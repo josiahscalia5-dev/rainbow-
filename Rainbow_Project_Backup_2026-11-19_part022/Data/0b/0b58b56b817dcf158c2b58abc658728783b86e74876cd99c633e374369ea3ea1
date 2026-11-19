@@ -1,0 +1,100 @@
+diff --git a/src/vfx/proj05Tunnel.ts b/src/vfx/proj05Tunnel.ts
+index e403916a..14d83222 100644
+--- a/src/vfx/proj05Tunnel.ts
++++ b/src/vfx/proj05Tunnel.ts
+@@ -14,7 +14,7 @@
+  * materials are wrapped only when a switch is on, every default shader program is unchanged.
+  */
+ import * as THREE from 'three';
+-import { M05WALL, PROJ05_INVERSE, m05eye, on05, proj05Pending } from './waterRibbon';
++import { M05WALL, M05WTILE, PROJ05_INVERSE, m05eye, on05, proj05Pending } from './waterRibbon';
+ // the tunnel bake follows its own switches OR the master `?match05=1` (on05)
+ const flag05 = on05;
+ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+@@ -253,6 +253,40 @@ const M05WALL_GLSL = /* glsl */ `
+     }
+   }`;
+ 
++/**
++ * `&m05wtile=1` (Screen 05 round 11, waterRibbon.ts M05WTILE): a far bay row (BC … GX) magnified while swimming shows the
++ * approved near bay N1 instead (same angle round the tube, same place within the bay), tinted by the ratio of the bay's
++ * own low-frequency colour to N1's, so the painted light distribution of each bay stays. Rows AB / N1 / N2 are sharp
++ * already and stay as they are. Off at the locked checkpoint eye.
++ */
++const M05WTILE_GLSL = /* glsl */ `
++  if (prow > 0.5 && prow < 6.5) {
++    vec2 tpt = puv * uPtWallSize;
++    vec2 jta = dFdx(tpt), jtb = dFdy(tpt);
++    float mT = abs(jta.x * jtb.y - jta.y * jtb.x) / max(max(length(jta), length(jtb)), 1e-5);
++    float rideT = uM05Eye.w > 0.5 ? smoothstep(0.02, 0.5, distance(cameraPosition, uM05Eye.xyz)) : 0.0;
++    float wT = rideT * (1.0 - smoothstep(0.35, 0.85, mT));
++    if (wT > 0.0) {
++      // the bay's own row keeps its painted light along the tunnel (streaks = detail round the tube, which the atlas
++      // has at full resolution); N1 adds the slot rows along the tunnel that the own row lacks: N1 divided by its own
++      // average over one slot pitch along the tunnel (≈ 38 texel rows) = the slots' light / dark pattern only
++      vec2 rN = uPtRows[${7}];
++      float lo = (rN.x + 0.5) / uPtWallSize.y, hi = (rN.x + rN.y - 0.5) / uPtWallSize.y;
++      float yN = (rN.x + clamp(pt * rN.y, 0.5, rN.y - 0.5)) / uPtWallSize.y;
++      float st = 9.5 / uPtWallSize.y;
++      vec3 cN = texture2D(uPtWall, vec2(puv.x, yN)).rgb;
++      vec3 avN = cN;
++      avN += texture2D(uPtWall, vec2(puv.x, clamp(yN + st, lo, hi))).rgb + texture2D(uPtWall, vec2(puv.x, clamp(yN - st, lo, hi))).rgb;
++      avN += texture2D(uPtWall, vec2(puv.x, clamp(yN + 2.0 * st, lo, hi))).rgb + texture2D(uPtWall, vec2(puv.x, clamp(yN - 2.0 * st, lo, hi))).rgb;
++      avN /= 5.0;
++      vec3 ratio = clamp((cN + 0.03) / (avN + 0.03), vec3(0.2), vec3(1.7));
++      // only where the own row is wall-coloured (purple: low green); water / foam texels keep N1 as it is
++      float wallO = smoothstep(0.05, 0.18, min(pc.r, pc.b) - pc.g);
++      vec3 cW = mix(cN, clamp(pc * ratio, 0.0, 1.0), wallO);
++      pc = mix(pc, cW, wT);
++    }
++  }`;
++
+ /** one wall bay: tunnel coordinate range [v0, v1) (the wall's uv.y) → atlas row, t at v0 and at v1 */
+ export interface WallSeg { v0: number; v1: number; row: number; t0: number; t1: number }
+ 
+@@ -264,7 +298,7 @@ export interface WallSeg { v0: number; v1: number; row: number; t0: number; t1:
+ export function withProj05Wall<T extends THREE.MeshStandardMaterial>(mat: T, segs: WallSeg[], tile: { anchor: number; period: number }, key: string): T {
+   const seg = Array.from({ length: N_SEG }, (_, i) => (segs[i] ? new THREE.Vector4(segs[i].v0, segs[i].v1, 0, 0) : new THREE.Vector4(1e9, 1e9, 0, 0)));
+   const segT = Array.from({ length: N_SEG }, (_, i) => (segs[i] ? new THREE.Vector3(segs[i].row, segs[i].t0, segs[i].t1) : new THREE.Vector3(0, 0, 0)));
+-  const uniforms = { ...shared, uPtSeg: { value: seg }, uPtSegT: { value: segT }, uPtTile: { value: new THREE.Vector2(tile.anchor, tile.period) }, ...(M05WALL ? { uM05Eye: m05eye } : {}) };
++  const uniforms = { ...shared, uPtSeg: { value: seg }, uPtSegT: { value: segT }, uPtTile: { value: new THREE.Vector2(tile.anchor, tile.period) }, ...(M05WALL || M05WTILE ? { uM05Eye: m05eye } : {}) };
+   // env05 run #4: the bays stay editable until the first render (environment.ts adds the real wall's bay past the seam)
+   mat.userData.ptSeg = seg;
+   mat.userData.ptSegT = segT;
+@@ -289,13 +323,13 @@ void main() {`)
+   }
+   vec2 rw = uPtRows[int(prow + 0.5)];
+   vec2 puv = vec2(fract(vPerfUv.x + 0.25), (rw.x + clamp(pt * rw.y, 0.5, rw.y - 0.5)) / uPtWallSize.y);
+-  vec3 pc = texture2D(uPtWall, puv).rgb;${M05WALL ? M05WALL_GLSL : ''}
++  vec3 pc = texture2D(uPtWall, puv).rgb;${M05WTILE && ENV05 ? M05WTILE_GLSL : ''}${M05WALL ? M05WALL_GLSL : ''}
+   gl_FragColor = uPtDbg > 0.5 ? vec4(puv, 7.0, 77.0) : vec4(pjInverse(pc), 1.0);
+ }`);
+-    if (M05WALL) shader.fragmentShader = shader.fragmentShader.replace('void main() {', 'uniform vec4 uM05Eye;\nvoid main() {');
++    if (M05WALL || M05WTILE) shader.fragmentShader = shader.fragmentShader.replace('void main() {', 'uniform vec4 uM05Eye;\nvoid main() {');
+   };
+   const prevKey = mat.customProgramCacheKey.bind(mat);
+-  mat.customProgramCacheKey = () => prevKey() + '|ptwall-' + key + (M05WALL ? '|m05wall' : '');
++  mat.customProgramCacheKey = () => prevKey() + '|ptwall-' + key + (M05WALL ? '|m05wall' : '') + (M05WTILE ? '|m05wtile' : '');
+   const prevRender = mat.onBeforeRender;
+   mat.onBeforeRender = (renderer, ...rest) => { livePost(renderer); prevRender.call(mat, renderer, ...rest); };
+   return mat;
+diff --git a/src/vfx/waterRibbon.ts b/src/vfx/waterRibbon.ts
+index 99f615e9..cef4551f 100644
+--- a/src/vfx/waterRibbon.ts
++++ b/src/vfx/waterRibbon.ts
+@@ -334,6 +334,15 @@ const m05nearS0 = (): number => {
+  */
+ export const M05WALL: boolean = MATCH05 && q05('m05far') && q05('m05wall');
+ export const m05eye = { value: new THREE.Vector4(0, 0, 0, 0) };
++/**
++ * `&m05wtile=1` (Screen 05 round 11, needs m05far; src/vfx/proj05Tunnel.ts withProj05Wall): the far bays of the wall
++ * atlas (rows BC … GX: 128 → 16 texel rows per bay, as small as the approved picture shows them) were magnified into a
++ * horizontal smear when swimming brought them close. Where a bay's own row would be magnified, the wall shows the
++ * approved NEAR bay N1 (256 texel rows, the sharpest painted wall: slots, pink light streaks) at the same angle round the
++ * tube and the same place within the bay, tinted to the bay's own painted colour — world-anchored like the rest of the
++ * wall. Off at the locked checkpoint eye (0 px there) and wherever the own row is sharp enough.
++ */
++export const M05WTILE: boolean = MATCH05 && q05('m05far') && q05('m05wtile');
+ /**
+  * `&m05geo=1` (Screen 05 round 9, needs m05ride; qa/match/05/r9/BLUEPRINT.md): RIVER SHAPE. The game's water surface is
+  * the full course width (wall to wall, flat); the painted river is an S-channel whose banks swing across it (measured by
