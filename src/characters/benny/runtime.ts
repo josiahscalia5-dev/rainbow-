@@ -34,7 +34,10 @@ export async function loadBenny(opts: { furQuality?: 'high' | 'low' } = {}): Pro
   const clips: THREE.AnimationClip[] = src.userData.animations ?? [];
   // `?benny05=1` / `?match05=1` only: the maps baked from the approved Screen 05 (benny05.ts)
   const maps05 = BENNY05 ? await loadBenny05Maps() : undefined;
-  return createBennyRuntime(src.clone(true), clips, { furQuality: opts.furQuality ?? defaultFurQuality(), maps05 });
+  const actor = src.clone(true);
+  const cuff = await loadFittedCuff06();
+  if (cuff) applyFittedCuff06(actor, cuff);
+  return createBennyRuntime(actor, clips, { furQuality: opts.furQuality ?? defaultFurQuality(), maps05 });
 }
 
 /**
