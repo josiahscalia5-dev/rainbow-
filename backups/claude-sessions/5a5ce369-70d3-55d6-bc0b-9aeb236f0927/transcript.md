@@ -3326,3 +3326,41 @@ I have what I need. Saving the new Screen 04 preview to its own branch and putti
 
 > 🔧 **Bash** `{"command": "cat >> docs/briefs/2026-11-19-r19/COORDINATION.md <<'EOF'\n| 6 (~20:45) | 04 COMBINED PREVIEW v3 (lead): `claude/rainbow-s04-preview-c19` @ `09459079` = v2 + s04 `97fcb8b6` + s04tex `1cff16f2` (clean merges; query `qa/match/04/r19/PREVIEW_QUERY_v3.txt`) | shown to the user with 05 / 07 NOW frames and Benny close-ups — `qa/review_r19/screen04_now/`. Lead's by-eye rating given on request (start view ≈ 8.5/10 — scenery is the painting, Benny differs; swimming ≈ 6/10). m04end not refitted yet. |\n\n## ~20:40 UTC user: Benny must look like the approved Benny (\"100% clone\", \"mine loo …[+1171 chars]`
 
+### 🧑 User — 2026-11-19T20:36:44.031Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+> AUTOSAVE OK | branch ccr-d00ac5ec-gabdsh | scheduler daemon | last verified backup 2026-11-19T20:36:27+00:00 (0.3 min ago) | local b1e680a remote b1e680a (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-19T20:36:57.325Z
+
+I've sent you Screen 04 as it is now (the newest rings, water and foam combined), a full-size swim clip, close-ups of Benny, and your approved 05 and 07 next to the game. These ratings are my honest judgment by eye, not a measurement.
+
+**Screen 04**
+- **At the start: about 8.5/10.** All the scenery there is your own painting, so the only real difference is Benny.
+- **While swimming: about 6/10.**
+  - **Close to yours:** the gold washer opening and the few thick, polished gold rings leading into the light.
+  - **Not close yet:** the river is a flat strip with straight edges against the gold wall, where yours swirls and curves up the sides. Inside the tunnel, the top half of the screen is one plain orange-copper surface. The foam is small white puffs instead of your soft lilac heaps.
+
+**The other screens while swimming**
+| Screen | Rating | Main gap |
+|---|---|---|
+| **05** | about 7.5/10 (closest) | Purple slotted tunnel, gold rings, gold paddles and the pink-and-cyan S-river all match. The water swirls are broader and flatter than your thick streaks. |
+| **07** | about 7/10 | Same tunnel style and winding river. The pink bands are flat sheets, the water near Benny is blurry, and there's a thin sliver across one gold paddle. |
+| **06** | about 5/10 | Not re-rendered this session; this is from the last saved notes. The arch is still a straight ring target instead of your curving crest. |
+| **08** | paused | Paused, as you asked. The start view is close, but the scenery tears while Benny moves. |
+
+All five need more work while swimming. The biggest gaps are 06 and 04.
+
+**Benny: yes, he needs fixing, and you're right that he looks cartoonish.** His overall size is right (within about 5%). The difference is the materials:
+- **Fur:** the game's is neon hot pink and made of thin, needle-like strands. Yours is a softer dusty rose-pink plush with long, soft tufts, darker underneath.
+- **Hat:** the game's is smooth with two pale pink stripes, and about 10% too small. Yours is a chunky hand-knit beanie with visible stitches, cream-white and violet stripes, and a thick ribbed brim. Screen 05's Benny already has a closer hat, so part of this already exists.
+- **Pompom:** the game's is spiky and dark purple. Yours is soft chunky yarn in a lighter violet.
+- **Star:** the game's is a shiny plastic 3D star. Yours is a flat, stitched felt patch.
+
+Benny is in every frame of every playable screen, so fixing him raises all five ratings at once. That's what I'd do next. Since the camera is always behind him, I can take his back view straight from your painting as the reference for the hat, pompom and star, and rebuild the fur to be softer, longer, tufted and dusty rose. It's free (Blender plus code, no credits) and goes behind a switch, and I'd show you your Benny next to before and after on all five screens.
+
+A perfect 100% copy isn't possible for a character that moves in 3D, but from behind he can get very close, around 9/10.
+
+Should I start on Benny now, in this session?
+
