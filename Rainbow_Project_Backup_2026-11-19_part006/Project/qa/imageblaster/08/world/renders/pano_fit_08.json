@@ -1,0 +1,17 @@
+{
+ "pano": "/home/user/neilsonnn/image-blaster/worlds/rainbow-08-final-spin-chamber/output/world/0-world-pano.png",
+ "reference": "/tmp/claude-0/-home-user-rainbow-/03b94f36-3d2a-53ac-a9c6-c76da0a815ed/scratchpad/w08/clean_864.png",
+ "pano_size": [
+  4608,
+  2304
+ ],
+ "image_size": [
+  864,
+  1536
+ ],
+ "f_px": 442.0,
+ "hfov_deg": 88.68894097281938,
+ "yaw_deg": 23.0,
+ "pitch_deg": -12.000000000000002,
+ "ncc_blurred_quarter_res": 0.3813147694946965
+}
