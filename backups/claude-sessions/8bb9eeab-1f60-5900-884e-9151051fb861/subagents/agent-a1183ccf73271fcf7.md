@@ -1229,3 +1229,66 @@ Checkpoint: 0 px differ. Now let me look at the +1.1 u result.
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && timeout 300 npx tsc --noEmit -p . 2>&1 | tail -3; K=\"match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1\" && O=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06/try7 && node tools/match06/r16_start.mjs $O NEW@1.1 \"$K&m06st=1\" 2>&1 | grep -v \"allow list\"; python3 -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06/'\na=Image.open(S+'try7/[REDACTED-EMAIL]').crop((380,480,864,600)); b=Image.open(S+'tr …[+273 chars]`
 
+### 🧑 User — 2026-11-19T02:52:45.820Z
+
+> ↩︎ result: NEW@1.1 s 200.01 cam 1.64,-35.09,-132.97 coins 1680
+
+### 🤖 Claude — 2026-11-19T02:52:47.884Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06/line_zoom7.png"}`
+
+### 🧑 User — 2026-11-19T02:52:47.930Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:53:03.788Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -i 's/          if (zs < 0.8 \\* zf) zc = zs;/          if (zs < uStO * zf) zc = zs;/; s/              if (z2 < 0.8 \\* zf) {/              if (z2 < uStO * zf) {/; s/                  if (z3 >= 0.8 \\* zf) break;/                  if (z3 >= uStO * zf) break;/' src/world/match06.ts && python3 - <<'EOF'\np='/home/user/wt/s06/src/world/match06.ts'\ns=open(p).read()\ns=s.replace(\"uniform vec2 uStB;\\n\",\"uniform vec2 uStB;\\nuniform float uStO;\\n\",1)\ns=s.replace(\"    uStB: { value: new THREE.Vector2(80, 160) },\\n\",\"    uStB: { value: new THREE.Vect …[+948 chars]`
+
+### 🧑 User — 2026-11-19T02:53:03.942Z
+
+> ↩︎ result: 105:// uStO = depth ratio below which a surface counts as a nearer occluder (the river in front of the tunnel)
+> 111:uniform float uStO;
+> 243:          if (zs < uStO * zf) zc = zs;
+> 250:              if (z2 < uStO * zf) {
+> 255:                  if (z3 >= uStO * zf) break;
+> 427:    uStO: { value: 0.94 },
+> 468:  if (Number.isFinite(Number(qs?.get('m06sto'))) && qs?.get('m06sto')) shared.uStO.value = Number(qs?.get('m06sto'));
+> [This command modified 1 file you've previously read: ../wt/s06/src/world/match06.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-19T02:53:10.745Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && timeout 300 npx tsc --noEmit -p . 2>&1 | tail -3; K=\"match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1\" && O=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06/try8 && node tools/match06/r16_start.mjs $O NEW@1.1 \"$K&m06st=1\" 2>&1 | grep -v \"allow list\"; python3 -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06/'\na=Image.open(S+'try8/[REDACTED-EMAIL]').crop((380,480,864,600)); b=Image.open(S+'tr …[+267 chars]`
+
+### 🧑 User — 2026-11-19T02:53:45.808Z
+
+> ↩︎ result: NEW@1.1 s 200.01 cam 1.64,-35.09,-132.97 coins 1680
+
+### 🤖 Claude — 2026-11-19T02:53:47.892Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06/line_zoom8.png"}`
+
+### 🧑 User — 2026-11-19T02:53:47.926Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:53:58.456Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='/home/user/wt/s06/src/world/match06.ts'\ns=open(p).read()\ns=s.replace(\"uniform float uStO;\\n\",\"uniform float uStO;\\nuniform float uStDbg;\\n\",1)\ns=s.replace(\"    uStO: { value: 0.94 },\\n\",\"    uStO: { value: 0.94 },\\n    uStDbg: { value: 0 },\\n\",1)\ns=s.replace(\"  if (Number.isFinite(Number(qs?.get('m06sto'))) && qs?.get('m06sto')) shared.uStO.value = Number(qs?.get('m06sto'));\\n\",\n \"  if (Number.isFinite(Number(qs?.get('m06sto'))) && qs?.get('m06sto')) shared.uStO.value = Number(qs?.get('m06sto'));\\n  shared.uStDb …[+1304 chars]`
+
+### 🧑 User — 2026-11-19T02:54:25.288Z
+
+> ↩︎ result: 229:      float filled = 0.0, dbgB = 0.0, dbgZ = 0.0;
+> 244:          dbgZ = 1.0;
+> 271:              if (q.w > 0.0) { uvF = clamp(q.xy / q.w * 0.5 + 0.5, 0.0005, 0.9995); filled = 1.0; dbgB = bw; }
+> 312:      if (uStDbg > 0.5) t = vec3(filled, filled > 0.5 ? dbgB : 0.0, uFloor);
+> stdbg s 200.01 cam 1.64,-35.09,-132.97 coins 1680
+
+### 🤖 Claude — 2026-11-19T02:54:27.294Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s06/dbg/stdbg.png"}`
+
+### 🧑 User — 2026-11-19T02:54:27.329Z
+
+> ↩︎ result: [image]
+

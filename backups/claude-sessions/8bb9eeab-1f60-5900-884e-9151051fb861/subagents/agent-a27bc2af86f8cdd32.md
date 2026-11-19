@@ -1883,3 +1883,63 @@ Now the centre line: with the band switch, the centre is Benny's lane only (the 
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-19T02:52:03.174Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/qa/match/07/r18/step4_band/NEW/s_left_hard.png"}`
+
+### 🧑 User — 2026-11-19T02:52:03.278Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:52:10.431Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && head -20 tools/match07/swim_clip_half.mjs; S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/cap4 && mkdir -p $S && K=\"$(cat qa/match/07/r16/K.txt)&m07foam=1&m07coinsz=1&m07nearw=1&m07foamb=1\" && node scripts/capture.mjs 07 --out=$S/before \"--q=$K\" 2>&1 | grep \"^07\"; node scripts/capture.mjs 07 --out=$S/new \"--q=$K&m07band=1\" 2>&1 | grep \"^07\"; node /home/user/tools-pixelmatch/pixeldiff.mjs $S/before/07.png $S/new/07.png $S/diff07.png 0.1 180 1536; git checkout qa/capture_log.json; node scripts/gameplay-test.mjs \ …[+194 chars]`
+
+### 🧑 User — 2026-11-19T02:53:25.894Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // s07 r17: tools/lead_r13/swim_clip.mjs rendered at HALF size (432x768, same 9:16 framing; CPU is shared). Lead r13 (2026-11-18): a short REAL-GAMEPLAY swimming clip for any playable screen 04–08 (read-only).
+> // Starts at the screen's checkpoint and rides the real game simulation (Benny, camera rig, course, coins unchanged) with
+> // the shader clock running: straight, then left, then right, then straight — one frame per 1/fps s → OUT/0000.png …
+> // Generalises scripts/proj05-move.mjs --zigzag. Encode: ffmpeg -framerate 24 -i OUT/%04d.png -pix_fmt yuv420p clip.mp4
+> //   node tools/lead_r13/swim_clip.mjs <screen 04..08> <outDir> <seconds> [query]
+> import { mkdirSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> const [SCREEN, OUT, SECS = '6', Q = ''] = process.argv.slice(2);
+> const fps = 24;
+> mkdirSync(OUT, { recursive: true });
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5277);
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> try {
+>   const page = await browser.newPage({ viewport: { width: 432 …[+1199 chars]
+
+### 🤖 Claude — 2026-11-19T02:53:28.967Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 -c \"\nimport json; d=json.load(open('qa/match/07/r18/step4_band/gameplay_new.json')); c=d['checks']; print(sum(1 for v in c.values() if v['pass']),'/',len(c), c['realCoinPickups'], d['plunge']['verticalDrop'])\"; sed -n 20,60p tools/match07/swim_clip_half.mjs | head -45; which ffmpeg", "description": "Confirm coins and read clip tool"}`
+
+### 🧑 User — 2026-11-19T02:53:29.118Z
+
+> ↩︎ result: 8 / 8 {'pass': True, 'startCoins': 1330, 'endCoins': 2240, 'collected': 91} 61.14
+>   await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 300000 });
+>   await page.evaluate((id) => window.__rainbow.goto(id), SCREEN);
+>   const n = Math.round(Number(SECS) * fps);
+>   for (let i = 0; i < n; i++) {
+>     const ph = i / n;                                   // straight 0–0.3, left 0.3–0.55, right 0.55–0.8, straight
+>     const dir = ph < 0.3 ? null : ph < 0.55 ? -1 : ph < 0.8 ? 1 : null;
+>     await page.evaluate(([t, dt, dir]) => { const R = window.__rainbow; R.setSteer(dir); R.freezeAt(t); R.step(Math.round(dt * 60), 1 / 60); R.freezeAt(t + dt); R.step(1, 1e-4); }, [12 + i / fps, 1 / fps, dir]);
+>     await page.evaluate(() => window.__rainbow.drawList());
+>     await page.screenshot({ path: `${OUT}/${String(i).padStart(4, '0')}.png` });
+>   }
+>   console.log('frames', n);
+> } finally {
+>   await browser.close();
+>   await vite.close();
+> }
+> /usr/bin/ffmpeg
+
+### 🤖 Claude — 2026-11-19T02:53:33.319Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && F=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/clip4 && rm -rf $F && K=\"$(cat qa/match/07/r16/K.txt)&m07foam=1&m07coinsz=1&m07nearw=1&m07foamb=1&m07band=1\" && node tools/match07/swim_clip_half.mjs 07 $F 3.6 \"$K\" 2>&1 | tail -2 && ffmpeg -loglevel error -y -framerate 24 -i $F/%04d.png -pix_fmt yuv420p -vcodec libx264 -crf 23 qa/match/07/r18/step4_band/swim_NEW_band.mp4 && ls -la qa/match/07/r18/step4_band/", "description": "Render half-size real-gameplay swim clip for step 4", "timeout": 1800000}`
+

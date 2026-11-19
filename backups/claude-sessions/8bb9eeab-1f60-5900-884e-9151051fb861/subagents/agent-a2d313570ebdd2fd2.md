@@ -1369,3 +1369,62 @@ Now add the shared uniform (waterRibbon.ts), write it in the live sync (match05f
 > ↩︎ result: ok
 > 116:  const L = ft.L, c0 = ft.c0, T = ft.T, U = ft.U, Rt = ft.Rt, R = ft.R, sF = ft.sF;
 
+### 🤖 Claude — 2026-11-19T02:52:03.248Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"uM05FwC; uniform\\|uPtSegN\\[\\${N_SEG}\\]; uniform\" src/vfx/proj05Tunnel.ts && git diff --stat", "description": "Verify the shader uniform injection lines"}`
+
+### 🧑 User — 2026-11-19T02:52:03.657Z
+
+> ↩︎ result: 406:    if (M05WCRISP) shader.fragmentShader = shader.fragmentShader.replace('void main() {', `uniform vec3 uPtSegN[${N_SEG}]; uniform sampler2D uM05WField; uniform vec2 uM05WC;\nvoid main() {`);
+> 407:    if (fwExact) shader.fragmentShader = shader.fragmentShader.replace('void main() {', 'uniform vec3 uM05FwC; uniform vec3 uM05FwT; uniform vec4 uM05FwP; uniform vec2 uM05FwK[8];\nvoid main() {');
+>  qa/match/05/r18/PROGRESS.md | 14 +++++++
+>  src/vfx/proj05Tunnel.ts     | 96 ++++++++++++++++++++++++++++++++++++++++-----
+>  src/vfx/waterRibbon.ts      | 28 +++++++++++++
+>  src/world/environment.ts    | 30 +++++++++++++-
+>  src/world/match05far.ts     | 14 ++++++-
+>  5 files changed, 171 insertions(+), 11 deletions(-)
+
+### 🤖 Claude — 2026-11-19T02:52:11.309Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='src/vfx/proj05Tunnel.ts'\ns=open(p).read()\na=\"\"\"      vec2 hsc = vec2(0.34, 0.19) - 0.15;\n      vec2 kc = max(abs(qc) - hsc, 0.0);\n      float dS = length(kc) + min(max(abs(qc.x) - hsc.x, abs(qc.y) - hsc.y), 0.0) - 0.15;\"\"\"\nb=\"\"\"      vec2 hsc = vec2(0.34, 0.27) - 0.2;\n      vec2 kc = max(abs(qc) - hsc, 0.0);\n      float dS = length(kc) + min(max(abs(qc.x) - hsc.x, abs(qc.y) - hsc.y), 0.0) - 0.2;\"\"\"\nassert s.count(a)==1\ns=s.replace(a,b)\nopen(p,'w').write(s)\nEOF\nQ=\"$(cat qa/match/05/r18/KEPT_START.txt)&m05wcrisp= …[+570 chars]`
+
+### 🧑 User — 2026-11-19T02:53:49.244Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T02:53:51.284Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/try2/x97L.png"}`
+
+### 🧑 User — 2026-11-19T02:53:51.337Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:54:04.529Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/try2/k81_kink_left.png"}`
+
+### 🧑 User — 2026-11-19T02:54:04.586Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:54:18.959Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 -I -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/'\nim=Image.open(S+'try2/k81_kink_left.png').convert('RGB')\nim.crop((0,900,300,1200)).resize((600,600),Image.NEAREST).save(S+'try2_corner.png')\nprint(im.getpixel((15,1060)), im.getpixel((30,1080)))\"", "description": "Zoom the bottom-left corner"}`
+
+### 🧑 User — 2026-11-19T02:54:19.179Z
+
+> ↩︎ result: (137, 50, 181) (134, 48, 179)
+
+### 🤖 Claude — 2026-11-19T02:54:20.317Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/try2_corner.png"}`
+
+### 🧑 User — 2026-11-19T02:54:20.405Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:54:25.197Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && Q=\"$(cat qa/match/05/r18/KEPT_START.txt)&m05wcrisp=1\" && GRID='-0.954,-0.432;-0.97,-0.40;-0.93,-0.45;-0.98,-0.47' timeout 600 node tools/match05/r15_probe.mjs \"$Q\" t81L 5275 2>&1 | tail -5", "description": "Probe the hot-pink corner surface", "timeout": 600000}`
+

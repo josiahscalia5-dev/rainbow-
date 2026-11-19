@@ -21,7 +21,7 @@ index 44af1e56..667b0a9c 100644
 +* The hot-pink triangle in the bottom-left corner at t81L is also the far wall (its baked row holds river / bank colours
 +  at those angles, magnified).
 diff --git a/src/vfx/proj05Tunnel.ts b/src/vfx/proj05Tunnel.ts
-index 14d83222..9ce59026 100644
+index 14d83222..0e805f03 100644
 --- a/src/vfx/proj05Tunnel.ts
 +++ b/src/vfx/proj05Tunnel.ts
 @@ -14,7 +14,7 @@
@@ -100,9 +100,9 @@ index 14d83222..9ce59026 100644
 +      // slot cell in real units: 46 round the tube (2 pi 7.6 / 46 = 1.04 u), psn.z along it
 +      vec2 gc = vec2(vPerfUv.x * 46.0, psn.x + psn.y * pt);
 +      vec2 qc = (fract(gc) - 0.5) * vec2(1.038, psn.z);
-+      vec2 hsc = vec2(0.34, 0.19) - 0.15;
++      vec2 hsc = vec2(0.34, 0.27) - 0.2;
 +      vec2 kc = max(abs(qc) - hsc, 0.0);
-+      float dS = length(kc) + min(max(abs(qc.x) - hsc.x, abs(qc.y) - hsc.y), 0.0) - 0.15;
++      float dS = length(kc) + min(max(abs(qc.x) - hsc.x, abs(qc.y) - hsc.y), 0.0) - 0.2;
 +      float aS = fwidth(dS) * 0.85 + 1e-4;
 +      float hole = 1.0 - smoothstep(-aS, aS, dS);
 +      // pale pink rim just outside the edge, strongest at the slot's ends round the tube

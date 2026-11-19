@@ -1625,3 +1625,105 @@ Now a small render helper (copy of the audit tool that renders only the shots I 
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && npx tsc --noEmit -p . 2>&1 | tail -5; S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex && K6=\"$(cat $S/K5.txt)&m04rpvar=1\" && echo \"$K6\" > $S/K6.txt && ONLY=f06_forward6u,f20_forward20u,t95_through_screen node $S/audit_only.mjs 04 $S/rf1 \"$K6&m04rfew=1\" 2>&1 | grep -v \"allow list\" | tail -5", "description": "Typecheck and render first telescope test shots", "timeout": 600000}`
 
+### 🧑 User — 2026-11-19T02:52:38.624Z
+
+> ↩︎ result: 04 f06_forward6u s 84.432 lat 0 stage 04 frames 26
+> 04 f20_forward20u s 98.181 lat 0 stage 04 frames 86
+> 04 t95_through_screen s 113.676 lat 0 stage 04 frames 153
+
+### 🤖 Claude — 2026-11-19T02:52:41.251Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex/rf1/f06_forward6u.png"}`
+
+### 🧑 User — 2026-11-19T02:52:41.310Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:52:45.905Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex/rf1/t95_through_screen.png"}`
+
+### 🧑 User — 2026-11-19T02:52:46.032Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:53:04.411Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex/rf1/f20_forward20u.png"}`
+
+### 🧑 User — 2026-11-19T02:53:04.478Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T02:53:17.788Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && grep -n \"col = clamp(col, 0.0, 1.0);\" src/world/match04m4.ts; grep -n \"if (part > 3.5) {\" src/world/match04m4.ts", "description": "Locate insertion points in GOLD_FRAG"}`
+
+### 🧑 User — 2026-11-19T02:53:17.909Z
+
+> ↩︎ result: 365:  col = clamp(col, 0.0, 1.0);
+> 544:  col = clamp(col, 0.0, 1.0);
+> 197:  if (part > 3.5) {
+
+### 🤖 Claude — 2026-11-19T02:53:19.677Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "offset": 196, "limit": 10}`
+
+### 🧑 User — 2026-11-19T02:53:19.703Z
+
+> ↩︎ result: 196	  vec3 col;
+> 197	  if (part > 3.5) {
+> 198	    // the far glow (painted vanishing point): small warm-white core, orange-gold outside with faint far rings
+> 199	    // soft warm-white core, yellow-orange glow, orange toward the rim (matches the far bands), no hard target rings
+> 200	    float rad = clamp(rr / 3.6, 0.0, 1.0);
+> 201	    col = mix(vec3(1.0, 0.95, 0.78), vec3(1.0, 0.72, 0.24), smoothstep(0.04, 0.30, rad));
+> 202	    col = mix(col, uGoldY > 0.5 ? vec3(0.98, 0.70, 0.22) : vec3(0.93, 0.52, 0.15), smoothstep(0.30, 0.95, rad));
+> 203	    col *= 1.0 - 0.10 * smoothstep(0.25, 0.0, abs(fract(log(max(rad, 0.01)) / log(0.72)) - 0.5)) * smoothstep(0.35, 0.7, rad);
+> 204	  } else {
+> 205	    bool mouth = vK.y < -0.5;
+
+### 🤖 Claude — 2026-11-19T02:53:20.254Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "offset": 358, "limit": 10}`
+
+### 🧑 User — 2026-11-19T02:53:20.320Z
+
+> ↩︎ result: 358	        pr += vec3(1.0, 0.62, 0.20) * 0.60 * smoothstep(3.0, 0.0, d) * on;   // orange halo
+> 359	        pr = mix(pr, vec3(1.0, 0.95, 0.76), smoothstep(1.0, 0.35, d) * on);  // yellow-white core
+> 360	      }
+> 361	      // the painted colour replaces the procedural ramp, its streaks, star glints, lip bulbs and pink-violet tint
+> 362	      col = mix(col, pr, uRPaint);
+> 363	    }
+> 364	  }
+> 365	  col = clamp(col, 0.0, 1.0);
+> 366	  // the approved view shows the approved pixels (the projector IS this camera there)
+> 367	  if (uAway < 0.999 && vProj.w > 0.0) {
+
+### 🤖 Claude — 2026-11-19T02:53:27.968Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "      // the painted colour replaces the procedural ramp, its streaks, star glints, lip bulbs and pink-violet tint\n      col = mix(col, pr, uRPaint);\n    }\n  }\n  col = clamp(col, 0.0, 1.0);\n  // the approved view shows the approved pixels (the projector IS this camera there)", "new_string": "      // the painted colour replaces the procedural ramp, its streaks, star glints, lip bulbs and pink-violet tint\n      col = mix(col, pr, uRPaint);\n    }\n  }\n#ifdef RFEW\n  if (vK.y > -0.5 && uRFewW.y …[+1224 chars]`
+
+### 🧑 User — 2026-11-19T02:53:28.000Z
+
+> ↩︎ result: The file /home/user/wt/s04b/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T02:53:29.830Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "uniform float uRFewG;      // r18 m04rfew: height of the telescope's shrink centre (group units, from the axis; < 0 = below)\nvarying vec2 vF;", "new_string": "uniform float uRFewG;      // r18 m04rfew: height of the telescope's shrink centre (group units, from the axis; < 0 = below)\nuniform vec2 uRFewW;       // r18 m04rfew: x = ring scale where the deep rings reach warm yellow-white, y = amount (m04rfw, m04rfk)\nvarying vec2 vF;"}`
+
+### 🧑 User — 2026-11-19T02:53:29.875Z
+
+> ↩︎ result: The file /home/user/wt/s04b/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T02:53:31.120Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "      gm.uniforms.uRFewG = { value: rfGz };", "new_string": "      gm.uniforms.uRFewG = { value: rfGz };\n      gm.uniforms.uRFewW = { value: new THREE.Vector2(M04.num('m04rfw', 0.12), M04.num('m04rfk', 1)) };"}`
+
+### 🧑 User — 2026-11-19T02:53:31.189Z
+
+> ↩︎ result: The file /home/user/wt/s04b/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T02:53:37.241Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && npx tsc --noEmit -p . 2>&1 | tail -3; S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex && K6=$(cat $S/K6.txt) && ONLY=f06_forward6u,f20_forward20u,t95_through_screen node $S/audit_only.mjs 04 $S/rf2 \"$K6&m04rfew=1\" 2>&1 | grep -E \"pageerror|Error\" | head -5; ONLY=f06_forward6u,f20_forward20u,t95_through_screen node $S/audit_only.mjs 04 $S/rf2g \"$K6&m04rfew=1&m04rfg=1.2\" 2>&1 | grep -E \"pageerror|Error\" | head -5; ls $S/rf2 $S/rf2g", "description": "Render warm-end telescope, constant and growing corridor",  …[+18 chars]`
+
