@@ -1216,3 +1216,47 @@ I'll pass this straight to the Benny worker. First I'll measure your approved Be
 
 > ↩︎ result: {"success":true,"message":"Message queued for delivery to a748ac2c3b3a4c626 at its next tool round. Moved 1 running tool call to the background without stopping it, so that round no longer waits for it. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"a748ac2c3b3a4c626","name":"a748ac2c3b3a4c626","ref":"7a6753"}}
 
+### 🤖 Claude — 2026-11-19T23:45:48.197Z
+
+I'll record your order in the round notes so later sessions follow it too.
+
+### 🤖 Claude — 2026-11-19T23:45:53.603Z
+
+> 🔧 **Bash** `{"command": "cat >> docs/briefs/2026-11-19-r20/COORDINATION.md <<'EOF'\n\n## ~23:50 UTC user: Benny must be a \"100%\" match of the approved Benny — fur texture + pink colour first, in EVERY state\nUser: \"Make sure Benny looks a lot more like the approved screen's Benny pink character ... Like the fur, the pink texture, like\nthe color of the texture ... I want it to look like the 100% everything about the pink character from my approved screen ...\nAll of this states as well.\" (= start, swimming, steering, every screen). Relayed to the Benny worker with the lead's fur\nmeasurement (04 start …[+872 chars]`
+
+### 🤖 Claude — 2026-11-19T23:45:54.104Z
+
+> 🔧 **TaskUpdate** `{"taskId": "4", "status": "completed"}`
+
+### 🤖 Claude — 2026-11-19T23:45:55.520Z
+
+> 🔧 **TaskCreate** `{"subject": "Review Benny fur/colour step and show APPROVED / BEFORE / NEW in motion", "description": "When the Benny worker reports: check full-size close-ups + HSV numbers vs approved, steering, clip, 05/06/07; show user.", "activeForm": "Waiting for the Benny fur result"}`
+
+### 🧑 User — 2026-11-19T23:46:10.959Z
+
+> ↩︎ result: "pushed_verified": true,
+>   "commit": "1e6b38810e03539f1b1436325ba4663e84ba19a5",
+> AUTOSAVE OK | branch ccr-681a37bb-5jqfbu | scheduler daemon | last verified backup 2026-11-19T23:45:53+00:00 (0.3 min ago) | local 1e6b388 remote 1e6b388 (match) | uncommitted 0
+
+### 🧑 User — 2026-11-19T23:46:10.976Z
+
+> ↩︎ result: Updated task #4 status
+
+### 🧑 User — 2026-11-19T23:46:10.986Z
+
+> ↩︎ result: Task #5 created successfully: Review Benny fur/colour step and show APPROVED / BEFORE / NEW in motion
+
+### 🤖 Claude — 2026-11-19T23:46:16.338Z
+
+I've sent your order to the Benny worker with your exact words. The fur and its pink colour are now its top job, ahead of the hat, pompom and star. The match has to hold at the start, while swimming and while steering, on every screen.
+
+To make that concrete, I measured the pink fur on your approved Benny against the game's:
+
+- **The pink shade itself is already right.** Yours and the game's are nearly the same rose-pink.
+- **What makes the game look neon and cartoonish is the lighting inside the fur.** Your Benny has deep rose shadows between the tufts and underneath him, getting brighter toward the tips. The game's fur is evenly bright everywhere with no shadow, so it reads as one flat glowing pink.
+- **The texture is different too.** Yours is very fine, dense, silky fur combed downward in soft overlapping layers. The game has stiff needles, and the worker's rough test made stiff petal-like clumps. I've told the worker that direction is wrong.
+
+The worker now has your approved Benny's measured light-to-dark range as its target. I've asked it to report the same measurement for each new version, so we can tell whether it's actually closer instead of guessing.
+
+A perfect 100% copy isn't possible for a 3D character that moves and turns, but the fur colour and texture can get very close. I'll judge it at full size first. Then I'll show you your Benny, the game now and the new version at the start, swimming and steering, on Screens 04–07, plus a swim clip. I've saved your order in the project notes.
+

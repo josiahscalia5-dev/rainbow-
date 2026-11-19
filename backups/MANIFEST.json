@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 19348,
-   "sha256": "c80950f9e468750ec6e3197b1160aea39960b8ce31388fe89b2648d2e186709c"
+   "sha256": "bdc5b90fdcac43210610859b62fa01e8db7e3ad3b1057dbca2bed6add406af12"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -858,8 +858,8 @@
   },
   {
    "path": "backups/wip/claude__rainbow-benny-c21/INFO.json",
-   "bytes": 3060,
-   "sha256": "6b110f70218e7c0c96a3829951176cfad6a1e1279636d773b13e3326a051c050"
+   "bytes": 3224,
+   "sha256": "51100a12a3f6bdfff1054434780d88d98955db3fddba9a01ef4755a8d29fde3a"
   },
   {
    "path": "backups/wip/claude__rainbow-benny-c21/tracked.patch",
@@ -915,6 +915,16 @@
    "path": "backups/wip/claude__rainbow-benny-c21/untracked/qa/benny/r20/probe/b/probe.json",
    "bytes": 2120,
    "sha256": "61ed40cbae5a5c5641aae95ec9dd9b513cf186bdbb41147a38ca61fa46ca6a05"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-benny-c21/untracked/qa/benny/r20/probe/c/c0_base_mask.png",
+   "bytes": 127273,
+   "sha256": "0f3f02483872dd278c9ab5802068213fd6489a83bda4065549ea99c2faa91c9d"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-benny-c21/untracked/qa/benny/r20/probe/c/c1_k0.08_mask.png",
+   "bytes": 127273,
+   "sha256": "0f3f02483872dd278c9ab5802068213fd6489a83bda4065549ea99c2faa91c9d"
   },
   {
    "path": "backups/wip/claude__rainbow-benny-c21/untracked/qa/benny/r20/t1/before/closeup_f00.png",
@@ -1584,7 +1594,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c21/INFO.json",
    "bytes": 506,
-   "sha256": "d254f3c2fefb1f1d1e20f9fe68b74e3bf485a73b1bc0b95b101e00f0c5b83e57"
+   "sha256": "8d81886cb71bff11f32a144f5198f4cf7262ccda357185ebf55558b18fa240cc"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c21/tracked.patch",
@@ -1754,7 +1764,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c21/INFO.json",
    "bytes": 515,
-   "sha256": "b5d9a939b0b9c2f15f92c18c5bd105ceedef01ce9e60784d373edf91c5da7553"
+   "sha256": "d5b6bcdc5a38b24ec33d0a5a8d4ce7123efa3f61b61ff62b4c510e852d388e79"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c21/tracked.patch",

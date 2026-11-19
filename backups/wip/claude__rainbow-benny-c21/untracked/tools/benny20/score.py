@@ -70,6 +70,19 @@ for k in ('fur', 'pom', 'cuff', 'crown', 'star'):
         v = img[m]
         L = v.mean(1)
         out[f'med_{k}'] = [int(x) for x in np.median(v, 0)] + [f'L p10/50/90 {[int(np.percentile(L, p)) for p in (10, 50, 90)]}']
+# lead's fur measure (r20): pink body pixels below the cuff, HSV saturation / brightness p10/50/90 + mean RGB
+def hsv_stats(px):
+    px = px.astype(float) / 255
+    mx, mn = px.max(1), px.min(1)
+    sat = np.where(mx > 0, (mx - mn) / np.maximum(mx, 1e-6), 0)
+    return {'mean': [int(v) for v in (px.mean(0) * 255)], 'sat': [round(float(np.percentile(sat, p)), 2) for p in (10, 50, 90)],
+            'val': [round(float(np.percentile(mx, p)), 2) for p in (10, 50, 90)]}
+cb = out['cuff_bottom_c'][0] or 1250
+gf = gm['fur'].copy(); gf[:cb + 4] = False
+pinkg = (img[..., 0] > 90) & (img[..., 0] > img[..., 2] + 5) & (img[..., 1] < 0.62 * img[..., 0])
+if (gf & pinkg).sum() > 50: out['fur_hsv'] = hsv_stats(img[gf & pinkg])
+af = afur.copy(); af[:1275] = False
+out['fur_hsv_approved'] = hsv_stats(A[af])
 out['approved_med'] = {'fur': [213, 71, 150, 'L 106/144/184'], 'pom': [133, 30, 229, 'L 78/130/178'], 'cuff': [103, 16, 209],
                        'crown_white': [233, 182, 233], 'crown_violet': [104, 15, 216], 'star': [252, 195, 70]}
 print(json.dumps(out))
