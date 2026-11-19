@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 18874,
-   "sha256": "4d13500e1fa44767ba82ba08770cdc20a71e63a74fa81f80ac5ac997dee37c68"
+   "sha256": "7040998801eca307e54b4a1b23dae03322bf8e7f1fcca3bb4f7ec08dfad9de13"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1209,7 +1209,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c19/INFO.json",
    "bytes": 477,
-   "sha256": "c02eadaeeb42958fc5715d8e56478c44b184fb04287ef441e9c094e43e34b4ca"
+   "sha256": "04b3e6132aeb6108d49433b57d26ef84cd7902ce9ef52ccea9bfe3ce4f782044"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-preview-c18/INFO.json",
@@ -1354,22 +1354,32 @@
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c19/INFO.json",
    "bytes": 486,
-   "sha256": "3a3862520f357c5d237c4f89ce4bd57b25100de76de747a7680ea94b407ca687"
+   "sha256": "cae4253bceba9160f6618e2ccdd2b0aea95177029f2432332f1bb9a542b9cd98"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-thrixel-c19/INFO.json",
-   "bytes": 1027,
-   "sha256": "1f10be4063fbba48046dfbcd1ff893b4e12f1ae2e0d4a50dc18c1742e2f47d03"
+   "bytes": 1668,
+   "sha256": "0a489ed3bbfe7d5ed3df3670eb95388796f0b2bae7a5ee7c8008a4e4df1a932d"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-thrixel-c19/tracked.patch",
-   "bytes": 8838,
-   "sha256": "c934b57f2e461230a932e81a19542afe9c3434b070c302aa40742a3e144d5f1f"
+   "bytes": 8921,
+   "sha256": "02d2d9ed42d335bad53f8ea1d0c071c7a183a06225ddd78b46714dcede416709"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-thrixel-c19/untracked/assets/models/match04/foam_heap_blender04.glb",
    "bytes": 672696,
    "sha256": "464237f137499a79851ab3d5e490e04295ddc593f2d6fa2e73e36fb05bcf4f7e"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-thrixel-c19/untracked/qa/match/04/r19_blendfoam/CANDIDATE_QUERY_ADD.txt",
+   "bytes": 109,
+   "sha256": "b6aa8e24b85547ef8552f971dcf62ecebb71b729d35b7d53da3a8b8af66de6b5"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-thrixel-c19/untracked/qa/match/04/r19_blendfoam/NEW/motion.json",
+   "bytes": 702,
+   "sha256": "98806ea7f813f39e86bbde5b76fa513cbd6accd584aee2ab08b7ac091739e466"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-thrixel-c19/untracked/qa/match/04/r19_blendfoam/tune/b1_default_crop.png",
@@ -1382,9 +1392,24 @@
    "sha256": "ad47e91474f6ed8b6f5786fad05843fbec7741d55f0d9ef0e4a29959620460bf"
   },
   {
+   "path": "backups/wip/claude__rainbow-s04-thrixel-c19/untracked/qa/match/04/r19_blendfoam/tune/b3_crop.png",
+   "bytes": 310132,
+   "sha256": "985860cad7bc22180b72fa24445c70d1ab1e97f734682b3b91388fea81022a57"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-thrixel-c19/untracked/qa/match/04/r19_blendfoam/tune/b4_crop.png",
+   "bytes": 306128,
+   "sha256": "d488e2dfb65bb1d51d795a3b6e3765b9d8581b426eba3852bef22dc2da59d273"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-thrixel-c19/untracked/qa/match/04/r19_blendfoam/tune/b5_crop.png",
+   "bytes": 306066,
+   "sha256": "c573ac0dda0e815d555d2cfd6a2e67fdb696d4522a0bb2f50feef333f2f16ac2"
+  },
+  {
    "path": "backups/wip/claude__rainbow-s04-thrixel-c19/untracked/qa/match/04/r19_blendfoam/tune/motion.json",
    "bytes": 130,
-   "sha256": "2d2ac8d1bc4737264904ce9af9064fde6c2b4de97502903de63e382158439671"
+   "sha256": "56bf2e415710fe99900f2970def2e69bbbfe0bd7b85647fdefc22991284722cc"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-thrixel-c19/untracked/qa/match/04/r19_blendfoam/view_low_side.png",
@@ -1774,7 +1799,7 @@
   {
    "path": "backups/wip/claude__rainbow-s05-match-c19/INFO.json",
    "bytes": 2358,
-   "sha256": "01a3aee662cff140db333360fc76fb7c409358111b53907e7b6dd0f2f389b3e7"
+   "sha256": "76011a61ab9c887fb369739e5e5153d2a54807e5a7a248486d36b83b7886c9bf"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c11/INFO.json",
@@ -2588,13 +2613,13 @@
   },
   {
    "path": "docs/briefs/2026-11-19-r19/COORDINATION.md",
-   "bytes": 5572,
-   "sha256": "b055f42e9aee345e283ed1db95dd52994fdf3d514e4c151e1c781ab7ad61438f"
+   "bytes": 5948,
+   "sha256": "7abe23dd01750060c6d1fc8233c2d764f964b769a36a3d6ae2ed23de59486d68"
   },
   {
    "path": "docs/briefs/2026-11-19-r19/RESUME_R19.md",
-   "bytes": 5556,
-   "sha256": "78801931b919d3c4258e05473076e0f121128884c2fe8e19f756f70ac7db8cec"
+   "bytes": 6132,
+   "sha256": "1617e82da194a846ae26cbad1bdfbddaa0e51a00fb3b0d938cca257859743805"
   },
   {
    "path": "docs/briefs/2026-11-19-r19/setup_worker.sh",
@@ -12640,6 +12665,51 @@
    "path": "qa/review_r18/show_1815/07_4_NOW_swim_clip.mp4",
    "bytes": 1719604,
    "sha256": "ec4b55777aa1f80b84d75eafae459c3e9a0653b5dd0f8d8f8df3386aaf0c338e"
+  },
+  {
+   "path": "qa/review_r19/blender_foam/1_APPROVED.png",
+   "bytes": 392932,
+   "sha256": "1b0ccdacbb4c97e9ea67c4910080668ebaf6a6c326249ef40340bc1472676193"
+  },
+  {
+   "path": "qa/review_r19/blender_foam/2_SAME_CAMERA_with_blender_heap.png",
+   "bytes": 2313897,
+   "sha256": "3fa4f36ce58b5b199c03096a9b5ae40fddabbd1ba2a6c4f0ed06d4c97944391a"
+  },
+  {
+   "path": "qa/review_r19/blender_foam/3_BEFORE_swimming_2u.png",
+   "bytes": 2172689,
+   "sha256": "c988a7645632b54f148d8a34ab15f417677f98a7da88d3634b6be87294d35438"
+  },
+  {
+   "path": "qa/review_r19/blender_foam/4_NEW_swimming_2u_blender.png",
+   "bytes": 2166225,
+   "sha256": "df61fe3a0c190d2e72e89bb9749cfc8e495f707213b04f0613f74ef491afda7a"
+  },
+  {
+   "path": "qa/review_r19/blender_foam/5_BEFORE_steering_right.png",
+   "bytes": 2112536,
+   "sha256": "59ee90417b62ca7f606e2ad9ac745c800ed4480e8aa186d4e4b8e3202b996397"
+  },
+  {
+   "path": "qa/review_r19/blender_foam/6_NEW_steering_right_blender.png",
+   "bytes": 2101124,
+   "sha256": "1c69095c87d32ab670e99d8f275e0fa8899cdf8d7b71a2c31ee01416a2e68df9"
+  },
+  {
+   "path": "qa/review_r19/blender_foam/7_blender_model.png",
+   "bytes": 266131,
+   "sha256": "2470757ce77e12cac037afb16026460ef762933af7fa31b2bc67ecbde3cfc8d4"
+  },
+  {
+   "path": "qa/review_r19/blender_foam/8_BEFORE_swim_clip.mp4",
+   "bytes": 1797297,
+   "sha256": "599c21c725f1ba71cb4ee07ef4c235c1c3d663e57ee23271b60fa38bfc5ad4cf"
+  },
+  {
+   "path": "qa/review_r19/blender_foam/9_NEW_swim_clip_blender.mp4",
+   "bytes": 1793201,
+   "sha256": "dbe54933f756ee93176c614bd60ea5df12872da84591d67720cb7507a0ac446c"
   },
   {
    "path": "qa/review_r19/thrixel_foam/10_NEW_swim_clip_thrixel.mp4",

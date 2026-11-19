@@ -37,6 +37,11 @@ workers finished their step, wrote a "(r19) WHERE I STOPPED / NEXT" block in the
   one sculpt (8 cubes of 250, 1 of 4 free sculpt runs; 242 cubes + 3 sculpt runs left until 2026-12-01). The model is a thin
   bubble relief, reads as a flat cut-out sheet with jagged edges in the game; the existing 3D foam is closer. Further Thrixel
   assets only with the user's OK; a better input (one clean isolated round heap) is suggested there.
+* **Blender bank-foam heap test — PROMISING** (user ~20:05: "maybe use Blender"; `qa/match/04/r19_blendfoam/NOTES.md` on
+  `claude/rainbow-s04-blendfoam-c19` @ `41ea03d1`, switch `&m04bfoam=1` + `CANDIDATE_QUERY_ADD.txt`; review set
+  `qa/review_r19/blender_foam/`): a free, deterministic Blender heap of 46 big glossy separate bubbles reads like the painted
+  heap while swimming (much better than the Thrixel model) but mixes with the cloud-style bank foam. Suggested next (user's
+  OK): the s04 worker gives the WHOLE bank foam this bubble-heap look behind a new switch.
 * fal: one TRELLIS request (`01a1f54f…`) rejected at input validation (no model, normally not billed); nothing else.
 
 ## Services (verified this round, free reads)

@@ -2905,3 +2905,69 @@ Compiles cleanly. Rendering the start view with the Blender heap forced visible,
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s04t && Q=\"$(tr -d '\\n' < qa/match/04/r18/PREVIEW_QUERY_v2.txt)\"; B=\"m04bfoam=1&m04bfe=0.2&m04bfec=1&m04bfi=0.15&m04bfsh=0&m04bfr=0.08&m04bfc=3&m04bfs=2.6&m04bfz=-0.6&m04bfo=0.3\"; echo \"$B\" > qa/match/04/r19_blendfoam/CANDIDATE_QUERY_ADD.txt; D=qa/match/04/r19_blendfoam; S='[[\"f01_forward1u\",1,null],[\"f02_forward2u\",2,null],[\"f03_forward3u\",3,null],[\"f05_forward5u\",5,null],[\"s3_right_steer\",3,1]]'; (timeout 1500 node tools/match04/tfoam_clip04.mjs 04 /tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad/clip_blend 4 \"$ …[+524 chars]`
 
+### 🧑 User — 2026-11-19T20:15:36.599Z
+
+> ↩︎ result: f01_forward1u s 79.285 lat 0 04 coins 1330
+> f02_forward2u s 80.216 lat 0 04 coins 1330
+> f03_forward3u s 81.149 lat 0 04 coins 1330
+> f05_forward5u s 83.249 lat 0 04 coins 1330
+> s3_right_steer s 81.149 lat 0.753 04 coins 1330
+> frames 96
+> CLIP_OK
+> [1]+  Done                    ( timeout 1500 node tools/match04/tfoam_clip04.mjs 04 /tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad/clip_blend 4 "$Q&$B" 2>&1 | grep -E "frames|rror"; ffmpeg -y -loglevel error -framerate 24 -i /tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad/clip_blend/%04d.png -vf scale=432:768 -pix_fmt yuv420p $D/NEW_swim_clip_half.mp4 && echo CLIP_OK )
+> f01_forward1u.png
+> f02_forward2u.png
+> f03_forward3u.png
+> f05_forward5u.png
+> motion.json
+> s3_right_steer.png
+> -rw-r--r-- 1 root root 1793201 Nov 19 20:15 qa/match/04/r19_blendfoam/NEW_swim_clip_half.mp4
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-19T20:15:40.245Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04t/qa/match/04/r19_blendfoam/NEW/f02_forward2u.png"}`
+
+### 🧑 User — 2026-11-19T20:15:40.302Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T20:15:40.575Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04t/qa/match/04/r19_blendfoam/NEW/s3_right_steer.png"}`
+
+### 🧑 User — 2026-11-19T20:15:40.631Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T20:15:53.388Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad; python3 -c \"\nfrom PIL import Image\nfr=[1,3,5,7,9,11]\nims=[Image.open('$S/clip_blend/%04d.png'%i).crop((432,700,864,1400)).resize((216,350)) for i in fr]\nW=Image.new('RGB',(216*6,350)); [W.paste(im,(216*k,0)) for k,im in enumerate(ims)]; W.save('$S/clip_blend_strip.png')\"", "description": "Strip early clip frames to check for glitches"}`
+
+### 🧑 User — 2026-11-19T20:15:53.912Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T20:15:57.715Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/scratchpad/clip_blend_strip.png"}`
+
+### 🧑 User — 2026-11-19T20:15:57.753Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T20:16:25.411Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04t && cat > qa/match/04/r19_blendfoam/NOTES.md <<'EOF'\n# Screen 04 — Blender bank-foam heap test (round 19, 2026-11-19 ~20:05–20:20 UTC) — free, no credits\n\nUser (after the Thrixel model was not an improvement): \"maybe use Blender ... [Thrixel] doesn't work for that certain thing\".\nSame single-heap test as `../r19_thrixel/NOTES.md`, same placement method and visibility rule, separate switch `&m04bfoam=1`.\n\n## Model (Blender 5.3, deterministic) — `tools/blender/foam_cluster04.py` → `assets/models/match04/foam_heap_blender04.glb`\nThe painted right-bank he …[+3900 chars]`
+
+### 🧑 User — 2026-11-19T20:16:34.592Z
+
+> ↩︎ result: remote: 
+> blendfoam local 41ea03d1d36b3bfdb8442941e43abe44e86ec357 remote 41ea03d1d36b3bfdb8442941e43abe44e86ec357 MATCH
+> 464237f137 * assets/models/match04/foam_heap_blender04.glb
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-19T20:16:49.602Z
+
+> 🔧 **Bash** `{"command": "R=qa/review_r19/blender_foam && mkdir -p $R && T=/home/user/wt/s04t/qa/match/04 && cp references/04_through_the_five_arrows.png $R/1_APPROVED.png && cp $T/r19_blendfoam/tune/b5.png $R/2_SAME_CAMERA_with_blender_heap.png && cp $T/r19_thrixel/BEFORE/f02_forward2u.png $R/3_BEFORE_swimming_2u.png && cp $T/r19_blendfoam/NEW/f02_forward2u.png $R/4_NEW_swimming_2u_blender.png && cp $T/r19_thrixel/BEFORE/s3_right_steer.png $R/5_BEFORE_steering_right.png && cp $T/r19_blendfoam/NEW/s3_right_steer.png $R/6_NEW_steering_right_blender.png && cp $T/r19_blendfoam/view_low_side.png $R/7_blender_m …[+1932 chars]`
+
