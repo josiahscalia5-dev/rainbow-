@@ -1,0 +1,1327 @@
+# Subagent agent-a98276c05864a7dd6 — session 9274fe33-3398-5480-a64f-29fb6dc2031b
+
+### 🧑 User — 2026-11-18T19:14:27.981Z
+
+Read and follow /home/user/rainbow-/docs/briefs/2026-11-18-r15/S06_LAUNCH.md — it is your complete launch brief (binding rules, task list, proof format, reporting) — with these ROUND-16 changes (account 15 hit its 5-hour usage limit at 18:49 UTC and its Screen 06 worker was cut off mid-step; you continue it on a new account):
+* Branch `claude/rainbow-s06-match-c16` (NOT -c15: every -c15 / -c14 / older branch is protected — never write, merge, rebase or force-push them). Worktree `/home/user/wt/s06` already exists: sparse checkout (qa/pilot05, qa/worldlabs, qa/imageblaster, builds, backups excluded), `node_modules` is a symlink to the lead checkout (never `git add` it; add files by explicit path), and the previous worker's UNFINISHED edits are restored on top of 050155b5 exactly as it left them (uncommitted: src/world/match06.ts + untracked assets/textures/match06/tile_ring6.png and tools/match06/make_ring06.py).
+* FIRST read /home/user/rainbow-/docs/briefs/2026-11-18-r16/RESUME_R16.md section "s06": your ranked audit is done (qa/match/06/r15/); the lead approved rank 1 `&m06gold` (the painted gold ring texture — "the texture is now straight", the shader switch was being wired, first renders existed). Review the restored diff (`git -C /home/user/wt/s06 diff`), finish m06gold with full proof, then rank 2 (foam as bubbly soap clusters — borrow the Screen 04 method read-only: `git -C /home/user/rainbow- show 160ce059 -- src/` is the 04 m04fclu commit; keep 06's own approved colours), then the next biggest visible difference.
+* Binding newest user order: /home/user/rainbow-/docs/briefs/2026-11-18-r15/USER_ORDER_R15_VISUAL.md — VISUALS ONLY (what can be SEEN while Benny swims), biggest visible difference first, minimal checks (approved start view unchanged, coins unchanged).
+* Log in `qa/match/06/r16/PROGRESS.md` (keep reading qa/match/06/r15/ for history). Dev-server port 5276 if a tool takes a port. Pixelmatch: `node /home/user/tools-pixelmatch/pixeldiff.mjs A.png B.png diff.png 0.1 180 1536`.
+* Work only inside /home/user/wt/s06 (every Bash call starts in /home/user/rainbow-, so always `cd /home/user/wt/s06 && ...` or use absolute paths). The lead checkout /home/user/rainbow- and the other workers' worktrees are read-only for you.
+* CPU: six workers share 4 cores. Render only the views you need, never run duplicate renders, close every dev server / browser when a capture ends.
+* After every finished step (kept or rejected): commit + `git push -u origin claude/rainbow-s06-match-c16`, then SendMessage to "main": step + URL switch, commit SHA, verdict (GOOD IMPROVEMENT / NOT AN IMPROVEMENT / NOT YET PROVEN in plain visual words), folder of the full-size APPROVED / BEFORE / NEW pictures, and the single most visible remaining difference. Then continue with the next task without waiting.
+
+### 🤖 Claude — 2026-11-18T19:14:29.708Z
+
+> 🔧 **Bash** `{"command": "cat /home/user/rainbow-/docs/briefs/2026-11-18-r15/S06_LAUNCH.md; echo ======; sed -n '1,400p' /home/user/rainbow-/docs/briefs/2026-11-18-r16/RESUME_R16.md", "description": "Read launch brief and resume notes"}`
+
+### 🧑 User — 2026-11-18T19:14:29.755Z
+
+> ↩︎ result: # Round 15 (account 15) — Screen 06 specialist launch prompt (reference-match-director)
+> 
+> You are the Rainbow project's `reference-match-director`, working ONLY on playable Screen 06 "Crest the Rinse Arch", VISUALS ONLY —
+> you rank the visible differences AND fix them yourself. (06 last ran in round 11; the user asked on 2026-11-18 ~18:45 UTC to work on
+> the other screens too.)
+> 
+> ## Where you work
+> * Git worktree `/home/user/wt/s06` on branch `claude/rainbow-s06-match-c15` (created from `claude/rainbow-s06-match-c11` @ `8182130c`,
+>   the newest 06 tip; no unfinished edits were left). Sparse checkout: `qa/pilot05`, `qa/worldlabs`, `qa/imageblaster`, `builds/`,
+>   `backups/` are left out to save disk (never `git sparse-checkout disable`). `node_modules` is a symlink to the lead checkout.
+>   `tools/lead_r13/` (swim clip tool) may have been copied in untracked — commit it with your first step.
+> * Commit and `git push -u origin claude/rainbow-s06-match-c15` after every step (kept or rejected). Push ONLY that branch. Never
+>   force-push, rebase, reset, merge, or write any other branch. Disk is limited: delete your own temporary captures you do not keep.
+> * Five other workers run in this container o …[+9896 chars]
+
+### 🤖 Claude — 2026-11-18T19:14:31.539Z
+
+> 🔧 **Bash** `{"command": "cat /home/user/rainbow-/docs/briefs/2026-11-18-r15/USER_ORDER_R15_VISUAL.md; echo =====; cd /home/user/wt/s06 && git status --short | head -30 && git log --oneline -8 && git branch --show-current; ls qa/match/06/r15/", "description": "Read user order and worktree state"}`
+
+### 🧑 User — 2026-11-18T19:14:31.595Z
+
+> ↩︎ result: # User order — 2026-11-18 ~18:55 UTC (account 15) — BINDING for every worker and every future account
+> 
+> User's words: "To make them exactly or very close to my approved screens — work on the visual part … not all technical problems. Make
+> sure it looks like the visual part, like scenery and all the stuff that looks like my approved screens. When a pink character goes
+> through my screens, it looks like it would have for my approved screens."
+> 
+> Meaning (adds to `docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md`, never replaces it):
+> * Work ONLY on what can be SEEN: scenery, rings, walls, water, foam, bubbles, paddles / cups / props, colours, lighting — on all five
+>   playable screens 04–08 — so that while Benny (the pink character) swims through, every view looks like the approved picture.
+> * No technical clean-up, refactors, metrics or tool projects unless a visual step needs them. Checks stay minimal (approved start view
+>   unchanged, coins unchanged). Report in plain visual words with separate full-size APPROVED / BEFORE / NEW pictures from the real game.
+> * Relayed to all six running workers (s04, s04tex, s05, s06, s07, s08) at ~18:55 UTC.
+> =====
+>  M src/world/match06.ts
+> ?? assets/texture …[+214 chars]
+
+### 🤖 Claude — 2026-11-18T19:14:32.890Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && cat qa/match/06/r15/PROGRESS.md; ls qa/match/06/r15/BEFORE | head -50; git diff --stat; git diff | head -400", "description": "Read r15 progress and restored diff"}`
+
+### 🧑 User — 2026-11-18T19:14:32.974Z
+
+> ↩︎ result: # Screen 06 — round 15 (account 15) — visuals only
+> 
+> Branch `claude/rainbow-s06-match-c15` (from `-c11` tip `8182130c`). Authority: `references/06_crest_the_rinse_arch.png`.
+> Kept set (unchanged): `match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1`.
+> BEFORE = that set, 12 audit shots `qa/match/06/r15/BEFORE/` (`tools/lead_r6/motion_audit.mjs`, 2026-11-18 ~18:45 UTC).
+> Not touched: camera, composition (the centred ring stack is a user decision, task 3), Benny, coins, physics, HUD.
+> 
+> ## Step 1 — fresh audit: what LOOKS different while Benny swims (biggest first, parts / materials only)
+> 1. **Gold rings.** Game: thin hoops whose camera-facing faces are dull rust-brown with one thin yellow line (f03, f10, t33,
+>    t66, steering) — they read as flat orange-brown bands. Picture: thick polished bands in salmon-orange / yellow-gold with
+>    white-yellow highlight dashes all round, pink-lilac reflections on the lips, several stepped tiers per ring.
+> 2. **Foam clouds.** Game: big smooth pink-white balls (plastic-looking, huge when steering, f03 / s_left_hard /
+>    s_right_hard / t66), mostly along the horizon. Picture: lilac-white BUBBLY soap-foam clusters (many smal …[+7942 chars]
+
+### 🤖 Claude — 2026-11-18T19:14:35.090Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && cat tools/match06/make_ring06.py; python3 -c \"\nfrom PIL import Image; im=Image.open('assets/textures/match06/tile_ring6.png'); print(im.size, im.mode)\"; ls -la assets/textures/match06/", "description": "Read ring texture tool and assets"}`
+
+### 🧑 User — 2026-11-18T19:14:35.211Z
+
+> ↩︎ result: """Screen 06 round 15 `&m06gold=1`: the user's PAINTED gold ring band, straightened from the approved picture, as the
+> material of every modeled ring (src/world/match06.ts, uGold).
+> 
+> The nearest complete painted ring (upper-left arc, clear of HUD, coins and bubbles) is fitted with a circle through the
+> median of its orange band (centre ~(618, 562), r ~286 px), unwrapped in (angle, radius), and each angle column is
+> straightened between its own band edges (outer edge = band -> pink wall, inner edge = band -> lilac panel), so one row
+> of the texture = one position across the painted band. The user's pixels are only resampled, never repainted.
+> 
+>   python3 -I tools/match06/make_ring06.py assets/textures/match06
+> writes tile_ring6.png: columns = angle along the painted arc (mirrored-repeat around the ring), rows = across the band,
+> row 0 = OUTER edge (nearest the camera, the face) .. last row = INNER far edge (end of the band's inner cylinder)."""
+> import math, sys
+> import numpy as np, cv2
+> from scipy.ndimage import median_filter, gaussian_filter1d
+> 
+> d = sys.argv[1]
+> A = cv2.imread(f"{d}/plate06_hybrid.png").astype(np.float32)          # BGR, approved pixels
+> H, W = A.shape[:2]
+> 
+> 
+> def orange(p):  # BG …[+4202 chars]
+
+### 🤖 Claude — 2026-11-18T19:14:35.782Z
+
+Let me look at the texture, the approved picture and BEFORE shots.
+
+### 🤖 Claude — 2026-11-18T19:14:36.292Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/assets/textures/match06/tile_ring6.png"}`
+
+### 🧑 User — 2026-11-18T19:14:36.314Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:14:36.643Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/references/06_crest_the_rinse_arch.png"}`
+
+### 🧑 User — 2026-11-18T19:14:36.666Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:14:38.423Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/qa/match/06/r15/BEFORE/f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-18T19:14:38.473Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:14:38.808Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/qa/match/06/r15/BEFORE/f03_forward3u.png"}`
+
+### 🧑 User — 2026-11-18T19:14:38.870Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:14:41.193Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && ls tools/lead_r6/ tools/lead_r13/ 2>&1; sed -n '1,80p' tools/lead_r6/motion_audit.mjs", "description": "Inspect motion audit tool"}`
+
+### 🧑 User — 2026-11-18T19:14:41.244Z
+
+> ↩︎ result: tools/lead_r13/:
+> swim_clip.mjs
+> 
+> tools/lead_r6/:
+> motion_audit.mjs
+> motion_metrics.py
+> // Lead r6 (2026-11-17): ONE moving-gameplay audit method for every playable screen 04–08 (read-only).
+> // From the screen's approved-view checkpoint it rides the real game simulation forward / steers and screenshots what
+> // the live camera sees, so every screen is judged with the same shots. Generalises tools/match08/motion08.mjs.
+> // Run from the checkout to test (vite serves the current directory):
+> //   node <path>/motion_audit.mjs <screen 04..08> <outDir> [query]
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> const [SCREEN, OUT, Q = ''] = process.argv.slice(2);
+> mkdirSync(OUT, { recursive: true });
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5270 + Number(SCREEN));
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> const log = [];
+> // [name, forward distance in world units from the checkpoint (or 'tN' = fraction N of the rest of the stage), steer]
+> const SHOTS = [
+>   ['a00_approved_view', 0, null …[+1845 chars]
+
+### 🤖 Claude — 2026-11-18T19:14:44.280Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && ls tools/match06/ && cat qa/match/06/STATUS.md | head -60 && git log --oneline -15 && nproc && uptime", "description": "List match06 tools, status, log, load"}`
+
+### 🧑 User — 2026-11-18T19:14:44.374Z
+
+> ↩︎ result: coinrun06.mjs
+> coins06.py
+> fit_river06.py
+> fit_water06.py
+> geo06.py
+> make_floor06.py
+> make_masks06.py
+> make_plate06.py
+> make_ring06.py
+> make_river06.py
+> make_tiles06.py
+> measure06.py
+> motion06.mjs
+> overlay06.py
+> probe06.mjs
+> probe06_locked.json
+> r11_mouth_probe.mjs
+> solve_cam06.py
+> # Screen 06 — STATUS (round 6, 2026-11-17) — paused by the lead, then the user (phone, ~22:30 UTC) asked to continue with
+> # existing assets: the open proofs below were completed (no Marble/fal use; Screen 06 needs no Marble files)
+> 
+> * **Branch:** `claude/rainbow-s06-match-c6`, started from `c088718bb9e3374583238f4ee93f25bdee600065` (startup check OK:
+>   remote == HEAD, autosave OK, 13 reference checksums OK).
+> * **Approval status:** NOTHING approved — only the user approves. Default build untouched (only `src/world/match06.ts`
+>   changed; it runs only under `?match06=1`).
+> 
+> ## Diagnosis (verified)
+> * `&m06dbg=1` at the approved view (`r6/debug_BEFORE_m06dbg/a00_approved_view.png`): the water floor covered the whole
+>   frame below the crest line, including the crest-loop hole, the right tunnel wall and the foam banks.
+> * Measured through the locked camera, the painted river is only **~4.5 u wide** at Benny (frame edges = lateral ± …[+3732 chars]
+
+### 🤖 Claude — 2026-11-18T19:14:46.868Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && wc -l src/world/match06.ts && sed -n '60,260p' src/world/match06.ts", "description": "Read match06 shader section"}`
+
+### 🧑 User — 2026-11-18T19:14:47.053Z
+
+> ↩︎ result: 630 src/world/match06.ts
+>   vProj = uProjVP * wp;
+>   vW = wp.xyz;
+>   vTile = aTile;
+>   vLS = aLS;
+>   vN = normalize(mat3(modelMatrix) * normal);
+>   gl_Position = projectionMatrix * viewMatrix * wp;
+> }`;
+> 
+> const FRAG = /* glsl */ `
+> uniform sampler2D uPlate;
+> uniform sampler2D uDepth;
+> uniform float uUseDepth;
+> uniform vec2 uNearFar;
+> uniform sampler2D uTile;
+> uniform vec3 uProjPos;
+> uniform vec4 uPjPost;
+> uniform vec2 uPjRes;
+> uniform vec3 uDbg;
+> uniform sampler2D uMask;
+> uniform float uFloor;
+> uniform float uUseMask;
+> // r6 (qa/match/06/NOTES.md): uGeo = narrow fitted river (lateral |l| <= Wc water, Wc..Wb foam bank); uR6 = river material
+> // built from the approved painted water, world-anchored and flowing downstream (uR6p = Wc, Wb, river period, foam period)
+> uniform float uGeo;
+> uniform float uR6;
+> uniform vec4 uR6p;
+> uniform float uTime;
+> uniform sampler2D uRiver;
+> uniform sampler2D uFoam;
+> // r7 m06ring: modeled gold rings (uRing = 1) around the straight tunnel axis (origin, direction, right, up)
+> uniform float uRing;
+> uniform vec3 uAxO;
+> uniform vec3 uAxD;
+> uniform vec3 uAxR;
+> uniform vec3 uAxU;
+> uniform float uRingH;
+> uniform float uBendAng; // r11 m06bend: ring bulb angle per vertex (vTile.x) instead of arou …[+9814 chars]
+
+### 🤖 Claude — 2026-11-18T19:14:55.725Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n '400,520p' src/world/match06.ts", "description": "Read ring building code"}`
+
+### 🧑 User — 2026-11-18T19:14:55.783Z
+
+> ↩︎ result: };
+>     const pos: number[] = [], tl: number[] = [], ls: number[] = [], idx: number[] = [];
+>     const rows: number[] = [];
+>     for (let a = a0; a < a0 + 90; a += 0.5) rows.push(a);
+>     for (let a = a0 + 90; a <= a1; a += 2) rows.push(a);
+>     // r7 `&m06ring=1`: the far tunnel narrows so the rings converge into a SMALL glow (the full-radius end cap was a big
+>     // flat pale disc of the painted vanishing-point glow once the camera moved)
+>     const RING = qs?.get('m06ring') === '1';
+>     const radAt = (a: number) => (RING ? Rt * (1 - 0.82 * THREE.MathUtils.smoothstep(a, a1 - 200, a1)) : Rt);
+>     for (const a of rows) for (let j = 0, f = axisAt(a); j <= RAD; j++) {
+>       const th = (j / RAD) * Math.PI * 2, Ra = radAt(a);
+>       const p = f.p.clone().addScaledVector(f.r, Ra * Math.cos(th)).addScaledVector(f.u, Ra * Math.sin(th));
+>       pos.push(p.x, p.y, p.z);
+>       let aa = th; if (aa > TT.wallAngle[1]) aa -= Math.PI * 2;
+>       tl.push((aa - TT.wallAngle[0]) / TT.anglePeriod, (a + kS) / TT.period); ls.push(0, a + kS);
+>     }
+>     const nC = RAD + 1;
+>     for (let i = 0; i < rows.length - 1; i++) for (let j = 0; j < RAD; j++) { const a = i * nC + j, b = a + 1, c = a + nC, d = c + 1; idx.push …[+8404 chars]
+
+### 🤖 Claude — 2026-11-18T19:15:09.072Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/wt/s06/tools/match06 && cat > /home/user/wt/s06/tools/match06/r16_shots.mjs <<'EOF'\n// Screen 06 round 16: the lead's motion-audit shots (tools/lead_r6/motion_audit.mjs, same positions), but only the named\n// subset, so a visual step renders just the views it needs (CPU shared by six workers). Port 5276.\n//   node tools/match06/r16_shots.mjs <outDir> \"<query>\" a00,f03,f10,...\nimport { mkdirSync, writeFileSync } from 'node:fs';\nimport { pathToFileURL } from 'node:url';\nconst { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${pro …[+2557 chars]`
+
+### 🧑 User — 2026-11-18T19:15:09.111Z
+
+> ↩︎ result: {
+>  "screen": "06",
+>  "query": "match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1",
+>  "shots": [
+>   {
+>    "name": "a00_approved_view",
+>    "dist": 0,
+>    "steer": null,
+>    "mode": "ride",
+>    "stage": "06",
+>    "s": 200.01,
+>    "lat": 0,
+>    "coins": 1680,
+>    "hearts": 5,
+>    "paused": false,
+>    "bennyY": -37.076,
+>    "bennyVisible": true,
+>    "cam": [
+>     1.62,
+>     -35.02,
+>     -133.05
+>    ],
+>    "frames": 0,
+>    "s0": 198.91,
+>    "s1": 242.87279039922453,
+>    "target": 198.91
+>   },
+>   {
+>    "name": "f03_forward3u",
+>    "dist": 3,
+>    "steer": null,
+>    "mode": "ride",
+>    "stage": "0
+
+### 🤖 Claude — 2026-11-18T19:15:12.061Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && KEPT=\"match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1\" && time timeout 900 node tools/match06/r16_shots.mjs /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/gold1 \"$KEPT&m06gold=1\" f03,f10,t33 2>&1 | tail -15", "description": "Render gold test shots f03 f10 t33", "timeout": 960000}`
+
+### 🧑 User — 2026-11-18T19:16:21.117Z
+
+> ↩︎ result: [match06] m06ring {rings: 25, spacing: 12.87, aN: 36.9, aF: 49.8}
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff2" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff2" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff" is outside of Vite serving allow list.
+> f03_forward3u s 202.848 lat 0 stage 06 frames 17
+> f10_forward10u s 209.562 lat 0 stage 06 frames 55
+> t33_through_screen s 214.13 lat 0 stage 06 frames 80
+> 
+> real	1m8.984s
+> user	0m1.721s
+> sys	0m0.458s
+
+### 🤖 Claude — 2026-11-18T19:16:24.749Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/gold1/f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-18T19:16:24.875Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:16:25.357Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/gold1/f03_forward3u.png"}`
+
+### 🧑 User — 2026-11-18T19:16:25.437Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:16:32.163Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/gold1/t33_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T19:16:32.325Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:16:32.659Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/qa/match/06/r15/BEFORE/t33_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T19:16:32.917Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:16:38.334Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && S=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad && python3 -I -c \"\nfrom PIL import Image\na=Image.open('references/06_crest_the_rinse_arch.png').convert('RGB'); print(a.size)\na.crop((380,180,864,620)).save('$S/crop_appr.png')\nb=Image.open('$S/gold1/f03_forward3u.png').convert('RGB'); b.crop((300,180,864,620)).save('$S/crop_new_f03.png')\n\"", "description": "Crop ring regions for close comparison"}`
+
+### 🧑 User — 2026-11-18T19:16:38.914Z
+
+> ↩︎ result: (864, 1536)
+
+### 🤖 Claude — 2026-11-18T19:16:39.288Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/crop_appr.png"}`
+
+### 🧑 User — 2026-11-18T19:16:39.305Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:16:39.900Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/crop_new_f03.png"}`
+
+### 🧑 User — 2026-11-18T19:16:39.962Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:16:52.391Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && cat .gitattributes 2>/dev/null | head; du -sh qa/match/06/r15/BEFORE; ls -la qa/match/06/r15/BEFORE | head -5; df -h /home/user | tail -1", "description": "Check LFS attributes and disk"}`
+
+### 🧑 User — 2026-11-18T19:16:52.498Z
+
+> ↩︎ result: # Git LFS for large binary art & builds (approved reference PNG/JPG stay in plain git
+> # so they remain byte-identical and usable without LFS).
+> *.blend filter=lfs diff=lfs merge=lfs -text
+> *.glb   filter=lfs diff=lfs merge=lfs -text
+> *.ply   filter=lfs diff=lfs merge=lfs -text
+> *.spz   filter=lfs diff=lfs merge=lfs -text
+> *.fbx   filter=lfs diff=lfs merge=lfs -text
+> *.hdr   filter=lfs diff=lfs merge=lfs -text
+> *.exr   filter=lfs diff=lfs merge=lfs -text
+> *.ktx2  filter=lfs diff=lfs merge=lfs -text
+> 24M	qa/match/06/r15/BEFORE
+> total 24304
+> drwxr-xr-x 2 root root    4096 Nov 18 19:14 .
+> drwxr-xr-x 3 root root    4096 Nov 18 19:14 ..
+> -rw-r--r-- 1 root root 2503816 Nov 18 19:14 a00_approved_view.png
+> -rw-r--r-- 1 root root 2085779 Nov 18 19:14 f03_forward3u.png
+> /dev/vda        252G   32G  7.6G  81% /
+
+### 🤖 Claude — 2026-11-18T19:17:03.920Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && KEPT=\"match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1\" && time timeout 900 node tools/match06/r16_shots.mjs /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/gold1 \"$KEPT&m06gold=1\" a00,f06,f20,t66,t95,s_left_hard,s_right_hard 2>&1 | grep -v 'allow list' | tail -12", "description": "Render remaining gold NEW shots", "timeout": 960000}`
+
+### 🧑 User — 2026-11-18T19:20:14.430Z
+
+> ↩︎ result: [match06] m06ring {rings: 25, spacing: 12.87, aN: 36.9, aF: 49.8}
+> a00_approved_view s 200.01 lat 0 stage 06 frames 0
+> f06_forward6u s 205.546 lat 0 stage 06 frames 33
+> f20_forward20u s 219.629 lat 0 stage 06 frames 110
+> s_left_hard s 211.562 lat -2.95 stage 06 frames 66
+> s_right_hard s 211.561 lat 2.95 stage 06 frames 66
+> t66_through_screen s 228.612 lat 0.001 stage 06 frames 159
+> t95_through_screen s 241.301 lat 0 stage 06 frames 228
+> 
+> real	3m10.255s
+> user	0m2.212s
+> sys	0m0.520s
+
+### 🤖 Claude — 2026-11-18T19:20:17.886Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && S=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad && node /home/user/tools-pixelmatch/pixeldiff.mjs qa/match/06/r15/BEFORE/a00_approved_view.png $S/gold1/a00_approved_view.png $S/diff_a00.png 0.1 180 1536 2>&1 | tail -5; for f in f03_forward3u f10_forward10u t33_through_screen; do node /home/user/tools-pixelmatch/pixeldiff.mjs qa/match/06/r15/BEFORE/$f.png $S/gold1/$f.png $S/diff_$f.png 0.1 180 1536 2>&1 | tail -1; done", "description": "Pixel diff start view and moving views"}`
+
+### 🧑 User — 2026-11-18T19:20:21.373Z
+
+> ↩︎ result: {"a":"qa/match/06/r15/BEFORE/a00_approved_view.png","b":"/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/gold1/a00_approved_view.png","rows":[180,1536],"threshold":0.1,"diff_pixels":59345,"total":1171584,"diff_pct":5.0654}
+> {"a":"qa/match/06/r15/BEFORE/f03_forward3u.png","b":"/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/gold1/f03_forward3u.png","rows":[180,1536],"threshold":0.1,"diff_pixels":695552,"total":1171584,"diff_pct":59.3685}
+> {"a":"qa/match/06/r15/BEFORE/f10_forward10u.png","b":"/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/gold1/f10_forward10u.png","rows":[180,1536],"threshold":0.1,"diff_pixels":242063,"total":1171584,"diff_pct":20.6612}
+> {"a":"qa/match/06/r15/BEFORE/t33_through_screen.png","b":"/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/gold1/t33_through_screen.png","rows":[180,1536],"threshold":0.1,"diff_pixels":470931,"total":1171584,"diff_pct":40.1961}
+
+### 🤖 Claude — 2026-11-18T19:20:24.830Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/diff_a00.png"}`
+
+### 🧑 User — 2026-11-18T19:20:24.937Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:20:31.783Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/gold1/a00_approved_view.png"}`
+
+### 🧑 User — 2026-11-18T19:20:31.858Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:20:46.343Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && S=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad && for f in qa/match/06/r15/BEFORE/a00_approved_view.png $S/gold1/a00_approved_view.png; do node /home/user/tools-pixelmatch/pixeldiff.mjs references/06_crest_the_rinse_arch.png $f $S/d.png 0.1 180 1536 | tail -1; done; python3 -I -c \"\nimport numpy as np; from PIL import Image\nA=np.asarray(Image.open('references/06_crest_the_rinse_arch.png').convert('RGB')).astype(int)\nB=np.asarray(Image.open('qa/match/06/r15/BEFORE/a00_approved_view.png').convert('RGB')).astype(int)\nN= …[+459 chars]`
+
+### 🧑 User — 2026-11-18T19:20:47.882Z
+
+> ↩︎ result: Exit code 1
+> /home/user/tools-pixelmatch/node_modules/pngjs/lib/sync-reader.js:43
+>     throw new Error("unrecognised content at end of stream");
+>           ^
+> 
+> Error: unrecognised content at end of stream
+>     at SyncReader.process (/home/user/tools-pixelmatch/node_modules/pngjs/lib/sync-reader.js:43:11)
+>     at module.exports (/home/user/tools-pixelmatch/node_modules/pngjs/lib/parser-sync.js:68:10)
+>     at exports.read (/home/user/tools-pixelmatch/node_modules/pngjs/lib/png-sync.js:7:10)
+>     at file:///home/user/tools-pixelmatch/pixeldiff.mjs:8:20
+>     at ModuleJob.run (node:internal/modules/esm/module_job:343:25)
+>     at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:681:26)
+>     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+> 
+> Node.js v22.23.5
+> /home/user/tools-pixelmatch/node_modules/pngjs/lib/sync-reader.js:43
+>     throw new Error("unrecognised content at end of stream");
+>           ^
+> 
+> Error: unrecognised content at end of stream
+>     at SyncReader.process (/home/user/tools-pixelmatch/node_modules/pngjs/lib/sync-reader.js:43:11)
+>     at module.exports (/home/user/tools-pixelmatch/node_modules/pngjs/lib/parser-sync.js:68:10)
+>     at expo …[+786 chars]
+
+### 🤖 Claude — 2026-11-18T19:20:53.288Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && S=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad && python3 -I -c \"\nimport numpy as np; from PIL import Image\nA=np.asarray(Image.open('references/06_crest_the_rinse_arch.png').convert('RGB')).astype(int)[180:]\nB=np.asarray(Image.open('qa/match/06/r15/BEFORE/a00_approved_view.png').convert('RGB')).astype(int)[180:]\nN=np.asarray(Image.open('$S/gold1/a00_approved_view.png').convert('RGB')).astype(int)[180:]\nD=np.asarray(Image.open('$S/diff_a00.png').convert('RGB')).astype(int)\nm=(D[...,0]>200)&(D[...,1]<60)\nprint('cha …[+439 chars]`
+
+### 🧑 User — 2026-11-18T19:20:54.567Z
+
+> ↩︎ result: changed px 59345
+> BEFORE mean abs err vs approved on changed px 95.0 within20 0.027
+> BEFORE whole rows180+ within20 0.0694
+> NEW mean abs err vs approved on changed px 86.9 within20 0.027
+> NEW whole rows180+ within20 0.07
+> ring region changes rows 180 579
+
+### 🤖 Claude — 2026-11-18T19:21:01.237Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && S=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad && python3 -I -c \"\nfrom PIL import Image\nfor nm,p in [('b','qa/match/06/r15/BEFORE/a00_approved_view.png'),('n','$S/gold1/a00_approved_view.png'),('a','references/06_crest_the_rinse_arch.png')]:\n  Image.open(p).convert('RGB').crop((300,180,864,600)).save('$S/a00crop_'+nm+'.png')\n\"", "description": "Crop start-view ring area"}`
+
+### 🧑 User — 2026-11-18T19:21:02.136Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-18T19:21:02.196Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/a00crop_b.png"}`
+
+### 🧑 User — 2026-11-18T19:21:02.246Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:21:02.792Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/a00crop_n.png"}`
+
+### 🧑 User — 2026-11-18T19:21:02.918Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:21:17.405Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/gold1/s_left_hard.png"}`
+
+### 🧑 User — 2026-11-18T19:21:17.515Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:21:18.611Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/gold1/t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-18T19:21:18.722Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:21:24.702Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n '1,40p' tools/lead_r13/swim_clip.mjs; which ffmpeg", "description": "Inspect swim clip tool"}`
+
+### 🧑 User — 2026-11-18T19:21:24.827Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Lead r13 (2026-11-18): a short REAL-GAMEPLAY swimming clip for any playable screen 04–08 (read-only).
+> // Starts at the screen's checkpoint and rides the real game simulation (Benny, camera rig, course, coins unchanged) with
+> // the shader clock running: straight, then left, then right, then straight — one frame per 1/fps s → OUT/0000.png …
+> // Generalises scripts/proj05-move.mjs --zigzag. Encode: ffmpeg -framerate 24 -i OUT/%04d.png -pix_fmt yuv420p clip.mp4
+> //   node tools/lead_r13/swim_clip.mjs <screen 04..08> <outDir> <seconds> [query]
+> import { mkdirSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> const [SCREEN, OUT, SECS = '6', Q = ''] = process.argv.slice(2);
+> const fps = 24;
+> mkdirSync(OUT, { recursive: true });
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5280 + Number(SCREEN));
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> try {
+>   const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
+>   page.on('pageerror', (e) => console.error(' …[+995 chars]
+
+### 🤖 Claude — 2026-11-18T19:21:32.187Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && KEPT=\"match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1\" && S=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad && timeout 1500 node tools/lead_r13/swim_clip.mjs 06 $S/clip_gold 3.6 \"$KEPT&m06gold=1\" 2>&1 | grep -v 'allow list' | tail -3 && ffmpeg -loglevel error -y -framerate 24 -i $S/clip_gold/%04d.png -vf scale=432:768 -pix_fmt yuv420p -c:v libx264 -crf 24 $S/m06gold_swim.mp4 && ls -la $S/m06gold_swim.mp4", "description": "Record NEW swim clip with gold rings", "timeout": 1600000, "ru …[+23 chars]`
+
+### 🧑 User — 2026-11-18T19:21:32.244Z
+
+> ↩︎ result: Command running in background with ID: bmin5d20g. Output is being written to: /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/tasks/bmin5d20g.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-18T19:21:35.192Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && S=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad && D=qa/match/06/r16/step1_m06gold && mkdir -p $D/BEFORE $D/NEW && cp references/06_crest_the_rinse_arch.png $D/1_APPROVED.png && for f in a00_approved_view f03_forward3u f06_forward6u f10_forward10u f20_forward20u t33_through_screen t66_through_screen t95_through_screen s_left_hard s_right_hard; do cp -l qa/match/06/r15/BEFORE/$f.png $D/BEFORE/$f.png; cp $S/gold1/$f.png $D/NEW/$f.png; done; cp $S/gold1/motion.json $D/NEW/motion_part2.json; ls $D $D/NEW | head -30; du -sh $D …[+49 chars]`
+
+### 🧑 User — 2026-11-18T19:21:35.648Z
+
+> ↩︎ result: qa/match/06/r16/step1_m06gold:
+> 1_APPROVED.png
+> BEFORE
+> NEW
+> 
+> qa/match/06/r16/step1_m06gold/NEW:
+> a00_approved_view.png
+> f03_forward3u.png
+> f06_forward6u.png
+> f10_forward10u.png
+> f20_forward20u.png
+> motion_part2.json
+> s_left_hard.png
+> s_right_hard.png
+> t33_through_screen.png
+> t66_through_screen.png
+> t95_through_screen.png
+> 42M	qa/match/06/r16/step1_m06gold
+
+### 🤖 Claude — 2026-11-18T19:21:40.480Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 -I -c \"\nimport json\nb={s['name']:s for s in json.load(open('qa/match/06/r15/BEFORE/motion.json'))['shots']}\nn={s['name']:s for s in json.load(open('qa/match/06/r16/step1_m06gold/NEW/motion_part2.json'))['shots']}\nfor k,v in n.items(): print(k, 'coins', b[k]['coins'], v['coins'], 's', b[k]['s'], v['s'], 'lat', b[k]['lat'], v['lat'])\n\"", "description": "Compare coin counts BEFORE vs NEW"}`
+
+### 🧑 User — 2026-11-18T19:21:40.843Z
+
+> ↩︎ result: a00_approved_view coins 1680 1680 s 200.01 200.01 lat 0 0
+> f06_forward6u coins 1700 1700 s 205.542 205.546 lat 0 0
+> f20_forward20u coins 1800 1800 s 219.628 219.629 lat 0 0
+> s_left_hard coins 1720 1720 s 211.561 211.562 lat -2.95 -2.95
+> s_right_hard coins 1680 1680 s 211.561 211.561 lat 2.95 2.95
+> t66_through_screen coins 1800 1800 s 228.611 228.612 lat 0 0.001
+> t95_through_screen coins 1800 1800 s 241.301 241.301 lat 0 0
+
+### 🤖 Claude — 2026-11-18T19:21:43.277Z
+
+> 🔧 **Bash** `{"command": "git show 160ce059 --stat | head -30 && git show 160ce059 -- src/ | head -300", "description": "Read Screen 04 foam cluster commit"}`
+
+### 🧑 User — 2026-11-18T19:21:53.876Z
+
+> ↩︎ result: commit 160ce059e5f4d1dbf680243720d1d17608dc5bd4
+> Author: Claude <noreply@anthropic.com>
+> Date:   Wed Nov 18 18:42:09 2026 +0000
+> 
+>     Screen 04 r15 step 1: foam as clusters of many small shiny bubbles (m04fclu) — GOOD IMPROVEMENT
+>     
+>     Every kept L4 foam puff becomes a low heap of small pearly lilac-white bubbles
+>     (white highlight, soft light rim, see-through edges), world-anchored, shrinking away
+>     near the camera. Start view 0 px changed; default build untouched.
+>     
+>     Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+>     Claude-Session: https://claude.ai/code/session_018Sg3ATzNgZxrzcDBPkeEAQ
+> 
+>  .claude/agents/android-build-performance.md        |   16 +
+>  .claude/agents/animation-and-gameplay-engineer.md  |   16 +
+>  .claude/agents/benny-character-artist.md           |   16 +
+>  .claude/agents/cartoon-girl-character-artist.md    |   16 +
+>  .claude/agents/foam-bubbles-particles.md           |   16 +
+>  .claude/agents/path-camera-transition-engineer.md  |   16 +
+>  .claude/agents/playwright-visual-qa.md             |   16 +
+>  .claude/agents/reference-match-director.md         |   16 +
+>  .claude/agents/washer-environment-modeler.md       |   16 +
+>  .claude/agents/water-fx-specialis …[+18069 chars]
+
+### 🤖 Claude — 2026-11-18T19:21:56.255Z
+
+> 🔧 **Bash** `{"command": "git grep -n \"m04fclu\\|fclu\" 160ce059 -- src/ | head -30", "description": "Find foam cluster code in 04 commit"}`
+
+### 🧑 User — 2026-11-18T19:21:57.325Z
+
+> ↩︎ result: 160ce059:src/world/match04m4.ts:468:  // r15 m04fclu: foam bubbles shrink away as they near the camera (no pale puff popping in the screen corners)
+> 160ce059:src/world/match04m4.ts:525:// r15 `&m04fclu=1`: ONE small shiny foam bubble of the painted foam clusters (references/04: heaps of many pearly lilac-white
+> 160ce059:src/world/match04m4.ts:814:    // r15 `&m04fclu=1`: every puff becomes a LOW heap of MANY small shiny bubbles (the painted foam), same layout as the
+> 160ce059:src/world/match04m4.ts:817:    const clu = M04.num('m04fclu', 0) > 0;
+> 160ce059:src/world/match04m4.ts:895:      console.info('[match04] m04fclu', { bubbles: items.length });
+
+### 🤖 Claude — 2026-11-18T19:22:03.583Z
+
+> 🔧 **Bash** `{"command": "git show 160ce059:src/world/match04m4.ts | sed -n '440,600p'", "description": "Read 04 foam bubble shader"}`
+
+### 🧑 User — 2026-11-18T19:22:03.707Z
+
+> ↩︎ result: // the painted arrows sit in a deeper electric-cyan lane; a dark-cyan halo, then a glowing white-cyan body
+>     col = mix(col, vec3(0.05, 0.55, 0.96), 0.45 * exp(-max(d, 0.0) / 0.45) * fade);
+>     col = mix(col, vec3(0.55, 0.92, 1.0), exp(-max(d, 0.0) / 0.12) * 0.6 * fade);
+>     col = mix(col, vec3(0.86, 0.98, 1.0), (1.0 - smoothstep(-px, px, d)) * 0.95 * fade);
+>     col = mix(col, vec3(0.96, 1.0, 1.0), (1.0 - smoothstep(-px, px, abs(d + uArr.w * 0.12) - uArr.w * 0.10)) * fade);
+>   }
+>   col = clamp(col, 0.0, 1.0);
+>   if (uAway < 0.999 && vProj.w > 0.0) {
+>     vec2 uv = vProj.xy / vProj.w * 0.5 + 0.5;
+>     if (uv.x >= 0.0 && uv.x <= 1.0 && uv.y >= 0.0 && uv.y <= 1.0) col = mix(texture2D(uPlate, uv).rgb, col, uAway);
+>   }
+>   gl_FragColor = vec4(pjInverse(col), 1.0);
+> }`;
+> 
+> /** world-space bubble discs + foam puffs share one tiny shader each (camera-facing sprites in an InstancedMesh) */
+> const SPRITE_VERT = /* glsl */ `
+> attribute vec4 aB;          // xyz world centre, w radius
+> attribute float aS;         // seed
+> uniform vec2 uNear;         // fade sprites out this close to the camera (no giant discs in the face)
+> varying vec2 vUv;
+> varying float vS;
+> varying float vF;
+> void main() {
+>   vUv = uv * 2.0 - …[+6311 chars]
+
+### 🤖 Claude — 2026-11-18T19:22:04.191Z
+
+> 🔧 **Bash** `{"command": "git show 160ce059:src/world/match04m4.ts | sed -n '760,910p'", "description": "Read 04 foam cluster placement code"}`
+
+### 🧑 User — 2026-11-18T19:22:04.273Z
+
+> ↩︎ result: g.setIndex(idx);
+>     const riv = new THREE.TextureLoader().load(new URL('../../assets/textures/match04/tile_river3.png', import.meta.url).href, (t) => { t.needsUpdate = true; });
+>     riv.colorSpace = THREE.NoColorSpace; riv.flipY = false; riv.wrapS = riv.wrapT = THREE.RepeatWrapping;
+>     riv.minFilter = THREE.LinearMipmapLinearFilter; riv.anisotropy = 8;
+>     // tiles04.json river3: lateral +-4 u, along 1.757 .. 6.409 u from Benny's checkpoint water point
+>     const rm = new THREE.ShaderMaterial({ vertexShader: RIVER_VERT, fragmentShader: RIVER_FRAG, side: THREE.DoubleSide, fog: false,
+>       extensions: { derivatives: true } as never, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -4,
+>       uniforms: { uPlate: shared.uPlate, uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uProjVP: shared.uProjVP, uAway: away,
+>         uRiv: { value: riv }, uRivA: { value: new THREE.Vector4(4, 1.7572621, 4.6517529, M04.num('m04rk', 1.0)) }, uTime: time,
+>         uArr: { value: new THREE.Vector4(M04.num('m04ap', 5.6), 9.58, M04.num('m04aw', 1.0), M04.num('m04at', 0.21)) }, uZ0: { value: z0 },
+>         uLane: { value: new THREE.Vector3(M04.num('m04lane', 0), M04.num('m04lanew', 1.9), M04 …[+10433 chars]
+
+### 🤖 Claude — 2026-11-18T19:22:06.492Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -rn \"m06foam\\|m06bub\" src/ | head -20", "description": "Find 06 foam code"}`
+
+### 🧑 User — 2026-11-18T19:22:06.585Z
+
+> ↩︎ result: src/world/match06.ts:43:  /** r7 `&m06bub=1`: 0 at the approved viewpoint .. 1 once the camera has left it (the painting only covers that view) */
+> src/world/match06.ts:45:  /** r7 `&m06foam=1`: show the 3D foam clouds once the camera has left the approved view (a = away()) */
+> src/world/match06.ts:567:  // r7 `&m06foam=1` (needs m06geo): puffy 3D foam clouds along both banks — the painted white-lilac foam clusters that
+> src/world/match06.ts:571:  if (GEO && R6 && qs?.get('m06foam') === '1') {
+> src/game/Game.ts:69:  const M06_BUB = flag05('m06bub');
+> src/game/Game.ts:543:      // r7 `&m06bub=1`: the game's iridescent bubbles + Benny's splash crown / spray return once the camera leaves the
+
+### 🤖 Claude — 2026-11-18T19:22:09.010Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n '520,630p' src/world/match06.ts; sed -n '1,58p' src/world/match06.ts", "description": "Read 06 foam implementation"}`
+
+### 🧑 User — 2026-11-18T19:22:09.244Z
+
+> ↩︎ result: const pads: THREE.BufferGeometry[] = [];
+>         for (const pd of [hitWall(287, 242), hitWall(155, 397)]) {
+>           for (let k = -1; k <= 12; k++) {
+>             const a = pd.a + k * dA; if (a < a0 + 2 || a > a1 - 220) continue;
+>             const Ra = radAt(a), rh = Rx.clone().multiplyScalar(Math.cos(pd.th)).addScaledVector(Ux, Math.sin(pd.th));
+>             const X = ax.clone(), Y = rh.clone().negate(), Z = new THREE.Vector3().crossVectors(X, Y);
+>             const m4 = new THREE.Matrix4().makeBasis(X, Y, Z).setPosition(O.clone().addScaledVector(ax, a).addScaledVector(rh, Ra + 0.05));
+>             const bg = blade.clone().applyMatrix4(m4), n = bg.attributes.position.count;
+>             bg.setAttribute('aLS', new THREE.Float32BufferAttribute(new Float32Array(n * 2).fill(5), 2));
+>             bg.setAttribute('aTile', new THREE.Float32BufferAttribute(new Float32Array(n * 2), 2));
+>             pads.push(bg);
+>           }
+>         }
+>         const pm = mat(tTube);
+>         Object.assign(pm.uniforms, { uRing: { value: 1 }, uRingH: { value: h }, uUseMask: { value: 0 }, uAxO: { value: O.clone() },
+>           uAxD: { value: ax.clone() }, uAxR: { value: Rx.clone() }, uAxU: { value: Ux.clone() } });
+>   …[+8905 chars]
+
+### 🤖 Claude — 2026-11-18T19:22:29.601Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && S=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad && ls $S/clip_gold 2>/dev/null | wc -l; python3 -I -c \"\nfrom PIL import Image\na=Image.open('references/06_crest_the_rinse_arch.png').convert('RGB')\na.crop((0,980,260,1260)).resize((520,560)).save('$S/foam_appr_L.png')\na.crop((640,1100,864,1440)).resize((448,680)).save('$S/foam_appr_R.png')\nimport numpy as np\nA=np.asarray(a).astype(int)\nfor nm,(x0,y0,x1,y1) in {'L':(0,1000,130,1250),'R':(720,1150,864,1420),'crestL':(0,500,250,580)}.items():\n  P=A[y0:y1,x0:x1].reshape …[+410 chars]`
+
+### 🤖 Claude — 2026-11-18T19:22:30.883Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/foam_appr_L.png"}`
+
+### 🧑 User — 2026-11-18T19:22:31.210Z
+
+> ↩︎ result: 2
+> L n 15843
+>   band 0 198 [159 172 247]
+>   band 198 225 [191 192 250]
+>   band 225 252 [238 230 252]
+>   band 252 999 [253 252 253]
+> R n 20883
+>   band 0 196 [159 169 246]
+>   band 196 223 [188 192 250]
+>   band 223 251 [234 226 251]
+>   band 251 999 [253 252 253]
+> crestL n 10987
+>   band 0 201 [172 168 241]
+>   band 201 230 [211 201 238]
+>   band 230 250 [245 234 244]
+>   band 250 999 [253 250 253]
+
+### 🧑 User — 2026-11-18T19:22:31.227Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:22:38.040Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/qa/match/06/r15/BEFORE/s_right_hard.png"}`
+
+### 🧑 User — 2026-11-18T19:22:38.227Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:22:38.438Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/qa/match/06/r15/BEFORE/s_left_hard.png"}`
+
+### 🧑 User — 2026-11-18T19:22:38.841Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:22:48.601Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"PROJ05_INVERSE\" -A 30 src/vfx/waterRibbon.ts | head -45; grep -n \"setAway\\|m06\\.\\|match06\" src/game/Game.ts | head -20", "description": "Inspect post-chain inverse and Game hooks"}`
+
+### 🧑 User — 2026-11-18T19:22:48.990Z
+
+> ↩︎ result: 319:export const PROJ05_INVERSE = /* glsl */ `
+> 320-// undo grade (vignette, contrast, saturation) -> sRGB -> Neutral tone map -> exposure: the linear colour that the
+> 321-// post chain turns into the display colour t (bloom is not undone: it is measured and fed back into the bake)
+> 322-vec3 pjInverse(vec3 t) {
+> 323-  vec2 q = gl_FragCoord.xy / uPjRes - 0.5; q.x *= 0.75;
+> 324-  float vig = 1.0 - uPjPost.w * smoothstep(0.25, 0.75, length(q));
+> 325-  vec3 c = t / max(vig, 0.5);
+> 326-  c = (c - 0.5) / uPjPost.z + 0.5;
+> 327-  float l = dot(c, vec3(0.2126, 0.7152, 0.0722));
+> 328-  c = vec3(l) + (c - vec3(l)) / uPjPost.y;
+> 329-  c = clamp(c, 0.0, 0.975);
+> 330-  c = mix(c / 12.92, pow((c + 0.055) / 1.055, vec3(2.4)), step(0.04045, c));
+> 331-  float np = max(c.r, max(c.g, c.b));
+> 332-  if (np >= 0.76) {
+> 333-    float peak = 0.0576 / (1.0 - np) - 0.24 + 0.76;
+> 334-    float g = 1.0 - 1.0 / (0.15 * (peak - np) + 1.0);
+> 335-    c = (c - g * np) / (1.0 - g);
+> 336-    c *= peak / np;
+> 337-  }
+> 338-  float x = min(c.r, min(c.g, c.b));
+> 339-  float off = x >= 0.04 ? 0.04 : (sqrt(max(x, 0.0)) / 2.5 - x);
+> 340-  return (c + off) / uPjPost.x;
+> 341-}
+> 342-`;
+> 343-
+> 344-const FRAG = /* glsl */ `
+> 345-uniform float uTime;
+> 346- …[+1556 chars]
+
+### 🤖 Claude — 2026-11-18T19:23:06.336Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n '260,400p' src/world/match06.ts", "description": "Read middle of buildMatch06"}`
+
+### 🧑 User — 2026-11-18T19:23:06.858Z
+
+> ↩︎ result: const TF2 = !v2 ? L.tiles.floor2 : undefined;
+>   const [tTube, tFloor] = await Promise.all([loadTile('tube'), loadTile(TF2 ? 'floor2' : 'floor')]);
+>   if (TF2) tFloor.wrapT = THREE.RepeatWrapping; // seamless along the river (mirrored only across it)
+>   // r6 switches (each its own factor): `&m06geo=1` narrow river + foam banks + tunnel walls down to the banks;
+>   // `&m06flow=1` river / foam material from the approved painted water, flowing (needs m06geo)
+>   const qs = typeof location !== 'undefined' ? new URLSearchParams(location.search) : null;
+>   const R6 = !v2 ? L.tiles.r6 : undefined;
+>   const GEO = !!R6 && qs?.get('m06geo') === '1';
+>   const FLOW = GEO && qs?.get('m06flow') === '1';
+>   const mask = v2 ? null : await loader.loadAsync(tex('mask06.png'));
+>   if (mask) { mask.colorSpace = THREE.NoColorSpace; mask.generateMipmaps = false; mask.minFilter = THREE.LinearFilter; }
+>   let tRiver: THREE.Texture | null = null, tFoam: THREE.Texture | null = null;
+>   if (FLOW) {
+>     [tRiver, tFoam] = await Promise.all([loader.loadAsync(tex('tile_river6.png')), loader.loadAsync(tex('tile_foam6.png'))]);
+>     for (const t of [tRiver, tFoam]) {
+>       t.colorSpace = THREE.NoColorSpace; t.wrapS = THREE.Cla …[+9134 chars]
+
+### 🤖 Claude — 2026-11-18T19:23:10.840Z
+
+> 🔧 **Bash** `{"command": "ls /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/clip_gold | wc -l; cat /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/tasks/bmin5d20g.output | grep -v \"allow list\" | tail -3; uptime", "description": "Check clip progress"}`
+
+### 🧑 User — 2026-11-18T19:23:11.390Z
+
+> ↩︎ result: 7
+>  19:23:11 up 35 min,  0 user,  load average: 23.02, 18.19, 9.27
+
+### 🤖 Claude — 2026-11-18T19:23:35.390Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "  let foamClouds: THREE.InstancedMesh | null = null;\n  if (GEO && R6 && qs?.get('m06foam') === '1') {\n    let seed = 12345; const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);\n    const items: { p: THREE.Vector3; r: number }[] = [];\n    for (let s = L.s0 + 3; s < L.s0 + 12 + 44 + 12; s += 0.6) for (const side of [-1, 1]) {\n      const n = 4 + Math.floor(rnd() * 4); // r7c: more, smaller blobs = bubbly clusters (big ones read as plastic balls up close)\n      for (let i = 0; i <  …[+5806 chars]`
+
+### 🧑 User — 2026-11-18T19:23:35.779Z
+
+> ↩︎ result: <tool_use_error>File has not been read yet. Read it first before writing to it.</tool_use_error>
+
+### 🤖 Claude — 2026-11-18T19:23:37.755Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/src/world/match06.ts", "offset": 560, "limit": 70}`
+
+### 🧑 User — 2026-11-18T19:23:38.394Z
+
+> ↩︎ result: 560	  add(grid(FC, (s, j, fr) => {
+> 561	    const half = GEO && R6 ? R6.Wb : Math.min(L.Lfloor, course.widthAt(Math.min(s, L.s1)) / 2 + 1.0);
+> 562	    const l = -half + (2 * half * j) / FC;
+> 563	    const p = fr.pos.clone().addScaledVector(fr.right, l);
+> 564	    if (GEO && R6) { const t = Math.min(1, Math.max(0, (Math.abs(l) - R6.Wc + 0.1) / 0.5)); p.addScaledVector(fr.up, R6.hb * t * t * (3 - 2 * t)); }
+> 565	    return [p, l / TF.lateralPeriod, l];
+> 566	  }, TF.period), mat(tFloor, true), 'floor');
+> 567	  // r7 `&m06foam=1` (needs m06geo): puffy 3D foam clouds along both banks — the painted white-lilac foam clusters that
+> 568	  // vanished as flat strips once Benny moved. Hidden at the approved view (the painting carries them there), shown once
+> 569	  // the camera has left it (setAway). Not part of the projector depth bake (invisible while baking).
+> 570	  let foamClouds: THREE.InstancedMesh | null = null;
+> 571	  if (GEO && R6 && qs?.get('m06foam') === '1') {
+> 572	    let seed = 12345; const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+> 573	    const items: { p: THREE.Vector3; r: number }[] = [];
+> 574	    for (let s = L.s0 + 3; s < L.s0 + 12 + 44 + 12; s += 0.6) for (const s …[+3435 chars]
+
+### 🤖 Claude — 2026-11-18T19:24:00.909Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "  let foamClouds: THREE.InstancedMesh | null = null;\n  if (GEO && R6 && qs?.get('m06foam') === '1') {\n    let seed = 12345; const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);\n    const items: { p: THREE.Vector3; r: number }[] = [];\n    for (let s = L.s0 + 3; s < L.s0 + 12 + 44 + 12; s += 0.6) for (const side of [-1, 1]) {\n      const n = 4 + Math.floor(rnd() * 4); // r7c: more, smaller blobs = bubbly clusters (big ones read as plastic balls up close)\n      for (let i = 0; i <  …[+5844 chars]`
+
+### 🧑 User — 2026-11-18T19:24:00.978Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T19:24:02.065Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "    setAway(a) { if (foamClouds) foamClouds.visible = a > 0.5; },", "new_string": "    setAway(a) { if (foamClouds) foamClouds.visible = a > 0.5; for (const o of foamSprites) o.visible = a > 0.5; },"}`
+
+### 🧑 User — 2026-11-18T19:24:02.205Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T19:24:24.423Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "const tex = (f: string) => new URL(`../../assets/textures/match06/${f}`, import.meta.url).href;", "new_string": "// r16 `&m06fclu=1`: one foam lobe / small bubble of the painted 06 foam heaps (camera-facing sprite; aB = centre + radius,\n// aS >= 1 = a foam lobe with bubble pores, < 1 = a small shiny bubble). Shrinks away inside uNear (u) of the camera.\nconst FOAMC_VERT = /* glsl */ `\nattribute vec4 aB;\nattribute float aS;\nuniform vec2 uNear;\nvarying vec2 vUv;\nvarying float vS;\nvarying float vF; …[+2898 chars]`
+
+### 🧑 User — 2026-11-18T19:24:24.567Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-18T19:24:29.468Z
+
+> 🔧 **Bash** `{"command": "ls /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/clip_gold | wc -l; uptime", "description": "Check clip progress"}`
+
+### 🧑 User — 2026-11-18T19:24:29.522Z
+
+> ↩︎ result: 18
+>  19:24:29 up 36 min,  0 user,  load average: 21.47, 19.02, 10.31
+
+### 🤖 Claude — 2026-11-18T19:24:41.564Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s06/qa/match/06/r16/PROGRESS.md", "content": "# Screen 06 — round 16 (account 16) — visuals only\n\nBranch `claude/rainbow-s06-match-c16` (from `050155b5` = r15 audit + the r15 worker's unfinished `m06gold` edits, restored).\nHistory: `qa/match/06/r15/PROGRESS.md` (ranked audit, BEFORE shots `qa/match/06/r15/BEFORE/`). Authority: `references/06_crest_the_rinse_arch.png`.\nKept set (unchanged): `match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1`.\nShots: `tools/match06/r16_shots.mjs` (the lead's motion-audit positions, only the nam …[+1794 chars]`
+
+### 🧑 User — 2026-11-18T19:24:41.649Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s06/qa/match/06/r16/PROGRESS.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-18T19:25:01.823Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && S=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad && cp src/world/match06.ts $S/match06_full.ts && python3 -I - \"$S/match06_full.ts\" \"$S/match06_step1.ts\" <<'EOF'\nimport sys, re\nsrc = open(sys.argv[1]).read()\n# 1. drop the FOAMC shaders\na = src.index('// r16 `&m06fclu=1`: one foam lobe')\nb = src.index('const tex = (f: string)')\nsrc = src[:a] + src[b:]\n# 2. foam block back to the r7 version\na = src.index('  let foamClouds: THREE.InstancedMesh | null = null;\\n  const foamSprites')\nb = src.index('  // far end cap …[+1844 chars]`
+
+### 🧑 User — 2026-11-18T19:25:02.189Z
+
+> ↩︎ result: src/world/match06.ts | 37 ++++++++++++++++++++++++++++++++++---
+>  1 file changed, 34 insertions(+), 3 deletions(-)
+> 0
+> diff --git a/src/world/match06.ts b/src/world/match06.ts
+> index 5b6f191..15d504e 100644
+> --- a/src/world/match06.ts
+> +++ b/src/world/match06.ts
+> @@ -95,6 +95,9 @@ uniform vec3 uAxU;
+
+### 🤖 Claude — 2026-11-18T19:25:06.888Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && ls tsconfig*.json && time timeout 600 npx tsc --noEmit -p tsconfig.json 2>&1 | head -20", "description": "Typecheck step 1 code", "timeout": 660000}`
+
+### 🧑 User — 2026-11-18T19:25:19.043Z
+
+> ↩︎ result: tsconfig.json
+> 
+> real	0m11.963s
+> user	0m5.230s
+> sys	0m0.317s
+
+### 🤖 Claude — 2026-11-18T19:25:22.112Z
+
+> 🔧 **Bash** `{"command": "ls /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/clip_gold | wc -l", "description": "Check clip progress"}`
+
+### 🧑 User — 2026-11-18T19:25:22.722Z
+
+> ↩︎ result: 32
+
+### 🤖 Claude — 2026-11-18T19:25:27.656Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"hmr\\|watch\\|createServer\" scripts/lib/pw.mjs | head", "description": "Check vite HMR settings in helper"}`
+
+### 🧑 User — 2026-11-18T19:25:27.764Z
+
+> ↩︎ result: 20:  const { createServer } = await import('vite');
+> 21:  const server = await createServer({ server: { port, strictPort: false, host: '127.0.0.1', hmr: false, watch: { ignored: ['**/*'] } }, logLevel: 'error' });
+
+### 🤖 Claude — 2026-11-18T19:25:31.113Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/clip_gold/0030.png"}`
+
+### 🧑 User — 2026-11-18T19:25:31.261Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:25:41.232Z
+
+> 🔧 **Bash** `{"command": "sleep 1; ls /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/clip_gold | wc -l", "description": "Check clip progress"}`
+
+### 🧑 User — 2026-11-18T19:25:42.339Z
+
+> ↩︎ result: 36
+
+### 🤖 Claude — 2026-11-18T19:25:47.873Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n '530,560p' src/game/Game.ts && grep -n \"M06_BUB\\|bub6\" src/game/Game.ts", "description": "Read Game.ts 06 bubble/splash hooks"}`
+
+### 🧑 User — 2026-11-18T19:25:48.155Z
+
+> ↩︎ result: outroUpdate(dt);
+>     }
+>     girl.update(dt);
+>     const time = st.frozen ?? st.clock;
+>     env.update(time, dt);
+>     water.update(time, dt, st.s, camera);
+>     // `?match08=1` on Screen 08: the projected scenery carries the approved river, foam and bubbles
+>     if (m08 && (m08On || m08Applied)) {
+>       for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m08On; }
+>       m08Applied = m08On;
+>     }
+>     // `?match06=1` on Screen 06: the projected scenery carries the approved river, ripples, foam and bubbles
+>     if (m06 && (m06On || m06Applied) && !(m08 && m08On)) {
+>       // r7 `&m06bub=1`: the game's iridescent bubbles + Benny's splash crown / spray return once the camera leaves the
+>       // approved view (the painting
+>       // carries its bubbles only there; while swimming the screen had none)
+>       const bub6 = M06_BUB && m06On && m06.away(camera.position) > 0.5;
+>       m06.setAway(m06On ? m06.away(camera.position) : 0);
+>       for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m06On || (bub6 && (k === 'bubbles' || k === 'splashCrown' || k === 'spray')); }
+>       m06Applied = m06On;
+>     }
+>     if (m08 && m08On) for (const k of ['puddles', 'finalW …[+1041 chars]
+
+### 🤖 Claude — 2026-11-18T19:25:50.492Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"M08_HIDE =\" -A3 src/game/Game.ts; grep -rn \"splashCrown\\|ripple\" src/vfx/*.ts | head -20", "description": "Find water parts and ripple code"}`
+
+### 🧑 User — 2026-11-18T19:25:50.680Z
+
+> ↩︎ result: 111:  const M08_HIDE = ['ribbon', 'foam', 'bubbles', 'splashCrown', 'spray'];
+> 112-  // `?match08=1` Benny on Screen 08 toward the approved picture: smaller beanie, body a little higher out of the water,
+> 113-  // white-and-purple knit stripes (crown tint); everything restored when leaving 08 (qa/match/08/NOTES.md)
+> 114-  const M08_BENNY = { hat: 0.86, lift: 0.06, dx: 0.26, body: [0.94, 1.0, 0.94] as const, crown: new THREE.Color().setRGB(0.86, 1.04, 1.0) };
+> src/vfx/flow05.ts:2: * Screen 05 test W11, material factor (`?flow05=1` / `?river05=1`): flow map + ripple map for the 05 river.
+> src/vfx/flow05.ts:13: *   B  turbulence (0 … 1): bank shear + bends (brighter, busier ripples)
+> src/vfx/flow05.ts:20: * RIPPLE MAP (rippleMap05): tileable 128² normal (RG) + height (B) + crest (A) texture, a deterministic sum of
+> src/vfx/flow05.ts:122:/** tileable ripple map: RG = normal xy (0.5 + 0.5 n), B = height 0..1, A = crest mask (sharp bright wave tops) */
+> src/vfx/flow05.ts:123:export function rippleData05(N = RIPPLE_N): Uint8Array<ArrayBuffer> {
+> src/vfx/flow05.ts:170:  ripple: THREE.DataTexture;
+> src/vfx/flow05.ts:182:  let flowMap: THREE.DataTexture, ripple: THREE.DataTexture;
+> src/vfx/flow05.ts:18 …[+1351 chars]
+
+### 🤖 Claude — 2026-11-18T19:25:54.060Z
+
+> 🔧 **ToolSearch** `{"query": "select:Monitor,SendMessage", "max_results": 2}`
+
+### 🧑 User — 2026-11-18T19:25:54.070Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-18T19:26:03.845Z
+
+> 🔧 **Bash** `{"command": "until [ -f /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/m06gold_swim.mp4 ] || ! pgrep -f \"swim_clip.mjs 06\" >/dev/null; do sleep 5; done; ls -la /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/m06gold_swim.mp4; ls /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/clip_gold | wc -l", "description": "Wait for swim clip to finish", "timeout": 1800000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-18T19:26:04.002Z
+
+> ↩︎ result: Command running in background with ID: b27dkr8ql. Output is being written to: /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/tasks/b27dkr8ql.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-18T19:26:09.067Z
+
+> 🔧 **Monitor** `{"description": "swim clip frames for m06gold", "timeout_ms": 1200000, "command": "D=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad; until [ -f $D/m06gold_swim.mp4 ] || ! pgrep -f \"swim_clip.mjs 06\" >/dev/null; do sleep 10; done; echo \"clip done: $(ls $D/clip_gold | wc -l) frames, mp4: $(ls $D/m06gold_swim.mp4 2>&1)\""}`
+
+### 🧑 User — 2026-11-18T19:26:09.267Z
+
+> ↩︎ result: Monitor started (task bb0mz7dpp, expires in 20m unless the source ends first; you get one notice at expiry — re-arm if you still need the watch). You will be notified on each event. Keep working — do not poll or sleep. Events may arrive while you are waiting for the user — an event is not their reply.
+
+### 🤖 Claude — 2026-11-18T19:26:13.975Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/tasks/b27dkr8ql.output 2>/dev/null; ls /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/clip_gold | wc -l", "description": "Check clip status"}`
+
+### 🧑 User — 2026-11-18T19:26:14.366Z
+
+> ↩︎ result: 43
+
+### 🤖 Claude — 2026-11-18T19:26:16.520Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && git status --short | head; git log --oneline -1; git remote -v | head -2", "description": "Check git status before commit"}`
+
+### 🧑 User — 2026-11-18T19:26:16.967Z
+
+> ↩︎ result: M src/world/match06.ts
+> ?? assets/textures/match06/tile_ring6.png
+> ?? node_modules
+> ?? qa/match/06/r16/
+> ?? tools/match06/make_ring06.py
+> ?? tools/match06/r16_shots.mjs
+> 050155b Screen 06 r15 step 1: fresh BEFORE audit of the kept set + ranked visible differences
+> origin	https://github.com/josiahscalia5-dev/rainbow- (fetch) [blob:none]
+> origin	https://github.com/josiahscalia5-dev/rainbow- (push)
+
+### 🤖 Claude — 2026-11-18T19:26:21.155Z
+
+> 🔧 **Bash** `{"command": "D=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad; timeout 590 bash -c \"until [ -f $D/m06gold_swim.mp4 ] || ! pgrep -f 'swim_clip.mjs 06' >/dev/null; do sleep 5; done\"; ls $D/clip_gold | wc -l; ls -la $D/m06gold_swim.mp4 2>&1", "description": "Wait up to ten minutes for clip", "timeout": 600000}`
+
+### 🧑 User — 2026-11-18T19:30:14.338Z
+
+> ↩︎ result: 86
+> -rw-r--r-- 1 root root 48 Nov 18 19:30 /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/m06gold_swim.mp4
+
+### 🤖 Claude — 2026-11-18T19:30:18.484Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/tasks/bmin5d20g.output | grep -v \"allow list\" | tail; ffmpeg -hide_banner -encoders 2>/dev/null | grep -i \"264\\|mpeg4\\|vp9\" | head", "description": "Inspect ffmpeg failure and encoders"}`
+
+### 🧑 User — 2026-11-18T19:30:18.782Z
+
+> ↩︎ result: frames 86
+>  V....D libx264              libx264 H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10 (codec h264)
+>  V....D libx264rgb           libx264 H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10 RGB (codec h264)
+>  V....D h264_nvenc           NVIDIA NVENC H.264 encoder (codec h264)
+>  V..... h264_qsv             H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10 (Intel Quick Sync Video acceleration) (codec h264)
+>  V..... h264_v4l2m2m         V4L2 mem2mem H.264 encoder wrapper (codec h264)
+>  V....D h264_vaapi           H.264/AVC (VAAPI) (codec h264)
+>  V.S... mpeg4                MPEG-4 part 2
+>  V....D libxvid              libxvidcore MPEG-4 part 2 (codec mpeg4)
+>  V..... mpeg4_v4l2m2m        V4L2 mem2mem MPEG4 encoder wrapper (codec mpeg4)
+>  V..... msmpeg4v2            MPEG-4 part 2 Microsoft variant version 2
+
+### 🤖 Claude — 2026-11-18T19:30:21.889Z
+
+> 🔧 **Bash** `{"command": "D=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad; ffmpeg -loglevel error -y -framerate 24 -i $D/clip_gold/%04d.png -vf scale=432:768 -pix_fmt yuv420p -c:v libx264 -crf 24 $D/m06gold_swim.mp4; echo rc $?; ls -la $D/m06gold_swim.mp4", "description": "Re-encode swim clip"}`
+
+### 🧑 User — 2026-11-18T19:30:26.969Z
+
+> ↩︎ result: rc 0
+> -rw-r--r-- 1 root root 1427955 Nov 18 19:30 /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/m06gold_swim.mp4
+
+### 🤖 Claude — 2026-11-18T19:30:30.264Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/clip_gold/0060.png"}`
+
+### 🧑 User — 2026-11-18T19:30:30.316Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-18T19:30:38.365Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && D=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad && cp $D/m06gold_swim.mp4 qa/match/06/r16/step1_m06gold/NEW/m06gold_swim.mp4 && git add src/world/match06.ts assets/textures/match06/tile_ring6.png tools/match06/make_ring06.py tools/match06/r16_shots.mjs qa/match/06/r16/PROGRESS.md qa/match/06/r16/step1_m06gold && git status --short | grep -v '^??' | wc -l && git commit -q -m \"Screen 06 r16 step 1: painted gold ring band on the modeled rings (m06gold) — GOOD IMPROVEMENT\n\nThe rings carry the user's painted ring band (stra …[+771 chars]`
+
+### 🧑 User — 2026-11-18T19:30:48.286Z
+
+> ↩︎ result: 28
+> Uploading LFS objects: 100% (1/1), 1.4 MB | 0 B/s, done.
+> bd017740fc33122c0e7ead834adb44b3beba5c17
+> bd017740fc33122c0e7ead834adb44b3beba5c17	refs/heads/claude/rainbow-s06-match-c16
+
+### 🤖 Claude — 2026-11-18T19:30:53.716Z
+
+> 🔧 **SendMessage** `{"to": "main", "summary": "s06 step 1 m06gold done, GOOD IMPROVEMENT", "message": "s06 step 1 &m06gold=1 (painted gold ring band on the rings): GOOD IMPROVEMENT. Commit bd017740 on claude/rainbow-s06-match-c16 (pushed, remote == HEAD).\nVisual: while Benny swims the rings are no longer dull rust-brown hoops with one thin yellow line; they are thick polished salmon-gold bands with bright highlight dashes all round, made from the user's own painted ring (only resampled). Start view: only the thin ring strip just above the crest changes (brown -> gold); coins identical at every shot.\nPictures: q …[+530 chars]`
+
+### 🧑 User — 2026-11-18T19:30:53.738Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for the main conversation's next turn."}
+
+### 🤖 Claude — 2026-11-18T19:30:54.992Z
+
+Now step 2: restore the foam-cluster code and render.
+
+### 🤖 Claude — 2026-11-18T19:30:56.788Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && D=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad && cp $D/match06_full.ts src/world/match06.ts && git diff --stat && timeout 300 npx tsc --noEmit -p tsconfig.json 2>&1 | head", "description": "Restore foam cluster code and typecheck"}`
+
+### 🧑 User — 2026-11-18T19:31:03.106Z
+
+> ↩︎ result: src/world/match06.ts | 135 +++++++++++++++++++++++++++++++++++++++++++++++----
+>  1 file changed, 126 insertions(+), 9 deletions(-)
+
+### 🤖 Claude — 2026-11-18T19:31:08.229Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && KEPT=\"match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1\" && time timeout 900 node tools/match06/r16_shots.mjs /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/fclu1 \"$KEPT&m06fclu=1\" a00,f10,s_left_hard,s_right_hard 2>&1 | grep -v 'allow list' | tail -8", "description": "Render foam cluster test shots", "timeout": 960000}`
+
+### 🧑 User — 2026-11-18T19:32:20.339Z
+
+> ↩︎ result: Command was moved to the background (ID: btla9zjhx) so that a message that arrived while it was running can reach you; it was not interrupted. Output is being written to: /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/tasks/btla9zjhx.output. You will be notified when it completes. If it is still running after 30m in the background (plus the timeout it was started with, up to the background maximum), it will be stopped and you will be notified. It is running now: do not start a second copy while it runs. If it is no longer needed, stop it with TaskStop. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-18T19:32:26.604Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 -I -c \"\nimport json,math\nL=json.load(open('assets/textures/match06/proj06.json')); p=L['camera']['pos']; print('proj',p)\nm=json.load(open('qa/match/06/r15/BEFORE/motion.json'))\nfor s in m['shots']:\n  c=s['cam']; print(s['name'], round(math.dist(c,p),3))\n\"", "description": "Compute camera-projector distance per shot"}`
+
+### 🧑 User — 2026-11-18T19:32:26.727Z
+
+> ↩︎ result: proj [1.7205354776162962, -35.369414293064274, -132.64401919037763]
+> a00_approved_view 0.545
+> f03_forward3u 2.919
+> f06_forward6u 6.246
+> f10_forward10u 10.397
+> f20_forward20u 18.865
+> s_left_steer 6.397
+> s_right_steer 6.216
+> s_left_hard 12.537
+> s_right_hard 12.161
+> t33_through_screen 14.476
+> t66_through_screen 25.685
+> t95_through_screen 37.576
+
+### 🤖 Claude — 2026-11-18T19:32:42.844Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/src/world/match06.ts", "offset": 120, "limit": 40}`
+
+### 🧑 User — 2026-11-18T19:32:42.926Z
+
+> ↩︎ result: 120	    float fr = pow(1.0 - abs(dot(nn, normalize(cameraPosition - vW))), 4.0);
+> 121	    riv += fr * 0.22 * vec3(0.9, 0.85, 1.0);
+> 122	    vec3 fo = texture2D(uFoam, vec2((al - uR6p.x) / (uR6p.y - uR6p.x), vLS.y / uR6p.w)).rgb;
+> 123	    pc = mix(riv, fo, smoothstep(uR6p.x - 0.3, uR6p.x + 0.15, al));
+> 124	  }
+> 125	  if (uRing > 0.5 && uGold > 0.5) {
+> 126	    // r15 m06gold: vTile = (angle around the ring, position across the painted band: 0 = outer face edge .. 1 = far lip);
+> 127	    // a light view-dependent sheen keeps the polish alive while moving (painted highlights stay world-anchored)
+> 128	    vec3 V = normalize(cameraPosition - vW);
+> 129	    float fres = pow(1.0 - abs(dot(nn, V)), 3.0);
+> 130	    pc = texture2D(uRingTex, vTile).rgb;
+> 131	    pc = mix(pc, vec3(1.0, 0.93, 0.80), fres * 0.18);
+> 132	  } else if (uRing > 0.5) {
+> 133	    // polished gold band: reflects the warm glow down the tunnel and the purple walls; a row of warm bulbs in the groove
+> 134	    vec3 V = normalize(cameraPosition - vW);
+> 135	    vec3 n2 = dot(nn, V) < 0.0 ? -nn : nn;
+> 136	    vec3 Rf = reflect(-V, n2);
+> 137	    float fw = dot(Rf, uAxD);
+> 138	    vec3 env = mix(vec3(0.46, 0.20, 0.55), vec3(1.0, 0.80, 0.50), smoothstep …[+1576 chars]
+
+### 🤖 Claude — 2026-11-18T19:33:01.174Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && D=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad && cat > $D/goldv2.py <<'EOF'\nimport sys\np = sys.argv[1]\ns = open(p).read()\nold_head = '''  if (uRing > 0.5 && uGold > 0.5) {\n    // r15 m06gold: vTile = (angle around the ring, position across the painted band: 0 = outer face edge .. 1 = far lip);\n    // a light view-dependent sheen keeps the polish alive while moving (painted highlights stay world-anchored)\n    vec3 V = normalize(cameraPosition - vW);\n    float fres = pow(1.0 - abs(dot(nn, V)), 3.0);\n    pc = text …[+1651 chars]`
+
+### 🧑 User — 2026-11-18T19:33:16.162Z
+
+> ↩︎ result: ok src/world/match06.ts
+> ok /tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/match06_goldv2.ts
+> diff --git a/src/world/match06.ts b/src/world/match06.ts
+> index 15d504e..3dc3496 100644
+> --- a/src/world/match06.ts
+> +++ b/src/world/match06.ts
+> @@ -122,14 +122,7 @@ void main() {
+>      vec3 fo = texture2D(uFoam, vec2((al - uR6p.x) / (uR6p.y - uR6p.x), vLS.y / uR6p.w)).rgb;
+>      pc = mix(riv, fo, smoothstep(uR6p.x - 0.3, uR6p.x + 0.15, al));
+>    }
+> -  if (uRing > 0.5 && uGold > 0.5) {
+> -    // r15 m06gold: vTile = (angle around the ring, position across the painted band: 0 = outer face edge .. 1 = far lip);
+> -    // a light view-dependent sheen keeps the polish alive while moving (painted highlights stay world-anchored)
+> -    vec3 V = normalize(cameraPosition - vW);
+> -    float fres = pow(1.0 - abs(dot(nn, V)), 3.0);
+> -    pc = texture2D(uRingTex, vTile).rgb;
+> -    pc = mix(pc, vec3(1.0, 0.93, 0.80), fres * 0.18);
+> -  } else if (uRing > 0.5) {
+> +  if (uRing > 0.5) {
+>      // polished gold band: reflects the warm glow down the tunnel and the purple walls; a row of warm bulbs in the groove
+>      vec3 V = normalize(cameraPosition - vW);
+>      vec3 n2 = dot(nn, V) < 0.0 ? -nn :  …[+1234 chars]
+
+### 🤖 Claude — 2026-11-18T19:33:24.613Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && KEPT=\"match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1\" && D=/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad && timeout 900 node tools/match06/r16_shots.mjs $D/goldv2 \"$KEPT&m06gold=1\" a00,f03 2>&1 | grep -v 'allow list' | tail -3 && node /home/user/tools-pixelmatch/pixeldiff.mjs qa/match/06/r15/BEFORE/a00_approved_view.png $D/goldv2/a00_approved_view.png $D/diff_v2_a00.png 0.1 180 1536 | tail -1 && node /home/user/tools-pixelmatch/pixeldiff.mjs qa/match/06/r16/step1_m06gold/NEW/f03_f …[+161 chars]`
+
+### 🧑 User — 2026-11-18T19:34:40.598Z
+
+> ↩︎ result: [match06] m06ring {rings: 25, spacing: 12.87, aN: 36.9, aF: 49.8}
+> a00_approved_view s 199.712 lat 0 stage 06 frames 0
+> f03_forward3u s 202.583 lat 0 stage 06 frames 17
+> {"a":"qa/match/06/r15/BEFORE/a00_approved_view.png","b":"/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/goldv2/a00_approved_view.png","rows":[180,1536],"threshold":0.1,"diff_pixels":766181,"total":1171584,"diff_pct":65.397}
+> {"a":"qa/match/06/r16/step1_m06gold/NEW/f03_forward3u.png","b":"/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/goldv2/f03_forward3u.png","rows":[180,1536],"threshold":0.1,"diff_pixels":597589,"total":1171584,"diff_pct":51.0069}
+
+### 🤖 Claude — 2026-11-18T19:34:51.039Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"freezeAt\\|drawList\\|run(\" tools/match06/*.mjs | head -20; grep -n \"freezeAt\\|drawList\\|  run(\\|step(\" src/game/Game.ts | head -20", "description": "Find deterministic capture API usage"}`
+
+### 🧑 User — 2026-11-18T19:34:51.197Z
+
+> ↩︎ result: tools/match06/motion06.mjs:24:      r.run(true); await new Promise((res) => requestAnimationFrame(() => requestAnimationFrame(res))); r.run(false);
+> tools/match06/r16_shots.mjs:37:      r.run(true); await new Promise((res) => requestAnimationFrame(() => requestAnimationFrame(res))); r.run(false);
+> 34:const sm = (a: number, b: number, x: number) => THREE.MathUtils.smoothstep(x, a, b);
+> 683:    run(v = true) { running = v; last = performance.now(); },
+> 686:    freezeAt(t: number) { st.frozen = t; st.clock = t; },
+> 689:    step(n: number, dt = 1 / 60) { for (let i = 0; i < n; i++) stepSim(dt); return api.state(); },
+> 740:    drawList() {
+
+### 🤖 Claude — 2026-11-18T19:34:54.026Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n '670,760p' src/game/Game.ts", "description": "Read QA API in Game.ts"}`
+
+### 🧑 User — 2026-11-18T19:34:54.576Z
+
+> ↩︎ result: const refId = (id.slice(0, 2) as StageId);
+>     st.coins = course.stage(refId).refCoins || START_COINS;
+>     hud.setCoins(st.coins);
+>     hud.setHearts(5);
+>     render();
+>     dirty = false;
+>     return { stage: st.stage, s: st.s, y: benny.root.position.y };
+>   };
+> 
+>   const api = {
+>     ready: true,
+>     checkpoints: Object.keys(CHECKPOINTS),
+>     goto: gotoCheckpoint,
+>     run(v = true) { running = v; last = performance.now(); },
+>     unfreeze() { st.frozen = null; input.override = null; },
+>     /** QA: freeze the shader clock at t (frame-by-frame clips of animated water); rendering is otherwise unchanged */
+>     freezeAt(t: number) { st.frozen = t; st.clock = t; },
+>     setSteer(v: number | null) { input.override = v; },
+>     /** deterministic simulation: advance n steps of dt (no rendering needed) */
+>     step(n: number, dt = 1 / 60) { for (let i = 0; i < n; i++) stepSim(dt); return api.state(); },
+>     startRideAt(id: StageId = '03') {
+>       resetToIntro(); startRide(); st.s = course.stage(id).s0; coins.resetUntil(-1); st.coins = START_COINS; hud.setCoins(st.coins); st.log = [];
+>       return api.state();
+>     },
+>     state() {
+>       return { mode: st.mode, stage: st.stage, s: +st.s.toFixed(3), lat: …[+4554 chars]
+
+### 🤖 Claude — 2026-11-18T19:35:19.452Z
+
+> 🔧 **Bash** `{"command": "cat > /home/user/wt/s06/tools/match06/r16_start.mjs <<'EOF'\n// Screen 06 round 16: deterministic START-VIEW capture for the \"approved start view unchanged\" check.\n// The lead's motion-audit shot runs the live game for two animation frames after goto (real time: under CPU load the\n// start view lands at a slightly different s each run), and the 06 water clock is performance.now(). Here the page clock\n// is frozen, the game is NOT run: goto('06') renders the checkpoint itself, then one more render with the frozen clock.\n//   node tools/match06/r16_start.mjs <outDir> name1 \"< …[+2067 chars]`
+
+### 🧑 User — 2026-11-18T19:37:02.794Z
+
+> ↩︎ result: BEFORE s 198.91 cam 1.72,-35.37,-132.64 coins 1680
+> BEFORE_repeat s 198.91 cam 1.72,-35.37,-132.64 coins 1680
+> NEW_m06gold s 198.91 cam 1.72,-35.37,-132.64 coins 1680
+> 
+> real	1m42.144s
+> user	0m2.715s
+> sys	0m0.633s
+> {"a":"/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/start/BEFORE.png","b":"/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/start/BEFORE_repeat.png","rows":[180,1536],"threshold":0.1,"diff_pixels":0,"total":1171584,"diff_pct":0}
+> {"a":"/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/start/BEFORE.png","b":"/tmp/claude-0/-home-user-rainbow-/9274fe33-3398-5480-a64f-29fb6dc2031b/scratchpad/start/NEW_m06gold.png","rows":[180,1536],"threshold":0.1,"diff_pixels":0,"total":1171584,"diff_pct":0}
+
+### 🤖 Claude — 2026-11-18T19:37:27.310Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='tools/match06/r16_start.mjs'\ns=open(p).read()\ns=s.replace(\"\"\"//   node tools/match06/r16_start.mjs <outDir> name1 \"<query1>\" [name2 \"<query2>\" ...]\"\"\",\"\"\"//   node tools/match06/r16_start.mjs <outDir> name1 \"<query1>\" [name2 \"<query2>\" ...]\n// name@D (e.g. BEFORE@1.1): first ride D u forward from the checkpoint with fixed 1/60 s simulation steps (no steering)\"\"\")\ns=s.replace(\"\"\"    const st = await page.evaluate(() => {\n      performance.now = () => 50000;\n      const r = window.__rainbow; r.run(false); r.g …[+1463 chars]`
+
