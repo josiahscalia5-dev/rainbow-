@@ -2218,3 +2218,113 @@ The corner now shows the slotted wall down to the foam. Now the full proof set: 
 
 > 🔧 **Bash** `{"command": "until [ -f /home/user/wt/s05/qa/match/05/r18/step2_wall/new/shots.json ]; do sleep 10; done; ls /home/user/wt/s05/qa/match/05/r18/step2_wall/new/ | wc -l; grep -ci \"error\" /home/user/wt/s05/qa/match/05/r18/step2_wall/new.log", "description": "Block until the NEW set completes", "timeout": 3000000}`
 
+### 🧑 User — 2026-11-19T18:31:01.637Z
+
+> ↩︎ result: 17
+> 0
+
+### 🤖 Claude — 2026-11-19T18:31:06.131Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05/qa/match/05/r18/step2_wall && for f in before/*.png; do n=$(basename $f); node /home/user/tools-pixelmatch/pixeldiff.mjs before/$n new/$n /tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/d_$n 0.1 180 1536 2>/dev/null | python3 -c \"import sys,json; d=json.load(sys.stdin); print('$n', d['diff_pixels'])\"; done", "description": "Count changed pixels per position BEFORE vs NEW"}`
+
+### 🧑 User — 2026-11-19T18:31:12.595Z
+
+> ↩︎ result: a00_approved_view.png 14633
+> f03_forward3u.png 7692
+> f06_forward6u.png 9278
+> f10_forward10u.png 22128
+> f20_forward20u.png 130158
+> k81_kink_left.png 303062
+> k81_kink_right.png 218091
+> s_left_hard.png 34256
+> s_right_hard.png 69177
+> t33_through_screen.png 110496
+> t66_through_screen.png 194882
+> t95_through_screen.png 323053
+> t98_end.png 432419
+> x97.png 388140
+> x97L.png 395824
+> x97R.png 362086
+
+### 🤖 Claude — 2026-11-19T18:31:20.373Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05 && python3 -I -c \"\nimport numpy as np\nfrom PIL import Image\na=np.asarray(Image.open('/home/user/wt/s05/qa/match/05/r18/step2_wall/before/a00_approved_view.png').convert('RGB')).astype(int)\nb=np.asarray(Image.open('/home/user/wt/s05/qa/match/05/r18/step2_wall/new/a00_approved_view.png').convert('RGB')).astype(int)\nd=np.abs(a-b).max(2)>30\nys,xs=np.nonzero(d); print(d.sum(), xs.min(),xs.max(),ys.min(),ys.max())\n# coarse grid of where\nH,W=d.shape\nfor y0 in range(0,H,128):\n  print(y0, '' …[+182 chars]`
+
+### 🧑 User — 2026-11-19T18:31:20.693Z
+
+> ↩︎ result: 18852 0 862 0 1527
+> 0 ............
+> 128 +..........+
+> 256 ..++...+....
+> 384 ....+.++....
+> 512 ...++++++#+.
+> 640 +++.......++
+> 768 .....##.....
+> 896 ...#####+...
+> 1024 ..#######+..
+> 1152 ..########+.
+> 1280 ....++++....
+> 1408 ............
+
+### 🤖 Claude — 2026-11-19T18:31:28.393Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05 && python3 -I -c \"\nfrom PIL import Image\na=Image.open('/home/user/wt/s05/qa/match/05/r18/step2_wall/before/a00_approved_view.png').convert('RGB').crop((560,480,800,680))\nb=Image.open('/home/user/wt/s05/qa/match/05/r18/step2_wall/new/a00_approved_view.png').convert('RGB').crop((560,480,800,680))\nc=Image.new('RGB',(490,200)); c.paste(a,(0,0)); c.paste(b,(250,0)); c.resize((980,400)).save('a00cmp.png')\"", "description": "Compare a00 crops where they differ"}`
+
+### 🧑 User — 2026-11-19T18:31:28.695Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T18:31:29.687Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/a00cmp.png"}`
+
+### 🧑 User — 2026-11-19T18:31:29.720Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T18:31:37.890Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05/qa/match/05/r18/step2_wall && python3 -I -c \"\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/'\ndef pair(names,out):\n  c=Image.new('RGB',(len(names)*2*300+ (len(names)-1)*20,533),(0,0,0))\n  x=0\n  for n in names:\n    for d in ['before','new']:\n      c.paste(Image.open(d+'/'+n+'.png').convert('RGB').resize((300,533)),(x,0)); x+=300\n    x+=20\n  c.save(S+out)\npair(['t95_through_screen','x97R'],'cmpA.png'); pair(['t66_through_screen','k81_kink_right'],'cmpB.png'); pair(['t33_through_screen', …[+139 chars]`
+
+### 🤖 Claude — 2026-11-19T18:31:38.887Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/cmpA.png"}`
+
+### 🧑 User — 2026-11-19T18:31:38.990Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🧑 User — 2026-11-19T18:31:39.018Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T18:32:13.306Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && Q=\"$(cat qa/match/05/r18/KEPT_START.txt)&m05wcrisp=1&m05pink=1\" && OUT=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/try7 && PRE_JS='(()=>{const {scene}=window.__rainbow.qa3d();scene.traverse(o=>{if(o.isInstancedMesh&&o.name===\"tube05_far\"&&!o.visible)o.visible=true;});for(const n of [\"lid05_L3\",\"lid05_R3\"]){const o=scene.getObjectByName(n);if(o)o.visible=false;}})()' timeout 900 node tools/match05/r8_shots.mjs $OUT \"$Q\" t95_through_screen,t66_through_screen,k81_kink_left 5275 2>&1 | grep -i error | head -3; …[+454 chars]`
+
+### 🧑 User — 2026-11-19T18:34:10.274Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T18:34:13.188Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s05/try7_strip.png"}`
+
+### 🧑 User — 2026-11-19T18:34:13.223Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T18:34:46.383Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\nimport re\ndef edit(p, pairs):\n    s=open(p).read()\n    for a,b in pairs:\n        assert s.count(a)==1, (p, a[:80], s.count(a))\n        s=s.replace(a,b)\n    open(p,'w').write(s)\n# proj05Tunnel: remove the vertex remap\np='src/vfx/proj05Tunnel.ts'\ns=open(p).read()\nstart=s.index(\"    if (farLive) {\\n      // `&m05lidf=1`\")\nend=s.index(\"gl_Position = projectionMatrix * mvPosition;`);\\n    }\\n\", start)+len(\"gl_Position = projectionMatrix * mvPosition;`);\\n    }\\n\")\ns=s[:start]+s[end:]\nopen(p,'w').write(s)\nedit(p,[\n(\"  …[+5612 chars]`
+
+### 🧑 User — 2026-11-19T18:34:48.846Z
+
+> ↩︎ result: ok
+> src/world/match05far.ts:25:import { EDGE_LIFT, M05BLEND, M05JOIN, M05LIDF, M05WCRISP, MATCH05, ampAt, flag05, m05blend, m05blendTime, m05eye, m05fw, m05join, m05seam } from '../vfx/waterRibbon';
+> src/world/match05far.ts:397:    if (M05LIDF) a.onLive?.(!atLock && open < 0.5);
+
+### 🤖 Claude — 2026-11-19T18:35:01.204Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='src/world/environment.ts'\ns=open(p).read()\na=\"\"\"      onLive: M05LIDF && PROJLID05 ? (live: boolean) => {\n        farLids.visible = live;\n        const g = zones.tubes.getObjectByName('tube05_lids_blender');\n        g?.traverse((o) => { if (/_[LR]3$/.test(o.name)) o.visible = !live; });\n      } : undefined,\"\"\"\nb=\"\"\"      onLive: M05LIDF && PROJLID05 ? (() => {\n        let far3: THREE.Object3D[] | null = null;   // the Blender L3 / R3 (found once the GLB has loaded)\n        return (live: boolean) => {\n          farLid …[+1180 chars]`
+

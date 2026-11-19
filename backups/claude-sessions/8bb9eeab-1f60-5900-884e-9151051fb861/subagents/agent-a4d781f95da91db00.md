@@ -2390,3 +2390,187 @@ Frame to frame the telescope and its glow change smoothly: no popping, no seams,
 > 326	        // r16 m04rwarm: the painted rings keep their copper near the viewer, then the last rings before the glowing end
 > 327	        // turn orange -> yellow -> warm yellow-white (band medians measured ring by ring on the approved picture, R 100 ->
 
+### 🤖 Claude — 2026-11-19T18:30:15.321Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "      vec3 pr = textureGrad(uRTex, uvR, vec2(dax / 6.2831853, gS.x), vec2(day / 6.2831853, gS.y)).rgb;\n      pr *= 1.0 - uRLip.z + uRLip.z * facing;                          // gentle modeled shading", "new_string": "      vec3 pr = textureGrad(uRTex, uvR, vec2(dax / 6.2831853, gS.x), vec2(day / 6.2831853, gS.y)).rgb;\n      if (uRPol.x > 0.0) {\n        // r18 m04rpol: POLISHED gold. While swimming the near bands fill the view and the painted rings' bright parts\n        // (lip lines, highlight s …[+1036 chars]`
+
+### 🧑 User — 2026-11-19T18:30:15.380Z
+
+> ↩︎ result: The file /home/user/wt/s04b/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T18:30:17.574Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "uniform float uRVar;       // r17 m04rpvar: number of painted rings stacked in the atlas (0 = the single painted ring 1)\n#ifdef RFEW", "new_string": "uniform float uRVar;       // r17 m04rpvar: number of painted rings stacked in the atlas (0 = the single painted ring 1)\nuniform vec4 uRPol;        // r18 m04rpol: x amount, y luma pivot, z contrast gain above it, w below it\nuniform vec2 uRPol2;       // r18 m04rpol: x sharp sheen (reflection of the bright end), y grazing-angle brightening\n#ifdef R …[+5 chars]`
+
+### 🧑 User — 2026-11-19T18:30:17.621Z
+
+> ↩︎ result: The file /home/user/wt/s04b/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T18:30:19.583Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "M04.num('m04rpds', 0.06)) }, uRVar: { value: 0 },", "new_string": "M04.num('m04rpds', 0.06)) }, uRVar: { value: 0 },\n        uRPol: { value: new THREE.Vector4(M04.num('m04rpol', 0), M04.num('m04rpp', 0.37), M04.num('m04rpgh', 0.4), M04.num('m04rpgl', 0.2)) },\n        uRPol2: { value: new THREE.Vector2(M04.num('m04rpsp', 0.35), M04.num('m04rpfr', 0.25)) },"}`
+
+### 🧑 User — 2026-11-19T18:30:19.635Z
+
+> ↩︎ result: The file /home/user/wt/s04b/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T18:30:29.382Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && npx tsc --noEmit -p . 2>&1 | tail -3; S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex && K7=$(cat $S/K7.txt) && ONLY=f10_forward10u,t66_through_screen,s_left_hard node $S/audit_only.mjs 04 $S/s8b \"$K7&m04rpol=1\" 2>&1 | grep -E \"pageerror|Error\" | head; python3 -I -c \"\nimport numpy as np, cv2\ndef st(f, y0=200, y1=760):\n    A=cv2.imread(f).astype(np.float32)[y0:y1]\n    b,g,r=A[...,0],A[...,1],A[...,2]; gm=(r>g*1.15)&(g>b*1.05)&(r>90)\n    v=A[gm]; L=[REDACTED-EMAIL]([0.11,0.59,0.3]); return v.mean(0).round( …[+844 chars]`
+
+### 🧑 User — 2026-11-19T18:31:05.678Z
+
+> ↩︎ result: APPROVED (array([ 46., 103., 204.], dtype=float32), array([ 82., 101., 120., 148., 195.]))
+> f10_forward10u K7  (array([ 44.,  94., 190.], dtype=float32), array([ 88., 100., 111., 130., 165.]))
+> f10_forward10u pol (array([ 64., 126., 228.], dtype=float32), array([ 98., 120., 151., 177., 205.]))
+> t66_through_screen K7  (array([ 49.,  97., 194.], dtype=float32), array([ 89., 103., 116., 134., 168.]))
+> t66_through_screen pol (array([ 74., 134., 234.], dtype=float32), array([ 98., 133., 162., 183., 206.]))
+> s_left_hard K7  (array([ 51., 100., 199.], dtype=float32), array([ 89., 106., 120., 141., 170.]))
+> s_left_hard pol (array([ 73., 136., 236.], dtype=float32), array([ 98., 135., 168., 185., 206.]))
+
+### 🤖 Claude — 2026-11-19T18:31:09.452Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex/s8b_f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-19T18:31:09.483Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T18:31:28.156Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "        // (1) the painted ring's own highlights lifted to the painting's range (contrast above a pivot, darks kept),\n        // (2) polished metal brightens at grazing angles instead of darkening (no modeled shading), and it mirrors the\n        // bright end of the tunnel as a sharp warm-white sheen that moves with the view.\n        float l0 = dot(pr, vec3(0.30, 0.59, 0.11));\n        float l1 = l0 + (l0 > uRPol.y ? uRPol.z : uRPol.w) * (l0 - uRPol.y);\n        pr *= mix(1.0, l1 / max(l0, 1e-3), …[+1170 chars]`
+
+### 🧑 User — 2026-11-19T18:31:28.200Z
+
+> ↩︎ result: The file /home/user/wt/s04b/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T18:31:35.309Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && sed -i \"s/M04.num('m04rpgh', 0.4), M04.num('m04rpgl', 0.2)/M04.num('m04rpgh', 0.5), M04.num('m04rpgl', 0.1)/; s/M04.num('m04rpsp', 0.35), M04.num('m04rpfr', 0.25)/M04.num('m04rpsp', 0.3), M04.num('m04rpfr', 0.06)/\" src/world/match04m4.ts && grep -n \"m04rpgh\\|m04rpsp\" src/world/match04m4.ts && npx tsc --noEmit -p . 2>&1 | tail -3; S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex && K7=$(cat $S/K7.txt) && ONLY=f10_forward10u,t66_through_screen,s_left_hard node $S/audit_only.mjs 04 $S/s8c \"$K7&m04rpol=1\" 2>&1 | …[+1064 chars]`
+
+### 🧑 User — 2026-11-19T18:32:10.898Z
+
+> ↩︎ result: 721:        uRPol: { value: new THREE.Vector4(M04.num('m04rpol', 0), M04.num('m04rpp', 0.37), M04.num('m04rpgh', 0.5), M04.num('m04rpgl', 0.1)) },
+> 722:        uRPol2: { value: new THREE.Vector2(M04.num('m04rpsp', 0.3), M04.num('m04rpfr', 0.06)) },
+> APPROVED (array([ 46., 103., 204.], dtype=float32), array([ 82., 101., 120., 148., 195.]))
+> f10_forward10u pol2 (array([ 56., 112., 210.], dtype=float32), array([ 92., 107., 131., 160., 192.]))
+> t66_through_screen pol2 (array([ 63., 117., 216.], dtype=float32), array([ 91., 117., 140., 164., 193.]))
+> s_left_hard pol2 (array([ 64., 120., 222.], dtype=float32), array([ 91., 121., 147., 167., 196.]))
+> [This command modified 1 file you've previously read: ../wt/s04b/src/world/match04m4.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-19T18:32:14.938Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex/s8c_t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-19T18:32:15.000Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T18:32:26.189Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex && cd /home/user/wt/s04b && python3 -c \"\nfrom PIL import Image\na=Image.open('qa/match/04/r18/ringpaint/step7_rfew/3_NEW_t66_through_screen.png').convert('RGB').crop((300,220,600,620)).resize((600,800))\nb=Image.open('$S/s8c/t66_through_screen.png').convert('RGB').crop((300,220,600,620)).resize((600,800))\nc=Image.new('RGB',(1210,800),'white'); c.paste(a,(0,0)); c.paste(b,(610,0)); c.save('$S/notch_zoom.png')\n\"", "description": "Zoom top-centre ring edges K7 vs polish"}`
+
+### 🧑 User — 2026-11-19T18:32:26.512Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T18:32:29.644Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex/notch_zoom.png"}`
+
+### 🧑 User — 2026-11-19T18:32:29.680Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T18:32:51.623Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex && cd /home/user/wt/s04b && python3 -c \"\nfrom PIL import Image\nfs=['qa/match/04/r17/ringpaint/step5_dots/3_NEW_t66_through_screen.png','qa/match/04/r18/ringpaint/step6_var/3_NEW_t66_through_screen.png','qa/match/04/r14/s11_rimfoam/L4/t66_through_screen.png']\nc=Image.new('RGB',(900,600),'white')\nfor i,f in enumerate(fs):\n    try: c.paste(Image.open(f).convert('RGB').crop((330,200,630,600)).resize((300,400)),(i*300,0))\n    except Exception as e: print(f,e)\nc.save('$S/seam_hist.png')\n\ …[+121 chars]`
+
+### 🧑 User — 2026-11-19T18:32:52.652Z
+
+> ↩︎ result: a00_approved_view.png
+> f03_forward3u.png
+> f06_forward6u.png
+
+### 🤖 Claude — 2026-11-19T18:32:55.803Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex/seam_hist.png"}`
+
+### 🧑 User — 2026-11-19T18:32:55.831Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T18:33:21.092Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "offset": 826, "limit": 16}`
+
+### 🧑 User — 2026-11-19T18:33:21.122Z
+
+> ↩︎ result: 826	      }
+> 827	      tun.computeVertexNormals();
+> 828	    }
+> 829	    // r18 `m04rfew`: scale every telescoping ring about its centre on the water line (lathe-local z = up)
+> 830	    const rfGz = -cy + M04.num('m04rfh', 0);
+> 831	    if (rfew) {
+> 832	      const pa = tun.attributes.position as THREE.BufferAttribute, nPt = prof.length;
+> 833	      const aF = new Float32Array(pa.count * 2);
+> 834	      for (let i = 0; i < pa.count; i++) {
+> 835	        const j = i % nPt, s = fS[j];
+> 836	        pa.setX(i, pa.getX(i) * s); pa.setZ(i, rfGz + (pa.getZ(i) - rfGz) * s);
+> 837	        aF[i * 2] = fV[j]; aF[i * 2 + 1] = s;
+> 838	      }
+> 839	      tun.setAttribute('aF', new THREE.Float32BufferAttribute(aF, 2));
+> 840	      tun.computeVertexNormals();
+> 841	      gm.defines = { RFEW: '' };
+
+### 🤖 Claude — 2026-11-19T18:33:26.568Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "old_string": "      tun.setAttribute('aF', new THREE.Float32BufferAttribute(aF, 2));\n      tun.computeVertexNormals();\n      gm.defines = { RFEW: '' };", "new_string": "      tun.setAttribute('aF', new THREE.Float32BufferAttribute(aF, 2));\n      tun.computeVertexNormals();\n      // weld the lathe seam (first and last vertex columns coincide at the tunnel top): without it the two columns get\n      // different normals and the shading / polished sheen shows a vertical seam at the top of every ring\n      const …[+419 chars]`
+
+### 🧑 User — 2026-11-19T18:33:26.639Z
+
+> ↩︎ result: The file /home/user/wt/s04b/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-19T18:33:34.005Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && npx tsc --noEmit -p . 2>&1 | tail -3; S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex && K7=$(cat $S/K7.txt) && ONLY=t66_through_screen node $S/audit_only.mjs 04 $S/s8d \"$K7&m04rpol=1\" 2>&1 | grep -E \"pageerror|Error\"; ONLY=t66_through_screen node $S/audit_only.mjs 04 $S/s8d0 \"$K7&m04rpol=1&m04rpj=0\" 2>&1 | grep -E \"pageerror|Error\"; python3 -c \"\nfrom PIL import Image\nS='$S/'\nc=Image.new('RGB',(1820,800),'white')\nfor i,f in enumerate([S+'s8c/t66_through_screen.png',S+'s8d/t66_through_screen.png',S+'s8 …[+242 chars]`
+
+### 🧑 User — 2026-11-19T18:34:25.957Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T18:34:28.768Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex/seam_fix.png"}`
+
+### 🧑 User — 2026-11-19T18:34:28.795Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T18:34:38.719Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex && for d in s8c s8d s8d0; do python3 -c \"\nimport json; j=json.load(open('$S/$d/motion.json')); s=[x for x in j['shots'] if x['name']=='t66_through_screen'][0]; print('$d', s['s'], s['cam'], s['frames'])\"; done; grep -o '\"s\": [0-9.]*' /home/user/wt/s04b/qa/match/04/r18/ringpaint/step7_rfew/motion.json | sed -n 11p", "description": "Compare t66 positions across test renders"}`
+
+### 🧑 User — 2026-11-19T18:34:38.834Z
+
+> ↩︎ result: s8c 102.849 [2.4, -28.22, -41.23] 106
+> s8d 103.546 [2.4, -28.61, -41.86] 106
+> s8d0 103.028 [2.4, -28.31, -41.38] 106
+> "s": 102.848
+
+### 🤖 Claude — 2026-11-19T18:34:43.665Z
+
+Normal run-to-run timing jitter (±0.7 u), not a change. Now judging the polish tuning by eye on the f10 pair.
+
+### 🤖 Claude — 2026-11-19T18:34:45.104Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex/s8c_f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-19T18:34:45.132Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T18:35:07.039Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && sed -i \"s/M04.num('m04rpp', 0.37), M04.num('m04rpgh', 0.5), M04.num('m04rpgl', 0.1)/M04.num('m04rpp', 0.42), M04.num('m04rpgh', 0.5), M04.num('m04rpgl', 0.15)/; s/M04.num('m04rpsp', 0.3), M04.num('m04rpfr', 0.06)/M04.num('m04rpsp', 0.25), M04.num('m04rpfr', 0)/\" src/world/match04m4.ts && grep -n \"m04rpgh\\|m04rpsp\" src/world/match04m4.ts && npx tsc --noEmit -p . 2>&1 | tail -3; S=/tmp/claude-0/-home-user-rainbow-/8bb9eeab-1f60-5900-884e-9151051fb861/scratchpad/s04tex && K7=$(cat $S/K7.txt) && ONLY=f10_forward10u,t66_through_screen,s_left_hard node $S/a …[+1115 chars]`
+
