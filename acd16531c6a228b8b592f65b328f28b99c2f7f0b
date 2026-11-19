@@ -1,0 +1,24 @@
+{
+  "source": "Extracted Project from backup parts 001 and 002; existing installed dependency tree reused after exact npm lockfile equality.",
+  "approvedReferences": {
+    "exit": 0,
+    "outputFiles": null
+  },
+  "webBuild": {
+    "exit": 0,
+    "outputFiles": 63
+  },
+  "continuity": {
+    "exit": 0,
+    "outputFiles": null
+  },
+  "capacitorSync": {
+    "exit": 0
+  },
+  "androidDebugBuild": {
+    "exit": 0,
+    "bytes": 22882260,
+    "sha256": "d5a9911e680848ffd541bb28a269e14dc354350257d807c1a3bcb19c706cc71c"
+  },
+  "androidPlayTest": "No physical Android device attached to this restore test."
+}

@@ -1,0 +1,10 @@
+{
+  "fullFsck": true,
+  "restoredRefs": 429,
+  "expectedGitBlobs": 22810,
+  "verifiedExistingObjectStores": 40,
+  "unavailableInLocalCaches": 16628,
+  "fsckExit": 0,
+  "unresolvedReachableObjects": 0,
+  "transferredPackBytes": 5690971119
+}

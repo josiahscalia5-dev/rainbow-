@@ -1,0 +1,859 @@
+{
+  "originalWorkspaceLFSPointers": [
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/04/assets/models/benny.glb",
+      "pointerFileHash": "2934af987f9c6236d1817cfc05887e260ab7df88d4821a5064dc140f21884dda",
+      "actualFileHash": "40633fdd02014c6434bb61811c03bc0c61a8d456c30fbb9cd62bb9a91a0198a1"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/04/assets/models/lids05.glb",
+      "pointerFileHash": "d686b376bd05215a0fc66ca64bf3ab8efdb1117a3f5ed8a2d52914769add579d",
+      "actualFileHash": "f2cd3abeaaf219635321c1f2ffead20eb91403d73ff7ef3173380a0ecedbb22c"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/04/assets/models/rainbow_girl.glb",
+      "pointerFileHash": "2f7cc8d28c824f010133631ab95bcadb5a716797b2e95d344862e39fd6de116d",
+      "actualFileHash": "fa846773af9a593d090ec2c0ac4ea69812306fc334439b05f900bc9311f92528"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/04/qa/pilot05/marble_feas/blender/marble05_projection.blend",
+      "pointerFileHash": "2cd804a86ad3f50ecdebe2258c3aa3b0d21ace2fa0375c7f26563961da743ead",
+      "actualFileHash": "9a33cdf35c5ed43dca2a0bcac3331641b5dd0faef93afafe57af17755022bafb"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/04/qa/pilot05/proj/tunnel/lid/lids05.blend",
+      "pointerFileHash": "24163c622534b04cd4e6b454b1f7b8c95dcad374f0f418e9182b33186708b448",
+      "actualFileHash": "8bd205c396b59f2ce291da5056151160ef96df3e5024ffb83ed95014c8aafef0"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/04/qa/pilot05/wave6/camera_lock/screen05_camera_lock.blend",
+      "pointerFileHash": "734a8d3ce0634ac06f97e85d0f70ef68088c54d4d8ab1302d0d4925a28124631",
+      "actualFileHash": "25baa89f89b3da62d5ab438b9955633a29290b5cb34d75089d6da11038e4074b"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/04/qa/pilot05/wave6/camera_lock/screen05_layout.blend",
+      "pointerFileHash": "fd091d1f03e542f142c30bd0126aa432482afc1763ef46d970d65a62530aa936",
+      "actualFileHash": "90e43977debf875795fab1c791c6cf557b1b6b4034f89cad23a97401abe5f440"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/04/qa/worldlabs/05/blender/screen05_layout.blend",
+      "pointerFileHash": "da2dcc72d38b3bde0e7bfd2d20462eba22e8fe76021dbc691e78d67fe98c26e0",
+      "actualFileHash": "b1a21d08438f2f808147345354d3169c450bc664670b3fffdfaa5fcaf762e0c9"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/04/qa/worldlabs/05/pilot/draft/import/draft05.blend",
+      "pointerFileHash": "dcd60d7835732aed4134f160b2c30783952a78d89b488fd0d0c8097210c77f23",
+      "actualFileHash": "915423cf00c9d4a9f2642386e9d8084edd9a79b6b3d666db9d0097bf85efdf59"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/04/qa/worldlabs/05/pilot/full/import/full05.blend",
+      "pointerFileHash": "00af2b0afc4f24a2a0cf1af84b2894ac962317eb9b6d1311141987c7cdc7c2b7",
+      "actualFileHash": "5704dfcd8f3e893246773835f32c9f12db965beee08bbee8f02d0d58e820ab39"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/04r/assets/models/benny.glb",
+      "pointerFileHash": "2934af987f9c6236d1817cfc05887e260ab7df88d4821a5064dc140f21884dda",
+      "actualFileHash": "40633fdd02014c6434bb61811c03bc0c61a8d456c30fbb9cd62bb9a91a0198a1"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/04r/assets/models/lids05.glb",
+      "pointerFileHash": "d686b376bd05215a0fc66ca64bf3ab8efdb1117a3f5ed8a2d52914769add579d",
+      "actualFileHash": "f2cd3abeaaf219635321c1f2ffead20eb91403d73ff7ef3173380a0ecedbb22c"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/04r/assets/models/rainbow_girl.glb",
+      "pointerFileHash": "2f7cc8d28c824f010133631ab95bcadb5a716797b2e95d344862e39fd6de116d",
+      "actualFileHash": "fa846773af9a593d090ec2c0ac4ea69812306fc334439b05f900bc9311f92528"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/04r/qa/pilot05/marble_feas/blender/marble05_projection.blend",
+      "pointerFileHash": "2cd804a86ad3f50ecdebe2258c3aa3b0d21ace2fa0375c7f26563961da743ead",
+      "actualFileHash": "9a33cdf35c5ed43dca2a0bcac3331641b5dd0faef93afafe57af17755022bafb"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/04r/qa/pilot05/proj/tunnel/lid/lids05.blend",
+      "pointerFileHash": "24163c622534b04cd4e6b454b1f7b8c95dcad374f0f418e9182b33186708b448",
+      "actualFileHash": "8bd205c396b59f2ce291da5056151160ef96df3e5024ffb83ed95014c8aafef0"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/04r/qa/pilot05/wave6/camera_lock/screen05_camera_lock.blend",
+      "pointerFileHash": "734a8d3ce0634ac06f97e85d0f70ef68088c54d4d8ab1302d0d4925a28124631",
+      "actualFileHash": "25baa89f89b3da62d5ab438b9955633a29290b5cb34d75089d6da11038e4074b"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/04r/qa/pilot05/wave6/camera_lock/screen05_layout.blend",
+      "pointerFileHash": "fd091d1f03e542f142c30bd0126aa432482afc1763ef46d970d65a62530aa936",
+      "actualFileHash": "90e43977debf875795fab1c791c6cf557b1b6b4034f89cad23a97401abe5f440"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/04r/qa/worldlabs/05/blender/screen05_layout.blend",
+      "pointerFileHash": "da2dcc72d38b3bde0e7bfd2d20462eba22e8fe76021dbc691e78d67fe98c26e0",
+      "actualFileHash": "b1a21d08438f2f808147345354d3169c450bc664670b3fffdfaa5fcaf762e0c9"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/04r/qa/worldlabs/05/pilot/draft/import/draft05.blend",
+      "pointerFileHash": "dcd60d7835732aed4134f160b2c30783952a78d89b488fd0d0c8097210c77f23",
+      "actualFileHash": "915423cf00c9d4a9f2642386e9d8084edd9a79b6b3d666db9d0097bf85efdf59"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/04r/qa/worldlabs/05/pilot/full/import/full05.blend",
+      "pointerFileHash": "00af2b0afc4f24a2a0cf1af84b2894ac962317eb9b6d1311141987c7cdc7c2b7",
+      "actualFileHash": "5704dfcd8f3e893246773835f32c9f12db965beee08bbee8f02d0d58e820ab39"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/05/assets/models/benny.glb",
+      "pointerFileHash": "2934af987f9c6236d1817cfc05887e260ab7df88d4821a5064dc140f21884dda",
+      "actualFileHash": "40633fdd02014c6434bb61811c03bc0c61a8d456c30fbb9cd62bb9a91a0198a1"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/05/assets/models/lids05.glb",
+      "pointerFileHash": "d686b376bd05215a0fc66ca64bf3ab8efdb1117a3f5ed8a2d52914769add579d",
+      "actualFileHash": "f2cd3abeaaf219635321c1f2ffead20eb91403d73ff7ef3173380a0ecedbb22c"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/05/assets/models/lids05e.glb",
+      "pointerFileHash": "3925a8f2c6ebd2d217f4a732cb747998901c60dc3e49348582df0af0436872a3",
+      "actualFileHash": "978793113ee9433255f396e0a226e82218ab2a61c4687a503a475755aaa014a9"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/05/assets/models/rainbow_girl.glb",
+      "pointerFileHash": "2f7cc8d28c824f010133631ab95bcadb5a716797b2e95d344862e39fd6de116d",
+      "actualFileHash": "fa846773af9a593d090ec2c0ac4ea69812306fc334439b05f900bc9311f92528"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/05/qa/pilot05/full_reference_match/env/lid/lids05.blend",
+      "pointerFileHash": "b7da91db9a8bbc6d3fda09e338b61a82c73fed695146de2c8bcb51540ed624ac",
+      "actualFileHash": "18af25120b347636679b5b3dcf41e5cbd8a332c65500c968086eda6eb7923508"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/05/qa/pilot05/marble_feas/blender/marble05_projection.blend",
+      "pointerFileHash": "2cd804a86ad3f50ecdebe2258c3aa3b0d21ace2fa0375c7f26563961da743ead",
+      "actualFileHash": "9a33cdf35c5ed43dca2a0bcac3331641b5dd0faef93afafe57af17755022bafb"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/05/qa/pilot05/proj/tunnel/lid/lids05.blend",
+      "pointerFileHash": "24163c622534b04cd4e6b454b1f7b8c95dcad374f0f418e9182b33186708b448",
+      "actualFileHash": "8bd205c396b59f2ce291da5056151160ef96df3e5024ffb83ed95014c8aafef0"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/05/qa/pilot05/wave6/camera_lock/screen05_camera_lock.blend",
+      "pointerFileHash": "734a8d3ce0634ac06f97e85d0f70ef68088c54d4d8ab1302d0d4925a28124631",
+      "actualFileHash": "25baa89f89b3da62d5ab438b9955633a29290b5cb34d75089d6da11038e4074b"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/05/qa/pilot05/wave6/camera_lock/screen05_layout.blend",
+      "pointerFileHash": "fd091d1f03e542f142c30bd0126aa432482afc1763ef46d970d65a62530aa936",
+      "actualFileHash": "90e43977debf875795fab1c791c6cf557b1b6b4034f89cad23a97401abe5f440"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/05/qa/worldlabs/05/blender/screen05_layout.blend",
+      "pointerFileHash": "da2dcc72d38b3bde0e7bfd2d20462eba22e8fe76021dbc691e78d67fe98c26e0",
+      "actualFileHash": "b1a21d08438f2f808147345354d3169c450bc664670b3fffdfaa5fcaf762e0c9"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/05/qa/worldlabs/05/pilot/draft/import/draft05.blend",
+      "pointerFileHash": "dcd60d7835732aed4134f160b2c30783952a78d89b488fd0d0c8097210c77f23",
+      "actualFileHash": "915423cf00c9d4a9f2642386e9d8084edd9a79b6b3d666db9d0097bf85efdf59"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/05/qa/worldlabs/05/pilot/full/import/full05.blend",
+      "pointerFileHash": "00af2b0afc4f24a2a0cf1af84b2894ac962317eb9b6d1311141987c7cdc7c2b7",
+      "actualFileHash": "5704dfcd8f3e893246773835f32c9f12db965beee08bbee8f02d0d58e820ab39"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/06/assets/models/benny.glb",
+      "pointerFileHash": "2934af987f9c6236d1817cfc05887e260ab7df88d4821a5064dc140f21884dda",
+      "actualFileHash": "40633fdd02014c6434bb61811c03bc0c61a8d456c30fbb9cd62bb9a91a0198a1"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/06/assets/models/lids05.glb",
+      "pointerFileHash": "d686b376bd05215a0fc66ca64bf3ab8efdb1117a3f5ed8a2d52914769add579d",
+      "actualFileHash": "f2cd3abeaaf219635321c1f2ffead20eb91403d73ff7ef3173380a0ecedbb22c"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/06/assets/models/rainbow_girl.glb",
+      "pointerFileHash": "2f7cc8d28c824f010133631ab95bcadb5a716797b2e95d344862e39fd6de116d",
+      "actualFileHash": "fa846773af9a593d090ec2c0ac4ea69812306fc334439b05f900bc9311f92528"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/06/qa/pilot05/marble_feas/blender/marble05_projection.blend",
+      "pointerFileHash": "2cd804a86ad3f50ecdebe2258c3aa3b0d21ace2fa0375c7f26563961da743ead",
+      "actualFileHash": "9a33cdf35c5ed43dca2a0bcac3331641b5dd0faef93afafe57af17755022bafb"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/06/qa/pilot05/proj/tunnel/lid/lids05.blend",
+      "pointerFileHash": "24163c622534b04cd4e6b454b1f7b8c95dcad374f0f418e9182b33186708b448",
+      "actualFileHash": "8bd205c396b59f2ce291da5056151160ef96df3e5024ffb83ed95014c8aafef0"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/06/qa/pilot05/wave6/camera_lock/screen05_camera_lock.blend",
+      "pointerFileHash": "734a8d3ce0634ac06f97e85d0f70ef68088c54d4d8ab1302d0d4925a28124631",
+      "actualFileHash": "25baa89f89b3da62d5ab438b9955633a29290b5cb34d75089d6da11038e4074b"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/06/qa/pilot05/wave6/camera_lock/screen05_layout.blend",
+      "pointerFileHash": "fd091d1f03e542f142c30bd0126aa432482afc1763ef46d970d65a62530aa936",
+      "actualFileHash": "90e43977debf875795fab1c791c6cf557b1b6b4034f89cad23a97401abe5f440"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/06/qa/worldlabs/05/blender/screen05_layout.blend",
+      "pointerFileHash": "da2dcc72d38b3bde0e7bfd2d20462eba22e8fe76021dbc691e78d67fe98c26e0",
+      "actualFileHash": "b1a21d08438f2f808147345354d3169c450bc664670b3fffdfaa5fcaf762e0c9"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/06/qa/worldlabs/05/pilot/draft/import/draft05.blend",
+      "pointerFileHash": "dcd60d7835732aed4134f160b2c30783952a78d89b488fd0d0c8097210c77f23",
+      "actualFileHash": "915423cf00c9d4a9f2642386e9d8084edd9a79b6b3d666db9d0097bf85efdf59"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/06/qa/worldlabs/05/pilot/full/import/full05.blend",
+      "pointerFileHash": "00af2b0afc4f24a2a0cf1af84b2894ac962317eb9b6d1311141987c7cdc7c2b7",
+      "actualFileHash": "5704dfcd8f3e893246773835f32c9f12db965beee08bbee8f02d0d58e820ab39"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/07/assets/models/benny.glb",
+      "pointerFileHash": "2934af987f9c6236d1817cfc05887e260ab7df88d4821a5064dc140f21884dda",
+      "actualFileHash": "40633fdd02014c6434bb61811c03bc0c61a8d456c30fbb9cd62bb9a91a0198a1"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/07/assets/models/lids05.glb",
+      "pointerFileHash": "d686b376bd05215a0fc66ca64bf3ab8efdb1117a3f5ed8a2d52914769add579d",
+      "actualFileHash": "f2cd3abeaaf219635321c1f2ffead20eb91403d73ff7ef3173380a0ecedbb22c"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/07/assets/models/rainbow_girl.glb",
+      "pointerFileHash": "2f7cc8d28c824f010133631ab95bcadb5a716797b2e95d344862e39fd6de116d",
+      "actualFileHash": "fa846773af9a593d090ec2c0ac4ea69812306fc334439b05f900bc9311f92528"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/07/qa/pilot05/marble_feas/blender/marble05_projection.blend",
+      "pointerFileHash": "2cd804a86ad3f50ecdebe2258c3aa3b0d21ace2fa0375c7f26563961da743ead",
+      "actualFileHash": "9a33cdf35c5ed43dca2a0bcac3331641b5dd0faef93afafe57af17755022bafb"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/07/qa/pilot05/proj/tunnel/lid/lids05.blend",
+      "pointerFileHash": "24163c622534b04cd4e6b454b1f7b8c95dcad374f0f418e9182b33186708b448",
+      "actualFileHash": "8bd205c396b59f2ce291da5056151160ef96df3e5024ffb83ed95014c8aafef0"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/07/qa/pilot05/wave6/camera_lock/screen05_camera_lock.blend",
+      "pointerFileHash": "734a8d3ce0634ac06f97e85d0f70ef68088c54d4d8ab1302d0d4925a28124631",
+      "actualFileHash": "25baa89f89b3da62d5ab438b9955633a29290b5cb34d75089d6da11038e4074b"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/07/qa/pilot05/wave6/camera_lock/screen05_layout.blend",
+      "pointerFileHash": "fd091d1f03e542f142c30bd0126aa432482afc1763ef46d970d65a62530aa936",
+      "actualFileHash": "90e43977debf875795fab1c791c6cf557b1b6b4034f89cad23a97401abe5f440"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/07/qa/worldlabs/05/blender/screen05_layout.blend",
+      "pointerFileHash": "da2dcc72d38b3bde0e7bfd2d20462eba22e8fe76021dbc691e78d67fe98c26e0",
+      "actualFileHash": "b1a21d08438f2f808147345354d3169c450bc664670b3fffdfaa5fcaf762e0c9"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/07/qa/worldlabs/05/pilot/draft/import/draft05.blend",
+      "pointerFileHash": "dcd60d7835732aed4134f160b2c30783952a78d89b488fd0d0c8097210c77f23",
+      "actualFileHash": "915423cf00c9d4a9f2642386e9d8084edd9a79b6b3d666db9d0097bf85efdf59"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/07/qa/worldlabs/05/pilot/full/import/full05.blend",
+      "pointerFileHash": "00af2b0afc4f24a2a0cf1af84b2894ac962317eb9b6d1311141987c7cdc7c2b7",
+      "actualFileHash": "5704dfcd8f3e893246773835f32c9f12db965beee08bbee8f02d0d58e820ab39"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/08/assets/models/benny.glb",
+      "pointerFileHash": "2934af987f9c6236d1817cfc05887e260ab7df88d4821a5064dc140f21884dda",
+      "actualFileHash": "40633fdd02014c6434bb61811c03bc0c61a8d456c30fbb9cd62bb9a91a0198a1"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/08/assets/models/lids05.glb",
+      "pointerFileHash": "d686b376bd05215a0fc66ca64bf3ab8efdb1117a3f5ed8a2d52914769add579d",
+      "actualFileHash": "f2cd3abeaaf219635321c1f2ffead20eb91403d73ff7ef3173380a0ecedbb22c"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/08/assets/models/rainbow_girl.glb",
+      "pointerFileHash": "2f7cc8d28c824f010133631ab95bcadb5a716797b2e95d344862e39fd6de116d",
+      "actualFileHash": "fa846773af9a593d090ec2c0ac4ea69812306fc334439b05f900bc9311f92528"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/08/qa/pilot05/marble_feas/blender/marble05_projection.blend",
+      "pointerFileHash": "2cd804a86ad3f50ecdebe2258c3aa3b0d21ace2fa0375c7f26563961da743ead",
+      "actualFileHash": "9a33cdf35c5ed43dca2a0bcac3331641b5dd0faef93afafe57af17755022bafb"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/08/qa/pilot05/proj/tunnel/lid/lids05.blend",
+      "pointerFileHash": "24163c622534b04cd4e6b454b1f7b8c95dcad374f0f418e9182b33186708b448",
+      "actualFileHash": "8bd205c396b59f2ce291da5056151160ef96df3e5024ffb83ed95014c8aafef0"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/08/qa/pilot05/wave6/camera_lock/screen05_camera_lock.blend",
+      "pointerFileHash": "734a8d3ce0634ac06f97e85d0f70ef68088c54d4d8ab1302d0d4925a28124631",
+      "actualFileHash": "25baa89f89b3da62d5ab438b9955633a29290b5cb34d75089d6da11038e4074b"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/08/qa/pilot05/wave6/camera_lock/screen05_layout.blend",
+      "pointerFileHash": "fd091d1f03e542f142c30bd0126aa432482afc1763ef46d970d65a62530aa936",
+      "actualFileHash": "90e43977debf875795fab1c791c6cf557b1b6b4034f89cad23a97401abe5f440"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/08/qa/worldlabs/05/blender/screen05_layout.blend",
+      "pointerFileHash": "da2dcc72d38b3bde0e7bfd2d20462eba22e8fe76021dbc691e78d67fe98c26e0",
+      "actualFileHash": "b1a21d08438f2f808147345354d3169c450bc664670b3fffdfaa5fcaf762e0c9"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/08/qa/worldlabs/05/pilot/draft/import/draft05.blend",
+      "pointerFileHash": "dcd60d7835732aed4134f160b2c30783952a78d89b488fd0d0c8097210c77f23",
+      "actualFileHash": "915423cf00c9d4a9f2642386e9d8084edd9a79b6b3d666db9d0097bf85efdf59"
+    },
+    {
+      "path": "Workspaces/rainbow-visual-audit.X0POSzUq/read/08/qa/worldlabs/05/pilot/full/import/full05.blend",
+      "pointerFileHash": "00af2b0afc4f24a2a0cf1af84b2894ac962317eb9b6d1311141987c7cdc7c2b7",
+      "actualFileHash": "5704dfcd8f3e893246773835f32c9f12db965beee08bbee8f02d0d58e820ab39"
+    }
+  ],
+  "assetsInspected": 41,
+  "blendCount": 17,
+  "glbCount": 24,
+  "opened": 41,
+  "references": {
+    "relative path present in saved inventory": 6,
+    "needs relinking; a matching filename exists": 1
+  },
+  "issues": [
+    {
+      "asset": "25baa89f89b3da62d5ab438b9955633a29290b5cb34d75089d6da11038e4074b",
+      "example": "01_GAME/qa/pilot05/wave6/camera_lock/screen05_camera_lock.blend",
+      "location": "/home/user/rainbow-/references/05_flow_into_the_current.png",
+      "state": "needs relinking; a matching filename exists"
+    }
+  ],
+  "assets": {
+    "9a33cdf35c5ed43dca2a0bcac3331641b5dd0faef93afafe57af17755022bafb": {
+      "opened": true,
+      "objects": 4,
+      "meshes": 2,
+      "links": [],
+      "examplePaths": [
+        "01_GAME/qa/pilot05/marble_feas/blender/marble05_projection.blend",
+        "qa/pilot05/marble_feas/blender/marble05_projection.blend",
+        "Workspaces/rainbow-benny-photo-GvwzjV/games/06/qa/pilot05/marble_feas/blender/marble05_projection.blend",
+        "Workspaces/rainbow-crest-join-iwriacol/games/06/qa/pilot05/marble_feas/blender/marble05_projection.blend"
+      ]
+    },
+    "8bd205c396b59f2ce291da5056151160ef96df3e5024ffb83ed95014c8aafef0": {
+      "opened": true,
+      "objects": 7,
+      "meshes": 6,
+      "links": [
+        {
+          "type": "images",
+          "originalLocation": "//../../../../../references/05_flow_into_the_current.png",
+          "state": "relative path present in saved inventory",
+          "matchingPaths": [
+            "01_GAME/references/05_flow_into_the_current.png",
+            "Workspaces/rainbow-benny-photo-GvwzjV/games/06/references/05_flow_into_the_current.png",
+            "Workspaces/rainbow-crest-join-iwriacol/games/06/references/05_flow_into_the_current.png",
+            "Workspaces/rainbow-fal-towel-yzIzBqSp/games/08/references/05_flow_into_the_current.png",
+            "Workspaces/rainbow-one-review.MG1VK6V4/first-extraction-without-archived-checklists/01_GAME/references/05_flow_into_the_current.png",
+            "Workspaces/rainbow-one-review.MG1VK6V4/payload/01_GAME/references/05_flow_into_the_current.png"
+          ]
+        },
+        {
+          "type": "images",
+          "originalLocation": "//../../../../../assets/textures/tunnel05/lid05.png",
+          "state": "relative path present in saved inventory",
+          "matchingPaths": [
+            "01_GAME/assets/textures/tunnel05/lid05.png",
+            "Workspaces/rainbow-benny-photo-GvwzjV/games/06/assets/textures/tunnel05/lid05.png",
+            "Workspaces/rainbow-crest-join-iwriacol/games/06/assets/textures/tunnel05/lid05.png",
+            "Workspaces/rainbow-fal-towel-yzIzBqSp/games/08/assets/textures/tunnel05/lid05.png",
+            "Workspaces/rainbow-one-review.MG1VK6V4/first-extraction-without-archived-checklists/01_GAME/assets/textures/tunnel05/lid05.png",
+            "Workspaces/rainbow-one-review.MG1VK6V4/payload/01_GAME/assets/textures/tunnel05/lid05.png"
+          ]
+        }
+      ],
+      "examplePaths": [
+        "01_GAME/qa/pilot05/proj/tunnel/lid/lids05.blend",
+        "qa/pilot05/proj/tunnel/lid/lids05.blend",
+        "Workspaces/rainbow-benny-photo-GvwzjV/games/06/qa/pilot05/proj/tunnel/lid/lids05.blend",
+        "Workspaces/rainbow-crest-join-iwriacol/games/06/qa/pilot05/proj/tunnel/lid/lids05.blend"
+      ]
+    },
+    "25baa89f89b3da62d5ab438b9955633a29290b5cb34d75089d6da11038e4074b": {
+      "opened": true,
+      "objects": 32,
+      "meshes": 29,
+      "links": [
+        {
+          "type": "images",
+          "originalLocation": "/home/user/rainbow-/references/05_flow_into_the_current.png",
+          "state": "needs relinking; a matching filename exists",
+          "matchingPaths": [
+            "01_GAME/references/05_flow_into_the_current.png",
+            "Workspaces/rainbow-benny-photo-GvwzjV/games/06/references/05_flow_into_the_current.png",
+            "Workspaces/rainbow-crest-join-iwriacol/games/06/references/05_flow_into_the_current.png",
+            "Workspaces/rainbow-crest-release.V85M78Mo/from-original-github/references/05_flow_into_the_current.png",
+            "Workspaces/rainbow-fal-towel-yzIzBqSp/games/08/references/05_flow_into_the_current.png",
+            "Workspaces/rainbow-image2blender.hENWhcMS/game/references/05_flow_into_the_current.png"
+          ]
+        }
+      ],
+      "examplePaths": [
+        "01_GAME/qa/pilot05/wave6/camera_lock/screen05_camera_lock.blend",
+        "qa/pilot05/wave6/camera_lock/screen05_camera_lock.blend",
+        "Workspaces/rainbow-benny-photo-GvwzjV/games/06/qa/pilot05/wave6/camera_lock/screen05_camera_lock.blend",
+        "Workspaces/rainbow-crest-join-iwriacol/games/06/qa/pilot05/wave6/camera_lock/screen05_camera_lock.blend"
+      ]
+    },
+    "90e43977debf875795fab1c791c6cf557b1b6b4034f89cad23a97401abe5f440": {
+      "opened": true,
+      "objects": 18,
+      "meshes": 15,
+      "links": [],
+      "examplePaths": [
+        "01_GAME/qa/pilot05/wave6/camera_lock/screen05_layout.blend",
+        "qa/pilot05/wave6/camera_lock/screen05_layout.blend",
+        "Workspaces/rainbow-benny-photo-GvwzjV/games/06/qa/pilot05/wave6/camera_lock/screen05_layout.blend",
+        "Workspaces/rainbow-crest-join-iwriacol/games/06/qa/pilot05/wave6/camera_lock/screen05_layout.blend"
+      ]
+    },
+    "b1a21d08438f2f808147345354d3169c450bc664670b3fffdfaa5fcaf762e0c9": {
+      "opened": true,
+      "objects": 17,
+      "meshes": 15,
+      "links": [],
+      "examplePaths": [
+        "01_GAME/qa/worldlabs/05/blender/screen05_layout.blend",
+        "qa/worldlabs/05/blender/screen05_layout.blend",
+        "Workspaces/rainbow-benny-photo-GvwzjV/games/06/qa/worldlabs/05/blender/screen05_layout.blend",
+        "Workspaces/rainbow-crest-join-iwriacol/games/06/qa/worldlabs/05/blender/screen05_layout.blend"
+      ]
+    },
+    "915423cf00c9d4a9f2642386e9d8084edd9a79b6b3d666db9d0097bf85efdf59": {
+      "opened": true,
+      "objects": 5,
+      "meshes": 2,
+      "links": [],
+      "examplePaths": [
+        "01_GAME/qa/worldlabs/05/pilot/draft/import/draft05.blend",
+        "qa/worldlabs/05/pilot/draft/import/draft05.blend",
+        "Workspaces/rainbow-benny-photo-GvwzjV/games/06/qa/worldlabs/05/pilot/draft/import/draft05.blend",
+        "Workspaces/rainbow-crest-join-iwriacol/games/06/qa/worldlabs/05/pilot/draft/import/draft05.blend"
+      ]
+    },
+    "5704dfcd8f3e893246773835f32c9f12db965beee08bbee8f02d0d58e820ab39": {
+      "opened": true,
+      "objects": 5,
+      "meshes": 2,
+      "links": [],
+      "examplePaths": [
+        "01_GAME/qa/worldlabs/05/pilot/full/import/full05.blend",
+        "qa/worldlabs/05/pilot/full/import/full05.blend",
+        "Workspaces/rainbow-benny-photo-GvwzjV/games/06/qa/worldlabs/05/pilot/full/import/full05.blend",
+        "Workspaces/rainbow-crest-join-iwriacol/games/06/qa/worldlabs/05/pilot/full/import/full05.blend"
+      ]
+    },
+    "18af25120b347636679b5b3dcf41e5cbd8a332c65500c968086eda6eb7923508": {
+      "opened": true,
+      "objects": 7,
+      "meshes": 6,
+      "links": [
+        {
+          "type": "images",
+          "originalLocation": "//../../../../../references/05_flow_into_the_current.png",
+          "state": "relative path present in saved inventory",
+          "matchingPaths": [
+            "references/05_flow_into_the_current.png"
+          ]
+        },
+        {
+          "type": "images",
+          "originalLocation": "//../../../../../assets/textures/tunnel05/lid05.png",
+          "state": "relative path present in saved inventory",
+          "matchingPaths": [
+            "Workspaces/rainbow-visual-audit.X0POSzUq/read/05/assets/textures/tunnel05/lid05.png",
+            "assets/textures/tunnel05/lid05.png"
+          ]
+        }
+      ],
+      "examplePaths": [
+        "02_VERSIONS/Claudia_S05/files/qa/pilot05/full_reference_match/env/lid/lids05.blend",
+        "qa/pilot05/full_reference_match/env/lid/lids05.blend",
+        "Workspaces/rainbow-one-review.MG1VK6V4/first-extraction-without-archived-checklists/02_VERSIONS/Claudia_S05/files/qa/pilot05/full_reference_match/env/lid/lids05.blend",
+        "Workspaces/rainbow-one-review.MG1VK6V4/payload/02_VERSIONS/Claudia_S05/files/qa/pilot05/full_reference_match/env/lid/lids05.blend"
+      ]
+    },
+    "88f476b97ec54ae809e8e358b9964f3f006faf7253f1b43ec11d11394b14d3be": {
+      "opened": true,
+      "objects": 11,
+      "meshes": 4,
+      "links": [],
+      "examplePaths": [
+        "02_VERSIONS/Codex_s07-magenta-bank-shape/files/experiments/image2blender/s07-magenta-bank-shape/model/s07-banks.blend",
+        "experiments/image2blender/s07-magenta-bank-shape/model/s07-banks.blend",
+        "Saved-deliveries/library-files/Rainbow-S07-Image2Blender/s07-banks.blend",
+        "Workspaces/rainbow-image2blender.hENWhcMS/experiment-git/experiments/image2blender/s07-magenta-bank-shape/model/s07-banks.blend"
+      ]
+    },
+    "dea3dda91604349f37dbb58bbdd2ec13d36e83d3844b8891e27cec5130dd510e": {
+      "opened": true,
+      "objects": 1,
+      "meshes": 1,
+      "links": [],
+      "examplePaths": [
+        "02_VERSIONS/Codex_s07-painted-paddle-face/files/experiments/codex/07/model/screen-07-fitted-paddle.blend",
+        "experiments/codex/07/model/screen-07-fitted-paddle.blend",
+        "Saved-deliveries/library-files/Rainbow-Reconstruction-Experiments/Screen-07/model/screen-07-fitted-paddle.blend",
+        "Workspaces/rainbow-one-review.MG1VK6V4/first-extraction-without-archived-checklists/02_VERSIONS/Codex_s07-painted-paddle-face/files/experiments/codex/07/model/screen-07-fitted-paddle.blend"
+      ]
+    },
+    "3365b1a724821e157ee8a213e4f12d271b690d4a9f6d0c5db84b0f43788a3931": {
+      "opened": true,
+      "objects": 5,
+      "meshes": 2,
+      "links": [],
+      "examplePaths": [
+        "experiments/codex/s06-approved-crest-route/editable/Screen06_Crest_Routes.blend",
+        "Workspaces/rainbow-s06-coin-arc-RoZNOWum/authoring/Screen06_Crest_Routes.blend",
+        "Workspaces/rainbow-s06-coin-arc-RoZNOWum/repo/experiments/codex/s06-approved-crest-route/editable/Screen06_Crest_Routes.blend"
+      ]
+    },
+    "ddcd793703c10053af6fd2ac47fe5b57169df4b3ec3132e14b09f318ab7966c7": {
+      "opened": true,
+      "objects": 30,
+      "meshes": 24,
+      "links": [],
+      "examplePaths": [
+        "experiments/codex/s06-arched-washer-passage/editable/Screen06_Arched_Washer_Passage.blend",
+        "Workspaces/rainbow-s06-arched-passage-AEyFAwIZ/authoring/Screen06_Arched_Washer_Passage.blend",
+        "Workspaces/rainbow-s06-arched-passage-AEyFAwIZ/repo/experiments/codex/s06-arched-washer-passage/editable/Screen06_Arched_Washer_Passage.blend"
+      ]
+    },
+    "6d3c16b46dc958d16e103829cb8ab2ba1bc0eb15e5bf4cd4d1a8cea0a56c7733": {
+      "opened": true,
+      "objects": 7,
+      "meshes": 1,
+      "links": [],
+      "examplePaths": [
+        "experiments/codex/s06-world-space-rinse-arch/editable/Crest_Fit_Study.blend",
+        "Workspaces/rainbow-s06-rinse-world-6N8q2x2g/repo/experiments/codex/s06-world-space-rinse-arch/editable/Crest_Fit_Study.blend"
+      ]
+    },
+    "e636c67d7a5393a90ce1af91a5b048f2c5b33bcf3eb23e4886c28c65fdee2a8d": {
+      "opened": true,
+      "objects": 25,
+      "meshes": 22,
+      "links": [],
+      "examplePaths": [
+        "experiments/codex/s06-world-space-rinse-arch/editable/Screen06_Rinse_Arch.blend",
+        "Workspaces/rainbow-s06-rinse-world-6N8q2x2g/editable/Screen06_Rinse_Arch.blend"
+      ]
+    },
+    "974b5e35a80c7da4fcaf3f63a7abba07f64ebcfa8965c2c0ed69507d81d2286a": {
+      "opened": true,
+      "objects": 28,
+      "meshes": 22,
+      "links": [],
+      "examplePaths": [
+        "experiments/codex/s06-world-space-rinse-arch/editable/Screen06_Rinse_Arch.blend",
+        "Workspaces/rainbow-s06-rinse-world-6N8q2x2g/repo/experiments/codex/s06-world-space-rinse-arch/editable/Screen06_Rinse_Arch.blend"
+      ]
+    },
+    "3e9521aa1c38691cb6b2089d8d3a1afd7d1bef5e98f3cd5e7c5c52e85e3aad19": {
+      "opened": true,
+      "objects": 7,
+      "meshes": 6,
+      "links": [
+        {
+          "type": "images",
+          "originalLocation": "//../../../../../references/05_flow_into_the_current.png",
+          "state": "relative path present in saved inventory",
+          "matchingPaths": [
+            "references/05_flow_into_the_current.png"
+          ]
+        },
+        {
+          "type": "images",
+          "originalLocation": "//../../../../../assets/textures/tunnel05/lid05.png",
+          "state": "relative path present in saved inventory",
+          "matchingPaths": [
+            "assets/textures/tunnel05/lid05.png"
+          ]
+        }
+      ],
+      "examplePaths": [
+        "qa/pilot05/proj/tunnel/lid/lids05.blend"
+      ]
+    },
+    "599bfa92a1b0c3b846beeddcc7f343f5f1bdbcacf75a21e4ec02baed7e637eda": {
+      "opened": true,
+      "objects": 28,
+      "meshes": 22,
+      "links": [],
+      "examplePaths": [
+        "Workspaces/rainbow-s06-rinse-world-6N8q2x2g/editable/Screen06_Rinse_Arch_Materials.blend"
+      ]
+    },
+    "40633fdd02014c6434bb61811c03bc0c61a8d456c30fbb9cd62bb9a91a0198a1": {
+      "opened": true,
+      "meshes": 25,
+      "animations": 4,
+      "links": [],
+      "examplePaths": [
+        "01_GAME/assets/models/benny.glb",
+        "assets/models/benny.glb",
+        "Workspaces/rainbow-benny-photo-GvwzjV/games/06/assets/models/benny.glb",
+        "Workspaces/rainbow-benny-photo-GvwzjV/games/06/dist/assets/benny-BNj-9CQ9.glb"
+      ]
+    },
+    "f2cd3abeaaf219635321c1f2ffead20eb91403d73ff7ef3173380a0ecedbb22c": {
+      "opened": true,
+      "meshes": 6,
+      "animations": 0,
+      "links": [],
+      "examplePaths": [
+        "01_GAME/assets/models/lids05.glb",
+        "assets/models/lids05.glb",
+        "Workspaces/rainbow-benny-photo-GvwzjV/games/06/assets/models/lids05.glb",
+        "Workspaces/rainbow-benny-photo-GvwzjV/games/06/dist/assets/lids05-A3RjQaaU.glb"
+      ]
+    },
+    "fa846773af9a593d090ec2c0ac4ea69812306fc334439b05f900bc9311f92528": {
+      "opened": true,
+      "meshes": 164,
+      "animations": 9,
+      "links": [],
+      "examplePaths": [
+        "01_GAME/assets/models/rainbow_girl.glb",
+        "assets/models/rainbow_girl.glb",
+        "Workspaces/rainbow-benny-photo-GvwzjV/games/06/assets/models/rainbow_girl.glb",
+        "Workspaces/rainbow-benny-photo-GvwzjV/games/06/dist/assets/rainbow_girl-BGmVI95Z.glb"
+      ]
+    },
+    "e5bb181d8d6b9eae22865db65c593ad4b3b980cfbf46f04bb992f50c28809a9f": {
+      "opened": true,
+      "meshes": 1,
+      "animations": 0,
+      "links": [],
+      "examplePaths": [
+        "01_GAME/qa/imageblaster/08/world/0-world.glb",
+        "qa/imageblaster/08/world/0-world.glb",
+        "External-assets/cdn.marble.worldlabs.ai/8f015f5858/060657ad.glb",
+        "Workspaces/rainbow-benny-photo-GvwzjV/games/06/qa/imageblaster/08/world/0-world.glb"
+      ]
+    },
+    "8567f56ef76fa3ef6a898e23148111ea4d67fffb6146f04ece9e4b62c565a9ed": {
+      "opened": true,
+      "meshes": 16,
+      "animations": 0,
+      "links": [],
+      "examplePaths": [
+        "01_GAME/qa/pilot05/wave6/camera_lock/screen05_layout.glb",
+        "qa/pilot05/wave6/camera_lock/screen05_layout.glb",
+        "Workspaces/rainbow-benny-photo-GvwzjV/games/06/qa/pilot05/wave6/camera_lock/screen05_layout.glb",
+        "Workspaces/rainbow-crest-join-iwriacol/games/06/qa/pilot05/wave6/camera_lock/screen05_layout.glb"
+      ]
+    },
+    "8cfd5093ede29e763e3a4af0981a11fecd976844506632febe8fe8134c0300f0": {
+      "opened": true,
+      "meshes": 16,
+      "animations": 0,
+      "links": [],
+      "examplePaths": [
+        "01_GAME/qa/worldlabs/05/blender/screen05_layout.glb",
+        "qa/worldlabs/05/blender/screen05_layout.glb",
+        "Workspaces/rainbow-benny-photo-GvwzjV/games/06/qa/worldlabs/05/blender/screen05_layout.glb",
+        "Workspaces/rainbow-crest-join-iwriacol/games/06/qa/worldlabs/05/blender/screen05_layout.glb"
+      ]
+    },
+    "cdaf62b116a7d74662c07da4272ad73629cbb5625979f7288de02b160c7bc9d2": {
+      "opened": true,
+      "meshes": 1,
+      "animations": 0,
+      "links": [],
+      "examplePaths": [
+        "01_GAME/qa/worldlabs/05/pilot/draft/collider.glb",
+        "qa/worldlabs/05/pilot/draft/collider.glb",
+        "External-assets/cdn.marble.worldlabs.ai/56f9936729/fe64f35a.glb",
+        "Workspaces/rainbow-benny-photo-GvwzjV/games/06/qa/worldlabs/05/pilot/draft/collider.glb"
+      ]
+    },
+    "3aabf9f058ac662b580a0096a36a90657156ac0b0905eb1eb05777cc0eed1778": {
+      "opened": true,
+      "meshes": 1,
+      "animations": 0,
+      "links": [],
+      "examplePaths": [
+        "01_GAME/qa/worldlabs/05/pilot/draft/import/draft05_underlay.glb",
+        "qa/worldlabs/05/pilot/draft/import/draft05_underlay.glb",
+        "Workspaces/rainbow-benny-photo-GvwzjV/games/06/qa/worldlabs/05/pilot/draft/import/draft05_underlay.glb",
+        "Workspaces/rainbow-crest-join-iwriacol/games/06/qa/worldlabs/05/pilot/draft/import/draft05_underlay.glb"
+      ]
+    },
+    "d7e952d0e53fcacdfc75eb5b27193396c007daef83d2052a18f3a76cf342d48a": {
+      "opened": true,
+      "meshes": 1,
+      "animations": 0,
+      "links": [],
+      "examplePaths": [
+        "01_GAME/qa/worldlabs/05/pilot/full/collider.glb",
+        "qa/worldlabs/05/pilot/full/collider.glb",
+        "External-assets/cdn.marble.worldlabs.ai/d5d8696668/55c120a8.glb",
+        "Workspaces/rainbow-benny-photo-GvwzjV/games/06/qa/worldlabs/05/pilot/full/collider.glb"
+      ]
+    },
+    "f1e40d63fddd88d63a8f0da36f042d7b1736ceff5769d06eb0f8045b7c83e7f5": {
+      "opened": true,
+      "meshes": 1,
+      "animations": 0,
+      "links": [],
+      "examplePaths": [
+        "01_GAME/qa/worldlabs/05/pilot/full/import/full05_underlay.glb",
+        "qa/worldlabs/05/pilot/full/import/full05_underlay.glb",
+        "Workspaces/rainbow-benny-photo-GvwzjV/games/06/qa/worldlabs/05/pilot/full/import/full05_underlay.glb",
+        "Workspaces/rainbow-crest-join-iwriacol/games/06/qa/worldlabs/05/pilot/full/import/full05_underlay.glb"
+      ]
+    },
+    "978793113ee9433255f396e0a226e82218ab2a61c4687a503a475755aaa014a9": {
+      "opened": true,
+      "meshes": 6,
+      "animations": 0,
+      "links": [],
+      "examplePaths": [
+        "02_VERSIONS/Claudia_S05/files/assets/models/lids05e.glb",
+        "assets/models/lids05e.glb",
+        "Workspaces/rainbow-crest-release.V85M78Mo/round2/production/05/assets/lids05e-CcXUawGH.glb",
+        "Workspaces/rainbow-final-fidelity.RuUP0xJ2/production/05/assets/lids05e-CcXUawGH.glb"
+      ]
+    },
+    "3811352879f3ea38f3f42a902fa207bfeda698702fb4da245414eaf638c64a7d": {
+      "opened": true,
+      "meshes": 4,
+      "animations": 0,
+      "links": [],
+      "examplePaths": [
+        "02_VERSIONS/Codex_s07-magenta-bank-shape/files/experiments/image2blender/s07-magenta-bank-shape/model/s07-banks.glb",
+        "experiments/image2blender/s07-magenta-bank-shape/model/s07-banks.glb",
+        "Saved-deliveries/library-files/Rainbow-S07-Image2Blender/s07-banks.glb",
+        "Workspaces/rainbow-image2blender.hENWhcMS/experiment-git/experiments/image2blender/s07-magenta-bank-shape/model/s07-banks.glb"
+      ]
+    },
+    "788be872e113048ac688379b9d85a095b60cb342b70134ef7f9b55b16aef3c48": {
+      "opened": true,
+      "meshes": 1,
+      "animations": 0,
+      "links": [],
+      "examplePaths": [
+        "02_VERSIONS/Codex_s07-painted-paddle-face/files/experiments/codex/07/model/screen-07-fitted-paddle.glb",
+        "experiments/codex/07/model/screen-07-fitted-paddle.glb",
+        "Saved-deliveries/library-files/Rainbow-Reconstruction-Experiments/Screen-07/model/screen-07-fitted-paddle.glb",
+        "Workspaces/rainbow-one-review.MG1VK6V4/first-extraction-without-archived-checklists/02_VERSIONS/Codex_s07-painted-paddle-face/files/experiments/codex/07/model/screen-07-fitted-paddle.glb"
+      ]
+    },
+    "5458450e4cb0b0a81261a4ef7365944d9fa4ee9a546b7b5e46e75a31f1d19c5d": {
+      "opened": true,
+      "meshes": 24,
+      "animations": 0,
+      "links": [],
+      "examplePaths": [
+        "assets/arched-passage06/passage.glb",
+        "Workspaces/rainbow-benny-photo-GvwzjV/games/06/assets/arched-passage06/passage.glb",
+        "Workspaces/rainbow-s06-arched-passage-AEyFAwIZ/games/06/assets/arched-passage06/passage.glb",
+        "Workspaces/rainbow-s06-arched-passage-AEyFAwIZ/games/06/dist/assets/passage-ExzoEIsF.glb"
+      ]
+    },
+    "cf83756b4382d864c57546deb55a7d9363c94ee67eada76212017693e271f2be": {
+      "opened": true,
+      "meshes": 25,
+      "animations": 4,
+      "links": [],
+      "examplePaths": [
+        "assets/models/benny.glb"
+      ]
+    },
+    "8949337b65bc3760351bb0f26c306a99c81dc4b65cec723151e49ee695d7dc29": {
+      "opened": true,
+      "meshes": 25,
+      "animations": 4,
+      "links": [],
+      "examplePaths": [
+        "assets/models/benny.glb"
+      ]
+    },
+    "89522bedbcaa4c0c510d8cf22b026b069f1560b298a7cbd338eeb503ec67e959": {
+      "opened": true,
+      "meshes": 25,
+      "animations": 4,
+      "links": [],
+      "examplePaths": [
+        "assets/models/benny.glb"
+      ]
+    },
+    "a6f946615b07e12d4d5b81c179385a4979db2cb7c122c89677090b866fea252c": {
+      "opened": true,
+      "meshes": 25,
+      "animations": 4,
+      "links": [],
+      "examplePaths": [
+        "assets/models/benny.glb"
+      ]
+    },
+    "9c2f9d50b2129f6d8e26368e14811031060ceac89f69a39a6d77bf00007893d7": {
+      "opened": true,
+      "meshes": 25,
+      "animations": 4,
+      "links": [],
+      "examplePaths": [
+        "assets/models/benny.glb"
+      ]
+    },
+    "3441d9198ee3c255399fa3a8d6d649e6a6e8f8bc8f35818635777f65c7f6ca19": {
+      "opened": true,
+      "meshes": 25,
+      "animations": 4,
+      "links": [],
+      "examplePaths": [
+        "assets/models/benny.glb"
+      ]
+    },
+    "0e53197f6f77164976f2cb72ba0440e9c1f6d68743bd47f8f2bb96960e98b7fa": {
+      "opened": true,
+      "meshes": 25,
+      "animations": 4,
+      "links": [],
+      "examplePaths": [
+        "assets/models/benny.glb"
+      ]
+    },
+    "8a7a3268c5f9745832a7e3cf453d4ea12f6b95b2ec84317698ce62968a3048ea": {
+      "opened": true,
+      "meshes": 25,
+      "animations": 4,
+      "links": [],
+      "examplePaths": [
+        "assets/models/benny.glb"
+      ]
+    },
+    "fe57b519e32231adacbd11d68eb9841415f08e2858ba272f37e4f4d4fd5c8c3d": {
+      "opened": true,
+      "meshes": 166,
+      "animations": 9,
+      "links": [],
+      "examplePaths": [
+        "assets/models/rainbow_girl.glb"
+      ]
+    },
+    "85f66c3f03c13cf1a8279d501d06b1f57ed3fd95d0123fcaa593f8a5fb7a9d0e": {
+      "opened": true,
+      "meshes": 22,
+      "animations": 0,
+      "links": [],
+      "examplePaths": [
+        "assets/reconstruction06/rinse_arch.glb",
+        "Workspaces/rainbow-s06-rinse-world-6N8q2x2g/android-check/android/app/build/intermediates/assets/debug/public/assets/rinse_arch-CZCt2Xcg.glb",
+        "Workspaces/rainbow-s06-rinse-world-6N8q2x2g/android-check/android/app/src/main/assets/public/assets/rinse_arch-CZCt2Xcg.glb",
+        "Workspaces/rainbow-s06-rinse-world-6N8q2x2g/android-check/dist/assets/rinse_arch-CZCt2Xcg.glb"
+      ]
+    }
+  }
+}

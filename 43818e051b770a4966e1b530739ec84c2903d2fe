@@ -1,0 +1,16 @@
+{
+  "branch": "codex/rainbow-visual-motion-matcher",
+  "commit": "3b57658f78fd5d7dce498d2743f1a09a173a570a",
+  "files": [
+    {
+      "path": ".agents/skills/rainbow-visual-motion-matcher/SKILL.md",
+      "gitBlob": "34878e65e313bac06dd158f7c4690a152abbe380",
+      "sha256": "8f3e3473a85b240cf1fef9e9554fdf99d2acd78ec1506c0a1e758956b8332c34"
+    },
+    {
+      "path": "AGENTS.md",
+      "gitBlob": "7eb07c3d682f8ca9e4c95363e80a983c2caea6bc",
+      "sha256": "15396a703cbd01199b3ecd4bf600a6f5b88ba41f93d60e382e6c7dc9f1e6ca1d"
+    }
+  ]
+}

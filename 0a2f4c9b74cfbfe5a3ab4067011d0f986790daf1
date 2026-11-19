@@ -1,0 +1,17 @@
+{
+  "leadBranch": "ccr-ae71d3a5-80naq2",
+  "leadCommit": "08dce491ec04a5a022ea4d9351cdaa0d9fcd5605",
+  "remoteBranches": 178,
+  "remoteTags": 1,
+  "remoteCodexBranches": 38,
+  "namedRestoreRefs": 429,
+  "leadFiles": 3175,
+  "localFiles": 50561,
+  "gitBlobs": 22810,
+  "historicalPathVersions": 28641,
+  "lfsObjects": 192,
+  "lfsBytes": 2154541973,
+  "identifiedFlowFilenamesInHistory": [],
+  "identifiedFlowFilenamesInArchives": [],
+  "uniquePayloadBytes": 22831289571
+}

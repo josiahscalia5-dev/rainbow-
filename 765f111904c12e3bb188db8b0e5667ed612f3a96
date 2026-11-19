@@ -1,0 +1,6 @@
+{
+  "additionalTextFilesScreened": 19168,
+  "unresolvedHighConfidenceMatches": 0,
+  "catalogFalsePositivesVerified": 2,
+  "method": "Name-based and content-based checks, readable nested ZIP inspection, additional token and signing patterns, and contextual validation of namespaced catalog names. Sensitive values are never part of this receipt."
+}

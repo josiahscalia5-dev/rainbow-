@@ -1,0 +1,41 @@
+# Round 7 (account 7) — SCREEN 04 · THROUGH THE FIVE ARROWS — milestone M4, then stop (QUEUED: launch when a slot frees)
+
+You are the SCREEN 04 specialist (`washer-environment-modeler` role, `.claude/agents/`) of the user's EXISTING Rainbow
+Android game. Do NOT restart, redesign, rebuild or discard anything. Lead = account-7 session on `claude/rainbow-lead-c7`.
+
+## Your branch: `claude/rainbow-s04-match-c7`
+Created by the lead at `claude/rainbow-s04-match-c5` @ `d1e422faff67a37f837566301fb8abff0bac98db` (newest tip; M3 done,
+all M3 parts on by default under `?match04=1`). Push ONLY this branch (never force). Never write older branches, never
+merge/rebase, never touch PRs.
+
+## Read first
+`CLAUDE.md`; on your branch `qa/match/04/STATUS.md`, `NOTES.md`; `docs/briefs/2026-11-17-r4/S04.md` + `COMMON_RULES.md`;
+from the lead branch (`git fetch origin claude/rainbow-lead-c7 && git show FETCH_HEAD:<file>`):
+`docs/briefs/2026-11-17-r7/COORDINATION.md`, `docs/briefs/2026-11-17-r6/USER_DECISIONS.md`.
+
+## The user's order (2026-11-18 ~00:00 UTC) — VISUALS ONLY, NO REDESIGN, Screen 04's OWN design
+Screen 04 must look like `references/04_through_the_five_arrows.png` **while Benny swims**, ≥ 8.5/10 (ideally 9+).
+User's words for 04: "the missing laundry-room entrance, gold washer opening, thick colorful water, bubbles, and foam
+are important." Do not reuse another screen's tunnel. Lead's rating now: approved view ~8, swimming ~3.5 — after a few
+units the scene becomes a giant blurred orange-gold tube; the laundry-room top (shelves, towels), the gold washer
+opening with its bulbs, the five glowing blue arrows, the thick cyan/pink swirl water, foam banks and bubbles disappear.
+
+## Milestone M4 (each change behind its own `&m04…=1` sub-switch of `?match04=1`, default build untouched)
+1. Startup: `python3 -I scripts/autosave-status.py`; reproduce `node tools/lead_r6/motion_audit.mjs 04 <out> "match04=1"`
+   (copy `tools/lead_r6/` from the lead branch if missing).
+2. **Greatest visible gap first:** keep Screen 04's own architecture visible while moving: the gold washer opening (a
+   real modeled ring with its bulb row, sized/placed from the approved picture), the laundry-room entrance beyond it,
+   the tunnel walls as world-anchored geometry (no blurred projection smear). Check the two structural causes from 06
+   (`COORDINATION.md`) first: camera pitch following the slope; proxy tube built around the river path.
+3. Then: the five blue arrows staying crisp while travelling; the thick cyan-and-pink swirl water without the repeated
+   4.7 u swirl tile and without the flat floating ramp; foam banks and bubbles as in the approved picture.
+4. Reuse the already-paid fal clean plate (do NOT run fal again). Preserve 91 coins / 2,240; Benny files untouched.
+5. Proofs: `npx tsc --noEmit`; default build 0 px; gameplay 8/8, 91 / 2,240; `npm run test:continuity`.
+6. Pictures: APPROVED + BEFORE (`match04=1`) + NEW at the 12 audit positions → `qa/match/04/r7/BEFORE/`, `NEW/`
+   (separate full-size portrait files, no collage).
+7. Update STATUS.md + NOTES.md (changes, kept switches, numbers, HONEST moving rating separate from pixel numbers,
+   exact next step), commit, push, verify `git ls-remote origin refs/heads/claude/rainbow-s04-match-c7` == HEAD, STOP.
+
+## Hard rules
+No paid World Labs / fal.ai / video jobs. No APK troubleshooting. No coin-count changes. Do not edit other screens' files.
+Never print secrets.

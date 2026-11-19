@@ -1,0 +1,9 @@
+{
+  "scope": "Transfer-tool test using the actual approved Screen 06 bytes and actual Benny GLB, plus an isolated test index and unfinished file. Separate full-project results are in graph-test and physical-git-restore-test.",
+  "passed": true,
+  "splitOriginalReassembled": true,
+  "bareGitFsckPassed": true,
+  "originalGitHeadRestored": true,
+  "stagedAndUnstagedVersionsDistinct": true,
+  "untrackedFileRecovered": true
+}

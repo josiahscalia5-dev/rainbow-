@@ -1,0 +1,5 @@
+# Optional connections for future development. Offline restore requires none.
+# Set credentials privately on the new workstation.
+FAL_KEY=
+WLT_API_KEY=
+ANDROID_SDK_ROOT=/path/to/Android/Sdk

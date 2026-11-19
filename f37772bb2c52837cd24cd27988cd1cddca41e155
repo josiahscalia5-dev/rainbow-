@@ -1,0 +1,33 @@
+{
+  "snapshotDate": "2026-11-19",
+  "privateRepo": "josiahscalia5-dev/rainbow-",
+  "remoteBranches": 178,
+  "remoteTags": 1,
+  "originalRefsComparedAtEnd": 179,
+  "changedOriginalRefs": [],
+  "independentNewRemoteRefs": [],
+  "restoredGitMetadataTips": 429,
+  "gitCommits": 1865,
+  "historicTrees": 16634,
+  "hashedGitBlobs": 22810,
+  "materializedLFS": 192,
+  "LFSBytes": 2154541973,
+  "leadFiles": 3175,
+  "preservedLocalFiles": 50561,
+  "largeOriginalFilesReassembledFromDownloadedZIPs": 21,
+  "inputPartsPriorToHandoff": 179,
+  "inputPartBytesPriorToHandoff": 18974483757,
+  "fullSeparateGitFsck": {
+    "fullFsck": true,
+    "restoredRefs": 429,
+    "expectedGitBlobs": 22810,
+    "verifiedExistingObjectStores": 40,
+    "unavailableInLocalCaches": 16628,
+    "fsckExit": 0,
+    "unresolvedReachableObjects": 0,
+    "transferredPackBytes": 5690971119
+  },
+  "allZIPFilesExtractedAndVerifiedPerFile": true,
+  "mountedSubmoduleEntries": 0,
+  "availablePayloadsAndSubsequentHistoricalObjectGraphValidated": true
+}

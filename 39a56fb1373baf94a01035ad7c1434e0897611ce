@@ -1,0 +1,10 @@
+{
+  "distinctMaterializedBlenderScenes": 17,
+  "distinctGLBs": 24,
+  "distinctSavedAPKs": 26,
+  "savedAABs": 0,
+  "distinctMP4s": 224,
+  "distinctSPZs": 11,
+  "approvedScreens": 11,
+  "recordingProvenance": "scripts/record-screens.mjs describes historical qa/recordings/screen_NN.mp4 files as actual headless Chromium/WebGL recordings. These recordings are preserved separately from the unavailable Google Flow masters."
+}

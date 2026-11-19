@@ -1,0 +1,42 @@
+{
+  "blender": "5.3.0",
+  "openedBlend": "Screen06_Arched_Washer_Passage.blend",
+  "blendObjects": 30,
+  "blendMeshes": 24,
+  "externalImages": [],
+  "glbs": {
+    "rainbow_girl.glb": {
+      "meshObjects": 165,
+      "actions": 9
+    },
+    "lids05.glb": {
+      "meshObjects": 6,
+      "actions": 0
+    },
+    "benny.glb": {
+      "meshObjects": 27,
+      "actions": 4
+    }
+  },
+  "structuralChecks": {
+    "rainbow_girl.glb": {
+      "bytes": 3546480,
+      "sha256": "fa846773af9a593d090ec2c0ac4ea69812306fc334439b05f900bc9311f92528",
+      "meshes": 164,
+      "animations": 9
+    },
+    "lids05.glb": {
+      "bytes": 992168,
+      "sha256": "f2cd3abeaaf219635321c1f2ffead20eb91403d73ff7ef3173380a0ecedbb22c",
+      "meshes": 6,
+      "animations": 0
+    },
+    "benny.glb": {
+      "bytes": 1126892,
+      "sha256": "40633fdd02014c6434bb61811c03bc0c61a8d456c30fbb9cd62bb9a91a0198a1",
+      "meshes": 25,
+      "animations": 4
+    }
+  },
+  "blendSHA256": "ddcd793703c10053af6fd2ac47fe5b57169df4b3ec3132e14b09f318ab7966c7"
+}
