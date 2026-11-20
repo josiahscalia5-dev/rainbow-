@@ -1718,3 +1718,337 @@ Finally, briefly clarify which screens your strong opening-view and gameplay cla
 
 My next priority is seeing this actual playable result and making a decision from it.
 
+### 🤖 Claude — 2026-11-20T18:42:16.685Z
+
+I'll start by reading the candidate's actual code, so my explanation of what it changes is exact.
+
+### 🤖 Claude — 2026-11-20T18:42:17.901Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && cat /home/user/rainbow-/qa/match/06/r25/step2/QUERY_NEW2.txt; echo; git diff src/world/match06.ts | head -400", "description": "Show the BEFORE query and the route candidate's code changes"}`
+
+### 🧑 User — 2026-11-20T18:42:18.048Z
+
+> ↩︎ result: match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1&m06st=1&m06fcl=1&m06view=1&m06vs=0&m06rip=1&m06hole=2&m06fade=1&m06spl=1&m06fcn=3&m06fcg=1
+> diff --git a/src/world/match06.ts b/src/world/match06.ts
+> index 831c2b44..c1a694d0 100644
+> --- a/src/world/match06.ts
+> +++ b/src/world/match06.ts
+> @@ -44,6 +44,8 @@ export interface Match06 {
+>    away(cam: THREE.Vector3): number;
+>    /** r7 `&m06foam=1`: show the 3D foam clouds once the camera has left the approved view (a = away()) */
+>    setAway(a: number): void;
+> +  /** r23 `&m06rip=1`: Benny's place on the river (course s, lateral) for the painted ripple rings carried with him */
+> +  setBenny(s: number, lat: number): void;
+>  }
+>  
+>  const VERT = /* glsl */ `
+> @@ -112,6 +114,39 @@ uniform float uStO;
+>  uniform float uStDbg;
+>  uniform vec3 uProjF;
+>  uniform mat4 uProjVP;
+> +// r23 '&m06rip=1' (qa/match/06/r23/PROGRESS.md): the approved picture's ripple rings round Benny, carried with him on the
+> +// river floor. uRip = the painted water round the approved Benny in the river's own coordinates (lateral x course s, premult.
+> +// alpha = 0 where his body was filled), uRipR = its extent (l0, l1, ds0, ds1), uBen = …[+27064 chars]
+
+### 🤖 Claude — 2026-11-20T18:42:45.134Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && wc -l tools/match06/r28_quick.mjs tools/match06/r28_probe.mjs tools/match06/r23_audit.mjs tools/match06/r23_vite.mjs tools/match06/r25_open_clip.mjs tools/match06/r25_frames.mjs; cat tools/match06/r28_quick.mjs | head -120", "description": "Inspect the quick-capture and dev-server tools for Screen 06"}`
+
+### 🧑 User — 2026-11-20T18:42:45.185Z
+
+> ↩︎ result: 47 tools/match06/r28_quick.mjs
+>    33 tools/match06/r28_probe.mjs
+>    46 tools/match06/r23_audit.mjs
+>    12 tools/match06/r23_vite.mjs
+>    50 tools/match06/r25_open_clip.mjs
+>    17 tools/match06/r25_frames.mjs
+>   205 total
+> // r28 s06: quick low-res copy of tools/lead23/audit06_slow.mjs (AUDIT_W / AUDIT_H, default 432x768); same shots / pinning.
+> // Round 21 lead audit (read-only): one playable screen of the REAL game at start / early / middle / late / end and hard
+> // r23 S06 copy: lead audit tool (tools/lead21/audit_screen.mjs) + Vite allowed to serve the symlinked node_modules (HUD fonts).
+> // left / right, deterministic (fixed sim steps, frozen shader clock, one frame rendered per shot, no real-time steps).
+> // Run from the worktree whose build you want to see (vite serves the current directory):
+> //   cd <worktree> && node /home/user/rainbow-/tools/lead21/audit_screen.mjs <outDir> <stage 04..08> "<query>"
+> // Shots are fractions of the stage from its checkpoint to its end; env AUDIT_SHOTS='[["name",frac,steer],...]' overrides.
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS } = await import(pathToFileURL(`$ …[+2659 chars]
+
+### 🤖 Claude — 2026-11-20T18:42:55.865Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/0b75226b-8a40-5a2a-98c8-95d5f5e274d8/scratchpad && mkdir -p $S/s06 && identify references/06_crest_the_rinse_arch.png && cd qa/review_r27/web && montage -label '%t' 06_approved.jpg 06_a_start.jpg 06_b_early.jpg 06_c_middle.jpg 06_d_late.jpg 06_e_end.jpg 06_f_hard_left.jpg 06_g_hard_right.jpg -tile 8x1 -geometry 216x384+4+4 -pointsize 14 $S/s06/r27_06_strip.jpg && identify $S/s06/r27_06_strip.jpg", "description": "Make a strip of the approved 06 and the round-27 in-motion frames"}`
+
+### 🧑 User — 2026-11-20T18:42:56.146Z
+
+> ↩︎ result: references/06_crest_the_rinse_arch.png JPEG 864x1536 864x1536+0+0 8-bit sRGB 497882B 0.000u 0:00.000
+> /tmp/claude-0/-home-user-rainbow-/0b75226b-8a40-5a2a-98c8-95d5f5e274d8/scratchpad/s06/r27_06_strip.jpg JPEG 1792x415 1792x415+0+0 8-bit sRGB 580839B 0.000u 0:00.000
+
+### 🤖 Claude — 2026-11-20T18:42:57.341Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/references/06_crest_the_rinse_arch.png"}`
+
+### 🧑 User — 2026-11-20T18:42:57.363Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T18:42:58.424Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/0b75226b-8a40-5a2a-98c8-95d5f5e274d8/scratchpad/s06/r27_06_strip.jpg"}`
+
+### 🧑 User — 2026-11-20T18:42:58.514Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T18:43:20.349Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/scratch/s06 && cat > /home/user/scratch/s06/quick.sh <<'EOF'\n#!/usr/bin/env bash\n# r29 lead: quick 432x768 BEFORE / NEW diagnostic for the Screen 06 route candidate (same shots, pinned clocks)\nset -u\ncd /home/user/wt/s06\nQ0=$(cat /home/user/rainbow-/qa/match/06/r25/step2/QUERY_NEW2.txt)\nexport AUDIT_SHOTS='[[\"a_start\",0,null],[\"b_open03\",0.03,null],[\"c_early12\",0.12,null],[\"d_crest20\",0.2,null],[\"e_entry30\",0.3,null],[\"f_mid50\",0.5,null],[\"g_late70\",0.7,null],[\"h_end85\",0.85,null],[\"i_exit97\",0.97,null],[\"j_07a\",1.05,null],[\"k_07b\",1 …[+748 chars]`
+
+### 🧑 User — 2026-11-20T18:43:22.473Z
+
+> ↩︎ result: slot 1 busy
+> slot 2 busy
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T18:43:25.056Z
+
+While that renders (several minutes on the CPU renderer), I'll check the other two parts of the candidate: the coin growth and the game hook.
+
+### 🤖 Claude — 2026-11-20T18:43:26.452Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && git diff src/gameplay/coins.ts src/game/Game.ts | grep -E \"^[-+]\" | grep -v \"^+++\\|^---\" | cut -c1-260; echo; cat tools/match06/r28_probe.mjs | head -40 | cut -c1-240", "description": "Show the coin-growth change and the route probe script"}`
+
+### 🧑 User — 2026-11-20T18:43:26.517Z
+
+> ↩︎ result: +  // r26 `&m06spl=1` (qa/match/06/r25/PROGRESS.md r26): on Screen 06 Benny's contact = a short, low lace collar (the approved picture's
+> +  // shallow rounded contact ripple) instead of the long white V streak fans of ref 05; the ballistic spray dots stay hidden there
+> +  const M06_SPL = flag05('m06spl');
+> +  let m06SplRest: { len: number; h: number } | null = null;
+> +      coins.setGrow(m06On ? m06.away(camera.position) : 1); // r28 m06route coin growth (no-op without it)
+> +      m06.setBenny(st.s, st.lat); // r23 `&m06rip=1` only (no-op without it)
+> +      const crownU = M06_SPL ? ((water.parts?.splashCrown as THREE.Mesh | undefined)?.material as THREE.ShaderMaterial | undefined)?.uniforms : undefined;
+> +      if (crownU?.uLen && crownU.uH) {
+> +        if (!m06SplRest) m06SplRest = { len: crownU.uLen.value as number, h: crownU.uH.value as number };
+> +        crownU.uLen.value = m06On ? 0.42 : m06SplRest.len;
+> +        crownU.uH.value = m06On ? 0.09 : m06SplRest.h;
+> +        const sp = water.parts?.spray; if (sp && m06On) sp.visible = false;
+> +      }
+> -export interface CoinDef { s: number; lat: number; h: number; stage: StageId; scale?: number; tilt?: number; faceTo?: [number, number, number …[+4284 chars]
+
+### 🤖 Claude — 2026-11-20T18:43:30.020Z
+
+> 🔧 **TaskUpdate** `{"taskId": "4", "status": "in_progress", "description": "User (r29 ~18:40): resume the Screen 06 test ALONE (others paused). Lead runs it directly. Quick BEFORE/NEW diagnostic first (crest, middle, ending, steering, 07 join); full proof only if convincing; explain what m06route changes; identify the real next correction."}`
+
+### 🧑 User — 2026-11-20T18:43:30.034Z
+
+> ↩︎ result: Updated task #4 description, status
+
+### 🤖 Claude — 2026-11-20T18:43:31.631Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && Q0=$(cat /home/user/rainbow-/qa/match/06/r25/step2/QUERY_NEW2.txt) && timeout 300 npx vite-node tools/match06/r28_probe.mjs -- \"$Q0\" 196 252 2 2>&1 | grep -v \"^\\[\" | cut -c1-200 | head -60", "description": "Probe the Screen 06 river against the approved camera and tunnel axis", "timeout": 320000}`
+
+### 🧑 User — 2026-11-20T18:43:33.474Z
+
+> ↩︎ result: O_full [3.618207615033741,-36.35146859486923,-132.599548800415]
+> cam [ 1.72, -35.37, -132.64 ] ax [ -0.02, -0.083, -0.996 ] O [ 3.62, -36.35, -132.6 ] Rx [ 1, 0, -0.02 ] Ux [ -0.002, 0.997, -0.083 ]
+> stage 05 114.69 188.91
+> stage 06 188.91 242.87
+> stage 07 242.87 385.06
+> stage 08 385.06 400.63
+> marks {
+>   '10': 415.85,
+>   '11': 431.03,
+>   '01': 0,
+>   '02_drain': 22.77,
+>   '03': 41,
+>   '04': 70.41,
+>   '05': 114.69,
+>   '06': 188.91,
+>   '07': 242.87,
+>   '07_plunge_top': 306.25,
+>   '07_plunge_mid_end': 369.03,
+>   '07_plunge_bottom': 384.97,
+>   '08': 385.06,
+>   '09': 400.63,
+>   '05_crest': 132.44
+> }
+> 196.0 pos 0.9,-39.77,-136 tan -0.13,0.61,-0.78 w 7.0 axial 3.7 radR -2.65 radU -3.12 px 387,1876,
+> 198.0 pos 0.65,-38.57,-137.58 tan -0.12,0.59,-0.8 w 7.0 axial 5.2 radR -2.87 radU -1.79 px 412,1269,
+> 200.0 pos 0.42,-37.46,-139.23 tan -0.11,0.52,-0.85 w 7.0 axial 6.8 radR -3.07 radU -0.55 px 433,911,
+> 202.0 pos 0.22,-36.52,-140.98 tan -0.09,0.41,-0.91 w 7.0 axial 8.4 radR -3.24 radU 0.54 px 454,697,
+> 204.0 pos 0.04,-35.84,-142.85 tan -0.08,0.26,-0.96 w 7.0 axial 10.2 radR -3.37 radU 1.37 px 475,580,
+> 206.0 pos -0.09,-35.49,-144.81 tan -0.05,0.08,-1 w 7.0 axial 12.2 radR -3.46 radU 1.88 px 495,534,
+> 208.0 pos -0.15,-35. …[+2541 chars]
+
+### 🤖 Claude — 2026-11-20T18:44:24.307Z
+
+> 🔧 **Bash** `{"command": "sleep 60; cd /home/user/scratch/s06 && tail -3 q_before.log q_new.log 2>/dev/null; ls q_before q_new 2>/dev/null | head -40", "description": "Check render progress of the quick captures", "timeout": 120000}`
+
+### 🧑 User — 2026-11-20T18:44:24.315Z
+
+> ↩︎ result: <tool_use_error>Blocked: sleep 60 followed by: cd /home/user/scratch/s06 tail -3 q_before.log q_new.log ls q_before q_new head -40. To wait for a condition, use Monitor with an until-loop (e.g. `until <check>; do sleep 2; done`). To wait for a command you started, use run_in_background: true. Do not chain shorter sleeps to work around this block.</tool_use_error>
+
+### 🤖 Claude — 2026-11-20T18:44:25.818Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && tail -3 q_before.log q_new.log 2>/dev/null; ls q_before q_new 2>/dev/null | head -40", "description": "Check render progress of the quick captures"}`
+
+### 🧑 User — 2026-11-20T18:44:25.862Z
+
+> ↩︎ result: q_before:
+> a_start.png
+> b_open03.png
+> c_early12.png
+> d_crest20.png
+> e_entry30.png
+> f_mid50.png
+> g_late70.png
+> h_end85.png
+> i_exit97.png
+> j_07a.png
+> k_07b.png
+> l_hardL35.png
+> m_hardR35.png
+> n_hardL70.png
+> o_hardR70.png
+> shots.json
+> 
+> q_new:
+> a_start.png
+> b_open03.png
+> c_early12.png
+> d_crest20.png
+> e_entry30.png
+> f_mid50.png
+> g_late70.png
+> h_end85.png
+> i_exit97.png
+> j_07a.png
+> k_07b.png
+> l_hardL35.png
+> m_hardR35.png
+> n_hardL70.png
+> o_hardR70.png
+> shots.json
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T18:44:28.189Z
+
+Both runs finished. I'll check where the two versions actually differ before looking at the pictures.
+
+### 🤖 Claude — 2026-11-20T18:44:31.358Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && cat q_before.log | tail -2; python3 - <<'EOF'\nimport json\nfrom PIL import Image, ImageChops\nimport numpy as np\nb=json.load(open('q_before/shots.json')); n=json.load(open('q_new/shots.json'))\nfor x,y in zip(b,n):\n    A=np.asarray(Image.open(f\"q_before/{x['name']}.png\").convert('RGB')).astype(int); B=np.asarray(Image.open(f\"q_new/{y['name']}.png\").convert('RGB')).astype(int)\n    d=np.abs(A-B).max(axis=2); \n    print(f\"{x['name']:11s} s {x['s']:.2f}/{y['s']:.2f} lat {x['lat']:+.2f}/{y['lat']:+.2f} stage {x['stage']}/{y['stage']} coins {x['coi …[+155 chars]`
+
+### 🧑 User — 2026-11-20T18:44:32.222Z
+
+> ↩︎ result: 06 o_hardR70 s 229.71 lat 2.755 stage 06 coins 1680
+> q_before exit 0
+> a_start     s 198.91/198.91 lat +0.00/+0.00 stage 06/06 coins 1680/1680  px>20:    163 (0.0%)
+> b_open03    s 200.38/200.38 lat +0.00/+0.00 stage 06/06 coins 1690/1690  px>20:  20450 (6.2%)
+> c_early12   s 204.23/204.23 lat +0.00/+0.00 stage 06/06 coins 1700/1700  px>20: 124953 (37.7%)
+> d_crest20   s 207.71/207.71 lat +0.00/+0.00 stage 06/06 coins 1700/1700  px>20: 153366 (46.2%)
+> e_entry30   s 212.11/212.11 lat +0.00/+0.00 stage 06/06 coins 1710/1710  px>20: 164226 (49.5%)
+> f_mid50     s 220.91/220.91 lat +0.00/+0.00 stage 06/06 coins 1800/1800  px>20: 163178 (49.2%)
+> g_late70    s 229.71/229.71 lat +0.00/+0.00 stage 06/06 coins 1800/1800  px>20: 142867 (43.1%)
+> h_end85     s 236.31/236.31 lat +0.00/+0.00 stage 06/06 coins 1800/1800  px>20: 133660 (40.3%)
+> i_exit97    s 241.68/241.68 lat +0.00/+0.00 stage 06/06 coins 1800/1800  px>20: 182177 (54.9%)
+> j_07a       s 245.14/245.14 lat +0.00/+0.00 stage 07/07 coins 1800/1800  px>20:      0 (0.0%)
+> k_07b       s 250.92/250.92 lat +0.00/+0.00 stage 07/07 coins 1810/1810  px>20:      0 (0.0%)
+> l_hardL35   s 214.31/214.31 lat -2.95/-2.95 stage 06/06 coins 1720/1720  px>20: 171909 (51. …[+331 chars]
+
+### 🤖 Claude — 2026-11-20T18:44:42.820Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && for set in \"a_start b_open03 c_early12 d_crest20 e_entry30:1\" \"f_mid50 g_late70 h_end85 i_exit97 j_07a:2\" \"l_hardL35 m_hardR35 n_hardL70 o_hardR70 k_07b:3\"; do names=${set%%:*}; k=${set##*:}; args=(); for nm in $names; do args+=(-label \"BEFORE $nm\" q_before/$nm.png); done; for nm in $names; do args+=(-label \"NEW $nm\" q_new/$nm.png); done; montage \"${args[@]}\" -tile 5x2 -geometry 288x512+3+3 -pointsize 15 cmp$k.jpg; done; ls -la cmp*.jpg", "description": "Build BEFORE-over-NEW comparison sheets for the quick captures"}`
+
+### 🧑 User — 2026-11-20T18:44:43.703Z
+
+> ↩︎ result: -rw-r--r-- 1 root root 1225428 Nov 20 18:44 cmp1.jpg
+> -rw-r--r-- 1 root root 1214265 Nov 20 18:44 cmp2.jpg
+> -rw-r--r-- 1 root root 1195734 Nov 20 18:44 cmp3.jpg
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T18:44:44.895Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s06/cmp1.jpg"}`
+
+### 🧑 User — 2026-11-20T18:44:45.049Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T18:44:45.349Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s06/cmp2.jpg"}`
+
+### 🧑 User — 2026-11-20T18:44:45.491Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T18:44:45.650Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s06/cmp3.jpg"}`
+
+### 🧑 User — 2026-11-20T18:44:45.816Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T18:45:48.285Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && python3 - <<'EOF'\nfrom PIL import Image\nimport numpy as np\nA=np.asarray(Image.open('q_before/a_start.png').convert('RGB')).astype(int); B=np.asarray(Image.open('q_new/a_start.png').convert('RGB')).astype(int)\nd=np.abs(A-B).max(axis=2); ys,xs=np.nonzero(d>20); print('start diff px', len(xs), 'bbox x', xs.min(), xs.max(), 'y', ys.min(), ys.max(), 'max', d.max())\nEOF\ncd /home/user/wt/s06 && grep -n \"06\\b\\|'06'\\|07\" src/world/course.ts | head -40 | cut -c1-200", "description": "Locate the start-view difference and inspect how stages 06/07 are pl …[+20 chars]`
+
+### 🧑 User — 2026-11-20T18:45:48.511Z
+
+> ↩︎ result: start diff px 163 bbox x 8 430 y 7 298 max 236
+> 7: * rinse arch (06), winds through the washer tube and then PLUNGES ~62 units straight down (07) before
+> 17:import path06 from '../../assets/textures/match06/path06.json';
+> 19:export type StageId = '01' | '02' | '03' | '04' | '05' | '06' | '07' | '08' | '09' | '10' | '11';
+> 57:  '06': 'CREST THE RINSE ARCH',
+> 58:  '07': 'DIVE THE WASHER TUBE',
+> 166:/** from U05_TAIL to the 06 join the ORIGINAL curve is used verbatim, so the 05→06 junction (and the 06 up-vector
+> 167: *  smoothing, which looks ±12 samples back into 05) is bit-identical to the approved 06 */
+> 176: * here before the 06 arch too (old sine +1.71 u at u 62). Its amplitude is solved (secant on Course.length)
+> 179: * (−0.78 u) shifted every later screen (06: Benny 0.034 lower, a ring grazing the frame bottom, different
+> 180: * bubbles/foam). The 06/07 rings, lids and slot rows are additionally anchored to the 06 stage start
+> 264:  // buildRoute). Offset and slope vanish at both ends, so 04 and 06 join tangentially and s6 (hence
+> 265:  // 06/07/plunge/08) is unchanged. tube.ts builds the 05 tunnel on the line.
+> 268:  // 48 points (1.5-unit spacing) as before: the junction smoothing, hence  …[+2485 chars]
+
+### 🤖 Claude — 2026-11-20T18:45:59.160Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 273,300p src/world/course.ts | cut -c1-230; grep -n \"chamber\" src/world/worldConfig.ts 2>/dev/null | head -5; grep -rn \"center:\" src/world/*.ts | grep -i chamber | head -3", "description": "Read how the 06 river and the 07 route are defined in the course"}`
+
+### 🧑 User — 2026-11-20T18:45:59.217Z
+
+> ↩︎ result: // ---- 06: rinse arch — rises ~12 units, crests, curls down and to the right into the 07 tube ----
+>   const s6 = pts[pts.length - 1].clone();
+>   // `?match06=1` (src/world/match06.ts, qa/match/06/NOTES.md): the 06 river follows the APPROVED picture's painted river
+>   // (correction fitted with the locked 06 camera, assets/textures/match06/path06.json); value and slope are 0 at both
+>   // ends, so the 05->06 join and the whole 07 / plunge / 08 route are unchanged. Off: d06 = 0 (default route).
+>   const m06 = flag05('match06') || flag05('matchall');
+>   const d06 = (c: number[], t: number) => (m06 ? Math.sin(Math.PI * t) ** 2 * (c[0] + c[1] * Math.cos(Math.PI * t) + c[2] * Math.cos(2 * Math.PI * t)) : 0);
+>   seg(34, (t) =>
+>     V(
+>       s6.x - 4 * Math.sin(Math.PI * t) + (WORLD.chamber.center.x - s6.x) * smooth(0.4, 1, t) + d06(path06.dx, t),
+>       s6.y + 12.5 * Math.pow(Math.sin(Math.PI * Math.min(t / 0.82, 1)), 1.15) - 4.5 * smooth(0.5, 1, t) + d06(path06.dy, t),
+>       s6.z - 46 * t,
+>     ),
+>   );
+>   mark('07');
+>   // ---- 07: winding washer tube (the visible stretch) ----
+>   const s7 = pts[pts.length - 1].clone();
+>   seg(32, (t) =>
+>     V(s7.x + 3.2 * Math.sin(3 * Math.PI * t) * Math.sin(Math.PI …[+610 chars]
+
+### 🤖 Claude — 2026-11-20T18:46:57.701Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && echo \"absolute-coordinate data used by 07-10:\"; grep -ln \"WORLD.chamber\\|WORLD.plunge\" src -r | tr '\\n' ' '; echo; grep -rhoE \"match0[78]/[A-Za-z0-9_]+\\.json|cam0[78][A-Za-z0-9_]*\\.json|proj0[78][A-Za-z0-9_]*\\.json\" src | sort | uniq -c | head -20; grep -rn \"WORLD.chamber\" src | wc -l", "description": "Count the absolute-position data that Screens 07-10 depend on"}`
+
+### 🧑 User — 2026-11-20T18:46:57.767Z
+
+> ↩︎ result: absolute-coordinate data used by 07-10:
+> src/world/environment.ts src/world/course.ts src/vfx/puddles.ts 
+>       2 match08/coins08.json
+>       2 match08/proj08.json
+>       2 match08/river08.json
+>       1 match08/splash08.json
+> 5
+> Shell cwd was reset to /home/user/rainbow-
+
