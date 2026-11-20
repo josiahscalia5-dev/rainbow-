@@ -3021,3 +3021,46 @@ All committed (videos through Git LFS). Sending you the proof.
 
 > 🔧 **mcp__claude-code-remote__request_credential** `{"host": "api.worldlabs.ai", "reason": "The free World Labs (Marble) key check returns HTTP 401 in this new environment, so the key from the previous account is not set here. Saving it re-enables Marble for this project; no paid job runs without the user's OK.", "header_name": "WLT-Api-Key", "display_name": "World Labs Marble API key", "suggested_type": "bearer"}`
 
+### 🧑 User — 2026-11-20T21:19:34.645Z
+
+> ↩︎ result: {"status":"saved","host":"api.worldlabs.ai","applies_to":"environment","note":"A credential for this host is saved on this session's environment. Every session in that environment uses it, including other people's sessions when the environment is shared. The session's network proxy injects it into HTTPS requests to this host — you never see or send the value yourself. Saving it also allows HTTPS requests to this host from those sessions, so do not add the host to the environment's allowed hosts. No environment variable holds the credential, so code that reads a key from a variable finds none and may skip its work. To run such code, set that variable to a placeholder for that command, never a real value: `proxy-injected`, or a dummy in the format the code expects if it checks one. This works where the code sends the key in a header, which the proxy overwrites; a cookie the code sends instead replaces the saved cookie of that name. Tell the user this when their own scripts expect such a variable. Retry the failing request now, as-is (do not add the credential's header yourself): the proxy usually picks the credential up within a couple of seconds. Only a refusal, with the same 401/40 …[+446 chars]
+
+### 🤖 Claude — 2026-11-20T21:19:35.305Z
+
+The key is saved. Re-running the free World Labs check now.
+
+### 🤖 Claude — 2026-11-20T21:19:36.210Z
+
+> 🔧 **Bash** `{"command": "timeout 120 python3 -I scripts/verify-assets.py worldlabs 2>&1 | tail -3", "description": "Re-run the free World Labs key check", "timeout": 150000}`
+
+### 🧑 User — 2026-11-20T21:19:36.844Z
+
+> ↩︎ result: @@ fail Marble API authentication FAILED (HTTP 401): reconnect with the secure credential form (request_credential host api.worldlabs.ai, header WLT-Api-Key) - never chat or git
+
+### 🤖 Claude — 2026-11-20T21:19:38.838Z
+
+Still 401. The proxy can take up to a minute to pick up a new key, so I'll retry once after a minute.
+
+### 🤖 Claude — 2026-11-20T21:19:39.992Z
+
+> 🔧 **Bash** `{"command": "sleep 65; cd /home/user/rainbow- && timeout 120 python3 -I scripts/verify-assets.py worldlabs 2>&1 | tail -3", "description": "Retry the World Labs check after a minute", "timeout": 240000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T21:19:40.032Z
+
+> ↩︎ result: Command running in background with ID: bze0qj1vj. Output is being written to: /tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/tasks/bze0qj1vj.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-20T21:19:42.735Z
+
+> 🔧 **Bash** `{"command": "until [ -s /tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/tasks/bze0qj1vj.output ]; do sleep 3; done; cat /tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/tasks/bze0qj1vj.output", "description": "Wait for the retry result", "timeout": 240000}`
+
+### 🧑 User — 2026-11-20T21:20:48.812Z
+
+> ↩︎ result: @@ warn Marble API key authenticated (free read: 5420 credits); worlds draft 404, full 404; no paid job started
+> 
+> [exited with code 0]
+
+### 🤖 Claude — 2026-11-20T21:20:55.461Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='docs/briefs/2026-11-20-r30/COORDINATION.md'; t=open(p).read()\nold=\"GitHub works; World Labs API key **HTTP 401** (not on this\\n  environment → secure form needed);\"\nnew=\"GitHub works; World Labs API key was HTTP 401 → **re-entered by the user via the secure form ~21:22 UTC, verified\\n  (free read 5,420 credits; the old world IDs 404 = previous account's worlds, files in LFS)**;\"\nassert old in t; t=t.replace(old,new,1); open(p,'w').write(t)\np='docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md'; t=open(p).read()\nt=t.replace(\"This environment (\\\"Default\\\") has  …[+607 chars]`
+

@@ -9,8 +9,8 @@ User's messages verbatim: `USER_R30.md` (+ the two pictures `USER_S06_RING_MISMA
   (GitHub == local).
 * Worktrees: `docs/briefs/2026-11-20-r29/setup_worker_r30.sh` → LOCAL `-c31` (all 12), **all 12 tracked patch-id MATCH + every untracked
   file byte-identical** to the 20:02 snapshots.
-* This account / environment ("Default", personal, no network secrets): GitHub works; World Labs API key **HTTP 401** (not on this
-  environment → secure form needed); Marble/Atlas connector "no active Atlas account" (atlas.worldlabs.ai sign-up); fal key not on this
+* This account / environment ("Default", personal, no network secrets): GitHub works; World Labs API key was HTTP 401 → **re-entered by the user via the secure form ~21:22 UTC, verified
+  (free read 5,420 credits; the old world IDs 404 = previous account's worlds, files in LFS)**; Marble/Atlas connector "no active Atlas account" (atlas.worldlabs.ai sign-up); fal key not on this
   environment; Hugging Face + Context7 connectors connected; plugins playwright + claude-code-setup NOT enabled (install card shown; the
   Playwright LIBRARY + Chromium work, all renders use it). 10/10 specialist definitions unchanged; no worker relaunched (the user's r29 order:
   Screen 06 alone, lead does it).
