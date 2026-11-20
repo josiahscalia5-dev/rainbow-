@@ -134,10 +134,10 @@ index 388c121..c2ce315 100644
      // drain and the porthole wall (Benny left, drain lower-right as in the reference)
      const st3 = this.course.stage('03');
 diff --git a/src/gameplay/coins.ts b/src/gameplay/coins.ts
-index 0f2c1f7..d7f2bdd 100644
+index 0f2c1f7..200572d 100644
 --- a/src/gameplay/coins.ts
 +++ b/src/gameplay/coins.ts
-@@ -61,7 +61,17 @@ export function coinLayout(course: Course): CoinDef[] {
+@@ -61,7 +61,27 @@ export function coinLayout(course: Course): CoinDef[] {
    // `?match07=1&m07coins=1` (qa/match/07/m2/NOTES.md, position only): the two trail coins right behind the painted far coins
    // (which otherwise pile up on the painted cluster) continue the painted line to the right of it, at the painted coins' size for that distance (0.45)
    const m07c = m07 && flag05('m07coins'); let m07k = 0;
@@ -152,7 +152,17 @@ index 0f2c1f7..d7f2bdd 100644
 +    return lat * (1 - w) + (sbC * course.bend07At(s)) / b7.amp * w;
 +  };
 +  // (r23 m07sbend: the trail keeps the un-bent spacing — the S lengthens the plunge by b7.extra — so every coin before the plunge stays put)
-+  { const a = st('07'); const n = 24; let skip = m07 ? coins07.coins.length : 0; for (let i = 0; i < n; i++) { const s = a.s0 + 6 + i * ((a.s1 - a.s0 - 10 - (b7?.extra ?? 0)) / n); if (skip > 0 && s >= a.s0 + 14) { skip--; continue; } const far = m07c && skip === 0 && s >= a.s0 + 30 && m07k < 2; if (far) add('07', s, M07_FAR_LAT[m07k++], 0.9, { scale: 0.45 }); else add('07', s, m07Lat(s, 1.0 * Math.sin(i * 0.5 + 1))); } }
++  // r28 `&m07coinw=1` (qa/match/07/r24/PROGRESS.md; user review: coins crowd into a stacked column down the drop): down the plunge the
++  // trail snakes gently across the cyan core (±0.7 u, one swing per ~24 u, faded in after the lip and out before the 08 inlet) and the
++  // plunge coins are a little smaller, so seen down the steep slope they read as a winding line with gaps like the approved picture's
++  // far coins. Same count and s spacing (91 in the run), every coin before the plunge unchanged.
++  const m07w = !!b7 && flag05('m07coinw');
++  const coinW = (s: number, lat: number) => {
++    if (!m07w || !b7) return lat;
++    const w = THREE.MathUtils.smoothstep(s, b7.s0 + 4, b7.s0 + 12) * (1 - THREE.MathUtils.smoothstep(s, b7.s1 - 2, b7.s1 + 4));
++    return lat + 0.7 * Math.sin((s - b7.s0) * 0.26) * w;
++  };
++  { const a = st('07'); const n = 24; let skip = m07 ? coins07.coins.length : 0; for (let i = 0; i < n; i++) { const s = a.s0 + 6 + i * ((a.s1 - a.s0 - 10 - (b7?.extra ?? 0)) / n); if (skip > 0 && s >= a.s0 + 14) { skip--; continue; } const far = m07c && skip === 0 && s >= a.s0 + 30 && m07k < 2; if (far) add('07', s, M07_FAR_LAT[m07k++], 0.9, { scale: 0.45 }); else add('07', s, coinW(s, m07Lat(s, 1.0 * Math.sin(i * 0.5 + 1))), 0.9, m07w && b7 && s > b7.s0 + 4 ? { scale: 0.85 } : {}); } }
    if (m07) {
      const a = st('07');
      for (const c of coins07.coins) {

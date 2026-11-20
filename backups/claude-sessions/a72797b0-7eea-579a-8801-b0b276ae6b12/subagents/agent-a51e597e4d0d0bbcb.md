@@ -1075,3 +1075,131 @@ While the proof renders (it reads from the combo copy, so worktree edits are saf
 > 66-  const b7 = m07 ? course.bend07 : null;
 > 67-  const sbC = (() => { const v = typeof location !== 'undefined' ? parseFloat(new URLSearchParams( …[+3780 chars]
 
+### 🤖 Claude — 2026-11-20T17:20:30.093Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n -i \"coin\\|steer\" tools/match07/gameplay_test_5277.mjs | head -30", "description": "Check how the gameplay test steers and counts coins"}`
+
+### 🧑 User — 2026-11-20T17:20:30.657Z
+
+> ↩︎ result: 8://  * real coin pickups update the counter; steering into the foam wall costs a heart
+> 36:  api.setSteer(0);
+> 47:  // ---- full run 03 → 11 with a coin-seeking steering policy
+> 52:  const startCoins = prev.coins;
+> 57:  // steering policy: weave gently so Benny crosses coin lines (real pickups)
+> 61:    // coin-seeking: steer toward the lateral offset of the next untaken coin within 12 units
+> 62:    const next = api.coinDefs().find((d) => !d.taken && d.s > st.s + 0.5 && d.s < st.s + 12);
+> 64:    api.setSteer(Math.max(-1, Math.min(1, (want - st.lat) * 0.9)));
+> 77:    if (steps % 30 === 0) out.samples.push({ t: +t.toFixed(2), s: s1.s, stage: s1.stage, y: s1.bennyY, cam: s1.cam, coins: s1.coins });
+> 89:  out.checks.realCoinPickups = { pass: endState.coins > startCoins, startCoins, endCoins: endState.coins, collected: (endState.coins - startCoins) / 10 };
+> 92:  // ---- hearts: hold steer into the wall in 05
+> 94:  api.setSteer(1);
+> 98:  api.setSteer(null);
+> 119:  '(deterministic 60 Hz simulation, coin-seeking steering). Frames: `qa/continuity/07a…07d.png`',
+
+### 🤖 Claude — 2026-11-20T17:20:45.287Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"const add = \\|function add\" -A4 src/gameplay/coins.ts | head -12; grep -n \"bend07At\\|bend07 \" src/world/course.ts | head -5", "description": "Read the coin add helper and bend07 API"}`
+
+### 🧑 User — 2026-11-20T17:20:45.342Z
+
+> ↩︎ result: 46:  const add = (stage: StageId, s: number, lat: number, h = 0.9, extra: Partial<CoinDef> = {}) => out.push({ s, lat, h, stage, ...extra });
+> 47-  const st = (id: StageId) => course.stage(id);
+> 48-  // 03 — spiral trail ahead of Benny toward the drain
+> 49-  { const a = st('03'); for (let i = 0; i < 9; i++) add('03', a.s0 + 6 + i * 2.7, 0.9 - i * 0.12); }
+> 50-  // 04 — along the left edge of the slide
+> 388:    bend07 = { x: pts[marks['07_plunge_mid_end']].x, amp: A };
+> 399:  return { points: pts, marks, straight, bend07 };
+> 503:    const sw07 = !!route.bend07 && flag05('m07swing');
+> 504:    this.bend07 = route.bend07 ? { ...route.bend07, s0: this.marks['07_plunge_top'] + 2, s1: this.marks['07_plunge_bottom'] - 2, extra: grid07?.extra ?? 0, fade: sw07 ? 1 : 3 } : null;
+> 553:    const bS = this.bend07 && sw07 ? this.bend07 : null;
+
+### 🤖 Claude — 2026-11-20T17:20:58.157Z
+
+I'll write step 3 behind its own switch now (worktree only; the combo copy used by the running proof is not touched until it finishes).
+
+### 🤖 Claude — 2026-11-20T17:21:04.305Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && cp src/gameplay/coins.ts /home/user/scratch/s07/coins_before_s3.ts && python3 - <<'EOF'\nfrom pathlib import Path\np = Path('/home/user/wt/s07/src/gameplay/coins.ts'); s = p.read_text()\nold = \"  // (r23 m07sbend: the trail keeps the un-bent spacing — the S lengthens the plunge by b7.extra — so every coin before the plunge stays put)\\n\"\nassert s.count(old) == 1\nnew = old + (\n\"  // r28 `&m07coinw=1` (qa/match/07/r24/PROGRESS.md; user review: coins crowd into a stacked column down the drop): down the plunge the\\n\"\n\"  // trail snakes gently across t …[+1164 chars]`
+
+### 🧑 User — 2026-11-20T17:21:09.767Z
+
+> ↩︎ result: step3 code written
+> tsc=0
+
+### 🤖 Claude — 2026-11-20T17:21:17.098Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/match/07/r24/PROGRESS.md", "old_string": "  (`qa/match/07/r27/s2_fsoft/gameplay_NEW_fsoft.json`). Logs `/home/user/scratch/s07/logs/`. Then landmark stills from the clip.", "new_string": "  (`qa/match/07/r27/s2_fsoft/gameplay_NEW_fsoft.json`). Logs `/home/user/scratch/s07/logs/`. Then landmark stills from the clip.\n* 18:00 STEP 3 code written (NOT rendered): `&m07coinw=1` (coins.ts only, tsc 0; pre-edit copy `/home/user/scratch/s07/coins_before_s3.ts`):\n  down the plunge the trail snakes +-0.7 u across the cyan core (one swing per ~ …[+272 chars]`
+
+### 🧑 User — 2026-11-20T17:21:17.272Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/match/07/r24/PROGRESS.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T17:21:20.341Z
+
+> 🔧 **Bash** `{"command": "cat /home/user/scratch/s07/logs/proof.log 2>/dev/null; ls /home/user/scratch/s07/st_new /home/user/scratch/s07/clip_new 2>/dev/null | tail -3; tail -2 /home/user/scratch/s07/logs/*.log; uptime", "description": "Check proof render progress"}`
+
+### 🧑 User — 2026-11-20T17:21:20.413Z
+
+> ↩︎ result: start done
+> /home/user/scratch/s07/st_new:
+> a_start.png
+> shots.json
+> tail: option used in invalid context -- 2
+>  17:21:20 up 50 min,  0 user,  load average: 8.06, 7.18, 5.71
+
+### 🤖 Claude — 2026-11-20T17:21:23.793Z
+
+Start views are done. Comparing BEFORE vs NEW start pixel-for-pixel.
+
+### 🤖 Claude — 2026-11-20T17:21:25.704Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s07 && python3 -c \"\nfrom PIL import Image, ImageChops\na=Image.open('st_before/a_start.png').convert('RGB'); b=Image.open('st_new/a_start.png').convert('RGB')\nd=ImageChops.difference(a,b); bb=d.getbbox(); import numpy as np\nn=int((np.asarray(d).max(axis=2)>0).sum()); print('size',a.size,b.size,'diff px',n,'bbox',bb)\"; date -u +%H:%M", "description": "Pixel-compare the BEFORE and NEW start views"}`
+
+### 🧑 User — 2026-11-20T17:21:26.255Z
+
+> ↩︎ result: size (864, 1536) (864, 1536) diff px 2 bbox (149, 113, 151, 115)
+> 17:21
+
+### 🤖 Claude — 2026-11-20T17:21:34.614Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s07 && python3 -c \"\nfrom PIL import Image\na=Image.open('st_before/a_start.png').convert('RGB'); b=Image.open('st_new/a_start.png').convert('RGB')\nfor p in [(149,113),(150,113),(149,114),(150,114),(151,114),(150,115)]: print(p, a.getpixel(p), b.getpixel(p))\na.crop((110,80,190,150)).resize((320,280),Image.NEAREST).save('crop_b.png'); b.crop((110,80,190,150)).resize((320,280),Image.NEAREST).save('crop_n.png')\"", "description": "Inspect the two differing start-view pixels"}`
+
+### 🧑 User — 2026-11-20T17:21:34.829Z
+
+> ↩︎ result: (149, 113) (200, 82, 117) (200, 82, 117)
+> (150, 113) (182, 67, 101) (181, 67, 101)
+> (149, 114) (211, 81, 115) (210, 81, 115)
+> (150, 114) (213, 87, 116) (213, 87, 116)
+> (151, 114) (215, 90, 117) (215, 90, 117)
+> (150, 115) (212, 80, 107) (212, 80, 107)
+
+### 🤖 Claude — 2026-11-20T17:21:41.889Z
+
+> 🔧 **Bash** `{"command": "head -12 /home/user/tools-pixelmatch/pixeldiff.mjs | grep -E \"^//\"; cd /home/user/scratch/s07 && node /home/user/tools-pixelmatch/pixeldiff.mjs st_before/a_start.png st_new/a_start.png diff_start.png 2>&1 | tail -3", "description": "Run the shared pixelmatch diff on the start views"}`
+
+### 🧑 User — 2026-11-20T17:21:42.757Z
+
+> ↩︎ result: // QA only (not a game dependency). Usage: node pixeldiff.mjs A.png B.png [diff.png] [threshold=0.1] [yFrom yTo]
+> // Compares two same-size PNGs with Pixelmatch (anti-aliasing aware), optionally only rows yFrom..yTo-1.
+> {"a":"st_before/a_start.png","b":"st_new/a_start.png","rows":[0,1536],"threshold":0.1,"diff_pixels":0,"total":1327104,"diff_pct":0}
+
+### 🤖 Claude — 2026-11-20T17:21:53.596Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/07/r24 && python3 - <<'EOF'\nfrom pathlib import Path\np = Path('PROGRESS.md'); s = p.read_text()\ni = s.index('## (r28)'); j = s.index('## (r27)')\nblk = s[i:j]\nfor a, b in [('* 16:55 DONE: s08', '* 16:56 DONE: s08'), ('* 17:05 v2 quick', '* 17:01 v2 quick'), ('* 17:10 v3 written', '* 17:03 v3 written'),\n             ('* 17:20 v3 quick', '* 17:08 v3 quick'), ('* 17:25 v4 written', '* 17:09 v4 written'), ('* 17:35 v4 quick', '* 17:13 v4 quick'),\n             ('* 17:40 v5 written', '* 17:14 v5 written'), ('* 17:50 v5 quick', '* 17:18 v5 quick'), ( …[+772 chars]`
+
+### 🧑 User — 2026-11-20T17:21:53.668Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-20T17:21:56.888Z
+
+Waiting for the full NEW clip to finish rendering.
+
+### 🤖 Claude — 2026-11-20T17:21:58.561Z
+
+> 🔧 **Monitor** `{"command": "until grep -q \"label rc\\|proof all end\" /home/user/scratch/s07/logs/proof.log 2>/dev/null; do sleep 15; done; cat /home/user/scratch/s07/logs/proof.log; ls /home/user/scratch/s07/clip_new | wc -l; tail -c 400 /home/user/scratch/s07/logs/clip.log", "description": "full NEW clip render + labels finished", "timeout_ms": 3600000}`
+
+### 🧑 User — 2026-11-20T17:21:58.592Z
+
+> ↩︎ result: Monitor started (task b22uin68n, expires in 30m unless the source ends first; you get one notice at expiry — re-arm if you still need the watch). You will be notified on each event. Keep working — do not poll or sleep. Events may arrive while you are waiting for the user — an event is not their reply.
+
