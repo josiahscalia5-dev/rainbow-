@@ -1870,3 +1870,66 @@ All four workers have your note. Saving the package script into the repo for rep
 
 > 🔧 **Bash** `{"command": "sed 's#^SP=/tmp/claude-0/.*#SP=${1:?usage: regen_review_pkg_r25.sh <scratch dir for export + ZIPs>}#' /tmp/claude-0/-home-user-rainbow-/1de16074-a1ea-5d78-8ed3-5aa46f86005c/scratchpad/regen_review_pkg.sh > tools/export/regen_review_pkg_r25.sh && bash -n tools/export/regen_review_pkg_r25.sh && cp /tmp/claude-0/-home-user-rainbow-/1de16074-a1ea-5d78-8ed3-5aa46f86005c/scratchpad/Rainbow_App_Review_ZIPS/extraction_test.json docs/review_package/2026-11-20/extraction_test_r25_regenerated.json && timeout 240 bash -c 'until flock -n backups/.autosave.lock true; do sleep 2; done'; timeout  …[+429 chars]`
 
+### 🧑 User — 2026-11-20T12:15:49.179Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "bbaba6a8841aac47e482b9d4c75804bc71191218",
+> local bbaba6a8841aac47e482b9d4c75804bc71191218
+> remote bbaba6a8841aac47e482b9d4c75804bc71191218
+> MATCH
+> AUTOSAVE OK | branch ccr-a9235d04-90cw28 | scheduler daemon | last verified backup 2026-11-20T12:15:24+00:00 (0.4 min ago) | local bbaba6a remote bbaba6a (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-20T12:15:51.098Z
+
+> 🔧 **ListPlugins** `{}`
+
+### 🧑 User — 2026-11-20T12:15:51.159Z
+
+> ↩︎ result: {"results":[]}
+
+### 🤖 Claude — 2026-11-20T12:15:51.452Z
+
+> 🔧 **TaskUpdate** `{"taskId": "4", "status": "completed"}`
+
+### 🧑 User — 2026-11-20T12:15:51.469Z
+
+> ↩︎ result: Updated task #4 status
+
+### 🤖 Claude — 2026-11-20T12:16:35.277Z
+
+RAINBOW 3D BACKUP VERIFIED
+
+**How it's going:** everything is restored, and four specialists are working again on 07, 06, 04 and Benny. They started about 15 minutes ago, so there are no new pictures yet.
+
+**Do the screens look like your approved screens yet?** The start views are fairly close on several screens. None of them is yet at your 90–95% look while Benny swims. Here is what the saved notes say still looks wrong in motion:
+- **07 (being fixed first):** the middle and end still look like a straight slide with a wavy strip inside. The purple wall fills the view while steering. A speckled band shows where the water meets Screen 08.
+- **06:** the "blue cone" under Benny at the start is a hole cut out of your painted water and filled with brighter water. After the opening, the gold rings re-centre and the river looks like a straight streaky chute.
+- **04:** cleaner now: no pink walls, clearer water and low foam along the edges. You haven't seen this newest version yet. Still wrong: the far foam looks like separate bubbles instead of soft clouds, and the glints near the camera are too long.
+- **08:** the K23-3 candidate is kept but not approved. When Benny swims forward, the near water turns into a wide bright sheet with spiky sparkles instead of your narrow S-river with foam banks.
+- **05:** the end of the screen and the hard left are still open.
+- **Benny:** the knit hat improved; the felt star and the softer fur are in progress.
+
+I passed your note (clean water, neat scenery that matches your pictures as Benny goes past, 90–95%) word for word to all four specialists. I told them to judge every change while he is moving and to reject anything messy. I won't give you percentages I can't prove. Each result will come as APPROVED / BEFORE / NEW pictures plus labelled clips.
+
+**Startup report**
+- **Branches:** source `ccr-5be1062a-0ffyej` at `36bc5332f9b48cf6b638b943b2e7f1eb55b40e8c`, its last save at 11:43 UTC. The new working branch is **`ccr-a9235d04-90cw28`**. It started from that exact commit and is now at `bbaba6a8841aac47e482b9d4c75804bc71191218`; GitHub shows the same commit. Nothing was merged.
+- **Saved conversations:** the lead conversation runs to 11:17:57 UTC and the workers' to 11:12, when you stopped them. The automatic saves continued to 11:43, and no session was open from 11:43 to 11:54. Earlier gaps today, such as 06:27–09:42, were times the environment was closed, so nothing could be saved then.
+- **Files:** all 134 large files (models, Marble files, APKs, clips) have their real contents here and are confirmed on GitHub. All 13 approved references are unchanged.
+- **Automatic backup:** saving every 5 minutes to the new branch. Each save includes this conversation, the four specialists' conversations, their unfinished edits, and the agent and tool lists.
+- **One startup failure:** the first GitHub fetch failed on a network error. I re-ran it: all 206 branches downloaded and none is newer than your 11:43 save.
+- **Paid jobs:** none.
+
+**Services**
+- **Working:** GitHub, the World Labs API key (5,420 credits), fal, Hugging Face, Context7, Playwright with its browser, Blender 5.3.0, the Android build tools, Git LFS, the project tests and the worldlabs plugin.
+- **Needs you:**
+  1. **World Labs Atlas:** the connector is connected but says this login has no active Atlas account. Open atlas.worldlabs.ai, sign in with this account and finish signing up. The separate World Labs API key already works.
+  2. **Plugins:** 8 are on (including Design). The other 7 from your old account are on the install card above, from their original publishers: claude-bridge, claude-md-management, code-simplifier, commit-commands, security-guidance, typemux-cc and typescript-native-lsp. Click Install; new plugins load in the next session, and I couldn't confirm any were installed yet.
+  3. **Optional sign-ins:** the Design plugin's Figma, Notion, Slack and other connectors need sign-in only if you want them. Asana failed to connect on its side. Rainbow needs none of them.
+
+**Specialists:** all 10 definitions are present and unchanged. The worker folders were rebuilt from the 11:43 saves, with exactly the same changed files. Four are running, your limit: 07, 06, 04 and Benny. The machine has only 4 processors, so they take turns on heavy renders to avoid the timeouts from last round. Screen 08's K23-3 is kept untouched, and Screen 05 is queued next.
+
+**Review package:** I rebuilt it from the same saved version as before and sent the 7 ZIPs above; upload `Rainbow_App_Review.zip` first. All 2,161 files match the saved list exactly and there are no keys or passwords inside. The only change is the example settings file, which contains placeholders only. The known gaps are as before: there's no APK of the current work (the newest is from 11-17), your Flow videos aren't in the repository, and the newest work for each screen is still in separate versions.
+
+**Next result:** Screen 07 with the whole river in broad S-bends, the river ahead kept in view while steering, and a clean water and foam join into Screen 08 (K23-3). It comes with the same labelled swim-and-steering clip at 1.0x and 0.5x speed, next to the earlier version. In parallel, Screen 06's opening comparison you're still owed: APPROVED / what you saw / NEW.
+
