@@ -160,7 +160,9 @@ export function makeSbJoin(tube07: THREE.Object3D) {
   tube07.traverse((o) => {
     const m = (o as THREE.Mesh).material as THREE.MeshStandardMaterial | undefined;
     if (!m || !(m as THREE.MeshStandardMaterial).isMeshStandardMaterial || mats.some((x) => x.m === m)) return;
-    const fg = m.userData.farGlow as FG | undefined;
+    // withFarGlow() keeps its uniforms in userData.farGlow; perforatedMetal() (the 07 tube WALL) in userData.perfUniforms
+    const pu = m.userData.perfUniforms as Partial<FG> | undefined;
+    const fg = (m.userData.farGlow as FG | undefined) ?? (pu?.uFarGlowColor && pu.uFarGlowRange && pu.uMidTint && pu.uMidRange ? (pu as FG) : undefined);
     mats.push({ fg, m, colRest: m.color.clone(),
       rest: fg ? { col: fg.uFarGlowColor.value.clone(), rng: fg.uFarGlowRange.value.clone(), mid: fg.uMidTint.value.clone(), mrng: fg.uMidRange.value.clone() } : null });
   });

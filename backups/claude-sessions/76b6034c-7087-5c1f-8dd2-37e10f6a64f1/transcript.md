@@ -1992,3 +1992,127 @@ Typecheck is clean, and the diagnosis is done, so I'm updating the task list. Th
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && echo \"$(cat /home/user/rainbow-/qa/match/06/r30/QUERY_NEW_v2.txt)&m06sb=1\" > /home/user/rainbow-/qa/match/06/r30b/QUERY_SB_t2.txt && Q=$(cat /home/user/rainbow-/qa/match/06/r30b/QUERY_SB_t2.txt) && DIAG_S='[214.86,232,250,270,290,310,330,350,370,385]' AUDIT_PORT=5364 timeout 900 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/match06/r30b_diag.mjs /home/user/rainbow-/qa/match/06/r30b/t2 \"$Q\" 2>&1 | grep -E \"^s |stages|rror|m06sb\" | cut -c1-200; cd /home/user/rainbow-/qa/match/06/r30b/t2 && python3 -I -c \"\nfrom PIL import Image\nss=[' …[+330 chars]`
 
+### 🧑 User — 2026-11-20T22:49:09.075Z
+
+> ↩︎ result: console [match06] m06sbband {bands: 8, spacing: 18, width: 6, depth: 1.1}
+> console [match06] m06sbjoin {materials: 4, j07: 40}
+> stages {"05":{"s0":114.6883020282324,"s1":188.90987977543347},"06":{"s0":188.90987977543347,"s1":396.5534884455474},"07":{"s0":396.5534884455474,"s1":538.7310498238152},"08":{"s0":538.7310498238152,"s
+> s 214.86 stage 06 benny {"x":0.03,"y":-0.19,"z":0.987,"visible":true,"cam":[-1.25,-33.38,-146.07],"benny":[-2.56,-35.6,-153.23]}
+> s 232 stage 06 benny {"x":-0.07,"y":-0.31,"z":0.984,"visible":true,"cam":[-3.19,-34.54,-165.32],"benny":[-2.13,-38.26,-170.29]}
+> s 250 stage 06 benny {"x":-0.06,"y":-0.27,"z":0.984,"visible":true,"cam":[-0.87,-39.26,-182.85],"benny":[1.37,-42.75,-187.34]}
+> s 270 stage 06 benny {"x":-0.01,"y":-0.29,"z":0.984,"visible":true,"cam":[8.45,-45.91,-198.98],"benny":[10.77,-49.14,-203.68]}
+> s 290 stage 06 benny {"x":-0.03,"y":-0.32,"z":0.984,"visible":true,"cam":[20.11,-50.23,-215.13],"benny":[20.95,-53.51,-220.27]}
+> s 310 stage 06 benny {"x":0.01,"y":-0.32,"z":0.983,"visible":true,"cam":[29.84,-54.48,-233.08],"benny":[28.47,-57.6,-238.18]}
+> s 330 stage 06 benny {"x":-0.01,"y":-0.32,"z":0.984,"visible":true,"cam":[27.69,-58.23,-252.62],"benny":[25. …[+400 chars]
+
+### 🤖 Claude — 2026-11-20T22:49:11.660Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r30b/t2/sheet.png"}`
+
+### 🧑 User — 2026-11-20T22:49:11.770Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T22:49:41.980Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && cat > tools/match06/r30b_probe.mjs <<'EOF'\n// r30b lead (read-only): probe chosen NDC points at chosen river positions; prints the first 3 hits (object path, distance)\n//   cd <worktree> && node tools/match06/r30b_probe.mjs \"<query>\"   env: PROBE='[[350,[[0.2,0.4],[0.1,0.3]]]]'\nimport { pathToFileURL } from 'node:url';\nconst { loadPlaywright, CHROMIUM_ARGS } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);\nconst { startVite } = await import(pathToFileURL(`${process.cwd()}/tools/match06/r23_vite.mjs`).href);\nconst [Q] = proc …[+1440 chars]`
+
+### 🧑 User — 2026-11-20T22:50:02.287Z
+
+> ↩︎ result: {"s":198.91,"benny":{"x":-0.03,"y":-0.31,"z":0.984,"visible":true,"cam":[1.72,-35.37,-132.64],"benny":[0.54,-37.64,-138.27]},"hits":[{"x":0,"y":0,"h":[{"d":5.14,"obj":"fur_pom<pom<hat<body<benny_root","p":[0.74,-36.34,-137.59]},{"d":5.14,"obj":"fur_pom<pom<hat<body<benny_root","p":[0.74,-36.34,-137.59]},{"d":5.14,"obj":"fur_pom<pom<hat<body<benny_root","p":[0.74,-36.34,-137.59]}]}]}
+> {"s":350.16,"benny":{"x":-0.02,"y":-0.33,"z":0.984,"visible":true,"cam":[19.29,-61.66,-270.56],"benny":[18.53,-64.59,-275.95]},"hits":[{"x":0.25,"y":0.45,"h":[{"d":95.85,"obj":"Mesh<tube07<zone_tubes<washer_world<Scene","p":[14.57,-65.26,-366.23]},{"d":115.86,"obj":"Mesh<tube07<zone_tubes<washer_world<Scene","p":[13.58,-66.01,-386.2]}]},{"x":0.3,"y":0.35,"h":[{"d":129.94,"obj":"Mesh<tube07<zone_tubes<washer_world<Scene","p":[15.22,-73.85,-399.87]}]},{"x":0.2,"y":0.5,"h":[{"d":87.03,"obj":"Mesh<tube07<zone_tubes<washer_world<Scene","p":[13.54,-62.52,-357.4]}]}]}
+> {"s":370.143,"benny":{"x":-0.06,"y":-0.3,"z":0.984,"visible":true,"cam":[13.06,-64.95,-289.46],"benny":[13.78,-67.52,-294.99]},"hits":[{"x":0.1,"y":0.4,"h":[{"d":61.89,"obj":"Mesh<tube07<zone_tubes<washer_world<Scene","p":[24.41,-66.14,-350.29]}, …[+449 chars]
+
+### 🤖 Claude — 2026-11-20T22:50:12.349Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"farGlow\" src/world/materials.ts | head -20", "description": "Find how perforated metal applies its far glow"}`
+
+### 🧑 User — 2026-11-20T22:50:12.392Z
+
+> ↩︎ result: 49:  farGlow?: FarGlow;
+> 83:float farGlowK(){ float k = smoothstep(uFarGlowRange.x, uFarGlowRange.y, fgDist()); return uFarGlowRange.z * k * k; }
+> 94:  float fg = farGlowK(); diffuseColor.rgb = mix(diffuseColor.rgb, uFarGlowColor, min(1.0, fg * 0.5) * sol); totalEmissiveRadiance += uFarGlowColor * fg * mix(0.35, 1.0, sol); }`;
+> 96:function farGlowUniforms(g: FarGlow) {
+> 110:  const uniforms = farGlowUniforms(g);
+> 131:  mat.userData.farGlow = uniforms;
+> 272:    const fg = shader.fragmentShader.includes('float farGlowK()');
+> 333:${fg ? `  float bfg = farGlowK(); float bmt = midTintK();
+> 384:    const fg = shader.fragmentShader.includes('float farGlowK()');
+> 422:${fg ? `  float lfg = farGlowK();
+> 471:    ...(o.farGlow ? farGlowUniforms(o.farGlow) : {}),
+> 475:  if (o.farGlow) defines.PERF_FARGLOW = '';
+> 476:  if (o.farGlow && o.virtualDepth) defines.FG_VIRTUAL = '';
+> 477:  if (river && o.farGlow && o.virtualDepth) defines.PERF_RIVER = '';
+> 591:  float rfg = farGlowK();
+> 601:  mat.customProgramCacheKey = () => 'perf-v4' + (relief ? '-r' : '') + (o.farGlow ? '-g' : '') + (o.farGlow && o.virtualDepth ? '-v' : '') + (river && o.farGlow && o.virtualDepth ? '-w' : '');
+> Shell cwd was reset to /home/user/rai …[+5 chars]
+
+### 🤖 Claude — 2026-11-20T22:50:15.318Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 460,482p src/world/materials.ts; sed -n 580,600p src/world/materials.ts", "description": "Read perforated metal uniforms setup"}`
+
+### 🧑 User — 2026-11-20T22:50:15.362Z
+
+> ↩︎ result: uSlotHalf: { value: new THREE.Vector2(o.slotHalf?.[0] ?? -1, o.slotHalf?.[1] ?? -1) },
+>     uStagger: { value: o.stagger === false ? 0 : 0.5 },
+>     uOffsetV: { value: o.offsetV ?? 0 },
+>     uRelief: { value: new THREE.Vector3(relief?.corrugation ?? 0, relief?.bevel ?? 0, relief?.bevelWidth ?? 0.09) },
+>     uRimColor: { value: new THREE.Color(o.rimColor ?? '#ffd1ff') },
+>     uRimStrength: { value: o.rimStrength ?? 0.55 },
+>     uHoleCover: { value: holeCover },
+>     uRiver: { value: new THREE.Vector2(river?.halfWidth ?? 0, river?.from ?? 0) },
+>     uRiverCore: { value: new THREE.Color(river?.core ?? '#000000') },
+>     uRiverBand: { value: new THREE.Color(river?.band ?? '#000000') },
+>     uRiverFoam: { value: new THREE.Color(river?.foam ?? '#000000') },
+>     ...(o.farGlow ? farGlowUniforms(o.farGlow) : {}),
+>   };
+>   const defines: Record<string, string> = {};
+>   if (relief) defines.PERF_RELIEF = '';
+>   if (o.farGlow) defines.PERF_FARGLOW = '';
+>   if (o.farGlow && o.virtualDepth) defines.FG_VIRTUAL = '';
+>   if (river && o.farGlow && o.virtualDepth) defines.PERF_RIVER = '';
+>   mat.defines = defines;
+>   mat.userData.perfUniforms = uniforms;
+>   mat.onBeforeCompile = (shader) => {
+>     Object.assign(shader.un …[+1012 chars]
+
+### 🤖 Claude — 2026-11-20T22:50:20.876Z
+
+The perforated wall keeps its glow settings under a different internal name (`perfUniforms`), so my retint skipped it. Fixing:
+
+### 🤖 Claude — 2026-11-20T22:50:22.781Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/m06sb.ts", "old_string": "    const fg = m.userData.farGlow as FG | undefined;", "new_string": "    // withFarGlow() keeps its uniforms in userData.farGlow; perforatedMetal() (the 07 tube WALL) in userData.perfUniforms\n    const pu = m.userData.perfUniforms as Partial<FG> | undefined;\n    const fg = (m.userData.farGlow as FG | undefined) ?? (pu?.uFarGlowColor && pu.uFarGlowRange && pu.uMidTint && pu.uMidRange ? (pu as FG) : undefined);"}`
+
+### 🧑 User — 2026-11-20T22:50:22.926Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/m06sb.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T22:50:26.625Z
+
+Next I'm comparing two of the new frames at full size against storyboard panels 2 and 3, to judge the band and wall materials up close:
+
+### 🤖 Claude — 2026-11-20T22:50:30.080Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r30b/t2 && python3 -I -c \"\nfrom PIL import Image\nSB=Image.open('/home/user/rainbow-/docs/briefs/2026-11-20-r30/USER_S06_STORYBOARD_R30.png').convert('RGB')\ndef win(f):  # game frame window (28,250)-(811,1251) at 864x1536 -> scale to 432x768 render\n    im=Image.open(f).convert('RGB'); return im.crop((14,125,405,625)).resize((392,500))\np2=SB.crop((520,100,1010,724)).resize((392,500)); p3=SB.crop((16,790,506,1398)).resize((392,500))\no=Image.new('RGB',(392*4+30,500)); \nfor i,im in enumerate([p2,win('s270.png'),p3,win('s310.png')]): o.paste(im …[+110 chars]`
+
+### 🧑 User — 2026-11-20T22:50:30.437Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T22:50:33.137Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r30b/t2/cmp_p2p3.png"}`
+
+### 🧑 User — 2026-11-20T22:50:33.176Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T22:51:06.056Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image\nim=Image.open('s270.png').convert('RGB'); im.crop((0,100,200,330)).resize((400,460),Image.NEAREST).save('zoom_band270.png')\"", "description": "Zoom into a gold band in the test frame"}`
+
+### 🧑 User — 2026-11-20T22:51:06.188Z
+
+> ↩︎ result: (Bash completed with no output)
+

@@ -893,3 +893,192 @@ The overview sheet works. Checking on the clip render.
 
 > 🔧 **Bash** `{"command": "until grep -q \"flow_fixedcam\\|t05.png\" /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/tasks/bypqoesem.output 2>/dev/null || [ -f /home/user/rainbow-/qa/match/06/r30/water06/flow_fixedcam/info.json ]; do sleep 5; done; cat /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/tasks/bypqoesem.output", "description": "Wait for clip and fixed-camera renders to finish", "timeout": 900000}`
 
+### 🧑 User — 2026-11-20T22:48:35.506Z
+
+> ↩︎ result: frame 0 { s: 199.461, stage: '06', lat: 0, coins: 1680 }
+> frame 24 { s: 212.687, stage: '06', lat: 0, coins: 1700 }
+> frames 48 s0 198.91 s07 396.27066741997834
+> at s 266.01
+> 49
+> info.json
+> t00.png
+> t01.png
+> t02.png
+> t03.png
+> t04.png
+> t05.png
+> 
+> [exited with code 0]
+
+### 🤖 Claude — 2026-11-20T22:48:51.951Z
+
+> 🔧 **Bash** `{"command": "R=/home/user/rainbow-/qa/match/06/r30/water06; which ffmpeg >/dev/null && ffmpeg -loglevel error -y -framerate 24 -i $R/clip_frames/%04d.png -c:v libx264 -pix_fmt yuv420p -crf 20 -vf scale=432:768 $R/W30_clip_2s_1x.mp4 && ls -la $R/W30_clip_2s_1x.mp4; python3 -I - <<'EOF'\nimport numpy as np\nfrom PIL import Image\nR='/home/user/rainbow-/qa/match/06/r30/water06/flow_fixedcam/'\ndef g(i): return np.asarray(Image.open(R+'t%02d.png'%i).convert('L')).astype(float)\ndef pc(a,b):\n    A=np.fft.fft2(a*np.hanning(a.shape[0])[:,None]*np.hanning(a.shape[1])[None]); B=np.fft.fft2(b*np.hannin …[+760 chars]`
+
+### 🧑 User — 2026-11-20T22:48:57.365Z
+
+> ↩︎ result: -rw-r--r-- 1 root root 1431428 Nov 20 22:48 /home/user/rainbow-/qa/match/06/r30/water06/W30_clip_2s_1x.mp4
+> left water shift (dy,dx) per 0.25 s: [(np.int64(-12), np.int64(-49)), (np.int64(-35), np.int64(50)), (np.int64(3), np.int64(-55)), (np.int64(-80), np.int64(39)), (np.int64(13), np.int64(-1))]
+> right water shift (dy,dx) per 0.25 s: [(np.int64(0), np.int64(0)), (np.int64(0), np.int64(0)), (np.int64(0), np.int64(0)), (np.int64(0), np.int64(0)), (np.int64(0), np.int64(0))]
+> mid water ahead shift (dy,dx) per 0.25 s: [(np.int64(0), np.int64(0)), (np.int64(0), np.int64(0)), (np.int64(0), np.int64(0)), (np.int64(0), np.int64(0)), (np.int64(0), np.int64(0))]
+> changed px t00->t05 (water rows 900-1536): 33.9%  rows 0-700 (tunnel): 2.59%
+
+### 🤖 Claude — 2026-11-20T22:49:10.408Z
+
+Phase correlation is unreliable here (the veins also flicker by design), so I'll check the fixed-camera frames visually.
+
+### 🤖 Claude — 2026-11-20T22:49:13.107Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad && python3 -I -c \"\nfrom PIL import Image\nR='/home/user/rainbow-/qa/match/06/r30/water06/flow_fixedcam/'\nims=[Image.open(R+'t%02d.png'%i).convert('RGB').crop((0,1180,300,1536)) for i in range(4)]\nW=Image.new('RGB',(300*4+30,356),(0,0,0)); [W.paste(im,(i*310,0)) for i,im in enumerate(ims)]; W.save('flowstrip.png')\n\"", "description": "Strip of fixed-camera water crops over time"}`
+
+### 🧑 User — 2026-11-20T22:49:13.445Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T22:49:16.372Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/flowstrip.png"}`
+
+### 🧑 User — 2026-11-20T22:49:16.399Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T22:49:20.319Z
+
+The water pattern changes and drifts between frames with the camera fixed (veins move along the river, ripples spread). Now a few frames from the gameplay clip.
+
+### 🤖 Claude — 2026-11-20T22:49:23.382Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad && python3 -I -c \"\nfrom PIL import Image\nR='/home/user/rainbow-/qa/match/06/r30/water06/clip_frames/'\nfs=[0,3,6,12,24,47]\nims=[Image.open(R+'%04d.png'%i).convert('RGB').resize((288,512)) for i in fs]\nW=Image.new('RGB',(288*6,512)); [W.paste(im,(i*288,0)) for i,im in enumerate(ims)]; W.save('/home/user/rainbow-/qa/match/06/r30/water06/W30_clip_frames_0_3_6_12_24_47.jpg', quality=90); W.save('clipstrip.png')\n\"", "description": "Strip of selected gameplay clip frames"}`
+
+### 🧑 User — 2026-11-20T22:49:23.961Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T22:49:27.923Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/clipstrip.png"}`
+
+### 🧑 User — 2026-11-20T22:49:27.963Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T22:49:43.331Z
+
+> 🔧 **Bash** `{"command": "cp /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/tools/w30_flowfix.mjs /home/user/wt/water06/tools/match06/w30_flowfix.mjs && cd /home/user/wt/water06 && npx tsc --noEmit -p . && echo TSC_OK; grep -n \"w30\\|W30\" src/world/match06.ts; wc -l src/world/m06water30.ts; ls -la assets/textures/match06/tile_w30veins.png; md5sum src/world/m06water30.ts src/world/match06.ts assets/textures/match06/tile_w30veins.png; date -u +%H:%M", "description": "Copy QA script, typecheck, list hooks and file hashes"}`
+
+### 🧑 User — 2026-11-20T22:49:49.461Z
+
+> ↩︎ result: TSC_OK
+> 21:import { W30_GLSL, setupW30 } from './m06water30'; // r30 water06 `&w30=1`
+> 170:${W30_GLSL}
+> 195:#ifdef W30
+> 196:    riv = w30Water(riv, vLS, uR6p.x, uTime, dAp, fr); // r30 water06 (src/world/m06water30.ts)
+> 988:  await setupW30(floorMat, qs, FLOW); // r30 water06 `&w30=1`: rainbow water in motion (src/world/m06water30.ts)
+> 137 src/world/m06water30.ts
+> -rw-r--r-- 1 root root 241280 Nov 20 22:23 assets/textures/match06/tile_w30veins.png
+> f584a31866be75632b362073d484de88  src/world/m06water30.ts
+> 0e612b6a11fdd8dec6b060e633ce3165  src/world/match06.ts
+> 1f09ba87d818a9600310b0c42b7c65b4  assets/textures/match06/tile_w30veins.png
+> 22:49
+
+### 🤖 Claude — 2026-11-20T22:49:56.453Z
+
+Writing a self-contained patch of only my changes (so the lead can combine it) and the NOTES.md.
+
+### 🤖 Claude — 2026-11-20T22:50:03.151Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/water06 && S=/tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad && mkdir -p $S/pbase/src/world && python3 -I - <<'EOF'\nsrc=open('/home/user/wt/water06/src/world/match06.ts').read().split('\\n')\nout=[]; i=0\nwhile i < len(src):\n    l=src[i]\n    if \"import { W30_GLSL, setupW30 } from './m06water30'\" in l or l=='${W30_GLSL}' or 'await setupW30(floorMat' in l: i+=1; continue\n    if l.strip()=='#ifdef W30' and 'w30Water' in src[i+1] and src[i+2].strip()=='#endif': i+=3; continue\n    out.append(l); i+=1\nopen('/tmp/claude-0/-home-u …[+774 chars]`
+
+### 🧑 User — 2026-11-20T22:50:03.268Z
+
+> ↩︎ result: 4967
+> +++ b/src/world/match06.ts
+> @@ -18,6 +18,7 @@
+> @@ -166,6 +167,7 @@
+> @@ -190,6 +192,9 @@
+> @@ -980,6 +985,7 @@
+> +++ b/src/world/m06water30.ts
+> @@ -0,0 +1,137 @@
+> +++ b/tools/match06/w30_make_veins.py
+> @@ -0,0 +1,100 @@
+> +++ b/tools/match06/w30_flowfix.mjs
+> @@ -0,0 +1,25 @@
+> patch reverse-applies cleanly to the worktree
+
+### 🤖 Claude — 2026-11-20T22:50:28.736Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/match/06/r30/water06/NOTES.md", "content": "# Screen 06 water in motion: water06 r30b (`&w30=1`)\n\nWorktree `/home/user/wt/water06`, LOCAL branch `claude/rainbow-s06-water06-c32`. Nothing is committed or pushed. This continues the r30 work\nthat stopped at ~22:14 (the third shader iteration had been written but never rendered).\n\n## Query addition\n`&w30=1` added to `qa/match/06/r30/QUERY_NEW_v2.txt` gives NEW. It needs `match06=1&m06geo=1&m06flow=1`, which v2 already has.\nOptional tuning switches: `w30f` flow speed u/s (2.2) · `w30v` vein strength (1)  …[+4700 chars]`
+
+### 🧑 User — 2026-11-20T22:50:28.902Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/match/06/r30/water06/NOTES.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T22:50:34.113Z
+
+> 🔧 **Bash** `{"command": "ls /home/user/rainbow-/qa/match/06/r30/water06/ /home/user/rainbow-/qa/match/06/r30/water06/new /home/user/rainbow-/qa/match/06/r30/water06/before_v2; cd /home/user/wt/water06 && git status --short | grep -i w30", "description": "Confirm output files and worktree w30 files"}`
+
+### 🧑 User — 2026-11-20T22:50:34.156Z
+
+> ↩︎ result: /home/user/rainbow-/qa/match/06/r30/water06/:
+> NOTES.md
+> W30_clip_2s_1x.mp4
+> W30_clip_frames_0_3_6_12_24_47.jpg
+> before
+> before_v2
+> clip_frames
+> compare
+> flow_fixedcam
+> new
+> w30_water06.patch
+> 
+> /home/user/rainbow-/qa/match/06/r30/water06/before_v2:
+> a_start.png
+> b_214.png
+> c_238.png
+> d_266.png
+> e_310.png
+> f_387.png
+> shots.json
+> 
+> /home/user/rainbow-/qa/match/06/r30/water06/new:
+> a_start.png
+> b_214.png
+> c_238.png
+> d_266.png
+> e_310.png
+> f_387.png
+> shots.json
+> ?? assets/textures/match06/tile_w30veins.png
+> ?? tools/match06/w30_flowfix.mjs
+> ?? tools/match06/w30_make_veins.py
+
+### 🤖 Claude — 2026-11-20T22:50:45.997Z
+
+The long scratch-like streaks are gone. While Benny swims, the river now reads like the panels: cyan-blue centre with white sparkly veins, vivid pink/magenta sides, and a rainbow strip that comes and goes. It moves, but it is closer to the panels, not identical. Everything is behind one switch, the start view is unchanged, and tsc is clean.
+
+**Query addition:** `&w30=1` (v2 already has the switches it needs). Tuning defaults are listed in NOTES.md.
+
+**Files changed** (in `/home/user/wt/water06`, all uncommitted):
+- `src/world/m06water30.ts` (new): the water shader and its setup, only compiled when the switch is on.
+- `src/world/match06.ts`: 4 small hook lines (import, include, river-branch call, setup call).
+- `assets/textures/match06/tile_w30veins.png` (new, 512², 241 KB): veins, branching net and glints.
+- `tools/match06/w30_make_veins.py` (makes the texture) and `tools/match06/w30_flowfix.mjs` (fixed-camera flow check).
+- `/home/user/rainbow-/qa/match/06/r30/water06/w30_water06.patch` holds only these changes; it reverse-applies cleanly to the worktree.
+
+**Measured** (real game captures):
+- **Start view:** 0 pixels differ from BEFORE. With the switch off, the build renders exactly as before.
+- **Streakiness** of the water beside Benny (1 = parallel streaks): panels 0.46–0.51, BEFORE 0.82–0.91, NEW 0.48–0.60.
+- **Colour shares** (cyan / blue-violet / pink): panels 37–48 / 22–30 / 12–21 %, NEW 38–67 / 16–34 / 5–22 %.
+- **Flow:** a 48-frame gameplay clip (`W30_clip_2s_1x.mp4`) and a fixed-camera sequence at s 266 (`flow_fixedcam/`) both show the pattern moving.
+- **Cost:** about 4 texture reads and ~90 operations per river pixel, no loops. Android performance not measured.
+
+**Flow direction:** the water flows downstream with Benny, the same way as the existing river shader. It only streams toward the camera because Benny swims faster than the current (about 13 u/s against 2.2 u/s). With the camera held still it drifts away from the camera; `w30f` below 0 reverses that if you want it.
+
+**What still differs:**
+- The painting has more large, swooping curved light streams; mine has more jagged lightning-like veins. This shows most at the hand-over around clip frames 3–6.
+- At mid distance the pink sides are still a fairly even band. The panels show wider, more varied lavender-pink and more rainbow on the left (panels 1–2).
+- The river's on-screen width and curves come from your camera and route work; foam and the splash ring belong to the other workers.
+- Steering, gameplay and Android were not tested.
+
+Everything is in `/home/user/rainbow-/qa/match/06/r30/water06/`: `NOTES.md`, the overview sheet `compare/OVERVIEW_PANELS_BEFORE_NEW.jpg` (each panel above BEFORE and NEW), and in `compare/` the full-size `<pos>_APPROVED_BEFORE_NEW.png` triptychs plus separate labelled stills at 214.86, 238, 266, 310 and 387.
+

@@ -624,7 +624,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 24646,
-   "sha256": "9d658e4405bb7b638d95286aada34332d15fa68bed58055135f59b17ecfbc7c8"
+   "sha256": "9ed60c3875d7568495bc14355c5c28bf89ec2da201989f54d25af9802458540e"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -639,7 +639,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3441,
-   "sha256": "e5165ffd5f953f9302735c750a954aa888810bcd83a0cf795f2a9571b444c551"
+   "sha256": "c7879cccdaad75600f63a3a6ac04d967978b027c9084018a878206a60d2758ab"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -3164,7 +3164,7 @@
   {
    "path": "backups/wip/claude__rainbow-s06-benny06-c32/INFO.json",
    "bytes": 2155,
-   "sha256": "7bb56710d20619e11fc6249731773f595535ab803d0d22498d1f5919086fc10d"
+   "sha256": "ad38fffd0cf570eb8a19cd6fa0d3e450c7626d041fa212fe1133a189cc768816"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-benny06-c32/tracked.patch",
@@ -3554,7 +3554,7 @@
   {
    "path": "backups/wip/claude__rainbow-s06-foam06-c32/INFO.json",
    "bytes": 2047,
-   "sha256": "50110519d51abc4eaab5ce86c4bf813464d8c9906434cc45ddd4edc11048c42c"
+   "sha256": "b7e7a18e7b22f66e4ac1c9de1c52bfd414b27182284631154aebec61af88df88"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-foam06-c32/tracked.patch",
@@ -4548,13 +4548,13 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c32/INFO.json",
-   "bytes": 2069,
-   "sha256": "3d1a067d54e3571d9ecf1d171e2af56fa4fc04a44612af0718d31375dbb616d0"
+   "bytes": 2177,
+   "sha256": "e56ebe0c7f3bcf1a0652929c6a09dbc8a8df64af5df4b28af843446a0fbe2134"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c32/tracked.patch",
-   "bytes": 100890,
-   "sha256": "a392ae75e219c1586a284332e5ba47e512ee1012bf7965bee8288c474d444caf"
+   "bytes": 101460,
+   "sha256": "be2ce13fa2de1000458a707555cca04fb1ce63c682ba926a152b8d80e1d32f6f"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c32/untracked/assets/textures/match06/coins06deep.json",
@@ -4582,6 +4582,11 @@
    "sha256": "f207027c1069491951e3fa66c2c084e374785d1112db83d7e4d7812ac1bbeed7"
   },
   {
+   "path": "backups/wip/claude__rainbow-s06-match-c32/untracked/assets/textures/match06/route06sb.json",
+   "bytes": 39342,
+   "sha256": "370772fd788d88a242496791ebf27f07ac9fd10a0b47a75805f01f11c9cf2782"
+  },
+  {
    "path": "backups/wip/claude__rainbow-s06-match-c32/untracked/assets/textures/match06/tile_hole06.png",
    "bytes": 1271412,
    "sha256": "6e19bdfb5c70c1537f0ace4b0533796888c75741875e7506b976363cc637a936"
@@ -4598,8 +4603,13 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c32/untracked/src/world/m06sb.ts",
-   "bytes": 12045,
-   "sha256": "f500ccc6e7e74b7bb622a4ea175ead6abd82d8e338516018cc66a0b7847f4896"
+   "bytes": 12612,
+   "sha256": "85b0f3a2318eea22ac3a5a765bf8aa3abdd5935cdfe23e25cd3c298455f8b560"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s06-match-c32/untracked/src/world/route06c.ts",
+   "bytes": 835,
+   "sha256": "28428faf881ecc9b67abce19bb3e332b5fe7df5f115cd7cdf15bb308bc6822f2"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c32/untracked/tools/match06/lead23_audit_slow.mjs",
@@ -4735,6 +4745,11 @@
    "path": "backups/wip/claude__rainbow-s06-match-c32/untracked/tools/match06/r30_shots.mjs",
    "bytes": 3902,
    "sha256": "96d62d7853e8391095a5c14f6ebec2222bea3855cd8e31d33d3fe5770594228b"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s06-match-c32/untracked/tools/match06/r30b_design_sb.py",
+   "bytes": 8428,
+   "sha256": "e704a2f2d0f6e1b7f60cc662df4fcc356d35cf7000a73793cca0787540d4794b"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c32/untracked/tools/match06/r30b_diag.mjs",
@@ -4934,7 +4949,7 @@
   {
    "path": "backups/wip/claude__rainbow-s06-scen06-c32/INFO.json",
    "bytes": 2047,
-   "sha256": "e1fa15006a0d2cd43cb74eb3185927afc6b5b40c30c879ef1b5510c8be5f21b8"
+   "sha256": "a976b1fb89486c3071b3c86db180336b81d181fbe5bca47a35243d7ebc700a4a"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-scen06-c32/tracked.patch",
@@ -5324,7 +5339,7 @@
   {
    "path": "backups/wip/claude__rainbow-s06-water06-c32/INFO.json",
    "bytes": 2137,
-   "sha256": "95f1293515350cbf3ed53ab2f993d1206c89548d4edda13a9649b9499eab98e1"
+   "sha256": "e0124ec09d191bf83c93a7662e967dd58520b6c773be508630fd5e84beb9099b"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-water06-c32/tracked.patch",
@@ -5379,7 +5394,7 @@
   {
    "path": "backups/wip/claude__rainbow-s06-water06-c32/untracked/src/world/m06water30.ts",
    "bytes": 10661,
-   "sha256": "7e7c0dc71bf2c05357cc2ccbcec9b0d6c28df792ab3d106194887769db18f937"
+   "sha256": "42c6a0b31d7c029d4c970bed5e780bc911e24cd3f31832f02abbc99c9cee0ebe"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-water06-c32/untracked/tools/match06/lead23_audit_slow.mjs",
@@ -17657,6 +17672,21 @@
    "sha256": "32df134e4edfd1666f03a99f31570b5852bd6d9f61971d7111adb6f7a7831c73"
   },
   {
+   "path": "qa/match/06/r30/water06/NOTES.md",
+   "bytes": 5219,
+   "sha256": "59f661790b291f1924ed52db33406140a5ebbf34b52ea850082407773401c4c3"
+  },
+  {
+   "path": "qa/match/06/r30/water06/W30_clip_2s_1x.mp4",
+   "bytes": 1431428,
+   "sha256": "80deaee6c8bb21a3688fdfd4ff0b807b67644ddcbbce2ca9db0ef5d4e3e28a26"
+  },
+  {
+   "path": "qa/match/06/r30/water06/W30_clip_frames_0_3_6_12_24_47.jpg",
+   "bytes": 428700,
+   "sha256": "e74014574337748898eec683801ef7bf1add04b8b9fad952ce7f08ed2ff4d603"
+  },
+  {
    "path": "qa/match/06/r30/water06/before/a_start.png",
    "bytes": 2618576,
    "sha256": "6a91ba3879e4c6de53912e0e477292be35ae268a6760a7cc7ec34299fa7cce80"
@@ -17852,6 +17882,121 @@
    "sha256": "624a586b39f6d1cec1d1f25f3fc500dfbe0ec306b40ee390e38f49aa348d308d"
   },
   {
+   "path": "qa/match/06/r30/water06/clip_frames/0026.png",
+   "bytes": 2224402,
+   "sha256": "664c0b4f4977aff811f71832a8f9817285cb92ed427944e60e197f7c165cd4b7"
+  },
+  {
+   "path": "qa/match/06/r30/water06/clip_frames/0027.png",
+   "bytes": 2223037,
+   "sha256": "0b0cd5bae5d2c505165a6a8bf6b415f3da9449baceb3abe15a3815e392718de7"
+  },
+  {
+   "path": "qa/match/06/r30/water06/clip_frames/0028.png",
+   "bytes": 2220910,
+   "sha256": "def901142c89385eccfd1db31cb9f7cac297a037e962bbe1e6f547ef4a71f2ab"
+  },
+  {
+   "path": "qa/match/06/r30/water06/clip_frames/0029.png",
+   "bytes": 2216567,
+   "sha256": "b7d6b86fa2744a95f1fecfee4a541559a4282eecb7e23f2fa771a50d4afe25de"
+  },
+  {
+   "path": "qa/match/06/r30/water06/clip_frames/0030.png",
+   "bytes": 2211672,
+   "sha256": "8bdbc1d19820e796707e9fab1aac8603574fdad4a48921d72e88197444da0883"
+  },
+  {
+   "path": "qa/match/06/r30/water06/clip_frames/0031.png",
+   "bytes": 2196535,
+   "sha256": "9759707fc6cdd4a7ccffcfa75b7d9b656e3e586bf20e8cf3183adce228dded69"
+  },
+  {
+   "path": "qa/match/06/r30/water06/clip_frames/0032.png",
+   "bytes": 2202872,
+   "sha256": "5dcb34557aa938a4f19c89b5f3a6fcc71f73a50c4be10f1a8fc5bdd58a051994"
+  },
+  {
+   "path": "qa/match/06/r30/water06/clip_frames/0033.png",
+   "bytes": 2177297,
+   "sha256": "69c5daa2d784da0be530ae8ca08ded21725dfbd2757bb0c446b0722fe004a2b3"
+  },
+  {
+   "path": "qa/match/06/r30/water06/clip_frames/0034.png",
+   "bytes": 2175578,
+   "sha256": "b25dddc2003808678b02b1c3b2479fc1479680f40d0dc27edc7f5d16bb32a189"
+  },
+  {
+   "path": "qa/match/06/r30/water06/clip_frames/0035.png",
+   "bytes": 2167111,
+   "sha256": "d388aeebf138459a71c5b370e576b80654766b261af14800e1fe28f339723ac0"
+  },
+  {
+   "path": "qa/match/06/r30/water06/clip_frames/0036.png",
+   "bytes": 2169364,
+   "sha256": "17b5fdec85286114256e393ebaf027a1cc9dac363b235db55d448336e96d9ab0"
+  },
+  {
+   "path": "qa/match/06/r30/water06/clip_frames/0037.png",
+   "bytes": 2160423,
+   "sha256": "bafc90ccabcf307ef941c964a754964f58c4f6c44ee13c22824f21f81028f570"
+  },
+  {
+   "path": "qa/match/06/r30/water06/clip_frames/0038.png",
+   "bytes": 2157881,
+   "sha256": "a46d1b867051d59e3bbc07c3a7de36587f7a9894d5d3c2183766a0d8a030f290"
+  },
+  {
+   "path": "qa/match/06/r30/water06/clip_frames/0039.png",
+   "bytes": 2147093,
+   "sha256": "9f4a4f60a3716a8606d0c51cdfdd8990a0966e63f9299431a448bf7735a034f0"
+  },
+  {
+   "path": "qa/match/06/r30/water06/clip_frames/0040.png",
+   "bytes": 2133637,
+   "sha256": "57c8f1cfca3896e6d2255649626fec16b5ec6330c74d9cebcb55e81c16f3279c"
+  },
+  {
+   "path": "qa/match/06/r30/water06/clip_frames/0041.png",
+   "bytes": 2126723,
+   "sha256": "2b6a2582db8e6ad879e32f51bde0d43f65cae328fd9d932bdde82991c6838d0a"
+  },
+  {
+   "path": "qa/match/06/r30/water06/clip_frames/0042.png",
+   "bytes": 2104563,
+   "sha256": "043f80150bd4a39a3a3408924a63b14a7f0fb13662972df1d1ab61cd1b2e7c38"
+  },
+  {
+   "path": "qa/match/06/r30/water06/clip_frames/0043.png",
+   "bytes": 2106463,
+   "sha256": "ab1b4e067e1d900b59571856902e53e2f9ba2ca8a79d457afa60d72af5aabd99"
+  },
+  {
+   "path": "qa/match/06/r30/water06/clip_frames/0044.png",
+   "bytes": 2095620,
+   "sha256": "d5f34bbff3f1f85c026036943a8dd31f6ef14926e5b27fc27ef2dcad49c3ec62"
+  },
+  {
+   "path": "qa/match/06/r30/water06/clip_frames/0045.png",
+   "bytes": 2103933,
+   "sha256": "58bfe2a205697e3f1dc53755782a3e069d621452c10d8996f11626ad1b7af50f"
+  },
+  {
+   "path": "qa/match/06/r30/water06/clip_frames/0046.png",
+   "bytes": 2112579,
+   "sha256": "8192081acf5877fdd7d70590e505271111d15980060e450e7ad0f6e639adf5d6"
+  },
+  {
+   "path": "qa/match/06/r30/water06/clip_frames/0047.png",
+   "bytes": 2128642,
+   "sha256": "cdb319dac607d774f06965cf59f431e895354ac22ed8a0b5c5533f0d73f46fe9"
+  },
+  {
+   "path": "qa/match/06/r30/water06/clip_frames/frames.json",
+   "bytes": 4042,
+   "sha256": "6801a275b6bc64f201577dba98cabaf2b771f63f99b53b38a6aca74eff48c5f7"
+  },
+  {
    "path": "qa/match/06/r30/water06/compare/APPROVED_06.png",
    "bytes": 2469586,
    "sha256": "deda1439986b66a2905b7a84c5441b9251bd067b5768580b7a11d9cc3f47d6ba"
@@ -17957,6 +18102,41 @@
    "sha256": "7445dfab68654c774349ec921eb128976c0fda26cb43d5b4f4bc885364b3ca03"
   },
   {
+   "path": "qa/match/06/r30/water06/flow_fixedcam/info.json",
+   "bytes": 339,
+   "sha256": "aabaa88910c9d5a5f58a40bf1b90238dbbb314407c5244d21f22679937df64f6"
+  },
+  {
+   "path": "qa/match/06/r30/water06/flow_fixedcam/t00.png",
+   "bytes": 2299821,
+   "sha256": "f8cc3a483df042d0c05bc6084fe2d689126a4ef42fd7ff64b1f38216ea504a78"
+  },
+  {
+   "path": "qa/match/06/r30/water06/flow_fixedcam/t01.png",
+   "bytes": 2282198,
+   "sha256": "ce945f1bf2a3101ce0ea3b918e1e626487dd04323230727f569f9a048debcc05"
+  },
+  {
+   "path": "qa/match/06/r30/water06/flow_fixedcam/t02.png",
+   "bytes": 2285164,
+   "sha256": "87162d5efe2a0253cb79d40f61d67215741e21ed96625a7d7822240589e921a1"
+  },
+  {
+   "path": "qa/match/06/r30/water06/flow_fixedcam/t03.png",
+   "bytes": 2293340,
+   "sha256": "891f015bdd6cba88b0b7175fcb98a1f1970035802fc3652a9154786cc4e4cf2f"
+  },
+  {
+   "path": "qa/match/06/r30/water06/flow_fixedcam/t04.png",
+   "bytes": 2287107,
+   "sha256": "47610819b48a0c0c9dcdffd954a0ac49ab6b2de2bc1a57fb86d4428b3d399684"
+  },
+  {
+   "path": "qa/match/06/r30/water06/flow_fixedcam/t05.png",
+   "bytes": 2287672,
+   "sha256": "ee4906f9fa2e657c8a461c22a7ac96197667243f0659407a86253048dfc9f9c7"
+  },
+  {
    "path": "qa/match/06/r30/water06/new/a_start.png",
    "bytes": 2618576,
    "sha256": "6a91ba3879e4c6de53912e0e477292be35ae268a6760a7cc7ec34299fa7cce80"
@@ -17990,6 +18170,11 @@
    "path": "qa/match/06/r30/water06/new/shots.json",
    "bytes": 978,
    "sha256": "f2a6a5ed5ee95e728e33f6f0a99a106c2935ad61620daf81f076d34cf9945af8"
+  },
+  {
+   "path": "qa/match/06/r30/water06/w30_water06.patch",
+   "bytes": 331587,
+   "sha256": "d33b6c49d44d3d398332b4c7cde006c0cd312b9800676abc6c83a522de02c6e5"
   },
   {
    "path": "qa/match/06/r30b/QUERY_SB_t1.txt",
@@ -18115,6 +18300,76 @@
    "path": "qa/match/06/r30b/t1/sheet.png",
    "bytes": 2819615,
    "sha256": "893afcb0ded96c085da22180aeb1b7d9bd6f4907f70e941b6f3acde8d7531b39"
+  },
+  {
+   "path": "qa/match/06/r30b/t2/cmp_p2p3.png",
+   "bytes": 1510651,
+   "sha256": "247cf494620da37f2d7c48e9ec83cf3e4e6887e96b7fc3f1e19ae2e430da68e6"
+  },
+  {
+   "path": "qa/match/06/r30b/t2/diag.json",
+   "bytes": 76068,
+   "sha256": "edac7356a7386c9e65962144ad7bfd73d1e808e9ef00d2f3f59284294b7159dc"
+  },
+  {
+   "path": "qa/match/06/r30b/t2/s214.86.png",
+   "bytes": 622289,
+   "sha256": "5c78c9617697fa9c42551a6dab3bafd3640b94187aa01775350263dc8444ba99"
+  },
+  {
+   "path": "qa/match/06/r30b/t2/s232.png",
+   "bytes": 624295,
+   "sha256": "bf1e2dc7bafdab70f343ea3b85da8af1b4856d871b55e78309009038d868bdfa"
+  },
+  {
+   "path": "qa/match/06/r30b/t2/s250.png",
+   "bytes": 623990,
+   "sha256": "7fce1fafe448c4f82bf57c65bea599ce96f0ca304476e970a1c285f4dc09873f"
+  },
+  {
+   "path": "qa/match/06/r30b/t2/s270.png",
+   "bytes": 620615,
+   "sha256": "35fc17f48056f1d20c504c3cb3505f7329a3e648ac492a8e52dae6c4896cc017"
+  },
+  {
+   "path": "qa/match/06/r30b/t2/s290.png",
+   "bytes": 585027,
+   "sha256": "b6e4286b869141c1f344acb7ea971297b31102a6a63d3db5dc9a2458cce95db0"
+  },
+  {
+   "path": "qa/match/06/r30b/t2/s310.png",
+   "bytes": 611811,
+   "sha256": "bc22e1fbfb21e30589968b027df7817faa525e93ccb3d68e2510dc2336ac3959"
+  },
+  {
+   "path": "qa/match/06/r30b/t2/s330.png",
+   "bytes": 614542,
+   "sha256": "4951428c1c4fd6418c2db64c7adc8500611b32bdd414ee0d144aa47d116c127f"
+  },
+  {
+   "path": "qa/match/06/r30b/t2/s350.png",
+   "bytes": 620066,
+   "sha256": "fb341a240f550ec56680a4d1b358f31e3238427e7efbe4f2095ec50502e0e4e6"
+  },
+  {
+   "path": "qa/match/06/r30b/t2/s370.png",
+   "bytes": 646839,
+   "sha256": "b14be2d680987ffcdbe237339598308329bcc0827b91859093a8d6c78c9fcf8c"
+  },
+  {
+   "path": "qa/match/06/r30b/t2/s385.png",
+   "bytes": 637376,
+   "sha256": "d26145b8a44e779a78dc6355a010acf647789b5ce0d5972e9b94ef4097093fc0"
+  },
+  {
+   "path": "qa/match/06/r30b/t2/sheet.png",
+   "bytes": 1582199,
+   "sha256": "eec780724afb11277c6f063f8399da274073a9122d4887d1a0a1fc7f40f82fc2"
+  },
+  {
+   "path": "qa/match/06/r30b/t2/zoom_band270.png",
+   "bytes": 106031,
+   "sha256": "f60b028a2f5515350ad4a28ef38aa8268d967c8b51a02b4496ad138d353a6eeb"
   },
   {
    "path": "qa/match/06/relaunch/BRIEF_path-camera-transition-engineer.txt",
