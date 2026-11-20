@@ -2091,3 +2091,58 @@ The sheets are readable. Writing the verdict into the project (proof folder READ
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow- && cat > qa/match/06/r28/route/quick_r29/README.md <<'EOF'\n# Screen 06 route candidate `&m06route=1` — quick diagnostic (round 29 lead, 2026-11-20 ~18:45 UTC)\n\nIndividual playable candidate (Chromium, 432×768, deterministic stills: fixed sim steps, frozen clock, pinned water clock), NOT a combined\nbuild, NOT Android. BEFORE = `qa/match/06/r25/step2/QUERY_NEW2.txt` (the version the user last saw); NEW = BEFORE + `&m06route=1`.\nWorktree `/home/user/wt/s06` (LOCAL `claude/rainbow-s06-match-c30`), tool `tools/match06/r28_quick.mjs`, runner `quick.sh` (this  …[+5911 chars]`
 
+### 🧑 User — 2026-11-20T18:49:14.495Z
+
+> ↩︎ result: "commit": "03fc55d6eed19c67aa11f45505eef47e7a397054",
+> AUTOSAVE OK | branch ccr-ac160b4c-3hdecw | scheduler daemon | last verified backup 2026-11-20T18:48:52+00:00 (0.4 min ago) | local 03fc55d remote 03fc55d (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-20T18:49:18.124Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/match/06/r28/route/quick_r29/SHEET1_swim_start_to_middle.jpg", "/home/user/rainbow-/qa/match/06/r28/route/quick_r29/SHEET2_swim_late_exit_07.jpg", "/home/user/rainbow-/qa/match/06/r28/route/quick_r29/SHEET3_steering.jpg"], "caption": "Screen 06 route test, quick in-game captures (one candidate on its own, not Android). Each sheet: your original approved picture, then BEFORE (top row) and NEW (bottom row) at the same moments.", "display": "render", "status": "normal"}`
+
+### 🧑 User — 2026-11-20T18:49:18.686Z
+
+> ↩︎ result: 3 files delivered to user.
+>   /home/user/rainbow-/qa/match/06/r28/route/quick_r29/SHEET1_swim_start_to_middle.jpg → file_uuid: 25811482-7f6c-4a97-9220-1edfc67748ef
+>   /home/user/rainbow-/qa/match/06/r28/route/quick_r29/SHEET2_swim_late_exit_07.jpg → file_uuid: 13670a32-4c4e-4273-99c5-796a74861872
+>   /home/user/rainbow-/qa/match/06/r28/route/quick_r29/SHEET3_steering.jpg → file_uuid: 43f6060d-81e3-4a99-afc4-09492cb81de6
+
+### 🤖 Claude — 2026-11-20T18:49:20.832Z
+
+> 🔧 **TaskUpdate** `{"taskId": "4", "status": "completed", "description": "Quick diagnostic done (qa/match/06/r28/route/quick_r29/): m06route = NOT AN IMPROVEMENT; full proof not produced (not convincing). Next correction (07 entrance onto tunnel centre line, 07-10 moved as one block) awaits the user's go."}`
+
+### 🧑 User — 2026-11-20T18:49:20.850Z
+
+> ↩︎ result: Updated task #4 description, status
+
+### 🤖 Claude — 2026-11-20T18:49:54.591Z
+
+**Verdict: not an improvement.** The quick in-game captures (sheets above) show this candidate doesn't fix Screen 06, so I didn't make the full-size comparison or the clip, as you asked. The other specialists remain paused.
+
+**What this candidate changes.** It only lines the tunnel up better around the existing river. It doesn't keep your curling river and doesn't create the tunnel passage you want.
+- **What changes:** the far half of the tunnel shifts sideways toward where the river goes, and the coins grow as Benny approaches them.
+- **What stays the same:** the river's path, width and length, Benny's route, coin positions, camera, steering and the hand-over into 07.
+- **Why the deeper river was dropped:** Screen 07's entrance is only about 44 units (about 4 seconds of swimming) past Benny's start, so pushing the river deeper made it fold back on itself.
+
+**What the captures show**
+- **Unchanged:** the start view and the 3% moment are the same (only 163 pixels differ, inside the tunnel opening). Screen 07 frames are pixel-identical.
+- **Still different from your picture, in both versions:**
+  - The crest is gone after about 3%.
+  - From 50% on, the river sweeps up the right-hand side while the rings sit above-left, so Benny never travels down the middle of the rings.
+  - The hand-over into 07 jumps abruptly from 06's gold-and-purple tunnel to 07's pink tube.
+- **New problems in NEW:** a flat purple wall slab with a straight edge appears on the left (12–35%), and the grown coins form a row of big coins beside Benny at 50%.
+
+**Cause.** In your painting the river climbs up-left over the crest, then runs straight down the middle of the tunnel toward its far end. The first painted ring sits where 06 is already 85% done, and the painted tunnel continues about 60 units past 06's current end. In the game, 07's entrance is fixed 44 units ahead, about 12 units to the lower right of the tunnel's centre line, and points about 16° further right. To reach it, the river must leave the tunnel's centre and swerve right, whatever the tunnel does. Shifting the tunnel keeps that swerve and opens a seam. Bending it was rejected twice in round 11 (creased walls, rings seen edge-on). So this approach can't fix the remaining difference, and I won't run more variants of it.
+
+**The actual next correction: give 06 your painting's depth**
+- Reshape the river to the painted route: up-left over the crest, then straight through the middle of 3–5 gold rings.
+- Move 07's entrance onto the tunnel's centre line, about 30–60 units deeper, so Benny continues past the rings into 07.
+- Let the last 06 ring open into 07's tube instead of the abrupt jump.
+- Move everything from 07 onward (07, the plunge, 08, 09, 10) together as one block, so each keeps exactly its current look. I'd check their start views are pixel-identical.
+
+It makes 06 about 3–5 seconds longer, needs no artwork or paid credits, and sits behind its own switch; the current version stays. The paused 07 and 08 candidates would take the same move when combined. This goes one step beyond the test you authorized, because it moves where 07–10 sit in the game world (not how they look). Say "go" and I'll build it and show you BEFORE / NEW gameplay through the tunnel and into 07.
+
+**Correction to my earlier claim:** the 8–9.5 start-view ratings cover Screens 04–08 only. 09 and 10 are still the old stand-in scenes, 3/10 at every moment including the start. The gameplay test (all 8 checks, all 91 coins) plays the whole ride from 04 through 10 to the victory, so 09 and 10 are playable but don't yet look like your pictures.
+
+Everything is saved to GitHub (`03fc55d`, verified) and the five-minute saving is running. The captures and notes are in `qa/match/06/r28/route/quick_r29/`.
+
