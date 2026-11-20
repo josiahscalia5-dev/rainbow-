@@ -32,7 +32,7 @@ index 65c878c..a20f48e 100644
        if (mvViews.length && camera) {
          const cp = camera.getWorldPosition(_cp);
 diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
-index 2b62a35..a8db23c 100644
+index 2b62a35..e85ff44 100644
 --- a/src/world/match04m4.ts
 +++ b/src/world/match04m4.ts
 @@ -120,6 +120,15 @@ uniform float uRVar;       // r17 m04rpvar: number of painted rings stacked in t
@@ -1070,7 +1070,7 @@ index 2b62a35..a8db23c 100644
      if (arrowsOut.length) {
        const cz = -a5b.z;                                                // camera local z (forward = -z)
        // r13: fade window ahead of the camera (Benny swims ≈ 6.4 u ahead of it on 04: m04a3n0/n1 ≈ 6.5/8.5 makes every
-@@ -1825,12 +2529,51 @@ export function addM04(ctx: M04Ctx) {
+@@ -1825,12 +2529,58 @@ export function addM04(ctx: M04Ctx) {
        const go = M04.num('m04a3o', 0.55);
        const b0 = M04.num('m04a3b0', 1.6), b1 = M04.num('m04a3b1', 3.0);
        const bz = M04.num('m04a3b', 0) > 0 && benny ? benny.clone().applyMatrix4(MwInv).z : null;   // Benny's local z (same frame as cz)
@@ -1094,8 +1094,14 @@ index 2b62a35..a8db23c 100644
 +      // Each lies down FLAT on the water as it nears him (rise x m04a5vf from m04a5v0 to m04a5v1 u ahead of him), so it does
 +      // not stand up round his hat; it slides UNDER him (depth-tested: his body hides the middle, the bar ends show beside
 +      // him) and shows behind him for a moment as he leaves it (fades m04a5vb .. m04a5vb + 1.5 u behind him).
-+      const a5v = M04.num('m04a5v', 0) > 0 && M04.num('m04a5', 0) > 0 && bz !== null;
-+      const v0 = M04.num('m04a5v0', 16), v1 = M04.num('m04a5v1', 8), vf = M04.num('m04a5vf', 0.06), vb = M04.num('m04a5vb', 2.0);
++      // `m04a5v=2`: the same flat chevrons, but each fades out just before its flat bars would reach his pompom on screen
++      // (m04a5vh0 -> m04a5vh1 u ahead of him; measured on the =1 probe: a flat chevron ~8-10 u ahead of him lies at pompom
++      // height), so no thin bar shows beside his pompom / hat; they still stay in view far longer than the r22 fade
++      // (calibrated for UPRIGHT chevrons: gone 14-17 u ahead of him). Flattening for =2 from 18 -> 10 u by default.
++      const a5vm = M04.num('m04a5v', 0);
++      const a5v = a5vm > 0 && M04.num('m04a5', 0) > 0 && bz !== null;
++      const v0 = M04.num('m04a5v0', a5vm >= 2 ? 18 : 16), v1 = M04.num('m04a5v1', a5vm >= 2 ? 10 : 8), vf = M04.num('m04a5vf', 0.06), vb = M04.num('m04a5vb', 2.0);
++      const vh0 = M04.num('m04a5vh0', 8.5), vh1 = M04.num('m04a5vh1', 10.5);
        for (let i = 0; i < arrowsOut.length; i += 2) {
          const d = cz - arrowsOut[i].za;                                 // distance ahead of the camera
          // r13 `&m04a3b=1`: the near fade is measured from BENNY (m04a3b0/b1 u ahead of him), so no chevron ever sits round
@@ -1105,6 +1111,7 @@ index 2b62a35..a8db23c 100644
 +        const nearK = a5v ? THREE.MathUtils.smoothstep(bz! - arrowsOut[i].za, -vb - 1.5, -vb)
 +          : bz !== null ? THREE.MathUtils.smoothstep(bz - arrowsOut[i].za, b0, b1) : THREE.MathUtils.smoothstep(d, n0, n1);
 +        let k = arrA * nearK * (1 - THREE.MathUtils.smoothstep(d, f0, f1));
++        if (a5v && a5vm >= 2) k *= THREE.MathUtils.smoothstep(bz! - arrowsOut[i].za, vh0, vh1);
 +        if (scT && camera && k > 0 && !a5v) {
 +          // the chevron's nearest bar ends (u = +-hw at the lane plane) are its lowest points on screen
 +          const A = arrowsOut[i], hwA = A.hw ?? 1, yA = A.y ?? 0.05;

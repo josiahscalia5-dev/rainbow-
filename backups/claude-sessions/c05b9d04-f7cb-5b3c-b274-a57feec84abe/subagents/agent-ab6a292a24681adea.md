@@ -955,3 +955,123 @@ Now I'll add the clustering + soft-glow option (`m04lgcg`, new uniform `uLG7`), 
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-20T16:10:19.141Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -I - <<'EOF'\np='src/world/match04m4.ts'; s=open(p).read()\ndef rep(old,new):\n    global s\n    assert s.count(old)==1, old[:60]; s=s.replace(old,new)\nrep(\"\"\"      const a5v = M04.num('m04a5v', 0) > 0 && M04.num('m04a5', 0) > 0 && bz !== null;\n      const v0 = M04.num('m04a5v0', 16), v1 = M04.num('m04a5v1', 8), vf = M04.num('m04a5vf', 0.06), vb = M04.num('m04a5vb', 2.0);\n\"\"\",\"\"\"      // `m04a5v=2`: the same flat chevrons, but each fades out just before its flat bars would reach his pompom on screen\n      // (m04a5vh0 -> m04a5vh1 u ahea …[+1235 chars]`
+
+### 🧑 User — 2026-11-20T16:10:25.201Z
+
+> ↩︎ result: ok
+> tsc-done
+
+### 🤖 Claude — 2026-11-20T16:10:40.902Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/rainbow-/qa/match/04/r27/{s1_glint,s2_cloud,s3_arrows,s4_combined} && cd /home/user/rainbow-/qa/match/04/r27 && B=$(cat /home/user/rainbow-/qa/match/04/r26/s0_five/QUERY_NEW_K23-S3_a5.txt) && \nS1=\"m04lgc=1&m04lgt=0.035&m04lgn=5&m04lgcl=0.35&m04lgcb=0.08&m04lgcs=0.9&m04lgcgx=0.5&m04lgcgz=1.8&m04lgco=0.15&m04lgcg=0.42&m04lgch=0.4\" &&\nS2=\"m04bbdc=1&m04ry=0.35&m04bbdcb=1.6&m04bbdcl=1.3&m04bbdcw=0.45\" && S3=\"m04a5v=2\" &&\necho \"$S1\" > s1_glint/SWITCH.txt && echo \"$S2\" > s2_cloud/SWITCH.txt && echo \"$S3\" > s3_arrows/SWITCH.txt &&\nQ=$(node /home/user/ra …[+465 chars]`
+
+### 🧑 User — 2026-11-20T16:10:41.060Z
+
+> ↩︎ result: m04ry: 1
+> m04lgn: 1
+> m04lgt: 1
+> m04a5v: 1
+> m04bbdc: 1
+> m04lgcg: 1
+> m04ry=0.35
+> m04lgn=5
+> m04lgt=0.035
+
+### 🤖 Claude — 2026-11-20T16:10:50.016Z
+
+> 🔧 **Bash** `{"command": "cat > /home/user/scratch/s04/run_r27e.sh <<'EOF'\n#!/usr/bin/env bash\n# r27 s04 job E: a5v=2 probe, combined candidate K27-C 7-shot audit, whole-04 clip, gameplay\nS=/home/user/scratch/s04; R=/home/user/rainbow-/qa/match/04/r27\nexport BASE=/home/user/rainbow-/qa/match/04/r26/s0_five/QUERY_NEW_K23-S3_a5.txt\nV=/home/user/rainbow-/qa/match/04/r23/s04_tools/variant.sh\nrun() { echo \"start $1 $(date -u +%T)\"; bash $V $S/$1 5273 \"$2\"; }\nSHOTS='[[\"b2_20\",0.2,null],[\"c2_45\",0.45,null],[\"c3_55\",0.55,null],[\"d_late\",0.6,null],[\"d2_70\",0.7,null]]' run s3var/A5V2 \"m04a5v=2\ …[+1183 chars]`
+
+### 🧑 User — 2026-11-20T16:10:50.070Z
+
+> ↩︎ result: started
+> 16:10:50
+
+### 🤖 Claude — 2026-11-20T16:11:05.330Z
+
+> 🔧 **Bash** `{"command": "cat > /home/user/scratch/s04/mkproof.py <<'EOF'\n# usage: mkproof.py <outdir> <label> <src.png> <dst-name>   -> copy with a burned label strip at the top\nimport sys\nfrom PIL import Image, ImageDraw, ImageFont\nout, label, src, dst = sys.argv[1:5]\nim = Image.open(src).convert('RGB')\nd = ImageDraw.Draw(im)\nf = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 26)\nw = d.textlength(label, font=f)\nd.rectangle((0, im.height - 44, w + 24, im.height), fill=(0, 0, 0))\nd.text((12, im.height - 38), label, font=f, fill=(255, 255, 255))\nim.save(f'{out}/{dst}') …[+1345 chars]`
+
+### 🧑 User — 2026-11-20T16:11:13.512Z
+
+> ↩︎ result: /home/user/rainbow-/qa/match/04/r27/s1_glint:
+> SWITCH.txt
+> c_middle_1_ORIGINAL_APPROVED.png
+> c_middle_2_BEFORE.png
+> c_middle_3_NEW.png
+> d_late_1_ORIGINAL_APPROVED.png
+> d_late_2_BEFORE.png
+> d_late_3_NEW.png
+> near_water_crops_BEFORE-fine_vs_NEW.png
+> 
+> /home/user/rainbow-/qa/match/04/r27/s2_cloud:
+> SWITCH.txt
+> b_early_1_ORIGINAL_APPROVED.png
+> b_early_2_BEFORE.png
+> b_early_3_NEW.png
+> c_middle_1_ORIGINAL_APPROVED.png
+> c_middle_2_BEFORE.png
+> c_middle_3_NEW.png
+> d_late_1_ORIGINAL_APPROVED.png
+> d_late_2_BEFORE.png
+> d_late_3_NEW.png
+> e_end_1_ORIGINAL_APPROVED.png
+> e_end_2_BEFORE.png
+> e_end_3_NEW.png
+
+### 🤖 Claude — 2026-11-20T16:11:19.684Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s04 && python3 -I -c \"\nfrom PIL import Image\nW=Image.new('RGB',(2*400,2*330))\nfor k,v in enumerate(['V0_base','V11_clu_dense']):\n  for j,sh in enumerate(['c_middle','d_late']):\n    W.paste(Image.open(f's1var/{v}/{sh}.png').convert('RGB').crop((80,1180,480,1510)),(k*400,j*330))\nW.save('/home/user/rainbow-/qa/match/04/r27/s1_glint/near_water_crops_LEFT_BEFORE_RIGHT_NEW.png')\nW=Image.new('RGB',(2*432,768))\nfor k,v in enumerate(['V0_base','V11_clu_dense']):\n  W.paste(Image.open(f's1var/{v}/d_late.png').convert('RGB').resize((432,768)),(k*432,0))\nW.save …[+183 chars]`
+
+### 🧑 User — 2026-11-20T16:11:20.244Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T16:11:21.264Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s04/v11_whole.png"}`
+
+### 🧑 User — 2026-11-20T16:11:21.296Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T16:11:31.288Z
+
+> 🔧 **Bash** `{"command": "cat /home/user/scratch/s04/run_r27e.out; date -u +%T; bash /home/user/rainbow-/tools/lead25/render_slot.sh --status", "description": "Check final job status"}`
+
+### 🧑 User — 2026-11-20T16:11:31.342Z
+
+> ↩︎ result: 16:11:31
+> slot 1 busy
+> slot 2 busy
+
+### 🤖 Claude — 2026-11-20T16:11:37.675Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s04 && python3 -I - <<'EOF'\np='run_r27e.sh'; s=open(p).read()\nold=\"\"\"SHOTS='[[\"b2_20\",0.2,null]\"\"\"\nnew=\"\"\"F=\"m04lgc=1&m04lgt=0.035&m04lgn=5&m04lgcl=0.35&m04lgcb=0.08&m04lgcs=0.9&m04lgcgx=0.5&m04lgcgz=1.8&m04lgco=0.15&m04lgcg=0.42&m04lgch=0.4\"\nSHOTS='[[\"c_middle\",0.35,null],[\"d_late\",0.6,null]]' run s1var/V13_clu_hand \"$F&m04lgc0=12&m04lgc1=18\"\nSHOTS='[[\"b2_20\",0.2,null]\"\"\"\nassert s.count(old)==1; s=s.replace(old,new,1); open(p,'w').write(s); print('ok')\nEOF\ncat /home/user/scratch/s04/run_r27e.out", "description": "Add far-hando …[+32 chars]`
+
+### 🧑 User — 2026-11-20T16:11:37.784Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-20T16:11:46.725Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/04/r23/PROGRESS.md", "limit": 20}`
+
+### 🧑 User — 2026-11-20T16:11:46.754Z
+
+> ↩︎ result: 1	# Screen 04 — round 23 (new account, lead session branch `claude/rainbow-r22-restore-ut3m39`) — lead log
+> 2	
+> 3	## (r27) WHERE I STOPPED / NEXT — s04 specialist (relaunched r27 ~15:20 UTC, worktree `/home/user/wt/s04`, LOCAL branch `claude/rainbow-s04-match-c28`)
+> 4	* Worktree = r26 state restored (K23-S3 code + `m04lgc` + `m04a5` + `m04bbdc`), ports 5273/5274, scratch `/home/user/scratch/s04/`.
+> 5	* Lost r26 variant renders recovered from the r26 transcript (exact overrides) and re-rendering: `/home/user/scratch/s04/run_r27a.sh`
+> 6	  (V0_base, V4_fine, V5_fine2 + new V6_thin, V7_sparse; step-2 C1_cloud, C2_cloud_low), base = `qa/match/04/r26/s0_five/QUERY_NEW_K23-S3_a5.txt`.
+> 7	* 15:35 rendered V0/V4/V5/V6/V7 + C1/C2 + C3_cloud_full (`m04bbdc=1&m04ry=0.35&m04bbdcb=1.6&m04bbdcl=1.3&m04bbdcw=0.45`, fuller banks
+> 8	  = my step-2 pick so far). V4..V7 still read as an even sprinkle of separate white dashes. NEW CODE (tsc 0, default off):
+> 9	  `&m04lgcg=t` crescents gather in clusters along the swirl ridges (+ `m04lgcgx`/`m04lgcgz` cluster size, `m04lgch` soft cyan halo,
+> 10	  uniform `uLG7`); V8-V10 too sparse, V11/V12 denser queued. `&m04a5v=1` (step 3): the five chevrons lie flat and slide  …[+1184 chars]
+
+### 🤖 Claude — 2026-11-20T16:11:47.113Z
+
+You've hit your 5-hour limit · resets 8:10pm (UTC)
+
