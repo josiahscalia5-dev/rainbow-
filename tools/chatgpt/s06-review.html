@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Rainbow Screen 06 — development review</title>
+    <style>
+      :root { color-scheme: dark; font: 15px/1.5 system-ui,sans-serif; background:#151123; color:#f7f2ff; }
+      * { box-sizing:border-box; } body { margin:0; padding:22px; } h1 { margin:0 0 5px; font-size:25px; } h2 { margin:0 0 10px; font-size:17px; }
+      p { margin:5px 0 12px; } .muted { color:#c5bbd9; } .tag { color:#84f3ee; font-size:12px; letter-spacing:.06em; font-weight:700; }
+      .layout { display:grid; grid-template-columns:minmax(300px,390px) minmax(432px,1fr); gap:20px; align-items:start; max-width:1180px; margin:20px auto; }
+      section { padding:17px; background:#211a32; border:1px solid #4b3a64; border-radius:12px; margin-bottom:14px; }
+      button,a.download { display:inline-block; border:1px solid #705195; border-radius:7px; background:#38264e; color:#fff; padding:9px 11px; font:inherit; cursor:pointer; text-decoration:none; }
+      button:hover,a.download:hover { background:#51386d; } button:disabled { cursor:wait; opacity:.45; }
+      button.primary { background:#5e3390; border-color:#b98ae8; } button.stop { background:#622c3b; } .buttons { display:flex; flex-wrap:wrap; gap:7px; }
+      label { display:block; margin:9px 0 5px; } label.inline { display:flex; gap:8px; align-items:center; }
+      input[type=checkbox] { width:18px; height:18px; } textarea,pre { width:100%; color:#e7def3; background:#130f1e; border:1px solid #59416f; border-radius:6px; padding:10px; font:12px/1.45 ui-monospace,monospace; }
+      textarea { resize:vertical; } pre { max-height:300px; overflow:auto; white-space:pre-wrap; overflow-wrap:anywhere; }
+      #status { padding:12px 15px; border:1px solid #4e7881; background:#173039; border-radius:9px; min-height:48px; }
+      #runtime-status { font-variant-numeric:tabular-nums; } #game { width:432px; height:768px; border:0; display:block; background:#2a0b46; border-radius:10px; }
+      .preview { display:flex; justify-content:center; } #model-frame { width:2px; height:2px; opacity:0; position:absolute; left:-20px; pointer-events:none; }
+      #gallery { display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:13px; } figure { margin:0; background:#201930; border-radius:8px; overflow:hidden; border:1px solid #4b3a64; }
+      figure img { width:100%; height:auto; display:block; } figcaption { padding:9px; font-size:12px; } figcaption a { color:#a8f5f2; }
+      details { margin-top:12px; } summary { cursor:pointer; color:#d8c2f4; } #exports a { margin:4px 5px 4px 0; } .notice { border-left:3px solid #e7bf70; padding-left:10px; color:#e4cfaa; font-size:13px; }
+      @media(max-width:850px) { body { padding:12px; } .layout { grid-template-columns:1fr; } .preview { overflow:auto; justify-content:flex-start; } }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="tag">DEVELOPMENT REVIEW · ACTUAL GAME RENDERING</div>
+      <h1>Rainbow Screen 06</h1>
+      <p class="muted">Review the saved playable candidate. Captures below come from the game canvas. They are not repainted artwork.</p>
+      <div id="status" role="status" aria-live="polite">Ready to load. The original model builders can rebuild missing model files for this browser review.</div>
+    </header>
+    <main class="layout">
+      <div>
+        <section>
+          <h2>1. Load the existing game</h2>
+          <div class="buttons">
+            <button class="primary" id="build-load" data-task>Build original models and load Screen 06</button>
+            <button id="load-game" data-task>Load Screen 06 with current query</button>
+          </div>
+          <label class="inline"><input id="use-models" type="checkbox" checked />Use original models rebuilt in this browser</label>
+          <p class="notice">Rebuilt models are temporary browser assets until their GLB downloads are saved into the repository. Game source and saved model files are unchanged.</p>
+          <details>
+            <summary>Query and model export controls</summary>
+            <label for="query">Verified saved candidate query</label><textarea id="query" rows="5"></textarea>
+            <label for="overrides">Optional query overrides</label><textarea id="overrides" rows="2" placeholder="m06pad=1"></textarea>
+            <div class="buttons">
+              <button id="export-benny" data-task>Export original Benny GLB</button>
+              <button id="export-girl" data-task>Export original girl GLB</button>
+            </div>
+            <div id="exports" aria-label="Model downloads"></div>
+            <pre id="model-status">No models rebuilt in this review yet.</pre>
+          </details>
+        </section>
+        <section>
+          <h2>2. Capture named positions</h2>
+          <p class="muted">Each begins at the actual 06 checkpoint, advances at 60 simulation steps per second, and uses a fixed shader time.</p>
+          <div class="buttons">
+            <button data-shot="start" data-task>Capture start</button>
+            <button data-shot="early" data-task>Capture early 12%</button>
+            <button data-shot="middle" data-task>Capture middle 35%</button>
+            <button data-shot="late" data-task>Capture late 60%</button>
+            <button data-shot="end" data-task>Capture end 85%</button>
+            <button data-shot="left" data-task>Capture held left 35%</button>
+            <button data-shot="right" data-task>Capture held right 35%</button>
+            <button data-shot="entry07" data-task>Capture actual entry into 07</button>
+            <button id="capture-all" data-task>Capture all eight positions</button>
+            <button id="cancel" class="stop">Cancel current operation</button>
+          </div>
+        </section>
+        <section>
+          <h2>3. Play the continuous route</h2>
+          <div class="buttons">
+            <button id="play-from-start" data-task>Play continuously from 06</button>
+            <button id="resume" data-task>Resume motion</button>
+            <button id="pause">Pause motion</button>
+            <button id="steer-left">Steer left</button>
+            <button id="steer-center">Steer center</button>
+            <button id="steer-right">Steer right</button>
+            <button id="capture-current" data-task>Capture current game frame</button>
+          </div>
+          <p class="muted">Steering stays selected until changed. Live motion uses the game's own loop and may slow down if rendering is overloaded.</p>
+          <div id="runtime-status" role="status">Game not loaded.</div>
+        </section>
+        <section>
+          <h2>Inspect the real geometry</h2>
+          <label class="inline"><input id="cutaway" type="checkbox" checked />Cut away enclosing 06 walls; show rings as wireframe</label>
+          <div class="buttons">
+            <button data-inspect="top" data-task>Inspect from above</button>
+            <button data-inspect="side" data-task>Inspect from the side</button>
+          </div>
+          <p class="muted">Diagnostic views are labeled separately from gameplay captures.</p>
+        </section>
+        <section>
+          <h2>Evidence and errors</h2>
+          <div class="buttons"><button id="download-metadata">Download review metadata</button></div>
+          <pre id="metadata" aria-label="Capture metadata">No captures yet.</pre>
+        </section>
+      </div>
+      <div>
+        <section>
+          <h2>Live game · 432 × 768</h2>
+          <div class="preview"><iframe id="game" title="Playable Rainbow Screen 06" width="432" height="768" allow="autoplay"></iframe></div>
+        </section>
+        <section>
+          <h2>Captured game frames</h2>
+          <div id="gallery" aria-label="Actual gameplay captures"></div>
+        </section>
+      </div>
+    </main>
+    <iframe id="model-frame" title="Original character model export"></iframe>
+    <script type="module" src="./s06-review.ts"></script>
+  </body>
+</html>
