@@ -3139,3 +3139,56 @@ Typecheck clean. Rendering two variants side by side (camera distance k = 1.0 an
 
 > 🔧 **Bash** `{"command": "B=/home/user/rainbow-/qa/match/06/r30b; (cd /home/user/wt/s06 && Q=$(cat $B/QUERY_SB_NEW.txt) && AUDIT_W=864 AUDIT_H=1536 AUDIT_PORT=5369 AUDIT_PIN=10000 AUDIT_SHOTS='[[\"start\",0,null],[\"p1_214.86\",214.86,null],[\"p2_250\",250,null],[\"p3_290\",290,null],[\"p4_330\",330,null]]' timeout 1800 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/match06/r30_shots.mjs $B/proof/new 06 \"$Q\" > $B/proof/new.log 2>&1) & (cd /home/user/wt/scen06 && Q=$(cat /home/user/rainbow-/qa/match/06/r30/QUERY_NEW_v2.txt) && AUDIT_W=864 AUDIT_H=1536 AUDIT_PORT=5352 AUDIT_PIN=10000 AUDIT …[+390 chars]`
 
+### 🧑 User — 2026-11-20T23:15:10.680Z
+
+> ↩︎ result: [1]-  Exit 1                  ( cd /home/user/wt/s06 && Q=$(cat $B/QUERY_SB_NEW.txt) && AUDIT_W=864 AUDIT_H=1536 AUDIT_PORT=5369 AUDIT_PIN=10000 AUDIT_SHOTS='[["start",0,null],["p1_214.86",214.86,null],["p2_250",250,null],["p3_290",290,null],["p4_330",330,null]]' timeout 1800 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/match06/r30_shots.mjs $B/proof/new 06 "$Q" > $B/proof/new.log 2>&1 )
+> [2]+  Done                    ( cd /home/user/wt/scen06 && Q=$(cat /home/user/rainbow-/qa/match/06/r30/QUERY_NEW_v2.txt) && AUDIT_W=864 AUDIT_H=1536 AUDIT_PORT=5352 AUDIT_PIN=10000 AUDIT_SHOTS='[["start",0,null],["p1_214.86",214.86,null]]' timeout 1800 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/match06/r30_shots.mjs $B/proof/baseline 06 "$Q" > $B/proof/baseline2.log 2>&1 )
+>   name: 'TimeoutError'
+> 06 start s 198.91 lat 0 stage 06 coins 1680
+> 06 p1_214.86 s 214.86 lat 0 stage 06 coins 1700
+
+### 🤖 Claude — 2026-11-20T23:15:15.073Z
+
+> 🔧 **Bash** `{"command": "tail -20 /home/user/rainbow-/qa/match/06/r30b/proof/new.log | cut -c1-200; ls /home/user/rainbow-/qa/match/06/r30b/proof/new/ 2>&1; uptime", "description": "Inspect the failed new-frame render"}`
+
+### 🧑 User — 2026-11-20T23:15:15.115Z
+
+> ↩︎ result: node:internal/modules/run_main:123
+>     triggerUncaughtException(
+>     ^
+> 
+> page.waitForFunction: Timeout 300000ms exceeded.
+>     at /home/user/wt/s06/tools/match06/r30_shots.mjs:27:14 {
+>   log: [],
+>   name: 'TimeoutError'
+> }
+> 
+> Node.js v22.23.5
+> shots.json
+>  23:15:15 up  1:05,  0 user,  load average: 0.02, 0.83, 2.30
+
+### 🤖 Claude — 2026-11-20T23:15:18.254Z
+
+The new-frame render timed out while loading the page (both renders were starting at once). The machine is idle now, so I'm retrying it alone:
+
+### 🤖 Claude — 2026-11-20T23:15:20.519Z
+
+> 🔧 **Bash** `{"command": "B=/home/user/rainbow-/qa/match/06/r30b; cd /home/user/wt/s06 && Q=$(cat $B/QUERY_SB_NEW.txt) && AUDIT_W=864 AUDIT_H=1536 AUDIT_PORT=5369 AUDIT_PIN=10000 AUDIT_SHOTS='[[\"start\",0,null],[\"p1_214.86\",214.86,null],[\"p2_250\",250,null],[\"p3_290\",290,null],[\"p4_330\",330,null]]' timeout 1800 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/match06/r30_shots.mjs $B/proof/new 06 \"$Q\" 2>&1 | grep -E \"^06|rror\" | cut -c1-90", "description": "Retry the full-size new-frame render", "timeout": 1900000}`
+
+### 🧑 User — 2026-11-20T23:15:55.658Z
+
+> ↩︎ result: 06 start s 198.91 lat 0 stage 06 coins 1680
+> 06 p1_214.86 s 214.86 lat 0 stage 06 coins 1700
+> 06 p2_250 s 250.06 lat 0 stage 06 coins 1740
+> 06 p3_290 s 290.027 lat 0 stage 06 coins 1760
+> 06 p4_330 s 330.177 lat 0 stage 06 coins 1780
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T23:16:01.312Z
+
+All five full-size frames rendered. Building the four numbered comparisons, and measuring the start view against the baseline:
+
+### 🤖 Claude — 2026-11-20T23:16:05.884Z
+
+> 🔧 **Bash** `{"command": "B=/home/user/rainbow-/qa/match/06/r30b/proof && python3 -I /home/user/wt/s06/tools/match06/r30b_proof.py $B/baseline $B/new $B/sheets 238,266,310,387 214.86,250,290,330 && cd $B && python3 -I -c \"\nfrom PIL import Image; import numpy as np\na=np.asarray(Image.open('baseline/start.png').convert('RGB')).astype(int); b=np.asarray(Image.open('new/start.png').convert('RGB')).astype(int)\nd=np.abs(a-b).max(2); m=np.ones(d.shape,bool); m[600:1260,200:700]=False\nprint(f'start view NEW vs BASELINE: whole frame identical {100*(d==0).mean():.2f} %, within 20 levels {100*(d<=20).mean():.2f} …[+552 chars]`
+
