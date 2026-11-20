@@ -1216,3 +1216,12 @@ Let me view the approved reference and the lead's e_end / f_hard_left / g_hard_r
 > 324:  // `&m05fcoin=1` (Screen 05 round 12): a coin's visual place on the far river's core (see M05FCOIN)
 > 161:export const flag05 = q05;
 
+### 🤖 Claude — 2026-11-20T17:10:52.814Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\nimport re\np='src/world/match05far.ts'\ns=open(p).read()\nanchor=\"export const far05Coins = {\"\nadd='''/**\n * `&m05endr=1` (Screen 05 round 28, needs m05far; qa/match/05/r27/PROGRESS.md step 1): THE END OF 05 KEEPS THE PAINTED WINDING\n * RIVER. From ≈ 12 % of the stage on the far seam is capped (s ≈ 186.5) and Benny closes in on it; at 85 % everything above the\n * screen middle is the far block's river. Its layout right behind the seam is the real ribbon's, wall to wall (half width 5.2\n * of the 6.53 floor half chord), and narrows o …[+3513 chars]`
+
+### 🧑 User — 2026-11-20T17:10:52.909Z
+
+> ↩︎ result: 3
+> 192:  let D0 = D0lock, zs = 0;
+

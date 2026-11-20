@@ -2895,3 +2895,16 @@ The Screen 05 specialist created its proof folder right after that save. Saving 
 
 > 🔧 **Bash** `{"command": "until ! pgrep -f \"rainbow-autosave.py\" >/dev/null; do sleep 3; done; python3 scripts/rainbow-autosave.py --reason manual:stop-hook 2>&1 | grep -E '\"result\"|\"commit\"|\"error\"|skipping'; git rev-parse HEAD; git ls-remote origin refs/heads/ccr-9652868f-lkw0w0; git status --short", "description": "Save new Screen 05 folder and verify remote", "timeout": 300000}`
 
+### 🧑 User — 2026-11-20T17:10:52.405Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "commit": "3bc07be47f057111ec0f764e81e198edecdffe00",
+> 3bc07be47f057111ec0f764e81e198edecdffe00
+> 3bc07be47f057111ec0f764e81e198edecdffe00	refs/heads/ccr-9652868f-lkw0w0
+
+### 🤖 Claude — 2026-11-20T17:10:55.314Z
+
+Everything is saved: commit `3bc07be47f057111ec0f764e81e198edecdffe00` is on GitHub and matches this checkout, with nothing uncommitted. It includes the new Screen 05 proof folder, which the specialist created just after the previous save.
+
+The four specialists are still working: the Screen 06 route test, plus Screens 07, 04 and 05. Their files will keep changing between saves, and the five-minute autosave keeps pushing them.
+
