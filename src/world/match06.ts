@@ -788,7 +788,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
     // kept fraction `&m06fclk=`), hugging the water edge (lateral band `&m06fclw=` u instead of 1.3) and sitting lower.
     const FCL = qs?.get('m06fcl') === '1';
     const fnum = (k: string, d: number) => { const v = Number(qs?.get(k)); return qs?.get(k) != null && qs?.get(k) !== '' && Number.isFinite(v) ? v : d; };
-    const fclP = fnum('m06fclp', 4.5), fclK = fnum('m06fclk', 0.45), fclW = fnum('m06fclw', 0.7);
+    const fclP = fnum('m06fclp', 3.5), fclK = fnum('m06fclk', 0.65), fclW = fnum('m06fclw', 0.7);
     const heap = (s: number, side: number) => {
       const ph = ((s - L.s0) / fclP + (side > 0 ? 0.5 : 0)) % 1; // 0..1 within one heap period, the sides half a period apart
       return 1 - Math.abs(ph * 2 - 1); // 1 at a heap centre, 0 in the gap

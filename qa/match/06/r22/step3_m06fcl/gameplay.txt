@@ -1,0 +1,5 @@
+gold=1&m06fclu=1&m06fcl=1 pass True 8 / 8 coins 1330 -> 2240 91
+fclu=1&m06view=1&m06fcl=1 pass True 8 / 8 coins 1330 -> 2240 91
+ "ok": true,
+  "05->06 gap=0 dT=0.281 y=-43.35",
+  "06->07 gap=0 dT=0.114 y=-48.53",

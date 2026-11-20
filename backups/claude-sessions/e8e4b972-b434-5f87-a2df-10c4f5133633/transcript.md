@@ -820,3 +820,101 @@ Step 2 pushed and reported. Now task 3: the big white foam walls. Finding how th
 
 > 🔧 **Bash** `{"command": "K6='match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1'\nexport AUDIT_SHOTS='[[\"a_start\", 0, null], [\"b_early\", 0.12, null], [\"b2_early\", 0.22, null], [\"c_middle\", 0.35, null], [\"c2_middle\", 0.47, null], [\"d_late\", 0.6, null], [\"e_end\", 0.85, null], [\"f_hard_left\", 0.35, -1], [\"g_hard_right\", 0.35, 1], [\"h_left_early\", 0.15, -1], [\"i_right_early\", 0.15, 1]]'\nD=qa/match/06/r22/step3_m06fcl; mkdir -p $D; cp references/06_crest_the_rinse_arch.png $D/1_APPROVED.png\n(AUDIT_PORT=5276 timeout 900 node tools/lea …[+996 chars]`
 
+### 🧑 User — 2026-11-20T03:54:20.366Z
+
+> ↩︎ result: 06 i_right_early s 205.51 lat 2.95 stage 06 coins 1680
+> 06 i_right_early s 205.51 lat 2.95 stage 06 coins 1680
+> {"a":"qa/match/06/r22/step1_m06view/BEFORE/c_middle.png","b":"qa/match/06/r22/step3_m06fcl/BEFORE/c_middle.png","rows":[0,1536],"threshold":0.1,"diff_pixels":211595,"total":1327104,"diff_pct":15.9441}
+> {"a":"qa/match/06/r22/step1_m06view/BEFORE/e_end.png","b":"qa/match/06/r22/step3_m06fcl/BEFORE/e_end.png","rows":[0,1536],"threshold":0.1,"diff_pixels":259128,"total":1327104,"diff_pct":19.5258}
+
+### 🤖 Claude — 2026-11-20T03:54:22.874Z
+
+BEFORE differs from the earlier BEFORE render — checking whether my change altered the existing foam layout or the renders just vary between runs.
+
+### 🤖 Claude — 2026-11-20T03:54:25.480Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e8e4b972-b434-5f87-a2df-10c4f5133633/scratchpad; python3 -c \"\nfrom PIL import Image\nW=Image.new('RGB',(864,768))\nfor j,p in enumerate(['qa/match/06/r22/step1_m06view/BEFORE/c_middle.png','qa/match/06/r22/step3_m06fcl/BEFORE/c_middle.png']):\n  W.paste(Image.open(p).convert('RGB').resize((432,768)),(432*j,0))\nW.save('$S/bdiff.png')\"", "description": "Side-by-side of the two BEFORE renders"}`
+
+### 🧑 User — 2026-11-20T03:54:25.772Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T03:54:27.710Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e8e4b972-b434-5f87-a2df-10c4f5133633/scratchpad/bdiff.png"}`
+
+### 🧑 User — 2026-11-20T03:54:27.742Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:54:29.696Z
+
+Same scene (foam identical; only water shimmer differs between runs). Now the foam comparison.
+
+### 🤖 Claude — 2026-11-20T03:54:30.732Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e8e4b972-b434-5f87-a2df-10c4f5133633/scratchpad/fcl1.png"}`
+
+### 🧑 User — 2026-11-20T03:54:30.937Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:54:39.158Z
+
+NEW removes the white walls, but now too little foam is left in view; the painting has clear puffy heaps. Trying denser heaps (more of each heap kept, shorter gaps).
+
+### 🤖 Claude — 2026-11-20T03:54:44.875Z
+
+> 🔧 **Bash** `{"command": "K6='match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1'\nexport AUDIT_SHOTS='[[\"b_early\", 0.12, null], [\"c_middle\", 0.35, null], [\"d_late\", 0.6, null], [\"g_hard_right\", 0.35, 1], [\"h_left_early\", 0.15, -1]]'\nS=/tmp/claude-0/-home-user-rainbow-/e8e4b972-b434-5f87-a2df-10c4f5133633/scratchpad\n(AUDIT_PORT=5276 timeout 900 node tools/lead21/audit_screen.mjs $S/v2 06 \"$K6&m06fcl=1&m06fclk=0.65&m06fclp=3.5\" > $S/v2.log 2>&1 &)\nAUDIT_PORT=5277 timeout 900 node tools/lead21/audit_screen.mjs $S/v3 06 \"$K6&m06fcl=1&m06fcl …[+526 chars]`
+
+### 🧑 User — 2026-11-20T03:55:35.011Z
+
+> ↩︎ result: 06 h_left_early s 205.51 lat -2.95 stage 06 coins 1720
+
+### 🤖 Claude — 2026-11-20T03:55:36.825Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e8e4b972-b434-5f87-a2df-10c4f5133633/scratchpad/fcl2.png"}`
+
+### 🧑 User — 2026-11-20T03:55:37.042Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:55:48.115Z
+
+> 🔧 **Bash** `{"command": "sed -i \"s/const fclP = fnum('m06fclp', 4.5), fclK = fnum('m06fclk', 0.45)/const fclP = fnum('m06fclp', 3.5), fclK = fnum('m06fclk', 0.65)/\" src/world/match06.ts && grep -n \"fclP = \" src/world/match06.ts && npx tsc --noEmit -p . && K6='match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1'\nexport AUDIT_SHOTS='[[\"a_start\", 0, null], [\"b_early\", 0.12, null], [\"b2_early\", 0.22, null], [\"c_middle\", 0.35, null], [\"c2_middle\", 0.47, null], [\"d_late\", 0.6, null], [\"e_end\", 0.85, null], [\"f_hard_left\", 0.35, -1], [\"g_ …[+1017 chars]`
+
+### 🧑 User — 2026-11-20T03:58:20.147Z
+
+> ↩︎ result: 791:    const fclP = fnum('m06fclp', 3.5), fclK = fnum('m06fclk', 0.65), fclW = fnum('m06fclw', 0.7);
+> 06 i_right_early s 205.51 lat 2.95 stage 06 coins 1680
+> tail: option used in invalid context -- 1
+> {"a":"qa/match/06/r22/step3_m06fcl/BEFORE/a_start.png","b":"qa/match/06/r22/step3_m06fcl/NEW/a_start.png","rows":[0,1536],"threshold":0.1,"diff_pixels":0,"total":1327104,"diff_pct":0}
+> {"a":"qa/match/06/r22/step3_m06fcl/with_m06view/BEFORE/a_start.png","b":"qa/match/06/r22/step3_m06fcl/with_m06view/NEW/a_start.png","rows":[0,1536],"threshold":0.1,"diff_pixels":0,"total":1327104,"diff_pct":0}
+> [This command modified 1 file you've previously read: src/world/match06.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-20T03:58:22.558Z
+
+Start view 0 px both with and without `m06view`. Reviewing the final NEW and the `m06view` combination.
+
+### 🤖 Claude — 2026-11-20T03:58:25.965Z
+
+> 🔧 **Bash** `{"command": "rmdir qa/match/06/r22/step3_m06fcl/rejected_first_try; ls qa/match/06/r22/step3_m06fcl/with_m06view/*/ | head -3; S=/tmp/claude-0/-home-user-rainbow-/e8e4b972-b434-5f87-a2df-10c4f5133633/scratchpad; python3 -c \"\nfrom PIL import Image\nD='qa/match/06/r22/step3_m06fcl';S='$S'\nns=['b_early','b2_early','c2_middle','e_end','f_hard_left','i_right_early']\nW=Image.new('RGB',(240*len(ns),427*2))\nfor i,n in enumerate(ns):\n  for j,k in enumerate(['with_m06view/BEFORE','with_m06view/NEW']):\n    W.paste(Image.open(f'{D}/{k}/{n}.png').convert('RGB').resize((240,427)),(240*i,427*j))\nW.sa …[+75 chars]`
+
+### 🧑 User — 2026-11-20T03:58:26.958Z
+
+> ↩︎ result: qa/match/06/r22/step3_m06fcl/with_m06view/BEFORE/:
+> a_start.png
+> b2_early.png
+
+### 🤖 Claude — 2026-11-20T03:58:29.185Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e8e4b972-b434-5f87-a2df-10c4f5133633/scratchpad/fcl3.png"}`
+
+### 🧑 User — 2026-11-20T03:58:29.367Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:58:40.591Z
+
+> 🔧 **Bash** `{"command": "K6='match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1'; D=qa/match/06/r22/step3_m06fcl; S=/tmp/claude-0/-home-user-rainbow-/e8e4b972-b434-5f87-a2df-10c4f5133633/scratchpad; rm -rf $S/c3a $S/c3b\n(CLIP_PORT=5293 timeout 1500 node $S/swim_clip_log.mjs 06 $S/c3a 4.8 \"$K6&m06fcl=1\" > $S/c3a.log 2>&1 &)\n(CLIP_PORT=5294 timeout 1500 node $S/swim_clip_log.mjs 06 $S/c3b 4.8 \"$K6&m06view=1&m06fcl=1\" > $S/c3b.log 2>&1 &)\nfor q in \"$K6&m06fcl=1\" \"$K6&m06view=1&m06fcl=1\"; do timeout 900 node scripts/gameplay-test.mjs --q=\"$q\"  …[+1016 chars]`
+
