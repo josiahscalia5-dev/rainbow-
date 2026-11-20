@@ -3096,3 +3096,268 @@ Screen 07 has no unfinished work. The Screen 04 water worker left a 12 KB unfini
 > +        // r20 `&m04farsm=1`: smooth band edges inside the far telescope (river along = distance inside the opening - z0)
 > +        uFar: { value: new THREE. …[+2851 chars]
 
+### 🤖 Claude — 2026-11-20T02:01:00.122Z
+
+> 🔧 **Bash** `{"command": "set -e\nSP=/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad\nmkwt() { WT=$1; BR=$2; BASE=$3\n  exec 9>backups/.autosave.lock; flock 9\n  git worktree add --no-checkout -b \"$BR\" \"$WT\" \"$BASE\" >/dev/null 2>&1\n  printf '/*\\n!/qa/pilot05/\\n!/qa/worldlabs/\\n!/qa/imageblaster/\\n!/builds/\\n!/backups/\\n' | git -C \"$WT\" sparse-checkout set --no-cone --stdin\n  git -C \"$WT\" read-tree -mu HEAD; ln -sfn /home/user/rainbow-/node_modules \"$WT/node_modules\"\n  flock -u 9; exec 9>&-; }\nmkwt /home/user/wt/s04 claude/rainbow-s04-match-c22 34cb494 …[+1100 chars]`
+
+### 🧑 User — 2026-11-20T02:01:14.824Z
+
+> ↩︎ result: r20 WIP restored
+> error: src/world/match04m4.ts: does not match index
+> Applied patch to 'src/game/Game.ts' cleanly.
+> error: src/world/match04m4.ts: does not match index
+> s04 tsc 0
+>  M src/world/match04m4.ts
+> ?? node_modules
+> ?? tools/match04/rings21.mjs
+> 8accdad Screen 07 r18 step 4: &m07band=1 — thick magenta bands sweeping in S-curves beside Benny (GOOD IMPROVEMENT)
+> pixelmatch pngjs
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T02:01:23.491Z
+
+The three-way apply refused because the restored edit wasn't staged yet, so only the `Game.ts` part landed. Staging it and re-applying the shader parts:
+
+### 🤖 Claude — 2026-11-20T02:01:27.541Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && SP=/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad\ngit add src/world/match04m4.ts src/game/Game.ts\ngit apply -3 $SP/ringtex_v3_to_70e5595.patch && echo \"rings applied\"\ngit apply -3 --include=src/world/match04m4.ts /home/user/rainbow-/qa/match/04/r21_rings/r21_rings_vs_70e5595.patch && echo \"r21 shader applied\"\ngit diff --cached --name-only; grep -c \"CONFLICT\\|<<<<<<<\" src/world/match04m4.ts; git reset -q\ngrep -c \"m04bbx\\|m04farsm\\|m04endfit\" src/world/match04m4.ts; grep -c \"uRSoft\\|m04rflat\\|uRNear\" src/ …[+224 chars]`
+
+### 🧑 User — 2026-11-20T02:01:30.264Z
+
+> ↩︎ result: Applied patch to 'src/world/match04m4.ts' cleanly.
+> rings applied
+> Applied patch to 'src/world/match04m4.ts' cleanly.
+> r21 shader applied
+> src/world/match04m4.ts
+> 0
+> 14
+> 68
+> 0
+> tsc 0
+>  M src/world/match04m4.ts
+> ?? node_modules
+> ?? tools/match04/rings21.mjs
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T02:01:36.498Z
+
+The `msaa` change in `Game.ts` didn't stick (the earlier failed apply was all-or-nothing). Adding it:
+
+### 🤖 Claude — 2026-11-20T02:01:38.296Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && git apply --include=src/game/Game.ts /home/user/rainbow-/qa/match/04/r21_rings/r21_rings_vs_70e5595.patch && grep -c \"msaa\" src/game/Game.ts && npx tsc --noEmit -p . 2>&1 | tail -2; git status --short | head -4; cd /home/user/wt/s04p && grep -c msaa src/game/Game.ts; git status --short | head -4", "description": "Apply the msaa change to the 04 worker copy", "timeout": 200000}`
+
+### 🧑 User — 2026-11-20T02:01:41.046Z
+
+> ↩︎ result: 4
+>  M src/game/Game.ts
+>  M src/world/match04m4.ts
+> ?? node_modules
+> ?? tools/match04/rings21.mjs
+> 4
+> M  src/game/Game.ts
+> M  src/world/match04m4.ts
+> ?? node_modules
+> ?? tools/match04/rings21.mjs
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T02:01:48.609Z
+
+The Screen 04 copy now has the v4 preview code plus last round's unfinished edit. A quick check that it renders exactly like the v4 preview while the unfinished switches are off:
+
+### 🤖 Claude — 2026-11-20T02:01:52.366Z
+
+> 🔧 **Bash** `{"command": "A=/home/user/rainbow-/qa/review_r21/audit; S=/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r; cd /home/user/wt/s04 && AUDIT_SHOTS='[[\"c_middle\",0.35,null]]' AUDIT_PORT=5291 timeout 600 node /home/user/rainbow-/tools/lead21/audit_screen.mjs $S/chk04 04 \"$(cat $A/QUERY_04.txt)\" 2>&1 | grep -E \"^04|rror\"; python3 -c \"\nfrom PIL import Image; import numpy as np\na=np.asarray(Image.open('$S/chk04/c_middle.png').convert('RGB')).astype(int); b=np.asarray(Image.open('$A/04/c_middle.png').convert('RGB')).astype(int)\nd=np.abs(a-b).max(2); print('w …[+160 chars]`
+
+### 🧑 User — 2026-11-20T02:02:11.129Z
+
+> ↩︎ result: 04 c_middle s 90.48 lat 0 stage 04 coins 1330
+> worker copy vs v4 preview, tunnel rows 150-700 max diff 0
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T02:02:28.778Z
+
+Identical (max difference 0). Before writing the briefs, let me confirm the proof tools they'll need exist in both copies:
+
+### 🤖 Claude — 2026-11-20T02:02:30.677Z
+
+> 🔧 **Bash** `{"command": "for w in s04 s07; do echo \"== $w\"; for f in tools/lead_r13/swim_clip.mjs scripts/gameplay-test.mjs tools/lead_r6/motion_audit.mjs scripts/capture.mjs tools/match07/shots07.mjs; do [ -f /home/user/wt/$w/$f ] && echo \"ok $f\" || echo \"-- $f\"; done; done; head -5 /home/user/wt/s07/tools/lead_r13/swim_clip.mjs 2>/dev/null | cut -c1-200", "description": "Check proof tools present in worker worktrees"}`
+
+### 🧑 User — 2026-11-20T02:02:30.727Z
+
+> ↩︎ result: == s04
+> ok tools/lead_r13/swim_clip.mjs
+> ok scripts/gameplay-test.mjs
+> ok tools/lead_r6/motion_audit.mjs
+> ok scripts/capture.mjs
+> -- tools/match07/shots07.mjs
+> == s07
+> ok tools/lead_r13/swim_clip.mjs
+> ok scripts/gameplay-test.mjs
+> ok tools/lead_r6/motion_audit.mjs
+> ok scripts/capture.mjs
+> -- tools/match07/shots07.mjs
+> #!/usr/bin/env node
+> // Lead r13 (2026-11-18): a short REAL-GAMEPLAY swimming clip for any playable screen 04–08 (read-only).
+> // Starts at the screen's checkpoint and rides the real game simulation (Benny, camera rig, course, coins unchanged) with
+> // the shader clock running: straight, then left, then right, then straight — one frame per 1/fps s → OUT/0000.png …
+> // Generalises scripts/proj05-move.mjs --zigzag. Encode: ffmpeg -framerate 24 -i OUT/%04d.png -pix_fmt yuv420p clip.mp4
+
+### 🤖 Claude — 2026-11-20T02:02:35.775Z
+
+All tools are present. Writing the round-21 coordination map and both launch briefs (so a future session can relaunch them too):
+
+### 🤖 Claude — 2026-11-20T02:02:55.729Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-20-r21/S04_R21.md", "content": "# Round 21 — Screen 04 water / foam specialist (foam-bubbles-particles)\n\nYou are the Rainbow project's `foam-bubbles-particles` specialist, working ONLY on playable Screen 04 \"Through the Five Arrows\",\nVISUALS ONLY: the river water, the water climbing the tunnel sides, the foam banks, bubbles and the five chevron arrows.\nUser (2026-11-20): \"level 4 ... it goes through the very beginning of level 4 and through the 5 arrows. I want that background.\nSee the water? See how the image of the proof screen l …[+4890 chars]`
+
+### 🧑 User — 2026-11-20T02:02:55.891Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-20-r21/S04_R21.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T02:03:14.241Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-20-r21/S07_R21.md", "content": "# Round 21 — Screen 07 specialist (water-fx-specialist)\n\nYou are the Rainbow project's `water-fx-specialist`, working ONLY on playable Screen 07 \"Dive the Washer Tube\", VISUALS ONLY.\nUser (2026-11-20): \"all my approved screens ... I want them to look exactly like [them] for my gaming app ... when the pink character\nswims or moves through all my approved screens, I want to make sure that it looks like my approved artwork, background, scenery,\nand the entire approved screen. Even if it's like 90 % clos …[+5164 chars]`
+
+### 🧑 User — 2026-11-20T02:03:14.390Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-20-r21/S07_R21.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T02:03:18.220Z
+
+Let me confirm the exact continuity-test command for the 07 brief, then write the coordination map.
+
+### 🤖 Claude — 2026-11-20T02:03:19.171Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 -c \"import json;print(json.load(open('package.json'))['scripts'])\" | tr ',' '\\n' | grep -i -E \"test|contin|check\" | head", "description": "List test scripts in package.json"}`
+
+### 🧑 User — 2026-11-20T02:03:19.231Z
+
+> ↩︎ result: 'typecheck': 'tsc --noEmit'
+>  'test:continuity': 'vite-node scripts/continuity-test.ts'
+>  'test:cinematic': 'node scripts/cinematic-test.mjs'}
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T02:03:36.935Z
+
+> 🔧 **Bash** `{"command": "sed -i 's#(`npm run test` or the continuity script the bootstrap uses)#(`npm run test:continuity` → all joins gap 0, 07→08 drop unchanged)#' docs/briefs/2026-11-20-r21/S07_R21.md && grep -c \"test:continuity\" docs/briefs/2026-11-20-r21/S07_R21.md && cat > docs/briefs/2026-11-20-r21/COORDINATION.md <<'EOF'\n# Round 21 — coordination (lead session branch `ccr-68d26c2d-gwegce`, 2026-11-20)\n\nSession opened on the r20 lead `ccr-681a37bb-5jqfbu` @ `413e419` (nothing merged). Task 1 (done): Screen 04 ring bands — `m04rsoft`\n+ `msaa` (`qa/match/04/r21_rings/NOTES.md`). User ~01:55 UTC …[+2738 chars]`
+
+### 🧑 User — 2026-11-20T02:03:36.994Z
+
+> ↩︎ result: 1
+> ok
+> [This command modified 1 file you've previously read: docs/briefs/2026-11-20-r21/S07_R21.md. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-20T02:03:41.490Z
+
+Launching the two specialists in the background:
+
+### 🤖 Claude — 2026-11-20T02:03:51.805Z
+
+> 🔧 **Agent** `{"description": "Screen 04 water/foam/arrows r21", "subagent_type": "foam-bubbles-particles", "prompt": "Round 21 launch. Your complete launch brief is the file /home/user/rainbow-/docs/briefs/2026-11-20-r21/S04_R21.md — read it FIRST, in full, and follow it exactly (also the binding files it lists). The most important rules, repeated here:\n\n* You work ONLY on Screen 04 visuals: river water, the pink water climbing the tunnel sides, foam banks, bubbles, the five chevron arrows. Not the gold rings (lead), not Benny's model, not the camera, physics, input, HUD, coins logic or other screens.\n* …[+2530 chars]`
+
+### 🧑 User — 2026-11-20T02:03:51.852Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a02345c391404d851 (internal ID - do not mention to user. Use SendMessage with to: 'a02345c391404d851', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/tasks/a02345c391404d851.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-20T02:04:01.760Z
+
+> 🔧 **Agent** `{"description": "Screen 07 scenery match r21", "subagent_type": "water-fx-specialist", "prompt": "Round 21 launch. Your complete launch brief is the file /home/user/rainbow-/docs/briefs/2026-11-20-r21/S07_R21.md — read it FIRST, in full, and follow it exactly (also the binding files it lists). The most important rules, repeated here:\n\n* You work ONLY on Screen 07 \"Dive the Washer Tube\" visuals (scenery, water, foam, walls, rings, paddles). Not Benny, not the camera framing at the approved view, physics, input, HUD, coins logic, the 07→08 drop geometry, or other screens.\n* Worktree /home/u …[+2773 chars]`
+
+### 🧑 User — 2026-11-20T02:04:01.793Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: ad68eb42eb49d8613 (internal ID - do not mention to user. Use SendMessage with to: 'ad68eb42eb49d8613', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/tasks/ad68eb42eb49d8613.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-20T02:04:09.031Z
+
+Both specialists are running. I'll record them in the specialists status file (CLAUDE.md asks for that whenever their state changes), then send you the audit pictures.
+
+### 🤖 Claude — 2026-11-20T02:04:14.734Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\np='backups/AGENTS_STATUS.json'; d=json.load(open(p))\nprint(list(d.keys())[:15])\nd['round21']={\n \"updated\":\"2026-11-20 ~02:10 UTC\",\"lead_branch\":\"ccr-68d26c2d-gwegce\",\n \"running\":[\n  {\"screen\":\"04 water/foam/arrows\",\"agent\":\"foam-bubbles-particles\",\"worktree\":\"/home/user/wt/s04\",\"local_branch\":\"claude/rainbow-s04-match-c22\",\"brief\":\"docs/briefs/2026-11-20-r21/S04_R21.md\",\"proof\":\"qa/match/04/r21/\",\"code_backup\":\"backups/wip/claude__rainbow-s04-match-c22/\"},\n  {\"screen\":\"07\",\"agent\":\"water-fx-speciali …[+852 chars]`
+
+### 🧑 User — 2026-11-20T02:04:14.836Z
+
+> ↩︎ result: ['_comment', 'schema', 'updated_utc', 'updated_by_session', 'running_now', 'assignments_now', 'current_focus', 'agents', 'marble_feasibility_05', 'proj05', 'previous_round_stopped', 'round2_stopped', 'round3_stopped', 'round4_done', 'backup_2026_11_17_1945']
+> json ok
+
+### 🤖 Claude — 2026-11-20T02:04:22.697Z
+
+Now sending you the audit pictures, one overview sheet per screen. These are for orientation, not approval; the full-size frames are in the same folder.
+
+### 🤖 Claude — 2026-11-20T02:04:24.601Z
+
+> 🔧 **Bash** `{"command": "for s in 04 05 06 07 08; do cp /tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/sheet_$s.png /home/user/rainbow-/qa/review_r21/audit/OVERVIEW_$s.png; done; ls /home/user/rainbow-/qa/review_r21/audit/", "description": "Save overview sheets into the review folder"}`
+
+### 🧑 User — 2026-11-20T02:04:24.656Z
+
+> ↩︎ result: 04
+> 04.log
+> 05
+> 05.log
+> 06
+> 06.log
+> 07
+> 07.log
+> 08
+> 08.log
+> OVERVIEW_04.png
+> OVERVIEW_05.png
+> OVERVIEW_06.png
+> OVERVIEW_07.png
+> OVERVIEW_08.png
+> QUERY_04.txt
+> QUERY_05.txt
+> QUERY_06.txt
+> QUERY_07.txt
+> QUERY_08.txt
+> done.flag
+> run.sh
+
+### 🤖 Claude — 2026-11-20T02:04:28.846Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/review_r21/audit/OVERVIEW_04.png", "/home/user/rainbow-/qa/review_r21/audit/OVERVIEW_05.png", "/home/user/rainbow-/qa/review_r21/audit/OVERVIEW_06.png", "/home/user/rainbow-/qa/review_r21/audit/OVERVIEW_07.png", "/home/user/rainbow-/qa/review_r21/audit/OVERVIEW_08.png"], "caption": "Where every playable screen stands today, from the real game: your APPROVED picture first, then start, early, middle, late, end, hard left and hard right while Benny swims. Screens 04, 05, 06, 07, 08.", "status": "normal", "display": "render"}`
+
+### 🤖 Claude — 2026-11-20T02:04:29.294Z
+
+> 🔧 **TaskUpdate** `{"taskId": "5", "status": "completed"}`
+
+### 🧑 User — 2026-11-20T02:04:29.303Z
+
+> ↩︎ result: Updated task #5 status
+
+### 🤖 Claude — 2026-11-20T02:04:29.639Z
+
+> 🔧 **TaskUpdate** `{"taskId": "6", "status": "completed"}`
+
+### 🧑 User — 2026-11-20T02:04:29.648Z
+
+> ↩︎ result: Updated task #6 status
+
+### 🧑 User — 2026-11-20T02:04:30.191Z
+
+> ↩︎ result: 5 files delivered to user.
+>   /home/user/rainbow-/qa/review_r21/audit/OVERVIEW_04.png → file_uuid: a5332a55-91db-4fad-b49b-5f8b7e4570c0
+>   /home/user/rainbow-/qa/review_r21/audit/OVERVIEW_05.png → file_uuid: f164fb0a-a9e5-4be0-b256-0576b7a197cc
+>   /home/user/rainbow-/qa/review_r21/audit/OVERVIEW_06.png → file_uuid: 758f8e67-7178-4173-bbe3-8a0b72ea079c
+>   /home/user/rainbow-/qa/review_r21/audit/OVERVIEW_07.png → file_uuid: 11815bed-f66d-4be9-98df-ea8e79f3b339
+>   /home/user/rainbow-/qa/review_r21/audit/OVERVIEW_08.png → file_uuid: 662f450e-c535-4e78-9a11-6da68de8ba8e
+
+### 🤖 Claude — 2026-11-20T02:04:33.248Z
+
+Saving the audit, briefs and status to GitHub and verifying:
+
+### 🤖 Claude — 2026-11-20T02:04:35.488Z
+
+> 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason \"manual:r21-audit-and-workers\" 2>&1 | grep -E '\"commit\"|error|ERROR' | head -3; B=$(git rev-parse --abbrev-ref HEAD); L=$(git rev-parse HEAD); R=$(timeout 60 git ls-remote origin refs/heads/$B | cut -f1); echo \"$B local $L remote $R\"; [ \"$L\" = \"$R\" ] && echo MATCH; git ls-tree -r --name-only HEAD qa/review_r21 docs/briefs/2026-11-20-r21 | wc -l; ls backups/wip | grep -E \"c22\"", "description": "Manual autosave and remote verification", "timeout": 300000}`
+

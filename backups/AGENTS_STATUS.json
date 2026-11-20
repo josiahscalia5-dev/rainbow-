@@ -62,7 +62,7 @@
    "next": "after approval: Phase 2 = same method for 04, 05, 06, 07 (fal clean plates approved by the user)"
   }
  },
- "current_focus": "Screen 05 water \u2014 NEW APPROACH (user 2026-11-16 ~15:40): reproduce the ACTUAL approved water design by camera-matched texture projection / baking of the user's original artwork onto the real river mesh (Specialist 1, running), then animate that same design (Specialist 2, queued). Branch claude/rainbow-05-water-projection; ccr-451ea8c7-3nqlis is the protected working version (T2 default, W12 candidates). No more procedural / bloom / saturation rounds.",
+ "current_focus": "Screen 05 water — NEW APPROACH (user 2026-11-16 ~15:40): reproduce the ACTUAL approved water design by camera-matched texture projection / baking of the user's original artwork onto the real river mesh (Specialist 1, running), then animate that same design (Specialist 2, queued). Branch claude/rainbow-05-water-projection; ccr-451ea8c7-3nqlis is the protected working version (T2 default, W12 candidates). No more procedural / bloom / saturation rounds.",
  "agents": [
   {
    "name": "washer-environment-modeler",
@@ -386,7 +386,7 @@
   }
  ],
  "backup_2026_11_17_1945": {
-  "why": "user order: account 4 near its usage limit \u2014 save everything, no more development",
+  "why": "user order: account 4 near its usage limit — save everything, no more development",
   "scheduled_checkin": "trig_01CAGS7pWQYyNtb9LAeLDoZz disabled 19:40 UTC (it would have started Screen 05)",
   "handoff": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md top section",
   "restart": "new -c5 branches from each -c4 tip; briefs docs/briefs/2026-11-17-r4/"
@@ -435,8 +435,8 @@
   "capacity_rule": "at most two specialist sessions at once (user)",
   "briefs": "docs/briefs/2026-11-17-r5/ (COMMON_RULES, S08_SCENERY, S08_BENNY); other workstreams use their r4 brief with -c5",
   "done": {
-   "08 scenery r1": "claude/rainbow-s08-scenery-c5 @ 60e7ffe8 (keep ?match08=1&coins08px=1&m08bw=1&m08fill=1; m08lane off; APK blocked: Maven Central 404) \u2014 report REPORTS_ROUND5.md",
-   "08 Benny r6": "claude/rainbow-s08-benny08-bake-c5 @ c68926764849cdaf3e51acf823a06eafb0c522cc (b08clump + b08yarn default on match08; BEFORE r5b = &b08clump=0&b08yarn=0; APK blocked: Maven Central 429) \u2014 report docs/briefs/2026-11-17-r5/REPORTS_ROUND5.md"
+   "08 scenery r1": "claude/rainbow-s08-scenery-c5 @ 60e7ffe8 (keep ?match08=1&coins08px=1&m08bw=1&m08fill=1; m08lane off; APK blocked: Maven Central 404) — report REPORTS_ROUND5.md",
+   "08 Benny r6": "claude/rainbow-s08-benny08-bake-c5 @ c68926764849cdaf3e51acf823a06eafb0c522cc (b08clump + b08yarn default on match08; BEFORE r5b = &b08clump=0&b08yarn=0; APK blocked: Maven Central 429) — report docs/briefs/2026-11-17-r5/REPORTS_ROUND5.md"
   },
   "preview_branch": {
    "branch": "claude/rainbow-preview-all-c5",
@@ -453,7 +453,7 @@
    },
    "tip": "69a1d474 (+ final save commit)",
    "preview_switches": "match04=1&match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&match06=1&match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&match08=1&coins08px=1",
-   "state": "VERIFIED with each screen's OWN switches: 04/05/07/08 pixel-identical to their branches, 06 identical except 1,098 faint px in the top bar; default identical to the lead; continuity ok; gameplay 8/8 91/2,240 default and all switches (coin fix 69a1d474). NOT usable with ALL switches together: likeness 04 81.8, 05 83.0, 06 84.3, 07 74.4, 08 29.5 % \u2014 08 projected scene shifted vs camera (cause unknown; bisect of 08 + each other screen's switches interrupted by the user 21:23), 05 Benny look on every screen, hud05 not fitted to 04.",
+   "state": "VERIFIED with each screen's OWN switches: 04/05/07/08 pixel-identical to their branches, 06 identical except 1,098 faint px in the top bar; default identical to the lead; continuity ok; gameplay 8/8 91/2,240 default and all switches (coin fix 69a1d474). NOT usable with ALL switches together: likeness 04 81.8, 05 83.0, 06 84.3, 07 74.4, 08 29.5 % — 08 projected scene shifted vs camera (cause unknown; bisect of 08 + each other screen's switches interrupted by the user 21:23), 05 Benny look on every screen, hud05 not fitted to 04.",
    "next": "1) bisect 08 breakage (match08&coins08px + each of 05set / 04 / 06 / 07set; tools/lead_r5/verify_preview.sh pattern); 2) per-screen Benny (05 look only where tuned) and per-screen top bar (04 layout, banner widths); 3) merge 08 scenery r1 final 60e7ffe8 + Benny r6 c6892676; 4) moving-view work 07 -> 05 -> 06 -> 04; APKs blocked by Maven Central in this environment",
    "evidence": "qa/lead_r5/2026-11-17/README.md"
   },
@@ -1065,7 +1065,7 @@
  "round19b": {
   "started_utc": "2026-11-19T20:57Z",
   "base": "preview v3 claude/rainbow-s04-preview-c19 @ 09459079",
-  "user_rule": "approved screen = same look while swimming/moving (CLAUDE.md \u00a76)",
+  "user_rule": "approved screen = same look while swimming/moving (CLAUDE.md §6)",
   "workers": {
    "benny": {
     "branch": "claude/rainbow-benny-c20",
@@ -1135,5 +1135,32 @@
    "s08": "PAUSED by the user (claude/rainbow-s08-scenery-c17 @ 3c0fa970)"
   },
   "relaunch": "same account: SendMessage to the agent; new session/account: -c22 branches from each newest -c21 tip + backups/wip snapshot, prompts in backups/claude-sessions/7951f197-ca4f-5615-a4e3-a23f22863243/ (Agent calls \"... r20\")"
+ },
+ "round21": {
+  "updated": "2026-11-20 ~02:10 UTC",
+  "lead_branch": "ccr-68d26c2d-gwegce",
+  "running": [
+   {
+    "screen": "04 water/foam/arrows",
+    "agent": "foam-bubbles-particles",
+    "worktree": "/home/user/wt/s04",
+    "local_branch": "claude/rainbow-s04-match-c22",
+    "brief": "docs/briefs/2026-11-20-r21/S04_R21.md",
+    "proof": "qa/match/04/r21/",
+    "code_backup": "backups/wip/claude__rainbow-s04-match-c22/"
+   },
+   {
+    "screen": "07",
+    "agent": "water-fx-specialist",
+    "worktree": "/home/user/wt/s07",
+    "local_branch": "claude/rainbow-s07-match-c22",
+    "brief": "docs/briefs/2026-11-20-r21/S07_R21.md",
+    "proof": "qa/match/07/r21/",
+    "code_backup": "backups/wip/claude__rainbow-s07-match-c22/"
+   }
+  ],
+  "lead_done": "Screen 04 rings m04rsoft + msaa (qa/match/04/r21_rings/NOTES.md); audit of 04-08 in motion qa/review_r21/audit/",
+  "next": "06 (composition decision needed), 05 polish, Benny approved look (claude/rainbow-benny-c21 @ bade594 + WIP)",
+  "note": "workers never commit/push this round (session push rule); relaunch from the brief + backups/wip snapshot"
  }
 }

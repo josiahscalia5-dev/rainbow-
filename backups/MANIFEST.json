@@ -593,8 +593,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 60252,
-   "sha256": "5755768c52e695ffc5a2d32bb210778f4c726bca3ee04a2a465a8eeab8ef8077"
+   "bytes": 61350,
+   "sha256": "028260fe005359b363d783a834882acd7f021f5ec002c6a98ff2eb59617142ca"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 19811,
-   "sha256": "e469eab59e0fc1a40d3e2f796ae6347bebc0a1a5d5b6a4fc2ec7a872ac6c5051"
+   "sha256": "4f2e0f1131c4b34cc8a51ac7f3c1433c14f8a4a28d3b9d9636dc2199e0a825c7"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -629,7 +629,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3192,
-   "sha256": "6215b8982c2e18309315b245e8ae86a970b39c9084a8e251917fe604fbd6fcea"
+   "sha256": "c0100df64ba07f08cd92d2ab3386832b6ea787bbd024fab3c23afe1a55e0a34e"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -1414,7 +1414,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-preview-c22/INFO.json",
    "bytes": 569,
-   "sha256": "6dd425bc72b5baffcedd0181656bad38f22a5986e0369d1ac43e155fb92cda94"
+   "sha256": "d5d01acf08bfc8f51970f276ed77377e689b0f311e6cfb37d61690ff87819b4a"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-preview-c22/tracked.patch",
@@ -1639,7 +1639,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c22/INFO.json",
    "bytes": 1341,
-   "sha256": "a734a3c0b8ef182f150dd68eb19ba07665a351c15ee612dd979ddc4d95227421"
+   "sha256": "01d3d69458ef4bc2f95b393d676410b8ec00027f82e0e69096401f3e7aed8142"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c22/tracked.patch",
@@ -2459,27 +2459,27 @@
   {
    "path": "backups/wip/detached-34cb494137/INFO.json",
    "bytes": 440,
-   "sha256": "ae470efc96abe41adac940a84c718a4b97d857d0bfb45b43ef860a6987cce16e"
+   "sha256": "8c86c62c13727d34c2a028e368259b68b6b24903242b266741e14bbe5608bcff"
   },
   {
    "path": "backups/wip/detached-3c0fa97090/INFO.json",
    "bytes": 439,
-   "sha256": "868ec4bc77c9e2954cfb226968b228a71be11e41cb07b2990a277f038b004e1f"
+   "sha256": "90876c13d2d292bb0448309461ca69ec0d5a631ef0e5927c7d94dd7588ea5d82"
   },
   {
    "path": "backups/wip/detached-8accdad0a0/INFO.json",
    "bytes": 439,
-   "sha256": "f87caaef39dbc4371a636ba60e005a434921d507f9af8b4d5a8d8048bf4202f6"
+   "sha256": "a294c818f19cc1c1677de40029451ed14e514a393194cb00bfdc7169bbec14fc"
   },
   {
    "path": "backups/wip/detached-c649fcbc35/INFO.json",
    "bytes": 439,
-   "sha256": "78fdeb1cd6646122903db3b19dfade34ce99665d6b13b9252e12c2faaadd738f"
+   "sha256": "d07a471ccd65a1438e981d0e57bea8006d3630acc47bb643a5bf8fce96611841"
   },
   {
    "path": "backups/wip/detached-eb7233e364/INFO.json",
    "bytes": 439,
-   "sha256": "2fa434cd37300a768d997d3b2db9ae4169fec3c88e80329cdb2c74532f957931"
+   "sha256": "1505202c2c9e348f3336bc67dd05336abe6dad90a7ed90307dc00b710edf7b17"
   },
   {
    "path": "builds/rainbow-debug-06-2026-11-17-r3.apk",
@@ -3010,6 +3010,21 @@
    "path": "docs/briefs/2026-11-19-r20/setup_worker.sh",
    "bytes": 2220,
    "sha256": "6d6dc6b953f63842dc47c53ec9c29d7c463f45f0894640d3339ca8efec5a96fb"
+  },
+  {
+   "path": "docs/briefs/2026-11-20-r21/COORDINATION.md",
+   "bytes": 2912,
+   "sha256": "e97a93fce202860653503a0ee239bc9d5c9e8af68cebec82ffcaa40f3943b89d"
+  },
+  {
+   "path": "docs/briefs/2026-11-20-r21/S04_R21.md",
+   "bytes": 5358,
+   "sha256": "774bdbd3b73b50187f1ee2ef4b79d0da152355416559f4c00c141afde6277106"
+  },
+  {
+   "path": "docs/briefs/2026-11-20-r21/S07_R21.md",
+   "bytes": 5645,
+   "sha256": "efe615a12e7ed7ac7f8fcecb39615d615dc94c462c0921cd5c052d662978c2f7"
   },
   {
    "path": "docs/characters/benny.md",
@@ -13545,6 +13560,31 @@
    "path": "qa/review_r21/audit/08/shots.json",
    "bytes": 1168,
    "sha256": "f28c12f86c0b357b0129f55e5dbef0eefea1436c69ed0faa5183b8bdc893a8b1"
+  },
+  {
+   "path": "qa/review_r21/audit/OVERVIEW_04.png",
+   "bytes": 1725750,
+   "sha256": "3bd3ccae7c060ad5b907fc24e54982ee75cea1edbc60817186863a5d53614a8d"
+  },
+  {
+   "path": "qa/review_r21/audit/OVERVIEW_05.png",
+   "bytes": 2064009,
+   "sha256": "dbf969b8371b94ad3d18f21163beaa2f1adfb710ca0e05d7216bd21ad1653f3e"
+  },
+  {
+   "path": "qa/review_r21/audit/OVERVIEW_06.png",
+   "bytes": 2071501,
+   "sha256": "908127ca4b5e186a95b147e893ccf71660bdbec9b7702406b8a9825f806820b3"
+  },
+  {
+   "path": "qa/review_r21/audit/OVERVIEW_07.png",
+   "bytes": 2068249,
+   "sha256": "643f88e229c6a4e30760e927b2983e2e25bde0c9cdc83da4fcaae13dd82c8ddd"
+  },
+  {
+   "path": "qa/review_r21/audit/OVERVIEW_08.png",
+   "bytes": 2248498,
+   "sha256": "8b6d47c4ed7f828f0e305b5fbe2907acee7824e5b51fdc6e2e08a893530a7e82"
   },
   {
    "path": "qa/review_r21/audit/QUERY_04.txt",
