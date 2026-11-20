@@ -64,3 +64,8 @@ If this account stops: the next account runs `bash docs/briefs/2026-11-20-r29/se
   the user interrupted the lead while it was republishing the review page). Do NOT relaunch them unless the user asks. No render processes
   left running; both render slots free. Their worktrees keep whatever they had changed (snapshots `backups/wip/*-c30/`). Review-page
   republish NOT done (source `qa/review_r28/index.html` + `qa/review_r27/web/`).
+* ~18:40 USER: resume the existing Screen 06 test ALONE (other specialists stay paused); explain what `m06route` changes; quick diagnostic
+  first, full proof only if convincing; identify the cause before more variants. Lead ran it itself (no worker): ~18:48 quick BEFORE / NEW
+  done -> `qa/match/06/r28/route/quick_r29/` — **`&m06route=1` = NOT AN IMPROVEMENT** (tunnel-only change; river unchanged). Cause: 07's
+  entrance sits 43 u ahead, 12 u off the painted tunnel's centre line and 16.5° to the right. Proposed next correction (needs the user's go):
+  river on the painted route + 07 entrance on the tunnel centre line, 07–10 moved as one rigid block.

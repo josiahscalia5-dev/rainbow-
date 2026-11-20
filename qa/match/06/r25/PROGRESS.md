@@ -6,6 +6,14 @@
   `tools/match06/r28_quick.mjs` (432x768, AUDIT_PORT=5276, AUDIT_SHOTS env). NOW: quick BEFORE vs NEW (+`&m06route=1`) shots into
   `/home/user/scratch/s06/q1/{BEFORE,NEW}/` (start / 3 / 12 / 20 / 30 / 40 / 50 / 70 / 85 / 99 % / 07 +3 / +10 % / hard L / R at 35 %).
 
+## (r29) WHERE I STOPPED / NEXT — lead ran the quick diagnostic itself (user, r29 ~18:40: "resume the existing Screen 06 test alone")
+* 18:41–18:48 UTC: quick 432×768 BEFORE (`step2/QUERY_NEW2.txt`) vs NEW (+`&m06route=1`), 15 shots incl. hard L/R 35 % + 70 % and two 07
+  frames -> `qa/match/06/r28/route/quick_r29/` (README + 3 labelled sheets). **Verdict `&m06route=1`: NOT AN IMPROVEMENT** — river course
+  unchanged (still swerves up the right side from 50 %, crest gone after 3 %), new flat wall slab on the left 12–35 %, grown coins form a row
+  of big coins at 50 %; 07 identical (0 px). Full-size proof + clips NOT produced (user: only if convincing). Keep the switch OFF.
+* Cause + the real next correction (07 entrance onto the painted tunnel's centre line, 07–10 moved as one rigid block): see the README.
+  Waiting for the user's go before building it (separate switch, e.g. `&m06deep=1`).
+
 ## (r28) WHERE I STOPPED / NEXT
 * ~17:10 UTC — relaunched (new account), worktree `/home/user/wt/s06` LOCAL branch `claude/rainbow-s06-match-c29`, scratch
   `/home/user/scratch/s06/`. TASK = the user-authorized route test `docs/briefs/2026-11-20-r28/S06_ROUTE_R28.md` (+ clarification

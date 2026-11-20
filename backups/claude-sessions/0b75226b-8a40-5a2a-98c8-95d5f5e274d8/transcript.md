@@ -2052,3 +2052,42 @@ Both runs finished. I'll check where the two versions actually differ before loo
 > 5
 > Shell cwd was reset to /home/user/rainbow-
 
+### 🤖 Claude — 2026-11-20T18:47:09.762Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && python3 - <<'EOF'\nfrom PIL import Image\nimport numpy as np\nA=np.asarray(Image.open('q_before/a_start.png').convert('RGB')).astype(int); B=np.asarray(Image.open('q_new/a_start.png').convert('RGB')).astype(int)\nd=np.abs(A-B).max(axis=2)>20\nys,xs=np.nonzero(d)\nfrom collections import Counter\nc=Counter([(y//32*32,x//48*48) for y,x in zip(ys,xs)])\nprint(sorted(c.items(), key=lambda t:-t[1])[:10])\nImage.fromarray((np.abs(A-B).max(axis=2)>20).astype(np.uint8)*255).crop((0,0,432,320)).resize((864,640)).save('start_diff_mask.png')\nEOF", "description": …[+61 chars]`
+
+### 🧑 User — 2026-11-20T18:47:10.059Z
+
+> ↩︎ result: [((np.int64(224), np.int64(336)), 20), ((np.int64(224), np.int64(384)), 11), ((np.int64(224), np.int64(288)), 11), ((np.int64(192), np.int64(288)), 8), ((np.int64(256), np.int64(288)), 8), ((np.int64(224), np.int64(240)), 7), ((np.int64(160), np.int64(384)), 6), ((np.int64(160), np.int64(336)), 6), ((np.int64(256), np.int64(240)), 6), ((np.int64(96), np.int64(288)), 5)]
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T18:47:50.133Z
+
+I've pinned the cause. Saving the evidence into the project, then building labelled sheets with your approved picture alongside BEFORE and NEW.
+
+### 🤖 Claude — 2026-11-20T18:47:57.633Z
+
+> 🔧 **Bash** `{"command": "set -e; R=/home/user/rainbow-/qa/match/06/r28/route/quick_r29; mkdir -p $R/before $R/new; cp /home/user/scratch/s06/q_before/*.png /home/user/scratch/s06/q_before/shots.json $R/before/; cp /home/user/scratch/s06/q_new/*.png /home/user/scratch/s06/q_new/shots.json $R/new/; cp /home/user/scratch/s06/quick.sh $R/quick.sh\ncd $R && convert /home/user/rainbow-/references/06_crest_the_rinse_arch.png -resize 432x768 approved_432.png\nmk() { # mk <out> <title> <name:label>...\n  out=$1; title=$2; shift 2; args=(-label \"ORIGINAL APPROVED\" approved_432.png); for p in \"$@\"; do args+=(-la …[+1204 chars]`
+
+### 🧑 User — 2026-11-20T18:48:09.248Z
+
+> ↩︎ result: -rw-r--r-- 1 root root 769215 Nov 20 18:48 /home/user/rainbow-/qa/match/06/r28/route/quick_r29/SHEET1_swim_start_to_middle.jpg
+> -rw-r--r-- 1 root root 759599 Nov 20 18:48 /home/user/rainbow-/qa/match/06/r28/route/quick_r29/SHEET2_swim_late_exit_07.jpg
+> -rw-r--r-- 1 root root 640283 Nov 20 18:48 /home/user/rainbow-/qa/match/06/r28/route/quick_r29/SHEET3_steering.jpg
+
+### 🤖 Claude — 2026-11-20T18:48:11.313Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r28/route/quick_r29/SHEET2_swim_late_exit_07.jpg"}`
+
+### 🧑 User — 2026-11-20T18:48:11.457Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T18:48:27.171Z
+
+The sheets are readable. Writing the verdict into the project (proof folder README, Screen 06 progress notes, coordination log), then saving to GitHub.
+
+### 🤖 Claude — 2026-11-20T18:48:52.176Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && cat > qa/match/06/r28/route/quick_r29/README.md <<'EOF'\n# Screen 06 route candidate `&m06route=1` — quick diagnostic (round 29 lead, 2026-11-20 ~18:45 UTC)\n\nIndividual playable candidate (Chromium, 432×768, deterministic stills: fixed sim steps, frozen clock, pinned water clock), NOT a combined\nbuild, NOT Android. BEFORE = `qa/match/06/r25/step2/QUERY_NEW2.txt` (the version the user last saw); NEW = BEFORE + `&m06route=1`.\nWorktree `/home/user/wt/s06` (LOCAL `claude/rainbow-s06-match-c30`), tool `tools/match06/r28_quick.mjs`, runner `quick.sh` (this  …[+5911 chars]`
+
