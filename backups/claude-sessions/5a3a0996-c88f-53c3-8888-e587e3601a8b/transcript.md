@@ -1623,3 +1623,214 @@ Also smoothing the colour handover inside that merged last rib, where the painte
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-20T01:23:38.325Z
+
+The thin line and the dashes are gone; the ribs are now even, with rounded crests. Let me compare the tones and the look against the approved again.
+
+### 🤖 Claude — 2026-11-20T01:23:49.590Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r && cat > /tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/stats04.py <<'EOF'\nimport sys; from PIL import Image; import numpy as np\nfrom scipy import ndimage as ndi\nR0='/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r/'\ndef stats(img, mask):\n    Y=img@[0.299,0.587,0.114]; v=Y[mask]\n    hsv=np.asarray(Image.fromarray(img.astype(np.uint8)).convert('HSV')).astype(float)\n    S=hsv[...,1][mask]/255; H=hsv[...,0][mask]*360/255\n …[+1757 chars]`
+
+### 🧑 User — 2026-11-20T01:23:50.707Z
+
+> ↩︎ result: APPROVED inner rings   luma p5   81 p25   99 p50  116 p75  147 p95  219 mean  128 | <60 0.46% | violet/pink/blue 14.3% | hard steps 89
+> b0 marked area         luma p5   75 p25  102 p50  127 p75  162 p95  229 mean  136 | <60 0.89% | violet/pink/blue 16.2% | hard steps 761
+> a3 marked area         luma p5   91 p25  100 p50  119 p75  144 p95  172 mean  124 | <60 0.04% | violet/pink/blue 17.0% | hard steps 245
+> b0 whole tunnel        luma p5   69 p25   98 p50  120 p75  153 p95  219 mean  129 | <60 3.17% | violet/pink/blue 27.3% | hard steps 1936
+> a3 whole tunnel        luma p5   72 p25   96 p50  115 p75  138 p95  182 mean  120 | <60 2.91% | violet/pink/blue 26.9% | hard steps 481
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:24:03.614Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r && python3 -c \"\nfrom PIL import Image; import numpy as np\nI=np.asarray(Image.open('a3/f06.png').convert('RGB')).astype(float); Y=I@[.299,.587,.114]\nm=(Y<60); m[760:]=False\nys,xs=np.where(m); print('dark px', m.sum()); \nimport collections\nH=np.histogram2d(ys,xs,bins=[np.arange(0,761,95),np.arange(0,865,108)])[0].astype(int); print(H)\no=(I*0.5).astype(np.uint8); o[m]=[0,255,0]; Image.fromarray(o[:760]).resize((432,380)).save('dark_a3.png')\"", "description": "Locate remaining dark pixels i …[+14 chars]`
+
+### 🧑 User — 2026-11-20T01:24:03.940Z
+
+> ↩︎ result: dark px 13896
+> [[   0   28    5    0    0   34    0    0]
+>  [ 694 1994 1983 1993 2011 1998 1979  702]
+>  [   0    0    0    0    0    0    0    0]
+>  [   0    8   86    0   40   46    0    0]
+>  [   0    4    0    0    0  150   55    0]
+>  [  86    0    0    0    0    0    0    0]
+>  [   0    0    0    0    0    0    0    0]
+>  [   0    0    0    0    0    0    0    0]]
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:24:07.207Z
+
+Nearly all of those are in rows 95–190: the dark purple title banner, not the tunnel. Inside the tunnel only about 500 dark pixels remain. Now the rim highlight range:
+
+### 🤖 Claude — 2026-11-20T01:24:14.604Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && python3 - <<'EOF'\np='src/world/match04m4.ts'; s=open(p).read()\na=\"\"\"          T = mix(T, 0.635 + 0.04 * lipR + 0.13 * spot, crest);        // rounded soft-gold crest, hot in places\"\"\"\nassert s.count(a)==1\ns=s.replace(a,\"\"\"          T = mix(T, 0.655 + 0.05 * lipR + 0.21 * spot, crest);        // rounded soft-gold crest, hot in places (approved p95 ~219)\"\"\")\nopen(p,'w').write(s)\nEOF\nS=/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r; Q=$(cat qa/match/04/r19b/ringpaint/preview_r20/QUERY_preview.txt)\nSH='[ …[+853 chars]`
+
+### 🧑 User — 2026-11-20T01:24:38.484Z
+
+> ↩︎ result: APPROVED inner rings   luma p5   81 p25   99 p50  116 p75  147 p95  219 mean  128 | <60 0.46% | violet/pink/blue 14.3% | hard steps 89
+> b0 marked area         luma p5   75 p25  102 p50  127 p75  162 p95  229 mean  136 | <60 0.89% | violet/pink/blue 16.2% | hard steps 761
+> a4 marked area         luma p5   91 p25  100 p50  119 p75  144 p95  175 mean  124 | <60 0.04% | violet/pink/blue 17.0% | hard steps 294
+> b0 whole tunnel        luma p5   69 p25   98 p50  120 p75  153 p95  219 mean  129 | <60 3.17% | violet/pink/blue 27.3% | hard steps 1936
+> a4 whole tunnel        luma p5   72 p25   97 p50  115 p75  138 p95  183 mean  120 | <60 2.91% | violet/pink/blue 26.9% | hard steps 536
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:24:44.577Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r/tri4.png"}`
+
+### 🧑 User — 2026-11-20T01:24:44.609Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T01:25:10.207Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nfrom PIL import Image; import numpy as np\nA=np.asarray(Image.open('references/04_through_the_five_arrows.png').convert('RGB').resize((864,1536),Image.LANCZOS)).astype(float)\nyy,xx=np.mgrid[0:1536,0:864]; Y=A@[.299,.587,.114]\nfor r0,r1 in [(110,330),(110,280),(110,240),(150,280)]:\n  m=(np.hypot(xx-470,yy-720)>r0)&(np.hypot(xx-470,yy-720)<r1)&(yy<700)&(xx<470)\n  v=Y[m]; print(r0,r1,'left half: p5 %.0f p25 %.0f p50 %.0f p75 %.0f p95 %.0f p99 %.0f mean %.0f'%tuple(list(np.percentile(v,[5,25,50,75,95,99]))+[v.mean()]))\no=A.copy(); m=(np.hypot(xx-470,yy-720)>110)&(n …[+300 chars]`
+
+### 🧑 User — 2026-11-20T01:25:10.771Z
+
+> ↩︎ result: 110 330 left half: p5 83 p25 98 p50 112 p75 139 p95 215 p99 244 mean 124
+> 110 280 left half: p5 81 p25 94 p50 105 p75 123 p95 167 p99 225 mean 113
+> 110 240 left half: p5 83 p25 95 p50 104 p75 117 p95 159 p99 199 mean 109
+> 150 280 left half: p5 80 p25 94 p50 106 p75 125 p95 170 p99 230 mean 113
+
+### 🤖 Claude — 2026-11-20T01:25:29.067Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nfrom PIL import Image; import numpy as np\nfrom scipy import ndimage as ndi\nR0='/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r/'\ndef cool(img,m):\n    hsv=np.asarray(Image.fromarray(img.astype(np.uint8)).convert('HSV')).astype(float)\n    H=hsv[...,0]*360/255; S=hsv[...,1]/255\n    out=[]\n    for lo,hi,nm in [(195,255,'blue'),(255,300,'violet'),(300,340,'magenta-pink'),(340,361,'rose')]:\n        out.append(f\"{nm} {(((H>=lo)&(H<hi)&(S>0.2))[m]).mean()*100:.1f}%\")\n    return ' '.join(out)\nA=np.asarray(Image.open('refere …[+720 chars]`
+
+### 🧑 User — 2026-11-20T01:25:29.893Z
+
+> ↩︎ result: APPROVED inner rings blue 0.2% violet 0.5% magenta-pink 2.5% rose 7.9%
+> b0 whole tunnel f06    blue 1.9% violet 13.5% magenta-pink 7.2% rose 4.7%
+> a4 whole tunnel f06    blue 1.9% violet 13.4% magenta-pink 6.8% rose 4.7%
+
+### 🤖 Claude — 2026-11-20T01:25:42.383Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nfrom PIL import Image; import numpy as np\nfrom scipy import ndimage as ndi\nR0='/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r/'\ndef cool(img,m):\n    hsv=np.asarray(Image.fromarray(img.astype(np.uint8)).convert('HSV')).astype(float)\n    H=hsv[...,0]*360/255; S=hsv[...,1]/255\n    return ' '.join(f\"{nm} {(((H>=lo)&(H<hi)&(S>0.2))[m]).mean()*100:.1f}%\" for lo,hi,nm in [(195,255,'blue'),(255,300,'violet'),(300,340,'magenta-pink'),(340,361,'rose')])\nyy,xx=np.mgrid[0:1536,0:864]\nd=np.asarray(Image.open(R0+'d1/f06.png').con …[+863 chars]`
+
+### 🧑 User — 2026-11-20T01:25:43.322Z
+
+> ↩︎ result: b0 marked area blue 2.0% violet 2.9% magenta-pink 3.2% rose 8.0%
+> a4 marked area blue 2.1% violet 2.6% magenta-pink 3.5% rose 8.5%
+> APPROVED inner rings LEFT half blue 0.1% violet 0.5% magenta-pink 4.3% rose 12.4%
+> APPROVED left walls incl. washer rim blue 1.5% violet 5.6% magenta-pink 7.3% rose 10.6%
+
+### 🤖 Claude — 2026-11-20T01:26:10.207Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && python3 - <<'EOF'\np='src/world/match04m4.ts'; s=open(p).read()\ndef rep(a,b,cnt=1):\n    global s\n    assert s.count(a)==cnt, (a[:70], s.count(a)); s=s.replace(a,b)\ni=s.index(\"vec3 copperSoft(float T) {\"); j=s.index(\"\\n}\\n\",i)+3\ns=s[:i]+\"\"\"vec3 copperSoft(float T) {\n  // r21 m04rsoft: display colours measured on the approved inner rings (rose-copper to orange-copper bands, soft-gold rims),\n  // indexed by their luma: groove (146,52,34) .306, near end of a band (160,66,58) .365, body (200,90,62) .469, warm body\n  // (224,106,64) .535, soft-g …[+2668 chars]`
+
+### 🧑 User — 2026-11-20T01:26:36.204Z
+
+> ↩︎ result: ok
+> APPROVED inner rings   luma p5   81 p25   99 p50  116 p75  147 p95  219 mean  128 | <60 0.46% | violet/pink/blue 14.3% | hard steps 89
+> b0 marked area         luma p5   75 p25  102 p50  127 p75  162 p95  229 mean  136 | <60 0.89% | violet/pink/blue 16.2% | hard steps 761
+> a5 marked area         luma p5   85 p25   97 p50  117 p75  141 p95  173 mean  121 | <60 0.04% | violet/pink/blue 20.1% | hard steps 309
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:26:39.665Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r/tri5.png"}`
+
+### 🧑 User — 2026-11-20T01:26:39.696Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T01:26:48.348Z
+
+Smooth rose-copper bands with soft rims now. Let me look at the full frame and a 4× zoom of the marked area to judge it the way you'll see it.
+
+### 🤖 Claude — 2026-11-20T01:26:51.407Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r && python3 -c \"\nfrom PIL import Image\nA=Image.open('/home/user/rainbow-/references/04_through_the_five_arrows.png').convert('RGB').resize((864,1536),Image.LANCZOS)\nims=[A,Image.open('b0/f06.png').convert('RGB'),Image.open('a5/f06.png').convert('RGB')]\no=Image.new('RGB',(3*432+20,768),'white')\nfor i,im in enumerate(ims): o.paste(im.resize((432,768),Image.LANCZOS),(i*442,0))\no.save('full5.png')\nImage.open('a5/f06.png').convert('RGB').crop((60,470,300,710)).resize((960,960),Image.NEAREST).s …[+71 chars]`
+
+### 🧑 User — 2026-11-20T01:26:51.945Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:26:54.940Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r/full5.png"}`
+
+### 🧑 User — 2026-11-20T01:26:54.983Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T01:27:01.458Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r/a5_z4.png"}`
+
+### 🧑 User — 2026-11-20T01:27:01.476Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T01:27:21.198Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && python3 - <<'EOF'\np='src/world/match04m4.ts'; s=open(p).read()\ndef rep(a,b,cnt=1):\n    global s\n    assert s.count(a)==cnt, (a[:70], s.count(a)); s=s.replace(a,b)\nrep(\"\"\"          if (uu >= uL - 0.3) {\n            // the painted rows past the lip line are the dark painted groove: blend into the painted band colour at this\n            // angle instead (over 0.3 ring units, no seam)\"\"\",\"\"\"          float kB = max(smoothstep(uL - 0.3, uL, uu), 1.0 - smoothstep(0.08, 0.38, uu));\n          if (kB > 0.0) {\n            // the painted rows past t …[+1212 chars]`
+
+### 🧑 User — 2026-11-20T01:27:46.879Z
+
+> ↩︎ result: ok
+> APPROVED inner rings   luma p5   81 p25   99 p50  116 p75  147 p95  219 mean  128 | <60 0.46% | violet/pink/blue 14.3% | hard steps 89
+> b0 marked area         luma p5   75 p25  102 p50  127 p75  162 p95  229 mean  136 | <60 0.89% | violet/pink/blue 16.2% | hard steps 761
+> a6 marked area         luma p5   85 p25   97 p50  117 p75  141 p95  173 mean  121 | <60 0.04% | violet/pink/blue 20.1% | hard steps 308
+> b0 whole tunnel        luma p5   69 p25   98 p50  120 p75  153 p95  219 mean  129 | <60 3.17% | violet/pink/blue 27.3% | hard steps 1936
+> a6 whole tunnel        luma p5   72 p25   94 p50  114 p75  136 p95  183 mean  118 | <60 2.92% | violet/pink/blue 27.8% | hard steps 542
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:27:50.160Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r/a6_z4.png"}`
+
+### 🧑 User — 2026-11-20T01:27:50.180Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T01:27:55.389Z
+
+That line is still there, so the cause is something else. Let me sample the pixels across it together with the debug labels.
+
+### 🤖 Claude — 2026-11-20T01:28:00.350Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && S=/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r; Q=$(cat qa/match/04/r19b/ringpaint/preview_r20/QUERY_preview.txt)\ntimeout 600 node tools/match04/rings21.mjs $S/ad6 \"$Q&m04rsoft=1&m04dbg=1\" '[[\"f06\",84.183,null,10]]' 2>&1 | grep rror\npython3 - <<'EOF'\nfrom PIL import Image; import numpy as np\nR0='/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r/'\na=np.asarray(Image.open(R0+'a6/f06.png').convert('RGB')).astype(int); d=np.asarray(Image.open(R0+'ad6/f06.png').convert('RGB')).ast …[+272 chars]`
+
+### 🧑 User — 2026-11-20T01:28:14.316Z
+
+> ↩︎ result: -8 (np.int64(215), np.int64(539)) [144  63  53] 86 dbg [189   0   0]
+> -7 (np.int64(216), np.int64(539)) [142  63  56] 85 dbg [191   0   0]
+> -6 (np.int64(216), np.int64(540)) [139  63  59] 85 dbg [194   0   0]
+> -5 (np.int64(217), np.int64(541)) [134  63  64] 84 dbg [200   0   0]
+> -4 (np.int64(218), np.int64(542)) [132  64  68] 84 dbg [205   0   0]
+> -3 (np.int64(218), np.int64(543)) [131  64  70] 84 dbg [208   0   0]
+> -2 (np.int64(219), np.int64(543)) [130  65  72] 85 dbg [211   0   0]
+> -1 (np.int64(219), np.int64(544)) [130  65  74] 85 dbg [214   0   0]
+> 0 (np.int64(220), np.int64(545)) [129  66  77] 86 dbg [219   0   0]
+> 1 (np.int64(221), np.int64(546)) [130  68  80] 87 dbg [224   0   0]
+> 2 (np.int64(221), np.int64(547)) [130  68  81] 88 dbg [227   0   0]
+> 3 (np.int64(222), np.int64(547)) [130  69  83] 88 dbg [229   0   0]
+> 4 (np.int64(222), np.int64(548)) [130  69  85] 89 dbg [232   0   0]
+> 5 (np.int64(223), np.int64(549)) [131  71  88] 90 dbg [237   0   0]
+> 6 (np.int64(224), np.int64(550)) [133  72  92] 92 dbg [241   0   0]
+> 7 (np.int64(224), np.int64(551)) [134  74  93] 94 dbg [244   0   0]
+> 8 (np.int64(225), np.int64(551)) [135  74  94] 94 dbg [246   0   0]
+> Shell cwd was reset to /home/user/ra …[+6 chars]
+
+### 🤖 Claude — 2026-11-20T01:28:26.091Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r && python3 - <<'EOF'\nfrom PIL import Image; import numpy as np\na=np.asarray(Image.open('a6/f06.png').convert('RGB')).astype(float); d=np.asarray(Image.open('ad6/f06.png').convert('RGB')).astype(int)\nY=a@[.299,.587,.114]\n# along the line x in 150..300, y = 610 - (x-142.5)*120/157.5 ; search +-8 px vertically for a 1-2 px bright ridge\nfor x in range(170,300,16):\n    yc=int(round(610-(x-142.5)*120/157.5))\n    col=Y[yc-8:yc+9,x]; k=np.argmax(col); y=yc-8+k\n    print(x,y,'ridge',int(col[k]),' …[+187 chars]`
+
+### 🧑 User — 2026-11-20T01:28:26.373Z
+
+> ↩︎ result: 170 597 ridge 88 neighbors 88 90 rgb [144  66  62] dbg [231   0   0] dbg-2 [226   0   0] dbg+2 [235   0   0]
+> 186 585 ridge 93 neighbors 91 95 rgb [145  71  74] dbg [243   0   0] dbg-2 [239   0   0] dbg+2 [247   0   0]
+> 202 573 ridge 97 neighbors 95 110 rgb [144  76  89] dbg [252   0   0] dbg-2 [247   0   0] dbg+2 [255   0   0]
+> 218 560 ridge 104 neighbors 96 102 rgb [146  83 106] dbg [255   0   0] dbg-2 [250   0   0] dbg+2 [255   0   0]
+> 234 548 ridge 108 neighbors 96 103 rgb [150  87 108] dbg [255   0   0] dbg-2 [250   0   0] dbg+2 [255   0   0]
+> 250 536 ridge 100 neighbors 95 104 rgb [142  80  98] dbg [253   0   0] dbg-2 [248   0   0] dbg+2 [255   0   0]
+> 266 524 ridge 94 neighbors 92 98 rgb [136  75  89] dbg [246   0   0] dbg-2 [240   0   0] dbg+2 [252   0   0]
+> 282 497 ridge 145 neighbors 133 86 rgb [228 121  57] dbg [  0 255   0] dbg-2 [  0 255   0] dbg+2 [187   0   0]
+> 298 490 ridge 150 neighbors 132 86 rgb [229 127  68] dbg [  0 255   0] dbg-2 [  0 255   0] dbg+2 [186   0   0]
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:28:45.557Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && python3 - <<'EOF'\np='src/world/match04m4.ts'; s=open(p).read()\ndef rep(a,b,cnt=1):\n    global s\n    assert s.count(a)==cnt, (a[:70], s.count(a)); s=s.replace(a,b)\nrep(\"\"\"          float rimW = clamp(max(uRSoft.z / ribW, 2.5 * fx), 0.0, 0.45); // the rim's rounded roll-off (>= 2.5 px)\"\"\",\"\"\"          float rimW = clamp(max(uRSoft.z / ribW, 3.5 * fx), 0.0, 0.45); // the rim's rounded roll-off (>= 3.5 px)\"\"\")\nrep(\"\"\"          ribC = u0L + rWL * (1.0 - 1.15 * clamp(max(uRSoft.z / rWL, 2.5 * fu / rWL), 0.0, 0.45));\"\"\",\"\"\"          rib …[+996 chars]`
+
