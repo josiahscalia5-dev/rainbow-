@@ -1,29 +1,29 @@
 # Rainbow bootstrap report — BOOTSTRAP PROBLEMS
 
-Generated 2026-11-20 03:10 UTC by `scripts/claude-bootstrap.sh` (mode `background`) on branch `ccr-4742c19f-ez2mrs`.
+Generated 2026-11-20 04:09 UTC by `scripts/claude-bootstrap.sh` (mode `background`) on branch `claude/rainbow-r22-restore-ut3m39`.
 The commit that contains this file is the backup itself, so its SHA is not written here; use `git log -1 -- backups/BOOTSTRAP_REPORT.md`.
 
 | Step | Result | Details | s |
 |---|---|---|---|
-| Repository + branch | OK | josiahscalia5-dev/rainbow- on ccr-4742c19f-ez2mrs @ c58faf2 (session started from ccr-68d26c2d-gwegce) | 0 |
+| Repository + branch | OK | josiahscalia5-dev/rainbow- on claude/rainbow-r22-restore-ut3m39 @ f4193fe (session started from ccr-4742c19f-ez2mrs) | 0 |
 | Resume newest work | FAIL | git fetch from GitHub failed (network / GitHub connection?) | 240 |
-| Backup gap since last session | WARN | GAP: no backup ran from 2026-11-20 02:48 to 2026-11-20 03:05 UTC (0.3 h) - no Claude cloud environment with the autosave was active. Nothing can be saved while an environment is closed; the newest saved state is c58faf2.; previous session ended WITHOUT an end-of-session backup (its environment closed after an automatic save); 12 gap(s) > 10 min in the last 72 h of the autosave log, longest 11-17 22:38-20:24 UTC (21.8 h) | 0 |
-| Git LFS binaries (local) | OK | 89/89 real files (models, APK, kit ZIP, Marble splats/PLY/colliders/.blend), git lfs fsck OK | 2 |
-| Git LFS on GitHub | OK | 89/89 LFS objects (577 MB, 17 Marble/World Labs) confirmed on GitHub LFS | 1 |
-| Approved references | OK | 13/13 byte-identical (scripts/reference.sha256, incl. the official cartoon-girl reference) | 1 |
+| Backup gap since last session | OK | previous save on GitHub: f4193fe 2026-11-20 04:01 UTC (daemon) on ccr-4742c19f-ez2mrs, claude/rainbow-r22-restore-ut3m39; previous session ended WITHOUT an end-of-session backup (its environment closed after an automatic save); 13 gap(s) > 10 min in the last 72 h of the autosave log, longest 11-17 22:38-20:24 UTC (21.8 h) | 0 |
+| Git LFS binaries (local) | OK | 97/97 real files (models, APK, kit ZIP, Marble splats/PLY/colliders/.blend), git lfs fsck OK | 1 |
+| Git LFS on GitHub | OK | 97/97 LFS objects (592 MB, 17 Marble/World Labs) confirmed on GitHub LFS | 1 |
+| Approved references | OK | 13/13 byte-identical (scripts/reference.sha256, incl. the official cartoon-girl reference) | 0 |
 | Game: 11 screens + code | OK | 11 approved screen references 01-11, source tree src/ (46 files), Android project android/, characters assets/models/*.glb | 0 |
 | Specialist agents | OK | 10/10 specialist definitions present; all SHA-256 unchanged; running: _note | 0 |
 | Marble World Labs assets | OK | both worlds complete: 49 files checked, 15 real LFS binaries (splats/PLY/colliders/.blend), 71 files tracked under qa/worldlabs; credits spent 1810 of cap 6250 | 0 |
-| World Labs integration | WARN | Marble API authentication FAILED (HTTP 401): reconnect with the secure credential form (request_credential host api.worldlabs.ai, header WLT-Api-Key) - never chat or git; plugin worldlabs@worldlabs installed now; Atlas connector = claude.ai connector (check in Claude: ToolSearch World_Labs_Atlas); no paid job started | 5 |
+| World Labs integration | WARN | Marble API key authenticated (free read: 5420 credits); worlds draft 404, full 404; no paid job started; plugin worldlabs@worldlabs installed; Atlas connector = claude.ai connector (check in Claude: ToolSearch World_Labs_Atlas); no paid job started | 2 |
 | Node.js | OK | v22.23.5, npm 10.9.9 | 0 |
-| npm dependencies | OK | npm ci done (99 packages; cache ~/.npm reused) | 3 |
-| Python QA libraries | OK | installed: opencv-python-headless scipy; Python 3.13.18; required numpy+Pillow OK; optional cv2+scipy OK | 7 |
+| npm dependencies | OK | npm ci done (99 packages; cache ~/.npm reused) | 2 |
+| Python QA libraries | OK | installed: opencv-python-headless scipy; Python 3.13.18; required numpy+Pillow OK; optional cv2+scipy OK | 12 |
 | Playwright + Chromium | OK | headless Chromium 157.0.8103.78 with WebGL2 (SwiftShader); preinstalled, never reinstall | 1 |
-| ffmpeg / ImageMagick | OK | ffmpeg 6.1.1-3ubuntu5, ImageMagick 6.9.12-98 (Flow video + image checks) | 1 |
-| Blender | OK | Blender 5.3.0 (installed now) at /usr/local/bin/blender; headless bpy test OK | 13 |
-| Android build tools | OK | Android SDK platform 34 + build-tools 34.0.0 + platform-tools (installed now, /opt/android-sdk), Java 21, Gradle wrapper gradle-8.2.1; APK: npm run android:debug | 0 |
-| Claude hooks / plugins / MCP | OK | hooks: SessionStart PreCompact Stop SessionEnd; Playwright MCP connected; plugins: claude-code-setup code-review context7 design feature-dev frontend-design playwright superpowers worldlabs ; MCP template .mcp.json.template (no secrets) | 4 |
+| ffmpeg / ImageMagick | OK | ffmpeg 6.1.1-3ubuntu5, ImageMagick 6.9.12-98 (Flow video + image checks) | 0 |
+| Blender | OK | Blender 5.3.0 (present) at /usr/local/bin/blender; headless bpy test OK | 2 |
+| Android build tools | OK | Android SDK platform 34 + build-tools 34.0.0 + platform-tools (present, /opt/android-sdk), Java 21, Gradle wrapper gradle-8.2.1; APK: npm run android:debug | 0 |
+| Claude hooks / plugins / MCP | OK | hooks: SessionStart PreCompact Stop SessionEnd; Playwright MCP connected; plugins: context7 design frontend-design playwright worldlabs ; MCP template .mcp.json.template (no secrets) | 4 |
 | Build + game tests | OK | tsc OK; continuity OK (all stage joins gap 0, 07->08 drop 61.19) | 3 |
-| Five-minute GitHub autosave | OK | AUTOSAVE OK / branch ccr-4742c19f-ez2mrs / scheduler daemon / last verified backup 2026-11-20T03:10:30+00:00 (0.1 min ago) / local 32a768d remote 32a768d (match) / uncommitted 0 | 10 |
+| Five-minute GitHub autosave | OK | AUTOSAVE OK / branch claude/rainbow-r22-restore-ut3m39 / scheduler daemon / last verified backup 2026-11-20T04:08:54+00:00 (0.2 min ago) / local 12948b5 remote 12948b5 (match) / uncommitted 0 | 10 |
 
 Not transferable through GitHub (re-connect on a new Claude account): Claude login, GitHub connection + Claude GitHub App, World Labs Atlas connector sign-in, the Marble World API key (secure credential form only), cloud-environment settings, running processes. See `backups/TOOL_MANIFEST.json`.

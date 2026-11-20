@@ -1,0 +1,10 @@
+{
+ "worktree": "/home/user/wt/benny",
+ "branch": "claude/rainbow-benny-c24",
+ "head": "734efb6bc407c691c3d7d99e29b710544c82a9c5",
+ "time": "2026-11-20T04:13:44+00:00",
+ "dirty_tracked": [],
+ "untracked_copied": [],
+ "untracked_skipped": [],
+ "restore": "git switch claude/rainbow-benny-c24 (newest pushed tip) && git apply --binary backups/wip/claude__rainbow-benny-c24/tracked.patch && copy backups/wip/claude__rainbow-benny-c24/untracked/* into the worktree"
+}
