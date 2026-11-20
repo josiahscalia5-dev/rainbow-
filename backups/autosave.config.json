@@ -3,12 +3,12 @@
  "repo_full_name": "josiahscalia5-dev/rainbow-",
  "remote_name": "origin",
  "remote_url_must_contain": "github.com/josiahscalia5-dev/rainbow-",
- "branch": "ccr-681a37bb-5jqfbu",
+ "branch": "ccr-4742c19f-ez2mrs",
  "session_branch_patterns": [
   "ccr-*",
   "claude/*"
  ],
- "commit_trailer": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01AvQv6U3gDKWR4hkd5Ky2Pt",
+ "commit_trailer": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_0179kWgNJzw5v4674DNtMpda",
  "claude_projects_glob": "~/.claude/projects/-home-user-rainbow-*",
  "allowlist": [
   "*.md",
@@ -49,6 +49,9 @@
  "max_plain_git_file_mb": 49,
  "push_retries": 4,
  "protected_branches": [
+  "ccr-68d26c2d-gwegce",
+  "claude/rainbow-s06-match-c22",
+  "claude/rainbow-benny-c22",
   "ccr-6f431adf-7h0m8y",
   "claude/rainbow-3d-recovery-m4v347",
   "ccr-d4bb0ad3-8ycajb",

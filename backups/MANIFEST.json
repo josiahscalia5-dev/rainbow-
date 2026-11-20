@@ -603,8 +603,8 @@
   },
   {
    "path": "backups/BOOTSTRAP_REPORT.md",
-   "bytes": 3884,
-   "sha256": "958cc3b977ec36aee5c628f507dd69a4198e597100880a7b115ab2771ec09e23"
+   "bytes": 3955,
+   "sha256": "a1fbaffc017bddf0813956819736e5d32268d3892f279aaa69277cec314d0fa1"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
@@ -619,7 +619,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 20287,
-   "sha256": "88a367f1965aea07166425ea7f78c3b6a6f65cf26c5c1e817d8bb3ad276db40a"
+   "sha256": "3b28ee620234e877baca811e79deacca7b75e5f6dfd9484f27b530367fad248e"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -633,8 +633,8 @@
   },
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
-   "bytes": 1889,
-   "sha256": "29b373dca169d60bf8d37e3064e62046a87d73cad4e5c699b5419dc22eaf6936"
+   "bytes": 1957,
+   "sha256": "eb78ab7a64bf4c6f1e3c8c043b3002b4cdd7ab34a94b0bab1e2f4a3445bcca45"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -658,8 +658,8 @@
   },
   {
    "path": "backups/autosave.config.json",
-   "bytes": 10231,
-   "sha256": "d6a79156be072270e350be7e126449460bdd07c513beed4d487dc41db976e0a5"
+   "bytes": 10320,
+   "sha256": "da0ea88e3af3e075653cf67bd9451c0f1199040f3ead5d8c3240de6142915e65"
   },
   {
    "path": "backups/claude-config/2026-11-18-account12/README.md",
