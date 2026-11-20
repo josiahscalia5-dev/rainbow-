@@ -1190,3 +1190,29 @@ Let me view the approved reference and the lead's e_end / f_hard_left / g_hard_r
 > slot 1 busy
 > slot 2 busy
 
+### 🤖 Claude — 2026-11-20T17:10:23.342Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/match/05/r27/PROGRESS.md", "content": "# Screen 05 — rounds 27 / 28 progress log (water-fx-specialist, slug s05)\n\nWorktree `/home/user/wt/s05`, LOCAL branch `claude/rainbow-s05-match-c29` (base `eb7233e`, clean at start), port 5275,\ntemp `/home/user/scratch/s05/`. Old notes: `/home/user/wt/s05/qa/match/05/r18/PROGRESS.md`. Kept candidate (BEFORE for every\nstep): `/home/user/wt/s05/qa/match/05/r18/KEPT_STEP2.txt`. Lead preview of that candidate: `qa/review_r27/05/`.\n\n## (r28) WHERE I STOPPED / NEXT\n* 17:10 UTC — started r28. Diagnosis of the end sect …[+1199 chars]`
+
+### 🧑 User — 2026-11-20T17:10:23.474Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/match/05/r27/PROGRESS.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T17:10:24.497Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"^import\\|M05FCOIN\\b\" src/world/match05far.ts | head; grep -n \"M05TRANS\\|M05END\\b\" src/vfx/waterRibbon.ts | head -3; grep -n \"flag05\\b\" src/vfx/waterRibbon.ts | head -3", "description": "Check imports and flag helper"}`
+
+### 🧑 User — 2026-11-20T17:10:24.707Z
+
+> ↩︎ result: 20:import * as THREE from 'three';
+> 21:import type { ForcedTunnel, TubeWarp } from './tube';
+> 22:import { tubeCenterAt } from './tube';
+> 23:import type { FarRiverLayout, FarRiverRow } from './far05';
+> 24:import type { Course, CourseSample } from './course';
+> 25:import { EDGE_LIFT, M05BLEND, M05JOIN, M05LIDF, M05WCRISP, MATCH05, ampAt, flag05, m05blend, m05blendTime, m05eye, m05fw, m05join, m05seam } from '../vfx/waterRibbon';
+> 26:import { clip05, m05rideS } from '../vfx/clip05';
+> 27:import type { FarLump05 } from '../vfx/foam';
+> 60:export const M05FCOIN: boolean = M05FAR && flag05('m05fcoin');
+> 324:  // `&m05fcoin=1` (Screen 05 round 12): a coin's visual place on the far river's core (see M05FCOIN)
+> 161:export const flag05 = q05;
+
