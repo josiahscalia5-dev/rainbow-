@@ -624,7 +624,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 21255,
-   "sha256": "c40bf2e5b286d6b930efc23143b72c5efe9011e54b73d9847d9567484c6af223"
+   "sha256": "359a15deb1d3827e8df7665b2d628db0d22b902c08561a3c5edb42a56848f597"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -639,7 +639,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3719,
-   "sha256": "7334d60616229c34f104286843162de7cf7867142b564b799b88ed16f4883ae7"
+   "sha256": "7ec7830e99ca15e71ccfd39c774f8800f77db2a323782028328451ba2b8ba61f"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -919,7 +919,7 @@
   {
    "path": "backups/wip/claude__rainbow-benny-c25/INFO.json",
    "bytes": 1014,
-   "sha256": "33d9c6fdeda981bbf8d89864f3243af2cd2fcb8d0a1b53701245a9e3a937d775"
+   "sha256": "15628a1f09c37dbc61ac2c7286fe282ad2ac385249185c88d1f2d4124483e4e7"
   },
   {
    "path": "backups/wip/claude__rainbow-benny-c25/tracked.patch",
@@ -1529,7 +1529,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c25/INFO.json",
    "bytes": 586,
-   "sha256": "d9d6d7f8814d945a55a870e7e905a44dfb4a1156f88adaca2949eff8858c7500"
+   "sha256": "b7365332f5b9c76f90ad762e030ba512fac1c4c96a7272c374429bc4bb85944e"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c25/tracked.patch",
@@ -2299,7 +2299,7 @@
   {
    "path": "backups/wip/claude__rainbow-s05-match-c25/INFO.json",
    "bytes": 477,
-   "sha256": "6c404878d4c236ec93a023618dfa19e489eee03a87ac65b5c3d0b1284d41a597"
+   "sha256": "2e6079490f2366354b378431429f33481668e26a2bb5ed4df2c145d48cbe40cb"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c11/INFO.json",
@@ -2399,7 +2399,7 @@
   {
    "path": "backups/wip/claude__rainbow-s06-match-c25/INFO.json",
    "bytes": 736,
-   "sha256": "2d477e14b3bd0bc45cfd5df508934ee5b4f476478c3863c14011aa3919855808"
+   "sha256": "e620984dd83846005722ff3e386ef9baaf16ecddc3b78a4d1c0236af015e5665"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c25/tracked.patch",
@@ -2664,7 +2664,7 @@
   {
    "path": "backups/wip/claude__rainbow-s07-match-c25/INFO.json",
    "bytes": 971,
-   "sha256": "82a5cbc569e28fa6474d8d91802fe0018c8207dfa35cbf43d555e9ce708323c2"
+   "sha256": "17d9d403a2bc956e21c84af9e12762f63697cbcd338c2998de84c95e1e894a68"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c25/tracked.patch",
@@ -2859,7 +2859,7 @@
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c25/INFO.json",
    "bytes": 640,
-   "sha256": "9711734d08ba246e62b0f87b21e66cee429c23753e263d03536e58d9ae18ac27"
+   "sha256": "2fa6ac196dd57e9497f243ab3f7b79c4113a0cfeeb3444cdcaaba5b5cbbf0cff"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c25/tracked.patch",
@@ -2894,7 +2894,7 @@
   {
    "path": "backups/wip/detached-8accdad0a0/INFO.json",
    "bytes": 491,
-   "sha256": "a43a18bf22db82c67af1134092b7d2cab6291a470f82756f523c20c7315abe5b"
+   "sha256": "3d114a54ac3de1aa5912f9f1eed29744218301a99d3c5f28a6b8951d097c21e4"
   },
   {
    "path": "backups/wip/detached-8accdad0a0/tracked.patch",
@@ -2909,7 +2909,7 @@
   {
    "path": "backups/wip/detached-e162aec2bf/INFO.json",
    "bytes": 701,
-   "sha256": "30dff8319b6b3f4474e4b60a0d6ce45218c66c53a4be28956f28e9c4d48f6b27"
+   "sha256": "e089cdabd63e4d39d332ae655f57a9663af53c90d09574a4be09e02ccdbe7787"
   },
   {
    "path": "backups/wip/detached-e162aec2bf/tracked.patch",
@@ -3678,13 +3678,13 @@
   },
   {
    "path": "docs/review_package/2026-11-20/MANIFEST.json",
-   "bytes": 21436,
-   "sha256": "9463b15320f2c7623c557af4fe3d514f3e4ba10503ff585aa67e8f72f825ed07"
+   "bytes": 21704,
+   "sha256": "a754bfa1b74c4f73d4196b3050385c83b923599fde15157a7a583271400aeb49"
   },
   {
    "path": "docs/review_package/2026-11-20/MANIFEST_FILES.tsv",
-   "bytes": 522527,
-   "sha256": "b4e81bcd4c90f4e7915599e1b621f4dd71b7f1f3d53a2fee60a033f4d1a73fd9"
+   "bytes": 522590,
+   "sha256": "a496e087d396e0058c12c284e40b425b4cd04c7c2d3388a7bb7a0194738479e6"
   },
   {
    "path": "docs/review_package/2026-11-20/PACKAGE_VERIFICATION.md",
@@ -3693,8 +3693,8 @@
   },
   {
    "path": "docs/review_package/2026-11-20/REVIEW_README.md",
-   "bytes": 14833,
-   "sha256": "905d754741028feb0159c59a94ca31470a6149c3130f4118b5d4a455e43c9b68"
+   "bytes": 15005,
+   "sha256": "6fbe5d4418253de4c2f1e8118a3bd268cd44c05cb76d3b0b6eab78eee58eff64"
   },
   {
    "path": "docs/review_package/2026-11-20/apply_version.py",
@@ -3703,8 +3703,8 @@
   },
   {
    "path": "docs/review_package/2026-11-20/zip_and_test.py",
-   "bytes": 4779,
-   "sha256": "cb643bc990e698bf67616a84738f319cf33885e215a945c51045c8801325dc35"
+   "bytes": 4945,
+   "sha256": "e9129943e471f3a79fb14c53266263a4bb1817971c630951fc63f5e4df684a53"
   },
   {
    "path": "docs/vfx/water.md",
