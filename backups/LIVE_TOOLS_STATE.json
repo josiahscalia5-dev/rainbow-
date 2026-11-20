@@ -1,5 +1,5 @@
 {
- "time_utc": "2026-11-20T03:09:55+00:00",
+ "time_utc": "2026-11-20T03:10:36+00:00",
  "lead_branch": "ccr-4742c19f-ez2mrs",
  "specialists_sha256_16": {
   "android-build-performance": "b0c45161860a960c",
@@ -17,8 +17,12 @@
  "workers_status_latest_round": {
   "round9_account9": null
  },
- "plugins_installed_locally": [],
- "plugins_enabled_user_settings": [],
+ "plugins_installed_locally": [
+  "worldlabs@worldlabs"
+ ],
+ "plugins_enabled_user_settings": [
+  "worldlabs@worldlabs"
+ ],
  "plugins_synced_from_claude_account": [
   "Accelerate design workflows \u2014 critique, design system management, UX writing, accessibilit",
   "Frontend design skill for UI/UX implementation",
@@ -29,7 +33,9 @@
   "Upstash Context7 MCP server for up-to-date documentation lookup. Connects to Context7's ho",
   "Browser automation and end-to-end testing MCP server by Microsoft. Enables Claude to inter"
  ],
- "mcp_servers_configured": [],
+ "mcp_servers_configured": [
+  "worldlabs"
+ ],
  "hooks_project": [
   "PreCompact",
   "SessionEnd",
