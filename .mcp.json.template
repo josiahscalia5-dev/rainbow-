@@ -5,6 +5,6 @@
     "blender": { "command": "uvx", "args": ["mcp-for-blender"] },
     "_meshy": "NOT VERIFIED HERE — install per https://github.com/meshy-dev/meshy-mcp-server README; key goes in env MESHY_API_KEY only",
     "hyper3d-rodin": { "type": "http", "url": "https://api.hyper3d.com/api/mcp" },
-    "worldlabs": { "type": "http", "url": "https://api.atlas.worldlabs.ai/mcp" }
+    "_worldlabs": "DO NOT ADD HERE (would duplicate). Atlas = claude.ai connector 'World Labs Atlas' (https://api.atlas.worldlabs.ai/mcp); the worldlabs@worldlabs plugin is installed for its skills with its own MCP copy disabled: scripts/setup-worldlabs-plugin.sh"
   }
 }

@@ -1,0 +1,82 @@
+{
+  "D": [
+    {
+      "opacity": "1",
+      "t": 0.021493,
+      "dur": 2.52,
+      "ended": false,
+      "err": null,
+      "paused": true
+    },
+    {
+      "opacity": "0",
+      "t": 2.52,
+      "dur": 2.52,
+      "ended": true,
+      "err": null,
+      "paused": false
+    },
+    {
+      "opacity": "1",
+      "t": 0.025126,
+      "dur": 2.52,
+      "ended": false,
+      "err": null,
+      "paused": true
+    }
+  ],
+  "E": [
+    {
+      "atShow": {
+        "opacity": "1",
+        "t": 0.035837,
+        "dur": 2.52,
+        "ended": false,
+        "err": null,
+        "paused": true
+      },
+      "start": {
+        "s": 77.413,
+        "lat": 0,
+        "coins": 1420
+      },
+      "handOver": {
+        "steps": 1690,
+        "coins": 2240,
+        "stage": "11",
+        "missedBefore09": []
+      },
+      "final": {
+        "coins": 2240,
+        "taken": 91,
+        "mode": "end"
+      }
+    },
+    {
+      "atShow": {
+        "opacity": "1",
+        "t": 0.013486,
+        "dur": 2.52,
+        "ended": false,
+        "err": null,
+        "paused": true
+      },
+      "start": {
+        "s": 77.413,
+        "lat": 0,
+        "coins": 1420
+      },
+      "handOver": {
+        "steps": 1690,
+        "coins": 2240,
+        "stage": "11",
+        "missedBefore09": []
+      },
+      "final": {
+        "coins": 2240,
+        "taken": 91,
+        "mode": "end"
+      }
+    }
+  ]
+}

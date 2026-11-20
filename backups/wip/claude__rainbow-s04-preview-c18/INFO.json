@@ -1,0 +1,10 @@
+{
+ "worktree": "/home/user/wt/s04p",
+ "branch": "claude/rainbow-s04-preview-c18",
+ "head": "c338978b345b64c89e2ebb0f79fa242c5f53f623",
+ "time": "2026-11-19T18:56:30+00:00",
+ "dirty_tracked": [],
+ "untracked_copied": [],
+ "untracked_skipped": [],
+ "restore": "git switch claude/rainbow-s04-preview-c18 (newest pushed tip) && git apply --binary backups/wip/claude__rainbow-s04-preview-c18/tracked.patch && copy backups/wip/claude__rainbow-s04-preview-c18/untracked/* into the worktree"
+}

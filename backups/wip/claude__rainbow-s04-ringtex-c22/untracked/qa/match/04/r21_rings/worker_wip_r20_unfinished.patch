@@ -1,0 +1,37 @@
+diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
+index 0986940..5b7fecd 100644
+--- a/src/world/match04m4.ts
++++ b/src/world/match04m4.ts
+@@ -391,7 +391,6 @@ void main() {
+ #ifdef RFEW
+         fd *= step(0.999, vF.y);                                     // corridor rings only (the telescope stays painted)
+ #endif
+-        if (uRNear5.w < -1.5 && uRNear5.w > -2.5) pr = vec3(facing); else if (uRNear5.w < -0.5 && uRNear5.w > -1.5) pr = vec3(fd, fract(si * 0.37 + 0.2), fract(kI * 0.25)); else   // DEBUG
+         if (fd > 0.001) {
+           float lastS = step(Ns - 0.5, si);                          // the last sub-band ends at the modelled lip
+           float sid = kI * 7.0 + si;                                 // world-anchored id of this sub-band
+@@ -449,14 +448,14 @@ void main() {
+           float xh = mix(0.42, 0.80, mv);
+           float spot = clamp(0.85 * streaks(ang + rj, sid + 41.0), 0.0, 1.0);
+           float hm = uRNear5.x + (1.0 - uRNear5.x) * spot;
+-          float hb = exp(-pow((xs - xh) / 0.16, 2.0)) * hm, hcr = exp(-pow((xs - xh) / (0.16 / uRNear4.z), 2.0)) * spot;
++          float hb = exp(-pow((xs - xh) / 0.26, 2.0)) * hm, hcr = exp(-pow((xs - xh) / (0.26 / uRNear4.z), 2.0)) * spot;
+           // analytic band normal (the lathe's normals are per facet: a mirror term on them shows the facets)
+           vec3 nA = normalize(-normalize(qr) - 0.2 * uAxD);
+           float th = (xs - 0.5) * 1.5;
+           vec3 nT = normalize(nA * cos(th) + uAxD * sin(th));
+           vec3 RT = reflect(-V, nT);
+           float fz = pow(max(dot(RT, uAxD), 0.0), 8.0) * hm;
+-          pr += (vec3(1.0, 0.74, 0.30) * 0.42 * (hb + fz) + vec3(1.0, 0.94, 0.74) * 0.75 * hcr) * uRNear3.y * fd;
++          pr += (vec3(1.0, 0.78, 0.36) * 0.42 * (hb + fz) + vec3(1.0, 0.94, 0.74) * 0.40 * hcr) * uRNear3.y * fd;   // broad glossy sheen, soft core
+           // short static yellow glows on each tube's crown (the painting's yellow light columns, finer than the magnified ones)
+           float yc = smoothstep(0.5, 1.25, streaks(ang + rj + 0.7, sid + 83.0)) * exp(-pow((xs - 0.66) / 0.2, 2.0));
+           pr += vec3(1.0, 0.76, 0.34) * uRNear5.y * yc * fd;
+@@ -471,7 +470,6 @@ void main() {
+             rc = mix(rc, vec3(0.52, 0.56, 0.98), 0.8 * step(0.6, h21(vec2(sid, 7.7))));   // some cool blue-violet glints
+             float sR = uRNear2.w * fd * pa;
+             pr = mix(pr, rc * (0.75 + 0.45 * dot(pr, vec3(0.30, 0.59, 0.11))), clamp(sR, 0.0, 0.75));
+-            if (uRNear5.w < -2.5) pr = vec3(clamp(sR * 2.0, 0.0, 1.0), 0.0, pa);   // DEBUG
+           }
+           // (e) the sub-rims (not after the last sub-band: the modelled lip carries its own line, groove and dots): a thin
+           // dark groove line, a crisp warm-white rim line just before it, the rounded rim catching the light, bulbs on it
