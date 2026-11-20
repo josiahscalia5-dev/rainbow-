@@ -82,9 +82,10 @@ const LOCK20: Record<string, { lock: V4; shade: V4; comb: V4; pile: V4; color: [
  *  ((207, 74, 151), .84), while the game lights him less there. The game records its screen on
  *  benny.root.userData.stage (Game.ts setStage); runtime.ts eases the factor over ≈ 1 s. Unlisted screens: 04's look. */
 export const EXPO20: Record<string, [number, number, number]> = {
-  '05': lin('x05', [1.5, 2.2, 1.75]),
-  '06': lin('x06', [1.65, 3.0, 1.6]),
-  '07': lin('x07', [1.58, 2.44, 1.84]),
+  '05': lin('x05', [2.08, 1.54, 1.68]),
+  '06': lin('x06', [1.73, 1.62, 1.5]),
+  '07': lin('x07', [2.33, 1.59, 1.75]),
+  '08': lin('x08', [2.0, 1.21, 1.7]),
 };
 
 const EXPO_ON = n('expo', 0) > 0;

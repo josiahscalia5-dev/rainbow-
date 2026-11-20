@@ -2,8 +2,8 @@
 
 ## (r22) WHERE I STOPPED / NEXT — 2026-11-20
 
-**Done:** step 1 (plush fur, `&benny20=1`) proven on 04–08; step 2 (per-screen exposure `&benny20=1&b20expo=1`) values tuned
-on 05/06/07/08 (see log). **Next:** step 2 proof shots → commit/report; then step 3 (pompom lighter yarn, clean cuff ribs
+**Done:** step 1 (plush fur, `&benny20=1`) and step 2 (per-screen exposure `&benny20=1&b20expo=1`) proven on 04–08.
+**Next:** step 3 (pompom lighter yarn, clean cuff ribs
 `b20knit=1`, felt star, size vs painted Benny).
 
 Kept query per screen = lead `qa/review_r21/audit/QUERY_0N.txt` (lead branch `ccr-4742c19f-ez2mrs`) + Benny switches.
@@ -23,3 +23,13 @@ is judged. Default build unchanged (every change only under `benny20`).
   05 / 06 / 07 / 08 he is a darker, duller mauve-rose than the bright dusty rose painted there (→ step 2); pompom still a
   dark koosh; cuff texture smeared (→ step 3). The fixed crop box misses Benny on the hard-left shots (he is off to the
   side) — look at the full frames there.
+
+### Step 2 — per-screen fur exposure (`&benny20=1&b20expo=1`) — GOOD IMPROVEMENT (colour on 05–08)
+* `EXPO20` (src/characters/benny/benny20.ts) re-solved for the NEW plush fur in two shoot-measure passes against each
+  approved Benny's body colour: 05 [2.08,1.54,1.68], 06 [1.73,1.62,1.5], 07 [2.33,1.59,1.75], NEW 08 [2.0,1.21,1.7]
+  (linear multipliers; 04 keeps its own look). Still opt-in `b20expo=1`; overridable `&b20x0N=r,g,b`.
+* BEFORE = step 1 NEW (`qa/benny/r22/t1/0N/new/`), NEW = `qa/benny/r22/t2/0N/new/` (full frames + crops). Gameplay 8/8 with
+  `--q=benny20=1&b20expo=1`.
+* Verdict by eye: Benny now reads the same bright dusty rose on 05, 06, 07 and 08 as painted (no more dark mauve), at the
+  start, in the middle and steering hard left. Trade-off: at the brighter exposure the fur's strand shading is a bit flatter
+  than the approved (which keeps deeper rose creases) — worth a later shade-depth pass. Pompom / cuff unchanged (step 3).
