@@ -878,3 +878,111 @@ Restore and service checks are done. Rendering the first Screen 04 test now: BEF
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && O=/home/user/rainbow-/qa/match/04/r23/lead_t1 && mkdir -p $O && K=$(cat /home/user/rainbow-/qa/match/04/r22/s2_bbd/QUERY_K22-2.txt) && N=${K/m04wup=1/m04wup=0} && echo \"$N\" > $O/QUERY_NEW.txt && echo \"$K\" > $O/QUERY_BEFORE.txt && (AUDIT_PORT=5273 timeout 900 node /home/user/rainbow-/qa/match/04/r22/tools/audit_pinned.mjs $O/BEFORE 04 \"$K\" > $O/before.log 2>&1 &) ; AUDIT_PORT=5274 timeout 900 node /home/user/rainbow-/qa/match/04/r22/tools/audit_pinned.mjs $O/NEW 04 \"$N\" > $O/new.log 2>&1; sleep 5; while pgrep -f \"audit_pinned.mjs $O/BEFORE\" >/dev/n …[+167 chars]`
 
+### 🧑 User — 2026-11-20T04:13:48.579Z
+
+> ↩︎ result: tail: option used in invalid context -- 3
+> /home/user/rainbow-/qa/match/04/r23/lead_t1/BEFORE:
+> a_start.png
+> b_early.png
+> c_middle.png
+> d_late.png
+> e_end.png
+> f_hard_left.png
+> g_hard_right.png
+> shots.json
+> 
+> /home/user/rainbow-/qa/match/04/r23/lead_t1/NEW:
+> a_start.png
+> b_early.png
+> c_middle.png
+> d_late.png
+> e_end.png
+> f_hard_left.png
+> g_hard_right.png
+> shots.json
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T04:13:49.958Z
+
+Renders done and all six worktrees are up. Let me look at the approved picture next to BEFORE and NEW at the middle and late shots, where the pink walls were worst.
+
+### 🤖 Claude — 2026-11-20T04:13:53.156Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/setup_rest.log | tail -4; O=qa/match/04/r23/lead_t1; S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad; for s in c_middle d_late; do convert references/04_through_the_five_arrows.png -resize 432x768! $S/ap.png; convert $O/BEFORE/$s.png -resize 432x768 $S/b.png; convert $O/NEW/$s.png -resize 432x768 $S/n.png; convert $S/ap.png $S/b.png $S/n.png +append $S/view_$s.png; done; identify references/04_through_the_five_arrows.png", "description": "Build side-by-side vie …[+26 chars]`
+
+### 🧑 User — 2026-11-20T04:13:54.803Z
+
+> ↩︎ result: s08: /home/user/wt/s08 on claude/rainbow-s08-scenery-c24 from 3c0fa97 
+> Preparing worktree (new branch 'claude/rainbow-s05-match-c24')
+> s05: /home/user/wt/s05 on claude/rainbow-s05-match-c24 from eb7233e 
+> done
+> references/04_through_the_five_arrows.png JPEG 864x1536 864x1536+0+0 8-bit sRGB 392932B 0.000u 0:00.000
+
+### 🤖 Claude — 2026-11-20T04:13:56.223Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/view_c_middle.png"}`
+
+### 🧑 User — 2026-11-20T04:13:56.269Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:13:56.832Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/view_d_late.png"}`
+
+### 🧑 User — 2026-11-20T04:13:56.877Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:14:06.474Z
+
+> 🔧 **Bash** `{"command": "O=qa/match/04/r23/lead_t1; S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad; for s in a_start b_early e_end f_hard_left g_hard_right; do convert $O/BEFORE/$s.png -resize 324x576 $S/b_$s.png; convert $O/NEW/$s.png -resize 324x576 $S/n_$s.png; done; convert \\( $S/b_b_early.png $S/b_e_end.png $S/b_f_hard_left.png $S/b_g_hard_right.png +append \\) \\( $S/n_b_early.png $S/n_e_end.png $S/n_f_hard_left.png $S/n_g_hard_right.png +append \\) -append $S/view_rest.png; node /home/user/tools-pixelmatch/pixeldiff.mjs $O/BEFORE/a_start.png $O/NEW/a_start.png  …[+95 chars]`
+
+### 🧑 User — 2026-11-20T04:14:08.353Z
+
+> ↩︎ result: Node.js v22.23.5
+
+### 🤖 Claude — 2026-11-20T04:14:11.400Z
+
+> 🔧 **Bash** `{"command": "ls /home/user/tools-pixelmatch/ 2>&1 | head; cd /home/user/rainbow- && python3 -c \"\nfrom PIL import Image, ImageChops; import numpy as np\na=np.asarray(Image.open('qa/match/04/r23/lead_t1/BEFORE/a_start.png').convert('RGB')).astype(int)\nb=np.asarray(Image.open('qa/match/04/r23/lead_t1/NEW/a_start.png').convert('RGB')).astype(int)\nd=np.abs(a-b).max(axis=2); print('start view pixels differing (>25):', int((d[180:]>25).sum()), 'any:', int((d[180:]>0).sum()))\"", "description": "Locate pixeldiff tool and diff start view in Python"}`
+
+### 🧑 User — 2026-11-20T04:14:11.828Z
+
+> ↩︎ result: ls: cannot access '/home/user/tools-pixelmatch/': No such file or directory
+> start view pixels differing (>25): 0 any: 17625
+
+### 🤖 Claude — 2026-11-20T04:14:12.446Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/view_rest.png"}`
+
+### 🧑 User — 2026-11-20T04:14:12.628Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:14:30.037Z
+
+> 🔧 **Bash** `{"command": "head -30 qa/match/04/r22/tools/swim_clip_pinned.mjs; head -15 qa/match/04/r22/tools/gameplay_test_5273.mjs", "description": "Read pinned swim-clip and gameplay tool usage"}`
+
+### 🧑 User — 2026-11-20T04:14:30.088Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // r22 S04 copy of tools/lead_r13/swim_clip.mjs: port AUDIT_PORT (default 5273) and performance.now() pinned to the clip clock
+> // while each frame is stepped and drawn (the Screen 04 river shader reads the wall clock), so BEFORE / NEW clips match.
+> // Lead r13 (2026-11-18): a short REAL-GAMEPLAY swimming clip for any playable screen 04–08 (read-only).
+> // Starts at the screen's checkpoint and rides the real game simulation (Benny, camera rig, course, coins unchanged) with
+> // the shader clock running: straight, then left, then right, then straight — one frame per 1/fps s → OUT/0000.png …
+> // Generalises scripts/proj05-move.mjs --zigzag. Encode: ffmpeg -framerate 24 -i OUT/%04d.png -pix_fmt yuv420p clip.mp4
+> //   node tools/lead_r13/swim_clip.mjs <screen 04..08> <outDir> <seconds> [query]
+> import { mkdirSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> const [SCREEN, OUT, SECS = '6', Q = ''] = process.argv.slice(2);
+> const fps = 24;
+> mkdirSync(OUT, { recursive: true });
+> const { chromium } = loadPlaywright();
+> const vite = await start …[+2419 chars]
+
+### 🤖 Claude — 2026-11-20T04:14:37.463Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && O=/home/user/rainbow-/qa/match/04/r23/lead_t1 && K=$(cat $O/QUERY_BEFORE.txt) && N=$(cat $O/QUERY_NEW.txt) && T=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/clip && rm -rf $T && mkdir -p $T && (AUDIT_PORT=5273 timeout 1500 node /home/user/rainbow-/qa/match/04/r22/tools/swim_clip_pinned.mjs 04 $T/B 2.4 \"$K\" > $T/b.log 2>&1; ffmpeg -loglevel error -y -framerate 24 -i $T/B/%04d.png -vf scale=432:768 -pix_fmt yuv420p $O/swim04_BEFORE.mp4; ffmpeg -loglevel error -y -framerate 12 -i $T/B/%04d.png -vf scale=432:768 -pix_fmt y …[+712 chars]`
+
