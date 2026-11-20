@@ -60,3 +60,7 @@ s06 / Benny = their pushed `-c23` tips + their r22 PROGRESS.md.
 * ~03:40 Benny step 2 `&benny20=1&b20expo=1` (per-screen exposure, `@ 438ffb9`; worker: GOOD IMPROVEMENT). Lead by eye
   (`qa/review_r22/benny_t2/`): colour now the same bright dusty rose on 05–08 = GOOD IMPROVEMENT (colour); fur still short velvet,
   less fluffy than approved (feedback from step 1 still open). Shown to the user: 08 start APPROVED / BEFORE / NEW.
+* **~03:42 USER APPROVED the three Screen 04 generated views** ("Yes, approve the Screen 04 proposals, keep going"):
+  `qa/review_r21/artwork/04/USER_VERDICT.md`, `accepted/04_gen_{c_middle_p2_v1,d_late_p3_v1,e_end_p2_v1}.png`. s04 foam worker asked
+  to finish its current step and stop; then `washer-environment-modeler` takes the s04 worktree for the multi-plate projection
+  `&m04mp=1` (`LAUNCH_S04_PROJ.md`). 07 + 05 proposals still await the user.

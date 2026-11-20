@@ -1468,3 +1468,298 @@ Hard left now shows puffy foam clouds where the flat pale sheet was. Re-recordin
 
 > 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/clips/lvl_cmp2.png"}`
 
+### 🧑 User — 2026-11-20T03:41:58.459Z
+
+> ↩︎ result: frames 86
+> frames 86
+> {
+>   "what": "deterministic scripts/capture.mjs, K7 vs K7&m07end=1, rows 180-1536, threshold 0.1",
+>   "07_start_view": 0,
+>   "08_start_view": 0,
+>   "07d_entering_08": 0,
+>   "audit_a_start": 0,
+>   "audit_b_early": 0
+> }
+
+### 🧑 User — 2026-11-20T03:41:59.215Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:42:08.403Z
+
+The grey lather sheet at hard right is gone (bottom row, frames 70/80); the 3D clouds stand there instead. Checking the end-of-stage clip frames.
+
+### 🤖 Claude — 2026-11-20T03:42:12.205Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/clips && mkdir -p $S/end_bef && ffmpeg -loglevel error -y -i /home/user/rainbow-/qa/match/07/r22/s1_cloud/swim_end_BEFORE.mp4 $S/end_bef/%04d.png && python3 -I -c \"\nfrom PIL import Image\nS='$S'\nfr=[10,35,60,80]\nims=[Image.open(f'{S}/end_bef/{i+1:04d}.png').convert('RGB') for i in fr]+[Image.open(f'{S}/end_new/{i:04d}.png').convert('RGB') for i in fr]\nw,h=ims[0].size; sheet=Image.new('RGB',(w*4,h*2),'black')\nfor k,im in enumerate(ims): sheet.paste(im.resize((w,h)),((k%4)*w,(k//4)*h))\nsheet.s …[+87 chars]`
+
+### 🤖 Claude — 2026-11-20T03:42:13.403Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/clips/end_cmp.png"}`
+
+### 🧑 User — 2026-11-20T03:42:14.374Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🧑 User — 2026-11-20T03:42:15.140Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:42:19.472Z
+
+In the drop the flat pale sheets are now puffy foam banks on both sides; frame 80 (already in 08) is unchanged. Now the proof checks; first I'll confirm which ports the test scripts use.
+
+### 🤖 Claude — 2026-11-20T03:42:20.675Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"startVite\\|port\\|PORT\" scripts/gameplay-test.mjs scripts/capture.mjs scripts/lib/pw.mjs | head -20; grep -n \"test:continuity\" package.json; head -30 scripts/capture.mjs | grep -n \"argv\\|usage\\|//\" | head -15", "description": "Check test script ports and usage"}`
+
+### 🧑 User — 2026-11-20T03:42:20.740Z
+
+> ↩︎ result: scripts/gameplay-test.mjs:4://  * continuous travel: s strictly increases, no position jump > speed·dt (no teleport/cut)
+> scripts/gameplay-test.mjs:13:import { writeFileSync, mkdirSync } from 'node:fs';
+> scripts/gameplay-test.mjs:14:import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> scripts/gameplay-test.mjs:20:const vite = await startVite(5213);
+> scripts/gameplay-test.mjs:22:const page = await browser.newPage({ viewport: { width: 216, height: 384 } });
+> scripts/gameplay-test.mjs:85:  out.checks.noTeleport = { pass: maxJump < 1.0, maxBennyAltitudeJumpPerStep: +maxJump.toFixed(3), at: out.maxJumpAt };
+> scripts/gameplay-test.mjs:129:  `* max Benny altitude change per step: **${result.checks.noTeleport.maxBennyAltitudeJumpPerStep}** (no teleport)`,
+> scripts/capture.mjs:8:import { mkdirSync, writeFileSync } from 'node:fs';
+> scripts/capture.mjs:9:import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> scripts/capture.mjs:24:const vite = await startVite(5201);
+> scripts/capture.mjs:30:    const page = await browser.newPage({ viewport: { width: w, height: h }, deviceScaleFactor: 1 });
+> scripts/capture.mjs:47:    // first use). Render once more (after the scree …[+1275 chars]
+
+### 🤖 Claude — 2026-11-20T03:42:24.772Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 15,45p scripts/lib/pw.mjs; grep -n \"q=\\|--q\\|query\" scripts/capture.mjs | head; ls /home/user/rainbow-/qa/match/07/r21/untracked_tools/tools/*/ 2>/dev/null", "description": "Read startVite and capture query handling"}`
+
+### 🧑 User — 2026-11-20T03:42:24.822Z
+
+> ↩︎ result: export const CHROMIUM_ARGS = ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
+> 
+> /** start a Vite dev server for the project and return { url, close } */
+> export async function startVite(port = 5199) {
+>   const { createServer } = await import('vite');
+>   const server = await createServer({ server: { port, strictPort: false, host: '127.0.0.1', hmr: false, watch: { ignored: ['**/*'] } }, logLevel: 'error' });
+>   await server.listen();
+>   const addr = server.resolvedUrls?.local?.[0] ?? `http://127.0.0.1:${port}/`;
+>   return { url: addr.replace(/\/$/, ''), close: () => server.close() };
+> }
+> 
+> export async function waitDone(page, timeoutMs = 180000) {
+>   await page.waitForFunction(() => window.__done === true, null, { timeout: timeoutMs });
+>   const err = await page.evaluate(() => window.__error);
+>   if (err) throw new Error(err);
+> }
+> 37:    if (!log.renderer) log.renderer = await page.evaluate(() => { const g = document.querySelector('canvas').getContext('webgl2'); const d = g?.getExtension('WEBGL_debug_renderer_info'); return d ? g.getParameter(d.UNMASKED_RENDERER_WEBGL) : 'unknown'; });
+> diag_r21.mjs
+> swim_clip_r21.mjs
+
+### 🤖 Claude — 2026-11-20T03:42:31.537Z
+
+Both test scripts hard-code their own ports (5213, 5201). To stay on port 5277 only, I'll run port-patched copies under `tools/match07/` (untracked QA helpers; logic unchanged).
+
+### 🤖 Claude — 2026-11-20T03:42:33.003Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 1,40p scripts/gameplay-test.mjs | grep -n \"argv\\|writeFile\\|mkdir\\|q=\" ; grep -n \"writeFileSync\\|mkdirSync\\|OUT\\b\\|--out\" scripts/gameplay-test.mjs scripts/capture.mjs | head -20; grep -n \"import\" scripts/gameplay-test.mjs scripts/capture.mjs", "description": "Check gameplay test output paths and imports"}`
+
+### 🧑 User — 2026-11-20T03:42:33.055Z
+
+> ↩︎ result: 11://   node scripts/gameplay-test.mjs --q=river05=1 --out=qa/pilot05/wave11/tests/gameplay_river05.json
+> 13:import { writeFileSync, mkdirSync } from 'node:fs';
+> 16:const optQ = (process.argv.find((a) => a.startsWith('--q=')) ?? '').slice(4);
+> 17:const optOut = (process.argv.find((a) => a.startsWith('--out=')) ?? '').slice(6);
+> 18:mkdirSync('qa', { recursive: true });
+> scripts/gameplay-test.mjs:11://   node scripts/gameplay-test.mjs --q=river05=1 --out=qa/pilot05/wave11/tests/gameplay_river05.json
+> scripts/gameplay-test.mjs:13:import { writeFileSync, mkdirSync } from 'node:fs';
+> scripts/gameplay-test.mjs:17:const optOut = (process.argv.find((a) => a.startsWith('--out=')) ?? '').slice(6);
+> scripts/gameplay-test.mjs:18:mkdirSync('qa', { recursive: true });
+> scripts/gameplay-test.mjs:106:  writeFileSync(f, JSON.stringify(result, null, 2));
+> scripts/gameplay-test.mjs:112:writeFileSync('qa/gameplay_test.json', JSON.stringify(result, null, 2));
+> scripts/gameplay-test.mjs:138:writeFileSync('qa/07_to_08_continuity.md', md.join('\n') + '\n');
+> scripts/capture.mjs:7://   node scripts/capture.mjs --out=DIR       → custom output dir
+> scripts/capture.mjs:8:import { mkdirSync, writeFileSync } from 'node:fs'; …[+652 chars]
+
+### 🤖 Claude — 2026-11-20T03:42:37.897Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 10,60p scripts/capture.mjs; git sparse-checkout list 2>/dev/null | head; git status --short qa | head", "description": "Read capture script body and sparse checkout"}`
+
+### 🧑 User — 2026-11-20T03:42:37.953Z
+
+> ↩︎ result: const args = process.argv.slice(2);
+> const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> let ids = args.filter((a) => !a.startsWith('--'));
+> const NATIVE = { '03': [727, 1536] };
+> const plunge = ['07a_plunge_top', '07b_plunge_mid', '07c_plunge_bottom', '07d_entering_08'];
+> if (opt.plunge) ids = plunge;
+> if (!ids.length) ids = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> const size = typeof opt.size === 'string' ? opt.size.split('x').map(Number) : null;
+> const outDir = typeof opt.out === 'string' ? opt.out : opt.plunge ? 'qa/continuity' : size ? `screenshots/${size[0]}x${size[1]}` : 'screenshots';
+> mkdirSync(outDir, { recursive: true });
+> mkdirSync('qa', { recursive: true });
+> 
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5201);
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> const log = { when: new Date().toISOString(), renderer: null, shots: [], errors: [] };
+> try {
+>   for (const id of ids) {
+>     const [w, h] = size ?? NATIVE[id] ?? [864, 1536];
+>     const page = await browser.newPage({ viewport: { width: w, heigh …[+2583 chars]
+
+### 🤖 Claude — 2026-11-20T03:42:42.294Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 98,115p scripts/gameplay-test.mjs; sed -n 134,140p scripts/gameplay-test.mjs; cat scripts/continuity-test.ts | grep -n \"startVite\\|port\\|writeFile\" | head", "description": "Inspect gameplay test write paths and continuity test"}`
+
+### 🧑 User — 2026-11-20T03:42:42.347Z
+
+> ↩︎ result: return out;
+> });
+> 
+> result.errors = errors;
+> result.pass = Object.values(result.checks).every((c) => c.pass) && errors.length === 0;
+> if (optQ) result.query = optQ;
+> if (optQ || optOut) {
+>   const f = optOut || 'qa/gameplay_test_switch.json';
+>   writeFileSync(f, JSON.stringify(result, null, 2));
+>   console.log(JSON.stringify({ query: optQ, out: f, pass: result.pass, checks: Object.fromEntries(Object.entries(result.checks).map(([k, v]) => [k, v.pass])), plunge: result.plunge, errors }, null, 1));
+>   await browser.close();
+>   await vite.close();
+>   process.exit(result.pass ? 0 : 1);
+> }
+> writeFileSync('qa/gameplay_test.json', JSON.stringify(result, null, 2));
+> const p = result.plunge;
+> const md = [
+>   '# 07 → 08 continuity proof (automated)',
+>   ...Object.entries(result.checks).map(([k, v]) => `* ${v.pass ? '✅' : '❌'} **${k}** — ${JSON.stringify(Object.fromEntries(Object.entries(v).filter(([kk]) => kk !== 'pass' && kk !== 'finalState')))}`),
+>   '',
+>   `Page errors: ${errors.length ? errors.join('; ') : 'none'}`,
+> ];
+> writeFileSync('qa/07_to_08_continuity.md', md.join('\n') + '\n');
+> console.log(JSON.stringify({ pass: result.pass, checks: Object.fromEntries(Object.entries(result.checks).map(([k, v]) => [k, v …[+484 chars]
+
+### 🤖 Claude — 2026-11-20T03:42:50.528Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -e \"s#startVite(5213)#startVite(5277)#\" -e \"s#'./lib/pw.mjs'#'../../scripts/lib/pw.mjs'#\" -e \"s#^mkdirSync('qa', { recursive: true });#// (r22 copy: port 5277, writes only --out)#\" scripts/gameplay-test.mjs > tools/match07/gameplay_test_5277.mjs && sed -e \"s#startVite(5201)#startVite(5277)#\" -e \"s#'./lib/pw.mjs'#'../../scripts/lib/pw.mjs'#\" -e \"s#^mkdirSync('qa', { recursive: true });#// (r22 copy: port 5277, log into the out dir)#\" -e \"s#writeFileSync(opt.plunge ? 'qa/continuity/capture_log.json' : \\`qa/capture_log\\${size ? '_' + size.jo …[+714 chars]`
+
+### 🧑 User — 2026-11-20T03:42:50.660Z
+
+> ↩︎ result: 0a1
+> > // r22 s07 QA copy of scripts/gameplay-test.mjs: identical checks, dev server on port 5277 (the only port this worker may use); always pass --q and --out
+> 14c15
+> < import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> ---
+> > import { loadPlaywright, CHROMIUM_ARGS, startVite } from '../../scripts/lib/pw.mjs';
+> 18c19
+> < mkdirSync('qa', { recursive: true });
+> ---
+> > // (r22 copy: port 5277, writes only --out)
+> 20c21
+> < const vite = await startVite(5213);
+> ---
+> > const vite = await startVite(5277);
+> 0a1
+> > // r22 s07 QA copy of scripts/capture.mjs: identical capture, dev server on port 5277; pass --out=DIR (capture_log.json goes there)
+> 9c10
+> < import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> ---
+> > import { loadPlaywright, CHROMIUM_ARGS, startVite } from '../../scripts/lib/pw.mjs';
+> 21c22
+> < mkdirSync('qa', { recursive: true });
+> ---
+> > // (r22 copy: port 5277, log into the out dir)
+> 24c25
+> < const vite = await startVite(5201);
+> ---
+> > const vite = await startVite(5277);
+> 58c59
+> <   writeFileSync(opt.plunge ? 'qa/continuity/capture_log.json' : `qa/capture_log${size ? '_' + size.join('x') : ''}.json`, JSON.stringify(log, null, 2));
+> ---
+> >   writeFileSync(`${outDir …[+51 chars]
+
+### 🤖 Claude — 2026-11-20T03:42:54.919Z
+
+Running gameplay test (candidate) first.
+
+### 🤖 Claude — 2026-11-20T03:42:57.425Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && K7=$(cat /home/user/rainbow-/qa/match/07/r21/K7.txt) && timeout 1200 node tools/match07/gameplay_test_5277.mjs --q=\"${K7}&m07end=1&m07cloud=1\" --out=/home/user/rainbow-/qa/match/07/r22/s1_cloud/gameplay_new.json 2>&1 | grep -v \"outside of Vite\" | tail -30; python3 -I -c \"\nimport json;d=json.load(open('/home/user/rainbow-/qa/match/07/r22/s1_cloud/gameplay_new.json'))\nprint('pass',d['pass'], {k:v['pass'] for k,v in d['checks'].items()}); print({k:v for k,v in d['checks'].items() if 'coin' in k.lower()})\"", "description": "Run gameplay test for cloud c …[+30 chars]`
+
+### 🧑 User — 2026-11-20T03:42:57.567Z
+
+> ↩︎ result: Exit code 1
+> file:///home/user/wt/s07/tools/match07/gameplay_test_5277.mjs:2
+> #!/usr/bin/env node
+> ^
+> 
+> SyntaxError: Invalid or unexpected token
+>     at compileSourceTextModule (node:internal/modules/esm/utils:346:16)
+>     at ModuleLoader.moduleStrategy (node:internal/modules/esm/translators:110:18)
+>     at #translate (node:internal/modules/esm/loader:559:20)
+>     at afterLoad (node:internal/modules/esm/loader:612:29)
+>     at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:617:12)
+>     at #createModuleJob (node:internal/modules/esm/loader:640:36)
+>     at #getJobFromResolveResult (node:internal/modules/esm/loader:353:34)
+>     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:321:41)
+>     at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:680:25)
+> 
+> Node.js v22.23.5
+> Traceback (most recent call last):
+>   File "<string>", line 2, in <module>
+>     import json;d=json.load(open('/home/user/rainbow-/qa/match/07/r22/s1_cloud/gameplay_new.json'))
+>                             ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> FileNotFoundError: [Errno 2] No such file or directory: '/home/user/rainbow-/qa/match/07/r22/s1_cloud/game …[+14 chars]
+
+### 🤖 Claude — 2026-11-20T03:42:58.820Z
+
+The shebang must stay on line 1; moving my comment below it.
+
+### 🤖 Claude — 2026-11-20T03:43:01.471Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && for f in tools/match07/gameplay_test_5277.mjs tools/match07/capture_5277.mjs; do python3 -I - \"$f\" <<'EOF'\nimport sys\np=sys.argv[1]; L=open(p).read().split('\\n')\nif len(L)>1 and L[1].startswith('#!'):\n    L[0],L[1]=L[1],L[0]\nopen(p,'w').write('\\n'.join(L))\nEOF\nhead -2 $f; done; K7=$(cat /home/user/rainbow-/qa/match/07/r21/K7.txt) && timeout 1200 node tools/match07/gameplay_test_5277.mjs --q=\"${K7}&m07end=1&m07cloud=1\" --out=/home/user/rainbow-/qa/match/07/r22/s1_cloud/gameplay_new.json 2>&1 | grep -v \"outside of Vite\" | tail -30", "descriptio …[+66 chars]`
+
+### 🧑 User — 2026-11-20T03:43:09.781Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // r22 s07 QA copy of scripts/gameplay-test.mjs: identical checks, dev server on port 5277 (the only port this worker may use); always pass --q and --out
+> #!/usr/bin/env node
+> // r22 s07 QA copy of scripts/capture.mjs: identical capture, dev server on port 5277; pass --out=DIR (capture_log.json goes there)
+> {
+>  "query": "match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1&m07foam=1&m07coinsz=1&m07nearw=1&m07foamb=1&m07band=1&m07end=1&m07cloud=1",
+>  "out": "/home/user/rainbow-/qa/match/07/r22/s1_cloud/gameplay_new.json",
+>  "pass": true,
+>  "checks": {
+>   "pauseFreezes": true,
+>   "continuousTravel": true,
+>   "noCameraCut": true,
+>   "noTeleport": true,
+>   "plunge": true,
+>   "realCoinPickups": true,
+>   "victory": true,
+>   "heartsLostOnWallBump": true
+>  },
+>  "plunge": {
+>   "tTop": 23.866666666666593,
+>   "tBottom": 30.366666666666223,
+>   "t08": 30.366666666666223,
+>   "yTop": -51.95,
+>   "yBottom": -113.095,
+>   "y08": -113.095,
+>   "travelTimeTopToInlet": 6.5,
+>   "verticalDrop": 61.14
+>  },
+>  "errors": []
+> }
+
+### 🤖 Claude — 2026-11-20T03:43:12.779Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport json;d=json.load(open('/home/user/rainbow-/qa/match/07/r22/s1_cloud/gameplay_new.json'))\nc=d['checks']['realCoinPickups']; print({k:v for k,v in c.items() if k!='finalState'}); v=d['checks']['victory']; print({k:(v[k] if k!='finalState' else {kk:v[k].get(kk) for kk in ['coins','stage','score'] if isinstance(v[k],dict)}) for k in v})\" 2>&1 | head -10", "description": "Read coin pickup and score details"}`
+
+### 🧑 User — 2026-11-20T03:43:12.836Z
+
+> ↩︎ result: {'pass': True, 'startCoins': 1330, 'endCoins': 2240, 'collected': 91}
+> {'pass': True, 'finalState': {'coins': 2240, 'stage': '11', 'score': None}}
+
+### 🤖 Claude — 2026-11-20T03:43:18.566Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && K7=$(cat /home/user/rainbow-/qa/match/07/r21/K7.txt) && S=/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/cap && rm -rf $S && timeout 1500 node tools/match07/capture_5277.mjs 07 08 07a_plunge_top 07b_plunge_mid 07c_plunge_bottom 07d_entering_08 --q=\"${K7}&m07end=1\" --out=$S/bef 2>&1 | grep -v \"outside of Vite\" | cut -c1-120 && timeout 1500 node tools/match07/capture_5277.mjs 07 08 07a_plunge_top 07b_plunge_mid 07c_plunge_bottom 07d_entering_08 --q=\"${K7}&m07end=1&m07cloud=1\" --out=$S/new 2>&1 | grep -v \"outside of Vi …[+109 chars]`
+

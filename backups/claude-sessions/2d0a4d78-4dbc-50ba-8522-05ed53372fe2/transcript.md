@@ -2647,3 +2647,141 @@ Stop hook feedback:
 
 Everything is committed and pushed, including the overview picture. The branch is at `c47c912` and GitHub matches. The one file left is a clip frame the Screen 04 specialist wrote seconds after the save, and the next five-minute autosave will commit it.
 
+### 🧑 User — 2026-11-20T03:41:59.963Z
+
+Yes, approve the Screen 04 proposals, keep going
+
+### 🤖 Claude — 2026-11-20T03:42:13.962Z
+
+Thank you. Recording your approval of the three Screen 04 proposals, then building them into the game. I'll start by checking how Screen 04 currently projects your original picture, and which camera positions the three proposals were painted from.
+
+### 🤖 Claude — 2026-11-20T03:42:15.116Z
+
+> 🔧 **Bash** `{"command": "date -u +%FT%TZ; cat qa/review_r21/artwork/04/game_frames/shots.json 2>/dev/null | head -50; ls qa/review_r21/artwork/04/game_frames/", "description": "Check the 04 proposal camera records"}`
+
+### 🧑 User — 2026-11-20T03:42:15.342Z
+
+> ↩︎ result: 2026-11-20T03:42:15Z
+> [
+>  {
+>   "name": "c_middle",
+>   "frac": 0.35,
+>   "steer": null,
+>   "s": 90.48,
+>   "lat": 0,
+>   "stage": "04",
+>   "coins": 1330,
+>   "s0": 77.413,
+>   "s1": 114.68830202823243
+>  },
+>  {
+>   "name": "d_late",
+>   "frac": 0.6,
+>   "steer": null,
+>   "s": 99.813,
+>   "lat": 0,
+>   "stage": "04",
+>   "coins": 1330,
+>   "s0": 77.413,
+>   "s1": 114.68830202823243
+>  },
+>  {
+>   "name": "e_end",
+>   "frac": 0.85,
+>   "steer": null,
+>   "s": 109.146,
+>   "lat": 0,
+>   "stage": "04",
+>   "coins": 1330,
+>   "s0": 77.413,
+>   "s1": 114.68830202823243
+>  }
+> ]c_middle.png
+> d_late.png
+> e_end.png
+> shots.json
+
+### 🤖 Claude — 2026-11-20T03:42:16.219Z
+
+> 🔧 **Grep** `{"pattern": "plate04|projector|projMat|uProj|textureMatrix|PROJ|camera04|cam04", "path": "/home/user/wt/s04/src/world/match04m4.ts", "output_mode": "content", "head_limit": 60}`
+
+### 🧑 User — 2026-11-20T03:42:16.248Z
+
+> ↩︎ result: 22: *             -> tile_mouth.png) on a modeled mouth ring flush with the painted ring plane, mapped through the projector so
+> 29:import { PROJ05_INVERSE } from '../vfx/waterRibbon';
+> 61:uniform mat4 uProjVP;
+> 73:  vProj = uProjVP * wp;
+> 111:uniform vec3 uProjPos;
+> 143:${PROJ05_INVERSE}
+> 327:      // m04mouth: the painted washer opening. The fragment is carried along the projector ray onto the fitted mouth plane
+> 328:      // (homothety about the projector), so the approach continues the approved view; (psi, rho) there index the
+> 330:      float dP = dot(vW - uProjPos, uAxD), d0 = dot(uAxO - uProjPos, uAxD);
+> 331:      vec3 Q = uProjPos + (vW - uProjPos) * (d0 / max(dP, 0.5));
+> 345:      // the modeled lip apex, piecewise linear in between. World-anchored (no projector) -> nothing slides while swimming.
+> 726:  // the approved view shows the approved pixels (the projector IS this camera there)
+> 747:uniform mat4 uProjVP;
+> 755:  vProj = uProjVP * wp;
+> 816:${PROJ05_INVERSE}
+> 1178:uniform mat4 uProjVP;
+> 1184:  vProj = uProjVP * wp;
+> 1198:${PROJ05_INVERSE}
+> 1279:${PROJ05_INVERSE}
+> 1301:${PROJ05_INVERSE}
+> 1334:${PROJ05_INVERSE}
+> 1376:${PROJ05_INVERSE}
+> 1425:      uniforms: { uPlate: shared.uPlate, uPjPost: s …[+1194 chars]
+
+### 🤖 Claude — 2026-11-20T03:42:34.039Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nfrom PIL import Image\nimport numpy as np, glob\nA='qa/review_r21/artwork/04'\nfor n in ['c_middle','d_late','e_end']:\n    sh=np.asarray(Image.open(f'{A}/FOR_APPROVAL_04_{n}.png').convert('RGB')).astype(float)\n    W=sh.shape[1]; pw=(W-2*20)//3\n    panel=sh[60:, W-pw:]   # right panel (approx)\n    best=[]\n    for f in sorted(glob.glob(f'{A}/proposals/{n}*_v1.png')):\n        p=np.asarray(Image.open(f).convert('RGB').resize((panel.shape[1],panel.shape[0]))).astype(float)\n        best.append((np.abs(p-panel).mean(), f))\n    best.sort(); print(n, [(round(e …[+104 chars]`
+
+### 🤖 Claude — 2026-11-20T03:42:34.448Z
+
+> 🔧 **ToolSearch** `{"query": "select:SendMessage", "max_results": 1}`
+
+### 🧑 User — 2026-11-20T03:42:35.624Z
+
+> ↩︎ result: c_middle [(np.float64(0.3), 'c_middle_p2_v1.png'), (np.float64(28.9), 'c_middle_v1.png')]
+> d_late [(np.float64(0.3), 'd_late_p3_v1.png'), (np.float64(21.9), 'd_late_p2_v1.png')]
+> e_end [(np.float64(0.3), 'e_end_p2_v1.png')]
+
+### 🧑 User — 2026-11-20T03:42:35.634Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-20T03:42:51.818Z
+
+> 🔧 **Bash** `{"command": "A=qa/review_r21/artwork/04; mkdir -p $A/accepted && for f in c_middle_p2_v1 d_late_p3_v1 e_end_p2_v1; do cp $A/proposals/$f.png $A/accepted/04_gen_$f.png; done; cat > $A/USER_VERDICT.md <<EOF\n# Screen 04 generated continuation views — USER VERDICT\n\n**2026-11-20 ~03:42 UTC, user (verbatim): \"Yes, approve the Screen 04 proposals, keep going\"**\n\nAccepted as GENERATED reference views for Screen 04 (they extend the approved world beyond what the original shows; the user's\noriginal \\`references/04_through_the_five_arrows.png\\` stays the master and is unchanged). Matched pixel- …[+1075 chars]`
+
+### 🧑 User — 2026-11-20T03:42:51.897Z
+
+> ↩︎ result: |---|---|---|---|
+> | c_middle | frac 0.35, s = 90.48 u, lat 0, no steer | `accepted/04_gen_c_middle_p2_v1.png` | `f4b389aeb7430d1f…` |
+> | d_late | frac 0.60, s = 99.813 u, lat 0, no steer | `accepted/04_gen_d_late_p3_v1.png` | `e014beb41b16adad…` |
+> | e_end | frac 0.85, s = 109.146 u, lat 0, no steer | `accepted/04_gen_e_end_p2_v1.png` | `7e7d5861bd564d7e…` |
+> 
+> Structure frames (the exact game cameras): `game_frames/{c_middle,d_late,e_end}.png` + `game_frames/shots.json`.
+> Rejected tries kept for the record only: `c_middle_v1` (layout drift), `d_late_p2_v1` (too many dots).
+> Next (lead, round 22): multi-plate camera projection behind its own URL switch — `docs/briefs/2026-11-20-r22/LAUNCH_S04_PROJ.md`.
+> 13
+
+### 🤖 Claude — 2026-11-20T03:42:53.923Z
+
+> 🔧 **SendMessage** `{"to": "a019baf157b236168", "summary": "Ask s04 to finish step and stop", "message": "Lead: the user just APPROVED the three generated Screen 04 continuation views (middle / late / end). A projection specialist will now project them onto the Screen 04 tunnel in your worktree. Please FINISH the step you are on (proof + PROGRESS.md verdict + code.patch for it if kept), do NOT start a new task, leave your worktree edits in place (uncommitted), and send your final report. Thank you.", "type": "message", "recipient": "a019baf157b236168", "recipient_kind": "agent", "content": "Lead: the user just AP …[+30 chars]`
+
+### 🧑 User — 2026-11-20T03:42:53.957Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to a019baf157b236168 at its next tool round. Moved 1 running tool call to the background without stopping it, so that round no longer waits for it. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"a019baf157b236168","name":"a019baf157b236168","ref":"c249a7"}}
+
+### 🤖 Claude — 2026-11-20T03:43:26.454Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-20-r22/LAUNCH_S04_PROJ.md", "content": "# Round 22 — Screen 04 MULTI-PLATE PROJECTION of the user-approved generated views (in-process `washer-environment-modeler`)\n\n## User decision (verbatim, 2026-11-20 ~03:42 UTC)\n\"Yes, approve the Screen 04 proposals, keep going\". Record: `qa/review_r21/artwork/04/USER_VERDICT.md`. Goal (binding,\n`docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md` + round 21): Screen 04 must look like the approved picture WHILE Benny swims —\nstart, middle, late, end, hard left / right. The user's original `refe …[+4594 chars]`
+
+### 🧑 User — 2026-11-20T03:43:26.555Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-20-r22/LAUNCH_S04_PROJ.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T03:43:31.712Z
+
+> 🔧 **Bash** `{"command": "cat >> docs/briefs/2026-11-20-r22/COORDINATION.md <<'EOF'\n* **~03:42 USER APPROVED the three Screen 04 generated views** (\"Yes, approve the Screen 04 proposals, keep going\"):\n  `qa/review_r21/artwork/04/USER_VERDICT.md`, `accepted/04_gen_{c_middle_p2_v1,d_late_p3_v1,e_end_p2_v1}.png`. s04 foam worker asked\n  to finish its current step and stop; then `washer-environment-modeler` takes the s04 worktree for the multi-plate projection\n  `&m04mp=1` (`LAUNCH_S04_PROJ.md`). 07 + 05 proposals still await the user.\nEOF\nfor i in $(seq 1 120); do pgrep -f \"rainbow-autosave.py\" >/de …[+495 chars]`
+
