@@ -4247,3 +4247,33 @@ All four specialists are running in the background. I'll record them in the agen
 
 > 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\np='backups/AGENTS_STATUS.json'; d=json.load(open(p))\nd['r30_parallel_06']={'_launched':'2026-11-20 ~22:05 UTC by the r30 lead ccr-2644c3c0-iikckn (user: \"do multiple agents do different tasks at the same time\")',\n '_brief':'docs/briefs/2026-11-20-r30/LAUNCH_R30_PARALLEL.md; worktrees: docs/briefs/2026-11-20-r30/setup_r30_parallel.sh',\n 'benny06':{'agent':'benny-character-artist','worktree':'/home/user/wt/benny06','branch':'claude/rainbow-s06-benny06-c31','switch':'b30*','state':'RUNNING','out':'qa/match/06/r30/benny06/'},\n 'water06':{'agent':' …[+2248 chars]`
 
+### 🧑 User — 2026-11-20T22:02:58.742Z
+
+> ↩︎ result: "commit": "ec911a0dd44d31cbc341f3b546116516a5373245",
+> AUTOSAVE OK | branch ccr-2644c3c0-iikckn | scheduler daemon | last verified backup 2026-11-20T22:02:36+00:00 (0.4 min ago) | local ec911a0 remote ec911a0 (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-20T22:03:01.467Z
+
+> 🔧 **TaskCreate** `{"subject": "Combine the four specialists' Screen 06 results (Benny, water, foam, scenery) and prove in one clip", "description": "When each specialist reports: review its stills vs approved/storyboard, keep only clear improvements, combine accepted switches in one candidate worktree, run tsc + continuity + gameplay test, render one uninterrupted clip + APPROVED|BEFORE|NEW sheet, save, send to the user.", "activeForm": "Waiting for the four specialists"}`
+
+### 🧑 User — 2026-11-20T22:03:01.492Z
+
+> ↩︎ result: Task #6 created successfully: Combine the four specialists' Screen 06 results (Benny, water, foam, scenery) and prove in one clip
+
+### 🤖 Claude — 2026-11-20T22:03:06.479Z
+
+Yes. Four specialists are now working on Screen 06 at the same time:
+
+| Specialist | Working on |
+|---|---|
+| **Benny** | your painted Benny: a smaller hat sitting higher, thin cream-and-violet knit stripes, thick violet brim, soft dusty-pink fur visible below the hat |
+| **Water** | your rainbow water while he swims: sparkly white veins, rainbow edges, ripples around Benny, instead of speed streaks |
+| **Foam & bubbles** | the big bubbly foam piles along both banks and the large rainbow-rimmed bubbles floating around him |
+| **Scenery** | broad, smooth copper bands like your storyboard, and the purple tunnel continuing into the distance instead of the peach glow |
+
+- **Kept separate:** each works on its own copy of the current Screen 06, so they can't break each other's work or your saved versions.
+- **Shared machine:** this machine has only 4 processors and no graphics card, so they take turns rendering. Expect about an hour or so, not minutes.
+- **What I do next:** as each one finishes, I'll check its pictures against your approved screen and storyboard and keep only clear improvements. Then I'll combine them into one version and send you a single uninterrupted gameplay clip with side-by-side pictures.
+
+Everything is saved to GitHub (`ec911a0`), and the five-minute autosave also backs up each specialist's work in progress.
+

@@ -183,3 +183,248 @@ Deliver: the switch combination to add to the v2 query, APPROVED | BEFORE (v2) |
 > 169:void main() {
 > 172:  if (uTSwap > 0.5 && uFloor < 0. …[+3160 chars]
 
+### 🤖 Claude — 2026-11-20T22:02:40.084Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/scen06/src/world/match06.ts", "offset": 1, "limit": 440}`
+
+### 🧑 User — 2026-11-20T22:02:40.178Z
+
+> ↩︎ result: 1	/**
+> 2	 * `?match06=1` — Screen 06 approved-picture test (2026-11-17, qa/match/06/NOTES.md), the Screen 08 method.
+> 3	 * REAL 3D proxy geometry of "Crest the Rinse Arch", built around the game's own 06 river (which under the switch follows
+> 4	 * the painted river: course.ts + assets/textures/match06/path06.json) and seen from the locked approved-view camera
+> 5	 * (tools/match06/fit_river06.py → cam06_locked.json; layout tools/match06/make_tiles06.py → proj06.json):
+> 6	 *   * the perforated tunnel = a tube of radius R around the river (centre hA above the water) from behind the camera
+> 7	 *     into 07, continued straight along the river's heading so the painted far rings stay concentric
+> 8	 *   * the river floor = the water surface: the game river's width + 1 u of foam bank each side (<= Lfloor)
+> 9	 *   * a dark end cap far down the tunnel
+> 10	 * Every surface is textured by camera projection of the user's ORIGINAL approved pixels (HUD, title, Benny and coins
+> 11	 * provisionally filled locally: plate06_hybrid.png) from the locked camera, so the locked view shows the approved scenery
+> 12	 * and a moving camera sees it on geometry (parallax). Surfaces the picture never showed (or showed edge …[+25869 chars]
+
+### 🤖 Claude — 2026-11-20T22:02:41.756Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/scen06/src/world/match06.ts", "offset": 950, "limit": 352}`
+
+### 🧑 User — 2026-11-20T22:02:41.858Z
+
+> ↩︎ result: 950	          uAxD: { value: ax.clone() }, uAxR: { value: Rx.clone() }, uAxU: { value: Ux.clone() } });
+> 951	        add(mergeGeometries(pads), pm, 'paddles');
+> 952	      }
+> 953	    }
+> 954	    // the river floor's straight 260 u extension ran into the painted vanishing point (it hid the glowing end from the
+> 955	    // projector -> flat disc); in the straight tunnel the river ends 20 u after the 06 stage
+> 956	    while (sList.length && sList[sList.length - 1] > sE + 20) sList.pop();
+> 957	  } else add(grid(RAD, (_s, j, fr) => {
+> 958	    const th = (j / RAD) * Math.PI * 2;
+> 959	    let lx = L.R * Math.cos(th);
+> 960	    const ly = L.hA + L.R * Math.sin(th);
+> 961	    if (GEO && R6) {
+> 962	      const t = Math.min(1, Math.max(0, (yTop - ly) / yTop)), k = t * t * (3 - 2 * t);
+> 963	      lx -= Math.sign(lx) * k * (Lw - R6.Wb);
+> 964	    }
+> 965	    const p = GEO ? fr.pos.clone().addScaledVector(fr.right, lx).addScaledVector(fr.up, ly)
+> 966	      : fr.pos.clone().addScaledVector(fr.up, L.hA).addScaledVector(fr.right, L.R * Math.cos(th)).addScaledVector(fr.up, L.R * Math.sin(th));
+> 967	    let a = th; if (a > TT.wallAngle[1]) a -= Math.PI * 2; // continuous over the wall (the part under the water is never see …[+27296 chars]
+
+### 🤖 Claude — 2026-11-20T22:02:42.970Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/scen06 && grep -n \"M06_CURL\\|tube07\\|s07 - 175\\|m06curl\\|match06\\|buildMatch06\\|m06\\.\\|setBenny\\|setAway\" src/game/Game.ts | head -60", "description": "Find Screen 06/07 hooks in Game.ts"}`
+
+### 🧑 User — 2026-11-20T22:02:43.006Z
+
+> ↩︎ result: 28:import { buildMatch06 } from '../world/match06';
+> 71:  const M06_CURL = flag05('m06deep') && flag05('m06curl'); // r30 lead, qa/match/06/r30/
+> 125:  // `?match06=1`: the approved Screen 06 scenery on fitted 3D geometry (src/world/match06.ts); off: nothing is built
+> 126:  // r30 `&m06curl=1`: the 06 tunnel's end wall gets its doorway exactly at Screen 07's tube mouth
+> 127:  const m06 = MATCH['06'] ? await buildMatch06(course, { c: tubeCenterAt(env.tubeAxis.path, course.stage('07').s0), r: env.tubeAxis.path.radius(course.stage('07').s0) }) : null;
+> 128:  if (m06) { m06.group.visible = false; scene.add(m06.group); m06.bakeDepth(renderer); }
+> 130:  const tube07 = env.zones.tubes.getObjectByName('tube07') ?? null; // r29 m06deep only
+> 131:  let tube07Applied = false;
+> 184:    if (m06) { m06On = st.stage === '06'; m06.group.visible = m06On; if (m06On) env.zones.tubes.visible = false; }
+> 550:    // `?match06=1` on Screen 06: the projected scenery carries the approved river, ripples, foam and bubbles
+> 555:      const bub6 = M06_BUB && m06On && m06.away(camera.position) > 0.5;
+> 556:      m06.setAway(m06On ? m06.away(camera.position) : 0);
+> 557:      coins.setGrow(m06On ? m06.away(camera.position) :  …[+794 chars]
+
+### 🤖 Claude — 2026-11-20T22:02:44.091Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/scen06/src/game/Game.ts", "offset": 540, "limit": 100}`
+
+### 🧑 User — 2026-11-20T22:02:44.117Z
+
+> ↩︎ result: 540	    }
+> 541	    girl.update(dt);
+> 542	    const time = st.frozen ?? st.clock;
+> 543	    env.update(time, dt);
+> 544	    water.update(time, dt, st.s, camera);
+> 545	    // `?match08=1` on Screen 08: the projected scenery carries the approved river, foam and bubbles
+> 546	    if (m08 && (m08On || m08Applied)) {
+> 547	      for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m08On; }
+> 548	      m08Applied = m08On;
+> 549	    }
+> 550	    // `?match06=1` on Screen 06: the projected scenery carries the approved river, ripples, foam and bubbles
+> 551	    if (m06 && (m06On || m06Applied) && !(m08 && m08On)) {
+> 552	      // r7 `&m06bub=1`: the game's iridescent bubbles + Benny's splash crown / spray return once the camera leaves the
+> 553	      // approved view (the painting
+> 554	      // carries its bubbles only there; while swimming the screen had none)
+> 555	      const bub6 = M06_BUB && m06On && m06.away(camera.position) > 0.5;
+> 556	      m06.setAway(m06On ? m06.away(camera.position) : 0);
+> 557	      coins.setGrow(m06On ? m06.away(camera.position) : 1); // r28 m06route coin growth (no-op without it)
+> 558	      m06.setBenny(st.s, st.lat); // r23 `&m06rip=1` only (no-op without it)
+> 559	     …[+5005 chars]
+
+### 🤖 Claude — 2026-11-20T22:02:47.177Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/scen06 && python3 -c \"\nimport json;d=json.load(open('assets/textures/match06/route06curl.json'));print(d.keys());c=d['curl'];print({k:(v if not isinstance(v,list) else (len(v), v[:3] if k!='axis' else '')) for k,v in c.items()})\n\"; grep -rn \"doorway\\|endWall\\|end wall\" src/ --include=*.ts | head -20; ls assets/textures/match06/ | head -60", "description": "Inspect route06curl.json and doorway code"}`
+
+### 🧑 User — 2026-11-20T22:02:47.261Z
+
+> ↩︎ result: dict_keys(['note', 'O', 'ax', 'Rx', 'Ux', 'aKeep', 'blend', 'points', 'end', 'length', 'tunnel_pin', 's07_orig', 'curl'])
+> {'aSplit': 40.0, 'ds': 0.5, 'a07': 200.0, 'aEnd': 200.3, 'riverU': -5.2, 'ringD': 22.0, 'rings': (7, [58.95, 80.95, 102.95]), 'keys': (5, [[0, 0.0, 0.0], [40, 30.0, 7.0], [52, 30.0, 7.0]]), 'axis': (322, '')}
+> src/world/match06.ts:788:    // the entrance plane, radius - 0.25), so the purple-and-gold tunnel runs straight into 07's tube; its gold collar = the doorway
+> src/world/match06.ts:1266:  if (CURL) cap.visible = false; // r30 m06curl: closed by the end wall + doorway instead
+> src/game/Game.ts:126:  // r30 `&m06curl=1`: the 06 tunnel's end wall gets its doorway exactly at Screen 07's tube mouth
+> src/game/Game.ts:574:      const show = m06On && st.s > course.stage('07').s0 - (M06_CURL ? 175 : 12); // r29 v2 (user): the 06 tunnel look continues until the doorway (~1 s)
+> cam06_locked.json
+> coins06.json
+> coins06deep.json
+> hole06.json
+> leg06deep.json
+> mask06.png
+> path06.json
+> plate06.json
+> plate06_fillmask.png
+> plate06_hybrid.png
+> proj06.json
+> route06curl.json
+> route06deep.json
+> tile_floor.png
+> tile_floor2.png
+> tile_foam6.png
+> tile_hole06.png
+> tile_hole06b.png
+> tile_hole06w.png
+> tile_ri …[+50 chars]
+
+### 🤖 Claude — 2026-11-20T22:02:49.632Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/scen06 && python3 -c \"\nimport json;d=json.load(open('assets/textures/match06/route06curl.json'));c=d['curl'];print(c['rings'], c['keys'], c['riverU']); print(d['note'][:1500] if isinstance(d['note'],str) else d['note'])\n\"; python3 -c \"\nfrom PIL import Image\nfor f in ['tile_ring6.png','tile_tube.png']:\n  im=Image.open('/home/user/wt/scen06/assets/textures/match06/'+f); print(f, im.size, im.mode)\n\"", "description": "Inspect curl rings and tile sizes"}`
+
+### 🧑 User — 2026-11-20T22:02:49.779Z
+
+> ↩︎ result: [58.95, 80.95, 102.95, 124.95, 146.95, 168.95, 190.95] [[0, 0.0, 0.0], [40, 30.0, 7.0], [52, 30.0, 7.0], [106, -14.0, 5.0], [150, 15.94320926565621, 0.6302746817998136]] -5.2
+> r30 lead m06curl (docs/briefs/2026-11-20-r30, qa/match/06/r30/): the user's 06 storyboard route. Deep route kept up to virtual depth 40.0, then the tunnel axis curls right + descends, S-bend, onto the original 07 entrance heading (tools/match06/r30_design_curl.py). World coords; course reads O/ax/aKeep/points like route06deep.
+> tile_ring6.png (1024, 256) RGB
+> tile_tube.png (384, 1024) RGB
+
+### 🤖 Claude — 2026-11-20T22:02:50.610Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/scen06/assets/textures/match06/tile_ring6.png"}`
+
+### 🧑 User — 2026-11-20T22:02:50.637Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T22:02:51.013Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/scen06/assets/textures/match06/tile_tube.png"}`
+
+### 🧑 User — 2026-11-20T22:02:51.043Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T22:02:53.430Z
+
+> 🔧 **Bash** `{"command": "cat /home/user/rainbow-/tools/lead25/render_slot.sh; cd /home/user/wt/scen06 && ls tools/match06/ | grep r30; ls -la node_modules 2>/dev/null | head -2; sed -n 1,80p tools/match06/r30_shots.mjs", "description": "Read render slot script and shots tool"}`
+
+### 🧑 User — 2026-11-20T22:02:53.493Z
+
+> ↩︎ result: #!/usr/bin/env bash
+> # render_slot.sh — run one heavy render (Playwright / SwiftShader / Blender / ffmpeg) while holding one of N machine-wide
+> # render slots, so the four specialist workers on this 4-CPU container take turns instead of overloading it
+> # (round 24 ran at load ~30 with repeated Playwright timeouts).
+> #   usage:  bash /home/user/rainbow-/tools/lead25/render_slot.sh <command> [args...]
+> #   N = $RENDER_SLOTS (default 2). Waits (polling every 5 s) until a slot is free; prints the wait time on stderr.
+> #   The exit code is the command's. Slots are flock(1) locks under /tmp, released automatically if the process dies.
+> #   Status:  bash /home/user/rainbow-/tools/lead25/render_slot.sh --status
+> N=${RENDER_SLOTS:-2}
+> if [ "${1:-}" = "--status" ]; then
+>   for i in $(seq 1 "$N"); do
+>     if flock -n "/tmp/rainbow-render-slot$i.lock" true 2>/dev/null; then echo "slot $i free"; else echo "slot $i busy"; fi
+>   done
+>   exit 0
+> fi
+> [ $# -gt 0 ] || { echo "usage: $0 <command> [args...]" >&2; exit 2; }
+> t0=$(date +%s)
+> while true; do
+>   for i in $(seq 1 "$N"); do
+>     exec {fd}>"/tmp/rainbow-render-slot$i.lock"
+>     if flock -n "$fd"; then
+>       w=$(( $(date +%s) - t0 )); [ "$w" -gt 0 ] && echo "[rend …[+4274 chars]
+
+### 🤖 Claude — 2026-11-20T22:02:57.506Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r30 && for d in stills_BEFORE stills_NEW proof_v2/stills_from_clip quick_v2_haze80 quick_camk2; do echo \"== $d\"; ls $d | head; [ -f $d/shots.json ] && python3 -c \"import json;print([ (x['name'],round(x['s'],2)) for x in json.load(open('$d/shots.json'))])\"; done; python3 -c \"\nfrom PIL import Image;import glob\nfor f in sorted(glob.glob('/home/user/rainbow-/qa/match/06/r30/stills_NEW/*.png'))[:3]: print(f, Image.open(f).size)\"; ls /home/user/rainbow-/qa/match/06/r30/ -la | head -40", "description": "Check existing BEFORE/NEW stills"}`
+
+### 🧑 User — 2026-11-20T22:02:57.752Z
+
+> ↩︎ result: == stills_BEFORE
+> a_start.png
+> b_marked.png
+> c_share30.png
+> d_share50.png
+> e_share70.png
+> f_share90.png
+> g_07first.png
+> shots.json
+> [('a_start', 198.91), ('b_marked', 214.86), ('c_share30', 233.19), ('d_share50', 255.93), ('e_share70', 278.66), ('f_share90', 301.39), ('g_07first', 341.13)]
+> == stills_NEW
+> a_start.png
+> b_marked.png
+> b_marked_vw3456.png
+> shots.json
+> [('a_start', 198.91)]
+> == proof_v2/stills_from_clip
+> frame_0070.png
+> frame_0120.png
+> frame_0200.png
+> frame_0340.png
+> frames.json
+> == quick_v2_haze80
+> s10_07a.png
+> s1_marked.png
+> s4_275.png
+> s6_315.png
+> s8_355.png
+> s9_385.png
+> s9c_408.png
+> shots.json
+> [('s1_marked', 214.86), ('s4_275', 275.18), ('s6_315', 315.14), ('s8_355', 355.11), ('s9_385', 385.18), ('s9c_408', 408.17), ('s10_07a', 424.67)]
+> == quick_camk2
+> b_marked.png
+> c_238.png
+> d_266.png
+> e_310.png
+> f_350.png
+> g_387.png
+> h_07.png
+> shots.json
+> [('b_marked', 214.86), ('c_238', 238.14), ('d_266', 266.01), ('e_310', 310.01), ('f_350', 350.16), ('g_387', 387.01), ('h_07', 400.18)]
+> /home/user/rainbow-/qa/match/06/r30/stills_NEW/a_start.png (864, 1536)
+> /home/user/rainbow-/qa/match/06/r30/stills_NEW/b_marked.png (864, 1536)
+> /home/user/rainbow-/qa/match/06/r30/stills_NEW/b_marked_vw3456.png (864, 1536)
+> total 132
+> d …[+1385 chars]
+
+### 🤖 Claude — 2026-11-20T22:03:06.140Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r30/quick_camk2 && python3 -c \"\nfrom PIL import Image\nims=[Image.open(f) for f in ['b_marked.png','c_238.png','d_266.png','e_310.png','f_350.png','g_387.png','h_07.png']]\nW=sum(i.width for i in ims);H=ims[0].height\no=Image.new('RGB',(W,H))\nx=0\nfor i in ims: o.paste(i,(x,0)); x+=i.width\no.save('/tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/scratchpad/camk2_sheet.jpg',quality=85)\nprint(o.size)\n\"; bash /home/user/rainbow-/tools/lead25/render_slot.sh --status; uptime", "description": "Make contact sheet of current  …[+18 chars]`
+
+### 🧑 User — 2026-11-20T22:03:06.348Z
+
+> ↩︎ result: (3024, 768)
+> slot 1 free
+> slot 2 free
+>  22:03:06 up  2:09,  0 user,  load average: 0.31, 1.04, 2.02
+
