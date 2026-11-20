@@ -1502,3 +1502,179 @@ The background bootstrap's only failure is the start-of-session `git fetch` (a n
 
 > 🔧 **Bash** `{"command": "timeout 600 git fetch origin --quiet 2>&1 | tail -3; echo \"rc=$?\"; git ls-remote --heads origin | wc -l; git for-each-ref --sort=-committerdate --format='%(committerdate:iso8601) %(refname:short) %(objectname:short)' refs/remotes/origin | head -6", "description": "Fetch all branches and list the newest ones", "timeout": 700000}`
 
+### 🧑 User — 2026-11-20T13:23:45.579Z
+
+> ↩︎ result: Terminated
+> rc=143
+> Command did not complete within its 600s timeout and was moved to the background (ID: bw0ggi6cj). Output is being written to: /tmp/claude-0/-home-user-rainbow-/57d35962-86cf-5cfa-ab0b-2faf54b8a6e6/tasks/bw0ggi6cj.output. You will be notified when it completes. If it is still running after 30m in the background, it will be stopped and you will be notified. It is running now: do not start a second copy while it runs. If it is no longer needed, stop it with TaskStop. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-20T13:23:47.997Z
+
+The full fetch of all ~200 branches is too large to finish in 10 minutes. I'll use a lighter check instead: list every remote branch tip and find any commit this container doesn't already have.
+
+### 🤖 Claude — 2026-11-20T13:23:50.005Z
+
+> 🔧 **Bash** `{"command": "pkill -f \"git fetch origin --quiet\" ; timeout 120 git ls-remote --heads origin > /home/user/scratch/lead/heads.txt; wc -l < /home/user/scratch/lead/heads.txt; n=0; while read sha ref; do git cat-file -e \"$sha^{commit}\" 2>/dev/null || { echo \"UNKNOWN $ref $sha\"; n=$((n+1)); }; done < /home/user/scratch/lead/heads.txt | tee /home/user/scratch/lead/unknown.txt | head -20; wc -l < /home/user/scratch/lead/unknown.txt", "description": "Find remote branch tips not present locally"}`
+
+### 🧑 User — 2026-11-20T13:23:50.950Z
+
+> ↩︎ result: 208
+> UNKNOWN refs/heads/backup/2026-11-17-screen08-transfer 714f6502447149b8f1a1dd07159e412ed8df8c46
+> UNKNOWN refs/heads/ccr-067047f0-up5d1m 7d1318ecd584c653210a8bd29de6699a2c98af5b
+> UNKNOWN refs/heads/ccr-251ed97c-ty2xvp 84298d6be05dc03c89945511a43c9ce275608100
+> UNKNOWN refs/heads/ccr-32bfea9a-ea6he9 58a78ffc961234f096fdde953666da3e22e4a900
+> UNKNOWN refs/heads/ccr-32c4e0e1-9kxw6d 388cd1fd411e724e1f5e7eb7c30f3dfebba7e38e
+> UNKNOWN refs/heads/ccr-3b139b48-0qqkkz 87ed797a47744c933890696e7760a3b0f8aec292
+> UNKNOWN refs/heads/ccr-44f84024-ii5iih 98ffd8e20fabf69f361faac1a57d315627d9da09
+> UNKNOWN refs/heads/ccr-451ea8c7-3nqlis 97dda283bba47b647eabaf84595eecc11672ea1e
+> UNKNOWN refs/heads/ccr-4742c19f-ez2mrs f4193fe1e262bbb28c3f70ea2520f30d227cacbb
+> UNKNOWN refs/heads/ccr-47b10cec-03c7co a44d7f506560b4ab96464bf6a41400b6e16fe887
+> UNKNOWN refs/heads/ccr-4bd35b15-7z45t0 dde3e9afd25cf3fb4ebff45359d3a72eb2f31363
+> UNKNOWN refs/heads/ccr-4f6c3e0e-5kxgr0 0fe0b0c596d27e8626f2aad338fb6e479930a5e1
+> UNKNOWN refs/heads/ccr-5495e9c4-g0apvl 77bce73536af5728681495a741f19cc940558787
+> UNKNOWN refs/heads/ccr-57af22a4-lsg7y7 7ecb3f5791669befb988fd9f23136089a0ffcac9
+> UNKNOWN refs/heads/ccr-58dd182e-m48xwk 2c2bcdef03eeb2831f6f9 …[+422 chars]
+
+### 🤖 Claude — 2026-11-20T13:23:58.530Z
+
+> 🔧 **Bash** `{"command": "while read sha ref; do git cat-file -e \"$sha^{commit}\" 2>/dev/null || echo \"$ref $sha\"; done < /home/user/scratch/lead/heads.txt > /home/user/scratch/lead/unknown.txt; wc -l < /home/user/scratch/lead/unknown.txt; git for-each-ref --sort=-committerdate --format='%(committerdate:iso8601) %(refname:short)' refs/remotes/origin | head -4", "description": "Count remote branch tips missing locally"}`
+
+### 🧑 User — 2026-11-20T13:23:59.015Z
+
+> ↩︎ result: 124
+> 2026-11-20 13:19:47 +0000 origin/ccr-08ece3a6-xcwyls
+> 2026-11-20 12:52:08 +0000 origin/ccr-a9235d04-90cw28
+> 2026-11-20 04:09:34 +0000 origin/claude/rainbow-s06-match-c23
+> 2026-11-20 04:05:19 +0000 origin/claude/rainbow-benny-c23
+
+### 🤖 Claude — 2026-11-20T13:24:16.812Z
+
+> 🔧 **Bash** `{"command": "while read ref sha; do b=${ref#refs/heads/}; if ! grep -rqF \"$b\" docs backups/BACKUP_LOG.md backups/AGENTS_STATUS.json backups/autosave.config.json CLAUDE.md 2>/dev/null; then echo \"NOT-IN-DOCS $b $sha\"; fi; done < /home/user/scratch/lead/unknown.txt | head -30", "description": "Find unknown branches never mentioned in project records"}`
+
+### 🧑 User — 2026-11-20T13:24:18.078Z
+
+> ↩︎ result: NOT-IN-DOCS ccr-32bfea9a-ea6he9 58a78ffc961234f096fdde953666da3e22e4a900
+> NOT-IN-DOCS ccr-32c4e0e1-9kxw6d 388cd1fd411e724e1f5e7eb7c30f3dfebba7e38e
+> NOT-IN-DOCS ccr-694bda6a-x58ntq 4e140fa68307d51e4a9aca0b6ff9a2cf78595d6b
+> NOT-IN-DOCS ccr-8c4acadc-iybw0n 05941383f2b9e17a909a44483a4ec81656a954d7
+> NOT-IN-DOCS ccr-d5d28060-inz1aa 6550b4ace6e1b17a961b627ae36dd2b922e2938c
+> NOT-IN-DOCS claude/approved-screen-implementation-g3loqu b81cc34ae55d616e8d1cd931e51e491d67dc2b34
+> NOT-IN-DOCS claude/rainbow-account-transfer-npxahd 89eacf0708aa7252782c06c7ee9ff84d30e57f89
+> NOT-IN-DOCS claude/rainbow-restore-env-setup-bxn85h 9c50d6742f258d493606f3c454b88b86eb8cf623
+> NOT-IN-DOCS claude/rainbow-visual-brief-20261120-4d91512d e5d0ccfa52941cd7b3d2ed8f7c45e2f796d727ef
+> NOT-IN-DOCS codex/downloads/Rainbow_Gameplay_Videos 6498086768e60da4b0bb0649e8ed0010efc37a11
+> NOT-IN-DOCS codex/downloads/Rainbow_Phone_Review 5804d48f3d837d7c6cadb666a4f8c808a2e074ae
+> NOT-IN-DOCS codex/downloads/Rainbow_Visual_Images c517292d868f35ce4c27772c15d628cd16e77bb9
+> NOT-IN-DOCS codex/downloads/full-code-and-screens-20261119-3fb798fd ca0e670daf9e5ea59223e422b090dd461aa86a64
+> NOT-IN-DOCS codex/portable-project-backup-20261119-8r27zxaj 4f03f7ad33 …[+1390 chars]
+
+### 🤖 Claude — 2026-11-20T13:24:22.690Z
+
+> 🔧 **ToolSearch** `{"query": "select:mcp__github__get_commit,mcp__github__list_commits", "max_results": 2}`
+
+### 🧑 User — 2026-11-20T13:24:22.702Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-20T13:24:24.410Z
+
+> 🔧 **mcp__github__list_commits** `{"owner": "josiahscalia5-dev", "repo": "rainbow-", "sha": "claude/rainbow-visual-brief-20261120-4d91512d", "perPage": 3, "fields": ["sha", "commit"]}`
+
+### 🧑 User — 2026-11-20T13:24:25.519Z
+
+> ↩︎ result: [{"commit":{"author":{"date":"2026-11-20T13:09:53Z","email":"[REDACTED-EMAIL]","name":"josiahscalia5-dev"},"committer":{"date":"2026-11-20T13:09:53Z","email":"[REDACTED-EMAIL]","name":"josiahscalia5-dev"},"message":"docs: record direct candidate review and remaining visual evidence gaps"},"sha":"e5d0ccfa52941cd7b3d2ed8f7c45e2f796d727ef"},{"commit":{"author":{"date":"2026-11-20T13:09:49Z","email":"[REDACTED-EMAIL]","name":"josiahscalia5-dev"},"committer":{"date":"2026-11-20T13:09:49Z","email":"[REDACTED-EMAIL]","name":"josiahscalia5-dev"},"message":"docs: allocate current visual requirements to all ten specialist roles"},"sha":"1e471e353836a85b05ce2eed9ad2e6d66cdd2444"},{"commit":{"author":{"date":"2026-11-20T13:07:06Z","email":"[REDACTED-EMAIL]","name":"josiahscalia5-dev"},"committer":{"date":"2026-11-20T13:07:06Z","email":"[REDACTED-EMAIL]","name":"josiahscalia5-dev"},"message":"docs: make current owner visual brief the first continuation instruction"},"sha":"5b66936c3b46f7f41b0ecb2587bdca65b1e3a010"}]
+
+### 🤖 Claude — 2026-11-20T13:24:25.557Z
+
+> 🔧 **mcp__github__list_commits** `{"owner": "josiahscalia5-dev", "repo": "rainbow-", "sha": "ccr-d5d28060-inz1aa", "perPage": 1, "fields": ["sha", "commit"]}`
+
+### 🧑 User — 2026-11-20T13:24:26.635Z
+
+> ↩︎ result: [{"commit":{"author":{"date":"2026-11-18T13:55:00Z","email":"noreply@anthropic.com","name":"Claude"},"committer":{"date":"2026-11-18T13:55:00Z","email":"noreply@anthropic.com","name":"Claude"},"message":"autosave: Rainbow 2026-11-18 13:54 UTC\n\nAutomated Rainbow backup (daemon). 4 file(s) changed.\nTranscripts: refreshed (repo verified private)\n\nCo-Authored-By: Claude Opus 5.5 \u003cnoreply@anthropic.com\u003e\nClaude-Session: https://claude.ai/code/session_012NR93Pvi5RJjrMrgsAWUrv"},"sha":"6550b4ace6e1b17a961b627ae36dd2b922e2938c"}]
+
+### 🤖 Claude — 2026-11-20T13:24:26.708Z
+
+> 🔧 **mcp__github__list_commits** `{"owner": "josiahscalia5-dev", "repo": "rainbow-", "sha": "ccr-8c4acadc-iybw0n", "perPage": 1, "fields": ["sha", "commit"]}`
+
+### 🤖 Claude — 2026-11-20T13:24:27.760Z
+
+> 🔧 **mcp__github__list_commits** `{"owner": "josiahscalia5-dev", "repo": "rainbow-", "sha": "claude/rainbow-restore-env-setup-bxn85h", "perPage": 1, "fields": ["sha", "commit"]}`
+
+### 🧑 User — 2026-11-20T13:24:28.413Z
+
+> ↩︎ result: [{"commit":{"author":{"date":"2026-11-16T23:39:17Z","email":"noreply@anthropic.com","name":"Claude"},"committer":{"date":"2026-11-16T23:39:17Z","email":"noreply@anthropic.com","name":"Claude"},"message":"autosave: Rainbow 2026-11-16 23:38 UTC\n\nAutomated Rainbow backup (daemon). 1 file(s) changed.\nTranscripts: refreshed (repo verified private)\n\nCo-Authored-By: Claude Fable 5.2 \u003cnoreply@anthropic.com\u003e\nClaude-Session: https://claude.ai/code/session_01KS3bZtuLZb28K4pdNYaQHQ"},"sha":"05941383f2b9e17a909a44483a4ec81656a954d7"}]
+
+### 🧑 User — 2026-11-20T13:24:28.726Z
+
+> ↩︎ result: [{"commit":{"author":{"date":"2026-11-17T01:09:31Z","email":"noreply@anthropic.com","name":"Claude"},"committer":{"date":"2026-11-17T01:09:31Z","email":"noreply@anthropic.com","name":"Claude"},"message":"autosave: Rainbow 2026-11-17 01:08 UTC\n\nAutomated Rainbow backup (daemon). 1 file(s) changed.\nTranscripts: refreshed (repo verified private)\n\nCo-Authored-By: Claude Fable 5.2 \u003cnoreply@anthropic.com\u003e\nClaude-Session: https://claude.ai/code/session_01AvQv6S7KgQVrwzruK4eB4o"},"sha":"9c50d6742f258d493606f3c454b88b86eb8cf623"}]
+
+### 🤖 Claude — 2026-11-20T13:24:35.345Z
+
+> 🔧 **Bash** `{"command": "timeout 300 git fetch --depth=10 origin \"+refs/heads/claude/rainbow-visual-brief-20261120-4d91512d:refs/remotes/origin/claude/rainbow-visual-brief-20261120-4d91512d\" 2>&1 | tail -2; B=origin/claude/rainbow-visual-brief-20261120-4d91512d; git log --format='%h %ad %an %s' --date=iso $B | head -10; echo; git merge-base HEAD $B 2>&1; for c in $(git log --format=%h $B | head -8); do echo \"== $c\"; git show --stat --format= $c | tail -5; done", "description": "Fetch the new visual-brief branch read-only and inspect it", "timeout": 400000}`
+
+### 🧑 User — 2026-11-20T13:24:37.338Z
+
+> ↩︎ result: From https://github.com/josiahscalia5-dev/rainbow-
+>  * [new branch]      claude/rainbow-visual-brief-20261120-4d91512d -> origin/claude/rainbow-visual-brief-20261120-4d91512d
+> e5d0ccf 2026-11-20 08:09:53 -0500 josiahscalia5-dev docs: record direct candidate review and remaining visual evidence gaps
+> 1e471e3 2026-11-20 08:09:49 -0500 josiahscalia5-dev docs: allocate current visual requirements to all ten specialist roles
+> 5b66936 2026-11-20 08:07:06 -0500 josiahscalia5-dev docs: make current owner visual brief the first continuation instruction
+> 11c9ef8 2026-11-20 08:05:31 -0500 josiahscalia5-dev docs: preserve owner's complete moving-world visual brief
+> a2261d5 2026-11-20 12:52:08 +0000 Claude autosave: Rainbow 2026-11-20 12:51 UTC
+> 29d7ed8 2026-11-20 12:46:52 +0000 Claude autosave: Rainbow 2026-11-20 12:46 UTC
+> b7bb579 2026-11-20 12:41:37 +0000 Claude autosave: Rainbow 2026-11-20 12:41 UTC
+> 04f4ec9 2026-11-20 12:36:18 +0000 Claude autosave: Rainbow 2026-11-20 12:36 UTC
+> 99a0376 2026-11-20 12:30:59 +0000 Claude autosave: Rainbow 2026-11-20 12:30 UTC
+> 90ee5b7 2026-11-20 12:28:47 +0000 Claude autosave: Rainbow 2026-11-20 12:28 UTC
+> 
+> a2261d5b96f7ed190af74f075eacec3a3a223665
+> == e5d0ccf
+>  .../REVIEW …[+1708 chars]
+
+### 🤖 Claude — 2026-11-20T13:24:40.718Z
+
+That branch is `a2261d5` (the same starting point as this session) plus four documentation-only commits made under your GitHub account at 13:05–13:09 UTC. No game code. Reading what they say:
+
+### 🤖 Claude — 2026-11-20T13:24:42.075Z
+
+> 🔧 **Bash** `{"command": "B=origin/claude/rainbow-visual-brief-20261120-4d91512d; git diff --stat a2261d5 $B; git diff a2261d5 $B -- CLAUDE.md; F=$(git diff --name-only a2261d5 $B | grep SPECIALIST); git show $B:$F", "description": "Show the new branch's CLAUDE.md change and specialist file"}`
+
+### 🧑 User — 2026-11-20T13:24:42.130Z
+
+> ↩︎ result: CLAUDE.md                                          |   8 +
+>  .../REVIEW_AND_NEXT_STEPS.md                       | 115 ++++++++++
+>  .../SPECIALIST_REQUIREMENTS.md                     |  53 +++++
+>  .../USER_VISUAL_REQUIREMENTS.md                    | 239 +++++++++++++++++++++
+>  4 files changed, 415 insertions(+)
+> diff --git a/CLAUDE.md b/CLAUDE.md
+> index a24e046..c5933dd 100644
+> --- a/CLAUDE.md
+> +++ b/CLAUDE.md
+> @@ -1,3 +1,11 @@
+> +# CURRENT OWNER VISUAL BRIEF — 2026-11-20
+> +
+> +Read `docs/briefs/2026-11-20-visual-requirements/USER_VISUAL_REQUIREMENTS.md` in full before continuing any screen work. It preserves the owner's latest message verbatim and takes precedence over older visual targets and contradictory review instructions below. The owner's target is approximately 90–95% likeness, with 95% preferred, throughout swimming, steering and transitions; do not report an unsupported achieved percentage. K23-3 remains unapproved.
+> +
+> +Use `docs/briefs/2026-11-20-visual-requirements/SPECIALIST_REQUIREMENTS.md` to brief the existing ten specialist roles and `REVIEW_AND_NEXT_STEPS.md` in the same folder for the saved-evidence review. Keep current approvals, successful work, controls and the existing vide …[+8999 chars]
+
+### 🤖 Claude — 2026-11-20T13:24:49.468Z
+
+> 🔧 **Bash** `{"command": "B=origin/claude/rainbow-visual-brief-20261120-4d91512d; F=$(git diff --name-only a2261d5 $B | grep REVIEW); echo $F; git show $B:$F | sed -n 1,115p", "description": "Read the ChatGPT review document on that branch"}`
+
+### 🧑 User — 2026-11-20T13:24:49.728Z
+
+> ↩︎ result: docs/briefs/2026-11-20-visual-requirements/REVIEW_AND_NEXT_STEPS.md
+> # Rainbow — saved-candidate visual review, 20 November 2026
+> 
+> ## Result
+> 
+> There are visible local improvements worth preserving. The reviewed images do not establish the owner's approximately 90–95% moving-world acceptance standard. Opening views generally preserve the references more convincingly than the later and steering views. Water shape and continuity, nearby materials, foam and route visibility remain substantial issues.
+> 
+> This review does not promote any candidate. Screen 08 K23-3 remains unapproved. The complete owner brief is preserved verbatim in [USER_VISUAL_REQUIREMENTS.md](USER_VISUAL_REQUIREMENTS.md); all ten existing specialist roles are covered in [SPECIALIST_REQUIREMENTS.md](SPECIALIST_REQUIREMENTS.md).
+> 
+> ## What was checked
+> 
+> - Verified the private repository `josiahscalia5-dev/rainbow-` and continuation branch `ccr-a9235d04-90cw28` at commit **`a2261d5b96f7ed190af74f075eacec3a3a223665`**, saved 20 November 2026 at 07:52:08 EST (12:52:08 UTC). Rechecked the branch before saving this documentation; its head was unchanged.
+> - Read the round-25 coordination/launch notes, relevant progress records, candid …[+16520 chars]
+

@@ -3,7 +3,7 @@
 # (one frame per 1/24 s of game time, water clock follows the clip clock), labelled on every frame with the playback speed
 # (tools/lead23/label_clip.py): <V>_opening_1x.mp4 + <V>_opening_0.5x.mp4.   bash clip.sh NEW CURRENT
 O=/home/user/rainbow-/qa/match/06/r25/step1_hole; cd /home/user/wt/s06
-declare -A TITLE=([NEW]="SCREEN 06 OPENING - NEW (m06hole)" [CURRENT]="SCREEN 06 OPENING - CURRENT (what you saw)")
+declare -A TITLE=([NEW2]="SCREEN 06 OPENING - NEW (m06hole=2)" [NEW]="SCREEN 06 OPENING - NEW (m06hole)" [CURRENT]="SCREEN 06 OPENING - CURRENT (what you saw)")
 for V in ${*:-NEW CURRENT}; do
   D=/home/user/scratch/s06/clip_$V; rm -rf "$D"
   CLIP_END=${CLIP_END:-0.32} AUDIT_PORT=${PORT:-5283} bash /home/user/rainbow-/tools/lead25/render_slot.sh timeout 3000 \

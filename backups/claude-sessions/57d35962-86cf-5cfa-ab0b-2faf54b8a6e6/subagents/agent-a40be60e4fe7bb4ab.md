@@ -604,3 +604,108 @@ While that renders, let me review the `m07join` code to plan step 3.
 > 33
 > Fri Nov 20 13:19:24 UTC 2026
 
+### 🤖 Claude — 2026-11-20T13:19:25.604Z
+
+Start shots done. Check the start view pixel difference.
+
+### 🤖 Claude — 2026-11-20T13:19:26.771Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/07/r26/s2_look && ls BEFORE NEW && node /home/user/tools-pixelmatch/pixeldiff.mjs BEFORE/a_start.png NEW/a_start.png 2>&1 | tail -3", "description": "Pixel-diff start view BEFORE vs NEW"}`
+
+### 🧑 User — 2026-11-20T13:19:27.502Z
+
+> ↩︎ result: BEFORE:
+> a_start.png
+> shots.json
+> 
+> NEW:
+> a_start.png
+> shots.json
+> {"a":"BEFORE/a_start.png","b":"NEW/a_start.png","rows":[0,1536],"threshold":0.1,"diff_pixels":0,"total":1327104,"diff_pct":0}
+
+### 🤖 Claude — 2026-11-20T13:19:29.181Z
+
+> 🔧 **Bash** `{"command": "until grep -q \"exit done\" /home/user/scratch/s07/step2.log 2>/dev/null; do sleep 10; done; cat /home/user/scratch/s07/step2.log; ls /home/user/scratch/s07/s2seg/NEW | head -3; ls /home/user/scratch/s07/s2seg/NEW | wc -l; date", "description": "Wait for NEW segment render", "timeout": 540000}`
+
+### 🧑 User — 2026-11-20T13:23:09.588Z
+
+> ↩︎ result: shot BEFORE exit 0
+> seg BEFORE exit 0
+> shot NEW exit 0
+> seg NEW exit 0
+> exit done
+> 0048.png
+> 0050.png
+> 0052.png
+> 33
+> Fri Nov 20 13:23:09 UTC 2026
+
+### 🤖 Claude — 2026-11-20T13:23:11.765Z
+
+Start view is 0 px. Now a BEFORE vs NEW contact sheet of the segment.
+
+### 🤖 Claude — 2026-11-20T13:23:17.330Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s07/s2seg && for v in BEFORE NEW; do ls $v/*.png | awk 'NR%3==1' | head -11 > /tmp/claude-0/-home-user-rainbow-/57d35962-86cf-5cfa-ab0b-2faf54b8a6e6/scratchpad/l_$v.txt 2>/dev/null || true; done; mkdir -p /tmp/claude-0/-home-user-rainbow-/57d35962-86cf-5cfa-ab0b-2faf54b8a6e6/scratchpad; for v in BEFORE NEW; do ls $v/*.png | awk 'NR%3==1' | head -11 > /home/user/scratch/s07/l_$v.txt; done; cat /home/user/scratch/s07/l_NEW.txt | tr '\\n' ' '; echo; python3 -I - <<'EOF'\nfrom PIL import Image, ImageDraw\nrows=[]\nfor v in ['BEFORE','NEW']:\n    fs=[l.strip() for …[+615 chars]`
+
+### 🧑 User — 2026-11-20T13:23:18.231Z
+
+> ↩︎ result: NEW/0048.png NEW/0054.png NEW/0060.png NEW/0066.png NEW/0072.png NEW/0078.png NEW/0084.png NEW/0090.png NEW/0096.png NEW/0102.png NEW/0108.png
+
+### 🤖 Claude — 2026-11-20T13:23:19.000Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s07/s2_sheet.png"}`
+
+### 🧑 User — 2026-11-20T13:23:19.361Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T13:23:37.146Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 100,135p src/game/cameraRig.ts | grep -n \"back\\|height\\|up\\|dist\\|PRESET\\|preset\" | head -20; grep -n \"'07'\" src/game/cameraRig.ts src/world/presets*.ts 2>/dev/null | head; grep -rn \"07:\\s*{\" src/game/cameraRig.ts src/world/*.ts | head -5", "description": "Find normal 07 ride camera offsets"}`
+
+### 🧑 User — 2026-11-20T13:23:37.367Z
+
+> ↩︎ result: 10:    let up = f.up.clone();
+> 17:        up.lerp(af.up, w).normalize();
+> 20:    up.addScaledVector(dir, -up.dot(dir)).normalize();
+> 21:    const right = new THREE.Vector3().crossVectors(dir, up).normalize();
+> 24:    // offsets use an 'upright' up: banking only tilts the camera as much as `roll` allows
+> 25:    const upPos = new THREE.Vector3(0, 1, 0).lerp(up, Math.max(p.roll, Math.abs(dir.y))).normalize();
+> 27:    // 07 pull-up arc); aim: along his heading so he stays centred in winding streams
+> 28:    const fbk = this.course.sample(Math.max(0, s - p.back));
+> 29:    const upB = new THREE.Vector3(0, 1, 0).lerp(fbk.up, Math.max(p.roll, Math.abs(fbk.tan.y))).normalize();
+> 30:    const straightPos = anchor.clone().addScaledVector(dir, -p.back).addScaledVector(upPos, p.up);
+> 31:    const curvedPos = fbk.pos.clone().addScaledVector(fbk.right, lat * p.latFollow).addScaledVector(upB, p.up);
+> 35:    outTarget.copy(anchor).addScaledVector(dir, p.ahead).addScaledVector(upPos, p.lookUp);
+> 36:    outUp.set(0, 1, 0).lerp(up, p.roll).normalize();
+> src/game/cameraRig.ts:55:  '07': { back: 6.4, up: 4.1, ahead: 18, lookUp: 1.8, fov: 62, latFollow: 0.6, roll: 0.6 },
+> src/game/cameraRig.ts:141:    const p7 = STAGE_ …[+375 chars]
+
+### 🤖 Claude — 2026-11-20T13:23:53.301Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s07 && node /home/user/rainbow-/tools/lead23/setq.mjs \"$(cat Q_S2.txt)\" \"m07lkB=5&m07lkU=6.2\" > Q_S2b.txt && node /home/user/rainbow-/tools/lead23/setq.mjs \"$(cat Q_S2.txt)\" \"m07lkB=4&m07lkU=7.2&m07lkA=12\" > Q_S2c.txt && tail -c 60 Q_S2b.txt; echo; tail -c 60 Q_S2c.txt; echo; cat > step2b.sh <<'EOF'\n#!/usr/bin/env bash\nset -u\nSC=/home/user/scratch/s07; SLOT=/home/user/rainbow-/tools/lead25/render_slot.sh\ncd $SC/combo\nfor v in b c; do\n  SEG_PORT=5280 bash $SLOT timeout 2400 node tools/match07/seg_clip_r24.mjs $SC/s2seg/NEW_$v \"$(cat $SC/Q_S2$v.t …[+222 chars]`
+
+### 🧑 User — 2026-11-20T13:23:53.639Z
+
+> ↩︎ result: insz=1&m08towelm=1&m08towelv=1&m07look=1&m07lkB=5&m07lkU=6.2
+> towelm=1&m08towelv=1&m07look=1&m07lkB=4&m07lkU=7.2&m07lkA=12
+> started
+
+### 🤖 Claude — 2026-11-20T13:23:57.746Z
+
+While the variants render, I'll launch the step-3 (`m07join`) segment in parallel on the other port: t 6.6–8.9 s, BEFORE = step-1 candidate, NEW = + `m07join`.
+
+### 🤖 Claude — 2026-11-20T13:24:00.708Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s07 && node /home/user/rainbow-/tools/lead23/setq.mjs \"$(cat Q_S1.txt)\" \"m07join=1\" > Q_S3.txt && tail -c 40 Q_S3.txt; echo; cat > step3.sh <<'EOF'\n#!/usr/bin/env bash\nset -u\nSC=/home/user/scratch/s07; SLOT=/home/user/rainbow-/tools/lead25/render_slot.sh\ncd $SC/combo\nfor v in BEFORE NEW; do\n  Q=$([ $v = BEFORE ] && cat $SC/Q_S1.txt || cat $SC/Q_S3.txt)\n  SEG_PORT=5281 bash $SLOT timeout 2400 node tools/match07/seg_clip_r24.mjs $SC/s3seg/$v \"$Q\" 6.6 8.9 12 432 > $SC/s3_seg_$v.log 2>&1; echo \"seg $v exit $?\"\ndone\necho \"exit done\"\nEOF\nnohup  …[+100 chars]`
+
+### 🧑 User — 2026-11-20T13:24:00.972Z
+
+> ↩︎ result: insz=1&m08towelm=1&m08towelv=1&m07join=1
+> started
+
+### 🤖 Claude — 2026-11-20T13:24:02.574Z
+
+> 🔧 **Bash** `{"command": "until grep -q \"exit done\" /home/user/scratch/s07/step2b.log 2>/dev/null; do sleep 10; done; cat /home/user/scratch/s07/step2b.log /home/user/scratch/s07/step3.log; date", "description": "Wait for tuned m07look variants", "timeout": 540000}`
+

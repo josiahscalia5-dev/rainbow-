@@ -945,3 +945,51 @@ GaussianBlur drops the singleton channel; fix the broadcast.
 
 > 🔧 **Bash** `{"command": "until [ \"$(ls /home/user/rainbow-/qa/match/06/r25/step1_hole/NEW2/*.png 2>/dev/null | wc -l)\" -ge 4 ] || grep -q exit /home/user/scratch/s06/render_new2.out; do sleep 10; done; cat /home/user/scratch/s06/render_new2.out /home/user/scratch/s06/clip_current.out; ls /home/user/scratch/s06/clip_CURRENT/f 2>/dev/null | wc -l; date", "description": "Wait for NEW2 shots (foreground, up to 9 min)", "timeout": 560000}`
 
+### 🧑 User — 2026-11-20T13:24:21.821Z
+
+> ↩︎ result: NEW2 exit 0 4 png
+> 8
+> Fri Nov 20 13:24:21 UTC 2026
+
+### 🤖 Claude — 2026-11-20T13:24:25.406Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r25/step1_hole && node /home/user/tools-pixelmatch/pixeldiff.mjs CURRENT/a_start.png NEW2/a_start.png 2>&1 | tail -2; python3 -c \"\nfrom PIL import Image\nbox=(0,700,864,1536)\nims=[Image.open(p).convert('RGB').crop(box) for p in ['NEW/o1_003.png','NEW2/o1_003.png','NEW/o2_007.png','NEW2/o2_007.png']]\nw,h=ims[0].size; s=0.6\nout=Image.new('RGB',(int(w*s)*2,int(h*s)*2))\nfor i,im in enumerate(ims): out.paste(im.resize((int(w*s),int(h*s))),((i%2)*int(w*s),(i//2)*int(h*s)))\nout.save('/home/user/scratch/s06/crop_new_new2.png')\n\"", "description": …[+47 chars]`
+
+### 🧑 User — 2026-11-20T13:24:26.682Z
+
+> ↩︎ result: {"a":"CURRENT/a_start.png","b":"NEW2/a_start.png","rows":[0,1536],"threshold":0.1,"diff_pixels":6,"total":1327104,"diff_pct":0.0005}
+
+### 🤖 Claude — 2026-11-20T13:24:32.499Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r25/step1_hole && python3 -c \"\nimport numpy as np; from PIL import Image\na=np.asarray(Image.open('CURRENT/a_start.png').convert('RGB')).astype(int); b=np.asarray(Image.open('NEW2/a_start.png').convert('RGB')).astype(int); c=np.asarray(Image.open('NEW/a_start.png').convert('RGB')).astype(int)\nd=np.abs(a-b).max(2); ys,xs=np.nonzero(d); print('CUR vs NEW2 changed px', len(ys), 'max', d.max(), list(zip(xs[:10],ys[:10])))\nd2=np.abs(a-c).max(2); print('CUR vs NEW changed', (d2>0).sum())\n\"", "description": "Locate start-view pixel differences"}`
+
+### 🧑 User — 2026-11-20T13:24:33.763Z
+
+> ↩︎ result: CUR vs NEW2 changed px 1098 max 186 [(np.int64(77), np.int64(21)), (np.int64(77), np.int64(23)), (np.int64(82), np.int64(23)), (np.int64(78), np.int64(25)), (np.int64(77), np.int64(26)), (np.int64(81), np.int64(26)), (np.int64(79), np.int64(27)), (np.int64(77), np.int64(29)), (np.int64(749), np.int64(29)), (np.int64(750), np.int64(29))]
+> CUR vs NEW changed 0
+
+### 🤖 Claude — 2026-11-20T13:24:38.630Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r25/step1_hole && python3 -c \"\nimport numpy as np; from PIL import Image\na=np.asarray(Image.open('CURRENT/a_start.png').convert('RGB')).astype(int); b=np.asarray(Image.open('NEW2/a_start.png').convert('RGB')).astype(int)\nd=np.abs(a-b).max(2)>0; ys,xs=np.nonzero(d); print('y range',ys.min(),ys.max(),'x range',xs.min(),xs.max()); print('below y=200:', (ys>200).sum())\nImage.fromarray(np.concatenate([a[:130],b[:130]],0).astype(np.uint8)).save('/home/user/scratch/s06/hud_diff.png')\n\"", "description": "Check whether differences are HUD only"}`
+
+### 🧑 User — 2026-11-20T13:24:39.641Z
+
+> ↩︎ result: y range 21 1017 x range 77 786
+> below y=200: 1
+
+### 🤖 Claude — 2026-11-20T13:24:40.392Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s06/hud_diff.png"}`
+
+### 🧑 User — 2026-11-20T13:24:40.512Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T13:24:44.164Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s06/crop_new_new2.png"}`
+
+### 🧑 User — 2026-11-20T13:24:44.231Z
+
+> ↩︎ result: [image]
+
