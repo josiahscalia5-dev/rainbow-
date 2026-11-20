@@ -491,6 +491,8 @@ uniform vec4 uWU;            // r19b m04wup: x highest climb up the wall above t
 uniform vec4 uWU2;           // r19b m04wup: x / y the climb falls from full (x u ahead of Benny) to z of it (y u ahead), w soft top edge (u)
 uniform vec4 uWU3;           // r19b m04wup: x old water edge (arc u), y tongue drift with the current (0..1), z lilac-white lace
                              // on the climbing crest (share of the m04edge fringe), w band tile column at the crest (0 = lilac sparkle)
+uniform vec4 uWC;            // r20 m04wcr: x on (strength), y bands per u up the wall, z bright highlight lines, w dark violet edges
+uniform vec2 uWC2;           // r20 m04wcr: x bright glossy lip just under the crest, y soft top width (u) instead of m04wus
 uniform vec4 uA5;        // m04arr5: x on, y spacing, z first apex (along), w bar thickness along the flow
 uniform vec4 uA5b;           // m04arr5: x half width, y arm slope (along per lateral), z camera along, w visible depth
 uniform vec2 uA5n;           // r10 m04arr5: near fade-in distance (start, full) ahead of the camera; default 6.5, 9.0
@@ -716,6 +718,37 @@ void main() {
     col = mix(col, bc, uSB0.x * ckc * smoothstep(inner - uSB1.x, inner + 0.25 * uSB1.x, am));
     if (uSB1.y > 0.5) col = mix(col, vec3(0.97, 0.90, 1.0), fringe);
   }
+  if (uWC.x > 0.0 && uWU.x > 0.0) {
+    // r20 m04wcr: the painted WALL swirls are crisp glossy ribbons, not a soft pink haze — on the climbing water the pink satin
+    // is drawn as defined magenta / hot-pink bands running along the tunnel (rising and dipping with the tongues), each with a
+    // thin bright white-pink highlight line and a darker violet edge; the painted tile's satin light / dark flow is kept
+    // inside the bands; world-anchored and flowing with the current; starts a hair below the old edge (no seam there)
+    float kc = smoothstep(-0.3, 0.1, ext) * wuK;
+    if (kc > 0.0) {
+      float sdw = vS < 0.0 ? 0.0 : 1.0;
+      // band coordinate: height up the wall measured as a share of THIS spot's climb (so the bands rise and dip with each
+      // tongue, parallel to its crest, like the painted swirl lines), m04wcn bands per u of the full climb, slow wobble
+      float q = ext / max(wuE, 0.25) * uWC.y * uWU.x * 0.6 + 0.35 * sin(fl * 0.31 + sdw * 2.1) + 0.6 * vn(vec2(fl * 0.09, sdw * 5.0 + 9.0));
+      float qi = floor(q), qf = fract(q);
+      float hv = h21(vec2(qi, sdw + 3.0));                                 // each band its own pink
+      float l = dot(col, vec3(0.30, 0.55, 0.15));
+      vec3 bandC = mix(vec3(0.80, 0.10, 0.62), vec3(1.0, 0.36, 0.78), smoothstep(0.1, 0.8, qf) * (0.45 + 0.55 * hv));
+      bandC = mix(bandC, vec3(1.0, 0.64, 0.92), 0.6 * smoothstep(0.55, 0.85, l));
+      bandC *= 0.82 + 0.36 * l;
+      float pxq = fwidth(q) + 1e-4;
+      float dE = min(qf, 1.0 - qf);
+      bandC = mix(bandC, vec3(0.46, 0.10, 0.62), uWC.w * (1.0 - smoothstep(0.0, 0.14 + pxq, dE)));
+      // satin sheen across each band, then the thin bright highlight broken into glossy streaks along the flow (not wires)
+      float sn = vn(vec2(fl * 0.45 + qi * 7.3, qi * 3.1 + sdw * 7.0));
+      bandC = mix(bandC, vec3(1.0, 0.72, 0.94), 0.45 * exp(-pow((qf - 0.58) / 0.13, 2.0)) * smoothstep(0.3, 0.8, sn));
+      float hl = 1.0 - smoothstep(0.0, (0.02 + 0.03 * sn) + pxq, abs(qf - 0.30 - 0.1 * hv));
+      hl *= smoothstep(0.32, 0.62, vn(vec2(fl * 0.8 + 11.0, qi * 5.7 + sdw * 3.0)));
+      bandC = mix(bandC, vec3(1.0, 0.92, 0.99), uWC.z * hl * min(1.0, 0.05 / pxq));
+      col = mix(col, bandC, kc * min(uWC.x, 1.0));
+      float dTop = wuE - ext, pt = fwidth(dTop) + 1e-4;                     // a thin glossy lip just under the crest
+      col = mix(col, vec3(1.0, 0.84, 0.97), uWC2.x * kc * (1.0 - smoothstep(0.0, 0.03 + pt, abs(dTop - 0.12))) * min(1.0, 0.04 / pt));
+    }
+  }
   if (uA5.x > 0.5) {
     // m04arr5: fat flat chevrons (bars between two nested V lines, ends cut along the flow), as painted
     float k5 = floor((along - uA5.z) / uA5.y + 0.5);
@@ -754,7 +787,7 @@ void main() {
   // r19b m04wup: the climbing water on the wall (own see-through mesh): soft top edge, nothing above it; hidden in the
   // approved view (the painted picture is shown there), fading in with the rest of the 3D scenery
   if (uAway < 0.001 || ext > wuE) discard;
-  alpha = 1.0 - smoothstep(wuE - uWU2.w, wuE, ext);
+  alpha = 1.0 - smoothstep(wuE - (uWC.x > 0.0 ? uWC2.y : uWU2.w), wuE, ext);
 #endif
   if (uAway < 0.999 && vProj.w > 0.0) {
     vec2 uv = vProj.xy / vProj.w * 0.5 + 0.5;
@@ -1380,6 +1413,10 @@ export function addM04(ctx: M04Ctx) {
         // to m04wun1 u ahead of Benny, m04wus soft top edge, m04wuv tongue drift with the current, m04wut band column at the crest, m04wuw crest lace
         uWU: { value: wup ? new THREE.Vector4(wuH, M04.num('m04wul', 9), M04.num('m04wud', 0.35), M04.num('m04wub', 0.6)) : new THREE.Vector4(0, 1, 0, 1) },
         uWU2: { value: new THREE.Vector4(M04.num('m04wun0', 2), M04.num('m04wun1', 14), M04.num('m04wuf', 0.3), M04.num('m04wus', 0.6)) },
+        // r20 `&m04wcr=1` (with m04wup): crisp glossy wall swirls — m04wcr strength, m04wcn bands per u up the wall, m04wch
+        // highlight lines, m04wcv dark violet edges, m04wcl glossy lip under the crest, m04wcs soft top width (u)
+        uWC: { value: new THREE.Vector4(wup ? M04.num('m04wcr', 0) : 0, M04.num('m04wcn', 2.2), M04.num('m04wch', 0.8), M04.num('m04wcv', 0.55)) },
+        uWC2: { value: new THREE.Vector2(M04.num('m04wcl', 0.6), M04.num('m04wcs', 0.25)) },
         uWU3: { value: new THREE.Vector4(arc[nX], M04.num('m04wuv', 0.3), M04.num('m04wuw', 0.25), M04.num('m04wut', 0.28)) },
         uNB: { value: nbU }, uNB2:{ value: new THREE.Vector4(M04.num('m04nba', 4.2), M04.num('m04nbb', 0.04), M04.num('m04nbp', 0.0), M04.num('m04nbf', 0)) },
         uSB0: { value: new THREE.Vector4(M04.num('m04sband', 0) > 0 ? M04.num('m04sbs', 0.95) : 0, M04.num('m04sbi', 2.0), arc[nX], M04.num('m04sbl', 10)) },
@@ -1435,7 +1472,7 @@ export function addM04(ctx: M04Ctx) {
   const buildBank = (clumps: { side: number; a: number; cl: number; reach: number }[], puffs: { side: number; x: number; z: number }[], nearF: number[]) => {
     let s3 = 24683; const r3 = () => ((s3 = (s3 * 16807) % 2147483647) / 2147483647);
     const HL = 3.3, HH = 1.43;                                  // heap length / height in the glb (u)
-    const bs = M04.num('m04bbs', 1), sink = M04.num('m04bbk', 0.04);
+    const bs = M04.num('m04bbs', 1.15), sink = M04.num('m04bbk', 0.04);
     const place: { x: number; y: number; z: number; s: number; yaw: number; k: number }[] = [];
     // the river surface height d u from the centre line (flat lane, the trough's side rising to RY at xW, its top edge beyond):
     // a heap rests on the surface a little outward of its centre line, so its bubbles are not cut flat by the rising side
@@ -1464,8 +1501,8 @@ export function addM04(ctx: M04Ctx) {
       vertexColors: true, color: new THREE.Color(['#ffffff', '#e4e2ff', '#d6e2ff', '#cfdcff'][Math.round(M04.num('m04bbc', 3))] ?? '#ffffff'),
       roughness: M04.num('m04bbr', 0.08), metalness: 0, clearcoat: 1, clearcoatRoughness: 0.08,
       iridescence: M04.num('m04bbi', 0.15), iridescenceIOR: 1.3,
-      emissive: new THREE.Color('#eef3ff'), emissiveIntensity: M04.num('m04bbe', 0.2), transparent: true, depthWrite: true });
-    const rimC = new THREE.Vector4(0.74, 0.72, 0.98, M04.num('m04bbl', 0.55)), rimW = M04.num('m04bbg', 0.35), glint = M04.num('m04bbh', 0.6);
+      emissive: new THREE.Color('#eef3ff'), emissiveIntensity: M04.num('m04bbe', 0.12), transparent: true, depthWrite: true });
+    const rimC = new THREE.Vector4(0.74, 0.72, 0.98, M04.num('m04bbl', 0.75)), rimW = M04.num('m04bbg', 0.35), glint = M04.num('m04bbh', 0.6);
     mat.onBeforeCompile = (sh) => {
       sh.uniforms.uBNear = { value: near }; sh.uniforms.uBRim = { value: rimC }; sh.uniforms.uBRimW = { value: rimW }; sh.uniforms.uBGl = { value: glint };
       // the painted foam bubbles: pale lilac-white faces, soft blue-lilac shading toward each bubble's outline, a thin bright rim
