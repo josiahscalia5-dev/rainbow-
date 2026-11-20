@@ -1,8 +1,8 @@
 {
  "crown_w": 2048,
  "crown_h": 512,
- "crown_cols": 168,
- "crown_rows": 34,
+ "crown_cols": 108,
+ "crown_rows": 26,
  "stripes": [
   [
    0.0,
@@ -18,14 +18,6 @@
   ],
   [
    0.645,
-   "V"
-  ],
-  [
-   0.75,
-   "W"
-  ],
-  [
-   0.815,
    "V"
   ]
  ],
@@ -46,9 +38,9 @@
  ],
  "brim_w": 2048,
  "brim_h": 256,
- "brim_cols": 132,
- "brim_rows": 12,
- "groove": 0.38,
+ "brim_cols": 86,
+ "brim_rows": 8,
+ "groove": 0.3,
  "seed": 7,
  "star_px": 512,
  "star_gold": [
@@ -65,5 +57,6 @@
   196,
   112,
   36
- ]
+ ],
+ "crown_rib": true
 }

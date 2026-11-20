@@ -155,6 +155,8 @@ export async function startGame(canvas: HTMLCanvasElement) {
   const setStage = (id: StageId) => {
     if (st.stage === id) return;
     st.stage = id;
+    // read only by `?benny20=1` (benny20.ts per-screen fur exposure); nothing else uses it
+    benny.root.userData.stage = id;
     hud.setStage(id);
     updateZones();
   };

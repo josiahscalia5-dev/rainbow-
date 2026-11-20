@@ -106,7 +106,7 @@ export function createBennyRuntime(
   const b05 = B05 ? applyBenny05(scene, furs, opts.maps05 ?? {}) : null;
   if (B05) clips = dampedClips(clips);
   // `?benny20=1`: the round-20 approved-04 look on top (benny20.ts). Off: nothing runs.
-  if (BENNY20) applyBenny20(scene, furs, opts.maps20 ?? {});
+  const tick20 = BENNY20 ? applyBenny20(scene, furs, opts.maps20 ?? {}) : null;
 
   // QA colour A/B: `?bennyTint=hat_brim:7868a0,hat_crown:e4d4e4` sets the base-colour factor of meshes whose name
   // starts with the given prefix (the GLB's own factors are the default; materials are shared by every clone)
@@ -173,6 +173,8 @@ export function createBennyRuntime(
 
   const update: BennyRuntime['update'] = (dt, st) => {
     dt = Math.min(dt, 1 / 20);
+    // `?benny20=1`: per-screen fur exposure (Game.ts records the screen on root.userData.stage)
+    tick20?.(dt, root.userData.stage as string | undefined);
     // clip weights
     const tumble = !!st.tumble;
     const swim = tumble ? 0 : THREE.MathUtils.clamp(st.swim, 0, 1);

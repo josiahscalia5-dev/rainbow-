@@ -113,7 +113,8 @@ def l2s8(c):
 
 def crown(p, out):
     W, H, cols, rows = p['crown_w'], p['crown_h'], p['crown_cols'], p['crown_rows']
-    h, rowid, var = knit_field(W, H, cols, rows, p['seed'])
+    # r20: optional ribbed crown (approved 04 crown = raised knit columns with grooves, like the cuff but milder)
+    h, rowid, var = knit_field(W, H, cols, rows, p['seed'], rib=bool(p.get('crown_rib', False)))
     fz = fbm((H, W), p['seed'] + 1)
     # stripe per stitch ROW (stripes change on row boundaries -> jagged knit edge like a real beanie)
     vrow = 1 - (rowid + 0.5) / rows          # v of the row centre (0 bottom .. 1 top)
