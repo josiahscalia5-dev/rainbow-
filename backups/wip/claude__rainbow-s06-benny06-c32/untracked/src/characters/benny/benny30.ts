@@ -25,6 +25,10 @@ import type { FurHandle } from './fur';
 export const BENNY30: boolean = flag05('b30');
 
 export interface B30Params {
+  /** whole Benny (visual only, his own benny_root node; game placement / collision radius unchanged): scale about the body
+   *  centre and raise (body units). The painted 06 Benny is ≈ 0.92 of the game's on-screen size at the v2 framing. */
+  sc: number;
+  sy: number;
   /** ride lean (deg, + = top forward), replaces the runtime's BENNY_RIDE_PITCH (12.6°) */
   pitch: number;
   /** beanie: uniform scale about the cuff's bottom centre, extra vertical factor, raise along the body's up (body units) */
@@ -62,6 +66,7 @@ export interface B30Params {
 }
 
 const DEF: B30Params = {
+  sc: 1, sy: 0,
   pitch: 12.6,
   hs: 1, hsy: 1, hy: 0, hz: 0,
   bsx: 1, bsy: 1, by: 0,
@@ -106,7 +111,9 @@ export function applyBenny30(scene: THREE.Object3D, furs: FurHandle[]): Benny30H
   const hat = get('hat')!;
   const pom = get('pom')!;
   const armL = get('armL')!, armR = get('armR')!;
+  const broot = get('benny_root');
   const base = {
+    rootPos: broot ? broot.position.clone() : new THREE.Vector3(), rootScale: broot ? broot.scale.clone() : new THREE.Vector3(1, 1, 1),
     hatPos: hat.position.clone(), hatScale: hat.scale.clone(),
     pomScale: pom.scale.clone(),
     armL: armL.position.clone(), armR: armR.position.clone(), armS: armL.scale.clone(),
@@ -167,6 +174,11 @@ export function applyBenny30(scene: THREE.Object3D, furs: FurHandle[]): Benny30H
   const apply = () => {
     const P = params;
     reshape(P.bp, P.bcap, P.bw);
+    if (broot) {
+      broot.scale.copy(base.rootScale).multiplyScalar(P.sc);
+      broot.position.copy(base.rootPos);
+      broot.position.y += P.sy;
+    }
     // ---- beanie: scale about the cuff's bottom centre, then raise / shift back ----
     const s = P.hs;
     hat.scale.set(base.hatScale.x * s, base.hatScale.y * s * P.hsy, base.hatScale.z * s);

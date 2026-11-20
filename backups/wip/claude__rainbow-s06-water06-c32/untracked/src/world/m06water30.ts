@@ -18,8 +18,8 @@
  *
  * Switches (all optional, with `w30=1`): `w30f` flow speed u/s (2.2) · `w30v` vein strength (1) · `w30rb` rainbow-band strength (1) ·
  * `w30sp` glint strength (1) · `w30t=a,b` vein tile size across, along (u; 2.2,3.8) · `w30rip` ripple strength (0.55) ·
- * `w30old` share of the old painted streak strip kept (0) · `w30st=a,b` start hand-over (0.02,0.6) · `w30e=a,b` rainbow band from
- * |l|/Wc = a to b (0.36,1.0)
+ * `w30old` share of the old painted streak strip kept (0) · `w30st=a,b` start hand-over (0.02,0.6) · `w30e` the pink side starts at
+ * |l|/Wc (0.62) · `w30rk` how strongly the rainbow strip between cyan and pink shows where it appears (0.7)
  */
 import * as THREE from 'three';
 
@@ -29,45 +29,52 @@ export const W30_GLSL = /* glsl */ `
 uniform sampler2D uW30T;
 uniform vec4 uW30A; // flow speed (u/s), vein strength, rainbow strength, glint strength
 uniform vec4 uW30B; // vein tile across (u), along (u), ripple strength, share of the old painted strip kept
-uniform vec4 uW30C; // start hand-over a..b (camera distance from the approved viewpoint), rainbow band inner / outer edge (|l| / Wc)
-// display-space colour across the slide, x = |lateral| / Wc (0 centre .. 1 at the foam), read from the storyboard panels and the approved
-// picture: bright cyan centre -> azure -> blue-violet -> magenta -> hot pink -> lilac-pink at the bank. k = how much of the iridescent
-// RAINBOW strip shows in the edge band (the approved right-hand band measured across it: cyan, mint, yellow, peach, pink, magenta)
-vec3 w30Lat(float x, float k) {
-  vec3 c = vec3(0.14, 0.85, 1.0);
-  c = mix(c, vec3(0.02, 0.74, 0.99), smoothstep(0.05, 0.28, x));
-  c = mix(c, vec3(0.03, 0.53, 0.95), smoothstep(0.28, 0.44, x));
-  vec3 p = mix(c, vec3(0.45, 0.36, 0.97), smoothstep(0.44, 0.56, x));
-  p = mix(p, vec3(0.92, 0.27, 0.90), smoothstep(0.54, 0.68, x));
-  p = mix(p, vec3(0.99, 0.45, 0.88), smoothstep(0.68, 0.82, x));
-  p = mix(p, vec3(0.96, 0.62, 0.95), smoothstep(0.82, 0.93, x));
-  p = mix(p, vec3(0.90, 0.32, 0.92), smoothstep(0.93, 1.0, x));
-  vec3 r = mix(c, vec3(0.05, 0.84, 0.99), smoothstep(0.40, 0.50, x));
-  r = mix(r, vec3(0.45, 0.93, 0.80), smoothstep(0.50, 0.58, x));
-  r = mix(r, vec3(0.98, 0.93, 0.55), smoothstep(0.58, 0.66, x));
-  r = mix(r, vec3(0.99, 0.70, 0.62), smoothstep(0.66, 0.74, x));
-  r = mix(r, vec3(0.98, 0.42, 0.86), smoothstep(0.74, 0.84, x));
-  r = mix(r, vec3(0.92, 0.26, 0.90), smoothstep(0.84, 0.97, x));
+uniform vec4 uW30C; // start hand-over a..b (camera distance from the approved viewpoint), pink side starts at |l|/Wc, rainbow strip max
+// display-space colour across the slide, x = |lateral| / Wc remapped so that 0.5 = where the pink side starts (w30e), 1 = the foam.
+// Measured on the storyboard panels (panel 3 rows under Benny) and the approved picture: azure core (5,150,240) lit by bright cyan
+// glows (100,225,252) -> blue-violet -> saturated magenta (245,65,235) -> hot pink (252,150,252) -> lavender pink at the bank.
+// k = how much of the iridescent RAINBOW strip shows between the cyan and the pink (the approved right-hand band measured across
+// it: cyan, mint, yellow, peach, pink, magenta); it comes and goes along the river, independently on each side
+vec3 w30Lat(float x, float k, float lit) {
+  vec3 c = mix(vec3(0.02, 0.56, 0.93), vec3(0.16, 0.86, 1.0), lit);   // core: deep azure .. bright cyan (volume)
+  c = mix(c, vec3(0.02, 0.50, 0.92), smoothstep(0.30, 0.42, x) * (1.0 - 0.5 * lit));
+  // (pinks set deeper than measured: the bloom of the bright foam lifts them by ~60 levels in green)
+  vec3 p = mix(c, vec3(0.30, 0.30, 0.95), smoothstep(0.40, 0.48, x));
+  p = mix(p, vec3(0.86, 0.07, 0.82), smoothstep(0.46, 0.56, x));
+  p = mix(p, vec3(0.97, 0.26, 0.88), smoothstep(0.64, 0.78, x));
+  p = mix(p, vec3(0.74, 0.34, 0.96), smoothstep(0.86, 0.98, x));
+  vec3 r = mix(c, vec3(0.06, 0.86, 0.99), smoothstep(0.36, 0.42, x));
+  r = mix(r, vec3(0.42, 0.95, 0.66), smoothstep(0.42, 0.47, x));
+  r = mix(r, vec3(0.99, 0.93, 0.48), smoothstep(0.47, 0.52, x));
+  r = mix(r, vec3(1.0, 0.64, 0.52), smoothstep(0.52, 0.57, x));
+  r = mix(r, vec3(0.95, 0.24, 0.84), smoothstep(0.57, 0.63, x));
+  r = mix(r, p, smoothstep(0.63, 0.72, x));
   return mix(p, r, k);
 }
 vec3 w30Water(vec3 old, vec2 ls, float wc, float t, float dAp, float fres) {
   float u = ls.x / wc, sd = u < 0.0 ? -1.0 : 1.0;
-  float sf = ls.y - t * uW30A.x; // anchored to the river, flowing downstream (+s)
-  // soft, broad flow lines (the vein tile read blurred = mip-biased, long along the flow): they bend the colour bands and give the
-  // body light / deep zones (volume) without any thin scratch lines
-  float body = texture2D(uW30T, vec2(ls.x / 1.3 + 0.37, sf / 7.5 + 0.11), 2.5).r;
-  // the colour bands follow the river but meander gently and drift with the flow (flowing curves, not parallel stripes)
-  float mu = 0.09 * sin(ls.y * 0.17 + t * 0.35) + 0.05 * sin(ls.y * 0.43 + 1.1) + 0.10 * (body - 0.15);
-  float x = abs(u + mu * (1.0 - 0.5 * abs(u)));
-  float rk = smoothstep(-0.3, 0.6, sin(ls.y * 0.11 + sd * 2.3) + 0.5 * sin(ls.y * 0.29 + 0.7)) * clamp(uW30A.z, 0.0, 1.0);
-  float ew = mix(1.0, (x - uW30C.z) / max(uW30C.w - uW30C.z, 1e-3), step(0.0, uW30C.w)); // band placement (w30e)
-  vec3 col = w30Lat(clamp(uW30C.z + ew * (1.0 - uW30C.z) * step(uW30C.z, x) + x * step(x, uW30C.z) - uW30C.z * step(uW30C.z, x) * 0.0, 0.0, 1.0), rk);
-  col *= 0.86 + 0.32 * smoothstep(0.02, 0.4, body);
+  float sf = ls.y - t * uW30A.x; // anchored to the river, flowing downstream (+s): every pattern below streams with the water
+  // soft, broad light / deep zones (the vein tile read heavily blurred, mip-biased): volume without any thin scratch lines
+  float body = texture2D(uW30T, vec2(ls.x / 1.6 + 0.37, sf / 4.5 + 0.11), 3.0).r;
+  float body2 = texture2D(uW30T, vec2(ls.x / 2.3 + 0.71, sf / 6.0 + 0.53), 3.5).g;
+  float lit = smoothstep(0.08, 0.42, body * 0.8 + body2 * 0.6);
+  // the colour bands follow the river but meander and swirl with the flow (flowing curves, not parallel stripes)
+  float mu = 0.11 * sin(sf * 0.23 + sd * 0.9) + 0.06 * sin(sf * 0.61 + 1.1) + 0.12 * (body - 0.15);
+  float x0 = clamp(abs(u) + sd * mu * (1.0 - abs(u)) * 1.4, 0.0, 1.0);
+  float pe = clamp(uW30C.z, 0.2, 0.8);
+  float x = x0 < pe ? 0.5 * x0 / pe : 0.5 + 0.5 * (x0 - pe) / (1.0 - pe);
+  float rk = smoothstep(0.35, 1.0, sin(sf * 0.13 + sd * 2.3) + 0.6 * sin(sf * 0.37 + 0.7 + sd)) * clamp(uW30A.z, 0.0, 1.0) * uW30C.w;
+  vec3 col = w30Lat(x, rk, lit);
+  float pinkS = smoothstep(0.46, 0.60, x);
   // volume: brighter crown, slightly deeper just inside the banks
-  col += vec3(0.10, 0.10, 0.06) * (1.0 - smoothstep(0.0, 0.35, x));
-  col *= 1.0 - 0.10 * smoothstep(0.86, 1.0, x);
+  col += vec3(0.06, 0.08, 0.04) * (1.0 - smoothstep(0.0, 0.30, x));
+  col *= 1.0 - 0.10 * smoothstep(0.88, 1.0, x);
+  // silky light lines on the pink sides (the painting's curved pink-white flow lines): soft, curving with the water, broken up
+  float wv = x0 + 0.05 * sin(sf * 0.47 + sd * 1.7) + 0.035 * sin(sf * 1.13 + 0.4) + 0.05 * body2;
+  float silk = smoothstep(0.45, 1.0, sin(wv * 34.0)) * (0.35 + 0.65 * smoothstep(0.05, 0.45, body + 0.5 * body2)) * pinkS * (1.0 - 0.6 * rk);
+  col = mix(col, vec3(1.0, 0.70, 0.98), silk * 0.8);
   // electric veins: crisp sparse white lightning (R) + branching crackle net (G) from two reads at different scale / speed,
-  // flickering like current; a soft glow round them; white-cyan on the water, pink-white on the pink bands
+  // flickering like current; a soft cyan glow round them; white-cyan on the water, pink-white on the pink sides
   vec2 q1 = vec2(ls.x / uW30B.x, sf / uW30B.y);
   vec2 q2 = vec2(ls.x / (uW30B.x * 0.62) + 0.31 + 0.04 * sin(sf * 0.35), (ls.y - t * uW30A.x * 1.4) / (uW30B.y * 0.68) + 0.57);
   vec3 a = texture2D(uW30T, q1).rgb;
@@ -75,14 +82,13 @@ vec3 w30Water(vec3 old, vec2 ls, float wc, float t, float dAp, float fres) {
   float fl = 0.72 + 0.28 * sin(t * 5.3 + sf * 1.7 + ls.x * 0.9);
   float glow = smoothstep(0.10, 0.55, max(a.r * fl, b.g)) * uW30A.y;
   float vein = clamp(max(smoothstep(0.60, 0.92, a.r * fl), 0.85 * smoothstep(0.50, 0.88, b.g)) * uW30A.y, 0.0, 1.0);
-  float pinkS = smoothstep(0.55, 0.75, x) * (1.0 - rk * 0.5);
-  vec3 vc = mix(vec3(0.84, 1.0, 1.0), vec3(1.0, 0.80, 0.98), pinkS);
-  col = mix(col, mix(col, vec3(0.30, 0.92, 1.0), 1.0 - pinkS) + vec3(0.12) * pinkS, glow * 0.45);
-  col = mix(col, vc, vein);
+  vec3 vc = mix(vec3(0.86, 1.0, 1.0), vec3(1.0, 0.84, 0.99), pinkS);
+  col = mix(col, vec3(0.32, 0.92, 1.0), glow * 0.45 * (1.0 - pinkS));
+  col = mix(col, vc, vein * (1.0 - 0.45 * pinkS));
   // reflective highlights: soft white sheen patches drifting with the flow + the grazing-angle reflection far ahead
   float sh = sin(sf * 0.31 + u * 2.2 + 0.7) * sin(sf * 0.13 - u * 1.1 + 0.4);
-  col += vec3(0.85, 0.95, 1.0) * 0.22 * pow(max(sh, 0.0), 3.0) * (0.5 + body);
-  col += fres * 0.18 * vec3(0.9, 0.88, 1.0);
+  col += vec3(0.85, 0.95, 1.0) * 0.20 * pow(max(sh, 0.0), 3.0) * (0.5 + body);
+  col += fres * 0.16 * vec3(0.9, 0.88, 1.0);
   // star glints twinkling on the veins
   float gl = max(a.b, b.b * 0.8) * (0.35 + 0.65 * pow(0.5 + 0.5 * sin(t * 8.0 + ls.x * 6.1 + sf * 2.3), 3.0));
   col += vec3(0.85, 0.97, 1.0) * gl * uW30A.w;
@@ -112,7 +118,7 @@ export async function setupW30(mat: THREE.ShaderMaterial, qs: URLSearchParams | 
   const t = await new THREE.TextureLoader().loadAsync(new URL('../../assets/textures/match06/tile_w30veins.png', import.meta.url).href);
   t.colorSpace = THREE.NoColorSpace; t.wrapS = t.wrapT = THREE.RepeatWrapping; t.anisotropy = 8;
   t.minFilter = THREE.LinearMipmapLinearFilter;
-  const [ta, tb] = pair(qs, 'w30t', [2.2, 3.8]), [sa, sb] = pair(qs, 'w30st', [0.02, 0.6]), [ea, eb] = pair(qs, 'w30e', [0.36, 1.0]);
+  const [ta, tb] = pair(qs, 'w30t', [2.2, 3.8]), [sa, sb] = pair(qs, 'w30st', [0.02, 0.6]), ea = num(qs, 'w30e', 0.62), eb = num(qs, 'w30rk', 0.7);
   Object.assign(mat.uniforms, {
     uW30T: { value: t },
     uW30A: { value: new THREE.Vector4(num(qs, 'w30f', 2.2), num(qs, 'w30v', 1), num(qs, 'w30rb', 1), num(qs, 'w30sp', 1)) },
@@ -121,6 +127,6 @@ export async function setupW30(mat: THREE.ShaderMaterial, qs: URLSearchParams | 
   });
   mat.defines = { ...(mat.defines ?? {}), W30: '' };
   mat.needsUpdate = true;
-  console.info('[match06] w30 rainbow water', { tile: [ta, tb], start: [sa, sb], band: [ea, eb] });
+  console.info('[match06] w30 rainbow water', { tile: [ta, tb], start: [sa, sb], pink: ea, rainbow: eb });
   return true;
 }

@@ -466,3 +466,143 @@ The third shader iteration was written but never rendered. Let me look at the ta
 
 > 🔧 **Bash** `{"command": "until [ $(ls /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/n3/*.png 2>/dev/null | wc -l) -ge 6 ]; do sleep 3; done; sleep 2; tail -3 /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/n3.log", "description": "Wait until all six NEW stills exist", "timeout": 400000}`
 
+### 🧑 User — 2026-11-20T22:31:21.808Z
+
+> ↩︎ result: 06 d_266 s 266.01 lat 0 stage 06 coins 1750
+> 06 e_310 s 310.01 lat 0 stage 06 coins 1770
+> 06 f_387 s 387.01 lat 0 stage 06 coins 1800
+
+### 🤖 Claude — 2026-11-20T22:31:27.310Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad && cat > mont.py <<'EOF'\nimport sys\nfrom PIL import Image\nd=sys.argv[1]; out=sys.argv[2]; fs=sys.argv[3:] or ['b_214.png','c_238.png','d_266.png','e_310.png','f_387.png']\nims=[Image.open(d+'/'+f).convert('RGB').resize((346,614)) for f in fs]\nW=Image.new('RGB',(346*len(ims),614)); [W.paste(im,(346*i,0)) for i,im in enumerate(ims)]; W.save(out)\nEOF\npython3 -I mont.py n3 n3.png; python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\na=np.asarray(Image.open('/home/user/rainbow-/qa/match/0 …[+307 chars]`
+
+### 🧑 User — 2026-11-20T22:31:28.130Z
+
+> ↩︎ result: start changed px frac 0.0 over 8 levels 0.0
+
+### 🤖 Claude — 2026-11-20T22:31:30.822Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/n3.png"}`
+
+### 🧑 User — 2026-11-20T22:31:30.877Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T22:31:41.356Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad && python3 -I -c \"\nfrom PIL import Image\nsb=Image.open('/home/user/rainbow-/docs/briefs/2026-11-20-r30/USER_S06_STORYBOARD_R30.png').convert('RGB')\np=sb.crop((16,790,506,1398)).resize((864,1072),Image.LANCZOS)\nn=Image.open('n3/d_266.png').convert('RGB').resize((864,1536))\nW=Image.new('RGB',(864*2,800)); W.paste(p.crop((0,272,864,1072)),(0,0)); W.paste(n.crop((0,736,864,1536)),(864,0)); W.resize((1296,600)).save('cmp3.png')\n\"", "description": "Side-by-side panel 3 vs NEW 266 lower half"}`
+
+### 🧑 User — 2026-11-20T22:31:41.872Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T22:31:44.620Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/cmp3.png"}`
+
+### 🧑 User — 2026-11-20T22:31:44.660Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T22:32:01.757Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad && python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\nsb=Image.open('/home/user/rainbow-/docs/briefs/2026-11-20-r30/USER_S06_STORYBOARD_R30.png').convert('RGB')\np=np.asarray(sb.crop((16,790,506,1398))).astype(float)\nfor y in (560,600):\n  row=p[y-4:y+4].mean(0); print('panel3 row',y)\n  print(' '.join('%3d,%3d,%3d'%tuple(row[x:x+20].mean(0)) for x in range(0,490,20)))\nn=np.asarray(Image.open('n3/d_266.png').convert('RGB')).astype(float)\nfor y in (1350,1480):\n  row=n[y-6:y+6].mean(0) …[+171 chars]`
+
+### 🧑 User — 2026-11-20T22:32:02.155Z
+
+> ↩︎ result: panel3 row 560
+>  32,135,247 138,157,252 191,144,252 192,114,252 203,127,251 212,163,253 100,166,250  99,186,249   4,147,242  10,117,206  51,122,197  62,125,196  91,149,211  65,133,206  20,122,210   3,122,220  13,162,246  99,226,252  13,182,251   6,150,250  10,142,236  58,140,230 192,211,252 216,210,252 197,200,251
+> panel3 row 600
+> 185, 60,242 242, 63,231 248, 66,237 252,154,253 249, 79,231 208, 89,228 108,131,247  49,184,252   6,174,248   0,135,229   6,170,246   1,174,251   1,139,235   0,132,228  12,176,248   1,154,248   0,129,232   1,121,225   7,153,248   2,132,248  50,148,250   2,121,229  50,133,228 108,152,250 151,166,250
+> new row 1350
+> 211,218,164 143,240,227 101,217,230  44,185,233  49,170,237  41,183,237  97,241,241  12,187,239   8,150,224   4,156,235   8,175,242  15,202,249  33,234,249  45,204,248  87,184,248  71,131,245 220,166, 55 241,165, 17 240,162, 17 245,157, 19 246,160, 60 113,214,208 143,217,200 208,209,156
+> new row 1480
+>  85,221,222  25,208,237  14,161,219   9,131,215 177,184,167 201,222,171 159,233,202 122,225,208  90,229,237  71,208,235  64,177,232  63,193,246  70,188,243  92,189,232 249,149, 35 252,170, 34 236,139,  0 241,166, 44 233,156, 24 244,155,  1 238,140,  1 251, …[+31 chars]
+
+### 🤖 Claude — 2026-11-20T22:33:05.986Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/water06 && python3 -I - <<'EOF'\np='src/world/m06water30.ts'\ns=open(p).read()\na=s.index('// display-space colour across the slide')\nb=s.index('#endif\\n`;')\nnew='''// display-space colour across the slide, x = |lateral| / Wc remapped so that 0.5 = where the pink side starts (w30e), 1 = the foam.\n// Measured on the storyboard panels (panel 3 rows under Benny) and the approved picture: azure core (5,150,240) lit by bright cyan\n// glows (100,225,252) -> blue-violet -> saturated magenta (245,65,235) -> hot pink (252,150,252) -> lavender pink at the bank.\n// k = …[+6570 chars]`
+
+### 🧑 User — 2026-11-20T22:33:10.105Z
+
+> ↩︎ result: 21: * `w30old` share of the old painted streak strip kept (0) · `w30st=a,b` start hand-over (0.02,0.6) · `w30e` the pink side starts at
+> 22: * |l|/Wc (0.52) · `w30rk` how strongly the rainbow strip between cyan and pink shows where it appears (0.7)
+> 33:// display-space colour across the slide, x = |lateral| / Wc remapped so that 0.5 = where the pink side starts (w30e), 1 = the foam.
+> 120:  const [ta, tb] = pair(qs, 'w30t', [2.2, 3.8]), [sa, sb] = pair(qs, 'w30st', [0.02, 0.6]), ea = num(qs, 'w30e', 0.52), eb = num(qs, 'w30rk', 0.7);
+> TSC_OK
+
+### 🤖 Claude — 2026-11-20T22:33:18.716Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/water06 && Q=\"$(cat /home/user/rainbow-/qa/match/06/r30/QUERY_NEW_v2.txt)&w30=1\" && O=/tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/n4 && AUDIT_PIN=12000 AUDIT_W=864 AUDIT_H=1536 AUDIT_PORT=5332 AUDIT_SHOTS='[[\"b_214\",214.86,null],[\"c_238\",238,null],[\"d_266\",266,null],[\"e_310\",310,null],[\"f_387\",387,null]]' timeout 900 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/match06/r30_shots.mjs $O 06 \"$Q\" 2>&1 | grep -iv \"^06 \" | tail -5; cd /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10 …[+136 chars]`
+
+### 🧑 User — 2026-11-20T22:33:54.809Z
+
+> ↩︎ result: b_214.png
+> c_238.png
+> d_266.png
+> e_310.png
+> f_387.png
+> shots.json
+
+### 🤖 Claude — 2026-11-20T22:33:57.494Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/n4.png"}`
+
+### 🧑 User — 2026-11-20T22:33:57.542Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T22:34:04.499Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad && python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\nsb=Image.open('/home/user/rainbow-/docs/briefs/2026-11-20-r30/USER_S06_STORYBOARD_R30.png').convert('RGB')\np=sb.crop((16,790,506,1398)).resize((864,1072),Image.LANCZOS)\nn=Image.open('n4/d_266.png').convert('RGB')\nW=Image.new('RGB',(864*2,900)); W.paste(p.crop((0,172,864,1072)),(0,0)); W.paste(n.crop((0,636,864,1536)),(864,0)); W.resize((1296,675)).save('cmp4.png')\na=np.asarray(n).astype(float)\nfor y in (900,1100,1350):\n  row=a[y …[+195 chars]`
+
+### 🧑 User — 2026-11-20T22:34:05.050Z
+
+> ↩︎ result: new row 900
+> 219,147,233 237,235,253 241,238,252 221,217,251 152,179,244 166,149,238 246,127,249 255,126,249 248,121,238 253,214,228 255,221,233 254,221,238 245,208,241 226,179,244 196,132,246 117,150,247  71,137,250 238, 82,245 252, 98,247 255,117,247 220,156,248 201,201,250 221,220,251 239,236,253
+> new row 1100
+> 144,152,238 213,125,243 254,121,245 253,129,245 252,112,244 248, 95,208 255, 87,167 255,104,150 255,112,162 255,117,173 255,107,173 255,103,177 255, 93,177 255, 94,180 255, 97,184 255, 91,184 255, 88,184 253, 61,164 188,137,198 227,179,177 253,114,224 252,112,241 254,114,243 204,132,243
+> new row 1350
+> 240,108,239 241,103,244 153,157,250  69,164,249  49,163,243  18,175,244  79,236,249   2,182,242   3,148,228   4,155,236   8,176,244  15,201,249  33,234,250  45,204,249  86,182,248  68,130,246 219,166, 56 241,165, 17 240,162, 17 245,157, 19 250,160, 58 226,172,162 245,148,212 248, 96,230
+
+### 🤖 Claude — 2026-11-20T22:34:08.203Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/cmp4.png"}`
+
+### 🧑 User — 2026-11-20T22:34:08.240Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T22:34:32.395Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/water06 && python3 -I - <<'EOF'\np='src/world/m06water30.ts'\ns=open(p).read()\nrep=[\n(\"  vec3 p = mix(c, vec3(0.42, 0.46, 0.98), smoothstep(0.40, 0.48, x));\\n  p = mix(p, vec3(0.94, 0.25, 0.91), smoothstep(0.46, 0.56, x));\\n  p = mix(p, vec3(0.99, 0.42, 0.93), smoothstep(0.62, 0.76, x));\\n  p = mix(p, vec3(0.86, 0.50, 0.98), smoothstep(0.84, 0.97, x));\",\n \"  // (pinks set deeper than measured: the bloom of the bright foam lifts them by ~60 levels in green)\\n  vec3 p = mix(c, vec3(0.30, 0.30, 0.95), smoothstep(0.40, 0.48, x));\\n  p = mix(p, vec3(0.86, 0. …[+1759 chars]`
+
+### 🧑 User — 2026-11-20T22:35:38.271Z
+
+> ↩︎ result: TSC_OK
+> 6
+
+### 🤖 Claude — 2026-11-20T22:35:43.681Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/n5.png"}`
+
+### 🧑 User — 2026-11-20T22:35:43.728Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T22:35:50.433Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad && python3 -I -c \"\nfrom PIL import Image\nn=Image.open('n5/c_238.png').convert('RGB')\nn.crop((0,500,864,1300)).save('z5.png')\n\"", "description": "Crop NEW 238 mid region at full resolution"}`
+
+### 🧑 User — 2026-11-20T22:35:50.730Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T22:35:53.609Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/z5.png"}`
+
+### 🧑 User — 2026-11-20T22:35:53.661Z
+
+> ↩︎ result: [image]
+

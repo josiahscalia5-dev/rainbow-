@@ -1313,3 +1313,319 @@ The three specialists are running. Meanwhile I'm on the scenery: first reading t
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-20T22:31:34.236Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && git diff src/game/cameraRig.ts | head -120", "description": "Read the Screen 06 camera rig changes"}`
+
+### 🧑 User — 2026-11-20T22:31:34.291Z
+
+> ↩︎ result: diff --git a/src/game/cameraRig.ts b/src/game/cameraRig.ts
+> index 2a2b9eb..1763055 100644
+> --- a/src/game/cameraRig.ts
+> +++ b/src/game/cameraRig.ts
+> @@ -20,6 +20,23 @@ const M06_LA = (() => {
+>   *  is held while Benny swims and eases toward the m06cam route view only as visibility needs it. Tunables (QA):
+>   *  `&m06vw=a,b` hold → hand-over (u past the checkpoint, default 20,38), `&m06vx=` max route x (NDC, default 0.85) */
+>  const M06_VIEW = M06_CAM && flag05('m06view');
+> +/** r30 `&m06hold=1` (lead, with m06view; user r30 "look exactly like my approved screen ... while he swims", docs/briefs/2026-11-20-r30):
+> + *  the approved framing (camera distance / height / downward angle behind Benny, so his size and place in the frame) is kept through
+> + *  the WHOLE of 06; it only turns with the river (yaw of the chord toward the river ahead, relative to the checkpoint) and tilts by
+> + *  `&m06holdp=` x the chord's pitch change (default 0.6); eased into the m06cam view over the last 16 u before 07 (07 join unchanged). */
+> +const M06_HOLD = M06_VIEW && flag05('m06hold');
+> +/** r30 `&m06camk=` (default 1 = off): the route view's approved offset (m06cam) shortened by this factor past the hold (eased in o …[+5744 chars]
+
+### 🤖 Claude — 2026-11-20T22:31:34.551Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"m06view\\|m06vw\\|M06V\\|approvedOff\\|m06la\\|m06cam\\b\\|m06cam=\" src/game/cameraRig.ts src/game/Game.ts | head -40", "description": "Find Screen 06 camera view controls"}`
+
+### 🧑 User — 2026-11-20T22:31:34.620Z
+
+> ↩︎ result: src/game/cameraRig.ts:13:/** r7 `?match06=1&m06cam=1` only: Screen 06 camera frame = chord toward the river this far ahead (`&m06la=`, default 40) */
+> src/game/cameraRig.ts:14:const M06_CAM = flag05('m06cam');
+> src/game/cameraRig.ts:16:  const v = typeof location !== 'undefined' ? Number(new URLSearchParams(location.search).get('m06la')) : NaN;
+> src/game/cameraRig.ts:19:/** r21 `&m06view=1` (with m06cam; qa/match/06/r21/PROGRESS.md): composition test — the approved view direction / off-centre aim
+> src/game/cameraRig.ts:20: *  is held while Benny swims and eases toward the m06cam route view only as visibility needs it. Tunables (QA):
+> src/game/cameraRig.ts:21: *  `&m06vw=a,b` hold → hand-over (u past the checkpoint, default 20,38), `&m06vx=` max route x (NDC, default 0.85) */
+> src/game/cameraRig.ts:22:const M06_VIEW = M06_CAM && flag05('m06view');
+> src/game/cameraRig.ts:23:/** r30 `&m06hold=1` (lead, with m06view; user r30 "look exactly like my approved screen ... while he swims", docs/briefs/2026-11-20-r30):
+> src/game/cameraRig.ts:26: *  `&m06holdp=` x the chord's pitch change (default 0.6); eased into the m06cam view over the last 16 u before 07 (07 join unchanged). */
+> src/game/cameraRig. …[+979 chars]
+
+### 🤖 Claude — 2026-11-20T22:32:13.087Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"flag05('m07\\|get('m07\\|M07_\\b\\|m07wall\\|m07tube\\|m07pur\" src/world/environment.ts | head -30; grep -n \"function withFarGlow\" -A30 src/world/*.ts src/vfx/*.ts 2>/dev/null | head -45", "description": "Find Screen 07 tube material switches and far glow code"}`
+
+### 🧑 User — 2026-11-20T22:32:13.134Z
+
+> ↩︎ result: src/world/materials.ts:109:export function withFarGlow<T extends THREE.MeshStandardMaterial>(mat: T, g: FarGlow, key: string, virtualDepth = false): T {
+> src/world/materials.ts-110-  const uniforms = farGlowUniforms(g);
+> src/world/materials.ts-111-  const prev = mat.onBeforeCompile;
+> src/world/materials.ts-112-  if (virtualDepth) mat.defines = { ...(mat.defines ?? {}), FG_VIRTUAL: '' };
+> src/world/materials.ts-113-  mat.onBeforeCompile = (shader, r) => {
+> src/world/materials.ts-114-    prev.call(mat, shader, r);
+> src/world/materials.ts-115-    Object.assign(shader.uniforms, uniforms);
+> src/world/materials.ts-116-    if (virtualDepth) {
+> src/world/materials.ts-117-      shader.vertexShader = shader.vertexShader
+> src/world/materials.ts-118-        .replace('#include <common>', '#include <common>\n' + FG_VIRTUAL_VERT_PARS)
+> src/world/materials.ts-119-        .replace('#include <project_vertex>', '#include <project_vertex>\n' + FG_VIRTUAL_VERT);
+> src/world/materials.ts-120-    }
+> src/world/materials.ts-121-    shader.fragmentShader = shader.fragmentShader
+> src/world/materials.ts-122-      .replace('#include <common>', '#include <common>\n' + FAR_GLOW_PARS)
+> src/world/materials.ts-123-      .replace( …[+1212 chars]
+
+### 🤖 Claude — 2026-11-20T22:32:17.367Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 60,108p src/world/materials.ts; grep -rn \"K23\\|m07fsoft\" qa/match/07/r24/QUERY_08_latest_K23-3.txt | head -2; cat /home/user/rainbow-/qa/match/07/r24/QUERY_08_latest_K23-3.txt | head -c 1500", "description": "Read far-glow uniforms and the 07 K23-3 query"}`
+
+### 🧑 User — 2026-11-20T22:32:17.429Z
+
+> ↩︎ result: virtualDepth?: boolean;
+>   /**
+>    * paint a far stream on the tunnel floor (forced-perspective section only): band centred on the
+>    * bottom (uv.x = 0.5), half width in uv.x, visible beyond `from` virtual units
+>    */
+>   river?: { halfWidth: number; from: number; core: THREE.ColorRepresentation; band: THREE.ColorRepresentation; foam: THREE.ColorRepresentation };
+> }
+> 
+> export interface FarGlow {
+>   color: THREE.ColorRepresentation; near: number; far: number; strength: number;
+>   /** optional mid-distance tint of the metal colour (refs: walls turn violet deeper in the tunnel) */
+>   mid?: { color: THREE.ColorRepresentation; near: number; far: number; amount: number };
+> }
+> 
+> /** GLSL for the distance glow, shared by the tube wall, rings and lids. With FG_VIRTUAL the distance is the
+>  *  forced-perspective (virtual) depth: real view distance + the per-vertex/per-instance `fgExtra`. */
+> const FAR_GLOW_PARS = `uniform vec3 uFarGlowColor; uniform vec3 uFarGlowRange; uniform vec3 uMidTint; uniform vec3 uMidRange;
+> #ifdef FG_VIRTUAL
+> varying float vFgExtra;
+> float fgDist(){ return length(vViewPosition) + vFgExtra; }
+> #else
+> float fgDist(){ return length(vViewPosition); }
+> #endif
+> float farGlowK(){ float k = smo …[+1883 chars]
+
+### 🤖 Claude — 2026-11-20T22:32:32.547Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && Q=$(cat /home/user/rainbow-/qa/match/06/r30/QUERY_NEW_v2.txt) && DIAG_S='[360,392,398,412,432]' AUDIT_PORT=5362 timeout 600 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/match06/r30b_diag.mjs /home/user/rainbow-/qa/match/06/r30b/diag07 \"$Q\" 2>&1 | grep -E \"^s |hits\" | cut -c1-400; cd /home/user/rainbow-/qa/match/06/r30b/diag07 && python3 -I -c \"\nfrom PIL import Image\nss=(360,392,398,412,432); ims=[Image.open(f's{s}.png') for s in ss]\nW,H=ims[0].size; sh=Image.new('RGB',(W*5+40,H),(20,14,30))\nfor i,im in enumerate(ims): sh.paste(im …[+109 chars]`
+
+### 🧑 User — 2026-11-20T22:33:08.332Z
+
+> ↩︎ result: s 360 {"mode":"ride","stage":"06","s":360.06,"lat":0,"coins":1790,"hearts":5,"paused":false,"bennyY":-65.047,"bennyVisible":true,"cam":[20.61,-61.81,-283.23]} cam [20.605604458404216,-61.80934155499761,-283.2302244336003]
+>   hits {"Mesh<tube07<zone_tubes<washer_world<Scene":29,"m06_tube<match06_projection<Scene":2,"foam_berm<foam_banks<water_system<Scene":3,"m06_rings<match06_projection<Scene":2,"Mesh<foam_banks<water_system<Scene":4,"m06_floor<match06_projection<Scene":16,"fur_pom<pom<hat<body<benny_root":2,"hat_crown<hat<body<benny_root<AuxScene":2}
+> s 392 {"mode":"ride","stage":"06","s":392.147,"lat":0,"coins":1810,"hearts":5,"paused":false,"bennyY":-68.561,"bennyVisible":true,"cam":[24.38,-65.55,-312.55]} cam [24.380215671692334,-65.54704417261406,-312.5450503037869]
+>   hits {"Mesh<tube07<zone_tubes<washer_world<Scene":48,"Mesh<foam_banks<water_system<Scene":3,"foam_berm<foam_banks<water_system<Scene":5,"m06_floor<match06_projection<Scene":2,"Mesh<coins<Scene":1,"fur_pom<pom<hat<body<benny_root":1}
+> s 398 {"mode":"ride","stage":"07","s":398.011,"lat":0,"coins":1810,"hearts":5,"paused":false,"bennyY":-69.076,"bennyVisible":true,"cam":[25.53,-65.45,-317.69]} cam [25.532543940786283,- …[+1024 chars]
+
+### 🤖 Claude — 2026-11-20T22:33:10.472Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r30b/diag07/sheet.png"}`
+
+### 🧑 User — 2026-11-20T22:33:10.906Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-20T22:33:10.902Z
+
+[Image: original 2200x768, displayed at 2000x698. Multiply coordinates by 1.10 to map to original image.]
+
+### 🤖 Claude — 2026-11-20T22:33:26.016Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && grep -rl \"m07fsoft\" docs/briefs qa/match/07 2>/dev/null | head -5; grep -rho \"[a-z0-9_&=,.]*m07fsoft=1[a-z0-9_&=,.]*\" docs/briefs qa/match/07 2>/dev/null | sort | uniq -c | sort -rn | head -3 | cut -c1-1500", "description": "Find the full Screen 07 candidate query"}`
+
+### 🧑 User — 2026-11-20T22:33:26.563Z
+
+> ↩︎ result: docs/briefs/2026-11-20-r28/COORDINATION.md
+> docs/briefs/2026-11-20-r28/LAUNCH_R28.md
+> docs/briefs/2026-11-20-r29/COORDINATION.md
+> docs/briefs/2026-11-20-r29/LAUNCH_R29.md
+> qa/match/07/r24/PROGRESS.md
+>       5 &m07fsoft=1
+>       2 m07fsoft=1
+>       1 match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1&m07foam=1&m07coinsz=1&m07nearw=1&m07foamb=1&m07band=1&m07end=1&m07cloud=1&m07satin=1&m07sbend=1&m07swing=1&match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1&m08ceil=1&m08near=1&m08cup=1&m08rw=1&m08drum=1&m08ring=1&m08cupg=1&m08bore=1&m08flange=1&m08cupw=1&m08nq=1&m08sr=1&m08vh=1&m08gl=1&m08coinsz=1&m08towelm=1&m08towelv=1&m07look=1&m07join=1&m07fsoft=1
+
+### 🤖 Claude — 2026-11-20T22:33:32.449Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && ls src/world/ | grep -i \"07\\|match\"; grep -n \"m07wall\\|m07tube\" src/world/*.ts | head -8", "description": "Check Screen 07 candidate code in the s06 worktree"}`
+
+### 🧑 User — 2026-11-20T22:33:32.490Z
+
+> ↩︎ result: match06.ts
+> match08.ts
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T22:33:53.325Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r30b/align && python3 -I -c \"\nfrom PIL import Image\nSB=Image.open('/home/user/rainbow-/docs/briefs/2026-11-20-r30/USER_S06_STORYBOARD_R30.png').convert('RGB')\ncrops=[(520,100,1010,330),(16,790,330,1000),(700,790,1010,1000)]\nims=[SB.crop(c) for c in crops]\nims=[im.resize((im.width*2,im.height*2),Image.LANCZOS) for im in ims]\nW=max(i.width for i in ims); H=sum(i.height for i in ims)+20\no=Image.new('RGB',(W,H)); y=0\nfor im in ims: o.paste(im,(0,y)); y+=im.height+10\no.save('storyboard_wall_band_zoom.png'); print(o.size)\"", "description": " …[+43 chars]`
+
+### 🧑 User — 2026-11-20T22:33:53.765Z
+
+> ↩︎ result: (980, 1320)
+
+### 🤖 Claude — 2026-11-20T22:33:57.028Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r30b/align/storyboard_wall_band_zoom.png"}`
+
+### 🧑 User — 2026-11-20T22:33:57.083Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T22:34:22.023Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"const FRAG\\|const VERT\\|void main\\|vec3 nn = normalize(vN)\\|uRing > 0.5\\|uRing < 0.5\\|texture2D(uRingTex\\|gl_FragColor\\|float away\\|uAway\\|pc = \\|vec3 pc\\|uHaze\" src/world/match06.ts | head -50", "description": "Locate key parts of the Screen 06 shader"}`
+
+### 🧑 User — 2026-11-20T22:34:22.074Z
+
+> ↩︎ result: 53:const VERT = /* glsl */ `
+> 62:void main() {
+> 72:const FRAG = /* glsl */ `
+> 104:// panel columns (x 0.18..0.88, mirrored) so the walls carry purple metal and the 3D bands carry the gold; uHaze = (near, far, strength, on):
+> 105:// walls + rings fade into the painted deep-tunnel purple uHazeCol with camera distance (the painting shows ~6 rings, then dark purple);
+> 108:uniform vec4 uHaze;
+> 109:uniform vec3 uHazeCol;
+> 169:void main() {
+> 171:  vec3 pc = texture2D(uTile, vTile).rgb;
+> 172:  if (uTSwap > 0.5 && uFloor < 0.5 && uRing < 0.5) {
+> 174:    pc = texture2D(uTile, tc).rgb;
+> 176:  if (uDbgFlat > 0.5 && uFloor < 0.5 && uRing < 0.5) pc = vec3(0.45, 0.22, 0.55);
+> 177:  vec3 nn = normalize(vN);
+> 194:    pc = mix(riv, fo, smoothstep(uR6p.x - 0.3, uR6p.x + 0.15, al));
+> 196:  if (uRing > 0.5) {
+> 216:    pc = mix(g, vec3(1.0, 0.96, 0.84), smoothstep(0.5, 0.15, bd));
+> 226:      vec3 gc = texture2D(uRingTex, vTile).rgb;
+> 228:      pc = mix(pc, gc, gw);
+> 231:  if (uPanel > 0.5 && uFloor < 0.5 && uRing < 0.5) {
+> 254:    pc = mix(pc, pan, 0.85);
+> 256:  if (uHaze.w > 0.5 && uFloor < 0.5) pc = mix(pc, uHazeCol, uHaze.z * smoothstep(uHaze.x, uHaze.y, distance(cameraPosition, vW)));
+> 351:        float away = smoothste …[+943 chars]
+
+### 🤖 Claude — 2026-11-20T22:34:24.807Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/src/world/match06.ts", "offset": 53, "limit": 205}`
+
+### 🧑 User — 2026-11-20T22:34:24.826Z
+
+> ↩︎ result: 53	const VERT = /* glsl */ `
+> 54	uniform mat4 uProjVP;
+> 55	attribute vec2 aTile;
+> 56	attribute vec2 aLS;
+> 57	varying vec4 vProj;
+> 58	varying vec3 vW;
+> 59	varying vec3 vN;
+> 60	varying vec2 vTile;
+> 61	varying vec2 vLS;
+> 62	void main() {
+> 63	  vec4 wp = modelMatrix * vec4(position, 1.0);
+> 64	  vProj = uProjVP * wp;
+> 65	  vW = wp.xyz;
+> 66	  vTile = aTile;
+> 67	  vLS = aLS;
+> 68	  vN = normalize(mat3(modelMatrix) * normal);
+> 69	  gl_Position = projectionMatrix * viewMatrix * wp;
+> 70	}`;
+> 71	
+> 72	const FRAG = /* glsl */ `
+> 73	uniform sampler2D uPlate;
+> 74	uniform sampler2D uDepth;
+> 75	uniform float uUseDepth;
+> 76	uniform vec2 uNearFar;
+> 77	uniform sampler2D uTile;
+> 78	uniform vec3 uProjPos;
+> 79	uniform vec4 uPjPost;
+> 80	uniform vec2 uPjRes;
+> 81	uniform vec3 uDbg;
+> 82	uniform sampler2D uMask;
+> 83	uniform float uFloor;
+> 84	uniform float uUseMask;
+> 85	// r6 (qa/match/06/NOTES.md): uGeo = narrow fitted river (lateral |l| <= Wc water, Wc..Wb foam bank); uR6 = river material
+> 86	// built from the approved painted water, world-anchored and flowing downstream (uR6p = Wc, Wb, river period, foam period)
+> 87	uniform float uGeo;
+> 88	uniform float uR6;
+> 89	uniform vec4 uR6p;
+> 90	uniform float uTime;
+> 91	uniform sampler2D uRiver;
+> 92	uniform …[+10827 chars]
+
+### 🤖 Claude — 2026-11-20T22:35:31.814Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/src/game/cameraRig.ts", "offset": 100, "limit": 230}`
+
+### 🧑 User — 2026-11-20T22:35:31.853Z
+
+> ↩︎ result: 100	  for (const st of course.stages) {
+> 101	    const p = STAGE_CAM[st.id];
+> 102	    if (!p) continue;
+> 103	    const a = THREE.MathUtils.smoothstep(s, st.s0 - blend, st.s0 + blend) * (1 - THREE.MathUtils.smoothstep(s, st.s1 - blend, st.s1 + blend));
+> 104	    if (a <= 0) continue;
+> 105	    for (const k of KEYS) acc[k] += p[k] * a;
+> 106	    w += a;
+> 107	  }
+> 108	  if (w === 0) return { ...(STAGE_CAM['03'] as CamParams) };
+> 109	  for (const k of KEYS) acc[k] /= w;
+> 110	  return acc;
+> 111	}
+> 112	
+> 113	export class RideCamera {
+> 114	  readonly pos = new THREE.Vector3();
+> 115	  readonly target = new THREE.Vector3();
+> 116	  readonly up = new THREE.Vector3(0, 1, 0);
+> 117	  fov = 70;
+> 118	  private init = false;
+> 119	  /** optional straight tunnel axis + the s-range where the camera aligns to it */
+> 120	  axis: { path: TubePath; s0: number; s1: number } | null = null;
+> 121	  /** `?match06=1`: off06 / dir06 in the river's level frame at the 06 checkpoint (computed once) */
+> 122	  private m06: { s0: number; o: number[]; d: number[] } | null = null;
+> 123	  /** r21 m06view: approved vertical angle between Benny and the river 6 u ahead (rad) */
+> 124	  private m06vSep: number | null = null;
+> 125	
+> 126	  constructor(priv …[+15133 chars]
+
+### 🤖 Claude — 2026-11-20T22:35:50.215Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"update(\\|this.pos.lerp\\|this.target.lerp\\|damp\\|1 - Math.exp\" src/game/cameraRig.ts | head -20; grep -n \"fov\\b\\|fov =\" src/game/cameraRig.ts src/game/Game.ts | head -10; grep -n \"off06\\|dir06\" src/game/*.ts src/world/*.ts | grep -v \"p6\\.\\|M\\.o\\|this.m06\" | head -5", "description": "Find camera smoothing and approved 06 camera values"}`
+
+### 🧑 User — 2026-11-20T22:35:50.279Z
+
+> ↩︎ result: 356:      const follow = p5.latFollow * (1 - Math.exp(-(off * off) / (dz * dz)));
+> 368:  update(dt: number, s: number, lat: number, cam: THREE.PerspectiveCamera, snap = false) {
+> 371:    const k = snap || !this.init ? 1 : 1 - Math.exp(-dt * 7);
+> 372:    const kt = snap || !this.init ? 1 : 1 - Math.exp(-dt * 9);
+> 373:    this.pos.lerp(dp, k);
+> 374:    this.target.lerp(dt3, kt);
+> src/game/cameraRig.ts:55:  fov: number;
+> src/game/cameraRig.ts:78:  '03': { back: 6.5, up: 6.5, ahead: 6, lookUp: -1.5, fov: 64, latFollow: 0.3, roll: 0.3 },
+> src/game/cameraRig.ts:79:  '04': { back: 8.5, up: 5.2, ahead: 14, lookUp: -3.0, fov: 66, latFollow: 0.6, roll: 0.4 },
+> src/game/cameraRig.ts:83:  '05': { back: 6.4, up: 3.6, ahead: 18, lookUp: -1.92, fov: 62, latFollow: 0.85, roll: 0, yaw: 2.96, deadZone: 1.0 },
+> src/game/cameraRig.ts:84:  '06': { back: 5.6, up: 2.6, ahead: 12, lookUp: 3.4, fov: 66, latFollow: 0.7, roll: 0.4 },
+> src/game/cameraRig.ts:85:  '07': { back: 6.4, up: 4.1, ahead: 18, lookUp: 1.8, fov: 62, latFollow: 0.6, roll: 0.6 },
+> src/game/cameraRig.ts:86:  '08': { back: 6.2, up: 3.7, ahead: 16, lookUp: 0.2, fov: 62, latFollow: 0.8, roll: 0.3 },
+> src/game/cameraRig.ts:87:  '09': { back: 6.2, up: 3.7,  …[+869 chars]
+
+### 🤖 Claude — 2026-11-20T22:35:53.546Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 364,383p src/game/cameraRig.ts; grep -rn \"off06\\s*[:=]\\|dir06\\s*[:=]\\|STAGE_CAM\\['06'\\]\\s*=\\|fov06\" src --include=*.ts | head -8", "description": "Read camera update and approved 06 camera setup"}`
+
+### 🧑 User — 2026-11-20T22:35:53.640Z
+
+> ↩︎ result: }
+>     return p;
+>   }
+> 
+>   update(dt: number, s: number, lat: number, cam: THREE.PerspectiveCamera, snap = false) {
+>     const dp = new THREE.Vector3(), dt3 = new THREE.Vector3(), du = new THREE.Vector3();
+>     const p = this.desired(s, lat, dp, dt3, du);
+>     const k = snap || !this.init ? 1 : 1 - Math.exp(-dt * 7);
+>     const kt = snap || !this.init ? 1 : 1 - Math.exp(-dt * 9);
+>     this.pos.lerp(dp, k);
+>     this.target.lerp(dt3, kt);
+>     this.up.lerp(du, kt).normalize();
+>     this.fov += (p.fov - this.fov) * (snap || !this.init ? 1 : Math.min(1, dt * 3));
+>     this.init = true;
+>     cam.position.copy(this.pos);
+>     cam.up.copy(this.up);
+>     cam.lookAt(this.target);
+>     if (Math.abs(cam.fov - this.fov) > 0.01) { cam.fov = this.fov; cam.updateProjectionMatrix(); }
+>   }
+> }
+> src/game/match.ts:27:  '06': { fov: 62, roll: 0, off06: [1.1796, 2.6793, 5.6776], dir06: [-0.19129, -0.18969, -0.96303] },
+> Shell cwd was reset to /home/user/rainbow-
+

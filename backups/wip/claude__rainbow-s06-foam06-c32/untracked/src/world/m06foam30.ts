@@ -114,6 +114,72 @@ void main() {
   gl_FragColor = vec4(pjInverse(clamp(col, 0.0, 1.0)), a);
 }`;
 
+// ------------------------------------------------------------------------------------------------ froth strip on the bank
+// the floor's own bank band (lateral WC..WB, tile_foam6 flowing) reads as ribbed lilac walls / bead rows once Benny swims; a
+// soft froth of packed soap bubbles (two sizes, sphere-shaded, glossy dot) is laid just above it, its inner edge irregular and lacy
+// where it meets the water. World-anchored (s, l), AA-faded to the froth's mean colour where the cells get small.
+const STRIP_VERT = /* glsl */ `
+attribute vec2 aSL;
+varying vec2 vSL;
+void main() {
+  vSL = aSL;
+  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+}`;
+const STRIP_FRAG = /* glsl */ `
+uniform vec4 uPjPost;
+uniform vec2 uPjRes;
+uniform vec3 uStrip; // WC, WB, grow
+varying vec2 vSL;
+${PROJ05_INVERSE}
+float h21(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+float vn(float x) { float i = floor(x), f = fract(x); f = f * f * (3.0 - 2.0 * f); return mix(h21(vec2(i, 1.7)), h21(vec2(i + 1.0, 1.7)), f); }
+// nearest jittered bubble of a cell layer: x = distance / radius, yz = offset / radius
+vec3 cells(vec2 p, float salt) {
+  vec2 id = floor(p), f = fract(p);
+  vec3 best = vec3(9.0, 0.0, 0.0);
+  for (int y = -1; y <= 1; y++) for (int x = -1; x <= 1; x++) {
+    vec2 o = vec2(float(x), float(y)), cid = id + o + salt;
+    vec2 c = o + 0.5 + (vec2(h21(cid), h21(cid + 5.7)) - 0.5) * 0.55;
+    float r = 0.34 + 0.24 * h21(cid + 2.3);
+    vec2 d = (f - c) / r;
+    float dd = length(d);
+    if (dd < best.x) best = vec3(dd, d);
+  }
+  return best;
+}
+vec3 shadeBub(vec2 d) {
+  vec3 n = vec3(d, sqrt(max(0.0, 1.0 - dot(d, d))));
+  float lt = dot(n, normalize(vec3(-0.45, 0.6, 0.65)));
+  vec3 c = mix(vec3(0.70, 0.73, 0.97), vec3(0.90, 0.88, 0.995), smoothstep(-0.1, 0.55, lt));
+  c = mix(c, vec3(1.0), smoothstep(0.62, 0.92, lt));
+  c = mix(c, vec3(1.0), smoothstep(0.22, 0.08, length(d - vec2(-0.38, 0.40))));     // glossy window
+  c = mix(c, vec3(0.62, 0.66, 0.95), smoothstep(0.80, 1.0, length(d)) * 0.6);        // thin rim
+  return c;
+}
+void main() {
+  float al = abs(vSL.x);
+  vec2 p = vec2(vSL.y, vSL.x);
+  // inner edge: an irregular lacy line on the water's pink edge
+  float e = al - (uStrip.x - 0.12 + 0.28 * vn(vSL.y * 1.1 + (vSL.x > 0.0 ? 13.0 : 0.0)) + 0.1 * vn(vSL.y * 3.7));
+  vec2 pa = p / 0.30, pb = p / 0.105;
+  vec3 A = cells(pa, 0.0), B = cells(pb, 31.0);
+  float fa = length(fwidth(pa)), fb = length(fwidth(pb));
+  vec3 mean = vec3(0.84, 0.84, 0.985);
+  vec3 col = vec3(0.74, 0.76, 0.975);                                               // shaded gaps
+  float mB = 1.0 - smoothstep(0.88, 1.0, B.x);
+  col = mix(col, shadeBub(B.yz), mB);
+  col = mix(col, mean, smoothstep(0.25, 0.6, fb));
+  float mA = (1.0 - smoothstep(0.90, 1.0, A.x)) * step(0.30, h21(floor(pa) + 9.1));
+  vec3 cA = mix(shadeBub(A.yz), mean, smoothstep(0.25, 0.6, fa));
+  col = mix(col, cA, mA);
+  float a = smoothstep(-0.02, 0.14, e);
+  a = max(a, mB * smoothstep(-0.16, -0.04, e) * (1.0 - smoothstep(0.25, 0.6, fb)));  // lace: single bubbles past the edge
+  a *= 1.0 - smoothstep(uStrip.y - 0.05, uStrip.y + 0.15, al);
+  a *= uStrip.z;
+  if (a < 0.01) discard;
+  gl_FragColor = vec4(pjInverse(clamp(col, 0.0, 1.0)), a);
+}`;
+
 // ------------------------------------------------------------------------------------------------ floating bubbles
 const BUB_VERT = /* glsl */ `
 attribute vec4 aP;  // centre (world) + radius (already capped / faded on the CPU)
@@ -192,10 +258,10 @@ void main() {
   float side = abs(cos(th));                       // 1 at his left / right, 0 ahead / behind
   float R0 = uRing.x, w = uRing.y * (0.75 + 0.6 * side);
   float u = (rho - R0) / w;                        // 0 at the body .. 1 at the band's outer edge
-  if (u < -0.15 || u > 1.6) discard;
+  if (u < -0.15 || rho > R0 * 2.1) discard;
   float n1 = vn(vec2(th * 9.0 + uTime * 0.6, rho * 9.0 - uTime * 1.3));
   float n2 = vn(vec2(th * 23.0 - uTime * 0.9, rho * 22.0 + uTime * 0.7));
-  float lace = smoothstep(0.38, 0.55, 0.62 * n1 + 0.38 * n2 + 0.25 * (1.0 - u));   // holes
+  float lace = smoothstep(0.36, 0.52, 0.62 * n1 + 0.38 * n2 + 0.35 * (1.0 - u));   // holes
   float band = smoothstep(-0.15, 0.08, u) * (1.0 - smoothstep(0.55 + 0.35 * n1, 1.0 + 0.25 * n2, u));
   // beads on the outer edge: a ring of small droplets
   float cells = 46.0 + 10.0 * side;
@@ -203,7 +269,14 @@ void main() {
   float cf = fract((th / 6.2832 + 0.5) * cells) - 0.5;
   float bu = 1.05 + 0.35 * h21(vec2(cid, 3.0));
   float bead = (1.0 - smoothstep(0.18, 0.30, length(vec2(cf * 6.2832 * rho / cells * 2.0 / w, (u - bu) * 1.6)))) * step(0.35, h21(vec2(cid, 9.0)));
-  float m = max(band * lace, bead * 0.9);
+  // the painted ripples: two thin broken white-cyan rings outside the crown, drifting outward
+  float rip = 0.0;
+  for (int k = 0; k < 2; k++) {
+    float rk = R0 * (1.42 + 0.36 * float(k)) + 0.06 * fract(uTime * 0.35 + 0.5 * float(k));
+    float lw = 0.022 + 0.012 * side;
+    rip = max(rip, (1.0 - smoothstep(lw * 0.4, lw, abs(rho - rk))) * (0.55 - 0.18 * float(k)) * smoothstep(0.3, 0.6, vn(vec2(th * 7.0 + float(k) * 5.0, 2.0))));
+  }
+  float m = max(max(band * lace, bead * 0.9), rip);
   if (m < 0.02) discard;
   vec3 col = mix(vec3(0.78, 0.93, 1.0), vec3(1.0), smoothstep(0.3, 0.9, n2 + 0.3 * (1.0 - u)));
   gl_FragColor = vec4(pjInverse(col), m * uRing.z);
@@ -247,6 +320,7 @@ export function buildFoam30(course: Course): Foam30 | null {
   // shared post-chain inverse (the match06 default grade; exposure + buffer size follow the renderer)
   const uPjPost = { value: new THREE.Vector4(0.86, 1.36, 1.15, 0.18) }, uPjRes = { value: new THREE.Vector2(864, 1536) };
   const uTime = { value: 0 };
+  const uStrip = { value: new THREE.Vector3(WC, WB, 0) };
   const quad = new THREE.PlaneGeometry(1, 1);
   let seed = 30061; const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
 
@@ -278,7 +352,7 @@ export function buildFoam30(course: Course): Foam30 | null {
           const p = foot.clone().addScaledVector(t1, du).addScaledVector(fr.right, dl).addScaledVector(fr.up, hgt);
           aB.push(p.x, p.y, p.z, rho); aC.push(foot.x, foot.y, foot.z, Rh * 1.3 + Hh * 0.3); aS.push(rnd() * 0.999 + (lobe ? 1 : 0));
         }
-        s += (big ? 1.5 : 1.0) * Rh * 2.0 * (0.75 + 0.5 * rnd()) + (rnd() < 0.2 ? 0.8 + rnd() * 1.4 : 0); // close piles, a few gaps
+        s += (big ? 1.3 : 1.0) * Rh * 1.7 * (0.75 + 0.5 * rnd()) + (rnd() < num('f30bg', 0.12) ? 0.5 + rnd() * 1.0 : 0); // overlapping piles, a few short gaps
       }
     }
     const g = new THREE.InstancedBufferGeometry();
@@ -297,17 +371,48 @@ export function buildFoam30(course: Course): Foam30 | null {
       o.name = rim ? 'f30_bank_rim' : 'f30_bank'; o.frustumCulled = false; o.renderOrder = rim ? 4 : 3;
       group.add(o); bankObjs.push(o);
     }
-    console.info('[f30] bank', { lobes: aS.length });
+    // froth strip over the floor's bank band, both sides (one draw)
+    const sp: number[] = [], ssl: number[] = [], si: number[] = [];
+    const NJ = 8, sA = st.s0 - 1, sB = st.s1 + 3, ds = 0.5;
+    const NS = Math.ceil((sB - sA) / ds) + 1;
+    const frs = { s: 0, pos: new THREE.Vector3(), tan: new THREE.Vector3(), up: new THREE.Vector3(), right: new THREE.Vector3() };
+    for (const side of [-1, 1]) {
+      const base = sp.length / 3;
+      for (let i = 0; i < NS; i++) {
+        const s = sA + i * ds;
+        course.sample(s, frs);
+        for (let j = 0; j <= NJ; j++) {
+          const al = WC - 0.45 + ((WB + 0.2 - (WC - 0.45)) * j) / NJ, t = Math.min(1, Math.max(0, (al - WC + 0.1) / 0.5));
+          const p = frs.pos.clone().addScaledVector(frs.right, side * al).addScaledVector(frs.up, HB * t * t * (3 - 2 * t) + 0.035);
+          sp.push(p.x, p.y, p.z); ssl.push(side * al, s);
+        }
+      }
+      for (let i = 0; i < NS - 1; i++) for (let j = 0; j < NJ; j++) {
+        const a = base + i * (NJ + 1) + j, b = a + 1, c = a + NJ + 1, d = c + 1;
+        si.push(a, c, b, b, c, d);
+      }
+    }
+    const sg = new THREE.BufferGeometry();
+    sg.setAttribute('position', new THREE.Float32BufferAttribute(sp, 3));
+    sg.setAttribute('aSL', new THREE.Float32BufferAttribute(ssl, 2));
+    sg.setIndex(si);
+    const strip = new THREE.Mesh(sg, new THREE.ShaderMaterial({ vertexShader: STRIP_VERT, fragmentShader: STRIP_FRAG, transparent: true, depthWrite: false,
+      fog: false, side: THREE.DoubleSide, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2, uniforms: { uPjPost, uPjRes, uStrip } }));
+    strip.name = 'f30_froth'; strip.frustumCulled = false; strip.renderOrder = 2;
+    strip.visible = qs.get('f30strip') !== '0';
+    group.add(strip);
+    console.info('[f30] bank', { lobes: aS.length, stripVerts: sp.length / 3 });
   }
 
   // ---- floating bubbles (pool, recycled ahead of Benny)
-  interface Bub { s: number; l: number; h: number; r: number; ph: number; seed: number; }
+  // w0 / win: the bubble's window along the river relative to Benny (it drifts downstream inside it and is recycled at the far end)
+  interface Bub { s: number; l: number; h: number; r: number; ph: number; seed: number; w0: number; win: number; }
   const bubs: Bub[] = [];
   let bubMesh: THREE.Mesh | null = null, aP: THREE.InstancedBufferAttribute | null = null, aA: THREE.InstancedBufferAttribute | null = null;
   const WIN0 = -5, WIN = num('f30bw', 46);
   const capR = num('f30bcap', 0.062); // max bubble radius on screen (fraction of the half-height): ~95 px diameter at 1536
   if (BUB) {
-    const nBig = Math.round(num('f30bbn', 30)), nSmall = Math.round(num('f30bsn', 34)), bs = num('f30bbs', 1);
+    const nBig = Math.round(num('f30bbn', 30)), nSmall = Math.round(num('f30bsn', 34)), nNear = Math.round(num('f30bnn', 10)), bs = num('f30bbs', 1);
     for (let i = 0; i < nBig + nSmall; i++) {
       const bigB = i < nBig;
       const side = rnd() < 0.5 ? -1 : 1;
@@ -315,7 +420,12 @@ export function buildFoam30(course: Course): Foam30 | null {
       const l = side * (bigB ? 1.2 + 3.2 * rnd() : 0.8 + 3.8 * rnd());
       const h = bigB ? 0.3 + 3.0 * Math.pow(rnd(), 1.2) : 0.2 + 3.4 * rnd();
       const r = (bigB ? 0.11 + 0.17 * Math.pow(rnd(), 0.8) : 0.03 + 0.045 * rnd()) * bs;
-      bubs.push({ s: rnd() * WIN, l, h, r, ph: rnd() * 6.283, seed: rnd() });
+      bubs.push({ s: rnd() * WIN, l, h, r, ph: rnd() * 6.283, seed: rnd(), w0: WIN0, win: WIN });
+    }
+    // the storyboard's few LARGE bubbles floating at Benny's sides (a short window round him, low over the water edges / banks)
+    for (let i = 0; i < nNear; i++) {
+      const side = i % 2 ? -1 : 1, win = 16;
+      bubs.push({ s: rnd() * win, l: side * (1.15 + 1.5 * rnd()), h: 0.25 + 1.6 * rnd(), r: (0.13 + 0.11 * rnd()) * bs, ph: rnd() * 6.283, seed: rnd(), w0: -2, win });
     }
     const g = new THREE.InstancedBufferGeometry();
     g.setIndex(quad.index); g.setAttribute('position', quad.attributes.position);
@@ -331,13 +441,13 @@ export function buildFoam30(course: Course): Foam30 | null {
 
   // ---- lace splash ring + droplets round Benny
   let ring: THREE.Mesh | null = null, drops: THREE.Points | null = null;
-  const ringU = { uRing: { value: new THREE.Vector3(num('f30rr', 0.62), num('f30rw', 0.2), 0.95) } };
+  const ringU = { uRing: { value: new THREE.Vector3(num('f30rr', 0.66), num('f30rw', 0.26), 0.95) } };
   const ND = 44;
   const dropSeed: number[][] = [];
   const dropPos = new Float32Array(ND * 3), dropSize = new Float32Array(ND);
   const dropU = { uScale: { value: 1000 }, uAlpha: { value: 1 } };
   if (RING) {
-    const rg = new THREE.RingGeometry(ringU.uRing.value.x * 0.85, ringU.uRing.value.x + ringU.uRing.value.y * 2.4, 96, 4);
+    const rg = new THREE.RingGeometry(ringU.uRing.value.x * 0.85, ringU.uRing.value.x * 2.15, 96, 6);
     ring = new THREE.Mesh(rg, new THREE.ShaderMaterial({ vertexShader: RING_VERT, fragmentShader: RING_FRAG, transparent: true, depthWrite: false, fog: false,
       side: THREE.DoubleSide, uniforms: { uPjPost, uPjRes, uTime, ...ringU } }));
     ring.name = 'f30_ring'; ring.renderOrder = 5; ring.frustumCulled = false;
@@ -376,6 +486,7 @@ export function buildFoam30(course: Course): Foam30 | null {
       uTime.value = time;
       camera.updateMatrixWorld();
       if (bankU) bankU.uCap.value.z = grow;
+      uStrip.value.z = grow;
       if (bubMesh && aP && aA) {
         // Benny's body on screen (no bubble may cover him)
         course.sample(s, fr);
@@ -384,8 +495,8 @@ export function buildFoam30(course: Course): Foam30 | null {
         for (let i = 0; i < bubs.length; i++) {
           const b = bubs[i];
           // drifting downstream (slower than Benny) inside a window that travels with him; recycled at the far end
-          const sw = ((((b.s + time * 1.1 - (s + WIN0)) % WIN) + WIN) % WIN);
-          const sb = s + WIN0 + sw;
+          const sw = ((((b.s + time * 1.1 - (s + b.w0)) % b.win) + b.win) % b.win);
+          const sb = s + b.w0 + sw;
           course.sample(Math.min(sb, st.s1 + 8), fr);
           v.copy(fr.pos).addScaledVector(fr.right, b.l + 0.12 * Math.sin(time * 0.6 + b.ph * 2.0))
             .addScaledVector(fr.up, b.h + 0.14 * Math.sin(time * 0.9 + b.ph));
@@ -394,7 +505,8 @@ export function buildFoam30(course: Course): Foam30 | null {
           let r = b.r, a = 1;
           if (z > 0.05) r = Math.min(r, (capR * z) / P);
           a *= THREE.MathUtils.smoothstep(z, 0.9, 2.2);                    // pass the camera without filling the screen
-          a *= 1 - THREE.MathUtils.smoothstep(sw, WIN - 9, WIN);           // fade in far ahead (recycled bubbles)
+          a *= 1 - THREE.MathUtils.smoothstep(sw, b.win * 0.8, b.win);     // fade in far ahead (recycled bubbles)
+          a *= THREE.MathUtils.smoothstep(sw, 0, b.win * 0.06);             // and out at the near end of the window
           a *= 1 - THREE.MathUtils.smoothstep(sb, st.s1 - 2, st.s1 + 6);    // none beyond 06
           ndc.copy(v).project(camera);
           const ex = (ndc.x - bN.x) / 0.34, ey = (ndc.y - bN.y) / 0.30;      // keep clear of Benny

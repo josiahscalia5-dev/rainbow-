@@ -389,3 +389,114 @@ Metric reproduces 49.4 %. Now let me view the painted target Benny: approved cro
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/benny06 && Q=\"$(cat /home/user/rainbow-/qa/match/06/r30/QUERY_NEW_v2.txt)&b30=1\" && OUT=/tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/b30/s4 && time AUDIT_W=864 AUDIT_H=1536 AUDIT_PORT=5320 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/benny30/sweep.mjs $OUT \"$Q\" '[\n[\"d0\",{}],\n[\"F\",{\"pitch\":32,\"hs\":0.9,\"ay\":-0.18,\"bp\":4,\"bcap\":2}],\n[\"Fc\",{\"pitch\":32,\"hs\":0.9,\"ay\":-0.18,\"bp\":4,\"bcap\":2,\"fr\":0.88,\"fg\":1.7,\"fb\":0.95,\"fl\":0.09,\"fd\":130,\"fk\":0.7}]\n]' '[[\"a_start\",0],[\ …[+188 chars]`
 
+### 🧑 User — 2026-11-20T22:32:30.614Z
+
+> ↩︎ result: [render_slot] got slot 2 after 20s
+> d0 a_start s 198.91 stage 06
+> d0 c_238 s 238.143 stage 06
+> d0 e_310 s 310.01 stage 06
+> F a_start s 198.91 stage 06
+> F c_238 s 238.143 stage 06
+> F e_310 s 310.01 stage 06
+> Fc a_start s 198.91 stage 06
+> Fc c_238 s 238.143 stage 06
+> Fc e_310 s 310.01 stage 06
+> 
+> real	1m54.920s
+> user	0m3.368s
+> sys	0m0.721s
+> == F_a_start.png: benny-box  54.5%  mean|d| 26.6
+>    body   x 194-643 (w 449) y 942-1202 n 63975
+>    pom    x 346-509 (w 163) y 722-875 n 16055
+>    cuff   x 262-577 (w 315) y 887-1010 n 16413
+>    crown  x 278-562 (w 284) y 813-957 n 25395
+>    star   x 483-562 (w 79) y 886-959 n 3008
+>    ALL x 194-643 (w 449) y 722-1202;  cuff bottom @x413: y 1009 -> 60% of height
+>    hat width 315  body width 449  body widths at height-frac 0.60:408 0.70:424 0.80:334 0.90:270 0.97:142
+> == Fc_a_start.png: benny-box  53.2%  mean|d| 25.7
+>    body   x 199-642 (w 443) y 947-1205 n 61918
+>    pom    x 341-505 (w 164) y 725-878 n 16034
+>    cuff   x 261-576 (w 315) y 892-1012 n 16385
+>    crown  x 277-560 (w 283) y 817-959 n 25286
+>    star   x 479-558 (w 79) y 887-960 n 3005
+>    ALL x 199-642 (w 443) y 725-1205;  cuff bottom @x414: y 1012 -> 60% of height
+>    hat width 315  body width 443  body widths  …[+527 chars]
+
+### 🤖 Claude — 2026-11-20T22:32:37.761Z
+
+Let me look at the crops side by side.
+
+### 🤖 Claude — 2026-11-20T22:32:41.265Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/b30 && python3 -I -c \"\nfrom PIL import Image\nims=[Image.open('/home/user/rainbow-/references/06_crest_the_rinse_arch.png')]+[Image.open(f's4/{k}_a_start.png') for k in ['d0','F','Fc']]\no=Image.new('RGB',(4*440,560))\nfor i,im in enumerate(ims): o.paste(im.convert('RGB').crop((170,690,610,1250)),(i*440,0))\no.save('c4.png')\nims=[Image.open(f's4/{k}_{s}.png') for s in ['c_238','e_310'] for k in ['d0','F','Fc']]\no=Image.new('RGB',(6*300,420))\nfor i,im in enumerate(ims): o.paste(im.convert('RGB …[+134 chars]`
+
+### 🧑 User — 2026-11-20T22:32:41.929Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T22:32:44.368Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/b30/c4.png"}`
+
+### 🧑 User — 2026-11-20T22:32:44.418Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T22:32:44.980Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/b30/c4m.png"}`
+
+### 🧑 User — 2026-11-20T22:32:45.022Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T22:33:06.849Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/b30 && cat > seg.py <<'EOF'\nimport sys, numpy as np\nfrom PIL import Image\ndef pinkmask(a):\n    R,G,B=a[...,0],a[...,1],a[...,2]\n    return (R>170)&(R-G>70)&(B>100)&(B<235)&(R>B-10)\nA=np.asarray(Image.open('/home/user/rainbow-/references/06_crest_the_rinse_arch.png').convert('RGB'),int)\ndef rows(a, label, m=None):\n    pm = pinkmask(a) if m is None else m\n    out=[]\n    for y in range(960,1220,20):\n        xs=np.nonzero(pm[y,180:700])[0]+180\n        out.append(f\"{y}:{xs.min()}-{xs.max() …[+814 chars]`
+
+### 🧑 User — 2026-11-20T22:33:07.652Z
+
+> ↩︎ result: APPR 960:- 980:- 1000:280-557 1020:285-562 1040:221-619 1060:210-628 1080:221-618 1100:273-558 1120:289-539 1140:292-527 1160:313-496 1180:- 1200:-
+> APPR fur mean [234.  86. 180.] n 26046
+> d0_a_start.p 960:- 980:206-633 1000:195-640 1020:203-633 1040:242-590 1060:246-590 1080:252-576 1100:262-567 1120:267-561 1140:290-541 1160:298-514 1180:343-482 1200:-
+>    fur mean (core box) [215.  51. 171.]  all body [219.  58. 178.]
+> F_a_start.pn 960:250-577 980:249-587 1000:217-591 1020:197-633 1040:197-639 1060:213-636 1080:242-603 1100:243-583 1120:257-574 1140:275-562 1160:291-537 1180:324-498 1200:366-445
+>    fur mean (core box) [240.  80. 186.]  all body [232.  75. 182.]
+> Fc_a_start.p 960:258-578 980:248-586 1000:245-612 1020:216-639 1040:199-639 1060:207-629 1080:229-584 1100:247-580 1120:267-568 1140:273-555 1160:291-538 1180:317-501 1200:-
+>    fur mean (core box) [222. 125. 175.]  all body [213. 116. 170.]
+
+### 🤖 Claude — 2026-11-20T22:33:39.890Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny06 && grep -n \"Track(\\|KeyframeTrack\\|\\.scale'\\|\\.position'\\|\\.quaternion'\" src/characters/benny/build.ts | head -30; grep -n \"scene.position\\|scene.scale\\|scene.rotation\\|scene.quaternion\\|root.scale\" src/characters/benny/runtime.ts | head", "description": "Find animated tracks and scene transforms"}`
+
+### 🧑 User — 2026-11-20T22:33:39.937Z
+
+> ↩︎ result: 433:function qTrack(node: string, times: number[], eulers: E3[]): THREE.QuaternionKeyframeTrack {
+> 436:  return new THREE.QuaternionKeyframeTrack(`${node}.quaternion`, times, vals);
+> 438:function vTrack(node: string, prop: 'position' | 'scale', times: number[], vecs: E3[]): THREE.VectorKeyframeTrack {
+> 439:  return new THREE.VectorKeyframeTrack(`${node}.${prop}`, times, vecs.flat());
+> 456:    vTrack('body', 'position', ti, ti.map((t) => [0, Math.sin((t / 2.4) * tau) * 0.015, 0])),
+> 457:    qTrack('armL', ti, ti.map((t) => [0, 0, Math.sin((t / 2.4) * tau) * 0.08])),
+> 458:    qTrack('armR', ti, ti.map((t) => [0, 0, -Math.sin((t / 2.4) * tau) * 0.08])),
+> 459:    qTrack('footL', ti, ti.map(() => [0, 0, 0])),
+> 460:    qTrack('footR', ti, ti.map(() => [0, 0, 0])),
+> 461:    qTrack('body', ti, ti.map(() => [0, 0, 0])),
+> 468:    vTrack('body', 'position', ts, ts.map((t) => [0, Math.abs(Math.sin(ph(t))) * 0.04 - 0.01, 0])),
+> 469:    qTrack('body', ts, ts.map((t) => [Math.sin(ph(t) * 2) * 0.03, 0, Math.sin(ph(t)) * 0.05])),
+> 470:    qTrack('armL', ts, ts.map((t) => [Math.sin(ph(t)) * 0.75, 0, 0.25 + Math.cos(ph(t)) * 0.2])),
+> 471:    qTrack('armR', ts, ts.map((t) => [Math.sin(ph(t) + Math.PI) * 0.75, 0, - …[+1316 chars]
+
+### 🤖 Claude — 2026-11-20T22:33:55.649Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny06 && python3 - <<'EOF'\np='src/characters/benny/benny30.ts'\ns=open(p).read()\ns=s.replace(\"\"\"export interface B30Params {\n  /** ride lean\"\"\",\"\"\"export interface B30Params {\n  /** whole Benny (visual only, his own benny_root node; game placement / collision radius unchanged): scale about the body\n   *  centre and raise (body units). The painted 06 Benny is ≈ 0.92 of the game's on-screen size at the v2 framing. */\n  sc: number;\n  sy: number;\n  /** ride lean\"\"\")\ns=s.replace(\"\"\"const DEF: B30Params = {\n  pitch: 12.6,\"\"\",\"\"\"const DEF …[+905 chars]`
+
+### 🧑 User — 2026-11-20T22:33:58.685Z
+
+> ↩︎ result: 7: * Joints: benny_root › body › { hat › pom, eyes › eyeL/eyeR, mouth, armL, armR, footL, footR }.
+> 170:  const root = named(new THREE.Group(), 'benny_root');
+> TSC_OK
+
+### 🤖 Claude — 2026-11-20T22:34:10.425Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny06 && Q=\"$(cat /home/user/rainbow-/qa/match/06/r30/QUERY_NEW_v2.txt)&b30=1\" && OUT=/tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/b30/s5 && F='\"pitch\":32,\"hs\":0.9,\"ay\":-0.18,\"bp\":4,\"bcap\":2' && AUDIT_W=864 AUDIT_H=1536 AUDIT_PORT=5321 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/benny30/sweep.mjs $OUT \"$Q\" \"[\n[\\\"G1\\\",{$F,\\\"sc\\\":0.92,\\\"bsx\\\":0.88,\\\"ax\\\":-0.06}],\n[\\\"G2\\\",{$F,\\\"sc\\\":0.92,\\\"bsx\\\":0.85,\\\"ax\\\":-0.08,\\\"as\\\":1.15}],\n[\\\"G3\\\",{$F,\\\"sc\\\":0 …[+651 chars]`
+
