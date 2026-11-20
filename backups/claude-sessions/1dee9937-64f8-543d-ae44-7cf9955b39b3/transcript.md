@@ -2379,3 +2379,15 @@ You've hit your 5-hour limit · resets 9am (UTC)
 <result>K23-1 rendered with the new code equals BEFORE at 0 px in all 7 shots (switches are inert by default). Let me inspect the clip in motion against the lead's BEFORE clip.</result>
 </task-notification>
 
+### 🧑 User — 2026-11-20T05:24:12.359Z
+
+<task-notification>
+<task-id>ad6745221c2fe7d06</task-id>
+<tool-use-id>toolu_015G2eyWAqr5DKsM4rAUrPH8</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/tasks/ad6745221c2fe7d06.output</output-file>
+<status>failed</status>
+<summary>Agent "Benny knit, star, fur" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 9am (UTC) (error type rate_limit, HTTP 429, request id req_011ChDd3nnv4UTfeDQzSAgfJ, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 9am (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+<result>I'll start by reading the brief files in the order given.</result>
+</task-notification>
+
