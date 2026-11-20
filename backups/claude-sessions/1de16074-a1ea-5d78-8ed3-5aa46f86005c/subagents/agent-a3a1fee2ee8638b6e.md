@@ -1187,3 +1187,57 @@ The checkpoint lands at (421, 1083) = the painted Benny's contact, so the geomet
 > user	0m3.984s
 > sys	0m0.343s
 
+### 🤖 Claude — 2026-11-20T12:18:06.248Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && python3 - <<'EOF'\nimport numpy as np\nfrom PIL import Image\nU=np.load('unwrap100.npz')\nrgb=U['rgb'].astype(np.uint8); m=U['mask']; f=U['fill']; vis=U['vis']; ins=U['inside']\nK=float(U['K']); sa=float(U['sa'])\ndef up(x): return x[::-1]\nr=np.stack([m[...,0]]*3,-1).astype(np.uint8)\ng=np.stack([m[...,1]]*3,-1).astype(np.uint8)\nv=np.stack([vis*255]*3,-1).astype(np.uint8)\nff=np.stack([f]*3,-1).astype(np.uint8)\ndim=rgb.copy(); dim[~vis]=dim[~vis]//4\nimg=np.concatenate([up(dim),up(r),up(ff),up(g),up(v)],1)\n# grid lines every 1 u of s\nfor k in rang …[+719 chars]`
+
+### 🧑 User — 2026-11-20T12:18:08.465Z
+
+> ↩︎ result: ds  -3.0 hole(mask R>10) l +0.00..+0.00  body-fill l +0.00..+0.00  vis 0.00  y 1910
+> ds  -2.5 hole(mask R>10) l +0.00..+0.00  body-fill l +0.00..+0.00  vis 0.00  y 1720
+> ds  -2.0 hole(mask R>10) l +0.00..+0.00  body-fill l +0.00..+0.00  vis 0.00  y 1556
+> ds  -1.5 hole(mask R>10) l +0.00..+0.00  body-fill l +0.00..+0.00  vis 0.48  y 1413
+> ds  -1.0 hole(mask R>10) l +0.00..+0.00  body-fill l +0.00..+0.00  vis 0.52  y 1289
+> ds  -0.5 hole(mask R>10) l -1.12..+1.10  body-fill l -0.52..+0.52  vis 0.55  y 1179
+> ds  +0.0 hole(mask R>10) l -1.38..+1.31  body-fill l -1.12..+1.08  vis 0.58  y 1082
+> ds  +0.5 hole(mask R>10) l -1.33..+1.23  body-fill l -0.92..+0.81  vis 0.62  y 997
+> ds  +1.0 hole(mask R>10) l -1.30..+1.10  body-fill l -1.00..+0.83  vis 0.65  y 922
+> ds  +1.5 hole(mask R>10) l -1.40..+1.13  body-fill l -1.10..+0.39  vis 0.68  y 856
+> ds  +2.0 hole(mask R>10) l -1.68..+0.72  body-fill l -0.75..+0.40  vis 0.72  y 798
+> ds  +2.5 hole(mask R>10) l -1.95..+0.68  body-fill l -1.56..+0.23  vis 0.75  y 747
+> ds  +3.0 hole(mask R>10) l -2.08..+0.48  body-fill l -1.72..+1.70  vis 0.79  y 703
+> ds  +3.5 hole(mask R>10) l -2.20..-0.53  body-fill l -2.12..+1.52  vis 0.83  y 665
+> ds  +4.0 hole(mask R>10) l +0.0 …[+964 chars]
+
+### 🤖 Claude — 2026-11-20T12:18:13.158Z
+
+The hole (mask06 red, what the shader swaps for river water) spans about 0.6 u behind the approved Benny to 3.6 u ahead, up to 3.5 u wide. Let me look at the unwrap.
+
+### 🤖 Claude — 2026-11-20T12:18:13.461Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s06/unwrap_view.png"}`
+
+### 🧑 User — 2026-11-20T12:18:13.547Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T12:18:22.081Z
+
+Let me zoom into the region that matters (ds −1.6..+4.5, l ±2.8) at full unwrap resolution, with the hole outlined.
+
+### 🤖 Claude — 2026-11-20T12:18:26.444Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && python3 - <<'EOF'\nimport numpy as np, cv2\nfrom PIL import Image\nU=np.load('unwrap100.npz')\nK=float(U['K']); sa=float(U['sa']); L=U['ls']\nrgb=U['rgb'].astype(np.uint8).copy(); m=U['mask']; vis=U['vis']\ni0=int((-2.8+3.6)*K); i1=int((2.8+3.6)*K); j0=int((-1.6-sa)*K); j1=int((4.5-sa)*K)\nc=rgb[j0:j1,i0:i1].copy(); hole=(m[j0:j1,i0:i1,0]>10).astype(np.uint8)\ncnt,_=cv2.findContours(hole,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_NONE)\nc2=c.copy(); cv2.drawContours(c2,cnt,-1,(255,255,0),2)\ng=(m[j0:j1,i0:i1,1]>128).astype(np.uint8); cnt,_=cv2.findContours(g,c …[+322 chars]`
+
+### 🧑 User — 2026-11-20T12:18:27.524Z
+
+> ↩︎ result: (610, 1120, 3)
+
+### 🤖 Claude — 2026-11-20T12:18:28.553Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s06/unwrap_zoom.png"}`
+
+### 🧑 User — 2026-11-20T12:18:28.580Z
+
+> ↩︎ result: [image]
+
