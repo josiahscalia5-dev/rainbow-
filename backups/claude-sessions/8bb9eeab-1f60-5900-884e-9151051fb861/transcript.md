@@ -2742,3 +2742,11 @@ You've hit your 5-hour limit · resets 11pm (UTC)
 <result>The colours now sit close to the painted walls (violet-magenta, painted light kept) and t66 keeps more of the painted far tunnel. Re-rendering the final NEW set with this version plus the lock check.</result>
 </task-notification>
 
+### 🧑 User — 2026-11-19T19:04:37.999Z
+
+This session's worker process was restarted. If your previous turn was already complete, take no action and wait for the next event. Otherwise, continue from where you left off.
+
+### 🤖 Claude — 2026-11-19T19:04:40.588Z
+
+You've hit your 5-hour limit · resets 11pm (UTC)
+
