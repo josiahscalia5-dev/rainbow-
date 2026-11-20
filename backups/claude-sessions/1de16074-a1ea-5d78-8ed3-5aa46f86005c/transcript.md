@@ -2224,3 +2224,28 @@ Stop hook feedback:
 
 > 🔧 **Bash** `{"command": "git status --porcelain; timeout 240 bash -c 'until flock -n backups/.autosave.lock true; do sleep 2; done'; timeout 500 python3 scripts/rainbow-autosave.py --reason manual:stop-hook-untracked 2>&1 | grep -E '\"result\"|\"commit\"|pushed_verified'; H=$(git rev-parse HEAD); R=$(git ls-remote origin refs/heads/ccr-a9235d04-90cw28 | cut -f1); echo \"local  $H\"; echo \"GitHub $R\"; [ \"$H\" = \"$R\" ] && echo MATCH; echo \"left: $(git status --porcelain | wc -l)\"; git status --porcelain", "description": "Commit and push untracked files, verify remote", "timeout": 800000}`
 
+### 🧑 User — 2026-11-20T12:27:10.985Z
+
+> ↩︎ result: M backups/claude-sessions/1de16074-a1ea-5d78-8ed3-5aa46f86005c/subagents/agent-a37295c79004f16e1.md
+>  M backups/claude-sessions/1de16074-a1ea-5d78-8ed3-5aa46f86005c/subagents/agent-a37295c79004f16e1.sanitized.jsonl
+>  M backups/claude-sessions/1de16074-a1ea-5d78-8ed3-5aa46f86005c/subagents/agent-a6d73b58ae32de7ef.md
+>  M backups/claude-sessions/1de16074-a1ea-5d78-8ed3-5aa46f86005c/subagents/agent-a6d73b58ae32de7ef.sanitized.jsonl
+>  M backups/claude-sessions/1de16074-a1ea-5d78-8ed3-5aa46f86005c/subagents/agent-aadb120f8f34ac332.md
+>  M backups/claude-sessions/1de16074-a1ea-5d78-8ed3-5aa46f86005c/subagents/agent-aadb120f8f34ac332.sanitized.jsonl
+>  M backups/claude-sessions/1de16074-a1ea-5d78-8ed3-5aa46f86005c/transcript.md
+>  M backups/claude-sessions/1de16074-a1ea-5d78-8ed3-5aa46f86005c/transcript.sanitized.jsonl
+> ?? qa/match/04/r23/s04_tools/probe_wl.mjs
+>   "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "badb90cdbebd67a3a6b9bcd1ced54920e291d500",
+> local  badb90cdbebd67a3a6b9bcd1ced54920e291d500
+> GitHub badb90cdbebd67a3a6b9bcd1ced54920e291d500
+> MATCH
+> left: 0
+
+### 🤖 Claude — 2026-11-20T12:27:13.339Z
+
+That leftover file (the Screen 04 specialist's new test script) is now saved too, along with the latest conversation updates. GitHub matches this session exactly at commit `badb90cd`, and nothing is left unsaved.
+
+The four specialists are still working. Their new work keeps going to GitHub with the automatic save every 5 minutes.
+

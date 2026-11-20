@@ -1349,3 +1349,35 @@ I'll start by reading the briefs and my previous progress logs in the specified 
 > ↩︎ result: a=1&b=2&m07look=1
 > started
 
+### 🤖 Claude — 2026-11-20T12:27:01.869Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/07/r24 && python3 - <<'EOF'\np='PROGRESS.md'; s=open(p).read()\nold=\"\"\"* NOW: step 1 proof (clips BEFORE + NEW 1.0x / 0.5x, gameplay, continuity, verdict). NEXT: step 2 `m07look`, step 3 07→08 join,\n  labelled NEW / BEFORE sequence.\"\"\"\nnew=\"\"\"* 12:23 DONE: BEFORE clip (r23 candidate & K23-3, combo build) rendered, 209 frames / 8.71 s, same schedule as the lead's r23 clip\n  (`clips/BEFORE_frames.json`; labelled mp4s `clips/SCREEN07_BEFORE_r23cand_K23-3_{1x,0.5x}.mp4` when the label job is done).\n  Seen in it: t 2.5–3.75 the purple tube w …[+1219 chars]`
+
+### 🧑 User — 2026-11-20T12:27:01.975Z
+
+> ↩︎ result: 0
+> Fri Nov 20 12:27:01 UTC 2026
+
+### 🤖 Claude — 2026-11-20T12:27:10.496Z
+
+> 🔧 **Bash** `{"command": "sed -n 30,200p /home/user/wt/s07/tools/match07/gameplay_test_5277.mjs | grep -n \"checks\\|coins\\|pass\\|writeFile\\|console.log\" | head -30; python3 -c \"\nimport json; d=json.load(open('/home/user/rainbow-/qa/match/07/r23/s1_satin/gameplay_new.json')); print(list(d.keys())); print({k:d[k] for k in d if k in ('pass','passed','summary','coins','ok')})\" 2>&1 | head", "description": "Inspect gameplay test outputs"}`
+
+### 🧑 User — 2026-11-20T12:27:10.591Z
+
+> ↩︎ result: 4:  const out = { checks: {}, samples: [], plunge: {} };
+> 16:  out.checks.pauseFreezes = { pass: Math.abs(sPaused - sBefore) < 1e-6 && sAfter > sPaused, sBefore, sPaused, sAfter };
+> 23:  const startCoins = prev.coins;
+> 48:    if (steps % 30 === 0) out.samples.push({ t: +t.toFixed(2), s: s1.s, stage: s1.stage, y: s1.bennyY, cam: s1.cam, coins: s1.coins });
+> 55:  out.checks.continuousTravel = { pass: nonMonotonic === 0, nonMonotonicSteps: nonMonotonic, steps, respawns: api.respawns() };
+> 56:  out.checks.noCameraCut = { pass: maxCamJump < 1.5, maxCameraJumpPerStep: +maxCamJump.toFixed(3) };
+> 57:  out.checks.noTeleport = { pass: maxJump < 1.0, maxBennyAltitudeJumpPerStep: +maxJump.toFixed(3), at: out.maxJumpAt };
+> 59:  out.checks.plunge = { pass: out.plunge.travelTimeTopToInlet > 2 && out.plunge.verticalDrop > 50, ...out.plunge };
+> 60:  out.checks.realCoinPickups = { pass: endState.coins > startCoins, startCoins, endCoins: endState.coins, collected: (endState.coins - startCoins) / 10 };
+> 61:  out.checks.victory = { pass: fin.mode === 'end' && fin.stage === '11' && fin.bennyVisible === false, finalState: fin };
+> 68:  out.checks.heartsLostOnWallBump = { pass: h.hearts < 5, hearts: h.hearts };
+> 74:r …[+1467 chars]
+
+### 🤖 Claude — 2026-11-20T12:27:15.182Z
+
+> 🔧 **Bash** `{"command": "until [ $(ls /home/user/scratch/s07/clips/S1NEW/f 2>/dev/null | wc -l) -ge 100 ] || grep -q \"^exit\" /home/user/scratch/s07/clips/S1NEW.log 2>/dev/null; do sleep 10; done; ls /home/user/scratch/s07/clips/S1NEW/f | wc -l; cat /home/user/scratch/s07/clips/BEFORE_label.log; ls /home/user/rainbow-/qa/match/07/r24/clips/; date", "description": "Wait for 100 frames of S1NEW", "timeout": 3600000}`
+
