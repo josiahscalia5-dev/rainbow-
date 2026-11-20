@@ -1,5 +1,28 @@
 # Screen 06 — round 25 progress (worktree `/home/user/wt/s06`, LOCAL branch `claude/rainbow-s06-match-c26`, ports 5276 / 5282 / 5283)
 
+## (r27) WHERE I STOPPED / NEXT
+* ~15:20 UTC — relaunched (new account), worktree `/home/user/wt/s06` LOCAL branch `claude/rainbow-s06-match-c28`. Found SURVIVED (not lost
+  as LAUNCH_R27 feared): `step1_hole/gameplay_NEW3.json` (query = NEW3, 8/8 pass, 91 coins) and `step2/{BEFORE,NEW}/` (7 shots each,
+  NEW = NEW3 + `&m06fcn=3`). Re-used, nothing re-rendered.
+* **STEP 1 DONE — verdict `&m06hole=2&m06fade=1&m06spl=1` (NEW3): GOOD IMPROVEMENT.** Comparison owed to the user assembled:
+  `step1_hole/COMPARE/{a_start,o1_003,o2_007,o3_012}/{1_ORIGINAL_APPROVED,2_WHAT_YOU_SAW,3_NEW}.png` + `COMPARE/clips/`
+  (`2_WHAT_YOU_SAW_opening_{1.0x,0.5x}.mp4`, `3_NEW_opening_{1.0x,0.5x}.mp4`) + `COMPARE/README.txt`.
+  - Closer: the bright hard-edged blue cone under Benny is gone in motion (3 %): the painted water runs on continuously from under him
+    to the bottom of the frame, no cut-out edge, no brighter patch, no left-behind lacy ring; at 7 / 12 % one coherent river below him
+    (cyan centre, pink sides), no bounded patches or direction breaks; his contact is a low lace collar + shallow rings instead of the
+    long white V spray streaks. Start view unchanged (0 px, files byte-identical).
+  - Still differs: the fill reads as fairly straight fanning streaks where the approved water swirls; only one faint shallow ring at
+    his contact vs the approved concentric rings; from ~7 % the camera/route turns into the centred ring tunnel, so the approved
+    composition (crest + winding river + coin trail to the upper left) is no longer in view.
+  - New problems: none seen; gameplay 8/8, 91 coins. Clip title of NEW is cut at the right edge (cosmetic; frames were lost).
+* Step 2 (foam height) judged from the existing shots: `&m06fcn=3` changes ONLY 47 % / 60 % / hard-right (all other views 0 px);
+  lower-third white foam px BEFORE→NEW 90.8k→74.0k, 110.4k→61.4k, 115.9k→56.6k: the big near foam clouds over the bottom of the
+  frame shrink away, more river visible. NEW PROBLEM: half-shrunk heaps break into trails of tiny loose white beads (60 % bottom
+  left, hard-right centre) — each sprite shrank by its OWN depth with lobe positions fixed. Fix behind `&m06fcg=1` (whole heap
+  shrinks as one unit into its foot on the water, timed by the heap's distance; FOAMC_VERT `#define GROUP` + attribute `aC`;
+  tsc 0). NOW: `step2/NEW2/` (query `QUERY_NEW2.txt` = NEW + `&m06fcg=1`, only the 3 changed views) rendering. NEXT: judge, then
+  whole-06 clip BEFORE vs NEW2 (`step2/clip.sh`, 1.0x + 0.5x), gameplay with NEW2, verdict.
+
 ## (r26) WHERE I STOPPED / NEXT
 * ~13:15 UTC — relaunched (new account), worktree `/home/user/wt/s06` LOCAL branch `claude/rainbow-s06-match-c27` (r25 edits incl. m06hole).
 * Step 1 judgement of the r25 shots (`step1_hole/{CURRENT,NEW,WDBG_NEW}`): the bright hard-edged cone body is GONE in NEW; start view

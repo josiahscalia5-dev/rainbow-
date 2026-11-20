@@ -6,7 +6,17 @@
 * Found on relaunch: `qa/match/07/r26/final/gameplay_NEW_full.json` DID finish before the r26 stop — query = step-1 candidate & K23-3 &
   m07look & m07join (the full candidate), **8 / 8 checks pass, 91 coins collected** (1330 -> 2240), plunge 61.02 u, 0 respawns.
   Full NEW clip `r26/final/SCREEN07_NEW_full_K23-3_{1x,0.5x}.mp4` also complete.
-* NOW: rebuilding the s08 snapshot + combo build, then landmark stills BEFORE vs NEW (lip, bend apexes, inlet) -> `r26/final/landmarks/`.
+* 15:25 DONE: s08 snapshot re-copied read-only from `/home/user/wt/s08`: **30 / 30 files match `combo/s08snap_SHA256SUMS_r25.txt`**; combo
+  build `/home/user/scratch/s07/combo` rebuilt (`combo/mkcombo.py`), tsc 0.
+* 15:30 DONE — **STEP 1 (r27) final check of the full candidate:** gameplay 8/8 + 91 coins (above); landmark stills BEFORE (r23 candidate
+  & K23-3) vs NEW (full candidate & K23-3) at matched route landmarks, taken from the two existing 1.0x clips (same steering schedule;
+  BEFORE frames picked at the same share of the lip->inlet drop, since the S makes NEW's drop ~2.5 u longer):
+  `qa/match/07/r26/final/landmarks/` (`1_ORIGINAL_APPROVED`, `2_BEFORE_*`, `3_NEW_*`: a_lip t 2.71, b..e bend apexes t 3.75 / 4.96 /
+  6.12 / 7.29 (BEFORE 3.75 / 4.88 / 6.00 / 7.17), f_inlet last 07 frame t 8.25 (BEFORE 8.08)).
+  Verdict unchanged: GOOD IMPROVEMENT (not approved) — at every apex the cyan body, both pink edges, both foam banks and the coin trail
+  bend together; the inlet shows the painted river with pink edges running into 08 (BEFORE: rainbow-striped sheet + white lather slab).
+  Still differs (= step 2's job): the foam is BULKY — big uniformly packed white masses (bend1 t 3.75 lower-left foreground cloud,
+  bend2 t 4.96 cloud over Benny's lower left, bend4 t 7.29 both banks thick walls of white), and the coins stack in a column down the drop.
 * NEXT: step 2 = foam refinement behind a new switch (user's r27 foam note) + inside-bend foam over Benny at the right limit (t 5.0 s);
   step 3 (if time) = stacked coin column down the drop.
 

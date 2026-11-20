@@ -1,5 +1,13 @@
 # Benny round 23 — progress (worktree `/home/user/wt/benny`, local branch `claude/rainbow-benny-c24` = `-c23` @ `734efb6`; not committed / pushed by Benny — the lead's autosave snapshots the worktree)
 
+## (r27) WHERE I STOPPED / NEXT — 2026-11-20 ~15:30 UTC (new account; worktree `/home/user/wt/benny`, LOCAL branch `claude/rainbow-benny-c28`, port 5279, temp `/home/user/scratch/benny/`)
+
+**Step 1 (silk `&b20silk=2`) in progress:** `gameplay_silk.json` checked = 8/8 checks, 91 coins (1,330 → 2,240), victory, no errors.
+Stills judged (crops + native body crops): fur colour unchanged (median within ≤ 5 levels of BEFORE on all 15 shots); NEW adds a
+downward-combed streak direction but the pile stays pixel-fine with dark speckles; high-frequency detail +5–14 % vs BEFORE (not softer).
+Rendering the 04 swim clip BEFORE/NEW (4.5 s, same tool + schedule) → `qa/benny/r25/s4_silk/clip/`. Verdict to follow.
+**Next:** (2) hat crown vs the approved taller beanie; (3) 06 start star amber.
+
 ## (r26) WHERE I STOPPED / NEXT — 2026-11-20 ~14:00 UTC (new account; worktree `/home/user/wt/benny`, LOCAL branch `claude/rainbow-benny-c27`, port 5279)
 
 **Done:** BEFORE swim clip 06 re-rendered (same tool + schedule as NEW) and encoded `qa/benny/r23/s3_star/clip/swim06_star_BEFORE_*`.

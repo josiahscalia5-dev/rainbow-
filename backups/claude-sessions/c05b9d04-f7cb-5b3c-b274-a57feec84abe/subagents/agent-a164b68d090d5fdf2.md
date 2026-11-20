@@ -296,3 +296,335 @@ Step 2 BEFORE/NEW renders also survived. Let me verify their queries, then build
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-20T15:26:40.466Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 1,200p tools/match06/r25_open_clip.mjs | grep -n -i -E \"steer|phase|label|lat|input|key\" | head -30; grep -n -i -E \"phase|steer|LEFT|font|truetype|size\" /home/user/rainbow-/tools/lead23/label_clip.py | head -30", "description": "Find steering and label logic in clip tools"}`
+
+### 🧑 User — 2026-11-20T15:26:40.512Z
+
+> ↩︎ result: 4:// steering phase and the screen logged per frame (for labels). Real game speed: one frame per 1/24 s of game time.
+> 5:// Steering by the share of the screen travelled: straight < 0.30, LEFT 0.30-0.50, RIGHT 0.50-0.70, straight after (end).
+> 38:    const phase = frac < 0.3 ? 'ENTRANCE (straight)' : frac < 0.5 ? 'MIDDLE (steering LEFT)' : frac < 0.7 ? 'MIDDLE (steering RIGHT)' : 'END (straight)';
+> 39:    const st = await page.evaluate(([t, dt, dir]) => { const _pn = performance.now; performance.now = () => (t + dt) * 1000; const R = window.__rainbow; R.setSteer(dir); R.freezeAt(t); R.step(Math.round(dt * 60), 1 / 60); R.freezeAt(t + dt); R.step(1, 1e-4); R.drawList(); performance.now = _pn; return R.state(); }, [12 + i / fps, 1 / fps, dir]);
+> 41:    log.push({ i, t: +(i / fps).toFixed(3), stage: st.stage, s: st.s, lat: st.lat, frac: +frac.toFixed(3), phase: st.stage === SCREEN ? phase : `next screen ${st.stage}` });
+> 2:"""Lead r23: label every frame of a screen_clip.mjs run (title, playback speed, phase, game time) and encode mp4s.
+> 6:from PIL import Image, ImageDraw, ImageFont
+> 10:fb = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 30)
+> 11:fs = ImageFont.truet …[+301 chars]
+
+### 🤖 Claude — 2026-11-20T15:26:41.884Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 25,45p tools/match06/r25_open_clip.mjs", "description": "Read steering schedule in clip tool"}`
+
+### 🧑 User — 2026-11-20T15:26:41.922Z
+
+> ↩︎ result: const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> const log = [];
+> try {
+>   const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
+>   page.on('pageerror', (e) => console.error('pageerror', e.message));
+>   await page.goto(`${vite.url}/?qa=1&dpr=1${Q ? '&' + Q : ''}`);
+>   await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 300000 });
+>   const rng = await page.evaluate((id) => { const r = window.__rainbow; r.goto(id); const g = r.course.stage(id); return { s0: r.state().s, s1: g.s1 }; }, SCREEN);
+>   let tailLeft = Math.round(Number(TAIL) * fps);
+>   for (let i = 0; i < 2400; i++) {
+>     const st0 = await page.evaluate(() => window.__rainbow.state());
+>     const frac = (st0.s - rng.s0) / (rng.s1 - rng.s0);
+>     const dir = frac < 0.3 ? null : frac < 0.5 ? -1 : frac < 0.7 ? 1 : null;
+>     const phase = frac < 0.3 ? 'ENTRANCE (straight)' : frac < 0.5 ? 'MIDDLE (steering LEFT)' : frac < 0.7 ? 'MIDDLE (steering RIGHT)' : 'END (straight)';
+>     const st = await page.evaluate(([t, dt, dir]) => { const _pn = performance.now; performance.now = () => (t + dt) * 1000; const R = window.__rainbow; R.se …[+803 chars]
+
+### 🤖 Claude — 2026-11-20T15:26:56.282Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && python3 -c \"\nfrom PIL import Image\nD='/home/user/rainbow-/qa/match/06/r25/step1_hole/'\na=Image.open(D+'CURRENT/o1_003.png').crop((0,600,864,1536)); b=Image.open(D+'NEW3/o1_003.png').crop((0,600,864,1536))\nS=Image.new('RGB',(1728,936)); S.paste(a,(0,0)); S.paste(b,(864,0)); S.resize((1152,624),Image.LANCZOS).save('o1crop.png')\"", "description": "Crop lower half CURRENT vs NEW3 at 3 percent"}`
+
+### 🧑 User — 2026-11-20T15:26:56.638Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T15:26:57.757Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s06/o1crop.png"}`
+
+### 🧑 User — 2026-11-20T15:26:57.802Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T15:27:12.381Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r25/step1_hole && mkdir -p COMPARE/clips && ln -f CURRENT_opening_1x.mp4 COMPARE/clips/2_WHAT_YOU_SAW_opening_1.0x.mp4 && ln -f CURRENT_opening_0.5x.mp4 COMPARE/clips/2_WHAT_YOU_SAW_opening_0.5x.mp4 && ln -f NEW3_opening_1x.mp4 COMPARE/clips/3_NEW_opening_1.0x.mp4 && ln -f NEW3_opening_0.5x.mp4 COMPARE/clips/3_NEW_opening_0.5x.mp4 && cat > COMPARE/README.txt <<'EOF'\nSCREEN 06 OPENING COMPARISON (owed to the user) - round 27, s06\nPer shot folder: 1_ORIGINAL_APPROVED.png (references/06_crest_the_rinse_arch.png, unchanged) | 2_WHAT_YOU_SAW.png | 3 …[+866 chars]`
+
+### 🧑 User — 2026-11-20T15:27:12.507Z
+
+> ↩︎ result: total 4316
+> drwxr-xr-x 2 root root    4096 Nov 20 15:27 .
+> drwxr-xr-x 7 root root    4096 Nov 20 15:27 ..
+> -rw-r--r-- 2 root root 1271549 Nov 20 15:15 2_WHAT_YOU_SAW_opening_0.5x.mp4
+> -rw-r--r-- 2 root root  957039 Nov 20 15:15 2_WHAT_YOU_SAW_opening_1.0x.mp4
+> -rw-r--r-- 2 root root 1243469 Nov 20 15:15 3_NEW_opening_0.5x.mp4
+> -rw-r--r-- 2 root root  933337 Nov 20 15:15 3_NEW_opening_1.0x.mp4
+
+### 🤖 Claude — 2026-11-20T15:27:13.963Z
+
+Now the r27 block at the top of PROGRESS.md.
+
+### 🤖 Claude — 2026-11-20T15:27:22.712Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/match/06/r25/PROGRESS.md", "old_string": "# Screen 06 — round 25 progress (worktree `/home/user/wt/s06`, LOCAL branch `claude/rainbow-s06-match-c26`, ports 5276 / 5282 / 5283)\n", "new_string": "# Screen 06 — round 25 progress (worktree `/home/user/wt/s06`, LOCAL branch `claude/rainbow-s06-match-c26`, ports 5276 / 5282 / 5283)\n\n## (r27) WHERE I STOPPED / NEXT\n* ~15:20 UTC — relaunched (new account), worktree `/home/user/wt/s06` LOCAL branch `claude/rainbow-s06-match-c28`. Found SURVIVED (not lost\n  as LAUNCH_R27 feared): `step1_ho …[+1579 chars]`
+
+### 🧑 User — 2026-11-20T15:27:22.783Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/match/06/r25/PROGRESS.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T15:27:24.814Z
+
+> 🔧 **Bash** `{"command": "S=/home/user/rainbow-/qa/match/06/r25/step2; R=\"\"; for s in b2_early c_middle c2_middle d_late e_end f_hard_left g_hard_right; do R=\"$R;$S/BEFORE/$s.png,$S/NEW/$s.png\"; done; python3 /home/user/scratch/s06/sheet.py /home/user/scratch/s06/step2_sheet.png 0.3 \"BEFORE|NEW\" \"${R#;}\"; python3 -c \"\nimport json;print(open('$S/NEW/shots.json').read()[:600])\"; grep -n \"m06fcn\" /home/user/wt/s06/src/world/match06.ts | head", "description": "Build step-2 contact sheet and find m06fcn code"}`
+
+### 🧑 User — 2026-11-20T15:27:26.069Z
+
+> ↩︎ result: (518, 3346)
+> [
+>  {
+>   "name": "b2_early",
+>   "frac": 0.22,
+>   "steer": null,
+>   "s": 208.627,
+>   "lat": 0,
+>   "stage": "06",
+>   "coins": 1700,
+>   "s0": 198.91,
+>   "s1": 242.87279039922453
+>  },
+>  {
+>   "name": "c_middle",
+>   "frac": 0.35,
+>   "steer": null,
+>   "s": 214.31,
+>   "lat": 0,
+>   "stage": "06",
+>   "coins": 1720,
+>   "s0": 198.91,
+>   "s1": 242.87279039922453
+>  },
+>  {
+>   "name": "c2_middle",
+>   "frac": 0.47,
+>   "steer": null,
+>   "s": 219.627,
+>   "lat": 0,
+>   "stage": "06",
+>   "coins": 1800,
+>   "s0": 198.91,
+>   "s1": 242.87279039922453
+>  },
+>  {
+>   "name": "d_late",
+>   "frac": 0.6,
+>   "steer": null,
+>   "s": 225.31,
+>   "lat": 0,
+>   "stage": "06"
+> 1044:    // bubble count scale, `&m06fcn=` distance (u) below which they shrink away. A separate random stream: every other
+> 1048:      const fcs = num('m06fcs', 1.25), fck = num('m06fck', 1), fcn = num('m06fcn', 1.4);
+
+### 🤖 Claude — 2026-11-20T15:27:27.587Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s06/step2_sheet.png"}`
+
+### 🧑 User — 2026-11-20T15:27:27.699Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-20T15:27:27.693Z
+
+[Image: original 518x3346, displayed at 310x2000. Multiply coordinates by 1.67 to map to original image.]
+
+### 🤖 Claude — 2026-11-20T15:27:30.165Z
+
+The sheet is too small to judge foam size. Let me measure where BEFORE and NEW differ, then view the three most affected shots larger.
+
+### 🤖 Claude — 2026-11-20T15:27:33.617Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && python3 -c \"\nfrom PIL import Image, ImageChops\nimport numpy as np\nS='/home/user/rainbow-/qa/match/06/r25/step2/'\nfor s in ['b2_early','c_middle','c2_middle','d_late','e_end','f_hard_left','g_hard_right']:\n  a=np.asarray(Image.open(S+'BEFORE/'+s+'.png').convert('RGB')).astype(int); b=np.asarray(Image.open(S+'NEW/'+s+'.png').convert('RGB')).astype(int)\n  d=np.abs(a-b).max(2); m=d>20\n  wa=(a.min(2)>225).sum(); wb=(b.min(2)>225).sum()\n  ys,xs=np.nonzero(m)\n  print(s, 'diff>20 px:',m.sum(), 'bbox', (xs.min(),ys.min(),xs.max(),ys.max()) if m.sum()  …[+197 chars]`
+
+### 🧑 User — 2026-11-20T15:27:35.782Z
+
+> ↩︎ result: b2_early diff>20 px: 14 bbox (np.int64(82), np.int64(29), np.int64(786), np.int64(94)) white px B/N 43922 43923 lower-third white B/N 3522 3522
+> c_middle diff>20 px: 0 bbox None white px B/N 45310 45310 lower-third white B/N 5623 5623
+> c2_middle diff>20 px: 48370 bbox (np.int64(415), np.int64(1072), np.int64(863), np.int64(1384)) white px B/N 140346 123487 lower-third white B/N 90829 73970
+> d_late diff>20 px: 83035 bbox (np.int64(0), np.int64(1322), np.int64(676), np.int64(1535)) white px B/N 153961 104978 lower-third white B/N 110417 61434
+> e_end diff>20 px: 0 bbox None white px B/N 90633 90633 lower-third white B/N 38459 38459
+> f_hard_left diff>20 px: 0 bbox None white px B/N 56152 56152 lower-third white B/N 7551 7551
+> g_hard_right diff>20 px: 97707 bbox (np.int64(226), np.int64(1138), np.int64(801), np.int64(1535)) white px B/N 175923 116632 lower-third white B/N 115904 56613
+
+### 🤖 Claude — 2026-11-20T15:27:41.403Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && python3 -c \"\nfrom PIL import Image\nS='/home/user/rainbow-/qa/match/06/r25/step2/'\nrows=['c2_middle','d_late','g_hard_right']; W=864; y0=800; H=1536-y0; sc=0.55\nout=Image.new('RGB',(int(2*W*sc),int(3*H*sc)))\nfor i,s in enumerate(rows):\n  for j,v in enumerate(['BEFORE','NEW']):\n    im=Image.open(S+v+'/'+s+'.png').convert('RGB').crop((0,y0,W,1536)).resize((int(W*sc),int(H*sc)),Image.LANCZOS)\n    out.paste(im,(int(j*W*sc),int(i*H*sc)))\nout.save('step2_crop.png'); print(out.size)\"", "description": "Crop lower halves of changed step-2 views"}`
+
+### 🧑 User — 2026-11-20T15:27:42.113Z
+
+> ↩︎ result: (950, 1214)
+
+### 🤖 Claude — 2026-11-20T15:27:43.188Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s06/step2_crop.png"}`
+
+### 🧑 User — 2026-11-20T15:27:43.244Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T15:27:55.614Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 1030,1110p src/world/match06.ts", "description": "Read foam-lobe shrink code"}`
+
+### 🧑 User — 2026-11-20T15:27:55.667Z
+
+> ↩︎ result: const w = (h - (1 - fclK)) / fclK; // 0 at a heap's edge, 1 at its centre: the heap tapers off lower and narrower
+>           const l = side * (R6.Wc + 0.15 + rl * fclW * (0.4 + 0.6 * w));
+>           items.push({ p: fr.pos.clone().addScaledVector(fr.right, l).addScaledVector(fr.up, R6.hb + r * 0.15 + rh * 0.05), r: r * (0.6 + 0.4 * w), up: fr.up });
+>           continue;
+>         }
+>         const l = side * (R6.Wc + 0.25 + rl * 1.3);
+>         items.push({ p: fr.pos.clone().addScaledVector(fr.right, l).addScaledVector(fr.up, R6.hb + r * 0.35 + rh * 0.12), r, up: fr.up });
+>       }
+>     }
+>     // r16 `&m06fclu=1` (qa/match/06/r16/PROGRESS.md): the painted 06 foam is soft lilac-white cumulus heaps made of many
+>     // round foam lobes and small bubbles (white tops, cool lilac-blue undersides, tiny bubble pores along the lower edges),
+>     // not smooth pink-white plastic balls. Same layout as m06foam; every blob becomes a low heap of lobes + small bubbles
+>     // (camera-facing sprites, two passes: opaque cores + see-through rims; the Screen 04 `m04fclu` method with 06's own
+>     // painted colours), world-anchored, shrinking away right in front of the camera. `&m06fcs=` heap size, `&m06fck=`
+>     // …[+4787 chars]
+
+### 🤖 Claude — 2026-11-20T15:27:57.951Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"FOAMC_VERT\" src/world/match06.ts | head -3; L=$(grep -n \"const FOAMC_VERT\" src/world/match06.ts | cut -d: -f1); sed -n \"${L},$((L+30))p\" src/world/match06.ts", "description": "Read the foam sprite vertex shader"}`
+
+### 🧑 User — 2026-11-20T15:27:58.082Z
+
+> ↩︎ result: 409:const FOAMC_VERT = /* glsl */ `
+> 1074:        const m = new THREE.ShaderMaterial({ vertexShader: FOAMC_VERT, fragmentShader: (rim ? '#define RIM\n' : '') + FOAMC_FRAG,
+> const FOAMC_VERT = /* glsl */ `
+> attribute vec4 aB;
+> attribute float aS;
+> uniform vec2 uNear;
+> varying vec2 vUv;
+> varying float vS;
+> varying float vF;
+> varying float vPx;
+> void main() {
+>   vUv = uv * 2.0 - 1.0;
+>   vS = aS;
+>   vec4 mv = viewMatrix * vec4(aB.xyz, 1.0);
+>   vF = smoothstep(uNear.x, uNear.y, -mv.z);
+>   mv.xy += position.xy * aB.w * 2.0 * vF;
+>   vPx = aB.w * vF * projectionMatrix[1][1] / max(-mv.z, 0.1); // on-screen radius (fraction of the half-height)
+>   gl_Position = projectionMatrix * mv;
+> }`;
+> // colours = the approved picture's foam heaps (display values, lower corners + crest): white tops (253,252,253), pale
+> // lilac (238,230,252), lilac-blue (191,192,250), cool shadow (159,172,247); pores = darker lilac-blue dots with a glint
+> const FOAMC_FRAG = /* glsl */ `
+> uniform vec4 uPjPost;
+> uniform vec2 uPjRes;
+> varying vec2 vUv;
+> varying float vS;
+> varying float vF;
+> varying float vPx;
+> ${PROJ05_INVERSE}
+> float h21(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+> void main() {
+>   float r = length(vUv);
+>   if …[+32 chars]
+
+### 🤖 Claude — 2026-11-20T15:28:25.620Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='src/world/match06.ts'; s=open(p).read()\nold_v=\"\"\"attribute vec4 aB;\nattribute float aS;\nuniform vec2 uNear;\nvarying vec2 vUv;\nvarying float vS;\nvarying float vF;\nvarying float vPx;\nvoid main() {\n  vUv = uv * 2.0 - 1.0;\n  vS = aS;\n  vec4 mv = viewMatrix * vec4(aB.xyz, 1.0);\n  vF = smoothstep(uNear.x, uNear.y, -mv.z);\n  mv.xy += position.xy * aB.w * 2.0 * vF;\"\"\"\nnew_v=\"\"\"attribute vec4 aB;\nattribute float aS;\n#ifdef GROUP\nattribute vec3 aC;\n#endif\nuniform vec2 uNear;\nvarying vec2 vUv;\nvarying float vS;\nvary …[+2054 chars]`
+
+### 🧑 User — 2026-11-20T15:28:32.259Z
+
+> ↩︎ result: 412:#ifdef GROUP
+> 423:#ifdef GROUP
+> 424:  // r27 m06fcg: the whole heap shrinks as one unit into its foot on the water, timed by the heap's own distance
+> 1061:      const fcg = qs?.get('m06fcg') === '1'; // r27: shrink each heap as a unit (see FOAMC_VERT GROUP)
+> 1084:      if (fcg) g.setAttribute('aC', new THREE.InstancedBufferAttribute(new Float32Array(aC), 3));
+> 1087:        const m = new THREE.ShaderMaterial({ vertexShader: (fcg ? '#define GROUP\n' : '') + FOAMC_VERT, fragmentShader: (rim ? '#define RIM\n' : '') + FOAMC_FRAG,
+> tsc exit 0
+
+### 🤖 Claude — 2026-11-20T15:28:38.624Z
+
+The typecheck is clean. Now I'll render NEW2 = step-2 NEW + `&m06fcg=1`, only for the three views that `m06fcn` changes, with the same pinned water clock, through the render slot.
+
+### 🤖 Claude — 2026-11-20T15:28:40.579Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r25/step2 && echo -n \"$(cat QUERY_NEW.txt)&m06fcg=1\" > QUERY_NEW2.txt && cat QUERY_NEW2.txt && echo && node /home/user/rainbow-/tools/lead23/setq.mjs \"$(cat QUERY_NEW.txt)\" \"m06fcg=1\" 2>&1 | head -3; ss -ltnp 2>/dev/null | grep -E \":52(76|82|83)\" ; cat /home/user/rainbow-/tools/lead25/render_slot.sh | head -20", "description": "Write NEW2 query and check ports and slot tool"}`
+
+### 🧑 User — 2026-11-20T15:28:40.830Z
+
+> ↩︎ result: match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1&m06st=1&m06fcl=1&m06view=1&m06vs=0&m06rip=1&m06hole=2&m06fade=1&m06spl=1&m06fcn=3&m06fcg=1
+> match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1&m06st=1&m06fcl=1&m06view=1&m06vs=0&m06rip=1&m06hole=2&m06fade=1&m06spl=1&m06fcn=3&m06fcg=1#!/usr/bin/env bash
+> # render_slot.sh — run one heavy render (Playwright / SwiftShader / Blender / ffmpeg) while holding one of N machine-wide
+> # render slots, so the four specialist workers on this 4-CPU container take turns instead of overloading it
+> # (round 24 ran at load ~30 with repeated Playwright timeouts).
+> #   usage:  bash /home/user/rainbow-/tools/lead25/render_slot.sh <command> [args...]
+> #   N = $RENDER_SLOTS (default 2). Waits (polling every 5 s) until a slot is free; prints the wait time on stderr.
+> #   The exit code is the command's. Slots are flock(1) locks under /tmp, released automatically if the process dies.
+> #   Status:  bash /home/user/rainbow-/tools/lead25/render_slot.sh --status
+> N=${RENDER_SLOTS:-2}
+> if [ "${1:-}" = "--status" ]; then
+>   for i in $(seq 1 "$N"); do
+>     if flock -n "/ …[+300 chars]
+
+### 🤖 Claude — 2026-11-20T15:28:43.603Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r25/step2 && SHOTS='[[\"c2_middle\",0.47,null],[\"d_late\",0.6,null],[\"g_hard_right\",0.35,1]]' bash render.sh NEW2 > /home/user/scratch/s06/r_new2.log 2>&1; cat /home/user/scratch/s06/r_new2.log; tail -5 NEW2.log", "description": "Render NEW2 three changed step-2 views", "timeout": 3000000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T15:28:43.680Z
+
+> ↩︎ result: Command running in background with ID: bxun2l798. Output is being written to: /tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/tasks/bxun2l798.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-20T15:28:46.989Z
+
+While that renders, I'll update the r27 block and prepare the whole-06 clip script for step 2.
+
+### 🤖 Claude — 2026-11-20T15:28:47.917Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 1,24p tools/match06/r25_open_clip.mjs | grep -n -E \"TAIL|argv|fps|PORT|vite\" ", "description": "Check clip tool arguments and tail"}`
+
+### 🧑 User — 2026-11-20T15:28:48.009Z
+
+> ↩︎ result: 7://   cd <worktree> && AUDIT_PORT=5290 node /home/user/rainbow-/tools/lead23/screen_clip.mjs <screen 04..08> <outDir> "<query>" [tailSecs]
+> 13:  const { createServer, searchForWorkspaceRoot } = await import(pathToFileURL(`${process.cwd()}/node_modules/vite/dist/node/index.js`).href);
+> 20:const [SCREEN, OUT, Q = '', TAIL = '0.6'] = process.argv.slice(2);
+> 21:const fps = 24;
+> 24:const vite = await startVite(Number(process.env.AUDIT_PORT ?? 5290));
+
+### 🤖 Claude — 2026-11-20T15:28:55.004Z
+
+> 🔧 **Bash** `{"command": "cat > /home/user/rainbow-/qa/match/06/r25/step2/clip.sh <<'EOF'\n#!/usr/bin/env bash\n# r27 s06 step 2: uninterrupted REAL-GAMEPLAY clip of the WHOLE of Screen 06 (entrance straight < 30 %, steering LEFT 30-50 %,\n# RIGHT 50-70 %, straight to the end, then 0.6 s into 07), real game speed (24 frames per game second, water clock = clip clock),\n# every frame labelled with the playback speed (tools/lead23/label_clip.py): <V>_whole06_1x.mp4 + <V>_whole06_0.5x.mp4.\n#   bash clip.sh BEFORE NEW2      (QUERY_<V>.txt; each run waits for a machine render slot)\nO=/home/user/rainbow-/qa/mat …[+917 chars]`
+
+### 🧑 User — 2026-11-20T15:28:55.150Z
+
+> ↩︎ result: 2:"""Lead r23: label every frame of a screen_clip.mjs run (title, playback speed, phase, game time) and encode mp4s.
+> 3:usage: python3 -I label_clip.py <clipDir> <title> <out_prefix>   -> <out_prefix>_1x.mp4 (real game speed) + _0.5x.mp4"""
+> 8:d, title, outp = Path(sys.argv[1]), sys.argv[2], sys.argv[3]
+> 14:for speed in ('1x', '0.5x'):
+> 18:        spd = 'REAL GAME SPEED (1.0x)' if speed == '1x' else 'HALF SPEED (0.5x)'
+> 27:    subprocess.run(['ffmpeg', '-loglevel', 'error', '-y', '-framerate', str(rate), '-i', str(lab / '%04d.png'),
+> 28:                    '-pix_fmt', 'yuv420p', '-c:v', 'libx264', '-crf', '20', f'{outp}_{speed}.mp4'], check=True)
+
+### 🤖 Claude — 2026-11-20T15:29:01.644Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/match/06/r25/PROGRESS.md", "old_string": "* NOW: step 2 (foam height `&m06fcn=3`) — judging the existing `step2/BEFORE|NEW` shots.\n", "new_string": "* Step 2 (foam height) judged from the existing shots: `&m06fcn=3` changes ONLY 47 % / 60 % / hard-right (all other views 0 px);\n  lower-third white foam px BEFORE→NEW 90.8k→74.0k, 110.4k→61.4k, 115.9k→56.6k: the big near foam clouds over the bottom of the\n  frame shrink away, more river visible. NEW PROBLEM: half-shrunk heaps break into trails of tiny loose white beads (60 % bottom\n  …[+478 chars]`
+
+### 🧑 User — 2026-11-20T15:29:01.896Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/match/06/r25/PROGRESS.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T15:29:10.028Z
+
+Waiting for the NEW2 render (it holds or waits for a machine slot).
+
+### 🤖 Claude — 2026-11-20T15:29:11.878Z
+
+> 🔧 **Bash** `{"command": "bash /home/user/rainbow-/tools/lead25/render_slot.sh --status; until [ -f /home/user/rainbow-/qa/match/06/r25/step2/NEW2/g_hard_right.png ] || grep -q \"exit\" /home/user/scratch/s06/r_new2.log 2>/dev/null; do sleep 15; done; cat /home/user/scratch/s06/r_new2.log; ls /home/user/rainbow-/qa/match/06/r25/step2/NEW2/", "description": "Wait for NEW2 render to finish", "timeout": 560000}`
+

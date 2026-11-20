@@ -1,5 +1,12 @@
 # Screen 04 — round 23 (new account, lead session branch `claude/rainbow-r22-restore-ut3m39`) — lead log
 
+## (r27) WHERE I STOPPED / NEXT — s04 specialist (relaunched r27 ~15:20 UTC, worktree `/home/user/wt/s04`, LOCAL branch `claude/rainbow-s04-match-c28`)
+* Worktree = r26 state restored (K23-S3 code + `m04lgc` + `m04a5` + `m04bbdc`), ports 5273/5274, scratch `/home/user/scratch/s04/`.
+* Lost r26 variant renders recovered from the r26 transcript (exact overrides) and re-rendering: `/home/user/scratch/s04/run_r27a.sh`
+  (V0_base, V4_fine, V5_fine2 + new V6_thin, V7_sparse; step-2 C1_cloud, C2_cloud_low), base = `qa/match/04/r26/s0_five/QUERY_NEW_K23-S3_a5.txt`.
+* NEXT: step 1 verdict (pick one crescent variant) -> proof `qa/match/04/r27/s1_glint/`; step 2 cloud banks -> `qa/match/04/r27/s2_cloud/`;
+  step 3 arrow trade-off switch + gameplay + combined whole-04 clip -> `qa/match/04/r27/s3_combined/`.
+
 ## (r26) WHERE I STOPPED / NEXT — s04 specialist (relaunched r26 ~13:10 UTC, worktree `/home/user/wt/s04`, LOCAL branch `claude/rainbow-s04-match-c27`)
 * Worktree = K23-S3 code + r25 `m04lgc` + r26 `m04a5` + r26 `m04bbdc` (cloud banks, written, unproven). tsc 0. Scratch `/home/user/scratch/s04/`.
 * Step 0' DONE — five-arrow fix `&m04a5=2` proven in the clip (`qa/match/04/r26/s0_five/`, result below). Gameplay run owed (planned

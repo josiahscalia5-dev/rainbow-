@@ -346,3 +346,194 @@ I'll start by reading the required documents in order.
 > 893	      // r23 m04lgs=1: the painted lane water is CLEAN glossy electric cyan with long thin white highlight streaks running
 > 894	      // with the flow (no soft white frosted blotches): base = the tile's gentle light / dark flow seen  …[+5296 chars]
 
+### 🤖 Claude — 2026-11-20T15:26:36.769Z
+
+> 🔧 **Bash** `{"command": "ls /home/user/rainbow-/qa/match/04/r23/s1_arrows/APPROVED/ /home/user/rainbow-/qa/match/04/r23/s3_glossy/ | head -40; ls /home/user/rainbow-/qa/match/04/r25/clip | head", "description": "List approved and glossy step folders"}`
+
+### 🧑 User — 2026-11-20T15:26:36.832Z
+
+> ↩︎ result: /home/user/rainbow-/qa/match/04/r23/s1_arrows/APPROVED/:
+> 1_APPROVED_original_start_early.png
+> 2_ACCEPTED_GENERATED_view_c_middle.png
+> 2_ACCEPTED_GENERATED_view_d_late.png
+> 2_ACCEPTED_GENERATED_view_e_end.png
+> 
+> /home/user/rainbow-/qa/match/04/r23/s3_glossy/:
+> APPROVED
+> K23-1_with_new_code
+> K23-S2_with_new_code
+> NEW
+> QUERY_K23-S3.txt
+> SWITCH.txt
+> code.patch
+> gameplay.json
+> step3_only.patch
+> swim04_NEW_K23-S3_frames
+> swim04_NEW_K23-S3_halfspeed.mp4
+> swim04_NEW_K23-S3_realspeed.mp4
+> QUERY_BEFORE_K23-1.txt
+> QUERY_NEW_K23-S3.txt
+> frames_BEFORE_K23-1.json
+> frames_NEW_K23-S3.json
+> frames_full_BEFORE_K23-1
+> frames_full_NEW_K23-S3
+> swim04_whole_BEFORE_K23-1_0.5x.mp4
+> swim04_whole_BEFORE_K23-1_1.0x.mp4
+> swim04_whole_NEW_K23-S3_0.5x.mp4
+> swim04_whole_NEW_K23-S3_1.0x.mp4
+
+### 🤖 Claude — 2026-11-20T15:26:49.104Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/scratch/s04/s1var /home/user/scratch/s04/s2var && cat > /home/user/scratch/s04/run_r27a.sh <<'EOF'\n#!/usr/bin/env bash\n# r27 s04 job A: re-render the lost step-1 / step-2 variants (base = K23-S3 + m04a5=2) on port 5274\nS=/home/user/scratch/s04\nexport BASE=/home/user/rainbow-/qa/match/04/r26/s0_five/QUERY_NEW_K23-S3_a5.txt\nV=/home/user/rainbow-/qa/match/04/r23/s04_tools/variant.sh\nrun() { echo \"start $1 $(date -u +%T)\"; bash $V $S/$1 5274 \"$2\"; }\nrun s1var/V0_base \"\"\nTWO='[[\"c_middle\",0.35,null],[\"d_late\",0.6,null]]'\nSHOTS=$TWO run s1var/V4_fi …[+865 chars]`
+
+### 🧑 User — 2026-11-20T15:26:51.207Z
+
+> ↩︎ result: slot 1 busy
+> slot 2 free
+>  15:26:51 up 25 min,  0 user,  load average: 0.97, 0.58, 0.45
+
+### 🤖 Claude — 2026-11-20T15:26:57.489Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/match/04/r23/PROGRESS.md", "old_string": "# Screen 04 — round 23 (new account, lead session branch `claude/rainbow-r22-restore-ut3m39`) — lead log\n", "new_string": "# Screen 04 — round 23 (new account, lead session branch `claude/rainbow-r22-restore-ut3m39`) — lead log\n\n## (r27) WHERE I STOPPED / NEXT — s04 specialist (relaunched r27 ~15:20 UTC, worktree `/home/user/wt/s04`, LOCAL branch `claude/rainbow-s04-match-c28`)\n* Worktree = r26 state restored (K23-S3 code + `m04lgc` + `m04a5` + `m04bbdc`), ports 5273/5274, scratch `/home/u …[+549 chars]`
+
+### 🧑 User — 2026-11-20T15:26:57.548Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/match/04/r23/PROGRESS.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T15:26:58.170Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/src/world/match04m4.ts", "offset": 1960, "limit": 110}`
+
+### 🧑 User — 2026-11-20T15:26:58.198Z
+
+> ↩︎ result: 1960	  // r20 `&m04bbank=1` (with m04foam + m04river): the painted bank foam — LOW, WIDE heaps of BIG separate glossy pearly
+> 1961	  // lilac-white bubbles with pale blue-lilac shading — as instanced Blender heaps (tools/blender/foam_bank04.py: 4 seeds in
+> 1962	  // assets/models/match04/foam_bank04.glb, ~5k triangles each; recipe from the lead's r19 m04bfoam test) in place of the
+> 1963	  // sprite cloud puffs: one heap per bank clump inside the entrance rim, the pre-opening foam banks binned into heaps (two
+> 1964	  // rows per side). Same visibility rule as all 3D foam (hidden in the approved view, fading in as the camera leaves it);
+> 1965	  // every bubble shrinks away into its own centre as it nears the camera (view depth m04bbn0 -> m04bbn1, default the
+> 1966	  // foam's m04foamn0 / m04foamn1, like the sprite bubbles) so nothing pops in the face. Tunables: m04bbs heap size,
+> 1967	  // m04bbb pre-opening bin length (u), m04bbe self-light, m04bbc tint (0 white .. 3 blue-lilac), m04bbi iridescence,
+> 1968	  // m04bbr roughness, m04bbk sink into the water (share of the heap height), m04bbw inside-rim heaps (0 = none), m04bbl
+> 1969	  // blue-lilac shading toward each bubble's outline, m04bbg t …[+8787 chars]
+
+### 🤖 Claude — 2026-11-20T15:27:01.836Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/04/r23/s1_arrows/APPROVED/ && python3 -I -c \"\nfrom PIL import Image\nimport glob\nfs=sorted(glob.glob('*.png'))\nfor f in fs: print(f, Image.open(f).size)\nW=Image.new('RGB',(4*432,768))\nfor k,f in enumerate(fs):\n    W.paste(Image.open(f).convert('RGB').resize((432,768)),(k*432,0))\nW.save('/home/user/scratch/s04/approved_sheet.png')\n\"", "description": "Build reduced contact sheet of approved views"}`
+
+### 🧑 User — 2026-11-20T15:27:02.586Z
+
+> ↩︎ result: 1_APPROVED_original_start_early.png (864, 1536)
+> 2_ACCEPTED_GENERATED_view_c_middle.png (864, 1548)
+> 2_ACCEPTED_GENERATED_view_d_late.png (864, 1548)
+> 2_ACCEPTED_GENERATED_view_e_end.png (864, 1548)
+
+### 🤖 Claude — 2026-11-20T15:27:03.806Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s04/approved_sheet.png"}`
+
+### 🧑 User — 2026-11-20T15:27:03.911Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T15:27:06.842Z
+
+> 🔧 **Bash** `{"command": "timeout 540 bash -c 'until grep -q \"start s1var/V5\" /home/user/scratch/s04/run_r27a.out; do sleep 10; done'; cat /home/user/scratch/s04/run_r27a.out; uptime", "description": "Wait for first variants to render", "timeout": 560000}`
+
+### 🧑 User — 2026-11-20T15:28:16.965Z
+
+> ↩︎ result: start s1var/V0_base 15:26:49
+> done /home/user/scratch/s04/s1var/V0_base 4 png
+> start s1var/V4_fine 15:27:35
+> done /home/user/scratch/s04/s1var/V4_fine 2 png
+> start s1var/V5_fine2 15:28:16
+>  15:28:16 up 27 min,  0 user,  load average: 5.06, 1.84, 0.89
+
+### 🤖 Claude — 2026-11-20T15:28:21.182Z
+
+> 🔧 **Bash** `{"command": "timeout 540 bash -c 'until grep -q \"start s2var/C1\" /home/user/scratch/s04/run_r27a.out; do sleep 10; done'; cat /home/user/scratch/s04/run_r27a.out; cd /home/user/scratch/s04 && python3 -I -c \"\nfrom PIL import Image\nvs=['V0_base','V4_fine','V5_fine2','V6_thin','V7_sparse']\nW=Image.new('RGB',(5*432,2*300))\nfor k,v in enumerate(vs):\n  for j,sh in enumerate(['c_middle','d_late']):\n    im=Image.open(f's1var/{v}/{sh}.png').convert('RGB')\n    W.paste(im.crop((0,936,864,1536)).resize((432,300)),(k*432,j*300))\nW.save('lgc_cmp_r27.png')\nA=Image.open('/home/user/rainbow-/qa/mat …[+239 chars]`
+
+### 🧑 User — 2026-11-20T15:30:42.238Z
+
+> ↩︎ result: start s1var/V0_base 15:26:49
+> done /home/user/scratch/s04/s1var/V0_base 4 png
+> start s1var/V4_fine 15:27:35
+> done /home/user/scratch/s04/s1var/V4_fine 2 png
+> start s1var/V5_fine2 15:28:16
+> done /home/user/scratch/s04/s1var/V5_fine2 2 png
+> start s1var/V6_thin 15:29:02
+> done /home/user/scratch/s04/s1var/V6_thin 2 png
+> start s1var/V7_sparse 15:29:46
+> done /home/user/scratch/s04/s1var/V7_sparse 2 png
+> start s2var/C1_cloud 15:30:34
+
+### 🤖 Claude — 2026-11-20T15:30:43.144Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s04/lgc_cmp_r27.png"}`
+
+### 🧑 User — 2026-11-20T15:30:43.305Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-20T15:30:43.291Z
+
+[Image: original 2160x600, displayed at 2000x556. Multiply coordinates by 1.08 to map to original image.]
+
+### 🤖 Claude — 2026-11-20T15:30:44.687Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s04/lgc_acc.png"}`
+
+### 🧑 User — 2026-11-20T15:30:44.715Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T15:30:52.731Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s04 && python3 -I -c \"\nfrom PIL import Image\nvs=['V0_base','V4_fine','V6_thin','V7_sparse']\nW=Image.new('RGB',(4*400,330))\nfor k,v in enumerate(vs):\n  im=Image.open(f's1var/{v}/c_middle.png').convert('RGB')\n  W.paste(im.crop((80,1180,480,1510)),(k*400,0))\nW.save('lgc_full_r27.png')\nA=Image.open('/home/user/rainbow-/qa/match/04/r23/s1_arrows/APPROVED/2_ACCEPTED_GENERATED_view_c_middle.png').convert('RGB').crop((80,1100,480,1430)); A.save('lgc_acc_full.png')\n\"", "description": "Full-resolution near-water crops for glint variants"}`
+
+### 🧑 User — 2026-11-20T15:30:53.171Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T15:30:54.199Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s04/lgc_full_r27.png"}`
+
+### 🧑 User — 2026-11-20T15:30:54.219Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T15:30:54.557Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s04/lgc_acc_full.png"}`
+
+### 🧑 User — 2026-11-20T15:30:54.634Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T15:31:08.746Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 772,780p src/world/match04m4.ts && grep -n \"float vn(\\|float h21(\" src/world/match04m4.ts | head", "description": "Show uniform declarations and noise helpers"}`
+
+### 🧑 User — 2026-11-20T15:31:08.887Z
+
+> ↩︎ result: uniform vec4 uLG;            // r23 m04lgs: x strength, y streaks per u across, z line half width (share), w whiteness
+> uniform vec4 uLG2;           // r23 m04lgs: x streak segment length (u), y meander (u), z base smoothing (mip), w far fade
+> uniform vec4 uLG3;           // r24 m04lgs: x swirl bend (u), y swirl size (u), z sparkles, w dash threshold
+> uniform vec4 uLG4;           // r24 m04lgs: x deeper electric-blue base (brightness shift), y glint brightness variation
+> uniform vec4 uLG5;           // r25 m04lgc: x crescent glints on (strength), y crescent cell length along (u), z bend (share of the
+>                              // line spacing), w dash threshold (higher = fewer crescents)
+> uniform vec4 uLG6;           // r25 m04lgc: x / y crescents from x to y u ahead of the camera hand over to the long streaks
+>                              // (y <= x: crescents everywhere), z crescent whiteness boost, w star sparkle at the brightest crescents
+> uniform vec4 uEdge;          // r13 m04edge: x on, y half arc to the edge, z fringe width, w strength
+> 144:float h21(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+> 825:float h21(vec2 p) { return fract(sin(dot(p, vec2(127.1, …[+371 chars]
+
+### 🤖 Claude — 2026-11-20T15:31:10.352Z
+
+Now I'll add the clustering + soft-glow option (`m04lgcg`, new uniform `uLG7`), default off.
+
+### 🤖 Claude — 2026-11-20T15:31:24.160Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -I - <<'EOF'\np='src/world/match04m4.ts'; s=open(p).read()\ndef rep(old,new):\n    global s\n    assert s.count(old)==1, old[:60]; s=s.replace(old,new)\nrep(\"\"\"                             // (y <= x: crescents everywhere), z crescent whiteness boost, w star sparkle at the brightest crescents\n\"\"\",\"\"\"                             // (y <= x: crescents everywhere), z crescent whiteness boost, w star sparkle at the brightest crescents\nuniform vec4 uLG7;           // r27 m04lgcg: x cluster threshold (0 = off), y cluster size across (u), z clus …[+3204 chars]`
+

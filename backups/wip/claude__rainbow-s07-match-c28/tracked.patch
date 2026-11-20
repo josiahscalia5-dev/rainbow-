@@ -318,7 +318,7 @@ index 531778e..9a82521 100644
      let base = this.prop(s, 'width');
      // 05 current (ref 05): the water fills the tube floor wall to wall. The centreline winds by
 diff --git a/src/world/match07.ts b/src/world/match07.ts
-index b9f474c..d9d9946 100644
+index b9f474c..e9d7df4 100644
 --- a/src/world/match07.ts
 +++ b/src/world/match07.ts
 @@ -48,8 +48,11 @@ varying vec3 vN;
@@ -333,20 +333,21 @@ index b9f474c..d9d9946 100644
    vec4 wp = modelMatrix * vec4(position, 1.0);
    vProj = uProjVP * wp;
    vW = wp.xyz;
-@@ -94,6 +97,12 @@ uniform sampler2D uFoamTile;
+@@ -94,6 +97,13 @@ uniform sampler2D uFoamTile;
  uniform vec3 uWF;         // r16 '?m07wfoam=1': foam clouds piled on the lowest wall band — base height, cloud-top height, on (z)
  uniform vec4 uBand;       // r18 '?m07band=1': S-sweep of the river centre off Benny's lane: amplitude, wavelength, phase (along), on (w)
  uniform vec4 uBand2;      // r18 m07band: reach of Benny's lane (lane ± steer + body), cyan core half-width, min band width, foam-edge wobble
 +uniform vec3 uPlC;        // r21 m07end: plunge river cyan core half-width ramp (along from, along to, half-width)
 +uniform float uCloudSh;   // r22 m07cloud: the flat painted foam between the 3D foam mounds takes the mounds' periwinkle shade (0 = off)
 +uniform float uSatin;     // r22 '?m07satin=1': crisp painted satin streaks on the magenta bands (1 = on)
++uniform float uFSoft;     // r27 '?m07fsoft=1': the painted bubble trim between cyan and magenta only in irregular clusters (1 = on)
 +uniform vec4 uBandP;      // r23 '?m07sbend=1': plunge cyan-core lean toward the inside of each S-bend (x = core shift at full bend),
 +                          // z = along where the plunge river starts (the level S-sweep hands over to it), w = on
 +varying float vBend;
  varying vec2 vUv;
  varying vec4 vProj;
  varying vec3 vW;
-@@ -101,12 +110,63 @@ varying vec3 vN;
+@@ -101,12 +111,65 @@ varying vec3 vN;
  varying vec3 vL;
  varying float vCtr;
  ${PROJ05_INVERSE}
@@ -356,6 +357,8 @@ index b9f474c..d9d9946 100644
 +// segments at the painted scale, anti-aliased by fwidth and faded out where a lane gets thinner than ~2 px (far away the tile
 +// shows as before).
 +float hash12(vec2 p) { vec3 p3 = fract(vec3(p.xyx) * 0.1031); p3 += dot(p3, p3.yzx + 33.33); return fract((p3.x + p3.y) * p3.z); }
++// r27 m07fsoft: 1D value noise (world-anchored along the river) for where the painted bubble trim shows
++float vnoise1(float x, float seed) { float i = floor(x), f = fract(x); f = f * f * (3.0 - 2.0 * f); return mix(hash12(vec2(i, seed)), hash12(vec2(i + 1.0, seed)), f); }
 +// r23 m07satin: the painted satin's tone ribbons are ~0.3 u apart at the painted near scale (3–4 light ribbons across the near
 +// band), meandering gently with the flow and now and then merging; ph = ribbon coordinate (1 per ribbon), world-anchored
 +float satinPh(float xb, float wb, float y, float sd) {
@@ -413,7 +416,7 @@ index b9f474c..d9d9946 100644
    float R = uNearW.x, mw = uNearW.y;
    float Rc = R - mw;                       // cyan core half-width
    float Ro = R;                            // outer edge of the magenta band (foam beyond)
-@@ -115,9 +175,12 @@ vec3 nearWater() {
+@@ -115,9 +178,12 @@ vec3 nearWater() {
      // core sweeping in a world-anchored S off his lane (so the bands curve across the view as he swims, like the painted
      // S-sweeps); on the outside of each bend the band widens to cover everywhere Benny can steer (never foam under him)
      float S = uBand.x * sin(6.2831853 * (along - uBand.z) / uBand.y);
@@ -427,10 +430,26 @@ index b9f474c..d9d9946 100644
      Ro = max(Rc + uBand2.z, reach);
    }
    float a = abs(d);
-@@ -132,15 +195,35 @@ vec3 nearWater() {
+@@ -132,15 +198,51 @@ vec3 nearWater() {
    vec3 cL = texture2D(uNearTile, vec2(u, v)).rgb;
    vec3 cR = texture2D(uNearTile, vec2(u, v + 0.5)).rgb;
    vec3 river = mix(cL, cR, smoothstep(-0.32, 0.32, d));
++  if (uFSoft > 0.5) {
++    // r27 m07fsoft (user r27: "refine ... the overly regular white bead-like lines between cyan water and pink edges"): the bank
++    // tile's bubble trim (columns ~82-110 of 268) repeats as an unbroken bead row down both edges. Here it shows only in short
++    // irregular clusters (world-anchored, ~1-2 u long, a quarter of the length, each side its own); elsewhere the clean magenta
++    // (columns <= 80) meets the clean glossy cyan (columns >= 112) with a soft blend
++    float sdT = d >= 0.0 ? 1.0 : -1.0;
++    float nT = 0.68 * vnoise1(along * 0.55, 3.7 + sdT * 11.3) + 0.32 * vnoise1(along * 1.9, 8.1 + sdT * 5.9);
++    float tm = smoothstep(0.6, 0.72, nT);
++    float uMg = min(u, uNearM) * (80.0 / 268.0) / uNearM;
++    float uCy = 112.0 / 268.0 + max(u - uNearM, 0.0) * (156.0 / 268.0) / (1.0 - uNearM);
++    float sdW = smoothstep(-0.32, 0.32, d);
++    vec3 cm = mix(texture2D(uNearTile, vec2(uMg, v)).rgb, texture2D(uNearTile, vec2(uMg, v + 0.5)).rgb, sdW);
++    vec3 cc = mix(texture2D(uNearTile, vec2(uCy, v)).rgb, texture2D(uNearTile, vec2(uCy, v + 0.5)).rgb, sdW);
++    vec3 clean = mix(cm, cc, smoothstep(uNearM - 0.012, uNearM + 0.03, u));
++    river = mix(clean, river, tm);
++  }
 +  if (uSatin > 0.5) {
 +    // r22 m07satin: where the band is magnified close to the camera the smooth painted satin (tone ribbons following the flow)
 +    // takes over from the blurry tile; long white-pink glints run along the light crest ribbons (a few elsewhere)
@@ -464,7 +483,7 @@ index b9f474c..d9d9946 100644
    return mix(river, foam, smoothstep(R - 0.04, R + 0.10, a));
  }
  // r16 m07wfoam: the painted foam clouds piled where the tube wall meets the water (no hard wall / floor edge when steering hard);
-@@ -162,6 +245,11 @@ vec3 riverTile() {
+@@ -162,6 +264,11 @@ vec3 riverTile() {
    return texture2D(uTile, vec2(u, v)).rgb;
  }
  vec3 tileColor() {
@@ -476,7 +495,7 @@ index b9f474c..d9d9946 100644
    // M3 '?m07tube=1' plunge surfaces (real geometry along the course): uv = (arc depth along the tube, angle / lateral)
    if (uMode > 3.5) {
      float u = (vUv.x - uRiver.x) / (uRiver.y - uRiver.x);
-@@ -175,7 +263,7 @@ vec3 tileColor() {
+@@ -175,7 +282,7 @@ vec3 tileColor() {
      return texture2D(uTile, vec2(u, v)).rgb;
    }
    if (uMode > 1.5) {
@@ -485,7 +504,7 @@ index b9f474c..d9d9946 100644
      return riverTile();
    }
    if (uMode > 0.5) {
-@@ -248,6 +336,92 @@ void main() {
+@@ -248,6 +355,94 @@ void main() {
    gl_FragColor = vec4(pjInverse(t), 1.0);
  }`;
  
@@ -531,6 +550,7 @@ index b9f474c..d9d9946 100644
 +}`;
 +const CLOUD_FRAG = /* glsl */ `
 +uniform mat4 projectionMatrix;
++uniform float uFSoftC;    // r27 m07fsoft: small lobes matte (no glint, no rim sheen) so the bumps blend into one soft mass
 +uniform vec4 uPjPost;
 +uniform vec2 uPjRes;
 +varying vec3 vPv;
@@ -571,14 +591,15 @@ index b9f474c..d9d9946 100644
 +  vec3 L = normalize(vec3(-0.25, 0.85, 0.0) + 0.45 * vw);
 +  float sp = pow(max(dot(reflect(-L, nw), vw), 0.0), 14.0);
 +  vec3 sheen = mix(vec3(0.96, 0.82, 0.98), vec3(0.8, 0.9, 1.0), 0.5 + 0.5 * sin(vTone.y * 6.28 + nw.x * 3.0));
-+  col = mix(col, sheen, 0.14 * rim) + 0.16 * sp;
++  float gK = uFSoftC > 0.5 ? smoothstep(0.16, 0.42, vR) : 1.0;
++  col = mix(col, sheen, 0.14 * rim * gK) + 0.16 * sp * gK;
 +  gl_FragColor = vec4(pjInverse(clamp(col, 0.0, 1.0)), 1.0);
 +}`;
 +
  const tex = (f: string) => new URL(`../../assets/textures/match07/${f}`, import.meta.url).href;
  /** r18: numeric URL tunable (QA only), default when absent or not a number */
  const num07 = (k: string, def: number) => {
-@@ -256,7 +430,11 @@ const num07 = (k: string, def: number) => {
+@@ -256,7 +451,11 @@ const num07 = (k: string, def: number) => {
  };
  
  /** M3 '?m07tube=1': the plunge continuation needs the course (arc samples) and where it starts / ends */
@@ -591,7 +612,7 @@ index b9f474c..d9d9946 100644
  
  export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
    const [L, TL]: [Layout07, Tiles07] = await Promise.all([fetch(tex('proj07.json')).then((r) => r.json()), fetch(tex('tiles07.json')).then((r) => r.json())]);
-@@ -283,6 +461,25 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -283,6 +482,30 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
    // r18: on top of m07nearw, the painted near-river proportions — narrow cyan core, thick magenta bands, world-anchored S-sweep
    // (the r17 draft '&m07nearf' was rejected: qa/match/07/r18/PROGRESS.md)
    const band = nearW && flag05('m07band');
@@ -613,11 +634,16 @@ index b9f474c..d9d9946 100644
 +  // r24 '&m07swing=1' (with m07sbend; qa/match/07/r24/PROGRESS.md): the drop's foam banks follow the broad S-bends — squeezed to a
 +  // thin fringe where the river's outer bank runs against the tube wall, heaped in big clouds that fill the wide inside of each bend
 +  const swing = endW && clouds && !!plunge?.course.bend07 && flag05('m07swing');
++  // r27 '&m07fsoft=1' (qa/match/07/r24/PROGRESS.md, user r27 foam note): keep the outer-bank foam but as soft, varied clusters with
++  // believable gaps (no bulky uniformly packed banks: fewer, larger-varied surface bumps, matte small lobes, a clustered skirt, the
++  // inside-bend heaps lower and kept off the river so they do not reach over Benny at the steering limit), and the bank tile's bubble
++  // trim between cyan and magenta only in short irregular clusters instead of an unbroken bead row
++  const fsoft = nearW && flag05('m07fsoft');
 +  const lowRamp = (s: number, sA: number) => (lowF ? THREE.MathUtils.smootherstep(s, sA + 3, sA + 12) : 0);
    const [tNear, tFoam] = await Promise.all([nearW ? load('near_bank.png', THREE.RepeatWrapping) : null, nearW || wallFoamOn ? load('near_foam.png', THREE.RepeatWrapping) : null]);
    if (tNear) tNear.wrapS = THREE.ClampToEdgeWrapping;
    const [plate, tWall, tRiver, pGold, fillMask] = await Promise.all([
-@@ -351,7 +548,12 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -351,7 +574,13 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
      // foam-edge wobble 0.12 u. Tunables ?m07bA= / ?m07bL= / ?m07bC=
      uBand: { value: new THREE.Vector4(num07('m07bA', 0.6), num07('m07bL', 14), 0, band ? 1 : 0) },
      uBand2: { value: new THREE.Vector4(2.85, num07('m07bC', 1.1), 0.95, 0.12) },
@@ -625,12 +651,13 @@ index b9f474c..d9d9946 100644
 +    uCloudSh: { value: 0 },
 +    uSatin: { value: band && flag05('m07satin') ? 1 : 0 },
 +    uBandP: { value: new THREE.Vector4(num07('m07sbC', -0.5), 0, 0, 0) },
++    uFSoft: { value: fsoft ? 1 : 0 },
    };
 +  const ctrLane: number[] = [];
    if (nearW) {
      // river centre line in the tube-local frame: the lane Benny swims (course centre, sampled at the depth) plus the painted
      // river's winding (tools/match07/river_coins07.py → river07.json, clamped so Benny stays in the cyan), continued by a gentle
-@@ -384,6 +586,7 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -384,6 +613,7 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
        const kk = THREE.MathUtils.smoothstep(along, aEnd - 4, aEnd + 6);
        // r18 m07band: the lane only (the S-sweep is added in the shader, uBand)
        ctr[k] = band ? lane : lane + painted * (1 - kk) + tail * kk;
@@ -638,7 +665,7 @@ index b9f474c..d9d9946 100644
      }
      // smooth (no kinks between samples: the bands must curve, not zigzag)
      for (let pass = 0; pass < 4; pass++) {
-@@ -393,10 +596,15 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -393,10 +623,15 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
      shared.uCtrA.value.z = 1;
      console.info('[m07nearw] checkpoint s', sCk.toFixed(2), 'centre line', ctr.map((v) => v.toFixed(2)).join(' '));
    }
@@ -658,7 +685,7 @@ index b9f474c..d9d9946 100644
    const M = { wall: mat(tWall, 1), water: mat(tRiver, 2), gold: mat(pGold, 0, 1 / 1.2) };
    const add = (g: THREE.BufferGeometry, m: THREE.Material, name: string) => {
      const o = new THREE.Mesh(g, m); o.name = 'm07_' + name; o.frustumCulled = false; group.add(o); return o;
-@@ -436,12 +644,21 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -436,12 +671,21 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
      const f0 = course.sample(sA);
      const alongA = f0.pos.clone().sub(base).dot(Dv);
      plungeAlong = alongA;
@@ -682,7 +709,7 @@ index b9f474c..d9d9946 100644
      const nR = 24;
      const c = new THREE.Vector3(), p = new THREE.Vector3();
      for (let i = 0; i < nS; i++) {
-@@ -449,23 +666,73 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -449,23 +693,73 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
        const f = course.sample(s);
        const k = 1 - THREE.MathUtils.smootherstep(s, sA, sA + 14);
        const along = alongA + (s - sA);
@@ -762,7 +789,7 @@ index b9f474c..d9d9946 100644
      const geo = (P: number[], UV: number[], I: number[]) => {
        const g = new THREE.BufferGeometry();
        g.setAttribute('position', new THREE.Float32BufferAttribute(P, 3));
-@@ -475,14 +742,159 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -475,14 +769,176 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
      };
      // world-space vertices: the meshes are added to the scene-level group with the inverse group matrix
      const toLocal = (g: THREE.BufferGeometry) => g.applyMatrix4(groupInv);
@@ -795,7 +822,7 @@ index b9f474c..d9d9946 100644
 +      console.info('[m07cloud]', name, 'lobes', g.instanceCount);
 +      const m = new THREE.ShaderMaterial({
 +        vertexShader: CLOUD_VERT, fragmentShader: CLOUD_FRAG, fog: false, side: THREE.DoubleSide,
-+        uniforms: { uGuard: shared.uGuard, uProjPos: shared.uProjPos, uClip: shared.uClip, uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uMagOn: { value: magOn }, uCScale: { value: sc } },
++        uniforms: { uGuard: shared.uGuard, uProjPos: shared.uProjPos, uClip: shared.uClip, uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uMagOn: { value: magOn }, uCScale: { value: sc }, uFSoftC: { value: fsoft ? 1 : 0 } },
 +      });
 +      return add(g, m, name);
 +    };
@@ -808,8 +835,17 @@ index b9f474c..d9d9946 100644
 +    type Place = (lat: number, a: number, up: number) => THREE.Vector3;
 +    const edge = 2.95;
 +    const pushL = (out: number[], tone: number[], place: Place, side: number, wallLat: number, lat: number, along: number, up: number, r: number, lvl: number) => {
++      if (fsoft) {
++        // r27 m07fsoft: the lobe's river-side surface stays beyond edge - 0.25 (the band's outer part); where the room to the wall
++        // is tight the lobe gets smaller instead of being pushed back over the river
++        const inner = edge - 0.25;
++        r = Math.min(r, Math.max(0.1, (wallLat - inner) / 1.25));
++        lat = Math.max(lat, inner + r * (up > 0.2 * r ? 0.85 : 0.7));
++        if (lat + r * 0.25 > wallLat) lat = Math.max(inner + r * 0.5, wallLat - r * 0.25);
++      } else {
 +      lat = Math.max(lat, edge - r * 0.35);
 +      if (lat + r * 0.25 > wallLat) lat = wallLat - r * 0.25;
++      }
 +      const p = place(side * lat, along, up);
 +      out.push(p.x, p.y, p.z, r); tone.push(rnd(), rnd(), lvl);
 +    };
@@ -840,9 +876,9 @@ index b9f474c..d9d9946 100644
 +      }
 +      // small bumps half out of every big lobe (upper hemisphere and the sides; the side facing the river gets most of them)
 +      for (const [l, al, up, r] of big) {
-+        const nS = 1 + Math.floor(rnd() * 3);
++        const nS = fsoft ? (rnd() < 0.4 ? 0 : 1 + Math.floor(rnd() * 1.6)) : 1 + Math.floor(rnd() * 3);
 +        for (let k = 0; k < nS; k++) {
-+          const rs = r * (0.28 + 0.2 * rnd());
++          const rs = r * (fsoft ? 0.3 + 0.32 * rnd() : 0.28 + 0.2 * rnd());
 +          const th = rnd() * Math.PI * 2, el = -0.1 + 0.95 * rnd();
 +          let dl = Math.cos(th) * Math.sqrt(1 - el * el); const da = Math.sin(th) * Math.sqrt(1 - el * el);
 +          if (dl > 0 && rnd() < 0.6) dl = -dl; // toward the river
@@ -857,7 +893,9 @@ index b9f474c..d9d9946 100644
 +    };
 +    /** the bank's lumpy foam line right beyond the magenta band (continuous, low, small lobes: the painted foam lines the river) */
 +    const skirt = (out: number[], tone: number[], place: Place, side: number, a: number, wallLat: number) => {
-+      const r = 0.16 + 0.14 * rnd();
++      // r27 m07fsoft: the skirt in soft clusters with gaps (a slow along-the-bank wave decides where it shows), sizes varied
++      if (fsoft && Math.sin(a * 0.9 + side * 1.3 + 0.8 * Math.sin(a * 0.37 + side)) + 0.35 * (rnd() - 0.5) < -0.15) return;
++      const r = fsoft ? 0.13 + 0.22 * rnd() * rnd() + 0.06 * rnd() : 0.16 + 0.14 * rnd();
 +      pushL(out, tone, place, side, wallLat, edge + r * 0.5 + 0.1 * rnd(), a, -r * (0.2 + 0.3 * rnd()), r, 0.35);
 +      if (rnd() < 0.5) { const r2 = r * (0.45 + 0.25 * rnd()); pushL(out, tone, place, side, wallLat, edge + r * 0.7, a + (rnd() - 0.5) * 0.2, r * 0.45, r2, 0.75); }
 +    };
@@ -869,10 +907,16 @@ index b9f474c..d9d9946 100644
 +        const room = wall(a) - edge;
 +        // r24 m07swing: no mound where the outer bank runs against the wall (the skirt is the thin fringe there); a second, outer
 +        // row heaped toward the wall where the inside of a bend is wide
-+        if (rnd() > 0.12 && (swB === 0 || room > 0.45)) mound(out, tone, place(a), side, a, wall(a), S);
++        if (rnd() > (fsoft ? 0.2 : 0.12) && (swB === 0 || room > 0.45)) mound(out, tone, place(a), side, a, wall(a), S);
++        if (!fsoft) {
 +        if (swB > 0 && room > 2.3 && rnd() > 0.15) mound(out, tone, place(a), side, a + 0.4 * S, wall(a), 0.9 + 0.5 * rnd(), (room - 1.9) * 0.5);
 +        if (swB > 0 && room > 3.0 && rnd() > 0.15) mound(out, tone, place(a), side, a - 0.3 * S, wall(a), 1.0 + 0.4 * rnd(), room - 1.9);
++        } else {
++          // r27 m07fsoft: the wide inside of a bend gets one lower, outer heap now and then (not two stacked rows of big clouds)
++          if (swB > 0 && room > 2.3 && rnd() > 0.45) mound(out, tone, place(a), side, a + 0.4 * S, wall(a), 0.7 + 0.4 * rnd(), (room - 1.9) * 0.6);
++        }
 +        a += (0.75 + 0.7 * rnd()) * S * (swB > 0 ? THREE.MathUtils.clamp(0.25 + (0.75 * room) / 1.9, 0.45, 1.2) : 1) + 0.25;
++        if (fsoft && rnd() < 0.2) a += 1.0 + 1.5 * rnd(); // believable gaps between clusters
 +      }
 +      for (let a = a0; a < a1; a += 0.36 + 0.2 * rnd()) skirt(out, tone, place(a), side, a, wall(a));
 +    };
@@ -924,7 +968,7 @@ index b9f474c..d9d9946 100644
    group.traverse((o) => o.updateMatrixWorld?.(true));
  
    return {
-@@ -493,7 +905,8 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -493,7 +949,8 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
        const clone = group.clone(true);
        clone.visible = true;
        // the plunge continuation is not in the approved picture: it never occludes the projector
