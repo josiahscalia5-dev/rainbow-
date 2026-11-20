@@ -2592,3 +2592,344 @@ I'll start by reading where each screen stands. The binding visual-goal brief an
 
 > 🔧 **Bash** `{"command": "set -e\nmk() { B=$1; WT=$2; TIP=$3\n  timeout 180 git fetch --depth=50 origin \"+$B:refs/remotes/origin/$B\" >/dev/null 2>&1 || echo \"fetch fail $B\"\n  [ \"$(git rev-parse refs/remotes/origin/$B)\" = \"$(git rev-parse $TIP 2>/dev/null || echo x)\" ] || echo \"NOTE $B tip $(git rev-parse --short refs/remotes/origin/$B) (expected $TIP)\"\n  exec 9>backups/.autosave.lock; flock 9\n  git worktree add --detach --no-checkout \"$WT\" \"refs/remotes/origin/$B\" >/dev/null 2>&1\n  printf '/*\\n!/qa/pilot05/\\n!/qa/worldlabs/\\n!/qa/imageblaster/\\n!/builds/\\n!/backups/\\n' | git -C \"$W …[+663 chars]`
 
+### 🧑 User — 2026-11-20T01:53:10.703Z
+
+> ↩︎ result: /home/user/wt/a05 = claude/rainbow-s05-match-c19 @ eb7233e
+> /home/user/wt/a06 = claude/rainbow-s06-match-c18 @ c649fcb
+> /home/user/wt/a07 = claude/rainbow-s07-match-c18 @ 8accdad
+> /home/user/wt/a08 = claude/rainbow-s08-scenery-c17 @ 3c0fa97
+> /home/user/wt/a04w = claude/rainbow-s04-match-c21 @ 34cb494
+> /dev/vda        252G   32G   38G  47% /
+
+### 🤖 Claude — 2026-11-20T01:53:14.571Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt && for s in 05 06 07 08; do echo \"== $s\"; ls a$s/qa/match/$s/ 2>/dev/null | tail -8; done; cat a05/qa/match/05/r18/KEPT_STEP2.txt | head -5 | cut -c1-400", "description": "List match folders and the 05 kept query"}`
+
+### 🧑 User — 2026-11-20T01:53:14.616Z
+
+> ↩︎ result: == 05
+> r18
+> r3_final
+> r3_teal
+> r3_wall
+> r7
+> r8
+> r9
+> scenery_bands.txt
+> == 06
+> r11
+> r15
+> r16
+> r17
+> r6
+> r7
+> relaunch
+> scenery_metrics_BEFORE_NEW.json
+> == 07
+> metrics_BEFORE_NEW.json
+> r15
+> r16
+> r17
+> r18
+> r7
+> r8
+> rings
+> == 08
+> r13
+> r14
+> r15
+> r16
+> r17
+> scenery
+> scenery_metrics_BEFORE_FINAL.json
+> scenery_metrics_BEFORE_NEW.json
+> match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1&m05fpaint=1&m05fcloud=1&m05fcoin=1&m05join=1&m05frim=1&m05vee2=1&m05bank=1&m05trans=1&m05wcrisp=1&m05pink=1
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:53:18.178Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt && for s in 06 07 08; do echo \"== $s\"; grep -rlE \"KEPT|kept set|Kept set\" a$s/qa/match/$s/r1[5-8] 2>/dev/null | head -5; ls a$s/qa/match/$s/r1[6-8]/ 2>/dev/null | head -20; done", "description": "Find kept-set notes for 06, 07, 08"}`
+
+### 🧑 User — 2026-11-20T01:53:18.610Z
+
+> ↩︎ result: == 06
+> a06/qa/match/06/r15/PROGRESS.md
+> a06/qa/match/06/r16/PROGRESS.md
+> a06/qa/match/06/r17/PROGRESS.md
+> a06/qa/match/06/r16/:
+> PROGRESS.md
+> step1_m06gold
+> 
+> a06/qa/match/06/r17/:
+> PROGRESS.md
+> step2_m06fclu
+> == 07
+> a07/qa/match/07/r16/PROGRESS.md
+> a07/qa/match/07/r17/PROGRESS.md
+> a07/qa/match/07/r18/PROGRESS.md
+> a07/qa/match/07/r16/:
+> APPROVED_07.png
+> K.txt
+> PROGRESS.md
+> step1
+> step2_nearw
+> 
+> a07/qa/match/07/r17/:
+> PROGRESS.md
+> step2_nearw
+> 
+> a07/qa/match/07/r18/:
+> APPROVED_07.png
+> PROGRESS.md
+> step3_foamb
+> step4_band
+> step4_nearf_rejected
+> == 08
+> a08/qa/match/08/r15/PROGRESS.md
+> a08/qa/match/08/r16/PROGRESS.md
+> a08/qa/match/08/r17/PROGRESS.md
+> a08/qa/match/08/r16/:
+> PROGRESS.md
+> step1_m08sr
+> 
+> a08/qa/match/08/r17/:
+> PROGRESS.md
+> step1_m08vh
+> step2_m08gl_UNFINISHED
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:53:23.418Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt && echo \"== 07 K\"; cat a07/qa/match/07/r16/K.txt | cut -c1-600; echo; grep -n -i -E \"kept|query|QS|\\?match\" a07/qa/match/07/r18/PROGRESS.md | tail -8 | cut -c1-400; echo \"== 06\"; grep -n -i -E \"kept|query|match06=1\" a06/qa/match/06/r17/PROGRESS.md | tail -8 | cut -c1-500; echo \"== 08\"; grep -n -i -E \"kept|K16|match08=1\" a08/qa/match/08/r17/PROGRESS.md | tail -8 | cut -c1-500", "description": "Extract kept queries for 06, 07, 08"}`
+
+### 🧑 User — 2026-11-20T01:53:23.488Z
+
+> ↩︎ result: == 07 K
+> match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1
+> 
+> 8:Kept set before this round: `K&m07foam=1&m07coinsz=1&m07nearw=1`, K = `qa/match/07/r16/K.txt`
+> 21:  plunge range. Tried first (not kept): the regrown bank without its puffs → a smooth white slab; now the puffs ride on the growing
+> 26:* Query NEW: `K&m07foam=1&m07coinsz=1&m07nearw=1&m07foamb=1`; BEFORE: `K&m07foam=1&m07coinsz=1&m07nearw=1`.
+> 33:  proves the fixed ramp leaves the other screens' foam alone. Gameplay with the NEW query: **8/8 pass, 91 coins, 1,330 → 2,240**,
+> 60:* Query NEW: `K&m07foam=1&m07coinsz=1&m07nearw=1&m07foamb=1&m07band=1`; BEFORE: the same without `m07band`.
+> 68:  triangles both). Gameplay with the NEW query: **8/8 pass, 91 coins, 1,330 → 2,240** (`step4_band/gameplay_new.json`).
+> == 06
+> 6:Kept set: `match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1`.
+> 8:Default build unchanged (everything under `match06=1`).
+> 9:Shots: `R16_DET=1 node tools/match06/r16_shots.mjs <out> "<query>" <list>` — new deterministic mode (frozen page clock, fixed
+> 19:* Pictures `qa/match/06/r17/step2_m06fclu/`: `1_APPROVED.png`; `BEFORE/` (kept set) and `NEW/`  …[+1069 chars]
+
+### 🤖 Claude — 2026-11-20T01:53:42.359Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/a04w && git log --oneline -4; grep -rn -E \"K20-2|m04bbank\" qa/match/04/r18/PROGRESS.md | tail -5 | cut -c1-300; ls qa/match/04/r19b/ 2>/dev/null; cat qa/match/04/r19b/s2_bbank/QUERY*.txt 2>/dev/null | cut -c1-2000", "description": "Find Screen 04 water step kept query"}`
+
+### 🧑 User — 2026-11-20T01:53:42.425Z
+
+> ↩︎ result: 34cb494 Screen 04 r20 step 2: bank foam = big glossy pearly Blender bubble heaps (m04bbank=1) — GOOD IMPROVEMENT
+> 006b6ae Screen 04 r20 step 1: the river curves UP the tunnel sides (m04wup=1) — GOOD IMPROVEMENT
+> dfeb60c Screen 04 r20: r19b WIP restored — m04wup (water climbing the tunnel walls), off by default, unproven
+> 0945907 Screen 04 preview v3: combined query (K18-5 water/foam + K9 rings) + start / swim / steer shots + swim clips
+> 161:## (r20) Step 2 — bank foam = big glossy pearly BUBBLE HEAPS (Blender) instead of white cloud puffs — `&m04bbank=1` — GOOD IMPROVEMENT
+> 162:Query (K20-2): K20-1 + `&m04bbank=1` (defaults: `m04bbs` 1.15 heap size, `m04bbl` 0.75 blue-lilac shading toward each bubble's
+> 180:* Start view: K20-1 vs K20-2 → 0 px differ (pixelmatch 0 / 1,171,584, rows 180–1536).
+> 188:* Pictures: `qa/match/04/r19b/s2_bbank/1_APPROVED.png`, `BEFORE/` (K20-1), `NEW/` (K20-2): a00 start view, f01, f03, f06, f10, f20,
+> s1_wup
+> s2_bbank
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:53:46.770Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/a04w && grep -n -E \"K20-1|Query \\(K20\" qa/match/04/r18/PROGRESS.md | head -6 | cut -c1-500; ls qa/match/04/r19b/s1_wup qa/match/04/r19b/s2_bbank | head; find qa/match/04/r19b -name \"*.json\" | head -3", "description": "Locate K20-1 query definition"}`
+
+### 🧑 User — 2026-11-20T01:53:46.828Z
+
+> ↩︎ result: 137:Query (K20-1): v3 + `&m04wup=1` (defaults: `m04wuh` 1.7 climb up the wall (u), `m04wul` 9 tongue wavelength, `m04wud` 0.35 tongue
+> 149:* Start view: `node scripts/capture.mjs 04` v3 vs K20-1 → 0 px differ (pixelmatch 0 / 1,171,584, rows 180–1536; 50 draw calls both).
+> 157:* Pictures: `qa/match/04/r19b/s1_wup/1_APPROVED.png`, `BEFORE/` (v3), `NEW/` (K20-1): a00 start view, f03, f06, f10, f20,
+> 162:Query (K20-2): K20-1 + `&m04bbank=1` (defaults: `m04bbs` 1.15 heap size, `m04bbl` 0.75 blue-lilac shading toward each bubble's
+> 180:* Start view: K20-1 vs K20-2 → 0 px differ (pixelmatch 0 / 1,171,584, rows 180–1536).
+> 188:* Pictures: `qa/match/04/r19b/s2_bbank/1_APPROVED.png`, `BEFORE/` (K20-1), `NEW/` (K20-2): a00 start view, f01, f03, f06, f10, f20,
+> qa/match/04/r19b/s1_wup:
+> 1_APPROVED.png
+> BEFORE
+> BEFORE_swim_clip_half.mp4
+> NEW
+> NEW_swim_clip_half.mp4
+> 
+> qa/match/04/r19b/s2_bbank:
+> 1_APPROVED.png
+> BEFORE
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:53:50.906Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/a04w && git show --stat 09459079 | grep -i -E \"query|txt|md\" | head -8", "description": "Find preview v3 query file"}`
+
+### 🧑 User — 2026-11-20T01:53:50.961Z
+
+> ↩︎ result: Screen 04 preview v3: combined query (K18-5 water/foam + K9 rings) + start / swim / steer shots + swim clips
+>     cleanly (no conflicting switches). Query: qa/match/04/r19/PREVIEW_QUERY_v3.txt. m04end not refitted yet.
+>  qa/match/04/r19/PREVIEW_QUERY_v3.txt          |   1 +
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:53:57.175Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/a04w && python3 - <<'EOF'\nv3=open('qa/match/04/r19/PREVIEW_QUERY_v3.txt').read().strip()\nr20=open('/home/user/wt/s04b/qa/match/04/r19b/ringpaint/preview_r20/QUERY_preview.txt').read().strip()\np=lambda q: dict(kv.split('=',1) for kv in q.split('&') if '=' in kv)\na,b=p(v3),p(r20)\nprint('in v3 not r20:', {k:a[k] for k in a if k not in b})\nprint('differ:', {k:(a[k],b[k]) for k in a if k in b and a[k]!=b[k]})\nprint('in r20 not v3:', {k:b[k] for k in b if k not in a})\nEOF", "description": "Compare preview v3 and rings preview queries"}`
+
+### 🧑 User — 2026-11-20T01:53:57.222Z
+
+> ↩︎ result: in v3 not r20: {}
+> differ: {}
+> in r20 not v3: {'m04rflat': '1', 'm04rnear': '1', 'm04rnh': '0.7', 'm04rny': '0.15', 'm04rng': '0.5', 'm04rnhf': '0.1', 'm04rnr': '0.6', 'm04rnf': '0.8', 'm04rmat': '1'}
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:54:09.073Z
+
+> 🔧 **Bash** `{"command": "set -e; WT=/home/user/wt/s04p\nexec 9>backups/.autosave.lock; flock 9\ngit worktree add --no-checkout -b claude/rainbow-s04-preview-c22 \"$WT\" 34cb494137e1030c4410d871125e6e9eef6aa4ea >/dev/null 2>&1\nprintf '/*\\n!/qa/pilot05/\\n!/qa/worldlabs/\\n!/qa/imageblaster/\\n!/builds/\\n!/backups/\\n' | git -C \"$WT\" sparse-checkout set --no-cone --stdin\ngit -C \"$WT\" read-tree -mu HEAD; ln -sfn /home/user/rainbow-/node_modules \"$WT/node_modules\"\nflock -u 9; exec 9>&-\ncd $WT\ngit diff 09459079de00a674f0d3d3cdba5cc25e92b856ba 70e559572ef44d6d8be4f7d0b86c36f54149ff44 -- src > /tmp/ …[+697 chars]`
+
+### 🧑 User — 2026-11-20T01:54:17.163Z
+
+> ↩︎ result: Applied patch to 'src/world/match04m4.ts' cleanly.
+> ringtex applied
+> Applied patch to 'src/game/Game.ts' cleanly.
+> Applied patch to 'src/world/match04m4.ts' cleanly.
+> r21 applied
+> M  src/game/Game.ts
+> M  src/world/match04m4.ts
+> ?? node_modules
+> ?? tools/match04/rings21.mjs
+> tsc 0
+> 20
+> 22
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:54:21.292Z
+
+Both applied cleanly and the type check passes. Let me make sure the ring commits didn't also add texture files outside `src`.
+
+### 🤖 Claude — 2026-11-20T01:54:23.735Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04p && git diff --stat 09459079de00a674f0d3d3cdba5cc25e92b856ba 70e559572ef44d6d8be4f7d0b86c36f54149ff44 | grep -v \"qa/\" | tail -6; git diff --stat 09459079de00a674f0d3d3cdba5cc25e92b856ba 34cb494137e1030c4410d871125e6e9eef6aa4ea | grep -v \"qa/\" | tail -6", "description": "Check non-qa files in each branch diff"}`
+
+### 🧑 User — 2026-11-20T01:54:23.871Z
+
+> ↩︎ result: src/world/match04m4.ts | 213 ++++++++++++++++++++++++++++++++++++++++++++-----
+>  1 file changed, 192 insertions(+), 21 deletions(-)
+>  .../04/r19b/s2_bbank/BEFORE/f10_forward10u.png     | Bin 0 -> 1715941 bytes
+>  .../04/r19b/s2_bbank/BEFORE/f20_forward20u.png     | Bin 0 -> 1622112 bytes
+>  .../04/r19b/s2_bbank/BEFORE_swim_clip_half.mp4     |   3 +
+>  src/world/match04m4.ts                             | 260 ++++++++++++++++++++-
+>  tools/blender/foam_bank04.py                       |  98 ++++++++
+>  52 files changed, 427 insertions(+), 7 deletions(-)
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:54:30.286Z
+
+Everything that preview needs is included. Now a single audit tool that works for any screen. First, how the shared helper starts the game server:
+
+### 🤖 Claude — 2026-11-20T01:54:31.040Z
+
+> 🔧 **Bash** `{"command": "grep -n -A14 \"export async function startVite\" scripts/lib/pw.mjs | head -24", "description": "Read startVite helper"}`
+
+### 🧑 User — 2026-11-20T01:54:31.074Z
+
+> ↩︎ result: 19:export async function startVite(port = 5199) {
+> 20-  const { createServer } = await import('vite');
+> 21-  const server = await createServer({ server: { port, strictPort: false, host: '127.0.0.1', hmr: false, watch: { ignored: ['**/*'] } }, logLevel: 'error' });
+> 22-  await server.listen();
+> 23-  const addr = server.resolvedUrls?.local?.[0] ?? `http://127.0.0.1:${port}/`;
+> 24-  return { url: addr.replace(/\/$/, ''), close: () => server.close() };
+> 25-}
+> 26-
+> 27-export async function waitDone(page, timeoutMs = 180000) {
+> 28-  await page.waitForFunction(() => window.__done === true, null, { timeout: timeoutMs });
+> 29-  const err = await page.evaluate(() => window.__error);
+> 30-  if (err) throw new Error(err);
+> 31-}
+
+### 🤖 Claude — 2026-11-20T01:54:52.989Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/lead21/audit_screen.mjs", "content": "// Round 21 lead audit (read-only): one playable screen of the REAL game at start / early / middle / late / end and hard\n// left / right, deterministic (fixed sim steps, frozen shader clock, one frame rendered per shot, no real-time steps).\n// Run from the worktree whose build you want to see (vite serves the current directory):\n//   cd <worktree> && node /home/user/rainbow-/tools/lead21/audit_screen.mjs <outDir> <stage 04..08> \"<query>\"\n// Shots are fractions of the stage from its checkpoint to its end; env A …[+2310 chars]`
+
+### 🧑 User — 2026-11-20T01:54:53.182Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/lead21/audit_screen.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T01:54:58.978Z
+
+Running the audit for all five screens in the background (about 15 minutes):
+
+### 🤖 Claude — 2026-11-20T01:55:06.156Z
+
+> 🔧 **Bash** `{"command": "A=/home/user/rainbow-/qa/review_r21/audit; mkdir -p $A; T=/home/user/rainbow-/tools/lead21/audit_screen.mjs\nQ04=\"$(cat /home/user/wt/s04b/qa/match/04/r19b/ringpaint/preview_r20/QUERY_preview.txt)&m04wup=1&m04bbank=1&m04rsoft=1&msaa=4\"\nQ05=\"$(head -1 /home/user/wt/a05/qa/match/05/r18/KEPT_STEP2.txt | tr -d '\\n')\"\nQ06=\"match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1\"\nQ07=\"match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1&m07foam=1&m07coinsz=1&m07nearw=1&m07foamb=1&m07band=1\"\nQ08=\" …[+983 chars]`
+
+### 🧑 User — 2026-11-20T01:55:06.207Z
+
+> ↩︎ result: 1035 /home/user/rainbow-/qa/review_r21/audit/QUERY_04.txt
+>  284 /home/user/rainbow-/qa/review_r21/audit/QUERY_05.txt
+>  105 /home/user/rainbow-/qa/review_r21/audit/QUERY_06.txt
+>  136 /home/user/rainbow-/qa/review_r21/audit/QUERY_07.txt
+>  234 /home/user/rainbow-/qa/review_r21/audit/QUERY_08.txt
+> 1794 total
+
+### 🤖 Claude — 2026-11-20T01:55:09.675Z
+
+> 🔧 **Bash** `{"command": "bash /home/user/rainbow-/qa/review_r21/audit/run.sh", "description": "Run the five-screen audit renders", "timeout": 7200000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T01:55:09.696Z
+
+> ↩︎ result: Command running in background with ID: bx4pw22iy. Output is being written to: /tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/tasks/bx4pw22iy.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-20T01:55:10.873Z
+
+> 🔧 **TaskCreate** `{"subject": "Audit all playable screens 04-08 in motion", "description": "Render best current version of each screen (start/early/mid/late/end/hard L/R) vs approved; honest per-screen verdict + biggest difference", "activeForm": "Auditing screens 04-08 in motion"}`
+
+### 🧑 User — 2026-11-20T01:55:10.886Z
+
+> ↩︎ result: Task #5 created successfully: Audit all playable screens 04-08 in motion
+
+### 🤖 Claude — 2026-11-20T01:55:12.021Z
+
+> 🔧 **TaskCreate** `{"subject": "Plan + launch improvement work (2 specialists + lead on 04)", "description": "From audit: biggest visible differences first; relaunch specialists per binding rule (two at a time); lead continues Screen 04", "activeForm": "Planning screen work"}`
+
+### 🧑 User — 2026-11-20T01:55:12.029Z
+
+> ↩︎ result: Task #6 created successfully: Plan + launch improvement work (2 specialists + lead on 04)
+
+### 🤖 Claude — 2026-11-20T01:55:29.579Z
+
+The audit is rendering. Meanwhile I'll read the reusable launch briefs from round 15, so the specialists I relaunch start from the established rules.
+
+### 🤖 Claude — 2026-11-20T01:55:30.670Z
+
+> 🔧 **Bash** `{"command": "ls docs/briefs/2026-11-18-r15/; wc -l docs/briefs/2026-11-18-r15/S0*_LAUNCH.md; sed -n 1,60p docs/briefs/2026-11-18-r15/S05_LAUNCH.md", "description": "Read round-15 launch brief for Screen 05"}`
+
+### 🧑 User — 2026-11-20T01:55:30.729Z
+
+> ↩︎ result: COORDINATION.md
+> GITHUB_3D_TOOLS.md
+> S04B_RINGTEX_LAUNCH.md
+> S04_LAUNCH.md
+> S05_LAUNCH.md
+> S06_LAUNCH.md
+> S07_LAUNCH.md
+> S08_LAUNCH.md
+> USER_ORDER_R15_VISUAL.md
+>    66 docs/briefs/2026-11-18-r15/S04B_RINGTEX_LAUNCH.md
+>    61 docs/briefs/2026-11-18-r15/S04_LAUNCH.md
+>    55 docs/briefs/2026-11-18-r15/S05_LAUNCH.md
+>    51 docs/briefs/2026-11-18-r15/S06_LAUNCH.md
+>    50 docs/briefs/2026-11-18-r15/S07_LAUNCH.md
+>    55 docs/briefs/2026-11-18-r15/S08_LAUNCH.md
+>   338 total
+> # Round 15 (account 15) — Screen 05 specialist launch prompt (water-fx-specialist)
+> 
+> You are the Rainbow project's `water-fx-specialist`, working ONLY on playable Screen 05 "Flow Into the Current", VISUALS ONLY.
+> (Account 14 ran out of usage at ~17:46 UTC; you continue its work on a NEW branch. Nothing of account 14 was lost.)
+> 
+> ## Where you work
+> * Git worktree `/home/user/wt/s05` on branch `claude/rainbow-s05-match-c15` (created from `claude/rainbow-s05-match-c14` @ `34aadd11`,
+>   the newest account-14 tip). `node_modules` is a symlink to the lead checkout. Untracked BEFORE shots of the unfinished step 4
+>   (`qa/match/05/r14/step4_trans/before/`, partial: x99 x100 x101 x103 x105 t102_06 + shots.json; t95/t98/x93/x96/x97 were too big
+>   for …[+4609 chars]
+

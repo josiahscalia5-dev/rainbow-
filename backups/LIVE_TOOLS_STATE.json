@@ -1,5 +1,5 @@
 {
- "time_utc": "2026-11-20T01:50:28+00:00",
+ "time_utc": "2026-11-20T01:55:40+00:00",
  "lead_branch": "ccr-68d26c2d-gwegce",
  "specialists_sha256_16": {
   "android-build-performance": "b0c45161860a960c",
@@ -15,14 +15,39 @@
  },
  "workers_git_worktrees": [
   {
+   "worktree": "/home/user/wt/a04w",
+   "branch": "",
+   "head": "34cb494137e1"
+  },
+  {
    "worktree": "/home/user/wt/a05",
    "branch": "",
    "head": "eb7233e36466"
   },
   {
+   "worktree": "/home/user/wt/a06",
+   "branch": "",
+   "head": "c649fcbc3578"
+  },
+  {
+   "worktree": "/home/user/wt/a07",
+   "branch": "",
+   "head": "8accdad0a07e"
+  },
+  {
+   "worktree": "/home/user/wt/a08",
+   "branch": "",
+   "head": "3c0fa97090af"
+  },
+  {
    "worktree": "/home/user/wt/s04b",
    "branch": "claude/rainbow-s04-ringtex-c22",
    "head": "70e559572ef4"
+  },
+  {
+   "worktree": "/home/user/wt/s04p",
+   "branch": "claude/rainbow-s04-preview-c22",
+   "head": "34cb494137e1"
   }
  ],
  "workers_status_latest_round": {

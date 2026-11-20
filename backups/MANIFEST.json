@@ -613,8 +613,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 19803,
-   "sha256": "3b7baa346e0ba1f7e40914e9876ef10106b448891e8762a86615635db4b0873f"
+   "bytes": 19811,
+   "sha256": "dffaf25292707cca50b4ef5a5a989c89cdb0be3be467d6e7addcf825975781e4"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -628,8 +628,8 @@
   },
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
-   "bytes": 2632,
-   "sha256": "898e8b13456bad2556270f0fa896b1ce1c6e9f13b484f719be0b3f823505d3ab"
+   "bytes": 2720,
+   "sha256": "d232e7c93e6cd5435aecc0e7a29b3bf152e8d2ee62498579133a46a1af4b64c3"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -1624,7 +1624,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c22/INFO.json",
    "bytes": 1341,
-   "sha256": "d02f32cdbdbf8ff5c8cacb5770c58d362b0b5d1b429b4aa03d4a01ea9d8e6599"
+   "sha256": "8f1cde3ac44086781d307534f5619ae12ee3565e66a7453628d5c51cfc13f239"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c22/tracked.patch",
@@ -2440,6 +2440,11 @@
    "path": "backups/wip/claude__rainbow-s08-scenery-c17/INFO.json",
    "bytes": 485,
    "sha256": "8f0cad434bf3f6972eaf74478dd56ae4223db01d643e673bb6f20b487ce73f5e"
+  },
+  {
+   "path": "backups/wip/detached-eb7233e364/INFO.json",
+   "bytes": 439,
+   "sha256": "22d5bc437b3b07193843ee7dab87797a301e02f7ec49634073fefa61695f6bbe"
   },
   {
    "path": "builds/rainbow-debug-06-2026-11-17-r3.apk",
@@ -13307,6 +13312,46 @@
    "sha256": "75d95ad7f6f951e834f8e3f3d098d0dd2a73bc2c04a295186850bc7b76647f5f"
   },
   {
+   "path": "qa/review_r21/audit/04/a_start.png",
+   "bytes": 2337324,
+   "sha256": "cf5379b449c2e6dfa84f37376542a69a7459556c83c1a42cfd404e2c5cf4dd11"
+  },
+  {
+   "path": "qa/review_r21/audit/04/b_early.png",
+   "bytes": 2048303,
+   "sha256": "790b05ba0e1f21872b2c0d7b8b57bfd790fc460f224c5922c142762807e09fa8"
+  },
+  {
+   "path": "qa/review_r21/audit/QUERY_04.txt",
+   "bytes": 1035,
+   "sha256": "c240db53533e74a8ef9fe40238a9e6479d516a928211cd18a6e82d284f5609db"
+  },
+  {
+   "path": "qa/review_r21/audit/QUERY_05.txt",
+   "bytes": 284,
+   "sha256": "bedc67552a29b967659fabcc97de598682ebde72077926d9a3554883e9387bc9"
+  },
+  {
+   "path": "qa/review_r21/audit/QUERY_06.txt",
+   "bytes": 105,
+   "sha256": "26b85e636b2dd687c08cee55c0d711197328c4fdb8227aa76944ba888db3cf4c"
+  },
+  {
+   "path": "qa/review_r21/audit/QUERY_07.txt",
+   "bytes": 136,
+   "sha256": "f65ec63599eb81c6225cc103d6dd70d31032fc2d6586f782cc3b49348d6ea9b0"
+  },
+  {
+   "path": "qa/review_r21/audit/QUERY_08.txt",
+   "bytes": 234,
+   "sha256": "0a6c4c22d900395972670d9489c6df223740407853abb52a07a989182f43b517"
+  },
+  {
+   "path": "qa/review_r21/audit/run.sh",
+   "bytes": 1346,
+   "sha256": "445524abd9b3d63ee1e084d1a3ea97d7e01b9a2b7d25351aeb806be42e98c62a"
+  },
+  {
    "path": "qa/review_r7/04_1_APPROVED.jpg",
    "bytes": 405092,
    "sha256": "c97608fff9e21089778db45a8b4e27edac2f2d7b15246d838092a4f6adea4dd2"
@@ -15075,6 +15120,11 @@
    "path": "tools/imageblaster/render08.mjs",
    "bytes": 1924,
    "sha256": "69ee93dc70222750ed61bc4a8195193b0592556c5802b267a84634bba96b5709"
+  },
+  {
+   "path": "tools/lead21/audit_screen.mjs",
+   "bytes": 2783,
+   "sha256": "a81fe23531bccda537222f1704adae905d70fc6ee9c0ae66a6b3263a09480303"
   },
   {
    "path": "tools/lead_r10/refviews.py",
