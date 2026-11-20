@@ -36,6 +36,7 @@ BEFORE (v3) / NOW in motion. If this account runs out: `-c22` branches from each
 | # | Screen / step | Verdict |
 |---|---|---|
 | 1 (~00:05) | 04 water step 1 `&m04wup=1` (s04 `006b6ae5`, K20-1 = v3 + m04wup) | GOOD IMPROVEMENT (worker + lead at full size f06 / f10 / hard left): the straight cut river edge with bare gold wall under it is gone; glossy pink / magenta water climbs both walls like the painted half-pipe, also while steering; start view 0 px; coins same; clip clean. Left: tops of the climbing pink are a soft hazy blur (painting: crisp glossy swirls with bright highlight lines) — `/home/user/wt/s04/qa/match/04/r19b/s1_wup/` |
+| 2 (~00:20) | 04 bank foam step 2 `&m04bbank=1` (s04 `34cb4941`, K20-2 = v3 + m04wup + m04bbank) | GOOD IMPROVEMENT (worker + lead at full size f03 / steer R): small white cloud puffs → low wide heaps of big glossy pearly lilac bubbles (4 Blender seeds instanced along both banks); start view 0 px; coins same; +2 draw calls, +25k tris. Left: bubbles a little matte (painted: brighter sparkle + iridescent rim); near heap close to Benny at hard steer — `/home/user/wt/s04/qa/match/04/r19b/s2_bbank/` |
 
 ## ~23:50 UTC user: Benny must be a "100%" match of the approved Benny — fur texture + pink colour first, in EVERY state
 User: "Make sure Benny looks a lot more like the approved screen's Benny pink character ... Like the fur, the pink texture, like

@@ -2622,3 +2622,17 @@ While the clip finishes, I'll implement the per-screen fur exposure (benny20 onl
 
 > ↩︎ result: TSC_OK
 
+### 🤖 Claude — 2026-11-20T00:18:02.083Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && python3 - <<'EOF'\np='src/characters/benny/benny20.ts'\ns=open(p).read()\na='''  let first = true;\n  const tick: Benny20Tick = (dt, stage) => {\n    const e = (stage && EXPO20[stage]) || [1, 1, 1];\n    tgt.set(e[0], e[1], e[2]);\n    if (first) { cur.copy(tgt); first = false; } else cur.lerp(tgt, 1 - Math.exp(-dt * 3));'''\nnew='''  let first = true;\n  const lastPos = new THREE.Vector3();\n  const pos = new THREE.Vector3();\n  const tick: Benny20Tick = (dt, stage) => {\n    const e = (stage && EXPO20[stage]) || [1, 1, 1];\n    tgt.set(e[0], e[1], e[2]) …[+618 chars]`
+
+### 🧑 User — 2026-11-20T00:18:06.802Z
+
+> ↩︎ result: TSC_OK
+> frames 96
+> PROOF_DONE
+
+### 🤖 Claude — 2026-11-20T00:18:18.695Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && python3 - <<'EOF'\np='src/characters/benny/benny20.ts'\ns=open(p).read()\na=\"    const e = (stage && EXPO20[stage]) || [1, 1, 1];\"\nassert s.count(a)==1\ns=s.replace(a,\"    // opt-in `&b20expo=1` until proven in motion on 05–07 (step-1 pictures were made without it)\\n    const e = (EXPO_ON && stage && EXPO20[stage]) || [1, 1, 1];\")\na=\"/** beanie geometry on top of benny05's HAT05\"\ns=s.replace(a,\"const EXPO_ON = n('expo', 0) > 0;\\n\\n\"+a,1)\nopen(p,'w').write(s)\nEOF\ntimeout 300 npx tsc --noEmit -p . && echo TSC_OK && O=qa/benny/r20/step1_fur  …[+666 chars]`
+
