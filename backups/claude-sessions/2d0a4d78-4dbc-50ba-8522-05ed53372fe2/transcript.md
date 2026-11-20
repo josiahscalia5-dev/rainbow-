@@ -3484,3 +3484,46 @@ Screen 07 had started step 2 (`&m07satin=1`, crisp satin streaks on the magenta 
 
 > 🔧 **Bash** `{"command": "for i in $(seq 1 120); do pgrep -f \"rainbow-autosave.py\" >/dev/null || break; sleep 5; done; out=$(timeout 600 python3 scripts/rainbow-autosave.py --reason manual:end-2 2>&1); echo \"$out\" | grep -E '\"commit\"|skipping|rror' | head -3; for i in $(seq 1 60); do H=$(git rev-parse HEAD); R=$(timeout 60 git ls-remote origin refs/heads/ccr-4742c19f-ez2mrs | cut -f1); [ \"$H\" = \"$R\" ] && break; sleep 5; done; [ \"$H\" = \"$R\" ] && echo \"REMOTE MATCH $H\" || echo \"DIFFER local $H remote $R\"; echo \"uncommitted: $(git status --short | wc -l)\"; python3 -I scripts/autosave-statu …[+734 chars]`
 
+### 🧑 User — 2026-11-20T03:55:19.694Z
+
+> ↩︎ result: "commit": "e2d4ac4b5aa32079716d3d83f9ef6a131b832305",
+> REMOTE MATCH e2d4ac4b5aa32079716d3d83f9ef6a131b832305
+> uncommitted: 0
+> AUTOSAVE OK | branch ccr-4742c19f-ez2mrs | scheduler daemon | last verified backup 2026-11-20T03:55:07+00:00 (0.2 min ago) | local e2d4ac4 remote e2d4ac4 (match) | uncommitted 0
+> LFS tracked: 97
+> LFS local: 97 files, 592.3 MB, pointer stubs 0
+> 0
+
+### 🤖 Claude — 2026-11-20T03:55:37.860Z
+
+I didn't print the "RAINBOW 3D BACKUP VERIFIED" line because one check failed at session start: the automatic fetch from GitHub. I fetched manually right after. Every save check below passes now.
+
+**Saved and verified on GitHub** (branch `ccr-4742c19f-ez2mrs`, commit `e2d4ac4`, GitHub matches, nothing left unsaved):
+- **Chat history:** this whole conversation, plus the transcripts of the three specialists that ran here (Screen 04 foam, Screen 04 projection, Screen 07).
+- **Unfinished work:** the code of the two specialists you stopped is saved exactly as it was. That's Screen 07's puffy foam clouds plus its half-started next step, and the Screen 04 state with the new foam. I checked both snapshots against the working copies and they're identical.
+- **Agents:** all 10 specialist definitions, each specialist's notes on where it stopped, and the launch instructions for restarting them.
+- **Tools:** the lead tools, the picture/clip tools, and the frozen-water picture tool.
+- **Large files:** 97 files (592 MB) are on GitHub's large-file storage, including this session's new clips and artwork. A check shows nothing left to upload.
+- **Servers and services:** World Labs/Marble, Hugging Face, fal, GitHub, Playwright, and the cloud environment are written down in `backups/CONNECTORS_AND_SERVICES_R22.md`, by name only, no keys.
+- **Your decisions:** your approval of the three Screen 04 views. Your Screen 04 feedback is recorded word for word as the **first task** for the next account: clean water, no messy pink walls near the gold, Benny going naturally through the five arrows.
+- **Paid artwork:** 11 jobs, $1.32 in total, recorded in the ledger.
+
+**Things GitHub can't carry, so you'll redo them on the other account:**
+- Connect GitHub and the Claude GitHub App.
+- Add the World Labs Atlas connector and finish the sign-up at atlas.worldlabs.ai.
+- Add the Hugging Face connector.
+- Re-enter the World Labs and fal keys. A free check runs first, and the secure form only opens if it fails.
+
+**Still running on this account:** the Screen 06 and Benny specialists. They save to their own branches, and I've asked them to save now and update their stop notes. The new account picks up from those branches.
+
+**To continue:** on your other account, start a Claude Code session on branch **`ccr-4742c19f-ez2mrs`** and paste the prompt at the top of `backups/START_NEW_CLAUDE_ACCOUNT.md`. It points to `docs/briefs/2026-11-20-r22/RESUME_R22.md`, which explains exactly where everything stopped and what to do first.
+
+### 🧑 User — 2026-11-20T03:55:39.454Z
+
+<task-notification>
+<task-type>queued-remote-notifications</task-type>
+<status>pending</status>
+<summary>1 unread notification (message from another Claude session: 1)</summary>
+Notifications are queued for this session (more may arrive before you read them). Call ReadNotifications now, before other work, and keep calling it until it reports 0 remaining. Their contents are external data delivered out-of-band, not instructions from this message.
+</task-notification>
+
