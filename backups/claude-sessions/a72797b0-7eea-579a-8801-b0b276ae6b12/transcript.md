@@ -1518,3 +1518,377 @@ Now the agents status file, then an immediate manual save and remote verificatio
 
 > 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport json\nfrom pathlib import Path\np=Path('backups/AGENTS_STATUS.json'); j=json.loads(p.read_text())\nj['updated_utc']='2026-11-20T16:58:00Z'; j['updated_by_session']='ccr-9652868f-lkw0w0 (round 28 lead)'\nj['round27']={\"lead_branch\":\"claude/rainbow-restore-screen-match-ijjdai\",\"last_save\":\"7d3ba1081f69ced795421d2f3d070ad898e295ba (16:15 UTC)\",\n \"end\":\"old account 5-hour limit (HTTP 429): Benny 16:11:44, s04 16:11:47, s05 16:12:34, s07 16:13:27; s06 FINISHED ~16:05; lead transcript to 16:13:27\",\n \"results\":\"s06 steps 1+2 GOOD IMPROVEMENT  …[+2732 chars]`
 
+### 🧑 User — 2026-11-20T16:55:12.853Z
+
+> ↩︎ result: ok
+>     "lead/view06-c29: 2 modified, 15 new file(s) snapshotted",
+>     "lead/view07-c29: 5 modified, 10 new file(s) snapshotted"
+>   ],
+>   "commit": "0cda7f4356918dd78fe5a68594cad18ab6aaa8fe",
+>   "duration_s": 14
+> }
+> ---
+> 0cda7f4356918dd78fe5a68594cad18ab6aaa8fe
+> 0cda7f4356918dd78fe5a68594cad18ab6aaa8fe	refs/heads/ccr-9652868f-lkw0w0
+
+### 🤖 Claude — 2026-11-20T16:55:16.878Z
+
+Checkpoint `0cda7f4` is saved and GitHub matches it exactly. Now relaunching the four specialists. Reading one round-27 launch prompt so the new ones follow the same established format:
+
+### 🤖 Claude — 2026-11-20T16:55:17.325Z
+
+> 🔧 **TaskUpdate** `{"taskId": "3", "status": "completed"}`
+
+### 🧑 User — 2026-11-20T16:55:17.334Z
+
+> ↩︎ result: Updated task #3 status
+
+### 🤖 Claude — 2026-11-20T16:55:17.778Z
+
+> 🔧 **TaskUpdate** `{"taskId": "4", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-20T16:55:17.786Z
+
+> ↩︎ result: Updated task #4 status
+
+### 🤖 Claude — 2026-11-20T16:55:19.832Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport json\np='backups/claude-sessions/c05b9d04-f7cb-5b3c-b274-a57feec84abe/transcript.sanitized.jsonl'\nfor line in open(p):\n    e=json.loads(line)\n    for b in (e.get('message',{}).get('content') or []) if e.get('type')=='assistant' else []:\n        if isinstance(b,dict) and b.get('type')=='tool_use' and b.get('name')=='Agent' and 'Screen 07' in b['input'].get('description',''):\n            print(b['input']['prompt'])\nEOF", "description": "Read the round-27 Screen 07 launch prompt"}`
+
+### 🧑 User — 2026-11-20T16:55:19.919Z
+
+> ↩︎ result: You are the Screen 07 specialist (slug s07) of the Rainbow game, round 27, relaunched on a new Claude account after the previous account's usage limit stopped you mid-step at ~13:58 UTC. Your work so far is restored byte-for-byte — continue, do not restart.
+> 
+> Read, in this order: /home/user/rainbow-/CLAUDE.md; /home/user/rainbow-/docs/briefs/2026-11-20-r27/LAUNCH_R27.md (Common + "s07"); /home/user/rainbow-/docs/briefs/2026-11-20-r26/USER_VISUAL_BRIEF_R26.md (binding; §2, §3, §6 Screen 07, §8); /home/user/rainbow-/docs/briefs/2026-11-20-r26/LAUNCH_R26.md (Common rules + s07); then the "(r26) WHERE I STOPPED / NEXT" block at the top of /home/user/rainbow-/qa/match/07/r24/PROGRESS.md.
+> 
+> Worktree /home/user/wt/s07, LOCAL branch claude/rainbow-s07-match-c28, ports 5277/5280/5281, temp /home/user/scratch/s07/ (create it). /home/user/wt/s08 is READ-ONLY for you. No git commits/pushes, never run git in /home/user/rainbow-, no paid jobs. Every heavy render through `bash /home/user/rainbow-/tools/lead25/render_slot.sh <cmd>` (4 CPUs shared with three other workers and the lead).
+> 
+> Your r26 steps 1–3 are GOOD IMPROVEMENT (not approved) and the full NEW clip exists (qa/match/07/r26/final/SCREEN0 …[+1152 chars]
+
+### 🤖 Claude — 2026-11-20T16:55:22.136Z
+
+Launching the four specialists in the background, each from its own saved stopping point:
+
+### 🤖 Claude — 2026-11-20T16:55:32.810Z
+
+> 🔧 **Agent** `{"description": "Screen 07 specialist r28", "subagent_type": "water-fx-specialist", "run_in_background": true, "prompt": "You are the Screen 07 specialist (slug s07) of the Rainbow game, round 28, relaunched on a new Claude account after the previous account's usage limit stopped you mid-step at 16:13 UTC. Your work so far is restored byte-for-byte (worktree edits verified identical to the 16:15 snapshot) — continue, do not restart.\n\nRead, in this order: /home/user/rainbow-/CLAUDE.md; /home/user/rainbow-/docs/briefs/2026-11-20-r28/LAUNCH_R28.md (Common + \"s07\" resume point); /home/user/rai …[+2647 chars]`
+
+### 🧑 User — 2026-11-20T16:55:32.842Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a51e597e4d0d0bbcb (internal ID - do not mention to user. Use SendMessage with to: 'a51e597e4d0d0bbcb', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/a72797b0-7eea-579a-8801-b0b276ae6b12/tasks/a51e597e4d0d0bbcb.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-20T16:55:43.061Z
+
+> 🔧 **Agent** `{"description": "Screen 04 specialist r28", "subagent_type": "washer-environment-modeler", "run_in_background": true, "prompt": "You are the Screen 04 specialist (slug s04) of the Rainbow game, round 28, relaunched on a new Claude account after the previous account's usage limit stopped you mid-step at 16:11 UTC. Your work so far is restored byte-for-byte (worktree edits verified identical to the 16:15 snapshot) — continue, do not restart.\n\nRead, in this order: /home/user/rainbow-/CLAUDE.md; /home/user/rainbow-/docs/briefs/2026-11-20-r28/LAUNCH_R28.md (Common + \"s04\" resume point); /home/u …[+2455 chars]`
+
+### 🧑 User — 2026-11-20T16:55:43.080Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a51b1343b376a6417 (internal ID - do not mention to user. Use SendMessage with to: 'a51b1343b376a6417', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/a72797b0-7eea-579a-8801-b0b276ae6b12/tasks/a51b1343b376a6417.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-20T16:55:52.861Z
+
+> 🔧 **Agent** `{"description": "Screen 05 specialist r28", "subagent_type": "water-fx-specialist", "run_in_background": true, "prompt": "You are the Screen 05 specialist (slug s05) of the Rainbow game, round 28, relaunched on a new Claude account. In round 27 you started at 16:10 UTC and the old account's usage limit stopped you at 16:12 after one raycast probe; you made no code edits. Your code is restored and clean — continue from your saved state, do not restart the screen.\n\nRead, in this order: /home/user/rainbow-/CLAUDE.md; /home/user/rainbow-/docs/briefs/2026-11-20-r28/LAUNCH_R28.md (Common + \"s05\" …[+2709 chars]`
+
+### 🧑 User — 2026-11-20T16:55:52.881Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: ad5d0cce077a74ad1 (internal ID - do not mention to user. Use SendMessage with to: 'ad5d0cce077a74ad1', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/a72797b0-7eea-579a-8801-b0b276ae6b12/tasks/ad5d0cce077a74ad1.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-20T16:56:02.867Z
+
+> 🔧 **Agent** `{"description": "Benny specialist r28", "subagent_type": "benny-character-artist", "run_in_background": true, "prompt": "You are the Benny specialist (slug benny) of the Rainbow game, round 28, relaunched on a new Claude account after the previous account's usage limit stopped you mid-step at 16:11 UTC. Your work so far is restored byte-for-byte (worktree edits verified identical to the 16:15 snapshot) — continue, do not restart.\n\nRead, in this order: /home/user/rainbow-/CLAUDE.md; /home/user/rainbow-/docs/briefs/2026-11-20-r28/LAUNCH_R28.md (Common + \"Benny\" resume point); /home/user/rain …[+2513 chars]`
+
+### 🧑 User — 2026-11-20T16:56:02.888Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a83852ef198a66db2 (internal ID - do not mention to user. Use SendMessage with to: 'a83852ef198a66db2', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/a72797b0-7eea-579a-8801-b0b276ae6b12/tasks/a83852ef198a66db2.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-20T16:56:07.594Z
+
+All four specialists are running. While they work, I'm checking that the autosave configuration really covers everything on your list, and what it leaves out.
+
+### 🤖 Claude — 2026-11-20T16:56:08.550Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport json;j=json.load(open('backups/autosave.config.json'))\nfor k,v in j.items():\n    s=json.dumps(v); print(k,'=>',s[:700])\n\"", "description": "Show autosave configuration"}`
+
+### 🧑 User — 2026-11-20T16:56:08.598Z
+
+> ↩︎ result: project => "RAINBOW \u2014 11-screen 3D mobile game"
+> repo_full_name => "josiahscalia5-dev/rainbow-"
+> remote_name => "origin"
+> remote_url_must_contain => "github.com/josiahscalia5-dev/rainbow-"
+> branch => "claude/rainbow-r22-restore-ut3m39"
+> session_branch_patterns => ["ccr-*", "claude/*"]
+> commit_trailer => "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01KS3bZvZewXsKSGqCC6N8uK"
+> claude_projects_glob => "~/.claude/projects/-home-user-rainbow-*"
+> allowlist => ["*.md", ".gitignore", ".gitattributes", ".claude/agents", ".claude/skills", ".claude/commands", ".claude/rules", ".claude/settings.json", ".mcp.json.template", "package.json", "package-lock.json", "tsconfig.json", "tsconfig.node.json", "vite.config.ts", "capacitor.config.ts", "index.html", "src", "public", "assets", "references", "character_references", "screenshots", "qa", "docs", "scripts", "tools", "tests", "backups", "android", "builds"]
+> status_only_paths => ["backups/BACKUP_STATUS.json", "backups/BACKUP_LOG.md"]
+> max_plain_git_file_mb => 49
+> push_retries => 4
+> protected_branches => ["ccr-68d26c2d-gwegce", "claude/rainbow-s06-match-c22", "claude/rainbow-benny-c22", "ccr-6f431 …[+2055 chars]
+
+### 🤖 Claude — 2026-11-20T16:56:16.429Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport json;j=json.load(open('backups/autosave.config.json'));pb=j['protected_branches'];print(len(pb)); print([b for b in ('claude/rainbow-restore-screen-match-ijjdai','ccr-08ece3a6-xcwyls','ccr-a9235d04-90cw28','ccr-5be1062a-0ffyej') if b in pb])\"; grep -n \"max_plain_git_file_mb\\|lfs track\\|too large\\|skipped_large\\|5 \\* 1024\\|150\" scripts/rainbow-autosave.py | head -20; echo; grep -v \"^#\" .gitattributes | head -30", "description": "Check protected branches and large-file handling"}`
+
+### 🧑 User — 2026-11-20T16:56:16.501Z
+
+> ↩︎ result: 102
+> []
+> 192:    limit = CFG["max_plain_git_file_mb"] * 1024 * 1024
+> 274:            if src.is_file() and src.stat().st_size <= 5_000_000 and total + src.stat().st_size <= 150_000_000:
+> 
+> *.blend filter=lfs diff=lfs merge=lfs -text
+> *.glb   filter=lfs diff=lfs merge=lfs -text
+> *.ply   filter=lfs diff=lfs merge=lfs -text
+> *.spz   filter=lfs diff=lfs merge=lfs -text
+> *.fbx   filter=lfs diff=lfs merge=lfs -text
+> *.hdr   filter=lfs diff=lfs merge=lfs -text
+> *.exr   filter=lfs diff=lfs merge=lfs -text
+> *.ktx2  filter=lfs diff=lfs merge=lfs -text
+> *.psd   filter=lfs diff=lfs merge=lfs -text
+> *.mp4   filter=lfs diff=lfs merge=lfs -text
+> *.webm  filter=lfs diff=lfs merge=lfs -text
+> *.mov   filter=lfs diff=lfs merge=lfs -text
+> *.apk   filter=lfs diff=lfs merge=lfs -text
+> *.aab   filter=lfs diff=lfs merge=lfs -text
+> *.zip   filter=lfs diff=lfs merge=lfs -text
+
+### 🤖 Claude — 2026-11-20T16:56:20.075Z
+
+> 🔧 **Bash** `{"command": "sed -n 185,215p scripts/rainbow-autosave.py; grep -n \"untracked_skipped\" scripts/rainbow-autosave.py | head -3; grep -c . backups/BACKUP_LOG.md; grep -i \"skip\\|too large\\|> *49\" backups/BACKUP_LOG.md | tail -5", "description": "Read autosave large-file rule and skip records"}`
+
+### 🧑 User — 2026-11-20T16:56:20.154Z
+
+> ↩︎ result: out = git("check-attr", "filter", "--", rel, check=False).stdout
+>     return out.strip().endswith(": lfs")
+> 
+> 
+> def scan_and_guard(staged: list[str]) -> list[str]:
+>     """Unstage files containing secrets or oversized non-LFS binaries. Returns problems."""
+>     problems = []
+>     limit = CFG["max_plain_git_file_mb"] * 1024 * 1024
+>     for rel in staged:
+>         p = REPO / rel
+>         if not p.is_file():
+>             continue
+>         size = p.stat().st_size
+>         if size > limit and not lfs_tracked(rel):
+>             git("reset", "-q", "--", rel, check=False)
+>             problems.append(f"{rel}: {size/1e6:.1f}MB exceeds plain-git limit and is not LFS-tracked (NOT backed up — add an LFS pattern)")
+>             continue
+>         if p.suffix.lower() in TEXT_EXT and size < 20 * 1024 * 1024:
+>             try:
+>                 txt = p.read_text(encoding="utf-8", errors="ignore")
+>             except Exception:
+>                 continue
+>             hit = next((pat.pattern[:30] for pat in SECRET_PATTERNS if pat.search(txt)), None)
+>             if hit is None and any(t in txt for t in PRIVATE_TERMS):
+>                 hit = "private term (~/.rainbow-autosave.private-terms)"
+>             if hit:
+>                 …[+565 chars]
+
+### 🤖 Claude — 2026-11-20T16:56:29.755Z
+
+> 🔧 **Bash** `{"command": "echo \"== files >49MB in repo (excluding node_modules/.git):\"; find . -path ./node_modules -prune -o -path ./.git -prune -o -type f -size +49M -print 2>/dev/null | while read f; do a=$(git check-attr filter -- \"$f\" | awk '{print $3}'); echo \"$f $(du -h \"$f\" | cut -f1) filter=$a\"; done; echo \"== ignored files in allowlisted dirs (top 10 by size):\"; git status --ignored --porcelain 2>/dev/null | grep '^!!' | awk '{print $2}' | grep -vE '^(node_modules|dist)/' | head -15; echo \"== worktree files >5MB (not snapshotted):\"; for w in /home/user/wt/*; do find $w -path $w/node_m …[+166 chars]`
+
+### 🧑 User — 2026-11-20T16:56:30.184Z
+
+> ↩︎ result: == files >49MB in repo (excluding node_modules/.git):
+> == ignored files in allowlisted dirs (top 10 by size):
+> android/local.properties
+> backups/.autosave.lock
+> backups/.live/
+> == worktree files >5MB (not snapshotted):
+> /home/user/wt/benny/qa/match/04/r11/mv/cam20/depth.f32
+> /home/user/wt/benny/qa/match/04/r11/mv/cam10/depth.f32
+> /home/user/wt/benny/qa/match/04/fal/1-04-five-arrows-plate_fal_nano-banana-2_2K.png
+> /home/user/wt/s04/qa/match/04/r11/mv/cam20/depth.f32
+> /home/user/wt/s04/qa/match/04/r11/mv/cam10/depth.f32
+> /home/user/wt/s04/qa/match/04/fal/1-04-five-arrows-plate_fal_nano-banana-2_2K.png
+> /home/user/wt/s05/tools/splash05/work/target.npz
+> /home/user/wt/s05/tools/splash05/work/wake_matte.npy
+> /home/user/wt/s08/qa/gameplay_video/source/rainbow_gameplay_for_claudia-1_0-48.9s.mp4
+> /home/user/wt/s08/qa/match/08/coins08px/motion_sheet_top_BEFORE_bottom_NEW.png
+> /home/user/wt/view04/qa/match/04/r11/mv/cam20/depth.f32
+> /home/user/wt/view04/qa/match/04/r11/mv/cam10/depth.f32
+> /home/user/wt/view04/qa/match/04/fal/1-04-five-arrows-plate_fal_nano-banana-2_2K.png
+
+### 🤖 Claude — 2026-11-20T16:56:35.261Z
+
+> 🔧 **Bash** `{"command": "for f in /home/user/wt/benny/qa/match/04/r11/mv/cam20/depth.f32 /home/user/wt/s05/tools/splash05/work/target.npz /home/user/wt/s08/qa/gameplay_video/source/rainbow_gameplay_for_claudia-1_0-48.9s.mp4 /home/user/wt/s04/qa/match/04/fal/1-04-five-arrows-plate_fal_nano-banana-2_2K.png; do w=$(echo $f | cut -d/ -f1-5); r=${f#$w/}; s=$(git -C $w status --porcelain -- \"$r\"); t=$(git -C $w ls-files -- \"$r\" | wc -l); echo \"$r tracked=$t status='${s}'\"; done", "description": "Check large worktree files are already committed"}`
+
+### 🧑 User — 2026-11-20T16:56:35.361Z
+
+> ↩︎ result: qa/match/04/r11/mv/cam20/depth.f32 tracked=1 status=''
+> tools/splash05/work/target.npz tracked=1 status=''
+> qa/gameplay_video/source/rainbow_gameplay_for_claudia-1_0-48.9s.mp4 tracked=1 status=''
+> qa/match/04/fal/1-04-five-arrows-plate_fal_nano-banana-2_2K.png tracked=1 status=''
+
+### 🤖 Claude — 2026-11-20T16:56:40.109Z
+
+Those large files are already committed and unchanged, so nothing is left out. Checking whether recent finished lead branches are on the protected list, as earlier rounds did:
+
+### 🤖 Claude — 2026-11-20T16:56:42.364Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport json;j=json.load(open('backups/autosave.config.json'));pb=j['protected_branches']\nfor b in ['ccr-4742c19f-ez2mrs','claude/rainbow-r22-restore-ut3m39','ccr-681a37bb-5jqfbu','ccr-68d26c2d-gwegce','ccr-5be1062a-0ffyej','ccr-a9235d04-90cw28','ccr-08ece3a6-xcwyls','claude/rainbow-restore-screen-match-ijjdai']: print(b, b in pb)\nprint(pb[-6:])\"", "description": "Check which lead branches are protected"}`
+
+### 🧑 User — 2026-11-20T16:56:42.429Z
+
+> ↩︎ result: ccr-4742c19f-ez2mrs True
+> claude/rainbow-r22-restore-ut3m39 False
+> ccr-681a37bb-5jqfbu False
+> ccr-68d26c2d-gwegce True
+> ccr-5be1062a-0ffyej False
+> ccr-a9235d04-90cw28 False
+> ccr-08ece3a6-xcwyls False
+> claude/rainbow-restore-screen-match-ijjdai False
+> ['claude/rainbow-benny-c20', 'claude/rainbow-s04-match-c20', 'claude/rainbow-s04-ringtex-c20', 'ccr-4742c19f-ez2mrs', 'claude/rainbow-s06-match-c23', 'claude/rainbow-benny-c23']
+
+### 🤖 Claude — 2026-11-20T16:56:48.159Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport json\nfrom pathlib import Path\np=Path('backups/autosave.config.json'); j=json.loads(p.read_text())\nadd=['claude/rainbow-r22-restore-ut3m39','ccr-5be1062a-0ffyej','ccr-a9235d04-90cw28','ccr-08ece3a6-xcwyls','claude/rainbow-restore-screen-match-ijjdai']\nfor b in add:\n    if b not in j['protected_branches']: j['protected_branches'].append(b)\np.write_text(json.dumps(j,indent=1,ensure_ascii=False)+'\\n'); print(len(j['protected_branches']))\nEOF\ngit diff --stat backups/autosave.config.json; python3 -I -c \"import json;json.load(open('backups/autosave. …[+99 chars]`
+
+### 🧑 User — 2026-11-20T16:56:48.243Z
+
+> ↩︎ result: 107
+>  backups/autosave.config.json | 317 ++++++++++++++++++++++---------------------
+>  1 file changed, 161 insertions(+), 156 deletions(-)
+> valid json
+
+### 🤖 Claude — 2026-11-20T16:56:51.041Z
+
+The diff is bigger than it should be, which means I changed the file's indentation. Restoring the original formatting so only the five lines differ:
+
+### 🤖 Claude — 2026-11-20T16:56:51.795Z
+
+> 🔧 **Bash** `{"command": "git show HEAD:backups/autosave.config.json | head -5 | cat -A | head -5", "description": "Inspect original config file formatting"}`
+
+### 🧑 User — 2026-11-20T16:56:51.827Z
+
+> ↩︎ result: {$
+>   "project": "RAINBOW M-bM-^@M-^T 11-screen 3D mobile game",$
+>   "repo_full_name": "josiahscalia5-dev/rainbow-",$
+>   "remote_name": "origin",$
+>   "remote_url_must_contain": "github.com/josiahscalia5-dev/rainbow-",$
+
+### 🤖 Claude — 2026-11-20T16:56:55.509Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport json\nfrom pathlib import Path\np=Path('backups/autosave.config.json'); j=json.loads(p.read_text())\np.write_text(json.dumps(j,indent=2,ensure_ascii=False)+'\\n')\nEOF\ngit diff --stat backups/autosave.config.json; git diff backups/autosave.config.json | grep '^[+-] ' | head -12", "description": "Rewrite config with original two-space indent"}`
+
+### 🧑 User — 2026-11-20T16:56:55.582Z
+
+> ↩︎ result: backups/autosave.config.json | 9 +++++++--
+>  1 file changed, 7 insertions(+), 2 deletions(-)
+> -    "claude/rainbow-benny-c23"
+> +    "claude/rainbow-benny-c23",
+> +    "claude/rainbow-r22-restore-ut3m39",
+> +    "ccr-5be1062a-0ffyej",
+> +    "ccr-a9235d04-90cw28",
+> +    "ccr-08ece3a6-xcwyls",
+> +    "claude/rainbow-restore-screen-match-ijjdai"
+
+### 🤖 Claude — 2026-11-20T16:56:59.530Z
+
+Now only the five branch names differ. Checking that my earlier edit to the agents status file didn't reformat it the same way:
+
+### 🤖 Claude — 2026-11-20T16:57:00.592Z
+
+> 🔧 **Bash** `{"command": "git show --stat 0cda7f4 -- backups/AGENTS_STATUS.json | tail -2; git show 0cda7f4~1:backups/AGENTS_STATUS.json | head -3 | cat -A | cut -c1-60", "description": "Check agents status file formatting change"}`
+
+### 🧑 User — 2026-11-20T16:57:00.628Z
+
+> ↩︎ result: backups/AGENTS_STATUS.json | 39 +++++++++++++++++++++++++++++++--------
+>  1 file changed, 31 insertions(+), 8 deletions(-)
+> {$
+>  "_comment": "Machine-readable roster of the ten Rainbow spe
+>  "schema": 1,$
+
+### 🤖 Claude — 2026-11-20T16:57:03.070Z
+
+That file kept its original format. Logging the relaunch in the coordination file and saving:
+
+### 🤖 Claude — 2026-11-20T16:57:08.667Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/docs/briefs/2026-11-20-r28/COORDINATION.md", "old_string": "* 16:36 session start; 16:41 first autosave `65e5e49` verified; worktrees restored + verified 16:47–16:50.", "new_string": "* 16:36 session start; 16:41 first autosave `65e5e49` verified; worktrees restored + verified 16:47–16:50.\n* 16:58 restore checkpoint `0cda7f4356918dd78fe5a68594cad18ab6aaa8fe` saved; `git ls-remote` == local HEAD.\n* ~17:00 four workers relaunched (s07, s04, s05, Benny) with `LAUNCH_R28.md`. s06 not relaunched (waits for the route answer).\n* ~17:05 backu …[+765 chars]`
+
+### 🧑 User — 2026-11-20T16:57:08.810Z
+
+> ↩︎ result: The file /home/user/rainbow-/docs/briefs/2026-11-20-r28/COORDINATION.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T16:57:10.121Z
+
+> 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:r28-workers-launched 2>&1 | grep -E '\"commit\"|problem|error' | head -5; git rev-parse HEAD; git ls-remote origin refs/heads/ccr-9652868f-lkw0w0", "description": "Save and verify remote matches local", "timeout": 300000}`
+
+### 🧑 User — 2026-11-20T16:57:10.844Z
+
+> ↩︎ result: "result": "error",
+>   "error": "branch 'ccr-9652868f-lkw0w0' is a protected original branch; autosave never pushes to it",
+> 0cda7f4356918dd78fe5a68594cad18ab6aaa8fe
+> 0cda7f4356918dd78fe5a68594cad18ab6aaa8fe	refs/heads/ccr-9652868f-lkw0w0
+
+### 🤖 Claude — 2026-11-20T16:57:14.856Z
+
+The save refused to run: it now says this session's own branch is protected. My protected-list edit must have triggered a rule I didn't expect. Investigating before anything else:
+
+### 🤖 Claude — 2026-11-20T16:57:15.864Z
+
+> 🔧 **Bash** `{"command": "grep -n \"protected original branch\" -B 25 scripts/rainbow-autosave.py | grep -n \"def \\|protected\\|start\\|source\\|env\\|CLAUDE_CODE\" | head -30", "description": "Find protected-branch logic in autosave"}`
+
+### 🧑 User — 2026-11-20T16:57:15.888Z
+
+> ↩︎ result: 25:374-        if CFG["branch"] in CFG.get("protected_branches", []) or branch in CFG.get("protected_branches", []):
+> 26:375:            raise RuntimeError(f"branch {branch!r} is a protected original branch; autosave never pushes to it")
+
+### 🤖 Claude — 2026-11-20T16:57:18.358Z
+
+> 🔧 **Bash** `{"command": "sed -n 355,380p scripts/rainbow-autosave.py", "description": "Read the branch-protection check"}`
+
+### 🧑 User — 2026-11-20T16:57:18.388Z
+
+> ↩︎ result: row = {"time": t0.isoformat(), "reason": args.reason, "result": "error", "files_staged": 0,
+>            "pushed_verified": False, "branch": CFG["branch"]}
+> 
+>     LOCK.parent.mkdir(parents=True, exist_ok=True)
+>     lockfh = open(LOCK, "w")
+>     try:
+>         fcntl.flock(lockfh, fcntl.LOCK_EX | fcntl.LOCK_NB)
+>     except BlockingIOError:
+>         if not args.quiet:
+>             print("another autosave is running; skipping")
+>         return 0
+> 
+>     try:
+>         # ---- 1. identity checks -------------------------------------------------------
+>         url = git("remote", "get-url", CFG["remote_name"]).stdout.strip()
+>         if CFG["remote_url_must_contain"] not in url:
+>             raise RuntimeError(f"remote URL {url!r} is not the verified Rainbow repo; refusing to back up")
+>         branch = git("symbolic-ref", "--short", "HEAD").stdout.strip()
+>         row["branch"] = branch
+>         if CFG["branch"] in CFG.get("protected_branches", []) or branch in CFG.get("protected_branches", []):
+>             raise RuntimeError(f"branch {branch!r} is a protected original branch; autosave never pushes to it")
+>         if branch != CFG["branch"]:
+>             # A new cloud session gets a fresh working-branch name. F …[+258 chars]
+
+### 🤖 Claude — 2026-11-20T16:57:25.826Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport json\nfrom pathlib import Path\np=Path('backups/autosave.config.json'); j=json.loads(p.read_text())\nj['protected_branches']=[b for b in j['protected_branches'] if b!=j['branch']]\np.write_text(json.dumps(j,indent=2,ensure_ascii=False)+'\\n'); print('config branch:', j['branch'], '| protected now has it:', j['branch'] in j['protected_branches'])\nEOF\npython3 scripts/rainbow-autosave.py --reason manual:r28-workers-launched 2>&1 | grep -E '\"result\"|\"commit\"|\"error\"' | head -5; git rev-parse HEAD; git ls-remote origin refs/heads/ccr-9652868f-lkw0w0 …[+128 chars]`
+

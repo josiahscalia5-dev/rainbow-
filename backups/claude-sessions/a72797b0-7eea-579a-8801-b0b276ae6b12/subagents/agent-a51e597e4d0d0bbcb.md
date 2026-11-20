@@ -1,0 +1,527 @@
+# Subagent agent-a51e597e4d0d0bbcb — session a72797b0-7eea-579a-8801-b0b276ae6b12
+
+### 🧑 User — 2026-11-20T16:55:32.823Z
+
+You are the Screen 07 specialist (slug s07) of the Rainbow game, round 28, relaunched on a new Claude account after the previous account's usage limit stopped you mid-step at 16:13 UTC. Your work so far is restored byte-for-byte (worktree edits verified identical to the 16:15 snapshot) — continue, do not restart.
+
+Read, in this order: /home/user/rainbow-/CLAUDE.md; /home/user/rainbow-/docs/briefs/2026-11-20-r28/LAUNCH_R28.md (Common + "s07" resume point); /home/user/rainbow-/docs/briefs/2026-11-20-r27/LAUNCH_R27.md (Common + "s07", incl. the user's foam clarification verbatim); /home/user/rainbow-/docs/briefs/2026-11-20-r26/USER_VISUAL_BRIEF_R26.md (binding; §2, §3, §6 Screen 07, §8); then the "(r27) WHERE I STOPPED / NEXT" block at the top of /home/user/rainbow-/qa/match/07/r24/PROGRESS.md.
+
+Worktree /home/user/wt/s07, LOCAL branch claude/rainbow-s07-match-c29, ports 5277/5280/5281, temp /home/user/scratch/s07/ (create it; the r27 scratch incl. the combo build and v2.sh is GONE — rebuild the combo with qa/match/07/r24/combo/mkcombo.py from /home/user/wt/s08 READ-ONLY and check hashes vs combo/s08snap_SHA256SUMS_r25.txt). No git commits/pushes, never run git in /home/user/rainbow-, no paid jobs. Every heavy render through `bash /home/user/rainbow-/tools/lead25/render_slot.sh <cmd>` (4 CPUs, no GPU, shared with three other workers and the lead).
+
+Where you stopped: r27 step 1 DONE (full candidate 8/8 + 91 coins, landmark stills, GOOD IMPROVEMENT). Step 2 `&m07fsoft=1`: v1 quick check removed the white bead row and kept clouds off Benny at t 5.0, but the drop's banks were still big ball piles → you wrote v2 (drop clouds ×0.82, max scale 1.0, big domes sunk deeper, fewer heaped top lobes, irregular sunk skirt). First confirm the v2 edits are in match07.ts, then: re-render the v2 quick check, judge it vs the BEFORE landmarks and the approved picture; if good, the full-size proof qa/match/07/r27/s2_fsoft/ (1_ORIGINAL_APPROVED / 2_BEFORE / 3_NEW at the landmark frames, start view 0 px) + the NEW full clip 1.0x then 0.5x (BEFORE = qa/match/07/r26/final/SCREEN07_NEW_full_K23-3_*), gameplay 8/8 + 91 coins, `npx tsc --noEmit`. Step 3 if time: the stacked coin column down the drop (keep 91 total, same route). The magenta panel at the end of the drop is the K23-3 08 inlet pipe (pre-existing, not your code) — only note it.
+
+Keep a "(r28) WHERE I STOPPED / NEXT" block ABOVE the r27 block in qa/match/07/r24/PROGRESS.md, updated after every finished sub-step (the account can stop at any moment; the lead's autosave saves your worktree + qa every 5 min). Be economical with usage (don't re-read big files or view more images than needed). After at most 3 finished steps, stop and report: steps, URL switches, plain-word verdicts (GOOD IMPROVEMENT / NOT AN IMPROVEMENT / NOT YET PROVEN: what got closer, what still differs, any new problem, what is next), proof folders, clip paths (1.0x + 0.5x), the full candidate query, and the most visible remaining difference vs the approved picture. Never claim an unmeasured likeness percentage. Nothing is approved until the user says so.
+
+### 🤖 Claude — 2026-11-20T16:55:35.836Z
+
+I'll start by reading the launch briefs in the order given.
+
+### 🤖 Claude — 2026-11-20T16:55:36.839Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/docs/briefs/2026-11-20-r28 && wc -l LAUNCH_R28.md && grep -n \"^#\" LAUNCH_R28.md | head -40", "description": "Show size and headings of the r28 launch brief"}`
+
+### 🧑 User — 2026-11-20T16:55:36.881Z
+
+> ↩︎ result: 49 LAUNCH_R28.md
+> 1:# Round 28 — relaunch of four specialists (lead session branch `ccr-9652868f-lkw0w0`, new Claude account, 2026-11-20 from ~16:36 UTC)
+> 11:## Common (all workers)
+> 23:## Resume points (from each worker's own r27 block)
+
+### 🤖 Claude — 2026-11-20T16:55:39.437Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/docs/briefs/2026-11-20-r28 && sed -n 1,49p LAUNCH_R28.md | grep -v -i -E \"^\\s*$\" | awk 'NR<=22 || /s07/ {print}'", "description": "Read Common section and s07 lines of r28 brief"}`
+
+### 🧑 User — 2026-11-20T16:55:39.482Z
+
+> ↩︎ result: # Round 28 — relaunch of four specialists (lead session branch `ccr-9652868f-lkw0w0`, new Claude account, 2026-11-20 from ~16:36 UTC)
+> Round 27 (lead `claude/rainbow-restore-screen-match-ijjdai`) stopped at 16:09–16:13 UTC: the old account hit its 5-hour limit and the four
+> workers died mid-step (NOT a rejection). Its last autosave was 16:15 (`7d3ba10`) = this session's start. Every worktree was recreated by
+> `docs/briefs/2026-11-20-r27/setup_worker_r28.sh` (base commit + the 16:15 snapshot) on NEW LOCAL branches **`-c29`** (same paths and ports);
+> **tracked edits verified identical (patch-id) and every untracked file byte-identical** to each snapshot. Scratch folders of round 27
+> (`/home/user/scratch/*`, dev servers, combined builds, probe variants, queued render scripts) are GONE — recreate only what is missing;
+> everything under `qa/` survived. Helper installs rebuilt: `/home/user/tools-pixelmatch/pixeldiff.mjs` (pixelmatch 5.3.0),
+> `/home/user/tools-threejs-devtools`, `/home/user/tools-spector`.
+> ## Common (all workers)
+> * ALL rules of `docs/briefs/2026-11-20-r27/LAUNCH_R27.md` "Common" still apply (read order: CLAUDE.md → `USER_VISUAL_BRIEF_R26.md` (binding) +
+>   `USER_VISUAL_GOAL_R13.m …[+1788 chars]
+
+### 🤖 Claude — 2026-11-20T16:55:42.043Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/docs/briefs/2026-11-20-r28 && grep -n -A8 '^\\* \\*\\*s07' LAUNCH_R28.md | head -20; echo ----; cd ../2026-11-20-r27 && grep -n \"^#\" LAUNCH_R27.md", "description": "Read full s07 resume point and r27 headings"}`
+
+### 🧑 User — 2026-11-20T16:55:42.090Z
+
+> ↩︎ result: 24:* **s07** (water-fx-specialist, `/home/user/wt/s07`, port 5277; PROGRESS `qa/match/07/r24/PROGRESS.md`): r27 step 1 DONE (full candidate
+> 25-  gameplay 8/8 + 91, landmark stills `qa/match/07/r26/final/landmarks/`, GOOD IMPROVEMENT). Step 2 `&m07fsoft=1` written: v1 quick check =
+> 26-  bead row gone, clouds off Benny at t 5.0, but drop banks still big ball piles → v2 (drop clouds ×0.82, max scale 1.0, domes sunk, fewer top
+> 27-  lobes, irregular skirt) was rendering (`/home/user/scratch/s07/v2.sh` → `aud_new2`, `q2_new` — LOST with the scratch; the combo build
+> 28-  `/home/user/scratch/s07/combo` must be rebuilt with `qa/match/07/r24/combo/mkcombo.py` from `/home/user/wt/s08` READ-ONLY, hashes vs
+> 29-  `combo/s08snap_SHA256SUMS_r25.txt`). Next: check the v2 code is in the worktree, re-render v2 quick check, judge vs BEFORE landmarks +
+> 30-  approved → full-size proof `qa/match/07/r27/s2_fsoft/` + NEW full clip 1.0x + 0.5x (BEFORE = `r26/final/SCREEN07_NEW_full_K23-3_*`).
+> 31-  Step 3 if time: stacked coin column down the drop. Known pre-existing item (not 07 code): the magenta panel at the end of the 07 drop =
+> 32-  the K23-3 08 inlet pipe mesh (`m08_pipe`) poking into 07 — a 07-side hid …[+660 chars]
+
+### 🤖 Claude — 2026-11-20T16:55:44.063Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/docs/briefs/2026-11-20-r27 && sed -n 10,47p LAUNCH_R27.md", "description": "Read r27 Common and s07 sections"}`
+
+### 🧑 User — 2026-11-20T16:55:44.094Z
+
+> ↩︎ result: ## Common (all workers) — read in this order
+> 1. `/home/user/rainbow-/CLAUDE.md`.
+> 2. **`docs/briefs/2026-11-20-r26/USER_VISUAL_BRIEF_R26.md`** — the user's detailed visual brief (binding; §2 moving views, §3 water, §4 scenery,
+>    §5 Benny, §6 your screen, §8 evidence). Plus `docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md`.
+> 3. `docs/briefs/2026-11-20-r26/LAUNCH_R26.md` (Common rules + your section) — all its rules still apply (render slots, URL switches, proof format,
+>    verdict words, no git, no paid jobs, economical usage, at most 3 finished steps then stop and report).
+> 4. The "(r26) WHERE I STOPPED / NEXT" block at the TOP of your PROGRESS.md (paths below). Add a "(r27) WHERE I STOPPED / NEXT" block ABOVE it
+>    and keep it current after every finished sub-step (the account can stop at any moment; the lead's autosave saves your worktree + qa every 5 min).
+> * The user's standing order (r26 brief §8): ORIGINAL APPROVED / BEFORE / NEW as separate full-size labelled pictures + an uninterrupted clip at
+>   1.0x first, then 0.5x; BEFORE and NEW under the same conditions. Never claim an unmeasured likeness percentage. Nothing is approved until the USER says so.
+> * Machine: 4 CPUs shared b …[+2728 chars]
+
+### 🤖 Claude — 2026-11-20T16:55:46.857Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/docs/briefs/2026-11-20-r26 && wc -l USER_VISUAL_BRIEF_R26.md && grep -n \"^#\" USER_VISUAL_BRIEF_R26.md", "description": "List headings of the binding visual brief"}`
+
+### 🧑 User — 2026-11-20T16:55:46.901Z
+
+> ↩︎ result: 245 USER_VISUAL_BRIEF_R26.md
+> 1:# The user's detailed visual requirements for every approved Rainbow screen (round 26, 2026-11-20 ~13:00 UTC, verbatim)
+> 17:## 1. Use each screen's own original approved image as its visual specification
+> 35:## 2. Maintain the approved appearance throughout movement
+> 57:## 3. Make the water clean, detailed and consistent with each reference
+> 76:## 4. Keep the scenery detailed and the camera useful during play
+> 92:## 5. Keep Benny consistent with his approved appearance
+> 107:## 6. Individual requirements for the screens we are reviewing
+> 109:### Screen 04 — THROUGH THE FIVE ARROWS
+> 126:### Screen 05 — FLOW INTO THE CURRENT
+> 142:### Screen 06 — CREST THE RINSE ARCH
+> 159:### Screen 07 — DIVE THE WASHER TUBE
+> 177:### Screen 08 — FINAL SPIN CHAMBER
+> 194:### Every other approved screen
+> 200:## 7. Make the whole experience feel like one polished mobile game
+> 212:## 8. Show me clear evidence of improvement
+> 239:## 9. Continue toward this result
+
+### 🤖 Claude — 2026-11-20T16:55:49.070Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/docs/briefs/2026-11-20-r26 && sed -n '35,75p;159,176p;212,238p' USER_VISUAL_BRIEF_R26.md", "description": "Read brief sections 2, 3, Screen 07 and 8"}`
+
+### 🧑 User — 2026-11-20T16:55:49.103Z
+
+> ↩︎ result: ## 2. Maintain the approved appearance throughout movement
+> 
+> The opening frame is only one part of the requirement.
+> 
+> The approved visual quality must continue through the entrance, early movement, middle, late section, ending, left steering, right steering and transition into the next screen.
+> 
+> I expect perspective to change naturally as Benny moves. Nearby objects should pass the camera, distant objects should approach, and scenery should become visible from new angles. Throughout that movement, the world must retain the approved design, materials, colours, proportions and quality.
+> 
+> When movement reveals a surface or area that the original picture did not show, make it a convincing continuation of that same approved environment.
+> 
+> Please inspect what happens when Benny:
+> 
+> - Approaches and passes a gold ring.
+> - Travels alongside a wall or foam bank.
+> - Moves around a bend.
+> - Steers strongly toward either side.
+> - Swims over a crest or down a drop.
+> - Reaches the end of the stage.
+> - Enters the next environment.
+> 
+> Those moving views are part of the design requirement. They need the same care as the opening view.
+> 
+> ## 3. Make the water clean, detailed and consistent with each reference
+> 
+> The wa …[+3863 chars]
+
+### 🤖 Claude — 2026-11-20T16:55:54.131Z
+
+Now the PROGRESS.md r27 block.
+
+### 🤖 Claude — 2026-11-20T16:55:55.001Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/07/r24 && wc -l PROGRESS.md && grep -n \"WHERE I STOPPED\" PROGRESS.md | head", "description": "Locate the stop blocks in PROGRESS.md"}`
+
+### 🧑 User — 2026-11-20T16:55:55.042Z
+
+> ↩︎ result: 147 PROGRESS.md
+> 3:## (r27) WHERE I STOPPED / NEXT
+> 44:## (r26) WHERE I STOPPED / NEXT
+> 104:## (r25) WHERE I STOPPED / NEXT
+> 125:## (r24) WHERE I STOPPED / NEXT
+
+### 🤖 Claude — 2026-11-20T16:55:57.166Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/07/r24/PROGRESS.md", "limit": 103}`
+
+### 🧑 User — 2026-11-20T16:55:57.186Z
+
+> ↩︎ result: 1	# Screen 07 · round 24 (water-fx-specialist) — progress log
+> 2	
+> 3	## (r27) WHERE I STOPPED / NEXT
+> 4	* r27 relaunch (new account, ~15:20 UTC). Worktree `/home/user/wt/s07`, LOCAL branch `claude/rainbow-s07-match-c28` (r26 edits restored
+> 5	  byte-identical by the lead). Ports 5277 / 5280 / 5281. Temp `/home/user/scratch/s07/`.
+> 6	* Found on relaunch: `qa/match/07/r26/final/gameplay_NEW_full.json` DID finish before the r26 stop — query = step-1 candidate & K23-3 &
+> 7	  m07look & m07join (the full candidate), **8 / 8 checks pass, 91 coins collected** (1330 -> 2240), plunge 61.02 u, 0 respawns.
+> 8	  Full NEW clip `r26/final/SCREEN07_NEW_full_K23-3_{1x,0.5x}.mp4` also complete.
+> 9	* 15:25 DONE: s08 snapshot re-copied read-only from `/home/user/wt/s08`: **30 / 30 files match `combo/s08snap_SHA256SUMS_r25.txt`**; combo
+> 10	  build `/home/user/scratch/s07/combo` rebuilt (`combo/mkcombo.py`), tsc 0.
+> 11	* 15:30 DONE — **STEP 1 (r27) final check of the full candidate:** gameplay 8/8 + 91 coins (above); landmark stills BEFORE (r23 candidate
+> 12	  & K23-3) vs NEW (full candidate & K23-3) at matched route landmarks, taken from the two existing 1.0x clips (same steering schedule;
+> 13	  BEFORE frames pic …[+10615 chars]
+
+### 🤖 Claude — 2026-11-20T16:55:59.583Z
+
+Now let me check the worktree state and confirm the v2 edits are present.
+
+### 🤖 Claude — 2026-11-20T16:56:00.738Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/scratch/s07; cd /home/user/wt/s07 && git branch --show-current && git status --short | head -30 && ls /home/user/rainbow-/qa/match/07/r24/combo/ && ls /home/user/rainbow-/qa/match/07/r26/final/ | head -30", "description": "Check worktree branch, status, combo tools and final folder"}`
+
+### 🧑 User — 2026-11-20T16:56:00.791Z
+
+> ↩︎ result: claude/rainbow-s07-match-c29
+>  M src/game/Game.ts
+>  M src/game/cameraRig.ts
+>  M src/gameplay/coins.ts
+>  M src/world/course.ts
+>  M src/world/match07.ts
+> ?? node_modules
+> ?? tools/match07/audit_screen_r23.mjs
+> ?? tools/match07/capture_5277.mjs
+> ?? tools/match07/cloudprobe_r24.mjs
+> ?? tools/match07/diag_r21.mjs
+> ?? tools/match07/gameplay_test_5277.mjs
+> ?? tools/match07/r23_vite_s08.mjs
+> ?? tools/match07/route_r23.mjs
+> ?? tools/match07/seg_clip_r24.mjs
+> ?? tools/match07/shots08_s08.mjs
+> ?? tools/match07/swim_clip_r21.mjs
+> check08
+> check08_r25
+> mkcombo.py
+> s08snap_HEAD.txt
+> s08snap_SHA256SUMS.txt
+> s08snap_SHA256SUMS_r25.txt
+> NEW_full_frames.json
+> SCREEN07_NEW_full_K23-3_0.5x.mp4
+> SCREEN07_NEW_full_K23-3_1x.mp4
+> gameplay_NEW_full.json
+> landmarks
+
+### 🤖 Claude — 2026-11-20T16:56:03.275Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"m07fsoft\\|fsoft\" src/world/match07.ts | head -60", "description": "Find the m07fsoft switch code in match07.ts"}`
+
+### 🧑 User — 2026-11-20T16:56:03.311Z
+
+> ↩︎ result: 103:uniform float uFSoft;     // r27 '?m07fsoft=1': the painted bubble trim between cyan and magenta only in irregular clusters (1 = on)
+> 120:// r27 m07fsoft: 1D value noise (world-anchored along the river) for where the painted bubble trim shows
+> 202:    // r27 m07fsoft (user r27: "refine ... the overly regular white bead-like lines between cyan water and pink edges"): the bank
+> 400:uniform float uFSoftC;    // r27 m07fsoft: small lobes matte (no glint, no rim sheen) so the bumps blend into one soft mass
+> 503:  // r27 '&m07fsoft=1' (qa/match/07/r24/PROGRESS.md, user r27 foam note): keep the outer-bank foam but as soft, varied clusters with
+> 507:  const fsoft = nearW && flag05('m07fsoft');
+> 581:    uFSoft: { value: fsoft ? 1 : 0 },
+> 799:        uniforms: { uGuard: shared.uGuard, uProjPos: shared.uProjPos, uClip: shared.uClip, uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uMagOn: { value: magOn }, uCScale: { value: sc }, uFSoftC: { value: fsoft ? 1 : 0 } },
+> 812:      if (fsoft) {
+> 813:        // r27 m07fsoft: the lobe's river-side surface stays beyond edge - 0.25 (the band's outer part); where the room to the wall
+> 830:      if (swB > 0) S *= THREE.MathUtils.clamp(0.25 + (0.75 * (wallLat - …[+1600 chars]
+
+### 🤖 Claude — 2026-11-20T16:56:06.385Z
+
+The v2 edits appear present (×0.82, max 1.0, sunk domes, fewer top lobes, irregular skirt). Let me view that block briefly to confirm.
+
+### 🤖 Claude — 2026-11-20T16:56:06.987Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/src/world/match07.ts", "offset": 805, "limit": 100}`
+
+### 🧑 User — 2026-11-20T16:56:07.006Z
+
+> ↩︎ result: 805	     * → group-local. Built like the painted foam: 2–4 big domes sunk into the water, softer lobes heaped on top of them, and many
+> 806	     * small bumps half out of every big lobe (the lumpy cauliflower outline), a few loose bubbles at the river edge. Mound size and
+> 807	     * spacing vary (no row of equal balls).
+> 808	     */
+> 809	    type Place = (lat: number, a: number, up: number) => THREE.Vector3;
+> 810	    const edge = 2.95;
+> 811	    const pushL = (out: number[], tone: number[], place: Place, side: number, wallLat: number, lat: number, along: number, up: number, r: number, lvl: number) => {
+> 812	      if (fsoft) {
+> 813	        // r27 m07fsoft: the lobe's river-side surface stays beyond edge - 0.25 (the band's outer part); where the room to the wall
+> 814	        // is tight the lobe gets smaller instead of being pushed back over the river
+> 815	        const inner = edge - 0.25;
+> 816	        r = Math.min(r, Math.max(0.1, (wallLat - inner) / 1.25));
+> 817	        lat = Math.max(lat, inner + r * (up > 0.2 * r ? 0.85 : 0.7));
+> 818	        if (lat + r * 0.25 > wallLat) lat = Math.max(inner + r * 0.5, wallLat - r * 0.25);
+> 819	      } else {
+> 820	      lat = Math.max(lat, edge - r * 0.35);
+> 82 …[+6964 chars]
+
+### 🤖 Claude — 2026-11-20T16:56:11.006Z
+
+The v2 code is in place (plus a small "v3" comment on the inside-of-bend heaps from the previous session). Writing the r28 block first, then rebuilding the combo build.
+
+### 🤖 Claude — 2026-11-20T16:56:14.660Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/match/07/r24/PROGRESS.md", "old_string": "# Screen 07 · round 24 (water-fx-specialist) — progress log\n", "new_string": "# Screen 07 · round 24 (water-fx-specialist) — progress log\n\n## (r28) WHERE I STOPPED / NEXT\n* r28 relaunch (new account, ~16:40 UTC). Worktree `/home/user/wt/s07`, LOCAL branch `claude/rainbow-s07-match-c29` (r27 edits restored\n  byte-identical by the lead). Ports 5277 / 5280 / 5281. Temp `/home/user/scratch/s07/` (recreated, empty).\n* CONFIRMED: the m07fsoft v2 edits are in `src/world/match07.ts` (drop clouds …[+305 chars]`
+
+### 🧑 User — 2026-11-20T16:56:14.893Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/match/07/r24/PROGRESS.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T16:56:15.813Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/07/r24/combo && sed -n 1,80p mkcombo.py; cat s08snap_HEAD.txt; wc -l s08snap_SHA256SUMS_r25.txt; ls check08_r25 | head", "description": "Read mkcombo.py and snapshot metadata"}`
+
+### 🧑 User — 2026-11-20T16:56:15.878Z
+
+> ↩︎ result: #!/usr/bin/env python3
+> """r24 s07 — RENDER-ONLY combined build: my Screen 07 worktree + the latest Screen 08 code (s08 worker's tree, K16 & m08gl).
+> 
+> No tree / branch holds both lines (the 07 line = 8accdad0 has the r3-era 08 code; the 08 line = 3c0fa97 has no 07 match
+> code). The user asked that the 07->08 transition is checked with the latest Screen 08, so every 07 clip / join check of
+> round 24 renders from this throw-away directory. Nothing here is committed or merged into any branch; it is rebuilt from
+> the two sources before each render:
+>   * everything from /home/user/wt/s07 (src, assets, public, scripts, tools/match07, configs; node_modules = symlink)
+>   * from the s08 snapshot (read-only copy of /home/user/wt/s08, see SNAP below):
+>       - src/world/match08.ts (whole file: the 07 line never changed it after r3) + assets/textures/match08/* (new files)
+>       - src/gameplay/coins.ts = the s08 file with my 07 parts spliced in (07 trail / picture coins / m07coinsz look);
+>         the 08 coin look (m08coinv, quiet pop) is limited to non-07 coins so 07 stays exactly as in my build
+>       - src/world/course.ts = my file + the 08 line's frame-table spacing rule under match08 (keep the defau …[+4552 chars]
+
+### 🤖 Claude — 2026-11-20T16:56:19.038Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/07/r24/combo && head -5 s08snap_SHA256SUMS_r25.txt && sed -n 80,200p mkcombo.py | tail -30; cd /home/user/wt/s08 && git log -1 --format=%H", "description": "Check sums file format and the tail of mkcombo.py"}`
+
+### 🧑 User — 2026-11-20T16:56:19.084Z
+
+> ↩︎ result: # r25 s07: READ-ONLY copy of /home/user/wt/s08 taken 2026-11-20T12:04:02Z (s08 HEAD 3c0fa970 + the r24 11:43 snapshot = K23-3 steps 1-3); used by combo/mkcombo.py
+> fe67abb168b62a46d07c40d333227135c10b75cd70e0b656d11ffbde2ab2e5f6  ./assets/textures/match08/bore08.json
+> f8b8d9548c4e3f15f4d9cdaa7e6bfeecd1a3191a447b2f760af7b1cc8ecc6237  ./assets/textures/match08/cam08_locked.json
+> f25b8b1bf3c323922c25dd48615f906e2d5d71971cf8cfac3a6b630cf51f54d9  ./assets/textures/match08/coins08.json
+> 5d8c40e11f114cbc3e11f8f8e4adb97695f6b250c700a20e19876565592ace72  ./assets/textures/match08/coins08px.json
+>         "  const m08 = !no08 && (flag05('match08') || flag05('matchall'));\n  const rz = river08.z")
+> # reference spacing: with match08 the DEFAULT build's (no 08 river, no bend) — the 08 line's rule; my bend grid uses it too
+> s = rep(s, '      const L0 = arc(buildRoute(0).points), n0 = Math.ceil(L0 / 0.25), ds0 = L0 / n0;',
+>         "      const L0 = arc(buildRoute(0).points);\n"
+>         "      const dsRef = flag05('match08') || flag05('matchall') ? (() => { const Ld = arc(buildRoute(0, true).points); return Ld / Math.ceil(Ld / 0.25); })() : L0 / Math.ceil(L0 / 0.25);\n"
+>         "      const ds0 = dsRef, n …[+944 chars]
+
+### 🤖 Claude — 2026-11-20T16:56:23.236Z
+
+> 🔧 **Bash** `{"command": "set -e; S=/home/user/scratch/s07/s08snap; mkdir -p $S; cd /home/user/wt/s08; grep -v '^#' /home/user/rainbow-/qa/match/07/r24/combo/s08snap_SHA256SUMS_r25.txt | awk '{print $2}' | while read f; do mkdir -p \"$S/$(dirname \"$f\")\"; cp -p \"$f\" \"$S/$f\"; done; cd $S && grep -v '^#' /home/user/rainbow-/qa/match/07/r24/combo/s08snap_SHA256SUMS_r25.txt | sha256sum -c --quiet && echo \"ALL MATCH: $(grep -vc '^#' /home/user/rainbow-/qa/match/07/r24/combo/s08snap_SHA256SUMS_r25.txt)\"; cd /home/user/rainbow-/qa/match/07/r24/combo && python3 -I mkcombo.py $S /home/user/scratch/s07/combo …[+78 chars]`
+
+### 🧑 User — 2026-11-20T16:56:23.779Z
+
+> ↩︎ result: ALL MATCH: 30
+> combo ok /home/user/scratch/s07/combo
+
+### 🤖 Claude — 2026-11-20T16:56:26.615Z
+
+Snapshot 30/30 match, combo rebuilt. Now tsc and finding the full candidate query.
+
+### 🤖 Claude — 2026-11-20T16:56:28.772Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s07/combo && timeout 300 npx tsc --noEmit; echo \"combo tsc=$?\"; head -c 1500 /home/user/rainbow-/qa/match/07/r26/final/NEW_full_frames.json; echo; python3 -c \"\nimport json;d=json.load(open('/home/user/rainbow-/qa/match/07/r26/final/gameplay_NEW_full.json'));print({k:(v if len(str(v))<400 else str(v)[:400]) for k,v in d.items()} if isinstance(d,dict) else str(d)[:800])\"", "description": "Typecheck combo, show full candidate frames json and gameplay result"}`
+
+### 🧑 User — 2026-11-20T16:56:32.159Z
+
+> ↩︎ result: combo tsc=0
+> {
+>  "screen": "07",
+>  "fps": 24,
+>  "s0": 273.056,
+>  "s1": 392.89463260340705,
+>  "query": "match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1&m07foam=1&m07coinsz=1&m07nearw=1&m07foamb=1&m07band=1&m07end=1&m07cloud=1&m07satin=1&m07sbend=1&m07swing=1&match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1&m08ceil=1&m08near=1&m08cup=1&m08rw=1&m08drum=1&m08ring=1&m08cupg=1&m08bore=1&m08flange=1&m08cupw=1&m08nq=1&m08sr=1&m08vh=1&m08gl=1&m08coinsz=1&m08towelm=1&m08towelv=1&m07look=1&m07join=1",
+>  "frames": [
+>   {
+>    "i": 0,
+>    "t": 0,
+>    "stage": "07",
+>    "s": 273.657,
+>    "lat": 0,
+>    "frac": 0,
+>    "phase": "ENTRANCE (straight)"
+>   },
+>   {
+>    "i": 1,
+>    "t": 0.042,
+>    "stage": "07",
+>    "s": 274.258,
+>    "lat": 0,
+>    "frac": 0.005,
+>    "phase": "ENTRANCE (straight)"
+>   },
+>   {
+>    "i": 2,
+>    "t": 0.083,
+>    "stage": "07",
+>    "s": 274.859,
+>    "lat": 0,
+>    "frac": 0.01,
+>    "phase": "ENTRANCE (straight)"
+>   },
+>   {
+>    "i": 3,
+>    "t": 0.125,
+>    "stage": "07",
+>    "s": 275.46,
+>    "lat": 0,
+>    "frac": 0.015,
+>    "phase": "ENTRANCE (straight)"
+>   },
+>   {
+>    "i": 4,
+>    "t": 0.167,
+>    "stage": "07",
+>    "s": 276.062,
+>    "la …[+1891 chars]
+
+### 🤖 Claude — 2026-11-20T16:56:35.165Z
+
+Full candidate query recovered. Now the render tools' usage.
+
+### 🤖 Claude — 2026-11-20T16:56:36.517Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07/tools/match07 && for f in audit_screen_r23.mjs seg_clip_r24.mjs swim_clip_r21.mjs gameplay_test_5277.mjs r23_vite_s08.mjs capture_5277.mjs; do echo \"=== $f\"; head -25 $f | grep -E \"^\\s*(//|\\*|/\\*)\" | head -14; done", "description": "Show header comments of the render tool scripts"}`
+
+### 🧑 User — 2026-11-20T16:56:36.578Z
+
+> ↩︎ result: === audit_screen_r23.mjs
+> // r23 s07 copy of tools/lead21/audit_screen.mjs (identical shots) with 600 s timeouts for the loaded shared machine (lead note)
+> // Round 21 lead audit (read-only): one playable screen of the REAL game at start / early / middle / late / end and hard
+> // left / right, deterministic (fixed sim steps, frozen shader clock, one frame rendered per shot, no real-time steps).
+> // Run from the worktree whose build you want to see (vite serves the current directory):
+> //   cd <worktree> && node /home/user/rainbow-/tools/lead21/audit_screen.mjs <outDir> <stage 04..08> "<query>"
+> // Shots are fractions of the stage from its checkpoint to its end; env AUDIT_SHOTS='[["name",frac,steer],...]' overrides.
+> === seg_clip_r24.mjs
+> // r24 s07 (QA only): a SEGMENT of the lead's labelled-clip run (tools/lead23/screen_clip.mjs: same steering schedule by the share
+> // of the screen travelled — straight < 0.30, LEFT 0.30–0.50, RIGHT 0.50–0.70, straight after — same per-frame stepping and pinned
+> // shader clock), but it records only from game time tFrom to tTo (seconds of the clip), at FPS frames per second of game time and
+> // at a smaller viewport (same 9:16 framing) for quick framing iter …[+3343 chars]
+
+### 🤖 Claude — 2026-11-20T16:56:40.784Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07/tools/match07 && grep -n -i \"port\\|AUDIT_SHOTS\\|spawn\\|vite\" audit_screen_r23.mjs | head -20; echo ---; grep -n -i \"SEG_PORT\\|spawn\\|vite\\|FRAMES\\|process.env\" seg_clip_r24.mjs | head -20; echo; ls /home/user/rainbow-/qa/match/07/r26/final/landmarks/", "description": "Check how audit and segment tools start servers and pick frames"}`
+
+### 🧑 User — 2026-11-20T16:56:40.824Z
+
+> ↩︎ result: 4:// Run from the worktree whose build you want to see (vite serves the current directory):
+> 6:// Shots are fractions of the stage from its checkpoint to its end; env AUDIT_SHOTS='[["name",frac,steer],...]' overrides.
+> 7:import { mkdirSync, writeFileSync } from 'node:fs';
+> 8:import { pathToFileURL } from 'node:url';
+> 9:const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> 11:const SHOTS = process.env.AUDIT_SHOTS ? JSON.parse(process.env.AUDIT_SHOTS)
+> 16:const vite = await startVite(Number(process.env.AUDIT_PORT ?? 5290));
+> 20:  const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
+> 23:  await page.goto(`${vite.url}/?qa=1&dpr=1&${Q}`);
+> 43:} finally { writeFileSync(`${OUT}/shots.json`, JSON.stringify(log, null, 1)); await browser.close(); await vite.close?.(); }
+> ---
+> 4:// shader clock), but it records only from game time tFrom to tTo (seconds of the clip), at FPS frames per second of game time and
+> 5:// at a smaller viewport (same 9:16 framing) for quick framing iterations. The frames before tFrom are simulated at 24 fps exactly
+> 7://   cd <tree> && SEG_PORT=5280 node tools/m …[+986 chars]
+
+### 🤖 Claude — 2026-11-20T16:56:50.833Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07/tools/match07 && sed -n 23,54p seg_clip_r24.mjs; ls /home/user/rainbow-/tools/lead23/ 2>/dev/null | head; cat /home/user/rainbow-/tools/lead25/render_slot.sh | head -30", "description": "Read segment clip loop and the render slot wrapper"}`
+
+### 🧑 User — 2026-11-20T16:56:50.892Z
+
+> ↩︎ result: const vite = await startVite(Number(process.env.SEG_PORT ?? 5280));
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> const log = [];
+> try {
+>   const page = await browser.newPage({ viewport: { width: W, height: H }, deviceScaleFactor: 1 });
+>   page.on('pageerror', (e) => console.error('pageerror', e.message));
+>   await page.goto(`${vite.url}/?qa=1&dpr=1${Q ? '&' + Q : ''}`);
+>   await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 600000 });
+>   const rng = await page.evaluate((id) => { const r = window.__rainbow; r.goto(id); const g = r.course.stage(id); return { s0: r.state().s, s1: g.s1 }; }, SCREEN);
+>   for (let i = 0; i < 2400; i++) {
+>     const t = i / fps;
+>     if (t > Number(T1) + 1e-6) break;
+>     const rec = t >= Number(T0) - 1e-6 && i % every === 0;
+>     const st = await page.evaluate(([t, dt, rng, draw]) => {
+>       const R = window.__rainbow;
+>       const frac = (R.state().s - rng.s0) / (rng.s1 - rng.s0);
+>       const dir = frac < 0.3 ? null : frac < 0.5 ? -1 : frac < 0.7 ? 1 : null;
+>       const _pn = performance.now; performance.now = () => (t + dt) * 1000;
+>       R.setSteer(dir); R.freezeAt(t); R.step(Math.round(dt * 60), …[+2198 chars]
+
+### 🤖 Claude — 2026-11-20T16:56:55.143Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07/tools/match07 && sed -n 8,22p seg_clip_r24.mjs; sed -n 1,40p /home/user/rainbow-/tools/lead23/clip.sh | grep -v \"^\\s*$\" | head -30", "description": "Read segment tool arguments and the lead clip script"}`
+
+### 🧑 User — 2026-11-20T16:56:55.184Z
+
+> ↩︎ result: import { mkdirSync, writeFileSync, realpathSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> async function startVite(port) {
+>   const { createServer, searchForWorkspaceRoot } = await import(pathToFileURL(`${process.cwd()}/node_modules/vite/dist/node/index.js`).href);
+>   const root = process.cwd();
+>   const server = await createServer({ server: { port, strictPort: false, host: '127.0.0.1', hmr: false, watch: { ignored: ['**/*'] },
+>     fs: { allow: [searchForWorkspaceRoot(root), realpathSync(`${root}/node_modules`)] } }, logLevel: 'error' });
+>   await server.listen();
+>   return { url: (server.resolvedUrls?.local?.[0] ?? `http://127.0.0.1:${port}/`).replace(/\/$/, ''), close: () => server.close() };
+> }
+> const [OUT, Q = '', T0 = '0', T1 = '9', FPS = '12', WID = '432'] = process.argv.slice(2);
+> const SCREEN = '07', fps = 24, every = Math.max(1, Math.round(fps / Number(FPS))), W = Number(WID), H = Math.round((W * 16) / 9);
+> mkdirSync(OUT, { recursive: true });
+> const { chromium } = loadPlaywright();
+> #!/usr/bin/env bash
+> # usage: clip.sh <query file> <out mp4 prefix> <po …[+615 chars]
+
+### 🤖 Claude — 2026-11-20T16:56:59.471Z
+
+> 🔧 **Bash** `{"command": "head -30 /home/user/rainbow-/tools/lead23/screen_clip.mjs | grep -E \"^\\s*//\" ; head -15 /home/user/rainbow-/tools/lead23/label_clip.py | grep -E \"^#|usage\" ; ffprobe -v error -show_entries stream=width,height,nb_frames,r_frame_rate -of csv=p=0 /home/user/rainbow-/qa/match/07/r26/final/SCREEN07_NEW_full_K23-3_1x.mp4 /home/user/rainbow-/qa/match/07/r26/final/SCREEN07_NEW_full_K23-3_0.5x.mp4", "description": "Read the lead clip tool usage and existing clip properties"}`
+
+### 🧑 User — 2026-11-20T16:56:59.548Z
+
+> ↩︎ result: Exit code 1
+> // Lead r23: uninterrupted REAL-GAMEPLAY clip of one whole playable screen (entrance -> end, into the next screen), with the
+> // steering phase and the screen logged per frame (for labels). Real game speed: one frame per 1/24 s of game time.
+> // Steering by the share of the screen travelled: straight < 0.30, LEFT 0.30-0.50, RIGHT 0.50-0.70, straight after (end).
+> // The shader clock follows the clip clock (performance.now pinned per frame), so the water moves at its normal speed.
+> //   cd <worktree> && AUDIT_PORT=5290 node /home/user/rainbow-/tools/lead23/screen_clip.mjs <screen 04..08> <outDir> "<query>" [tailSecs]
+> // worktrees link node_modules to the main checkout: allow Vite to serve it too, else the HUD fonts fall back (s06 r23 fix)
+> #!/usr/bin/env python3
+> usage: python3 -I label_clip.py <clipDir> <title> <out_prefix>   -> <out_prefix>_1x.mp4 (real game speed) + _0.5x.mp4"""
+> Argument '/home/user/rainbow-/qa/match/07/r26/final/SCREEN07_NEW_full_K23-3_0.5x.mp4' provided as input filename, but '/home/user/rainbow-/qa/match/07/r26/final/SCREEN07_NEW_full_K23-3_1x.mp4' was already specified.
+
+### 🤖 Claude — 2026-11-20T16:57:07.652Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json;d=json.load(open('/home/user/rainbow-/qa/match/07/r26/final/NEW_full_frames.json'));f=d['frames'];print(len(f),f[-1]);print([ (x['i'],x['t'],x['stage']) for x in f if x['stage']!='07'][:2]); print([k for k in d if k!='frames'])\"; grep -n \"tail\\|argv\" /home/user/rainbow-/tools/lead23/screen_clip.mjs | head", "description": "Inspect existing full clip frame count and tail setting"}`
+
+### 🧑 User — 2026-11-20T16:57:07.706Z
+
+> ↩︎ result: 213 {'i': 212, 't': 8.833, 'stage': '08', 's': 399.493, 'lat': 1.275, 'frac': 1.051, 'phase': 'next screen 08'}
+> [(199, 8.292, '08'), (200, 8.333, '08')]
+> ['screen', 'fps', 's0', 's1', 'query']
+> 6://   cd <worktree> && AUDIT_PORT=5290 node /home/user/rainbow-/tools/lead23/screen_clip.mjs <screen 04..08> <outDir> "<query>" [tailSecs]
+> 19:const [SCREEN, OUT, Q = '', TAIL = '0.6'] = process.argv.slice(2);
+> 32:  let tailLeft = Math.round(Number(TAIL) * fps);
+> 41:    if (st.stage !== SCREEN && --tailLeft <= 0) break;
+
+### 🤖 Claude — 2026-11-20T16:57:16.096Z
+
+I'll make a frame-list variant of the segment tool in scratch for the quick check (same stepping, records only the landmark frames).
+
+### 🤖 Claude — 2026-11-20T16:57:20.760Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s07 && sed -e \"s|const rec = t >= Number(T0) - 1e-6 \\&\\& i % every === 0;|const rec = PICK ? PICK.includes(i) : (t >= Number(T0) - 1e-6 \\&\\& i % every === 0);|\" -e \"s|^mkdirSync(OUT, { recursive: true });|const PICK = process.env.SEG_FRAMES ? process.env.SEG_FRAMES.split(',').map(Number) : null;\\nmkdirSync(OUT, { recursive: true });|\" /home/user/wt/s07/tools/match07/seg_clip_r24.mjs > seg_frames.mjs && grep -n \"PICK\" seg_frames.mjs && Q=$(python3 -c \"import json;print(json.load(open('/home/user/rainbow-/qa/match/07/r26/final/NEW_full_frames.json') …[+572 chars]`
+
+### 🧑 User — 2026-11-20T16:57:20.824Z
+
+> ↩︎ result: 21:const PICK = process.env.SEG_FRAMES ? process.env.SEG_FRAMES.split(',').map(Number) : null;
+> 36:    const rec = PICK ? PICK.includes(i) : (t >= Number(T0) - 1e-6 && i % every === 0);
+> ok
+
+### 🤖 Claude — 2026-11-20T16:57:23.343Z
+
+> 🔧 **Bash** `{"command": "bash /home/user/rainbow-/tools/lead25/render_slot.sh --status; uptime", "description": "Check render slot availability and machine load"}`
+
+### 🧑 User — 2026-11-20T16:57:23.381Z
+
+> ↩︎ result: slot 1 free
+> slot 2 free
+>  16:57:23 up 26 min,  0 user,  load average: 0.09, 0.19, 0.25
+

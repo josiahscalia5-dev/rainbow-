@@ -1,5 +1,13 @@
 # Screen 07 · round 24 (water-fx-specialist) — progress log
 
+## (r28) WHERE I STOPPED / NEXT
+* r28 relaunch (new account, ~16:40 UTC). Worktree `/home/user/wt/s07`, LOCAL branch `claude/rainbow-s07-match-c29` (r27 edits restored
+  byte-identical by the lead). Ports 5277 / 5280 / 5281. Temp `/home/user/scratch/s07/` (recreated, empty).
+* CONFIRMED: the m07fsoft v2 edits are in `src/world/match07.ts` (drop clouds x0.82 l.831, swing max scale 1.0 l.830, domes sunk
+  0.18-0.48 r l.840, 40 % lobes no bumps l.854, 45 % no heaped top lobe l.845, irregular sunk skirt l.872-874, inside-of-bend low heaps
+  l.892-893).
+* NOW: rebuilding the combo build from `/home/user/wt/s08` (read-only), then the v2 quick check.
+
 ## (r27) WHERE I STOPPED / NEXT
 * r27 relaunch (new account, ~15:20 UTC). Worktree `/home/user/wt/s07`, LOCAL branch `claude/rainbow-s07-match-c28` (r26 edits restored
   byte-identical by the lead). Ports 5277 / 5280 / 5281. Temp `/home/user/scratch/s07/`.

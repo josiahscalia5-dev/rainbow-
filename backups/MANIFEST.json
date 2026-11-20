@@ -624,7 +624,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 23203,
-   "sha256": "405486b0e2ee170572733500d04fcd69df8c924a3a39b4908fbf4df0201b356a"
+   "sha256": "e76b6e7d15dc7caf69efce04600b755a6623b944a85ffabe58d86623d3da65cb"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -639,7 +639,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 4145,
-   "sha256": "065229ccbcae290fcae763a8a09e6b38642b73e35b5fb89140434fea6e1a6bc3"
+   "sha256": "ab2adf8df9f11d23152338822e80f478c0c8ea13dbb2b852223d3a1a79259619"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -663,8 +663,8 @@
   },
   {
    "path": "backups/autosave.config.json",
-   "bytes": 10707,
-   "sha256": "f02507c8f38ecd405554d9b696e90dda2b60b7dc8acc17012f017fbc58aea480"
+   "bytes": 10839,
+   "sha256": "0d7179066707b5c1f84ad49a72ca16a57246022bfaeb548a2df6e1bc2b3ab624"
   },
   {
    "path": "backups/claude-config/2026-11-18-account12/README.md",
@@ -1104,7 +1104,7 @@
   {
    "path": "backups/wip/claude__rainbow-benny-c29/INFO.json",
    "bytes": 1206,
-   "sha256": "276c1d7ea8ac16da336792df532ff81234310991d8d87c8fb79789fe8aaa29bb"
+   "sha256": "9fbb3f7473cdf58d72a761d0da827feeb48984f876d8ac3023052ba25a2e4c5f"
   },
   {
    "path": "backups/wip/claude__rainbow-benny-c29/tracked.patch",
@@ -1799,7 +1799,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c29/INFO.json",
    "bytes": 586,
-   "sha256": "fcc5831134a5fa75e4e00b002091211a44d7180e7ddd169c19cb8e2372041e5d"
+   "sha256": "c950f9a0b118cc1e455c12a575c068736d7effa36dbe81d74c3d53c4863ecff9"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c29/tracked.patch",
@@ -2589,7 +2589,7 @@
   {
    "path": "backups/wip/claude__rainbow-s05-match-c29/INFO.json",
    "bytes": 477,
-   "sha256": "49ac1416de203b9bb566efae470b51765621b50d5fe36255b0a6f4ec3c82c77e"
+   "sha256": "47d16902deab61ee09ab3135ee7bece310c8352e02be07844906d079798409c2"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c11/INFO.json",
@@ -2979,7 +2979,7 @@
   {
    "path": "backups/wip/claude__rainbow-s06-match-c29/INFO.json",
    "bytes": 1090,
-   "sha256": "c234e292800d429dac4fc311994f0616206d2acaff7b6321b9c1cc90810081dc"
+   "sha256": "6956fd9716214a299570bec7c0969a5b580a63c2af1699d973e9f7668456f361"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c29/tracked.patch",
@@ -3529,7 +3529,7 @@
   {
    "path": "backups/wip/claude__rainbow-s07-match-c29/INFO.json",
    "bytes": 971,
-   "sha256": "8c6a9c6de4ecda6e0cad3377e3456473e26316b0c3ae5e64e4527bf8f483c8d7"
+   "sha256": "3b71eee5eac588427149c5439e9cc68c53ba919210c252c1f59ffdad56365a91"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c29/tracked.patch",
@@ -3804,7 +3804,7 @@
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c29/INFO.json",
    "bytes": 640,
-   "sha256": "adc6d67312c1270e81dc080efded0b423ed0c6eb7ab9ba0eee158cd367a21869"
+   "sha256": "bba1a65d2da76639b82015ce8c5d87ca6d82476864104c7a2a2061cf9b8ef8a2"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c29/tracked.patch",
@@ -3839,7 +3839,7 @@
   {
    "path": "backups/wip/detached-8accdad0a0/INFO.json",
    "bytes": 491,
-   "sha256": "9accbf70796a85dd1f0387c6a3606041ca6d645f45247f0e9dc6e6f3892e8b4b"
+   "sha256": "484ccc85bff19f57b0544e585806351200ee5f187f51c1993e9f490027e9f1b0"
   },
   {
    "path": "backups/wip/detached-8accdad0a0/tracked.patch",
@@ -3854,7 +3854,7 @@
   {
    "path": "backups/wip/detached-e162aec2bf/INFO.json",
    "bytes": 701,
-   "sha256": "45efaa72bcb792391d8fcf248d889a7a18d9619a2147f20216a14c6e84988ed6"
+   "sha256": "491957fa3a00b1166670649ec40dd388c2609947bfbe9439b2cf7e12f4ba1f4a"
   },
   {
    "path": "backups/wip/detached-e162aec2bf/tracked.patch",
@@ -4019,7 +4019,7 @@
   {
    "path": "backups/wip/lead__trial07-c29/INFO.json",
    "bytes": 927,
-   "sha256": "333d95f02d4c7e82f0e7d37e0e613555c9caca5372210f4c2cf299555addc1be"
+   "sha256": "32320942dfea32299010d2938c40303f750417bdddbc8fea14642d193a1d4d72"
   },
   {
    "path": "backups/wip/lead__trial07-c29/tracked.patch",
@@ -4094,7 +4094,7 @@
   {
    "path": "backups/wip/lead__view04-c29/INFO.json",
    "bytes": 537,
-   "sha256": "b587801b7ef8993e704a744a4cb02fa75c083ce7e2b3533699a986e921fcca63"
+   "sha256": "060df2606e1e0baf18fd10227f3250e0351265726e65d2e8e2e11c43dd94abcd"
   },
   {
    "path": "backups/wip/lead__view04-c29/tracked.patch",
@@ -4194,7 +4194,7 @@
   {
    "path": "backups/wip/lead__view06-c29/INFO.json",
    "bytes": 1041,
-   "sha256": "37479498df920ec35f6596fcba5f382809b5aa8549901a043a7d678da112f841"
+   "sha256": "de2dfb9f6e3d73c15ec7ca3f8f8c1e14168b249ff45528426873b208fb497171"
   },
   {
    "path": "backups/wip/lead__view06-c29/tracked.patch",
@@ -4339,7 +4339,7 @@
   {
    "path": "backups/wip/lead__view07-c29/INFO.json",
    "bytes": 922,
-   "sha256": "fed09c539d7e46fbf0183d3286542c8f5d2c41ce19bfbe26aebd9d960290cf07"
+   "sha256": "9ffea13e2f262655d6d64c71401e11656ce17fa497a8db111623199d97d61534"
   },
   {
    "path": "backups/wip/lead__view07-c29/tracked.patch",
@@ -5108,8 +5108,8 @@
   },
   {
    "path": "docs/briefs/2026-11-20-r28/COORDINATION.md",
-   "bytes": 7764,
-   "sha256": "72ffc72f06f1f5049d0ff2d9be1f6bf7fd8cd54489383100b9c6379a186770db"
+   "bytes": 8774,
+   "sha256": "7667bef9c1ead96a086f1e38f7b3f0f182d5525d27367baca386afb8b709a8c5"
   },
   {
    "path": "docs/briefs/2026-11-20-r28/LAUNCH_R28.md",
@@ -7195,6 +7195,176 @@
    "path": "qa/benny/r27/s5_crown/08/new/shots.json",
    "bytes": 1209,
    "sha256": "ce6aba61cd1327df0553c5a021da27b95ae4dea7cfe22f3281ccdfe9621512a6"
+  },
+  {
+   "path": "qa/benny/r27/s5_crown/COMPARE/04_a_start/1_ORIGINAL_APPROVED.png",
+   "bytes": 887639,
+   "sha256": "71349a901105f05868efc3f2d6cbd8a5a48483f3160b257af5b04d2f23a4a9a2"
+  },
+  {
+   "path": "qa/benny/r27/s5_crown/COMPARE/04_a_start/2_BEFORE.png",
+   "bytes": 991297,
+   "sha256": "2ca081a1c60fb55365d1dc2d3ffa6e7aa81f33307c704f155db301210b5f2de8"
+  },
+  {
+   "path": "qa/benny/r27/s5_crown/COMPARE/04_a_start/3_NEW.png",
+   "bytes": 1012904,
+   "sha256": "423d3c94c058fce17f4375df5f260ece03a3ae59567fb69dfcd47fa8bc8a10a3"
+  },
+  {
+   "path": "qa/benny/r27/s5_crown/COMPARE/04_a_start/CROP.json",
+   "bytes": 438,
+   "sha256": "17b787f824920f911e4af383780f771395d4b01cc56536d45357284f2ebe22cb"
+  },
+  {
+   "path": "qa/benny/r27/s5_crown/COMPARE/04_c_middle/1_ORIGINAL_APPROVED.png",
+   "bytes": 887639,
+   "sha256": "71349a901105f05868efc3f2d6cbd8a5a48483f3160b257af5b04d2f23a4a9a2"
+  },
+  {
+   "path": "qa/benny/r27/s5_crown/COMPARE/04_c_middle/2_BEFORE.png",
+   "bytes": 830053,
+   "sha256": "fcc5e2e67eb9d558d1cf86cdc737f780ae38c4e7700239bfe7019d6d6e095db0"
+  },
+  {
+   "path": "qa/benny/r27/s5_crown/COMPARE/04_c_middle/3_NEW.png",
+   "bytes": 861373,
+   "sha256": "8398bcac61327888607f837c2ddd73bcf6b245c155da3bff61aac1cd5b1d59c1"
+  },
+  {
+   "path": "qa/benny/r27/s5_crown/COMPARE/04_c_middle/CROP.json",
+   "bytes": 444,
+   "sha256": "a21778b3b1a7e6107a905907c43fad5653c859ce5088e9c9bcec6d8b2e1d4a26"
+  },
+  {
+   "path": "qa/benny/r27/s5_crown/COMPARE/04_f_hard_left/1_ORIGINAL_APPROVED.png",
+   "bytes": 887639,
+   "sha256": "71349a901105f05868efc3f2d6cbd8a5a48483f3160b257af5b04d2f23a4a9a2"
+  },
+  {
+   "path": "qa/benny/r27/s5_crown/COMPARE/04_f_hard_left/2_BEFORE.png",
+   "bytes": 773164,
+   "sha256": "6e5bd15d409f8aa4352fbbb791ec953677912f3b47cb0e5add0fbd53c8a184a2"
+  },
+  {
+   "path": "qa/benny/r27/s5_crown/COMPARE/04_f_hard_left/3_NEW.png",
+   "bytes": 796575,
+   "sha256": "1e366fc5bd1bfe170c57b882d81ef725a92bbbd4a3e79f8a29631eaa45ca40c0"
+  },
+  {
+   "path": "qa/benny/r27/s5_crown/COMPARE/04_f_hard_left/CROP.json",
+   "bytes": 450,
+   "sha256": "8f1d0f09ce18c7eb1b0339fec06154d82af83edea4457689ac751cccc88c54bb"
+  },
+  {
+   "path": "qa/benny/r27/s5_crown/COMPARE/05_a_start/1_ORIGINAL_APPROVED.png",
+   "bytes": 894288,
+   "sha256": "e7e76502f61c1922d85257afa88cde42fd73e0192043dc3169b21b48ac15e2f0"
+  },
+  {
+   "path": "qa/benny/r27/s5_crown/COMPARE/05_a_start/2_BEFORE.png",
+   "bytes": 896501,
+   "sha256": "ab5342f3eaaebbc124a804736c4147c15472320558b60a7acf551c2a5c9d9d22"
+  },
+  {
+   "path": "qa/benny/r27/s5_crown/COMPARE/05_a_start/3_NEW.png",
+   "bytes": 927295,
+   "sha256": "6ee655b60403c9f1be1048a550ff74a90fc30d85dd12d0373aff9e47c698c3fe"
+  },
+  {
+   "path": "qa/benny/r27/s5_crown/COMPARE/05_a_start/CROP.json",
+   "bytes": 451,
+   "sha256": "2f66a3efe3180dc17c20389947e885682cfd973044911982fd01dd5bf452bb18"
+  },
+  {
+   "path": "qa/benny/r27/s5_crown/COMPARE/05_c_middle/1_ORIGINAL_APPROVED.png",
+   "bytes": 894288,
+   "sha256": "e7e76502f61c1922d85257afa88cde42fd73e0192043dc3169b21b48ac15e2f0"
+  },
+  {
+   "path": "qa/benny/r27/s5_crown/COMPARE/05_c_middle/2_BEFORE.png",
+   "bytes": 767009,
+   "sha256": "6cd4f80379473a65aaa6e57dd388a511305036244602745cd9cd106ce9d79a29"
+  },
+  {
+   "path": "qa/benny/r27/s5_crown/COMPARE/05_c_middle/3_NEW.png",
+   "bytes": 799292,
+   "sha256": "a4a2f7bf22046063d7bc794ccfeb9491740e8c6fbd22c1b49b300b7704153288"
+  },
+  {
+   "path": "qa/benny/r27/s5_crown/COMPARE/05_c_middle/CROP.json",
+   "bytes": 453,
+   "sha256": "e073b38fea2a6d93f0e31329c0d762529097596bb99724f75183c8828152439b"
+  },
+  {
+   "path": "qa/benny/r27/s5_crown/COMPARE/05_f_hard_left/1_ORIGINAL_APPROVED.png",
+   "bytes": 894288,
+   "sha256": "e7e76502f61c1922d85257afa88cde42fd73e0192043dc3169b21b48ac15e2f0"
+  },
+  {
+   "path": "qa/benny/r27/s5_crown/COMPARE/05_f_hard_left/2_BEFORE.png",
+   "bytes": 943001,
+   "sha256": "a4daf3a62de82ff9f67ea8c5460c63e50d91c8b08289629cdeb15e5cd195bfab"
+  },
+  {
+   "path": "qa/benny/r27/s5_crown/COMPARE/05_f_hard_left/3_NEW.png",
+   "bytes": 959165,
+   "sha256": "d107e548dbbd98c6b8761450bc90270069e319247ada5417a8ebcbb2f9cd09e0"
+  },
+  {
+   "path": "qa/benny/r27/s5_crown/COMPARE/05_f_hard_left/CROP.json",
+   "bytes": 459,
+   "sha256": "778c8774c0e8adc9683918f70e7fc8621b4c4bb3125263b4a15753a321205656"
+  },
+  {
+   "path": "qa/benny/r27/s5_crown/COMPARE/06_a_start/1_ORIGINAL_APPROVED.png",
+   "bytes": 942207,
+   "sha256": "4870fbbc20d36708b4d952a6f49264c2c05473a5d220ed1e0435ff86fd9c98dc"
+  },
+  {
+   "path": "qa/benny/r27/s5_crown/COMPARE/06_a_start/2_BEFORE.png",
+   "bytes": 918197,
+   "sha256": "99cbb9c56699ffd12b39db4fa403647e61162f99bf985d85e8f8e29ec81fca29"
+  },
+  {
+   "path": "qa/benny/r27/s5_crown/COMPARE/06_a_start/3_NEW.png",
+   "bytes": 931563,
+   "sha256": "399cbb9542b51c1273d5a107fe15e76de789d118c12a2a3f5e6ad12c708a188b"
+  },
+  {
+   "path": "qa/benny/r27/s5_crown/COMPARE/06_a_start/CROP.json",
+   "bytes": 449,
+   "sha256": "d06f140833d29495b6101396523394aa727013275d282932368dd3f595c6858e"
+  },
+  {
+   "path": "qa/benny/r27/s5_crown/COMPARE/06_c_middle/1_ORIGINAL_APPROVED.png",
+   "bytes": 942207,
+   "sha256": "4870fbbc20d36708b4d952a6f49264c2c05473a5d220ed1e0435ff86fd9c98dc"
+  },
+  {
+   "path": "qa/benny/r27/s5_crown/COMPARE/06_c_middle/2_BEFORE.png",
+   "bytes": 772568,
+   "sha256": "97c5ad2eed3ca4859d51eb53990805c3a70934e07ffb899409e95c2446c2e697"
+  },
+  {
+   "path": "qa/benny/r27/s5_crown/COMPARE/06_c_middle/3_NEW.png",
+   "bytes": 783366,
+   "sha256": "47dd612418999d6b423e42229f661a4ea27162fe4b6c44a097b42d4ec00ec765"
+  },
+  {
+   "path": "qa/benny/r27/s5_crown/COMPARE/06_c_middle/CROP.json",
+   "bytes": 453,
+   "sha256": "ba7f591928e6e2566c26c0b41b92bdaff401f407d56bec10270a4431d6e49339"
+  },
+  {
+   "path": "qa/benny/r27/s5_crown/COMPARE/06_f_hard_left/1_ORIGINAL_APPROVED.png",
+   "bytes": 942207,
+   "sha256": "4870fbbc20d36708b4d952a6f49264c2c05473a5d220ed1e0435ff86fd9c98dc"
+  },
+  {
+   "path": "qa/benny/r27/s5_crown/COMPARE/06_f_hard_left/2_BEFORE.png",
+   "bytes": 689463,
+   "sha256": "c4324ad03ae5557c99a93a0a40f39c8153360477f7e4539ca06e8c2a88cff7f1"
   },
   {
    "path": "qa/benny/r27/s5_crown/QUERY_BEFORE_04.txt",
@@ -13348,8 +13518,8 @@
   },
   {
    "path": "qa/match/07/r24/PROGRESS.md",
-   "bytes": 16171,
-   "sha256": "bceaf678138a5a919babeee7a14c406e4bc17a18c9dc3826c731679c1234453e"
+   "bytes": 16824,
+   "sha256": "a598acb00e4f94df1e34e88f060c6ba49485a66c69aeca9b4fabe089f3997e09"
   },
   {
    "path": "qa/match/07/r24/QUERY_08_latest_K16_m08gl.txt",

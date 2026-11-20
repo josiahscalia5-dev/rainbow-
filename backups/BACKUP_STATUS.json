@@ -1,34 +1,19 @@
 {
   "last_run": {
-    "time": "2026-11-20T16:51:38+00:00",
-    "reason": "daemon",
-    "result": "committed+pushed",
-    "files_staged": 57,
-    "pushed_verified": true,
+    "time": "2026-11-20T16:57:10+00:00",
+    "reason": "manual:r28-workers-launched",
+    "result": "error",
+    "files_staged": 0,
+    "pushed_verified": false,
     "branch": "ccr-9652868f-lkw0w0",
-    "note": "following session branch 'ccr-9652868f-lkw0w0' (config branch 'claude/rainbow-r22-restore-ut3m39')",
-    "wip_snapshots": [
-      "claude/rainbow-benny-c29: 10 modified, 10 new file(s) snapshotted",
-      "detached-e162aec2bf: 2 modified, 6 new file(s) snapshotted",
-      "detached-8accdad0a0: 2 modified, 0 new file(s) snapshotted",
-      "claude/rainbow-s04-match-c29: 3 modified, 1 new file(s) snapshotted",
-      "claude/rainbow-s05-match-c29: 0 modified, 0 new file(s) snapshotted",
-      "claude/rainbow-s06-match-c29: 2 modified, 15 new file(s) snapshotted",
-      "claude/rainbow-s07-match-c29: 5 modified, 10 new file(s) snapshotted",
-      "claude/rainbow-s08-scenery-c29: 3 modified, 2 new file(s) snapshotted",
-      "lead/trial07-c29: 5 modified, 10 new file(s) snapshotted",
-      "lead/view04-c29: 3 modified, 1 new file(s) snapshotted",
-      "lead/view06-c29: 2 modified, 15 new file(s) snapshotted",
-      "lead/view07-c29: 5 modified, 10 new file(s) snapshotted"
-    ],
-    "commit": "ae134483fe0ce2d29cbd1f36d01a5fe9adb09b6c",
-    "duration_s": 48
+    "error": "branch 'ccr-9652868f-lkw0w0' is a protected original branch; autosave never pushes to it",
+    "duration_s": 0
   },
   "repo": "https://github.com/josiahscalia5-dev/rainbow-",
   "branch": "ccr-9652868f-lkw0w0",
-  "last_verified_remote_sha": "ae134483fe0ce2d29cbd1f36d01a5fe9adb09b6c",
-  "last_successful_backup_utc": "2026-11-20T16:51:38+00:00",
-  "consecutive_failures": 0,
+  "last_verified_remote_sha": "0cda7f4356918dd78fe5a68594cad18ab6aaa8fe",
+  "last_successful_backup_utc": "2026-11-20T16:54:58+00:00",
+  "consecutive_failures": 1,
   "schedule": "every 5 min, container-local (scheduler=daemon status=active pid=595); see backups/RECOVERY.md for limits",
-  "next_scheduled_utc": "2026-11-20T16:55:00+00:00"
+  "next_scheduled_utc": "2026-11-20T17:00:00+00:00"
 }

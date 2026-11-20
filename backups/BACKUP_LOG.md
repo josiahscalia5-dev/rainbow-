@@ -904,3 +904,5 @@ error: failed to push some refs to 'https://github.com/josiahscalia5-dev/rainbow
 | 2026-11-20T16:42:04+00:00 | bootstrap:background | committed+pushed | `2217c213d77f` | `ccr-9652868f-lkw0w0` | 5 | True |  |
 | 2026-11-20T16:46:23+00:00 | daemon | committed+pushed | `2968c33ec6cd` | `ccr-9652868f-lkw0w0` | 54 | True |  |
 | 2026-11-20T16:51:38+00:00 | daemon | committed+pushed | `ae134483fe0c` | `ccr-9652868f-lkw0w0` | 57 | True |  |
+| 2026-11-20T16:54:58+00:00 | manual:r28-restore-checkpoint | committed+pushed | `0cda7f435691` | `ccr-9652868f-lkw0w0` | 24 | True |  |
+| 2026-11-20T16:57:10+00:00 | manual:r28-workers-launched | error | `—` | `ccr-9652868f-lkw0w0` | 0 | False | branch 'ccr-9652868f-lkw0w0' is a protected original branch; autosave never pushes to it |

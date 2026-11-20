@@ -63,3 +63,11 @@ newest `backups/wip/*-c29/`, trial07 + view04/06/07 included).
 
 ## Results log
 * 16:36 session start; 16:41 first autosave `65e5e49` verified; worktrees restored + verified 16:47–16:50.
+* 16:58 restore checkpoint `0cda7f4356918dd78fe5a68594cad18ab6aaa8fe` saved; `git ls-remote` == local HEAD.
+* ~17:00 four workers relaunched (s07, s04, s05, Benny) with `LAUNCH_R28.md`. s06 not relaunched (waits for the route answer).
+* ~17:05 backup coverage checked: allow-list covers src / assets / references / qa / docs / tools / scripts / backups / android / builds /
+  `.claude/agents` + skills + settings; LFS patterns cover .blend .glb .ply .spz .fbx .hdr .exr .ktx2 .psd .mp4 .webm .mov .apk .aab .zip;
+  no file > 49 MB outside LFS; worktree snapshots skipped nothing. NOT saved by design: `/home/user/scratch/*` temp renders, the helper installs
+  in `/home/user/tools-*` and `node_modules` (reinstallable), hidden reasoning + image payloads in conversation copies, running processes.
+  Protected list += the finished r23–r27 lead branches (`claude/rainbow-r22-restore-ut3m39`, `ccr-5be1062a-0ffyej`, `ccr-a9235d04-90cw28`,
+  `ccr-08ece3a6-xcwyls`, `claude/rainbow-restore-screen-match-ijjdai`).
