@@ -2,7 +2,7 @@
  "worktree": "/home/user/wt/s06",
  "branch": "claude/rainbow-s06-match-c32",
  "head": "e162aec2bfdc631913c41daa435f9d449439af4f",
- "time": "2026-11-20T22:24:06+00:00",
+ "time": "2026-11-20T22:26:18+00:00",
  "dirty_tracked": [
   "src/characters/benny/benny05.ts",
   "src/game/Game.ts",
@@ -48,7 +48,8 @@
   "tools/match06/r30_eval.mjs",
   "tools/match06/r30_hitprobe.mjs",
   "tools/match06/r30_ring_probe.mjs",
-  "tools/match06/r30_shots.mjs"
+  "tools/match06/r30_shots.mjs",
+  "tools/match06/r30b_diag.mjs"
  ],
  "untracked_skipped": [],
  "restore": "git switch claude/rainbow-s06-match-c32 (newest pushed tip) && git apply --binary backups/wip/claude__rainbow-s06-match-c32/tracked.patch && copy backups/wip/claude__rainbow-s06-match-c32/untracked/* into the worktree"

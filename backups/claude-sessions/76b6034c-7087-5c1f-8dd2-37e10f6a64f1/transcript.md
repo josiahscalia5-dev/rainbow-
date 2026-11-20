@@ -608,3 +608,259 @@ Merged and committed (`34786f3`). Now I'm rebuilding the Screen 06 candidate wor
 
 > 🔧 **Bash** `{"command": "timeout 280 python3 scripts/rainbow-autosave.py --reason manual:r30b-restore 2>&1 | tail -5; python3 -I scripts/autosave-status.py; git ls-remote origin refs/heads/ccr-e490fceb-u85291; git rev-parse HEAD; ls backups/wip | grep c32", "description": "Run a manual autosave and verify GitHub matches", "timeout": 300000}`
 
+### 🧑 User — 2026-11-20T22:24:12.935Z
+
+> ↩︎ result: "claude/rainbow-s06-water06-c32: 8 modified, 38 new file(s) snapshotted"
+>   ],
+>   "commit": "ac6577b0eae35aae44b9f8e5c725c22b6e5b758c",
+>   "duration_s": 16
+> }
+> AUTOSAVE OK | branch ccr-e490fceb-u85291 | scheduler daemon | last verified backup 2026-11-20T22:23:56+00:00 (0.3 min ago) | local ac6577b remote ac6577b (match) | uncommitted 0
+> ac6577b0eae35aae44b9f8e5c725c22b6e5b758c	refs/heads/ccr-e490fceb-u85291
+> ac6577b0eae35aae44b9f8e5c725c22b6e5b758c
+> claude__rainbow-s06-benny06-c32
+> claude__rainbow-s06-foam06-c32
+> claude__rainbow-s06-match-c32
+> claude__rainbow-s06-scen06-c32
+> claude__rainbow-s06-water06-c32
+
+### 🤖 Claude — 2026-11-20T22:24:16.992Z
+
+Recoverable checkpoint saved and verified on GitHub (`ac6577b`), including snapshots of all five workspaces. Now I'm checking what each of the four workers had changed beyond the Screen 06 candidate.
+
+### 🤖 Claude — 2026-11-20T22:24:18.354Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt && for x in benny06 water06 foam06 scen06; do echo \"=== $x\"; diff -rq --exclude=node_modules --exclude=.git s06/src $x/src 2>/dev/null; diff -rq s06/tools $x/tools 2>/dev/null | head -5; diff -rq s06/assets $x/assets 2>/dev/null | head -5; done", "description": "Compare worker worktrees against the s06 candidate"}`
+
+### 🧑 User — 2026-11-20T22:24:18.546Z
+
+> ↩︎ result: === benny06
+> Files s06/src/characters/benny/benny05.ts and benny06/src/characters/benny/benny05.ts differ
+> Only in benny06/src/characters/benny: benny30.ts
+> Files s06/src/characters/benny/runtime.ts and benny06/src/characters/benny/runtime.ts differ
+> Only in benny06/tools: benny30
+> === water06
+> Only in water06/src/world: m06water30.ts
+> Files s06/src/world/match06.ts and water06/src/world/match06.ts differ
+> Only in water06/tools/match06: w30_make_veins.py
+> Only in water06/assets/textures/match06: tile_w30veins.png
+> === foam06
+> Files s06/src/game/Game.ts and foam06/src/game/Game.ts differ
+> Only in foam06/src/world: m06foam30.ts
+> === scen06
+> Only in scen06/src/world: e30scen06.ts
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T22:24:21.906Z
+
+Each worker had only started (about 10 minutes of edits) before the session closed. I'll review them later; first I need to understand the Screen 06 scene code itself.
+
+### 🤖 Claude — 2026-11-20T22:24:23.069Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && wc -l src/world/match06.ts src/game/cameraRig.ts src/world/course.ts src/game/Game.ts src/world/environment.ts src/gameplay/coins.ts && git diff --stat && grep -n \"m06curl\\|curl\" src/world/match06.ts | head -80", "description": "Survey Screen 06 code size and curl switch usage"}`
+
+### 🧑 User — 2026-11-20T22:24:23.145Z
+
+> ↩︎ result: 1301 src/world/match06.ts
+>    383 src/game/cameraRig.ts
+>    736 src/world/course.ts
+>    794 src/game/Game.ts
+>    930 src/world/environment.ts
+>    261 src/gameplay/coins.ts
+>   4405 total
+>  src/characters/benny/benny05.ts |   7 +
+>  src/game/Game.ts                |  30 ++-
+>  src/game/cameraRig.ts           |  41 +++-
+>  src/gameplay/coins.ts           |  38 +++-
+>  src/world/course.ts             |  97 ++++++++-
+>  src/world/environment.ts        |  29 ++-
+>  src/world/match06.ts            | 435 ++++++++++++++++++++++++++++++++++++++--
+>  src/world/match08.ts            |  16 ++
+>  8 files changed, 650 insertions(+), 43 deletions(-)
+> 23:import route06curl from '../../assets/textures/match06/route06curl.json';
+> 524:  // r30 `&m06curl=1` (lead, with m06deep; user storyboard 2026-11-20 ~20:10, tools/match06/r30_design_curl.py -> route06curl.json,
+> 526:  // qa/match/06/r30/diag/): unchanged up to virtual depth curl.aSplit (approved opening, crest, painted coins 0-6), then its axis
+> 527:  // curls right + descends, swings through a gentle S-bend and settles on Screen 07's entrance heading; gold bands every
+> 528:  // curl.ringD u of axis length (`&m06cbw=` band width factor, default 1.5), each perpendicular to the …[+1936 chars]
+
+### 🤖 Claude — 2026-11-20T22:24:38.296Z
+
+Here is the Screen 07 approved picture, since the brief requires 06 to hand over into 07's own approved entry:
+
+### 🤖 Claude — 2026-11-20T22:24:38.644Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/references/07_dive_the_washer_tube.png"}`
+
+### 🧑 User — 2026-11-20T22:24:38.665Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T22:24:45.150Z
+
+> 🔧 **Bash** `{"command": "cat tools/lead25/render_slot.sh | head -40; echo ----; sed -n 1,200p /home/user/wt/s06/tools/match06/r30_shots.mjs 2>/dev/null || ls tools/match06 | grep r30", "description": "Read render slot and shot capture tools"}`
+
+### 🧑 User — 2026-11-20T22:24:45.200Z
+
+> ↩︎ result: #!/usr/bin/env bash
+> # render_slot.sh — run one heavy render (Playwright / SwiftShader / Blender / ffmpeg) while holding one of N machine-wide
+> # render slots, so the four specialist workers on this 4-CPU container take turns instead of overloading it
+> # (round 24 ran at load ~30 with repeated Playwright timeouts).
+> #   usage:  bash /home/user/rainbow-/tools/lead25/render_slot.sh <command> [args...]
+> #   N = $RENDER_SLOTS (default 2). Waits (polling every 5 s) until a slot is free; prints the wait time on stderr.
+> #   The exit code is the command's. Slots are flock(1) locks under /tmp, released automatically if the process dies.
+> #   Status:  bash /home/user/rainbow-/tools/lead25/render_slot.sh --status
+> N=${RENDER_SLOTS:-2}
+> if [ "${1:-}" = "--status" ]; then
+>   for i in $(seq 1 "$N"); do
+>     if flock -n "/tmp/rainbow-render-slot$i.lock" true 2>/dev/null; then echo "slot $i free"; else echo "slot $i busy"; fi
+>   done
+>   exit 0
+> fi
+> [ $# -gt 0 ] || { echo "usage: $0 <command> [args...]" >&2; exit 2; }
+> t0=$(date +%s)
+> while true; do
+>   for i in $(seq 1 "$N"); do
+>     exec {fd}>"/tmp/rainbow-render-slot$i.lock"
+>     if flock -n "$fd"; then
+>       w=$(( $(date +%s) - t0 )); [ "$w" -gt 0 ] && echo "[rend …[+4066 chars]
+
+### 🤖 Claude — 2026-11-20T22:24:51.225Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"__rainbow\\s*=\" -A40 src/game/Game.ts | head -70; grep -n \"s07\\|stage(7\\|'07'\" src/game/Game.ts | head -20", "description": "See what the debug handle exposes"}`
+
+### 🧑 User — 2026-11-20T22:24:51.285Z
+
+> ↩︎ result: 792:  (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+> 793-  return api;
+> 794-}
+> 34:const STAGE_ORDER: StageId[] = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> 127:  const m06 = MATCH['06'] ? await buildMatch06(course, { c: tubeCenterAt(env.tubeAxis.path, course.stage('07').s0), r: env.tubeAxis.path.radius(course.stage('07').s0) }) : null;
+> 176:    chamber: ['07', '11'],
+> 574:      const show = m06On && st.s > course.stage('07').s0 - (M06_CURL ? 175 : 12); // r29 v2 (user): the 06 tunnel look continues until the doorway (~1 s)
+> 656:    '07': { mode: 'ride', s: course.stage('07').s0 + 26 },
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T22:24:54.434Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 540,620p src/game/Game.ts; grep -n \"const api\" -A45 src/game/Game.ts | head -60", "description": "Read stage visibility logic and debug API"}`
+
+### 🧑 User — 2026-11-20T22:24:54.474Z
+
+> ↩︎ result: }
+>     girl.update(dt);
+>     const time = st.frozen ?? st.clock;
+>     env.update(time, dt);
+>     water.update(time, dt, st.s, camera);
+>     // `?match08=1` on Screen 08: the projected scenery carries the approved river, foam and bubbles
+>     if (m08 && (m08On || m08Applied)) {
+>       for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m08On; }
+>       m08Applied = m08On;
+>     }
+>     // `?match06=1` on Screen 06: the projected scenery carries the approved river, ripples, foam and bubbles
+>     if (m06 && (m06On || m06Applied) && !(m08 && m08On)) {
+>       // r7 `&m06bub=1`: the game's iridescent bubbles + Benny's splash crown / spray return once the camera leaves the
+>       // approved view (the painting
+>       // carries its bubbles only there; while swimming the screen had none)
+>       const bub6 = M06_BUB && m06On && m06.away(camera.position) > 0.5;
+>       m06.setAway(m06On ? m06.away(camera.position) : 0);
+>       coins.setGrow(m06On ? m06.away(camera.position) : 1); // r28 m06route coin growth (no-op without it)
+>       m06.setBenny(st.s, st.lat); // r23 `&m06rip=1` only (no-op without it)
+>       for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m06On  …[+7146 chars]
+
+### 🤖 Claude — 2026-11-20T22:24:56.775Z
+
+> 🔧 **TaskUpdate** `{"taskId": "1", "status": "completed"}`
+
+### 🧑 User — 2026-11-20T22:24:56.788Z
+
+> ↩︎ result: Updated task #1 status
+
+### 🤖 Claude — 2026-11-20T22:24:57.124Z
+
+> 🔧 **TaskUpdate** `{"taskId": "2", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-20T22:24:57.140Z
+
+> ↩︎ result: Updated task #2 status
+
+### 🤖 Claude — 2026-11-20T22:25:00.188Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 752,792p src/game/Game.ts", "description": "Read remainder of debug API"}`
+
+### 🧑 User — 2026-11-20T22:25:00.227Z
+
+> ↩︎ result: return { matrixWorld: camera.matrixWorld.toArray(), fov: camera.fov, aspect: camera.aspect, near: camera.near, far: camera.far, width: W, height: H, position: camera.position.toArray(), target: rideCam.target.toArray() };
+>     },
+>     /** debug: Benny's projected screen position (NDC -1..1, z<1 = in front of camera) */
+>     bennyScreen() {
+>       const v = benny.root.getWorldPosition(new THREE.Vector3()).project(camera);
+>       return { x: +v.x.toFixed(2), y: +v.y.toFixed(2), z: +v.z.toFixed(3), visible: benny.root.visible, cam: camera.position.toArray().map((q) => +q.toFixed(2)), benny: benny.root.position.toArray().map((q) => +q.toFixed(2)) };
+>     },
+>     /** debug: what does a ray from the camera through NDC (x,y) hit first? */
+>     probe(x = 0, y = 0) {
+>       const rc = new THREE.Raycaster();
+>       rc.setFromCamera(new THREE.Vector2(x, y), camera);
+>       const hits = rc.intersectObjects(scene.children, true).filter((h) => (h.object as THREE.Mesh).isMesh && h.object.visible);
+>       const path = (o: THREE.Object3D) => { const a: string[] = []; let c: THREE.Object3D | null = o; while (c) { a.push(c.name || c.type); c = c.parent; } return a.slice(0, 5).join('<'); };
+>       return hits.slic …[+1694 chars]
+
+### 🤖 Claude — 2026-11-20T22:25:19.346Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s06/tools/match06/r30b_diag.mjs", "content": "// r30b lead diagnosis (read-only): at given river positions s, report stage boundaries, camera, and what object each probe point\n// on a grid hits (window.__rainbow.probe), plus screenshots with selected objects hidden (by name substring) to show causes.\n//   cd <worktree> && node tools/match06/r30b_diag.mjs <outDir> \"<query>\"   env: DIAG_S='[238,266,310,387]' DIAG_HIDE='[[\"no07\",[\"tube07\"]]]'\nimport { mkdirSync, writeFileSync } from 'node:fs';\nimport { pathToFileURL } from 'node:url';\nconst { loadPlaywright …[+3440 chars]`
+
+### 🧑 User — 2026-11-20T22:25:19.534Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s06/tools/match06/r30b_diag.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T22:25:21.393Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && Q=$(cat /home/user/rainbow-/qa/match/06/r30/QUERY_NEW_v2.txt) && AUDIT_PORT=5361 timeout 600 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/match06/r30b_diag.mjs /home/user/rainbow-/qa/match/06/r30b/diag \"$Q\" 2>&1 | grep -v \"^console.*\\[match06\\] m06\\b\" | tail -30", "description": "Run Screen 06 diagnosis render at four positions", "timeout": 620000}`
+
+### 🧑 User — 2026-11-20T22:25:47.088Z
+
+> ↩︎ result: console [match06] m06curl {aSplit: 40, a07: 200, aEnd: 200.3, rings: 7, ringD: 22}
+> console [match06] m06curl join to 07 {offR: -0.05, offU: 7.82, offT: -0.01, r07: 15}
+> console [match06] m06ring {rings: 11, spacing: 12.87, aN: 36.9, aF: 49.8}
+> console [match06] m06leg {points: 40, length: 19, halfWidth: 2.6}
+> console [match06] m06rip {NX: 384, NY: 490, LW: 1.45, D0: -2.4, D1: 1.3}
+> console [match06] m06hole {rect: Array(4), zone: Object}
+> console [match06] m06fclu {blobs: 2619, sprites: 21845}
+> stages {"05":{"s0":114.6883020282324,"s1":188.90987977543347},"06":{"s0":188.90987977543347,"s1":396.27066741997834},"07":{"s0":396.27066741997834,"s1":538.4464233115538},"08":{"s0":538.4464233115538,"s1":554.0258550062437}}
+> s 238 {"mode":"ride","stage":"06","s":238.143,"lat":0,"coins":1730,"hearts":5,"paused":false,"bennyY":-39.522,"bennyVisible":true,"cam":[-2.05,-35.62,-171.97]} cam [-2.04780424246316,-35.622122646602854,-171.9690912986926]
+>   hits {"m06_tube<match06_projection<Scene":24,"m06_rings<match06_projection<Scene":6,"Mesh<tube07<zone_tubes<washer_world<Scene":1,"foam_berm<foam_banks<water_system<Scene":2,"Mesh<foam_banks<water_system<Scene":5,"m06_floor<match06_projection<Scene":15,"Me …[+1837 chars]
+
+### 🤖 Claude — 2026-11-20T22:25:56.626Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r30b/diag && python3 -c \"\nfrom PIL import Image\nims=[Image.open(f's{s}.png') for s in (238,266,310,387)]\nW,H=ims[0].size; sheet=Image.new('RGB',(W*4+30,H),(20,14,30))\nfor i,im in enumerate(ims): sheet.paste(im,(i*(W+10),0))\nsheet.save('sheet_v2.png')\"", "description": "Combine diagnosis frames into one sheet"}`
+
+### 🧑 User — 2026-11-20T22:25:57.117Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T22:25:59.356Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r30b/diag/sheet_v2.png"}`
+
+### 🧑 User — 2026-11-20T22:25:59.551Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T22:26:05.048Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && sed -n 1,60p docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md | cut -c1-400", "description": "Read top of new-account handoff"}`
+
+### 🧑 User — 2026-11-20T22:26:05.097Z
+
+> ↩︎ result: # ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 30 (2026-11-20, lead branch `ccr-2644c3c0-iikckn`, from ~20:05 UTC)
+> 
+> New session/account; started at `8abed78`, merged the r29 lead's last two saves (`f090393`, 20:02) on the user's "continue exactly where we
+> left off" (`1d1f359`). Worktrees recreated on LOCAL `-c31` (all 12 byte-identical to the 20:02 snapshots). This environment ("Default"): World Labs key
+> re-entered via the secure form ~21:22 (verified, 5,420 credits), fal not set, Atlas connector needs the atlas.worldlabs.ai sign-up; plugins
+> playwright + claude-code-setup not enabled (card shown). **User's r30 Screen 06 orders verbatim: `docs/briefs/2026-11-20-r30/USER_R30.md`** (ring
+> "target" diagnosis first → done; storyboard route: crest → curl right + descend → gold bands → S-bend → 07). Built `&m06curl=1` (map + checks:
+> **`docs/briefs/2026-11-20-r30/COORDINATION.md`**; proof `qa/match/06/r30/`). Not approved yet. No specialist workers running.
+> 
+> # ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ ROUND 29 (2026-11-20, lead branch `ccr-ac160b4c-3hdecw`, from ~18:21 UTC)
+> 
+> New account; session branch started at **`31d3a8c`** = the r28 lead `ccr-9652868f-lkw0w0`'s last save (18:12 UTC; verified with `git l …[+5750 chars]
+
