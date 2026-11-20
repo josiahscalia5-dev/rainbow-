@@ -619,7 +619,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 20297,
-   "sha256": "df3629f47860fd923c4e2084f59cb9ed2d1a5ecd011159d71ced939bb9d9e810"
+   "sha256": "4f49d6e28aec21508e9d37f7570d1b532776bc2c09ccba5c4aba91860df8ce00"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -634,7 +634,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 2190,
-   "sha256": "83074b967828564e514a67aa4b0d1ac70faf83625af6e8f813792e4c216f3021"
+   "sha256": "59828bb1ef2858ca085601eafaad85034167fb041a6f38f03f72b2b407760ccd"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -1424,7 +1424,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c23/INFO.json",
    "bytes": 586,
-   "sha256": "c7033f176af8a5d3f5d54c8d436858a9f6a6a86317f441ea77ffe0f646ed7088"
+   "sha256": "f487482d6781cf838189820ce896b02b96b411106433a98c1f4900fb97ac2380"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c23/tracked.patch",
@@ -2399,7 +2399,7 @@
   {
    "path": "backups/wip/claude__rainbow-s07-match-c23/INFO.json",
    "bytes": 596,
-   "sha256": "c572dba808a3c7d42125650e88b08f6f302166bbd1d7f8ba9c6db0898a0beec5"
+   "sha256": "b4ea9881de6aa5de9f0c0efbe0f3dd5d730822bcc6584fdbe6a5407bfd92709a"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c23/tracked.patch",
@@ -6267,6 +6267,16 @@
    "sha256": "c8602d50a91f3d2de7c6116b0fe231b7b11ab79b0dddec28f9ae234a9d968ef3"
   },
   {
+   "path": "qa/match/04/r22/scratch/clip_s2/0000.png",
+   "bytes": 2325079,
+   "sha256": "6a5e38a8593dd552caacb44469768f6a4fd48cbd09ff7fd9bac3d4d5f945a0b5"
+  },
+  {
+   "path": "qa/match/04/r22/scratch/clip_s2/0001.png",
+   "bytes": 2338221,
+   "sha256": "76d559d95ae07ab9e5d9501baefc27975cd22a7f1242d35f365583b6d49847de"
+  },
+  {
    "path": "qa/match/04/r22/scratch/crops/ref_left_mid.png",
    "bytes": 893196,
    "sha256": "bbcddca3a569e328b7a7965900b30d3dc9a898287e401affe15fb72c9a7aade4"
@@ -6883,8 +6893,8 @@
   },
   {
    "path": "qa/match/07/r22/s1_cloud/swim_end_NEW.mp4",
-   "bytes": 2127655,
-   "sha256": "3ea7c02618156851d89b537b1a8251094e412c8a8e99dcb471887c3810e58d85"
+   "bytes": 2130661,
+   "sha256": "7b16fb2709903f42912997f161490e4a557d0bf18f1fad34d58bbde40790f8b5"
   },
   {
    "path": "qa/match/07/r22/s1_cloud/swim_level_BEFORE.mp4",
