@@ -1,5 +1,5 @@
 diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
-index 9abbbbb..909dee0 100644
+index 9abbbbb..9869554 100644
 --- a/src/world/match04m4.ts
 +++ b/src/world/match04m4.ts
 @@ -119,12 +119,14 @@ uniform float uRVar;       // r17 m04rpvar: number of painted rings stacked in t
@@ -16,13 +16,13 @@ index 9abbbbb..909dee0 100644
 -uniform float uRNearW;     // r19b m04rnear: water plane height relative to the tunnel axis (world u)
 -uniform vec4 uRNear4;      // r19b m04rnear: x bulbs per sub-rim, y fraction lit, z reflection patchiness (0 = even stripe), w bulb size
 +uniform vec4 uRNear4;      // r19b m04rnear: x bulbs per sub-rim, y fraction lit, z highlight core sharpness, w bulb size
-+uniform vec4 uRNear6;      // r20 m04rnear: x painted light riding on the band grade, y grade exponent along the sub-band, zw spare
++uniform vec4 uRNear6;      // r20 m04rnear: x painted light riding on the band grade, y grade exponent along the sub-band, z fine machined lines, w their spacing (ring units)
 +uniform vec4 uRNear5;      // r20 m04rnear: x highlight floor round the ring (0 = hot spots only), y static yellow glows, z rim line
 +                           // offset before the sub-rim (ring units), w the painted band re-drawn on every sub-band (m04rntex)
  #ifdef RFEW
  uniform float uRFewG;      // r18 m04rfew: height of the telescope's shrink centre (group units, from the axis; < 0 = below)
  uniform vec2 uRFewW;       // r18 m04rfew: x = ring scale where the deep rings reach warm yellow-white, y = amount (m04rfw, m04rfk)
-@@ -367,66 +369,105 @@ void main() {
+@@ -367,66 +369,117 @@ void main() {
        }
        pr += vec3(1.0, 0.86, 0.55) * 0.10 * gl * smoothstep(0.0, 0.2, facing);   // moving polished sheen
        if (uRNear.x > 0.0 && uu < uL) {
@@ -98,6 +98,18 @@ index 9abbbbb..909dee0 100644
 +          gr = mix(gr, vec3(1.0, 0.84, 0.36), clamp(xg5 - 4.0, 0.0, 1.0));
 +          gr = mix(gr, mix(gr, vec3(1.0, 0.78, 0.30), 0.35), uRNear2.z * smoothstep(0.5, 1.0, xg) * 0.6);   // yellow-gold
 +          pr = mix(pr, gr * (0.85 + 0.3 * lp / 0.45), uRNear2.x * fd * warm);
++          // (f) fine machined lines across the band (the painted rings' thin bright / dark concentric lines, ~0.4-0.9 u
++          // apart, crisp): world-anchored, anti-aliased to the pixel footprint, gone where thinner than a pixel
++          if (uRNear6.z > 0.0) {
++            float cq = uu / uRNear6.w, cI = floor(cq);
++            float lpos = 0.2 + 0.6 * h21(vec2(cI + kI * 13.0, 4.7));
++            float eL = (cq - cI - lpos) * uRNear6.w;                  // ring units from this cell's line
++            float hW = 0.006 + 0.008 * h21(vec2(cI + kI * 13.0, 8.3));
++            float cL = clamp((hW + 0.5 * fuN - abs(eL)) / fuN, 0.0, 1.0) * min(1.0, 2.0 * hW / fuN);
++            float bright = step(0.45, h21(vec2(cI + kI * 13.0, 1.9)));
++            cL *= uRNear6.z * fd * (1.0 - smoothstep(0.85, 1.0, xs)) * smoothstep(0.0, 0.08, xs);
++            pr = mix(pr, bright > 0.5 ? mix(pr, vec3(1.0, 0.86, 0.58), 0.55) : pr * vec3(0.62, 0.48, 0.42), cL);
++          }
 +          // (c) polished highlights that move: a highlight line along each tube's crown that slides over the tube as Benny
 +          // swims (toward the rim while the sub-band is far ahead, back toward the groove once it is overhead: the polished
 +          // tube mirroring the bright end of the tunnel), brightest in a few hot spots round the ring (world-anchored per
@@ -170,7 +182,7 @@ index 9abbbbb..909dee0 100644
              pr += vec3(1.0, 0.80, 0.42) * 0.22 * gS * fd * uRNear2.y;
              pr = mix(pr, vec3(1.0, 0.93, 0.70), 0.8 * cB * fd * uRNear2.y);
              pr = mix(pr, pr * vec3(0.50, 0.32, 0.26), cD * fd * uRNear2.y);
-@@ -435,14 +476,16 @@ void main() {
+@@ -435,14 +488,16 @@ void main() {
                float rs = kI * 7.0 + bi;
                float cfl = (ang + rj) / 6.2831853 * uRNear4.x + 0.5 * mod(bi, 2.0);
                float ci = floor(cfl);
@@ -189,7 +201,7 @@ index 9abbbbb..909dee0 100644
                pr = mix(pr, vec3(1.0, 0.96, 0.80), smoothstep(1.0, 0.35, dd) * onB);
              }
            }
-@@ -1069,11 +1112,12 @@ export function addM04(ctx: M04Ctx) {
+@@ -1069,11 +1124,12 @@ export function addM04(ctx: M04Ctx) {
          uRPol2: { value: new THREE.Vector2(M04.num('m04rpsp', 0.25), M04.num('m04rpfr', 0)) },
          uRCr: { value: new THREE.Vector4(M04.num('m04rpcr', 0), M04.num('m04rpcb', 0.011), M04.num('m04rpcd', 0.014), M04.num('m04rpcc', 0.012)) },
          // r19b `m04rnear=1`: the near band seen from inside resolves into the painted washer rim's polished sub-bands
@@ -201,7 +213,7 @@ index 9abbbbb..909dee0 100644
 -        uRNearW: { value: -cy },
 -        uRNear4: { value: new THREE.Vector4(M04.num('m04rnbn', 28), M04.num('m04rnbf', 0.75), M04.num('m04rnrp', 1), M04.num('m04rnbz', 0.08)) },
 +                uRNear4: { value: new THREE.Vector4(M04.num('m04rnbn', 28), M04.num('m04rnbf', 0.75), M04.num('m04rnhp', 4), M04.num('m04rnbz', 0.08)) },
-+        uRNear6: { value: new THREE.Vector4(M04.num('m04rnlc', 0.35), M04.num('m04rnxp', 1.6), 0, 0) },
++        uRNear6: { value: new THREE.Vector4(M04.num('m04rnlc', 0.35), M04.num('m04rnxp', 1.6), M04.num('m04rnf', 0), M04.num('m04rnfs', 0.6)) },
 +        uRNear5: { value: new THREE.Vector4(M04.num('m04rnhf', 0.22), M04.num('m04rny', 0.3), M04.num('m04rno', 0.04), M04.num('m04rntex', 0)) },
          uP: { value: M04.num('m04ringp', 2.6) }, uLipBulb: { value: M04.num('m04lipbulb', 1) }, uBulbR: { value: (r + ctx.outerR) / 2 }, uLen: { value: len }, uRingTile: { value: ringTile }, uPaint: { value: M04.num('m04paint', M04.gold ? 0.8 : 1.4) }, uGoldY: { value: M04.gold ? 1 : 0 }, uCopper: { value: M04.num('m04copper', 0) }, uBulge: { value: M04.num('m04bulge', 0) }, uMouthT: { value: 0 }, uMouthTex: { value: null }, uMouthRho: { value: new THREE.Vector3(4.45, 3.25, M04.num('m04mro', -0.10)) }, uProjPos: shared.uProjPos, uTone: { value: new THREE.Vector4(M04.num('m04tb', 0.11), M04.num('m04tl', 0.38), M04.num('m04tm', 0.5), M04.num('m04ts', 0.45)) } },
      });

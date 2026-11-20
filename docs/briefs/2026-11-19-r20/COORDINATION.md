@@ -47,3 +47,12 @@ brightness p10/50/90 0.57/0.80/0.98 · GAME v3 (255,92,179), hue 328°, brightne
 clipped brightness. Target: the approved brightness spread (deep rose creases / underside → bright tips), saturation ≤ approved;
 very fine dense silky strands combed downward in soft overlapping layers (worker probes b3/b4 read as stiff petals: rejected
 direction). Fur first, then hat / pompom / star.
+
+## ~00:10 UTC user: Screen 04 gold tunnel — "a little bump on top of the gold" + different material / layout (marked pictures)
+User marked the approved picture (arrow, upper-left inner edge of the front ring) and the game at f06 (red circle):
+`qa/review_r20/user_marked_rings/` (1_APPROVED_user_arrow.jpg, 2_GAME_user_red_circle.jpg, zooms 3_/4_ = crop x0–480 y380–860).
+Lead's reading: GAME = a few fat RAISED ring lips protruding like bumps, wide flat brown-copper wall between them, nearest ring
+contour slightly wavy. APPROVED = smooth mirror-polished yellow-gold tube with MANY thin, tightly spaced, flush concentric ribs
+(bright line + thin dark groove, perfect circles), soft violet / pink reflections; only the front washer rim is a thick torus.
+Relayed to the rings worker (s04tex) as its FIRST priority: flatten the bump lips, many fine ribs at the painted spacing from
+f03 to f20 and while steering, mirror-polished yellow-gold; proof incl. the same zoom crop at f06.

@@ -1792,3 +1792,49 @@ It's kept behind its switch, so the normal game hasn't changed yet. It goes into
 
 Everything is saved and matches GitHub (`e23aceb`).
 
+### 🧑 User — 2026-11-20T00:14:01.187Z
+
+I still feel like screen 4  See how the gold, the asking you. Hold on. I'll upload what I'm talking about. It's the one. I'm gonna upload a approved screen, and I'm gonna put like an arrow next to it. But that mine doesn't like. See how mine, the top of it, there's like a little bump on top of the gold, like the tunnel machine thing. And my approved screen looks the gold, machine, like the material looks the different texture and layout than the approved screen. I see the second one I uploaded, the second one with the red circle, that's my screen, and that's what I'm talking about. And the first one is my approved screen with the arrow. That's what my gold tunnel texture should be like.
+
+### 🤖 Claude — 2026-11-20T00:14:12.253Z
+
+You're pointing at the shape and material of the gold tunnel rings, not the water. Let me copy your two marked pictures into the project, where they'll be saved and the rings worker can use them, and zoom into both marked spots.
+
+### 🤖 Claude — 2026-11-20T00:14:16.310Z
+
+> 🔧 **Bash** `{"command": "D=qa/review_r20/user_marked_rings && mkdir -p $D && cp /root/.claude/uploads/7951f197-ca4f-5615-a4e3-a23f22863243/dcf4f2ee-image.jpg $D/1_APPROVED_user_arrow.jpg && cp /root/.claude/uploads/7951f197-ca4f-5615-a4e3-a23f22863243/5d7c3ffd-image.jpg $D/2_GAME_user_red_circle.jpg && python3 -c \"\nfrom PIL import Image\na=Image.open('$D/1_APPROVED_user_arrow.jpg'); g=Image.open('$D/2_GAME_user_red_circle.jpg'); print(a.size,g.size)\na.crop((0,380,480,860)).resize((720,720),Image.LANCZOS).save('$D/3_APPROVED_zoom_arrow.png')\ng.crop((0,380,480,860)).resize((720,720),Image.LANCZOS).save( …[+199 chars]`
+
+### 🧑 User — 2026-11-20T00:14:19.057Z
+
+> ↩︎ result: (864, 1536) (864, 1536)
+> 103:uniform float uBulge;      // r13 m04bulge: each band shaded as a ROUNDED tube (bright middle, darker edges) like the painted rings
+> 1133:        uP: { value: M04.num('m04ringp', 2.6) }, uLipBulb: { value: M04.num('m04lipbulb', 1) }, uBulbR: { value: (r + ctx.outerR) / 2 }, uLen: { value: len }, uRingTile: { value: ringTile }, uPaint: { value: M04.num('m04paint', M04.gold ? 0.8 : 1.4) }, uGoldY: { value: M04.gold ? 1 : 0 }, uCopper: { value: M04.num('m04copper', 0) }, uBulge: { value: M04.num('m04bulge', 0) }, uMouthT: { value: 0 }, uMouthTex: { value: null }, uMouthRho: { value: new THREE.Vector3(4.45, 3.25, M04.num('m04mro', -0.10)) }, uProjPos: shared.uProjPos, uTone: { value: new THREE.Vector4(M04.num('m04tb', 0.11), M04.num('m04tl', 0.38), M04.num('m04tm', 0.5), M04.num('m04ts', 0.45)) } },
+
+### 🤖 Claude — 2026-11-20T00:14:20.536Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/review_r20/user_marked_rings/3_APPROVED_zoom_arrow.png"}`
+
+### 🧑 User — 2026-11-20T00:14:20.575Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T00:14:21.043Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/review_r20/user_marked_rings/4_GAME_zoom_circle.png"}`
+
+### 🧑 User — 2026-11-20T00:14:21.232Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T00:14:43.746Z
+
+> 🔧 **SendMessage** `{"to": "a030a0be71298a035", "summary": "User-marked ring shape/material: top priority", "message": "USER PRIORITY (00:10 UTC) for Screen 04 rings — this now comes FIRST, before any other ring step.\nThe user marked two pictures (read them at full size):\n* APPROVED with arrow: /home/user/rainbow-/qa/review_r20/user_marked_rings/1_APPROVED_user_arrow.jpg (zoom: 3_APPROVED_zoom_arrow.png, crop x0–480 y380–860)\n* GAME with red circle (= v3 / step-1 query at f06): /home/user/rainbow-/qa/review_r20/user_marked_rings/2_GAME_user_red_circle.jpg (zoom: 4_GAME_zoom_circle.png)\nUser's words: \"See how …[+2104 chars]`
+
+### 🧑 User — 2026-11-20T00:14:43.770Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to a030a0be71298a035 at its next tool round. Moved 1 running tool call to the background without stopping it, so that round no longer waits for it. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"a030a0be71298a035","name":"a030a0be71298a035","ref":"ff48e3"}}
+
+### 🤖 Claude — 2026-11-20T00:14:48.550Z
+
+> 🔧 **Bash** `{"command": "cat >> docs/briefs/2026-11-19-r20/COORDINATION.md <<'EOF'\n\n## ~00:10 UTC user: Screen 04 gold tunnel — \"a little bump on top of the gold\" + different material / layout (marked pictures)\nUser marked the approved picture (arrow, upper-left inner edge of the front ring) and the game at f06 (red circle):\n`qa/review_r20/user_marked_rings/` (1_APPROVED_user_arrow.jpg, 2_GAME_user_red_circle.jpg, zooms 3_/4_ = crop x0–480 y380–860).\nLead's reading: GAME = a few fat RAISED ring lips protruding like bumps, wide flat brown-copper wall between them, nearest ring\ncontour slightly wavy …[+665 chars]`
+
