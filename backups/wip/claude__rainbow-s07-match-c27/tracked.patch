@@ -1,5 +1,5 @@
 diff --git a/src/game/Game.ts b/src/game/Game.ts
-index 017370a..d0dd6c5 100644
+index 017370a..10696d2 100644
 --- a/src/game/Game.ts
 +++ b/src/game/Game.ts
 @@ -122,7 +122,34 @@ export async function startGame(canvas: HTMLCanvasElement) {
@@ -38,7 +38,18 @@ index 017370a..d0dd6c5 100644
    if (m07) { m07.group.visible = false; scene.add(m07.group); m07.bakeDepth(renderer); }
    const M07_HIDE = ['ribbon', 'foam', 'bubbles'];
    const m07Range = [course.stage('07').s0 + 14, m07Tube ? course.stage('08').s0 : course.marks['07_plunge_top'] - 8];
-@@ -558,6 +585,9 @@ export async function startGame(canvas: HTMLCanvasElement) {
+@@ -547,6 +574,10 @@ export async function startGame(canvas: HTMLCanvasElement) {
+       m08Applied = m08On;
+     }
+     if (m08 && m08On) for (const k of ['puddles', 'finalWave']) { const o = water.parts?.[k]; if (o) o.visible = false; }
++    // r26 m07join: the 09 final-wave mesh (shown by water.update from 25 u before 08, hidden inside 08 by match08) stood as a big
++    // white arch at the 08 chamber seen from the end of the drop and vanished at the cut into 08 — hidden while 07 shows too
++    // (water.update re-sets it every frame, so 08 / 09 are unchanged)
++    if (m07Join && st.stage === '07') { const o = water.parts?.finalWave; if (o) o.visible = false; }
+     // `?match07=1` on the visible 07 stretch: the projected scenery carries the approved tube, rings, paddles, river,
+     // foam and bubbles (the game's tube zone and river are hidden there and restored outside it)
+     if (m07) {
+@@ -558,6 +589,9 @@ export async function startGame(canvas: HTMLCanvasElement) {
        }
        // M3 m07tube: hand-over to the plunge continuation where the old build handed over to the default world (8 u before the top)
        if (m07Tube) m07.setPlunge(on && st.s >= course.marks['07_plunge_top'] - 8);

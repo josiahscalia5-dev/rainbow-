@@ -1352,3 +1352,246 @@ GaussianBlur drops the singleton channel; fix the broadcast.
 
 > 🔧 **Bash** `{"command": "until [ \"$(ls /home/user/rainbow-/qa/match/06/r25/step1_hole/NEW3/*.png 2>/dev/null | wc -l)\" -ge 4 ] || grep -q exit /home/user/scratch/s06/render_new3.out; do sleep 10; done; cat /home/user/scratch/s06/render_new3.out; date", "description": "Wait for NEW3 shots", "timeout": 560000}`
 
+### 🧑 User — 2026-11-20T13:37:42.618Z
+
+> ↩︎ result: Command did not complete within its 560s timeout and was moved to the background (ID: bz0a4kp17). Output is being written to: /tmp/claude-0/-home-user-rainbow-/57d35962-86cf-5cfa-ab0b-2faf54b8a6e6/tasks/bz0a4kp17.output. You will be notified when it completes. If it is still running after 30m in the background, it will be stopped and you will be notified. It is running now: do not start a second copy while it runs. If it is no longer needed, stop it with TaskStop. No output had been read from it when it was moved. A program that buffers its output, or a pipe into one such as tail, can keep the output file empty until the command finishes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-20T13:37:45.215Z
+
+> 🔧 **Bash** `{"command": "bash /home/user/rainbow-/tools/lead25/render_slot.sh --status; uptime; tail -3 /home/user/rainbow-/qa/match/06/r25/step1_hole/NEW3.log; ls /home/user/rainbow-/qa/match/06/r25/step1_hole/NEW3/ 2>/dev/null", "description": "Check NEW3 render progress"}`
+
+### 🧑 User — 2026-11-20T13:37:45.332Z
+
+> ↩︎ result: slot 1 busy
+> slot 2 busy
+>  13:37:45 up 45 min,  0 user,  load average: 7.44, 8.13, 7.04
+> [render_slot] got slot 2 after 572s
+> 06 a_start s 198.91 lat 0 stage 06 coins 1680
+> a_start.png
+
+### 🤖 Claude — 2026-11-20T13:37:53.752Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"m06fcl\\|FCL\" src/world/match06.ts src/game/Game.ts src/vfx/*.ts | head -20", "description": "Locate m06fcl foam heap code"}`
+
+### 🧑 User — 2026-11-20T13:37:53.820Z
+
+> ↩︎ result: src/world/match06.ts:407:// r16 `&m06fclu=1`: one foam lobe / small bubble of the painted 06 foam heaps (camera-facing sprite; aB = centre + radius,
+> src/world/match06.ts:1011:    // r22 `&m06fcl=1` (qa/match/06/r22/PROGRESS.md): the painted foam is separate LOW puffy heaps (lower corners, along the
+> src/world/match06.ts:1013:    // Same random stream (identical draws), but blobs only where a heap is (period `&m06fclp=` u, heaps alternate sides,
+> src/world/match06.ts:1014:    // kept fraction `&m06fclk=`), hugging the water edge (lateral band `&m06fclw=` u instead of 1.3) and sitting lower.
+> src/world/match06.ts:1015:    const FCL = qs?.get('m06fcl') === '1';
+> src/world/match06.ts:1017:    const fclP = fnum('m06fclp', 3.5), fclK = fnum('m06fclk', 0.65), fclW = fnum('m06fclw', 0.7);
+> src/world/match06.ts:1027:        if (FCL) {
+> src/world/match06.ts:1039:    // r16 `&m06fclu=1` (qa/match/06/r16/PROGRESS.md): the painted 06 foam is soft lilac-white cumulus heaps made of many
+> src/world/match06.ts:1046:    if (qs?.get('m06fclu') === '1') {
+> src/world/match06.ts:1062:          const hgt = (lobe ? R * (0.15 + 0.35 * rnd2()) * (1 - d / (1.2 * R)) : rho * 0.5) * (FCL ? 0.55 : 1); // r22 m06fcl: fl …[+123 chars]
+
+### 🤖 Claude — 2026-11-20T13:37:55.118Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 1000,1085p src/world/match06.ts", "description": "Read foam heap generation code"}`
+
+### 🧑 User — 2026-11-20T13:37:55.179Z
+
+> ↩︎ result: (window as unknown as { __m06hole?: unknown }).__m06hole = { NX, NY, l0, l1, sa, sb, sB, Wc: R6.Wc, Wb: R6.Wb, data: b64(out), xy: b64(new Uint8Array(xy.buffer)) };
+>     console.info('[match06] m06holedump', { NX, NY, l0, l1, sa, sb });
+>   }
+>   // r7 `&m06foam=1` (needs m06geo): puffy 3D foam clouds along both banks — the painted white-lilac foam clusters that
+>   // vanished as flat strips once Benny moved. Hidden at the approved view (the painting carries them there), shown once
+>   // the camera has left it (setAway). Not part of the projector depth bake (invisible while baking).
+>   let foamClouds: THREE.InstancedMesh | null = null;
+>   const foamSprites: THREE.Mesh[] = [];
+>   if (GEO && R6 && qs?.get('m06foam') === '1') {
+>     let seed = 12345; const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+>     const items: { p: THREE.Vector3; r: number; up: THREE.Vector3 }[] = [];
+>     // r22 `&m06fcl=1` (qa/match/06/r22/PROGRESS.md): the painted foam is separate LOW puffy heaps (lower corners, along the
+>     // banks) with gaps between them, not an unbroken strip that stacks into tall white walls seen from Benny's low camera.
+>     // Same random stream (identical draws), but blobs on …[+5675 chars]
+
+### 🤖 Claude — 2026-11-20T13:38:00.138Z
+
+> 🔧 **Bash** `{"command": "until [ \"$(ls /home/user/rainbow-/qa/match/06/r25/step1_hole/NEW3/*.png 2>/dev/null | wc -l)\" -ge 4 ] || grep -q exit /home/user/scratch/s06/render_new3.out; do sleep 10; done; cat /home/user/scratch/s06/render_new3.out; date", "description": "Wait for NEW3 shots to finish", "timeout": 560000}`
+
+### 🧑 User — 2026-11-20T13:38:10.232Z
+
+> ↩︎ result: NEW3 exit 0 4 png
+> Fri Nov 20 13:38:10 UTC 2026
+
+### 🤖 Claude — 2026-11-20T13:38:14.222Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r25/step1_hole && python3 -c \"\nfrom PIL import Image\nimport numpy as np\nA='/home/user/rainbow-/qa/match/06/r23/step3_m06rip/1_APPROVED.png'\nW,H=288,512\nout=Image.new('RGB',(W*4,H*2))\nfor c,v in enumerate(['CURRENT','NEW3']):\n  for i,s in enumerate(['a_start','o1_003','o2_007','o3_012']):\n    out.paste(Image.open(f'{v}/{s}.png').convert('RGB').resize((W,H)),(i*W,c*H))\nout.save('/home/user/scratch/s06/sheet_new3.png')\nfor s in ['a_start','o1_003','o2_007','o3_012']:\n  a=np.asarray(Image.open(f'CURRENT/{s}.png').convert('RGB')).astype(in …[+221 chars]`
+
+### 🧑 User — 2026-11-20T13:38:16.165Z
+
+> ↩︎ result: a_start changed(>25) 0.0%
+> o1_003 changed(>25) 20.1%
+> o2_007 changed(>25) 20.0%
+> o3_012 changed(>25) 11.2%
+
+### 🤖 Claude — 2026-11-20T13:38:17.276Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s06/sheet_new3.png"}`
+
+### 🧑 User — 2026-11-20T13:38:17.498Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T13:38:26.254Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r25/step1_hole && python3 -c \"\nfrom PIL import Image\nbox=(100,800,764,1536)\nims=[Image.open(p).convert('RGB').crop(box) for p in ['CURRENT/o2_007.png','NEW3/o2_007.png','CURRENT/o3_012.png','NEW3/o3_012.png']]\nw,h=ims[0].size; s=0.55\nout=Image.new('RGB',(int(w*s)*4,int(h*s)))\nfor i,im in enumerate(ims): out.paste(im.resize((int(w*s),int(h*s))),(i*int(w*s),0))\nout.save('/home/user/scratch/s06/crop_new3.png'); print(out.size)\n\"", "description": "Crop contact region CURRENT vs NEW3 at o2/o3"}`
+
+### 🧑 User — 2026-11-20T13:38:26.730Z
+
+> ↩︎ result: (1460, 404)
+
+### 🤖 Claude — 2026-11-20T13:38:27.717Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s06/crop_new3.png"}`
+
+### 🧑 User — 2026-11-20T13:38:27.778Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T13:38:35.805Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r25/step1_hole && sed -i 's#declare -A TITLE=(\\[NEW2\\]#declare -A TITLE=([NEW3]=\"SCREEN 06 OPENING - NEW (m06hole=2 m06fade m06spl)\" [NEW2]#' clip.sh && grep -c NEW3 clip.sh && sed -e 's/NEW2/NEW3/g' /home/user/scratch/s06/chain_new2.sh > /home/user/scratch/s06/chain_new3.sh && cat /home/user/scratch/s06/chain_new3.sh | tail -3 && (bash /home/user/scratch/s06/chain_new3.sh > /home/user/scratch/s06/chain_new3.out 2>&1 &); for s in a_start o1_003 o2_007 o3_012; do cp NEW3/$s.png COMPARE/$s/3_NEW.png; done; echo copied", "description": "Queue NE …[+38 chars]`
+
+### 🧑 User — 2026-11-20T13:38:35.956Z
+
+> ↩︎ result: 1
+> bash $O/clip.sh NEW3
+> cd /home/user/wt/s06 && bash /home/user/rainbow-/tools/lead25/render_slot.sh timeout 2400 node scripts/gameplay-test.mjs "--q=$(tr -d '\n' < $O/QUERY_NEW3.txt)" "--out=$O/gameplay_NEW3.json" > $O/gameplay_NEW3.log 2>&1
+> echo "gameplay exit $?"
+> copied
+
+### 🤖 Claude — 2026-11-20T13:38:44.438Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"FOAMC_VERT = \" -A22 src/world/match06.ts | grep -n \"uNear\\|scale\\|dist\\|gl_Position\" | head; python3 - <<'EOF'\np='/home/user/rainbow-/qa/match/06/r25/PROGRESS.md'; s=open(p).read()\nold=s[s.index('  tsc 0. NOW: NEW3 shots rendering'):s.index('## (r25) WHERE I STOPPED / NEXT')]\nnew=\"\"\"  tsc 0. NEW3 shots DONE (`step1_hole/NEW3/`): o1 = NEW2 (cone gone, painted water continuous, shallow rings); o2/o3: one coherent\n  river below Benny (cyan centre, pink sides), no bounded patch / ghost foam / direction break, low lace collar + rings at hi …[+499 chars]`
+
+### 🧑 User — 2026-11-20T13:38:44.550Z
+
+> ↩︎ result: 4:412-uniform vec2 uNear;
+> 13:421-  vF = smoothstep(uNear.x, uNear.y, -mv.z);
+> 16:424-  gl_Position = projectionMatrix * mv;
+> ok
+
+### 🤖 Claude — 2026-11-20T13:38:46.102Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 409,426p src/world/match06.ts; grep -n \"foamSprites\" src/world/match06.ts | head", "description": "Read foam sprite vertex shader"}`
+
+### 🧑 User — 2026-11-20T13:38:46.175Z
+
+> ↩︎ result: const FOAMC_VERT = /* glsl */ `
+> attribute vec4 aB;
+> attribute float aS;
+> uniform vec2 uNear;
+> varying vec2 vUv;
+> varying float vS;
+> varying float vF;
+> varying float vPx;
+> void main() {
+>   vUv = uv * 2.0 - 1.0;
+>   vS = aS;
+>   vec4 mv = viewMatrix * vec4(aB.xyz, 1.0);
+>   vF = smoothstep(uNear.x, uNear.y, -mv.z);
+>   mv.xy += position.xy * aB.w * 2.0 * vF;
+>   vPx = aB.w * vF * projectionMatrix[1][1] / max(-mv.z, 0.1); // on-screen radius (fraction of the half-height)
+>   gl_Position = projectionMatrix * mv;
+> }`;
+> // colours = the approved picture's foam heaps (display values, lower corners + crest): white tops (253,252,253), pale
+> 1007:  const foamSprites: THREE.Mesh[] = [];
+> 1079:        group.add(o); foamSprites.push(o);
+> 1124:    setAway(a) { if (foamClouds) foamClouds.visible = a > 0.5; for (const o of foamSprites) o.visible = a > 0.5; },
+
+### 🤖 Claude — 2026-11-20T13:38:58.102Z
+
+> 🔧 **Bash** `{"command": "until grep -q \"gameplay exit\" /home/user/scratch/s06/chain_new3.out; do sleep 10; done; cat /home/user/scratch/s06/chain_new3.out; date", "description": "Wait for NEW3 clip and gameplay", "timeout": 560000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T13:38:58.139Z
+
+> ↩︎ result: Command running in background with ID: bsdrhubxm. Output is being written to: /tmp/claude-0/-home-user-rainbow-/57d35962-86cf-5cfa-ab0b-2faf54b8a6e6/tasks/bsdrhubxm.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-20T13:39:01.690Z
+
+> 🔧 **Bash** `{"command": "grep -n \"AUDIT_SHOTS\\|const SHOTS\\|\\[\\\"\" /home/user/rainbow-/tools/lead23/audit06_slow.mjs | head -10", "description": "Check audit06 default shot list"}`
+
+### 🧑 User — 2026-11-20T13:39:01.725Z
+
+> ↩︎ result: 6:// Shots are fractions of the stage from its checkpoint to its end; env AUDIT_SHOTS='[["name",frac,steer],...]' overrides.
+> 12:const SHOTS = process.env.AUDIT_SHOTS ? JSON.parse(process.env.AUDIT_SHOTS)
+
+### 🤖 Claude — 2026-11-20T13:39:03.027Z
+
+> 🔧 **Bash** `{"command": "sed -n 10,20p /home/user/rainbow-/tools/lead23/audit06_slow.mjs | cut -c1-400", "description": "Read default shots definition"}`
+
+### 🧑 User — 2026-11-20T13:39:03.070Z
+
+> ↩︎ result: const { startVite } = await import(pathToFileURL(`${process.cwd()}/tools/match06/r23_vite.mjs`).href); // r23: fonts via symlinked node_modules
+> const [OUT, STAGE, Q] = process.argv.slice(2);
+> const SHOTS = process.env.AUDIT_SHOTS ? JSON.parse(process.env.AUDIT_SHOTS)
+>   : [['a_start', 0, null], ['b_early', 0.12, null], ['c_middle', 0.35, null], ['d_late', 0.6, null], ['e_end', 0.85, null],
+>      ['f_hard_left', 0.35, -1], ['g_hard_right', 0.35, 1]];
+> mkdirSync(OUT, { recursive: true });
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(Number(process.env.AUDIT_PORT ?? 5290));
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> const log = [];
+> try {
+
+### 🤖 Claude — 2026-11-20T13:39:10.728Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r25 && mkdir -p step2 && cp step1_hole/QUERY_NEW3.txt step2/QUERY_BEFORE.txt && cat > step2/render.sh <<'EOF'\n#!/usr/bin/env bash\n# r26 s06 step 2: later views (22..85 % + hard left / right at 35 %) for each variant, water clock pinned (AUDIT_PIN=1000).\n#   bash render.sh BEFORE NEW      (QUERY_<V>.txt; each run waits for a machine render slot)\nO=/home/user/rainbow-/qa/match/06/r25/step2; cd /home/user/wt/s06\nfor V in ${*:-BEFORE NEW}; do\n  AUDIT_PORT=${PORT:-5282} AUDIT_PIN=1000 AUDIT_SHOTS=\"${SHOTS:-[[\\\"b2_early\\\",0.22,null],[\\\"c_m …[+615 chars]`
+
+### 🧑 User — 2026-11-20T13:39:10.791Z
+
+> ↩︎ result: queued
+
+### 🤖 Claude — 2026-11-20T13:39:21.214Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"steer\\|Steer\\|coin\" scripts/gameplay-test.mjs | head -15; grep -rn \"refCoins\\|coinLane\\|coins06\\|lateralAt\" src/gameplay/coins.ts | head -15", "description": "Check how gameplay test collects coins"}`
+
+### 🧑 User — 2026-11-20T13:39:21.334Z
+
+> ↩︎ result: 7://  * real coin pickups update the counter; steering into the foam wall costs a heart
+> 35:  api.setSteer(0);
+> 46:  // ---- full run 03 → 11 with a coin-seeking steering policy
+> 51:  const startCoins = prev.coins;
+> 56:  // steering policy: weave gently so Benny crosses coin lines (real pickups)
+> 60:    // coin-seeking: steer toward the lateral offset of the next untaken coin within 12 units
+> 61:    const next = api.coinDefs().find((d) => !d.taken && d.s > st.s + 0.5 && d.s < st.s + 12);
+> 63:    api.setSteer(Math.max(-1, Math.min(1, (want - st.lat) * 0.9)));
+> 76:    if (steps % 30 === 0) out.samples.push({ t: +t.toFixed(2), s: s1.s, stage: s1.stage, y: s1.bennyY, cam: s1.cam, coins: s1.coins });
+> 88:  out.checks.realCoinPickups = { pass: endState.coins > startCoins, startCoins, endCoins: endState.coins, collected: (endState.coins - startCoins) / 10 };
+> 91:  // ---- hearts: hold steer into the wall in 05
+> 93:  api.setSteer(1);
+> 97:  api.setSteer(null);
+> 118:  '(deterministic 60 Hz simulation, coin-seeking steering). Frames: `qa/continuity/07a…07d.png`',
+> 12:import coins06 from '../../assets/textures/match06/coins06.json';
+> 55:  // height from the locked 06 camera, assets/textures/match06/coins06.j …[+210 chars]
+
+### 🤖 Claude — 2026-11-20T13:39:24.173Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 40,75p src/gameplay/coins.ts; python3 -c \"\nimport json; d=json.load(open('/home/user/wt/s06/assets/textures/match06/coins06.json')); print(d.keys()); print([(round(c['s'],2), round(c['lat'],2), round(c['h'],2)) for c in d['coins']])\"", "description": "Read 06 coin layout code and data"}`
+
+### 🧑 User — 2026-11-20T13:39:24.245Z
+
+> ↩︎ result: export function coinLayout(course: Course): CoinDef[] {
+>   const out: CoinDef[] = [];
+>   const add = (stage: StageId, s: number, lat: number, h = 0.9, extra: Partial<CoinDef> = {}) => out.push({ s, lat, h, stage, ...extra });
+>   const st = (id: StageId) => course.stage(id);
+>   // 03 — spiral trail ahead of Benny toward the drain
+>   { const a = st('03'); for (let i = 0; i < 9; i++) add('03', a.s0 + 6 + i * 2.7, 0.9 - i * 0.12); }
+>   // 04 — along the left edge of the slide
+>   { const a = st('04'); for (let i = 0; i < 8; i++) add('04', a.s0 + 9 + i * 3.6, -1.35); }
+>   // 05 — on the winding cyan core (see C05)
+>   coins05(course, add);
+>   // 06 — up and over the crest (left of centre like the ref)
+>   const m06 = flag05('match06') || flag05('matchall');
+>   if (!m06) { const a = st('06'); const n = 18; for (let i = 0; i < n; i++) { const s = a.s0 + 4 + i * ((a.s1 - a.s0 - 6) / n); add('06', s, -1.3 + 0.7 * Math.sin(i * 0.4)); } }
+>   // `?match06=1` (qa/match/06/NOTES.md): the approved picture's 15 coins where the picture shows them (river s / lateral /
+>   // height from the locked 06 camera, assets/textures/match06/coins06.json, facing that camera) + the other 3 of the 18-coin
+>   // 06 row on the 06 e …[+1740 chars]
+
+### 🤖 Claude — 2026-11-20T13:39:30.673Z
+
+> 🔧 **Bash** `{"command": "until grep -q \"gameplay exit\" /home/user/scratch/s06/chain_new3.out; do sleep 10; done; cat /home/user/scratch/s06/chain_new3.out; date", "description": "Wait for NEW3 clip and gameplay (foreground)", "timeout": 560000}`
+

@@ -32,7 +32,7 @@ index 65c878c..a20f48e 100644
        if (mvViews.length && camera) {
          const cp = camera.getWorldPosition(_cp);
 diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
-index 2b62a35..5f3e27e 100644
+index 2b62a35..c8001e3 100644
 --- a/src/world/match04m4.ts
 +++ b/src/world/match04m4.ts
 @@ -120,6 +120,15 @@ uniform float uRVar;       // r17 m04rpvar: number of painted rings stacked in t
@@ -772,7 +772,7 @@ index 2b62a35..5f3e27e 100644
      // the river surface height d u from the centre line (flat lane, the trough's side rising to RY at xW, its top edge beyond):
      // a heap rests on the surface a little outward of its centre line, so its bubbles are not cut flat by the rising side
      const surfY = (d: number) => (d <= XF ? 0.02 : d >= xW ? RY : 0.02 + (RY - 0.02) * ((d - XF) / Math.max(0.1, xW - XF)) ** 2);
-@@ -1495,6 +1994,38 @@ export function addM04(ctx: M04Ctx) {
+@@ -1495,6 +1994,68 @@ export function addM04(ctx: M04Ctx) {
        const s = (1.9 + 0.9 * r3()) / HL * bs, x = b.x / b.n;
        place.push({ x, y: surfY(Math.abs(x - cx) + 0.3 * s) - sink * HH * s, z: b.z / b.n, s, yaw: (r3() - 0.5) * 0.4, k: Math.floor(r3() * 4) });
      }
@@ -787,6 +787,36 @@ index 2b62a35..5f3e27e 100644
 +      const d0 = M04.num('m04bbd0', 0.55), d1 = M04.num('m04bbd1', 0.32), gS = M04.num('m04bbdg', 1), xo = M04.num('m04bbdx', 0.15);
 +      const sk2 = M04.num('m04bbdk', 0.12);
 +      let nD = 0;
++      // r26 `&m04bbdc=1`: the far foam as SOFT CLOUD BANKS (the painted banks: rounded clusters of varied size with real gaps),
++      // not an evenly spaced bead row: heaps grouped into banks of m04bbdcn (default 3-5) — the middle heaps biggest, the ends
++      // small, staggered in two rows across the edge so the outline is a rounded cloud — each bank m04bbdcl u long (default
++      // 2.2-4.0), then an open gap of m04bbdcg u (default 2.0-5.0, wider with depth) where the pink edge and the gold show.
++      // Own random stream; sizes still shrink with depth (m04bbd0 -> m04bbd1); off (0): the r21 row unchanged.
++      if (M04.num('m04bbdc', 0) > 0) {
++        let s5 = 24601; const r5 = () => ((s5 = (s5 * 16807) % 2147483647) / 2147483647);
++        const nB = M04.num('m04bbdcn', 0), bLn = M04.num('m04bbdcl', 1), gp = M04.num('m04bbdcg', 1), rowW = M04.num('m04bbdcw', 0.35);
++        const big = M04.num('m04bbdcb', 1.25), sml = M04.num('m04bbdcs', 0.6);
++        for (const side of [-1, 1]) {
++          let a = rimL0 + 0.6 + r5() * 1.5;
++          while (a < aEnd) {
++            const f = THREE.MathUtils.clamp((a - rimL0) / Math.max(1, aEnd - rimL0), 0, 1);
++            const n = nB > 0 ? Math.round(nB) : 3 + Math.floor(r5() * 3);
++            const BL = (2.2 + r5() * 1.8) * bLn;
++            for (let j = 0; j < n; j++) {
++              const t = n > 1 ? j / (n - 1) : 0.5;
++              const bell = Math.sin(Math.PI * (0.15 + 0.7 * t));                     // 0.45 at the ends .. 1 in the middle
++              const cl = 0.9 + r5() * 1.2;
++              const s = THREE.MathUtils.clamp(cl * 1.15, 1.4, 2.8) * bs / HL * (d0 + (d1 - d0) * f) * (sml + (big - sml) * bell);
++              const row = (j % 2 === 0 ? 1 : -1) * rowW * s * (0.6 + 0.4 * r5());     // staggered: outer / inner row
++              const xi = Math.max(XF + 0.2, xW - xo - 0.9 * s + row);
++              const za = a + t * BL + (r5() - 0.5) * 0.3;
++              place.push({ x: cx + side * xi, y: surfY(xi + 0.3 * s) - (sink + sk2 * (0.7 + 0.6 * r5())) * HH * s, z: z0 - za, s, yaw: (r5() - 0.5) * 0.6, k: Math.floor(r5() * 4), deep: 1 });
++              nD++;
++            }
++            a += BL + (2.0 + r5() * 3.0) * (1 + 0.6 * f) * gp;
++          }
++        }
++      } else
 +      for (const side of [-1, 1]) {
 +        let a = rimL0 + 0.4 + r4() * 0.9;
 +        while (a < aEnd) {
@@ -811,7 +841,7 @@ index 2b62a35..5f3e27e 100644
      const holder = new THREE.Group(); holder.name = 'm04_bank_heaps'; holder.visible = false; group.add(holder);
      const near = new THREE.Vector2(M04.num('m04bbn0', nearF[0]), M04.num('m04bbn1', nearF[1]));
      const mat = new THREE.MeshPhysicalMaterial({
-@@ -1503,25 +2034,62 @@ export function addM04(ctx: M04Ctx) {
+@@ -1503,25 +2064,62 @@ export function addM04(ctx: M04Ctx) {
        iridescence: M04.num('m04bbi', 0.15), iridescenceIOR: 1.3,
        emissive: new THREE.Color('#eef3ff'), emissiveIntensity: M04.num('m04bbe', 0.12), transparent: true, depthWrite: true });
      const rimC = new THREE.Vector4(0.74, 0.72, 0.98, M04.num('m04bbl', 0.75)), rimW = M04.num('m04bbg', 0.35), glint = M04.num('m04bbh', 0.6);
@@ -877,7 +907,7 @@ index 2b62a35..5f3e27e 100644
      };
      updaters.push((a) => { holder.visible = a > 0.01; mat.opacity = a; });
      new GLTFLoader().loadAsync(new URL('../../assets/models/match04/foam_bank04.glb', import.meta.url).href).then((gl) => {
-@@ -1555,6 +2123,7 @@ export function addM04(ctx: M04Ctx) {
+@@ -1555,6 +2153,7 @@ export function addM04(ctx: M04Ctx) {
          const mine = place.filter((p) => p.k % nG === gi);
          if (!mine.length) return;
          const im = new THREE.InstancedMesh(g, mat, mine.length);
@@ -885,7 +915,7 @@ index 2b62a35..5f3e27e 100644
          mine.forEach((p, i) => {
            // glb: length along +x, up +y; the river runs along -z -> yaw 90 deg (+ a little), turned round on the left bank
            // (no negative scale: an instanced mesh would show its back faces)
-@@ -1662,7 +2231,7 @@ export function addM04(ctx: M04Ctx) {
+@@ -1662,7 +2261,7 @@ export function addM04(ctx: M04Ctx) {
      // r14 m04foamn0 / m04foamn1: fade puffs out this close to the camera (big plain balls in the face while steering)
      const nearF = [M04.num('m04foamn0', 0.6), M04.num('m04foamn1', 1.2)];
      if (bbank) {
@@ -894,7 +924,7 @@ index 2b62a35..5f3e27e 100644
      } else if (clu) {
        // r15: two passes of the same bubble instances — opaque cores, then the see-through rims blended on top
        const fb = new THREE.Vector3(M04.num('m04fce', 0.5), M04.num('m04fcg', 1.0), M04.num('m04fcd', 1.0));
-@@ -1727,7 +2296,19 @@ export function addM04(ctx: M04Ctx) {
+@@ -1727,7 +2326,19 @@ export function addM04(ctx: M04Ctx) {
    // (fat white-cyan bars, apex pointing down the tunnel, cyan glow) leans back toward the camera like the painted lane seen
    // from above; spaced so about five are in view ahead; each fades in from 2 u ahead (Benny never clips through one) and out
    // far away; hidden at the approved viewpoint (the painted picture is shown there). The flat river chevrons are switched off.
@@ -915,7 +945,7 @@ index 2b62a35..5f3e27e 100644
    let arrA = 0;
    if (M04.arr3d) {
      const hw = M04.num('m04a3w', 1.15), th = M04.num('m04a3t', 0.42), drop = M04.num('m04a3d', 0.95);
-@@ -1783,7 +2364,20 @@ export function addM04(ctx: M04Ctx) {
+@@ -1783,7 +2394,20 @@ export function addM04(ctx: M04Ctx) {
      const neon = M04.num('m04a3w2', 0) > 0;
      const coreC = neon ? new THREE.Color(1.0, 1.0, 1.0) : new THREE.Color(0.86, 0.98, 1.0);
      const glowC = neon ? new THREE.Color(0.22, 0.86, 1.0) : new THREE.Color(0.10, 0.62, 1.0);
@@ -937,7 +967,7 @@ index 2b62a35..5f3e27e 100644
        const core = new THREE.MeshBasicMaterial({ color: coreC, transparent: true, depthWrite: false, toneMapped: false, side: THREE.DoubleSide });
        // r13 `&m04a3hb=1`: a deep-blue halo with NORMAL blending (the painted arrows pop as white bars in a blue glow; an
        // additive halo only whitened the bright cyan water round them)
-@@ -1802,20 +2396,76 @@ export function addM04(ctx: M04Ctx) {
+@@ -1802,20 +2426,76 @@ export function addM04(ctx: M04Ctx) {
        m.renderOrder = 5; g.renderOrder = coreT && lum > 0 ? 6 : 4; m.name = 'm04_arrow3d'; g.name = 'm04_arrow3d_glow';   // luminous layer on top
        m.visible = g.visible = false;                                     // invisible during the projector depth bake
        group.add(g); group.add(m);
@@ -1016,7 +1046,7 @@ index 2b62a35..5f3e27e 100644
      if (arrowsOut.length) {
        const cz = -a5b.z;                                                // camera local z (forward = -z)
        // r13: fade window ahead of the camera (Benny swims ≈ 6.4 u ahead of it on 04: m04a3n0/n1 ≈ 6.5/8.5 makes every
-@@ -1825,12 +2475,41 @@ export function addM04(ctx: M04Ctx) {
+@@ -1825,12 +2505,41 @@ export function addM04(ctx: M04Ctx) {
        const go = M04.num('m04a3o', 0.55);
        const b0 = M04.num('m04a3b0', 1.6), b1 = M04.num('m04a3b1', 3.0);
        const bz = M04.num('m04a3b', 0) > 0 && benny ? benny.clone().applyMatrix4(MwInv).z : null;   // Benny's local z (same frame as cz)

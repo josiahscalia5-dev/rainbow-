@@ -12,9 +12,11 @@
   over at dAp 0.02..0.3): shots `step1_hole/NEW2/` — left-behind ring gone at 3 %, a bit more sparkle; (c) unchanged.
 * NEW3 = NEW2 + `&m06fade=1` (the pinned painted floor dissolves as a whole into the river's own water between dAp 0.85..2.2: no
   bounded patches) + `&m06spl=1` (06 only: crown jets 1.25->0.42 u long, 0.34->0.09 u high = low lace collar; spray dots hidden).
-  tsc 0. NOW: NEW3 shots rendering (`render.sh NEW3`). CURRENT opening clip DONE (`CURRENT_opening_{1x,0.5x}.mp4`, 26 frames,
-  1.08 s, checkpoint -> 32 %). NEXT: judge NEW3; clip of the chosen NEW (same schedule) + gameplay; COMPARE/<shot>/1_,2_,3_ files
-  (currently 3_NEW = NEW2; replace if NEW3 wins).
+  tsc 0. NEW3 shots DONE (`step1_hole/NEW3/`): o1 = NEW2 (cone gone, painted water continuous, shallow rings); o2/o3: one coherent
+  river below Benny (cyan centre, pink sides), no bounded patch / ghost foam / direction break, low lace collar + rings at his
+  contact instead of the white V streaks; start 0 px. `COMPARE/<shot>/3_NEW.png` = NEW3. NOW: NEW3 opening clip + gameplay
+  (`/home/user/scratch/s06/chain_new3.sh`, waits for a slot). CURRENT clip DONE (`CURRENT_opening_{1x,0.5x}.mp4`, 1.08 s).
+  NEXT: verdict step 1; step 2 = most visible later difference (near foam heaps too high mid/late; river beyond the crest).
 
 ## (r25) WHERE I STOPPED / NEXT
 * ~12:05 UTC — started. Read CLAUDE.md, `docs/briefs/2026-11-20-r25/LAUNCH_R25.md` (s06), the lead's diagnosis

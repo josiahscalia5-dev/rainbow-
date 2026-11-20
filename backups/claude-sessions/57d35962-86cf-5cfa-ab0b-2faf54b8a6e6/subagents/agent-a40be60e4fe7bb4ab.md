@@ -898,3 +898,214 @@ Step 2 logged. Waiting for the step-3 NEW segment (the combo build must not be r
 
 > 🔧 **Bash** `{"command": "until grep -q \"exit done\" /home/user/scratch/s07/step3.log 2>/dev/null; do sleep 10; done; cat /home/user/scratch/s07/step3.log; grep -v \"allow list\" /home/user/scratch/s07/s3_seg_NEW.log | tail -3; ls /home/user/scratch/s07/s3seg/NEW | wc -l; date", "description": "Wait for step-3 NEW segment", "timeout": 540000}`
 
+### 🧑 User — 2026-11-20T13:37:27.974Z
+
+> ↩︎ result: seg BEFORE exit 0
+> seg NEW exit 0
+> exit done
+> frames 27
+> 28
+> Fri Nov 20 13:37:27 UTC 2026
+
+### 🤖 Claude — 2026-11-20T13:37:33.101Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s07/s3seg && ls BEFORE | head -2; ls BEFORE | tail -2; python3 -I - <<'EOF'\nfrom PIL import Image, ImageDraw\nfrom pathlib import Path\nfs=sorted(p.name for p in Path('/home/user/scratch/s07/s3seg/BEFORE').glob('[0-9]*.png'))\nsel=fs[::2][:14]\nW,H=128,228\nrows=[]\nfor v in ['BEFORE','NEW']:\n    im=Image.new('RGB',(W*len(sel),H+14),'black'); d=ImageDraw.Draw(im)\n    for k,f in enumerate(sel):\n        a=Image.open(f'/home/user/scratch/s07/s3seg/{v}/{f}').convert('RGB').resize((W,H)); im.paste(a,(k*W,14))\n        d.text((k*W+3,1),f'{v[:3]} {int(f[:4])/24: …[+272 chars]`
+
+### 🧑 User — 2026-11-20T13:37:33.745Z
+
+> ↩︎ result: 0160.png
+> 0162.png
+> 0212.png
+> frames.json
+
+### 🤖 Claude — 2026-11-20T13:37:34.581Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s07/s3_sheet.png"}`
+
+### 🧑 User — 2026-11-20T13:37:34.738Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T13:37:40.810Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s07/s3seg && ffmpeg -v error -y -i BEFORE/0188.png -i NEW/0188.png -i BEFORE/0196.png -i NEW/0196.png -filter_complex \"hstack=inputs=4\" /home/user/scratch/s07/s3_pair.png", "description": "Side-by-side join view at t 7.83 and 8.17"}`
+
+### 🧑 User — 2026-11-20T13:37:41.257Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T13:37:42.274Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s07/s3_pair.png"}`
+
+### 🧑 User — 2026-11-20T13:37:42.475Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T13:38:02.722Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s07/combo && grep -n \"finalWave\\|'puddles'\" src/game/Game.ts | head; sed -n \"$(grep -n \"for (const k of \\['puddles', 'finalWave'\\])\" src/game/Game.ts | head -1 | cut -d: -f1),+0p\" src/game/Game.ts; grep -n \"m08On\\b\" src/game/Game.ts | head -8", "description": "Find final-wave visibility logic in combo"}`
+
+### 🧑 User — 2026-11-20T13:38:02.864Z
+
+> ↩︎ result: 576:    if (m08 && m08On) for (const k of ['puddles', 'finalWave']) { const o = water.parts?.[k]; if (o) o.visible = false; }
+>     if (m08 && m08On) for (const k of ['puddles', 'finalWave']) { const o = water.parts?.[k]; if (o) o.visible = false; }
+> 116:  let m08On = false;
+> 210:    if (m08) { m08On = st.stage === '08'; m08.group.visible = m08On; if (m08On) env.zones.chamber.visible = false; }
+> 572:    if (m08 && (m08On || m08Applied)) {
+> 573:      for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m08On; }
+> 574:      m08Applied = m08On;
+> 576:    if (m08 && m08On) for (const k of ['puddles', 'finalWave']) { const o = water.parts?.[k]; if (o) o.visible = false; }
+> 595:      const [bx, by, bz] = m08On ? M08_BENNY.body : [1, 1, 1];
+> 597:      const hk = m08On ? M08_BENNY.hat : 1;
+
+### 🤖 Claude — 2026-11-20T13:38:05.418Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s07/combo && grep -rn \"finalWave\" src --include=*.ts | grep -v \"Game.ts\" | head -5; sed -n 566,580p src/game/Game.ts", "description": "Locate finalWave mesh definition"}`
+
+### 🧑 User — 2026-11-20T13:38:05.576Z
+
+> ↩︎ result: src/vfx/index.ts:20:import { createFinalWave } from './finalWave';
+> src/vfx/index.ts:96:  const parts: Record<string, THREE.Object3D> = { ribbon: ribbon.mesh, whirlpool: whirl.mesh, drum: drum.group, drumSwirl: drum.swirl, finalWave: wave.mesh, puddles: puddles.group, foam: foam.group, foamBerm: foam.berm, foamRafts: foam.rafts, foamRim05: foam.rim05, foamFlank: foam.flank, bubbles: bubbles.group, bubblesSmall: bubbles.small, bubblesBig: bubbles.big, spray: spray.points, splashCrown: crown.mesh, splash05: crown05.mesh };
+>     }
+>     girl.update(dt);
+>     const time = st.frozen ?? st.clock;
+>     env.update(time, dt);
+>     water.update(time, dt, st.s, camera);
+>     // `?match08=1` on Screen 08: the projected scenery carries the approved river, foam and bubbles
+>     if (m08 && (m08On || m08Applied)) {
+>       for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m08On; }
+>       m08Applied = m08On;
+>     }
+>     if (m08 && m08On) for (const k of ['puddles', 'finalWave']) { const o = water.parts?.[k]; if (o) o.visible = false; }
+>     // `?match07=1` on the visible 07 stretch: the projected scenery carries the approved tube, rings, paddles, river,
+>     // foam and bubbles (the game' …[+159 chars]
+
+### 🤖 Claude — 2026-11-20T13:38:13.729Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s07/combo && grep -n \"visible\" src/vfx/finalWave.ts src/vfx/index.ts | head -10", "description": "Check finalWave visibility handling"}`
+
+### 🧑 User — 2026-11-20T13:38:13.797Z
+
+> ↩︎ result: src/vfx/index.ts:13: * (BENNY_RIDE_OFFSET ≈ 0.55 for a 0.8-radius body: bottom third in the water, splash visible).
+> src/vfx/index.ts:183:      drum.swirl.visible = controls.drumSwirl > 0.001;
+> src/vfx/index.ts:188:      puddles.group.visible = controls.outro > 0.001;
+> src/vfx/index.ts:190:      drum.group.visible = focusS < st03.s0 + 12;
+> src/vfx/index.ts:191:      whirl.mesh.visible = focusS > drainMark - 8 && focusS < st04.s0 + 45;
+> src/vfx/index.ts:192:      wave.mesh.visible = focusS > st08.s0 - 25;
+> src/vfx/index.ts:201:      if (wave.mesh.visible && focusS > st09.s0 - 20 && focusS < st09.s1 + 20 && controls.outro < 0.5) {
+> src/vfx/index.ts:214:      for (const k of qaHide) { const o = parts[k]; if (o) o.visible = false; }
+
+### 🤖 Claude — 2026-11-20T13:38:19.058Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"if (m08 && m08On) for (const k of \\['puddles', 'finalWave'\\])\" src/game/Game.ts", "description": "Find the line in the worktree Game.ts"}`
+
+### 🧑 User — 2026-11-20T13:38:19.105Z
+
+> ↩︎ result: 576:    if (m08 && m08On) for (const k of ['puddles', 'finalWave']) { const o = water.parts?.[k]; if (o) o.visible = false; }
+
+### 🤖 Claude — 2026-11-20T13:38:20.412Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/src/game/Game.ts", "offset": 574, "limit": 4}`
+
+### 🧑 User — 2026-11-20T13:38:20.434Z
+
+> ↩︎ result: 574	      m08Applied = m08On;
+> 575	    }
+> 576	    if (m08 && m08On) for (const k of ['puddles', 'finalWave']) { const o = water.parts?.[k]; if (o) o.visible = false; }
+> 577	    // `?match07=1` on the visible 07 stretch: the projected scenery carries the approved tube, rings, paddles, river,
+
+### 🤖 Claude — 2026-11-20T13:38:23.269Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s07/src/game/Game.ts", "old_string": "    if (m08 && m08On) for (const k of ['puddles', 'finalWave']) { const o = water.parts?.[k]; if (o) o.visible = false; }\n", "new_string": "    if (m08 && m08On) for (const k of ['puddles', 'finalWave']) { const o = water.parts?.[k]; if (o) o.visible = false; }\n    // r26 m07join: the 09 final-wave mesh (shown by water.update from 25 u before 08, hidden inside 08 by match08) stood as a big\n    // white arch at the 08 chamber seen from the end of the drop and vanished at the cut into 08 — hidden while 07 …[+189 chars]`
+
+### 🧑 User — 2026-11-20T13:38:23.326Z
+
+> ↩︎ result: The file /home/user/wt/s07/src/game/Game.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T13:38:27.339Z
+
+Now rebuild the combo with both edits, typecheck, and re-render only the step-3 NEW segment.
+
+### 🤖 Claude — 2026-11-20T13:38:31.191Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s07 && python3 -I /home/user/rainbow-/qa/match/07/r24/combo/mkcombo.py /home/user/scratch/s07/s08snap /home/user/scratch/s07/combo && cd combo && timeout 900 npx tsc --noEmit -p .; echo tsc $?; grep -c \"r26 m07join\" src/game/Game.ts; grep -c \"numQc('m07lkB', 5)\" src/game/cameraRig.ts; cd /home/user/scratch/s07 && cat > step3b.sh <<'EOF'\n#!/usr/bin/env bash\nset -u\nSC=/home/user/scratch/s07; SLOT=/home/user/rainbow-/tools/lead25/render_slot.sh\ncd $SC/combo\nSEG_PORT=5281 bash $SLOT timeout 2400 node tools/match07/seg_clip_r24.mjs $SC/s3seg/NEW2 \"$(cat  …[+340 chars]`
+
+### 🧑 User — 2026-11-20T13:38:37.723Z
+
+> ↩︎ result: combo ok /home/user/scratch/s07/combo
+> tsc 0
+> 1
+> 1
+> started
+> 2:// r22 s07 QA copy of scripts/gameplay-test.mjs: identical checks, dev server on port 5277 (the only port this worker may use); always pass --q and --out
+> 3:// Automated gameplay + continuity test on the REAL running game (headless Chromium, WebGL).
+> 4:// Drives Benny from 03 to the 11 ending with the deterministic simulation API and checks:
+> 5://  * continuous travel: s strictly increases, no position jump > speed·dt (no teleport/cut)
+> 6://  * camera continuity: no camera jump between steps (no hard cut), incl. the 07 plunge → 08
+> 7://  * 07 plunge: positive travel time, large vertical drop, 08 inlet reached from the bottom
+> 8://  * real coin pickups update the counter; steering into the foam wall costs a heart
+> 9://  * pause freezes the simulation; resume continues
+> 10://  * the run ends in the 11 victory with Benny hidden under the towel
+> 11:// Writes qa/gameplay_test.json and qa/07_to_08_continuity.md. Exit 1 on failure.
+
+### 🤖 Claude — 2026-11-20T13:38:41.235Z
+
+> 🔧 **Bash** `{"command": "grep -n \"'--q\\|--out\\|--q=\\|startsWith('--\" /home/user/wt/s07/tools/match07/gameplay_test_5277.mjs | head; python3 -c \"\nimport json; d=json.load(open('/home/user/rainbow-/qa/match/07/r23/s1_satin/gameplay_new.json')); print({k:v.get('pass') for k,v in d['checks'].items()}, d['checks']['realCoinPickups'])\"", "description": "Check gameplay test arguments and expected result"}`
+
+### 🧑 User — 2026-11-20T13:38:41.348Z
+
+> ↩︎ result: 2:// r22 s07 QA copy of scripts/gameplay-test.mjs: identical checks, dev server on port 5277 (the only port this worker may use); always pass --q and --out
+> 12://   node scripts/gameplay-test.mjs --q=river05=1 --out=qa/pilot05/wave11/tests/gameplay_river05.json
+> 17:const optQ = (process.argv.find((a) => a.startsWith('--q=')) ?? '').slice(4);
+> 18:const optOut = (process.argv.find((a) => a.startsWith('--out=')) ?? '').slice(6);
+> 19:// (r22 copy: port 5277, writes only --out)
+> {'pauseFreezes': True, 'continuousTravel': True, 'noCameraCut': True, 'noTeleport': True, 'plunge': True, 'realCoinPickups': True, 'victory': True, 'heartsLostOnWallBump': True} {'pass': True, 'startCoins': 1330, 'endCoins': 2240, 'collected': 91}
+
+### 🤖 Claude — 2026-11-20T13:38:48.622Z
+
+I'll prepare the full-candidate query and the final-sequence chain (clip + labels + gameplay) while the segment re-renders.
+
+### 🤖 Claude — 2026-11-20T13:38:55.030Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s07 && node /home/user/rainbow-/tools/lead23/setq.mjs \"$(cat Q_S1.txt)\" \"m07look=1&m07join=1\" > Q_FULL.txt && tr '&' '\\n' < Q_FULL.txt | sort | uniq -d | head; tr '&' '\\n' < Q_FULL.txt | wc -l; cat > final.sh <<'EOF'\n#!/usr/bin/env bash\n# s07 r26: the full labelled swim + steering sequence (NEW = full candidate & K23-3; BEFORE = existing r25 clip, same schedule) + gameplay\nset -u\nSC=/home/user/scratch/s07; SLOT=/home/user/rainbow-/tools/lead25/render_slot.sh; F=/home/user/rainbow-/qa/match/07/r26/final\nmkdir -p $F $SC/clips\ncd $SC/combo\n( AUDIT_P …[+1015 chars]`
+
+### 🧑 User — 2026-11-20T13:38:55.296Z
+
+> ↩︎ result: 47
+> 2:// r22 s07 QA copy of scripts/gameplay-test.mjs: identical checks, dev server on port 5277 (the only port this worker may use); always pass --q and --out
+> 19:// (r22 copy: port 5277, writes only --out)
+> 21:const vite = await startVite(Number(process.env.QA_PORT ?? 5277));
+
+### 🤖 Claude — 2026-11-20T13:39:00.384Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s07 && sed -i 's#( cp tools/match07/gameplay_test_5277.mjs /tmp/ 2>/dev/null; bash#( bash#' final.sh && grep -n \"gameplay_test\" final.sh && tr '&' '\\n' < Q_FULL.txt | grep -c . && tr '&' '\\n' < Q_FULL.txt | grep \"m07\"", "description": "Clean chain script; verify query switches"}`
+
+### 🧑 User — 2026-11-20T13:39:00.473Z
+
+> ↩︎ result: 10:( bash $SLOT timeout 3000 node tools/match07/gameplay_test_5277.mjs "--q=$(cat $SC/Q_FULL.txt)" --out=$F/gameplay_NEW_full.json > $SC/gameplay_full.log 2>&1; echo "gameplay exit $?" >> $SC/final.log ) &
+> 48
+> m07fill=1
+> m07gold=1
+> m07wall=1
+> m07coins=1
+> m07river=1
+> m07tube=1
+> m07ring=1
+> m07foam=1
+> m07coinsz=1
+> m07nearw=1
+> m07foamb=1
+> m07band=1
+> m07end=1
+> m07cloud=1
+> m07satin=1
+> m07sbend=1
+> m07swing=1
+> m07look=1
+> m07join=1
+
+### 🤖 Claude — 2026-11-20T13:39:02.661Z
+
+> 🔧 **Bash** `{"command": "until grep -q \"exit done\" /home/user/scratch/s07/step3b.log 2>/dev/null; do sleep 10; done; cat /home/user/scratch/s07/step3b.log; cd /home/user/scratch/s07/s3seg && ffmpeg -v error -y -i NEW/0196.png -i NEW2/0196.png -i NEW2/0200.png -filter_complex \"hstack=inputs=3,scale=972:-1\" /home/user/scratch/s07/s3_arch.png; date", "description": "Wait for NEW2 join segment and compare arch", "timeout": 540000}`
+
