@@ -619,7 +619,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 20297,
-   "sha256": "f0564b3d812eadd2e406f693710d8aaef14e34f71d6083cb4d55c7c63bcec5aa"
+   "sha256": "d4cef0de9fda105c178abcf4187b01a05e75d891144f17990d7c4c26ee874ac0"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -634,7 +634,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 2190,
-   "sha256": "c581d5643f90eb857b69073af9eff6d5e500978552dc1f36d95cf10ecd52d8ca"
+   "sha256": "0520a491ae68360983d9f9a156887c4f29e0f54f6140a55055f4f76ba8fc7216"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -1424,7 +1424,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c23/INFO.json",
    "bytes": 586,
-   "sha256": "4bbca10485180bcd12916d7de68432ae150996563a6392025add10f78d44c48d"
+   "sha256": "76111a8857ddb4eb534b1705e5c3b075fa01502fbcad96bc15b6bfe7ad437744"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c23/tracked.patch",
@@ -2399,7 +2399,7 @@
   {
    "path": "backups/wip/claude__rainbow-s07-match-c23/INFO.json",
    "bytes": 674,
-   "sha256": "30277c8e8c5c4ae7a46b92d1a2df99dd7d1a20b1e457d50a8d4d9e6515b9cb63"
+   "sha256": "a915156544deaed9e296d346eefb9700b9fc921904af8952dfcc9e1988e08695"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c23/tracked.patch",
@@ -6007,6 +6007,11 @@
    "sha256": "f1c38cb0038fb66fff794bc472af25bda16c100c5c5ccf1fef0650d53ce1710f"
   },
   {
+   "path": "qa/match/04/r22/scratch/clip_before.mp4",
+   "bytes": 524336,
+   "sha256": "d590c2d1c87dc6be9791f8cc7951632c9949107b259fcd4bd01fcf2b8c6e3a19"
+  },
+  {
    "path": "qa/match/04/r22/scratch/clip_before/0000.png",
    "bytes": 2325082,
    "sha256": "d4cef59906f51155b3b52b199bae998bb0dd36f6cc9529eaa6a936e20bf4d17e"
@@ -6580,6 +6585,11 @@
    "path": "qa/match/04/r22/scratch/clip_s2/0056.png",
    "bytes": 1953862,
    "sha256": "009afa10d43ec1c0da6f295a158a3412903290434ce4cb46b2fdc28cb70bce4f"
+  },
+  {
+   "path": "qa/match/04/r22/scratch/clip_s2/0057.png",
+   "bytes": 1967110,
+   "sha256": "c8602d50a91f3d2de7c6116b0fe231b7b11ab79b0dddec28f9ae234a9d968ef3"
   },
   {
    "path": "qa/match/04/r22/scratch/crops/ref_left_mid.png",
