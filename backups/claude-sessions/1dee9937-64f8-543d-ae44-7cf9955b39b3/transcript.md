@@ -986,3 +986,204 @@ Renders done and all six worktrees are up. Let me look at the approved picture n
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && O=/home/user/rainbow-/qa/match/04/r23/lead_t1 && K=$(cat $O/QUERY_BEFORE.txt) && N=$(cat $O/QUERY_NEW.txt) && T=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/clip && rm -rf $T && mkdir -p $T && (AUDIT_PORT=5273 timeout 1500 node /home/user/rainbow-/qa/match/04/r22/tools/swim_clip_pinned.mjs 04 $T/B 2.4 \"$K\" > $T/b.log 2>&1; ffmpeg -loglevel error -y -framerate 24 -i $T/B/%04d.png -vf scale=432:768 -pix_fmt yuv420p $O/swim04_BEFORE.mp4; ffmpeg -loglevel error -y -framerate 12 -i $T/B/%04d.png -vf scale=432:768 -pix_fmt y …[+712 chars]`
 
+### 🧑 User — 2026-11-20T04:19:15.604Z
+
+> ↩︎ result: [1]-  Done                    cd /home/user/wt/s04 && O=/home/user/rainbow-/qa/match/04/r23/lead_t1 && K=$(cat $O/QUERY_BEFORE.txt) && N=$(cat $O/QUERY_NEW.txt) && T=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/clip && rm -rf $T && mkdir -p $T && ( AUDIT_PORT=5273 timeout 1500 node /home/user/rainbow-/qa/match/04/r22/tools/swim_clip_pinned.mjs 04 $T/B 2.4 "$K" > $T/b.log 2>&1; ffmpeg -loglevel error -y -framerate 24 -i $T/B/%04d.png -vf scale=432:768 -pix_fmt yuv420p $O/swim04_BEFORE.mp4; ffmpeg -loglevel error -y -framerate 12 -i $T/B/%04d.png -vf scale=432:768 -pix_fmt yuv420p $O/swim04_BEFORE_halfspeed.mp4 )
+> [2]+  Done                    ( AUDIT_PORT=5274 timeout 1500 node /home/user/rainbow-/qa/match/04/r22/tools/swim_clip_pinned.mjs 04 $T/N 2.4 "$N" > $T/n.log 2>&1; ffmpeg -loglevel error -y -framerate 24 -i $T/N/%04d.png -vf scale=432:768 -pix_fmt yuv420p $O/swim04_NEW.mp4; ffmpeg -loglevel error -y -framerate 12 -i $T/N/%04d.png -vf scale=432:768 -pix_fmt yuv420p $O/swim04_NEW_halfspeed.mp4 )
+>   "verticalDrop": 61.41
+>  },
+>  "errors": []
+> }
+> -rw-r--r-- 1 root root 1008893 Nov 20 04:17 /swim04_NEW.mp4
+> -rw-r--r-- 1 root root 1330406 Nov 20 04:17  …[+28 chars]
+
+### 🤖 Claude — 2026-11-20T04:19:30.932Z
+
+> 🔧 **Bash** `{"command": "rm -rf /N /B /swim04_NEW.mp4 /swim04_NEW_halfspeed.mp4 /gameplay_NEW.json 2>/dev/null; cd /home/user/wt/s04 && grep -n \"uPk\\b\\|uPk\\.\\|uSB0\\|uNB\\.\\|uNB4\\|uNB6\\|uNB7\\|uEdge\\.\\|uLane\\.\\|uLane2\" src/world/match04m4.ts | sed -n '1,80p' | cut -c1-220", "description": "Remove invalid outputs and find pink-band shader uses"}`
+
+### 🧑 User — 2026-11-20T04:19:44.468Z
+
+> ↩︎ result: 771:uniform vec4 uLane2;         // r13 m04lane2: x swirl detail, y gloss, z sparkle
+> 777:uniform vec4 uPk;            // m04pink: x on, y cyan lane half width, z outer edge of the pink bands, w strength
+> 780:uniform vec4 uSB0;           // x strength, y inner |arc| where the bands start, z outer |arc| (water edge), w tile length along (u)
+> 788:uniform vec4 uNB4;           // r18 m04nwhirl: x along squash of the whirl ellipse behind Benny (0 = off), y its centre ahead of Benny (u),
+> 791:uniform vec2 uNB6;           // r18 m04nwhirl: cyan corridor straight behind Benny — x half width (u, 0 = off), y soft edge (u)
+> 792:uniform vec2 uNB7;           // r18 m04nwq / m04nwr: x clean lane water where the whirl leaves the water bare (0/1), y whirl radius
+> 842:  if (uLane.x > 0.5) {
+> 846:    float kl = 1.0 - smoothstep(uLane.y, uLane.y + 0.9, abs(vS));
+> 852:    if (uLane2.x > 0.0) {
+> 854:      // own swirls kept at a moderate blur (uLane2.x = detail), flowing glossy highlight ribbons, twinkling white sparkles
+> 856:      float ld = mix(lb, dot(dl, vec3(0.30, 0.55, 0.15)), uLane2.x) + uLane2.w;   // w = brighter / more turquoise
+> 859:      laneC = mix(laneC, vec3(0.80, 0.98, 1.00), uLane2.y * smoothstep …[+4161 chars]
+
+### 🤖 Claude — 2026-11-20T04:19:59.509Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad; cat > $S/sweep.sh <<'EOF'\n#!/usr/bin/env bash\n# usage: sweep.sh <outdir> <port> <extra query appended to lead_t1 NEW>\nset -u\nO=$1; P=$2; X=$3\nN=$(cat /home/user/rainbow-/qa/match/04/r23/lead_t1/QUERY_NEW.txt)\nQ=\"$N$X\"\nmkdir -p \"$O\"; echo \"$Q\" > \"$O/QUERY.txt\"\ncd /home/user/wt/s04\nAUDIT_PORT=$P AUDIT_SHOTS='[[\"b_early\",0.12,null],[\"c_middle\",0.35,null],[\"d_late\",0.6,null],[\"g_hard_right\",0.35,1]]' \\\n  timeout 900 node /home/user/rainbow-/qa/match/04/r22/tools/audit_pinned …[+502 chars]`
+
+### 🧑 User — 2026-11-20T04:21:15.990Z
+
+> ↩︎ result: [1]   Done                    $S/sweep.sh $R/P1 5273 "&m04nwhirl=0&m04nband=0"
+> [2]-  Done                    $S/sweep.sh $R/P2 5274 "&m04nwhirl=0&m04nband=0&m04sbi=3.0&m04pkl=3.0"
+> [3]+  Done                    $S/sweep.sh $R/P3 5275 "&m04nwhirl=0&m04nband=0&m04sbi=3.6&m04pkl=3.5&m04sbs=0.8&m04pkw=0.6"
+> /home/user/rainbow-/qa/match/04/r23/lead_t2/P1/:
+> QUERY.txt
+> audit.log
+> b_early.png
+> c_middle.png
+> d_late.png
+> g_hard_right.png
+> shots.json
+> 
+> /home/user/rainbow-/qa/match/04/r23/lead_t2/P2/:
+> QUERY.txt
+> audit.log
+> b_early.png
+> c_middle.png
+> d_late.png
+> g_hard_right.png
+> shots.json
+> 
+> /home/user/rainbow-/qa/match/04/r23/lead_t2/P3/:
+> QUERY.txt
+> audit.log
+> b_early.png
+> c_middle.png
+> d_late.png
+> g_hard_right.png
+> shots.json
+
+### 🤖 Claude — 2026-11-20T04:21:19.827Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad; R=qa/match/04/r23; for s in c_middle d_late; do convert references/04_through_the_five_arrows.png -resize 324x576! $S/a.png; convert $R/lead_t1/BEFORE/$s.png -resize 324x576 $S/0.png; convert $R/lead_t1/NEW/$s.png -resize 324x576 $S/1.png; for p in P1 P2 P3; do convert $R/lead_t2/$p/$s.png -resize 324x576 $S/$p.png; done; convert $S/a.png $S/0.png $S/1.png $S/P1.png $S/P2.png $S/P3.png +append $S/sw_$s.png; done", "description": "Compose approved, BEFORE, T1 and P1–P3 strips"}`
+
+### 🤖 Claude — 2026-11-20T04:21:20.924Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/sw_c_middle.png"}`
+
+### 🤖 Claude — 2026-11-20T04:21:21.527Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/sw_d_late.png"}`
+
+### 🧑 User — 2026-11-20T04:21:21.633Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🧑 User — 2026-11-20T04:21:21.668Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-20T04:21:21.673Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:21:31.955Z
+
+> 🔧 **Bash** `{"command": "grep -h \"m04river\\|m04lane\\|xW\" qa/match/04/r23/lead_t2/P1/audit.log | head -5; cd /home/user/wt/s04 && sed -n 836,886p src/world/match04m4.ts", "description": "Read river width log and the cyan lane shader"}`
+
+### 🧑 User — 2026-11-20T04:21:31.999Z
+
+> ↩︎ result: float w = smoothstep(0.3, 0.7, vn(vec2(along * 0.16, vS * 0.35 + 3.0)));
+>   vec3 col = mix(texture2D(uRiv, uv1).rgb, texture2D(uRiv, uv2).rgb, w);
+>   vec3 tileC = col;                                        // r14: the painted tile colour before any re-colouring
+>   vec3 laneCol = col;                                      // r18: the clean lane water (for the bare parts of the whirl)
+>   // the deeper cyan centre lane of the painting
+>   col = mix(col, col * vec3(0.55, 0.85, 1.0) + vec3(0.0, 0.05, 0.12), 0.35 * (1.0 - smoothstep(0.9, 1.7, abs(vS))));
+>   if (uLane.x > 0.5) {
+>     // r13 m04lane: the painted centre path is ONE clean glossy blue lane (deep cyan-blue, soft long light streaks, no
+>     // foam crests or swirl knots): the tile seen heavily smoothed (mip bias) for its gentle light / dark flow, re-coloured
+>     // into the painted lane blues, plus a few long thin highlights running down the path
+>     float kl = 1.0 - smoothstep(uLane.y, uLane.y + 0.9, abs(vS));
+>     vec3 bl = mix(texture2D(uRiv, uv1, 4.5).rgb, texture2D(uRiv, uv2, 4.5).rgb, w);
+>     float lb = dot(bl, vec3(0.30, 0.55, 0.15));
+>     vec3 laneC = mix(vec3(0.02, 0.42, 0.88), vec3(0.30, 0.82, 1.0), smoothstep(0.35, 0.80, lb));
+>  …[+3034 chars]
+
+### 🤖 Claude — 2026-11-20T04:21:43.429Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad; R=/home/user/rainbow-/qa/match/04/r23/lead_t2; B=\"&m04nwhirl=0&m04nband=0\"\n$S/sweep.sh $R/Q1 5273 \"$B&m04sbi=3.0&m04pkl=3.0&m04lanew=3.2&m04lanes=0.95\" &\n$S/sweep.sh $R/Q2 5274 \"$B&m04sbi=3.6&m04pkl=3.6&m04lanew=3.8&m04lanes=1\" &\n$S/sweep.sh $R/Q3 5275 \"$B&m04sbi=4.2&m04pkl=4.2&m04lanew=4.4&m04lanes=1\" &\nwait; cd /home/user/rainbow- && R=qa/match/04/r23/lead_t2; for s in c_middle d_late g_hard_right; do convert references/04_through_the_five_arrows.png -resize 324x576! $S/a.png; conver …[+328 chars]`
+
+### 🤖 Claude — 2026-11-20T04:21:44.578Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/sq_c_middle.png"}`
+
+### 🤖 Claude — 2026-11-20T04:21:45.207Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/sq_d_late.png"}`
+
+### 🧑 User — 2026-11-20T04:23:01.455Z
+
+> ↩︎ result: [1]   Done                    $S/sweep.sh $R/Q1 5273 "$B&m04sbi=3.0&m04pkl=3.0&m04lanew=3.2&m04lanes=0.95"
+> [2]-  Done                    $S/sweep.sh $R/Q2 5274 "$B&m04sbi=3.6&m04pkl=3.6&m04lanew=3.8&m04lanes=1"
+> [3]+  Done                    $S/sweep.sh $R/Q3 5275 "$B&m04sbi=4.2&m04pkl=4.2&m04lanew=4.4&m04lanes=1"
+
+### 🧑 User — 2026-11-20T04:23:01.492Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-20T04:23:01.497Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:23:17.479Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad; R=$S/diag; B=\"&m04nwhirl=0&m04nband=0\"\nsed -i 's/AUDIT_SHOTS=.*\\\\$/AUDIT_SHOTS=\"${SHOTS:-[[\\\\\"b_early\\\\\",0.12,null],[\\\\\"c_middle\\\\\",0.35,null],[\\\\\"d_late\\\\\",0.6,null],[\\\\\"g_hard_right\\\\\",0.35,1]]}\" \\\\/' $S/sweep.sh; grep AUDIT_SHOTS $S/sweep.sh\nexport SHOTS='[[\"c_middle\",0.35,null]]'\n$S/sweep.sh $R/D1 5273 \"$B&m04sband=0\" &\n$S/sweep.sh $R/D2 5274 \"$B&m04sband=0&m04pink=0\" &\n$S/sweep.sh $R/D3 5275 \"$B&m04sband=0&m04pink=0&m04lanew=10&m04lanes=1\" &\n$S/sw …[+311 chars]`
+
+### 🤖 Claude — 2026-11-20T04:23:18.584Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/diag/diag.png"}`
+
+### 🧑 User — 2026-11-20T04:23:56.941Z
+
+> ↩︎ result: AUDIT_PORT=$P AUDIT_SHOTS="${SHOTS:-[[\"b_early\",0.12,null],[\"c_middle\",0.35,null],[\"d_late\",0.6,null],[\"g_hard_right\",0.35,1]]}" \
+> [1]   Done                    $S/sweep.sh $R/D1 5273 "$B&m04sband=0"
+> [3]-  Done                    $S/sweep.sh $R/D3 5275 "$B&m04sband=0&m04pink=0&m04lanew=10&m04lanes=1"
+> [4]+  Done                    $S/sweep.sh $R/D4 5276 "$B&m04sband=0&m04pink=0&m04lanew=10&m04lanes=1&m04edge=0"
+> [2]+  Done                    $S/sweep.sh $R/D2 5274 "$B&m04sband=0&m04pink=0"
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🧑 User — 2026-11-20T04:23:56.959Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:24:01.287Z
+
+Even with every pink layer of the river shader off and the cyan lane 10 u wide, the near pink stays identical, so it's painted by a separate mesh drawn over the river. Finding which one:
+
+### 🤖 Claude — 2026-11-20T04:24:02.539Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"\\.name = 'm04_\" src/world/match04m4.ts src/world/match04.ts | cut -c1-160; grep -n \"m04flo\\|'m04rnear'\\|m04rpaint'\" src/world/match04m4.ts src/world/match04.ts | head -12 | cut -c1-200", "description": "List Screen 04 meshes and suspect switches"}`
+
+### 🧑 User — 2026-11-20T04:24:02.595Z
+
+> ↩︎ result: src/world/match04m4.ts:1612:    const tm = new THREE.Mesh(tun, gm); tm.name = 'm04_ring_tunnel'; group.add(tm);
+> src/world/match04m4.ts:1632:    const mm = new THREE.Mesh(mouth, gm); mm.name = 'm04_ring_mouth'; group.add(mm);
+> src/world/match04m4.ts:1640:    const cm = new THREE.Mesh(cap, gm); cm.name = 'm04_ring_glow'; group.add(cm);
+> src/world/match04m4.ts:1832:    const rmesh = new THREE.Mesh(g, rm); rmesh.name = 'm04_river'; rmesh.renderOrder = 1; group.add(rmesh);
+> src/world/match04m4.ts:1841:      const umesh = new THREE.Mesh(gu, um); umesh.name = 'm04_river_up'; umesh.renderOrder = 1; umesh.frustumCulled = false; umesh.v
+> src/world/match04m4.ts:1938:    const holder = new THREE.Group(); holder.name = 'm04_bank_heaps'; holder.visible = false; group.add(holder);
+> src/world/match04m4.ts:2292:      m.renderOrder = 5; g.renderOrder = coreT && lum > 0 ? 6 : 4; m.name = 'm04_arrow3d'; g.name = 'm04_arrow3d_glow';   // luminou
+> src/world/match04.ts:235:  const add = (g: THREE.BufferGeometry, m: THREE.Material, name: string) => { const o = new THREE.Mesh(g, m); o.name = 'm04_' + name; g
+> src/world/match04.ts:396:    splash.name = 'm04_splash';
+> src/world/match04m4.ts:1433:        uRNear: { va …[+1301 chars]
+
+### 🤖 Claude — 2026-11-20T04:24:06.039Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"add(\" src/world/match04.ts | grep -v \"group.add\\|scene.add\" | head -20 | cut -c1-200; grep -n \"m04m4\\|match04m4\\|buildM4\\|import\" src/world/match04.ts | head -10 | cut -c1-160", "description": "Find meshes built in match04.ts"}`
+
+### 🧑 User — 2026-11-20T04:24:06.097Z
+
+> ↩︎ result: 251:  add(tube, M.tunnel, 'tube');
+> 257:  add(ringG, M.gold, 'mouth_ring');
+> 261:  const roomWall = add(new THREE.ShapeGeometry(wall, 96).translate(0, 0, z0 - 0.01), M.wall, 'room_wall');
+> 274:      const v = new THREE.Vector3(pa.getX(i), pa.getY(i), pa.getZ(i)).sub(cL).multiplyScalar(k).add(cL);
+> 281:    add(far, fm, 'room_far');
+> 288:  add(wp, M.water, 'water');
+> 290:  add(new THREE.CircleGeometry(T.r, 64).translate(cx, cy, zEnd), M.gold, 'tube_end');
+> 378:      o.add(c);
+> 18:import * as THREE from 'three';
+> 19:import { PROJ05_INVERSE } from '../vfx/waterRibbon';
+> 20:import { addM04, M04 } from './match04m4';
+> 162:const tex = (f: string) => new URL(`../../assets/textures/match04/${f}`, import.meta.url).href;
+> 292:  // round 8 (M4): `&m04ring / m04foam / m04bub / m04arrow / m04wave =1` sub-switches (src/world/match04m4.ts); absent = no change
+> Shell cwd was reset to /home/user/rainbow-
+
