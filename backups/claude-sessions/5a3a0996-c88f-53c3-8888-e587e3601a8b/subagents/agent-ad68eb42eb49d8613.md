@@ -570,3 +570,281 @@ Round 21 launch. Your complete launch brief is the file /home/user/rainbow-/docs
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && K7='match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1&m07foam=1&m07coinsz=1&m07nearw=1&m07foamb=1&m07band=1'; echo \"$K7\" > /home/user/rainbow-/qa/match/07/r21/K7.txt; export AUDIT_SHOTS='[[\"a_start\",0,null],[\"b_early\",0.12,null],[\"c_middle\",0.35,null],[\"d_late\",0.6,null],[\"e1_075\",0.75,null],[\"e_end\",0.85,null],[\"e2_092\",0.92,null],[\"f_hard_left\",0.35,-1],[\"g_hard_right\",0.35,1]]'; time AUDIT_PORT=5277 node /home/user/rainbow-/tools/lead21/audit_screen.mjs /home/user/rainbow-/qa/match/07/r21/BEFORE_K7 07 \ …[+102 chars]`
 
+### 🧑 User — 2026-11-20T02:06:27.508Z
+
+> ↩︎ result: The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff2" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff2" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff" is outside of Vite serving allow list.
+> 07 a_start s 273.056 lat 0 stage 07 coins 1940
+> 07 b_early s 287.256 lat 0 stage 07 coins 1960
+> 07 c_middle s 314.056 lat 0 stage 07 coins 2030
+> 07 d_late s 343.456 lat 0 stage 07 coins 2080
+> 07 e1_075 s 361.056 lat 0 stage 07 coins 2110
+> 07 e_end s 372.656 lat 0 stage 07 coins 2130
+> 07 e2_092 s 380.856 lat 0 stage 07 coins 2150
+> 07 f_hard_left s 314.056 lat -2.25 stage 07 coins 1940
+> 07 g_hard_right s 314.056 lat 2.25 stage 07 coins 1950
+> 
+> real	1m10.203s
+> user	0m2.053s
+> sys	0m0.538s
+
+### 🤖 Claude — 2026-11-20T02:06:32.446Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && for n in a_start c_middle e_end f_hard_left; do node /home/user/tools-pixelmatch/pixeldiff.mjs /home/user/rainbow-/qa/review_r21/audit/07/$n.png /home/user/rainbow-/qa/match/07/r21/BEFORE_K7/$n.png /tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/d_$n.png 0.1 180 1536 2>&1 | tail -2; done", "description": "Compare my BEFORE renders with lead audit"}`
+
+### 🧑 User — 2026-11-20T02:06:33.879Z
+
+> ↩︎ result: {"a":"/home/user/rainbow-/qa/review_r21/audit/07/a_start.png","b":"/home/user/rainbow-/qa/match/07/r21/BEFORE_K7/a_start.png","rows":[180,1536],"threshold":0.1,"diff_pixels":0,"total":1171584,"diff_pct":0}
+> {"a":"/home/user/rainbow-/qa/review_r21/audit/07/c_middle.png","b":"/home/user/rainbow-/qa/match/07/r21/BEFORE_K7/c_middle.png","rows":[180,1536],"threshold":0.1,"diff_pixels":0,"total":1171584,"diff_pct":0}
+> {"a":"/home/user/rainbow-/qa/review_r21/audit/07/e_end.png","b":"/home/user/rainbow-/qa/match/07/r21/BEFORE_K7/e_end.png","rows":[180,1536],"threshold":0.1,"diff_pixels":31196,"total":1171584,"diff_pct":2.6627}
+> {"a":"/home/user/rainbow-/qa/review_r21/audit/07/f_hard_left.png","b":"/home/user/rainbow-/qa/match/07/r21/BEFORE_K7/f_hard_left.png","rows":[180,1536],"threshold":0.1,"diff_pixels":16986,"total":1171584,"diff_pct":1.4498}
+
+### 🤖 Claude — 2026-11-20T02:06:38.412Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/07/r21/BEFORE_K7/e1_075.png"}`
+
+### 🧑 User — 2026-11-20T02:06:38.465Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T02:06:38.871Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/07/r21/BEFORE_K7/e2_092.png"}`
+
+### 🧑 User — 2026-11-20T02:06:38.917Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T02:07:11.065Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"__rainbow\\s*=\\|window.__rainbow\\b\" -r src | head; grep -n \"__rainbow = {\" -A40 src/game/Game.ts | head -80", "description": "Find debug API exposed on window"}`
+
+### 🧑 User — 2026-11-20T02:07:11.138Z
+
+> ↩︎ result: src/game/Game.ts:9: * window.__rainbow exposes a deterministic QA API used by scripts/capture.mjs.
+> src/game/Game.ts:777:  (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+> src/game/modules.ts:4: * reported in window.__rainbow.stats().modules so QA never mistakes them for final assets.
+
+### 🤖 Claude — 2026-11-20T02:07:14.984Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 690,780p src/game/Game.ts", "description": "Read debug API definition"}`
+
+### 🧑 User — 2026-11-20T02:07:15.022Z
+
+> ↩︎ result: };
+> 
+>   const api = {
+>     ready: true,
+>     checkpoints: Object.keys(CHECKPOINTS),
+>     goto: gotoCheckpoint,
+>     run(v = true) { running = v; last = performance.now(); },
+>     unfreeze() { st.frozen = null; input.override = null; },
+>     /** QA: freeze the shader clock at t (frame-by-frame clips of animated water); rendering is otherwise unchanged */
+>     freezeAt(t: number) { st.frozen = t; st.clock = t; },
+>     setSteer(v: number | null) { input.override = v; },
+>     /** deterministic simulation: advance n steps of dt (no rendering needed) */
+>     step(n: number, dt = 1 / 60) { for (let i = 0; i < n; i++) stepSim(dt); return api.state(); },
+>     startRideAt(id: StageId = '03') {
+>       resetToIntro(); startRide(); st.s = course.stage(id).s0; coins.resetUntil(-1); st.coins = START_COINS; hud.setCoins(st.coins); st.log = [];
+>       return api.state();
+>     },
+>     state() {
+>       return { mode: st.mode, stage: st.stage, s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: st.coins, hearts: st.hearts, paused: st.paused, bennyY: +benny.root.position.y.toFixed(3), bennyVisible: benny.root.visible, cam: camera.position.toArray().map((x) => +x.toFixed(2)) };
+>     },
+>     log() { return st.log; },
+>     c …[+4407 chars]
+
+### 🤖 Claude — 2026-11-20T02:07:30.611Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s07/tools/match07/diag_r21.mjs", "content": "// r21 Screen 07 diagnostics (read-only QA): deterministic shots like tools/lead21/audit_screen.mjs, plus per-shot hiding of\n// named scene objects and ray probes, to see which mesh paints which part of the frame.\n//   cd /home/user/wt/s07 && node tools/match07/diag_r21.mjs <outDir> \"<query>\" '<json shots>'\n// shots: [{\"name\":\"x\",\"frac\":0.85,\"steer\":null,\"hide\":[\"ribbon\",\"foam\"],\"probe\":[[0,0.5],[-0.5,0.2]]}]\nimport { mkdirSync, writeFileSync } from 'node:fs';\nimport { pathToFileURL } from 'node:ur …[+2350 chars]`
+
+### 🧑 User — 2026-11-20T02:07:30.765Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s07/tools/match07/diag_r21.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T02:07:36.381Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"\\.name = '\" src/vfx/*.ts src/world/environment.ts src/world/tube.ts | head -40; grep -n \"parts\" src/vfx/index.ts | head", "description": "Find scene object names for water parts"}`
+
+### 🧑 User — 2026-11-20T02:07:36.418Z
+
+> ↩︎ result: src/vfx/bubbles.ts:181:  group.name = 'bubbles';
+> src/vfx/bubbles.ts:196:  big.name = 'bubbles_big';
+> src/vfx/bubbles.ts:214:  small.name = 'bubbles_small';
+> src/vfx/drumWater.ts:163:  group.name = 'water_drumA';
+> src/vfx/drumWater.ts:188:  surface.name = 'water_drumA_surface';
+> src/vfx/drumWater.ts:220:  swirl.name = 'water_drumA_swirl';
+> src/vfx/finalWave.ts:180:  mesh.name = 'water_final_wave';
+> src/vfx/flow05.ts:190:  flowMap.name = 'flow05_map';
+> src/vfx/flow05.ts:196:  ripple.name = 'flow05_ripple';
+> src/vfx/foam.ts:660:  mesh.name = 'foam_berm';
+> src/vfx/foam.ts:679:  group.name = 'foam_banks';
+> src/vfx/foam.ts:822:  whirlGroup.name = 'foam_whirlpool';
+> src/vfx/foam.ts:883:  flank.name = 'foam_flank';
+> src/vfx/foam.ts:918:  rafts.name = 'foam_rafts';
+> src/vfx/foam.ts:932:  rim05.name = 'foam_rim05';
+> src/vfx/index.ts:68:  group.name = 'water_system';
+> src/vfx/proj05Apron.ts:91:  mesh.name = 'proj05_apron';
+> src/vfx/proj05Tunnel.ts:67:    lids05Scene.name = 'tube05_lids_blender';
+> src/vfx/proj05Tunnel.ts:91:  g.name = 'tube05_lids05';
+> src/vfx/puddles.ts:83:  group.name = 'water_puddles';
+> src/vfx/riderSplash.ts:188:  mesh.name = 'rider_splash';
+> src/vfx/riderSplash.ts:431:  mesh.name = 'rider_sp …[+1619 chars]
+
+### 🤖 Claude — 2026-11-20T02:07:42.905Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && K7=$(cat /home/user/rainbow-/qa/match/07/r21/K7.txt); D=/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/diag1; P='[[0,0.6],[0,0.3],[-0.6,0.2],[0.6,0.2],[-0.4,-0.3],[0.4,-0.3],[0,0.9],[-0.7,0.7],[0.7,0.7]]'; node tools/match07/diag_r21.mjs $D \"$K7\" '[{\"name\":\"e1_all\",\"frac\":0.75,\"probe\":'$P'},{\"name\":\"e1_noribbon\",\"frac\":0.75,\"hide\":[\"water_ribbon\"]},{\"name\":\"e1_nofoam\",\"frac\":0.75,\"hide\":[\"foam_banks\",\"foam_berm\"]},{\"name\":\"e2_all\",\"frac\":0.92,\"probe\":'$P'},{\"name\":\"e2_noribbon_nof …[+253 chars]`
+
+### 🧑 User — 2026-11-20T02:08:21.825Z
+
+> ↩︎ result: console [m07nearw] checkpoint s 273.26 centre line 1.10 0.53 0.09 -0.15 -0.17 -0.02 0.21 0.42 0.55 0.52 0.33 0.02 -0.35 -0.72 -1.04 -1.32 -1.55 -1.76 -1.92 -1.97 -1.84 -1.47 -0.91 -0.21 0.54 1.23 1.74 2.02 2.09 2.02 1.88 1.74 1.61 1.51 1.43 1.38 1.33 1.29 1.25 1.22 1.19 1.15 1.12 1.09 1.06 1.03 1.00 0.96 0.
+> console Failed to load resource: the server responded with a status of 403 (Forbidden)
+> console Failed to load resource: the server responded with a status of 403 (Forbidden)
+> console Failed to load resource: the server responded with a status of 403 (Forbidden)
+> console Failed to load resource: the server responded with a status of 403 (Forbidden)
+> e1_all s 361.056 lat 0 hidden 0
+> e1_noribbon s 361.056 lat 0 hidden 1
+> e1_nofoam s 361.056 lat 0 hidden 2
+> e2_all s 380.856 lat 0 hidden 0
+> e2_noribbon_nofoam s 380.856 lat 0 hidden 2
+> e2_nom07 s 380.856 lat 0 hidden 1
+
+### 🤖 Claude — 2026-11-20T02:08:26.319Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/diag1 && python3 -c \"\nimport json\nd=json.load(open('diag.json'))\nprint(d[0]['marks'])\nfor e in d:\n  print('==',e['name'], e['s'], 'cam', e['cam'])\n  for c in e['calls'][:40]: print('   ', c)\n  for p in e['probes']: print('  P', p['x'], p['y'], [(h['obj'][:50], h['d']) for h in p['hits'][:3]])\n\" | head -150", "description": "Print draw list and probe results"}`
+
+### 🧑 User — 2026-11-20T02:08:26.414Z
+
+> ↩︎ result: {'10': 420.93207258715967, '11': 436.098256728091, '01': 0, '02_drain': 22.76573634731289, '03': 40.99515264641385, '04': 70.41308465825975, '05': 114.68830202823243, '06': 188.92412082521383, '07': 247.05563400776518, '07_plunge_top': 312.41331806416713, '07_plunge_mid_end': 374.13919823028124, '07_plunge_bottom': 390.071167658835, '08': 390.1617102628636, '09': 405.731391842403, '05_crest': 132.4383020282329}
+> == e1_all 361.056 cam [12.91, -84.12, -262.81]
+>     ['zone_chamber/Mesh', 7]
+>     ['foam_banks/Mesh', 4]
+>     ['coins/Mesh', 3]
+>     ['laundry_room/Mesh', 1]
+>     ['water_system/water_ribbon', 1]
+>     ['foam_banks/foam_berm', 1]
+>     ['eyeL/lash_L_05', 1]
+>     ['eyeR/lash_R_05', 1]
+>     ['eyeL/lash_L_085', 1]
+>     ['eyeR/lash_R_085', 1]
+>     ['body/nose', 1]
+>     ['hat/hat_star', 1]
+>     ['eyeL/eyeL_happy', 1]
+>     ['eyeR/eyeR_happy', 1]
+>     ['mouth/mouth_happy', 1]
+>     ['armL/palmL', 1]
+>     ['armR/palmR', 1]
+>     ['footL/soleL', 1]
+>     ['footR/soleR', 1]
+>     ['hat/hat_brim', 1]
+>     ['hat/hat_crown', 1]
+>     ['body/fur_body', 1]
+>     ['armL/fur_armL', 1]
+>     ['armR/fur_armR', 1]
+>     ['footL/fur_footL', 1]
+>     ['footR/fur_footR', 1]
+>     ['pom/fur_pom', 1]
+>     ['match07_projection/m07_tube', 1 …[+4997 chars]
+
+### 🤖 Claude — 2026-11-20T02:08:30.506Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/diag1/e1_noribbon.png"}`
+
+### 🧑 User — 2026-11-20T02:08:30.549Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T02:08:31.211Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/diag1/e1_nofoam.png"}`
+
+### 🧑 User — 2026-11-20T02:08:31.258Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T02:08:31.861Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/diag1/e2_noribbon_nofoam.png"}`
+
+### 🧑 User — 2026-11-20T02:08:31.920Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T02:09:30.485Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 - <<'EOF'\nimport re\np='tools/match07/diag_r21.mjs'\ns=open(p).read()\ns=s.replace(\"\"\"      const probes = (sh.probe ?? []).map(([x, y]) => ({ x, y, hits: r.probe(x, y) }));\"\"\",\"\"\"      const sOf = (pt) => { let best = 1e9, bs = 0; for (let q = 240; q < 430; q += 0.25) { const p = r.course.sample(q).pos; const d = Math.hypot(p.x - pt[0], p.y - pt[1], p.z - pt[2]); if (d < best) { best = d; bs = q; } } return [bs, +best.toFixed(2)]; };\n      const probes = (sh.probe ?? []).map(([x, y]) => ({ x, y, hits: r.probe(x, y).map((h) => ({ ...h, sd …[+882 chars]`
+
+### 🧑 User — 2026-11-20T02:09:49.734Z
+
+> ↩︎ result: console [m07nearw] checkpoint s 273.26 centre line 1.10 0.53 0.09 -0.15 -0.17 -0.02 0.21 0.42 0.55 0.52 0.33 0.02 -0.35 -0.72 -1.04 -1.32 -1.55 -1.76 -1.92 -1.97 -1.84 -1.47 -0.91 -0.21 0.54 1.23 1.74 2.02 2.09 2.02 1.88 1.74 1.61 1.51 1.43 1.38 1.33 1.29 1.25 1.22 1.19 1.15 1.12 1.09 1.06 1.03 1.00 0.96 0.
+> e2_all s 380.856 lat 0 hidden 0
+> e1_all s 361.056 lat 0 hidden 0
+> == e2_all 380.856 cam [12.91, -102.1, -269.55]
+>   P -0.31 0.22 [('foam_berm<foam_banks<water_s', 15.67, [390.5, 2.13]), ('water_ribbon<water_system<Sc', 15.79, [390.5, 2.15]), ('Mesh<zone_chamber<washer_wor', 17.58, [391.75, 2.78])]
+>   P -0.54 -0.17 [('foam_berm<foam_banks<water_s', 12.23, [386, 2.28]), ('water_ribbon<water_system<Sc', 12.25, [386, 2.28]), ('m07_pl_river<match07_project', 12.4, [386, 2.31])]
+>   P 0.62 0.09 [('Mesh<foam_banks<water_system', 14.02, [388.75, 2.74]), ('foam_berm<foam_banks<water_s', 14.16, [389, 2.74]), ('m07_pl_river<match07_project', 15.05, [390, 2.79]), ('Mesh<zone_chamber<washer_wor', 16.2, [391, 2.96])]
+>   P 0 0.6 [('water_ribbon<water_system<Sc', 20.99, [397.75, 0.1]), ('Mesh<zone_chamber<washer_wor', 22.78, [399.25, 1.07])]
+>   P 0 0.85 [('water_ribbon<water_system<Sc', 24.36, [402.25, …[+909 chars]
+
+### 🤖 Claude — 2026-11-20T02:10:19.745Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 215,240p src/vfx/waterRibbon.ts; sed -n 705,760p src/vfx/waterRibbon.ts; sed -n 1600,1660p src/vfx/waterRibbon.ts", "description": "Read ribbon HIDE07R code"}`
+
+### 🧑 User — 2026-11-20T02:10:19.809Z
+
+> ↩︎ result: /** `?proj05=1`: texture loads of other proj05 parts (far block, bank strip) that the game waits for before `ready` */
+> export const proj05Pending: Promise<unknown>[] = [];
+> 
+> /**
+>  * W11 geometry (`?farw05=1`, else the full width): the VISIBLE water channel of the 05 river at arc length s, in the
+>  * ribbon frame — centre `c` (units along `right`) and half width `hw`. Between the channel and the bank lies a foam
+>  * shelf (drawn by the ribbon shader on the same surface; Benny can still ride over it — widthAt() and the steering
+>  * range are unchanged). Approved image, banks traced through the locked 05 eye: a left shelf ≈1.3 u wide at
+>  * y 640–720 (s ≈ 145–155) and a right shelf that grows to ≈3.9 u at the seam (y 560–590, the big foam bank at
+>  * x 546–592) and continues into the far block; it hands back to the full width behind the seam (s 183–191, hidden
+>  * by the far block at the checkpoint, the ride into 06 is the normal river).
+>  */
+> /** r8 '?match07=1&m07foam=1': arc range of the 07 plunge where the sheet's lifted white edges step aside (null = off) */
+> function HIDE07R(course: Course): [number, number] | null {
+>   if (!flag05('match07') || !flag05('m07foam')) return null;
+>   // r17 '&m …[+6628 chars]
+
+### 🤖 Claude — 2026-11-20T02:10:57.518Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 110,175p src/vfx/foam.ts; sed -n 550,600p src/vfx/foam.ts", "description": "Read foam berm hide/ramp code"}`
+
+### 🧑 User — 2026-11-20T02:10:57.555Z
+
+> ↩︎ result: vec4 mvPosition = viewMatrix * wp;
+>   gl_Position = projectionMatrix * mvPosition;
+>   #include <fog_vertex>
+> }
+> `;
+> 
+> const BERM_FRAG = /* glsl */ `
+> uniform float uTime;
+> uniform vec2 uOutro;     // amount, chamber start s
+> uniform vec3 uLightDir;
+> uniform vec4 uSt05;      // wave 7: 05 soap shading weight ramps in s0..s1, out s2..s3 (= bermScale05)
+> uniform vec2 uHide07;    // r8 m07foam: berm hidden on s in (x, y)
+> varying vec3 vFoam;
+> varying vec3 vPosW;
+> varying vec3 vNormalW;
+> #include <fog_pars_fragment>
+> ${NOISE_GLSL}
+> ${FRAG_FX_GLSL}
+> ${SOAP05_GLSL}
+> void main() {
+>   float s = vFoam.y;
+>   #ifdef PROJ05
+>   // ?proj05=1: the approved picture's foam is baked into the 05 river texture, so the lather sheet steps aside on 05
+>   // (dithered over 3 u at both joins; 04 / 06 keep their berm)
+>   float pjIn = smoothstep(uSt05.y, uSt05.y + 3.0, s) * (1.0 - smoothstep(uSt05.z - 3.0, uSt05.z, s));
+>   if (pjIn > 0.999 || fract(sin(dot(floor(gl_FragCoord.xy), vec2(12.9898, 78.233))) * 43758.5453) < pjIn) discard;
+>   #endif
+>   #ifdef HIDE07
+>   // r8 '?match07=1&m07foam=1': the tall white lather walls step aside down the 07 plunge so the matched tube's river
+>   // tile (with its painted soft foam banks) shows instead;  …[+4433 chars]
+

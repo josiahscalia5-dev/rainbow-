@@ -19,7 +19,7 @@ index 6a4653f..2a7e591 100644
    // Screen 05 test GL1 (user 2026-11-16: "the glow on the highlights is most of what makes the approved version look so
    // shiny"): `?glow05=1` = a stronger UnrealBloom with a HIGH threshold, so only the bright highlights (streak cores,
 diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
-index 2b62a35..0778b00 100644
+index 2b62a35..5821ec5 100644
 --- a/src/world/match04m4.ts
 +++ b/src/world/match04m4.ts
 @@ -120,6 +120,15 @@ uniform float uRVar;       // r17 m04rpvar: number of painted rings stacked in t
@@ -379,15 +379,23 @@ index 2b62a35..0778b00 100644
  }`;
  
  /** `m04river`: the wide painted river inside the tunnel — a curved trough (flat lane, sides rising to the walls) carrying
-@@ -491,6 +799,7 @@ uniform vec4 uWU;            // r19b m04wup: x highest climb up the wall above t
+@@ -491,9 +799,14 @@ uniform vec4 uWU;            // r19b m04wup: x highest climb up the wall above t
  uniform vec4 uWU2;           // r19b m04wup: x / y the climb falls from full (x u ahead of Benny) to z of it (y u ahead), w soft top edge (u)
  uniform vec4 uWU3;           // r19b m04wup: x old water edge (arc u), y tongue drift with the current (0..1), z lilac-white lace
                               // on the climbing crest (share of the m04edge fringe), w band tile column at the crest (0 = lilac sparkle)
 +uniform vec2 uFar;           // r20 m04farsm: x where the K9 telescope begins (along, local), y on — beyond it the band edges run smooth
  uniform vec4 uWC;            // r20 m04wcr: x on (strength), y bands per u up the wall, z bright highlight lines, w dark violet edges
  uniform vec2 uWC2;           // r20 m04wcr: x bright glossy lip just under the crest, y soft top width (u) instead of m04wus
- uniform vec4 uA5;        // m04arr5: x on, y spacing, z first apex (along), w bar thickness along the flow
-@@ -674,6 +983,9 @@ void main() {
+-uniform vec4 uA5;        // m04arr5: x on, y spacing, z first apex (along), w bar thickness along the flow
++uniform vec4 uWG;            // r21 m04wgl: x on (strength), y satin bands per u up the wall, z white highlight streaks, w sparkles
++uniform vec4 uWG2;           // r21 m04wgl: x crisp top edge width (u), y bright lip under the crest, z translucent lilac top share,
++                             // w cyan streak bands low on the wall (share)
++uniform vec4 uWG3;           // r21 m04wgl: x band waviness along the flow (u), y its wavelength (u), z crease darkness, w top alpha
++uniform vec4 uA5;      // m04arr5: x on, y spacing, z first apex (along), w bar thickness along the flow
+ uniform vec4 uA5b;           // m04arr5: x half width, y arm slope (along per lateral), z camera along, w visible depth
+ uniform vec2 uA5n;           // r10 m04arr5: near fade-in distance (start, full) ahead of the camera; default 6.5, 9.0
+ varying vec4 vProj;
+@@ -674,6 +987,9 @@ void main() {
          // r18 m04nwhirl meander: ahead of Benny the band edge swings in and out along the slide (world-anchored S-curves,
          // left / right in opposite phase) instead of running as two straight rails
          mea = uNB4.z * sin(along * 6.2832 / uNB4.w + (vS < 0.0 ? 0.0 : 3.1416)) * smoothstep(0.0, uNB2.x, d);
@@ -397,7 +405,7 @@ index 2b62a35..0778b00 100644
          inner += mea;
        }
      }
-@@ -687,7 +999,7 @@ void main() {
+@@ -687,7 +1003,7 @@ void main() {
        asB = as + uSS.x * 4.0 * kk * (1.0 - kk) * sin(along * 6.2832 / uSS.y + (vS < 0.0 ? 1.3 : 4.1) + 1.5 * vn(vec2(along * 0.07, vS < 0.0 ? 1.0 : 5.0)));
      }
      float sg = rr >= 0.0 ? 0.0 : sign(vS);       // r18 whirl: one wander for both sides (no jump where the crescents cross)
@@ -406,7 +414,78 @@ index 2b62a35..0778b00 100644
      float tb = clamp((asB + wan - inner) / max(0.1, uSB0.z - inner), 0.0, 1.0);
      if (uWU.x > 0.0) {
        // r19b m04wup: the painted band sequence (cyan by the lane -> violet -> hot-pink satin -> lilac sparkle) reaches only
-@@ -1039,6 +1351,8 @@ export function addM04(ctx: M04Ctx) {
+@@ -749,6 +1065,58 @@ void main() {
+       col = mix(col, vec3(1.0, 0.84, 0.97), uWC2.x * kc * (1.0 - smoothstep(0.0, 0.03 + pt, abs(dTop - 0.12))) * min(1.0, 0.04 / pt));
+     }
+   }
++  float wgTop = 0.0;                                                       // r21 m04wgl: share of the translucent lilac top (CLIMB alpha)
++  if (uWG.x > 0.0 && uWU.x > 0.0) {
++    // r21 m04wgl: the painted wall water is CRISP glossy satin, not a soft magenta haze (the 256 px band strip magnified near the
++    // camera): procedural ribbons running along the tunnel (rising and dipping with each tongue, waving gently with the flow) in
++    // the painted hot pink / magenta / violet with a few cyan streaks low down, satin sheen inside each ribbon, thin bright
++    // white-pink highlight streaks broken into long dashes, twinkling white glints, a translucent lilac top and a bright lip
++    // right under a crisp top edge. Resolution independent (distance fields + fwidth), world-anchored, flowing with the current.
++    float kc = smoothstep(-0.75, -0.2, ext) * wuK;
++    if (kc > 0.0) {
++      float sdw = vS < 0.0 ? 0.0 : 1.0;
++      float hq = ext >= 0.0 ? mix(ext, ext / max(wuE, 0.3) * uWU.x, 0.55) : ext;   // parallel to this spot's crest
++      hq += uWG3.x * sin(fl * 6.2832 / uWG3.y + sdw * 2.3 + 2.0 * vn(vec2(fl * 0.11, sdw * 4.0 + 1.0))) * smoothstep(-0.4, 0.5, ext);
++      hq += 0.06 * (vn(vec2(fl * 0.2, sdw * 7.0 + 3.0)) - 0.5);
++      float q = hq * uWG.y + sdw * 0.37;
++      float qi = floor(q), qf = fract(q), pxq = fwidth(q) + 1e-4;
++      float hv = h21(vec2(qi, sdw * 13.0 + 5.0)), hv2 = h21(vec2(qi + 41.0, sdw * 3.0 + 1.0));
++      vec3 dk, lt;
++      if (hv < 0.50)      { dk = vec3(0.93, 0.20, 0.66); lt = vec3(1.00, 0.60, 0.90); }   // hot pink
++      else if (hv < 0.84) { dk = vec3(0.76, 0.09, 0.62); lt = vec3(1.00, 0.40, 0.84); }   // magenta
++      else if (hv < 0.95) { dk = vec3(0.58, 0.20, 0.80); lt = vec3(0.90, 0.60, 1.00); }   // violet
++      else                { dk = vec3(0.86, 0.62, 0.98); lt = vec3(1.00, 0.86, 1.00); }   // pale lilac
++      float cy = uWG2.w * (1.0 - smoothstep(0.0, 0.55, ext));                // cyan streak bands low on the wall
++      if (hv2 < cy) { dk = vec3(0.05, 0.56, 0.96); lt = vec3(0.62, 0.96, 1.00); }
++      // satin sheen across the ribbon (off-centre, varying along the flow) — the painted folds of light
++      float sn = vn(vec2(fl * 0.32 + qi * 3.7, qi * 1.3 + sdw * 5.0));
++      float sh = exp(-pow((qf - (0.32 + 0.36 * hv2)) / (0.16 + 0.10 * sn), 2.0));
++      vec3 bc = mix(dk, lt, clamp(sh * (0.35 + 0.75 * sn), 0.0, 1.0));
++      // a soft darker crease where two ribbons meet (hides the colour step, crisp at any distance)
++      float dE = min(qf, 1.0 - qf);
++      bc *= 1.0 - uWG3.z * (1.0 - smoothstep(0.0, 0.10 + 1.5 * pxq, dE));
++      // thin bright highlight streaks along the flow: one per ribbon + a finer set between, broken into long dashes
++      float aa = min(1.0, 0.07 / pxq);                                      // fade the hairlines out where they would alias
++      float hl1 = 1.0 - smoothstep(0.0, 0.03 + pxq, abs(qf - (0.24 + 0.30 * hv)));
++      hl1 *= smoothstep(0.40, 0.62, vn(vec2(fl * 0.45 + hv * 20.0, qi * 2.1 + sdw * 9.0)));
++      float q3 = q * 3.0 + 0.6 * vn(vec2(fl * 0.18, sdw * 3.0 + 2.0)), p3 = fwidth(q3) + 1e-4;
++      float hl2 = 1.0 - smoothstep(0.0, 0.06 + p3, abs(fract(q3) - 0.5));
++      hl2 *= smoothstep(0.60, 0.78, vn(vec2(fl * 0.9 + floor(q3) * 5.1, floor(q3) * 0.7 + sdw * 2.0))) * min(1.0, 0.09 / p3);
++      bc = mix(bc, vec3(1.0, 0.93, 0.99), uWG.z * clamp(max(hl1 * aa, 0.75 * hl2), 0.0, 1.0));
++      // twinkling white glints (world-anchored on the flowing water)
++      vec2 gq = vec2(fl * 2.6, hq * 7.0 + sdw * 3.0); vec2 gi = floor(gq), gf = fract(gq) - 0.5;
++      float gh = h21(gi + 23.0 + sdw);
++      float gl = smoothstep(0.17, 0.0, length(gf - (vec2(h21(gi + 2.3), h21(gi + 8.9)) - 0.5) * 0.6)) * step(0.88, gh);
++      bc = mix(bc, vec3(1.0), uWG.w * gl * (0.55 + 0.45 * sin(uTime * 5.0 + gh * 37.0)) * (1.0 - smoothstep(0.25, 0.7, fwidth(gq.x))));
++      // translucent lilac top (the painted crest is see-through violet-lilac over the gold) and a bright glossy lip under the edge
++      float tq = ext > 0.0 ? smoothstep(1.0 - uWG2.z, 1.0, ext / max(wuE, 0.05)) : 0.0;
++      bc = mix(bc, mix(bc, vec3(0.84, 0.62, 1.0), 0.55), tq);
++      wgTop = tq;
++      float dTop = wuE - ext, pt = fwidth(dTop) + 1e-4;
++      bc = mix(bc, vec3(1.0, 0.90, 0.99), uWG2.y * (ext > 0.0 ? 1.0 : 0.0) * (1.0 - smoothstep(0.0, 0.025 + pt, abs(dTop - 0.07))) * min(1.0, 0.05 / pt));
++      col = mix(col, bc, kc * min(uWG.x, 1.0));
++    }
++  }
+   if (uA5.x > 0.5) {
+     // m04arr5: fat flat chevrons (bars between two nested V lines, ends cut along the flow), as painted
+     float k5 = floor((along - uA5.z) / uA5.y + 0.5);
+@@ -788,6 +1156,11 @@ void main() {
+   // approved view (the painted picture is shown there), fading in with the rest of the 3D scenery
+   if (uAway < 0.001 || ext > wuE) discard;
+   alpha = 1.0 - smoothstep(wuE - (uWC.x > 0.0 ? uWC2.y : uWU2.w), wuE, ext);
++  if (uWG.x > 0.0) {
++    // r21 m04wgl: a crisp top edge against the gold (anti-aliased, no soft pink haze above the water), see-through lilac top
++    float pe = fwidth(ext) + 1e-4;
++    alpha = (1.0 - smoothstep(wuE - uWG2.x - pe, wuE, ext)) * mix(1.0, uWG3.w, wgTop);
++  }
+ #endif
+   if (uAway < 0.999 && vProj.w > 0.0) {
+     vec2 uv = vProj.xy / vProj.w * 0.5 + 0.5;
+@@ -1039,6 +1412,8 @@ export function addM04(ctx: M04Ctx) {
    const out: { update(cam: THREE.Vector3, benny?: THREE.Vector3): void } = { update() {} };
    const updaters: ((a: number) => void)[] = [];
    let endCap: THREE.Mesh | null = null;
@@ -415,7 +494,7 @@ index 2b62a35..0778b00 100644
  
    if (M04.ring) {
      const ringTile = new THREE.TextureLoader().load(new URL('../../assets/textures/match04/tile_ring.png', import.meta.url).href, (t) => { t.needsUpdate = true; });
-@@ -1053,6 +1367,18 @@ export function addM04(ctx: M04Ctx) {
+@@ -1053,6 +1428,18 @@ export function addM04(ctx: M04Ctx) {
          uRPol: { value: new THREE.Vector4(M04.num('m04rpol', 0), M04.num('m04rpp', 0.42), M04.num('m04rpgh', 0.5), M04.num('m04rpgl', 0.15)) },
          uRPol2: { value: new THREE.Vector2(M04.num('m04rpsp', 0.25), M04.num('m04rpfr', 0)) },
          uRCr: { value: new THREE.Vector4(M04.num('m04rpcr', 0), M04.num('m04rpcb', 0.011), M04.num('m04rpcd', 0.014), M04.num('m04rpcc', 0.012)) },
@@ -434,7 +513,7 @@ index 2b62a35..0778b00 100644
          uP: { value: M04.num('m04ringp', 2.6) }, uLipBulb: { value: M04.num('m04lipbulb', 1) }, uBulbR: { value: (r + ctx.outerR) / 2 }, uLen: { value: len }, uRingTile: { value: ringTile }, uPaint: { value: M04.num('m04paint', M04.gold ? 0.8 : 1.4) }, uGoldY: { value: M04.gold ? 1 : 0 }, uCopper: { value: M04.num('m04copper', 0) }, uBulge: { value: M04.num('m04bulge', 0) }, uMouthT: { value: 0 }, uMouthTex: { value: null }, uMouthRho: { value: new THREE.Vector3(4.45, 3.25, M04.num('m04mro', -0.10)) }, uProjPos: shared.uProjPos, uTone: { value: new THREE.Vector4(M04.num('m04tb', 0.11), M04.num('m04tl', 0.38), M04.num('m04tm', 0.5), M04.num('m04ts', 0.45)) } },
      });
      const gw = M04.num('m04ringgw', 1);
-@@ -1094,23 +1420,31 @@ export function addM04(ctx: M04Ctx) {
+@@ -1094,23 +1481,31 @@ export function addM04(ctx: M04Ctx) {
      // groove and dots keep their painted proportions on every ring (ring coordinate in painted-period units).
      const rfew = M04.num('m04rfew', 0) > 0;
      const fV: number[] = [], fS: number[] = [];   // per profile point: ring coordinate (painted-period units), ring scale
@@ -476,7 +555,7 @@ index 2b62a35..0778b00 100644
        }
      } else {
        const g = M04.num('m04rfg', 1), aT = M04.num('m04rfa', 30), q = M04.num('m04rfq', 0.75), sMin = M04.num('m04rfmin', 0.03);
-@@ -1118,7 +1452,7 @@ export function addM04(ctx: M04Ctx) {
+@@ -1118,7 +1513,7 @@ export function addM04(ctx: M04Ctx) {
        let A = 0, s0 = 1, Pc = P, tP = 0;
        for (let k = 0; k < 400 && s0 >= sMin; k++) {
          const tele = A >= aT - 1e-6;
@@ -485,7 +564,7 @@ index 2b62a35..0778b00 100644
          const PU = tele ? tP : Pc, s1 = tele ? s0 * q : 1, B = PU - L;
          const A0 = A;
          const pushP = (rr: number, aa: number, part: number) => {
-@@ -1128,17 +1462,17 @@ export function addM04(ctx: M04Ctx) {
+@@ -1128,17 +1523,17 @@ export function addM04(ctx: M04Ctx) {
            prof.push({ r: rr, a: A0 + wa, part }); ringOf.push(k);
            fV.push(k * P + (band ? aa * (P - L) / B : aa - (PU - P))); fS.push(s);
          };
@@ -514,7 +593,7 @@ index 2b62a35..0778b00 100644
          A = A0 + B * (s0 + s1) / 2 + L * s1;
          s0 = s1; if (!tele) Pc *= g;
        }
-@@ -1243,6 +1577,7 @@ export function addM04(ctx: M04Ctx) {
+@@ -1243,6 +1638,7 @@ export function addM04(ctx: M04Ctx) {
      if (rfew) cap.setAttribute('aF', new THREE.Float32BufferAttribute(new Float32Array(nC * 2).map((_, i) => (i % 2 === 0 ? 0 : capS)), 2));
      const cm = new THREE.Mesh(cap, gm); cm.name = 'm04_ring_glow'; group.add(cm);
      endCap = cm;
@@ -522,7 +601,7 @@ index 2b62a35..0778b00 100644
      ctx.hideOld(['m04_tube', 'm04_mouth_ring', 'm04_tube_end']);
      console.info('[match04] m04ring', { period: P, rings: ringOf[ringOf.length - 1] + 1 });
      if (M04.mouth) {
-@@ -1283,7 +1618,9 @@ export function addM04(ctx: M04Ctx) {
+@@ -1283,7 +1679,9 @@ export function addM04(ctx: M04Ctx) {
      endCap.material = new THREE.ShaderMaterial({ vertexShader: END_VERT, fragmentShader: END_FRAG, side: THREE.DoubleSide, fog: false,
        extensions: { derivatives: true } as never,
        uniforms: { uPlate: shared.uPlate, uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uProjVP: shared.uProjVP, uAway: away, uTime: time,
@@ -533,16 +612,22 @@ index 2b62a35..0778b00 100644
          uE: { value: new THREE.Vector4(M04.num('m04eg', -0.28), M04.num('m04eq', 0.78), M04.num('m04ec', 0.14), M04.num('m04eh', 0.55)) },
          uE2: { value: new THREE.Vector4((0.02 - cy) / r, M04.num('m04el', 0.62), M04.num('m04es', 1.25), M04.num('m04ek', 1.0)) } } });
      console.info('[match04] m04end', { water: (0.02 - cy) / r });
-@@ -1417,6 +1754,8 @@ export function addM04(ctx: M04Ctx) {
+@@ -1417,6 +1815,14 @@ export function addM04(ctx: M04Ctx) {
          // highlight lines, m04wcv dark violet edges, m04wcl glossy lip under the crest, m04wcs soft top width (u)
          uWC: { value: new THREE.Vector4(wup ? M04.num('m04wcr', 0) : 0, M04.num('m04wcn', 2.2), M04.num('m04wch', 0.8), M04.num('m04wcv', 0.55)) },
          uWC2: { value: new THREE.Vector2(M04.num('m04wcl', 0.6), M04.num('m04wcs', 0.25)) },
++        // r21 `&m04wgl=1` (with m04wup): crisp glossy satin wall water — m04wgl strength, m04wgn ribbons per u up the wall, m04wgh
++        // white highlight streaks, m04wgs glints; m04wge crisp top edge (u), m04wgp bright lip, m04wgt translucent lilac top share,
++        // m04wgc cyan streak share low down; m04wga / m04wgw ribbon waviness (u) / wavelength (u), m04wgk crease, m04wgo top alpha
++        uWG: { value: new THREE.Vector4(wup ? M04.num('m04wgl', 0) : 0, M04.num('m04wgn', 3.2), M04.num('m04wgh', 0.85), M04.num('m04wgs', 0.8)) },
++        uWG2: { value: new THREE.Vector4(M04.num('m04wge', 0.04), M04.num('m04wgp', 0.7), M04.num('m04wgt', 0.25), M04.num('m04wgc', 0.35)) },
++        uWG3: { value: new THREE.Vector4(M04.num('m04wga', 0.12), M04.num('m04wgw', 3.5), M04.num('m04wgk', 0.25), M04.num('m04wgo', 0.85)) },
 +        // r20 `&m04farsm=1`: smooth band edges inside the far telescope (river along = distance inside the opening - z0)
 +        uFar: { value: new THREE.Vector2(telA - z0, M04.num('m04farsm', 0) > 0 && telA < 1e8 ? 1 : 0) },
          uWU3: { value: new THREE.Vector4(arc[nX], M04.num('m04wuv', 0.3), M04.num('m04wuw', 0.25), M04.num('m04wut', 0.28)) },
          uNB: { value: nbU }, uNB2:{ value: new THREE.Vector4(M04.num('m04nba', 4.2), M04.num('m04nbb', 0.04), M04.num('m04nbp', 0.0), M04.num('m04nbf', 0)) },
          uSB0: { value: new THREE.Vector4(M04.num('m04sband', 0) > 0 ? M04.num('m04sbs', 0.95) : 0, M04.num('m04sbi', 2.0), arc[nX], M04.num('m04sbl', 10)) },
-@@ -1469,6 +1808,7 @@ export function addM04(ctx: M04Ctx) {
+@@ -1469,6 +1875,7 @@ export function addM04(ctx: M04Ctx) {
    // m04bbb pre-opening bin length (u), m04bbe self-light, m04bbc tint (0 white .. 3 blue-lilac), m04bbi iridescence,
    // m04bbr roughness, m04bbk sink into the water (share of the heap height), m04bbw inside-rim heaps (0 = none), m04bbl
    // blue-lilac shading toward each bubble's outline, m04bbg thin bright rim, m04bbh white sparkle.
@@ -550,7 +635,7 @@ index 2b62a35..0778b00 100644
    const buildBank = (clumps: { side: number; a: number; cl: number; reach: number }[], puffs: { side: number; x: number; z: number }[], nearF: number[]) => {
      let s3 = 24683; const r3 = () => ((s3 = (s3 * 16807) % 2147483647) / 2147483647);
      const HL = 3.3, HH = 1.43;                                  // heap length / height in the glb (u)
-@@ -1503,24 +1843,51 @@ export function addM04(ctx: M04Ctx) {
+@@ -1503,24 +1910,51 @@ export function addM04(ctx: M04Ctx) {
        iridescence: M04.num('m04bbi', 0.15), iridescenceIOR: 1.3,
        emissive: new THREE.Color('#eef3ff'), emissiveIntensity: M04.num('m04bbe', 0.12), transparent: true, depthWrite: true });
      const rimC = new THREE.Vector4(0.74, 0.72, 0.98, M04.num('m04bbl', 0.75)), rimW = M04.num('m04bbg', 0.35), glint = M04.num('m04bbh', 0.6);
@@ -605,7 +690,7 @@ index 2b62a35..0778b00 100644
    }`);
      };
      updaters.push((a) => { holder.visible = a > 0.01; mat.opacity = a; });
-@@ -1813,6 +2180,7 @@ export function addM04(ctx: M04Ctx) {
+@@ -1813,6 +2247,7 @@ export function addM04(ctx: M04Ctx) {
      time.value = performance.now() / 1000;
      a5b.z = -cam.clone().applyMatrix4(MwInv).z;   // camera position down the slide (local along)
      if (nbU.x > 0 && benny) { const bl = benny.clone().applyMatrix4(MwInv); nbU.y = -bl.z; nbU.z = bl.x - cx; }
