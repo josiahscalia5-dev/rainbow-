@@ -72,7 +72,8 @@ const LOCK20: Record<string, { lock: V4; shade: V4; comb: V4; pile: V4; color: [
     lock: [n('plx', 40), n('ply', 0.8), n('plz', 1.0), n('plw', 220)],
     shade: [n('psx', 0.45), n('psy', 0.3), n('psz', 0.35), n('psw', 0.3)],
     comb: [0, 1, n('pcz', 0.12), n('pcw', 0.3)],
-    pile: [n('ppx', 0.4), n('ppy', 0.35), n('ppz', 0.6), 0],
+    // w = lighter soft yarn tips: opt-in `&b20ppw=<0..1>` (r22 step 3) until proven
+    pile: [n('ppx', 0.4), n('ppy', 0.35), n('ppz', 0.6), n('ppw', 0)],
     color: lin('pcol', [0.1016, 0.0067, 0.4425]),
   },
 };

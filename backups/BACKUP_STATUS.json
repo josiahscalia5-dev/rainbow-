@@ -1,20 +1,20 @@
 {
   "last_run": {
-    "time": "2026-11-20T03:26:33+00:00",
-    "reason": "hook:Stop",
-    "result": "committed+pushed",
-    "files_staged": 8,
-    "pushed_verified": true,
+    "time": "2026-11-20T03:34:13+00:00",
+    "reason": "daemon",
+    "result": "skipped",
+    "files_staged": 0,
+    "pushed_verified": false,
     "branch": "claude/rainbow-benny-c23",
     "note": "following session branch 'claude/rainbow-benny-c23' (config branch 'ccr-9c4a8ad6-xovgsx')",
-    "commit": "1aef1693d8c367a8d99855c00438597f7559f61e",
-    "duration_s": 9
+    "error": "git operation in progress (index.lock); will retry next run",
+    "duration_s": 0
   },
   "repo": "https://github.com/josiahscalia5-dev/rainbow-",
   "branch": "claude/rainbow-benny-c23",
-  "last_verified_remote_sha": "1aef1693d8c367a8d99855c00438597f7559f61e",
-  "last_successful_backup_utc": "2026-11-20T03:26:33+00:00",
+  "last_verified_remote_sha": "bb37a16282ec6a5396bef9e15ab371232a3a0155",
+  "last_successful_backup_utc": "2026-11-20T03:28:59+00:00",
   "consecutive_failures": 0,
   "schedule": "every 5 min, container-local (scheduler=daemon status=active pid=566); see backups/RECOVERY.md for limits",
-  "next_scheduled_utc": "2026-11-20T03:30:00+00:00"
+  "next_scheduled_utc": "2026-11-20T03:35:00+00:00"
 }

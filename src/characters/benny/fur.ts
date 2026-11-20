@@ -181,6 +181,11 @@ export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
           float crease = 1.0 - uShade.z * smoothstep(0.45, 1.0, td / uLock.y) * (1.0 - smoothstep(0.0, 0.6, lt));
           float tip = 1.0 + uShade.y * smoothstep(0.45, 1.0, lt);
           diffuseColor.rgb *= uTint * ao * crease * tip * rnd * (0.9 + 0.12 * th) * (1.0 - uComb.z + 2.0 * uComb.z * sh);
+          // uPile.w: lighter, softer yarn tips (pompom): the outer strand ends fade toward a pale lavender of the same
+          // brightness instead of a deeper saturated violet (0 = off; body / arms keep 0)
+          float tl = uPile.w * smoothstep(0.35, 1.0, lt);
+          float mxc = max(diffuseColor.r, max(diffuseColor.g, diffuseColor.b));
+          diffuseColor.rgb = mix(diffuseColor.rgb, mxc * vec3(0.78, 0.55, 1.0), tl);
         }
         #else
         {
