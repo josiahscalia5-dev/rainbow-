@@ -2146,3 +2146,52 @@ Let me check what the rings worker has done on that so far.
 > line (not black) at their modelled places on every ring, world-anchored, anti-aliased to the pixel footprint and faded out where
 > thinner than a pixel (far rings keep the painted texture, no shimmer). Widths `m04rpcb` 0.011, `m04rpcd` 0.014, `m04rp …[+3405 chars]
 
+### 🤖 Claude — 2026-11-20T00:23:19.684Z
+
+The rings worker hasn't committed anything new yet, but it's actively changing the ring code (about 150 lines rewritten). Let me check whether it has rendered any test pictures of your marked spot.
+
+### 🤖 Claude — 2026-11-20T00:23:22.534Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && find . -path ./node_modules -prune -o -type f -mmin -45 \\( -name '*.png' -o -name '*.mp4' -o -name '*.json' -o -name '*.md' \\) -print 2>/dev/null | grep -v node_modules | head -30; ls -t /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/ 2>/dev/null | head; git diff | grep '^+' | grep -io 'm04r[a-z0-9]*' | sort | uniq -c | sort -rn | head -15; git diff | grep '^+ *//' | head -25 | cut -c1-200", "description": "Find rings worker test renders and new code notes"}`
+
+### 🧑 User — 2026-11-20T00:23:22.997Z
+
+> ↩︎ result: tasks
+> scratchpad
+> started
+>       7 m04rnear
+>       3 m04rmat
+>       2 m04rntex
+>       2 m04rflat
+>       2 m04rfla
+>       1 m04rpcr
+>       1 m04rny
+>       1 m04rnxp
+>       1 m04rnw1
+>       1 m04rnw0
+>       1 m04rnt
+>       1 m04rnr
+>       1 m04rno
+>       1 m04rnlc
+>       1 m04rnl
+> +                           // 1536 px tall portrait view, from world length, distance and foreshortening) where the detail starts / is full
+> +                           // offset before the sub-rim (ring units), w the painted band re-drawn on every sub-band (m04rntex)
+> +        // r19b / r20 m04rnear: the NEAR band seen from inside. While swimming, the band of the ring Benny is in fills the
+> +        // top half of the view and the painted ring (160 texture rows for a whole ring) is magnified ~10x into one broad,
+> +        // smooth orange-copper surface. The painting's nearest gold (the washer rim) is several polished yellow-gold tubes
+> +        // with bright rims, thin dark grooves, hot highlights and glowing bulbs, with soft pink / violet reflections. So once
+> +        // a band is large on screen it resolves into that structure: N sub-bands (about uRNear.y world u each, world-
+> +        // anchored), each a rounded polished  …[+2112 chars]
+
+### 🤖 Claude — 2026-11-20T00:23:33.837Z
+
+> 🔧 **SendMessage** `{"to": "a030a0be71298a035", "summary": "User asks for progress on marked tunnel spot", "message": "The user just asked how the marked gold-tunnel fix (arrow / red circle, qa/review_r20/user_marked_rings/) is going. As soon as you have a first render with the flattened lips + fine ribs + yellow-gold material, send \"main\" the path of the f06 frame and its zoom crop x0–480 y380–860 (same box as 3_/4_ zooms), even before the full proof set — the lead will show it to the user as a preview. Then continue with the full proof as planned. Also commit + push your current code once tsc passes, so it is …[+153 chars]`
+
+### 🧑 User — 2026-11-20T00:23:33.859Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to a030a0be71298a035 at its next tool round. Moved 1 running tool call to the background without stopping it, so that round no longer waits for it. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"a030a0be71298a035","name":"a030a0be71298a035","ref":"ff48e3"}}
+
+### 🤖 Claude — 2026-11-20T00:23:35.157Z
+
+I've asked it for that preview. Its unfinished code is already in the five-minute GitHub saves, so nothing is lost if the session stops. When the preview arrives, I'll show you your marked approved spot next to the same spot in the game: before and after.
+
