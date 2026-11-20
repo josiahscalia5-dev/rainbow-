@@ -16,14 +16,14 @@ def part(s):
     if s < S07 - 24: return '3  gentle S-bend', (255, 160, 230)
     return '4  into Screen 07 (its gold-collared mouth)', (160, 255, 200)
 lab = f'{OUT}/_lab'; os.makedirs(lab, exist_ok=True)
-for m in meta:
+for m in ([] if os.environ.get('SHEET_ONLY') else meta):
     im = Image.open(f"{FR}/{m['i']:04d}.png").convert('RGB').resize((540, 960), Image.LANCZOS)
     c = Image.new('RGB', (540, 1024), (20, 12, 34)); c.paste(im, (0, 64)); d = ImageDraw.Draw(c)
     t, col = part(m['s'])
     d.text((10, 6), 'SCREEN 06 NEW &m06curl=1 - real gameplay, no cuts', font=f2, fill='white')
     d.text((10, 34), f"{t}", font=f1, fill=col); d.text((430, 34), f"t {m['t']:5.2f}s", font=f2, fill=(200, 200, 230))
     c.save(f"{lab}/{m['i']:04d}.png")
-for spd, pts in (('1x', '1.0'), ('0.5x', '2.0')):
+for spd, pts in (() if os.environ.get('SHEET_ONLY') else (('1x', '1.0'), ('0.5x', '2.0'))):
     subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-framerate', '24', '-i', f'{lab}/%04d.png', '-vf', f'setpts={pts}*PTS', '-r', '24',
                     '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '20', f'{OUT}/SCREEN06_NEW_route_into_07_{spd}.mp4'], check=True)
 # storyboard panels vs gameplay
@@ -37,7 +37,7 @@ d.text((g, 22), 'Your storyboard (top) vs the SAME moments in real gameplay of t
 for k in range(4):
     x = g + k * (max(pw, gw) + g)
     out.paste(SB.crop(boxes[k]).resize((pw, ph), Image.LANCZOS), (x + (max(pw, gw) - pw) // 2, 90))
-    d.text((x, 90 + ph + 10), 'STORYBOARD ' + names[k], font=f1, fill=(255, 220, 140))
+    d.text((x, 90 + ph + 10), 'STORYBOARD ' + names[k], font=f2, fill=(255, 220, 140))
     m = meta[PICK[k]]
     out.paste(Image.open(f"{FR}/{m['i']:04d}.png").convert('RGB').resize((gw, gh), Image.LANCZOS), (x + (max(pw, gw) - gw) // 2, 90 + ph + 50))
     d.text((x, 90 + ph + 50 + gh + 12), f"GAMEPLAY t {m['t']:.1f} s, river s {m['s']:.0f}", font=f1, fill='white')

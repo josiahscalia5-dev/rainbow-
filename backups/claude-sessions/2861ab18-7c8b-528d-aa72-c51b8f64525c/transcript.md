@@ -2810,3 +2810,146 @@ Just over halfway (223 of ~400 frames). I'll wait for the finish notification.
 
 > 🔧 **Bash** `{"command": "until ! pgrep -f \"r30_clip.mjs /home/user/scratch/r30/clip_new \" >/dev/null; do sleep 5; done; tail -1 /home/user/scratch/r30/clip_new.log", "description": "Wait for clip render completion", "timeout": 600000}`
 
+### 🧑 User — 2026-11-20T21:14:41.931Z
+
+> ↩︎ result: frames 399 s0 198.91 s07 396.27066741997834
+
+### 🤖 Claude — 2026-11-20T21:14:44.095Z
+
+The clip is complete (399 frames, 06 checkpoint → 24 units into Screen 07). I'll scan it for background gaps and make a contact sheet to pick the storyboard moments.
+
+### 🤖 Claude — 2026-11-20T21:14:48.900Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/r30/clip_new && python3 -c \"\nfrom PIL import Image, ImageDraw, ImageFont; import numpy as np, glob, json\nL=json.load(open('frames.json'))['log']; bad=[]\nfor m in L:\n  a=np.asarray(Image.open('%04d.png'%m['i']).convert('RGB').resize((216,384))).astype(int); q=(np.abs(a-np.array([198,0,201])).max(axis=2)<8).mean()\n  if q>0.0005: bad.append((m['i'], round(100*q,2)))\nprint('frames with flat magenta:', bad)\nf=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',13)\nidx=list(range(0,len(L),10)); w,h=140,249; cols=10; rows=(len(idx)+col …[+491 chars]`
+
+### 🧑 User — 2026-11-20T21:15:11.934Z
+
+> ↩︎ result: frames with flat magenta: [(345, np.float64(0.07)), (346, np.float64(0.12)), (347, np.float64(0.17)), (348, np.float64(0.24)), (349, np.float64(0.28)), (350, np.float64(0.33)), (351, np.float64(0.4)), (352, np.float64(0.46)), (353, np.float64(0.48)), (354, np.float64(0.51)), (355, np.float64(0.53)), (356, np.float64(0.58)), (357, np.float64(0.59)), (358, np.float64(0.58)), (359, np.float64(0.62)), (360, np.float64(0.58)), (361, np.float64(0.48)), (362, np.float64(0.43)), (363, np.float64(0.37)), (364, np.float64(0.37)), (365, np.float64(0.38)), (366, np.float64(0.38)), (367, np.float64(0.39)), (368, np.float64(0.42)), (369, np.float64(0.46)), (370, np.float64(0.51)), (371, np.float64(0.57)), (372, np.float64(0.59)), (373, np.float64(0.59)), (374, np.float64(0.58)), (375, np.float64(0.61)), (376, np.float64(0.59)), (377, np.float64(0.55)), (378, np.float64(0.46)), (379, np.float64(0.34)), (380, np.float64(0.37)), (381, np.float64(0.34)), (382, np.float64(0.27)), (383, np.float64(0.29)), (384, np.float64(0.23)), (385, np.float64(0.23)), (386, np.float64(0.22)), (387, np.float64(0.2)), (388, np.float64(0.2)), (389, np.float64(0.22)), (390, np.float64(0.25)), (391, np.float64(0.24)), ( …[+214 chars]
+
+### 🤖 Claude — 2026-11-20T21:15:14.896Z
+
+Frames 345–398 (the join and the first second inside Screen 07) show small flat magenta areas, 0.2–0.6% of the frame. I'll check whether the earlier clip had them too and look at one frame.
+
+### 🤖 Claude — 2026-11-20T21:15:18.309Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/r30 && python3 -c \"\nfrom PIL import Image; import numpy as np\nfor i in (350,359,375):\n  a=np.asarray(Image.open('clip_new_vw3456/%04d.png'%i).convert('RGB').resize((216,384))).astype(int); print('old clip',i, round(100*(np.abs(a-np.array([198,0,201])).max(axis=2)<8).mean(),2))\na=np.asarray(Image.open('clip_new/0359.png').convert('RGB')).astype(int); m=(np.abs(a-np.array([198,0,201])).max(axis=2)<8); ys,xs=np.where(m); print('new 359 bbox', xs.min(),ys.min(),xs.max(),ys.max())\nImage.open('clip_new/0359.png').convert('RGB').resize((432,768)).save('/tmp/cl …[+149 chars]`
+
+### 🧑 User — 2026-11-20T21:15:18.902Z
+
+> ↩︎ result: old clip 350 0.32
+> old clip 359 0.6
+> old clip 375 0.61
+> new 359 bbox 328 0 863 821
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T21:15:20.308Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/scratchpad/f359.png"}`
+
+### 🧑 User — 2026-11-20T21:15:20.340Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T21:15:25.232Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/scratchpad/clip2_sheet.jpg"}`
+
+### 🧑 User — 2026-11-20T21:15:25.373Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T21:15:31.842Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/r30/clip_new && python3 -c \"\nfrom PIL import Image\nc=[96,104,112,120,128]; w,h=288,512\no=Image.new('RGB',(len(c)*w,h)); [o.paste(Image.open('%04d.png'%i).convert('RGB').resize((w,h)),(k*w,0)) for k,i in enumerate(c)]; o.save('/tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/scratchpad/band.jpg',quality=88)\"", "description": "Compare candidate frames for passing under a band"}`
+
+### 🧑 User — 2026-11-20T21:15:32.194Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T21:15:33.785Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/scratchpad/band.jpg"}`
+
+### 🧑 User — 2026-11-20T21:15:33.810Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T21:15:37.793Z
+
+Bands arch overhead and slide past through this stretch; frame 120 is a good match for panel 2. Building the labelled videos (1.0× and 0.5×) and the storyboard-vs-gameplay sheet.
+
+### 🤖 Claude — 2026-11-20T21:15:39.698Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r30/proof && timeout 1200 python3 -I make_clip.py /home/user/scratch/r30/clip_new /home/user/rainbow-/qa/match/06/r30/proof 396.27 70,120,200,340 && rm -rf _lab && ls -la *.mp4 *.jpg && ffprobe -v error -show_entries format=duration -of csv=p=0 SCREEN06_NEW_route_into_07_1x.mp4", "description": "Encode labelled clips and storyboard sheet", "timeout": 1300000}`
+
+### 🧑 User — 2026-11-20T21:17:22.423Z
+
+> ↩︎ result: done 399 frames
+> -rw-r--r-- 1 root root  1337628 Nov 20 20:37 MARKED_SPOT_approved_before_new.jpg
+> -rw-r--r-- 1 root root 17518603 Nov 20 21:17 SCREEN06_NEW_route_into_07_0.5x.mp4
+> -rw-r--r-- 1 root root 13225865 Nov 20 21:17 SCREEN06_NEW_route_into_07_1x.mp4
+> -rw-r--r-- 1 root root  1339574 Nov 20 21:17 STORYBOARD_vs_GAMEPLAY.jpg
+> 16.625000
+
+### 🤖 Claude — 2026-11-20T21:17:23.621Z
+
+Videos are encoded (16.6 s at 1.0×). Checking the storyboard comparison sheet.
+
+### 🤖 Claude — 2026-11-20T21:17:24.126Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r30/proof/STORYBOARD_vs_GAMEPLAY.jpg"}`
+
+### 🧑 User — 2026-11-20T21:17:24.393Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-20T21:17:24.387Z
+
+[Image: original 2250x1720, displayed at 2000x1529. Multiply coordinates by 1.13 to map to original image.]
+
+### 🤖 Claude — 2026-11-20T21:17:40.142Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='make_clip.py'; t=open(p).read()\nt=t.replace(\"lab = f'{OUT}/_lab'; os.makedirs(lab, exist_ok=True)\\nfor m in meta:\", \"lab = f'{OUT}/_lab'; os.makedirs(lab, exist_ok=True)\\nfor m in ([] if os.environ.get('SHEET_ONLY') else meta):\")\nt=t.replace(\"for spd, pts in (('1x', '1.0'), ('0.5x', '2.0')):\", \"for spd, pts in (() if os.environ.get('SHEET_ONLY') else (('1x', '1.0'), ('0.5x', '2.0'))):\")\nt=t.replace(\"d.text((x, 90 + ph + 10), 'STORYBOARD ' + names[k], font=f1, fill=(255, 220, 140))\", \"d.text((x, 90 + ph + 10), 'STORYBOARD ' + names[k], font=f2, …[+539 chars]`
+
+### 🧑 User — 2026-11-20T21:17:40.601Z
+
+> ↩︎ result: done 399 frames
+> frame_0070.png
+> frame_0120.png
+> frame_0200.png
+> frame_0340.png
+> frame_0360.png
+> frames.json
+
+### 🤖 Claude — 2026-11-20T21:17:44.950Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && Q=\"$(cat /home/user/rainbow-/qa/match/06/r30/QUERY_NEW.txt)\" && timeout 1700 node scripts/gameplay-test.mjs --q=\"$Q\" --out=/home/user/rainbow-/qa/match/06/r30/gameplay_NEW.json > /dev/null 2>&1; python3 -c \"\nimport json;d=json.load(open('/home/user/rainbow-/qa/match/06/r30/gameplay_NEW.json'));c=d['checks'];print(sum(v.get('pass') is True for v in c.values()),'/',len(c), {k:v.get('pass') for k,v in c.items()}); print('coins', c['realCoinPickups'], 'maxCamJump', c['noCameraCut'].get('maxCameraJumpPerStep'))\" && AUDIT_W=864 AUDIT_H=1536 AUDIT_PORT=5307 …[+650 chars]`
+
+### 🧑 User — 2026-11-20T21:18:07.004Z
+
+> ↩︎ result: 8 / 8 {'pauseFreezes': True, 'continuousTravel': True, 'noCameraCut': True, 'noTeleport': True, 'plunge': True, 'realCoinPickups': True, 'victory': True, 'heartsLostOnWallBump': True}
+> coins {'pass': True, 'startCoins': 1330, 'endCoins': 2240, 'collected': 91} maxCamJump 0.728
+> 06 b_marked s 214.86 lat 0 stage 06 coins 1700
+> marked NEW (vw34,56) vs final (vw20,38): >20 levels 21.616 %
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T21:18:12.232Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nfrom PIL import Image\na=Image.open('/home/user/rainbow-/qa/match/06/r30/stills_NEW/b_marked.png').convert('RGB').resize((432,768)); b=Image.open('/home/user/scratch/r30/marked_final/b_marked.png').convert('RGB').resize((432,768))\no=Image.new('RGB',(874,768)); o.paste(a,(0,0)); o.paste(b,(442,0)); o.save('/tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/scratchpad/marked2.jpg',quality=88)\"", "description": "Compare marked-spot frames for the two holds"}`
+
+### 🧑 User — 2026-11-20T21:18:12.478Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T21:18:14.270Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/scratchpad/marked2.jpg"}`
+
+### 🧑 User — 2026-11-20T21:18:14.292Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T21:18:25.422Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r30 && mv stills_NEW/b_marked.png stills_NEW/b_marked_vw3456.png && cp /home/user/scratch/r30/marked_final/b_marked.png stills_NEW/b_marked.png && python3 -I proof/make_marked.py && cp QUERY_NEW.txt proof/QUERY_NEW.txt && cp diag/QUERY_MARKED.txt proof/QUERY_BEFORE_marked.txt && cat > proof/README.md <<'EOF'\n# Screen 06 — round 30 proof (lead, 2026-11-20 ~21:20 UTC) — individual playable candidate, NOT approved, not Android\n\n* BEFORE = the version the user marked (`QUERY_BEFORE_marked.txt` = r29 final without `m06tswap` / `m06haze`).\n* NEW =  …[+1583 chars]`
+
