@@ -453,3 +453,184 @@ Slots are free; I'll start the full-size BEFORE (v2) render now while I study th
 
 [Image: original 3024x768, displayed at 2000x508. Multiply coordinates by 1.51 to map to original image.]
 
+### 🤖 Claude — 2026-11-20T22:05:34.547Z
+
+> 🔧 **Bash** `{"command": "ls /home/user/rainbow-/qa/match/06/r30/diag/ /home/user/rainbow-/qa/match/06/r30/proof_v2/; cat /home/user/rainbow-/qa/match/06/r30/proof_v2/README.md | head -60", "description": "Read diag and proof_v2 notes"}`
+
+### 🧑 User — 2026-11-20T22:05:34.587Z
+
+> ↩︎ result: /home/user/rainbow-/qa/match/06/r30/diag/:
+> DIAG_gold_target_at_mark.jpg
+> QUERY_MARKED.txt
+> make_diag.py
+> probe_marked_p14.json
+> 
+> /home/user/rainbow-/qa/match/06/r30/proof_v2/:
+> QUERY_NEW_v2.txt
+> README.md
+> SCREEN06_NEW_route_into_07_0.5x.mp4
+> SCREEN06_NEW_route_into_07_1x.mp4
+> STORYBOARD_vs_GAMEPLAY.jpg
+> make_clip.py
+> stills_from_clip
+> # Screen 06 — v2 proof (lead, 2026-11-20 ~22:10 UTC) — individual playable candidate, NOT approved, not Android
+> 
+> * v2 = `QUERY_NEW_v2.txt` = v1 (`../QUERY_NEW_v1.txt`) + `&m06camk=0.65&m06camu=1.05`: after the approved start view the camera stays 35 % closer behind
+>   Benny at the same height (eased back over the last 16 u before 07), so Benny is large and low in the frame like the approved picture and
+>   the storyboard, with the winding slide + coin trail visible above his hat. Route, scenery, start view and the 07 join unchanged.
+> * `SCREEN06_NEW_route_into_07_1x.mp4` / `_0.5x.mp4` — one uninterrupted real-gameplay clip, 06 start → into 07 (16.6 s, 399 frames).
+> * `STORYBOARD_vs_GAMEPLAY.jpg` — the user's 4 panels above the same moments of v2; full-size frames in `stills_from_clip/`.
+> * Gameplay test 8/8, 91 coins, 2,240, max camera step 0.728 (`../gameplay_NEW_v2. …[+287 chars]
+
+### 🤖 Claude — 2026-11-20T22:05:35.973Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r30/scen06/before && cat log.txt | tail -12; ls", "description": "Check BEFORE render log"}`
+
+### 🧑 User — 2026-11-20T22:05:36.022Z
+
+> ↩︎ result: 06 a_start s 198.91 lat 0 stage 06 coins 1680
+> 06 b_marked s 214.86 lat 0 stage 06 coins 1700
+> 06 c_266 s 266.01 lat 0 stage 06 coins 1750
+> 06 d_310 s 310.01 lat 0 stage 06 coins 1770
+> 06 e_350 s 350.16 lat 0 stage 06 coins 1790
+> 06 f_387 s 387.01 lat 0 stage 06 coins 1800
+> a_start.png
+> b_marked.png
+> c_266.png
+> d_310.png
+> e_350.png
+> f_387.png
+> log.txt
+> shots.json
+
+### 🤖 Claude — 2026-11-20T22:05:39.465Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r30/scen06/before && python3 -c \"\nfrom PIL import Image\nims=[Image.open(f).crop((0,0,864,1000)) for f in ['b_marked.png','c_266.png','d_310.png','e_350.png','f_387.png']]\no=Image.new('RGB',(864*5,1000))\nfor k,i in enumerate(ims): o.paste(i,(864*k,0))\no.resize((864*5//2,500)).save('/tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/scratchpad/before_top.jpg',quality=88)\n\"", "description": "Make top-half sheet of BEFORE stills"}`
+
+### 🧑 User — 2026-11-20T22:05:39.806Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T22:05:40.320Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/scratchpad/before_top.jpg"}`
+
+### 🧑 User — 2026-11-20T22:05:40.396Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-20T22:05:40.391Z
+
+[Image: original 2160x500, displayed at 2000x463. Multiply coordinates by 1.08 to map to original image.]
+
+### 🤖 Claude — 2026-11-20T22:05:48.553Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/scen06 && grep -n \"tube07\\|tubeAxis\\|tubeCenterAt\" src/world/*.ts src/game/*.ts | head -40", "description": "Find tube07 construction"}`
+
+### 🧑 User — 2026-11-20T22:05:48.588Z
+
+> ↩︎ result: src/world/environment.ts:10:import { buildTubeGeometry, buildRings, buildRingsAt, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt, ForcedTunnel, bandGeometry, wallLidGeometry, wallLidBasis, nearFrameGeometry } from './tube';
+> src/world/environment.ts:33:  tubeAxis: { path: import('./tube').TubePath; s0: number; s1: number };
+> src/world/environment.ts:201:  // 'tube07' inside zones.tubes, so Game can show the mouth ahead of Benny inside the 06 ring tunnel (the rest stays hidden in 06)
+> src/world/environment.ts:203:  const tube07 = new THREE.Group(); tube07.name = 'tube07';
+> src/world/environment.ts:204:  if (deep07) zones.tubes.add(tube07);
+> src/world/environment.ts:349:  if (deep07) { addWall(sGlow05, s07e, perfTubeMat); addWall(s07e, s08, perfTubeMat, tube07); } else addWall(sGlow05, s08, perfTubeMat);
+> src/world/environment.ts:400:    tube07.add(buildRingsAt(perfPath, [s07e + 0.4, ...rings0607.filter((s) => s >= s07e + 2)], ringMat, { inset: 0.02, collar }));
+> src/world/environment.ts:437:      tube07.add(buildWallLids(perfPath, 0, 0, ringSpacing, lidMat, { positions: lids0607.filter((s) => s >= s07e), ...lidOpt }));
+> src/world/environment.ts:460:    const D0 = tubeCenterAt …[+2558 chars]
+
+### 🤖 Claude — 2026-11-20T22:05:50.188Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/scen06 && sed -n 195,215p src/world/environment.ts; sed -n 340,352p src/world/environment.ts; sed -n 395,440p src/world/environment.ts; grep -n \"s07e\\s*=\\|const s07e\\|deep07 =\" src/world/environment.ts", "description": "Read tube07 group construction in environment.ts"}`
+
+### 🧑 User — 2026-11-20T22:05:50.241Z
+
+> ↩︎ result: // =====================================================================================
+>   // 05–07 perforated tubes (incl. the 06 arch hall and the full 07 plunge)
+>   // =====================================================================================
+>   const s08 = course.stage('08').s0;
+>   // r29 `&m06deep=1`: Screen 07's tube (walls from the 07 entrance, its rings + lids, a gold collar at the mouth) in its OWN group
+>   // 'tube07' inside zones.tubes, so Game can show the mouth ahead of Benny inside the 06 ring tunnel (the rest stays hidden in 06)
+>   const deep07 = course.deepDs07 > 0, s07e = course.stage('07').s0;
+>   const tube07 = new THREE.Group(); tube07.name = 'tube07';
+>   if (deep07) zones.tubes.add(tube07);
+>   const pinkFlow = pinkFlowMaterial();
+>   // refs 05–07: rich saturated magenta→violet glossy pressed metal, dense glowing slot rows, warm light
+>   // far down the tunnel. Own reflection environment (no cyan studio panel) + correct inward normals.
+>   // hot magenta near → violet mid-tunnel → warm yellow-white core at the vanishing point
+>   const tubeGlow: FarGlow = { color: '#ffd08a', near: 48, far: 105, strength: 1.5 };
+>   const wallGlow: FarGlow = { ...tubeGlow, mid: { color …[+4738 chars]
+
+### 🤖 Claude — 2026-11-20T22:05:59.554Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/scen06 && grep -n \"__rainbow\\s*=\\|window.__rainbow\\b\\|__rainbow =\" src -r | head; grep -n \"__rainbow\" src/game/Game.ts | head -5", "description": "Find QA hooks exposed on window"}`
+
+### 🧑 User — 2026-11-20T22:05:59.609Z
+
+> ↩︎ result: src/game/Game.ts:9: * window.__rainbow exposes a deterministic QA API used by scripts/capture.mjs.
+> src/game/Game.ts:792:  (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+> src/game/modules.ts:4: * reported in window.__rainbow.stats().modules so QA never mistakes them for final assets.
+> 9: * window.__rainbow exposes a deterministic QA API used by scripts/capture.mjs.
+> 792:  (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+
+### 🤖 Claude — 2026-11-20T22:06:00.659Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/scen06 && sed -n 700,794p src/game/Game.ts", "description": "Read QA API in Game.ts"}`
+
+### 🧑 User — 2026-11-20T22:06:00.696Z
+
+> ↩︎ result: hud.setCoins(st.coins);
+>     hud.setHearts(5);
+>     render();
+>     dirty = false;
+>     return { stage: st.stage, s: st.s, y: benny.root.position.y };
+>   };
+> 
+>   const api = {
+>     ready: true,
+>     checkpoints: Object.keys(CHECKPOINTS),
+>     goto: gotoCheckpoint,
+>     run(v = true) { running = v; last = performance.now(); },
+>     unfreeze() { st.frozen = null; input.override = null; },
+>     /** QA: freeze the shader clock at t (frame-by-frame clips of animated water); rendering is otherwise unchanged */
+>     freezeAt(t: number) { st.frozen = t; st.clock = t; },
+>     setSteer(v: number | null) { input.override = v; },
+>     /** deterministic simulation: advance n steps of dt (no rendering needed) */
+>     step(n: number, dt = 1 / 60) { for (let i = 0; i < n; i++) stepSim(dt); return api.state(); },
+>     startRideAt(id: StageId = '03') {
+>       resetToIntro(); startRide(); st.s = course.stage(id).s0; coins.resetUntil(-1); st.coins = START_COINS; hud.setCoins(st.coins); st.log = [];
+>       return api.state();
+>     },
+>     state() {
+>       return { mode: st.mode, stage: st.stage, s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: st.coins, hearts: st.hearts, paused: st.paused, bennyY: +benny.root.position.y. …[+4555 chars]
+
+### 🤖 Claude — 2026-11-20T22:06:11.820Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/scratchpad/probe && cat > /tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/scratchpad/probe/probe.mjs <<'EOF'\n// e30 probe: console info + which objects the camera sees at given river s (grid of rays)\nimport { pathToFileURL } from 'node:url';\nconst { loadPlaywright, CHROMIUM_ARGS } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);\nconst { startVite } = await import(pathToFileURL(`${process.cwd()}/tools/match06/r23_vite.mjs`).href);\nconst [Q, SL] = pro …[+1673 chars]`
+
+### 🧑 User — 2026-11-20T22:06:29.965Z
+
+> ↩︎ result: CONSOLE [match06] m06curl {aSplit: 40, a07: 200, aEnd: 200.3, rings: 7, ringD: 22}
+> CONSOLE [match06] m06curl join to 07 {offR: -0.05, offU: 7.82, offT: -0.01, r07: 15}
+> CONSOLE [match06] m06ring {rings: 11, spacing: 12.87, aN: 36.9, aF: 49.8}
+> CONSOLE [match06] m06leg {points: 40, length: 19, halfWidth: 2.6}
+> CONSOLE [match06] m06rip {NX: 384, NY: 490, LW: 1.45, D0: -2.4, D1: 1.3}
+> CONSOLE [match06] m06hole {rect: Array(4), zone: Object}
+> CONSOLE [match06] m06fclu {blobs: 2619, sprites: 21845}
+> {
+>  "s": 266.01,
+>  "cam": [
+>   5.52,
+>   -43.91,
+>   -197.08
+>  ],
+>  "s07": 396.27066741997834,
+>  "res": {
+>   "-0.8,0.9": "m06_rings<match06_projection<Scene@39.98 | m06_rings<match06_projection<Scene@41.38",
+>   "-0.4,0.9": "m06_rings<match06_projection<Scene@58.23 | m06_rings<match06_projection<Scene@59.11",
+>   "0,0.9": "m06_rings<match06_projection<Scene@60.57 | m06_tube<match06_projection<Scene@61.92",
+>   "0.4,0.9": "m06_tube<match06_projection<Scene@55.68",
+>   "0.8,0.9": "m06_tube<match06_projection<Scene@47.73",
+>   "-0.8,0.7": "m06_rings<match06_projection<Scene@54.68 | m06_rings<match06_projection<Scene@55.07",
+>   "-0.4,0.7": "m06_rings<match06_projection<Scene@83.71 | m06_tube<match06_projection<Scene@84.97" …[+6025 chars]
+

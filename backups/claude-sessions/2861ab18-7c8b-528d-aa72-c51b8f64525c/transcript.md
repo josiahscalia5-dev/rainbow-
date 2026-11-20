@@ -4277,3 +4277,68 @@ Yes. Four specialists are now working on Screen 06 at the same time:
 
 Everything is saved to GitHub (`ec911a0`), and the five-minute autosave also backs up each specialist's work in progress.
 
+### 🧑 User — 2026-11-20T22:07:59.214Z
+
+How's it going so far I don't want u to interrupt the agents just curious of how's it going my screens
+
+### 🤖 Claude — 2026-11-20T22:08:01.266Z
+
+I'll check their progress from the outside only, through the files each specialist has written so far, without touching or interrupting any of them.
+
+### 🤖 Claude — 2026-11-20T22:08:03.780Z
+
+> 🔧 **Bash** `{"command": "for x in benny06 water06 foam06 scen06; do echo \"== $x: $(git -C /home/user/wt/$x diff --stat HEAD 2>/dev/null | tail -1)\"; echo \"   new files: $(git -C /home/user/wt/$x status --porcelain | grep '^??' | grep -v node_modules | wc -l)  outputs: $(ls qa/match/06/r30/$x 2>/dev/null | wc -l)  NOTES: $( [ -f qa/match/06/r30/$x/NOTES.md ] && wc -l < qa/match/06/r30/$x/NOTES.md || echo none)\"; ls -t qa/match/06/r30/$x 2>/dev/null | head -4 | sed 's/^/     /'; done; bash tools/lead25/render_slot.sh --status; uptime", "description": "Read-only progress check of the four workers"}`
+
+### 🧑 User — 2026-11-20T22:08:04.031Z
+
+> ↩︎ result: == benny06:  9 files changed, 649 insertions(+), 45 deletions(-)
+>    new files: 37  outputs: 0  NOTES: none
+> == water06:  8 files changed, 656 insertions(+), 43 deletions(-)
+>    new files: 38  outputs: 1  NOTES: none
+>      before
+> == foam06:  8 files changed, 650 insertions(+), 43 deletions(-)
+>    new files: 35  outputs: 2  NOTES: none
+>      before_v2
+>      QUERY_BEFORE_v2.txt
+> == scen06:  8 files changed, 650 insertions(+), 43 deletions(-)
+>    new files: 35  outputs: 1  NOTES: none
+>      before
+> slot 1 busy
+> slot 2 free
+>  22:08:04 up  2:14,  0 user,  load average: 3.38, 2.53, 2.43
+
+### 🤖 Claude — 2026-11-20T22:08:08.517Z
+
+> 🔧 **Bash** `{"command": "for x in benny06 water06; do echo \"== $x\"; git -C /home/user/wt/$x status --porcelain | grep -v node_modules | grep -v -F -f <(git -C /home/user/wt/foam06 status --porcelain | grep -v node_modules) | head -5; done", "description": "List files the workers changed beyond the baseline"}`
+
+### 🧑 User — 2026-11-20T22:08:08.585Z
+
+> ↩︎ result: == benny06
+>  M src/characters/benny/runtime.ts
+> ?? src/characters/benny/benny30.ts
+> ?? tools/benny30/
+> == water06
+> ?? assets/textures/match06/tile_w30veins.png
+> ?? src/world/m06water30.ts
+> ?? tools/match06/w30_make_veins.py
+
+### 🤖 Claude — 2026-11-20T22:08:12.753Z
+
+They're about 5 minutes in, so still early, but all four are moving and nothing has gone wrong. I only read the files they've written and didn't interrupt anyone.
+
+| Specialist | Progress so far |
+|---|---|
+| **Benny** | Has started building a corrected Benny in a new file of its own, plus a small hook into how Benny is loaded. |
+| **Water** | Has made a new texture of sparkly white "veins" for the water and started the new water effect that uses it. |
+| **Foam & bubbles** | Has rendered its "before" pictures to compare against; no changes yet. |
+| **Scenery** | Has rendered its "before" pictures to compare against; no changes yet. |
+
+None has finished a result yet, so there's nothing to judge visually. They're taking turns on the processors as planned: one rendering slot busy, one free, load normal.
+
+I'll check each result against your approved screen and storyboard as it comes in, and tell you which ones I keep. The five-minute autosave is backing up all of their work in progress.
+
+### 🧑 User — 2026-11-20T22:08:14.049Z
+
+Stop hook feedback:
+[command hook 2]: There are untracked files in the repository. Please commit and push these changes to the remote branch.
+

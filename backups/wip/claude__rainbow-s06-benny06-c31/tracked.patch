@@ -1,21 +1,47 @@
 diff --git a/src/characters/benny/benny05.ts b/src/characters/benny/benny05.ts
-index 142e6c3c..94c18d88 100644
+index 142e6c3c..4848a97c 100644
 --- a/src/characters/benny/benny05.ts
 +++ b/src/characters/benny/benny05.ts
-@@ -243,6 +243,13 @@ export function applyBenny05(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
-   pom.position.y += dCuff + (HAT05.crownH - D.crownH) + HAT05.pomDY;
-   pom.position.x += HAT05.pomDX;
-   pom.position.z += HAT05.pomDZ;
-+  // r30 lead (user r30 "the pink character ... exactly like my approved screen", docs/briefs/2026-11-20-r30/USER_R30.md, qa/benny/r30/):
-+  // the approved 06 / storyboard Benny wears a SMALLER beanie sitting HIGHER (brim at ~53 % of his height, the dusty-pink body visible
-+  // below it) - `&b30hs=` scales the whole beanie (crown, cuff, pom, star; about the hat's own origin), `&b30hy=` raises it (hat-parent
-+  // units). Defaults 1 / 0 = unchanged.
-+  { const q = typeof location !== 'undefined' ? new URLSearchParams(location.search) : null;
-+    const hs = Number(q?.get('b30hs')) || 1, hy = Number(q?.get('b30hy')) || 0;
-+    if (hs !== 1 || hy !== 0) { hat.scale.multiplyScalar(hs); hat.position.y += hy; } }
-   pom.scale.setScalar(HAT05.pomScale);
+@@ -20,7 +20,8 @@ import * as THREE from 'three';
+ import { flag05 } from '../../vfx/waterRibbon';
+ // ported from line B (ccr-b0757dec-dj6l1o @99ab17b, Screen 05 full-reference Benny) WITHOUT a merge (2026-11-17): on this
+ // branch it runs under `?benny05=1`, `?benny08=1` or the Screen 08 switch `?match08=1` (and `?matchall=1`); off: nothing runs
+-const on05 = (key: string): boolean => flag05(key) || flag05('benny08') || flag05('match08') || flag05('matchall');
++// r30: `?b30=1` (benny30.ts) builds on this look, so it switches it on too
++const on05 = (key: string): boolean => flag05(key) || flag05('benny08') || flag05('match08') || flag05('matchall') || flag05('b30');
+ import type { FurHandle, FurParams } from './fur';
  
-   // ---- fur clumping ----
+ export const BENNY05: boolean = on05('benny05');
+diff --git a/src/characters/benny/runtime.ts b/src/characters/benny/runtime.ts
+index 894a962d..73508a88 100644
+--- a/src/characters/benny/runtime.ts
++++ b/src/characters/benny/runtime.ts
+@@ -7,6 +7,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+ import type { BennyRuntime } from '../types';
+ import { makeFur, type FurHandle, type FurParams } from './fur';
+ import { BENNY05, FUR05, applyBenny05, dampedClips, loadBenny05Maps } from './benny05';
++import { BENNY30, applyBenny30 } from './benny30';
+ 
+ const BENNY_URL = new URL('../../../assets/models/benny.glb', import.meta.url).href;
+ 
+@@ -99,6 +100,8 @@ export function createBennyRuntime(
+   // `?benny05=1` / `?match05=1`: the Screen-05 reference-matched look, on Benny himself (benny05.ts). Off: nothing runs.
+   const b05 = BENNY05 ? applyBenny05(scene, furs, opts.maps05 ?? {}) : null;
+   if (BENNY05) clips = dampedClips(clips);
++  // `?b30=1`: the painted Screen 06 Benny's proportions / fur on top of benny05 (benny30.ts). Off: nothing runs.
++  const b30 = BENNY30 ? applyBenny30(scene, furs) : null;
+ 
+   // QA colour A/B: `?bennyTint=hat_brim:7868a0,hat_crown:e4d4e4` sets the base-colour factor of meshes whose name
+   // starts with the given prefix (the GLB's own factors are the default; materials are shared by every clone)
+@@ -182,7 +185,7 @@ export function createBennyRuntime(
+     scene.position.y = lift;
+     // ride lean into the current (see BENNY_RIDE_PITCH), on the same ease as the lift
+     const pitchScale = typeof root.userData.ridePitch === 'number' ? THREE.MathUtils.clamp(root.userData.ridePitch, 0, 1) : 1;
+-    const pitchTarget = tumble || peek ? 0 : pitchMax * pitchScale * THREE.MathUtils.smoothstep(swim, 0.5, 0.9);
++    const pitchTarget = tumble || peek ? 0 : (b30 ? THREE.MathUtils.degToRad(b30.params.pitch) : pitchMax) * pitchScale * THREE.MathUtils.smoothstep(swim, 0.5, 0.9);
+     pitch += (pitchTarget - pitch) * (1 - Math.exp(-dt * 7));
+ 
+     // steering lean (roll) + slight yaw into the turn
 diff --git a/src/game/Game.ts b/src/game/Game.ts
 index 6aec2406..735b4041 100644
 --- a/src/game/Game.ts
