@@ -1,0 +1,23 @@
+{
+  "budget": {
+    "ceiling_credits": 5420,
+    "expected_credits": 1580,
+    "pricing_source": "https://docs.worldlabs.ai/api/pricing",
+    "pricing_verified_on": "2026-11-20"
+  },
+  "correlation_tag": "s06-dec63764d24f47f58a97c2d8",
+  "input": {
+    "bytes": 497882,
+    "extension": "jpg",
+    "mime": "image/jpeg",
+    "path": "/workspace/scratch/f32363dbf3ff/rainbow-s06/references/06_crest_the_rinse_arch.png",
+    "sha256": "3946058c0893e97a99dd5015f3197901859475cd7ef55e09d982d232951441fe"
+  },
+  "job_name": "s06-approved-reference",
+  "local_request_id": "dec63764d24f47f58a97c2d8cdae24d4",
+  "network_requests": 0,
+  "prepared_at": "2026-11-20T21:47:46+00:00",
+  "request_sha256": "6ba313481b2ba5442fa9552d2aad0925968d6436bfbcf23e5a8bc3ca1eeec0df",
+  "schema_version": 1,
+  "visual_match_guaranteed": false
+}

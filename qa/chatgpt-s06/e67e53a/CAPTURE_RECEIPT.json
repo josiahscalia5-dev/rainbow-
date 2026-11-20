@@ -1,0 +1,92 @@
+{
+  "source_commit": "e67e53a55258be0ba50dbd6e0c62099e6051231e",
+  "github_run_id": 44822898955,
+  "github_run_url": "https://github.com/josiahscalia5-dev/rainbow-/actions/runs/44822898955",
+  "artifact_id": 14670684206,
+  "archive_sha256": "6d7c2346b9f63d5b3ba09f40ba1d5bce2442292e8a5c6ed950dac081d713ee9a",
+  "capture_type": "Actual game runtime at fixed simulation checkpoints and shader time; no generated or repainted gameplay frames.",
+  "viewport": [
+    432,
+    768
+  ],
+  "device_scale_factor": 1,
+  "notes": [
+    "Both variants loaded original Benny and girl GLB runtime modules; no stand-in warnings.",
+    "Both capture logs contain one console 404 during initial load, without the resource URL; not yet attributed. Status is completed-with-errors. No page error or shader failure was recorded.",
+    "Neutral steering screenshots do not validate hard-steering bounds.",
+    "End checkpoint is 85 percent of the route after the 06 checkpoint, not the boundary. entry07 is a real simulated crossing plus three units.",
+    "These captures do not establish the requested visual fidelity or continuous-motion quality."
+  ],
+  "files": [
+    {
+      "path": "baseline/a_start.png",
+      "bytes": 706679,
+      "sha256": "0628c0970dd35f88a96a78db3019354b5a540cd331b3bdef5dcdd7bdd9a252e0"
+    },
+    {
+      "path": "baseline/c_middle_35.png",
+      "bytes": 541312,
+      "sha256": "4b179991889783e4adacbd95a3c33e6dc627bdff010f74411bd42003afae2c71"
+    },
+    {
+      "path": "baseline/e_end_85.png",
+      "bytes": 560442,
+      "sha256": "5e0a9f4ca6c06e0f773d66d58585eff1a54cc350407f72402b683c3e4427e506"
+    },
+    {
+      "path": "baseline/h_actual_entry_07.png",
+      "bytes": 533694,
+      "sha256": "4abc8371a33cd051a123ceb55f00a0576a44d717218ed87cebdeb271d91539d8"
+    },
+    {
+      "path": "baseline/capture.json",
+      "bytes": 17157,
+      "sha256": "e6aa9b29390a373cbe702f328e0be2011b809c5bdc8ae933e83e4b60813094ef"
+    },
+    {
+      "path": "candidate/a_start.png",
+      "bytes": 706781,
+      "sha256": "1a4500a9c747888a31995214c8a3f7c9419f797a09c6a5e1220cb7243c61f037"
+    },
+    {
+      "path": "candidate/c_middle_35.png",
+      "bytes": 548409,
+      "sha256": "29c1f0da9665f019785b5b3c959f13a685698be6faf53a85f51b05e12e13f2d2"
+    },
+    {
+      "path": "candidate/e_end_85.png",
+      "bytes": 565788,
+      "sha256": "d4b553a3f0f0513735e21597529ff446639246792cd65de998d2e2e34f3d92db"
+    },
+    {
+      "path": "candidate/h_actual_entry_07.png",
+      "bytes": 533694,
+      "sha256": "4abc8371a33cd051a123ceb55f00a0576a44d717218ed87cebdeb271d91539d8"
+    },
+    {
+      "path": "candidate/capture.json",
+      "bytes": 17209,
+      "sha256": "c5c2d2b612a31b28e44ede515a3c7290a0873660552e89546fd0b7cac5d06c32"
+    },
+    {
+      "path": "browser-version.txt",
+      "bytes": 29,
+      "sha256": "04ce1829b69f68a11eb8ef036a6ab18a63411689e39b9b3331c0d884b707983a"
+    },
+    {
+      "path": "node-version.txt",
+      "bytes": 9,
+      "sha256": "4409d3bfa08b82f385bd424eeda65fc63b756129f0e89e82df77f1fecafccc14"
+    },
+    {
+      "path": "source-commit.txt",
+      "bytes": 41,
+      "sha256": "3da43931522b0e9273075e2a989ef54e1ec90d81081a0659dcaf057b24477c46"
+    },
+    {
+      "path": "result.json",
+      "bytes": 119,
+      "sha256": "3773861ab671fbcefbac55b051235e33d7cbaa0f189ccf0f3dc893fc6ce127b3"
+    }
+  ]
+}

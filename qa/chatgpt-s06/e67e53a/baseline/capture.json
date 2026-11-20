@@ -1,0 +1,757 @@
+{
+  "schema": 1,
+  "startedUTC": "2026-11-20T21:44:23.259Z",
+  "status": "completed-with-errors",
+  "url": "http://127.0.0.1:5199/?match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1&m06st=1&m06fcl=1&m06view=1&m06vs=0&m06rip=1&m06hole=2&m06fade=1&m06spl=1&m06fcn=3&m06fcg=1&m06deep=1&m06leg=1&m06vw=34%2C56&m06tswap=2&m06haze=50%2C115%2C0.85&reviewModels=0&qa=1&dpr=1",
+  "viewport": {
+    "width": 432,
+    "height": 768,
+    "deviceScaleFactor": 1
+  },
+  "simulationHz": 60,
+  "stillShaderTime": 10,
+  "executablePath": "/usr/bin/google-chrome",
+  "source": "Existing Rainbow Screen 06 runtime; captured pixels, no generated or repainted gameplay frames.",
+  "errors": [
+    {
+      "kind": "console",
+      "phase": "loading",
+      "utc": "2026-11-20T21:44:30.504Z",
+      "message": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    }
+  ],
+  "warnings": [],
+  "shots": [
+    {
+      "name": "a_start",
+      "fraction": 0,
+      "steer": 0,
+      "file": "/home/runner/work/rainbow-/rainbow-/capture-artifact/baseline/a_start.png",
+      "goalS": 198.91,
+      "simulationTicks": 0,
+      "simulationTime": 0,
+      "shaderTime": 10,
+      "range": {
+        "checkpointS": 198.91,
+        "stage06": {
+          "id": "06",
+          "title": "CREST THE RINSE ARCH",
+          "s0": 188.90987977543335,
+          "s1": 312.72763955454957,
+          "width": 7,
+          "tube": 15,
+          "tubeKind": "perf",
+          "speed": 11,
+          "refCoins": 1680,
+          "interactive": true,
+          "bank": 0.6
+        },
+        "stage07": {
+          "id": "07",
+          "title": "DIVE THE WASHER TUBE",
+          "s0": 312.72763955454957,
+          "s1": 454.90669055564535,
+          "width": 5.6,
+          "tube": 7.2,
+          "tubeKind": "perf",
+          "speed": 12,
+          "refCoins": 1940,
+          "interactive": true,
+          "bank": 1
+        },
+        "state": {
+          "mode": "ride",
+          "stage": "06",
+          "s": 198.91,
+          "lat": 0,
+          "coins": 1680,
+          "hearts": 5,
+          "paused": false,
+          "bennyY": -37.61,
+          "bennyVisible": true,
+          "cam": [
+            1.72,
+            -35.37,
+            -132.64
+          ]
+        }
+      },
+      "transitions": [],
+      "state": {
+        "mode": "ride",
+        "stage": "06",
+        "s": 198.91,
+        "lat": 0,
+        "coins": 1680,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -37.61,
+        "bennyVisible": true,
+        "cam": [
+          1.72,
+          -35.37,
+          -132.64
+        ]
+      },
+      "stats": {
+        "fps": 82.2,
+        "calls": 46,
+        "triangles": 293779,
+        "geometries": 63,
+        "textures": 43,
+        "modules": {
+          "water": "vfx/index.ts",
+          "benny": "assets/models/benny.glb",
+          "girl": "assets/models/rainbow_girl.glb"
+        },
+        "courseLength": 500.87831070149514
+      },
+      "camera": {
+        "matrixWorld": [
+          0.9808375853832519,
+          -3.469446951953614e-18,
+          -0.19482718265055315,
+          0,
+          -0.036956750886988396,
+          0.9818440496142485,
+          -0.1860549940231922,
+          0,
+          0.191289909988554,
+          0.1896899107414335,
+          0.9630295468465534,
+          0,
+          1.7204859682032327,
+          -35.369651276695045,
+          -132.6439934659901,
+          1
+        ],
+        "fov": 62,
+        "aspect": 0.5625,
+        "near": 0.05,
+        "far": 1200,
+        "width": 432,
+        "height": 768,
+        "position": [
+          1.7204859682032327,
+          -35.369651276695045,
+          -132.6439934659901
+        ],
+        "target": [
+          -0.19241313168230745,
+          -37.26655038410938,
+          -142.27428893445563
+        ]
+      },
+      "benny": {
+        "x": -0.03,
+        "y": -0.31,
+        "z": 0.984,
+        "visible": true,
+        "cam": [
+          1.72,
+          -35.37,
+          -132.64
+        ],
+        "benny": [
+          0.54,
+          -37.61,
+          -138.25
+        ]
+      },
+      "error": null
+    },
+    {
+      "name": "c_middle_35",
+      "fraction": 0.35,
+      "steer": 0,
+      "file": "/home/runner/work/rainbow-/rainbow-/capture-artifact/baseline/c_middle_35.png",
+      "goalS": 238.74617384409234,
+      "simulationTicks": 218,
+      "simulationTime": 3.6333333333333333,
+      "shaderTime": 10,
+      "range": {
+        "checkpointS": 198.91,
+        "stage06": {
+          "id": "06",
+          "title": "CREST THE RINSE ARCH",
+          "s0": 188.90987977543335,
+          "s1": 312.72763955454957,
+          "width": 7,
+          "tube": 15,
+          "tubeKind": "perf",
+          "speed": 11,
+          "refCoins": 1680,
+          "interactive": true,
+          "bank": 0.6
+        },
+        "stage07": {
+          "id": "07",
+          "title": "DIVE THE WASHER TUBE",
+          "s0": 312.72763955454957,
+          "s1": 454.90669055564535,
+          "width": 5.6,
+          "tube": 7.2,
+          "tubeKind": "perf",
+          "speed": 12,
+          "refCoins": 1940,
+          "interactive": true,
+          "bank": 1
+        },
+        "state": {
+          "mode": "ride",
+          "stage": "06",
+          "s": 198.91,
+          "lat": 0,
+          "coins": 1680,
+          "hearts": 5,
+          "paused": false,
+          "bennyY": -37.61,
+          "bennyVisible": true,
+          "cam": [
+            1.72,
+            -35.37,
+            -132.64
+          ]
+        }
+      },
+      "transitions": [],
+      "state": {
+        "mode": "ride",
+        "stage": "06",
+        "s": 238.877,
+        "lat": 0,
+        "coins": 1740,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -39.558,
+        "bennyVisible": true,
+        "cam": [
+          -0.43,
+          -36.86,
+          -169.74
+        ]
+      },
+      "stats": {
+        "fps": 87.7,
+        "calls": 51,
+        "triangles": 350881,
+        "geometries": 65,
+        "textures": 43,
+        "modules": {
+          "water": "vfx/index.ts",
+          "benny": "assets/models/benny.glb",
+          "girl": "assets/models/rainbow_girl.glb"
+        },
+        "courseLength": 500.87831070149514
+      },
+      "camera": {
+        "matrixWorld": [
+          0.9877039090008641,
+          -3.469446951953614e-18,
+          -0.15633613831872908,
+          0,
+          -0.03494847511010914,
+          0.9746931505117828,
+          -0.22079824825594302,
+          0,
+          0.15237976319672794,
+          0.22354700254178084,
+          0.9627082348368555,
+          0,
+          -0.43109866127899626,
+          -36.855692560752246,
+          -169.73984920513738,
+          1
+        ],
+        "fov": 62,
+        "aspect": 0.5625,
+        "near": 0.05,
+        "far": 1200,
+        "width": 432,
+        "height": 768,
+        "position": [
+          -0.43109866127899626,
+          -36.855692560752246,
+          -169.73984920513738
+        ],
+        "target": [
+          -2.0067615374716348,
+          -39.16725090419499,
+          -179.69460693946328
+        ]
+      },
+      "benny": {
+        "x": 0.13,
+        "y": -0.23,
+        "z": 0.987,
+        "visible": true,
+        "cam": [
+          -0.43,
+          -36.86,
+          -169.74
+        ],
+        "benny": [
+          -1.23,
+          -39.56,
+          -176.88
+        ]
+      },
+      "error": null
+    },
+    {
+      "name": "e_end_85",
+      "fraction": 0.85,
+      "steer": 0,
+      "file": "/home/runner/work/rainbow-/rainbow-/capture-artifact/baseline/e_end_85.png",
+      "goalS": 295.6549936213671,
+      "simulationTicks": 528,
+      "simulationTime": 8.8,
+      "shaderTime": 10,
+      "range": {
+        "checkpointS": 198.91,
+        "stage06": {
+          "id": "06",
+          "title": "CREST THE RINSE ARCH",
+          "s0": 188.90987977543335,
+          "s1": 312.72763955454957,
+          "width": 7,
+          "tube": 15,
+          "tubeKind": "perf",
+          "speed": 11,
+          "refCoins": 1680,
+          "interactive": true,
+          "bank": 0.6
+        },
+        "stage07": {
+          "id": "07",
+          "title": "DIVE THE WASHER TUBE",
+          "s0": 312.72763955454957,
+          "s1": 454.90669055564535,
+          "width": 5.6,
+          "tube": 7.2,
+          "tubeKind": "perf",
+          "speed": 12,
+          "refCoins": 1940,
+          "interactive": true,
+          "bank": 1
+        },
+        "state": {
+          "mode": "ride",
+          "stage": "06",
+          "s": 198.91,
+          "lat": 0,
+          "coins": 1680,
+          "hearts": 5,
+          "paused": false,
+          "bennyY": -37.61,
+          "bennyVisible": true,
+          "cam": [
+            1.72,
+            -35.37,
+            -132.64
+          ]
+        }
+      },
+      "transitions": [],
+      "state": {
+        "mode": "ride",
+        "stage": "06",
+        "s": 295.71,
+        "lat": 0,
+        "coins": 1810,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -49.175,
+        "bennyVisible": true,
+        "cam": [
+          2.79,
+          -45.78,
+          -225.82
+        ]
+      },
+      "stats": {
+        "fps": 71.8,
+        "calls": 51,
+        "triangles": 350881,
+        "geometries": 65,
+        "textures": 43,
+        "modules": {
+          "water": "vfx/index.ts",
+          "benny": "assets/models/benny.glb",
+          "girl": "assets/models/rainbow_girl.glb"
+        },
+        "courseLength": 500.87831070149514
+      },
+      "camera": {
+        "matrixWorld": [
+          0.996978631756059,
+          5.204170427930421e-18,
+          0.0776763015456868,
+          0,
+          0.025648686837750442,
+          0.9439111173631383,
+          -0.3292019856892889,
+          0,
+          -0.07331952458462529,
+          0.330199640396945,
+          0.9410592142880344,
+          0,
+          2.7854941656686547,
+          -45.77680659280674,
+          -225.81523721123597,
+          1
+        ],
+        "fov": 62,
+        "aspect": 0.5625,
+        "near": 0.05,
+        "far": 1200,
+        "width": 432,
+        "height": 768,
+        "position": [
+          2.7854941656686547,
+          -45.77680659280674,
+          -225.81523721123597
+        ],
+        "target": [
+          3.543627372338332,
+          -49.19111285888698,
+          -235.54590914120428
+        ]
+      },
+      "benny": {
+        "x": -0.06,
+        "y": -0.21,
+        "z": 0.987,
+        "visible": true,
+        "cam": [
+          2.79,
+          -45.78,
+          -225.82
+        ],
+        "benny": [
+          3.16,
+          -49.17,
+          -232.65
+        ]
+      },
+      "error": null
+    },
+    {
+      "name": "h_actual_entry_07",
+      "stage07Offset": 3,
+      "steer": 0,
+      "file": "/home/runner/work/rainbow-/rainbow-/capture-artifact/baseline/h_actual_entry_07.png",
+      "goalS": 315.72763955454957,
+      "simulationTicks": 636,
+      "simulationTime": 10.6,
+      "shaderTime": 10,
+      "range": {
+        "checkpointS": 198.91,
+        "stage06": {
+          "id": "06",
+          "title": "CREST THE RINSE ARCH",
+          "s0": 188.90987977543335,
+          "s1": 312.72763955454957,
+          "width": 7,
+          "tube": 15,
+          "tubeKind": "perf",
+          "speed": 11,
+          "refCoins": 1680,
+          "interactive": true,
+          "bank": 0.6
+        },
+        "stage07": {
+          "id": "07",
+          "title": "DIVE THE WASHER TUBE",
+          "s0": 312.72763955454957,
+          "s1": 454.90669055564535,
+          "width": 5.6,
+          "tube": 7.2,
+          "tubeKind": "perf",
+          "speed": 12,
+          "refCoins": 1940,
+          "interactive": true,
+          "bank": 1
+        },
+        "state": {
+          "mode": "ride",
+          "stage": "06",
+          "s": 198.91,
+          "lat": 0,
+          "coins": 1680,
+          "hearts": 5,
+          "paused": false,
+          "bennyY": -37.61,
+          "bennyVisible": true,
+          "cam": [
+            1.72,
+            -35.37,
+            -132.64
+          ]
+        }
+      },
+      "transitions": [
+        {
+          "from": "06",
+          "to": "07",
+          "atStep": 21,
+          "s": 312.861,
+          "simulationTime": 10.35
+        }
+      ],
+      "state": {
+        "mode": "ride",
+        "stage": "07",
+        "s": 315.781,
+        "lat": 0,
+        "coins": 1810,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -51.299,
+        "bennyVisible": true,
+        "cam": [
+          5.06,
+          -47.57,
+          -244.83
+        ]
+      },
+      "stats": {
+        "fps": 83.2,
+        "calls": 252,
+        "triangles": 714791,
+        "geometries": 193,
+        "textures": 63,
+        "modules": {
+          "water": "vfx/index.ts",
+          "benny": "assets/models/benny.glb",
+          "girl": "assets/models/rainbow_girl.glb"
+        },
+        "courseLength": 500.87831070149514
+      },
+      "camera": {
+        "matrixWorld": [
+          0.9950269399746512,
+          -0.03045433985880798,
+          0.09483629003944753,
+          0,
+          0.04286992183853987,
+          0.9903534626732015,
+          -0.131765658548642,
+          0,
+          -0.08990861208048691,
+          0.13517600436084817,
+          0.9867339506264069,
+          0,
+          5.056253941414108,
+          -47.56835680216703,
+          -244.8270380990911,
+          1
+        ],
+        "fov": 62,
+        "aspect": 0.5625,
+        "near": 0.05,
+        "far": 1200,
+        "width": 432,
+        "height": 768,
+        "position": [
+          5.056253941414108,
+          -47.56835680216703,
+          -244.8270380990911
+        ],
+        "target": [
+          7.079847598442003,
+          -50.6107939911886,
+          -267.03568438398946
+        ]
+      },
+      "benny": {
+        "x": 0.18,
+        "y": -0.56,
+        "z": 0.988,
+        "visible": true,
+        "cam": [
+          5.06,
+          -47.57,
+          -244.83
+        ],
+        "benny": [
+          6.15,
+          -51.3,
+          -252.28
+        ]
+      },
+      "error": null
+    }
+  ],
+  "inspections": [],
+  "clip": null,
+  "initial": {
+    "state": {
+      "mode": "intro",
+      "stage": "01",
+      "s": 0,
+      "lat": 0,
+      "coins": 1330,
+      "hearts": 5,
+      "paused": false,
+      "bennyY": 0,
+      "bennyVisible": true,
+      "cam": [
+        0,
+        0,
+        0
+      ]
+    },
+    "stats": {
+      "fps": 86.8,
+      "calls": 77,
+      "triangles": 866677,
+      "geometries": 49,
+      "textures": 28,
+      "modules": {
+        "water": "vfx/index.ts",
+        "benny": "assets/models/benny.glb",
+        "girl": "assets/models/rainbow_girl.glb"
+      },
+      "courseLength": 500.87831070149514
+    },
+    "camera": {
+      "matrixWorld": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "fov": 66,
+      "aspect": 0.5625,
+      "near": 0.05,
+      "far": 1200,
+      "width": 432,
+      "height": 768,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "target": [
+        0,
+        0,
+        0
+      ]
+    },
+    "benny": {
+      "x": null,
+      "y": null,
+      "z": null,
+      "visible": true,
+      "cam": [
+        0,
+        0,
+        0
+      ],
+      "benny": [
+        0,
+        0,
+        0
+      ]
+    },
+    "error": null
+  },
+  "final": {
+    "state": {
+      "mode": "ride",
+      "stage": "07",
+      "s": 315.781,
+      "lat": 0,
+      "coins": 1810,
+      "hearts": 5,
+      "paused": false,
+      "bennyY": -51.299,
+      "bennyVisible": true,
+      "cam": [
+        5.06,
+        -47.57,
+        -244.83
+      ]
+    },
+    "stats": {
+      "fps": 83.2,
+      "calls": 252,
+      "triangles": 714791,
+      "geometries": 193,
+      "textures": 63,
+      "modules": {
+        "water": "vfx/index.ts",
+        "benny": "assets/models/benny.glb",
+        "girl": "assets/models/rainbow_girl.glb"
+      },
+      "courseLength": 500.87831070149514
+    },
+    "camera": {
+      "matrixWorld": [
+        0.9950269399746512,
+        -0.03045433985880798,
+        0.09483629003944753,
+        0,
+        0.04286992183853987,
+        0.9903534626732015,
+        -0.131765658548642,
+        0,
+        -0.08990861208048691,
+        0.13517600436084817,
+        0.9867339506264069,
+        0,
+        5.056253941414108,
+        -47.56835680216703,
+        -244.8270380990911,
+        1
+      ],
+      "fov": 62,
+      "aspect": 0.5625,
+      "near": 0.05,
+      "far": 1200,
+      "width": 432,
+      "height": 768,
+      "position": [
+        5.056253941414108,
+        -47.56835680216703,
+        -244.8270380990911
+      ],
+      "target": [
+        7.079847598442003,
+        -50.6107939911886,
+        -267.03568438398946
+      ]
+    },
+    "benny": {
+      "x": 0.18,
+      "y": -0.56,
+      "z": 0.988,
+      "visible": true,
+      "cam": [
+        5.06,
+        -47.57,
+        -244.83
+      ],
+      "benny": [
+        6.15,
+        -51.3,
+        -252.28
+      ]
+    },
+    "error": null
+  },
+  "finishedUTC": "2026-11-20T21:44:57.101Z"
+}

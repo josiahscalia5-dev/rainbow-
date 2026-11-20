@@ -1,0 +1,25 @@
+{
+  "display_name": "Rainbow Screen06 Purple Washer Tunnel",
+  "model": "marble-1.1",
+  "permission": {
+    "allow_id_access": false,
+    "allowed_readers": [],
+    "allowed_writers": [],
+    "public": false
+  },
+  "tags": [
+    "rainbow",
+    "screen06",
+    "washer-tunnel",
+    "s06-dec63764d24f47f58a97c2d8"
+  ],
+  "world_prompt": {
+    "image_prompt": {
+      "media_asset_id": "PREPARE_WILL_SET_MEDIA_ASSET_ID",
+      "source": "media_asset"
+    },
+    "is_pano": false,
+    "text_prompt": "Build a continuous interior environment based closely on the supplied Screen06 reference. An enormous cylindrical washer-drum tunnel has glossy purple and magenta metal walls, orderly rows of rounded perforations, and substantial broad reflective gold circumferential bands. A glossy cyan waterslide with vivid pink edges winds around bends and descends deeply through the tunnel, extending from the foreground into the distance. Preserve the saturated candy-like lighting, enclosed tunnel depth, iridescent bubbles, and white foam along the slide. Form a spatially coherent explorable three-dimensional interior from a viewpoint on the descending slide. Environment only, without people, game characters, text, HUD, or interface elements. Preserve the reference's main structure and material palette.",
+    "type": "image"
+  }
+}
