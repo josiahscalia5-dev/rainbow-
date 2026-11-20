@@ -430,7 +430,7 @@ index 598cb42a..d9056e56 100644
    // ---- 05 far tunnel (forced perspective, calibrated for the locked 05 checkpoint eye) ----
    {
 diff --git a/src/world/match06.ts b/src/world/match06.ts
-index 831c2b44..6aa1a52e 100644
+index 831c2b44..93ebd2f7 100644
 --- a/src/world/match06.ts
 +++ b/src/world/match06.ts
 @@ -19,6 +19,8 @@ import * as THREE from 'three';
@@ -1067,7 +1067,7 @@ index 831c2b44..6aa1a52e 100644
        shared.uUseDepth.value = 1;
      },
      setAway(a) { if (foamClouds) foamClouds.visible = a > 0.5; for (const o of foamSprites) o.visible = a > 0.5; },
-+    setBenny(s, lat) { if (floorMat.uniforms.uRipOn.value > 0.5) floorMat.uniforms.uBen.value.set(lat, s); if (stub0) stub0.visible = s < L.s0 + 12 + 10; } // r30: approved checkpoint (L.s0 + 12) + 10 u,
++    setBenny(s, lat) { if (floorMat.uniforms.uRipOn.value > 0.5) floorMat.uniforms.uBen.value.set(lat, s); if (stub0) stub0.visible = s < L.s0 + 12 + 10; }, // r30: approved checkpoint (L.s0 + 12) + 10 u
      away(cam) { return THREE.MathUtils.smoothstep(cam.distanceTo(shared.uProjPos.value), 0.6, 2.0); },
      sync(renderer, w, h) {
        shared.uPjPost.value.x = renderer.toneMappingExposure;

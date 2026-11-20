@@ -2579,3 +2579,46 @@ tsc picked up my small continuity wrapper (it needs Node typings). I'll mark it 
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -i 's/if (stub0) stub0.visible = s < L.s0 + 10; }/if (stub0) stub0.visible = s < L.s0 + 12 + 10; } \\/\\/ r30: approved checkpoint (L.s0 + 12) + 10 u/' src/world/match06.ts && grep -c \"L.s0 + 12 + 10\" src/world/match06.ts && sed -i 's/exists only while Benny is within his first ~10 u (setBenny)/exists only while Benny is within his first ~10 u past the approved checkpoint (setBenny)/' src/world/match06.ts && AUDIT_W=864 AUDIT_H=1536 AUDIT_PORT=5302 AUDIT_SHOTS='[[\"a_start\",0,null]]' timeout 1500 node tools/match06/r30_shots.mjs /home/user/rainbow-/q …[+766 chars]`
 
+### 🧑 User — 2026-11-20T20:48:41.888Z
+
+> ↩︎ result: 1
+> 8:43:40 PM [vite] Pre-transform error: Transform failed with 1 error:
+> 8:43:41 PM [vite] Internal server error: Transform failed with 1 error:
+>       at failureErrorWithLog (/home/user/rainbow-/node_modules/esbuild/lib/main.js:1472:15)
+> console Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+>   name: 'TimeoutError'
+> start view: >20 levels 0.222 %, >0 18.16 %
+> right-edge region max diff 251 magenta px 880
+> 295
+> [This command modified 1 file you've previously read: ../../../../../wt/s06/src/world/match06.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-20T20:48:45.070Z
+
+My edit broke the build: the comment swallowed the comma after that method. Fixing it.
+
+### 🤖 Claude — 2026-11-20T20:48:47.136Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"setBenny(s, lat) {\" src/world/match06.ts && sed -i 's|if (stub0) stub0.visible = s < L.s0 + 12 + 10; } // r30: approved checkpoint (L.s0 + 12) + 10 u,|if (stub0) stub0.visible = s < L.s0 + 12 + 10; }, // r30: approved checkpoint (L.s0 + 12) + 10 u|' src/world/match06.ts && grep -n \"setBenny(s, lat) {\" src/world/match06.ts && npx tsc --noEmit -p . 2>&1 | head -3; echo tsc-done", "description": "Fix the syntax error and typecheck", "timeout": 240000}`
+
+### 🧑 User — 2026-11-20T20:48:52.079Z
+
+> ↩︎ result: 1293:    setBenny(s, lat) { if (floorMat.uniforms.uRipOn.value > 0.5) floorMat.uniforms.uBen.value.set(lat, s); if (stub0) stub0.visible = s < L.s0 + 12 + 10; } // r30: approved checkpoint (L.s0 + 12) + 10 u,
+> 1293:    setBenny(s, lat) { if (floorMat.uniforms.uRipOn.value > 0.5) floorMat.uniforms.uBen.value.set(lat, s); if (stub0) stub0.visible = s < L.s0 + 12 + 10; }, // r30: approved checkpoint (L.s0 + 12) + 10 u
+> tsc-done
+> Shell cwd was reset to /home/user/rainbow-
+> [This command modified 1 file you've previously read: ../wt/s06/src/world/match06.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-20T20:48:53.960Z
+
+Fixed and typecheck is clean. The running clip had already loaded, so it wasn't affected. Re-checking the start view.
+
+### 🤖 Claude — 2026-11-20T20:48:57.421Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && AUDIT_W=864 AUDIT_H=1536 AUDIT_PORT=5302 AUDIT_SHOTS='[[\"a_start\",0,null]]' timeout 1500 node tools/match06/r30_shots.mjs /home/user/rainbow-/qa/match/06/r30/stills_NEW 06 \"$(cat /home/user/rainbow-/qa/match/06/r30/QUERY_NEW.txt)\" 2>&1 | grep -E \"^06|rror\" && cd /home/user/rainbow-/qa/match/06/r30 && python3 -c \"\nfrom PIL import Image; import numpy as np\na=np.asarray(Image.open('stills_BEFORE/a_start.png').convert('RGB')).astype(int); b=np.asarray(Image.open('stills_NEW/a_start.png').convert('RGB')).astype(int)\nd=np.abs(a-b).max(axis=2); print('st …[+299 chars]`
+
+### 🧑 User — 2026-11-20T20:49:20.431Z
+
+> ↩︎ result: 06 a_start s 198.91 lat 0 stage 06 coins 1680
+> start view: >20 levels 0.128 %, >0 18.09 %
+> right-edge region max diff 185 magenta px 0
+
