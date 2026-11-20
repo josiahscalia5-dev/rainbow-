@@ -54,4 +54,9 @@ Briefs: `LAUNCH_R27.md`. If this account stops: next account runs `bash docs/bri
 newest `backups/wip/*-c28/`, trial07 included).
 
 ## Results log
-* ~15:40 four workers launched (s07, s06, s04, Benny). Lead: screen preview + ratings for the user (`qa/review_r27/`).
+* ~15:25 four workers launched (s07, s06, s04, Benny). Restore checkpoint `7d41c35` (15:26) verified on GitHub. Draft PR #24 (DO NOT MERGE).
+* ~15:30 USER (mid-turn): screens 01, 02, 03 and 11 are the user's Google Flow videos — do not build or rate them (kept as video slots).
+* 15:28–15:45 lead preview: newest candidate of 04–08 in motion + 09/10 stand-ins → `qa/review_r27/` (README with ratings + method) and the
+  page https://claude.ai/artifact/WVqynQ46W6j3yZSGAqV3qA. Ratings (by eye, overall): 04 6.5 · 05 7.5 · 06 5.5 · 07 5 · 08 7.5 · 09/10 3.
+  None ≥ 8.5 in motion. New 07 defect (magenta wall panel at 85 %) sent to s07. Save `15d03cc` verified.
+* Open question to the user: 09 and 10 playable or Flow videos? Paid continuation views per screen need the user's OK (job + cost first).

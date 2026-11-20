@@ -2352,3 +2352,66 @@ Everything is saved and verified on GitHub (`15d03cc`, remote matches). I've now
 
 > ↩︎ result: 48 files 4545 KB
 
+### 🤖 Claude — 2026-11-20T15:47:09.546Z
+
+Writing the preview page: approved picture first, then the game at start, early, middle, late, end and hard left/right for each screen, with ratings and the fix plan.
+
+### 🤖 Claude — 2026-11-20T15:48:20.054Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/review_r27/index.html", "content": "<title>Rainbow Screen Check</title>\n<meta name=\"claude:viewport-fit-sides\" content=\"cover\">\n<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Inter:wght@400;500;600&display=swap\">\n<style>\n/* Layout: one column of screen \"cards\"; each card = rating header + a scrolling filmstrip of phone frames (approved first) + notes. */\n:root{\n  --bg:#1b1029; --panel:#26163a; --line:#3d2758; --fg:#f6eefc; --m …[+20800 chars]`
+
+### 🧑 User — 2026-11-20T15:48:20.221Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/review_r27/index.html (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T15:48:23.919Z
+
+Publishing the page with its images.
+
+### 🤖 Claude — 2026-11-20T15:48:27.438Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport json,os\nm={}\nfor n in ['04','05','06','07','08','09','10']: m[f'web/{n}_approved.jpg']=f'qa/review_r27/web/{n}_approved.jpg'\nfor n in ['04','05','06','07','08']:\n  for k in ['a_start','b_early','c_middle','d_late','e_end','f_hard_left','g_hard_right']: m[f'web/{n}_{k}.jpg']=f'qa/review_r27/web/{n}_{k}.jpg'\nfor n in ['09','10']: m[f'web/{n}_now.jpg']=f'qa/review_r27/web/{n}_now.jpg'\nassert all(os.path.exists(v) for v in m.values())\nprint(len(m)); print(json.dumps(m))\" > /tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/scratchpa …[+168 chars]`
+
+### 🧑 User — 2026-11-20T15:48:27.520Z
+
+> ↩︎ result: 44
+> {"web/04_approved.jpg": "qa/review_r27/web/04_approved.jpg", "web/05_approved.jpg": "qa/review_r27/web/05_approved.jpg", "web/06_approved.jpg": "qa/review_r27/web/06_approved.jpg", "web/07_approved.jpg": "qa/review_r27/web/07_approved.jpg", "web/08_approved.jpg": "qa/review_r27/web/08_approved.jp
+
+### 🤖 Claude — 2026-11-20T15:48:39.275Z
+
+> 🔧 **Artifact** `{"file_path": "/home/user/rainbow-/qa/review_r27/index.html", "icon": "game", "description": "Each playable Rainbow screen captured in motion from the real game, next to its approved picture, with a 1–10 rating and the plan to reach 8.5.", "files": {"web/04_approved.jpg": "qa/review_r27/web/04_approved.jpg", "web/05_approved.jpg": "qa/review_r27/web/05_approved.jpg", "web/06_approved.jpg": "qa/review_r27/web/06_approved.jpg", "web/07_approved.jpg": "qa/review_r27/web/07_approved.jpg", "web/08_approved.jpg": "qa/review_r27/web/08_approved.jpg", "web/09_approved.jpg": "qa/review_r27/web/09_appro …[+2270 chars]`
+
+### 🧑 User — 2026-11-20T15:48:41.673Z
+
+> ↩︎ result: Published /home/user/rainbow-/qa/review_r27/index.html at https://claude.ai/artifact/WVqynQ46W6j3yZSGAqV3qA (Version 1, version id 1795189720-6290) Icon: "game".
+> 
+> Durable wake subscription: arming in the background — not registered yet, so this is not a subscription until `status` lists it (you are told if it cannot be registered). Once registered, this session is woken by a new turn when this artifact is republished elsewhere, or when anyone sends a comment on it to Claude.
+> 
+> To update: publish the same file path here (keeps this URL); from another conversation pass the URL as `url`, or that publish creates a separate artifact. This artifact is private: only its owner and the people the owner has given access can open the link. You cannot change sharing; that is done from the page's Share menu. If the page is meant for someone else, tell the user when you present the page that those people cannot open it until it is shared with them. Sharing can change without you being told: read the artifact before you later say who can open it.
+> 
+> The files you sent are still on disk. For the next small change to this file, send it as `edits` on a publish of the same file_path (old_str/new_str pai …[+391 chars]
+
+### 🤖 Claude — 2026-11-20T15:48:44.598Z
+
+The preview page is published. Now I'll record the ratings and results in the repo so the next account has them, then save.
+
+### 🤖 Claude — 2026-11-20T15:48:54.897Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/review_r27/README.md", "content": "# Round 27 lead preview — every playable screen in motion vs its approved picture (2026-11-20 15:28–15:45 UTC)\n\nPage for the user: https://claude.ai/artifact/WVqynQ46W6j3yZSGAqV3qA (private to the owner) — source `index.html`, images `web/`.\nUser (r27, mid-turn): screens **01, 02, 03 and 11 are the user's Google Flow videos — do not build or rate them** (kept as video slots, nothing removed).\n09 and 10: listed as Flow videos on 11-17; the user did not mention them on 11-20 → question asked (playable or video?).\n\n##  …[+1930 chars]`
+
+### 🧑 User — 2026-11-20T15:48:55.011Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/review_r27/README.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T15:48:59.400Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/docs/briefs/2026-11-20-r27/COORDINATION.md", "old_string": "## Results log\n* ~15:40 four workers launched (s07, s06, s04, Benny). Lead: screen preview + ratings for the user (`qa/review_r27/`).", "new_string": "## Results log\n* ~15:25 four workers launched (s07, s06, s04, Benny). Restore checkpoint `7d41c35` (15:26) verified on GitHub. Draft PR #24 (DO NOT MERGE).\n* ~15:30 USER (mid-turn): screens 01, 02, 03 and 11 are the user's Google Flow videos — do not build or rate them (kept as video slots).\n* 15:28–15:45 lead preview: newest  …[+489 chars]`
+
+### 🧑 User — 2026-11-20T15:48:59.464Z
+
+> ↩︎ result: The file /home/user/rainbow-/docs/briefs/2026-11-20-r27/COORDINATION.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T15:49:01.468Z
+
+> 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:r27-preview-published 2>&1 | grep -E '\"commit\"' ; python3 -I scripts/autosave-status.py; echo \"github: $(timeout 60 git ls-remote origin refs/heads/claude/rainbow-restore-screen-match-ijjdai | cut -f1)\"; git lfs ls-files | awk '$2==\"-\"' | wc -l; ls backups/wip/ | grep c28", "description": "Save preview results and verify GitHub", "timeout": 300000}`
+
