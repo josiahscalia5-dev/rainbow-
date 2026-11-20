@@ -53,3 +53,7 @@ s06 / Benny = their pushed `-c23` tips + their r22 PROGRESS.md.
   (`qa/review_r22/benny_t1/`): outline smooth + round, shaggy tiers / hem gone = closer; fur now reads as flat velvet / terry, darker
   and duller than the approved fluffy plush = NOT YET. Feedback sent (tuft volume + lighter tips behind own switch; centre the middle
   crops on Benny — 05/06/07 middle crops missed him). Shown to the user: 04 start APPROVED / BEFORE / NEW (NOT YET PROVEN).
+* ~03:40 s06 step 1 `&m06view=1` proof (`claude/rainbow-s06-match-c23` @ `fa509ac`; worker + lead: NOT YET PROVEN). Lead by eye
+  (`qa/review_r22/s06_t1/`, clips smudged from LFS): Benny smaller / lower + more river ahead = closer; smooth, no snaps; but the
+  centred bullseye rings + big foam walls still dominate, the off-centre tunnel / left crest is not held. Shown to the user:
+  APPROVED / BEFORE / NEW early + both clips — the user decides on m06view. s06 asked to do task 3 (foam walls) before task 2.

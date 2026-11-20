@@ -1,8 +1,8 @@
 diff --git a/src/game/Game.ts b/src/game/Game.ts
-index 017370a..025777d 100644
+index 017370a..906c906 100644
 --- a/src/game/Game.ts
 +++ b/src/game/Game.ts
-@@ -122,7 +122,21 @@ export async function startGame(canvas: HTMLCanvasElement) {
+@@ -122,7 +122,25 @@ export async function startGame(canvas: HTMLCanvasElement) {
    // the bottom) and the game's 07 tube (whose gold rings filled the screen mid-plunge) is hidden until 08 starts
    const m07Tube = MATCH['07'] && flag05('m07tube');
    const m07sA = course.marks['07_plunge_top'] - 4;
@@ -21,11 +21,15 @@ index 017370a..025777d 100644
 +  // dithered, over 08 start ± 1.5 u — the tall white columns down the end of the drop go; 08's own bank is unchanged)
 +  const m07BermHide = m07End ? ((water.parts?.foamBerm as THREE.Mesh | undefined)?.material as THREE.ShaderMaterial | undefined)?.uniforms?.uHide07 : undefined;
 +  const m07BermHide0 = m07BermHide ? (m07BermHide.value as THREE.Vector2).clone() : null;
-+  const m07BermHideOn = m07BermHide0 ? new THREE.Vector2(m07BermHide0.x, s08 + 1.5) : null;
++  // r22 `&m07cloud=1` (qa/match/07/r22/PROGRESS.md): the real 3D foam clouds stand on both banks, so while 07 shows the flat
++  // lather sheet steps aside over the whole visible 07 stretch too (it showed as a flat pale / grey sheet beside the river when
++  // steering hard left / right); not in the approved start view (0 px), 06 / 08 unchanged (only set while 07 shows)
++  const m07Cloud = m07End && flag05('m07cloud');
++  const m07BermHideOn = m07BermHide0 ? new THREE.Vector2(m07Cloud ? course.stage('07').s0 + 14 - 6 : m07BermHide0.x, s08 + 1.5) : null;
    if (m07) { m07.group.visible = false; scene.add(m07.group); m07.bakeDepth(renderer); }
    const M07_HIDE = ['ribbon', 'foam', 'bubbles'];
    const m07Range = [course.stage('07').s0 + 14, m07Tube ? course.stage('08').s0 : course.marks['07_plunge_top'] - 8];
-@@ -558,6 +572,9 @@ export async function startGame(canvas: HTMLCanvasElement) {
+@@ -558,6 +576,9 @@ export async function startGame(canvas: HTMLCanvasElement) {
        }
        // M3 m07tube: hand-over to the plunge continuation where the old build handed over to the default world (8 u before the top)
        if (m07Tube) m07.setPlunge(on && st.s >= course.marks['07_plunge_top'] - 8);

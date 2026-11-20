@@ -1355,3 +1355,75 @@ Hiding the berm changes the approved start view (45k px), so it is part of what 
 > {"a":"r20_hide.png","b":"r20.png","rows":[180,1536],"threshold":0.1,"diff_pixels":34569,"total":1171584,"diff_pct":2.9506}
 > {"a":"l20_hide.png","b":"l20.png","rows":[180,1536],"threshold":0.1,"diff_pixels":28351,"total":1171584,"diff_pct":2.4199}
 
+### 🤖 Claude — 2026-11-20T03:36:39.377Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 640,660p src/vfx/foam.ts && sed -n 685,700p src/vfx/foam.ts && grep -n \"uHide07\\|h07\\b\\|hide07(\" src/vfx/foam.ts | head -20 && grep -n \"parts\\b\\|parts =\" src/vfx/water*.ts | head", "description": "Check berm puffs and water parts wiring"}`
+
+### 🧑 User — 2026-11-20T03:36:39.453Z
+
+> ↩︎ result: geo.setIndex(idx);
+>   geo.computeVertexNormals();
+>   const st05 = course.stage('05');
+>   const uniforms = withFog({
+>     uTime: { value: 0 },
+>     uOutro: { value: new THREE.Vector2(0, course.stage('08').s0) },
+>     uLightDir: { value: new THREE.Vector3(0.3, 1.0, 0.45).normalize() },
+>     // colour starts at the 05 stage start (not s0 - 6 like the squash) so the 04 frame keeps its own foam colours
+>     uSt05: { value: new THREE.Vector4(st05.s0 - 1, st05.s0 + 2, st05.s1 - 1, st05.s1 + 4) },
+>     uHide07: { value: new THREE.Vector2(...(hide07(course) ?? [0, 0])) },
+>   });
+>   const mat = new THREE.ShaderMaterial({
+>     uniforms,
+>     vertexShader: BERM_VERT,
+>     fragmentShader: BERM_FRAG,
+>     fog: true,
+>     side: THREE.DoubleSide,
+>     defines: { ...(quality === 'low' ? { LOW_Q: 1 } : {}), ...(PROJ05 && !flag05('projfoam05') ? { PROJ05: 1 } : {}), ...(hide07(course) ? { HIDE07: 1 } : {}) },
+>   });
+>   const mesh = new THREE.Mesh(geo, mat);
+>   mesh.name = 'foam_berm';
+>   const tmpQ = new THREE.Quaternion();
+>   const tmpS = new THREE.Vector3();
+>   const tmpE = new THREE.Euler();
+>   const tmpC = new THREE.Color();
+> 
+>   /** wave 8: the 05 berm puffs (Puff.imp) go to one impostor list (fine-foam shader, 2 tris ea …[+2089 chars]
+
+### 🤖 Claude — 2026-11-20T03:36:47.732Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s07/src/game/Game.ts", "old_string": "  const m07BermHideOn = m07BermHide0 ? new THREE.Vector2(m07BermHide0.x, s08 + 1.5) : null;", "new_string": "  // r22 `&m07cloud=1` (qa/match/07/r22/PROGRESS.md): the real 3D foam clouds stand on both banks, so while 07 shows the flat\n  // lather sheet steps aside over the whole visible 07 stretch too (it showed as a flat pale / grey sheet beside the river when\n  // steering hard left / right); not in the approved start view (0 px), 06 / 08 unchanged (only set while 07 shows)\n  const m07Cloud = m07End & …[+160 chars]`
+
+### 🧑 User — 2026-11-20T03:36:47.754Z
+
+> ↩︎ result: <tool_use_error>File has not been read yet. Read it first before writing to it.</tool_use_error>
+
+### 🤖 Claude — 2026-11-20T03:36:49.301Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/src/game/Game.ts", "offset": 118, "limit": 30}`
+
+### 🧑 User — 2026-11-20T03:36:49.322Z
+
+> ↩︎ result: 118	  // `?match07=1`: the approved Screen 07 scenery on fitted 3D geometry (src/world/match07.ts), shown from 12 u before the
+> 119	  // 07 checkpoint until 8 u before the plunge top (the 07→08 drop keeps the game's own tube); off: nothing is built
+> 120	  // M3 `&m07tube=1` (qa/match/07/r7/NOTES): the matched tube continues as real geometry from 4 u before the plunge top down the
+> 121	  // whole plunge to the 08 inlet; the game's own water stays visible in the plunge (the plunge river fades into it near
+> 122	  // the bottom) and the game's 07 tube (whose gold rings filled the screen mid-plunge) is hidden until 08 starts
+> 123	  const m07Tube = MATCH['07'] && flag05('m07tube');
+> 124	  const m07sA = course.marks['07_plunge_top'] - 4;
+> 125	  // r21 `&m07end=1` (qa/match/07/r21/PROGRESS.md): the painted plunge river runs down to the 08 inlet (fades out over the last
+> 126	  // 2.2 u) and the game's streaky water sheet stays away down the whole drop while Benny is in 07 (it fades back in, dithered,
+> 127	  // over the last 3 u, so 08 starts with its own water); 08's own views are unchanged (the hide is only set while 07 shows)
+> 128	  const m07End = m07Tube && flag05('m07end') && flag05('m07nearw') & …[+1830 chars]
+
+### 🤖 Claude — 2026-11-20T03:36:52.882Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s07/src/game/Game.ts", "old_string": "  const m07BermHideOn = m07BermHide0 ? new THREE.Vector2(m07BermHide0.x, s08 + 1.5) : null;", "new_string": "  // r22 `&m07cloud=1` (qa/match/07/r22/PROGRESS.md): the real 3D foam clouds stand on both banks, so while 07 shows the flat\n  // lather sheet steps aside over the whole visible 07 stretch too (it showed as a flat pale / grey sheet beside the river when\n  // steering hard left / right); not in the approved start view (0 px), 06 / 08 unchanged (only set while 07 shows)\n  const m07Cloud = m07End & …[+160 chars]`
+
+### 🧑 User — 2026-11-20T03:36:52.968Z
+
+> ↩︎ result: The file /home/user/wt/s07/src/game/Game.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T03:36:58.733Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && npx tsc --noEmit -p . 2>&1 | tail -3; K7=$(cat /home/user/rainbow-/qa/match/07/r21/K7.txt) && rm -rf /home/user/rainbow-/qa/match/07/r22/s1_cloud/NEW && AUDIT_PORT=5277 AUDIT_SHOTS='[[\"a_start\",0,null],[\"b_early\",0.12,null],[\"c_middle\",0.35,null],[\"d_late\",0.6,null],[\"e1_075\",0.75,null],[\"e_end\",0.85,null],[\"e2_092\",0.92,null],[\"f_hard_left\",0.35,-1],[\"g_hard_right\",0.35,1]]' timeout 900 node /home/user/rainbow-/tools/lead21/audit_screen.mjs /home/user/rainbow-/qa/match/07/r22/s1_cloud/NEW 07 \"${K7}&m07end=1&m07cloud=1\" 2>&1 | grep -v \" …[+300 chars]`
+
