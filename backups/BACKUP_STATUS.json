@@ -1,34 +1,20 @@
 {
   "last_run": {
-    "time": "2026-11-20T19:58:50+00:00",
-    "reason": "manual:r29-ring-target-diagnosis",
+    "time": "2026-11-20T20:09:20+00:00",
+    "reason": "daemon",
     "result": "committed+pushed",
-    "files_staged": 49,
+    "files_staged": 5,
     "pushed_verified": true,
-    "branch": "ccr-ac160b4c-3hdecw",
-    "note": "following session branch 'ccr-ac160b4c-3hdecw' (config branch 'claude/rainbow-r22-restore-ut3m39')",
-    "wip_snapshots": [
-      "claude/rainbow-benny-c30: 12 modified, 10 new file(s) snapshotted",
-      "detached-e162aec2bf: 2 modified, 6 new file(s) snapshotted",
-      "detached-8accdad0a0: 2 modified, 0 new file(s) snapshotted",
-      "claude/rainbow-s04-match-c30: 3 modified, 1 new file(s) snapshotted",
-      "claude/rainbow-s05-match-c30: 3 modified, 0 new file(s) snapshotted",
-      "claude/rainbow-s06-match-c30: 6 modified, 26 new file(s) snapshotted",
-      "claude/rainbow-s07-match-c30: 5 modified, 10 new file(s) snapshotted",
-      "claude/rainbow-s08-scenery-c30: 3 modified, 2 new file(s) snapshotted",
-      "lead/trial07-c30: 5 modified, 10 new file(s) snapshotted",
-      "lead/view04-c30: 3 modified, 1 new file(s) snapshotted",
-      "lead/view06-c30: 2 modified, 15 new file(s) snapshotted",
-      "lead/view07-c30: 5 modified, 10 new file(s) snapshotted"
-    ],
-    "commit": "b93b67cf8c16e066e4ac9e8e51502c5f956d6c10",
-    "duration_s": 26
+    "branch": "ccr-2644c3c0-iikckn",
+    "note": "following session branch 'ccr-2644c3c0-iikckn' (config branch 'claude/rainbow-r22-restore-ut3m39')",
+    "commit": "549f2525232cf3929016ee62c5c8a221069e77f3",
+    "duration_s": 15
   },
   "repo": "https://github.com/josiahscalia5-dev/rainbow-",
-  "branch": "ccr-ac160b4c-3hdecw",
-  "last_verified_remote_sha": "b93b67cf8c16e066e4ac9e8e51502c5f956d6c10",
-  "last_successful_backup_utc": "2026-11-20T19:58:50+00:00",
+  "branch": "ccr-2644c3c0-iikckn",
+  "last_verified_remote_sha": "549f2525232cf3929016ee62c5c8a221069e77f3",
+  "last_successful_backup_utc": "2026-11-20T20:09:20+00:00",
   "consecutive_failures": 0,
-  "schedule": "every 5 min, container-local (scheduler=daemon status=active pid=599); see backups/RECOVERY.md for limits",
-  "next_scheduled_utc": "2026-11-20T20:00:00+00:00"
+  "schedule": "every 5 min, container-local (scheduler=daemon status=started pid=632); see backups/RECOVERY.md for limits",
+  "next_scheduled_utc": "2026-11-20T20:10:00+00:00"
 }
