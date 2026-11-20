@@ -2933,3 +2933,166 @@ The audit is rendering. Meanwhile I'll read the reusable launch briefs from roun
 >   (`qa/match/05/r14/step4_trans/before/`, partial: x99 x100 x101 x103 x105 t102_06 + shots.json; t95/t98/x93/x96/x97 were too big
 >   for …[+4609 chars]
 
+### 🤖 Claude — 2026-11-20T01:55:34.119Z
+
+Good template. Checking audit progress:
+
+### 🤖 Claude — 2026-11-20T01:55:35.077Z
+
+> 🔧 **Bash** `{"command": "A=/home/user/rainbow-/qa/review_r21/audit; for s in 04 05 06 07 08; do [ -f $A/$s.log ] && { echo \"== $s\"; grep -v \"outside of Vite\" $A/$s.log | tail -8; }; done", "description": "Check audit render progress"}`
+
+### 🧑 User — 2026-11-20T01:55:35.127Z
+
+> ↩︎ result: Exit code 1
+> == 04
+> 04 a_start s 77.413 lat 0 stage 04 coins 1330
+
+### 🤖 Claude — 2026-11-20T01:55:43.877Z
+
+> 🔧 **Bash** `{"command": "A=/home/user/rainbow-/qa/review_r21/audit; until [ -f $A/done.flag ] || [ $(ls $A/08/*.png 2>/dev/null | wc -l) -ge 7 ]; do sleep 10; done; for s in 04 05 06 07 08; do echo \"== $s\"; grep -v \"outside of Vite\" $A/$s.log | tail -8; done", "description": "Wait for all audit renders to finish", "timeout": 3600000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T01:55:43.931Z
+
+> ↩︎ result: Command running in background with ID: ba3d33vkl. Output is being written to: /tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/tasks/ba3d33vkl.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-20T01:55:47.805Z
+
+> 🔧 **Bash** `{"command": "A=/home/user/rainbow-/qa/review_r21/audit; ls $A/04 2>/dev/null; grep -v \"outside of Vite\" $A/04.log | tail -8", "description": "Check Screen 04 audit output"}`
+
+### 🧑 User — 2026-11-20T01:55:47.856Z
+
+> ↩︎ result: a_start.png
+> b_early.png
+> c_middle.png
+> 04 a_start s 77.413 lat 0 stage 04 coins 1330
+> 04 b_early s 82.08 lat 0 stage 04 coins 1330
+> 04 c_middle s 90.48 lat 0 stage 04 coins 1330
+
+### 🤖 Claude — 2026-11-20T01:55:51.826Z
+
+Screen 04 is rendering (3 of 7 shots done); the whole audit takes a while longer. I'll wait for it.
+
+### 🤖 Claude — 2026-11-20T01:55:53.242Z
+
+> 🔧 **Bash** `{"command": "A=/home/user/rainbow-/qa/review_r21/audit; until [ $(ls $A/05/*.png 2>/dev/null | wc -l) -ge 7 ]; do sleep 10; done; ls $A/04 $A/05 | tr '\\n' ' '", "description": "Wait for screens 04 and 05 audit frames", "timeout": 1800000}`
+
+### 🧑 User — 2026-11-20T01:57:13.384Z
+
+> ↩︎ result: /home/user/rainbow-/qa/review_r21/audit/04: a_start.png b_early.png c_middle.png d_late.png e_end.png f_hard_left.png g_hard_right.png shots.json  /home/user/rainbow-/qa/review_r21/audit/05: a_start.png b_early.png c_middle.png d_late.png e_end.png f_hard_left.png g_hard_right.png shots.json
+
+### 🤖 Claude — 2026-11-20T01:57:21.143Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/sheet.py <<'EOF'\nimport sys, glob\nfrom PIL import Image, ImageDraw\ns=sys.argv[1]; A='/home/user/rainbow-/qa/review_r21/audit'\nref=sorted(glob.glob(f'/home/user/rainbow-/references/{s}_*.png'))[0]\nims=[('APPROVED',Image.open(ref).convert('RGB'))]+[(n,Image.open(f'{A}/{s}/{n}.png').convert('RGB')) for n in ['a_start','b_early','c_middle','d_late','e_end','f_hard_left','g_hard_right']]\nW,H=270,480\no=Image.new('RGB',(4*W+30,2*H+50),'white'); d=ImageDraw.Draw(o)\nfor i,(n,im) in enumerate(ims …[+503 chars]`
+
+### 🧑 User — 2026-11-20T01:57:22.472Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T01:57:27.154Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/sheet_04.png"}`
+
+### 🧑 User — 2026-11-20T01:57:27.200Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T01:57:35.052Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/sheet_05.png"}`
+
+### 🧑 User — 2026-11-20T01:57:35.217Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T01:57:42.790Z
+
+> 🔧 **Bash** `{"command": "A=/home/user/rainbow-/qa/review_r21/audit; until [ -f $A/done.flag ]; do sleep 10; done; for s in 06 07 08; do ls $A/$s/*.png | wc -l; grep -E \"pageerror|console\" $A/$s.log | head -3; python3 /tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/sheet.py $s; done", "description": "Wait for audit completion, build sheets", "timeout": 3000000}`
+
+### 🧑 User — 2026-11-20T01:59:04.832Z
+
+> ↩︎ result: 7
+> 7
+> 7
+
+### 🤖 Claude — 2026-11-20T01:59:08.758Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/sheet_06.png"}`
+
+### 🧑 User — 2026-11-20T01:59:08.918Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T01:59:09.419Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/sheet_07.png"}`
+
+### 🧑 User — 2026-11-20T01:59:09.570Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T01:59:10.018Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/sheet_08.png"}`
+
+### 🧑 User — 2026-11-20T01:59:10.176Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T01:59:43.786Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,12p docs/briefs/2026-11-18-r15/S06_LAUNCH.md; echo ...; sed -n 25,51p docs/briefs/2026-11-18-r15/S06_LAUNCH.md; echo ====; sed -n 25,50p docs/briefs/2026-11-18-r15/S07_LAUNCH.md", "description": "Read Screen 06 and 07 launch briefs"}`
+
+### 🧑 User — 2026-11-20T01:59:43.838Z
+
+> ↩︎ result: # Round 15 (account 15) — Screen 06 specialist launch prompt (reference-match-director)
+> 
+> You are the Rainbow project's `reference-match-director`, working ONLY on playable Screen 06 "Crest the Rinse Arch", VISUALS ONLY —
+> you rank the visible differences AND fix them yourself. (06 last ran in round 11; the user asked on 2026-11-18 ~18:45 UTC to work on
+> the other screens too.)
+> 
+> ## Where you work
+> * Git worktree `/home/user/wt/s06` on branch `claude/rainbow-s06-match-c15` (created from `claude/rainbow-s06-match-c11` @ `8182130c`,
+>   the newest 06 tip; no unfinished edits were left). Sparse checkout: `qa/pilot05`, `qa/worldlabs`, `qa/imageblaster`, `builds/`,
+>   `backups/` are left out to save disk (never `git sparse-checkout disable`). `node_modules` is a symlink to the lead checkout.
+>   `tools/lead_r13/` (swim clip tool) may have been copied in untracked — commit it with your first step.
+> * Commit and `git push -u origin claude/rainbow-s06-match-c15` after every step (kept or rejected). Push ONLY that branch. Never
+> ...
+> 
+> ## Resume, do not repeat
+> Read `qa/match/06/r11/PROGRESS.md`, `qa/match/06/r7/NOTES.md`, `qa/match/06/STATUS.md`, `git log -15`. Log in `qa/match/06/r15/PROGRESS.md`.
+> Kept  …[+4767 chars]
+
+### 🤖 Claude — 2026-11-20T02:00:38.670Z
+
+> 🔧 **Bash** `{"command": "for b in claude__rainbow-s07-match-c18 claude__rainbow-s04-match-c21; do echo \"== $b\"; python3 -c \"import json;d=json.load(open('backups/wip/$b/INFO.json'));print(d['head'][:8],d['time'],'dirty',d.get('dirty_tracked'),'untracked',len(d.get('untracked_copied',[])))\"; wc -c < backups/wip/$b/tracked.patch; done; ls /home/user/tools-pixelmatch 2>/dev/null | head -3", "description": "Check unfinished work for 07 and 04 workers"}`
+
+### 🧑 User — 2026-11-20T02:00:38.779Z
+
+> ↩︎ result: == claude__rainbow-s07-match-c18
+> 8accdad0 2026-11-19T18:56:30+00:00 dirty [] untracked 0
+> /bin/bash: line 2: backups/wip/claude__rainbow-s07-match-c18/tracked.patch: No such file or directory
+> == claude__rainbow-s04-match-c21
+> 34cb4941 2026-11-20T00:39:14+00:00 dirty ['src/world/match04m4.ts'] untracked 0
+> 12294
+
+### 🤖 Claude — 2026-11-20T02:00:43.497Z
+
+Screen 07 has no unfinished work. The Screen 04 water worker left a 12 KB unfinished edit after its bank-foam step. Let me see what it was doing.
+
+### 🤖 Claude — 2026-11-20T02:00:45.248Z
+
+> 🔧 **Bash** `{"command": "grep -E \"^\\+.*(//|r20|m04[a-z]+)\" backups/wip/claude__rainbow-s04-match-c21/tracked.patch | head -20 | cut -c1-220; grep -n -A6 \"WHERE I STOPPED\\|(r20) Step 3\\|Step 3\" /home/user/wt/a04w/qa/match/04/r18/PROGRESS.md | tail -14 | cut -c1-250", "description": "Inspect the unfinished Screen 04 water edit"}`
+
+### 🧑 User — 2026-11-20T02:00:45.285Z
+
+> ↩︎ result: +uniform vec2 uFar;           // r20 m04farsm: x where the K9 telescope begins (along, local), y on — beyond it the band edges run smooth
+> +        // r20 m04farsm: inside the far telescope every ring is a shrunk copy, but the meander keeps its 7 u period along the
+> +        // slide, so it zig-zags once per ring (sawtooth "Christmas tree" edges round the far river) — let it fade out there
+> +  let telA = 1e9;                              // r20 m04farsm: where the K9 telescope begins (u inside the opening)   // r20 m04endfit: the end disc's own centre (x, y) and radius under m04rfew
+> +    if (rfew) { endFit = new THREE.Vector3(cx, cy + rfGz * (1 - capS), r * capS); telA = M04.num('m04rfa', 30); }
+> +        // r20 `&m04endfit=1`: with the K9 telescope (m04rfew) the disc sits at the telescope's end, shrunk to its last ring —
+> +        // paint the distant opening in the disc's OWN frame (its centre and size), not the full-size tube's
+> +        uC: { value: M04.num('m04endfit', 0) > 0 && endFit ? endFit : new THREE.Vector3(cx, cy, r) },
+> +        // r20 `&m04farsm=1`: smooth band edges inside the far telescope (river along = distance inside the opening - z0)
+> +        uFar: { value: new THREE. …[+2851 chars]
+
