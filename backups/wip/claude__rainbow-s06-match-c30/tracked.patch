@@ -31,10 +31,18 @@ index 6aec2406..57a87ac2 100644
      }
      if (m08 && m08On) for (const k of ['puddles', 'finalWave']) { const o = water.parts?.[k]; if (o) o.visible = false; }
 diff --git a/src/gameplay/coins.ts b/src/gameplay/coins.ts
-index 69122b33..4c3fcc97 100644
+index 69122b33..0c9737cd 100644
 --- a/src/gameplay/coins.ts
 +++ b/src/gameplay/coins.ts
-@@ -14,7 +14,7 @@ import coins06 from '../../assets/textures/match06/coins06.json';
+@@ -6,6 +6,7 @@
+  */
+ import * as THREE from 'three';
+ import type { Course, StageId } from '../world/course';
++import { m06deepShift } from '../world/course';
+ import { canvasTexture } from '../world/materials';
+ import { coreLateral, flag05 } from '../vfx/waterRibbon';
+ import coins08 from '../../assets/textures/match08/coins08.json';
+@@ -14,7 +15,7 @@ import coins06 from '../../assets/textures/match06/coins06.json';
  export const COIN_VALUE = 10;
  
  /** scale: coin size factor (1 = 1.0 u diameter); tilt: radians the coin leans back (top away from the camera) */
@@ -43,7 +51,7 @@ index 69122b33..4c3fcc97 100644
  
  /**
   * 05 (ref 05, measured): ≈10 coins on the electric-cyan core winding to the VP. The nearest one is
-@@ -57,7 +57,13 @@ export function coinLayout(course: Course): CoinDef[] {
+@@ -57,7 +58,13 @@ export function coinLayout(course: Course): CoinDef[] {
    if (m06) {
      const a = st('06');
      for (let i = 0; i < 3; i++) add('06', a.s0 + 1 + i, -0.4 + 0.4 * i);
@@ -58,7 +66,32 @@ index 69122b33..4c3fcc97 100644
    }
    // 07 — winding trail, continuing down the plunge
    { const a = st('07'); const n = 24; for (let i = 0; i < n; i++) { const s = a.s0 + 6 + i * ((a.s1 - a.s0 - 10) / n); add('07', s, 1.0 * Math.sin(i * 0.5 + 1)); } }
-@@ -113,6 +119,8 @@ export interface CoinSystem {
+@@ -70,7 +77,8 @@ export function coinLayout(course: Course): CoinDef[] {
+   // (assets/textures/match08/coins08.json, from the locked 08 camera), instead of the 08 + 09 rows above
+   if (m08) {
+     const s0 = st('08').s0, s1 = st('11').s0;
+-    const cam = coins08.faceTo as [number, number, number];
++    const T8 = m06deepShift(); // r29 m06deep: the 08 chamber moved with the longer 06 route (zero when off)
++    const cam = [coins08.faceTo[0] + T8.x, coins08.faceTo[1] + T8.y, coins08.faceTo[2] + T8.z] as [number, number, number];
+     const toRiver = (x: number, z: number) => {
+       let best = s0, bd = Infinity;
+       for (let s = s0; s <= s1; s += 0.05) { const p = course.sample(s).pos; const d = (p.x - x) ** 2 + (p.z - z) ** 2; if (d < bd) { bd = d; best = s; } }
+@@ -78,12 +86,12 @@ export function coinLayout(course: Course): CoinDef[] {
+       return { s: best, lat: (x - f.pos.x) * f.right.x + (z - f.pos.z) * f.right.z, y: f.pos.y };
+     };
+     for (const c of coins08.coins) {
+-      let r = toRiver(c.x, c.z), h = c.h, scale = c.scale;
++      let r = toRiver(c.x + T8.x, c.z + T8.z), h = c.h, scale = c.scale;
+       // keep every picture coin collectible: if it lies beyond pickup reach (|lateral| > 1.1), slide it along its own view
+       // ray from the approved camera (same pixel in the approved view) to the nearest depth within reach, above the water;
+       // its size scales with the depth so it still covers the painted coin
+       if (Math.abs(r.lat) > 1.1) {
+-        const P = [c.x, r.y + c.h, c.z], D = [P[0] - cam[0], P[1] - cam[1], P[2] - cam[2]];
++        const P = [c.x + T8.x, r.y + c.h, c.z + T8.z], D = [P[0] - cam[0], P[1] - cam[1], P[2] - cam[2]];
+         let pick: { k: number; r: typeof r; h: number } | null = null;
+         for (let k = 0.2; k <= 1.8; k += 0.01) {
+           const q = [cam[0] + D[0] * k, cam[1] + D[1] * k, cam[2] + D[2] * k], rq = toRiver(q[0], q[2]), hq = q[1] - rq.y;
+@@ -113,6 +121,8 @@ export interface CoinSystem {
    update(time: number, dt: number, bennyS: number, bennyLat: number): number;
    /** mark coins before s as collected (deterministic QA checkpoint state) or reset all */
    resetUntil(s: number): void;
@@ -67,7 +100,7 @@ index 69122b33..4c3fcc97 100644
  }
  
  export function createCoins(course: Course): CoinSystem {
-@@ -175,6 +183,7 @@ export function createCoins(course: Course): CoinSystem {
+@@ -175,6 +185,7 @@ export function createCoins(course: Course): CoinSystem {
    const spin = new THREE.Quaternion(), axis = new THREE.Vector3();
    const tiltQ = new THREE.Quaternion(), xAxis = new THREE.Vector3(1, 0, 0);
    const back = new THREE.Vector3();
@@ -75,7 +108,7 @@ index 69122b33..4c3fcc97 100644
  
    const place = (time: number) => {
      defs.forEach((d, i) => {
-@@ -200,7 +209,8 @@ export function createCoins(course: Course): CoinSystem {
+@@ -200,7 +211,8 @@ export function createCoins(course: Course): CoinSystem {
        spin.setFromAxisAngle(axis.set(0, 1, 0), (d.faceTo ? 0.06 : d.tilt ? 0.18 : 0.35) * Math.sin(time * 2.2 + i * 0.7));
        q.multiply(spin);
        if (d.tilt) q.multiply(tiltQ.setFromAxisAngle(xAxis, -d.tilt));
@@ -85,7 +118,7 @@ index 69122b33..4c3fcc97 100644
        mesh.setMatrixAt(i, m);
      });
      mesh.instanceMatrix.needsUpdate = true;
-@@ -227,6 +237,7 @@ export function createCoins(course: Course): CoinSystem {
+@@ -227,6 +239,7 @@ export function createCoins(course: Course): CoinSystem {
        place(time);
        return picked;
      },
@@ -93,11 +126,101 @@ index 69122b33..4c3fcc97 100644
      resetUntil(s) {
        for (let i = 0; i < defs.length; i++) { collected[i] = defs[i].s < s ? 1 : 0; popT[i] = -1; }
        place(0);
+diff --git a/src/world/course.ts b/src/world/course.ts
+index 99850bb3..bebae236 100644
+--- a/src/world/course.ts
++++ b/src/world/course.ts
+@@ -15,6 +15,7 @@ import * as THREE from 'three';
+ import { flag05 } from '../vfx/waterRibbon';
+ import river08 from '../../assets/textures/match08/river08.json';
+ import path06 from '../../assets/textures/match06/path06.json';
++import route06deep from '../../assets/textures/match06/route06deep.json';
+ 
+ export type StageId = '01' | '02' | '03' | '04' | '05' | '06' | '07' | '08' | '09' | '10' | '11';
+ export type TubeKind = 'none' | 'chute' | 'gold' | 'perf';
+@@ -72,6 +73,27 @@ export const WORLD = {
+   plunge: { topY: -52, bottomY: -113.6 },
+ };
+ 
++/** r29 `&m06deep=1`: the original anchors (WORLD itself is moved by the 06 route length, see m06deepShift) */
++const WORLD0 = {
++  chamber: { center: WORLD.chamber.center.clone(), zBack: WORLD.chamber.zBack, zDoor: WORLD.chamber.zDoor, floorY: WORLD.chamber.floorY },
++  platform: { center: WORLD.platform.center.clone(), topY: WORLD.platform.topY },
++  plunge: { topY: WORLD.plunge.topY, bottomY: WORLD.plunge.bottomY },
++};
++const SHIFT07 = new THREE.Vector3();
++/**
++ * r29 `&match06=1&m06deep=1` (lead, docs/briefs/2026-11-20-r29, qa/match/06/r29/): the 06 river follows the painted coin trail rebuilt
++ * in 3D and runs down the painted ring tunnel, so Screen 06 is longer. Everything from the 07 entrance on (07 tube, plunge, 08 chamber,
++ * platform, towel, 09, 10) is moved by this ONE rigid offset, so each of those screens keeps exactly its look. Zero when off.
++ */
++export function m06deepShift(): THREE.Vector3 { return SHIFT07.clone(); }
++function applyWorldShift(t: THREE.Vector3) {
++  SHIFT07.copy(t);
++  WORLD.chamber.center.copy(WORLD0.chamber.center).add(t);
++  WORLD.chamber.zBack = WORLD0.chamber.zBack + t.z; WORLD.chamber.zDoor = WORLD0.chamber.zDoor + t.z; WORLD.chamber.floorY = WORLD0.chamber.floorY + t.y;
++  WORLD.platform.center.copy(WORLD0.platform.center).add(t); WORLD.platform.topY = WORLD0.platform.topY + t.y;
++  WORLD.plunge.topY = WORLD0.plunge.topY + t.y; WORLD.plunge.bottomY = WORLD0.plunge.bottomY + t.y;
++}
++
+ /** funnel surface height of the whirlpool basin as a function of radius from its axis */
+ export function funnelY(r: number): number {
+   const b = WORLD.basin;
+@@ -277,13 +299,27 @@ function buildRoute(): RouteData {
+   // ends, so the 05->06 join and the whole 07 / plunge / 08 route are unchanged. Off: d06 = 0 (default route).
+   const m06 = flag05('match06') || flag05('matchall');
+   const d06 = (c: number[], t: number) => (m06 ? Math.sin(Math.PI * t) ** 2 * (c[0] + c[1] * Math.cos(Math.PI * t) + c[2] * Math.cos(2 * Math.PI * t)) : 0);
+-  seg(34, (t) =>
++  // r29 `&m06deep=1` (needs match06): see m06deepShift. The original anchors (WORLD0) define the original route, so the formula
++  // below is unchanged whether or not the shift was applied by an earlier Course in this page.
++  const old06 = (t: number) =>
+     V(
+-      s6.x - 4 * Math.sin(Math.PI * t) + (WORLD.chamber.center.x - s6.x) * smooth(0.4, 1, t) + d06(path06.dx, t),
++      s6.x - 4 * Math.sin(Math.PI * t) + (WORLD0.chamber.center.x - s6.x) * smooth(0.4, 1, t) + d06(path06.dx, t),
+       s6.y + 12.5 * Math.pow(Math.sin(Math.PI * Math.min(t / 0.82, 1)), 1.15) - 4.5 * smooth(0.5, 1, t) + d06(path06.dy, t),
+       s6.z - 46 * t,
+-    ),
+-  );
++    );
++  const deep06 = m06 && flag05('m06deep');
++  if (deep06) {
++    // the first metres stay EXACTLY the original route (Benny's approved checkpoint pose and the r25 hole patch s 197.2-203.3 depend
++    // on them): raw points up to axial aKeep along the painted tunnel axis, then the designed centre line (route06deep.json,
++    // tools/match06/r29_design_route.py), whose last point is the moved 07 entrance
++    const O6 = V(route06deep.O[0], route06deep.O[1], route06deep.O[2]), ax6 = V(route06deep.ax[0], route06deep.ax[1], route06deep.ax[2]);
++    for (let i = 1; i <= 34; i++) { const p = old06(i / 34); if (p.clone().sub(O6).dot(ax6) > route06deep.aKeep) break; push(p); }
++    for (const q of route06deep.points) push(V(q[0], q[1], q[2]));
++    applyWorldShift(pts[pts.length - 1].clone().sub(old06(1)));
++  } else {
++    applyWorldShift(new THREE.Vector3());
++    seg(34, old06);
++  }
+   mark('07');
+   // ---- 07: winding washer tube (the visible stretch) ----
+   const s7 = pts[pts.length - 1].clone();
+@@ -324,7 +360,8 @@ function buildRoute(): RouteData {
+   // river (its centre line projected on the chamber floor from the locked 08 camera, assets/textures/match08/river08.json),
+   // eased in over the first 3 u after the inlet and out over the last 4 u into the platform. Off: the formulas below.
+   const m08 = flag05('match08') || flag05('matchall');
+-  const rz = river08.z.filter((z) => z >= -326), rxs = river08.x.slice(0, rz.length);
++  // r29 m06deep: the painted 08 river (absolute coordinates) moves with the chamber (SHIFT07 = 0 when off)
++  const rz = river08.z.filter((z) => z >= -326).map((z) => z + SHIFT07.z), rxs = river08.x.slice(0, rz.length).map((x) => x + SHIFT07.x);
+   const riverX = (z: number) => {
+     if (z >= rz[0]) return rxs[0];
+     for (let i = 1; i < rz.length; i++) if (z >= rz[i]) { const a = (z - rz[i - 1]) / (rz[i] - rz[i - 1]); return rxs[i - 1] + (rxs[i] - rxs[i - 1]) * a; }
 diff --git a/src/world/match06.ts b/src/world/match06.ts
-index 831c2b44..c1a694d0 100644
+index 831c2b44..1933ea73 100644
 --- a/src/world/match06.ts
 +++ b/src/world/match06.ts
-@@ -44,6 +44,8 @@ export interface Match06 {
+@@ -19,6 +19,7 @@ import * as THREE from 'three';
+ import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
+ import { PROJ05_INVERSE } from '../vfx/waterRibbon';
+ import type { Course } from './course';
++import route06deep from '../../assets/textures/match06/route06deep.json';
+ 
+ interface Layout06 {
+   camera: { matrixWorld: number[]; fov: number; size: [number, number]; pos: number[] };
+@@ -44,6 +45,8 @@ export interface Match06 {
    away(cam: THREE.Vector3): number;
    /** r7 `&m06foam=1`: show the 3D foam clouds once the camera has left the approved view (a = away()) */
    setAway(a: number): void;
@@ -106,7 +229,7 @@ index 831c2b44..c1a694d0 100644
  }
  
  const VERT = /* glsl */ `
-@@ -112,6 +114,39 @@ uniform float uStO;
+@@ -112,6 +115,39 @@ uniform float uStO;
  uniform float uStDbg;
  uniform vec3 uProjF;
  uniform mat4 uProjVP;
@@ -146,7 +269,7 @@ index 831c2b44..c1a694d0 100644
  varying vec4 vProj;
  varying vec3 vW;
  varying vec3 vN;
-@@ -226,7 +261,7 @@ void main() {
+@@ -226,7 +262,7 @@ void main() {
      if (inside || (stOn > 0.5 && edge > 0.0)) {
        float vis = 1.0;
        vec2 uvF = uv; // r18 m06st: where the plate is read (the crest-top layer below)
@@ -155,7 +278,7 @@ index 831c2b44..c1a694d0 100644
        if (uUseDepth > 0.5) {
          float zs = linZ(texture2D(uDepth, uv).r), zf = linZ(ndc.z * 0.5 + 0.5);
          vis = 1.0 - smoothstep(0.015 * zs, 0.04 * zs + 0.05, zf - zs);
-@@ -310,7 +345,9 @@ void main() {
+@@ -310,7 +346,9 @@ void main() {
              }
              rS = (rS / 12.0) * 0.5 + mk.r * 0.5;
            }
@@ -166,7 +289,7 @@ index 831c2b44..c1a694d0 100644
          } else w *= 1.0 - max(mk.r, mk.g) * away * inWater;
        }
        // r6 m06geo: painted WATER that lands on the tunnel wall (the crest-top water / far stream beside the narrow river)
-@@ -324,11 +361,46 @@ void main() {
+@@ -324,11 +362,46 @@ void main() {
        if (uRing > 0.5) w *= stOn > 0.5 ? (filled > 0.5 ? 1.0 : hold) : 1.0 - smoothstep(0.2, 1.2, distance(cameraPosition, uProjPos));
        vec3 pl = texture2D(uPlate, uv).rgb;
        if (filled > 0.5) pl = textureLod(uPlate, uvF, 0.0).rgb;
@@ -213,7 +336,7 @@ index 831c2b44..c1a694d0 100644
    if (uDbg.x + uDbg.y + uDbg.z > 0.0) gl_FragColor.rgb = mix(gl_FragColor.rgb, uDbg, 0.45);
  }`;
  
-@@ -337,6 +409,9 @@ void main() {
+@@ -337,6 +410,9 @@ void main() {
  const FOAMC_VERT = /* glsl */ `
  attribute vec4 aB;
  attribute float aS;
@@ -223,7 +346,7 @@ index 831c2b44..c1a694d0 100644
  uniform vec2 uNear;
  varying vec2 vUv;
  varying float vS;
-@@ -345,8 +420,15 @@ varying float vPx;
+@@ -345,8 +421,15 @@ varying float vPx;
  void main() {
    vUv = uv * 2.0 - 1.0;
    vS = aS;
@@ -239,7 +362,19 @@ index 831c2b44..c1a694d0 100644
    mv.xy += position.xy * aB.w * 2.0 * vF;
    vPx = aB.w * vF * projectionMatrix[1][1] / max(-mv.z, 0.1); // on-screen radius (fraction of the half-height)
    gl_Position = projectionMatrix * mv;
-@@ -494,7 +576,10 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+@@ -412,6 +495,11 @@ const tex = (f: string) => new URL(`../../assets/textures/match06/${f}`, import.
+ 
+ export async function buildMatch06(course: Course): Promise<Match06> {
+   const L: Layout06 = await fetch(tex('proj06.json')).then((r) => r.json());
++  // r29 `&m06deep=1` (lead; src/world/course.ts m06deepShift, assets/textures/match06/route06deep.json): the course river follows the
++  // painted coin trail rebuilt in 3D down the painted ring tunnel into the moved 07 entrance. The floor, frames and foam run to the NEW
++  // 07 entrance; the tunnel stays exactly where the approved picture has it (axis origin, wall-tile phase and far end pinned).
++  const DEEP = typeof location !== 'undefined' && new URLSearchParams(location.search).get('m06deep') === '1';
++  if (DEEP) L.s1 = course.stage('07').s0 + ((L as unknown as { sAhead07?: number }).sAhead07 ?? 34);
+   const loader = new THREE.TextureLoader();
+   const plate = await loader.loadAsync(tex('plate06_hybrid.png'));
+   plate.colorSpace = THREE.NoColorSpace; // raw display values: the shader inverts the post chain itself
+@@ -494,7 +582,10 @@ export async function buildMatch06(course: Course): Promise<Match06> {
        uGeo: { value: GEO ? 1 : 0 }, uR6: { value: FLOW ? 1 : 0 }, uR6p: { value: r6p },
        uRiver: { value: tRiver ?? tile }, uFoam: { value: tFoam ?? tile },
        uRing: { value: 0 }, uGold: { value: 0 }, uRingTex: { value: tile }, uRingH: { value: 1 }, uBendAng: { value: 0 }, uPanel: { value: 0 }, uAxO: { value: new THREE.Vector3() }, uAxD: { value: new THREE.Vector3(0, 0, -1) },
@@ -251,7 +386,20 @@ index 831c2b44..c1a694d0 100644
    });
  
    // river frames from the course (beyond s1: straight along the heading at s1, as tools/match06/geo06.py)
-@@ -603,7 +688,26 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+@@ -558,9 +649,9 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+     cen.multiplyScalar(1 / n);
+     const Ux = new THREE.Vector3(0, 1, 0).addScaledVector(ax, -ax.y).normalize(), Rx = new THREE.Vector3().crossVectors(ax, Ux).normalize();
+     const hq = Number(qs?.get('m06tunh'));
+-    const O = C.clone().add(cen).addScaledVector(Ux, Number.isFinite(hq) && qs?.get('m06tunh') ? hq : 3);
+-    const a0 = course.sample(L.s0).pos.sub(O).dot(ax) - 6, a1 = P1.clone().sub(O).dot(ax) + L.ext;
+-    const kS = L.s1 - P1.clone().sub(O).dot(ax); // tile phase: same ring positions as the old tube's straight part
++    const O = DEEP ? new THREE.Vector3().fromArray(route06deep.O) : C.clone().add(cen).addScaledVector(Ux, Number.isFinite(hq) && qs?.get('m06tunh') ? hq : 3);
++    const a0 = course.sample(L.s0).pos.sub(O).dot(ax) - 6, a1 = (DEEP ? route06deep.tunnel_pin.P1a : P1.clone().sub(O).dot(ax)) + L.ext;
++    const kS = DEEP ? route06deep.tunnel_pin.kS : L.s1 - P1.clone().sub(O).dot(ax); // tile phase: same ring positions as the old tube's straight part
+     // r11 `&m06bend=1` (lead, qa/match/06/r11/NOTES.md): the painted tunnel BENDS down-right with the river (BLUEPRINT_06:
+     // the inner ring centres drift toward the glow; Depth Anything 3: the glow is the far end of a deep tube that turns away).
+     // The straight cylinder ignored the river's right turn after the crest, so while swimming it showed a long centred
+@@ -603,7 +694,26 @@ export async function buildMatch06(course: Course): Promise<Match06> {
        }
        console.info('[match06] m06bend', { sTop, aTop: +aTop.toFixed(1), yawEndDeg: +THREE.MathUtils.radToDeg(yaw[nA - 1]).toFixed(1) });
      }
@@ -278,7 +426,7 @@ index 831c2b44..c1a694d0 100644
        if (!BEND) return { p: O.clone().addScaledVector(ax, a), t: ax, r: Rx, u: Ux };
        const i = THREE.MathUtils.clamp(Math.round((a - a0) / DA), 0, nA - 1);
        return { p: fP[i].clone().addScaledVector(fT[i], a - (a0 + i * DA)), t: fT[i], r: fR[i], u: fU[i] };
-@@ -774,6 +878,157 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+@@ -774,6 +884,157 @@ export async function buildMatch06(course: Course): Promise<Match06> {
      if (GEO && R6) { const t = Math.min(1, Math.max(0, (Math.abs(l) - R6.Wc + 0.1) / 0.5)); p.addScaledVector(fr.up, R6.hb * t * t * (3 - 2 * t)); }
      return [p, l / TF.lateralPeriod, l];
    }, TF.period), mat(tFloor, true), 'floor');
@@ -436,7 +584,16 @@ index 831c2b44..c1a694d0 100644
    // r7 `&m06foam=1` (needs m06geo): puffy 3D foam clouds along both banks — the painted white-lilac foam clusters that
    // vanished as flat strips once Benny moved. Hidden at the approved view (the painting carries them there), shown once
    // the camera has left it (setAway). Not part of the projector depth bake (invisible while baking).
-@@ -821,7 +1076,8 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+@@ -793,7 +1054,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+       const ph = ((s - L.s0) / fclP + (side > 0 ? 0.5 : 0)) % 1; // 0..1 within one heap period, the sides half a period apart
+       return 1 - Math.abs(ph * 2 - 1); // 1 at a heap centre, 0 in the gap
+     };
+-    for (let s = L.s0 + 3; s < L.s0 + 12 + 44 + 12; s += 0.6) for (const side of [-1, 1]) {
++    for (let s = L.s0 + 3; s < (DEEP ? course.stage('07').s0 + 12 : L.s0 + 12 + 44 + 12); s += 0.6) for (const side of [-1, 1]) {
+       const n = 4 + Math.floor(rnd() * 4); // r7c: more, smaller blobs = bubbly clusters (big ones read as plastic balls up close)
+       for (let i = 0; i < n; i++) {
+         const fr = frame(s + rnd() * 0.6), r = 0.1 + rnd() * 0.22;
+@@ -821,7 +1082,8 @@ export async function buildMatch06(course: Course): Promise<Match06> {
        const num = (k: string, d: number) => { const v = Number(qs?.get(k)); return qs?.get(k) != null && Number.isFinite(v) ? v : d; };
        const fcs = num('m06fcs', 1.25), fck = num('m06fck', 1), fcn = num('m06fcn', 1.4);
        let seed2 = 9871; const rnd2 = () => ((seed2 = (seed2 * 16807) % 2147483647) / 2147483647);
@@ -446,7 +603,7 @@ index 831c2b44..c1a694d0 100644
        for (const it of items) {
          const R = it.r * fcs, n = Math.min(24, Math.max(3, Math.round((2 + 30 * R) * fck)));
          const t1 = new THREE.Vector3().crossVectors(it.up, new THREE.Vector3(1, 0, 0));
-@@ -836,6 +1092,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+@@ -836,6 +1098,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
            const hgt = (lobe ? R * (0.15 + 0.35 * rnd2()) * (1 - d / (1.2 * R)) : rho * 0.5) * (FCL ? 0.55 : 1); // r22 m06fcl: flatter heaps
            const p = base.clone().addScaledVector(t1, Math.cos(th) * d).addScaledVector(t2, Math.sin(th) * d).addScaledVector(it.up, rho * 0.55 + Math.max(0, hgt));
            aB.push(p.x, p.y, p.z, rho); aS.push(rnd2() + (lobe ? 1 : 0)); // aS >= 1: a foam lobe (pores), < 1: a small bubble
@@ -454,7 +611,7 @@ index 831c2b44..c1a694d0 100644
          }
        }
        const quad = new THREE.PlaneGeometry(1, 1);
-@@ -843,9 +1100,10 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+@@ -843,9 +1106,10 @@ export async function buildMatch06(course: Course): Promise<Match06> {
        g.setIndex(quad.index); g.setAttribute('position', quad.attributes.position); g.setAttribute('uv', quad.attributes.uv);
        g.setAttribute('aB', new THREE.InstancedBufferAttribute(new Float32Array(aB), 4));
        g.setAttribute('aS', new THREE.InstancedBufferAttribute(new Float32Array(aS), 1));
@@ -466,7 +623,7 @@ index 831c2b44..c1a694d0 100644
            transparent: rim, depthWrite: !rim, fog: false,
            uniforms: { uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uNear: { value: new THREE.Vector2(fcn * 0.5, fcn) } } });
          const o = new THREE.Mesh(g, m);
-@@ -896,6 +1154,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+@@ -896,6 +1160,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
        shared.uUseDepth.value = 1;
      },
      setAway(a) { if (foamClouds) foamClouds.visible = a > 0.5; for (const o of foamSprites) o.visible = a > 0.5; },
@@ -474,3 +631,37 @@ index 831c2b44..c1a694d0 100644
      away(cam) { return THREE.MathUtils.smoothstep(cam.distanceTo(shared.uProjPos.value), 0.6, 2.0); },
      sync(renderer, w, h) {
        shared.uPjPost.value.x = renderer.toneMappingExposure;
+diff --git a/src/world/match08.ts b/src/world/match08.ts
+index 1c5deea4..4aca7624 100644
+--- a/src/world/match08.ts
++++ b/src/world/match08.ts
+@@ -11,6 +11,21 @@
+  */
+ import * as THREE from 'three';
+ import { PROJ05_INVERSE } from '../vfx/waterRibbon';
++import { m06deepShift } from './course';
++
++/** r29 `&m06deep=1` (src/world/course.ts m06deepShift): translate every absolute position of the fitted 08 layout by t */
++function shiftLayout08(L: Layout, t: THREE.Vector3) {
++  if (t.lengthSq() === 0) return;
++  const m = L.camera.matrixWorld; m[12] += t.x; m[13] += t.y; m[14] += t.z;
++  L.floorY += t.y;
++  L.chamber.cx += t.x; L.chamber.cy += t.y; L.chamber.zBack += t.z; L.chamber.zDoor += t.z;
++  L.arch.z += t.z; for (const c of [L.arch.outer, L.arch.inner]) { c.cx += t.x; c.cy += t.y; }
++  L.pipe.cx += t.x; L.pipe.cy += t.y; L.pipe.z0 += t.z; L.pipe.z1 += t.z;
++  L.backwall.z += t.z;
++  L.platform.cx += t.x; L.platform.cz += t.z; L.platform.topY += t.y; L.platform.rimBottomY += t.y; L.platform.floorY += t.y;
++  L.towel.cx += t.x; L.towel.cz += t.z; L.towel.y0 += t.y;
++  for (const k of Object.keys(L.spouts)) { const c = L.spouts[k].c; c[0] += t.x; c[1] += t.y; c[2] += t.z; }
++}
+ 
+ interface Layout {
+   camera: { matrixWorld: number[]; fov: number; size: [number, number] };
+@@ -95,6 +110,7 @@ void main() {
+ 
+ export async function buildMatch08(): Promise<Match08> {
+   const L: Layout = await fetch(new URL('../../assets/textures/match08/proj08.json', import.meta.url).href).then((r) => r.json());
++  shiftLayout08(L, m06deepShift()); // r29 m06deep: the whole 08 chamber moves with the longer 06 route (no-op when off)
+   const plate = await new THREE.TextureLoader().loadAsync(new URL('../../assets/textures/match08/plate08_hybrid.png', import.meta.url).href);
+   plate.colorSpace = THREE.NoColorSpace; // raw display values: the shader inverts the post chain itself
+   plate.minFilter = THREE.LinearMipmapLinearFilter;

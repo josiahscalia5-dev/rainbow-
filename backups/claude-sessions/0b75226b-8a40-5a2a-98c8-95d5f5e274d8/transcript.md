@@ -2572,3 +2572,356 @@ Now I'll fix the coin depths to a smooth progression (the painted sizes of the t
 > 10 px 659.5,668,14 depth 58.0 water 0.60,-42.25,-190.28 | axial 58.0 radR -1.87 radU -1.06 | r 2.1
 > 11 px 675.2,675.9,13 depth 63.0 water 1.27,-43.16,-195.21 | axial 63.0 radR -1.10 radU -1.56 | r …[+344 chars]
 
+### 🤖 Claude — 2026-11-20T19:02:43.289Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/wt/s06/tools/match06 && cat > /home/user/wt/s06/tools/match06/r29_design_route.py <<'EOF'\n\"\"\"r29 lead: design the m06deep river centre line (drum frame -> world) through the painted coin trail rebuilt in 3D\n(tools/match06/r29_route_probe.mjs -> route_probe2.json). Writes assets/textures/match06/route06deep.json.\nusage: python3 -I tools/match06/r29_design_route.py <route_probe.json> <out.json>\"\"\"\nimport json, sys, math\nimport numpy as np\nP = json.load(open(sys.argv[1]))\nO, ax, Rx, Ux = (np.array(P[k]) for k in ('O', 'ax', 'Rx', 'Ux'))\ndef w(a, r, u …[+3942 chars]`
+
+### 🧑 User — 2026-11-20T19:02:43.474Z
+
+> ↩︎ result: length 111.7 u, points 76, min turn radius 12.0 u, max slope 13.0 deg down, max climb 18.8 deg
+>      0.0 u  world [   0.54  -38.05 -138.32]  drum [ 5.9  -2.96 -1.21]  tan [-0.153  0.322 -0.934]
+>     12.0 u  world [  -2.25  -36.1  -149.72]  drum [17.15 -5.53  1.69]  tan [-0.115  0.049 -0.992]
+>     24.0 u  world [  -2.66  -36.87 -161.65]  drum [29.11 -5.7   1.92]  tan [ 0.036 -0.168 -0.985]
+>     36.0 u  world [  -1.74  -39.32 -173.36]  drum [40.96 -4.55  0.45]  tan [ 0.136 -0.207 -0.969]
+>     48.0 u  world [-5.0000e-02 -4.1470e+01 -1.8504e+02]  drum [52.74 -2.62 -0.72]  tan [ 0.14  -0.156 -0.978]
+>     60.0 u  world [   1.4   -43.43 -196.78]  drum [64.58 -0.94 -1.7 ]  tan [ 0.085 -0.169 -0.982]
+>     72.0 u  world [   2.12  -45.4  -208.6 ]  drum [ 7.65e+01  2.00e-02 -2.68e+00]  tan [ 0.045 -0.16  -0.986]
+>     84.0 u  world [   2.69  -47.41 -220.42]  drum [88.43  0.82 -3.69]  tan [ 0.054 -0.178 -0.983]
+>     96.0 u  world [   3.23  -49.46 -232.23]  drum [100.36   1.59  -4.75]  tan [ 0.03  -0.158 -0.987]
+>    108.0 u  world [   3.33  -51.01 -244.12]  drum [112.34   1.93  -5.3 ]  tan [-0.012 -0.1   -0.995]
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:03:15.825Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 -c \"\nimport json; h=json.load(open('assets/textures/match06/hole06.json')); print({k:v for k,v in h.items() if not isinstance(v,list)})\"; python3 - <<'EOF'\nimport json\nP=json.load(open('/home/user/scratch/s06/route_probe2.json'))\nEOF\ngrep -n \"sigma\\|function smoothPolyline\" -A12 src/world/course.ts | sed -n 1,16p | cut -c1-160", "description": "Check the extent of the fill patch around Benny and how the route is smoothed"}`
+
+### 🧑 User — 2026-11-20T19:03:15.934Z
+
+> ↩︎ result: {'note': 'r25 m06hole (tools/match06/make_hole06.py)', 'method': 'flow', 'K': 160.0, 'l0': -2.8, 'l1': 2.8, 's0': 197.21, 's1': 203.31, 'sB': 198.91, 'zone': {'dc': -0.25, 'hl': 1.75, 'hs': 0.85}}
+> 364:function smoothPolyline(pts: THREE.Vector3[], from: number, sigma: number, passes: number) {
+> 365-  for (let pass = 0; pass < passes; pass++) {
+> 366-    const cum: number[] = [0];
+> 367-    for (let i = 1; i < pts.length; i++) cum.push(cum[i - 1] + pts[i].distanceTo(pts[i - 1]));
+> 368-    const out = pts.map((p) => p.clone());
+> 369-    for (let i = from + 1; i < pts.length - 1; i++) {
+> 370-      const acc = new THREE.Vector3();
+> 371-      let wsum = 0;
+> 372-      for (let j = i - 12; j <= i + 12; j++) {
+> 373-        if (j < from || j >= pts.length) continue;
+> 374-        const d = cum[j] - cum[i];
+> 375:        const w = Math.exp(-(d * d) / (2 * sigma * sigma));
+> 376-        acc.addScaledVector(pts[j], w);
+> 377-        wsum += w;
+> 378-      }
+> 379-      out[i].copy(acc.divideScalar(wsum));
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:03:53.017Z
+
+> 🔧 **Bash** `{"command": "cat > /home/user/wt/s06/tools/match06/r29_old_samples.mjs <<'EOF'\n// r29 lead (QA only): the current 06 route sampled in the m06tun drum frame (for the m06deep blend), JSON to stdout.\nimport * as THREE from 'three';\nconst Q = process.argv.slice(2).filter((a) => a !== '--')[0];\nglobalThis.location = { search: '?' + Q, href: 'http://x/?' + Q, hostname: 'x' };\nconst { Course } = await import('../../src/world/course');\nconst c = new Course();\nconst out = [];\nfor (let s = 196; s <= 222.0001; s += 0.5) { const f = c.sample(s); out.push({ s: +s.toFixed(2), pos: f.pos.toArray(), t …[+628 chars]`
+
+### 🧑 User — 2026-11-20T19:03:54.818Z
+
+> ↩︎ result: 53 196 222
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:04:16.782Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\nimport re\np='tools/match06/r29_design_route.py'; t=open(p).read()\nt=t.replace('''usage: python3 -I tools/match06/r29_design_route.py <route_probe.json> <out.json>\"\"\"''','''usage: python3 -I tools/match06/r29_design_route.py <route_probe.json> <out.json> <old_samples.json>\nThe first metres stay EXACTLY the current route (Benny's checkpoint pose + the r25 hole patch s 197.2-203.3 depend on it): the\ncourse keeps its raw points up to axial AKEEP and this curve starts there, blending from the current route (old_samples.json, sampled\nin …[+2087 chars]`
+
+### 🧑 User — 2026-11-20T19:04:17.033Z
+
+> ↩︎ result: length 107.7 u, points 73, min turn radius 6.8 u, max slope 12.9 deg down, max climb 8.2 deg
+>      0.0 u  world [ 1.0000e-01 -3.6040e+01 -1.4219e+02]  drum [ 9.6  -3.33  1.11]  tan [-0.194  0.142 -0.971]
+>     12.0 u  world [  -2.58  -36.09 -153.65]  drum [21.07 -5.77  2.03]  tan [-0.061 -0.023 -0.998]
+>     24.0 u  world [  -2.47  -37.59 -165.52]  drum [33.03 -5.43  1.53]  tan [ 0.057 -0.195 -0.979]
+>     36.0 u  world [  -1.2   -40.1  -177.18]  drum [ 4.483e+01 -3.930e+00 -1.000e-02]  tan [ 0.129 -0.185 -0.974]
+>     48.0 u  world [   0.43  -42.05 -188.91]  drum [56.64 -2.07 -0.98]  tan [ 0.116 -0.151 -0.982]
+>     60.0 u  world [   1.68  -44.09 -200.66]  drum [68.5  -0.58 -2.03]  tan [ 0.064 -0.165 -0.984]
+>     72.0 u  world [   2.29  -46.04 -212.49]  drum [80.43  0.27 -2.98]  tan [ 0.043 -0.162 -0.986]
+>     84.0 u  world [   2.9   -48.11 -224.29]  drum [92.35  1.11 -4.07]  tan [ 0.051 -0.177 -0.983]
+>     96.0 u  world [   3.32  -50.05 -236.12]  drum [104.29   1.76  -5.02]  tan [ 0.016 -0.139 -0.99 ]
+>    107.7 u  world [   3.28  -51.36 -247.76]  drum [116.     1.95  -5.35]  tan [-0.013 -0.098 -0.995]
+> points 72 first [-0.1893, -35.8302, -143.6349] end [3.276, -51.3621, -247.7646] aKeep 9.6
+> Shel …[+38 chars]
+
+### 🤖 Claude — 2026-11-20T19:04:37.054Z
+
+> 🔧 **Bash** `{"command": "cat > /home/user/scratch/s06/ks_probe.mjs <<'EOF'\nimport * as THREE from 'three';\nconst Q = process.argv.slice(2).filter((a) => a !== '--')[0];\nglobalThis.location = { search: '?' + Q, href: 'http://x/?' + Q, hostname: 'x' };\nconst { Course } = await import('/home/user/wt/s06/src/world/course.ts');\nconst c = new Course();\nconst O = new THREE.Vector3(3.618207615033741, -36.35146859486923, -132.599548800415);\nconst ax = new THREE.Vector3(-0.0198, -0.0834, -0.9963);\nconst P1 = c.sample(276.8727903992245).pos; const a1 = P1.clone().sub(O).dot(ax);\nconsole.log('@@', JSON.strin …[+464 chars]`
+
+### 🧑 User — 2026-11-20T19:04:39.141Z
+
+> ↩︎ result: @@ {"P1axial":77.47845438029809,"kS":199.39433601892642,"s07":242.87279039922498,"len":431.0287164842816}
+> 636:    let ax = new THREE.Vector3((vp[0] / W) * 2 - 1, 1 - (vp[1] / H) * 2, 0.5).unproject(proj).sub(proj.position).normalize();
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:04:45.550Z
+
+I have the pinned values. Now the edits to the game's route code. All of them sit behind the new `m06deep` switch, so the existing versions stay untouched.
+
+### 🤖 Claude — 2026-11-20T19:04:46.151Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/src/world/course.ts", "offset": 60, "limit": 30}`
+
+### 🧑 User — 2026-11-20T19:04:46.178Z
+
+> ↩︎ result: 60	  '09': 'RIDE THE FINAL WAVE',
+> 61	  '10': 'SLIDE INTO HIDING',
+> 62	  '11': 'SAFELY HOME',
+> 63	};
+> 64	
+> 65	/** Fixed world anchors shared by environment builders (absolute coordinates). */
+> 66	export const WORLD = {
+> 67	  drumA: { center: new THREE.Vector3(0, 0, 0), radius: 5, zBack: -6.5, zDoor: 3.5, doorRadius: 3.2, waterY: -2.5 },
+> 68	  basin: { center: new THREE.Vector3(2, -16, -19), rimRadius: 11.5, rimY: -10.6, drainRadius: 4.3, drainY: -20.2 },
+> 69	  /** Final Spin Chamber (08–11): drum with axis along Z, door at the far (-Z) end */
+> 70	  chamber: { center: new THREE.Vector3(12, -101.1, 0), radius: 13.5, zBack: -280, zDoor: -332, floorY: -113.6, doorRadius: 6.2 },
+> 71	  platform: { center: new THREE.Vector3(12, -110.6, -325.0), radius: 6.2, topY: -110.6 },
+> 72	  plunge: { topY: -52, bottomY: -113.6 },
+> 73	};
+> 74	
+> 75	/** funnel surface height of the whirlpool basin as a function of radius from its axis */
+> 76	export function funnelY(r: number): number {
+> 77	  const b = WORLD.basin;
+> 78	  const t = THREE.MathUtils.clamp((r - b.drainRadius * 0.6) / (b.rimRadius - b.drainRadius * 0.6), 0, 1);
+> 79	  return b.drainY + (b.rimY - b.drainY) * Math.pow(t, 0.72);
+> 80	}
+> 81	
+> 82	const V = (x: number, y:  …[+317 chars]
+
+### 🤖 Claude — 2026-11-20T19:04:53.558Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/course.ts", "old_string": "  plunge: { topY: -52, bottomY: -113.6 },\n};\n", "new_string": "  plunge: { topY: -52, bottomY: -113.6 },\n};\n\n/** r29 `&m06deep=1`: the original anchors (WORLD itself is moved by the 06 route length, see m06deepShift) */\nconst WORLD0 = {\n  chamber: { center: WORLD.chamber.center.clone(), zBack: WORLD.chamber.zBack, zDoor: WORLD.chamber.zDoor, floorY: WORLD.chamber.floorY },\n  platform: { center: WORLD.platform.center.clone(), topY: WORLD.platform.topY },\n  plunge: { topY: WORLD.plunge.topY, bott …[+1059 chars]`
+
+### 🧑 User — 2026-11-20T19:04:53.626Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/course.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T19:04:54.900Z
+
+Now the 06 segment itself and the 07 hand-off:
+
+### 🤖 Claude — 2026-11-20T19:05:02.862Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/course.ts", "old_string": "  const d06 = (c: number[], t: number) => (m06 ? Math.sin(Math.PI * t) ** 2 * (c[0] + c[1] * Math.cos(Math.PI * t) + c[2] * Math.cos(2 * Math.PI * t)) : 0);\n  seg(34, (t) =>\n    V(\n      s6.x - 4 * Math.sin(Math.PI * t) + (WORLD.chamber.center.x - s6.x) * smooth(0.4, 1, t) + d06(path06.dx, t),\n      s6.y + 12.5 * Math.pow(Math.sin(Math.PI * Math.min(t / 0.82, 1)), 1.15) - 4.5 * smooth(0.5, 1, t) + d06(path06.dy, t),\n      s6.z - 46 * t,\n    ),\n  );\n  mark('07');", "new_string": "  const d06 = (c …[+1590 chars]`
+
+### 🧑 User — 2026-11-20T19:05:02.921Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/course.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T19:05:03.917Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/course.ts", "old_string": "import path06 from '../../assets/textures/match06/path06.json';", "new_string": "import path06 from '../../assets/textures/match06/path06.json';\nimport route06deep from '../../assets/textures/match06/route06deep.json';"}`
+
+### 🧑 User — 2026-11-20T19:05:03.971Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/course.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T19:05:07.111Z
+
+Now the Screen 08–10 river must follow the moved chamber. Its painted river line is stored in fixed coordinates:
+
+### 🤖 Claude — 2026-11-20T19:05:08.166Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"const push = \\|function push\" -A4 src/world/course.ts | head -8; grep -n \"const rz = river08\" -A6 src/world/course.ts | cut -c1-200", "description": "Read the point-push helper and the 08 river lookup"}`
+
+### 🧑 User — 2026-11-20T19:05:08.220Z
+
+> ↩︎ result: 221:  const push = (p: THREE.Vector3) => {
+> 222-    if (pts.length && p.distanceTo(pts[pts.length - 1]) < 0.25) return;
+> 223-    pts.push(p);
+> 224-  };
+> 225-  const mark = (k: string) => (marks[k] = pts.length - 1);
+> 363:  const rz = river08.z.filter((z) => z >= -326), rxs = river08.x.slice(0, rz.length);
+> 364-  const riverX = (z: number) => {
+> 365-    if (z >= rz[0]) return rxs[0];
+> 366-    for (let i = 1; i < rz.length; i++) if (z >= rz[i]) { const a = (z - rz[i - 1]) / (rz[i] - rz[i - 1]); return rxs[i - 1] + (rxs[i] - rxs[i - 1]) * a; }
+> 367-    return rxs[rxs.length - 1];
+> 368-  };
+> 369-  const x08 = (z: number, xDefault: number) => {
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:05:10.927Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/course.ts", "old_string": "  const rz = river08.z.filter((z) => z >= -326), rxs = river08.x.slice(0, rz.length);", "new_string": "  // r29 m06deep: the painted 08 river (absolute coordinates) moves with the chamber (SHIFT07 = 0 when off)\n  const rz = river08.z.filter((z) => z >= -326).map((z) => z + SHIFT07.z), rxs = river08.x.slice(0, rz.length).map((x) => x + SHIFT07.x);"}`
+
+### 🧑 User — 2026-11-20T19:05:10.975Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/course.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T19:05:12.127Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"river08\\|coins08\\|proj08\\|splash08\\|faceTo\\|floorY\" src/world/match08.ts src/gameplay/coins.ts src/game/Game.ts src/vfx/*.ts 2>/dev/null | head -30 | cut -c1-200", "description": "Find every use of the Screen 08 position data"}`
+
+### 🧑 User — 2026-11-20T19:05:12.185Z
+
+> ↩︎ result: src/world/match08.ts:4: * camera (tools/match08/fit_proxies.py → assets/textures/match08/proj08.json): inlet pipe, gold arch, chamber walls,
+> src/world/match08.ts:17:  floorY: number;
+> src/world/match08.ts:22:  platform: { cx: number; cz: number; r: number; topY: number; rimBottomY: number; floorY: number; tiltDeg: number };
+> src/world/match08.ts:97:  const L: Layout = await fetch(new URL('../../assets/textures/match08/proj08.json', import.meta.url).href).then((r) => r.json());
+> src/world/match08.ts:166:  fl.rotateX(-Math.PI / 2).translate(C.cx, L.floorY, (L.pipe.z0 + C.zDoor) / 2);
+> src/world/match08.ts:176:  const skH = P.rimBottomY - P.floorY;
+> src/world/match08.ts:194:  const SP: { offset: [number, number, number]; w: number; h: number } = await fetch(new URL('../../assets/textures/match08/splash08.json', import.meta.url).href).then((r) => 
+> src/world/match08.ts:195:  const spTex = await new THREE.TextureLoader().loadAsync(new URL('../../assets/textures/match08/splash08.png', import.meta.url).href);
+> src/gameplay/coins.ts:11:import coins08 from '../../assets/textures/match08/coins08.json';
+> src/gameplay/coins.ts:17:export interface CoinDef { s: number; lat: number; h: number; stage: Sta …[+1041 chars]
+
+### 🤖 Claude — 2026-11-20T19:05:17.351Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 10,40p src/world/match08.ts | cut -c1-200; grep -n \"L\\.[a-zA-Z]*\" -o src/world/match08.ts | sort | uniq -c | sort -rn | head -20; sed -n 76,100p src/gameplay/coins.ts | cut -c1-200", "description": "Read the Screen 08 layout data structure and how 08 coins are placed"}`
+
+### 🧑 User — 2026-11-20T19:05:17.428Z
+
+> ↩︎ result: * Without the switch nothing in this file runs and the game is unchanged.
+>  */
+> import * as THREE from 'three';
+> import { PROJ05_INVERSE } from '../vfx/waterRibbon';
+> 
+> interface Layout {
+>   camera: { matrixWorld: number[]; fov: number; size: [number, number] };
+>   floorY: number;
+>   chamber: { cx: number; cy: number; r: number; zBack: number; zDoor: number };
+>   arch: { z: number; outer: { cx: number; cy: number; r: number }; inner: { cx: number; cy: number; r: number }; depth: number };
+>   pipe: { cx: number; cy: number; r: number; z0: number; z1: number };
+>   backwall: { z: number; holeR: number };
+>   platform: { cx: number; cz: number; r: number; topY: number; rimBottomY: number; floorY: number; tiltDeg: number };
+>   towel: { cx: number; cz: number; w: number; h: number; y0: number; d: number };
+>   spouts: Record<string, { c: [number, number, number]; rx: number; ry: number }>;
+> }
+> 
+> export interface Match08 {
+>   group: THREE.Group;
+>   /** the approved picture's splash ring around Benny (camera-facing card; Game places it at Benny + splashOffset) */
+>   splash: THREE.Mesh;
+>   splashOffset: THREE.Vector3;
+>   /** render the projector depth map once (needs the renderer); call after the group is in the s …[+2446 chars]
+
+### 🤖 Claude — 2026-11-20T19:05:22.599Z
+
+Screen 08's layout data (camera, arch, pipe, back wall, platform, towel, spouts) and its coins are all in fixed coordinates. I'll add one shift step right where each is loaded.
+
+### 🤖 Claude — 2026-11-20T19:05:31.999Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='src/world/match08.ts'; t=open(p).read()\nold=\"  const L: Layout = await fetch(new URL('../../assets/textures/match08/proj08.json', import.meta.url).href).then((r) => r.json());\"\nassert old in t\nnew=old+\"\"\"\n  shiftLayout08(L, m06deepShift()); // r29 m06deep: the whole 08 chamber moves with the longer 06 route (no-op when off)\"\"\"\nt=t.replace(old,new,1)\nimp=\"import { PROJ05_INVERSE } from '../vfx/waterRibbon';\"\nassert imp in t\nt=t.replace(imp, imp+\"\"\"\nimport { m06deepShift } from './course';\n\n/** r29 `&m06deep=1` (s …[+1962 chars]`
+
+### 🧑 User — 2026-11-20T19:05:32.081Z
+
+> ↩︎ result: 7:import * as THREE from 'three';
+> 8:import type { Course, StageId } from '../world/course';
+> 9:import { canvasTexture } from '../world/materials';
+> 10:import { coreLateral, flag05 } from '../vfx/waterRibbon';
+> 11:import coins08 from '../../assets/textures/match08/coins08.json';
+> 12:import coins06 from '../../assets/textures/match06/coins06.json';
+> 5: * door wall, floor/river plane, platform (top tilted toward the camera as painted), towel and the four half-dome spouts.
+> 27:  for (const k of Object.keys(L.spouts)) { const c = L.spouts[k].c; c[0] += t.x; c[1] += t.y; c[2] += t.z; }
+> 38:  towel: { cx: number; cz: number; w: number; h: number; y0: number; d: number };
+> 39:  spouts: Record<string, { c: [number, number, number]; rx: number; ry: number }>;
+> 151:  const M = { wall: mat('#c25bd0', pWall, 1 / 2.4), floor: mat('#9c55c8', pWall, 1 / 2.4), gold: mat('#e8a24a', pGold, 1 / 1.2), plat: mat('#b78ad
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:05:37.642Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='src/gameplay/coins.ts'; t=open(p).read()\nt=t.replace(\"import type { Course, StageId } from '../world/course';\",\"import type { Course, StageId } from '../world/course';\\nimport { m06deepShift } from '../world/course';\",1)\nopen(p,'w').write(t)\nEOF\nnpx tsc --noEmit 2>&1 | head -20; echo \"tsc rc=$?\"", "description": "Add the import and type-check the changes so far", "timeout": 300000}`
+
+### 🧑 User — 2026-11-20T19:05:40.563Z
+
+> ↩︎ result: tsc rc=0
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:05:46.070Z
+
+Type check passes. Now the Screen 06 world: pin the tunnel, extend the river floor to the new 07 entrance, and check what other ranges are tied to the old stage end.
+
+### 🤖 Claude — 2026-11-20T19:05:47.476Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"for (let s = \\|stage('06')\\|stage('07')\\|L\\.s0 + \\|sB + \\|L\\.sB\" src/world/match06.ts | head -30 | cut -c1-200; grep -n \"^import\\|route06deep\" src/world/match06.ts | head", "description": "Find the river-position ranges used by the Screen 06 scenery"}`
+
+### 🧑 User — 2026-11-20T19:05:47.566Z
+
+> ↩︎ result: 593:  for (let s = L.s0; s < L.s1; s += 0.5) sList.push(s);
+> 594:  for (let s = L.s1; s <= L.s1 + L.ext + 1e-6; s += 2) sList.push(s);
+> 637:    const sA = L.s0 + 12, sE = L.s0 + 12 + 44; // approved checkpoint .. end of the 06 stage
+> 642:    for (let s = L.s0; s <= sE; s += 1) { const q = course.sample(s).pos.sub(C); cen.add(q.addScaledVector(ax, -q.dot(ax))); n++; }
+> 663:      for (let s = L.s0; s <= sE; s += 0.5) { const y = course.sample(s).pos.y; if (y > yTopC) { yTopC = y; sTop = s; } }
+> 665:      for (let s = sTop; s <= sE + 20; s += 0.5) { const q = course.sample(s); smp.push([q.pos.clone().sub(O).dot(ax), yawOf(q.tan)]); }
+> 704:      const q = course.sample(course.stage('07').s0).pos.sub(O), aq = q.dot(ax); q.addScaledVector(ax, -aq);
+> 898:    const sB = (L as unknown as { sB?: number }).sB ?? L.s0 + 12;
+> 918:      const ds = D0 + ((j + 0.5) / NY) * (D1 - D0), fr = frame(sB + ds);
+> 970:      uHoleR: { value: new THREE.Vector4(hm.l0, hm.l1, hm.s0, hm.s1) }, uHoleZ: { value: new THREE.Vector4(hm.sB + z.dc, z.hl, z.hs, 0) } });
+> 981:    const sB = (L as unknown as { sB?: number }).sB ?? L.s0 + 12;
+> 983:    const l0 = -R6.Wb, l1 = R6.Wb, sa = sB - 5, sb = sB + 25;
+> 1051:    for (let s = L. …[+335 chars]
+
+### 🤖 Claude — 2026-11-20T19:05:52.693Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 496,512p src/world/match06.ts | cut -c1-200; sed -n 584,596p src/world/match06.ts | cut -c1-200", "description": "Read where Screen 06 loads its layout and builds its floor range"}`
+
+### 🧑 User — 2026-11-20T19:05:52.745Z
+
+> ↩︎ result: const L: Layout06 = await fetch(tex('proj06.json')).then((r) => r.json());
+>   const loader = new THREE.TextureLoader();
+>   const plate = await loader.loadAsync(tex('plate06_hybrid.png'));
+>   plate.colorSpace = THREE.NoColorSpace; // raw display values: the shader inverts the post chain itself
+>   plate.minFilter = THREE.LinearMipmapLinearFilter;
+>   plate.anisotropy = 8;
+> 
+>   // the projector = the locked game camera the picture was matched to (far enough for the deep painted tunnel)
+>   const [W, H] = L.camera.size;
+>   const proj = new THREE.PerspectiveCamera(L.camera.fov, W / H, 0.3, L.ext + 160);
+>   proj.matrixWorld.fromArray(L.camera.matrixWorld);
+>   proj.matrixWorld.decompose(proj.position, proj.quaternion, proj.scale);
+>   proj.matrixWorldInverse.copy(proj.matrixWorld).invert();
+>   proj.updateProjectionMatrix();
+>   const projVP = new THREE.Matrix4().multiplyMatrices(proj.projectionMatrix, proj.matrixWorldInverse);
+> 
+>   const depthRT = new THREE.WebGLRenderTarget(1024, Math.round((1024 * H) / W), { depthBuffer: true });
+> 
+>   // river frames from the course (beyond s1: straight along the heading at s1, as tools/match06/geo06.py)
+>   const f1 = course.sample(L.s1);
+>   const T1 = f1.tan.clone().normalize …[+600 chars]
+
+### 🤖 Claude — 2026-11-20T19:06:09.401Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"const qs\\b\\|const qs =\" src/world/match06.ts | head -3 && python3 - <<'EOF'\nimport json\np='assets/textures/match06/route06deep.json'; r=json.load(open(p))\nr['tunnel_pin']={'note':'m06tun values of the ORIGINAL route (tools: /home/user/scratch/s06/ks_probe.mjs, r29): wall-tile phase kS and the old end axial P1a (a1 = P1a + ext)', 'kS':199.39433601892642, 'P1a':77.47845438029809}\njson.dump(r,open(p,'w'),indent=0)\np='src/world/match06.ts'; t=open(p).read()\nold=\"  const L: Layout06 = await fetch(tex('proj06.json')).then((r) => r.json());\\n\ …[+2094 chars]`
+
+### 🧑 User — 2026-11-20T19:06:12.471Z
+
+> ↩︎ result: 544:  const qs = typeof location !== 'undefined' ? new URLSearchParams(location.search) : null;
+> ok
+> src/world/match06.ts(501,16): error TS2448: Block-scoped variable 'qs' used before its declaration.
+> src/world/match06.ts(501,16): error TS2454: Variable 'qs' is used before being assigned.
+> src/world/match06.ts(502,46): error TS2339: Property 'sAhead07' does not exist on type 'Layout06'.
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:06:16.067Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='src/world/match06.ts'; t=open(p).read()\nt=t.replace(\"\"\"  const DEEP = qs?.get('m06deep') === '1';\n  if (DEEP) L.s1 = course.stage('07').s0 + L.sAhead07;\n\"\"\",\"\"\"  const DEEP = typeof location !== 'undefined' && new URLSearchParams(location.search).get('m06deep') === '1';\n  if (DEEP) L.s1 = course.stage('07').s0 + ((L as unknown as { sAhead07?: number }).sAhead07 ?? 34);\n\"\"\",1)\nopen(p,'w').write(t)\nEOF\nnpx tsc --noEmit 2>&1 | head -10; echo done", "description": "Fix the switch lookup order and type-check again", "tim …[+14 chars]`
+
+### 🧑 User — 2026-11-20T19:06:19.076Z
+
+> ↩︎ result: done
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:06:40.398Z
+
+> 🔧 **Bash** `{"command": "cat > /home/user/wt/s06/tools/match06/r29_coins_deep.mjs <<'EOF'\n// r29 lead (QA, no browser): the painted 06 coins on the m06deep river. Coins 0-1 (inside the unchanged first metres) keep\n// coins06.json; coins 2-14 = the painted pixel's ray from the approved camera at the r29 depth (route06deep design), placed on the\n// NEW course (s, lat, h) with the scale that covers the painted coin at the approved view. Writes assets/textures/match06/coins06deep.json.\n//   cd /home/user/wt/s06 && npx vite-node tools/match06/r29_coins_deep.mjs -- \"<query incl. m06deep=1>\"\nimport * as T …[+2810 chars]`
+
+### 🧑 User — 2026-11-20T19:06:42.159Z
+
+> ↩︎ result: stages 06 188.89 309.65 07 309.65 451.81 course length 497.8
+> Benny sB pos [ 0.4926, -38.0944, -138.3469 ] tan [ -0.145, 0.5357, -0.8318 ]
+>  2 s 207.13 lat -1.75 h 0.44 scale 0.632 dist 13.7 along-miss -0.01
+>  3 s 212.11 lat -1.25 h 0.81 scale 0.632 dist 18.8 along-miss -0.01
+>  4 s 218.49 lat -0.98 h 0.83 scale 0.631 dist 25.2 along-miss -0.01
+>  5 s 226.51 lat -0.39 h 0.60 scale 0.568 dist 33.0 along-miss 0.01
+>  6 s 232.75 lat -0.16 h 0.47 scale 0.580 dist 39.0 along-miss -0.01
+>  7 s 237.93 lat -0.00 h 0.42 scale 0.654 dist 44.0 along-miss -0.00
+>  8 s 242.53 lat -0.03 h 0.45 scale 0.721 dist 48.5 along-miss 0.01
+>  9 s 247.15 lat 0.07 h 0.45 scale 0.663 dist 53.0 along-miss -0.01
+> 10 s 252.19 lat -0.00 h 0.50 scale 0.635 dist 58.0 along-miss 0.00
+> 11 s 257.25 lat 0.08 h 0.44 scale 0.641 dist 63.0 along-miss 0.00
+> 12 s 266.29 lat 0.02 h 0.44 scale 0.563 dist 72.0 along-miss -0.00
+> 13 s 278.31 lat 0.01 h 0.46 scale 0.460 dist 84.0 along-miss -0.01
+> 14 s 290.33 lat 0.08 h 0.36 scale 0.601 dist 96.0 along-miss -0.00
+> Shell cwd was reset to /home/user/rainbow-
+
