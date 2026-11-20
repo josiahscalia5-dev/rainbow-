@@ -3521,3 +3521,59 @@ About halfway (202 of ~400 frames). Waiting for it to finish.
 
 > 🔧 **Bash** `{"command": "until ! pgrep -f \"r30_clip.mjs /home/user/scratch/r30/clip_v2\" >/dev/null; do sleep 10; done; tail -1 /home/user/scratch/r30/clip_v2.log; ls /home/user/scratch/r30/clip_v2/*.png | wc -l", "description": "Wait for v2 clip completion", "timeout": 600000}`
 
+### 🧑 User — 2026-11-20T21:50:33.770Z
+
+> ↩︎ result: frames 399 s0 198.91 s07 396.27066741997834
+> 399
+
+### 🤖 Claude — 2026-11-20T21:50:39.748Z
+
+The v2 clip is complete (399 frames, same uninterrupted ride). Next: the gameplay test with v2 in the background, and the labelled videos plus storyboard sheet for v2.
+
+### 🤖 Claude — 2026-11-20T21:50:43.946Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && (timeout 1700 node scripts/gameplay-test.mjs --q=\"$(cat /home/user/rainbow-/qa/match/06/r30/QUERY_NEW_v2.txt)\" --out=/home/user/rainbow-/qa/match/06/r30/gameplay_NEW_v2.json > /home/user/scratch/r30/gp_v2.log 2>&1 &) ; mkdir -p /home/user/rainbow-/qa/match/06/r30/proof_v2 && cd /home/user/rainbow-/qa/match/06/r30/proof_v2 && sed -e \"s/SCREEN 06 NEW &m06curl=1 - real gameplay, no cuts/SCREEN 06 NEW v2 (closer framing) - real gameplay, no cuts/\" ../proof/make_clip.py > make_clip.py && timeout 1500 python3 -I make_clip.py /home/user/scratch/r30/clip_v2 /ho …[+404 chars]`
+
+### 🧑 User — 2026-11-20T21:52:27.902Z
+
+> ↩︎ result: done 399 frames
+> QUERY_NEW_v2.txt
+> SCREEN06_NEW_route_into_07_0.5x.mp4
+> SCREEN06_NEW_route_into_07_1x.mp4
+> STORYBOARD_vs_GAMEPLAY.jpg
+> make_clip.py
+> stills_from_clip
+
+### 🤖 Claude — 2026-11-20T21:52:28.666Z
+
+The v2 videos and sheet are built. Checking the v2 storyboard comparison.
+
+### 🤖 Claude — 2026-11-20T21:52:29.215Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r30/proof_v2/STORYBOARD_vs_GAMEPLAY.jpg"}`
+
+### 🧑 User — 2026-11-20T21:52:29.457Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-20T21:52:29.451Z
+
+[Image: original 2250x1720, displayed at 2000x1529. Multiply coordinates by 1.13 to map to original image.]
+
+### 🤖 Claude — 2026-11-20T21:52:36.302Z
+
+> 🔧 **Bash** `{"command": "until [ -s /home/user/rainbow-/qa/match/06/r30/gameplay_NEW_v2.json ] && ! pgrep -f \"gameplay-test.mjs\" >/dev/null; do sleep 5; done; python3 -c \"\nimport json;d=json.load(open('/home/user/rainbow-/qa/match/06/r30/gameplay_NEW_v2.json'));c=d['checks'];print(sum(v.get('pass') is True for v in c.values()),'/',len(c), [k for k,v in c.items() if not v.get('pass')]); print('coins', c['realCoinPickups']['collected'], c['realCoinPickups']['endCoins'], 'maxCamJump', c['noCameraCut'].get('maxCameraJumpPerStep'))\"", "description": "Wait for and read v2 gameplay test", "timeout": 1500000 …[+1 chars]`
+
+### 🧑 User — 2026-11-20T21:52:36.397Z
+
+> ↩︎ result: 8 / 8 []
+> coins 91 2240 maxCamJump 0.728
+
+### 🤖 Claude — 2026-11-20T21:52:38.020Z
+
+v2 passes all 8 gameplay checks: 91 coins, 2,240 at the end, and no camera jumps. Saving the v2 proof to GitHub and sending it.
+
+### 🤖 Claude — 2026-11-20T21:52:44.121Z
+
+> 🔧 **Bash** `{"command": "cat > README.md <<'EOF'\n# Screen 06 — v2 proof (lead, 2026-11-20 ~22:10 UTC) — individual playable candidate, NOT approved, not Android\n\n* v2 = `QUERY_NEW_v2.txt` = v1 (`../QUERY_NEW_v1.txt`) + `&m06camk=0.65&m06camu=1.05`: after the approved start view the camera stays 35 % closer behind\n  Benny at the same height (eased back over the last 16 u before 07), so Benny is large and low in the frame like the approved picture and\n  the storyboard, with the winding slide + coin trail visible above his hat. Route, scenery, start view and the 07 join unchanged.\n* `SCREEN06_NEW_route …[+913 chars]`
+
