@@ -2348,3 +2348,37 @@ The videos are made (3 s each). Before sending, a visual check of AFTER frames a
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-20T01:45:10.675Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/match/04/r21_rings/clip_BEFORE_vs_AFTER_swimming.mp4", "/home/user/rainbow-/qa/match/04/r21_rings/clip_zoom_marked_area_BEFORE_vs_AFTER.mp4"], "caption": "Moving view, BEFORE | AFTER: Benny swims from the opening about 16 units into the tunnel, steering left and right (3 s, shown at roughly 1/3 speed so the edges are easy to inspect). The second clip is your marked area at 2× with no smoothing.", "status": "normal", "display": "render"}`
+
+### 🤖 Claude — 2026-11-20T01:45:11.126Z
+
+> 🔧 **TaskUpdate** `{"taskId": "3", "status": "completed"}`
+
+### 🧑 User — 2026-11-20T01:45:11.138Z
+
+> ↩︎ result: Updated task #3 status
+
+### 🤖 Claude — 2026-11-20T01:45:11.529Z
+
+> 🔧 **TaskUpdate** `{"taskId": "4", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-20T01:45:11.540Z
+
+> ↩︎ result: 2 files delivered to user.
+>   /home/user/rainbow-/qa/match/04/r21_rings/clip_BEFORE_vs_AFTER_swimming.mp4 → file_uuid: fcac825d-c03c-4830-83f5-52e9a5335ad3
+>   /home/user/rainbow-/qa/match/04/r21_rings/clip_zoom_marked_area_BEFORE_vs_AFTER.mp4 → file_uuid: 9472ad14-bc03-4464-b65c-2f8164f19015
+
+### 🧑 User — 2026-11-20T01:45:11.553Z
+
+> ↩︎ result: Updated task #4 status
+
+### 🤖 Claude — 2026-11-20T01:45:23.481Z
+
+Now saving: refresh the code patch, run the manual autosave, and verify that GitHub matches.
+
+### 🤖 Claude — 2026-11-20T01:45:27.334Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && git diff 70e559572ef44d6d8be4f7d0b86c36f54149ff44 -- src tools > /home/user/rainbow-/qa/match/04/r21_rings/r21_rings_vs_70e5595.patch && git diff --stat 70e559572ef44d6d8be4f7d0b86c36f54149ff44 -- src tools && cd /home/user/rainbow- && python3 scripts/rainbow-autosave.py --reason \"manual:s04-rings-r21\" 2>&1 | tail -4; B=$(git rev-parse --abbrev-ref HEAD); L=$(git rev-parse HEAD); R=$(timeout 60 git ls-remote origin refs/heads/$B | cut -f1); echo \"branch $B local $L remote $R\"; [ \"$L\" = \"$R\" ] && echo MATCH; git show --stat --oneline HEAD | grep -E  …[+193 chars]`
+
