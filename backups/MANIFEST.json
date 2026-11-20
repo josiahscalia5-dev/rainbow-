@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 19349,
-   "sha256": "337f9fa84d89f470d72c35acd34b5f8cb7a80834c4effe74265930ecf3f08744"
+   "sha256": "c2a73296801a12319ac02af08c27550ee498ca848841c037b86f4f7d2c0d2686"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -629,7 +629,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 1748,
-   "sha256": "3b315ebc7fb81d4931a08f05c06adcb66b58a3100ee5a3f04c34f14f79952a23"
+   "sha256": "3dc1c48b28ee03791ba123038912fa3a870ba7a3bbc87b4869285431f656502d"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -863,8 +863,13 @@
   },
   {
    "path": "backups/wip/claude__rainbow-benny-c21/INFO.json",
-   "bytes": 463,
-   "sha256": "d8ec77a9f9dd6024e1909a1e4d8185833fa6add27ba61b1649ec2562f762be4f"
+   "bytes": 494,
+   "sha256": "cbf3aa25b073665057dc8b540a7e2c62766371dc53464fa8bcc8c3e152de6171"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-benny-c21/tracked.patch",
+   "bytes": 2230,
+   "sha256": "a45744aa3c5b5526bde03c8898537ccd73c724d744101bdd7ad6b3f62edd6a5b"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-blendfoam-c19/INFO.json",
@@ -1388,8 +1393,13 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c21/INFO.json",
-   "bytes": 477,
-   "sha256": "f93f8245d4e639ef4080974e4317db84a6431a764b445ccb2242962845ac8e9b"
+   "bytes": 506,
+   "sha256": "b9c35157164c8dbc219feb3645446ff8b1a084a205c014de4d8d09b806aeb924"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-match-c21/tracked.patch",
+   "bytes": 2395,
+   "sha256": "11bcfa2b25b84cddee9a68bc37708552943cfb3d2df05f31fa4e6d0c1b33fce8"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-preview-c18/INFO.json",
@@ -1554,7 +1564,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c21/INFO.json",
    "bytes": 515,
-   "sha256": "fd4713d8dbeec32d8a94fd38ad27c4483342e72590c7749dbf09e381459c930a"
+   "sha256": "13ac481c59e2f74eb77de1665a563c775b4882d6939b3f6a23f2d203f3ada1be"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c21/tracked.patch",

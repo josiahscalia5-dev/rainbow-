@@ -2093,3 +2093,27 @@ The Benny worker reports its fur step. Since this is the change you care about m
 
 > 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:benny-step1-review 2>&1 | grep -E '\"commit\"|pushed_verified|skipping'; python3 -I scripts/autosave-status.py", "description": "Save and verify on GitHub", "timeout": 300000}`
 
+### 🧑 User — 2026-11-20T00:19:55.373Z
+
+> ↩︎ result: "pushed_verified": true,
+>   "commit": "cf7bc5421d650cf4038c3a44f6ca778faabf7809",
+> AUTOSAVE OK | branch ccr-681a37bb-5jqfbu | scheduler daemon | last verified backup 2026-11-20T00:19:39+00:00 (0.2 min ago) | local cf7bc54 remote cf7bc54 (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-20T00:20:00.990Z
+
+The Benny worker finished its first fur step. I checked it myself and sent you five files: your approved Benny, before, new at the start, new while steering, and a swim clip. **The colour is better, but the texture isn't right yet.**
+
+**Better:**
+- **Colour:** the neon hot pink is gone. The fur is now dusty rose, darker underneath and in the folds, lighter at the tips. Measured, the colour now closely matches your approved Benny.
+- **Hat and star:** the hat is a bit bigger and sits further down at the back. The star is now a flat stitched patch instead of shiny plastic.
+
+**Not right yet:**
+- **Fur texture:** it hangs in long stiff layers like a shaggy fringe, with a spiky, jagged bottom edge. Your Benny's fur is short, dense, soft plush with a smooth round outline.
+- **Pompom:** a dark, spiky violet ball. Yours is a lighter, chunky yarn pompom.
+- **Cuff:** looks smeared. Yours has crisp chunky knit ribs.
+- **Screens 05, 06 and 07:** the fur comes out too dark, almost maroon, because the lighting differs between screens.
+
+I've sent the worker exact instructions: keep the colour, and make the fur shorter, much denser and softer, with a smooth round outline and no rows or spikes. After that it fixes the brightness on 05–07, then the pompom and the cuff.
+
+The other two workers are still going: the rings worker is on your marked gold-tunnel fix, and the water worker is making the pink water on the walls crisp. Saved and verified on GitHub (`cf7bc54`).
+
