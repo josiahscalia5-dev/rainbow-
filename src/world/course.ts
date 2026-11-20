@@ -15,6 +15,7 @@ import * as THREE from 'three';
 import { flag05 } from '../vfx/waterRibbon';
 import river08 from '../../assets/textures/match08/river08.json';
 import path06 from '../../assets/textures/match06/path06.json';
+import route06deep from '../../assets/textures/match06/route06deep.json';
 
 export type StageId = '01' | '02' | '03' | '04' | '05' | '06' | '07' | '08' | '09' | '10' | '11';
 export type TubeKind = 'none' | 'chute' | 'gold' | 'perf';
@@ -72,6 +73,27 @@ export const WORLD = {
   plunge: { topY: -52, bottomY: -113.6 },
 };
 
+/** r29 `&m06deep=1`: the original anchors (WORLD itself is moved by the 06 route length, see m06deepShift) */
+const WORLD0 = {
+  chamber: { center: WORLD.chamber.center.clone(), zBack: WORLD.chamber.zBack, zDoor: WORLD.chamber.zDoor, floorY: WORLD.chamber.floorY },
+  platform: { center: WORLD.platform.center.clone(), topY: WORLD.platform.topY },
+  plunge: { topY: WORLD.plunge.topY, bottomY: WORLD.plunge.bottomY },
+};
+const SHIFT07 = new THREE.Vector3();
+/**
+ * r29 `&match06=1&m06deep=1` (lead, docs/briefs/2026-11-20-r29, qa/match/06/r29/): the 06 river follows the painted coin trail rebuilt
+ * in 3D and runs down the painted ring tunnel, so Screen 06 is longer. Everything from the 07 entrance on (07 tube, plunge, 08 chamber,
+ * platform, towel, 09, 10) is moved by this ONE rigid offset, so each of those screens keeps exactly its look. Zero when off.
+ */
+export function m06deepShift(): THREE.Vector3 { return SHIFT07.clone(); }
+function applyWorldShift(t: THREE.Vector3) {
+  SHIFT07.copy(t);
+  WORLD.chamber.center.copy(WORLD0.chamber.center).add(t);
+  WORLD.chamber.zBack = WORLD0.chamber.zBack + t.z; WORLD.chamber.zDoor = WORLD0.chamber.zDoor + t.z; WORLD.chamber.floorY = WORLD0.chamber.floorY + t.y;
+  WORLD.platform.center.copy(WORLD0.platform.center).add(t); WORLD.platform.topY = WORLD0.platform.topY + t.y;
+  WORLD.plunge.topY = WORLD0.plunge.topY + t.y; WORLD.plunge.bottomY = WORLD0.plunge.bottomY + t.y;
+}
+
 /** funnel surface height of the whirlpool basin as a function of radius from its axis */
 export function funnelY(r: number): number {
   const b = WORLD.basin;
@@ -103,6 +125,9 @@ interface RouteData {
   points: THREE.Vector3[];
   marks: Record<string, number>;
   straight: { from: string; to: string; a: THREE.Vector3; b: THREE.Vector3; floorDepth: number }[];
+  /** r29 m06deep only: original point count and the last unchanged 06 point index (Course keeps the original arc-length samples) */
+  nOld?: number;
+  iKeep?: number;
 }
 
 /**
@@ -277,13 +302,17 @@ function buildRoute(): RouteData {
   // ends, so the 05->06 join and the whole 07 / plunge / 08 route are unchanged. Off: d06 = 0 (default route).
   const m06 = flag05('match06') || flag05('matchall');
   const d06 = (c: number[], t: number) => (m06 ? Math.sin(Math.PI * t) ** 2 * (c[0] + c[1] * Math.cos(Math.PI * t) + c[2] * Math.cos(2 * Math.PI * t)) : 0);
-  seg(34, (t) =>
+  // r29 `&m06deep=1` (needs match06): see m06deepShift. The original anchors (WORLD0) define the original route, so the formula
+  // below is unchanged whether or not the shift was applied by an earlier Course in this page.
+  const old06 = (t: number) =>
     V(
-      s6.x - 4 * Math.sin(Math.PI * t) + (WORLD.chamber.center.x - s6.x) * smooth(0.4, 1, t) + d06(path06.dx, t),
+      s6.x - 4 * Math.sin(Math.PI * t) + (WORLD0.chamber.center.x - s6.x) * smooth(0.4, 1, t) + d06(path06.dx, t),
       s6.y + 12.5 * Math.pow(Math.sin(Math.PI * Math.min(t / 0.82, 1)), 1.15) - 4.5 * smooth(0.5, 1, t) + d06(path06.dy, t),
       s6.z - 46 * t,
-    ),
-  );
+    );
+  const deep06 = m06 && flag05('m06deep');
+  applyWorldShift(new THREE.Vector3()); // the route is always generated with the ORIGINAL anchors; m06deep moves 07+ afterwards
+  seg(34, old06);
   mark('07');
   // ---- 07: winding washer tube (the visible stretch) ----
   const s7 = pts[pts.length - 1].clone();
@@ -324,7 +353,8 @@ function buildRoute(): RouteData {
   // river (its centre line projected on the chamber floor from the locked 08 camera, assets/textures/match08/river08.json),
   // eased in over the first 3 u after the inlet and out over the last 4 u into the platform. Off: the formulas below.
   const m08 = flag05('match08') || flag05('matchall');
-  const rz = river08.z.filter((z) => z >= -326), rxs = river08.x.slice(0, rz.length);
+  // r29 m06deep: the painted 08 river (absolute coordinates) moves with the chamber (SHIFT07 = 0 when off)
+  const rz = river08.z.filter((z) => z >= -326).map((z) => z + SHIFT07.z), rxs = river08.x.slice(0, rz.length).map((x) => x + SHIFT07.x);
   const riverX = (z: number) => {
     if (z >= rz[0]) return rxs[0];
     for (let i = 1; i < rz.length; i++) if (z >= rz[i]) { const a = (z - rz[i - 1]) / (rz[i] - rz[i - 1]); return rxs[i - 1] + (rxs[i] - rxs[i - 1]) * a; }
@@ -353,7 +383,43 @@ function buildRoute(): RouteData {
     const u = pts[i].clone().sub(s5).dot(dir05) * (S05.L / L05.length());
     pts[i].x += meander05(u);
   }
+  if (deep06) { const nOld = pts.length, d6 = deepen06(pts, marks); return { points: d6.points, marks, straight, nOld, iKeep: d6.iKeep }; }
   return { points: pts, marks, straight };
+}
+
+/**
+ * r29 `&match06=1&m06deep=1` (lead, docs/briefs/2026-11-20-r29): AFTER the normal build + smoothing, the smoothed 06 points past axial
+ * aKeep (along the painted tunnel axis) are replaced by the designed centre line (route06deep.json: the painted coin trail rebuilt in
+ * 3D, down the painted ring tunnel; designed from the SMOOTHED original route, so it continues it exactly), and every point from the
+ * 07 entrance on is moved by ONE rigid offset (07 tube, plunge, 08-10 = translated copies, so those screens keep their look). Benny's
+ * approved checkpoint and everything before it stay bit-identical. Only the 06/07 seam is re-smoothed locally (first metres of 07).
+ */
+function deepen06(pts: THREE.Vector3[], marks: Record<string, number>): { points: THREE.Vector3[]; iKeep: number } {
+  const O6 = new THREE.Vector3().fromArray(route06deep.O), ax6 = new THREE.Vector3().fromArray(route06deep.ax);
+  const i06 = marks['06'], i07 = marks['07'];
+  let iK = i06;
+  while (iK + 1 < i07 && pts[iK + 1].clone().sub(O6).dot(ax6) <= route06deep.aKeep) iK++;
+  const mid = route06deep.points.map((q) => new THREE.Vector3(q[0], q[1], q[2]));
+  const T = mid[mid.length - 1].clone().sub(pts[i07]);
+  const out = [...pts.slice(0, iK + 1), ...mid.slice(0, -1), ...pts.slice(i07).map((p) => p.clone().add(T))];
+  const d = iK + 1 + mid.length - 1 - i07; // index shift of every mark from 07 on
+  for (const k of Object.keys(marks)) if (marks[k] >= i07) marks[k] += d;
+  // local seam smoothing on the 06 SIDE only (same kernel as smoothPolyline; the designed line already arrives along the original
+  // 07 entrance heading): the 07+ points stay an exact rigid copy, so 07-10 keep their geometry and distances
+  const j07 = marks['07'];
+  for (let pass = 0; pass < 3; pass++) {
+    const cum: number[] = [0];
+    for (let i = 1; i < out.length; i++) cum.push(cum[i - 1] + out[i].distanceTo(out[i - 1]));
+    const nw: THREE.Vector3[] = [];
+    for (let i = j07 - 6; i < j07; i++) {
+      const acc = new THREE.Vector3(); let ws = 0;
+      for (let j = i - 12; j <= i + 12; j++) { const w = Math.exp(-((cum[j] - cum[i]) ** 2) / (2 * 2.2 * 2.2)); acc.addScaledVector(out[j], w); ws += w; }
+      nw.push(acc.divideScalar(ws));
+    }
+    for (let i = j07 - 6; i < j07; i++) out[i].copy(nw[i - (j07 - 6)]);
+  }
+  applyWorldShift(T);
+  return { points: out, iKeep: iK };
 }
 
 /**
@@ -387,6 +453,8 @@ export class Course {
   readonly length: number;
   readonly stages: StageDef[];
   readonly marks: Record<string, number>; // arc-length of named marks
+  /** r29 `&m06deep=1`: added 06 length, i.e. every arc length from the 07 entrance on = original + deepDs07 (0 when off) */
+  readonly deepDs07: number;
   /** straight tunnel stretches (05 current) — see StraightAxis */
   readonly straightAxes: StraightAxis[];
   /** world X of the straight 05 tunnel line (the meander is pos.x − line05x) */
@@ -403,12 +471,16 @@ export class Course {
     const route = buildRoute();
     this.curve = new THREE.CatmullRomCurve3(route.points, false, 'centripetal');
     // arc-length table over curve parameter u
-    const M = route.points.length * 24;
+    const deep = route.nOld;
+    // r29 m06deep: the samples keep the ORIGINAL spacing in segment coordinates (original point count nOld), so every s up to
+    // the 06 divergence (all of 01-05 and Benny's 06 checkpoint) is exactly the original one; the original table otherwise.
+    const dp = deep ? (deep - 1) / (24 * deep) : 0;
+    const M = deep ? Math.ceil((route.points.length - 1) / dp) : route.points.length * 24;
     const us: number[] = [0];
     const ls: number[] = [0];
     let prev = this.curve.getPoint(0);
     for (let i = 1; i <= M; i++) {
-      const u = i / M;
+      const u = deep ? Math.min(1, (i * dp) / (route.points.length - 1)) : i / M;
       const p = this.curve.getPoint(u);
       ls.push(ls[i - 1] + p.distanceTo(prev));
       us.push(u);
@@ -425,12 +497,20 @@ export class Course {
       return us[lo] + (us[hi] - us[lo]) * f;
     };
     const sAtIndex = (i: number) => {
+      if (deep) { // r29 m06deep: original sample index for the unchanged marks, nearest sample at segment coordinate i after
+        const iK = route.iKeep ?? 0;
+        if (i <= iK) return ls[Math.min(M, Math.round((i / (deep - 1)) * deep * 24))];
+        const k = Math.min(M - 1, Math.floor(i / dp)), f = i / dp - k; // exact arc length at point i (interpolated)
+        return ls[k] + (ls[k + 1] - ls[k]) * f;
+      }
       const u = i / (route.points.length - 1);
       const k = Math.round(u * M);
       return ls[k];
     };
     this.marks = {};
     for (const [k, i] of Object.entries(route.marks)) this.marks[k] = sAtIndex(i);
+    // r29 m06deep: extra 06 length (07+ arc lengths are the original ones + this); 0 when off
+    this.deepDs07 = deep ? this.marks['07'] - route06deep.s07_orig : 0;
     this.straightAxes = route.straight.map((r) => ({ s0: this.marks[r.from], s1: this.marks[r.to], a: r.a, b: r.b, floorDepth: r.floorDepth }));
     this.line05x = route.straight[0].a.x;
 
@@ -651,3 +731,4 @@ export function validateContinuity(c: Course): ContinuityReport {
     plunge.inlet08.y < plunge.entryAltitude07 - 50;
   return { ok, boundaries, maxStepTangentDeg: +maxT.toFixed(3), maxStepPos: +maxP.toFixed(4), plunge };
 }
+

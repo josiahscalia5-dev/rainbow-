@@ -5,5 +5,104 @@
   "workerSnapshotCommit": "f090393f19334ad2fd8a20325a7d6289eee339e8",
   "workerSnapshotPath": "backups/wip/claude__rainbow-s06-match-c30",
   "mode": "isolated Screen06 candidate; other branches preserved",
-  "userAuthorization": "Use approved Screen06 continuation storyboard as scenery target; show actual game output; World Labs credit spending authorized; secure credential connection not yet established."
+  "userAuthorization": "Use the approved Screen06 continuation storyboard as scenery direction; show actual game output; spending existing World Labs credits is authorized. Preserve other branches and approved references.",
+  "checkpointPreparedUTC": "2026-11-20T21:21:02.591642+00:00",
+  "workerSnapshotTimeUTC": "2026-11-20T20:02:13+00:00",
+  "patchedSourceFiles": [
+    "src/game/Game.ts",
+    "src/gameplay/coins.ts",
+    "src/world/course.ts",
+    "src/world/environment.ts",
+    "src/world/match06.ts",
+    "src/world/match08.ts"
+  ],
+  "untrackedRestoration": {
+    "snapshotPaths": [
+      "assets/textures/match06/coins06deep.json",
+      "assets/textures/match06/hole06.json",
+      "assets/textures/match06/leg06deep.json",
+      "assets/textures/match06/route06deep.json",
+      "assets/textures/match06/tile_hole06.png",
+      "assets/textures/match06/tile_hole06b.png",
+      "assets/textures/match06/tile_hole06w.png",
+      "tools/match06/lead23_audit_slow.mjs",
+      "tools/match06/make_hole06.py",
+      "tools/match06/r23_audit.mjs",
+      "tools/match06/r23_ripdump.mjs",
+      "tools/match06/r23_swim.mjs",
+      "tools/match06/r23_tunprobe.mjs",
+      "tools/match06/r23_vite.mjs",
+      "tools/match06/r25_frames.mjs",
+      "tools/match06/r25_holedump.mjs",
+      "tools/match06/r25_open_clip.mjs",
+      "tools/match06/r25_unwrap06.py",
+      "tools/match06/r28_probe.mjs",
+      "tools/match06/r28_quick.mjs",
+      "tools/match06/r29_coins_deep.mjs",
+      "tools/match06/r29_design_leg.py",
+      "tools/match06/r29_design_route.py",
+      "tools/match06/r29_multi.mjs",
+      "tools/match06/r29_old_samples.mjs",
+      "tools/match06/r29_route_probe.mjs"
+    ],
+    "locallyVerifiedPaths": [
+      "assets/textures/match06/coins06deep.json",
+      "assets/textures/match06/hole06.json",
+      "assets/textures/match06/leg06deep.json",
+      "assets/textures/match06/route06deep.json",
+      "assets/textures/match06/tile_hole06w.png",
+      "tools/match06/lead23_audit_slow.mjs",
+      "tools/match06/make_hole06.py",
+      "tools/match06/r23_audit.mjs",
+      "tools/match06/r23_ripdump.mjs",
+      "tools/match06/r23_swim.mjs",
+      "tools/match06/r23_tunprobe.mjs",
+      "tools/match06/r23_vite.mjs",
+      "tools/match06/r25_frames.mjs",
+      "tools/match06/r25_holedump.mjs",
+      "tools/match06/r25_open_clip.mjs",
+      "tools/match06/r25_unwrap06.py",
+      "tools/match06/r28_probe.mjs",
+      "tools/match06/r28_quick.mjs",
+      "tools/match06/r29_coins_deep.mjs",
+      "tools/match06/r29_design_leg.py",
+      "tools/match06/r29_design_route.py",
+      "tools/match06/r29_multi.mjs",
+      "tools/match06/r29_old_samples.mjs",
+      "tools/match06/r29_route_probe.mjs"
+    ],
+    "linkedRemoteBlobsWithoutLocalDownload": [
+      "assets/textures/match06/tile_hole06.png",
+      "assets/textures/match06/tile_hole06b.png"
+    ]
+  },
+  "localAssetStatus": {
+    "missingImagePaths": [
+      "assets/textures/match06/plate06_hybrid.png",
+      "assets/textures/match08/plate08_clean.png",
+      "assets/textures/match08/plate08_hybrid.png",
+      "assets/textures/tunnel05/wall05.png",
+      "assets/textures/water05/proj05_E.png",
+      "assets/textures/water05/proj05_T2.png",
+      "assets/textures/match06/tile_hole06.png",
+      "assets/textures/match06/tile_hole06b.png"
+    ],
+    "modelLfsPointersWithoutModelPayload": [
+      "assets/models/benny.glb",
+      "assets/models/lids05.glb",
+      "assets/models/rainbow_girl.glb"
+    ],
+    "completePlayableRuntimeVerified": false
+  },
+  "worldLabs": {
+    "websiteSignInVerifiedByLead": true,
+    "apiAuthenticationVerified": false,
+    "generationAssetsIncludedInThisCheckpoint": false
+  },
+  "validation": {
+    "runtimeScriptSyntaxChecks": "passed",
+    "playableCaptureVerified": false,
+    "localBrowserLaunch": "blocked by socket restrictions",
+    "note": "This checkpoint preserves restoration work and QA tooling. It does not establish visual likeness or a working Android build."
+  }
 }

@@ -197,6 +197,11 @@ export function buildEnvironment(course: Course): Environment {
   // 05–07 perforated tubes (incl. the 06 arch hall and the full 07 plunge)
   // =====================================================================================
   const s08 = course.stage('08').s0;
+  // r29 `&m06deep=1`: Screen 07's tube (walls from the 07 entrance, its rings + lids, a gold collar at the mouth) in its OWN group
+  // 'tube07' inside zones.tubes, so Game can show the mouth ahead of Benny inside the 06 ring tunnel (the rest stays hidden in 06)
+  const deep07 = course.deepDs07 > 0, s07e = course.stage('07').s0;
+  const tube07 = new THREE.Group(); tube07.name = 'tube07';
+  if (deep07) zones.tubes.add(tube07);
   const pinkFlow = pinkFlowMaterial();
   // refs 05–07: rich saturated magenta→violet glossy pressed metal, dense glowing slot rows, warm light
   // far down the tunnel. Own reflection environment (no cyan studio panel) + correct inward normals.
@@ -224,7 +229,8 @@ export function buildEnvironment(course: Course): Environment {
   // START, not from the 05 start, so reshaping the 05 river (which changes its arc length) never slides the
   // 06/07 rings, lids or slot rows along the tube. The phases reproduce the pre-wave-6 layout exactly
   // (measured on that course: first 06/07 ring 5.5644 u after the 06 start; slot-row phase 0.96618 there).
-  const s06 = course.stage('06').s0;
+  // r29 m06deep: the 07 rings / lids / slot rows keep their place on the (moved) 07 tube: anchor + the added 06 length
+  const s06 = course.stage('06').s0 + course.deepDs07;
   const RING06_PHASE = 5.5643876;
   const ROW06_PHASE = 0.9661842;
   const rowRepeat0607 = slotRowsPerBay / ringSpacing;
@@ -331,16 +337,16 @@ export function buildEnvironment(course: Course): Environment {
     : { ...strips, intensity: 4.4, width: 0.017, alt: 0.8 };
   const perf05Mat = withTubeStrips(perforatedMetal(wall05), strips05, 'attribute', 'wall05');
   const chunk = 40;
-  const addWall = (a0: number, a1: number, mat: THREE.Material) => {
+  const addWall = (a0: number, a1: number, mat: THREE.Material, into: THREE.Group = zones.tubes) => {
     for (let a = a0; a < a1 - 0.01; a += chunk) {
       const b = Math.min(a1, a + chunk + 0.6);
-      zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 72, step: 0.6, frontNormals: true, axisAttr: true }), mat));
+      into.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 72, step: 0.6, frontNormals: true, axisAttr: true }), mat));
       // glossy magenta flow sheet lining the tube floor under the stream (refs 05/07 pink banks)
-      zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 24, step: 0.8, arc: 1.9, inset: -0.12, vScale: 6, frontNormals: true }), pinkFlow.material));
+      into.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 24, step: 0.8, arc: 1.9, inset: -0.12, vScale: 6, frontNormals: true }), pinkFlow.material));
     }
   };
   addWall(s05, sGlow05, perf05Mat);
-  addWall(sGlow05, s08, perfTubeMat);
+  if (deep07) { addWall(sGlow05, s07e, perfTubeMat); addWall(s07e, s08, perfTubeMat, tube07); } else addWall(sGlow05, s08, perfTubeMat);
   // 06/07 rings and the 04→05 junction collar (unchanged look)
   const ringMat = withTubeStrips(withFarGlow(gold({ color: '#ffc890', roughness: 0.12, emissive: 0.16 }), tubeGlow, 'ring'), { ...strips, color: '#fff0c8', intensity: 3.2 }, 'instance', 'ring');
   ringMat.envMap = goldEnv;
@@ -389,7 +395,10 @@ export function buildEnvironment(course: Course): Environment {
   zones.tubes.add(buildRingsAt(perfPath, rings05, ringMat05, { inset: 0.02, band: band05near }));
   const rings0607: number[] = [];
   for (let s = s06 + RING06_PHASE - 2 * ringSpacing; s <= s08 - 1 + 1e-6; s += ringSpacing) if (s >= sGlow05 + 4) rings0607.push(s);
-  zones.tubes.add(buildRingsAt(perfPath, rings0607, ringMat, { inset: 0.02, collar }));
+  if (deep07) {
+    zones.tubes.add(buildRingsAt(perfPath, rings0607.filter((s) => s < s07e - 0.5), ringMat, { inset: 0.02, collar }));
+    tube07.add(buildRingsAt(perfPath, [s07e + 0.4, ...rings0607.filter((s) => s >= s07e + 2)], ringMat, { inset: 0.02, collar }));
+  } else zones.tubes.add(buildRingsAt(perfPath, rings0607, ringMat, { inset: 0.02, collar }));
   // copper nozzle lids: one symmetric pair per bay on the side walls a little above eye level,
   // skipped where the stream climbs the wall (06 arch) so a lid never blocks the ride
   const lidMat = withTubeStrips(withFarGlow(gold({ color: '#ffb27a', roughness: 0.16, emissive: 0.2 }), tubeGlow, 'lid'), { ...strips, color: '#fff0c8', intensity: 2.4 }, 'instance', 'lid');
@@ -421,7 +430,13 @@ export function buildEnvironment(course: Course): Environment {
   // 06/07: legacy hoods, unchanged
   const lids0607: number[] = [];
   for (let s = s06 + RING06_PHASE + ringSpacing * 0.5 - 2 * ringSpacing; s <= s08 - 6 + 1e-6; s += ringSpacing) if (s >= sGlow05 + 4) lids0607.push(s);
-  zones.tubes.add(buildWallLids(perfPath, 0, 0, ringSpacing, lidMat, { positions: lids0607, angleDeg: 18, droopDeg: 20, size: 1.7, thickness: 0.42, stretch: 1.3, sink: 0.12, skip: lidClear }));
+  {
+    const lidOpt = { angleDeg: 18, droopDeg: 20, size: 1.7, thickness: 0.42, stretch: 1.3, sink: 0.12, skip: lidClear };
+    if (deep07) {
+      zones.tubes.add(buildWallLids(perfPath, 0, 0, ringSpacing, lidMat, { positions: lids0607.filter((s) => s < s07e), ...lidOpt }));
+      tube07.add(buildWallLids(perfPath, 0, 0, ringSpacing, lidMat, { positions: lids0607.filter((s) => s >= s07e), ...lidOpt }));
+    } else zones.tubes.add(buildWallLids(perfPath, 0, 0, ringSpacing, lidMat, { positions: lids0607, ...lidOpt }));
+  }
 
   // ---- 05 far tunnel (forced perspective, calibrated for the locked 05 checkpoint eye) ----
   {
@@ -913,3 +928,4 @@ function pinkFlowMaterial() {
   const material = new THREE.MeshStandardMaterial({ map: tex, emissiveMap: tex, emissive: '#ff3fb8', emissiveIntensity: 0.35, metalness: 0.2, roughness: 0.12, envMapIntensity: 1.4, side: THREE.DoubleSide });
   return { material, update: (t: number) => { tex.offset.y = -t * 0.9; } };
 }
+

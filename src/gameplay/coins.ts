@@ -6,15 +6,17 @@
  */
 import * as THREE from 'three';
 import type { Course, StageId } from '../world/course';
+import { m06deepShift } from '../world/course';
 import { canvasTexture } from '../world/materials';
 import { coreLateral, flag05 } from '../vfx/waterRibbon';
 import coins08 from '../../assets/textures/match08/coins08.json';
 import coins06 from '../../assets/textures/match06/coins06.json';
+import coins06deep from '../../assets/textures/match06/coins06deep.json';
 
 export const COIN_VALUE = 10;
 
 /** scale: coin size factor (1 = 1.0 u diameter); tilt: radians the coin leans back (top away from the camera) */
-export interface CoinDef { s: number; lat: number; h: number; stage: StageId; scale?: number; tilt?: number; faceTo?: [number, number, number] }
+export interface CoinDef { s: number; lat: number; h: number; stage: StageId; scale?: number; tilt?: number; faceTo?: [number, number, number]; grow?: number }
 
 /**
  * 05 (ref 05, measured): ≈10 coins on the electric-cyan core winding to the VP. The nearest one is
@@ -57,7 +59,14 @@ export function coinLayout(course: Course): CoinDef[] {
   if (m06) {
     const a = st('06');
     for (let i = 0; i < 3; i++) add('06', a.s0 + 1 + i, -0.4 + 0.4 * i);
-    for (const c of coins06.coins) add(course.stageAtS(c.s).id, c.s, c.lat, c.h, { scale: c.scale, faceTo: coins06.faceTo as [number, number, number] });
+    // r28 `&m06route=1`: the painted coins keep the approved size in the approved view, then grow to one common size (the
+    // nearest painted coin's) as the camera leaves it (setGrow = the 06 away factor), so the far ones are not tiny when reached
+    const grow = flag05('m06route');
+    // r29 `&m06deep=1`: the painted coins on the deep river (tools/match06/r29_coins_deep.mjs), at their painted pixels and sizes
+    for (const c of (flag05('m06deep') ? coins06deep : coins06).coins) {
+      const { s, lat, h, scale } = c;
+      add(course.stageAtS(s).id, s, lat, h, { scale, faceTo: coins06.faceTo as [number, number, number], ...(grow ? { grow: Math.max(scale, 0.632) } : {}) });
+    }
   }
   // 07 — winding trail, continuing down the plunge
   { const a = st('07'); const n = 24; for (let i = 0; i < n; i++) { const s = a.s0 + 6 + i * ((a.s1 - a.s0 - 10) / n); add('07', s, 1.0 * Math.sin(i * 0.5 + 1)); } }
@@ -70,7 +79,8 @@ export function coinLayout(course: Course): CoinDef[] {
   // (assets/textures/match08/coins08.json, from the locked 08 camera), instead of the 08 + 09 rows above
   if (m08) {
     const s0 = st('08').s0, s1 = st('11').s0;
-    const cam = coins08.faceTo as [number, number, number];
+    const T8 = m06deepShift(); // r29 m06deep: the 08 chamber moved with the longer 06 route (zero when off)
+    const cam = [coins08.faceTo[0] + T8.x, coins08.faceTo[1] + T8.y, coins08.faceTo[2] + T8.z] as [number, number, number];
     const toRiver = (x: number, z: number) => {
       let best = s0, bd = Infinity;
       for (let s = s0; s <= s1; s += 0.05) { const p = course.sample(s).pos; const d = (p.x - x) ** 2 + (p.z - z) ** 2; if (d < bd) { bd = d; best = s; } }
@@ -78,12 +88,12 @@ export function coinLayout(course: Course): CoinDef[] {
       return { s: best, lat: (x - f.pos.x) * f.right.x + (z - f.pos.z) * f.right.z, y: f.pos.y };
     };
     for (const c of coins08.coins) {
-      let r = toRiver(c.x, c.z), h = c.h, scale = c.scale;
+      let r = toRiver(c.x + T8.x, c.z + T8.z), h = c.h, scale = c.scale;
       // keep every picture coin collectible: if it lies beyond pickup reach (|lateral| > 1.1), slide it along its own view
       // ray from the approved camera (same pixel in the approved view) to the nearest depth within reach, above the water;
       // its size scales with the depth so it still covers the painted coin
       if (Math.abs(r.lat) > 1.1) {
-        const P = [c.x, r.y + c.h, c.z], D = [P[0] - cam[0], P[1] - cam[1], P[2] - cam[2]];
+        const P = [c.x + T8.x, r.y + c.h, c.z + T8.z], D = [P[0] - cam[0], P[1] - cam[1], P[2] - cam[2]];
         let pick: { k: number; r: typeof r; h: number } | null = null;
         for (let k = 0.2; k <= 1.8; k += 0.01) {
           const q = [cam[0] + D[0] * k, cam[1] + D[1] * k, cam[2] + D[2] * k], rq = toRiver(q[0], q[2]), hq = q[1] - rq.y;
@@ -113,6 +123,8 @@ export interface CoinSystem {
   update(time: number, dt: number, bennyS: number, bennyLat: number): number;
   /** mark coins before s as collected (deterministic QA checkpoint state) or reset all */
   resetUntil(s: number): void;
+  /** r28 m06route: 0 = approved coin sizes .. 1 = grown (coins with `grow`) */
+  setGrow(k: number): void;
 }
 
 export function createCoins(course: Course): CoinSystem {
@@ -175,6 +187,7 @@ export function createCoins(course: Course): CoinSystem {
   const spin = new THREE.Quaternion(), axis = new THREE.Vector3();
   const tiltQ = new THREE.Quaternion(), xAxis = new THREE.Vector3(1, 0, 0);
   const back = new THREE.Vector3();
+  let growK = 0;
 
   const place = (time: number) => {
     defs.forEach((d, i) => {
@@ -200,7 +213,8 @@ export function createCoins(course: Course): CoinSystem {
       spin.setFromAxisAngle(axis.set(0, 1, 0), (d.faceTo ? 0.06 : d.tilt ? 0.18 : 0.35) * Math.sin(time * 2.2 + i * 0.7));
       q.multiply(spin);
       if (d.tilt) q.multiply(tiltQ.setFromAxisAngle(xAxis, -d.tilt));
-      m.compose(p, q, sc.setScalar((d.scale ?? 1) * scale * (collected[i] ? 1 - (time - popT[i]) / 0.35 : 1)));
+      const base = d.grow !== undefined ? (d.scale ?? 1) + (d.grow - (d.scale ?? 1)) * growK : (d.scale ?? 1);
+      m.compose(p, q, sc.setScalar(base * scale * (collected[i] ? 1 - (time - popT[i]) / 0.35 : 1)));
       mesh.setMatrixAt(i, m);
     });
     mesh.instanceMatrix.needsUpdate = true;
@@ -227,9 +241,11 @@ export function createCoins(course: Course): CoinSystem {
       place(time);
       return picked;
     },
+    setGrow(k) { growK = THREE.MathUtils.clamp(k, 0, 1); },
     resetUntil(s) {
       for (let i = 0; i < defs.length; i++) { collected[i] = defs[i].s < s ? 1 : 0; popT[i] = -1; }
       place(0);
     },
   };
 }
+

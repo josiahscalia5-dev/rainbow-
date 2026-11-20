@@ -11,6 +11,21 @@
  */
 import * as THREE from 'three';
 import { PROJ05_INVERSE } from '../vfx/waterRibbon';
+import { m06deepShift } from './course';
+
+/** r29 `&m06deep=1` (src/world/course.ts m06deepShift): translate every absolute position of the fitted 08 layout by t */
+function shiftLayout08(L: Layout, t: THREE.Vector3) {
+  if (t.lengthSq() === 0) return;
+  const m = L.camera.matrixWorld; m[12] += t.x; m[13] += t.y; m[14] += t.z;
+  L.floorY += t.y;
+  L.chamber.cx += t.x; L.chamber.cy += t.y; L.chamber.zBack += t.z; L.chamber.zDoor += t.z;
+  L.arch.z += t.z; for (const c of [L.arch.outer, L.arch.inner]) { c.cx += t.x; c.cy += t.y; }
+  L.pipe.cx += t.x; L.pipe.cy += t.y; L.pipe.z0 += t.z; L.pipe.z1 += t.z;
+  L.backwall.z += t.z;
+  L.platform.cx += t.x; L.platform.cz += t.z; L.platform.topY += t.y; L.platform.rimBottomY += t.y; L.platform.floorY += t.y;
+  L.towel.cx += t.x; L.towel.cz += t.z; L.towel.y0 += t.y;
+  for (const k of Object.keys(L.spouts)) { const c = L.spouts[k].c; c[0] += t.x; c[1] += t.y; c[2] += t.z; }
+}
 
 interface Layout {
   camera: { matrixWorld: number[]; fov: number; size: [number, number] };
@@ -95,6 +110,7 @@ void main() {
 
 export async function buildMatch08(): Promise<Match08> {
   const L: Layout = await fetch(new URL('../../assets/textures/match08/proj08.json', import.meta.url).href).then((r) => r.json());
+  shiftLayout08(L, m06deepShift()); // r29 m06deep: the whole 08 chamber moves with the longer 06 route (no-op when off)
   const plate = await new THREE.TextureLoader().loadAsync(new URL('../../assets/textures/match08/plate08_hybrid.png', import.meta.url).href);
   plate.colorSpace = THREE.NoColorSpace; // raw display values: the shader inverts the post chain itself
   plate.minFilter = THREE.LinearMipmapLinearFilter;
@@ -228,3 +244,4 @@ void main() { vec4 c = texture2D(uTex, vUv); if (c.a < 0.02) discard; gl_FragCol
     },
   };
 }
+

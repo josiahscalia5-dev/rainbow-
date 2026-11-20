@@ -67,6 +67,10 @@ export async function startGame(canvas: HTMLCanvasElement) {
   // HDR luminance). Switch off: 0.2 / 0.35 / 0.94 exactly as before (pixel-identical default build).
   const glow05 = flag05('glow05');
   const M06_BUB = flag05('m06bub');
+  // r26 `&m06spl=1` (qa/match/06/r25/PROGRESS.md r26): on Screen 06 Benny's contact = a short, low lace collar (the approved picture's
+  // shallow rounded contact ripple) instead of the long white V streak fans of ref 05; the ballistic spray dots stay hidden there
+  const M06_SPL = flag05('m06spl');
+  let m06SplRest: { len: number; h: number } | null = null;
   const qn = (k: string, d: number) => { const v = qs.get(k); return v !== null && v !== '' && isFinite(+v) ? +v : d; };
   // (measured 2026-11-16, qa/pilot05/wave12/glow/: threshold 1.0–1.3 washed the whole river toward white — the scene's
   // linear HDR body colours pass it; 2.6 keeps only streak cores, flares and lamps → water saturation UP, 0.92 → 0.97)
@@ -120,6 +124,8 @@ export async function startGame(canvas: HTMLCanvasElement) {
   const m06 = MATCH['06'] ? await buildMatch06(course) : null;
   if (m06) { m06.group.visible = false; scene.add(m06.group); m06.bakeDepth(renderer); }
   let m06On = false;
+  const tube07 = env.zones.tubes.getObjectByName('tube07') ?? null; // r29 m06deep only
+  let tube07Applied = false;
   let m06Applied = false;
   // debug: ?hide=water,benny,coins,drumA,basin,tubes,chamber
   const hidden = new Set((qs.get('hide') ?? '').split(',').filter(Boolean));
@@ -545,8 +551,25 @@ export async function startGame(canvas: HTMLCanvasElement) {
       // carries its bubbles only there; while swimming the screen had none)
       const bub6 = M06_BUB && m06On && m06.away(camera.position) > 0.5;
       m06.setAway(m06On ? m06.away(camera.position) : 0);
+      coins.setGrow(m06On ? m06.away(camera.position) : 1); // r28 m06route coin growth (no-op without it)
+      m06.setBenny(st.s, st.lat); // r23 `&m06rip=1` only (no-op without it)
       for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m06On || (bub6 && (k === 'bubbles' || k === 'splashCrown' || k === 'spray')); }
+      const crownU = M06_SPL ? ((water.parts?.splashCrown as THREE.Mesh | undefined)?.material as THREE.ShaderMaterial | undefined)?.uniforms : undefined;
+      if (crownU?.uLen && crownU.uH) {
+        if (!m06SplRest) m06SplRest = { len: crownU.uLen.value as number, h: crownU.uH.value as number };
+        crownU.uLen.value = m06On ? 0.42 : m06SplRest.len;
+        crownU.uH.value = m06On ? 0.09 : m06SplRest.h;
+        const sp = water.parts?.spray; if (sp && m06On) sp.visible = false;
+      }
       m06Applied = m06On;
+    }
+    // r29 `&m06deep=1`: over the LAST ~12 u of Screen 06 the 07 tube (walls, rings, lids, gold mouth collar) is shown ahead of
+    // Benny inside the ring tunnel, so he visibly swims into it; everything else of the tube zone stays hidden in 06
+    if (m06 && tube07 && (m06On || tube07Applied)) {
+      const show = m06On && st.s > course.stage('07').s0 - 12; // r29 v2 (user): the 06 tunnel look continues until the doorway (~1 s)
+      if (m06On) { env.zones.tubes.visible = show; for (const ch of env.zones.tubes.children) ch.visible = ch === tube07; }
+      else for (const ch of env.zones.tubes.children) ch.visible = true;
+      tube07Applied = m06On;
     }
     if (m08 && m08On) for (const k of ['puddles', 'finalWave']) { const o = water.parts?.[k]; if (o) o.visible = false; }
     if (m08 && b08 && b08Rest) {
@@ -764,3 +787,4 @@ export async function startGame(canvas: HTMLCanvasElement) {
   (window as unknown as { __rainbow: typeof api }).__rainbow = api;
   return api;
 }
+
