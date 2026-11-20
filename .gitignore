@@ -43,3 +43,8 @@ backups/.live/
 # Agent worktrees (each specialist works on its own branch there; never committed into the lead branch)
 .claude/worktrees/
 .playwright-mcp/
+# r30b: raw per-frame clip renders (hundreds of PNGs); the encoded mp4s, labelled sheets and selected stills are kept instead
+qa/match/06/r30b/proof/clip_frames/
+qa/match/06/r30b/proof/steer_frames/
+qa/match/06/r30b/proof/_lab/
+qa/match/06/r30b/proof/_steer/

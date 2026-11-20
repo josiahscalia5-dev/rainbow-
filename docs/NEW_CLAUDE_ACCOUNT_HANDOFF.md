@@ -1,3 +1,10 @@
+# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 30b (2026-11-20, lead branch `ccr-e490fceb-u85291`, from ~22:20 UTC)
+
+The r30 session closed ~22:14; this one merged its last save `b9ca06c` (user: "Continue from the latest saved version") and recreated the
+worktrees on LOCAL `-c32` (`docs/briefs/2026-11-20-r30/setup_r30b.sh`). **User's binding brief: `docs/briefs/2026-11-20-r30/USER_R30.md` §6 — all FOUR
+storyboard panels of Screen 06 are mandatory approved targets.** Built `&m06sb=1` + specialists' `w30` / `f30` / `b30` (map: `docs/briefs/2026-11-20-r30/COORDINATION.md`
+"Round 30b"; launch brief `LAUNCH_R30B.md`). Candidate commit `cf1a660` (LOCAL), patch + proof on GitHub: `qa/match/06/r30b/proof/`. Not approved yet.
+
 # ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 30 (2026-11-20, lead branch `ccr-2644c3c0-iikckn`, from ~20:05 UTC)
 
 New session/account; started at `8abed78`, merged the r29 lead's last two saves (`f090393`, 20:02) on the user's "continue exactly where we

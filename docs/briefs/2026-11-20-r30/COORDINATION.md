@@ -49,3 +49,13 @@ snapshots) and relaunch with the same brief. The lead combines accepted switches
 ## Next account
 `docs/briefs/2026-11-20-r29/setup_worker_r30.sh` pattern with the newest `backups/wip/*-c31/` snapshots (copy the script, bump -c31 → -c32 and
 the wip folder names to `*-c31`).
+
+## Round 30b (lead session `ccr-e490fceb-u85291`, from ~22:20 UTC) — the user's "MATCH ALL FOUR APPROVED SCREEN 06 VIEWS" (USER_R30.md §6, §7)
+* Restore: merged the r30 session's last save `b9ca06c` (22:14) → `34786f3`; worktrees recreated from the 22:14 snapshots on LOCAL `-c32`
+  (`setup_r30b.sh`). Specialists relaunched (`LAUNCH_R30B.md`): water `w30`, foam `f30`, Benny `b30` — all finished, combined by the lead.
+* Lead built `&m06sb=1` (`src/world/m06sb.ts`, `route06c.ts`; hooks in match06.ts, cameraRig.ts, Game.ts): pale-peach-circle cause (07's far glow)
+  + join retint, storyboard route (curl / left sweep / late right turn, tunnel 10.5), broad bands, procedural drum walls, telephoto framing with
+  Benny at his approved place, Benny world-tilt fix. Query `qa/match/06/r30b/QUERY_SB_NEW.txt`.
+* Candidate commit `cf1a660` (tree `b12c04e`, LOCAL `claude/rainbow-s06-r30b-candidate`), reproducible patch on GitHub:
+  `qa/match/06/r30b/proof/r30b_candidate_from_e162aec.patch`. Proof + honest differences: `qa/match/06/r30b/proof/README.md`.
+* NOT approved — waiting for the user. Next account: `setup_r30b.sh` pattern with the newest `backups/wip/*-c32/` (bump to -c33).

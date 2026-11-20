@@ -5,12 +5,12 @@
  "updated_by_session": "ccr-9652868f-lkw0w0 (round 28 lead)",
  "running_now": {
   "_note": "round 28 lead ccr-9652868f-lkw0w0, launched ~17:00 UTC as in-process background agents (do not survive a new session; relaunch from docs/briefs/2026-11-20-r28/LAUNCH_R28.md)",
-  "s07": "water-fx-specialist — Screen 07 m07fsoft v2 (soft varied foam) proof + clip, then coin column",
-  "s04": "FINISHED ~17:20 — K27-B (glints + cloud banks GOOD IMPROVEMENT; m04a5v=2 arrows NOT AN IMPROVEMENT, off); next needs a user decision on the arrows (drift downstream vs higher camera)",
-  "s05": "water-fx-specialist — Screen 05 end section + hard left (check hard right)",
-  "benny": "benny-character-artist — RESUMED ~17:22: step 3 06 start star lighter yellow (b20s06a=1), proof qa/benny/r28/s6_star06/",
-  "s06": "path-camera-transition-engineer — USER-AUTHORIZED Screen 06 route test (m06route): river curves left into the tunnel, through the rings, into 07 (docs/briefs/2026-11-20-r28/S06_ROUTE_R28.md)",
-  "s09_s10": "QUEUED — new playable workstreams (user 17:25); start when a slot frees"
+  "s07": "water-fx-specialist \u2014 Screen 07 m07fsoft v2 (soft varied foam) proof + clip, then coin column",
+  "s04": "FINISHED ~17:20 \u2014 K27-B (glints + cloud banks GOOD IMPROVEMENT; m04a5v=2 arrows NOT AN IMPROVEMENT, off); next needs a user decision on the arrows (drift downstream vs higher camera)",
+  "s05": "water-fx-specialist \u2014 Screen 05 end section + hard left (check hard right)",
+  "benny": "benny-character-artist \u2014 RESUMED ~17:22: step 3 06 start star lighter yellow (b20s06a=1), proof qa/benny/r28/s6_star06/",
+  "s06": "path-camera-transition-engineer \u2014 USER-AUTHORIZED Screen 06 route test (m06route): river curves left into the tunnel, through the rings, into 07 (docs/briefs/2026-11-20-r28/S06_ROUTE_R28.md)",
+  "s09_s10": "QUEUED \u2014 new playable workstreams (user 17:25); start when a slot frees"
  },
  "assignments_now": {
   "_read_first": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md, then backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md",
@@ -68,7 +68,7 @@
    "next": "after approval: Phase 2 = same method for 04, 05, 06, 07 (fal clean plates approved by the user)"
   }
  },
- "current_focus": "Screen 05 water — NEW APPROACH (user 2026-11-16 ~15:40): reproduce the ACTUAL approved water design by camera-matched texture projection / baking of the user's original artwork onto the real river mesh (Specialist 1, running), then animate that same design (Specialist 2, queued). Branch claude/rainbow-05-water-projection; ccr-451ea8c7-3nqlis is the protected working version (T2 default, W12 candidates). No more procedural / bloom / saturation rounds.",
+ "current_focus": "Screen 05 water \u2014 NEW APPROACH (user 2026-11-16 ~15:40): reproduce the ACTUAL approved water design by camera-matched texture projection / baking of the user's original artwork onto the real river mesh (Specialist 1, running), then animate that same design (Specialist 2, queued). Branch claude/rainbow-05-water-projection; ccr-451ea8c7-3nqlis is the protected working version (T2 default, W12 candidates). No more procedural / bloom / saturation rounds.",
  "agents": [
   {
    "name": "washer-environment-modeler",
@@ -392,7 +392,7 @@
   }
  ],
  "backup_2026_11_17_1945": {
-  "why": "user order: account 4 near its usage limit — save everything, no more development",
+  "why": "user order: account 4 near its usage limit \u2014 save everything, no more development",
   "scheduled_checkin": "trig_01CAGS7pWQYyNtb9LAeLDoZz disabled 19:40 UTC (it would have started Screen 05)",
   "handoff": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md top section",
   "restart": "new -c5 branches from each -c4 tip; briefs docs/briefs/2026-11-17-r4/"
@@ -441,8 +441,8 @@
   "capacity_rule": "at most two specialist sessions at once (user)",
   "briefs": "docs/briefs/2026-11-17-r5/ (COMMON_RULES, S08_SCENERY, S08_BENNY); other workstreams use their r4 brief with -c5",
   "done": {
-   "08 scenery r1": "claude/rainbow-s08-scenery-c5 @ 60e7ffe8 (keep ?match08=1&coins08px=1&m08bw=1&m08fill=1; m08lane off; APK blocked: Maven Central 404) — report REPORTS_ROUND5.md",
-   "08 Benny r6": "claude/rainbow-s08-benny08-bake-c5 @ c68926764849cdaf3e51acf823a06eafb0c522cc (b08clump + b08yarn default on match08; BEFORE r5b = &b08clump=0&b08yarn=0; APK blocked: Maven Central 429) — report docs/briefs/2026-11-17-r5/REPORTS_ROUND5.md"
+   "08 scenery r1": "claude/rainbow-s08-scenery-c5 @ 60e7ffe8 (keep ?match08=1&coins08px=1&m08bw=1&m08fill=1; m08lane off; APK blocked: Maven Central 404) \u2014 report REPORTS_ROUND5.md",
+   "08 Benny r6": "claude/rainbow-s08-benny08-bake-c5 @ c68926764849cdaf3e51acf823a06eafb0c522cc (b08clump + b08yarn default on match08; BEFORE r5b = &b08clump=0&b08yarn=0; APK blocked: Maven Central 429) \u2014 report docs/briefs/2026-11-17-r5/REPORTS_ROUND5.md"
   },
   "preview_branch": {
    "branch": "claude/rainbow-preview-all-c5",
@@ -459,7 +459,7 @@
    },
    "tip": "69a1d474 (+ final save commit)",
    "preview_switches": "match04=1&match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&match06=1&match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&match08=1&coins08px=1",
-   "state": "VERIFIED with each screen's OWN switches: 04/05/07/08 pixel-identical to their branches, 06 identical except 1,098 faint px in the top bar; default identical to the lead; continuity ok; gameplay 8/8 91/2,240 default and all switches (coin fix 69a1d474). NOT usable with ALL switches together: likeness 04 81.8, 05 83.0, 06 84.3, 07 74.4, 08 29.5 % — 08 projected scene shifted vs camera (cause unknown; bisect of 08 + each other screen's switches interrupted by the user 21:23), 05 Benny look on every screen, hud05 not fitted to 04.",
+   "state": "VERIFIED with each screen's OWN switches: 04/05/07/08 pixel-identical to their branches, 06 identical except 1,098 faint px in the top bar; default identical to the lead; continuity ok; gameplay 8/8 91/2,240 default and all switches (coin fix 69a1d474). NOT usable with ALL switches together: likeness 04 81.8, 05 83.0, 06 84.3, 07 74.4, 08 29.5 % \u2014 08 projected scene shifted vs camera (cause unknown; bisect of 08 + each other screen's switches interrupted by the user 21:23), 05 Benny look on every screen, hud05 not fitted to 04.",
    "next": "1) bisect 08 breakage (match08&coins08px + each of 05set / 04 / 06 / 07set; tools/lead_r5/verify_preview.sh pattern); 2) per-screen Benny (05 look only where tuned) and per-screen top bar (04 layout, banner widths); 3) merge 08 scenery r1 final 60e7ffe8 + Benny r6 c6892676; 4) moving-view work 07 -> 05 -> 06 -> 04; APKs blocked by Maven Central in this environment",
    "evidence": "qa/lead_r5/2026-11-17/README.md"
   },
@@ -1071,7 +1071,7 @@
  "round19b": {
   "started_utc": "2026-11-19T20:57Z",
   "base": "preview v3 claude/rainbow-s04-preview-c19 @ 09459079",
-  "user_rule": "approved screen = same look while swimming/moving (CLAUDE.md §6)",
+  "user_rule": "approved screen = same look while swimming/moving (CLAUDE.md \u00a76)",
   "workers": {
    "benny": {
     "branch": "claude/rainbow-benny-c20",
@@ -1180,7 +1180,7 @@
    "08 polish (coins, m08gl verdict) from 3c0fa970",
    "05 polish (end, hard left) from eb7233e3"
   ],
-  "artwork": "qa/review_r21/artwork/ — 5 fal nano-banana-2/edit jobs $0.60; 04 proposals await user approval",
+  "artwork": "qa/review_r21/artwork/ \u2014 5 fal nano-banana-2/edit jobs $0.60; 04 proposals await user approval",
   "resume": "docs/briefs/2026-11-20-r21/RESUME_R21.md + setup_worker_r22.sh"
  },
  "round22": {
@@ -1259,8 +1259,8 @@
    "s07": "water-fx-specialist /home/user/wt/s07 claude/rainbow-s07-match-c29",
    "s04": "washer-environment-modeler /home/user/wt/s04 claude/rainbow-s04-match-c29",
    "s05": "water-fx-specialist /home/user/wt/s05 claude/rainbow-s05-match-c29",
-   "benny": "benny-character-artist /home/user/wt/benny claude/rainbow-benny-c29 — stopped 17:08 after step 2 (slot given to 06)",
-   "s06": "path-camera-transition-engineer /home/user/wt/s06 claude/rainbow-s06-match-c29 — route test (user-authorized 17:05)",
+   "benny": "benny-character-artist /home/user/wt/benny claude/rainbow-benny-c29 \u2014 stopped 17:08 after step 2 (slot given to 06)",
+   "s06": "path-camera-transition-engineer /home/user/wt/s06 claude/rainbow-s06-match-c29 \u2014 route test (user-authorized 17:05)",
    "s08": "finished (K23-3, unapproved) read-only"
   },
   "user_scope_decision": "2026-11-20 ~17:25 UTC: 01/02/03/11 = Google Flow videos; 04-10 incl. 09 and 10 = real playable 3D (docs/briefs/2026-11-20-r28/USER_CLARIFICATIONS_R28.md)"
@@ -1299,6 +1299,51 @@
    "switch": "e30*",
    "state": "RUNNING",
    "out": "qa/match/06/r30/scen06/"
+  }
+ },
+ "round_30b": {
+  "lead_branch": "ccr-e490fceb-u85291",
+  "time": "2026-11-20 ~23:30 UTC",
+  "brief": "docs/briefs/2026-11-20-r30/LAUNCH_R30B.md",
+  "workers": {
+   "benny06": {
+    "agent": "benny-character-artist",
+    "worktree": "/home/user/wt/benny06",
+    "branch_local": "claude/rainbow-s06-benny06-c32",
+    "switch": "b30",
+    "status": "finished, combined by lead",
+    "notes": "qa/match/06/r30/benny06/NOTES.md"
+   },
+   "water06": {
+    "agent": "water-fx-specialist",
+    "worktree": "/home/user/wt/water06",
+    "branch_local": "claude/rainbow-s06-water06-c32",
+    "switch": "w30",
+    "status": "finished, combined by lead",
+    "notes": "qa/match/06/r30/water06/NOTES.md"
+   },
+   "foam06": {
+    "agent": "foam-bubbles-particles",
+    "worktree": "/home/user/wt/foam06",
+    "branch_local": "claude/rainbow-s06-foam06-c32",
+    "switch": "f30",
+    "status": "finished, combined by lead (heaps tuned f30bs=0.7 f30bg=0.3 f30bc=0.16)",
+    "notes": "qa/match/06/r30/foam06/NOTES.md"
+   },
+   "scen06": {
+    "agent": "washer-environment-modeler",
+    "worktree": "/home/user/wt/scen06",
+    "branch_local": "claude/rainbow-s06-scen06-c32",
+    "switch": "e30",
+    "status": "not relaunched: scenery done by the lead (m06sb); its unwired e30scen06.ts kept for reference"
+   }
+  },
+  "candidate": {
+   "query": "qa/match/06/r30b/QUERY_SB_NEW.txt",
+   "commit_local": "cf1a66036b9cfeae6ca64ecd54918110909ef448",
+   "tree": "b12c04e6df76a054ed5cc619e932f004b96ab440",
+   "patch": "qa/match/06/r30b/proof/r30b_candidate_from_e162aec.patch",
+   "approved": false
   }
  }
 }

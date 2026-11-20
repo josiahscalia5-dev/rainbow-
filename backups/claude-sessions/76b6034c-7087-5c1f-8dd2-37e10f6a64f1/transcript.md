@@ -3385,3 +3385,375 @@ Final frames and the four sheets are rebuilt. Updating the task list, then runni
 > ↩︎ result: Command running in background with ID: bmxld86v5. Output is being written to: /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/tasks/bmxld86v5.output. You will be notified when it completes. To check interim output, use Read on that file path.
 > Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
 
+### 🤖 Claude — 2026-11-20T23:21:27.496Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s06/tools/match06/r30b_make_clip.py", "content": "\"\"\"r30b lead: label the ONE uninterrupted real-gameplay clip (tools/match06/r30_clip.mjs frames: 1/24 s of the real simulation each, no cuts)\nand encode it at normal speed (1.0x) and half speed (0.5x); plus HANDOFF_06_to_07.jpg = the frames around the actual 06 -> 07 entrance.\nusage: python3 -I r30b_make_clip.py <framesDir> <outDir> <s07> <query-name>\"\"\"\nimport json, sys, os, subprocess\nfrom PIL import Image, ImageDraw, ImageFont\nFR, OUT, S07, QN = sys.argv[1], sys.argv[2], float(sys.argv[3]), sys.argv[4] …[+2489 chars]`
+
+### 🧑 User — 2026-11-20T23:21:27.725Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s06/tools/match06/r30b_make_clip.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T23:21:28.050Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r30b/proof/sheets/3_PANEL3_APPROVED_BASELINE_NEW.jpg"}`
+
+### 🧑 User — 2026-11-20T23:21:28.134Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-20T23:21:28.130Z
+
+[Image: original 2445x1210, displayed at 2000x990. Multiply coordinates by 1.22 to map to original image.]
+
+### 🤖 Claude — 2026-11-20T23:21:35.613Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/tasks/bmxld86v5.output", "description": "Read final gameplay test result"}`
+
+### 🧑 User — 2026-11-20T23:21:35.642Z
+
+> ↩︎ result: exit 0
+> PASS True {'pauseFreezes': True, 'continuousTravel': True, 'noCameraCut': True, 'noTeleport': True, 'plunge': True, 'realCoinPickups': True, 'victory': True, 'heartsLostOnWallBump': True}
+> coins {'pass': True, 'startCoins': 1330, 'endCoins': 2240, 'collected': 91}
+> wall {'pass': True, 'hearts': 4}
+> camera max jump 0.728
+> errors []
+> 
+> [exited with code 0]
+
+### 🤖 Claude — 2026-11-20T23:21:43.799Z
+
+> 🔧 **Bash** `{"command": "B=/home/user/rainbow-/qa/match/06/r30b; cd /home/user/wt/s06 && Q=$(cat $B/QUERY_SB_NEW.txt) && STEER=zigzag AUDIT_PORT=5368 timeout 3000 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/match06/r30_clip.mjs $B/proof/steer_frames \"$Q\" 12 360 640 > $B/proof/steer.log 2>&1; echo \"exit $?\"; tail -2 $B/proof/steer.log; ls $B/proof/steer_frames | wc -l", "description": "Render a zig-zag steering clip on the candidate", "timeout": 3100000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T23:21:43.856Z
+
+> ↩︎ result: Command running in background with ID: b3ya6t1am. Output is being written to: /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/tasks/b3ya6t1am.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-20T23:22:08.027Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && git status --porcelain | awk '{print $1}' | sort | uniq -c; git status --porcelain | grep '^??' | cut -c4- | head -60", "description": "List the candidate's changed and new files"}`
+
+### 🧑 User — 2026-11-20T23:22:08.184Z
+
+> ↩︎ result: 52 ??
+>       9 M
+> assets/textures/match06/coins06deep.json
+> assets/textures/match06/hole06.json
+> assets/textures/match06/leg06deep.json
+> assets/textures/match06/route06curl.json
+> assets/textures/match06/route06deep.json
+> assets/textures/match06/route06sb.json
+> assets/textures/match06/tile_hole06.png
+> assets/textures/match06/tile_hole06b.png
+> assets/textures/match06/tile_hole06w.png
+> assets/textures/match06/tile_w30veins.png
+> node_modules
+> src/characters/benny/benny30.ts
+> src/world/m06foam30.ts
+> src/world/m06sb.ts
+> src/world/m06water30.ts
+> src/world/route06c.ts
+> tools/benny30/
+> tools/match06/lead23_audit_slow.mjs
+> tools/match06/make_hole06.py
+> tools/match06/r23_audit.mjs
+> tools/match06/r23_ripdump.mjs
+> tools/match06/r23_swim.mjs
+> tools/match06/r23_tunprobe.mjs
+> tools/match06/r23_vite.mjs
+> tools/match06/r25_frames.mjs
+> tools/match06/r25_holedump.mjs
+> tools/match06/r25_open_clip.mjs
+> tools/match06/r25_unwrap06.py
+> tools/match06/r28_probe.mjs
+> tools/match06/r28_quick.mjs
+> tools/match06/r29_coins_deep.mjs
+> tools/match06/r29_design_leg.py
+> tools/match06/r29_design_route.py
+> tools/match06/r29_multi.mjs
+> tools/match06/r29_old_samples.mjs
+> tools/match06/r29_route_probe.mjs
+> tools/match06/r30_cam.mjs
+> tools/match06/r30_clip.mjs
+> t …[+470 chars]
+
+### 🤖 Claude — 2026-11-20T23:22:19.659Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && export GIT_INDEX_FILE=/tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/r30b.idx && rm -f $GIT_INDEX_FILE && git read-tree HEAD && git add -A -- . ':!node_modules' && TREE=$(git write-tree) && C=$(git commit-tree $TREE -p HEAD -m \"r30b Screen 06 storyboard candidate (lead, session ccr-e490fceb-u85291): \\`&m06sb=1\\` + water w30 + foam f30 + Benny b30\n\nUser 2026-11-20 ~22:20 UTC (docs/briefs/2026-11-20-r30/USER_R30.md §6): match all four approved storyboard views of Screen 06.\nQuery: qa/match/06/r30b/QUERY_SB_NEW.txt. Not …[+762 chars]`
+
+### 🧑 User — 2026-11-20T23:22:24.270Z
+
+> ↩︎ result: commit cf1a66036b9cfeae6ca64ecd54918110909ef448 tree b12c04e6df76a054ed5cc619e932f004b96ab440
+> 61
+> -rw-r--r-- 1 root root 4149689 Nov 20 23:22 /home/user/rainbow-/qa/match/06/r30b/proof/r30b_candidate_from_e162aec.patch
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T23:22:34.896Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && export GIT_INDEX_FILE=/tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/verify.idx && rm -f $GIT_INDEX_FILE && git read-tree e162aec2bfdc631913c41daa435f9d449439af4f && git apply --cached --binary /home/user/rainbow-/qa/match/06/r30b/proof/r30b_candidate_from_e162aec.patch && T2=$(git write-tree) && unset GIT_INDEX_FILE && echo \"rebuilt tree $T2\" && [ \"$T2\" = \"b12c04e6df76a054ed5cc619e932f004b96ab440\" ] && echo \"PATCH REPRODUCES THE CANDIDATE EXACTLY\"", "description": "Verify the patch reproduces the candidate tree"}`
+
+### 🧑 User — 2026-11-20T23:22:35.021Z
+
+> ↩︎ result: rebuilt tree b12c04e6df76a054ed5cc619e932f004b96ab440
+> PATCH REPRODUCES THE CANDIDATE EXACTLY
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T23:23:07.996Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/match/06/r30b/proof/README.md", "content": "# Screen 06 — r30b storyboard candidate: proof (lead, session `ccr-e490fceb-u85291`, 2026-11-20 ~23:30 UTC)\n\n**Individual playable candidate, NOT approved.** Default build and every earlier query unchanged (verified, see \"Baseline preserved\").\nUser's binding brief: `docs/briefs/2026-11-20-r30/USER_R30.md` §6 (the FOUR storyboard panels = mandatory approved targets).\n\n## Exact candidate\n* Query: `../QUERY_SB_NEW.txt` = r30 v2 (`qa/match/06/r30/QUERY_NEW_v2.txt`) + `&m06sb=1&w30=1&f30=1&f30bs=0.7&f30bg=0.3& …[+6394 chars]`
+
+### 🧑 User — 2026-11-20T23:23:08.153Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/match/06/r30b/proof/README.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T23:23:26.055Z
+
+> 🔧 **Bash** `{"command": "cat >> docs/briefs/2026-11-20-r30/COORDINATION.md <<'EOF'\n\n## Round 30b (lead session `ccr-e490fceb-u85291`, from ~22:20 UTC) — the user's \"MATCH ALL FOUR APPROVED SCREEN 06 VIEWS\" (USER_R30.md §6, §7)\n* Restore: merged the r30 session's last save `b9ca06c` (22:14) → `34786f3`; worktrees recreated from the 22:14 snapshots on LOCAL `-c32`\n  (`setup_r30b.sh`). Specialists relaunched (`LAUNCH_R30B.md`): water `w30`, foam `f30`, Benny `b30` — all finished, combined by the lead.\n* Lead built `&m06sb=1` (`src/world/m06sb.ts`, `route06c.ts`; hooks in match06.ts, cameraRig.ts, Game …[+3830 chars]`
+
+### 🧑 User — 2026-11-20T23:23:26.302Z
+
+> ↩︎ result: CLAUDE.md updated
+> AGENTS_STATUS updated
+
+### 🤖 Claude — 2026-11-20T23:23:35.428Z
+
+Docs are updated. Checking the two clips' progress:
+
+### 🤖 Claude — 2026-11-20T23:23:36.668Z
+
+> 🔧 **Bash** `{"command": "ls /home/user/rainbow-/qa/match/06/r30b/proof/clip_frames 2>/dev/null | wc -l; ls /home/user/rainbow-/qa/match/06/r30b/proof/steer_frames 2>/dev/null | wc -l; tail -1 /home/user/rainbow-/qa/match/06/r30b/proof/clip.log | cut -c1-120; date -u +%H:%M", "description": "Check clip render progress"}`
+
+### 🧑 User — 2026-11-20T23:23:36.721Z
+
+> ↩︎ result: 115
+> 73
+> frame 96 { s: 252.367, stage: '06', lat: 0, coins: 1740 }
+> 23:23
+
+### 🤖 Claude — 2026-11-20T23:23:44.871Z
+
+The clip is about a quarter done (115 of roughly 410 frames; both clips share the machine). Since the four comparison sheets are final, I'm sending them to you now rather than waiting:
+
+### 🤖 Claude — 2026-11-20T23:23:47.689Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/match/06/r30b/proof/sheets/1_PANEL1_APPROVED_BASELINE_NEW.jpg", "/home/user/rainbow-/qa/match/06/r30b/proof/sheets/2_PANEL2_APPROVED_BASELINE_NEW.jpg", "/home/user/rainbow-/qa/match/06/r30b/proof/sheets/3_PANEL3_APPROVED_BASELINE_NEW.jpg", "/home/user/rainbow-/qa/match/06/r30b/proof/sheets/4_PANEL4_APPROVED_BASELINE_NEW.jpg"], "caption": "Screen 06, the four numbered comparisons. Each sheet shows your storyboard panel (concept art) | the previous version (your bottom row) | the new candidate (real gameplay), all in the same window. Not approved; your call.",  …[+40 chars]`
+
+### 🧑 User — 2026-11-20T23:23:48.771Z
+
+> ↩︎ result: 4 files delivered to user.
+>   /home/user/rainbow-/qa/match/06/r30b/proof/sheets/1_PANEL1_APPROVED_BASELINE_NEW.jpg → file_uuid: d2ea08ca-e915-4223-a643-6d01f7aff236
+>   /home/user/rainbow-/qa/match/06/r30b/proof/sheets/2_PANEL2_APPROVED_BASELINE_NEW.jpg → file_uuid: 656dd8c1-eb8d-4d5d-99a2-ee63bd3b2e6d
+>   /home/user/rainbow-/qa/match/06/r30b/proof/sheets/3_PANEL3_APPROVED_BASELINE_NEW.jpg → file_uuid: 99a3f4a1-9ce9-4cf7-8a7b-4723b0592ad7
+>   /home/user/rainbow-/qa/match/06/r30b/proof/sheets/4_PANEL4_APPROVED_BASELINE_NEW.jpg → file_uuid: 89bf0f8e-79a0-4442-901e-a7a2aab0b0b0
+
+### 🤖 Claude — 2026-11-20T23:23:52.359Z
+
+I haven't yet looked at the final versions of sheets 1 and 4 myself, so checking them now to describe them accurately:
+
+### 🤖 Claude — 2026-11-20T23:23:53.015Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r30b/proof/sheets/1_PANEL1_APPROVED_BASELINE_NEW.jpg"}`
+
+### 🧑 User — 2026-11-20T23:23:53.093Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-20T23:23:53.088Z
+
+[Image: original 2445x1210, displayed at 2000x990. Multiply coordinates by 1.22 to map to original image.]
+
+### 🤖 Claude — 2026-11-20T23:23:53.570Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r30b/proof/sheets/4_PANEL4_APPROVED_BASELINE_NEW.jpg"}`
+
+### 🧑 User — 2026-11-20T23:23:53.664Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-20T23:23:53.660Z
+
+[Image: original 2445x1210, displayed at 2000x990. Multiply coordinates by 1.22 to map to original image.]
+
+### 🤖 Claude — 2026-11-20T23:24:15.777Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r30b/proof && cp new/start.png new/p1_198.91.png && python3 -I /home/user/wt/s06/tools/match06/r30b_proof.py baseline new sheets 238,266,300,387 198.91,250,300,336 >/dev/null 2>&1; python3 -I /home/user/wt/s06/tools/match06/r30b_proof.py baseline new sheets 238,266,310,387 198.91,250,300,336 && mkdir -p /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/s1b && cp baseline/p1_214.86.png /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/s1b/p1_214.86.png && cp new/p1_214.86.png /tmp/cla …[+1494 chars]`
+
+### 🧑 User — 2026-11-20T23:24:22.739Z
+
+> ↩︎ result: wrote sheets
+> 1_PANEL1_APPROVED_BASELINE_NEW.jpg
+> 1a_APPROVED_storyboard_panel1.png
+> 1b_BASELINE_full_s238.png
+> 1b_PANEL1_in_motion_s214.86.jpg
+> 1c_NEW_full_s198.91.png
+> 2_PANEL2_APPROVED_BASELINE_NEW.jpg
+> 2a_APPROVED_storyboard_panel2.png
+> 2b_BASELINE_full_s266.png
+> 2c_NEW_full_s250.png
+> 3_PANEL3_APPROVED_BASELINE_NEW.jpg
+> 3a_APPROVED_storyboard_panel3.png
+> 3b_BASELINE_full_s310.png
+> 3c_NEW_full_s300.png
+> 4_PANEL4_APPROVED_BASELINE_NEW.jpg
+> 4a_APPROVED_storyboard_panel4.png
+> 4b_BASELINE_full_s387.png
+> 4c_NEW_full_s336.png
+
+### 🤖 Claude — 2026-11-20T23:24:27.807Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r30b/proof/sheets/1b_PANEL1_in_motion_s214.86.jpg"}`
+
+### 🧑 User — 2026-11-20T23:24:27.893Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-20T23:24:27.889Z
+
+[Image: original 2445x1210, displayed at 2000x990. Multiply coordinates by 1.22 to map to original image.]
+
+### 🤖 Claude — 2026-11-20T23:24:39.402Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='README.md'; s=open(p).read()\ns=s.replace(\"user's bottom row, river s 238 / 266 / 310 / 387) | NEW (s 214.86 / 250 / 300 / 336), all three in the SAME window\",\n \"user's bottom row, river s 238 / 266 / 310 / 387) | NEW (s 198.91 = the start of 06 / 250 / 300 / 336), all three in the SAME window\")\ns=s.replace(\"NEW moments chosen in storyboard order.\",\n \"NEW moments chosen in storyboard order. `sheets/1b_PANEL1_in_motion_s214.86.jpg`: panel 1 again 1.3 s later (BASELINE and NEW both at s 214.86):\\n   the start-view hold still trails Benny (smaller) in …[+780 chars]`
+
+### 🧑 User — 2026-11-20T23:24:40.412Z
+
+> ↩︎ result: 141
+> 115
+> 23:24
+> AUTOSAVE OK | branch ccr-e490fceb-u85291 | scheduler daemon | last verified backup 2026-11-20T23:21:08+00:00 (3.5 min ago) | local 2903c3e remote 2903c3e (match) | uncommitted 99
+
+### 🤖 Claude — 2026-11-20T23:24:47.125Z
+
+The clip is about a third done, and autosave is current (23:21, GitHub matches local). Sending you the corrected sheet 1 and the extra in-motion sheet 1b:
+
+### 🤖 Claude — 2026-11-20T23:24:49.384Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/match/06/r30b/proof/sheets/1_PANEL1_APPROVED_BASELINE_NEW.jpg", "/home/user/rainbow-/qa/match/06/r30b/proof/sheets/1b_PANEL1_in_motion_s214.86.jpg"], "caption": "Corrected comparison 1: NEW is now the real start of Screen 06, just before Benny curls over the crest. 1b shows the same panel 1.3 s later: Benny trails a little small there (the baseline does the same), but the walls are now crisp instead of blurry.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-20T23:24:50.364Z
+
+> ↩︎ result: 2 files delivered to user.
+>   /home/user/rainbow-/qa/match/06/r30b/proof/sheets/1_PANEL1_APPROVED_BASELINE_NEW.jpg → file_uuid: 8f60ac2f-136a-48c8-b44b-889fccd6ee1e
+>   /home/user/rainbow-/qa/match/06/r30b/proof/sheets/1b_PANEL1_in_motion_s214.86.jpg → file_uuid: 09cbb1d9-f27d-4336-b74b-79c3fa7617e2
+
+### 🤖 Claude — 2026-11-20T23:24:56.542Z
+
+While the clips finish, I'm writing the encoder for the steering clip. It labels every frame with Benny's left/right position and the live coin count, so steering and coin pickups are visible:
+
+### 🤖 Claude — 2026-11-20T23:25:05.089Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s06/tools/match06/r30b_make_steer.py", "content": "\"\"\"r30b lead: label the uninterrupted zig-zag steering clip (tools/match06/r30_clip.mjs with STEER=zigzag) with Benny's lateral position and the\nlive coin counter, and encode it at normal speed. usage: python3 -I r30b_make_steer.py <framesDir> <outDir> <s07>\"\"\"\nimport json, sys, os, subprocess\nfrom PIL import Image, ImageDraw, ImageFont\nFR, OUT, S07 = sys.argv[1], sys.argv[2], float(sys.argv[3])\nmeta = json.load(open(f'{FR}/frames.json'))['log']\nFB = '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf …[+1535 chars]`
+
+### 🧑 User — 2026-11-20T23:25:05.231Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s06/tools/match06/r30b_make_steer.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T23:25:15.660Z
+
+While the clips render, I'm checking that the autosave will actually upload the 4.1 MB candidate patch and the proof videos (file-type and size rules):
+
+### 🤖 Claude — 2026-11-20T23:25:17.261Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && python3 -c \"\nimport json; c=json.load(open('backups/autosave.config.json')); print({k:(v if len(str(v))<400 else str(v)[:400]) for k,v in c.items() if k not in ('protected_branches',)})\" ; git log -1 --name-only --format='%h %s' | head -5; git ls-files qa/match/06/r30b/proof | head -20", "description": "Check autosave rules for the patch and videos"}`
+
+### 🧑 User — 2026-11-20T23:25:17.809Z
+
+> ↩︎ result: {'project': 'RAINBOW — 11-screen 3D mobile game', 'repo_full_name': 'josiahscalia5-dev/rainbow-', 'remote_name': 'origin', 'remote_url_must_contain': 'github.com/josiahscalia5-dev/rainbow-', 'branch': 'claude/rainbow-r22-restore-ut3m39', 'session_branch_patterns': ['ccr-*', 'claude/*'], 'commit_trailer': 'Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01KS3bZvZewXsKSGqCC6N8uK', 'claude_projects_glob': '~/.claude/projects/-home-user-rainbow-*', 'allowlist': "['*.md', '.gitignore', '.gitattributes', '.claude/agents', '.claude/skills', '.claude/commands', '.claude/rules', '.claude/settings.json', '.mcp.json.template', 'package.json', 'package-lock.json', 'tsconfig.json', 'tsconfig.node.json', 'vite.config.ts', 'capacitor.config.ts', 'index.html', 'src', 'public', 'assets', 'references', 'character_references', 'screenshots', 'qa', 'docs', 'scripts', 'to", 'status_only_paths': ['backups/BACKUP_STATUS.json', 'backups/BACKUP_LOG.md'], 'max_plain_git_file_mb': 49, 'push_retries': 4, 'original_branch_note': 'PROTECTED, never pushed to by the autosave: ccr-6f431adf-7h0m8y = untouched original from the first Claude account (81e639e); c …[+1704 chars]
+
+### 🤖 Claude — 2026-11-20T23:25:21.553Z
+
+> 🔧 **Bash** `{"command": "git ls-files qa/match/06/r30b/proof | grep -v \"clip_frames\\|steer_frames\" ; git ls-files qa/match/06/r30b/proof/clip_frames | wc -l", "description": "List which proof files are already saved to Git"}`
+
+### 🧑 User — 2026-11-20T23:25:21.632Z
+
+> ↩︎ result: qa/match/06/r30b/proof/baseline/p1_214.86.png
+> qa/match/06/r30b/proof/baseline/p1_238.png
+> qa/match/06/r30b/proof/baseline/p2_266.png
+> qa/match/06/r30b/proof/baseline/p3_310.png
+> qa/match/06/r30b/proof/baseline/p4_387.png
+> qa/match/06/r30b/proof/baseline/shots.json
+> qa/match/06/r30b/proof/baseline/start.png
+> qa/match/06/r30b/proof/equiv_from_candidate_code/shots.json
+> qa/match/06/r30b/proof/equiv_from_candidate_code/v2_310.png
+> qa/match/06/r30b/proof/equiv_from_candidate_code/v2_start.png
+> qa/match/06/r30b/proof/equiv_mask_s310.png
+> qa/match/06/r30b/proof/new/p1_214.86.png
+> qa/match/06/r30b/proof/new/p2_250.png
+> qa/match/06/r30b/proof/new/p3_300.png
+> qa/match/06/r30b/proof/new/p4_336.png
+> qa/match/06/r30b/proof/new/shots.json
+> qa/match/06/r30b/proof/new/start.png
+> qa/match/06/r30b/proof/sheets/1_PANEL1_APPROVED_BASELINE_NEW.jpg
+> qa/match/06/r30b/proof/sheets/1a_APPROVED_storyboard_panel1.png
+> qa/match/06/r30b/proof/sheets/1b_BASELINE_full_s238.png
+> qa/match/06/r30b/proof/sheets/1c_NEW_full_s214.86.png
+> qa/match/06/r30b/proof/sheets/2_PANEL2_APPROVED_BASELINE_NEW.jpg
+> qa/match/06/r30b/proof/sheets/2a_APPROVED_storyboard_panel2.png
+> qa/match/06/r30b/proof/sheets/2b_BASELINE_full_s266.png
+> qa/match/06/r30b/p …[+507 chars]
+
+### 🤖 Claude — 2026-11-20T23:25:34.475Z
+
+> 🔧 **Bash** `{"command": "cat >> .gitignore <<'EOF'\n# r30b: raw per-frame clip renders (hundreds of PNGs); the encoded mp4s, labelled sheets and selected stills are kept instead\nqa/match/06/r30b/proof/clip_frames/\nqa/match/06/r30b/proof/steer_frames/\nqa/match/06/r30b/proof/_lab/\nqa/match/06/r30b/proof/_steer/\nEOF\ngit rm -r -q --cached qa/match/06/r30b/proof/clip_frames 2>/dev/null; git rm -r -q --cached qa/match/06/r30b/proof/steer_frames 2>/dev/null; git status --short | grep -c \"^D \" ; ls qa/match/06/r30b/proof/clip_frames | wc -l", "description": "Stop committing raw clip frames to GitHub"}`
+
+### 🧑 User — 2026-11-20T23:25:34.614Z
+
+> ↩︎ result: 57
+> 163
+
+### 🤖 Claude — 2026-11-20T23:25:39.955Z
+
+Raw frames are untracked (local copies kept; 163 rendered so far). Now waiting for the two clips to finish. I'll be notified when the main clip completes.
+
+### 🤖 Claude — 2026-11-20T23:25:42.911Z
+
+> 🔧 **Monitor** `{"description": "main gameplay clip and steering clip completion", "timeout_ms": 1800000, "command": "D=/home/user/rainbow-/qa/match/06/r30b/proof; a=0; b=0; while [ $a -eq 0 ] || [ $b -eq 0 ]; do if [ $a -eq 0 ] && [ -f $D/clip_frames/frames.json ]; then echo \"MAIN CLIP DONE: $(ls $D/clip_frames | wc -l) files\"; a=1; fi; if [ $b -eq 0 ] && [ -f $D/steer_frames/frames.json ]; then echo \"STEER CLIP DONE: $(ls $D/steer_frames | wc -l) files\"; b=1; fi; if ! pgrep -f r30_clip.mjs >/dev/null; then [ $a -eq 0 ] && echo \"MAIN CLIP: renderer exited without frames.json\"; [ $b -eq 0 ] && echo \"ST …[+76 chars]`
+
+### 🧑 User — 2026-11-20T23:25:43.002Z
+
+> ↩︎ result: Monitor started (task bzhody17d, expires in 30m unless the source ends first; you get one notice at expiry — re-arm if you still need the watch). You will be notified on each event. Keep working — do not poll or sleep. Events may arrive while you are waiting for the user — an event is not their reply.
+
+### 🤖 Claude — 2026-11-20T23:25:49.149Z
+
+While the clips finish, I'm reviewing my own code changes once more for mistakes. This is the camera solver and the per-frame hooks:
+
+### 🤖 Claude — 2026-11-20T23:25:50.004Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n '/  sbW(s: number)/,/^  update(/p' src/game/cameraRig.ts | head -60", "description": "Review the storyboard camera solver code"}`
+
+### 🧑 User — 2026-11-20T23:25:50.080Z
+
+> ↩︎ result: sbW(s: number) { // public: Game.ts keeps Benny's on-screen tilt with the same weight
+>     if (!SB.cam || !STAGE_CAM['06']?.off06) return 0;
+>     const st6 = this.course.stage('06'), sB = st6.s0 + 10, s07 = this.course.stage('07').s0;
+>     return THREE.MathUtils.smoothstep(s, sB + M06_VW[0], sB + M06_VW[1]) * (1 - THREE.MathUtils.smoothstep(s, s07 - 14, s07 - 3));
+>   }
+>   /** r30b m06sbcam pose: camera position + view direction (see desired()) */
+>   private sbPose(s: number, lat: number, off06: [number, number, number], dir06: [number, number, number], fovDeg: number) {
+>     const UP = new THREE.Vector3(0, 1, 0);
+>     const basis = (F: THREE.Vector3) => { const R = new THREE.Vector3().crossVectors(F, UP).normalize(); return { F, R, U: new THREE.Vector3().crossVectors(R, F) }; };
+>     if (!this.sbB) {
+>       const off = new THREE.Vector3(...off06), d0 = new THREE.Vector3(...dir06).normalize(), b = basis(d0), v = off.clone().negate();
+>       this.sbB = { v: new THREE.Vector3(v.dot(b.R), v.dot(b.U), v.dot(b.F)).normalize(), D: off.length() };
+>     }
+>     const f = this.course.sample(s), bn = f.pos.clone().addScaledVector(f.right, lat * 0.6);
+>     const Q = new THREE.Vector3();
+>     for (let i = 0; i …[+1710 chars]
+
+### 🤖 Claude — 2026-11-20T23:26:06.398Z
+
+> 🔧 **Bash** `{"command": "git log -3 --format='%h %cd %s' --date=format:%H:%M; for f in qa/match/06/r30b/proof/r30b_candidate_from_e162aec.patch qa/match/06/r30b/proof/README.md qa/match/06/r30b/proof/gameplay_NEW.json qa/match/06/r30b/proof/CANDIDATE_COMMIT.txt docs/briefs/2026-11-20-r30/LAUNCH_R30B.md docs/briefs/2026-11-20-r30/setup_r30b.sh; do git ls-files --error-unmatch $f >/dev/null 2>&1 && echo \"tracked  $f\" || echo \"NOT YET  $f\"; done; git ls-files qa/match/06/r30b/proof/clip_frames | wc -l", "description": "Check the patch, README and results are saved"}`
+
+### 🧑 User — 2026-11-20T23:26:06.486Z
+
+> ↩︎ result: 2903c3e 23:21 autosave: Rainbow 2026-11-20 23:21 UTC
+> 9bb64d3 23:16 autosave: Rainbow 2026-11-20 23:16 UTC
+> 7611aee 23:11 autosave: Rainbow 2026-11-20 23:11 UTC
+> NOT YET  qa/match/06/r30b/proof/r30b_candidate_from_e162aec.patch
+> NOT YET  qa/match/06/r30b/proof/README.md
+> NOT YET  qa/match/06/r30b/proof/gameplay_NEW.json
+> NOT YET  qa/match/06/r30b/proof/CANDIDATE_COMMIT.txt
+> tracked  docs/briefs/2026-11-20-r30/LAUNCH_R30B.md
+> tracked  docs/briefs/2026-11-20-r30/setup_r30b.sh
+> 0
+

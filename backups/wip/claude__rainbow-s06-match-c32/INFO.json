@@ -2,7 +2,7 @@
  "worktree": "/home/user/wt/s06",
  "branch": "claude/rainbow-s06-match-c32",
  "head": "e162aec2bfdc631913c41daa435f9d449439af4f",
- "time": "2026-11-20T23:21:19+00:00",
+ "time": "2026-11-20T23:26:18+00:00",
  "dirty_tracked": [
   "src/characters/benny/benny05.ts",
   "src/characters/benny/runtime.ts",
@@ -63,6 +63,8 @@
   "tools/match06/r30_shots.mjs",
   "tools/match06/r30b_design_sb.py",
   "tools/match06/r30b_diag.mjs",
+  "tools/match06/r30b_make_clip.py",
+  "tools/match06/r30b_make_steer.py",
   "tools/match06/r30b_panel_match.py",
   "tools/match06/r30b_probe.mjs",
   "tools/match06/r30b_proof.py",
