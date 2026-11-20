@@ -2,7 +2,7 @@
  "worktree": "/home/user/wt/s06",
  "branch": "claude/rainbow-s06-match-c31",
  "head": "e162aec2bfdc631913c41daa435f9d449439af4f",
- "time": "2026-11-20T20:14:31+00:00",
+ "time": "2026-11-20T20:19:29+00:00",
  "dirty_tracked": [
   "src/game/Game.ts",
   "src/gameplay/coins.ts",
@@ -37,7 +37,8 @@
   "tools/match06/r29_design_route.py",
   "tools/match06/r29_multi.mjs",
   "tools/match06/r29_old_samples.mjs",
-  "tools/match06/r29_route_probe.mjs"
+  "tools/match06/r29_route_probe.mjs",
+  "tools/match06/r30_ring_probe.mjs"
  ],
  "untracked_skipped": [],
  "restore": "git switch claude/rainbow-s06-match-c31 (newest pushed tip) && git apply --binary backups/wip/claude__rainbow-s06-match-c31/tracked.patch && copy backups/wip/claude__rainbow-s06-match-c31/untracked/* into the worktree"
