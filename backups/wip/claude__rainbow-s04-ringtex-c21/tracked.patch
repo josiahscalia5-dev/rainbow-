@@ -1,8 +1,8 @@
 diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
-index 9abbbbb..674a6dd 100644
+index 9abbbbb..1903fe8 100644
 --- a/src/world/match04m4.ts
 +++ b/src/world/match04m4.ts
-@@ -119,12 +119,14 @@ uniform float uRVar;       // r17 m04rpvar: number of painted rings stacked in t
+@@ -119,12 +119,15 @@ uniform float uRVar;       // r17 m04rpvar: number of painted rings stacked in t
  uniform vec4 uRPol;        // r18 m04rpol: x amount, y luma pivot, z contrast gain above it, w below it
  uniform vec2 uRPol2;       // r18 m04rpol: x sharp sheen (reflection of the bright end), y grazing-angle brightening
  uniform vec4 uRCr;         // r18 m04rpcr: x amount, y bright lip line half width, z dark lip-edge line half width, w band-start corner (u)
@@ -16,12 +16,13 @@ index 9abbbbb..674a6dd 100644
  uniform float uRNearW;     // r19b m04rnear: water plane height relative to the tunnel axis (world u)
 -uniform vec4 uRNear4;      // r19b m04rnear: x bulbs per sub-rim, y fraction lit, z reflection patchiness (0 = even stripe), w bulb size
 +uniform vec4 uRNear4;      // r19b m04rnear: x bulbs per sub-rim, y fraction lit, z highlight core sharpness, w bulb size
++uniform vec4 uRNear6;      // r20 m04rnear: x painted light riding on the band grade, yzw spare
 +uniform vec4 uRNear5;      // r20 m04rnear: x highlight floor round the ring (0 = hot spots only), y static yellow glows, z rim line
 +                           // offset before the sub-rim (ring units), w the painted band re-drawn on every sub-band (m04rntex)
  #ifdef RFEW
  uniform float uRFewG;      // r18 m04rfew: height of the telescope's shrink centre (group units, from the axis; < 0 = below)
  uniform vec2 uRFewW;       // r18 m04rfew: x = ring scale where the deep rings reach warm yellow-white, y = amount (m04rfw, m04rfk)
-@@ -367,44 +369,86 @@ void main() {
+@@ -367,44 +370,86 @@ void main() {
        }
        pr += vec3(1.0, 0.86, 0.55) * 0.10 * gl * smoothstep(0.0, 0.2, facing);   // moving polished sheen
        if (uRNear.x > 0.0 && uu < uL) {
@@ -88,7 +89,7 @@ index 9abbbbb..674a6dd 100644
 +          // pink / violet texels keep their colour (only the warm copper ones are re-graded)
 +          float lp = dot(pr, vec3(0.30, 0.59, 0.11));
 +          float warm = smoothstep(0.04, 0.22, pr.r - pr.b);
-+          float xg = clamp(0.06 + 0.94 * pow(xs, 1.15) + 0.35 * (lp - 0.45), 0.0, 1.0);
++          float xg = clamp(0.06 + 0.94 * pow(xs, 1.15) + uRNear6.x * (lp - 0.45), 0.0, 1.0);
 +          float xg5 = xg * 5.0;
 +          vec3 gr = mix(vec3(0.50, 0.20, 0.06), vec3(0.70, 0.27, 0.07), clamp(xg5, 0.0, 1.0));
 +          gr = mix(gr, vec3(0.84, 0.38, 0.12), clamp(xg5 - 1.0, 0.0, 1.0));
@@ -134,7 +135,7 @@ index 9abbbbb..674a6dd 100644
            vec3 qW = vW - uAxO;
            float py = dot(qW, uAxU), Ry = dot(RT, uAxU);
            if (uRNear2.w > 0.0 && Ry < -0.02) {
-@@ -413,20 +457,19 @@ void main() {
+@@ -413,20 +458,19 @@ void main() {
              float lane = 1.0 - smoothstep(0.8, 1.7, abs(hx));
              vec3 rc = mix(vec3(0.86, 0.46, 0.82), vec3(0.64, 0.56, 0.92), lane);   // painted pink (211,118,207) / violet
              float nz = 0.5 + 0.5 * sin(hz * 0.55 + hx * 1.1 + 2.0 * sin(hz * 0.21 + hx * 0.6));
@@ -161,7 +162,7 @@ index 9abbbbb..674a6dd 100644
              pr += vec3(1.0, 0.80, 0.42) * 0.22 * gS * fd * uRNear2.y;
              pr = mix(pr, vec3(1.0, 0.93, 0.70), 0.8 * cB * fd * uRNear2.y);
              pr = mix(pr, pr * vec3(0.50, 0.32, 0.26), cD * fd * uRNear2.y);
-@@ -1069,11 +1112,12 @@ export function addM04(ctx: M04Ctx) {
+@@ -1069,11 +1113,13 @@ export function addM04(ctx: M04Ctx) {
          uRPol2: { value: new THREE.Vector2(M04.num('m04rpsp', 0.25), M04.num('m04rpfr', 0)) },
          uRCr: { value: new THREE.Vector4(M04.num('m04rpcr', 0), M04.num('m04rpcb', 0.011), M04.num('m04rpcd', 0.014), M04.num('m04rpcc', 0.012)) },
          // r19b `m04rnear=1`: the near band seen from inside resolves into the painted washer rim's polished sub-bands
@@ -173,6 +174,7 @@ index 9abbbbb..674a6dd 100644
          uRNearW: { value: -cy },
 -        uRNear4: { value: new THREE.Vector4(M04.num('m04rnbn', 28), M04.num('m04rnbf', 0.75), M04.num('m04rnrp', 1), M04.num('m04rnbz', 0.08)) },
 +        uRNear4: { value: new THREE.Vector4(M04.num('m04rnbn', 28), M04.num('m04rnbf', 0.75), M04.num('m04rnhp', 4), M04.num('m04rnbz', 0.08)) },
++        uRNear6: { value: new THREE.Vector4(M04.num('m04rnlc', 0.35), 0, 0, 0) },
 +        uRNear5: { value: new THREE.Vector4(M04.num('m04rnhf', 0.22), M04.num('m04rny', 0.3), M04.num('m04rno', 0.04), M04.num('m04rntex', 0)) },
          uP: { value: M04.num('m04ringp', 2.6) }, uLipBulb: { value: M04.num('m04lipbulb', 1) }, uBulbR: { value: (r + ctx.outerR) / 2 }, uLen: { value: len }, uRingTile: { value: ringTile }, uPaint: { value: M04.num('m04paint', M04.gold ? 0.8 : 1.4) }, uGoldY: { value: M04.gold ? 1 : 0 }, uCopper: { value: M04.num('m04copper', 0) }, uBulge: { value: M04.num('m04bulge', 0) }, uMouthT: { value: 0 }, uMouthTex: { value: null }, uMouthRho: { value: new THREE.Vector3(4.45, 3.25, M04.num('m04mro', -0.10)) }, uProjPos: shared.uProjPos, uTone: { value: new THREE.Vector4(M04.num('m04tb', 0.11), M04.num('m04tl', 0.38), M04.num('m04tm', 0.5), M04.num('m04ts', 0.45)) } },
      });

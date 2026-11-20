@@ -2232,3 +2232,25 @@ Relative to Benny's height, the tilted beanie (f0) sits ~36 px too low but has t
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-20T00:03:31.029Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && python3 - <<'EOF'\np='src/characters/benny/benny20.ts'\ns=open(p).read()\nfor a,b in [(\"color: lin('bcol', [0.305, 0.108, 0.18]),\",\"color: lin('bcol', [0.29, 0.092, 0.172]),\"),\n            (\"color: lin('acol', [0.305, 0.108, 0.18]),\",\"color: lin('acol', [0.29, 0.092, 0.172]),\"),\n            (\"shade: [n('bsx', 0.3), n('bsy', 0.3), n('bsz', 0.5), n('bsw', 0.3)],\",\"shade: [n('bsx', 0.22), n('bsy', 0.3), n('bsz', 0.5), n('bsw', 0.3)],\"),\n            (\"  knit('hat_crown', 'crown.png', 'crown_n.png', MAT20.crown, MAT20.crownN);\\n  knit('hat_bri …[+2431 chars]`
+
+### 🧑 User — 2026-11-20T00:03:37.238Z
+
+> ↩︎ result: TSC_OK
+
+### 🤖 Claude — 2026-11-20T00:03:38.337Z
+
+Committing the work so far before the proof renders, then launching them.
+
+### 🤖 Claude — 2026-11-20T00:03:42.541Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && git add src/characters/benny/benny20.ts src/characters/benny/runtime.ts src/characters/benny/fur.ts tools/benny20 qa/benny/r20/t1 && git add -f qa/benny/r20/probe 2>/dev/null; git status --short | grep -v \"^??\" | wc -l; du -sh qa/benny/r20/probe; git commit -q -m \"Benny r20: ?benny20=1 switch (builds on benny05): plush-lock fur combed along the surface, dusty-rose albedo solved through the live 04 light + post chain, beanie bigger / tilted back (front stays above the eyes), felt star, QA probe / score / calibration tools; task-1 benny05 shots\n\nCo-Aut …[+263 chars]`
+
+### 🧑 User — 2026-11-20T00:03:46.078Z
+
+> ↩︎ result: 128
+> 88M	qa/benny/r20/probe
+> 24dd125
+

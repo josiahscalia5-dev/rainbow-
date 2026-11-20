@@ -1767,3 +1767,28 @@ The Screen 04 water worker reports its first step as done. I'll check its pictur
 
 > 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:s04-step1-kept 2>&1 | grep -E '\"commit\"|pushed_verified|skipping'; python3 -I scripts/autosave-status.py", "description": "Save the kept-step record to GitHub", "timeout": 300000}`
 
+### 🧑 User — 2026-11-20T00:03:38.110Z
+
+> ↩︎ result: "pushed_verified": true,
+>   "commit": "e23aceb215688a287eaa98291720a940501897b6",
+> AUTOSAVE OK | branch ccr-681a37bb-5jqfbu | scheduler daemon | last verified backup 2026-11-20T00:03:22+00:00 (0.2 min ago) | local e23aceb remote e23aceb (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-20T00:03:43.731Z
+
+The first Screen 04 piece is done, and I checked it myself at full size. I've sent you six files: your approved picture, before and new while swimming, before and new while steering hard left, and a 4-second swim clip of the new version.
+
+**The river now curves up the tunnel walls.**
+- **Before:** the river was a flat strip with straight diagonal edges, and bare gold wall showed under it. Steering hard made it look like a cut-off sheet.
+- **Now:** glossy pink and magenta water sweeps up both walls and blends into the gold rings, like the half-pipe in your painting. It holds while Benny steers, with pink water rising on the wall he swims toward.
+- **Checks:** the start view is pixel-for-pixel unchanged, the coins are identical, and the swim clip shows no seams or popping.
+- **Still different:** the tops of the pink water on the walls look soft and hazy, where your painting has crisp glossy swirls with bright highlight lines. I've sent that to the worker for a later step.
+
+It's kept behind its switch, so the normal game hasn't changed yet. It goes into the next combined Screen 04 version with the other kept steps, and I'm not calling Screen 04 8/10 until you've seen that version in motion.
+
+**Still in progress:**
+- **Water worker:** the bank foam, to replace the small white cloud puffs with big glossy pearly bubble heaps like your painting.
+- **Rings worker:** the polished yellow-gold ring bands across the top half of the tunnel. The rings still look orange-copper in these pictures.
+- **Benny worker:** the fur colour and texture, using the brightness measurements from your approved Benny.
+
+Everything is saved and matches GitHub (`e23aceb`).
+
