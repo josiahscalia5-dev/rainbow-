@@ -158,3 +158,48 @@ index f240c1e..12916ab 100644
 +print(json.dumps({'n': int(len(px)), 'mean': [int(v) for v in px.mean(0) * 255],
                    'sat': [round(float(np.percentile(sat, p)), 2) for p in (10, 50, 90)],
                    'val': [round(float(np.percentile(mx, p)), 2) for p in (10, 50, 90)]}))
+diff --git a/tools/benny20/knit.py b/tools/benny20/knit.py
+index 9254093..fccfeae 100644
+--- a/tools/benny20/knit.py
++++ b/tools/benny20/knit.py
+@@ -78,10 +78,19 @@ def knit_field(W, H, cols, rows, seed, rib=False, groove=0.38):
+         rowid = np.where(better, k, rowid)
+         var = np.where(better, rv[np.clip(k + 1, 0, rows + 2), (col % cols)], var)
+     if rib:
+-        # ribbing: every column is a raised knit rib; the purl grooves between them sink deep
++        # ribbing (r20, like the approved 04 cuff): each column = one raised knit rib (its V stitch squeezed into the
++        # central `rib` share of the column) + a deep purl groove between ribs with small horizontal purl bumps
++        rw = float(rib) if not isinstance(rib, bool) else 0.7
+         edge = np.abs(s)
+-        ribprof = np.clip(1 - ((edge - 0.18) / 0.32).clip(0) ** 2, 0, 1)
+-        hmax = hmax * (0.55 + 0.45 * ribprof) + 0.35 * ribprof
++        hv = np.zeros_like(hmax)
++        for dr in (-1, 0, 1):
++            k = np.floor(Y).astype(int) + dr
++            t = 1 - (Y - k)
++            hv = np.maximum(hv, np.maximum(leg_height(s / rw, t, -1), leg_height(s / rw, t, 1)))
++        ribprof = np.clip(1 - (edge / (0.5 * rw)) ** 4, 0, 1)
++        tt = (Y - np.floor(Y)) * 2 - 1
++        purl = 0.22 * np.clip(1 - tt ** 2 * 3, 0, 1)
++        hmax = np.where(edge < 0.5 * rw, 0.25 + 0.75 * hv * (0.6 + 0.4 * ribprof), purl)
+         hmax = hmax / hmax.max()
+     return hmax, rowid, var
+ 
+@@ -114,7 +123,7 @@ def l2s8(c):
+ def crown(p, out):
+     W, H, cols, rows = p['crown_w'], p['crown_h'], p['crown_cols'], p['crown_rows']
+     # r20: optional ribbed crown (approved 04 crown = raised knit columns with grooves, like the cuff but milder)
+-    h, rowid, var = knit_field(W, H, cols, rows, p['seed'], rib=bool(p.get('crown_rib', False)))
++    h, rowid, var = knit_field(W, H, cols, rows, p['seed'], rib=p.get('crown_rib', False))
+     fz = fbm((H, W), p['seed'] + 1)
+     # stripe per stitch ROW (stripes change on row boundaries -> jagged knit edge like a real beanie)
+     vrow = 1 - (rowid + 0.5) / rows          # v of the row centre (0 bottom .. 1 top)
+@@ -132,7 +141,7 @@ def crown(p, out):
+ 
+ def brim(p, out):
+     W, H, cols, rows = p['brim_w'], p['brim_h'], p['brim_cols'], p['brim_rows']
+-    h, rowid, var = knit_field(W, H, cols, rows, p['seed'] + 3, rib=True)
++    h, rowid, var = knit_field(W, H, cols, rows, p['seed'] + 3, rib=p.get('brim_rib', True))
+     fz = fbm((H, W), p['seed'] + 4)
+     base = np.broadcast_to(s2l(p['cuff']), (H, W, 3))
+     alb = shade(h, base, var, p['groove'] * 0.85, fz)

@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 19349,
-   "sha256": "a7bef42749acde3259d1395eae3a5690f3a04f5349ad7803359c54248aab29ee"
+   "sha256": "7b948994db6cf6ff1ec0057793f320faa4b741aca8356970ed4db9ec3a8444c1"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -629,7 +629,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 1748,
-   "sha256": "99f351b4bef0aab243531e5683ab4e7d795bcdca933607b0585ef7c796989101"
+   "sha256": "b4121bc63e42246195c9d32b4bf7c118005333382b0f25fa03e6744058f7d3eb"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -864,7 +864,7 @@
   {
    "path": "backups/wip/claude__rainbow-benny-c21/INFO.json",
    "bytes": 564,
-   "sha256": "ca8b876859023acd6261ade833a9abc51d38bf1809c963683197b834200d3281"
+   "sha256": "0660ec677635bd565b76915489c3e80a61483ab35786b8083142b7cf6bf8e35b"
   },
   {
    "path": "backups/wip/claude__rainbow-benny-c21/tracked.patch",
@@ -1394,7 +1394,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c21/INFO.json",
    "bytes": 506,
-   "sha256": "94c609299fa2cb03ffcfa13cd8c65267b31897e5c4264f6c2463de3e03c0fb39"
+   "sha256": "88c47904642dd693917d865ed7d1dcd48a2d910e38085082d6b77318384c053d"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c21/tracked.patch",
@@ -1563,13 +1563,8 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c21/INFO.json",
-   "bytes": 515,
-   "sha256": "54af9a27eb4fb1cd7dedda1efcb312802edfa50e3be6a302d52c14c9f4c9b8d0"
-  },
-  {
-   "path": "backups/wip/claude__rainbow-s04-ringtex-c21/tracked.patch",
-   "bytes": 25933,
-   "sha256": "63a17922181c4c99c0d606000c966045d61db7a3a4be978828e0e31f01c1240b"
+   "bytes": 486,
+   "sha256": "ae1a44a68dbcf83387b08988171a848d527c7bbebe1faa4d3102824b7999f1a5"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-thrixel-c19/INFO.json",
@@ -2843,8 +2838,8 @@
   },
   {
    "path": "docs/briefs/2026-11-19-r20/COORDINATION.md",
-   "bytes": 7602,
-   "sha256": "84d092b1106c1aeeef0c14b8b679cee60705cd322c293c10f7c4f3249eac6b9d"
+   "bytes": 8138,
+   "sha256": "53290669f7b5fe04a5863ab2b87536b0d9740c602096671fa623eb03ff70e55a"
   },
   {
    "path": "docs/briefs/2026-11-19-r20/setup_worker.sh",

@@ -2704,3 +2704,69 @@ While that probe runs, preparing the plush texture variants (fur length, lock si
 
 > 🔧 **Bash** `{"command": "until [ -f /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/probe_k/probe.json ] || ! pgrep -f \"probe.mjs /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/probe_k\" >/dev/null; do sleep 5; done; echo finished; ls /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/probe_k | grep -v mask", "description": "Wait for k/exposure probe to end", "timeout": 1200000}`
 
+### 🧑 User — 2026-11-20T00:23:44.340Z
+
+> ↩︎ result: finished
+> k0_knit2.png
+> k1_knitcol.png
+> k2_pomcol.png
+> k3_pomlock28.png
+> k4_pomlock22.png
+> probe.json
+> x05_b.png
+> x05_default.png
+> x06_b.png
+> x06_default.png
+> x07_b.png
+> x07_default.png
+
+### 🤖 Claude — 2026-11-20T00:23:45.660Z
+
+Launching the plush probe now (texture is the lead's #1), then analysing the exposure/pompom results while it runs.
+
+### 🤖 Claude — 2026-11-20T00:23:48.810Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && V3=$(cat qa/match/04/r19/PREVIEW_QUERY_v3.txt); B20_MASK=1 timeout 1500 nice -n 5 node tools/benny20/probe.mjs /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/probe_p \"$V3&benny20=1\" /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/v12.json > /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/probe_p.log 2>&1", "description": "Run plush texture probe in background", "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T00:23:48.852Z
+
+> ↩︎ result: Command running in background with ID: bi8x4iem7. Output is being written to: /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/tasks/bi8x4iem7.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-20T00:23:52.261Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/probe_k && for v in x05_default x05_b x06_default x06_b x07_default x07_b; do echo -n \"$v \"; python3 -I /home/user/wt/benny/tools/benny20/furstat.py $v.png --mask ${v}_mask.png; done; R=/home/user/rainbow-/references; echo \"approved 05/06/07 (rect)\"; python3 -I /home/user/wt/benny/tools/benny20/furstat.py $R/05_flow_into_the_current.png 300 1050 560 1180; python3 -I /home/user/wt/benny/tools/benny20/furstat.py $R/06_crest_the_rinse_arch.png 300 1010 440 1150; python3 -I /home/user/wt/benny/too …[+126 chars]`
+
+### 🧑 User — 2026-11-20T00:23:55.327Z
+
+> ↩︎ result: x05_default {"n": 24398, "mean": [228, 101, 178], "sat": [0.49, 0.55, 0.66], "val": [0.76, 0.91, 1.0]}
+> x05_b {"n": 24333, "mean": [241, 110, 193], "sat": [0.45, 0.54, 0.65], "val": [0.83, 1.0, 1.0]}
+> x06_default {"n": 51088, "mean": [222, 100, 174], "sat": [0.48, 0.55, 0.64], "val": [0.75, 0.88, 1.0]}
+> x06_b {"n": 51017, "mean": [238, 106, 193], "sat": [0.48, 0.55, 0.65], "val": [0.82, 0.96, 1.0]}
+> x07_default {"n": 11618, "mean": [228, 104, 180], "sat": [0.48, 0.53, 0.65], "val": [0.77, 0.91, 1.0]}
+> x07_b {"n": 11603, "mean": [242, 112, 196], "sat": [0.45, 0.53, 0.65], "val": [0.84, 1.0, 1.0]}
+> approved 05/06/07 (rect)
+> {"n": 26748, "mean": [230, 76, 174], "sat": [0.5, 0.69, 0.81], "val": [0.72, 0.95, 1.0]}
+> {"n": 17108, "mean": [234, 85, 177], "sat": [0.47, 0.65, 0.81], "val": [0.8, 0.95, 1.0]}
+> {"n": 12095, "mean": [240, 84, 182], "sat": [0.49, 0.65, 0.83], "val": [0.87, 0.98, 1.0]}
+
+### 🤖 Claude — 2026-11-20T00:24:06.223Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/probe_k && python3 -I -c \"\nfrom PIL import Image\nims=[Image.open(f'{n}.png').crop((230,900,600,1300)) for n in ['k0_knit2','k1_knitcol','k3_pomlock28','k4_pomlock22']]\nc=Image.new('RGB',(370*4+30,400),'white')\nfor i,im in enumerate(ims): c.paste(im,(i*380,0))\nc.save('../c/k_sbs.png')\n\"; for v in k0_knit2 k1_knitcol k2_pomcol k3_pomlock28 k4_pomlock22; do echo -n \"$v \"; python3 -I /home/user/wt/benny/tools/benny20/score.py $v.png ${v}_mask.png | python3 -c \"import json,sys; d=json.load(s …[+122 chars]`
+
+### 🤖 Claude — 2026-11-20T00:24:07.399Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/k_sbs.png"}`
+
+### 🧑 User — 2026-11-20T00:24:10.989Z
+
+> ↩︎ result: k0_knit2 [147, 3, 255, 'L p10/50/90 [119, 135, 154]'] [97, 0, 196, 'L p10/50/90 [71, 98, 129]'] [190, 110, 255, 'L p10/50/90 [142, 182, 249]']
+> k1_knitcol [147, 3, 255, 'L p10/50/90 [119, 135, 154]'] [91, 0, 186, 'L p10/50/90 [67, 92, 123]'] [191, 104, 255, 'L p10/50/90 [140, 177, 245]']
+> k2_pomcol [155, 33, 255, 'L p10/50/90 [105, 145, 170]'] [91, 0, 186, 'L p10/50/90 [67, 92, 123]'] [191, 104, 255, 'L p10/50/90 [140, 177, 245]']
+> k3_pomlock28 [145, 29, 243, 'L p10/50/90 [100, 138, 166]'] [91, 0, 186, 'L p10/50/90 [67, 92, 123]'] [194, 109, 255, 'L p10/50/90 [140, 180, 245]']
+> k4_pomlock22 [141, 28, 237, 'L p10/50/90 [96, 134, 164]'] [91, 0, 186, 'L p10/50/90 [67, 92, 123]'] [193, 108, 255, 'L p10/50/90 [140, 179, 245]']
+
+### 🧑 User — 2026-11-20T00:24:11.005Z
+
+> ↩︎ result: [image]
+
