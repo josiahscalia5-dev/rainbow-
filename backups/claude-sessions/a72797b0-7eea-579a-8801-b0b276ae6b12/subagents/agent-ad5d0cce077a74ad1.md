@@ -958,3 +958,90 @@ Let me view the approved reference and the lead's e_end / f_hard_left / g_hard_r
 >   float xB = a.x, hw = a.y, cL = a.z, wL = a.w, cR = b.x, wR = b.y, core = b.z;
 >   float a0 = xB - hw, a1 = cL - wL, a2 = cL, a3 = cL + wL, a4 = core, a5 = cR - wR, a6 = cR, a7 = cR + wR, a8 …[+1614 chars]
 
+### 🤖 Claude — 2026-11-20T17:05:21.392Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s05 && python3 -c \"\nfrom PIL import Image\nim=Image.open('/home/user/rainbow-/references/05_flow_into_the_current.png').convert('RGB')\nW,H=im.size\npx=im.load()\ndef cls(r,g,b):\n  mx=max(r,g,b); mn=min(r,g,b)\n  if mn>185 and mx-mn<60: return 'F'\n  if b>150 and g>130 and r<120: return 'C'\n  if r>180 and g<110 and b>120: return 'P'\n  return '.'\nfor y in range(380,1000,30):\n  s=''.join(cls(*px[x,y]) for x in range(0,W,8))\n  print(y,s)\n\"", "description": "Classify approved image rows into foam/cyan/pink"}`
+
+### 🧑 User — 2026-11-20T17:05:21.532Z
+
+> ↩︎ result: 380 ..F..PP...................F......P....PPFFPP..........P...P.F..P..F.....PFPP.....P..PP..F.FPPPP....P..PPP.PP
+> 410 .....PP.PP.PP..................P.P............P.PP...P...P..P.....P..PF.P.......P..F........P.....P.PPP.FP..
+> 440 ...PP..PP..FP.PPPP....PPP.....................................................PF............PPPPPP....F.....
+> 470 ...PPP.PP.PP.PP.PP.P.F.PP.....P.........P...P......P..P.......................P.P...P.......FFF.......FF....
+> 500 ......PPP.PPPP.P.P.P.P........................................F......F.......PF.P.....P.....................
+> 530 ....P....................................P...FP.FFF..P.CCC.CC.....CCCCCPP.F................PP.............PP
+> 560 ...........P......PP..FFFF.F..FF....F.F.CCCCC.PP.PP.....CCCCCCCP.P..CFF....F.P...........PP.PP.P.........PPP
+> 590 .......P.PFFP..PPP.....PP..PFFF....PP.FPPP..CCCCCCCC.....CC..F.CCC..PPPPPP..C.FFFFFF.....P...PP..PP..P......
+> 620 .......P.....P....PPP....FF.C..PPPP..PPPP.CCCCCCC.C.CCCCC.......CCCCCCCCCCCCCC..PPPPPPPP.F.....P..P......P..
+> 650 .........P...PPP.......C....FCC....PPPPPPPFPPPPPP.CCCCCCCCCCCCC.F........CCCCCCCCCCCCC..PPPPPPPPP......P..P.
+> 680 PP..........P....PP...F.F.CC.C.F.CF..C...PPP.PPPPPP..CCCC...FFCCC. …[+1172 chars]
+
+### 🤖 Claude — 2026-11-20T17:05:31.786Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s05 && python3 -c \"\nfrom PIL import Image\na=Image.open('/home/user/rainbow-/references/05_flow_into_the_current.png').convert('RGB').crop((0,380,864,900))\nb=Image.open('/home/user/rainbow-/qa/review_r27/05/e_end.png').convert('RGB').crop((0,380,864,900))\ns=Image.new('RGB',(864,1040)); s.paste(a,(0,0)); s.paste(b,(0,520)); s.resize((648,780)).save('mid_cmp.jpg',quality=88)\"", "description": "Crop mid region approved vs e_end"}`
+
+### 🧑 User — 2026-11-20T17:05:31.972Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T17:05:33.946Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s05/mid_cmp.jpg"}`
+
+### 🧑 User — 2026-11-20T17:05:33.961Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T17:05:56.909Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"far05Coins\\|M05FCOIN\" src/gameplay/coins.ts | head; grep -n \"far05Coins\" -A40 src/gameplay/coins.ts | sed -n 1,80p | grep -v \"^--$\" | head -70", "description": "Read far coin mapping usage in coins.ts"}`
+
+### 🧑 User — 2026-11-20T17:05:57.017Z
+
+> ↩︎ result: 11:import { M05FCOIN, far05Coins } from '../world/match05far'; // Screen 05 round 12: ?…&m05fcoin=1 only (coin look)
+> 366:      const hS = M05FCOIN && d.far && d.h > C05.h ? d.h + (C05.h - d.h) * 0.7 * (1 - THREE.MathUtils.smoothstep(d.s - lastS, 4, 9)) : d.h;
+> 376:      // `&m05fcoin=1` (Screen 05 round 12, match05far.ts M05FCOIN): past the live far block's seam the next stage's (06)
+> 380:      if (M05FCOIN && !collected[i] && d.stage === '06' && far05Coins.live && far05Coins.map && d.s > far05Coins.seamS && lastS < far05Coins.popS) {
+> 382:        const k = far05Coins.map(d.s, 0.5 * (d.lat - coreLateral(course, d.s)), 0.6 + 0.08 * Math.sin(time * 3 + ph), fcP) * 0.5;
+> 383:        const o = far05Coins.open;
+> 388:        back.copy(far05Coins.T).negate();
+> 11:import { M05FCOIN, far05Coins } from '../world/match05far'; // Screen 05 round 12: ?…&m05fcoin=1 only (coin look)
+> 12-
+> 13-export const COIN_VALUE = 10;
+> 14-
+> 15-/** `?coins05=1` / `?match05=1`: Screen 05 reference coins (measured 05 layout C05M + approved coin look, all screens) */
+> 16-const COINS05 = on05('coins05');
+> 17-/**
+> 18- * `?coins05tot=1` (on with `?coins05=1` / `?match05=1`; explicit `=0` = off; Screen 05 agent 2026-11-17, qa/matc …[+4675 chars]
+
+### 🤖 Claude — 2026-11-20T17:06:00.963Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 340,380p src/gameplay/coins.ts", "description": "Read coin placement loop start"}`
+
+### 🧑 User — 2026-11-20T17:06:01.009Z
+
+> ↩︎ result: }
+>   const mesh = new THREE.InstancedMesh(geo, mats, defs.length);
+>   mesh.frustumCulled = false;
+>   const group = new THREE.Group();
+>   group.name = 'coins';
+>   group.add(mesh);
+>   const collected = new Uint8Array(defs.length);
+>   const popT = new Float32Array(defs.length).fill(-1);
+>   const m = new THREE.Matrix4(), q = new THREE.Quaternion(), basis = new THREE.Matrix4();
+>   const p = new THREE.Vector3(), sc = new THREE.Vector3();
+>   const spin = new THREE.Quaternion(), axis = new THREE.Vector3();
+>   const tiltQ = new THREE.Quaternion(), xAxis = new THREE.Vector3(1, 0, 0);
+>   const back = new THREE.Vector3();
+>   const up05 = new THREE.Vector3(), right05 = new THREE.Vector3();
+>   const fcP = new THREE.Vector3();   // m05fcoin (Screen 05 round 12)
+> 
+>   let lastS = -1e9; // Benny's s at the last update (coins05 far-scale)
+>   const place = (time: number) => {
+>     defs.forEach((d, i) => {
+>       const f = course.sample(d.s);
+>       const ph = d.phase ?? i;
+>       let scale = 1;
+>       // `&m05fcoin=1` (Screen 05 round 12): the painted far-arc coins (C05M 7–18, lifted up to 3.4 u to sit on the
+>       // forced-perspective relief in the locked view) settle toward the normal coin height over the river as Benny …[+1404 chars]
+
