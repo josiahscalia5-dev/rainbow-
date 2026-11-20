@@ -744,3 +744,37 @@ While that renders, I'll start PROGRESS.md (copying the r22 WHERE-I-STOPPED bloc
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad; O=/home/user/rainbow-/qa/match/06/r23/step1_m06fcl; $S/shots.sh $S/q_before.txt $O/BEFORE 5276 & $S/shots.sh $S/q_new.txt $O/NEW 5282 & wait; tail -3 $O/BEFORE.log $O/NEW.log", "description": "Render BEFORE and NEW step 1 shots with fonts", "run_in_background": true}`
 
+### 🧑 User — 2026-11-20T04:39:55.786Z
+
+> ↩︎ result: Command running in background with ID: bv49y8iyy. Output is being written to: /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/tasks/bv49y8iyy.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-20T04:39:57.387Z
+
+While the renders run, I'll study the QA API to plan step 2 (the off-centre tunnel).
+
+### 🤖 Claude — 2026-11-20T04:39:58.095Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 680,770p src/game/Game.ts", "description": "Read QA API section of Game.ts"}`
+
+### 🧑 User — 2026-11-20T04:39:58.139Z
+
+> ↩︎ result: ready: true,
+>     checkpoints: Object.keys(CHECKPOINTS),
+>     goto: gotoCheckpoint,
+>     run(v = true) { running = v; last = performance.now(); },
+>     unfreeze() { st.frozen = null; input.override = null; },
+>     /** QA: freeze the shader clock at t (frame-by-frame clips of animated water); rendering is otherwise unchanged */
+>     freezeAt(t: number) { st.frozen = t; st.clock = t; },
+>     setSteer(v: number | null) { input.override = v; },
+>     /** deterministic simulation: advance n steps of dt (no rendering needed) */
+>     step(n: number, dt = 1 / 60) { for (let i = 0; i < n; i++) stepSim(dt); return api.state(); },
+>     startRideAt(id: StageId = '03') {
+>       resetToIntro(); startRide(); st.s = course.stage(id).s0; coins.resetUntil(-1); st.coins = START_COINS; hud.setCoins(st.coins); st.log = [];
+>       return api.state();
+>     },
+>     state() {
+>       return { mode: st.mode, stage: st.stage, s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: st.coins, hearts: st.hearts, paused: st.paused, bennyY: +benny.root.position.y.toFixed(3), bennyVisible: benny.root.visible, cam: camera.position.toArray().map((x) => +x.toFixed(2)) };
+>     },
+>     log() { return st.log; },
+>     coinDefs() { return coins …[+4383 chars]
+

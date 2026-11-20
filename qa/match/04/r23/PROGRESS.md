@@ -8,6 +8,12 @@
   clearly ahead of him, not at hat height), the hard straight lilac edge where water meets gold → low bubbly foam bank, glossy long
   white streaks instead of the frosted ripple, then projection of the three approved generated views.
 
+## (r23 s04) WHERE I STOPPED / NEXT
+* Specialist (washer-environment-modeler, worktree `/home/user/wt/s04`, local branch `claude/rainbow-s04-match-c24`, port 5273-5275,
+  brief `docs/briefs/2026-11-20-r23/LAUNCH_S04_R23.md`). Uncommitted edits only.
+* Step 0 DONE: BEFORE = K23-1 re-rendered with the pinned audit -> `s04_BEFORE_K23-1/` == lead `lead_t2/C2/` 0 px in all 7 shots.
+* NOW: step 1 (five chevrons clearly AHEAD of Benny, Benny IN the water).
+
 ## User feedback driving this round (verbatim, 2026-11-20)
 * ~03:58 (r22): "I don't want the water to look messy. I want it to look very clean ... like the original approved screen through
   the 5 arrows ... he's going naturally." Pink on the left and right "near the gold part" inside the tunnel.

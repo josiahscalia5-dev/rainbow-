@@ -340,3 +340,59 @@ Both ran. Now compare BEFORE with the saved r22 step-1 NEW (restore check) and N
 > c_middle | restore: {"a":"BEFORE/c_middle.png","b":"/home/user/rainbow-/qa/match/07/r22/s1_cloud/NEW/c_middle.png","rows":[0,1536],"threshold":0.1,"diff_pixels":0,"total":1327104,"diff_pct":0} | NEW vs BEFORE: {"a":"BEFORE/c_middle.png","b":"NEW/c_middle.png","rows":[0,1536],"threshold":0.1,"diff_pixels":45784,"total":1327104,"diff_pct":3.4499}
 > d_late | restore: {"a":"BEFORE/d_late.png","b":"/home/user/rainbow-/qa/match/07/r22/s1_cloud/NEW/d_late.png","rows":[0,1536],"threshold":0.1,"diff_pixels":0,"total":1327104,"diff_ …[+1892 chars]
 
+### 🤖 Claude — 2026-11-20T04:39:56.033Z
+
+Restore check is 0 px on all 9 shots; start view unchanged. Now let me look at the NEW shots by eye.
+
+### 🤖 Claude — 2026-11-20T04:39:56.537Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/07/r23/s1_satin/NEW/f_hard_left.png"}`
+
+### 🧑 User — 2026-11-20T04:39:56.582Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:39:56.998Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/07/r23/s1_satin/NEW/g_hard_right.png"}`
+
+### 🧑 User — 2026-11-20T04:39:57.069Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:40:00.933Z
+
+Let me crop the painted magenta band close-up and the NEW foreground to compare detail.
+
+### 🤖 Claude — 2026-11-20T04:40:03.665Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/07/r23/s1_satin && mkdir -p crops && python3 -c \"\nfrom PIL import Image\na=Image.open('/home/user/rainbow-/qa/match/07/r21/APPROVED_07.png').convert('RGB')\na.crop((0,1050,430,1536)).resize((860,972),Image.LANCZOS).save('crops/approved_band_left.png')\na.crop((600,800,864,1300)).resize((528,1000),Image.LANCZOS).save('crops/approved_band_right.png')\nn=Image.open('NEW/g_hard_right.png').convert('RGB'); n.crop((320,1150,864,1536)).save('crops/new_right_fg.png')\nb=Image.open('BEFORE/g_hard_right.png').convert('RGB'); b.crop((320,1150,864,1536)).save …[+96 chars]`
+
+### 🤖 Claude — 2026-11-20T04:40:04.156Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/07/r23/s1_satin/crops/approved_band_left.png"}`
+
+### 🤖 Claude — 2026-11-20T04:40:04.706Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/07/r23/s1_satin/crops/approved_band_right.png"}`
+
+### 🧑 User — 2026-11-20T04:40:04.813Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🧑 User — 2026-11-20T04:40:04.976Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-20T04:40:04.998Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:40:05.161Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/07/r23/s1_satin/crops/new_right_fg.png"}`
+
+### 🧑 User — 2026-11-20T04:40:05.185Z
+
+> ↩︎ result: [image]
+

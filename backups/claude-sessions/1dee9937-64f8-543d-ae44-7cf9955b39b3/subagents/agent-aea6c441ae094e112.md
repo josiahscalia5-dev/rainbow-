@@ -364,3 +364,21 @@ Let me verify my BEFORE (K23-1) reproduces the lead's C2 pictures exactly, timin
 
 > 🔧 **Bash** `{"command": "mkdir -p /home/user/rainbow-/qa/match/04/r23/s04_BEFORE_K23-1 && cd /home/user/wt/s04 && cp /home/user/rainbow-/qa/match/04/r23/QUERY_K23-1.txt /home/user/rainbow-/qa/match/04/r23/s04_BEFORE_K23-1/QUERY.txt && time (AUDIT_PORT=5273 timeout 1200 node /home/user/rainbow-/qa/match/04/r22/tools/audit_pinned.mjs /home/user/rainbow-/qa/match/04/r23/s04_BEFORE_K23-1 04 \"$(cat /home/user/rainbow-/qa/match/04/r23/QUERY_K23-1.txt)\" > /home/user/rainbow-/qa/match/04/r23/s04_BEFORE_K23-1/audit.log 2>&1); tail -8 /home/user/rainbow-/qa/match/04/r23/s04_BEFORE_K23-1/audit.log", "description": …[+69 chars]`
 
+### 🧑 User — 2026-11-20T04:40:08.788Z
+
+> ↩︎ result: real	2m8.581s
+> user	0m1.937s
+> sys	0m0.465s
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff" is outside of Vite serving allow list.
+> 04 a_start s 77.413 lat 0 stage 04 coins 1330
+> 04 b_early s 82.08 lat 0 stage 04 coins 1330
+> 04 c_middle s 90.48 lat 0 stage 04 coins 1330
+> 04 d_late s 99.813 lat 0 stage 04 coins 1330
+> 04 e_end s 109.146 lat 0 stage 04 coins 1330
+> 04 f_hard_left s 90.48 lat -1.65 stage 04 coins 1360
+> 04 g_hard_right s 90.48 lat 1.65 stage 04 coins 1330
+
+### 🤖 Claude — 2026-11-20T04:40:12.169Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/04/r23 && for s in a_start b_early c_middle d_late e_end f_hard_left g_hard_right; do printf \"%s \" $s; node /home/user/tools-pixelmatch/pixeldiff.mjs s04_BEFORE_K23-1/$s.png lead_t2/C2/$s.png /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/d_$s.png 0.1 180 1536 2>&1 | tail -1; done", "description": "Compare my BEFORE run with lead C2 pictures"}`
+
