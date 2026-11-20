@@ -306,3 +306,37 @@ The satin code looks complete. Let me run tsc, then render BEFORE (K7c, to verif
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && Q=$(cat /home/user/rainbow-/qa/match/07/r23/K7c.txt) && O=/home/user/rainbow-/qa/match/07/r23/s1_satin\nSH='[[\"a_start\",0,null],[\"b_early\",0.12,null],[\"c_middle\",0.35,null],[\"d_late\",0.6,null],[\"e1_075\",0.75,null],[\"e_end\",0.85,null],[\"e2_092\",0.92,null],[\"f_hard_left\",0.35,-1],[\"g_hard_right\",0.35,1]]'\n(AUDIT_SHOTS=\"$SH\" AUDIT_PORT=5277 timeout 1500 node /home/user/rainbow-/tools/lead21/audit_screen.mjs $O/BEFORE 07 \"$Q\" > $O/before.log 2>&1 &)\nQN=$(node /home/user/rainbow-/tools/lead23/setq.mjs \"$Q\" \"m07satin=1\")\necho \"$QN\"  …[+320 chars]`
 
+### 🧑 User — 2026-11-20T04:39:43.572Z
+
+> ↩︎ result: exit 0
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff2" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff" is outside of Vite serving allow list.
+> 07 a_start s 273.056 lat 0 stage 07 coins 1940
+> 07 b_early s 287.256 lat 0 stage 07 coins 1960
+> 07 c_middle s 314.056 lat 0 stage 07 coins 2030
+> 07 d_late s 343.456 lat 0 stage 07 coins 2080
+> 07 e1_075 s 361.056 lat 0 stage 07 coins 2110
+> 07 e_end s 372.656 lat 0 stage 07 coins 2130
+> 07 e2_092 s 380.856 lat 0 stage 07 coins 2150
+> 07 f_hard_left s 314.056 lat -2.25 stage 07 coins 1940
+> 07 g_hard_right s 314.056 lat 2.25 stage 07 coins 1950
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff2" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff" is outside of Vite serving allow list.
+> The request url "/home/use …[+554 chars]
+
+### 🤖 Claude — 2026-11-20T04:39:45.511Z
+
+Both ran. Now compare BEFORE with the saved r22 step-1 NEW (restore check) and NEW vs BEFORE.
+
+### 🤖 Claude — 2026-11-20T04:39:47.974Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/07/r23/s1_satin && mkdir -p diffs && for s in a_start b_early c_middle d_late e1_075 e_end e2_092 f_hard_left g_hard_right; do r=$(node /home/user/tools-pixelmatch/pixeldiff.mjs BEFORE/$s.png /home/user/rainbow-/qa/match/07/r22/s1_cloud/NEW/$s.png diffs/restore_$s.png 0.1 0 1536 2>&1 | tail -1); n=$(node /home/user/tools-pixelmatch/pixeldiff.mjs BEFORE/$s.png NEW/$s.png diffs/new_$s.png 0.1 0 1536 2>&1 | tail -1); echo \"$s | restore: $r | NEW vs BEFORE: $n\"; done", "description": "Pixel-diff restore check and NEW vs BEFORE"}`
+
+### 🧑 User — 2026-11-20T04:39:55.226Z
+
+> ↩︎ result: a_start | restore: {"a":"BEFORE/a_start.png","b":"/home/user/rainbow-/qa/match/07/r22/s1_cloud/NEW/a_start.png","rows":[0,1536],"threshold":0.1,"diff_pixels":0,"total":1327104,"diff_pct":0} | NEW vs BEFORE: {"a":"BEFORE/a_start.png","b":"NEW/a_start.png","rows":[0,1536],"threshold":0.1,"diff_pixels":0,"total":1327104,"diff_pct":0}
+> b_early | restore: {"a":"BEFORE/b_early.png","b":"/home/user/rainbow-/qa/match/07/r22/s1_cloud/NEW/b_early.png","rows":[0,1536],"threshold":0.1,"diff_pixels":0,"total":1327104,"diff_pct":0} | NEW vs BEFORE: {"a":"BEFORE/b_early.png","b":"NEW/b_early.png","rows":[0,1536],"threshold":0.1,"diff_pixels":67257,"total":1327104,"diff_pct":5.068}
+> c_middle | restore: {"a":"BEFORE/c_middle.png","b":"/home/user/rainbow-/qa/match/07/r22/s1_cloud/NEW/c_middle.png","rows":[0,1536],"threshold":0.1,"diff_pixels":0,"total":1327104,"diff_pct":0} | NEW vs BEFORE: {"a":"BEFORE/c_middle.png","b":"NEW/c_middle.png","rows":[0,1536],"threshold":0.1,"diff_pixels":45784,"total":1327104,"diff_pct":3.4499}
+> d_late | restore: {"a":"BEFORE/d_late.png","b":"/home/user/rainbow-/qa/match/07/r22/s1_cloud/NEW/d_late.png","rows":[0,1536],"threshold":0.1,"diff_pixels":0,"total":1327104,"diff_ …[+1892 chars]
+

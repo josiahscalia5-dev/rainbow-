@@ -640,3 +640,107 @@ While that renders, I'll start PROGRESS.md (copying the r22 WHERE-I-STOPPED bloc
 > * `tools/match06/r11_mouth_probe.mjs`: at the approved camera the game river crests 8 u ahead (s 206.9), passes the painted
 >   glow pixel only 23–25 u away (s 217–219) and then turns  …[+2667 chars]
 
+### 🤖 Claude — 2026-11-20T04:39:19.003Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && cat tools/match06/r21_probe.mjs | head -80; grep -n \"__rainbow\\s*=\\|__rainbow = \\|window.__rainbow\" src/*.ts src/**/*.ts | head", "description": "Read r21 probe tool and find debug API"}`
+
+### 🧑 User — 2026-11-20T04:39:19.145Z
+
+> ↩︎ result: // Screen 06 r21 (QA only): camera / Benny / route screen positions along 06 for a query.
+> //   node tools/match06/r21_probe.mjs "<query>" [steer]
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> const [Q, STEER] = process.argv.slice(2);
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5277);
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> try {
+>   const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
+>   await page.goto(`${vite.url}/?qa=1&dpr=1&${Q}`);
+>   await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 300000 });
+>   const rows = await page.evaluate(async (steer) => {
+>     const r = window.__rainbow; r.goto('06');
+>     const { camera } = r.qa3d(); const T = camera.position.constructor;
+>     const s1 = r.course.stage('06').s1, out = [];
+>     r.setSteer(steer === undefined ? null : Number(steer));
+>     const pr = (p) => { const v = p.clone().project(camera); return [+(((v.x + 1) / 2) * 864).toFixed(0), +(((1 - v.y) / 2) * 1536).toFixed(0), v.z …[+1088 chars]
+
+### 🤖 Claude — 2026-11-20T04:39:20.871Z
+
+> 🔧 **Bash** `{"command": "O=/home/user/rainbow-/qa/match/06/r23/step1_m06fcl; cat $O/BEFORE.log $O/NEW.log 2>/dev/null | tail; uptime", "description": "Check render progress"}`
+
+### 🧑 User — 2026-11-20T04:39:21.042Z
+
+> ↩︎ result: The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff" is outside of Vite serving allow list.
+> 06 a_start s 198.91 lat 0 stage 06 coins 1680
+> 06 b_early s 204.227 lat 0 stage 06 coins 1700
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff2" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff2" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff" is outside of Vite serving allow list.
+> 06 a_start s 198.91 lat 0 stage 06 coins 1680
+> 06 b_early s 204.227 lat 0 stage 06 coins 1700
+>  04:39:21 up 42 min,  0 user,  load average: 16.23, 7.33, 5.29
+
+### 🤖 Claude — 2026-11-20T04:39:27.605Z
+
+> 🔧 **Bash** `{"command": "ls -la /home/user/wt/s06/node_modules | head -3; ls -la /home/user/wt/s04/node_modules 2>/dev/null | head -2; cat /home/user/wt/s06/vite.config.* 2>/dev/null | head -40", "description": "Check node_modules symlink and vite config"}`
+
+### 🧑 User — 2026-11-20T04:39:28.044Z
+
+> ↩︎ result: lrwxrwxrwx 1 root root 32 Nov 20 04:11 /home/user/wt/s06/node_modules -> /home/user/rainbow-/node_modules
+> lrwxrwxrwx 1 root root 32 Nov 20 04:10 /home/user/wt/s04/node_modules -> /home/user/rainbow-/node_modules
+> import { defineConfig } from 'vite';
+> import { resolve } from 'node:path';
+> 
+> export default defineConfig({
+>   base: './',
+>   assetsInclude: ['**/*.glb'],
+>   server: { port: 5173, strictPort: false },
+>   build: {
+>     target: 'es2020',
+>     outDir: 'dist',
+>     assetsInlineLimit: 0,
+>     chunkSizeWarningLimit: 2000,
+>     rollupOptions: {
+>       input: {
+>         main: resolve(__dirname, 'index.html'),
+>       },
+>     },
+>   },
+> });
+
+### 🤖 Claude — 2026-11-20T04:39:37.373Z
+
+> 🔧 **Bash** `{"command": "pkill -f \"audit_screen.mjs /home/user/rainbow-/qa/match/06/r23\" ; sleep 1; ps aux | grep -c \"[a]udit_screen.mjs /home/user/rainbow-/qa/match/06/r23\"; ps aux | grep \"[c]hrom\" | grep -c 527[68]; true", "description": "Stop the running step 1 renders"}`
+
+### 🧑 User — 2026-11-20T04:39:38.661Z
+
+> ↩︎ result: 0
+> 0
+
+### 🤖 Claude — 2026-11-20T04:39:49.311Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/wt/s06/tools/match06 && cat > /home/user/wt/s06/tools/match06/r23_vite.mjs <<'EOF'\n// r23 (QA only): Vite dev server for this worktree that may also serve the symlinked node_modules\n// (/home/user/wt/s06/node_modules -> /home/user/rainbow-/node_modules; without this the HUD fonts are refused and fall back).\nimport { realpathSync } from 'node:fs';\nexport async function startVite(port = 5276) {\n  const { createServer, searchForWorkspaceRoot } = await import('vite');\n  const root = process.cwd();\n  const allow = [searchForWorkspaceRoot(root), realpathSync(` …[+1767 chars]`
+
+### 🧑 User — 2026-11-20T04:39:49.412Z
+
+> ↩︎ result: tools/match06/r23_audit.mjs:10:const { startVite } = await import(pathToFileURL(`${process.cwd()}/tools/match06/r23_vite.mjs`).href); // r23: fonts via symlinked node_modules
+> tools/match06/r23_audit.mjs:17:const vite = await startVite(Number(process.env.AUDIT_PORT ?? 5290));
+> tools/match06/r23_swim.mjs:2:// r22 S04 copy of tools/lead_r13/swim_clip.mjs: port AUDIT_PORT (default 5273) and performance.now() pinned to the clip clock
+> tools/match06/r23_swim.mjs:12:const { startVite } = await import(pathToFileURL(`${process.cwd()}/tools/match06/r23_vite.mjs`).href); // r23: fonts via symlinked node_modules
+> tools/match06/r23_swim.mjs:17:const vite = await startVite(Number(process.env.AUDIT_PORT ?? 5276));
+
+### 🤖 Claude — 2026-11-20T04:39:52.674Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad; sed -i 's#node tools/lead21/audit_screen.mjs#node tools/match06/r23_audit.mjs#' $S/shots.sh; rm -rf /home/user/rainbow-/qa/match/06/r23/step1_m06fcl/BEFORE* /home/user/rainbow-/qa/match/06/r23/step1_m06fcl/NEW*; cat $S/shots.sh | grep node", "description": "Point wrapper at local audit tool, clear old output"}`
+
+### 🧑 User — 2026-11-20T04:39:52.826Z
+
+> ↩︎ result: AUDIT_PORT=$3 timeout 2400 node tools/match06/r23_audit.mjs "$2" 06 "$(cat $1)" > "$2.log" 2>&1
+
+### 🤖 Claude — 2026-11-20T04:39:55.744Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad; O=/home/user/rainbow-/qa/match/06/r23/step1_m06fcl; $S/shots.sh $S/q_before.txt $O/BEFORE 5276 & $S/shots.sh $S/q_new.txt $O/NEW 5282 & wait; tail -3 $O/BEFORE.log $O/NEW.log", "description": "Render BEFORE and NEW step 1 shots with fonts", "run_in_background": true}`
+
