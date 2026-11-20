@@ -1076,3 +1076,210 @@ Now the debug view: a temporary switch that colours each pixel by which surface 
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-20T01:08:12.087Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && grep -rn \"__rainbow\\s*=\" src | head -3; grep -rn -A40 \"__rainbow = {\" src/game/*.ts | grep -E \"^\\S+-\\s+(\\w+)\\s*[:(]\" | head -40", "description": "Inspect the QA control API"}`
+
+### 🧑 User — 2026-11-20T01:08:12.159Z
+
+> ↩︎ result: src/game/Game.ts:762:  (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:08:15.191Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && grep -n \"const api\" src/game/Game.ts && sed -n \"$(grep -n 'const api' src/game/Game.ts | cut -d: -f1),+45p\" src/game/Game.ts", "description": "Read QA API definition"}`
+
+### 🧑 User — 2026-11-20T01:08:15.249Z
+
+> ↩︎ result: 677:  const api = {
+>   const api = {
+>     ready: true,
+>     checkpoints: Object.keys(CHECKPOINTS),
+>     goto: gotoCheckpoint,
+>     run(v = true) { running = v; last = performance.now(); },
+>     unfreeze() { st.frozen = null; input.override = null; },
+>     /** QA: freeze the shader clock at t (frame-by-frame clips of animated water); rendering is otherwise unchanged */
+>     freezeAt(t: number) { st.frozen = t; st.clock = t; },
+>     setSteer(v: number | null) { input.override = v; },
+>     /** deterministic simulation: advance n steps of dt (no rendering needed) */
+>     step(n: number, dt = 1 / 60) { for (let i = 0; i < n; i++) stepSim(dt); return api.state(); },
+>     startRideAt(id: StageId = '03') {
+>       resetToIntro(); startRide(); st.s = course.stage(id).s0; coins.resetUntil(-1); st.coins = START_COINS; hud.setCoins(st.coins); st.log = [];
+>       return api.state();
+>     },
+>     state() {
+>       return { mode: st.mode, stage: st.stage, s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: st.coins, hearts: st.hearts, paused: st.paused, bennyY: +benny.root.position.y.toFixed(3), bennyVisible: benny.root.visible, cam: camera.position.toArray().map((x) => +x.toFixed(2)) };
+>     },
+>     log() { return  …[+1820 chars]
+
+### 🤖 Claude — 2026-11-20T01:08:22.104Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && sed -n 723,765p src/game/Game.ts; grep -n \"function frame\\|const frame\\|requestAnimationFrame\" src/game/Game.ts | head", "description": "Read rest of QA API and frame loop"}`
+
+### 🧑 User — 2026-11-20T01:08:22.149Z
+
+> ↩︎ result: },
+>     /** debug: Benny's projected screen position (NDC -1..1, z<1 = in front of camera) */
+>     bennyScreen() {
+>       const v = benny.root.getWorldPosition(new THREE.Vector3()).project(camera);
+>       return { x: +v.x.toFixed(2), y: +v.y.toFixed(2), z: +v.z.toFixed(3), visible: benny.root.visible, cam: camera.position.toArray().map((q) => +q.toFixed(2)), benny: benny.root.position.toArray().map((q) => +q.toFixed(2)) };
+>     },
+>     /** debug: what does a ray from the camera through NDC (x,y) hit first? */
+>     probe(x = 0, y = 0) {
+>       const rc = new THREE.Raycaster();
+>       rc.setFromCamera(new THREE.Vector2(x, y), camera);
+>       const hits = rc.intersectObjects(scene.children, true).filter((h) => (h.object as THREE.Mesh).isMesh && h.object.visible);
+>       const path = (o: THREE.Object3D) => { const a: string[] = []; let c: THREE.Object3D | null = o; while (c) { a.push(c.name || c.type); c = c.parent; } return a.slice(0, 5).join('<'); };
+>       return hits.slice(0, 4).map((h) => ({ d: +h.distance.toFixed(2), obj: path(h.object), p: h.point.toArray().map((v) => +v.toFixed(2)) }));
+>     },
+>     /** QA: which scene objects issue draw calls in one render ("parent/name" → calls), most firs …[+1586 chars]
+
+### 🤖 Claude — 2026-11-20T01:08:24.622Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && sed -n 560,620p src/game/Game.ts", "description": "Read render and frame functions"}`
+
+### 🧑 User — 2026-11-20T01:08:24.662Z
+
+> ↩︎ result: if (m08On) { m08.splash.position.copy(benny.root.position).add(m08.splashOffset); m08.splash.quaternion.copy(camera.quaternion); }
+>     }
+>     if (m04?.splash) {
+>       m04.splash.visible = m04On;
+>       if (m04On) { m04.splash.position.copy(benny.root.position).add(m04.splashOffset); m04.splash.quaternion.copy(camera.quaternion); }
+>     }
+>     fill.position.copy(camera.position);
+>     sun.target.position.copy(camera.position).add(new THREE.Vector3(0, -10, -10));
+>   };
+> 
+>   let last = performance.now();
+>   let fps = 60;
+>   let running = !qaMode;
+>   let dirty = true;
+>   renderer.info.autoReset = false;
+>   // glow05: the strong highlight bloom belongs to Screen 05 only — blended in over the last 6 u of 04 and out over the
+>   // first 6 u of 06, so 04 / 06 / 07 keep their look and there is no pop at the joins
+>   const bloomBase = { s: 0.2, r: 0.35, t: 0.94 };
+>   const bloom05 = { s: bloom.strength, r: bloom.radius, t: bloom.threshold };
+>   const bloomS0 = bloom.strength;
+>   const dbs = new THREE.Vector2();
+>   const st05 = course.stage('05');
+>   const render = () => {
+>     if (glow05) {
+>       const w = sm(st05.s0 - 6, st05.s0, st.s) * (1 - sm(st05.s1, st05.s1 + 6, st.s));
+>       bloom.strength = bloomBase.s + …[+1504 chars]
+
+### 🤖 Claude — 2026-11-20T01:08:49.199Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s04b/tools/match04/rings21.mjs", "content": "// Screen 04 r21 ring proof shots (read-only): DETERMINISTIC camera + shader clock, so BEFORE / AFTER line up pixel for pixel.\n// The game sim is stepped a fixed way (step(1) until s >= target), the shader clock is frozen, and ONE frame is rendered\n// directly (no real-time rAF steps, which made motion04's positions drift by up to ~0.25 u between runs).\n// usage: node tools/match04/rings21.mjs <outDir> <query> [shots JSON]\n//   shots: [[name, targetS (absolute course s) | \"+d\" (forward d u from the 04 checkpoint),  …[+2854 chars]`
+
+### 🧑 User — 2026-11-20T01:08:49.691Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s04b/tools/match04/rings21.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T01:08:57.619Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && S=/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r; Q=$(cat qa/match/04/r19b/ringpaint/preview_r20/QUERY_preview.txt)\nSH='[[\"f06\",84.183,null,10],[\"f10\",88.4,null,10],[\"sR\",84.183,1,10]]'\ntimeout 600 node tools/match04/rings21.mjs $S/b1 \"$Q\" \"$SH\" 2>&1 | grep -E \"^(f|s)[0-9R]|error\"\ntimeout 600 node tools/match04/rings21.mjs $S/b2 \"$Q\" \"$SH\" 2>&1 | grep -E \"^(f|s)[0-9R]|error\"\ntimeout 600 node tools/match04/rings21.mjs $S/d1 \"$Q&m04dbg=1\" \"$SH\" 2>&1 | grep -E \"^(f|s)[0-9R]|error\"\npython3 -c \" …[+423 chars]`
+
+### 🧑 User — 2026-11-20T01:10:03.569Z
+
+> ↩︎ result: f06 s 84.413 lat 0 04 coins 1330
+> f10 s 88.613 lat 0 04 coins 1330
+> sR s 84.413 lat 1.65 04 coins 1330
+> f06 s 84.413 lat 0 04 coins 1330
+> f10 s 88.613 lat 0 04 coins 1330
+> sR s 84.413 lat 1.65 04 coins 1330
+> f06 s 84.413 lat 0 04 coins 1330
+> f10 s 88.613 lat 0 04 coins 1330
+> sR s 84.413 lat 1.65 04 coins 1330
+> f06 run-to-run max diff 212 pct identical 68.63
+> f10 run-to-run max diff 222 pct identical 65.64
+> sR run-to-run max diff 219 pct identical 74.79
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:10:11.553Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r && python3 -c \"\nfrom PIL import Image; import numpy as np\na=np.asarray(Image.open('b1/f06.png').convert('RGB')).astype(int); b=np.asarray(Image.open('b2/f06.png').convert('RGB')).astype(int)\nd=(np.abs(a-b).max(2)>6).astype(np.uint8)*255\nImage.fromarray(d).resize((432,768)).save('diffmask.png')\ndd=np.asarray(Image.open('d1/f06.png').convert('RGB')).astype(int)\nring=(dd[...,1]>200)&(dd[...,0]<60)|((dd[...,0]>60)&(dd[...,1]<40))|((dd[...,2]>100)&(dd[...,0]<40))\nprint('ring px',ring.mean(),  …[+117 chars]`
+
+### 🧑 User — 2026-11-20T01:10:12.015Z
+
+> ↩︎ result: ring px 0.45397572458526236 ring px changed run-to-run 0.12119713248560517
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:10:15.781Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r/diffmask.png"}`
+
+### 🧑 User — 2026-11-20T01:10:15.799Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T01:10:30.228Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r && python3 - <<'EOF'\nfrom PIL import Image; import numpy as np\nfrom scipy import ndimage as ndi\nb=np.asarray(Image.open('b1/f06.png').convert('RGB')).astype(float)\nd=np.asarray(Image.open('d1/f06.png').convert('RGB')).astype(float)\nY=b@[0.299,0.587,0.114]\n# classes from debug render (post-processed colours, so loose thresholds)\nR,G,B=d[...,0],d[...,1],d[...,2]\nlip=(G>150)&(R<90)&(B<120)\ngroove=(R<25)&(G<25)&(B<25)\nred=(R>B+40)&(G<90)\nblue=(B>R+40)&(G<200)&~lip\nring=lip|groove|red|blu …[+1196 chars]`
+
+### 🧑 User — 2026-11-20T01:10:33.897Z
+
+> ↩︎ result: ring               px 121213  luma p5  74.6 p50 127.0
+> lip                px  16465  luma p5  60.8 p50  99.6
+> groove             px   1018  luma p5  46.1 p50  66.3
+> subband boundary   px   2947  luma p5  75.2 p50 130.3
+> near-black (luma<55) ring px in marked box: 616
+>   of which within 2px of groove part: 115  within 2px of a sub-band boundary: 54  within 2px of lip: 562
+> hard steps (|dY|>70 to a neighbour) ring px in box: 891  on sub-band boundaries: 502  on groove/lip strips: 384
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:10:49.061Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r && python3 - <<'EOF'\nfrom PIL import Image; import numpy as np\nb=np.asarray(Image.open('b1/f06.png').convert('RGB')).astype(float)\nd=np.asarray(Image.open('d1/f06.png').convert('RGB')).astype(float)\np0=np.array([300.,640.]); p1=np.array([40.,470.])\nn=int(np.linalg.norm(p1-p0)); out=[]\nfor i in range(n):\n  x,y=(p0+(p1-p0)*i/n).astype(int)\n  R,G,B=d[y,x]; c='?'\n  if G>150 and R<90 and B<120: c='L'\n  elif R<25 and G<25 and B<25: c='g'\n  elif R>B+40: c='r'\n  elif B>R+40: c='b'\n  Y=b[y,x …[+238 chars]`
+
+### 🧑 User — 2026-11-20T01:10:49.354Z
+
+> ↩︎ result: (0, np.int64(300), np.int64(640), 'r', 124, (np.int64(199), np.int64(98), np.int64(68)))
+> (4, np.int64(296), np.int64(637), 'b', 116, (np.int64(187), np.int64(91), np.int64(65)))
+> (6, np.int64(294), np.int64(636), 'b', 115, (np.int64(186), np.int64(90), np.int64(63)))
+> (12, np.int64(289), np.int64(633), 'b', 114, (np.int64(186), np.int64(89), np.int64(58)))
+> (18, np.int64(284), np.int64(630), 'b', 122, (np.int64(198), np.int64(96), np.int64(59)))
+> (23, np.int64(280), np.int64(627), 'r', 109, (np.int64(180), np.int64(84), np.int64(53)))
+> (24, np.int64(279), np.int64(626), 'r', 107, (np.int64(177), np.int64(83), np.int64(52)))
+> (30, np.int64(274), np.int64(623), 'r', 97, (np.int64(162), np.int64(74), np.int64(49)))
+> (36, np.int64(269), np.int64(620), 'r', 96, (np.int64(162), np.int64(72), np.int64(48)))
+> (42, np.int64(264), np.int64(616), 'r', 93, (np.int64(160), np.int64(70), np.int64(42)))
+> (44, np.int64(263), np.int64(615), 'L', 71, (np.int64(128), np.int64(50), np.int64(33)))
+> (48, np.int64(259), np.int64(613), 'L', 80, (np.int64(148), np.int64(58), np.int64(21)))
+> (52, np.int64(256), np.int64(611), 'b', 211, (np.int64(255), np.int64(209), np.int64(106)))
+> (54, np.int64(254), np.int64(610), ' …[+4282 chars]
+
+### 🤖 Claude — 2026-11-20T01:11:58.403Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nfrom PIL import Image; import numpy as np\na=np.asarray(Image.open('references/04_through_the_five_arrows.png').convert('RGB').resize((864,1536),Image.LANCZOS)).astype(float)\nImage.fromarray(a.astype(np.uint8)).crop((150,420,520,820)).resize((740,800),Image.LANCZOS).save('/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r/appr_inner.png')\np0=np.array([440.,680.]); p1=np.array([170.,470.])\nn=int(np.linalg.norm(p1-p0))\nfor i in range(0,n,2):\n  x,y=(p0+(p1-p0)*i/n).astype(int); c=a[y,x]; Y=c@[0.299,0.587,0.114]\n  print(i,x,y,i …[+102 chars]`
+
+### 🧑 User — 2026-11-20T01:11:58.799Z
+
+> ↩︎ result: 0 440 680 118 [185  92  84] ##############
+> 2 438 678 127 [197 104  70] ###############
+> 4 436 677 183 [253 162 115] ######################
+> 6 435 676 130 [197 107  73] ################
+> 8 433 675 122 [186  98  84] ###############
+> 10 432 673 120 [180  98  84] ###############
+> 12 430 672 108 [161  87  84] #############
+> 14 428 671 103 [155  82  75] ############
+> 16 427 670 102 [163  80  64] ############
+> 18 425 668 127 [199 103  63] ###############
+> 20 424 667 130 [202 106  68] ################
+> 22 422 666 121 [189  97  72] ###############
+> 24 421 665 120 [183  97  74] ###############
+> 26 419 664 115 [175  93  79] ##############
+> 28 417 662 105 [166  81  74] #############
+> 30 416 661 102 [161  79  68] ############
+> 32 414 660 97 [151  76  70] ############
+> 34 413 659 93 [152  71  54] ###########
+> 36 411 657 109 [190  83  37] #############
+> 38 410 656 121 [206  95  40] ###############
+> 40 408 655 108 [189  81  42] #############
+> 42 406 654 107 [184  79  57] #############
+> 44 405 652 104 [177  77  54] #############
+> 46 403 651 99 [171  72  51] ############
+> 48 402 650 96 [166  70  48] ############
+> 50 400 649 93 [162  67  49] ###########
+> 52 398 648 87 [150  63  53] ##########
+> 54 397 646 84 [148  60  48] #### …[+6768 chars]
+
