@@ -1,5 +1,5 @@
 {
- "time_utc": "2026-11-20T18:22:10+00:00",
+ "time_utc": "2026-11-20T18:22:57+00:00",
  "lead_branch": "ccr-ac160b4c-3hdecw",
  "specialists_sha256_16": {
   "android-build-performance": "b0c45161860a960c",
@@ -17,8 +17,12 @@
  "workers_status_latest_round": {
   "round9_account9": null
  },
- "plugins_installed_locally": [],
- "plugins_enabled_user_settings": [],
+ "plugins_installed_locally": [
+  "worldlabs@worldlabs"
+ ],
+ "plugins_enabled_user_settings": [
+  "worldlabs@worldlabs"
+ ],
  "plugins_synced_from_claude_account": [
   "Frontend design skill for UI/UX implementation",
   "Comprehensive feature development workflow with specialized agents for codebase exploratio",
@@ -39,7 +43,9 @@
   "playwright",
   "superpowers"
  ],
- "mcp_servers_configured": [],
+ "mcp_servers_configured": [
+  "worldlabs"
+ ],
  "hooks_project": [
   "PreCompact",
   "SessionEnd",
