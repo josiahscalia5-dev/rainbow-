@@ -19,7 +19,16 @@ pompom. New problem: none seen. Fur grain unchanged (separate open item).
 **Best query now (unapproved):** `&benny20=1&b20expo=1&b20ppw=0.45&b20tuft=1&b20knit=1&b20star=1&b20crown=1`.
 **Next:** step 3 = 06 start star leaning amber vs the approved lighter yellow (`b20sx06`); later: crown taper toward the top + pompom higher.
 
-**STOPPED ~17:15 UTC by the coordinator (Screen 06 priority, slot needed) — not a rejection.** Step 3 is NOT finished / NOT YET PROVEN:
+**RESUMED ~17:20 UTC (coordinator: slot free again; 06 route test keeps render priority).** Probe done (`qa/benny/r28/s6_star06/probe/`,
+p1 = first 8, p2 = checkpoint / +5 / +10 m × cur 0.9,1.2,.55 | c1 0.9,1.9,.55 | c2 1.0,2.05,.6; measured star median):
+checkpoint (stage frac .17) cur (255,171,29) g/r .67 → c2 (253,224,21) .89 vs approved (251,226,34) .90 (c1 .90 but darker 241,216,16);
+frac .26 cur .68 → c2 .83; frac .345 cur .74 → c2 1.02 (lemon-lime: the light is already turning to the middle's) → defaults set
+`STARX06A` = 1.0,2.05,0.6, fade `s06f0` .27 → `s06f1` .42 (≈ half at .345 ≈ .88); middle (.46) keeps STARX20['06'] (.93). tsc OK.
+Proof running (`/home/user/scratch/benny/star06/proof.sh`, log `proof.log`): `qa/benny/r28/s6_star06/06/new/` (a_start, c_middle,
+f_hard_left; BEFORE = `qa/benny/r27/s5_crown/06/new/`, same query + tool), clips 3 s BEFORE + NEW from the 06 checkpoint →
+`clip/swim06_s06a_{BEFORE,NEW}_{full,benny}_{1x,0.5x}.mp4`, gameplay `gameplay_s06a.json`. Then COMPARE crops + verdict.
+
+(earlier) **STOPPED ~17:15 UTC by the coordinator (Screen 06 priority, slot needed) — not a rejection.** Step 3 was NOT finished / NOT YET PROVEN:
 the probe below was killed after 8 of 20 renders (`/home/user/scratch/benny/star06/p1/p02_*`, `p10_*` = 06 entry +2 m and the 06 checkpoint,
 green 1.2 / 1.45 / 1.6 / 1.75 — not measured, not judged; scratch may be lost). The `&b20s06a=1` code stays in the worktree, OFF by default.
 **Resume:** measure p1 with starm.py (target g/r ≈ .90 without clipping the relief), finish the positions +5/+10/+16.9 m, set the STARX06A /

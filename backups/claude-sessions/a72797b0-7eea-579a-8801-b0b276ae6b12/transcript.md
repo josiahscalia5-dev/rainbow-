@@ -3115,3 +3115,167 @@ Now the handoff, the new-account guide, the coordination file and the agents sta
 
 > 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nfrom pathlib import Path\nimport json\nline='**USER SCOPE DECISION (r28, ~17:25 UTC, permanent): 01, 02, 03, 11 = Google Flow videos; 04–10 INCLUDING 09 AND 10 = real playable 3D.** Verbatim + per-screen clarifications (04 / 06 / 09 / 10): `docs/briefs/2026-11-20-r28/USER_CLARIFICATIONS_R28.md`.'\n# handoff\nh=Path('docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md'); t=h.read_text()\nanchor='Draft PR #25 (DO NOT MERGE).'\nassert anchor in t and 'USER SCOPE DECISION (r28' not in t\nt=t.replace(anchor, anchor+'\\n'+line+' **Screen 06 route test AUTHORIZED (r28 ~17:05)** — br …[+2144 chars]`
 
+### 🧑 User — 2026-11-20T17:17:10.250Z
+
+> ↩︎ result: ok
+>   "result": "committed+pushed",
+>   "commit": "6c72adc6f5c31683cbaae87058e3ca6d9f25ad55",
+> 6c72adc6f5c31683cbaae87058e3ca6d9f25ad55
+> 6c72adc6f5c31683cbaae87058e3ca6d9f25ad55	refs/heads/ccr-9652868f-lkw0w0
+
+### 🤖 Claude — 2026-11-20T17:17:12.974Z
+
+The decision is saved (`6c72adc`, GitHub matches). Passing your Screen 06 points to the specialist who is building it:
+
+### 🤖 Claude — 2026-11-20T17:17:15.873Z
+
+> 🔧 **SendMessage** `{"to": "a19a5ec306145815f", "summary": "Relay user's Screen 06 clarification", "message": "New user clarification for your Screen 06 route test (verbatim in /home/user/rainbow-/docs/briefs/2026-11-20-r28/USER_CLARIFICATIONS_R28.md). It refines your task; it does not replace it.\n\"The high, curling cyan-and-pink water crest and the approach to the off-centre tunnel are defining features of this screen. Preserve that shape as you develop the playable route. Match the warm gold lighting and purple surroundings while demonstrating Benny's journey into and through the tunnel.\" Also, for every scr …[+494 chars]`
+
+### 🧑 User — 2026-11-20T17:17:15.894Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to a19a5ec306145815f at its next tool round. Sending this moved nothing it is running to the background just now, so the message waits for that round unless something moves sooner. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"a19a5ec306145815f","name":"a19a5ec306145815f","ref":"64b561"}}
+
+### 🤖 Claude — 2026-11-20T17:17:22.577Z
+
+> 🔧 **TaskCreate** `{"subject": "Screens 09 + 10 playable 3D: audit current state, write brief, start when a slot frees", "description": "User 17:25: 04-10 incl 09/10 playable. 09 = final wave + washer opening + towel ledge (own reference). 10 = towel hiding place, hand-over to 11 Flow ending. Existing assets first (08 chamber method K23-3 / match08).", "activeForm": "Planning Screens 09 and 10"}`
+
+### 🧑 User — 2026-11-20T17:17:22.592Z
+
+> ↩︎ result: Task #7 created successfully: Screens 09 + 10 playable 3D: audit current state, write brief, start when a slot frees
+
+### 🤖 Claude — 2026-11-20T17:17:23.984Z
+
+> 🔧 **Bash** `{"command": "grep -rln \"'09'\\|\\\"09\\\"\\|stage09\\|match09\\|match10\\|'10'\" src | head -20; echo ---; ls src/world/ | head -50; echo ---; ls qa/match/ 2>/dev/null; ls qa/match/09 qa/match/10 2>/dev/null | head", "description": "Find how stages 09 and 10 are built"}`
+
+### 🧑 User — 2026-11-20T17:17:24.089Z
+
+> ↩︎ result: src/world/course.ts
+> src/vfx/index.ts
+> src/vfx/finalWave.ts
+> src/vfx/waterRibbon.ts
+> src/game/match.ts
+> src/game/cameraRig.ts
+> src/game/Game.ts
+> src/gameplay/coins.ts
+> ---
+> course.ts
+> environment.ts
+> far05.ts
+> laundryRoom.ts
+> match08.ts
+> materials.ts
+> towel.ts
+> tube.ts
+> ---
+> 04
+> 05
+> 06
+> 07
+> 08
+> NOTES.md
+> audit
+
+### 🤖 Claude — 2026-11-20T17:17:27.537Z
+
+> 🔧 **Bash** `{"command": "grep -n \"'09'\\|'10'\\|'11'\\|stage:\\|id: '0\" src/world/course.ts | head -40; echo ---; wc -l src/vfx/finalWave.ts src/world/towel.ts src/world/match08.ts; grep -n \"'09'\\|'10'\" src/game/Game.ts src/game/cameraRig.ts src/gameplay/coins.ts src/game/match.ts | head -20", "description": "Inspect stage 09/10 definitions in course and game"}`
+
+### 🧑 User — 2026-11-20T17:17:27.623Z
+
+> ↩︎ result: 18:export type StageId = '01' | '02' | '03' | '04' | '05' | '06' | '07' | '08' | '09' | '10' | '11';
+> 59:  '09': 'RIDE THE FINAL WAVE',
+> 60:  '10': 'SLIDE INTO HIDING',
+> 61:  '11': 'SAFELY HOME',
+> 333:  mark('09');
+> 336:  mark('10');
+> 342:  mark('11');
+> 447:      def('08', m['08'], m['09'], { width: 4.8, speed: 9.5, refCoins: 2040 }),
+> 448:      def('09', m['09'], m['10'], { width: 6.4, speed: 9.5, refCoins: 2280 }),
+> 449:      def('10', m['10'], m['11'], { width: 3.8, speed: 7.5, refCoins: 2500 }),
+> 450:      def('11', m['11'], this.length, { width: 3, interactive: false, speed: 0, refCoins: 2500 }),
+> 499:    this.st10 = this.stage('10');
+> ---
+>   183 src/vfx/finalWave.ts
+>   151 src/world/towel.ts
+>   230 src/world/match08.ts
+>   564 total
+> src/game/Game.ts:32:const STAGE_ORDER: StageId[] = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> src/game/Game.ts:160:    tubes: ['03', '09'],
+> src/game/Game.ts:400:    env.towel.setTent(sm(course.stage('09').s1 - 6, course.stage('10').s0 + 2, st.s));
+> src/game/Game.ts:402:    if (st.stage === '09' || st.stage === '10') {
+> src/game/Game.ts:410:    if (flowPlan && cinematic.ending && st.mode === 'ride' && st.s >= course.stage('09').s0) { startFlo …[+964 chars]
+
+### 🤖 Claude — 2026-11-20T17:17:37.310Z
+
+> 🔧 **Bash** `{"command": "grep -n \"flowPlan\" src/game/*.ts src/*.ts 2>/dev/null | head -8; grep -n \"flowplan\" docs/FLOW_VIDEO.md | head -5", "description": "Check whether the flowPlan switch is on by default"}`
+
+### 🧑 User — 2026-11-20T17:17:37.374Z
+
+> ↩︎ result: src/game/Game.ts:68:  const flowPlan = flag05('flowplan'); // user's Google Flow plan: videos 01–03 + 09–11, playable 04–08 (see startFlowEnding)
+> src/game/Game.ts:410:    if (flowPlan && cinematic.ending && st.mode === 'ride' && st.s >= course.stage('09').s0) { startFlowEnding(); return; }
+> src/game/Game.ts:514:    if (flowPlan) {
+> 23:This split is implemented behind the test switch **`?flowplan=1`** (`src/game/Game.ts`, lead r3). The **default build
+> 24:is unchanged**: without `flowplan=1` the game still plays its real-time fallback scenes for 01–03 and 09–11 exactly as
+> 31:| File | Default build (no `flowplan`) | With `?flowplan=1` |
+> 36:Coin rule under `flowplan`: only coins that are **not yet collected** in a video-covered stretch are credited, once
+> 41:If a file is missing, the real-time 3D cinematic plays instead (with or without `flowplan`). Videos are always muted
+
+### 🤖 Claude — 2026-11-20T17:17:45.915Z
+
+> 🔧 **Bash** `{"command": "grep -h \"s08\" docs/briefs/2026-11-20-r24/COORDINATION.md | grep -i \"agent\\|specialist\\|modeler\\|engineer\\|director\" | head -3 | cut -c1-250; ls qa/match/08/ | head -30", "description": "Find the agent and method used for Screen 08"}`
+
+### 🧑 User — 2026-11-20T17:17:45.996Z
+
+> ↩︎ result: | s08 | washer-environment-modeler | `/home/user/wt/s08` `claude/rainbow-s08-scenery-c25` | 5278 | resume `m08gl` clips, `m08coinsz`, `m08towelm` |
+> 08_BEFORE_current_game.png
+> 08_NEW_match08.png
+> 08_NEW_match08_android1080x1920.png
+> 08_NEW_screen_match.json
+> NOTES.md
+> benny_APPROVED_closeup.png
+> benny_NEW_ported_closeup.png
+> coins08px
+> gameplay_test_match08.json
+> motion
+> other_screens
+> r23
+> scenery_metrics_BEFORE_FINAL.json
+> scenery_metrics_BEFORE_NEW.json
+
+### 🤖 Claude — 2026-11-20T17:17:55.106Z
+
+> 🔧 **Bash** `{"command": "find qa assets tools -iname \"*09*plate*\" -o -iname \"*10*plate*\" -o -iname \"*clean*09*\" -o -iname \"*clean*10*\" 2>/dev/null | grep -v node_modules | head; find qa -path \"*09*\" -name \"*.png\" 2>/dev/null | head -5; grep -n \"^| \\|Total\\|total\" qa/review_r21/artwork/LEDGER.md | tail -6 | cut -c1-200", "description": "Look for existing 09/10 clean plates and budget ledger"}`
+
+### 🧑 User — 2026-11-20T17:17:55.192Z
+
+> ↩︎ result: qa/09_side_by_side.png
+> qa/09_overlay.png
+> qa/pilot05/wave3/water/it09/05.png
+> qa/pilot05/wave3_baseline/09.png
+> qa/match/audit/09_BEFORE_default.png
+> 58:| 2026-11-20 16:04 | g_hard_right | nano-banana-2/edit 2K | `01a1f9b3-348d-7eb0-9a4d-0fb15026e91e` | 1 | 0.12 | g_hard_right_v1.png |
+> 59:| 2026-11-20 16:04 | e_end | nano-banana-2/edit 2K | `01a1f9b3-34d6-7a42-8cb5-ba1e12017120` | 1 | 0.12 | e_end_v1.png |
+> 60:| 2026-11-20 16:04 | f_hard_left | nano-banana-2/edit 2K | `01a1f9b3-34f3-7550-aaee-f99b036579db` | 1 | 0.12 | f_hard_left_v1.png |
+> 61:| 2026-11-20 16:05 | g_hard_right_sw | nano-banana-2/edit 2K | `01a1f9b4-9b45-7dd3-9528-e45ab2f71393` | 1 | 0.12 | g_hard_right_sw_v1.png |
+> 62:| 2026-11-20 16:06 | f_hard_left_sw | nano-banana-2/edit 2K | `01a1f9b4-9b10-7663-96e0-0dd5706699f3` | 1 | 0.12 | f_hard_left_sw_v1.png |
+> 69:* **Running total: 42 jobs, $5.04** (r21 $0.60, r22 $0.72, r27 $3.72). Nothing is an accepted reference until the user approves it.
+
+### 🤖 Claude — 2026-11-20T17:17:58.460Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,15p qa/review_r21/artwork/LEDGER.md | cut -c1-300", "description": "Read paid artwork authorization and budget"}`
+
+### 🧑 User — 2026-11-20T17:17:58.513Z
+
+> ↩︎ result: # Round 21 generated-artwork ledger (paid jobs, user-authorised 2026-11-20 ~02:20 UTC)
+> 
+> | UTC | job | endpoint | request id | images | est. cost (USD) | result |
+> |---|---|---|---|---|---|---|
+> | 2026-11-20 02:34 | c_middle | nano-banana-2/edit 2K | `01a1f6cd-9740-74b0-8ab7-360fbcd093ba` | 1 | 0.12 | c_middle_v1.png |
+> | 2026-11-20 02:35 | c_middle_p2 | nano-banana-2/edit 2K | `01a1f6ce-536b-7643-bbfc-e21202933af2` | 1 | 0.12 | c_middle_p2_v1.png |
+> | 2026-11-20 02:35 | d_late_p2 | nano-banana-2/edit 2K | `01a1f6ce-a8c2-7c83-908b-5e7531b3aba8` | 1 | 0.12 | d_late_p2_v1.png |
+> | 2026-11-20 02:35 | e_end_p2 | nano-banana-2/edit 2K | `01a1f6cf-114d-7623-99cc-dea278ecabc0` | 1 | 0.12 | e_end_p2_v1.png |
+> | 2026-11-20 02:36 | d_late_p3 | nano-banana-2/edit 2K | `01a1f6cf-e68f-7f42-ba57-0c5b1cbb363e` | 1 | 0.12 | d_late_p3_v1.png |
+> | 2026-11-20 03:20 | d_late | nano-banana-2/edit 2K | `01a1f6f8-3c51-7bb0-9cc9-53458f0888e9` | 1 | 0.12 | d_late_v1.png |
+> | 2026-11-20 03:20 | e_end | nano-banana-2/edit 2K | `01a1f6f8-3b9c-7523-8f17-00008ec826b0` | 1 | 0.12 | e_end_v1.png |
+> | 2026-11-20 03:21 | e_end_p2 | nano-banana-2/edit 2K | `01a1f6f9-268d-7603-a14e-302510bd3a80` | 1 | 0.12 | e_end_p2_v1.png |
+>  …[+239 chars]
+

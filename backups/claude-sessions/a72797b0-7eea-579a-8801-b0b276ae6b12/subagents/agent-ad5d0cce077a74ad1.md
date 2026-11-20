@@ -1319,3 +1319,22 @@ Now the placement of bank-fill lumps in match05far.ts and the faster taper.
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -i 's|        co.copy(Rt).multiplyScalar(x).addScaledVector(U, a.level + EDGE_LIFT + lift0 + l.lift);|        co.copy(Rt).multiplyScalar(x).addScaledVector(U, a.level + EDGE_LIFT + lift0 + l.lift + 0.35 * (l.f ?? 0) ** 2);|' src/world/match05far.ts && npx tsc --noEmit && Q=\"$(cat qa/match/05/r18/KEPT_STEP2.txt)&m05endr=1\" && AUDIT_PORT=5275 AUDIT_SHOTS='[[\"d_late\",0.6,null],[\"e_end\",0.85,null],[\"h_t95\",0.95,null]]' timeout 1200 bash /home/user/rainbow-/tools/lead25/render_slot.sh node /home/user/rainbow-/tools/lead21/audit_screen.mjs /home/user/ …[+554 chars]`
 
+### 🧑 User — 2026-11-20T17:17:04.652Z
+
+> ↩︎ result: [render_slot] got slot 2 after 60s
+> 05 d_late s 166.355 lat 0 stage 05 coins 1460
+> 05 e_end s 180.472 lat 0 stage 05 coins 1460
+> 05 h_t95 s 186.155 lat 0 stage 05 coins 1580
+
+### 🤖 Claude — 2026-11-20T17:17:11.509Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s05/v2_sheet.jpg"}`
+
+### 🧑 User — 2026-11-20T17:17:11.525Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T17:17:46.460Z
+
+> 🔧 **Bash** `{"command": "cat > /home/user/scratch/s05/tools/probe_coins.mjs <<'EOF'\n// s05 r28: coin defs + drawn screen positions near the 05 end (read-only)\nimport { pathToFileURL } from 'node:url';\nconst { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);\nconst [Q, FR = '0.95', PORT = '5275'] = process.argv.slice(2);\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(Number(PORT));\nconst browser = await chromium.launch({ args: CHROMIUM_ARGS });\ntry {\n  const page = await browser.newPage({ viewport: { width: 86 …[+1865 chars]`
+
