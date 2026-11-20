@@ -2210,3 +2210,50 @@ Clip at 41/58 frames (load ~33). Meanwhile I'll write the step-2 record (clip pa
 
 > ↩︎ result: The file /home/user/rainbow-/qa/match/04/r23/PROGRESS.md has been updated successfully.
 
+### 🤖 Claude — 2026-11-20T10:15:51.866Z
+
+> 🔧 **Bash** `{"command": "ls /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/clip2EJW/f 2>/dev/null | wc -l; ls /home/user/rainbow-/qa/match/04/r23/s2_edge/", "description": "Check clip progress"}`
+
+### 🧑 User — 2026-11-20T10:15:52.557Z
+
+> ↩︎ result: 43
+> NEW
+> QUERY_K23-S2.txt
+> SWITCH.txt
+> audit_new.log
+> gameplay.json
+> gameplay.log
+
+### 🤖 Claude — 2026-11-20T10:15:55.533Z
+
+> 🔧 **ToolSearch** `{"query": "select:Monitor", "max_results": 1}`
+
+### 🧑 User — 2026-11-20T10:15:55.555Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-20T10:16:08.922Z
+
+> 🔧 **Monitor** `{"description": "step-2 swim clip finished (mp4 written) or job failed", "timeout_ms": 1800000, "command": "F=/home/user/rainbow-/qa/match/04/r23/s2_edge/swim04_NEW_K23-S2_realspeed.mp4; O=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/tasks/ba30o22b6.output; until [ -f \"$F\" ] || ! pgrep -f \"swim_clip_pinned_slow.mjs 04\" >/dev/null; do sleep 5; done; sleep 3; if [ -f \"$F\" ]; then echo \"CLIP DONE $(ls $(dirname $F) | grep mp4 | tr '\\n' ' ')\"; else echo \"CLIP PROCESS ENDED WITHOUT MP4\"; tail -3 $O; fi"}`
+
+### 🧑 User — 2026-11-20T10:16:09.004Z
+
+> ↩︎ result: Monitor started (task b923w8ple, expires in 30m unless the source ends first; you get one notice at expiry — re-arm if you still need the watch). You will be notified on each event. Keep working — do not poll or sleep. Events may arrive while you are waiting for the user — an event is not their reply.
+
+### 🤖 Claude — 2026-11-20T10:16:20.533Z
+
+> 🔧 **Bash** `{"command": "grep -n \"^float h21\\|^float vn\\|float h21(\\|float vn(\" /home/user/wt/s04/src/world/match04m4.ts | head; sed -n 740,760p /home/user/wt/s04/src/world/match04m4.ts | grep -n \"RIVER_FRAG\" ", "description": "Verify helper functions exist for the river shader"}`
+
+### 🧑 User — 2026-11-20T10:16:20.760Z
+
+> ↩︎ result: 144:float h21(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+> 817:float h21(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+> 818:float vn(vec2 p) { vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f);
+> 1199:float h21(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+> 2325:float h21(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+> 2326:float vn(vec2 p) { vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f);
+
+### 🤖 Claude — 2026-11-20T10:16:26.568Z
+
+> 🔧 **Bash** `{"command": "P=$(pgrep -f \"swim_clip_pinned_slow.mjs 04\" | head -1); echo \"clip pid=$P\"; [ -n \"$P\" ] && timeout 1500 tail --pid=$P -f /dev/null; ls /home/user/rainbow-/qa/match/04/r23/s2_edge/ | grep -E \"mp4|frames\"", "description": "Wait for the step-2 clip process to exit", "timeout": 1600000}`
+
