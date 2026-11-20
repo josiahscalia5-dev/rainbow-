@@ -2622,3 +2622,43 @@ Fixed and typecheck is clean. The running clip had already loaded, so it wasn't 
 > start view: >20 levels 0.128 %, >0 18.09 %
 > right-edge region max diff 185 magenta px 0
 
+### 🤖 Claude — 2026-11-20T20:49:28.163Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nfrom PIL import Image; import numpy as np\nfrom scipy import ndimage\na=np.asarray(Image.open('stills_BEFORE/a_start.png').convert('RGB')).astype(int); b=np.asarray(Image.open('stills_NEW/a_start.png').convert('RGB')).astype(int)\nm=np.abs(a-b).max(axis=2)>20\nprint('right edge region px', int(m[600:720,800:864].sum()), ' Benny region (250-620,560-1150) px', int(m[560:1150,250:620].sum()), ' total', int(m.sum()))\nlab,n=ndimage.label(ndimage.binary_dilation(m,iterations=3)); sz=ndimage.sum(m,lab,range(1,n+1)); objs=ndimage.find_objects(lab)\nfor s,o in sorted(zip(sz …[+157 chars]`
+
+### 🧑 User — 2026-11-20T20:49:29.063Z
+
+> ↩︎ result: right edge region px 58  Benny region (250-620,560-1150) px 896  total 1703
+> 115 (308, 716, 425, 772)
+> 44 (430, 736, 470, 776)
+> 37 (329, 862, 377, 898)
+> 24 (252, 1096, 291, 1146)
+> 23 (398, 1156, 428, 1198)
+
+### 🤖 Claude — 2026-11-20T20:49:41.054Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/r30/clip_new && python3 -c \"\nfrom PIL import Image; import numpy as np, glob, json\nfs=sorted(glob.glob('0*.png')); bad=[]\nfor f in fs:\n  a=np.asarray(Image.open(f).convert('RGB').resize((216,384))).astype(int); m=(np.abs(a-np.array([198,0,201])).max(axis=2)<8).mean()\n  if m>0.0005: bad.append((f[:4], round(100*m,2)))\nprint('frames', len(fs), 'with flat magenta >0.05%:', bad[:40])\"", "description": "Scan clip frames for background gaps", "timeout": 300000}`
+
+### 🧑 User — 2026-11-20T20:49:57.430Z
+
+> ↩︎ result: frames 313 with flat magenta >0.05%: [('0000', np.float64(0.07)), ('0001', np.float64(0.09)), ('0002', np.float64(0.13)), ('0003', np.float64(0.15)), ('0004', np.float64(0.15)), ('0005', np.float64(0.15)), ('0006', np.float64(0.14)), ('0007', np.float64(0.13)), ('0008', np.float64(0.1)), ('0009', np.float64(0.1)), ('0010', np.float64(0.1)), ('0011', np.float64(0.07))]
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T20:50:02.983Z
+
+Only frames 0–11 show it, and those are the ones I'll replace with the patched re-render. Nothing else along the route shows the background. Waiting for the clip to finish.
+
+### 🤖 Claude — 2026-11-20T20:50:04.238Z
+
+> 🔧 **Bash** `{"command": "until ! pgrep -f \"r30_clip.mjs /home/user/scratch/r30/clip_new\" >/dev/null; do sleep 5; done; tail -2 /home/user/scratch/r30/clip_new.log; ls /home/user/scratch/r30/clip_new/*.png | wc -l", "description": "Wait for the clip render to end", "timeout": 1800000}`
+
+### 🧑 User — 2026-11-20T20:53:25.452Z
+
+> ↩︎ result: frame 384 { s: 412.434, stage: '07', lat: 0, coins: 1840 }
+> frames 399 s0 198.91 s07 396.27066741997834
+> 399
+
+### 🤖 Claude — 2026-11-20T20:53:30.585Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && MAXF=20 AUDIT_PORT=5304 timeout 1500 node tools/match06/r30_clip.mjs /home/user/scratch/r30/clip_head \"$(cat /home/user/rainbow-/qa/match/06/r30/QUERY_NEW.txt)\" 24 2>&1 | tail -1 && python3 -c \"\nimport json\na=json.load(open('/home/user/scratch/r30/clip_new/frames.json'))['log'][:20]; b=json.load(open('/home/user/scratch/r30/clip_head/frames.json'))['log']\nsame=all(x['s']==y['s'] and x['lat']==y['lat'] and x['coins']==y['coins'] for x,y in zip(a,b)); print('simulation identical for 20 frames:', same, len(b))\n\" && mkdir -p /home/user/scratch/r30/clip_ …[+325 chars]`
+
