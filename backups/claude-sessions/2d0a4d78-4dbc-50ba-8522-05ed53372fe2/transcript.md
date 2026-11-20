@@ -3583,3 +3583,18 @@ Notifications are queued for this session (more may arrive before you read them)
 
 > 🔧 **Bash** `{"command": "cat >> docs/briefs/2026-11-20-r22/COORDINATION.md <<'EOF'\n* ~04:00 Benny r23 step 1 `&b20tuft=1` (on `&benny20=1&b20expo=1&b20ppw=0.45`, `claude/rainbow-benny-c23` @ `b9c91d0`; worker: GOOD\n  (partial) — soft tufts + lighter rose tips instead of flat velvet; still finer than the approved silky tufts; crops now centred on\n  Benny, tools `tools/benny23/`; lead review pending). Next: knit cream stripes / cuff ribs.\nEOF\nsed -i 's/round-23 batch started (b20tuft, cream stripes, felt star);/round-23 batch: step 1 `\\&b20tuft=1` @ `b9c91d0` (worker GOOD partial, lead review pending) …[+571 chars]`
 
+### 🧑 User — 2026-11-20T04:00:31.893Z
+
+> ↩︎ result: 1
+>   "commit": "ff837204841804e0c5af3db76732ad3efdbf057d",
+> MATCH ff837204841804e0c5af3db76732ad3efdbf057d
+> [This command modified 2 files you've previously read: docs/briefs/2026-11-20-r22/RESUME_R22.md, docs/briefs/2026-11-20-r22/COORDINATION.md. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-20T04:00:35.366Z
+
+Benny finished another step: the fur now shows soft tufts with lighter rose tips and a bit of fluffy volume, instead of flat velvet. His colour stays the dusty rose that now matches across all five screens. Benny's specialist calls it a partial improvement, because the tufts are still finer than your Benny's long, silky fur. That difference is hard to see at normal game size on Screens 05–08. I haven't reviewed these pictures myself yet.
+
+His close-up pictures are now centred on him on every screen, fixing the problem I flagged earlier. Next he's working on cream hat stripes, cleaner knit ribs on the cuff, and a deeper violet.
+
+I've added this step to the handoff notes, and GitHub matches (`ff83720`). The way to continue on your other account is unchanged.
+
