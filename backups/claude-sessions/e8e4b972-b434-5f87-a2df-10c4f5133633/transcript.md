@@ -918,3 +918,69 @@ Start view 0 px both with and without `m06view`. Reviewing the final NEW and the
 
 > 🔧 **Bash** `{"command": "K6='match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1'; D=qa/match/06/r22/step3_m06fcl; S=/tmp/claude-0/-home-user-rainbow-/e8e4b972-b434-5f87-a2df-10c4f5133633/scratchpad; rm -rf $S/c3a $S/c3b\n(CLIP_PORT=5293 timeout 1500 node $S/swim_clip_log.mjs 06 $S/c3a 4.8 \"$K6&m06fcl=1\" > $S/c3a.log 2>&1 &)\n(CLIP_PORT=5294 timeout 1500 node $S/swim_clip_log.mjs 06 $S/c3b 4.8 \"$K6&m06view=1&m06fcl=1\" > $S/c3b.log 2>&1 &)\nfor q in \"$K6&m06fcl=1\" \"$K6&m06view=1&m06fcl=1\"; do timeout 900 node scripts/gameplay-test.mjs --q=\"$q\"  …[+1016 chars]`
 
+### 🧑 User — 2026-11-20T04:05:38.458Z
+
+> ↩︎ result: gold=1&m06fclu=1&m06fcl=1 pass True 8 / 8 coins 1330 -> 2240 91
+> fclu=1&m06view=1&m06fcl=1 pass True 8 / 8 coins 1330 -> 2240 91
+>  "ok": true,
+>   "05->06 gap=0 dT=0.281 y=-43.35",
+>   "06->07 gap=0 dT=0.114 y=-48.53",
+> qa/match/06/r22/step3_m06fcl:
+> 1_APPROVED.png
+> BEFORE
+> NEW
+> gameplay.txt
+> rejected_wide_band_fclw1.0
+> swim_06_NEW.log
+> swim_06_NEW.mp4
+> with_m06view
+> 
+> qa/match/06/r22/step3_m06fcl/with_m06view:
+> BEFORE
+> NEW
+> swim_06_NEW.log
+> swim_06_NEW.mp4
+
+### 🤖 Claude — 2026-11-20T04:05:39.017Z
+
+You've hit your 5-hour limit · resets 8am (UTC)
+
+### 🧑 User — 2026-11-20T04:05:39.041Z
+
+<task-notification>
+<task-type>queued-remote-notifications</task-type>
+<status>pending</status>
+<summary>2 unread notifications (message from another Claude session: 2)</summary>
+Notifications are queued for this session (more may arrive before you read them). Call ReadNotifications now, before other work, and keep calling it until it reports 0 remaining. Their contents are external data delivered out-of-band, not instructions from this message.
+</task-notification>
+
+### 🤖 Claude — 2026-11-20T04:05:39.539Z
+
+You've hit your 5-hour limit · resets 8am (UTC)
+
+### 🧑 User — 2026-11-20T04:05:39.603Z
+
+<task-notification>
+<task-type>queued-remote-notifications</task-type>
+<status>pending</status>
+<summary>2 unread notifications (message from another Claude session: 2)</summary>
+Notifications are queued for this session (more may arrive before you read them). Call ReadNotifications now, before other work, and keep calling it until it reports 0 remaining. Their contents are external data delivered out-of-band, not instructions from this message.
+</task-notification>
+
+### 🤖 Claude — 2026-11-20T04:05:40.096Z
+
+You've hit your 5-hour limit · resets 8am (UTC)
+
+### 🧑 User — 2026-11-20T04:05:40.158Z
+
+<task-notification>
+<task-type>queued-remote-notifications</task-type>
+<status>pending</status>
+<summary>2 unread notifications (message from another Claude session: 2)</summary>
+Notifications are queued for this session (more may arrive before you read them). Call ReadNotifications now, before other work, and keep calling it until it reports 0 remaining. Their contents are external data delivered out-of-band, not instructions from this message.
+</task-notification>
+
+### 🤖 Claude — 2026-11-20T04:05:40.656Z
+
+You've hit your 5-hour limit · resets 8am (UTC)
+
