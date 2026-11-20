@@ -1629,3 +1629,182 @@ The three specialists are running. Meanwhile I'm on the scenery: first reading t
 > src/game/match.ts:27:  '06': { fov: 62, roll: 0, off06: [1.1796, 2.6793, 5.6776], dir06: [-0.19129, -0.18969, -0.96303] },
 > Shell cwd was reset to /home/user/rainbow-
 
+### 🤖 Claude — 2026-11-20T22:36:16.069Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r30b/align && python3 -I -c \"\nfrom PIL import Image; import numpy as np\nSB=np.asarray(Image.open('/home/user/rainbow-/docs/briefs/2026-11-20-r30/USER_S06_STORYBOARD_R30.png').convert('RGB')).astype(float)\ndef reg(name,x0,y0,x1,y1):\n    r=SB[y0:y1,x0:x1].reshape(-1,3); L=r.mean(1)\n    q=np.percentile(L,[5,25,50,75,95])\n    def at(p):\n        lo,hi=np.percentile(L,[p-3,p+3]); m=(L>=lo)&(L<=hi); return r[m].mean(0).round().astype(int).tolist()\n    print(f'{name:22s} p5 {at(5)} p25 {at(25)} p50 {at(50)} p75 {at(75)} p95 {at(95)}')\n# panel3  …[+569 chars]`
+
+### 🧑 User — 2026-11-20T22:36:16.539Z
+
+> ↩︎ result: p3 left wall           p5 [119, 32, 108] p25 [157, 59, 134] p50 [174, 101, 156] p75 [180, 165, 214] p95 [238, 222, 241]
+> p2 ceiling wall        p5 [75, 5, 52] p25 [151, 35, 100] p50 [174, 44, 112] p75 [223, 72, 132] p95 [251, 139, 223]
+> p4 ceiling wall        p5 [77, 8, 74] p25 [125, 31, 128] p50 [169, 55, 136] p75 [224, 107, 138] p95 [252, 197, 212]
+> p2 far tunnel          p5 [120, 39, 158] p25 [159, 73, 186] p50 [179, 117, 232] p75 [223, 144, 246] p95 [245, 210, 249]
+> p3 far tunnel          p5 [154, 124, 87] p25 [73, 171, 217] p50 [126, 181, 200] p75 [174, 180, 228] p95 [230, 225, 234]
+> p4 far tunnel          p5 [130, 43, 149] p25 [178, 87, 191] p50 [167, 159, 227] p75 [218, 154, 247] p95 [247, 217, 249]
+> p2 gold band top       p5 [180, 62, 31] p25 [223, 111, 51] p50 [249, 145, 63] p75 [253, 207, 112] p95 [254, 254, 248]
+> p4 gold band           p5 [92, 12, 107] p25 [148, 46, 178] p50 [169, 63, 213] p75 [204, 90, 238] p95 [250, 181, 249]
+
+### 🤖 Claude — 2026-11-20T22:37:45.053Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s06/src/world/m06sb.ts", "content": "/**\n * r30b lead — `&m06sb=1` \"storyboard\" candidate for Screen 06 (user 2026-11-20 ~22:10 / ~22:20 UTC, docs/briefs/2026-11-20-r30/USER_R30.md §6:\n * the FOUR storyboard panels docs/briefs/2026-11-20-r30/USER_S06_STORYBOARD_R30.png are ALL mandatory approved targets). Builds on the\n * r30 v2 candidate (qa/match/06/r30/QUERY_NEW_v2.txt: m06deep + m06curl + m06camk/u). Every part is opt-in; `m06sb=1` turns all on:\n *   `&m06sbwall=1`  after the approved start view the tunnel wall = clean purple-magenta drum metal with small …[+11668 chars]`
+
+### 🧑 User — 2026-11-20T22:37:45.326Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s06/src/world/m06sb.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T22:37:51.359Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 205,240p src/world/environment.ts; grep -n \"tube07\\b\\|tube07 =\\|tube07\\.name\\|\\.name = 'tube07\\|name: 'tube07\" src/world/environment.ts | head; grep -n \"function gold\" -A6 src/world/*.ts | head -10", "description": "Inspect Screen 07 tube materials and names"}`
+
+### 🧑 User — 2026-11-20T22:37:51.431Z
+
+> ↩︎ result: const pinkFlow = pinkFlowMaterial();
+>   // refs 05–07: rich saturated magenta→violet glossy pressed metal, dense glowing slot rows, warm light
+>   // far down the tunnel. Own reflection environment (no cyan studio panel) + correct inward normals.
+>   // hot magenta near → violet mid-tunnel → warm yellow-white core at the vanishing point
+>   const tubeGlow: FarGlow = { color: '#ffd08a', near: 48, far: 105, strength: 1.5 };
+>   const wallGlow: FarGlow = { ...tubeGlow, mid: { color: '#8a3cf0', near: 10, far: 42, amount: 0.55 } };
+>   const tubeEnv = washerTubeEnv('wall');
+>   const goldEnv = washerTubeEnv('gold');
+>   // 06/07 ring bays (unchanged): gold bands every 9 units, 4 circumferential slot rows per bay
+>   const ringSpacing = 9.0;
+>   const slotRowsPerBay = 4;
+>   // analytic strip lights along the tunnel (28 around: ref 05 shows ≈12–16 marquee spots per half-ring)
+>   const strips: TubeStrips = { count: 28, width: 0.022, intensity: 2.6, color: '#ffd9f6', alt: 0.65 };
+>   // glossy (low roughness → the strips stay crisp lengthwise streaks instead of a flat clipped sheen)
+>   const wallBase = {
+>     // pale pink F0: the saturation comes from the magenta/violet tube environment, so white strip lights
+>     / …[+2957 chars]
+
+### 🤖 Claude — 2026-11-20T22:37:58.691Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/m06sb.ts", "old_string": "        if (x.m.metalness < 0.9 || x.m.map) x.m.color.copy(x.colRest).lerp(x.colRest.clone().multiply(wallTint), k);", "new_string": "        if (x.m.metalness < 0.99) x.m.color.copy(x.colRest).lerp(x.colRest.clone().multiply(wallTint), k); // perforated wall 0.92, gold() 1"}`
+
+### 🧑 User — 2026-11-20T22:37:58.894Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/m06sb.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T22:38:26.691Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 -I -c \"\nimport json; d=json.load(open('assets/textures/match06/route06curl.json'))\nc=d['curl']; print({k:(v if not isinstance(v,list) else (len(v), v[:3] if k!='axis' else '...')) for k,v in c.items()})\nprint('rings', c['rings'])\"; grep -n \"^import\" src/world/match06.ts", "description": "Read the curl route ring positions"}`
+
+### 🧑 User — 2026-11-20T22:38:26.819Z
+
+> ↩︎ result: {'aSplit': 40.0, 'ds': 0.5, 'a07': 200.0, 'aEnd': 200.3, 'riverU': -5.2, 'ringD': 22.0, 'rings': (7, [58.95, 80.95, 102.95]), 'keys': (5, [[0, 0.0, 0.0], [40, 30.0, 7.0], [52, 30.0, 7.0]]), 'axis': (322, '...')}
+> rings [58.95, 80.95, 102.95, 124.95, 146.95, 168.95, 190.95]
+> 18:import * as THREE from 'three';
+> 19:import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
+> 20:import { PROJ05_INVERSE } from '../vfx/waterRibbon';
+> 21:import type { Course } from './course';
+> 22:import route06deep from '../../assets/textures/match06/route06deep.json';
+> 23:import route06curl from '../../assets/textures/match06/route06curl.json';
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T22:38:33.013Z
+
+Now the edits to the Screen 06 scene file (imports, shaders, tube and band geometry, haze), all switch-gated:
+
+### 🤖 Claude — 2026-11-20T22:38:39.329Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\nimport re\np='src/world/match06.ts'; s=open(p).read(); n0=len(s)\ndef rep(old,new,cnt=1):\n    global s\n    assert s.count(old)==cnt, (old[:80], s.count(old)); s=s.replace(old,new)\nrep(\"import route06curl from '../../assets/textures/match06/route06curl.json';\",\n\"import route06curl from '../../assets/textures/match06/route06curl.json';\\nimport { SB, SB_GLSL, SB_FAR, buildSbBands } from './m06sb'; // r30b lead `&m06sb*` storyboard candidate\")\n# FRAG hook: before the haze line\nrep(\"  if (uHaze.w > 0.5 && uFloor < 0.5) pc = mix(pc, …[+953 chars]`
+
+### 🧑 User — 2026-11-20T22:38:39.415Z
+
+> ↩︎ result: ok 704
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T22:39:11.484Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='src/world/match06.ts'; s=open(p).read()\ndef rep(old,new,cnt=1):\n    global s\n    assert s.count(old)==cnt, (old[:90], s.count(old)); s=s.replace(old,new)\nrep(\"\"\"  const mat = (tile: THREE.Texture, floor = false) => new THREE.ShaderMaterial({\n    vertexShader: VERT, fragmentShader: FRAG, side: THREE.DoubleSide, fog: false,\n    uniforms: { ...shared,\"\"\",\n\"\"\"  // r30b m06sb: storyboard walls / bands need the tunnel direction per vertex (aAxT) and the m06sb GLSL; off = the shaders as before\n  const SBX = SB.wall || SB.band …[+5567 chars]`
+
+### 🧑 User — 2026-11-20T22:39:17.721Z
+
+> ↩︎ result: ok
+> tsc 0
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T22:39:24.592Z
+
+Typecheck is clean. Next is the join retint in the game loop, which needs to know where Game.ts gets the Screen 07 tube object.
+
+### 🤖 Claude — 2026-11-20T22:39:25.760Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"tube07\\b\" src/game/Game.ts | head; grep -n \"^import\" src/game/Game.ts | head -40 | tail -15; grep -n \"M06_CURL\\s*=\" src/game/Game.ts", "description": "Find tube07 handle and imports in Game.ts"}`
+
+### 🧑 User — 2026-11-20T22:39:25.919Z
+
+> ↩︎ result: 130:  const tube07 = env.zones.tubes.getObjectByName('tube07') ?? null; // r29 m06deep only
+> 571:    if (m06 && tube07 && (m06On || tube07Applied)) {
+> 575:      if (m06On) { env.zones.tubes.visible = show; for (const ch of env.zones.tubes.children) ch.visible = ch === tube07; }
+> 16:import { Course, StageId, WORLD } from '../world/course';
+> 17:import { buildEnvironment } from '../world/environment';
+> 18:import { createCandyEnvironment, createRenderer } from '../render/env';
+> 19:import { createGradePass } from '../render/grade';
+> 20:import { createHud } from '../ui/hud';
+> 21:import { findCinematic, playCinematic } from '../ui/cinematicVideo';
+> 22:import { createCoins, COIN_VALUE } from '../gameplay/coins';
+> 23:import { createInput } from '../gameplay/input';
+> 24:import { RideCamera } from './cameraRig';
+> 25:import { flag05 } from '../vfx/waterRibbon';
+> 26:import { MATCH } from './match';
+> 27:import { buildMatch08 } from '../world/match08';
+> 28:import { buildMatch06 } from '../world/match06';
+> 29:import { tubeCenterAt } from '../world/tube';
+> 30:import { loadBennyRuntime, loadGirlRuntime, loadWater, moduleStatus } from './modules';
+> 71:  const M06_CURL = flag05('m06deep') && flag05('m06curl'); // r30 l …[+64 chars]
+
+### 🤖 Claude — 2026-11-20T22:39:32.562Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='src/game/Game.ts'; s=open(p).read()\ndef rep(old,new,cnt=1):\n    global s\n    assert s.count(old)==cnt, (old[:90], s.count(old)); s=s.replace(old,new)\nrep(\"import { buildMatch06 } from '../world/match06';\", \"import { buildMatch06 } from '../world/match06';\\nimport { SB, makeSbJoin } from '../world/m06sb'; // r30b lead `&m06sb*`\")\nrep(\"  const tube07 = env.zones.tubes.getObjectByName('tube07') ?? null; // r29 m06deep only\",\n\"\"\"  const tube07 = env.zones.tubes.getObjectByName('tube07') ?? null; // r29 m06deep only\n  // r3 …[+778 chars]`
+
+### 🧑 User — 2026-11-20T22:39:32.623Z
+
+> ↩︎ result: ok
+> 11:import * as THREE from 'three';
+> 36:const sm = (a: number, b: number, x: number) => THREE.MathUtils.smoothstep(x, a, b);
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T22:40:24.792Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='src/game/cameraRig.ts'; s=open(p).read()\ndef rep(old,new,cnt=1):\n    global s\n    assert s.count(old)==cnt, (old[:90], s.count(old)); s=s.replace(old,new)\n# import\nfirst_import = s.index(\"import \")\nrep(\"const M06_CAM = flag05('m06cam');\", \"const M06_CAM = flag05('m06cam');\\n// r30b `&m06sbcam=1` (src/world/m06sb.ts): storyboard framing past the start view\\nimport { SB } from '../world/m06sb';\")\n# fields\nrep(\"  private m06vSep: number | null = null;\\n\", \"\"\"  private m06vSep: number | null = null;\n  /** r30b m06sbc …[+5089 chars]`
+
+### 🧑 User — 2026-11-20T22:40:31.433Z
+
+> ↩︎ result: ok
+> 6:import * as THREE from 'three';
+> 7:import { WORLD } from '../world/course';
+> 8:import type { Course, StageId } from '../world/course';
+> 9:import type { TubePath } from '../world/tube';
+> 10:import { applyMatchCam } from './match';
+> 11:import { flag05 } from '../vfx/waterRibbon';
+> 16:import { SB } from '../world/m06sb';
+> tsc done
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T22:40:39.998Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='src/game/cameraRig.ts'; s=open(p).read()\ns=s.replace(\"const M06_CAM = flag05('m06cam');\\n// r30b `&m06sbcam=1` (src/world/m06sb.ts): storyboard framing past the start view\\nimport { SB } from '../world/m06sb';\",\"const M06_CAM = flag05('m06cam');\",1)\ns=s.replace(\"import { flag05 } from '../vfx/waterRibbon';\\n\",\"import { flag05 } from '../vfx/waterRibbon';\\nimport { SB } from '../world/m06sb'; // r30b `&m06sbcam=1`: storyboard framing past the start view\\n\",1)\nopen(p,'w').write(s)\nEOF\ngrep -n \"^import\\|m06sb\" src/gam …[+152 chars]`
+
+### 🧑 User — 2026-11-20T22:40:46.123Z
+
+> ↩︎ result: 6:import * as THREE from 'three';
+> 7:import { WORLD } from '../world/course';
+> 8:import type { Course, StageId } from '../world/course';
+> 9:import type { TubePath } from '../world/tube';
+> 10:import { applyMatchCam } from './match';
+> 11:import { flag05 } from '../vfx/waterRibbon';
+> 12:import { SB } from '../world/m06sb'; // r30b `&m06sbcam=1`: storyboard framing past the start view
+> 126:  /** r30b m06sbcam: the approved camera-space ray to Benny (+z forward, x right, y up) and distance, from off06 / dir06 */
+> 328:          // r30b m06sbcam: Benny at his APPROVED place / size in the frame (all four storyboard panels show him exactly there), the
+> 382:  /** r30b m06sbcam weight: in after the start-view hold (m06vw hand-over), out over the last 14..3 u before 07 */
+> tsc rc=0
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T22:40:53.772Z
+
+Typecheck clean. First test render of the storyboard candidate (all `m06sb` parts on) at the four moments plus the doorway:
+
+### 🤖 Claude — 2026-11-20T22:40:57.843Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -i 's/      return { state: r.state(), cam: r.camera().position, target: r.camera().target, grid };/      return { state: r.state(), cam: r.camera().position, target: r.camera().target, bs: r.bennyScreen(), grid };/' tools/match06/r30b_diag.mjs && sed -i \"s/    console.log('s', tS, JSON.stringify(st.state), 'cam', JSON.stringify(st.cam));/    console.log('s', tS, 'stage', st.state.stage, 'benny', JSON.stringify(st.bs));/\" tools/match06/r30b_diag.mjs && echo \"$(cat /home/user/rainbow-/qa/match/06/r30/QUERY_NEW_v2.txt)&m06sb=1\" > /home/user/rainbow-/q …[+429 chars]`
+

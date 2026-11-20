@@ -500,3 +500,110 @@ Let me look at the crops side by side.
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/benny06 && Q=\"$(cat /home/user/rainbow-/qa/match/06/r30/QUERY_NEW_v2.txt)&b30=1\" && OUT=/tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/b30/s5 && F='\"pitch\":32,\"hs\":0.9,\"ay\":-0.18,\"bp\":4,\"bcap\":2' && AUDIT_W=864 AUDIT_H=1536 AUDIT_PORT=5321 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/benny30/sweep.mjs $OUT \"$Q\" \"[\n[\\\"G1\\\",{$F,\\\"sc\\\":0.92,\\\"bsx\\\":0.88,\\\"ax\\\":-0.06}],\n[\\\"G2\\\",{$F,\\\"sc\\\":0.92,\\\"bsx\\\":0.85,\\\"ax\\\":-0.08,\\\"as\\\":1.15}],\n[\\\"G3\\\",{$F,\\\"sc\\\":0 …[+651 chars]`
 
+### 🧑 User — 2026-11-20T22:36:32.941Z
+
+> ↩︎ result: == G1_a_start.png: benny-box  55.7%  mean|d| 24.4
+>    body   x 223-615 (w 392) y 967-1178 n 44498
+>    pom    x 347-494 (w 147) y 748-888 n 13658
+>    cuff   x 272-562 (w 290) y 896-1014 n 14021
+>    crown  x 287-548 (w 261) y 829-965 n 22047
+>    star   x 472-545 (w 73) y 898-964 n 2521
+>    ALL x 223-615 (w 392) y 748-1178;  cuff bottom @x413: y 1014 -> 62% of height
+>    hat width 290  body width 392  body widths at height-frac 0.60:344 0.70:381 0.80:262 0.90:208 0.97:87
+> == G2_a_start.png: benny-box  55.3%  mean|d| 25.9
+>    body   x 215-619 (w 404) y 965-1178 n 45599
+>    pom    x 351-500 (w 149) y 744-885 n 13409
+>    cuff   x 275-564 (w 289) y 895-1009 n 14075
+>    crown  x 290-550 (w 260) y 827-960 n 21364
+>    star   x 476-549 (w 73) y 895-961 n 2492
+>    ALL x 215-619 (w 404) y 744-1178;  cuff bottom @x414: y 1009 -> 61% of height
+>    hat width 289  body width 404  body widths at height-frac 0.60:356 0.70:392 0.80:254 0.90:198 0.97:88
+> == G3_a_start.png: benny-box  55.4%  mean|d| 25.3
+>    body   x 221-618 (w 397) y 974-1171 n 43691
+>    pom    x 350-496 (w 146) y 748-888 n 13417
+>    cuff   x 274-563 (w 289) y 899-1012 n 14034
+>    crown  x 289-548 (w 259) y 829-962 n 21348
+>    star   x 473-546 (w 73) y 897 …[+1729 chars]
+
+### 🤖 Claude — 2026-11-20T22:36:43.665Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/b30 && python3 -I -c \"\nfrom PIL import Image\nims=[Image.open('/home/user/rainbow-/references/06_crest_the_rinse_arch.png'),Image.open('s4/d0_a_start.png')]+[Image.open(f's5/{k}_a_start.png') for k in ['G1','G3']]\no=Image.new('RGB',(4*440,560))\nfor i,im in enumerate(ims): o.paste(im.convert('RGB').crop((170,690,610,1250)),(i*440,0))\no.save('c5.png')\nims=[Image.open(f's5/{k}_{s}.png') for s in ['c_238','e_310'] for k in ['G1','G3']]\no=Image.new('RGB',(4*300,420))\nfor i,im in enumerate(ims): …[+158 chars]`
+
+### 🧑 User — 2026-11-20T22:36:44.226Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T22:36:44.466Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/b30/c5.png"}`
+
+### 🧑 User — 2026-11-20T22:36:44.495Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T22:36:45.069Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/b30/c5m.png"}`
+
+### 🧑 User — 2026-11-20T22:36:45.107Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T22:37:12.027Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny06 && python3 - <<'EOF'\np='src/characters/benny/benny30.ts'\ns=open(p).read()\ns=s.replace(\"\"\"  /** beanie: shift toward his back (body units, + = toward the rear camera) */\n  hz: number;\"\"\",\"\"\"  /** beanie: shift toward his back (body units, + = toward the rear camera) */\n  hz: number;\n  /** beanie: forward tilt about the cuff's bottom centre (deg, + = top away from the rear camera, so the chase camera\n   *  sees the cuff and stripes as level bands like the painting) */\n  hp: number;\"\"\")\ns=s.replace(\"hs: 1, hsy: 1, hy: 0, hz: 0,\",\"hs: 1 …[+945 chars]`
+
+### 🧑 User — 2026-11-20T22:37:14.845Z
+
+> ↩︎ result: TSC_OK
+
+### 🤖 Claude — 2026-11-20T22:37:30.998Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny06 && python3 - <<'EOF'\np='src/characters/benny/benny30.ts'\ns=open(p).read()\nold=\"\"\"      u.uBald.value.w = THREE.MathUtils.clamp(yUnscaled / SKIN, -1, 1.5);\"\"\"\nnew=\"\"\"      u.uBald.value.w = THREE.MathUtils.clamp(yUnscaled / SKIN, -1, 1.5);\n      // the bald cap's axis follows the beanie's forward tilt\n      const ax = hatUp.clone().applyAxisAngle(new THREE.Vector3(1, 0, 0), THREE.MathUtils.degToRad(P.hp));\n      u.uBald.value.x = ax.x; u.uBald.value.y = ax.y; u.uBald.value.z = ax.z;\"\"\"\nassert old in s; s=s.replace(old,new)\ns=s.replace(\ …[+1390 chars]`
+
+### 🧑 User — 2026-11-20T22:40:29.453Z
+
+> ↩︎ result: TSC_OK
+> == H1_a_start.png: benny-box  56.3%  mean|d| 23.5
+>    ALL x 234-608 (w 374) y 748-1182;  cuff bottom @x413: y 1014 -> 61% of height
+>    hat width 290  body width 374  body widths at height-frac 0.60:268 0.70:368 0.80:273 0.90:218 0.97:137
+> == H2_a_start.png: benny-box  55.2%  mean|d| 28.9
+>    ALL x 228-605 (w 377) y 735-1174;  cuff bottom @x416: y 988 -> 58% of height
+>    hat width 286  body width 377  body widths at height-frac 0.60:270 0.70:367 0.80:319 0.90:240 0.97:143
+> == H3_a_start.png: benny-box  55.4%  mean|d| 28.6
+>    ALL x 235-606 (w 371) y 731-1183;  cuff bottom @x417: y 977 -> 54% of height
+>    hat width 287  body width 371  body widths at height-frac 0.60:267 0.70:365 0.80:295 0.90:226 0.97:129
+> == H4_a_start.png: benny-box  55.1%  mean|d| 28.1
+>    ALL x 239-597 (w 358) y 735-1198;  cuff bottom @x416: y 983 -> 54% of height
+>    hat width 287  body width 358  body widths at height-frac 0.60:267 0.70:348 0.80:300 0.90:238 0.97:107
+> APPR 960:- 980:- 1000:280-557 1020:285-562 1040:221-619 1060:210-628 1080:221-618 1100:273-558 1120:289-539 1140:292-527 1160:313-496 1180:- 1200:-
+> H1_a_start.p 960:- 980:285-547 1000:285-554 1020:260-583 1040:237-602 1060:238-603 1080:252-592 1100 …[+553 chars]
+
+### 🤖 Claude — 2026-11-20T22:40:38.716Z
+
+H1 scores best (56.3 %) and its body rows now track the painted silhouette within ~10–20 px; H3 (hat tilt) hits the painted cuff height (54 % vs ~53 %). Let me compare visually.
+
+### 🤖 Claude — 2026-11-20T22:40:42.154Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/b30 && python3 -I -c \"\nfrom PIL import Image\nims=[Image.open('/home/user/rainbow-/references/06_crest_the_rinse_arch.png')]+[Image.open(f's6/{k}_a_start.png') for k in ['H1','H2','H3','H4']]\no=Image.new('RGB',(5*360,460))\nfor i,im in enumerate(ims): o.paste(im.convert('RGB').crop((170,690,610,1250)).resize((360,458)),(i*360,0))\no.save('c6.png')\nims=[Image.open(f's6/{k}_{s}.png') for s in ['c_238','e_310'] for k in ['H1','H3','H4']]\no=Image.new('RGB',(6*300,420))\nfor i,im in enumerate(ims) …[+159 chars]`
+
+### 🧑 User — 2026-11-20T22:40:42.994Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T22:40:43.131Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/b30/c6.png"}`
+
+### 🧑 User — 2026-11-20T22:40:43.165Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T22:40:43.756Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/b30/c6m.png"}`
+
+### 🧑 User — 2026-11-20T22:40:43.839Z
+
+> ↩︎ result: [image]
+

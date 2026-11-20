@@ -79,10 +79,12 @@ void main() {
   vec3 nrm = vec3(vUv, sqrt(max(0.0, 1.0 - r * r)));
   vec3 L = normalize(vec3(-0.40, 0.74, 0.55));
   float lt = dot(nrm, L);
-  vec3 cSh = vec3(0.60, 0.66, 0.96), cMid = vec3(0.75, 0.75, 0.98), cLi = vec3(0.93, 0.90, 0.99), cW = vec3(0.995, 0.99, 0.995);
+  vec3 cSh = vec3(0.60, 0.64, 0.95), cMid = vec3(0.77, 0.75, 0.97), cLi = vec3(0.89, 0.86, 0.985), cW = vec3(0.995, 0.99, 0.995);
   vec3 col = mix(cSh, cMid, smoothstep(-0.35, 0.25, lt));
   col = mix(col, cLi, smoothstep(0.25, 0.62, lt));
-  col = mix(col, cW, smoothstep(0.60, 0.90, lt));
+  col = mix(col, cW, smoothstep(0.70, 0.95, lt));
+  // a defined lilac rim between packed lobes (the painted spheres read one by one)
+  col = mix(col, cSh * 0.92, smoothstep(0.70, 0.88, r) * (lobe ? 0.4 : 0.2));
   // bounce light from the cyan water on the underside
   col = mix(col, vec3(0.66, 0.80, 1.0), 0.35 * smoothstep(-0.2, -0.85, vUv.y) * smoothstep(0.2, -0.4, lt));
   if (lobe) {
@@ -161,15 +163,15 @@ void main() {
   vec2 p = vec2(vSL.y, vSL.x);
   // inner edge: an irregular lacy line on the water's pink edge
   float e = al - (uStrip.x - 0.12 + 0.28 * vn(vSL.y * 1.1 + (vSL.x > 0.0 ? 13.0 : 0.0)) + 0.1 * vn(vSL.y * 3.7));
-  vec2 pa = p / 0.30, pb = p / 0.105;
+  vec2 pa = p / 0.34, pb = p / 0.13;
   vec3 A = cells(pa, 0.0), B = cells(pb, 31.0);
   float fa = length(fwidth(pa)), fb = length(fwidth(pb));
-  vec3 mean = vec3(0.84, 0.84, 0.985);
-  vec3 col = vec3(0.74, 0.76, 0.975);                                               // shaded gaps
+  vec3 mean = vec3(0.82, 0.81, 0.975);
+  vec3 col = vec3(0.76, 0.76, 0.97);                                               // shaded gaps
   float mB = 1.0 - smoothstep(0.88, 1.0, B.x);
-  col = mix(col, shadeBub(B.yz), mB);
+  col = mix(col, mix(shadeBub(B.yz), mean, 0.45), mB);
   col = mix(col, mean, smoothstep(0.25, 0.6, fb));
-  float mA = (1.0 - smoothstep(0.90, 1.0, A.x)) * step(0.30, h21(floor(pa) + 9.1));
+  float mA = (1.0 - smoothstep(0.90, 1.0, A.x)) * step(0.18, h21(floor(pa) + 9.1));
   vec3 cA = mix(shadeBub(A.yz), mean, smoothstep(0.25, 0.6, fa));
   col = mix(col, cA, mA);
   float a = smoothstep(-0.02, 0.14, e);

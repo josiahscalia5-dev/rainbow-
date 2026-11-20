@@ -17,18 +17,19 @@ index 142e6c3..94c18d8 100644
  
    // ---- fur clumping ----
 diff --git a/src/game/Game.ts b/src/game/Game.ts
-index 6aec240..735b404 100644
+index 6aec240..4603121 100644
 --- a/src/game/Game.ts
 +++ b/src/game/Game.ts
-@@ -26,6 +26,7 @@ import { flag05 } from '../vfx/waterRibbon';
+@@ -26,6 +26,8 @@ import { flag05 } from '../vfx/waterRibbon';
  import { MATCH } from './match';
  import { buildMatch08 } from '../world/match08';
  import { buildMatch06 } from '../world/match06';
++import { SB, makeSbJoin } from '../world/m06sb'; // r30b lead `&m06sb*`
 +import { tubeCenterAt } from '../world/tube';
  import { loadBennyRuntime, loadGirlRuntime, loadWater, moduleStatus } from './modules';
  
  type Mode = 'intro' | 'ride' | 'outro' | 'end';
-@@ -67,6 +68,11 @@ export async function startGame(canvas: HTMLCanvasElement) {
+@@ -67,6 +69,11 @@ export async function startGame(canvas: HTMLCanvasElement) {
    // HDR luminance). Switch off: 0.2 / 0.35 / 0.94 exactly as before (pixel-identical default build).
    const glow05 = flag05('glow05');
    const M06_BUB = flag05('m06bub');
@@ -40,7 +41,7 @@ index 6aec240..735b404 100644
    const qn = (k: string, d: number) => { const v = qs.get(k); return v !== null && v !== '' && isFinite(+v) ? +v : d; };
    // (measured 2026-11-16, qa/pilot05/wave12/glow/: threshold 1.0–1.3 washed the whole river toward white — the scene's
    // linear HDR body colours pass it; 2.6 keeps only streak cores, flares and lamps → water saturation UP, 0.92 → 0.97)
-@@ -117,9 +123,12 @@ export async function startGame(canvas: HTMLCanvasElement) {
+@@ -117,9 +124,16 @@ export async function startGame(canvas: HTMLCanvasElement) {
    let m08On = false;
    let m08Applied = false;
    // `?match06=1`: the approved Screen 06 scenery on fitted 3D geometry (src/world/match06.ts); off: nothing is built
@@ -50,11 +51,15 @@ index 6aec240..735b404 100644
    if (m06) { m06.group.visible = false; scene.add(m06.group); m06.bakeDepth(renderer); }
    let m06On = false;
 +  const tube07 = env.zones.tubes.getObjectByName('tube07') ?? null; // r29 m06deep only
++  // r30b `&m06sbjoin=1` (src/world/m06sb.ts): 07's tube seen from inside 06 = the storyboard's far violet (not its warm '#ffd08a' far glow,
++  // the pale peach circle), easing back to 07's own look over the first SB.j07 u of Screen 07
++  const sbJoin = SB.join && tube07 ? makeSbJoin(tube07) : null;
++  if (sbJoin) console.info('[match06] m06sbjoin', { materials: sbJoin.count, j07: SB.j07 });
 +  let tube07Applied = false;
    let m06Applied = false;
    // debug: ?hide=water,benny,coins,drumA,basin,tubes,chamber
    const hidden = new Set((qs.get('hide') ?? '').split(',').filter(Boolean));
-@@ -545,9 +554,28 @@ export async function startGame(canvas: HTMLCanvasElement) {
+@@ -545,9 +559,29 @@ export async function startGame(canvas: HTMLCanvasElement) {
        // carries its bubbles only there; while swimming the screen had none)
        const bub6 = M06_BUB && m06On && m06.away(camera.position) > 0.5;
        m06.setAway(m06On ? m06.away(camera.position) : 0);
@@ -80,14 +85,23 @@ index 6aec240..735b404 100644
 +      else for (const ch of env.zones.tubes.children) ch.visible = true;
 +      tube07Applied = m06On;
 +    }
++    if (sbJoin) { const s07j = course.stage('07').s0; sbJoin.update(1 - THREE.MathUtils.smoothstep(st.s, s07j, s07j + SB.j07)); }
      if (m08 && m08On) for (const k of ['puddles', 'finalWave']) { const o = water.parts?.[k]; if (o) o.visible = false; }
      if (m08 && b08 && b08Rest) {
        // rounder body (narrower, taller) with the beanie counter-scaled to keep its size; ≈23 px right (world +x, measured fur centroid), lifted
 diff --git a/src/game/cameraRig.ts b/src/game/cameraRig.ts
-index 2a2b9eb..1763055 100644
+index 2a2b9eb..50b3153 100644
 --- a/src/game/cameraRig.ts
 +++ b/src/game/cameraRig.ts
-@@ -20,6 +20,23 @@ const M06_LA = (() => {
+@@ -9,6 +9,7 @@ import type { Course, StageId } from '../world/course';
+ import type { TubePath } from '../world/tube';
+ import { applyMatchCam } from './match';
+ import { flag05 } from '../vfx/waterRibbon';
++import { SB } from '../world/m06sb'; // r30b `&m06sbcam=1`: storyboard framing past the start view
+ 
+ /** r7 `?match06=1&m06cam=1` only: Screen 06 camera frame = chord toward the river this far ahead (`&m06la=`, default 40) */
+ const M06_CAM = flag05('m06cam');
+@@ -20,6 +21,23 @@ const M06_LA = (() => {
   *  is held while Benny swims and eases toward the m06cam route view only as visibility needs it. Tunables (QA):
   *  `&m06vw=a,b` hold → hand-over (u past the checkpoint, default 20,38), `&m06vx=` max route x (NDC, default 0.85) */
  const M06_VIEW = M06_CAM && flag05('m06view');
@@ -111,7 +125,18 @@ index 2a2b9eb..1763055 100644
  const m06num = (k: string, n: number, d: number[]) => {
    const v = typeof location !== 'undefined' ? new URLSearchParams(location.search).get(k) : null;
    const a = (v ?? '').split(',').map(Number);
-@@ -198,8 +215,11 @@ export class RideCamera {
+@@ -105,6 +123,10 @@ export class RideCamera {
+   private m06: { s0: number; o: number[]; d: number[] } | null = null;
+   /** r21 m06view: approved vertical angle between Benny and the river 6 u ahead (rad) */
+   private m06vSep: number | null = null;
++  /** r30b m06sbcam: the approved camera-space ray to Benny (+z forward, x right, y up) and distance, from off06 / dir06 */
++  private sbB: { v: THREE.Vector3; D: number } | null = null;
++  private sbPrevS: number | null = null;
++  private sbVel = 0;
+ 
+   constructor(private course: Course) {}
+ 
+@@ -198,8 +220,11 @@ export class RideCamera {
            this.m06 = { s0: st6.s0, o: [o.dot(F.R), o.dot(F.U), o.dot(F.T)], d: [d.dot(F.R), d.dot(F.U), d.dot(F.T)] };
          }
          const F = frame6(s), M = this.m06;
@@ -124,7 +149,7 @@ index 2a2b9eb..1763055 100644
          const d6 = F.R.clone().multiplyScalar(M.d[0]).addScaledVector(F.U, M.d[1]).addScaledVector(F.T, M.d[2]);
          if (M06_CAM) {
            // keep the camera >= 1.6 u above the water directly below it (the chord frame is flatter than the slope), then
-@@ -222,11 +242,28 @@ export class RideCamera {
+@@ -222,11 +247,28 @@ export class RideCamera {
            // the route stays visible; exactly the approved camera at the checkpoint (wv = 1), eased into the m06cam view
            // above by the hand-over distance (so the 06→07 join is unchanged)
            const sB = st6.s0 + 10;
@@ -154,6 +179,81 @@ index 2a2b9eb..1763055 100644
              // keep >= 1.6 u above the water below (down the far slope), turning the view so Benny keeps his approved place
              let best = Infinity, wy = -Infinity;
              for (let k = -14; k <= 8; k += 0.5) {
+@@ -282,6 +324,15 @@ export class RideCamera {
+             d6.normalize().lerp(dv, wv).normalize();
+           }
+         }
++        if (SB.cam) {
++          // r30b m06sbcam: Benny at his APPROVED place / size in the frame (all four storyboard panels show him exactly there), the
++          // view yawed / pitched so the river SB.la u ahead sits at NDC SB.q (the panels' vanishing area); level (no roll)
++          const wS = this.sbW(s);
++          if (wS > 0) {
++            const pose = this.sbPose(s, lat, p6.off06, p6.dir06, p.fov);
++            cp6.lerp(pose.c, wS); d6.normalize().lerp(pose.d, wS).normalize();
++          }
++        }
+         outPos.lerp(cp6, w6);
+         outTarget.lerp(cp6.addScaledVector(d6, 10), w6);
+         outUp.lerp(new THREE.Vector3(0, 1, 0), w6).normalize();
+@@ -328,9 +379,57 @@ export class RideCamera {
+     return p;
+   }
+ 
++  /** r30b m06sbcam weight: in after the start-view hold (m06vw hand-over), out over the last 14..3 u before 07 */
++  private sbW(s: number) {
++    if (!SB.cam || !STAGE_CAM['06']?.off06) return 0;
++    const st6 = this.course.stage('06'), sB = st6.s0 + 10, s07 = this.course.stage('07').s0;
++    return THREE.MathUtils.smoothstep(s, sB + M06_VW[0], sB + M06_VW[1]) * (1 - THREE.MathUtils.smoothstep(s, s07 - 14, s07 - 3));
++  }
++  /** r30b m06sbcam pose: camera position + view direction (see desired()) */
++  private sbPose(s: number, lat: number, off06: [number, number, number], dir06: [number, number, number], fovDeg: number) {
++    const UP = new THREE.Vector3(0, 1, 0);
++    const basis = (F: THREE.Vector3) => { const R = new THREE.Vector3().crossVectors(F, UP).normalize(); return { F, R, U: new THREE.Vector3().crossVectors(R, F) }; };
++    if (!this.sbB) {
++      const off = new THREE.Vector3(...off06), d0 = new THREE.Vector3(...dir06).normalize(), b = basis(d0), v = off.clone().negate();
++      this.sbB = { v: new THREE.Vector3(v.dot(b.R), v.dot(b.U), v.dot(b.F)).normalize(), D: off.length() };
++    }
++    const f = this.course.sample(s), bn = f.pos.clone().addScaledVector(f.right, lat * 0.6);
++    const Q = new THREE.Vector3();
++    for (let i = 0; i <= 4; i++) Q.add(this.course.sample(Math.min(s + SB.la[0] + ((SB.la[1] - SB.la[0]) * i) / 4, this.course.length - 1)).pos);
++    Q.multiplyScalar(1 / 5);
++    const tV = Math.tan(THREE.MathUtils.degToRad(fovDeg / 2)), tH = tV * 0.5625;
++    const vQ = new THREE.Vector3(SB.q[0] * tH, SB.q[1] * tV, 1).normalize();
++    const D = this.sbB.D * SB.k, vB = this.sbB.v;
++    const rot = (yaw: number, pit: number) => basis(new THREE.Vector3(Math.sin(yaw) * Math.cos(pit), Math.sin(pit), Math.cos(yaw) * Math.cos(pit)));
++    const apply = (b: ReturnType<typeof basis>, v: THREE.Vector3) => b.R.clone().multiplyScalar(v.x).addScaledVector(b.U, v.y).addScaledVector(b.F, v.z);
++    let C = bn.clone().sub(Q).setY(0).normalize().multiplyScalar(D).add(bn).add(new THREE.Vector3(0, D * 0.45, 0));
++    let b = basis(Q.clone().sub(C).normalize());
++    for (let it = 0; it < 5; it++) {
++      const wQ = Q.clone().sub(C).normalize();
++      const rho = Math.hypot(vQ.y, vQ.z), al = Math.atan2(vQ.z, vQ.y);
++      const pit = al - Math.acos(THREE.MathUtils.clamp(wQ.y / rho, -1, 1));
++      const w0 = apply(rot(0, pit), vQ);
++      const yaw = Math.atan2(wQ.x, wQ.z) - Math.atan2(w0.x, w0.z);
++      b = rot(yaw, pit);
++      C = bn.clone().addScaledVector(apply(b, vB), -D);
++    }
++    return { c: C, d: b.F.clone() };
++  }
++
+   update(dt: number, s: number, lat: number, cam: THREE.PerspectiveCamera, snap = false) {
+     const dp = new THREE.Vector3(), dt3 = new THREE.Vector3(), du = new THREE.Vector3();
+-    const p = this.desired(s, lat, dp, dt3, du);
++    // r30b m06sbcam: the rig's smoothing trails ~v/7 u (position) and ~v/9 u (aim) behind a moving Benny; aim the smoothed pose that far
++    // ahead so Benny keeps his approved size and place while swimming (no lead while the storyboard framing is off)
++    if (SB.cam) {
++      if (this.sbPrevS !== null && dt > 0 && !snap) this.sbVel += (THREE.MathUtils.clamp((s - this.sbPrevS) / dt, 0, 40) - this.sbVel) * Math.min(1, dt * 4);
++      this.sbPrevS = s;
++    }
++    const wL = SB.cam && !snap ? this.sbW(s) : 0;
++    if (wL > 0) {
++      const tp = new THREE.Vector3(), tu = new THREE.Vector3();
++      this.desired(s + wL * this.sbVel / 9, lat, tp, dt3, tu);
++    }
++    const p = this.desired(s + wL * this.sbVel / 7, lat, dp, wL > 0 ? new THREE.Vector3() : dt3, du);
+     const k = snap || !this.init ? 1 : 1 - Math.exp(-dt * 7);
+     const kt = snap || !this.init ? 1 : 1 - Math.exp(-dt * 9);
+     this.pos.lerp(dp, k);
 diff --git a/src/gameplay/coins.ts b/src/gameplay/coins.ts
 index 69122b3..49a3b46 100644
 --- a/src/gameplay/coins.ts
@@ -519,19 +619,20 @@ index 598cb42..d9056e5 100644
    // ---- 05 far tunnel (forced perspective, calibrated for the locked 05 checkpoint eye) ----
    {
 diff --git a/src/world/match06.ts b/src/world/match06.ts
-index 831c2b4..93ebd2f 100644
+index 831c2b4..7550fd7 100644
 --- a/src/world/match06.ts
 +++ b/src/world/match06.ts
-@@ -19,6 +19,8 @@ import * as THREE from 'three';
+@@ -19,6 +19,9 @@ import * as THREE from 'three';
  import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
  import { PROJ05_INVERSE } from '../vfx/waterRibbon';
  import type { Course } from './course';
 +import route06deep from '../../assets/textures/match06/route06deep.json';
 +import route06curl from '../../assets/textures/match06/route06curl.json';
++import { SB, SB_GLSL, SB_FAR, buildSbBands } from './m06sb'; // r30b lead `&m06sb*` storyboard candidate
  
  interface Layout06 {
    camera: { matrixWorld: number[]; fov: number; size: [number, number]; pos: number[] };
-@@ -44,6 +46,8 @@ export interface Match06 {
+@@ -44,6 +47,8 @@ export interface Match06 {
    away(cam: THREE.Vector3): number;
    /** r7 `&m06foam=1`: show the 3D foam clouds once the camera has left the approved view (a = away()) */
    setAway(a: number): void;
@@ -540,7 +641,7 @@ index 831c2b4..93ebd2f 100644
  }
  
  const VERT = /* glsl */ `
-@@ -95,6 +99,16 @@ uniform vec3 uAxU;
+@@ -95,6 +100,16 @@ uniform vec3 uAxU;
  uniform float uRingH;
  uniform float uBendAng; // r11 m06bend: ring bulb angle per vertex (vTile.x) instead of around the straight axis
  uniform float uPanel;
@@ -557,7 +658,7 @@ index 831c2b4..93ebd2f 100644
  // r15 m06gold: the user's painted ring band (tools/match06/make_ring06.py) along each modeled ring's profile
  uniform float uGold;
  uniform sampler2D uRingTex;
-@@ -112,6 +126,39 @@ uniform float uStO;
+@@ -112,6 +127,39 @@ uniform float uStO;
  uniform float uStDbg;
  uniform vec3 uProjF;
  uniform mat4 uProjVP;
@@ -597,7 +698,7 @@ index 831c2b4..93ebd2f 100644
  varying vec4 vProj;
  varying vec3 vW;
  varying vec3 vN;
-@@ -122,6 +169,11 @@ float linZ(float d) { float n = uNearFar.x, f = uNearFar.y; float z = d * 2.0 -
+@@ -122,6 +170,11 @@ float linZ(float d) { float n = uNearFar.x, f = uNearFar.y; float z = d * 2.0 -
  void main() {
    // ring-structured tile in the surface's own coordinates (mirrored repeat: no seams)
    vec3 pc = texture2D(uTile, vTile).rgb;
@@ -609,15 +710,20 @@ index 831c2b4..93ebd2f 100644
    vec3 nn = normalize(vN);
    float al = abs(vLS.x);
    // r18 m06st: off exactly at the approved viewpoint (the approved start view keeps its pixels), on as soon as the camera
-@@ -201,6 +253,7 @@ void main() {
+@@ -201,6 +254,12 @@ void main() {
      vec3 pan = mix(base, vec3(0.24, 0.02, 0.22), slot) + vec3(0.85, 0.55, 0.95) * 0.18 * lip * (1.0 - slot);
      pc = mix(pc, pan, 0.85);
    }
++#ifdef SB06
++  // r30b m06sb (src/world/m06sb.ts): storyboard gold bands + drum walls once the 3D materials show (the approved view keeps its pixels below)
++  if (uSbBand > 0.5 && uRing > 0.5) { vec3 Vs = normalize(cameraPosition - vW); vec3 Ts = dot(vAxT, vAxT) > 0.25 ? normalize(vAxT) : uAxD; pc = sbGold(vTile.x * 1.5707963, clamp(vTile.y, 0.0, 1.0), nn, Vs, Ts); }
++  if (uSbWall > 0.5 && uFloor < 0.5 && uRing < 0.5) { vec3 Vs = normalize(cameraPosition - vW); vec3 Ts = dot(vAxT, vAxT) > 0.25 ? normalize(vAxT) : uAxD; pc = sbWall(vTile.x * uSbA.x + uSbA.y, vLS.y, uSbA.z, nn, Vs, Ts); }
++#endif
 +  if (uHaze.w > 0.5 && uFloor < 0.5) pc = mix(pc, uHazeCol, uHaze.z * smoothstep(uHaze.x, uHaze.y, distance(cameraPosition, vW)));
    vec3 t = pc;
    float cp = abs(dot(nn, normalize(uProjPos - vW))), cc = abs(dot(nn, normalize(cameraPosition - vW)));
    // stretch + magnification guard: the projection is used where the current view sees the surface no more face-on and
-@@ -226,7 +279,7 @@ void main() {
+@@ -226,7 +285,7 @@ void main() {
      if (inside || (stOn > 0.5 && edge > 0.0)) {
        float vis = 1.0;
        vec2 uvF = uv; // r18 m06st: where the plate is read (the crest-top layer below)
@@ -626,7 +732,7 @@ index 831c2b4..93ebd2f 100644
        if (uUseDepth > 0.5) {
          float zs = linZ(texture2D(uDepth, uv).r), zf = linZ(ndc.z * 0.5 + 0.5);
          vis = 1.0 - smoothstep(0.015 * zs, 0.04 * zs + 0.05, zf - zs);
-@@ -310,7 +363,9 @@ void main() {
+@@ -310,7 +369,9 @@ void main() {
              }
              rS = (rS / 12.0) * 0.5 + mk.r * 0.5;
            }
@@ -637,7 +743,7 @@ index 831c2b4..93ebd2f 100644
          } else w *= 1.0 - max(mk.r, mk.g) * away * inWater;
        }
        // r6 m06geo: painted WATER that lands on the tunnel wall (the crest-top water / far stream beside the narrow river)
-@@ -324,11 +379,50 @@ void main() {
+@@ -324,11 +385,50 @@ void main() {
        if (uRing > 0.5) w *= stOn > 0.5 ? (filled > 0.5 ? 1.0 : hold) : 1.0 - smoothstep(0.2, 1.2, distance(cameraPosition, uProjPos));
        vec3 pl = texture2D(uPlate, uv).rgb;
        if (filled > 0.5) pl = textureLod(uPlate, uvF, 0.0).rgb;
@@ -688,7 +794,7 @@ index 831c2b4..93ebd2f 100644
    if (uDbg.x + uDbg.y + uDbg.z > 0.0) gl_FragColor.rgb = mix(gl_FragColor.rgb, uDbg, 0.45);
  }`;
  
-@@ -337,6 +431,9 @@ void main() {
+@@ -337,6 +437,9 @@ void main() {
  const FOAMC_VERT = /* glsl */ `
  attribute vec4 aB;
  attribute float aS;
@@ -698,7 +804,7 @@ index 831c2b4..93ebd2f 100644
  uniform vec2 uNear;
  varying vec2 vUv;
  varying float vS;
-@@ -345,8 +442,15 @@ varying float vPx;
+@@ -345,8 +448,15 @@ varying float vPx;
  void main() {
    vUv = uv * 2.0 - 1.0;
    vS = aS;
@@ -714,7 +820,7 @@ index 831c2b4..93ebd2f 100644
    mv.xy += position.xy * aB.w * 2.0 * vF;
    vPx = aB.w * vF * projectionMatrix[1][1] / max(-mv.z, 0.1); // on-screen radius (fraction of the half-height)
    gl_Position = projectionMatrix * mv;
-@@ -410,8 +514,28 @@ void main() {
+@@ -410,8 +520,29 @@ void main() {
  
  const tex = (f: string) => new URL(`../../assets/textures/match06/${f}`, import.meta.url).href;
  
@@ -740,15 +846,31 @@ index 831c2b4..93ebd2f 100644
 +  const hz = (QS0?.get('m06haze') ?? '').split(',').map(Number);
 +  const pw = (QS0?.get('m06projw') ?? '').split(',').map(Number);
 +  const PROJW = TDBG === 'noproj' ? new THREE.Vector2(0.01, 0.02) : pw.length === 2 && pw.every(Number.isFinite) && pw[1] > pw[0] ? new THREE.Vector2(pw[0], pw[1]) : new THREE.Vector2(1e4, 2e4);
-+  const HAZE = hz.length >= 2 && hz.every(Number.isFinite) ? new THREE.Vector4(hz[0], hz[1], hz[2] ?? 1, 1) : new THREE.Vector4(0, 1, 0, 0);
++  const HAZE = SB.haze ? new THREE.Vector4(SB.hz[0], SB.hz[1], SB.hz[2], 1) // r30b m06sbhaze: the storyboard's bright far violet
++    : hz.length >= 2 && hz.every(Number.isFinite) ? new THREE.Vector4(hz[0], hz[1], hz[2] ?? 1, 1) : new THREE.Vector4(0, 1, 0, 0);
    const loader = new THREE.TextureLoader();
    const plate = await loader.loadAsync(tex('plate06_hybrid.png'));
    plate.colorSpace = THREE.NoColorSpace; // raw display values: the shader inverts the post chain itself
-@@ -493,8 +617,12 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+@@ -487,14 +618,25 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+   if (stb.length === 2 && stb.every(Number.isFinite)) shared.uStB.value.set(stb[0], stb[1]);
+   if (Number.isFinite(Number(qs?.get('m06sto'))) && qs?.get('m06sto')) shared.uStO.value = Number(qs?.get('m06sto'));
+   shared.uStDbg.value = qs?.get('m06stdbg') === '1' ? 1 : 0; // QA only: red = crest layer, green = its weight, blue = floor
++  // r30b m06sb: storyboard walls / bands need the tunnel direction per vertex (aAxT) and the m06sb GLSL; off = the shaders as before
++  const SBX = SB.wall || SB.band;
++  const VERT_X = SBX ? VERT.replace('varying vec2 vLS;', 'varying vec2 vLS;\nattribute vec3 aAxT;\nvarying vec3 vAxT;').replace('vLS = aLS;', 'vLS = aLS;\n  vAxT = aAxT;') : VERT;
++  const FRAG_X = SBX ? FRAG.replace('varying vec2 vLS;', 'varying vec2 vLS;\nuniform vec3 uSbA;\n' + SB_GLSL) : FRAG;
++  const TT0 = L.tiles.tube as unknown as { anglePeriod: number; wallAngle: [number, number] };
++  const sbU = () => ({ uSbWall: { value: 0 }, uSbBand: { value: 0 }, uSbSlot: { value: new THREE.Vector4(SB.slot[0], SB.slot[1], SB.slot[2], SB.slot[3]) },
++    uSbA: { value: new THREE.Vector3(TT0.anglePeriod, TT0.wallAngle[0], Number(qs?.get('m06tunr')) || 14) } });
+   const mat = (tile: THREE.Texture, floor = false) => new THREE.ShaderMaterial({
+-    vertexShader: VERT, fragmentShader: FRAG, side: THREE.DoubleSide, fog: false,
+-    uniforms: { ...shared, uTile: { value: tile }, uDbg: { value: new THREE.Vector3() }, uMask: { value: mask },
++    vertexShader: VERT_X, fragmentShader: FRAG_X, side: THREE.DoubleSide, fog: false, defines: SBX ? { SB06: '' } : {},
++    uniforms: { ...shared, ...sbU(), uTile: { value: tile }, uDbg: { value: new THREE.Vector3() }, uMask: { value: mask },
        uFloor: { value: floor ? 1 : 0 }, uUseMask: { value: mask ? 1 : 0 }, uStM: { value: floor ? 0 : 1 },
        uGeo: { value: GEO ? 1 : 0 }, uR6: { value: FLOW ? 1 : 0 }, uR6p: { value: r6p },
        uRiver: { value: tRiver ?? tile }, uFoam: { value: tFoam ?? tile },
-+      uTSwap: { value: TCROP ? 1 : 0 }, uHaze: { value: HAZE.clone() }, uHazeCol: { value: new THREE.Vector3(0.52, 0.22, 0.44) }, uDbgFlat: { value: TDBG === 'flatwall' ? 1 : 0 }, uProjW: { value: PROJW.clone() },
++      uTSwap: { value: TCROP ? 1 : 0 }, uHaze: { value: HAZE.clone() }, uHazeCol: { value: SB.haze ? SB_FAR.clone() : new THREE.Vector3(0.52, 0.22, 0.44) }, uDbgFlat: { value: TDBG === 'flatwall' ? 1 : 0 }, uProjW: { value: PROJW.clone() },
        uRing: { value: 0 }, uGold: { value: 0 }, uRingTex: { value: tile }, uRingH: { value: 1 }, uBendAng: { value: 0 }, uPanel: { value: 0 }, uAxO: { value: new THREE.Vector3() }, uAxD: { value: new THREE.Vector3(0, 0, -1) },
 -      uAxR: { value: new THREE.Vector3(1, 0, 0) }, uAxU: { value: new THREE.Vector3(0, 1, 0) } },
 +      uAxR: { value: new THREE.Vector3(1, 0, 0) }, uAxU: { value: new THREE.Vector3(0, 1, 0) },
@@ -758,7 +880,7 @@ index 831c2b4..93ebd2f 100644
    });
  
    // river frames from the course (beyond s1: straight along the heading at s1, as tools/match06/geo06.py)
-@@ -549,7 +677,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+@@ -549,7 +691,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
      const Rt = Number(qs?.get("m06tunr")) || 14;
      const vp = (TT as { vp?: [number, number] }).vp ?? [W / 2, H / 2];
      let ax = new THREE.Vector3((vp[0] / W) * 2 - 1, 1 - (vp[1] / H) * 2, 0.5).unproject(proj).sub(proj.position).normalize();
@@ -767,7 +889,7 @@ index 831c2b4..93ebd2f 100644
      if (qs?.get('m06tunax') === 'chord') ax = course.sample(sE).pos.sub(course.sample(sA).pos).normalize();
      const C = proj.position.clone();
      // axis through the centroid of the 06 river (perpendicular to ax), lifted `&m06tunh=` (default 3) above it
-@@ -558,9 +686,9 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+@@ -558,9 +700,9 @@ export async function buildMatch06(course: Course): Promise<Match06> {
      cen.multiplyScalar(1 / n);
      const Ux = new THREE.Vector3(0, 1, 0).addScaledVector(ax, -ax.y).normalize(), Rx = new THREE.Vector3().crossVectors(ax, Ux).normalize();
      const hq = Number(qs?.get('m06tunh'));
@@ -780,7 +902,7 @@ index 831c2b4..93ebd2f 100644
      // r11 `&m06bend=1` (lead, qa/match/06/r11/NOTES.md): the painted tunnel BENDS down-right with the river (BLUEPRINT_06:
      // the inner ring centres drift toward the glow; Depth Anything 3: the glow is the far end of a deep tube that turns away).
      // The straight cylinder ignored the river's right turn after the crest, so while swimming it showed a long centred
-@@ -603,25 +731,92 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+@@ -603,25 +745,95 @@ export async function buildMatch06(course: Course): Promise<Match06> {
        }
        console.info('[match06] m06bend', { sTop, aTop: +aTop.toFixed(1), yawEndDeg: +THREE.MathUtils.radToDeg(yaw[nA - 1]).toFixed(1) });
      }
@@ -835,7 +957,9 @@ index 831c2b4..93ebd2f 100644
 +      const sg = new THREE.BufferGeometry();
 +      sg.setAttribute('position', new THREE.Float32BufferAttribute(sp, 3)); sg.setAttribute('aTile', new THREE.Float32BufferAttribute(stl, 2));
 +      sg.setAttribute('aLS', new THREE.Float32BufferAttribute(sls, 2)); sg.setIndex(si); sg.computeVertexNormals();
-+      stub0 = add(sg, mat(tTube), 'stub0');
++      if (SBX) { const n0 = sp.length / 3, at0 = new Float32Array(n0 * 3); for (let i = 0; i < n0; i++) at0.set([ax.x, ax.y, ax.z], i * 3); sg.setAttribute('aAxT', new THREE.BufferAttribute(at0, 3)); }
++      const stM = mat(tTube); if (SB.wall) stM.uniforms.uSbWall.value = 1;
++      stub0 = add(sg, stM, 'stub0');
 +    }
 +    // r30 m06curl: over the last 24 u before Screen 07's entrance the tube's centre + radius ease onto the 07 tube mouth (its centre in
 +    // the entrance plane, radius - 0.25), so the purple-and-gold tunnel runs straight into 07's tube; its gold collar = the doorway
@@ -852,7 +976,8 @@ index 831c2b4..93ebd2f 100644
        const i = THREE.MathUtils.clamp(Math.round((a - a0) / DA), 0, nA - 1);
        return { p: fP[i].clone().addScaledVector(fT[i], a - (a0 + i * DA)), t: fT[i], r: fR[i], u: fU[i] };
      };
-     const pos: number[] = [], tl: number[] = [], ls: number[] = [], idx: number[] = [];
+-    const pos: number[] = [], tl: number[] = [], ls: number[] = [], idx: number[] = [];
++    const pos: number[] = [], tl: number[] = [], ls: number[] = [], idx: number[] = [], axT: number[] = [];
      const rows: number[] = [];
      for (let a = a0; a < a0 + 90; a += 0.5) rows.push(a);
 -    for (let a = a0 + 90; a <= a1; a += 2) rows.push(a);
@@ -874,10 +999,22 @@ index 831c2b4..93ebd2f 100644
        let aa = th; if (aa > TT.wallAngle[1]) aa -= Math.PI * 2;
 -      tl.push((aa - TT.wallAngle[0]) / TT.anglePeriod, (a + kS) / TT.period); ls.push(0, a + kS);
 +      if (TSWAP) tl.push((a + kS) / TT.period, (aa - TT.wallAngle[0]) / TT.anglePeriod); else tl.push((aa - TT.wallAngle[0]) / TT.anglePeriod, (a + kS) / TT.period); ls.push(0, a + kS);
++      axT.push(f.t.x, f.t.y, f.t.z);
      }
      const nC = RAD + 1;
      for (let i = 0; i < rows.length - 1; i++) for (let j = 0; j < RAD; j++) { const a = i * nC + j, b = a + 1, c = a + nC, d = c + 1; idx.push(a, c, b, b, c, d); }
-@@ -686,12 +881,22 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+@@ -629,8 +841,10 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+     g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+     g.setAttribute('aTile', new THREE.Float32BufferAttribute(tl, 2));
+     g.setAttribute('aLS', new THREE.Float32BufferAttribute(ls, 2));
++    if (SBX) g.setAttribute('aAxT', new THREE.Float32BufferAttribute(axT, 3));
+     g.setIndex(idx); g.computeVertexNormals();
+     const tubeMat = mat(tTube);
++    if (SB.wall) tubeMat.uniforms.uSbWall.value = 1;
+     add(g, tubeMat, 'tube');
+     { const fe = axisAt(a1); tunCap = { pos: fe.p.clone(), dir: fe.t.clone(), r: radAt(a1) }; }
+     if (RING) {
+@@ -686,12 +900,23 @@ export async function buildMatch06(course: Course): Promise<Match06> {
        // r7b: only the nearer rings are modeled (up to `&m06ringn=`, default 10 spacings past the nearest painted ring); the
        // far ones bunched into a busy moiré — beyond them the painted rings + the tapering tunnel carry the depth
        const nMax = Number(qs?.get('m06ringn')) || 99; // r7b: limiting to 10 left an empty hole at the centre (not kept)
@@ -892,7 +1029,8 @@ index 831c2b4..93ebd2f 100644
 +        ringAs.push(a);
 +      }
 +      const nPainted = ringAs.length;
-+      if (CURL) ringAs.push(...route06curl.curl.rings);
++      // r30b m06sbband: the designed curl bands are built below as broad storyboard bands (not as lathes of the painted profile)
++      if (CURL && !SB.band) ringAs.push(...route06curl.curl.rings);
 +      const CBW = Number(qs?.get('m06cbw')) || 1.5;
 +      for (let ri = 0; ri < ringAs.length; ri++) {
 +        const a = ringAs[ri], Ra = radAt(a), sc = Ra / Rt, wk = ri >= nPainted ? CBW : 1;
@@ -904,16 +1042,35 @@ index 831c2b4..93ebd2f 100644
          lg.translate(fr.p.x, fr.p.y, fr.p.z);
          const n = lg.attributes.position.count, lsA = new Float32Array(n * 2), tA = new Float32Array(n * 2);
          for (let i = 0; i < n; i++) lsA[i * 2] = lp[i % lp.length].y / sc; // local axial offset inside the band
-@@ -708,7 +913,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+@@ -700,6 +925,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+         else if (GOLD) for (let i = 0; i < n; i++) { tA[i * 2] = (Math.floor(i / lp.length) / 128) * 4; tA[i * 2 + 1] = vProf[i % lp.length]; }
+         lg.setAttribute('aLS', new THREE.Float32BufferAttribute(lsA, 2));
+         lg.setAttribute('aTile', new THREE.Float32BufferAttribute(tA, 2));
++        if (SBX) { const atA = new Float32Array(n * 3); for (let i = 0; i < n; i++) atA.set([fr.t.x, fr.t.y, fr.t.z], i * 3); lg.setAttribute('aAxT', new THREE.BufferAttribute(atA, 3)); }
+         lg.deleteAttribute('uv');
+         parts.push(lg);
+       }
+@@ -708,7 +934,18 @@ export async function buildMatch06(course: Course): Promise<Match06> {
        const rm = mat(tTube);
        Object.assign(rm.uniforms, { uRing: { value: 1 }, uGold: { value: GOLD ? 1 : 0 }, uRingTex: { value: tRing ?? tTube }, uRingH: { value: h }, uBendAng: { value: BEND ? 1 : 0 }, uUseMask: { value: 0 }, uAxO: { value: O.clone() }, uAxD: { value: ax.clone() },
          uAxR: { value: Rx.clone() }, uAxU: { value: Ux.clone() } });
 -      add(rg, rm, 'rings');
++      if (SB.band) rm.uniforms.uSbBand.value = 1;
 +      add(rg, rm, 'rings').visible = TDBG !== 'norings';
++      if (CURL && SB.band) {
++        // r30b m06sbband: broad polished bands every SB.sp u of the curled axis from just past the crest to 8 u before 07's mouth
++        const cu = route06curl.curl, bands: { p: THREE.Vector3; t: THREE.Vector3; r: THREE.Vector3; u: THREE.Vector3; R: number }[] = [];
++        for (let a = cu.aSplit + 14; a < cu.a07 - 8; a += SB.sp) { const fr = axisAt(a); bands.push({ p: fr.p.clone(), t: fr.t.clone(), r: fr.r.clone(), u: fr.u.clone(), R: radAt(a) }); }
++        const bm = mat(tTube);
++        Object.assign(bm.uniforms, { uRing: { value: 1 }, uGold: { value: 0 }, uRingH: { value: SB.bw / 2 }, uUseMask: { value: 0 }, uAxO: { value: O.clone() }, uAxD: { value: ax.clone() }, uAxR: { value: Rx.clone() }, uAxU: { value: Ux.clone() } });
++        bm.uniforms.uSbBand.value = 1;
++        add(buildSbBands(bands, SB.bw, SB.bd), bm, 'sbbands');
++        console.info('[match06] m06sbband', { bands: bands.length, spacing: SB.sp, width: SB.bw, depth: SB.bd });
++      }
        console.info('[match06] m06ring', { rings: parts.length, spacing: +dA.toFixed(2), aN: +aN.toFixed(1), aF: +aF.toFixed(1) });
        if (qs?.get('m06pad') === '1') {
          // r7c `&m06pad=1`: the two painted gold paddle blades (drum lifters) on the upper-left wall, as real beveled gold
-@@ -774,6 +979,191 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+@@ -774,6 +1011,191 @@ export async function buildMatch06(course: Course): Promise<Match06> {
      if (GEO && R6) { const t = Math.min(1, Math.max(0, (Math.abs(l) - R6.Wc + 0.1) / 0.5)); p.addScaledVector(fr.up, R6.hb * t * t * (3 - 2 * t)); }
      return [p, l / TF.lateralPeriod, l];
    }, TF.period), mat(tFloor, true), 'floor');
@@ -1105,7 +1262,7 @@ index 831c2b4..93ebd2f 100644
    // r7 `&m06foam=1` (needs m06geo): puffy 3D foam clouds along both banks — the painted white-lilac foam clusters that
    // vanished as flat strips once Benny moved. Hidden at the approved view (the painting carries them there), shown once
    // the camera has left it (setAway). Not part of the projector depth bake (invisible while baking).
-@@ -793,7 +1183,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+@@ -793,7 +1215,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
        const ph = ((s - L.s0) / fclP + (side > 0 ? 0.5 : 0)) % 1; // 0..1 within one heap period, the sides half a period apart
        return 1 - Math.abs(ph * 2 - 1); // 1 at a heap centre, 0 in the gap
      };
@@ -1114,7 +1271,7 @@ index 831c2b4..93ebd2f 100644
        const n = 4 + Math.floor(rnd() * 4); // r7c: more, smaller blobs = bubbly clusters (big ones read as plastic balls up close)
        for (let i = 0; i < n; i++) {
          const fr = frame(s + rnd() * 0.6), r = 0.1 + rnd() * 0.22;
-@@ -821,7 +1211,8 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+@@ -821,7 +1243,8 @@ export async function buildMatch06(course: Course): Promise<Match06> {
        const num = (k: string, d: number) => { const v = Number(qs?.get(k)); return qs?.get(k) != null && Number.isFinite(v) ? v : d; };
        const fcs = num('m06fcs', 1.25), fck = num('m06fck', 1), fcn = num('m06fcn', 1.4);
        let seed2 = 9871; const rnd2 = () => ((seed2 = (seed2 * 16807) % 2147483647) / 2147483647);
@@ -1124,7 +1281,7 @@ index 831c2b4..93ebd2f 100644
        for (const it of items) {
          const R = it.r * fcs, n = Math.min(24, Math.max(3, Math.round((2 + 30 * R) * fck)));
          const t1 = new THREE.Vector3().crossVectors(it.up, new THREE.Vector3(1, 0, 0));
-@@ -836,6 +1227,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+@@ -836,6 +1259,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
            const hgt = (lobe ? R * (0.15 + 0.35 * rnd2()) * (1 - d / (1.2 * R)) : rho * 0.5) * (FCL ? 0.55 : 1); // r22 m06fcl: flatter heaps
            const p = base.clone().addScaledVector(t1, Math.cos(th) * d).addScaledVector(t2, Math.sin(th) * d).addScaledVector(it.up, rho * 0.55 + Math.max(0, hgt));
            aB.push(p.x, p.y, p.z, rho); aS.push(rnd2() + (lobe ? 1 : 0)); // aS >= 1: a foam lobe (pores), < 1: a small bubble
@@ -1132,7 +1289,7 @@ index 831c2b4..93ebd2f 100644
          }
        }
        const quad = new THREE.PlaneGeometry(1, 1);
-@@ -843,9 +1235,10 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+@@ -843,9 +1267,10 @@ export async function buildMatch06(course: Course): Promise<Match06> {
        g.setIndex(quad.index); g.setAttribute('position', quad.attributes.position); g.setAttribute('uv', quad.attributes.uv);
        g.setAttribute('aB', new THREE.InstancedBufferAttribute(new Float32Array(aB), 4));
        g.setAttribute('aS', new THREE.InstancedBufferAttribute(new Float32Array(aS), 1));
@@ -1144,7 +1301,7 @@ index 831c2b4..93ebd2f 100644
            transparent: rim, depthWrite: !rim, fog: false,
            uniforms: { uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uNear: { value: new THREE.Vector2(fcn * 0.5, fcn) } } });
          const o = new THREE.Mesh(g, m);
-@@ -870,6 +1263,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+@@ -870,6 +1295,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
    if (tunCap) { cap.position.copy(tunCap.pos); cap.lookAt(cap.position.clone().sub(tunCap.dir)); (cap.material as THREE.ShaderMaterial).uniforms.uUseMask.value = 0; }
    else { cap.position.copy(fe.pos).addScaledVector(fe.up, L.hA); cap.lookAt(cap.position.clone().sub(T1)); }
    cap.name = 'm06_end'; cap.frustumCulled = false;
@@ -1152,7 +1309,7 @@ index 831c2b4..93ebd2f 100644
    group.add(cap);
  
    // QA only: `&m06dbg=1` tints the tube green and the river floor red (which proxy surface a pixel comes from)
-@@ -896,6 +1290,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+@@ -896,6 +1322,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
        shared.uUseDepth.value = 1;
      },
      setAway(a) { if (foamClouds) foamClouds.visible = a > 0.5; for (const o of foamSprites) o.visible = a > 0.5; },

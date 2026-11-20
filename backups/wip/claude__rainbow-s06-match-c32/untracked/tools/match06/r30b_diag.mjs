@@ -32,7 +32,7 @@ try {
       for (let y = 0.9; y >= -0.2; y -= 0.1) for (let x = -0.6; x <= 0.61; x += 0.3) {
         const h = r.probe(x, y)[0]; grid.push({ x: +x.toFixed(1), y: +y.toFixed(1), obj: h?.obj ?? 'none', d: h?.d ?? null });
       }
-      return { state: r.state(), cam: r.camera().position, target: r.camera().target, grid };
+      return { state: r.state(), cam: r.camera().position, target: r.camera().target, bs: r.bennyScreen(), grid };
     }, tS);
     await page.screenshot({ path: `${OUT}/s${tS}.png` });
     const rec = { s: tS, ...st, hidden: [] };
@@ -46,7 +46,7 @@ try {
       rec.hidden.push({ tag, n: await page.evaluate(() => { const n = window.__hid.length; for (const o of window.__hid) o.visible = true; return n; }) });
     }
     out.shots.push(rec);
-    console.log('s', tS, JSON.stringify(st.state), 'cam', JSON.stringify(st.cam));
+    console.log('s', tS, 'stage', st.state.stage, 'benny', JSON.stringify(st.bs));
     const seen = {}; for (const g of st.grid) seen[g.obj] = (seen[g.obj] ?? 0) + 1;
     console.log('  hits', JSON.stringify(seen));
   }

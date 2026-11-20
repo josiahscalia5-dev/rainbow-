@@ -19,7 +19,7 @@
  * Switches (all optional, with `w30=1`): `w30f` flow speed u/s (2.2) · `w30v` vein strength (1) · `w30rb` rainbow-band strength (1) ·
  * `w30sp` glint strength (1) · `w30t=a,b` vein tile size across, along (u; 2.2,3.8) · `w30rip` ripple strength (0.55) ·
  * `w30old` share of the old painted streak strip kept (0) · `w30st=a,b` start hand-over (0.02,0.6) · `w30e` the pink side starts at
- * |l|/Wc (0.62) · `w30rk` how strongly the rainbow strip between cyan and pink shows where it appears (0.7)
+ * |l|/Wc (0.62) · `w30rk` how strongly the rainbow strip between cyan and pink shows where it appears (0.8)
  */
 import * as THREE from 'three';
 
@@ -63,7 +63,7 @@ vec3 w30Water(vec3 old, vec2 ls, float wc, float t, float dAp, float fres) {
   float x0 = clamp(abs(u) + sd * mu * (1.0 - abs(u)) * 1.4, 0.0, 1.0);
   float pe = clamp(uW30C.z, 0.2, 0.8);
   float x = x0 < pe ? 0.5 * x0 / pe : 0.5 + 0.5 * (x0 - pe) / (1.0 - pe);
-  float rk = smoothstep(0.35, 1.0, sin(sf * 0.13 + sd * 2.3) + 0.6 * sin(sf * 0.37 + 0.7 + sd)) * clamp(uW30A.z, 0.0, 1.0) * uW30C.w;
+  float rk = smoothstep(0.05, 0.85, sin(sf * 0.13 + sd * 2.3) + 0.6 * sin(sf * 0.37 + 0.7 + sd)) * clamp(uW30A.z, 0.0, 1.0) * uW30C.w;
   vec3 col = w30Lat(x, rk, lit);
   float pinkS = smoothstep(0.46, 0.60, x);
   // volume: brighter crown, slightly deeper just inside the banks
@@ -71,8 +71,13 @@ vec3 w30Water(vec3 old, vec2 ls, float wc, float t, float dAp, float fres) {
   col *= 1.0 - 0.10 * smoothstep(0.88, 1.0, x);
   // silky light lines on the pink sides (the painting's curved pink-white flow lines): soft, curving with the water, broken up
   float wv = x0 + 0.05 * sin(sf * 0.47 + sd * 1.7) + 0.035 * sin(sf * 1.13 + 0.4) + 0.05 * body2;
-  float silk = smoothstep(0.45, 1.0, sin(wv * 34.0)) * (0.35 + 0.65 * smoothstep(0.05, 0.45, body + 0.5 * body2)) * pinkS * (1.0 - 0.6 * rk);
-  col = mix(col, vec3(1.0, 0.70, 0.98), silk * 0.8);
+  // (thin lines fade out with distance before they would alias; a broader glossy crest line along the pink stays)
+  float dist = distance(cameraPosition, vW);
+  float silk = smoothstep(0.45, 1.0, sin(wv * 34.0)) * (0.35 + 0.65 * smoothstep(0.05, 0.45, body + 0.5 * body2)) * (1.0 - smoothstep(7.0, 16.0, dist));
+  float crest = exp(-pow((wv - 0.80) / 0.045, 2.0)) * smoothstep(0.0, 0.35, body2 + 0.3 * body);
+  // the pink sides breathe between deep magenta and a lighter glowing pink along the flow (no flat neon band)
+  col = mix(col, vec3(0.99, 0.48, 0.95), 0.45 * smoothstep(0.15, 0.55, body2 + 0.4 * sin(sf * 0.29 + sd * 1.3)) * pinkS * smoothstep(0.62, 0.8, x));
+  col = mix(col, vec3(1.0, 0.70, 0.98), clamp(silk * 0.8 + crest * 0.6, 0.0, 1.0) * pinkS * (1.0 - 0.6 * rk));
   // electric veins: crisp sparse white lightning (R) + branching crackle net (G) from two reads at different scale / speed,
   // flickering like current; a soft cyan glow round them; white-cyan on the water, pink-white on the pink sides
   vec2 q1 = vec2(ls.x / uW30B.x, sf / uW30B.y);
@@ -118,7 +123,7 @@ export async function setupW30(mat: THREE.ShaderMaterial, qs: URLSearchParams | 
   const t = await new THREE.TextureLoader().loadAsync(new URL('../../assets/textures/match06/tile_w30veins.png', import.meta.url).href);
   t.colorSpace = THREE.NoColorSpace; t.wrapS = t.wrapT = THREE.RepeatWrapping; t.anisotropy = 8;
   t.minFilter = THREE.LinearMipmapLinearFilter;
-  const [ta, tb] = pair(qs, 'w30t', [2.2, 3.8]), [sa, sb] = pair(qs, 'w30st', [0.02, 0.6]), ea = num(qs, 'w30e', 0.62), eb = num(qs, 'w30rk', 0.7);
+  const [ta, tb] = pair(qs, 'w30t', [2.2, 3.8]), [sa, sb] = pair(qs, 'w30st', [0.02, 0.6]), ea = num(qs, 'w30e', 0.62), eb = num(qs, 'w30rk', 0.8);
   Object.assign(mat.uniforms, {
     uW30T: { value: t },
     uW30A: { value: new THREE.Vector4(num(qs, 'w30f', 2.2), num(qs, 'w30v', 1), num(qs, 'w30rb', 1), num(qs, 'w30sp', 1)) },

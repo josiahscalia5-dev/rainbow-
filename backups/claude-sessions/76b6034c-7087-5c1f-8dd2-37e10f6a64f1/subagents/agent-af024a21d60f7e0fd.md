@@ -606,3 +606,69 @@ The third shader iteration was written but never rendered. Let me look at the ta
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-20T22:36:19.928Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/water06 && python3 -I - <<'EOF'\np='src/world/m06water30.ts'\ns=open(p).read()\na=\"\"\"  float silk = smoothstep(0.45, 1.0, sin(wv * 34.0)) * (0.35 + 0.65 * smoothstep(0.05, 0.45, body + 0.5 * body2)) * pinkS * (1.0 - 0.6 * rk);\n  col = mix(col, vec3(1.0, 0.70, 0.98), silk * 0.8);\"\"\"\nb=\"\"\"  // (thin lines fade out with distance before they would alias; a broader glossy crest line along the pink stays)\n  float dist = distance(cameraPosition, vW);\n  float silk = smoothstep(0.45, 1.0, sin(wv * 34.0)) * (0.35 + 0.65 * smoothstep(0.05, 0.45, body + 0.5 * bod …[+1561 chars]`
+
+### 🧑 User — 2026-11-20T22:36:52.165Z
+
+> ↩︎ result: TSC_OK
+> 22:36
+
+### 🤖 Claude — 2026-11-20T22:36:55.862Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/n6.png"}`
+
+### 🧑 User — 2026-11-20T22:36:56.076Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T22:37:18.074Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad && python3 -I -c \"\nfrom PIL import Image\nsb=Image.open('/home/user/rainbow-/docs/briefs/2026-11-20-r30/USER_S06_STORYBOARD_R30.png').convert('RGB')\nboxes=[(16,100,506,724),(520,100,1010,724),(16,790,506,1398),(520,790,1010,1398)]\nps=[sb.crop(b).resize((432,550),Image.LANCZOS) for b in boxes]\nfs=['n6/c_238.png','n6/d_266.png','n6/e_310.png','n5/f_387.png']\nW=Image.new('RGB',(432*4,550+768))\nfor i,(p,f) in enumerate(zip(ps,fs)):\n  W.paste(p,(432*i,0)); W.paste(Image.open(f).convert('RGB').r …[+111 chars]`
+
+### 🧑 User — 2026-11-20T22:37:18.999Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T22:37:22.179Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/sheet6.png"}`
+
+### 🧑 User — 2026-11-20T22:37:22.904Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T22:37:38.405Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/water06 && python3 -I - <<'EOF'\np='src/world/m06water30.ts'\ns=open(p).read()\na=\"float rk = smoothstep(0.35, 1.0, sin(sf * 0.13 + sd * 2.3) + 0.6 * sin(sf * 0.37 + 0.7 + sd))\"\nb=\"float rk = smoothstep(0.05, 0.85, sin(sf * 0.13 + sd * 2.3) + 0.6 * sin(sf * 0.37 + 0.7 + sd))\"\nassert s.count(a)==1; s=s.replace(a,b)\na=\"eb = num(qs, 'w30rk', 0.7)\"; assert s.count(a)==1; s=s.replace(a,\"eb = num(qs, 'w30rk', 0.8)\")\na=\"where it appears (0.7)\"; assert s.count(a)==1; s=s.replace(a,\"where it appears (0.8)\")\nopen(p,'w').write(s)\nEOF\nnpx tsc --noEmit -p .  …[+617 chars]`
+
+### 🧑 User — 2026-11-20T22:39:27.973Z
+
+> ↩︎ result: TSC_OK
+> [render_slot] got slot 1 after 30s
+> 06 a_start s 198.91 lat 0 stage 06 coins 1680
+> 06 b_214 s 214.86 lat 0 stage 06 coins 1700
+> 06 c_238 s 238.143 lat 0 stage 06 coins 1730
+> 06 d_266 s 266.01 lat 0 stage 06 coins 1750
+> 06 e_310 s 310.01 lat 0 stage 06 coins 1770
+> 06 f_387 s 387.01 lat 0 stage 06 coins 1800
+
+### 🤖 Claude — 2026-11-20T22:39:30.593Z
+
+Now the BEFORE (v2) at all positions in the same run so they match exactly, using the same shot tool.
+
+### 🤖 Claude — 2026-11-20T22:39:33.232Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/water06 && mkdir -p /home/user/rainbow-/qa/match/06/r30/water06/before_v2 && Q=\"$(cat /home/user/rainbow-/qa/match/06/r30/QUERY_NEW_v2.txt)\" && AUDIT_PIN=12000 AUDIT_W=864 AUDIT_H=1536 AUDIT_PORT=5336 AUDIT_SHOTS='[[\"a_start\",0,null],[\"b_214\",214.86,null],[\"c_238\",238,null],[\"d_266\",266,null],[\"e_310\",310,null],[\"f_387\",387,null]]' timeout 900 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/match06/r30_shots.mjs /home/user/rainbow-/qa/match/06/r30/water06/before_v2 06 \"$Q\" 2>&1 | tail -7", "description": "Render BEFORE v2 stills at  …[+34 chars]`
+
+### 🧑 User — 2026-11-20T22:41:03.908Z
+
+> ↩︎ result: [render_slot] got slot 1 after 20s
+> 06 a_start s 198.91 lat 0 stage 06 coins 1680
+> 06 b_214 s 214.86 lat 0 stage 06 coins 1700
+> 06 c_238 s 238.143 lat 0 stage 06 coins 1730
+> 06 d_266 s 266.01 lat 0 stage 06 coins 1750
+> 06 e_310 s 310.01 lat 0 stage 06 coins 1770
+> 06 f_387 s 387.01 lat 0 stage 06 coins 1800
+

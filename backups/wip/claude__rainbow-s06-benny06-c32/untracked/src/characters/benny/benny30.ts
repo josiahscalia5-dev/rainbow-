@@ -37,6 +37,9 @@ export interface B30Params {
   hy: number;
   /** beanie: shift toward his back (body units, + = toward the rear camera) */
   hz: number;
+  /** beanie: forward tilt about the cuff's bottom centre (deg, + = top away from the rear camera, so the chase camera
+   *  sees the cuff and stripes as level bands like the painting) */
+  hp: number;
   /** body: width (x, z) and height scale about the body's bottom, extra raise (body units) */
   bsx: number;
   bsy: number;
@@ -68,7 +71,7 @@ export interface B30Params {
 const DEF: B30Params = {
   sc: 1, sy: 0,
   pitch: 12.6,
-  hs: 1, hsy: 1, hy: 0, hz: 0,
+  hs: 1, hsy: 1, hy: 0, hz: 0, hp: 0,
   bsx: 1, bsy: 1, by: 0,
   bp: 2.8, bcap: 1.5, bw: 0,
   tuck: 0.07,
@@ -114,7 +117,7 @@ export function applyBenny30(scene: THREE.Object3D, furs: FurHandle[]): Benny30H
   const broot = get('benny_root');
   const base = {
     rootPos: broot ? broot.position.clone() : new THREE.Vector3(), rootScale: broot ? broot.scale.clone() : new THREE.Vector3(1, 1, 1),
-    hatPos: hat.position.clone(), hatScale: hat.scale.clone(),
+    hatPos: hat.position.clone(), hatScale: hat.scale.clone(), hatQuat: hat.quaternion.clone(),
     pomScale: pom.scale.clone(),
     armL: armL.position.clone(), armR: armR.position.clone(), armS: armL.scale.clone(),
   };
@@ -187,6 +190,13 @@ export function applyBenny30(scene: THREE.Object3D, furs: FurHandle[]): Benny30H
     hat.position.copy(base.hatPos).add(keep);
     hat.position.y += P.hy;
     hat.position.z -= P.hz;
+    hat.quaternion.copy(base.hatQuat);
+    if (P.hp) {
+      const pivot = c.clone().multiply(hat.scale).applyQuaternion(hat.quaternion).add(hat.position);
+      const q = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), THREE.MathUtils.degToRad(P.hp));
+      hat.position.sub(pivot).applyQuaternion(q).add(pivot);
+      hat.quaternion.premultiply(q);
+    }
     pom.scale.copy(base.pomScale).multiplyScalar(P.ps);
     // ---- body: scaled about its bottom, raised ----
     if (body) {
@@ -197,6 +207,9 @@ export function applyBenny30(scene: THREE.Object3D, furs: FurHandle[]): Benny30H
       const yUnscaled = (cuffBody.y + P.tuck - body.mesh.position.y) / P.bsy;
       const u = body.uniforms as U;
       u.uBald.value.w = THREE.MathUtils.clamp(yUnscaled / SKIN, -1, 1.5);
+      // the bald cap's axis follows the beanie's forward tilt
+      const ax = hatUp.clone().applyAxisAngle(new THREE.Vector3(1, 0, 0), THREE.MathUtils.degToRad(P.hp));
+      u.uBald.value.x = ax.x; u.uBald.value.y = ax.y; u.uBald.value.z = ax.z;
       u.uFurLen.value = P.fl;
       u.uDensity.value = P.fd;
       body.uniforms.uClump.value = P.fk;
@@ -217,7 +230,6 @@ export function applyBenny30(scene: THREE.Object3D, furs: FurHandle[]): Benny30H
     armR.scale.copy(base.armS).multiplyScalar(P.as);
   };
   apply();
-  void hatUp;
   const handle: Benny30Handle = {
     params,
     set(p) { Object.assign(params, p); apply(); return { ...params }; },
