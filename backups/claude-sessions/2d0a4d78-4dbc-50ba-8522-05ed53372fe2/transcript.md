@@ -2785,3 +2785,25 @@ Thank you. Recording your approval of the three Screen 04 proposals, then buildi
 
 > 🔧 **Bash** `{"command": "cat >> docs/briefs/2026-11-20-r22/COORDINATION.md <<'EOF'\n* **~03:42 USER APPROVED the three Screen 04 generated views** (\"Yes, approve the Screen 04 proposals, keep going\"):\n  `qa/review_r21/artwork/04/USER_VERDICT.md`, `accepted/04_gen_{c_middle_p2_v1,d_late_p3_v1,e_end_p2_v1}.png`. s04 foam worker asked\n  to finish its current step and stop; then `washer-environment-modeler` takes the s04 worktree for the multi-plate projection\n  `&m04mp=1` (`LAUNCH_S04_PROJ.md`). 07 + 05 proposals still await the user.\nEOF\nfor i in $(seq 1 120); do pgrep -f \"rainbow-autosave.py\" >/de …[+495 chars]`
 
+### 🧑 User — 2026-11-20T03:43:53.429Z
+
+> ↩︎ result: "commit": "b9b11a8913177a9f8621c76617f426d70d454011",
+> MATCH b9b11a8913177a9f8621c76617f426d70d454011
+
+### 🤖 Claude — 2026-11-20T03:43:58.810Z
+
+Your approval of the three Screen 04 views is recorded and saved. The branch is at `b9b11a8`, and GitHub matches.
+
+**What happens next:**
+1. **The Screen 04 foam specialist** is finishing the step it's on and will hand over in a few minutes.
+2. **A projection specialist** then builds your three approved views into the real 3D tunnel. Each view is painted onto the walls, gold rings, foam banks and river from the exact spot in the game it was painted for. As Benny swims deeper, the scenery blends smoothly from your original picture into the middle, late and end views. The paint stays fixed to the tunnel, so it shouldn't slide when he steers.
+3. **No double arrows or bubbles.** The five arrows and big bubbles painted in the views get masked out, because the game already has real 3D ones.
+4. **It's built as a separate switch,** so the current game is unchanged until you see it in motion and approve it.
+
+You'll get your approved picture, BEFORE and NEW pictures at each part of the tunnel, plus an uninterrupted swimming clip. Screens 06 and 07 and Benny are still being worked on. The Screen 07 and Screen 05 proposals are still waiting for your verdict whenever you're ready.
+
+### 🧑 User — 2026-11-20T03:44:00.490Z
+
+Stop hook feedback:
+[command hook 2]: There are untracked files in the repository. Please commit and push these changes to the remote branch.
+
