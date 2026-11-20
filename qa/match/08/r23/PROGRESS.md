@@ -6,9 +6,21 @@
   rebooted: the r23 scratchpad (step 3 render, helper scripts) is gone; proof already in `qa/match/08/r23/` is intact.
 * Checked: step 1 clips complete and labelled (`step1_m08gl/clip/`, 40 frames each = 26 frames of 08 + 14 into 09; 1.0x =
   24 fps real game speed, 0.5x = 12 fps). Step 2 12-shot BEFORE / NEW complete (verdict pending a coin-size table).
-* ~10:45 UTC rendering: step 2 NEW clip + step 3 NEW clip (port 5286); step 3 NEW 12 shots + K23-1 coin-log re-render
-  (port 5287; also checks that today's renders equal the r23 ones pixel for pixel).
-* NEXT: step 2 verdict + clip; step 3 proof + verdict; gameplay 8/8 + 91 coins; `npx tsc --noEmit`; report.
+* ~11:10 UTC: ALL THREE STEPS FINISHED with full proof; STOPPED and reported to the lead (brief: up to 3 steps, then stop).
+  Step 1 `m08gl` KEPT (GOOD small) · step 2 `m08coinsz` KEPT (GOOD small) · step 3 `m08towelm` + new `m08towelv` KEPT (GOOD
+  small). Candidate **K23-3** = `qa/match/08/r23/QUERY_CANDIDATE_K23-3.txt` = K16 & `m08gl=1&m08coinsz=1&m08towelm=1&m08towelv=1`.
+* Gameplay (`scripts/gameplay-test.mjs --q=`): K23-1, K23-2, K23-3 each 8/8 checks, 91 coins (1,330 -> 2,240), no errors.
+  `npx tsc --noEmit` clean. Start view 0 px changed in all three steps. Default build and K16 unchanged (every change
+  behind its own switch). Today's K23-1 render = the r23 render pixel for pixel (0 px in all 12 shots).
+* 07->08 hand-over (s07 worker uses K16 & m08gl=1): steps 2 and 3 change Screen 08 from its first moving frame (08 lasts only
+  ~1.1 s at real speed: 26 clip frames), but ONLY the coins above Benny (step 2: every 08 shot changes only inside coin discs)
+  and the towel on the platform (step 3: changes only in x 325-683, y 421-565). Water, foam banks and the river at the
+  inlet are untouched, so the water / foam join is the same with K23-3; the s07 worker can switch to K23-3 for the latest look.
+* NEXT (when resumed): the most visible remaining difference while swimming = the near river below / around Benny turns
+  into a broad bright cyan-and-pink sheet with spiky white sparkles across the whole lower frame, where the painting shows a
+  narrow S-river with white foam banks and purple perforated floor beside it; then the small pale wedge at the towel's
+  top-left when steering (towel proxy is a box; a rolled-towel shape would fix it), the abrupt size step between the
+  coin beside Benny and the next one, rectangular blocks at the platform ends at hard steer, `m08occ` (r8) as a separate test.
 
 ## (r23) WHERE I STOPPED / NEXT
 * 2026-11-20 ~09:52 UTC: round 23 started (washer-environment-modeler, in-process). Brief
@@ -57,3 +69,22 @@ Kept query: `K23-2 = K23-1&m08coinsz=1` (`step2_m08coinsz/QUERY_NEW.txt`). BEFOR
 * Pictures: `step2_m08coinsz/1_APPROVED.png`, `2_BEFORE_<shot>.png` (K23-1), `3_NEW_<shot>.png` (12 shots),
   `pixel_changes.json`, `coin_sizes.json`, `code.patch`, `qa_tools.patch` (QA coin log + HUD-font server).
   Clips `step2_m08coinsz/clip/08_NEW_m08coinsz_{1x,0.5x}.mp4`, BEFORE `08_BEFORE_K23-1_{1x,0.5x}.mp4` (see `CLIPS.txt`).
+  Gameplay `step2_m08coinsz/gameplay_K23-2.json`: 8/8, 91 coins (1,330 -> 2,240). (Step 1: `step1_m08gl/gameplay_K23-1.json`, 8/8, 91.)
+
+## Step 3 — `&m08towelm=1&m08towelv=1` (towel double exposure) — KEPT (GOOD IMPROVEMENT, small)
+Kept query: `K23-3 = K23-2&m08towelm=1&m08towelv=1` (`step3_m08towelm/QUERY_NEW.txt`, also `QUERY_CANDIDATE_K23-3.txt`).
+BEFORE = K23-2 (the r23 step 2 NEW renders; determinism checked: today's re-render of K23-1 = r23's, 0 px).
+* What changed: `m08towelm` (r8 code, untouched) cuts the towel stand-in to the painted towel's outline (colour pass and
+  depth bake), so the door wall behind it carries the window pixels instead of a box at towel depth. Alone it changed the
+  approved start view (2,253 px: faint resampling in the window above the towel + 16–20 magenta wall specks on the towel's
+  top edge; `towelm_only/`). New `&m08towelv=1` (r24, `src/world/match08.ts`, `code.patch`): the cut only once the camera
+  has left the approved viewpoint (> 0.2 u, the m08fill rule) -> start view 0 px; all 11 moving shots identical to towelm alone.
+* Pixels: start view 0 px, f20 (stage 09) 0 px; other shots 0.42–0.72 % of the frame, all inside the towel area.
+* By eye (clearest at hard left / right, forward 10 u, 95 % through, and clip frames 14–25): the hard-edged rectangle of
+  shifted window pixels round the towel is gone — before, the window's cloud line jumped at the towel's top and a straight
+  vertical seam stood at its left; now the window and clouds run on continuously behind the towel, as painted.
+* Still wrong: a small pale wedge at the towel's top-left corner while steering (the stand-in is a box, the painted towel a
+  rolled shape) and a thin violet line at the towel's left end (was there before too).
+* Pictures: `step3_m08towelm/1_APPROVED.png`, `2_BEFORE_<shot>.png` (K23-2), `3_NEW_<shot>.png` (12 shots), `pixel_changes.json`,
+  `code.patch`, `towelm_only/` (start-view specks without m08towelv). Clips `step3_m08towelm/clip/08_NEW_m08towelm_{1x,0.5x}.mp4`,
+  BEFORE `08_BEFORE_K23-2_{1x,0.5x}.mp4` (`CLIPS.txt`). Gameplay `gameplay_K23-3.json`: 8/8, 91 coins (1,330 -> 2,240).

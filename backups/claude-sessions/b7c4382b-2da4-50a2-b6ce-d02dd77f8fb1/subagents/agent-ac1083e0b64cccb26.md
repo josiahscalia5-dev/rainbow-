@@ -690,3 +690,487 @@ The edit was refused (file not read in this session), so that re-render reproduc
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/benny && S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/k; P=/home/user/rainbow-/qa/benny/r23/s3_star; rm -rf $P/06/new; export AUDIT_SHOTS='[[\"a_start\",0,null],[\"c_middle\",0.35,null],[\"f_hard_left\",0.35,-1]]'; AUDIT_PORT=5279 timeout 900 node tools/benny23/shots_c.mjs $P/06/new 06 \"$(cat $P/QUERY_NEW_06.txt)\" 2>&1 | grep -v \"allow list\" | tail -n 4; python3 -I tools/benny23/crop_c.py $P/06/new; for sh in a_start c_middle; do echo -n \"$sh \"; python3 -I $S/starbox.py $P/06/new $sh $S/z/06_${sh}_new.png | tail -1; don …[+292 chars]`
 
+### 🧑 User — 2026-11-20T10:59:49.705Z
+
+> ↩︎ result: 06 a_start s 198.924 lat 0 stage 06 coins 1680
+> 06 c_middle s 215.791 lat 0 stage 06 coins 1730
+> 06 f_hard_left s 215.791 lat -2.95 stage 06 coins 1690
+> a_start cx 555 cy 1204 area 4235 vr 0.61 median [252, 197, 30] p10 [226, 153, 0] p90 [255, 231, 78] hue 45.5
+> c_middle cx 417 cy 832 area 1554 vr 0.36 median [255, 255, 46] p10 [234, 176, 17] p90 [255, 255, 71] hue 60.0
+
+### 🤖 Claude — 2026-11-20T10:59:57.612Z
+
+06 NEW now matches probe D. Next: the swim clip, gameplay test and tsc. Let me find how r23 made those.
+
+### 🤖 Claude — 2026-11-20T10:59:59.655Z
+
+> 🔧 **Bash** `{"command": "F=/home/user/rainbow-/backups/claude-sessions/1dee9937-64f8-543d-ae44-7cf9955b39b3/subagents/agent-ad6745221c2fe7d06.md; grep -n \"swim05_knit_NEW\\|gameplay_knit\\|screen_clip\\|label_clip\\|gameplay.mjs\\|tsc --noEmit\" $F | head -20", "description": "Find clip and gameplay commands in r23 transcript"}`
+
+### 🧑 User — 2026-11-20T11:00:00.091Z
+
+> ↩︎ result: 1630:> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && sed -i \"s/'08': { v: lin('kv08', \\[1.75, 1.6, 2.1\\]), w: lin('kw08', \\[2.4, 3.2, 2.6\\]) },/'08': { v: lin('kv08', [1.75, 1.6, 2.1]), w: lin('kw08', [1.3, 1.45, 1.3]) },/\" src/characters/benny/benny20.ts && grep -n \"kv0\" src/characters/benny/benny20.ts && npx tsc --noEmit -p . && echo TSC_OK; ls tools/lead_r13/ 2>&1 | head; ls scripts/gameplay-test.mjs", "description": "Set final 08 knit exposure, typecheck", "timeout": 300000}`
+> 1903:> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/k; ls $S 2>&1 | head; ls $S/swim05 2>/dev/null | wc -l; P=/home/user/rainbow-/qa/benny/r23/s2_knit; ls $P $P/06/new 2>&1; python3 -c \"\nimport json; d=json.load(open('$P/gameplay_knit.json')); print({k:d[k] for k in d if k not in ('plunge','stages','log')} if isinstance(d,dict) else d)\" 2>&1 | head -30; cd /home/user/wt/benny && git status --short | head; grep -n \"kw06\\|kv08\" src/characters/benny/benny20.ts; date -u", "description": "Check state after container restart"}`
+> 1934:> gameplay_knit.json
+> 1948:> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-6 …[+1303 chars]
+
+### 🤖 Claude — 2026-11-20T11:00:03.857Z
+
+> 🔧 **Bash** `{"command": "F=/home/user/rainbow-/backups/claude-sessions/1dee9937-64f8-543d-ae44-7cf9955b39b3/subagents/agent-ad6745221c2fe7d06.md; grep -n \"swim05/\\|gameplay-test\\|swimclip\\|swim_clip\" $F | head -20", "description": "Find swim frame capture and gameplay test commands"}`
+
+### 🧑 User — 2026-11-20T11:00:04.169Z
+
+> ↩︎ result: 1630:> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && sed -i \"s/'08': { v: lin('kv08', \\[1.75, 1.6, 2.1\\]), w: lin('kw08', \\[2.4, 3.2, 2.6\\]) },/'08': { v: lin('kv08', [1.75, 1.6, 2.1]), w: lin('kw08', [1.3, 1.45, 1.3]) },/\" src/characters/benny/benny20.ts && grep -n \"kv0\" src/characters/benny/benny20.ts && npx tsc --noEmit -p . && echo TSC_OK; ls tools/lead_r13/ 2>&1 | head; ls scripts/gameplay-test.mjs", "description": "Set final 08 knit exposure, typecheck", "timeout": 300000}`
+> 1640:> swim_clip.mjs
+> 1641:> scripts/gameplay-test.mjs
+> 1830:> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && sed -n 1,25p tools/lead_r13/swim_clip.mjs; sed -n 1,30p scripts/gameplay-test.mjs | grep -n \"q=\\|argv\\|port\\|PORT\" ", "description": "Check swim clip and gameplay test usage"}`
+> 1839:> //   node tools/lead_r13/swim_clip.mjs <screen 04..08> <outDir> <seconds> [query]
+> 1855:> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && grep -n \"startVite(\" scripts/gameplay-test.mjs; ss -ltn | grep -E ':52[0-9][0-9]' | head", "description": "Check gameplay test port and active ports"}`
+> 1864:> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && sed -e \"s#startVite(5213)#startVite(5284)#\" -e  …[+1162 chars]
+
+### 🤖 Claude — 2026-11-20T11:00:07.519Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && sed -n 1,40p tools/lead_r13/swim_clip.mjs; ls .cache/ 2>/dev/null | head; grep -n \"startVite(\" scripts/gameplay-test.mjs; ls /home/user/rainbow-/tools/lead23/", "description": "Read swim clip tool and gameplay test port"}`
+
+### 🧑 User — 2026-11-20T11:00:08.479Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Lead r13 (2026-11-18): a short REAL-GAMEPLAY swimming clip for any playable screen 04–08 (read-only).
+> // Starts at the screen's checkpoint and rides the real game simulation (Benny, camera rig, course, coins unchanged) with
+> // the shader clock running: straight, then left, then right, then straight — one frame per 1/fps s → OUT/0000.png …
+> // Generalises scripts/proj05-move.mjs --zigzag. Encode: ffmpeg -framerate 24 -i OUT/%04d.png -pix_fmt yuv420p clip.mp4
+> //   node tools/lead_r13/swim_clip.mjs <screen 04..08> <outDir> <seconds> [query]
+> import { mkdirSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> const [SCREEN, OUT, SECS = '6', Q = ''] = process.argv.slice(2);
+> const fps = 24;
+> mkdirSync(OUT, { recursive: true });
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5280 + Number(SCREEN));
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> try {
+>   const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
+>   page.on('pageerror', (e) => console.error(' …[+1103 chars]
+
+### 🤖 Claude — 2026-11-20T11:00:14.634Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,30p /home/user/rainbow-/tools/lead23/screen_clip.mjs; echo ----; sed -n 1,30p /home/user/rainbow-/tools/lead23/label_clip.py; echo ----; cat /home/user/rainbow-/tools/lead23/clip.sh | head -30", "description": "Read lead clip and label tools"}`
+
+### 🧑 User — 2026-11-20T11:00:15.590Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Lead r23: uninterrupted REAL-GAMEPLAY clip of one whole playable screen (entrance -> end, into the next screen), with the
+> // steering phase and the screen logged per frame (for labels). Real game speed: one frame per 1/24 s of game time.
+> // Steering by the share of the screen travelled: straight < 0.30, LEFT 0.30-0.50, RIGHT 0.50-0.70, straight after (end).
+> // The shader clock follows the clip clock (performance.now pinned per frame), so the water moves at its normal speed.
+> //   cd <worktree> && AUDIT_PORT=5290 node /home/user/rainbow-/tools/lead23/screen_clip.mjs <screen 04..08> <outDir> "<query>" [tailSecs]
+> import { mkdirSync, writeFileSync, realpathSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> // worktrees link node_modules to the main checkout: allow Vite to serve it too, else the HUD fonts fall back (s06 r23 fix)
+> async function startVite(port) {
+>   const { createServer, searchForWorkspaceRoot } = await import(pathToFileURL(`${process.cwd()}/node_modules/vite/dist/node/index.js`).href);
+>   const root = process.cwd();
+>   const  …[+3431 chars]
+
+### 🤖 Claude — 2026-11-20T11:00:24.696Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && uptime && timeout 600 npx tsc --noEmit -p . && echo TSC_OK", "description": "Typecheck the worktree", "timeout": 700000}`
+
+### 🧑 User — 2026-11-20T11:00:39.108Z
+
+> ↩︎ result: 11:00:25 up 39 min,  0 user,  load average: 31.48, 29.17, 18.81
+> TSC_OK
+
+### 🤖 Claude — 2026-11-20T11:00:43.597Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && mkdir -p .cache && sed -e \"s#startVite(5213)#startVite(5285)#\" -e \"s#from './lib/pw.mjs'#from '../scripts/lib/pw.mjs'#\" scripts/gameplay-test.mjs > .cache/gp5285.mjs && grep -n \"startVite(\\|pw.mjs\" .cache/gp5285.mjs | head -3; grep -n \"argv\\|--q\\|--out\" scripts/gameplay-test.mjs | head", "description": "Prepare gameplay test copy on port 5285"}`
+
+### 🧑 User — 2026-11-20T11:00:43.681Z
+
+> ↩︎ result: 14:import { loadPlaywright, CHROMIUM_ARGS, startVite } from '../scripts/lib/pw.mjs';
+> 20:const vite = await startVite(5285);
+> 11://   node scripts/gameplay-test.mjs --q=river05=1 --out=qa/pilot05/wave11/tests/gameplay_river05.json
+> 12://   → the same run with URL test switches; with --q the tracked qa/ files above are NOT rewritten.
+> 16:const optQ = (process.argv.find((a) => a.startsWith('--q=')) ?? '').slice(4);
+> 17:const optOut = (process.argv.find((a) => a.startsWith('--out=')) ?? '').slice(6);
+
+### 🤖 Claude — 2026-11-20T11:00:47.042Z
+
+Load is high (~31 on 4 cores, other workers rendering), so I'll keep to two renders at a time in one background script.
+
+### 🤖 Claude — 2026-11-20T11:00:52.097Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/k; P=/home/user/rainbow-/qa/benny/r23/s3_star; cat > $S/proof_s3.sh <<EOF\n#!/usr/bin/env bash\nset -u\ncd /home/user/wt/benny\nP=$P; S=$S\nclip(){ # screen tag queryfile port\n  AUDIT_PORT=\\$4 timeout 2400 node /home/user/rainbow-/tools/lead23/screen_clip.mjs \\$1 \\$S/clip_\\$2 \"\\$(cat \\$3)\" > \\$S/cliplog_\\$2.txt 2>&1; echo \"clip \\$2 exit \\$?\"; }\n( clip 06 06new \\$P/QUERY_NEW_06.txt 5279 ) &\n( timeout 2400 node .cache/gp5285.mjs \"--q=benny20=1&b20expo=1&b20ppw=0.45&b20tuft=1&b20kni …[+337 chars]`
+
+### 🧑 User — 2026-11-20T11:00:52.152Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-20T11:00:55.948Z
+
+> 🔧 **Bash** `{"command": "/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/k/proof_s3.sh", "description": "Run star-step clips and gameplay test in background", "timeout": 5400000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T11:00:55.980Z
+
+> ↩︎ result: Command running in background with ID: b3u58ax3u. Output is being written to: /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/tasks/b3u58ax3u.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-20T11:01:00.568Z
+
+While those run, I'll prepare the next item: longer, silky, combed fur (own switch). First a close look at approved vs current fur.
+
+### 🤖 Claude — 2026-11-20T11:01:03.872Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/k; python3 -I -c \"\nfrom PIL import Image\nA=Image.open('/home/user/wt/benny/references/04_through_the_five_arrows.png').convert('RGB')\nG=Image.open('/home/user/rainbow-/qa/benny/r23/s3_star/04/new/a_start.png').convert('RGB')\nprint(A.size,G.size)\na=A.crop((300,1270,460,1390)).resize((480,360),Image.BICUBIC)\ng=G.crop((300,1262,460,1382)).resize((480,360),Image.BICUBIC)\no=Image.new('RGB',(970,360),'white'); o.paste(a,(0,0)); o.paste(g,(490,0)); o.save('$S/fur04z.png')\nfor n in ['05','07','08' …[+76 chars]`
+
+### 🧑 User — 2026-11-20T11:01:04.690Z
+
+> ↩︎ result: (864, 1536) (864, 1536)
+
+### 🤖 Claude — 2026-11-20T11:01:07.423Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/k/fur04z.png"}`
+
+### 🧑 User — 2026-11-20T11:01:07.444Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T11:01:15.847Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && grep -n \"BENNY20\" src/characters/benny/fur.ts | head -30; wc -l src/characters/benny/fur.ts", "description": "Locate BENNY20 code in fur shader"}`
+
+### 🧑 User — 2026-11-20T11:01:15.939Z
+
+> ↩︎ result: 60:    /** `?benny20=1` only (material.defines.BENNY20, benny20.ts): soft plush LOCKS instead of single needles —
+> 95:        #ifdef BENNY20
+> 112:        #ifdef BENNY20
+> 138:        #ifdef BENNY20
+> 147:        #ifdef BENNY20
+> 258:    `${material.defines?.BENNY05 !== undefined ? '-b05' : ''}${material.defines?.BENNY20 !== undefined ? '-b20' : ''}` +
+> 271 src/characters/benny/fur.ts
+
+### 🤖 Claude — 2026-11-20T11:01:18.834Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/benny/src/characters/benny/fur.ts", "offset": 40, "limit": 225}`
+
+### 🧑 User — 2026-11-20T11:01:18.855Z
+
+> ↩︎ result: 40	  };
+> 41	}
+> 42	
+> 43	export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
+> 44	  const shells = Math.max(2, Math.round(p.shells));
+> 45	  const uniforms = {
+> 46	    uFurLen: { value: p.length },
+> 47	    uDensity: { value: p.density },
+> 48	    uRoot: { value: new THREE.Color(p.root) },
+> 49	    uTip: { value: new THREE.Color(p.tip) },
+> 50	    uGravity: { value: p.gravity ?? 0.3 },
+> 51	    uBald: { value: new THREE.Vector4(...(p.bald ?? [0, 1, 0, 2])) },
+> 52	    uShortDir: { value: new THREE.Vector3(...((p.short?.slice(0, 3) as [number, number, number]) ?? [0, 0, 1])) },
+> 53	    uShort: { value: new THREE.Vector3(p.short?.[3] ?? 2, p.short?.[4] ?? 3, p.short?.[5] ?? 1) },
+> 54	    uTime: { value: 0 },
+> 55	    uWind: { value: new THREE.Vector3() },
+> 56	    /** QA segmentation colour (only compiled in when material.defines.BENNY_MASK is set, see runtime.ts) */
+> 57	    uMaskCol: { value: new THREE.Color(1, 0, 0) },
+> 58	    /** `?benny05=1` only (material.defines.BENNY05, benny05.ts): strand clumping toward tuft centres */
+> 59	    uClump: { value: 0.42 },
+> 60	    /** `?benny20=1` only (material.defines.BENNY20, benny20.ts): soft plush LOCKS instead of single needles —
+> 61	     *  x = lock cells  …[+12086 chars]
+
+### 🤖 Claude — 2026-11-20T11:01:35.585Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && grep -n \"TUFT\\|LOCK20\\|uLock\\|uShade\\|uComb\\|uPile\\|uVol\\|uTipCol\" src/characters/benny/benny20.ts | head -50", "description": "Find the fur lock parameter blocks"}`
+
+### 🧑 User — 2026-11-20T11:01:35.680Z
+
+> ↩︎ result: 46:/** lock shader parameters per part (fur.ts uLock / uShade / uComb) and flat albedo (LINEAR rgb). Albedos solved from a
+> 49:const LOCK20: Record<string, { lock: V4; shade: V4; comb: V4; pile: V4; color: [number, number, number] }> = {
+> 84:const TUFT = n('tuft', 0) > 0;
+> 87:if (TUFT) {
+> 93:    const L = LOCK20[k];
+> 208:    const spec = LOCK20[f.mesh.name];
+> 218:    f.uniforms.uLock.value.set(...spec.lock);
+> 219:    f.uniforms.uShade.value.set(...spec.shade);
+> 220:    f.uniforms.uComb.value.set(...spec.comb);
+> 221:    f.uniforms.uPile.value.set(...spec.pile);
+> 223:    if (vol) f.uniforms.uVol.value.set(...vol);
+> 225:    if (tc) f.uniforms.uTipCol.value.setRGB(...tc);
+> 370:    (window as unknown as { __b20?: unknown }).__b20 = { scene, furs, hat, pom, star, HAT20, LOCK20, EXPO20, expo, KNITX20, knitMats, STARX20, starX, screenBox };
+
+### 🤖 Claude — 2026-11-20T11:01:38.307Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/benny/src/characters/benny/benny20.ts", "offset": 1, "limit": 100}`
+
+### 🧑 User — 2026-11-20T11:01:38.340Z
+
+> ↩︎ result: 1	/**
+> 2	 * Round 20 Benny — `?benny20=1` (benny-character-artist, qa/benny/r19b/PROGRESS.md). Off (default): nothing in this file
+> 3	 * runs, every material, geometry and shader program is the previous one.
+> 4	 *
+> 5	 * Builds ON benny05 (benny05.ts also runs whenever benny20 is on: approved-pixel maps, beanie seat, damped roll) and then
+> 6	 * moves Benny toward the APPROVED Screen 04 Benny (references/04_through_the_five_arrows.png, the largest, sharpest view):
+> 7	 *  1. Fur: soft plush LOCKS instead of single needles (fur.ts `#ifdef BENNY20`): long, clumped, combed-down tufts with
+> 8	 *     darker roots / creases and lighter tips, in dusty rose / mauve instead of neon pink (flat albedo, colour solved
+> 9	 *     against the approved fur in the real 04 frame).
+> 10	 *  2. Beanie: bigger and seated lower over the body (approved: ≈ 10 % wider, cuff bottom far lower), chunky hand-knit
+> 11	 *     maps (tools/benny20/knit.py: V-stitch columns, cream-white / violet stripes, thick ribbed violet cuff).
+> 12	 *  3. Pompom: bigger, lighter violet, chunky yarn locks (same lock shader, radial).
+> 13	 *  4. Star: flat stitched felt patch (thin, matte, soft gold, stitched rim) instead of a glossy 3D plastic sta …[+4614 chars]
+
+### 🤖 Claude — 2026-11-20T11:01:38.906Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/benny/src/characters/benny/benny20.ts", "offset": 195, "limit": 40}`
+
+### 🧑 User — 2026-11-20T11:01:38.931Z
+
+> ↩︎ result: 195	}
+> 196	
+> 197	/** per-frame: ease the fur albedo toward the current screen's exposure (EXPO20); returned by applyBenny20 */
+> 198	export type Benny20Tick = (dt: number, stage: string | undefined) => void;
+> 199	
+> 200	/** apply after applyBenny05 (same freshly cloned scene + fur handles) */
+> 201	export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Record<string, THREE.Texture | null>): Benny20Tick {
+> 202	  const get = (nm: string) => scene.getObjectByName(nm);
+> 203	  const white = new THREE.DataTexture(new Uint8Array([255, 255, 255, 255]), 1, 1);
+> 204	  white.needsUpdate = true;
+> 205	
+> 206	  // ---- fur: plush locks, flat dusty-rose albedo ----
+> 207	  for (const f of furs) {
+> 208	    const spec = LOCK20[f.mesh.name];
+> 209	    if (!spec) continue;
+> 210	    const mat = f.material;
+> 211	    const d = mat.defines ?? (mat.defines = {});
+> 212	    d.BENNY20 = '';
+> 213	    if (d.BENNY05 === undefined) d.BENNY05 = '';
+> 214	    mat.map = white;
+> 215	    mat.color.setRGB(...spec.color);
+> 216	    f.uniforms.uRoot.value.setRGB(1, 1, 1);
+> 217	    f.uniforms.uTip.value.setRGB(1, 1, 1);
+> 218	    f.uniforms.uLock.value.set(...spec.lock);
+> 219	    f.uniforms.uShade.value.set(...spec.shade);
+> 220	     …[+586 chars]
+
+### 🤖 Claude — 2026-11-20T11:01:57.584Z
+
+To design the silky-lock change I'll use the one-load probe from r23 (it applies JS variants to the live uniforms without reloading). Let me check its interface.
+
+### 🤖 Claude — 2026-11-20T11:01:58.184Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && sed -n 1,60p tools/benny23/knitprobe.mjs", "description": "Read the knit probe tool"}`
+
+### 🧑 User — 2026-11-20T11:01:58.265Z
+
+> ↩︎ result: // Benny r23 (benny-character-artist, read-only QA): load the game ONCE at a screen checkpoint (frozen frame, as
+> // tools/benny20/probe.mjs) and render many knit-map variants of Benny's beanie without a reload: each variant swaps the
+> // crown / cuff albedo + normal images on the live b20knit materials (query must contain &benny20=1&b20knit=1) and may set
+> // the material colour factors / normal strengths, then runs optional js (async; B = window.__b20, R = window.__rainbow).
+> //   node tools/benny23/knitprobe.mjs <outDir> "<query>" <variants.json> [screen=04] [dist=0] [steer=null]
+> // variants.json: [{ "name": "v1", "dir": "/.cache/b23knit/v1", "ccol": [r,g,b], "rcol": [r,g,b], "kcn": 2, "kbn": 2.5,
+> //                   "js": "..." }]   dir = URL folder holding crown.png, crown_n.png, brim.png, brim_n.png (any subset)
+> // Writes <outDir>/<name>.png and <outDir>/probe.json (incl. Benny's screen box for Benny-centred crops).
+> import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from '../../scripts/lib/pw.mjs';
+> const [OUT, Q = '', VJ, SCR = '04', DIST = '0', STEER = 'null'] = process.argv.slice(2);
+> mkdirSync(OUT, { recursive: …[+2890 chars]
+
+### 🤖 Claude — 2026-11-20T11:02:26.605Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && grep -on \"n('[a-z0-9]*'\\|lin('[a-z0-9]*'\" src/characters/benny/benny20.ts src/characters/benny/benny05.ts | sed \"s/.*('//;s/'//\" | sort | uniq | tr '\\n' ' '; echo; grep -n \"flag05\\|b20silk\\|silk\" src/characters/benny/*.ts | head", "description": "List existing override keys to avoid collisions"}`
+
+### 🧑 User — 2026-11-20T11:02:27.332Z
+
+> ↩︎ result: acol acx agr alen alx alz ash bcol bcw bcx bcy bcz bgr blen blw blx bly blz bpx bpy bpz bsh bsw bsx bsy bsz bw ccol expo hd hs ht kbn kcn knit kv05 kv06 kv07 kv08 kw05 kw06 kw07 kw08 pcol pcw pcz pdy pgr plen plw plx ply plz ppw ppx ppy ppz ps psh psw psx psy psz rcol scol se sf sfcol sfe sfn star sx05 sx06 sx07 sx08 tcw tcx tcy tgr tlen tlw tlx tpw tpx tpy tsw tsx tsy tsz ttb ttg ttr tuft tvx tvy x05 x06 x07 x08 
+> src/characters/benny/benny05.ts:20:import { flag05 } from '../../vfx/waterRibbon';
+> src/characters/benny/benny05.ts:23:const on05 = (key: string): boolean => flag05(key) || flag05('benny08') || flag05('match08') || flag05('matchall');
+> src/characters/benny/benny20.ts:18:import { flag05 } from '../../vfx/waterRibbon';
+> src/characters/benny/benny20.ts:21:export const BENNY20: boolean = flag05('benny20');
+
+### 🤖 Claude — 2026-11-20T11:02:31.143Z
+
+Prefix `g` is free; silk keys will be `&b20silk=1` plus `&b20g*` overrides. Now the shader change in `fur.ts`.
+
+### 🤖 Claude — 2026-11-20T11:02:34.645Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/benny/src/characters/benny/fur.ts", "old_string": "    uVol: { value: new THREE.Vector4(0, 0, 0, 0) },\n  };", "new_string": "    uVol: { value: new THREE.Vector4(0, 0, 0, 0) },\n    /** `?benny20=1&b20silk=1` only (material.defines.B20SILK, benny20.ts): long SILKY COMBED locks — the strands inside a\n     *  lock are smooth streaks running along it (converging into its pointed tip) instead of per-strand dots.\n     *  x = streaks across one lock, y = streak brightness contrast, z = per-streak tip-length variation (soft pointed\n     *  fringe …[+289 chars]`
+
+### 🧑 User — 2026-11-20T11:02:35.301Z
+
+> ↩︎ result: The file /home/user/wt/benny/src/characters/benny/fur.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T11:02:36.604Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/benny/src/characters/benny/fur.ts", "old_string": "        uniform vec4 uLock; uniform vec4 uShade; uniform vec3 uTint; uniform vec4 uComb; uniform vec4 uPile; uniform vec3 uTipCol; uniform vec4 uVol;\n        #endif", "new_string": "        uniform vec4 uLock; uniform vec4 uShade; uniform vec3 uTint; uniform vec4 uComb; uniform vec4 uPile; uniform vec3 uTipCol; uniform vec4 uVol;\n        #endif\n        #ifdef B20SILK\n        uniform vec4 uSilk; uniform vec4 uSilk2;\n        #endif"}`
+
+### 🧑 User — 2026-11-20T11:02:37.410Z
+
+> ↩︎ result: The file /home/user/wt/benny/src/characters/benny/fur.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T11:02:59.701Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/benny/src/characters/benny/fur.ts", "old_string": "          float lh = 1.0 - uShade.w * th;                       // this lock's length (fraction of the fur length)\n          float lt = clamp(layer / lh, 0.0, 1.0);\n          float rl = uLock.y * pow(max(0.0, 1.0 - lt), 0.4);    // lock cross-section radius at this height (leaf-shaped)\n          float rr = td / max(rl, 1e-3);", "new_string": "          float lh = 1.0 - uShade.w * th;                       // this lock's length (fraction of the fur length)\n          float lt = clamp(layer / …[+1955 chars]`
+
+### 🧑 User — 2026-11-20T11:03:00.229Z
+
+> ↩︎ result: The file /home/user/wt/benny/src/characters/benny/fur.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T11:03:01.403Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/benny/src/characters/benny/fur.ts", "old_string": "          diffuseColor.rgb *= uTint * ao * crease * tip * rnd * (0.9 + 0.12 * th) * (1.0 - uComb.z + 2.0 * uComb.z * sh);\n          // uPile.w", "new_string": "          diffuseColor.rgb *= uTint * ao * crease * tip * rnd * (0.9 + 0.12 * th) * (1.0 - uComb.z + 2.0 * uComb.z * sh);\n          #endif\n          // uPile.w"}`
+
+### 🧑 User — 2026-11-20T11:03:02.259Z
+
+> ↩︎ result: The file /home/user/wt/benny/src/characters/benny/fur.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T11:03:03.202Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/benny/src/characters/benny/fur.ts", "old_string": "    `${material.defines?.BENNY05 !== undefined ? '-b05' : ''}${material.defines?.BENNY20 !== undefined ? '-b20' : ''}` +", "new_string": "    `${material.defines?.BENNY05 !== undefined ? '-b05' : ''}${material.defines?.BENNY20 !== undefined ? '-b20' : ''}` +\n    `${material.defines?.B20SILK !== undefined ? '-silk' : ''}` +"}`
+
+### 🧑 User — 2026-11-20T11:03:04.951Z
+
+> ↩︎ result: The file /home/user/wt/benny/src/characters/benny/fur.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T11:03:09.437Z
+
+Now `benny20.ts`: the switch, its parameters and applying the define. Let me check the `FurHandle` type and the TUFT block end.
+
+### 🤖 Claude — 2026-11-20T11:03:10.443Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && sed -n 1,40p src/characters/benny/fur.ts | grep -n \"uniforms\\|FurHandle\\|interface\\|type\" ; grep -n \"return {\" src/characters/benny/fur.ts; sed -n 100,112p src/characters/benny/benny20.ts", "description": "Check FurHandle uniforms type and TUFT block end"}`
+
+### 🧑 User — 2026-11-20T11:03:10.834Z
+
+> ↩︎ result: 12:export interface FurParams {
+> 23:export interface FurHandle {
+> 26:  uniforms: {
+> 308:  return { mesh, material, uniforms };
+>   }
+> }
+> 
+> /** per-screen fur exposure (LINEAR multipliers on the fur albedo above, which is solved for Screen 04). The approved
+>  *  pictures paint Benny lighter / pinker on 05–07 (fur mean ≈ (234, 82, 178), brightness median .95–.98) than on 04
+>  *  ((207, 74, 151), .84), while the game lights him less there. The game records its screen on
+>  *  benny.root.userData.stage (Game.ts setStage); runtime.ts eases the factor over ≈ 1 s. Unlisted screens: 04's look. */
+> export const EXPO20: Record<string, [number, number, number]> = {
+>   '05': lin('x05', [2.08, 1.54, 1.68]),
+>   '06': lin('x06', [1.73, 1.62, 1.5]),
+>   '07': lin('x07', [2.33, 1.59, 1.75]),
+>   '08': lin('x08', [2.0, 1.21, 1.7]),
+> };
+
+### 🤖 Claude — 2026-11-20T11:03:13.192Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/benny/src/characters/benny/fur.ts", "offset": 20, "limit": 22}`
+
+### 🧑 User — 2026-11-20T11:03:13.241Z
+
+> ↩︎ result: 20	  short?: [number, number, number, number, number, number];
+> 21	}
+> 22	
+> 23	export interface FurHandle {
+> 24	  mesh: THREE.InstancedMesh;
+> 25	  material: THREE.MeshStandardMaterial;
+> 26	  uniforms: {
+> 27	    uTime: { value: number };
+> 28	    uWind: { value: THREE.Vector3 };
+> 29	    uMaskCol: { value: THREE.Color };
+> 30	    uRoot: { value: THREE.Color };
+> 31	    uTip: { value: THREE.Color };
+> 32	    uClump: { value: number };
+> 33	    uLock: { value: THREE.Vector4 };
+> 34	    uShade: { value: THREE.Vector4 };
+> 35	    uTint: { value: THREE.Color };
+> 36	    uComb: { value: THREE.Vector4 };
+> 37	    uPile: { value: THREE.Vector4 };
+> 38	    uTipCol: { value: THREE.Color };
+> 39	    uVol: { value: THREE.Vector4 };
+> 40	  };
+> 41	}
+
+### 🤖 Claude — 2026-11-20T11:03:17.024Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/benny/src/characters/benny/fur.ts", "old_string": "    uVol: { value: THREE.Vector4 };\n  };\n}", "new_string": "    uVol: { value: THREE.Vector4 };\n    uSilk: { value: THREE.Vector4 };\n    uSilk2: { value: THREE.Vector4 };\n  };\n}"}`
+
+### 🧑 User — 2026-11-20T11:03:17.847Z
+
+> ↩︎ result: The file /home/user/wt/benny/src/characters/benny/fur.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T11:03:23.536Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/benny/src/characters/benny/benny20.ts", "old_string": "    VOL20[k] = [n('tvx', 0.35), n('tvy', 0.1), 0, 0];\n    TIP20[k] = [n('ttr', 1.0), n('ttg', 0.42), n('ttb', 0.92)];\n  }\n}", "new_string": "    VOL20[k] = [n('tvx', 0.35), n('tvy', 0.1), 0, 0];\n    TIP20[k] = [n('ttr', 1.0), n('ttg', 0.42), n('ttb', 0.92)];\n  }\n}\n\n/** `&b20silk=1` (r24 fur step, opt-in, on top of b20tuft): LONGER SILKY COMBED locks like the approved Benny — bigger,\n *  longer locks lying down along the body, each a smooth pointed flame of streaks running along it …[+995 chars]`
+
+### 🧑 User — 2026-11-20T11:03:24.136Z
+
+> ↩︎ result: The file /home/user/wt/benny/src/characters/benny/benny20.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T11:03:25.536Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/benny/src/characters/benny/benny20.ts", "old_string": "    const tc = TIP20[f.mesh.name];\n    if (tc) f.uniforms.uTipCol.value.setRGB(...tc);\n    mat.needsUpdate = true;", "new_string": "    const tc = TIP20[f.mesh.name];\n    if (tc) f.uniforms.uTipCol.value.setRGB(...tc);\n    const sk = SILK20[f.mesh.name];\n    if (sk) {\n      d.B20SILK = '';\n      f.uniforms.uSilk.value.set(...sk.silk);\n      f.uniforms.uSilk2.value.set(...sk.silk2);\n    }\n    mat.needsUpdate = true;"}`
+
+### 🧑 User — 2026-11-20T11:03:26.815Z
+
+> ↩︎ result: The file /home/user/wt/benny/src/characters/benny/benny20.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T11:03:34.469Z
+
+The background proof renders load code from this worktree, so let me make sure my edits can't hot-reload a running page.
+
+### 🤖 Claude — 2026-11-20T11:03:37.220Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && grep -n \"hmr\\|watch\\|createServer\" scripts/lib/pw.mjs | head; cat /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/tasks/b3u58ax3u.output; ls /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/k/clip_06new/f 2>/dev/null | wc -l; tail -n 3 /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/k/gp.log", "description": "Check vite HMR settings and proof progress"}`
+
+### 🧑 User — 2026-11-20T11:03:37.362Z
+
+> ↩︎ result: 20:  const { createServer } = await import('vite');
+> 21:  const server = await createServer({ server: { port, strictPort: false, host: '127.0.0.1', hmr: false, watch: { ignored: ['**/*'] } }, logLevel: 'error' });
+> gameplay exit 0
+> 12
+>  },
+>  "errors": []
+> }
+
+### 🤖 Claude — 2026-11-20T11:03:39.986Z
+
+HMR is off, so running pages are safe. The gameplay test already finished; checking it.
+
+### 🤖 Claude — 2026-11-20T11:03:42.295Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport json; d=json.load(open('/home/user/rainbow-/qa/benny/r23/s3_star/gameplay_star.json'))\nprint([k for k in d])\nc=d.get('checks',{})\nif isinstance(c,dict): print(sum(1 for v in c.values() if v.get('pass')), '/', len(c)); print({k:v.get('pass') for k,v in c.items()})\nfor k in ('coins','coinsCollected','score','victory','q','query','errors'):\n    if k in d: print(k, d[k] if not isinstance(d[k],(list,dict)) or len(str(d[k]))<300 else str(d[k])[:300])\n\"", "description": "Summarise the gameplay test result"}`
+
+### 🧑 User — 2026-11-20T11:03:42.469Z
+
+> ↩︎ result: ['checks', 'samples', 'plunge', 'maxJumpAt', 'errors', 'pass', 'query']
+> 8 / 8
+> {'pauseFreezes': True, 'continuousTravel': True, 'noCameraCut': True, 'noTeleport': True, 'plunge': True, 'realCoinPickups': True, 'victory': True, 'heartsLostOnWallBump': True}
+> query benny20=1&b20expo=1&b20ppw=0.45&b20tuft=1&b20knit=1&b20star=1
+> errors []
+
+### 🤖 Claude — 2026-11-20T11:03:47.119Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport json; d=json.load(open('/home/user/rainbow-/qa/benny/r23/s3_star/gameplay_star.json'))\nprint(json.dumps(d['checks'])[:1500])\n\"; python3 -I -c \"\nimport json; d=json.load(open('/home/user/rainbow-/qa/benny/r23/s2_knit/gameplay_knit.json'))\nprint(json.dumps(d['checks'])[:600])\"", "description": "Show check details including coin counts"}`
+
+### 🧑 User — 2026-11-20T11:03:47.225Z
+
+> ↩︎ result: {"pauseFreezes": {"pass": true, "sBefore": 45.495, "sPaused": 45.495, "sAfter": 49.995}, "continuousTravel": {"pass": true, "nonMonotonicSteps": 0, "steps": 2139, "respawns": 0}, "noCameraCut": {"pass": true, "maxCameraJumpPerStep": 0.728}, "noTeleport": {"pass": true, "maxBennyAltitudeJumpPerStep": 0.19, "at": {"s": 360.074, "s1": 360.274, "stage": "07", "y0": -93.088, "y1": -93.278, "t": 27.85}}, "plunge": {"pass": true, "tTop": 23.699999999999935, "tBottom": 30.283333333332894, "t08": 30.283333333332894, "yTop": -51.836, "yBottom": -113.243, "y08": -113.243, "travelTimeTopToInlet": 6.58, "verticalDrop": 61.41}, "realCoinPickups": {"pass": true, "startCoins": 1330, "endCoins": 2240, "collected": 91}, "victory": {"pass": true, "finalState": {"mode": "end", "stage": "11", "s": 435.183, "lat": -0.027, "coins": 2240, "hearts": 5, "paused": false, "bennyY": -109.61, "bennyVisible": false, "cam": [11.2, -99.1, -304]}}, "heartsLostOnWallBump": {"pass": true, "hearts": 4}}
+> {"pauseFreezes": {"pass": true, "sBefore": 45.495, "sPaused": 45.495, "sAfter": 49.995}, "continuousTravel": {"pass": true, "nonMonotonicSteps": 0, "steps": 2139, "respawns": 0}, "noCameraCut": {"pass": true, "maxCamer …[+382 chars]
+
+### 🤖 Claude — 2026-11-20T11:03:55.109Z
+
+Gameplay with the star switch: 8/8 checks, 91 coins (1,330 → 2,240), victory, no errors. Now typecheck the silk code.
+
+### 🤖 Claude — 2026-11-20T11:03:56.028Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && timeout 600 npx tsc --noEmit -p . && echo TSC_OK", "description": "Typecheck after silk fur changes", "timeout": 700000}`
+
+### 🧑 User — 2026-11-20T11:04:07.281Z
+
+> ↩︎ result: TSC_OK
+
+### 🤖 Claude — 2026-11-20T11:04:12.761Z
+
+Typecheck passes. Now a one-load probe on 04 (largest view of Benny) with the silk defaults and a few lock-size / streak variants, tuned live through uniforms.
+
+### 🤖 Claude — 2026-11-20T11:04:20.625Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/k; python3 - <<EOF\nimport json\ndef js(lx=18, ly=1.1, lz=0.55, sh=(0.55,0.55,0.55,0.3), cb=(0.9,0.8,0,0.45), silk=(7,0.35,0.35,0.3), silk2=(0.7,0.45,0,0), L=0.1):\n    return (\"for (const f of B.furs) { if (!/^fur_(body|arm)/.test(f.mesh.name)) continue; const arm = f.mesh.name !== 'fur_body'; const u = f.uniforms; \"\n            f\"u.uLock.value.set(arm ? {lx}*1.33 : {lx}, {ly}, {lz}, u.uLock.value.w); u.uShade.value.set({','.join(map(str,sh))}); u.uComb.value.set({','.join(map(str,cb))}); \"\n …[+946 chars]`
+

@@ -1,5 +1,7 @@
 # Screen 07 · round 23 (water-fx-specialist) — progress log
 
+> **Round 24 continues in `qa/match/07/r24/PROGRESS.md`** (r24 WHERE I STOPPED / NEXT is at its top).
+
 ## (r23) WHERE I STOPPED / NEXT
 * DONE: step 1 `&m07satin=1` (painted satin ribbons + white flares on the magenta bands) — GOOD IMPROVEMENT (s1_satin/; lead: small
   GOOD IMPROVEMENT). Candidate query now: `K7c&m07satin=1` (`s1_satin/query_NEW.txt`); m07cloud (fuller, rounder foam) stays in it

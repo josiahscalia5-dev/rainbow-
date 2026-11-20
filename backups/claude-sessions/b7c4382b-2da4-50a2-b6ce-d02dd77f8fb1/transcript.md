@@ -2240,3 +2240,401 @@ Next I'll freeze the export point: one save that also snapshots every specialist
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow- && timeout 240 bash -c 'until flock -n backups/.autosave.lock true; do sleep 2; done'; timeout 400 python3 scripts/rainbow-autosave.py --reason manual:review-export-freeze 2>&1 | grep -E '\"result\"|\"commit\"|skipping'; X=$(git rev-parse HEAD); echo \"X=$X\"; echo \"remote $(git ls-remote origin refs/heads/ccr-5be1062a-0ffyej | cut -f1)\"; for d in claude__rainbow-s04-match-c25 claude__rainbow-s05-match-c25 claude__rainbow-s06-match-c25 claude__rainbow-s07-match-c25 claude__rainbow-s08-scenery-c25 claude__rainbow-benny-c25 detached-8accdad0a0 detached-e162a …[+369 chars]`
 
+### 🧑 User — 2026-11-20T11:00:24.125Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "commit": "e71b45b939b98c2ae82d5d7750f02977f7e9269a",
+> X=e71b45b939b98c2ae82d5d7750f02977f7e9269a
+> remote e71b45b939b98c2ae82d5d7750f02977f7e9269a
+> claude__rainbow-s04-match-c25 34cb4941 2026-11-20T11:00:09+00:00 dirty ['src/game/Game.ts', 'src/world/match04.ts', 'src/world/match04m4.ts'] untracked ['tools/match04/rings21.mjs'] skipped []
+> claude__rainbow-s05-match-c25 eb7233e3 2026-11-20T11:00:10+00:00 dirty [] untracked [] skipped []
+> claude__rainbow-s06-match-c25 e162aec2 2026-11-20T11:00:10+00:00 dirty ['src/game/Game.ts', 'src/world/match06.ts'] untracked ['tools/match06/lead23_audit_slow.mjs', 'tools/match06/r23_audit.mjs', 'tools/match06/r23_ripdump.mjs', 'tools/match06/r23_swim.mjs', 'tools/match06/r23_tunprobe.mjs', 'tools/match06/r23_vite.mjs'] skipped []
+> claude__rainbow-s07-match-c25 8accdad0 2026-11-20T11:00:10+00:00 dirty ['src/game/Game.ts', 'src/game/cameraRig.ts', 'src/gameplay/coins.ts', 'src/world/course.ts', 'src/world/match07.ts'] untracked ['tools/match07/audit_screen_r23.mjs', 'tools/match07/capture_5277.mjs', 'tools/match07/diag_r21.mjs', 'tools/match07/gameplay_test_5277.mjs', 'tools/match07/r23_vite_s08.mjs', 'tools/match07/route_ …[+1394 chars]
+
+### 🤖 Claude — 2026-11-20T11:00:31.414Z
+
+> 🔧 **Bash** `{"command": "for d in qa/review_r21/audit qa/review_r21/artwork qa/match/04/r23 qa/match/04/r22 qa/match/05 qa/match/06/r23 qa/match/06/r24 qa/match/07/r23 qa/match/07/r24 qa/match/08/r23 qa/benny/r23 screenshots qa/gameplay_video qa/worldlabs qa/review_r21; do printf \"%8s %s\\n\" \"$(du -sh $d 2>/dev/null | cut -f1)\" \"$d\"; done; ls qa/match/05/ 2>/dev/null | tail -5; ls qa/review_r21/artwork qa/review_r21/artwork/*/ | head -30", "description": "Measure evidence folder sizes"}`
+
+### 🧑 User — 2026-11-20T11:00:32.322Z
+
+> ↩︎ result: 86M qa/review_r21/audit
+>     133M qa/review_r21/artwork
+>     135M qa/match/04/r23
+>      80M qa/match/04/r22
+>          qa/match/05
+>     200M qa/match/06/r23
+>      57M qa/match/06/r24
+>     177M qa/match/07/r23
+>      11M qa/match/07/r24
+>     125M qa/match/08/r23
+>     209M qa/benny/r23
+>      32M screenshots
+>      22M qa/gameplay_video
+>     203M qa/worldlabs
+>     218M qa/review_r21
+> qa/review_r21/artwork:
+> 04
+> 05
+> 07
+> LEDGER.md
+> 
+> qa/review_r21/artwork/04/:
+> FOR_APPROVAL_04_c_middle.png
+> FOR_APPROVAL_04_d_late.png
+> FOR_APPROVAL_04_e_end.png
+> USER_VERDICT.md
+> accepted
+> game_frames
+> prompt_04.txt
+> prompt_04_late.txt
+> proposals
+> 
+> qa/review_r21/artwork/05/:
+> FOR_APPROVAL_05_d_late.png
+> FOR_APPROVAL_05_e_end.png
+> game_frames
+> prompt_05_p2.txt
+> proposals
+> swatches
+> 
+> qa/review_r21/artwork/07/:
+> FOR_APPROVAL_07_d_late.png
+> FOR_APPROVAL_07_e_end.png
+> game_frames
+> prompt_07.txt
+
+### 🤖 Claude — 2026-11-20T11:00:45.560Z
+
+The evidence totals over 1 GB, so the package will be a core ZIP plus numbered asset ZIPs. I'll find where the latest Screen 05 evidence lives.
+
+### 🤖 Claude — 2026-11-20T11:00:48.112Z
+
+> 🔧 **Bash** `{"command": "ls -d qa/*05* qa/*/05* qa/match* 2>/dev/null | head; find qa -maxdepth 3 -type d -name \"r19*\" | head; grep -rn \"qa/\" /home/user/wt/s05/qa/match05*/r19/PROGRESS.md 2>/dev/null | head -3; git log -1 --format=%H eb7233e3646640397f14e360f601aeff088d7536 -- 2>/dev/null; git show --stat eb7233e3646640397f14e360f601aeff088d7536 | head -20", "description": "Locate the latest Screen 05 evidence"}`
+
+### 🧑 User — 2026-11-20T11:00:48.213Z
+
+> ↩︎ result: qa/05_diff.png
+> qa/05_overlay.png
+> qa/05_side_by_side.png
+> qa/match
+> qa/parallel_preview/05
+> qa/pilot05
+> qa/pilot05/05_before_81e639e.png
+> qa/pilot05/05_partial_f2a86ab.png
+> qa/pilot05/05_ref_before_partial.png
+> qa/review_c12/05_1_APPROVED.png
+> qa/match/04/r19_thrixel
+> qa/match/04/r19_falfoam
+> eb7233e3646640397f14e360f601aeff088d7536
+> commit eb7233e3646640397f14e360f601aeff088d7536
+> Author: Claude <noreply@anthropic.com>
+> Date:   Thu Nov 19 19:55:30 2026 +0000
+> 
+>     Screen 05 r19 step 2: &m05wcrisp=1 + &m05pink=1 KEPT (crisp painted slotted far wall while swimming, pink corner smear gone; GOOD IMPROVEMENT), &m05lidf=1 rejected for now (doubled far paddles at the start); locked view byte-identical, gameplay 8/8, 91 coins, 2,240; handoff block in PROGRESS
+>     
+>     Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+>     Claude-Session: https://claude.ai/code/session_018Sg3AUbSK5nc5dd7NL38mT
+> 
+>  qa/capture_log.json                                |   16 +-
+>  qa/match/05/r18/KEPT_STEP2.txt                     |    1 +
+>  qa/match/05/r18/PROGRESS.md                        |   42 +
+>  qa/match/05/r18/step2_wall/1_APPROVED.png          |  Bin 0 -> 484196 bytes
+>  .../05/r18/step2_wall/BEFORE/a00_approved_view.p …[+498 chars]
+
+### 🤖 Claude — 2026-11-20T11:01:20.799Z
+
+> 🔧 **Bash** `{"command": "for d in qa/review_r21/audit qa/match/04/r23 qa/match/04/r22 qa/match/06/r23 qa/match/06/r24 qa/match/07/r23 qa/match/07/r24 qa/match/08/r23 qa/benny/r23 qa/review_r21/artwork; do n=$(find $d -name \"*.mp4\" | wc -l); s=$(find $d -name \"*.mp4\" -print0 | du -ch --files0-from=- 2>/dev/null | tail -1 | cut -f1); echo \"$d mp4=$n $s\"; done; du -sh qa/review_r21/artwork/04/accepted qa/review_r21/artwork/04/proposals qa/review_r21/artwork/05 qa/review_r21/artwork/07; ls qa/review_r21/artwork/04/accepted; head -30 qa/review_r21/artwork/04/USER_VERDICT.md", "description": "Measure clip …[+30 chars]`
+
+### 🧑 User — 2026-11-20T11:01:21.265Z
+
+> ↩︎ result: qa/review_r21/audit mp4=0 0
+> qa/match/04/r23 mp4=12 12M
+> qa/match/04/r22 mp4=2 2.6M
+> qa/match/06/r23 mp4=5 15M
+> qa/match/06/r24 mp4=0 0
+> qa/match/07/r23 mp4=4 23M
+> qa/match/07/r24 mp4=0 0
+> qa/match/08/r23 mp4=8 13M
+> qa/benny/r23 mp4=2 3.1M
+> qa/review_r21/artwork mp4=0 0
+> 16M	qa/review_r21/artwork/04/accepted
+> 26M	qa/review_r21/artwork/04/proposals
+> 29M	qa/review_r21/artwork/05
+> 44M	qa/review_r21/artwork/07
+> 04_gen_c_middle_p2_v1.png
+> 04_gen_d_late_p3_v1.png
+> 04_gen_e_end_p2_v1.png
+> # Screen 04 generated continuation views — USER VERDICT
+> 
+> **2026-11-20 ~03:42 UTC, user (verbatim): "Yes, approve the Screen 04 proposals, keep going"**
+> 
+> Accepted as GENERATED reference views for Screen 04 (they extend the approved world beyond what the original shows; the user's
+> original `references/04_through_the_five_arrows.png` stays the master and is unchanged). Matched pixel-for-pixel to the sheets the
+> user approved (`FOR_APPROVAL_04_*.png`, mean abs diff 0.3 vs ≥ 21.9 for the other tries):
+> 
+> | View | Game camera (audit_screen.mjs, query = QUERY_04.txt V4) | Accepted file | sha256 |
+> |---|---|---|---|
+> | c_middle | frac 0.35, s = 90.48 u, lat 0, no steer | `accepted/04_gen_c_middle_p2_v1.png` | `f4b389aeb7430d1f…` |
+> |  …[+569 chars]
+
+### 🤖 Claude — 2026-11-20T11:01:48.233Z
+
+> 🔧 **Bash** `{"command": "grep -rln \"gameplay_for_claudia\" docs qa/*.md backups/*.md 2>/dev/null | head -3; grep -rh -m3 \"gameplay_for_claudia\" docs 2>/dev/null | head -3; for f in builds/*.apk; do echo \"$(git log -1 --format='%ci %h' -- $f) $f\"; done | sort", "description": "Check reference video origin and APK dates"}`
+
+### 🧑 User — 2026-11-20T11:01:48.817Z
+
+> ↩︎ result: docs/briefs/2026-11-17-r2/S08_CAMERA.md
+> docs/briefs/2026-11-17-r3/S08_CAMERA.md
+> * My phone recording of the match08 APK: `qa/gameplay_video/source/rainbow_gameplay_for_claudia-1_0-48.9s.mp4` (Git LFS, 720×1602, 30 fps) + 1 fps sheets `user_video_1fps_00-23s.png`, `user_video_1fps_24-48s.png`. First read: 03 at 4–6 s a white sheet over the view; 04 at 7–10 s a white sheet, then the whole frame inside a pink wall at 8 s; 05 11–16 s; 06 18–20 s drum wall + gold band fill the view; 07 33–36 s a gold ring band fills the frame; 08 38–39 s = the match08 reconstruction; 09 40 s; 10 41–43 s; 11 44–48 s.
+> 2. Review my saved gameplay recording `qa/gameplay_video/source/rainbow_gameplay_for_claudia-1_0-48.9s.mp4` (Git LFS). For every problem moment put SEPARATE full-size frames side by side: my video frame | current build at the same moment | `camclear=1` at the same moment — 03 4–6 s (white sheet), 04 7–10 s (white sheet, then inside a pink wall at 8 s), 06 18–20 s (drum wall + gold band fill the view), 07 33–36 s (gold ring band fills the frame) and the 07→08 drop, 08 38–40 s (does the match08 view engage and hold?), 09–11 40–47 s. Fix only what the newer builds still show; each fix minimal a …[+536 chars]
+
+### 🤖 Claude — 2026-11-20T11:02:58.606Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/export/make_review_package.py", "content": "#!/usr/bin/env python3\n\"\"\"Build the Rainbow review package from ONE commit (consistent export; round 24, 2026-11-20).\n\nusage: python3 -I tools/export/make_review_package.py <commit> <out_dir>\n\nEvery file comes from git objects of <commit> (or of a specialist's base commit + the unfinished-work snapshot stored IN\n<commit> under backups/wip/), never from the live working tree, so files that change while the export runs cannot leak in.\nGit LFS pointers are replaced by the real objects from .git/lfs/obje …[+18585 chars]`
+
+### 🧑 User — 2026-11-20T11:02:59.563Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/export/make_review_package.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T11:03:00.815Z
+
+> 🔧 **Bash** `{"command": "O=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/export && rm -rf $O && mkdir -p $O && timeout 1500 python3 -I tools/export/make_review_package.py e71b45b939b98c2ae82d5d7750f02977f7e9269a $O 2>&1 | tail -40", "description": "Run the package builder from the frozen commit", "timeout": 1600000}`
+
+### 🧑 User — 2026-11-20T11:03:38.687Z
+
+> ↩︎ result: files 2095  bytes 1851.5 MB  problems 0
+>   apk_core                             49.9 MB  3 files
+>   apk_more                             65.4 MB  5 files
+>   evid_core                            83.3 MB  229 files
+>   evid_stills                        1121.7 MB  661 files
+>   main                                 53.8 MB  494 files
+>   marble                              211.8 MB  71 files
+>   ref                                 101.3 MB  41 files
+>   version:benny_all_screens            41.2 MB  102 files
+>   version:screen04_s04                 25.1 MB  77 files
+>   version:screen05_s05                 62.3 MB  137 files
+>   version:screen06_lead_cone_test       4.9 MB  56 files
+>   version:screen06_s06                  4.9 MB  56 files
+>   version:screen07_candidate_r23        6.8 MB  55 files
+>   version:screen07_s07                  6.8 MB  64 files
+>   version:screen08_s08                 12.2 MB  44 files
+
+### 🤖 Claude — 2026-11-20T11:03:48.989Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/export && for f in Rainbow_App_Review/2_screen_versions/*/VERSION.json; do python3 -c \"import json;d=json.load(open('$f'));print(d['name'],'| patch:',d['snapshot_patch_applied'],'| changed',d['overlay_changed'],'added',d['overlay_added'],'deleted',d['deleted_vs_main'])\"; done; python3 -c \"\nimport json,collections\nd=json.load(open('export_records.json'))\nc=collections.Counter()\nfor r in d['records']:\n  if r['section']=='evid_stills': c['/'.join(r['path'].split('/')[:2])]+=r['bytes']\nfor k, …[+246 chars]`
+
+### 🧑 User — 2026-11-20T11:03:49.286Z
+
+> ↩︎ result: benny_all_screens | patch: ok | changed 10 added 88 deleted 38
+> screen04_s04 | patch: ok | changed 8 added 65 deleted 39
+> screen05_s05 | patch: none | changed 39 added 95 deleted 76
+> screen06_lead_cone_test | patch: ok | changed 7 added 45 deleted 39
+> screen06_s06 | patch: ok | changed 7 added 45 deleted 39
+> screen07_candidate_r23 | patch: ok | changed 9 added 42 deleted 40
+> screen07_s07 | patch: ok | changed 9 added 51 deleted 40
+> screen08_s08 | patch: ok | changed 7 added 33 deleted 37
+>     79.1 MB 4_evidence/all_screens_audit_r21
+>     33.4 MB 4_evidence/default_build_per_scene_screenshots
+>    209.7 MB 4_evidence/screen04
+>     42.8 MB 4_evidence/screen05
+>    252.5 MB 4_evidence/screen06
+>    171.4 MB 4_evidence/screen07
+>    117.7 MB 4_evidence/screen08
+>    215.1 MB 4_evidence/screenbenny
+> LFS files 62 373.132283 MB
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T11:03:59.763Z
+
+All six unfinished-work patches applied cleanly; Screen 05 had none. Next I'll list the clips with their durations so each can be labelled with screen, version and playback speed.
+
+### 🤖 Claude — 2026-11-20T11:04:02.252Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/export/Rainbow_App_Review && find 4_evidence 3_references -name \"*.mp4\" | sort | while read f; do d=$(ffprobe -v error -show_entries format=duration -of csv=p=0 \"$f\"); r=$(ffprobe -v error -select_streams v -show_entries stream=width,height,r_frame_rate -of csv=p=0 \"$f\"); printf \"%6.1fs %-18s %s\\n\" \"$d\" \"$r\" \"$f\"; done", "description": "List all clips with duration and resolution"}`
+
+### 🧑 User — 2026-11-20T11:04:08.692Z
+
+> ↩︎ result: 49.0s 720,1602,30/1      3_references/E_USER_PHONE_RECORDING_2026-11-17_match08_APK/rainbow_gameplay_for_claudia-1_0-48.9s.mp4
+>    2.4s 432,768,24/1       4_evidence/screen04/match/04/r22/s2_bbd/BEFORE_swim_clip_half.mp4
+>    2.4s 432,768,24/1       4_evidence/screen04/match/04/r22/s2_bbd/NEW_swim_clip_half.mp4
+>    2.4s 432,768,24/1       4_evidence/screen04/match/04/r23/lead_t1/swim04_BEFORE.mp4
+>    4.8s 432,768,12/1       4_evidence/screen04/match/04/r23/lead_t1/swim04_BEFORE_halfspeed.mp4
+>    2.4s 432,768,24/1       4_evidence/screen04/match/04/r23/lead_t2/swim04_BEFORE_K22-2.mp4
+>    4.8s 432,768,12/1       4_evidence/screen04/match/04/r23/lead_t2/swim04_BEFORE_K22-2_halfspeed.mp4
+>    2.4s 432,768,24/1       4_evidence/screen04/match/04/r23/lead_t2/swim04_NEW_K23-1.mp4
+>    4.8s 432,768,12/1       4_evidence/screen04/match/04/r23/lead_t2/swim04_NEW_K23-1_halfspeed.mp4
+>    5.8s 432,768,10/1       4_evidence/screen04/match/04/r23/s1_arrows/swim04_BEFORE_K23-1_halfspeed_exact.mp4
+>    2.9s 432,768,20/1       4_evidence/screen04/match/04/r23/s1_arrows/swim04_BEFORE_K23-1_realspeed.mp4
+>    5.8s 432,768,10/1       4_evidence/screen04/match/04/r23/s1_arrows/swim04_NEW_K23-S1_halfspeed_exact.mp4
+>    2 …[+2263 chars]
+
+### 🤖 Claude — 2026-11-20T11:04:20.981Z
+
+Next I'll check which app features the code implements (menus, settings, audio, saving, controls), so the README describes them accurately.
+
+### 🤖 Claude — 2026-11-20T11:04:22.530Z
+
+> 🔧 **Bash** `{"command": "ls src src/*/ | head -80; echo; grep -rlE \"localStorage|AudioContext|new Audio|HTMLAudio|\\.mp3|\\.ogg\" src | head; grep -rn \"localStorage\" src | head -5; grep -rln \"pause\\|Pause\" src | head -5; grep -rn \"keydown\\|touchstart\\|pointerdown\" src | head -6", "description": "Survey implemented app features in the source"}`
+
+### 🧑 User — 2026-11-20T11:04:23.561Z
+
+> ↩︎ result: src:
+> characters
+> game
+> gameplay
+> main.ts
+> render
+> ui
+> vfx
+> world
+> 
+> src/characters/:
+> benny
+> girl
+> types.ts
+> 
+> src/game/:
+> Game.ts
+> cameraRig.ts
+> match.ts
+> modules.ts
+> 
+> src/gameplay/:
+> coins.ts
+> input.ts
+> 
+> src/render/:
+> env.ts
+> grade.ts
+> 
+> src/ui/:
+> cinematicVideo.ts
+> hud.ts
+> 
+> src/vfx/:
+> bubbles.ts
+> drumWater.ts
+> finalWave.ts
+> flow05.ts
+> foam.ts
+> glsl.ts
+> index.ts
+> proj05Apron.ts
+> proj05Tunnel.ts
+> puddles.ts
+> riderSplash.ts
+> spray.ts
+> waterRibbon.ts
+> whirlpool.ts
+> 
+> src/world/:
+> course.ts
+> environment.ts
+> far05.ts
+> laundryRoom.ts
+> match08.ts
+> materials.ts
+> towel.ts
+> tube.ts
+> 
+> src/ui/cinematicVideo.ts
+> src/ui/hud.ts
+> src/game/Game.ts
+> src/ui/cinematicVideo.ts:145:    wrap.addEventListener('pointerdown', () => {
+> src/ui/hud.ts:117:  $('pause').addEventListener('pointerdown', (e) => { e.stopPropagation(); pauseCb(); });
+> src/ui/hud.ts:118:  paused.addEventListener('pointerdown', (e) => { e.stopPropagation(); pauseCb(); });
+> src/ui/hud.ts:119:  $('replay').addEventListener('pointerdown', (e) => { e.stopPropagation(); replayCb(); });
+> src/gameplay/input.ts:31:  el.addEventListener('pointerdown', (e) => {
+> src/gameplay/input.ts:50:  window.addEventListener('keydown', (e) => { keys.add(e.key); keyCb(e.key); });
+
+### 🤖 Claude — 2026-11-20T11:04:28.672Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,30p src/gameplay/input.ts | grep -v \"^import\" | head -25; grep -n \"keyCb\\|onKey\\|case '[0-9a-z]'\\|key ===\\|e.key\\b\" src/game/Game.ts src/main.ts | head -20; grep -n \"goto(\\|__rainbow\\s*=\\|window.__rainbow\" src/game/Game.ts src/main.ts | head -8", "description": "Read controls and screen-jump hooks"}`
+
+### 🧑 User — 2026-11-20T11:04:28.820Z
+
+> ↩︎ result: /** Touch-drag / half-screen press / keyboard steering → steer value in [-1, 1]. */
+> export interface Input {
+>   steer: number;
+>   /** test/QA override (null = live input) */
+>   override: number | null;
+>   onTap(cb: () => void): void;
+>   onKey(cb: (k: string) => void): void;
+>   update(dt: number): void;
+> }
+> 
+> export function createInput(el: HTMLElement): Input {
+>   let target = 0;
+>   let dragX: number | null = null;
+>   let dragStart = 0;
+>   let tapCb = () => {};
+>   let keyCb = (_k: string) => {};
+>   const keys = new Set<string>();
+>   const state: Input = {
+>     steer: 0,
+>     override: null,
+>     onTap: (cb) => (tapCb = cb),
+>     onKey: (cb) => (keyCb = cb),
+>     update(dt) {
+>       let t = target;
+>       if (keys.has('ArrowLeft') || keys.has('a') || keys.has('A')) t = -1;
+> src/game/Game.ts:501:  input.onKey((k) => { if (k === 'p' || k === 'P' || k === 'Escape') togglePause(); });
+> src/game/Game.ts:9: * window.__rainbow exposes a deterministic QA API used by scripts/capture.mjs.
+> src/game/Game.ts:776:  (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+
+### 🤖 Claude — 2026-11-20T11:04:32.739Z
+
+> 🔧 **Bash** `{"command": "sed -n 700,780p src/game/Game.ts | grep -nE \"^\\s+[a-zA-Z]+\\(|goto|stage|freeze|step|setSteer|ready\" | head -30; grep -n \"'qa'\\|get('qa')\\|autoplay\\|get('flowplan')\\|flowplan\" src/game/Game.ts src/main.ts | head -8", "description": "Read the QA API and qa / flowplan switches"}`
+
+### 🧑 User — 2026-11-20T11:04:33.167Z
+
+> ↩︎ result: 1:    /** deterministic simulation: advance n steps of dt (no rendering needed) */
+> 2:    step(n: number, dt = 1 / 60) { for (let i = 0; i < n; i++) stepSim(dt); return api.state(); },
+> 3:    startRideAt(id: StageId = '03') {
+> 4:      resetToIntro(); startRide(); st.s = course.stage(id).s0; coins.resetUntil(-1); st.coins = START_COINS; hud.setCoins(st.coins); st.log = [];
+> 7:    state() {
+> 8:      return { mode: st.mode, stage: st.stage, s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: st.coins, hearts: st.hearts, paused: st.paused, bennyY: +benny.root.position.y.toFixed(3), bennyVisible: benny.root.visible, cam: camera.position.toArray().map((x) => +x.toFixed(2)) };
+> 10:    log() { return st.log; },
+> 11:    coinDefs() { return coins.defs.map((d, i) => ({ s: d.s, lat: d.lat, taken: coins.collected[i] === 1 })); },
+> 13:    coinScreen() {
+> 32:    respawns() { return st.respawns; },
+> 34:    camera() {
+> 40:    bennyScreen() {
+> 45:    probe(x = 0, y = 0) {
+> 53:    drawList() {
+> 63:      render();
+> 71:    stats() {
+> src/game/Game.ts:43:  const qaMode = qs.has('qa');
+> src/game/Game.ts:68:  const flowPlan = flag05('flowplan'); // user's Google Flow plan: videos 01–03 + 09–11, playable 04–08 (see startF …[+588 chars]
+
+### 🤖 Claude — 2026-11-20T11:04:38.059Z
+
+> 🔧 **Bash** `{"command": "grep -n \"    goto\\|goto(id\\|goto:\" src/game/Game.ts | head -3; grep -n \"    goto\\|goto(id\" /home/user/wt/s06/src/game/Game.ts | head -3; cat scripts/gameplay-test.mjs 2>/dev/null | head -12; ls scripts/ | head -40", "description": "Confirm the screen jump API and test scripts"}`
+
+### 🧑 User — 2026-11-20T11:04:38.437Z
+
+> ↩︎ result: 694:    goto: gotoCheckpoint,
+> 683:    goto: gotoCheckpoint,
+> #!/usr/bin/env node
+> // Automated gameplay + continuity test on the REAL running game (headless Chromium, WebGL).
+> // Drives Benny from 03 to the 11 ending with the deterministic simulation API and checks:
+> //  * continuous travel: s strictly increases, no position jump > speed·dt (no teleport/cut)
+> //  * camera continuity: no camera jump between steps (no hard cut), incl. the 07 plunge → 08
+> //  * 07 plunge: positive travel time, large vertical drop, 08 inlet reached from the bottom
+> //  * real coin pickups update the counter; steering into the foam wall costs a heart
+> //  * pause freezes the simulation; resume continues
+> //  * the run ends in the 11 victory with Benny hidden under the towel
+> // Writes qa/gameplay_test.json and qa/07_to_08_continuity.md. Exit 1 on failure.
+> //   node scripts/gameplay-test.mjs --q=river05=1 --out=qa/pilot05/wave11/tests/gameplay_river05.json
+> //   → the same run with URL test switches; with --q the tracked qa/ files above are NOT rewritten.
+> apk-web-check.mjs
+> aspect-test.mjs
+> autosave-cron.sh
+> autosave-daemon.sh
+> autosave-hook.sh
+> autosave-status.py
+> camera-lock-05.mjs
+> camera-lock-overlay.py
+> capture.mjs
+> ci …[+561 chars]
+

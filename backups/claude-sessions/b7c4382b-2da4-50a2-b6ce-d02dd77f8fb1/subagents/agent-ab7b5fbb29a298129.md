@@ -673,3 +673,84 @@ Typecheck passes. Three variants of the smooth swirl.
 
 > 🔧 **Bash** `{"command": "uptime; S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04; T=/home/user/rainbow-/qa/match/04/r23/s04_tools; Q2=/home/user/rainbow-/qa/match/04/r23/s2_edge/QUERY_K23-S2.txt; SH='[[\"b_early\",0.12,null],[\"c_middle\",0.35,null]]'; C=\"m04lgs=1&m04lgn=3&m04lgt=0.06&m04lgm=0.6&m04lgb=4&m04lgk=0.75\"\n( BASE=$Q2 SHOTS=$SH bash $T/variant.sh $S/V11 5273 \"$C&m04lgl2=2.2&m04lgw=0.5&m04lgwb=1.2&m04lgsp=0.8\" > $S/V11.out 2>&1 ) &\n( BASE=$Q2 SHOTS=$SH bash $T/variant.sh $S/V12 5274 \"$C&m04lgl2=2.2&m04lgw=0.8&m04lgwb=1.8&m04lgsp=0.8\" > $S/V12.out 2> …[+674 chars]`
 
+### 🧑 User — 2026-11-20T11:00:40.920Z
+
+> ↩︎ result: 10:58:27 up 37 min,  0 user,  load average: 26.77, 27.60, 16.94
+> [1]   Done                    ( BASE=$Q2 SHOTS=$SH bash $T/variant.sh $S/V11 5273 "$C&m04lgl2=2.2&m04lgw=0.5&m04lgwb=1.2&m04lgsp=0.8" > $S/V11.out 2>&1 )
+> [3]+  Done                    ( BASE=$Q2 SHOTS=$SH bash $T/variant.sh $S/V13 5275 "$C&m04lgl2=1.6&m04lgw=0.35&m04lgwb=1.0&m04lgsp=1.0" > $S/V13.out 2>&1 )
+> [2]+  Done                    ( BASE=$Q2 SHOTS=$SH bash $T/variant.sh $S/V12 5274 "$C&m04lgl2=2.2&m04lgw=0.8&m04lgwb=1.8&m04lgsp=0.8" > $S/V12.out 2>&1 )
+> done /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04/V11 2 png
+> done /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04/V12 2 png
+> done /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04/V13 2 png
+
+### 🤖 Claude — 2026-11-20T11:00:46.876Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04/sweep4.png"}`
+
+### 🧑 User — 2026-11-20T11:00:46.934Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T11:00:57.577Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04/V13/c_middle.png"}`
+
+### 🧑 User — 2026-11-20T11:00:57.669Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T11:01:28.681Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -I - <<'EOF'\np = '/home/user/wt/s04/src/world/match04m4.ts'\ns = open(p).read()\ndef rep(old, new):\n    global s\n    assert s.count(old) == 1, old\n    s = s.replace(old, new)\nrep(\"uniform vec4 uLG3;           // r24 m04lgs: x swirl bend (u), y swirl size (u), z sparkles, w dash threshold\\n\",\n    \"uniform vec4 uLG3;           // r24 m04lgs: x swirl bend (u), y swirl size (u), z sparkles, w dash threshold\\n\"\n    \"uniform vec4 uLG4;           // r24 m04lgs: x deeper electric-blue base (brightness shift), y glint brightness variation\\n\") …[+2601 chars]`
+
+### 🧑 User — 2026-11-20T11:03:35.501Z
+
+> ↩︎ result: ok
+> tsc_exit=0
+>  11:01:38 up 40 min,  0 user,  load average: 19.65, 26.01, 18.51
+> [1]   Done                    ( BASE=$Q2 SHOTS=$SH bash $T/variant.sh $S/V14 5273 "$C&m04lgd=0.12&m04lgv=0.5" > $S/V14.out 2>&1 )
+> [3]+  Done                    ( BASE=$Q2 SHOTS=$SH bash $T/variant.sh $S/V16 5275 "$C&m04lgd=0.22&m04lgv=0.5&m04lgk=0.9" > $S/V16.out 2>&1 )
+> [2]+  Done                    ( BASE=$Q2 SHOTS=$SH bash $T/variant.sh $S/V15 5274 "$C&m04lgd=0.22&m04lgv=0.5" > $S/V15.out 2>&1 )
+> done /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04/V14 2 png
+> done /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04/V15 2 png
+> done /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04/V16 2 png
+
+### 🤖 Claude — 2026-11-20T11:03:41.812Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04/sweep5.png"}`
+
+### 🧑 User — 2026-11-20T11:03:41.860Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T11:03:48.815Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04/V16/c_middle.png"}`
+
+### 🧑 User — 2026-11-20T11:03:48.902Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T11:04:06.138Z
+
+> 🔧 **Bash** `{"command": "grep -o \"gameplay_test_5273.mjs[^\\`]\\{0,300\\}\" backups/claude-sessions/1dee9937-64f8-543d-ae44-7cf9955b39b3/subagents/agent-aea6c441ae094e112.md | head -3; head -30 qa/match/04/r22/tools/gameplay_test_5273.mjs | grep -n \"argv\\|PORT\\|query\\|Q\\b\" | head", "description": "Find gameplay test invocation from r23"}`
+
+### 🧑 User — 2026-11-20T11:04:06.482Z
+
+> ↩︎ result: gameplay_test_5273.mjs | cut -c1-200; grep -n \"screenshot\\|timeout\" /home/user/rainbow-/qa/match/04/r22/tools/gameplay_test_5273.mjs | head", "description": "Read gameplay test tool usage"}
+> gameplay_test_5273.mjs --q=\"$(cat $D/QUERY_K23-S1.txt)\" --out=$D/gameplay.json > $D/gameplay.log 2>&1; echo gameplay_exit=$?) & (cd /home/user/wt/s04 && timeout 600 npx tsc --noEmit > $D/tsc.log 2>&1; echo tsc_exit=$?) ; wa …[+155 chars]
+> gameplay_test_5273.mjs --q="$(cat $D/QUERY_K23-S1.txt)" --out=$D/gameplay.json > $D/gameplay.log 2>&1; echo gameplay_exit=$? )
+> 2:// r22 S04 copy of scripts/gameplay-test.mjs: identical checks, only the dev-server port (AUDIT_PORT, default 5273) and the
+> 19:const optQ = (process.argv.find((a) => a.startsWith('--q=')) ?? '').slice(4);
+> 20:const optOut = (process.argv.find((a) => a.startsWith('--out=')) ?? '').slice(6);
+> 23:const vite = await startVite(Number(process.env.AUDIT_PORT ?? 5273));
+> 28:await page.goto(`${vite.url}/?qa=1&dpr=1&bloom=0${optQ ? '&' + optQ : ''}`);
+
+### 🤖 Claude — 2026-11-20T11:04:10.488Z
+
+Setting up the step-3 folder, then running the NEW audit and both regressions in parallel.
+
+### 🤖 Claude — 2026-11-20T11:04:17.626Z
+
+> 🔧 **Bash** `{"command": "D=/home/user/rainbow-/qa/match/04/r23/s3_glossy; mkdir -p $D; X=\"m04lgs=1&m04lgn=3&m04lgt=0.06&m04lgm=0.6&m04lgb=4&m04lgk=0.9&m04lgl2=1.6&m04lgw=0.35&m04lgwb=1.0&m04lgsp=1.0&m04lgd=0.17&m04lgv=0.5\"; echo \"$X\" > $D/SWITCH.txt; node /home/user/rainbow-/tools/lead23/setq.mjs \"$(cat /home/user/rainbow-/qa/match/04/r23/s2_edge/QUERY_K23-S2.txt)\" \"$X\" > $D/QUERY_K23-S3.txt; tail -c 300 $D/QUERY_K23-S3.txt; echo; grep -o \"m04lgs=[^&]*\" $D/QUERY_K23-S3.txt | wc -l\nuptime; S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04; A=/home/user/rainb …[+746 chars]`
+
