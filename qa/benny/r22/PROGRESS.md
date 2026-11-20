@@ -5,7 +5,12 @@
 **Done (3 steps, round stopped as briefed):** step 1 plush fur `&benny20=1` GOOD; step 2 per-screen exposure `&b20expo=1`
 GOOD; step 3 pompom lighter yarn tips `&b20ppw=0.45` GOOD, knit maps `&b20knit=1` NOT YET PROVEN.
 Best Benny query now: `&benny20=1&b20expo=1&b20ppw=0.45` (all opt-in; default build unchanged).
-**Next:** (a) knit maps: make the crown's light stripes CREAM (they come out lavender-pink — fix in `tools/benny20/knit.py`
+**Next — FIRST the lead's step-1/2 feedback (03:36 / 03:39 UTC):** the new pile reads as short flat velvet / terry, a bit
+grainy and dull; approved = soft FLUFFY plush with visible volume (medium-short soft tufts, lighter rose tips, soft
+highlights on upper body / cheeks, darker only in underside creases) → new switch `b20tuft` (tuft volume + light tips),
+compare full size vs `qa/benny/r22/approved/0N_benny.png`. PROOF FIX: centre every crop on Benny's projected screen
+position (start / middle / hard left) — the fixed box misses him on 05/06/07 middle and all hard-left shots.
+**Then:** (a) knit maps: make the crown's light stripes CREAM (they come out lavender-pink — fix in `tools/benny20/knit.py`
 stripe colour, not via `b20ccol`, which barely moves it), lighter less-blue violet, vertical cuff ribbing like the approved;
 (b) deeper rose creases in the body fur at the brighter 05–08 exposure (shade `bsx/bsz`); (c) felt star stitching and
 Benny's size vs the painted Benny (06 start: Benny far larger than painted — camera/framing, flag to lead).

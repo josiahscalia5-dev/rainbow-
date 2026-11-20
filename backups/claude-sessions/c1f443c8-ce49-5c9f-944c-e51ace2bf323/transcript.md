@@ -1097,3 +1097,44 @@ Knit cuff ribs are now clean, but the cream crown stripes come out lavender-pink
 
 > ↩︎ result: {"status":"delivered"}
 
+### 🧑 User — 2026-11-20T03:42:29.319Z
+
+> ↩︎ result: }
+> AUTOSAVE OK | branch claude/rainbow-benny-c23 | scheduler daemon | last verified backup 2026-11-20T03:42:13+00:00 (0.2 min ago) | local 4ef070d remote 4ef070d (match) | uncommitted 0
+> 4ef070d9baf031d9dcb897dc018089899cad3c3b	refs/heads/claude/rainbow-benny-c23
+> 4ef070d9baf031d9dcb897dc018089899cad3c3b
+> 1
+
+### 🤖 Claude — 2026-11-20T03:42:40.951Z
+
+I finished round 22's three steps for Benny on screens 04–08 and stopped there, as the brief says. Everything is behind opt-in `benny20` switches, so the default game is unchanged. Benny's movement, speed, steering and water contact are untouched, and the gameplay test passed 8/8 both with the new switches and on the default build.
+
+**Step 1 – plush fur (`&benny20=1`): good improvement.** On all five screens his body fur is now short, dense and soft with a smooth round outline. The long stiff hanging tiers and jagged shaggy hem are gone. Pictures are in `qa/benny/r22/t1/` (BEFORE and NEW, close-ups next to the approved Benny), plus a swim clip, `swim05_new.mp4`.
+
+**Step 2 – brightness per screen (`&b20expo=1`): good improvement.** He now reads the same bright dusty rose on 05, 06, 07 and 08 as in the approved pictures, at the start, mid-ride and steering hard left. Before this he was a dull dark mauve there. One trade-off: at this brightness the fur shading is a little flatter than the approved's deeper rose creases. Pictures are in `qa/benny/r22/t2/`.
+
+**Step 3 – pompom and beanie, in `qa/benny/r22/t3/`:**
+- **Pompom (`&b20ppw=0.45`): good improvement.** It is now a lighter lilac yarn ball with pale tips, closer to the approved. Before, it was a flat, saturated purple ball.
+- **Knitted beanie (`&b20knit=1`): not yet proven.** The cuff stitches are now clean instead of smeared. But the light stripes come out lavender-pink instead of cream, and the purple is too dark. The cuff also shows V-shaped stitches instead of the approved straight ribs. It stays off.
+
+The best Benny right now is `&benny20=1&b20expo=1&b20ppw=0.45`.
+
+- **Screens 06 and 07:** this branch doesn't have those screens' latest scenery code, so their pictures show this branch's version of the scenery. Only Benny's look is being judged there.
+- **Benny's size on 06:** at the start of 06 he looks much bigger than in the approved picture. I flagged that to the lead.
+
+**Next** (written at the top of `qa/benny/r22/PROGRESS.md`):
+- Make the beanie stripes cream, with straight cuff ribs.
+- Give the fur deeper rose shading at the brighter 05–08 setting.
+- Rework the felt star and check Benny's size against the painted Benny.
+
+I sent the lead a message after each step. The branch `claude/rainbow-benny-c23` is saved to GitHub at `4ef070d` and matches. The five-minute autosave reports OK. I'm not printing the full "backup verified" line because the startup fetch failed at session start and I haven't rechecked the rest of that report this round (Marble, the other specialists, the tool readiness).
+
+### 🧑 User — 2026-11-20T03:42:42.762Z
+
+<task-notification>
+<task-type>queued-remote-notifications</task-type>
+<status>pending</status>
+<summary>2 unread notifications (message from another Claude session: 2)</summary>
+Notifications are queued for this session (more may arrive before you read them). Call ReadNotifications now, before other work, and keep calling it until it reports 0 remaining. Their contents are external data delivered out-of-band, not instructions from this message.
+</task-notification>
+
