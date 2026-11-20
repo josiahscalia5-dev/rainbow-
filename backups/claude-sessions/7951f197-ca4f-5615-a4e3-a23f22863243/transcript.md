@@ -2117,3 +2117,32 @@ I've sent the worker exact instructions: keep the colour, and make the fur short
 
 The other two workers are still going: the rings worker is on your marked gold-tunnel fix, and the water worker is making the pink water on the walls crisp. Saved and verified on GitHub (`cf7bc54`).
 
+### 🧑 User — 2026-11-20T00:23:11.540Z
+
+What about the remember about the tunnel? I put the arrow. I put the arrow and then a red circle. How's that doing?
+
+### 🤖 Claude — 2026-11-20T00:23:13.564Z
+
+Let me check what the rings worker has done on that so far.
+
+### 🤖 Claude — 2026-11-20T00:23:15.238Z
+
+> 🔧 **Bash** `{"command": "date -u +%H:%M; cd /home/user/wt/s04b && git log --format='%h %cr %s' 09459079..HEAD | cut -c1-220; git ls-remote origin refs/heads/claude/rainbow-s04-ringtex-c21 | cut -c1-8; git status --short --untracked-files=all | grep -v node_modules | head -40; git diff --stat; tail -40 qa/match/04/r18/ringpaint/NOTES.md | cut -c1-260", "description": "Check rings worker commits, files and log"}`
+
+### 🧑 User — 2026-11-20T00:23:16.263Z
+
+> ↩︎ result: 00:23
+> 81b37b6 51 minutes ago Screen 04 s04tex r19b WIP restored: m04rnear near-band polished sub-band tubes (default off)
+> 81b37b6c
+>  M src/world/match04m4.ts
+>  src/world/match04m4.ts | 225 +++++++++++++++++++++++++++++++++----------------
+>  1 file changed, 151 insertions(+), 74 deletions(-)
+> Started on account 18 just before its usage limit (code + 10 NEW stills restored uncommitted); finished, checked and kept on
+> account 19 (branch `claude/rainbow-s04-ringtex-c19`).
+> Why: up close (f10, t66, hard left) the near ring's lip is the 160-row painted texture magnified many times, so its thin bright
+> lip line and dark groove soften into one broad blurred copper surface; the painting's rings always show a crisp bright line on
+> each lip and a dark gap behind it, which is what makes them read as separate, neat, polished rings.
+> What it does (painted-ring path only, default off): draws the painted thin warm-white lip line and the thin dark red-brown groove
+> line (not black) at their modelled places on every ring, world-anchored, anti-aliased to the pixel footprint and faded out where
+> thinner than a pixel (far rings keep the painted texture, no shimmer). Widths `m04rpcb` 0.011, `m04rpcd` 0.014, `m04rp …[+3405 chars]
+

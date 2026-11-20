@@ -2668,3 +2668,39 @@ While the clip finishes, I'll implement the per-screen fur exposure (benny20 onl
 > ↩︎ result: Command was moved to the background (ID: b90bh3uy1) so that a message that arrived while it was running can reach you; it was not interrupted. Output is being written to: /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/tasks/b90bh3uy1.output. You will be notified when it completes. If it is still running after 30m in the background (plus the timeout it was started with, up to the background maximum), it will be stopped and you will be notified. It is running now: do not start a second copy while it runs. If it is no longer needed, stop it with TaskStop. To check interim output, use Read on that file path.
 > Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
 
+### 🤖 Claude — 2026-11-20T00:20:18.370Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && python3 - <<'EOF'\np='src/characters/benny/fur.ts'\ns=open(p).read()\nrep=[\n(\"    uComb: { value: THREE.Vector4 };\\n  };\\n}\", \"    uComb: { value: THREE.Vector4 };\\n    uPile: { value: THREE.Vector4 };\\n  };\\n}\"),\n(\"    uComb: { value: new THREE.Vector4(0, 1, 0.14, 0) },\\n  };\",\n \"    uComb: { value: new THREE.Vector4(0, 1, 0.14, 0) },\\n    /** `?benny20=1`: plush pile — x = strand tip radius (taper, cell units), y = strand length variation (0: all reach\\n     *  the lock top; higher: the pile thins out toward its surface → soft fuzzy ed …[+3811 chars]`
+
+### 🧑 User — 2026-11-20T00:20:26.517Z
+
+> ↩︎ result: 5
+> TSC_OK
+
+### 🤖 Claude — 2026-11-20T00:20:30.324Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/tasks/b90bh3uy1.output | grep -v \"outside of Vite\"; ls /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/probe_k 2>/dev/null | grep -v mask", "description": "Check k/exposure probe progress"}`
+
+### 🧑 User — 2026-11-20T00:20:30.573Z
+
+> ↩︎ result: {"n": 23291, "mean": [211, 72, 145], "sat": [0.59, 0.65, 0.78], "val": [0.67, 0.84, 0.98]}
+> k0_knit2.png
+> k1_knitcol.png
+> k2_pomcol.png
+
+### 🤖 Claude — 2026-11-20T00:20:32.301Z
+
+While that probe runs, preparing the plush texture variants (fur length, lock size, comb, pile thinning) plus a colour re-check.
+
+### 🤖 Claude — 2026-11-20T00:20:37.661Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\nfb=\"const f=B.furs.find(f=>f.mesh.name==='fur_body');\"\ndef col(sc):\n    c=(0.29*sc,0.092*sc,0.172*sc); t=f\"{c[0]:.4f},{c[1]:.4f},{c[2]:.4f}\"\n    return fb+f\"f.material.color.setRGB({t}); for (const a of B.furs.filter(f=>/arm/.test(f.mesh.name))) a.material.color.setRGB({t});\"\nV=[{\"name\":\"p0_plush\"},\n   {\"name\":\"p1_lock55\",\"js\":fb+\"f.uniforms.uLock.value.set(55,1.1,0.9,320);\"},\n   {\"name\":\"p2_len06\",\"js\":fb+\"f.uniforms.uLock.value.set(40,1.1,0.9,260); f.uniforms.uFurLen.value=0.06;\"},\n   {\"name\":\"p3_comb04\",\"js\" …[+548 chars]`
+
+### 🧑 User — 2026-11-20T00:20:37.732Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-20T00:20:41.553Z
+
+> 🔧 **Bash** `{"command": "until [ -f /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/probe_k/probe.json ] || ! pgrep -f \"probe.mjs /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/probe_k\" >/dev/null; do sleep 5; done; echo finished; ls /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/probe_k | grep -v mask", "description": "Wait for k/exposure probe to end", "timeout": 1200000}`
+
