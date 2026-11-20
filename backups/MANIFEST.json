@@ -619,7 +619,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 20297,
-   "sha256": "d52a2fdfdffef246d4aaa0634604bd95a668ae42f16ed30eb15b6b7009319304"
+   "sha256": "6f84d840597d3f46cd2c649382beec5d482636109ce2e08ea0b748b0dab0f5cf"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -634,7 +634,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 2190,
-   "sha256": "05a5e21f43e8ef25d7f9c110d4d7d8264f68ab33b1d760d7aa2325e1e164d8d6"
+   "sha256": "62c510e7f6d15596a83239bf311fc27210d88a28ab7983730ca929ee2a51a3ea"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -1424,7 +1424,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c23/INFO.json",
    "bytes": 586,
-   "sha256": "05c6fe8da15dda56632f96d64c07339abc25c196d0de268108db0323a9ccb8dd"
+   "sha256": "e0b6589550fc2fb56709eef87b6123faaaba16931b482d6203759e0921027406"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c23/tracked.patch",
@@ -2399,7 +2399,7 @@
   {
    "path": "backups/wip/claude__rainbow-s07-match-c23/INFO.json",
    "bytes": 596,
-   "sha256": "8dc923adf6cad8c0350dbcdeb5b92c8923325b619e99bab6c280276cacb6f050"
+   "sha256": "34224d5054a3f1bff0ecff5f2cfb5a92c8dd88000c5bc5a6349372413adfed7f"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c23/tracked.patch",
@@ -6340,6 +6340,21 @@
    "path": "qa/match/04/r22/scratch/clip_s2/0014.png",
    "bytes": 1812259,
    "sha256": "c1b450879fc420cf04aab1198797aad36baf0f55dcef31c9f598fe706b31ba44"
+  },
+  {
+   "path": "qa/match/04/r22/scratch/clip_s2/0015.png",
+   "bytes": 1776350,
+   "sha256": "e2564ba9bc999480c1c2941202844ae4155edf97fb9b9aed03e0f273c51eaa93"
+  },
+  {
+   "path": "qa/match/04/r22/scratch/clip_s2/0016.png",
+   "bytes": 1745460,
+   "sha256": "4008b4c977cefe83463ce5cf199600fc0626b80c7d73b197fd6368990e5ce552"
+  },
+  {
+   "path": "qa/match/04/r22/scratch/clip_s2/0017.png",
+   "bytes": 1747190,
+   "sha256": "68e1804300b48b1f25687e6d5211049bff5c4369f4e96438f5a1a81a70c3fe35"
   },
   {
    "path": "qa/match/04/r22/scratch/crops/ref_left_mid.png",
