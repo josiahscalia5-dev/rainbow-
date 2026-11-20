@@ -573,3 +573,71 @@ Comparing three `m06view` tunings (default, longer off-centre hold, smaller rise
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -i \"s/const M06_VW = m06num('m06vw', 2, \\[16, 34\\]);/const M06_VW = m06num('m06vw', 2, [20, 38]);/; s/const M06_VX = m06num('m06vx', 1, \\[0.55\\])\\[0\\];/const M06_VX = m06num('m06vx', 1, [0.85])[0];/; s/default 16,34), \\`&m06vx=\\` max route x (NDC, default 0.55)/default 20,38), \\`\\&m06vx=\\` max route x (NDC, default 0.85)/\" src/game/cameraRig.ts; grep -n \"M06_VW =\\|M06_VX =\\|default 20,38\" src/game/cameraRig.ts\nK6='match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1'\nD=qa/match/06/r2 …[+702 chars]`
 
+### 🧑 User — 2026-11-20T02:45:42.585Z
+
+> ↩︎ result: 21: *  `&m06vw=a,b` hold → hand-over (u past the checkpoint, default 20,38), `&m06vx=` max route x (NDC, default 0.85) */
+> 28:const M06_VW = m06num('m06vw', 2, [20, 38]);
+> 29:const M06_VX = m06num('m06vx', 1, [0.85])[0];
+> 11
+> [This command modified 1 file you've previously read: src/game/cameraRig.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-20T02:45:45.487Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/84d7059c-5d5b-59cc-a486-4b20ba5b09b1/scratchpad/cmp4.png"}`
+
+### 🧑 User — 2026-11-20T02:45:45.711Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T02:45:49.856Z
+
+> 🔧 **Bash** `{"command": "ls /home/user/tools-pixelmatch/ 2>&1 | head; cd /home/user/rainbow-; sed -n 1,30p tools/lead_r13/swim_clip.mjs | head -30; grep -n \"test:continuity\" package.json", "description": "Check proof tools"}`
+
+### 🧑 User — 2026-11-20T02:45:49.898Z
+
+> ↩︎ result: ls: cannot access '/home/user/tools-pixelmatch/': No such file or directory
+> #!/usr/bin/env node
+> // Lead r13 (2026-11-18): a short REAL-GAMEPLAY swimming clip for any playable screen 04–08 (read-only).
+> // Starts at the screen's checkpoint and rides the real game simulation (Benny, camera rig, course, coins unchanged) with
+> // the shader clock running: straight, then left, then right, then straight — one frame per 1/fps s → OUT/0000.png …
+> // Generalises scripts/proj05-move.mjs --zigzag. Encode: ffmpeg -framerate 24 -i OUT/%04d.png -pix_fmt yuv420p clip.mp4
+> //   node tools/lead_r13/swim_clip.mjs <screen 04..08> <outDir> <seconds> [query]
+> import { mkdirSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> const [SCREEN, OUT, SECS = '6', Q = ''] = process.argv.slice(2);
+> const fps = 24;
+> mkdirSync(OUT, { recursive: true });
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5280 + Number(SCREEN));
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> try {
+>   const page = await browser.newPage({ viewport: { width: 864, height: 15 …[+1060 chars]
+
+### 🤖 Claude — 2026-11-20T02:45:55.741Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/tools-pixelmatch && cd /home/user/rainbow- && git show FETCH_HEAD:docs/briefs/2026-11-18-r16/pixeldiff.mjs > /home/user/tools-pixelmatch/pixeldiff.mjs 2>/dev/null || cp docs/briefs/2026-11-18-r16/pixeldiff.mjs /home/user/tools-pixelmatch/; cd /home/user/tools-pixelmatch && (npm init -y >/dev/null; npm i pixelmatch@7 pngjs@7 2>&1 | tail -1); head -15 pixeldiff.mjs", "description": "Rebuild pixelmatch tool", "timeout": 200000}`
+
+### 🧑 User — 2026-11-20T02:45:56.499Z
+
+> ↩︎ result: found 0 vulnerabilities
+> // QA only (not a game dependency). Usage: node pixeldiff.mjs A.png B.png [diff.png] [threshold=0.1] [yFrom yTo]
+> // Compares two same-size PNGs with Pixelmatch (anti-aliasing aware), optionally only rows yFrom..yTo-1.
+> import fs from 'node:fs';
+> import { PNG } from 'pngjs';
+> import pixelmatch from 'pixelmatch';
+> const [a, b, diffPath, thr = '0.1', y0s, y1s] = process.argv.slice(2);
+> if (!a || !b) { console.error('usage: node pixeldiff.mjs A.png B.png [diff.png] [threshold] [yFrom yTo]'); process.exit(2); }
+> const A = PNG.sync.read(fs.readFileSync(a)), B = PNG.sync.read(fs.readFileSync(b));
+> if (A.width !== B.width || A.height !== B.height) { console.error(`size mismatch ${A.width}x${A.height} vs ${B.width}x${B.height}`); process.exit(3); }
+> const W = A.width, y0 = y0s ? Math.max(0, +y0s) : 0, y1 = y1s ? Math.min(A.height, +y1s) : A.height, H = y1 - y0;
+> const crop = (img) => img.data.subarray(y0 * W * 4, y1 * W * 4);
+> const D = new PNG({ width: W, height: H });
+> const n = pixelmatch(crop(A), crop(B), D.data, W, H, { threshold: +thr });
+> if (diffPath && diffPath !== '-') fs.writeFileSync(diffPath, PNG.sync.write(D));
+> console.log(JSON.stringify({ a, b, rows: [y0, y1], thr …[+133 chars]
+
+### 🤖 Claude — 2026-11-20T02:45:59.150Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; K6='match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1'\nSP=/tmp/claude-0/-home-user-rainbow-/84d7059c-5d5b-59cc-a486-4b20ba5b09b1/scratchpad\nnode tools/lead_r13/swim_clip.mjs 06 $SP/clipN 6 \"$K6&m06view=1\" > $SP/clipN.log 2>&1 &\nnode tools/lead_r13/swim_clip.mjs 07 $SP/clipB 0.1 \"$K6\" > /dev/null 2>&1; echo dummy\nwait; tail -2 $SP/clipN.log; ls $SP/clipN | wc -l", "description": "Record NEW swim clip frames", "timeout": 900000, "run_in_background": false}`
+
