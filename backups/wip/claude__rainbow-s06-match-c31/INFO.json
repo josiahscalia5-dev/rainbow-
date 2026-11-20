@@ -2,7 +2,7 @@
  "worktree": "/home/user/wt/s06",
  "branch": "claude/rainbow-s06-match-c31",
  "head": "e162aec2bfdc631913c41daa435f9d449439af4f",
- "time": "2026-11-20T21:21:49+00:00",
+ "time": "2026-11-20T21:22:13+00:00",
  "dirty_tracked": [
   "src/game/Game.ts",
   "src/gameplay/coins.ts",
