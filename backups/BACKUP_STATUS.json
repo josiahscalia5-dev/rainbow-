@@ -1,6 +1,6 @@
 {
   "last_run": {
-    "time": "2026-11-20T13:52:03+00:00",
+    "time": "2026-11-20T13:57:29+00:00",
     "reason": "daemon",
     "result": "committed+pushed",
     "files_staged": 40,
@@ -18,14 +18,14 @@
       "claude/rainbow-s08-scenery-c27: 3 modified, 2 new file(s) snapshotted",
       "lead/trial07-c27: 5 modified, 10 new file(s) snapshotted"
     ],
-    "commit": "46d69b6f6866c70cc7f1743180aa08e8ec3f1eeb",
-    "duration_s": 26
+    "commit": "3c1fc4c5f2a51fa0044c2ae1b0e4705c3c2cd3d4",
+    "duration_s": 23
   },
   "repo": "https://github.com/josiahscalia5-dev/rainbow-",
   "branch": "ccr-08ece3a6-xcwyls",
-  "last_verified_remote_sha": "46d69b6f6866c70cc7f1743180aa08e8ec3f1eeb",
-  "last_successful_backup_utc": "2026-11-20T13:52:03+00:00",
+  "last_verified_remote_sha": "3c1fc4c5f2a51fa0044c2ae1b0e4705c3c2cd3d4",
+  "last_successful_backup_utc": "2026-11-20T13:57:29+00:00",
   "consecutive_failures": 0,
   "schedule": "every 5 min, container-local (scheduler=daemon status=active pid=567); see backups/RECOVERY.md for limits",
-  "next_scheduled_utc": "2026-11-20T13:55:00+00:00"
+  "next_scheduled_utc": "2026-11-20T14:00:00+00:00"
 }
