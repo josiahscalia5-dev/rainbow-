@@ -429,3 +429,177 @@ Both jobs are running. I'll read the label tool's usage while waiting.
 
 > 🔧 **Bash** `{"command": "until grep -q \"ALL_DONE\" /home/user/scratch/benny/clips/run.log 2>/dev/null || grep -q \"probe a exit\" /home/user/scratch/benny/silk/run_pa.log 2>/dev/null; do sleep 10; done; date -u +%H:%M:%S; cat /home/user/scratch/benny/clips/run.log /home/user/scratch/benny/silk/run_pa.log; ls /home/user/scratch/benny/clips/06_BEFORE/f | wc -l; tail -3 /home/user/scratch/benny/silk/log_pa.txt", "description": "Wait for the clip or the probe to finish", "timeout": 600000}`
 
+### 🧑 User — 2026-11-20T13:15:06.596Z
+
+> ↩︎ result: 13:15:06
+> probe a exit 0
+> 48
+> variant s2_soft_b1 4071 ms box [ 103, 837, 636, 1530 ]
+> variant s3_soft_b5 3850 ms box [ 103, 837, 636, 1530 ]
+> variant s4_soft_b6 3925 ms box [ 103, 837, 636, 1530 ]
+
+### 🤖 Claude — 2026-11-20T13:15:11.558Z
+
+The probe finished. I'll build a contact sheet of Benny crops: BEFORE (current best, no silk) plus the 11 variants.
+
+### 🤖 Claude — 2026-11-20T13:15:15.983Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/benny/silk && python3 -I -c \"\nfrom PIL import Image, ImageDraw, ImageFont\nimport json\nfnt=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',18)\nbox=(103,837,636,1430)\nnames=['a0_code_default','b1_long_combed','b2_fine_fibres','b3_long_contrast','b4_long_droop','b5_vlong_thin','b6_mid_tiplight','s1_soft_default','s2_soft_b1','s3_soft_b5','s4_soft_b6']\nims=[('BEFORE(star NEW)',Image.open('/home/user/rainbow-/qa/benny/r23/s3_star/04/new/a_start.png').convert('RGB'))]+[(n,Image.open('pa/%s.png'%n).convert('RGB')) for n in names]\ns= …[+423 chars]`
+
+### 🧑 User — 2026-11-20T13:15:17.042Z
+
+> ↩︎ result: (1300, 1083)
+
+### 🤖 Claude — 2026-11-20T13:15:17.775Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/benny/silk/sheet_pa.png"}`
+
+### 🧑 User — 2026-11-20T13:15:17.970Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T13:15:42.277Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && sed -n 240,300p src/characters/benny/fur.ts", "description": "Read the remaining fur colour code"}`
+
+### 🧑 User — 2026-11-20T13:15:42.356Z
+
+> ↩︎ result: float rnd = mix(1.0 - uComb.w, 1.0 + 0.4 * uComb.w, 1.0 - smoothstep(0.0, 1.0, rr));
+>           float ao = mix(uShade.x, 1.0, smoothstep(0.0, 0.8, lt));
+>           float crease = 1.0 - uShade.z * smoothstep(0.45, 1.0, td / uLock.y) * (1.0 - smoothstep(0.0, 0.6, lt));
+>           float tip = 1.0 + uShade.y * smoothstep(0.45, 1.0, lt);
+>           diffuseColor.rgb *= uTint * ao * crease * tip * rnd * (0.9 + 0.12 * th) * (1.0 - uComb.z + 2.0 * uComb.z * sh);
+>           #endif
+>           // uPile.w: lighter, softer yarn tips (pompom): the outer strand ends fade toward a pale lavender of the same
+>           // brightness instead of a deeper saturated violet (0 = off; body / arms keep 0)
+>           float tl = uPile.w * smoothstep(0.35, 1.0, lt);
+>           float mxc = max(diffuseColor.r, max(diffuseColor.g, diffuseColor.b));
+>           diffuseColor.rgb = mix(diffuseColor.rgb, mxc * uTipCol, tl);
+>           // soft volume (b20tuft): light catches the upper body / cheeks, the underside stays in deeper rose
+>           float upn = normalize(vNormal).y;
+>           diffuseColor.rgb *= (1.0 + uVol.x * smoothstep(0.0, 0.9, upn) * (0.5 + 0.5 * lt)) * (1.0 - uVol.y * smoothstep(0.0, 0.8, -upn));
+>         }
+>        …[+1991 chars]
+
+### 🤖 Claude — 2026-11-20T13:16:03.052Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && sed -n 60,95p src/characters/benny/benny20.ts; sed -n 225,236p src/characters/benny/fur.ts", "description": "Read TUFT config block and tuft strand code"}`
+
+### 🧑 User — 2026-11-20T13:16:03.139Z
+
+> ↩︎ result: comb: [n('acx', 0.4), 0.9, 0.08, 0.15],
+>     pile: [0.35, 0.5, 0.5, 0],
+>     color: lin('acol', [0.29, 0.092, 0.172]),
+>   },
+>   fur_armR: {
+>     lock: [n('alx', 50), 0.95, n('alz', 0.9), 320],
+>     shade: [0.45, 0.25, 0.3, 0.3],
+>     comb: [n('acx', 0.4), 0.9, 0.08, 0.15],
+>     pile: [0.35, 0.5, 0.5, 0],
+>     color: lin('acol', [0.29, 0.092, 0.172]),
+>   },
+>   fur_pom: {
+>     lock: [n('plx', 40), n('ply', 0.8), n('plz', 1.0), n('plw', 220)],
+>     shade: [n('psx', 0.45), n('psy', 0.3), n('psz', 0.35), n('psw', 0.3)],
+>     comb: [0, 1, n('pcz', 0.12), n('pcw', 0.3)],
+>     // w = lighter soft yarn tips: opt-in `&b20ppw=<0..1>` (r22 step 3) until proven
+>     pile: [n('ppx', 0.4), n('ppy', 0.35), n('ppz', 0.6), n('ppw', 0)],
+>     color: lin('pcol', [0.1016, 0.0067, 0.4425]),
+>   },
+> };
+> 
+> /** `&b20tuft=1` (r23 step 1, opt-in): soft FLUFFY plush volume instead of the flat velvet pile — medium-short soft
+>  *  tufts (bigger locks, a little longer fur, rounder tuft shading), lighter rose tips, soft highlight on the upper body /
+>  *  cheeks, deeper rose only in the underside creases. Every value overridable (`&b20t<key>=`). */
+> const TUFT = n('tuft', 0) > 0;
+> const VOL20: Record<string, V4> = {};
+> const TIP20: Record<s …[+1173 chars]
+
+### 🤖 Claude — 2026-11-20T13:16:18.292Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && sed -n 306,318p src/characters/benny/fur.ts; sed -n 214,224p src/characters/benny/fur.ts; sed -n 44,52p src/characters/benny/benny20.ts", "description": "Read cache key and strand clump code"}`
+
+### 🧑 User — 2026-11-20T13:16:18.495Z
+
+> ↩︎ result: gl_FragColor = vec4(vB05Uv, uMaskCol.r, vLayer); // QA bake pass (benny05.ts): uv, part id, shell layer
+>         #endif`,
+>       );
+>     shader.fragmentShader = shader.fragmentShader.replace('uniform vec3 uTip;', 'uniform vec3 uTip; uniform vec3 uMaskCol;');
+>   };
+>   material.customProgramCacheKey = () =>
+>     `benny-fur-${shells}${material.defines?.BENNY_MASK !== undefined ? '-mask' : ''}` +
+>     `${material.defines?.BENNY05 !== undefined ? '-b05' : ''}${material.defines?.BENNY20 !== undefined ? '-b20' : ''}` +
+>     `${material.defines?.B20SILK !== undefined ? '-silk' : ''}${material.defines?.B20SOFT !== undefined ? '-soft' : ''}` +
+>     `${material.defines?.BENNY_UV !== undefined ? '-uv' : ''}`;
+> 
+>   const mesh = new THREE.InstancedMesh(src.geometry, material, shells);
+>   const I = new THREE.Matrix4();
+>           float crease = 1.0 - uShade.z * smoothstep(uSilk2.y, 1.0, td / uLock.y) * (1.0 - smoothstep(0.0, 0.6, lt));
+>           float tip = 1.0 + uShade.y * smoothstep(0.45, 1.0, lt);
+>           float sheen = 1.0 + uSilk.w * exp(-across * across * 6.0) * smoothstep(0.15, 0.6, lt) * (1.0 - smoothstep(0.85, 1.0, lt));
+>           diffuseColor.rgb *= uTint * ao * crease * tip * rnd * sheen * (0.9 +  …[+1074 chars]
+
+### 🤖 Claude — 2026-11-20T13:16:33.510Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && python3 -I - <<'EOF'\np='/home/user/wt/benny/src/characters/benny/fur.ts'\ns=open(p).read()\ndef rep(a,b):\n    global s\n    assert s.count(a)==1, a\n    s=s.replace(a,b)\nrep(\"\"\"        #ifdef B20SILK\n        uniform vec4 uSilk; uniform vec4 uSilk2;\n        #endif\"\"\",\"\"\"        #if defined(B20SILK) || defined(B20COMB)\n        uniform vec4 uSilk; uniform vec4 uSilk2;\n        #endif\"\"\")\nrep(\"\"\"          vec3 cs = vec3(tc.x / uLock.x, tc.y / (uLock.x * uLock.z), tc.z / uLock.x) * uLock.w;\n          qs = cs + (qs - cs) / max(0.3, 1.0 -  …[+3544 chars]`
+
+### 🧑 User — 2026-11-20T13:16:33.852Z
+
+> ↩︎ result: 38:export const FUR20: Record<string, Partial<FurParams>> = {
+> 91:    FUR20[k].length = arm ? len * 0.8 : len;
+> 92:    FUR20[k].gravity = n('tgr', 0.04);
+> 113:    FUR20[k].length = arm ? len * 0.75 : len;
+> 114:    FUR20[k].gravity = n('ggr', 0.04);
+> 39:  fur_body: { shells: n('bsh', 24), length: n('blen', 0.075), gravity: n('bgr', 0.05) },
+> 40:  fur_armL: { shells: n('ash', 16), length: n('alen', 0.07), gravity: n('agr', 0.1) },
+> 41:  fur_armR: { shells: n('ash', 16), length: n('alen', 0.07), gravity: n('agr', 0.1) },
+> 42:  fur_pom: { shells: n('psh', 20), length: n('plen', 0.12), gravity: n('pgr', 0.04) },
+> 92:    FUR20[k].gravity = n('tgr', 0.04);
+> 114:    FUR20[k].gravity = n('ggr', 0.04);
+> 130: *  length, qcx downward comb, qgr gravity. Body + arms only (pompom unchanged). */
+> 139:    FUR20[k].gravity = n('qgr', FUR20[k].gravity ?? 0.04);
+
+### 🤖 Claude — 2026-11-20T13:16:38.740Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && sed -i \"s|const len = n('qlen', FUR20\\[k\\].length / (arm \\&\\& TUFT ? 0.8 : 1));|const len = n('qlen', (FUR20[k].length ?? 0.08) / (arm \\&\\& TUFT ? 0.8 : 1));|\" src/characters/benny/benny20.ts && grep -n \"qlen'\" src/characters/benny/benny20.ts && timeout 600 nice -n 5 npx tsc --noEmit -p . && echo TSC_OK; cat /home/user/scratch/benny/clips/run.log; ls /home/user/scratch/benny/clips/06_BEFORE/f | wc -l", "description": "Fix optional length and typecheck", "timeout": 700000}`
+
+### 🧑 User — 2026-11-20T13:16:46.218Z
+
+> ↩︎ result: 137:    const len = n('qlen', (FUR20[k].length ?? 0.08) / (arm && TUFT ? 0.8 : 1));
+> TSC_OK
+> 69
+
+### 🤖 Claude — 2026-11-20T13:16:53.338Z
+
+Typecheck passes. Now a probe of the combed mode on 04's start, with a control variant (squash 1, no streaks = exactly the current tuft look) in the same frame.
+
+### 🤖 Claude — 2026-11-20T13:16:59.901Z
+
+> 🔧 **Bash** `{"command": "cat > /home/user/scratch/benny/silk/mkvar_c.py <<'EOF'\nimport json, sys\n# B20COMB probe: tuft defaults body lock [30, 1.1, 0.9*qlz, 180], arms lock x 36; comb x 0.55; len 0.08 (arms *0.8)\ndef js(qsq=0.3, qst=0.06, L=0.08, cx=0.55, lz=1.0, lw=180, gr=0.04):\n    return (\"for (const f of B.furs) { const nm = f.mesh.name; if (!/^fur_(body|arm)/.test(nm)) continue; const arm = nm !== 'fur_body'; \"\n            \"const u = f.uniforms; \"\n            f\"u.uSilk.value.set({qsq}, {qst}, 0, 0); u.uLock.value.z = 0.9 * {lz}; u.uLock.value.w = {lw}; u.uComb.value.x = {cx}; \"\n         …[+989 chars]`
+
+### 🧑 User — 2026-11-20T13:17:00.023Z
+
+> ↩︎ result: ['c7_control_tuft', 'c0_code_default', 'c1_sq05', 'c2_sq018', 'c3_sq03_long', 'c4_sq02_long_lz07', 'c5_sq03_streak12', 'c6_sq025_fine240', 'c8_sq03_vlong']
+> 04 [{"name": "a_start", "frac": 0, "steer": null, "box": [90, 849, 640, 1559], "bs": {"x": -0.09, "y": -0.63, "z": 0.985, "visible": true, "cam": [2.43, -15.97, -21.05], "benny": [2.01, -21.9, -24.97]}, "s": 77.413, "lat": 0, "stage": "04", "coins": 1330, "s0": 77.413, "s1": 114.68830202823243}, {"name": "c_middle", "frac": 0.35, "steer": null, "box": [196, 812, 601, 1372], "bs": {"x": -0.05, "y": -0.49, "z": 0.988, "visible": true, "cam": [2.4, -21.64, -30.68], "benny": [2, -28.46, -36.03]}, "s": 90.48, "lat": 0, "stage": "04", "coins": 1330, "s0": 77.413, "s1": 114.68830202823243}, {"name": "f_
+> 06 [{"name": "a_start", "frac": 0, "steer": null, "box": [-77, 796, 710, 1601], "bs": {"x": -0.13, "y": -0.71, "z": 0.98, "visible": true, "cam": [0.95, -38.81, -132.79], "benny": [0.17, -37.45, -138.02]}, "s": 198.924, "lat": 0, "stage": "06", "coins": 1680, "s0": 198.924, "s1": 247.05710253588848}, {"name": "c_middle", "frac": 0.35, "steer": null, "box": [140, 671, 557, 1194], "bs": {"x": -0.21, "y": -0.25, "z": 0.987, "visible": true …[+163 chars]
+
+### 🤖 Claude — 2026-11-20T13:17:04.871Z
+
+> 🔧 **Bash** `{"command": "cat > /home/user/scratch/benny/silk/run_pc.sh <<'EOF'\n#!/usr/bin/env bash\nset -u\ncd /home/user/wt/benny\nfor spec in \"04 0\" \"06 16.9\"; do\n  set -- $spec\n  Q=\"$(cat /home/user/rainbow-/qa/benny/r23/s3_star/QUERY_NEW_$1.txt)&b20silk=2\"\n  B20_PORT=5284 bash /home/user/rainbow-/tools/lead25/render_slot.sh timeout 3000 node tools/benny23/knitprobe.mjs /home/user/scratch/benny/silk/pc$1 \"$Q\" /home/user/scratch/benny/silk/vc.json $1 $2 > /home/user/scratch/benny/silk/log_pc$1.txt 2>&1\n  echo \"probe c $1 exit $?\"\ndone\necho PC_DONE\nEOF\nchmod +x /home/user/scratch/benny …[+75 chars]`
+
+### 🧑 User — 2026-11-20T13:17:05.010Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T13:17:05.934Z
+
+> 🔧 **Bash** `{"command": "/home/user/scratch/benny/silk/run_pc.sh > /home/user/scratch/benny/silk/run_pc.log 2>&1", "description": "Run combed-pile probes on 04 and 06", "timeout": 3600000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T13:17:05.988Z
+
+> ↩︎ result: Command running in background with ID: bf3i48535. Output is being written to: /tmp/claude-0/-home-user-rainbow-/57d35962-86cf-5cfa-ab0b-2faf54b8a6e6/tasks/bf3i48535.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-20T13:17:08.275Z
+
+> 🔧 **Bash** `{"command": "until grep -q \"ALL_DONE\" /home/user/scratch/benny/clips/run.log 2>/dev/null || grep -q \"PC_DONE\" /home/user/scratch/benny/silk/run_pc.log 2>/dev/null; do sleep 10; done; date -u +%H:%M:%S; cat /home/user/scratch/benny/clips/run.log /home/user/scratch/benny/silk/run_pc.log; ls /home/user/scratch/benny/clips/06_BEFORE/f | wc -l; tail -2 /home/user/scratch/benny/silk/log_pc04.txt", "description": "Wait for clip or probe to finish", "timeout": 600000}`
+

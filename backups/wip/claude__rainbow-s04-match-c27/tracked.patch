@@ -32,7 +32,7 @@ index 65c878c..a20f48e 100644
        if (mvViews.length && camera) {
          const cp = camera.getWorldPosition(_cp);
 diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
-index 2b62a35..63aab5d 100644
+index 2b62a35..da4ec30 100644
 --- a/src/world/match04m4.ts
 +++ b/src/world/match04m4.ts
 @@ -120,6 +120,15 @@ uniform float uRVar;       // r17 m04rpvar: number of painted rings stacked in t
@@ -915,7 +915,24 @@ index 2b62a35..63aab5d 100644
    let arrA = 0;
    if (M04.arr3d) {
      const hw = M04.num('m04a3w', 1.15), th = M04.num('m04a3t', 0.42), drop = M04.num('m04a3d', 0.95);
-@@ -1802,20 +2383,76 @@ export function addM04(ctx: M04Ctx) {
+@@ -1783,7 +2364,16 @@ export function addM04(ctx: M04Ctx) {
+     const neon = M04.num('m04a3w2', 0) > 0;
+     const coreC = neon ? new THREE.Color(1.0, 1.0, 1.0) : new THREE.Color(0.86, 0.98, 1.0);
+     const glowC = neon ? new THREE.Color(0.22, 0.86, 1.0) : new THREE.Color(0.10, 0.62, 1.0);
++    // r26 `&m04a5=1`: EXACTLY FIVE chevrons. Without it the lane carries a row of chevrons every m04a3p u along its whole
++    // length and the fade window shows ~5 at a time — a conveyor: 10 different arrows appear during 04 and new ones keep
++    // arriving far away (still 2 ahead at the end). With it only the five that line up with the painted group of the
++    // approved start view are built (row indices m04a5i .. m04a5i + 4, default 2 = the five in view at the start), so the
++    // count goes 5 -> 0 as Benny swims through them and the lane ahead is clear after the fifth.
++    const a5 = M04.num('m04a5', 0) > 0, a5i = Math.round(M04.num('m04a5i', 2));
++    let a5n = -1;
+     for (let a = first; a < len - 6; a += sp) {
++      a5n++;
++      if (a5 && (a5n < a5i || a5n > a5i + 4)) continue;
+       const core = new THREE.MeshBasicMaterial({ color: coreC, transparent: true, depthWrite: false, toneMapped: false, side: THREE.DoubleSide });
+       // r13 `&m04a3hb=1`: a deep-blue halo with NORMAL blending (the painted arrows pop as white bars in a blue glow; an
+       // additive halo only whitened the bright cyan water round them)
+@@ -1802,20 +2392,76 @@ export function addM04(ctx: M04Ctx) {
        m.renderOrder = 5; g.renderOrder = coreT && lum > 0 ? 6 : 4; m.name = 'm04_arrow3d'; g.name = 'm04_arrow3d_glow';   // luminous layer on top
        m.visible = g.visible = false;                                     // invisible during the projector depth bake
        group.add(g); group.add(m);
@@ -994,7 +1011,7 @@ index 2b62a35..63aab5d 100644
      if (arrowsOut.length) {
        const cz = -a5b.z;                                                // camera local z (forward = -z)
        // r13: fade window ahead of the camera (Benny swims ≈ 6.4 u ahead of it on 04: m04a3n0/n1 ≈ 6.5/8.5 makes every
-@@ -1825,12 +2462,41 @@ export function addM04(ctx: M04Ctx) {
+@@ -1825,12 +2471,41 @@ export function addM04(ctx: M04Ctx) {
        const go = M04.num('m04a3o', 0.55);
        const b0 = M04.num('m04a3b0', 1.6), b1 = M04.num('m04a3b1', 3.0);
        const bz = M04.num('m04a3b', 0) > 0 && benny ? benny.clone().applyMatrix4(MwInv).z : null;   // Benny's local z (same frame as cz)

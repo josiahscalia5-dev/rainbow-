@@ -1,5 +1,13 @@
 # Screen 04 — round 23 (new account, lead session branch `claude/rainbow-r22-restore-ut3m39`) — lead log
 
+## (r26) WHERE I STOPPED / NEXT — s04 specialist (relaunched r26 ~13:10 UTC, worktree `/home/user/wt/s04`, LOCAL branch `claude/rainbow-s04-match-c27`)
+* Worktree = K23-S3 code + the unfinished r25 `m04lgc` crescent edit (tsc 0). Scratch `/home/user/scratch/s04/`. Proof `qa/match/04/r26/`.
+* Step 0' DONE (verdict below, "r26 Step 0'"): the game does NOT show five arrows — it shows a CONVEYOR (K23-1: 12 different
+  arrows during 04, K23-S3: 10 + one 0.1 s flicker; ~5 in view at a time; new ones keep arriving far away; 2-4 still ahead at the
+  end). Fix written behind `&m04a5=1` (exactly five: only the five chevrons that line up with the painted group of the start view are
+  built). tsc 0. NEW clip rendering (`/home/user/scratch/s04/clip_a5`, run_a5clip.sh) -> `qa/match/04/r26/s0_five/`.
+* NEXT: verdict of the five-arrow clip + gameplay 8/8; then step 1 `m04lgc` variants (r25 variant renders were lost with the scratch).
+
 ## (r25) WHERE I STOPPED / NEXT — s04 specialist (relaunched r25 ~12:00 UTC, worktree `/home/user/wt/s04`, LOCAL branch `claude/rainbow-s04-match-c26`)
 * Worktree verified: `git diff` == `s3_glossy/code.patch` byte for byte (K23-S3 code complete; no patch re-applied). Scratch
   `/home/user/scratch/s04/`. Proof folder `qa/match/04/r25/`. Heavy jobs wrapped in `tools/lead25/render_slot.sh`.

@@ -14,7 +14,7 @@ fb = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 
 fs = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 26)
 # chevrons he has passed: any chevron that was drawn ahead of him and is now within 0.5 u of him or behind (it may have faded
 # out behind his hat before he reaches it)
-seen, through = set(), set()
+seen, through, seen3 = set(), set(), set()   # r26: seen3 = different chevrons shown clearly (opacity > 0.3) so far
 rows = []
 for fr in meta['frames']:
     ahead_vis = 0
@@ -22,18 +22,20 @@ for fr in meta['frames']:
         if a['vis'] and a['op'] > 0.05 and a['ahead'] > 0:
             ahead_vis += 1
             seen.add(a['z'])
+            if a['op'] > 0.3:
+                seen3.add(a['z'])
         if a['z'] in seen and a['ahead'] <= 0.5:
             through.add(a['z'])
-    rows.append((ahead_vis, len(through)))
+    rows.append((ahead_vis, len(through), len(seen3)))
 for speed, rate in (('1.0x', 20), ('0.5x', 10)):
     lab = d / f'lab_{speed}'
     lab.mkdir(exist_ok=True)
-    for fr, (av, th) in zip(meta['frames'], rows):
+    for fr, (av, th, sn) in zip(meta['frames'], rows):
         im = Image.open(d / 'f' / f"{fr['i']:04d}.png").convert('RGB')
         dr = ImageDraw.Draw(im)
         spd = 'REAL GAME SPEED (1.0x)' if speed == '1.0x' else 'HALF SPEED (0.5x)'
-        arr = (f"arrows in view ahead of Benny: {av}   passed: {th}" if fr['stage'] == meta['screen']
-               else f"arrows passed on Screen {meta['screen']}: {th}")
+        arr = (f"arrows in view: {av}   different arrows so far: {sn}   passed: {th}" if fr['stage'] == meta['screen']
+               else f"Screen {meta['screen']}: different arrows shown {sn}, passed {th}")
         lines = [(title, fb), (f"{spd}   game time t = {fr['i'] * dt:.2f} s", fs), (fr['phase'], fs), (arr, fs)]
         y = 1536 - 20 - 46 * len(lines)
         dr.rectangle([0, y - 14, 864, 1536], fill=(20, 8, 40))
@@ -43,4 +45,4 @@ for speed, rate in (('1.0x', 20), ('0.5x', 10)):
         im.resize((540, 960), Image.LANCZOS).save(lab / f"{fr['i']:04d}.png")
     subprocess.run(['ffmpeg', '-loglevel', 'error', '-y', '-framerate', str(rate), '-i', str(lab / '%04d.png'),
                     '-pix_fmt', 'yuv420p', '-c:v', 'libx264', '-crf', '20', f'{outp}_{speed}.mp4'], check=True)
-print('frames', len(meta['frames']), 'game seconds', round(len(meta['frames']) * dt, 2), 'arrows passed', len(through))
+print('frames', len(meta['frames']), 'game seconds', round(len(meta['frames']) * dt, 2), 'arrows passed', len(through), 'different arrows shown', len(seen3))

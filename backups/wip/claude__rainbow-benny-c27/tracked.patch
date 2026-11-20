@@ -154141,10 +154141,10 @@ index a76822b..cbb7ee4 100644
  * `fur.ts`: new BENNY20-only uniforms `uTipCol` (colour the uPile.w tips fade to; pompom keeps its pale lavender) and `uVol`
    (x highlight on up-facing fur, y darker underside). `benny20.ts`: `TUFT` block (body + arms): bigger locks (30 / arms 36),
 diff --git a/src/characters/benny/benny20.ts b/src/characters/benny/benny20.ts
-index 340e1d3..a978516 100644
+index 340e1d3..eb11f8b 100644
 --- a/src/characters/benny/benny20.ts
 +++ b/src/characters/benny/benny20.ts
-@@ -100,6 +100,30 @@ if (TUFT) {
+@@ -100,6 +100,49 @@ if (TUFT) {
    }
  }
  
@@ -154152,7 +154152,7 @@ index 340e1d3..a978516 100644
 + *  longer locks lying down along the body, each a smooth pointed flame of streaks running along it (fur.ts `B20SILK`:
 + *  no per-strand dots / grain), a soft sheen line down its centre, a pointed fringe of strand ends, dark creases between
 + *  locks. Body + arms only (pompom unchanged). Every value overridable (`&b20g<key>=`). */
-+const SILK = n('silk', 0) > 0;
++const SILK = n('silk', 0) === 1;
 +const SILK20: Record<string, { silk: V4; silk2: V4 }> = {};
 +if (SILK) {
 +  const len = n('glen', 0.1);
@@ -154171,11 +154171,30 @@ index 340e1d3..a978516 100644
 +/** `&b20gsoft=1` (with b20silk, r25): soft lock edges instead of hard per-pixel cut-outs (fur.ts `B20SOFT`): the game frame
 + *  has no MSAA, so the fur's discard edges alias into speckle that shimmers in motion; fade over `&b20gew=` px instead */
 +const SILK_SOFT = SILK && n('gsoft', 0) > 0;
++/** `&b20silk=2` (r26, with b20tuft): COMBED silky pile — the soft b20tuft pile (no lock cones → no spikes) with its
++ *  strands stretched along the body's vertical, so the fur reads as fine downward-combed fibres like the approved Benny
++ *  instead of a dotted velvet grain (fur.ts `B20COMB`). Colour = the b20tuft dusty rose. Overrides `&b20q<key>=`:
++ *  qsq strand squash (lower = longer fibres), qst fibre streak contrast, qlz lock vertical scale factor, qlen fur
++ *  length, qcx downward comb, qgr gravity. Body + arms only (pompom unchanged). */
++const COMB = n('silk', 0) === 2;
++const COMB20: Record<string, V4> = {};
++if (COMB) {
++  for (const k of ['fur_body', 'fur_armL', 'fur_armR']) {
++    const arm = k !== 'fur_body';
++    const L = LOCK20[k];
++    const len = n('qlen', (FUR20[k].length ?? 0.08) / (arm && TUFT ? 0.8 : 1));
++    FUR20[k].length = arm && TUFT ? len * 0.8 : len;
++    FUR20[k].gravity = n('qgr', FUR20[k].gravity ?? 0.04);
++    L.lock = [L.lock[0], L.lock[1], L.lock[2] * n('qlz', 1), L.lock[3]];
++    L.comb = [n('qcx', L.comb[0]), L.comb[1], L.comb[2], L.comb[3]];
++    COMB20[k] = [n('qsq', 0.3), n('qst', 0.06), 0, 0];
++  }
++}
 +
  /** per-screen fur exposure (LINEAR multipliers on the fur albedo above, which is solved for Screen 04). The approved
   *  pictures paint Benny lighter / pinker on 05–07 (fur mean ≈ (234, 82, 178), brightness median .95–.98) than on 04
   *  ((207, 74, 151), .84), while the game lights him less there. The game records its screen on
-@@ -132,17 +156,44 @@ export const HAT20 = {
+@@ -132,17 +175,44 @@ export const HAT20 = {
    starFlat: n('sf', 0.3),
  };
  
@@ -154225,7 +154244,7 @@ index 340e1d3..a978516 100644
  let loaded: Promise<Record<string, THREE.Texture | null>> | null = null;
  /** load the knit / felt maps once (missing file → null: that part keeps its benny05 look) */
  export function loadBenny20Maps(): Promise<Record<string, THREE.Texture | null>> {
-@@ -196,6 +247,16 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
+@@ -196,6 +266,21 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
      if (vol) f.uniforms.uVol.value.set(...vol);
      const tc = TIP20[f.mesh.name];
      if (tc) f.uniforms.uTipCol.value.setRGB(...tc);
@@ -154239,10 +154258,15 @@ index 340e1d3..a978516 100644
 +      f.uniforms.uSilk.value.set(...sk.silk);
 +      f.uniforms.uSilk2.value.set(...sk.silk2);
 +    }
++    const cb = COMB20[f.mesh.name];
++    if (cb) {
++      d.B20COMB = '';
++      f.uniforms.uSilk.value.set(...cb);
++    }
      mat.needsUpdate = true;
    }
  
-@@ -234,36 +295,69 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
+@@ -234,36 +319,69 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
      if (nt) mat.normalScale.setScalar(ns);
      mat.roughness = 0.92;
      mat.metalness = 0;
@@ -154318,7 +154342,7 @@ index 340e1d3..a978516 100644
    let first = true;
    const lastPos = new THREE.Vector3();
    const pos = new THREE.Vector3();
-@@ -275,8 +369,20 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
+@@ -275,8 +393,20 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
      scene.getWorldPosition(pos);
      const jumped = pos.distanceTo(lastPos) > 5;
      lastPos.copy(pos);
@@ -154340,7 +154364,7 @@ index 340e1d3..a978516 100644
    };
  
    // QA only (`?qa` pages, read by tools/benny20/probe.mjs): live handles for tuning without a reload
-@@ -295,7 +401,7 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
+@@ -295,7 +425,7 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
        }
        return [Math.round(x0), Math.round(y0), Math.round(x1), Math.round(y1)];
      };
@@ -154350,7 +154374,7 @@ index 340e1d3..a978516 100644
    return tick;
  }
 diff --git a/src/characters/benny/fur.ts b/src/characters/benny/fur.ts
-index 2b9523c..174ccef 100644
+index 2b9523c..91b6714 100644
 --- a/src/characters/benny/fur.ts
 +++ b/src/characters/benny/fur.ts
 @@ -37,6 +37,8 @@ export interface FurHandle {
@@ -154381,13 +154405,13 @@ index 2b9523c..174ccef 100644
          #ifdef BENNY20
          uniform vec4 uLock; uniform vec4 uShade; uniform vec3 uTint; uniform vec4 uComb; uniform vec4 uPile; uniform vec3 uTipCol; uniform vec4 uVol;
          #endif
-+        #ifdef B20SILK
++        #if defined(B20SILK) || defined(B20COMB)
 +        uniform vec4 uSilk; uniform vec4 uSilk2;
 +        #endif
          float fhash(vec3 p) { p = fract(p * 0.3183099 + 0.1); p *= 17.0; return fract(p.x * p.y * p.z * (p.x + p.y + p.z)); }
          vec3 fhash3(vec3 p) { return vec3(fhash(p), fhash(p + 17.31), fhash(p + 41.7)); }`,
        )
-@@ -160,8 +173,49 @@ export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
+@@ -160,11 +173,58 @@ export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
            }
            float lh = 1.0 - uShade.w * th;                       // this lock's length (fraction of the fur length)
            float lt = clamp(layer / lh, 0.0, 1.0);
@@ -154437,19 +154461,33 @@ index 2b9523c..174ccef 100644
            // fine strands, clumped toward the lock axis as they rise (q' = c + (q - c) / (1 - h k))
            vec3 qs = vBase * uLock.w;
            vec3 cs = vec3(tc.x / uLock.x, tc.y / (uLock.x * uLock.z), tc.z / uLock.x) * uLock.w;
-@@ -188,6 +242,7 @@ export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
++          #ifdef B20COMB
++          // b20silk=2 (r26): COMBED pile — the strand cells are stretched along the body's vertical (the comb / gravity
++          // direction), so the soft pile reads as fine downward-lying fibres instead of round dots (grain); no lock cones,
++          // so no spikes. uSilk.x = vertical squash of the strand grid (1 = the plain tuft pile)
++          qs.y *= uSilk.x; cs.y *= uSilk.x;
++          #endif
+           qs = cs + (qs - cs) / max(0.3, 1.0 - 0.6 * lt);
+           vec3 sc = floor(qs);
+           vec3 sp = sc + 0.5 + (fhash3(sc) - 0.5) * 0.7;
+@@ -188,6 +248,11 @@ export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
            float crease = 1.0 - uShade.z * smoothstep(0.45, 1.0, td / uLock.y) * (1.0 - smoothstep(0.0, 0.6, lt));
            float tip = 1.0 + uShade.y * smoothstep(0.45, 1.0, lt);
            diffuseColor.rgb *= uTint * ao * crease * tip * rnd * (0.9 + 0.12 * th) * (1.0 - uComb.z + 2.0 * uComb.z * sh);
++          #ifdef B20COMB
++          // fibre streaks: each (stretched) strand a little lighter / darker along its length (uSilk.y = amount)
++          diffuseColor.rgb *= 1.0 - uSilk.y + 2.0 * uSilk.y * sh;
++          #endif
 +          #endif
            // uPile.w: lighter, softer yarn tips (pompom): the outer strand ends fade toward a pale lavender of the same
            // brightness instead of a deeper saturated violet (0 = off; body / arms keep 0)
            float tl = uPile.w * smoothstep(0.35, 1.0, lt);
-@@ -256,6 +311,7 @@ export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
+@@ -256,6 +321,8 @@ export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
    material.customProgramCacheKey = () =>
      `benny-fur-${shells}${material.defines?.BENNY_MASK !== undefined ? '-mask' : ''}` +
      `${material.defines?.BENNY05 !== undefined ? '-b05' : ''}${material.defines?.BENNY20 !== undefined ? '-b20' : ''}` +
 +    `${material.defines?.B20SILK !== undefined ? '-silk' : ''}${material.defines?.B20SOFT !== undefined ? '-soft' : ''}` +
++    `${material.defines?.B20COMB !== undefined ? '-comb' : ''}` +
      `${material.defines?.BENNY_UV !== undefined ? '-uv' : ''}`;
  
    const mesh = new THREE.InstancedMesh(src.geometry, material, shells);

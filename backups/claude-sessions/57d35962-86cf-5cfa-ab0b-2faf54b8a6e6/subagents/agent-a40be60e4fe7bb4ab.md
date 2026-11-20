@@ -521,3 +521,86 @@ Now step 2. Let me read the `m07look` code and the segment-clip tool I wrote in 
 > //   cd <worktree> && node /home/user/rainbow-/tools/lead21/audit_screen.mjs <outDir> <stage 04..08> "<query>"
 > // Shots are fractions of th …[+94 chars]
 
+### 🤖 Claude — 2026-11-20T13:14:07.138Z
+
+Now the step-2 proof run: start-view shots (0 px check) plus the t 2.0–4.6 s segment at the clip's exact steering schedule, BEFORE = full step-1 candidate, NEW = + `m07look`.
+
+### 🤖 Claude — 2026-11-20T13:14:09.763Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/07/r24 && Q07=$(cat QUERY_s1_swing_07only.txt) && Q08=$(cat QUERY_08_latest_K23-3.txt) && echo -n \"$Q07&$Q08\" > /home/user/scratch/s07/Q_S1.txt && node /home/user/rainbow-/tools/lead23/setq.mjs \"$(cat /home/user/scratch/s07/Q_S1.txt)\" \"m07look=1\" > /home/user/scratch/s07/Q_S2.txt && cat /home/user/scratch/s07/Q_S2.txt | tr '&' '\\n' | grep -c . ; tail -c 120 /home/user/scratch/s07/Q_S2.txt; echo; grep -n \"AUDIT_PORT\\|AUDIT_SHOTS\" /home/user/wt/s07/tools/match07/audit_screen_r23.mjs | head -5", "description": "Build step-1 and step-2 query s …[+8 chars]`
+
+### 🧑 User — 2026-11-20T13:14:10.050Z
+
+> ↩︎ result: 47
+> &m08cupg=1&m08bore=1&m08flange=1&m08cupw=1&m08nq=1&m08sr=1&m08vh=1&m08gl=1&m08coinsz=1&m08towelm=1&m08towelv=1&m07look=1
+> 6:// Shots are fractions of the stage from its checkpoint to its end; env AUDIT_SHOTS='[["name",frac,steer],...]' overrides.
+> 11:const SHOTS = process.env.AUDIT_SHOTS ? JSON.parse(process.env.AUDIT_SHOTS)
+> 16:const vite = await startVite(Number(process.env.AUDIT_PORT ?? 5290));
+
+### 🤖 Claude — 2026-11-20T13:14:17.703Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json\na=json.load(open('/home/user/rainbow-/qa/match/07/r24/clips/S1_swing_NEW_frames.json'))['query']; b=open('/home/user/scratch/s07/Q_S1.txt').read().strip()\nprint('S1 query identical to clip query:', a==b)\"\ncat > /home/user/scratch/s07/step2.sh <<'EOF'\n#!/usr/bin/env bash\n# s07 r26 step 2 proof: m07look — start shot (0 px) + segment t 2.0-4.6 s (same schedule as the full clips), BEFORE vs NEW\nset -u\nSC=/home/user/scratch/s07; SLOT=/home/user/rainbow-/tools/lead25/render_slot.sh; R=/home/user/rainbow-/qa/match/07/r26/s2_look\nmkdir -p $R/BEFORE $R/N …[+760 chars]`
+
+### 🧑 User — 2026-11-20T13:14:19.868Z
+
+> ↩︎ result: S1 query identical to clip query: True
+> slot 1 busy
+> slot 2 busy
+
+### 🤖 Claude — 2026-11-20T13:14:21.119Z
+
+While that renders, let me review the `m07join` code to plan step 3.
+
+### 🤖 Claude — 2026-11-20T13:14:21.883Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"m07join\\|sJ\\b\\|sJ:\" src/game/Game.ts src/world/match07.ts | head -20", "description": "Locate m07join code"}`
+
+### 🧑 User — 2026-11-20T13:14:21.939Z
+
+> ↩︎ result: src/game/Game.ts:130:  // r25 `&m07join=1` (with m07end; qa/match/07/r24/PROGRESS.md, user ~10:35: "the detailed swirling water changes abruptly into
+> src/game/Game.ts:134:  // and its round foam clouds run on along the 08 floor to sJ (the end of 08 + 3 u, `?m07jL=` u past the 08 start) while 07 shows,
+> src/game/Game.ts:137:  const m07Join = m07End && flag05('m07join');
+> src/game/Game.ts:138:  const m07sJ = m07Join ? (() => { const v = parseFloat(new URLSearchParams(location.search).get('m07jL') ?? ''); return s08 + (Number.isFinite(v) ? v : course.stage('08').s1 - s08 + 3); })() : s08;
+> src/game/Game.ts:139:  const m07Fade: [number, number] = m07End ? [m07sJ - 2.2, m07sJ - 0.1] : [course.marks['07_plunge_bottom'] - 14, course.marks['07_plunge_bottom'] - 3];
+> src/game/Game.ts:140:  const m07 = MATCH['07'] ? await buildMatch07(m07Tube ? { course, sA: m07sA, sB: course.marks['07_plunge_bottom'], fade: m07Fade, sJ: m07Join ? m07sJ : undefined } : undefined) : null;
+> src/game/Game.ts:143:  const m07RibbonHideOn = new THREE.Vector4(m07sA - 3, m07Join ? m07sJ + 3 : s08, -1, -0.5);
+> src/game/Game.ts:152:  const m07BermHideOn = m07BermHide0 ? new THREE.Vector2(m07Cloud ? course.stage('07').s0 + 1 …[+925 chars]
+
+### 🤖 Claude — 2026-11-20T13:14:23.381Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 128,160p src/game/Game.ts; grep -n \"m07Join\\|m07sJ\" src/game/Game.ts | sed -n 1,40p", "description": "Read Game.ts join wiring"}`
+
+### 🧑 User — 2026-11-20T13:14:23.462Z
+
+> ↩︎ result: const m07End = m07Tube && flag05('m07end') && flag05('m07nearw') && flag05('m07band') && flag05('m07foam');
+>   const s08 = course.stage('08').s0;
+>   // r25 `&m07join=1` (with m07end; qa/match/07/r24/PROGRESS.md, user ~10:35: "the detailed swirling water changes abruptly into
+>   // smoother striped water, with a speckled band across the join. Make the water and foam banks connect consistently through the
+>   // exit"): seen from the end of the drop, the 08 floor ahead showed the game's default streaky sheet + its white lather walls, and
+>   // the painted plunge river faded into it through a dithered (speckled) band at the 08 inlet. With the switch the painted river
+>   // and its round foam clouds run on along the 08 floor to sJ (the end of 08 + 3 u, `?m07jL=` u past the 08 start) while 07 shows,
+>   // the default sheet / lather walls stay away to there, so the drop's water and foam banks continue unbroken; when Benny enters
+>   // 08 the 08 view takes over as before (08's own views unchanged: everything here is only set while 07 shows)
+>   const m07Join = m07End && flag05('m07join');
+>   const m07sJ = m07Join ? (() => { const v = parseFloat(new URLSearchParams(location.search).get('m07jL') ?? '') …[+3168 chars]
+
+### 🤖 Claude — 2026-11-20T13:14:32.496Z
+
+> 🔧 **Bash** `{"command": "sleep 60; cat /home/user/scratch/s07/step2.log; tail -3 /home/user/scratch/s07/s2_shot_BEFORE.log 2>/dev/null; bash /home/user/rainbow-/tools/lead25/render_slot.sh --status; uptime", "description": "Check step-2 render progress"}`
+
+### 🧑 User — 2026-11-20T13:14:32.517Z
+
+> ↩︎ result: <tool_use_error>Blocked: sleep 60 followed by: cat /home/user/scratch/s07/step2.log tail -3 /home/user/scratch/s07/s2_shot_BEFORE.log bash /home/user/rainbow-/tools/lead25/render_slot.sh --status uptime. To wait for a condition, use Monitor with an until-loop (e.g. `until <check>; do sleep 2; done`). To wait for a command you started, use run_in_background: true. Do not chain shorter sleeps to work around this block.</tool_use_error>
+
+### 🤖 Claude — 2026-11-20T13:14:34.307Z
+
+> 🔧 **Bash** `{"command": "until grep -q \"shot NEW\" /home/user/scratch/s07/step2.log 2>/dev/null; do sleep 10; done; cat /home/user/scratch/s07/step2.log; ls /home/user/scratch/s07/s2seg/BEFORE 2>/dev/null | wc -l; date", "description": "Wait until the NEW start shot finishes", "timeout": 540000}`
+
+### 🧑 User — 2026-11-20T13:19:24.736Z
+
+> ↩︎ result: shot BEFORE exit 0
+> seg BEFORE exit 0
+> shot NEW exit 0
+> 33
+> Fri Nov 20 13:19:24 UTC 2026
+

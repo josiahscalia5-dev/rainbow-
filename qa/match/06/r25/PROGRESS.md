@@ -1,5 +1,14 @@
 # Screen 06 — round 25 progress (worktree `/home/user/wt/s06`, LOCAL branch `claude/rainbow-s06-match-c26`, ports 5276 / 5282 / 5283)
 
+## (r26) WHERE I STOPPED / NEXT
+* ~13:15 UTC — relaunched (new account), worktree `/home/user/wt/s06` LOCAL branch `claude/rainbow-s06-match-c27` (r25 edits incl. m06hole).
+* Step 1 judgement of the existing shots (`step1_hole/{CURRENT,NEW,WDBG_NEW}`): the bright hard-edged cone body is GONE in NEW (the cut-out
+  now shows painted water continued from around it); start view 0 px. NOT yet clean: (a) at 3 % the painted lacy ring left at the
+  checkpoint is still half visible (ring zone hands over slowly, `smoothstep(0.15, 0.9, dAp)`); (b) the fill is smooth combed stripes
+  without the painted water's sparkle, so below Benny at 3-7 % it reads as a smoother, stretched patch. Fix = `&m06hole=2` (fast ring
+  hand-over synced with the carried rings + the painted water's own fine sparkle carried into the fill). NOW: CURRENT opening clip
+  rendering (`step1_hole/clip.sh CURRENT`), building m06hole=2.
+
 ## (r25) WHERE I STOPPED / NEXT
 * ~12:05 UTC — started. Read CLAUDE.md, `docs/briefs/2026-11-20-r25/LAUNCH_R25.md` (s06), the lead's diagnosis
   `qa/match/06/r24/lead_rip/NOTES.md` (cone = the cut-out hole where the painted Benny was removed from the projected painting,

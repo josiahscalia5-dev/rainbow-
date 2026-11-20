@@ -37,6 +37,10 @@ BUB = [(366, 645, 22), (48, 668, 20), (85, 740, 37), (68, 868, 30), (207, 863, 2
        (88, 1452, 40), (643, 993, 6)]
 # ring zone round the approved Benny's contact (the lacy splash collar + concentric rings): ellipse in (l, ds)
 ZONE = dict(dc=-0.25, hl=1.75, hs=0.85)
+# r26 m06hole=2: mirrored fine-detail layer (env HOLE_DSIG = high-pass sigma in course units, 0 = off = the r25 fill; HOLE_DAMP = gain)
+import os  # noqa: E402
+DSIG = float(os.environ.get('HOLE_DSIG', '0'))
+DAMP = float(os.environ.get('HOLE_DAMP', '1'))
 
 
 def foam_mask_px():
@@ -102,6 +106,11 @@ def flow_fill(I, Om, good, valid, seam, K):
     DX, DY = np.cos(th), np.sin(th)
     print(f'  orientation field {time.time() - t0:.0f}s', flush=True)
     Ib = cv2.GaussianBlur(I, (0, 0), 0.7)
+    # r26 (m06hole=2): the painted water's own fine detail (white sparkle dashes along the streaks) = high-pass of the good water;
+    # carried into the hole by MIRRORING along each streak (the texel d steps inside the border takes the detail d steps outside it)
+    gq = good.astype(np.float32)[..., None]
+    Ilo = cv2.GaussianBlur(I * gq, (0, 0), max(DSIG, 0.01) * K) / np.maximum(cv2.GaussianBlur(gq[..., 0], (0, 0), max(DSIG, 0.01) * K), 1e-3)[..., None]
+    Dm = (I - Ilo) * gq
     H, W = Om.shape
     ys, xs = np.nonzero(Om); n = len(ys)
     res = []
@@ -109,6 +118,7 @@ def flow_fill(I, Om, good, valid, seam, K):
         px, py = xs.astype(np.float64), ys.astype(np.float64)
         dpx, dpy = sgn * DX[ys, xs], sgn * DY[ys, xs]
         hitc = np.full((n, 3), np.nan); hitd = np.full(n, np.inf)
+        hp = np.zeros((n, 4))  # hit position + direction (for the mirrored detail walk)
         act = np.arange(n)
         for k in range(1, int(6 * K)):
             ix, iy = np.clip(np.round(px[act]).astype(int), 0, W - 1), np.clip(np.round(py[act]).astype(int), 0, H - 1)
@@ -126,10 +136,38 @@ def flow_fill(I, Om, good, valid, seam, K):
                 # 2 texels on into the good water (away from the border's soft edge)
                 hx = np.clip(np.round(px[a] + 2 * dpx[a]).astype(int), 0, W - 1); hy = np.clip(np.round(py[a] + 2 * dpy[a]).astype(int), 0, H - 1)
                 hitc[a] = Ib[hy, hx]; hitd[a] = k
+                hp[a] = np.stack([px[a], py[a], dpx[a], dpy[a]], 1)
             act = act[~(stop | hit)]
             if not len(act): break
-        res.append((hitc, hitd))
-    (c1, d1), (c2_, d2) = res
+        # mirrored detail: walk on along the streak, out of the hole, as many steps as the texel lies inside it
+        det = np.zeros((n, 3))
+        if DSIG > 0:
+            act = np.nonzero(np.isfinite(hitd))[0]
+            qx, qy, qdx, qdy = hp[act, 0].copy(), hp[act, 1].copy(), hp[act, 2].copy(), hp[act, 3].copy()
+            left = hitd[act].copy()
+            lastx, lasty = np.round(qx).astype(int).clip(0, W - 1), np.round(qy).astype(int).clip(0, H - 1)
+            alive = np.ones(len(act), bool)
+            for k in range(int(6 * K)):
+                alive &= left > 0
+                if not alive.any(): break
+                ia = np.nonzero(alive)[0]
+                ix, iy = np.clip(np.round(qx[ia]).astype(int), 0, W - 1), np.clip(np.round(qy[ia]).astype(int), 0, H - 1)
+                dx, dy = DX[iy, ix], DY[iy, ix]
+                flip = dx * qdx[ia] + dy * qdy[ia] < 0
+                dx = np.where(flip, -dx, dx); dy = np.where(flip, -dy, dy)
+                nx_, ny_ = qx[ia] + dx, qy[ia] + dy
+                jx, jy = np.round(nx_).astype(int), np.round(ny_).astype(int)
+                okk = (jx >= 0) & (jy >= 0) & (jx < W) & (jy < H)
+                jxc, jyc = jx.clip(0, W - 1), jy.clip(0, H - 1)
+                okk &= good[jyc, jxc]
+                g2 = ia[okk]
+                qx[g2], qy[g2], qdx[g2], qdy[g2] = nx_[okk], ny_[okk], dx[okk], dy[okk]
+                lastx[g2], lasty[g2] = jxc[okk], jyc[okk]
+                left[ia] -= 1
+                alive[ia[~okk]] = False  # left the good water: keep the last good texel's detail
+            det[act] = Dm[lasty, lastx]
+        res.append((hitc, hitd, det))
+    (c1, d1, e1), (c2_, d2, e2) = res
     both = np.isfinite(d1) & np.isfinite(d2)
     col = np.where(np.isfinite(d1)[:, None], c1, c2_)
     wt = (d2 / (d1 + d2))[both][:, None]
@@ -144,6 +182,14 @@ def flow_fill(I, Om, good, valid, seam, K):
         G = np.where(np.isnan(G), 0, G)
     out = poisson(I.astype(np.float64), G, Om, seam)
     print(f'  poisson blend {time.time() - t0:.0f}s', flush=True)
+    if DSIG > 0:
+        # cross-fade both mirrored details like the colours, variance kept (sqrt-normalised weights); zero at no streak end
+        w1 = np.zeros(n); w1[np.isfinite(d1)] = 1.0; w1[both] = wt[:, 0]
+        w2 = np.zeros(n); w2[~np.isfinite(d1) & np.isfinite(d2)] = 1.0; w2[both] = 1 - wt[:, 0]
+        nrm = np.sqrt(w1 ** 2 + w2 ** 2); nrm[nrm < 1e-6] = 1
+        det = (e1 * w1[:, None] + e2 * w2[:, None]) / nrm[:, None]
+        out[ys, xs] += DAMP * det
+        print(f'  detail mirrored (sigma {DSIG * K:.1f} texels, amp {DAMP}) rms {np.sqrt((det ** 2).mean()):.1f}', flush=True)
     return out.astype(np.float32), Tt.astype(np.float32)
 
 
