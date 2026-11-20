@@ -1,4 +1,16 @@
-# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 24 (2026-11-20, lead branch `ccr-5be1062a-0ffyej`, from ~10:30 UTC)
+# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 25 (2026-11-20, lead branch `ccr-a9235d04-90cw28`, from ~11:54 UTC)
+
+New account; session branch started at `36bc533` = the latest of the r24 lead `ccr-5be1062a-0ffyej` (its last daemon save 11:43 UTC).
+Nothing merged. Saved r24 conversation recovered to 11:17:57 UTC (workers to 11:12, the user's interrupt). Worktrees recreated from the
+11:43:21 snapshots on LOCAL `-c26` branches (`docs/briefs/2026-11-20-r24/setup_worker_r25.sh`, counts identical). Four workers relaunched
+(s07 → S-bends / steering view / 07→08 join with K23-3; s06 → the opening blue cone + owed comparison, then crest / river / coin trail;
+s04 → labelled K23-S3 clip + glints / ribbons / far foam / projection; Benny → felt star verdict, silky fur). Map + services:
+**`docs/briefs/2026-11-20-r25/COORDINATION.md`**; briefs `LAUNCH_R25.md`; next-account recipe `setup_worker_r26.sh` (`-c27` from the
+newest `backups/wip/*-c26/`). Heavy renders share 2 slots (`tools/lead25/render_slot.sh`). Account services on this account: the
+Marble/Atlas connector needs the user to finish the Atlas sign-up (atlas.worldlabs.ai); 7 plugins of the old account were not yet enabled
+(install card shown). Review package ZIPs: regenerated in this session from `bf01adf` (not in git).
+
+# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ ROUND 24 (2026-11-20, lead branch `ccr-5be1062a-0ffyej`, from ~10:30 UTC)
 
 New account; started from the r23 lead `claude/rainbow-r22-restore-ut3m39` and merged its final save `a735ec7` (10:25). Round 23
 stopped at 10:19 UTC (5-hour limit) right after sending the complete labelled Screen 07 clip. **The user reviewed it (~10:35): Screen 07

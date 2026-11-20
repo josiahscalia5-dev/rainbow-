@@ -11,7 +11,7 @@ index 6aec240..321c542 100644
        m06Applied = m06On;
      }
 diff --git a/src/world/match06.ts b/src/world/match06.ts
-index 831c2b4..277c531 100644
+index 831c2b4..a6d96d6 100644
 --- a/src/world/match06.ts
 +++ b/src/world/match06.ts
 @@ -44,6 +44,8 @@ export interface Match06 {
@@ -23,7 +23,7 @@ index 831c2b4..277c531 100644
  }
  
  const VERT = /* glsl */ `
-@@ -112,6 +114,15 @@ uniform float uStO;
+@@ -112,6 +114,23 @@ uniform float uStO;
  uniform float uStDbg;
  uniform vec3 uProjF;
  uniform mat4 uProjVP;
@@ -36,10 +36,29 @@ index 831c2b4..277c531 100644
 +uniform vec4 uRipR;
 +uniform vec2 uBen;
 +uniform vec4 uRipA;
++// r24 lead '&m06ripz=1' (qa/match/06/r24/lead_rip/NOTES.md; needs m06rip): the painted ripple zone round the approved Benny stays
++// pinned to the checkpoint in the projected plate — once Benny swims on, its rings, splash collar and streaks are left behind and
++// stretch into a raised-looking blue cone under him. uRipZ = on; uRip0 = the approved Benny (lateral, s). The zone hands over to
++// the river's own painted water exactly as the carried decal fades in, so only the shallow rings travelling with Benny remain.
++uniform float uRipZ;
++uniform float uWDbg;
++float gWDbg = 0.0;
++uniform vec2 uRip0;
  varying vec4 vProj;
  varying vec3 vW;
  varying vec3 vN;
-@@ -328,6 +339,21 @@ void main() {
+@@ -324,11 +343,34 @@ void main() {
+       if (uRing > 0.5) w *= stOn > 0.5 ? (filled > 0.5 ? 1.0 : hold) : 1.0 - smoothstep(0.2, 1.2, distance(cameraPosition, uProjPos));
+       vec3 pl = texture2D(uPlate, uv).rgb;
+       if (filled > 0.5) pl = textureLod(uPlate, uvF, 0.0).rgb;
++      if (uRipZ > 0.5 && uFloor > 0.5) {
++        vec2 dZ = vLS - uRip0;
++        float eZ = length(vec2(dZ.x / uRipR.y, dZ.y < 0.0 ? dZ.y / uRipR.z : dZ.y / uRipR.w));
++        float inWZ = 1.0 - smoothstep(uR6p.x - 0.2, uR6p.x + 0.1, al);
++        w *= 1.0 - (1.0 - smoothstep(0.85, 1.2, eZ)) * inWZ * smoothstep(0.15, 0.9, dAp);
++      }
+       t = mix(pc, pl, w);
++      gWDbg = w;
        if (uStDbg > 0.5) t = vec3(dbgZ * filled, (1.0 - dbgZ) * dbgB * filled, uFloor * 0.5 + 0.5 * (1.0 - vis));
      }
    }
@@ -59,20 +78,22 @@ index 831c2b4..277c531 100644
 +    if (acc.a > 1e-3) t = mix(t, acc.rgb / acc.a, clamp(wr, 0.0, 1.0));
 +  }
    gl_FragColor = vec4(pjInverse(t), 1.0);
++  if (uWDbg > 0.5 && uFloor > 0.5) gl_FragColor.rgb = vec3(gWDbg, 0.0, 1.0 - gWDbg);
    if (uDbg.x + uDbg.y + uDbg.z > 0.0) gl_FragColor.rgb = mix(gl_FragColor.rgb, uDbg, 0.45);
  }`;
-@@ -494,7 +520,9 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+ 
+@@ -494,7 +536,9 @@ export async function buildMatch06(course: Course): Promise<Match06> {
        uGeo: { value: GEO ? 1 : 0 }, uR6: { value: FLOW ? 1 : 0 }, uR6p: { value: r6p },
        uRiver: { value: tRiver ?? tile }, uFoam: { value: tFoam ?? tile },
        uRing: { value: 0 }, uGold: { value: 0 }, uRingTex: { value: tile }, uRingH: { value: 1 }, uBendAng: { value: 0 }, uPanel: { value: 0 }, uAxO: { value: new THREE.Vector3() }, uAxD: { value: new THREE.Vector3(0, 0, -1) },
 -      uAxR: { value: new THREE.Vector3(1, 0, 0) }, uAxU: { value: new THREE.Vector3(0, 1, 0) } },
 +      uAxR: { value: new THREE.Vector3(1, 0, 0) }, uAxU: { value: new THREE.Vector3(0, 1, 0) },
-+      uRip: { value: tile }, uRipOn: { value: 0 }, uRipR: { value: new THREE.Vector4(-1, 1, -1, 1) }, uBen: { value: new THREE.Vector2() },
++      uRip: { value: tile }, uRipOn: { value: 0 }, uRipR: { value: new THREE.Vector4(-1, 1, -1, 1) }, uBen: { value: new THREE.Vector2() }, uRipZ: { value: 0 }, uWDbg: { value: qs?.get('m06wdbg') === '1' ? 1 : 0 }, uRip0: { value: new THREE.Vector2() },
 +      uRipA: { value: new THREE.Vector4(0.06, 0.5, 1, 0) } },
    });
  
    // river frames from the course (beyond s1: straight along the heading at s1, as tools/match06/geo06.py)
-@@ -774,6 +802,75 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+@@ -774,6 +818,76 @@ export async function buildMatch06(course: Course): Promise<Match06> {
      if (GEO && R6) { const t = Math.min(1, Math.max(0, (Math.abs(l) - R6.Wc + 0.1) / 0.5)); p.addScaledVector(fr.up, R6.hb * t * t * (3 - 2 * t)); }
      return [p, l / TF.lateralPeriod, l];
    }, TF.period), mat(tFloor, true), 'floor');
@@ -142,13 +163,14 @@ index 831c2b4..277c531 100644
 +    Object.assign(floorMat.uniforms, { uRip: { value: rt }, uRipOn: { value: 1 }, uRipR: { value: new THREE.Vector4(-LW, LW, D0, D1) },
 +      uRipA: { value: new THREE.Vector4(rn('m06ripx', 0.06), 0.5, rn('m06ripk', 1), 0) } });
 +    floorMat.uniforms.uBen.value.set(0, sB);
++    if (qs?.get('m06ripz') === '1') { floorMat.uniforms.uRipZ.value = 1; floorMat.uniforms.uRip0.value.set(0, sB); }
 +    console.info('[match06] m06rip', { NX, NY, LW, D0, D1, px: ext.map((q) => Math.round(q)) });
 +    if (qs?.get('m06ripdbg') === '1') (window as unknown as { __m06rip?: unknown }).__m06rip = { data, NX, NY };
 +  }
    // r7 `&m06foam=1` (needs m06geo): puffy 3D foam clouds along both banks — the painted white-lilac foam clusters that
    // vanished as flat strips once Benny moved. Hidden at the approved view (the painting carries them there), shown once
    // the camera has left it (setAway). Not part of the projector depth bake (invisible while baking).
-@@ -896,6 +993,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+@@ -896,6 +1010,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
        shared.uUseDepth.value = 1;
      },
      setAway(a) { if (foamClouds) foamClouds.visible = a > 0.5; for (const o of foamSprites) o.visible = a > 0.5; },

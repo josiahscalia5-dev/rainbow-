@@ -1,6 +1,16 @@
 # Paste this into Claude Code on the next Claude account
 
-## ▶▶ NEWEST (2026-11-20 ~11:20 UTC, round 24 → next account) — use THIS prompt
+## ▶▶▶ NEWEST (2026-11-20 ~12:15 UTC, round 25 → next account)
+Same steps and prompt as the round-24 block below, with these replacements: start the cloud session on branch **`ccr-a9235d04-90cw28`**
+(the round-25 lead; NOT the default branch); read the TOP of `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md` ("ROUND 25") and
+`docs/briefs/2026-11-20-r25/COORDINATION.md` + `LAUNCH_R25.md`; recreate the worktrees with
+`bash docs/briefs/2026-11-20-r25/setup_worker_r26.sh` (LOCAL `-c27` branches from the newest `backups/wip/*-c26/` snapshots).
+On a new account also: finish the World Labs Atlas sign-up at atlas.worldlabs.ai (the connector reported "no active Atlas account" on
+round 25's account) and enable the account plugins listed below.
+
+---
+
+## ▶▶ (2026-11-20 ~11:20 UTC, round 24 → next account) — use THIS prompt
 
 ### Before pasting (on the new Claude account)
 1. Connect GitHub on claude.ai (+ the Claude GitHub App on `josiahscalia5-dev/rainbow-`).
