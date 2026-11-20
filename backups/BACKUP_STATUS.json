@@ -1,7 +1,7 @@
 {
   "last_run": {
-    "time": "2026-11-20T23:51:08+00:00",
-    "reason": "daemon",
+    "time": "2026-11-20T23:51:30+00:00",
+    "reason": "hook:Stop",
     "result": "committed+pushed",
     "files_staged": 10,
     "pushed_verified": true,
@@ -14,13 +14,13 @@
       "claude/rainbow-s06-scen06-c32: 8 modified, 36 new file(s) snapshotted",
       "claude/rainbow-s06-water06-c32: 8 modified, 39 new file(s) snapshotted"
     ],
-    "commit": "69a4922844b16cba334c2913bf4c080034aa1a9f",
+    "commit": "dc73224c30ed40a5e27e25e6cd4a2bff4ced6903",
     "duration_s": 15
   },
   "repo": "https://github.com/josiahscalia5-dev/rainbow-",
   "branch": "ccr-e490fceb-u85291",
-  "last_verified_remote_sha": "69a4922844b16cba334c2913bf4c080034aa1a9f",
-  "last_successful_backup_utc": "2026-11-20T23:51:08+00:00",
+  "last_verified_remote_sha": "dc73224c30ed40a5e27e25e6cd4a2bff4ced6903",
+  "last_successful_backup_utc": "2026-11-20T23:51:30+00:00",
   "consecutive_failures": 0,
   "schedule": "every 5 min, container-local (scheduler=daemon status=active pid=585); see backups/RECOVERY.md for limits",
   "next_scheduled_utc": "2026-11-20T23:55:00+00:00"
