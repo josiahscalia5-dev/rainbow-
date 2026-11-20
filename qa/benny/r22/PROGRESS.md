@@ -1,0 +1,25 @@
+# Benny round 22 — progress (branch `claude/rainbow-benny-c23`)
+
+## (r22) WHERE I STOPPED / NEXT — 2026-11-20
+
+**Done:** step 1 (plush fur, `&benny20=1`) proven on 04–08; step 2 (per-screen exposure `&benny20=1&b20expo=1`) values tuned
+on 05/06/07/08 (see log). **Next:** step 2 proof shots → commit/report; then step 3 (pompom lighter yarn, clean cuff ribs
+`b20knit=1`, felt star, size vs painted Benny).
+
+Kept query per screen = lead `qa/review_r21/audit/QUERY_0N.txt` (lead branch `ccr-4742c19f-ez2mrs`) + Benny switches.
+Note: this branch has only part of the screens' match code (no `match06` / most `m06*`, `m07*`, `m05pink` …), so the 06 / 07
+(and partly 05) proofs show this branch's build of those screens with the unknown switches ignored — Benny's look is what
+is judged. Default build unchanged (every change only under `benny20`).
+
+## Log
+
+### Step 1 — plush pile fur (`&benny20=1`, restored r20 edits) — GOOD IMPROVEMENT (texture); colour still too dark on 05–08
+* `npx tsc --noEmit` clean; `tools/benny20/knit.py` re-run with scipy (maps only used with opt-in `b20knit=1`).
+* BEFORE = `bade594` (r20 step 1), NEW = this branch. Folder `qa/benny/r22/t1/0N/{before,new}/` — full frames
+  `a_start / c_middle / f_hard_left.png` + `*_crop.png` Benny close-ups; approved crops `qa/benny/r22/approved/0N_benny.png`.
+  Swim clip `qa/benny/r22/t1/swim05_new.mp4`. Gameplay `scripts/gameplay-test.mjs` 8/8 (also with `--q=benny20=1&b20expo=1`).
+* Verdict by eye: on all five screens the body fur is now short, dense and plush with a smooth round outline — the long
+  stiff hanging tiers and the jagged shaggy hem of BEFORE are gone; closer to the approved Benny. Still different: on
+  05 / 06 / 07 / 08 he is a darker, duller mauve-rose than the bright dusty rose painted there (→ step 2); pompom still a
+  dark koosh; cuff texture smeared (→ step 3). The fixed crop box misses Benny on the hard-left shots (he is off to the
+  side) — look at the full frames there.
