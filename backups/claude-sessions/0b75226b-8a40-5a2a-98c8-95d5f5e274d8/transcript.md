@@ -4155,3 +4155,44 @@ Another save was already running (the scheduled one), so mine stepped aside. I'l
 
 > 🔧 **Bash** `{"command": "until ! pgrep -f \"rainbow-autosave.py\" >/dev/null; do sleep 2; done; timeout 600 python3 scripts/rainbow-autosave.py --reason manual:stop-hook-retry2 2>&1 | grep -E '\"commit\"|skipping|error|refused'; git status --short | head -5; python3 -I scripts/autosave-status.py; echo \"GitHub: $(git ls-remote origin refs/heads/ccr-ac160b4c-3hdecw | cut -c1-12)  local: $(git rev-parse --short=12 HEAD)\"", "description": "Wait for the running save, then save again and verify on GitHub", "timeout": 900000}`
 
+### 🧑 User — 2026-11-20T19:25:00.708Z
+
+> ↩︎ result: "commit": "f73a8fb917c601cc23138d3281e5fc540c30cfb4",
+> AUTOSAVE OK | branch ccr-ac160b4c-3hdecw | scheduler daemon | last verified backup 2026-11-20T19:24:38+00:00 (0.3 min ago) | local f73a8fb remote f73a8fb (match) | uncommitted 0
+> GitHub: f73a8fb917c6  local: f73a8fb917c6
+
+### 🤖 Claude — 2026-11-20T19:25:04.122Z
+
+I've saved everything that was left over and confirmed GitHub has it: commit `f73a8fb` at 19:24 UTC, with no uncommitted files remaining.
+
+My first try was skipped because the regular five-minute save was already running; the retry after it finished worked. This save includes the Screen 06 picture sheets I sent you and the latest copy of our conversation. Saving continues every five minutes while this session is open.
+
+The normal-speed videos are still rendering. BEFORE should finish around 19:31 UTC and NEW around 19:42. Once they're done I'll send both, then the full-size APPROVED / BEFORE / NEW pictures, including left and right steering.
+
+### 🧑 User — 2026-11-20T19:25:06.166Z
+
+How's it looking so far?
+Claudia, please evaluate Needle Inspector and Needle MCP as an additional tool for the Screen 06 reconstruction already underway.
+
+Official documentation:
+https://engine.needle.tools/docs/three/needle-devtools-for-threejs-chrome-extension/
+
+Claude Code connection instructions:
+https://engine.needle.tools/docs/ai/needle-mcp-server/
+
+Start with a short compatibility check. Confirm whether the browser extension and MCP server can work in this environment with our actual Three.js version and running game. Check whether an existing Needle connection or licence is already available.
+
+Use free inspection first where possible. The Inspector’s MCP and development-server editing features require Pro; if we need to purchase it, show me the current price and the specific benefit before purchasing.
+
+If compatible, use it to:
+
+1. Inspect the actual Screen 06 river, tunnel, rings and camera from above, from the side and from the gameplay view.
+2. Identify where the river and ring openings fail to align, where the crest loses its approved shape, and where surfaces stretch or change appearance.
+3. Test a useful correction against Screen 06’s original approved reference.
+4. Apply successful adjustments to the actual project source, reload the game and verify that they persist.
+5. Show the improvement during Benny’s movement, including steering and the connection into Screen 07.
+
+Keep the current reconstruction moving forward. Preserve existing candidates, assets and approved references, and continue verified GitHub saves every five minutes while working.
+
+If Needle cannot run here, report the exact blocker and continue with the working tools. Keep this evaluation brief. The goal is a visible improvement in the playable Screen 06 environment.
+
