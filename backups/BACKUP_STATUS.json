@@ -1,30 +1,20 @@
 {
   "last_run": {
-    "time": "2026-11-20T12:46:41+00:00",
+    "time": "2026-11-20T13:03:35+00:00",
     "reason": "daemon",
     "result": "committed+pushed",
-    "files_staged": 15,
+    "files_staged": 5,
     "pushed_verified": true,
-    "branch": "ccr-a9235d04-90cw28",
-    "note": "following session branch 'ccr-a9235d04-90cw28' (config branch 'claude/rainbow-r22-restore-ut3m39')",
-    "wip_snapshots": [
-      "claude/rainbow-benny-c26: 10 modified, 7 new file(s) snapshotted",
-      "detached-e162aec2bf: 2 modified, 6 new file(s) snapshotted",
-      "detached-8accdad0a0: 2 modified, 0 new file(s) snapshotted",
-      "claude/rainbow-s04-match-c26: 3 modified, 1 new file(s) snapshotted",
-      "claude/rainbow-s05-match-c26: 0 modified, 0 new file(s) snapshotted",
-      "claude/rainbow-s06-match-c26: 2 modified, 14 new file(s) snapshotted",
-      "claude/rainbow-s07-match-c26: 5 modified, 10 new file(s) snapshotted",
-      "claude/rainbow-s08-scenery-c26: 3 modified, 2 new file(s) snapshotted"
-    ],
-    "commit": "29d7ed8783a8bdea15dec90a43f296be40edd4bd",
+    "branch": "ccr-08ece3a6-xcwyls",
+    "note": "following session branch 'ccr-08ece3a6-xcwyls' (config branch 'claude/rainbow-r22-restore-ut3m39')",
+    "commit": "4f93cbdf2440fc4a557f55e2f5903813a91ccea8",
     "duration_s": 15
   },
   "repo": "https://github.com/josiahscalia5-dev/rainbow-",
-  "branch": "ccr-a9235d04-90cw28",
-  "last_verified_remote_sha": "29d7ed8783a8bdea15dec90a43f296be40edd4bd",
-  "last_successful_backup_utc": "2026-11-20T12:46:41+00:00",
+  "branch": "ccr-08ece3a6-xcwyls",
+  "last_verified_remote_sha": "4f93cbdf2440fc4a557f55e2f5903813a91ccea8",
+  "last_successful_backup_utc": "2026-11-20T13:03:35+00:00",
   "consecutive_failures": 0,
-  "schedule": "every 5 min, container-local (scheduler=daemon status=active pid=575); see backups/RECOVERY.md for limits",
-  "next_scheduled_utc": "2026-11-20T12:50:00+00:00"
+  "schedule": "every 5 min, container-local (scheduler=daemon status=started pid=567); see backups/RECOVERY.md for limits",
+  "next_scheduled_utc": "2026-11-20T13:05:00+00:00"
 }
