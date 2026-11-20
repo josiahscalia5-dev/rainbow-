@@ -2953,3 +2953,71 @@ Videos are encoded (16.6 s at 1.0×). Checking the storyboard comparison sheet.
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r30 && mv stills_NEW/b_marked.png stills_NEW/b_marked_vw3456.png && cp /home/user/scratch/r30/marked_final/b_marked.png stills_NEW/b_marked.png && python3 -I proof/make_marked.py && cp QUERY_NEW.txt proof/QUERY_NEW.txt && cp diag/QUERY_MARKED.txt proof/QUERY_BEFORE_marked.txt && cat > proof/README.md <<'EOF'\n# Screen 06 — round 30 proof (lead, 2026-11-20 ~21:20 UTC) — individual playable candidate, NOT approved, not Android\n\n* BEFORE = the version the user marked (`QUERY_BEFORE_marked.txt` = r29 final without `m06tswap` / `m06haze`).\n* NEW =  …[+1583 chars]`
 
+### 🧑 User — 2026-11-20T21:18:48.975Z
+
+> ↩︎ result: (2688, 1756)
+>   "commit": "941751ec1ac405bc388641c1234f8c47cd6132dd",
+> AUTOSAVE OK | branch ccr-2644c3c0-iikckn | scheduler daemon | last verified backup 2026-11-20T21:18:25+00:00 (0.4 min ago) | local 941751e remote 941751e (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-20T21:18:50.344Z
+
+Saved (`941751e`, GitHub matches local). I'll confirm the videos and pictures made it into the commit, then send them.
+
+### 🤖 Claude — 2026-11-20T21:18:51.298Z
+
+> 🔧 **Bash** `{"command": "git ls-files qa/match/06/r30/proof | head -20; git check-attr filter qa/match/06/r30/proof/SCREEN06_NEW_route_into_07_1x.mp4", "description": "Confirm proof files are committed"}`
+
+### 🧑 User — 2026-11-20T21:18:51.356Z
+
+> ↩︎ result: qa/match/06/r30/proof/MARKED_SPOT_approved_before_new.jpg
+> qa/match/06/r30/proof/QUERY_BEFORE_marked.txt
+> qa/match/06/r30/proof/QUERY_NEW.txt
+> qa/match/06/r30/proof/README.md
+> qa/match/06/r30/proof/SCREEN06_NEW_route_into_07_0.5x.mp4
+> qa/match/06/r30/proof/SCREEN06_NEW_route_into_07_1x.mp4
+> qa/match/06/r30/proof/STORYBOARD_vs_GAMEPLAY.jpg
+> qa/match/06/r30/proof/make_clip.py
+> qa/match/06/r30/proof/make_marked.py
+> qa/match/06/r30/proof/stills_from_clip/frame_0070.png
+> qa/match/06/r30/proof/stills_from_clip/frame_0120.png
+> qa/match/06/r30/proof/stills_from_clip/frame_0200.png
+> qa/match/06/r30/proof/stills_from_clip/frame_0340.png
+> qa/match/06/r30/proof/stills_from_clip/frame_0360.png
+> qa/match/06/r30/proof/stills_from_clip/frames.json
+> qa/match/06/r30/proof/SCREEN06_NEW_route_into_07_1x.mp4: filter: lfs
+
+### 🤖 Claude — 2026-11-20T21:18:52.273Z
+
+All committed (videos through Git LFS). Sending you the proof.
+
+### 🤖 Claude — 2026-11-20T21:18:54.073Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/match/06/r30/proof/SCREEN06_NEW_route_into_07_1x.mp4"], "caption": "One uninterrupted gameplay clip, real simulation with no cuts (16.6 s): your approved 06 opening → curl right and descend → beneath the gold bands → gentle S-bend → through Screen 07's gold-collared doorway into Screen 07. A 0.5× version is saved next to it.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-20T21:18:55.365Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/match/06/r30/proof/SCREEN06_NEW_route_into_07_1x.mp4 → file_uuid: 09929c6d-b648-44cf-b7a2-9a83bd500557
+
+### 🤖 Claude — 2026-11-20T21:18:55.726Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/match/06/r30/proof/MARKED_SPOT_approved_before_new.jpg", "/home/user/rainbow-/qa/match/06/r30/proof/STORYBOARD_vs_GAMEPLAY.jpg"], "caption": "1) Your red-marked spot: APPROVED | BEFORE | NEW at the identical river position. 2) Your four storyboard panels above the same moments in real gameplay.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-20T21:18:56.476Z
+
+> ↩︎ result: 2 files delivered to user.
+>   /home/user/rainbow-/qa/match/06/r30/proof/MARKED_SPOT_approved_before_new.jpg → file_uuid: 4e13adac-81e0-4168-b6c4-04eca59fda21
+>   /home/user/rainbow-/qa/match/06/r30/proof/STORYBOARD_vs_GAMEPLAY.jpg → file_uuid: c1d1537b-f8ea-4718-897c-6b0d64a2c06e
+
+### 🤖 Claude — 2026-11-20T21:19:00.719Z
+
+> 🔧 **TaskUpdate** `{"taskId": "4", "status": "completed"}`
+
+### 🧑 User — 2026-11-20T21:19:00.733Z
+
+> ↩︎ result: Updated task #4 status
+
+### 🤖 Claude — 2026-11-20T21:19:02.379Z
+
+> 🔧 **mcp__claude-code-remote__request_credential** `{"host": "api.worldlabs.ai", "reason": "The free World Labs (Marble) key check returns HTTP 401 in this new environment, so the key from the previous account is not set here. Saving it re-enables Marble for this project; no paid job runs without the user's OK.", "header_name": "WLT-Api-Key", "display_name": "World Labs Marble API key", "suggested_type": "bearer"}`
+
