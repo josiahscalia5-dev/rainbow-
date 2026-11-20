@@ -36,7 +36,7 @@ index 017370a..025777d 100644
      }
      if (m08 && b08 && b08Rest) {
 diff --git a/src/world/match07.ts b/src/world/match07.ts
-index b9f474c..61987fc 100644
+index b9f474c..390c857 100644
 --- a/src/world/match07.ts
 +++ b/src/world/match07.ts
 @@ -94,6 +94,7 @@ uniform sampler2D uFoamTile;
@@ -174,9 +174,9 @@ index b9f474c..61987fc 100644
 +  // white tops): the lobe's top and the mound's upper lobes light, undersides periwinkle, a darker lilac crease only where a
 +  // lobe's lower edge tucks into the mass (not a dark outline all round — that reads as separate balls)
 +  float upw = nw.y;
-+  float tt = 0.44 + 0.36 * upw + 0.12 * nv + 0.16 * (vTone.z - 0.5) + 0.10 * (vTone.x - 0.5);
-+  tt -= 0.30 * rim * smoothstep(0.25, -0.6, upw);
-+  tt += 0.12 * rim * smoothstep(0.1, 0.8, upw);
++  float tt = 0.36 + 0.46 * upw + 0.06 * nv + 0.14 * (vTone.z - 0.5) + 0.08 * (vTone.x - 0.5);
++  tt -= 0.28 * rim * smoothstep(0.25, -0.6, upw);
++  tt += 0.10 * rim * smoothstep(0.1, 0.8, upw);
 +  tt = clamp(tt, 0.0, 1.0);
 +  vec3 cCrev = vec3(0.588, 0.608, 0.933), cSh = vec3(0.65, 0.69, 0.968), cMid = vec3(0.77, 0.785, 0.976), cLt = vec3(0.886, 0.866, 0.976), cW = vec3(0.984, 0.976, 0.992);
 +  vec3 col = tt < 0.22 ? mix(cCrev, cSh, tt / 0.22) : tt < 0.45 ? mix(cSh, cMid, (tt - 0.22) / 0.23) : tt < 0.66 ? mix(cMid, cLt, (tt - 0.45) / 0.21) : mix(cLt, cW, min((tt - 0.66) / 0.2, 1.0));
@@ -295,15 +295,15 @@ index b9f474c..61987fc 100644
 +      const big: [number, number, number, number][] = []; // lat, along, up, r
 +      const nB = 2 + Math.floor(rnd() * 3);
 +      for (let i = 0; i < nB; i++) {
-+        const r = (0.26 + 0.14 * rnd()) * S;
++        const r = (0.34 + 0.16 * rnd()) * S;
 +        const l = lC + (rnd() - 0.4) * 0.55 * S, da = (nB > 1 ? i / (nB - 1) - 0.5 : 0) * len + (rnd() - 0.5) * 0.2 * S;
-+        const up = -r * (0.2 + 0.3 * rnd());
++        const up = -r * (0.05 + 0.25 * rnd());
 +        big.push([l, a + da, up, r]); pushL(out, tone, place, side, wallLat, l, a + da, up, r, 0.15);
 +      }
 +      // softer lobes heaped on top
 +      for (const [l, al, up, r] of big.slice()) {
-+        if (rnd() < 0.3) continue;
-+        const ru = r * (0.55 + 0.2 * rnd());
++        if (rnd() < 0.2) continue;
++        const ru = r * (0.65 + 0.2 * rnd());
 +        const th = rnd() * Math.PI * 2, el = 0.55 + 0.35 * rnd();
 +        const dl = Math.cos(th) * Math.sqrt(1 - el * el), da = Math.sin(th) * Math.sqrt(1 - el * el);
 +        const c: [number, number, number, number] = [l + dl * r * 0.6, al + da * r * 0.6, up + el * r * 0.62, ru];
@@ -311,9 +311,9 @@ index b9f474c..61987fc 100644
 +      }
 +      // small bumps half out of every big lobe (upper hemisphere and the sides; the side facing the river gets most of them)
 +      for (const [l, al, up, r] of big) {
-+        const nS = 2 + Math.floor(rnd() * 3);
++        const nS = 1 + Math.floor(rnd() * 3);
 +        for (let k = 0; k < nS; k++) {
-+          const rs = r * (0.2 + 0.2 * rnd());
++          const rs = r * (0.28 + 0.2 * rnd());
 +          const th = rnd() * Math.PI * 2, el = -0.1 + 0.95 * rnd();
 +          let dl = Math.cos(th) * Math.sqrt(1 - el * el); const da = Math.sin(th) * Math.sqrt(1 - el * el);
 +          if (dl > 0 && rnd() < 0.6) dl = -dl; // toward the river
@@ -328,19 +328,19 @@ index b9f474c..61987fc 100644
 +    };
 +    /** the bank's lumpy foam line right beyond the magenta band (continuous, low, small lobes: the painted foam lines the river) */
 +    const skirt = (out: number[], tone: number[], place: Place, side: number, a: number, wallLat: number) => {
-+      const r = 0.11 + 0.11 * rnd();
-+      pushL(out, tone, place, side, wallLat, edge + r * 0.45 + 0.08 * rnd(), a, -r * (0.15 + 0.3 * rnd()), r, 0.35);
++      const r = 0.16 + 0.14 * rnd();
++      pushL(out, tone, place, side, wallLat, edge + r * 0.5 + 0.1 * rnd(), a, -r * (0.2 + 0.3 * rnd()), r, 0.35);
 +      if (rnd() < 0.5) { const r2 = r * (0.45 + 0.25 * rnd()); pushL(out, tone, place, side, wallLat, edge + r * 0.7, a + (rnd() - 0.5) * 0.2, r * 0.45, r2, 0.75); }
 +    };
 +    /** a whole bank on one side from along a0 to a1: irregular mounds (size 0.75–1.5, now and then a big one against the wall, now
 +     *  and then a gap) and the continuous skirt */
 +    const bank = (out: number[], tone: number[], place: (s: number) => Place, wall: (a: number) => number, side: number, a0: number, a1: number) => {
 +      for (let a = a0 + rnd(); a < a1; ) {
-+        const S = rnd() < 0.18 ? 1.35 + 0.35 * rnd() : 0.75 + 0.5 * rnd();
++        const S = rnd() < 0.2 ? 1.4 + 0.4 * rnd() : 0.8 + 0.5 * rnd();
 +        if (rnd() > 0.12) mound(out, tone, place(a), side, a, wall(a), S);
 +        a += (0.75 + 0.7 * rnd()) * S + 0.25;
 +      }
-+      for (let a = a0; a < a1; a += 0.3 + 0.18 * rnd()) skirt(out, tone, place(a), side, a, wall(a));
++      for (let a = a0; a < a1; a += 0.36 + 0.2 * rnd()) skirt(out, tone, place(a), side, a, wall(a));
 +    };
 +    // level stretch (tube-local: x right, y up, z = -along), lane from the centre-line samples
 +    const laneAt = (along: number) => {

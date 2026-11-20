@@ -738,3 +738,59 @@ Now updating the two callers (level stretch and drop) to use `bank()`.
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && npx tsc --noEmit -p . 2>&1 | tail -5; K7=$(cat /home/user/rainbow-/qa/match/07/r21/K7.txt) && AUDIT_PORT=5277 AUDIT_SHOTS='[[\"a_start\",0,null],[\"b_early\",0.12,null],[\"c_middle\",0.35,null],[\"d_late\",0.6,null],[\"e1_075\",0.75,null],[\"e_end\",0.85,null],[\"e2_092\",0.92,null],[\"f_hard_left\",0.35,-1],[\"g_hard_right\",0.35,1]]' timeout 900 node /home/user/rainbow-/tools/lead21/audit_screen.mjs /home/user/rainbow-/qa/match/07/r22/s1_cloud/draft1 07 \"${K7}&m07end=1&m07cloud=1\" 2>&1 | grep -v \"outside of Vite\" | tail -12", "description": "Typecheck …[+54 chars]`
 
+### 🧑 User — 2026-11-20T03:24:34.013Z
+
+> ↩︎ result: 07 a_start s 273.056 lat 0 stage 07 coins 1940
+> 07 b_early s 287.256 lat 0 stage 07 coins 1960
+> 07 c_middle s 314.056 lat 0 stage 07 coins 2030
+> 07 d_late s 343.456 lat 0 stage 07 coins 2080
+> 07 e1_075 s 361.056 lat 0 stage 07 coins 2110
+> 07 e_end s 372.656 lat 0 stage 07 coins 2130
+> 07 e2_092 s 380.856 lat 0 stage 07 coins 2150
+> 07 f_hard_left s 314.056 lat -2.25 stage 07 coins 1940
+> 07 g_hard_right s 314.056 lat 2.25 stage 07 coins 1950
+
+### 🤖 Claude — 2026-11-20T03:24:35.559Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/07/r22/s1_cloud/draft1/d_late.png"}`
+
+### 🧑 User — 2026-11-20T03:24:35.606Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:24:36.109Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/07/r22/s1_cloud/draft1/f_hard_left.png"}`
+
+### 🧑 User — 2026-11-20T03:24:36.162Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:24:36.560Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/07/r22/s1_cloud/draft1/b_early.png"}`
+
+### 🧑 User — 2026-11-20T03:24:36.614Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:24:44.881Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/crops && python3 -I -c \"\nfrom PIL import Image\nim=Image.open('/home/user/rainbow-/qa/match/07/r22/s1_cloud/draft1/d_late.png').convert('RGB')\nim.crop((0,850,330,1150)).resize((660,600),Image.LANCZOS).save('d1_left.png')\n\"", "description": "Crop draft 1 left bank for close look"}`
+
+### 🧑 User — 2026-11-20T03:24:45.084Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T03:24:45.787Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/crops/d1_left.png"}`
+
+### 🧑 User — 2026-11-20T03:24:45.811Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:25:13.259Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 -I - <<'EOF'\nimport re\np='src/world/match07.ts'\ns=open(p).read()\nrep=[\n(\"\"\"  float tt = 0.44 + 0.36 * upw + 0.12 * nv + 0.16 * (vTone.z - 0.5) + 0.10 * (vTone.x - 0.5);\n  tt -= 0.30 * rim * smoothstep(0.25, -0.6, upw);\n  tt += 0.12 * rim * smoothstep(0.1, 0.8, upw);\"\"\",\n\"\"\"  float tt = 0.36 + 0.46 * upw + 0.06 * nv + 0.14 * (vTone.z - 0.5) + 0.08 * (vTone.x - 0.5);\n  tt -= 0.28 * rim * smoothstep(0.25, -0.6, upw);\n  tt += 0.10 * rim * smoothstep(0.1, 0.8, upw);\"\"\"),\n(\"\"\"        const r = (0.26 + 0.14 * rnd()) * S;\n         …[+2199 chars]`
+
