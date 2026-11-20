@@ -1,8 +1,8 @@
 diff --git a/src/game/Game.ts b/src/game/Game.ts
-index 017370a..d0dd6c5 100644
+index 017370a..906c906 100644
 --- a/src/game/Game.ts
 +++ b/src/game/Game.ts
-@@ -122,7 +122,34 @@ export async function startGame(canvas: HTMLCanvasElement) {
+@@ -122,7 +122,25 @@ export async function startGame(canvas: HTMLCanvasElement) {
    // the bottom) and the game's 07 tube (whose gold rings filled the screen mid-plunge) is hidden until 08 starts
    const m07Tube = MATCH['07'] && flag05('m07tube');
    const m07sA = course.marks['07_plunge_top'] - 4;
@@ -12,20 +12,11 @@ index 017370a..d0dd6c5 100644
 +  // over the last 3 u, so 08 starts with its own water); 08's own views are unchanged (the hide is only set while 07 shows)
 +  const m07End = m07Tube && flag05('m07end') && flag05('m07nearw') && flag05('m07band') && flag05('m07foam');
 +  const s08 = course.stage('08').s0;
-+  // r25 `&m07join=1` (with m07end; qa/match/07/r24/PROGRESS.md, user ~10:35: "the detailed swirling water changes abruptly into
-+  // smoother striped water, with a speckled band across the join. Make the water and foam banks connect consistently through the
-+  // exit"): seen from the end of the drop, the 08 floor ahead showed the game's default streaky sheet + its white lather walls, and
-+  // the painted plunge river faded into it through a dithered (speckled) band at the 08 inlet. With the switch the painted river
-+  // and its round foam clouds run on along the 08 floor to sJ (the end of 08 + 3 u, `?m07jL=` u past the 08 start) while 07 shows,
-+  // the default sheet / lather walls stay away to there, so the drop's water and foam banks continue unbroken; when Benny enters
-+  // 08 the 08 view takes over as before (08's own views unchanged: everything here is only set while 07 shows)
-+  const m07Join = m07End && flag05('m07join');
-+  const m07sJ = m07Join ? (() => { const v = parseFloat(new URLSearchParams(location.search).get('m07jL') ?? ''); return s08 + (Number.isFinite(v) ? v : course.stage('08').s1 - s08 + 3); })() : s08;
-+  const m07Fade: [number, number] = m07End ? [m07sJ - 2.2, m07sJ - 0.1] : [course.marks['07_plunge_bottom'] - 14, course.marks['07_plunge_bottom'] - 3];
-+  const m07 = MATCH['07'] ? await buildMatch07(m07Tube ? { course, sA: m07sA, sB: course.marks['07_plunge_bottom'], fade: m07Fade, sJ: m07Join ? m07sJ : undefined } : undefined) : null;
++  const m07Fade: [number, number] = m07End ? [s08 - 2.2, s08 - 0.1] : [course.marks['07_plunge_bottom'] - 14, course.marks['07_plunge_bottom'] - 3];
++  const m07 = MATCH['07'] ? await buildMatch07(m07Tube ? { course, sA: m07sA, sB: course.marks['07_plunge_bottom'], fade: m07Fade } : undefined) : null;
 +  const m07RibbonHide = m07End ? ((water.parts?.ribbon as THREE.Mesh | undefined)?.material as THREE.ShaderMaterial | undefined)?.uniforms?.uHide07r : undefined;
 +  const m07RibbonHide0 = m07RibbonHide ? (m07RibbonHide.value as THREE.Vector4).clone() : null;
-+  const m07RibbonHideOn = new THREE.Vector4(m07sA - 3, m07Join ? m07sJ + 3 : s08, -1, -0.5);
++  const m07RibbonHideOn = new THREE.Vector4(m07sA - 3, s08, -1, -0.5);
 +  // ... and the white lather walls (berm) that grew back over the last 5 u of 07 stay away to the 08 start too (they rise,
 +  // dithered, over 08 start ± 1.5 u — the tall white columns down the end of the drop go; 08's own bank is unchanged)
 +  const m07BermHide = m07End ? ((water.parts?.foamBerm as THREE.Mesh | undefined)?.material as THREE.ShaderMaterial | undefined)?.uniforms?.uHide07 : undefined;
@@ -34,11 +25,11 @@ index 017370a..d0dd6c5 100644
 +  // lather sheet steps aside over the whole visible 07 stretch too (it showed as a flat pale / grey sheet beside the river when
 +  // steering hard left / right); not in the approved start view (0 px), 06 / 08 unchanged (only set while 07 shows)
 +  const m07Cloud = m07End && flag05('m07cloud');
-+  const m07BermHideOn = m07BermHide0 ? new THREE.Vector2(m07Cloud ? course.stage('07').s0 + 14 - 6 : m07BermHide0.x, m07Join ? m07sJ + 3 : s08 + 1.5) : null;
++  const m07BermHideOn = m07BermHide0 ? new THREE.Vector2(m07Cloud ? course.stage('07').s0 + 14 - 6 : m07BermHide0.x, s08 + 1.5) : null;
    if (m07) { m07.group.visible = false; scene.add(m07.group); m07.bakeDepth(renderer); }
    const M07_HIDE = ['ribbon', 'foam', 'bubbles'];
    const m07Range = [course.stage('07').s0 + 14, m07Tube ? course.stage('08').s0 : course.marks['07_plunge_top'] - 8];
-@@ -558,6 +585,9 @@ export async function startGame(canvas: HTMLCanvasElement) {
+@@ -558,6 +576,9 @@ export async function startGame(canvas: HTMLCanvasElement) {
        }
        // M3 m07tube: hand-over to the plunge continuation where the old build handed over to the default world (8 u before the top)
        if (m07Tube) m07.setPlunge(on && st.s >= course.marks['07_plunge_top'] - 8);
@@ -48,292 +39,21 @@ index 017370a..d0dd6c5 100644
        m07On = on; m07Applied = on;
      }
      if (m08 && b08 && b08Rest) {
-diff --git a/src/game/cameraRig.ts b/src/game/cameraRig.ts
-index 388c121..23d24c1 100644
---- a/src/game/cameraRig.ts
-+++ b/src/game/cameraRig.ts
-@@ -8,6 +8,15 @@ import { WORLD } from '../world/course';
- import type { Course, StageId } from '../world/course';
- import type { TubePath } from '../world/tube';
- import { applyMatchCam } from './match';
-+import { flag05 } from '../vfx/waterRibbon';
-+
-+/** r23 `&m07sbend=1`: the plunge view looks along the straight chute unless `&m07sbcam=0` */
-+const SB07_CAM = typeof location === 'undefined' || new URLSearchParams(location.search).get('m07sbcam') !== '0';
-+/** r24 `&m07look=1` tunables (QA): look-ahead along the route (u), camera pulled in toward Benny (u), raised (u), aim weight */
-+const numQc = (k: string, d: number) => { const v = typeof location !== 'undefined' ? parseFloat(new URLSearchParams(location.search).get(k) ?? '') : NaN; return Number.isFinite(v) ? v : d; };
-+const LOOK07 = { ahead: numQc('m07lkA', 14), back: numQc('m07lkB', 2.5), up: numQc('m07lkU', 5.5), w: numQc('m07lkW', 1) };
-+/** r24 `&m07swing=1`: share of the S-bend's sideways sweep the camera does NOT follow (`?m07swK=`, 0.5) */
-+const SW07K = (() => { const v = typeof location !== 'undefined' ? parseFloat(new URLSearchParams(location.search).get('m07swK') ?? '') : NaN; return Number.isFinite(v) ? v : 0.5; })();
- 
- export interface CamParams {
-   back: number; // distance behind Benny
-@@ -88,6 +97,15 @@ export class RideCamera {
-     const f = this.course.sample(s);
-     const fb = this.course.sample(Math.max(0, s - p.back * 0.5)); // smoothing of heading
-     const dir = f.tan.clone().lerp(fb.tan, 0.35).normalize();
-+    // r23 `?match07=1&m07sbend=1` (framing test, qa/match/07/r23/PROGRESS.md): down the plunge the view looks along the STRAIGHT
-+    // chute (the un-bent plunge lies in one YZ plane) instead of yawing with each S-bend, so the river's bends sweep across the
-+    // screen like the approved picture's S-river; the camera still rides behind Benny. `&m07sbcam=0` = yaw with the route.
-+    // (r23: an extra look-ahead aim over the lip of the drop was tried and rejected — Benny drifted to mid-screen)
-+    const b7 = this.course.bend07;
-+    if (b7 && SB07_CAM) {
-+      const w = THREE.MathUtils.smoothstep(s, b7.s0, b7.s0 + 3) * (1 - THREE.MathUtils.smoothstep(s, b7.s1 - 4, b7.s1));
-+      if (w > 0) { dir.x *= 1 - w; dir.normalize(); }
-+    }
-     let up = f.up.clone();
-     if (this.axis) {
-       const a = this.axis;
-@@ -115,6 +133,10 @@ export class RideCamera {
-     outPos.copy(straightPos).lerp(curvedPos, Math.max(pitchBend, 0.35));
-     outTarget.copy(anchor).addScaledVector(dir, p.ahead).addScaledVector(upPos, p.lookUp);
-     outUp.set(0, 1, 0).lerp(up, p.roll).normalize();
-+    // r24 `?match07=1&m07sbend=1&m07swing=1` (qa/match/07/r24/PROGRESS.md): with the broad S the camera rides only half of the
-+    // river's sideways sweep (the plunge's un-bent line is one world-YZ plane, so the sweep is world X): Benny swims across the
-+    // screen with the river while the straight tube and its rings hold steadier, and the bends read across the frame
-+    if (b7 && SB07_CAM && flag05('m07swing')) { const bx = this.course.bend07At(s) * SW07K; outPos.x -= bx; outTarget.x -= bx; }
-     // `?match07=1`: approved-picture framing in 07 — yaw the view and shift the camera sideways (both 0 / absent by default)
-     const p7 = STAGE_CAM['07'];
-     if (p7 && (p7.yaw07 || p7.side07)) {
-@@ -154,6 +176,24 @@ export class RideCamera {
-         outUp.lerp(new THREE.Vector3(0, 1, 0), w7).normalize();
-       }
-     }
-+    // r24 `?match07=1&m07look=1` (qa/match/07/r24/PROGRESS.md; user ~10:35: "around t = 2.5–3.5 seconds the purple wall dominates
-+    // the screen and I lose sight of the upcoming river"): over the lip of the 70° drop the river falls away below the line of
-+    // sight of a camera 6 u behind Benny (the falling river is hidden behind the brow; only the tube wall where the tube bends down
-+    // is left in view). From 12 u before the lip the camera comes up close over Benny's shoulder (2.5 u behind, 5.5 u above, in
-+    // the ride frame, so it stays above the chute as it pitches down) and looks at the river 14 u ahead on the route (its centre:
-+    // the route ahead stays centred while he steers to one side), so the river pouring over the brow and down into the first bend
-+    // stays in view; 6 → 16 u into the drop it eases back to the normal ride camera (smooth weights + the usual camera smoothing)
-+    if (p7 && p7.off07 && flag05('m07look')) {
-+      const sTop = this.course.marks['07_plunge_top'];
-+      const wl = LOOK07.w * THREE.MathUtils.smoothstep(s, sTop - 12, sTop - 4) * (1 - THREE.MathUtils.smoothstep(s, sTop + 6, sTop + 16));
-+      if (wl > 0) {
-+        const fa = this.course.sample(s + LOOK07.ahead);
-+        const aim = fa.pos.clone().addScaledVector(fa.right, lat * 0.3);
-+        const lp = benny.clone().addScaledVector(dir, -LOOK07.back).addScaledVector(up, LOOK07.up);
-+        outPos.lerp(lp, wl);
-+        outTarget.lerp(aim, wl);
-+      }
-+    }
-     // 03 whirlpool: dynamic high angle from the near side, looking down into the vortex toward the
-     // drain and the porthole wall (Benny left, drain lower-right as in the reference)
-     const st3 = this.course.stage('03');
-diff --git a/src/gameplay/coins.ts b/src/gameplay/coins.ts
-index 0f2c1f7..d7f2bdd 100644
---- a/src/gameplay/coins.ts
-+++ b/src/gameplay/coins.ts
-@@ -61,7 +61,17 @@ export function coinLayout(course: Course): CoinDef[] {
-   // `?match07=1&m07coins=1` (qa/match/07/m2/NOTES.md, position only): the two trail coins right behind the painted far coins
-   // (which otherwise pile up on the painted cluster) continue the painted line to the right of it, at the painted coins' size for that distance (0.45)
-   const m07c = m07 && flag05('m07coins'); let m07k = 0;
--  { const a = st('07'); const n = 24; let skip = m07 ? coins07.coins.length : 0; for (let i = 0; i < n; i++) { const s = a.s0 + 6 + i * ((a.s1 - a.s0 - 10) / n); if (skip > 0 && s >= a.s0 + 14) { skip--; continue; } const far = m07c && skip === 0 && s >= a.s0 + 30 && m07k < 2; if (far) add('07', s, M07_FAR_LAT[m07k++], 0.9, { scale: 0.45 }); else add('07', s, 1.0 * Math.sin(i * 0.5 + 1)); } }
-+  // r23 `&m07sbend=1` (qa/match/07/r23/PROGRESS.md): down the plunge the trail runs on the cyan core, which leans to the inside of
-+  // each S-bend of the route (−0.5 at full bend, `?m07sbC=`), so the coins sweep with the river; elsewhere unchanged
-+  const b7 = m07 ? course.bend07 : null;
-+  const sbC = (() => { const v = typeof location !== 'undefined' ? parseFloat(new URLSearchParams(location.search).get('m07sbC') ?? '') : NaN; return Number.isFinite(v) ? v : -0.5; })();
-+  const m07Lat = (s: number, lat: number) => {
-+    if (!b7) return lat;
-+    const w = THREE.MathUtils.smoothstep(s, b7.s0, b7.s0 + 8);
-+    return lat * (1 - w) + (sbC * course.bend07At(s)) / b7.amp * w;
-+  };
-+  // (r23 m07sbend: the trail keeps the un-bent spacing — the S lengthens the plunge by b7.extra — so every coin before the plunge stays put)
-+  { const a = st('07'); const n = 24; let skip = m07 ? coins07.coins.length : 0; for (let i = 0; i < n; i++) { const s = a.s0 + 6 + i * ((a.s1 - a.s0 - 10 - (b7?.extra ?? 0)) / n); if (skip > 0 && s >= a.s0 + 14) { skip--; continue; } const far = m07c && skip === 0 && s >= a.s0 + 30 && m07k < 2; if (far) add('07', s, M07_FAR_LAT[m07k++], 0.9, { scale: 0.45 }); else add('07', s, m07Lat(s, 1.0 * Math.sin(i * 0.5 + 1))); } }
-   if (m07) {
-     const a = st('07');
-     for (const c of coins07.coins) {
-diff --git a/src/world/course.ts b/src/world/course.ts
-index 531778e..9a82521 100644
---- a/src/world/course.ts
-+++ b/src/world/course.ts
-@@ -103,8 +103,16 @@ interface RouteData {
-   points: THREE.Vector3[];
-   marks: Record<string, number>;
-   straight: { from: string; to: string; a: THREE.Vector3; b: THREE.Vector3; floorDepth: number }[];
-+  /** r23 `?match07=1&m07sbend=1`: world X of the un-bent 07 plunge line (the plunge lies in that YZ plane) + bend amplitude */
-+  bend07?: { x: number; amp: number };
- }
- 
-+/** r23 `&m07sbend=1` numeric URL tunable (QA only) */
-+const numQ = (k: string, def: number) => {
-+  const v = typeof location !== 'undefined' ? parseFloat(new URLSearchParams(location.search).get(k) ?? '') : NaN;
-+  return Number.isFinite(v) ? v : def;
-+};
-+
- /**
-  * 05 current (ref 05): the tunnel is a straight line; the STREAM winds inside it. The meander is the
-  * lateral (world +X) offset of the course centreline from that line, as a function of the distance
-@@ -192,7 +200,7 @@ export function meander05(u: number): number {
- }
- 
- /** Generates the dense control polyline of the route (absolute coordinates). */
--function buildRoute(): RouteData {
-+function buildRoute(bendAmp?: number): RouteData {
-   const pts: THREE.Vector3[] = [];
-   const marks: Record<string, number> = {};
-   const straight: RouteData['straight'] = [];
-@@ -362,7 +370,33 @@ function buildRoute(): RouteData {
-     const u = pts[i].clone().sub(s5).dot(dir05) * (S05.L / L05.length());
-     pts[i].x += meander05(u);
-   }
--  return { points: pts, marks, straight };
-+  // r23 `?match07=1&m07sbend=1` (qa/match/07/r23/PROGRESS.md): the approved 07 picture's broad S-bends down the plunge — the river
-+  // (and with it Benny, his steering bounds, the coins and the camera) sweeps right / left / right inside the straight tube while
-+  // it drops. A lateral (world X) offset of the plunge points after smoothing, like the 05 meander: zero offset and slope at the
-+  // plunge top (in over d 4 → 14 u) and before the pull-up arc into 08 (out over D−16 → D−5), so the 07 level stretch, the vertical
-+  // drop and the 08 inlet keep their shape. The un-bent plunge lies in one YZ plane (x = bend07.x).
-+  // r24 `&m07swing=1` (with m07sbend; qa/match/07/r24/PROGRESS.md, user ~10:35: "the whole river follow the broad S-shaped
-+  // bends … the current middle and end still look mostly like a straight slide with a wavy coloured strip inside it"): the
-+  // S sweeps across the whole tube floor — amplitude 2.1 u (the outer magenta band reaches the wall foot at each apex, the
-+  // painted outer bends), broader 34 u wavelength, phased so the last zero crossing lies 5 u before the 08 inlet, and it
-+  // keeps sweeping down the END of the drop (out over D−9 → D−3 instead of D−16 → D−5). Tunables ?m07sbA= ?m07sbL= ?m07swE=
-+  const swing07 = flag05('m07swing');
-+  let bend07: RouteData['bend07'];
-+  if (m07 && flag05('m07sbend') && bendAmp !== 0) {
-+    const i0 = marks['07_plunge_top'], i1 = marks['07_plunge_bottom'];
-+    const A = bendAmp ?? numQ('m07sbA', swing07 ? 2.1 : 1.5), lam = numQ('m07sbL', swing07 ? 34 : 28);
-+    bend07 = { x: pts[marks['07_plunge_mid_end']].x, amp: A };
-+    const d: number[] = [0];
-+    for (let i = i0 + 1; i <= i1; i++) d.push(d[d.length - 1] + pts[i].distanceTo(pts[i - 1]));
-+    const D = d[d.length - 1];
-+    const ph = swing07 ? D - numQ('m07swE', 5) - 2 * lam : numQ('m07sbP', 9);
-+    for (let i = i0 + 1; i < i1; i++) {
-+      const di = d[i - i0];
-+      const w = smooth(4, 14, di) * (1 - (swing07 ? smooth(D - 9, D - 3, di) : smooth(D - 16, D - 5, di)));
-+      pts[i].x += A * Math.sin((2 * Math.PI * (di - ph)) / lam) * w;
-+    }
-+  }
-+  return { points: pts, marks, straight, bend07 };
- }
- 
- /**
-@@ -400,6 +434,8 @@ export class Course {
-   readonly straightAxes: StraightAxis[];
-   /** world X of the straight 05 tunnel line (the meander is pos.x − line05x) */
-   private readonly line05x: number;
-+  /** r23 `&m07sbend=1`: the 07 plunge S-bend (null = off) — un-bent line x, amplitude, the s range where it may be non-zero */
-+  readonly bend07: { x: number; amp: number; s0: number; s1: number; extra: number; fade: number } | null;
-   private st05!: StageDef;
-   private st10!: StageDef;
-   private readonly N: number;
-@@ -409,7 +445,28 @@ export class Course {
-   private readonly U: Float32Array;
- 
-   constructor() {
--    const route = buildRoute();
-+    let route = buildRoute();
-+    // r23 `&m07sbend=1`: the S makes the route longer; the bend amplitude is fine-tuned (by a few hundredths of a unit) so the extra
-+    // length is a whole number of frame-table steps of the UN-BENT route — the frame table then keeps exactly the un-bent grid, so
-+    // everything before the plunge is sampled identically (continuity measured as before) and the last interval is not short
-+    let grid07: { ds: number; n: number; extra: number } | null = null;
-+    if (route.bend07) {
-+      const arc = (pts: THREE.Vector3[]) => {
-+        const cv = new THREE.CatmullRomCurve3(pts, false, 'centripetal'), M = pts.length * 24;
-+        let L = 0, q0 = cv.getPoint(0);
-+        for (let i = 1; i <= M; i++) { const q = cv.getPoint(i / M); L += q.distanceTo(q0); q0 = q; }
-+        return L;
-+      };
-+      const L0 = arc(buildRoute(0).points), n0 = Math.ceil(L0 / 0.25), ds0 = L0 / n0;
-+      let A = route.bend07.amp, L = arc(route.points);
-+      const k = Math.max(1, Math.round((L - L0) / ds0)), target = L0 + k * ds0;
-+      for (let it = 0; it < 6 && Math.abs(L - target) > 1e-4; it++) {
-+        A *= Math.sqrt((target - L0) / (L - L0)); // the extra length grows ≈ with the amplitude squared
-+        route = buildRoute(A);
-+        L = arc(route.points);
-+      }
-+      grid07 = { ds: ds0, n: n0 + k, extra: k * ds0 };
-+    }
-     this.curve = new THREE.CatmullRomCurve3(route.points, false, 'centripetal');
-     // arc-length table over curve parameter u
-     const M = route.points.length * 24;
-@@ -442,6 +499,9 @@ export class Course {
-     for (const [k, i] of Object.entries(route.marks)) this.marks[k] = sAtIndex(i);
-     this.straightAxes = route.straight.map((r) => ({ s0: this.marks[r.from], s1: this.marks[r.to], a: r.a, b: r.b, floorDepth: r.floorDepth }));
-     this.line05x = route.straight[0].a.x;
-+    // (r24 m07swing: the route offset is exactly 0 from 3 u before the inlet, so the measured bend's own end fade sits there)
-+    const sw07 = !!route.bend07 && flag05('m07swing');
-+    this.bend07 = route.bend07 ? { ...route.bend07, s0: this.marks['07_plunge_top'] + 2, s1: this.marks['07_plunge_bottom'] - 2, extra: grid07?.extra ?? 0, fade: sw07 ? 1 : 3 } : null;
- 
-     // ---- stages ----
-     const m = this.marks;
-@@ -469,6 +529,7 @@ export class Course {
-     // ---- dense frame table (pos, tangent, banked up) ----
-     this.N = Math.ceil(this.length / 0.25) + 1;
-     this.ds = this.length / (this.N - 1); // exact spacing so the last interval is not short
-+    if (grid07) { this.ds = grid07.ds; this.N = grid07.n + 1; } // r23 m07sbend: the un-bent grid (see above)
-     this.P = new Float32Array(this.N * 3);
-     this.T = new Float32Array(this.N * 3);
-     this.U = new Float32Array(this.N * 3);
-@@ -484,11 +545,23 @@ export class Course {
-     const WU = new THREE.Vector3(0, 1, 0);
-     const ups: THREE.Vector3[] = [];
-     let prevUp = WU.clone();
-+    // r24 m07swing: on the S-bent 70° drop world-up projected off the tangent twists the frame (the sideways sweep turns the
-+    // horizontal heading by up to ~45° on so steep a slope): 'right' then leaves the chute surface (Benny steering, coins and foam
-+    // dipped under / rose off the water by up to 0.7 u per unit of lateral) and Benny rolled. There the frame's up is the chute
-+    // surface's own normal — the drop's profile (one world-YZ plane) extruded along world X: up = normalize(X × tan), so 'right'
-+    // = across the river IN the chute surface. Identical to the projection where the drop is not bent (tan.x = 0).
-+    const bS = this.bend07 && sw07 ? this.bend07 : null;
-+    const XW = new THREE.Vector3(1, 0, 0), upX = new THREE.Vector3();
-     for (let i = 0; i < this.N; i++) {
-       const t = tan[i];
-       let up = WU.clone().addScaledVector(t, -WU.dot(t));
-       if (up.lengthSq() < 1e-4) up = prevUp.clone().addScaledVector(t, -prevUp.dot(t));
-       up.normalize();
-+      if (bS) {
-+        const si = i * this.ds;
-+        const wb = THREE.MathUtils.smoothstep(si, bS.s0 - 2, bS.s0) * (1 - THREE.MathUtils.smoothstep(si, bS.s1, bS.s1 + 2));
-+        if (wb > 0) { upX.crossVectors(XW, t); if (upX.y < 0) upX.negate(); if (upX.lengthSq() > 1e-6) up.lerp(upX.normalize(), wb).normalize(); }
-+      }
-       // banking from lateral curvature
-       const i0 = Math.max(0, i - 4), i1 = Math.min(this.N - 1, i + 4);
-       const k = tan[i1].clone().sub(tan[i0]).divideScalar((i1 - i0) * this.ds);
-@@ -556,6 +629,14 @@ export class Course {
-     return w > 0 ? v / w : this.stageAtS(s)[key];
-   }
- 
-+  /** r23 `&m07sbend=1`: lateral (world X) offset of the 07 plunge from its un-bent line at s (0 when off / outside the plunge) */
-+  bend07At(s: number): number {
-+    const b = this.bend07;
-+    if (!b || s <= b.s0 || s >= b.s1) return 0;
-+    const w = THREE.MathUtils.smoothstep(s, b.s0, b.s0 + 3) * (1 - THREE.MathUtils.smoothstep(s, b.s1 - b.fade, b.s1));
-+    return (this.sample(s).pos.x - b.x) * w;
-+  }
-+
-   widthAt(s: number): number {
-     let base = this.prop(s, 'width');
-     // 05 current (ref 05): the water fills the tube floor wall to wall. The centreline winds by
 diff --git a/src/world/match07.ts b/src/world/match07.ts
-index b9f474c..d9d9946 100644
+index b9f474c..82bf087 100644
 --- a/src/world/match07.ts
 +++ b/src/world/match07.ts
-@@ -48,8 +48,11 @@ varying vec3 vN;
- varying vec3 vL;
- varying vec2 vUv;
- varying float vCtr;
-+attribute float aBend;    // r23 '?m07sbend=1': plunge river rows — the route's S-bend there / its amplitude (−1..1); 0 elsewhere
-+varying float vBend;
- void main() {
-   vUv = uv;
-+  vBend = aBend;
-   vec4 wp = modelMatrix * vec4(position, 1.0);
-   vProj = uProjVP * wp;
-   vW = wp.xyz;
-@@ -94,6 +97,12 @@ uniform sampler2D uFoamTile;
+@@ -94,6 +94,9 @@ uniform sampler2D uFoamTile;
  uniform vec3 uWF;         // r16 '?m07wfoam=1': foam clouds piled on the lowest wall band — base height, cloud-top height, on (z)
  uniform vec4 uBand;       // r18 '?m07band=1': S-sweep of the river centre off Benny's lane: amplitude, wavelength, phase (along), on (w)
  uniform vec4 uBand2;      // r18 m07band: reach of Benny's lane (lane ± steer + body), cyan core half-width, min band width, foam-edge wobble
 +uniform vec3 uPlC;        // r21 m07end: plunge river cyan core half-width ramp (along from, along to, half-width)
 +uniform float uCloudSh;   // r22 m07cloud: the flat painted foam between the 3D foam mounds takes the mounds' periwinkle shade (0 = off)
 +uniform float uSatin;     // r22 '?m07satin=1': crisp painted satin streaks on the magenta bands (1 = on)
-+uniform vec4 uBandP;      // r23 '?m07sbend=1': plunge cyan-core lean toward the inside of each S-bend (x = core shift at full bend),
-+                          // z = along where the plunge river starts (the level S-sweep hands over to it), w = on
-+varying float vBend;
  varying vec2 vUv;
  varying vec4 vProj;
  varying vec3 vW;
-@@ -101,12 +110,63 @@ varying vec3 vN;
+@@ -101,12 +104,63 @@ varying vec3 vN;
  varying vec3 vL;
  varying float vCtr;
  ${PROJ05_INVERSE}
@@ -400,13 +120,8 @@ index b9f474c..d9d9946 100644
    float R = uNearW.x, mw = uNearW.y;
    float Rc = R - mw;                       // cyan core half-width
    float Ro = R;                            // outer edge of the magenta band (foam beyond)
-@@ -115,9 +175,12 @@ vec3 nearWater() {
-     // core sweeping in a world-anchored S off his lane (so the bands curve across the view as he swims, like the painted
-     // S-sweeps); on the outside of each bend the band widens to cover everywhere Benny can steer (never foam under him)
+@@ -117,7 +171,7 @@ vec3 nearWater() {
      float S = uBand.x * sin(6.2831853 * (along - uBand.z) / uBand.y);
-+    // r23 m07sbend: down the plunge the cyan core leans to the inside of the route's own S-bends (the outer band thick, the inner
-+    // one thinner, like the painted bends) instead of a separate wobble inside a straight chute
-+    if (uBandP.w > 0.5 && uMode > 4.5) S = mix(S, uBandP.x * vBend, smoothstep(uBandP.z + 1.0, uBandP.z + 9.0, along));
      d -= S;
      float reach = (d > 0.0 ? -S : S) + uBand2.x;
 -    Rc = uBand2.y;
@@ -414,7 +129,7 @@ index b9f474c..d9d9946 100644
      Ro = max(Rc + uBand2.z, reach);
    }
    float a = abs(d);
-@@ -132,15 +195,35 @@ vec3 nearWater() {
+@@ -132,15 +186,35 @@ vec3 nearWater() {
    vec3 cL = texture2D(uNearTile, vec2(u, v)).rgb;
    vec3 cR = texture2D(uNearTile, vec2(u, v + 0.5)).rgb;
    vec3 river = mix(cL, cR, smoothstep(-0.32, 0.32, d));
@@ -451,7 +166,7 @@ index b9f474c..d9d9946 100644
    return mix(river, foam, smoothstep(R - 0.04, R + 0.10, a));
  }
  // r16 m07wfoam: the painted foam clouds piled where the tube wall meets the water (no hard wall / floor edge when steering hard);
-@@ -162,6 +245,11 @@ vec3 riverTile() {
+@@ -162,6 +236,11 @@ vec3 riverTile() {
    return texture2D(uTile, vec2(u, v)).rgb;
  }
  vec3 tileColor() {
@@ -463,7 +178,7 @@ index b9f474c..d9d9946 100644
    // M3 '?m07tube=1' plunge surfaces (real geometry along the course): uv = (arc depth along the tube, angle / lateral)
    if (uMode > 3.5) {
      float u = (vUv.x - uRiver.x) / (uRiver.y - uRiver.x);
-@@ -175,7 +263,7 @@ vec3 tileColor() {
+@@ -175,7 +254,7 @@ vec3 tileColor() {
      return texture2D(uTile, vec2(u, v)).rgb;
    }
    if (uMode > 1.5) {
@@ -472,7 +187,7 @@ index b9f474c..d9d9946 100644
      return riverTile();
    }
    if (uMode > 0.5) {
-@@ -248,6 +336,92 @@ void main() {
+@@ -248,6 +327,92 @@ void main() {
    gl_FragColor = vec4(pjInverse(t), 1.0);
  }`;
  
@@ -565,20 +280,7 @@ index b9f474c..d9d9946 100644
  const tex = (f: string) => new URL(`../../assets/textures/match07/${f}`, import.meta.url).href;
  /** r18: numeric URL tunable (QA only), default when absent or not a number */
  const num07 = (k: string, def: number) => {
-@@ -256,7 +430,11 @@ const num07 = (k: string, def: number) => {
- };
- 
- /** M3 '?m07tube=1': the plunge continuation needs the course (arc samples) and where it starts / ends */
--export interface Plunge07 { course: Course; sA: number; sB: number; fade: [number, number] }
-+export interface Plunge07 {
-+  course: Course; sA: number; sB: number; fade: [number, number];
-+  /** r25 `&m07join=1`: the painted river + its foam clouds run on past sB along the 08 floor to sJ (while 07 shows) */
-+  sJ?: number;
-+}
- 
- export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
-   const [L, TL]: [Layout07, Tiles07] = await Promise.all([fetch(tex('proj07.json')).then((r) => r.json()), fetch(tex('tiles07.json')).then((r) => r.json())]);
-@@ -283,6 +461,25 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -283,6 +448,13 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
    // r18: on top of m07nearw, the painted near-river proportions — narrow cyan core, thick magenta bands, world-anchored S-sweep
    // (the r17 draft '&m07nearf' was rejected: qa/match/07/r18/PROGRESS.md)
    const band = nearW && flag05('m07band');
@@ -589,35 +291,22 @@ index b9f474c..d9d9946 100644
 +  // r21 '&m07cloud=1': real 3D puffy foam clouds on both banks beyond the magenta bands (level stretch: they rise only where the view
 +  // magnifies the water — none in the approved view; drop: everywhere, with m07end)
 +  const clouds = nearW && band && flag05('m07cloud');
-+  // r23 '&m07low=1' (qa/match/07/r23/PROGRESS.md): down the drop the purple slotted tube wall comes down to the water just behind a
-+  // narrow, LOW foam fringe (the painting) instead of a 2 u wide flat pale foam strip with a tall cloud wall on it: the plunge tube's
-+  // lower wall is pulled in (wall foot ±m07lF from the tube centre at the water, the cross-section unchanged from 2.6 u up and at
-+  // the hand-over), and the drop's foam clouds become low lumps piled against that wall
-+  const lowF = endW && clouds && flag05('m07low');
-+  // (parked r23: NOT AN IMPROVEMENT — the pulled-in wall bends the gold rings into chevrons; the round clouds the user liked keep
-+  // their size unless ?m07lK < 1 is given)
-+  const footL = num07('m07lF', 3.55), lowY = num07('m07lY', 2.6), lowK = num07('m07lK', 1);
-+  // r24 '&m07swing=1' (with m07sbend; qa/match/07/r24/PROGRESS.md): the drop's foam banks follow the broad S-bends — squeezed to a
-+  // thin fringe where the river's outer bank runs against the tube wall, heaped in big clouds that fill the wide inside of each bend
-+  const swing = endW && clouds && !!plunge?.course.bend07 && flag05('m07swing');
-+  const lowRamp = (s: number, sA: number) => (lowF ? THREE.MathUtils.smootherstep(s, sA + 3, sA + 12) : 0);
    const [tNear, tFoam] = await Promise.all([nearW ? load('near_bank.png', THREE.RepeatWrapping) : null, nearW || wallFoamOn ? load('near_foam.png', THREE.RepeatWrapping) : null]);
    if (tNear) tNear.wrapS = THREE.ClampToEdgeWrapping;
    const [plate, tWall, tRiver, pGold, fillMask] = await Promise.all([
-@@ -351,7 +548,12 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -351,7 +523,11 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
      // foam-edge wobble 0.12 u. Tunables ?m07bA= / ?m07bL= / ?m07bC=
      uBand: { value: new THREE.Vector4(num07('m07bA', 0.6), num07('m07bL', 14), 0, band ? 1 : 0) },
      uBand2: { value: new THREE.Vector4(2.85, num07('m07bC', 1.1), 0.95, 0.12) },
 +    uPlC: { value: new THREE.Vector3(1e6, 1e6 + 1, 1.1) },
 +    uCloudSh: { value: 0 },
 +    uSatin: { value: band && flag05('m07satin') ? 1 : 0 },
-+    uBandP: { value: new THREE.Vector4(num07('m07sbC', -0.5), 0, 0, 0) },
    };
 +  const ctrLane: number[] = [];
    if (nearW) {
      // river centre line in the tube-local frame: the lane Benny swims (course centre, sampled at the depth) plus the painted
      // river's winding (tools/match07/river_coins07.py → river07.json, clamped so Benny stays in the cyan), continued by a gentle
-@@ -384,6 +586,7 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -384,6 +560,7 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
        const kk = THREE.MathUtils.smoothstep(along, aEnd - 4, aEnd + 6);
        // r18 m07band: the lane only (the S-sweep is added in the shader, uBand)
        ctr[k] = band ? lane : lane + painted * (1 - kk) + tail * kk;
@@ -625,27 +314,7 @@ index b9f474c..d9d9946 100644
      }
      // smooth (no kinks between samples: the bands must curve, not zigzag)
      for (let pass = 0; pass < 4; pass++) {
-@@ -393,10 +596,15 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
-     shared.uCtrA.value.z = 1;
-     console.info('[m07nearw] checkpoint s', sCk.toFixed(2), 'centre line', ctr.map((v) => v.toFixed(2)).join(' '));
-   }
--  const mat = (tile: THREE.Texture, mode: number, k = 1) => new THREE.ShaderMaterial({
--    vertexShader: 'uniform mat4 uGroupInv;\n' + VERT, fragmentShader: FRAG, side: THREE.DoubleSide, fog: false,
--    uniforms: { ...shared, uTile: { value: tile }, uMode: { value: mode }, uPatchK: { value: k } },
--  });
-+  const mat = (tile: THREE.Texture, mode: number, k = 1) => {
-+    const m = new THREE.ShaderMaterial({
-+      vertexShader: 'uniform mat4 uGroupInv;\n' + VERT, fragmentShader: FRAG, side: THREE.DoubleSide, fog: false,
-+      uniforms: { ...shared, uTile: { value: tile }, uMode: { value: mode }, uPatchK: { value: k } },
-+    });
-+    // r23: meshes without the plunge-bend attribute read 0 (explicit, not whatever the GL generic attribute state holds)
-+    m.defaultAttributeValues = { ...m.defaultAttributeValues, aBend: [0] };
-+    return m;
-+  };
-   const M = { wall: mat(tWall, 1), water: mat(tRiver, 2), gold: mat(pGold, 0, 1 / 1.2) };
-   const add = (g: THREE.BufferGeometry, m: THREE.Material, name: string) => {
-     const o = new THREE.Mesh(g, m); o.name = 'm07_' + name; o.frustumCulled = false; group.add(o); return o;
-@@ -436,12 +644,21 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -436,6 +613,8 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
      const f0 = course.sample(sA);
      const alongA = f0.pos.clone().sub(base).dot(Dv);
      plungeAlong = alongA;
@@ -654,102 +323,16 @@ index b9f474c..d9d9946 100644
      shared.uFade.value.set(plunge.fade[0] - sA + alongA, plunge.fade[1] - sA + alongA);
      const axisA = base.clone().addScaledVector(X, T.ax).addScaledVector(U, T.h).addScaledVector(Dv, alongA);
      const d0 = axisA.clone().sub(f0.pos.clone().addScaledVector(f0.up, T.h));
-     const ds = 0.4, nS = Math.ceil((sB - sA) / ds) + 1, nT = 160;
--    const tubeP: number[] = [], tubeUV: number[] = [], rivP: number[] = [], rivUV: number[] = [], idxT: number[] = [], idxR: number[] = [];
--    const halfW = Math.sqrt(Math.max(T.r * T.r - T.h * T.h, 1)) + 0.15;
-+    const tubeP: number[] = [], tubeUV: number[] = [], rivP: number[] = [], rivUV: number[] = [], rivB: number[] = [], idxT: number[] = [], idxR: number[] = [];
-+    // r23 m07sbend: the route bends in S inside the plunge; the tube (and the river floor under the whole tube) stays on the STRAIGHT
-+    // un-bent line in the un-bent frame (the painted straight tube), the bands / foam / coins follow the bent route inside it
-+    const bend = endW && course.bend07 ? course.bend07 : null;
-+    if (bend) shared.uBandP.value.set(shared.uBandP.value.x, 0, alongA, 1);
-+    const t0 = new THREE.Vector3(), up0 = new THREE.Vector3(), r0 = new THREE.Vector3(), cen = new THREE.Vector3(), cPrev = new THREE.Vector3();
-+    let alongT = alongA;
-+    const Wf = Math.sqrt(Math.max(T.r * T.r - T.h * T.h, 1));
-+    const halfW = Wf + 0.15;
-     const nR = 24;
-     const c = new THREE.Vector3(), p = new THREE.Vector3();
-     for (let i = 0; i < nS; i++) {
-@@ -449,23 +666,73 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
-       const f = course.sample(s);
-       const k = 1 - THREE.MathUtils.smootherstep(s, sA, sA + 14);
-       const along = alongA + (s - sA);
--      c.copy(f.pos).addScaledVector(f.up, T.h).addScaledVector(d0, k);
-+      let fr = f.right, fu = f.up, bx = 0;
-+      cen.copy(f.pos);
-+      if (bend) {
-+        bx = course.bend07At(s);
-+        t0.copy(f.tan); t0.x = 0; t0.normalize();
-+        fu = up0.set(0, 1, 0).addScaledVector(t0, -t0.y).normalize();
-+        fr = r0.crossVectors(t0, up0).normalize();
-+        cen.x -= bx;
-+      }
-+      c.copy(cen).addScaledVector(fu, T.h).addScaledVector(d0, k);
-+      // the straight tube's ring bays follow its own (un-bent) length
-+      if (bend && i > 0) alongT += c.distanceTo(cPrev);
-+      cPrev.copy(c);
-+      const alongW = bend ? alongT : along;
-+      const sq = lowRamp(s, sA);
-       for (let j = 0; j <= nT; j++) {
-         const th = -Math.PI / 2 + (2 * Math.PI * j) / nT; // same angle convention as the fitted tube (x = right, y = up)
--        p.copy(c).addScaledVector(f.right, T.r * Math.cos(th)).addScaledVector(f.up, T.r * Math.sin(th));
--        tubeP.push(p.x, p.y, p.z); tubeUV.push(along, th);
-+        let cx = T.r * Math.cos(th);
-+        const cy = T.r * Math.sin(th);
-+        // r23 m07low: lower wall pulled in toward the river (full at the water line and below, none from lowY above the water)
-+        if (sq > 0) cx *= 1 - sq * (1 - footL / Wf) * (1 - THREE.MathUtils.smoothstep(T.h + cy, 0, lowY));
-+        p.copy(c).addScaledVector(fr, cx).addScaledVector(fu, cy);
-+        tubeP.push(p.x, p.y, p.z); tubeUV.push(alongW, th);
-       }
--      const lat0 = d0.dot(f.right) * k;
-+      const lat0 = d0.dot(fr) * k;
+@@ -459,7 +638,7 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
        for (let j = 0; j <= nR; j++) {
          const l = -halfW + (2 * halfW * j) / nR;
--        p.copy(f.pos).addScaledVector(f.right, lat0 + T.ax + l).addScaledVector(f.up, 0.06);
+         p.copy(f.pos).addScaledVector(f.right, lat0 + T.ax + l).addScaledVector(f.up, 0.06);
 -        rivP.push(p.x, p.y, p.z); rivUV.push(T.ax + l, along); // centred on the tube axis like the fitted water
-+        p.copy(cen).addScaledVector(fr, lat0 + T.ax + l).addScaledVector(fu, 0.06);
-+        // centred on the tube axis like the fitted water (r21 m07end: lateral from the course centre; r23 m07sbend: from the BENT centre)
-+        rivP.push(p.x, p.y, p.z); rivUV.push((endW ? lat0 - bx * fr.x : 0) + T.ax + l, along);
-+        rivB.push(bend ? bx / bend.amp : 0);
++        rivP.push(p.x, p.y, p.z); rivUV.push((endW ? lat0 : 0) + T.ax + l, along); // centred on the tube axis like the fitted water (r21 m07end: lateral from the course centre)
        }
        if (i > 0) {
          for (let j = 0; j < nT; j++) { const a = (i - 1) * (nT + 1) + j, b = a + nT + 1; idxT.push(a, b, a + 1, b, b + 1, a + 1); }
-         for (let j = 0; j < nR; j++) { const a = (i - 1) * (nR + 1) + j, b = a + nR + 1; idxR.push(a, b, a + 1, b, b + 1, a + 1); }
-       }
-     }
-+    // r25 m07join: the river rows go on past sB along the 08 floor (the course's own frame: the 08 river winds; no tube, no S
-+    // offset there) with the same lateral layout and the same world-anchored along, so the design flows on unbroken; appended
-+    // AFTER the drop's rows (the drop's mesh is unchanged), joined to its last row
-+    if (endW && plunge.sJ && plunge.sJ > sB + ds) {
-+      const nE = Math.ceil((plunge.sJ - sB) / ds);
-+      const eR = new THREE.Vector3(), eU = new THREE.Vector3();
-+      for (let e = 1; e <= nE; e++) {
-+        const s = Math.min(plunge.sJ, sB + e * ds);
-+        const f = course.sample(s);
-+        const along = alongA + (s - sA);
-+        // (with m07sbend the drop's rows lie square to the un-bent line; the 08 route already turns ~10° at sB: ease the rows
-+        // from that square frame into the course frame over 3 u, so the sheet has no kink / fold at the join)
-+        eR.copy(f.right); eU.copy(f.up);
-+        if (bend) {
-+          const w = THREE.MathUtils.smoothstep(s, sB, sB + 3);
-+          t0.copy(f.tan); t0.x = 0; t0.normalize();
-+          up0.set(0, 1, 0).addScaledVector(t0, -t0.y).normalize();
-+          r0.crossVectors(t0, up0).normalize();
-+          eR.lerpVectors(r0, f.right, w).normalize(); eU.lerpVectors(up0, f.up, w).normalize();
-+        }
-+        for (let j = 0; j <= nR; j++) {
-+          const l = -halfW + (2 * halfW * j) / nR;
-+          p.copy(f.pos).addScaledVector(eR, T.ax + l).addScaledVector(eU, 0.06);
-+          rivP.push(p.x, p.y, p.z); rivUV.push(T.ax + l, along);
-+          rivB.push(0);
-+        }
-+        const r0i = nS - 1 + e - 1;
-+        for (let j = 0; j < nR; j++) { const a = r0i * (nR + 1) + j, b = a + nR + 1; idxR.push(a, b, a + 1, b, b + 1, a + 1); }
-+      }
-+    }
-     const geo = (P: number[], UV: number[], I: number[]) => {
-       const g = new THREE.BufferGeometry();
-       g.setAttribute('position', new THREE.Float32BufferAttribute(P, 3));
-@@ -475,14 +742,159 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -475,7 +654,7 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
      };
      // world-space vertices: the meshes are added to the scene-level group with the inverse group matrix
      const toLocal = (g: THREE.BufferGeometry) => g.applyMatrix4(groupInv);
@@ -757,11 +340,8 @@ index b9f474c..d9d9946 100644
 +    const wallM = mat(tWall, 3), rivM = mat(tRiver, endW ? 5 : 4);
      rivM.transparent = true;
      const t = add(toLocal(geo(tubeP, tubeUV, idxT)), wallM, 'pl_tube');
--    const r = add(toLocal(geo(rivP, rivUV, idxR)), rivM, 'pl_river');
-+    const rg = geo(rivP, rivUV, idxR);
-+    if (bend) rg.setAttribute('aBend', new THREE.Float32BufferAttribute(rivB, 1));
-+    const r = add(toLocal(rg), rivM, 'pl_river');
-     r.renderOrder = 1;
+     const r = add(toLocal(geo(rivP, rivUV, idxR)), rivM, 'pl_river');
+@@ -483,6 +662,131 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
      t.visible = r.visible = false;
      plungeMeshes.push(t, r);
    }
@@ -800,25 +380,21 @@ index b9f474c..d9d9946 100644
 +      const p = place(side * lat, along, up);
 +      out.push(p.x, p.y, p.z, r); tone.push(rnd(), rnd(), lvl);
 +    };
-+    let low = 0; // r23 m07low: 1 while the drop's bank is built (smaller, sunk lumps, few heaped on top)
-+    let swB = 0; // r24 m07swing: 1 while the drop's bank is built (mound size follows the room between the band and the wall)
-+    const mound = (out: number[], tone: number[], place: Place, side: number, a: number, wallLat: number, S: number, inset = 0) => {
-+      if (low > 0) S *= lowK;
-+      if (swB > 0) S *= THREE.MathUtils.clamp(0.25 + (0.75 * (wallLat - edge - inset)) / 1.9, 0.3, 1.3);
++    const mound = (out: number[], tone: number[], place: Place, side: number, a: number, wallLat: number, S: number) => {
 +      const room = Math.max(0.5, wallLat - edge);
-+      const lC = edge + inset + Math.min(room * 0.55, 0.35 * S + 0.2 + 0.25 * rnd());
++      const lC = edge + Math.min(room * 0.55, 0.35 * S + 0.2 + 0.25 * rnd());
 +      const len = (0.8 + 0.6 * rnd()) * S;
 +      const big: [number, number, number, number][] = []; // lat, along, up, r
 +      const nB = 2 + Math.floor(rnd() * 3);
 +      for (let i = 0; i < nB; i++) {
 +        const r = (0.34 + 0.16 * rnd()) * S;
 +        const l = lC + (rnd() - 0.4) * 0.55 * S, da = (nB > 1 ? i / (nB - 1) - 0.5 : 0) * len + (rnd() - 0.5) * 0.2 * S;
-+        const up = -r * (low > 0 && lowK < 1 ? 0.3 + 0.25 * rnd() : 0.05 + 0.25 * rnd());
++        const up = -r * (0.05 + 0.25 * rnd());
 +        big.push([l, a + da, up, r]); pushL(out, tone, place, side, wallLat, l, a + da, up, r, 0.15);
 +      }
 +      // softer lobes heaped on top
 +      for (const [l, al, up, r] of big.slice()) {
-+        if (rnd() < (low > 0 && lowK < 1 ? 0.65 : 0.2)) continue;
++        if (rnd() < 0.2) continue;
 +        const ru = r * (0.65 + 0.2 * rnd());
 +        const th = rnd() * Math.PI * 2, el = 0.55 + 0.35 * rnd();
 +        const dl = Math.cos(th) * Math.sqrt(1 - el * el), da = Math.sin(th) * Math.sqrt(1 - el * el);
@@ -853,13 +429,8 @@ index b9f474c..d9d9946 100644
 +    const bank = (out: number[], tone: number[], place: (s: number) => Place, wall: (a: number) => number, side: number, a0: number, a1: number) => {
 +      for (let a = a0 + rnd(); a < a1; ) {
 +        const S = rnd() < 0.2 ? 1.4 + 0.4 * rnd() : 0.8 + 0.5 * rnd();
-+        const room = wall(a) - edge;
-+        // r24 m07swing: no mound where the outer bank runs against the wall (the skirt is the thin fringe there); a second, outer
-+        // row heaped toward the wall where the inside of a bend is wide
-+        if (rnd() > 0.12 && (swB === 0 || room > 0.45)) mound(out, tone, place(a), side, a, wall(a), S);
-+        if (swB > 0 && room > 2.3 && rnd() > 0.15) mound(out, tone, place(a), side, a + 0.4 * S, wall(a), 0.9 + 0.5 * rnd(), (room - 1.9) * 0.5);
-+        if (swB > 0 && room > 3.0 && rnd() > 0.15) mound(out, tone, place(a), side, a - 0.3 * S, wall(a), 1.0 + 0.4 * rnd(), room - 1.9);
-+        a += (0.75 + 0.7 * rnd()) * S * (swB > 0 ? THREE.MathUtils.clamp(0.25 + (0.75 * room) / 1.9, 0.45, 1.2) : 1) + 0.25;
++        if (rnd() > 0.12) mound(out, tone, place(a), side, a, wall(a), S);
++        a += (0.75 + 0.7 * rnd()) * S + 0.25;
 +      }
 +      for (let a = a0; a < a1; a += 0.36 + 0.2 * rnd()) skirt(out, tone, place(a), side, a, wall(a));
 +    };
@@ -886,23 +457,14 @@ index b9f474c..d9d9946 100644
 +      const q = new THREE.Vector3();
 +      // lateral from the course centre (= the plunge river's band frame); the tube centre sits lat0 = d0·right·k off it over the
 +      // first 14 u of the drop, so the wall foot on each side is measured from the tube centre
-+      const sE = plunge.sJ && plunge.sJ > sB ? plunge.sJ : sB; // r25 m07join: the banks run on along the 08 floor
 +      const placeP: Place = (lat, s, up) => {
-+        const f = course.sample(THREE.MathUtils.clamp(s, sA, sE));
++        const f = course.sample(THREE.MathUtils.clamp(s, sA, sB));
 +        return q.copy(f.pos).addScaledVector(f.right, lat).addScaledVector(f.up, up + 0.06).applyMatrix4(groupInv).clone();
 +      };
-+      low = lowF ? 1 : 0;
 +      for (const side of [-1, 1]) {
-+        // (r23 m07sbend: the wall foot measured from the BENT course centre — nearer on the outside of each bend)
-+        const wallP = (ss: number) => Math.max(swing ? 2.6 : 3.2, THREE.MathUtils.lerp(4.85, footL - 0.05, lowRamp(ss, sA)) + side * d0.dot(course.sample(ss).right) * (1 - THREE.MathUtils.smootherstep(ss, sA, sA + 14)) - (endW ? side * course.bend07At(ss) : 0));
-+        swB = swing ? 1 : 0;
++        const wallP = (ss: number) => Math.max(3.2, 4.85 + side * d0.dot(course.sample(ss).right) * (1 - THREE.MathUtils.smootherstep(ss, sA, sA + 14)));
 +        bank(PL, PT, () => placeP, wallP, side, sA, sB - 0.5);
-+        swB = 0;
 +      }
-+      low = 0;
-+      // r25 m07join: the same banks on along the 08 floor (built after both drop banks, so the drop's clouds are unchanged; the
-+      // room to the default chamber's floor edge is taken as the drop's widest, 4.85 u)
-+      if (sE > sB) for (const side of [-1, 1]) { swB = swing ? 1 : 0; bank(PL, PT, () => placeP, () => 4.85, side, sB - 0.5, sE - 0.5); swB = 0; }
 +      const pc = makeCloud(PL, PT, 0, 'pl_cloud');
 +      pc.visible = false;
 +      plungeMeshes.push(pc);
@@ -911,7 +473,7 @@ index b9f474c..d9d9946 100644
    group.traverse((o) => o.updateMatrixWorld?.(true));
  
    return {
-@@ -493,7 +905,8 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -493,7 +797,8 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
        const clone = group.clone(true);
        clone.visible = true;
        // the plunge continuation is not in the approved picture: it never occludes the projector

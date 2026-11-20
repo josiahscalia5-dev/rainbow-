@@ -154141,10 +154141,10 @@ index a76822b..cbb7ee4 100644
  * `fur.ts`: new BENNY20-only uniforms `uTipCol` (colour the uPile.w tips fade to; pompom keeps its pale lavender) and `uVol`
    (x highlight on up-facing fur, y darker underside). `benny20.ts`: `TUFT` block (body + arms): bigger locks (30 / arms 36),
 diff --git a/src/characters/benny/benny20.ts b/src/characters/benny/benny20.ts
-index 340e1d3..eb11f8b 100644
+index 340e1d3..6b5171e 100644
 --- a/src/characters/benny/benny20.ts
 +++ b/src/characters/benny/benny20.ts
-@@ -100,6 +100,49 @@ if (TUFT) {
+@@ -100,6 +100,51 @@ if (TUFT) {
    }
  }
  
@@ -154182,11 +154182,13 @@ index 340e1d3..eb11f8b 100644
 +  for (const k of ['fur_body', 'fur_armL', 'fur_armR']) {
 +    const arm = k !== 'fur_body';
 +    const L = LOCK20[k];
-+    const len = n('qlen', (FUR20[k].length ?? 0.08) / (arm && TUFT ? 0.8 : 1));
-+    FUR20[k].length = arm && TUFT ? len * 0.8 : len;
-+    FUR20[k].gravity = n('qgr', FUR20[k].gravity ?? 0.04);
++    // r26 probe (/home/user/scratch/benny/silk/pc04, pd04, pd06m; variant c8): longer, more combed-down pile; bigger
++    // clumps / darker creases (d3, d5) read shaggy and darker than the dusty rose at phone size → not used
++    const len = n('qlen', 0.12);
++    FUR20[k].length = arm ? len * 0.8 : len;
++    FUR20[k].gravity = n('qgr', 0.07);
 +    L.lock = [L.lock[0], L.lock[1], L.lock[2] * n('qlz', 1), L.lock[3]];
-+    L.comb = [n('qcx', L.comb[0]), L.comb[1], L.comb[2], L.comb[3]];
++    L.comb = [n('qcx', 0.9), L.comb[1], L.comb[2], L.comb[3]];
 +    COMB20[k] = [n('qsq', 0.3), n('qst', 0.06), 0, 0];
 +  }
 +}
@@ -154194,7 +154196,7 @@ index 340e1d3..eb11f8b 100644
  /** per-screen fur exposure (LINEAR multipliers on the fur albedo above, which is solved for Screen 04). The approved
   *  pictures paint Benny lighter / pinker on 05–07 (fur mean ≈ (234, 82, 178), brightness median .95–.98) than on 04
   *  ((207, 74, 151), .84), while the game lights him less there. The game records its screen on
-@@ -132,17 +175,44 @@ export const HAT20 = {
+@@ -132,17 +177,46 @@ export const HAT20 = {
    starFlat: n('sf', 0.3),
  };
  
@@ -154232,8 +154234,10 @@ index 340e1d3..eb11f8b 100644
 +export const STARX20: Record<string, [number, number, number]> = {
 +  '05': lin('sx05', [0.9, 1.3, 0.7]),
 +  // r24: 2.1 green turned the star lemon-lime under the strong warm light of the 06 middle / hard left (probe A–D,
-+  // qa/benny/r23/s3_star/06/probe_r24/); this keeps a warm gold at the start and a clean yellow in the middle
-+  '06': lin('sx06', [0.9, 1.55, 0.62]),
++  // qa/benny/r23/s3_star/06/probe_r24/); r24's 1.55 still CLIPPED the middle to a flat green-lemon (median 250/255/55, the
++  // stitched relief gone; r26 review) → r26 probe x0–x5 (/home/user/scratch/benny/silk/pd06m, pd06s): 1.2 gives the
++  // approved middle hue (g/r .90 vs approved .89) with the relief back; the start leans a little amber (g/r .65)
++  '06': lin('sx06', [0.9, 1.2, 0.55]),
 +  '07': lin('sx07', [0.9, 1.3, 0.6]),
 +  '08': lin('sx08', [0.9, 1.3, 0.75]),
  };
@@ -154244,7 +154248,7 @@ index 340e1d3..eb11f8b 100644
  let loaded: Promise<Record<string, THREE.Texture | null>> | null = null;
  /** load the knit / felt maps once (missing file → null: that part keeps its benny05 look) */
  export function loadBenny20Maps(): Promise<Record<string, THREE.Texture | null>> {
-@@ -196,6 +266,21 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
+@@ -196,6 +270,21 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
      if (vol) f.uniforms.uVol.value.set(...vol);
      const tc = TIP20[f.mesh.name];
      if (tc) f.uniforms.uTipCol.value.setRGB(...tc);
@@ -154266,7 +154270,7 @@ index 340e1d3..eb11f8b 100644
      mat.needsUpdate = true;
    }
  
-@@ -234,36 +319,69 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
+@@ -234,36 +323,69 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
      if (nt) mat.normalScale.setScalar(ns);
      mat.roughness = 0.92;
      mat.metalness = 0;
@@ -154342,7 +154346,7 @@ index 340e1d3..eb11f8b 100644
    let first = true;
    const lastPos = new THREE.Vector3();
    const pos = new THREE.Vector3();
-@@ -275,8 +393,20 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
+@@ -275,8 +397,20 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
      scene.getWorldPosition(pos);
      const jumped = pos.distanceTo(lastPos) > 5;
      lastPos.copy(pos);
@@ -154364,7 +154368,7 @@ index 340e1d3..eb11f8b 100644
    };
  
    // QA only (`?qa` pages, read by tools/benny20/probe.mjs): live handles for tuning without a reload
-@@ -295,7 +425,7 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
+@@ -295,7 +429,7 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
        }
        return [Math.round(x0), Math.round(y0), Math.round(x1), Math.round(y1)];
      };

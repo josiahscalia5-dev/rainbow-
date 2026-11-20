@@ -1,18 +1,20 @@
 # Benny round 23 — progress (worktree `/home/user/wt/benny`, local branch `claude/rainbow-benny-c24` = `-c23` @ `734efb6`; not committed / pushed by Benny — the lead's autosave snapshots the worktree)
 
-## (r26) WHERE I STOPPED / NEXT — 2026-11-20 ~13:40 UTC (new account; worktree `/home/user/wt/benny`, LOCAL branch `claude/rainbow-benny-c27`, port 5279)
+## (r26) WHERE I STOPPED / NEXT — 2026-11-20 ~13:55 UTC (new account; worktree `/home/user/wt/benny`, LOCAL branch `claude/rainbow-benny-c27`, port 5279)
 
-**Done:** BEFORE swim clip 06 re-rendered with the same tool + schedule as NEW (`swim_clip_c.mjs 06 … 6 0`) and encoded:
-`qa/benny/r23/s3_star/clip/swim06_star_BEFORE_{full,benny}_{1x,0.5x}.mp4` (NEW = `swim06_star_NEW_*`, rendered r25).
-**Star finding (measured inside the star window):** 04 NEW ≈ approved (median 255/201/69 vs 251/197/73, orange stitched rim
-share 0.26 vs 0.22; BEFORE 244/207/28, rim 0.06) → closer. 06 middle NEW is CLIPPED green-lemon (250/255/55, green above red,
-brightness p50 ≈ p90 → flat, stitch line almost gone) vs approved 06 251/223/31 and BEFORE 243/209/52 → NOT closer there
-(matches the lead's / user's review). Probing softer `b20sx06` values (start + middle) now (`/home/user/scratch/benny/silk/pd06*`).
-**Silk:** `&b20silk=1` (lock cones) probed: every variant reads as SPIKY shards, hotter pink → rejected. New `&b20silk=2`
-(fur.ts `B20COMB`, benny20.ts `COMB20`, `&b20q<key>=`): the soft b20tuft pile with its strand grid stretched vertically →
-downward combed fibres, no spikes, same dusty rose. First probe (pc04/pc06) promising on 04 (c8: qsq .3, qlen .12, qcx .9,
-qgr .07); second probe running (clump shading, less per-strand grain). Fixed key clash `gsw` → soft width now `&b20gew=`.
-**Next:** pick 06 star value → re-render 06 star crops + NEW clip → verdict; pick silk=2 defaults → proof `qa/benny/r25/s4_silk/`.
+**Done:** BEFORE swim clip 06 re-rendered (same tool + schedule as NEW) and encoded `qa/benny/r23/s3_star/clip/swim06_star_BEFORE_*`.
+**Star 06 fix (r26):** measured inside the star window — 04 NEW ≈ approved (255/201/69 vs 251/197/73, orange stitched rim share
+0.26 vs 0.22; BEFORE 0.06) = closer; 06 middle r25 NEW was CLIPPED green-lemon (250/255/55, relief flattened) = NOT closer
+(agrees with the user's review). Probe x0–x5 → `b20sx06` default now `0.9,1.2,0.55` (middle 255/229/55, g/r .90 vs approved
+.89, relief p10/50/90 169/216/235 vs approved 167/211/228; start leans amber g/r .65 vs approved .89). Old NEW kept:
+`06/new_r25_lemon/`, `clip/old_r25_lemon_swim06_star_NEW_*`. Re-rendering 06 `new/` + NEW clip now
+(`/home/user/scratch/benny/clips/run_new06.sh`).
+**Silk:** `&b20silk=1` (lock cones) = spiky shards, hotter pink → rejected. NEW `&b20silk=2` (fur.ts `B20COMB`, benny20.ts `COMB20`,
+overrides `&b20q<key>=`): soft b20tuft pile with strands stretched vertically → downward combed fibres, no spikes, same rose.
+Defaults = probe c8 (qsq .3, qst .06, qlen .12, qcx .9, qgr .07); clumpier d3/d5 read darker + shaggy → not used. Proof running:
+`/home/user/scratch/benny/silk/run_proof.sh` → `qa/benny/r25/s4_silk/0N/new/` (BEFORE = `qa/benny/r23/s3_star/0N/new/`, same
+query + tool), clip 04 BEFORE/NEW, gameplay `gameplay_silk.json`. Key clash fixed: soft-edge width now `&b20gew=`.
+**Next:** star verdict from the new 06 crops + clips; silk verdict; then step 3 (hat crown taller / pompom softer).
 
 ## (r25) WHERE I STOPPED / NEXT — 2026-11-20 ~12:10 UTC (new account; worktree `/home/user/wt/benny`, LOCAL branch `claude/rainbow-benny-c26`, port 5279)
 

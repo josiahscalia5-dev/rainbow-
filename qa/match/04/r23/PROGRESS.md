@@ -1,11 +1,12 @@
 # Screen 04 — round 23 (new account, lead session branch `claude/rainbow-r22-restore-ut3m39`) — lead log
 
 ## (r26) WHERE I STOPPED / NEXT — s04 specialist (relaunched r26 ~13:10 UTC, worktree `/home/user/wt/s04`, LOCAL branch `claude/rainbow-s04-match-c27`)
-* Worktree = K23-S3 code + the unfinished r25 `m04lgc` crescent edit (tsc 0). Scratch `/home/user/scratch/s04/`. Proof `qa/match/04/r26/`.
-* Step 0' verdict WRITTEN (below, "r26 Step 0'"). Fix written: `&m04a5=1|2` (exactly five chevrons; 2 = one compact group placed so
-  Benny's route crosses all five inside 04). tsc 0. Job `/home/user/scratch/s04/run_job1.sh` (log `run_job1.out`) renders the
-  m04a5=2 clip (`clip_a5`) then the step-1 m04lgc variants (`s1var/V0..V3`, base = K23-S3 + m04a5=2).
-* NEXT: label + judge the five-arrow clip (-> `qa/match/04/r26/s0_five/`), gameplay 8/8; then step 1 m04lgc verdict.
+* Worktree = K23-S3 code + r25 `m04lgc` + r26 `m04a5` + r26 `m04bbdc` (cloud banks, written, unproven). tsc 0. Scratch `/home/user/scratch/s04/`.
+* Step 0' DONE — five-arrow fix `&m04a5=2` proven in the clip (`qa/match/04/r26/s0_five/`, result below). Gameplay run owed (planned
+  once for the final combined candidate; arrows are visual only).
+* Step 1 RUNNING: variants V0..V3 rendered (`/home/user/scratch/s04/s1var/`): V1/V2 crescents = right length but too fat / C-shaped
+  (white confetti), V3 busier. `run_job2.sh` renders finer ones V4_fine / V5_fine2 + step-2 cloud banks `s2var/C1_cloud`, `C2_cloud_low`.
+* NEXT: step 1 verdict; step 2 = `&m04bbdc=1` far foam cloud banks (+ lower pink `m04ry`), then gameplay with the combined query.
 
 ## (r26) Step 0' — whole-04 clips K23-1 (BEFORE) vs K23-S3 (NEW), r25 `qa/match/04/r25/clip/` — verdict + ARROW COUNT
 * VERDICT K23-S3 vs K23-1: GOOD IMPROVEMENT for the pink sides (lower, contained, the gold rings visible down both sides instead
@@ -25,6 +26,16 @@
 * FIX (behind a switch, default unchanged): `&m04a5=1` builds only the five chevrons that line up with the painted start-view group;
   `&m04a5=2` (candidate) = ONE compact group of five (`m04a5a`=13.5 u down the lane, `m04a5p`=3.4 u apart) so all five show
   at the start and his route crosses all five inside 04 (fifth ~0.25 s before the end). Proof: `qa/match/04/r26/s0_five/`.
+
+* RESULT `&m04a5=2` (clip `qa/match/04/r26/s0_five/swim04_whole_NEW_K23-S3_five_{1.0x,0.5x}.mp4`, side by side with the r25 K23-S3 clip
+  `swim04_SIDE_BY_SIDE_BEFORE_K23-S3_vs_NEW_five_*.mp4`, same steering schedule; log `frames_NEW_five.json`): exactly FIVE chevrons
+  exist and are shown (5 different arrows in all of 04, never a sixth), one compact neat stack above his pompom at t 0.15-0.6 s
+  (close to the painted stack), then 5 -> 4 -> 3 -> 2 -> 1 -> 0 as each one meets his pompom on screen and slips away (t 0.35 ..
+  1.2 s); his route crosses all five inside 04 (t 1.45 / 1.65 / 1.90 / 2.15 / 2.40 s; 04 ends at 2.6 s). Start view unchanged
+  (no 3D arrow drawn at t = 0, by construction and in the log).
+  VERDICT: GOOD IMPROVEMENT on the arrow count (five, neatly arranged, all passed inside 04). STILL DIFFERENT / new trade-off:
+  the five are gone from the screen by 1.2 s, so the second half of 04 shows an empty lane (in K23-S3 the conveyor kept ~5 in view
+  to the end); each one still vanishes where it meets his pompom instead of visibly sliding under him (r22 screen-clearance fade).
 
 ## (r25) WHERE I STOPPED / NEXT — s04 specialist (relaunched r25 ~12:00 UTC, worktree `/home/user/wt/s04`, LOCAL branch `claude/rainbow-s04-match-c26`)
 * Worktree verified: `git diff` == `s3_glossy/code.patch` byte for byte (K23-S3 code complete; no patch re-applied). Scratch
