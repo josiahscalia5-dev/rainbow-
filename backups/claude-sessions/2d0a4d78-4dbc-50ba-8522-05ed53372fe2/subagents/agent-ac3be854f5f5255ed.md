@@ -526,3 +526,163 @@ The r21 `&m07cloud=1` draft (ray-traced sphere-lobe foam clouds) was never rende
 > user	0m1.989s
 > sys	0m0.560s
 
+### 🤖 Claude — 2026-11-20T03:20:09.547Z
+
+Fast (33 s per audit). Viewing the draft frames.
+
+### 🤖 Claude — 2026-11-20T03:20:10.063Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/07/r22/s1_cloud/draft0/d_late.png"}`
+
+### 🧑 User — 2026-11-20T03:20:10.113Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:20:10.566Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/07/r22/s1_cloud/draft0/f_hard_left.png"}`
+
+### 🧑 User — 2026-11-20T03:20:10.612Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:20:11.020Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/07/r22/s1_cloud/draft0/b_early.png"}`
+
+### 🧑 User — 2026-11-20T03:20:11.093Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:20:16.144Z
+
+The draft reads as rows of smooth white balls (beads), not painted cumulus foam; at hard left they become giant balloons. Let me crop the painted foam clouds to see exactly what they look like.
+
+### 🤖 Claude — 2026-11-20T03:20:19.445Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/crops && cd /tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/crops && python3 -I -c \"\nfrom PIL import Image\nim=Image.open('/home/user/rainbow-/references/07_dive_the_washer_tube.png').convert('RGB')\nim.crop((560,1100,864,1440)).resize((608,680),Image.LANCZOS).save('foam_lr.png')\nim.crop((0,820,330,1120)).resize((660,600),Image.LANCZOS).save('foam_l.png')\nim.crop((230,560,560,820)).resize((660,520),Image.LANCZOS).save('foam_mid.png')\n\"", "description": …[+54 chars]`
+
+### 🧑 User — 2026-11-20T03:20:19.968Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T03:20:20.494Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/crops/foam_lr.png"}`
+
+### 🧑 User — 2026-11-20T03:20:20.509Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:20:21.149Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/crops/foam_l.png"}`
+
+### 🧑 User — 2026-11-20T03:20:21.227Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:20:21.803Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/crops/foam_mid.png"}`
+
+### 🧑 User — 2026-11-20T03:20:21.838Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:20:44.746Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\nfor f in ['near_bank.png','near_foam.png','tile_river_clean.png','tile_wall_ring.png','plate07_hybrid.png']:\n    im=Image.open('assets/textures/match07/'+f); print(f, im.size, im.mode)\nim=np.asarray(Image.open('/home/user/rainbow-/references/07_dive_the_washer_tube.png').convert('RGB')).astype(float)\n# sample foam tones in lower-right cloud\nreg=im[1250:1420,640:860].reshape(-1,3)\nlum=reg.mean(1)\nfor q in [5,25,50,75,95]:\n    t=np.percentile(lum,q); sel=reg[np.abs(lum-t)<3]; print(q, sel.mea …[+148 chars]`
+
+### 🧑 User — 2026-11-20T03:20:45.086Z
+
+> ↩︎ result: near_bank.png (268, 388) RGB
+> near_foam.png (114, 144) RGB
+> tile_river_clean.png (512, 512) RGB
+> tile_wall_ring.png (512, 1024) RGB
+> plate07_hybrid.png (864, 1536) RGB
+> 5 [  4. 129. 208.]
+> 25 [111. 161. 227.]
+> 50 [156. 180. 237.]
+> 75 [208. 210. 242.]
+> 95 [252. 252. 253.]
+> audit_r15.mjs
+> audit_r16.mjs
+> audit_r18.mjs
+> axis07.py
+> coinprobe07.mjs
+> diag_r21.mjs
+> diff0px_r7.py
+> fit_proxies07.py
+> lock_projector07.py
+> make_plate07.py
+> metrics07.py
+> motion07.mjs
+> near_tiles_r15.py
+> near_tiles_r16.py
+> plunge_audit_r8.mjs
+> probe07.mjs
+> probe_r7.mjs
+> proof0px_r7.mjs
+> river_coins07.py
+> river_iter07.py
+> solve_cam07.py
+> straighten_wall07.py
+> swim_clip_half.mjs
+> swim_clip_r21.mjs
+> 25:    "three": "^0.170.0"
+> 29:    "@types/three": "^0.170.0",
+
+### 🤖 Claude — 2026-11-20T03:20:50.871Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\nim=np.asarray(Image.open('/home/user/rainbow-/references/07_dive_the_washer_tube.png').convert('RGB')).astype(float)\nfor name,(y0,y1,x0,x1) in {'lr_cloud':(1230,1420,650,864),'left_cloud':(1000,1110,0,200),'mid_bank':(600,700,300,420)}.items():\n    reg=im[y0:y1,x0:x1].reshape(-1,3); R,G,B=reg.T\n    m=(B>190)&(R>140)&(np.abs(R-G)<35)\n    f=reg[m]; lum=f.mean(1)\n    print(name, 'foam frac', m.mean().round(2))\n    for q in [5,20,40,60,80,95]:\n        t=np.percentile(lum,q); sel=f[np.abs(lum-t)<4]; print('  ',q, sel.m …[+83 chars]`
+
+### 🧑 User — 2026-11-20T03:20:51.128Z
+
+> ↩︎ result: lr_cloud foam frac 0.49
+>    5 [150. 159. 239.]
+>    20 [163. 178. 248.]
+>    40 [194. 200. 249.]
+>    60 [226. 221. 248.]
+>    80 [250. 248. 252.]
+>    95 [253. 252. 253.]
+> left_cloud foam frac 0.28
+>    5 [154. 153. 239.]
+>    20 [167. 170. 246.]
+>    40 [191. 193. 248.]
+>    60 [221. 217. 251.]
+>    80 [245. 241. 254.]
+>    95 [252. 250. 254.]
+> mid_bank foam frac 0.11
+>    5 [152. 151. 240.]
+>    20 [173. 173. 245.]
+>    40 [212. 202. 251.]
+>    60 [245. 232. 245.]
+>    80 [252. 242. 251.]
+>    95 [253. 247. 253.]
+
+### 🤖 Claude — 2026-11-20T03:21:14.013Z
+
+Painted foam tones: shadows periwinkle (152,155,240), mids (194,200,249), lights (224,220,249), tops near white. Let me measure what the draft clouds actually render as.
+
+### 🤖 Claude — 2026-11-20T03:21:16.567Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\nim=np.asarray(Image.open('/home/user/rainbow-/qa/match/07/r22/s1_cloud/draft0/d_late.png').convert('RGB')).astype(float)\nfor name,(y0,y1,x0,x1) in {'left':(880,1120,0,230),'right':(850,1100,650,864)}.items():\n    reg=im[y0:y1,x0:x1].reshape(-1,3); R,G,B=reg.T\n    m=(B>190)&(R>140)&(np.abs(R-G)<35)\n    f=reg[m]; lum=f.mean(1)\n    print(name, 'foam frac', m.mean().round(2))\n    for q in [5,20,40,60,80,95]:\n        t=np.percentile(lum,q); sel=f[np.abs(lum-t)<4]; print('  ',q, sel.mean(0).round())\n\"", "description": …[+43 chars]`
+
+### 🧑 User — 2026-11-20T03:21:16.878Z
+
+> ↩︎ result: left foam frac 0.67
+>    5 [160. 156. 232.]
+>    20 [182. 180. 243.]
+>    40 [207. 200. 247.]
+>    60 [225. 217. 249.]
+>    80 [238. 232. 248.]
+>    95 [249. 245. 249.]
+> right foam frac 0.67
+>    5 [159. 157. 233.]
+>    20 [180. 179. 243.]
+>    40 [208. 201. 247.]
+>    60 [226. 218. 249.]
+>    80 [240. 234. 248.]
+>    95 [248. 244. 248.]
+

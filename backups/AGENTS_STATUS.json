@@ -1176,5 +1176,22 @@
   ],
   "artwork": "qa/review_r21/artwork/ — 5 fal nano-banana-2/edit jobs $0.60; 04 proposals await user approval",
   "resume": "docs/briefs/2026-11-20-r21/RESUME_R21.md + setup_worker_r22.sh"
+ },
+ "round22": {
+  "updated": "2026-11-20T03:25Z",
+  "lead_branch": "ccr-4742c19f-ez2mrs",
+  "lead_session": "session_0179kWgNJzw5v4674DNtMpda",
+  "coordination": "docs/briefs/2026-11-20-r22/COORDINATION.md",
+  "running": {
+   "foam-bubbles-particles (s04)": "in-process; /home/user/wt/s04 local claude/rainbow-s04-match-c23; launch LAUNCH_S04.md; log qa/match/04/r22/PROGRESS.md",
+   "water-fx-specialist (s07)": "in-process; /home/user/wt/s07 local claude/rainbow-s07-match-c23; launch LAUNCH_S07.md; log qa/match/07/r22/PROGRESS.md",
+   "s06 (path-camera + reference-match roles)": "cloud session_0179kWgNZhiYHyDdV12Eaw6e -> claude/rainbow-s06-match-c23 (from c7cac38); LAUNCH_S06.md",
+   "benny-character-artist": "cloud session_0179kWgM7wtBDT3n5KLuLz7o -> claude/rainbow-benny-c23 (from 70d3b83b); LAUNCH_BENNY.md"
+  },
+  "queued": [
+   "s08 polish from claude/rainbow-s08-scenery-c17 @ 3c0fa970",
+   "s05 polish from claude/rainbow-s05-match-c19 @ eb7233e3"
+  ],
+  "unfinished_work_restore": "s04/s07: worktree from INFO.head + backups/wip/claude__rainbow-s0N-match-c23/tracked.patch; s06/benny: their -c23 tips"
  }
 }

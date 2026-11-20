@@ -1342,3 +1342,173 @@ Both keys are saved. Retrying the free World Labs check now that the proxy has h
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-20T03:20:22.526Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/review_r21/artwork/07/prompt_07.txt", "content": "IMAGE 1 is a frame from a 3D mobile game. Its camera is further down the washer tube of the scene shown in IMAGE 2. IMAGE 2 is the art director's approved original illustration (the final design of this level).\n\nRepaint IMAGE 1 as a finished illustration in exactly the art style, materials, colours and lighting of IMAGE 2, so it looks like the same painting seen from deeper inside the tube:\n- a deep violet-purple washer drum tube with neat rows of rounded slots (perforations) in the purple metal, crisp a …[+946 chars]`
+
+### 🧑 User — 2026-11-20T03:20:22.563Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/review_r21/artwork/07/prompt_07.txt (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T03:20:25.379Z
+
+> 🔧 **Bash** `{"command": "O=qa/review_r21/artwork/07/proposals; P=qa/review_r21/artwork/07/prompt_07.txt; R=references/07_dive_the_washer_tube.png; F=qa/review_r21/artwork/07/game_frames; (timeout 400 python3 -I tools/lead21/fal_view.py $O d_late $P $F/d_late.png $R > /tmp/claude-0/fal_d.log 2>&1 &); timeout 400 python3 -I tools/lead21/fal_view.py $O e_end $P $F/e_end.png $R > /tmp/claude-0/fal_e.log 2>&1; sleep 1; wait; tail -3 /tmp/claude-0/fal_d.log /tmp/claude-0/fal_e.log; tail -3 qa/review_r21/artwork/LEDGER.md; ls $O", "description": "Run two paid fal jobs for Screen 07 views", "timeout": 450000}`
+
+### 🧑 User — 2026-11-20T03:20:50.193Z
+
+> ↩︎ result: tail: option used in invalid context -- 3
+> | 2026-11-20 02:36 | d_late_p3 | nano-banana-2/edit 2K | `01a1f6cf-e68f-7f42-ba57-0c5b1cbb363e` | 1 | 0.12 | d_late_p3_v1.png |
+> | 2026-11-20 03:20 | d_late | nano-banana-2/edit 2K | `01a1f6f8-3c51-7bb0-9cc9-53458f0888e9` | 1 | 0.12 | d_late_v1.png |
+> | 2026-11-20 03:20 | e_end | nano-banana-2/edit 2K | `01a1f6f8-3b9c-7523-8f17-00008ec826b0` | 1 | 0.12 | e_end_v1.png |
+> d_late.job.json
+> d_late_v1.png
+> e_end.job.json
+> e_end_v1.png
+
+### 🤖 Claude — 2026-11-20T03:20:51.979Z
+
+Both jobs completed: 2 × $0.12 = **$0.24**, appended to the existing ledger, which now totals **$0.84 over 7 jobs**. Let me look at the results before deciding whether to show them to you.
+
+### 🤖 Claude — 2026-11-20T03:20:55.484Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad && python3 -I - \"$SP\" <<'EOF'\nimport sys\nfrom PIL import Image\nsp=sys.argv[1]\nfs=['references/07_dive_the_washer_tube.png','qa/review_r21/artwork/07/game_frames/d_late.png','qa/review_r21/artwork/07/proposals/d_late_v1.png','qa/review_r21/artwork/07/game_frames/e_end.png','qa/review_r21/artwork/07/proposals/e_end_v1.png']\nH=560; ims=[]\nfor f in fs:\n    im=Image.open(f).convert('RGB'); ims.append(im.resize((int(im.width*H/im.height),H)))\nW=sum(i.width for i in ims)+5*len(ims); out=Image.n …[+233 chars]`
+
+### 🧑 User — 2026-11-20T03:20:56.037Z
+
+> ↩︎ result: [(864, 1536), (864, 1536), (1536, 2752), (864, 1536), (1536, 2752)]
+
+### 🤖 Claude — 2026-11-20T03:20:57.700Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/s07_prop_check.jpg"}`
+
+### 🧑 User — 2026-11-20T03:20:57.727Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:21:11.873Z
+
+> 🔧 **Bash** `{"command": "T=/home/user/wt/s07/assets/textures/match07; python3 -I -c \"\nfrom PIL import Image\nfor n in ['tile_wall_clean','tile_wall_ring','tile_river_clean','patch_gold','near_foam','near_bank','patch_wall']:\n    im=Image.open('$T/'+n+'.png'); print(n, im.size, im.mode)\"; cat $T/tiles07.json | head -20", "description": "Inspect 07 material swatch textures"}`
+
+### 🧑 User — 2026-11-20T03:21:11.976Z
+
+> ↩︎ result: tile_wall_clean (512, 1024) RGB
+> tile_wall_ring (512, 1024) RGB
+> tile_river_clean (512, 512) RGB
+> patch_gold (40, 80) RGB
+> near_foam (114, 144) RGB
+> near_bank (268, 388) RGB
+> patch_wall (120, 120) RGB
+> {
+>  "filled_share": 0.22063756872106483,
+>  "wall": {
+>   "theta": [
+>    -0.5585053606381855,
+>    3.7000980142279785
+>   ],
+>   "along": [
+>    19.76196893269257,
+>    35.5871131067841
+>   ],
+>   "bay": 8.54694135869698
+>  },
+>  "river": {
+>   "lateral": [
+>    -5.0,
+>    5.0
+>   ],
+>   "along": [
+>    6.0,
+
+### 🤖 Claude — 2026-11-20T03:21:19.478Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/review_r21/artwork/07/prompt_07_p2.txt", "content": "IMAGE 1 is a frame from a 3D mobile game and defines EVERYTHING about the layout. IMAGES 2-5 are small material swatches cut from the art director's approved illustration of this level — they show ONLY surface materials, not a layout:\nIMAGE 2 = the purple slotted washer-drum wall with a polished gold ring; IMAGE 3 = the glossy cyan river water; IMAGE 4 = the thick glossy hot-pink / magenta river bank; IMAGE 5 = the puffy white-lilac soap foam.\n\nRepaint IMAGE 1 surface by surface with these materials,  …[+1000 chars]`
+
+### 🧑 User — 2026-11-20T03:21:19.515Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/review_r21/artwork/07/prompt_07_p2.txt (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T03:21:25.332Z
+
+> 🔧 **Bash** `{"command": "O=qa/review_r21/artwork/07/proposals; P=qa/review_r21/artwork/07/prompt_07_p2.txt; T=/home/user/wt/s07/assets/textures/match07; F=qa/review_r21/artwork/07/game_frames; REFS=\"$T/tile_wall_ring.png $T/tile_river_clean.png $T/near_bank.png $T/near_foam.png\"; (timeout 400 python3 -I tools/lead21/fal_view.py $O d_late_p2 $P $F/d_late.png $REFS > /tmp/claude-0/fal_d2.log 2>&1 &); timeout 400 python3 -I tools/lead21/fal_view.py $O e_end_p2 $P $F/e_end.png $REFS > /tmp/claude-0/fal_e2.log 2>&1; while pgrep -f \"fal_view.py .* d_late_p2\" >/dev/null; do sleep 2; done; tail -n 2 qa/review …[+795 chars]`
+
+### 🧑 User — 2026-11-20T03:21:53.074Z
+
+> ↩︎ result: | 2026-11-20 03:21 | e_end_p2 | nano-banana-2/edit 2K | `01a1f6f9-268d-7603-a14e-302510bd3a80` | 1 | 0.12 | e_end_p2_v1.png |
+> | 2026-11-20 03:21 | d_late_p2 | nano-banana-2/edit 2K | `01a1f6f9-26a0-7742-92a8-cd019dd1415c` | 1 | 0.12 | d_late_p2_v1.png |
+> d_late.job.json
+> d_late_p2.job.json
+> d_late_p2_v1.png
+> d_late_v1.png
+> e_end.job.json
+> e_end_p2.job.json
+> e_end_p2_v1.png
+> e_end_v1.png
+
+### 🤖 Claude — 2026-11-20T03:21:54.550Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/s07_prop2_check.jpg"}`
+
+### 🧑 User — 2026-11-20T03:21:54.575Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:22:00.934Z
+
+> 🔧 **Bash** `{"command": "grep -rln \"FOR_APPROVAL\" tools/ scripts/ 2>/dev/null | head; grep -rn \"GENERATED PROPOSAL\" tools/ 2>/dev/null | head -3", "description": "Find the approval sheet tool"}`
+
+### 🧑 User — 2026-11-20T03:22:00.979Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T03:22:08.674Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/rainbow-/tools/lead22 && cat > /home/user/rainbow-/tools/lead22/approval_sheet.py <<'EOF'\n\"\"\"Lead r22: labelled approval sheet ORIGINAL APPROVED (unchanged) | GAME NOW - <where> | GENERATED PROPOSAL (not yet approved).\nSame layout as the round-21 FOR_APPROVAL_04_* sheets. The original is only read, never written.\nusage: python3 -I tools/lead22/approval_sheet.py <original.png> <game_frame.png> <proposal.png> \"<where>\" <out.png>\"\"\"\nimport sys\nfrom PIL import Image, ImageDraw, ImageFont\norig, game, prop, where, out = sys.argv[1:6]\nH = 1536; BAR = 60 …[+1263 chars]`
+
+### 🧑 User — 2026-11-20T03:22:11.431Z
+
+> ↩︎ result: qa/review_r21/artwork/07/FOR_APPROVAL_07_d_late.png (2625, 1596)
+> qa/review_r21/artwork/07/FOR_APPROVAL_07_e_end.png (2625, 1596)
+> character_references/official_cartoon_girl_original.jpg: OK
+> references/water/05_water_isolated_original.png: OK
+
+### 🤖 Claude — 2026-11-20T03:22:16.659Z
+
+> 🔧 **Bash** `{"command": "sha256sum -c scripts/reference.sha256 2>&1 | grep -c \": OK\"; cat >> qa/review_r21/artwork/LEDGER.md <<'EOF'\n\n### Round 22 notes (lead `ccr-4742c19f-ez2mrs`, new account; fal key re-entered via the secure form 03:19 UTC)\n* 07 `d_late`, `e_end` (style ref = the whole original): NOT USABLE — the model copied the original's layout (invented a drain hole;\n  the end view became the start composition) → geometry does not match the game camera, cannot be projected.\n* 07 `d_late_p2`, `e_end_p2` (style refs = material swatches cut from the original: wall+ring, river, bank, foam): geo …[+452 chars]`
+
+### 🧑 User — 2026-11-20T03:22:16.714Z
+
+> ↩︎ result: 13
+>   exactly; surfaces flatter / less glossy than the painting; the end keeps two white foam columns beside the falling water.
+>   Labelled sheets `07/FOR_APPROVAL_07_d_late.png`, `07/FOR_APPROVAL_07_e_end.png` — shown to the user, verdict pending.
+> * Running total: 9 jobs, **$1.08** (round 21: 5 jobs $0.60; round 22: 4 jobs $0.48).
+
+### 🤖 Claude — 2026-11-20T03:22:17.774Z
+
+All 13 original references are still byte-identical. Sending the two new Screen 07 proposals:
+
+### 🤖 Claude — 2026-11-20T03:22:19.172Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/review_r21/artwork/07/FOR_APPROVAL_07_d_late.png"], "caption": "NEW Screen 07 proposal 1 of 2, LATE in the tube. Left: original approved (unchanged). Centre: game now. Right: GENERATED PROPOSAL (not yet approved).", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-20T03:22:20.074Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/review_r21/artwork/07/FOR_APPROVAL_07_d_late.png → file_uuid: ad3c76a0-6e46-4e95-993b-e3b44409fa00
+
+### 🤖 Claude — 2026-11-20T03:22:20.472Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/review_r21/artwork/07/FOR_APPROVAL_07_e_end.png"], "caption": "NEW Screen 07 proposal 2 of 2, END of the tube (the drop). Left: original approved (unchanged). Centre: game now. Right: GENERATED PROPOSAL (not yet approved).", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-20T03:22:21.281Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/review_r21/artwork/07/FOR_APPROVAL_07_e_end.png → file_uuid: b4260e0e-9453-4c6e-8dc5-9eefc3deec04
+
+### 🤖 Claude — 2026-11-20T03:22:23.319Z
+
+Saving everything and verifying the remote, then updating the specialists' status file.
+
+### 🤖 Claude — 2026-11-20T03:22:31.549Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\np='backups/AGENTS_STATUS.json'\nd=json.load(open(p))\nprint(list(d.keys())[:20])\nd['round22']={\n \"updated\":\"2026-11-20T03:25Z\",\"lead_branch\":\"ccr-4742c19f-ez2mrs\",\"lead_session\":\"session_0179kWgNJzw5v4674DNtMpda\",\n \"coordination\":\"docs/briefs/2026-11-20-r22/COORDINATION.md\",\n \"running\":{\n  \"foam-bubbles-particles (s04)\":\"in-process; /home/user/wt/s04 local claude/rainbow-s04-match-c23; launch LAUNCH_S04.md; log qa/match/04/r22/PROGRESS.md\",\n  \"water-fx-specialist (s07)\":\"in-process; /home/user/wt/s07 local claude/rainb …[+1246 chars]`
+

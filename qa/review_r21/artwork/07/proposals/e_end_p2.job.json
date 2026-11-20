@@ -1,0 +1,39 @@
+{
+ "name": "e_end_p2",
+ "endpoint": "fal-ai/nano-banana-2/edit",
+ "request_id": "01a1f6f9-268d-7603-a14e-302510bd3a80",
+ "status": "COMPLETED",
+ "resolution": "2K",
+ "aspect_ratio": "9:16",
+ "num_images": 1,
+ "estimated_cost_usd": 0.12,
+ "inputs": [
+  {
+   "path": "qa/review_r21/artwork/07/game_frames/e_end.png",
+   "sha256": "14f41e282ef5b66db4e2e0fe3ad2737b7549e16bc1bb3aca03dd9158e3ca6dd8"
+  },
+  {
+   "path": "/home/user/wt/s07/assets/textures/match07/tile_wall_ring.png",
+   "sha256": "0e6f9ac0be877962dec66fd929f56371441d78716a6f7fc0d01c86f49054ede5"
+  },
+  {
+   "path": "/home/user/wt/s07/assets/textures/match07/tile_river_clean.png",
+   "sha256": "420eb75ced1051e9aee68fd2d8a972808bddbca8d3cc94d89de091057b846d5e"
+  },
+  {
+   "path": "/home/user/wt/s07/assets/textures/match07/near_bank.png",
+   "sha256": "7ec035c66dc4ff983370dee698b1fa886b8ddb3a07294fe8b25a61e185575767"
+  },
+  {
+   "path": "/home/user/wt/s07/assets/textures/match07/near_foam.png",
+   "sha256": "6193f97944db67d77f854da065679a2c1b68e9d1a4125dc6608e3b3b731d6260"
+  }
+ ],
+ "prompt": "IMAGE 1 is a frame from a 3D mobile game and defines EVERYTHING about the layout. IMAGES 2-5 are small material swatches cut from the art director's approved illustration of this level \u2014 they show ONLY surface materials, not a layout:\nIMAGE 2 = the purple slotted washer-drum wall with a polished gold ring; IMAGE 3 = the glossy cyan river water; IMAGE 4 = the thick glossy hot-pink / magenta river bank; IMAGE 5 = the puffy white-lilac soap foam.\n\nRepaint IMAGE 1 surface by surface with these materials, as a finished premium illustration:\n- every wall surface of IMAGE 1 becomes the deep violet-purple metal with neat, crisp rows of rounded slots (IMAGE 2), and every ring of IMAGE 1 becomes polished bright gold with warm amber light dots;\n- every water surface of IMAGE 1 (including any falling water) becomes the glossy cyan water of IMAGE 3 with crisp white highlight streaks;\n- the pink streaks / edges along the water become thick glossy magenta banks (IMAGE 4);\n- any white foam of IMAGE 1 becomes soft rounded puffy foam clouds (IMAGE 5) \u2014 never tall white columns or flat pale sheets;\n- add a few small iridescent soap bubbles.\n\nSTRICT: do NOT change any shape, position, size or perspective from IMAGE 1. Do not add, remove or move any object: no holes, drains, extra rings, new river bends or new paddles. The river, the drop, the tube opening and every ring stay exactly where they are in IMAGE 1. No character, coins, text, HUD or user interface. Output only the repainted scene.",
+ "outputs": [
+  "qa/review_r21/artwork/07/proposals/e_end_p2_v1.png"
+ ],
+ "seconds": 25.0,
+ "error": null,
+ "note": "PROPOSAL \u2014 generated view, NOT an approved reference until the user approves it"
+}
