@@ -2337,3 +2337,15 @@ You've hit your 5-hour limit · resets 4:50pm (UTC)
 <result>The NEW clip's page has loaded (it runs on the K23-S3 code), so I can now apply the crescent edit and typecheck.</result>
 </task-notification>
 
+### 🧑 User — 2026-11-20T12:45:37.276Z
+
+<task-notification>
+<task-id>a37295c79004f16e1</task-id>
+<tool-use-id>toolu_01UGvVfaD1nPjvRNFVwab37G</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/1de16074-a1ea-5d78-8ed3-5aa46f86005c/tasks/a37295c79004f16e1.output</output-file>
+<status>failed</status>
+<summary>Agent "Benny specialist r25" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 4:50pm (UTC) (error type rate_limit, HTTP 429, request id req_011ChECi7xVEstmjnKdrhGeT, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 4:50pm (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+<result>The NEW clip is done (06 lasts under 5 s from its checkpoint, so the last second runs into 07 and is labelled as such). Label and encode it.</result>
+</task-notification>
+
