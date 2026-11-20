@@ -69,3 +69,11 @@ If this account stops: the next account runs `bash docs/briefs/2026-11-20-r29/se
   done -> `qa/match/06/r28/route/quick_r29/` — **`&m06route=1` = NOT AN IMPROVEMENT** (tunnel-only change; river unchanged). Cause: 07's
   entrance sits 43 u ahead, 12 u off the painted tunnel's centre line and 16.5° to the right. Proposed next correction (needs the user's go):
   river on the painted route + 07 entrance on the tunnel centre line, 07–10 moved as one rigid block.
+* ~19:00 USER: "fix Screen 06 so Benny actually swims through my approved rainbow water and purple-and-gold tunnel" — extend / reconstruct
+  the 06 route and its transition into 07 if needed (authorized), existing assets only, full proof. Lead builds `&m06deep=1` itself in
+  `/home/user/wt/s06` (details: `qa/match/06/r25/PROGRESS.md` "(r29b)"): river along the painted coin trail rebuilt in 3D, down the middle of
+  the painted ring tunnel; 07-10 moved as ONE rigid block (T = -5.98, -3.02, -73.17; 06 = 123.8 u, was 54); 07 tube mouth shown ahead.
+* ~19:15 USER: "make sure u save everything to my github ... chat history and plugin tools agents servers every 5 minutes" — verified:
+  one daemon, saves 18:57 / 19:02 / 19:07 / 19:12 pushed + verified, manual save `98469e9` 19:15 (GitHub == local), s06 snapshot incl. the
+  new m06deep files, chat copy 19:15, LIVE_TOOLS_STATE 19:15:30.
+* ~19:37 full BEFORE / NEW clips rendering (proof -> `qa/match/06/r29/`).

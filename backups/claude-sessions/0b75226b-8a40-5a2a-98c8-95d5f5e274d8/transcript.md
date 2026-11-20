@@ -3665,3 +3665,310 @@ Found it: one more line trims the river floor to 20 units past the OLD end of th
 > ↩︎ result: tsc-done
 > Shell cwd was reset to /home/user/rainbow-
 
+### 🤖 Claude — 2026-11-20T19:17:07.927Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 170,182p src/game/Game.ts | cut -c1-200; grep -n \"zones.tubes.add(buildRingsAt(perfPath, rings0607\\|zones.tubes.add(buildWallLids(perfPath, 0, 0, ringSpacing\\|addWall(sGlow05, s08\" src/world/environment.ts", "description": "Read the stage visibility switch and the 06/07 tube parts"}`
+
+### 🧑 User — 2026-11-20T19:17:07.996Z
+
+> ↩︎ result: tubes: ['03', '09'],
+>     chamber: ['07', '11'],
+>   };
+>   const updateZones = () => {
+>     const i = STAGE_ORDER.indexOf(st.stage);
+>     for (const [k, [a, b]] of Object.entries(zoneRanges)) {
+>       env.zones[k as keyof typeof env.zones].visible = !zoneHidden(k) && i >= STAGE_ORDER.indexOf(a) && i <= STAGE_ORDER.indexOf(b);
+>     }
+>     if (m08) { m08On = st.stage === '08'; m08.group.visible = m08On; if (m08On) env.zones.chamber.visible = false; }
+>     if (m06) { m06On = st.stage === '06'; m06.group.visible = m06On; if (m06On) env.zones.tubes.visible = false; }
+>     const inDrum = i <= 1;
+>     fog.density = inDrum ? 0.0015 : i >= 7 ? 0.0025 : 0.0035;
+>   };
+> 344:  addWall(sGlow05, s08, perfTubeMat);
+> 393:  zones.tubes.add(buildRingsAt(perfPath, rings0607, ringMat, { inset: 0.02, collar }));
+> 425:  zones.tubes.add(buildWallLids(perfPath, 0, 0, ringSpacing, lidMat, { positions: lids0607, angleDeg: 18, droopDeg: 20, size: 1.7, thickness: 0.42, stretch: 1.3, sink: 0.12, skip: lidClear }));
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:17:33.809Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 40,60p src/world/environment.ts | cut -c1-160; grep -n \"^  return {\" -A6 src/world/environment.ts | head -10 | cut -c1-160; grep -n \"const s07\\|const s08 = \\|s08 =\" src/world/environment.ts | head -5 | cut -c1-160", "description": "Read the environment's zone groups and returned structure"}`
+
+### 🧑 User — 2026-11-20T19:17:33.885Z
+
+> ↩︎ result: export function buildEnvironment(course: Course): Environment {
+>   const root = new THREE.Group();
+>   root.name = 'washer_world';
+>   const zones = {
+>     drumA: new THREE.Group(),
+>     basin: new THREE.Group(),
+>     tubes: new THREE.Group(),
+>     chamber: new THREE.Group(),
+>   };
+>   Object.entries(zones).forEach(([k, g]) => { g.name = 'zone_' + k; root.add(g); });
+>   const goldMat = gold();
+>   const goldSoft = gold({ roughness: 0.3, emissive: 0.3 });
+>   const chromeMat = chrome();
+>   const animated: ((t: number, dt: number) => void)[] = [];
+> 
+>   // =====================================================================================
+>   // Drum A (01–02)
+>   // =====================================================================================
+>   const dA = WORLD.drumA;
+>   const drumLen = dA.zDoor - dA.zBack;
+> 685:  return {
+> 686-    group: root,
+> 687-    update: (t, dt) => animated.forEach((f) => f(t, dt)),
+> 688-    doorA,
+> 689-    doorC,
+> 690-    roomA: { ...roomA, anchor: anchorA },
+> 691-    roomC: { ...roomC, anchor: anchorC },
+> --
+> 840:  return { mesh, update: (t: number) => { tex.offset.y = -t * 2.2; } };
+> 841-}
+> 199:  const s08 = course.stage('08').s0;
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:17:43.857Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 540,566p src/game/Game.ts | cut -c1-180; grep -n \"const tube05\\|perfPath = \\|const s05 = \" src/world/environment.ts | head -4 | cut -c1-140", "description": "Read the per-frame Screen 06 block in the game loop"}`
+
+### 🧑 User — 2026-11-20T19:17:43.927Z
+
+> ↩︎ result: // `?match08=1` on Screen 08: the projected scenery carries the approved river, foam and bubbles
+>     if (m08 && (m08On || m08Applied)) {
+>       for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m08On; }
+>       m08Applied = m08On;
+>     }
+>     // `?match06=1` on Screen 06: the projected scenery carries the approved river, ripples, foam and bubbles
+>     if (m06 && (m06On || m06Applied) && !(m08 && m08On)) {
+>       // r7 `&m06bub=1`: the game's iridescent bubbles + Benny's splash crown / spray return once the camera leaves the
+>       // approved view (the painting
+>       // carries its bubbles only there; while swimming the screen had none)
+>       const bub6 = M06_BUB && m06On && m06.away(camera.position) > 0.5;
+>       m06.setAway(m06On ? m06.away(camera.position) : 0);
+>       coins.setGrow(m06On ? m06.away(camera.position) : 1); // r28 m06route coin growth (no-op without it)
+>       m06.setBenny(st.s, st.lat); // r23 `&m06rip=1` only (no-op without it)
+>       for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m06On || (bub6 && (k === 'bubbles' || k === 'splashCrown' || k === 'spray')); }
+>       const crownU = M06_SPL ? ((water.parts?.splashCrown as  …[+942 chars]
+
+### 🤖 Claude — 2026-11-20T19:17:45.192Z
+
+Now the edits: 07's parts get their own group in the environment, and the game loop reveals it ahead of Benny.
+
+### 🤖 Claude — 2026-11-20T19:18:00.953Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='src/world/environment.ts'; t=open(p).read()\nold=\"  const s08 = course.stage('08').s0;\"\nassert t.count(old)==1\nt=t.replace(old, old+\"\"\"\n  // r29 `&m06deep=1`: Screen 07's tube (walls from the 07 entrance, its rings + lids, a gold collar at the mouth) in its OWN group\n  // 'tube07' inside zones.tubes, so Game can show the mouth ahead of Benny inside the 06 ring tunnel (the rest stays hidden in 06)\n  const deep07 = course.deepDs07 > 0, s07e = course.stage('07').s0;\n  const tube07 = new THREE.Group(); tube07.name = 'tube07';\n  …[+4086 chars]`
+
+### 🧑 User — 2026-11-20T19:18:04.196Z
+
+> ↩︎ result: ok
+> tsc-done
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:18:08.634Z
+
+Type check passes. Re-capturing Screen 06 (water through to the end, plus the new view of 07's mouth) and the 07–10 start views after the ring fix:
+
+### 🤖 Claude — 2026-11-20T19:18:12.442Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && Q0=$(cat /home/user/rainbow-/qa/match/06/r25/step2/QUERY_NEW2.txt); STG='[[\"s07\",0,null,\"07\"],[\"s08\",0,null,\"08\"],[\"s09\",0,null,\"09\"],[\"s10\",0,null,\"10\"]]'; SH='[[\"a_start\",0,null],[\"c_early12\",0.12,null],[\"d_crest20\",0.2,null],[\"e_entry30\",0.3,null],[\"f_mid50\",0.5,null],[\"g_late70\",0.7,null],[\"h_end85\",0.85,null],[\"p_end92\",0.92,null],[\"i_exit97\",0.97,null],[\"j_07a\",1.03,null],[\"k_07b\",1.1,null],[\"l_hardL35\",0.35,-1],[\"m_hardR35\",0.35,1],[\"n_hardL70\",0.7,-1],[\"o_hardR70\",0.7,1]]'; (PORT=5293 nohup ./quick2 …[+284 chars]`
+
+### 🧑 User — 2026-11-20T19:18:13.544Z
+
+> ↩︎ result: slot 1 busy
+> slot 2 busy
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:18:13.841Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && until grep -q \"exit\" d2_new.log 2>/dev/null && grep -q \"exit\" d2_stages_new.log 2>/dev/null; do sleep 3; done; grep -h exit d2_new.log d2_stages_new.log", "description": "Wait for the second round of captures", "timeout": 1200000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T19:18:13.896Z
+
+> ↩︎ result: Command running in background with ID: bej4ry7mz. Output is being written to: /tmp/claude-0/-home-user-rainbow-/0b75226b-8a40-5a2a-98c8-95d5f5e274d8/tasks/bej4ry7mz.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-20T19:18:16.732Z
+
+While that renders, I'll prepare the continuous-video tool by reading the existing Screen 06 clip script:
+
+### 🤖 Claude — 2026-11-20T19:18:17.439Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && cat tools/match06/r25_open_clip.mjs | cut -c1-230", "description": "Read the existing Screen 06 clip-recording tool"}`
+
+### 🧑 User — 2026-11-20T19:18:17.505Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // r25 s06 copy of tools/lead23/screen_clip.mjs (QA only): stops at env CLIP_END (share of the screen, default 1 = whole screen)
+> // Lead r23: uninterrupted REAL-GAMEPLAY clip of one whole playable screen (entrance -> end, into the next screen), with the
+> // steering phase and the screen logged per frame (for labels). Real game speed: one frame per 1/24 s of game time.
+> // Steering by the share of the screen travelled: straight < 0.30, LEFT 0.30-0.50, RIGHT 0.50-0.70, straight after (end).
+> // The shader clock follows the clip clock (performance.now pinned per frame), so the water moves at its normal speed.
+> //   cd <worktree> && AUDIT_PORT=5290 node /home/user/rainbow-/tools/lead23/screen_clip.mjs <screen 04..08> <outDir> "<query>" [tailSecs]
+> import { mkdirSync, writeFileSync, realpathSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> // worktrees link node_modules to the main checkout: allow Vite to serve it too, else the HUD fonts fall back (s06 r23 fix)
+> async function startVite(port) {
+>   const { createServer, searchForWorkspaceRoot } =  …[+2834 chars]
+
+### 🤖 Claude — 2026-11-20T19:18:25.722Z
+
+> 🔧 **Bash** `{"command": "grep -rl \"drawtext\" tools/ scripts/ 2>/dev/null | head -5; ls tools/lead23/ 2>/dev/null | head -20", "description": "Find the existing clip labelling and encoding scripts"}`
+
+### 🧑 User — 2026-11-20T19:18:25.806Z
+
+> ↩︎ result: tools/lead_r4/assemble_tour.py
+> tools/lead_r5/assemble_tour.py
+> audit06_slow.mjs
+> clip.sh
+> label_clip.py
+> probe04.mjs
+> screen_clip.mjs
+> setq.mjs
+> sweep.sh
+
+### 🤖 Claude — 2026-11-20T19:18:27.969Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,40p tools/lead23/label_clip.py | cut -c1-200; echo ----; cat tools/lead23/clip.sh | head -30 | cut -c1-200", "description": "Read the clip labelling and assembly scripts"}`
+
+### 🧑 User — 2026-11-20T19:18:28.039Z
+
+> ↩︎ result: #!/usr/bin/env python3
+> """Lead r23: label every frame of a screen_clip.mjs run (title, playback speed, phase, game time) and encode mp4s.
+> usage: python3 -I label_clip.py <clipDir> <title> <out_prefix>   -> <out_prefix>_1x.mp4 (real game speed) + _0.5x.mp4"""
+> import json, subprocess, sys
+> from pathlib import Path
+> from PIL import Image, ImageDraw, ImageFont
+> 
+> d, title, outp = Path(sys.argv[1]), sys.argv[2], sys.argv[3]
+> meta = json.loads((d / 'frames.json').read_text())
+> fb = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 30)
+> fs = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 26)
+> lab = d / 'lab'
+> lab.mkdir(exist_ok=True)
+> for speed in ('1x', '0.5x'):
+>     for fr in meta['frames']:
+>         im = Image.open(d / 'f' / f"{fr['i']:04d}.png").convert('RGB')
+>         dr = ImageDraw.Draw(im)
+>         spd = 'REAL GAME SPEED (1.0x)' if speed == '1x' else 'HALF SPEED (0.5x)'
+>         lines = [(title, fb), (f"{spd}   t = {fr['t']:.2f} s", fs), (fr['phase'], fs)]
+>         y = 1536 - 20 - sum(46 for _ in lines)
+>         dr.rectangle([0, y - 14, 864, 1536], fill=(20, 8, 40))
+>         for txt, f in lines:
+>             dr.text((24, y), txt, font=f, fill=(255, …[+1152 chars]
+
+### 🤖 Claude — 2026-11-20T19:18:34.265Z
+
+> 🔧 **Bash** `{"command": "ls scripts | grep -i -E \"game|play|smoke|coin\" | head; grep -o '\"test[^\"]*\": \"[^\"]*\"' package.json | head -10", "description": "Find the gameplay test script and npm test commands"}`
+
+### 🧑 User — 2026-11-20T19:18:34.317Z
+
+> ↩︎ result: gameplay-test.mjs
+> "test:continuity": "vite-node scripts/continuity-test.ts"
+> "test:cinematic": "node scripts/cinematic-test.mjs"
+
+### 🤖 Claude — 2026-11-20T19:18:36.335Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,30p scripts/gameplay-test.mjs | cut -c1-200; grep -n \"argv\\|QUERY\\|process.env\" scripts/gameplay-test.mjs | head -10 | cut -c1-200", "description": "Read how the gameplay test is run and given a query"}`
+
+### 🧑 User — 2026-11-20T19:18:36.394Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Automated gameplay + continuity test on the REAL running game (headless Chromium, WebGL).
+> // Drives Benny from 03 to the 11 ending with the deterministic simulation API and checks:
+> //  * continuous travel: s strictly increases, no position jump > speed·dt (no teleport/cut)
+> //  * camera continuity: no camera jump between steps (no hard cut), incl. the 07 plunge → 08
+> //  * 07 plunge: positive travel time, large vertical drop, 08 inlet reached from the bottom
+> //  * real coin pickups update the counter; steering into the foam wall costs a heart
+> //  * pause freezes the simulation; resume continues
+> //  * the run ends in the 11 victory with Benny hidden under the towel
+> // Writes qa/gameplay_test.json and qa/07_to_08_continuity.md. Exit 1 on failure.
+> //   node scripts/gameplay-test.mjs --q=river05=1 --out=qa/pilot05/wave11/tests/gameplay_river05.json
+> //   → the same run with URL test switches; with --q the tracked qa/ files above are NOT rewritten.
+> import { writeFileSync, mkdirSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const optQ = (process.argv.find((a) => a.startsWith('--q=')) ?? '').slice(4);
+> const optOut = (pr …[+820 chars]
+
+### 🤖 Claude — 2026-11-20T19:18:42.010Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/0b75226b-8a40-5a2a-98c8-95d5f5e274d8/tasks/bej4ry7mz.output 2>/dev/null; ls /home/user/scratch/s06/d2_new 2>/dev/null | wc -l; ls /home/user/scratch/s06/d2_stages_new 2>/dev/null | wc -l", "description": "Check the second round of captures"}`
+
+### 🧑 User — 2026-11-20T19:18:42.070Z
+
+> ↩︎ result: 6
+> 5
+
+### 🤖 Claude — 2026-11-20T19:18:43.773Z
+
+The 07–10 start views are ready. Checking whether the ring fix made them match:
+
+### 🤖 Claude — 2026-11-20T19:18:46.777Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && python3 - <<'EOF'\nfrom PIL import Image\nimport numpy as np\nfor s in ['s07','s08','s09','s10']:\n    A=np.asarray(Image.open(f'd1_stages_before/{s}.png').convert('RGB')).astype(int); B=np.asarray(Image.open(f'd2_stages_new/{s}.png').convert('RGB')).astype(int)\n    d=np.abs(A-B).max(axis=2); m=(d>20)\n    print(s, f\"px>20: {100*m.mean():.1f}%  mean abs diff {np.abs(A-B).mean():.1f} levels\")\nEOF\nmontage -label 'BEFORE %t' d1_stages_before/s07.png d1_stages_before/s08.png -label 'NEW %t' d2_stages_new/s07.png d2_stages_new/s08.png -tile 4x1 -geomet …[+118 chars]`
+
+### 🧑 User — 2026-11-20T19:18:47.458Z
+
+> ↩︎ result: s07 px>20: 49.6%  mean abs diff 25.5 levels
+> s08 px>20: 32.2%  mean abs diff 17.1 levels
+> s09 px>20: 47.6%  mean abs diff 29.9 levels
+> s10 px>20: 39.1%  mean abs diff 18.9 levels
+> ok
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:18:48.802Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s06/stages_cmp2.jpg"}`
+
+### 🧑 User — 2026-11-20T19:18:48.844Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T19:19:01.107Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && until grep -q \"exit\" d2_new.log 2>/dev/null; do sleep 3; done; grep exit d2_new.log; ls d2_new | wc -l", "description": "Wait for the new Screen 06 captures to finish", "timeout": 900000}`
+
+### 🧑 User — 2026-11-20T19:19:01.186Z
+
+> ↩︎ result: 06 i_exit97 s 309.47 lat 0 stage 06 coins 1810
+> d2_new exit 0
+> 16
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:19:03.810Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && montage -label 'NEW %t' d2_new/c_early12.png d2_new/e_entry30.png d2_new/f_mid50.png d2_new/g_late70.png d2_new/h_end85.png d2_new/p_end92.png d2_new/i_exit97.png d2_new/j_07a.png d2_new/k_07b.png d2_new/n_hardL70.png -tile 5x2 -geometry 270x480+3+3 -pointsize 15 new2.jpg; echo ok", "description": "Build a sheet of the new Screen 06 captures"}`
+
+### 🧑 User — 2026-11-20T19:19:04.145Z
+
+> ↩︎ result: ok
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:19:05.485Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s06/new2.jpg"}`
+
+### 🧑 User — 2026-11-20T19:19:05.647Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T19:19:41.650Z
+
+> 🔧 **Bash** `{"command": "cat > /home/user/scratch/s06/clips.sh <<'EOF'\n#!/usr/bin/env bash\n# r29 lead: continuous real-gameplay clips of Screen 06 (checkpoint -> through the exit -> 1.5 s into 07), BEFORE and NEW, same steering\nset -u\ncd /home/user/wt/s06\nQ0=$(cat /home/user/rainbow-/qa/match/06/r25/step2/QUERY_NEW2.txt)\nrun() { AUDIT_PORT=$2 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/match06/r25_open_clip.mjs 06 /home/user/scratch/s06/$1 \"$3\" 1.5 > /home/user/scratch/s06/$1.log 2>&1; echo \"$1 exit $?\" >> /home/user/scratch/s06/$1.log; }\nrun clip_before 5295 \"$Q0\" &\nrun  …[+299 chars]`
+
+### 🧑 User — 2026-11-20T19:19:43.802Z
+
+> ↩︎ result: slot 1 busy
+> slot 2 busy
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:19:47.831Z
+
+Both clips are rendering, which will take a while on this CPU-only machine. Meanwhile I'll update the progress notes and make a save.
+
+### 🤖 Claude — 2026-11-20T19:19:59.679Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='qa/match/06/r25/PROGRESS.md'; t=open(p).read()\nold=\"* NOW: quick captures `/home/user/scratch/s06/d1_new` (06 moments) + `d1_stages_{before,new}` (07-10 start views must be identical).\"\nassert old in t\nt=t.replace(old,\"\"\"* d1 quick check (19:05): 06 start view visually identical (fur speckle from a 0.18 deg roll + 3 coin outlines); Benny now travels INSIDE the\n  ring tunnel. Bugs found + fixed: (1) the river floor was trimmed 20 u past the OLD 06 end (`sE`) -> water missing from ~65 %; (2) the 07\n  rings / lids / slot rows were phased from the 06 st …[+2288 chars]`
+
