@@ -833,3 +833,176 @@ Clean 5-line change. Now recreating the s04 and s07 worktrees with the setup scr
 
 > 🔧 **Bash** `{"command": "mkdir -p /home/user/tools-pixelmatch && cp /home/user/rainbow-/docs/briefs/2026-11-18-r16/pixeldiff.mjs /home/user/tools-pixelmatch/ && cd /home/user/tools-pixelmatch && npm init -y >/dev/null && npm i pixelmatch@7 pngjs@7 2>&1 | tail -1", "description": "Rebuild pixel comparison QA tool", "timeout": 200000}`
 
+### 🧑 User — 2026-11-20T03:15:09.623Z
+
+> ↩︎ result: Preparing worktree (new branch 'claude/rainbow-s04-match-c23')
+> s04: /home/user/wt/s04 on claude/rainbow-s04-match-c23 from 34cb494 + qa/match/04/r21/code_at_stop_full.patch
+> Preparing worktree (new branch 'claude/rainbow-s07-match-c23')
+> s07: /home/user/wt/s07 on claude/rainbow-s07-match-c23 from 8accdad + qa/match/07/r21/code_at_stop_full.patch
+> ---verify
+> == s04: claude/rainbow-s04-match-c23 @ 34cb494
+>  src/game/Game.ts       |   9 +-
+>  src/world/match04m4.ts | 525 ++++++++++++++++++++++++++++++++++++++++++++++---
+>  2 files changed, 501 insertions(+), 33 deletions(-)
+> blender imageblaster lead_r13 lead_r6 make_env_geometry_ref.py make_env_plate.py make_env_plate_v2.py make_env_plate_v3.py marble05 match match04 match08 model-lab.html model-lab.ts proj05 qa water-lab.html water-lab.ts worldlabs 
+> == s07: claude/rainbow-s07-match-c23 @ 8accdad
+>  src/game/Game.ts     |  19 +++++-
+>  src/world/match07.ts | 189 ++++++++++++++++++++++++++++++++++++++++++++++++---
+>  2 files changed, 198 insertions(+), 10 deletions(-)
+> blender imageblaster lead_r13 lead_r6 make_env_geometry_ref.py make_env_plate.py make_env_plate_v2.py make_env_plate_v3.py marble05 match match07 match08 model-lab.html model-lab.ts pro …[+49 chars]
+
+### 🧑 User — 2026-11-20T03:15:10.313Z
+
+> ↩︎ result: found 0 vulnerabilities
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T03:15:12.708Z
+
+Both worktrees restored on new local `-c23` branches with the patches applied once (`m04wgl` and `m07end` code present). Typechecking both before handing them to specialists:
+
+### 🤖 Claude — 2026-11-20T03:15:14.821Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && (timeout 300 npx tsc --noEmit -p . 2>&1 | tail -3; echo \"s04 tsc exit ${PIPESTATUS[0]}\") ; cd /home/user/wt/s07 && (timeout 300 npx tsc --noEmit -p . 2>&1 | tail -3; echo \"s07 tsc exit ${PIPESTATUS[0]}\"); cat /home/user/rainbow-/qa/review_r21/audit/QUERY_04.txt; echo; tail -25 /home/user/rainbow-/qa/match/04/r21/PROGRESS.md", "description": "Typecheck both worktrees, read s04 log", "timeout": 600000}`
+
+### 🧑 User — 2026-11-20T03:15:19.642Z
+
+> ↩︎ result: s04 tsc exit 0
+> s07 tsc exit 0
+> match04=1&m04ring=1&m04river=1&m04bub=1&m04mouth=1&m04room=1&m04ry=0.8&m04rk=0.82&m04arr3d=1&m04a3k=66&m04a3w2=1&m04a3g=1.6&m04a3o=0.38&m04a3b=1&m04a3b0=3.0&m04a3b1=4.4&m04a3f0=25&m04a3f1=31&m04a3p=4.0&m04a3w=1.15&m04a3t=0.32&m04a3d=0.55&m04a3f=4&m04a3y=0.1&m04ringp=4.6&m04ringgw=1.2&m04tb=0.2&m04ts=0.22&m04paint=0.9&m04pink=1&m04pkl=2.15&m04pkw=0.9&m04a3hb=1&m04xf=2.6&m04lane=1&m04lanew=2.3&m04lanes=0.85&m04a3co=1.0&m04lane2=0.55&m04lgl=1.3&m04lsp=0.9&m04copper=1.3&m04edge=1&m04rf0=1.25&m04rf1=0.8&m04lbr=0.14&m04a3tex=1&m04bulge=0.18&m04lcd=1.0&m04lcw=1.7&m04a3fa=1.0&m04a3gb=0.16&m04a3tm=0.45&m04a3lum=1.1&m04a3rw=0.03&m04foam=1&m04foamr=2.5&m04foamn0=4.5&m04foamn1=6.5&m04fclu=1&m04sband=1&m04end=1&m04nband=1&m04nwhirl=1&m04nwc=1.3&m04flo=1&m04nwq=2&m04nwr=3.2&m04rpaint=1&m04rpsoft=1&m04rpj=0.35&m04rplu=3.95&m04rpgu=4.28&m04rpdots=1&m04rpvar=1&m04rfew=1&m04rfg=1.2&m04rpol=1&m04rpcr=1&m04rflat=1&m04rnear=1&m04rnh=0.7&m04rny=0.15&m04rng=0.5&m04rnhf=0.1&m04rnr=0.6&m04rnf=0.8&m04rmat=1&m04wup=1&m04bbank=1&m04rsoft=1&msaa=4
+> 
+>   old edge, no seam) procedural satin ribbons running along the tunnel, rising and dipping with each tongue and waving gently
+>   with t …[+2791 chars]
+
+### 🤖 Claude — 2026-11-20T03:15:36.075Z
+
+> 🔧 **Bash** `{"command": "P=backups/wip/claude__rainbow-s06-match-c18/tracked.patch; grep '^diff --git' $P; grep '^+' $P | grep -v '^+++' | head -400 | awk 'length>40' | head -4 > /tmp/claude-0/s06probe.txt; cat /tmp/claude-0/s06probe.txt | cut -c1-140; echo \"--- present in c7cac38?\"; while IFS= read -r l; do s=\"${l:1}\"; git show origin/claude/rainbow-s06-match-c22:src/world/match06.ts | grep -qF -- \"$s\" && echo FOUND || echo absent; done < /tmp/claude-0/s06probe.txt; echo \"--- benny c22 progress head\"; timeout 200 git fetch --depth=20 origin +refs/heads/claude/rainbow-benny-c22:refs/remotes/origin …[+207 chars]`
+
+### 🧑 User — 2026-11-20T03:15:48.552Z
+
+> ↩︎ result: diff --git a/src/world/match06.ts b/src/world/match06.ts
+> +// r18 m06st (qa/match/06/r18/PROGRESS.md): the start view keeps the approved look a little longer and cleanly. uSt = on;
+> +// uStW = camera distance from the approved viewpoint (u) over which the approved pixels hand over to the 3D materials;
+> +// uStM = 1 on the tunnel / rings / end cap (the crest-top layer: see below);
+> +// uStK = march step down the projector's depth map (uv, 4 px of the approved picture); uStB = crest warp band (px);
+> --- present in c7cac38?
+> FOUND
+> FOUND
+> FOUND
+> FOUND
+> --- benny c22 progress head
+>  * [new branch]      claude/rainbow-benny-c22 -> origin/claude/rainbow-benny-c22
+> # Benny round 21 — progress (branch `claude/rainbow-benny-c22`)
+> 
+> ## (r21) WHERE I STOPPED / NEXT  — 2026-11-20
+> 
+> **State:** round-20 step 1 (`&benny20=1`, commit `bade594`: dusty-rose colour GOOD on 04, texture NOT yet) +
+> the round-20 unfinished edits restored from `backups/wip/claude__rainbow-benny-c21/tracked.patch` (lead branch
+> `ccr-68d26c2d-gwegce`) and committed here UNTESTED:
+> * `src/characters/benny/benny20.ts` — shorter, denser body fur (shells 24, length 0.075, gravity 0.05, lock 40/1.1/0.9/260,
+>   comb softened) + new per-part `pile …[+1782 chars]
+
+### 🤖 Claude — 2026-11-20T03:16:05.464Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-20-r22/COORDINATION.md", "content": "# Round 22 — coordination (new account; lead session branch `ccr-4742c19f-ez2mrs`, 2026-11-20 from ~03:05 UTC)\n\nLead session `session_0179kWgNJzw5v4674DNtMpda`. Started from the round-21 lead `ccr-68d26c2d-gwegce`. Nothing merged anywhere.\nUser authorizations carried forward verbatim from round 21 (`docs/briefs/2026-11-20-r21/RESUME_R21.md` §\"User decisions\"): paid\nartwork, up to FOUR specialists at once, 06 + 07 camera-framing TESTS, Screen 08 resumed, consistent approved Benny on 04–08.\n\n## Re …[+2815 chars]`
+
+### 🧑 User — 2026-11-20T03:16:05.501Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-20-r22/COORDINATION.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T03:16:10.800Z
+
+> 🔧 **Bash** `{"command": "ls qa/match/07/r21/ qa/match/04/r21/; ls qa/match/07/r21/*/ | head -30; grep -n \"K7&m07end\\|kept\\|Kept\" qa/match/07/r21/PROGRESS.md | head -8", "description": "Locate saved s07/s04 step-1 evidence folders"}`
+
+### 🧑 User — 2026-11-20T03:16:10.840Z
+
+> ↩︎ result: qa/match/04/r21/:
+> BEFORE_V4
+> PROGRESS.md
+> code_at_stop_full.patch
+> s1_wgl
+> untracked_tools
+> 
+> qa/match/07/r21/:
+> APPROVED_07.png
+> BEFORE_K7
+> K7.txt
+> PROGRESS.md
+> code_at_stop_full.patch
+> step1_end
+> untracked_tools
+> qa/match/07/r21/BEFORE_K7/:
+> a_start.png
+> b_early.png
+> c_middle.png
+> d_late.png
+> e1_075.png
+> e2_092.png
+> e_end.png
+> f_hard_left.png
+> g_hard_right.png
+> shots.json
+> 
+> qa/match/07/r21/step1_end/:
+> NEW
+> code.patch
+> continuity.txt
+> diag_r21.mjs
+> diff_a_start.png
+> gameplay_new.json
+> proof_0px.json
+> swim_clip_r21.mjs
+> swim_end_BEFORE.mp4
+> swim_end_NEW.mp4
+> 
+> qa/match/07/r21/untracked_tools/:
+> tools
+> 4:worktree (lead autosave snapshots them); each kept step also has `code.patch` (full `git diff` at that step). Brief:
+> 8:* Kept set at the start of the round, K7 (`K7.txt`): `match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1&m07foam=1&m07coinsz=1&m07nearw=1&m07foamb=1&m07band=1`
+> 35:Query NEW: `K7&m07end=1` · BEFORE: K7
+> 45:* Start view a_start and b_early: **0 px** (`diff_a_start.png`). Deterministic `scripts/capture.mjs` K7 vs K7&m07end: 07 start
+> 47:* Gameplay `node scripts/gameplay-test.mjs --q="K7&m07end=1"`: **8/8 pass, 91 coins, 1,330 → 2,240**, plunge drop 61.14 u
+
+### 🤖 Claude — 2026-11-20T03:16:11.998Z
+
+Now the four launch addenda, saved in the repo so any interruption can resume from them.
+
+### 🤖 Claude — 2026-11-20T03:16:19.545Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-20-r22/LAUNCH_S04.md", "content": "# Round 22 launch — Screen 04 water / foam / arrows (in-process `foam-bubbles-particles`)\n\nYour full brief is `docs/briefs/2026-11-20-r21/S04_R21.md` (rules, tasks, proof, reporting). THIS file overrides only what changed:\n\n* Worktree `/home/user/wt/s04`, LOCAL branch **`claude/rainbow-s04-match-c23`** (base `34cb4941` + `qa/match/04/r21/code_at_stop_full.patch`\n  applied once by the lead; tsc OK). Do NOT commit, do NOT push, never run git in `/home/user/rainbow-`. The lead's five-minute\n  autosave  …[+1177 chars]`
+
+### 🧑 User — 2026-11-20T03:16:19.569Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-20-r22/LAUNCH_S04.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T03:16:27.398Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-20-r22/LAUNCH_S07.md", "content": "# Round 22 launch — Screen 07 (in-process `water-fx-specialist`)\n\nYour full brief is `docs/briefs/2026-11-20-r21/S07_R21.md` (rules, tasks, proof, reporting). THIS file overrides only what changed:\n\n* Worktree `/home/user/wt/s07`, LOCAL branch **`claude/rainbow-s07-match-c23`** (base `8accdad0` + `qa/match/07/r21/code_at_stop_full.patch`\n  applied once by the lead; tsc OK). Do NOT commit, do NOT push, never run git in `/home/user/rainbow-`. The lead's five-minute\n  autosave snapshots your edits to ` …[+1686 chars]`
+
+### 🧑 User — 2026-11-20T03:16:27.425Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-20-r22/LAUNCH_S07.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T03:16:37.497Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-20-r22/LAUNCH_S06.md", "content": "# Round 22 launch — Screen 06 (cloud session; roles `path-camera-transition-engineer` + `reference-match-director`)\n\nYour full brief is `docs/briefs/2026-11-20-r21/S06_R21.md` (user decision verbatim, rules, tasks, proof). THIS file overrides only what changed:\n\n* You start on **`claude/rainbow-s06-match-c23`**, created from `claude/rainbow-s06-match-c22` @ `c7cac38` (02:50 UTC). Push ONLY\n  your own branch; keep your session's five-minute autosave running (CLAUDE.md §2). Never merge / rebase / force …[+1895 chars]`
+
+### 🧑 User — 2026-11-20T03:16:37.521Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-20-r22/LAUNCH_S06.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T03:16:43.548Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-20-r22/LAUNCH_BENNY.md", "content": "# Round 22 launch — Benny (cloud session; role `benny-character-artist`)\n\nYour full brief is `docs/briefs/2026-11-20-r21/BENNY_R21.md` (user orders, target, tasks, proof). THIS file overrides only what changed:\n\n* You start on **`claude/rainbow-benny-c23`**, created from `claude/rainbow-benny-c22` @ `70d3b83b`. Push ONLY your own branch; keep\n  your session's five-minute autosave running (CLAUDE.md §2). Never merge / rebase / force-push; never write any other branch.\n* The round-20 unfinished edit …[+1085 chars]`
+
+### 🧑 User — 2026-11-20T03:16:43.578Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-20-r22/LAUNCH_BENNY.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T03:16:47.587Z
+
+The briefs need to be on GitHub before the cloud sessions read them. Saving now:
+
+### 🤖 Claude — 2026-11-20T03:16:49.090Z
+
+> 🔧 **Bash** `{"command": "timeout 300 python3 scripts/rainbow-autosave.py --reason manual:r22-restore 2>&1 | tail -4; git rev-parse HEAD; timeout 60 git ls-remote origin refs/heads/ccr-4742c19f-ez2mrs", "description": "Save briefs and config to GitHub, verify", "timeout": 320000}`
+

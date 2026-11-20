@@ -618,8 +618,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 20287,
-   "sha256": "3b28ee620234e877baca811e79deacca7b75e5f6dfd9484f27b530367fad248e"
+   "bytes": 20296,
+   "sha256": "c45372ab6dd5f833a39edeb72e75830e8054d393404f42b0d61ee93d1dc491a8"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -633,8 +633,8 @@
   },
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
-   "bytes": 1957,
-   "sha256": "eb78ab7a64bf4c6f1e3c8c043b3002b4cdd7ab34a94b0bab1e2f4a3445bcca45"
+   "bytes": 2074,
+   "sha256": "5ffb30c9d1fe079cd04842c7975d13b6c1b078de462cfb8a9e6677b596821c68"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -1418,6 +1418,21 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c22/untracked/tools/match04/rings21.mjs",
+   "bytes": 3769,
+   "sha256": "1300f664a22b78841df2731bf82b07f1a61318b72fb84a4f9c1a4ea79f52c29e"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-match-c23/INFO.json",
+   "bytes": 560,
+   "sha256": "009d3c8b3e805f2ee3d21ec3c8fc72396177a97921b3b5255e9a5bb74595552e"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-match-c23/tracked.patch",
+   "bytes": 60486,
+   "sha256": "97a06742738f94323dcd984c58d7e6d94bb18a03a721d8ff48e9e1597add6d1c"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-match-c23/untracked/tools/match04/rings21.mjs",
    "bytes": 3769,
    "sha256": "1300f664a22b78841df2731bf82b07f1a61318b72fb84a4f9c1a4ea79f52c29e"
   },
@@ -3085,6 +3100,31 @@
    "path": "docs/briefs/2026-11-20-r21/setup_worker_r22.sh",
    "bytes": 3075,
    "sha256": "16fbb012a8e26401a9faa9c4601b9f9ce372e9a7c8efdfa2bf7153a389a5479a"
+  },
+  {
+   "path": "docs/briefs/2026-11-20-r22/COORDINATION.md",
+   "bytes": 3310,
+   "sha256": "398b6fe4f466beed846e1b24fd6a2ac3b6aebc56a3cd49f299937bc62eb16fe0"
+  },
+  {
+   "path": "docs/briefs/2026-11-20-r22/LAUNCH_BENNY.md",
+   "bytes": 1578,
+   "sha256": "e7b9bb24b87a12cc604d379a321408188fda457ab8373604100c439f1fe5d839"
+  },
+  {
+   "path": "docs/briefs/2026-11-20-r22/LAUNCH_S04.md",
+   "bytes": 1665,
+   "sha256": "a41b87f1057cbb9c45024368ee360af2e10f0a713a8626f6d57870d4ec11ccc2"
+  },
+  {
+   "path": "docs/briefs/2026-11-20-r22/LAUNCH_S06.md",
+   "bytes": 2389,
+   "sha256": "8ec11f4a2a325bab0c04dd0bfa62e057b2800bb9848061df0a8c8115edb359c8"
+  },
+  {
+   "path": "docs/briefs/2026-11-20-r22/LAUNCH_S07.md",
+   "bytes": 2176,
+   "sha256": "a762632af4f0da351057b62dfab8702de58648288242de98f2bcf5d2abe5bd41"
   },
   {
    "path": "docs/characters/benny.md",
