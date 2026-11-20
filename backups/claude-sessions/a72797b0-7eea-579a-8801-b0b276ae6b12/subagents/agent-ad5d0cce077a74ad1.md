@@ -1045,3 +1045,119 @@ Let me view the approved reference and the lead's e_end / f_hard_left / g_hard_r
 >       // `&m05fcoin=1` (Screen 05 round 12): the painted far-arc coins (C05M 7–18, lifted up to 3.4 u to sit on the
 >       // forced-perspective relief in the locked view) settle toward the normal coin height over the river as Benny …[+1404 chars]
 
+### 🤖 Claude — 2026-11-20T17:08:34.122Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"export function createFarCloud05\" -A60 src/vfx/foam.ts | head -80", "description": "Read far cloud lump generator"}`
+
+### 🧑 User — 2026-11-20T17:08:34.175Z
+
+> ↩︎ result: 581:export function createFarCloud05(zMax: number): { mesh: THREE.InstancedMesh; lumps: FarLump05[] } {
+> 582-  const rc = rng(5353);
+> 583-  const lumps: FarLump05[] = [];
+> 584-  const cols: [number, number, number][] = [];
+> 585-  for (let Z = 0.2; Z < zMax; Z += 0.6 + rc() * 1.0) {
+> 586-    for (const side of [-1, 1]) {
+> 587-      if (rc() < 0.12) continue;
+> 588-      const zc = Z + (rc() - 0.5) * 0.6, ec = -0.15 + rc() * 0.75;
+> 589-      const n = 7 + ((rc() * 7) | 0);
+> 590-      const big = 0.24 + rc() * 0.2;
+> 591-      for (let k = 0; k < n; k++) {
+> 592-        const a = rc() * Math.PI * 2, d = Math.sqrt(rc());
+> 593-        const r = big * (0.45 + 0.6 * (1 - d) * rc() + 0.25 * rc());
+> 594-        lumps.push({ Z: zc + Math.cos(a) * d * 0.75, side, e: ec + Math.sin(a) * d * 0.55, lift: r * (0.05 + 0.25 * (1 - d)), r });
+> 595-        cols.push([0.78 + 0.22 * (1 - d), rc(), rc() * 2 - 1]);
+> 596-      }
+> 597-      const nb = 4 + ((rc() * 6) | 0);
+> 598-      for (let k = 0; k < nb; k++) {
+> 599-        const u = rc(), r = 0.025 + 0.05 * u * u;
+> 600-        lumps.push({ Z: zc + (rc() - 0.5) * 1.8, side, e: ec - 0.35 - rc() * 0.4, lift: r * 0.2, r });
+> 601-        cols.push([0.95, rc(), rc() * 2 - 1]);
+> 602- …[+1962 chars]
+
+### 🤖 Claude — 2026-11-20T17:08:48.230Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 1100,1135p src/world/materials.ts", "description": "Read non-W11 far rim foam drawing"}`
+
+### 🧑 User — 2026-11-20T17:08:48.265Z
+
+> ↩︎ result: #else
+>   col = mix(col, vec3(0.2, 0.08, 0.45), smoothstep(0.15, 0.6, e));
+>   float foamIn = smoothstep(-0.42, -0.12, e + bankN) * (1.0 - smoothstep(0.25, 0.55, e + bankN));
+> #endif
+>   if (foamIn > 0.0) {
+>     float c = rivCells(vec2(lat * 2.4, s * 0.9 + lat * 0.7));
+>     float c2 = rivCells(vec2(lat * 5.0 + 3.1, s * 1.9 - lat * 0.5));
+>     float cf = 1.0 - smoothstep(0.08, 0.22, fl * 2.4);
+>     float cf2 = 1.0 - smoothstep(0.08, 0.22, fl * 5.0);
+>     float puff = mix(0.55, 1.0 - smoothstep(0.2, 0.85, c), cf);
+>     vec3 fo = mix(uRivFoamLav * 0.8, uRivFoam, puff);
+>     fo = mix(fo, uRivFoamBlue, (1.0 - smoothstep(0.05, 0.25, c2)) * cf2 * 0.6);
+>     col = mix(col, fo, foamIn);
+>   }
+> #else
+>   // ---- water: cyan core between two hot-pink bands, flow lines that follow the winding core ----
+>   float xq = lat - core;
+>   float dL = abs(lat - cL), dR = abs(lat - cR);
+>   float pL = 1.0 - smoothstep(wL - aaw, wL + aaw, dL);
+>   float pR = 1.0 - smoothstep(wR - aaw, wR + aaw, dR);
+>   float pink = max(pL, pR);
+>   float relB = pL >= pR ? (lat - cL) / max(wL, 1e-3) : (cR - lat) / max(wR, 1e-3);   // +1 on the core side
+>   // two octaves of flow lines along the winding core (fine near the seam, coarse further in), each …[+940 chars]
+
+### 🤖 Claude — 2026-11-20T17:08:58.279Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 1136,1215p src/world/materials.ts; sed -n 860,898p src/world/materials.ts", "description": "Read FPAINT apply and far river onBeforeCompile"}`
+
+### 🧑 User — 2026-11-20T17:08:58.333Z
+
+> ↩︎ result: vec3 pk = mix(uRivPinkLo, uRivPink, smoothstep(-0.95, -0.2, relB));
+>   pk = mix(pk, uRivPinkHi, clamp(satin * 0.5 + lines * 0.35, 0.0, 1.0));
+>   vec3 col = mix(cy, pk, pink);
+>   // ---- foam rims: fine bubbles, white tops, lavender / blue shading (low: the banks barely rise) ----
+>   float foamIn = smoothstep(-0.3, -0.04, e + bankN);
+>   if (foamIn > 0.0) {
+>     float c = rivCells(vec2(lat * 5.5, s * 2.4 + lat * 0.7));
+>     float cf = 1.0 - smoothstep(0.08, 0.22, fl * 5.5);    // bubble cells only where they are ≳ 3 px
+>     float bub = mix(0.5, smoothstep(0.12, 0.8, c), cf);
+>     vec3 fo = mix(uRivFoam, uRivFoamLav, bub);
+>     fo = mix(fo, uRivFoamBlue, 0.55 * (1.0 - smoothstep(0.0, 0.2, abs(e + 0.05))));          // shade at the waterline
+>     fo = mix(fo, uRivFoamBlue, 0.45 * smoothstep(0.45, 1.0, e / max(0.3, bankW)));         // shaded outer edge
+>     col = mix(col, fo, foamIn);
+>   }
+> #endif
+>   float fg = smoothstep(uRivGlowR.x, uRivGlowR.y, vRivDist);
+>   col = mix(col, uRivGlow, min(0.9, fg * fg * uRivGlowR.z));
+>   diffuseColor.rgb = col;
+> }`);
+>     if (pj) {
+>       shader.fragmentShader = shader.fragmentShader
+>         .replace('#include <common>', '#include <common>\n' + pj.pars)
+>         .replace( …[+6598 chars]
+
+### 🤖 Claude — 2026-11-20T17:09:52.874Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 899,935p src/world/materials.ts; grep -n \"m05fbank\\|M05FBANK\" qa/match/05/*/PROGRESS.md 2>/dev/null | head -5; ls qa/match/05/", "description": "Read far river material uniforms and m05fbank history"}`
+
+### 🧑 User — 2026-11-20T17:09:52.956Z
+
+> ↩︎ result: export function farRiverMaterial(glow: FarGlow, d0 = 53.25, flow?: { ripple: THREE.Texture; time: THREE.IUniform; speed: number }): THREE.MeshBasicMaterial {
+>   const mat = new THREE.MeshBasicMaterial({ color: '#ffffff', fog: false });
+>   // wins the depth test against the real ribbon's continuation it covers just behind the seam
+>   mat.polygonOffset = true;
+>   mat.polygonOffsetFactor = -1;
+>   mat.polygonOffsetUnits = -2;
+>   const lin = (r: number, g: number, b: number) => new THREE.Color().setRGB(r, g, b, THREE.LinearSRGBColorSpace);
+>   const uniforms = {
+>     uRivCyanLo: { value: lin(0.02, 0.22, 0.62) },
+>     uRivCyan: { value: lin(0.03, 0.42, 0.95) },
+>     uRivCyanHi: { value: lin(0.25, 0.95, 1.6) },
+>     uRivPinkLo: { value: lin(0.45, 0.03, 0.42) },
+>     uRivPink: { value: lin(0.85, 0.07, 0.75) },
+>     uRivPinkHi: { value: lin(1.05, 0.42, 1.0) },
+>     uRivFoam: { value: lin(0.95, 0.92, 1.05) },
+>     uRivFoamLav: { value: lin(0.62, 0.52, 0.95) },
+>     uRivFoamBlue: { value: lin(0.32, 0.36, 0.9) },
+>     uRivGlow: { value: new THREE.Color(glow.color) },
+>     uRivGlowR: { value: new THREE.Vector3(glow.near, glow.far, glow.strength) },
+>     /** W11: depth of the seam from the locked 05 eye (ForcedTunn …[+1878 chars]
+

@@ -17,6 +17,13 @@
   on medium lobes), domes 1-3 per cluster with more size variety + brighter tone + moderate sinking, 70 % of clusters keep a lit top,
   inside-of-bend heaps occasional (55 % / 30 %) and varied, skirt = overlapping low lobes in segments (a soft ridge with gaps, not beads).
   tsc 0. Quick check rendering -> `/home/user/scratch/s07/q3_new/`.
+* 17:20 v3 quick check (`q3_new`): brighter lobes, but thinning the clouds exposes the flat pale-lilac bank FLOOR (t 3.75 near-left,
+  t 5.0 / 6.12 / 7.29 inside of the bends read as a flat snow sheet with scattered bumps) -> loses the approved's fullness (the approved
+  has big foreground clouds and full banks). Lesson: keep BEFORE's coverage, change only bulk + uniformity. NOT kept.
+* 17:25 v4 written (copy of v3 `/home/user/scratch/s07/match07_v3.ts`): BEFORE's mound density back (skip 12 %, inside rows 85 % / 75 %),
+  cluster sizes smaller + more varied (15 % 1.1-1.4, else 0.6-1.1; BEFORE 20 % 1.4-1.8, else 0.8-1.3), drop x0.9, short gaps only,
+  softer crease shading between lobes (one soft mass, not separate balls), skirt where the pink edge runs against the wall only in short
+  segments (no bead row). tsc 0. Quick check rendering -> `q4_new`.
 
 ## (r27) WHERE I STOPPED / NEXT
 * r27 relaunch (new account, ~15:20 UTC). Worktree `/home/user/wt/s07`, LOCAL branch `claude/rainbow-s07-match-c28` (r26 edits restored
