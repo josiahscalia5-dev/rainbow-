@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 19811,
-   "sha256": "0693a6577c1761a3e8e57befc94130f4d2d1c67d4f46bb8a332635d406f318a5"
+   "sha256": "b556557c778675c6d5933d61b0a6a2e88f57af7d44948e423d0879ba293eb9bc"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -629,7 +629,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3424,
-   "sha256": "9e22336cef388c8211c8ae9df3868c87952e4a1e2f6ce7450f3abf41969df0c3"
+   "sha256": "9fc75088a9dc3a647d828ba014775c48c3622116acb71d79888e96d6011644a5"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -1404,7 +1404,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c22/INFO.json",
    "bytes": 560,
-   "sha256": "75881ed5c45a578c47f65262e9aec7c3302cc6a52777b49a725e6807caf94f95"
+   "sha256": "a93f1cbba1407823802ca305827490c7023b8509e383a6d8782eca30c3525bc8"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c22/tracked.patch",
@@ -1429,7 +1429,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-preview-c22/INFO.json",
    "bytes": 569,
-   "sha256": "55e8fda14a1a07ef6ab9988e2d02bd0839d35e6f49e04d649bb58552dae6458c"
+   "sha256": "11ad2c1bec2a212ae25a36d96fcd0cf4468204674e310afbe71f6ecbd9f352fc"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-preview-c22/tracked.patch",
@@ -1654,7 +1654,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c22/INFO.json",
    "bytes": 1341,
-   "sha256": "a95b486cb6a790a8da9cca82436f61c2f028e3b6d4c48fee4ac33a0e8a4f3dd6"
+   "sha256": "36b512ea2801febe526194365ea4fec4bdc8ebef369905129c5a8f2509d60e8a"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c22/tracked.patch",
@@ -2359,7 +2359,7 @@
   {
    "path": "backups/wip/claude__rainbow-s07-match-c22/INFO.json",
    "bytes": 596,
-   "sha256": "5db365e7ff79e7e1081e518f19877a77115c04008a918cd400b959860a52e168"
+   "sha256": "828ead021190796e6ca122b324008de3b1a6d3272c1cc74487c66e90be2b1ae2"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c22/tracked.patch",
@@ -2494,27 +2494,27 @@
   {
    "path": "backups/wip/detached-34cb494137/INFO.json",
    "bytes": 440,
-   "sha256": "e3ad92379bc7aa6c371c57b3fa49aaf8d9d0296549f767d99d912d916d2cf207"
+   "sha256": "0b81f2ad3ee23cc71c2e65a357ee87a6bb947f0099fbd1983b696b9b460c1382"
   },
   {
    "path": "backups/wip/detached-3c0fa97090/INFO.json",
    "bytes": 439,
-   "sha256": "a0157fff241b2ca36f7c021d1f9ff5a0f05becf68ab325a72309c0a316bcbc3d"
+   "sha256": "647325d94817592678d6e5b0ed953ba6741a7e5ef34590c053b6898a0184e2e3"
   },
   {
    "path": "backups/wip/detached-8accdad0a0/INFO.json",
    "bytes": 439,
-   "sha256": "032896f7c90ed93cc4310b144a2a659189c0410484c09a5381d5c2f616948286"
+   "sha256": "835be1ed0efbafdf5705b9b06408022fdebe866cd8743393656a385ecaed24a3"
   },
   {
    "path": "backups/wip/detached-c649fcbc35/INFO.json",
    "bytes": 439,
-   "sha256": "7ff5b62b3f73a4d13d976d30875b9c7387b0ba7d3d27f4ab1aa9184d048b368a"
+   "sha256": "ea3ff6acd1c49fbe7eb5671e32806dbfbf65c89be5e972c091f5680ddd6cee79"
   },
   {
    "path": "backups/wip/detached-eb7233e364/INFO.json",
    "bytes": 439,
-   "sha256": "1b79ad767e2083697fbe7f692e4e7babe86104e7a82736411c43a7f3878492ad"
+   "sha256": "66f4d21afffb5c3221e004935075f21183b799e8fb0754e50588dab212ca4aa4"
   },
   {
    "path": "builds/rainbow-debug-06-2026-11-17-r3.apk",
@@ -13652,6 +13652,11 @@
    "sha256": "75d95ad7f6f951e834f8e3f3d098d0dd2a73bc2c04a295186850bc7b76647f5f"
   },
   {
+   "path": "qa/review_r21/artwork/04/game_frames/c_middle.png",
+   "bytes": 1575314,
+   "sha256": "108af2794018a51261353aebd1a786346f911821b9a89c281652b16cc6dad39f"
+  },
+  {
    "path": "qa/review_r21/audit/04/a_start.png",
    "bytes": 2337324,
    "sha256": "cf5379b449c2e6dfa84f37376542a69a7459556c83c1a42cfd404e2c5cf4dd11"
@@ -15685,6 +15690,11 @@
    "path": "tools/lead21/audit_screen.mjs",
    "bytes": 2783,
    "sha256": "a81fe23531bccda537222f1704adae905d70fc6ee9c0ae66a6b3263a09480303"
+  },
+  {
+   "path": "tools/lead21/clean_frame.mjs",
+   "bytes": 3071,
+   "sha256": "fcf75c177537230c131a3b0fe4cda7ed35afb664c8a18348b30608d7c14c86df"
   },
   {
    "path": "tools/lead_r10/refviews.py",

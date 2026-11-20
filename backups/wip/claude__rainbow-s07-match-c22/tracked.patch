@@ -36,7 +36,7 @@ index 017370a..025777d 100644
      }
      if (m08 && b08 && b08Rest) {
 diff --git a/src/world/match07.ts b/src/world/match07.ts
-index b9f474c..54c0d0e 100644
+index b9f474c..c51ad30 100644
 --- a/src/world/match07.ts
 +++ b/src/world/match07.ts
 @@ -94,6 +94,7 @@ uniform sampler2D uFoamTile;
@@ -98,7 +98,83 @@ index b9f474c..54c0d0e 100644
      return riverTile();
    }
    if (uMode > 0.5) {
-@@ -283,6 +288,10 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -248,6 +253,75 @@ void main() {
+   gl_FragColor = vec4(pjInverse(t), 1.0);
+ }`;
+ 
++
++// r21 '&m07cloud=1': REAL 3D puffy foam clouds on both banks (the painted foam: soft glossy cumulus lobes, white tops, lavender-blue
++// undersides, small bubbly lobes at the river edge). Each lobe is a sphere impostor: a camera-facing quad, ray-traced in the
++// fragment shader (true round silhouette, sphere normal and sphere depth, so lobes overlap each other and sit IN the water with a
++// round contact line). 2 triangles per lobe.
++const CLOUD_VERT = /* glsl */ `
++attribute vec4 aLobe;     // centre (group-local), radius
++attribute vec2 aTone;     // brightness jitter, iridescence seed
++uniform vec2 uGuard;
++uniform vec3 uProjPos;
++uniform float uClip;
++uniform float uMagOn;     // 1 = level stretch: a lobe rises only where the moving view magnifies the water past what the approved view showed
++uniform float uCScale;
++varying vec3 vPv;
++varying vec3 vCv;
++varying float vR;
++varying vec2 vTone;
++void main() {
++  vec4 wc = modelMatrix * vec4(aLobe.xyz, 1.0);
++  float pres = 1.0;
++  if (uMagOn > 0.5) {
++    // the same stretch guard as the projected water (1 in the approved view → no cloud there: the painted foam shows)
++    vec3 n = normalize(mat3(modelMatrix) * vec3(0.0, 1.0, 0.0));
++    float cp = abs(dot(n, normalize(uProjPos - wc.xyz))), cc = abs(dot(n, normalize(cameraPosition - wc.xyz)));
++    float mag = (cc / max(cp, 1e-3)) * (distance(uProjPos, wc.xyz) / max(distance(cameraPosition, wc.xyz), 1e-3));
++    pres = smoothstep(uGuard.x, uGuard.y, mag);
++    if (uClip > 0.0 && -aLobe.z > uClip) pres = 0.0;
++  }
++  float r = aLobe.w * uCScale * pres;
++  vec4 cv = viewMatrix * wc;
++  vCv = cv.xyz; vR = r; vTone = aTone;
++  vec3 pv = cv.xyz + vec3(position.xy * r * 1.4, 0.0);
++  vPv = pv;
++  gl_Position = r > 1e-4 ? projectionMatrix * vec4(pv, 1.0) : vec4(2.0, 2.0, 2.0, 1.0);
++}`;
++const CLOUD_FRAG = /* glsl */ `
++uniform vec4 uPjPost;
++uniform vec2 uPjRes;
++varying vec3 vPv;
++varying vec3 vCv;
++varying float vR;
++varying vec2 vTone;
++${PROJ05_INVERSE}
++void main() {
++  vec3 rd = normalize(vPv);
++  float b = dot(rd, vCv);
++  float c = dot(vCv, vCv) - vR * vR;
++  float h = b * b - c;
++  if (h < 0.0 || c < 0.0) discard;
++  float t = b - sqrt(h);
++  vec3 hit = rd * t;
++  vec3 n = (hit - vCv) / vR;                         // view-space sphere normal
++  vec4 clip = projectionMatrix * vec4(hit, 1.0);
++  gl_FragDepthEXT = 0.5 * clip.z / clip.w + 0.5;
++  vec3 nw = normalize((vec4(n, 0.0) * viewMatrix).xyz); // world normal (view rotation transposed)
++  float nv = max(dot(n, -rd), 0.0);
++  // painted foam tones (display values sampled from the approved picture): crevice, lavender-blue shadow, lilac mid, light, white
++  float tt = clamp(0.5 * nw.y + 0.38 * nv + 0.22 + 0.1 * (vTone.x - 0.5), 0.0, 1.0);
++  vec3 cCrev = vec3(0.56, 0.55, 0.88), cSh = vec3(0.67, 0.667, 0.945), cMid = vec3(0.86, 0.824, 0.976), cLt = vec3(0.973, 0.957, 0.969);
++  vec3 col = tt < 0.3 ? mix(cCrev, cSh, tt / 0.3) : tt < 0.6 ? mix(cSh, cMid, (tt - 0.3) / 0.3) : tt < 0.86 ? mix(cMid, cLt, (tt - 0.6) / 0.26) : mix(cLt, vec3(1.0), (tt - 0.86) / 0.14);
++  // glossy foam: a soft white glint toward the light (from above, the viewer's side) and a faint pink / cyan bubble sheen at the rim
++  vec3 L = normalize(vec3(0.0, 0.85, 0.0) - 0.45 * normalize((vec4(rd, 0.0) * viewMatrix).xyz));
++  float sp = pow(max(dot(reflect(-L, nw), normalize(-(vec4(rd, 0.0) * viewMatrix).xyz)), 0.0), 26.0);
++  float rim = pow(1.0 - nv, 2.6);
++  vec3 sheen = mix(vec3(1.0, 0.78, 0.97), vec3(0.78, 0.94, 1.0), 0.5 + 0.5 * sin(vTone.y * 6.28 + nw.x * 3.0));
++  col = mix(col, sheen, 0.22 * rim) + 0.3 * sp;
++  gl_FragColor = vec4(pjInverse(clamp(col, 0.0, 1.0)), 1.0);
++}`;
++
+ const tex = (f: string) => new URL(`../../assets/textures/match07/${f}`, import.meta.url).href;
+ /** r18: numeric URL tunable (QA only), default when absent or not a number */
+ const num07 = (k: string, def: number) => {
+@@ -283,6 +357,13 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
    // r18: on top of m07nearw, the painted near-river proportions — narrow cyan core, thick magenta bands, world-anchored S-sweep
    // (the r17 draft '&m07nearf' was rejected: qa/match/07/r18/PROGRESS.md)
    const band = nearW && flag05('m07band');
@@ -106,18 +182,31 @@ index b9f474c..54c0d0e 100644
 +  // the whole drop to the 08 inlet (the game's streaky sheet stays away until then: Game.ts), so the drop keeps the approved
 +  // glossy cyan core + thick magenta banks instead of a pale streaky waterfall
 +  const endW = nearW && band && !!plunge && flag05('m07end');
++  // r21 '&m07cloud=1': real 3D puffy foam clouds on both banks beyond the magenta bands (level stretch: they rise only where the view
++  // magnifies the water — none in the approved view; drop: everywhere, with m07end)
++  const clouds = nearW && band && flag05('m07cloud');
    const [tNear, tFoam] = await Promise.all([nearW ? load('near_bank.png', THREE.RepeatWrapping) : null, nearW || wallFoamOn ? load('near_foam.png', THREE.RepeatWrapping) : null]);
    if (tNear) tNear.wrapS = THREE.ClampToEdgeWrapping;
    const [plate, tWall, tRiver, pGold, fillMask] = await Promise.all([
-@@ -351,6 +360,7 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -351,7 +432,9 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
      // foam-edge wobble 0.12 u. Tunables ?m07bA= / ?m07bL= / ?m07bC=
      uBand: { value: new THREE.Vector4(num07('m07bA', 0.6), num07('m07bL', 14), 0, band ? 1 : 0) },
      uBand2: { value: new THREE.Vector4(2.85, num07('m07bC', 1.1), 0.95, 0.12) },
 +    uPlC: { value: new THREE.Vector3(1e6, 1e6 + 1, 1.1) },
    };
++  const ctrLane: number[] = [];
    if (nearW) {
      // river centre line in the tube-local frame: the lane Benny swims (course centre, sampled at the depth) plus the painted
-@@ -436,6 +446,8 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+     // river's winding (tools/match07/river_coins07.py → river07.json, clamped so Benny stays in the cyan), continued by a gentle
+@@ -384,6 +467,7 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+       const kk = THREE.MathUtils.smoothstep(along, aEnd - 4, aEnd + 6);
+       // r18 m07band: the lane only (the S-sweep is added in the shader, uBand)
+       ctr[k] = band ? lane : lane + painted * (1 - kk) + tail * kk;
++      ctrLane[k] = lane;
+     }
+     // smooth (no kinks between samples: the bands must curve, not zigzag)
+     for (let pass = 0; pass < 4; pass++) {
+@@ -436,6 +520,8 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
      const f0 = course.sample(sA);
      const alongA = f0.pos.clone().sub(base).dot(Dv);
      plungeAlong = alongA;
@@ -126,7 +215,7 @@ index b9f474c..54c0d0e 100644
      shared.uFade.value.set(plunge.fade[0] - sA + alongA, plunge.fade[1] - sA + alongA);
      const axisA = base.clone().addScaledVector(X, T.ax).addScaledVector(U, T.h).addScaledVector(Dv, alongA);
      const d0 = axisA.clone().sub(f0.pos.clone().addScaledVector(f0.up, T.h));
-@@ -459,7 +471,7 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -459,7 +545,7 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
        for (let j = 0; j <= nR; j++) {
          const l = -halfW + (2 * halfW * j) / nR;
          p.copy(f.pos).addScaledVector(f.right, lat0 + T.ax + l).addScaledVector(f.up, 0.06);
@@ -135,7 +224,7 @@ index b9f474c..54c0d0e 100644
        }
        if (i > 0) {
          for (let j = 0; j < nT; j++) { const a = (i - 1) * (nT + 1) + j, b = a + nT + 1; idxT.push(a, b, a + 1, b, b + 1, a + 1); }
-@@ -475,7 +487,7 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -475,7 +561,7 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
      };
      // world-space vertices: the meshes are added to the scene-level group with the inverse group matrix
      const toLocal = (g: THREE.BufferGeometry) => g.applyMatrix4(groupInv);
@@ -144,3 +233,92 @@ index b9f474c..54c0d0e 100644
      rivM.transparent = true;
      const t = add(toLocal(geo(tubeP, tubeUV, idxT)), wallM, 'pl_tube');
      const r = add(toLocal(geo(rivP, rivUV, idxR)), rivM, 'pl_river');
+@@ -483,6 +569,78 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+     t.visible = r.visible = false;
+     plungeMeshes.push(t, r);
+   }
++  // r21 m07cloud: lobes of each cumulus cluster (deterministic). Level stretch in the tube-local frame along the lane; the drop along
++  // the course frame (world → group-local), both beyond the magenta band's outer edge (lane ± 2.85 u) toward the wall.
++  if (clouds) {
++    let seed = 7.31;
++    const rnd = () => { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; };
++    const sc = num07('m07cS', 1);
++    const makeCloud = (lobes: number[], tone: number[], magOn: number, name: string) => {
++      const g = new THREE.InstancedBufferGeometry();
++      g.setAttribute('position', new THREE.Float32BufferAttribute([-1, -1, 0, 1, -1, 0, 1, 1, 0, -1, 1, 0], 3));
++      g.setIndex([0, 1, 2, 0, 2, 3]);
++      g.setAttribute('aLobe', new THREE.InstancedBufferAttribute(new Float32Array(lobes), 4));
++      g.setAttribute('aTone', new THREE.InstancedBufferAttribute(new Float32Array(tone), 2));
++      g.instanceCount = lobes.length / 4;
++      const m = new THREE.ShaderMaterial({
++        vertexShader: CLOUD_VERT, fragmentShader: CLOUD_FRAG, fog: false, side: THREE.DoubleSide,
++        uniforms: { uGuard: shared.uGuard, uProjPos: shared.uProjPos, uClip: shared.uClip, uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uMagOn: { value: magOn }, uCScale: { value: sc } },
++      });
++      return add(g, m, name);
++    };
++    /** one cumulus cluster at lateral e (outward from the band edge, sign = side), along a; place(lat, along, up) → group-local */
++    const cluster = (out: number[], tone: number[], place: (lat: number, a: number, up: number) => THREE.Vector3, side: number, a: number, wallLat: number) => {
++      const push = (lat: number, da: number, up: number, r: number) => {
++        if (Math.abs(lat) + r * 0.3 > wallLat) lat = side * (wallLat - r * 0.3);
++        const p = place(lat, a + da, up);
++        out.push(p.x, p.y, p.z, r); tone.push(rnd(), rnd());
++      };
++      const edge = 2.95;
++      // bubbly trim right at the band edge
++      for (let i = 0; i < 3; i++) { const r = 0.08 + 0.08 * rnd(); push(side * (edge + 0.05 + 0.12 * rnd()), (i - 1) * 0.32 + 0.1 * rnd(), r * 0.15, r); }
++      // the mound: one big lobe, side lobes along, a top lobe
++      const rM = 0.3 + 0.24 * rnd(), lM = side * (edge + 0.35 + rM * 0.7 + 0.4 * rnd());
++      push(lM, 0, rM * 0.22, rM);
++      for (const dd of [-1, 1]) { const r = rM * (0.55 + 0.25 * rnd()); push(lM + side * (rnd() - 0.6) * 0.35, dd * rM * (0.7 + 0.3 * rnd()), r * 0.12, r); }
++      if (rnd() < 0.7) { const r = rM * (0.45 + 0.2 * rnd()); push(lM + side * 0.1, (rnd() - 0.5) * 0.3, rM * 0.62, r); }
++      // a bigger lobe against the wall
++      if (rnd() < 0.8) { const r = 0.32 + 0.28 * rnd(); push(side * (wallLat - 0.15), (rnd() - 0.5) * 0.6, r * 0.3, r); }
++    };
++    // level stretch (tube-local: x right, y up, z = -along), lane from the centre-line samples
++    const laneAt = (along: number) => {
++      const ia = THREE.MathUtils.clamp((along + 8) / 1.5, 0, 62.999), i0 = Math.floor(ia);
++      return ctrLane.length ? ctrLane[i0] + (ctrLane[i0 + 1] - ctrLane[i0]) * (ia - i0) : 0;
++    };
++    const aEndL = plunge ? plungeAlong : 60;
++    const LL: number[] = [], LT: number[] = [];
++    for (let a = -6; a < aEndL; a += 0.85 + 0.3 * rnd()) {
++      for (const side of [-1, 1]) {
++        const lane = laneAt(a);
++        // wall foot (tube meets the water) measured from the lane
++        const wallLat = Math.max(3.2, side > 0 ? T.ax + 4.85 - lane : lane - (T.ax - 4.85));
++        cluster(LL, LT, (lat, aa, up) => new THREE.Vector3(laneAt(aa) + lat, up, -aa), side, a + 0.3 * rnd(), wallLat);
++      }
++    }
++    makeCloud(LL, LT, 1, 'cloud_level');
++    if (plunge && endW) {
++      const { course, sA, sB } = plunge;
++      const f0 = course.sample(sA), alongA = f0.pos.clone().sub(base).dot(Dv);
++      const axisA = base.clone().addScaledVector(X, T.ax).addScaledVector(U, T.h).addScaledVector(Dv, alongA);
++      const d0 = axisA.clone().sub(f0.pos.clone().addScaledVector(f0.up, T.h));
++      const PL: number[] = [], PT: number[] = [];
++      const q = new THREE.Vector3();
++      const placeP = (lat: number, s: number, up: number) => {
++        const ss = THREE.MathUtils.clamp(s, sA, sB);
++        const f = course.sample(ss);
++        const k = 1 - THREE.MathUtils.smootherstep(ss, sA, sA + 14);
++        return q.copy(f.pos).addScaledVector(f.right, d0.dot(f.right) * k + lat).addScaledVector(f.up, up + 0.06).applyMatrix4(groupInv).clone();
++      };
++      for (let ss = sA; ss < sB - 0.5; ss += 0.85 + 0.3 * rnd()) for (const side of [-1, 1]) cluster(PL, PT, placeP, side, ss + 0.3 * rnd(), 4.75);
++      const pc = makeCloud(PL, PT, 0, 'pl_cloud');
++      pc.visible = false;
++      plungeMeshes.push(pc);
++    }
++  }
+   group.traverse((o) => o.updateMatrixWorld?.(true));
+ 
+   return {
+@@ -493,7 +651,8 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+       const clone = group.clone(true);
+       clone.visible = true;
+       // the plunge continuation is not in the approved picture: it never occludes the projector
+-      const drop: THREE.Object3D[] = []; clone.traverse((o) => { if (o.name.startsWith('m07_pl_')) drop.push(o); });
++      // (r21 m07cloud: nor do the foam clouds — they only rise where the view moves away from the approved one)
++      const drop: THREE.Object3D[] = []; clone.traverse((o) => { if (o.name.startsWith('m07_pl_') || o.name.startsWith('m07_cloud')) drop.push(o); });
+       for (const o of drop) o.removeFromParent();
+       clone.traverse((o) => { if ((o as THREE.Mesh).isMesh) (o as THREE.Mesh).material = new THREE.MeshBasicMaterial({ colorWrite: false, side: THREE.DoubleSide }); });
+       scene.add(clone);

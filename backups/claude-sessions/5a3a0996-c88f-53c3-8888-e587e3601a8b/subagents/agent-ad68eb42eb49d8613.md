@@ -1484,3 +1484,158 @@ Now the PROGRESS.md entry for step 1.
 
 > ↩︎ result: File created successfully at: /home/user/rainbow-/qa/match/07/r21/PROGRESS.md (file state is current in your context — no need to Read it back)
 
+### 🤖 Claude — 2026-11-20T02:28:33.728Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 -I - <<'EOF'\nfrom PIL import Image\nimport numpy as np, json\nim=np.asarray(Image.open('/home/user/rainbow-/references/07_dive_the_washer_tube.png').convert('RGB')).astype(float)\ndef stats(name,x0,y0,x1,y1):\n    a=im[y0:y1,x0:x1].reshape(-1,3)\n    # foam-ish: low saturation, bright-ish\n    mx=a.max(1); mn=a.min(1); sat=(mx-mn)/np.maximum(mx,1)\n    m=(sat<0.35)&(mx>120)\n    b=a[m]; L=b@[0.299,0.587,0.114]\n    print(name, 'n',len(b), 'frac', round(m.mean(),2))\n    for lo,hi in [(0,10),(10,30),(30,60),(60,90),(90,100)]:\n        pl,ph=np.perce …[+390 chars]`
+
+### 🧑 User — 2026-11-20T02:28:34.025Z
+
+> ↩︎ result: lowright n 16648 frac 0.43
+>    pct 0 10 [171 170 241]
+>    pct 10 30 [190 189 247]
+>    pct 30 60 [219 210 249]
+>    pct 60 90 [248 244 247]
+>    pct 90 100 [254 254 253]
+> left n 4686 frac 0.33
+>    pct 0 10 [172 166 241]
+>    pct 10 30 [191 183 247]
+>    pct 30 60 [222 204 250]
+>    pct 60 90 [245 234 253]
+>    pct 90 100 [253 253 254]
+> farL n 1900 frac 0.16
+>    pct 0 10 [179 157 225]
+>    pct 10 30 [201 175 239]
+>    pct 30 60 [232 196 246]
+>    pct 60 90 [250 230 244]
+>    pct 90 100 [253 250 248]
+> midR n 3252 frac 0.23
+>    pct 0 10 [185 166 235]
+>    pct 10 30 [215 183 245]
+>    pct 30 60 [240 209 245]
+>    pct 60 90 [252 242 241]
+>    pct 90 100 [254 253 252]
+> tube {'r': 5.843921330510962, 'ax': 0.09941569607211748, 'h': 3.0972788153823347}
+
+### 🤖 Claude — 2026-11-20T02:28:41.306Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad && python3 -c \"\nfrom PIL import Image\nim=Image.open('/home/user/rainbow-/references/07_dive_the_washer_tube.png')\na=im.crop((560,1100,864,1500)); b=im.crop((0,820,330,1220)); c=im.crop((240,580,560,800))\nout=Image.new('RGB',(304+330+320,400))\nout.paste(a,(0,0)); out.paste(b,(304,0)); out.paste(c,(634,0))\nout.save('ref_foam_crops.png')\n\"", "description": "Crop painted foam clouds for reference"}`
+
+### 🧑 User — 2026-11-20T02:28:41.514Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T02:28:44.927Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/ref_foam_crops.png"}`
+
+### 🧑 User — 2026-11-20T02:28:44.949Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T02:29:07.200Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"\\\"three\\\"\" package.json; grep -rn \"logarithmicDepthBuffer\\|new THREE.WebGLRenderer\\|antialias\" src/game/*.ts | head -5; grep -n \"REVISION\" node_modules/three/build/three.module.js | head -2; grep -rn \"gl_FragDepth\" node_modules/three/src/renderers/webgl/WebGLProgram.js | head", "description": "Check three.js version and renderer depth settings"}`
+
+### 🧑 User — 2026-11-20T02:29:07.264Z
+
+> ↩︎ result: 25:    "three": "^0.170.0"
+> 6:const REVISION = '170';
+> 29102:			if ( 'setAttribute' in canvas ) canvas.setAttribute( 'data-engine', `three.js r${REVISION}` );
+> 875:			'#define gl_FragDepthEXT gl_FragDepth',
+
+### 🤖 Claude — 2026-11-20T02:29:10.521Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -rn \"WebGLRenderer(\" src | head -3; grep -rn \"logarithmic\\|reversedDepth\" src | head -3", "description": "Find renderer construction options"}`
+
+### 🧑 User — 2026-11-20T02:29:10.575Z
+
+> ↩︎ result: src/render/env.ts:49:  const renderer = new THREE.WebGLRenderer({
+> src/vfx/whirlpool.ts:3: * cyan / hot-pink / white bands follow the SAME logarithmic spiral as Benny's course through the
+
+### 🤖 Claude — 2026-11-20T02:29:13.360Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 45,75p src/render/env.ts", "description": "Read renderer options"}`
+
+### 🧑 User — 2026-11-20T02:29:13.398Z
+
+> ↩︎ result: }
+> 
+> /** Standard renderer setup used by the game and the tools. */
+> export function createRenderer(canvas: HTMLCanvasElement, opts: { preserveDrawingBuffer?: boolean } = {}): THREE.WebGLRenderer {
+>   const renderer = new THREE.WebGLRenderer({
+>     canvas,
+>     antialias: true,
+>     alpha: false,
+>     powerPreference: 'high-performance',
+>     preserveDrawingBuffer: !!opts.preserveDrawingBuffer,
+>   });
+>   renderer.outputColorSpace = THREE.SRGBColorSpace;
+>   renderer.toneMapping = THREE.NeutralToneMapping;
+>   renderer.toneMappingExposure = 0.86;
+>   return renderer;
+> }
+
+### 🤖 Claude — 2026-11-20T02:29:35.429Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"export const PROJ05_INVERSE\" -A30 src/vfx/waterRibbon.ts | head -40", "description": "Read PROJ05_INVERSE GLSL helper"}`
+
+### 🧑 User — 2026-11-20T02:29:35.468Z
+
+> ↩︎ result: 327:export const PROJ05_INVERSE = /* glsl */ `
+> 328-// undo grade (vignette, contrast, saturation) -> sRGB -> Neutral tone map -> exposure: the linear colour that the
+> 329-// post chain turns into the display colour t (bloom is not undone: it is measured and fed back into the bake)
+> 330-vec3 pjInverse(vec3 t) {
+> 331-  vec2 q = gl_FragCoord.xy / uPjRes - 0.5; q.x *= 0.75;
+> 332-  float vig = 1.0 - uPjPost.w * smoothstep(0.25, 0.75, length(q));
+> 333-  vec3 c = t / max(vig, 0.5);
+> 334-  c = (c - 0.5) / uPjPost.z + 0.5;
+> 335-  float l = dot(c, vec3(0.2126, 0.7152, 0.0722));
+> 336-  c = vec3(l) + (c - vec3(l)) / uPjPost.y;
+> 337-  c = clamp(c, 0.0, 0.975);
+> 338-  c = mix(c / 12.92, pow((c + 0.055) / 1.055, vec3(2.4)), step(0.04045, c));
+> 339-  float np = max(c.r, max(c.g, c.b));
+> 340-  if (np >= 0.76) {
+> 341-    float peak = 0.0576 / (1.0 - np) - 0.24 + 0.76;
+> 342-    float g = 1.0 - 1.0 / (0.15 * (peak - np) + 1.0);
+> 343-    c = (c - g * np) / (1.0 - g);
+> 344-    c *= peak / np;
+> 345-  }
+> 346-  float x = min(c.r, min(c.g, c.b));
+> 347-  float off = x >= 0.04 ? 0.04 : (sqrt(max(x, 0.0)) / 2.5 - x);
+> 348-  return (c + off) / uPjPost.x;
+> 349-}
+> 350-`;
+> 351-
+> 352-const FRAG = /* glsl */ `
+> 353-uniform float uTime;
+> 354- …[+105 chars]
+
+### 🤖 Claude — 2026-11-20T02:30:02.737Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"uGroupInv\" src/world/match07.ts | head; grep -n \"^const tex\\|^export async function buildMatch07\\|group.traverse((o) => o.updateMatrixWorld\" src/world/match07.ts", "description": "Locate insertion points in match07.ts"}`
+
+### 🧑 User — 2026-11-20T02:30:02.783Z
+
+> ↩︎ result: 56:  vL = (uGroupInv * wp).xyz;
+> 332:    uGroupInv: { value: groupInv },
+> 407:    vertexShader: 'uniform mat4 uGroupInv;\n' + VERT, fragmentShader: FRAG, side: THREE.DoubleSide, fog: false,
+> 256:const tex = (f: string) => new URL(`../../assets/textures/match07/${f}`, import.meta.url).href;
+> 266:export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+> 498:  group.traverse((o) => o.updateMatrixWorld?.(true));
+
+### 🤖 Claude — 2026-11-20T02:30:06.036Z
+
+Now I'll write the 3D foam cloud system (step 2) into match07.ts.
+
+### 🤖 Claude — 2026-11-20T02:30:45.139Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 - <<'EOF'\np='src/world/match07.ts'\ns=open(p).read()\ndef rep(a,b,cnt=1):\n    global s\n    assert s.count(a)==cnt, (a, s.count(a))\n    s=s.replace(a,b)\n\nCLOUD = r'''\n// r21 '&m07cloud=1': REAL 3D puffy foam clouds on both banks (the painted foam: soft glossy cumulus lobes, white tops, lavender-blue\n// undersides, small bubbly lobes at the river edge). Each lobe is a sphere impostor: a camera-facing quad, ray-traced in the\n// fragment shader (true round silhouette, sphere normal and sphere depth, so lobes overlap each other and sit IN the wa …[+9491 chars]`
+
+### 🧑 User — 2026-11-20T02:30:49.747Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T02:31:05.920Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 - <<'EOF'\np='src/world/match07.ts'\ns=open(p).read()\na=\"\"\"      const drop: THREE.Object3D[] = []; clone.traverse((o) => { if (o.name.startsWith('m07_pl_')) drop.push(o); });\"\"\"\nb=\"\"\"      // (r21 m07cloud: nor do the foam clouds — they only rise where the view moves away from the approved one)\n      const drop: THREE.Object3D[] = []; clone.traverse((o) => { if (o.name.startsWith('m07_pl_') || o.name.startsWith('m07_cloud')) drop.push(o); });\"\"\"\nassert s.count(a)==1; s=s.replace(a,b); open(p,'w').write(s)\nEOF\nnpx tsc --noEmit -p . …[+573 chars]`
+
