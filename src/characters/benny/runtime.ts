@@ -7,6 +7,9 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import type { BennyRuntime } from '../types';
 import { makeFur, type FurHandle, type FurParams } from './fur';
 import { BENNY05, FUR05, applyBenny05, dampedClips, loadBenny05Maps } from './benny05';
+import { BENNY20, FUR20, applyBenny20, loadBenny20Maps } from './benny20';
+/** benny05's look also runs under `?benny20=1` (benny20.ts builds on it); both off: nothing runs */
+const B05 = BENNY05 || BENNY20;
 
 const BENNY_URL = new URL('../../../assets/models/benny.glb', import.meta.url).href;
 
@@ -33,8 +36,10 @@ export async function loadBenny(opts: { furQuality?: 'high' | 'low' } = {}): Pro
   const src = await loadScene();
   const clips: THREE.AnimationClip[] = src.userData.animations ?? [];
   // `?benny05=1` / `?match05=1` only: the maps baked from the approved Screen 05 (benny05.ts)
-  const maps05 = BENNY05 ? await loadBenny05Maps() : undefined;
-  return createBennyRuntime(src.clone(true), clips, { furQuality: opts.furQuality ?? defaultFurQuality(), maps05 });
+  const maps05 = B05 ? await loadBenny05Maps() : undefined;
+  // `?benny20=1` only: the round-20 knit / felt maps (benny20.ts)
+  const maps20 = BENNY20 ? await loadBenny20Maps() : undefined;
+  return createBennyRuntime(src.clone(true), clips, { furQuality: opts.furQuality ?? defaultFurQuality(), maps05, maps20 });
 }
 
 /**
@@ -74,7 +79,7 @@ function ridePitch(): number {
 export function createBennyRuntime(
   scene: THREE.Object3D,
   clips: THREE.AnimationClip[],
-  opts: { furQuality?: 'high' | 'low'; maps05?: Record<string, THREE.Texture | null> } = {},
+  opts: { furQuality?: 'high' | 'low'; maps05?: Record<string, THREE.Texture | null>; maps20?: Record<string, THREE.Texture | null> } = {},
 ): BennyRuntime {
   const root = new THREE.Group();
   root.name = 'Benny';
@@ -89,7 +94,8 @@ export function createBennyRuntime(
   });
   for (const m of toReplace) {
     const p = { ...(m.userData.fur as FurParams) };
-    if (BENNY05 && FUR05[m.name]) Object.assign(p, FUR05[m.name]);
+    if (B05 && FUR05[m.name]) Object.assign(p, FUR05[m.name]);
+    if (BENNY20 && FUR20[m.name]) Object.assign(p, FUR20[m.name]);
     if (opts.furQuality === 'low') p.shells = Math.max(6, Math.round(p.shells * 0.6));
     const h = makeFur(m, p);
     m.parent!.add(h.mesh);
@@ -97,8 +103,10 @@ export function createBennyRuntime(
     furs.push(h);
   }
   // `?benny05=1` / `?match05=1`: the Screen-05 reference-matched look, on Benny himself (benny05.ts). Off: nothing runs.
-  const b05 = BENNY05 ? applyBenny05(scene, furs, opts.maps05 ?? {}) : null;
-  if (BENNY05) clips = dampedClips(clips);
+  const b05 = B05 ? applyBenny05(scene, furs, opts.maps05 ?? {}) : null;
+  if (B05) clips = dampedClips(clips);
+  // `?benny20=1`: the round-20 approved-04 look on top (benny20.ts). Off: nothing runs.
+  if (BENNY20) applyBenny20(scene, furs, opts.maps20 ?? {});
 
   // QA colour A/B: `?bennyTint=hat_brim:7868a0,hat_crown:e4d4e4` sets the base-colour factor of meshes whose name
   // starts with the given prefix (the GLB's own factors are the default; materials are shared by every clone)

@@ -33,6 +33,7 @@ export interface FurHandle {
     uLock: { value: THREE.Vector4 };
     uShade: { value: THREE.Vector4 };
     uTint: { value: THREE.Color };
+    uComb: { value: THREE.Vector4 };
   };
 }
 
@@ -62,6 +63,9 @@ export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
     uShade: { value: new THREE.Vector4(0.42, 0.22, 0.4, 0.4) },
     /** `?benny20=1`: colour factor on the baked albedo (dusty rose / mauve calibration) */
     uTint: { value: new THREE.Color(1, 1, 1) },
+    /** `?benny20=1`: x = comb ALONG the surface toward his feet (fraction of the fur length), y = lift off the surface
+     *  (normal push factor, < 1: strands lie flatter), z = strand-to-strand brightness variation, w = tuft roundness shading (bright axis, darker rim) */
+    uComb: { value: new THREE.Vector4(0, 1, 0.14, 0) },
   };
   const material = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 0.9, metalness: 0 });
   material.onBeforeCompile = (shader) => {
@@ -75,6 +79,9 @@ export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
         varying float vLayer; varying vec3 vBase; varying float vLenMask;
         #ifdef BENNY05
         varying vec2 vB05Uv;
+        #endif
+        #ifdef BENNY20
+        uniform vec4 uComb;
         #endif`,
       )
       .replace(
@@ -90,9 +97,19 @@ export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
         vB05Uv = uv;
         #endif
         float h = uFurLen * vLayer * vLenMask;
+        #ifdef BENNY20
+        // benny20.ts: strands combed DOWN ALONG the surface (gravity projected onto the tangent plane) and lying flatter,
+        // so they overlap in soft layers like the approved plush instead of hanging off the underside as spikes
+        vec3 dn = vec3(0.0, -1.0, 0.0);
+        vec3 tg = dn - nrm * dot(dn, nrm);
+        transformed += nrm * h * uComb.y;
+        transformed += tg * uFurLen * uComb.x * pow(vLayer, 1.3) * vLenMask;
+        vec3 g = uWind + vec3(0.0, -1.0, 0.0) * uGravity;
+        #else
         transformed += nrm * h;
         // gravity droop + gentle wind sway grows with layer height
         vec3 g = vec3(0.0, -1.0, 0.0) * uGravity + uWind;
+        #endif
         g += vec3(sin(uTime * 3.0 + position.y * 9.0), 0.0, cos(uTime * 2.3 + position.x * 7.0)) * 0.06;
         transformed += g * uFurLen * vLayer * vLayer * vLenMask;`,
       );
@@ -107,7 +124,7 @@ export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
         uniform float uClump;
         #endif
         #ifdef BENNY20
-        uniform vec4 uLock; uniform vec4 uShade; uniform vec3 uTint;
+        uniform vec4 uLock; uniform vec4 uShade; uniform vec3 uTint; uniform vec4 uComb;
         #endif
         float fhash(vec3 p) { p = fract(p * 0.3183099 + 0.1); p *= 17.0; return fract(p.x * p.y * p.z * (p.x + p.y + p.z)); }
         vec3 fhash3(vec3 p) { return vec3(fhash(p), fhash(p + 17.31), fhash(p + 41.7)); }`,
@@ -131,7 +148,7 @@ export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
           }
           float lh = 1.0 - uShade.w * th;                       // this lock's length (fraction of the fur length)
           float lt = clamp(layer / lh, 0.0, 1.0);
-          float rl = uLock.y * pow(max(0.0, 1.0 - lt), 0.55);   // lock cross-section radius at this height
+          float rl = uLock.y * pow(max(0.0, 1.0 - lt), 0.4);    // lock cross-section radius at this height (leaf-shaped)
           float rr = td / max(rl, 1e-3);
           // fine strands, clumped toward the lock axis as they rise (q' = c + (q - c) / (1 - h k))
           vec3 qs = vBase * uLock.w;
@@ -144,13 +161,15 @@ export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
           if (layer > 0.001) {
             if (vLenMask < 0.05) discard;
             if (layer > lh || rr > 1.0) discard;
-            // wispy, separated strands toward the outside / top of a lock; dense core
-            if (lt > 0.2 && sd > mix(0.95, 0.42, smoothstep(0.35, 1.0, rr) * smoothstep(0.2, 0.9, lt))) discard;
+            // dense lock core; wispy, separated strands only toward the lock's rim and tip
+            if (lt > 0.3 && rr > 0.5 && sd > mix(0.95, 0.45, smoothstep(0.5, 1.0, rr) * smoothstep(0.3, 1.0, lt))) discard;
           }
+          // rounded tuft: brighter along the lock's axis, darker toward its rim (uComb.w = amount)
+          float rnd = mix(1.0 - uComb.w, 1.0 + 0.4 * uComb.w, 1.0 - smoothstep(0.0, 1.0, rr));
           float ao = mix(uShade.x, 1.0, smoothstep(0.0, 0.8, lt));
           float crease = 1.0 - uShade.z * smoothstep(0.45, 1.0, td / uLock.y) * (1.0 - smoothstep(0.0, 0.6, lt));
           float tip = 1.0 + uShade.y * smoothstep(0.45, 1.0, lt);
-          diffuseColor.rgb *= uTint * ao * crease * tip * (0.9 + 0.12 * th) * (0.93 + 0.14 * sh);
+          diffuseColor.rgb *= uTint * ao * crease * tip * rnd * (0.9 + 0.12 * th) * (1.0 - uComb.z + 2.0 * uComb.z * sh);
         }
         #else
         {

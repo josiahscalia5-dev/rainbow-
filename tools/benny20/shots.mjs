@@ -27,7 +27,24 @@ try {
     }, [scr, dist, steer]);
     await page.waitForTimeout(150);
     await page.screenshot({ path: `${OUT}/${name}.png` });
+    if (process.env.B20_MASK) {
+      // flat part-colour mask of Benny alone (white background): fur red, pom green, crown cyan, cuff blue, star black
+      await page.evaluate(() => {
+        const { scene, camera, renderer } = window.__rainbow.qa3d();
+        const benny = scene.getObjectByName('Benny');
+        const keep = new Set(); for (let o = benny; o; o = o.parent) keep.add(o);
+        const vis = [];
+        scene.traverse((o) => { if (o === scene || keep.has(o)) return; let inB = false; for (let p = o.parent; p; p = p.parent) if (p === benny) { inB = true; break; } if (inB) return; vis.push([o, o.visible]); if (!o.isLight) o.visible = false; });
+        const bg = scene.background; scene.background = null;
+        let Ctor; scene.traverse((o) => { if (!Ctor && o.material?.color) Ctor = o.material.color.constructor; }); const cc = renderer.getClearColor(new Ctor()); const ca = renderer.getClearAlpha();
+        window.__bennyQA.mask(true);
+        renderer.setClearColor(0xffffff, 1); renderer.setRenderTarget(null); renderer.clear(); renderer.render(scene, camera);
+        window.__b20restore = () => { window.__bennyQA.mask(false); for (const [o, v] of vis) o.visible = v; scene.background = bg; renderer.setClearColor(cc, ca); };
+      });
+      await page.screenshot({ path: `${OUT}/${name}_mask.png` });
+      await page.evaluate(() => { window.__b20restore(); });
+    }
     log.push({ name, scr, dist, steer, frames: st.frames, s: st.s, lat: st.lat, stage: st.stage, coins: st.coins });
     console.log(name, scr, 's', st.s, 'lat', st.lat, st.stage, 'coins', st.coins);
   }
-} finally { writeFileSync(`${OUT}/shots.json`, JSON.stringify(log, null, 1)); await browser.close(); await vite.close?.(); }
+} finally { writeFileSync(`${OUT}/${process.env.B20_LOG ?? 'shots.json'}`, JSON.stringify(log, null, 1)); await browser.close(); await vite.close?.(); }
