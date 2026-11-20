@@ -2662,3 +2662,70 @@ Only frames 0–11 show it, and those are the ones I'll replace with the patched
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && MAXF=20 AUDIT_PORT=5304 timeout 1500 node tools/match06/r30_clip.mjs /home/user/scratch/r30/clip_head \"$(cat /home/user/rainbow-/qa/match/06/r30/QUERY_NEW.txt)\" 24 2>&1 | tail -1 && python3 -c \"\nimport json\na=json.load(open('/home/user/scratch/r30/clip_new/frames.json'))['log'][:20]; b=json.load(open('/home/user/scratch/r30/clip_head/frames.json'))['log']\nsame=all(x['s']==y['s'] and x['lat']==y['lat'] and x['coins']==y['coins'] for x,y in zip(a,b)); print('simulation identical for 20 frames:', same, len(b))\n\" && mkdir -p /home/user/scratch/r30/clip_ …[+325 chars]`
 
+### 🧑 User — 2026-11-20T20:54:39.874Z
+
+> ↩︎ result: frames 20 s0 198.91 s07 396.27066741997834
+> simulation identical for 20 frames: True 20
+> swapped
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T20:54:42.122Z
+
+The simulation matches exactly over those 20 frames, and the patched frames are swapped in. Now a contact sheet of every 10th frame, to pick the moments that match your four storyboard panels.
+
+### 🤖 Claude — 2026-11-20T20:54:45.576Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/r30/clip_new && python3 -c \"\nfrom PIL import Image, ImageDraw, ImageFont; import json\nL=json.load(open('frames.json'))['log']; f=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',13)\nidx=list(range(0,len(L),10)); w,h=140,249; cols=10; rows=(len(idx)+cols-1)//cols\nout=Image.new('RGB',(cols*w,rows*(h+16)),(20,12,34)); d=ImageDraw.Draw(out)\nfor k,i in enumerate(idx):\n  x=(k%cols)*w; y=(k//cols)*(h+16); out.paste(Image.open('%04d.png'%i).convert('RGB').resize((w,h)),(x,y+16)); d.text((x+2,y+1),'%d s%.0f'%(i,L[i]['s']),font=f,fill='w …[+188 chars]`
+
+### 🧑 User — 2026-11-20T20:54:47.761Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T20:54:49.356Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/scratchpad/clip_sheet.jpg"}`
+
+### 🧑 User — 2026-11-20T20:54:49.474Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T20:55:34.738Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && Q=\"$(cat /home/user/rainbow-/qa/match/06/r30/QUERY_NEW.txt | sed 's/&m06vw=34,56/\\&m06vw=20,38/')\" && echo \"$Q\" | tr '&' '\\n' | grep m06vw && AUDIT_PORT=5305 AUDIT_SHOTS='[[\"a_start\",0,null],[\"b_marked\",214.86,null],[\"c_222\",222,null],[\"d_233\",233,null],[\"e_244\",244,null]]' timeout 1500 node tools/match06/r30_shots.mjs /home/user/rainbow-/qa/match/06/r30/quick_vw2038 06 \"$Q\" 2>&1 | grep -E \"^06|rror\" && cd /home/user/rainbow-/qa/match/06/r30 && python3 -c \"\nfrom PIL import Image, ImageDraw, ImageFont; import json\nL=json.load(open('/ho …[+897 chars]`
+
+### 🧑 User — 2026-11-20T20:55:54.241Z
+
+> ↩︎ result: m06vw=20,38
+> 06 a_start s 198.91 lat 0 stage 06 coins 1680
+> 06 b_marked s 214.86 lat 0 stage 06 coins 1700
+> 06 c_222 s 222.01 lat 0 stage 06 coins 1710
+> 06 d_233 s 233.01 lat 0 stage 06 coins 1730
+> 06 e_244 s 244.01 lat 0 stage 06 coins 1740
+
+### 🤖 Claude — 2026-11-20T20:55:56.014Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/scratchpad/vw.jpg"}`
+
+### 🧑 User — 2026-11-20T20:55:56.041Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T20:56:13.398Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -i \"s/st.s > course.stage('07').s0 - (M06_CURL ? 160 : 12)/st.s > course.stage('07').s0 - (M06_CURL ? 175 : 12)/; s/IS 07's tube -> shown from 160 u back/IS 07's tube -> shown from 175 u back/\" src/game/Game.ts && grep -c \"M06_CURL ? 175\" src/game/Game.ts && cp /home/user/rainbow-/qa/match/06/r30/QUERY_NEW.txt /home/user/rainbow-/qa/match/06/r30/QUERY_NEW_vw3456.txt && sed -i 's/&m06vw=34,56/\\&m06vw=20,38/' /home/user/rainbow-/qa/match/06/r30/QUERY_NEW.txt && cat /home/user/rainbow-/qa/match/06/r30/QUERY_NEW.txt && mv /home/user/scratch/r30/clip_ne …[+324 chars]`
+
+### 🧑 User — 2026-11-20T20:56:15.455Z
+
+> ↩︎ result: 1
+> match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1&m06st=1&m06fcl=1&m06view=1&m06vs=0&m06rip=1&m06hole=2&m06fade=1&m06spl=1&m06fcn=3&m06fcg=1&m06deep=1&m06leg=1&m06vw=20,38&m06tswap=2&m06curl=1&m06haze=80,170,0.55
+> started
+> [This command modified 1 file you've previously read: ../../../../../wt/s06/src/game/Game.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-20T20:56:18.117Z
+
+While the clip renders (~20 minutes), I'll save everything to GitHub and check that this round's worktree edits are captured in the snapshot.
+
+### 🤖 Claude — 2026-11-20T20:56:20.567Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && python3 scripts/rainbow-autosave.py --reason manual:r30-m06curl-built 2>&1 | grep -E '\"commit\"|\"status\"' | head -3; python3 -I scripts/autosave-status.py | head -1; ls backups/wip/ | grep c31 | head; python3 -c \"import json;d=json.load(open('backups/wip/claude__rainbow-s06-match-c31/INFO.json'));print(d.get('time'), len(d.get('untracked_saved',d.get('untracked',[])) or []))\" 2>/dev/null; grep -c \"m06curl\" backups/wip/claude__rainbow-s06-match-c31/tracked.patch", "description": "Manual GitHub save; verify s06 snapshot", "timeout": 300000}`
+

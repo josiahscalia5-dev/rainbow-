@@ -1,5 +1,5 @@
 diff --git a/src/game/Game.ts b/src/game/Game.ts
-index 6aec2406..d3f09573 100644
+index 6aec2406..735b4041 100644
 --- a/src/game/Game.ts
 +++ b/src/game/Game.ts
 @@ -26,6 +26,7 @@ import { flag05 } from '../vfx/waterRibbon';
@@ -56,8 +56,8 @@ index 6aec2406..d3f09573 100644
 +    // Benny inside the ring tunnel, so he visibly swims into it; everything else of the tube zone stays hidden in 06
 +    if (m06 && tube07 && (m06On || tube07Applied)) {
 +      // r30 m06curl: the 06 tunnel runs straight into 07's tube (eased onto its mouth); wherever the tunnel's far end can be in view, what
-+      // lies beyond it IS 07's tube -> shown from 160 u back (only its interior, through the 06 tunnel's end, is visible from inside 06)
-+      const show = m06On && st.s > course.stage('07').s0 - (M06_CURL ? 160 : 12); // r29 v2 (user): the 06 tunnel look continues until the doorway (~1 s)
++      // lies beyond it IS 07's tube -> shown from 175 u back (only its interior, through the 06 tunnel's end, is visible from inside 06)
++      const show = m06On && st.s > course.stage('07').s0 - (M06_CURL ? 175 : 12); // r29 v2 (user): the 06 tunnel look continues until the doorway (~1 s)
 +      if (m06On) { env.zones.tubes.visible = show; for (const ch of env.zones.tubes.children) ch.visible = ch === tube07; }
 +      else for (const ch of env.zones.tubes.children) ch.visible = true;
 +      tube07Applied = m06On;
