@@ -2290,3 +2290,34 @@ That "other Claude session" is an agent working inside this same session — a s
 
 > 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:rings-preview 2>&1 | grep -E '\"commit\"|pushed_verified|skipping'; python3 -I scripts/autosave-status.py", "description": "Save and verify on GitHub", "timeout": 300000}`
 
+### 🧑 User — 2026-11-20T00:24:55.628Z
+
+> ↩︎ result: "pushed_verified": true,
+>   "commit": "c4b319d4fea4c7dfae93ecf81724b02f7ae86a0d",
+> AUTOSAVE OK | branch ccr-681a37bb-5jqfbu | scheduler daemon | last verified backup 2026-11-20T00:24:38+00:00 (0.3 min ago) | local c4b319d remote c4b319d (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-20T00:25:01.315Z
+
+Here's the first preview of the gold-tunnel fix you marked. I've sent five pictures:
+- the spot you marked with the arrow on your approved picture
+- the spot you circled, before
+- the same spot now
+- the full screen before and now while swimming
+
+It isn't final yet.
+
+**Better:**
+- **The bumps are gone.** The fat raised rings that stuck out from the wall are now flush, perfectly round ribs, so the tunnel reads as a smooth ribbed gold tube like yours.
+- **It holds while swimming.** The ribbed look stays from the start of the swim to deep in the tunnel.
+
+**Still different from your picture:**
+- **Ribs:** yours are finer and closer together. The new ones are still a bit wide.
+- **Colour:** yours is an even, mirror-like yellow-gold. The new one is still too orange, with reddish-brown grooves.
+- **Shine:** yours has a soft glossy sheen. The new one has a few hot glare streaks.
+
+I've sent those three fixes to the worker. After that it does the full check: start view unchanged, coins, steering left and right, and a swim clip.
+
+**About the full-screen pictures:** this preview only has the ring change. The river still looks like the old flat strip because the water worker's two kept steps aren't in this preview. They'll all be combined in the next Screen 04 version.
+
+Saved and verified on GitHub (`c4b319d`).
+

@@ -1,5 +1,5 @@
 diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
-index 2b62a35..5c37ea9 100644
+index 2b62a35..c727af9 100644
 --- a/src/world/match04m4.ts
 +++ b/src/world/match04m4.ts
 @@ -491,6 +491,7 @@ uniform vec4 uWU;            // r19b m04wup: x highest climb up the wall above t
@@ -66,3 +66,73 @@ index 2b62a35..5c37ea9 100644
          uWU3: { value: new THREE.Vector4(arc[nX], M04.num('m04wuv', 0.3), M04.num('m04wuw', 0.25), M04.num('m04wut', 0.28)) },
          uNB: { value: nbU }, uNB2:{ value: new THREE.Vector4(M04.num('m04nba', 4.2), M04.num('m04nbb', 0.04), M04.num('m04nbp', 0.0), M04.num('m04nbf', 0)) },
          uSB0: { value: new THREE.Vector4(M04.num('m04sband', 0) > 0 ? M04.num('m04sbs', 0.95) : 0, M04.num('m04sbi', 2.0), arc[nX], M04.num('m04sbl', 10)) },
+@@ -1469,6 +1480,7 @@ export function addM04(ctx: M04Ctx) {
+   // m04bbb pre-opening bin length (u), m04bbe self-light, m04bbc tint (0 white .. 3 blue-lilac), m04bbi iridescence,
+   // m04bbr roughness, m04bbk sink into the water (share of the heap height), m04bbw inside-rim heaps (0 = none), m04bbl
+   // blue-lilac shading toward each bubble's outline, m04bbg thin bright rim, m04bbh white sparkle.
++  const bankBen = new THREE.Vector4(0, -1e4, 0, 0.95);   // r20 m04bbx: Benny's body centre (world) + radius, set every frame
+   const buildBank = (clumps: { side: number; a: number; cl: number; reach: number }[], puffs: { side: number; x: number; z: number }[], nearF: number[]) => {
+     let s3 = 24683; const r3 = () => ((s3 = (s3 * 16807) % 2147483647) / 2147483647);
+     const HL = 3.3, HH = 1.43;                                  // heap length / height in the glb (u)
+@@ -1503,24 +1515,50 @@ export function addM04(ctx: M04Ctx) {
+       iridescence: M04.num('m04bbi', 0.15), iridescenceIOR: 1.3,
+       emissive: new THREE.Color('#eef3ff'), emissiveIntensity: M04.num('m04bbe', 0.12), transparent: true, depthWrite: true });
+     const rimC = new THREE.Vector4(0.74, 0.72, 0.98, M04.num('m04bbl', 0.75)), rimW = M04.num('m04bbg', 0.35), glint = M04.num('m04bbh', 0.6);
++    // r20 `&m04bbx=1` (lead notes on step 2): x on, y sparkle strength (brighter, a little larger), z faint iridescent pink / cyan
++    // rim on every bubble, w Benny clearance — a bubble that would sit IN FRONT of Benny's silhouette (seen from the camera)
++    // shrinks away, so a heap never covers him when he steers into a bank. bankBen = Benny's body centre (world) + radius.
++    const bbx = new THREE.Vector4(M04.num('m04bbx', 0) > 0 ? 1 : 0, M04.num('m04bbxs', 1.0), M04.num('m04bbxi', 0.35), M04.num('m04bbxb', 1));
++    bankBen.w = M04.num('m04bbxr', 0.95);
+     mat.onBeforeCompile = (sh) => {
+       sh.uniforms.uBNear = { value: near }; sh.uniforms.uBRim = { value: rimC }; sh.uniforms.uBRimW = { value: rimW }; sh.uniforms.uBGl = { value: glint };
++      sh.uniforms.uBX = { value: bbx }; sh.uniforms.uBen = { value: bankBen };
+       // the painted foam bubbles: pale lilac-white faces, soft blue-lilac shading toward each bubble's outline, a thin bright rim
+-      sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform vec4 uBRim;\nuniform float uBRimW;\nuniform float uBGl;')
++      sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform vec4 uBRim;\nuniform float uBRimW;\nuniform float uBGl;\nuniform vec4 uBX;')
+         .replace('#include <opaque_fragment>', `{
+     float nv = saturate(dot(normal, geometryViewDir));
+     outgoingLight = mix(outgoingLight, outgoingLight * uBRim.rgb, uBRim.a * pow(1.0 - nv, 1.4));
+     outgoingLight += vec3(1.0, 0.96, 1.0) * uBRimW * pow(1.0 - nv, 6.0);
+     // the painted white sparkle on every bubble (upper left, as the painting is lit), view-space so it rides with each bubble
+     outgoingLight = mix(outgoingLight, vec3(1.0), uBGl * smoothstep(0.93, 0.975, dot(normal, normalize(vec3(-0.45, 0.6, 0.66)))));
++    if (uBX.x > 0.5) {
++      // r20 m04bbx: the painted bubbles' crisp white sparkle (a bigger hot spot + a small second glint lower right) and a faint
++      // thin-film rim that shifts pink -> cyan round each bubble
++      float g1 = dot(normal, normalize(vec3(-0.45, 0.6, 0.66))), g2 = dot(normal, normalize(vec3(0.5, -0.35, 0.79)));
++      outgoingLight = mix(outgoingLight, vec3(1.0), clamp(uBX.y * (smoothstep(0.90, 0.965, g1) + 0.45 * smoothstep(0.975, 0.99, g2)), 0.0, 1.0));
++      float rimI = pow(1.0 - nv, 2.6) * (1.0 - pow(1.0 - nv, 9.0));
++      vec3 film = mix(vec3(1.0, 0.55, 0.88), vec3(0.45, 0.88, 1.0), 0.5 + 0.5 * sin(normal.x * 4.0 + normal.y * 2.5 + 1.0));
++      outgoingLight = mix(outgoingLight, film, uBX.z * rimI);
++    }
+   }
+   #include <opaque_fragment>`);
+-      sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nattribute vec4 aC;\nuniform vec2 uBNear;')
++      sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nattribute vec4 aC;\nuniform vec2 uBNear;\nuniform vec4 uBX;\nuniform vec4 uBen;')
+         .replace('#include <begin_vertex>', `#include <begin_vertex>
+   {
+     // r20 m04bbank: each bubble shrinks into its own centre as it nears the camera (view depth), like the sprite foam
+     vec4 cv = viewMatrix * modelMatrix * instanceMatrix * vec4(aC.xyz, 1.0);
+-    transformed = aC.xyz + (transformed - aC.xyz) * smoothstep(uBNear.x, uBNear.y, -cv.z);
++    float kS = smoothstep(uBNear.x, uBNear.y, -cv.z);
++    if (uBX.x > 0.5 && uBX.w > 0.0) {
++      // r20 m04bbx: never in front of Benny — a bubble nearer the camera than Benny whose direction overlaps his silhouette
++      // (his angular radius, grown a little) shrinks away smoothly
++      vec4 bv = viewMatrix * vec4(uBen.xyz, 1.0);
++      float bd = max(-bv.z, 0.1), cd = max(-cv.z, 0.1);
++      vec2 dA = cv.xy / cd - bv.xy / bd;
++      float rB = uBen.w / bd;
++      float front = smoothstep(-0.2, 0.6, bd - cd);
++      kS *= 1.0 - uBX.w * front * (1.0 - smoothstep(rB * 1.0, rB * 1.7, length(dA)));
++    }
++    transformed = aC.xyz + (transformed - aC.xyz) * kS;
+   }`);
+     };
+     updaters.push((a) => { holder.visible = a > 0.01; mat.opacity = a; });
+@@ -1813,6 +1851,7 @@ export function addM04(ctx: M04Ctx) {
+     time.value = performance.now() / 1000;
+     a5b.z = -cam.clone().applyMatrix4(MwInv).z;   // camera position down the slide (local along)
+     if (nbU.x > 0 && benny) { const bl = benny.clone().applyMatrix4(MwInv); nbU.y = -bl.z; nbU.z = bl.x - cx; }
++    if (benny) bankBen.set(benny.x, benny.y + M04.num('m04bbxy', 0.55), benny.z, bankBen.w);   // r20 m04bbx
+     away.value = THREE.MathUtils.smoothstep(cam.distanceTo(proj.position), fade, fade1);
+     const a2 = THREE.MathUtils.smoothstep(cam.distanceTo(proj.position), 0.4, 1.6);
+     for (const u of updaters) u(a2);

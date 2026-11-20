@@ -2770,3 +2770,27 @@ Launching the plush probe now (texture is the lead's #1), then analysing the exp
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-20T00:24:45.745Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && python3 - <<'EOF'\np='tools/benny20/knit.py'\ns=open(p).read()\nold=\"\"\"    if rib:\n        # ribbing: every column is a raised knit rib; the purl grooves between them sink deep\n        edge = np.abs(s)\n        ribprof = np.clip(1 - ((edge - 0.18) / 0.32).clip(0) ** 2, 0, 1)\n        hmax = hmax * (0.55 + 0.45 * ribprof) + 0.35 * ribprof\n        hmax = hmax / hmax.max()\"\"\"\nnew=\"\"\"    if rib:\n        # ribbing (r20, like the approved 04 cuff): each column = one raised knit rib (its V stitch squeezed into the\n        # central `rib` share of  …[+2275 chars]`
+
+### 🤖 Claude — 2026-11-20T00:24:47.098Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/knit3/view.png"}`
+
+### 🧑 User — 2026-11-20T00:24:50.464Z
+
+> ↩︎ result: wrote /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/knit3
+
+### 🧑 User — 2026-11-20T00:24:50.487Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T00:24:53.026Z
+
+Ribbed cuff now has real vertical ribs with dark purl grooves; crown has cream V columns. Kept for the cuff step. Checking the plush probe.
+
+### 🤖 Claude — 2026-11-20T00:24:56.903Z
+
+> 🔧 **Bash** `{"command": "until [ -f /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/probe_p/probe.json ] || ! pgrep -f \"probe_p \" >/dev/null; do sleep 5; done; grep -v \"outside of Vite\" /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/probe_p.log | tail -9; cd /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/probe_p && for v in p0_plush p1_lock55 p2_len06 p3_comb04 p4_pile06 p5_col1.15 p6_col1.3; do echo -n \"$v \"; python3 -I /home/user/wt/benny/tools/benny20/score.py $v.png ${v}_mask.png | python3 -c  …[+171 chars]`
+
