@@ -2391,3 +2391,19 @@ You've hit your 5-hour limit · resets 9am (UTC)
 <result>I'll start by reading the brief files in the order given.</result>
 </task-notification>
 
+### 🧑 User — 2026-11-20T06:35:16.699Z
+
+<system-reminder>
+The container was restarted. The following background tasks were running and are now stopped:
+- Screen 07 satin + low foam (task ad506edb73ba1c3d9)
+Re-create them if still needed.
+</system-reminder>
+
+### 🧑 User — 2026-11-20T06:35:20.972Z
+
+This session's worker process was restarted. If your previous turn was already complete, take no action and wait for the next event. Otherwise, continue from where you left off.
+
+### 🤖 Claude — 2026-11-20T06:35:23.427Z
+
+You've hit your 5-hour limit · resets 9am (UTC)
+

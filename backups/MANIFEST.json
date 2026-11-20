@@ -623,8 +623,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 20783,
-   "sha256": "5d6872dc46bf2bb67c1823a113d1064cf2a53cd5eac27be7f2c59c941aa1843e"
+   "bytes": 20784,
+   "sha256": "d6493ee4260689f06a5fb34e377e6f98a79c25a46ab3f2ce32571249a906ba01"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -639,7 +639,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 2284,
-   "sha256": "08c1247de553a9b7de83ded8b337afb609d2d207461e9cb1508dcea294ec2516"
+   "sha256": "c1cea216ab4758152f823e26960008d1602fc0a50e870bfdc01bc1b3d2fbb187"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -884,7 +884,7 @@
   {
    "path": "backups/wip/claude__rainbow-benny-c24/INFO.json",
    "bytes": 799,
-   "sha256": "16f0be35ae6daf2895ac25efc119bc628d79473c51360682752f13dd06730f91"
+   "sha256": "fd9f30ac2aa62b8f5808307cc3ae91af1d9f670d63815180eefaf316b771a975"
   },
   {
    "path": "backups/wip/claude__rainbow-benny-c24/tracked.patch",
@@ -1464,7 +1464,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c24/INFO.json",
    "bytes": 586,
-   "sha256": "563e56763039abafba13622ac0774100f0ea954c0155ba7654ecdbaa1234865b"
+   "sha256": "11c48c20e345637e767e1693deef747ed2785b57fe211114f868a24ef16f0aba"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c24/tracked.patch",
@@ -2229,7 +2229,7 @@
   {
    "path": "backups/wip/claude__rainbow-s05-match-c24/INFO.json",
    "bytes": 477,
-   "sha256": "b393ca87b64aed654e6af28e644e993508041d2d2f27e65dca4381ae5a7dafd7"
+   "sha256": "db7f7e6e0db08df4231b32609ce924379fbd900a6702b3997c28c00e3d4034ee"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c11/INFO.json",
@@ -2289,7 +2289,7 @@
   {
    "path": "backups/wip/claude__rainbow-s06-match-c24/INFO.json",
    "bytes": 695,
-   "sha256": "bdf8786d8f42fa8162aa4561f692c094e26231a1d635371a60c5bb13bfb15381"
+   "sha256": "1760adf161f70f584870d517c9f1fe2901da549ca8f1a26072acd2cd04d30396"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c24/tracked.patch",
@@ -2509,7 +2509,7 @@
   {
    "path": "backups/wip/claude__rainbow-s07-match-c24/INFO.json",
    "bytes": 674,
-   "sha256": "9b95f58ad8a4e5a55b40b9e536e3c4b28dd981c0a2eecdfdda3cb333c33d98e0"
+   "sha256": "bb1ca5dc1cfe719df6c0861c5b62ff526e8e7aae894023dbd8928be4b652e311"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c24/tracked.patch",
@@ -2654,7 +2654,7 @@
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c24/INFO.json",
    "bytes": 485,
-   "sha256": "133146497a5204c509007f8153ed5206599973844b7d1711c3ac086166ec8788"
+   "sha256": "39bf64a8cbfc3addeef02d7f908e3bb6995d94049d781a526e3dd7019804686c"
   },
   {
    "path": "backups/wip/detached-34cb494137/INFO.json",
