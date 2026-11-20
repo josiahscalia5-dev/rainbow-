@@ -1,6 +1,6 @@
 {
- "time_utc": "2026-11-20T10:20:26+00:00",
- "lead_branch": "claude/rainbow-r22-restore-ut3m39",
+ "time_utc": "2026-11-20T10:31:38+00:00",
+ "lead_branch": "ccr-5be1062a-0ffyej",
  "specialists_sha256_16": {
   "android-build-performance": "b0c45161860a960c",
   "animation-and-gameplay-engineer": "c48094c3ed3d22e7",
@@ -13,61 +13,29 @@
   "washer-environment-modeler": "7abdea786d530d79",
   "water-fx-specialist": "b160f12ff93db70e"
  },
- "workers_git_worktrees": [
-  {
-   "worktree": "/home/user/wt/benny",
-   "branch": "claude/rainbow-benny-c24",
-   "head": "734efb6bc407"
-  },
-  {
-   "worktree": "/home/user/wt/lead07",
-   "branch": "",
-   "head": "8accdad0a07e"
-  },
-  {
-   "worktree": "/home/user/wt/s04",
-   "branch": "claude/rainbow-s04-match-c24",
-   "head": "34cb494137e1"
-  },
-  {
-   "worktree": "/home/user/wt/s05",
-   "branch": "claude/rainbow-s05-match-c24",
-   "head": "eb7233e36466"
-  },
-  {
-   "worktree": "/home/user/wt/s06",
-   "branch": "claude/rainbow-s06-match-c24",
-   "head": "e162aec2bfdc"
-  },
-  {
-   "worktree": "/home/user/wt/s07",
-   "branch": "claude/rainbow-s07-match-c24",
-   "head": "8accdad0a07e"
-  },
-  {
-   "worktree": "/home/user/wt/s08",
-   "branch": "claude/rainbow-s08-scenery-c24",
-   "head": "3c0fa97090af"
-  }
- ],
+ "workers_git_worktrees": [],
  "workers_status_latest_round": {
   "round9_account9": null
  },
- "plugins_installed_locally": [
-  "worldlabs@worldlabs"
- ],
- "plugins_enabled_user_settings": [
-  "worldlabs@worldlabs"
- ],
+ "plugins_installed_locally": [],
+ "plugins_enabled_user_settings": [],
  "plugins_synced_from_claude_account": [
-  "Browser automation and end-to-end testing MCP server by Microsoft. Enables Claude to inter",
+  "Closes the gap between Claude Code and the browser. When a task needs the web, Claude Code",
+  "TypeScript/JavaScript language server for Claude Code that runs TypeScript 7's native LSP ",
+  "Tools to maintain and improve CLAUDE.md files - audit quality, capture session learnings, ",
+  "Python type-checker LSP multiplexer for Claude Code (pyright, ty, pyrefly)",
+  "Streamline your git workflow with simple commands for committing, pushing, and creating pu",
+  "Automated code review for pull requests using multiple specialized agents with confidence-",
+  "Analyze codebases and recommend tailored Claude Code automations such as hooks, skills, MC",
+  "Agent that simplifies and refines code for clarity, consistency, and maintainability while",
+  "Comprehensive feature development workflow with specialized agents for codebase exploratio",
   "Frontend design skill for UI/UX implementation",
-  "Accelerate design workflows \u2014 critique, design system management, UX writing, accessibilit",
+  "Core skills library for Claude Code: TDD, debugging, collaboration patterns, and proven te",
+  "Browser automation and end-to-end testing MCP server by Microsoft. Enables Claude to inter",
+  "Security review for Claude-generated code. Pattern-based warnings on edits, LLM-powered di",
   "Upstash Context7 MCP server for up-to-date documentation lookup. Connects to Context7's ho"
  ],
- "mcp_servers_configured": [
-  "worldlabs"
- ],
+ "mcp_servers_configured": [],
  "hooks_project": [
   "PreCompact",
   "SessionEnd",
