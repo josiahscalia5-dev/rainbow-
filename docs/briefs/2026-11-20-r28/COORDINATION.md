@@ -90,3 +90,9 @@ newest `backups/wip/*-c29/`, trial07 + view04/06/07 included).
   Open question 3 (09 / 10) is ANSWERED: playable. 09 and 10 = new workstreams, queued for the next free slot (06 route test stays the focused
   checkpoint). Screen 04 K27-B (glints `m04lgc…` + cloud banks `m04bbdc…`) GOOD IMPROVEMENT ×2, arrows `m04a5v=2` NOT AN IMPROVEMENT (switch off);
   proof `qa/match/04/r27/s4_combined/`; s04 FINISHED ~17:20. Benny resumed ~17:22 on step 3 (06 start star, `b20s06a`).
+* ~17:22 USER: "save everything to my repository, everything, every 5 minutes." Audit: daemon OK, but the loop slept 300 s AFTER each save
+  (cadence drifted to ~5 min 15–20 s) and a tick that found the save lock busy was skipped for a whole extra 5 min (no data gap: manual
+  saves covered it). `scripts/autosave-daemon.sh` now runs START TO START every 300 s and, when a tick is skipped by the lock (no new row
+  in `backups/.live/BACKUP_LOG.md`), retries every 20 s. Swapped atomically, old loop stopped between saves, new loop started via
+  `install-autosave-scheduler.sh` (a stale pidfile had to be removed first — the installer briefly saw the exiting pid). One daemon
+  (pid 30909); scheduled saving was down ~1 min (last save before 17:20:24, first new save 17:22:05, verified on GitHub).

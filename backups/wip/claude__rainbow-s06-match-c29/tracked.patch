@@ -1,5 +1,5 @@
 diff --git a/src/game/Game.ts b/src/game/Game.ts
-index 6aec240..dde142b 100644
+index 6aec240..57a87ac 100644
 --- a/src/game/Game.ts
 +++ b/src/game/Game.ts
 @@ -67,6 +67,10 @@ export async function startGame(canvas: HTMLCanvasElement) {
@@ -13,10 +13,11 @@ index 6aec240..dde142b 100644
    const qn = (k: string, d: number) => { const v = qs.get(k); return v !== null && v !== '' && isFinite(+v) ? +v : d; };
    // (measured 2026-11-16, qa/pilot05/wave12/glow/: threshold 1.0–1.3 washed the whole river toward white — the scene's
    // linear HDR body colours pass it; 2.6 keeps only streak cores, flares and lamps → water saturation UP, 0.92 → 0.97)
-@@ -545,7 +549,15 @@ export async function startGame(canvas: HTMLCanvasElement) {
+@@ -545,7 +549,16 @@ export async function startGame(canvas: HTMLCanvasElement) {
        // carries its bubbles only there; while swimming the screen had none)
        const bub6 = M06_BUB && m06On && m06.away(camera.position) > 0.5;
        m06.setAway(m06On ? m06.away(camera.position) : 0);
++      coins.setGrow(m06On ? m06.away(camera.position) : 1); // r28 m06route coin growth (no-op without it)
 +      m06.setBenny(st.s, st.lat); // r23 `&m06rip=1` only (no-op without it)
        for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m06On || (bub6 && (k === 'bubbles' || k === 'splashCrown' || k === 'spray')); }
 +      const crownU = M06_SPL ? ((water.parts?.splashCrown as THREE.Mesh | undefined)?.material as THREE.ShaderMaterial | undefined)?.uniforms : undefined;
@@ -29,6 +30,66 @@ index 6aec240..dde142b 100644
        m06Applied = m06On;
      }
      if (m08 && m08On) for (const k of ['puddles', 'finalWave']) { const o = water.parts?.[k]; if (o) o.visible = false; }
+diff --git a/src/gameplay/coins.ts b/src/gameplay/coins.ts
+index 69122b3..4e67dcd 100644
+--- a/src/gameplay/coins.ts
++++ b/src/gameplay/coins.ts
+@@ -14,7 +14,7 @@ import coins06 from '../../assets/textures/match06/coins06.json';
+ export const COIN_VALUE = 10;
+ 
+ /** scale: coin size factor (1 = 1.0 u diameter); tilt: radians the coin leans back (top away from the camera) */
+-export interface CoinDef { s: number; lat: number; h: number; stage: StageId; scale?: number; tilt?: number; faceTo?: [number, number, number] }
++export interface CoinDef { s: number; lat: number; h: number; stage: StageId; scale?: number; tilt?: number; faceTo?: [number, number, number]; grow?: number }
+ 
+ /**
+  * 05 (ref 05, measured): ≈10 coins on the electric-cyan core winding to the VP. The nearest one is
+@@ -57,7 +57,10 @@ export function coinLayout(course: Course): CoinDef[] {
+   if (m06) {
+     const a = st('06');
+     for (let i = 0; i < 3; i++) add('06', a.s0 + 1 + i, -0.4 + 0.4 * i);
+-    for (const c of coins06.coins) add(course.stageAtS(c.s).id, c.s, c.lat, c.h, { scale: c.scale, faceTo: coins06.faceTo as [number, number, number] });
++    // r28 `&m06route=1`: the painted coins keep the approved size in the approved view, then grow to one common size (the
++    // nearest painted coin's) as the camera leaves it (setGrow = the 06 away factor), so the far ones are not tiny when reached
++    const grow = flag05('m06route');
++    for (const c of coins06.coins) add(course.stageAtS(c.s).id, c.s, c.lat, c.h, { scale: c.scale, faceTo: coins06.faceTo as [number, number, number], ...(grow ? { grow: Math.max(c.scale, 0.632) } : {}) });
+   }
+   // 07 — winding trail, continuing down the plunge
+   { const a = st('07'); const n = 24; for (let i = 0; i < n; i++) { const s = a.s0 + 6 + i * ((a.s1 - a.s0 - 10) / n); add('07', s, 1.0 * Math.sin(i * 0.5 + 1)); } }
+@@ -113,6 +116,8 @@ export interface CoinSystem {
+   update(time: number, dt: number, bennyS: number, bennyLat: number): number;
+   /** mark coins before s as collected (deterministic QA checkpoint state) or reset all */
+   resetUntil(s: number): void;
++  /** r28 m06route: 0 = approved coin sizes .. 1 = grown (coins with `grow`) */
++  setGrow(k: number): void;
+ }
+ 
+ export function createCoins(course: Course): CoinSystem {
+@@ -175,6 +180,7 @@ export function createCoins(course: Course): CoinSystem {
+   const spin = new THREE.Quaternion(), axis = new THREE.Vector3();
+   const tiltQ = new THREE.Quaternion(), xAxis = new THREE.Vector3(1, 0, 0);
+   const back = new THREE.Vector3();
++  let growK = 0;
+ 
+   const place = (time: number) => {
+     defs.forEach((d, i) => {
+@@ -200,7 +206,8 @@ export function createCoins(course: Course): CoinSystem {
+       spin.setFromAxisAngle(axis.set(0, 1, 0), (d.faceTo ? 0.06 : d.tilt ? 0.18 : 0.35) * Math.sin(time * 2.2 + i * 0.7));
+       q.multiply(spin);
+       if (d.tilt) q.multiply(tiltQ.setFromAxisAngle(xAxis, -d.tilt));
+-      m.compose(p, q, sc.setScalar((d.scale ?? 1) * scale * (collected[i] ? 1 - (time - popT[i]) / 0.35 : 1)));
++      const base = d.grow !== undefined ? (d.scale ?? 1) + (d.grow - (d.scale ?? 1)) * growK : (d.scale ?? 1);
++      m.compose(p, q, sc.setScalar(base * scale * (collected[i] ? 1 - (time - popT[i]) / 0.35 : 1)));
+       mesh.setMatrixAt(i, m);
+     });
+     mesh.instanceMatrix.needsUpdate = true;
+@@ -227,6 +234,7 @@ export function createCoins(course: Course): CoinSystem {
+       place(time);
+       return picked;
+     },
++    setGrow(k) { growK = THREE.MathUtils.clamp(k, 0, 1); },
+     resetUntil(s) {
+       for (let i = 0; i < defs.length; i++) { collected[i] = defs[i].s < s ? 1 : 0; popT[i] = -1; }
+       place(0);
 diff --git a/src/world/match06.ts b/src/world/match06.ts
 index 831c2b4..c1a694d 100644
 --- a/src/world/match06.ts

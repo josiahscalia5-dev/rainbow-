@@ -1203,3 +1203,32 @@ Waiting for the full NEW clip to finish rendering.
 
 > ↩︎ result: Monitor started (task b22uin68n, expires in 30m unless the source ends first; you get one notice at expiry — re-arm if you still need the watch). You will be notified on each event. Keep working — do not poll or sleep. Events may arrive while you are waiting for the user — an event is not their reply.
 
+### 🤖 Claude — 2026-11-20T17:22:13.925Z
+
+> 🔧 **Bash** `{"command": "cat > /home/user/scratch/s07/stills.sh <<'EOF'\n#!/usr/bin/env bash\n# r28 s07 step 2 proof stills: BEFORE = r26/27 full candidate (landmarks + its 1x clip), NEW = + m07fsoft (new 1x clip), same frames\nset -eu\nS=/home/user/scratch/s07; P=/home/user/rainbow-/qa/match/07/r27/s2_fsoft; L=/home/user/rainbow-/qa/match/07/r26/final/landmarks\nOLD=/home/user/rainbow-/qa/match/07/r26/final/SCREEN07_NEW_full_K23-3_1x.mp4; NEW=$P/SCREEN07_NEW_fsoft_K23-3_1x.mp4\ncp $L/1_ORIGINAL_APPROVED.png $P/1_ORIGINAL_APPROVED.png\ncp $S/st_before/a_start.png $P/2_BEFORE_a_start_864.png; cp $S/st_new/ …[+717 chars]`
+
+### 🧑 User — 2026-11-20T17:22:13.993Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-20T17:22:29.085Z
+
+> 🔧 **Bash** `{"command": "cat >> /home/user/scratch/s07/stills.sh <<'EOF'\n# clear labels: a header bar above each picture (nothing of the picture is covered)\npython3 -I - \"$P\" <<'PY'\nimport sys, glob, os\nfrom PIL import Image, ImageDraw, ImageFont\nP = sys.argv[1]\ntry: F = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 22)\nexcept OSError: F = ImageFont.load_default()\ntags = {'1_': ('ORIGINAL APPROVED (references/07)', (40, 120, 40)), '2_': ('BEFORE = r27 full candidate (no m07fsoft) + K23-3', (120, 60, 20)),\n        '3_': ('NEW = full candidate + m07fsoft (v5) + K23-3' …[+632 chars]`
+
+### 🧑 User — 2026-11-20T17:22:29.225Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-20T17:22:39.422Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s07 && python3 - <<'EOF'\nfrom pathlib import Path\np = Path('/home/user/scratch/s07/stills.sh'); s = p.read_text()\ns = s.replace(\"try: F = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 22)\\nexcept OSError: F = ImageFont.load_default()\\n\", \"\")\ns = s.replace(\"    im = Image.open(f).convert('RGB'); w, h = im.size\\n\",\n \"    im = Image.open(f).convert('RGB'); w, h = im.size\\n    try: F = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 15 if w < 600 else 22)\\n    except OSError: F = ImageFont.l …[+723 chars]`
+
+### 🧑 User — 2026-11-20T17:22:39.511Z
+
+> ↩︎ result: /usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf
+> syntax-ok
+
+### 🤖 Claude — 2026-11-20T17:22:42.331Z
+
+Waiting for the clip render to complete (monitor armed).
+

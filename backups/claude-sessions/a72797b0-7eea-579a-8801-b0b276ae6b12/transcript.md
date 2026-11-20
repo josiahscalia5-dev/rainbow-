@@ -3608,3 +3608,49 @@ Process 595 is gone; the installer checked a moment before it fully exited. Clea
 
 > 🔧 **Bash** `{"command": "rm -f ~/.rainbow-autosave/daemon.pid && bash scripts/install-autosave-scheduler.sh 2>&1 | tail -1; sleep 3; echo \"running:\"; pgrep -af \"scripts/autosave-daemon.sh\" | grep -v pgrep; echo \"count: $(pgrep -fc 'scripts/autosave-daemon.sh')\"; cat ~/.rainbow-autosave/daemon.pid", "description": "Start the new autosave daemon and confirm one copy"}`
 
+### 🧑 User — 2026-11-20T17:22:08.305Z
+
+> ↩︎ result: scheduler=daemon status=started pid=30909
+> running:
+> 30909 bash /home/user/rainbow-/scripts/autosave-daemon.sh
+> count: 1
+> 30909
+
+### 🤖 Claude — 2026-11-20T17:22:13.758Z
+
+> 🔧 **Bash** `{"command": "until tail -1 backups/.live/BACKUP_LOG.md | grep -q \"| daemon |\" && ! pgrep -f rainbow-autosave.py >/dev/null; do sleep 3; done; tail -2 backups/.live/BACKUP_LOG.md | cut -c1-130; git rev-parse HEAD; git ls-remote origin refs/heads/ccr-9652868f-lkw0w0; python3 -I scripts/autosave-status.py", "description": "Wait for the new daemon's first save and verify", "timeout": 300000}`
+
+### 🧑 User — 2026-11-20T17:22:26.964Z
+
+> ↩︎ result: | 2026-11-20T17:20:24+00:00 | hook:Stop | committed+pushed | `b1baca7c0690` | `ccr-9652868f-lkw0w0` | 21 | True |  |
+> | 2026-11-20T17:22:05+00:00 | daemon | committed+pushed | `3ee8e77bc1d7` | `ccr-9652868f-lkw0w0` | 26 | True |  |
+> 3ee8e77bc1d75f00bc74d9838f0edd386a4f87cf
+> 3ee8e77bc1d75f00bc74d9838f0edd386a4f87cf	refs/heads/ccr-9652868f-lkw0w0
+> AUTOSAVE OK | branch ccr-9652868f-lkw0w0 | scheduler daemon | last verified backup 2026-11-20T17:22:05+00:00 (0.3 min ago) | local 3ee8e77 remote 3ee8e77 (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-20T17:22:32.465Z
+
+The new loop's first save (17:22:05) reached GitHub and matches. Recording the change in the coordination log, then confirming the next scheduled save lands exactly 5 minutes later:
+
+### 🤖 Claude — 2026-11-20T17:22:37.161Z
+
+> 🔧 **Bash** `{"command": "git log -3 --format='%h %s' -- scripts/autosave-daemon.sh | head -3; cat >> docs/briefs/2026-11-20-r28/COORDINATION.md <<'EOF'\n* ~17:22 USER: \"save everything to my repository, everything, every 5 minutes.\" Audit: daemon OK, but the loop slept 300 s AFTER each save\n  (cadence drifted to ~5 min 15–20 s) and a tick that found the save lock busy was skipped for a whole extra 5 min (no data gap: manual\n  saves covered it). `scripts/autosave-daemon.sh` now runs START TO START every 300 s and, when a tick is skipped by the lock (no new row\n  in `backups/.live/BACKUP_LOG.md`), retr …[+426 chars]`
+
+### 🧑 User — 2026-11-20T17:22:37.237Z
+
+> ↩︎ result: 3ee8e77 autosave: Rainbow 2026-11-20 17:22 UTC
+> 553060a autosave: Rainbow 2026-11-20 12:25 UTC
+> logged
+
+### 🤖 Claude — 2026-11-20T17:22:41.211Z
+
+> 🔧 **Monitor** `{"command": "cd /home/user/rainbow- && until [ \"$(grep -c '| daemon |' backups/.live/BACKUP_LOG.md)\" -gt \"$(git show HEAD:backups/BACKUP_LOG.md 2>/dev/null | grep -c '| daemon |' || echo 0)\" ] && tail -n 20 backups/.live/BACKUP_LOG.md | grep '| daemon |' | tail -1 | grep -qv '17:22:05'; do sleep 5; done; tail -n 20 backups/.live/BACKUP_LOG.md | grep '| daemon |' | tail -2 | cut -c1-110", "description": "Wait for the next scheduled save after 17:22:05", "timeout": "420000"}`
+
+### 🧑 User — 2026-11-20T17:22:41.261Z
+
+> ↩︎ result: Monitor started (task bssjuyzga, expires in 5m unless the source ends first; you get one notice at expiry — re-arm if you still need the watch). You will be notified on each event. Keep working — do not poll or sleep. Events may arrive while you are waiting for the user — an event is not their reply.
+
+### 🤖 Claude — 2026-11-20T17:22:47.710Z
+
+> 🔧 **Bash** `{"command": "until grep '| daemon |' backups/.live/BACKUP_LOG.md | tail -1 | grep -qv '17:22:05'; do sleep 5; done; until ! pgrep -f rainbow-autosave.py >/dev/null; do sleep 2; done; grep '| daemon |' backups/.live/BACKUP_LOG.md | tail -2 | cut -c1-120; git rev-parse HEAD; git ls-remote origin refs/heads/ccr-9652868f-lkw0w0; pgrep -fc 'scripts/autosave-daemon.sh'", "description": "Wait for next scheduled save and verify remote", "timeout": 420000}`
+
