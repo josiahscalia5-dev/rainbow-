@@ -2249,3 +2249,45 @@ That leftover file (the Screen 04 specialist's new test script) is now saved too
 
 The four specialists are still working. Their new work keeps going to GitHub with the automatic save every 5 minutes.
 
+### 🧑 User — 2026-11-20T12:28:21.744Z
+
+How's it going? Like, I don't want to interrupt the task or the specialist or agent, whatever. But how's my screen's going?
+
+### 🤖 Claude — 2026-11-20T12:28:23.346Z
+
+I'll check the specialists' progress notes and output folders, without interrupting them.
+
+### 🤖 Claude — 2026-11-20T12:28:25.112Z
+
+> 🔧 **Bash** `{"command": "date -u +%H:%M; for f in qa/match/07/r24/PROGRESS.md qa/match/06/r25/PROGRESS.md qa/match/04/r23/PROGRESS.md qa/benny/r23/PROGRESS.md; do echo \"######## $f\"; [ -f $f ] && awk '/WHERE I STOPPED/{c++} c==1' $f | head -16 | cut -c1-330; done; bash tools/lead25/render_slot.sh --status; uptime", "description": "Read each specialist's latest progress notes"}`
+
+### 🧑 User — 2026-11-20T12:28:25.432Z
+
+> ↩︎ result: 12:28
+> ######## qa/match/07/r24/PROGRESS.md
+> ## (r25) WHERE I STOPPED / NEXT
+> * r25 relaunch (new account, ~12:00 UTC). Worktree `/home/user/wt/s07`, LOCAL branch `claude/rainbow-s07-match-c26` (= `8accdad0` + my
+>   r24 11:43 edits, applied by the lead). Ports 5277 / 5280 / 5281. Heavy renders via `tools/lead25/render_slot.sh`. Temp
+>   `/home/user/scratch/s07/`.
+> * 12:10 DONE: s08 snapshot rebuilt read-only from `/home/user/wt/s08` (K23-3, hashes `combo/s08snap_SHA256SUMS_r25.txt`); combined build
+>   `/home/user/scratch/s07/combo` (tsc 0). Check `combo/check08_r25/`: 08 approved view **0 px** vs the s08 worker's own K23-3 render
+>   (`qa/match/08/r23/step3_m08towelm/3_NEW_a00_approved_view.png`); forward 10 u: scenery identical, only Benny's fur shading differs.
+> * r24 step-1 shots `s1_swing/BEFORE|NEW` (combo, K23-3) are complete (9 + 9). Start view a_start: 27 px (one far coin down the drop
+>   moved ~2 px with the S); the other shots are at stage fractions and the S makes 07 2.5 u longer, so they are not at the same s.
+> * 12:23 DONE: BEFORE clip (r23 candidate & K23-3, combo build) rendered, 209 frames / 8.71 s, same schedule as the lead's r23 clip
+>   (`clips/BEFORE_frames.json`; labelled mp4 …[+5287 chars]
+
+### 🤖 Claude — 2026-11-20T12:28:36.048Z
+
+It's going well. None of the four specialists has a finished result to show you yet: they restarted about 30 minutes ago and are partway through their first steps. The machine is coping; the load is about a third of last round's, so renders aren't timing out.
+
+- **Screen 07 (first priority):**
+  - The "before" clip is recorded. It shows exactly what you complained about: while steering, the purple wall fills about 70% of the screen and the river is a thin strip at the bottom. At the end, the water turns into a streaky sheet with a speckled band just before Screen 08.
+  - The new version, with the whole river sweeping in broad S-bends, passed the route and path checks. Its swim clip is rendering now.
+  - Still to do after that: keeping the river ahead visible while steering, and a clean water and foam join into Screen 08 using the newest Screen 08 version.
+- **Screen 06 (the blue cone under Benny):** the fix is built. It fills the cut-out hole with your own painted water from around it, so the brighter, hard-edged cone shape should disappear, leaving only small, shallow ripples that travel with Benny. The "what you saw" pictures are rendering. Next come the new pictures, then your comparison and a clip.
+- **Screen 04:** it's recording two whole-screen swim clips side by side: the version you last saw, and the newer, cleaner one with lower pink edges, clearer water and low foam. Each frame is labelled with how many of the five arrows Benny has passed. After that: shorter glints near the camera, softer foam clouds in the distance, and richer cyan and pink water around Benny.
+- **Benny:** the felt-star pictures for Screens 04–08 are done; it's now recording the swim clip to finish that step. Next is softer, combed fur, not spiky or grainy.
+
+All of them are working to your note: clean water and neat scenery while Benny swims past things, judged in motion, not just from the first picture. I'll send you before-and-after pictures and labelled clips as soon as each one has a finished result, starting with Screens 07 and 06.
+
