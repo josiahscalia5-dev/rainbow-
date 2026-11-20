@@ -367,3 +367,202 @@ Round 21 launch. Your complete launch brief is the file /home/user/rainbow-/docs
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-20T02:04:38.102Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && wc -l src/world/match07.ts src/vfx/foam.ts src/vfx/waterRibbon.ts && grep -n \"m07[a-zA-Z]*\" -o src/world/match07.ts | sort | uniq -c | sort -rn | head -40; ls src/world src/vfx", "description": "Survey match07 code and switches"}`
+
+### 🧑 User — 2026-11-20T02:04:38.167Z
+
+> ↩︎ result: 517 src/world/match07.ts
+>   1169 src/vfx/foam.ts
+>   1799 src/vfx/waterRibbon.ts
+>   3485 total
+>       2 4:m07
+>       2 352:m07
+>       1 96:m07band
+>       1 95:m07band
+>       1 94:m07wfoam
+>       1 89:m07nearw
+>       1 87:m07near
+>       1 86:m07tube
+>       1 84:m07gold
+>       1 83:m07ang
+>       1 81:m07fill
+>       1 496:m07
+>       1 43:m07nearw
+>       1 428:m07tube
+>       1 422:m07gold
+>       1 402:m07
+>       1 394:m07nearw
+>       1 385:m07band
+>       1 37:m07tube
+>       1 353:m07bC
+>       1 353:m07
+>       1 352:m07bL
+>       1 352:m07bA
+>       1 351:m07bL
+>       1 351:m07bC
+>       1 351:m07bA
+>       1 350:m07band
+>       1 291:m07fill
+>       1 285:m07band
+>       1 284:m07nearf
+>       1 283:m07nearw
+>       1 282:m07wfoam
+>       1 281:m07nearw
+>       1 278:m07near
+>       1 277:m07ring
+>       1 274:m07river
+>       1 273:m07wall
+>       1 272:m07gold
+>       1 271:m07ang
+>       1 270:m07fill
+> src/vfx:
+> bubbles.ts
+> drumWater.ts
+> finalWave.ts
+> flow05.ts
+> foam.ts
+> glsl.ts
+> index.ts
+> proj05Apron.ts
+> proj05Tunnel.ts
+> puddles.ts
+> riderSplash.ts
+> spray.ts
+> waterRibbon.ts
+> whirlpool.ts
+> 
+> src/world:
+> course.ts
+> environment.ts
+> far05.ts
+> laundryRoom.ts
+> match07.ts
+> match08.ts
+> materials.ts
+> towel.ts
+> tube.ts
+
+### 🤖 Claude — 2026-11-20T02:04:40.401Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/src/world/match07.ts"}`
+
+### 🧑 User — 2026-11-20T02:04:40.517Z
+
+> ↩︎ result: 1	/**
+> 2	 * `?match07=1` — Screen 07 approved-picture test (2026-11-17, qa/match/07/NOTES.md), the Screen 08 method.
+> 3	 * REAL 3D proxy geometry of "Dive the Washer Tube", solved from the user's approved Screen 07 and the locked game camera
+> 4	 * (tools/match07/solve_cam07.py → cam07_locked.json, tools/match07/fit_proxies07.py → proj07.json): the purple tube (a
+> 5	 * cylinder along the game's 07 tube axis, radius and ring depths fitted to the painted gold rings), the water plane at
+> 6	 * Benny's water level (the painted S-river, foam banks, bubbles) and the five paddles upper-left (blocks standing out of
+> 7	 * the wall at the painted spots).
+> 8	 * Every surface is textured by camera projection of the user's ORIGINAL approved pixels (HUD, title, Benny and coins
+> 9	 * provisionally filled locally: assets/textures/match07/plate07_hybrid.png) from that locked camera, so the locked view
+> 10	 * shows the approved scenery and a moving camera sees it on geometry (parallax). Surfaces the picture never showed, or
+> 11	 * showed much farther / more edge-on than the moving camera sees them (stretch guard + projector depth test), get
+> 12	 * RING-STRUCTURED tiles unwrapped from the artwork: the painted wal …[+31303 chars]
+
+### 🤖 Claude — 2026-11-20T02:04:43.845Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -rn \"match07\\|Match07\\|m07\" src --include=*.ts | grep -v \"^src/world/match07.ts\" | head -60", "description": "Find match07 usages outside its own file"}`
+
+### 🧑 User — 2026-11-20T02:04:43.881Z
+
+> ↩︎ result: src/world/course.ts:17:import river07 from '../../assets/textures/match07/river07.json';
+> src/world/course.ts:285:  // `?match07=1` (src/world/match07.ts, qa/match/07/NOTES.md): the visible 07 stream follows the APPROVED picture's painted
+> src/world/course.ts:287:  // assets/textures/match07/river07.json), eased in over 10 u before the 07 checkpoint and out over the last 4 u before
+> src/world/course.ts:289:  const m07 = flag05('match07') || flag05('matchall');
+> src/world/course.ts:291:    if (!m07) return xDefault;
+> src/world/course.ts:461:      // `?match07=1`: the painted river is level (no tilt) → no curvature banking on 07 (frames only; gameplay unchanged)
+> src/world/course.ts:462:      def('07', m['07'], m['08'], { width: 5.6, tube: 7.2, tubeKind: 'perf', speed: 12, refCoins: 1940, ...(flag05('match07') || flag05('matchall') ? { bank: 0 } : {}) }),
+> src/vfx/foam.ts:121:uniform vec2 uHide07;    // r8 m07foam: berm hidden on s in (x, y)
+> src/vfx/foam.ts:138:  // r8 '?match07=1&m07foam=1': the tall white lather walls step aside down the 07 plunge so the matched tube's river
+> src/vfx/foam.ts:556:/** r8 '?match07=1&m07foam=1': arc range of the 07 plunge where the berm + its puffs step aside …[+5661 chars]
+
+### 🤖 Claude — 2026-11-20T02:04:46.734Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 100,140p src/game/Game.ts && sed -n 540,620p src/game/Game.ts && grep -n \"M07_HIDE\" src/game/Game.ts", "description": "Read Game.ts match07 integration"}`
+
+### 🧑 User — 2026-11-20T02:04:46.780Z
+
+> ↩︎ result: const water = await loadWater(course);
+>   scene.add(water.group);
+>   const benny = await loadBennyRuntime();
+>   scene.add(benny.root);
+>   const girl = await loadGirlRuntime();
+>   const coins = createCoins(course);
+>   scene.add(coins.group);
+>   // `?match08=1`: the approved Screen 08 scenery on fitted 3D geometry (src/world/match08.ts); off: nothing is built
+>   const m08 = MATCH['08'] ? await buildMatch08() : null;
+>   if (m08) { m08.group.visible = false; scene.add(m08.group); m08.bakeDepth(renderer); scene.add(m08.splash); }
+>   const M08_HIDE = ['ribbon', 'foam', 'bubbles', 'splashCrown', 'spray'];
+>   // `?match08=1` Benny on Screen 08 toward the approved picture: smaller beanie, body a little higher out of the water,
+>   // white-and-purple knit stripes (crown tint); everything restored when leaving 08 (qa/match/08/NOTES.md)
+>   const M08_BENNY = { hat: 0.86, lift: 0.06, dx: 0.26, body: [0.94, 1.0, 0.94] as const, crown: new THREE.Color().setRGB(0.86, 1.04, 1.0) };
+>   const b08 = m08 ? { hat: benny.root.getObjectByName('hat'), body: benny.root.getObjectByName('body'), aux: benny.root.getObjectByName('AuxScene'), crown: benny.root.getObjectByName('hat_crown') as THREE.Mesh | undefined } : null;
+>    …[+6859 chars]
+
+### 🤖 Claude — 2026-11-20T02:05:05.636Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && ls scripts/lib/ tools/ | head -50; ls tools/lead_r13 2>/dev/null; ls /home/user/rainbow-/tools/lead_r13/ 2>/dev/null | head; git sparse-checkout list | head -30", "description": "Check tools availability in worktree"}`
+
+### 🧑 User — 2026-11-20T02:05:05.699Z
+
+> ↩︎ result: scripts/lib/:
+> pw-smoke.mjs
+> pw.mjs
+> 
+> tools/:
+> blender
+> imageblaster
+> lead_r13
+> lead_r6
+> make_env_geometry_ref.py
+> make_env_plate.py
+> make_env_plate_v2.py
+> make_env_plate_v3.py
+> marble05
+> match
+> match07
+> match08
+> model-lab.html
+> model-lab.ts
+> proj05
+> qa
+> water-lab.html
+> water-lab.ts
+> worldlabs
+> swim_clip.mjs
+> /*
+> !/qa/pilot05/
+> !/qa/worldlabs/
+> !/qa/imageblaster/
+> !/builds/
+> !/backups/
+
+### 🤖 Claude — 2026-11-20T02:05:09.382Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && cat tools/lead_r13/swim_clip.mjs | head -60; ls tools/match07/; mkdir -p /home/user/rainbow-/qa/match/07/r21; ls /home/user/rainbow-/qa/match/07/r21; nproc; uptime", "description": "Read swim clip tool and set up output folder"}`
+
+### 🧑 User — 2026-11-20T02:05:09.458Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Lead r13 (2026-11-18): a short REAL-GAMEPLAY swimming clip for any playable screen 04–08 (read-only).
+> // Starts at the screen's checkpoint and rides the real game simulation (Benny, camera rig, course, coins unchanged) with
+> // the shader clock running: straight, then left, then right, then straight — one frame per 1/fps s → OUT/0000.png …
+> // Generalises scripts/proj05-move.mjs --zigzag. Encode: ffmpeg -framerate 24 -i OUT/%04d.png -pix_fmt yuv420p clip.mp4
+> //   node tools/lead_r13/swim_clip.mjs <screen 04..08> <outDir> <seconds> [query]
+> import { mkdirSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> const [SCREEN, OUT, SECS = '6', Q = ''] = process.argv.slice(2);
+> const fps = 24;
+> mkdirSync(OUT, { recursive: true });
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5280 + Number(SCREEN));
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> try {
+>   const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
+>   page.on('pageerror', (e) => console.error(' …[+1388 chars]
+

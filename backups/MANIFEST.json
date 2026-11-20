@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 19811,
-   "sha256": "4f2e0f1131c4b34cc8a51ac7f3c1433c14f8a4a28d3b9d9636dc2199e0a825c7"
+   "sha256": "980e2849a7bf70c8b13a146128c96a085b26f474716d7228fb3e6551690bcf03"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -628,8 +628,8 @@
   },
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
-   "bytes": 3192,
-   "sha256": "c0100df64ba07f08cd92d2ab3386832b6ea787bbd024fab3c23afe1a55e0a34e"
+   "bytes": 3424,
+   "sha256": "e1809f092d3046798de235403bb3afe82ff17af6c421755dc034660f37af85ef"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -1402,6 +1402,21 @@
    "sha256": "1d5844d919b1639aa0cd01489a6002586ceb520637d33a09fd65e910bffb4e07"
   },
   {
+   "path": "backups/wip/claude__rainbow-s04-match-c22/INFO.json",
+   "bytes": 560,
+   "sha256": "ebc698ec195a916a8100453a7bf30da1d6f1ba603917feadfb75868bb42ac6d8"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-match-c22/tracked.patch",
+   "bytes": 49805,
+   "sha256": "77c297f3619d89b5b8388392779e08a76a69f723b60234e00f21208cbec2daca"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s04-match-c22/untracked/tools/match04/rings21.mjs",
+   "bytes": 3769,
+   "sha256": "1300f664a22b78841df2731bf82b07f1a61318b72fb84a4f9c1a4ea79f52c29e"
+  },
+  {
    "path": "backups/wip/claude__rainbow-s04-preview-c18/INFO.json",
    "bytes": 486,
    "sha256": "d9480401ac0b634590fbecf2a5d780dee67eb27c9f0f76f2a36ca04ac4d9117e"
@@ -1414,7 +1429,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-preview-c22/INFO.json",
    "bytes": 569,
-   "sha256": "d5d01acf08bfc8f51970f276ed77377e689b0f311e6cfb37d61690ff87819b4a"
+   "sha256": "8cbfbfb886729ac3d893b0b71490ab8492fa9d7707a39057b2526f9efe3f001d"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-preview-c22/tracked.patch",
@@ -1639,7 +1654,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c22/INFO.json",
    "bytes": 1341,
-   "sha256": "01d3d69458ef4bc2f95b393d676410b8ec00027f82e0e69096401f3e7aed8142"
+   "sha256": "880be98cfe11cf35b4f369ebdd4136556e0c81e7fa1622f78f0bc6191b6b3014"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c22/tracked.patch",
@@ -2342,6 +2357,11 @@
    "sha256": "da3090e63c0a593b8602085b791076d09870af529a67f1d31369de218a0535a4"
   },
   {
+   "path": "backups/wip/claude__rainbow-s07-match-c22/INFO.json",
+   "bytes": 477,
+   "sha256": "04140cd9cf7eac09fe7eb78454bdd0a2d0bb6d2b059dd7e5f24c7253afcfa612"
+  },
+  {
    "path": "backups/wip/claude__rainbow-s08-scenery-c10/INFO.json",
    "bytes": 903,
    "sha256": "c5c3c39daa34e160c794bd09f145e1a1eee0181d80512e947c34d0235959e269"
@@ -2459,27 +2479,27 @@
   {
    "path": "backups/wip/detached-34cb494137/INFO.json",
    "bytes": 440,
-   "sha256": "8c86c62c13727d34c2a028e368259b68b6b24903242b266741e14bbe5608bcff"
+   "sha256": "97e76fb9987344d607bde55dad08327772d46591611e5dd2643aaf33f4c5e960"
   },
   {
    "path": "backups/wip/detached-3c0fa97090/INFO.json",
    "bytes": 439,
-   "sha256": "90876c13d2d292bb0448309461ca69ec0d5a631ef0e5927c7d94dd7588ea5d82"
+   "sha256": "f74fe99c62babfbbf1272d4c5196049c0920328f89c34f4f0f51930bea8d9c59"
   },
   {
    "path": "backups/wip/detached-8accdad0a0/INFO.json",
    "bytes": 439,
-   "sha256": "a294c818f19cc1c1677de40029451ed14e514a393194cb00bfdc7169bbec14fc"
+   "sha256": "ea69d8a1e38feb0a6ecd1045f2e43433f6e753b4159ee209b44b11601524c5cf"
   },
   {
    "path": "backups/wip/detached-c649fcbc35/INFO.json",
    "bytes": 439,
-   "sha256": "d07a471ccd65a1438e981d0e57bea8006d3630acc47bb643a5bf8fce96611841"
+   "sha256": "bec9634f95fbeeed5954feb434238d9265c21c2a99c4bd08ca49adac9ff8608c"
   },
   {
    "path": "backups/wip/detached-eb7233e364/INFO.json",
    "bytes": 439,
-   "sha256": "1505202c2c9e348f3336bc67dd05336abe6dad90a7ed90307dc00b710edf7b17"
+   "sha256": "0145e1e528a702156fc9789f6a2bfd85e445158bf33d8fa19229c1e6d2540284"
   },
   {
    "path": "builds/rainbow-debug-06-2026-11-17-r3.apk",
@@ -5180,6 +5200,16 @@
    "path": "qa/match/04/r19_thrixel/view_top.png",
    "bytes": 264701,
    "sha256": "2f6042bb2c85eb32f8a25ac6be9c72657984581b25c278b8877e9a29cff0a896"
+  },
+  {
+   "path": "qa/match/04/r21/BEFORE_V4/a_start.png",
+   "bytes": 2337324,
+   "sha256": "cf5379b449c2e6dfa84f37376542a69a7459556c83c1a42cfd404e2c5cf4dd11"
+  },
+  {
+   "path": "qa/match/04/r21/BEFORE_V4/b_early.png",
+   "bytes": 2047131,
+   "sha256": "019fb4c0b36e69ac69d1093108a8ce283838f41d9f3f6c33169dcba336f28764"
   },
   {
    "path": "qa/match/04/r21_rings/1_APPROVED.png",

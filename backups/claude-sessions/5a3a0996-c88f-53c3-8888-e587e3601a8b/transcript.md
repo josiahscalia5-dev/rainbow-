@@ -3361,3 +3361,50 @@ Saving the audit, briefs and status to GitHub and verifying:
 
 > 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason \"manual:r21-audit-and-workers\" 2>&1 | grep -E '\"commit\"|error|ERROR' | head -3; B=$(git rev-parse --abbrev-ref HEAD); L=$(git rev-parse HEAD); R=$(timeout 60 git ls-remote origin refs/heads/$B | cut -f1); echo \"$B local $L remote $R\"; [ \"$L\" = \"$R\" ] && echo MATCH; git ls-tree -r --name-only HEAD qa/review_r21 docs/briefs/2026-11-20-r21 | wc -l; ls backups/wip | grep -E \"c22\"", "description": "Manual autosave and remote verification", "timeout": 300000}`
 
+### 🧑 User — 2026-11-20T02:04:49.809Z
+
+> ↩︎ result: "commit": "23d9dc7704516c3490646a38633b3e553fc1cff1",
+> ccr-68d26c2d-gwegce local 23d9dc7704516c3490646a38633b3e553fc1cff1 remote 23d9dc7704516c3490646a38633b3e553fc1cff1
+> MATCH
+> 55
+> claude__rainbow-s04-match-c22
+> claude__rainbow-s04-preview-c22
+> claude__rainbow-s04-ringtex-c22
+> claude__rainbow-s07-match-c22
+
+### 🤖 Claude — 2026-11-20T02:05:08.581Z
+
+Yes, that makes sense, and it's the goal we've been building toward: each of your five playable screens (04–08) should look like its approved picture the whole time Benny swims, not just in the first frame.
+
+I rendered every screen from the real game at the start, early, middle, late and end of the stage, and steering hard left and right. The overview sheets are above. My honest read by eye (out of 10):
+
+| Screen | At the start | While Benny swims | What's still most different |
+|---|---|---|---|
+| 08 | ~9 | ~8.5 | Already close; the coins are a little big |
+| 05 | ~9 | ~8 | The end of the stage (smeared walls, bunched coins) and a tall foam column when steering left |
+| 04 | ~9 | ~6.5 | Inside the tunnel, the pink water up the walls is a hazy blur instead of crisp glossy swirls, and the foam along the edges disappears |
+| 06 | ~8.5 | ~5 | Turns into a straight, centred ring "target" instead of your crest curving left into an off-centre tunnel; big foam walls |
+| 07 | ~9 | ~5 | The view runs into close purple walls mid-stage, and the end becomes a pale streaky waterfall |
+
+On the arrows in Screen 04: Benny is inside the tunnel and the five glowing arrows are ahead of him on the lane, so that part is working. The Screen 04 specialist will check in a swimming clip that he passes through them cleanly.
+
+**Working now** (two specialists at a time, as you approved before):
+- **Screen 04:** crisp glossy pink and magenta water up the tunnel walls, the bubbly foam continuing along both edges deeper inside, and the arrows. It's built on the best version of Screen 04 so far, which includes today's ring fix.
+- **Screen 07:** the end of the stage and the hard-left and hard-right views turned back into your purple tube, glossy cyan and magenta river, and puffy foam.
+- **Me:** I'll review each result and send you approved / before / new pictures from the real game, with a short swimming clip.
+
+**Next in line:** Screen 06, the end of Screen 05, and Benny's approved look on every screen.
+
+Getting every screen to 90 % while swimming will take several rounds, not one. Screens 05 and 08 are nearly there.
+
+Everything is saved and verified on GitHub (`ccr-68d26c2d-gwegce` at `23d9dc7`).
+
+**Two decisions only you can make:**
+1. **Screen 08** is still paused from your earlier instruction, and it already holds up well while swimming. Should I restart work on it, or keep it paused?
+2. **Screen 06:** to keep your picture's curving crest and off-centre tunnel on screen while Benny swims, the view would have to keep your painted angle for longer instead of swinging round to face down the tunnel. Can the specialist try that as a test? You'd see pictures before anything is kept.
+
+### 🧑 User — 2026-11-20T02:05:12.961Z
+
+Stop hook feedback:
+[command hook 2]: There are untracked files in the repository. Please commit and push these changes to the remote branch.
+
