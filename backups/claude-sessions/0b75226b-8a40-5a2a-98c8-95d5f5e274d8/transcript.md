@@ -4870,3 +4870,22 @@ While it renders, I'll write the side-by-side script: each frame shows BEFORE on
 > 19:41:57
 > Shell cwd was reset to /home/user/rainbow-
 
+### 🤖 Claude — 2026-11-20T19:41:59.987Z
+
+The gameplay rerun with the final settings has finished. Checking it:
+
+### 🤖 Claude — 2026-11-20T19:42:01.694Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json; g=json.load(open('/home/user/rainbow-/qa/match/06/r29/gameplay_NEW_final.json')); c=g['checks']; print('overall pass', g['pass'], '| errors', g['errors']); print({k:v.get('pass') for k,v in c.items()}); r=c['realCoinPickups']; print('coins', r['startCoins'], '->', r['endCoins'], 'collected', r['collected']); print('max camera jump per step', c['noCameraCut'].get('maxCameraJumpPerStep'))\"", "description": "Summarise the final gameplay test"}`
+
+### 🧑 User — 2026-11-20T19:42:01.755Z
+
+> ↩︎ result: overall pass True | errors []
+> {'pauseFreezes': True, 'continuousTravel': True, 'noCameraCut': True, 'noTeleport': True, 'plunge': True, 'realCoinPickups': True, 'victory': True, 'heartsLostOnWallBump': True}
+> coins 1330 -> 2240 collected 91
+> max camera jump per step 0.728
+
+### 🤖 Claude — 2026-11-20T19:42:06.881Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && until grep -q \"exit\" clip_new2.log 2>/dev/null; do sleep 5; done; tail -2 clip_new2.log; date -u +%H:%M:%S", "description": "Wait for the final NEW video to finish rendering", "timeout": 1800000}`
+
