@@ -39,4 +39,11 @@ s06 / Benny = their pushed `-c23` tips + their r22 PROGRESS.md.
 * 04: K21-1 = V4 + `&m04wgl=1` (r21 GOOD IMPROVEMENT by the worker; re-verified in r22 step 0).
 * 07: K7 + `&m07end=1` (r21 GOOD IMPROVEMENT by the worker; re-verified in r22 step 0).
 * 06: `&m06view=1` (NOT YET PROVEN).
-* 04 artwork proposals `qa/review_r21/artwork/04/FOR_APPROVAL_04_*.png` — awaiting the user.
+* 04 artwork proposals `qa/review_r21/artwork/04/FOR_APPROVAL_04_*.png` — awaiting the user (shown again ~03:18).
+* 07 artwork `qa/review_r21/artwork/07/FOR_APPROVAL_07_{d_late,e_end}.png` (swatch method p2) — awaiting the user.
+* 05 artwork `qa/review_r21/artwork/05/FOR_APPROVAL_05_{d_late,e_end}.png` (swatch method p2) — awaiting the user.
+  Lead note for the s05 polish slot: the proposals fix the smeared end walls but the painting has many CLOSE gold rings at the
+  end of 05 — the game geometry has fewer there (scenery task, not artwork).
+* Artwork method that keeps the game's geometry (round 22): IMAGE 1 = clean game frame, IMAGES 2.. = small material swatches cut
+  from the original (never the whole original: the model then copies its layout). Ledger `qa/review_r21/artwork/LEDGER.md`
+  (11 jobs, $1.32). Sheet tool `tools/lead22/approval_sheet.py`.

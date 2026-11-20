@@ -19,3 +19,10 @@
   exactly; surfaces flatter / less glossy than the painting; the end keeps two white foam columns beside the falling water.
   Labelled sheets `07/FOR_APPROVAL_07_d_late.png`, `07/FOR_APPROVAL_07_e_end.png` — shown to the user, verdict pending.
 * Running total: 9 jobs, **$1.08** (round 21: 5 jobs $0.60; round 22: 4 jobs $0.48).
+| 2026-11-20 03:30 | d_late_p2 | nano-banana-2/edit 2K | `01a1f701-8305-7a73-9d53-cc7989b83d64` | 1 | 0.12 | d_late_p2_v1.png |
+| 2026-11-20 03:30 | e_end_p2 | nano-banana-2/edit 2K | `01a1f701-83ea-7be1-bfd6-098475636316` | 1 | 0.12 | e_end_p2_v1.png |
+* 05 `d_late_p2`, `e_end_p2` (refs = the user's isolated 05 water original + two wall / ring / paddle swatches cut from below the title
+  banner of the 05 original, `05/swatches/`): geometry kept exactly; walls crisp instead of smeared, amber light dots on the rings;
+  does NOT add the painting's many close gold rings (the game geometry has fewer there — a scenery task for s05). Sheets
+  `05/FOR_APPROVAL_05_d_late.png`, `05/FOR_APPROVAL_05_e_end.png` — shown to the user, verdict pending.
+* Running total: 11 jobs, **$1.32** (round 21: 5 jobs $0.60; round 22: 6 jobs $0.72).
