@@ -760,3 +760,377 @@ The round-27 lead also had three "clean frame" copies (view04, view06, view07) t
 
 > 🔧 **Bash** `{"command": "mkdir -p /home/user/wt && bash docs/briefs/2026-11-20-r27/setup_worker_r28.sh 2>&1 | tail -20", "description": "Recreate the nine worker worktrees on -c29 branches", "timeout": 600000}`
 
+### 🧑 User — 2026-11-20T16:47:48.434Z
+
+> ↩︎ result: Preparing worktree (new branch 'claude/rainbow-s04-match-c29')
+> s04: /home/user/wt/s04 on claude/rainbow-s04-match-c29 from 34cb494 + backups/wip/claude__rainbow-s04-match-c28 — dirty 5
+> Preparing worktree (new branch 'claude/rainbow-s07-match-c29')
+> s07: /home/user/wt/s07 on claude/rainbow-s07-match-c29 from 8accdad + backups/wip/claude__rainbow-s07-match-c28 — dirty 16
+> Preparing worktree (new branch 'claude/rainbow-s06-match-c29')
+> s06: /home/user/wt/s06 on claude/rainbow-s06-match-c29 from e162aec + backups/wip/claude__rainbow-s06-match-c28 — dirty 18
+> Preparing worktree (new branch 'claude/rainbow-benny-c29')
+> benny: /home/user/wt/benny on claude/rainbow-benny-c29 from 734efb6 + backups/wip/claude__rainbow-benny-c28 — dirty 20
+> Preparing worktree (new branch 'claude/rainbow-s08-scenery-c29')
+> s08: /home/user/wt/s08 on claude/rainbow-s08-scenery-c29 from 3c0fa97 + backups/wip/claude__rainbow-s08-scenery-c28 — dirty 6
+> Preparing worktree (new branch 'claude/rainbow-s05-match-c29')
+> s05: /home/user/wt/s05 on claude/rainbow-s05-match-c29 from eb7233e + backups/wip/claude__rainbow-s05-match-c28 — dirty 1
+> Preparing worktree (detached HEAD 8accdad)
+> lead07: /home/user/wt/lead07 on --detach from  …[+350 chars]
+
+### 🤖 Claude — 2026-11-20T16:47:50.866Z
+
+Now the three clean-frame copies, using the same method:
+
+### 🤖 Claude — 2026-11-20T16:47:54.873Z
+
+> 🔧 **Bash** `{"command": "R=$PWD; for spec in \"view04 34cb494137e1030c4410d871125e6e9eef6aa4ea\" \"view06 e162aec2bfdc631913c41daa435f9d449439af4f\" \"view07 8accdad0a07ec4e3c4189701aea9df101932c7f5\"; do set -- $spec; X=$1; BASE=$2; WT=/home/user/wt/$X; W=backups/wip/lead__$X-c28; [ -e \"$WT\" ] && { echo \"$X exists, skipped\"; continue; }; git worktree add --no-checkout -b lead/$X-c29 \"$WT\" \"$BASE\" >/dev/null 2>&1; printf '/*\\n!/qa/pilot05/\\n!/qa/worldlabs/\\n!/qa/imageblaster/\\n!/builds/\\n!/backups/\\n' | git -C \"$WT\" sparse-checkout set --no-cone --stdin; git -C \"$WT\" read-tree -mu HEAD;  …[+326 chars]`
+
+### 🧑 User — 2026-11-20T16:48:06.266Z
+
+> ↩︎ result: view04: lead/view04-c29 from 34cb494 — dirty 5
+> view06: lead/view06-c29 from e162aec — dirty 18
+> view07: lead/view07-c29 from 8accdad — dirty 16
+
+### 🤖 Claude — 2026-11-20T16:48:09.627Z
+
+Verifying every restored copy against its snapshot (tracked edits by patch-id, every new file byte-for-byte):
+
+### 🤖 Claude — 2026-11-20T16:48:16.334Z
+
+> 🔧 **Bash** `{"command": "R=$PWD; check(){ X=$1; W=$2; WT=/home/user/wt/$X; a=$(git -C $WT diff --binary HEAD | git patch-id --stable | awk '{print $1}'); b=$( [ -s $R/$W/tracked.patch ] && git patch-id --stable < $R/$W/tracked.patch | awk '{print $1}'); [ \"$a\" = \"$b\" ] && t=MATCH || t=\"DIFF($a vs $b)\"; n=0; bad=0; if [ -d $R/$W/untracked ]; then while IFS= read -r f; do n=$((n+1)); cmp -s \"$R/$W/untracked/$f\" \"$WT/$f\" || { bad=$((bad+1)); echo \"  mismatch $f\"; }; done < <(cd $R/$W/untracked && find . -type f | sed 's|^\\./||'); fi; u=$(git -C $WT status --porcelain --untracked-files=all | grep …[+1104 chars]`
+
+### 🧑 User — 2026-11-20T16:48:19.016Z
+
+> ↩︎ result: s04: tracked MATCH | untracked snapshot files 1, mismatches 0 | untracked in worktree 1
+> s07: tracked MATCH | untracked snapshot files 10, mismatches 0 | untracked in worktree 10
+> s06: tracked MATCH | untracked snapshot files 15, mismatches 0 | untracked in worktree 15
+> benny: tracked MATCH | untracked snapshot files 10, mismatches 0 | untracked in worktree 10
+> s08: tracked MATCH | untracked snapshot files 2, mismatches 0 | untracked in worktree 2
+> s05: tracked MATCH | untracked snapshot files 0, mismatches 0 | untracked in worktree 0
+> lead07: tracked MATCH | untracked snapshot files 0, mismatches 0 | untracked in worktree 0
+> lead06: tracked MATCH | untracked snapshot files 6, mismatches 0 | untracked in worktree 6
+> trial07: tracked MATCH | untracked snapshot files 10, mismatches 0 | untracked in worktree 10
+> view04: tracked MATCH | untracked snapshot files 1, mismatches 0 | untracked in worktree 1
+> view06: tracked MATCH | untracked snapshot files 15, mismatches 0 | untracked in worktree 15
+> view07: tracked MATCH | untracked snapshot files 10, mismatches 0 | untracked in worktree 10
+> /dev/vda        252G   45G   25G  65% /
+
+### 🤖 Claude — 2026-11-20T16:48:24.245Z
+
+All 12 worker copies match their 16:15 snapshots exactly (every tracked edit and every new file), and no snapshot skipped any file. Now checking tools and services on this account.
+
+### 🤖 Claude — 2026-11-20T16:48:24.695Z
+
+> 🔧 **TaskUpdate** `{"taskId": "1", "status": "completed"}`
+
+### 🧑 User — 2026-11-20T16:48:24.705Z
+
+> ↩︎ result: Updated task #1 status
+
+### 🤖 Claude — 2026-11-20T16:48:25.149Z
+
+> 🔧 **TaskUpdate** `{"taskId": "2", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-20T16:48:25.167Z
+
+> ↩︎ result: Updated task #2 status
+
+### 🤖 Claude — 2026-11-20T16:48:27.051Z
+
+> 🔧 **Bash** `{"command": "timeout 90 python3 -I scripts/verify-assets.py worldlabs 2>&1 | tail -8; echo \"--- fal probe (unknown model, no job) ---\"; curl -s -o /dev/null -w \"%{http_code}\\n\" --max-time 30 -X POST https://queue.fal.run/fal-ai/rainbow-auth-probe-nonexistent -H \"Content-Type: application/json\" -d '{}'", "description": "Check World Labs key and fal authentication with free reads", "timeout": 150000}`
+
+### 🤖 Claude — 2026-11-20T16:48:27.806Z
+
+> 🔧 **ToolSearch** `{"query": "select:mcp__World_Labs_Marble__list_projects,mcp__Hugging_Face__hf_whoami,mcp__github__get_me,ListPlugins", "max_results": 4}`
+
+### 🧑 User — 2026-11-20T16:48:28.605Z
+
+> ↩︎ result: @@ warn Marble API key authenticated (free read: 5420 credits); worlds draft 404, full 404; no paid job started
+> --- fal probe (unknown model, no job) ---
+> 404
+
+### 🧑 User — 2026-11-20T16:48:28.614Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+> [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-20T16:48:30.665Z
+
+> 🔧 **mcp__World_Labs_Marble__list_projects** `{}`
+
+### 🤖 Claude — 2026-11-20T16:48:30.692Z
+
+> 🔧 **mcp__Hugging_Face__hf_whoami** `{}`
+
+### 🤖 Claude — 2026-11-20T16:48:30.837Z
+
+> 🔧 **mcp__github__get_me** `{}`
+
+### 🤖 Claude — 2026-11-20T16:48:30.886Z
+
+> 🔧 **ListPlugins** `{}`
+
+### 🧑 User — 2026-11-20T16:48:30.938Z
+
+> ↩︎ result: {"results":[]}
+
+### 🧑 User — 2026-11-20T16:48:31.279Z
+
+> ↩︎ result: {"login":"josiahscalia5-dev","id":322329431,"profile_url":"https://github.com/josiahscalia5-dev","avatar_url":"https://avatars.githubusercontent.com/u/322329431?v=4","details":{"public_repos":11,"public_gists":0,"followers":0,"following":0,"created_at":"2026-08-29T02:18:36Z","updated_at":"2026-10-18T13:41:20Z"}}
+
+### 🧑 User — 2026-11-20T16:49:01.067Z
+
+> ↩︎ result: {"projects":[{"project_id":"proj_ad4fdb076f4a4c80934406cfefc4d30b","name":"My project","account_name":"Personal workspace","available_tools":["atlasChisel","atlasGenerate","atlasTextToImage","images2PosedRGBD","posedImages2Splats","splats2Mesh"],"credits_available":true}]}
+
+### 🧑 User — 2026-11-20T16:49:02.285Z
+
+> ↩︎ result: {"status":"authenticated","account":{"id":"68ee89f1f7918f8c0401c78a","type":"user","name":"josdois","url":"https://huggingface.co/josdois","is_pro":false},"organizations":[],"credential":{"type":"oauth","expires_at":"2026-11-20T18:21:39.000Z","scopes":["openid","profile","read-mcp","read-repos","jobs","contribute-repos","inference-api"]}}
+
+### 🤖 Claude — 2026-11-20T16:49:08.509Z
+
+> 🔧 **Bash** `{"command": "ls /root/.claude/plugins/ 2>&1; echo \"---synced---\"; ls /root/.claude/plugins/synced/*/*/ 2>/dev/null | head -40; echo \"---installed json---\"; python3 -I -c \"\nimport json,glob\nfor f in glob.glob('/root/.claude/plugins/*.json'):\n    try: j=json.load(open(f))\n    except Exception as e: print(f,e); continue\n    print(f, list((j.get('plugins') or j).keys())[:40] if isinstance(j,dict) else type(j))\n\"; echo \"---previous account names---\"; python3 -I -c \"\nimport json;j=json.load(open('backups/LIVE_TOOLS_STATE.json'))\nfor k in j:\n    if 'plugin' in k.lower(): print(k, j[ …[+81 chars]`
+
+### 🧑 User — 2026-11-20T16:49:08.612Z
+
+> ↩︎ result: cache
+> data
+> installed_plugins.json
+> known_marketplaces.json
+> marketplaces
+> store
+> synced
+> ---synced---
+> /root/.claude/plugins/synced/3cfed598-2f11-4199-9ad6-9e421d2ddaba_3c459f59-4e74-461e-b4e6-c52936eda7c5/1763cd53-20d6-4f29-8a54-258616605d71/:
+> LICENSE
+> README.md
+> commands
+> 
+> /root/.claude/plugins/synced/3cfed598-2f11-4199-9ad6-9e421d2ddaba_3c459f59-4e74-461e-b4e6-c52936eda7c5/22bf1341-d051-4d92-9363-8d0dc8349035/:
+> 
+> /root/.claude/plugins/synced/3cfed598-2f11-4199-9ad6-9e421d2ddaba_3c459f59-4e74-461e-b4e6-c52936eda7c5/263ff246-aaad-487a-9bc9-a25cf6ca8fec/:
+> LICENSE
+> README.md
+> agents
+> assets
+> skills
+> 
+> /root/.claude/plugins/synced/3cfed598-2f11-4199-9ad6-9e421d2ddaba_3c459f59-4e74-461e-b4e6-c52936eda7c5/29ab87a4-9f00-4cd8-b8f1-dbae61cffd7d/:
+> LICENSE
+> agents
+> 
+> /root/.claude/plugins/synced/3cfed598-2f11-4199-9ad6-9e421d2ddaba_3c459f59-4e74-461e-b4e6-c52936eda7c5/2ca4e30e-2482-4c94-8644-6c26adf27391/:
+> LICENSE
+> README.md
+> skills
+> 
+> /root/.claude/plugins/synced/3cfed598-2f11-4199-9ad6-9e421d2ddaba_3c459f59-4e74-461e-b4e6-c52936eda7c5/30660c6c-4a3b-4c48-84d6-917f249343d9/:
+> LICENSE
+> README.md
+> hooks
+> tests
+> 
+> /root/.claude/plugins/synced/3cfed598-2f11-4199-9ad6-9e421d2ddaba_3c459f59-4e74-461e-b4e6-c52936eda7c5/59d0c8 …[+2126 chars]
+
+### 🤖 Claude — 2026-11-20T16:49:12.575Z
+
+> 🔧 **Bash** `{"command": "for d in /root/.claude/plugins/synced/*/*/; do n=$(python3 -I -c \"\nimport json,sys,os\nfor p in ['.claude-plugin/plugin.json','plugin.json']:\n    f=os.path.join(sys.argv[1],p)\n    if os.path.exists(f):\n        j=json.load(open(f)); print(j.get('name'), j.get('version',''), (j.get('author') or {}).get('name','') if isinstance(j.get('author'),dict) else j.get('author','')); break\nelse: print('?')\n\" \"$d\"); echo \"$n\"; done | sort", "description": "Name each plugin synced from this Claude account"}`
+
+### 🧑 User — 2026-11-20T16:49:12.908Z
+
+> ↩︎ result: claude-bridge 0.1.0 Ivan Aguilar
+> claude-code-setup 1.0.0 Anthropic
+> claude-md-management 1.0.0 Anthropic
+> code-review 1.0.1 Anthropic
+> code-simplifier 1.0.0 Anthropic
+> commit-commands 1.0.1 Anthropic
+> context7  Upstash
+> feature-dev 1.0.1 Anthropic
+> frontend-design 1.1.1 Anthropic
+> playwright  Microsoft
+> security-guidance 2.0.17 David Dworken
+> superpowers 7.0.2 Jesse Vincent
+> typemux-cc 0.2.18 K-dash
+> typescript-native-lsp 1.1.2 rubberduck studio
+
+### 🤖 Claude — 2026-11-20T16:49:23.778Z
+
+> 🔧 **ToolSearch** `{"query": "select:SearchPlugins,mcp__Context7__resolve-library-id", "max_results": 2}`
+
+### 🧑 User — 2026-11-20T16:49:23.784Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-20T16:49:24.514Z
+
+> 🔧 **Bash** `{"command": "tail -15 backups/.live/bootstrap.log 2>/dev/null; echo; grep -rn '\"design' backups/LIVE_TOOLS_STATE.json | head -5; git log --all --oneline -S'\"design\"' -- backups/LIVE_TOOLS_STATE.json | head -3", "description": "Show bootstrap progress and earlier design plugin record"}`
+
+### 🧑 User — 2026-11-20T16:49:24.577Z
+
+> ↩︎ result: OK   Python QA libraries            installed: opencv-python-headless scipy; Python 3.13.18; required numpy+Pillow OK; optional cv2+scipy OK
+>   OK   Playwright + Chromium          headless Chromium 157.0.8103.78 with WebGL2 (SwiftShader); preinstalled, never reinstall
+>   OK   ffmpeg / ImageMagick           ffmpeg 6.1.1-3ubuntu5, ImageMagick 6.9.12-98 (Flow video + image checks)
+>   OK   Blender                        Blender 5.3.0 (installed now) at /usr/local/bin/blender; headless bpy test OK
+>   OK   Android build tools            Android SDK platform 34 + build-tools 34.0.0 + platform-tools (installed now, /opt/android-sdk), Java 21, Gradle wrapper gradle-8.2.1; APK: npm run android:debug
+>   OK   Claude hooks / plugins / MCP   hooks: SessionStart PreCompact Stop SessionEnd; Playwright MCP connected; plugins: claude-bridge claude-code-setup claude-md-management code-review code-simplifier commit-commands context7 feature-dev frontend-design playwright security-guidance superpowers typemux-cc typescript-native-lsp worldlabs ; MCP template .mcp.json.template (no secrets)
+> 
+> == 4 Tests
+>   OK   Build + game tests             tsc OK; continuity OK (all stage joins gap 0, 07->08 drop 61.19)
+> 
+> ==  …[+451 chars]
+
+### 🤖 Claude — 2026-11-20T16:49:27.529Z
+
+The background bootstrap has finished. Reading its full report for every non-OK line, and checking the remaining two services.
+
+### 🤖 Claude — 2026-11-20T16:49:28.488Z
+
+> 🔧 **Bash** `{"command": "grep -E \"^\\| \" backups/BOOTSTRAP_REPORT.md | grep -vE \"\\| OK \\|\" | cut -c1-600", "description": "Show non-OK bootstrap report lines"}`
+
+### 🧑 User — 2026-11-20T16:49:28.515Z
+
+> ↩︎ result: | Step | Result | Details | s |
+> | Resume newest work | FAIL | git fetch from GitHub failed (network / GitHub connection?) | 240 |
+> | Backup gap since last session | WARN | GAP: no backup ran from 2026-11-20 16:15 to 2026-11-20 16:36 UTC (0.4 h) - no Claude cloud environment with the autosave was active. Nothing can be saved while an environment is closed; the newest saved state is 7d3ba10.; previous session ended WITHOUT an end-of-session backup (its environment closed after an automatic save); 15 gap(s) > 10 min in the last 72 h of the autosave log, longest 11-17 22:38-20:24 UTC (21.8 h) | 0 |
+> | World Labs integration | WARN | Marble API key authenticated (free read: 5420 credits); worlds draft 404, full 404; no paid job started; plugin worldlabs@worldlabs installed now; Atlas connector = claude.ai connector (check in Claude: ToolSearch World_Labs_Atlas); no paid job started | 5 |
+
+### 🤖 Claude — 2026-11-20T16:49:28.890Z
+
+> 🔧 **SearchPlugins** `{"keywords": ["design"]}`
+
+### 🧑 User — 2026-11-20T16:49:29.343Z
+
+> ↩︎ result: {"results":[{"id":"plugin_01BJyUTWdE5wt92pvTVz4hdN","name":"afe29730-8d0c-470c-801a-a52a510c0510","display_name":"Design","description":"Accelerate design workflows — critique, design system management, UX writing, accessibility audits, research synthesis, and dev handoff. From exploration to pixel-perfect specs.","enabled":false,"presents_as":null,"installation_preference":"available","created_at":"2026-09-24T20:07:36.889481Z","updated_at":"2026-09-24T20:07:36.889481Z","partition_by":"marketplace","marketplace_id":"marketplace_01VNB7JgJyYTuJiDfXSABKm3","marketplace_name":"anthropic-plugin-directory","marketplace_display_name":"Anthropic Directory","marketplace_kind":"other_catalog","author":{"name":"Anthropic","email":null,"url":null},"publisher":{"tier":"anthropic","name":"anthropics","basis":"directory_review"},"content_scan":null,"components":[{"type":"skill","name":"afe29730-8d0c-470c-801a-a52a510c0510:accessibility-review","description":null,"origin":null},{"type":"skill","name":"afe29730-8d0c-470c-801a-a52a510c0510:design-critique","description":null,"origin":null},{"type":"skill","name":"afe29730-8d0c-470c-801a-a52a510c0510:design-handoff","description":null,"origin":null}, …[+26398 chars]
+
+### 🤖 Claude — 2026-11-20T16:49:29.440Z
+
+> 🔧 **mcp__Context7__resolve-library-id** `{"libraryName": "Three.js", "query": "WebGLRenderer render target"}`
+
+### 🧑 User — 2026-11-20T16:51:12.298Z
+
+> ↩︎ result: Available Libraries:
+> 
+> - Title: Three.js
+> - Context7-compatible library ID: /mrdoob/three.js
+> - Description: Three.js is a JavaScript library for building 3D graphics in the browser, with WebGL and WebGPU renderers, the TSL node-based shader system, and addons for controls, loaders and CSS3D rendering.
+> - Code Snippets: 33058
+> - Source Reputation: High
+> - Benchmark Score: 71.86
+> - Versions: r110, r186, r160, r184, r180, r170, r175
+> ----------
+> - Title: Three.js
+> - Context7-compatible library ID: /llmstxt/threejs_llms-full_txt
+> - Description: Three.js is a cross-browser JavaScript library for creating 3D graphics using WebGL and WebGPU with support for modern shading through TSL (Three.js Shading Language).
+> - Code Snippets: 9181
+> - Source Reputation: High
+> - Benchmark Score: 69.54
+> ----------
+> - Title: three.js
+> - Context7-compatible library ID: /websites/threejs
+> - Description: three.js is a JavaScript 3D library that makes it easy to create and display animated 3D computer graphics in a web browser. It provides a powerful and flexible way to build interactive 3D experiences.
+> - Code Snippets: 9556
+> - Source Reputation: High
+> - Benchmark Score: 60.22
+> ----------
+> - Title: Three.js (DeepWiki)
+> - Context7- …[+701 chars]
+
+### 🤖 Claude — 2026-11-20T16:51:19.604Z
+
+> 🔧 **Bash** `{"command": "ls tools/lead26/trial07_recovered/; grep -n -i \"install\\|npm\\|tools-\\|git clone\" tools/lead26/trial07_recovered/NOTES.md | head -25; ls -d /home/user/tools-* 2>&1", "description": "Check DevTools/Spector recovery notes and installs"}`
+
+### 🧑 User — 2026-11-20T16:51:19.655Z
+
+> ↩︎ result: Exit code 2
+> NOTES.md
+> inspect.mjs
+> probe2.mjs
+> 13:| `threejs-devtools-mcp` 0.5.0 (DmitriyGolub, commit 8151443) | **in-page library**: its Playwright helper `attachDevtools(page)` injected the bridge into OUR Playwright page; the tool functions were called with `page.evaluate` | NO — never registered as an MCP server |
+> 14:| `spectorjs` 0.9.33 (npm) | **in-page library**: `spector.bundle.js` injected into our Playwright page, capture code adapted from Spector.js `mcp/src/spector-bridge.ts` | NO |
+> 17:Install locations (`/home/user/tools-threejs-devtools`, `/home/user/tools-spector`) were outside the repo → reinstall with
+> 18:`npm install` into those folders (free, not into the game's dependencies).
+> ls: cannot access '/home/user/tools-*': No such file or directory
+
+### 🤖 Claude — 2026-11-20T16:51:21.706Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,40p tools/lead26/trial07_recovered/NOTES.md", "description": "Read DevTools/Spector recovery notes"}`
+
+### 🧑 User — 2026-11-20T16:51:21.864Z
+
+> ↩︎ result: # Round-26 lead tool trial (Three.js DevTools + Spector.js) — recovered 2026-11-20 ~15:25 UTC (round 27)
+> 
+> The r26 lead ran this trial from `/home/user/scratch/lead/trial07/` (outside the repo), so its files and outputs were lost with that
+> container. The two scripts were recovered verbatim from the saved conversation
+> (`backups/claude-sessions/57d35962-86cf-5cfa-ab0b-2faf54b8a6e6/transcript.sanitized.jsonl`, Write calls 13:27:58 and 13:40:00 UTC):
+> `inspect.mjs` (DevTools) and `probe2.mjs` (DevTools raycast + Spector capture). Paths inside them still point at the old scratch
+> folder; the trial worktree itself is restored at `/home/user/wt/trial07` (LOCAL `lead/trial07-c28` = `8accdad` + snapshot
+> `backups/wip/lead__trial07-c27/`, byte-identical).
+> 
+> ## What it is (accurate status)
+> | Tool | How it was used | Available as MCP tools in Claude? |
+> |---|---|---|
+> | `threejs-devtools-mcp` 0.5.0 (DmitriyGolub, commit 8151443) | **in-page library**: its Playwright helper `attachDevtools(page)` injected the bridge into OUR Playwright page; the tool functions were called with `page.evaluate` | NO — never registered as an MCP server |
+> | `spectorjs` 0.9.33 (npm) | **in-page library**: `spector.bundle.j …[+2110 chars]
+
+### 🤖 Claude — 2026-11-20T16:51:25.893Z
+
+The DevTools, Spector and pixelmatch installs were outside the repository and went with the old container. Reinstalling them in the background (free, outside the game's own dependencies):
+
+### 🤖 Claude — 2026-11-20T16:51:28.361Z
+
+> 🔧 **Bash** `{"command": "cd /home/user && for spec in \"tools-spector spectorjs@0.9.33\" \"tools-pixelmatch pixelmatch pngjs\" \"tools-threejs-devtools threejs-devtools-mcp@0.5.0\"; do set -- $spec; d=$1; shift; mkdir -p $d && (cd $d && [ -f package.json ] || npm init -y >/dev/null 2>&1; npm install --no-audit --no-fund \"$@\" 2>&1 | tail -2); echo \"== $d: $(cd /home/user/$d && npm ls --depth=0 2>/dev/null | tail -n +2 | tr '\\n' ' ')\"; done", "description": "Reinstall Spector, pixelmatch and Three.js DevTools", "timeout": 600000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T16:51:28.398Z
+
+> ↩︎ result: Command running in background with ID: bigteo6v7. Output is being written to: /tmp/claude-0/-home-user-rainbow-/a72797b0-7eea-579a-8801-b0b276ae6b12/tasks/bigteo6v7.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-20T16:51:31.532Z
+
+While that installs, reading the round-27 worker briefs and where each worker stopped.
+
+### 🤖 Claude — 2026-11-20T16:51:32.239Z
+
+> 🔧 **Bash** `{"command": "cat docs/briefs/2026-11-20-r27/LAUNCH_R27.md", "description": "Read round-27 worker launch briefs"}`
+
+### 🧑 User — 2026-11-20T16:51:32.269Z
+
+> ↩︎ result: # Round 27 — relaunch of four specialists (lead session branch `claude/rainbow-restore-screen-match-ijjdai`, new Claude account, 2026-11-20 from ~15:11 UTC)
+> 
+> Round 26 (lead `ccr-08ece3a6-xcwyls`) stopped at 13:57–14:03 UTC: the old account hit its 5-hour limit and all four workers died mid-step
+> (NOT a rejection). Its container kept autosaving until 15:03 (`e655f19`, merged here as `e2e1d12`). Every worktree was recreated by
+> `docs/briefs/2026-11-20-r26/setup_worker_r27.sh` (base commit + the 15:03 snapshot) on NEW LOCAL branches **`-c28`** (same paths and ports);
+> **tracked edits verified identical (patch-id) and every untracked file byte-identical** to each snapshot. Scratch folders of round 26
+> (`/home/user/scratch/*`, dev servers, combined builds, probe variants) are GONE — recreate only what is missing; everything under `qa/` survived.
+> Helper installs rebuilt: `/home/user/tools-pixelmatch/pixeldiff.mjs`, `/home/user/tools-threejs-devtools`, `/home/user/tools-spector`.
+> 
+> ## Common (all workers) — read in this order
+> 1. `/home/user/rainbow-/CLAUDE.md`.
+> 2. **`docs/briefs/2026-11-20-r26/USER_VISUAL_BRIEF_R26.md`** — the user's detailed visual brief (binding; §2 moving views, §3 water, § …[+7777 chars]
+
+### 🤖 Claude — 2026-11-20T16:51:34.729Z
+
+Now the "(r27) WHERE I STOPPED" block each worker kept at the top of its progress file:
+
+### 🤖 Claude — 2026-11-20T16:51:36.336Z
+
+> 🔧 **Bash** `{"command": "for f in qa/match/07/r24/PROGRESS.md qa/match/04/r23/PROGRESS.md qa/benny/r23/PROGRESS.md qa/match/05/r27/PROGRESS.md qa/match/06/r25/PROGRESS.md; do echo \"################ $f ($(stat -c %y $f 2>/dev/null | cut -c1-19))\"; [ -f $f ] && sed -n 1,28p $f | cut -c1-400; done", "description": "Read top of each worker progress file"}`
+
+### 🧑 User — 2026-11-20T16:51:36.406Z
+
+> ↩︎ result: ################ qa/match/07/r24/PROGRESS.md (2026-11-20 16:36:47)
+> # Screen 07 · round 24 (water-fx-specialist) — progress log
+> 
+> ## (r27) WHERE I STOPPED / NEXT
+> * r27 relaunch (new account, ~15:20 UTC). Worktree `/home/user/wt/s07`, LOCAL branch `claude/rainbow-s07-match-c28` (r26 edits restored
+>   byte-identical by the lead). Ports 5277 / 5280 / 5281. Temp `/home/user/scratch/s07/`.
+> * Found on relaunch: `qa/match/07/r26/final/gameplay_NEW_full.json` DID finish before the r26 stop — query = step-1 candidate & K23-3 &
+>   m07look & m07join (the full candidate), **8 / 8 checks pass, 91 coins collected** (1330 -> 2240), plunge 61.02 u, 0 respawns.
+>   Full NEW clip `r26/final/SCREEN07_NEW_full_K23-3_{1x,0.5x}.mp4` also complete.
+> * 15:25 DONE: s08 snapshot re-copied read-only from `/home/user/wt/s08`: **30 / 30 files match `combo/s08snap_SHA256SUMS_r25.txt`**; combo
+>   build `/home/user/scratch/s07/combo` rebuilt (`combo/mkcombo.py`), tsc 0.
+> * 15:30 DONE — **STEP 1 (r27) final check of the full candidate:** gameplay 8/8 + 91 coins (above); landmark stills BEFORE (r23 candidate
+>   & K23-3) vs NEW (full candidate & K23-3) at matched route landmarks, taken from the two existing 1.0x clips (same s …[+11761 chars]
+
