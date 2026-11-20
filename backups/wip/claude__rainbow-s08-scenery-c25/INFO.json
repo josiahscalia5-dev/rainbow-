@@ -2,7 +2,7 @@
  "worktree": "/home/user/wt/s08",
  "branch": "claude/rainbow-s08-scenery-c25",
  "head": "3c0fa97090afb2c0fca41898774db7247e23e522",
- "time": "2026-11-20T10:42:05+00:00",
+ "time": "2026-11-20T10:44:47+00:00",
  "dirty_tracked": [
   "src/gameplay/coins.ts",
   "tools/match08/shots08.mjs"

@@ -1,4 +1,19 @@
-# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 22 (2026-11-20, lead branch `ccr-4742c19f-ez2mrs`) — HANDOFF READY (~04:00 UTC)
+# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 24 (2026-11-20, lead branch `ccr-5be1062a-0ffyej`, from ~10:30 UTC)
+
+New account; started from the r23 lead `claude/rainbow-r22-restore-ut3m39` and merged its final save `a735ec7` (10:25). Round 23
+stopped at 10:19 UTC (5-hour limit) right after sending the complete labelled Screen 07 clip. **The user reviewed it (~10:35): Screen 07
+NOT approved — (1) whole river in broad S-bends, (2) route ahead visible while steering, (3) clean 07→08 water / foam join with the
+latest 08; keep the fuller foam; then the same labelled clip.** Screen 06 opening ripple ("raised blue cone") comparison still owed;
+06 crest / winding river / curved coin trail stay open. Four workers relaunched on LOCAL `-c25` branches (s07, s04, s08, Benny).
+Map + services: **`docs/briefs/2026-11-20-r24/COORDINATION.md`**; briefs `LAUNCH_R24.md`; recipe `setup_worker_r24.sh`; open items
+`docs/briefs/2026-11-20-r23/OPEN_ITEMS.md`. Nothing else merged.
+
+# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ ROUND 23 (2026-11-20, lead branch `claude/rainbow-r22-restore-ut3m39`, ~04:08–10:19 UTC)
+
+Map, results log, user notes verbatim: `docs/briefs/2026-11-20-r23/COORDINATION.md` + `OPEN_ITEMS.md`. Done: 04 K23-1 (pink walls
+off, clear blue water), 07 `m07satin`, 06 `m06fcl` / `m06view&m06vs=0` / `m06rip`, 08 `m08gl`, Benny star work; the labelled 07 clip.
+
+# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ ROUND 22 (2026-11-20, lead branch `ccr-4742c19f-ez2mrs`) — HANDOFF READY (~04:00 UTC)
 
 The user is moving to another Claude account again. Start the next session on **`ccr-4742c19f-ez2mrs`**. Everything is in
 **`docs/briefs/2026-11-20-r22/RESUME_R22.md`** (+ `COORDINATION.md`, launch briefs `LAUNCH_S04.md`, `LAUNCH_S04_PROJ.md`,

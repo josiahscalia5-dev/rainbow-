@@ -1,4 +1,4 @@
-# Open items per screen — round 23 (user: "Keep these screens open for review until the moving scenery meets the approved design.")
+# Open items per screen — round 23 (+ round 24 updates) (user: "Keep these screens open for review until the moving scenery meets the approved design.")
 
 Nothing below is finished until the USER approves it in motion. Candidates are NOT accepted; they stay behind URL switches.
 
@@ -26,7 +26,13 @@ Nothing below is finished until the USER approves it in motion. Candidates are N
   `m07satin` (lead: small GOOD).
 * OPEN (user priority): broad S-shaped channel — water, pink edges, foam and coin trail curving together, route / camera / collision
   consistent (s07 worker step 2); foam natural variation in size + spacing (step 3).
-* Owed to the user: complete labelled clip entrance → exit into 08 with playback speed (lead, `qa/match/07/r23/lead_clip/`).
+* DELIVERED 10:19: complete labelled clip `qa/match/07/r23/lead_clip/` (NOTE: its query had no 08 switches → old default 08).
+* **USER ~10:35 (r24), NOT approved — priorities:** (1) the WHOLE river in broad S-bends — cyan water, pink edges, foam banks and coin
+  trail curving together; middle + end still "a straight slide with a wavy coloured strip inside it"; Benny + collisions aligned;
+  (2) steering view t = 2.5–3.5 s: the purple wall dominates, the upcoming river is lost — keep the route ahead visible, natural
+  movement; (3) water join t = 7.25–8 s: detailed swirling water → smoother striped water with a speckled band across the join —
+  water + foam banks must connect consistently through the exit; the transition must use the latest 08. Keep the fuller foam.
+  Then the SAME labelled swim + steering sequence for a fair comparison. Verbatim: `docs/briefs/2026-11-20-r24/LAUNCH_R24.md`.
 * Artwork proposals `qa/review_r21/artwork/07/FOR_APPROVAL_07_{d_late,e_end}.png` await the user.
 
 ## Screen 08 — Final Spin Chamber

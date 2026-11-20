@@ -2,7 +2,7 @@
 # r23 s04 (QA only): pinned swim clip through Screen 04 (straight/left/right/straight). One frame = 3 game steps of 1/60 s = 0.05 s, so 20 fps = REAL game speed, 10 fps = half speed.
 # usage: clip.sh <query file> <out mp4 prefix> <port>
 set -u
-QF=$1; OP=$2; P=$3; T=$(mktemp -d /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/clipXXXX)
+QF=$1; OP=$2; P=$3; S=${S04_SCRATCH:-/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad}; mkdir -p "$S"; T=$(mktemp -d "$S/clipXXXX")
 cd /home/user/wt/s04
 AUDIT_PORT=$P timeout 2400 node /home/user/rainbow-/qa/match/04/r23/s04_tools/swim_clip_pinned_slow.mjs 04 "$T/f" 2.4 "$(cat $QF)" > "$T/log" 2>&1
 ffmpeg -loglevel error -y -framerate 20 -i "$T/f/%04d.png" -vf scale=432:768 -pix_fmt yuv420p "${OP}_realspeed.mp4"
