@@ -4147,3 +4147,46 @@ The steering clip is still rendering. When it finishes I'll encode it, send it t
 > ↩︎ result: 1 file delivered to user.
 >   /home/user/rainbow-/qa/match/06/r30b/proof/STEER_zigzag_06_1x.mp4 → file_uuid: f0ad258e-1067-43ad-9812-971b9d7081d4
 
+### 🤖 Claude — 2026-11-20T23:51:09.308Z
+
+> 🔧 **TaskUpdate** `{"taskId": "5", "status": "completed"}`
+
+### 🧑 User — 2026-11-20T23:51:09.348Z
+
+> ↩︎ result: Updated task #5 status
+
+### 🤖 Claude — 2026-11-20T23:51:26.585Z
+
+I've finished this round of Screen 06 changes and everything is sent to you. Screen 06 is noticeably closer to your four storyboard pictures, but it is not exact yet, and none of it is approved until you say so. The game you have now and all earlier versions are unchanged; the new look only appears with this candidate's settings switched on.
+
+**What I fixed:**
+- **The pale peach circle ahead:** it was Screen 07's tube glowing peach through the end of the Screen 06 tunnel. From inside 06 it is now deep violet.
+- **The crowded gold target:** the rings are now broad, flat, polished gold bands that arch over Benny and pass behind him. The slide also bends more, curling right over the crest, sweeping left, then turning right toward Screen 07.
+- **Blurry, stretched wall holes:** the walls are now clean purple-magenta metal with small, sharp rounded holes in neat rows, using colours measured from your storyboard.
+- **Framing:** Benny stays at his approved size and place, his beanie sits level as in your painting, and the scenery behind him looks bigger, like your panels.
+- **Water, foam and Benny:** three specialists removed the scratchy water streaks and the bead-like foam walls, and brought Benny to the painted proportions, knit beanie and dusty-pink fur. At the start view, his share of pixels within 20 colour levels of your picture went from 49 % to 57 %.
+
+**What still differs:**
+- The gold is less shiny than your painted gold, and the walls glow less.
+- At some moments the slide is partly hidden behind Benny, where your panels show more of it.
+- Near the end of Screen 06, Screen 07's own tube, with its paddles and dense rings, shows in the distance.
+- After the doorway, Screen 07 still has its current pink look, not your purple-and-gold 07 picture. A purple 07 version exists on another branch; I haven't combined it because that needs your OK.
+- 1.3 seconds after the start, Benny looks a little small for a moment. The old version did the same.
+
+**The checks you asked for:**
+1. Four large numbered comparisons: your storyboard panel, your bottom row (the old version) and the new gameplay, shown side by side in the same window. There's an extra sheet for panel 1 in motion.
+2. One uninterrupted normal-speed clip, plus a half-speed copy, from the crest into Screen 07, and a sheet of the exact moment the title switches to 07.
+3. A steering clip: Benny steers fully left and right and collects coins. The gameplay test passes all 8 checks: 91 coins collected, a wall bump costs a heart, no camera jumps, through to the ending.
+4. The candidate is commit `cf1a660` on a local branch. A copy that rebuilds it exactly is on GitHub; I applied it to a clean copy and got identical code.
+
+**Backup report:** I'm not printing "RAINBOW 3D BACKUP VERIFIED", because one start-up check failed. The automatic GitHub fetch at session start hit a network error. I ran the fetch again by hand, it worked, and that is how I found and merged the previous session's last save from 22:14.
+- **Branch:** `ccr-e490fceb-u85291`, latest save `5f63b57e83b4b003004e85cb0b03f6b58abd9b59`. GitHub matches the local copy exactly.
+- **Five-minute autosave:** running the whole session, and it also saves each specialist's unfinished work.
+- **Large binary files (models, Marble worlds and other big assets):** all 218 are present locally and confirmed on GitHub.
+- **Specialists:** all 10 definitions are unchanged.
+- **World Labs:** the key works (5,420 credits), and no paid jobs were started.
+- **Tools:** Blender, the Android tools, Playwright and its connection to Claude all work.
+- **Can't be carried over to a new account:** logins, the World Labs key, and running processes.
+
+Everything is in `qa/match/06/r30b/proof/`; `README.md` there lists all the files.
+
