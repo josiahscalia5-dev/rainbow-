@@ -411,3 +411,377 @@ Both conflicts are in files that the autosave regenerates. I'll keep the source 
 > e655f19 autosave: Rainbow 2026-11-20 15:03 UTC
 > source e655f19 contained: YES
 
+### 🤖 Claude — 2026-11-20T15:16:05.495Z
+
+> 🔧 **Bash** `{"command": "for i in 1 2 3 4; do timeout 120 git push -u origin claude/rainbow-restore-screen-match-ijjdai 2>&1 | tail -2 && break; sleep $((i*3)); done; echo \"local  $(git rev-parse HEAD)\"; echo \"remote $(timeout 60 git ls-remote origin refs/heads/claude/rainbow-restore-screen-match-ijjdai | cut -f1)\"; python3 -I scripts/autosave-status.py 2>&1 | tail -5", "description": "Push merge and verify autosave status"}`
+
+### 🧑 User — 2026-11-20T15:16:08.438Z
+
+> ↩︎ result: d55a9e3..e2e1d12  claude/rainbow-restore-screen-match-ijjdai -> claude/rainbow-restore-screen-match-ijjdai
+> branch 'claude/rainbow-restore-screen-match-ijjdai' set up to track 'origin/claude/rainbow-restore-screen-match-ijjdai'.
+> local  e2e1d12092e0eb2a586b93e5d9716d5e92334b3b
+> remote e2e1d12092e0eb2a586b93e5d9716d5e92334b3b
+> AUTOSAVE OK | branch claude/rainbow-restore-screen-match-ijjdai | scheduler daemon | last verified backup 2026-11-20T15:15:28+00:00 (0.7 min ago) | local e2e1d12 remote e2e1d12 (match) | uncommitted 3
+
+### 🤖 Claude — 2026-11-20T15:16:10.695Z
+
+Checkpoint is established and verified (`AUTOSAVE OK … (match)`). Now I'll read the newest handoff documents and the bootstrap report.
+
+### 🤖 Claude — 2026-11-20T15:16:11.994Z
+
+> 🔧 **Bash** `{"command": "grep -n \"^## \" docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md | head -8; echo; awk '/^## /{n++} n==1' docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md | head -150", "description": "Read the newest ROUND 26 handoff section"}`
+
+### 🧑 User — 2026-11-20T15:16:12.033Z
+
+> ↩︎ result: 308:## PAUSED BY THE USER ~22:30 UTC (save credits)
+> 313:## Branch map (round 6; nothing merged into production, no -c5 or older branch written)
+> 324:## Restore audit (account 6, 21:50–22:10 UTC)
+> 333:## Round-6 audit result (`qa/lead_r6/2026-11-17/README.md`) — NO screen is 8.5/10 while riding yet
+> 339:## Next tasks after the two running milestones (user's order: 06 + 08 first, then 07, 05, 04)
+> 355:## Branch map (round 5; nothing merged, no -c4 or older branch written)
+> 370:## Restore audit (account 5, 20:05–20:35 UTC)
+> 386:## Round 5 progress (~21:20 UTC) — the user's goal: every playable screen >= 95 % like its approved picture
+> 
+> ## PAUSED BY THE USER ~22:30 UTC (save credits)
+> Both specialists were told to checkpoint, push and stop (take the NEWEST commit of each `-c6` branch). Marble CDN host
+> still blocked (the allowlist request was denied at the prompt); APK builds still fail on intermittent Maven Central 404s
+> through this network (details: `backups/AGENTS_STATUS.json` → `round6_account6.paused_by_user_2026_11_17_2230`).
+
+### 🤖 Claude — 2026-11-20T15:16:12.693Z
+
+> 🔧 **Bash** `{"command": "bash scripts/claude-bootstrap.sh --status 2>&1 | tail -60", "description": "Check background bootstrap progress"}`
+
+### 🧑 User — 2026-11-20T15:16:13.157Z
+
+> ↩︎ result: # Rainbow bootstrap report — BOOTSTRAP PROBLEMS
+> 
+> Generated 2026-11-20 13:04 UTC by `scripts/claude-bootstrap.sh` (mode `background`) on branch `ccr-08ece3a6-xcwyls`.
+> The commit that contains this file is the backup itself, so its SHA is not written here; use `git log -1 -- backups/BOOTSTRAP_REPORT.md`.
+> 
+> | Step | Result | Details | s |
+> |---|---|---|---|
+> | Repository + branch | OK | josiahscalia5-dev/rainbow- on ccr-08ece3a6-xcwyls @ a2261d5 (session started from ccr-a9235d04-90cw28) | 0 |
+> | Resume newest work | FAIL | git fetch from GitHub failed (network / GitHub connection?) | 240 |
+> | Backup gap since last session | OK | previous save on GitHub: a2261d5 2026-11-20 12:52 UTC (daemon) on ccr-08ece3a6-xcwyls, ccr-a9235d04-90cw28; previous session ended WITHOUT an end-of-session backup (its environment closed after an automatic save); 15 gap(s) > 10 min in the last 72 h of the autosave log, longest 11-17 22:38-20:24 UTC (21.8 h) | 0 |
+> | Git LFS binaries (local) | OK | 148/148 real files (models, APK, kit ZIP, Marble splats/PLY/colliders/.blend), git lfs fsck OK | 2 |
+> | Git LFS on GitHub | OK | 148/148 LFS objects (754 MB, 17 Marble/World Labs) confirmed on GitHub LFS | 1 |
+> | Approved  …[+2981 chars]
+
+### 🤖 Claude — 2026-11-20T15:16:15.442Z
+
+The bootstrap is still running (that report is from the previous session). The handoff's newest section is above the first `##` heading; reading it directly.
+
+### 🤖 Claude — 2026-11-20T15:16:16.044Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md", "limit": 110}`
+
+### 🧑 User — 2026-11-20T15:16:16.070Z
+
+> ↩︎ result: 1	# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 26 (2026-11-20, lead branch `ccr-08ece3a6-xcwyls`, from ~13:00 UTC)
+> 2	
+> 3	New account; session branch started at `a2261d5` = the latest of the r25 lead `ccr-a9235d04-90cw28` (its last daemon save 12:51 UTC).
+> 4	Round 25 ended 12:36–12:45 UTC when the old account hit its 5-hour limit (all four workers stopped mid-step). Nothing merged. Worktrees
+> 5	recreated from the 12:52:06 snapshots on LOCAL `-c27` branches (`docs/briefs/2026-11-20-r25/setup_worker_r26.sh`, content identical).
+> 6	**The user's detailed visual brief for every screen (binding): `docs/briefs/2026-11-20-r26/USER_VISUAL_BRIEF_R26.md`.** Four workers relaunched
+> 7	(s07, s06, s04, Benny). Map + services: **`docs/briefs/2026-11-20-r26/COORDINATION.md`**; briefs `LAUNCH_R26.md`; next-account recipe
+> 8	`setup_worker_r27.sh` (`-c28` from the newest `backups/wip/*-c27/`). On this account: World Labs API key and fal key are NOT on the
+> 9	environment (World Labs check HTTP 401 → secure form); Atlas connector still "no active Atlas account" (user: atlas.worldlabs.ai sign-up).
+> 10	
+> 11	# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 25 (2026-11-20, lead branch `ccr-a9235d04-90cw28`, from ~11:54 UTC)
+> 12	
+>  …[+9448 chars]
+
+### 🤖 Claude — 2026-11-20T15:16:17.641Z
+
+> 🔧 **Bash** `{"command": "ls docs/briefs/2026-11-20-r26/ && wc -l docs/briefs/2026-11-20-r26/*.md && head -60 backups/START_NEW_CLAUDE_ACCOUNT.md", "description": "List round-26 briefs and read start doc top"}`
+
+### 🧑 User — 2026-11-20T15:16:17.680Z
+
+> ↩︎ result: COORDINATION.md
+> LAUNCH_R26.md
+> USER_VISUAL_BRIEF_R26.md
+> setup_worker_r27.sh
+>    47 docs/briefs/2026-11-20-r26/COORDINATION.md
+>    97 docs/briefs/2026-11-20-r26/LAUNCH_R26.md
+>   245 docs/briefs/2026-11-20-r26/USER_VISUAL_BRIEF_R26.md
+>   389 total
+> # Paste this into Claude Code on the next Claude account
+> 
+> ## ▶▶▶▶ NEWEST (2026-11-20 ~13:20 UTC, round 26 → next account)
+> Same steps and prompt as the round-24 block below, with these replacements: start the cloud session on branch **`ccr-08ece3a6-xcwyls`**
+> (the round-26 lead; NOT the default branch); read the TOP of `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md` ("ROUND 26"), the user's visual brief
+> `docs/briefs/2026-11-20-r26/USER_VISUAL_BRIEF_R26.md` and `docs/briefs/2026-11-20-r26/COORDINATION.md` + `LAUNCH_R26.md`; recreate the
+> worktrees with `bash docs/briefs/2026-11-20-r26/setup_worker_r27.sh` (LOCAL `-c28` branches from the newest `backups/wip/*-c27/` snapshots).
+> Keys: World Labs (`api.worldlabs.ai`, header `WLT-Api-Key`) and fal (`queue.fal.run`, `Authorization: Key`) live as network secrets on the
+> cloud environment — a new account's environment starts WITHOUT them; check with the free reads, then the secure form.
+> 
+> ---
+> 
+> ## ▶▶▶ NEWEST (2026-11-20  …[+4603 chars]
+
+### 🤖 Claude — 2026-11-20T15:16:18.800Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-20-r26/COORDINATION.md"}`
+
+### 🧑 User — 2026-11-20T15:16:18.821Z
+
+> ↩︎ result: 1	# Round 26 — coordination (lead session branch `ccr-08ece3a6-xcwyls`, new Claude account, 2026-11-20 from ~13:00 UTC)
+> 2	
+> 3	User (new account, ~13:00): "RESTORE MY COMPLETE RAINBOW PROJECT AND CONTINUE ON THIS ACCOUNT" — source branch `ccr-a9235d04-90cw28`;
+> 4	restore project, conversations, tools, connectors, plugins, ten specialists, unfinished work; continue 07 → 06 → 04 → Benny, preserve 08 K23-3,
+> 5	05 per its queue; keep the review package. Plus a long **detailed visual brief for every screen** → verbatim in `USER_VISUAL_BRIEF_R26.md`
+> 6	(binding for every worker). Authorizations unchanged: useful paid artwork (record job, purpose, provider / job ID, cost), up to four
+> 7	specialists at once. Nothing is approved until the user says so.
+> 8	
+> 9	## Restore audit (lead, 13:03–13:20 UTC)
+> 10	* Session branch `ccr-08ece3a6-xcwyls` starts at `a2261d5b96f7ed190af74f075eacec3a3a223665` = the latest commit of `ccr-a9235d04-90cw28` on
+> 11	  GitHub (r25's last daemon save, 12:51 UTC). Nothing merged. First save on this branch `4f93cbd` (13:03) verified = GitHub.
+> 12	* Hook: `git fetch` failed once at session start (network); `git ls-remote` OK at 13:03.
+> 13	* Saved conversations: r25 lead `1de1607 …[+3874 chars]
+
+### 🤖 Claude — 2026-11-20T15:16:19.398Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-20-r26/USER_VISUAL_BRIEF_R26.md"}`
+
+### 🧑 User — 2026-11-20T15:16:19.413Z
+
+> ↩︎ result: 1	# The user's detailed visual requirements for every approved Rainbow screen (round 26, 2026-11-20 ~13:00 UTC, verbatim)
+> 2	
+> 3	Binding for EVERY specialist and every screen, together with `docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md`. The user's own words follow.
+> 4	
+> 5	---
+> 6	
+> 7	CLAUDIA — MY DETAILED VISUAL REQUIREMENTS FOR EVERY APPROVED RAINBOW SCREEN
+> 8	
+> 9	Please use this message as my continuing visual brief for the entire game and share the relevant requirements with every specialist.
+> 10	
+> 11	My goal is for someone playing my mobile game to recognise the world shown in my original approved screens immediately—and to keep seeing that same world as Benny swims forward, steers, passes the scenery and moves into the next stage.
+> 12	
+> 13	I want the closest possible match to my approved screens. Ideally, the appearance would match exactly. My acceptable visual target is approximately 90–95% likeness, with 95% preferred. Treat that as my visual acceptance standard. Explain and show the remaining differences rather than giving me percentages that have not been established.
+> 14	
+> 15	The result must be a real, responsive mobile game. Benny's movement, the scenery, the water, the camera,  …[+14986 chars]
+
+### 🤖 Claude — 2026-11-20T15:16:19.849Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-20-r26/setup_worker_r27.sh"}`
+
+### 🧑 User — 2026-11-20T15:16:19.876Z
+
+> ↩︎ result: 1	#!/usr/bin/env bash
+> 2	# setup_worker_r27.sh — the NEXT account after round 26: recreate every worker worktree on
+> 3	# NEW LOCAL -c28 branches = the worker base commit + its NEWEST autosave snapshot backups/wip/<branch-c27>/ (the round-26 lead autosave refreshes it every 5 min; read INFO.json "time").
+> 4	# The -c27 branches were LOCAL only in the r26 container (never pushed); their unfinished edits live only in those snapshots.
+> 5	# Sparse worktrees (disk), node_modules symlinked. Run from the lead checkout.
+> 6	# usage: bash docs/briefs/2026-11-20-r26/setup_worker_r27.sh [s04 s07 s06 benny s08 s05 lead07 lead06]
+> 7	set -euo pipefail
+> 8	R=$(git rev-parse --show-toplevel); cd "$R"
+> 9	mk() {  # mk <slug> <worktree> <new branch> <base commit> [wip dir]
+> 10	  local X=$1 WT=$2 BR=$3 BASE=$4 W=${5:-}
+> 11	  [ -e "$WT" ] && { echo "$X: $WT exists, skipped"; return; }
+> 12	  if [ "$BR" = "--detach" ]; then git worktree add --no-checkout --detach "$WT" "$BASE" >/dev/null
+> 13	  else git worktree add --no-checkout -b "$BR" "$WT" "$BASE" >/dev/null; fi
+> 14	  printf '/*\n!/qa/pilot05/\n!/qa/worldlabs/\n!/qa/imageblaster/\n!/builds/\n!/backups/\n' | git -C "$WT" sparse-checkout set --no-cone --stdin
+> 15	  git  …[+2350 chars]
+
+### 🤖 Claude — 2026-11-20T15:16:23.122Z
+
+The recovery script doesn't include the separate `lead/trial07-c27` trial, as you suspected. Next I'll check the snapshots and where the previous lead conversation actually stopped.
+
+### 🤖 Claude — 2026-11-20T15:16:25.475Z
+
+> 🔧 **Bash** `{"command": "ls -d backups/wip/*c27* backups/wip/detached-* 2>/dev/null; echo; for d in backups/wip/*c27* backups/wip/detached-8accdad0a0 backups/wip/detached-e162aec2bf; do python3 - \"$d\" <<'EOF'\nimport json,sys,os\nd=sys.argv[1]; i=json.load(open(d+\"/INFO.json\"))\nkeys=[k for k in i if k in(\"branch\",\"head\",\"HEAD\",\"time\",\"worktree\",\"dirty\",\"dirty_count\",\"untracked_saved\",\"untracked_skipped\",\"base\")]\nprint(os.path.basename(d), {k:(i[k] if not isinstance(i[k],list) else len(i[k])) for k in keys})\nEOF\ndone", "description": "List worker WIP snapshots and their metadata …[+2 chars]`
+
+### 🧑 User — 2026-11-20T15:16:25.697Z
+
+> ↩︎ result: backups/wip/claude__rainbow-benny-c27
+> backups/wip/claude__rainbow-s04-match-c27
+> backups/wip/claude__rainbow-s05-match-c27
+> backups/wip/claude__rainbow-s06-match-c27
+> backups/wip/claude__rainbow-s07-match-c27
+> backups/wip/claude__rainbow-s08-scenery-c27
+> backups/wip/detached-34cb494137
+> backups/wip/detached-3c0fa97090
+> backups/wip/detached-8accdad0a0
+> backups/wip/detached-c649fcbc35
+> backups/wip/detached-e162aec2bf
+> backups/wip/detached-eb7233e364
+> backups/wip/lead__trial07-c27
+> 
+> claude__rainbow-benny-c27 {'worktree': '/home/user/wt/benny', 'branch': 'claude/rainbow-benny-c27', 'head': '734efb6bc407c691c3d7d99e29b710544c82a9c5', 'time': '2026-11-20T15:03:51+00:00', 'untracked_skipped': 0}
+> claude__rainbow-s04-match-c27 {'worktree': '/home/user/wt/s04', 'branch': 'claude/rainbow-s04-match-c27', 'head': '34cb494137e1030c4410d871125e6e9eef6aa4ea', 'time': '2026-11-20T15:03:52+00:00', 'untracked_skipped': 0}
+> claude__rainbow-s05-match-c27 {'worktree': '/home/user/wt/s05', 'branch': 'claude/rainbow-s05-match-c27', 'head': 'eb7233e3646640397f14e360f601aeff088d7536', 'time': '2026-11-20T15:03:53+00:00', 'untracked_skipped': 0}
+> claude__rainbow-s06-match-c27 {'worktree': '/home/user/wt/s06', 'branch': 'c …[+1189 chars]
+
+### 🤖 Claude — 2026-11-20T15:16:28.541Z
+
+> 🔧 **Bash** `{"command": "for d in backups/wip/*c27* backups/wip/detached-8accdad0a0 backups/wip/detached-e162aec2bf; do n=$(grep -c '^diff --git' $d/tracked.patch 2>/dev/null); u=$(find $d/untracked -type f 2>/dev/null | wc -l); echo \"$(basename $d): patch-files=$n untracked=$u size=$(du -sh $d | cut -f1)\"; done; ls /home/user/wt 2>/dev/null || echo \"no /home/user/wt\"; git worktree list", "description": "Count patch and untracked files per snapshot"}`
+
+### 🧑 User — 2026-11-20T15:16:28.664Z
+
+> ↩︎ result: claude__rainbow-benny-c27: patch-files=10 untracked=7 size=11M
+> claude__rainbow-s04-match-c27: patch-files=3 untracked=1 size=112K
+> claude__rainbow-s05-match-c27: patch-files= untracked=0 size=8.0K
+> claude__rainbow-s06-match-c27: patch-files=2 untracked=15 size=2.7M
+> claude__rainbow-s07-match-c27: patch-files=5 untracked=10 size=140K
+> claude__rainbow-s08-scenery-c27: patch-files=3 untracked=2 size=36K
+> lead__trial07-c27: patch-files=5 untracked=10 size=140K
+> detached-8accdad0a0: patch-files=2 untracked=0 size=40K
+> detached-e162aec2bf: patch-files=2 untracked=6 size=60K
+> no /home/user/wt
+> /home/user/rainbow-  51ff4bb [claude/rainbow-restore-screen-match-ijjdai]
+
+### 🤖 Claude — 2026-11-20T15:16:29.943Z
+
+> 🔧 **Bash** `{"command": "T=backups/claude-sessions/57d35962-86cf-5cfa-ab0b-2faf54b8a6e6/transcript.md; wc -l $T; ls backups/claude-sessions/57d35962-86cf-5cfa-ab0b-2faf54b8a6e6/; grep -n \"^## \\|^### \" $T | tail -40", "description": "Inspect the previous lead transcript structure"}`
+
+### 🧑 User — 2026-11-20T15:16:29.992Z
+
+> ↩︎ result: 2996 backups/claude-sessions/57d35962-86cf-5cfa-ab0b-2faf54b8a6e6/transcript.md
+> subagents
+> transcript.md
+> transcript.sanitized.jsonl
+> 2724:### 🧑 User — 2026-11-20T13:40:00.379Z
+> 2728:### 🤖 Claude — 2026-11-20T13:40:02.905Z
+> 2732:### 🧑 User — 2026-11-20T13:40:02.970Z
+> 2737:### 🤖 Claude — 2026-11-20T13:40:06.247Z
+> 2741:### 🤖 Claude — 2026-11-20T13:40:06.998Z
+> 2745:### 🧑 User — 2026-11-20T13:40:07.152Z
+> 2761:### 🤖 Claude — 2026-11-20T13:40:08.586Z
+> 2765:### 🧑 User — 2026-11-20T13:40:08.701Z
+> 2786:### 🤖 Claude — 2026-11-20T13:40:17.872Z
+> 2790:### 🧑 User — 2026-11-20T13:40:18.374Z
+> 2794:### 🤖 Claude — 2026-11-20T13:40:19.334Z
+> 2798:### 🧑 User — 2026-11-20T13:40:19.381Z
+> 2802:### 🤖 Claude — 2026-11-20T13:40:24.711Z
+> 2806:### 🧑 User — 2026-11-20T13:40:24.805Z
+> 2826:### 🤖 Claude — 2026-11-20T13:41:01.203Z
+> 2830:### 🧑 User — 2026-11-20T13:46:10.248Z
+> 2834:### 🤖 Claude — 2026-11-20T13:46:11.954Z
+> 2838:### 🤖 Claude — 2026-11-20T13:46:15.564Z
+> 2842:### 🧑 User — 2026-11-20T13:46:16.820Z
+> 2864:### 🤖 Claude — 2026-11-20T13:46:27.246Z
+> 2868:### 🧑 User — 2026-11-20T13:46:27.355Z
+> 2883:### 🤖 Claude — 2026-11-20T13:46:30.238Z
+> 2887:### 🧑 User — 2026-11-20T13:46:30.368Z
+> 2892:### 🤖 Claude — 2026-11-20T13:46:36.175Z
+> 2896:### 🧑  …[+690 chars]
+
+### 🤖 Claude — 2026-11-20T15:16:32.777Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/backups/claude-sessions/57d35962-86cf-5cfa-ab0b-2faf54b8a6e6/transcript.md", "offset": 2824, "limit": 175}`
+
+### 🧑 User — 2026-11-20T15:16:32.800Z
+
+> ↩︎ result: 2824	>     // S-sweeps); on the outside of each bend the band widens to cover every …[+3687 chars]
+> 2825	
+> 2826	### 🤖 Claude — 2026-11-20T13:41:01.203Z
+> 2827	
+> 2828	> 🔧 **Bash** `{"command": "until grep -q \"^real\" /home/user/scratch/lead/trial07/probe2.log 2>/dev/null; do sleep 15; done; tail -4 /home/user/scratch/lead/trial07/probe2.log; python3 -c \"\nimport json;d=json.load(open('/home/user/scratch/lead/trial07/probe2/probe2.json'))\nprint(d.get('timings_s'))\nfor k,v in d.get('hits',{}).items(): print(k, json.dumps(v)[:400])\n\"", "description": "Wait for the probes and print raycast hits", "timeout": 2400000}`
+> 2829	
+> 2830	### 🧑 User — 2026-11-20T13:46:10.248Z
+> 2831	
+> 2832	> ↩︎ result: Command was moved to the background (ID: b275i2qjf) so that a message that arrived while it was running can reach you; it was not interrupted. Output is being written to: /tmp/claude-0/-home-user-rainbow-/57d35962-86cf-5cfa-ab0b-2faf54b8a6e6/tasks/b275i2qjf.output. You will be notified when it completes. If it is still running after 30m in the background (plus the timeout it was started with, up to the background maximum), it will be stopped and you will be notified. It is running now: do not start a  …[+12341 chars]
+
+### 🤖 Claude — 2026-11-20T15:16:39.722Z
+
+The previous lead stopped at 13:58 UTC (5-hour limit). Its workers stopped mid-step at about 13:58 (s06) and 14:03 (s04). I'll track this restore as tasks.
+
+### 🤖 Claude — 2026-11-20T15:16:40.219Z
+
+> 🔧 **ToolSearch** `{"query": "select:TaskCreate,TaskUpdate,TaskList", "max_results": 3}`
+
+### 🧑 User — 2026-11-20T15:16:40.232Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-20T15:16:42.291Z
+
+> 🔧 **TaskCreate** `{"subject": "Establish verified checkpoint + autosave", "description": "Fetch source ccr-08ece3a6-xcwyls e655f19, merge into session branch, push, verify AUTOSAVE OK (match). Done: e2e1d12.", "activeForm": "Establishing checkpoint"}`
+
+### 🧑 User — 2026-11-20T15:16:42.305Z
+
+> ↩︎ result: Task #1 created successfully: Establish verified checkpoint + autosave
+
+### 🤖 Claude — 2026-11-20T15:16:43.695Z
+
+> 🔧 **TaskCreate** `{"subject": "Recreate worker worktrees (-c28) + trial07 + verify contents", "description": "Run setup_worker_r27.sh; separately recreate lead/trial07 from backups/wip/lead__trial07-c27; compare file counts with snapshot INFO.json; recover DevTools/Spector experiment scripts.", "activeForm": "Recreating worker worktrees"}`
+
+### 🧑 User — 2026-11-20T15:16:43.707Z
+
+> ↩︎ result: Task #2 created successfully: Recreate worker worktrees (-c28) + trial07 + verify contents
+
+### 🤖 Claude — 2026-11-20T15:16:44.897Z
+
+> 🔧 **TaskCreate** `{"subject": "Check tools, connectors, keys, plugins", "description": "World Labs key (free read), fal, Atlas connector, HF, Context7, Playwright MCP, Blender, Android, LFS, references; plugin list loaded vs not.", "activeForm": "Checking tools and connectors"}`
+
+### 🧑 User — 2026-11-20T15:16:44.907Z
+
+> ↩︎ result: Task #3 created successfully: Check tools, connectors, keys, plugins
+
+### 🤖 Claude — 2026-11-20T15:16:46.247Z
+
+> 🔧 **TaskCreate** `{"subject": "Relaunch 4 specialists (s07, s06, s04, Benny)", "description": "Read where each stopped (subagent transcripts), relaunch on -c28 worktrees with LAUNCH_R26 brief + user visual brief; update COORDINATION r27.", "activeForm": "Relaunching specialists"}`
+
+### 🧑 User — 2026-11-20T15:16:46.259Z
+
+> ↩︎ result: Task #4 created successfully: Relaunch 4 specialists (s07, s06, s04, Benny)
+
+### 🤖 Claude — 2026-11-20T15:16:47.946Z
+
+> 🔧 **TaskCreate** `{"subject": "Preview gallery of all screens + honest ratings + fix plan", "description": "User's new request: show what all mobile screens look like now (playable 04-08 in motion + others), rate each vs approved (1-10), for any under 8.5 give fixes + tools needed. Publish as artifact.", "activeForm": "Building screen preview and ratings"}`
+
+### 🧑 User — 2026-11-20T15:16:47.958Z
+
+> ↩︎ result: Task #5 created successfully: Preview gallery of all screens + honest ratings + fix plan
+
+### 🤖 Claude — 2026-11-20T15:16:49.245Z
+
+> 🔧 **TaskCreate** `{"subject": "Startup report + handoff notes for round 27", "description": "Write docs/briefs/2026-11-20-r27/COORDINATION.md, handoff top section, START_NEW_CLAUDE_ACCOUNT newest block, setup_worker_r28.sh; give user backup report.", "activeForm": "Writing handoff notes"}`
+
+### 🧑 User — 2026-11-20T15:16:49.264Z
+
+> ↩︎ result: Task #6 created successfully: Startup report + handoff notes for round 27
+
+### 🤖 Claude — 2026-11-20T15:16:50.335Z
+
+> 🔧 **TaskUpdate** `{"taskId": "1", "status": "completed"}`
+
+### 🧑 User — 2026-11-20T15:16:50.349Z
+
+> ↩︎ result: Updated task #1 status
+
+### 🤖 Claude — 2026-11-20T15:16:50.790Z
+
+> 🔧 **TaskUpdate** `{"taskId": "2", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-20T15:16:50.802Z
+
+> ↩︎ result: Updated task #2 status
+
+### 🤖 Claude — 2026-11-20T15:16:52.929Z
+
+> 🔧 **Bash** `{"command": "for c in 34cb494137e1030c4410d871125e6e9eef6aa4ea 8accdad0a07ec4e3c4189701aea9df101932c7f5 e162aec2bfdc631913c41daa435f9d449439af4f 734efb6bc407c691c3d7d99e29b710544c82a9c5 3c0fa97090afb2c0fca41898774db7247e23e522 eb7233e3646640397f14e360f601aeff088d7536; do git cat-file -e $c^{commit} 2>/dev/null && echo \"have $c\" || echo \"MISSING $c\"; done; df -h /home/user | tail -1; free -g | head -2; nproc", "description": "Check base commits exist locally and resources"}`
+
+### 🧑 User — 2026-11-20T15:16:52.992Z
+
+> ↩︎ result: MISSING 34cb494137e1030c4410d871125e6e9eef6aa4ea
+> MISSING 8accdad0a07ec4e3c4189701aea9df101932c7f5
+> MISSING e162aec2bfdc631913c41daa435f9d449439af4f
+> MISSING 734efb6bc407c691c3d7d99e29b710544c82a9c5
+> MISSING 3c0fa97090afb2c0fca41898774db7247e23e522
+> MISSING eb7233e3646640397f14e360f601aeff088d7536
+> /dev/vda        252G   28G   42G  41% /
+>                total        used        free      shared  buff/cache   available
+> Mem:              15           0           0           0          14          14
+> 4
+
+### 🤖 Claude — 2026-11-20T15:16:55.403Z
+
+The base commits will be fetched by the script's own `need` step. Running the recovery script now (it skips any worktree that already exists).
+
+### 🤖 Claude — 2026-11-20T15:16:56.409Z
+
+> 🔧 **Bash** `{"command": "time bash docs/briefs/2026-11-20-r26/setup_worker_r27.sh 2>&1 | tail -20", "description": "Recreate worker worktrees on -c28 branches", "timeout": 900000}`
+
