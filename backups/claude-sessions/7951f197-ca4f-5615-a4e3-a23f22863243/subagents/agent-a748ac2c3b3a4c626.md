@@ -2254,3 +2254,124 @@ Committing the work so far before the proof renders, then launching them.
 > 88M	qa/benny/r20/probe
 > 24dd125
 
+### 🤖 Claude — 2026-11-20T00:03:48.214Z
+
+Pushed `24dd125`. Launching the proof renders (04 motion set with masks, 05/06/07 start + swim, 4 s clip).
+
+### 🤖 Claude — 2026-11-20T00:03:50.421Z
+
+> 🔧 **Bash** `{"command": "bash /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/bin/proof.sh qa/benny/r20/step1_fur \"&benny20=1\" > /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/proof1.log 2>&1", "description": "Render step-1 proof set in background", "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T00:03:50.475Z
+
+> ↩︎ result: Command running in background with ID: b4im7p81u. Output is being written to: /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/tasks/b4im7p81u.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-20T00:03:53.690Z
+
+While the proof renders, I'll write the progress log (task 1 verdict and the step-1 method so far).
+
+### 🤖 Claude — 2026-11-20T00:03:55.488Z
+
+> 🔧 **Bash** `{"command": "ls -la /home/user/wt/benny/qa/benny/r20/t1/benny05/swim_clip_half.mp4 && cat /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/tasks/bjagxappq.output | tail -2", "description": "Confirm benny05 clip was written"}`
+
+### 🧑 User — 2026-11-20T00:03:55.579Z
+
+> ↩︎ result: -rw-r--r-- 1 root root 2489305 Nov 19 23:50 /home/user/wt/benny/qa/benny/r20/t1/benny05/swim_clip_half.mp4
+> 
+> [exited with code 0]
+
+### 🤖 Claude — 2026-11-20T00:04:13.167Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/benny/qa/benny/r19b/PROGRESS.md", "content": "# Benny — round 19b / 20 progress (benny-character-artist, branch `claude/rainbow-benny-c21`, worktree `/home/user/wt/benny`)\n\nTarget: the APPROVED Benny (`references/04_through_the_five_arrows.png`, largest view; also 05 / 06 / 07) on every screen,\nin motion. BEFORE = Screen 04 preview v3 (`qa/match/04/r19/PREVIEW_QUERY_v3.txt`, commit `09459079`).\nClose-up crop = lead's box x 170–620, y 900–1440 of the 864×1536 frame, ×1.5 (`tools/benny20/crop.py`).\n\n## (r20) 0. Restored r19b WIP — commit `8fb1b91`\n`fur.ts` BEN …[+3353 chars]`
+
+### 🧑 User — 2026-11-20T00:04:13.251Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/benny/qa/benny/r19b/PROGRESS.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T00:04:33.845Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && sed -n '/^def crown/,/^def brim/p' tools/benny20/knit.py | head -5; python3 - <<'EOF'\nimport json\np=json.load(open('assets/textures/benny20/knit_params.json'))\np.update(crown_cols=108, crown_rows=26, brim_cols=86, brim_rows=8, groove=0.3,\n         stripes=[[0.0,'W'],[0.3,'V'],[0.5,'W'],[0.645,'V']], crown_rib=True)\njson.dump(p,open('/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/knit2.json','w'),indent=1)\nEOF\npython3 - <<'EOF'\np='/home/user/wt/benny/tools/benny20/knit.py'\ns=open(p).read()\na=\"    h, rowid, var  …[+1060 chars]`
+
+### 🤖 Claude — 2026-11-20T00:04:35.100Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/knit2/brim_q.png"}`
+
+### 🧑 User — 2026-11-20T00:04:37.158Z
+
+> ↩︎ result: def crown(p, out):
+>     W, H, cols, rows = p['crown_w'], p['crown_h'], p['crown_cols'], p['crown_rows']
+>     h, rowid, var = knit_field(W, H, cols, rows, p['seed'])
+>     fz = fbm((H, W), p['seed'] + 1)
+>     # stripe per stitch ROW (stripes change on row boundaries -> jagged knit edge like a real beanie)
+> wrote /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/knit2
+
+### 🧑 User — 2026-11-20T00:04:37.189Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T00:04:41.633Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/proof1.log; ls /home/user/wt/benny/qa/benny/r20/step1_fur 2>/dev/null | head -30; uptime", "description": "Check proof render progress"}`
+
+### 🧑 User — 2026-11-20T00:04:41.675Z
+
+> ↩︎ result: f00_start.png
+> f00_start_mask.png
+> f03_forward3u.png
+> f03_forward3u_mask.png
+>  00:04:41 up 48 min,  0 user,  load average: 7.96, 10.16, 9.72
+
+### 🤖 Claude — 2026-11-20T00:04:46.699Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && python3 -I tools/benny20/score.py qa/benny/r20/step1_fur/f00_start.png qa/benny/r20/step1_fur/f00_start_mask.png | python3 -c \"import json,sys; d=json.load(sys.stdin); print(d['shift_best'], d['cuff_frac'], d['bbox_all'], d['cuff_bottom_c'], d.get('fur_hsv'), d['fur_hsv_approved'])\"; python3 -I tools/benny20/crop.py qa/benny/r20/step1_fur/f00_start.png /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/s1_f00.png", "description": "Score step-1 start view"}`
+
+### 🤖 Claude — 2026-11-20T00:04:48.091Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/s1_f00.png"}`
+
+### 🧑 User — 2026-11-20T00:04:48.107Z
+
+> ↩︎ result: {'dy': 50, 'iou_all': 0.8375, 'iou_hat': 0.8079, 'iou_fur': 0.7389} [0.717, 0.691] [[208, 591, 922, 1350], [188, 591, 965, 1408]] [1229, 1271] {'mean': [211, 72, 145], 'sat': [0.59, 0.65, 0.78], 'val': [0.67, 0.84, 0.98]} {'mean': [207, 74, 151], 'sat': [0.53, 0.65, 0.77], 'val': [0.61, 0.84, 0.99]}
+
+### 🧑 User — 2026-11-20T00:04:48.169Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T00:05:00.571Z
+
+> 🔧 **Bash** `{"command": "until grep -q \"PROOF_DONE\\|Error\\|error:\" /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/proof1.log; do sleep 5; done; cat /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/proof1.log | tail -20", "description": "Wait for proof renders to finish", "timeout": 1800000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T00:05:00.624Z
+
+> ↩︎ result: Command running in background with ID: b0esgns7n. Output is being written to: /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/tasks/b0esgns7n.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-20T00:05:04.862Z
+
+While the proof set renders, checking the current pompom/cuff/crown/star colours at the start view.
+
+### 🤖 Claude — 2026-11-20T00:05:06.267Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && python3 -I tools/benny20/score.py qa/benny/r20/step1_fur/f00_start.png qa/benny/r20/step1_fur/f00_start_mask.png | python3 -c \"import json,sys; d=json.load(sys.stdin); [print(k, d[k]) for k in d if k.startswith('med_') or k=='approved_med' or k=='pom_bbox']\"", "description": "Part colour medians at step-1 start view"}`
+
+### 🧑 User — 2026-11-20T00:05:07.307Z
+
+> ↩︎ result: pom_bbox [336, 507, 922, 1091]
+> med_fur [219, 82, 151, 'L p10/50/90 [114, 151, 188]']
+> med_pom [146, 1, 255, 'L p10/50/90 [117, 134, 153]']
+> med_cuff [119, 25, 231, 'L p10/50/90 [85, 125, 170]']
+> med_crown [225, 174, 241, 'L p10/50/90 [114, 205, 252]']
+> med_star [240, 204, 24, 'L p10/50/90 [125, 156, 186]']
+> approved_med {'fur': [213, 71, 150, 'L 106/144/184'], 'pom': [133, 30, 229, 'L 78/130/178'], 'cuff': [103, 16, 209], 'crown_white': [233, 182, 233], 'crown_violet': [104, 15, 216], 'star': [252, 195, 70]}
+
+### 🤖 Claude — 2026-11-20T00:05:22.290Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && for f in crown crown_n brim brim_n; do cp /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/knit2/$f.png assets/textures/benny20/$f.png; done; python3 - <<'EOF'\nimport json\np=json.load(open('/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/knit2.json'))\njson.dump(p,open('/home/user/wt/benny/assets/textures/benny20/knit_params.json','w'),indent=1)\npom=\"const p=B.furs.find(f=>f.mesh.name==='fur_pom');\"\nV=[{\"name\":\"k0_knit2\"},\n   {\"name\":\"k1_knitcol\",\"js\":\"const c=B.scene.get …[+752 chars]`
+
+### 🧑 User — 2026-11-20T00:05:22.439Z
+
+> ↩︎ result: staged
+
+### 🤖 Claude — 2026-11-20T00:05:31.399Z
+
+> 🔧 **Bash** `{"command": "until grep -q \"PROOF_DONE\\|rror\" /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/proof1.log; do sleep 5; done; tail -5 /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/proof1.log", "description": "Block until proof renders finish", "timeout": 1200000}`
+
