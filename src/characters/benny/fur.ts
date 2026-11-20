@@ -34,6 +34,7 @@ export interface FurHandle {
     uShade: { value: THREE.Vector4 };
     uTint: { value: THREE.Color };
     uComb: { value: THREE.Vector4 };
+    uPile: { value: THREE.Vector4 };
   };
 }
 
@@ -66,6 +67,10 @@ export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
     /** `?benny20=1`: x = comb ALONG the surface toward his feet (fraction of the fur length), y = lift off the surface
      *  (normal push factor, < 1: strands lie flatter), z = strand-to-strand brightness variation, w = tuft roundness shading (bright axis, darker rim) */
     uComb: { value: new THREE.Vector4(0, 1, 0.14, 0) },
+    /** `?benny20=1`: plush pile — x = strand tip radius (taper, cell units), y = strand length variation (0: all reach
+     *  the lock top; higher: the pile thins out toward its surface → soft fuzzy edge, no hard tips), z = lock-core radius
+     *  (fraction of the lock) where the strands are dense, w = unused */
+    uPile: { value: new THREE.Vector4(0.35, 0.45, 0.5, 0) },
   };
   const material = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 0.9, metalness: 0 });
   material.onBeforeCompile = (shader) => {
@@ -124,7 +129,7 @@ export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
         uniform float uClump;
         #endif
         #ifdef BENNY20
-        uniform vec4 uLock; uniform vec4 uShade; uniform vec3 uTint; uniform vec4 uComb;
+        uniform vec4 uLock; uniform vec4 uShade; uniform vec3 uTint; uniform vec4 uComb; uniform vec4 uPile;
         #endif
         float fhash(vec3 p) { p = fract(p * 0.3183099 + 0.1); p *= 17.0; return fract(p.x * p.y * p.z * (p.x + p.y + p.z)); }
         vec3 fhash3(vec3 p) { return vec3(fhash(p), fhash(p + 17.31), fhash(p + 41.7)); }`,
@@ -153,16 +158,22 @@ export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
           // fine strands, clumped toward the lock axis as they rise (q' = c + (q - c) / (1 - h k))
           vec3 qs = vBase * uLock.w;
           vec3 cs = vec3(tc.x / uLock.x, tc.y / (uLock.x * uLock.z), tc.z / uLock.x) * uLock.w;
-          qs = cs + (qs - cs) / max(0.15, 1.0 - 0.8 * lt);
+          qs = cs + (qs - cs) / max(0.3, 1.0 - 0.6 * lt);
           vec3 sc = floor(qs);
           vec3 sp = sc + 0.5 + (fhash3(sc) - 0.5) * 0.7;
           float sd = length(qs - sp);
           float sh = fhash(sc * 1.37 + 5.1);
+          float sh2 = fhash(sc * 2.71 + 1.3);
           if (layer > 0.001) {
             if (vLenMask < 0.05) discard;
             if (layer > lh || rr > 1.0) discard;
-            // dense lock core; wispy, separated strands only toward the lock's rim and tip
-            if (lt > 0.3 && rr > 0.5 && sd > mix(0.95, 0.45, smoothstep(0.5, 1.0, rr) * smoothstep(0.3, 1.0, lt))) discard;
+            // plush pile: every strand has its own length (the pile thins out toward its surface → soft fuzzy edge,
+            // no hard tips) and tapers; strands stay dense in the lock core, separate toward its rim
+            float sH = 1.0 - uPile.y * sh2;
+            if (lt > sH) discard;
+            float srad = mix(0.95, uPile.x, smoothstep(0.05, 1.0, lt / sH));
+            srad = mix(srad, 0.95, (1.0 - smoothstep(0.0, uPile.z, rr)) * (1.0 - smoothstep(0.3, 0.9, lt)));
+            if (lt > 0.08 && sd > srad) discard;
           }
           // rounded tuft: brighter along the lock's axis, darker toward its rim (uComb.w = amount)
           float rnd = mix(1.0 - uComb.w, 1.0 + 0.4 * uComb.w, 1.0 - smoothstep(0.0, 1.0, rr));

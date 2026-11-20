@@ -36,7 +36,7 @@ function lin(key: string, def: [number, number, number]): [number, number, numbe
 
 /** shell-fur overrides (merged over the GLB's userData.fur and benny05's FUR05) */
 export const FUR20: Record<string, Partial<FurParams>> = {
-  fur_body: { shells: n('bsh', 28), length: n('blen', 0.13), gravity: n('bgr', 0.1) },
+  fur_body: { shells: n('bsh', 24), length: n('blen', 0.075), gravity: n('bgr', 0.05) },
   fur_armL: { shells: n('ash', 16), length: n('alen', 0.07), gravity: n('agr', 0.1) },
   fur_armR: { shells: n('ash', 16), length: n('alen', 0.07), gravity: n('agr', 0.1) },
   fur_pom: { shells: n('psh', 20), length: n('plen', 0.12), gravity: n('pgr', 0.04) },
@@ -46,29 +46,33 @@ type V4 = [number, number, number, number];
 /** lock shader parameters per part (fur.ts uLock / uShade / uComb) and flat albedo (LINEAR rgb). Albedos solved from a
  *  grey calibration sweep through the live 04 lighting + post chain (tools/benny20/calfit.py, qa/benny/r20/probe/c) for
  *  the approved means: fur (207, 74, 151), pompom (133, 30, 229) */
-const LOCK20: Record<string, { lock: V4; shade: V4; comb: V4; color: [number, number, number] }> = {
+const LOCK20: Record<string, { lock: V4; shade: V4; comb: V4; pile: V4; color: [number, number, number] }> = {
   fur_body: {
-    lock: [n('blx', 24), n('bly', 1.0), n('blz', 1.0), n('blw', 180)],
+    lock: [n('blx', 40), n('bly', 1.1), n('blz', 0.9), n('blw', 260)],
     shade: [n('bsx', 0.22), n('bsy', 0.3), n('bsz', 0.5), n('bsw', 0.3)],
-    comb: [n('bcx', 0.8), n('bcy', 0.85), n('bcz', 0.1), n('bcw', 0.4)],
+    comb: [n('bcx', 0.6), n('bcy', 1.0), n('bcz', 0.1), n('bcw', 0.35)],
+    pile: [n('bpx', 0.35), n('bpy', 0.45), n('bpz', 0.5), 0],
     color: lin('bcol', [0.29, 0.092, 0.172]),
   },
   fur_armL: {
     lock: [n('alx', 50), 0.95, n('alz', 0.9), 320],
     shade: [0.45, 0.25, 0.3, 0.3],
     comb: [n('acx', 0.4), 0.9, 0.08, 0.15],
+    pile: [0.35, 0.5, 0.5, 0],
     color: lin('acol', [0.29, 0.092, 0.172]),
   },
   fur_armR: {
     lock: [n('alx', 50), 0.95, n('alz', 0.9), 320],
     shade: [0.45, 0.25, 0.3, 0.3],
     comb: [n('acx', 0.4), 0.9, 0.08, 0.15],
+    pile: [0.35, 0.5, 0.5, 0],
     color: lin('acol', [0.29, 0.092, 0.172]),
   },
   fur_pom: {
     lock: [n('plx', 40), n('ply', 0.8), n('plz', 1.0), n('plw', 220)],
     shade: [n('psx', 0.45), n('psy', 0.3), n('psz', 0.35), n('psw', 0.3)],
     comb: [0, 1, n('pcz', 0.12), n('pcw', 0.3)],
+    pile: [n('ppx', 0.4), n('ppy', 0.35), n('ppz', 0.6), 0],
     color: lin('pcol', [0.1016, 0.0067, 0.4425]),
   },
 };
@@ -163,6 +167,7 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
     f.uniforms.uLock.value.set(...spec.lock);
     f.uniforms.uShade.value.set(...spec.shade);
     f.uniforms.uComb.value.set(...spec.comb);
+    f.uniforms.uPile.value.set(...spec.pile);
     mat.needsUpdate = true;
   }
 
