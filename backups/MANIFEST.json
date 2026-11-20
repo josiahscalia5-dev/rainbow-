@@ -624,7 +624,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 20783,
-   "sha256": "1f4dc8f874a58e0e421602099cfa2b960cd1518a89b414ae1554168d1b835914"
+   "sha256": "df8f882e74a54c43ae9fec1c12d92695c005f05af884ff4dcabf80d0e68de0ca"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -639,7 +639,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 2284,
-   "sha256": "7fcc486a841315a552bd4c47a1d799bbc3fd646fadb5f9384b70211ca6891d6f"
+   "sha256": "90de68fcdd869951a3cbbc0e52aca7948a4f0a48c2b43cc2893d9e0958d3981a"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -884,7 +884,7 @@
   {
    "path": "backups/wip/claude__rainbow-benny-c24/INFO.json",
    "bytes": 463,
-   "sha256": "18db0c5fc61b070b9ad8742b02bebcf8832949140bc9f9f649cac2a60e4bd9bf"
+   "sha256": "2dd308a151a9382d0406504ebda711f8d49110987292facdbb539c2515737035"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-blendfoam-c19/INFO.json",
@@ -1449,7 +1449,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c24/INFO.json",
    "bytes": 586,
-   "sha256": "ad244db0317bf21a1539384af2755f27ec5bff30245784093d10ea2ce5479153"
+   "sha256": "9f19a4e6070d26481c166e89ac3179ec78e38ebefcd99ca3c76dde4b737b5a44"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c24/tracked.patch",
@@ -2214,7 +2214,7 @@
   {
    "path": "backups/wip/claude__rainbow-s05-match-c24/INFO.json",
    "bytes": 477,
-   "sha256": "c2b11da997e0bffdb7e9bde6840786c4a86d7f22bd041319a19ad26ff19bba4e"
+   "sha256": "e7ce437c4a97169d67103f482246a1063a1633c09d45170f880e47669d61c50d"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c11/INFO.json",
@@ -2274,7 +2274,7 @@
   {
    "path": "backups/wip/claude__rainbow-s06-match-c24/INFO.json",
    "bytes": 477,
-   "sha256": "577b0cd8f7addba38a27d5319d15edf35a13813ac08e2003518e3fac700c378d"
+   "sha256": "ad1c4e02fca44a20fbd947e4ca8bb48bdade39df40bab0f11ab8f7eff9db2123"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c15/INFO.json",
@@ -2464,7 +2464,7 @@
   {
    "path": "backups/wip/claude__rainbow-s07-match-c24/INFO.json",
    "bytes": 674,
-   "sha256": "d0c6ad1b8538509b446d600284b94db5a9785a8bcdfa36bc9f46633ca496a241"
+   "sha256": "4594392a709bc4f9d3e856c51e2f62de37633390acae6f450dcc1c064f0860bb"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c24/tracked.patch",
@@ -2609,7 +2609,7 @@
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c24/INFO.json",
    "bytes": 485,
-   "sha256": "e8c7b7e22d7093114ec1d1387e3def00e6b7af9bb9bddd27e019f12cbb9c86b8"
+   "sha256": "179950df18f2a811b3fb4997607d86fdc76994bd1976cc6537a00a1ecef65e5b"
   },
   {
    "path": "backups/wip/detached-34cb494137/INFO.json",
@@ -6092,6 +6092,11 @@
    "sha256": "8c02448eb6d9311ab44303044a3de763163a8cd83e16d281cfd568e1eaefa68c"
   },
   {
+   "path": "qa/match/04/r23/PROGRESS.md",
+   "bytes": 3231,
+   "sha256": "2ce8a7b233eee257e42745c81ffd053939299884f9d408d0b38efb9eedaa0442"
+  },
+  {
    "path": "qa/match/04/r23/QUERY_K23-1.txt",
    "bytes": 1168,
    "sha256": "10b945539c7079c1908fb8f2aa5e0e58523a402d116046313e4faccaabd3acf0"
@@ -6290,6 +6295,36 @@
    "path": "qa/match/04/r23/lead_t2/gameplay_K23-1.json",
    "bytes": 15815,
    "sha256": "54dea99cfac1ae805ec537698fa7be7993b4e25cae2be907173515473c0d1b8e"
+  },
+  {
+   "path": "qa/match/04/r23/lead_t2/swim04_BEFORE_K22-2.mp4",
+   "bytes": 962948,
+   "sha256": "3960294f45110fe64c6c3ec771cd50f231508473adaa7faad6852e7fdfa079f8"
+  },
+  {
+   "path": "qa/match/04/r23/lead_t2/swim04_BEFORE_K22-2_frame28.png",
+   "bytes": 1731478,
+   "sha256": "884f327d3920891d72fb1e4e4fe9457d0f4b0732ef9cb2a823dcf27e03a17daa"
+  },
+  {
+   "path": "qa/match/04/r23/lead_t2/swim04_BEFORE_K22-2_halfspeed.mp4",
+   "bytes": 1254738,
+   "sha256": "25e36d59e5af0710d9589cac976d55e3bd9c05bae9019c6973f13bc578214260"
+  },
+  {
+   "path": "qa/match/04/r23/lead_t2/swim04_NEW_K23-1.mp4",
+   "bytes": 872317,
+   "sha256": "390fa4cd5eca3feb2926ccd003ad20a51a2a95875b518679e16be468825ff51e"
+  },
+  {
+   "path": "qa/match/04/r23/lead_t2/swim04_NEW_K23-1_frame28.png",
+   "bytes": 1681485,
+   "sha256": "59e5c8f150324066c9b93dd46b3cdc89436921b8bd83f7bac77ff67014214438"
+  },
+  {
+   "path": "qa/match/04/r23/lead_t2/swim04_NEW_K23-1_halfspeed.mp4",
+   "bytes": 1140927,
+   "sha256": "37fe0e0bede1ff4aa847c716b0bebade4b4ee0e2eb2b2b9a1f5d8a07db3cd69d"
   },
   {
    "path": "qa/match/06/relaunch/BRIEF_path-camera-transition-engineer.txt",
@@ -17425,6 +17460,26 @@
    "path": "tools/lead22/approval_sheet.py",
    "bytes": 1261,
    "sha256": "76f1fd5c9498f10406ab5dc551d8dcd6b78416ce36a6e52ea0ef26e076a2c000"
+  },
+  {
+   "path": "tools/lead23/clip.sh",
+   "bytes": 686,
+   "sha256": "9ce7d5b1f900501e79a24b56e72b26a3f68abe2b8cc37613e3928e296e56a7fb"
+  },
+  {
+   "path": "tools/lead23/probe04.mjs",
+   "bytes": 1179,
+   "sha256": "eab6f0f7954c5aa1e0e04d8c30d91abe13b66c7689fff7c9521bd44bccedab8d"
+  },
+  {
+   "path": "tools/lead23/setq.mjs",
+   "bytes": 282,
+   "sha256": "69b98de40c5ea6259f8d8c02bd9a2d80dac41e3c1b8a28e78a6d521f491a162a"
+  },
+  {
+   "path": "tools/lead23/sweep.sh",
+   "bytes": 610,
+   "sha256": "0957dab08430b0aeea46b24f1d3b796c71cb73c730b4dde2eb4345864adadd63"
   },
   {
    "path": "tools/lead_r10/refviews.py",

@@ -1522,3 +1522,202 @@ The debug API has `probe(x, y)`, which reports what a camera ray hits first. I'l
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad; cat > $S/clip.sh <<'EOF'\n#!/usr/bin/env bash\n# usage: clip.sh <query file> <out mp4 prefix> <port>\nset -u\nQF=$1; OP=$2; P=$3; T=$(mktemp -d /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/clipXXXX)\ncd /home/user/wt/s04\nAUDIT_PORT=$P timeout 1500 node /home/user/rainbow-/qa/match/04/r22/tools/swim_clip_pinned.mjs 04 \"$T/f\" 2.4 \"$(cat $QF)\" > \"$T/log\" 2>&1\nffmpeg -loglevel error -y -framerate 24 -i \"$T/f/%04d.png\" -vf scale=432:768 -pix_fmt yuv420p \" …[+1044 chars]`
 
+### 🧑 User — 2026-11-20T04:33:43.359Z
+
+> ↩︎ result: ue,
+>   "victory": true,
+>   "heartsLostOnWallBump": true
+>  },
+>  "plunge": {
+>   "tTop": 23.699999999999935,
+>   "tBottom": 30.283333333332894,
+>   "t08": 30.283333333332894,
+>   "yTop": -51.836,
+>   "yBottom": -113.243,
+>   "y08": -113.243,
+>   "travelTimeTopToInlet": 6.58,
+>   "verticalDrop": 61.41
+>  },
+>  "errors": []
+> }
+> 58 frames -> /home/user/rainbow-/qa/match/04/r23/lead_t2/swim04_NEW_K23-1.mp4
+> 58 frames -> /home/user/rainbow-/qa/match/04/r23/lead_t2/swim04_BEFORE_K22-2.mp4
+> [1]   Done                    $S/clip.sh $R/lead_t1/QUERY_BEFORE.txt $R/lead_t2/swim04_BEFORE_K22-2 5273
+> [2]-  Done                    $S/clip.sh $R/QUERY_K23-1.txt $R/lead_t2/swim04_NEW_K23-1 5274
+> [3]+  Done                    ( cd /home/user/wt/s04 && AUDIT_PORT=5275 timeout 1500 node /home/user/rainbow-/qa/match/04/r22/tools/gameplay_test_5273.mjs --q="$(cat $R/QUERY_K23-1.txt)" --out=$R/lead_t2/gameplay_K23-1.json > $S/g.log 2>&1; tail -c 300 $S/g.log )
+> -rw-r--r-- 1 root root  962948 Nov 20 04:33 /home/user/rainbow-/qa/match/04/r23/lead_t2/swim04_BEFORE_K22-2.mp4
+> -rw-r--r-- 1 root root 1254738 Nov 20 04:33 /home/user/rainbow-/qa/match/04/r23/lead_t2/swim04_BEFORE_K22-2_halfspeed.mp4
+> -rw-r--r-- 1 root root  872317 Nov 20 04:33 / …[+783 chars]
+
+### 🤖 Claude — 2026-11-20T04:33:47.829Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json;d=json.load(open('qa/match/04/r23/lead_t2/gameplay_K23-1.json'));c=d['checks'];print('checks:',sum(1 for v in c.values() if isinstance(v,dict) and v.get('pass')),'/',len(c));print({k:v for k,v in d.items() if 'coin' in k.lower()}); print([k for k in c]); print(c.get('coinPickups') or c.get('coins'))\" 2>&1 | cut -c1-700; S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad; R=qa/match/04/r23/lead_t2; for i in 0010 0020 0034 0046; do :; done; ls $S | grep clip", "description": "Summarise gameplay checks and coins"}`
+
+### 🧑 User — 2026-11-20T04:33:47.908Z
+
+> ↩︎ result: checks: 8 / 8
+> {}
+> ['pauseFreezes', 'continuousTravel', 'noCameraCut', 'noTeleport', 'plunge', 'realCoinPickups', 'victory', 'heartsLostOnWallBump']
+> None
+> clip
+> clip.sh
+> clip5WyI
+> clipXPF1
+
+### 🤖 Claude — 2026-11-20T04:33:53.365Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json;d=json.load(open('qa/match/04/r23/lead_t2/gameplay_K23-1.json'));print(json.dumps(d['checks']['realCoinPickups'])[:300])\"; S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad; for d in $S/clip5WyI $S/clipXPF1; do grep -l \"K23\\|nwhirl\" $d/log >/dev/null; done; A=$(ls -d $S/clip5WyI); B=$(ls -d $S/clipXPF1); for f in 0008 0020 0032 0044; do convert $A/f/$f.png -resize 216x384 $S/x1_$f.png; convert $B/f/$f.png -resize 216x384 $S/x2_$f.png; done; convert \\( $S/x1_0008.png $S/x1_0020.png $S/x1_0032.png $S/x1_0044.png +appe …[+172 chars]`
+
+### 🧑 User — 2026-11-20T04:33:54.300Z
+
+> ↩︎ result: {"pass": true, "startCoins": 1330, "endCoins": 2240, "collected": 91}
+
+### 🤖 Claude — 2026-11-20T04:33:54.413Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/clipframes.png"}`
+
+### 🧑 User — 2026-11-20T04:33:54.451Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:34:02.796Z
+
+> 🔧 **SendUserFile** `{"files": ["references/04_through_the_five_arrows.png", "qa/match/04/r23/lead_t1/BEFORE/c_middle.png", "qa/match/04/r23/lead_t2/C2/c_middle.png"], "caption": "Screen 04, middle of the tunnel: ORIGINAL APPROVED | BEFORE (pink walls) | NEW K23-1 (pink walls gone, mostly blue water, thin pink at the sides)", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-20T04:34:03.365Z
+
+> ↩︎ result: 3 files delivered to user.
+>   /home/user/rainbow-/references/04_through_the_five_arrows.png → file_uuid: 4034c2e7-31d1-4a28-8366-b62b0eed0712
+>   /home/user/rainbow-/qa/match/04/r23/lead_t1/BEFORE/c_middle.png → file_uuid: 11a349ea-2d43-48e3-9882-d006ac075345
+>   /home/user/rainbow-/qa/match/04/r23/lead_t2/C2/c_middle.png → file_uuid: c4ef3520-34e8-4658-8be9-26b01f7b0b8c
+
+### 🤖 Claude — 2026-11-20T04:34:04.453Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/match/04/r23/lead_t2/swim04_BEFORE_K22-2.mp4", "qa/match/04/r23/lead_t2/swim04_NEW_K23-1.mp4", "qa/match/04/r23/lead_t2/swim04_NEW_K23-1_halfspeed.mp4"], "caption": "Uninterrupted Screen 04 swim, BEFORE vs NEW at real game speed (2.4 s: straight, left, right, straight), plus NEW at half speed", "status": "normal"}`
+
+### 🧑 User — 2026-11-20T04:34:04.901Z
+
+> ↩︎ result: 3 files delivered to user.
+>   /home/user/rainbow-/qa/match/04/r23/lead_t2/swim04_BEFORE_K22-2.mp4 → file_uuid: 5bffc18b-b06f-4101-9331-1d8867361667
+>   /home/user/rainbow-/qa/match/04/r23/lead_t2/swim04_NEW_K23-1.mp4 → file_uuid: 9563ce2e-d6fb-46ca-a00f-ced7cddcc2bd
+>   /home/user/rainbow-/qa/match/04/r23/lead_t2/swim04_NEW_K23-1_halfspeed.mp4 → file_uuid: 89d5f754-b683-42ae-ab37-6aac3f55f0a3
+
+### 🤖 Claude — 2026-11-20T04:34:06.472Z
+
+Writing the lead log so this result survives, then checking whether the old-account s06 and Benny sessions are still pushing.
+
+### 🤖 Claude — 2026-11-20T04:34:19.777Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/match/04/r23/PROGRESS.md", "content": "# Screen 04 — round 23 (new account, lead session branch `claude/rainbow-r22-restore-ut3m39`) — lead log\n\n## (r23) WHERE I STOPPED / NEXT\n* Candidate **K23-1** = `QUERY_K23-1.txt` = K22-2 with `m04wup=0` (no pink water climbing the gold walls) + `m04nwhirl=0&m04nband=0`\n  (no pink swirl wrapped round Benny) + `m04lane2=0.25` (calmer lane water). Lead verdict: GOOD IMPROVEMENT on the user's\n  two complaints (pink walls by the gold, too much pink). Shown to the user ~04:35 UTC. Waiting for the user's eye.\n* Next ( …[+2730 chars]`
+
+### 🧑 User — 2026-11-20T04:34:19.811Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/match/04/r23/PROGRESS.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T04:34:22.677Z
+
+> 🔧 **Bash** `{"command": "mkdir -p tools/lead23 && cp /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/{setq.mjs,sweep.sh,clip.sh,probe04.mjs} tools/lead23/ && for b in claude/rainbow-s06-match-c23 claude/rainbow-benny-c23; do timeout 300 git fetch --depth=20 origin \"+$b:refs/remotes/origin/$b\" >/dev/null 2>&1; echo \"$b -> $(git log -1 --format='%h %ci %s' refs/remotes/origin/$b)\"; done; date -u +%H:%M", "description": "Save lead tools and re-check worker branch tips", "timeout": 600000}`
+
+### 🧑 User — 2026-11-20T04:34:23.947Z
+
+> ↩︎ result: claude/rainbow-s06-match-c23 -> e162aec 2026-11-20 04:09:34 +0000 autosave: Rainbow 2026-11-20 04:09 UTC
+> claude/rainbow-benny-c23 -> 734efb6 2026-11-20 04:05:19 +0000 autosave: Rainbow 2026-11-20 04:05 UTC
+> 04:34
+
+### 🤖 Claude — 2026-11-20T04:34:36.659Z
+
+> 🔧 **Bash** `{"command": "cat docs/briefs/2026-11-20-r22/LAUNCH_S07.md; echo =====; cat docs/briefs/2026-11-20-r22/LAUNCH_S06.md | head -60", "description": "Read S07 and S06 launch briefs"}`
+
+### 🧑 User — 2026-11-20T04:34:36.692Z
+
+> ↩︎ result: # Round 22 launch — Screen 07 (in-process `water-fx-specialist`)
+> 
+> Your full brief is `docs/briefs/2026-11-20-r21/S07_R21.md` (rules, tasks, proof, reporting). THIS file overrides only what changed:
+> 
+> * Worktree `/home/user/wt/s07`, LOCAL branch **`claude/rainbow-s07-match-c23`** (base `8accdad0` + `qa/match/07/r21/code_at_stop_full.patch`
+>   applied once by the lead; tsc OK). Do NOT commit, do NOT push, never run git in `/home/user/rainbow-`. The lead's five-minute
+>   autosave snapshots your edits to `backups/wip/claude__rainbow-s07-match-c23/`. Port 5277.
+> * Proof / logs go to `/home/user/rainbow-/qa/match/07/r22/<step>/` and `/home/user/rainbow-/qa/match/07/r22/PROGRESS.md`
+>   (start it with a short "(r22) WHERE I STOPPED / NEXT" block and keep it current after every step).
+> * Your round-21 log (step 1 `m07end` GOOD IMPROVEMENT): `qa/match/07/r21/PROGRESS.md`; pictures `qa/match/07/r21/step1_end/`.
+> * Current candidate set (not user-approved) **K7e** = `$(cat /home/user/rainbow-/qa/match/07/r21/K7.txt)&m07end=1`.
+> * **USER-APPROVED framing TEST for 07** (2026-11-20 ~02:20): "test the camera framing changes that could preserve the approved
+>   composition better during swimming. The result  …[+3343 chars]
+
+### 🤖 Claude — 2026-11-20T04:34:37.714Z
+
+> 🔧 **Bash** `{"command": "cat docs/briefs/2026-11-20-r22/LAUNCH_BENNY.md | head -50; echo ====; head -30 qa/match/07/r22/PROGRESS.md; ls qa/match/07/r22/s1_cloud/", "description": "Read Benny brief and s07 progress"}`
+
+### 🧑 User — 2026-11-20T04:34:37.758Z
+
+> ↩︎ result: # Round 22 launch — Benny (cloud session; role `benny-character-artist`)
+> 
+> Your full brief is `docs/briefs/2026-11-20-r21/BENNY_R21.md` (user orders, target, tasks, proof). THIS file overrides only what changed:
+> 
+> * You start on **`claude/rainbow-benny-c23`**, created from `claude/rainbow-benny-c22` @ `70d3b83b`. Push ONLY your own branch; keep
+>   your session's five-minute autosave running (CLAUDE.md §2). Never merge / rebase / force-push; never write any other branch.
+> * The round-20 unfinished edits are ALREADY restored and committed on your branch (`benny20.ts`, `fur.ts`, `furstat.py`, `knit.py`,
+>   `tools/lead21/audit_screen.mjs`) — do NOT apply `backups/wip/claude__rainbow-benny-c21/tracked.patch` again.
+> * Resume exactly from "(r21) WHERE I STOPPED / NEXT" at the top of `qa/benny/r21/PROGRESS.md`: typecheck the `uPile` code, re-run
+>   `knit.py` (scipy), then task 1 shots on 04–08 BEFORE (`bade594` = r20 step 1) vs NEW. Each screen's kept query:
+>   `git fetch --depth=5 origin ccr-4742c19f-ez2mrs && git show FETCH_HEAD:qa/review_r21/audit/QUERY_0N.txt` (N = 4..8); if a screen's
+>   code is not on your branch, use that screen's default build for the Benny proof and say so.
+> * Write round- …[+3085 chars]
+
+### 🤖 Claude — 2026-11-20T04:34:41.603Z
+
+The pixel-diff tool the briefs rely on (`/home/user/tools-pixelmatch/`) doesn't exist in this new container. Finding the rebuild recipe before launching the specialists:
+
+### 🤖 Claude — 2026-11-20T04:34:42.705Z
+
+> 🔧 **Bash** `{"command": "grep -rh -B2 -A6 \"tools-pixelmatch\" docs/briefs/2026-11-20-r21/S07_R21.md | head -30; ls tools/ | head -40", "description": "Find pixel tool rebuild instructions"}`
+
+### 🧑 User — 2026-11-20T04:34:42.751Z
+
+> ↩︎ result: start, early, middle, late, end, hard left / right) for BEFORE (K7) and NEW (K7 + your switch); APPROVED = the reference. Add extra
+> end-of-stage shots with `AUDIT_SHOTS='[["e1",0.75,null],["e2",0.92,null]]'` when you work on the end. Separate full-size pictures,
+> no collages. Start view: `node /home/user/tools-pixelmatch/pixeldiff.mjs A.png B.png diff.png 0.1 180 1536` → 0 px. A short swim
+> clip (`node tools/lead_r13/swim_clip.mjs 07 <outdir> 3.6 "<query>"`, ffmpeg to mp4) when visible in motion. Gameplay:
+> `node scripts/gameplay-test.mjs --q="<query>"` → 8/8, 91 coins. 3–5 line verdict in plain visual words: GOOD IMPROVEMENT /
+> NOT AN IMPROVEMENT / NOT YET PROVEN. No colour-percentage claims as proof.
+> 
+> ## Reporting
+> Log each step in PROGRESS.md (switch, query, verdict, picture folder, most visible remaining difference). When you stop (after 3
+> blender
+> da3
+> imageblaster
+> lead21
+> lead22
+> lead23
+> lead_r10
+> lead_r4
+> lead_r5
+> lead_r6
+> make_env_geometry_ref.py
+> make_env_plate.py
+> make_env_plate_v2.py
+> make_env_plate_v3.py
+> marble05
+> match
+> match08
+> model-lab.html
+> model-lab.ts
+> proj05
+> qa
+> water-lab.html
+> water-lab.ts
+> worldlabs
+
+### 🤖 Claude — 2026-11-20T04:34:44.970Z
+
+> 🔧 **Bash** `{"command": "git log --all --oneline -1 -- '*pixeldiff.mjs' 2>/dev/null; git ls-files | grep -i \"pixeldiff\\|pixelmatch\" | head; ls node_modules | grep -i \"pixelmatch\\|pngjs\"", "description": "Look for a saved pixeldiff tool or deps"}`
+
+### 🧑 User — 2026-11-20T04:34:45.042Z
+
+> ↩︎ result: 8c76568 autosave: Rainbow 2026-11-20 02:45 UTC
+> backups/wip/claude__rainbow-s04-ringtex-c18/untracked/qa/match/04/r18/ringpaint/step9_crisp/start_view_pixeldiff_BEFORE_vs_NEW.png
+> docs/briefs/2026-11-18-r16/pixeldiff.mjs
+> qa/match/04/r21/s1_wgl/start_pixeldiff.png
+> qa/match/04/r22/s2_bbd/start_pixeldiff.png
+> qa/match/07/r22/s0_verify/pixeldiff_fullframe.txt
+
