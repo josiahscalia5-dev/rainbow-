@@ -30,6 +30,12 @@
   exceeds their radii sum -> separate balls.
 * 17:40 v5 written (copy of v4 `/home/user/scratch/s07/match07_v4.ts`): 2-3 domes ~0.45 S apart (melt into one cluster), sizes a bit
   fuller (18 % 1.2-1.5, else 0.7-1.2). tsc 0. Quick check rendering -> `q5_new`.
+* 17:50 v5 quick check (`q5_new`): best balance so far — no towering ball walls on the drop, varied cluster sizes with gaps, fuller than
+  v4, clouds clear of Benny at t 5.0; still: some inside-of-bend domes sit like separate eggs on the pale floor, near foreground has less
+  cloud volume than the approved. Iteration stopped here (usage); v5 = the m07fsoft candidate to prove at full size.
+* NOW (17:52): `/home/user/scratch/s07/proof.sh all` in a render slot: start view BEFORE/NEW (`st_before`, `st_new`, 864x1536) -> full NEW
+  clip (`clip_new` -> `qa/match/07/r27/s2_fsoft/SCREEN07_NEW_fsoft_K23-3_{1x,0.5x}.mp4`) -> gameplay
+  (`qa/match/07/r27/s2_fsoft/gameplay_NEW_fsoft.json`). Logs `/home/user/scratch/s07/logs/`. Then landmark stills from the clip.
 
 ## (r27) WHERE I STOPPED / NEXT
 * r27 relaunch (new account, ~15:20 UTC). Worktree `/home/user/wt/s07`, LOCAL branch `claude/rainbow-s07-match-c28` (r26 edits restored

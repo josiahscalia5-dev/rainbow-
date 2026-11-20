@@ -29,7 +29,7 @@ f_hard_left; BEFORE = `qa/benny/r27/s5_crown/06/new/`, same query + tool), clips
 `clip/swim06_s06a_{BEFORE,NEW}_{full,benny}_{1x,0.5x}.mp4`, gameplay `gameplay_s06a.json`. Then COMPARE crops + verdict.
 First stills (kept `06/new_v1_lag/`): start (252,224,23) g/r .89 ≈ approved .90 (BEFORE .67) but the MIDDLE turned lemon .98
 (BEFORE .93) because the star colour eased with τ ≈ 0.33 s and still lagged after the fade ended → fix: star eases with τ ≈ 0.12 s
-inside 06 when the switch is on (tsc OK); proof re-run from scratch (17:25).
+inside 06 when the switch is on (tsc OK); proof re-run from scratch (17:19).
 
 (earlier) **STOPPED ~17:15 UTC by the coordinator (Screen 06 priority, slot needed) — not a rejection.** Step 3 was NOT finished / NOT YET PROVEN:
 the probe below was killed after 8 of 20 renders (`/home/user/scratch/benny/star06/p1/p02_*`, `p10_*` = 06 entry +2 m and the 06 checkpoint,

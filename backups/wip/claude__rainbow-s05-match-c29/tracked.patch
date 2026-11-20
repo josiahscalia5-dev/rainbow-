@@ -1,5 +1,5 @@
 diff --git a/src/vfx/foam.ts b/src/vfx/foam.ts
-index 172d033..1e132e8 100644
+index 172d033..3e09240 100644
 --- a/src/vfx/foam.ts
 +++ b/src/vfx/foam.ts
 @@ -569,6 +569,8 @@ export interface FarLump05 {
@@ -29,15 +29,15 @@ index 172d033..1e132e8 100644
 +    // water edge and the wall is filled with piled foam clouds (placed across the bank by match05far.ts), rising toward the
 +    // wall — the painted soft foam banks, not a flat slab. Own random stream: the edge lumps above are unchanged.
 +    const rf = rng(9191);
-+    for (let Z = 0.3; Z < zMax; Z += 0.45 + rf() * 0.7) {
++    for (let Z = 0.3; Z < zMax; Z += 0.35 + rf() * 0.55) {
 +      for (const side of [-1, 1]) {
-+        const n = 4 + ((rf() * 5) | 0);
++        const n = 6 + ((rf() * 6) | 0);
 +        const zc = Z + (rf() - 0.5) * 0.5, fc = rf();
-+        const big = 0.3 + rf() * 0.22;
++        const big = 0.16 + rf() * 0.16;
 +        for (let k = 0; k < n; k++) {
 +          const a = rf() * Math.PI * 2, d = Math.sqrt(rf());
 +          const r = big * (0.5 + 0.55 * (1 - d) * rf() + 0.2 * rf());
-+          const f = Math.min(1, Math.max(0, fc + Math.sin(a) * d * 0.22));
++          const f = Math.min(1, Math.max(0, fc + Math.sin(a) * d * 0.3));
 +          lumps.push({ Z: zc + Math.cos(a) * d * 0.7, side, e: 0, lift: r * (0.08 + 0.3 * (1 - d)), r, f });
 +          cols.push([0.8 + 0.2 * (1 - d), rf(), rf() * 2 - 1]);
 +        }
@@ -70,7 +70,7 @@ index 2632a9a..b9d1009 100644
        ft, farWall, farRiver, farRings, farLids, ringItems, lidItems, glow, glowMat, lay: farLay, level, zEnd, warp: warpFar,
        radial: 64, wallSteps: 80, inset: 0.004, cols: 16, riverSteps: 120,
 diff --git a/src/world/match05far.ts b/src/world/match05far.ts
-index d8f6027..00d4a67 100644
+index d8f6027..5b57de5 100644
 --- a/src/world/match05far.ts
 +++ b/src/world/match05far.ts
 @@ -22,7 +22,7 @@ import type { ForcedTunnel, TubeWarp } from './tube';
@@ -169,7 +169,7 @@ index d8f6027..00d4a67 100644
 +          e = 0.45 + l.f * Math.max(0, bank - 0.75);
 +        }
 +        const x = THREE.MathUtils.clamp(l.side < 0 ? r.xB - r.hw - e : r.xB + r.hw + e, -ch, ch);
-+        co.copy(Rt).multiplyScalar(x).addScaledVector(U, a.level + EDGE_LIFT + lift0 + l.lift + 0.35 * (l.f ?? 0) ** 2);
++        co.copy(Rt).multiplyScalar(x).addScaledVector(U, a.level + EDGE_LIFT + lift0 + l.lift + 0.25 * (l.f ?? 0) ** 2);
          point(l.Z, co, cp);
          const mag = (D0lock + l.Z) / Math.max(cp.distanceTo(eye), 0.5);
 -        sc = l.r * kOf(l.Z) * THREE.MathUtils.smoothstep(mag, 1.4, 2.2) * THREE.MathUtils.smoothstep(l.Z, zs, zs + 0.6) * (1 - open);

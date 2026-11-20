@@ -1367,3 +1367,15 @@ Now the placement of bank-fill lumps in match05far.ts and the faster taper.
 >  M src/world/match05far.ts
 > ?? node_modules
 
+### 🤖 Claude — 2026-11-20T17:19:37.924Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s05/v2_mid.jpg"}`
+
+### 🧑 User — 2026-11-20T17:19:37.941Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T17:19:53.765Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='src/vfx/foam.ts'\ns=open(p).read()\nold=\"\"\"    for (let Z = 0.3; Z < zMax; Z += 0.45 + rf() * 0.7) {\n      for (const side of [-1, 1]) {\n        const n = 4 + ((rf() * 5) | 0);\n        const zc = Z + (rf() - 0.5) * 0.5, fc = rf();\n        const big = 0.3 + rf() * 0.22;\"\"\"\nnew=\"\"\"    for (let Z = 0.3; Z < zMax; Z += 0.35 + rf() * 0.55) {\n      for (const side of [-1, 1]) {\n        const n = 6 + ((rf() * 6) | 0);\n        const zc = Z + (rf() - 0.5) * 0.5, fc = rf();\n        const big = 0.16 + rf() * 0.16;\"\"\"\nassert  …[+1200 chars]`
+
