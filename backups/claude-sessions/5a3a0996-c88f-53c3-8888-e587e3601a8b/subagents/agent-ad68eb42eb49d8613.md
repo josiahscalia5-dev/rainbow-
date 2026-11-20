@@ -566,3 +566,7 @@ Round 21 launch. Your complete launch brief is the file /home/user/rainbow-/docs
 >   const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
 >   page.on('pageerror', (e) => console.error(' …[+1388 chars]
 
+### 🤖 Claude — 2026-11-20T02:05:17.257Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && K7='match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1&m07foam=1&m07coinsz=1&m07nearw=1&m07foamb=1&m07band=1'; echo \"$K7\" > /home/user/rainbow-/qa/match/07/r21/K7.txt; export AUDIT_SHOTS='[[\"a_start\",0,null],[\"b_early\",0.12,null],[\"c_middle\",0.35,null],[\"d_late\",0.6,null],[\"e1_075\",0.75,null],[\"e_end\",0.85,null],[\"e2_092\",0.92,null],[\"f_hard_left\",0.35,-1],[\"g_hard_right\",0.35,1]]'; time AUDIT_PORT=5277 node /home/user/rainbow-/tools/lead21/audit_screen.mjs /home/user/rainbow-/qa/match/07/r21/BEFORE_K7 07 \ …[+102 chars]`
+

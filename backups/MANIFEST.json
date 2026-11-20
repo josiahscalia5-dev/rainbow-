@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 19811,
-   "sha256": "980e2849a7bf70c8b13a146128c96a085b26f474716d7228fb3e6551690bcf03"
+   "sha256": "aac1319945cd083f439edd8252fa3a417b72a78f7c91bdabc25b7e3044f50b3a"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -629,7 +629,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3424,
-   "sha256": "e1809f092d3046798de235403bb3afe82ff17af6c421755dc034660f37af85ef"
+   "sha256": "675b9edf0a3c7f65c36e9ff4242e5667725d331d3f02a384e598ee5735cd8601"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -1404,7 +1404,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c22/INFO.json",
    "bytes": 560,
-   "sha256": "ebc698ec195a916a8100453a7bf30da1d6f1ba603917feadfb75868bb42ac6d8"
+   "sha256": "eb32e29563ca2f74f1c33619758fb3d175ece235426bc63b1bf7286e28a49c73"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c22/tracked.patch",
@@ -1429,7 +1429,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-preview-c22/INFO.json",
    "bytes": 569,
-   "sha256": "8cbfbfb886729ac3d893b0b71490ab8492fa9d7707a39057b2526f9efe3f001d"
+   "sha256": "f223e6647f9e25f43c6946400fd773ac85b246ec393ba4f1756d96c8d7cb8855"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-preview-c22/tracked.patch",
@@ -1654,7 +1654,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c22/INFO.json",
    "bytes": 1341,
-   "sha256": "880be98cfe11cf35b4f369ebdd4136556e0c81e7fa1622f78f0bc6191b6b3014"
+   "sha256": "64ea895ee0759478f397dbcf7962e305476e401ab51a1c0484dd1b2bb9d24b79"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c22/tracked.patch",
@@ -2359,7 +2359,7 @@
   {
    "path": "backups/wip/claude__rainbow-s07-match-c22/INFO.json",
    "bytes": 477,
-   "sha256": "04140cd9cf7eac09fe7eb78454bdd0a2d0bb6d2b059dd7e5f24c7253afcfa612"
+   "sha256": "49b6fa72dae68816c73bd9e04c472e7cad0b11e79b44738ae1fc8f57aad49c22"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c10/INFO.json",
@@ -2479,27 +2479,27 @@
   {
    "path": "backups/wip/detached-34cb494137/INFO.json",
    "bytes": 440,
-   "sha256": "97e76fb9987344d607bde55dad08327772d46591611e5dd2643aaf33f4c5e960"
+   "sha256": "b595603ac180168d58ecfa2bb812305ea81e2d84043d276154208e9b49ca321f"
   },
   {
    "path": "backups/wip/detached-3c0fa97090/INFO.json",
    "bytes": 439,
-   "sha256": "f74fe99c62babfbbf1272d4c5196049c0920328f89c34f4f0f51930bea8d9c59"
+   "sha256": "0aa9546e3d8b454e82e248ae42dda532c7152c2778a08cc55f8f5c76bf8e15c2"
   },
   {
    "path": "backups/wip/detached-8accdad0a0/INFO.json",
    "bytes": 439,
-   "sha256": "ea69d8a1e38feb0a6ecd1045f2e43433f6e753b4159ee209b44b11601524c5cf"
+   "sha256": "3e210cdb0a417d5ffb6ac14b1348e982babf4495383ab8cfd972a8931f307840"
   },
   {
    "path": "backups/wip/detached-c649fcbc35/INFO.json",
    "bytes": 439,
-   "sha256": "bec9634f95fbeeed5954feb434238d9265c21c2a99c4bd08ca49adac9ff8608c"
+   "sha256": "adfa1088fbc9fe76cf83fa9e2a0b19c630a4a6c54c86d248589550ca1d0dd3f4"
   },
   {
    "path": "backups/wip/detached-eb7233e364/INFO.json",
    "bytes": 439,
-   "sha256": "0145e1e528a702156fc9789f6a2bfd85e445158bf33d8fa19229c1e6d2540284"
+   "sha256": "25f4a8b2c8995fbc6af01d27a7424c39dbca114503911c5f0a7e49757d1cd946"
   },
   {
    "path": "builds/rainbow-debug-06-2026-11-17-r3.apk",
@@ -5212,6 +5212,11 @@
    "sha256": "019fb4c0b36e69ac69d1093108a8ce283838f41d9f3f6c33169dcba336f28764"
   },
   {
+   "path": "qa/match/04/r21/BEFORE_V4/c_middle.png",
+   "bytes": 1666023,
+   "sha256": "7afab07e076154504b3961582e07010124656750922e149a808b2e04d2619a5f"
+  },
+  {
    "path": "qa/match/04/r21_rings/1_APPROVED.png",
    "bytes": 2173209,
    "sha256": "019ede0b738e389d478e7ff3685cbc43784fa9c6a5597bec5824c8cae337fd9d"
@@ -5370,6 +5375,11 @@
    "path": "qa/match/07/geo_match07.json",
    "bytes": 43046,
    "sha256": "943d19c51c705156ec97e6159588222838238aa8461b6496b91a50b864b2cbe7"
+  },
+  {
+   "path": "qa/match/07/r21/K7.txt",
+   "bytes": 136,
+   "sha256": "f65ec63599eb81c6225cc103d6dd70d31032fc2d6586f782cc3b49348d6ea9b0"
   },
   {
    "path": "qa/match/07/rings/approved.json",
