@@ -3401,3 +3401,40 @@ Page updated. Recording the batch in the ledger and notes, then saving to GitHub
 
 > 🔧 **Bash** `{"command": "cat >> qa/review_r21/artwork/LEDGER.md <<'EOF'\n* Round 27 result (16:00–16:10 UTC): **31 jobs, $3.72** (07 ×8 incl. 2 retries, 06 ×6, 04 ×5 incl. 2 swatch retries, 05 ×6, 08 ×6), all\n  `fal-ai/nano-banana-2/edit` 2K, request ids in each `qa/review_r27/artwork/NN/proposals/*.job.json`. Selection shown to the user:\n  `qa/review_r27/artwork/SELECTION_FOR_APPROVAL.json` + page https://claude.ai/artifact/WVqynQ46W6j3yZSGAqV3qA (\"New extra views\").\n  Not usable: 04 `g_hard_right` (both tries: layout drift / added arrows), 07 `e_end` (try 1 added an arch, try 2 moved the top) — red …[+2301 chars]`
 
+### 🧑 User — 2026-11-20T16:09:28.199Z
+
+> ↩︎ result: "commit": "cb05c2cc0d0259c16b78993b6976073a6da03fa6",
+> AUTOSAVE OK | branch claude/rainbow-restore-screen-match-ijjdai | scheduler daemon | last verified backup 2026-11-20T16:09:01+00:00 (0.4 min ago) | local cb05c2c remote cb05c2c (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-20T16:09:30.106Z
+
+> 🔧 **TaskUpdate** `{"taskId": "7", "status": "completed"}`
+
+### 🧑 User — 2026-11-20T16:09:30.127Z
+
+> ↩︎ result: Updated task #7 status
+
+### 🤖 Claude — 2026-11-20T16:09:41.009Z
+
+I made the extra views. They're on your page under "New extra views for your approval": https://claude.ai/artifact/WVqynQ46W6j3yZSGAqV3qA
+
+Each view shows the real game at a spot your approved picture doesn't cover: early, middle, late, end, hard left and hard right. Next to it is the same spot repainted in your picture's materials and colours. It cost $3.72 for 31 views, all logged with their job IDs, within your standing approval for useful artwork.
+
+**How close they get:**
+- **Screen 08:** the best set. The window and towel hold, the towel isn't doubled, and the flat pink sheet at the late and end spots turned back into a river with pink banks and a foam border.
+- **Screen 06:** bright polished gold rings, crisp purple walls, glossy water, and a real curling crest where the game had flat water.
+- **Screen 05:** crisper walls, brighter gold, and cyan and pink swirls. A moderate step closer.
+- **Screen 07:** purple slotted walls and gold rings replace the flat bright-pink panels. The game's big white foam heaps stayed even when I asked for them to change. Its specialist is already reshaping that foam, so I'll redo 07's late and end views after that.
+- **Not usable, to redo later:** 04 hard right (it added arrows the game doesn't have there) and 07 end (it added a gold arch).
+
+**What these views can and can't do:** they fix how surfaces look, not the shape of each scene. On 06 the gold rings still fill the top half, and 07's drop is still straight, because the views keep the game's current framing. Getting to "looks like my picture the whole way" also needs the river shapes and the viewpoint changed, which the specialists are working on screen by screen.
+
+**Screen 06 comparison you were owed:** it's on the same page, with your approved picture, what you saw before, the new version, and clips at normal and half speed. The bright blue cone under Benny is gone, and the near foam is lower. From about 10% into the stage, the view is still a centred gold-ring tunnel instead of your off-centre tunnel. The 06 specialist has used up the fixes that leave Benny's route alone.
+
+**Now working:** Screens 07, 04 and 05 and Benny. Screen 05 started when 06 finished, on its end section and hard-left view. Everything is saved and verified on GitHub.
+
+Three things I need from you:
+1. **Which views to approve.** For example "approve all 08 and 05", or name single views. Once a view is approved, its specialist can paint it onto the 3D scenery at that spot.
+2. **Screen 06 route.** Can I let the river after the opening curve up to the left, like your picture? That's the only remaining fix for the ring-tunnel view, and it slightly changes where 06 hands over to 07. I'd test it as a separate version, so nothing is lost.
+3. **Screens 09 and 10.** Should they be playable screens, or part of your Google Flow videos?
+

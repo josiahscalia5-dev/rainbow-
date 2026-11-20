@@ -1,9 +1,9 @@
 {
   "last_run": {
-    "time": "2026-11-20T16:04:03+00:00",
-    "reason": "daemon",
+    "time": "2026-11-20T16:09:01+00:00",
+    "reason": "manual:r27-step3-views",
     "result": "committed+pushed",
-    "files_staged": 181,
+    "files_staged": 105,
     "pushed_verified": true,
     "branch": "claude/rainbow-restore-screen-match-ijjdai",
     "note": "following session branch 'claude/rainbow-restore-screen-match-ijjdai' (config branch 'claude/rainbow-r22-restore-ut3m39')",
@@ -21,13 +21,13 @@
       "lead/view06-c28: 2 modified, 15 new file(s) snapshotted",
       "lead/view07-c28: 5 modified, 10 new file(s) snapshotted"
     ],
-    "commit": "37e346f1c5d5173fc57390e793edafe2cc74821e",
-    "duration_s": 65
+    "commit": "cb05c2cc0d0259c16b78993b6976073a6da03fa6",
+    "duration_s": 26
   },
   "repo": "https://github.com/josiahscalia5-dev/rainbow-",
   "branch": "claude/rainbow-restore-screen-match-ijjdai",
-  "last_verified_remote_sha": "37e346f1c5d5173fc57390e793edafe2cc74821e",
-  "last_successful_backup_utc": "2026-11-20T16:04:03+00:00",
+  "last_verified_remote_sha": "cb05c2cc0d0259c16b78993b6976073a6da03fa6",
+  "last_successful_backup_utc": "2026-11-20T16:09:01+00:00",
   "consecutive_failures": 0,
   "schedule": "every 5 min, container-local (scheduler=daemon status=active pid=1074); see backups/RECOVERY.md for limits",
   "next_scheduled_utc": "2026-11-20T16:10:00+00:00"
