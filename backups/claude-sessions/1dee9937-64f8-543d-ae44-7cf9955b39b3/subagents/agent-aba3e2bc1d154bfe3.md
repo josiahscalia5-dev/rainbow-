@@ -1364,3 +1364,124 @@ While renders run, I'll prepare step 3 (towel double exposure): reading how `m08
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && grep -rln \"towelm\" qa/ docs/ 2>/dev/null | head; ", "description": "Find notes mentioning m08towelm"}`
 
+### 🧑 User — 2026-11-20T10:04:27.243Z
+
+> ↩︎ result: qa/match/08/scenery/r8/towelm/motion.json
+> qa/match/08/r17/PROGRESS.md
+
+### 🤖 Claude — 2026-11-20T10:04:29.961Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && ls qa/match/08/scenery/r8/towelm/; python3 -I -c \"\nimport json; j=json.load(open('qa/match/08/scenery/r8/towelm/motion.json')); print(j.get('query','')[:400])\"; python3 -I -c \"\nimport json; j=json.load(open('qa/match/08/scenery/r8/occ/motion.json')); print(j.get('query','')[:400])\"; grep -rn -i \"towel\" qa/match/08/scenery/NOTES.md | head -20", "description": "Read r8 towel test queries and notes"}`
+
+### 🧑 User — 2026-11-20T10:04:30.551Z
+
+> ↩︎ result: f10_forward10u.png
+> motion.json
+> s_left_hard.png
+> s_right_hard.png
+> t95_through_screen.png
+> match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08occ=1&m08towelm=1
+> match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08occ=1
+> 63:  projector rays: no torn gold/blue slabs at the frame bottom at forward 3 u), `m08towel` (towel frustum along projector
+> 64:  rays: no door-window slab on the towel when steering hard). `m08swim` and `m08seam` = 0 px at the approved view.
+
+### 🤖 Claude — 2026-11-20T10:04:32.733Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && grep -n -i -B2 -A8 \"m08occ\\|towelm\" qa/match/08/scenery/NOTES.md | head -60; ls qa/match/08/scenery/", "description": "Read scenery notes on m08occ and towel mask"}`
+
+### 🧑 User — 2026-11-20T10:04:32.902Z
+
+> ↩︎ result: NOTES.md
+> SHARED_CHANGES.md
+> STATUS.md
+> dbg_ids
+> dbg_lane
+> final_r5
+> motion_BEFORE
+> motion_bw
+> motion_bw_r5
+> motion_fill_r5
+> motion_lane
+> motion_lane_r5
+> r6
+> r7
+> r8
+
+### 🤖 Claude — 2026-11-20T10:04:35.321Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && grep -rn -i \"occ\\b\\|m08occ\\|towelm\\|towel mask\\|towelmask\" qa/match/08/scenery/STATUS.md qa/match/08/scenery/SHARED_CHANGES.md qa/match/08/r9*/PROGRESS.md qa/match/08/r1*/PROGRESS.md 2>/dev/null | head -20", "description": "Search status docs for occ/towelm history"}`
+
+### 🧑 User — 2026-11-20T10:04:35.452Z
+
+> ↩︎ result: qa/match/08/r17/PROGRESS.md:31:  exposure, next brief task `m08towelm`), rectangular blocks at the platform ends at hard steer, the torn white "lightning"
+> qa/match/08/r17/PROGRESS.md:59:  exposure at hard left / right — test `&m08towelm=1` alone (mask `towel08_mask.png` fits the painted towel, checked), then
+> qa/match/08/r17/PROGRESS.md:60:  `&m08occ=1` separately (r8 frames `qa/match/08/scenery/r8/occ/` showed the window running cleanly behind the towel with
+
+### 🤖 Claude — 2026-11-20T10:04:40.141Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s08r23 && python3 -I -c \"\nfrom PIL import Image\nims=[Image.open(p).convert('RGB').crop((150,250,750,650)) for p in ['/home/user/wt/s08/qa/match/08/scenery/r8/occ/s_right_hard.png','/home/user/wt/s08/qa/match/08/scenery/r8/towelm/s_right_hard.png','s1_new/s_right_hard.png','s1_new/s_left_hard.png']]\nc=Image.new('RGB',(1210,810)); [c.paste(im,((k%2)*610,(k//2)*410)) for k,im in enumerate(ims)]; c.save('insp/towel_r8.png')\n\"", "description": "Compare r8 towel tests with current towel area"}`
+
+### 🧑 User — 2026-11-20T10:04:40.762Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T10:04:43.266Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s08r23/insp/towel_r8.png"}`
+
+### 🧑 User — 2026-11-20T10:04:43.347Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T10:04:51.179Z
+
+> 🔧 **Bash** `{"command": "D=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s08r23; tail -2 $D/clip_s1_before.log $D/clip_s1_new.log $D/s2_new.log 2>/dev/null; ls $D/clip_s1_before/f 2>/dev/null | wc -l; ls $D/clip_s1_new/f 2>/dev/null | wc -l", "description": "Check clip and step 2 render progress"}`
+
+### 🧑 User — 2026-11-20T10:04:51.469Z
+
+> ↩︎ result: 9
+> 0
+
+### 🤖 Claude — 2026-11-20T10:04:54.477Z
+
+> 🔧 **Bash** `{"command": "uptime; ps aux --sort=-%cpu | grep -E \"node |chrome-headless-shell.real --type=gpu\" | grep -v grep | awk '{print $2,$3,$12,$13,$14,$15}' | head -12", "description": "Check machine load and running renders"}`
+
+### 🧑 User — 2026-11-20T10:04:54.752Z
+
+> ↩︎ result: 10:04:54 up 22 min,  0 user,  load average: 23.75, 18.98, 10.95
+> 2673 104 --type=gpu-process --gpu-recent-crash-count=0 --no-sandbox --disable-breakpad
+> 8560 59.2 --type=gpu-process --gpu-recent-crash-count=0 --no-sandbox --disable-breakpad
+> 8446 59.0 --type=gpu-process --gpu-recent-crash-count=0 --no-sandbox --disable-breakpad
+> 9302 44.5 --type=gpu-process --gpu-recent-crash-count=0 --no-sandbox --disable-breakpad
+> 9221 2.4 /home/user/rainbow-/qa/match/04/r23/s04_tools/swim_clip_pinned_slow.mjs 04 /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/clip2EJW/f 2.4
+> 8403 1.2 tools/match08/screen_clip08.mjs 08 /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s08r23/clip_s1_before match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1&m08ceil=1&m08near=1&m08cup=1&m08rw=1&m08drum=1&m08ring=1&m08cupg=1&m08bore=1&m08flange=1&m08cupw=1&m08nq=1&m08sr=1&m08vh=1
+> 2622 1.0 /home/user/rainbow-/tools/lead23/screen_clip.mjs 07 /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/c07 match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07 …[+825 chars]
+
+### 🤖 Claude — 2026-11-20T10:04:58.448Z
+
+The machine is heavily loaded (four renders across workers, load ~24 on 4 cores), so these will be slow. I'll wait for them rather than add more.
+
+### 🤖 Claude — 2026-11-20T10:05:00.445Z
+
+> 🔧 **Bash** `{"command": "D=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s08r23; until [ -f $D/s2_new/motion.json ]; do sleep 5; done; tail -3 $D/s2_new.log", "description": "Wait for step 2 NEW render", "timeout": 1800000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T10:05:00.730Z
+
+> ↩︎ result: Command running in background with ID: b83vbbrnf. Output is being written to: /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/tasks/b83vbbrnf.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-20T10:05:03.376Z
+
+Meanwhile, a small script to tabulate coin sizes per shot (BEFORE, NEW, and the painted coin size at the same screen height).
+
+### 🤖 Claude — 2026-11-20T10:05:09.969Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s08r23/coincmp.py", "content": "\"\"\"usage: python3 -I coincmp.py <before motion.json> <new motion.json> [out.json]\nPer shot: each visible coin's screen centre and diameter (px) BEFORE / NEW, and the painted coin diameter at that height.\"\"\"\nimport json, sys\nimport numpy as np\n\nP = json.load(open('/home/user/wt/s08/assets/textures/match08/coins08px.json'))['coins']\npy = np.array(sorted(c['px'][1] for c in P), float)\npd = np.array([2 * c['px'][2] for c in sorted(P, key=lambda c: c['px'][1] …[+958 chars]`
+
+### 🧑 User — 2026-11-20T10:05:10.058Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s08r23/coincmp.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T10:05:13.892Z
+
+> 🔧 **Bash** `{"command": "D=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s08r23; until [ -f $D/s2_new/motion.json ]; do sleep 5; done; tail -4 $D/s2_new.log; ls $D/clip_s1_before/f | wc -l; ls $D/clip_s1_new/f 2>/dev/null | wc -l", "description": "Block until step 2 NEW render finishes", "timeout": 1800000}`
+

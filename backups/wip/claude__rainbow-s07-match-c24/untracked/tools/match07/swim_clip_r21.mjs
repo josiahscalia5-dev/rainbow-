@@ -9,7 +9,7 @@ import { mkdirSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
 const [SCREEN, OUT, SECS = '6', Q = '', FR = '0'] = process.argv.slice(2);
-const fps = 24;
+const fps = Number(process.env.CLIP_FPS ?? 24); // r23: 20 = exactly 3 sim steps (1/60 s) per frame → real game speed when encoded at 20 fps
 mkdirSync(OUT, { recursive: true });
 const { chromium } = loadPlaywright();
 const vite = await startVite(Number(process.env.QA_PORT ?? 5277));
@@ -19,7 +19,9 @@ try {
   page.on('pageerror', (e) => console.error('pageerror', e.message));
   await page.goto(`${vite.url}/?qa=1&dpr=1${Q ? '&' + Q : ''}`);
   await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 300000 });
-  await page.evaluate(([id, fr]) => { const r = window.__rainbow; r.goto(id); const s0 = r.state().s, s1 = r.course.stage(id).s1; const tS = s0 + fr * (s1 - s0); let k = 0; while (r.state().s < tS && k < 6000) { r.step(1); k++; } }, [SCREEN, Number(FR)]);
+  // r23: CLIP_GOTO=<stage> CLIP_S=<abs s> starts from that stage's checkpoint and rides to s (e.g. from 06 to just before the 07 entrance)
+  if (process.env.CLIP_GOTO) await page.evaluate(([id, sT]) => { const r = window.__rainbow; r.goto(id); let k = 0; while (r.state().s < sT && k < 12000) { r.step(1); k++; } }, [process.env.CLIP_GOTO, Number(process.env.CLIP_S)]);
+  else await page.evaluate(([id, fr]) => { const r = window.__rainbow; r.goto(id); const s0 = r.state().s, s1 = r.course.stage(id).s1; const tS = s0 + fr * (s1 - s0); let k = 0; while (r.state().s < tS && k < 6000) { r.step(1); k++; } }, [SCREEN, Number(FR)]);
   const n = Math.round(Number(SECS) * fps);
   for (let i = 0; i < n; i++) {
     const ph = i / n;                                   // straight 0–0.3, left 0.3–0.55, right 0.55–0.8, straight

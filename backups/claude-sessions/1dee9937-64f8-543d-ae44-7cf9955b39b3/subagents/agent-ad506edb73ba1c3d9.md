@@ -2333,3 +2333,63 @@ Amplitude settles at 1.45 u and the grid is exact. Re-running the continuity tes
 >  M src/world/course.ts
 >  M src/world/match07.ts
 
+### 🤖 Claude — 2026-11-20T10:04:18.105Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/sb2/c_middle.png"}`
+
+### 🧑 User — 2026-11-20T10:04:18.216Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T10:04:18.932Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/sb2/c2_045.png"}`
+
+### 🧑 User — 2026-11-20T10:04:19.063Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T10:04:34.249Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 - <<'EOF'\np='src/game/cameraRig.ts'; s=open(p).read()\nold='''    // Over the lip of the drop the view also aims at the route 12 u ahead (it pitches down with the river instead of facing the\n    // tube wall while the river falls away below); back to the heading before the pull-up arc into 08 (the 08 entry unchanged).\n    const b7 = this.course.bend07;\n    if (b7 && SB07_CAM) {\n      const sTop = this.course.marks['07_plunge_top'], sBot = this.course.marks['07_plunge_bottom'];\n      const wA = THREE.MathUtils.smoothstep(s, sTop - 6, sTop) * (1 …[+782 chars]`
+
+### 🧑 User — 2026-11-20T10:04:48.182Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-20T10:05:00.537Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && D=/home/user/rainbow-/qa/match/07/r23/s2_sriver && QB=$(cat $D/query_BEFORE.txt) && QN=$(cat $D/query_NEW.txt) && SH='[[\"a_start\",0,null],[\"b_early\",0.12,null],[\"c_middle\",0.35,null],[\"d_late\",0.6,null],[\"e1_075\",0.75,null],[\"e_end\",0.85,null],[\"e2_092\",0.92,null],[\"f_hard_left\",0.35,-1],[\"g_hard_right\",0.35,1]]'\n(AUDIT_SHOTS=\"$SH\" AUDIT_PORT=5280 timeout 2400 node /home/user/rainbow-/tools/lead21/audit_screen.mjs $D/BEFORE 07 \"$QB\" > $D/before.log 2>&1; echo before-exit $? >> $D/before.log) &\nAUDIT_SHOTS=\"$SH\" AUDIT_PORT=5277 time …[+284 chars]`
+
+### 🧑 User — 2026-11-20T10:05:00.618Z
+
+> ↩︎ result: Command running in background with ID: bdo4ha6an. Output is being written to: /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/tasks/bdo4ha6an.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-20T10:05:20.510Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 - <<'EOF'\np='tools/match07/swim_clip_r21.mjs'; s=open(p).read()\nold=\"const fps = 24;\"\nnew=\"const fps = Number(process.env.CLIP_FPS ?? 24); // r23: 20 = exactly 3 sim steps (1/60 s) per frame → real game speed when encoded at 20 fps\"\nassert s.count(old)==1; s=s.replace(old,new)\nold=\"  await page.evaluate(([id, fr]) => { const r = window.__rainbow; r.goto(id); const s0 = r.state().s, s1 = r.course.stage(id).s1; const tS = s0 + fr * (s1 - s0); let k = 0; while (r.state().s < tS && k < 6000) { r.step(1); k++; } }, [SCREEN, Number(FR)]);\"\nnew …[+858 chars]`
+
+### 🧑 User — 2026-11-20T10:05:21.186Z
+
+> ↩︎ result: 12:const fps = Number(process.env.CLIP_FPS ?? 24); // r23: 20 = exactly 3 sim steps (1/60 s) per frame → real game speed when encoded at 20 fps
+> 22:  // r23: CLIP_GOTO=<stage> CLIP_S=<abs s> starts from that stage's checkpoint and rides to s (e.g. from 06 to just before the 07 entrance)
+> 23:  if (process.env.CLIP_GOTO) await page.evaluate(([id, sT]) => { const r = window.__rainbow; r.goto(id); let k = 0; while (r.state().s < sT && k < 12000) { r.step(1); k++; } }, [process.env.CLIP_GOTO, Number(process.env.CLIP_S)]);
+> 29:    await page.evaluate(([t, dt, dir]) => { const R = window.__rainbow; R.setSteer(dir); R.freezeAt(t); R.step(Math.round(dt * 60), 1 / 60); R.freezeAt(t + dt); R.step(1, 1e-4); }, [12 + i / fps, 1 / fps, dir]);
+
+### 🤖 Claude — 2026-11-20T10:05:28.965Z
+
+Clip tool ready. Waiting for the two audit renders to finish before starting the two clips (keeping to two parallel renders).
+
+### 🤖 Claude — 2026-11-20T10:05:31.037Z
+
+> 🔧 **Bash** `{"command": "until grep -q \"before-exit\" /home/user/rainbow-/qa/match/07/r23/s2_sriver/before.log 2>/dev/null && [ -f /home/user/rainbow-/qa/match/07/r23/s2_sriver/NEW/shots.json ]; do sleep 10; done; grep -v \"allow list\" /home/user/rainbow-/qa/match/07/r23/s2_sriver/before.log /home/user/rainbow-/qa/match/07/r23/s2_sriver/new.log | tail -22", "description": "Wait for both audit renders to finish", "timeout": 2500000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T10:05:31.128Z
+
+> ↩︎ result: Command running in background with ID: bv8304fxf. Output is being written to: /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/tasks/bv8304fxf.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-20T10:05:33.170Z
+
+The completion notice will arrive when both renders are done.
+
