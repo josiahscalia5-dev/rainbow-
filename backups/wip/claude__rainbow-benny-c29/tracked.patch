@@ -154141,7 +154141,7 @@ index a76822b..cbb7ee4 100644
  * `fur.ts`: new BENNY20-only uniforms `uTipCol` (colour the uPile.w tips fade to; pompom keeps its pale lavender) and `uVol`
    (x highlight on up-facing fur, y darker underside). `benny20.ts`: `TUFT` block (body + arms): bigger locks (30 / arms 36),
 diff --git a/src/characters/benny/benny20.ts b/src/characters/benny/benny20.ts
-index 340e1d3..ae0b33d 100644
+index 340e1d3..122e820 100644
 --- a/src/characters/benny/benny20.ts
 +++ b/src/characters/benny/benny20.ts
 @@ -100,6 +100,51 @@ if (TUFT) {
@@ -154259,6 +154259,15 @@ index 340e1d3..ae0b33d 100644
  let loaded: Promise<Record<string, THREE.Texture | null>> | null = null;
  /** load the knit / felt maps once (missing file → null: that part keeps its benny05 look) */
  export function loadBenny20Maps(): Promise<Record<string, THREE.Texture | null>> {
+@@ -168,7 +253,7 @@ export function loadBenny20Maps(): Promise<Record<string, THREE.Texture | null>>
+ }
+ 
+ /** per-frame: ease the fur albedo toward the current screen's exposure (EXPO20); returned by applyBenny20 */
+-export type Benny20Tick = (dt: number, stage: string | undefined) => void;
++export type Benny20Tick = (dt: number, stage: string | undefined, frac?: number) => void;
+ 
+ /** apply after applyBenny05 (same freshly cloned scene + fur handles) */
+ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Record<string, THREE.Texture | null>): Benny20Tick {
 @@ -196,6 +281,21 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
      if (vol) f.uniforms.uVol.value.set(...vol);
      const tc = TIP20[f.mesh.name];
@@ -154306,7 +154315,7 @@ index 340e1d3..ae0b33d 100644
  
    // ---- knit maps on the crown / cuff ----
    const knit = (name: string, map: string, nmap: string, factor: [number, number, number], ns: number) => {
-@@ -234,36 +352,70 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
+@@ -234,40 +352,74 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
      if (nt) mat.normalScale.setScalar(ns);
      mat.roughness = 0.92;
      mat.metalness = 0;
@@ -154384,6 +154393,11 @@ index 340e1d3..ae0b33d 100644
    let first = true;
    const lastPos = new THREE.Vector3();
    const pos = new THREE.Vector3();
+-  const tick: Benny20Tick = (dt, stage) => {
++  const tick: Benny20Tick = (dt, stage, frac) => {
+     // opt-in `&b20expo=1` until proven in motion on 05–07 (step-1 pictures were made without it)
+     const e = (EXPO_ON && stage && EXPO20[stage]) || [1, 1, 1];
+     tgt.set(e[0], e[1], e[2]);
 @@ -275,8 +427,20 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
      scene.getWorldPosition(pos);
      const jumped = pos.distanceTo(lastPos) > 5;
