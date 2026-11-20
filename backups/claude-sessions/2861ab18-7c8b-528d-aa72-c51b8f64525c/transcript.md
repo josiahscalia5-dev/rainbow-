@@ -3064,3 +3064,63 @@ Still 401. The proxy can take up to a minute to pick up a new key, so I'll retry
 
 > 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='docs/briefs/2026-11-20-r30/COORDINATION.md'; t=open(p).read()\nold=\"GitHub works; World Labs API key **HTTP 401** (not on this\\n  environment → secure form needed);\"\nnew=\"GitHub works; World Labs API key was HTTP 401 → **re-entered by the user via the secure form ~21:22 UTC, verified\\n  (free read 5,420 credits; the old world IDs 404 = previous account's worlds, files in LFS)**;\"\nassert old in t; t=t.replace(old,new,1); open(p,'w').write(t)\np='docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md'; t=open(p).read()\nt=t.replace(\"This environment (\\\"Default\\\") has  …[+607 chars]`
 
+### 🧑 User — 2026-11-20T21:21:13.807Z
+
+> ↩︎ result: "commit": "4c896204a165f71597ca9187303212eb9bb1781e",
+> AUTOSAVE OK | branch ccr-2644c3c0-iikckn | scheduler daemon | last verified backup 2026-11-20T21:20:55+00:00 (0.3 min ago) | local 4c89620 remote 4c89620 (match) | uncommitted 0
+> ls-remote: 4c896204a165f71597ca9187303212eb9bb1781e
+> HEAD:      4c896204a165f71597ca9187303212eb9bb1781e
+
+### 🤖 Claude — 2026-11-20T21:21:33.592Z
+
+Your Screen 06 is now one continuous route that follows your storyboard, with no gold "target" at your red mark. The new clip, the marked-spot comparison and a storyboard-vs-gameplay sheet are in the chat above. It's a separate test version: your current version is unchanged, and nothing is approved until you say so.
+
+**Backup status.** I'm not giving the "verified" line, because two setup items remain:
+- **Restored:** this session's start-up fetch failed, so I fetched by hand. Your previous session had saved two more times than this one knew about, and I brought those in (your current version of Screen 06 included). The 12 unfinished worktrees match their snapshots exactly. The 10 specialist definitions are unchanged; none are running.
+- **Saved:** latest save is `4c89620` on `ccr-2644c3c0-iikckn`, and GitHub matches it. The 214 large files (models, Marble files) are confirmed on GitHub, the 13 approved pictures are unchanged, and the five-minute autosave is running.
+- **World Labs (Marble) key:** you re-entered it in the secure form and it works (5,420 credits, nothing spent).
+- **Still needs you:**
+  - Enable the **playwright** and **claude-code-setup** plugins from the card I showed. Rendering doesn't depend on them.
+  - The Marble connector needs you to finish signing up at atlas.worldlabs.ai.
+  - The fal image key isn't set on this account; I'll ask only if a paid job is approved.
+
+**What caused the gold "target"** (diagnosis picture sent before any change):
+- The modeled gold rings repeated every 12.9 units down one perfectly straight tunnel, 346 units long.
+- At your mark the camera looked almost straight down that tunnel (11° off its centre line), so 21 rings stacked inside each other.
+- The purple wall texture also had 2–3 painted gold stripes per stretch, adding more rings.
+
+**What I built:**
+- **Opening and crest:** kept as approved. The start view is unchanged apart from tiny fur specks on Benny.
+- **The tunnel itself now bends:** after the crest it curls right and descends, swings through a gentle S-bend, then lines up exactly with Screen 07's entrance.
+- **Gold bands:** broader, every 22 units instead of 12.9, with the purple roof and walls between them. Only 2–4 are in view at a time, and they pass over Benny.
+- **Hand-over:** the tunnel runs straight into Screen 07's tube through its gold-collared doorway.
+- **Camera:** it now turns with the river during the curl, so you see the water and coin trail ahead instead of the wall.
+- **Length:** Screen 06 is now about 207 units, roughly 17 seconds of swimming (was 124).
+- **Checks:** the joins between screens are seamless and the full gameplay test passes all 8 checks. You still collect all 91 coins and finish on 2,240, so later screens' coin totals don't change.
+
+**Still different from your storyboard:**
+- The camera sits higher, so Benny looks smaller.
+- Our bands are thinner than your broad copper bands.
+- The coin trail is sparser: same 91 coins in total, so later screens' totals stay right.
+- From about the middle of 06, the far end glows peach. That's Screen 07's tube seen ahead. Tell me if you'd rather keep it deep purple until the doorway.
+- Screen 07 itself is still pinker than your approved 07 picture.
+
+**Would Marble World Labs help?** Not for this part, in my view:
+- Marble builds a 3D scene around a single picture. It can't build a long winding tunnel that Benny swims through, with the river and its rules.
+- Your four storyboard panels aren't views of one consistent place, so Marble would build four mismatched scenes.
+- Earlier rounds spent 1,810 credits on Marble scenes for Screen 05 and ended up using a different method.
+
+The remaining gaps are mostly the look of the bands and walls, plus Benny's size on screen. The best next step is free: build band and wall textures from your own storyboard pixels, widen the bands, and bring the camera lower behind Benny. If that isn't close enough, a small paid set of painted extra views (~$1) could follow, but only with your OK.
+
+Should I start the free storyboard-texture pass on Screen 06?
+
+Files are in `qa/match/06/r30/proof/`:
+- SCREEN06_NEW_route_into_07_1x.mp4 (a 0.5x version is next to it)
+- MARKED_SPOT_approved_before_new.jpg
+- STORYBOARD_vs_GAMEPLAY.jpg
+
+### 🧑 User — 2026-11-20T21:21:36.889Z
+
+Marble World Labs. I meant 
+How's it looking so far?
+
