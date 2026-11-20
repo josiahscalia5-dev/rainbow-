@@ -672,3 +672,224 @@ Now the BEFORE (v2) at all positions in the same run so they match exactly, usin
 > 06 e_310 s 310.01 lat 0 stage 06 coins 1770
 > 06 f_387 s 387.01 lat 0 stage 06 coins 1800
 
+### 🤖 Claude — 2026-11-20T22:41:25.798Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/tools && cat > /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/tools/measure.py <<'EOF'\nimport numpy as np, colorsys\nfrom PIL import Image\nfrom scipy import ndimage\nR='/home/user/rainbow-/qa/match/06/r30/water06/'\na=np.asarray(Image.open(R+'before_v2/a_start.png').convert('RGB')).astype(int)\nb=np.asarray(Image.open(R+'new/a_start.png').convert('RGB')).astype(int)\nd=np.abs(a-b).max(-1)\nprint('START: px changed %.4f%%, >8 levels %.4f%%' % (100*(d>0).me …[+2186 chars]`
+
+### 🧑 User — 2026-11-20T22:41:27.532Z
+
+> ↩︎ result: Exit code 1
+> START: px changed 0.0827%, >8 levels 0.0026%
+> frame            cyan  blueV   pink   warm  white  coherence(streakiness, 0..1)
+> Traceback (most recent call last):
+>   File "/tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/tools/measure.py", line 43, in <module>
+>     rep('panel%d'%(i+1), p)
+>     ~~~^^^^^^^^^^^^^^^^^^^^
+>   File "/tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/tools/measure.py", line 38, in rep
+>     cl=np.mean([classes(r) for r in rs],0)
+>                 ~~~~~~~^^^
+>   File "/tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/tools/measure.py", line 15, in classes
+>     mx=px.max(1); mn=px.min(1); s=(mx-mn)/np.maximum(mx,1e-6)
+>                                           ^^
+> UnboundLocalError: cannot access local variable 'np' where it is not associated with a value
+
+### 🤖 Claude — 2026-11-20T22:41:36.039Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad && sed -i 's/^    import numpy as np$//' tools/measure.py && python3 -I tools/measure.py && python3 -I -c \"\nimport numpy as np\nfrom PIL import Image\nR='/home/user/rainbow-/qa/match/06/r30/water06/'\na=np.asarray(Image.open(R+'before_v2/a_start.png').convert('RGB')).astype(int)\nb=np.asarray(Image.open(R+'new/a_start.png').convert('RGB')).astype(int)\nc=np.asarray(Image.open(R+'before/a_start.png').convert('RGB')).astype(int)\nd=np.abs(a-b).max(-1); ys,xs=np.nonzero(d); print('diff bbox', xs.mi …[+235 chars]`
+
+### 🧑 User — 2026-11-20T22:41:38.833Z
+
+> ↩︎ result: START: px changed 0.0827%, >8 levels 0.0026%
+> frame            cyan  blueV   pink   warm  white  coherence(streakiness, 0..1)
+> panel1           40.2   22.4   20.6    0.0   16.8  0.472
+> panel2           36.8   30.5   18.9    0.0   13.8  0.468
+> panel3           42.8   26.1   15.9    0.0   15.2  0.508
+> panel4           48.3   21.8   12.1    0.0   17.7  0.457
+> approved         32.9   25.9   25.5    0.0   15.6  0.713
+> before 214       67.5   19.6   10.4    0.0    2.5  0.910
+> new 214          73.7    2.7   11.2    9.0    3.5  0.491
+> before 238       71.4   15.7    8.6    0.0    4.3  0.866
+> new 238          70.7   13.7   12.2    0.0    3.4  0.508
+> before 266       50.8   13.7    9.3   23.3    2.9  0.874
+> new 266          46.0    8.0   13.8   29.0    3.2  0.595
+> before 310       73.7   16.7    6.4    0.0    3.2  0.824
+> new 310          81.2    7.4    5.3    3.1    3.0  0.505
+> before 387       69.9   17.3    9.7    0.0    3.0  0.896
+> new 387          59.0   14.4   23.9    1.0    1.7  0.478
+> diff bbox 77 786 21 160 max 74
+> before_v2 vs old before (both w/o w30): changed 0.0000%
+
+### 🤖 Claude — 2026-11-20T22:41:53.500Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad && python3 -I mont.py /home/user/rainbow-/qa/match/06/r30/water06/new nfinal.png", "description": "Montage final NEW stills"}`
+
+### 🧑 User — 2026-11-20T22:41:54.056Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T22:41:56.871Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/nfinal.png"}`
+
+### 🧑 User — 2026-11-20T22:41:56.916Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T22:42:14.532Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/water06 && python3 -I - <<'EOF'\np='src/world/m06water30.ts'\ns=open(p).read()\nrep=[\n(\"  vec3 c = mix(vec3(0.02, 0.56, 0.93), vec3(0.16, 0.86, 1.0), lit);   // core: deep azure .. bright cyan (volume)\\n  c = mix(c, vec3(0.02, 0.50, 0.92), smoothstep(0.30, 0.42, x) * (1.0 - 0.5 * lit));\",\n \"  vec3 c = mix(vec3(0.06, 0.46, 0.95), vec3(0.16, 0.86, 1.0), lit);   // core: deep azure .. bright cyan (volume)\\n  c = mix(c, vec3(0.12, 0.40, 0.96), smoothstep(0.26, 0.40, x) * (1.0 - 0.5 * lit));\"),\n(\"  vec3 p = mix(c, vec3(0.30, 0.30, 0.95), smoothstep(0.40, 0.48 …[+1386 chars]`
+
+### 🧑 User — 2026-11-20T22:43:28.044Z
+
+> ↩︎ result: TSC_OK
+> approved         32.9   25.9   25.5    0.0   15.6  0.713
+> before 214       67.5   19.6   10.4    0.0    2.5  0.910
+> new 214          56.5   19.9   10.7    9.7    3.1  0.493
+> before 238       71.4   15.7    8.6    0.0    4.3  0.866
+> new 238          53.3   32.0   11.2    0.0    3.5  0.510
+> before 266       50.8   13.7    9.3   23.3    2.9  0.874
+> new 266          38.4   16.2   12.9   29.2    3.2  0.596
+> before 310       73.7   16.7    6.4    0.0    3.2  0.824
+> new 310          67.2   21.7    4.9    3.1    3.1  0.505
+> before 387       69.9   17.3    9.7    0.0    3.0  0.896
+> new 387          41.1   34.0   21.8    1.1    2.0  0.480
+
+### 🤖 Claude — 2026-11-20T22:43:31.753Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/n8.png"}`
+
+### 🧑 User — 2026-11-20T22:43:31.800Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T22:43:36.024Z
+
+Blue-violet share now 16–34 % (panels 22–30 %), cyan 38–67 % (panels 37–48 %), and the water stays bright. Keeping this as the final version: promoting these stills, then the flow clip.
+
+### 🤖 Claude — 2026-11-20T22:43:40.024Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad; R=/home/user/rainbow-/qa/match/06/r30/water06; rm -f $R/new/*.png && cp $S/n8/*.png $S/n8/shots.json $R/new/ && python3 -I -c \"\nimport numpy as np\nfrom PIL import Image\nR='$R/'\na=np.asarray(Image.open(R+'before_v2/a_start.png').convert('RGB')).astype(int)\nb=np.asarray(Image.open(R+'new/a_start.png').convert('RGB')).astype(int)\nd=np.abs(a-b).max(-1); ys,xs=np.nonzero(d)\nprint('START changed %.4f%%' % (100*(d>0).mean()), 'bbox', (xs.min(),xs.max(),ys.min(),ys.max()) if len(xs) else None)\npr …[+258 chars]`
+
+### 🧑 User — 2026-11-20T22:43:40.445Z
+
+> ↩︎ result: START changed 0.0000% bbox None
+> START changed below the HUD (y>200): 0.00000%
+> 11:const fps = 24, ZIG = process.env.STEER === 'zigzag';
+> 14:const vite = await startVite(Number(process.env.AUDIT_PORT ?? 5298));
+> 31:    if (st.s > sEnd || (process.env.MAXF && log.length >= Number(process.env.MAXF))) break;
+
+### 🤖 Claude — 2026-11-20T22:43:43.261Z
+
+> 🔧 **Bash** `{"command": "sed -n 14,45p /home/user/wt/water06/tools/match06/r30_clip.mjs", "description": "Read clip tool loop body"}`
+
+### 🧑 User — 2026-11-20T22:43:43.309Z
+
+> ↩︎ result: const vite = await startVite(Number(process.env.AUDIT_PORT ?? 5298));
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> const log = [];
+> try {
+>   const page = await browser.newPage({ viewport: { width: +W, height: +H }, deviceScaleFactor: 1 });
+>   page.on('pageerror', (e) => console.error('pageerror', e.message));
+>   await page.goto(`${vite.url}/?qa=1&dpr=1${Q ? '&' + Q : ''}`);
+>   await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 300000 });
+>   const { s0, s07 } = await page.evaluate(() => { const R = window.__rainbow; R.goto('06'); return { s0: R.state().s, s07: R.course.stage('07').s0 }; });
+>   const sEnd = s07 + Number(END);
+>   for (let i = 0; i < 24 * 60; i++) {
+>     const st0 = log.length ? log[log.length - 1].s : s0, ph = (st0 - s0) / (s07 - s0);
+>     const dir = !ZIG ? null : ph < 0.3 ? null : ph < 0.5 ? -1 : ph < 0.7 ? 1 : null;
+>     const st = await page.evaluate(([t, dt, dir]) => { const _pn = performance.now; performance.now = () => (t + dt) * 1000; const R = window.__rainbow; R.setSteer(dir); R.freezeAt(t); R.step(Math.round(dt * 60), 1 / 60); R.freezeAt(t + dt); R.step(1, 1e-4); R.drawList(); performance.now = _pn; …[+642 chars]
+
+### 🤖 Claude — 2026-11-20T22:43:49.779Z
+
+> 🔧 **Bash** `{"command": "grep -n \"AUDIT_PIN\\|freezeAt\\|SHOTS\\|shot\\[\" /home/user/wt/water06/tools/match06/r30_shots.mjs | head", "description": "Check shot tool time pinning"}`
+
+### 🧑 User — 2026-11-20T22:43:49.817Z
+
+> ↩︎ result: 8:// Shots are fractions of the stage from its checkpoint to its end; env AUDIT_SHOTS='[["name",frac,steer],...]' overrides.
+> 14:const SHOTS = process.env.AUDIT_SHOTS ? JSON.parse(process.env.AUDIT_SHOTS)
+> 28:  if (process.env.AUDIT_PIN) await page.evaluate((t) => { window.__pinNow = t; }, Number(process.env.AUDIT_PIN));
+> 29:  for (const [name, frac, steer, stShot] of SHOTS) { const STAGE = stShot ?? STAGE0;
+> 38:      r.freezeAt(10);
+
+### 🤖 Claude — 2026-11-20T22:43:57.836Z
+
+> 🔧 **Bash** `{"command": "sed -n 20,60p /home/user/wt/water06/tools/match06/r30_shots.mjs", "description": "Read shot tool positioning code"}`
+
+### 🧑 User — 2026-11-20T22:43:57.861Z
+
+> ↩︎ result: const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> const log = [];
+> try {
+>   const page = await browser.newPage({ viewport: { width: Number(process.env.AUDIT_W ?? 432), height: Number(process.env.AUDIT_H ?? 768) }, deviceScaleFactor: 1 });
+>   page.on('pageerror', (e) => console.error('pageerror', e.message));
+>   page.on('console', (m) => { if (m.type() === 'error' && /Shader|WebGL|rror/.test(m.text())) console.error('console', m.text().slice(0, 160)); });
+>   await page.goto(`${vite.url}/?qa=1&dpr=1&${Q}`);
+>   await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 300000 });
+>   if (process.env.AUDIT_PIN) await page.evaluate((t) => { window.__pinNow = t; }, Number(process.env.AUDIT_PIN));
+>   for (const [name, frac, steer, stShot] of SHOTS) { const STAGE = stShot ?? STAGE0;
+>     const st = await page.evaluate(async ([stage, frac, steer]) => {
+>       const r = window.__rainbow;
+>       r.goto(stage);
+>       const s0 = r.state().s, s1 = r.course.stage(stage).s1;
+>       const tS = frac > 1 ? frac : s0 + frac * (s1 - s0); // r30: a value > 1 = absolute river distance s
+>       r.setSteer(steer);
+>       let k = 0; while (r.state().s < tS && k < 60 …[+881 chars]
+
+### 🤖 Claude — 2026-11-20T22:44:15.003Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/tools/w30_flowfix.mjs <<'EOF'\n// QA only (water06 r30b): fixed camera at river s = S, shader clock advanced by DT ms per frame -> proves the water pattern itself flows.\n//   cd <worktree> && node <this> <outDir> \"<query>\" [S=266] [N=6] [DT=250]\nimport { mkdirSync, writeFileSync } from 'node:fs';\nimport { pathToFileURL } from 'node:url';\nconst { loadPlaywright, CHROMIUM_ARGS } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);\nconst { startVite } = await import(pa …[+2273 chars]`
+
+### 🧑 User — 2026-11-20T22:44:15.041Z
+
+> ↩︎ result: Command running in background with ID: bypqoesem. Output is being written to: /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/tasks/bypqoesem.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-20T22:44:23.659Z
+
+While that renders, building the labelled comparison pictures and the overview sheet.
+
+### 🤖 Claude — 2026-11-20T22:44:24.562Z
+
+> 🔧 **Bash** `{"command": "fc-list 2>/dev/null | grep -i \"dejavu.*bold\" | head -2; ls /usr/share/fonts/truetype/dejavu/ 2>/dev/null | head", "description": "Find a bold font for labels"}`
+
+### 🧑 User — 2026-11-20T22:44:24.618Z
+
+> ↩︎ result: /usr/share/fonts/truetype/dejavu/DejaVuSerif-Bold.ttf: DejaVu Serif:style=Bold
+> /usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf: DejaVu Sans:style=Bold
+> DejaVuSans-Bold.ttf
+> DejaVuSans.ttf
+> DejaVuSansMono-Bold.ttf
+> DejaVuSansMono-BoldOblique.ttf
+> DejaVuSansMono-Oblique.ttf
+> DejaVuSansMono.ttf
+> DejaVuSerif-Bold.ttf
+> DejaVuSerif.ttf
+
+### 🤖 Claude — 2026-11-20T22:44:44.947Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/tools/sheets.py <<'EOF'\nimport os\nfrom PIL import Image, ImageDraw, ImageFont\nR = '/home/user/rainbow-/qa/match/06/r30/water06/'\nOUT = R + 'compare/'\nos.makedirs(OUT, exist_ok=True)\nF = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 30)\nFs = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 22)\nap = Image.open('/home/user/rainbow-/references/06_crest_the_rinse_arch.png').convert('RGB')\nsb = Image.open('/home/user/rainbow-/docs/briefs …[+3081 chars]`
+
+### 🧑 User — 2026-11-20T22:44:56.164Z
+
+> ↩︎ result: ok ['APPROVED_06.png', 'APPROVED_PANEL1.png', 'APPROVED_PANEL2.png', 'APPROVED_PANEL3.png', 'APPROVED_PANEL4.png', 'OVERVIEW_PANELS_BEFORE_NEW.jpg', 'b_214_APPROVED_BEFORE_NEW.png', 'b_214_BEFORE.png', 'b_214_NEW.png', 'c_238_APPROVED_BEFORE_NEW.png', 'c_238_BEFORE.png', 'c_238_NEW.png', 'd_266_APPROVED_BEFORE_NEW.png', 'd_266_BEFORE.png', 'd_266_NEW.png', 'e_310_APPROVED_BEFORE_NEW.png', 'e_310_BEFORE.png', 'e_310_NEW.png', 'f_387_APPROVED_BEFORE_NEW.png', 'f_387_BEFORE.png', 'f_387_NEW.png']
+
+### 🤖 Claude — 2026-11-20T22:44:58.580Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r30/water06/compare/OVERVIEW_PANELS_BEFORE_NEW.jpg"}`
+
+### 🧑 User — 2026-11-20T22:44:58.900Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-20T22:44:58.897Z
+
+[Image: original 2192x2474, displayed at 1772x2000. Multiply coordinates by 1.24 to map to original image.]
+
+### 🤖 Claude — 2026-11-20T22:45:02.037Z
+
+The overview sheet works. Checking on the clip render.
+
+### 🤖 Claude — 2026-11-20T22:45:05.037Z
+
+> 🔧 **Bash** `{"command": "until grep -q \"flow_fixedcam\\|t05.png\" /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/tasks/bypqoesem.output 2>/dev/null || [ -f /home/user/rainbow-/qa/match/06/r30/water06/flow_fixedcam/info.json ]; do sleep 5; done; cat /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/tasks/bypqoesem.output", "description": "Wait for clip and fixed-camera renders to finish", "timeout": 900000}`
+

@@ -33,7 +33,9 @@ export const SB = {
   haze: on('m06sbhaze'),
   join: on('m06sbjoin'),
   cam: on('m06sbcam'),
-  sp: num('m06sbsp', 16), bw: num('m06sbbw', 4.0), bd: num('m06sbbd', 0.9),
+  sp: num('m06sbsp', 18), bw: num('m06sbbw', 6.0), bd: num('m06sbbd', 1.1),
+  // `&m06sbr=` tunnel radius past the crest with the storyboard route (default 10.5; the approved crest keeps 14, 07's mouth is 15)
+  rMid: num('m06sbr', 10.5),
   hz: nums('m06sbhz', [55, 150, 0.72]),
   j07: num('m06sbj07', 40),
   la: nums('m06sbla', [22, 42]),
@@ -57,21 +59,23 @@ vec3 sbWall(float th, float ax, float R, vec3 n, vec3 V, vec3 T) {
   vec3 n2 = dot(n, V) < 0.0 ? -n : n;
   vec3 Rf = reflect(-V, n2);
   float fw = dot(Rf, T);
-  float lit = smoothstep(-0.55, 0.95, fw);
-  vec3 c = mix(vec3(0.34, 0.06, 0.34), vec3(0.64, 0.19, 0.52), smoothstep(0.0, 0.6, lit));
-  c = mix(c, vec3(0.86, 0.32, 0.60), smoothstep(0.55, 1.0, lit));
+  // r30b t2: the light varies ROUND the drum (world-anchored broad bands), not with the grazing angle (which lit every far wall pixel):
+  // storyboard walls p25 (151,35,100) p50 (174,44,112) p75 (223,72,132), highlights (251,139,223) as streaks only
+  float broad = 0.5 + 0.25 * cos(th * 3.0 + 1.1) + 0.25 * cos(th * 2.0 - 0.4);
+  vec3 c = mix(vec3(0.50, 0.10, 0.36), vec3(0.68, 0.18, 0.46), smoothstep(0.15, 0.6, broad));
+  c = mix(c, vec3(0.86, 0.29, 0.52), 0.8 * smoothstep(0.6, 0.95, broad));
   // violet toward the sides, magenta on the ceiling (storyboard p2 ceiling vs p3 side wall)
   float side = abs(cos(th));
-  c = mix(c, c * vec3(0.92, 1.05, 1.22), 0.45 * side);
+  c = mix(c, vec3(0.62, 0.24, 0.62), 0.35 * side);
   float arc = th * R;
   // brushed grain along the tunnel
   float gr = sin(arc * 29.0 + sin(ax * 0.31) * 1.3) * 0.5 + sin(arc * 61.0 + ax * 0.07) * 0.5;
-  c *= 1.0 + 0.045 * gr;
-  // long pink-white streaks along the tunnel, strongest where the wall reflects the light down the tunnel
-  float st = sbStrip(th, 30.0) * (0.35 + 0.65 * smoothstep(-0.2, 0.9, fw));
-  float st2 = pow(0.5 + 0.5 * cos(th * 23.0 + 1.9), 40.0) * 0.5 * smoothstep(0.0, 0.9, fw);
-  c = mix(c, vec3(0.99, 0.66, 0.90), clamp(0.85 * st + st2, 0.0, 0.9));
-  c += vec3(0.95, 0.55, 0.85) * 0.22 * pow(max(fw, 0.0), 12.0);
+  c *= 1.0 + 0.05 * gr;
+  // long pink-white streaks along the tunnel (narrow), a little stronger where the wall reflects the light down the tunnel
+  float st = sbStrip(th, 60.0) * (0.45 + 0.55 * smoothstep(0.2, 1.0, fw));
+  float st2 = pow(0.5 + 0.5 * cos(th * 23.0 + 1.9), 90.0) * 0.45;
+  c = mix(c, vec3(0.98, 0.58, 0.86), clamp(0.8 * st + st2, 0.0, 0.85));
+  c += vec3(0.75, 0.30, 0.60) * 0.10 * pow(max(fw, 0.0), 20.0);
   // slots: rows round the drum, staggered, long axis round the drum
   vec2 pitch = vec2(uSbSlot.y, uSbSlot.x);
   float row = floor(ax / pitch.y);
@@ -104,12 +108,13 @@ vec3 sbGold(float th, float v, vec3 n, vec3 V, vec3 T) {
   // bright reflection patches round the ring (the same strip lights as the walls) + a broad soft sheen
   float pt = sbStrip(th, 7.0), pt2 = pow(0.5 + 0.5 * cos(th * 3.0 - 0.4), 6.0);
   float acr = exp(-pow((v - 0.47) / 0.2, 2.0)) + 0.6 * exp(-pow((v - 0.72) / 0.08, 2.0));
-  c = mix(c, brt, clamp(0.55 * pt2 * acr + 0.35 * body, 0.0, 0.8));
-  c = mix(c, vec3(1.0, 0.97, 0.88), clamp(pt * acr * 0.9, 0.0, 0.9));
+  // r30b t2: storyboard gold p25 (223,111,51) p50 (249,145,63) p75 (253,207,112); white only in the reflection patches
+  c = mix(c, brt, clamp(0.5 * pt2 * acr + 0.12 * body, 0.0, 0.6));
+  c = mix(c, vec3(1.0, 0.95, 0.82), clamp(pt * acr * 0.85, 0.0, 0.85));
   float fw = dot(Rf, T);
-  c += vec3(1.0, 0.80, 0.50) * 0.45 * pow(max(fw, 0.0), 10.0) * (0.4 + 0.6 * body);
+  c += vec3(0.9, 0.55, 0.25) * 0.2 * pow(max(fw, 0.0), 24.0) * (0.4 + 0.6 * body);
   float fr = pow(1.0 - abs(dot(n2, V)), 4.0);
-  c = mix(c, vec3(1.0, 0.86, 0.62), fr * 0.22);
+  c = mix(c, vec3(0.98, 0.70, 0.40), fr * 0.15);
   return clamp(c, 0.0, 1.0);
 }
 `;

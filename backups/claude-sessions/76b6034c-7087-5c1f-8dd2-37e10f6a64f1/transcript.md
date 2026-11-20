@@ -1808,3 +1808,187 @@ Typecheck clean. First test render of the storyboard candidate (all `m06sb` part
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -i 's/      return { state: r.state(), cam: r.camera().position, target: r.camera().target, grid };/      return { state: r.state(), cam: r.camera().position, target: r.camera().target, bs: r.bennyScreen(), grid };/' tools/match06/r30b_diag.mjs && sed -i \"s/    console.log('s', tS, JSON.stringify(st.state), 'cam', JSON.stringify(st.cam));/    console.log('s', tS, 'stage', st.state.stage, 'benny', JSON.stringify(st.bs));/\" tools/match06/r30b_diag.mjs && echo \"$(cat /home/user/rainbow-/qa/match/06/r30/QUERY_NEW_v2.txt)&m06sb=1\" > /home/user/rainbow-/q …[+429 chars]`
 
+### 🧑 User — 2026-11-20T22:41:52.904Z
+
+> ↩︎ result: console [match06] m06sbband {bands: 9, spacing: 16, width: 4, depth: 0.9}
+> console [match06] m06sbjoin {materials: 4, j07: 40}
+> s 238 stage 06 benny {"x":-0.04,"y":-0.3,"z":0.983,"visible":true,"cam":[-2.83,-35.91,-171.45],"benny":[-1.36,-39.52,-176.17]}
+>   hits {"m06_tube<match06_projection<Scene":18,"m06_sbbands<match06_projection<Scene":18,"foam_berm<foam_banks<water_system<Scene":3,"m06_floor<match06_projection<Scene":11,"fur_pom<pom<hat<body<benny_root":2,"Mesh<foam_banks<water_system<Scene":2,"hat_crown<hat<body<benny_root<AuxScene":2,"hat_star<hat<body<benny_root<AuxScene"
+> s 266 stage 06 benny {"x":-0.03,"y":-0.29,"z":0.984,"visible":true,"cam":[5.22,-44.49,-196.35],"benny":[7.47,-47.68,-201.13]}
+>   hits {"m06_sbbands<match06_projection<Scene":19,"m06_tube<match06_projection<Scene":16,"Mesh<tube07<zone_tubes<washer_world<Scene":1,"foam_berm<foam_banks<water_system<Scene":3,"m06_floor<match06_projection<Scene":9,"Mesh<foam_banks<water_system<Scene":4,"fur_pom<pom<hat<body<benny_root":2,"hat_crown<hat<body<benny_root<AuxSce
+> s 310 stage 06 benny {"x":0,"y":-0.32,"z":0.984,"visible":true,"cam":[27.12,-53.48,-234.32],"benny":[26.48,-56.59,-239.58]}
+>   hits {"m06_sbbands<match06_projec …[+1361 chars]
+
+### 🤖 Claude — 2026-11-20T22:42:01.155Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r30b/t1 && python3 -I -c \"\nfrom PIL import Image\nss=(238,266,310,360,387); ims=[Image.open(f's{s}.png') for s in ss]\nW,H=ims[0].size; sh=Image.new('RGB',(W*5+40,H),(20,14,30))\nfor i,im in enumerate(ims): sh.paste(im,(i*(W+10),0))\nsh.save('sheet.png')\"", "description": "Combine first test frames into a sheet"}`
+
+### 🧑 User — 2026-11-20T22:42:01.817Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T22:42:04.507Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r30b/t1/sheet.png"}`
+
+### 🧑 User — 2026-11-20T22:42:05.035Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-20T22:42:05.030Z
+
+[Image: original 2200x768, displayed at 2000x698. Multiply coordinates by 1.10 to map to original image.]
+
+### 🤖 Claude — 2026-11-20T22:43:37.097Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && wc -l tools/match06/r30_design_curl.py && sed -n 1,200p tools/match06/r30_design_curl.py", "description": "Read the curl route design script"}`
+
+### 🧑 User — 2026-11-20T22:43:37.147Z
+
+> ↩︎ result: 103 tools/match06/r30_design_curl.py
+> """r30 lead: design `&m06curl=1` (with m06deep) — the user's Screen 06 storyboard (2026-11-20 ~20:10 UTC, docs/briefs/2026-11-20-r30):
+> "preserve the opening crest -> curl right and descend -> pass beneath the gold bands inside the purple washer tunnel -> follow a
+> gentle S-bend -> connect smoothly into Screen 07's approved entry", purple roof + walls around Benny throughout, substantial gold
+> bands spaced along them.
+> 
+> WHY (qa/match/06/r30/diag/): the deep route ran down ONE straight 346 u tube with a gold ring every 12.87 u; the camera looked
+> within ~11 deg of its axis, so ~21 rings nested into a bullseye. Here the TUNNEL ITSELF follows the route: straight (unchanged) up to
+> virtual depth A_SPLIT (the approved opening, crest and painted coins 0-6 stay exactly where they are), then its axis curls right
+> and pitches down, swings through a gentle S-bend and settles on Screen 07's original entrance heading, so the 07-10 block stays a
+> rigid translated copy. The river rides the tube's lower middle. Rings: the painted ones up to A_SPLIT, then one band every RING_D u
+> of axis arc length, perpendicular to the local axis (round, never edge-on: min bend radius  …[+6755 chars]
+
+### 🤖 Claude — 2026-11-20T22:43:45.438Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -rn \"route06curl\" src --include=*.ts | grep -v \"^\\s*//\" | cut -c1-200", "description": "Find all uses of the curl route file"}`
+
+### 🧑 User — 2026-11-20T22:43:45.504Z
+
+> ↩︎ result: src/world/match06.ts:23:import route06curl from '../../assets/textures/match06/route06curl.json';
+> src/world/match06.ts:530:  // r30 `&m06curl=1` (lead, with m06deep; user storyboard 2026-11-20 ~20:10, tools/match06/r30_design_curl.py -> route06curl.json,
+> src/world/match06.ts:704:    const a0 = course.sample(L.s0).pos.sub(O).dot(ax) - 6, a1 = CURL ? route06curl.curl.aEnd : (DEEP ? route06deep.tunnel_pin.P1a : P1.clone().sub(O).dot(ax)) + L.ext;
+> src/world/match06.ts:750:      const cu = route06curl.curl, A = cu.axis, aS = cu.aSplit;
+> src/world/match06.ts:806:    const jK = (a: number) => (CURL && mouth07 ? THREE.MathUtils.smoothstep(a, route06curl.curl.a07 - 24, route06curl.curl.a07) : 0);
+> src/world/match06.ts:825:      const fe = axisAtRaw(route06curl.curl.a07), hc = mouth07.c.clone().sub(fe.p);
+> src/world/match06.ts:907:        if (CURL && a > route06curl.curl.aSplit - 2) break;
+> src/world/match06.ts:912:      if (CURL && !SB.band) ringAs.push(...route06curl.curl.rings);
+> src/world/match06.ts:941:        const cu = route06curl.curl, bands: { p: THREE.Vector3; t: THREE.Vector3; r: THREE.Vector3; u: THREE.Vector3; R: number }[] = [];
+> src/world/course.ts:19:import route06curl from '../../ …[+675 chars]
+
+### 🤖 Claude — 2026-11-20T22:43:48.874Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 60,100p src/gameplay/coins.ts; sed -n 390,420p src/world/course.ts", "description": "Read how coins and course use the route"}`
+
+### 🧑 User — 2026-11-20T22:43:48.914Z
+
+> ↩︎ result: if (m06) {
+>     const a = st('06');
+>     for (let i = 0; i < 3; i++) add('06', a.s0 + 1 + i, -0.4 + 0.4 * i);
+>     // r28 `&m06route=1`: the painted coins keep the approved size in the approved view, then grow to one common size (the
+>     // nearest painted coin's) as the camera leaves it (setGrow = the 06 away factor), so the far ones are not tiny when reached
+>     const grow = flag05('m06route');
+>     // r29 `&m06deep=1`: the painted coins on the deep river (tools/match06/r29_coins_deep.mjs), at their painted pixels and sizes
+>     const src06 = (flag05('m06deep') ? coins06deep : coins06).coins;
+>     // r30 `&m06curl=1` (lead, qa/match/06/r30/): the painted coins before the bend keep their places (approved start view); the ones
+>     // that sat further down the old straight tunnel are spread along the new route instead (same count: later HUD totals unchanged)
+>     const curl = flag05('m06deep') && flag05('m06curl');
+>     const aOf = (c: { pos?: number[] }) => { const p = c.pos, O = route06curl.O, x = route06curl.ax; return p ? (p[0] - O[0]) * x[0] + (p[1] - O[1]) * x[1] + (p[2] - O[2]) * x[2] : 0; };
+>     const kept06 = curl ? src06.filter((c) => aOf(c as { pos?: number[] }) < route06curl.cur …[+4530 chars]
+
+### 🤖 Claude — 2026-11-20T22:44:32.491Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r30b/t1 && python3 -I -c \"\nfrom PIL import Image; import numpy as np\nfor f,box in (('s266.png',(5,120,70,330)),('s238.png',(330,150,425,330)),('s310.png',(5,120,80,330))):\n    a=np.asarray(Image.open(f).convert('RGB')).astype(float)[box[1]:box[3],box[0]:box[2]].reshape(-1,3)\n    L=a.mean(1); print(f, 'p10',a[L<=np.percentile(L,10)].mean(0).round(), 'p50', a[(L>np.percentile(L,45))&(L<np.percentile(L,55))].mean(0).round(), 'p90', a[L>=np.percentile(L,90)].mean(0).round())\n\"", "description": "Measure rendered wall colours in the test frames" …[+1 chars]`
+
+### 🧑 User — 2026-11-20T22:44:32.757Z
+
+> ↩︎ result: s266.png p10 [184.  85.  42.] p50 [239. 177. 126.] p90 [251. 237. 210.]
+> s238.png p10 [139.  60.  93.] p50 [220. 108. 174.] p90 [243. 214. 196.]
+> s310.png p10 [123.  44.  70.] p50 [241. 137. 152.] p90 [254. 208. 204.]
+
+### 🤖 Claude — 2026-11-20T22:45:03.274Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/m06sb.ts", "old_string": "  float lit = smoothstep(-0.55, 0.95, fw);\n  vec3 c = mix(vec3(0.34, 0.06, 0.34), vec3(0.64, 0.19, 0.52), smoothstep(0.0, 0.6, lit));\n  c = mix(c, vec3(0.86, 0.32, 0.60), smoothstep(0.55, 1.0, lit));\n  // violet toward the sides, magenta on the ceiling (storyboard p2 ceiling vs p3 side wall)\n  float side = abs(cos(th));\n  c = mix(c, c * vec3(0.92, 1.05, 1.22), 0.45 * side);\n  float arc = th * R;\n  // brushed grain along the tunnel\n  float gr = sin(arc * 29.0 + sin(ax * 0.31) * 1.3) * 0.5 + sin(ar …[+1755 chars]`
+
+### 🧑 User — 2026-11-20T22:45:03.482Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/m06sb.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T22:45:07.528Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/m06sb.ts", "old_string": "  c = mix(c, brt, clamp(0.55 * pt2 * acr + 0.35 * body, 0.0, 0.8));\n  c = mix(c, vec3(1.0, 0.97, 0.88), clamp(pt * acr * 0.9, 0.0, 0.9));\n  float fw = dot(Rf, T);\n  c += vec3(1.0, 0.80, 0.50) * 0.45 * pow(max(fw, 0.0), 10.0) * (0.4 + 0.6 * body);\n  float fr = pow(1.0 - abs(dot(n2, V)), 4.0);\n  c = mix(c, vec3(1.0, 0.86, 0.62), fr * 0.22);", "new_string": "  // r30b t2: storyboard gold p25 (223,111,51) p50 (249,145,63) p75 (253,207,112); white only in the reflection patches\n  c = mix(c, brt, clamp(0 …[+323 chars]`
+
+### 🧑 User — 2026-11-20T22:45:07.828Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/m06sb.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T22:45:11.447Z
+
+Now the redesigned route. I'm copying the route design script with new bend keys and generating a separate route file, so the r30 route stays untouched.
+
+### 🤖 Claude — 2026-11-20T22:45:17.222Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\nsrc=open('tools/match06/r30_design_curl.py').read()\nsrc=src.replace('\"\"\"r30 lead: design `&m06curl=1`', '\"\"\"r30b lead (`&m06sbroute=1`, copy of r30_design_curl.py with storyboard keys): user r30 §6 — the four storyboard panels are mandatory:\\n1 curl right over the crest (right 32 deg + down 8), 2 descend through the gold band (hold), 3 follow the winding slide (sweeping left bend to\\n-20 deg), 4 connect into Screen 07 (a LATE right turn onto 07\\'s heading, so 07\\'s tube is hidden by the bend until the last stretch).\\nOutput as …[+964 chars]`
+
+### 🧑 User — 2026-11-20T22:45:17.555Z
+
+> ↩︎ result: river: 129 pts, 191.8 u from the first deep point (deep: 109.5); min river turn radius 6.7 u; axis min bend radius 32.5 u (tube radius 14); river max offset from axis 5.2 u
+> end tangent vs 07 heading: 0.00 deg; 07 heading yaw 15.9 pitch 0.63
+> drop over the new part: 31.7 u; rings at [54.95, 72.95, 90.95, 108.95, 126.95, 144.95, 162.95, 180.95, 198.95]
+> wrote assets/textures/match06/route06sb.json
+> -rw-r--r-- 1 root root 39342 Nov 20 22:45 assets/textures/match06/route06sb.json
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T22:45:24.935Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 -I tools/match06/r30_design_curl.py assets/textures/match06/route06deep.json /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/curl_check.json | head -2", "description": "Compare turn radius with the existing r30 route"}`
+
+### 🧑 User — 2026-11-20T22:45:25.250Z
+
+> ↩︎ result: river: 129 pts, 191.5 u from the first deep point (deep: 109.5); min river turn radius 6.7 u; axis min bend radius 47.1 u (tube radius 14); river max offset from axis 5.2 u
+> end tangent vs 07 heading: 0.00 deg; 07 heading yaw 15.9 pitch 0.63
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T22:45:28.677Z
+
+Same 6.7 in the existing route: it comes from the preserved crest section, not from my changes. Now I'm wiring in the route switch (`m06sbroute`) and the narrower tunnel radius profile:
+
+### 🤖 Claude — 2026-11-20T22:45:39.490Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && cat > src/world/route06c.ts <<'EOF'\n/**\n * r30 / r30b: the Screen 06 curled route in use. `&m06curl=1` = assets/textures/match06/route06curl.json (r30, tools/match06/r30_design_curl.py);\n * with `&m06sbroute=1` (or `&m06sb=1`) = route06sb.json (r30b storyboard keys: curl right + descend, sweeping left bend, late right turn into\n * 07, tools/match06/r30b_design_sb.py). Same keys / structure, so course.ts, coins.ts and match06.ts read either.\n */\nimport route06curl from '../../assets/textures/match06/route06curl.json';\nimport route06sb from '../../asse …[+2376 chars]`
+
+### 🧑 User — 2026-11-20T22:45:45.831Z
+
+> ↩︎ result: src/world/match06.ts:23:import { ROUTE06C as route06curl, SB_ROUTE } from './route06c'; // r30b: route06curl.json, or route06sb.json with &m06sbroute=1
+> src/world/match06.ts:530:  // r30 `&m06curl=1` (lead, with m06deep; user storyboard 2026-11-20 ~20:10, tools/match06/r30_design_curl.py -> route06curl.json,
+> src/world/match06.ts:704:    const a0 = course.sample(L.s0).pos.sub(O).dot(ax) - 6, a1 = CURL ? route06curl.curl.aEnd : (DEEP ? route06deep.tunnel_pin.P1a : P1.clone().sub(O).dot(ax)) + L.ext;
+> src/world/match06.ts:750:      const cu = route06curl.curl, A = cu.axis, aS = cu.aSplit;
+> src/world/match06.ts:806:    const jK = (a: number) => (CURL && mouth07 ? THREE.MathUtils.smoothstep(a, route06curl.curl.a07 - 24, route06curl.curl.a07) : 0);
+> src/world/match06.ts:825:      const fe = axisAtRaw(route06curl.curl.a07), hc = mouth07.c.clone().sub(fe.p);
+> src/world/match06.ts:831:    const rBase = (a: number) => (CURL && SB_ROUTE ? Rt + (SB.rMid - Rt) * THREE.MathUtils.smoothstep(a, route06curl.curl.aSplit + 2, route06curl.curl.aSplit + 22) : Rt);
+> src/world/match06.ts:910:        if (CURL && a > route06curl.curl.aSplit - 2) break;
+> src/world/match06.ts:915:      if (CURL && !SB.band) ringAs. …[+1040 chars]
+
+### 🤖 Claude — 2026-11-20T22:45:52.281Z
+
+Typecheck is clean, and the diagnosis is done, so I'm updating the task list. Then I'm rendering the redesigned route at ten positions along Screen 06 to find where it best matches each panel.
+
+### 🤖 Claude — 2026-11-20T22:45:52.738Z
+
+> 🔧 **TaskUpdate** `{"taskId": "2", "status": "completed"}`
+
+### 🧑 User — 2026-11-20T22:45:52.750Z
+
+> ↩︎ result: Updated task #2 status
+
+### 🤖 Claude — 2026-11-20T22:45:53.187Z
+
+> 🔧 **TaskUpdate** `{"taskId": "3", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-20T22:45:53.201Z
+
+> ↩︎ result: Updated task #3 status
+
+### 🤖 Claude — 2026-11-20T22:45:57.252Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && echo \"$(cat /home/user/rainbow-/qa/match/06/r30/QUERY_NEW_v2.txt)&m06sb=1\" > /home/user/rainbow-/qa/match/06/r30b/QUERY_SB_t2.txt && Q=$(cat /home/user/rainbow-/qa/match/06/r30b/QUERY_SB_t2.txt) && DIAG_S='[214.86,232,250,270,290,310,330,350,370,385]' AUDIT_PORT=5364 timeout 900 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/match06/r30b_diag.mjs /home/user/rainbow-/qa/match/06/r30b/t2 \"$Q\" 2>&1 | grep -E \"^s |stages|rror|m06sb\" | cut -c1-200; cd /home/user/rainbow-/qa/match/06/r30b/t2 && python3 -I -c \"\nfrom PIL import Image\nss=[' …[+330 chars]`
+

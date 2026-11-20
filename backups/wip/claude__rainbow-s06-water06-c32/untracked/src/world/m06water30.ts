@@ -36,13 +36,13 @@ uniform vec4 uW30C; // start hand-over a..b (camera distance from the approved v
 // k = how much of the iridescent RAINBOW strip shows between the cyan and the pink (the approved right-hand band measured across
 // it: cyan, mint, yellow, peach, pink, magenta); it comes and goes along the river, independently on each side
 vec3 w30Lat(float x, float k, float lit) {
-  vec3 c = mix(vec3(0.02, 0.56, 0.93), vec3(0.16, 0.86, 1.0), lit);   // core: deep azure .. bright cyan (volume)
-  c = mix(c, vec3(0.02, 0.50, 0.92), smoothstep(0.30, 0.42, x) * (1.0 - 0.5 * lit));
+  vec3 c = mix(vec3(0.06, 0.46, 0.95), vec3(0.16, 0.86, 1.0), lit);   // core: deep azure .. bright cyan (volume)
+  c = mix(c, vec3(0.12, 0.40, 0.96), smoothstep(0.26, 0.40, x) * (1.0 - 0.5 * lit));
   // (pinks set deeper than measured: the bloom of the bright foam lifts them by ~60 levels in green)
-  vec3 p = mix(c, vec3(0.30, 0.30, 0.95), smoothstep(0.40, 0.48, x));
-  p = mix(p, vec3(0.86, 0.07, 0.82), smoothstep(0.46, 0.56, x));
+  vec3 p = mix(c, vec3(0.36, 0.34, 0.97), smoothstep(0.36, 0.47, x));
+  p = mix(p, vec3(0.86, 0.07, 0.82), smoothstep(0.48, 0.58, x));
   p = mix(p, vec3(0.97, 0.26, 0.88), smoothstep(0.64, 0.78, x));
-  p = mix(p, vec3(0.74, 0.34, 0.96), smoothstep(0.86, 0.98, x));
+  p = mix(p, vec3(0.64, 0.42, 0.98), smoothstep(0.85, 0.97, x));
   vec3 r = mix(c, vec3(0.06, 0.86, 0.99), smoothstep(0.36, 0.42, x));
   r = mix(r, vec3(0.42, 0.95, 0.66), smoothstep(0.42, 0.47, x));
   r = mix(r, vec3(0.99, 0.93, 0.48), smoothstep(0.47, 0.52, x));
