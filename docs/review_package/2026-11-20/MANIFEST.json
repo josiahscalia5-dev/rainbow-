@@ -1,0 +1,424 @@
+{
+  "package": "Rainbow_App_Review",
+  "created_utc": "2026-11-20T11:10:43Z",
+  "repository": "josiahscalia5-dev/rainbow-",
+  "branch": "ccr-5be1062a-0ffyej",
+  "commit": "bf01adf096f4f888eb73bc982b4ed55012ec12c2",
+  "commit_saved_utc": "2026-11-20T11:07:52Z",
+  "commit_verified_on_github": "git ls-remote origin refs/heads/ccr-5be1062a-0ffyej == commit at the freeze (11:07:52 UTC)",
+  "consistency": "every file was read from git objects of the commit above, or of a specialist base commit + that specialist's unfinished-work snapshot stored inside the commit (backups/wip/<branch>/, 11:07:52 UTC); Git LFS pointers replaced by the real objects, SHA-256 + size verified",
+  "run_this": {
+    "full default game (opening → 11 ending)": "1_main_project",
+    "newest look per playable screen (unmerged, NOT approved)": {
+      "04 screen04_s04": "match04=1&m04ring=1&m04river=1&m04bub=1&m04mouth=1&m04room=1&m04ry=0.8&m04rk=0.82&m04arr3d=1&m04a3k=66&m04a3w2=1&m04a3g=…",
+      "05 screen05_s05": "match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05be…",
+      "06 screen06_s06": "match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1&m06st=1&m06fcl=…",
+      "06 screen06_lead_cone_test": "match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1&m06st=1&m06fcl=…",
+      "07 screen07_candidate_r23": "match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1&m07foam=1&m07coinsz=1&m07nearw=1&m07fo…",
+      "07 screen07_s07": "match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1&m07foam=1&m07coinsz=1&m07nearw=1&m07fo…",
+      "08 screen08_s08": "match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1&m08ceil=1…",
+      "04-08 (Benny) benny_all_screens": "&benny20=1&b20expo=1&b20ppw=0.45&b20tuft=1"
+    }
+  },
+  "uncommitted_changes_included": {
+    "lead_checkout": "none — the freeze save committed every allow-listed change; only live chat-transcript backups kept changing (excluded by design)",
+    "specialist_worktrees": {
+      "screen04_s04": {
+        "base_commit": "34cb494137e1030c4410d871125e6e9eef6aa4ea",
+        "base_branch": "claude/rainbow-s04-match-c21",
+        "snapshot": "backups/wip/claude__rainbow-s04-match-c25/ in commit bf01adf096f4f888eb73bc982b4ed55012ec12c2 (snapshot time 2026-11-20T11:07:50+00:00)",
+        "uncommitted_tracked_files": [
+          "src/game/Game.ts",
+          "src/world/match04.ts",
+          "src/world/match04m4.ts"
+        ],
+        "new_untracked_files": [
+          "tools/match04/rings21.mjs"
+        ],
+        "patch_applied": "ok"
+      },
+      "screen05_s05": {
+        "base_commit": "eb7233e3646640397f14e360f601aeff088d7536",
+        "base_branch": "claude/rainbow-s05-match-c19",
+        "snapshot": "backups/wip/claude__rainbow-s05-match-c25/ in commit bf01adf096f4f888eb73bc982b4ed55012ec12c2 (snapshot time 2026-11-20T11:07:51+00:00)",
+        "uncommitted_tracked_files": [],
+        "new_untracked_files": [],
+        "patch_applied": "none"
+      },
+      "screen06_s06": {
+        "base_commit": "e162aec2bfdc631913c41daa435f9d449439af4f",
+        "base_branch": "claude/rainbow-s06-match-c23",
+        "snapshot": "backups/wip/claude__rainbow-s06-match-c25/ in commit bf01adf096f4f888eb73bc982b4ed55012ec12c2 (snapshot time 2026-11-20T11:07:51+00:00)",
+        "uncommitted_tracked_files": [
+          "src/game/Game.ts",
+          "src/world/match06.ts"
+        ],
+        "new_untracked_files": [
+          "tools/match06/lead23_audit_slow.mjs",
+          "tools/match06/r23_audit.mjs",
+          "tools/match06/r23_ripdump.mjs",
+          "tools/match06/r23_swim.mjs",
+          "tools/match06/r23_tunprobe.mjs",
+          "tools/match06/r23_vite.mjs"
+        ],
+        "patch_applied": "ok"
+      },
+      "screen06_lead_cone_test": {
+        "base_commit": "e162aec2bfdc631913c41daa435f9d449439af4f",
+        "base_branch": "claude/rainbow-s06-match-c23",
+        "snapshot": "backups/wip/detached-e162aec2bf/ in commit bf01adf096f4f888eb73bc982b4ed55012ec12c2 (snapshot time 2026-11-20T11:07:49+00:00)",
+        "uncommitted_tracked_files": [
+          "src/game/Game.ts",
+          "src/world/match06.ts"
+        ],
+        "new_untracked_files": [
+          "tools/match06/lead23_audit_slow.mjs",
+          "tools/match06/r23_audit.mjs",
+          "tools/match06/r23_ripdump.mjs",
+          "tools/match06/r23_swim.mjs",
+          "tools/match06/r23_tunprobe.mjs",
+          "tools/match06/r23_vite.mjs"
+        ],
+        "patch_applied": "ok"
+      },
+      "screen07_candidate_r23": {
+        "base_commit": "8accdad0a07ec4e3c4189701aea9df101932c7f5",
+        "base_branch": "claude/rainbow-s07-match-c18",
+        "snapshot": "backups/wip/detached-8accdad0a0/ in commit bf01adf096f4f888eb73bc982b4ed55012ec12c2 (snapshot time 2026-11-20T11:07:50+00:00)",
+        "uncommitted_tracked_files": [
+          "src/game/Game.ts",
+          "src/world/match07.ts"
+        ],
+        "new_untracked_files": [],
+        "patch_applied": "ok"
+      },
+      "screen07_s07": {
+        "base_commit": "8accdad0a07ec4e3c4189701aea9df101932c7f5",
+        "base_branch": "claude/rainbow-s07-match-c18",
+        "snapshot": "backups/wip/claude__rainbow-s07-match-c25/ in commit bf01adf096f4f888eb73bc982b4ed55012ec12c2 (snapshot time 2026-11-20T11:07:51+00:00)",
+        "uncommitted_tracked_files": [
+          "src/game/Game.ts",
+          "src/game/cameraRig.ts",
+          "src/gameplay/coins.ts",
+          "src/world/course.ts",
+          "src/world/match07.ts"
+        ],
+        "new_untracked_files": [
+          "tools/match07/audit_screen_r23.mjs",
+          "tools/match07/capture_5277.mjs",
+          "tools/match07/cloudprobe_r24.mjs",
+          "tools/match07/diag_r21.mjs",
+          "tools/match07/gameplay_test_5277.mjs",
+          "tools/match07/r23_vite_s08.mjs",
+          "tools/match07/route_r23.mjs",
+          "tools/match07/seg_clip_r24.mjs",
+          "tools/match07/shots08_s08.mjs",
+          "tools/match07/swim_clip_r21.mjs"
+        ],
+        "patch_applied": "ok"
+      },
+      "screen08_s08": {
+        "base_commit": "3c0fa97090afb2c0fca41898774db7247e23e522",
+        "base_branch": "claude/rainbow-s08-scenery-c17",
+        "snapshot": "backups/wip/claude__rainbow-s08-scenery-c25/ in commit bf01adf096f4f888eb73bc982b4ed55012ec12c2 (snapshot time 2026-11-20T11:07:52+00:00)",
+        "uncommitted_tracked_files": [
+          "src/gameplay/coins.ts",
+          "src/world/match08.ts",
+          "tools/match08/shots08.mjs"
+        ],
+        "new_untracked_files": [
+          "tools/match08/r23_vite.mjs",
+          "tools/match08/screen_clip08.mjs"
+        ],
+        "patch_applied": "ok"
+      },
+      "benny_all_screens": {
+        "base_commit": "734efb6bc407c691c3d7d99e29b710544c82a9c5",
+        "base_branch": "claude/rainbow-benny-c23",
+        "snapshot": "backups/wip/claude__rainbow-benny-c25/ in commit bf01adf096f4f888eb73bc982b4ed55012ec12c2 (snapshot time 2026-11-20T11:07:49+00:00)",
+        "uncommitted_tracked_files": [
+          "assets/textures/benny20/brim.png",
+          "assets/textures/benny20/brim_n.png",
+          "assets/textures/benny20/crown.png",
+          "assets/textures/benny20/crown_n.png",
+          "assets/textures/benny20/knit_params.json",
+          "qa/benny/r23/PROGRESS.md",
+          "src/characters/benny/benny20.ts",
+          "src/characters/benny/fur.ts",
+          "tools/benny20/knit.py",
+          "tools/benny23/shots_c.mjs"
+        ],
+        "new_untracked_files": [
+          "assets/textures/benny20/star_felt.png",
+          "assets/textures/benny20/star_felt_n.png",
+          "tools/benny23/knit_r23.json",
+          "tools/benny23/knitprobe.mjs",
+          "tools/benny23/star_r23.json"
+        ],
+        "patch_applied": "ok"
+      }
+    }
+  },
+  "versions": [
+    {
+      "name": "screen04_s04",
+      "screen": "04",
+      "status": "Screen 04 specialist (washer-environment-modeler) — RUNNING at export time (round 24), steps 2–3 unfinished. Candidate K23-1 (pink walls off, clear blue water, gold visible) was shown to the user, NOT approved.",
+      "base_commit": "34cb494137e1030c4410d871125e6e9eef6aa4ea",
+      "base_branch": "claude/rainbow-s04-match-c21",
+      "unfinished_work_snapshot": "backups/wip/claude__rainbow-s04-match-c25/ in commit bf01adf096f4f888eb73bc982b4ed55012ec12c2 (snapshot time 2026-11-20T11:07:50+00:00)",
+      "snapshot_dirty_tracked": [
+        "src/game/Game.ts",
+        "src/world/match04.ts",
+        "src/world/match04m4.ts"
+      ],
+      "snapshot_untracked": [
+        "tools/match04/rings21.mjs"
+      ],
+      "snapshot_patch_applied": "ok",
+      "files_in_version": 330,
+      "overlay_changed": 8,
+      "overlay_added": 65,
+      "deleted_vs_main": 40,
+      "recommended_query": "match04=1&m04ring=1&m04river=1&m04bub=1&m04mouth=1&m04room=1&m04ry=0.8&m04rk=0.82&m04arr3d=1&m04a3k=66&m04a3w2=1&m04a3g=1.6&m04a3o=0.38&m04a3b=1&m04a3b0=3.0&m04a3b1=4.4&m04a3f0=25&m04a3f1=31&m04a3p=4.0&m04a3w=1.15&m04a3t=0.32&m04a3d=0.55&m04a3f=4&m04a3y=0.1&m04ringp=4.6&m04ringgw=1.2&m04tb=0.2&m04ts=0.22&m04paint=0.9&m04pink=1&m04pkl=2.15&m04pkw=0.9&m04a3hb=1&m04xf=2.6&m04lane=1&m04lanew=2.3&m04lanes=0.85&m04a3co=1.0&m04lane2=0.25&m04lgl=1.3&m04lsp=0.9&m04copper=1.3&m04edge=1&m04rf0=1.25&m04rf1=0.8&m04lbr=0.14&m04a3tex=1&m04bulge=0.18&m04lcd=1.0&m04lcw=1.7&m04a3fa=1.0&m04a3gb=0.16&m04a3tm=0.45&m04a3lum=1.1&m04a3rw=0.03&m04foam=1&m04foamr=2.5&m04foamn0=4.5&m04foamn1=6.5&m04fclu=1&m04sband=1&m04end=1&m04nband=0&m04nwhirl=0&m04nwc=1.3&m04flo=1&m04nwq=2&m04nwr=3.2&m04rpaint=1&m04rpsoft=1&m04rpj=0.35&m04rplu=3.95&m04rpgu=4.28&m04rpdots=1&m04rpvar=1&m04rfew=1&m04rfg=1.2&m04rpol=1&m04rpcr=1&m04rflat=1&m04rnear=1&m04rnh=0.7&m04rny=0.15&m04rng=0.5&m04rnhf=0.1&m04rnr=0.6&m04rnf=0.8&m04rmat=1&m04wup=0&m04bbank=1&m04rsoft=1&msaa=4&m04wgl=1&m04bbd=1&m04bbd0=0.85&m04bbd1=0.85&m04bbdk=0.15&m04bbdx=0&m04bbdg=0.6&m04bbdf=9&m04bbdf1=12&m04bbdn=2&m04bbdn1=3.5&m04bbx=1"
+    },
+    {
+      "name": "screen05_s05",
+      "screen": "05",
+      "status": "Screen 05 specialist — QUEUED (not running). Last finished step r19 step 2 (committed). NOT approved.",
+      "base_commit": "eb7233e3646640397f14e360f601aeff088d7536",
+      "base_branch": "claude/rainbow-s05-match-c19",
+      "unfinished_work_snapshot": "backups/wip/claude__rainbow-s05-match-c25/ in commit bf01adf096f4f888eb73bc982b4ed55012ec12c2 (snapshot time 2026-11-20T11:07:51+00:00)",
+      "snapshot_dirty_tracked": [],
+      "snapshot_untracked": [],
+      "snapshot_patch_applied": "none",
+      "files_in_version": 323,
+      "overlay_changed": 39,
+      "overlay_added": 95,
+      "deleted_vs_main": 77,
+      "recommended_query": "match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1&m05fpaint=1&m05fcloud=1&m05fcoin=1&m05join=1&m05frim=1&m05vee2=1&m05bank=1&m05trans=1&m05wcrisp=1&m05pink=1"
+    },
+    {
+      "name": "screen06_s06",
+      "screen": "06",
+      "status": "Screen 06 specialist — finished 3 steps in round 23 (uncommitted, snapshotted). Candidates NOT approved; the user asked to keep the camera experiment as an unapproved candidate; opening 'blue cone' still open.",
+      "base_commit": "e162aec2bfdc631913c41daa435f9d449439af4f",
+      "base_branch": "claude/rainbow-s06-match-c23",
+      "unfinished_work_snapshot": "backups/wip/claude__rainbow-s06-match-c25/ in commit bf01adf096f4f888eb73bc982b4ed55012ec12c2 (snapshot time 2026-11-20T11:07:51+00:00)",
+      "snapshot_dirty_tracked": [
+        "src/game/Game.ts",
+        "src/world/match06.ts"
+      ],
+      "snapshot_untracked": [
+        "tools/match06/lead23_audit_slow.mjs",
+        "tools/match06/r23_audit.mjs",
+        "tools/match06/r23_ripdump.mjs",
+        "tools/match06/r23_swim.mjs",
+        "tools/match06/r23_tunprobe.mjs",
+        "tools/match06/r23_vite.mjs"
+      ],
+      "snapshot_patch_applied": "ok",
+      "files_in_version": 310,
+      "overlay_changed": 7,
+      "overlay_added": 45,
+      "deleted_vs_main": 40,
+      "recommended_query": "match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1&m06st=1&m06fcl=1&m06view=1&m06vs=0&m06rip=1"
+    },
+    {
+      "name": "screen06_lead_cone_test",
+      "screen": "06",
+      "status": "Lead test, IN PROGRESS, not proven: &m06ripz=1 + QA debug &m06wdbg=1 (diagnosis of the opening 'blue cone').",
+      "base_commit": "e162aec2bfdc631913c41daa435f9d449439af4f",
+      "base_branch": "claude/rainbow-s06-match-c23",
+      "unfinished_work_snapshot": "backups/wip/detached-e162aec2bf/ in commit bf01adf096f4f888eb73bc982b4ed55012ec12c2 (snapshot time 2026-11-20T11:07:49+00:00)",
+      "snapshot_dirty_tracked": [
+        "src/game/Game.ts",
+        "src/world/match06.ts"
+      ],
+      "snapshot_untracked": [
+        "tools/match06/lead23_audit_slow.mjs",
+        "tools/match06/r23_audit.mjs",
+        "tools/match06/r23_ripdump.mjs",
+        "tools/match06/r23_swim.mjs",
+        "tools/match06/r23_tunprobe.mjs",
+        "tools/match06/r23_vite.mjs"
+      ],
+      "snapshot_patch_applied": "ok",
+      "files_in_version": 310,
+      "overlay_changed": 7,
+      "overlay_added": 45,
+      "deleted_vs_main": 40,
+      "recommended_query": "match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1&m06st=1&m06fcl=1&m06view=1&m06vs=0&m06rip=1&m06ripz=1"
+    },
+    {
+      "name": "screen07_candidate_r23",
+      "screen": "07",
+      "status": "The exact build of the labelled Screen 07 clip the user reviewed (~10:35 UTC): rounder fuller foam (user-liked candidate) + satin bands. NOT approved (S-bends, steering view, 07→08 join requested).",
+      "base_commit": "8accdad0a07ec4e3c4189701aea9df101932c7f5",
+      "base_branch": "claude/rainbow-s07-match-c18",
+      "unfinished_work_snapshot": "backups/wip/detached-8accdad0a0/ in commit bf01adf096f4f888eb73bc982b4ed55012ec12c2 (snapshot time 2026-11-20T11:07:50+00:00)",
+      "snapshot_dirty_tracked": [
+        "src/game/Game.ts",
+        "src/world/match07.ts"
+      ],
+      "snapshot_untracked": [],
+      "snapshot_patch_applied": "ok",
+      "files_in_version": 306,
+      "overlay_changed": 9,
+      "overlay_added": 42,
+      "deleted_vs_main": 41,
+      "recommended_query": "match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1&m07foam=1&m07coinsz=1&m07nearw=1&m07foamb=1&m07band=1&m07end=1&m07cloud=1&m07satin=1"
+    },
+    {
+      "name": "screen07_s07",
+      "screen": "07",
+      "status": "Screen 07 specialist (water-fx-specialist) — RUNNING at export time on the user's 3 priorities; code mid-change (unfinished S-bend step &m07sbend=1). NOT approved.",
+      "base_commit": "8accdad0a07ec4e3c4189701aea9df101932c7f5",
+      "base_branch": "claude/rainbow-s07-match-c18",
+      "unfinished_work_snapshot": "backups/wip/claude__rainbow-s07-match-c25/ in commit bf01adf096f4f888eb73bc982b4ed55012ec12c2 (snapshot time 2026-11-20T11:07:51+00:00)",
+      "snapshot_dirty_tracked": [
+        "src/game/Game.ts",
+        "src/game/cameraRig.ts",
+        "src/gameplay/coins.ts",
+        "src/world/course.ts",
+        "src/world/match07.ts"
+      ],
+      "snapshot_untracked": [
+        "tools/match07/audit_screen_r23.mjs",
+        "tools/match07/capture_5277.mjs",
+        "tools/match07/cloudprobe_r24.mjs",
+        "tools/match07/diag_r21.mjs",
+        "tools/match07/gameplay_test_5277.mjs",
+        "tools/match07/r23_vite_s08.mjs",
+        "tools/match07/route_r23.mjs",
+        "tools/match07/seg_clip_r24.mjs",
+        "tools/match07/shots08_s08.mjs",
+        "tools/match07/swim_clip_r21.mjs"
+      ],
+      "snapshot_patch_applied": "ok",
+      "files_in_version": 316,
+      "overlay_changed": 9,
+      "overlay_added": 52,
+      "deleted_vs_main": 41,
+      "recommended_query": "match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1&m07foam=1&m07coinsz=1&m07nearw=1&m07foamb=1&m07band=1&m07end=1&m07cloud=1&m07satin=1&m07sbend=1"
+    },
+    {
+      "name": "screen08_s08",
+      "screen": "08",
+      "status": "Screen 08 polish specialist — FINISHED 3 steps (~11:05 UTC, uncommitted, snapshotted): softer near-water glints, coin sizes tapering like the painting, towel double exposure removed. Candidate K23-3, NOT user-approved (coins08px=1 = the user's preferred coin version).",
+      "base_commit": "3c0fa97090afb2c0fca41898774db7247e23e522",
+      "base_branch": "claude/rainbow-s08-scenery-c17",
+      "unfinished_work_snapshot": "backups/wip/claude__rainbow-s08-scenery-c25/ in commit bf01adf096f4f888eb73bc982b4ed55012ec12c2 (snapshot time 2026-11-20T11:07:52+00:00)",
+      "snapshot_dirty_tracked": [
+        "src/gameplay/coins.ts",
+        "src/world/match08.ts",
+        "tools/match08/shots08.mjs"
+      ],
+      "snapshot_untracked": [
+        "tools/match08/r23_vite.mjs",
+        "tools/match08/screen_clip08.mjs"
+      ],
+      "snapshot_patch_applied": "ok",
+      "files_in_version": 300,
+      "overlay_changed": 7,
+      "overlay_added": 33,
+      "deleted_vs_main": 38,
+      "recommended_query": "match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1&m08ceil=1&m08near=1&m08cup=1&m08rw=1&m08drum=1&m08ring=1&m08cupg=1&m08bore=1&m08flange=1&m08cupw=1&m08nq=1&m08sr=1&m08vh=1&m08gl=1&m08coinsz=1&m08towelm=1&m08towelv=1"
+    },
+    {
+      "name": "benny_all_screens",
+      "screen": "04-08 (Benny)",
+      "status": "Benny specialist — RUNNING at export time (felt star, knit, fur). Best query not approved.",
+      "base_commit": "734efb6bc407c691c3d7d99e29b710544c82a9c5",
+      "base_branch": "claude/rainbow-benny-c23",
+      "unfinished_work_snapshot": "backups/wip/claude__rainbow-benny-c25/ in commit bf01adf096f4f888eb73bc982b4ed55012ec12c2 (snapshot time 2026-11-20T11:07:49+00:00)",
+      "snapshot_dirty_tracked": [
+        "assets/textures/benny20/brim.png",
+        "assets/textures/benny20/brim_n.png",
+        "assets/textures/benny20/crown.png",
+        "assets/textures/benny20/crown_n.png",
+        "assets/textures/benny20/knit_params.json",
+        "qa/benny/r23/PROGRESS.md",
+        "src/characters/benny/benny20.ts",
+        "src/characters/benny/fur.ts",
+        "tools/benny20/knit.py",
+        "tools/benny23/shots_c.mjs"
+      ],
+      "snapshot_untracked": [
+        "assets/textures/benny20/star_felt.png",
+        "assets/textures/benny20/star_felt_n.png",
+        "tools/benny23/knit_r23.json",
+        "tools/benny23/knitprobe.mjs",
+        "tools/benny23/star_r23.json"
+      ],
+      "snapshot_patch_applied": "ok",
+      "files_in_version": 354,
+      "overlay_changed": 10,
+      "overlay_added": 88,
+      "deleted_vs_main": 39,
+      "recommended_query": "&benny20=1&b20expo=1&b20ppw=0.45&b20tuft=1"
+    }
+  ],
+  "zip_parts": {
+    "Rainbow_App_Review_assets_1_of_5_stills_04_05_audit.zip": {
+      "part": "assets_1",
+      "files": 208,
+      "bytes": 354881831,
+      "mb": 354.9
+    },
+    "Rainbow_App_Review_assets_2_of_5_stills_06_default.zip": {
+      "part": "assets_2",
+      "files": 140,
+      "bytes": 285889165,
+      "mb": 285.9
+    },
+    "Rainbow_App_Review_assets_3_of_5_stills_07_08.zip": {
+      "part": "assets_3",
+      "files": 199,
+      "bytes": 350960066,
+      "mb": 351.0
+    },
+    "Rainbow_App_Review_assets_4_of_5_stills_benny.zip": {
+      "part": "assets_4",
+      "files": 154,
+      "bytes": 215071585,
+      "mb": 215.1
+    },
+    "Rainbow_App_Review_assets_5_of_5_marble_older_apks.zip": {
+      "part": "assets_5",
+      "files": 76,
+      "bytes": 277217324,
+      "mb": 277.2
+    },
+    "Rainbow_App_Review.zip": {
+      "part": "core",
+      "files": 1384,
+      "bytes": 459313417,
+      "mb": 459.3
+    }
+  },
+  "reassembly": "extract every ZIP into the same folder; each contains the top folder Rainbow_App_Review/; no file is in two ZIPs; only the core ZIP is needed to run the code",
+  "totals": {
+    "files": 2161,
+    "bytes": 1943333388,
+    "lfs_files_with_real_data": 66,
+    "lfs_bytes": 379685359
+  },
+  "excluded": [
+    "API keys, passwords, tokens, signing keys (none are stored in the repository; paths matching .env/.jks/.keystore/.p12/.pem/.key/secret/credential/settings.local.json are filtered)",
+    "chat transcripts (backups/claude-sessions, CONVERSATION_INDEX)",
+    "node_modules, dependency caches, dist/",
+    "the raw .git directory",
+    "backup / autosave logs and old worker snapshots under backups/ (except AGENTS_STATUS.json, TOOL_MANIFEST.json)",
+    "older evidence folders under qa/ (rounds ≤ 22 except 04 r22; 4.5 GB in total) — on the GitHub branch",
+    ".claude settings (only .claude/agents specialist definitions are included)"
+  ],
+  "missing_or_unavailable": [
+    "Google Flow opening / ending videos (not in the repository)",
+    "an APK of the current work (newest APKs 2026-11-17)",
+    "a merged build of the newest per-screen work",
+    "audio, settings menu, save system (not implemented)",
+    "phone recordings of current builds",
+    "clips listed under \"Not recorded\" in REVIEW_README.md section 5"
+  ]
+}

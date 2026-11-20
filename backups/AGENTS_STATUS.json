@@ -1,7 +1,7 @@
 {
   "_comment": "Machine-readable roster of the ten Rainbow specialists. Human-readable history: backups/AGENTS_STATUS.md. scripts/claude-bootstrap.sh checks every definition below (present + SHA-256). Agents load automatically from .claude/agents/ (Agent tool, subagent_type = name). Never recreate or rename them. A running specialist does NOT survive a new session or account: relaunch it from its notes + unfinished patch.",
   "schema": 1,
-  "updated_utc": "2026-11-20T10:45Z",
+  "updated_utc": "2026-11-20T11:22Z",
   "updated_by_session": "round 24 lead, branch ccr-5be1062a-0ffyej",
   "running_now": {
     "_note": "round 24 (new account, from ~10:30 UTC): four in-process background agents of the lead session, relaunched from the r23 10:25 snapshots; LOCAL -c25 branches, never pushed; the lead autosave snapshots each worktree to backups/wip/<branch>/. Recipe docs/briefs/2026-11-20-r24/setup_worker_r24.sh; briefs docs/briefs/2026-11-20-r24/LAUNCH_R24.md",
@@ -14,7 +14,8 @@
       "brief": "docs/briefs/2026-11-20-r24/LAUNCH_R24.md",
       "log": "qa/match/07/r24/ + qa/match/07/r23/PROGRESS.md",
       "started_utc": "2026-11-20T10:40Z",
-      "task": "user note ~10:35: (1) whole river in broad S-bends, (2) route ahead visible while steering t=2.5-3.5 s, (3) 07->08 water/foam join t=7.25-8 s with the latest 08 (K16&m08gl=1); then the same labelled clip"
+      "task": "user note ~10:35: (1) whole river in broad S-bends, (2) route ahead visible while steering t=2.5-3.5 s, (3) 07->08 water/foam join t=7.25-8 s with the latest 08 (K16&m08gl=1); then the same labelled clip",
+      "state": "STOPPED ~11:20 UTC (user interrupt) mid-step; unfinished edits in backups/wip/claude__rainbow-s07-match-c25/; relaunch: setup_worker_r25.sh + LAUNCH_R24.md"
     },
     "s04": {
       "agent": "washer-environment-modeler",
@@ -25,7 +26,8 @@
       "brief": "docs/briefs/2026-11-20-r24/LAUNCH_R24.md",
       "log": "qa/match/04/r23/PROGRESS.md",
       "started_utc": "2026-11-20T10:40Z",
-      "task": "resume: step 2 compare, step 3 (clean lower pink edges, gold visible, clear blue water, Benny through all five arrows)"
+      "task": "resume: step 2 compare, step 3 (clean lower pink edges, gold visible, clear blue water, Benny through all five arrows)",
+      "state": "STOPPED ~11:20 UTC (user interrupt) mid-step; unfinished edits in backups/wip/claude__rainbow-s04-match-c25/; relaunch: setup_worker_r25.sh + LAUNCH_R24.md"
     },
     "s08": {
       "agent": "washer-environment-modeler",
@@ -36,7 +38,8 @@
       "brief": "docs/briefs/2026-11-20-r24/LAUNCH_R24.md",
       "log": "qa/match/08/r23/PROGRESS.md",
       "started_utc": "2026-11-20T10:40Z",
-      "task": "resume: m08gl clips, m08coinsz verdict, m08towelm"
+      "task": "resume: m08gl clips, m08coinsz verdict, m08towelm",
+      "state": "FINISHED 3 steps ~11:05 UTC (m08gl, m08coinsz, m08towelm&m08towelv) -> candidate K23-3 qa/match/08/r23/QUERY_CANDIDATE_K23-3.txt; not user-approved"
     },
     "benny": {
       "agent": "benny-character-artist",
@@ -47,7 +50,8 @@
       "brief": "docs/briefs/2026-11-20-r24/LAUNCH_R24.md",
       "log": "qa/benny/r23/",
       "started_utc": "2026-11-20T10:40Z",
-      "task": "resume: felt star 05-07 renders + verdict, then knit stripes / cuff, combed fur"
+      "task": "resume: felt star 05-07 renders + verdict, then knit stripes / cuff, combed fur",
+      "state": "STOPPED ~11:20 UTC (user interrupt) mid-step; unfinished edits in backups/wip/claude__rainbow-benny-c25/; relaunch: setup_worker_r25.sh + LAUNCH_R24.md"
     },
     "s06": {
       "state": "not running (finished 3 steps in r23); worktree /home/user/wt/s06 claude/rainbow-s06-match-c25 restored; lead runs the opening-ripple test qa/match/06/r24/lead_rip/; crest / winding river / curved coin trail = next free slot"
@@ -1260,6 +1264,7 @@
     "lead_branch": "ccr-5be1062a-0ffyej",
     "started_from": "claude/rainbow-r22-restore-ut3m39 @ 4209ec3, merged its final save a735ec7 (10:25) at the user's 'continue exactly where we left off' (ecc22ac)",
     "services_10_40": "World Labs key OK (5,420 credits), Atlas connector OK (My project, credits available), Hugging Face OK (josdois), fal OK (status HTTP 200), GitHub MCP OK, Blender 5.3.0, Android SDK 34, Playwright OK; Context7 needs a sign-in",
-    "relaunch": "bash docs/briefs/2026-11-20-r24/setup_worker_r24.sh; briefs docs/briefs/2026-11-20-r24/LAUNCH_R24.md"
+    "relaunch": "bash docs/briefs/2026-11-20-r24/setup_worker_r24.sh; briefs docs/briefs/2026-11-20-r24/LAUNCH_R24.md",
+    "next_account": "TOP of backups/START_NEW_CLAUDE_ACCOUNT.md (branch ccr-5be1062a-0ffyej; autosave starts automatically; worktrees: docs/briefs/2026-11-20-r24/setup_worker_r25.sh)"
   }
 }

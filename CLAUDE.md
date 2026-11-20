@@ -69,6 +69,10 @@ match `?match05=1` with env05 / benny05 / hud05 / coins05 / splash05m / bub05 �
   definitions, work and restart instructions); never merge or overwrite specialist branches without the user's OK.
   TRAP: the GitHub DEFAULT branch (`ccr-6f431adf-7h0m8y`, protected original 11-15) has an OLD hook that does NOT restore
   newer work — a new account must start its session on the branch named at the top of `backups/START_NEW_CLAUDE_ACCOUNT.md`.
+* **User order restated 2026-11-20 ~11:20 UTC (round 24, for EVERY Claude account the user moves to):** save EVERYTHING to GitHub
+  every 5 minutes, automatically — code, assets, the chat history (lead + every specialist, `backups/claude-sessions/`), tools,
+  plugins, MCP servers, agents (`backups/LIVE_TOOLS_STATE.json`, `backups/AGENTS_STATUS.json`). The new-account steps (branch to
+  start on, plugins / connectors to enable, how to verify the autosave) are at the TOP of `backups/START_NEW_CLAUDE_ACCOUNT.md`.
 * Backups cannot run while an environment is closed: never claim they did. Report gaps from the bootstrap's
   "Backup gap" line (previous save, missing end-of-session backup, long gaps in the log).
 

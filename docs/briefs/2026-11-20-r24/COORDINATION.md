@@ -34,3 +34,12 @@ Briefs: `LAUNCH_R24.md` (this folder). If this account runs out: `-c26` LOCAL br
   OLD default 08; the latest 08 = K16 & `m08gl=1`.
 * ~10:40 four workers relaunched (s07, s04, s08, Benny). Lead: Screen 06 opening-ripple comparison `qa/match/06/r24/lead_rip/`
   (no ripple / current ripple / V1 / V2 at 3 / 7 / 12 % of 06; r23 V2 render had produced no shots).
+* ~10:58 USER asked for a complete review package for ChatGPT ("CLAUDIA — EXPORT MY COMPLETE RAINBOW APP FOR REVIEW"). Lead built
+  it from ONE commit `bf01adf` (11:07:52 UTC; first freeze `e71b45b` 11:00 superseded when s08 finished): builder
+  `tools/export/make_review_package.py`, zip + extraction test `docs/review_package/2026-11-20/zip_and_test.py`; README, manifest,
+  verification and clip index copied to `docs/review_package/2026-11-20/`. ZIPs (core + 5 asset parts, each < 512 MB) live only in
+  the session scratchpad (not committed: GitHub LFS quota).
+* ~11:05 s08 FINISHED 3 steps (worker: small GOOD each): `m08gl`, `m08coinsz`, `m08towelm&m08towelv` → candidate **K23-3**
+  (`qa/match/08/r23/QUERY_CANDIDATE_K23-3.txt`); s07 told to use K23-3 as "the latest Screen 08".
+* Screen 06 cone diagnosis (lead): the cone = the hole where the painted Benny was cut out of the projected plate (filled with the
+  river's own water, hard edge) + the painted ring left behind — `qa/match/06/r24/lead_rip/NOTES.md`; fix in progress.

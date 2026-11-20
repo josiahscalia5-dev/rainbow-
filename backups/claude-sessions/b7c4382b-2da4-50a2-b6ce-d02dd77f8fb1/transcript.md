@@ -2934,3 +2934,386 @@ Since the freeze, the lead checkout has only gained one new Screen 07 query file
 > {'files': 2161, 'bytes': 1943333388, 'lfs_files_with_real_data': 66, 'lfs_bytes': 379685359}
 > Shell cwd was reset to /home/user/rainbow-
 
+### 🤖 Claude — 2026-11-20T11:10:48.140Z
+
+The manifest is written. The package holds 66 of the repository's 124 large LFS files, all with real data. I'll list the 58 left out, so the README can say exactly what they are.
+
+### 🤖 Claude — 2026-11-20T11:10:51.517Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport json,subprocess,collections\nrecs=json.load(open('/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/export/records_with_zip.json'))\ninc={r['source'].split(':',1)[1] for r in recs if r['lfs']}\nout=subprocess.run(['git','lfs','ls-files','-n'],capture_output=True,text=True).stdout.split('\\n')\nmiss=[p for p in out if p and p not in inc]\nc=collections.Counter('/'.join(p.split('/')[:2]) for p in miss)\nprint(len(out)-1,'repo LFS files;',len(miss),'not in package'); [print(f'{v:3d} {k}') for k,v in c.most_common()]\nEOF",  …[+71 chars]`
+
+### 🧑 User — 2026-11-20T11:10:52.396Z
+
+> ↩︎ result: 132 repo LFS files; 67 not in package
+>  12 qa/pilot05
+>  11 qa/lead_r5
+>  11 qa/match
+>   5 qa/imageblaster
+>   5 qa/review_r18
+>   5 qa/review_r19
+>   4 backups/wip
+>   4 qa/review_r13
+>   2 qa/review_r16
+>   2 qa/review_r17
+>   2 qa/review_r22
+>   2 qa/screen_videos
+>   1 backups/source-package
+>   1 qa/review_r15
+
+### 🤖 Claude — 2026-11-20T11:11:01.108Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad && python3 - <<'EOF'\np='export/Rainbow_App_Review/REVIEW_README.md'; s=open(p).read()\na=\"Git LFS files contain their real data (SHA-256 checked against the LFS pointers).\"\nb=(\"Git LFS files contain their real data (SHA-256 checked against the LFS pointers): every LFS file the app and the included\\n\"\n   \"evidence need (models, Marble / World Labs files, APKs, clips — 66 files). The repository's other 67 LFS files are older\\n\"\n   \"evidence clips (rounds 5–22 reviews, pilot-05 tests, ol …[+257 chars]`
+
+### 🧑 User — 2026-11-20T11:11:01.665Z
+
+> ↩︎ result: ok
+> == verify 2026-11-20T11:09:25Z pkg=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/export/Rainbow_App_Review
+> -- node v22.23.5 npm 10.9.9
+> npm ci exit 0 (added 124 packages in 4s)
+> main tsc exit 0 (0 lines)
+> main continuity exit 0 ::  "ok": true,   "verticalDrop": 61.19, 
+> main vite build exit 0 :: dist/assets/main-C-IFn2sp.js                                905.58 kB │ gzip: 262.77 kB ✓ built in 7.85s 
+> approved screens sha256 OK: 12
+> character ref: official_cartoon_girl_original.jpg: OK
+> benny_all_screens: tsc exit 0 (0 lines), continuity exit 0 ::  "ok": true,
+> screen04_s04: tsc exit 0 (0 lines), continuity exit 0 ::  "ok": true,
+> screen05_s05: tsc exit 0 (0 lines), continuity exit 0 ::  "ok": true,
+> screen06_lead_cone_test: tsc exit 0 (0 lines), continuity exit 0 ::  "ok": true,
+> screen06_s06: tsc exit 0 (0 lines), continuity exit 0 ::  "ok": true,
+> screen07_candidate_r23: tsc exit 0 (0 lines), continuity exit 0 ::  "ok": true,
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T11:11:26.509Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/zip_and_test.py", "content": "#!/usr/bin/env python3\n\"\"\"Zip the staged Rainbow_App_Review into its parts, then test extraction against MANIFEST_FILES.tsv.\"\"\"\nimport hashlib, json, os, shutil, sys, zipfile\n\nEXP = sys.argv[1]            # .../export (contains Rainbow_App_Review/, records_with_zip.json, zipnames.json)\nOUTD = sys.argv[2]           # where the ZIPs go\nTEST = sys.argv[3]           # extraction test dir\nR = os.path.join(EXP, \"Rainbow_App_Review\")\nrecs = json.load(open(os.p …[+4520 chars]`
+
+### 🧑 User — 2026-11-20T11:11:27.008Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/zip_and_test.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T11:11:32.424Z
+
+> 🔧 **Bash** `{"command": "tail -4 /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/verify_stage/verify.log; uptime", "description": "Check remaining verification"}`
+
+### 🧑 User — 2026-11-20T11:11:33.029Z
+
+> ↩︎ result: screen07_candidate_r23: tsc exit 0 (0 lines), continuity exit 0 ::  "ok": true,
+> screen07_s07: tsc exit 0 (0 lines), continuity exit 0 ::  "ok": true,
+> screen08_s08: tsc exit 0 (0 lines), continuity exit 0 ::  "ok": true,
+> == done 2026-11-20T11:11:29Z
+>  11:11:32 up 50 min,  0 user,  load average: 21.79, 24.86, 21.91
+
+### 🤖 Claude — 2026-11-20T11:11:36.348Z
+
+All checks passed on the exported files. Next I'll write the verification record into the package, then zip and run the extraction test.
+
+### 🤖 Claude — 2026-11-20T11:11:45.368Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad; cat > $S/export/Rainbow_App_Review/PACKAGE_VERIFICATION.md <<EOF\n# Package verification — run on the EXPORTED files (not the original checkout), 2026-11-20 11:09–11:11 UTC\n\nEnvironment: Linux, Node v22.23.5, npm 10.9.9. Commit of the export: bf01adf096f4f888eb73bc982b4ed55012ec12c2.\n\n## 1_main_project (default game)\n| Check | Result |\n|---|---|\n| \\`npm ci\\` | exit 0 — 124 packages installed from \\`package-lock.json\\` |\n| \\`npx tsc --noEmit\\` | exit 0 — no errors |\n| \\`npm run test …[+1338 chars]`
+
+### 🧑 User — 2026-11-20T11:11:45.612Z
+
+> ↩︎ result: ## 2_screen_versions (each made with `apply_version.py`, same node_modules)
+> | Version | `tsc --noEmit` | `test:continuity` |
+> |---|---|---|
+> | `benny_all_screens` | exit 0 (0 error lines) | exit 0, "ok": true |
+> | `screen04_s04` | exit 0 (0 error lines) | exit 0, "ok": true |
+> | `screen05_s05` | exit 0 (0 error lines) | exit 0, "ok": true |
+> | `screen06_lead_cone_test` | exit 0 (0 error lines) | exit 0, "ok": true |
+> | `screen06_s06` | exit 0 (0 error lines) | exit 0, "ok": true |
+> | `screen07_candidate_r23` | exit 0 (0 error lines) | exit 0, "ok": true |
+> | `screen07_s07` | exit 0 (0 error lines) | exit 0, "ok": true |
+> | `screen08_s08` | exit 0 (0 error lines) | exit 0, "ok": true |
+> 
+> Not re-run for this package (results from the specialists' notes, see README section 8): the browser gameplay test
+> (`scripts/gameplay-test.mjs`, needs Playwright + Chromium) and the screenshot / clip renders. No test was run on a phone.
+> The ZIP extraction test (every file's SHA-256 against `MANIFEST_FILES.tsv`, LFS files hold real data, required files present,
+> secret-pattern scan) is reported with the delivery.
+
+### 🤖 Claude — 2026-11-20T11:11:50.195Z
+
+Now the ZIPs and the extraction test. It writes about 1.9 GB, so it runs in the background.
+
+### 🤖 Claude — 2026-11-20T11:11:52.499Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad; df -h /tmp | tail -1; timeout 3000 python3 -I $S/zip_and_test.py $S/export $S/Rainbow_App_Review_ZIPS $S/extract_test 2>&1 | tail -60", "description": "Create the ZIP parts and test extraction", "timeout": 3600000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T11:11:52.589Z
+
+> ↩︎ result: Command running in background with ID: blf7oalak. Output is being written to: /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/tasks/blf7oalak.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-20T11:11:57.355Z
+
+While that runs, I'll keep the package's text files in the repo too (README, manifest, verification, clip index, apply script), so they are saved on GitHub. The ZIPs themselves stay out of the repo.
+
+### 🤖 Claude — 2026-11-20T11:12:05.132Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/export/Rainbow_App_Review; D=/home/user/rainbow-/docs/review_package/2026-11-20; mkdir -p $D && cp $S/REVIEW_README.md $S/MANIFEST.json $S/MANIFEST_FILES.tsv $S/PACKAGE_VERIFICATION.md $S/.env.example $S/2_screen_versions/apply_version.py $D/ && cp $S/4_evidence/INDEX.md $D/EVIDENCE_INDEX.md && cp /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/zip_and_test.py $D/ && cat >> /home/user/rainbow-/docs/briefs/2026-11-20-r24/COORDINATION.md <<'EOF'\n* ~10:58 USER asked  …[+1109 chars]`
+
+### 🧑 User — 2026-11-20T11:12:05.425Z
+
+> ↩︎ result: EVIDENCE_INDEX.md
+> MANIFEST.json
+> MANIFEST_FILES.tsv
+> PACKAGE_VERIFICATION.md
+> REVIEW_README.md
+> apply_version.py
+> zip_and_test.py
+
+### 🧑 User — 2026-11-20T11:12:11.037Z
+
+[Request interrupted by user]
+
+### 🧑 User — 2026-11-20T11:12:11.458Z
+
+Make sure you save everything to my GitHub repository, including the chat history, all the tools, all the plugins, all the agents, my chat history. Make sure the most recent one. Make sure everything is saved. Make sure it's every 5 minutes. And make sure you put that in the, when you save it to my GitHub repository, make sure you put that in the instructions or notes for my other Claude account that I might have credits with, because I might be running out of credits on this one. So I want to make sure when I go on my other Claude account that it does have credits, it automatically audio saves every 5 minutes to GitHub repository.
+
+### 🤖 Claude — 2026-11-20T11:12:31.620Z
+
+> 🔧 **Bash** `{"command": "pgrep -af \"zip_and_test|rainbow-autosave|autosave-daemon\" | grep -v pgrep | cut -c1-160; ls -la /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/Rainbow_App_Review_ZIPS/ 2>/dev/null; cd /home/user/rainbow- && cat backups/autosave.config.json | python3 -c \"import json,sys;d=json.load(sys.stdin);print({k:d[k] for k in d if 'interval' in k.lower() or 'branch' in k.lower() or 'minutes' in k.lower()})\"; python3 -I scripts/autosave-status.py", "description": "Check the zip job, autosave daemon and interval"}`
+
+### 🧑 User — 2026-11-20T11:12:33.650Z
+
+> ↩︎ result: 558 bash /home/user/rainbow-/scripts/autosave-daemon.sh
+> total 1881128
+> drwxr-xr-x  2 root root      4096 Nov 20 11:12 .
+> drwx------ 23 root root      4096 Nov 20 11:12 ..
+> -rw-r--r--  1 root root 442296372 Nov 20 11:12 Rainbow_App_Review.zip
+> -rw-r--r--  1 root root 354769132 Nov 20 11:11 Rainbow_App_Review_assets_1_of_5_stills_04_05_audit.zip
+> -rw-r--r--  1 root root 285913699 Nov 20 11:11 Rainbow_App_Review_assets_2_of_5_stills_06_default.zip
+> -rw-r--r--  1 root root 350973506 Nov 20 11:11 Rainbow_App_Review_assets_3_of_5_stills_07_08.zip
+> -rw-r--r--  1 root root 215109381 Nov 20 11:11 Rainbow_App_Review_assets_4_of_5_stills_benny.zip
+> -rw-r--r--  1 root root 277167570 Nov 20 11:12 Rainbow_App_Review_assets_5_of_5_marble_older_apks.zip
+> -rw-r--r--  1 root root      1147 Nov 20 11:12 extraction_test.json
+> {'branch': 'claude/rainbow-r22-restore-ut3m39', 'session_branch_patterns': ['ccr-*', 'claude/*'], 'protected_branches': ['ccr-68d26c2d-gwegce', 'claude/rainbow-s06-match-c22', 'claude/rainbow-benny-c22', 'ccr-6f431adf-7h0m8y', 'claude/rainbow-3d-recovery-m4v347', 'ccr-d4bb0ad3-8ycajb', 'ccr-8b6fc834-7kd55l', 'ccr-e033f912-8b40f5', 'claude/rainbow-3d-account-transfer-syorak', 'ccr-93add0fa- …[+8904 chars]
+
+### 🤖 Claude — 2026-11-20T11:12:38.364Z
+
+The five-minute autosave daemon is running and its last save is verified (GitHub = local). The ZIP job also finished; I'll read its extraction test.
+
+### 🤖 Claude — 2026-11-20T11:12:39.793Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/Rainbow_App_Review_ZIPS/extraction_test.json", "description": "Read the ZIP extraction test results"}`
+
+### 🧑 User — 2026-11-20T11:12:39.899Z
+
+> ↩︎ result: {
+>  "manifest_files_ok": 2161,
+>  "mismatch": 0,
+>  "missing": 0,
+>  "lfs_pointers_left": 0,
+>  "required_missing": [],
+>  "largest_files": [
+>   "29.6 MB 6_marble_worldlabs_assets/05/pilot/full/splats_full_res.spz",
+>   "28.0 MB 6_marble_worldlabs_assets/05/pilot/full/splats_500k.ply",
+>   "27.9 MB 6_marble_worldlabs_assets/05/pilot/draft/splats_500k.ply",
+>   "26.9 MB 5_android_apk/rainbow-debug-06-2026-11-17-r3.apk",
+>   "26.3 MB 6_marble_worldlabs_assets/05/pilot/draft/splats_full_res.spz",
+>   "23.0 MB 5_android_apk/rainbow-debug-match08-2026-11-17c-benny.apk",
+>   "21.7 MB 5_android_apk/older_apks/rainbow-debug-match08-2026-11-17b.apk",
+>   "21.3 MB 5_android_apk/older_apks/rainbow-debug-match08-2026-11-17.apk"
+>  ],
+>  "secret_pattern_hits": [],
+>  "forbidden_dirs": [],
+>  "problems": [],
+>  "zips": {
+>   "Rainbow_App_Review.zip": 442.3,
+>   "Rainbow_App_Review_assets_5_of_5_marble_older_apks.zip": 277.2,
+>   "Rainbow_App_Review_assets_1_of_5_stills_04_05_audit.zip": 354.8,
+>   "Rainbow_App_Review_assets_3_of_5_stills_07_08.zip": 351.0,
+>   "Rainbow_App_Review_assets_2_of_5_stills_06_default.zip": 285.9,
+>   "Rainbow_App_Review_assets_4_of_5_stills_benny.zip": 215.1
+>  }
+> }
+
+### 🤖 Claude — 2026-11-20T11:12:48.768Z
+
+> 🔧 **Bash** `{"command": "ls -la backups/claude-sessions/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/ backups/claude-sessions/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/subagents | head -20; tail -5 backups/claude-sessions/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/transcript.md | cut -c1-200; python3 -c \"\nimport json;d=json.load(open('backups/LIVE_TOOLS_STATE.json'));print(list(d.keys()));\nfor k in ('plugins','mcp_servers','agents','specialists','hooks','skills'):\n  v=d.get(k); print(k, (json.dumps(v)[:400] if v is not None else None))\"", "description": "Check chat history export and tools state file"}`
+
+### 🧑 User — 2026-11-20T11:12:48.892Z
+
+> ↩︎ result: backups/claude-sessions/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/:
+> total 2416
+> drwxr-xr-x  3 root root    4096 Nov 20 11:10 .
+> drwxr-xr-x 44 root root    4096 Nov 20 10:31 ..
+> drwxr-xr-x  2 root root    4096 Nov 20 11:10 subagents
+> -rw-r--r--  1 root root  188368 Nov 20 11:10 transcript.md
+> -rw-r--r--  1 root root 2272055 Nov 20 11:10 transcript.sanitized.jsonl
+> 
+> backups/claude-sessions/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/subagents:
+> total 4352
+> drwxr-xr-x 2 root root    4096 Nov 20 11:10 .
+> drwxr-xr-x 3 root root    4096 Nov 20 11:10 ..
+> -rw-r--r-- 1 root root  106670 Nov 20 11:07 agent-a91d7572ef092d7f9.md
+> -rw-r--r-- 1 root root 1066034 Nov 20 11:07 agent-a91d7572ef092d7f9.sanitized.jsonl
+> -rw-r--r-- 1 root root  124205 Nov 20 11:10 agent-a9747714b21c05873.md
+> -rw-r--r-- 1 root root 1231970 Nov 20 11:10 agent-a9747714b21c05873.sanitized.jsonl
+> -rw-r--r-- 1 root root   58820 Nov 20 11:10 agent-ab7b5fbb29a298129.md
+> -rw-r--r-- 1 root root  800471 Nov 20 11:10 agent-ab7b5fbb29a298129.sanitized.jsonl
+> -rw-r--r-- 1 root root   86603 Nov 20 11:10 agent-ac1083e0b64cccb26.md
+> -rw-r--r-- 1 root root  952675 Nov 20 11:10 agent-ac1083e0b64cccb26.sanitized.jsonl
+> >  }
+> > }
+> > {'files': 2161, 'bytes': 1943333388,  …[+443 chars]
+
+### 🤖 Claude — 2026-11-20T11:12:53.432Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json;d=json.load(open('backups/LIVE_TOOLS_STATE.json'))\nfor k in ['time_utc','lead_branch','plugins_installed_locally','plugins_enabled_user_settings','plugins_synced_from_claude_account','mcp_servers_configured','hooks_project','specialists_sha256_16','workers_git_worktrees']:\n  print(k,'=',json.dumps(d.get(k))[:300])\"; ls backups/ | head -50", "description": "Read the tools state record and backups folder"}`
+
+### 🧑 User — 2026-11-20T11:12:53.562Z
+
+> ↩︎ result: time_utc = "2026-11-20T11:11:03+00:00"
+> lead_branch = "ccr-5be1062a-0ffyej"
+> plugins_installed_locally = ["worldlabs@worldlabs"]
+> plugins_enabled_user_settings = ["worldlabs@worldlabs"]
+> plugins_synced_from_claude_account = ["Closes the gap between Claude Code and the browser. When a task needs the web, Claude Code", "TypeScript/JavaScript language server for Claude Code that runs TypeScript 7's native LSP ", "Tools to maintain and improve CLAUDE.md files - audit quality, capture session learnings, ", "Python type-chec
+> mcp_servers_configured = ["worldlabs"]
+> hooks_project = ["PreCompact", "SessionEnd", "SessionStart", "Stop"]
+> specialists_sha256_16 = {"android-build-performance": "b0c45161860a960c", "animation-and-gameplay-engineer": "c48094c3ed3d22e7", "benny-character-artist": "cde203afa8b927cb", "cartoon-girl-character-artist": "52058503a3558580", "foam-bubbles-particles": "f6341dcde1ea07e5", "path-camera-transition-engineer": "4244cc8249008d
+> workers_git_worktrees = [{"worktree": "/home/user/wt/benny", "branch": "claude/rainbow-benny-c25", "head": "734efb6bc407"}, {"worktree": "/home/user/wt/lead06", "branch": "", "head": "e162aec2bfdc"}, {"worktree": "/home/user/wt/lead07", "branch": …[+507 chars]
+
+### 🤖 Claude — 2026-11-20T11:13:09.520Z
+
+> 🔧 **Bash** `{"command": "grep -n \"plugins_synced_from_claude_account\" -B12 scripts/rainbow-autosave.py | head -40; ls /root/.claude/plugins/synced/*/*/ 2>/dev/null | head; find /root/.claude/plugins/synced -maxdepth 4 -name plugin.json | head -5", "description": "Find how synced plugin names are recorded"}`
+
+### 🧑 User — 2026-11-20T11:13:09.806Z
+
+> ↩︎ result: 320-            workers.append({"worktree": kv["worktree"], "branch": kv.get("branch", "").replace("refs/heads/", ""),
+> 321-                            "head": kv.get("HEAD", "")[:12]})
+> 322-    status = jload(REPO / "backups" / "AGENTS_STATUS.json") or {}
+> 323-    rounds = sorted(k for k in status if k.startswith("round"))
+> 324-    state = {
+> 325-        "time_utc": now_utc().isoformat(),
+> 326-        "lead_branch": git("rev-parse", "--abbrev-ref", "HEAD", check=False).stdout.strip(),
+> 327-        "specialists_sha256_16": agents,
+> 328-        "workers_git_worktrees": workers,
+> 329-        "workers_status_latest_round": {rounds[-1]: status[rounds[-1]].get("workers")} if rounds else None,
+> 330-        "plugins_installed_locally": sorted((inst.get("plugins") or {}).keys()),
+> 331-        "plugins_enabled_user_settings": sorted(k for k, v in (user_set.get("enabledPlugins") or {}).items() if v),
+> 332:        "plugins_synced_from_claude_account": synced,
+> /root/.claude/plugins/synced/3cfed598-2f11-4199-9ad6-9e421d2ddaba_3c459f59-4e74-461e-b4e6-c52936eda7c5/1763cd53-20d6-4f29-8a54-258616605d71/:
+> LICENSE
+> README.md
+> commands
+> 
+> /root/.claude/plugins/synced/3cfed598-2f11-4199-9ad6-9e421d2ddaba_3c459f59-4e74 …[+1058 chars]
+
+### 🤖 Claude — 2026-11-20T11:13:13.083Z
+
+> 🔧 **Bash** `{"command": "grep -n \"synced = \\|synced\\.append\\|synced=\" -A6 scripts/rainbow-autosave.py | head -20", "description": "Read the synced plugin collection code"}`
+
+### 🧑 User — 2026-11-20T11:13:13.190Z
+
+> ↩︎ result: 304:    synced = []
+> 305-    for m in (home / ".claude" / "plugins" / "synced").glob("*/manifest.json"):
+> 306-        for p in (jload(m) or {}).get("plugins", []):
+> 307:            synced.append(p.get("description", "")[:90])
+> 308-    user_set = jload(home / ".claude" / "settings.json") or {}
+> 309-    proj_set = jload(REPO / ".claude" / "settings.json") or {}
+> 310-    mcp_names = set()
+> 311-    for cfg in (home / ".claude.json", REPO / ".mcp.json"):
+> 312-        mcp_names.update(((jload(cfg) or {}).get("mcpServers") or {}).keys())
+> 313-    for pj in (home / ".claude" / "plugins" / "cache").glob("*/*/*/mcp.json"):
+
+### 🤖 Claude — 2026-11-20T11:13:17.852Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/scripts/rainbow-autosave.py", "old_string": "    for m in (home / \".claude\" / \"plugins\" / \"synced\").glob(\"*/manifest.json\"):\n        for p in (jload(m) or {}).get(\"plugins\", []):\n            synced.append(p.get(\"description\", \"\")[:90])", "new_string": "    for m in (home / \".claude\" / \"plugins\" / \"synced\").glob(\"*/manifest.json\"):\n        for p in (jload(m) or {}).get(\"plugins\", []):\n            synced.append(p.get(\"description\", \"\")[:90])\n    # r24: the plugin NAMES (manifest.json only carries descriptio …[+262 chars]`
+
+### 🧑 User — 2026-11-20T11:13:18.230Z
+
+> ↩︎ result: The file /home/user/rainbow-/scripts/rainbow-autosave.py has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T11:13:18.922Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/scripts/rainbow-autosave.py", "old_string": "        \"plugins_synced_from_claude_account\": synced,", "new_string": "        \"plugins_synced_from_claude_account\": synced,\n        \"plugins_synced_from_claude_account_names\": synced_names,"}`
+
+### 🧑 User — 2026-11-20T11:13:19.164Z
+
+> ↩︎ result: The file /home/user/rainbow-/scripts/rainbow-autosave.py has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T11:13:20.246Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json,glob\nprint(sorted({json.load(open(p)).get('name','') for p in glob.glob('/root/.claude/plugins/synced/*/*/.claude-plugin/plugin.json')}))\"; python3 -m py_compile scripts/rainbow-autosave.py && echo compiled", "description": "Preview synced plugin names and compile the autosave"}`
+
+### 🧑 User — 2026-11-20T11:13:20.544Z
+
+> ↩︎ result: ['claude-bridge', 'claude-code-setup', 'claude-md-management', 'code-review', 'code-simplifier', 'commit-commands', 'context7', 'feature-dev', 'frontend-design', 'playwright', 'security-guidance', 'superpowers', 'typemux-cc', 'typescript-native-lsp']
+> compiled
+
+### 🤖 Claude — 2026-11-20T11:13:23.464Z
+
+Plugin names are recorded properly now. Next I'll update the instructions your other Claude account will read, starting with the top of `backups/START_NEW_CLAUDE_ACCOUNT.md`.
+
+### 🤖 Claude — 2026-11-20T11:13:24.055Z
+
+> 🔧 **Bash** `{"command": "head -45 backups/START_NEW_CLAUDE_ACCOUNT.md", "description": "Read the top of the new-account start file"}`
+
+### 🧑 User — 2026-11-20T11:13:24.280Z
+
+> ↩︎ result: # Paste this into Claude Code on the next Claude account
+> 
+> ## ▶ NEWEST (2026-11-20 ~04:00 UTC, round 22 → next account) — use THIS prompt
+> Before pasting: on the new account connect GitHub (+ Claude GitHub App on `josiahscalia5-dev/rainbow-`) and start a Claude Code cloud
+> session on the repo, branch **`ccr-4742c19f-ez2mrs`** (round-22 lead; NOT the default branch). Connectors on claude.ai: **World Labs
+> Atlas** (finish the Atlas sign-up at atlas.worldlabs.ai) and **Hugging Face**. Keys (World Labs `api.worldlabs.ai` header
+> `WLT-Api-Key`; fal `queue.fal.run` `Authorization: Key`) are checked with free reads first; the secure form opens only if a check fails.
+> 
+> > RAINBOW — continue my EXISTING game exactly where round 22 stopped. Do NOT restart, redesign, merge or delete anything.
+> > 1. Follow `CLAUDE.md` (five-minute GitHub autosave first). Read `docs/briefs/2026-11-20-r22/RESUME_R22.md` (where everything stopped,
+> >    my decisions and my latest Screen 04 feedback), `COORDINATION.md` in the same folder, and
+> >    `docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md` (binding). My authorizations stand: paid artwork, up to four specialists,
+> >    06 / 07 framing tests, Screen 08 polish, consi …[+2901 chars]
+
+### 🤖 Claude — 2026-11-20T11:13:45.969Z
+
+> 🔧 **Bash** `{"command": "sed -e 's/setup_worker_r24.sh — round 24 (new account after r23 hit its 5-hour limit at 10:19 UTC)/setup_worker_r25.sh — the NEXT account after round 24/' \\\n -e 's#NEW LOCAL -c25 branches = the r23 worker.s base commit + its newest autosave snapshot backups/wip/<branch-c24>/ (10:25:53 UTC).#NEW LOCAL -c26 branches = the worker base commit + its NEWEST autosave snapshot backups/wip/<branch-c25>/ (the round-24 lead autosave refreshes it every 5 min; read INFO.json \"time\").#' \\\n -e 's#The -c24 branches were LOCAL only in the r23 container#The -c25 branches were LOCAL only in th …[+2165 chars]`
+
+### 🧑 User — 2026-11-20T11:13:46.280Z
+
+> ↩︎ result: 3:# NEW LOCAL -c26 branches = the worker base commit + its NEWEST autosave snapshot backups/wip/<branch-c25>/ (the round-24 lead autosave refreshes it every 5 min; read INFO.json "time").
+> 4:# The -c25 branches were LOCAL only in the r24 container (never pushed); their unfinished edits live only in those snapshots.
+> 6:# usage: bash docs/briefs/2026-11-20-r24/setup_worker_r25.sh [s04 s07 s06 benny s08 s05 lead07 lead06]
+> 29:W=${*:-s04 s07 s06 benny s08 s05 lead07 lead06}
+> 31:  s04)    need $S04 claude/rainbow-s04-match-c21;   mk s04 /home/user/wt/s04 claude/rainbow-s04-match-c26 $S04 backups/wip/claude__rainbow-s04-match-c25 ;;
+> 32:  s07)    need $S07 claude/rainbow-s07-match-c18;   mk s07 /home/user/wt/s07 claude/rainbow-s07-match-c26 $S07 backups/wip/claude__rainbow-s07-match-c25 ;;
+> 33:  s06)    need $S06 claude/rainbow-s06-match-c23;   mk s06 /home/user/wt/s06 claude/rainbow-s06-match-c26 $S06 backups/wip/claude__rainbow-s06-match-c25 ;;
+> 34:  benny)  need $BEN claude/rainbow-benny-c23;       mk benny /home/user/wt/benny claude/rainbow-benny-c26 $BEN backups/wip/claude__rainbow-benny-c25 ;;
+> 35:  s08)    need $S08 claude/rainbow-s08-scenery-c17; mk s08 /home/user/wt/s08 claude/rainbow-s …[+370 chars]
+
+### 🤖 Claude — 2026-11-20T11:13:54.818Z
+
+Now the new-account instructions at the top of the start file:
+
+### 🤖 Claude — 2026-11-20T11:14:16.048Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='backups/START_NEW_CLAUDE_ACCOUNT.md'; s=open(p).read()\ntop = \"\"\"# Paste this into Claude Code on the next Claude account\n\n## ▶▶ NEWEST (2026-11-20 ~11:20 UTC, round 24 → next account) — use THIS prompt\n\n### Before pasting (on the new Claude account)\n1. Connect GitHub on claude.ai (+ the Claude GitHub App on `josiahscalia5-dev/rainbow-`).\n2. Start a Claude Code **cloud** session on `josiahscalia5-dev/rainbow-`, branch **`ccr-5be1062a-0ffyej`** (the round-24 lead).\n   **NOT the GitHub default branch** — the default branch (`ccr-6f431adf-7h0m8y`, the  …[+5405 chars]`
+
+### 🧑 User — 2026-11-20T11:14:16.259Z
+
+> ↩︎ result: ok
+> # Paste this into Claude Code on the next Claude account
+> 
+> ## ▶▶ NEWEST (2026-11-20 ~11:20 UTC, round 24 → next account) — use THIS prompt
+> 
+> ### Before pasting (on the new Claude account)
+
+### 🤖 Claude — 2026-11-20T11:14:21.608Z
+
+Next I'll record the same order in `CLAUDE.md`, the handoff, and the agents' status (Screen 07, Screen 04 and Benny stopped mid-step; Screen 08 finished).
+
+### 🤖 Claude — 2026-11-20T11:14:32.066Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\n# CLAUDE.md §2: user's restated order\np='CLAUDE.md'; s=open(p).read()\nanchor=\"* Backups cannot run while an environment is closed: never claim they did.\"\nadd=(\"* **User order restated 2026-11-20 ~11:20 UTC (round 24, for EVERY Claude account the user moves to):** save EVERYTHING to GitHub\\n\"\n\"  every 5 minutes, automatically — code, assets, the chat history (lead + every specialist, `backups/claude-sessions/`), tools,\\n\"\n\"  plugins, MCP servers, agents (`backups/LIVE_TOOLS_STATE.json`, `backups/AGENTS_STATUS.json`). The new-account ste …[+2170 chars]`
+
+### 🧑 User — 2026-11-20T11:14:32.397Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-20T11:14:35.787Z
+
+Now a full save (code, chat history, tools state, specialists' unfinished edits), then I'll verify on GitHub that the chat history and instructions are really there.
+
+### 🤖 Claude — 2026-11-20T11:14:39.658Z
+
+> 🔧 **Bash** `{"command": "timeout 240 bash -c 'until flock -n backups/.autosave.lock true; do sleep 2; done'; timeout 400 python3 scripts/rainbow-autosave.py --reason manual:user-save-everything 2>&1 | grep -E '\"result\"|\"commit\"|pushed_verified|skipping'; H=$(git rev-parse HEAD); R=$(git ls-remote origin refs/heads/ccr-5be1062a-0ffyej | cut -f1); echo \"local $H\"; echo \"remote $R\"; [ \"$H\" = \"$R\" ] && echo MATCH; python3 -I scripts/autosave-status.py; git show $H:backups/LIVE_TOOLS_STATE.json | python3 -c \"import json,sys;d=json.load(sys.stdin);print('plugin names:',d.get('plugins_synced_from_cl …[+292 chars]`
+

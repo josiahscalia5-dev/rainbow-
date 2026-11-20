@@ -858,3 +858,138 @@ Top row is step 2, bottom row is step 3. Foam and tunnel are complete in every N
 > /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04/clip*/f 0
 >  11:10:44 up 49 min,  0 user,  load average: 18.30, 24.93, 21.79
 
+### 🤖 Claude — 2026-11-20T11:10:49.851Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad; ls -d $S/clip* 2>/dev/null; for d in $S/clip*/f; do echo \"$d $(ls $d 2>/dev/null | wc -l)\"; done; tail -3 $S/clip*/log 2>/dev/null; python3 -I -c \"\nimport json; d=json.load(open('/home/user/rainbow-/qa/match/04/r23/s3_glossy/gameplay.json')); print({k:d[k] for k in d if k in ('pass','startCoins','endCoins','collected')}); print(d.get('checks', d.get('results','')) if not isinstance(d.get('checks'),list) else '')\" 2>&1 | head -5; tail -3 /home/user/rainbow-/qa/match/04/r23/s3_glossy/gameplay.l …[+66 chars]`
+
+### 🧑 User — 2026-11-20T11:10:50.216Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/clipBneI
+> /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/clips
+> /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/clipBneI/f 3
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff2" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff" is outside of Vite serving allow list.
+> {'pass': True}
+> {'pauseFreezes': {'pass': True, 'sBefore': 45.495, 'sPaused': 45.495, 'sAfter': 49.995}, 'continuousTravel': {'pass': True, 'nonMonotonicSteps': 0, 'steps': 2139, 'respawns': 0}, 'noCameraCut': {'pass': True, 'maxCameraJumpPerStep': 0.728}, 'noTeleport': {'pass': True, 'maxBennyAltitudeJumpPerStep': 0.19, 'at': {'s': 360.074, 's1': 360.274, 'stage': '07', 'y0': -93.088, 'y1': -93.278, 't': 27.85}}, 'plunge': {'pass': True, 'tTop': 23.699999999999935, 'tBottom': 30.283 …[+529 chars]
+
+### 🤖 Claude — 2026-11-20T11:11:01.068Z
+
+> 🔧 **Bash** `{"command": "D=/home/user/rainbow-/qa/match/04/r23/s3_glossy; S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04; cd /home/user/wt/s04 && git diff > $D/code.patch && diff -u $S/match04m4.before_s3.ts src/world/match04m4.ts | sed \"1,2s#$S/match04m4.before_s3.ts#a/src/world/match04m4.ts (r23 step 1-2 code)#; 2s#src/world/match04m4.ts#b/src/world/match04m4.ts#\" > $D/step3_only.patch; cp $S/tsc_s3.log $D/tsc.log; echo \"npx tsc --noEmit exit 0 (final step-3 code, $(date -u +%H:%M) UTC)\" >> $D/tsc.log; mkdir -p $D/APPROVED && cp /home/user/rainbow-/qa/match/0 …[+191 chars]`
+
+### 🧑 User — 2026-11-20T11:11:01.796Z
+
+> ↩︎ result: 1001 /home/user/rainbow-/qa/match/04/r23/s3_glossy/code.patch
+>    76 /home/user/rainbow-/qa/match/04/r23/s3_glossy/step3_only.patch
+>  1077 total
+> 54
+> APPROVED
+> K23-1_with_new_code
+> K23-S2_with_new_code
+> NEW
+> QUERY_K23-S3.txt
+> SWITCH.txt
+> code.patch
+> gameplay.json
+> gameplay.log
+> step3_only.patch
+> tsc.log
+
+### 🤖 Claude — 2026-11-20T11:11:06.717Z
+
+While the clip renders, I'll confirm the start view of step 3 against the original K23-1 BEFORE too (rows 180–1536, the standard check).
+
+### 🤖 Claude — 2026-11-20T11:11:10.108Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/tools-pixelmatch; S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04; node pixeldiff.mjs /home/user/rainbow-/qa/match/04/r23/s04_BEFORE_K23-1/a_start.png /home/user/rainbow-/qa/match/04/r23/s3_glossy/NEW/a_start.png $S/st.png 0.1 180 1536 | grep -o '\"diff_pixels\":[0-9]*'; node pixeldiff.mjs /home/user/rainbow-/qa/match/04/r23/s04_BEFORE_K23-1/a_start.png /home/user/rainbow-/qa/match/04/r23/s3_glossy/NEW/a_start.png $S/st2.png 0.1 0 1536 | grep -o '\"diff_pixels\":[0-9]*'; ls $S/../clipBneI/f | wc -l", "description": "Start view  …[+23 chars]`
+
+### 🧑 User — 2026-11-20T11:11:12.433Z
+
+> ↩︎ result: "diff_pixels":0
+> "diff_pixels":0
+> 5
+
+### 🤖 Claude — 2026-11-20T11:11:22.600Z
+
+Start view is 0 px against K23-1 across the whole frame. The clip is slow (5 of 58 frames), so I'll arm a monitor for it and update PROGRESS.md meanwhile (docs only, no `src/` edits).
+
+### 🤖 Claude — 2026-11-20T11:11:22.964Z
+
+> 🔧 **ToolSearch** `{"query": "select:Monitor", "max_results": 1}`
+
+### 🧑 User — 2026-11-20T11:11:22.988Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-20T11:11:28.168Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04; until grep -q \"clip_exit\" $S/clip_s3.out 2>/dev/null; do sleep 5; done; cat $S/clip_s3.out; ls /home/user/rainbow-/qa/match/04/r23/s3_glossy | grep -E \"mp4|frames\"", "description": "Wait for step-3 clip to finish", "timeout": 3600000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T11:11:28.331Z
+
+> ↩︎ result: Command running in background with ID: b0g5cafz0. Output is being written to: /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/tasks/b0g5cafz0.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-20T11:11:32.013Z
+
+Now the PROGRESS.md update: the r24 block at the top, step 2 completed, and step 3 (clip line filled in once it finishes).
+
+### 🤖 Claude — 2026-11-20T11:11:32.509Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/04/r23/PROGRESS.md", "limit": 30}`
+
+### 🧑 User — 2026-11-20T11:11:32.846Z
+
+> ↩︎ result: 1	# Screen 04 — round 23 (new account, lead session branch `claude/rainbow-r22-restore-ut3m39`) — lead log
+> 2	
+> 3	## (r23) WHERE I STOPPED / NEXT
+> 4	* Candidate **K23-1** = `QUERY_K23-1.txt` = K22-2 with `m04wup=0` (no pink water climbing the gold walls) + `m04nwhirl=0&m04nband=0`
+> 5	  (no pink swirl wrapped round Benny) + `m04lane2=0.25` (calmer lane water). Lead verdict: GOOD IMPROVEMENT on the user's
+> 6	  two complaints (pink walls by the gold, too much pink). Shown to the user ~04:35 UTC. Waiting for the user's eye.
+> 7	* Next (s04 specialist, `docs/briefs/2026-11-20-r23/LAUNCH_S04_R23.md`): Benny going naturally THROUGH the five arrows (chevrons
+> 8	  clearly ahead of him, not at hat height), the hard straight lilac edge where water meets gold → low bubbly foam bank, glossy long
+> 9	  white streaks instead of the frosted ripple, then projection of the three approved generated views.
+> 10	
+> 11	## (r23 s04) WHERE I STOPPED / NEXT
+> 12	* Specialist (washer-environment-modeler, worktree `/home/user/wt/s04`, local branch `claude/rainbow-s04-match-c24`, port 5273-5275,
+> 13	  brief `docs/briefs/2026-11-20-r23/LAUNCH_S04_R23.md`). Uncommitted edits only.
+> 14	* Step 0 DONE: BEFORE = K23-1 re-rendered wi …[+1989 chars]
+
+### 🤖 Claude — 2026-11-20T11:11:42.296Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/match/04/r23/PROGRESS.md", "old_string": "# Screen 04 — round 23 (new account, lead session branch `claude/rainbow-r22-restore-ut3m39`) — lead log\n\n## (r23) WHERE I STOPPED / NEXT", "new_string": "# Screen 04 — round 23 (new account, lead session branch `claude/rainbow-r22-restore-ut3m39`) — lead log\n\n## (r24) WHERE I STOPPED / NEXT — s04 specialist (relaunched r24, worktree `/home/user/wt/s04`, LOCAL branch `claude/rainbow-s04-match-c25`)\n* Resumed from the 10:25 snapshot (no patch re-applied). Recreated worktree verified: K23-S …[+1150 chars]`
+
+### 🧑 User — 2026-11-20T11:11:42.900Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/match/04/r23/PROGRESS.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T11:11:45.497Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/match/04/r23/PROGRESS.md", "old_string": "* Step 2 NEARLY DONE (`s2_edge/`, switches only, no new code; query `s2_edge/QUERY_K23-S2.txt`): lower, cleaner pink edges\n  (`m04ry=0.45`) + continuous LOW foam banks on both water edges down the tunnel (`m04bbd` window 30-40 u, on the edge, sunk,\n  denser) + softer lilac fringe. 7-shot NEW audit done (start 0 px). Running: clip + gameplay. Next: step 3 = glossy lane water.", "new_string": "* Step 2 DONE (finished in r24; `s2_edge/`, switches only, no new code; query `s2_edge/QUERY_K23-S2.t …[+293 chars]`
+
+### 🧑 User — 2026-11-20T11:11:46.141Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/match/04/r23/PROGRESS.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T11:11:49.960Z
+
+> 🔧 **Bash** `{"command": "grep -n \"Step 2 — cleaner\\|^\\* Mobile cost: more instanced\\|^## User feedback driving\" /home/user/rainbow-/qa/match/04/r23/PROGRESS.md; sed -n '/Step 2 — cleaner/,/^## User feedback/p' /home/user/rainbow-/qa/match/04/r23/PROGRESS.md | tail -12", "description": "Locate step-2 section end in PROGRESS.md"}`
+
+### 🧑 User — 2026-11-20T11:11:50.108Z
+
+> ↩︎ result: 63:## (r23 s04) Step 2 — cleaner, LOWER pink edges with a low foam bank where the water meets the gold — `s2_edge/` — GOOD IMPROVEMENT
+> 80:* Mobile cost: more instanced foam heaps visible at once (same 4 Blender heap meshes, ~5k triangles each, instanced; the far window
+> 83:## User feedback driving this round (verbatim, 2026-11-20)
+>   user's words); the straight lilac top line is mostly covered by the foam. Early view especially close to the painting.
+> * STILL DIFFERENT: the far foam rows are smaller, more separate bubbles than the painted cloud banks; near the end (e_end) the
+>   banks thin out where the far telescope begins; a little lilac still shows on the upper side slope; lane water still a frosted
+>   ripple (step 3).
+> * Rejected tries (`scratchpad`, not kept): E1/E2 (banks without lowering the sides: banks sit on a tall pink slope), E3 (lower
+>   sides only: lilac line still bare), E5 (fringe softening alone changes almost nothing).
+> * Proof: start view 0 px vs BEFORE; gameplay `gameplay.json` 8/8, 91 coins, 1,330 → 2,240; code unchanged since step 1
+>   (`npx tsc --noEmit` OK, `s1_arrows/code.patch`).
+> * Mobile cost: more instanced foam heaps visible at once (same 4 Blender heap meshes,  …[+205 chars]
+
+### 🧑 User — 2026-11-20T11:12:11.065Z
+
+[Request interrupted by user]
+

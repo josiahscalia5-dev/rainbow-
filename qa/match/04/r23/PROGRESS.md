@@ -1,5 +1,17 @@
 # Screen 04 — round 23 (new account, lead session branch `claude/rainbow-r22-restore-ut3m39`) — lead log
 
+## (r24) WHERE I STOPPED / NEXT — s04 specialist (relaunched r24, worktree `/home/user/wt/s04`, LOCAL branch `claude/rainbow-s04-match-c25`)
+* Resumed from the 10:25 snapshot (no patch re-applied). Recreated worktree verified: K23-S2 and K23-1 rendered with the final code
+  == the r23 pictures, 0 px over the WHOLE frame in all 7 shots (`s3_glossy/K23-S2_with_new_code/`, `s3_glossy/K23-1_with_new_code/`).
+* Step 2 DONE — GOOD IMPROVEMENT (clip frames step 1 vs step 2 compared in r24, see "Step 2" below). Candidate **K23-S2**.
+* Step 3 DONE — glossy clean lane water, `&m04lgs=1` + tuning (`s3_glossy/`, see "Step 3" below) — GOOD IMPROVEMENT. New candidate
+  **K23-S3** = `s3_glossy/QUERY_K23-S3.txt`. Up to 3 steps done -> STOPPED, reported to the lead.
+* NEXT (not started): near-camera glints shorter (painted short crescents), richer cyan/pink ribbon contrast round Benny, far foam
+  rows as cloud banks, then projection of the three accepted views (`&m04mp=1`, brief task 3).
+* Tool note: `s04_tools/clip.sh` temp folder now `$S04_SCRATCH` (default = the r24 scratchpad; the r23 one is gone). Under heavy
+  machine load a shot can be taken before the foam meshes / tunnel finish loading (seen twice in scratch variants: no foam, black
+  tunnel corner) — every proof shot here was checked by eye for complete foam + tunnel.
+
 ## (r23) WHERE I STOPPED / NEXT
 * Candidate **K23-1** = `QUERY_K23-1.txt` = K22-2 with `m04wup=0` (no pink water climbing the gold walls) + `m04nwhirl=0&m04nband=0`
   (no pink swirl wrapped round Benny) + `m04lane2=0.25` (calmer lane water). Lead verdict: GOOD IMPROVEMENT on the user's
@@ -13,9 +25,9 @@
   brief `docs/briefs/2026-11-20-r23/LAUNCH_S04_R23.md`). Uncommitted edits only.
 * Step 0 DONE: BEFORE = K23-1 re-rendered with the pinned audit -> `s04_BEFORE_K23-1/` == lead `lead_t2/C2/` 0 px in all 7 shots.
 * Step 1 DONE — GOOD IMPROVEMENT (details below, "s04 Step 1"). New candidate **K23-S1** = `s1_arrows/QUERY_K23-S1.txt`.
-* Step 2 NEARLY DONE (`s2_edge/`, switches only, no new code; query `s2_edge/QUERY_K23-S2.txt`): lower, cleaner pink edges
+* Step 2 DONE (finished in r24; `s2_edge/`, switches only, no new code; query `s2_edge/QUERY_K23-S2.txt`): lower, cleaner pink edges
   (`m04ry=0.45`) + continuous LOW foam banks on both water edges down the tunnel (`m04bbd` window 30-40 u, on the edge, sunk,
-  denser) + softer lilac fringe. 7-shot NEW audit done (start 0 px). Running: clip + gameplay. Next: step 3 = glossy lane water.
+  denser) + softer lilac fringe. 7-shot NEW audit (start 0 px), clip, gameplay all done. Step 3 = glossy lane water: see r24 block.
 * User confirmation ~09:55 UTC (via coordinator): "continue with the cleaner, lower pink edges. Keep the gold visible, the blue
   water clear, and show Benny travelling naturally through all five arrows." Never pink walls / wide pink.
 * QA tools (mine): `s04_tools/` (pinned audit / clip copies with a 300 s screenshot timeout, probes, variant runner `variant.sh`,

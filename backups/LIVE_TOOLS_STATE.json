@@ -1,5 +1,5 @@
 {
- "time_utc": "2026-11-20T11:11:03+00:00",
+ "time_utc": "2026-11-20T11:14:57+00:00",
  "lead_branch": "ccr-5be1062a-0ffyej",
  "specialists_sha256_16": {
   "android-build-performance": "b0c45161860a960c",
@@ -79,6 +79,22 @@
   "Browser automation and end-to-end testing MCP server by Microsoft. Enables Claude to inter",
   "Security review for Claude-generated code. Pattern-based warnings on edits, LLM-powered di",
   "Upstash Context7 MCP server for up-to-date documentation lookup. Connects to Context7's ho"
+ ],
+ "plugins_synced_from_claude_account_names": [
+  "claude-bridge",
+  "claude-code-setup",
+  "claude-md-management",
+  "code-review",
+  "code-simplifier",
+  "commit-commands",
+  "context7",
+  "feature-dev",
+  "frontend-design",
+  "playwright",
+  "security-guidance",
+  "superpowers",
+  "typemux-cc",
+  "typescript-native-lsp"
  ],
  "mcp_servers_configured": [
   "worldlabs"

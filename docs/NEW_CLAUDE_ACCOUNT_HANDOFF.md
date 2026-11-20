@@ -7,6 +7,12 @@ latest 08; keep the fuller foam; then the same labelled clip.** Screen 06 openin
 06 crest / winding river / curved coin trail stay open. Four workers relaunched on LOCAL `-c25` branches (s07, s04, s08, Benny).
 Map + services: **`docs/briefs/2026-11-20-r24/COORDINATION.md`**; briefs `LAUNCH_R24.md`; recipe `setup_worker_r24.sh`; open items
 `docs/briefs/2026-11-20-r23/OPEN_ITEMS.md`. Nothing else merged.
+**~11:20 state:** s08 FINISHED (candidate K23-3 = `qa/match/08/r23/QUERY_CANDIDATE_K23-3.txt`); s07 / s04 / Benny were STOPPED mid-step
+by the user's interrupt (their unfinished edits = `backups/wip/*-c25/`, refreshed every 5 min; recreate with
+`docs/briefs/2026-11-20-r24/setup_worker_r25.sh`); Screen 06 cone diagnosed (`qa/match/06/r24/lead_rip/NOTES.md`), fix not done.
+Review package for ChatGPT built (`docs/review_package/2026-11-20/`, ZIPs not in git). **Next account: follow the TOP of
+`backups/START_NEW_CLAUDE_ACCOUNT.md` — start on THIS branch; the five-minute autosave (incl. chat history, tools, plugins,
+agents) then starts by itself; verify with `python3 -I scripts/autosave-status.py`.**
 
 # ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ ROUND 23 (2026-11-20, lead branch `claude/rainbow-r22-restore-ut3m39`, ~04:08–10:19 UTC)
 

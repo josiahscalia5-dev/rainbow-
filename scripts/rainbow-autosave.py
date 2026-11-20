@@ -305,6 +305,9 @@ def snapshot_live_tools() -> None:
     for m in (home / ".claude" / "plugins" / "synced").glob("*/manifest.json"):
         for p in (jload(m) or {}).get("plugins", []):
             synced.append(p.get("description", "")[:90])
+    # r24: the plugin NAMES (manifest.json only carries descriptions) from each synced plugin's .claude-plugin/plugin.json
+    synced_names = sorted({(jload(pj) or {}).get("name", "") for pj in
+                           (home / ".claude" / "plugins" / "synced").glob("*/*/.claude-plugin/plugin.json")} - {""})
     user_set = jload(home / ".claude" / "settings.json") or {}
     proj_set = jload(REPO / ".claude" / "settings.json") or {}
     mcp_names = set()
@@ -330,6 +333,7 @@ def snapshot_live_tools() -> None:
         "plugins_installed_locally": sorted((inst.get("plugins") or {}).keys()),
         "plugins_enabled_user_settings": sorted(k for k, v in (user_set.get("enabledPlugins") or {}).items() if v),
         "plugins_synced_from_claude_account": synced,
+        "plugins_synced_from_claude_account_names": synced_names,
         "mcp_servers_configured": sorted(mcp_names),
         "hooks_project": sorted((proj_set.get("hooks") or {}).keys()),
         "note": "claude.ai connectors (World Labs Atlas, GitHub) and API keys are per Claude account / environment and "

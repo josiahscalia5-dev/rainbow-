@@ -1,6 +1,59 @@
 # Paste this into Claude Code on the next Claude account
 
-## ▶ NEWEST (2026-11-20 ~04:00 UTC, round 22 → next account) — use THIS prompt
+## ▶▶ NEWEST (2026-11-20 ~11:20 UTC, round 24 → next account) — use THIS prompt
+
+### Before pasting (on the new Claude account)
+1. Connect GitHub on claude.ai (+ the Claude GitHub App on `josiahscalia5-dev/rainbow-`).
+2. Start a Claude Code **cloud** session on `josiahscalia5-dev/rainbow-`, branch **`ccr-5be1062a-0ffyej`** (the round-24 lead).
+   **NOT the GitHub default branch** — the default branch (`ccr-6f431adf-7h0m8y`, the protected 11-15 original) carries an OLD
+   start hook that neither restores the newer work nor arms today's autosave. (Optional, your choice: on github.com → repository
+   Settings → Branches you can make `ccr-5be1062a-0ffyej` the default branch so every new session starts there automatically; that
+   changes no branch content.)
+3. claude.ai connectors to sign in to on that account: **World Labs Marble / Atlas**, **Hugging Face**, (optional) **Context7**.
+   Plugins to enable on that account (they belong to the account and cannot be copied through GitHub; the names are recorded every
+   5 min in `backups/LIVE_TOOLS_STATE.json` → `plugins_synced_from_claude_account_names`): claude-bridge, claude-code-setup,
+   claude-md-management, code-review, code-simplifier, commit-commands, context7, feature-dev, frontend-design, playwright,
+   security-guidance, superpowers, typemux-cc, typescript-native-lsp; the project's own `worldlabs` plugin is installed by the
+   start hook. Keys (World Labs `api.worldlabs.ai` header `WLT-Api-Key`; fal `queue.fal.run` `Authorization: Key`) are checked with
+   free reads first; the secure form opens only if a check fails — never paste keys into the chat.
+
+### The five-minute GitHub autosave starts AUTOMATICALLY (the owner's standing order — every account, every session)
+* Nothing to type: the repository's own hooks (`.claude/settings.json`) run at session start → `scripts/autosave-hook.sh` →
+  `scripts/claude-bootstrap.sh --hook`, which restores the Git LFS files and starts the autosave daemon
+  (`scripts/autosave-daemon.sh` → `scripts/rainbow-autosave.py` **every 5 minutes**); the Stop / PreCompact / SessionEnd hooks save
+  again and re-arm it.
+* Every save commits and pushes to the session's OWN branch (`ccr-*` / `claude/*`, never the protected ones) and checks that GitHub
+  holds exactly the local commit. It saves: code, assets, screenshots, clips, docs; every specialist's UNFINISHED edits
+  (`backups/wip/<branch>/`); **the chat history** of the lead session and of every specialist agent (`backups/claude-sessions/<session>/`,
+  sanitized: secrets removed; index `backups/CONVERSATION_INDEX.md`); the tools / plugins / MCP servers / agents / hooks state
+  (`backups/LIVE_TOOLS_STATE.json`, names only); the agents' status (`backups/AGENTS_STATUS.json`); the log `backups/BACKUP_LOG.md`.
+* Check it (first thing, and after every major step): `python3 -I scripts/autosave-status.py` → must print
+  `AUTOSAVE OK … (match)`. If it does not (e.g. the session was started on another branch): `bash scripts/claude-bootstrap.sh --skip-resume`
+  (from a branch without it: `git fetch origin ccr-5be1062a-0ffyej && git show FETCH_HEAD:scripts/claude-bootstrap.sh > /tmp/b.sh && bash /tmp/b.sh --skip-resume`).
+* Saves only run while a cloud session is open; when the account runs out of credits the container keeps saving until it closes.
+
+### The prompt
+> RAINBOW — continue my EXISTING game exactly where round 24 stopped. Do NOT restart, redesign, merge or delete anything.
+> 0. FIRST make sure the five-minute GitHub autosave is running on this session (`python3 -I scripts/autosave-status.py` →
+>    `AUTOSAVE OK … (match)`) and that it saves my chat history, tools, plugins and agents (see `backups/START_NEW_CLAUDE_ACCOUNT.md`).
+>    Then check every connector / tool (World Labs Marble + key, Hugging Face, fal, GitHub, Playwright, Blender, Android) and give
+>    me the backup report from `CLAUDE.md` §4.
+> 1. Follow `CLAUDE.md`. Read the TOP of `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md` ("ROUND 24"), `docs/briefs/2026-11-20-r24/COORDINATION.md`,
+>    `docs/briefs/2026-11-20-r24/LAUNCH_R24.md` (my Screen 07 note verbatim), `docs/briefs/2026-11-20-r23/OPEN_ITEMS.md` and
+>    `docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md` (binding). My authorizations stand: paid artwork when it helps (report job +
+>    cost), up to four specialists, 06 / 07 framing tests, Screen 08 polish, consistent approved Benny.
+> 2. Recreate the worktrees from the newest snapshots: `bash docs/briefs/2026-11-20-r24/setup_worker_r25.sh` (new LOCAL `-c26`
+>    branches). Continue: Screen 07 — my three priorities (the whole river in broad S-bends; keep the river ahead visible while steering
+>    at 2.5–3.5 s; a consistent water + foam-bank join at the 07→08 exit using the LATEST Screen 08 = K23-3), then the same labelled
+>    swim + steering clip; Screen 06 — the opening "blue cone" (diagnosis in `qa/match/06/r24/lead_rip/NOTES.md`) + crest / winding
+>    river / curved coin trail; Screen 04 (cleaner lower pink edges, gold visible, clear blue water, Benny through all five arrows);
+>    Benny (knit, felt star, fur); then 05.
+> 3. Show me ORIGINAL APPROVED / BEFORE / NEW pictures + uninterrupted gameplay clips with the playback speed, labelled GOOD IMPROVEMENT /
+>    NOT AN IMPROVEMENT / NOT YET PROVEN. Nothing is approved until I say so.
+
+---
+
+## ▶ (2026-11-20 ~04:00 UTC, round 22 → next account) — superseded by the prompt above
 Before pasting: on the new account connect GitHub (+ Claude GitHub App on `josiahscalia5-dev/rainbow-`) and start a Claude Code cloud
 session on the repo, branch **`ccr-4742c19f-ez2mrs`** (round-22 lead; NOT the default branch). Connectors on claude.ai: **World Labs
 Atlas** (finish the Atlas sign-up at atlas.worldlabs.ai) and **Hugging Face**. Keys (World Labs `api.worldlabs.ai` header
