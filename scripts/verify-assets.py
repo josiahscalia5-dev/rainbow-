@@ -68,16 +68,19 @@ def cmd_lfs_remote(download: bool) -> int:
     objs = lfs_objects()
     if not objs:
         return done("fail", "no LFS objects found in HEAD")
-    body = json.dumps({"operation": "download", "transfers": ["basic"],
-                       "objects": [{"oid": o["oid"], "size": o["size"]} for o in objs]}).encode()
-    req = urllib.request.Request(lfs_endpoint(), data=body, method="POST", headers={
-        "Accept": "application/vnd.git-lfs+json", "Content-Type": "application/vnd.git-lfs+json"})
-    try:
-        with urllib.request.urlopen(req, timeout=60) as r:
-            resp = json.loads(r.read())
-    except Exception as e:
-        return done("fail", f"GitHub LFS batch API unreachable: {str(e)[:120]}")
-    by_oid = {o["oid"]: o for o in resp.get("objects", [])}
+    # GitHub's LFS batch API answers HTTP 413 above 100 objects per request (2026-11-20: 123 objects) -> batches of 100
+    by_oid = {}
+    for i in range(0, len(objs), 100):
+        body = json.dumps({"operation": "download", "transfers": ["basic"],
+                           "objects": [{"oid": o["oid"], "size": o["size"]} for o in objs[i:i + 100]]}).encode()
+        req = urllib.request.Request(lfs_endpoint(), data=body, method="POST", headers={
+            "Accept": "application/vnd.git-lfs+json", "Content-Type": "application/vnd.git-lfs+json"})
+        try:
+            with urllib.request.urlopen(req, timeout=60) as r:
+                resp = json.loads(r.read())
+        except Exception as e:
+            return done("fail", f"GitHub LFS batch API unreachable: {str(e)[:120]}")
+        by_oid.update({o["oid"]: o for o in resp.get("objects", [])})
     missing, ok, dl_ok, dl_bad = [], 0, 0, []
     for o in objs:
         r = by_oid.get(o["oid"], {})

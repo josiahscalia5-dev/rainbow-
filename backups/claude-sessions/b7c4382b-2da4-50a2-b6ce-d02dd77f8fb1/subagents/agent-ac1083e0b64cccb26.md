@@ -423,3 +423,117 @@ On full frames it latches onto the HUD coin icon. I'll restrict the search to Be
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/k; cat > $S/starbox.py <<'EOF'\n\"\"\"usage: starbox.py <shotDir> <name> <out_zoom.png>  — star inside Benny's box (shots.json), zoom 360x360 of +-26 px\"\"\"\nimport sys, json\nsys.path.insert(0, '/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/k')\nfrom PIL import Image\nimport starfind\nd, name, out = sys.argv[1:4]\nsh = [s for s in json.load(open(f'{d}/shots.json')) if s['name'] == name][0]\nb = sh['box']; im = Image.open(f'{d}/{name}.png').convert('RGB')\nx0,  …[+931 chars]`
 
+### 🧑 User — 2026-11-20T10:47:16.283Z
+
+> ↩︎ result: == 04
+> a_start before  cx 511 cy 1200 area 3437 vr 0.78 median [243, 205, 24] p10 [218, 157, 0] p90 [253, 255, 58] hue 48.9
+> a_start new  cx 510 cy 1199 area 2589 vr 0.59 median [255, 203, 70] p10 [255, 170, 39] p90 [255, 228, 111] hue 42.5
+> c_middle before  cx 509 cy 1076 area 2072 vr 0.74 median [242, 207, 24] p10 [218, 158, 0] p90 [250, 255, 57] hue 49.6
+> c_middle new  cx 508 cy 1075 area 1566 vr 0.54 median [255, 207, 73] p10 [255, 171, 38] p90 [255, 232, 113] hue 43.6
+> f_hard_left before  cx 555 cy 1117 area 1781 vr 0.48 median [227, 188, 18] p10 [207, 144, 0] p90 [243, 240, 49] hue 47.9
+> f_hard_left new  cx 555 cy 1116 area 1270 vr 0.38 median [255, 195, 64] p10 [255, 169, 33] p90 [255, 220, 110] hue 40.9
+> == 05
+> a_start before  cx 529 cy 984 area 2889 vr 0.75 median [222, 180, 31] p10 [203, 138, 10] p90 [237, 227, 54] hue 45.5
+> a_start new  cx 528 cy 983 area 2670 vr 0.68 median [255, 221, 36] p10 [233, 163, 11] p90 [255, 255, 85] hue 50.9
+> c_middle before  cx 527 cy 906 area 1881 vr 0.78 median [217, 173, 26] p10 [200, 132, 6] p90 [232, 217, 51] hue 45.1
+> c_middle new  cx 527 cy 905 area 1750 vr 0.72 median [255, 212, 32] p10 [228, 158, 3] p90 [255, 246, 82] hue 48.9
+> f_hard_left befor …[+2336 chars]
+
+### 🤖 Claude — 2026-11-20T10:47:21.299Z
+
+Measured star colour (median RGB / hue) inside Benny's box. Some shots picked up a coin (06 a_start before, 06 and 08 hard-left); I'll check those by eye. Let me build zoomed star sheets.
+
+### 🤖 Claude — 2026-11-20T10:47:25.452Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/k; P=/home/user/rainbow-/qa/benny/r23/s3_star; for n in 04 05 06 07 08; do python3 -I $S/starfind.py $P/$n/approved_benny.png $S/z/${n}_appr.png 60 >/dev/null; done; python3 -I -c \"\nfrom PIL import Image, ImageDraw\nS='$S/z'\nrows=[]\nfor n in ['04','05','06','07','08']:\n    t=[Image.open(f'{S}/{n}_appr.png')]\n    for sh in ['a_start','c_middle','f_hard_left']:\n        for v in ['before','new']:\n            t.append(Image.open(f'{S}/{n}_{sh}_{v}.png'))\n    W=220\n    o=Image.new('RGB',((W+4) …[+319 chars]`
+
+### 🧑 User — 2026-11-20T10:47:32.803Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T10:47:35.249Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/k/starzoom_all.png"}`
+
+### 🧑 User — 2026-11-20T10:47:35.326Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T10:47:53.535Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/k; P=/home/user/rainbow-/qa/benny/r23/s3_star; python3 -I -c \"\nfrom PIL import Image\no=Image.new('RGB',(4*364,360),'white')\ni=0\nfor n,(x,y) in [('06',(506,324)),('08',(567,409))]:\n    for v in ['before','new']:\n        im=Image.open('$P/'+n+'/'+v+'/f_hard_left_crop.png').convert('RGB')\n        o.paste(im.crop((x-70,y-70,x+70,y+70)).resize((360,360),Image.LANCZOS),(i*364,0)); i+=1\no.save('$S/hl_zoom.png')\"", "description": "Zoom the hard-left star on 06 and 08 manually"}`
+
+### 🧑 User — 2026-11-20T10:47:53.922Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T10:47:57.019Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/k/hl_zoom.png"}`
+
+### 🧑 User — 2026-11-20T10:47:57.103Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T10:48:02.213Z
+
+06 hard-left confirms it: the NEW star there is a neon lemon-lime, not the approved warm gold. 08 hard-left is fine. Let me look at the per-screen star exposure table and the felt-star code.
+
+### 🤖 Claude — 2026-11-20T10:48:03.230Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && sed -n 100,175p src/characters/benny/benny20.ts", "description": "Read benny20.ts parameter tables"}`
+
+### 🧑 User — 2026-11-20T10:48:03.274Z
+
+> ↩︎ result: }
+> }
+> 
+> /** per-screen fur exposure (LINEAR multipliers on the fur albedo above, which is solved for Screen 04). The approved
+>  *  pictures paint Benny lighter / pinker on 05–07 (fur mean ≈ (234, 82, 178), brightness median .95–.98) than on 04
+>  *  ((207, 74, 151), .84), while the game lights him less there. The game records its screen on
+>  *  benny.root.userData.stage (Game.ts setStage); runtime.ts eases the factor over ≈ 1 s. Unlisted screens: 04's look. */
+> export const EXPO20: Record<string, [number, number, number]> = {
+>   '05': lin('x05', [2.08, 1.54, 1.68]),
+>   '06': lin('x06', [1.73, 1.62, 1.5]),
+>   '07': lin('x07', [2.33, 1.59, 1.75]),
+>   '08': lin('x08', [2.0, 1.21, 1.7]),
+> };
+> 
+> const EXPO_ON = n('expo', 0) > 0;
+> 
+> /** beanie geometry on top of benny05's HAT05 (hat-local). Measured at the 04 start view against the approved silhouette
+>  *  (tools/benny20/score.py): cuff bottom on the centre column 1276 → 1271 px target, pompom 168 px wide like the approved */
+> export const HAT20 = {
+>   /** uniform scale of the whole beanie (cuff, crown, star, pompom) about the head centre */
+>   scale: n('hs', 1.1),
+>   /** extra drop along the body's up axis (units) */
+>   drop: n('hd', 0.02),
+>   /** backward til …[+3282 chars]
+
+### 🤖 Claude — 2026-11-20T10:48:03.827Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && sed -n 285,370p src/characters/benny/benny20.ts", "description": "Read star material and per-frame exposure code"}`
+
+### 🧑 User — 2026-11-20T10:48:03.875Z
+
+> ↩︎ result: }
+>   const knitMats = KNIT_ON && EXPO_ON
+>     ? ['hat_crown', 'hat_brim']
+>         .map((nm) => (get(nm) as THREE.Mesh | undefined)?.material as THREE.MeshStandardMaterial | undefined)
+>         .filter((m): m is THREE.MeshStandardMaterial => !!m?.map)
+>         .map((m) => m.userData.knitU as { uKnitV: { value: THREE.Vector3 }; uKnitW: { value: THREE.Vector3 } })
+>     : [];
+> 
+>   // ---- star: flat stitched felt patch ----
+>   // r23 step 3, opt-in `&b20star=1`: puffy stitched FELT star (tools/benny20/knit.py `star_mode: felt`, params
+>   // tools/benny23/star_r23.json): golden felt pillow, lighter orange sewn rim (inner band + the mesh bevel as one band),
+>   // running stitch of light dashes / dark needle holes; colour solved through the live 04 light + post chain.
+>   const star = get('hat_star') as THREE.Mesh | undefined;
+>   const FELT = n('star', 0) > 0 && !!maps['star_felt.png'];
+>   if (star && maps['star.png']) {
+>     star.scale.z *= HAT20.starFlat;
+>     const mat = (star.material as THREE.MeshStandardMaterial).clone();
+>     mat.map = FELT ? maps['star_felt.png'] : maps['star.png'];
+>     mat.normalMap = FELT ? maps['star_felt_n.png'] : maps['star_n.png'];
+>     mat.normalScale.setScalar(FELT ? n('sfn …[+3652 chars]
+

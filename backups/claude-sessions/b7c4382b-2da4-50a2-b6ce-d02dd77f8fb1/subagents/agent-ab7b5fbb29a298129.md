@@ -440,3 +440,57 @@ The backticks in my GLSL comment close the JS template literal. Removing them fr
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04; T=/home/user/rainbow-/qa/match/04/r23/s04_tools; Q2=/home/user/rainbow-/qa/match/04/r23/s2_edge/QUERY_K23-S2.txt\n( BASE=$Q2 SHOTS='[[\"a_start\",0,null],[\"b_early\",0.12,null],[\"c_middle\",0.35,null],[\"d_late\",0.6,null],[\"e_end\",0.85,null],[\"f_hard_left\",0.35,-1],[\"g_hard_right\",0.35,1]]' bash $T/variant.sh $S/S2_newcode 5273 \"m04lgs=0\" > $S/S2_newcode.out 2>&1 ) &\n( BASE=$Q2 SHOTS='[[\"b_early\",0.12,null],[\"c_middle\",0.35,null]]' bash $T/variant.sh $S/L1 5274 \"m04lgs=1\" > $ …[+168 chars]`
 
+### 🧑 User — 2026-11-20T10:47:17.824Z
+
+> ↩︎ result: [1]-  Done                    ( BASE=$Q2 SHOTS='[["a_start",0,null],["b_early",0.12,null],["c_middle",0.35,null],["d_late",0.6,null],["e_end",0.85,null],["f_hard_left",0.35,-1],["g_hard_right",0.35,1]]' bash $T/variant.sh $S/S2_newcode 5273 "m04lgs=0" > $S/S2_newcode.out 2>&1 )
+> [2]+  Done                    ( BASE=$Q2 SHOTS='[["b_early",0.12,null],["c_middle",0.35,null]]' bash $T/variant.sh $S/L1 5274 "m04lgs=1" > $S/L1.out 2>&1 )
+> done /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04/S2_newcode 7 png
+> done /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04/L1 2 png
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff" is outside of Vite serving allow list.
+> 04 b_early s 82.08 lat 0 stage 04 coins 1330
+> 04 c_middle s 90.48 lat 0 stage 04 coins 1330
+
+### 🤖 Claude — 2026-11-20T10:47:23.596Z
+
+Both done. Pixel check of the regression render against the step-2 pictures.
+
+### 🤖 Claude — 2026-11-20T10:47:25.694Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04; cd /home/user/tools-pixelmatch; for n in a_start b_early c_middle d_late e_end f_hard_left g_hard_right; do printf \"%s \" $n; node pixeldiff.mjs /home/user/rainbow-/qa/match/04/r23/s2_edge/NEW/$n.png $S/S2_newcode/$n.png $S/d_$n.png 0.1 0 1536 2>&1 | tail -1; done", "description": "Pixel-diff regression render vs step-2 pictures"}`
+
+### 🧑 User — 2026-11-20T10:47:31.680Z
+
+> ↩︎ result: a_start {"a":"/home/user/rainbow-/qa/match/04/r23/s2_edge/NEW/a_start.png","b":"/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04/S2_newcode/a_start.png","rows":[0,1536],"threshold":0.1,"diff_pixels":0,"total":1327104,"diff_pct":0}
+> b_early {"a":"/home/user/rainbow-/qa/match/04/r23/s2_edge/NEW/b_early.png","b":"/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04/S2_newcode/b_early.png","rows":[0,1536],"threshold":0.1,"diff_pixels":0,"total":1327104,"diff_pct":0}
+> c_middle {"a":"/home/user/rainbow-/qa/match/04/r23/s2_edge/NEW/c_middle.png","b":"/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04/S2_newcode/c_middle.png","rows":[0,1536],"threshold":0.1,"diff_pixels":0,"total":1327104,"diff_pct":0}
+> d_late {"a":"/home/user/rainbow-/qa/match/04/r23/s2_edge/NEW/d_late.png","b":"/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04/S2_newcode/d_late.png","rows":[0,1536],"threshold":0.1,"diff_pixels":0,"total":1327104,"diff_pct":0}
+> e_end {"a":"/home/user/rainbow-/qa/match/04/r23/s2_edge/NEW/e_end.png","b":"/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2 …[+696 chars]
+
+### 🤖 Claude — 2026-11-20T10:47:34.051Z
+
+0 px in all 7 shots across the whole frame: the recreated worktree plus the new code reproduce step 2 exactly. Now the first look at the glossy lane.
+
+### 🤖 Claude — 2026-11-20T10:47:34.748Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04/L1/c_middle.png"}`
+
+### 🧑 User — 2026-11-20T10:47:34.905Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T10:47:45.775Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04; cd $S && python3 -I -c \"\nfrom PIL import Image\nA=Image.open('/home/user/rainbow-/references/04_through_the_five_arrows.png').convert('RGB')\nG=Image.open('/home/user/rainbow-/qa/match/04/r23/s1_arrows/APPROVED/2_ACCEPTED_GENERATED_view_c_middle.png').convert('RGB')\nW=Image.new('RGB',(1200,620),'white')\nW.paste(A.crop((300,700,600,1000)).resize((600,600)),(0,0))\nW.paste(G.crop((250,1050,550,1350)).resize((600,600)),(600,0))\nW.save('lane_crops.png')\"", "description": "Crop painted lane w …[+27 chars]`
+
+### 🧑 User — 2026-11-20T10:47:46.334Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T10:47:48.777Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04/lane_crops.png"}`
+
+### 🧑 User — 2026-11-20T10:47:48.817Z
+
+> ↩︎ result: [image]
+
