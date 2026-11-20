@@ -1116,3 +1116,292 @@ The diagnosis sheet is done. You asked to see the cause before any further chang
 > ↩︎ result: "commit": "d666e12d8fb3df94edaf46f47a249b129d219b2b",
 > AUTOSAVE OK | branch ccr-2644c3c0-iikckn | scheduler daemon | last verified backup 2026-11-20T20:19:17+00:00 (0.3 min ago) | local d666e12 remote d666e12 (match) | uncommitted 0
 
+### 🤖 Claude — 2026-11-20T20:20:00.644Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && git diff HEAD -- src/world/environment.ts src/game/Game.ts src/gameplay/coins.ts | head -150", "description": "Show deep-route changes in environment, Game, coins"}`
+
+### 🧑 User — 2026-11-20T20:20:00.698Z
+
+> ↩︎ result: diff --git a/src/game/Game.ts b/src/game/Game.ts
+> index 6aec2406..fc2aa78d 100644
+> --- a/src/game/Game.ts
+> +++ b/src/game/Game.ts
+> @@ -67,6 +67,10 @@ export async function startGame(canvas: HTMLCanvasElement) {
+>    // HDR luminance). Switch off: 0.2 / 0.35 / 0.94 exactly as before (pixel-identical default build).
+>    const glow05 = flag05('glow05');
+>    const M06_BUB = flag05('m06bub');
+> +  // r26 `&m06spl=1` (qa/match/06/r25/PROGRESS.md r26): on Screen 06 Benny's contact = a short, low lace collar (the approved picture's
+> +  // shallow rounded contact ripple) instead of the long white V streak fans of ref 05; the ballistic spray dots stay hidden there
+> +  const M06_SPL = flag05('m06spl');
+> +  let m06SplRest: { len: number; h: number } | null = null;
+>    const qn = (k: string, d: number) => { const v = qs.get(k); return v !== null && v !== '' && isFinite(+v) ? +v : d; };
+>    // (measured 2026-11-16, qa/pilot05/wave12/glow/: threshold 1.0–1.3 washed the whole river toward white — the scene's
+>    // linear HDR body colours pass it; 2.6 keeps only streak cores, flares and lamps → water saturation UP, 0.92 → 0.97)
+> @@ -120,6 +124,8 @@ export async function startGame(canvas: HTMLCanvasElement) {
+>    co …[+8882 chars]
+
+### 🤖 Claude — 2026-11-20T20:21:07.706Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 -c \"\nimport json,numpy as np\nc=json.load(open('assets/textures/match06/coins06deep.json')); cs=c['coins']; print('coins06deep', len(cs), 'keys', list(cs[0].keys()), 's range', cs[0]['s'], cs[-1]['s']); print([ (round(x['s'],1), round(x['lat'],2), round(x['h'],2), round(x['scale'],2)) for x in cs])\nR=json.load(open('assets/textures/match06/route06deep.json')); O=np.array(R['O']); ax=np.array(R['ax'])\nL=json.load(open('assets/textures/match06/leg06deep.json')); P=np.array(L['points']); print('leg a range', ((P-O)@ax).min().round(1), ((P-O)@ax).ma …[+433 chars]`
+
+### 🧑 User — 2026-11-20T20:21:07.868Z
+
+> ↩︎ result: coins06deep 15 keys ['px', 's', 'lat', 'h', 'scale', 'dist', 'fit', 'pos'] s range 201.33735685139513 290.72999999999763
+> [(201.3, -1.1, 0.32, 0.63), (201.5, -1.59, 0.89, 0.51), (207.7, -1.31, 0.75, 0.63), (212.4, -1.12, 0.71, 0.63), (218.9, -0.89, 0.7, 0.63), (226.9, -0.35, 0.53, 0.57), (233.2, -0.08, 0.48, 0.58), (238.3, -0.02, 0.45, 0.65), (242.9, 0.01, 0.47, 0.72), (247.6, 0.01, 0.47, 0.66), (252.6, 0.02, 0.47, 0.64), (257.7, -0.0, 0.44, 0.64), (266.7, 0.01, 0.45, 0.56), (278.7, 0.02, 0.45, 0.46), (290.7, 0.06, 0.38, 0.6)]
+> leg a range 6.6 24.2
+> deep pts a range 11.0 117.5
+> end tan world [ 0.2556 -0.0912 -0.9625] drum [0.9615, 0.2747, -0.011]
+> 94:uniform vec3 uAxO;
+> 95:uniform vec3 uAxD;
+> 98:uniform float uRingH;
+> 99:uniform float uBendAng; // r11 m06bend: ring bulb angle per vertex (vTile.x) instead of around the straight axis
+> 103:// panel columns (x 0.18..0.88, mirrored) so the walls carry purple metal and the 3D bands carry the gold; uHaze = (near, far, strength, on):
+> 104:// walls + rings fade into the painted deep-tunnel purple uHazeCol with camera distance (the painting shows ~6 rings, then dark purple);
+> 107:uniform vec4 uHaze;
+> 108:uniform vec3 uHazeCol;
+> 200:    float fw = dot(Rf, …[+1849 chars]
+
+### 🤖 Claude — 2026-11-20T20:21:08.955Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/src/world/match06.ts", "offset": 190, "limit": 60}`
+
+### 🧑 User — 2026-11-20T20:21:08.977Z
+
+> ↩︎ result: 190	    float fr = pow(1.0 - abs(dot(nn, normalize(cameraPosition - vW))), 4.0);
+> 191	    riv += fr * 0.22 * vec3(0.9, 0.85, 1.0);
+> 192	    vec3 fo = texture2D(uFoam, vec2((al - uR6p.x) / (uR6p.y - uR6p.x), vLS.y / uR6p.w)).rgb;
+> 193	    pc = mix(riv, fo, smoothstep(uR6p.x - 0.3, uR6p.x + 0.15, al));
+> 194	  }
+> 195	  if (uRing > 0.5) {
+> 196	    // polished gold band: reflects the warm glow down the tunnel and the purple walls; a row of warm bulbs in the groove
+> 197	    vec3 V = normalize(cameraPosition - vW);
+> 198	    vec3 n2 = dot(nn, V) < 0.0 ? -nn : nn;
+> 199	    vec3 Rf = reflect(-V, n2);
+> 200	    float fw = dot(Rf, uAxD);
+> 201	    vec3 env = mix(vec3(0.46, 0.20, 0.55), vec3(1.0, 0.80, 0.50), smoothstep(-0.35, 0.9, fw));
+> 202	    env = mix(env, vec3(1.0, 0.96, 0.86), pow(max(fw, 0.0), 10.0));
+> 203	    float fres = pow(1.0 - max(dot(n2, V), 0.0), 3.0);
+> 204	    vec3 g = vec3(1.0, 0.60, 0.20) * (0.24 + 0.95 * env) + fres * vec3(1.0, 0.82, 0.55) * 0.45;
+> 205	    g += vec3(1.0, 0.9, 0.7) * 0.5 * pow(max(dot(Rf, normalize(uAxD + uAxU * 0.35)), 0.0), 40.0);
+> 206	    // r7b: the painted bands' bright yellow-white lines on the lips and band edges
+> 207	    float lipL = smoothstep(0.07, 0.0, abs(abs(vLS.x) …[+2990 chars]
+
+### 🤖 Claude — 2026-11-20T20:21:35.522Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 -c \"\nimport json,numpy as np\nR=json.load(open('assets/textures/match06/route06deep.json')); O=np.array(R['O']); ax,Rx,Ux=(np.array(R[k]) for k in ('ax','Rx','Ux'))\nc=json.load(open('assets/textures/match06/coins06deep.json'))\nfor x in c['coins']:\n  p=np.array(x['pos']); q=p-O; a=q@ax; print('coin s %.1f a %.1f r %.2f u %.2f px %s scale %.2f'%(x['s'],a,q@Rx,q@Ux,[round(v) for v in x['px']],x['scale']))\npts=np.array(R['points']);\nfor p in pts[::6]: q=p-O; print('  route a %.1f r %.2f u %.2f'%(q@ax,q@Rx,q@Ux))\n\"", "description": "Map painted  …[+33 chars]`
+
+### 🧑 User — 2026-11-20T20:21:35.688Z
+
+> ↩︎ result: coin s 201.3 a 7.6 r -4.28 u 0.43 px [268, 716, 101] scale 0.63
+> coin s 201.5 a 7.4 r -4.78 u 0.99 px [179, 624, 82] scale 0.51
+> coin s 207.7 a 12.9 r -6.30 u 1.79 px [234, 548, 59] scale 0.63
+> coin s 212.4 a 18.1 r -6.77 u 2.50 px [320, 521, 43] scale 0.63
+> coin s 218.9 a 24.7 r -6.78 u 2.80 px [408, 534, 32] scale 0.63
+> coin s 226.9 a 32.7 r -5.81 u 2.09 px [506, 586, 22] scale 0.57
+> coin s 233.2 a 38.9 r -4.95 u 1.21 px [558, 623, 19] scale 0.58
+> coin s 238.3 a 43.9 r -4.06 u 0.54 px [595, 644, 19] scale 0.65
+> coin s 242.9 a 48.5 r -3.37 u 0.12 px [619, 655, 19] scale 0.72
+> coin s 247.6 a 53.0 r -2.55 u -0.27 px [643, 663, 16] scale 0.66
+> coin s 252.6 a 58.0 r -1.87 u -0.61 px [660, 668, 14] scale 0.64
+> coin s 257.7 a 63.0 r -1.10 u -1.11 px [675, 676, 13] scale 0.64
+> coin s 266.7 a 71.9 r -0.29 u -1.86 px [688, 684, 10] scale 0.56
+> coin s 278.7 a 83.9 r 0.51 u -2.82 px [696, 692, 7] scale 0.46
+> coin s 290.7 a 95.8 r 1.41 u -4.01 px [703, 701, 8] scale 0.60
+>   route a 11.0 r -3.59 u 1.45
+>   route a 19.6 r -5.70 u 1.93
+>   route a 28.6 r -5.73 u 1.96
+>   route a 37.5 r -5.02 u 0.92
+>   route a 46.3 r -3.71 u -0.16
+>   route a 55.2 r -2.27 u -0.88
+>   route a 64.0 r -1.00 u -1.65
+>   route a 73.0 r -0.23 u - …[+199 chars]
+
+### 🤖 Claude — 2026-11-20T20:22:53.632Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -rn \"m06view\\|m06vw\\|m06cam\\|m06la\\b\\|'m06la'\\|route06deep\" src --include=*.ts | grep -v \"^src/world/match06.ts.*//\" | head -30; grep -n \"^import\" src/world/match06.ts | head -20; grep -n \"continuity\" package.json", "description": "Find 06 camera code and straight-axis assumptions"}`
+
+### 🧑 User — 2026-11-20T20:22:53.697Z
+
+> ↩︎ result: src/world/match06.ts:22:import route06deep from '../../assets/textures/match06/route06deep.json';
+> src/world/match06.ts:681:    const O = DEEP ? new THREE.Vector3().fromArray(route06deep.O) : C.clone().add(cen).addScaledVector(Ux, Number.isFinite(hq) && qs?.get('m06tunh') ? hq : 3);
+> src/world/match06.ts:682:    const a0 = course.sample(L.s0).pos.sub(O).dot(ax) - 6, a1 = (DEEP ? route06deep.tunnel_pin.P1a : P1.clone().sub(O).dot(ax)) + L.ext;
+> src/world/course.ts:18:import route06deep from '../../assets/textures/match06/route06deep.json';
+> src/world/course.ts:392: * aKeep (along the painted tunnel axis) are replaced by the designed centre line (route06deep.json: the painted coin trail rebuilt in
+> src/world/course.ts:398:  const O6 = new THREE.Vector3().fromArray(route06deep.O), ax6 = new THREE.Vector3().fromArray(route06deep.ax);
+> src/world/course.ts:401:  while (iK + 1 < i07 && pts[iK + 1].clone().sub(O6).dot(ax6) <= route06deep.aKeep) iK++;
+> src/world/course.ts:402:  const mid = route06deep.points.map((q) => new THREE.Vector3(q[0], q[1], q[2]));
+> src/world/course.ts:513:    this.deepDs07 = deep ? this.marks['07'] - route06deep.s07_orig : 0;
+> src/game/cameraRig.ts:13:/** r7 `?match06=1&m06 …[+1845 chars]
+
+### 🤖 Claude — 2026-11-20T20:23:30.125Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s06/tools/match06/r30_design_curl.py", "content": "\"\"\"r30 lead: design `&m06curl=1` (with m06deep) — the user's Screen 06 storyboard (2026-11-20 ~20:10 UTC, docs/briefs/2026-11-20-r30):\n\"preserve the opening crest -> curl right and descend -> pass beneath the gold bands inside the purple washer tunnel -> follow a\ngentle S-bend -> connect smoothly into Screen 07's approved entry\", purple roof + walls around Benny throughout, substantial gold\nbands spaced along them.\n\nWHY (qa/match/06/r30/diag/): the deep route ran down ONE straight 346 u tube with a gold r …[+7485 chars]`
+
+### 🧑 User — 2026-11-20T20:23:30.179Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s06/tools/match06/r30_design_curl.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T20:23:31.435Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 -I tools/match06/r30_design_curl.py && ls -la assets/textures/match06/route06curl.json", "description": "Generate the curled route design"}`
+
+### 🧑 User — 2026-11-20T20:23:31.660Z
+
+> ↩︎ result: river: 129 pts, 191.6 u from the first deep point (deep: 109.5); min river turn radius 6.7 u; axis min bend radius 47.3 u (tube radius 14); river max offset from axis 5.2 u
+> end tangent vs 07 heading: 0.00 deg; 07 heading yaw 15.9 pitch 0.63
+> drop over the new part: 34.2 u; rings at [58.95, 80.95, 102.95, 124.95, 146.95, 168.95, 190.95]
+> wrote assets/textures/match06/route06curl.json
+> -rw-r--r-- 1 root root 47534 Nov 20 20:23 assets/textures/match06/route06curl.json
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T20:23:40.087Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 -c \"\nimport json,numpy as np,math\nD=json.load(open('assets/textures/match06/route06curl.json')); O=np.array(D['O']); ax=np.array(D['ax'])\ndeep=json.load(open('assets/textures/match06/route06deep.json'))\nP=np.array(deep['points'][:0]+D['points']); a=(P-O)@ax\ntg=np.diff(P,axis=0); L=np.linalg.norm(tg,axis=1); tg/=L[:,None]\nfor i in range(len(tg)-1):\n  ang=math.degrees(math.acos(np.clip(tg[i]@tg[i+1],-1,1))); R=L[i]/max(math.radians(ang),1e-6)\n  if R<25: print(i,'a %.2f'%a[i+1],'seg %.2f'%L[i],'ang %.2f'%ang,'R %.1f'%R)\n\"", "description": "L …[+28 chars]`
+
+### 🧑 User — 2026-11-20T20:23:40.233Z
+
+> ↩︎ result: 0 a 12.36 seg 1.50 ang 3.54 R 24.2
+> 1 a 13.66 seg 1.50 ang 15.19 R 5.6
+> 2 a 15.10 seg 1.49 ang 10.43 R 8.2
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T20:23:45.582Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -i 's/KEYS = \\[(0, 0.0, 0.0), (40, 30.0, 9.0), (52, 30.0, 9.0), (106, -14.0, 7.0), (150, psi7, th7)\\]/KEYS = [(0, 0.0, 0.0), (40, 30.0, 7.0), (52, 30.0, 7.0), (106, -14.0, 5.0), (150, psi7, th7)]/' tools/match06/r30_design_curl.py && python3 -I tools/match06/r30_design_curl.py", "description": "Regenerate route with gentler descent"}`
+
+### 🧑 User — 2026-11-20T20:23:45.777Z
+
+> ↩︎ result: river: 129 pts, 191.5 u from the first deep point (deep: 109.5); min river turn radius 6.7 u; axis min bend radius 47.1 u (tube radius 14); river max offset from axis 5.2 u
+> end tangent vs 07 heading: 0.00 deg; 07 heading yaw 15.9 pitch 0.63
+> drop over the new part: 30.5 u; rings at [58.95, 80.95, 102.95, 124.95, 146.95, 168.95, 190.95]
+> wrote assets/textures/match06/route06curl.json
+> Shell cwd was reset to /home/user/rainbow-
+> [This command modified 1 file you've previously read: ../wt/s06/tools/match06/r30_design_curl.py. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-20T20:23:50.343Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/src/world/match06.ts", "offset": 514, "limit": 20}`
+
+### 🧑 User — 2026-11-20T20:23:50.363Z
+
+> ↩︎ result: 514	const tex = (f: string) => new URL(`../../assets/textures/match06/${f}`, import.meta.url).href;
+> 515	
+> 516	export async function buildMatch06(course: Course): Promise<Match06> {
+> 517	  const L: Layout06 = await fetch(tex('proj06.json')).then((r) => r.json());
+> 518	  // r29 `&m06deep=1` (lead; src/world/course.ts m06deepShift, assets/textures/match06/route06deep.json): the course river follows the
+> 519	  // painted coin trail rebuilt in 3D down the painted ring tunnel into the moved 07 entrance. The floor, frames and foam run to the NEW
+> 520	  // 07 entrance; the tunnel stays exactly where the approved picture has it (axis origin, wall-tile phase and far end pinned).
+> 521	  const DEEP = typeof location !== 'undefined' && new URLSearchParams(location.search).get('m06deep') === '1';
+> 522	  if (DEEP) L.s1 = course.stage('07').s0 + ((L as unknown as { sAhead07?: number }).sAhead07 ?? 34);
+> 523	  // r29 lead: `&m06tswap=1` wall tile mapped as built (fixes the transposed painted rings), `&m06haze=near,far[,strength]` far-tunnel
+> 524	  // fade into the painted deep purple, `&m06tdbg=norings|flatwall` QA views (qa/match/06/r29/rings/)
+> 525	  const QS0 = typeof location !== 'undefined' ? new URLSea …[+933 chars]
+
+### 🤖 Claude — 2026-11-20T20:23:51.780Z
+
+Now I'll make the code changes: the import and switch, the curved axis frames, constant tube radius, finer wall rows, and wider-spaced bands oriented to the local tunnel direction.
+
+### 🤖 Claude — 2026-11-20T20:23:52.959Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "import route06deep from '../../assets/textures/match06/route06deep.json';", "new_string": "import route06deep from '../../assets/textures/match06/route06deep.json';\nimport route06curl from '../../assets/textures/match06/route06curl.json';"}`
+
+### 🧑 User — 2026-11-20T20:23:52.994Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T20:23:56.814Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "  if (DEEP) L.s1 = course.stage('07').s0 + ((L as unknown as { sAhead07?: number }).sAhead07 ?? 34);", "new_string": "  if (DEEP) L.s1 = course.stage('07').s0 + ((L as unknown as { sAhead07?: number }).sAhead07 ?? 34);\n  // r30 `&m06curl=1` (lead, with m06deep; user storyboard 2026-11-20 ~20:10, tools/match06/r30_design_curl.py -> route06curl.json,\n  // qa/match/06/r30/): the TUNNEL follows the route instead of running straight for 346 u (the cause of the gold bullseye,\n  // qa/match/06/r30/diag/):  …[+445 chars]`
+
+### 🧑 User — 2026-11-20T20:23:56.841Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T20:23:58.717Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "    const a0 = course.sample(L.s0).pos.sub(O).dot(ax) - 6, a1 = (DEEP ? route06deep.tunnel_pin.P1a : P1.clone().sub(O).dot(ax)) + L.ext;", "new_string": "    const a0 = course.sample(L.s0).pos.sub(O).dot(ax) - 6, a1 = CURL ? route06curl.curl.aEnd : (DEEP ? route06deep.tunnel_pin.P1a : P1.clone().sub(O).dot(ax)) + L.ext;"}`
+
+### 🧑 User — 2026-11-20T20:23:58.747Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T20:24:04.768Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "      console.info('[match06] m06bend', { sTop, aTop: +aTop.toFixed(1), yawEndDeg: +THREE.MathUtils.radToDeg(yaw[nA - 1]).toFixed(1) });\n    }", "new_string": "      console.info('[match06] m06bend', { sTop, aTop: +aTop.toFixed(1), yawEndDeg: +THREE.MathUtils.radToDeg(yaw[nA - 1]).toFixed(1) });\n    }\n    // r30 m06curl: the designed axis (parallel-transport frames, 0.5 u) past curl.aSplit; the straight drum axis before it\n    if (CURL) {\n      const cu = route06curl.curl, A = cu.axis, aS = cu.aSp …[+977 chars]`
+
+### 🧑 User — 2026-11-20T20:24:04.804Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T20:24:06.069Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "      if (!BEND) return { p: O.clone().addScaledVector(ax, a), t: ax, r: Rx, u: Ux };", "new_string": "      if (!CURVED) return { p: O.clone().addScaledVector(ax, a), t: ax, r: Rx, u: Ux };"}`
+
+### 🧑 User — 2026-11-20T20:24:06.094Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T20:24:07.269Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "    for (let a = a0 + 90; a <= a1; a += 2) rows.push(a);", "new_string": "    for (let a = a0 + 90; a <= a1; a += CURL ? 1 : 2) rows.push(a);"}`
+
+### 🧑 User — 2026-11-20T20:24:07.294Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T20:24:08.724Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "    const radAt = (a: number) => (RING ? Rt * (1 - 0.82 * THREE.MathUtils.smoothstep(a, a1 - 200, a1)) : Rt);", "new_string": "    const radAt = (a: number) => (RING && !CURL ? Rt * (1 - 0.82 * THREE.MathUtils.smoothstep(a, a1 - 200, a1)) : Rt);"}`
+
+### 🧑 User — 2026-11-20T20:24:08.777Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T20:24:11.711Z
+
+Task 2 (diagnosis) is done; updating the list, then the ring placement.
+
+### 🤖 Claude — 2026-11-20T20:24:12.159Z
+
+> 🔧 **TaskUpdate** `{"taskId": "2", "status": "completed"}`
+
+### 🧑 User — 2026-11-20T20:24:12.171Z
+
+> ↩︎ result: Updated task #2 status
+
+### 🤖 Claude — 2026-11-20T20:24:12.612Z
+
+> 🔧 **TaskUpdate** `{"taskId": "3", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-20T20:24:12.622Z
+
+> ↩︎ result: Updated task #3 status
+
+### 🤖 Claude — 2026-11-20T20:24:17.971Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "      for (let k = Math.ceil((a0 + 2 - aN) / dA); k <= nMax && aN + k * dA < a1 - 20 && parts.length < 70; k++) {\n        const a = aN + k * dA, Ra = radAt(a), sc = Ra / Rt;\n        const lp = prof.map((v) => new THREE.Vector2(Ra + v.x * sc, v.y * sc));\n        const lg = new THREE.LatheGeometry(lp, 128);\n        const fr = axisAt(a);\n        lg.applyQuaternion(BEND ? new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), fr.t) : qRot);", "new_string": "      // r30 m06curl: the pai …[+950 chars]`
+
+### 🧑 User — 2026-11-20T20:24:18.001Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T20:24:21.386Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"r30 m06curl: the painted rings\" src/world/match06.ts && sed -n '/r30 m06curl: the painted rings/,/const rg = mergeGeometries/p' src/world/match06.ts | tail -16", "description": "Review the edited ring loop"}`
+
+### 🧑 User — 2026-11-20T20:24:21.440Z
+
+> ↩︎ result: 850:      // r30 m06curl: the painted rings up to the split, then the designed bands (wider: `&m06cbw=`, default 1.5)
+>         const lp = prof.map((v) => new THREE.Vector2(Ra + v.x * sc, v.y * sc * wk));
+>         const lg = new THREE.LatheGeometry(lp, 128);
+>         const fr = axisAt(a);
+>         lg.applyQuaternion(CURVED ? new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), fr.t) : qRot);
+>         lg.translate(fr.p.x, fr.p.y, fr.p.z);
+>         const n = lg.attributes.position.count, lsA = new Float32Array(n * 2), tA = new Float32Array(n * 2);
+>         for (let i = 0; i < n; i++) lsA[i * 2] = lp[i % lp.length].y / sc; // local axial offset inside the band
+>         // r11 m06bend: the bulb angle = the lathe's own angle (continuous, the seam column is duplicated) for bent rings
+>         if (BEND) for (let i = 0; i < n; i++) tA[i * 2] = (Math.floor(i / lp.length) / 128) * Math.PI * 2 - Math.PI;
+>         else if (GOLD) for (let i = 0; i < n; i++) { tA[i * 2] = (Math.floor(i / lp.length) / 128) * 4; tA[i * 2 + 1] = vProf[i % lp.length]; }
+>         lg.setAttribute('aLS', new THREE.Float32BufferAttribute(lsA, 2));
+>         lg.setAttribute('aTile', new THREE.Float32BufferAttribute(tA …[+156 chars]
+
