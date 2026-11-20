@@ -689,3 +689,155 @@ Slots are free; I'll start the full-size BEFORE (v2) render now while I study th
 >   const M06_SPL = flag05('m06spl');
 >   let m06SplRest: { len: number;  …[+465 chars]
 
+### 🤖 Claude — 2026-11-20T22:10:27.500Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/scratchpad/base && cp /home/user/wt/scen06/src/world/match06.ts /home/user/wt/scen06/src/game/Game.ts /tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/scratchpad/base/ && sed -n '/^## 5/,$p' /home/user/rainbow-/docs/briefs/2026-11-20-r30/USER_R30.md | tail -30", "description": "Save baseline copies and re-read user brief tail"}`
+
+### 🧑 User — 2026-11-20T22:10:27.620Z
+
+> ↩︎ result: > Keep the water's width, shape, and visible flow consistent with the approved panels. Foam should form soft, varied clusters along the
+> > water, with the approved bubble detail. Correct the thick rows of separate bead-like balls and oversized foam walls. Keep the gold coins
+> > aligned with the water's path. Match their design and scale, allowing their apparent size to change naturally with perspective as Benny
+> > approaches them. Benny must retain the approved rounded pink furry body, small arms, purple-and-white knitted beanie, fluffy purple pom-pom,
+> > and yellow star. His proportions, materials, and contact with the water remain part of the matching requirement. Do not substitute a
+> > different mascot. Prioritize the large scenery and framing differences first, while preserving the character target.
+> > 5. Make it work during real movement — By "the same scenery," I mean Benny travels through one consistent place. The perspective should
+> > change naturally as he moves. Nearby walls and gold bands should pass him, while the environment's design, colors, proportions, and quality
+> > remain consistent. The result must remain real, responsive 3D gameplay during forward movement and steering. …[+2775 chars]
+
+### 🤖 Claude — 2026-11-20T22:11:11.145Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/scen06 && grep -n \"PROJ05_INVERSE\" -A 40 src/vfx/waterRibbon.ts | head -60", "description": "Read PROJ05_INVERSE GLSL helper"}`
+
+### 🧑 User — 2026-11-20T22:11:11.182Z
+
+> ↩︎ result: 319:export const PROJ05_INVERSE = /* glsl */ `
+> 320-// undo grade (vignette, contrast, saturation) -> sRGB -> Neutral tone map -> exposure: the linear colour that the
+> 321-// post chain turns into the display colour t (bloom is not undone: it is measured and fed back into the bake)
+> 322-vec3 pjInverse(vec3 t) {
+> 323-  vec2 q = gl_FragCoord.xy / uPjRes - 0.5; q.x *= 0.75;
+> 324-  float vig = 1.0 - uPjPost.w * smoothstep(0.25, 0.75, length(q));
+> 325-  vec3 c = t / max(vig, 0.5);
+> 326-  c = (c - 0.5) / uPjPost.z + 0.5;
+> 327-  float l = dot(c, vec3(0.2126, 0.7152, 0.0722));
+> 328-  c = vec3(l) + (c - vec3(l)) / uPjPost.y;
+> 329-  c = clamp(c, 0.0, 0.975);
+> 330-  c = mix(c / 12.92, pow((c + 0.055) / 1.055, vec3(2.4)), step(0.04045, c));
+> 331-  float np = max(c.r, max(c.g, c.b));
+> 332-  if (np >= 0.76) {
+> 333-    float peak = 0.0576 / (1.0 - np) - 0.24 + 0.76;
+> 334-    float g = 1.0 - 1.0 / (0.15 * (peak - np) + 1.0);
+> 335-    c = (c - g * np) / (1.0 - g);
+> 336-    c *= peak / np;
+> 337-  }
+> 338-  float x = min(c.r, min(c.g, c.b));
+> 339-  float off = x >= 0.04 ? 0.04 : (sqrt(max(x, 0.0)) / 2.5 - x);
+> 340-  return (c + off) / uPjPost.x;
+> 341-}
+> 342-`;
+> 343-
+> 344-const FRAG = /* glsl */ `
+> 345-uniform float uTime;
+> 346- …[+1361 chars]
+
+### 🤖 Claude — 2026-11-20T22:11:15.842Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/scen06 && grep -n \"export function withFarGlow\" -A 30 src/world/materials.ts | head -45", "description": "Read withFarGlow to confirm the peach cause"}`
+
+### 🧑 User — 2026-11-20T22:11:15.896Z
+
+> ↩︎ result: 109:export function withFarGlow<T extends THREE.MeshStandardMaterial>(mat: T, g: FarGlow, key: string, virtualDepth = false): T {
+> 110-  const uniforms = farGlowUniforms(g);
+> 111-  const prev = mat.onBeforeCompile;
+> 112-  if (virtualDepth) mat.defines = { ...(mat.defines ?? {}), FG_VIRTUAL: '' };
+> 113-  mat.onBeforeCompile = (shader, r) => {
+> 114-    prev.call(mat, shader, r);
+> 115-    Object.assign(shader.uniforms, uniforms);
+> 116-    if (virtualDepth) {
+> 117-      shader.vertexShader = shader.vertexShader
+> 118-        .replace('#include <common>', '#include <common>\n' + FG_VIRTUAL_VERT_PARS)
+> 119-        .replace('#include <project_vertex>', '#include <project_vertex>\n' + FG_VIRTUAL_VERT);
+> 120-    }
+> 121-    shader.fragmentShader = shader.fragmentShader
+> 122-      .replace('#include <common>', '#include <common>\n' + FAR_GLOW_PARS)
+> 123-      .replace(
+> 124-        '#include <emissivemap_fragment>',
+> 125-        `#include <emissivemap_fragment>
+> 126-${FAR_GLOW_APPLY()}`,
+> 127-      );
+> 128-  };
+> 129-  const prevKey = mat.customProgramCacheKey.bind(mat);
+> 130-  mat.customProgramCacheKey = () => prevKey() + '|fg2-' + key + (virtualDepth ? '-v' : '');
+> 131-  mat.userData.farGlow = uniforms;
+> 132-  retu …[+456 chars]
+
+### 🤖 Claude — 2026-11-20T22:11:19.628Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/scen06 && grep -n \"perfTubeMat\\s*=\" -A 3 src/world/environment.ts | head; grep -n \"FAR_GLOW_APPLY = \\|function FAR_GLOW_APPLY\\|const FAR_GLOW_APPLY\" -A 14 src/world/materials.ts | head -24", "description": "Confirm 07 wall material uses far glow"}`
+
+### 🧑 User — 2026-11-20T22:11:19.675Z
+
+> ↩︎ result: 238:  const perfTubeMat = perforatedMetal({ ...wallBase, repeatV: rowRepeat0607, offsetV: rowOffset0607, slotHalf: [0.36, 0.12] });
+> 239-  withTubeStrips(perfTubeMat, strips, 'attribute', 'wall');
+> 240-  // straight-axis tunnel (05 → 07 incl. arch + plunge); the stream winds inside it
+> 241-  // wave 9b controlled test T2 (user-directed 2026-11-16: BEFORE is the baseline, ONE geometric factor per test):
+> 93:const FAR_GLOW_APPLY = (solid = '1.0') => `{ float sol = ${solid}; float mt = midTintK() * sol; diffuseColor.rgb = mix(diffuseColor.rgb, uMidTint, mt); totalEmissiveRadiance *= 1.0 - mt * 0.5;
+> 94-  float fg = farGlowK(); diffuseColor.rgb = mix(diffuseColor.rgb, uFarGlowColor, min(1.0, fg * 0.5) * sol); totalEmissiveRadiance += uFarGlowColor * fg * mix(0.35, 1.0, sol); }`;
+> 95-
+> 96-function farGlowUniforms(g: FarGlow) {
+> 97-  return {
+> 98-    uFarGlowColor: { value: new THREE.Color(g.color) },
+> 99-    uFarGlowRange: { value: new THREE.Vector3(g.near, g.far, g.strength) },
+> 100-    uMidTint: { value: new THREE.Color(g.mid?.color ?? '#ffffff') },
+> 101-    uMidRange: { value: new THREE.Vector3(g.mid?.near ?? 0, g.mid?.far ?? 1, g.mid?.amount ?? 0) },
+> 102-  };
+> 103-}
+> 104-
+> 105-/**
+> 106- * Adds the  …[+196 chars]
+
+### 🤖 Claude — 2026-11-20T22:11:21.115Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/scen06 && grep -n \"export function perforatedMetal\" -A 12 src/world/materials.ts | grep -n -i \"glow\\|farGlow\" ; grep -n \"wallBase\\s*=\" -A 4 src/world/environment.ts | head", "description": "Check whether wall material includes far glow"}`
+
+### 🧑 User — 2026-11-20T22:11:21.164Z
+
+> ↩︎ result: 219:  const wallBase = {
+> 220-    // pale pink F0: the saturation comes from the magenta/violet tube environment, so white strip lights
+> 221-    // reflect as white-pink streaks (a saturated F0 turned them into clipped flat magenta)
+> 222-    color: '#ffa8e8', emissive: '#3a0656', emissiveIntensity: 0.3, holeColor: '#0c0014',
+> 223-    slot: 1, repeatU: 48, stagger: false,
+
+### 🤖 Claude — 2026-11-20T22:11:22.215Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/scen06 && sed -n 224,237p src/world/environment.ts", "description": "Read the rest of wallBase definition"}`
+
+### 🧑 User — 2026-11-20T22:11:22.251Z
+
+> ↩︎ result: streaks: 0, metalness: 0.92, roughness: 0.1,
+>     relief: { corrugation: 0.05, bevel: 0.05, bevelWidth: 0.12 }, rimColor: '#ff5fe0', rimStrength: 0.9,
+>     envMap: tubeEnv, envMapIntensity: 1.0, farGlow: wallGlow,
+>   } as const;
+>   // STAGE ANCHORS (wave 6): the 06/07 ring bays, hood lids and slot rows are laid out from the 06 STAGE
+>   // START, not from the 05 start, so reshaping the 05 river (which changes its arc length) never slides the
+>   // 06/07 rings, lids or slot rows along the tube. The phases reproduce the pre-wave-6 layout exactly
+>   // (measured on that course: first 06/07 ring 5.5644 u after the 06 start; slot-row phase 0.96618 there).
+>   // r29 m06deep: the 07 rings / lids / slot rows keep their place on the (moved) 07 tube: anchor + the added 06 length
+>   const s06 = course.stage('06').s0 + course.deepDs07;
+>   const RING06_PHASE = 5.5643876;
+>   const ROW06_PHASE = 0.9661842;
+>   const rowRepeat0607 = slotRowsPerBay / ringSpacing;
+>   const rowOffset0607 = (((ROW06_PHASE - s06 * rowRepeat0607) % 1) + 1) % 1;
+
+### 🤖 Claude — 2026-11-20T22:12:42.878Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/scen06/src/world/e30scen06.ts", "content": "/**\n * r30 scenery specialist (`e30*` switches, qa/match/06/r30/scen06/NOTES.md) — Screen 06 tunnel look while Benny swims, toward the\n * approved picture + the user's four storyboard panels. Every part is opt-in; without an `e30*` switch nothing here runs.\n *   `&e30band=1`  the designed curl bands (route06curl.json rings, every 22 u) as SUBSTANTIAL polished copper-gold bands: broad\n *                 (`&e30bw=` u, default 7.2 = a third of the spacing), deep (`&e30bd=`, default 0.95 u), two raised lips, a gently dome …[+17028 chars]`
+
+### 🧑 User — 2026-11-20T22:12:42.923Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/scen06/src/world/e30scen06.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T22:12:43.134Z
+
+You've hit your 5-hour limit · resets 1am (UTC)
+
