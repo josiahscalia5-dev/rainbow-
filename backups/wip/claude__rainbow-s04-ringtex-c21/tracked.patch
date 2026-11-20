@@ -1,8 +1,8 @@
 diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
-index 9abbbbb..69b5663 100644
+index 9abbbbb..909dee0 100644
 --- a/src/world/match04m4.ts
 +++ b/src/world/match04m4.ts
-@@ -119,12 +119,15 @@ uniform float uRVar;       // r17 m04rpvar: number of painted rings stacked in t
+@@ -119,12 +119,14 @@ uniform float uRVar;       // r17 m04rpvar: number of painted rings stacked in t
  uniform vec4 uRPol;        // r18 m04rpol: x amount, y luma pivot, z contrast gain above it, w below it
  uniform vec2 uRPol2;       // r18 m04rpol: x sharp sheen (reflection of the bright end), y grazing-angle brightening
  uniform vec4 uRCr;         // r18 m04rpcr: x amount, y bright lip line half width, z dark lip-edge line half width, w band-start corner (u)
@@ -13,7 +13,7 @@ index 9abbbbb..69b5663 100644
 +                           // 1536 px tall portrait view, from world length, distance and foreshortening) where the detail starts / is full
 +uniform vec4 uRNear2;      // r19b m04rnear: x painted band grade per sub-band, y rim + groove lines, z yellow-gold grade, w pink / violet reflection
  uniform vec4 uRNear3;      // r19b m04rnear: x bulbs on the sub-rims, y highlight lift, z corridor ring growth (m04rfg), w lip + groove size (u)
- uniform float uRNearW;     // r19b m04rnear: water plane height relative to the tunnel axis (world u)
+-uniform float uRNearW;     // r19b m04rnear: water plane height relative to the tunnel axis (world u)
 -uniform vec4 uRNear4;      // r19b m04rnear: x bulbs per sub-rim, y fraction lit, z reflection patchiness (0 = even stripe), w bulb size
 +uniform vec4 uRNear4;      // r19b m04rnear: x bulbs per sub-rim, y fraction lit, z highlight core sharpness, w bulb size
 +uniform vec4 uRNear6;      // r20 m04rnear: x painted light riding on the band grade, y grade exponent along the sub-band, zw spare
@@ -22,7 +22,7 @@ index 9abbbbb..69b5663 100644
  #ifdef RFEW
  uniform float uRFewG;      // r18 m04rfew: height of the telescope's shrink centre (group units, from the axis; < 0 = below)
  uniform vec2 uRFewW;       // r18 m04rfew: x = ring scale where the deep rings reach warm yellow-white, y = amount (m04rfw, m04rfk)
-@@ -367,44 +370,86 @@ void main() {
+@@ -367,66 +369,105 @@ void main() {
        }
        pr += vec3(1.0, 0.86, 0.55) * 0.10 * gl * smoothstep(0.0, 0.2, facing);   // moving polished sheen
        if (uRNear.x > 0.0 && uu < uL) {
@@ -57,7 +57,7 @@ index 9abbbbb..69b5663 100644
  #ifdef RFEW
          fd *= step(0.999, vF.y);                                     // corridor rings only (the telescope stays painted)
  #endif
-+        if (uRNear5.w < -1.5) pr = vec3(facing); else if (uRNear5.w < -0.5) pr = vec3(fd, fract(si * 0.37 + 0.2), fract(kI * 0.25)); else   // DEBUG
++        if (uRNear5.w < -1.5 && uRNear5.w > -2.5) pr = vec3(facing); else if (uRNear5.w < -0.5 && uRNear5.w > -1.5) pr = vec3(fd, fract(si * 0.37 + 0.2), fract(kI * 0.25)); else   // DEBUG
          if (fd > 0.001) {
            float lastS = step(Ns - 0.5, si);                          // the last sub-band ends at the modelled lip
 -          // (a) each sub-band a rounded polished tube bulging into the tunnel: its normal tilts from facing back toward the
@@ -88,7 +88,7 @@ index 9abbbbb..69b5663 100644
 +          // (250,152,40) -> yellow (255,215,92) at the lip), the painted texel's own light / colour variation riding on it;
 +          // pink / violet texels keep their colour (only the warm copper ones are re-graded)
 +          float lp = dot(pr, vec3(0.30, 0.59, 0.11));
-+          float warm = smoothstep(0.04, 0.22, pr.r - pr.b);
++          float warm = smoothstep(0.2, 0.45, pr.r - pr.b);
 +          float xg = clamp(0.06 + 0.94 * pow(xs, uRNear6.y) + uRNear6.x * (lp - 0.45), 0.0, 1.0);
 +          float xg5 = xg * 5.0;
 +          vec3 gr = mix(vec3(0.50, 0.20, 0.06), vec3(0.70, 0.27, 0.07), clamp(xg5, 0.0, 1.0));
@@ -125,28 +125,35 @@ index 9abbbbb..69b5663 100644
 -          pr += (vec3(1.0, 0.74, 0.30) * 0.45 * hl + vec3(1.0, 0.95, 0.78) * 0.9 * hc) * uRNear3.y * fd;
 -          // (c) soft pink / violet reflections: the polished tubes mirror the river below (violet-blue lane, pink banks),
 -          // as soft patches; moves with the view, world-anchored on the water
+-          vec3 qW = vW - uAxO;
+-          float py = dot(qW, uAxU), Ry = dot(RT, uAxU);
+-          if (uRNear2.w > 0.0 && Ry < -0.02) {
+-            float tH = (uRNearW - py) / Ry;
+-            float hx = dot(qW, uAxR) + dot(RT, uAxR) * tH, hz = dot(qW, uAxD) + dot(RT, uAxD) * tH;
+-            float lane = 1.0 - smoothstep(0.8, 1.7, abs(hx));
+-            vec3 rc = mix(vec3(0.86, 0.46, 0.82), vec3(0.64, 0.56, 0.92), lane);   // painted pink (211,118,207) / violet
+-            float nz = 0.5 + 0.5 * sin(hz * 0.55 + hx * 1.1 + 2.0 * sin(hz * 0.21 + hx * 0.6));
+-            // soft patches around the ring too (the painted pink / violet sheens are radial smears a few tenths of a radian
+-            // wide), world-anchored on the ring and different on every sub-band
+-            float pa = mix(1.0, smoothstep(0.35, 1.1, streaks(ang + rj, kI * 5.0 + si + 61.0)), uRNear4.z);
+-            float sR = uRNear2.w * fd * smoothstep(0.3, 0.85, nz) * pa * exp(-tH / 30.0) * smoothstep(-0.02, -0.2, Ry);
+-            pr = mix(pr, rc * (0.8 + 0.4 * dot(pr, vec3(0.30, 0.59, 0.11))), clamp(sR, 0.0, 0.7));
 +          float fz = pow(max(dot(RT, uAxD), 0.0), 8.0) * hm;
 +          pr += (vec3(1.0, 0.74, 0.30) * 0.42 * (hb + fz) + vec3(1.0, 0.94, 0.74) * 0.75 * hcr) * uRNear3.y * fd;
 +          // short static yellow glows on each tube's crown (the painting's yellow light columns, finer than the magnified ones)
 +          float yc = smoothstep(0.5, 1.25, streaks(ang + rj + 0.7, sid + 83.0)) * exp(-pow((xs - 0.66) / 0.2, 2.0));
 +          pr += vec3(1.0, 0.76, 0.34) * uRNear5.y * yc * fd;
-+          // (d) soft pink / violet reflections: the polished tubes mirror the river below (violet-blue lane, pink banks) as
-+          // soft patches round the ring; world-anchored on the water and on the ring, moving with the view
-           vec3 qW = vW - uAxO;
-           float py = dot(qW, uAxU), Ry = dot(RT, uAxU);
-           if (uRNear2.w > 0.0 && Ry < -0.02) {
-@@ -413,20 +458,20 @@ void main() {
-             float lane = 1.0 - smoothstep(0.8, 1.7, abs(hx));
-             vec3 rc = mix(vec3(0.86, 0.46, 0.82), vec3(0.64, 0.56, 0.92), lane);   // painted pink (211,118,207) / violet
-             float nz = 0.5 + 0.5 * sin(hz * 0.55 + hx * 1.1 + 2.0 * sin(hz * 0.21 + hx * 0.6));
--            // soft patches around the ring too (the painted pink / violet sheens are radial smears a few tenths of a radian
--            // wide), world-anchored on the ring and different on every sub-band
--            float pa = mix(1.0, smoothstep(0.35, 1.1, streaks(ang + rj, kI * 5.0 + si + 61.0)), uRNear4.z);
--            float sR = uRNear2.w * fd * smoothstep(0.3, 0.85, nz) * pa * exp(-tH / 30.0) * smoothstep(-0.02, -0.2, Ry);
-+            float pa = smoothstep(0.2, 0.9, streaks(ang + rj, sid + 61.0));
-+            float sR = uRNear2.w * fd * (0.5 + 0.5 * smoothstep(0.3, 0.85, nz)) * pa * exp(-tH / 40.0) * smoothstep(-0.02, -0.2, Ry);
-             pr = mix(pr, rc * (0.8 + 0.4 * dot(pr, vec3(0.30, 0.59, 0.11))), clamp(sR, 0.0, 0.7));
-+            if (uRNear5.w < -2.5) pr = vec3(clamp(sR * 2.0, 0.0, 1.0), fract(tH / 10.0), pa);   // DEBUG
++          // (d) soft pink / violet sheens (the painted reflections of the swirl water): soft patches on each tube's body,
++          // world-anchored round the ring and different on every sub-band, sliding a little with the view (a reflection);
++          // violet on the left, pink on the right, lilac-pink overhead (painted (211,118,207) pink / violet-blue)
++          if (uRNear2.w > 0.0) {
++            float sv = ang + rj + 0.35 * dot(V, uAxR) + 0.25 * dot(V, uAxU);
++            float pa = smoothstep(0.25, 0.85, streaks(sv, sid + 61.0)) * exp(-pow((xs - 0.42) / 0.3, 2.0));
++            vec3 rc = ang < 0.0 ? vec3(0.66, 0.50, 0.92) : vec3(0.93, 0.47, 0.80);
++            rc = mix(rc, vec3(0.88, 0.56, 0.86), 1.0 - smoothstep(0.5, 1.4, abs(ang)));
++            float sR = uRNear2.w * fd * pa;
++            pr = mix(pr, rc * (0.75 + 0.45 * dot(pr, vec3(0.30, 0.59, 0.11))), clamp(sR, 0.0, 0.75));
++            if (uRNear5.w < -2.5) pr = vec3(clamp(sR * 2.0, 0.0, 1.0), 0.0, pa);   // DEBUG
            }
 -          // (d) the sub-rims (not on the last sub-band: the modelled lip carries its own line, groove and dots)
 +          // (e) the sub-rims (not after the last sub-band: the modelled lip carries its own line, groove and dots): a thin
@@ -163,7 +170,7 @@ index 9abbbbb..69b5663 100644
              pr += vec3(1.0, 0.80, 0.42) * 0.22 * gS * fd * uRNear2.y;
              pr = mix(pr, vec3(1.0, 0.93, 0.70), 0.8 * cB * fd * uRNear2.y);
              pr = mix(pr, pr * vec3(0.50, 0.32, 0.26), cD * fd * uRNear2.y);
-@@ -435,14 +480,16 @@ void main() {
+@@ -435,14 +476,16 @@ void main() {
                float rs = kI * 7.0 + bi;
                float cfl = (ang + rj) / 6.2831853 * uRNear4.x + 0.5 * mod(bi, 2.0);
                float ci = floor(cfl);
@@ -182,7 +189,7 @@ index 9abbbbb..69b5663 100644
                pr = mix(pr, vec3(1.0, 0.96, 0.80), smoothstep(1.0, 0.35, dd) * onB);
              }
            }
-@@ -1069,11 +1116,13 @@ export function addM04(ctx: M04Ctx) {
+@@ -1069,11 +1112,12 @@ export function addM04(ctx: M04Ctx) {
          uRPol2: { value: new THREE.Vector2(M04.num('m04rpsp', 0.25), M04.num('m04rpfr', 0)) },
          uRCr: { value: new THREE.Vector4(M04.num('m04rpcr', 0), M04.num('m04rpcb', 0.011), M04.num('m04rpcd', 0.014), M04.num('m04rpcc', 0.012)) },
          // r19b `m04rnear=1`: the near band seen from inside resolves into the painted washer rim's polished sub-bands
@@ -191,9 +198,9 @@ index 9abbbbb..69b5663 100644
 +        uRNear: { value: new THREE.Vector4(M04.num('m04rnear', 0), M04.num('m04rnbs', 2.3), M04.num('m04rnw0', 25), M04.num('m04rnw1', 50)) },
 +        uRNear2: { value: new THREE.Vector4(M04.num('m04rnt', 0.8), M04.num('m04rnl', 1), M04.num('m04rng', 1), M04.num('m04rnr', 0.35)) },
          uRNear3: { value: new THREE.Vector4(M04.num('m04rnd', 1), M04.num('m04rnh', 1), M04.num('m04rfew', 0) > 0 ? M04.num('m04rfg', 1) : 1, 0.56 * M04.num('m04ringgw', 1)) },
-         uRNearW: { value: -cy },
+-        uRNearW: { value: -cy },
 -        uRNear4: { value: new THREE.Vector4(M04.num('m04rnbn', 28), M04.num('m04rnbf', 0.75), M04.num('m04rnrp', 1), M04.num('m04rnbz', 0.08)) },
-+        uRNear4: { value: new THREE.Vector4(M04.num('m04rnbn', 28), M04.num('m04rnbf', 0.75), M04.num('m04rnhp', 4), M04.num('m04rnbz', 0.08)) },
++                uRNear4: { value: new THREE.Vector4(M04.num('m04rnbn', 28), M04.num('m04rnbf', 0.75), M04.num('m04rnhp', 4), M04.num('m04rnbz', 0.08)) },
 +        uRNear6: { value: new THREE.Vector4(M04.num('m04rnlc', 0.35), M04.num('m04rnxp', 1.6), 0, 0) },
 +        uRNear5: { value: new THREE.Vector4(M04.num('m04rnhf', 0.22), M04.num('m04rny', 0.3), M04.num('m04rno', 0.04), M04.num('m04rntex', 0)) },
          uP: { value: M04.num('m04ringp', 2.6) }, uLipBulb: { value: M04.num('m04lipbulb', 1) }, uBulbR: { value: (r + ctx.outerR) / 2 }, uLen: { value: len }, uRingTile: { value: ringTile }, uPaint: { value: M04.num('m04paint', M04.gold ? 0.8 : 1.4) }, uGoldY: { value: M04.gold ? 1 : 0 }, uCopper: { value: M04.num('m04copper', 0) }, uBulge: { value: M04.num('m04bulge', 0) }, uMouthT: { value: 0 }, uMouthTex: { value: null }, uMouthRho: { value: new THREE.Vector3(4.45, 3.25, M04.num('m04mro', -0.10)) }, uProjPos: shared.uProjPos, uTone: { value: new THREE.Vector4(M04.num('m04tb', 0.11), M04.num('m04tl', 0.38), M04.num('m04tm', 0.5), M04.num('m04ts', 0.45)) } },

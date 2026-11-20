@@ -2,7 +2,7 @@
  "worktree": "/home/user/wt/benny",
  "branch": "claude/rainbow-benny-c21",
  "head": "24dd125204eb2df3d80c6338920f339339e1981c",
- "time": "2026-11-20T00:07:32+00:00",
+ "time": "2026-11-20T00:12:52+00:00",
  "dirty_tracked": [
   "assets/textures/benny20/brim.png",
   "assets/textures/benny20/brim_n.png",
@@ -24,11 +24,13 @@
   "qa/benny/r20/step1_fur/s06_start.png",
   "qa/benny/r20/step1_fur/s06_swim3u.png",
   "qa/benny/r20/step1_fur/s07_start.png",
+  "qa/benny/r20/step1_fur/s07_swim3u.png",
   "qa/benny/r20/step1_fur/s_left_steer.png",
   "qa/benny/r20/step1_fur/s_left_steer_mask.png",
   "qa/benny/r20/step1_fur/s_right_steer.png",
   "qa/benny/r20/step1_fur/s_right_steer_mask.png",
-  "qa/benny/r20/step1_fur/shots.json"
+  "qa/benny/r20/step1_fur/shots.json",
+  "qa/benny/r20/step1_fur/shots_other.json"
  ],
  "untracked_skipped": [],
  "restore": "git switch claude/rainbow-benny-c21 (newest pushed tip) && git apply --binary backups/wip/claude__rainbow-benny-c21/tracked.patch && copy backups/wip/claude__rainbow-benny-c21/untracked/* into the worktree"
