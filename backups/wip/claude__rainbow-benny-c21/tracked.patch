@@ -205666,6 +205666,104 @@ index cdfaa63..a9b8114 100644
 + "crown_rib": true
  }
 \ No newline at end of file
+diff --git a/src/characters/benny/benny20.ts b/src/characters/benny/benny20.ts
+index b77b833..ea9aa86 100644
+--- a/src/characters/benny/benny20.ts
++++ b/src/characters/benny/benny20.ts
+@@ -73,6 +73,16 @@ const LOCK20: Record<string, { lock: V4; shade: V4; comb: V4; color: [number, nu
+   },
+ };
+ 
++/** per-screen fur exposure (LINEAR multipliers on the fur albedo above, which is solved for Screen 04). The approved
++ *  pictures paint Benny lighter / pinker on 05–07 (fur mean ≈ (234, 82, 178), brightness median .95–.98) than on 04
++ *  ((207, 74, 151), .84), while the game lights him less there. The game records its screen on
++ *  benny.root.userData.stage (Game.ts setStage); runtime.ts eases the factor over ≈ 1 s. Unlisted screens: 04's look. */
++export const EXPO20: Record<string, [number, number, number]> = {
++  '05': lin('x05', [1.5, 2.2, 1.75]),
++  '06': lin('x06', [1.65, 3.0, 1.6]),
++  '07': lin('x07', [1.58, 2.44, 1.84]),
++};
++
+ /** beanie geometry on top of benny05's HAT05 (hat-local). Measured at the 04 start view against the approved silhouette
+  *  (tools/benny20/score.py): cuff bottom on the centre column 1276 → 1271 px target, pompom 168 px wide like the approved */
+ export const HAT20 = {
+@@ -127,8 +137,11 @@ export function loadBenny20Maps(): Promise<Record<string, THREE.Texture | null>>
+   return loaded;
+ }
+ 
++/** per-frame: ease the fur albedo toward the current screen's exposure (EXPO20); returned by applyBenny20 */
++export type Benny20Tick = (dt: number, stage: string | undefined) => void;
++
+ /** apply after applyBenny05 (same freshly cloned scene + fur handles) */
+-export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Record<string, THREE.Texture | null>): void {
++export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Record<string, THREE.Texture | null>): Benny20Tick {
+   const get = (nm: string) => scene.getObjectByName(nm);
+   const white = new THREE.DataTexture(new Uint8Array([255, 255, 255, 255]), 1, 1);
+   white.needsUpdate = true;
+@@ -212,8 +225,27 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
+     star.material = mat;
+   }
+ 
++  // ---- per-screen fur exposure (body + arms) ----
++  const expo = furs.filter((f) => /^fur_(body|arm)/.test(f.mesh.name)).map((f) => ({ f, base: f.material.color.clone() }));
++  const cur = new THREE.Vector3(1, 1, 1);
++  const tgt = new THREE.Vector3();
++  let first = true;
++  const lastPos = new THREE.Vector3();
++  const pos = new THREE.Vector3();
++  const tick: Benny20Tick = (dt, stage) => {
++    const e = (stage && EXPO20[stage]) || [1, 1, 1];
++    tgt.set(e[0], e[1], e[2]);
++    // ease while riding from one screen into the next; snap on the first frame and after a jump (checkpoint / QA goto)
++    scene.getWorldPosition(pos);
++    const jumped = pos.distanceTo(lastPos) > 5;
++    lastPos.copy(pos);
++    if (first || jumped) { cur.copy(tgt); first = false; } else cur.lerp(tgt, 1 - Math.exp(-dt * 3));
++    for (const { f, base } of expo) f.material.color.setRGB(base.r * cur.x, base.g * cur.y, base.b * cur.z);
++  };
++
+   // QA only (`?qa` pages, read by tools/benny20/probe.mjs): live handles for tuning without a reload
+   if (QS?.has('qa') && typeof window !== 'undefined') {
+-    (window as unknown as { __b20?: unknown }).__b20 = { scene, furs, hat, pom, star, HAT20, LOCK20 };
++    (window as unknown as { __b20?: unknown }).__b20 = { scene, furs, hat, pom, star, HAT20, LOCK20, EXPO20, expo };
+   }
++  return tick;
+ }
+diff --git a/src/characters/benny/runtime.ts b/src/characters/benny/runtime.ts
+index e214782..1f51a11 100644
+--- a/src/characters/benny/runtime.ts
++++ b/src/characters/benny/runtime.ts
+@@ -106,7 +106,7 @@ export function createBennyRuntime(
+   const b05 = B05 ? applyBenny05(scene, furs, opts.maps05 ?? {}) : null;
+   if (B05) clips = dampedClips(clips);
+   // `?benny20=1`: the round-20 approved-04 look on top (benny20.ts). Off: nothing runs.
+-  if (BENNY20) applyBenny20(scene, furs, opts.maps20 ?? {});
++  const tick20 = BENNY20 ? applyBenny20(scene, furs, opts.maps20 ?? {}) : null;
+ 
+   // QA colour A/B: `?bennyTint=hat_brim:7868a0,hat_crown:e4d4e4` sets the base-colour factor of meshes whose name
+   // starts with the given prefix (the GLB's own factors are the default; materials are shared by every clone)
+@@ -173,6 +173,8 @@ export function createBennyRuntime(
+ 
+   const update: BennyRuntime['update'] = (dt, st) => {
+     dt = Math.min(dt, 1 / 20);
++    // `?benny20=1`: per-screen fur exposure (Game.ts records the screen on root.userData.stage)
++    tick20?.(dt, root.userData.stage as string | undefined);
+     // clip weights
+     const tumble = !!st.tumble;
+     const swim = tumble ? 0 : THREE.MathUtils.clamp(st.swim, 0, 1);
+diff --git a/src/game/Game.ts b/src/game/Game.ts
+index 6a4653f..6ad40f4 100644
+--- a/src/game/Game.ts
++++ b/src/game/Game.ts
+@@ -155,6 +155,8 @@ export async function startGame(canvas: HTMLCanvasElement) {
+   const setStage = (id: StageId) => {
+     if (st.stage === id) return;
+     st.stage = id;
++    // read only by `?benny20=1` (benny20.ts per-screen fur exposure); nothing else uses it
++    benny.root.userData.stage = id;
+     hud.setStage(id);
+     updateZones();
+   };
 diff --git a/tools/benny20/knit.py b/tools/benny20/knit.py
 index 21753ed..9254093 100644
 --- a/tools/benny20/knit.py

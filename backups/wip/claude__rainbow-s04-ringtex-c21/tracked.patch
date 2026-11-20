@@ -1,5 +1,5 @@
 diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
-index 9abbbbb..9869554 100644
+index 9abbbbb..cf91c3c 100644
 --- a/src/world/match04m4.ts
 +++ b/src/world/match04m4.ts
 @@ -119,12 +119,14 @@ uniform float uRVar;       // r17 m04rpvar: number of painted rings stacked in t
@@ -218,3 +218,74 @@ index 9abbbbb..9869554 100644
          uP: { value: M04.num('m04ringp', 2.6) }, uLipBulb: { value: M04.num('m04lipbulb', 1) }, uBulbR: { value: (r + ctx.outerR) / 2 }, uLen: { value: len }, uRingTile: { value: ringTile }, uPaint: { value: M04.num('m04paint', M04.gold ? 0.8 : 1.4) }, uGoldY: { value: M04.gold ? 1 : 0 }, uCopper: { value: M04.num('m04copper', 0) }, uBulge: { value: M04.num('m04bulge', 0) }, uMouthT: { value: 0 }, uMouthTex: { value: null }, uMouthRho: { value: new THREE.Vector3(4.45, 3.25, M04.num('m04mro', -0.10)) }, uProjPos: shared.uProjPos, uTone: { value: new THREE.Vector4(M04.num('m04tb', 0.11), M04.num('m04tl', 0.38), M04.num('m04tm', 0.5), M04.num('m04ts', 0.45)) } },
      });
      const gw = M04.num('m04ringgw', 1);
+@@ -1115,23 +1171,31 @@ export function addM04(ctx: M04Ctx) {
+     // groove and dots keep their painted proportions on every ring (ring coordinate in painted-period units).
+     const rfew = M04.num('m04rfew', 0) > 0;
+     const fV: number[] = [], fS: number[] = [];   // per profile point: ring coordinate (painted-period units), ring scale
++    // r20 `m04rflat=1` (user, 2026-11-20 00:10: "there's like a little bump on top of the gold ... that's what my gold tunnel
++    // texture should be like", arrow on the approved picture): the inner rings are NOT fat raised lip beads protruding from
++    // the wall but a smooth polished tube with flush, shallow ribs (a fine bright line + a thin dark groove). The ring
++    // profile's relief (lip bead inward, groove step outward, band cone) is scaled to `m04rfla` (0.15 = ~0.07 u deep, flush)
++    // about the wall radius; along-tunnel positions, ring periods, telescope and texture mapping stay the same, so the painted
++    // lip line / groove rows (and the crisp m04rpcr lines) now draw the ribs on the flush wall. Front washer rim unchanged.
++    const flat = M04.num('m04rflat', 0) > 0 ? M04.num('m04rfla', 0.15) : 1;
++    const fr = (o: number) => r + o * flat;
+     let capA = len, capS = 1;
+     if (!rfew) {
+       const nP = Math.ceil(len / P);
+       for (let k = 0; k < nP; k++) {
+         const a = k * P;
+         const pushP = (rr: number, aa: number, part: number) => { prof.push({ r: rr, a: aa, part }); ringOf.push(k); };
+-        pushP(r + 0.22, a + 0.01, 2);
+-        pushP(r + 0.17, a + 0.07, 0);
+-        pushP(r + 0.07, a + P * 0.5, 0);
++        pushP(fr(0.22), a + 0.01, 2);
++        pushP(fr(0.17), a + 0.07, 0);
++        pushP(fr(0.07), a + P * 0.5, 0);
+         // r13 `m04ringgw` widens the lip bead + dark groove (the painted rings show a deep dark recess between bands)
+-        pushP(r - 0.05, a + P - 0.56 * gw, 0);
+-        pushP(r - 0.10, a + P - 0.48 * gw, 1);
+-        pushP(r - 0.22, a + P - 0.39 * gw, 1);
+-        pushP(r - 0.28 * Math.min(gw, 1.4), a + P - 0.27 * gw, 1);
+-        pushP(r - 0.23, a + P - 0.15 * gw, 1);
+-        pushP(r - 0.08, a + P - 0.07 * gw, 2);
+-        pushP(r + 0.22, a + P - 0.01, 2);
++        pushP(fr(-0.05), a + P - 0.56 * gw, 0);
++        pushP(fr(-0.10), a + P - 0.48 * gw, 1);
++        pushP(fr(-0.22), a + P - 0.39 * gw, 1);
++        pushP(fr(-0.28 * Math.min(gw, 1.4)), a + P - 0.27 * gw, 1);
++        pushP(fr(-0.23), a + P - 0.15 * gw, 1);
++        pushP(fr(-0.08), a + P - 0.07 * gw, 2);
++        pushP(fr(0.22), a + P - 0.01, 2);
+       }
+     } else {
+       const g = M04.num('m04rfg', 1), aT = M04.num('m04rfa', 30), q = M04.num('m04rfq', 0.75), sMin = M04.num('m04rfmin', 0.03);
+@@ -1149,17 +1213,17 @@ export function addM04(ctx: M04Ctx) {
+           prof.push({ r: rr, a: A0 + wa, part }); ringOf.push(k);
+           fV.push(k * P + (band ? aa * (P - L) / B : aa - (PU - P))); fS.push(s);
+         };
+-        pushP(r + 0.22, 0.01, 2);
+-        pushP(r + 0.17, 0.07, 0);
+-        if (tele) for (let i = 1; i < 6; i++) pushP(r + 0.17 + (-0.05 - 0.17) * (i / 6), 0.07 + (B - 0.07) * (i / 6), 0);
+-        else pushP(r + 0.07, PU * 0.5, 0);
+-        pushP(r - 0.05, PU - 0.56 * gw, 0);
+-        pushP(r - 0.10, PU - 0.48 * gw, 1);
+-        pushP(r - 0.22, PU - 0.39 * gw, 1);
+-        pushP(r - 0.28 * Math.min(gw, 1.4), PU - 0.27 * gw, 1);
+-        pushP(r - 0.23, PU - 0.15 * gw, 1);
+-        pushP(r - 0.08, PU - 0.07 * gw, 2);
+-        pushP(r + 0.22, PU - 0.01, 2);
++        pushP(fr(0.22), 0.01, 2);
++        pushP(fr(0.17), 0.07, 0);
++        if (tele) for (let i = 1; i < 6; i++) pushP(fr(0.17 + (-0.05 - 0.17) * (i / 6)), 0.07 + (B - 0.07) * (i / 6), 0);
++        else pushP(fr(0.07), PU * 0.5, 0);
++        pushP(fr(-0.05), PU - 0.56 * gw, 0);
++        pushP(fr(-0.10), PU - 0.48 * gw, 1);
++        pushP(fr(-0.22), PU - 0.39 * gw, 1);
++        pushP(fr(-0.28 * Math.min(gw, 1.4)), PU - 0.27 * gw, 1);
++        pushP(fr(-0.23), PU - 0.15 * gw, 1);
++        pushP(fr(-0.08), PU - 0.07 * gw, 2);
++        pushP(fr(0.22), PU - 0.01, 2);
+         A = A0 + B * (s0 + s1) / 2 + L * s1;
+         s0 = s1; if (!tele) Pc *= g;
+       }

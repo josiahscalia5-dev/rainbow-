@@ -2375,3 +2375,250 @@ While the proof set renders, checking the current pompom/cuff/crown/star colours
 
 > 🔧 **Bash** `{"command": "until grep -q \"PROOF_DONE\\|rror\" /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/proof1.log; do sleep 5; done; tail -5 /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/proof1.log", "description": "Block until proof renders finish", "timeout": 1200000}`
 
+### 🧑 User — 2026-11-20T00:15:32.221Z
+
+> ↩︎ result: Command did not complete within its 600s timeout and was moved to the background (ID: b336f5chn). Output is being written to: /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/tasks/b336f5chn.output. You will be notified when it completes. If it is still running after 30m in the background, it will be stopped and you will be notified. It is running now: do not start a second copy while it runs. If it is no longer needed, stop it with TaskStop. No output had been read from it when it was moved. A program that buffers its output, or a pipe into one such as tail, can keep the output file empty until the command finishes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-20T00:15:35.421Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/proof1.log; ls /home/user/wt/benny/qa/benny/r20/step1_fur/; ls /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/clipframes 2>/dev/null | wc -l; uptime", "description": "Check proof progress details"}`
+
+### 🧑 User — 2026-11-20T00:15:35.524Z
+
+> ↩︎ result: f00_start 04 s 78.813 lat 0 04 coins 1330
+> f03_forward3u 04 s 81.148 lat 0 04 coins 1330
+> f06_forward6u 04 s 84.183 lat 0 04 coins 1330
+> s_left_steer 04 s 84.187 lat -1.65 04 coins 1350
+> s_right_steer 04 s 84.183 lat 1.65 04 coins 1330
+> s05_start 05 s 133.394 lat 0 05 coins 1420
+> s05_swim3u 05 s 136.116 lat 0 05 coins 1420
+> s06_start 06 s 199.476 lat 0 06 coins 1680
+> s06_swim3u 06 s 202.592 lat 0 06 coins 1690
+> s07_start 07 s 273.658 lat 0 07 coins 1940
+> s07_swim3u 07 s 276.661 lat 0 07 coins 1950
+> f00_start.png
+> f00_start_mask.png
+> f03_forward3u.png
+> f03_forward3u_mask.png
+> f06_forward6u.png
+> f06_forward6u_mask.png
+> s05_start.png
+> s05_swim3u.png
+> s06_start.png
+> s06_swim3u.png
+> s07_start.png
+> s07_swim3u.png
+> s_left_steer.png
+> s_left_steer_mask.png
+> s_right_steer.png
+> s_right_steer_mask.png
+> shots.json
+> shots_other.json
+> 70
+>  00:15:35 up 59 min,  0 user,  load average: 12.99, 12.60, 11.08
+
+### 🤖 Claude — 2026-11-20T00:15:37.239Z
+
+Shots are done, clip at 70/96 frames. Scoring fur HSV in motion meanwhile.
+
+### 🤖 Claude — 2026-11-20T00:15:38.699Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny/qa/benny/r20/step1_fur && for s in f00_start f03_forward3u f06_forward6u s_left_steer s_right_steer; do echo -n \"$s \"; python3 -I /home/user/wt/benny/tools/benny20/score.py $s.png ${s}_mask.png | python3 -c \"import json,sys; d=json.load(sys.stdin); print(d.get('fur_hsv'))\"; done", "description": "Fur HSV numbers across motion frames"}`
+
+### 🧑 User — 2026-11-20T00:15:43.278Z
+
+> ↩︎ result: f00_start {'mean': [211, 72, 145], 'sat': [0.59, 0.65, 0.78], 'val': [0.67, 0.84, 0.98]}
+> f03_forward3u {'mean': [212, 73, 147], 'sat': [0.58, 0.65, 0.8], 'val': [0.67, 0.85, 1.0]}
+> f06_forward6u {'mean': [212, 73, 148], 'sat': [0.57, 0.65, 0.8], 'val': [0.67, 0.84, 1.0]}
+> s_left_steer {'mean': [219, 83, 131], 'sat': [0.57, 0.65, 1.0], 'val': [0.71, 0.87, 1.0]}
+> s_right_steer {'mean': [209, 70, 143], 'sat': [0.58, 0.65, 0.81], 'val': [0.66, 0.83, 0.99]}
+
+### 🤖 Claude — 2026-11-20T00:15:50.362Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny/qa/benny/r20/step1_fur && for s in s_left_steer s_right_steer f03_forward3u; do python3 -I /home/user/wt/benny/tools/benny20/crop.py $s.png closeup_$s.png 120 760 744 1460; done; python3 -I -c \"\nfrom PIL import Image\nfor s in ['s05_start','s06_start','s07_start','s06_swim3u']:\n    a=Image.open(f'../t1/before/{s}.png').crop((150,700,714,1500)); b=Image.open(f'{s}.png').crop((150,700,714,1500))\n    c=Image.new('RGB',(a.width*2+10,a.height),'white'); c.paste(a,(0,0)); c.paste(b,(a.width+10,0)); c=c.resize((c.width*3//4,c.height*3//4)); c.save(f'/tmp/claude …[+160 chars]`
+
+### 🤖 Claude — 2026-11-20T00:15:50.822Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/benny/qa/benny/r20/step1_fur/closeup_s_right_steer.png"}`
+
+### 🧑 User — 2026-11-20T00:15:52.304Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🧑 User — 2026-11-20T00:15:52.342Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T00:15:55.671Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/s1_sbs_s06_start.png"}`
+
+### 🧑 User — 2026-11-20T00:15:55.749Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T00:15:56.337Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/s1_sbs_s05_start.png"}`
+
+### 🧑 User — 2026-11-20T00:15:56.373Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T00:16:15.092Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && python3 -I -c \"\nfrom PIL import Image\nfor n in ['05_flow_into_the_current','06_crest_the_rinse_arch','07_dive_the_washer_tube']:\n    im=Image.open(f'/home/user/rainbow-/references/{n}.png'); im.resize((216,384)).save(f'/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/th_{n[:2]}.png')\nim=Image.new('RGB',(216*3+20,384),'white')\nfor i,n in enumerate(['05','06','07']): im.paste(Image.open(f'/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/th_{n}.png'),(i*226,0))\nim.save('/tmp/claude- …[+152 chars]`
+
+### 🧑 User — 2026-11-20T00:16:15.342Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T00:16:16.496Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/th_all.png"}`
+
+### 🧑 User — 2026-11-20T00:16:16.540Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T00:16:34.081Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && cat > tools/benny20/furstat.py <<'EOF'\n\"\"\"fur colour stats (pink pixels) inside a rectangle: mean RGB, HSV saturation / brightness p10/50/90.\nusage: python3 -I tools/benny20/furstat.py <frame.png> x0 y0 x1 y1\"\"\"\nimport sys, json\nimport numpy as np\nfrom PIL import Image\na = np.asarray(Image.open(sys.argv[1]).convert('RGB')).astype(float)\nx0, y0, x1, y1 = (int(v) for v in sys.argv[2:6])\nc = a[y0:y1, x0:x1].reshape(-1, 3)\nR, G, B = c[:, 0], c[:, 1], c[:, 2]\nm = (R > 90) & (R > B + 5) & (G < 0.62 * R)\npx = c[m] / 255\nmx, mn = px.max(1), px.m …[+1303 chars]`
+
+### 🤖 Claude — 2026-11-20T00:16:35.382Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/gth_all.png"}`
+
+### 🧑 User — 2026-11-20T00:16:35.417Z
+
+> ↩︎ result: APPROVED
+> {"n": 26748, "mean": [230, 76, 174], "sat": [0.5, 0.69, 0.81], "val": [0.72, 0.95, 1.0]}
+> {"n": 17108, "mean": [234, 85, 177], "sat": [0.47, 0.65, 0.81], "val": [0.8, 0.95, 1.0]}
+> {"n": 12095, "mean": [240, 84, 182], "sat": [0.49, 0.65, 0.83], "val": [0.87, 0.98, 1.0]}
+
+### 🧑 User — 2026-11-20T00:16:35.438Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T00:16:40.896Z
+
+The approved Benny is itself lighter and pinker on 05/06/07 (mean about 234,82,178, brightness median .95-.98) than on 04 (207,74,151, .84). Measuring the game on those screens.
+
+### 🤖 Claude — 2026-11-20T00:16:42.910Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && for v in before step1_fur; do d=qa/benny/r20/t1/before; [ $v = step1_fur ] && d=qa/benny/r20/step1_fur; echo $v; python3 -I tools/benny20/furstat.py $d/s05_start.png 280 1040 580 1160; python3 -I tools/benny20/furstat.py $d/s06_start.png 180 1260 560 1440; python3 -I tools/benny20/furstat.py $d/s07_start.png 200 1080 400 1190; done", "description": "Game fur stats on 05/06/07 BEFORE vs step 1"}`
+
+### 🧑 User — 2026-11-20T00:16:45.019Z
+
+> ↩︎ result: before
+> {"n": 28286, "mean": [254, 65, 176], "sat": [0.58, 0.74, 0.9], "val": [1.0, 1.0, 1.0]}
+> {"n": 62514, "mean": [254, 54, 186], "sat": [0.64, 0.79, 0.92], "val": [1.0, 1.0, 1.0]}
+> {"n": 17823, "mean": [254, 70, 178], "sat": [0.57, 0.72, 0.87], "val": [1.0, 1.0, 1.0]}
+> step1_fur
+> {"n": 26566, "mean": [196, 56, 134], "sat": [0.64, 0.71, 0.82], "val": [0.64, 0.78, 0.9]}
+> {"n": 51462, "mean": [185, 46, 144], "sat": [0.66, 0.75, 0.83], "val": [0.62, 0.73, 0.84]}
+> {"n": 13483, "mean": [195, 56, 138], "sat": [0.65, 0.7, 0.81], "val": [0.64, 0.77, 0.89]}
+
+### 🤖 Claude — 2026-11-20T00:16:53.241Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && grep -n \"interface BennyRuntime\" -A25 src/characters/types.ts | head -40; grep -n \"benny\\.update\\|benny.setExpression\\|stageId\\|curStage\\|stage =\" src/game/Game.ts | head -20", "description": "Inspect Benny runtime API and stage tracking"}`
+
+### 🧑 User — 2026-11-20T00:16:53.332Z
+
+> ↩︎ result: 12:export interface BennyRuntime {
+> 13-  /** origin = centre of the round body; faces +Z (camera behind him looks toward -Z… see docs) */
+> 14-  root: THREE.Group;
+> 15-  /** 'happy' (default, open smile), 'dizzy' (spiral eyes, scene 02), 'peek' (01, wide eyes) */
+> 16-  setExpression(e: 'happy' | 'dizzy' | 'peek'): void;
+> 17-  /**
+> 18-   * per-frame animation; swim 0..1 drives paddling paws/kicks, steer −1..1 leans, speed for
+> 19-   * splash/pom bounce, tumble=true lets the caller spin root freely (scene 02)
+> 20-   */
+> 21-  update(dt: number, state: { swim: number; steer: number; speed: number; time: number; tumble?: boolean }): void;
+> 22-  /** world-space radius of the body (for collisions/coin pickup and water contact) */
+> 23-  radius: number;
+> 24-}
+> 25-
+> 26-/** Runtime handle for the ONE official cartoon girl (assets/models/rainbow_girl.glb). */
+> 27-export interface GirlRuntime {
+> 28-  /** origin = between the feet on the floor; faces +Z; height ≈ 26 units */
+> 29-  root: THREE.Group;
+> 30-  mixer: THREE.AnimationMixer;
+> 31-  /** clip names: idle, walk, carryTowel, dropLoad, closeDoor, laundryCounter, leanReachTowel, holdTowel */
+> 32-  play(name: string, opts?: { fade?: number; loop?: boolean; timeScal …[+1431 chars]
+
+### 🤖 Claude — 2026-11-20T00:16:59.094Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && sed -n 150,160p src/game/Game.ts; grep -n \"update(dt, s)\\|update: (dt\\|update(dt: number, s\" src/characters/benny/runtime.ts | head", "description": "Read stage setter and Benny update signature"}`
+
+### 🧑 User — 2026-11-20T00:16:59.277Z
+
+> ↩︎ result: log: [] as { t: number; s: number; y: number; stage: StageId }[],
+>   };
+> 
+>   const stageOf = (s: number): StageId => course.stageAtS(s).id;
+> 
+>   const setStage = (id: StageId) => {
+>     if (st.stage === id) return;
+>     st.stage = id;
+>     hud.setStage(id);
+>     updateZones();
+>   };
+
+### 🤖 Claude — 2026-11-20T00:17:00.886Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && grep -n \"update\" src/characters/benny/runtime.ts | head -20", "description": "Find runtime update function"}`
+
+### 🧑 User — 2026-11-20T00:17:01.112Z
+
+> ↩︎ result: 174:  const update: BennyRuntime['update'] = (dt, st) => {
+> 185:    mixer.update(dt);
+> 239:  return { root, setExpression, update, radius: 0.8 };
+
+### 🤖 Claude — 2026-11-20T00:17:04.971Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && grep -n \"const benny\\b\\|let benny\\b\\|benny = await\\|const benny =\" src/game/Game.ts | head; sed -n 170,186p src/characters/benny/runtime.ts", "description": "Check benny variable scope and update body"}`
+
+### 🧑 User — 2026-11-20T00:17:05.060Z
+
+> ↩︎ result: 102:  const benny = await loadBennyRuntime();
+>   const qLean = new THREE.Quaternion();
+>   const qPom = new THREE.Quaternion();
+>   const eAxis = new THREE.Euler();
+> 
+>   const update: BennyRuntime['update'] = (dt, st) => {
+>     dt = Math.min(dt, 1 / 20);
+>     // clip weights
+>     const tumble = !!st.tumble;
+>     const swim = tumble ? 0 : THREE.MathUtils.clamp(st.swim, 0, 1);
+>     const peek = expression === 'peek' && !tumble ? 1 : 0;
+>     setW(aTumble, tumble ? 1 : 0);
+>     setW(aPeek, peek);
+>     setW(aSwim, peek ? 0 : swim);
+>     setW(aIdle, tumble || peek ? 0 : 1 - swim);
+>     if (aSwim) aSwim.timeScale = 0.8 + Math.min(1.2, st.speed / 14);
+>     mixer.update(dt);
+
+### 🤖 Claude — 2026-11-20T00:17:21.547Z
+
+> 🔧 **Bash** `{"command": "tail -3 /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/proof1.log; ls -la /home/user/wt/benny/qa/benny/r20/step1_fur/*.mp4 2>/dev/null", "description": "Check clip completion"}`
+
+### 🧑 User — 2026-11-20T00:17:21.827Z
+
+> ↩︎ result: Exit code 2
+> s06_swim3u 06 s 202.592 lat 0 06 coins 1690
+> s07_start 07 s 273.658 lat 0 07 coins 1940
+> s07_swim3u 07 s 276.661 lat 0 07 coins 1950
+
+### 🤖 Claude — 2026-11-20T00:17:24.627Z
+
+While the clip finishes, I'll implement the per-screen fur exposure (benny20 only; one line in Game.ts records the current screen on `benny.root.userData`).
+
+### 🤖 Claude — 2026-11-20T00:17:38.253Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && python3 - <<'EOF'\np='src/characters/benny/benny20.ts'\ns=open(p).read()\na=\"/** beanie geometry on top of benny05's HAT05\"\nnew='''/** per-screen fur exposure (LINEAR multipliers on the fur albedo above, which is solved for Screen 04). The approved\n *  pictures paint Benny lighter / pinker on 05–07 (fur mean ≈ (234, 82, 178), brightness median .95–.98) than on 04\n *  ((207, 74, 151), .84), while the game lights him less there. The game records its screen on\n *  benny.root.userData.stage (Game.ts setStage); runtime.ts eases the factor over ≈ 1 s. Unl …[+3284 chars]`
+
+### 🧑 User — 2026-11-20T00:17:44.504Z
+
+> ↩︎ result: TSC_OK
+
