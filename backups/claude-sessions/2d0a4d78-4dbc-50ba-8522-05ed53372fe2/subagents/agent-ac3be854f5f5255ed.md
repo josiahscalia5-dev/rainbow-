@@ -1037,3 +1037,283 @@ I'll record matching clips: NEW from 0.55 through the drop (BEFORE = r21's K7e `
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && K7=$(cat /home/user/rainbow-/qa/match/07/r21/K7.txt) && O=/home/user/rainbow-/qa/match/07/r22/s1_cloud && S=/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/clips && rm -rf $S && mkdir -p $S && \\\nnode tools/match07/swim_clip_r21.mjs 07 $S/end_new 3.6 \"${K7}&m07end=1&m07cloud=1\" 0.55 2>&1 | grep -v \"outside of Vite\" | tail -1 && ffmpeg -loglevel error -y -framerate 24 -i $S/end_new/%04d.png -pix_fmt yuv420p $O/swim_end_NEW.mp4 && \\\nnode tools/match07/swim_clip_r21.mjs 07 $S/lvl_new 3.6 \"${K7}&m07end=1&m07cloud=1\" 0. …[+590 chars]`
 
+### 🧑 User — 2026-11-20T03:33:38.447Z
+
+> ↩︎ result: frames 86
+> frames 86
+> frames 86
+> -rw-r--r-- 1 root root 2428032 Nov 20 03:33 /home/user/rainbow-/qa/match/07/r22/s1_cloud/swim_end_BEFORE.mp4
+> -rw-r--r-- 1 root root 2127655 Nov 20 03:30 /home/user/rainbow-/qa/match/07/r22/s1_cloud/swim_end_NEW.mp4
+> -rw-r--r-- 1 root root 1753704 Nov 20 03:33 /home/user/rainbow-/qa/match/07/r22/s1_cloud/swim_level_BEFORE.mp4
+> -rw-r--r-- 1 root root 1737896 Nov 20 03:32 /home/user/rainbow-/qa/match/07/r22/s1_cloud/swim_level_NEW.mp4
+
+### 🤖 Claude — 2026-11-20T03:33:40.844Z
+
+Let me review the level-stretch clip frames myself (contact sheet only for my own check, not for the user).
+
+### 🤖 Claude — 2026-11-20T03:33:44.046Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/clips && python3 -I -c \"\nfrom PIL import Image\nS='$S'\nfor name in ['lvl_new','end_new']:\n  fr=[0,14,28,42,56,70,85]\n  ims=[Image.open(f'{S}/{name}/{i:04d}.png').convert('RGB') for i in fr]\n  w,h=ims[0].size; sheet=Image.new('RGB',(w*4,h*2),'black')\n  for k,im in enumerate(ims): sheet.paste(im,((k%4)*w,(k//4)*h))\n  sheet.save(f'{S}/{name}_sheet.png')\n\"", "description": "Build review contact sheets of clip frames"}`
+
+### 🧑 User — 2026-11-20T03:33:45.094Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T03:33:45.238Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/clips/lvl_new_sheet.png"}`
+
+### 🧑 User — 2026-11-20T03:33:45.840Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:33:45.849Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/clips/end_new_sheet.png"}`
+
+### 🧑 User — 2026-11-20T03:33:46.495Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:33:51.265Z
+
+In the level clip, frames 42 and 70 show flat pale sheets beside the river while steering. Checking whether those are also in BEFORE (i.e. not caused by the clouds).
+
+### 🤖 Claude — 2026-11-20T03:33:54.280Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/clips && python3 -I -c \"\nfrom PIL import Image\nS='$S'\nfr=[42,56,70,80]\nims=[Image.open(f'{S}/lvl_bef/{i:04d}.png').convert('RGB') for i in fr]+[Image.open(f'{S}/lvl_new/{i:04d}.png').convert('RGB') for i in fr]\nw,h=ims[0].size; sheet=Image.new('RGB',(w*4,h*2),'black')\nfor k,im in enumerate(ims): sheet.paste(im,((k%4)*w,(k//4)*h))\nsheet.save(f'{S}/lvl_cmp.png')\n\"", "description": "Compare BEFORE vs NEW clip frames side by side"}`
+
+### 🧑 User — 2026-11-20T03:33:55.086Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T03:33:55.331Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/clips/lvl_cmp.png"}`
+
+### 🧑 User — 2026-11-20T03:33:55.935Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:34:05.994Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && head -40 tools/match07/diag_r21.mjs", "description": "Read diagnostic tool usage"}`
+
+### 🧑 User — 2026-11-20T03:34:06.033Z
+
+> ↩︎ result: // r21 Screen 07 diagnostics (read-only QA): deterministic shots like tools/lead21/audit_screen.mjs, plus per-shot hiding of
+> // named scene objects and ray probes, to see which mesh paints which part of the frame.
+> //   cd /home/user/wt/s07 && node tools/match07/diag_r21.mjs <outDir> "<query>" '<json shots>'
+> // shots: [{"name":"x","frac":0.85,"steer":null,"hide":["ribbon","foam"],"probe":[[0,0.5],[-0.5,0.2]]}]
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> const [OUT, Q, SH] = process.argv.slice(2);
+> const SHOTS = JSON.parse(SH);
+> mkdirSync(OUT, { recursive: true });
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(Number(process.env.AUDIT_PORT ?? 5277));
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> const log = [];
+> try {
+>   const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
+>   page.on('pageerror', (e) => console.error('pageerror', e.message));
+>   page.on('console', (m) => { const t = m.text(); if (m.type() === 'error' || /m07/.tes …[+1481 chars]
+
+### 🤖 Claude — 2026-11-20T03:34:13.595Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && K7=$(cat /home/user/rainbow-/qa/match/07/r21/K7.txt) && timeout 600 node tools/match07/diag_r21.mjs /tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/diag1 \"${K7}&m07end=1\" '[{\"name\":\"r20\",\"frac\":0.2,\"steer\":1,\"probe\":[[0.8,-0.6],[0.9,-0.2],[0.7,-0.9]]},{\"name\":\"r25\",\"frac\":0.25,\"steer\":1,\"probe\":[[0.8,-0.6],[0.9,-0.2]]}]' 2>&1 | grep -v \"outside of Vite\" | grep -v \"^console\" | head -60", "description": "Probe which mesh draws the grey sheet at hard right", "timeout": 660000}`
+
+### 🧑 User — 2026-11-20T03:34:30.209Z
+
+> ↩︎ result: r20 s 296.656 lat 2.25 hidden 0
+> r25 s 302.456 lat 2.25 hidden 0
+
+### 🤖 Claude — 2026-11-20T03:34:33.171Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/diag1 && ls && python3 -I -c \"\nimport json;d=json.load(open('log.json')) if __import__('os').path.exists('log.json') else None\nprint(type(d))\n\" ; ls; head -c 3000 *.json", "description": "Read diagnostic probe output"}`
+
+### 🧑 User — 2026-11-20T03:34:33.233Z
+
+> ↩︎ result: diag.json
+> r20.png
+> r25.png
+> <class 'NoneType'>
+> diag.json
+> r20.png
+> r25.png
+> [
+>  {
+>   "name": "r20",
+>   "mode": "ride",
+>   "stage": "07",
+>   "s": 296.656,
+>   "lat": 2.25,
+>   "coins": 1940,
+>   "hearts": 4,
+>   "paused": false,
+>   "bennyY": -50.681,
+>   "bennyVisible": true,
+>   "cam": [
+>    11.51,
+>    -47.94,
+>    -216.92
+>   ],
+>   "s0": 273.056,
+>   "s1": 390.1617102628636,
+>   "hidden": 0,
+>   "calls": [
+>    [
+>     "laundry_room/Mesh",
+>     60
+>    ],
+>    [
+>     "zone_chamber/Mesh",
+>     22
+>    ],
+>    [
+>     "Mesh",
+>     13
+>    ],
+>    [
+>     "coins/Mesh",
+>     3
+>    ],
+>    [
+>     "zone_chamber/purple_towel",
+>     1
+>    ],
+>    [
+>     "eyeR/lash_R_05",
+>     1
+>    ],
+>    [
+>     "eyeR/lash_R_085",
+>     1
+>    ],
+>    [
+>     "eyeL/lash_L_05",
+>     1
+>    ],
+>    [
+>     "eyeL/lash_L_085",
+>     1
+>    ],
+>    [
+>     "body/nose",
+>     1
+>    ],
+>    [
+>     "hat/hat_star",
+>     1
+>    ],
+>    [
+>     "mouth/mouth_happy",
+>     1
+>    ],
+>    [
+>     "armL/palmL",
+>     1
+>    ],
+>    [
+>     "armR/palmR",
+>     1
+>    ],
+>    [
+>     "eyeR/eyeR_happy",
+>     1
+>    ],
+>    [
+>     "eyeL/eyeL_happy",
+>     1
+>    ],
+>    [
+>     "footL/soleL",
+>     1
+>    ],
+>    [
+>     "footR/soleR",
+>     1
+>    ],
+>    [
+>     "hat/hat_brim",
+>     1
+>    ],
+>    [
+>     "hat/hat_crown",
+>     1
+>    ],
+>    [
+>     "body/fur_body",
+>     1
+>    ],
+>    [
+>     "armL/fur …[+1871 chars]
+
+### 🤖 Claude — 2026-11-20T03:34:35.334Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/diag1/r20.png"}`
+
+### 🧑 User — 2026-11-20T03:34:35.392Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:34:42.579Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -rn \"uHide07\\b\\|uHide07 \\|uHide07:\" src/ | head -20; grep -rn \"m07foamb\" src/ | head", "description": "Find foam berm hide uniform logic"}`
+
+### 🧑 User — 2026-11-20T03:34:42.619Z
+
+> ↩︎ result: src/vfx/foam.ts:121:uniform vec2 uHide07;    // r8 m07foam: berm hidden on s in (x, y)
+> src/vfx/foam.ts:141:  float h7 = smoothstep(uHide07.x, uHide07.x + 3.0, s) * (1.0 - smoothstep(uHide07.y - 3.0, uHide07.y, s));
+> src/vfx/foam.ts:649:    uHide07: { value: new THREE.Vector2(...(hide07(course) ?? [0, 0])) },
+> src/game/Game.ts:137:  const m07BermHide = m07End ? ((water.parts?.foamBerm as THREE.Mesh | undefined)?.material as THREE.ShaderMaterial | undefined)?.uniforms?.uHide07 : undefined;
+> src/vfx/foam.ts:559:  // r17 '&m07foamb=1': the walls stay away to near the end of 07 (they no longer start again partway down the drop with a
+> src/vfx/foam.ts:565:/** r17 '&m07foamb=1': arc length of the 08 start (end of 07) or null = off */
+> src/vfx/foam.ts:567:  if (!flag05('match07') || !flag05('m07foam') || !flag05('m07foamb')) return null;
+> src/vfx/foam.ts:570:/** r17 '&m07foamb=1': berm height / outer width factor, 0 (flat at the water line) 5 u before the 08 start → 1 at it.
+> src/vfx/foam.ts:693:  // r17 m07foamb: puffs stay away down to the ramp start (h07[1] = 5 u before the 08 start); r18: on the ramp they sit,
+> src/vfx/foam.ts:738:  // r18 '&m07foamb=1': puffs on the end-of-07 ramp sit on the  …[+444 chars]
+
+### 🤖 Claude — 2026-11-20T03:34:44.680Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 540,575p src/vfx/foam.ts && sed -n 110,175p src/vfx/foam.ts && node -e \"\" && grep -n \"07_plunge_top\\|'07'\\|marks\\[\" src/world/course.ts | head -20", "description": "Read foam berm hide07 range code"}`
+
+### 🧑 User — 2026-11-20T03:34:44.755Z
+
+> ↩︎ result: }
+> const BANK_CLEAR_RIDER = 1.3;
+> const BANK_CLEAR_CORE = 1.45;
+> 
+> /**
+>  * wave 5: 0.4 in 05 (smooth ramps at the stage ends), 1 elsewhere. In 05 the stream-edge rim toward the VP
+>  * is a LOW band of piled bubbles (ref ≈40–60 px); the full-height berm read as tall white heaps.
+>  */
+> function bermScale05(course: Course): (s: number) => number {
+>   const st = course.stage('05');
+>   const sm = (a: number, b: number, x: number) => { const u = Math.min(1, Math.max(0, (x - a) / (b - a))); return u * u * (3 - 2 * u); };
+>   return (s) => 1 - 0.6 * sm(st.s0 - 6, st.s0 - 1, s) * (1 - sm(st.s1 - 1, st.s1 + 4, s));
+> }
+> /** squash the part of the bank above the stream's edge water level by k (k = 1: unchanged) */
+> const squashBerm = (h: number, k: number) => (k < 1 && h > EDGE_LIFT ? EDGE_LIFT + (h - EDGE_LIFT) * k : h);
+> 
+> /** r8 '?match07=1&m07foam=1': arc range of the 07 plunge where the berm + its puffs step aside (null = off) */
+> function hide07(course: Course): [number, number] | null {
+>   if (!flag05('match07') || !flag05('m07foam')) return null;
+>   // r17 '&m07foamb=1': the walls stay away to near the end of 07 (they no longer start again partway down the drop with a
+>   // cut); over the last 5 u of 07 th …[+5022 chars]
+
+### 🤖 Claude — 2026-11-20T03:35:01.159Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && K7=$(cat /home/user/rainbow-/qa/match/07/r21/K7.txt) && timeout 600 node tools/match07/diag_r21.mjs /tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/diag2 \"${K7}&m07end=1&m07cloud=1\" '[{\"name\":\"a_start_hide\",\"frac\":0,\"steer\":null,\"hide\":[\"foam_berm\"]},{\"name\":\"a_start\",\"frac\":0,\"steer\":null},{\"name\":\"r20_hide\",\"frac\":0.2,\"steer\":1,\"hide\":[\"foam_berm\"]},{\"name\":\"r20\",\"frac\":0.2,\"steer\":1},{\"name\":\"l20_hide\",\"frac\":0.2,\"steer\":-1,\"hide\":[\"foam_berm\"]},{\"name\":\"l20\",\"fr …[+381 chars]`
+
+### 🧑 User — 2026-11-20T03:35:55.209Z
+
+> ↩︎ result: a_start_hide s 273.056 lat 0 hidden 1
+> a_start s 273.056 lat 0 hidden 0
+> r20_hide s 296.656 lat 2.25 hidden 1
+> r20 s 296.656 lat 2.25 hidden 0
+> l20_hide s 296.656 lat -2.25 hidden 1
+> l20 s 296.656 lat -2.25 hidden 0
+> {"a":"a_start_hide.png","b":"a_start.png","rows":[180,1536],"threshold":0.1,"diff_pixels":45464,"total":1171584,"diff_pct":3.8806}
+

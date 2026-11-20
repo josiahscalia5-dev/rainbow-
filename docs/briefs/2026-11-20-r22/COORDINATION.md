@@ -47,3 +47,9 @@ s06 / Benny = their pushed `-c23` tips + their r22 PROGRESS.md.
 * Artwork method that keeps the game's geometry (round 22): IMAGE 1 = clean game frame, IMAGES 2.. = small material swatches cut
   from the original (never the whole original: the model then copies its layout). Ledger `qa/review_r21/artwork/LEDGER.md`
   (11 jobs, $1.32). Sheet tool `tools/lead22/approval_sheet.py`.
+
+## Results log
+* ~03:35 Benny step 1 `&benny20=1` (plush pile, `claude/rainbow-benny-c23` @ `d153ad2`; worker: GOOD IMPROVEMENT). Lead by eye
+  (`qa/review_r22/benny_t1/`): outline smooth + round, shaggy tiers / hem gone = closer; fur now reads as flat velvet / terry, darker
+  and duller than the approved fluffy plush = NOT YET. Feedback sent (tuft volume + lighter tips behind own switch; centre the middle
+  crops on Benny — 05/06/07 middle crops missed him). Shown to the user: 04 start APPROVED / BEFORE / NEW (NOT YET PROVEN).

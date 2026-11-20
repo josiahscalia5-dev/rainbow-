@@ -1,6 +1,6 @@
+#!/usr/bin/env node
 // r22 S04 copy of tools/lead_r13/swim_clip.mjs: port AUDIT_PORT (default 5273) and performance.now() pinned to the clip clock
 // while each frame is stepped and drawn (the Screen 04 river shader reads the wall clock), so BEFORE / NEW clips match.
-#!/usr/bin/env node
 // Lead r13 (2026-11-18): a short REAL-GAMEPLAY swimming clip for any playable screen 04–08 (read-only).
 // Starts at the screen's checkpoint and rides the real game simulation (Benny, camera rig, course, coins unchanged) with
 // the shader clock running: straight, then left, then right, then straight — one frame per 1/fps s → OUT/0000.png …

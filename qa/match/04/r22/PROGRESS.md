@@ -3,8 +3,10 @@
 ## (r22) WHERE I STOPPED / NEXT
 * DONE: Step 0 — restore proven (code byte-identical to the saved r21 patch; start view 0 px; other shots differ ONLY in the
   river-water phase, see below).
-* NOW: Step 2 (r21 task 2) — foam banks deeper into the tunnel (`m04bbd`, unfinished r21 code) + `m04bbx`.
-* NEXT: Step 3 (r21 task 3) — chevrons always ahead of Benny / Benny through them neatly; then `m04farsm` / `m04endfit`.
+* NOW: Step 2 (r21 task 2) — foam banks beside Benny inside the tunnel. Values chosen (`s2_bbd/SWITCH.txt`), 7 NEW shots
+  rendered (`s2_bbd/NEW/`), start view 0 px, gameplay 8/8 + 91 coins (1,330 -> 2,240). Rendering BEFORE / NEW swim clips.
+* NEXT: Step 3 (r21 task 3) — chevrons always ahead of Benny / Benny through them neatly (d_late: the lowest chevron sits at
+  Benny's hat); then `m04farsm` / `m04endfit`.
 
 Worktree `/home/user/wt/s04` (local branch `claude/rainbow-s04-match-c23`, uncommitted edits only, dev port 5273).
 K21-1 = `$(cat qa/review_r21/audit/QUERY_04.txt)&m04wgl=1` (saved in `QUERY_K21-1.txt`). APPROVED = `1_APPROVED.png`.
