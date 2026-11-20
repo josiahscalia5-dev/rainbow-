@@ -1724,3 +1724,265 @@ The CURRENT render doesn't depend on the fill, so I'll queue it now (it waits fo
 > 54	    zone = eZ < 1.12
 > 55	   …[+582 chars]
 
+### 🤖 Claude — 2026-11-20T12:30:17.997Z
+
+I'll rewrite the fill tool with the streak-continuation method plus a Poisson blend (the patch method stays available as a reference option).
+
+### 🤖 Claude — 2026-11-20T12:31:00.021Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s06/tools/match06/make_hole06.py", "content": "#!/usr/bin/env python3\n\"\"\"r25 Screen 06 `&m06hole=1` (qa/match/06/r25/PROGRESS.md): the user's \"raised blue cone\" under Benny at the opening.\n\nCause (lead r24, qa/match/06/r24/lead_rip/NOTES.md): where the painted Benny was cut out of the projected approved plate, the river\nfloor shows the river's own brighter flowing material once the camera leaves the approved view — a hard-edged, Benny-shaped bright\npatch that reads as a cone — and the painted lacy ripple ring stays pinned at the checkpoint below it.\n\nTh …[+11410 chars]`
+
+### 🧑 User — 2026-11-20T12:31:00.172Z
+
+> ↩︎ result: The file /home/user/wt/s06/tools/match06/make_hole06.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T12:31:10.123Z
+
+Two safeguards before running: limit the orientation extension to the water (smaller system) and keep the solver non-singular.
+
+### 🤖 Claude — 2026-11-20T12:31:12.880Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06/tools/match06 && python3 - <<'EOF'\np='make_hole06.py'; s=open(p).read()\na=\"\"\"    ext = ~conf\n\"\"\"\nb=\"\"\"    ext = ~conf & (valid | Om)\n\"\"\"\nassert a in s; s=s.replace(a,b)\na=\"\"\"    diag[diag == 0] = 1\n\"\"\"\nb=\"\"\"    diag[diag == 0] = 1\n    diag += 1e-6  # a part with Neumann borders only stays solvable\n\"\"\"\nassert a in s; s=s.replace(a,b)\nopen(p,'w').write(s)\nEOF\ncd /home/user/wt/s06/tools/match06 && timeout 1800 nice -n 5 python3 -I make_hole06.py /home/user/scratch/s06/frames06.json /home/user/scratch/s06/hole_v3 160 flow 2>& …[+89 chars]`
+
+### 🧑 User — 2026-11-20T12:31:29.622Z
+
+> ↩︎ result: grid 896 976 omega 290809 good 155239 1.8s
+>   orientation field 3s
+> /home/user/wt/s06/tools/match06/make_hole06.py:129: RuntimeWarning: invalid value encountered in divide
+>   wt = (d2 / (d1 + d2))[both][:, None]
+>   streaks carried 11s; both ends 0.64, one end 0.34, none 0.023
+>   poisson blend 13s
+> {'note': 'r25 m06hole (tools/match06/make_hole06.py)', 'method': 'flow', 'K': 160.0, 'l0': -2.8, 'l1': 2.8, 's0': 197.21, 's1': 203.31, 'sB': 198.91, 'zone': {'dc': -0.25, 'hl': 1.75, 'hs': 0.85}} 16s
+
+### 🤖 Claude — 2026-11-20T12:31:31.501Z
+
+Fast (16 s). Let me look at before / carried streaks / final blend.
+
+### 🤖 Claude — 2026-11-20T12:31:33.808Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && python3 - <<'EOF'\nimport numpy as np, cv2\nfrom PIL import Image\nd=np.load('hole_v3/hole06_dbg.npz')\nb,c,a,Om=d['before'],d['carried'],d['after'],d['Om']\na2=a.copy(); cnt,_=cv2.findContours(Om.astype(np.uint8),cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_NONE); cv2.drawContours(a2,cnt,-1,(255,255,0),1)\nimg=np.concatenate([b[::-1],c[::-1],a[::-1]],1)\nImage.fromarray(img).resize((img.shape[1]*2//3,img.shape[0]*2//3),Image.LANCZOS).save('fill_v3.png')\nEOF", "description": "View v3 fill"}`
+
+### 🧑 User — 2026-11-20T12:31:34.494Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T12:31:35.874Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s06/fill_v3.png"}`
+
+### 🧑 User — 2026-11-20T12:31:35.943Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T12:32:15.370Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06/tools/match06 && python3 - <<'EOF'\np='make_hole06.py'; s=open(p).read()\nrep=[(\"\"\"    hole = cv2.dilate((U['fill'] > 8).astype(np.uint8), cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (int(0.08 * K) | 1,) * 2)) > 0\n    eZ = np.hypot(L2 / ZONE['hl'], (DS - ZONE['dc']) / ZONE['hs'])\n    zone = eZ < 1.12\n    Om = V & water & (hole | zone)\n    bub = np.zeros_like(V)\n    for bx, by, br in BUB: bub |= np.hypot(x - bx, y - by) < br + 5\n    fm = foam_mask_px()\n    foam = fm[np.clip(np.round(y), 0, H - 1).astype(int), np.clip(np.round(x), 0, W - 1).astype(int …[+2428 chars]`
+
+### 🧑 User — 2026-11-20T12:32:31.943Z
+
+> ↩︎ result: grid 896 976 omega 252240 good 171877 1.7s
+>   orientation field 3s
+>   streaks carried 11s; both ends 0.75, one end 0.25, none 0.000
+>   poisson blend 12s
+> {'note': 'r25 m06hole (tools/match06/make_hole06.py)', 'method': 'flow', 'K': 160.0, 'l0': -2.8, 'l1': 2.8, 's0': 197.21, 's1': 203.31, 'sB': 198.91, 'zone': {'dc': -0.25, 'hl': 1.75, 'hs': 0.85}} 15s
+
+### 🤖 Claude — 2026-11-20T12:32:33.097Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s06/fill_v4.png"}`
+
+### 🧑 User — 2026-11-20T12:32:33.148Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T12:32:44.969Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06/tools/match06 && python3 - <<'EOF'\np='make_hole06.py'; s=open(p).read()\na=\"\"\"    return cv2.dilate(f, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (13, 13))) > 0\n\"\"\"\nb=\"\"\"    # heaps only: the lacy splash collar's white bits are small (they belong to the rings and go with them)\n    n, lab, st, _ = cv2.connectedComponentsWithStats(f)\n    f = np.isin(lab, [k for k in range(1, n) if st[k, cv2.CC_STAT_AREA] >= 2500]).astype(np.uint8)\n    return cv2.dilate(f, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (13, 13))) > 0\n\"\"\"\nassert a in s; s=s.rep …[+508 chars]`
+
+### 🧑 User — 2026-11-20T12:32:46.126Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T12:32:47.469Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s06/foam_mask.png"}`
+
+### 🧑 User — 2026-11-20T12:32:47.505Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T12:32:50.658Z
+
+Foam mask now = real foam heaps only (plus the provisional ghost, which is always filled anyway). Rerun.
+
+### 🤖 Claude — 2026-11-20T12:32:53.777Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06/tools/match06 && timeout 1800 nice -n 5 python3 -I make_hole06.py /home/user/scratch/s06/frames06.json /home/user/scratch/s06/hole_v5 160 flow 2>&1 | grep -v Warning | grep -v \"wt = \" | tail -4\ncd /home/user/scratch/s06 && python3 - <<'EOF'\nimport numpy as np, cv2\nfrom PIL import Image\nd=np.load('hole_v5/hole06_dbg.npz')\nb,a,Om=d['before'],d['after'],d['Om']\na2=a.copy(); cnt,_=cv2.findContours(Om.astype(np.uint8),cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_NONE); cv2.drawContours(a2,cnt,-1,(255,255,0),1)\nimg=np.concatenate([b[::-1],a[::-1],a2[::-1]],1)\nImage. …[+162 chars]`
+
+### 🧑 User — 2026-11-20T12:33:12.082Z
+
+> ↩︎ result: orientation field 4s
+>   streaks carried 11s; both ends 0.74, one end 0.26, none 0.000
+>   poisson blend 13s
+> {'note': 'r25 m06hole (tools/match06/make_hole06.py)', 'method': 'flow', 'K': 160.0, 'l0': -2.8, 'l1': 2.8, 's0': 197.21, 's1': 203.31, 'sB': 198.91, 'zone': {'dc': -0.25, 'hl': 1.75, 'hs': 0.85}} 16s
+
+### 🤖 Claude — 2026-11-20T12:33:13.476Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s06/fill_v5.png"}`
+
+### 🧑 User — 2026-11-20T12:33:13.552Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T12:33:28.197Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06/tools/match06 && python3 - <<'EOF'\np='make_hole06.py'; s=open(p).read()\nrep=[(\"\"\"    Om = V & water & (hole | (zone & ~foam & ~bub))\n\"\"\",\"\"\"    bigbub = np.zeros_like(V)  # tiny bubbles inside the ring zone would float as lone specks in the smooth fill: filled too\n    for bx, by, br in BUB:\n        if br > 10: bigbub |= np.hypot(x - bx, y - by) < br + 5\n    Om = V & water & (hole | (zone & ~foam & ~bigbub))\n\"\"\"),\n(\"\"\"    np.savez_compressed(out / 'hole06_dbg.npz',\"\"\",\"\"\"    if out.resolve() != T.resolve(): np.savez_compressed(out / …[+807 chars]`
+
+### 🧑 User — 2026-11-20T12:33:45.848Z
+
+> ↩︎ result: 195:    if out.resolve() != T.resolve(): np.savez_compressed(out / 'hole06_dbg.npz', before=U['rgb'].astype(np.uint8), after=np.clip(Iout, 0, 255).astype(np.uint8),
+> 196-                        carried=np.clip(Tt, 0, 255).astype(np.uint8), Om=Om, good=good, V=V, hole=hole)
+> 197-    print(meta, f'{time.time() - t0:.0f}s')
+>   poisson blend 13s
+> {'note': 'r25 m06hole (tools/match06/make_hole06.py)', 'method': 'flow', 'K': 160.0, 'l0': -2.8, 'l1': 2.8, 's0': 197.21, 's1': 203.31, 'sB': 198.91, 'zone': {'dc': -0.25, 'hl': 1.75, 'hs': 0.85}} 17s
+
+### 🤖 Claude — 2026-11-20T12:33:47.349Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s06/fill_v6_zone.png"}`
+
+### 🧑 User — 2026-11-20T12:33:47.437Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T12:34:00.642Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06/tools/match06 && python3 - <<'EOF'\np='make_hole06.py'; s=open(p).read()\na=\"\"\"    V = U['vis'] & U['inside'] & (U['mask'][..., 1] < 128) & (x > 2) & (y > 2) & (x < W - 3) & (y < H - 3)\n\"\"\"\nb=\"\"\"    vis = U['vis'] | (cv2.morphologyEx(U['vis'].astype(np.uint8), cv2.MORPH_CLOSE, np.ones((9, 9), np.uint8)) > 0)  # z-buffer specks\n    V = vis & U['inside'] & (U['mask'][..., 1] < 128) & (x > 2) & (y > 2) & (x < W - 3) & (y < H - 3)\n\"\"\"\nassert a in s; s=s.replace(a,b); open(p,'w').write(s)\nEOF\ntimeout 1800 nice -n 5 python3 -I make_hole06.py /home …[+660 chars]`
+
+### 🧑 User — 2026-11-20T12:34:17.946Z
+
+> ↩︎ result: poisson blend 12s
+> {'note': 'r25 m06hole (tools/match06/make_hole06.py)', 'method': 'flow', 'K': 160.0, 'l0': -2.8, 'l1': 2.8, 's0': 197.21, 's1': 203.31, 'sB': 198.91, 'zone': {'dc': -0.25, 'hl': 1.75, 'hs': 0.85}} 15s
+
+### 🤖 Claude — 2026-11-20T12:34:19.521Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s06/fill_v7_zone.png"}`
+
+### 🧑 User — 2026-11-20T12:34:19.568Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T12:34:24.392Z
+
+Same specks, so it's not visibility. Let me inspect exactly what those texels are.
+
+### 🤖 Claude — 2026-11-20T12:34:27.749Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06/tools/match06 && python3 - <<'EOF'\nimport sys, json, numpy as np, cv2\nsys.path.insert(0,'.')\nimport r25_unwrap06 as UW, make_hole06 as M\nU=UW.unwrap('/home/user/scratch/s06/frames06.json',160,-2.8,2.8,-1.7,4.4)\nd=np.load('/home/user/scratch/s06/hole_v7/hole06_dbg.npz')\nOm,V=d['Om'],d['V']\na=d['after']; b=d['before']\n# find texels in rows 170-190, cols 350-540 where after==before and zone\nfor j in range(172,190,3):\n    row=[(i, bool(Om[j,i]), bool(V[j,i]), bool(U['vis'][j,i]), bool(U['inside'][j,i]), int(U['mask'][j,i,1]), round(float(U['x'][j,i])), r …[+148 chars]`
+
+### 🧑 User — 2026-11-20T12:34:29.952Z
+
+> ↩︎ result: 172 []
+> 175 [(400, False, True, True, True, 0, 349, 1201), (408, False, True, True, True, 0, 360, 1201), (416, False, True, True, True, 0, 371, 1201)]
+> 178 [(384, False, True, True, True, 0, 328, 1196), (392, False, True, True, True, 0, 339, 1196)]
+> 181 [(368, False, True, True, True, 0, 307, 1192)]
+> 184 [(360, False, True, True, True, 0, 296, 1188), (368, False, True, True, True, 0, 307, 1188)]
+> 187 [(360, False, True, True, True, 0, 297, 1184)]
+
+### 🤖 Claude — 2026-11-20T12:34:41.546Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06/tools/match06 && python3 - <<'EOF'\np='make_hole06.py'; s=open(p).read()\na=\"\"\"    n, lab, st, _ = cv2.connectedComponentsWithStats(f)\n    f = np.isin(lab, [k for k in range(1, n) if st[k, cv2.CC_STAT_AREA] >= 2500]).astype(np.uint8)\n\"\"\"\nb=\"\"\"    # (and the provisional Benny fill + the splash collar joined to it are not foam either)\n    fill = np.asarray(Image.open(T / 'plate06_fillmask.png').convert('L')) > 8\n    n, lab, st, _ = cv2.connectedComponentsWithStats(f)\n    onfill = set(np.unique(lab[fill]).tolist())\n    f = np.isin(lab, [k for k in …[+885 chars]`
+
+### 🧑 User — 2026-11-20T12:34:57.390Z
+
+> ↩︎ result: poisson blend 11s
+> {'note': 'r25 m06hole (tools/match06/make_hole06.py)', 'method': 'flow', 'K': 160.0, 'l0': -2.8, 'l1': 2.8, 's0': 197.21, 's1': 203.31, 'sB': 198.91, 'zone': {'dc': -0.25, 'hl': 1.75, 'hs': 0.85}} 14s
+
+### 🤖 Claude — 2026-11-20T12:34:58.711Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s06/fill_v8_zone.png"}`
+
+### 🧑 User — 2026-11-20T12:34:58.739Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T12:35:01.529Z
+
+Clean, continuous streaks; the foam heaps and the big painted bubbles stay as painted. Installing the textures into the worktree's assets and rendering NEW.
+
+### 🤖 Claude — 2026-11-20T12:35:04.633Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06/tools/match06 && timeout 1800 nice -n 5 python3 -I make_hole06.py /home/user/scratch/s06/frames06.json /home/user/wt/s06/assets/textures/match06 160 flow 2>&1 | grep -v Warning | grep -v \"wt = \" | tail -1; ls -la /home/user/wt/s06/assets/textures/match06/ | grep hole; cmp <(python3 -c \"from PIL import Image;import sys;sys.stdout.buffer.write(Image.open('/home/user/wt/s06/assets/textures/match06/tile_hole06.png').tobytes())\") <(python3 -c \"from PIL import Image;import numpy as np,sys;d=np.load('/home/user/scratch/s06/hole_v8/hole06_dbg.npz');sys.stdout.buf …[+222 chars]`
+
+### 🧑 User — 2026-11-20T12:35:21.347Z
+
+> ↩︎ result: {'note': 'r25 m06hole (tools/match06/make_hole06.py)', 'method': 'flow', 'K': 160.0, 'l0': -2.8, 'l1': 2.8, 's0': 197.21, 's1': 203.31, 'sB': 198.91, 'zone': {'dc': -0.25, 'hl': 1.75, 'hs': 0.85}} 15s
+> -rw-r--r-- 1 root root     216 Nov 20 12:35 hole06.json
+> -rw-r--r-- 1 root root 1271412 Nov 20 12:35 tile_hole06.png
+> -rw-r--r-- 1 root root   19248 Nov 20 12:35 tile_hole06w.png
+> installed == v8
+
+### 🤖 Claude — 2026-11-20T12:35:26.820Z
+
+The CURRENT render is still waiting for a free render slot. I'll queue NEW (and a plate-weight debug render of NEW) to run right after it, one heavy job at a time.
+
+### 🤖 Claude — 2026-11-20T12:35:28.853Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r25/step1_hole && printf '%s&m06wdbg=1\\n' \"$(tr -d '\\n' < QUERY_NEW.txt)\" > QUERY_WDBG_NEW.txt && cat QUERY_WDBG_NEW.txt && bash /home/user/rainbow-/tools/lead25/render_slot.sh --status; ps aux | grep -E \"render_slot.sh\" | grep -v grep | awk '{print $2, $12, $13, $14, $15}' | head", "description": "Prepare WDBG query and check slot queue"}`
+
+### 🧑 User — 2026-11-20T12:35:29.135Z
+
+> ↩︎ result: match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1&m06st=1&m06fcl=1&m06view=1&m06vs=0&m06rip=1&m06hole=1&m06wdbg=1
+> slot 1 busy
+> slot 2 busy
+> 17435 -c source /root/.claude/shell-snapshots/snapshot-bash-1795175659427-yvr78w.sh 2>/dev/null
+> 17439 -c source /root/.claude/shell-snapshots/snapshot-bash-1795175659427-yvr78w.sh 2>/dev/null
+> 18071 2400 bash /home/user/rainbow-/tools/lead25/render_slot.sh node
+> 18072 /home/user/rainbow-/tools/lead25/render_slot.sh node /home/user/rainbow-/tools/lead23/audit06_slow.mjs /home/user/rainbow-/qa/match/06/r25/step1_hole/CURRENT
+> 22939 /home/user/rainbow-/tools/lead25/render_slot.sh timeout 900 node
+> 23721 5400 bash /home/user/rainbow-/tools/lead25/render_slot.sh node
+> 23722 /home/user/rainbow-/tools/lead25/render_slot.sh node /home/user/rainbow-/tools/lead23/screen_clip.mjs 07
+> 24440 /home/user/rainbow-/tools/lead25/render_slot.sh timeout 3000 node
+
+### 🤖 Claude — 2026-11-20T12:35:37.453Z
+
+> 🔧 **Bash** `{"command": "pkill -f \"step1_hole/render.sh\" ; kill 18071 18072 2>/dev/null; sleep 1; cd /home/user/rainbow-/qa/match/06/r25/step1_hole && sed -i 's#    timeout 2400 bash /home/user/rainbow-/tools/lead25/render_slot.sh node#    bash /home/user/rainbow-/tools/lead25/render_slot.sh timeout 2400 node#' render.sh && grep -n \"render_slot\" render.sh; ps aux | grep \"step1_hole\" | grep -v grep | wc -l", "description": "Restart render chain with timeout inside the slot"}`
+
+### 🧑 User — 2026-11-20T12:35:38.792Z
+
+> ↩︎ result: 8:    bash /home/user/rainbow-/tools/lead25/render_slot.sh timeout 2400 node /home/user/rainbow-/tools/lead23/audit06_slow.mjs "$O/$V" 06 "$(cat $O/QUERY_$V.txt)" > "$O/$V.log" 2>&1
+> 0
+
+### 🤖 Claude — 2026-11-20T12:35:42.219Z
+
+> 🔧 **Bash** `{"command": "bash /home/user/rainbow-/qa/match/06/r25/step1_hole/render.sh NEW CURRENT WDBG_NEW > /home/user/scratch/s06/render_step1.log 2>&1", "description": "Render NEW, CURRENT, WDBG_NEW proof shots (chained)", "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T12:35:42.257Z
+
+> ↩︎ result: Command running in background with ID: bp1l9n8lj. Output is being written to: /tmp/claude-0/-home-user-rainbow-/1de16074-a1ea-5d78-8ed3-5aa46f86005c/tasks/bp1l9n8lj.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-20T12:35:50.119Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='/home/user/rainbow-/qa/match/06/r25/PROGRESS.md'; s=open(p).read()\na=s.index('* Step 1 `&m06hole=1`'); b=s.index('* Note (user, ~12:20')\nnew=\"\"\"* Step 1 `&m06hole=1` (the user's opening effect — the cut-out hole + the pinned painted ring filled with the approved\n  picture's own painted water continued from the water around it; keep only the carried shallow rings; start view 0 px):\n  ~12:36 BUILT. Hole measured in the river's own coordinates (`tools/match06/r25_frames.mjs` = game course frames,\n  `tools/match06/r25_unwrap06.py`: the painted Benny's cut …[+1258 chars]`
+
+### 🧑 User — 2026-11-20T12:35:50.397Z
+
+> ↩︎ result: CURRENT.log
+> NEW.log
+> QUERY_CURRENT.txt
+> QUERY_NEW.txt
+> QUERY_WDBG_NEW.txt
+> floorspace_before_after.png
+> floorspace_rejected_patchfill.png
+> floorspace_ringzone_before_after.png
+> render.sh
+
+### 🤖 Claude — 2026-11-20T12:36:02.379Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06/tools/match06 && sed -e 's#^// Lead r23: uninterrupted REAL-GAMEPLAY clip of one whole playable screen#// r25 s06 copy of tools/lead23/screen_clip.mjs (QA only): stops at env CLIP_END (share of the screen, default 1 = whole screen)\\n// Lead r23: uninterrupted REAL-GAMEPLAY clip of one whole playable screen#' -e 's#    if (st.stage !== SCREEN \\&\\& --tailLeft <= 0) break;#    if (st.stage !== SCREEN \\&\\& --tailLeft <= 0) break;\\n    if (st.stage === SCREEN \\&\\& (st.s - rng.s0) / (rng.s1 - rng.s0) >= Number(process.env.CLIP_END ?? 9)) break;#' /home/user/ …[+204 chars]`
+
+### 🧑 User — 2026-11-20T12:36:02.563Z
+
+> ↩︎ result: 1a2
+> > // r25 s06 copy of tools/lead23/screen_clip.mjs (QA only): stops at env CLIP_END (share of the screen, default 1 = whole screen)
+> 41a43
+> >     if (st.stage === SCREEN && (st.s - rng.s0) / (rng.s1 - rng.s0) >= Number(process.env.CLIP_END ?? 9)) break;
+

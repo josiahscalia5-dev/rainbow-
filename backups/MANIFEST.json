@@ -624,7 +624,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 21742,
-   "sha256": "f467ecd96f16cda5427750fed3a8dbe8d09ce3c00f3a8339e5eb04e328514722"
+   "sha256": "555e96f34b620d3a6a14a238ff1f9b5f00b5a0d536e5aeb2da7db970cca0c931"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -639,7 +639,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3023,
-   "sha256": "4474c2046a97e9a15d65bdf78a25734b5aedd4bc7943f6b1b9c0e538ca5c52e5"
+   "sha256": "2511550713706ec4ed8538b695c109b4e68f65df192e5775f6e3fa36436d4f23"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -954,7 +954,7 @@
   {
    "path": "backups/wip/claude__rainbow-benny-c26/INFO.json",
    "bytes": 1084,
-   "sha256": "7ba1d4818ba878871a63362888d7d4dfcae5ad9f0df937f51c58afde44c493ca"
+   "sha256": "eb32a4d20c7f585acc8904371a848ca4420131d5abf04b88ff0798daeb682fcc"
   },
   {
    "path": "backups/wip/claude__rainbow-benny-c26/tracked.patch",
@@ -1589,7 +1589,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c26/INFO.json",
    "bytes": 586,
-   "sha256": "64503a62c9731bccda628dfd248ffcde1d6cf2c2b5be1863f8b72cd61af5704f"
+   "sha256": "a52d272598d0780d96fe24345ce552d934fc954462e45aefa991fa74f941a4ec"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c26/tracked.patch",
@@ -2364,7 +2364,7 @@
   {
    "path": "backups/wip/claude__rainbow-s05-match-c26/INFO.json",
    "bytes": 477,
-   "sha256": "0b8b94ca332ab01b74329bc0818e2db163d53c5435b2e90c50a2f0c62906d4c4"
+   "sha256": "76bece6fccaaa760094c88136678a3fc8a061f083d25a9207c151579c722261c"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c11/INFO.json",
@@ -2504,7 +2504,7 @@
   {
    "path": "backups/wip/claude__rainbow-s06-match-c26/INFO.json",
    "bytes": 875,
-   "sha256": "91e8ead54c2c45d62d7d65b3f6f45dcc59285e63b8e2de91a3bdf659a6441c65"
+   "sha256": "bb362cec2fb2155eb124bf030595a5067778f6b332302d8d059dca47935644c0"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c26/tracked.patch",
@@ -2849,7 +2849,7 @@
   {
    "path": "backups/wip/claude__rainbow-s07-match-c26/INFO.json",
    "bytes": 971,
-   "sha256": "4888bdf96290cd6c86cdb6f29328c8b5cf8141fa4625c044776f0a4d1ac7912c"
+   "sha256": "82367f221dad09059c37f63b7c197ffd589cc60166c25a8f10f26e8dffe2abe5"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c26/tracked.patch",
@@ -3064,7 +3064,7 @@
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c26/INFO.json",
    "bytes": 640,
-   "sha256": "2617999c7c3248a1f35c9d282423decc176cd0296ff6d4371b830c345dfccad6"
+   "sha256": "3a1bef34fa1041ba7794df53e5bbc0464aa38f181a247ea515f5b8ad9a6a6f48"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c26/tracked.patch",
@@ -3099,7 +3099,7 @@
   {
    "path": "backups/wip/detached-8accdad0a0/INFO.json",
    "bytes": 491,
-   "sha256": "cbef3e2cd38df6c96773046763c58791825d99566e4cd9ef85fbad6a64dfdb2a"
+   "sha256": "932fa3a1528f7f613483fef3b449121049789706838eced0c887aa1682815889"
   },
   {
    "path": "backups/wip/detached-8accdad0a0/tracked.patch",
@@ -3114,7 +3114,7 @@
   {
    "path": "backups/wip/detached-e162aec2bf/INFO.json",
    "bytes": 701,
-   "sha256": "bc9df4fea22901bf0d567258add1c5520a9f0f671abc7c178fa86c0a6907b861"
+   "sha256": "2225c7fb4eef221f572af2ec04c3d4884acfe85bd7c01875d686a11f5d48d9ba"
   },
   {
    "path": "backups/wip/detached-e162aec2bf/tracked.patch",
@@ -5250,6 +5250,26 @@
    "path": "qa/benny/r23/s3_star/QUERY_NEW_08.txt",
    "bytes": 295,
    "sha256": "93441e72c7ed7614e093e367de6c3a790a9b3c281c7235dc1a788f6d6221ca90"
+  },
+  {
+   "path": "qa/benny/r23/s3_star/clip/swim06_star_NEW_benny_0.5x.mp4",
+   "bytes": 3670064,
+   "sha256": "5c65fd008d0a4e3f09fefe47c9a33b89b2303406532f5e3a6b08d1c5e7481419"
+  },
+  {
+   "path": "qa/benny/r23/s3_star/clip/swim06_star_NEW_benny_1x.mp4",
+   "bytes": 6059612,
+   "sha256": "415e8e25e8e56897db252518fd9d485e00920511ca6e7aee54d17ad6b5fe842f"
+  },
+  {
+   "path": "qa/benny/r23/s3_star/clip/swim06_star_NEW_full_0.5x.mp4",
+   "bytes": 7709359,
+   "sha256": "aa3baa64cdc21fa9d330444c33f484a69c8ee444f901059fee85f8fd6557a348"
+  },
+  {
+   "path": "qa/benny/r23/s3_star/clip/swim06_star_NEW_full_1x.mp4",
+   "bytes": 5784687,
+   "sha256": "a9b5c66312a8a49b4096f2ceb24697c49b8513bb729d8bb6030abecb4418cb4d"
   },
   {
    "path": "qa/benny/r23/s3_star/gameplay_star.json",
@@ -9483,8 +9503,8 @@
   },
   {
    "path": "qa/match/06/r25/PROGRESS.md",
-   "bytes": 4092,
-   "sha256": "6d1fda4744f2ad88a3a5e8c28eac372ecf6c51b3a581d90a7825aef817db7de0"
+   "bytes": 4434,
+   "sha256": "c7940308ce3f19c7caca0df2346f273bc58d56dfb758a928418dda12c6a26aca"
   },
   {
    "path": "qa/match/06/r25/step1_hole/QUERY_CURRENT.txt",
@@ -9497,9 +9517,29 @@
    "sha256": "171a7a26c74ef1bec523fc05b0822b2260fc6eeeed0d8532a7a3405fd9f7f511"
   },
   {
+   "path": "qa/match/06/r25/step1_hole/QUERY_WDBG_NEW.txt",
+   "bytes": 169,
+   "sha256": "ab363a51240549bb9e046f35a9a44238f38b4e8be0327e2d2b59ed940ed2bc97"
+  },
+  {
+   "path": "qa/match/06/r25/step1_hole/floorspace_before_after.png",
+   "bytes": 893036,
+   "sha256": "e8ec9d1a38c0ad70b2bd67219564a0f69a146dd1ec9f96c91d49e044c109c1e5"
+  },
+  {
+   "path": "qa/match/06/r25/step1_hole/floorspace_rejected_patchfill.png",
+   "bytes": 2047909,
+   "sha256": "9f5fe37ef6946f12ab6449bcfad72f8b15372c90e3db40dd7b8064911127ba86"
+  },
+  {
+   "path": "qa/match/06/r25/step1_hole/floorspace_ringzone_before_after.png",
+   "bytes": 647899,
+   "sha256": "1ecabd471ce96abf1a55a30ea3c12c491cffa5d746aee876affe99bd1d982e84"
+  },
+  {
    "path": "qa/match/06/r25/step1_hole/render.sh",
    "bytes": 864,
-   "sha256": "0626923d2d6f390f9ed659f5df06bb929d361649800e5e871c89fa4dbbfe1f3f"
+   "sha256": "2e85f1bbfdbf1e648d33041fcf9b720e10b93492516b3c6155fbc57047b0af2d"
   },
   {
    "path": "qa/match/06/relaunch/BRIEF_path-camera-transition-engineer.txt",
@@ -10650,6 +10690,11 @@
    "path": "qa/match/07/r24/clips/BEFORE_frames.json",
    "bytes": 29434,
    "sha256": "4024e43576b33e12e23877934ad699e1667d04d756a155e47b26123fa19e7dc9"
+  },
+  {
+   "path": "qa/match/07/r24/clips/SCREEN07_BEFORE_r23cand_K23-3_0.5x.mp4",
+   "bytes": 11062537,
+   "sha256": "3e4ec963a2dacd900c798c16af0d1fc12c755e0063fe8cb4e3392f03fac64b90"
   },
   {
    "path": "qa/match/07/r24/clips/SCREEN07_BEFORE_r23cand_K23-3_1x.mp4",

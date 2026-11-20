@@ -6,11 +6,14 @@
   filled with the river's own brighter water, hard Benny-shaped edge; `m06ripz` removed the left-behind ring only).
 * Step 1 `&m06hole=1` (the user's opening effect — the cut-out hole + the pinned painted ring filled with the approved
   picture's own painted water continued from the water around it; keep only the carried shallow rings; start view 0 px):
-  ~12:25 BUILT — measured the hole in the river's own coordinates (`tools/match06/r25_frames.mjs` = game course frames,
-  `r25_unwrap06.py`: cut-out ds -0.6..+3.6 u, up to 3.5 u wide); fill tool `tools/match06/make_hole06.py` (patch fill, painted
-  water only as source), shader + loader in `src/world/match06.ts` (`m06hole`, QA dump `m06holedump`), `tsc` clean. Fill
-  texture being generated; CURRENT proof shots rendering (`qa/match/06/r25/step1_hole/render.sh`). NEXT: check the fill in
-  floor space, copy it to `assets/textures/match06/`, render NEW, compare, clip, gameplay.
+  ~12:36 BUILT. Hole measured in the river's own coordinates (`tools/match06/r25_frames.mjs` = game course frames,
+  `tools/match06/r25_unwrap06.py`: the painted Benny's cut-out spans ds -0.6..+3.6 u, up to 3.5 u wide). Fill tool
+  `tools/match06/make_hole06.py` method `flow` (painted streaks carried across the hole along their own direction + Poisson blend,
+  sources = painted water only; foam heaps and big painted bubbles kept; first try = patch fill REJECTED on sight: blocky mosaic,
+  copied foam). Output `assets/textures/match06/tile_hole06.png`, `tile_hole06w.png`, `hole06.json`; shader + loader in
+  `src/world/match06.ts` (`m06hole`; QA dump `m06holedump`); `tsc` clean. Floor-space before/after:
+  `qa/match/06/r25/step1_hole/floorspace_*.png`. NOW: proof shots NEW / CURRENT / WDBG_NEW rendering (`step1_hole/render.sh`,
+  waits for a render slot). NEXT: compare, clip 1.0x + 0.5x, gameplay 8/8 + 91, verdict.
 * Note (user, ~12:20, via lead): judge by the MOVING views — clean continuous painted water round Benny in motion, no hard
   edges, no brighter patch, no left-behind rings.
 
