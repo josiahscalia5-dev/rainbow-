@@ -1,5 +1,18 @@
 # Screen 06 — round 25 progress (worktree `/home/user/wt/s06`, LOCAL branch `claude/rainbow-s06-match-c26`, ports 5276 / 5282 / 5283)
 
+## (r29c) WHERE I STOPPED / NEXT — lead, user ~19:33 UTC: "the SAME purple washer tunnel ... must continue throughout Screen 06, until the actual transition into Screen 07"
+* Cause of the "much brighter pink-and-yellow tunnel" in the later NEW frames = the 07 tube (`tube07`) shown ahead from s07 - 70 -> now from
+  s07 - 12 only (~1 s): 30-85 % = the same purple-and-gold ring tunnel + warm glow (quick check `/home/user/scratch/s06/d3b_new`).
+* `&m06leg=1` (match06.ts, `leg06deep.json`, tools/match06/r29_design_leg.py): the falling right band of the painted rinse arch as a
+  decorative water ribbon (river material; tucks 0.3 u under the playable river where they meet). Start view unchanged (2.76 % = same as
+  route-only: fur speckle + 3 coin outlines). Visible mainly in the first ~3 %.
+* Camera: `&m06vw=34,56` (existing tunable: the approved view direction held to sB+34, handed over by sB+56) keeps the approved
+  composition over the crest (tunnel upper right, river + coin trail sweeping right into it) — quick check `d4_hold`: closer than 20,38.
+* FINAL candidate query = `qa/match/06/r29/QUERY_NEW_FINAL.txt` (BEFORE = `QUERY_BEFORE.txt`). Gameplay (route-only, s07-70 reveal):
+  8/8 checks, 91 coins (1,330 -> 2,240), victory, no errors -> `qa/match/06/r29/gameplay_NEW_m06deep.json`; final-query rerun running.
+* NOW (19:41): NEW clip `clip_new2` rendering (BEFORE clip done: `qa/match/06/r29/clips/SCREEN06_BEFORE_{1x,0.5x}.mp4`). Then stills
+  (`qa/match/06/r29/make_stills.py`), README, send to the user.
+
 ## (r29b) WHERE I STOPPED / NEXT — lead builds `&m06deep=1` (user ~19:00 UTC: "fix Screen 06 so Benny actually swims through my approved water and tunnel"; extend / reconstruct the route + 07 connection authorized)
 * Cause (r29 quick diagnostic): the painted coin trail rebuilt in 3D at ONE coin size (depth = f*0.632/px; tools/match06/r29_route_probe.mjs) is a
   coherent slide INSIDE the m06tun drum: up-left over the crest (axial 8-25 u, ~6 u left of / 2 u above the axis), back across the middle

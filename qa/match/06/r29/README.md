@@ -4,7 +4,7 @@ Individual playable candidate (worktree `/home/user/wt/s06`, LOCAL branch `claud
 minutes in `backups/wip/claude__rainbow-s06-match-c30/`). NOT a combined build, NOT Android. NOT approved — waiting for the user.
 
 * BEFORE = `qa/match/06/r25/step2/QUERY_NEW2.txt` (the version the user last saw)
-* NEW = BEFORE + `&m06deep=1`
+* NEW = BEFORE + `&m06deep=1&m06leg=1&m06vw=34,56` (`QUERY_NEW_FINAL.txt`)
 
 ## What the switch does (user's words: "Benny swims down the colourful water slide, following the gold coins, directly into and through the purple-and-gold tunnel")
 * The 06 river follows the user's painted coin trail rebuilt in 3D (every painted coin the same real size, so its painted size gives its
@@ -13,8 +13,13 @@ minutes in `backups/wip/claude__rainbow-s06-match-c30/`). NOT a combined build, 
 * Before, the river swerved toward the tunnel's lower-right wall within 44 units ("the river travelling beside the tunnel") because Screen
   07 started there. Now Screens 07–10 are moved further away as ONE rigid block (same shapes, rings, chamber, towel; only further along),
   so Screen 06 is 124 units long instead of 54 (~11 s of swimming instead of ~5 s).
-* The mouth of Screen 07's tube (with a gold collar ring) is visible ahead inside the ring tunnel during the last part of 06, so Benny
-  swims into it instead of the scenery jumping at the hand-over.
+* The SAME purple-and-gold ring tunnel continues until the doorway: Screen 07's tube (with a gold collar ring at its mouth) appears only in
+  the last ~12 units (~1 s), straight ahead of Benny, and he swims into it. (An earlier version showed it from halfway — the "brighter
+  pink-and-yellow tunnel" the user saw — fixed.)
+* `&m06leg=1`: the falling right band of the painted rinse arch as real 3D water (the river's own material), so the crest's curl and its
+  window onto the purple wall exist in 3D (seen mainly at the very start of the climb).
+* `&m06vw=34,56`: your approved viewing direction is held longer over the crest, so the tunnel stays at the upper right and the river with
+  its coin trail visibly sweeps right into it, as painted, before the view settles down the tunnel.
 * Unchanged: the approved start view (visually identical; only sub-pixel fur speckle and three coin outlines differ), Screens 01–05,
   the painted tunnel's position, the stage joins (continuity test passes), Screens 07–10's geometry (rings / lids / slots re-anchored).
 

@@ -4683,3 +4683,153 @@ Preserve every existing version and continue verified GitHub backups every five 
 
 > ↩︎ result: {'pass': True, 'startCoins': 1330, 'endCoins': 2240, 'collected': 91}
 
+### 🤖 Claude — 2026-11-20T19:37:40.466Z
+
+> 🔧 **Bash** `{"command": "cat > /home/user/wt/s06/tools/match06/r29_design_leg.py <<'EOF'\n\"\"\"r29 lead `&m06leg=1`: the falling right-hand band of the painted rinse arch (the broad rainbow band from the crest top down past\nBenny's right side in references/06_crest_the_rinse_arch.png) as a decorative 3D water ribbon. Centre line = painted pixels on the\napproved camera's rays at depths on the coin scale; ends just UNDER the main river's right bank (merges). Writes\nassets/textures/match06/leg06deep.json.  usage: python3 -I tools/match06/r29_design_leg.py <route06deep.json> <proj06.json> <out>\"\"\"\nimp …[+2958 chars]`
+
+### 🧑 User — 2026-11-20T19:37:40.645Z
+
+> ↩︎ result: leg length 19.0 u, 40 points; min centre distance to the playable river 0.21 u at leg point 0/40
+>     0.0 u  world [  -2.62  -36.37 -156.74]  clearance 0.21
+>     3.0 u  world [  -0.84  -36.86 -154.37]  clearance 2.04
+>     6.0 u  world [   0.48  -37.35 -151.73]  clearance 3.25
+>     9.0 u  world [   1.38  -37.8  -148.91]  clearance 4.01
+>    12.0 u  world [   2.03  -38.05 -145.99]  clearance 3.77
+>    15.0 u  world [   2.48  -38.15 -143.03]  clearance 3.59
+>    18.0 u  world [   2.73  -38.09 -140.04]  clearance 5.15
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:38:25.913Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='src/world/match06.ts'; t=open(p).read()\nanchor=\"  const floorMat = (group.getObjectByName('m06_floor') as THREE.Mesh).material as THREE.ShaderMaterial;\\n\"\nassert anchor in t\nleg = anchor + \"\"\"  // r29 `&m06leg=1` (lead; with m06deep; tools/match06/r29_design_leg.py -> leg06deep.json): the FALLING RIGHT BAND of the painted rinse\n  // arch (the broad rainbow band from the crest top down past Benny's right side) as a decorative water ribbon with the river's own\n  // material (painted pixels at the approved view, flowing cyan /  …[+2603 chars]`
+
+### 🧑 User — 2026-11-20T19:38:28.851Z
+
+> ↩︎ result: ok
+> tsc-done
+> 494:const tex = (f: string) => new URL(`../../assets/textures/match06/${f}`, import.meta.url).href;
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:38:33.696Z
+
+Type check passes. Quick in-game check of the crest with the falling band, plus the end of 06 to confirm the tunnel now stays purple-and-gold until the doorway:
+
+### 🤖 Claude — 2026-11-20T19:38:36.764Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && Q0=$(cat /home/user/rainbow-/qa/match/06/r25/step2/QUERY_NEW2.txt); SH1='[[\"a_start\",0,null],[\"b_02\",0.02,null],[\"c_04\",0.04,null],[\"d_07\",0.07,null],[\"e_10\",0.1,null],[\"f_14\",0.14,null],[\"g_20\",0.2,null]]'; SH2='[[\"h_30\",0.3,null],[\"i_60\",0.6,null],[\"j_80\",0.8,null],[\"k_90\",0.9,null],[\"l_95\",0.95,null],[\"m_99\",0.99,null],[\"n_07a\",1.03,null]]'; (PORT=5293 nohup ./quick2.sh d3a_new \"$Q0&m06deep=1&m06leg=1\" \"$SH1\" > /dev/null 2>&1 &); (PORT=5294 nohup ./quick2.sh d3b_new \"$Q0&m06deep=1&m06leg=1\" \"$SH2\" > /dev/null 2>&1 …[+152 chars]`
+
+### 🧑 User — 2026-11-20T19:38:37.828Z
+
+> ↩︎ result: slot 1 busy
+> slot 2 busy
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:38:40.462Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && until grep -q \"exit\" d3a_new.log 2>/dev/null && grep -q \"exit\" d3b_new.log 2>/dev/null; do sleep 4; done; grep -h \"exit\\|m06leg\\|rror\" d3a_new.log d3b_new.log | head -6; date -u +%H:%M:%S", "description": "Wait for the crest and end-of-06 captures", "timeout": 1200000}`
+
+### 🧑 User — 2026-11-20T19:39:12.723Z
+
+> ↩︎ result: d3a_new exit 0
+> d3b_new exit 0
+> 19:39:12
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:39:17.584Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && A=/home/user/rainbow-/qa/match/06/r28/route/quick_r29/approved_432.png && montage -label 'APPROVED' $A -label 'NEW start' d3a_new/a_start.png -label 'NEW 2%' d3a_new/b_02.png -label 'NEW 4%' d3a_new/c_04.png -label 'NEW 7%' d3a_new/d_07.png -label 'NEW 10%' d3a_new/e_10.png -label 'NEW 14%' d3a_new/f_14.png -label 'NEW 20%' d3a_new/g_20.png -tile 4x2 -geometry 270x480+3+3 -pointsize 15 d3a_sheet.jpg && montage -label 'NEW 30%' d3b_new/h_30.png -label 'NEW 60%' d3b_new/i_60.png -label 'NEW 80%' d3b_new/j_80.png -label 'NEW 90%' d3b_new/k_90.png -label ' …[+236 chars]`
+
+### 🧑 User — 2026-11-20T19:39:18.090Z
+
+> ↩︎ result: ok
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:39:19.960Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s06/d3a_sheet.jpg"}`
+
+### 🧑 User — 2026-11-20T19:39:20.088Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T19:39:20.308Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s06/d3b_sheet.jpg"}`
+
+### 🧑 User — 2026-11-20T19:39:20.392Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T19:39:45.450Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && python3 - <<'EOF'\nfrom PIL import Image\nimport numpy as np\nA=np.asarray(Image.open('q_before/a_start.png').convert('RGB')).astype(int); B=np.asarray(Image.open('d3a_new/a_start.png').convert('RGB')).astype(int)\nd=np.abs(A-B).max(axis=2); print(f\"start view BEFORE vs NEW(+band): px>20 {100*(d>20).mean():.2f}%  (route-only NEW was 2.76%, fur speckle + 3 coin outlines)\")\nEOF\ncd /home/user/scratch/s06 && cat > clip_new2.sh <<'EOF'\n#!/usr/bin/env bash\ncd /home/user/wt/s06\nQ0=$(cat /home/user/rainbow-/qa/match/06/r25/step2/QUERY_NEW2.txt)\nAUDIT_P …[+485 chars]`
+
+### 🧑 User — 2026-11-20T19:39:46.681Z
+
+> ↩︎ result: start view BEFORE vs NEW(+band): px>20 2.76%  (route-only NEW was 2.76%, fur speckle + 3 coin outlines)
+> 19:39:46
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:39:58.654Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && Q0=$(cat /home/user/rainbow-/qa/match/06/r25/step2/QUERY_NEW2.txt); SH='[[\"b_02\",0.02,null],[\"c_04\",0.04,null],[\"d_07\",0.07,null],[\"e_10\",0.1,null],[\"f_14\",0.14,null],[\"g_20\",0.2,null],[\"h_26\",0.26,null]]'; (PORT=5298 nohup ./quick2.sh d4_hold \"$Q0&m06deep=1&m06leg=1&m06vw=34,56\" \"$SH\" > /dev/null 2>&1 &); sleep 1; bash /home/user/rainbow-/tools/lead25/render_slot.sh --status", "description": "Test holding the approved view direction longer over the crest"}`
+
+### 🧑 User — 2026-11-20T19:39:59.724Z
+
+> ↩︎ result: slot 1 busy
+> slot 2 busy
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:40:04.119Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && until grep -q \"exit\" d4_hold.log 2>/dev/null; do sleep 4; done; grep exit d4_hold.log; montage -label 'APPROVED' /home/user/rainbow-/qa/match/06/r28/route/quick_r29/approved_432.png -label 'HOLD 2%%' d4_hold/b_02.png -label 'HOLD 4%%' d4_hold/c_04.png -label 'HOLD 7%%' d4_hold/d_07.png -label 'HOLD 10%%' d4_hold/e_10.png -label 'HOLD 14%%' d4_hold/f_14.png -label 'HOLD 20%%' d4_hold/g_20.png -label 'HOLD 26%%' d4_hold/h_26.png -tile 8x1 -geometry 200x356+2+2 -pointsize 12 d4_sheet.jpg; echo \"clip_new2 frames: $(ls clip_new2/f 2>/dev/null | wc -l)\"; …[+108 chars]`
+
+### 🧑 User — 2026-11-20T19:40:32.884Z
+
+> ↩︎ result: d4_hold exit 0
+> clip_new2 frames: 8
+> 19:40:32
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:40:35.367Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s06/d4_sheet.jpg"}`
+
+### 🧑 User — 2026-11-20T19:40:35.488Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T19:40:43.690Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && pkill -f \"r25_open_clip.mjs 06 /home/user/scratch/s06/clip_new2\" ; sleep 2; sed -i 's/m06deep=1&m06leg=1\" 1.5/m06deep=1\\&m06leg=1\\&m06vw=34,56\" 1.5/' clip_new2.sh && grep -o 'm06deep[^\"]*' clip_new2.sh && rm -rf clip_new2 && (nohup ./clip_new2.sh > /dev/null 2>&1 &); sleep 2; bash /home/user/rainbow-/tools/lead25/render_slot.sh --status; date -u +%H:%M:%S", "description": "Restart the final NEW video with the approved-direction hold"}`
+
+### 🧑 User — 2026-11-20T19:40:47.824Z
+
+> ↩︎ result: m06deep=1&m06leg=1&m06vw=34,56
+> slot 1 busy
+> slot 2 free
+> 19:40:47
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:40:51.375Z
+
+While it renders (about 15 minutes), I'll rerun the full gameplay test with the final settings, since the longer camera hold affects the camera-continuity check.
+
+### 🤖 Claude — 2026-11-20T19:40:54.626Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && Q2=\"$(cat /home/user/rainbow-/qa/match/06/r25/step2/QUERY_NEW2.txt)&m06deep=1&m06leg=1&m06vw=34,56\" && echo \"$Q2\" > /home/user/rainbow-/qa/match/06/r29/QUERY_NEW_FINAL.txt && cp /home/user/rainbow-/qa/match/06/r25/step2/QUERY_NEW2.txt /home/user/rainbow-/qa/match/06/r29/QUERY_BEFORE.txt && (nohup bash -c \"bash /home/user/rainbow-/tools/lead25/render_slot.sh node scripts/gameplay-test.mjs '--q=$Q2' --out=/home/user/rainbow-/qa/match/06/r29/gameplay_NEW_final.json > /home/user/scratch/s06/gameplay_final.log 2>&1; echo \\\"gameplay exit \\$?\\\" >> /home/ …[+208 chars]`
+
+### 🧑 User — 2026-11-20T19:40:55.740Z
+
+> ↩︎ result: slot 1 busy
+> slot 2 busy
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:40:57.723Z
+
+While both run, I'll update the progress notes and the proof README for the final version, then save.
+
+### 🤖 Claude — 2026-11-20T19:41:12.229Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='qa/match/06/r25/PROGRESS.md'; t=open(p).read()\ni=t.index('## (r29b) WHERE I STOPPED / NEXT')\nblk='''## (r29c) WHERE I STOPPED / NEXT — lead, user ~19:33 UTC: \"the SAME purple washer tunnel ... must continue throughout Screen 06, until the actual transition into Screen 07\"\n* Cause of the \"much brighter pink-and-yellow tunnel\" in the later NEW frames = the 07 tube (`tube07`) shown ahead from s07 - 70 -> now from\n  s07 - 12 only (~1 s): 30-85 % = the same purple-and-gold ring tunnel + warm glow (quick check `/home/user/scratch/s06/d3b_new`).\n* `&m06leg= …[+3296 chars]`
+

@@ -2,7 +2,7 @@
  "worktree": "/home/user/wt/s06",
  "branch": "claude/rainbow-s06-match-c30",
  "head": "e162aec2bfdc631913c41daa435f9d449439af4f",
- "time": "2026-11-20T19:37:13+00:00",
+ "time": "2026-11-20T19:41:25+00:00",
  "dirty_tracked": [
   "src/game/Game.ts",
   "src/gameplay/coins.ts",
@@ -14,6 +14,7 @@
  "untracked_copied": [
   "assets/textures/match06/coins06deep.json",
   "assets/textures/match06/hole06.json",
+  "assets/textures/match06/leg06deep.json",
   "assets/textures/match06/route06deep.json",
   "assets/textures/match06/tile_hole06.png",
   "assets/textures/match06/tile_hole06b.png",
@@ -32,6 +33,7 @@
   "tools/match06/r28_probe.mjs",
   "tools/match06/r28_quick.mjs",
   "tools/match06/r29_coins_deep.mjs",
+  "tools/match06/r29_design_leg.py",
   "tools/match06/r29_design_route.py",
   "tools/match06/r29_multi.mjs",
   "tools/match06/r29_old_samples.mjs",

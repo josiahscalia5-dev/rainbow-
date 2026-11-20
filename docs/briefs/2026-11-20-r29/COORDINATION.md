@@ -77,3 +77,7 @@ If this account stops: the next account runs `bash docs/briefs/2026-11-20-r29/se
   one daemon, saves 18:57 / 19:02 / 19:07 / 19:12 pushed + verified, manual save `98469e9` 19:15 (GitHub == local), s06 snapshot incl. the
   new m06deep files, chat copy 19:15, LIVE_TOOLS_STATE 19:15:30.
 * ~19:19 full BEFORE / NEW clips rendering (proof -> `qa/match/06/r29/`).
+* ~19:33 USER: keep the SAME purple washer tunnel (gold bands, purple metal, warm light, cyan-pink water) all the way until the 07 transition;
+  investigate the "brighter pink-and-yellow tunnel"; one continuous BEFORE / NEW comparison + matching stills. Lead: cause = the 07 tube
+  shown from s07-70 -> now s07-12; + `&m06leg=1` (falling band of the arch) + `&m06vw=34,56` (approved composition held over the crest).
+  Final query `qa/match/06/r29/QUERY_NEW_FINAL.txt`; clips + stills + gameplay rerun in progress (19:41).
