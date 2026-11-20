@@ -57,3 +57,6 @@ s06 / Benny = their pushed `-c23` tips + their r22 PROGRESS.md.
   (`qa/review_r22/s06_t1/`, clips smudged from LFS): Benny smaller / lower + more river ahead = closer; smooth, no snaps; but the
   centred bullseye rings + big foam walls still dominate, the off-centre tunnel / left crest is not held. Shown to the user:
   APPROVED / BEFORE / NEW early + both clips — the user decides on m06view. s06 asked to do task 3 (foam walls) before task 2.
+* ~03:40 Benny step 2 `&benny20=1&b20expo=1` (per-screen exposure, `@ 438ffb9`; worker: GOOD IMPROVEMENT). Lead by eye
+  (`qa/review_r22/benny_t2/`): colour now the same bright dusty rose on 05–08 = GOOD IMPROVEMENT (colour); fur still short velvet,
+  less fluffy than approved (feedback from step 1 still open). Shown to the user: 08 start APPROVED / BEFORE / NEW.

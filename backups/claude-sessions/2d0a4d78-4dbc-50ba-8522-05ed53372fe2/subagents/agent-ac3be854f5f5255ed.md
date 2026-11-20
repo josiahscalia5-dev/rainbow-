@@ -1427,3 +1427,44 @@ Hiding the berm changes the approved start view (45k px), so it is part of what 
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && npx tsc --noEmit -p . 2>&1 | tail -3; K7=$(cat /home/user/rainbow-/qa/match/07/r21/K7.txt) && rm -rf /home/user/rainbow-/qa/match/07/r22/s1_cloud/NEW && AUDIT_PORT=5277 AUDIT_SHOTS='[[\"a_start\",0,null],[\"b_early\",0.12,null],[\"c_middle\",0.35,null],[\"d_late\",0.6,null],[\"e1_075\",0.75,null],[\"e_end\",0.85,null],[\"e2_092\",0.92,null],[\"f_hard_left\",0.35,-1],[\"g_hard_right\",0.35,1]]' timeout 900 node /home/user/rainbow-/tools/lead21/audit_screen.mjs /home/user/rainbow-/qa/match/07/r22/s1_cloud/NEW 07 \"${K7}&m07end=1&m07cloud=1\" 2>&1 | grep -v \" …[+300 chars]`
 
+### 🧑 User — 2026-11-20T03:38:10.060Z
+
+> ↩︎ result: 07 a_start s 273.056 lat 0 stage 07 coins 1940
+> 07 b_early s 287.256 lat 0 stage 07 coins 1960
+> 07 c_middle s 314.056 lat 0 stage 07 coins 2030
+> 07 d_late s 343.456 lat 0 stage 07 coins 2080
+> 07 e1_075 s 361.056 lat 0 stage 07 coins 2110
+> 07 e_end s 372.656 lat 0 stage 07 coins 2130
+> 07 e2_092 s 380.856 lat 0 stage 07 coins 2150
+> 07 f_hard_left s 314.056 lat -2.25 stage 07 coins 1940
+> 07 g_hard_right s 314.056 lat 2.25 stage 07 coins 1950
+> {"a":"NEW/a_start.png","b":"../s0_verify/a_start.png","rows":[180,1536],"threshold":0.1,"diff_pixels":0,"total":1171584,"diff_pct":0}
+
+### 🤖 Claude — 2026-11-20T03:38:11.631Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/07/r22/s1_cloud/NEW/f_hard_left.png"}`
+
+### 🧑 User — 2026-11-20T03:38:11.682Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:38:12.082Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/07/r22/s1_cloud/NEW/b_early.png"}`
+
+### 🧑 User — 2026-11-20T03:38:12.143Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:38:16.549Z
+
+Hard left now shows puffy foam clouds where the flat pale sheet was. Re-recording the clips with the berm change, then the proof checks.
+
+### 🤖 Claude — 2026-11-20T03:38:22.550Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && K7=$(cat /home/user/rainbow-/qa/match/07/r21/K7.txt) && O=/home/user/rainbow-/qa/match/07/r22/s1_cloud && S=/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/clips && rm -rf $S/end_new $S/lvl_new && \\\nnode tools/match07/swim_clip_r21.mjs 07 $S/end_new 3.6 \"${K7}&m07end=1&m07cloud=1\" 0.55 2>&1 | grep -v \"outside of Vite\" | tail -1 && ffmpeg -loglevel error -y -framerate 24 -i $S/end_new/%04d.png -pix_fmt yuv420p $O/swim_end_NEW.mp4 && \\\nnode tools/match07/swim_clip_r21.mjs 07 $S/lvl_new 3.6 \"${K7}&m07end=1&m07cloud=1\ …[+691 chars]`
+
+### 🤖 Claude — 2026-11-20T03:38:23.747Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/clips/lvl_cmp2.png"}`
+
