@@ -81,8 +81,18 @@ const DEF: B30Params = {
   ps: 1, pk: 1,
 };
 
-/** the chosen look (measured, qa/match/06/r30/benny06/NOTES.md); DEF = benny05 unchanged */
-const TUNED: Partial<B30Params> = {};
+/** the chosen look = sweep config K3 (measured against the approved 06 picture and the four storyboard panels,
+ *  qa/match/06/r30/benny06/NOTES.md); DEF = benny05 unchanged. Rejected (measured worse or visibly wrong while swimming):
+ *  beanie raise (hy, exposes a bare band under the cuff), beanie tilt (hp, bare 'hood' under the cuff), colour multipliers
+ *  (fr/fg/fb: the leaned fur already matches the painted mean colour), sinking deeper (sy < −0.07: the water never cuts him). */
+const TUNED: Partial<B30Params> = {
+  sc: 0.92, sy: -0.07,
+  pitch: 32,
+  hs: 0.9,
+  bsx: 0.85, bp: 3.5, bcap: 2, bw: 0.25,
+  as: 1.25, ay: -0.28, ax: -0.1,
+  fl: 0.095, fd: 90, fk: 0.85,
+};
 
 const QS: URLSearchParams | null = (() => {
   try { return typeof location !== 'undefined' ? new URLSearchParams(location.search) : null; } catch { return null; }

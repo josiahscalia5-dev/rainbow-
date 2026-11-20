@@ -729,3 +729,88 @@ Colour segmentation is confused by the pink water edges, so I'll pick the panel 
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-20T22:51:15.687Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny06 && Q=\"$(cat /home/user/rainbow-/qa/match/06/r30/QUERY_NEW_v2.txt)&b30=1\" && OUT=/tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/b30/s10 && F='\"hs\":0.9,\"bcap\":2,\"bsx\":0.85,\"pitch\":32,\"ay\":-0.28,\"as\":1.25,\"ax\":-0.10,\"bp\":3.5,\"bw\":0.25,\"sc\":0.92,\"fl\":0.095,\"fd\":90,\"fk\":0.85' && AUDIT_W=864 AUDIT_H=1536 AUDIT_PORT=5326 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/benny30/sweep.mjs $OUT \"$Q\" \"[\n[\\\"K3\\\",{$F,\\\"sy\\\":-0.07}],\n[\\\"M1\\\",{$F,\\\"sy\\\":-0.07,\\\"bsy\\\":1. …[+829 chars]`
+
+### 🧑 User — 2026-11-20T22:52:28.618Z
+
+> ↩︎ result: == K3_a_start.png: benny-box  56.8%  mean|d| 22.4
+> == M1_a_start.png: benny-box  55.5%  mean|d| 22.3
+> == M2_a_start.png: benny-box  54.0%  mean|d| 25.7
+> 22:52
+
+### 🤖 Claude — 2026-11-20T22:52:33.336Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/b30/c10.png"}`
+
+### 🧑 User — 2026-11-20T22:52:33.468Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T22:52:52.025Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny06 && python3 - <<'EOF'\np='src/characters/benny/benny30.ts'\ns=open(p).read()\nold=\"\"\"/** the chosen look (measured, qa/match/06/r30/benny06/NOTES.md); DEF = benny05 unchanged */\nconst TUNED: Partial<B30Params> = {};\"\"\"\nnew=\"\"\"/** the chosen look = sweep config K3 (measured against the approved 06 picture and the four storyboard panels,\n *  qa/match/06/r30/benny06/NOTES.md); DEF = benny05 unchanged. Rejected (measured worse or visibly wrong while swimming):\n *  beanie raise (hy, exposes a bare band under the cuff), beanie tilt (hp, bare 'hood' u …[+642 chars]`
+
+### 🧑 User — 2026-11-20T22:52:55.010Z
+
+> ↩︎ result: TSC_OK
+> 1,16d0
+> <   for (const [name, frac, steer, stShot] of SHOTS) { const STAGE = stShot ?? STAGE0;
+> <     const st = await page.evaluate(async ([stage, frac, steer]) => {
+> <       const r = window.__rainbow;
+> <       r.goto(stage);
+> <       const s0 = r.state().s, s1 = r.course.stage(stage).s1;
+> <       const tS = frac > 1 ? frac : s0 + frac * (s1 - s0); // r30: a value > 1 = absolute river distance s
+> <       r.setSteer(steer);
+> <       let k = 0; while (r.state().s < tS && k < 6000) { r.step(1); k++; }
+> <       r.setSteer(null);
+> <       r.freezeAt(10);
+> <       // r23: the 06 river shader reads the wall clock (performance.now) — pinned for the draw so BEFORE / NEW water matches
+> <       const _pn = performance.now; if (window.__pinNow) performance.now = () => window.__pinNow; r.drawList(); performance.now = _pn;
+> <       await new Promise((res) => requestAnimationFrame(() => res()));
+> <       return { ...r.state(), s0, s1 };
+> <     }, [STAGE, frac, steer]);
+> <     await page.screenshot({ path: `${OUT}/${name}.png`, timeout: 600000 });
+
+### 🤖 Claude — 2026-11-20T22:53:03.162Z
+
+Equivalent procedure. Official stills now with r30_shots.mjs: BEFORE (v2, no b30) and NEW (v2 + `b30=1`) at the six standard positions.
+
+### 🤖 Claude — 2026-11-20T22:53:06.873Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny06 && V2=\"$(cat /home/user/rainbow-/qa/match/06/r30/QUERY_NEW_v2.txt)\" && O=/home/user/rainbow-/qa/match/06/r30/benny06 && SH='[[\"a_start\",0,null],[\"b_marked\",214.86,null],[\"c_238\",238,null],[\"d_266\",266,null],[\"e_310\",310,null],[\"g_387\",387,null]]' && \\\nAUDIT_W=864 AUDIT_H=1536 AUDIT_PORT=5327 AUDIT_SHOTS=\"$SH\" bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/match06/r30_shots.mjs $O/BEFORE 06 \"$V2\" 2>&1 | tail -3 && \\\nAUDIT_W=864 AUDIT_H=1536 AUDIT_PORT=5328 AUDIT_SHOTS=\"$SH\" bash /home/user/rainbow-/tools/lead25/rende …[+272 chars]`
+
+### 🧑 User — 2026-11-20T22:54:26.637Z
+
+> ↩︎ result: 06 d_266 s 266.01 lat 0 stage 06 coins 1750
+> 06 e_310 s 310.01 lat 0 stage 06 coins 1770
+> 06 g_387 s 387.01 lat 0 stage 06 coins 1800
+> 06 d_266 s 266.01 lat 0 stage 06 coins 1750
+> 06 e_310 s 310.01 lat 0 stage 06 coins 1770
+> 06 g_387 s 387.01 lat 0 stage 06 coins 1800
+> /home/user/rainbow-/qa/match/06/r30/benny06/BEFORE:
+> a_start.png
+> b_marked.png
+> c_238.png
+> d_266.png
+> e_310.png
+> g_387.png
+> shots.json
+> 
+> /home/user/rainbow-/qa/match/06/r30/benny06/NEW:
+> a_start.png
+> b_marked.png
+> c_238.png
+> d_266.png
+> e_310.png
+> g_387.png
+> shots.json
+> == a_start.png: benny-box  49.4%  mean|d| 37.7
+> == a_start.png: benny-box  56.8%  mean|d| 22.4
+> 22:54
+
+### 🤖 Claude — 2026-11-20T22:54:54.480Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny06 && V2=\"$(cat /home/user/rainbow-/qa/match/06/r30/QUERY_NEW_v2.txt)\" && M=/tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/b30/masks && SH='[[\"a_start\",0],[\"b_marked\",214.86],[\"c_238\",238],[\"d_266\",266],[\"e_310\",310],[\"g_387\",387]]' && \\\nAUDIT_W=864 AUDIT_H=1536 AUDIT_PORT=5329 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/benny30/sweep.mjs $M \"$V2\" '[[\"BEFORE\",{}]]' \"$SH\" mask 2>&1 | tail -1 && \\\nAUDIT_W=864 AUDIT_H=1536 AUDIT_PORT=5329 bash /home/user/rainbow-/tools/lead25/render_s …[+618 chars]`
+

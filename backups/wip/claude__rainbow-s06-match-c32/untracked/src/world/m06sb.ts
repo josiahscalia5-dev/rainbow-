@@ -40,7 +40,8 @@ export const SB = {
   j07: num('m06sbj07', 40),
   la: nums('m06sbla', [22, 42]),
   q: nums('m06sbq', [0.10, 0.16]),
-  k: num('m06sbk', 1),
+  k: num('m06sbk', 1.15), // r30b t3: the 3D Benny is ~20 % larger than the painted one at the approved camera
+  by: num('m06sbby', 0), // NDC y shift of Benny's anchor (+ = higher)
   // wall slots: row pitch along the axis, arc pitch round the drum, slot length (round) and width (along) in u
   slot: nums('m06sbslot', [1.5, 1.75, 1.25, 0.42]),
 };
@@ -97,7 +98,7 @@ vec3 sbWall(float th, float ax, float R, vec3 n, vec3 V, vec3 T) {
 vec3 sbGold(float th, float v, vec3 n, vec3 V, vec3 T) {
   vec3 n2 = dot(n, V) < 0.0 ? -n : n;
   vec3 Rf = reflect(-V, n2);
-  vec3 dark = vec3(0.56, 0.18, 0.09), mid = vec3(0.87, 0.42, 0.18), gold = vec3(0.98, 0.58, 0.25), brt = vec3(0.99, 0.80, 0.45);
+  vec3 dark = vec3(0.46, 0.13, 0.06), mid = vec3(0.80, 0.36, 0.14), gold = vec3(0.97, 0.56, 0.22), brt = vec3(0.99, 0.80, 0.45);
   float body = smoothstep(0.03, 0.2, v) * smoothstep(0.97, 0.8, v);
   vec3 c = mix(dark, mid, 0.3 + 0.7 * body);
   c = mix(c, gold, 0.7 * exp(-pow((v - 0.5) / 0.26, 2.0)));
@@ -106,7 +107,9 @@ vec3 sbGold(float th, float v, vec3 n, vec3 V, vec3 T) {
   c *= 1.0 - 0.42 * grv;
   c = mix(c, vec3(1.0, 0.88, 0.58), 0.7 * lip);
   // bright reflection patches round the ring (the same strip lights as the walls) + a broad soft sheen
-  float pt = sbStrip(th, 7.0), pt2 = pow(0.5 + 0.5 * cos(th * 3.0 - 0.4), 6.0);
+  // r30b t3: crisp bright bars across the band (strip-light reflections) + finer secondary bars; brushed lines round the band
+  float pt = sbStrip(th, 26.0) + 0.55 * pow(0.5 + 0.5 * cos(th * 17.0 + 2.3), 40.0), pt2 = pow(0.5 + 0.5 * cos(th * 3.0 - 0.4), 6.0);
+  c *= 0.93 + 0.07 * sin(v * 210.0 + sin(th * 5.0));
   float acr = exp(-pow((v - 0.47) / 0.2, 2.0)) + 0.6 * exp(-pow((v - 0.72) / 0.08, 2.0));
   // r30b t2: storyboard gold p25 (223,111,51) p50 (249,145,63) p75 (253,207,112); white only in the reflection patches
   c = mix(c, brt, clamp(0.5 * pt2 * acr + 0.12 * body, 0.0, 0.6));
@@ -123,7 +126,7 @@ vec3 sbGold(float th, float v, vec3 n, vec3 V, vec3 T) {
 export function buildSbBands(rings: { p: THREE.Vector3; t: THREE.Vector3; r: THREE.Vector3; u: THREE.Vector3; R: number }[], W: number, D: number, NS = 160) {
   const h = W / 2;
   const prof: [number, number][] = [[0.3, -h], [-0.8 * D, -h], [-D, -h + 0.08], [-D - 0.07, -h + 0.22], [-D - 0.07, -h + 0.42], [-D + 0.05, -h + 0.52], [-D + 0.05, -h + 0.62]];
-  for (let k = 1; k < 10; k++) { const f = k / 10; prof.push([-D - 0.1 * Math.sin(Math.PI * f), -h + 0.72 + f * (W - 1.44)]); }
+  for (let k = 1; k < 10; k++) { const f = k / 10; prof.push([-D - 0.025 * Math.sin(Math.PI * f), -h + 0.72 + f * (W - 1.44)]); } // r30b t3: flat broad face (t2 dome read as a plastic tube)
   prof.push([-D + 0.05, h - 0.62], [-D + 0.05, h - 0.52], [-D - 0.07, h - 0.42], [-D - 0.07, h - 0.22], [-D, h - 0.08], [-0.8 * D, h], [0.3, h]);
   const vP: number[] = [0];
   for (let i = 1; i < prof.length; i++) vP.push(vP[i - 1] + Math.hypot(prof[i][0] - prof[i - 1][0], prof[i][1] - prof[i - 1][1]));

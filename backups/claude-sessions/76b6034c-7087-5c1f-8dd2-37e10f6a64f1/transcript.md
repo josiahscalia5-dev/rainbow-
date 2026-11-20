@@ -2116,3 +2116,369 @@ Next I'm comparing two of the new frames at full size against storyboard panels 
 
 > ↩︎ result: (Bash completed with no output)
 
+### 🤖 Claude — 2026-11-20T22:51:12.039Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r30b/t2/zoom_band270.png"}`
+
+### 🧑 User — 2026-11-20T22:51:12.055Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T22:51:30.540Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='src/world/m06sb.ts'; s=open(p).read()\ndef rep(old,new):\n    global s\n    assert s.count(old)==1, old[:80]; s=s.replace(old,new)\n# flat broad face profile\nrep(\"  for (let k = 1; k < 10; k++) { const f = k / 10; prof.push([-D - 0.1 * Math.sin(Math.PI * f), -h + 0.72 + f * (W - 1.44)]); }\",\n    \"  for (let k = 1; k < 10; k++) { const f = k / 10; prof.push([-D - 0.025 * Math.sin(Math.PI * f), -h + 0.72 + f * (W - 1.44)]); } // r30b t3: flat broad face (t2 dome read as a plastic tube)\")\n# gold: crisper metal\nrep(\"\"\"  vec3 dar …[+1461 chars]`
+
+### 🧑 User — 2026-11-20T22:51:34.832Z
+
+> ↩︎ result: tsc rc=0
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T22:51:45.565Z
+
+Typecheck clean. Now I'm combining the water and foam specialists' patches into the Screen 06 candidate, with a dry run first since we edited some of the same files:
+
+### 🤖 Claude — 2026-11-20T22:51:47.269Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && for x in water06/w30_water06 foam06/f30_foam06; do P=/home/user/rainbow-/qa/match/06/r30/$x.patch; echo \"== $x $(wc -l <$P) lines; files: $(grep '^+++ ' $P | sed 's/+++ b\\///' | tr '\\n' ' ')\"; patch -p1 --dry-run -F2 < $P | tail -5; done", "description": "Dry-run the water and foam patches on the candidate"}`
+
+### 🧑 User — 2026-11-20T22:51:47.507Z
+
+> ↩︎ result: == water06/w30_water06 4967 lines; files: src/world/match06.ts src/world/m06water30.ts tools/match06/w30_make_veins.py tools/match06/w30_flowfix.mjs 
+> Hunk #4 succeeded at 1020 (offset 35 lines).
+> checking file src/world/m06water30.ts
+> checking file tools/match06/w30_make_veins.py
+> checking file tools/match06/w30_flowfix.mjs
+> File assets/textures/match06/tile_w30veins.png: git binary diffs are not supported.
+> == foam06/f30_foam06 574 lines; files: src/game/Game.ts	2026-11-20 22:44:37.265016405 +0000 src/world/m06foam30.ts	2026-11-20 22:44:37.267654656 +0000 
+> Hunk #1 FAILED at 26.
+> Hunk #2 succeeded at 127 with fuzz 1 (offset 1 line).
+> Hunk #3 succeeded at 574 (offset 5 lines).
+> 1 out of 3 hunks FAILED
+> checking file src/world/m06foam30.ts
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T22:51:52.074Z
+
+The water patch applies cleanly (its texture image I'll copy directly). One foam hunk conflicts with my import line in `Game.ts`, so I'm applying the rest and doing that one by hand:
+
+### 🤖 Claude — 2026-11-20T22:51:55.279Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && patch -p1 -F2 < /home/user/rainbow-/qa/match/06/r30/water06/w30_water06.patch | grep -v \"^checking\\|^patching\" | tail -3; cp /home/user/wt/water06/assets/textures/match06/tile_w30veins.png assets/textures/match06/ && cmp assets/textures/match06/tile_w30veins.png /home/user/wt/water06/assets/textures/match06/tile_w30veins.png && echo veins_copied; sed -n '/^--- a\\/src\\/game\\/Game.ts/,/^@@ .*@@/p;' /home/user/rainbow-/qa/match/06/r30/foam06/f30_foam06.patch | head -5; awk '/^\\+\\+\\+ b\\/src\\/game\\/Game.ts/{f=1} f&&/^@@/{n++} f&&n==1{print} n==2{exit …[+134 chars]`
+
+### 🧑 User — 2026-11-20T22:51:55.358Z
+
+> ↩︎ result: Hunk #3 succeeded at 193 (offset 1 line).
+> Hunk #4 succeeded at 1020 (offset 35 lines).
+> File assets/textures/match06/tile_w30veins.png: git binary diffs are not supported.
+> veins_copied
+> --- a/src/game/Game.ts	2026-11-20 22:44:37.228932126 +0000
+> +++ b/src/game/Game.ts	2026-11-20 22:44:37.265016405 +0000
+> @@ -26,6 +26,7 @@
+> @@ -26,6 +26,7 @@
+>  import { MATCH } from './match';
+>  import { buildMatch08 } from '../world/match08';
+>  import { buildMatch06 } from '../world/match06';
+> +import { buildFoam30 } from '../world/m06foam30';
+>  import { tubeCenterAt } from '../world/tube';
+>  import { loadBennyRuntime, loadGirlRuntime, loadWater, moduleStatus } from './modules';
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T22:52:01.044Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && patch -p1 -F2 < /home/user/rainbow-/qa/match/06/r30/foam06/f30_foam06.patch | tail -2; rm -f src/game/Game.ts.rej src/game/Game.ts.orig src/world/match06.ts.orig; python3 - <<'EOF'\np='src/game/Game.ts'; s=open(p).read()\nif \"import { buildFoam30 } from '../world/m06foam30';\" not in s:\n    s=s.replace(\"import { SB, makeSbJoin } from '../world/m06sb'; // r30b lead `&m06sb*`\",\"import { SB, makeSbJoin } from '../world/m06sb'; // r30b lead `&m06sb*`\\nimport { buildFoam30 } from '../world/m06foam30';\",1)\nopen(p,'w').write(s)\nEOF\ngrep -n \"buildFoam30\ …[+290 chars]`
+
+### 🧑 User — 2026-11-20T22:52:05.768Z
+
+> ↩︎ result: 1 out of 3 hunks FAILED -- saving rejects to file src/game/Game.ts.rej
+> patching file src/world/m06foam30.ts
+> 30:import { buildFoam30 } from '../world/m06foam30';
+> 131:  // r30 foam06 `&f30*` (src/world/m06foam30.ts): 06 bubbly foam banks, floating iridescent bubbles, lace splash ring; null without a switch
+> 132:  const f30 = m06 ? buildFoam30(course) : null;
+> src/world/m06foam30.ts
+> src/world/m06water30.ts
+> tsc rc=0
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T22:52:10.133Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"f30[?.]\" src/game/Game.ts | head -5; grep -n \"w30\\|W30\" src/world/match06.ts | head -6", "description": "Confirm foam and water hooks are present"}`
+
+### 🧑 User — 2026-11-20T22:52:10.186Z
+
+> ↩︎ result: 133:  if (f30) scene.add(f30.group);
+> 578:    if (f30 && m06) f30.update({ on: m06On && !(m08 && m08On), away: m06On ? m06.away(camera.position) : 0, camera, benny: benny.root.position, s: st.s, time, renderer, m06group: m06.group });
+> 21:import { W30_GLSL, setupW30 } from './m06water30'; // r30 water06 `&w30=1`
+> 171:${W30_GLSL}
+> 196:#ifdef W30
+> 197:    riv = w30Water(riv, vLS, uR6p.x, uTime, dAp, fr); // r30 water06 (src/world/m06water30.ts)
+> 1023:  await setupW30(floorMat, qs, FLOW); // r30 water06 `&w30=1`: rainbow water in motion (src/world/m06water30.ts)
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T22:52:19.552Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && echo \"$(cat /home/user/rainbow-/qa/match/06/r30/QUERY_NEW_v2.txt)&m06sb=1&w30=1&f30=1\" > /home/user/rainbow-/qa/match/06/r30b/QUERY_SB_t3.txt && Q=$(cat /home/user/rainbow-/qa/match/06/r30b/QUERY_SB_t3.txt) && DIAG_S='[0,232,250,270,290,310,330,350,370,385,400,420]' AUDIT_PORT=5366 timeout 1200 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/match06/r30b_diag.mjs /home/user/rainbow-/qa/match/06/r30b/t3 \"$Q\" 2>&1 | grep -E \"^s |rror|m06sb|f30|w30\" | cut -c1-160; cd /home/user/rainbow-/qa/match/06/r30b/t3 && python3 -I -c \"\nfrom PIL im …[+358 chars]`
+
+### 🧑 User — 2026-11-20T22:53:21.909Z
+
+> ↩︎ result: console [match06] m06sbband {bands: 8, spacing: 18, width: 6, depth: 1.1}
+> console [match06] w30 rainbow water {tile: Array(2), start: Array(2), pink: 0.62, rainbow: 0.8}
+> console [match06] m06sbjoin {materials: 4, j07: 40}
+> s 0 stage 06 benny {"x":-0.03,"y":-0.31,"z":0.984,"visible":true,"cam":[1.72,-35.37,-132.64],"benny":[0.54,-37.64,-138.27]}
+>   hits {"m06_tube<match06_projection<Scene":19,"m06_rings<match06_projection<Scene":8,"m06_sbbands<match06_projection<Scene":2,"f30_froth<m06_f30<Scene":5,"foam
+> s 232 stage 06 benny {"x":-0.05,"y":-0.32,"z":0.986,"visible":true,"cam":[-3.33,-34.01,-164.79],"benny":[-2.13,-38.26,-170.29]}
+>   hits {"m06_tube<match06_projection<Scene":18,"m06_sbbands<match06_projection<Scene":17,"Mesh<foam_banks<water_system<Scene":7,"f30_froth<m06_f30<Scene":6,"m06
+> s 250 stage 06 benny {"x":-0.05,"y":-0.29,"z":0.986,"visible":true,"cam":[-1.18,-38.59,-182.23],"benny":[1.37,-42.75,-187.34]}
+>   hits {"m06_tube<match06_projection<Scene":18,"m06_sbbands<match06_projection<Scene":20,"f30_froth<m06_f30<Scene":9,"Mesh<foam_banks<water_system<Scene":3,"m06
+> s 270 stage 06 benny {"x":-0.02,"y":-0.31,"z":0.986,"visible":true,"cam":[8.13,-45.29,-198.31],"benny":[10.77,-49.14 …[+2150 chars]
+
+### 🤖 Claude — 2026-11-20T22:53:24.727Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r30b/t3/sheet.png"}`
+
+### 🧑 User — 2026-11-20T22:53:24.885Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T22:53:47.658Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"export function perforatedMetal\" -A22 src/world/materials.ts | grep -n \"color\\|Color\\|emissive\" | head; grep -n \"uMetalColor\\|uBaseColor\\|o.color\" src/world/materials.ts | head", "description": "Check how the 07 wall material sets its colour"}`
+
+### 🧑 User — 2026-11-20T22:53:47.696Z
+
+> ↩︎ result: 3:436-    color: o.color ?? '#d13fd6',
+> 6:439-    emissive: new THREE.Color(o.emissive ?? '#9a1fa8'),
+> 7:440-    emissiveIntensity: o.emissiveIntensity ?? 0.26,
+> 21:454-    uHoleColor: { value: new THREE.Color(o.holeColor ?? '#2b0640') },
+> 436:    color: o.color ?? '#d13fd6',
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T22:54:12.719Z
+
+> 🔧 **Bash** `{"command": "head -c 600 qa/match/06/r30/gameplay_NEW_v2.json; echo; ls /home/user/wt/s06/tools/match06/ | grep -i \"r30\\|gameplay\\|clip\\|contin\" ; grep -rl \"gameplay_NEW\" docs/briefs/2026-11-20-r30/ qa/match/06/r30/*.md qa/match/06/r30/proof*/README.md 2>/dev/null | head", "description": "Find clip, continuity and gameplay test tools"}`
+
+### 🧑 User — 2026-11-20T22:54:12.785Z
+
+> ↩︎ result: {
+>   "checks": {
+>     "pauseFreezes": {
+>       "pass": true,
+>       "sBefore": 45.495,
+>       "sPaused": 45.495,
+>       "sAfter": 49.995
+>     },
+>     "continuousTravel": {
+>       "pass": true,
+>       "nonMonotonicSteps": 0,
+>       "steps": 2953,
+>       "respawns": 0
+>     },
+>     "noCameraCut": {
+>       "pass": true,
+>       "maxCameraJumpPerStep": 0.728
+>     },
+>     "noTeleport": {
+>       "pass": true,
+>       "maxBennyAltitudeJumpPerStep": 0.19,
+>       "at": {
+>         "s": 508.109,
+>         "s1": 508.309,
+>         "stage": "07",
+>         "y0": -112.823,
+>         "y1": -113.013,
+>         "t": 41.317
+>       }
+>     },
+>     "p
+> r25_open_clip.mjs
+> r30_cam.mjs
+> r30_clip.mjs
+> r30_continuity.ts
+> r30_design_curl.py
+> r30_eval.mjs
+> r30_hitprobe.mjs
+> r30_ring_probe.mjs
+> r30_shots.mjs
+> r30b_design_sb.py
+> r30b_diag.mjs
+> r30b_probe.mjs
+> docs/briefs/2026-11-20-r30/COORDINATION.md
+> qa/match/06/r30/proof/README.md
+> qa/match/06/r30/proof_v2/README.md
+
+### 🤖 Claude — 2026-11-20T22:54:17.806Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json; d=json.load(open('qa/match/06/r30/gameplay_NEW_v2.json')); print(list(d.keys())); print({k:v.get('pass') for k,v in d['checks'].items()}); print({k:d[k] for k in d if k!='checks'} if len(str({k:d[k] for k in d if k!='checks'}))<800 else 'big')\"; grep -rn \"gameplay_NEW\" docs/briefs/2026-11-20-r30/COORDINATION.md qa/match/06/r30/proof/README.md | head -3; ls tools/ | head -40; ls scripts | grep -i \"game\\|test\\|contin\" | head", "description": "Inspect gameplay test result format and locate the script"}`
+
+### 🧑 User — 2026-11-20T22:54:17.914Z
+
+> ↩︎ result: ['checks', 'samples', 'plunge', 'maxJumpAt', 'errors', 'pass', 'query']
+> {'pauseFreezes': True, 'continuousTravel': True, 'noCameraCut': True, 'noTeleport': True, 'plunge': True, 'realCoinPickups': True, 'victory': True, 'heartsLostOnWallBump': True}
+> big
+> docs/briefs/2026-11-20-r30/COORDINATION.md:29:  0.003°); gameplay test 8/8, 91 coins, 2,240 (`qa/match/06/r30/gameplay_NEW.json`); start view see above.
+> qa/match/06/r30/proof/README.md:12:  (`../gameplay_NEW.json`); start view vs BEFORE: 0.13 % of pixels > 20 levels (fur speckle; the right-edge gap is filled by `m06_stub0`).
+> blender
+> da3
+> export
+> imageblaster
+> lead21
+> lead22
+> lead23
+> lead25
+> lead26
+> lead_r10
+> lead_r4
+> lead_r5
+> lead_r6
+> make_env_geometry_ref.py
+> make_env_plate.py
+> make_env_plate_v2.py
+> make_env_plate_v3.py
+> marble05
+> match
+> match08
+> model-lab.html
+> model-lab.ts
+> proj05
+> qa
+> water-lab.html
+> water-lab.ts
+> worldlabs
+> aspect-test.mjs
+> cinematic-test.mjs
+> continuity-test.ts
+> flowplan-test.mjs
+> gameplay-test.mjs
+
+### 🤖 Claude — 2026-11-20T22:54:21.506Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && head -30 scripts/gameplay-test.mjs | cut -c1-220; grep -n \"process.env\\|argv\" scripts/gameplay-test.mjs | head -10; head -20 tools/match06/r30_continuity.ts | cut -c1-220; head -25 tools/match06/r30_clip.mjs | cut -c1-240", "description": "Read usage of gameplay, continuity and clip tools"}`
+
+### 🧑 User — 2026-11-20T22:54:21.562Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Automated gameplay + continuity test on the REAL running game (headless Chromium, WebGL).
+> // Drives Benny from 03 to the 11 ending with the deterministic simulation API and checks:
+> //  * continuous travel: s strictly increases, no position jump > speed·dt (no teleport/cut)
+> //  * camera continuity: no camera jump between steps (no hard cut), incl. the 07 plunge → 08
+> //  * 07 plunge: positive travel time, large vertical drop, 08 inlet reached from the bottom
+> //  * real coin pickups update the counter; steering into the foam wall costs a heart
+> //  * pause freezes the simulation; resume continues
+> //  * the run ends in the 11 victory with Benny hidden under the towel
+> // Writes qa/gameplay_test.json and qa/07_to_08_continuity.md. Exit 1 on failure.
+> //   node scripts/gameplay-test.mjs --q=river05=1 --out=qa/pilot05/wave11/tests/gameplay_river05.json
+> //   → the same run with URL test switches; with --q the tracked qa/ files above are NOT rewritten.
+> import { writeFileSync, mkdirSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const optQ = (process.argv.find((a) => a.startsWith('--q=')) ?? '').slice(4);
+> const optOut = (pr …[+3616 chars]
+
+### 🤖 Claude — 2026-11-20T22:54:29.275Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && Q=\"$(cat /home/user/rainbow-/qa/match/06/r30b/QUERY_SB_t3.txt)\" timeout 300 npx vite-node tools/match06/r30_continuity.ts 2>&1 | python3 -c \"\nimport sys,json; t=sys.stdin.read(); i=t.index('{'); d=json.loads(t[i:]); print('ok',d['ok'],'length',d['length']); [print(s) for s in d['stages'] if s['id'] in ('05','06','07','08')]; print(d['report'][:500])\"", "description": "Run route continuity check on the candidate", "timeout": 320000}`
+
+### 🧑 User — 2026-11-20T22:54:31.027Z
+
+> ↩︎ result: ok True length 584.7
+> {'id': '05', 's0': 114.69, 'len': 74.22, 'y0': -40.63, 'y1': -43.34}
+> {'id': '06', 's0': 188.91, 'len': 207.64, 'y0': -43.34, 'y1': -70.59}
+> {'id': '07', 's0': 396.55, 'len': 142.18, 'y0': -70.59, 'y1': -135.59}
+> {'id': '08', 's0': 538.73, 'len': 15.58, 'y0': -135.59, 'y1': -135.68}
+> {"ok":true,"boundaries":[{"from":"01","to":"02","s":0.01,"posGap":0,"tangentAngleDeg":0.24,"upAngleDeg":0.241,"altitude":-2.4},{"from":"02","to":"03","s":41,"posGap":-0.0001,"tangentAngleDeg":0.677,"upAngleDeg":0.575,"altitude":-11.87},{"from":"03","to":"04","s":70.41,"posGap":0,"tangentAngleDeg":0.933,"upAngleDeg":0.577,"altitude":-19.41},{"from":"04","to":"05","s":114.69,"posGap":0,"tangentAngleDeg":0.241,"upAngleDeg":0.241,"altitude":-40.63},{"from":"05","to":"06","s":188.91,"posGap":0,"tange
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T22:54:36.170Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && Q=\"$(cat /home/user/rainbow-/qa/match/06/r30b/QUERY_SB_t3.txt)\" timeout 300 npx vite-node tools/match06/r30_continuity.ts 2>&1 | python3 -c \"\nimport sys,json; t=sys.stdin.read(); i=t.index('{'); d=json.loads(t[i:]); r=json.loads(d['report']+']}') if False else d['report']\nimport re; m=re.search(r'\\{\\\"from\\\":\\\"06\\\",\\\"to\\\":\\\"07\\\"[^}]*\\}', r); print(m.group(0) if m else r[400:900])\"", "description": "Show the 06→07 join numbers from the continuity check", "timeout": 320000}`
+
+### 🧑 User — 2026-11-20T22:54:37.869Z
+
+> ↩︎ result: {"from":"06","to":"07","s":396.55,"posGap":0,"tangentAngleDeg":0.002,"upAngleDeg":0.077,"altitude":-70.59}
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T22:54:43.763Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && timeout 1500 bash /home/user/rainbow-/tools/lead25/render_slot.sh node scripts/gameplay-test.mjs \"--q=$(cat /home/user/rainbow-/qa/match/06/r30b/QUERY_SB_t3.txt)\" --out=/home/user/rainbow-/qa/match/06/r30b/gameplay_t3.json > /home/user/rainbow-/qa/match/06/r30b/gameplay_t3.log 2>&1; echo \"exit $?\"; tail -5 /home/user/rainbow-/qa/match/06/r30b/gameplay_t3.log", "description": "Run the full gameplay test on the candidate", "timeout": 1600000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T22:54:43.802Z
+
+> ↩︎ result: Command running in background with ID: buwlut2ha. Output is being written to: /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/tasks/buwlut2ha.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-20T22:55:05.197Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s06/tools/match06/r30b_panel_match.py", "content": "\"\"\"r30b lead: which game moment matches each storyboard panel best (scenery only, Benny's area masked out).\nThe panel window in game pixels = (28,250)-(811,1251) of the 864x1536 frame (storyboard panel 1 registered onto the approved picture by\nSIFT + RANSAC, 93 inliers: qa/match/06/r30b/align/panel1_to_approved.json; Benny coincides exactly). Every frame is cropped to that window\n(scaled for other render sizes) and compared with each panel at 98x125 after a light blur:\n  ncc  = normalized cross-correlation  …[+2134 chars]`
+
+### 🧑 User — 2026-11-20T22:55:05.335Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s06/tools/match06/r30b_panel_match.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T22:55:06.700Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && echo \"== NEW t3\" && python3 -I tools/match06/r30b_panel_match.py /home/user/rainbow-/qa/match/06/r30b/t3 && echo \"== BEFORE v2 (user's bottom row positions)\" && python3 -I tools/match06/r30b_panel_match.py /home/user/rainbow-/qa/match/06/r30b/diag", "description": "Score panel matches for new and baseline frames"}`
+
+### 🧑 User — 2026-11-20T22:55:07.653Z
+
+> ↩︎ result: == NEW t3
+> panel 1: s0:+0.017  s232:-0.132  s250:-0.220  s270:-0.124  s290:-0.144  s310:-0.366  s330:-0.384  s350:-0.343  s370:-0.169  s385:-0.112  s400:-0.038  s420:-0.329   -> best s 0
+> panel 2: s0:-0.335  s232:-0.112  s250:-0.199  s270:-0.183  s290:-0.275  s310:-0.184  s330:-0.246  s350:-0.417  s370:-0.296  s385:-0.330  s400:-0.175  s420:-0.214   -> best s 232
+> panel 3: s0:-0.078  s232:-0.162  s250:-0.071  s270:-0.103  s290:-0.118  s310:-0.338  s330:-0.123  s350:-0.147  s370:-0.072  s385:-0.104  s400:+0.015  s420:-0.223   -> best s 400
+> panel 4: s0:-0.200  s232:-0.210  s250:-0.057  s270:+0.046  s290:-0.023  s310:-0.142  s330:-0.103  s350:-0.247  s370:-0.132  s385:-0.155  s400:-0.026  s420:-0.243   -> best s 270
+> == BEFORE v2 (user's bottom row positions)
+> panel 1: s238:-0.219  s266:-0.263  s310:-0.382  s387:-0.252   -> best s 238
+> panel 2: s238:-0.273  s266:-0.299  s310:-0.329  s387:-0.522   -> best s 238
+> panel 3: s238:-0.137  s266:-0.020  s310:-0.518  s387:-0.347   -> best s 266
+> panel 4: s238:-0.120  s266:-0.032  s310:-0.434  s387:-0.307   -> best s 266
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T22:55:17.241Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/tasks/buwlut2ha.output; tail -15 /home/user/rainbow-/qa/match/06/r30b/gameplay_t3.log; python3 -c \"\nimport json; d=json.load(open('/home/user/rainbow-/qa/match/06/r30b/gameplay_t3.json')); print('PASS', d['pass']); print({k:v.get('pass') for k,v in d['checks'].items()}); print('coins', d['checks']['realCoinPickups']); print('wall', d['checks']['heartsLostOnWallBump']); print('errors', d['errors'][:3])\" 2>&1 | cut -c1-600", "description": "Read gameplay test results"}`
+
+### 🧑 User — 2026-11-20T22:55:17.330Z
+
+> ↩︎ result: exit 0
+>   "travelTimeTopToInlet": 6.58,
+>   "verticalDrop": 61.39
+>  },
+>  "errors": []
+> }
+> 
+> [exited with code 0]
+>   "victory": true,
+>   "heartsLostOnWallBump": true
+>  },
+>  "plunge": {
+>   "tTop": 37.299999999999166,
+>   "tBottom": 43.86666666666546,
+>   "t08": 43.883333333332125,
+>   "yTop": -73.897,
+>   "yBottom": -135.3,
+>   "y08": -135.288,
+>   "travelTimeTopToInlet": 6.58,
+>   "verticalDrop": 61.39
+>  },
+>  "errors": []
+> }
+> PASS True
+> {'pauseFreezes': True, 'continuousTravel': True, 'noCameraCut': True, 'noTeleport': True, 'plunge': True, 'realCoinPickups': True, 'victory': True, 'heartsLostOnWallBump': True}
+> coins {'pass': True, 'startCoins': 1330, 'endCoins': 2240, 'collected': 91}
+> wall {'pass': True, 'hearts': 4}
+> errors []
+
+### 🤖 Claude — 2026-11-20T22:55:29.610Z
+
+> 🔧 **Bash** `{"command": "date -u +%H:%M:%S; cd /home/user/rainbow- && python3 -I scripts/autosave-status.py; tail -3 backups/BACKUP_LOG.md | cut -c1-140", "description": "Check time and autosave status"}`
+
+### 🧑 User — 2026-11-20T22:55:30.441Z
+
+> ↩︎ result: 22:55:29
+> AUTOSAVE OK | branch ccr-e490fceb-u85291 | scheduler daemon | last verified backup 2026-11-20T22:51:08+00:00 (4.3 min ago) | local 6ae8fc7 remote 6ae8fc7 (match) | uncommitted 5
+> | 2026-11-20T22:36:08+00:00 | daemon | committed+pushed | `7486efc5f2e8` | `ccr-e490fceb-u85291` | 27 | True |  |
+> | 2026-11-20T22:41:09+00:00 | daemon | committed+pushed | `5a470da08d0a` | `ccr-e490fceb-u85291` | 44 | True |  |
+> | 2026-11-20T22:46:08+00:00 | daemon | committed+pushed | `3ecf3639cd21` | `ccr-e490fceb-u85291` | 110 | True |  |
+
+### 🤖 Claude — 2026-11-20T22:55:38.783Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && Q=$(cat /home/user/rainbow-/qa/match/06/r30b/QUERY_SB_t3.txt) && AUDIT_W=864 AUDIT_H=1536 AUDIT_PORT=5367 AUDIT_PIN=10000 AUDIT_SHOTS='[[\"s232\",232,null],[\"s250\",250,null],[\"s270\",270,null],[\"s290\",290,null],[\"s310\",310,null],[\"s330\",330,null],[\"s345\",345,null]]' timeout 1500 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/match06/r30_shots.mjs /home/user/rainbow-/qa/match/06/r30b/t3full 06 \"$Q\" 2>&1 | grep -E \"^06|rror\" | cut -c1-120; cd /home/user/rainbow-/qa/match/06/r30b/t3full && python3 -I /home/user/wt/s06/tools/matc …[+115 chars]`
+
