@@ -1,0 +1,13 @@
+{
+  "extraKnownMarketplaces": {
+    "worldlabs": {
+      "source": {
+        "source": "github",
+        "repo": "worldlabsai/skills"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "worldlabs@worldlabs": true
+  }
+}

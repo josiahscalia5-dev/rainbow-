@@ -1,0 +1,14 @@
+{
+ "default_vs_qa/pilot05/current_default_05.png": {
+  "max_pixel_difference": 0,
+  "differing_pixels": 0
+ },
+ "BEFORE(?ringa=26&nearfloor05=0)_vs_qa/pilot05/wave9/baseline/05.png": {
+  "max_pixel_difference": 0,
+  "differing_pixels": 0
+ },
+ "river05_vs_wave11/compare/3_NEW_river05_05.png": {
+  "max_pixel_difference": 0,
+  "differing_pixels": 0
+ }
+}

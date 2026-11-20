@@ -1,0 +1,13 @@
+diff --git a/.claude/scripts/asset-pipeline/fal-queue.mjs b/.claude/scripts/asset-pipeline/fal-queue.mjs
+index a687cc9..6bd330a 100644
+--- a/.claude/scripts/asset-pipeline/fal-queue.mjs
++++ b/.claude/scripts/asset-pipeline/fal-queue.mjs
+@@ -312,7 +312,7 @@ export async function submitFalQueue(endpoint, input, options = {}) {
+   const submitBody = await submitResponse.json().catch(() => ({}));
+ 
+   if (!submitResponse.ok) {
+-    throw new Error(`FAL submit failed (${submitResponse.status}).`);
++    throw new Error(`FAL submit failed (${submitResponse.status}): ${JSON.stringify(submitBody).slice(0, 600)}`);
+   }
+ 
+   const requestId = submitBody.request_id;

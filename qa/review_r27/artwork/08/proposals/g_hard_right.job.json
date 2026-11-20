@@ -1,0 +1,39 @@
+{
+ "name": "g_hard_right",
+ "endpoint": "fal-ai/nano-banana-2/edit",
+ "request_id": "01a1f9b3-348d-7eb0-9a4d-0fb15026e91e",
+ "status": "COMPLETED",
+ "resolution": "2K",
+ "aspect_ratio": "9:16",
+ "num_images": 1,
+ "estimated_cost_usd": 0.12,
+ "inputs": [
+  {
+   "path": "qa/review_r27/artwork/08/game_frames/g_hard_right.png",
+   "sha256": "54bdceb42d817f835a0d78f792cf66078eba1ae86a7f85f113b0ee26ceba7785"
+  },
+  {
+   "path": "qa/review_r27/artwork/swatches08/wall_arch.png",
+   "sha256": "b82b50b0d2e1169164596c8b63c544b2301d4a8bb2e228f9274e2d632647b556"
+  },
+  {
+   "path": "qa/review_r27/artwork/swatches08/chamber_window_towel.png",
+   "sha256": "49d803ec85675c83ed521c8c81ce8742d9ef9d163cbcda500b757253f150dc68"
+  },
+  {
+   "path": "qa/review_r27/artwork/swatches08/river.png",
+   "sha256": "760d5627545c8a5638175fd8dcebf939b7d5aea82ec83d86e7031281f93a1c5a"
+  },
+  {
+   "path": "qa/review_r27/artwork/swatches08/foam_edge.png",
+   "sha256": "2d059047606bfa94635d471d1062ad68db2528c8ccb2a97d75039f3e3e34ae9e"
+  }
+ ],
+ "prompt": "IMAGE 1 is a clean frame from a 3D mobile game (the character was removed) and defines EVERYTHING about the layout. IMAGES 2-5 are small material swatches cut from the art director's approved illustration of this level \u2014 they show ONLY surface materials, not a layout:\nIMAGE 2 = the purple slotted washer-drum wall with a polished gold arch; IMAGE 3 = the far chamber: the round chrome washer window and the folded purple towel on its gold ledge; IMAGE 4 = the glossy river water: bright cyan with thick glossy hot-pink / magenta edges and white highlight streaks; IMAGE 5 = the soft white-lilac foam and small bubbles along the river edge.\n\nRepaint IMAGE 1 surface by surface with these materials, as a finished premium illustration:\n- every wall surface becomes the violet-purple metal with crisp, evenly spaced rounded slots (IMAGE 2); every arch, paddle and ring becomes polished bright gold with warm light;\n- where IMAGE 1 shows the washer window, the towel and the ledge, paint them like IMAGE 3 \u2014 one single crisp towel, never doubled or ghosted;\n- the river of IMAGE 1 becomes the water of IMAGE 4: bright cyan centre with thick glossy magenta banks on both sides, highlight streaks that follow the winding river, gentle sparkles (no sharp spiky glints, no broad white sheet);\n- a low border of soft rounded foam clusters and small bubbles follows both river edges (IMAGE 5);\n- add a few small iridescent soap bubbles in the air.\n\nSTRICT: do NOT change any shape, position, size or perspective from IMAGE 1. Do not add, remove or move any object: no holes, drains, extra rings, new arches or new river bends. The river, the window, the towel, the ledge and every arch stay exactly where they are in IMAGE 1. No character, coins, text, HUD or user interface. Output only the repainted scene.",
+ "outputs": [
+  "qa/review_r27/artwork/08/proposals/g_hard_right_v1.png"
+ ],
+ "seconds": 26.1,
+ "error": null,
+ "note": "PROPOSAL \u2014 generated view, NOT an approved reference until the user approves it"
+}
