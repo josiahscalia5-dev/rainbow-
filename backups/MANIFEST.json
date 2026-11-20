@@ -623,8 +623,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 22484,
-   "sha256": "2e8cc07806a18abfb7bf36ed72db21915ad221070b06d6c94195284cbac7f721"
+   "bytes": 22230,
+   "sha256": "091077753f9bb7d9b7311c6aacddf75c27382084e2883d06398f40f64c62da46"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -639,7 +639,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 2900,
-   "sha256": "bb109308f3acf850dc7d50fd8bb08623daa7e7d59833c60d2be1a95c84f9af74"
+   "sha256": "14a24b7db9eac636f78239c992a327dcdd2f7a1f64701297dcd4f14c90bca3bd"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -999,7 +999,7 @@
   {
    "path": "backups/wip/claude__rainbow-benny-c27/INFO.json",
    "bytes": 1084,
-   "sha256": "baf61cb478979d26411ce6e5a594e891063150a4e62e8520281531773a70ce9e"
+   "sha256": "549ce49848d1153085ce90ee1eb4bc3ecace85c5fd4a7f583d254b976e515c44"
   },
   {
    "path": "backups/wip/claude__rainbow-benny-c27/tracked.patch",
@@ -1649,7 +1649,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c27/INFO.json",
    "bytes": 586,
-   "sha256": "4f564bde634d9c3668912a63ce94b11657eeef2d2ced2909947ae94911a31c0d"
+   "sha256": "0aafb3a7a0d1fb999dc469325f49559d519c03a6a4bf9742a6191259e330d2a4"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c27/tracked.patch",
@@ -2429,7 +2429,7 @@
   {
    "path": "backups/wip/claude__rainbow-s05-match-c27/INFO.json",
    "bytes": 477,
-   "sha256": "8d0c2e0bf1d0f77f3da570f5d6898843b5a5d6616e7dcb090cab5efbf1eaf619"
+   "sha256": "bd1c011100df1958e8e3879dc57ef1401a5afc3e0c05c39669b2dc091cf3b341"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c11/INFO.json",
@@ -2649,7 +2649,7 @@
   {
    "path": "backups/wip/claude__rainbow-s06-match-c27/INFO.json",
    "bytes": 1090,
-   "sha256": "f01fabd368a60c51683e1b1c3d816239db436a8908601bf5721960016b3c23d8"
+   "sha256": "e8b5dc203eecb46f44f3d89351eaae598026ae2d6ec691b8eb91cb3bac50546d"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c27/tracked.patch",
@@ -3079,7 +3079,7 @@
   {
    "path": "backups/wip/claude__rainbow-s07-match-c27/INFO.json",
    "bytes": 971,
-   "sha256": "4870d1cfb2c2c2887e91fd0223780410d58511fbc32145b5a761d194762338b4"
+   "sha256": "959c5cff25e1711da7e7b56ddc5700a288b31e5a3119f4a1739656640cf69dc0"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c27/tracked.patch",
@@ -3314,7 +3314,7 @@
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c27/INFO.json",
    "bytes": 640,
-   "sha256": "d6845fac2e849ddd31442fea85b6635d1921c162df239cf7ba1c65fd3dc97fda"
+   "sha256": "6cef0903a35a8202288a8453a562538eb34448203ac3676c7cb7fb557cd8d67d"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c27/tracked.patch",
@@ -3349,7 +3349,7 @@
   {
    "path": "backups/wip/detached-8accdad0a0/INFO.json",
    "bytes": 491,
-   "sha256": "c0fdb389732efbf299c4338d017b338a762fc55ede27a36deb8adbc47a1e820b"
+   "sha256": "23f766db2a857a23e76ed70c913342d43cdaa7814a95b397396905bdec8faa5c"
   },
   {
    "path": "backups/wip/detached-8accdad0a0/tracked.patch",
@@ -3364,7 +3364,7 @@
   {
    "path": "backups/wip/detached-e162aec2bf/INFO.json",
    "bytes": 701,
-   "sha256": "d9a1e035f9f47055c3ebe01d786a5babd3b5d14599dea5478dec6800fa086a43"
+   "sha256": "abcff20f30752ff51884e814379a5c87c759fdae8ae0f094c39c949507883e01"
   },
   {
    "path": "backups/wip/detached-e162aec2bf/tracked.patch",
@@ -3409,7 +3409,7 @@
   {
    "path": "backups/wip/lead__trial07-c27/INFO.json",
    "bytes": 927,
-   "sha256": "8406d2dd5215a09b1c809cad7293261a4ff86c62efa1b3d2d5b07427e0517e06"
+   "sha256": "5c08c1d90309517f83668b9d7d84c08d29216c8ad7482ea01bc587413da5b6cd"
   },
   {
    "path": "backups/wip/lead__trial07-c27/tracked.patch",
@@ -5905,6 +5905,11 @@
    "path": "qa/benny/r25/s4_silk/QUERY_NEW_08.txt",
    "bytes": 306,
    "sha256": "57c4495c812b0a69312bfa692b4480f940bc0226b100d1c11da6a741b9868f30"
+  },
+  {
+   "path": "qa/benny/r25/s4_silk/gameplay_silk.json",
+   "bytes": 14718,
+   "sha256": "669c91e170089dc5be0a9c1842751440e3ad3a81ed372d7990d6fd4ac178b4bc"
   },
   {
    "path": "qa/capture_log.json",
