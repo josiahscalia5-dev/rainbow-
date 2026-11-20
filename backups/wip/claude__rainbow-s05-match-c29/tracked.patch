@@ -1,27 +1,3 @@
-diff --git a/src/gameplay/coins.ts b/src/gameplay/coins.ts
-index d553aac..237e0d2 100644
---- a/src/gameplay/coins.ts
-+++ b/src/gameplay/coins.ts
-@@ -8,7 +8,7 @@ import * as THREE from 'three';
- import type { Course, StageId } from '../world/course';
- import { canvasTexture } from '../world/materials';
- import { coreLateral, flag05, on05, proj05Pending, PROJ05_INVERSE } from '../vfx/waterRibbon';
--import { M05FCOIN, far05Coins } from '../world/match05far'; // Screen 05 round 12: ?…&m05fcoin=1 only (coin look)
-+import { M05ENDR, M05FCOIN, far05Coins } from '../world/match05far'; // Screen 05 round 12: ?…&m05fcoin=1 only (coin look); round 28: &m05endr=1
- 
- export const COIN_VALUE = 10;
- 
-@@ -376,8 +376,9 @@ export function createCoins(course: Course): CoinSystem {
-       // `&m05fcoin=1` (Screen 05 round 12, match05far.ts M05FCOIN): past the live far block's seam the next stage's (06)
-       // coins are drawn on the far river's core where the block shows that stretch of river, back to their real place as
-       // the block folds
-+      // `&m05endr=1` (round 28): also the last 05 coins past the seam (they stayed on the real course, swinging off to the left wall)
-       let fcFace = false;
--      if (M05FCOIN && !collected[i] && d.stage === '06' && far05Coins.live && far05Coins.map && d.s > far05Coins.seamS && lastS < far05Coins.popS) {
-+      if (M05FCOIN && !collected[i] && (d.stage === '06' || (M05ENDR && d.stage === '05')) && far05Coins.live && far05Coins.map && d.s > far05Coins.seamS && lastS < far05Coins.popS) {
-         // half the 06 lateral swing around the far core (the trail weaves), half size (the painted far coins are small)
-         const k = far05Coins.map(d.s, 0.5 * (d.lat - coreLateral(course, d.s)), 0.6 + 0.08 * Math.sin(time * 3 + ph), fcP) * 0.5;
-         const o = far05Coins.open;
 diff --git a/src/vfx/foam.ts b/src/vfx/foam.ts
 index 172d033..1e132e8 100644
 --- a/src/vfx/foam.ts

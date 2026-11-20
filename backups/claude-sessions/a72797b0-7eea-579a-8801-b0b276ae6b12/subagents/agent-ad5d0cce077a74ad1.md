@@ -1355,3 +1355,15 @@ Now the placement of bank-fill lumps in match05far.ts and the faster taper.
 >    36 | 186.2 | -1.02 |  | 297,608,33 | 0.06   ||      37 | 186.47 | -1.28 |  | 273,595,32 | 0.02
 >    37  …[+1659 chars]
 
+### 🤖 Claude — 2026-11-20T17:19:35.037Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && git checkout src/gameplay/coins.ts && git status --short && cd /home/user/scratch/s05 && python3 -c \"\nfrom PIL import Image\na=Image.open('/home/user/rainbow-/references/05_flow_into_the_current.png').convert('RGB').crop((0,380,864,900))\nb=Image.open('v2/e_end.png').convert('RGB').crop((0,380,864,900))\ns=Image.new('RGB',(864,1040)); s.paste(a,(0,0)); s.paste(b,(0,520)); s.resize((648,780)).save('v2_mid.jpg',quality=88)\"", "description": "Revert coins change, crop approved vs v2 mid region"}`
+
+### 🧑 User — 2026-11-20T17:19:35.298Z
+
+> ↩︎ result: Updated 1 path from the index
+>  M src/vfx/foam.ts
+>  M src/world/environment.ts
+>  M src/world/match05far.ts
+> ?? node_modules
+
