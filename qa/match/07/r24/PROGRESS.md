@@ -25,7 +25,19 @@
   outer heap now and then instead of two stacked rows; every lobe's river-side surface kept beyond edge-0.25 (smaller where the room
   to the wall is tight) so no cloud reaches over the river / Benny at the steering limit. Keeps the outer-bank foam.
   Quick check rendering: `/home/user/scratch/s07/q1_new/` (432 px, frames 0 / 65 / 90 / 119 / 120 / 147 / 175 / 198).
-* NEXT: judge the quick frames vs the BEFORE landmarks + approved; then full-size proof `qa/match/07/r27/s2_fsoft/` (APPROVED / BEFORE /
+* 16:20 quick check v1 (`q1_new`, lead-style audit `aud_new` vs `aud_before`, start view a_start **0 px**): the white bead row between
+  cyan and pink is GONE (clean glossy edge, a short bubble cluster now and then); clouds keep off Benny at t 5.0 but the drop's banks
+  are still big white ball piles (bend4 t 7.29 right bank) and the skirt still reads as a column of small balls -> v2 (same switch):
+  drop clouds x0.82 and max scale 1.0, big domes sunk deeper, fewer heaped top lobes, skirt sunk + irregular spacing. Rendering
+  (`/home/user/scratch/s07/v2.sh` -> `aud_new2`, `q2_new`).
+* LEAD r27 question (magenta panel, upper right of the lead's e_end, s 375.056 lat 0): raycast probe from the combo build
+  (`/home/user/scratch/s07/probe_panel.mjs` -> `probe_panel.json`): all 7 pixels in that panel hit **`m08_pipe` of
+  `match08_projection`** first (~10 u from the camera) = the K23-3 Screen 08 INLET PIPE mesh (match08.ts `add(pipe, M.wall, 'pipe')`,
+  the 08 picture's near pink pipe wall projected from the 08 approved camera). It pokes up into the end of the 07 drop and covers the
+  07 tube there; behind it the rays reach the default `zone_chamber` / `foam_berm` / `m08_floor` (~25 u), no 07 tube. Pre-existing
+  (in BEFORE identically); NOT 07 code and NOT changed by m07fsoft. Possible 07-side fix later (behind its own switch): hide /
+  clip the 08 pipe while 07 shows, after checking what shows behind it.
+* NEXT: judge v2 vs the BEFORE landmarks + approved; then full-size proof `qa/match/07/r27/s2_fsoft/` (APPROVED / BEFORE /
   NEW at the landmark frames, start view 0 px) + NEW full clip 1.0x + 0.5x (BEFORE = `r26/final/SCREEN07_NEW_full_K23-3_*`).
   Step 3 (if time) = stacked coin column down the drop.
 
