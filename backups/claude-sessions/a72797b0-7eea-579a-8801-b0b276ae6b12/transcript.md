@@ -2204,3 +2204,109 @@ The page is republished on this account. Recording its link in the coordination 
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow- && python3 -I - <<'EOF'\nfrom pathlib import Path\np=Path('docs/briefs/2026-11-20-r28/COORDINATION.md'); s=p.read_text()\nadd='''* ~17:10 draft PR #25 (DO NOT MERGE, backup only; the create call returned HTTP 502 but the PR exists) — subscribed to its activity.\n* ~17:12 the r27 review page (old account's artifact `WVqynQ46…` is NOT readable from this account) republished here from\n  `qa/review_r28/index.html` (= `qa/review_r27/index.html` + four status lines updated; pictures/clips from `qa/review_r27/web/`):\n  **https://claude.ai/artifact/S7TMhvuzJVvKirM …[+833 chars]`
 
+### 🧑 User — 2026-11-20T17:00:26.279Z
+
+> ↩︎ result: ok
+>   "result": "committed+pushed",
+>   "commit": "208adda8d84753a0883d13273b46fcd1a76ec32e",
+> 208adda8d84753a0883d13273b46fcd1a76ec32e
+> 208adda8d84753a0883d13273b46fcd1a76ec32e	refs/heads/ccr-9652868f-lkw0w0
+> AUTOSAVE OK | branch ccr-9652868f-lkw0w0 | scheduler daemon | last verified backup 2026-11-20T17:00:05+00:00 (0.3 min ago) | local 208adda remote 208adda (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-20T17:00:33.028Z
+
+> 🔧 **Bash** `{"command": "sha256sum -c scripts/reference.sha256 2>&1 | grep -c ': OK'; sha256sum -c scripts/reference.sha256 2>&1 | grep -v ': OK' | head -3; echo \"LFS pointer stubs: $(git lfs ls-files -n | while read f; do head -c 40 \"$f\" 2>/dev/null | grep -q 'git-lfs.github.com/spec' && echo \"$f\"; done | wc -l) of $(git lfs ls-files -n | wc -l)\"; uptime", "description": "Recheck reference hashes, LFS files and machine load", "timeout": 180000}`
+
+### 🧑 User — 2026-11-20T17:00:39.770Z
+
+> ↩︎ result: 13
+> LFS pointer stubs: 0 of 198
+>  17:00:39 up 30 min,  0 user,  load average: 8.38, 3.88, 1.66
+
+### 🤖 Claude — 2026-11-20T17:00:48.290Z
+
+> 🔧 **Bash** `{"command": "git lfs ls-files -n 7d3ba10 | wc -l; git diff --name-only 7d3ba10 HEAD | grep -E '\\.(mp4|glb|blend|ply|spz|zip|apk|webm|mov)$' | sed 's|/[^/]*$||' | sort | uniq -c | head; timeout 120 git lfs push --dry-run origin ccr-9652868f-lkw0w0 2>&1 | wc -l", "description": "Identify new LFS files and check all are on GitHub", "timeout": 180000}`
+
+### 🧑 User — 2026-11-20T17:00:49.515Z
+
+> ↩︎ result: 198
+> 0
+
+### 🤖 Claude — 2026-11-20T17:01:02.657Z
+
+> 🔧 **Bash** `{"command": "sed -i 's/user `josdois` (OAuth token expires 18:21 UTC; claude.ai renews it)/user `josdois` (current sign-in token expires 18:21 UTC; if Hugging Face tools then fail, reconnect it in claude.ai → Connectors)/' docs/briefs/2026-11-20-r28/COORDINATION.md && grep -c \"reconnect it in claude.ai\" docs/briefs/2026-11-20-r28/COORDINATION.md", "description": "Correct Hugging Face token note in coordination"}`
+
+### 🧑 User — 2026-11-20T17:01:02.721Z
+
+> ↩︎ result: 1
+> [This command modified 1 file you've previously read: docs/briefs/2026-11-20-r28/COORDINATION.md. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-20T17:01:05.997Z
+
+> 🔧 **TaskUpdate** `{"taskId": "5", "status": "completed"}`
+
+### 🧑 User — 2026-11-20T17:01:06.013Z
+
+> ↩︎ result: Updated task #5 status
+
+### 🤖 Claude — 2026-11-20T17:01:25.538Z
+
+**RAINBOW 3D BACKUP VERIFIED**
+
+The project is restored on this account, the five-minute GitHub save is running, and four specialists are back at work. One check failed at startup and is now fixed: the first download from GitHub failed, and my retry worked.
+
+## Source and save
+- **Source restored:** `claude/rainbow-restore-screen-match-ijjdai` at `7d3ba1081f69ced795421d2f3d070ad898e295ba`. That is the old account's last save (16:15 UTC). I checked it directly on GitHub; nothing newer exists, so nothing needed merging.
+- **This session's branch:** `ccr-9652868f-lkw0w0`, started from that commit.
+- **Latest save:** `208adda8d84753a0883d13273b46fcd1a76ec32e`. GitHub matches exactly.
+- **Five-minute autosave:** working. One daemon, `AUTOSAVE OK … (match)`, with manual saves after each major step. It also saves the conversations, unfinished worker edits, tool lists and agent status.
+- **Backup coverage:** I checked the configuration against your list and nothing you named is left out. Temporary render folders and reinstallable tool installs are not saved, by design.
+- **One mistake, caught and fixed:** while protecting the finished round 23–27 branches, I added a name the autosave uses internally. One manual save was refused, then I removed that name. No scheduled save was missed.
+- **Backup gap:** 16:15 → 16:36 UTC (21 minutes). Nobody was working: the old account's limit stopped everyone at 16:09–16:13. The old session ended without its end-of-session save. Its 16:15 automatic save is complete.
+
+## What was restored
+- **Conversations:** current to 16:13:27 UTC. The lead ends 16:13; the workers end 16:11–16:13. No interval is missing.
+- **Worker copies:** all 12 recreated on `-c29` branches. Each matches its 16:15 snapshot exactly, byte for byte, and no snapshot skipped a file. They are Screens 04, 05, 06, 07 and 08, Benny, the lead's 06 and 07 investigations, trial07, and three clean-frame copies the old recipe had missed.
+- **Assets:** all 198 Git LFS files are real files, not stubs, and none are missing on GitHub.
+- **Approved references:** 13 of 13 byte-identical.
+- **Specialists:** all 10 definitions unchanged.
+- **Tools:** the Three.js DevTools, Spector and pixel-compare installs lived outside the repository. I reinstalled them at the same versions.
+
+## Tools on this account
+
+| Service | Status |
+|---|---|
+| GitHub, Git LFS | working (pushes verified) |
+| World Labs key | working: live read just now shows 5,420 credits |
+| World Labs Atlas | working: "My project", credits available |
+| fal | working: authentication check passed, no paid job run |
+| Hugging Face | working (josdois) |
+| Context7 | working through its claude.ai connector |
+| Blender 5.3, Android SDK 34 + Java 21 + Gradle, Playwright + Chromium, ffmpeg | all tested OK |
+| Plugins | all 14 from your list are enabled and loaded, same publishers, plus the project's `worldlabs` plugin |
+
+- **Saved Marble worlds:** their IDs belong to the old account and return "not found" here. All their downloaded files are safe in Git LFS.
+- **Nothing you have to do.** Optionally, the "Design" plugin (Anthropic) is the only one on your list not enabled here; the game doesn't need it.
+
+## Specialists working now (four, your limit)
+- **Screen 07:** finishing the softer, varied foam test, then the proof pictures and full clip; after that, the stacked coins down the drop.
+- **Screen 04:** picking the sparkle-mark version; soft cloud-bank foam with lower pink edges and visible gold; the five arrows sliding under Benny; then one combined clip.
+- **Screen 05:** the end section, where the river spreads into a wide pool, then the hard-left foam wall, checking that hard right stays good.
+- **Benny:** proof pictures for the taller five-band hat; then the colour of the star at the start of 06.
+- **Screen 06:** waiting on your route answer below. Its opening fix and lower foam are done and look better, but are not approved.
+
+## Your three open decisions (unanswered since the old account)
+The old review page doesn't open on this account, so I republished it here: https://claude.ai/artifact/S7TMhvuzJVvKirMBM88pjX. Please reply here in chat: comments left on the page won't reach me.
+1. **Extra views:** which of the 31 views (cost $3.72) do you approve? They are proposals only, not in the game.
+2. **Screen 06:** may the river after the opening curve up to the left like your picture? I would test it as a separate version.
+3. **Screens 09 and 10:** playable screens, or part of your Google Flow videos?
+
+**Still unapproved:** Screen 08's K23-3 and every candidate above. Your three Screen 04 views from round 22 remain approved.
+
+I'll show you the approved picture, before and new side by side, plus clips, as each specialist finishes. Draft PR #25 is backup-only (do not merge), and I'm watching it.
+
+### 🧑 User — 2026-11-20T17:01:28.901Z
+
+Stop hook feedback:
+[command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+

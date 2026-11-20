@@ -716,3 +716,15 @@ Let me view the approved reference and the lead's e_end / f_hard_left / g_hard_r
 
 > ↩︎ result: {"sF05":180.0383020282329,"D0":53.24896756963126,"L":6,"sGlow05":183.02412082521383,"sCam05":126.03830202823289,"chord":6.530580380073458,"s0":114.68830202823243,"s1":188.92412082521383,"s06":188.92412082521383,"ws":[[114.7,6.7,0],[116.7,8.05,0.01],[118.7,9.5,0.03],[120.7,10.48,0.06],[122.7,11.13,0.01],[124.7,11.34,-0.14],[126.7,11.14,-0.3],[128.7,10.99,-0.41],[130.7,10.91,-0.45],[132.7,10.88,-0.47],[134.7,10.98,-0.41],[136.7,11.21,-0.26],[138.7,11.4,-0.03],[140.7,11.25,0.23],[142.7,11.05,0.37],[144.7,11.17,0.28],[146.7,11.39,0.06],[148.7,11.3,-0.18],[150.7,11.04,-0.38],[152.7,10.69,-0.58],[154.7,10.32,-0.78],[156.7,9.99,-0.96],[158.7,9.74,-1.09],[160.7,9.62,-1.15],[162.7,9.59,-1.17],[164.7,9.64,-1.14],[166.7,9.74,-1.09],[168.7,9.9,-1.01],[170.7,10.1,-0.9],[172.7,10.34,-0.77],[174.7,11.19,-0.27],[176.7,10.45,0.71],[178.7,8.85,1.54],[180.7,8.73,1.62],[182.7,9.56,1.03],[184.7,9.62,0.38],[186.7,8.79,-0.02],[188.7,8.06,-0.22],[190.7,7.57,0],[192.7,7.18,0],[194.7,7,0]],"lay":[[0,1.7,4.28,-0.39,1.97,4.35],[1,1.33,4.66,-0.96,1.71,4.34],[2,1.07,4.86,-1.49,1.35,4.22],[4,0.72,5.07,-2.31,0.76,3.98],[6,0.42,5.18,-2.93,0.52,4.01],[8,0.36,5.48,-3.44,0.53,4.48],[10,0.47,5.69,-3.58,0.63,4.83],[14, …[+2300 chars]
 
+### 🤖 Claude — 2026-11-20T17:00:18.544Z
+
+> 🔧 **Bash** `{"command": "cat > /home/user/scratch/s05/tools/dbg_shots.mjs <<'EOF'\n// s05 r28 debug: one page load, one position, several visibility variants -> screenshots (read-only)\n//   node dbg_shots.mjs <outDir> \"<query>\" <frac> <steer|null> '<json [[name,[hideNames...]],...]>' [port]\nimport { mkdirSync } from 'node:fs';\nimport { pathToFileURL } from 'node:url';\nconst { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);\nconst [OUT, Q, FR, STEER, VAR, PORT = '5275'] = process.argv.slice(2);\nmkdirSync(OUT, { recursive: true }); …[+1596 chars]`
+
+### 🧑 User — 2026-11-20T17:00:18.653Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-20T17:00:25.520Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && Q=$(cat qa/match/05/r18/KEPT_STEP2.txt) && timeout 900 bash /home/user/rainbow-/tools/lead25/render_slot.sh node /home/user/scratch/s05/tools/dbg_shots.mjs /home/user/scratch/s05/dbg85 \"$Q\" 0.85 null '[[\"base\",[]],[\"nofar\",[\"tube05_far_river\"]],[\"noribbon\",[\"water_ribbon\"]],[\"nofoam\",[\"foam_berm\",\"foam_rim05\",\"foam_far05_clouds\"]]]' 5275 2>&1 | grep -v \"allow list\" | tail -5; cd /home/user/scratch/s05/dbg85 && python3 -c \"\nfrom PIL import Image\nn=['base','nofar','noribbon','nofoam']\ns=Image.new('RGB',(4*324,576))\nfor i,k in enumer …[+204 chars]`
+

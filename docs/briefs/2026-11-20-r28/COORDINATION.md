@@ -33,7 +33,7 @@ until the user says so; generated "NEW VIEW" / "try" artwork = proposals only; K
 | World Labs API key (`api.worldlabs.ai`, proxy-injected) | **working** — live free read 16:45: 5,420 credits. Saved Marble world IDs → 404 for this key (another account's worlds); all their files are in Git LFS |
 | World Labs Atlas connector | **working** — project "My project" (`proj_ad4f…`), credits_available = true |
 | fal (`queue.fal.run`, proxy-injected) | **working** — unknown-model probe → 404 "application not found" (authenticated, not 401); no paid job run |
-| Hugging Face connector | **working** — user `josdois` (OAuth token expires 18:21 UTC; claude.ai renews it) |
+| Hugging Face connector | **working** — user `josdois` (current sign-in token expires 18:21 UTC; if Hugging Face tools then fail, reconnect it in claude.ai → Connectors) |
 | Context7 | claude.ai connector **working** (resolve-library-id OK); the duplicate plugin MCP asks for a sign-in (not needed) |
 | Playwright MCP (plugin) + claude-bridge chrome-devtools MCP | loaded; the Playwright library + Chromium work (all renders use it) |
 | Plugins synced from THIS account (14, same publishers as the inventory) | claude-bridge, claude-code-setup, claude-md-management, code-review, code-simplifier, commit-commands, context7, feature-dev, frontend-design, playwright, security-guidance, superpowers, typemux-cc, typescript-native-lsp; + project `worldlabs@worldlabs` installed locally |
