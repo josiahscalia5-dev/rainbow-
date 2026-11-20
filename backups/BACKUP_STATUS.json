@@ -1,9 +1,9 @@
 {
   "last_run": {
-    "time": "2026-11-20T20:14:20+00:00",
-    "reason": "daemon",
+    "time": "2026-11-20T20:19:17+00:00",
+    "reason": "manual:r30-06-diagnosis",
     "result": "committed+pushed",
-    "files_staged": 112,
+    "files_staged": 22,
     "pushed_verified": true,
     "branch": "ccr-2644c3c0-iikckn",
     "note": "following session branch 'ccr-2644c3c0-iikckn' (config branch 'claude/rainbow-r22-restore-ut3m39')",
@@ -13,7 +13,7 @@
       "detached-8accdad0a0: 2 modified, 0 new file(s) snapshotted",
       "claude/rainbow-s04-match-c31: 3 modified, 1 new file(s) snapshotted",
       "claude/rainbow-s05-match-c31: 3 modified, 0 new file(s) snapshotted",
-      "claude/rainbow-s06-match-c31: 6 modified, 26 new file(s) snapshotted",
+      "claude/rainbow-s06-match-c31: 6 modified, 27 new file(s) snapshotted",
       "claude/rainbow-s07-match-c31: 5 modified, 10 new file(s) snapshotted",
       "claude/rainbow-s08-scenery-c31: 3 modified, 2 new file(s) snapshotted",
       "lead/trial07-c31: 5 modified, 10 new file(s) snapshotted",
@@ -21,14 +21,14 @@
       "lead/view06-c31: 2 modified, 15 new file(s) snapshotted",
       "lead/view07-c31: 5 modified, 10 new file(s) snapshotted"
     ],
-    "commit": "074915f6c55b06f2d9470b14410685989efa8b0c",
-    "duration_s": 17
+    "commit": "d666e12d8fb3df94edaf46f47a249b129d219b2b",
+    "duration_s": 16
   },
   "repo": "https://github.com/josiahscalia5-dev/rainbow-",
   "branch": "ccr-2644c3c0-iikckn",
-  "last_verified_remote_sha": "074915f6c55b06f2d9470b14410685989efa8b0c",
-  "last_successful_backup_utc": "2026-11-20T20:14:20+00:00",
+  "last_verified_remote_sha": "d666e12d8fb3df94edaf46f47a249b129d219b2b",
+  "last_successful_backup_utc": "2026-11-20T20:19:17+00:00",
   "consecutive_failures": 0,
   "schedule": "every 5 min, container-local (scheduler=daemon status=active pid=632); see backups/RECOVERY.md for limits",
-  "next_scheduled_utc": "2026-11-20T20:15:00+00:00"
+  "next_scheduled_utc": "2026-11-20T20:20:00+00:00"
 }
