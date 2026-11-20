@@ -458,3 +458,118 @@ Now implement `m06view` in the camera rig.
 > {"s":206.977,"lat":0,"cam":[1.14,-32.96,-138.67],"fw":[-0.17,-0.177,-0.969],"benny":[423,883],"ahead":[[513,882,1],[594,901,1],[724,963,1],[865,1070,1]]}
 > {"s":208.993,"lat":0,"cam":[1.06,-32.89,-140.65],"fw":[-0.133,-0.182,-0.974],"benny":[389,914],"ahead":[[495,947,1],[593,966,1],[729,1025,1],[862,112 …[+2789 chars]
 
+### 🤖 Claude — 2026-11-20T02:40:04.337Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='src/game/cameraRig.ts'; s=open(p).read()\nimport re\ni=s.index(\"              if ((globalThis as any).__m06dbg)\"); j=s.index(\"\\n\",i)\ns=s[:i]+s[j+1:]\nopen(p,'w').write(s)\nEOF\ngrep -c m06dbg src/game/cameraRig.ts\nK6='match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1'\nD=qa/match/06/r21/step1_m06view; mkdir -p $D; cp references/06_crest_the_rinse_arch.png $D/1_APPROVED.png\nexport AUDIT_SHOTS='[[\"a_start\",0,null],[\"b_early\",0.12,null],[\"b2_early\",0.22,null],[\"c_middle …[+486 chars]`
+
+### 🧑 User — 2026-11-20T02:41:27.667Z
+
+> ↩︎ result: 0
+> 06 a_start s 198.91 lat 0 stage 06 coins 1680
+> 06 b_early s 204.227 lat 0 stage 06 coins 1700
+> 06 b2_early s 208.627 lat 0 stage 06 coins 1700
+> 06 c_middle s 214.31 lat 0 stage 06 coins 1720
+> 06 c2_middle s 219.627 lat 0 stage 06 coins 1800
+> 06 d_late s 225.31 lat 0 stage 06 coins 1800
+> 06 e_end s 236.31 lat 0 stage 06 coins 1800
+> 06 f_hard_left s 214.31 lat -2.95 stage 06 coins 1720
+> 06 g_hard_right s 214.31 lat 2.95 stage 06 coins 1680
+> 06 h_left_early s 205.51 lat -2.95 stage 06 coins 1720
+> 06 i_right_early s 205.51 lat 2.95 stage 06 coins 1680
+> 12
+
+### 🤖 Claude — 2026-11-20T02:41:33.327Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r21/step1_m06view; python3 - <<'EOF'\nfrom PIL import Image, ImageDraw\nnames=[\"b_early\",\"b2_early\",\"c_middle\",\"c2_middle\",\"d_late\",\"e_end\"]\nW,H=270,480\nim=Image.new('RGB',(W*(len(names)+1),H*2+20),'white'); d=ImageDraw.Draw(im)\nap=Image.open('1_APPROVED.png').convert('RGB').resize((W,H))\nfor r,f in enumerate(['BEFORE','NEW']):\n  im.paste(ap,(0,r*(H+20)+20)); d.text((5,r*(H+20)+5),f,fill='black')\n  for i,n in enumerate(names):\n    im.paste(Image.open(f'{f}/{n}.png').convert('RGB').resize((W,H)),((i+1)*W,r*(H+20)+20)); d.text((( …[+197 chars]`
+
+### 🧑 User — 2026-11-20T02:41:34.363Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T02:41:36.412Z
+
+Rendered BEFORE vs NEW (`m06view`) shots; reviewing them now.
+
+### 🤖 Claude — 2026-11-20T02:41:37.270Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/84d7059c-5d5b-59cc-a486-4b20ba5b09b1/scratchpad/cmp1.png"}`
+
+### 🧑 User — 2026-11-20T02:41:37.505Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T02:41:55.525Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; grep -n \"keep >= 1.6 u above the water below (down\" -A12 src/game/cameraRig.ts | head -14", "description": "Locate clamp block"}`
+
+### 🧑 User — 2026-11-20T02:41:55.571Z
+
+> ↩︎ result: 226:            // keep >= 1.6 u above the water below (down the far slope), turning the view so Benny keeps his approved place
+> 227-            let best = Infinity, wy = -Infinity;
+> 228-            for (let k = -14; k <= 8; k += 0.5) {
+> 229-              const q = this.course.sample(Math.max(0, s + k)).pos, dx = q.x - pv.x, dz = q.z - pv.z;
+> 230-              if (dx * dx + dz * dz < best) { best = dx * dx + dz * dz; wy = q.y; }
+> 231-            }
+> 232-            if (pv.y < wy + 1.6) {
+> 233-              const v0 = bn.clone().sub(pv).normalize();
+> 234-              pv.y = wy + 1.6;
+> 235-              dv.applyQuaternion(new THREE.Quaternion().setFromUnitVectors(v0, bn.clone().sub(pv).normalize()));
+> 236-            }
+> 237-            // visibility: turn only as much as needed so Benny stays in the lower middle and the route ahead (6 / 12 u)
+> 238-            // stays inside the frame (vertical fov 62, portrait 9:16)
+
+### 🤖 Claude — 2026-11-20T02:42:11.252Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; python3 - <<'EOF'\np='src/game/cameraRig.ts'; s=open(p).read()\nold=\"\"\"            if (pv.y < wy + 1.6) {\n              const v0 = bn.clone().sub(pv).normalize();\n              pv.y = wy + 1.6;\"\"\"\nnew=\"\"\"            // depth over the crest: rise (up to 4 u) so the river 6 u ahead stays as far above Benny on screen as in the\n            // approved view (the route over the crest top stays visible behind him instead of a climbing wall of water)\n            const elev = (c: THREE.Vector3, p: THREE.Vector3) => Math.atan2(p.y - c.y, Math.hypot(p.x  …[+2128 chars]`
+
+### 🧑 User — 2026-11-20T02:42:20.589Z
+
+> ↩︎ result: {"s":198.91,"lat":0,"cam":[1.72,-35.37,-132.64],"fw":[-0.191,-0.19,-0.963],"benny":[419,1006],"ahead":[[464,633,1],[505,530,1],[576,602,1],[713,735,1]]}
+> {"s":200.927,"lat":0,"cam":[1.62,-34.08,-133.44],"fw":[-0.186,-0.281,-0.941],"benny":[428,868],"ahead":[[480,591,1],[525,536,1],[609,602,1],[749,715,1]]}
+> {"s":202.943,"lat":0,"cam":[1.44,-31.16,-134.95],"fw":[-0.169,-0.47,-0.866],"benny":[432,891],"ahead":[[490,622,1],[543,545,1],[642,558,1],[781,631,1]]}
+> {"s":204.96,"lat":0,"cam":[1.27,-29.68,-136.73],"fw":[-0.161,-0.532,-0.831],"benny":[436,899],"ahead":[[503,679,1],[566,605,1],[679,599,1],[813,655,1]]}
+> {"s":206.977,"lat":0,"cam":[1.14,-29.05,-138.67],"fw":[-0.154,-0.55,-0.821],"benny":[436,899],"ahead":[[515,739,1],[591,672,1],[714,660,1],[841,709,1]]}
+> {"s":208.993,"lat":0,"cam":[1.06,-28.91,-140.65],"fw":[-0.128,-0.558,-0.82],"benny":[415,914],"ahead":[[507,788,1],[597,726,1],[723,714,1],[841,754,1]]}
+> {"s":211.01,"lat":0,"cam":[1.07,-29.11,-142.64],"fw":[-0.096,-0.562,-0.822],"benny":[389,945],"ahead":[[498,825,1],[598,767,1],[722,758,1],[832,783,1]]}
+> {"s":213.027,"lat":0,"cam":[1.18,-29.53,-144.6],"fw":[-0.064,-0.565,-0.823],"benny":[363,952],"ahead":[[494,854,1],[600,801,1],[ …[+2172 chars]
+
+### 🤖 Claude — 2026-11-20T02:42:30.841Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; K6='match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1'\nD=qa/match/06/r21/step1_m06view; export AUDIT_SHOTS='[[\"a_start\",0,null],[\"b_early\",0.12,null],[\"b2_early\",0.22,null],[\"c_middle\",0.35,null],[\"c2_middle\",0.47,null],[\"d_late\",0.6,null],[\"e_end\",0.85,null],[\"f_hard_left\",0.35,-1],[\"g_hard_right\",0.35,1],[\"h_left_early\",0.15,-1],[\"i_right_early\",0.15,1]]'\nAUDIT_PORT=5279 node tools/lead21/audit_screen.mjs /tmp/claude-0/-home-user-rainbow-/84d7059c-5d5b-59cc-a486-4b20ba5b09b1/sc …[+1036 chars]`
+
+### 🧑 User — 2026-11-20T02:43:14.399Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T02:43:19.204Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/84d7059c-5d5b-59cc-a486-4b20ba5b09b1/scratchpad/cmp2.png"}`
+
+### 🧑 User — 2026-11-20T02:43:19.451Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T02:43:34.702Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; K6='match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1'\nSP=/tmp/claude-0/-home-user-rainbow-/84d7059c-5d5b-59cc-a486-4b20ba5b09b1/scratchpad\nexport AUDIT_SHOTS='[[\"b_early\",0.12,null],[\"b2_early\",0.22,null],[\"c_middle\",0.35,null],[\"c2_middle\",0.47,null],[\"d_late\",0.6,null],[\"e_end\",0.85,null]]'\n(AUDIT_PORT=5281 node tools/lead21/audit_screen.mjs $SP/v3 06 \"$K6&m06view=1&m06vx=0.85&m06vw=20,38\" >/dev/null 2>&1 &); AUDIT_PORT=5282 node tools/lead21/audit_screen.mjs $SP/v4 06 \"$K6&m06view= …[+218 chars]`
+
+### 🧑 User — 2026-11-20T02:44:41.279Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T02:44:43.534Z
+
+Comparing three `m06view` tunings (default, longer off-centre hold, smaller rise).
+
+### 🤖 Claude — 2026-11-20T02:44:44.380Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/84d7059c-5d5b-59cc-a486-4b20ba5b09b1/scratchpad/cmp3.png"}`
+
+### 🧑 User — 2026-11-20T02:44:45.086Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T02:44:57.775Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-; sed -i \"s/const M06_VW = m06num('m06vw', 2, \\[16, 34\\]);/const M06_VW = m06num('m06vw', 2, [20, 38]);/; s/const M06_VX = m06num('m06vx', 1, \\[0.55\\])\\[0\\];/const M06_VX = m06num('m06vx', 1, [0.85])[0];/; s/default 16,34), \\`&m06vx=\\` max route x (NDC, default 0.55)/default 20,38), \\`\\&m06vx=\\` max route x (NDC, default 0.85)/\" src/game/cameraRig.ts; grep -n \"M06_VW =\\|M06_VX =\\|default 20,38\" src/game/cameraRig.ts\nK6='match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1'\nD=qa/match/06/r2 …[+702 chars]`
+

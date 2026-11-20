@@ -18,15 +18,17 @@ const M06_LA = (() => {
 })();
 /** r21 `&m06view=1` (with m06cam; qa/match/06/r21/PROGRESS.md): composition test — the approved view direction / off-centre aim
  *  is held while Benny swims and eases toward the m06cam route view only as visibility needs it. Tunables (QA):
- *  `&m06vw=a,b` hold → hand-over (u past the checkpoint, default 16,34), `&m06vx=` max route x (NDC, default 0.55) */
+ *  `&m06vw=a,b` hold → hand-over (u past the checkpoint, default 20,38), `&m06vx=` max route x (NDC, default 0.85) */
 const M06_VIEW = M06_CAM && flag05('m06view');
 const m06num = (k: string, n: number, d: number[]) => {
   const v = typeof location !== 'undefined' ? new URLSearchParams(location.search).get(k) : null;
   const a = (v ?? '').split(',').map(Number);
   return v && a.length === n && a.every(Number.isFinite) ? a : d;
 };
-const M06_VW = m06num('m06vw', 2, [16, 34]);
-const M06_VX = m06num('m06vx', 1, [0.55])[0];
+const M06_VW = m06num('m06vw', 2, [20, 38]);
+const M06_VX = m06num('m06vx', 1, [0.85])[0];
+/** `&m06vs=` share of the approved Benny→route screen separation kept over the crest (default 1; 0 = no rise) */
+const M06_VS = m06num('m06vs', 1, [1])[0];
 
 export interface CamParams {
   back: number; // distance behind Benny
@@ -101,6 +103,8 @@ export class RideCamera {
   axis: { path: TubePath; s0: number; s1: number } | null = null;
   /** `?match06=1`: off06 / dir06 in the river's level frame at the 06 checkpoint (computed once) */
   private m06: { s0: number; o: number[]; d: number[] } | null = null;
+  /** r21 m06view: approved vertical angle between Benny and the river 6 u ahead (rad) */
+  private m06vSep: number | null = null;
 
   constructor(private course: Course) {}
 
@@ -229,9 +233,28 @@ export class RideCamera {
               const q = this.course.sample(Math.max(0, s + k)).pos, dx = q.x - pv.x, dz = q.z - pv.z;
               if (dx * dx + dz * dz < best) { best = dx * dx + dz * dz; wy = q.y; }
             }
-            if (pv.y < wy + 1.6) {
+            // depth over the crest: rise (up to 4 u) so the river 6 u ahead stays as far above Benny on screen as in the
+            // approved view (the route over the crest top stays visible behind him instead of a climbing wall of water)
+            const elev = (c: THREE.Vector3, p: THREE.Vector3) => Math.atan2(p.y - c.y, Math.hypot(p.x - c.x, p.z - c.z));
+            const r6 = (x: number) => this.course.sample(Math.min(x + 6, this.course.length - 1)).pos.clone()
+              .addScaledVector(this.course.sample(Math.min(x + 6, this.course.length - 1)).right, lat * 0.5);
+            if (this.m06vSep === null) {
+              const b0 = this.course.sample(sB).pos, c0 = b0.clone().add(new THREE.Vector3(...p6.off06));
+              this.m06vSep = elev(c0, r6(sB).sub(new THREE.Vector3())) - elev(c0, b0);
+            }
+            const sepT = this.m06vSep * M06_VS, r6p = r6(s), sep = (h: number) => {
+              const c = pv.clone(); c.y += h; return elev(c, r6p) - elev(c, bn);
+            };
+            let hR = 0;
+            if (s > sB && sep(0) < sepT) {
+              let lo = 0, hi = 4;
+              if (sep(hi) < sepT) lo = hi; else for (let i = 0; i < 12; i++) { const m = (lo + hi) / 2; if (sep(m) < sepT) lo = m; else hi = m; }
+              hR = hi === 4 && lo === 4 ? 4 : hi;
+            }
+            const yT = Math.max(wy + 1.6, pv.y + hR);
+            if (pv.y < yT) {
               const v0 = bn.clone().sub(pv).normalize();
-              pv.y = wy + 1.6;
+              pv.y = yT;
               dv.applyQuaternion(new THREE.Quaternion().setFromUnitVectors(v0, bn.clone().sub(pv).normalize()));
             }
             // visibility: turn only as much as needed so Benny stays in the lower middle and the route ahead (6 / 12 u)
@@ -252,7 +275,6 @@ export class RideCamera {
                 if (ax > hi) yaw = Math.max(yaw, ax - hi); else if (ax < lo) yaw = Math.min(yaw, ax - lo);
                 if (ay > vhi) pit = Math.max(pit, ay - vhi); else if (ay < vlo) pit = Math.min(pit, ay - vlo);
               }
-              if ((globalThis as any).__m06dbg) console.log('m06view', s.toFixed(2), it, yaw.toFixed(4), pit.toFixed(4), pts.map(([p]) => { const r = p.clone().sub(pv), z = r.dot(dv); return [(r.dot(Rv) / z / tH).toFixed(2), (r.dot(Uv) / z / tV).toFixed(2)].join('/'); }).join(' '));
               if (Math.abs(yaw) < 1e-4 && Math.abs(pit) < 1e-4) break;
               dv.applyAxisAngle(UP, -yaw).applyAxisAngle(Rv, pit).normalize();
             }
