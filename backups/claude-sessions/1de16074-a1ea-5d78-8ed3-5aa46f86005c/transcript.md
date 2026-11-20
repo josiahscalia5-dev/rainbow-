@@ -2167,3 +2167,56 @@ I'll run a full save now and check on GitHub that everything is really there.
 
 > 🔧 **Bash** `{"command": "timeout 240 bash -c 'until flock -n backups/.autosave.lock true; do sleep 2; done'; timeout 500 python3 scripts/rainbow-autosave.py --reason manual:user-save-everything-r25 2>&1 | grep -E '\"result\"|\"commit\"|pushed_verified'; H=$(git rev-parse HEAD); R=$(git ls-remote origin refs/heads/ccr-a9235d04-90cw28 | cut -f1); echo \"local  $H\"; echo \"GitHub $R\"; [ \"$H\" = \"$R\" ] && echo MATCH; echo \"uncommitted: $(git status --porcelain | wc -l)\"; python3 -I scripts/autosave-status.py; pgrep -f autosave-daemon.sh >/dev/null && echo \"five-minute daemon running\"", "description": …[+62 chars]`
 
+### 🧑 User — 2026-11-20T12:26:16.278Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "553060ae57e1fbc940d05963ba0d22dd53f4fbe3",
+> local  553060ae57e1fbc940d05963ba0d22dd53f4fbe3
+> GitHub 553060ae57e1fbc940d05963ba0d22dd53f4fbe3
+> MATCH
+> uncommitted: 1
+> AUTOSAVE OK | branch ccr-a9235d04-90cw28 | scheduler daemon | last verified backup 2026-11-20T12:25:47+00:00 (0.5 min ago) | local 553060a remote 553060a (match) | uncommitted 1
+> five-minute daemon running
+
+### 🤖 Claude — 2026-11-20T12:26:18.479Z
+
+Saved. One file changed after that save; checking what it is, and confirming the specialists' work and the conversations are inside the commit on GitHub:
+
+### 🤖 Claude — 2026-11-20T12:26:22.225Z
+
+> 🔧 **Bash** `{"command": "git status --porcelain; H=553060ae57e1fbc940d05963ba0d22dd53f4fbe3; for b in s07-match s06-match s04-match benny s08-scenery s05-match; do d=backups/wip/claude__rainbow-$b-c26; git show $H:$d/INFO.json 2>/dev/null | python3 -c \"import json,sys;d=json.load(sys.stdin);print('$b'.ljust(12), d['time'], 'changed files:', len(d['dirty_tracked']), '+ new files:', len(d.get('untracked_copied',[])))\"; done; echo; git ls-tree -r --name-only $H backups/claude-sessions/1de16074-a1ea-5d78-8ed3-5aa46f86005c | sed 's#.*/##' | tr '\\n' ' '; echo; git ls-tree -r --name-only $H qa/match/06/r25 qa …[+138 chars]`
+
+### 🧑 User — 2026-11-20T12:26:22.733Z
+
+> ↩︎ result: ?? qa/match/04/r23/s04_tools/probe_wl.mjs
+> s07-match    2026-11-20T12:25:58+00:00 changed files: 5 + new files: 10
+> s06-match    2026-11-20T12:25:58+00:00 changed files: 2 + new files: 10
+> s04-match    2026-11-20T12:25:58+00:00 changed files: 3 + new files: 1
+> benny        2026-11-20T12:25:58+00:00 changed files: 10 + new files: 7
+> s08-scenery  2026-11-20T12:25:58+00:00 changed files: 3 + new files: 2
+> s05-match    2026-11-20T12:25:58+00:00 changed files: 0 + new files: 0
+> 
+> agent-a37295c79004f16e1.md agent-a37295c79004f16e1.sanitized.jsonl agent-a3a1fee2ee8638b6e.md agent-a3a1fee2ee8638b6e.sanitized.jsonl agent-a6d73b58ae32de7ef.md agent-a6d73b58ae32de7ef.sanitized.jsonl agent-aadb120f8f34ac332.md agent-aadb120f8f34ac332.sanitized.jsonl transcript.md transcript.sanitized.jsonl 
+> 84
+
+### 🤖 Claude — 2026-11-20T12:26:28.731Z
+
+Yes, everything is saved to your GitHub repository, and I checked it there rather than taking it on trust.
+
+- **Latest save:** branch `ccr-a9235d04-90cw28`, commit `553060ae57e1fbc940d05963ba0d22dd53f4fbe3` (12:25 UTC). GitHub has exactly the same commit as here.
+- **What it contains:**
+  - The whole game (code, assets, pictures, clips) and all the notes and plans.
+  - The unfinished work of all four running specialists (07, 06, 04, Benny), plus the saved Screen 08 and Screen 05 work. Each specialist's work was captured at 12:25.
+  - This conversation and all four specialists' conversations, with any keys or passwords removed.
+  - The list of tools, plugins and agents, and the resume notes for a future account.
+- **Large files:** all 134 (models, Marble World Labs files, APKs, clips) are stored with their real contents on GitHub.
+- **Keeps saving:** the automatic save is running and repeats every 5 minutes while this session is open. One file isn't in this save yet: a small test script the Screen 04 specialist created a moment later. The next automatic save, within 5 minutes, will include it.
+
+Saving can only happen while this session is open. If it closes, everything up to its last 5-minute save is safe on GitHub.
+
+### 🧑 User — 2026-11-20T12:26:30.765Z
+
+Stop hook feedback:
+[command hook 2]: There are untracked files in the repository. Please commit and push these changes to the remote branch.
+

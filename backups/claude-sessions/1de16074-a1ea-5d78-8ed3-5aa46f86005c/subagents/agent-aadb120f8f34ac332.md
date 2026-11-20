@@ -1115,3 +1115,15 @@ The NEW clip's page has loaded (it runs on the K23-S3 code), so I can now apply 
 >   };
 >  …[+1008 chars]
 
+### 🤖 Claude — 2026-11-20T12:26:05.308Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/match/04/r23/s04_tools/probe_wl.mjs", "content": "// r25 s04 (QA only, read-only): Benny's height vs the visible Screen 04 river surface under him and the m04wl waterline\n// patch, at several lateral positions (steer held for N steps from the middle of 04). Run from the worktree:\n//   cd /home/user/wt/s04 && AUDIT_PORT=5275 node <this> \"<query>\"\nimport { pathToFileURL } from 'node:url';\nconst { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);\nconst [Q] = process.argv.slice(2);\ncon …[+2253 chars]`
+
+### 🧑 User — 2026-11-20T12:26:05.386Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/match/04/r23/s04_tools/probe_wl.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T12:26:09.220Z
+
+> 🔧 **Bash** `{"command": "until grep -q \"ALL_DONE\" /home/user/scratch/s04/run_s1_variants.out; do sleep 5; done; cat /home/user/scratch/s04/run_s1_variants.out; cd /home/user/wt/s04 && AUDIT_PORT=5275 bash /home/user/rainbow-/tools/lead25/render_slot.sh timeout 900 node /home/user/rainbow-/qa/match/04/r23/s04_tools/probe_wl.mjs \"$(cat /home/user/rainbow-/qa/match/04/r23/s3_glossy/QUERY_K23-S3.txt)\" 2>&1 | grep -v \"outside of Vite\"", "description": "Wait for variants then run waterline probe", "timeout": 1200000}`
+

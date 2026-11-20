@@ -624,7 +624,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 21742,
-   "sha256": "468c9e9e941e5372fc1ee80bb4966044fc990c14e5571bea09d58bcf3294348f"
+   "sha256": "cff02fc527d43a2a3597f3bc741879d24118272d98b057baf4351b79ec2681b4"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -639,7 +639,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3023,
-   "sha256": "1d3dbed9df18ed6c3cc247fe65a17ce4bb779bd95df808d8f4bb3e1b2a2e448f"
+   "sha256": "bb28c7e9f677ce1903fdf955c8cfd31774224547bf1769cc8594b9fa793fee5b"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -954,12 +954,12 @@
   {
    "path": "backups/wip/claude__rainbow-benny-c26/INFO.json",
    "bytes": 1084,
-   "sha256": "8c4f70df7dcb4b5c19e50d7306ddeb7c0aa3a2033562cc9407480d48dd58ebf1"
+   "sha256": "aa6a52fecdaca6bfddade0c7e4c68e8db332a900d621757717a4ae7f5e9e017a"
   },
   {
    "path": "backups/wip/claude__rainbow-benny-c26/tracked.patch",
-   "bytes": 10351913,
-   "sha256": "af403da93688f4519d475a8750fe2dc4fcc0bb8a5a445ee28e452416a22ce81c"
+   "bytes": 10353404,
+   "sha256": "7e0962d09c41abfdb3e7ffad1165db78532bc02d159bf92b77ad3af68679b594"
   },
   {
    "path": "backups/wip/claude__rainbow-benny-c26/untracked/assets/textures/benny20/star_felt.png",
@@ -1589,7 +1589,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c26/INFO.json",
    "bytes": 586,
-   "sha256": "d6ebbef4bbfa4c809c55caae056dd8cf3b73857b14f64eb874b2bd69b25050aa"
+   "sha256": "1a4b6a4e524f9dd9a3f0fab0df8b4d03bffe9d42bcbe542ff2ad4a9ba7e9dab1"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c26/tracked.patch",
@@ -2364,7 +2364,7 @@
   {
    "path": "backups/wip/claude__rainbow-s05-match-c26/INFO.json",
    "bytes": 477,
-   "sha256": "3495677db3edf30bde78e8c65ca501d627c3a086e34ab8af652aae87612c90d5"
+   "sha256": "7b7376b0e7e0a58b237bcf2a6630a8ddd2504e18cd4c7b86fa65e70ecee940f2"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c11/INFO.json",
@@ -2503,18 +2503,23 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c26/INFO.json",
-   "bytes": 840,
-   "sha256": "ebc3bd42deb19ad1d3010ce848660c455b7aca3859b3d218606d3d253f6fae1a"
+   "bytes": 875,
+   "sha256": "b267b411b1133692acd90188d476c1fd82ee9c67f042efe1d84f08d82e7da00c"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c26/tracked.patch",
-   "bytes": 16722,
-   "sha256": "d406793c7dd2187933105b5177cfa21e55cd62b85ae5c3d10ff8c299622a2d67"
+   "bytes": 21292,
+   "sha256": "baa912fcad296376c9538c3240a623ef12ceba37138faec9f25b78ac89dddbb9"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c26/untracked/tools/match06/lead23_audit_slow.mjs",
    "bytes": 3417,
    "sha256": "6d32ba6b0c2825140bb6b9230a5287363cc62ea540a345587ed04407e5573674"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s06-match-c26/untracked/tools/match06/make_hole06.py",
+   "bytes": 8491,
+   "sha256": "fa0cc654b7af07583cf33ec79937deb42c7958c97e8aebb987a8ffa92d1f1367"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c26/untracked/tools/match06/r23_audit.mjs",
@@ -2542,9 +2547,9 @@
    "sha256": "442438e5e3705dc780df4a1b2506c1630082f7e119c47e8d5e6716f2d9d8985c"
   },
   {
-   "path": "backups/wip/claude__rainbow-s06-match-c26/untracked/tools/match06/r25_frames.ts",
-   "bytes": 1078,
-   "sha256": "dcbaa363eac84a7077eb9a0688db4c17b224ebabad97c4394c7205c2b1ac19c7"
+   "path": "backups/wip/claude__rainbow-s06-match-c26/untracked/tools/match06/r25_frames.mjs",
+   "bytes": 1029,
+   "sha256": "81ca1d4c673c634f12bb828d18c233c9df24d6f099f919e6c4c4e52cf2b51077"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c26/untracked/tools/match06/r25_holedump.mjs",
@@ -2553,8 +2558,8 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c26/untracked/tools/match06/r25_unwrap06.py",
-   "bytes": 5026,
-   "sha256": "c9d5a426507c3fc340ec487ff82242a3b06b3c91ca6849216f4d4c895e433d9c"
+   "bytes": 5027,
+   "sha256": "0a553a426fa8979838b10243c8c70945d1d4f5ecbfa3d6948f297d4515134f06"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c15/INFO.json",
@@ -2844,12 +2849,12 @@
   {
    "path": "backups/wip/claude__rainbow-s07-match-c26/INFO.json",
    "bytes": 971,
-   "sha256": "ce69f637928766a02d1a8762ffd744154f56ecad22811e7832b2f2a8d7450378"
+   "sha256": "2d18db24302974b86b906c021e42ebe45d4d40b40098257694f3957fe0900d8d"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c26/tracked.patch",
-   "bytes": 58342,
-   "sha256": "b01f685d8087bf843ae4660d506b90e113b3127e8f926c9665a5ad53757d08e1"
+   "bytes": 62218,
+   "sha256": "b2b685fd9d61543403ad3f2ab7c6e0162fea7e007d21686d9989286c987c604d"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c26/untracked/tools/match07/audit_screen_r23.mjs",
@@ -3059,7 +3064,7 @@
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c26/INFO.json",
    "bytes": 640,
-   "sha256": "908b3f74de3891c92188dc85a0dabf8f36e2fb4d633b3547adb097c7fdd80b1a"
+   "sha256": "de1642e005fc257d393b31752d5e208f3c43df234eafb462053124f6d2d7cb2e"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c26/tracked.patch",
@@ -3094,7 +3099,7 @@
   {
    "path": "backups/wip/detached-8accdad0a0/INFO.json",
    "bytes": 491,
-   "sha256": "58e619c06d569df813ba94847fad85725a8ae303cad820058a24ef254be520e8"
+   "sha256": "2db6f099996331b48aaae535355b186d539081eae152106587a6cd85b42c0b9b"
   },
   {
    "path": "backups/wip/detached-8accdad0a0/tracked.patch",
@@ -3109,7 +3114,7 @@
   {
    "path": "backups/wip/detached-e162aec2bf/INFO.json",
    "bytes": 701,
-   "sha256": "81f07ece967a44a6da1ee461adcb3bf9623c4505b6874aa898aada108c5603de"
+   "sha256": "aea7d00faf82c5af72d88b650031d52a862442fe4ebd1ae265803267d1d3df64"
   },
   {
    "path": "backups/wip/detached-e162aec2bf/tracked.patch",
@@ -8045,6 +8050,11 @@
    "path": "qa/match/04/r23/s04_tools/probe_waterline.mjs",
    "bytes": 3056,
    "sha256": "2a1b1a2116a7d2ae3d4b285950cc676acf7d7c8fe5fd18c244bdcd5c8c5b6595"
+  },
+  {
+   "path": "qa/match/04/r23/s04_tools/probe_wl.mjs",
+   "bytes": 2727,
+   "sha256": "27a858c041ce08bb3051103f4f68725f902abec7de5f92c6536c0795ab38981c"
   },
   {
    "path": "qa/match/04/r23/s04_tools/screen_clip20.mjs",

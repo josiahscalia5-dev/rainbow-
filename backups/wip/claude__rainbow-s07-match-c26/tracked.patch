@@ -305,7 +305,7 @@ index 531778ec3..9a82521c0 100644
      let base = this.prop(s, 'width');
      // 05 current (ref 05): the water fills the tube floor wall to wall. The centreline winds by
 diff --git a/src/world/match07.ts b/src/world/match07.ts
-index b9f474cee..b1374a597 100644
+index b9f474cee..d9d994696 100644
 --- a/src/world/match07.ts
 +++ b/src/world/match07.ts
 @@ -48,8 +48,11 @@ varying vec3 vN;
@@ -669,7 +669,7 @@ index b9f474cee..b1374a597 100644
      const nR = 24;
      const c = new THREE.Vector3(), p = new THREE.Vector3();
      for (let i = 0; i < nS; i++) {
-@@ -449,23 +666,62 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -449,23 +666,73 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
        const f = course.sample(s);
        const k = 1 - THREE.MathUtils.smootherstep(s, sA, sA + 14);
        const along = alongA + (s - sA);
@@ -721,13 +721,24 @@ index b9f474cee..b1374a597 100644
 +    // AFTER the drop's rows (the drop's mesh is unchanged), joined to its last row
 +    if (endW && plunge.sJ && plunge.sJ > sB + ds) {
 +      const nE = Math.ceil((plunge.sJ - sB) / ds);
++      const eR = new THREE.Vector3(), eU = new THREE.Vector3();
 +      for (let e = 1; e <= nE; e++) {
 +        const s = Math.min(plunge.sJ, sB + e * ds);
 +        const f = course.sample(s);
 +        const along = alongA + (s - sA);
++        // (with m07sbend the drop's rows lie square to the un-bent line; the 08 route already turns ~10° at sB: ease the rows
++        // from that square frame into the course frame over 3 u, so the sheet has no kink / fold at the join)
++        eR.copy(f.right); eU.copy(f.up);
++        if (bend) {
++          const w = THREE.MathUtils.smoothstep(s, sB, sB + 3);
++          t0.copy(f.tan); t0.x = 0; t0.normalize();
++          up0.set(0, 1, 0).addScaledVector(t0, -t0.y).normalize();
++          r0.crossVectors(t0, up0).normalize();
++          eR.lerpVectors(r0, f.right, w).normalize(); eU.lerpVectors(up0, f.up, w).normalize();
++        }
 +        for (let j = 0; j <= nR; j++) {
 +          const l = -halfW + (2 * halfW * j) / nR;
-+          p.copy(f.pos).addScaledVector(f.right, T.ax + l).addScaledVector(f.up, 0.06);
++          p.copy(f.pos).addScaledVector(eR, T.ax + l).addScaledVector(eU, 0.06);
 +          rivP.push(p.x, p.y, p.z); rivUV.push(T.ax + l, along);
 +          rivB.push(0);
 +        }
@@ -738,7 +749,7 @@ index b9f474cee..b1374a597 100644
      const geo = (P: number[], UV: number[], I: number[]) => {
        const g = new THREE.BufferGeometry();
        g.setAttribute('position', new THREE.Float32BufferAttribute(P, 3));
-@@ -475,14 +731,159 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -475,14 +742,159 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
      };
      // world-space vertices: the meshes are added to the scene-level group with the inverse group matrix
      const toLocal = (g: THREE.BufferGeometry) => g.applyMatrix4(groupInv);
@@ -900,7 +911,7 @@ index b9f474cee..b1374a597 100644
    group.traverse((o) => o.updateMatrixWorld?.(true));
  
    return {
-@@ -493,7 +894,8 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -493,7 +905,8 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
        const clone = group.clone(true);
        clone.visible = true;
        // the plunge continuation is not in the approved picture: it never occludes the projector
