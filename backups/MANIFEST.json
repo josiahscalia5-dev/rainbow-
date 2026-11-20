@@ -814,7 +814,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11492,
-   "sha256": "a5c0d9ef2fbc43507c397f431aca1bf8f8a3bd4ec68cf7ff7b4d16b63331e6f2"
+   "sha256": "1cf9766f8079141435ab90f1017fbe28d83ab4ae1633635c0363fe464bd08ac8"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -2165,6 +2165,36 @@
    "path": "qa/benny/r22/t1/04/before/c_middle.png",
    "bytes": 1721739,
    "sha256": "cdc67202246e66ef7dd858b0e45ede2c5f1b007f6cf781df49edf3e7875f7c0a"
+  },
+  {
+   "path": "qa/benny/r22/t1/04/before/f_hard_left.png",
+   "bytes": 1689334,
+   "sha256": "e0476bbd6f40c3836e27fc26fd2f9ede510c2ceecdcfe71251486edf3ce22dad"
+  },
+  {
+   "path": "qa/benny/r22/t1/04/before/shots.json",
+   "bytes": 499,
+   "sha256": "8da3b2476c170d878702b88337d3038a42c251f9a3ed49b9868c714d9d0c8987"
+  },
+  {
+   "path": "qa/benny/r22/t1/04/new/a_start.png",
+   "bytes": 2389761,
+   "sha256": "9dd98debf3d60a231bafe04d76fa0c12e73894ddac31bd5cfa5b2d33fc7e7e76"
+  },
+  {
+   "path": "qa/benny/r22/t1/04/new/c_middle.png",
+   "bytes": 1733145,
+   "sha256": "1066535357faf86c0acec98b646eb828369d16eb167b8673dff92e776259811e"
+  },
+  {
+   "path": "qa/benny/r22/t1/04/new/f_hard_left.png",
+   "bytes": 1699010,
+   "sha256": "cc0831bc7ccaa7fd9b8db8b8c2a2f48d311d7f5a1634dbde8ab8d13db9096059"
+  },
+  {
+   "path": "qa/benny/r22/t1/04/new/shots.json",
+   "bytes": 499,
+   "sha256": "8da3b2476c170d878702b88337d3038a42c251f9a3ed49b9868c714d9d0c8987"
   },
   {
    "path": "qa/capture_log.json",
