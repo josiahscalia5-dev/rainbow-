@@ -2580,3 +2580,176 @@ Use the appropriate restored tools and specialists within our existing concurren
 
 Please proceed with this candidate and return the playable BEFORE / NEW comparison, your honest verdict and the recommended next step.
 
+### 🤖 Claude — 2026-11-20T17:02:30.794Z
+
+Your decision unblocks the Screen 06 route test. All four specialist slots are busy, so first I'll check where each worker is, then free a slot at the least costly stopping point. Their unfinished work is saved every five minutes either way.
+
+### 🤖 Claude — 2026-11-20T17:02:33.203Z
+
+> 🔧 **Bash** `{"command": "python3 -I scripts/autosave-status.py; for f in qa/match/07/r24/PROGRESS.md qa/match/04/r23/PROGRESS.md qa/benny/r23/PROGRESS.md qa/match/05/r27/PROGRESS.md; do echo \"######## $f ($(stat -c %y $f 2>/dev/null | cut -c12-19))\"; awk '/\\(r28\\) WHERE I STOPPED/{f=1} f{print} /\\(r27\\) WHERE I STOPPED/{if(f)exit}' $f 2>/dev/null | head -22 | cut -c1-330; done; bash tools/lead25/render_slot.sh --status 2>&1 | tail -5; uptime", "description": "Check autosave and each worker's current progress"}`
+
+### 🧑 User — 2026-11-20T17:02:34.081Z
+
+> ↩︎ result: AUTOSAVE OK | branch ccr-9652868f-lkw0w0 | scheduler daemon | last verified backup 2026-11-20T17:01:52+00:00 (0.7 min ago) | local fdfef50 remote 6339f7b (DIFFERENT) | uncommitted 0
+> ######## qa/match/07/r24/PROGRESS.md (16:56:14)
+> ## (r28) WHERE I STOPPED / NEXT
+> * r28 relaunch (new account, ~16:40 UTC). Worktree `/home/user/wt/s07`, LOCAL branch `claude/rainbow-s07-match-c29` (r27 edits restored
+>   byte-identical by the lead). Ports 5277 / 5280 / 5281. Temp `/home/user/scratch/s07/` (recreated, empty).
+> * CONFIRMED: the m07fsoft v2 edits are in `src/world/match07.ts` (drop clouds x0.82 l.831, swing max scale 1.0 l.830, domes sunk
+>   0.18-0.48 r l.840, 40 % lobes no bumps l.854, 45 % no heaped top lobe l.845, irregular sunk skirt l.872-874, inside-of-bend low heaps
+>   l.892-893).
+> * NOW: rebuilding the combo build from `/home/user/wt/s08` (read-only), then the v2 quick check.
+> 
+> ## (r27) WHERE I STOPPED / NEXT
+> ######## qa/match/04/r23/PROGRESS.md (16:59:06)
+> ## (r28) WHERE I STOPPED / NEXT — s04 specialist (relaunched r28 ~16:50 UTC, worktree `/home/user/wt/s04`, LOCAL branch `claude/rainbow-s04-match-c29`)
+> * Found (from the r27 transcript backup, the r27 block below was not updated before t …[+3717 chars]
+
+### 🤖 Claude — 2026-11-20T17:02:42.152Z
+
+> 🔧 **ToolSearch** `{"query": "select:SendMessage", "max_results": 1}`
+
+### 🧑 User — 2026-11-20T17:02:42.166Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-20T17:02:47.036Z
+
+> 🔧 **SendMessage** `{"to": "a83852ef198a66db2", "summary": "Ask Benny to stop after step 2", "message": "Please stop now: the user gave Screen 06 priority and your worker slot is needed. Do NOT start step 3 (06 star colour). Finish only your current tool call, make sure your \"(r28) WHERE I STOPPED / NEXT\" block in qa/benny/r23/PROGRESS.md is current (step 2 verdict done; next = step 3 06 start star, later crown taper + higher pompom), leave your worktree as it is (the lead's autosave snapshots it), and end with your report (steps, switches, verdicts, proof folders, clip paths, best query). Thank you.", "type":  …[+136 chars]`
+
+### 🧑 User — 2026-11-20T17:02:47.057Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to a83852ef198a66db2 at its next tool round. Sending this moved nothing it is running to the background just now, so the message waits for that round unless something moves sooner. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"a83852ef198a66db2","name":"a83852ef198a66db2","ref":"b2afa3"}}
+
+### 🤖 Claude — 2026-11-20T17:02:48.941Z
+
+> 🔧 **TaskCreate** `{"subject": "Screen 06 route candidate: river curves left into tunnel, through rings, into 07", "description": "User authorized (r28). Free a slot (Benny stopped after step 2), brief s06 (path-camera-transition-engineer) with route+tunnel+camera+coins+collisions+06->07 join; existing assets only; BEFORE/NEW clips through exit into 07; full-size APPROVED/BEFORE/NEW; honest verdict; save.", "activeForm": "Running the Screen 06 route test"}`
+
+### 🧑 User — 2026-11-20T17:02:48.967Z
+
+> ↩︎ result: Task #6 created successfully: Screen 06 route candidate: river curves left into tunnel, through rings, into 07
+
+### 🤖 Claude — 2026-11-20T17:02:52.350Z
+
+While Benny wraps up, I'm gathering the Screen 06 details the specialist will need: the rest of its own notes on the route option, and your binding visual brief for 06.
+
+### 🤖 Claude — 2026-11-20T17:02:53.550Z
+
+> 🔧 **Bash** `{"command": "awk '/\\(r27\\) WHERE I STOPPED/{f=1} f{print} /\\(r26\\) WHERE I STOPPED/{if(f)exit}' qa/match/06/r25/PROGRESS.md | sed -n 28,80p | cut -c1-400", "description": "Read Screen 06 step-3 route notes"}`
+
+### 🧑 User — 2026-11-20T17:02:53.751Z
+
+> ↩︎ result: round foam ball at the bottom centre → water + pink edge; frame 58: the lower-left cloud clearly smaller); the heaps that shrink
+>     stay compact small cumulus heaps, no bead trails; everything else byte-identical (start, opening, 22 / 35 / 85 %, hard left).
+>   - Still differs: at the end (clip frames 61-66, ~77-83 %) a large white foam bank still fills the lower left (heaps > 3 u away);
+>     the approved keeps its foam heaps in the lower corners.
+>   - New problems: none seen.
+> * STEP 3 NOT STARTED — needs a USER decision: the biggest visible difference from ~10 % to the end is the composition (centred
+>   gold-ring "target", plain straight river climbing the crest with Benny hiding where it goes, then the river turning RIGHT up the
+>   right wall) vs the painting (off-centre tunnel, river curving up LEFT, coin trail along it). Levers already exhausted / banned:
+>   re-aiming the painted tunnel snaps the start view, `m06bend` rejected twice (never repeat), moving the river changes the route
+>   and 07; only the camera test `m06view=1&m06vs=0` (the user's, unapproved). Coins already sit at the painted positions
+>   (`coins06.json`). Possible next visual-only items: end-section foam bank (try `m06 …[+332 chars]
+
+### 🤖 Claude — 2026-11-20T17:02:54.453Z
+
+> 🔧 **Bash** `{"command": "grep -n \"^#\" docs/briefs/2026-11-20-r26/USER_VISUAL_BRIEF_R26.md | head -30", "description": "List sections of the binding visual brief"}`
+
+### 🧑 User — 2026-11-20T17:02:54.499Z
+
+> ↩︎ result: 1:# The user's detailed visual requirements for every approved Rainbow screen (round 26, 2026-11-20 ~13:00 UTC, verbatim)
+> 17:## 1. Use each screen's own original approved image as its visual specification
+> 35:## 2. Maintain the approved appearance throughout movement
+> 57:## 3. Make the water clean, detailed and consistent with each reference
+> 76:## 4. Keep the scenery detailed and the camera useful during play
+> 92:## 5. Keep Benny consistent with his approved appearance
+> 107:## 6. Individual requirements for the screens we are reviewing
+> 109:### Screen 04 — THROUGH THE FIVE ARROWS
+> 126:### Screen 05 — FLOW INTO THE CURRENT
+> 142:### Screen 06 — CREST THE RINSE ARCH
+> 159:### Screen 07 — DIVE THE WASHER TUBE
+> 177:### Screen 08 — FINAL SPIN CHAMBER
+> 194:### Every other approved screen
+> 200:## 7. Make the whole experience feel like one polished mobile game
+> 212:## 8. Show me clear evidence of improvement
+> 239:## 9. Continue toward this result
+
+### 🤖 Claude — 2026-11-20T17:02:57.324Z
+
+> 🔧 **Bash** `{"command": "sed -n 142,158p docs/briefs/2026-11-20-r26/USER_VISUAL_BRIEF_R26.md; echo ----; grep -rn \"m06bend\" qa/match/06 --include=*.md | head -5 | cut -c1-300; echo ----; ls qa/match/06/; ls references/ | grep -i 06", "description": "Read Screen 06 brief and earlier bend rejection"}`
+
+### 🧑 User — 2026-11-20T17:02:57.391Z
+
+> ↩︎ result: ### Screen 06 — CREST THE RINSE ARCH
+> 
+> The curling water crest and curved approach to the off-centre tunnel are defining features of this approved screen.
+> 
+> My specific requirements are:
+> 
+> - Preserve the crest's recognisable shape and its relationship to the tunnel.
+> - Continue the river's intended curves as Benny progresses.
+> - Keep the coin trail and foam following that same course.
+> - Frame the tunnel and crest in a way that preserves the approved composition while allowing natural forward movement.
+> - Correct the opening blue cone beneath Benny. His contact with the water should show the shallow ripple and integrated wake appropriate to the reference.
+> - Remove any visible edge or water mismatch left by the area where the painted Benny was removed.
+> - Keep the foam at an appropriate height so the water and scenery remain visible.
+> - Maintain the river's shape and detail beyond the opening, through the middle and end.
+> 
+> Please deliver the opening comparison I am still owed: the original approved image, the version I previously saw and the corrected candidate.
+> 
+> ----
+> qa/match/06/r25/PROGRESS.md:38:  re-aiming the painted tunnel snaps the start view, `m06bend` rejected twice (never repeat), m …[+244 chars]
+
+### 🤖 Claude — 2026-11-20T17:03:01.807Z
+
+An earlier Screen 06 attempt (`m06bend`) was rejected twice, so the new route must not repeat it. Finding what it was and why it was rejected:
+
+### 🤖 Claude — 2026-11-20T17:03:02.960Z
+
+> 🔧 **Bash** `{"command": "grep -rln \"m06bend\" qa docs src 2>/dev/null | head -10; grep -rn \"m06bend\" docs qa --include=*.md 2>/dev/null | grep -iv \"never repeat\" | head -8 | cut -c1-400", "description": "Find what the rejected m06bend attempt was"}`
+
+### 🧑 User — 2026-11-20T17:03:07.258Z
+
+> ↩︎ result: qa/match/06/r25/PROGRESS.md
+> qa/match/06/r23/PROGRESS.md
+> docs/briefs/2026-11-20-r21/COORDINATION.md
+> docs/briefs/2026-11-20-r21/S06_R21.md
+> docs/briefs/2026-11-18-r11/COORDINATION.md
+> docs/briefs/2026-11-18-r15/S06_LAUNCH.md
+> docs/briefs/2026-11-20-r21/COORDINATION.md:28:`m06bend`), 05 polish (end + hard left), Benny's approved look on every screen (`claude/rainbow-benny-c21` @ `bade594` + WIP).
+> docs/briefs/2026-11-18-r11/COORDINATION.md:37:| 3 (~12:20) | 06 lead test 1 `m06bend` (tube bends with the river's full turn; `767f46af`) | NOT AN IMPROVEMENT (closer arrangement, but creased slab + edge-on rings) |
+> docs/briefs/2026-11-18-r11/COORDINATION.md:38:| 4 (~12:25) | 06 lead test 2 `m06bend&m06bendk=0.5&m06bendw=14` | NOT AN IMPROVEMENT (no visible change); bend method stopped |
+
+### 🤖 Claude — 2026-11-20T17:03:43.584Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-20-r28/S06_ROUTE_R28.md", "content": "# Screen 06 — route candidate (round 28, USER-AUTHORIZED 2026-11-20 ~17:05 UTC)\n\n## The user's decision (verbatim excerpts, r28)\n> \"Yes, I authorize you to implement and test that as a separate saved candidate.\" — \"I authorize the separate Screen 06 route test you\n> proposed, including the river's curve after the opening and the necessary adjustments to the tunnel, camera and connection into Screen 07.\n> Build it as a separate, recoverable candidate. Keep the existing version available for comp …[+5197 chars]`
+
+### 🧑 User — 2026-11-20T17:03:43.792Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-20-r28/S06_ROUTE_R28.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T17:03:48.529Z
+
+Benny stopped cleanly. The hat step is done, and the half-started star colour work is saved behind a switch that's off. Launching the Screen 06 route specialist in the freed slot:
+
+### 🤖 Claude — 2026-11-20T17:04:02.478Z
+
+> 🔧 **Agent** `{"description": "Screen 06 route specialist r28", "subagent_type": "path-camera-transition-engineer", "run_in_background": true, "prompt": "You are the Screen 06 specialist (slug s06) of the Rainbow game, round 28 (new Claude account). Your round-27 steps 1 and 2 are done (GOOD IMPROVEMENT, not approved) and your worktree is restored byte-for-byte. The user has now given the decision you were waiting for: they AUTHORIZE the separate Screen 06 route test (the river curves up to the left after the opening into the off-centre tunnel; tunnel / camera / 07 connection adjusted as needed). This is yo …[+3370 chars]`
+
+### 🧑 User — 2026-11-20T17:04:02.501Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a19a5ec306145815f (internal ID - do not mention to user. Use SendMessage with to: 'a19a5ec306145815f', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/a72797b0-7eea-579a-8801-b0b276ae6b12/tasks/a19a5ec306145815f.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-20T17:04:05.050Z
+
+Recording the decision and the slot change in the coordination files and agent status, then saving:
+
+### 🤖 Claude — 2026-11-20T17:04:14.530Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nfrom pathlib import Path\nimport json\np=Path('docs/briefs/2026-11-20-r28/COORDINATION.md'); s=p.read_text()\nadd='''* **~17:05 USER DECISION: the separate Screen 06 route test is AUTHORIZED** (river curves up-left after the opening into the off-centre\n  tunnel; tunnel, camera and 07 connection adjusted; existing assets first; route before any new artwork; BEFORE / NEW proof through the\n  actual exit into 07; final approval after the user sees it; all other approvals unchanged). Brief: `S06_ROUTE_R28.md`.\n* ~17:08 Benny stopped at a clean point to free the …[+1808 chars]`
+

@@ -1,14 +1,15 @@
 {
  "_comment": "Machine-readable roster of the ten Rainbow specialists. Human-readable history: backups/AGENTS_STATUS.md. scripts/claude-bootstrap.sh checks every definition below (present + SHA-256). Agents load automatically from .claude/agents/ (Agent tool, subagent_type = name). Never recreate or rename them. A running specialist does NOT survive a new session or account: relaunch it from its notes + unfinished patch.",
  "schema": 1,
- "updated_utc": "2026-11-20T16:58:00Z",
+ "updated_utc": "2026-11-20T17:10:00Z",
  "updated_by_session": "ccr-9652868f-lkw0w0 (round 28 lead)",
  "running_now": {
   "_note": "round 28 lead ccr-9652868f-lkw0w0, launched ~17:00 UTC as in-process background agents (do not survive a new session; relaunch from docs/briefs/2026-11-20-r28/LAUNCH_R28.md)",
   "s07": "water-fx-specialist — Screen 07 m07fsoft v2 (soft varied foam) proof + clip, then coin column",
   "s04": "washer-environment-modeler — Screen 04 crescent glints verdict, cloud banks + lower pink, arrows slide under Benny, combined clip",
   "s05": "water-fx-specialist — Screen 05 end section + hard left (check hard right)",
-  "benny": "benny-character-artist — b20crown proof, then 06 start star colour"
+  "benny": "STOPPED 17:08 to free the slot for 06 (step 2 crown GOOD IMPROVEMENT; step 3 b20s06a written, unproven) — resume when a slot frees",
+  "s06": "path-camera-transition-engineer — USER-AUTHORIZED Screen 06 route test (m06route): river curves left into the tunnel, through the rings, into 07 (docs/briefs/2026-11-20-r28/S06_ROUTE_R28.md)"
  },
  "assignments_now": {
   "_read_first": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md, then backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md",
@@ -1257,8 +1258,8 @@
    "s07": "water-fx-specialist /home/user/wt/s07 claude/rainbow-s07-match-c29",
    "s04": "washer-environment-modeler /home/user/wt/s04 claude/rainbow-s04-match-c29",
    "s05": "water-fx-specialist /home/user/wt/s05 claude/rainbow-s05-match-c29",
-   "benny": "benny-character-artist /home/user/wt/benny claude/rainbow-benny-c29",
-   "s06": "WAITING for the user's 06 route answer (steps 1+2 done)",
+   "benny": "benny-character-artist /home/user/wt/benny claude/rainbow-benny-c29 — stopped 17:08 after step 2 (slot given to 06)",
+   "s06": "path-camera-transition-engineer /home/user/wt/s06 claude/rainbow-s06-match-c29 — route test (user-authorized 17:05)",
    "s08": "finished (K23-3, unapproved) read-only"
   }
  }

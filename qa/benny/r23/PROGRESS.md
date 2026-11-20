@@ -19,6 +19,20 @@ pompom. New problem: none seen. Fur grain unchanged (separate open item).
 **Best query now (unapproved):** `&benny20=1&b20expo=1&b20ppw=0.45&b20tuft=1&b20knit=1&b20star=1&b20crown=1`.
 **Next:** step 3 = 06 start star leaning amber vs the approved lighter yellow (`b20sx06`); later: crown taper toward the top + pompom higher.
 
+**STOPPED ~17:15 UTC by the coordinator (Screen 06 priority, slot needed) — not a rejection.** Step 3 is NOT finished / NOT YET PROVEN:
+the probe below was killed after 8 of 20 renders (`/home/user/scratch/benny/star06/p1/p02_*`, `p10_*` = 06 entry +2 m and the 06 checkpoint,
+green 1.2 / 1.45 / 1.6 / 1.75 — not measured, not judged; scratch may be lost). The `&b20s06a=1` code stays in the worktree, OFF by default.
+**Resume:** measure p1 with starm.py (target g/r ≈ .90 without clipping the relief), finish the positions +5/+10/+16.9 m, set the STARX06A /
+fade defaults, then proof → `qa/benny/r28/s6_star06/` (06 a_start + c_middle + f_hard_left BEFORE = `qa/benny/r27/s5_crown/06/new/`, swim
+clip 06 BEFORE = `qa/benny/r23/s3_star/clip/swim06_star_NEW_*`, gameplay 8/8 + 91). Later: crown taper toward the top + pompom higher.
+
+**Step 3 started (06 start star) — details:** measured (`/home/user/scratch/benny/star06/starm.py`, largest yellow blob in the star window):
+06 start NEW g/r .67 (255,171,30) vs approved .90 (251,226,34); 06 middle .93 and hard left .86 already ≈ approved (05 .83 vs .87,
+08 .81 vs .86). New switch `&b20s06a=1` written: `STARX06A` (`&b20sx06a=`, default 0.9,1.6,0.55) at the 06 start, smooth blend into
+STARX20['06'] between stage fractions `&b20s06f0=` .2 → `&b20s06f1=` .4; Game.ts writes `benny.root.userData.stageFrac` each ride
+frame (read only by this switch), runtime.ts passes it to the benny20 tick; `npx tsc --noEmit` OK. Probe running
+(`/home/user/scratch/benny/star06/probe06.mjs` → `p1/`: positions 06 entry +2 m, checkpoint +0/+5/+10/+16.9 m × green 1.2/1.45/1.6/1.75).
+
 ## (r27) WHERE I STOPPED / NEXT — 2026-11-20 ~15:30 UTC (new account; worktree `/home/user/wt/benny`, LOCAL branch `claude/rainbow-benny-c28`, port 5279, temp `/home/user/scratch/benny/`)
 
 **STEP 1 VERDICT — combed silk fur `&b20silk=2`: NOT AN IMPROVEMENT (keep the switch, do NOT add it to the best query).**

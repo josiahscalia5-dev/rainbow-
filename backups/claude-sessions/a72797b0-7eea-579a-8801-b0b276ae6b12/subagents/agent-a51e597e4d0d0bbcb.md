@@ -761,3 +761,91 @@ No human input has been received since the last genuine user message in this con
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-20T17:02:29.372Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"uFSoftC\\|lvl\\|vLvl\\|rim\\|glint\" src/world/match07.ts | sed -n 1,60p | awk -F: '$1>380 && $1<800'", "description": "Find cloud shader lines using the matte uniform"}`
+
+### 🧑 User — 2026-11-20T17:02:29.417Z
+
+> ↩︎ result: 400:uniform float uFSoftC;    // r27 m07fsoft: small lobes matte (no glint, no rim sheen) so the bumps blend into one soft mass
+> 426:  float rim = pow(1.0 - nv, 2.0);
+> 432:  tt -= 0.28 * rim * smoothstep(0.25, -0.6, upw);
+> 433:  tt += 0.10 * rim * smoothstep(0.1, 0.8, upw);
+> 437:  // glossy foam: a soft white glint toward the light (from above and the viewer's side), a faint pink / cyan bubble sheen at the rim
+> 441:  float gK = uFSoftC > 0.5 ? smoothstep(0.16, 0.42, vR) : 1.0;
+> 442:  col = mix(col, sheen, 0.14 * rim * gK) + 0.16 * sp * gK;
+> 478:  // r16: the level-stretch water tile = the painted NEAR river (magenta satin bands, bubbly trim, glossy cyan) winding along the
+> 506:  // trim between cyan and magenta only in short irregular clusters instead of an unbroken bead row
+> 799:        uniforms: { uGuard: shared.uGuard, uProjPos: shared.uProjPos, uClip: shared.uClip, uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uMagOn: { value: magOn }, uCScale: { value: sc }, uFSoftC: { value: fsoft ? 1 : 0 } },
+
+### 🤖 Claude — 2026-11-20T17:02:32.716Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/src/world/match07.ts", "offset": 404, "limit": 46}`
+
+### 🧑 User — 2026-11-20T17:02:32.732Z
+
+> ↩︎ result: 404	varying vec3 vCv;
+> 405	varying float vR;
+> 406	varying vec3 vTone;
+> 407	${PROJ05_INVERSE}
+> 408	void main() {
+> 409	  vec3 rd = normalize(vPv);
+> 410	  float b = dot(rd, vCv);
+> 411	  float c = dot(vCv, vCv) - vR * vR;
+> 412	  float h = b * b - c;
+> 413	  if (h < 0.0 || c < 0.0) discard;
+> 414	  float t = b - sqrt(h);
+> 415	  vec3 hit = rd * t;
+> 416	  vec3 n0 = (hit - vCv) / vR;                        // view-space sphere normal
+> 417	  vec4 clip = projectionMatrix * vec4(hit, 1.0);
+> 418	  gl_FragDepthEXT = 0.5 * clip.z / clip.w + 0.5;
+> 419	  vec3 nw0 = normalize((vec4(n0, 0.0) * viewMatrix).xyz); // world normal (view rotation transposed)
+> 420	  // the painted foam's soft bubbly surface: a small lumpy relief on each lobe (fixed to the lobe, so it does not swim)
+> 421	  vec3 q = nw0 * (5.0 + 2.0 * vTone.y) + vTone.y * 11.0;
+> 422	  vec3 bump = vec3(sin(q.x * 2.1 + 1.3 * cos(q.y * 1.7)), sin(q.y * 2.3 + 1.3 * cos(q.z * 1.3)), sin(q.z * 1.9 + 1.3 * cos(q.x * 1.1)));
+> 423	  vec3 nw = normalize(nw0 + 0.10 * bump);
+> 424	  vec3 vw = normalize(-(vec4(rd, 0.0) * viewMatrix).xyz);
+> 425	  float nv = max(dot(nw0, vw), 0.0);
+> 426	  float rim = pow(1.0 - nv, 2.0);
+> 427	  // painted cumulus shading (display values sampled fro …[+1879 chars]
+
+### 🤖 Claude — 2026-11-20T17:03:18.592Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && cp src/world/match07.ts /home/user/scratch/s07/match07_v2.ts && python3 - <<'EOF'\nfrom pathlib import Path\np = Path('/home/user/wt/s07/src/world/match07.ts'); s = p.read_text()\ndef rep(old, new):\n    global s\n    assert s.count(old) == 1, (old[:80], s.count(old)); s = s.replace(old, new)\n# shader: only the tiniest lobes matte (v2 made every small/medium lobe dull -> the banks read grey)\nrep(\"float gK = uFSoftC > 0.5 ? smoothstep(0.16, 0.42, vR) : 1.0;\",\n    \"float gK = uFSoftC > 0.5 ? smoothstep(0.07, 0.2, vR) : 1.0; // r28 v3: only the tiniest l …[+3002 chars]`
+
+### 🧑 User — 2026-11-20T17:03:18.722Z
+
+> ↩︎ result: v3 applied
+> 5
+
+### 🤖 Claude — 2026-11-20T17:03:24.230Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/07/r24/combo && python3 -I mkcombo.py /home/user/scratch/s07/s08snap /home/user/scratch/s07/combo >/dev/null && cd /home/user/wt/s07 && timeout 400 npx tsc --noEmit; echo \"tsc=$?\"; sed -i 's#/q2_new#/q3_new#g' /home/user/scratch/s07/q2.sh && cp /home/user/scratch/s07/q2.sh /home/user/scratch/s07/q3.sh && cat /home/user/scratch/s07/q3.sh | tail -3", "description": "Rebuild combo, typecheck, prepare v3 quick check script"}`
+
+### 🧑 User — 2026-11-20T17:03:28.463Z
+
+> ↩︎ result: tsc=0
+> cd /home/user/scratch/s07/combo
+> SEG_PORT=5280 SEG_FRAMES=0,65,90,119,120,147,175,198 timeout 2400 node /home/user/scratch/s07/seg_frames.mjs /home/user/scratch/s07/q3_new "$(cat /home/user/scratch/s07/Q_FSOFT.txt)" 0 8.26 24 432 > /home/user/scratch/s07/q3_new.log 2>&1
+> echo "exit $?" >> /home/user/scratch/s07/q3_new.log
+
+### 🤖 Claude — 2026-11-20T17:03:33.148Z
+
+> 🔧 **Bash** `{"command": "bash /home/user/rainbow-/tools/lead25/render_slot.sh /home/user/scratch/s07/q3.sh; tail -2 /home/user/scratch/s07/q3_new.log", "description": "Render the v3 quick check frames in a render slot", "timeout": 2700000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T17:03:33.177Z
+
+> ↩︎ result: Command running in background with ID: bsjvklei0. Output is being written to: /tmp/claude-0/-home-user-rainbow-/a72797b0-7eea-579a-8801-b0b276ae6b12/tasks/bsjvklei0.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-20T17:03:39.195Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/match/07/r24/PROGRESS.md", "old_string": "* NOW: rebuilding the combo build from `/home/user/wt/s08` (read-only), then the v2 quick check.", "new_string": "* 16:55 DONE: s08 snapshot re-copied read-only from `/home/user/wt/s08` (HEAD 3c0fa97): **30 / 30 files match\n  `combo/s08snap_SHA256SUMS_r25.txt`**; combo `/home/user/scratch/s07/combo` rebuilt (`combo/mkcombo.py`), tsc 0 (combo + worktree).\n  Full candidate query recovered from `r26/final/NEW_full_frames.json` -> `/home/user/scratch/s07/Q_FULL.txt` (+ `Q_FSOFT.txt` = & m07fsoft …[+964 chars]`
+
+### 🧑 User — 2026-11-20T17:03:39.443Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/match/07/r24/PROGRESS.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T17:03:41.277Z
+
+The v3 quick check is rendering; I'll wait for the completion notice.
+

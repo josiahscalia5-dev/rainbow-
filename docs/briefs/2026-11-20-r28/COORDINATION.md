@@ -78,3 +78,11 @@ newest `backups/wip/*-c29/`, trial07 + view04/06/07 included).
 * ~17:12 the r27 review page (old account's artifact `WVqynQ46…` is NOT readable from this account) republished here from
   `qa/review_r28/index.html` (= `qa/review_r27/index.html` + four status lines updated; pictures/clips from `qa/review_r27/web/`):
   **https://claude.ai/artifact/S7TMhvuzJVvKirMBM88pjX** (private to the owner). Same ratings and extra views as r27; nothing approved.
+* **~17:05 USER DECISION: the separate Screen 06 route test is AUTHORIZED** (river curves up-left after the opening into the off-centre
+  tunnel; tunnel, camera and 07 connection adjusted; existing assets first; route before any new artwork; BEFORE / NEW proof through the
+  actual exit into 07; final approval after the user sees it; all other approvals unchanged). Brief: `S06_ROUTE_R28.md`.
+* ~17:08 Benny stopped at a clean point to free the slot (user: 06 has priority within four): step 2 `&b20crown=1` = GOOD IMPROVEMENT (hat
+  shape, unapproved; proof `qa/benny/r27/s5_crown/COMPARE/`, gameplay 8/8 + 91); step 3 `&b20s06a=1` (06 start star lighter yellow) code
+  written, NOT YET PROVEN (probe stopped 8/20). Best Benny query `…&b20star=1&b20crown=1`. Resume Benny when a slot frees.
+* ~17:10 s06 relaunched (path-camera-transition-engineer, `/home/user/wt/s06` `claude/rainbow-s06-match-c29`, port 5276) on the route test.
+  Active now: s06 (route), s07, s04, s05.

@@ -9,7 +9,13 @@
   was lost with the scratch. `npx tsc --noEmit` rc 0 (r28 16:55).
 * 16:58 job `/home/user/scratch/s04/run_r28a.sh` (render slot): a5v=2 single-factor probe BEFORE/NEW at 20/45/55/70 %, K27-C
   7-shot audit, whole-04 clip, gameplay. Steps 1 + 2 verdicts are being written from the r27 pictures (no re-render needed).
-* NEXT: step-1/2 verdicts below; start view 0 px from the K27-C audit; step 3 verdict + clip 1.0x/0.5x + gameplay -> report.
+* 17:02 step 1 = GOOD IMPROVEMENT, step 2 = GOOD IMPROVEMENT (sections below, pictures from r27); step 3 `m04a5v=2` probe
+  rendered = NOT AN IMPROVEMENT (thin flat bars beside his pompom, only ~0.3 s longer) -> switch OFF. Job A stopped after the
+  probe; combined candidate = **K27-B** (`s4_combined/QUERY_K27-B.txt`, no a5v).
+* 17:03 job `/home/user/scratch/s04/run_r28b.sh` (render slot): K27-B 7-shot audit (`/home/user/scratch/s04/newB7`), whole-04
+  clip (`clip_k27b`), gameplay -> `s4_combined/gameplay_K27-B.json`.
+* NEXT: start view 0 px (newB7/a_start vs `s3_glossy/NEW/a_start.png`), label clip 1.0x + 0.5x into `s4_combined/`, side by side
+  with the r26 BEFORE clip, gameplay 8/8 + 91 -> report to the lead (3 steps done).
 
 ## (r27) WHERE I STOPPED / NEXT — s04 specialist (relaunched r27 ~15:20 UTC, worktree `/home/user/wt/s04`, LOCAL branch `claude/rainbow-s04-match-c28`)
 * Worktree = r26 state restored (K23-S3 code + `m04lgc` + `m04a5` + `m04bbdc`), ports 5273/5274, scratch `/home/user/scratch/s04/`.
@@ -58,6 +64,22 @@
   shading); the gaps between banks are wider than painted; near the end (e_end) the banks thin out; the river is straight
   (painted = pink / cyan swirls round the bends).
 * New problems: none seen in the stills (one big near heap on the right at d_late, as in BEFORE).
+
+## (r28) Step 3 — the five-arrow trade-off `&m04a5v=2` — `qa/match/04/r27/s3_arrows/` — NOT AN IMPROVEMENT (switch stays OFF)
+* Single-factor probe on K23-S3 + `m04a5=2` at 20 / 45 / 55 / 70 % of 04 (`{b2_20,c2_45,c3_55,d2_70}_{2_BEFORE,3_NEW}.png`,
+  APPROVED `1_ORIGINAL_APPROVED_start.png`, full-res crop `crop_hat_20pct_55pct_BEFORE_NEW_BEFORE_NEW.png`).
+* Gain: an arrow stays on screen a little longer (at 55 % one is still visible where BEFORE is already empty; at 70 % both empty),
+  i.e. only ~0.3 s more — the second part of 04 still shows an empty lane.
+* NEW PROBLEM: while lying flat the chevrons read as THIN WHITE LINES, not arrows, and at 20 % / 55 % a thin bar shows right
+  behind / beside his pompom (exactly what the r22 fade was there to avoid). r27 `m04a5v=1` (slide under him) showed bar ends
+  beside his hat too (r27 probe, seen before the 16:11 stop).
+* Why (measured r23): the camera sits ~3.6 u over the water 8 u behind him, so his body + hat cover the lane from 0 to ~14 u
+  ahead on screen; any arrow inside that band is hidden behind him or pokes out beside his hat. Fade tuning cannot make the
+  five readable for longer. Real options (NOT done, need a decision): arrows that drift slowly downstream with the current
+  (stay ahead longer; then he crosses them later / some after 04 ends), a second set of arrows (the user wants exactly five),
+  or a higher camera like the painting (camera not authorized).
+* Combined candidate therefore WITHOUT a5v: **K27-B** = `qa/match/04/r27/s4_combined/QUERY_K27-B.txt` (K23-S3 + a5=2 + step 1 +
+  step 2). (`QUERY_K27-C.txt` = with `m04a5v=2`, kept for the record, not the candidate.)
 
 ## (r26) Step 0' — whole-04 clips K23-1 (BEFORE) vs K23-S3 (NEW), r25 `qa/match/04/r25/clip/` — verdict + ARROW COUNT
 * VERDICT K23-S3 vs K23-1: GOOD IMPROVEMENT for the pink sides (lower, contained, the gold rings visible down both sides instead

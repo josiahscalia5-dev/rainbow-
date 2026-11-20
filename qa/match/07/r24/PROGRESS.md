@@ -6,7 +6,17 @@
 * CONFIRMED: the m07fsoft v2 edits are in `src/world/match07.ts` (drop clouds x0.82 l.831, swing max scale 1.0 l.830, domes sunk
   0.18-0.48 r l.840, 40 % lobes no bumps l.854, 45 % no heaped top lobe l.845, irregular sunk skirt l.872-874, inside-of-bend low heaps
   l.892-893).
-* NOW: rebuilding the combo build from `/home/user/wt/s08` (read-only), then the v2 quick check.
+* 16:55 DONE: s08 snapshot re-copied read-only from `/home/user/wt/s08` (HEAD 3c0fa97): **30 / 30 files match
+  `combo/s08snap_SHA256SUMS_r25.txt`**; combo `/home/user/scratch/s07/combo` rebuilt (`combo/mkcombo.py`), tsc 0 (combo + worktree).
+  Full candidate query recovered from `r26/final/NEW_full_frames.json` -> `/home/user/scratch/s07/Q_FULL.txt` (+ `Q_FSOFT.txt` = & m07fsoft=1).
+* 17:05 v2 quick check (`/home/user/scratch/s07/q2_new/`, 432 px, frames 0/65/90/119/120/147/175/198, same stepping as the clip;
+  BEFORE = the r27 landmark stills): less bulky, clouds clear of Benny at t 5.0, BUT the banks turned into a flat greyish carpet of
+  small bumps (inside of the bends covered edge to wall) and the drop's pink edges got dotted rows of separate small white balls
+  (bead-like) -> further from the approved's bright puffy clusters. NOT kept as is.
+* 17:10 v3 written (same switch, match07.ts; v2 copy `/home/user/scratch/s07/match07_v2.ts`): only the tiniest lobes matte (sheen back
+  on medium lobes), domes 1-3 per cluster with more size variety + brighter tone + moderate sinking, 70 % of clusters keep a lit top,
+  inside-of-bend heaps occasional (55 % / 30 %) and varied, skirt = overlapping low lobes in segments (a soft ridge with gaps, not beads).
+  tsc 0. Quick check rendering -> `/home/user/scratch/s07/q3_new/`.
 
 ## (r27) WHERE I STOPPED / NEXT
 * r27 relaunch (new account, ~15:20 UTC). Worktree `/home/user/wt/s07`, LOCAL branch `claude/rainbow-s07-match-c28` (r26 edits restored

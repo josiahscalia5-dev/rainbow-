@@ -728,3 +728,161 @@ Let me view the approved reference and the lead's e_end / f_hard_left / g_hard_r
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && Q=$(cat qa/match/05/r18/KEPT_STEP2.txt) && timeout 900 bash /home/user/rainbow-/tools/lead25/render_slot.sh node /home/user/scratch/s05/tools/dbg_shots.mjs /home/user/scratch/s05/dbg85 \"$Q\" 0.85 null '[[\"base\",[]],[\"nofar\",[\"tube05_far_river\"]],[\"noribbon\",[\"water_ribbon\"]],[\"nofoam\",[\"foam_berm\",\"foam_rim05\",\"foam_far05_clouds\"]]]' 5275 2>&1 | grep -v \"allow list\" | tail -5; cd /home/user/scratch/s05/dbg85 && python3 -c \"\nfrom PIL import Image\nn=['base','nofar','noribbon','nofoam']\ns=Image.new('RGB',(4*324,576))\nfor i,k in enumer …[+204 chars]`
 
+### 🧑 User — 2026-11-20T17:03:24.383Z
+
+> ↩︎ result: [render_slot] got slot 2 after 131s
+> shot base
+> shot nofar
+> shot noribbon
+> shot nofoam
+
+### 🤖 Claude — 2026-11-20T17:03:30.569Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s05/dbg85/sheet.jpg"}`
+
+### 🧑 User — 2026-11-20T17:03:30.588Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T17:03:52.725Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s05 && python3 -c \"\nfrom PIL import Image\na=Image.open('/home/user/rainbow-/qa/review_r27/artwork/05/proposals/e_end_v1.png').convert('RGB')\nb=Image.open('/home/user/rainbow-/qa/review_r27/artwork/05/proposals/f_hard_left_v1.png').convert('RGB')\nprint(a.size,b.size)\ns=Image.new('RGB',(864,768)); s.paste(a.resize((432,768)),(0,0)); s.paste(b.resize((432,768)),(432,0)); s.save('prop.jpg',quality=85)\"; cat /home/user/rainbow-/qa/review_r27/artwork/05/proposals/e_end.job.json | head -c 600", "description": "View unapproved proposal views as look target"}`
+
+### 🧑 User — 2026-11-20T17:03:53.197Z
+
+> ↩︎ result: (1536, 2752) (1536, 2752)
+> {
+>  "name": "e_end",
+>  "endpoint": "fal-ai/nano-banana-2/edit",
+>  "request_id": "01a1f9b2-4abe-7592-b47d-679544dcc33b",
+>  "status": "COMPLETED",
+>  "resolution": "2K",
+>  "aspect_ratio": "9:16",
+>  "num_images": 1,
+>  "estimated_cost_usd": 0.12,
+>  "inputs": [
+>   {
+>    "path": "qa/review_r27/artwork/05/game_frames/e_end.png",
+>    "sha256": "afae416b439bdc25ae42c1e37c8499fed534ff2f05df4729f9a6df8b03a6a519"
+>   },
+>   {
+>    "path": "qa/review_r21/artwork/05/swatches/wall_paddle_left.png",
+>    "sha256": "92fe315f5b81233ac4104793830ee7e8e17ecbb146f4220e54d3740887948e1a"
+>   },
+>   {
+>    "path": "qa/review_r21/artwork/05/swat
+
+### 🤖 Claude — 2026-11-20T17:03:55.038Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s05/prop.jpg"}`
+
+### 🧑 User — 2026-11-20T17:03:55.054Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T17:03:59.325Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 20,140p src/world/far05.ts", "description": "Read far river layout code"}`
+
+### 🧑 User — 2026-11-20T17:03:59.363Z
+
+> ↩︎ result: import { channel05, coreLateral, coreShiftW10, EDGE_LIFT, FARW05, WATER05 } from '../vfx/waterRibbon';
+> 
+> /** QA only: the far block publishes its tunnel + river path here (read by qa scripts via dynamic import) */
+> export const far05Debug: Record<string, unknown> = {};
+> 
+> /** far water body: outer bank of each far bend (units from the axis; the floor chord is ≈6.53, foam rim outside) */
+> const EXTENT_FAR = 6.25;
+> 
+> /**
+>  * Designed far path: lateral of the VISIBLE cyan core (units along ft.Rt, + = right) at virtual depth Z beyond the
+>  * seam. Fitted to the reference core (between the two pink bands) back-projected through the locked 05 eye
+>  * (f 1278 px, VP (500,479), eye 3.56 u above the far water plane): y 538 → core x 506–553 (Z≈24), 532 → 525–560
+>  * (Z≈32), 526 → 529–565 (Z≈43), 511 → 513–561 (Z≈88), 508 → 518–555 (Z≈103), then back left into the VP:
+>  * coins/core ≈505 at y 496 (Z≈215), ≈490 at y 490 (Z≈330). The first knots continue the real exit bend
+>  * (route lateral ≈0.3 at Z≈6) straight into the right swing (the reference's dip to the left at y≈550 sits where
+>  * the locked course has its exit bend, so it is not chased: that would add a wiggle at the seam).
+>  */
+> export const FAR05_C …[+5280 chars]
+
+### 🤖 Claude — 2026-11-20T17:04:02.164Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 140,240p src/world/far05.ts", "description": "Read farRiverLayout function"}`
+
+### 🧑 User — 2026-11-20T17:04:02.204Z
+
+> ↩︎ result: export const FARS05: boolean = (() => {
+>   try {
+>     return typeof location !== 'undefined' && new URLSearchParams(location.search).get('fars05') === '1';
+>   } catch {
+>     return false;
+>   }
+> })();
+> export const FAR05_CORE_S: [number, number][] = [
+>   [8, 0.35], [16, -0.9], [24, -0.5], [34, 0.9], [46, 2.6], [60, 3.7], [80, 4.5], [110, 4.2], [140, 3.0], [175, 1.7],
+>   [215, 1.0], [260, -0.6], [310, -2.4], [350, -3.0], [400, -3.0],
+> ];
+> export const FAR05_CORE_W10_S: [number, number][] = [
+>   [0, -0.3], [6, -0.9], [14, -1.8], [22, -1.2], [32, 0.4], [44, 2.2], [60, 3.6], [80, 4.5], [110, 4.2], [140, 3.0],
+>   [175, 1.7], [215, 1.0], [260, -0.6], [310, -2.4], [350, -3.0], [400, -3.0],
+> ];
+> 
+> /**
+>  * W10 far design row: the water body spans the whole floor chord (foam rim at the wall), the two satin bands run
+>  * BESIDE the winding core (approved far field: bands ≈ 20 px wide, 120 px apart at y 540, deep violet water between
+>  * each band and its bank) instead of as thin lines on the banks of a narrow body hugging the outer wall.
+>  */
+> function designW10(Z: number, chord: number): FarRiverRow {
+>   const hw = chord - 0.35;
+>   const core = Math.max(-hw + 1.2, Math.min(hw - 1.2, hermite(FARS05 ? FAR05_CORE_W10_ …[+4711 chars]
+
+### 🤖 Claude — 2026-11-20T17:04:12.259Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"farRiverMaterial\" src/world/materials.ts | head -3; grep -n \"M05FRIM\\|M05FMAG\\|M05FPAINT\\|M05JOIN\\|M05FCLOUD\\|discard\" src/world/materials.ts | head -40", "description": "Locate far river material switch code"}`
+
+### 🧑 User — 2026-11-20T17:04:12.317Z
+
+> ↩︎ result: 899:export function farRiverMaterial(glow: FarGlow, d0 = 53.25, flow?: { ripple: THREE.Texture; time: THREE.IUniform; speed: number }): THREE.MeshBasicMaterial {
+> 7:import { FARW05, PROJ05, PUFF05, SILK05, WATER05, proj05Far, M05FBANK, M05FMAG, M05FPAINT, M05FRIM, M05JOIN, m05blend, m05blendTime, m05fmagD0, m05fpaint } from '../vfx/waterRibbon';
+> 841:        if (a < 0.003) discard;
+> 884:    float fpW = uFbP.w * smoothstep(1.4, 2.2, (uFmD0 + max(Zv, 0.0)) / max(vRivDist, 0.5))${M05JOIN ? '' : ' * smoothstep(uFbP.x, uFbP.x + 2.5, Zv)'};
+> 898:const FMAG_PRE = `float fmK = 1.0 - uFbP.w * smoothstep(1.4, 2.2, (uFmD0 + max(vRivB.w, 0.0)) / max(vRivDist, 0.5))${M05JOIN ? '' : ' * smoothstep(uFbP.x, uFbP.x + 2.5, vRivB.w)'};\n  `;   // m05join (round 13): no F ramp behind the seam
+> 928:  if (pj && M05FMAG) { m05fmagD0.value = d0; Object.assign(uniforms, { uFbP: m05blend.uFbP, uFmD0: m05fmagD0 }); }
+> 975:  float bankW = mix(9.0, 1.3, smoothstep(10.0, 22.0, Zv));${M05FRIM ? `
+> 985:  if (e > bankW + bankN * 2.0) discard;
+> 1084:    if (e2 - rimW + (c1 - 0.5) * 0.8 * f1 > 0.0) discard;
+> 1158:        .replace('  diffuseColor.rgb = col;\n}', '  ' + (M05FMAG ? FMAG_PRE + pj.apply.replace(/\)\.a\);$/, ').a  …[+601 chars]
+
+### 🤖 Claude — 2026-11-20T17:04:14.781Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 940,1100p src/world/materials.ts", "description": "Read far river material shader body"}`
+
+### 🧑 User — 2026-11-20T17:04:14.842Z
+
+> ↩︎ result: uniform vec3 uRivCyanLo; uniform vec3 uRivCyan; uniform vec3 uRivCyanHi; uniform vec3 uRivPinkLo; uniform vec3 uRivPink; uniform vec3 uRivPinkHi;
+> uniform vec3 uRivFoam; uniform vec3 uRivFoamLav; uniform vec3 uRivFoamBlue; uniform vec3 uRivGlow; uniform vec3 uRivGlowR;
+> #ifdef FARW05
+> uniform float uRivD0;
+> #endif
+> #ifdef FLOWMAP05
+> uniform sampler2D uRivRipple; uniform float uRivTime; uniform float uRivFlow;
+> ${FLOW05_GLSL}
+> #endif
+> float rivHash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+> float rivNoise(vec2 p) {
+>   vec2 i = floor(p), f = fract(p); vec2 w = f * f * (3.0 - 2.0 * f);
+>   return mix(mix(rivHash(i), rivHash(i + vec2(1.0, 0.0)), w.x), mix(rivHash(i + vec2(0.0, 1.0)), rivHash(i + vec2(1.0, 1.0)), w.x), w.y);
+> }
+> float rivCells(vec2 p) {
+>   vec2 i = floor(p), f = fract(p); float d = 1.5;
+>   for (int y = -1; y <= 1; y++) for (int x = -1; x <= 1; x++) {
+>     vec2 g = vec2(float(x), float(y));
+>     vec2 o = vec2(rivHash(i + g), rivHash(i + g + 19.7));
+>     d = min(d, length(g + o - f));
+>   }
+>   return d;
+> }`)
+>       .replace('#include <color_fragment>', `#include <color_fragment>
+> {
+>   float lat = vRivLat;                                   // units from the tunnel axis  …[+8222 chars]
+
