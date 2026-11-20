@@ -154120,7 +154120,7 @@ index a76822b..cea17dd 100644
  * `fur.ts`: new BENNY20-only uniforms `uTipCol` (colour the uPile.w tips fade to; pompom keeps its pale lavender) and `uVol`
    (x highlight on up-facing fur, y darker underside). `benny20.ts`: `TUFT` block (body + arms): bigger locks (30 / arms 36),
 diff --git a/src/characters/benny/benny20.ts b/src/characters/benny/benny20.ts
-index 340e1d3..4452a59 100644
+index 340e1d3..da0af1a 100644
 --- a/src/characters/benny/benny20.ts
 +++ b/src/characters/benny/benny20.ts
 @@ -132,17 +132,42 @@ export const HAT20 = {
@@ -154159,10 +154159,10 @@ index 340e1d3..4452a59 100644
 + *  The approved 05–08 paint the star a brighter YELLOW gold (≈ (251, 215, 30), hue ≈ 51°) than the 04 amber (hue 42°);
 + *  each screen's light pushes the felt toward orange there. Overridable `&b20sx0N=r,g,b`. Unlisted (04): 1. */
 +export const STARX20: Record<string, [number, number, number]> = {
-+  '05': lin('sx05', [1, 1.45, 0.35]),
-+  '06': lin('sx06', [1, 2.3, 0.35]),
-+  '07': lin('sx07', [1, 1.5, 0.3]),
-+  '08': lin('sx08', [1, 1.5, 0.35]),
++  '05': lin('sx05', [0.9, 1.3, 0.7]),
++  '06': lin('sx06', [0.95, 2.1, 0.8]),
++  '07': lin('sx07', [0.9, 1.3, 0.6]),
++  '08': lin('sx08', [0.9, 1.3, 0.75]),
  };
  
  const T = (f: string) => new URL(`../../../assets/textures/benny20/${f}`, import.meta.url).href;

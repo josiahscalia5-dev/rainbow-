@@ -1485,3 +1485,101 @@ Meanwhile, a small script to tabulate coin sizes per shot (BEFORE, NEW, and the 
 
 > 🔧 **Bash** `{"command": "D=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s08r23; until [ -f $D/s2_new/motion.json ]; do sleep 5; done; tail -4 $D/s2_new.log; ls $D/clip_s1_before/f | wc -l; ls $D/clip_s1_new/f 2>/dev/null | wc -l", "description": "Block until step 2 NEW render finishes", "timeout": 1800000}`
 
+### 🧑 User — 2026-11-20T10:07:45.147Z
+
+> ↩︎ result: 08 s_right_hard s 403.559 lat 2.17 stage 08 frames 76
+> 08 t33_through_screen s 395.8 lat 0.009 stage 08 frames 27
+> 08 t66_through_screen s 400.075 lat 0 stage 08 frames 54
+> 08 t95_through_screen s 403.875 lat 0 stage 08 frames 78
+> 22
+> 0
+
+### 🤖 Claude — 2026-11-20T10:07:49.840Z
+
+Step 2 NEW is done. Assembling its proof against the step 1 result (BEFORE = K16 + `m08gl`) and looking at coin sizes.
+
+### 🤖 Claude — 2026-11-20T10:07:52.768Z
+
+> 🔧 **Bash** `{"command": "D=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s08r23; python3 -I $D/mkproof.py $D/s1_new $D/s2_new /home/user/rainbow-/qa/match/08/r23/step2_m08coinsz && python3 -I -c \"\nimport json\nj=json.load(open('$D/s2_new/motion.json'))\nfor s in j['shots']:\n    print(s['name'], [(c['i'],c['x'],c['y'],c['diam']) for c in s.get('coinPx',[]) if c['y']>180 and c['diam']>6])\n\"", "description": "Step 2 proof assembly and NEW coin sizes"}`
+
+### 🧑 User — 2026-11-20T10:08:01.593Z
+
+> ↩︎ result: a00_approved_view      changed       0 px  rows180+       0  (0.00 % of frame)
+> f03_forward3u          changed    6369 px  rows180+    6369  (0.48 % of frame)
+> f06_forward6u          changed   13228 px  rows180+   13228  (1.00 % of frame)
+> f10_forward10u         changed   13100 px  rows180+   13100  (0.99 % of frame)
+> f20_forward20u         changed    5946 px  rows180+    5946  (0.45 % of frame)
+> s_left_hard            changed   16998 px  rows180+   16998  (1.28 % of frame)
+> s_left_steer           changed   12603 px  rows180+   12603  (0.95 % of frame)
+> s_right_hard           changed   12799 px  rows180+   12799  (0.96 % of frame)
+> s_right_steer          changed   13438 px  rows180+   13438  (1.01 % of frame)
+> t33_through_screen     changed   16886 px  rows180+   16886  (1.27 % of frame)
+> t66_through_screen     changed   17303 px  rows180+   17303  (1.30 % of frame)
+> t95_through_screen     changed   15472 px  rows180+   15472  (1.17 % of frame)
+> a00_approved_view [(82, 334, 870, 83.9), (83, 400, 788, 70), (84, 467, 734, 58), (85, 383, 629, 36), (86, 428, 660, 40), (87, 497, 688, 48), (88, 479, 603, 24), (89, 420, 617, 30), (90, 454, 607, 26)]
+> f03_forward3u [(82, 312, 919, 87.2), (83, 393, 811, …[+1953 chars]
+
+### 🤖 Claude — 2026-11-20T10:08:13.495Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s08r23 && python3 -I -c \"\nfrom PIL import Image\nfor s in ['t66_through_screen','t95_through_screen','s_right_hard','f06_forward6u','t33_through_screen']:\n    a=Image.open('s1_new/'+s+'.png').convert('RGB'); b=Image.open('s2_new/'+s+'.png').convert('RGB')\n    c=Image.new('RGB',(864*2+12,1000),(0,0,0)); c.paste(a.crop((0,300,864,1300)),(0,0)); c.paste(b.crop((0,300,864,1300)),(876,0)); c.resize((c.width*55//100,c.height*55//100),Image.LANCZOS).save('insp/s2_'+s+'.png')\n\"", "description": "Mak …[+47 chars]`
+
+### 🧑 User — 2026-11-20T10:08:18.606Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T10:08:21.234Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s08r23/insp/s2_t95_through_screen.png"}`
+
+### 🧑 User — 2026-11-20T10:08:21.281Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T10:08:22.437Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s08r23/insp/s2_t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-20T10:08:22.476Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T10:08:23.644Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s08r23/insp/s2_s_right_hard.png"}`
+
+### 🧑 User — 2026-11-20T10:08:23.763Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T10:08:34.837Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && D=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s08r23 && Q3=$(node /home/user/rainbow-/tools/lead23/setq.mjs \"$(cat $D/q_s2.txt)\" \"m08towelm=1\") && echo \"$Q3\" > $D/q_s3.txt && M08_FONTS=1 M08_PORT=5287 M08_COINS=1 M08_DET=1 timeout 1800 node tools/match08/shots08.mjs 08 $D/s3_new \"$Q3\" > $D/s3_new.log 2>&1; echo C-done; tail -3 $D/s3_new.log", "description": "Job C: step 3 NEW render (towel mask)", "timeout": 2000000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T10:08:34.943Z
+
+> ↩︎ result: Command running in background with ID: by1px436u. Output is being written to: /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/tasks/by1px436u.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-20T10:08:36.594Z
+
+Writing the step 2 code patch and query files while renders run.
+
+### 🤖 Claude — 2026-11-20T10:08:39.581Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && D=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s08r23 && O=/home/user/rainbow-/qa/match/08/r23/step2_m08coinsz && git diff -- src/gameplay/coins.ts > $O/code.patch && git diff -- tools/match08/shots08.mjs > $O/qa_tools.patch && cp tools/match08/r23_vite.mjs tools/match08/screen_clip08.mjs $O/ && cp $D/q_s2.txt $O/QUERY_NEW.txt && cp $D/q_gl.txt $O/QUERY_BEFORE_K23-1.txt && wc -l $O/code.patch $O/qa_tools.patch && git status --short", "description": "Write step 2 patches and query files"}`
+
+### 🧑 User — 2026-11-20T10:08:40.257Z
+
+> ↩︎ result: 41 /home/user/rainbow-/qa/match/08/r23/step2_m08coinsz/code.patch
+>   36 /home/user/rainbow-/qa/match/08/r23/step2_m08coinsz/qa_tools.patch
+>   77 total
+>  M src/gameplay/coins.ts
+>  M tools/match08/shots08.mjs
+> ?? node_modules
+> ?? tools/match08/r23_vite.mjs
+> ?? tools/match08/screen_clip08.mjs
+
+### 🤖 Claude — 2026-11-20T10:08:46.125Z
+
+> 🔧 **Bash** `{"command": "D=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s08r23; until [ -f $D/clip_s1_new/frames.json ] || ! pgrep -f \"clip_s1_\" >/dev/null; do sleep 5; done; cat $D/clip_s1_before.log $D/clip_s1_new.log", "description": "Wait for step 1 clips to finish", "timeout": 1800000}`
+

@@ -3083,3 +3083,167 @@ Stop hook feedback:
 
 > 🔧 **Bash** `{"command": "for i in $(seq 1 100); do pgrep -f \"rainbow-autosave.py\" >/dev/null || break; sleep 3; done; timeout 600 python3 scripts/rainbow-autosave.py --reason manual:stop-hook 2>&1 | grep -E '\"commit\"|skipping' | head -2; python3 -I scripts/autosave-status.py", "description": "Commit and push new worker files, verify remote", "timeout": 900000}`
 
+### 🧑 User — 2026-11-20T10:07:24.186Z
+
+> ↩︎ result: "commit": "4530a9640cafd1ce61395d911e12a0bf88bc26ac",
+> AUTOSAVE OK | branch claude/rainbow-r22-restore-ut3m39 | scheduler daemon | last verified backup 2026-11-20T10:06:32+00:00 (0.8 min ago) | local 4530a96 remote 4530a96 (match) | uncommitted 2
+
+### 🤖 Claude — 2026-11-20T10:07:34.301Z
+
+> 🔧 **Bash** `{"command": "ls /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/c07/f 2>/dev/null | wc -l; cat /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/tasks/b25nv0y1r.output 2>/dev/null | tail -3; uptime", "description": "Check Screen 07 clip progress"}`
+
+### 🧑 User — 2026-11-20T10:07:34.444Z
+
+> ↩︎ result: 160
+>  10:07:34 up 25 min,  0 user,  load average: 30.93, 23.72, 13.99
+
+### 🤖 Claude — 2026-11-20T10:07:35.255Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"m06rip\\|RIP\" src/world/match06.ts | head -30 | cut -c1-200; grep -n \"m06rip\" src/game/Game.ts | cut -c1-200", "description": "Locate the m06rip ripple code"}`
+
+### 🧑 User — 2026-11-20T10:07:35.920Z
+
+> ↩︎ result: 47:  /** r23 `&m06rip=1`: Benny's place on the river (course s, lateral) for the painted ripple rings carried with him */
+> 117:// r23 '&m06rip=1' (qa/match/06/r23/PROGRESS.md): the approved picture's ripple rings round Benny, carried with him on the
+> 343:    // r23 m06rip: two copies drifting slowly outward from Benny, cross-faded (no jump), so the rings read as spreading
+> 806:  // r23 `&m06rip=1` (qa/match/06/r23/PROGRESS.md): the painted ripple rings round Benny (concentric white-cyan rings, the
+> 812:  // `&m06ripl=` half width (u, default 1.45: the painted foam heaps begin ~1.3-1.5 u out), `&m06ripd=a,b` behind / ahead
+> 814:  // `&m06ripk=` strength (default 1), `&m06ripx=` outward drift share (default 0.06; 0 = still).
+> 815:  if (qs?.get('m06rip') === '1') {
+> 817:    const rd = (qs?.get('m06ripd') ?? '').split(',').map(Number);
+> 821:    const LW = rn('m06ripl', 1.45), D0 = -(rd.length === 2 && rd.every(Number.isFinite) ? rd[0] : 2.4), D1 = rd.length === 2 && rd.every(Number.isFinite) ? rd[1] : 1.3;
+> 869:      uRipA: { value: new THREE.Vector4(rn('m06ripx', 0.06), 0.5, rn('m06ripk', 1), 0) } });
+> 871:    console.info('[match06] m06rip', { NX, NY, LW, D0, D1, px: ext.map((q) => Math.round( …[+248 chars]
+
+### 🤖 Claude — 2026-11-20T10:07:38.911Z
+
+Before changing anything, I'll look at what you saw: the opening frames of the Screen 06 clip.
+
+### 🤖 Claude — 2026-11-20T10:07:42.569Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/rip && mkdir -p $S && for t in 0.15 0.4 0.7 1.0; do ffmpeg -loglevel error -y -ss $t -i qa/match/06/r23/step3_m06rip/swim_06_NEW.mp4 -frames:v 1 $S/n_$t.png; ffmpeg -loglevel error -y -ss $t -i qa/match/06/r23/step1_m06fcl/swim_06_BEFORE.mp4 -frames:v 1 $S/b_$t.png; done; identify $S/n_0.4.png | cut -d' ' -f3; convert \\( $S/b_0.15.png $S/b_0.4.png $S/b_0.7.png $S/b_1.0.png +append \\) \\( $S/n_0.15.png $S/n_0.4.png $S/n_0.7.png $S/n_1.0.png +append \\) -append -resize 1400x $S/rip.png", "descripti …[+60 chars]`
+
+### 🤖 Claude — 2026-11-20T10:07:43.697Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/rip/rip.png"}`
+
+### 🧑 User — 2026-11-20T10:07:51.472Z
+
+> ↩︎ result: 432x768
+
+### 🧑 User — 2026-11-20T10:07:51.890Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T10:08:04.572Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/src/world/match06.ts", "offset": 806, "limit": 68}`
+
+### 🧑 User — 2026-11-20T10:08:04.773Z
+
+> ↩︎ result: 806	  // r23 `&m06rip=1` (qa/match/06/r23/PROGRESS.md): the painted ripple rings round Benny (concentric white-cyan rings, the
+> 807	  // splash collar at his base, the bright streaks under him) vanished as soon as he swam: the projection pins them to the
+> 808	  // checkpoint and the flowing river material has none. Here the approved plate's water round the approved Benny is
+> 809	  // re-sampled in the river's own coordinates (lateral l x distance ds from Benny, exactly the floor surface the projector
+> 810	  // painted at the checkpoint) and carried with Benny on the floor, where his body was filled transparent; faded in only
+> 811	  // once the camera has left the approved viewpoint (start view unchanged), fading out toward its rim, water only.
+> 812	  // `&m06ripl=` half width (u, default 1.45: the painted foam heaps begin ~1.3-1.5 u out), `&m06ripd=a,b` behind / ahead
+> 813	  // of Benny (u, default 2.4,1.3),
+> 814	  // `&m06ripk=` strength (default 1), `&m06ripx=` outward drift share (default 0.06; 0 = still).
+> 815	  if (qs?.get('m06rip') === '1') {
+> 816	    const rn = (k: string, d: number) => { const v = Number(qs?.get(k)); return qs?.get(k) != null && qs?.get(k) !== '' && Number.isFinite(v …[+4477 chars]
+
+### 🤖 Claude — 2026-11-20T10:08:05.168Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/src/world/match06.ts", "offset": 117, "limit": 50}`
+
+### 🧑 User — 2026-11-20T10:08:05.276Z
+
+> ↩︎ result: 117	// r23 '&m06rip=1' (qa/match/06/r23/PROGRESS.md): the approved picture's ripple rings round Benny, carried with him on the
+> 118	// river floor. uRip = the painted water round the approved Benny in the river's own coordinates (lateral x course s, premult.
+> 119	// alpha = 0 where his body was filled), uRipR = its extent (l0, l1, ds0, ds1), uBen = Benny (lateral, s), uRipA = (outward
+> 120	// drift share, drift rate /s, strength, -)
+> 121	uniform sampler2D uRip;
+> 122	uniform float uRipOn;
+> 123	uniform vec4 uRipR;
+> 124	uniform vec2 uBen;
+> 125	uniform vec4 uRipA;
+> 126	varying vec4 vProj;
+> 127	varying vec3 vW;
+> 128	varying vec3 vN;
+> 129	varying vec2 vTile;
+> 130	varying vec2 vLS;
+> 131	${PROJ05_INVERSE}
+> 132	float linZ(float d) { float n = uNearFar.x, f = uNearFar.y; float z = d * 2.0 - 1.0; return 2.0 * n * f / (f + n - z * (f - n)); }
+> 133	void main() {
+> 134	  // ring-structured tile in the surface's own coordinates (mirrored repeat: no seams)
+> 135	  vec3 pc = texture2D(uTile, vTile).rgb;
+> 136	  vec3 nn = normalize(vN);
+> 137	  float al = abs(vLS.x);
+> 138	  // r18 m06st: off exactly at the approved viewpoint (the approved start view keeps its pixels), on as soon as the camera
+> 139	  // has left it; hold = 1  …[+1823 chars]
+
+### 🤖 Claude — 2026-11-20T10:08:17.812Z
+
+> 🔧 **Bash** `{"command": "nproc; head -12 /home/user/wt/s06/tools/match06/r23_audit.mjs | cut -c1-200; grep -n \"AUDIT_PIN\\|AUDIT_SHOTS\\|argv\" /home/user/wt/s06/tools/match06/r23_audit.mjs | head -6 | cut -c1-200", "description": "Check CPU count and the s06 audit tool usage"}`
+
+### 🧑 User — 2026-11-20T10:08:17.935Z
+
+> ↩︎ result: 4
+> // Round 21 lead audit (read-only): one playable screen of the REAL game at start / early / middle / late / end and hard
+> // r23 S06 copy: lead audit tool (tools/lead21/audit_screen.mjs) + Vite allowed to serve the symlinked node_modules (HUD fonts).
+> // left / right, deterministic (fixed sim steps, frozen shader clock, one frame rendered per shot, no real-time steps).
+> // Run from the worktree whose build you want to see (vite serves the current directory):
+> //   cd <worktree> && node /home/user/rainbow-/tools/lead21/audit_screen.mjs <outDir> <stage 04..08> "<query>"
+> // Shots are fractions of the stage from its checkpoint to its end; env AUDIT_SHOTS='[["name",frac,steer],...]' overrides.
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> const { startVite } = await import(pathToFileURL(`${process.cwd()}/tools/match06/r23_vite.mjs`).href); // r23: fonts via symlinked node_modules
+> const [OUT, STAGE, Q] = process.argv.slice(2);
+> const SHOTS = process.env.AUDIT_SHOTS ? JSON.parse(process.env.AUDIT_SHOTS)
+> 6:// Shots are fractions of  …[+342 chars]
+
+### 🤖 Claude — 2026-11-20T10:08:28.260Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && O=/home/user/rainbow-/qa/match/06/r23/lead_rip && mkdir -p $O && B='match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1&m06st=1&m06fcl=1&m06view=1&m06vs=0&m06rip=1' && echo \"$B\" > $O/QUERY_BEFORE.txt && export AUDIT_PIN=22000 AUDIT_SHOTS='[[\"o1_003\",0.03,null],[\"o2_007\",0.07,null],[\"o3_012\",0.12,null]]' && for v in \"BEFORE|\" \"V1|&m06ripd=1.0,0.7&m06ripl=1.05&m06ripk=0.8\" \"V2|&m06ripd=1.4,0.8&m06ripl=1.2&m06ripk=0.6\"; do n=${v%%|*}; x=${v#*|}; Q=$(node /home/user/rainbow-/tools/lead23/setq.mj …[+271 chars]`
+
+### 🧑 User — 2026-11-20T10:08:28.328Z
+
+> ↩︎ result: Command running in background with ID: bxvuc5sh8. Output is being written to: /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/tasks/bxvuc5sh8.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-20T10:08:30.864Z
+
+While those render, recording your Screen 06 note and the open-items list for each screen so they survive any restart:
+
+### 🤖 Claude — 2026-11-20T10:08:41.367Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-20-r23/OPEN_ITEMS.md", "content": "# Open items per screen — round 23 (user: \"Keep these screens open for review until the moving scenery meets the approved design.\")\n\nNothing below is finished until the USER approves it in motion. Candidates are NOT accepted; they stay behind URL switches.\n\n## Screen 04 — Through the Five Arrows\n* Candidate K23-1 (`qa/match/04/r23/QUERY_K23-1.txt`): pink walls off, less pink, clear blue water, gold visible. User (~09:55):\n  \"continue with the cleaner, lower pink edges. Keep the gold visible, the  …[+2423 chars]`
+
+### 🧑 User — 2026-11-20T10:08:41.433Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-20-r23/OPEN_ITEMS.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T10:08:45.377Z
+
+> 🔧 **Bash** `{"command": "cat >> docs/briefs/2026-11-20-r23/COORDINATION.md <<'EOF'\n* **~10:10 USER (verbatim):** \"Send me the Screen 07 clip when it's ready ... The broad S-shaped channel, with the water, pink edges,\n  foam, and coin trail curving together, remains the right priority. I have one specific note on the attached Screen 06 clip: at the\n  opening, the new ripple effect looks like a raised blue cone underneath Benny. My approved picture shows a shallow ripple immediately\n  around his contact with the water. Please make that opening effect sit naturally on the water surface and blend into hi …[+850 chars]`
+
+### 🧑 User — 2026-11-20T10:08:45.489Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-20T10:08:50.977Z
+
+I'm working on both of your requests; neither is ready to show yet.
+
+**Screen 07 clip:** still rendering. It covers the whole screen through the exit into Screen 08, labelled with section and speed (1.0× and 0.5×). I'll send it the moment it's done.
+
+**Screen 06 ripple:** the ripple is a patch of your painting's water carried with Benny. It currently reaches well behind him toward the camera, at full strength. From the low game camera that large patch with a bright rim reads as the raised blue mound you saw. I'm testing two smaller, softer versions at the opening, limited to right around where he touches the water so it fades into his wake. I'll show you the original approved picture, the current version and the better new one side by side.
+
+**Screen 06 camera experiment:** it stays an unapproved candidate. The curling crest, winding river and curved coin trail are on the open-items list in `docs/briefs/2026-11-20-r23/OPEN_ITEMS.md`, with every other screen's open items.
+
+**Other specialists:** Screens 04 and 07, Benny and Screen 08 are still working, and the autosave keeps pushing their latest saves.
+
+The machine has only 4 CPU cores shared by four specialists plus my renders, so everything renders slowly. If you'd rather have faster results on fewer screens, I can run three specialists at a time instead of four.
+

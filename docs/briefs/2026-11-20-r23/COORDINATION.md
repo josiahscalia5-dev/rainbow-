@@ -62,3 +62,13 @@ Replace values in place: `node /home/user/rainbow-/tools/lead23/setq.mjs "<base 
 * ~09:58 s08 polish launched in the freed slot (`LAUNCH_S08_R23.md`: `m08gl`, coin sizing, towel double). Lead renders a labelled
   full Screen 07 clip of the current candidate from `/home/user/wt/lead07` (= `8accdad0` + `qa/match/07/r23/s1_satin/code.patch`) with
   `tools/lead23/screen_clip.mjs` + `label_clip.py` (HUD-font fix from s06 `r23_vite.mjs`).
+* **~10:10 USER (verbatim):** "Send me the Screen 07 clip when it's ready ... The broad S-shaped channel, with the water, pink edges,
+  foam, and coin trail curving together, remains the right priority. I have one specific note on the attached Screen 06 clip: at the
+  opening, the new ripple effect looks like a raised blue cone underneath Benny. My approved picture shows a shallow ripple immediately
+  around his contact with the water. Please make that opening effect sit naturally on the water surface and blend into his wake.
+  Preserve the successful surrounding work. Keep Screen 06's camera experiment as an unapproved candidate. Its curling crest, winding
+  river, and curved coin trail still need to remain recognizable after the opening. Keep those items on the unfinished-work list. The
+  attached video only briefly enters Screen 07. I will review Screen 07 properly when you provide the complete labelled clip through
+  its exit into Screen 08, with playback speed shown. Continue the other authorized specialist work and preserve the latest saves."
+  → open items per screen: `OPEN_ITEMS.md` (this folder). Lead tests the 06 ripple extent / strength (`qa/match/06/r23/lead_rip/`:
+  existing switches `m06ripd` behind,ahead / `m06ripl` half width / `m06ripk` strength).
