@@ -18,8 +18,21 @@ index 6a4653f..2a7e591 100644
    composer.addPass(new RenderPass(scene, camera));
    // Screen 05 test GL1 (user 2026-11-16: "the glow on the highlights is most of what makes the approved version look so
    // shiny"): `?glow05=1` = a stronger UnrealBloom with a HIGH threshold, so only the bright highlights (streak cores,
+diff --git a/src/world/match04.ts b/src/world/match04.ts
+index 65c878c..a20f48e 100644
+--- a/src/world/match04.ts
++++ b/src/world/match04.ts
+@@ -428,7 +428,7 @@ void main() { vec4 c = texture2D(uTex, vUv); if (c.a < 0.02) discard; gl_FragCol
+       shared.uPjPost.value.x = renderer.toneMappingExposure;
+       shared.uPjRes.value.set(w, h);
+       // r13: Benny's world position (Game puts the splash at Benny + splashOffset just before sync) for the m04arr3d fade
+-      if (m4 && camera) m4.update(camera.getWorldPosition(_cp), splash ? _bp.copy(splash.position).sub(splashOffset) : undefined);
++      if (m4 && camera) m4.update(camera.getWorldPosition(_cp), splash ? _bp.copy(splash.position).sub(splashOffset) : undefined, camera);
+       // r11 m04mv: full weight within 3 u of a view's camera, gone at 8 u (the approved camera is ~10 u from V04-1's)
+       if (mvViews.length && camera) {
+         const cp = camera.getWorldPosition(_cp);
 diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
-index 2b62a35..27b0fd7 100644
+index 2b62a35..c1d69f2 100644
 --- a/src/world/match04m4.ts
 +++ b/src/world/match04m4.ts
 @@ -120,6 +120,15 @@ uniform float uRVar;       // r17 m04rpvar: number of painted rings stacked in t
@@ -486,8 +499,12 @@ index 2b62a35..27b0fd7 100644
  #endif
    if (uAway < 0.999 && vProj.w > 0.0) {
      vec2 uv = vProj.xy / vProj.w * 0.5 + 0.5;
-@@ -1039,6 +1413,8 @@ export function addM04(ctx: M04Ctx) {
-   const out: { update(cam: THREE.Vector3, benny?: THREE.Vector3): void } = { update() {} };
+@@ -1036,9 +1410,11 @@ export function addM04(ctx: M04Ctx) {
+   const axU = toW(cx, cy + 1, z0).sub(axO).normalize(), axR = toW(cx + 1, cy, z0).sub(axO).normalize();
+   const away = { value: 0 };
+   const fade = (M04.num('m04fade0', 0.3)), fade1 = M04.num('m04fade1', 2.5);
+-  const out: { update(cam: THREE.Vector3, benny?: THREE.Vector3): void } = { update() {} };
++  const out: { update(cam: THREE.Vector3, benny?: THREE.Vector3, camera?: THREE.Camera): void } = { update() {} };
    const updaters: ((a: number) => void)[] = [];
    let endCap: THREE.Mesh | null = null;
 +  let endFit: THREE.Vector3 | null = null;
@@ -765,7 +782,41 @@ index 2b62a35..27b0fd7 100644
      } else if (clu) {
        // r15: two passes of the same bubble instances — opaque cores, then the see-through rims blended on top
        const fb = new THREE.Vector3(M04.num('m04fce', 0.5), M04.num('m04fcg', 1.0), M04.num('m04fcd', 1.0));
-@@ -1813,6 +2291,7 @@ export function addM04(ctx: M04Ctx) {
+@@ -1727,7 +2205,19 @@ export function addM04(ctx: M04Ctx) {
+   // (fat white-cyan bars, apex pointing down the tunnel, cyan glow) leans back toward the camera like the painted lane seen
+   // from above; spaced so about five are in view ahead; each fades in from 2 u ahead (Benny never clips through one) and out
+   // far away; hidden at the approved viewpoint (the painted picture is shown there). The flat river chevrons are switched off.
+-  const arrowsOut: { mesh: THREE.Mesh; za: number; mats: THREE.MeshBasicMaterial[] }[] = [];
++  const arrowsOut: { mesh: THREE.Mesh; za: number; mats: THREE.MeshBasicMaterial[]; hw?: number; y?: number }[] = [];
++  // r22 `&m04a3sc=1`: SCREEN clearance — as painted, all five chevrons lie AHEAD of Benny, above his pompom in the picture;
++  // a chevron whose nearest bar ends would show at or below the top of his hat (projected with the real camera) and
++  // overlapping him sideways fades out (a world-distance fade alone still left the nearest one straddling his hat).
++  // m04a3sy Benny's top above his root (u), m04a3sr his half width (u), m04a3s0 / m04a3s1 the screen gap (NDC y, chevron
++  // bar ends above his top) where it is gone / whole, m04a3sx sideways margin (NDC x).
++  const a3sc = M04.num('m04a3sc', 0) > 0;
++  const scP = new THREE.Vector3(), scQ = new THREE.Vector3(), scR = new THREE.Vector3();
++  let scMark: THREE.Mesh | null = null;
++  if (a3sc && M04.num('m04a3dbg', 0) > 0) {
++    scMark = new THREE.Mesh(new THREE.SphereGeometry(0.06, 12, 8), new THREE.MeshBasicMaterial({ color: 0xff0000, depthTest: false }));
++    scMark.renderOrder = 99; scMark.frustumCulled = false; group.parent ? group.parent.add(scMark) : group.add(scMark);
++  }
+   let arrA = 0;
+   if (M04.arr3d) {
+     const hw = M04.num('m04a3w', 1.15), th = M04.num('m04a3t', 0.42), drop = M04.num('m04a3d', 0.95);
+@@ -1802,17 +2292,18 @@ export function addM04(ctx: M04Ctx) {
+       m.renderOrder = 5; g.renderOrder = coreT && lum > 0 ? 6 : 4; m.name = 'm04_arrow3d'; g.name = 'm04_arrow3d_glow';   // luminous layer on top
+       m.visible = g.visible = false;                                     // invisible during the projector depth bake
+       group.add(g); group.add(m);
+-      arrowsOut.push({ mesh: m, za: z0 - a, mats: [coreT ?? core, glow] });
++      arrowsOut.push({ mesh: m, za: z0 - a, mats: [coreT ?? core, glow], hw, y: 0.05 + M04.num('m04a3y', 0) });
+       arrowsOut.push({ mesh: g, za: z0 - a, mats: [] });
+     }
+     updaters.push((a) => { arrA = a; });
+     console.info('[match04] m04arr3d', { arrows: arrowsOut.length / 2, sp, tilt: M04.num('m04a3k', 38) });
+   }
+ 
+-  out.update = (cam: THREE.Vector3, benny?: THREE.Vector3) => {
++  out.update = (cam: THREE.Vector3, benny?: THREE.Vector3, camera?: THREE.Camera) => {
      time.value = performance.now() / 1000;
      a5b.z = -cam.clone().applyMatrix4(MwInv).z;   // camera position down the slide (local along)
      if (nbU.x > 0 && benny) { const bl = benny.clone().applyMatrix4(MwInv); nbU.y = -bl.z; nbU.z = bl.x - cx; }
@@ -773,3 +824,38 @@ index 2b62a35..27b0fd7 100644
      away.value = THREE.MathUtils.smoothstep(cam.distanceTo(proj.position), fade, fade1);
      const a2 = THREE.MathUtils.smoothstep(cam.distanceTo(proj.position), 0.4, 1.6);
      for (const u of updaters) u(a2);
+@@ -1825,12 +2316,33 @@ export function addM04(ctx: M04Ctx) {
+       const go = M04.num('m04a3o', 0.55);
+       const b0 = M04.num('m04a3b0', 1.6), b1 = M04.num('m04a3b1', 3.0);
+       const bz = M04.num('m04a3b', 0) > 0 && benny ? benny.clone().applyMatrix4(MwInv).z : null;   // Benny's local z (same frame as cz)
++      // r22 m04a3sc: Benny's top (NDC) and half width (NDC) with the real camera
++      let scT: THREE.Vector3 | null = null, scW = 0;
++      if (a3sc && benny && camera) {
++        camera.updateMatrixWorld();
++        scR.setFromMatrixColumn(camera.matrixWorld, 0).normalize();
++        scT = scP.copy(benny).addScaledVector(new THREE.Vector3(0, 1, 0), M04.num('m04a3sy', 2.0));
++        if (scMark) scMark.position.copy(scT);
++        scT = scT.clone().project(camera);
++        scW = Math.abs(scQ.copy(benny).addScaledVector(scR, M04.num('m04a3sr', 1.0)).project(camera).x - scQ.copy(benny).project(camera).x);
++      }
++      const s0 = M04.num('m04a3s0', 0.0), s1 = M04.num('m04a3s1', 0.05), sx = M04.num('m04a3sx', 0.05);
+       for (let i = 0; i < arrowsOut.length; i += 2) {
+         const d = cz - arrowsOut[i].za;                                 // distance ahead of the camera
+         // r13 `&m04a3b=1`: the near fade is measured from BENNY (m04a3b0/b1 u ahead of him), so no chevron ever sits round
+         // his body, also where the camera closes in on him at the end of the stage
+         const nearK = bz !== null ? THREE.MathUtils.smoothstep(bz - arrowsOut[i].za, b0, b1) : THREE.MathUtils.smoothstep(d, n0, n1);
+-        const k = arrA * nearK * (1 - THREE.MathUtils.smoothstep(d, f0, f1));
++        let k = arrA * nearK * (1 - THREE.MathUtils.smoothstep(d, f0, f1));
++        if (scT && camera && k > 0) {
++          // the chevron's nearest bar ends (u = +-hw at the lane plane) are its lowest points on screen
++          const A = arrowsOut[i], hwA = A.hw ?? 1, yA = A.y ?? 0.05;
++          const e1 = scP.set(cx - hwA, yA, A.za).applyMatrix4(Mw).project(camera), y1 = e1.y, x1 = e1.x;
++          const e2 = scQ.set(cx + hwA, yA, A.za).applyMatrix4(Mw).project(camera), y2 = e2.y, x2 = e2.x;
++          const gapY = Math.min(y1, y2) - scT.y;                        // > 0: the chevron lies above Benny's top
++          const ov = Math.min(Math.max(x1, x2), scT.x + scW) - Math.max(Math.min(x1, x2), scT.x - scW);   // sideways overlap (NDC)
++          const side = THREE.MathUtils.smoothstep(ov, -sx, 0);           // 1 = overlapping him sideways
++          k *= 1 - side * (1 - THREE.MathUtils.smoothstep(gapY, s0, s1));
++        }
+         const [core, glow] = arrowsOut[i].mats;
+         core.opacity = M04.num('m04a3co', 0.95) * k; glow.opacity = go * k;
+         arrowsOut[i].mesh.visible = arrowsOut[i + 1].mesh.visible = k > 0.01;

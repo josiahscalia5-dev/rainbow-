@@ -1317,3 +1317,41 @@ In the level clip, frames 42 and 70 show flat pale sheets beside the river while
 > l20 s 296.656 lat -2.25 hidden 0
 > {"a":"a_start_hide.png","b":"a_start.png","rows":[180,1536],"threshold":0.1,"diff_pixels":45464,"total":1171584,"diff_pct":3.8806}
 
+### 🤖 Claude — 2026-11-20T03:35:57.090Z
+
+Hiding the berm changes the approved start view (45k px), so it is part of what the start view shows. Let me see where.
+
+### 🤖 Claude — 2026-11-20T03:35:58.229Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/diag2/d.png"}`
+
+### 🧑 User — 2026-11-20T03:35:58.264Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:35:58.990Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/diag2/r20_hide.png"}`
+
+### 🧑 User — 2026-11-20T03:35:59.034Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:35:59.601Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/diag2/r20.png"}`
+
+### 🧑 User — 2026-11-20T03:35:59.657Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:36:13.892Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/diag2 && node /home/user/tools-pixelmatch/pixeldiff.mjs a_start_hide.png /home/user/rainbow-/qa/match/07/r22/s0_verify/a_start.png d2.png 0.1 180 1536 | tail -1; node /home/user/tools-pixelmatch/pixeldiff.mjs r20_hide.png r20.png d3.png 0.1 180 1536 | tail -1; node /home/user/tools-pixelmatch/pixeldiff.mjs l20_hide.png l20.png d4.png 0.1 180 1536 | tail -1", "description": "Diff berm-hidden start view against clean audit start"}`
+
+### 🧑 User — 2026-11-20T03:36:15.038Z
+
+> ↩︎ result: {"a":"a_start_hide.png","b":"/home/user/rainbow-/qa/match/07/r22/s0_verify/a_start.png","rows":[180,1536],"threshold":0.1,"diff_pixels":0,"total":1171584,"diff_pct":0}
+> {"a":"r20_hide.png","b":"r20.png","rows":[180,1536],"threshold":0.1,"diff_pixels":34569,"total":1171584,"diff_pct":2.9506}
+> {"a":"l20_hide.png","b":"l20.png","rows":[180,1536],"threshold":0.1,"diff_pixels":28351,"total":1171584,"diff_pct":2.4199}
+
