@@ -1405,3 +1405,367 @@ Task 2 (diagnosis) is done; updating the list, then the ring placement.
 >         lg.setAttribute('aLS', new THREE.Float32BufferAttribute(lsA, 2));
 >         lg.setAttribute('aTile', new THREE.Float32BufferAttribute(tA …[+156 chars]
 
+### 🤖 Claude — 2026-11-20T20:24:23.488Z
+
+Now the course: when the switch is on, the river should follow the new centre line, and Screens 07–10 move to its end as one rigid block.
+
+### 🤖 Claude — 2026-11-20T20:24:28.443Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='src/world/course.ts'; t=open(p).read()\nt=t.replace(\"import route06deep from '../../assets/textures/match06/route06deep.json';\",\n\"import route06deep from '../../assets/textures/match06/route06deep.json';\\nimport route06curl from '../../assets/textures/match06/route06curl.json';\",1)\nold=\"\"\"  const O6 = new THREE.Vector3().fromArray(route06deep.O), ax6 = new THREE.Vector3().fromArray(route06deep.ax);\n  const i06 = marks['06'], i07 = marks['07'];\n  let iK = i06;\n  while (iK + 1 < i07 && pts[iK + 1].clone().sub(O6).dot(ax6) <= …[+902 chars]`
+
+### 🧑 User — 2026-11-20T20:24:28.513Z
+
+> ↩︎ result: 15:import { flag05 } from '../vfx/waterRibbon';
+> 304:  const m06 = flag05('match06') || flag05('matchall');
+> 314:  const deep06 = m06 && flag05('m06deep');
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T20:24:34.568Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 28,58p src/gameplay/coins.ts", "description": "Read the coin layout helper"}`
+
+### 🧑 User — 2026-11-20T20:24:34.614Z
+
+> ↩︎ result: export const C05 = { first: 5.7, gap0: 5.0, gapGrow: 1.5, gapMax: 8, scale: 0.9, h: 1.2, tilt: 0.8, preGap: 3.6, latK: 0.7 };
+> 
+> function coins05(course: Course, add: (stage: StageId, s: number, lat: number, h?: number, extra?: Partial<CoinDef>) => void) {
+>   const a = course.stage('05');
+>   const sCp = course.marks['05_crest'];
+>   const extra = { scale: C05.scale, tilt: C05.tilt };
+>   const ss: number[] = [];
+>   // gameplay trail before the checkpoint ends 1 u behind Benny's checkpoint spot (never between him and the camera view)
+>   for (let s = sCp - 1; s > a.s0 + 6; s -= C05.preGap) ss.unshift(s);
+>   for (let k = 0, s = sCp + C05.first; s < a.s1 - 3; k++) { ss.push(s); s += Math.min(C05.gapMax, C05.gap0 + k * C05.gapGrow); }
+>   // latK < 1: the trail winds with the cyan core but stays inside its middle (the core half width is
+>   // ≥ 2 u), so the far coins converge on the VP like the ref instead of swinging out to the pink bands
+>   for (const s of ss) add('05', s, C05.latK * coreLateral(course, s), C05.h, extra);
+> }
+> 
+> export function coinLayout(course: Course): CoinDef[] {
+>   const out: CoinDef[] = [];
+>   const add = (stage: StageId, s: number, lat: number, h = 0.9, extra: Partial<CoinDef> = {} …[+1140 chars]
+
+### 🤖 Claude — 2026-11-20T20:24:42.577Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='src/gameplay/coins.ts'; t=open(p).read()\nt=t.replace(\"import coins06deep from '../../assets/textures/match06/coins06deep.json';\",\n\"import coins06deep from '../../assets/textures/match06/coins06deep.json';\\nimport route06curl from '../../assets/textures/match06/route06curl.json';\",1)\nold=\"\"\"    for (const c of (flag05('m06deep') ? coins06deep : coins06).coins) {\n      const { s, lat, h, scale } = c;\n      add(course.stageAtS(s).id, s, lat, h, { scale, faceTo: coins06.faceTo as [number, number, number], ...(grow ? { grow: Ma …[+1501 chars]`
+
+### 🧑 User — 2026-11-20T20:24:45.610Z
+
+> ↩︎ result: tsc exit 0
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T20:24:57.735Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json; p=json.load(open('qa/match/06/r30/diag/probe_marked_p14.json')); print('marked s', p['s'], 's0', p['s0'], 's1', p['s1'])\"; cat qa/match/06/r29/QUERY_NEW_FINAL.txt", "description": "Get the marked spot's river distance"}`
+
+### 🧑 User — 2026-11-20T20:24:57.788Z
+
+> ↩︎ result: marked s 214.86 s0 198.91 s1 312.72763955454957
+> match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1&m06st=1&m06fcl=1&m06view=1&m06vs=0&m06rip=1&m06hole=2&m06fade=1&m06spl=1&m06fcn=3&m06fcg=1&m06deep=1&m06leg=1&m06vw=34,56&m06tswap=2&m06haze=50,115,0.85
+
+### 🤖 Claude — 2026-11-20T20:25:00.920Z
+
+I'll make a variant of the shot renderer that takes exact river distances, so BEFORE and NEW are compared at the very same spot.
+
+### 🤖 Claude — 2026-11-20T20:25:03.083Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -e 's|const tS = s0 + frac \\* (s1 - s0);|const tS = frac > 1 ? frac : s0 + frac * (s1 - s0); // r30: a value > 1 = absolute river distance s|' -e '1i // r30 lead copy of r29_multi.mjs: a shot value > 1 is an ABSOLUTE river distance s (same spot in BEFORE and NEW even when 06 got longer)' tools/match06/r29_multi.mjs > tools/match06/r30_shots.mjs && grep -n \"r30\" tools/match06/r30_shots.mjs | head", "description": "Create absolute-distance shot renderer"}`
+
+### 🧑 User — 2026-11-20T20:25:03.146Z
+
+> ↩︎ result: 1:// r30 lead copy of r29_multi.mjs: a shot value > 1 is an ABSOLUTE river distance s (same spot in BEFORE and NEW even when 06 got longer)
+> 34:      const tS = frac > 1 ? frac : s0 + frac * (s1 - s0); // r30: a value > 1 = absolute river distance s
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T20:25:09.329Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && Q=\"$(cat /home/user/rainbow-/qa/match/06/r29/QUERY_NEW_FINAL.txt)&m06curl=1\" && echo \"$Q\" > /home/user/rainbow-/qa/match/06/r30/QUERY_CURL_v1.txt && AUDIT_PORT=5292 AUDIT_SHOTS='[[\"s0_start\",0,null],[\"s1_marked\",214.86,null],[\"s2_235\",235,null],[\"s3_255\",255,null],[\"s4_275\",275,null],[\"s5_295\",295,null],[\"s6_315\",315,null],[\"s7_335\",335,null],[\"s8_355\",355,null],[\"s9_375\",375,null],[\"s10_07a\",0.02,null,\"07\"]]' timeout 1500 node tools/match06/r30_shots.mjs /home/user/rainbow-/qa/match/06/r30/quick_v1 06 \"$Q\" 2>&1 | grep -v \"^$\ …[+99 chars]`
+
+### 🧑 User — 2026-11-20T20:25:41.951Z
+
+> ↩︎ result: 06 s0_start s 198.91 lat 0 stage 06 coins 1680
+> 06 s1_marked s 214.86 lat 0 stage 06 coins 1700
+> 06 s2_235 s 235.027 lat 0 stage 06 coins 1730
+> 06 s3_255 s 255.01 lat 0 stage 06 coins 1740
+> 06 s4_275 s 275.177 lat 0 stage 06 coins 1750
+> 06 s5_295 s 295.16 lat 0 stage 06 coins 1760
+> 06 s6_315 s 315.143 lat 0 stage 06 coins 1770
+> 06 s7_335 s 335.127 lat 0 stage 06 coins 1780
+> 06 s8_355 s 355.11 lat 0 stage 06 coins 1790
+> 06 s9_375 s 375.093 lat 0 stage 06 coins 1800
+> 07 s10_07a s 424.671 lat 0 stage 07 coins 1950
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T20:25:44.109Z
+
+The frames rendered quickly. I'll put them on one sheet to look at the whole route at once.
+
+### 🤖 Claude — 2026-11-20T20:25:48.258Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r30/quick_v1 && python3 -c \"\nfrom PIL import Image, ImageDraw, ImageFont\nimport glob\nfs=['s0_start','s1_marked','s2_235','s3_255','s4_275','s5_295','s6_315','s7_335','s8_355','s9_375','s10_07a']\nw,h=288,512; f=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',18)\nout=Image.new('RGB',(6*w,2*(h+26)),(20,12,34)); d=ImageDraw.Draw(out)\nfor i,n in enumerate(fs):\n  im=Image.open(n+'.png').convert('RGB').resize((w,h)); x=(i%6)*w; y=(i//6)*(h+26); out.paste(im,(x,y+26)); d.text((x+4,y+3),n,font=f,fill='white')\nout.save('/ …[+169 chars]`
+
+### 🧑 User — 2026-11-20T20:25:48.564Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T20:25:49.871Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/scratchpad/v1_sheet.jpg"}`
+
+### 🧑 User — 2026-11-20T20:25:49.982Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T20:26:06.198Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r30/quick_v1/s9_375.png"}`
+
+### 🧑 User — 2026-11-20T20:26:06.219Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T20:26:24.604Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"tube07\" src/world/*.ts | head -10; grep -n \"radius\\|const R\\b\\|Rtube\\|tubeR\" src/world/environment.ts | grep -i \"07\\|tube\" | head -15", "description": "Find the 07 tube's construction and radius"}`
+
+### 🧑 User — 2026-11-20T20:26:24.647Z
+
+> ↩︎ result: src/world/environment.ts:201:  // 'tube07' inside zones.tubes, so Game can show the mouth ahead of Benny inside the 06 ring tunnel (the rest stays hidden in 06)
+> src/world/environment.ts:203:  const tube07 = new THREE.Group(); tube07.name = 'tube07';
+> src/world/environment.ts:204:  if (deep07) zones.tubes.add(tube07);
+> src/world/environment.ts:349:  if (deep07) { addWall(sGlow05, s07e, perfTubeMat); addWall(s07e, s08, perfTubeMat, tube07); } else addWall(sGlow05, s08, perfTubeMat);
+> src/world/environment.ts:400:    tube07.add(buildRingsAt(perfPath, [s07e + 0.4, ...rings0607.filter((s) => s >= s07e + 2)], ringMat, { inset: 0.02, collar }));
+> src/world/environment.ts:437:      tube07.add(buildWallLids(perfPath, 0, 0, ringSpacing, lidMat, { positions: lids0607.filter((s) => s >= s07e), ...lidOpt }));
+> 181:  const tubeR = (s: number) => course.prop('tube', s);
+> 185:  const r04 = (s: number) => tubeR(s) + 1.8 * (1 - sm(g0, g0 + 6, s));
+> 257:  const perfPath = straightTubePath(course, s05, s08, { window: 30, taper: 14, baseRadius: tubeR, floorExtra: floorExtra05 });
+> 497:      return { c: tubeCenterAt(perfPath, sReal), r: perfPath.radius(sReal) * 1.1 + 0.4, f: perfPath.frame(sReal) };
+> Shell cwd w …[+31 chars]
+
+### 🤖 Claude — 2026-11-20T20:26:26.413Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 195,210p src/world/environment.ts; grep -n \"s07e =\" src/world/environment.ts; grep -n \"export function tubeCenterAt\\|export function straightTubePath\" src/world/*.ts", "description": "Read the tube07 grouping and entrance distance"}`
+
+### 🧑 User — 2026-11-20T20:26:26.465Z
+
+> ↩︎ result: // =====================================================================================
+>   // 05–07 perforated tubes (incl. the 06 arch hall and the full 07 plunge)
+>   // =====================================================================================
+>   const s08 = course.stage('08').s0;
+>   // r29 `&m06deep=1`: Screen 07's tube (walls from the 07 entrance, its rings + lids, a gold collar at the mouth) in its OWN group
+>   // 'tube07' inside zones.tubes, so Game can show the mouth ahead of Benny inside the 06 ring tunnel (the rest stays hidden in 06)
+>   const deep07 = course.deepDs07 > 0, s07e = course.stage('07').s0;
+>   const tube07 = new THREE.Group(); tube07.name = 'tube07';
+>   if (deep07) zones.tubes.add(tube07);
+>   const pinkFlow = pinkFlowMaterial();
+>   // refs 05–07: rich saturated magenta→violet glossy pressed metal, dense glowing slot rows, warm light
+>   // far down the tunnel. Own reflection environment (no cyan studio panel) + correct inward normals.
+>   // hot magenta near → violet mid-tunnel → warm yellow-white core at the vanishing point
+>   const tubeGlow: FarGlow = { color: '#ffd08a', near: 48, far: 105, strength: 1.5 };
+>   const wallGlow: FarGlow = { ...tubeGlow, mid: { color …[+326 chars]
+
+### 🤖 Claude — 2026-11-20T20:26:38.858Z
+
+I'll check how the 07 tube's centre and radius are computed, to pass the exact mouth into the 06 builder rather than guess.
+
+### 🤖 Claude — 2026-11-20T20:26:40.414Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 140,160p src/world/tube.ts; grep -n \"return {\" src/world/environment.ts | tail -3; grep -n \"export interface Environment\\|export async function buildEnvironment\\|export function buildEnvironment\\|export function createEnvironment\" src/world/environment.ts; grep -n \"buildMatch06(course\\|= await build.*Environment\\|createEnvironment(\" src/game/Game.ts", "description": "Locate tube centre function and env return"}`
+
+### 🧑 User — 2026-11-20T20:26:40.463Z
+
+> ↩︎ result: return { pos, tan, up, right: new THREE.Vector3().crossVectors(tan, up).normalize() };
+>     },
+>     radius: (s) => lerpArr(R, s),
+>     depth: (s) => lerpArr(D, s),
+>   };
+> }
+> 
+> export function tubeCenterAt(path: TubePath, s: number, out = new THREE.Vector3()) {
+>   const f = path.frame(s);
+>   return out.copy(f.pos).addScaledVector(f.up, path.radius(s) - path.depth(s));
+> }
+> 
+> export interface TubeGeoOptions {
+>   radial?: number;
+>   step?: number;
+>   vScale?: number;
+>   /** angular range (radians, measured from the bottom) — default full circle */
+>   arc?: number;
+>   /** radius offset (negative = inset toward the axis) */
+>   inset?: number;
+>   /**
+> 699:  return {
+> 854:  return { mesh, update: (t: number) => { tex.offset.y = -t * 2.2; } };
+> 929:  return { material, update: (t: number) => { tex.offset.y = -t * 0.9; } };
+> 20:export interface Environment {
+> 41:export function buildEnvironment(course: Course): Environment {
+> 124:  const m06 = MATCH['06'] ? await buildMatch06(course) : null;
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T20:26:41.820Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 20,40p src/world/environment.ts; sed -n 695,712p src/world/environment.ts", "description": "Read Environment interface and return value"}`
+
+### 🧑 User — 2026-11-20T20:26:41.862Z
+
+> ↩︎ result: export interface Environment {
+>   group: THREE.Group;
+>   update(time: number, dt: number): void;
+>   doorA: THREE.Object3D; // hinge pivot (rotation.y opens)
+>   doorC: THREE.Object3D;
+>   roomA: LaundryRoom & { anchor: THREE.Object3D };
+>   roomC: LaundryRoom & { anchor: THREE.Object3D };
+>   towel: TowelMesh; // on the chamber platform (08–11)
+>   drumTowel: TowelMesh; // bundle wrapped around Benny in drum A (01–02)
+>   laundry: { sock: THREE.Object3D; shirt: THREE.Object3D };
+>   /** groups toggled per scene for performance */
+>   zones: Record<'drumA' | 'basin' | 'tubes' | 'chamber', THREE.Group>;
+>   /** straight 05–07 tunnel axis (camera alignment) */
+>   tubeAxis: { path: import('./tube').TubePath; s0: number; s1: number };
+> }
+> 
+> const sm = (a: number, b: number, x: number) => {
+>   const t = THREE.MathUtils.clamp((x - a) / (b - a), 0, 1);
+>   return t * t * (3 - 2 * t);
+> };
+> 
+>       frame.matrixWorld.multiplyMatrices(cam.matrixWorld, place);
+>     };
+>     zones.tubes.add(frame);
+>   }
+>   return {
+>     group: root,
+>     update: (t, dt) => animated.forEach((f) => f(t, dt)),
+>     doorA,
+>     doorC,
+>     roomA: { ...roomA, anchor: anchorA },
+>     roomC: { ...roomC, anchor: anchorC },
+>     towel,
+>     drumTowel,
+>     laundry: …[+156 chars]
+
+### 🤖 Claude — 2026-11-20T20:27:12.922Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"side:\\|const mat = \\|function mat\" src/world/match06.ts | head -8; sed -n '/const cap = /,/cap.frustumCulled/p' src/world/match06.ts | head -20; grep -n \"tunCap\" src/world/match06.ts | head", "description": "Check material side and end-cap code"}`
+
+### 🧑 User — 2026-11-20T20:27:12.978Z
+
+> ↩︎ result: 613:  const mat = (tile: THREE.Texture, floor = false) => new THREE.ShaderMaterial({
+> 614:    vertexShader: VERT, fragmentShader: FRAG, side: THREE.DoubleSide, fog: false,
+> 1148:    const heap = (s: number, side: number) => {
+> 1248:      clone.traverse((o) => { if ((o as THREE.Mesh).isMesh) (o as THREE.Mesh).material = new THREE.MeshBasicMaterial({ colorWrite: false, side: THREE.DoubleSide }); });
+>   const cap = new THREE.Mesh(new THREE.CircleGeometry(tunCap ? tunCap.r : L.R, 64), mat(tTube));
+>   cap.geometry.setAttribute('aTile', new THREE.Float32BufferAttribute(new Float32Array(cap.geometry.attributes.position.count * 2), 2));
+>   // m06tun: the cap shows the painted glowing vanishing point (the wall/water mask would swap it for a flat tile colour)
+>   if (tunCap) { cap.position.copy(tunCap.pos); cap.lookAt(cap.position.clone().sub(tunCap.dir)); (cap.material as THREE.ShaderMaterial).uniforms.uUseMask.value = 0; }
+>   else { cap.position.copy(fe.pos).addScaledVector(fe.up, L.hA); cap.lookAt(cap.position.clone().sub(T1)); }
+>   cap.name = 'm06_end'; cap.frustumCulled = false;
+> 674:  let tunCap: { pos: THREE.Vector3; dir: THREE.Vector3; r: number } | null = null;
+> 796:    { const fe = axisAt(a1); …[+384 chars]
+
+### 🤖 Claude — 2026-11-20T20:27:31.076Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -i 's/^S_END = S07 + 40.0 .*/S_END = S07 + 6.0       # tube ends just past the 07 entrance: an end wall with a doorway = the 07 tube mouth (match06.ts m06curl)/' tools/match06/r30_design_curl.py && grep -n \"^S_END\" tools/match06/r30_design_curl.py && python3 -I tools/match06/r30_design_curl.py | tail -2 && grep -n \"export async function buildMatch06\" src/world/match06.ts", "description": "End the tube just past the 07 entrance; regenerate"}`
+
+### 🧑 User — 2026-11-20T20:27:31.343Z
+
+> ↩︎ result: 34:S_END = S07 + 6.0       # tube ends just past the 07 entrance: an end wall with a doorway = the 07 tube mouth (match06.ts m06curl)
+> drop over the new part: 30.5 u; rings at [58.95, 80.95, 102.95, 124.95, 146.95, 168.95, 190.95]
+> wrote assets/textures/match06/route06curl.json
+> 517:export async function buildMatch06(course: Course): Promise<Match06> {
+> Shell cwd was reset to /home/user/rainbow-
+> [This command modified 1 file you've previously read: ../wt/s06/tools/match06/r30_design_curl.py. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-20T20:27:33.110Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "export async function buildMatch06(course: Course): Promise<Match06> {", "new_string": "export async function buildMatch06(course: Course, mouth07?: { c: THREE.Vector3; r: number }): Promise<Match06> {"}`
+
+### 🧑 User — 2026-11-20T20:27:33.138Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T20:27:41.706Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "    { const fe = axisAt(a1); tunCap = { pos: fe.p.clone(), dir: fe.t.clone(), r: radAt(a1) }; }", "new_string": "    { const fe = axisAt(a1); tunCap = { pos: fe.p.clone(), dir: fe.t.clone(), r: radAt(a1) }; }\n    // r30 m06curl: the tunnel ENDS just past Screen 07's entrance in a purple washer end wall (the wall tile continued radially\n    // inward from the rim) with a round doorway = the 07 tube mouth (Game.ts shows tube07 through it); no flat end disc\n    if (CURL && mouth07) {\n      const aP =  …[+1683 chars]`
+
+### 🧑 User — 2026-11-20T20:27:41.739Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T20:27:47.210Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='src/world/match06.ts'; t=open(p).read()\nold=\"  cap.name = 'm06_end'; cap.frustumCulled = false;\"\nassert old in t\nt=t.replace(old, old+\"\\n  if (CURL) cap.visible = false; // r30 m06curl: closed by the end wall + doorway instead\", 1)\nopen(p,'w').write(t)\np='src/game/Game.ts'; t=open(p).read()\nold=\"  const m06 = MATCH['06'] ? await buildMatch06(course) : null;\"\nassert old in t\nnew=\"\"\"  // r30 `&m06curl=1`: the 06 tunnel's end wall gets its doorway exactly at Screen 07's tube mouth\n  const m06 = MATCH['06'] ? await build …[+994 chars]`
+
+### 🧑 User — 2026-11-20T20:27:47.292Z
+
+> ↩︎ result: 11:import * as THREE from 'three';
+> 12:import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
+> 13:import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
+> 14:import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
+> 15:import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js';
+> 16:import { Course, StageId, WORLD } from '../world/course';
+> 17:import { buildEnvironment } from '../world/environment';
+> 18:import { createCandyEnvironment, createRenderer } from '../render/env';
+> 19:import { createGradePass } from '../render/grade';
+> 20:import { createHud } from '../ui/hud';
+> 21:import { findCinematic, playCinematic } from '../ui/cinematicVideo';
+> 22:import { createCoins, COIN_VALUE } from '../gameplay/coins';
+> 23:import { createInput } from '../gameplay/input';
+> 24:import { RideCamera } from './cameraRig';
+> 25:import { flag05 } from '../vfx/waterRibbon';
+> 26:import { MATCH } from './match';
+> 27:import { buildMatch08 } from '../world/match08';
+> 28:import { buildMatch06 } from '../world/match06';
+> 29:import { loadBennyRuntime, loadGirlRuntime, loadWater, moduleStatus } from './modules';
+> 126:  const m06 = M …[+205 chars]
+
+### 🤖 Claude — 2026-11-20T20:27:49.908Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -i \"s|^import { buildMatch06 } from '../world/match06';|import { buildMatch06 } from '../world/match06';\\nimport { tubeCenterAt } from '../world/tube';|\" src/game/Game.ts && grep -n \"const env = \\|env = buildEnvironment\" src/game/Game.ts | head -3 && npx tsc --noEmit -p . 2>&1 | head; echo done", "description": "Import tube helper and typecheck", "timeout": 240000}`
+
+### 🧑 User — 2026-11-20T20:27:52.813Z
+
+> ↩︎ result: 105:  const env = buildEnvironment(course);
+> done
+> Shell cwd was reset to /home/user/rainbow-
+> [This command modified 1 file you've previously read: ../wt/s06/src/game/Game.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-20T20:28:00.062Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && B=\"$(cat /home/user/rainbow-/qa/match/06/r29/QUERY_NEW_FINAL.txt | sed 's/&m06haze=50,115,0.85//')&m06curl=1\" && SH='[[\"s1_marked\",214.86,null],[\"s4_275\",275,null],[\"s6_315\",315,null],[\"s8_355\",355,null],[\"s9_385\",385,null],[\"s9c_408\",408,null],[\"s10_07a\",0.02,null,\"07\"]]' && (AUDIT_PORT=5293 AUDIT_SHOTS=\"$SH\" timeout 1500 node tools/match06/r30_shots.mjs /home/user/rainbow-/qa/match/06/r30/quick_v2_haze50 06 \"$B&m06haze=50,115,0.85\" 2>&1 | grep -E \"^0[67] |rror\" ; AUDIT_PORT=5294 AUDIT_SHOTS=\"$SH\" timeout 1500 node tools/match06/r …[+219 chars]`
+
+### 🧑 User — 2026-11-20T20:28:57.449Z
+
+> ↩︎ result: 06 s1_marked s 214.86 lat 0 stage 06 coins 1700
+> 06 s4_275 s 275.177 lat 0 stage 06 coins 1750
+> 06 s6_315 s 315.143 lat 0 stage 06 coins 1770
+> 06 s8_355 s 355.11 lat 0 stage 06 coins 1790
+> 06 s9_385 s 385.177 lat 0 stage 06 coins 1800
+> 06 s9c_408 s 408.171 lat 0 stage 07 coins 1830
+> 07 s10_07a s 424.671 lat 0 stage 07 coins 1950
+> 06 s1_marked s 214.86 lat 0 stage 06 coins 1700
+> 06 s4_275 s 275.177 lat 0 stage 06 coins 1750
+> 06 s6_315 s 315.143 lat 0 stage 06 coins 1770
+> 06 s8_355 s 355.11 lat 0 stage 06 coins 1790
+> 06 s9_385 s 385.177 lat 0 stage 06 coins 1800
+> 06 s9c_408 s 408.171 lat 0 stage 07 coins 1830
+> 07 s10_07a s 424.671 lat 0 stage 07 coins 1950
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T20:29:03.268Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r30 && python3 -c \"\nfrom PIL import Image, ImageDraw, ImageFont\nfs=['s1_marked','s4_275','s6_315','s8_355','s9_385','s9c_408','s10_07a']\nw,h=252,448; f=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',16)\nout=Image.new('RGB',(7*w,2*(h+24)),(20,12,34)); d=ImageDraw.Draw(out)\nfor r,dd in enumerate(['quick_v2_haze50','quick_v2_haze80']):\n  for i,n in enumerate(fs):\n    im=Image.open(f'{dd}/{n}.png').convert('RGB').resize((w,h)); x=i*w; y=r*(h+24); out.paste(im,(x,y+24)); d.text((x+4,y+3),dd[9:]+' '+n,font=f,fill='whi …[+187 chars]`
+
+### 🧑 User — 2026-11-20T20:29:03.589Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T20:29:05.274Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/scratchpad/v2_sheet.jpg"}`
+
+### 🧑 User — 2026-11-20T20:29:05.405Z
+
+> ↩︎ result: [image]
+
