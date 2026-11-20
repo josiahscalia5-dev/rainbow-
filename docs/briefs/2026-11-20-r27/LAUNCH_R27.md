@@ -69,3 +69,15 @@ Steps: (1) check `gameplay_silk.json`, then the silk verdict (APPROVED / BEFORE 
 one short swim clip 1.0x + 0.5x) — soft, fluffy, not grainy or spiky, colour unchanged dusty rose; (2) hat crown vs the approved taller beanie
 (redo only the probe you need); (3) if time, 06 start star leaning amber vs approved lighter yellow. Do NOT scale Benny.
 Best query so far `&benny20=1&b20expo=1&b20ppw=0.45&b20tuft=1&b20knit=1&b20star=1` (+ `&b20silk=2` pending) — not approved.
+
+## s05 — Screen 05 — started r27 ~16:10 UTC (slot freed by s06) — the queued end section + hard left
+Worktree `/home/user/wt/s05`, LOCAL `claude/rainbow-s05-match-c28` (= `eb7233e3`, clean), port 5275, temp `/home/user/scratch/s05/`. Your old notes:
+`/home/user/wt/s05/qa/match/05/r18/PROGRESS.md` (r19 next: (1) the flat cut-off gold paddle chunk at hard left in the kink (k81L) — Blender far
+paddle L3 / R3 static while the far block moves; (2) plain cyan near water at the end of 05 → painted water). Kept candidate query
+`/home/user/wt/s05/qa/match/05/r18/KEPT_STEP2.txt`. **Write proofs + a new PROGRESS.md in the MAIN repo `qa/match/05/r27/`** (the lead's autosave
+commits it). Lead r27 preview of that candidate in motion (`qa/review_r27/05/`, rated 7.5 overall — the closest playable screen with 08):
+`e_end` (85 %) the river spreads into a wide pink / cyan pool with scattered coins; `f_hard_left` a wall of bead foam covers Benny's side;
+water streaks a little stretched. Steps: (1) end section → the painted winding river with its pink edges and coin trail to the end;
+(2) hard left (bead-foam wall, paddle chunk) — and check hard RIGHT stays good; (3) if time, soft foam clusters instead of bead rows.
+Paid continuation views for 05 exist as PROPOSALS (`qa/review_r27/artwork/05/proposals/*_v1.png`, not approved by the user) — use them only as a
+look target, never as an accepted reference until the user approves.

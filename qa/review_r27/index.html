@@ -70,6 +70,17 @@ figure.ap figcaption{color:var(--gold);font-weight:600;letter-spacing:.04em}
 .lb img{max-height:88vh;max-width:100%;border-radius:20px;box-shadow:0 0 0 3px #120a1c}
 .lb p{color:#f6eefc;text-align:center;margin-top:10px;font-weight:600}
 .lb button{position:absolute;top:calc(env(safe-area-inset-top,0px) + 12px);right:max(16px,env(safe-area-inset-right,0px));background:#26163a;color:#f6eefc;border:1px solid #3d2758;border-radius:999px;padding:6px 14px;font:600 14px var(--body);cursor:pointer}
+.vset{display:grid;gap:10px;padding-top:6px;border-top:1px solid var(--line)}
+.vset h3{color:var(--fg)}
+.pair{flex:0 0 auto;display:grid;gap:6px}
+.pair .two{display:flex;gap:6px}
+.pair figure{width:min(132px,32vw)}
+.pair .lab{font-size:12px;font-weight:600;text-align:center}
+.ok{color:var(--good)} .badl{color:var(--bad)}
+.clips{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+@media (max-width:720px){.clips{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.clip{width:auto;min-width:0}
+.clip video{width:100%;max-width:100%;aspect-ratio:9/16;border-radius:16px;background:#120a1c;display:block}
 @media (prefers-reduced-motion:no-preference){.phone img{transition:transform .2s}.phone:hover img{transform:scale(1.03)}}
 </style>
 
@@ -93,6 +104,27 @@ figure.ap figcaption{color:var(--gold);font-weight:600;letter-spacing:.04em}
       <div class="row" role="listitem"><span class="nm">10 Slide Into Hiding</span><div class="track"><div class="fill" style="width:30%;background:var(--bad)"></div><div class="target"></div></div><span class="num lo">3</span></div>
     </div>
     <p class="legend">Scale 1–10 against your approved picture, judged by eye across all seven moments of each screen. These are my visual judgements, not measured percentages. White line = your 8.5 goal.</p>
+  </section>
+
+  <section class="panel" id="views" aria-labelledby="hviews">
+    <h2 id="hviews">New extra views for your approval</h2>
+    <p>Each new view repaints a clean frame of the real game (Benny, coins and HUD removed) in your approved picture's materials and colours. The game's layout is kept, so the view can later be painted onto the 3D scenery at that exact spot. Nothing here is approved until you say so. Reply with the screens or views you approve, for example "approve all 08 and 05".</p>
+    <p class="note">These views fix surfaces: gold, purple walls, water gloss, pink banks, crest and towel. They keep the game's current framing, so where the framing itself differs from your picture (06's rings at the top, 07's straight drop), that still needs the scenery and viewpoint work. Cost: 31 views, $3.72, all logged.</p>
+    <div id="viewsets"></div>
+  </section>
+
+  <section class="panel" id="c06" aria-labelledby="h06c">
+    <h2 id="h06c">Screen 06 opening: the comparison you were owed</h2>
+    <p>The bright blue cone under Benny is gone in the new candidate. The painted water now runs on unbroken under him, and his contact with the water is a low ring instead of long white V-shaped spray. The start view is unchanged. Still different: the water under him is straighter than your swirling picture, and from about 7% in, the view turns into the centred ring tunnel.</p>
+    <div class="strip" data-cmp="o1_003"></div>
+    <div class="strip" data-cmp="o2_007"></div>
+    <div class="clips">
+      <figure class="clip"><video src="web/06_saw_1x.mp4" controls muted playsinline loop preload="metadata"></video><figcaption>What you saw · normal speed</figcaption></figure>
+      <figure class="clip"><video src="web/06_new_1x.mp4" controls muted playsinline loop preload="metadata"></video><figcaption>New · normal speed</figcaption></figure>
+      <figure class="clip"><video src="web/06_saw_05x.mp4" controls muted playsinline loop preload="metadata"></video><figcaption>What you saw · half speed</figcaption></figure>
+      <figure class="clip"><video src="web/06_new_05x.mp4" controls muted playsinline loop preload="metadata"></video><figcaption>New · half speed</figcaption></figure>
+    </div>
+    <p class="note">Decision needed for the rest of 06: from about 10% to the end, the view is a centred gold-ring target, while your picture has an off-centre tunnel with the river curving up to the left. The specialist has used up the options that leave the route alone. Fixing it means letting the river after the opening curve left like your picture, which also shifts how 06 joins 07 a little. Should I test that as a separate candidate?</p>
   </section>
 
   <section class="panel" id="s04" aria-labelledby="h04">
@@ -122,12 +154,12 @@ figure.ap figcaption{color:var(--gold);font-weight:600;letter-spacing:.04em}
   <section class="panel" id="s06" aria-labelledby="h06">
     <div class="head"><h2 id="h06">06 · Crest the Rinse Arch</h2>
       <div class="pills"><span class="pill">Start <b class="hi">8.5</b></span><span class="pill">Swimming <b class="lo">5</b></span><span class="pill">Overall <b class="lo">5.5</b></span></div></div>
-    <p class="tag">Newest candidate: the opening blue cone removed (round 26). Not approved yet. Worker active now; your owed opening comparison is its first job.</p>
+    <p class="tag">Newest candidate: the opening blue cone removed and lower near foam (rounds 26–27). Not approved yet. The opening comparison is above; the rest of 06 waits on your decision.</p>
     <div class="strip" data-screen="06"></div>
     <div class="cols">
       <div><h4 class="k-close">Close to approved</h4><ul><li>Start view: curling crest, off-centre tunnel and coin trail match.</li><li>The blue cone under Benny at the opening is gone.</li></ul></div>
       <div><h4 class="k-diff">Still different</h4><ul><li>Right after the opening the curling crest and winding river become a wide, tilted streaky sheet.</li><li>Gold rings fill the top half; big round foam clouds block the bottom.</li><li>Coin trail straightens; Benny looks larger than in the picture.</li></ul></div>
-      <div><h4 class="k-fix">To reach 8.5</h4><ul><li>Lower foam (being tested now).</li><li>Rebuild the crest and the winding river for the whole stage, with the coins following the curve.</li><li>Keep the picture's view of the tunnel while moving.</li></ul></div>
+      <div><h4 class="k-fix">To reach 8.5</h4><ul><li>Lower near foam: done as a candidate (the big foam ball at the bottom is gone; one bank remains near the end).</li><li>Rebuild the crest and the winding river for the whole stage, with the coins following the curve.</li><li>Keep the picture's view of the tunnel while moving.</li></ul></div>
     </div>
   </section>
 
@@ -201,11 +233,20 @@ figure.ap figcaption{color:var(--gold);font-weight:600;letter-spacing:.04em}
 <script>
 const moments=[["a_start","Start"],["b_early","Early"],["c_middle","Middle"],["d_late","Late"],["e_end","End"],["f_hard_left","Hard left"],["g_hard_right","Hard right"]];
 function fig(src,cap,ap){return `<figure class="${ap?'ap':''}"><button class="phone" type="button" data-src="${src}" data-cap="${cap}" aria-label="Enlarge ${cap}"><img src="${src}" alt="${cap}" loading="lazy"></button><figcaption>${cap}</figcaption></figure>`;}
-document.querySelectorAll('.strip').forEach(s=>{
+document.querySelectorAll('.strip[data-screen]').forEach(s=>{
   const n=s.dataset.screen; let h='';
   if(n==='0910'){h=fig('web/09_approved.jpg','09 Approved',1)+fig('web/09_now.jpg','09 Game now')+fig('web/10_approved.jpg','10 Approved',1)+fig('web/10_now.jpg','10 Game now');}
   else{h=fig(`web/${n}_approved.jpg`,`${n} Approved`,1)+moments.map(([k,l])=>fig(`web/${n}_${k}.jpg`,`${n} ${l}`)).join('');}
   s.innerHTML=h;});
+const VL={b_early:'Early',c_middle:'Middle',d_late:'Late',e_end:'End',f_hard_left:'Hard left',g_hard_right:'Hard right'};
+const SETS=[
+ ['04','04 · Through the Five Arrows',[['b_early','ok'],['f_hard_left','ok'],['g_hard_right','bad','added arrows the game does not have; will redo']],'Your three approved views (middle, late, end) are kept as they are.'],
+ ['05','05 · Flow Into the Current',[['b_early','ok'],['c_middle','ok'],['d_late','ok'],['e_end','ok'],['f_hard_left','ok'],['g_hard_right','ok']],'Crisper slotted walls, brighter gold, cyan and pink swirls. A moderate step closer.'],
+ ['06','06 · Crest the Rinse Arch',[['b_early','ok'],['c_middle','ok'],['d_late','ok'],['e_end','ok'],['f_hard_left','ok'],['g_hard_right','ok']],'Bright polished gold, crisp purple walls, glossy water and a real curling crest. The rings still fill the top half because the game’s framing is kept.'],
+ ['07','07 · Dive the Washer Tube',[['b_early','ok'],['c_middle','ok'],['d_late','ok'],['e_end','bad','added a gold arch the game does not have; will redo after the foam fix'],['f_hard_left','ok'],['g_hard_right','ok']],'Purple slotted walls and gold rings replace the flat magenta. The big foam heaps stay until the game’s foam is reshaped (in progress).'],
+ ['08','08 · Final Spin Chamber',[['b_early','ok'],['c_middle','ok'],['d_late','ok'],['e_end','ok'],['f_hard_left','ok'],['g_hard_right','ok']],'The best set: a single crisp towel, the window, and the broad pink sheet turned back into a river with banks and a foam border.']];
+document.getElementById('viewsets').innerHTML=SETS.map(([n,t,vs,note])=>`<div class="vset"><h3>${t}</h3><p class="tag">${note}</p><div class="strip">${fig(`web/${n}_approved.jpg`,`${n} Approved`,1)}${vs.map(([v,st,why])=>`<div class="pair"><div class="two">${fig(`web/s3_${n}_${v}_game.jpg`,`Game now`)}${fig(`web/s3_${n}_${v}_new.jpg`,`New view`)}</div><div class="lab">${VL[v]} · ${st==='ok'?'<span class="ok">usable</span>':'<span class="badl">not usable: '+why+'</span>'}</div></div>`).join('')}</div></div>`).join('');
+document.querySelectorAll('.strip[data-cmp]').forEach(s=>{const k=s.dataset.cmp,l=k==='o1_003'?'3% in':'7% in';s.innerHTML=fig(`web/06cmp_${k}_1.jpg`,`Approved`,1)+fig(`web/06cmp_${k}_2.jpg`,`What you saw · ${l}`)+fig(`web/06cmp_${k}_3.jpg`,`New · ${l}`);});
 const lb=document.getElementById('lb'),li=document.getElementById('lbimg'),lc=document.getElementById('lbcap');
 document.addEventListener('click',e=>{const b=e.target.closest('.phone');if(b){li.src=b.dataset.src;li.alt=b.dataset.cap;lc.textContent=b.dataset.cap;lb.hidden=false;document.getElementById('lbx').focus();}
   else if(e.target===lb||e.target.id==='lbx'){lb.hidden=true;}});

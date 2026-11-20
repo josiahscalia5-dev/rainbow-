@@ -890,3 +890,52 @@ Now I'll add the clustering + soft-glow option (`m04lgcg`, new uniform `uLG7`), 
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/04/r23 && python3 -I - <<'EOF'\np='PROGRESS.md'; s=open(p).read()\nold=\"\"\"* NEXT: step 1 verdict (pick one crescent variant)\"\"\"\nnew=\"\"\"* 15:35 rendered V0/V4/V5/V6/V7 + C1/C2 + C3_cloud_full (`m04bbdc=1&m04ry=0.35&m04bbdcb=1.6&m04bbdcl=1.3&m04bbdcw=0.45`, fuller banks\n  = my step-2 pick so far). V4..V7 still read as an even sprinkle of separate white dashes. NEW CODE (tsc 0, default off):\n  `&m04lgcg=t` crescents gather in clusters along the swirl ridges (+ `m04lgcgx`/`m04lgcgz` cluster size, `m04lgch` soft cyan halo,\n  uniform `uLG7`); …[+622 chars]`
 
+### 🧑 User — 2026-11-20T16:08:13.793Z
+
+> ↩︎ result: ok
+> [render_slot] got slot 1 after 1686s
+> start s1var/V11_clu_dense 16:03:42
+> done /home/user/scratch/s04/s1var/V11_clu_dense 2 png
+> start s1var/V12_clu_mid 16:04:22
+> done /home/user/scratch/s04/s1var/V12_clu_mid 2 png
+> start s1var/V0_base_extra 16:05:07
+> done /home/user/scratch/s04/s1var/V0_base_extra 3 png
+> start s3var/A5V 16:05:55
+> done /home/user/scratch/s04/s3var/A5V 6 png
+> start s3var/A5_base_extra 16:07:16
+> done /home/user/scratch/s04/s3var/A5_base_extra 3 png
+> ALL_DONE
+> 16:08:13
+
+### 🤖 Claude — 2026-11-20T16:08:16.732Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s04 && python3 -I -c \"\nfrom PIL import Image\nvs=['V4_fine','V11_clu_dense','V12_clu_mid']\nW=Image.new('RGB',(3*400,2*330))\nfor k,v in enumerate(vs):\n  for j,sh in enumerate(['c_middle','d_late']):\n    im=Image.open(f's1var/{v}/{sh}.png').convert('RGB')\n    W.paste(im.crop((80,1180,480,1510)),(k*400,j*330))\nW.save('lgc_full_r27c.png')\n\"", "description": "Build glint crop sheet V4 vs V11 vs V12"}`
+
+### 🧑 User — 2026-11-20T16:08:17.105Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T16:08:18.545Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s04/lgc_full_r27c.png"}`
+
+### 🧑 User — 2026-11-20T16:08:18.565Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T16:08:27.241Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s04 && python3 -I -c \"\nfrom PIL import Image\nsh=['a2_01','b_early','b2_20','c_middle','c2_45']\nbase={'a2_01':'s3var/A5_base_extra','b_early':'s1var/V0_base','b2_20':'s3var/A5_base_extra','c_middle':'s1var/V0_base','c2_45':'s3var/A5_base_extra'}\nW=Image.new('RGB',(5*282,2*400))\nfor k,s in enumerate(sh):\n  for j,d in enumerate([base[s],'s3var/A5V']):\n    im=Image.open(f'{d}/{s}.png').convert('RGB')\n    W.paste(im.crop((150,500,714,1300)).resize((282,400)),(k*282,j*400))\nW.save('a5v_sheet.png')\n\" ; node /home/user/tools-pixelmatch/pixeldiff.mjs s1var …[+135 chars]`
+
+### 🧑 User — 2026-11-20T16:08:28.475Z
+
+> ↩︎ result: {"a":"s1var/V0_base_extra/a_start.png","b":"s3var/A5V/a_start.png","rows":[0,1536],"threshold":0.1,"diff_pixels":0,"total":1327104,"diff_pct":0}
+
+### 🤖 Claude — 2026-11-20T16:08:30.077Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s04/a5v_sheet.png"}`
+
+### 🧑 User — 2026-11-20T16:08:30.121Z
+
+> ↩︎ result: [image]
+

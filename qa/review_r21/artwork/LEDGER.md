@@ -58,3 +58,12 @@
 | 2026-11-20 16:04 | g_hard_right | nano-banana-2/edit 2K | `01a1f9b3-348d-7eb0-9a4d-0fb15026e91e` | 1 | 0.12 | g_hard_right_v1.png |
 | 2026-11-20 16:04 | e_end | nano-banana-2/edit 2K | `01a1f9b3-34d6-7a42-8cb5-ba1e12017120` | 1 | 0.12 | e_end_v1.png |
 | 2026-11-20 16:04 | f_hard_left | nano-banana-2/edit 2K | `01a1f9b3-34f3-7550-aaee-f99b036579db` | 1 | 0.12 | f_hard_left_v1.png |
+| 2026-11-20 16:05 | g_hard_right_sw | nano-banana-2/edit 2K | `01a1f9b4-9b45-7dd3-9528-e45ab2f71393` | 1 | 0.12 | g_hard_right_sw_v1.png |
+| 2026-11-20 16:06 | f_hard_left_sw | nano-banana-2/edit 2K | `01a1f9b4-9b10-7663-96e0-0dd5706699f3` | 1 | 0.12 | f_hard_left_sw_v1.png |
+* Round 27 result (16:00–16:10 UTC): **31 jobs, $3.72** (07 ×8 incl. 2 retries, 06 ×6, 04 ×5 incl. 2 swatch retries, 05 ×6, 08 ×6), all
+  `fal-ai/nano-banana-2/edit` 2K, request ids in each `qa/review_r27/artwork/NN/proposals/*.job.json`. Selection shown to the user:
+  `qa/review_r27/artwork/SELECTION_FOR_APPROVAL.json` + page https://claude.ai/artifact/WVqynQ46W6j3yZSGAqV3qA ("New extra views").
+  Not usable: 04 `g_hard_right` (both tries: layout drift / added arrows), 07 `e_end` (try 1 added an arch, try 2 moved the top) — redo later.
+  The model keeps the game's big foam heaps on 07 even when told to reshape them → regenerate 07 late/end after s07's foam step.
+  Lesson: full original as reference → layout drift on steering views (04 hard L/R); swatches keep the layout.
+* **Running total: 42 jobs, $5.04** (r21 $0.60, r22 $0.72, r27 $3.72). Nothing is an accepted reference until the user approves it.

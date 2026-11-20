@@ -59,4 +59,13 @@ newest `backups/wip/*-c28/`, trial07 included).
 * 15:28–15:45 lead preview: newest candidate of 04–08 in motion + 09/10 stand-ins → `qa/review_r27/` (README with ratings + method) and the
   page https://claude.ai/artifact/WVqynQ46W6j3yZSGAqV3qA. Ratings (by eye, overall): 04 6.5 · 05 7.5 · 06 5.5 · 07 5 · 08 7.5 · 09/10 3.
   None ≥ 8.5 in motion. New 07 defect (magenta wall panel at 85 %) sent to s07. Save `15d03cc` verified.
-* Open question to the user: 09 and 10 playable or Flow videos? Paid continuation views per screen need the user's OK (job + cost first).
+* ~15:55 USER: "Yes, for the extra view artwork for step 3 … I just want it to look exactly like my approved screen images" → step 3 run by the lead:
+  clean frames `qa/review_r27/artwork/NN/game_frames/` (tools/lead21/clean_frame.mjs, frozen 15:03 candidates) → 31 fal views ($3.72, ledger
+  `qa/review_r21/artwork/LEDGER.md`), prompts `qa/review_r27/artwork/prompt_*.txt`, swatches `swatches04/`, `swatches08/`. Shown on the page
+  ("New extra views for your approval"); WAITING for the user's approval per screen / view. Unusable: 04 g_hard_right, 07 e_end.
+* ~16:05 s06 FINISHED 2 steps: step 1 owed opening comparison (`&m06hole=2&m06fade=1&m06spl=1`, GOOD IMPROVEMENT; `qa/match/06/r25/step1_hole/COMPARE/`
+  + clips, gameplay 8/8, 91) and step 2 foam height (`&m06fcn=3&m06fcg=1`, GOOD IMPROVEMENT moderate; `qa/match/06/r25/step2/COMPARE/`). Step 3 needs
+  a USER DECISION: from ~10 % the view is a centred ring target; only remaining lever = let the river after the opening curve left like the picture
+  (changes the 06→07 join) → asked on the page + in chat. Comparison shown on the page ("Screen 06 opening").
+* ~16:10 s05 started (slot freed by s06): end section + hard left (+ hard right check) → `qa/match/05/r27/`.
+* Open questions to the user: (1) 09 / 10 playable or Flow videos? (2) approve which extra views? (3) 06: allow the river after the opening to curve left?

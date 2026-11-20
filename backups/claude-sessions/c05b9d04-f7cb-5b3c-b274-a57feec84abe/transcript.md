@@ -3088,3 +3088,316 @@ All six Screen 07 views came back ($0.72). Checking each against its game frame 
 
 > 🔧 **Bash** `{"command": "G=/tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/scratchpad/gen_r27.log; until grep -q \"GEN_ALL_DONE\" $G; do sleep 15; done; cat $G; cat /tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/scratchpad/clean_r27.log; for n in 04 05 08; do for f in qa/review_r27/artwork/$n/proposals/*.job.json; do python3 -c \"import json;d=json.load(open('$f'));print('$n',d['name'],d['status'],d['estimated_cost_usd'],(d['error'] or '')[:80])\"; done; done; S=/tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/scratchpad; python3 -I $S/g …[+337 chars]`
 
+### 🧑 User — 2026-11-20T16:04:44.106Z
+
+> ↩︎ result: gen 06 done 16:01:19
+> gen 04 done 16:02:11
+> gen 05 done 16:03:23
+> gen 08 done 16:04:27
+> GEN_ALL_DONE
+> clean 07 exit 0 15:59:42
+> clean 06 exit 0 16:00:42
+> clean 04 exit 0 16:01:29
+> clean 05 exit 0 16:02:45
+> clean 08 exit 0 16:03:38
+> ALL_DONE
+> 04 b_early COMPLETED 0.12 
+> 04 f_hard_left COMPLETED 0.12 
+> 04 g_hard_right COMPLETED 0.12 
+> 05 b_early COMPLETED 0.12 
+> 05 c_middle COMPLETED 0.12 
+> 05 d_late COMPLETED 0.12 
+> 05 e_end COMPLETED 0.12 
+> 05 f_hard_left COMPLETED 0.12 
+> 05 g_hard_right COMPLETED 0.12 
+> 08 b_early COMPLETED 0.12 
+> 08 c_middle COMPLETED 0.12 
+> 08 d_late COMPLETED 0.12 
+> 08 e_end COMPLETED 0.12 
+> 08 f_hard_left COMPLETED 0.12 
+> 08 g_hard_right COMPLETED 0.12
+
+### 🤖 Claude — 2026-11-20T16:04:47.663Z
+
+The Screen 06 specialist finished two steps (details below). First the 04, 05 and 08 views.
+
+### 🤖 Claude — 2026-11-20T16:04:48.756Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/scratchpad/gen05.jpg"}`
+
+### 🧑 User — 2026-11-20T16:04:48.790Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T16:04:49.406Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/scratchpad/gen08.jpg"}`
+
+### 🧑 User — 2026-11-20T16:04:49.419Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T16:04:50.060Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/scratchpad/gen04.jpg"}`
+
+### 🧑 User — 2026-11-20T16:04:50.094Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T16:05:08.865Z
+
+> 🔧 **Bash** `{"command": "A=qa/review_r27/artwork && mkdir -p $A/swatches04 && python3 -I -c \"\nfrom PIL import Image, ImageDraw, ImageFont\nim=Image.open('references/04_through_the_five_arrows.png').convert('RGB')\nB={'gold_rings':(300,420,620,700),'pink_swirl_foam':(0,620,240,1000),'water_lane':(330,700,560,900),'river_right':(620,1050,864,1400)}\nfnt=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',14); tiles=[]\nfor n,b in B.items():\n  c=im.crop(b); c.save(f'$A/swatches04/{n}.png'); tiles.append((n,c.resize((200,round(200*c.height/c.width)))))\nH=max(t.height for _,t in tiles …[+333 chars]`
+
+### 🧑 User — 2026-11-20T16:05:09.125Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T16:05:09.910Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/scratchpad/sw04.jpg"}`
+
+### 🧑 User — 2026-11-20T16:05:09.929Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T16:05:12.916Z
+
+The ring, water-lane and river crops are usable. The pink-swirl crop is mostly a coin, so I'll drop it and tell the model to ignore coins.
+
+### 🤖 Claude — 2026-11-20T16:05:24.727Z
+
+> 🔧 **Bash** `{"command": "A=qa/review_r27/artwork && cat > $A/prompt_04_sw.txt <<'EOF'\nIMAGE 1 is a clean frame from a 3D mobile game (the character was removed) and defines EVERYTHING about the layout. IMAGES 2-4 are small material swatches cut from the art director's approved illustration of this level — they show ONLY surface materials, not a layout (ignore any coins in them):\nIMAGE 2 = the polished yellow-gold telescoping tunnel rings with warm light; IMAGE 3 = the glossy cyan water lane with the glowing white-cyan chevron arrows; IMAGE 4 = the glossy cyan river with hot-pink swirls, soft white-lilac …[+2744 chars]`
+
+### 🤖 Claude — 2026-11-20T16:05:25.833Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/scratchpad/gen04sw.jpg"}`
+
+### 🧑 User — 2026-11-20T16:06:05.579Z
+
+> ↩︎ result: [2]+  Done                    nohup python3 -I tools/lead21/fal_view.py $A/04/proposals ${v}_sw $A/prompt_04_sw.txt $A/04/game_frames/$v.png $A/swatches04/gold_rings.png $A/swatches04/water_lane.png $A/swatches04/river_right.png > $A/04/proposals/${v}_sw.log 2>&1
+> [1]+  Done                    nohup python3 -I tools/lead21/fal_view.py $A/04/proposals ${v}_sw $A/prompt_04_sw.txt $A/04/game_frames/$v.png $A/swatches04/gold_rings.png $A/swatches04/water_lane.png $A/swatches04/river_right.png > $A/04/proposals/${v}_sw.log 2>&1
+> f_hard_left_sw COMPLETED None
+> g_hard_right_sw COMPLETED None
+
+### 🧑 User — 2026-11-20T16:06:05.593Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T16:06:22.700Z
+
+> 🔧 **Bash** `{"command": "sed -n 25,27p docs/briefs/2026-11-19-r19/RESUME_R19.md | cut -c1-900; ls /home/user/wt/s05/qa/match/05/ | tail -4; ls -t /home/user/wt/s05/qa/match/05/*/PROGRESS.md 2>/dev/null | head -2; grep -n \"s05\\|05 \" docs/briefs/2026-11-20-r2[2-6]/COORDINATION.md 2>/dev/null | grep -i \"hard-left\\|end section\\|queued\" | head -4 | cut -c1-300", "description": "Read Screen 05 saved next tasks"}`
+
+### 🧑 User — 2026-11-20T16:06:22.801Z
+
+> ↩︎ result: | **s05** (water-fx-specialist) | `claude/rainbow-s05-match-c19` @ `eb7233e3` | `qa/match/05/r18/KEPT_STEP2.txt` (= r17 kept set + `&m05wcrisp=1&m05pink=1`; `m05lidf` REJECTED: doubled far paddles) | 1 the flat cut-off gold paddle chunk at hard left in the kink (k81L) — Blender far paddle L3 / R3 static while the far block moves; 2 plain cyan near water at the end of 05 → painted water; then brief tasks 3–4. 30 extra step-2 renders left untracked on purpose (8 key positions per set are committed) |
+> | s06 | `claude/rainbow-s06-match-c18` @ `c649fcbc` + WIP rank-3 (`backups/wip/claude__rainbow-s06-match-c18/`) | `&m06gold=1` v2 + `&m06fclu=1` | not restarted since r18 (see RESUME_R18.md "s06") |
+> | s07 | `claude/rainbow-s07-match-c18` @ `8accdad0` | `K&m07foam=1&m07coinsz=1&m07nearw=1&m07foamb=1&m07band=1` | not restarted since r18: real 3D puffy foam clouds at hard left / right; thin sliver across a gold paddle at f10 |
+> r7
+> r8
+> r9
+> scenery_bands.txt
+> /home/user/wt/s05/qa/match/05/r9/PROGRESS.md
+> /home/user/wt/s05/qa/match/05/r8/PROGRESS.md
+> docs/briefs/2026-11-20-r22/COORDINATION.md:27:| s05 polish | QUEUED | from `claude/rainbow-s05-match-c19` @ `eb7233e3` | 5275 | end of 05, hard left |
+>  …[+467 chars]
+
+### 🤖 Claude — 2026-11-20T16:06:25.212Z
+
+> 🔧 **Bash** `{"command": "ls -d /home/user/wt/s05/qa/match/05/r1* 2>/dev/null; ls -t /home/user/wt/s05/qa/match/05/r1*/PROGRESS.md /home/user/wt/s05/qa/match/05/r1*/*.md 2>/dev/null | head -4", "description": "Find the newest Screen 05 progress notes"}`
+
+### 🧑 User — 2026-11-20T16:06:25.279Z
+
+> ↩︎ result: /home/user/wt/s05/qa/match/05/r10
+> /home/user/wt/s05/qa/match/05/r11
+> /home/user/wt/s05/qa/match/05/r12
+> /home/user/wt/s05/qa/match/05/r13
+> /home/user/wt/s05/qa/match/05/r14
+> /home/user/wt/s05/qa/match/05/r15
+> /home/user/wt/s05/qa/match/05/r16
+> /home/user/wt/s05/qa/match/05/r17
+> /home/user/wt/s05/qa/match/05/r18
+> /home/user/wt/s05/qa/match/05/r18/PROGRESS.md
+> /home/user/wt/s05/qa/match/05/r18/PROGRESS.md
+> /home/user/wt/s05/qa/match/05/r17/PROGRESS.md
+> /home/user/wt/s05/qa/match/05/r17/PROGRESS.md
+
+### 🤖 Claude — 2026-11-20T16:06:30.207Z
+
+Screen 05's notes are in its worktree. Adding its brief to the round-27 launch file, then starting it.
+
+### 🤖 Claude — 2026-11-20T16:06:36.901Z
+
+> 🔧 **Bash** `{"command": "cat >> docs/briefs/2026-11-20-r27/LAUNCH_R27.md <<'EOF'\n\n## s05 — Screen 05 — started r27 ~16:10 UTC (slot freed by s06) — the queued end section + hard left\nWorktree `/home/user/wt/s05`, LOCAL `claude/rainbow-s05-match-c28` (= `eb7233e3`, clean), port 5275, temp `/home/user/scratch/s05/`. Your old notes:\n`/home/user/wt/s05/qa/match/05/r18/PROGRESS.md` (r19 next: (1) the flat cut-off gold paddle chunk at hard left in the kink (k81L) — Blender far\npaddle L3 / R3 static while the far block moves; (2) plain cyan near water at the end of 05 → painted water). Kept candidate query\ …[+984 chars]`
+
+### 🧑 User — 2026-11-20T16:06:36.934Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-20T16:06:45.955Z
+
+> 🔧 **Agent** `{"description": "Screen 05 specialist r27", "subagent_type": "water-fx-specialist", "run_in_background": true, "prompt": "You are the Screen 05 specialist (slug s05) of the Rainbow game, round 27, started now because a worker slot freed up. Screen 05 has been queued since round 19; your code is restored and clean — continue from your saved state, do not restart.\n\nRead, in this order: /home/user/rainbow-/CLAUDE.md; /home/user/rainbow-/docs/briefs/2026-11-20-r27/LAUNCH_R27.md (Common + the \"s05\" section at the end); /home/user/rainbow-/docs/briefs/2026-11-20-r26/USER_VISUAL_BRIEF_R26.md (bin …[+2147 chars]`
+
+### 🧑 User — 2026-11-20T16:06:45.986Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a640b1b3cc4750436 (internal ID - do not mention to user. Use SendMessage with to: 'a640b1b3cc4750436', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/tasks/a640b1b3cc4750436.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-20T16:06:57.491Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r25/step1_hole/COMPARE && ls; ls o2_007 a_start; ls -la clips/ | awk '{print $5, $9}'; ffprobe -v error -show_entries format=duration -of csv=p=0 clips/3_NEW_opening_1.0x.mp4", "description": "Inspect the Screen 06 comparison files"}`
+
+### 🧑 User — 2026-11-20T16:06:57.747Z
+
+> ↩︎ result: README.txt
+> a_start
+> clips
+> o1_003
+> o2_007
+> o3_012
+> a_start:
+> 1_ORIGINAL_APPROVED.png
+> 2_WHAT_YOU_SAW.png
+> 3_NEW.png
+> 
+> o2_007:
+> 1_ORIGINAL_APPROVED.png
+> 2_WHAT_YOU_SAW.png
+> 3_NEW.png
+>  
+> 4096 .
+> 4096 ..
+> 1271549 2_WHAT_YOU_SAW_opening_0.5x.mp4
+> 957039 2_WHAT_YOU_SAW_opening_1.0x.mp4
+> 1243469 3_NEW_opening_0.5x.mp4
+> 933337 3_NEW_opening_1.0x.mp4
+> 1.083333
+
+### 🤖 Claude — 2026-11-20T16:07:05.668Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && python3 -I -c \"\nfrom PIL import Image, ImageDraw, ImageFont\nR='qa/match/06/r25/step1_hole/COMPARE/o2_007'; fnt=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',14); W=240;H=427\nfs=['1_ORIGINAL_APPROVED','2_WHAT_YOU_SAW','3_NEW']\nsh=Image.new('RGB',(W*3,H+20),'white'); d=ImageDraw.Draw(sh)\nfor i,f in enumerate(fs): sh.paste(Image.open(f'{R}/{f}.png').convert('RGB').resize((W,H)),(i*W,20)); d.text((i*W+4,2),f,fill='black',font=fnt)\nsh.save('/tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/scratchpad/s06c …[+86 chars]`
+
+### 🧑 User — 2026-11-20T16:07:05.928Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T16:07:06.764Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/scratchpad/s06cmp.jpg"}`
+
+### 🧑 User — 2026-11-20T16:07:06.786Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T16:07:20.080Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nfrom PIL import Image\nimport os, shutil, json\nR='qa/review_r27'; A=R+'/artwork'; W=R+'/web'\npick={'04':[('b_early','b_early_v1','ok'),('f_hard_left','f_hard_left_sw_v1','ok'),('g_hard_right','g_hard_right_sw_v1','bad:added arrows that are not in the game')],\n '05':[(v,v+'_v1','ok') for v in ['b_early','c_middle','d_late','e_end','f_hard_left','g_hard_right']],\n '06':[(v,v+'_v1','ok') for v in ['b_early','c_middle','d_late','e_end','f_hard_left','g_hard_right']],\n '07':[('b_early','b_early_v1','ok'),('c_middle','c_middle_v1','ok'),('d_late','d_late_v1',' …[+1419 chars]`
+
+### 🧑 User — 2026-11-20T16:07:26.324Z
+
+> ↩︎ result: added 7965 KB
+> web total 12511 KB
+
+### 🤖 Claude — 2026-11-20T16:07:31.743Z
+
+Adding the two new sections to the page.
+
+### 🤖 Claude — 2026-11-20T16:07:41.548Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/review_r27/index.html", "old_string": "  <section class=\"panel\" id=\"s04\" aria-labelledby=\"h04\">", "new_string": "  <section class=\"panel\" id=\"views\" aria-labelledby=\"hviews\">\n    <h2 id=\"hviews\">New extra views for your approval</h2>\n    <p>Each new view repaints a clean frame of the real game (Benny, coins and HUD removed) in your approved picture's materials and colours. The game's layout is kept, so the view can later be painted onto the 3D scenery at that exact spot. Nothing here is approved until you say so. Reply …[+2390 chars]`
+
+### 🧑 User — 2026-11-20T16:07:41.631Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/review_r27/index.html has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T16:07:45.019Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/review_r27/index.html", "old_string": "@media (prefers-reduced-motion:no-preference){", "new_string": ".vset{display:grid;gap:10px;padding-top:6px;border-top:1px solid var(--line)}\n.vset h3{color:var(--fg)}\n.pair{flex:0 0 auto;display:grid;gap:6px}\n.pair .two{display:flex;gap:6px}\n.pair figure{width:min(132px,32vw)}\n.pair .lab{font-size:12px;font-weight:600;text-align:center}\n.ok{color:var(--good)} .badl{color:var(--bad)}\n.clips{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}\n@media (max-width:720px){.clip …[+240 chars]`
+
+### 🧑 User — 2026-11-20T16:07:45.084Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/review_r27/index.html has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T16:07:54.355Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/review_r27/index.html", "old_string": "const lb=document.getElementById('lb')", "new_string": "const VL={b_early:'Early',c_middle:'Middle',d_late:'Late',e_end:'End',f_hard_left:'Hard left',g_hard_right:'Hard right'};\nconst SETS=[\n ['04','04 · Through the Five Arrows',[['b_early','ok'],['f_hard_left','ok'],['g_hard_right','bad','added arrows the game does not have; will redo']],'Your three approved views (middle, late, end) are kept as they are.'],\n ['05','05 · Flow Into the Current',[['b_early','ok'],['c_middle','ok'],['d_late','ok …[+1932 chars]`
+
+### 🧑 User — 2026-11-20T16:07:54.544Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/review_r27/index.html has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T16:08:00.329Z
+
+The page's existing image loop would also run over the new comparison rows, so I'm limiting it to the screen strips. I'm also updating the Screen 06 card now that its specialist has finished.
+
+### 🤖 Claude — 2026-11-20T16:08:01.323Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/review_r27/index.html", "old_string": "document.querySelectorAll('.strip').forEach(s=>{", "new_string": "document.querySelectorAll('.strip[data-screen]').forEach(s=>{"}`
+
+### 🧑 User — 2026-11-20T16:08:01.365Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/review_r27/index.html has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T16:08:02.876Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/review_r27/index.html", "old_string": "    <p class=\"tag\">Newest candidate: the opening blue cone removed (round 26). Not approved yet. Worker active now; your owed opening comparison is its first job.</p>", "new_string": "    <p class=\"tag\">Newest candidate: the opening blue cone removed and lower near foam (rounds 26–27). Not approved yet. The opening comparison is above; the rest of 06 waits on your decision.</p>"}`
+
+### 🧑 User — 2026-11-20T16:08:02.916Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/review_r27/index.html has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T16:08:04.081Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/review_r27/index.html", "old_string": "<li>Lower foam (being tested now).</li>", "new_string": "<li>Lower near foam: done as a candidate (the big foam ball at the bottom is gone; one bank remains near the end).</li>"}`
+
+### 🧑 User — 2026-11-20T16:08:04.136Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/review_r27/index.html has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T16:08:07.983Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport json,os,re\nh=open('qa/review_r27/index.html').read()\nm={}\nfor n in ['04','05','06','07','08','09','10']: m[f'web/{n}_approved.jpg']=f'qa/review_r27/web/{n}_approved.jpg'\nfor n in ['04','05','06','07','08']:\n  for k in ['a_start','b_early','c_middle','d_late','e_end','f_hard_left','g_hard_right']: m[f'web/{n}_{k}.jpg']=f'qa/review_r27/web/{n}_{k}.jpg'\nfor n in ['09','10']: m[f'web/{n}_now.jpg']=f'qa/review_r27/web/{n}_now.jpg'\nfor f in os.listdir('qa/review_r27/web'):\n  if f.startswith(('s3_','06cmp_','06_')): m['web/'+f]='qa/review_r27/web/'+f\nass …[+297 chars]`
+
+### 🧑 User — 2026-11-20T16:08:08.063Z
+
+> ↩︎ result: 108 12068 KB
+
+### 🤖 Claude — 2026-11-20T16:08:10.324Z
+
+Publishing the update with only the new files (the earlier images stay on the page):
+
+### 🤖 Claude — 2026-11-20T16:08:12.278Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport json\nm=json.load(open('/tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/scratchpad/files2.json'))\nn={k:v for k,v in m.items() if k.startswith(('web/s3_','web/06cmp_','web/06_'))}\nprint(len(n)); print(json.dumps(n,separators=(',',':')))\"", "description": "Print the new files map for publishing"}`
+
+### 🧑 User — 2026-11-20T16:08:12.332Z
+
+> ↩︎ result: 72
+> {"web/06_approved.jpg":"qa/review_r27/web/06_approved.jpg","web/06_a_start.jpg":"qa/review_r27/web/06_a_start.jpg","web/06_b_early.jpg":"qa/review_r27/web/06_b_early.jpg","web/06_c_middle.jpg":"qa/review_r27/web/06_c_middle.jpg","web/06_d_late.jpg":"qa/review_r27/web/06_d_late.jpg","web/06_e_end.jpg":"qa/review_r27/web/06_e_end.jpg","web/06_f_hard_left.jpg":"qa/review_r27/web/06_f_hard_left.jpg","web/06_g_hard_right.jpg":"qa/review_r27/web/06_g_hard_right.jpg","web/s3_08_b_early_game.jpg":"qa/review_r27/web/s3_08_b_early_game.jpg","web/s3_05_f_hard_left_game.jpg":"qa/review_r27/web/s3_05_f_hard_left_game.jpg","web/s3_08_c_middle_new.jpg":"qa/review_r27/web/s3_08_c_middle_new.jpg","web/s3_06_d_late_new.jpg":"qa/review_r27/web/s3_06_d_late_new.jpg","web/06cmp_o2_007_1.jpg":"qa/review_r27/web/06cmp_o2_007_1.jpg","web/s3_06_f_hard_left_game.jpg":"qa/review_r27/web/s3_06_f_hard_left_game.jpg","web/06cmp_o1_003_2.jpg":"qa/review_r27/web/06cmp_o1_003_2.jpg","web/s3_04_g_hard_right_new.jpg":"qa/review_r27/web/s3_04_g_hard_right_new.jpg","web/s3_07_c_middle_game.jpg":"qa/review_r27/web/s3_07_c_middle_game.jpg","web/06_saw_1x.mp4":"qa/review_r27/web/06_saw_1x.mp4","web/s3_08_d_late_game.j …[+3854 chars]
+
+### 🤖 Claude — 2026-11-20T16:08:33.882Z
+
+> 🔧 **Artifact** `{"file_path": "/home/user/rainbow-/qa/review_r27/index.html", "files": {"web/06_approved.jpg": "qa/review_r27/web/06_approved.jpg", "web/06_a_start.jpg": "qa/review_r27/web/06_a_start.jpg", "web/06_b_early.jpg": "qa/review_r27/web/06_b_early.jpg", "web/06_c_middle.jpg": "qa/review_r27/web/06_c_middle.jpg", "web/06_d_late.jpg": "qa/review_r27/web/06_d_late.jpg", "web/06_e_end.jpg": "qa/review_r27/web/06_e_end.jpg", "web/06_f_hard_left.jpg": "qa/review_r27/web/06_f_hard_left.jpg", "web/06_g_hard_right.jpg": "qa/review_r27/web/06_g_hard_right.jpg", "web/s3_08_b_early_game.jpg": "qa/review_r27/web …[+4666 chars]`
+
+### 🧑 User — 2026-11-20T16:08:47.706Z
+
+> ↩︎ result: Published /home/user/rainbow-/qa/review_r27/index.html at https://claude.ai/artifact/WVqynQ46W6j3yZSGAqV3qA (Version 2, version id 1795190927-caf6)
+> 
+> Durable wake subscription: arming in the background — not registered yet, so this is not a subscription until `status` lists it (you are told if it cannot be registered). Once registered, this session is woken by a new turn when this artifact is republished elsewhere, or when anyone sends a comment on it to Claude.
+> 
+> To update: publish the same file path here (keeps this URL); from another conversation pass the URL as `url`, or that publish creates a separate artifact. This artifact is private: only its owner and the people the owner has given access can open the link. You cannot change sharing; that is done from the page's Share menu. If the page is meant for someone else, tell the user when you present the page that those people cannot open it until it is shared with them. Sharing can change without you being told: read the artifact before you later say who can open it.
+> 
+> The files you sent are still on disk. For the next small change to this file, send it as `edits` on a publish of the same file_path (old_str/new_str pairs copied exac …[+377 chars]
+
+### 🤖 Claude — 2026-11-20T16:08:49.119Z
+
+Page updated. Recording the batch in the ledger and notes, then saving to GitHub.
+
+### 🤖 Claude — 2026-11-20T16:09:00.824Z
+
+> 🔧 **Bash** `{"command": "cat >> qa/review_r21/artwork/LEDGER.md <<'EOF'\n* Round 27 result (16:00–16:10 UTC): **31 jobs, $3.72** (07 ×8 incl. 2 retries, 06 ×6, 04 ×5 incl. 2 swatch retries, 05 ×6, 08 ×6), all\n  `fal-ai/nano-banana-2/edit` 2K, request ids in each `qa/review_r27/artwork/NN/proposals/*.job.json`. Selection shown to the user:\n  `qa/review_r27/artwork/SELECTION_FOR_APPROVAL.json` + page https://claude.ai/artifact/WVqynQ46W6j3yZSGAqV3qA (\"New extra views\").\n  Not usable: 04 `g_hard_right` (both tries: layout drift / added arrows), 07 `e_end` (try 1 added an arch, try 2 moved the top) — red …[+2301 chars]`
+
