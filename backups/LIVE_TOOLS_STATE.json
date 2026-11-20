@@ -1,5 +1,5 @@
 {
- "time_utc": "2026-11-20T10:31:38+00:00",
+ "time_utc": "2026-11-20T10:32:35+00:00",
  "lead_branch": "ccr-5be1062a-0ffyej",
  "specialists_sha256_16": {
   "android-build-performance": "b0c45161860a960c",
@@ -17,8 +17,12 @@
  "workers_status_latest_round": {
   "round9_account9": null
  },
- "plugins_installed_locally": [],
- "plugins_enabled_user_settings": [],
+ "plugins_installed_locally": [
+  "worldlabs@worldlabs"
+ ],
+ "plugins_enabled_user_settings": [
+  "worldlabs@worldlabs"
+ ],
  "plugins_synced_from_claude_account": [
   "Closes the gap between Claude Code and the browser. When a task needs the web, Claude Code",
   "TypeScript/JavaScript language server for Claude Code that runs TypeScript 7's native LSP ",
@@ -35,7 +39,9 @@
   "Security review for Claude-generated code. Pattern-based warnings on edits, LLM-powered di",
   "Upstash Context7 MCP server for up-to-date documentation lookup. Connects to Context7's ho"
  ],
- "mcp_servers_configured": [],
+ "mcp_servers_configured": [
+  "worldlabs"
+ ],
  "hooks_project": [
   "PreCompact",
   "SessionEnd",
