@@ -17,9 +17,9 @@
  * is stripped by the preprocessor, so every existing query renders exactly as before.
  *
  * Switches (all optional, with `w30=1`): `w30f` flow speed u/s (2.2) · `w30v` vein strength (1) · `w30rb` rainbow-band strength (1) ·
- * `w30sp` glint strength (1) · `w30t=a,b` vein tile size across, along (u; 1.7,3.2) · `w30rip` ripple strength (0.55) ·
+ * `w30sp` glint strength (1) · `w30t=a,b` vein tile size across, along (u; 2.2,3.8) · `w30rip` ripple strength (0.55) ·
  * `w30old` share of the old painted streak strip kept (0) · `w30st=a,b` start hand-over (0.02,0.6) · `w30e=a,b` rainbow band from
- * |l|/Wc = a to b (0.5,1.0)
+ * |l|/Wc = a to b (0.36,1.0)
  */
 import * as THREE from 'three';
 
@@ -30,36 +30,48 @@ uniform sampler2D uW30T;
 uniform vec4 uW30A; // flow speed (u/s), vein strength, rainbow strength, glint strength
 uniform vec4 uW30B; // vein tile across (u), along (u), ripple strength, share of the old painted strip kept
 uniform vec4 uW30C; // start hand-over a..b (camera distance from the approved viewpoint), rainbow band inner / outer edge (|l| / Wc)
-// display-space rainbow across the edge band: e = 0 inner (cyan) .. 1 at the foam (magenta)
-vec3 w30Rainbow(float e) {
-  vec3 c = vec3(0.04, 0.86, 0.99);
-  c = mix(c, vec3(0.42, 0.93, 0.78), smoothstep(0.04, 0.20, e));
-  c = mix(c, vec3(0.99, 0.95, 0.56), smoothstep(0.20, 0.36, e));
-  c = mix(c, vec3(0.99, 0.74, 0.60), smoothstep(0.36, 0.50, e));
-  c = mix(c, vec3(0.98, 0.46, 0.86), smoothstep(0.50, 0.66, e));
-  c = mix(c, vec3(0.91, 0.24, 0.88), smoothstep(0.66, 0.86, e));
-  return c;
+// display-space colour across the edge band, e = 0 inner (cyan) .. 1 at the foam (magenta). Rainbow ramp = the approved picture's
+// right-hand band measured across it (cyan, mint, yellow, peach, pink, magenta); plain ramp = its near-camera sides (azure -> violet
+// -> pink -> magenta, no yellow). k = how much of the rainbow shows (comes and goes along the river)
+vec3 w30Edge(float e, float k) {
+  vec3 r = vec3(0.04, 0.84, 0.99);
+  r = mix(r, vec3(0.45, 0.93, 0.80), smoothstep(0.02, 0.12, e));
+  r = mix(r, vec3(0.98, 0.93, 0.55), smoothstep(0.12, 0.22, e));
+  r = mix(r, vec3(0.99, 0.70, 0.62), smoothstep(0.22, 0.32, e));
+  r = mix(r, vec3(0.98, 0.42, 0.86), smoothstep(0.32, 0.44, e));
+  r = mix(r, vec3(0.93, 0.24, 0.88), smoothstep(0.44, 0.62, e));
+  r = mix(r, vec3(0.80, 0.20, 0.92), smoothstep(0.75, 1.0, e));
+  vec3 p = vec3(0.02, 0.55, 0.94);
+  p = mix(p, vec3(0.50, 0.30, 0.95), smoothstep(0.05, 0.25, e));
+  p = mix(p, vec3(0.97, 0.38, 0.88), smoothstep(0.22, 0.42, e));
+  p = mix(p, vec3(0.93, 0.24, 0.88), smoothstep(0.42, 0.62, e));
+  p = mix(p, vec3(0.80, 0.20, 0.92), smoothstep(0.75, 1.0, e));
+  return mix(p, r, k);
 }
 vec3 w30Water(vec3 old, vec2 ls, float wc, float t, float dAp, float fres) {
   float u = ls.x / wc, au = abs(u), sd = u < 0.0 ? -1.0 : 1.0;
   float sf = ls.y - t * uW30A.x; // anchored to the river, flowing downstream (+s)
-  // cyan core -> deeper azure toward the sides (approved lower water: ~(0-10, 150-210, 230-250) core, (10, 128, 231) azure)
-  vec3 col = mix(vec3(0.07, 0.80, 0.99), vec3(0.03, 0.58, 0.95), smoothstep(0.15, 0.55, au));
-  // rainbow edge band, breathing along the river (each side its own phase) and shifting a little with the view angle
-  float wob = 0.6 * sin(ls.y * 0.21 + sd * 1.9) + 0.4 * sin(ls.y * 0.57 + 0.8 * sd + t * 0.6);
-  float e = (au - uW30C.z) / max(uW30C.w - uW30C.z, 1e-3) + 0.07 * wob - 0.10 * fres;
-  float inB = smoothstep(-0.02, 0.10, e);
-  col = mix(col, w30Rainbow(clamp(e, 0.0, 1.0)), inB * uW30A.z);
   // electric veins: two reads of the vein tile (different scale, speed, slight cross drift) -> jagged veins + branching net
   vec2 q1 = vec2(ls.x / uW30B.x, sf / uW30B.y);
   vec2 q2 = vec2(ls.x / (uW30B.x * 0.62) + 0.31 + 0.04 * sin(sf * 0.35), (ls.y - t * uW30A.x * 1.4) / (uW30B.y * 0.68) + 0.57);
   vec3 a = texture2D(uW30T, q1).rgb;
   vec3 b = texture2D(uW30T, q2).rgb;
-  float fl = 0.78 + 0.22 * sin(t * 5.3 + sf * 1.7 + ls.x * 0.9); // current flickering along the veins
-  float vein = clamp(max(a.r * fl, b.g * (1.0 - 0.35 * fl)) * uW30A.y, 0.0, 1.0);
-  vec3 vc = mix(vec3(0.80, 1.0, 1.0), mix(col, vec3(1.0), 0.62), smoothstep(0.45, 0.9, e));
-  col = mix(col, vc, vein);
-  col += vec3(0.35, 0.80, 1.0) * 0.18 * a.g * b.r * uW30A.y; // faint caustic interference
+  float fl = 0.75 + 0.25 * sin(t * 5.3 + sf * 1.7 + ls.x * 0.9); // current flickering along the veins
+  float vein = max(a.r * fl, b.g * (1.0 - 0.3 * fl)) * uW30A.y;
+  // water body: deep azure between the veins, bright cyan in their glow, broad lighter / deeper zones drifting with the flow
+  // (approved lower water: azure ~(10, 128, 231), cyan ~(0-30, 170-220, 245), vein cores white-cyan)
+  float zone = 0.5 + 0.5 * sin(sf * 0.47 + ls.x * 1.1) * sin(sf * 0.19 - ls.x * 0.6 + 1.3);
+  vec3 col = mix(vec3(0.01, 0.50, 0.92), vec3(0.02, 0.70, 0.98), zone * 0.7 + 0.3 * (1.0 - smoothstep(0.0, 0.5, au)));
+  col = mix(col, vec3(0.10, 0.86, 1.0), smoothstep(0.08, 0.55, vein));
+  // magenta sides with a rainbow strip that comes and goes along the river (each side its own phase), wavy edges (follow the veins)
+  float wob = 0.6 * sin(ls.y * 0.21 + sd * 1.9) + 0.4 * sin(ls.y * 0.57 + 0.8 * sd + t * 0.6);
+  float e = (au - uW30C.z) / max(uW30C.w - uW30C.z, 1e-3) + 0.06 * wob + 0.10 * (a.r - 0.25) - 0.08 * fres;
+  float rk = smoothstep(-0.3, 0.5, sin(ls.y * 0.11 + sd * 2.3) + 0.5 * sin(ls.y * 0.29 + 0.7)) * uW30A.z;
+  col = mix(col, w30Edge(clamp(e, 0.0, 1.0), rk), smoothstep(-0.02, 0.12, e) * min(uW30A.z, 1.0));
+  // vein cores: white-cyan on the water, pink-white on the magenta sides
+  vec3 vc = mix(vec3(0.82, 1.0, 1.0), vec3(1.0, 0.78, 0.98), smoothstep(0.35, 0.7, e));
+  col = mix(col, vc, smoothstep(0.5, 0.95, vein));
+  col += vec3(0.35, 0.80, 1.0) * 0.15 * a.g * b.r * uW30A.y; // faint caustic interference
   float gl = max(a.b, b.b * 0.8) * (0.35 + 0.65 * pow(0.5 + 0.5 * sin(t * 8.0 + ls.x * 6.1 + sf * 2.3), 3.0));
   col += vec3(0.80, 0.95, 1.0) * gl * uW30A.w;
   col += fres * 0.16 * vec3(0.9, 0.85, 1.0);
@@ -89,7 +101,7 @@ export async function setupW30(mat: THREE.ShaderMaterial, qs: URLSearchParams | 
   const t = await new THREE.TextureLoader().loadAsync(new URL('../../assets/textures/match06/tile_w30veins.png', import.meta.url).href);
   t.colorSpace = THREE.NoColorSpace; t.wrapS = t.wrapT = THREE.RepeatWrapping; t.anisotropy = 8;
   t.minFilter = THREE.LinearMipmapLinearFilter;
-  const [ta, tb] = pair(qs, 'w30t', [1.7, 3.2]), [sa, sb] = pair(qs, 'w30st', [0.02, 0.6]), [ea, eb] = pair(qs, 'w30e', [0.5, 1.0]);
+  const [ta, tb] = pair(qs, 'w30t', [2.2, 3.8]), [sa, sb] = pair(qs, 'w30st', [0.02, 0.6]), [ea, eb] = pair(qs, 'w30e', [0.36, 1.0]);
   Object.assign(mat.uniforms, {
     uW30T: { value: t },
     uW30A: { value: new THREE.Vector4(num(qs, 'w30f', 2.2), num(qs, 'w30v', 1), num(qs, 'w30rb', 1), num(qs, 'w30sp', 1)) },
