@@ -629,7 +629,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3424,
-   "sha256": "ce5789c4eb3a9d171c45d7e07f5e9cd3827904b23d85869280e2c41f362ec4e0"
+   "sha256": "8205ebf3e4ec905d000bb87a3044aff18be3d31e2b112d091e4d9935904429cc"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -1404,7 +1404,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c22/INFO.json",
    "bytes": 560,
-   "sha256": "2bd319e501f57d20a391870fbce58a1da1e2c98b26d1bfb8813cc87be34e6ba0"
+   "sha256": "46295d90d5a13cd6ef3491dbc14965e6ae9bb4d731a1ea5ab0c8f2f857fffefd"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c22/tracked.patch",
@@ -1429,7 +1429,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-preview-c22/INFO.json",
    "bytes": 569,
-   "sha256": "be9ed6bb893d31d818a5dd3d55da1e37e14968fb909cc934a0d51dca75506182"
+   "sha256": "2f5963caefe01f21f746b4f41a723f3c976cedc59e1ab1698b3cddf6e25364da"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-preview-c22/tracked.patch",
@@ -1654,7 +1654,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c22/INFO.json",
    "bytes": 1341,
-   "sha256": "a88dc5bc19f5794aa22d8c258b3c52c4fa2fe483b648410f6caf160796e46b5a"
+   "sha256": "29720434bd897666d1e5e25003994e8541d286d1d3433e5e10217b37818cb3d1"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c22/tracked.patch",
@@ -2359,12 +2359,12 @@
   {
    "path": "backups/wip/claude__rainbow-s07-match-c22/INFO.json",
    "bytes": 559,
-   "sha256": "d14352d3351325883e717efbb20e35048cb142290aabaa9a958f063809efe5a1"
+   "sha256": "a99a40e8972fcddf3a4f136d8e76af68e4c0f36c1aca0a06546fd1f57136e720"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c22/tracked.patch",
-   "bytes": 8284,
-   "sha256": "21789abb3687ebc8b3df8d9c560d4ff92f13b4791e1296ecf7aa2fed8f201c34"
+   "bytes": 10688,
+   "sha256": "b7b11e839b881838ff763fa712399739f4ed843f11ac9b51886406425e46e65d"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c22/untracked/tools/match07/diag_r21.mjs",
@@ -2489,27 +2489,27 @@
   {
    "path": "backups/wip/detached-34cb494137/INFO.json",
    "bytes": 440,
-   "sha256": "ce67d78e3ffa4774031ad489a7b785161b50f342dcb4d85d984bef090df2a833"
+   "sha256": "fd8a6f37066c7706acde9398fe442f4946d06e0a87dca037e3e175dc0d0ecc17"
   },
   {
    "path": "backups/wip/detached-3c0fa97090/INFO.json",
    "bytes": 439,
-   "sha256": "9cddc2caaba9a2c7fde5365a1ad5f55a57a04a087f7f779646ffd60ffddf4f51"
+   "sha256": "c1146ca0eb101f372a85ccea72e033f25a96ad4301cde3a38944987f8cc17281"
   },
   {
    "path": "backups/wip/detached-8accdad0a0/INFO.json",
    "bytes": 439,
-   "sha256": "24d7b8b03e5b8ba3e42572873b505b83e07648337b59dde36f89ec5d220444c6"
+   "sha256": "be53aea65be33f860fe4e91b7ebf69c577e72ae81c0337f05aec47dd50091634"
   },
   {
    "path": "backups/wip/detached-c649fcbc35/INFO.json",
    "bytes": 439,
-   "sha256": "4fb75b0a3352f879dcb4a2dd0c63a4ccdbbcb1ab520331f7f24db390267bed3f"
+   "sha256": "3b47aba7d6a12df1e29b5fc922770055a48a6779b8e8ca571febf6d21925c7cd"
   },
   {
    "path": "backups/wip/detached-eb7233e364/INFO.json",
    "bytes": 439,
-   "sha256": "90dd981a202a495788d52bf01f225529ad3dabdefc4936a603c9709eb3291c5a"
+   "sha256": "897db5ee8d2f7e9c436e4c0112323e4f5a3948327f9f0328d1aaf885302a2620"
   },
   {
    "path": "builds/rainbow-debug-06-2026-11-17-r3.apk",
@@ -5253,33 +5253,48 @@
   },
   {
    "path": "qa/match/04/r21/s1_wgl/NEW/a_start.png",
-   "bytes": 2337268,
-   "sha256": "4cb2dc8066cabb4c84407c29113db53dd96cdd28d8fcbe14c671e86fc5f9bebe"
+   "bytes": 2337324,
+   "sha256": "cf5379b449c2e6dfa84f37376542a69a7459556c83c1a42cfd404e2c5cf4dd11"
   },
   {
    "path": "qa/match/04/r21/s1_wgl/NEW/b_early.png",
-   "bytes": 2078026,
-   "sha256": "dd8cf1d3d61cbcb28743a3bdc026f787ddf20e2b9f852d4c23cd9f9367dbe2e3"
+   "bytes": 2073627,
+   "sha256": "40bb5c81c7ae68d237e90e7fa7a7370d2e4f896419719c4e964741aa25959316"
   },
   {
    "path": "qa/match/04/r21/s1_wgl/NEW/c_middle.png",
-   "bytes": 1728390,
-   "sha256": "89209986381b8216d9c5695fe3183bb90d4549d34b6fe0fa61e826d4e9f482d3"
+   "bytes": 1723768,
+   "sha256": "6f22edb7927bf3931ec796d74cec68a0a1ba05cc01c1f065f1b22deeeb966dba"
   },
   {
    "path": "qa/match/04/r21/s1_wgl/NEW/d_late.png",
-   "bytes": 1749493,
-   "sha256": "e4c7a19ed5e480e88d0138b8e828e8bbd73576fa085452782167d7fbfad55be3"
+   "bytes": 1744611,
+   "sha256": "d60200fc0243e3f725554e6e71e0862e5638d0658b16b67b8fe87350a7bab1d8"
   },
   {
    "path": "qa/match/04/r21/s1_wgl/NEW/e_end.png",
-   "bytes": 1702061,
-   "sha256": "b0361b8a5df1847d34ce1056e9126cfcb0b36a8c7866d72d97bd7da6bc6282a3"
+   "bytes": 1694872,
+   "sha256": "005e8f096a796e2a9c1234b05d733e66bc63d043e47ec86101abb32e9af1008e"
   },
   {
    "path": "qa/match/04/r21/s1_wgl/NEW/f_hard_left.png",
-   "bytes": 1714675,
-   "sha256": "3cb07d1e7639e309dddc9f1f017c69c67653d707971af4e042e0e985716892fc"
+   "bytes": 1704843,
+   "sha256": "0651a74803dc7eede14e38e32601d454a6ea04cea202474d3573c001f3859758"
+  },
+  {
+   "path": "qa/match/04/r21/s1_wgl/NEW/g_hard_right.png",
+   "bytes": 1710332,
+   "sha256": "46b5834d4e52b93e13d3c27b9d6981dcb749fad928a34acd0f36fee99f876a24"
+  },
+  {
+   "path": "qa/match/04/r21/s1_wgl/NEW/shots.json",
+   "bytes": 1159,
+   "sha256": "5c29bca91bbd0f19ec2f762e7cb2f1e9fe22f8a7eb921cf7e0c2255613e8658e"
+  },
+  {
+   "path": "qa/match/04/r21/s1_wgl/start_pixeldiff.png",
+   "bytes": 668061,
+   "sha256": "d9b825236ded44b64661b6a1ed2d9b0e13b190bb3224a28f6602a4eec90ffc68"
   },
   {
    "path": "qa/match/04/r21_rings/1_APPROVED.png",
@@ -5495,6 +5510,76 @@
    "path": "qa/match/07/r21/K7.txt",
    "bytes": 136,
    "sha256": "f65ec63599eb81c6225cc103d6dd70d31032fc2d6586f782cc3b49348d6ea9b0"
+  },
+  {
+   "path": "qa/match/07/r21/step1_end/NEW/a_start.png",
+   "bytes": 2622370,
+   "sha256": "2fe3a2b677c7a0cbdedadf8f0c6254dacc53b65214c40e2d7bdc211d334a0c2a"
+  },
+  {
+   "path": "qa/match/07/r21/step1_end/NEW/b_early.png",
+   "bytes": 2302277,
+   "sha256": "fad9afacefce13b16fb2ecb01f90d77fe3fb37e8823414a9ba93956c979d7633"
+  },
+  {
+   "path": "qa/match/07/r21/step1_end/NEW/c_middle.png",
+   "bytes": 2247756,
+   "sha256": "7199adbbd6f967e88dcad303b6045484f3170429aec1c003e4aa52b78882e40c"
+  },
+  {
+   "path": "qa/match/07/r21/step1_end/NEW/d_late.png",
+   "bytes": 2594073,
+   "sha256": "5987d4a9844bca98d64f1b45234efe5cbe76d41c1797572cbcc7580cc858fbb0"
+  },
+  {
+   "path": "qa/match/07/r21/step1_end/NEW/e1_075.png",
+   "bytes": 2510549,
+   "sha256": "fe298ed00fb62956fe3f8adc906a5799c2f39008864e50a55a439298416b5cb3"
+  },
+  {
+   "path": "qa/match/07/r21/step1_end/NEW/e2_092.png",
+   "bytes": 1931333,
+   "sha256": "647b4761c524ddcc4ebf5662222d77bed359374c3a18d2d62375a284ebba1be6"
+  },
+  {
+   "path": "qa/match/07/r21/step1_end/NEW/e_end.png",
+   "bytes": 2290280,
+   "sha256": "96dd9ddf17f17064a8b230681c01806f82fce2dd329df605185a74851b758d1c"
+  },
+  {
+   "path": "qa/match/07/r21/step1_end/NEW/f_hard_left.png",
+   "bytes": 2236879,
+   "sha256": "b35b6721591f839d8e7ab4d0ab64c1f16b1fe5a968f64e10415e5b05d95cc86c"
+  },
+  {
+   "path": "qa/match/07/r21/step1_end/NEW/g_hard_right.png",
+   "bytes": 2252299,
+   "sha256": "4320835e914bd0e839dab0a7182e9a0e90a211712f95ec513be112e343e418d6"
+  },
+  {
+   "path": "qa/match/07/r21/step1_end/NEW/shots.json",
+   "bytes": 1499,
+   "sha256": "7b032dd79f2c3358b0058d6530dcee2a9e035ccede958a574bf784a00d569115"
+  },
+  {
+   "path": "qa/match/07/r21/step1_end/continuity.txt",
+   "bytes": 839,
+   "sha256": "e46298370f5c7332b268e9c000efa53f9e15788546e595d4cd3ed1cc18d36b32"
+  },
+  {
+   "path": "qa/match/07/r21/step1_end/diff_a_start.png",
+   "bytes": 899482,
+   "sha256": "7cbb4ab39affddd17a1f8ae282fc857f3df673d15991515318a0154c358988c1"
+  },
+  {
+   "path": "qa/match/07/r21/step1_end/diff_b_early.png",
+   "bytes": 595563,
+   "sha256": "0d47aedf90f2cce827a4cb223002fd2865548cbf9c9ab4890bfb83e857b0af0c"
+  },
+  {
+   "path": "qa/match/07/r21/step1_end/gameplay_new.json",
+   "bytes": 14776,
+   "sha256": "f2b351a677b14a49652ec4d124e67abcc6b300dfec1f006bf61f8f64440900e9"
   },
   {
    "path": "qa/match/07/rings/approved.json",

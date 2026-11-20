@@ -1057,3 +1057,308 @@ Round 21 launch. Your complete launch brief is the file /home/user/rainbow-/docs
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 - <<'EOF'\np='src/world/match07.ts'\ns=open(p).read()\ndef rep(a,b,cnt=1):\n    global s\n    assert s.count(a)==cnt, (a, s.count(a))\n    s=s.replace(a,b)\nrep(\"\"\"vec3 nearWater(float lx, float ctr, float along) {\n  float d = lx - ctr;\"\"\",\"\"\"vec3 nearWater(float lx, float ctr, float along, float rc) {\n  float d = lx - ctr;\"\"\")\nrep(\"\"\"    Rc = uBand2.y;\n    Ro = max(Rc + uBand2.z, reach);\"\"\",\"\"\"    Rc = rc;\n    Ro = max(Rc + uBand2.z, reach);\"\"\")\nrep(\"\"\"    if (uNearOn > 0.5) return nearWater(vL.x, vCtr, -vL.z);\"\"\ …[+1925 chars]`
 
+### 🧑 User — 2026-11-20T02:17:27.293Z
+
+> ↩︎ result: d_late s 343.456 lat 0 hidden 0
+> e_end s 372.656 lat 0 hidden 0
+> c_middle s 314.056 lat 0 hidden 0
+
+### 🤖 Claude — 2026-11-20T02:17:33.169Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/try3/e_end.png"}`
+
+### 🧑 User — 2026-11-20T02:17:33.219Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T02:17:33.779Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/try3/d_late.png"}`
+
+### 🧑 User — 2026-11-20T02:17:33.843Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T02:17:42.554Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && cat tools/match07/swim_clip_half.mjs | head -40; grep -n \"test:continuity\\|gameplay\" package.json", "description": "Inspect clip tool and test scripts"}`
+
+### 🧑 User — 2026-11-20T02:17:42.592Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // s07 r17: tools/lead_r13/swim_clip.mjs rendered at HALF size (432x768, same 9:16 framing; CPU is shared). Lead r13 (2026-11-18): a short REAL-GAMEPLAY swimming clip for any playable screen 04–08 (read-only).
+> // Starts at the screen's checkpoint and rides the real game simulation (Benny, camera rig, course, coins unchanged) with
+> // the shader clock running: straight, then left, then right, then straight — one frame per 1/fps s → OUT/0000.png …
+> // Generalises scripts/proj05-move.mjs --zigzag. Encode: ffmpeg -framerate 24 -i OUT/%04d.png -pix_fmt yuv420p clip.mp4
+> //   node tools/lead_r13/swim_clip.mjs <screen 04..08> <outDir> <seconds> [query]
+> import { mkdirSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> const [SCREEN, OUT, SECS = '6', Q = ''] = process.argv.slice(2);
+> const fps = 24;
+> mkdirSync(OUT, { recursive: true });
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5277);
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> try {
+>   const page = await browser.newPage({ viewport: { width: 432 …[+1132 chars]
+
+### 🤖 Claude — 2026-11-20T02:17:51.371Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -e 's#^// s07 r17:.*#// s07 r21: swim_clip_half.mjs that starts part-way through the stage (fraction of checkpoint → stage end), deterministic sim steps to get there.\\n//   node tools/match07/swim_clip_r21.mjs <screen> <outDir> <seconds> <query> <startFrac>#' -e \"s#const \\[SCREEN, OUT, SECS = '6', Q = ''\\] = process.argv.slice(2);#const [SCREEN, OUT, SECS = '6', Q = '', FR = '0'] = process.argv.slice(2);#\" -e \"s#  await page.evaluate((id) => window.__rainbow.goto(id), SCREEN);#  await page.evaluate(([id, fr]) => { const r = window.__rainbow; r.got …[+413 chars]`
+
+### 🧑 User — 2026-11-20T02:17:51.437Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // s07 r21: swim_clip_half.mjs that starts part-way through the stage (fraction of checkpoint → stage end), deterministic sim steps to get there.
+> //   node tools/match07/swim_clip_r21.mjs <screen> <outDir> <seconds> <query> <startFrac>
+> 11:const [SCREEN, OUT, SECS = '6', Q = '', FR = '0'] = process.argv.slice(2);
+> 20:  await page.goto(`${vite.url}/?qa=1&dpr=1${Q ? '&' + Q : ''}`);
+> 22:  await page.evaluate(([id, fr]) => { const r = window.__rainbow; r.goto(id); const s0 = r.state().s, s1 = r.course.stage(id).s1; const tS = s0 + fr * (s1 - s0); let k = 0; while (r.state().s < tS && k < 6000) { r.step(1); k++; } }, [SCREEN, Number(FR)]);
+
+### 🤖 Claude — 2026-11-20T02:17:53.879Z
+
+Now the NEW audit render for step 1.
+
+### 🤖 Claude — 2026-11-20T02:17:57.245Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && K7=$(cat /home/user/rainbow-/qa/match/07/r21/K7.txt); O=/home/user/rainbow-/qa/match/07/r21/step1_end; mkdir -p $O; export AUDIT_SHOTS='[[\"a_start\",0,null],[\"b_early\",0.12,null],[\"c_middle\",0.35,null],[\"d_late\",0.6,null],[\"e1_075\",0.75,null],[\"e_end\",0.85,null],[\"e2_092\",0.92,null],[\"f_hard_left\",0.35,-1],[\"g_hard_right\",0.35,1]]'; AUDIT_PORT=5277 node /home/user/rainbow-/tools/lead21/audit_screen.mjs $O/NEW 07 \"$K7&m07end=1\" 2>&1 | grep -v \"allow list\" | tail -10; for n in a_start b_early; do node /home/user/tools-pixelmatch/pixeldiff …[+207 chars]`
+
+### 🧑 User — 2026-11-20T02:18:51.759Z
+
+> ↩︎ result: 07 a_start s 273.056 lat 0 stage 07 coins 1940
+> 07 b_early s 287.256 lat 0 stage 07 coins 1960
+> 07 c_middle s 314.056 lat 0 stage 07 coins 2030
+> 07 d_late s 343.456 lat 0 stage 07 coins 2080
+> 07 e1_075 s 361.056 lat 0 stage 07 coins 2110
+> 07 e_end s 372.656 lat 0 stage 07 coins 2130
+> 07 e2_092 s 380.856 lat 0 stage 07 coins 2150
+> 07 f_hard_left s 314.056 lat -2.25 stage 07 coins 1940
+> 07 g_hard_right s 314.056 lat 2.25 stage 07 coins 1950
+> {"a":"/home/user/rainbow-/qa/match/07/r21/BEFORE_K7/a_start.png","b":"/home/user/rainbow-/qa/match/07/r21/step1_end/NEW/a_start.png","rows":[180,1536],"threshold":0.1,"diff_pixels":0,"total":1171584,"diff_pct":0}
+> {"a":"/home/user/rainbow-/qa/match/07/r21/BEFORE_K7/b_early.png","b":"/home/user/rainbow-/qa/match/07/r21/step1_end/NEW/b_early.png","rows":[180,1536],"threshold":0.1,"diff_pixels":0,"total":1171584,"diff_pct":0}
+
+### 🤖 Claude — 2026-11-20T02:18:55.336Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/07/r21/step1_end/NEW/g_hard_right.png"}`
+
+### 🧑 User — 2026-11-20T02:18:55.390Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T02:19:01.233Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"startVite\\|port\\|PORT\" scripts/gameplay-test.mjs | head; grep -n \"startVite\\|PORT\\|port\" scripts/capture.mjs | head -5", "description": "Check ports used by test scripts"}`
+
+### 🧑 User — 2026-11-20T02:19:01.270Z
+
+> ↩︎ result: 4://  * continuous travel: s strictly increases, no position jump > speed·dt (no teleport/cut)
+> 13:import { writeFileSync, mkdirSync } from 'node:fs';
+> 14:import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 20:const vite = await startVite(5213);
+> 22:const page = await browser.newPage({ viewport: { width: 216, height: 384 } });
+> 85:  out.checks.noTeleport = { pass: maxJump < 1.0, maxBennyAltitudeJumpPerStep: +maxJump.toFixed(3), at: out.maxJumpAt };
+> 129:  `* max Benny altitude change per step: **${result.checks.noTeleport.maxBennyAltitudeJumpPerStep}** (no teleport)`,
+> 8:import { mkdirSync, writeFileSync } from 'node:fs';
+> 9:import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 24:const vite = await startVite(5201);
+> 30:    const page = await browser.newPage({ viewport: { width: w, height: h }, deviceScaleFactor: 1 });
+> 47:    // first use). Render once more (after the screenshot) and report that per-frame cost as calls/tris.
+
+### 🤖 Claude — 2026-11-20T02:19:01.990Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 1,60p scripts/lib/pw.mjs | grep -n \"startVite\" -A20 | head -40", "description": "Read startVite helper"}`
+
+### 🧑 User — 2026-11-20T02:19:02.024Z
+
+> ↩︎ result: 19:export async function startVite(port = 5199) {
+> 20-  const { createServer } = await import('vite');
+> 21-  const server = await createServer({ server: { port, strictPort: false, host: '127.0.0.1', hmr: false, watch: { ignored: ['**/*'] } }, logLevel: 'error' });
+> 22-  await server.listen();
+> 23-  const addr = server.resolvedUrls?.local?.[0] ?? `http://127.0.0.1:${port}/`;
+> 24-  return { url: addr.replace(/\/$/, ''), close: () => server.close() };
+> 25-}
+> 26-
+> 27-export async function waitDone(page, timeoutMs = 180000) {
+> 28-  await page.waitForFunction(() => window.__done === true, null, { timeout: timeoutMs });
+> 29-  const err = await page.evaluate(() => window.__error);
+> 30-  if (err) throw new Error(err);
+> 31-}
+
+### 🤖 Claude — 2026-11-20T02:19:07.938Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"writeFileSync\\|mkdirSync(\" scripts/gameplay-test.mjs | head -5; K7=$(cat /home/user/rainbow-/qa/match/07/r21/K7.txt); time node scripts/gameplay-test.mjs --q=\"$K7&m07end=1\" 2>&1 | grep -v \"allow list\" | tail -25", "description": "Run gameplay test with step 1 query", "timeout": 900000}`
+
+### 🧑 User — 2026-11-20T02:19:17.471Z
+
+> ↩︎ result: 13:import { writeFileSync, mkdirSync } from 'node:fs';
+> 18:mkdirSync('qa', { recursive: true });
+> 106:  writeFileSync(f, JSON.stringify(result, null, 2));
+> 112:writeFileSync('qa/gameplay_test.json', JSON.stringify(result, null, 2));
+> 138:writeFileSync('qa/07_to_08_continuity.md', md.join('\n') + '\n');
+>  "query": "match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1&m07foam=1&m07coinsz=1&m07nearw=1&m07foamb=1&m07band=1&m07end=1",
+>  "out": "qa/gameplay_test_switch.json",
+>  "pass": true,
+>  "checks": {
+>   "pauseFreezes": true,
+>   "continuousTravel": true,
+>   "noCameraCut": true,
+>   "noTeleport": true,
+>   "plunge": true,
+>   "realCoinPickups": true,
+>   "victory": true,
+>   "heartsLostOnWallBump": true
+>  },
+>  "plunge": {
+>   "tTop": 23.866666666666593,
+>   "tBottom": 30.366666666666223,
+>   "t08": 30.366666666666223,
+>   "yTop": -51.95,
+>   "yBottom": -113.095,
+>   "y08": -113.095,
+>   "travelTimeTopToInlet": 6.5,
+>   "verticalDrop": 61.14
+>  },
+>  "errors": []
+> }
+> 
+> real	0m9.484s
+> user	0m1.172s
+> sys	0m0.308s
+
+### 🤖 Claude — 2026-11-20T02:19:22.980Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 -c \"\nimport json;d=json.load(open('qa/gameplay_test_switch.json'));print({k:d[k] for k in d if k not in ('checks','plunge','log')})\" | head -20; grep -n \"coins\\|2240\\|2,240\" qa/gameplay_test_switch.json | head", "description": "Check coin totals in gameplay result"}`
+
+### 🧑 User — 2026-11-20T02:19:23.052Z
+
+> ↩︎ result: {'samples': [{'t': 0.5, 's': 45.645, 'stage': '03', 'y': -13.457, 'cam': [-2.62, -7.96, -16.34], 'coins': 1330}, {'t': 1, 's': 50.145, 'stage': '03', 'y': -13.829, 'cam': [0.26, -8.46, -19.04], 'coins': 1350}, {'t': 1.5, 's': 54.645, 'stage': '03', 'y': -14.444, 'cam': [4.19, -9.22, -20.03], 'coins': 1370}, {'t': 2, 's': 59.145, 'stage': '03', 'y': -15.206, 'cam': [7.89, -10.13, -18.37], 'coins': 1380}, {'t': 2.5, 's': 63.645, 'stage': '03', 'y': -16.187, 'cam': [9.4, -11.49, -14.72], 'coins': 1400}, {'t': 3, 's': 68.312, 'stage': '03', 'y': -18.043, 'cam': [8.02, -11.89, -15.45], 'coins': 1420}, {'t': 3.5, 's': 74.238, 'stage': '04', 'y': -20.694, 'cam': [6.94, -11.73, -15.61], 'coins': 1420}, {'t': 4, 's': 81.211, 'stage': '04', 'y': -23.56, 'cam': [1.14, -14.84, -18.72], 'coins': 1430}, {'t': 4.5, 's': 88.211, 'stage': '04', 'y': -27.176, 'cam': [1.13, -17.3, -26.22], 'coins': 1450}, {'t': 5, 's': 95.211, 'stage': '04', 'y': -30.909, 'cam': [1.19, -20.87, -32.5], 'coins': 1470}, {'t': 5.5, 's': 102.211, 'stage': '04', 'y': -34.618, 'cam': [1.19, -24.58, -38.46], 'coins': 1490}, {'t': 6, 's': 109.211, 'stage': '04', 'y': -38.189, 'cam': [1.67, -28.41, -44.26], 'coins': 1500}, {'t …[+6554 chars]
+
+### 🤖 Claude — 2026-11-20T02:19:27.366Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 35,60p qa/gameplay_test_switch.json; cp qa/gameplay_test_switch.json /home/user/rainbow-/qa/match/07/r21/step1_end/gameplay_new.json; git status --short | head", "description": "Check coin pickups and save gameplay proof"}`
+
+### 🧑 User — 2026-11-20T02:19:27.489Z
+
+> ↩︎ result: "t08": 30.366666666666223,
+>       "yTop": -51.95,
+>       "yBottom": -113.095,
+>       "y08": -113.095,
+>       "travelTimeTopToInlet": 6.5,
+>       "verticalDrop": 61.14
+>     },
+>     "realCoinPickups": {
+>       "pass": true,
+>       "startCoins": 1330,
+>       "endCoins": 2240,
+>       "collected": 91
+>     },
+>     "victory": {
+>       "pass": true,
+>       "finalState": {
+>         "mode": "end",
+>         "stage": "11",
+>         "s": 436.098,
+>         "lat": -0.026,
+>         "coins": 2240,
+>         "hearts": 5,
+>         "paused": false,
+>         "bennyY": -109.608,
+>         "bennyVisible": false,
+>         "cam": [
+>  M src/game/Game.ts
+>  M src/world/match07.ts
+> ?? node_modules
+> ?? qa/gameplay_test_switch.json
+> ?? tools/match07/diag_r21.mjs
+> ?? tools/match07/swim_clip_r21.mjs
+
+### 🤖 Claude — 2026-11-20T02:19:32.627Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && rm -f qa/gameplay_test_switch.json && time npm run test:continuity 2>&1 | tail -25", "description": "Run continuity test", "timeout": 600000}`
+
+### 🧑 User — 2026-11-20T02:19:34.009Z
+
+> ↩︎ result: "plungeBottom": {
+>    "s": 389.13,
+>    "y": -113.49
+>   },
+>   "inlet08": {
+>    "s": 389.22,
+>    "y": -113.5
+>   },
+>   "verticalDrop": 61.19,
+>   "minPitchDeg": -70
+>  },
+>  "maxStepTangentDeg": 6.241,
+>  "boundaries": [
+>   "01->02 gap=0 dT=0.249 y=-2.4",
+>   "02->03 gap=-0.0001 dT=0.673 y=-11.87",
+>   "03->04 gap=0 dT=0.932 y=-19.41",
+>   "04->05 gap=0 dT=0.246 y=-40.63",
+>   "05->06 gap=0 dT=0.281 y=-43.35",
+>   "06->07 gap=0 dT=0.114 y=-48.53",
+>   "07->08 gap=0 dT=0.339 y=-113.5",
+>   "08->09 gap=0 dT=0.12 y=-113.59",
+>   "09->10 gap=0 dT=0.08 y=-113.47",
+>   "10->11 gap=0 dT=0.003 y=-110.16"
+>  ]
+> }
+> 
+> real	0m1.314s
+> user	0m0.890s
+> sys	0m0.103s
+
+### 🤖 Claude — 2026-11-20T02:19:37.445Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && npm run test:continuity 2>&1 | grep -i \"pass\\|fail\\|ok\" | head; npm run test:continuity > /home/user/rainbow-/qa/match/07/r21/step1_end/continuity.txt 2>&1; echo exit $?; git status --short", "description": "Save continuity output and check status", "timeout": 300000}`
+
+### 🧑 User — 2026-11-20T02:19:39.378Z
+
+> ↩︎ result: "ok": true,
+> exit 0
+>  M src/game/Game.ts
+>  M src/world/match07.ts
+> ?? node_modules
+> ?? tools/match07/diag_r21.mjs
+> ?? tools/match07/swim_clip_r21.mjs
+
+### 🤖 Claude — 2026-11-20T02:19:42.839Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 1,30p scripts/capture.mjs", "description": "Read capture script usage"}`
+
+### 🧑 User — 2026-11-20T02:19:42.871Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Playwright capture of the REAL running game (WebGL) at the native reference sizes.
+> //   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> //   node scripts/capture.mjs 03 07           → only those
+> //   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> //   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> //   node scripts/capture.mjs --out=DIR       → custom output dir
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const args = process.argv.slice(2);
+> const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> let ids = args.filter((a) => !a.startsWith('--'));
+> const NATIVE = { '03': [727, 1536] };
+> const plunge = ['07a_plunge_top', '07b_plunge_mid', '07c_plunge_bottom', '07d_entering_08'];
+> if (opt.plunge) ids = plunge;
+> if (!ids.length) ids = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> const size = typeof opt.size === 'str …[+684 chars]
+
+### 🤖 Claude — 2026-11-20T02:19:45.968Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 30,60p scripts/capture.mjs | grep -n \"goto\\|q=\\|query\\|location\" ", "description": "Check whether capture accepts a query"}`
+
+### 🧑 User — 2026-11-20T02:19:46.008Z
+
+> ↩︎ result: 4:    await page.goto(`${vite.url}/?qa=1&dpr=1${typeof opt.q === "string" ? "&" + opt.q : ""}`);
+> 8:    if (!log.renderer) log.renderer = await page.evaluate(() => { const g = document.querySelector('canvas').getContext('webgl2'); const d = g?.getExtension('WEBGL_debug_renderer_info'); return d ? g.getParameter(d.UNMASKED_RENDERER_WEBGL) : 'unknown'; });
+> 9:    const st = await page.evaluate((cid) => window.__rainbow.goto(cid), id);
+
+### 🤖 Claude — 2026-11-20T02:19:57.121Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && K7=$(cat /home/user/rainbow-/qa/match/07/r21/K7.txt); S=/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/cap; node scripts/capture.mjs 07 08 07d_entering_08 --q=\"$K7\" --out=$S/A 2>&1 | grep -v \"allow list\" | tail -3; node scripts/capture.mjs 07 08 07d_entering_08 --q=\"$K7&m07end=1\" --out=$S/B 2>&1 | grep -v \"allow list\" | tail -3; for n in 07 08 07d_entering_08; do node /home/user/tools-pixelmatch/pixeldiff.mjs $S/A/$n.png $S/B/$n.png $S/d_$n.png 0.1 180 1536 | tail -1; done", "description": "Prove 07 start and 08 vi …[+44 chars]`
+

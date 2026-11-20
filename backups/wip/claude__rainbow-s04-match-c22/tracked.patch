@@ -19,7 +19,7 @@ index 6a4653f..2a7e591 100644
    // Screen 05 test GL1 (user 2026-11-16: "the glow on the highlights is most of what makes the approved version look so
    // shiny"): `?glow05=1` = a stronger UnrealBloom with a HIGH threshold, so only the bright highlights (streak cores,
 diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
-index 2b62a35..488d637 100644
+index 2b62a35..6305667 100644
 --- a/src/world/match04m4.ts
 +++ b/src/world/match04m4.ts
 @@ -120,6 +120,15 @@ uniform float uRVar;       // r17 m04rpvar: number of painted rings stacked in t
@@ -466,26 +466,27 @@ index 2b62a35..488d637 100644
 +      bc = mix(bc, mix(bc, vec3(0.84, 0.62, 1.0), 0.55), tq);
 +      wgTop = tq;
 +      float dTop = wuE - ext, pt = fwidth(dTop) + 1e-4;
-+      bc = mix(bc, vec3(1.0, 0.90, 0.99), uWG2.y * (ext > 0.0 ? 1.0 : 0.0) * (1.0 - smoothstep(0.0, 0.025 + pt, abs(dTop - 0.07))) * min(1.0, 0.05 / pt));
++      bc = mix(bc, vec3(1.0, 0.90, 0.99), uWG2.y * (ext > 0.0 ? smoothstep(0.55, 0.95, wuK) : 0.0) * (1.0 - smoothstep(0.0, 0.025 + pt, abs(dTop - 0.07))) * min(1.0, 0.05 / pt));
 +      col = mix(col, bc, kc * min(uWG.x, 1.0));
 +    }
 +  }
    if (uA5.x > 0.5) {
      // m04arr5: fat flat chevrons (bars between two nested V lines, ends cut along the flow), as painted
      float k5 = floor((along - uA5.z) / uA5.y + 0.5);
-@@ -788,6 +1156,11 @@ void main() {
+@@ -788,6 +1156,12 @@ void main() {
    // approved view (the painted picture is shown there), fading in with the rest of the 3D scenery
    if (uAway < 0.001 || ext > wuE) discard;
    alpha = 1.0 - smoothstep(wuE - (uWC.x > 0.0 ? uWC2.y : uWU2.w), wuE, ext);
 +  if (uWG.x > 0.0) {
 +    // r21 m04wgl: a crisp top edge against the gold (anti-aliased, no soft pink haze above the water), see-through lilac top
 +    float pe = fwidth(ext) + 1e-4;
-+    alpha = (1.0 - smoothstep(wuE - uWG2.x - pe, wuE, ext)) * mix(1.0, uWG3.w, wgTop);
++    float rk = smoothstep(0.55, 0.95, wuK);                               // where the climb ramps in at the opening: a softer edge
++    alpha = (1.0 - smoothstep(wuE - mix(uWU2.w, uWG2.x, rk) - pe, wuE, ext)) * mix(1.0, uWG3.w, wgTop);
 +  }
  #endif
    if (uAway < 0.999 && vProj.w > 0.0) {
      vec2 uv = vProj.xy / vProj.w * 0.5 + 0.5;
-@@ -1039,6 +1412,8 @@ export function addM04(ctx: M04Ctx) {
+@@ -1039,6 +1413,8 @@ export function addM04(ctx: M04Ctx) {
    const out: { update(cam: THREE.Vector3, benny?: THREE.Vector3): void } = { update() {} };
    const updaters: ((a: number) => void)[] = [];
    let endCap: THREE.Mesh | null = null;
@@ -494,7 +495,7 @@ index 2b62a35..488d637 100644
  
    if (M04.ring) {
      const ringTile = new THREE.TextureLoader().load(new URL('../../assets/textures/match04/tile_ring.png', import.meta.url).href, (t) => { t.needsUpdate = true; });
-@@ -1053,6 +1428,18 @@ export function addM04(ctx: M04Ctx) {
+@@ -1053,6 +1429,18 @@ export function addM04(ctx: M04Ctx) {
          uRPol: { value: new THREE.Vector4(M04.num('m04rpol', 0), M04.num('m04rpp', 0.42), M04.num('m04rpgh', 0.5), M04.num('m04rpgl', 0.15)) },
          uRPol2: { value: new THREE.Vector2(M04.num('m04rpsp', 0.25), M04.num('m04rpfr', 0)) },
          uRCr: { value: new THREE.Vector4(M04.num('m04rpcr', 0), M04.num('m04rpcb', 0.011), M04.num('m04rpcd', 0.014), M04.num('m04rpcc', 0.012)) },
@@ -513,7 +514,7 @@ index 2b62a35..488d637 100644
          uP: { value: M04.num('m04ringp', 2.6) }, uLipBulb: { value: M04.num('m04lipbulb', 1) }, uBulbR: { value: (r + ctx.outerR) / 2 }, uLen: { value: len }, uRingTile: { value: ringTile }, uPaint: { value: M04.num('m04paint', M04.gold ? 0.8 : 1.4) }, uGoldY: { value: M04.gold ? 1 : 0 }, uCopper: { value: M04.num('m04copper', 0) }, uBulge: { value: M04.num('m04bulge', 0) }, uMouthT: { value: 0 }, uMouthTex: { value: null }, uMouthRho: { value: new THREE.Vector3(4.45, 3.25, M04.num('m04mro', -0.10)) }, uProjPos: shared.uProjPos, uTone: { value: new THREE.Vector4(M04.num('m04tb', 0.11), M04.num('m04tl', 0.38), M04.num('m04tm', 0.5), M04.num('m04ts', 0.45)) } },
      });
      const gw = M04.num('m04ringgw', 1);
-@@ -1094,23 +1481,31 @@ export function addM04(ctx: M04Ctx) {
+@@ -1094,23 +1482,31 @@ export function addM04(ctx: M04Ctx) {
      // groove and dots keep their painted proportions on every ring (ring coordinate in painted-period units).
      const rfew = M04.num('m04rfew', 0) > 0;
      const fV: number[] = [], fS: number[] = [];   // per profile point: ring coordinate (painted-period units), ring scale
@@ -555,7 +556,7 @@ index 2b62a35..488d637 100644
        }
      } else {
        const g = M04.num('m04rfg', 1), aT = M04.num('m04rfa', 30), q = M04.num('m04rfq', 0.75), sMin = M04.num('m04rfmin', 0.03);
-@@ -1118,7 +1513,7 @@ export function addM04(ctx: M04Ctx) {
+@@ -1118,7 +1514,7 @@ export function addM04(ctx: M04Ctx) {
        let A = 0, s0 = 1, Pc = P, tP = 0;
        for (let k = 0; k < 400 && s0 >= sMin; k++) {
          const tele = A >= aT - 1e-6;
@@ -564,7 +565,7 @@ index 2b62a35..488d637 100644
          const PU = tele ? tP : Pc, s1 = tele ? s0 * q : 1, B = PU - L;
          const A0 = A;
          const pushP = (rr: number, aa: number, part: number) => {
-@@ -1128,17 +1523,17 @@ export function addM04(ctx: M04Ctx) {
+@@ -1128,17 +1524,17 @@ export function addM04(ctx: M04Ctx) {
            prof.push({ r: rr, a: A0 + wa, part }); ringOf.push(k);
            fV.push(k * P + (band ? aa * (P - L) / B : aa - (PU - P))); fS.push(s);
          };
@@ -593,7 +594,7 @@ index 2b62a35..488d637 100644
          A = A0 + B * (s0 + s1) / 2 + L * s1;
          s0 = s1; if (!tele) Pc *= g;
        }
-@@ -1243,6 +1638,7 @@ export function addM04(ctx: M04Ctx) {
+@@ -1243,6 +1639,7 @@ export function addM04(ctx: M04Ctx) {
      if (rfew) cap.setAttribute('aF', new THREE.Float32BufferAttribute(new Float32Array(nC * 2).map((_, i) => (i % 2 === 0 ? 0 : capS)), 2));
      const cm = new THREE.Mesh(cap, gm); cm.name = 'm04_ring_glow'; group.add(cm);
      endCap = cm;
@@ -601,7 +602,7 @@ index 2b62a35..488d637 100644
      ctx.hideOld(['m04_tube', 'm04_mouth_ring', 'm04_tube_end']);
      console.info('[match04] m04ring', { period: P, rings: ringOf[ringOf.length - 1] + 1 });
      if (M04.mouth) {
-@@ -1283,7 +1679,9 @@ export function addM04(ctx: M04Ctx) {
+@@ -1283,7 +1680,9 @@ export function addM04(ctx: M04Ctx) {
      endCap.material = new THREE.ShaderMaterial({ vertexShader: END_VERT, fragmentShader: END_FRAG, side: THREE.DoubleSide, fog: false,
        extensions: { derivatives: true } as never,
        uniforms: { uPlate: shared.uPlate, uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uProjVP: shared.uProjVP, uAway: away, uTime: time,
@@ -612,7 +613,7 @@ index 2b62a35..488d637 100644
          uE: { value: new THREE.Vector4(M04.num('m04eg', -0.28), M04.num('m04eq', 0.78), M04.num('m04ec', 0.14), M04.num('m04eh', 0.55)) },
          uE2: { value: new THREE.Vector4((0.02 - cy) / r, M04.num('m04el', 0.62), M04.num('m04es', 1.25), M04.num('m04ek', 1.0)) } } });
      console.info('[match04] m04end', { water: (0.02 - cy) / r });
-@@ -1417,6 +1815,14 @@ export function addM04(ctx: M04Ctx) {
+@@ -1417,6 +1816,14 @@ export function addM04(ctx: M04Ctx) {
          // highlight lines, m04wcv dark violet edges, m04wcl glossy lip under the crest, m04wcs soft top width (u)
          uWC: { value: new THREE.Vector4(wup ? M04.num('m04wcr', 0) : 0, M04.num('m04wcn', 2.2), M04.num('m04wch', 0.8), M04.num('m04wcv', 0.55)) },
          uWC2: { value: new THREE.Vector2(M04.num('m04wcl', 0.6), M04.num('m04wcs', 0.25)) },
@@ -627,7 +628,7 @@ index 2b62a35..488d637 100644
          uWU3: { value: new THREE.Vector4(arc[nX], M04.num('m04wuv', 0.3), M04.num('m04wuw', 0.25), M04.num('m04wut', 0.28)) },
          uNB: { value: nbU }, uNB2:{ value: new THREE.Vector4(M04.num('m04nba', 4.2), M04.num('m04nbb', 0.04), M04.num('m04nbp', 0.0), M04.num('m04nbf', 0)) },
          uSB0: { value: new THREE.Vector4(M04.num('m04sband', 0) > 0 ? M04.num('m04sbs', 0.95) : 0, M04.num('m04sbi', 2.0), arc[nX], M04.num('m04sbl', 10)) },
-@@ -1469,6 +1875,7 @@ export function addM04(ctx: M04Ctx) {
+@@ -1469,6 +1876,7 @@ export function addM04(ctx: M04Ctx) {
    // m04bbb pre-opening bin length (u), m04bbe self-light, m04bbc tint (0 white .. 3 blue-lilac), m04bbi iridescence,
    // m04bbr roughness, m04bbk sink into the water (share of the heap height), m04bbw inside-rim heaps (0 = none), m04bbl
    // blue-lilac shading toward each bubble's outline, m04bbg thin bright rim, m04bbh white sparkle.
@@ -635,7 +636,7 @@ index 2b62a35..488d637 100644
    const buildBank = (clumps: { side: number; a: number; cl: number; reach: number }[], puffs: { side: number; x: number; z: number }[], nearF: number[]) => {
      let s3 = 24683; const r3 = () => ((s3 = (s3 * 16807) % 2147483647) / 2147483647);
      const HL = 3.3, HH = 1.43;                                  // heap length / height in the glb (u)
-@@ -1503,24 +1910,51 @@ export function addM04(ctx: M04Ctx) {
+@@ -1503,24 +1911,51 @@ export function addM04(ctx: M04Ctx) {
        iridescence: M04.num('m04bbi', 0.15), iridescenceIOR: 1.3,
        emissive: new THREE.Color('#eef3ff'), emissiveIntensity: M04.num('m04bbe', 0.12), transparent: true, depthWrite: true });
      const rimC = new THREE.Vector4(0.74, 0.72, 0.98, M04.num('m04bbl', 0.75)), rimW = M04.num('m04bbg', 0.35), glint = M04.num('m04bbh', 0.6);
@@ -690,7 +691,7 @@ index 2b62a35..488d637 100644
    }`);
      };
      updaters.push((a) => { holder.visible = a > 0.01; mat.opacity = a; });
-@@ -1813,6 +2247,7 @@ export function addM04(ctx: M04Ctx) {
+@@ -1813,6 +2248,7 @@ export function addM04(ctx: M04Ctx) {
      time.value = performance.now() / 1000;
      a5b.z = -cam.clone().applyMatrix4(MwInv).z;   // camera position down the slide (local along)
      if (nbU.x > 0 && benny) { const bl = benny.clone().applyMatrix4(MwInv); nbU.y = -bl.z; nbU.z = bl.x - cx; }
