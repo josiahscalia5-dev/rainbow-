@@ -19,7 +19,7 @@ index 6a4653f..2a7e591 100644
    // Screen 05 test GL1 (user 2026-11-16: "the glow on the highlights is most of what makes the approved version look so
    // shiny"): `?glow05=1` = a stronger UnrealBloom with a HIGH threshold, so only the bright highlights (streak cores,
 diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
-index 2b62a35..5821ec5 100644
+index 2b62a35..488d637 100644
 --- a/src/world/match04m4.ts
 +++ b/src/world/match04m4.ts
 @@ -120,6 +120,15 @@ uniform float uRVar;       // r17 m04rpvar: number of painted rings stacked in t
@@ -619,9 +619,9 @@ index 2b62a35..5821ec5 100644
 +        // r21 `&m04wgl=1` (with m04wup): crisp glossy satin wall water — m04wgl strength, m04wgn ribbons per u up the wall, m04wgh
 +        // white highlight streaks, m04wgs glints; m04wge crisp top edge (u), m04wgp bright lip, m04wgt translucent lilac top share,
 +        // m04wgc cyan streak share low down; m04wga / m04wgw ribbon waviness (u) / wavelength (u), m04wgk crease, m04wgo top alpha
-+        uWG: { value: new THREE.Vector4(wup ? M04.num('m04wgl', 0) : 0, M04.num('m04wgn', 3.2), M04.num('m04wgh', 0.85), M04.num('m04wgs', 0.8)) },
++        uWG: { value: new THREE.Vector4(wup ? M04.num('m04wgl', 0) : 0, M04.num('m04wgn', 2.2), M04.num('m04wgh', 0.85), M04.num('m04wgs', 0.8)) },
 +        uWG2: { value: new THREE.Vector4(M04.num('m04wge', 0.04), M04.num('m04wgp', 0.7), M04.num('m04wgt', 0.25), M04.num('m04wgc', 0.35)) },
-+        uWG3: { value: new THREE.Vector4(M04.num('m04wga', 0.12), M04.num('m04wgw', 3.5), M04.num('m04wgk', 0.25), M04.num('m04wgo', 0.85)) },
++        uWG3: { value: new THREE.Vector4(M04.num('m04wga', 0.18), M04.num('m04wgw', 6), M04.num('m04wgk', 0.12), M04.num('m04wgo', 0.85)) },
 +        // r20 `&m04farsm=1`: smooth band edges inside the far telescope (river along = distance inside the opening - z0)
 +        uFar: { value: new THREE.Vector2(telA - z0, M04.num('m04farsm', 0) > 0 && telA < 1e8 ? 1 : 0) },
          uWU3: { value: new THREE.Vector4(arc[nX], M04.num('m04wuv', 0.3), M04.num('m04wuw', 0.25), M04.num('m04wut', 0.28)) },

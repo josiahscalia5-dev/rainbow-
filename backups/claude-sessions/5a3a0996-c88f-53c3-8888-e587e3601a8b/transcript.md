@@ -3467,3 +3467,7 @@ Saved and pushed: GitHub matches the local commit `e8eacc8`.
 
 One new picture appeared right after that save (`qa/match/07/r21/BEFORE_K7/b_early.png`, from the Screen 07 specialist). The two specialists keep writing pictures and logs while they work, so there will always be a few unsaved files for a short while. The five-minute autosave picks them up, including their unfinished code. I'll do a full save and verify again when each specialist finishes, and before the session ends.
 
+### 🧑 User — 2026-11-20T02:15:51.154Z
+
+Okay, so what do I have to do to make my all my screens all at a 9 out of 10? And what I mean by that is that at the mostly for the while being swims, and he said what's still what's different. So make everything look like 9 out of 10. Let's try to get there, or at least 8.5, to make it exactly like my approved screens. So like, you know how my exact approved screens look like? I want that for my game mobile app screen, but actual game. So all the approved screens you see I have, that's how I want it to look like when the character moves or swims through the game, and the scenery, and the image, and everything. But actually, I want to make sure that it's the actual game. You clarify to me what I'm trying to tell you?
+

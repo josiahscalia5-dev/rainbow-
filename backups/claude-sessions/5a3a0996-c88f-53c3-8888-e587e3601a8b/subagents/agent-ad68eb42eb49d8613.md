@@ -848,3 +848,208 @@ Round 21 launch. Your complete launch brief is the file /home/user/rainbow-/docs
 >   // r8 '?match07=1&m07foam=1': the tall white lather walls step aside down the 07 plunge so the matched tube's river
 >   // tile (with its painted soft foam banks) shows instead;  …[+4433 chars]
 
+### 🤖 Claude — 2026-11-20T02:11:29.849Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"flag05\\b\" src/vfx/waterRibbon.ts | head -3; grep -n \"export function flag05\" -A8 src/vfx/waterRibbon.ts; grep -n \"parts?\\.\\|ribbon.*uniforms\\|uniforms:\" src/vfx/index.ts | head", "description": "Check flag05 and ribbon uniforms access"}`
+
+### 🧑 User — 2026-11-20T02:11:29.886Z
+
+> ↩︎ result: 167:export const flag05 = q05;
+> 229:  if (!flag05('match07') || !flag05('m07foam')) return null;
+> 231:  const end = flag05('m07foamb') ? course.marks['08'] ?? course.marks['07_plunge_bottom'] + 4 : course.marks['07_plunge_bottom'] - 12;
+> 160:      return { bubbles: bubbles.qaScreen(cam, w, h), rafts: foam.qaRafts(), fanStrength: crown.uniforms.uStrength.value, waterlineR: ribbon.uniforms.uBennyR.value };
+> 178:      ribbon.uniforms.uTime.value = time;
+> 187:      (ribbon.uniforms.uOutro.value as THREE.Vector2).x = controls.outro;
+> 194:      if (focusS < ribbonS0 || whirlBlend(focusS) > 0.5) (ribbon.uniforms.uBenny.value as THREE.Vector3).z = 0;
+> 232:        (ribbon.uniforms.uBenny.value as THREE.Vector3).set(s, lateral, strength);
+> 233:        ribbon.uniforms.uBennyR.value = waterlineR;
+
+### 🤖 Claude — 2026-11-20T02:11:41.686Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 - <<'EOF'\np='src/world/match07.ts'\ns=open(p).read()\ndef rep(a,b,cnt=1):\n    global s\n    assert s.count(a)==cnt, (a, s.count(a))\n    s=s.replace(a,b)\n# 1. parameterize nearWater (pure refactor: same math for the fitted water)\nrep(\"\"\"vec3 nearWater() {\n  float along = -vL.z;\n  float d = vL.x - vCtr;\"\"\",\"\"\"vec3 nearWater(float lx, float ctr, float along) {\n  float d = lx - ctr;\"\"\")\nrep(\"\"\"  vec2 fp = vec2(vL.x, along) / uNearW.w;\"\"\",\"\"\"  vec2 fp = vec2(lx, along) / uNearW.w;\"\"\")\nrep(\"\"\"    if (uNearOn > 0.5) ret …[+1938 chars]`
+
+### 🧑 User — 2026-11-20T02:11:41.747Z
+
+> ↩︎ result: 291:  const endW = nearW && band && !!plunge && flag05('m07end');
+> 468:        rivP.push(p.x, p.y, p.z); rivUV.push((endW ? lat0 : 0) + T.ax + l, along); // centred on the tube axis like the fitted water (r21 m07end: lateral from the course centre)
+> 484:    const wallM = mat(tWall, 3), rivM = mat(tRiver, endW ? 5 : 4);
+
+### 🤖 Claude — 2026-11-20T02:11:53.693Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 - <<'EOF'\np='src/game/Game.ts'\ns=open(p).read()\ndef rep(a,b,cnt=1):\n    global s\n    assert s.count(a)==cnt, (a, s.count(a))\n    s=s.replace(a,b)\nrep(\"\"\"  const m07 = MATCH['07'] ? await buildMatch07(m07Tube ? { course, sA: m07sA, sB: course.marks['07_plunge_bottom'], fade: [course.marks['07_plunge_bottom'] - 14, course.marks['07_plunge_bottom'] - 3] } : undefined) : null;\"\"\",\"\"\"  // r21 `&m07end=1` (qa/match/07/r21/PROGRESS.md): the painted plunge river runs down to the 08 inlet (fades out over the last\n  // 3.5 u) and the game's s …[+1599 chars]`
+
+### 🧑 User — 2026-11-20T02:11:57.881Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T02:12:03.952Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && K7=$(cat /home/user/rainbow-/qa/match/07/r21/K7.txt); D=/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/try1; node tools/match07/diag_r21.mjs $D \"$K7&m07end=1\" '[{\"name\":\"d_late\",\"frac\":0.6},{\"name\":\"e1\",\"frac\":0.75},{\"name\":\"e_end\",\"frac\":0.85},{\"name\":\"e2\",\"frac\":0.92}]' 2>&1 | grep -v \"allow list\\|403\\|m07nearw\" | tail -5", "description": "Render first try of m07end at the end of 07", "timeout": 600000}`
+
+### 🧑 User — 2026-11-20T02:12:34.105Z
+
+> ↩︎ result: d_late s 343.456 lat 0 hidden 0
+> e1 s 361.056 lat 0 hidden 0
+> e_end s 372.656 lat 0 hidden 0
+> e2 s 380.856 lat 0 hidden 0
+
+### 🤖 Claude — 2026-11-20T02:12:37.330Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/try1/e_end.png"}`
+
+### 🧑 User — 2026-11-20T02:12:37.377Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T02:12:38.047Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/try1/e1.png"}`
+
+### 🧑 User — 2026-11-20T02:12:38.091Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T02:12:38.754Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/try1/d_late.png"}`
+
+### 🧑 User — 2026-11-20T02:12:38.801Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T02:12:39.363Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/try1/e2.png"}`
+
+### 🧑 User — 2026-11-20T02:12:39.425Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T02:13:23.052Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && K7=$(cat /home/user/rainbow-/qa/match/07/r21/K7.txt); D=/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/try1; node tools/match07/diag_r21.mjs $D \"$K7&m07end=1\" '[{\"name\":\"c_middle\",\"frac\":0.35,\"probe\":[[0,-0.5],[-0.6,-0.6],[0.6,-0.6],[0,-0.9]]},{\"name\":\"f_hard_left\",\"frac\":0.35,\"steer\":-1,\"probe\":[[0,-0.5],[-0.6,-0.6],[0.6,-0.6],[0,-0.9]]},{\"name\":\"g_hard_right\",\"frac\":0.35,\"steer\":1}]' 2>&1 | grep -v \"allow list\\|403\\|m07nearw\" | tail -5; python3 -c \"\nimport json\nd=json.load(open('$D/diag …[+305 chars]`
+
+### 🧑 User — 2026-11-20T02:14:00.158Z
+
+> ↩︎ result: c_middle s 314.056 lat 0 hidden 0
+> f_hard_left s 314.056 lat -2.25 hidden 0
+> g_hard_right s 314.056 lat 2.25 hidden 0
+> == c_middle 314.056 cam [13.34, -47.65, -232.79]
+>   P 0 -0.5 [('fur_body<body<benny_root<Aux', 8.57, [313.25, 0.52]), ('fur_body<body<benny_root<Aux', 8.57, [313.25, 0.52]), ('fur_body<body<benny_root<Aux', 8.57, [313.25, 0.52]), ('fur_body<body<benny_root<Aux', 8.57, [313.25, 0.52])]
+>   P -0.6 -0.6 [('m07_water<match07_projection', 8.23, [312.75, 1.73]), ('m07_pl_river<match07_project', 8.72, [313.25, 1.79]), ('m07_tube<match07_projection<', 13.23, [317.5, 2.85]), ('foam_berm<foam_banks<water_s', 18.31, [322.75, 3.9])]
+>   P 0.6 -0.6 [('m07_water<match07_projection', 8.26, [312.75, 1.39]), ('m07_pl_river<match07_project', 8.71, [313, 1.48]), ('m07_tube<match07_projection<', 11.47, [316, 2.07])]
+>   P 0 -0.9 [('m07_water<match07_projection', 6.58, [311, 0.26]), ('m07_pl_river<match07_project', 6.6, [311, 0.25]), ('m07_tube<match07_projection<', 10.57, [314.5, 2.01]), ('m07_pl_tube<match07_projecti', 12.95, [317.25, 2.76])]
+> == f_hard_left 314.056 cam [12.01, -47.65, -232.9]
+>   P 0 -0.5 [('m07_water<match07_projection', 8.87, [313.75, 1.54]), ('fur_armR<armR<body<benny_roo', 9 …[+879 chars]
+
+### 🤖 Claude — 2026-11-20T02:14:07.183Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/try1/c_middle.png"}`
+
+### 🧑 User — 2026-11-20T02:14:07.228Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T02:14:07.788Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/try1/f_hard_left.png"}`
+
+### 🧑 User — 2026-11-20T02:14:07.830Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T02:14:31.818Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 600,780p src/vfx/foam.ts", "description": "Read berm build and puff placement"}`
+
+### 🧑 User — 2026-11-20T02:14:31.848Z
+
+> ↩︎ result: for (let i = 0; i < rows; i++) {
+>     const s = Math.min(s1, s0 + i * ds);
+>     rowS.push(s);
+>     const f = course.sample(s);
+>     const hw = course.widthAt(s) / 2;
+>     for (const side of [-1, 1]) {
+>       for (let j = 0; j < C; j++) {
+>         // left side is mirrored so every row runs inner → outer; bubble domes everywhere except
+>         // at the water line (keeps the lace edge flush with the stream)
+>         const e = E[j];
+>         const k05 = hk(s);
+>         const h = squashBerm(bermSurface(s, e, side, hw), k05);
+>         // 05: the outer (dry) side is laterally compressed too, so the rim is a narrow band of bubbles
+>         const eS = e > 0 ? e * (0.1 + 0.9 * k05) : e;
+>         tmp.copy(f.pos).addScaledVector(f.right, side * (hw + eS)).addScaledVector(f.up, h);
+>         tmp.toArray(pos, k * 3);
+>         foam[k * 3] = e;
+>         foam[k * 3 + 1] = s;
+>         foam[k * 3 + 2] = side;
+>         k++;
+>       }
+>     }
+>   }
+>   const idx: number[] = [];
+>   const rowStride = C * 2;
+>   for (let i = 0; i < rows - 1; i++) {
+>     const sa = rowS[i], sb = rowS[i + 1];
+>     if (sb > skip[0] && sa < skip[1]) continue;
+>     for (let sideI = 0; sideI < 2; sideI++) {
+>       for (let j = 0; j < C - 1; j++) {
+>         cons …[+7756 chars]
+
+### 🤖 Claude — 2026-11-20T02:15:15.362Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 - <<'EOF'\np='src/game/Game.ts'\ns=open(p).read()\ndef rep(a,b,cnt=1):\n    global s\n    assert s.count(a)==cnt, (a, s.count(a))\n    s=s.replace(a,b)\nrep(\"\"\"  const m07Fade: [number, number] = m07End ? [s08 - 4, s08 - 0.5] : [course.marks['07_plunge_bottom'] - 14, course.marks['07_plunge_bottom'] - 3];\"\"\",\"\"\"  const m07Fade: [number, number] = m07End ? [s08 - 2.2, s08 - 0.1] : [course.marks['07_plunge_bottom'] - 14, course.marks['07_plunge_bottom'] - 3];\"\"\")\nrep(\"\"\"  const m07RibbonHideOn = new THREE.Vector4(m07sA - 3, s08 - 1, -1 …[+1311 chars]`
+
+### 🧑 User — 2026-11-20T02:15:18.080Z
+
+> ↩︎ result: 96:  const parts: Record<string, THREE.Object3D> = { ribbon: ribbon.mesh, whirlpool: whirl.mesh, drum: drum.group, drumSwirl: drum.swirl, finalWave: wave.mesh, puddles: puddles.group, foam: foam.group, foamBerm: foam.berm, foamRafts: foam.rafts, foamRim05: foam.rim05, foamFlank: foam.flank, bubbles: bubbles.group, bubblesSmall: bubbles.small, bubblesBig: bubbles.big, spray: spray.points, splashCrown: crown.mesh, splash05: crown05.mesh };
+> 98:  // QA: ?waterhide=crown,spray,bubbles,foam,foamBerm,ribbon … hides water parts (isolation captures)
+
+### 🤖 Claude — 2026-11-20T02:15:22.243Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"berm: \\|berm,\" src/vfx/foam.ts | head -5; grep -n \"puffs.*h07\\|h07\\[1\\]\" src/vfx/foam.ts | head", "description": "Confirm berm export is the mesh"}`
+
+### 🧑 User — 2026-11-20T02:15:22.294Z
+
+> ↩︎ result: 3: *  - berm: ONE continuous lumpy lather bank per side, swept along the course (custom shader:
+> 469:  berm: THREE.Mesh;
+> 1065:          // bank is seen ≈5× closer than the berm, so its soap cells must be smaller
+> 1134:    berm: berm.mesh,
+> 693:  // r17 m07foamb: puffs stay away down to the ramp start (h07[1] = 5 u before the 08 start); r18: on the ramp they sit,
+> 707:      if (h07 && pf.s !== undefined && pf.s > h07[0] + 1.5 && pf.s < (e07 !== null ? h07[1] : h07[1] - 1.5)) tmpS.set(0, 0, 0); // r8 m07foam
+
+### 🤖 Claude — 2026-11-20T02:15:30.913Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && K7=$(cat /home/user/rainbow-/qa/match/07/r21/K7.txt); D=/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/try2; node tools/match07/diag_r21.mjs $D \"$K7&m07end=1\" '[{\"name\":\"e1\",\"frac\":0.75},{\"name\":\"e_end\",\"frac\":0.85},{\"name\":\"e2\",\"frac\":0.92},{\"name\":\"e3\",\"frac\":0.97}]' 2>&1 | grep -v \"allow list\\|403\\|m07nearw\" | tail -5", "description": "Render end shots after crossfade and berm changes", "timeout": 600000}`
+
+### 🧑 User — 2026-11-20T02:16:14.310Z
+
+> ↩︎ result: e1 s 361.056 lat 0 hidden 0
+> e_end s 372.656 lat 0 hidden 0
+> e2 s 380.856 lat 0 hidden 0
+> e3 s 386.833 lat 0 hidden 0
+
+### 🤖 Claude — 2026-11-20T02:16:18.013Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/try2/e_end.png"}`
+
+### 🧑 User — 2026-11-20T02:16:18.057Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T02:16:18.683Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/try2/e2.png"}`
+
+### 🧑 User — 2026-11-20T02:16:18.739Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T02:16:19.289Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/try2/e3.png"}`
+
+### 🧑 User — 2026-11-20T02:16:19.353Z
+
+> ↩︎ result: [image]
+
