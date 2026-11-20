@@ -1,6 +1,6 @@
 {
- "time_utc": "2026-11-20T04:01:47+00:00",
- "lead_branch": "ccr-4742c19f-ez2mrs",
+ "time_utc": "2026-11-20T04:08:34+00:00",
+ "lead_branch": "claude/rainbow-r22-restore-ut3m39",
  "specialists_sha256_16": {
   "android-build-performance": "b0c45161860a960c",
   "animation-and-gameplay-engineer": "c48094c3ed3d22e7",
@@ -13,18 +13,7 @@
   "washer-environment-modeler": "7abdea786d530d79",
   "water-fx-specialist": "b160f12ff93db70e"
  },
- "workers_git_worktrees": [
-  {
-   "worktree": "/home/user/wt/s04",
-   "branch": "claude/rainbow-s04-match-c23",
-   "head": "34cb494137e1"
-  },
-  {
-   "worktree": "/home/user/wt/s07",
-   "branch": "claude/rainbow-s07-match-c23",
-   "head": "8accdad0a07e"
-  }
- ],
+ "workers_git_worktrees": [],
  "workers_status_latest_round": {
   "round9_account9": null
  },
@@ -35,14 +24,10 @@
   "worldlabs@worldlabs"
  ],
  "plugins_synced_from_claude_account": [
-  "Accelerate design workflows \u2014 critique, design system management, UX writing, accessibilit",
+  "Browser automation and end-to-end testing MCP server by Microsoft. Enables Claude to inter",
   "Frontend design skill for UI/UX implementation",
-  "Automated code review for pull requests using multiple specialized agents with confidence-",
-  "Analyze codebases and recommend tailored Claude Code automations such as hooks, skills, MC",
-  "Core skills library for Claude Code: TDD, debugging, collaboration patterns, and proven te",
-  "Comprehensive feature development workflow with specialized agents for codebase exploratio",
-  "Upstash Context7 MCP server for up-to-date documentation lookup. Connects to Context7's ho",
-  "Browser automation and end-to-end testing MCP server by Microsoft. Enables Claude to inter"
+  "Accelerate design workflows \u2014 critique, design system management, UX writing, accessibilit",
+  "Upstash Context7 MCP server for up-to-date documentation lookup. Connects to Context7's ho"
  ],
  "mcp_servers_configured": [
   "worldlabs"
