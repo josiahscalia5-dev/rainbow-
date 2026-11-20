@@ -78,3 +78,6 @@ s06 / Benny = their pushed `-c23` tips + their r22 PROGRESS.md.
   `RESUME_R22.md`, `setup_worker_r23.sh`, `backups/CONNECTORS_AND_SERVICES_R22.md`, START prompt + handoff + CLAUDE.md pointer updated.
 * ~03:52 s06 step 2 `&m06st=1` (start-view flash fix, `claude/rainbow-s06-match-c23` @ `f7b3b22`; worker: small GOOD IMPROVEMENT, first
   ~1.3 u only; lead review pending): folder `qa/match/06/r22/step2_m06st/` on that branch. s06 next: task 3 (foam walls).
+* ~04:00 Benny r23 step 1 `&b20tuft=1` (on `&benny20=1&b20expo=1&b20ppw=0.45`, `claude/rainbow-benny-c23` @ `b9c91d0`; worker: GOOD
+  (partial) — soft tufts + lighter rose tips instead of flat velvet; still finer than the approved silky tufts; crops now centred on
+  Benny, tools `tools/benny23/`; lead review pending). Next: knit cream stripes / cuff ribs.
