@@ -683,8 +683,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 12426,
-   "sha256": "de007491be0241c7d3c0f613e5e0addebe7e0d362bb9a8763e3855f8261c73dd"
+   "bytes": 12434,
+   "sha256": "22de59396ff9f44cf3fd2df0bb4b431f178e1722caebec37e4e04067244a7b28"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -1205,6 +1205,11 @@
    "path": "qa/gameplay_test.json",
    "bytes": 14632,
    "sha256": "4865d9cef7c1030f061f7c53c27794136d4e9af68f2c74666b758ddddfac56c2"
+  },
+  {
+   "path": "qa/gameplay_test_switch.json",
+   "bytes": 14568,
+   "sha256": "64287ed7a10b6374d27046f17e098d4bb9e8e5e0d472ebbc72f3c12ad4fd0c4f"
   },
   {
    "path": "qa/glb_validation.txt",
@@ -2202,6 +2207,11 @@
    "sha256": "06cb9db8c2ff3f6276a1b5b1d605b32631ddacee3341e23b5d317336bb869d0b"
   },
   {
+   "path": "qa/match/06/r22/PROGRESS.md",
+   "bytes": 2498,
+   "sha256": "de62da3f45dd89aa8f33263aaf178966b52a793b81b0988bd4363a9e249a5bd7"
+  },
+  {
    "path": "qa/match/06/r22/step1_m06view/1_APPROVED.png",
    "bytes": 497882,
    "sha256": "3946058c0893e97a99dd5015f3197901859475cd7ef55e09d982d232951441fe"
@@ -2325,6 +2335,86 @@
    "path": "qa/match/06/r22/step1_m06view/NEW/shots.json",
    "bytes": 1841,
    "sha256": "06cb9db8c2ff3f6276a1b5b1d605b32631ddacee3341e23b5d317336bb869d0b"
+  },
+  {
+   "path": "qa/match/06/r22/step1_m06view/swim_06_BEFORE.mp4",
+   "bytes": 2199459,
+   "sha256": "530f4fed9ccdb9ef42ae21083b870bc0022c956a37afa59f00139999889567e6"
+  },
+  {
+   "path": "qa/match/06/r22/step1_m06view/swim_06_NEW.mp4",
+   "bytes": 2198638,
+   "sha256": "45c2bdd04cba0d37260a939bb01e9a4c1ab135a455c6ee3202c4bb6162e48d75"
+  },
+  {
+   "path": "qa/match/06/r22/step2_m06st/BEFORE/a_start.png",
+   "bytes": 2620995,
+   "sha256": "c05c1a235b0cf9cf4bbe4a9aadfca7ca27e0f7693b8a42fb13fbb7cb95286bc7"
+  },
+  {
+   "path": "qa/match/06/r22/step2_m06st/BEFORE/b_0.3u.png",
+   "bytes": 2570083,
+   "sha256": "9c2f67cc3ca38d1aa30ae05759838aec41c91e3f6b74a898569e179fba167969"
+  },
+  {
+   "path": "qa/match/06/r22/step2_m06st/BEFORE/c_0.6u.png",
+   "bytes": 2558207,
+   "sha256": "2cce8d6267fed3ec30fe6f1fc9350552464e5801f5d7c03faa65dc6aee58758a"
+  },
+  {
+   "path": "qa/match/06/r22/step2_m06st/BEFORE/d_0.9u.png",
+   "bytes": 2547639,
+   "sha256": "62a5d864448ca2fc2264fd57a6a9632e77773dbf96cb4ccaeb3f2fb93b7515b6"
+  },
+  {
+   "path": "qa/match/06/r22/step2_m06st/BEFORE/e_1.1u.png",
+   "bytes": 2528376,
+   "sha256": "b0d438448dd53043b686aa797140781d5169c7300e39038e5baffdadb15a1fed"
+  },
+  {
+   "path": "qa/match/06/r22/step2_m06st/BEFORE/f_1.5u.png",
+   "bytes": 2408672,
+   "sha256": "0d6a6f778475a17ff1e7f6a3fe9f053bf9a4a685833d0d0983eff6f27496590d"
+  },
+  {
+   "path": "qa/match/06/r22/step2_m06st/BEFORE/g_2u.png",
+   "bytes": 2317126,
+   "sha256": "0adceb90002d7a12f97f0478a6f87744a74df263f46a5421a5ab986d4cda328e"
+  },
+  {
+   "path": "qa/match/06/r22/step2_m06st/BEFORE/h_3u.png",
+   "bytes": 2249644,
+   "sha256": "35973a2fda66ed7591d703d6438e788b5360b120f568bb040f87309f1f93edbc"
+  },
+  {
+   "path": "qa/match/06/r22/step2_m06st/NEW/a_start.png",
+   "bytes": 2620995,
+   "sha256": "c05c1a235b0cf9cf4bbe4a9aadfca7ca27e0f7693b8a42fb13fbb7cb95286bc7"
+  },
+  {
+   "path": "qa/match/06/r22/step2_m06st/NEW/b_0.3u.png",
+   "bytes": 2523456,
+   "sha256": "536012f1edbae151a376aae2c2e58688ae9daef4e0e13cd07374beed72a84c92"
+  },
+  {
+   "path": "qa/match/06/r22/step2_m06st/NEW/c_0.6u.png",
+   "bytes": 2501934,
+   "sha256": "fdb5812394bcf44b83f737d6d76fa21c108aa46ae6a81f3e90e4fcd2bbbb451f"
+  },
+  {
+   "path": "qa/match/06/r22/step2_m06st/NEW/d_0.9u.png",
+   "bytes": 2492912,
+   "sha256": "a12bc626d7ed9625178b9112a53d9bde744ba169055bc04fe6aba100a51e7ff5"
+  },
+  {
+   "path": "qa/match/06/r22/step2_m06st/NEW/e_1.1u.png",
+   "bytes": 2480753,
+   "sha256": "5fd8a788e5661f67f9df8f5c8e68fd17ebc1b580a523133cb4b44ace27f4aed2"
+  },
+  {
+   "path": "qa/match/06/r22/step2_m06st/NEW/f_1.5u.png",
+   "bytes": 2403762,
+   "sha256": "544cee6dae6fff85c0d3be2f2d3d4c3df3a5d73a89aa6f434fcf65de10a50728"
   },
   {
    "path": "qa/match/06/r6/06_BEFORE_M1_approved_view.png",
