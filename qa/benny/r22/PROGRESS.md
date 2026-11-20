@@ -2,9 +2,13 @@
 
 ## (r22) WHERE I STOPPED / NEXT — 2026-11-20
 
-**Done:** step 1 (plush fur, `&benny20=1`) and step 2 (per-screen exposure `&benny20=1&b20expo=1`) proven on 04–08.
-**Next:** step 3 (pompom lighter yarn, clean cuff ribs
-`b20knit=1`, felt star, size vs painted Benny).
+**Done (3 steps, round stopped as briefed):** step 1 plush fur `&benny20=1` GOOD; step 2 per-screen exposure `&b20expo=1`
+GOOD; step 3 pompom lighter yarn tips `&b20ppw=0.45` GOOD, knit maps `&b20knit=1` NOT YET PROVEN.
+Best Benny query now: `&benny20=1&b20expo=1&b20ppw=0.45` (all opt-in; default build unchanged).
+**Next:** (a) knit maps: make the crown's light stripes CREAM (they come out lavender-pink — fix in `tools/benny20/knit.py`
+stripe colour, not via `b20ccol`, which barely moves it), lighter less-blue violet, vertical cuff ribbing like the approved;
+(b) deeper rose creases in the body fur at the brighter 05–08 exposure (shade `bsx/bsz`); (c) felt star stitching and
+Benny's size vs the painted Benny (06 start: Benny far larger than painted — camera/framing, flag to lead).
 
 Kept query per screen = lead `qa/review_r21/audit/QUERY_0N.txt` (lead branch `ccr-4742c19f-ez2mrs`) + Benny switches.
 Note: this branch has only part of the screens' match code (no `match06` / most `m06*`, `m07*`, `m05pink` …), so the 06 / 07
@@ -33,3 +37,14 @@ is judged. Default build unchanged (every change only under `benny20`).
 * Verdict by eye: Benny now reads the same bright dusty rose on 05, 06, 07 and 08 as painted (no more dark mauve), at the
   start, in the middle and steering hard left. Trade-off: at the brighter exposure the fur's strand shading is a bit flatter
   than the approved (which keeps deeper rose creases) — worth a later shade-depth pass. Pompom / cuff unchanged (step 3).
+
+### Step 3 — pompom lighter soft yarn (`&b20ppw=0.45`) GOOD IMPROVEMENT; knit maps (`&b20knit=1`) NOT YET PROVEN
+* New `uPile.w` in `fur.ts` (BENNY20 path only): outer strand ends fade toward a pale lavender of the same brightness;
+  pompom `pile.w = b20ppw` (default 0 → nothing changes unless the switch is set). Darker / chunkier pompom variants
+  (`b20pcol`, `plx`, `psx`) tried first: darker koosh → rejected.
+* BEFORE = step 2 (`t2/0N/new`, 04: `t1/04/new`), NEW = `qa/benny/r22/t3/0N/new/` with
+  `&benny20=1&b20expo=1&b20knit=1&b20ppw=0.45`. Gameplay 8/8 with these switches and with the default build.
+* Verdict by eye: the pompom now reads as a lighter lilac yarn ball with pale tips and darker violet depth (closer to the
+  approved; before it was a flat saturated violet koosh) — GOOD. The knit maps give clean, regular chunky cuff stitches
+  instead of the smeared streaks — but the crown's light stripes turn lavender-pink instead of cream, the violet goes
+  darker / bluer and the cuff shows V-stitches, not the approved vertical ribbing → NOT YET PROVEN, stays opt-in.
