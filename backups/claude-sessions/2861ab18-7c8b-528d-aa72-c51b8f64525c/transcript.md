@@ -3577,3 +3577,54 @@ v2 passes all 8 gameplay checks: 91 coins, 2,240 at the end, and no camera jumps
 
 > 🔧 **Bash** `{"command": "cat > README.md <<'EOF'\n# Screen 06 — v2 proof (lead, 2026-11-20 ~22:10 UTC) — individual playable candidate, NOT approved, not Android\n\n* v2 = `QUERY_NEW_v2.txt` = v1 (`../QUERY_NEW_v1.txt`) + `&m06camk=0.65&m06camu=1.05`: after the approved start view the camera stays 35 % closer behind\n  Benny at the same height (eased back over the last 16 u before 07), so Benny is large and low in the frame like the approved picture and\n  the storyboard, with the winding slide + coin trail visible above his hat. Route, scenery, start view and the 07 join unchanged.\n* `SCREEN06_NEW_route …[+913 chars]`
 
+### 🧑 User — 2026-11-20T21:53:05.687Z
+
+> ↩︎ result: "commit": "9a2c29c814bd1b5c36c7cf2d9ac85692dd3faeb2",
+> AUTOSAVE OK | branch ccr-2644c3c0-iikckn | scheduler daemon | last verified backup 2026-11-20T21:52:44+00:00 (0.3 min ago) | local 9a2c29c remote 9a2c29c (match) | uncommitted 0
+> 11
+
+### 🤖 Claude — 2026-11-20T21:53:06.674Z
+
+> 🔧 **TaskUpdate** `{"taskId": "5", "status": "completed"}`
+
+### 🧑 User — 2026-11-20T21:53:06.685Z
+
+> ↩︎ result: Updated task #5 status
+
+### 🤖 Claude — 2026-11-20T21:53:08.723Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/match/06/r30/proof_v2/SCREEN06_NEW_route_into_07_1x.mp4", "/home/user/rainbow-/qa/match/06/r30/proof_v2/STORYBOARD_vs_GAMEPLAY.jpg"], "caption": "v2: the camera now keeps your picture's framing while Benny swims (Benny big and low, the winding rainbow slide ahead above him), in one uninterrupted gameplay clip into Screen 07, plus your storyboard panels above the same moments.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-20T21:53:09.767Z
+
+> ↩︎ result: 2 files delivered to user.
+>   /home/user/rainbow-/qa/match/06/r30/proof_v2/SCREEN06_NEW_route_into_07_1x.mp4 → file_uuid: 362ce566-21b4-42f2-ae57-d37b5c73bf9f
+>   /home/user/rainbow-/qa/match/06/r30/proof_v2/STORYBOARD_vs_GAMEPLAY.jpg → file_uuid: 1150abc5-db75-4684-bd2c-ed58feffd5e4
+
+### 🤖 Claude — 2026-11-20T21:53:16.772Z
+
+Yes, I can make it very close to your approved picture and storyboard — but not literally 100% identical in every moving frame. Your painting shows Screen 06 from one spot only. Once Benny starts swimming, the game has to draw views the painting doesn't contain, so those can only be made to look like it.
+
+**Where it stands, measured against your approved picture:**
+- **Very first frame of Screen 06:**
+  - Background and rainbow water match on about 97% of pixels.
+  - Benny matches on only 39%. The game's 3D Benny has a taller hat with wide stripes, hotter pink fur, and sits closer to the camera.
+- **Your red-marked spot, 1.3 seconds later:** only about 5% of pixels match, because once Benny moves the painting can no longer be used directly and the game's own 3D look takes over.
+
+**What I fixed just now (v2, clip and comparison sheet sent above):**
+- The camera now keeps your picture's framing while Benny swims. He stays big and low in the middle, the winding rainbow slide and coin trail stay visible above his hat, and the purple tunnel and gold bands stay around him.
+- The four storyboard moments now line up with your panels in layout.
+- Everything else is unchanged: the opening, the route, the hand-over into Screen 07. The gameplay test passes 8/8 and coins still end at 2,240.
+
+**What still doesn't look like your picture, and what I'll do next, in this order:**
+1. **Benny.** Your Benny has a shorter knitted hat with cream and violet stripes, a thick ribbed violet brim, and softer, lighter dusty-pink fur. I'd rebuild the game's Benny to those proportions and colours; that changes every frame and every screen.
+2. **The water's surface.** Yours is cyan with sparkly white veins and rainbow edges; ours shows long speed streaks.
+3. **Foam and bubbles.** Your bubbly foam clusters and big iridescent bubbles.
+4. **The far end of the tunnel.** It glows peach for the second half instead of staying purple.
+
+None of this needs paid credits. Should I start with Benny?
+
+### 🧑 User — 2026-11-20T21:53:16.911Z
+
+You just said does that match in every moving frame is impossible since the game must draw angles in a painting never show. So what does that mean?
+
