@@ -1109,3 +1109,85 @@ I'll prepare the full-candidate query and the final-sequence chain (clip + label
 
 > 🔧 **Bash** `{"command": "until grep -q \"exit done\" /home/user/scratch/s07/step3b.log 2>/dev/null; do sleep 10; done; cat /home/user/scratch/s07/step3b.log; cd /home/user/scratch/s07/s3seg && ffmpeg -v error -y -i NEW/0196.png -i NEW2/0196.png -i NEW2/0200.png -filter_complex \"hstack=inputs=3,scale=972:-1\" /home/user/scratch/s07/s3_arch.png; date", "description": "Wait for NEW2 join segment and compare arch", "timeout": 540000}`
 
+### 🧑 User — 2026-11-20T13:47:33.390Z
+
+> ↩︎ result: seg NEW2 exit 0
+> exit done
+> Fri Nov 20 13:47:33 UTC 2026
+
+### 🤖 Claude — 2026-11-20T13:47:35.052Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s07/s3_arch.png"}`
+
+### 🧑 User — 2026-11-20T13:47:35.087Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T13:47:43.470Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s07/s3seg && node /home/user/tools-pixelmatch/pixeldiff.mjs BEFORE/0200.png NEW2/0200.png 2>&1 | tail -1; node /home/user/tools-pixelmatch/pixeldiff.mjs BEFORE/0204.png NEW2/0204.png 2>&1 | tail -1; python3 -I -c \"\nfrom PIL import Image\nfor v in ['BEFORE','NEW2']:\n    im=Image.open(f'/home/user/scratch/s07/s3seg/{v}/0200.png').convert('RGB'); w,h=im.size\n    print(v, w,h, [im.getpixel((x,h-20)) for x in (50,200,380)])\"", "description": "Compare first 08 frames BEFORE vs NEW2"}`
+
+### 🧑 User — 2026-11-20T13:47:43.968Z
+
+> ↩︎ result: {"a":"BEFORE/0200.png","b":"NEW2/0200.png","rows":[0,768],"threshold":0.1,"diff_pixels":0,"total":331776,"diff_pct":0}
+> {"a":"BEFORE/0204.png","b":"NEW2/0204.png","rows":[0,768],"threshold":0.1,"diff_pixels":0,"total":331776,"diff_pct":0}
+> BEFORE 432 768 [(218, 134, 36), (213, 42, 127), (249, 77, 119)]
+> NEW2 432 768 [(218, 134, 36), (213, 42, 127), (249, 77, 119)]
+
+### 🤖 Claude — 2026-11-20T13:47:50.743Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s07 && rm -f final.log && nohup bash final.sh > final_chain.log 2>&1 & \ncd /home/user/scratch/s07 && mkdir -p /home/user/rainbow-/qa/match/07/r26/s3_join/clip && python3 -I segpair.py s3seg/BEFORE s3seg/NEW2 /home/user/rainbow-/qa/match/07/r26/s3_join/clip/SCREEN07_S3_join_BEFORE_vs_NEW \"SCREEN 07 STEP 3 m07join  t 6.6-8.9 s (drop end -> 08)\" \"BEFORE: step-1 candidate (m07swing) + K23-3\" \"NEW: + m07join\" && rm -rf /home/user/rainbow-/qa/match/07/r26/s3_join/clip/*_frames && D=/home/user/rainbow-/qa/match/07/r26/s3_join && cp /home/user/rainbow-/referen …[+327 chars]`
+
+### 🧑 User — 2026-11-20T13:48:01.179Z
+
+> ↩︎ result: ok /home/user/rainbow-/qa/match/07/r26/s3_join/clip/SCREEN07_S3_join_BEFORE_vs_NEW
+> /home/user/rainbow-/qa/match/07/r26/s3_join:
+> 1_ORIGINAL_APPROVED.png
+> 2_BEFORE_t7.50.png
+> 2_BEFORE_t7.83.png
+> 2_BEFORE_t8.17.png
+> 2_BEFORE_t8.33_first08.png
+> 3_NEW_t7.50.png
+> 3_NEW_t7.83.png
+> 3_NEW_t8.17.png
+> 3_NEW_t8.33_first08.png
+> clip
+> 
+> /home/user/rainbow-/qa/match/07/r26/s3_join/clip:
+> SCREEN07_S3_join_BEFORE_vs_NEW_0.5x.mp4
+> SCREEN07_S3_join_BEFORE_vs_NEW_1.0x.mp4
+
+### 🤖 Claude — 2026-11-20T13:48:10.228Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/match/07/r24/PROGRESS.md", "old_string": "* (superseded) step 2 `&m07look=1` proof", "new_string": "* 13:50 DONE — **STEP 3 verdict `&m07join=1` (+ r26 one-line addition: the 09 final-wave mesh hidden while 07 shows; Game.ts,\n  tsc 0): GOOD IMPROVEMENT, not approved.** Proof `qa/match/07/r26/s3_join/` (1_ORIGINAL_APPROVED, 2_BEFORE_t*, 3_NEW_t* at t\n  7.5 / 7.83 / 8.17 / first 08 frame 8.33; side-by-side clip `clip/SCREEN07_S3_join_BEFORE_vs_NEW_{1.0x,0.5x}.mp4`, t 6.6–8.9 s).\n  - Closer: from the end of the drop the painted cyan r …[+1251 chars]`
+
+### 🧑 User — 2026-11-20T13:48:10.294Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/match/07/r24/PROGRESS.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T13:48:34.140Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/07/r24/clips && for f in SCREEN07_BEFORE_r23cand_K23-3_1x.mp4 SCREEN07_S1_swing_NEW_K23-3_1x.mp4; do ffprobe -v error -count_frames -select_streams v:0 -show_entries stream=nb_read_frames,width,height -of csv=p=0 $f; done; python3 -c \"\nimport json\nd=json.load(open('BEFORE_frames.json'))['frames']\nprint([ (x['i'],x['stage'],round(x['s'],2)) for x in d if 188<=x['i']<=197])\"; cat /home/user/scratch/s07/final.log 2>/dev/null; ls /home/user/scratch/s07/clips/FULL 2>/dev/null | head -3", "description": "Verify mp4 frame counts and the 07/08 boundary …[+2 chars]`
+
+### 🧑 User — 2026-11-20T13:48:36.841Z
+
+> ↩︎ result: 540,960,209
+> 540,960,213
+> [(188, '07', 386.67), (189, '07', 387.26), (190, '07', 387.84), (191, '07', 388.41), (192, '07', 388.98), (193, '07', 389.53), (194, '07', 390.08), (195, '08', 390.62), (196, '08', 391.16), (197, '08', 391.68)]
+
+### 🤖 Claude — 2026-11-20T13:48:41.109Z
+
+Frame indices map 1:1. Writing the landmark-pair extractor now (it runs once the NEW full clip exists).
+
+### 🤖 Claude — 2026-11-20T13:48:53.961Z
+
+> 🔧 **Bash** `{"command": "cat > /home/user/scratch/s07/landmarks.py <<'EOF'\n# s07 r26: BEFORE vs NEW stills at the SAME physical route points (not the same clip time). Up to the lip (s 314.41 = bend07.s0)\n# both routes are identical; on the drop the S route is longer, so a BEFORE point maps to the same share of the plunge:\n#   s_new = sTop + (s_before - sTop) * (s1_new - sTop) / (s1_before - sTop)\n# S-bend apexes (r24 m07swing: λ 34, last zero crossing 5 u before the inlet) at plunge distance 11.7 / 28.7 / 45.7 / 62.7 u.\nimport json, subprocess, sys\nfrom pathlib import Path\nfrom PIL import Image, Im …[+2490 chars]`
+
+### 🧑 User — 2026-11-20T13:48:54.044Z
+
+> ↩︎ result: Fri Nov 20 13:48:54 UTC 2026
+
+### 🤖 Claude — 2026-11-20T13:48:57.296Z
+
+> 🔧 **Bash** `{"command": "until grep -q \"exit done\" /home/user/scratch/s07/final.log 2>/dev/null; do sleep 15; done; cat /home/user/scratch/s07/final.log; date", "description": "Wait for final clip and gameplay chain", "timeout": 540000}`
+

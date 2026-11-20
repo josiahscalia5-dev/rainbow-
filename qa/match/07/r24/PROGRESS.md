@@ -40,6 +40,20 @@
   - New problem: none seen; a thin copper line across the river at t 2.5 s is in BEFORE too (pre-existing, note for later).
   - Tried and rejected: the r25 defaults (2.5 back / 5.5 up — Benny oversized, hat blocks the centre); variant c (4 / 7.2,
     ahead 12) — similar river share but more top-down.
+* 13:50 DONE — **STEP 3 verdict `&m07join=1` (+ r26 one-line addition: the 09 final-wave mesh hidden while 07 shows; Game.ts,
+  tsc 0): GOOD IMPROVEMENT, not approved.** Proof `qa/match/07/r26/s3_join/` (1_ORIGINAL_APPROVED, 2_BEFORE_t*, 3_NEW_t* at t
+  7.5 / 7.83 / 8.17 / first 08 frame 8.33; side-by-side clip `clip/SCREEN07_S3_join_BEFORE_vs_NEW_{1.0x,0.5x}.mp4`, t 6.6–8.9 s).
+  - Closer: from the end of the drop the painted cyan river with its pink edges and round foam clouds runs on unbroken into the
+    08 chamber up to the ledge; GONE: the speckled (dithered) band across the river, the switch to the rainbow-striped plain sheet,
+    the tall white lather slab, and the big white translucent arch (default 09 final wave) that vanished at the cut.
+  - Still differs: the camera cut from the 07 ride view to the 08 approved view at t 8.33 is still a cut (camera, not water);
+    coins crowd in a stacked column down the drop (pre-existing, review item); K23-3's first 08 frame shows a purple perforated
+    strip along the bottom edge (in BEFORE identically — 08 frames BEFORE vs NEW 0 px; s08's domain, for the lead).
+  - New problem: none seen. 08 itself unchanged (0 px at t 8.33 and 8.5).
+* NOW (13:50): final sequence running (`/home/user/scratch/s07/final.sh`): full NEW clip (Q = step-1 candidate & m07look &
+  m07join & K23-3, `/home/user/scratch/s07/Q_FULL.txt`) → `qa/match/07/r26/final/SCREEN07_NEW_full_K23-3_{1x,0.5x}.mp4`;
+  gameplay → `qa/match/07/r26/final/gameplay_NEW_full.json`. BEFORE = existing `r24/clips/SCREEN07_BEFORE_r23cand_K23-3_*`.
+  Then landmark stills (lip, bend apexes, inlet) BEFORE vs NEW.
 * (superseded) step 2 `&m07look=1` proof (segment t 2.0–4.6 s, BEFORE = full step-1 candidate, NEW = + m07look; start view 0 px — DONE
   `qa/match/07/r26/s2_look/{BEFORE,NEW}/a_start.png` 0 px). First look (default tunables 2.5 back / 5.5 up): route ahead shows
   ~0.5 s earlier (t 3.25 vs 3.75) and the river fills more of the lower frame, BUT Benny becomes oversized (camera ≈6.0 u from

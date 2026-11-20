@@ -16,7 +16,11 @@
   river below Benny (cyan centre, pink sides), no bounded patch / ghost foam / direction break, low lace collar + rings at his
   contact instead of the white V streaks; start 0 px. `COMPARE/<shot>/3_NEW.png` = NEW3. NOW: NEW3 opening clip + gameplay
   (`/home/user/scratch/s06/chain_new3.sh`, waits for a slot). CURRENT clip DONE (`CURRENT_opening_{1x,0.5x}.mp4`, 1.08 s).
-  NEXT: verdict step 1; step 2 = most visible later difference (near foam heaps too high mid/late; river beyond the crest).
+  NEXT: verdict step 1.
+* Step 2 (started ~13:50): later views of the step-1 candidate (`step2/BEFORE/`, query = NEW3; 22/35/47/60/85 % + hard L/R at 35 %):
+  rings centred and dominating, river beyond the crest a narrow strip on the right (route/camera = user decision), and BIG near
+  foam clouds over the water at the bottom at 47-85 % (user: keep the foam at an appropriate height so the water stays visible).
+  Test NEW = BEFORE + `&m06fcn=3` (foam lobes nearer than 3 u shrink away, default 1.4) rendering (`step2/render.sh NEW`).
 
 ## (r25) WHERE I STOPPED / NEXT
 * ~12:05 UTC — started. Read CLAUDE.md, `docs/briefs/2026-11-20-r25/LAUNCH_R25.md` (s06), the lead's diagnosis
