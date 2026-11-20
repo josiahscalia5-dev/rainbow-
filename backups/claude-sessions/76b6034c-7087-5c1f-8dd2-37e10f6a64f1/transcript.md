@@ -4072,3 +4072,20 @@ Checking what's still untracked, then committing and pushing it:
 
 > 🔧 **Bash** `{"command": "until ! pgrep -f \"rainbow-autosave.py\" >/dev/null; do sleep 2; done; timeout 600 python3 scripts/rainbow-autosave.py --reason manual:clip-proof 2>&1 | grep -E '\"result\"|\"commit\"|pushed_verified' | head -4; git status --porcelain | grep -v \"claude-sessions\\|CONVERSATION_INDEX\" | head; python3 -I scripts/autosave-status.py; echo \"GitHub: $(git ls-remote origin refs/heads/ccr-e490fceb-u85291 | cut -c1-40)  local: $(git rev-parse HEAD)\"; git ls-files qa/match/06/r30b/proof/*.mp4 qa/match/06/r30b/proof/HANDOFF_06_to_07.jpg", "description": "Commit and push the clip files, th …[+30 chars]`
 
+### 🧑 User — 2026-11-20T23:40:21.569Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "595825de40264971e8c9b4f7efef8b2201591668",
+> AUTOSAVE OK | branch ccr-e490fceb-u85291 | scheduler daemon | last verified backup 2026-11-20T23:40:05+00:00 (0.2 min ago) | local 595825d remote 595825d (match) | uncommitted 0
+> GitHub: 595825de40264971e8c9b4f7efef8b2201591668  local: 595825de40264971e8c9b4f7efef8b2201591668
+> qa/match/06/r30b/proof/HANDOFF_06_to_07.jpg
+> qa/match/06/r30b/proof/SCREEN06_r30b_into_07_0.5x.mp4
+> qa/match/06/r30b/proof/SCREEN06_r30b_into_07_1x.mp4
+
+### 🤖 Claude — 2026-11-20T23:40:25.749Z
+
+Everything is now committed and pushed to GitHub, with nothing left untracked. That includes both clip videos, the handover sheet and the clip details. The commit is `595825d` at 23:40 UTC, and GitHub matches the local copy exactly.
+
+The steering clip is still rendering. When it finishes I'll encode it, send it to you and save it the same way.
+
