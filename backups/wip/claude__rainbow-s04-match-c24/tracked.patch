@@ -32,7 +32,7 @@ index 65c878c..a20f48e 100644
        if (mvViews.length && camera) {
          const cp = camera.getWorldPosition(_cp);
 diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
-index 2b62a35..c1d69f2 100644
+index 2b62a35..1ed89ca 100644
 --- a/src/world/match04m4.ts
 +++ b/src/world/match04m4.ts
 @@ -120,6 +120,15 @@ uniform float uRVar;       // r17 m04rpvar: number of painted rings stacked in t
@@ -824,7 +824,7 @@ index 2b62a35..c1d69f2 100644
      away.value = THREE.MathUtils.smoothstep(cam.distanceTo(proj.position), fade, fade1);
      const a2 = THREE.MathUtils.smoothstep(cam.distanceTo(proj.position), 0.4, 1.6);
      for (const u of updaters) u(a2);
-@@ -1825,12 +2316,33 @@ export function addM04(ctx: M04Ctx) {
+@@ -1825,12 +2316,41 @@ export function addM04(ctx: M04Ctx) {
        const go = M04.num('m04a3o', 0.55);
        const b0 = M04.num('m04a3b0', 1.6), b1 = M04.num('m04a3b1', 3.0);
        const bz = M04.num('m04a3b', 0) > 0 && benny ? benny.clone().applyMatrix4(MwInv).z : null;   // Benny's local z (same frame as cz)
@@ -839,6 +839,10 @@ index 2b62a35..c1d69f2 100644
 +        scW = Math.abs(scQ.copy(benny).addScaledVector(scR, M04.num('m04a3sr', 1.0)).project(camera).x - scQ.copy(benny).project(camera).x);
 +      }
 +      const s0 = M04.num('m04a3s0', 0.0), s1 = M04.num('m04a3s1', 0.05), sx = M04.num('m04a3sx', 0.05);
++      // r23 `&m04a3fl=D0`: chevrons farther than D0 u from the camera lean flatter (rise x D0/d), so the five read like the
++      // painted arrows lying ON the water ahead of Benny — their on-screen height shrinks with distance like the lane gaps
++      // between them (upright bars stacked into a ladder near the far end otherwise). Bar ends stay at the same water height.
++      const a3fl = M04.num('m04a3fl', 0);
        for (let i = 0; i < arrowsOut.length; i += 2) {
          const d = cz - arrowsOut[i].za;                                 // distance ahead of the camera
          // r13 `&m04a3b=1`: the near fade is measured from BENNY (m04a3b0/b1 u ahead of him), so no chevron ever sits round
@@ -855,6 +859,10 @@ index 2b62a35..c1d69f2 100644
 +          const ov = Math.min(Math.max(x1, x2), scT.x + scW) - Math.max(Math.min(x1, x2), scT.x - scW);   // sideways overlap (NDC)
 +          const side = THREE.MathUtils.smoothstep(ov, -sx, 0);           // 1 = overlapping him sideways
 +          k *= 1 - side * (1 - THREE.MathUtils.smoothstep(gapY, s0, s1));
++        }
++        if (a3fl > 0) {
++          const sc = Math.min(1, a3fl / Math.max(d, 0.5)), y0 = arrowsOut[i].y ?? 0.05;
++          for (const o of [arrowsOut[i].mesh, arrowsOut[i + 1].mesh]) { o.scale.y = sc; o.position.y = y0 * (1 - sc); }
 +        }
          const [core, glow] = arrowsOut[i].mats;
          core.opacity = M04.num('m04a3co', 0.95) * k; glow.opacity = go * k;

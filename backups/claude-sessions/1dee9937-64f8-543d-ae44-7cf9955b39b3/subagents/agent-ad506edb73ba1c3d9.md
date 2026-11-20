@@ -813,3 +813,50 @@ Satin ribbons and flares also carry down the drop. Step 1 verdict is forming as 
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && O=/home/user/rainbow-/qa/match/07/r23/s1_satin && QN=$(cat $O/query_NEW.txt) && QB=$(cat /home/user/rainbow-/qa/match/07/r23/K7c.txt) && \\\n(QA_PORT=5280 timeout 1500 node tools/match07/capture_5277.mjs 07 08 07a_plunge_top 07b_plunge_mid 07c_plunge_bottom 07d_entering_08 --out=$O/capture_BEFORE --q=\"$QB\" > $O/capB.log 2>&1; echo capB $? >> $O/capB.log) &\n(QA_PORT=5281 timeout 1500 node tools/match07/capture_5277.mjs 07 08 07a_plunge_top 07b_plunge_mid 07c_plunge_bottom 07d_entering_08 --out=$O/capture_NEW --q=\"$QN\" > $O/capN.log 2>&1; echo capN $? >> …[+442 chars]`
 
+### 🧑 User — 2026-11-20T04:54:59.888Z
+
+> ↩︎ result: [2]+  Done                    ( QA_PORT=5281 timeout 1500 node tools/match07/capture_5277.mjs 07 08 07a_plunge_top 07b_plunge_mid 07c_plunge_bottom 07d_entering_08 --out=$O/capture_NEW --q="$QN" > $O/capN.log 2>&1; echo capN $? >> $O/capN.log )
+> cont 0
+> [1]+  Done                    cd /home/user/wt/s07 && O=/home/user/rainbow-/qa/match/07/r23/s1_satin && QN=$(cat $O/query_NEW.txt) && QB=$(cat /home/user/rainbow-/qa/match/07/r23/K7c.txt) && ( QA_PORT=5280 timeout 1500 node tools/match07/capture_5277.mjs 07 08 07a_plunge_top 07b_plunge_mid 07c_plunge_bottom 07d_entering_08 --out=$O/capture_BEFORE --q="$QB" > $O/capB.log 2>&1; echo capB $? >> $O/capB.log )
+> tail: option used in invalid context -- 2
+> continuity-identical-to-r22
+>   "verticalDrop": 61.19,
+>   "01->02 gap=0 dT=0.249 y=-2.4",
+>   "02->03 gap=-0.0001 dT=0.673 y=-11.87",
+>   "03->04 gap=0 dT=0.932 y=-19.41",
+>   "04->05 gap=0 dT=0.246 y=-40.63",
+>   "05->06 gap=0 dT=0.281 y=-43.35",
+>   "06->07 gap=0 dT=0.114 y=-48.53",
+>   "07->08 gap=0 dT=0.339 y=-113.5",
+
+### 🤖 Claude — 2026-11-20T04:55:05.221Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/07/r23/s1_satin && for f in capB.log capN.log; do tail -n 2 $f; done; ls capture_BEFORE capture_NEW; python3 - <<'EOF'\nimport subprocess,json\nres={\"what\":\"deterministic capture (tools/match07/capture_5277.mjs, scripts/capture.mjs logic), K7c vs K7c&m07satin=1, full frame, threshold 0.1\"}\nfor s in ['07','08','07a_plunge_top','07b_plunge_mid','07c_plunge_bottom','07d_entering_08']:\n  o=subprocess.run(['node','/home/user/tools-pixelmatch/pixeldiff.mjs',f'capture_BEFORE/{s}.png',f'capture_NEW/{s}.png',f'diffs/cap_{s}.png','0.1','0','1536'],captu …[+501 chars]`
+
+### 🧑 User — 2026-11-20T04:55:05.710Z
+
+> ↩︎ result: Exit code 1
+> ]
+> capB 0
+> tail: cannot open 'capN.log' for reading: No such file or directory
+> ls: cannot access 'capture_NEW': No such file or directory
+> capture_BEFORE:
+> 07.png
+> 07a_plunge_top.png
+> 07b_plunge_mid.png
+> 07c_plunge_bottom.png
+> 07d_entering_08.png
+> 08.png
+> capture_log.json
+> Traceback (most recent call last):
+>   File "<stdin>", line 4, in <module>
+> IndexError: list index out of range
+
+### 🤖 Claude — 2026-11-20T04:55:09.238Z
+
+The NEW capture didn't run (no log). Re-running it alone.
+
+### 🤖 Claude — 2026-11-20T04:55:11.004Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && O=/home/user/rainbow-/qa/match/07/r23/s1_satin && QN=$(cat $O/query_NEW.txt) && QA_PORT=5281 timeout 1500 node tools/match07/capture_5277.mjs 07 08 07a_plunge_top 07b_plunge_mid 07c_plunge_bottom 07d_entering_08 --out=$O/capture_NEW --q=\"$QN\" > $O/capN.log 2>&1; echo capN $?; ls $O/capture_NEW", "description": "Re-run NEW deterministic capture", "timeout": 1600000}`
+
