@@ -347,3 +347,177 @@ Start view is identical; from t ≈ 4.9 s onward NEW clearly winds. Let me look 
 >  *  checkpoint search window (u ≤ uCrest + λ/4) and therefore the LOCKED 05 camera are bit-identical */
 > function meander05Sine(u: number): number …[+2538 chars]
 
+### 🤖 Claude — 2026-11-20T13:13:11.497Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/07/r24/clips && python3 -c \"\nimport json\nd=json.load(open('S1_swing_NEW_frames.json'))['frames']; b=json.load(open('BEFORE_frames.json'))['frames']\nfor i in (110,115,120,125,130,135): print('NEW',i,d[i]['t'],d[i]['s'],d[i]['lat'])\nfor i in (118,): print('BEF',i,b[i]['t'],b[i]['s'],b[i]['lat'])\n\"", "description": "Check lateral position around t=5s"}`
+
+### 🧑 User — 2026-11-20T13:13:11.561Z
+
+> ↩︎ result: NEW 110 4.583 339.789 -0.325
+> NEW 115 4.792 342.795 1.508
+> NEW 120 5 345.801 2.25
+> NEW 125 5.208 348.807 2.25
+> NEW 130 5.417 351.813 1.961
+> NEW 135 5.625 354.819 2.25
+> BEF 118 4.917 344.598 2.25
+
+### 🤖 Claude — 2026-11-20T13:13:16.658Z
+
+At t 5.0 s both clips are at the same hard-right limit (lat +2.25), but in NEW the right foam cloud overlaps Benny. Let me read how the swing changes the bank placement.
+
+### 🤖 Claude — 2026-11-20T13:13:17.622Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 476,492p src/world/match07.ts; sed -n 786,800p src/world/match07.ts; sed -n 840,856p src/world/match07.ts", "description": "Read swing foam-bank placement code"}`
+
+### 🧑 User — 2026-11-20T13:13:17.675Z
+
+> ↩︎ result: // (parked r23: NOT AN IMPROVEMENT — the pulled-in wall bends the gold rings into chevrons; the round clouds the user liked keep
+>   // their size unless ?m07lK < 1 is given)
+>   const footL = num07('m07lF', 3.55), lowY = num07('m07lY', 2.6), lowK = num07('m07lK', 1);
+>   // r24 '&m07swing=1' (with m07sbend; qa/match/07/r24/PROGRESS.md): the drop's foam banks follow the broad S-bends — squeezed to a
+>   // thin fringe where the river's outer bank runs against the tube wall, heaped in big clouds that fill the wide inside of each bend
+>   const swing = endW && clouds && !!plunge?.course.bend07 && flag05('m07swing');
+>   const lowRamp = (s: number, sA: number) => (lowF ? THREE.MathUtils.smootherstep(s, sA + 3, sA + 12) : 0);
+>   const [tNear, tFoam] = await Promise.all([nearW ? load('near_bank.png', THREE.RepeatWrapping) : null, nearW || wallFoamOn ? load('near_foam.png', THREE.RepeatWrapping) : null]);
+>   if (tNear) tNear.wrapS = THREE.ClampToEdgeWrapping;
+>   const [plate, tWall, tRiver, pGold, fillMask] = await Promise.all([
+>     load('plate07_hybrid.png', THREE.ClampToEdgeWrapping), load(fixRing ? 'tile_wall_ring.png' : fixWall ? 'tile_wall_clean.png' : 'tile_wall.png', THREE.RepeatWrapping),
+>     l …[+2901 chars]
+
+### 🤖 Claude — 2026-11-20T13:13:28.199Z
+
+Step-1 verdict is clear enough. I'll save full-size stills (clip frames at identical schedule points) as proof and write the r26 block.
+
+### 🤖 Claude — 2026-11-20T13:13:31.410Z
+
+> 🔧 **Bash** `{"command": "D=/home/user/rainbow-/qa/match/07/r26/s1_verdict && mkdir -p $D && cd $D && C=/home/user/rainbow-/qa/match/07/r24/clips && cp /home/user/rainbow-/references/07_dive_the_washer_tube.png 1_ORIGINAL_APPROVED.png && \\\nfor p in \"71:70:t2.9_steer_left\" \"120:118:t5.0_steer_right\" \"155:152:t6.4_end\" \"180:177:t7.4_drop\"; do IFS=: read n b name <<<\"$p\"; \\\nffmpeg -v error -y -i $C/SCREEN07_BEFORE_r23cand_K23-3_1x.mp4 -vf \"select='eq(n\\,$b)'\" -frames:v 1 -vsync 0 2_BEFORE_$name.png; \\\nffmpeg -v error -y -i $C/SCREEN07_S1_swing_NEW_K23-3_1x.mp4 -vf \"select='eq(n\\,$n)'\" -f …[+99 chars]`
+
+### 🧑 User — 2026-11-20T13:13:36.942Z
+
+> ↩︎ result: 1_ORIGINAL_APPROVED.png
+> 2_BEFORE_t2.9_steer_left.png
+> 2_BEFORE_t5.0_steer_right.png
+> 2_BEFORE_t6.4_end.png
+> 2_BEFORE_t7.4_drop.png
+> 3_NEW_t2.9_steer_left.png
+> 3_NEW_t5.0_steer_right.png
+> 3_NEW_t6.4_end.png
+> 3_NEW_t7.4_drop.png
+
+### 🤖 Claude — 2026-11-20T13:13:46.154Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/match/07/r24/PROGRESS.md", "old_string": "# Screen 07 · round 24 (water-fx-specialist) — progress log\n", "new_string": "# Screen 07 · round 24 (water-fx-specialist) — progress log\n\n## (r26) WHERE I STOPPED / NEXT\n* r26 relaunch (new account, ~13:10 UTC). Worktree `/home/user/wt/s07`, LOCAL branch `claude/rainbow-s07-match-c27` (r25 edits incl.\n  m07swing / m07look / m07join restored by the lead). Ports 5277 / 5280 / 5281. Temp `/home/user/scratch/s07/`.\n* 13:14 DONE: s08 snapshot re-copied read-only from `/home/user/wt/s08` (HEA …[+1591 chars]`
+
+### 🧑 User — 2026-11-20T13:13:46.282Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/match/07/r24/PROGRESS.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T13:13:48.415Z
+
+Now step 2. Let me read the `m07look` code and the segment-clip tool I wrote in r25.
+
+### 🤖 Claude — 2026-11-20T13:13:49.214Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"m07look\\|LOOK07\\|look07\" src/game/*.ts | head; head -40 tools/match07/seg_clip_r24.mjs", "description": "Read m07look code and segment clip tool"}`
+
+### 🧑 User — 2026-11-20T13:13:49.262Z
+
+> ↩︎ result: src/game/cameraRig.ts:15:/** r24 `&m07look=1` tunables (QA): look-ahead along the route (u), camera pulled in toward Benny (u), raised (u), aim weight */
+> src/game/cameraRig.ts:17:const LOOK07 = { ahead: numQc('m07lkA', 14), back: numQc('m07lkB', 2.5), up: numQc('m07lkU', 5.5), w: numQc('m07lkW', 1) };
+> src/game/cameraRig.ts:179:    // r24 `?match07=1&m07look=1` (qa/match/07/r24/PROGRESS.md; user ~10:35: "around t = 2.5–3.5 seconds the purple wall dominates
+> src/game/cameraRig.ts:186:    if (p7 && p7.off07 && flag05('m07look')) {
+> src/game/cameraRig.ts:188:      const wl = LOOK07.w * THREE.MathUtils.smoothstep(s, sTop - 12, sTop - 4) * (1 - THREE.MathUtils.smoothstep(s, sTop + 6, sTop + 16));
+> src/game/cameraRig.ts:190:        const fa = this.course.sample(s + LOOK07.ahead);
+> src/game/cameraRig.ts:192:        const lp = benny.clone().addScaledVector(dir, -LOOK07.back).addScaledVector(up, LOOK07.up);
+> #!/usr/bin/env node
+> // r24 s07 (QA only): a SEGMENT of the lead's labelled-clip run (tools/lead23/screen_clip.mjs: same steering schedule by the share
+> // of the screen travelled — straight < 0.30, LEFT 0.30–0.50, RIGHT 0.50–0.70, straight after — same per-frame stepping and pinned
+> // shader c …[+2743 chars]
+
+### 🤖 Claude — 2026-11-20T13:13:50.488Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 175,215p src/game/cameraRig.ts", "description": "Read m07look camera logic"}`
+
+### 🧑 User — 2026-11-20T13:13:50.531Z
+
+> ↩︎ result: outTarget.lerp(cp7.addScaledVector(new THREE.Vector3(...p7.dir07), 10), w7);
+>         outUp.lerp(new THREE.Vector3(0, 1, 0), w7).normalize();
+>       }
+>     }
+>     // r24 `?match07=1&m07look=1` (qa/match/07/r24/PROGRESS.md; user ~10:35: "around t = 2.5–3.5 seconds the purple wall dominates
+>     // the screen and I lose sight of the upcoming river"): over the lip of the 70° drop the river falls away below the line of
+>     // sight of a camera 6 u behind Benny (the falling river is hidden behind the brow; only the tube wall where the tube bends down
+>     // is left in view). From 12 u before the lip the camera comes up close over Benny's shoulder (2.5 u behind, 5.5 u above, in
+>     // the ride frame, so it stays above the chute as it pitches down) and looks at the river 14 u ahead on the route (its centre:
+>     // the route ahead stays centred while he steers to one side), so the river pouring over the brow and down into the first bend
+>     // stays in view; 6 → 16 u into the drop it eases back to the normal ride camera (smooth weights + the usual camera smoothing)
+>     if (p7 && p7.off07 && flag05('m07look')) {
+>       const sTop = this.course.marks['07_plunge_top'];
+>       const wl = LOOK07.w * T …[+1740 chars]
+
+### 🤖 Claude — 2026-11-20T13:13:59.091Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/07/r24/clips && python3 -c \"\nimport json\nfor f in ['BEFORE_frames.json','S1_swing_NEW_frames.json']: print(f, json.load(open(f))['query'])\n\"; head -30 /home/user/wt/s07/tools/match07/capture_5277.mjs | grep -n \"usage\\|argv\\|//\" | head -15; grep -n \"argv\\|usage\\|PORT\" /home/user/rainbow-/tools/lead23/screen_clip.mjs | head", "description": "Get exact clip queries and tool usage"}`
+
+### 🧑 User — 2026-11-20T13:13:59.194Z
+
+> ↩︎ result: BEFORE_frames.json match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1&m07foam=1&m07coinsz=1&m07nearw=1&m07foamb=1&m07band=1&m07end=1&m07cloud=1&m07satin=1&match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1&m08ceil=1&m08near=1&m08cup=1&m08rw=1&m08drum=1&m08ring=1&m08cupg=1&m08bore=1&m08flange=1&m08cupw=1&m08nq=1&m08sr=1&m08vh=1&m08gl=1&m08coinsz=1&m08towelm=1&m08towelv=1
+> S1_swing_NEW_frames.json match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1&m07foam=1&m07coinsz=1&m07nearw=1&m07foamb=1&m07band=1&m07end=1&m07cloud=1&m07satin=1&m07sbend=1&m07swing=1&match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1&m08ceil=1&m08near=1&m08cup=1&m08rw=1&m08drum=1&m08ring=1&m08cupg=1&m08bore=1&m08flange=1&m08cupw=1&m08nq=1&m08sr=1&m08vh=1&m08gl=1&m08coinsz=1&m08towelm=1&m08towelv=1
+> 2:// r22 s07 QA copy of scripts/capture.mjs: identical capture, dev server on port 5277; pass --out=DIR (capture_log.json goes there)
+> 3:// Playwright capture of the REAL running game (WebGL) at the native reference sizes.
+> 4://   node scripts/ca …[+779 chars]
+
+### 🤖 Claude — 2026-11-20T13:14:01.483Z
+
+> 🔧 **Bash** `{"command": "head -c 600 /home/user/rainbow-/qa/match/07/r24/s1_swing/NEW/shots.json; echo; head -20 /home/user/wt/s07/tools/match07/audit_screen_r23.mjs | grep \"//\"", "description": "Check how step-1 proof shots were made"}`
+
+### 🧑 User — 2026-11-20T13:14:01.542Z
+
+> ↩︎ result: [
+>  {
+>   "name": "a_start",
+>   "frac": 0,
+>   "steer": null,
+>   "s": 273.056,
+>   "lat": 0,
+>   "stage": "07",
+>   "coins": 1940,
+>   "s0": 273.056,
+>   "s1": 392.89463260340705
+>  },
+>  {
+>   "name": "b_early",
+>   "frac": 0.12,
+>   "steer": null,
+>   "s": 287.456,
+>   "lat": 0,
+>   "stage": "07",
+>   "coins": 1960,
+>   "s0": 273.056,
+>   "s1": 392.89463260340705
+>  },
+>  {
+>   "name": "c_middle",
+>   "frac": 0.35,
+>   "steer": null,
+>   "s": 315.056,
+>   "lat": 0,
+>   "stage": "07",
+>   "coins": 2030,
+>   "s0": 273.056,
+>   "s1": 392.89463260340705
+>  },
+>  {
+>   "name": "d_late",
+>   "frac": 0.6,
+>   "steer": null,
+>   "s": 345.056,
+>   "lat": 0,
+>   "stage": "07",
+> // r23 s07 copy of tools/lead21/audit_screen.mjs (identical shots) with 600 s timeouts for the loaded shared machine (lead note)
+> // Round 21 lead audit (read-only): one playable screen of the REAL game at start / early / middle / late / end and hard
+> // left / right, deterministic (fixed sim steps, frozen shader clock, one frame rendered per shot, no real-time steps).
+> // Run from the worktree whose build you want to see (vite serves the current directory):
+> //   cd <worktree> && node /home/user/rainbow-/tools/lead21/audit_screen.mjs <outDir> <stage 04..08> "<query>"
+> // Shots are fractions of th …[+94 chars]
+

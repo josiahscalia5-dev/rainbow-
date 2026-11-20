@@ -1,5 +1,24 @@
 # Screen 07 · round 24 (water-fx-specialist) — progress log
 
+## (r26) WHERE I STOPPED / NEXT
+* r26 relaunch (new account, ~13:10 UTC). Worktree `/home/user/wt/s07`, LOCAL branch `claude/rainbow-s07-match-c27` (r25 edits incl.
+  m07swing / m07look / m07join restored by the lead). Ports 5277 / 5280 / 5281. Temp `/home/user/scratch/s07/`.
+* 13:14 DONE: s08 snapshot re-copied read-only from `/home/user/wt/s08` (HEAD 3c0fa97): **30 / 30 files match
+  `combo/s08snap_SHA256SUMS_r25.txt`**; combined build `/home/user/scratch/s07/combo` rebuilt with `combo/mkcombo.py`, tsc 0.
+* 13:20 DONE — **STEP 1 verdict `&m07sbend=1&m07swing=1`: GOOD IMPROVEMENT (moderate), not approved.** Judged from the two existing
+  labelled clips (same steering schedule, 1.0x) + the approved picture; full-size stills `qa/match/07/r26/s1_verdict/`
+  (`1_ORIGINAL_APPROVED`, `2_BEFORE_*`, `3_NEW_*` at t 2.9 / 5.0 / 6.4 / 7.4 s).
+  - Closer: from the middle on (t ≈ 4.5–6.6 s) the WHOLE river now winds — cyan body, both pink edges, both foam banks and the coin
+    trail bend together left-right in broad S-bends, like the approved picture's river; BEFORE was a straight slide with the coins
+    in a straight column. Start view identical.
+  - Still differs: the far part of the drop (t 7.0–8.2 s) still reads as a straight chute with vertical pink / cyan stripes and a
+    straight coin column; the steering-left section t 2.5–3.7 s is still dominated by the purple wall (step 2's job); the 08 inlet
+    still shows the speckled band (step 3's job).
+  - New small problem: at the right-hand steering limit inside a bend (t 5.0 s, lat +2.25) the bigger "inside of the bend" foam
+    clouds overlap Benny's lower right (BEFORE: he sits on the pink edge beside the foam). Next fix candidate: keep the inside
+    mounds from reaching over the band edge (`mound()` size / inset with `swB`).
+* NOW: step 2 `&m07look=1` proof (segment t 2.5–3.7 s, BEFORE = full step-1 candidate, NEW = + m07look; start view 0 px).
+
 ## (r25) WHERE I STOPPED / NEXT
 * r25 relaunch (new account, ~12:00 UTC). Worktree `/home/user/wt/s07`, LOCAL branch `claude/rainbow-s07-match-c26` (= `8accdad0` + my
   r24 11:43 edits, applied by the lead). Ports 5277 / 5280 / 5281. Heavy renders via `tools/lead25/render_slot.sh`. Temp

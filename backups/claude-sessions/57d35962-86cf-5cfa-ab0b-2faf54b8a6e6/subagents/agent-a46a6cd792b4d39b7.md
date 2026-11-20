@@ -359,3 +359,73 @@ The BEFORE clip is rendering. Meanwhile I'll look at the approved Benny next to 
 >     uShortDir: { value: new THREE.Vector3(...((p.short?.slice(0, 3) as [number, number, number]) ?? [0, 0, 1])) },
 >     uShort: { value: new THREE.Vector3(p.short?.[3] ?? 2, p.short?.[4] ? …[+2264 chars]
 
+### 🤖 Claude — 2026-11-20T13:13:32.282Z
+
+I'll recreate the lost silk probe variants (one page load at 04's start, many uniform sets) and queue it through the render slot.
+
+### 🤖 Claude — 2026-11-20T13:13:46.080Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/scratch/benny/silk && cat > /home/user/scratch/benny/silk/mkvar.py <<'EOF'\nimport json, sys\n# defaults = benny20.ts SILK block (body; arms get glx+6 and len*0.75)\nD = dict(glx=18, gly=1.1, glz=0.55, sh=(0.55, 0.55, 0.55, 0.3), comb=(0.9, 0.8, 0, 0.45),\n         silk=(7, 0.35, 0.35, 0.3), silk2=(0.7, 0.45, 1.0, 0), L=0.1, gr=0.04)\ndef js(**kw):\n    p = dict(D); p.update(kw)\n    f = lambda v: ','.join(str(x) for x in v)\n    return (\"for (const f of B.furs) { const nm = f.mesh.name; if (!/^fur_(body|arm)/.test(nm)) continue; const arm = nm !== 'fur_body'; …[+2671 chars]`
+
+### 🧑 User — 2026-11-20T13:13:46.186Z
+
+> ↩︎ result: ['a0_code_default', 'b1_long_combed', 'b2_fine_fibres', 'b3_long_contrast', 'b4_long_droop', 'b5_vlong_thin', 'b6_mid_tiplight', 's1_soft_default', 's2_soft_b1', 's3_soft_b5', 's4_soft_b6']
+> 27
+> slot 1 busy
+> slot 2 free
+
+### 🤖 Claude — 2026-11-20T13:13:47.251Z
+
+Typecheck after the key rename, then launch the probe in slot 2.
+
+### 🤖 Claude — 2026-11-20T13:13:48.263Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && timeout 600 nice -n 5 npx tsc --noEmit -p . && echo TSC_OK", "description": "Typecheck the worktree", "timeout": 700000}`
+
+### 🤖 Claude — 2026-11-20T13:13:49.318Z
+
+> 🔧 **Bash** `{"command": "/home/user/scratch/benny/silk/run_pa.sh > /home/user/scratch/benny/silk/run_pa.log 2>&1", "description": "Run silk fur probe on screen 04", "timeout": 3600000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T13:13:52.456Z
+
+> ↩︎ result: TSC_OK
+
+### 🧑 User — 2026-11-20T13:13:52.492Z
+
+> ↩︎ result: Command running in background with ID: b3j3x6y3h. Output is being written to: /tmp/claude-0/-home-user-rainbow-/57d35962-86cf-5cfa-ab0b-2faf54b8a6e6/tasks/b3j3x6y3h.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-20T13:13:53.452Z
+
+Both jobs are running. I'll read the label tool's usage while waiting.
+
+### 🤖 Claude — 2026-11-20T13:13:54.010Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,20p /home/user/wt/benny/tools/benny25/label_clip_c.py", "description": "Read label tool usage"}`
+
+### 🧑 User — 2026-11-20T13:13:54.051Z
+
+> ↩︎ result: #!/usr/bin/env python3
+> """Benny r25: label a tools/benny25/swim_clip_c.mjs run and encode four mp4s (playback speed printed on EVERY frame):
+>   <out>_full_1x.mp4 / _full_0.5x.mp4  whole game frame (540x960)
+>   <out>_benny_1x.mp4 / _benny_0.5x.mp4  Benny-centred close-up (fixed window = median of his projected box, centre
+>                                          smoothed over 9 frames so it never jumps), 675x810 + caption band
+> usage: python3 -I tools/benny25/label_clip_c.py <clipDir> "<title>" <out_prefix>"""
+> import json, subprocess, sys
+> from pathlib import Path
+> from PIL import Image, ImageDraw, ImageFont
+> 
+> d, title, outp = Path(sys.argv[1]), sys.argv[2], sys.argv[3]
+> meta = json.loads((d / 'frames.json').read_text())
+> fr = meta['frames']
+> fb = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 26)
+> fs = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 22)
+> boxes = [f['box'] if isinstance(f.get('box'), list) else None for f in fr]
+> good = [b for b in boxes if b]
+> def med(v): v = sorted(v); return v[len(v) // 2]
+> H = max(med([(b[3] - b[1]) * 0.92 for b in good]), med([(b[2] - b[0]) * 0.92 * 540 / 450 for b in good]), 200) if good else 540
+> W = H  …[+11 chars]
+
+### 🤖 Claude — 2026-11-20T13:13:56.379Z
+
+> 🔧 **Bash** `{"command": "until grep -q \"ALL_DONE\" /home/user/scratch/benny/clips/run.log 2>/dev/null || grep -q \"probe a exit\" /home/user/scratch/benny/silk/run_pa.log 2>/dev/null; do sleep 10; done; date -u +%H:%M:%S; cat /home/user/scratch/benny/clips/run.log /home/user/scratch/benny/silk/run_pa.log; ls /home/user/scratch/benny/clips/06_BEFORE/f | wc -l; tail -3 /home/user/scratch/benny/silk/log_pa.txt", "description": "Wait for the clip or the probe to finish", "timeout": 600000}`
+

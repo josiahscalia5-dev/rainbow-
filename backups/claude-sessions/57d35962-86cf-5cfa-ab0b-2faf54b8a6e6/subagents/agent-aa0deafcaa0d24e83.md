@@ -342,3 +342,137 @@ I'll start by reading the required files in order.
 >       // r3 masks (tools/match06/make_masks06.py): where the river floor carries painted pixels that are not water (G: the
 >       // tunnel wall seen through the crest …[+7294 chars]
 
+### 🤖 Claude — 2026-11-20T13:13:13.437Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"dAp\" src/world/match06.ts | head -12; python3 -c \"\nfrom PIL import Image\nim=Image.open('/home/user/rainbow-/qa/match/06/r25/step1_hole/floorspace_before_after.png'); print(im.size)\nim2=Image.open('/home/user/rainbow-/qa/match/06/r25/step1_hole/floorspace_ringzone_before_after.png'); print(im2.size)\n\"", "description": "Check dAp usage and floorspace image sizes"}`
+
+### 🧑 User — 2026-11-20T13:13:13.591Z
+
+> ↩︎ result: 159:  float dAp = distance(cameraPosition, uProjPos);
+> 160:  float stOn = uSt > 0.5 ? step(0.01, dAp) : 0.0;
+> 161:  float hold = 1.0 - smoothstep(uStW.x, uStW.y, dAp);
+> 335:          if (dAp > 0.01) {
+> 345:          w *= (1.0 - rS * smoothstep(0.01, 0.06, dAp) * inWater * (1.0 - uHoleOn)) * (1.0 - mk.g * (1.0 - hold) * inWater);
+> 365:          float hW = max(clamp(max(hv.a, rSh), 0.0, 1.0) * smoothstep(0.01, 0.06, dAp), (1.0 - smoothstep(0.9, 1.1, eH)) * smoothstep(0.15, 0.9, dAp));
+> 374:        w *= 1.0 - (1.0 - smoothstep(0.85, 1.2, eZ)) * inWZ * smoothstep(0.15, 0.9, dAp);
+> 393:    float wr = acc.a * inW * uRipA.z * smoothstep(0.15, 0.9, dAp);
+> (1194, 650)
+> (1200, 420)
+
+### 🤖 Claude — 2026-11-20T13:13:14.535Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r25/step1_hole/floorspace_ringzone_before_after.png"}`
+
+### 🧑 User — 2026-11-20T13:13:14.574Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T13:13:30.179Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && wc -l tools/match06/make_hole06.py && sed -n 1,60p tools/match06/make_hole06.py; cat /home/user/rainbow-/qa/match/06/r25/step1_hole/NEW/shots.json", "description": "Read hole fill tool header and shots meta"}`
+
+### 🧑 User — 2026-11-20T13:13:30.235Z
+
+> ↩︎ result: 205 tools/match06/make_hole06.py
+> #!/usr/bin/env python3
+> """r25 Screen 06 `&m06hole=1` (qa/match/06/r25/PROGRESS.md): the user's "raised blue cone" under Benny at the opening.
+> 
+> Cause (lead r24, qa/match/06/r24/lead_rip/NOTES.md): where the painted Benny was cut out of the projected approved plate, the river
+> floor shows the river's own brighter flowing material once the camera leaves the approved view — a hard-edged, Benny-shaped bright
+> patch that reads as a cone — and the painted lacy ripple ring stays pinned at the checkpoint below it.
+> 
+> This tool fills that cut-out (the plate's provisional fill: painted Benny + painted coins, plate06_fillmask, slightly dilated) AND
+> the painted ring zone round the approved Benny's contact with the approved picture's OWN painted water, continued from the water
+> around it, in the river floor's own coordinates (lateral l x course s): the plate is unwrapped onto the floor exactly as
+> match06.ts builds it (tools/match06/r25_unwrap06.py; river frames from the game's course.ts via tools/match06/r25_frames.mjs).
+>   method 'flow' (default): the painted streaks are carried across the hole along their own direction (orientation field of the
+>     surrounding painte …[+3831 chars]
+
+### 🤖 Claude — 2026-11-20T13:13:47.790Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 60,205p tools/match06/make_hole06.py", "description": "Read rest of hole fill tool"}`
+
+### 🧑 User — 2026-11-20T13:13:47.830Z
+
+> ↩︎ result: H, W = unk.shape
+>     idx = -np.ones((H, W), np.int64); ys, xs = np.nonzero(unk); n = len(ys); idx[ys, xs] = np.arange(n)
+>     rows, cols, vals = [], [], []
+>     diag = np.zeros(n); b = np.zeros((n, target.shape[2]))
+>     for dy, dx in ((-1, 0), (1, 0), (0, -1), (0, 1)):
+>         qy, qx = ys + dy, xs + dx
+>         inb = (qy >= 0) & (qy < H) & (qx >= 0) & (qx < W)
+>         qyc, qxc = np.clip(qy, 0, H - 1), np.clip(qx, 0, W - 1)
+>         inU = inb & unk[qyc, qxc]
+>         inD = inb & ~unk[qyc, qxc] & dirichlet[qyc, qxc]
+>         k = np.nonzero(inU)[0]
+>         diag[k] += 1; rows.append(k); cols.append(idx[qyc[k], qxc[k]]); vals.append(-np.ones(len(k)))
+>         b[k] += guide[ys[k], xs[k]] - guide[qyc[k], qxc[k]]
+>         k = np.nonzero(inD)[0]
+>         diag[k] += 1; b[k] += target[qyc[k], qxc[k]]
+>     diag[diag == 0] = 1
+>     diag += 1e-6  # a part with Neumann borders only stays solvable
+>     A = sp.csc_matrix((np.concatenate(vals + [diag]), (np.concatenate(rows + [np.arange(n)]), np.concatenate(cols + [np.arange(n)]))), shape=(n, n))
+>     lu = spl.splu(A, permc_spec='COLAMD')
+>     out = target.astype(np.float64).copy()
+>     for c in range(target.shape[2]): out[ys, xs, c] = lu.solve(b[:, c])
+>     return …[+7575 chars]
+
+### 🤖 Claude — 2026-11-20T13:13:50.952Z
+
+> 🔧 **Bash** `{"command": "ls /home/user/rainbow-/qa/match/06/r25/ ; find /home/user/rainbow-/qa/match/06/r25 /home/user/wt/s06/tools/match06 -name \"*.json\" -newer /home/user/wt/s06/src/world/match06.ts 2>/dev/null | head; find / -name \"frames06*.json\" -o -name \"*r25_frames*.json\" 2>/dev/null | grep -v proc | head; head -30 /home/user/wt/s06/tools/match06/r25_frames.mjs", "description": "Look for saved course frames JSON"}`
+
+### 🧑 User — 2026-11-20T13:13:55.681Z
+
+> ↩︎ result: PROGRESS.md
+> step1_hole
+> // r25 (QA only, no browser): the 06 river frames (pos / up / right) from the game's own course.ts under the given query, for
+> // tools/match06/make_hole06.py.  cd /home/user/wt/s06 && npx vite-node tools/match06/r25_frames.mjs -- "<query>" <out.json> [sa] [sb] [ds]
+> import { writeFileSync } from 'node:fs';
+> const args = process.argv.slice(2).filter((a) => a !== '--');
+> const [Q, OUT, SA, SB, DS] = args;
+> globalThis.location = { search: '?' + Q, href: 'http://x/?' + Q, hostname: 'x' };
+> const { Course } = await import('../../src/world/course');
+> const c = new Course();
+> const sa = Number(SA ?? 186), sb = Number(SB ?? 236), ds = Number(DS ?? 0.05);
+> const rows = [];
+> for (let s = sa; s <= sb + 1e-9; s += ds) {
+>   const f = c.sample(s);
+>   rows.push([+s.toFixed(4), ...f.pos.toArray(), ...f.up.toArray(), ...f.right.toArray()]);
+> }
+> const g6 = c.stage('06');
+> writeFileSync(OUT, JSON.stringify({ query: Q, s06: [g6.s0, g6.s1], cols: 's px py pz ux uy uz rx ry rz', rows }));
+> console.log('frames', rows.length, 'stage06', g6.s0, g6.s1);
+
+### 🤖 Claude — 2026-11-20T13:13:58.161Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 1,40p tools/match06/r25_unwrap06.py | cut -c1-220; grep -n \"def unwrap\\|open(\\|load\\|vis\" tools/match06/r25_unwrap06.py | head -30", "description": "Check unwrap tool inputs"}`
+
+### 🧑 User — 2026-11-20T13:13:58.224Z
+
+> ↩︎ result: #!/usr/bin/env python3
+> """r25 (Screen 06, `&m06hole=1` preparation): unwrap the projected approved plate + masks into the river floor's own coordinates
+> (lateral l x course s), exactly as match06.ts builds the floor (river frame + right * l + up * bank(l)) and projects it with the
+> locked projector camera (assets/textures/match06/proj06.json). Visibility = floor self-occlusion z-buffer in the projector image.
+> River frames from tools/match06/r25_frames.mjs (the game's own course.ts under the 06 query).
+>   python3 -I r25_unwrap06.py <frames.json> <out.npz> [texels_per_u] [l0 l1 sa sb  (s relative to sB)]"""
+> import json, sys
+> from pathlib import Path
+> import numpy as np
+> from PIL import Image
+> 
+> T = Path(__file__).resolve().parents[2] / 'assets/textures/match06'
+> 
+> 
+> def load_layout():
+>     L = json.loads((T / 'proj06.json').read_text())
+>     M = np.array(L['camera']['matrixWorld'], float).reshape(4, 4).T  # three.js column-major -> row-major
+>     return L, M
+> 
+> 
+> def project(L, M, P):
+>     """world points (...,3) -> projector px x, y (rip-code convention) and distance"""
+>     W, H = L['camera']['size']
+>     V = np.linalg.inv(M)
+>     ph = np.concatenate([P, np.ones(P.shape[:-1] + (1,))], -1) @ V.T
+>     f = …[+1004 chars]
+
