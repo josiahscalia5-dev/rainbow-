@@ -7,7 +7,7 @@ honestly whether the approved screens can be delivered as playable 3D that match
 mismatch, correction, demonstrated / unproven / blocked, what is needed). Same rules as r28: at most four specialists; nothing approved until
 the user says so; generated NEW VIEW / try artwork = proposals; 04 K27-B and 08 K23-3 = saved, unapproved candidates.
 
-## Restore audit (lead, 18:21–18:50 UTC)
+## Restore audit (lead, 18:21–18:35 UTC)
 * Session branch `ccr-ac160b4c-3hdecw` started at **`31d3a8cd71970e5ab0835b112e66f9d15f555a0a`** (18:12 UTC, the r28 container's last daemon
   save). The hook's start-time `git fetch` failed; the lead's retry succeeded: `git ls-remote` of `ccr-9652868f-lkw0w0` = `31d3a8c…` = the
   session's start commit → nothing newer existed, nothing merged.
@@ -26,7 +26,7 @@ the user says so; generated NEW VIEW / try artwork = proposals; 04 K27-B and 08 
   definitions unchanged, Blender 5.3.0, Android SDK 34 + Java 21 + Gradle 8.2.1, Node 22.23.5, Playwright Chromium 157 (SwiftShader),
   ffmpeg 6.1.1, ImageMagick 6.9.12, tsc OK, continuity OK (all joins gap 0, 07→08 drop 61.19).
 
-## Services on this account (18:45 UTC, free checks only)
+## Services on this account (18:30 UTC, free checks only)
 | Capability | State |
 |---|---|
 | GitHub (git push + GitHub MCP, login `josiahscalia5-dev`) | working |
@@ -40,7 +40,7 @@ the user says so; generated NEW VIEW / try artwork = proposals; 04 K27-B and 08 
 | Plugins of the inventory NOT enabled here | claude-bridge, claude-md-management, code-simplifier, commit-commands, security-guidance, typemux-cc, typescript-native-lsp (none needed for the game work) |
 | GPU | none (SwiftShader CPU rendering, 4 CPUs, 15 GB) |
 
-## Workers — four at once; in-process background agents of this lead session (launched ~18:48 UTC, `LAUNCH_R29.md`)
+## Workers — four at once; in-process background agents of this lead session (launched ~18:31 UTC, `LAUNCH_R29.md`)
 | Worker | Agent | Worktree / LOCAL branch | Port | Resume point |
 |---|---|---|---|---|
 | s06 ROUTE (priority) | path-camera-transition-engineer | `/home/user/wt/s06` `claude/rainbow-s06-match-c30` | 5276 | `&m06route=1` coded → quick BEFORE/NEW → proof `qa/match/06/r28/route/` |
@@ -57,5 +57,10 @@ If this account stops: the next account runs `bash docs/briefs/2026-11-20-r29/se
 `backups/wip/*-c30/`, trial07 + view04/06/07 included).
 
 ## Results log
-* 18:21 session start; 18:22 first autosave `1e5f29c` verified; worktrees restored 18:30–18:37 and verified 18:38.
-* ~18:48 four workers relaunched (s06 route, s07, s05, Benny).
+* 18:21 session start; 18:22 first autosave `1e5f29c` verified; worktrees restored 18:22–18:28 and verified ~18:29; restore checkpoint `13111d5` 18:33 (`git ls-remote` == HEAD).
+* ~18:31 four workers relaunched (s06 route, s07, s05, Benny).
+* ~18:36 draft PR #26 (DO NOT MERGE, backup only; the create call returned HTTP 502 but the PR exists) — subscribed. Plugin install card shown for the 7 inventory plugins not enabled here (user action).
+* **~18:35 all four workers (s06 route, s07, s05, Benny) were STOPPED by the user / the app** (task status "killed", ~4 min after launch;
+  the user interrupted the lead while it was republishing the review page). Do NOT relaunch them unless the user asks. No render processes
+  left running; both render slots free. Their worktrees keep whatever they had changed (snapshots `backups/wip/*-c30/`). Review-page
+  republish NOT done (source `qa/review_r28/index.html` + `qa/review_r27/web/`).

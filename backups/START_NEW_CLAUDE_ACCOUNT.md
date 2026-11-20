@@ -1,6 +1,6 @@
 # Paste this into Claude Code on the next Claude account
 
-## ▶▶▶▶▶▶▶ NEWEST (2026-11-20 ~18:50 UTC, round 29 → next account)
+## ▶▶▶▶▶▶▶ NEWEST (2026-11-20 ~18:33 UTC, round 29 → next account)
 Same steps as the round-28 block below, with these replacements: start the cloud session on branch **`ccr-ac160b4c-3hdecw`** (the round-29 lead;
 NOT the default branch); read the TOP of `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md` ("ROUND 29"), `docs/briefs/2026-11-20-r29/COORDINATION.md` +
 `LAUNCH_R29.md`; recreate the worktrees with `bash docs/briefs/2026-11-20-r29/setup_worker_r30.sh` (LOCAL `-c31` from the newest

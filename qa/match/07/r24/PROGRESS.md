@@ -8,8 +8,14 @@
   (213 frames each = same as BEFORE `r26/final/SCREEN07_NEW_full_K23-3_*`).
 * DONE: s08 snapshot re-copied read-only (s08 HEAD 3c0fa97): 30 / 30 match `combo/s08snap_SHA256SUMS_r25.txt`; combo
   `/home/user/scratch/s07/combo` rebuilt, tsc 0 (combo + worktree).
-* NEXT: confirm the clip is v5 (re-render 1-2 frames from the combo, compare), landmark stills from the clip at the r26 landmark t's
-  -> `qa/match/07/r27/s2_fsoft/landmarks/`, verdict. Then step 3 `&m07coinw=1` quick check.
+* DONE 18:40: landmark stills from the 1.0x clips -> `qa/match/07/r27/s2_fsoft/landmarks/` (`1_ORIGINAL_APPROVED`, `2_BEFORE_*` = full
+  candidate frames 65/90/119/147/175/198 = byte-identical to `r26/final/landmarks/3_NEW_*`, `3_NEW_*` = fsoft clip, same frames / t).
+  First look: banks lower and less uniform at every apex (t 3.75 lower-left, t 4.96 lower-right and t 7.29 right bank no longer big
+  white walls), pink edges + cyan read more; still many separate round lobes ("popcorn"), coins still a stacked column down the drop.
+* RUNNING: verification that the clip is v5 = frame 175 re-rendered from the rebuilt combo (`/home/user/scratch/s07/verify175.sh`
+  -> `v175/0175.png`, log `logs/v175.log`), compare with clip frame 175 NEW vs BEFORE.
+* NEXT: verdict; then step 3 `&m07coinw=1` quick check with `/home/user/scratch/s07/seg_frames.mjs` (records only listed frames,
+  e.g. 147,175,198 at 540 px; BEFORE = the fsoft clip frames).
 
 ## (r28) WHERE I STOPPED / NEXT
 * r28 relaunch (new account, ~16:40 UTC). Worktree `/home/user/wt/s07`, LOCAL branch `claude/rainbow-s07-match-c29` (r27 edits restored

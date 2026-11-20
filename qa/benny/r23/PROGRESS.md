@@ -1,5 +1,20 @@
 # Benny round 23 — progress (worktree `/home/user/wt/benny`, local branch `claude/rainbow-benny-c24` = `-c23` @ `734efb6`; not committed / pushed by Benny — the lead's autosave snapshots the worktree)
 
+## (r29) WHERE I STOPPED / NEXT — 2026-11-20 ~18:45 UTC (new account; worktree `/home/user/wt/benny`, LOCAL branch `claude/rainbow-benny-c30`, port 5279, temp `/home/user/scratch/benny/`)
+
+**STEP 3 VERDICT — 06 start star `&b20s06a=1`: GOOD IMPROVEMENT (star colour; not approved).** The r28 proof re-run (τ ≈ 0.12 s fix) had
+FINISHED before the stop; r29 verified it instead of re-rendering (no new renders): `qa/benny/r28/s6_star06/06/new/` = the τ-fixed run
+(middle g/r .94 vs lagged `new_v1_lag` .98), COMPARE crops `COMPARE/06_{a_start,c_middle,f_hard_left}/{1_ORIGINAL_APPROVED,2_BEFORE,3_NEW}.png`
+(one common rectangle per shot, `CROP.json`) cut from it. Star median (starm.py, largest yellow blob in the star window):
+start APPROVED (251,226,34) g/r .90 | BEFORE (255,171,30) .67 | NEW (252,224,23) .89; middle BEFORE .93 → NEW .94; hard left .85 → .85.
+Full frames vs BEFORE: start 5,121 px changed (the star only), middle and hard left 0 px. Clips `clip/swim06_s06a_{BEFORE,NEW}_{full,benny}_{1x,0.5x}.mp4`
+(3 s / 6 s from the 06 checkpoint, straight 0–1.5 s, LEFT 1.5–3 s): NEW star g/r .89–.94 for t 0–0.75 s (BEFORE .66–.77), then
+pixel-identical to BEFORE from t = 1.0 s (no lemon lag, no pop) — `/home/user/scratch/benny/clipdiff.py`. Gameplay `gameplay_s06a.json`:
+8/8 checks, 91 coins (1,330 → 2,240), victory, no errors, query ends `…&b20crown=1&b20s06a=1`. `npx tsc --noEmit` exit 0 (r29).
+Still different: approved star is slightly softer/brighter in its highlights (clip255 .34 vs ours .53).
+**Best query now (unapproved):** `&benny20=1&b20expo=1&b20ppw=0.45&b20tuft=1&b20knit=1&b20star=1&b20crown=1&b20s06a=1`.
+**Next:** step 4 = crown taper toward the top + pompom higher (own switch), BEFORE = `qa/benny/r27/s5_crown/0N/new/` + r28 06.
+
 ## (r28) WHERE I STOPPED / NEXT — 2026-11-20 ~16:55 UTC (new account; worktree `/home/user/wt/benny`, LOCAL branch `claude/rainbow-benny-c29`, port 5279, temp `/home/user/scratch/benny/`)
 
 **STEP 2 VERDICT — hat crown `&b20crown=1`: GOOD IMPROVEMENT (hat shape; not approved).** The r27 proof run had finished before the
