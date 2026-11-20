@@ -32,3 +32,18 @@ Briefs: `LAUNCH_R25.md` (this folder). If this account stops: next account recre
 
 ## Results log
 * ~12:10 four workers launched (s07, s06, s04, Benny).
+* ~12:20 lead: review package regenerated from `bf01adf` with `tools/export/make_review_package.py` + the saved docs; extraction test
+  2,161 / 2,161 files identical to `docs/review_package/2026-11-20/MANIFEST_FILES.tsv`, 0 missing, 0 LFS pointers, 0 secret hits; the 7
+  ZIPs (same part sizes as round 24) delivered to the user. `.env.example` recreated with placeholders (the sanitized transcript had
+  masked two placeholder values). All 206 remote branches fetched, nothing merged; no branch newer than r24's 11:43 save.
+* **~12:20 USER (verbatim, round 25) — applies to EVERY worker and every screen:** "when the pink character swims through my screens, I
+  want to make sure it looks like my exact or very close to my approved screens. And I want to make sure everything looks clean, like the
+  water. … when he moves, or swims by something, like the background or scenery or the water texture, the look. I want to make sure
+  everything looks neat and more like my exact approved screens. Like if he's going past by something and there's a scenery in the
+  background, I want to make sure it looks exactly or very close to my approved screen scenery, background. So I want to make everything
+  look really neat, a really, really good professional game where nothing looks messy or out of the ordinary, and looks very good. … not a
+  sloppy game where it looks messy. That's why I want it very close to my all my approved screens, or very, very close. Like maybe 95%, or
+  maybe the lowest, maybe 90%."
+  → Lead: judge every step by the MOVING views (Benny passing scenery, the water around him, the background behind him), not the start
+  frame; reject anything that adds mess (smears, torn / stretched textures, speckled bands, hard seams, spiky sparkles, cut-out holes,
+  floating / overlapping pieces); clean water first. No likeness percentages are claimed without evidence; target 90–95 % in motion.

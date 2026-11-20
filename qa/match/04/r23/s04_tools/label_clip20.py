@@ -17,7 +17,7 @@ seen, through = set(), set()
 rows = []
 for fr in meta['frames']:
     ahead_vis = 0
-    for a in fr.get('arrows', []):
+    for a in (fr.get('arrows', []) if fr['stage'] == meta['screen'] else []):   # the 04 group is hidden on the next screen
         if a['vis'] and a['op'] > 0.05 and a['ahead'] > 0:
             ahead_vis += 1
             seen.add(a['z'])

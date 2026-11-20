@@ -1746,3 +1746,127 @@ While the package rebuilds, let me confirm the autosave is capturing this sessio
 
 > 🔧 **Bash** `{"command": "time (timeout 600 git fetch origin --no-tags 2>&1 | tail -3); git branch -r | wc -l; git rev-parse origin/ccr-5be1062a-0ffyej", "description": "Fetch all remote branches (merge nothing)", "timeout": 700000}`
 
+### 🧑 User — 2026-11-20T12:13:24.956Z
+
+> ↩︎ result: * [new branch]          codex/screen05-reference-fit-20261116 -> origin/codex/screen05-reference-fit-20261116
+>  * [new branch]          codex/screen05-water-experiment-20261116 -> origin/codex/screen05-water-experiment-20261116
+>  * [new branch]          codex/screen05-water-hfb8p0-20261116 -> origin/codex/screen05-water-hfb8p0-20261116
+> 
+> real	7m11.564s
+> user	4m2.723s
+> sys	0m57.044s
+> 206
+> 36bc5332f9b48cf6b638b943b2e7f1eb55b40e8c
+
+### 🤖 Claude — 2026-11-20T12:13:27.563Z
+
+All 206 remote branches fetched; nothing merged. The package job also finished. Checking both:
+
+### 🤖 Claude — 2026-11-20T12:13:29.216Z
+
+> 🔧 **Bash** `{"command": "git for-each-ref --sort=-committerdate refs/remotes --count=5 --format='%(committerdate:iso8601) %(refname:short) %(objectname:short)'; SP=/tmp/claude-0/-home-user-rainbow-/1de16074-a1ea-5d78-8ed3-5aa46f86005c/scratchpad; cat $SP/regen_review_pkg.log | grep -v '^\\s*\"[0-9.]* MB' | tail -45", "description": "Check newest remote branches and package log"}`
+
+### 🧑 User — 2026-11-20T12:13:29.303Z
+
+> ↩︎ result: 2026-11-20 12:10:26 +0000 origin/ccr-a9235d04-90cw28 152a8ed02
+> 2026-11-20 11:43:22 +0000 origin/ccr-5be1062a-0ffyej 36bc5332f
+> 2026-11-20 10:25:55 +0000 origin/claude/rainbow-r22-restore-ut3m39 a735ec71b
+> 2026-11-20 04:09:34 +0000 origin/claude/rainbow-s06-match-c23 e162aec2b
+> 2026-11-20 04:05:19 +0000 origin/claude/rainbow-benny-c23 734efb6bc
+>   version:screen08_s08                 12.2 MB  44 files
+> == generated docs (saved copies) 12:06:09
+> == partition from the saved manifest
+> manifest files 2161 staged files 2168
+> == zip + extraction test 12:06:09
+> Rainbow_App_Review_assets_1_of_5_stills_04_05_audit.zip: 208 files, 354.8 MB
+> Rainbow_App_Review_assets_2_of_5_stills_06_default.zip: 140 files, 285.9 MB
+> Rainbow_App_Review_assets_3_of_5_stills_07_08.zip: 199 files, 351.0 MB
+> Rainbow_App_Review_assets_4_of_5_stills_benny.zip: 154 files, 215.1 MB
+> Rainbow_App_Review_assets_5_of_5_marble_older_apks.zip: 76 files, 277.2 MB
+> Rainbow_App_Review_assets_6_newest_apks.zip: 3 files, 49.9 MB
+> Rainbow_App_Review.zip: 1388 files, 392.4 MB
+> {
+>  "manifest_files_ok": 2161,
+>  "mismatch": 0,
+>  "missing": 0,
+>  "lfs_pointers_left": 0,
+>  "required_missing": [],
+>  "largest_files": [
+>  ],
+>  "secret_pattern_hits": [],
+>  "forbidd …[+1311 chars]
+
+### 🤖 Claude — 2026-11-20T12:13:44.394Z
+
+> 🔧 **SendUserFile** `{"files": ["/tmp/claude-0/-home-user-rainbow-/1de16074-a1ea-5d78-8ed3-5aa46f86005c/scratchpad/Rainbow_App_Review_ZIPS/Rainbow_App_Review.zip", "/tmp/claude-0/-home-user-rainbow-/1de16074-a1ea-5d78-8ed3-5aa46f86005c/scratchpad/Rainbow_App_Review_ZIPS/Rainbow_App_Review_assets_1_of_5_stills_04_05_audit.zip", "/tmp/claude-0/-home-user-rainbow-/1de16074-a1ea-5d78-8ed3-5aa46f86005c/scratchpad/Rainbow_App_Review_ZIPS/Rainbow_App_Review_assets_2_of_5_stills_06_default.zip", "/tmp/claude-0/-home-user-rainbow-/1de16074-a1ea-5d78-8ed3-5aa46f86005c/scratchpad/Rainbow_App_Review_ZIPS/Rainbow_App_Review_as …[+848 chars]`
+
+### 🧑 User — 2026-11-20T12:14:53.824Z
+
+> ↩︎ result: 7 files delivered to user.
+>   /tmp/claude-0/-home-user-rainbow-/1de16074-a1ea-5d78-8ed3-5aa46f86005c/scratchpad/Rainbow_App_Review_ZIPS/Rainbow_App_Review.zip → file_uuid: e57f0a00-3b6a-483e-a84a-0a57dab29bb7
+>   /tmp/claude-0/-home-user-rainbow-/1de16074-a1ea-5d78-8ed3-5aa46f86005c/scratchpad/Rainbow_App_Review_ZIPS/Rainbow_App_Review_assets_1_of_5_stills_04_05_audit.zip → file_uuid: 24e95805-dca4-4f28-9e52-c7454bcb2efc
+>   /tmp/claude-0/-home-user-rainbow-/1de16074-a1ea-5d78-8ed3-5aa46f86005c/scratchpad/Rainbow_App_Review_ZIPS/Rainbow_App_Review_assets_2_of_5_stills_06_default.zip → file_uuid: 4cea3c7b-6f5f-4bab-9701-e1edca05eb0c
+>   /tmp/claude-0/-home-user-rainbow-/1de16074-a1ea-5d78-8ed3-5aa46f86005c/scratchpad/Rainbow_App_Review_ZIPS/Rainbow_App_Review_assets_3_of_5_stills_07_08.zip → file_uuid: 5cb30448-c114-4665-9732-25e6cded9d82
+>   /tmp/claude-0/-home-user-rainbow-/1de16074-a1ea-5d78-8ed3-5aa46f86005c/scratchpad/Rainbow_App_Review_ZIPS/Rainbow_App_Review_assets_4_of_5_stills_benny.zip → file_uuid: e16f08a8-c8d8-4ecf-aa20-ddde72a9d9ce
+>   /tmp/claude-0/-home-user-rainbow-/1de16074-a1ea-5d78-8ed3-5aa46f86005c/scratchpad/Rainbow_App_Review_ZIPS/Rainbow_App_Review_assets_5_of_5_marble_o …[+265 chars]
+
+### 🤖 Claude — 2026-11-20T12:14:59.393Z
+
+Your note matters for every worker, so I'll record it verbatim and pass it to all four specialists before answering.
+
+### 🤖 Claude — 2026-11-20T12:14:59.895Z
+
+> 🔧 **ToolSearch** `{"query": "select:SendMessage", "max_results": 1}`
+
+### 🧑 User — 2026-11-20T12:14:59.904Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-20T12:15:06.709Z
+
+> 🔧 **Bash** `{"command": "cat >> docs/briefs/2026-11-20-r25/COORDINATION.md <<'EOF'\n* ~12:20 lead: review package regenerated from `bf01adf` with `tools/export/make_review_package.py` + the saved docs; extraction test\n  2,161 / 2,161 files identical to `docs/review_package/2026-11-20/MANIFEST_FILES.tsv`, 0 missing, 0 LFS pointers, 0 secret hits; the 7\n  ZIPs (same part sizes as round 24) delivered to the user. `.env.example` recreated with placeholders (the sanitized transcript had\n  masked two placeholder values). All 206 remote branches fetched, nothing merged; no branch newer than r24's 11:43 save.\ …[+1469 chars]`
+
+### 🧑 User — 2026-11-20T12:15:06.894Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-20T12:15:10.804Z
+
+> 🔧 **SendMessage** `{"to": "a6d73b58ae32de7ef", "summary": "Relay user's clean-in-motion note to s07", "message": "New user note (~12:20 UTC, applies to your Screen 07 work) — recorded verbatim in docs/briefs/2026-11-20-r25/COORDINATION.md (Results log). In short: while Benny swims, steers and passes scenery, the scenery, background and water texture must look exactly or very close to the approved picture (90–95 %), clean and neat like a professional game, nothing messy or out of the ordinary. For you this means: judge m07swing / m07look / the 07→08 join by the MOVING views, and reject anything that adds mess (sp …[+332 chars]`
+
+### 🧑 User — 2026-11-20T12:15:10.836Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to a6d73b58ae32de7ef at its next tool round. Moved 1 running tool call to the background without stopping it, so that round no longer waits for it. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"a6d73b58ae32de7ef","name":"a6d73b58ae32de7ef","ref":"dfa290"}}
+
+### 🤖 Claude — 2026-11-20T12:15:13.278Z
+
+> 🔧 **SendMessage** `{"to": "a3a1fee2ee8638b6e", "summary": "Relay user's clean-in-motion note to s06", "message": "New user note (~12:20 UTC, applies to your Screen 06 work) — recorded verbatim in docs/briefs/2026-11-20-r25/COORDINATION.md (Results log). In short: while Benny swims and passes scenery, the scenery, background and water texture must look exactly or very close to the approved picture (90–95 %), clean and neat like a professional game, nothing messy or out of the ordinary. For you: the cone / cut-out hole is exactly this kind of mess — the fix must leave clean, continuous painted water around Benny i …[+295 chars]`
+
+### 🧑 User — 2026-11-20T12:15:13.291Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to a3a1fee2ee8638b6e at its next tool round. Moved 1 running tool call to the background without stopping it, so that round no longer waits for it. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"a3a1fee2ee8638b6e","name":"a3a1fee2ee8638b6e","ref":"ece3ab"}}
+
+### 🤖 Claude — 2026-11-20T12:15:15.660Z
+
+> 🔧 **SendMessage** `{"to": "aadb120f8f34ac332", "summary": "Relay user's clean-in-motion note to s04", "message": "New user note (~12:20 UTC, applies to your Screen 04 work) — recorded verbatim in docs/briefs/2026-11-20-r25/COORDINATION.md (Results log). In short: while Benny swims and passes scenery, the scenery, background and water texture must look exactly or very close to the approved picture (90–95 %), clean and neat like a professional game, nothing messy or out of the ordinary. For you: clean blue water and neat edges in the MOVING views come first (glints, foam rows, pink edges, gold) — reject anything t …[+225 chars]`
+
+### 🧑 User — 2026-11-20T12:15:15.685Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to aadb120f8f34ac332 at its next tool round. Moved 1 running tool call to the background without stopping it, so that round no longer waits for it. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"aadb120f8f34ac332","name":"aadb120f8f34ac332","ref":"aa4619"}}
+
+### 🤖 Claude — 2026-11-20T12:15:18.122Z
+
+> 🔧 **SendMessage** `{"to": "a37295c79004f16e1", "summary": "Relay user's clean-in-motion note to Benny", "message": "New user note (~12:20 UTC) — recorded verbatim in docs/briefs/2026-11-20-r25/COORDINATION.md (Results log). In short: while Benny swims through the screens, everything must look exactly or very close to the approved pictures (90–95 %), clean and neat like a professional game, nothing messy. For you: Benny must look neat and polished in motion — fur soft and combed, not grainy, spiky or noisy; star and knit crisp; and he must sit cleanly IN the water (no hovering, sinking or overlap). Judge by the s …[+217 chars]`
+
+### 🧑 User — 2026-11-20T12:15:18.206Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to a37295c79004f16e1 at its next tool round. Moved 1 running tool call to the background without stopping it, so that round no longer waits for it. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"a37295c79004f16e1","name":"a37295c79004f16e1","ref":"dac2f2"}}
+
+### 🤖 Claude — 2026-11-20T12:15:20.177Z
+
+All four workers have your note. Saving the package script into the repo for reproducibility, then a verified save:
+
+### 🤖 Claude — 2026-11-20T12:15:24.416Z
+
+> 🔧 **Bash** `{"command": "sed 's#^SP=/tmp/claude-0/.*#SP=${1:?usage: regen_review_pkg_r25.sh <scratch dir for export + ZIPs>}#' /tmp/claude-0/-home-user-rainbow-/1de16074-a1ea-5d78-8ed3-5aa46f86005c/scratchpad/regen_review_pkg.sh > tools/export/regen_review_pkg_r25.sh && bash -n tools/export/regen_review_pkg_r25.sh && cp /tmp/claude-0/-home-user-rainbow-/1de16074-a1ea-5d78-8ed3-5aa46f86005c/scratchpad/Rainbow_App_Review_ZIPS/extraction_test.json docs/review_package/2026-11-20/extraction_test_r25_regenerated.json && timeout 240 bash -c 'until flock -n backups/.autosave.lock true; do sleep 2; done'; timeout  …[+429 chars]`
+

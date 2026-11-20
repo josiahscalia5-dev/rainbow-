@@ -153956,7 +153956,7 @@ zHyU1Ef1{aiFMltS8fnub+cE?Ae$}t^>z~psjq{;?;YQ}~mH#at`49Krf7rkN{llp}
 X+=*^d`r7_rM+8t)(pGGew~6>aib$e9
 
 diff --git a/assets/textures/benny20/knit_params.json b/assets/textures/benny20/knit_params.json
-index d1de648..c96482c 100644
+index d1de648fe..c96482c3a 100644
 --- a/assets/textures/benny20/knit_params.json
 +++ b/assets/textures/benny20/knit_params.json
 @@ -1,8 +1,8 @@
@@ -154055,7 +154055,7 @@ index d1de648..c96482c 100644
  }
 \ No newline at end of file
 diff --git a/qa/benny/r23/PROGRESS.md b/qa/benny/r23/PROGRESS.md
-index a76822b..cbb7ee4 100644
+index a76822bd5..cbb7ee41f 100644
 --- a/qa/benny/r23/PROGRESS.md
 +++ b/qa/benny/r23/PROGRESS.md
 @@ -1,18 +1,72 @@
@@ -154141,7 +154141,7 @@ index a76822b..cbb7ee4 100644
  * `fur.ts`: new BENNY20-only uniforms `uTipCol` (colour the uPile.w tips fade to; pompom keeps its pale lavender) and `uVol`
    (x highlight on up-facing fur, y darker underside). `benny20.ts`: `TUFT` block (body + arms): bigger locks (30 / arms 36),
 diff --git a/src/characters/benny/benny20.ts b/src/characters/benny/benny20.ts
-index 340e1d3..5fdf19b 100644
+index 340e1d382..5fdf19bc3 100644
 --- a/src/characters/benny/benny20.ts
 +++ b/src/characters/benny/benny20.ts
 @@ -100,6 +100,27 @@ if (TUFT) {
@@ -154343,7 +154343,7 @@ index 340e1d3..5fdf19b 100644
    return tick;
  }
 diff --git a/src/characters/benny/fur.ts b/src/characters/benny/fur.ts
-index 2b9523c..a8e3138 100644
+index 2b9523c06..a8e313841 100644
 --- a/src/characters/benny/fur.ts
 +++ b/src/characters/benny/fur.ts
 @@ -37,6 +37,8 @@ export interface FurHandle {
@@ -154431,7 +154431,7 @@ index 2b9523c..a8e3138 100644
  
    const mesh = new THREE.InstancedMesh(src.geometry, material, shells);
 diff --git a/tools/benny20/knit.py b/tools/benny20/knit.py
-index fccfeae..9b37c3b 100644
+index fccfeae8a..9b37c3bf4 100644
 --- a/tools/benny20/knit.py
 +++ b/tools/benny20/knit.py
 @@ -95,6 +95,81 @@ def knit_field(W, H, cols, rows, seed, rib=False, groove=0.38):
@@ -154612,7 +154612,7 @@ index fccfeae..9b37c3b 100644
      print('wrote', out)
  
 diff --git a/tools/benny23/shots_c.mjs b/tools/benny23/shots_c.mjs
-index 15d9828..1d4e951 100644
+index 15d982881..1d4e951b1 100644
 --- a/tools/benny23/shots_c.mjs
 +++ b/tools/benny23/shots_c.mjs
 @@ -21,7 +21,7 @@ try {

@@ -1,5 +1,5 @@
 diff --git a/src/game/Game.ts b/src/game/Game.ts
-index 017370a..906c906 100644
+index 017370aec..906c9066c 100644
 --- a/src/game/Game.ts
 +++ b/src/game/Game.ts
 @@ -122,7 +122,25 @@ export async function startGame(canvas: HTMLCanvasElement) {
@@ -40,7 +40,7 @@ index 017370a..906c906 100644
      }
      if (m08 && b08 && b08Rest) {
 diff --git a/src/world/match07.ts b/src/world/match07.ts
-index b9f474c..82bf087 100644
+index b9f474cee..82bf087aa 100644
 --- a/src/world/match07.ts
 +++ b/src/world/match07.ts
 @@ -94,6 +94,9 @@ uniform sampler2D uFoamTile;

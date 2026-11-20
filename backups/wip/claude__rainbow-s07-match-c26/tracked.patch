@@ -1,5 +1,5 @@
 diff --git a/src/game/Game.ts b/src/game/Game.ts
-index 017370a..906c906 100644
+index 017370aec..906c9066c 100644
 --- a/src/game/Game.ts
 +++ b/src/game/Game.ts
 @@ -122,7 +122,25 @@ export async function startGame(canvas: HTMLCanvasElement) {
@@ -40,7 +40,7 @@ index 017370a..906c906 100644
      }
      if (m08 && b08 && b08Rest) {
 diff --git a/src/game/cameraRig.ts b/src/game/cameraRig.ts
-index 388c121..23d24c1 100644
+index 388c12175..23d24c1d7 100644
 --- a/src/game/cameraRig.ts
 +++ b/src/game/cameraRig.ts
 @@ -8,6 +8,15 @@ import { WORLD } from '../world/course';
@@ -112,7 +112,7 @@ index 388c121..23d24c1 100644
      // drain and the porthole wall (Benny left, drain lower-right as in the reference)
      const st3 = this.course.stage('03');
 diff --git a/src/gameplay/coins.ts b/src/gameplay/coins.ts
-index 0f2c1f7..d7f2bdd 100644
+index 0f2c1f73c..d7f2bdde8 100644
 --- a/src/gameplay/coins.ts
 +++ b/src/gameplay/coins.ts
 @@ -61,7 +61,17 @@ export function coinLayout(course: Course): CoinDef[] {
@@ -135,7 +135,7 @@ index 0f2c1f7..d7f2bdd 100644
      const a = st('07');
      for (const c of coins07.coins) {
 diff --git a/src/world/course.ts b/src/world/course.ts
-index 531778e..9a82521 100644
+index 531778ec3..9a82521c0 100644
 --- a/src/world/course.ts
 +++ b/src/world/course.ts
 @@ -103,8 +103,16 @@ interface RouteData {
@@ -296,7 +296,7 @@ index 531778e..9a82521 100644
      let base = this.prop(s, 'width');
      // 05 current (ref 05): the water fills the tube floor wall to wall. The centreline winds by
 diff --git a/src/world/match07.ts b/src/world/match07.ts
-index b9f474c..dc585fc 100644
+index b9f474cee..dc585fc1c 100644
 --- a/src/world/match07.ts
 +++ b/src/world/match07.ts
 @@ -48,8 +48,11 @@ varying vec3 vN;

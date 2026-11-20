@@ -1001,3 +1001,67 @@ I'll start by reading the briefs and my previous progress logs in the specified 
 
 > 🔧 **Bash** `{"command": "until [ $(ls /home/user/scratch/s07/clips/BEFORE/f 2>/dev/null | wc -l) -ge 92 ] || grep -q \"^exit\" /home/user/scratch/s07/clips/BEFORE.log; do sleep 5; done; cd /home/user/scratch/s07 && python3 -c \"\nfrom PIL import Image\nfs=[52,60,66,72,78,84,90]\nW=Image.new('RGB',(288*len(fs),512))\nfor i,f in enumerate(fs): W.paste(Image.open(f'clips/BEFORE/f/{f:04d}.png').convert('RGB').resize((288,512)),(i*288,0))\nW.save('before_lip.png')\"; date", "description": "Wait for BEFORE lip frames and build a sheet", "timeout": 1200000}`
 
+### 🧑 User — 2026-11-20T12:14:38.608Z
+
+> ↩︎ result: Fri Nov 20 12:14:38 UTC 2026
+
+### 🤖 Claude — 2026-11-20T12:14:40.049Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s07/before_lip.png"}`
+
+### 🧑 User — 2026-11-20T12:14:40.287Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-20T12:14:40.282Z
+
+[Image: original 2016x512, displayed at 2000x508. Multiply coordinates by 1.01 to map to original image.]
+
+### 🤖 Claude — 2026-11-20T12:14:46.533Z
+
+> 🔧 **Bash** `{"command": "until grep -q \"^exit\" /home/user/scratch/s07/clips/BEFORE.log; do sleep 5; done; grep -v \"allow list\" /home/user/scratch/s07/clips/BEFORE.log | tail -3; ls /home/user/scratch/s07/clips/BEFORE/f | wc -l; date; python3 -c \"\nimport json; d=json.load(open('/home/user/scratch/s07/clips/BEFORE/frames.json'))\nfor f in d['frames'][::12]: print(f['i'],f['t'],f['stage'],round(f['s'],1),f['lat'],f['phase'])\"", "description": "Wait for the BEFORE clip to finish", "timeout": 1800000}`
+
+### 🧑 User — 2026-11-20T12:15:10.844Z
+
+> ↩︎ result: Command was moved to the background (ID: b64qa58ld) so that a message that arrived while it was running can reach you; it was not interrupted. Output is being written to: /tmp/claude-0/-home-user-rainbow-/1de16074-a1ea-5d78-8ed3-5aa46f86005c/tasks/b64qa58ld.output. You will be notified when it completes. If it is still running after 30m in the background (plus the timeout it was started with, up to the background maximum), it will be stopped and you will be notified. It is running now: do not start a second copy while it runs. If it is no longer needed, stop it with TaskStop. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-20T12:15:13.095Z
+
+> 🔧 **Bash** `{"command": "grep -n \"12:20\\|user note\\|USER\" /home/user/rainbow-/docs/briefs/2026-11-20-r25/COORDINATION.md | head -20", "description": "Find the new user note in coordination doc"}`
+
+### 🧑 User — 2026-11-20T12:15:13.142Z
+
+> ↩︎ result: 24:| s07 | water-fx-specialist | `/home/user/wt/s07` `claude/rainbow-s07-match-c26` | 5277 | user note ~10:35: S-bends `m07swing`, steering view `m07look`, 07→08 join with K23-3, labelled clip |
+> 35:* ~12:20 lead: review package regenerated from `bf01adf` with `tools/export/make_review_package.py` + the saved docs; extraction test
+> 39:* **~12:20 USER (verbatim, round 25) — applies to EVERY worker and every screen:** "when the pink character swims through my screens, I
+
+### 🤖 Claude — 2026-11-20T12:15:14.749Z
+
+> 🔧 **Bash** `{"command": "sed -n 35,60p /home/user/rainbow-/docs/briefs/2026-11-20-r25/COORDINATION.md", "description": "Read the user's note verbatim"}`
+
+### 🧑 User — 2026-11-20T12:15:14.786Z
+
+> ↩︎ result: * ~12:20 lead: review package regenerated from `bf01adf` with `tools/export/make_review_package.py` + the saved docs; extraction test
+>   2,161 / 2,161 files identical to `docs/review_package/2026-11-20/MANIFEST_FILES.tsv`, 0 missing, 0 LFS pointers, 0 secret hits; the 7
+>   ZIPs (same part sizes as round 24) delivered to the user. `.env.example` recreated with placeholders (the sanitized transcript had
+>   masked two placeholder values). All 206 remote branches fetched, nothing merged; no branch newer than r24's 11:43 save.
+> * **~12:20 USER (verbatim, round 25) — applies to EVERY worker and every screen:** "when the pink character swims through my screens, I
+>   want to make sure it looks like my exact or very close to my approved screens. And I want to make sure everything looks clean, like the
+>   water. … when he moves, or swims by something, like the background or scenery or the water texture, the look. I want to make sure
+>   everything looks neat and more like my exact approved screens. Like if he's going past by something and there's a scenery in the
+>   background, I want to make sure it looks exactly or very close to my approved screen scenery, background. So I want to make everything
+>   …[+711 chars]
+
+### 🤖 Claude — 2026-11-20T12:15:16.764Z
+
+> 🔧 **Bash** `{"command": "ls /home/user/scratch/s07/clips/BEFORE/f | wc -l; date", "description": "Check BEFORE frame count"}`
+
+### 🧑 User — 2026-11-20T12:15:16.920Z
+
+> ↩︎ result: 100
+> Fri Nov 20 12:15:16 UTC 2026
+
+### 🤖 Claude — 2026-11-20T12:15:23.911Z
+
+> 🔧 **Bash** `{"command": "until [ $(ls /home/user/scratch/s07/clips/BEFORE/f 2>/dev/null | wc -l) -ge 200 ] || grep -q \"^exit\" /home/user/scratch/s07/clips/BEFORE.log; do sleep 5; done; ls /home/user/scratch/s07/clips/BEFORE/f | wc -l; date", "description": "Wait for 200 BEFORE frames", "timeout": 1800000}`
+

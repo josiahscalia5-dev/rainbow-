@@ -925,3 +925,38 @@ Type-check, then run the dump (one render slot).
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && Q=$(cat /home/user/rainbow-/qa/match/06/r24/lead_rip/QUERY_RIP.txt | tr -d '\\n') && AUDIT_PORT=5283 timeout 900 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/match06/r25_holedump.mjs \"$Q\" /home/user/scratch/s06/hole 2>&1 | tail -20; ls -la /home/user/scratch/s06/", "description": "Dump the floor-space unwrap from the game", "timeout": 920000}`
 
+### 🧑 User — 2026-11-20T12:15:13.914Z
+
+> ↩︎ result: Command was moved to the background (ID: bp4mm851k) so that a message that arrived while it was running can reach you; it was not interrupted. Output is being written to: /tmp/claude-0/-home-user-rainbow-/1de16074-a1ea-5d78-8ed3-5aa46f86005c/tasks/bp4mm851k.output. You will be notified when it completes. If it is still running after 30m in the background (plus the timeout it was started with, up to the background maximum), it will be stopped and you will be notified. It is running now: do not start a second copy while it runs. If it is no longer needed, stop it with TaskStop. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-20T12:15:15.775Z
+
+Noted. Let me read the user's note verbatim while the dump runs.
+
+### 🤖 Claude — 2026-11-20T12:15:16.600Z
+
+> 🔧 **Bash** `{"command": "grep -n -i -B2 -A12 \"12:20\" /home/user/rainbow-/docs/briefs/2026-11-20-r25/COORDINATION.md | head -40", "description": "Read the new user note"}`
+
+### 🧑 User — 2026-11-20T12:15:16.752Z
+
+> ↩︎ result: 33-## Results log
+> 34-* ~12:10 four workers launched (s07, s06, s04, Benny).
+> 35:* ~12:20 lead: review package regenerated from `bf01adf` with `tools/export/make_review_package.py` + the saved docs; extraction test
+> 36-  2,161 / 2,161 files identical to `docs/review_package/2026-11-20/MANIFEST_FILES.tsv`, 0 missing, 0 LFS pointers, 0 secret hits; the 7
+> 37-  ZIPs (same part sizes as round 24) delivered to the user. `.env.example` recreated with placeholders (the sanitized transcript had
+> 38-  masked two placeholder values). All 206 remote branches fetched, nothing merged; no branch newer than r24's 11:43 save.
+> 39:* **~12:20 USER (verbatim, round 25) — applies to EVERY worker and every screen:** "when the pink character swims through my screens, I
+> 40-  want to make sure it looks like my exact or very close to my approved screens. And I want to make sure everything looks clean, like the
+> 41-  water. … when he moves, or swims by something, like the background or scenery or the water texture, the look. I want to make sure
+> 42-  everything looks neat and more like my exact approved screens. Like if he's going past by something and there's a scenery in the
+> 43-  background, I want to make sure i …[+832 chars]
+
+### 🤖 Claude — 2026-11-20T12:15:18.819Z
+
+> 🔧 **Bash** `{"command": "sleep 60; cat /tmp/claude-0/-home-user-rainbow-/1de16074-a1ea-5d78-8ed3-5aa46f86005c/tasks/bp4mm851k.output; ls -la /home/user/scratch/s06/; uptime", "description": "Check dump progress"}`
+
+### 🧑 User — 2026-11-20T12:15:18.827Z
+
+> ↩︎ result: <tool_use_error>Blocked: sleep 60 followed by: cat /tmp/claude-0/-home-user-rainbow-/1de16074-a1ea-5d78-8ed3-5aa46f86005c/tasks/bp4mm851k.output ls -la /home/user/scratch/s06/ uptime. To wait for a condition, use Monitor with an until-loop (e.g. `until <check>; do sleep 2; done`). To wait for a command you started, use run_in_background: true. Do not chain shorter sleeps to work around this block.</tool_use_error>
+

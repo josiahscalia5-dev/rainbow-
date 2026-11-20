@@ -769,3 +769,112 @@ I'll prepare the edit as a script and apply it once the NEW clip's page has load
 
 > 🔧 **Bash** `{"command": "until grep -q \"frame 0\" /home/user/scratch/s04/clip_NEW_K23-S3.log 2>/dev/null || grep -q \"clip_exit NEW\" /home/user/scratch/s04/run_clips.out; do sleep 3; done; cat /home/user/scratch/s04/run_clips.out; tail -2 /home/user/scratch/s04/clip_BEFORE_K23-1.log", "description": "Block until NEW clip page loaded", "timeout": 600000}`
 
+### 🧑 User — 2026-11-20T12:13:46.174Z
+
+> ↩︎ result: start BEFORE_K23-1 12:04:56
+> clip_exit BEFORE_K23-1 0 12:13:14
+> start NEW_K23-S3 12:13:14
+> frame 60 stage 05 frac 1.104
+> frames 65 game seconds 3.25
+
+### 🤖 Claude — 2026-11-20T12:13:47.430Z
+
+The NEW clip's page has loaded (it runs on the K23-S3 code), so I can now apply the crescent edit and typecheck.
+
+### 🤖 Claude — 2026-11-20T12:13:49.140Z
+
+> 🔧 **Bash** `{"command": "cp /home/user/wt/s04/src/world/match04m4.ts /home/user/scratch/s04/edits/match04m4.before_r25s1.ts && python3 -I /home/user/scratch/s04/edits/apply_lgc.py && cd /home/user/wt/s04 && timeout 600 npx tsc --noEmit > /home/user/scratch/s04/tsc_s1.log 2>&1; echo tsc_exit $?; tail -3 /home/user/scratch/s04/tsc_s1.log", "description": "Apply crescent glint edit and typecheck"}`
+
+### 🧑 User — 2026-11-20T12:13:55.362Z
+
+> ↩︎ result: applied
+> tsc_exit 0
+
+### 🤖 Claude — 2026-11-20T12:14:01.235Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s04 && nice -n 10 python3 -I /home/user/rainbow-/qa/match/04/r23/s04_tools/label_clip20.py /home/user/scratch/s04/clip_BEFORE_K23-1 \"BEFORE = K23-1 (what you last saw)\" /home/user/rainbow-/qa/match/04/r25/clip/swim04_whole_BEFORE_K23-1 && python3 -I -c \"\nimport json; m=json.load(open('/home/user/scratch/s04/clip_BEFORE_K23-1/frames.json'))\nfor f in m['frames'][::4]: print(f['i'], f['stage'], f['frac'], f['phase'][:10], [(a['ahead'],a['op']) for a in f['arrows'] if a['vis']])\nprint('all arrows z', sorted(set(a['z'] for f in m['frames'] for a in f['arrows …[+67 chars]`
+
+### 🧑 User — 2026-11-20T12:14:34.221Z
+
+> ↩︎ result: frames 65 game seconds 3.25 arrows swum through 9
+> 0 04 0 ENTRANCE ( []
+> 4 04 0.075 ENTRANCE ( [(7.36, 1), (11.36, 1), (15.36, 1), (19.36, 0.703)]
+> 8 04 0.151 ENTRANCE ( [(4.54, 1), (8.54, 1), (12.54, 1), (16.54, 1), (20.54, 0.35)]
+> 12 04 0.226 ENTRANCE ( [(5.73, 1), (9.73, 1), (13.73, 1), (17.73, 0.944), (21.73, 0.094)]
+> 16 04 0.301 MIDDLE (st [(6.92, 1), (10.92, 1), (14.92, 1), (18.92, 0.724)]
+> 20 04 0.376 MIDDLE (st [(4.12, 0.895), (8.12, 1), (12.12, 1), (16.12, 1), (20.12, 0.432)]
+> 24 04 0.452 MIDDLE (st [(5.31, 1), (9.31, 1), (13.31, 1), (17.31, 0.983), (21.31, 0.162)]
+> 28 04 0.527 MIDDLE (st [(6.51, 1), (10.51, 1), (14.51, 1), (18.51, 0.812)]
+> 32 04 0.602 MIDDLE (st [(3.7, 0.502), (7.7, 1), (11.7, 1), (15.7, 1), (19.7, 0.536)]
+> 36 04 0.677 MIDDLE (st [(4.9, 1), (8.9, 1), (12.9, 1), (16.9, 1), (20.9, 0.248)]
+> 40 04 0.753 END (strai [(6.11, 1), (10.11, 1), (14.11, 1), (18.11, 0.877), (22.11, 0.036)]
+> 44 04 0.828 END (strai [(3.33, 0.138), (7.33, 1), (11.33, 1), (15.33, 1), (19.33, 0.421)]
+> 48 04 0.903 END (strai [(4.59, 1), (8.59, 1), (12.59, 1), (16.59, 0.796)]
+> 52 04 0.974 END (strai [(6.13, 1), (10.13, 1), (14.13, 1), (18.13, 0.375)]
+> 56 05 1.041 next scree [(3.97, 1), (7.97, 1), (11.97, 1 …[+391 chars]
+
+### 🤖 Claude — 2026-11-20T12:14:43.385Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s04 && python3 -I -c \"\nfrom PIL import Image\nW=Image.new('RGB',(4*432,768))\nfor i,n in enumerate([50,54,58,64]):\n  W.paste(Image.open(f'clip_BEFORE_K23-1/f/{n:04d}.png').convert('RGB').resize((432,768)),(i*432,0))\nW.save('before_end_frames.png')\"", "description": "Sheet of BEFORE clip end frames"}`
+
+### 🧑 User — 2026-11-20T12:14:44.059Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T12:14:45.092Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s04/before_end_frames.png"}`
+
+### 🧑 User — 2026-11-20T12:14:45.147Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T12:14:51.002Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/04/r23/s04_tools && python3 -I - <<'EOF'\np='label_clip20.py'; s=open(p).read()\na=\"\"\"for fr in meta['frames']:\n    ahead_vis = 0\n    for a in fr.get('arrows', []):\"\"\"\nb=\"\"\"for fr in meta['frames']:\n    ahead_vis = 0\n    for a in (fr.get('arrows', []) if fr['stage'] == meta['screen'] else []):   # the 04 group is hidden on the next screen\"\"\"\nassert s.count(a)==1; s=s.replace(a,b); open(p,'w').write(s); print('ok')\nEOF\ncd /home/user/scratch/s04 && rm -rf clip_BEFORE_K23-1/lab_* && nice -n 10 python3 -I /home/user/rainbow-/qa/match …[+271 chars]`
+
+### 🧑 User — 2026-11-20T12:15:15.872Z
+
+> ↩︎ result: Command was moved to the background (ID: bdbj115g8) so that a message that arrived while it was running can reach you; it was not interrupted. Output is being written to: /tmp/claude-0/-home-user-rainbow-/1de16074-a1ea-5d78-8ed3-5aa46f86005c/tasks/bdbj115g8.output. You will be notified when it completes. If it is still running after 30m in the background (plus the timeout it was started with, up to the background maximum), it will be stopped and you will be notified. It is running now: do not start a second copy while it runs. If it is no longer needed, stop it with TaskStop. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-20T12:15:19.169Z
+
+> 🔧 **Bash** `{"command": "sed -n '/## Results log/,$p' /home/user/rainbow-/docs/briefs/2026-11-20-r25/COORDINATION.md", "description": "Read the new user note verbatim"}`
+
+### 🧑 User — 2026-11-20T12:15:19.314Z
+
+> ↩︎ result: ## Results log
+> * ~12:10 four workers launched (s07, s06, s04, Benny).
+> * ~12:20 lead: review package regenerated from `bf01adf` with `tools/export/make_review_package.py` + the saved docs; extraction test
+>   2,161 / 2,161 files identical to `docs/review_package/2026-11-20/MANIFEST_FILES.tsv`, 0 missing, 0 LFS pointers, 0 secret hits; the 7
+>   ZIPs (same part sizes as round 24) delivered to the user. `.env.example` recreated with placeholders (the sanitized transcript had
+>   masked two placeholder values). All 206 remote branches fetched, nothing merged; no branch newer than r24's 11:43 save.
+> * **~12:20 USER (verbatim, round 25) — applies to EVERY worker and every screen:** "when the pink character swims through my screens, I
+>   want to make sure it looks like my exact or very close to my approved screens. And I want to make sure everything looks clean, like the
+>   water. … when he moves, or swims by something, like the background or scenery or the water texture, the look. I want to make sure
+>   everything looks neat and more like my exact approved screens. Like if he's going past by something and there's a scenery in the
+>   background, I want to make sure it looks exactly or very close to  …[+781 chars]
+
+### 🤖 Claude — 2026-11-20T12:15:25.537Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/1de16074-a1ea-5d78-8ed3-5aa46f86005c/tasks/bdbj115g8.output; ls -la /home/user/rainbow-/qa/match/04/r25/clip/; tail -1 /home/user/scratch/s04/clip_NEW_K23-S3.log; uptime", "description": "Check labelling output and NEW clip progress"}`
+
+### 🧑 User — 2026-11-20T12:15:25.583Z
+
+> ↩︎ result: ok
+> frames 65 game seconds 3.25 arrows swum through 7
+> frame 0 stage 04 frac 0.000
+> frame 10 stage 04 frac 0.188
+> 
+> [exited with code 0]
+> total 4668
+> drwxr-xr-x 2 root root    4096 Nov 20 12:14 .
+> drwxr-xr-x 3 root root    4096 Nov 20 12:04 ..
+> -rw-r--r-- 1 root root    1168 Nov 20 12:04 QUERY_BEFORE_K23-1.txt
+> -rw-r--r-- 1 root root    1475 Nov 20 12:04 QUERY_NEW_K23-S3.txt
+> -rw-r--r-- 1 root root 2693866 Nov 20 12:15 swim04_whole_BEFORE_K23-1_0.5x.mp4
+> -rw-r--r-- 1 root root 2066527 Nov 20 12:15 swim04_whole_BEFORE_K23-1_1.0x.mp4
+> frame 10 stage 04 frac 0.188
+>  12:15:25 up 32 min,  0 user,  load average: 9.14, 8.10, 4.76
+

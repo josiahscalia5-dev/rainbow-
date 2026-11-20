@@ -1,5 +1,5 @@
 diff --git a/src/game/Game.ts b/src/game/Game.ts
-index 6aec240..321c542 100644
+index 6aec2406c..321c54228 100644
 --- a/src/game/Game.ts
 +++ b/src/game/Game.ts
 @@ -545,6 +545,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
@@ -11,7 +11,7 @@ index 6aec240..321c542 100644
        m06Applied = m06On;
      }
 diff --git a/src/world/match06.ts b/src/world/match06.ts
-index 831c2b4..a6d96d6 100644
+index 831c2b443..a6d96d67c 100644
 --- a/src/world/match06.ts
 +++ b/src/world/match06.ts
 @@ -44,6 +44,8 @@ export interface Match06 {
