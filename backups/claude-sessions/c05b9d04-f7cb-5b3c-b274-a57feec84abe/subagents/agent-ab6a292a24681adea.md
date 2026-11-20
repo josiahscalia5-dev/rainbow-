@@ -737,3 +737,90 @@ Now I'll add the clustering + soft-glow option (`m04lgcg`, new uniform `uLG7`), 
 > s=s.replace("for fr, (av, th) in zip(meta['frames'], rows):","for fr, (av, th, sn) in zip(meta['frames'], rows):")
 > s=s.replace("""        …[+4251 chars]
 
+### 🤖 Claude — 2026-11-20T15:45:52.819Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/04/r23/s04_tools && sed -n 1,14p label_clip20.py; head -c 600 ../s3_glossy/gameplay.json; echo; ls /home/user/rainbow-/tools/lead23/ /home/user/rainbow-/scripts | grep -i \"game\\|play\\|clip\" | head", "description": "Check labelling tool usage and gameplay test tool"}`
+
+### 🧑 User — 2026-11-20T15:45:52.916Z
+
+> ↩︎ result: #!/usr/bin/env python3
+> """r25 s04 (QA only): label every frame of a screen_clip20.mjs run and encode mp4s.
+> Copy of tools/lead23/label_clip.py with: 20 fps = REAL game speed (one frame = 0.05 s game time), 10 fps = half speed,
+> game time t = i * 0.05 s, and a line counting the glowing chevrons (in view AHEAD of Benny / swum through so far).
+> usage: python3 -I label_clip20.py <clipDir> <title> <out_prefix>   -> <out_prefix>_1.0x.mp4 + <out_prefix>_0.5x.mp4"""
+> import json, subprocess, sys
+> from pathlib import Path
+> from PIL import Image, ImageDraw, ImageFont
+> 
+> d, title, outp = Path(sys.argv[1]), sys.argv[2], sys.argv[3]
+> meta = json.loads((d / 'frames.json').read_text())
+> dt = meta.get('dt', 0.05)
+> fb = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 30)
+> fs = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 26)
+> {
+>   "checks": {
+>     "pauseFreezes": {
+>       "pass": true,
+>       "sBefore": 45.495,
+>       "sPaused": 45.495,
+>       "sAfter": 49.995
+>     },
+>     "continuousTravel": {
+>       "pass": true,
+>       "nonMonotonicSteps": 0,
+>       "steps": 2139,
+>       "respawns": 0
+>     },
+>     "noCameraCut": {
+>       "pass": true,
+>       "maxCameraJumpPerStep": 0. …[+321 chars]
+
+### 🤖 Claude — 2026-11-20T15:45:54.739Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/scripts && sed -n 1,25p gameplay-test.mjs | cut -c1-200; grep -n \"PORT\\|argv\\|process.env\" gameplay-test.mjs | head", "description": "Check gameplay test usage"}`
+
+### 🧑 User — 2026-11-20T15:45:54.795Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Automated gameplay + continuity test on the REAL running game (headless Chromium, WebGL).
+> // Drives Benny from 03 to the 11 ending with the deterministic simulation API and checks:
+> //  * continuous travel: s strictly increases, no position jump > speed·dt (no teleport/cut)
+> //  * camera continuity: no camera jump between steps (no hard cut), incl. the 07 plunge → 08
+> //  * 07 plunge: positive travel time, large vertical drop, 08 inlet reached from the bottom
+> //  * real coin pickups update the counter; steering into the foam wall costs a heart
+> //  * pause freezes the simulation; resume continues
+> //  * the run ends in the 11 victory with Benny hidden under the towel
+> // Writes qa/gameplay_test.json and qa/07_to_08_continuity.md. Exit 1 on failure.
+> //   node scripts/gameplay-test.mjs --q=river05=1 --out=qa/pilot05/wave11/tests/gameplay_river05.json
+> //   → the same run with URL test switches; with --q the tracked qa/ files above are NOT rewritten.
+> import { writeFileSync, mkdirSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const optQ = (process.argv.find((a) => a.startsWith('--q=')) ?? '').slice(4);
+> const optOut = (pr …[+634 chars]
+
+### 🤖 Claude — 2026-11-20T15:45:57.740Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"startVite\" -A12 scripts/lib/pw.mjs | head -25; grep -n \"startVite(\" scripts/gameplay-test.mjs", "description": "Check vite port handling in gameplay test"}`
+
+### 🧑 User — 2026-11-20T15:45:57.799Z
+
+> ↩︎ result: 19:export async function startVite(port = 5199) {
+> 20-  const { createServer } = await import('vite');
+> 21-  const server = await createServer({ server: { port, strictPort: false, host: '127.0.0.1', hmr: false, watch: { ignored: ['**/*'] } }, logLevel: 'error' });
+> 22-  await server.listen();
+> 23-  const addr = server.resolvedUrls?.local?.[0] ?? `http://127.0.0.1:${port}/`;
+> 24-  return { url: addr.replace(/\/$/, ''), close: () => server.close() };
+> 25-}
+> 26-
+> 27-export async function waitDone(page, timeoutMs = 180000) {
+> 28-  await page.waitForFunction(() => window.__done === true, null, { timeout: timeoutMs });
+> 29-  const err = await page.evaluate(() => window.__error);
+> 30-  if (err) throw new Error(err);
+> 31-}
+> 20:const vite = await startVite(5213);
+
+### 🤖 Claude — 2026-11-20T15:46:01.210Z
+
+> 🔧 **Bash** `{"command": "timeout 500 bash -c 'until grep -q \"ALL_DONE\" /home/user/scratch/s04/run_r27c.out; do sleep 10; done'; cat /home/user/scratch/s04/run_r27c.out /home/user/scratch/s04/run_r27d.out; date -u +%T", "description": "Wait for dense clustered glint variants", "timeout": 520000}`
+

@@ -2309,3 +2309,46 @@ Now waiting for Screen 05 and the 09/10 stand-ins.
 > 09 → /home/user/rainbow-/qa/review_r27/default/09.png {"stage":"09","s":407.29,"y":-113.215,"calls":309,"tris":637447,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
 > 10 → /home/user/rainbow-/qa/review_r27/default/10.png {"stage":"10","s":423.018,"y":-112.84,"calls":282,"tris":400383,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
 
+### 🤖 Claude — 2026-11-20T15:45:48.541Z
+
+Saving to GitHub right away, then I'll look at the last screens.
+
+### 🤖 Claude — 2026-11-20T15:45:50.538Z
+
+> 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:r27-preview-captures 2>&1 | grep -E '\"commit\"|\"pushed\"|error' | head -4; python3 -I scripts/autosave-status.py; echo \"remote: $(timeout 60 git ls-remote origin refs/heads/claude/rainbow-restore-screen-match-ijjdai | cut -f1)\"; git lfs ls-files | wc -l", "description": "Save everything to GitHub and verify remote", "timeout": 300000}`
+
+### 🤖 Claude — 2026-11-20T15:45:51.834Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/scratchpad/sheet05.jpg"}`
+
+### 🤖 Claude — 2026-11-20T15:45:52.437Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/scratchpad/sheet0910.jpg"}`
+
+### 🧑 User — 2026-11-20T15:46:20.322Z
+
+> ↩︎ result: "commit": "15d03cc755eccef7ac634f72c119c4452d331188",
+> AUTOSAVE OK | branch claude/rainbow-restore-screen-match-ijjdai | scheduler daemon | last verified backup 2026-11-20T15:45:50+00:00 (0.5 min ago) | local 15d03cc remote 15d03cc (match) | uncommitted 0
+> remote: 15d03cc755eccef7ac634f72c119c4452d331188
+> 175
+
+### 🧑 User — 2026-11-20T15:46:20.342Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-20T15:46:20.347Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T15:46:40.797Z
+
+Everything is saved and verified on GitHub (`15d03cc`, remote matches). I've now seen every screen. Making the phone-size frames for the preview page.
+
+### 🤖 Claude — 2026-11-20T15:46:44.261Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nfrom PIL import Image\nimport os\nR='qa/review_r27'; names=['a_start','b_early','c_middle','d_late','e_end','f_hard_left','g_hard_right']\ntot=0\nfor n in ['04','05','06','07','08']:\n    for x in names:\n        im=Image.open(f'{R}/{n}/{x}.png').convert('RGB').resize((432,768),Image.LANCZOS)\n        p=f'{R}/web/{n}_{x}.jpg'; im.save(p,quality=80,optimize=True); tot+=os.path.getsize(p)\nfor n in ['09','10']:\n    im=Image.open(f'{R}/default/{n}.png').convert('RGB'); im=im.resize((432,round(432*im.height/im.width)),Image.LANCZOS)\n    p=f'{R}/web/{n}_now.jpg' …[+280 chars]`
+
+### 🧑 User — 2026-11-20T15:46:46.027Z
+
+> ↩︎ result: 48 files 4545 KB
+
