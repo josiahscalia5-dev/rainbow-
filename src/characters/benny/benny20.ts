@@ -134,8 +134,8 @@ export const HAT20 = {
 
 /** colour factors (LINEAR multipliers on the knit / felt maps, solved like the fur) + knit normal strength */
 const MAT20 = {
-  crown: lin('ccol', [0.82, 0.82, 0.78]),
-  brim: lin('rcol', [0.34, 0.34, 0.31]),
+  crown: lin('ccol', [0.78, 0.78, 0.7]),
+  brim: lin('rcol', [0.67, 0.75, 0.57]),
   star: lin('scol', [0.34, 0.75, 1.0]),
   crownN: n('kcn', 2.0),
   brimN: n('kbn', 2.5),

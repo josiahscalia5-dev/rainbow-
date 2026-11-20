@@ -433,18 +433,18 @@
   },
   {
    "path": "assets/textures/benny20/brim.png",
-   "bytes": 618182,
-   "sha256": "f0580d87e243979a55fb0bb0c7629df05902977fdce268287db81e81ea4f0a4d"
+   "bytes": 649849,
+   "sha256": "3b456cfbce9077517955693f62ce7c5251b307d7d33f92d119eabfac9c2d90ac"
   },
   {
    "path": "assets/textures/benny20/brim_n.png",
-   "bytes": 431346,
-   "sha256": "2116b5d953e0bcc271d76afd8eb87f55fbbf455deef31e72460cca6978275c78"
+   "bytes": 35220,
+   "sha256": "60869d69110e6e0dcb26819645de2ae8070ddfc6a39f793680cb427dce115297"
   },
   {
    "path": "assets/textures/benny20/crown.png",
-   "bytes": 1549994,
-   "sha256": "24dedf9f5accdb933bef16890e62758bc42838e3042967ffca8071444f857527"
+   "bytes": 1509928,
+   "sha256": "54ea93345b670767936c6e7e9d09a172af76fc27b6d3247b98a12597ff2b2196"
   },
   {
    "path": "assets/textures/benny20/crown_n.png",
@@ -453,8 +453,8 @@
   },
   {
    "path": "assets/textures/benny20/knit_params.json",
-   "bytes": 549,
-   "sha256": "3cb3553b2e19688618a7cd7121e4100dc56441f5cd609d9bbf4724a2dcea2cbb"
+   "bytes": 565,
+   "sha256": "50e8f60bb4b7563af55ffb15f02bd6883d841f616d9e4dd2fbed6d2cb2909659"
   },
   {
    "path": "assets/textures/benny20/star.png",
@@ -814,7 +814,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11502,
-   "sha256": "87a8b3f408176b2eadc2157ca15cd5f8b7553b752756cbe30b2f80229e263e01"
+   "sha256": "734a9f10abaf813eb27040a12e2de9b0e25110013cf75b640ed65931ce8783b7"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -16193,8 +16193,8 @@
   },
   {
    "path": "src/characters/benny/benny20.ts",
-   "bytes": 14868,
-   "sha256": "82b519944d137c035ec25bc40578b83222627b71adb4fd658e0a2e93471dfe1c"
+   "bytes": 14867,
+   "sha256": "13a3d9343cc062270d87c6c7a151471c3b7e4fecf241ca91fc5438c7e51f7271"
   },
   {
    "path": "src/characters/benny/build.ts",

@@ -17,29 +17,29 @@
    "W"
   ],
   [
-   0.645,
+   0.7,
    "V"
   ]
  ],
  "white": [
-  238,
-  226,
-  240
+  228,
+  236,
+  214
  ],
  "violet": [
+  78,
+  10,
+  212
+ ],
+ "cuff": [
   118,
   40,
   222
  ],
- "cuff": [
-  112,
-  34,
-  218
- ],
  "brim_w": 2048,
  "brim_h": 256,
- "brim_cols": 86,
- "brim_rows": 8,
+ "brim_cols": 96,
+ "brim_rows": 12,
  "groove": 0.3,
  "seed": 7,
  "star_px": 512,
@@ -58,5 +58,6 @@
   112,
   36
  ],
- "crown_rib": true
+ "crown_rib": true,
+ "brim_rib": 0.5
 }
