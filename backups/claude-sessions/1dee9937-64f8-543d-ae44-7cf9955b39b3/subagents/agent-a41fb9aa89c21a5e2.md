@@ -2162,3 +2162,279 @@ First step 3 shot is in; checking the start view is unchanged.
 > 375 538 6 [131 222 255] [137 226 255]
 > 374 538 6 [119 218 255] [125 221 255]
 
+### 🤖 Claude — 2026-11-20T05:02:15.979Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\ndef L(p): return np.asarray(Image.open(p).convert('RGB')).astype(int)\nR='/home/user/rainbow-/qa/match/06/r23/'\nfor a,b in [('step1_m06fcl/BEFORE','step1_m06fcl/NEW'),('step1_m06fcl/NEW','step2_m06vs0/NEW'),('step1_m06fcl/BEFORE','step1_m06fcl/with_m06view/BEFORE')]:\n  d=np.abs(L(R+a+'/a_start.png')-L(R+b+'/a_start.png')).max(axis=2); ys,xs=np.nonzero(d)\n  print(a,'vs',b,'changed',len(ys),'max',d.max(), list(zip(xs[:3],ys[:3])))\n\"", "description": "Compare start-view noise between earlier runs"}`
+
+### 🧑 User — 2026-11-20T05:02:17.855Z
+
+> ↩︎ result: step1_m06fcl/BEFORE vs step1_m06fcl/NEW changed 16 max 12 [(np.int64(373), np.int64(538)), (np.int64(374), np.int64(538)), (np.int64(375), np.int64(538))]
+> step1_m06fcl/NEW vs step2_m06vs0/NEW changed 30782 max 13 [(np.int64(313), np.int64(492)), (np.int64(314), np.int64(492)), (np.int64(315), np.int64(492))]
+> step1_m06fcl/BEFORE vs step1_m06fcl/with_m06view/BEFORE changed 61732 max 14 [(np.int64(313), np.int64(492)), (np.int64(314), np.int64(492)), (np.int64(315), np.int64(492))]
+
+### 🤖 Claude — 2026-11-20T05:02:28.831Z
+
+> 🔧 **Monitor** `{"command": "L=/home/user/rainbow-/qa/match/06/r23/step3_m06rip/NEW.log; until [ \"$(grep -c '^06' $L)\" -ge 4 ] || grep -q \"done\\|pageerror\" $L; do sleep 5; done; grep -h \"^06\\|done\\|pageerror\" $L | tail -2", "description": "wait for step 3 middle shot", "timeout_ms": 1800000}`
+
+### 🧑 User — 2026-11-20T05:02:28.897Z
+
+> ↩︎ result: Monitor started (task blwlcl1iv, expires in 30m unless the source ends first; you get one notice at expiry — re-arm if you still need the watch). You will be notified on each event. Keep working — do not poll or sleep. Events may arrive while you are waiting for the user — an event is not their reply.
+
+### 🤖 Claude — 2026-11-20T05:02:31.520Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r23/step3_m06rip/NEW/b_early.png"}`
+
+### 🧑 User — 2026-11-20T05:02:31.957Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T05:02:40.135Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06; python3 -I -c \"\nfrom PIL import Image\nR='/home/user/rainbow-/qa/match/06/r23/'\nA=Image.open('/home/user/rainbow-/references/06_crest_the_rinse_arch.png').convert('RGB').crop((80,900,800,1400))\nrows=[A]\nfor f,box in [('b_early',(80,800,800,1300)),('b2_early',(80,750,800,1250)),('c_middle',(80,750,800,1250))]:\n  for d in ('step2_m06vs0/NEW','step3_m06rip/NEW'):\n    rows.append(Image.open(R+d+'/'+f+'.png').convert('RGB').crop(box))\nW=720;H=500\ns=Image.new('RGB',(W*2+6,H*4+18))\ns.paste( …[+241 chars]`
+
+### 🧑 User — 2026-11-20T05:02:41.505Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T05:02:44.465Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/rip_cmp.png"}`
+
+### 🧑 User — 2026-11-20T05:02:44.506Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T05:03:01.678Z
+
+> 🔧 **Bash** `{"command": "date -u +%H:%M; ls -la /home/user/rainbow-/qa/match/06/r23/*/*.mp4 /home/user/rainbow-/qa/match/06/r23/*/*/*.mp4 2>/dev/null; for d in /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/clip*/f; do echo \"$d $(ls $d | wc -l)\"; done; uptime", "description": "Check time, clips and load"}`
+
+### 🧑 User — 2026-11-20T05:03:01.773Z
+
+> ↩︎ result: 05:03
+> -rw-r--r-- 1 root root 3056160 Nov 20 05:01 /home/user/rainbow-/qa/match/06/r23/step1_m06fcl/swim_06_BEFORE.mp4
+> -rw-r--r-- 1 root root 3060911 Nov 20 05:00 /home/user/rainbow-/qa/match/06/r23/step1_m06fcl/swim_06_NEW.mp4
+> /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/clip16XH/f 115
+> /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/clip4bYF/f 16
+> /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/clipmSt7/f 115
+> /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/clipxocu/f 15
+>  05:03:01 up  1:05,  0 user,  load average: 16.69, 20.43, 17.49
+
+### 🤖 Claude — 2026-11-20T05:03:06.272Z
+
+The step 1 clips are done. Checking the clip logs cover 06 into 07, and pulling a mid-clip frame pair for the foam comparison.
+
+### 🤖 Claude — 2026-11-20T05:03:09.395Z
+
+> 🔧 **Bash** `{"command": "O=/home/user/rainbow-/qa/match/06/r23/step1_m06fcl; cat $O/swim_06_NEW.log | grep -v \"outside of Vite\" | tail -3; ffprobe -v error -show_entries stream=width,height,nb_frames -of csv=p=0 $O/swim_06_NEW.mp4; S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06; python3 -I $S/strip.py $S/clip_s1.png $S/clipmSt7/f/0040.png $S/clip16XH/f/0040.png $S/clipmSt7/f/0075.png $S/clip16XH/f/0075.png", "description": "Verify step 1 clips and build frame strip"}`
+
+### 🧑 User — 2026-11-20T05:03:09.969Z
+
+> ↩︎ result: frames 115
+> 115 frames -> /home/user/rainbow-/qa/match/06/r23/step1_m06fcl/swim_06_NEW.mp4 (frames kept in /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/clip16XH/f)
+> 432,768,115
+
+### 🤖 Claude — 2026-11-20T05:03:12.745Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/clip_s1.png"}`
+
+### 🧑 User — 2026-11-20T05:03:12.968Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T05:03:17.513Z
+
+The clip frames confirm step 1 in motion (BEFORE: tall foam wall; NEW: low separate heaps). Checking the last clip frame reaches Screen 07.
+
+### 🤖 Claude — 2026-11-20T05:03:20.703Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06; python3 -I -c \"\nfrom PIL import Image\na=Image.open('$S/clip16XH/f/0114.png').convert('RGB'); b=Image.open('$S/clip16XH/f/0060.png').convert('RGB')\ns=Image.new('RGB',(864,400)); s.paste(a.crop((0,100,864,300)),(0,0)); s.paste(b.crop((0,100,864,300)),(0,200)); s.resize((432,200)).save('$S/titles.png')\"", "description": "Crop stage titles from clip frames"}`
+
+### 🧑 User — 2026-11-20T05:03:21.265Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T05:03:24.274Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/titles.png"}`
+
+### 🧑 User — 2026-11-20T05:03:24.314Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T05:03:28.677Z
+
+The clip runs from 06 into 07. Waiting for the last step 3 shots.
+
+### 🤖 Claude — 2026-11-20T05:03:29.939Z
+
+> 🔧 **Monitor** `{"command": "L=/home/user/rainbow-/qa/match/06/r23/step3_m06rip/NEW.log; until grep -q \"done\\|pageerror\" $L; do sleep 5; done; grep -h \"done\\|pageerror\" $L | tail -2", "description": "wait for step 3 shots done", "timeout_ms": 1800000}`
+
+### 🧑 User — 2026-11-20T05:03:30.035Z
+
+> ↩︎ result: Monitor started (task bck8frswe, expires in 30m unless the source ends first; you get one notice at expiry — re-arm if you still need the watch). You will be notified on each event. Keep working — do not poll or sleep. Events may arrive while you are waiting for the user — an event is not their reply.
+
+### 🤖 Claude — 2026-11-20T05:03:30.183Z
+
+> 🔧 **TaskStop** `{"task_id": "bfaukhs9l"}`
+
+### 🧑 User — 2026-11-20T05:03:30.200Z
+
+> ↩︎ result: {"message":"Successfully stopped task: bfaukhs9l (L=/home/user/rainbow-/qa/match/06/r23/step3_m06rip/NEW.log; n=-1; while true; do c=0; [ -f $L ] && c=$(grep -c \"^06\" $L); if [ \"$c\" != \"$n\" ] && [ $((c % 4)) = 1 ]; then echo \"step3 shots: $c/11\"; fi; n=$c; if [ -f $L ] && grep -q \"done\\|pageerror\\|Shader\" $L; then grep -h \"done\\|pageerror\\|Shader\" $L | head -3; exit 0; fi; sleep 5; done)","task_id":"bfaukhs9l","task_type":"local_bash","command":"L=/home/user/rainbow-/qa/match/06/r23/step3_m06rip/NEW.log; n=-1; while true; do c=0; [ -f $L ] && c=$(grep -c \"^06\" $L); if [ \"$c\" != \"$n\" ] && [ $((c % 4)) = 1 ]; then echo \"step3 shots: $c/11\"; fi; n=$c; if [ -f $L ] && grep -q \"done\\|pageerror\\|Shader\" $L; then grep -h \"done\\|pageerror\\|Shader\" $L | head -3; exit 0; fi; sleep 5; done"}
+
+### 🤖 Claude — 2026-11-20T05:03:34.167Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && git diff --stat; git diff -- src/world/match06.ts src/game/Game.ts > /home/user/rainbow-/qa/match/06/r23/step3_m06rip/code.patch; wc -l /home/user/rainbow-/qa/match/06/r23/step3_m06rip/code.patch", "description": "Write step 3 code patch from worktree diff"}`
+
+### 🧑 User — 2026-11-20T05:03:34.430Z
+
+> ↩︎ result: src/game/Game.ts     |  1 +
+>  src/world/match06.ts | 97 +++++++++++++++++++++++++++++++++++++++++++++++++++-
+>  2 files changed, 97 insertions(+), 1 deletion(-)
+> 155 /home/user/rainbow-/qa/match/06/r23/step3_m06rip/code.patch
+
+### 🤖 Claude — 2026-11-20T05:03:36.864Z
+
+> 🔧 **Monitor** `{"command": "L=/home/user/rainbow-/qa/match/06/r23/step3_m06rip/NEW.log; until grep -q \"done\\|pageerror\" $L; do sleep 5; done; echo finished", "description": "step 3 shots finished", "timeout_ms": 1200000}`
+
+### 🧑 User — 2026-11-20T05:03:37.009Z
+
+> ↩︎ result: Monitor started (task bv2wsdqsn, expires in 20m unless the source ends first; you get one notice at expiry — re-arm if you still need the watch). You will be notified on each event. Keep working — do not poll or sleep. Events may arrive while you are waiting for the user — an event is not their reply.
+
+### 🤖 Claude — 2026-11-20T05:03:37.115Z
+
+> 🔧 **TaskStop** `{"task_id": "bck8frswe"}`
+
+### 🧑 User — 2026-11-20T05:03:37.129Z
+
+> ↩︎ result: {"message":"Successfully stopped task: bck8frswe (L=/home/user/rainbow-/qa/match/06/r23/step3_m06rip/NEW.log; until grep -q \"done\\|pageerror\" $L; do sleep 5; done; grep -h \"done\\|pageerror\" $L | tail -2)","task_id":"bck8frswe","task_type":"local_bash","command":"L=/home/user/rainbow-/qa/match/06/r23/step3_m06rip/NEW.log; until grep -q \"done\\|pageerror\" $L; do sleep 5; done; grep -h \"done\\|pageerror\" $L | tail -2"}
+
+### 🤖 Claude — 2026-11-20T05:03:39.968Z
+
+Meanwhile, the late and steering shots that are already done.
+
+### 🤖 Claude — 2026-11-20T05:03:43.711Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06; python3 -I -c \"\nfrom PIL import Image\nR='/home/user/rainbow-/qa/match/06/r23/'\nrows=[]\nfor f,box in [('d_late',(150,850,870,1350)),('f_hard_left',(0,700,720,1200)),('g_hard_right',(144,700,864,1200))]:\n  for d in ('step2_m06vs0/NEW','step3_m06rip/NEW'):\n    rows.append(Image.open(R+d+'/'+f+'.png').convert('RGB').crop(box))\nW=720;H=500\ns=Image.new('RGB',(W*2+6,H*3+12))\nfor i in range(3):\n  s.paste(rows[2*i],(0,i*(H+6))); s.paste(rows[2*i+1],(W+6,i*(H+6)))\ns.resize((s.width//2,s.heig …[+92 chars]`
+
+### 🧑 User — 2026-11-20T05:03:44.299Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T05:03:46.912Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/rip_cmp2.png"}`
+
+### 🧑 User — 2026-11-20T05:03:47.125Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T05:03:57.369Z
+
+In the late and hard-steering shots NEW looks the same as BEFORE. Let me measure where the two actually differ to see whether the decal is active there at all.
+
+### 🤖 Claude — 2026-11-20T05:03:59.828Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/tools-pixelmatch && for f in b_early b2_early c_middle c2_middle d_late e_end f_hard_left g_hard_right; do python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\nR='/home/user/rainbow-/qa/match/06/r23/'\na=np.asarray(Image.open(R+'step2_m06vs0/NEW/$f.png').convert('RGB')).astype(int)\nb=np.asarray(Image.open(R+'step3_m06rip/NEW/$f.png').convert('RGB')).astype(int)\nd=np.abs(a-b).max(axis=2)>30\nys,xs=np.nonzero(d)\nprint('$f', 'changed>30:', len(ys), 'bbox', (xs.min(),ys.min(),xs.max(),ys.max()) if len(ys) else None)\n\"; done", "description": "Measure where st …[+24 chars]`
+
+### 🧑 User — 2026-11-20T05:04:04.615Z
+
+> ↩︎ result: b_early changed>30: 242183 bbox (np.int64(0), np.int64(749), np.int64(863), np.int64(1535))
+> b2_early changed>30: 193618 bbox (np.int64(0), np.int64(928), np.int64(863), np.int64(1535))
+> c_middle changed>30: 89058 bbox (np.int64(0), np.int64(896), np.int64(863), np.int64(1535))
+> c2_middle changed>30: 184489 bbox (np.int64(0), np.int64(736), np.int64(863), np.int64(1535))
+> d_late changed>30: 163221 bbox (np.int64(0), np.int64(634), np.int64(863), np.int64(1499))
+> e_end changed>30: 212173 bbox (np.int64(0), np.int64(561), np.int64(863), np.int64(1535))
+> f_hard_left changed>30: 81522 bbox (np.int64(0), np.int64(1001), np.int64(863), np.int64(1535))
+> g_hard_right changed>30: 80029 bbox (np.int64(0), np.int64(871), np.int64(863), np.int64(1535))
+
+### 🤖 Claude — 2026-11-20T05:04:20.890Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 600,625p src/game/Game.ts | grep -n \"dirty\\|running\\|requestAnimationFrame\\|render()\" ; grep -n \"dirty\" src/game/Game.ts | head", "description": "Check QA-mode render loop behaviour"}`
+
+### 🧑 User — 2026-11-20T05:04:21.055Z
+
+> ↩︎ result: 8:    composer.render();
+> 15:    if (running) stepSim(dt);
+> 17:    if (!qaMode || running || dirty) { render(); dirty = false; }
+> 18:    requestAnimationFrame(frame);
+> 20:  requestAnimationFrame(frame);
+> 576:  let dirty = true;
+> 616:    if (!qaMode || running || dirty) { render(); dirty = false; }
+> 676:    dirty = false;
+
+### 🤖 Claude — 2026-11-20T05:04:25.278Z
+
+In QA mode the game renders only on request, so pinning the clock around the draw call makes shots repeatable. I'll add that to my audit copy and re-render step 3 BEFORE and NEW on the same clock.
+
+### 🤖 Claude — 2026-11-20T05:04:30.835Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='tools/match06/r23_audit.mjs'\ns=open(p).read()\nold=\"      r.drawList();\"\nnew=\"      // r23: the 06 river shader reads the wall clock (performance.now) — pinned for the draw so BEFORE / NEW water matches\\n      const _pn = performance.now; if (window.__pinNow) performance.now = () => window.__pinNow; r.drawList(); performance.now = _pn;\"\nassert old in s; s=s.replace(old,new)\nold2=\"  await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 300000 });\"\nnew2=old2+\"\\n  if (process.e …[+521 chars]`
+
+### 🧑 User — 2026-11-20T05:04:30.989Z
+
+> ↩︎ result: 26:  if (process.env.AUDIT_PIN) await page.evaluate((t) => { window.__pinNow = t; }, Number(process.env.AUDIT_PIN));
+> 38:      const _pn = performance.now; if (window.__pinNow) performance.now = () => window.__pinNow; r.drawList(); performance.now = _pn;
+> AUDIT_PIN=22000 AUDIT_PORT=$3 timeout 2400 node tools/match06/r23_audit.mjs "$2" 06 "$(cat $1)" > "$2.log" 2>&1
+
+### 🤖 Claude — 2026-11-20T05:04:40.033Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06; O=/home/user/rainbow-/qa/match/06/r23/step3_m06rip; rm -rf $O/NEW $O/NEW.log; $S/shots_pin.sh $S/q_s2_nr.txt $O/BEFORE 5282; $S/shots_pin.sh $S/q_s3_rip.txt $O/NEW 5282; grep -h done $O/BEFORE.log $O/NEW.log", "description": "Render pinned-clock BEFORE and NEW for step 3", "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T05:04:40.086Z
+
+> ↩︎ result: Command running in background with ID: brncymcrk. Output is being written to: /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/tasks/brncymcrk.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-20T05:04:45.121Z
+
+While those render, I'll queue the step 3 gameplay test and swim clip to start when the `m06view` reference clip frees port 5276.
+
+### 🤖 Claude — 2026-11-20T05:04:49.242Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06; O=/home/user/rainbow-/qa/match/06/r23/step3_m06rip; until [ -f /home/user/rainbow-/qa/match/06/r23/step1_m06fcl/with_m06view/swim_06_NEW.mp4 ]; do sleep 10; done; cd /home/user/wt/s06 && timeout 1500 node scripts/gameplay-test.mjs --q=\"$(cat $S/q_s3_rip.txt)\" --out=$O/gameplay_NEW.json > $O/gameplay_NEW.log 2>&1; python3 -I -c \"\nimport json\nd=json.load(open('$O/gameplay_NEW.json')); c=d['checks']\nprint('pass', d['pass'], sum(1 for v in c.values() if v.get('pass')), '/', len(c), c['realCo …[+203 chars]`
+
+### 🧑 User — 2026-11-20T05:04:49.510Z
+
+> ↩︎ result: Command running in background with ID: bloel60zr. Output is being written to: /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/tasks/bloel60zr.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-20T05:04:54.625Z
+
+> 🔧 **Monitor** `{"command": "O=/home/user/rainbow-/qa/match/06/r23; seen=\"\"; while true; do for f in step3_m06rip/BEFORE.log step3_m06rip/NEW.log; do if [ -f $O/$f ] && grep -q \"done\" $O/$f && ! echo \"$seen\" | grep -q \"$f\"; then echo \"$f finished: $(grep -h done $O/$f)\"; seen=\"$seen $f\"; fi; done; for m in step2_m06vs0/swim_06_NEW.mp4 step1_m06fcl/with_m06view/swim_06_NEW.mp4; do if [ -f $O/$m ] && ! echo \"$seen\" | grep -q \"$m\"; then echo \"clip ready: $m\"; seen=\"$seen $m\"; fi; done; n=$(echo $seen | wc -w); [ $n -ge 4 ] && exit 0; sleep 10; done", "description": "step 3 pinned shots and cl …[+39 chars]`
+
+### 🧑 User — 2026-11-20T05:04:54.778Z
+
+> ↩︎ result: Monitor started (task bfq54mbny, expires in 30m unless the source ends first; you get one notice at expiry — re-arm if you still need the watch). You will be notified on each event. Keep working — do not poll or sleep. Events may arrive while you are waiting for the user — an event is not their reply.
+
+### 🤖 Claude — 2026-11-20T05:04:58.595Z
+
+While waiting, I'll record the step 3 build in PROGRESS.md.
+
+### 🤖 Claude — 2026-11-20T05:05:07.068Z
+
+> 🔧 **Bash** `{"command": "date -u +%H:%M; python3 - <<'EOF'\np='/home/user/rainbow-/qa/match/06/r23/PROGRESS.md'\ns=open(p).read()\ns=s.replace(\"\"\"* ~05:05 UTC — Step 3 `&m06rip=1` (the painted ripple rings round Benny carried with him) BUILT (`src/world/match06.ts`,\n  1 line in `src/game/Game.ts`), `tsc` clean; rendering `qa/match/06/r23/step3_m06rip/NEW/`.\"\"\",\"\"\"* ~05:00 UTC — Step 3 `&m06rip=1` (the painted ripple rings round Benny carried with him) BUILT (`src/world/match06.ts`,\n  1 line in `src/game/Game.ts`), `tsc` clean. First NEW render was confounded by the river's flow animation (wall  …[+1768 chars]`
+
+### 🧑 User — 2026-11-20T05:05:07.824Z
+
+> ↩︎ result: 05:05
+> ok
+
+### 🤖 Claude — 2026-11-20T05:05:12.565Z
+
+> 🔧 **Monitor** `{"command": "L=/home/user/rainbow-/qa/match/06/r23/step3_m06rip/NEW.log; until [ -f $L ] && [ \"$(grep -c '^06' $L)\" -ge 3 ]; do sleep 10; done; echo \"step3 pinned NEW: 3 shots ready\"", "description": "first pinned step 3 NEW shots ready", "timeout_ms": 1800000}`
+
+### 🧑 User — 2026-11-20T05:05:12.716Z
+
+> ↩︎ result: Monitor started (task bnkgua8ta, expires in 30m unless the source ends first; you get one notice at expiry — re-arm if you still need the watch). You will be notified on each event. Keep working — do not poll or sleep. Events may arrive while you are waiting for the user — an event is not their reply.
+
+### 🤖 Claude — 2026-11-20T05:05:15.829Z
+
+> 🔧 **Bash** `{"command": "echo waiting", "description": "Idle until monitor events arrive"}`
+
+### 🧑 User — 2026-11-20T05:05:15.924Z
+
+> ↩︎ result: waiting
+
+### 🤖 Claude — 2026-11-20T05:05:27.216Z
+
+> 🔧 **Bash** `{"command": "L=/home/user/rainbow-/qa/match/06/r23/step3_m06rip/NEW.log; timeout 900 bash -c \"until [ -f $L ] && [ \\$(grep -c '^06' $L) -ge 3 ]; do sleep 5; done\"; grep -h \"^06\" $L | tail -3", "description": "Wait for first pinned step 3 shots", "timeout": 960000}`
+

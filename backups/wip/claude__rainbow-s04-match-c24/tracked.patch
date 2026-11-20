@@ -32,7 +32,7 @@ index 65c878c..a20f48e 100644
        if (mvViews.length && camera) {
          const cp = camera.getWorldPosition(_cp);
 diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
-index 2b62a35..1ed89ca 100644
+index 2b62a35..002f589 100644
 --- a/src/world/match04m4.ts
 +++ b/src/world/match04m4.ts
 @@ -120,6 +120,15 @@ uniform float uRVar;       // r17 m04rpvar: number of painted rings stacked in t
@@ -803,7 +803,7 @@ index 2b62a35..1ed89ca 100644
    let arrA = 0;
    if (M04.arr3d) {
      const hw = M04.num('m04a3w', 1.15), th = M04.num('m04a3t', 0.42), drop = M04.num('m04a3d', 0.95);
-@@ -1802,17 +2292,18 @@ export function addM04(ctx: M04Ctx) {
+@@ -1802,20 +2292,73 @@ export function addM04(ctx: M04Ctx) {
        m.renderOrder = 5; g.renderOrder = coreT && lum > 0 ? 6 : 4; m.name = 'm04_arrow3d'; g.name = 'm04_arrow3d_glow';   // luminous layer on top
        m.visible = g.visible = false;                                     // invisible during the projector depth bake
        group.add(g); group.add(m);
@@ -816,6 +816,53 @@ index 2b62a35..1ed89ca 100644
    }
  
 -  out.update = (cam: THREE.Vector3, benny?: THREE.Vector3) => {
++  // r23 `&m04wl=1`: Benny sits IN the water like the painting (r23 brief task 1: "not perched on top"). A short open water
++  // collar round him in the lane frame (follows him, also when he steers): translucent river-cyan below, a neat broken white
++  // spray crest on top. Its near half covers his lowest band (the water wraps his round bottom), its far half shows only
++  // beside him as the white splash ring (his body hides the rest). m04wlr radius, m04wlh height, m04wly base (lane y),
++  // m04wlz length stretch along the flow, m04wla water opacity, m04wlf crest strength. Benny himself is not moved / scaled.
++  let wlMesh: THREE.Mesh | null = null;
++  if (M04.num('m04wl', 0) > 0) {
++    const R = M04.num('m04wlr', 0.95), H = M04.num('m04wlh', 0.45);
++    const geo = new THREE.CylinderGeometry(R, R, H, 72, 8, true).translate(0, H / 2, 0);
++    geo.scale(1, 1, M04.num('m04wlz', 1.15));
++    wlMesh = new THREE.Mesh(geo, new THREE.ShaderMaterial({
++      transparent: true, depthWrite: false, side: THREE.DoubleSide, fog: false,
++      uniforms: { uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uTime: time, uH: { value: H },
++        uA: { value: M04.num('m04wla', 0.8) }, uF: { value: M04.num('m04wlf', 1.0) }, uK: { value: 0 } },
++      vertexShader: /* glsl */ `
++varying vec3 vP;
++void main() { vP = position; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
++      fragmentShader: /* glsl */ `
++uniform vec4 uPjPost; uniform vec2 uPjRes; uniform float uTime, uH, uA, uF, uK;
++varying vec3 vP;
++${PROJ05_INVERSE}
++float h21(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
++float vn(vec2 p) { vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f);
++  return mix(mix(h21(i), h21(i + vec2(1, 0)), f.x), mix(h21(i + vec2(0, 1)), h21(i + vec2(1, 1)), f.x), f.y); }
++void main() {
++  float h = clamp(vP.y / uH, 0.0, 1.0);
++  float a = atan(vP.x, vP.z);                                   // around Benny (0 = toward the camera / upstream side)
++  float t = uTime;
++  float n = vn(vec2(a * 9.0, t * 1.7)) * 0.65 + vn(vec2(a * 23.0 + 3.1, t * 3.1)) * 0.35;
++  float top = 0.70 + 0.22 * (n - 0.5);                          // broken crest line
++  float crest = smoothstep(top - 0.22, top, h) * (1.0 - smoothstep(top + 0.02, top + 0.20, h + 0.10 * vn(vec2(a * 41.0, h * 9.0 - t * 4.0))));
++  float drops = step(0.82, vn(vec2(a * 55.0, h * 14.0 - t * 6.0))) * smoothstep(top, top + 0.15, h) * (1.0 - smoothstep(0.9, 1.0, h));
++  // the water body: electric cyan with moving white streaks, fading out just under the crest
++  float st = smoothstep(0.62, 0.95, vn(vec2(a * 7.0 + t * 0.8, h * 3.0 - t * 1.4)));
++  vec3 water = mix(vec3(0.07, 0.68, 1.0), vec3(0.62, 0.92, 1.0), 0.55 * st);
++  float aw = uA * (1.0 - smoothstep(top - 0.30, top - 0.04, h));
++  float foam = clamp(crest * uF + drops * 0.8, 0.0, 1.0);
++  vec3 col = mix(water, vec3(0.97, 0.99, 1.0), foam);
++  float alpha = max(aw, foam * 0.95) * uK;
++  if (alpha < 0.01) discard;
++  gl_FragColor = vec4(pjInverse(col), alpha);
++}`,
++    }));
++    wlMesh.name = 'm04_waterline'; wlMesh.renderOrder = 5; wlMesh.frustumCulled = false; wlMesh.visible = false;
++    group.add(wlMesh);
++  }
++
 +  out.update = (cam: THREE.Vector3, benny?: THREE.Vector3, camera?: THREE.Camera) => {
      time.value = performance.now() / 1000;
      a5b.z = -cam.clone().applyMatrix4(MwInv).z;   // camera position down the slide (local along)
@@ -824,7 +871,15 @@ index 2b62a35..1ed89ca 100644
      away.value = THREE.MathUtils.smoothstep(cam.distanceTo(proj.position), fade, fade1);
      const a2 = THREE.MathUtils.smoothstep(cam.distanceTo(proj.position), 0.4, 1.6);
      for (const u of updaters) u(a2);
-@@ -1825,12 +2316,41 @@ export function addM04(ctx: M04Ctx) {
++    if (wlMesh) {                                                       // r23 m04wl: gone at the approved start view (0 px there)
++      const wu = (wlMesh.material as THREE.ShaderMaterial).uniforms;
++      wu.uK.value = a2; wlMesh.visible = !!benny && a2 > 0.01;
++      if (benny) { const bl = benny.clone().applyMatrix4(MwInv); wlMesh.position.set(bl.x, M04.num('m04wly', 0.0), bl.z); }
++    }
+     if (arrowsOut.length) {
+       const cz = -a5b.z;                                                // camera local z (forward = -z)
+       // r13: fade window ahead of the camera (Benny swims ≈ 6.4 u ahead of it on 04: m04a3n0/n1 ≈ 6.5/8.5 makes every
+@@ -1825,12 +2368,41 @@ export function addM04(ctx: M04Ctx) {
        const go = M04.num('m04a3o', 0.55);
        const b0 = M04.num('m04a3b0', 1.6), b1 = M04.num('m04a3b1', 3.0);
        const bz = M04.num('m04a3b', 0) > 0 && benny ? benny.clone().applyMatrix4(MwInv).z : null;   // Benny's local z (same frame as cz)

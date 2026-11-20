@@ -4,8 +4,9 @@
 * ~04:48 UTC — Step 1 (r22 step 3 `&m06fcl=1`, low foam heaps) DONE: **GOOD IMPROVEMENT** (see below; clips being encoded).
 * ~05:00 UTC — Step 2 (`&m06view=1&m06vs=0`, off-centre ring tunnel held through the first second) DONE: **GOOD
   IMPROVEMENT** as a camera-framing TEST (user decides; not in the kept set). Clip `swim_06_NEW.mp4` being recorded.
-* ~05:05 UTC — Step 3 `&m06rip=1` (the painted ripple rings round Benny carried with him) BUILT (`src/world/match06.ts`,
-  1 line in `src/game/Game.ts`), `tsc` clean; rendering `qa/match/06/r23/step3_m06rip/NEW/`.
+* ~05:00 UTC — Step 3 `&m06rip=1` (the painted ripple rings round Benny carried with him) BUILT (`src/world/match06.ts`,
+  1 line in `src/game/Game.ts`), `tsc` clean. First NEW render was confounded by the river's flow animation (wall clock,
+  differs per run) → re-rendering BEFORE / NEW with the water clock pinned (`AUDIT_PIN=22000`, `tools/match06/r23_audit.mjs`).
 * The machine is heavily loaded (other workers): shots ~5 min, each 4.8 s clip ~20–25 min.
 
 K6 = `match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1`
@@ -70,6 +71,20 @@ r23 BEFORE base = K6 + `&m06st=1` (r22 step 2, small GOOD IMPROVEMENT, lead revi
 * Still different: at the crest top the river beyond the crest is hidden for a moment (only the coin line on the right shows
   the way); from ~47 % on the rings drift back toward a target near the top centre (the game river turns right off the
   painted tunnel there), and the end (85 %) is unchanged; steering hard early still cuts Benny at the screen edge (as BEFORE).
+
+## Step 3 — `&m06rip=1`: the painted ripple rings round Benny, carried with him (built ~05:00 UTC)
+* Why: in the painting Benny sits in white-cyan concentric ripple rings with a lacy splash collar and bright streaks behind
+  him. While swimming the game shows none of it (the projection pins the painted rings to the checkpoint; the flowing river
+  material has no rings; only the game's white spray remains).
+* How (no new asset, no paid job): at load, the approved plate (`plate06_hybrid.png`, the user's pixels) is re-sampled in the
+  river's own coordinates round the approved Benny (lateral ±1.45 u, 2.4 u behind to 1.3 u ahead, exactly the river surface
+  the projector painted at the checkpoint); where the painted Benny's body was filled (`plate06_fillmask.png`, dilated) it is
+  transparent; the painted soap bubbles next to the rings are cut out (5 circles) and the foam heaps stay outside the width, so
+  nothing looks glued to Benny. This decal rides with Benny on the river (lateral + distance), water only, soft rim, two copies
+  drifting slowly outward (cross-faded) so the rings spread; it fades in only once the camera has left the approved viewpoint
+  (start view unchanged). Tunables: `m06ripl` (half width), `m06ripd=a,b` (behind, ahead), `m06ripk` (strength),
+  `m06ripx` (outward drift, 0 = still). Debug dump: `tools/match06/r23_ripdump.mjs`.
+* BEFORE = step 2 NEW (`…&m06view=1&m06vs=0`); NEW = BEFORE + `&m06rip=1`.
 
 ---
 ## (r22, copied from `/home/user/wt/s06/qa/match/06/r22/PROGRESS.md`) WHERE I STOPPED / NEXT

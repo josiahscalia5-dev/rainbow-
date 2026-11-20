@@ -864,3 +864,227 @@ The chevrons now read clearly ahead of him. Benny still looks perched: his whole
 
 > 🔧 **Bash** `{"command": "cat > /home/user/rainbow-/qa/match/04/r23/s04_tools/probe_waterline.mjs <<'EOF'\n// r23 s04 (QA only, read-only): where the river surface is relative to Benny's root, his body size in his own frame, and the\n// Screen 04 lane frame. cd /home/user/wt/s04 && AUDIT_PORT=5274 node <this> \"<query>\"\nimport { pathToFileURL } from 'node:url';\nconst { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);\nconst [Q] = process.argv.slice(2);\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(Number(process …[+2934 chars]`
 
+### 🧑 User — 2026-11-20T05:02:49.509Z
+
+> ↩︎ result: 0.12 {"s":82.08,"root":[1.99,-24,-28.91],"bennyRelY":[-0.827,1.251],"riverHitRelY":null,"river":["m04_river"],"hasTHREE":false,"group":[1,0,0,0,0,0.848,-0.53,0,0,0.53,0.848,0,2,-22.173,-24.564,1]}
+> 0.35 {"s":90.48,"root":[2,-28.46,-36.03],"bennyRelY":[-0.836,1.283],"riverHitRelY":null,"river":["m04_river"],"hasTHREE":false,"group":[1,0,0,0,0,0.848,-0.53,0,0,0.53,0.848,0,2,-22.173,-24.564,1]}
+> 0.6 {"s":99.813,"root":[2,-33.41,-43.94],"bennyRelY":[-0.818,1.244],"riverHitRelY":null,"river":["m04_river"],"hasTHREE":false,"group":[1,0,0,0,0,0.848,-0.53,0,0,0.53,0.848,0,2,-22.173,-24.564,1]}
+> 0.85 {"s":109.146,"root":[2,-38.14,-51.95],"bennyRelY":[-0.836,1.327],"riverHitRelY":null,"river":["m04_river"],"hasTHREE":false,"group":[1,0,0,0,0,0.848,-0.53,0,0,0.53,0.848,0,2,-22.173,-24.564,1]}
+
+### 🤖 Claude — 2026-11-20T05:03:21.179Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"const time\\b\\|const time =\\|tonemapping_fragment\\|colorspace_fragment\\|toneMapped\" src/world/match04m4.ts | head -20; grep -n \"export function\\|^const PROJ05_INVERSE\\|import \" src/world/match04m4.ts | head -20; python3 -c \"\nfrom PIL import Image\nim=Image.open('/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s1/V8/c_middle.png').convert('RGB')\nfor p in [(300,1290),(540,1290),(420,1320),(420,1400),(250,1200),(600,1200)]: print(p, im.getpixel(p))\"", "description": "Check shader conventions and sample w …[+25 chars]`
+
+### 🧑 User — 2026-11-20T05:03:22.093Z
+
+> ↩︎ result: 1676:  const time = { value: 0 };
+> 2266:      texMat = new THREE.MeshBasicMaterial({ map: ct, transparent: true, depthWrite: false, toneMapped: false, side: THREE.DoubleSide });
+> 2277:      const core = new THREE.MeshBasicMaterial({ color: coreC, transparent: true, depthWrite: false, toneMapped: false, side: THREE.DoubleSide });
+> 2281:      const glow = new THREE.MeshBasicMaterial({ color: hb ? new THREE.Color(0.02, 0.50, 1.0) : glowC, transparent: true, depthWrite: false, toneMapped: false, side: THREE.DoubleSide, blending: hb ? THREE.NormalBlending : THREE.AdditiveBlending });
+> 27:import * as THREE from 'three';
+> 28:import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+> 29:import { PROJ05_INVERSE } from '../vfx/waterRibbon';
+> 1402:export function addM04(ctx: M04Ctx) {
+> (300, 1290) (19, 155, 255)
+> (540, 1290) (27, 205, 255)
+> (420, 1320) (22, 186, 255)
+> (420, 1400) (14, 157, 255)
+> (250, 1200) (226, 217, 248)
+> (600, 1200) (26, 196, 252)
+
+### 🤖 Claude — 2026-11-20T05:03:25.475Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"pjInverse\\|gl_FragColor\" src/world/match04m4.ts | head -30; sed -n 1670,1680p src/world/match04m4.ts", "description": "See how river shaders output colour"}`
+
+### 🧑 User — 2026-11-20T05:03:25.744Z
+
+> ↩︎ result: 83:// polished gold, art-directed in DISPLAY colours measured on the approved picture (then pjInverse like the plate):
+> 731:  gl_FragColor = vec4(pjInverse(col), 1.0);
+> 738:    gl_FragColor = vec4(dc, 1.0);
+> 1170:  gl_FragColor = vec4(pjInverse(col), alpha);
+> 1248:  gl_FragColor = vec4(pjInverse(col), 1.0);
+> 1292:  gl_FragColor = vec4(pjInverse(col), clamp(alpha, 0.0, 1.0) * uAlpha * vF);
+> 1319:  gl_FragColor = vec4(pjInverse(clamp(col, 0.0, 1.0)), 1.0);
+> 1364:  gl_FragColor = vec4(pjInverse(clamp(col, 0.0, 1.0)), a);
+> 1387:  gl_FragColor = vec4(pjInverse(col), a * uAlpha * vF);
+>   }
+> 
+>   // `m04river`: the wide painted river trough inside the tunnel (world-anchored, replaces the flat ramp there)
+>   const RY = M04.num('m04ry', 1.0);                         // how high the river sides climb the wall (u above the water)
+>   const XF = M04.num('m04xf', 1.9);                         // half width of the flat centre lane (Benny's steering room)
+>   const xW = Math.sqrt(Math.max(0, (r + 0.08) ** 2 - (cy - RY) ** 2)); // where the river side meets the wall
+>   const time = { value: 0 };
+>   if (endCap && M04.num('m04end', 0) > 0) {
+>     // r16 `&m04end=1`: the distant glowing opening (END_FRAG): m04eg glow po …[+312 chars]
+
+### 🤖 Claude — 2026-11-20T05:03:29.464Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/src/world/match04m4.ts", "offset": 1252, "limit": 45}`
+
+### 🧑 User — 2026-11-20T05:03:29.622Z
+
+> ↩︎ result: 1252	const SPRITE_VERT = /* glsl */ `
+> 1253	attribute vec4 aB;          // xyz world centre, w radius
+> 1254	attribute float aS;         // seed
+> 1255	uniform vec2 uNear;         // fade sprites out this close to the camera (no giant discs in the face)
+> 1256	varying vec2 vUv;
+> 1257	varying float vS;
+> 1258	varying float vF;
+> 1259	void main() {
+> 1260	  vUv = uv * 2.0 - 1.0;
+> 1261	  vS = aS;
+> 1262	  vec4 mv = viewMatrix * vec4(aB.xyz, 1.0);
+> 1263	  vF = smoothstep(uNear.x, uNear.y, -mv.z);
+> 1264	#ifdef SHRINK
+> 1265	  // r15 m04fclu: foam bubbles shrink away as they near the camera (no pale puff popping in the screen corners)
+> 1266	  mv.xy += position.xy * aB.w * 2.0 * vF;
+> 1267	#else
+> 1268	  mv.xy += position.xy * aB.w * 2.0;
+> 1269	#endif
+> 1270	  gl_Position = projectionMatrix * mv;
+> 1271	}`;
+> 1272	const BUB_FRAG = /* glsl */ `
+> 1273	uniform vec4 uPjPost;
+> 1274	uniform vec2 uPjRes;
+> 1275	uniform float uAlpha;
+> 1276	varying vec2 vUv;
+> 1277	varying float vS;
+> 1278	varying float vF;
+> 1279	${PROJ05_INVERSE}
+> 1280	void main() {
+> 1281	  float r = length(vUv);
+> 1282	  if (r > 1.0) discard;
+> 1283	  // soap bubble: clear centre, iridescent rim (pink -> violet -> cyan around it), white window highlight
+> 1284	  float rim = smoo …[+635 chars]
+
+### 🤖 Claude — 2026-11-20T05:03:32.232Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"uPjPost:\" src/world/match04m4.ts | head -5; grep -n \"const sprites\\|function sprites\" src/world/match04m4.ts", "description": "Find uniform sharing for pjInverse in addM04"}`
+
+### 🧑 User — 2026-11-20T05:03:32.536Z
+
+> ↩︎ result: 1425:      uniforms: { uPlate: shared.uPlate, uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uProjVP: shared.uProjVP,
+> 1682:      uniforms: { uPlate: shared.uPlate, uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uProjVP: shared.uProjVP, uAway: away, uTime: time,
+> 1772:      uniforms: { uPlate: shared.uPlate, uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uProjVP: shared.uProjVP, uAway: away,
+> 1861:      uniforms: { uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uAlpha: alpha, uNear: { value: new THREE.Vector2(near[0], near[1]) } } });
+> 1850:  const sprites = (items: { p: THREE.Vector3; r: number; s: number }[], frag: string, name: string, order: number, opaque = false, near = [1.2, 2.6]) => {
+
+### 🤖 Claude — 2026-11-20T05:04:02.518Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04/src/world/match04m4.ts", "old_string": "  out.update = (cam: THREE.Vector3, benny?: THREE.Vector3, camera?: THREE.Camera) => {\n    time.value = performance.now() / 1000;", "new_string": "  // r23 `&m04wl=1`: Benny sits IN the water like the painting (r23 brief task 1: \"not perched on top\"). A short open water\n  // collar round him in the lane frame (follows him, also when he steers): translucent river-cyan below, a neat broken white\n  // spray crest on top. Its near half covers his lowest band (the water wraps his round bottom), its f …[+3148 chars]`
+
+### 🧑 User — 2026-11-20T05:04:02.578Z
+
+> ↩︎ result: The file /home/user/wt/s04/src/world/match04m4.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T05:04:08.094Z
+
+The start view must stay identical, so the collar has to fade in only once the camera leaves the approved viewpoint (like the 3D chevrons). Let me wire that.
+
+### 🤖 Claude — 2026-11-20T05:04:13.959Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='src/world/match04m4.ts'; s=open(p).read()\nold=\"\"\"    if (wlMesh) {\n      wlMesh.visible = !!benny;\n      if (benny) { const bl = benny.clone().applyMatrix4(MwInv); wlMesh.position.set(bl.x, M04.num('m04wly', 0.0), bl.z); }\n    }\n\"\"\"\nassert s.count(old)==1; s=s.replace(old,\"\")\nold2=\"\"\"    for (const u of updaters) u(a2);\n\"\"\"\nassert s.count(old2)==1\ns=s.replace(old2, old2+\"\"\"    if (wlMesh) {                                                       // r23 m04wl: gone at the approved start view (0 px there)\n       …[+1008 chars]`
+
+### 🧑 User — 2026-11-20T05:04:23.096Z
+
+> ↩︎ result: 891:  float ext = abs(vS) - uWU3.x, wuE = 0.0, wuK = 0.0;
+> 899:    wuK = clamp(vC, 0.0, 1.0);                                            // ramped in from the opening
+> 900:    wuE = uWU.x * env * (1.0 - uWU.z * (1.0 - tg)) * wuK;
+> 914:    float ew = uEdge.z * mix(1.0, 0.45, wuK);                             // r19b m04wup: a narrower lace on the climbing crest
+> 920:    fringe = uEdge.w * e * patchy * mix(1.0, uWU3.z, wuK);
+> 1011:      float bq = mix(1.0, uWU.w, wuK);
+> 1012:      float tq = mix(1.0, 1.0 - uWU3.w / max(uSB1.z, 0.05), wuK);          // the crest stays pink-violet (not the lilac column)
+> 1042:    float kc = smoothstep(-0.3, 0.1, ext) * wuK;
+> 1075:    float kc = smoothstep(-0.75, -0.2, ext) * wuK;
+> 1116:      bc = mix(bc, vec3(1.0, 0.90, 0.99), uWG2.y * (ext > 0.0 ? smoothstep(0.55, 0.95, wuK) : 0.0) * (1.0 - smoothstep(0.0, 0.025 + pt, abs(dTop - 0.07))) * min(1.0, 0.05 / pt));
+
+### 🤖 Claude — 2026-11-20T05:04:25.362Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"uK\\b\\|uK\\.\" src/world/match04m4.ts | head; timeout 300 npx tsc --noEmit; echo tsc=$?", "description": "Verify uK edits and run TypeScript check", "timeout": 320000}`
+
+### 🧑 User — 2026-11-20T05:04:35.412Z
+
+> ↩︎ result: 891:  float ext = abs(vS) - uWU3.x, wuE = 0.0, wuK = 0.0;
+> 899:    wuK = clamp(vC, 0.0, 1.0);                                            // ramped in from the opening
+> 900:    wuE = uWU.x * env * (1.0 - uWU.z * (1.0 - tg)) * wuK;
+> 914:    float ew = uEdge.z * mix(1.0, 0.45, wuK);                             // r19b m04wup: a narrower lace on the climbing crest
+> 920:    fringe = uEdge.w * e * patchy * mix(1.0, uWU3.z, wuK);
+> 1011:      float bq = mix(1.0, uWU.w, wuK);
+> 1012:      float tq = mix(1.0, 1.0 - uWU3.w / max(uSB1.z, 0.05), wuK);          // the crest stays pink-violet (not the lilac column)
+> 1042:    float kc = smoothstep(-0.3, 0.1, ext) * wuK;
+> 1075:    float kc = smoothstep(-0.75, -0.2, ext) * wuK;
+> 1116:      bc = mix(bc, vec3(1.0, 0.90, 0.99), uWG2.y * (ext > 0.0 ? smoothstep(0.55, 0.95, wuK) : 0.0) * (1.0 - smoothstep(0.0, 0.025 + pt, abs(dTop - 0.07))) * min(1.0, 0.05 / pt));
+> tsc=0
+
+### 🤖 Claude — 2026-11-20T05:04:39.139Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"m04wl\\|wu.uK\\|uK: \\|, uK;\\|\\* uK\" src/world/match04m4.ts", "description": "Verify waterline collar code is present"}`
+
+### 🧑 User — 2026-11-20T05:04:39.222Z
+
+> ↩︎ result: 2302:  // r23 `&m04wl=1`: Benny sits IN the water like the painting (r23 brief task 1: "not perched on top"). A short open water
+> 2305:  // beside him as the white splash ring (his body hides the rest). m04wlr radius, m04wlh height, m04wly base (lane y),
+> 2306:  // m04wlz length stretch along the flow, m04wla water opacity, m04wlf crest strength. Benny himself is not moved / scaled.
+> 2308:  if (M04.num('m04wl', 0) > 0) {
+> 2309:    const R = M04.num('m04wlr', 0.95), H = M04.num('m04wlh', 0.45);
+> 2311:    geo.scale(1, 1, M04.num('m04wlz', 1.15));
+> 2315:        uA: { value: M04.num('m04wla', 0.8) }, uF: { value: M04.num('m04wlf', 1.0) }, uK: { value: 0 } },
+> 2320:uniform vec4 uPjPost; uniform vec2 uPjRes; uniform float uTime, uH, uA, uF, uK;
+> 2340:  float alpha = max(aw, foam * 0.95) * uK;
+> 2357:    if (wlMesh) {                                                       // r23 m04wl: gone at the approved start view (0 px there)
+> 2359:      wu.uK.value = a2; wlMesh.visible = !!benny && a2 > 0.01;
+> 2360:      if (benny) { const bl = benny.clone().applyMatrix4(MwInv); wlMesh.position.set(bl.x, M04.num('m04wly', 0.0), bl.z); }
+
+### 🤖 Claude — 2026-11-20T05:04:41.379Z
+
+Now render V8 + the collar (two settings) at middle, late and hard right.
+
+### 🤖 Claude — 2026-11-20T05:04:46.095Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad; V=/home/user/rainbow-/qa/match/04/r23/s04_tools/variant.sh\nA=\"m04a3sc=1&m04a3sy=2.1&m04a3sr=0.9&m04a3s0=-0.005&m04a3s1=0.03&m04a3sx=0.02&m04a3d=0.6&m04a3t=0.4&m04a3w=1.5&m04a3p=6.5&m04a3k=60&m04a3fl=26&m04a3f0=50&m04a3f1=58\"\necho \"$A\" > $S/s1/A8.txt\nexport SHOTS='[[\"c_middle\",0.35,null],[\"d_late\",0.6,null],[\"g_hard_right\",0.35,1]]'\n( $V $S/s1/W1 5273 \"$A&m04wl=1\" & $V $S/s1/W2 5274 \"$A&m04wl=1&m04wly=0.1&m04wlh=0.55&m04wlr=0.9\" & wait )\nfor sh in c_middle d_late g_hard_right; do …[+217 chars]`
+
+### 🧑 User — 2026-11-20T05:06:29.978Z
+
+> ↩︎ result: Exit code 1
+> done /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s1/W1 3 png
+> done /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s1/W2 3 png
+> Traceback (most recent call last):
+>   File "/home/user/rainbow-/qa/match/04/r23/s04_tools/strip.py", line 9, in <module>
+>     ims.append(Image.open(p).convert('RGB').crop(box))
+>                ~~~~~~~~~~^^^
+>   File "/usr/local/lib/python3.13/site-packages/PIL/Image.py", line 3656, in open
+>     fp = builtins.open(filename, "rb")
+> FileNotFoundError: [Errno 2] No such file or directory: '/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s1/V8/g_hard_right.png'
+
+### 🤖 Claude — 2026-11-20T05:06:32.602Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad; B=/home/user/rainbow-/qa/match/04/r23/s04_BEFORE_K23-1\nfor sh in c_middle d_late g_hard_right; do python3 /home/user/rainbow-/qa/match/04/r23/s04_tools/strip.py $S/strip_$sh.png $sh 150,900,720,1420 $B $S/s1/W1 $S/s1/W2; done", "description": "Build strips with BEFORE instead of V8"}`
+
+### 🧑 User — 2026-11-20T05:06:34.355Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T05:06:37.086Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/strip_c_middle.png"}`
+
+### 🧑 User — 2026-11-20T05:06:37.105Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T05:06:37.703Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/strip_g_hard_right.png"}`
+
+### 🧑 User — 2026-11-20T05:06:37.782Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T05:07:09.091Z
+
+> 🔧 **Bash** `{"command": "cat > /home/user/rainbow-/qa/match/04/r23/s04_tools/probe_lane.mjs <<'EOF'\n// r23 s04 (QA only, read-only): river surface height (lane-local y) near Benny and Benny's body extent in the lane frame.\nimport { pathToFileURL } from 'node:url';\nconst { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);\nconst [Q] = process.argv.slice(2);\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(Number(process.env.AUDIT_PORT ?? 5274));\nconst browser = await chromium.launch({ args: CHROMIUM_ARGS });\ntry { …[+2853 chars]`
+
+### 🧑 User — 2026-11-20T05:07:35.327Z
+
+> ↩︎ result: {"bl":[0,0.746,-13.057],"riverProfile":[[-3.5,0.635],[-3,0.145],[-2.5,0.02],[-2,0.02],[-1.5,0.02],[-1,0.02],[-0.5,0.02],[0,0.02],[0.5,0.02],[1,0.02],[1.5,0.02],[2,0.02],[2.5,0.056],[3,0.485]],"bennyY":[-0.08,2.285],"bands":[[-0.1,0.46],[0,0.54],[0.1,0.61],[0.2,0.64],[0.3,0.63],[0.4,0.68],[0.5,0.73],[0.6,0.77],[0.7,1.01],[0.8,1.03],[0.9,1.03],[1,0.98],[1.1,0.85],[1.2,0.86],[1.3,0.83],[1.4,0.82],[1.5,0.78]],"riverName":"m04_river","grpName":"match04_projection"}
+

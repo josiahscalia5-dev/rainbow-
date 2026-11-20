@@ -23,6 +23,7 @@ try {
   page.on('console', (m) => { if (m.type() === 'error' && /Shader|WebGL|rror/.test(m.text())) console.error('console', m.text().slice(0, 160)); });
   await page.goto(`${vite.url}/?qa=1&dpr=1&${Q}`);
   await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 300000 });
+  if (process.env.AUDIT_PIN) await page.evaluate((t) => { window.__pinNow = t; }, Number(process.env.AUDIT_PIN));
   for (const [name, frac, steer] of SHOTS) {
     const st = await page.evaluate(async ([stage, frac, steer]) => {
       const r = window.__rainbow;
@@ -33,7 +34,8 @@ try {
       let k = 0; while (r.state().s < tS && k < 6000) { r.step(1); k++; }
       r.setSteer(null);
       r.freezeAt(10);
-      r.drawList();
+      // r23: the 06 river shader reads the wall clock (performance.now) — pinned for the draw so BEFORE / NEW water matches
+      const _pn = performance.now; if (window.__pinNow) performance.now = () => window.__pinNow; r.drawList(); performance.now = _pn;
       await new Promise((res) => requestAnimationFrame(() => res()));
       return { ...r.state(), s0, s1 };
     }, [STAGE, frac, steer]);
