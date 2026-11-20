@@ -104,6 +104,8 @@ uniform float uPanel;
 // walls + rings fade into the painted deep-tunnel purple uHazeCol with camera distance (the painting shows ~6 rings, then dark purple);
 // uDbgFlat (QA) = flat purple walls
 uniform float uTSwap;
+// Opt-in tunnel-wall crop: low U, high U, repeat multiplier, enabled. Other materials keep it off.
+uniform vec4 uWallCrop;
 uniform vec4 uHaze;
 uniform vec3 uHazeCol;
 uniform float uDbgFlat;
@@ -169,7 +171,13 @@ void main() {
   // ring-structured tile in the surface's own coordinates (mirrored repeat: no seams)
   vec3 pc = texture2D(uTile, vTile).rgb;
   if (uTSwap > 0.5 && uFloor < 0.5 && uRing < 0.5) {
-    vec2 tc = vTile; float mr = abs(fract(tc.x * 0.5) * 2.0 - 1.0); tc.x = 0.18 + 0.70 * mr;
+    vec2 tc = vTile;
+    if (uWallCrop.w > 0.5) {
+      float mr = abs(fract(tc.x * uWallCrop.z * 0.5) * 2.0 - 1.0);
+      tc.x = mix(uWallCrop.x, uWallCrop.y, mr);
+    } else {
+      float mr = abs(fract(tc.x * 0.5) * 2.0 - 1.0); tc.x = 0.18 + 0.70 * mr;
+    }
     pc = texture2D(uTile, tc).rgb;
   }
   if (uDbgFlat > 0.5 && uFloor < 0.5 && uRing < 0.5) pc = vec3(0.45, 0.22, 0.55);
@@ -513,6 +521,17 @@ void main() {
 
 const tex = (f: string) => new URL(`../../assets/textures/match06/${f}`, import.meta.url).href;
 
+/** Parse m06wallcrop=lo,hi. Missing/invalid input keeps the existing crop; valid input preserves UV density. */
+export function wallCrop06Params(raw: string | null): THREE.Vector4 {
+  const disabled = () => new THREE.Vector4(0.18, 0.88, 1, 0);
+  if (raw === null) return disabled();
+  const parts = raw.split(',').map((part) => part.trim());
+  if (parts.length !== 2 || parts.some((part) => part === '')) return disabled();
+  const [lo, hi] = parts.map(Number);
+  if (!Number.isFinite(lo) || !Number.isFinite(hi) || lo < 0 || hi > 1 || hi - lo < 0.05 - Number.EPSILON) return disabled();
+  return new THREE.Vector4(lo, hi, 0.70 / (hi - lo), 1);
+}
+
 export async function buildMatch06(course: Course): Promise<Match06> {
   const L: Layout06 = await fetch(tex('proj06.json')).then((r) => r.json());
   // r29 `&m06deep=1` (lead; src/world/course.ts m06deepShift, assets/textures/match06/route06deep.json): the course river follows the
@@ -524,6 +543,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
   // fade into the painted deep purple, `&m06tdbg=norings|flatwall` QA views (qa/match/06/r29/rings/)
   const QS0 = typeof location !== 'undefined' ? new URLSearchParams(location.search) : null;
   const TSWAP = QS0?.get('m06tswap') === '1', TCROP = TSWAP || QS0?.get('m06tswap') === '2', TDBG = QS0?.get('m06tdbg') ?? ''; // '2' = keep the mapping, drop the painted gold stripes
+  const WALL_CROP = wallCrop06Params(QS0?.get('m06wallcrop') ?? null);
   const hz = (QS0?.get('m06haze') ?? '').split(',').map(Number);
   const pw = (QS0?.get('m06projw') ?? '').split(',').map(Number);
   const PROJW = TDBG === 'noproj' ? new THREE.Vector2(0.01, 0.02) : pw.length === 2 && pw.every(Number.isFinite) && pw[1] > pw[0] ? new THREE.Vector2(pw[0], pw[1]) : new THREE.Vector2(1e4, 2e4);
@@ -609,7 +629,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
       uFloor: { value: floor ? 1 : 0 }, uUseMask: { value: mask ? 1 : 0 }, uStM: { value: floor ? 0 : 1 },
       uGeo: { value: GEO ? 1 : 0 }, uR6: { value: FLOW ? 1 : 0 }, uR6p: { value: r6p },
       uRiver: { value: tRiver ?? tile }, uFoam: { value: tFoam ?? tile },
-      uTSwap: { value: TCROP ? 1 : 0 }, uHaze: { value: HAZE.clone() }, uHazeCol: { value: new THREE.Vector3(0.52, 0.22, 0.44) }, uDbgFlat: { value: TDBG === 'flatwall' ? 1 : 0 }, uProjW: { value: PROJW.clone() },
+      uTSwap: { value: TCROP ? 1 : 0 }, uWallCrop: { value: new THREE.Vector4(0.18, 0.88, 1, 0) }, uHaze: { value: HAZE.clone() }, uHazeCol: { value: new THREE.Vector3(0.52, 0.22, 0.44) }, uDbgFlat: { value: TDBG === 'flatwall' ? 1 : 0 }, uProjW: { value: PROJW.clone() },
       uRing: { value: 0 }, uGold: { value: 0 }, uRingTex: { value: tile }, uRingH: { value: 1 }, uBendAng: { value: 0 }, uPanel: { value: 0 }, uAxO: { value: new THREE.Vector3() }, uAxD: { value: new THREE.Vector3(0, 0, -1) },
       uAxR: { value: new THREE.Vector3(1, 0, 0) }, uAxU: { value: new THREE.Vector3(0, 1, 0) },
       uRip: { value: tile }, uRipOn: { value: 0 }, uRipR: { value: new THREE.Vector4(-1, 1, -1, 1) }, uBen: { value: new THREE.Vector2() }, uRipZ: { value: 0 }, uHoleT: { value: new THREE.Vector2(0.15, 0.9) }, uFade: { value: new THREE.Vector2(1e4, 2e4) }, uWDbg: { value: qs?.get('m06wdbg') === '1' ? 1 : 0 }, uRip0: { value: new THREE.Vector2() },
@@ -770,6 +790,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
     g.setAttribute('aLS', new THREE.Float32BufferAttribute(ls, 2));
     g.setIndex(idx); g.computeVertexNormals();
     const tubeMat = mat(tTube);
+    tubeMat.uniforms.uWallCrop.value.copy(WALL_CROP);
     add(g, tubeMat, 'tube');
     { const fe = axisAt(a1); tunCap = { pos: fe.p.clone(), dir: fe.t.clone(), r: radAt(a1) }; }
     if (RING) {

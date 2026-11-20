@@ -16,6 +16,13 @@ import { flag05 } from '../vfx/waterRibbon';
 import river08 from '../../assets/textures/match08/river08.json';
 import path06 from '../../assets/textures/match06/path06.json';
 import route06deep from '../../assets/textures/match06/route06deep.json';
+import layout06 from '../../assets/textures/match06/proj06.json';
+
+// Development candidate: keep steering inside the narrow water rendered by match06's R6 geometry.
+// The geometry switch is URL-only in buildMatch06; match its gate here, including the legacy v2 exclusion.
+const QS06 = typeof location !== 'undefined' ? new URLSearchParams(location.search) : null;
+const M06_BOUNDS = flag05('m06bounds') && (flag05('match06') || flag05('matchall')) &&
+  QS06?.get('m06geo') === '1' && QS06?.get('m06v') !== '2';
 
 export type StageId = '01' | '02' | '03' | '04' | '05' | '06' | '07' | '08' | '09' | '10' | '11';
 export type TubeKind = 'none' | 'chute' | 'gold' | 'perf';
@@ -641,6 +648,18 @@ export class Course {
     // the stream narrows into the towel opening at the very end of 10
     const st10 = this.st10;
     return base * (1 - 0.35 * smooth(st10.s1 - 8, st10.s1, s));
+  }
+
+  /** Physics only: opt-in narrow 06 steering bounds; widthAt() still defines all existing geometry. */
+  playableWidthAt(s: number): number {
+    const base = this.widthAt(s);
+    if (!M06_BOUNDS) return base;
+    const st06 = this.stage('06');
+    // Reach the visible-water width at the 06 entrance and release it over the first 6 units of 07.
+    const weight = smooth(st06.s0 - 6, st06.s0, s) * (1 - smooth(st06.s1, st06.s1 + 6, s));
+    if (weight <= 0) return base;
+    const target = Math.min(base, 2 * layout06.tiles.r6.Wc);
+    return base + (target - base) * weight;
   }
 
   sample(s: number, out?: CourseSample): CourseSample {

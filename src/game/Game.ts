@@ -366,7 +366,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
     const stg = course.stageAtS(st.s);
     const speed = course.prop('speed', st.s);
     st.s = Math.min(course.stage('11').s0, st.s + speed * dt);
-    const halfW = course.widthAt(st.s) / 2;
+    const halfW = course.playableWidthAt(st.s) / 2;
     const safe = halfW - 0.75;
     st.vlat += (input.steer * 7.5 - st.vlat) * Math.min(1, dt * 8);
     st.lat = THREE.MathUtils.clamp(st.lat + st.vlat * dt, -halfW + 0.55, halfW - 0.55);

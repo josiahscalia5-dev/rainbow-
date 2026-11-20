@@ -1,0 +1,133 @@
+name: Capture actual Rainbow Screen 06 candidate
+on:
+  push:
+    branches:
+      - chatgpt/rainbow-s06-continuity-20261120
+    paths:
+      - .github/workflows/capture-rainbow-s06.yml
+permissions:
+  contents: read
+concurrency:
+  group: rainbow-s06-review-capture
+  cancel-in-progress: false
+jobs:
+  capture:
+    if: github.repository == 'josiahscalia5-dev/rainbow-' && github.ref == 'refs/heads/chatgpt/rainbow-s06-continuity-20261120'
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+    steps:
+      - name: Check out the runtime and original asset paths
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        env:
+          GIT_LFS_SKIP_SMUDGE: '1'
+        with:
+          fetch-depth: 1
+          fetch-tags: false
+          lfs: false
+          submodules: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /.gitattributes
+            /package.json
+            /package-lock.json
+            /tsconfig.json
+            /vite.config.ts
+            /index.html
+            /src/
+            /assets/textures/
+            /assets/models/
+            /scripts/lib/
+            /tools/chatgpt/
+            /docs/chatgpt-s06/
+            /references/06_crest_the_rinse_arch.png
+            /references/07_dive_the_washer_tube.png
+      - name: Restore the original runtime models
+        shell: bash
+        run: |
+          git lfs pull --include="assets/models/benny.glb,assets/models/lids05.glb,assets/models/rainbow_girl.glb" --exclude=""
+          python3 - <<'PY_MODELS'
+          import hashlib, pathlib
+          expected = {
+            'assets/models/benny.glb': '40633fdd02014c6434bb61811c03bc0c61a8d456c30fbb9cd62bb9a91a0198a1',
+            'assets/models/lids05.glb': 'f2cd3abeaaf219635321c1f2ffead20eb91403d73ff7ef3173380a0ecedbb22c',
+            'assets/models/rainbow_girl.glb': 'fa846773af9a593d090ec2c0ac4ea69812306fc334439b05f900bc9311f92528',
+          }
+          for name, digest in expected.items():
+              data = pathlib.Path(name).read_bytes()
+              if data[:4] != b'glTF' or hashlib.sha256(data).hexdigest() != digest:
+                  raise SystemExit('Original model verification failed: ' + name)
+          print('Verified the three original GLB models.')
+          PY_MODELS
+          python3 - <<'PY_REFERENCES'
+          import hashlib, pathlib
+          expected = {
+            'references/06_crest_the_rinse_arch.png': '3946058c0893e97a99dd5015f3197901859475cd7ef55e09d982d232951441fe',
+            'references/07_dive_the_washer_tube.png': '75782e387240d79436808c3b1c642040eda75fd5b58dbb76192035c7c60f78c9',
+          }
+          for name, digest in expected.items():
+              data = pathlib.Path(name).read_bytes()
+              if hashlib.sha256(data).hexdigest() != digest:
+                  raise SystemExit('Original reference verification failed: ' + name)
+              output = pathlib.Path('capture-artifact') / name
+              output.parent.mkdir(parents=True, exist_ok=True)
+              output.write_bytes(data)
+          print('Verified the unchanged Screen 06 and 07 references.')
+          PY_REFERENCES
+      - name: Use existing Chrome and install isolated capture tooling
+        shell: bash
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+        run: |
+          set -euo pipefail
+          mkdir -p capture-artifact
+          CHROME_PATH="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || true)"
+          if [ -z "$CHROME_PATH" ]; then
+            echo 'The hosted runner has no existing Chrome or Chromium. No browser will be downloaded.'
+            exit 1
+          fi
+          printf 'RAINBOW_CAPTURE_CHROME=%s\n' "$CHROME_PATH" >> "$GITHUB_ENV"
+          "$CHROME_PATH" --version > capture-artifact/browser-version.txt
+          node --version > capture-artifact/node-version.txt
+          git rev-parse HEAD > capture-artifact/source-commit.txt
+          npm ci --ignore-scripts --no-audit --no-fund
+          GLOBAL_MODULES="$(npm root -g)"
+          if node -e 'const r=require("node:module").createRequire(process.argv[1]+"/noop.js");try{r("playwright")}catch{r("playwright-core")}' "$GLOBAL_MODULES"; then
+            printf 'CODEX_PRIMARY_RUNTIME_NODE_MODULES=%s\n' "$GLOBAL_MODULES" >> "$GITHUB_ENV"
+          else
+            npm install --prefix "$RUNNER_TEMP/rainbow-qa-tools" --no-save --ignore-scripts --no-audit --no-fund playwright-core@1.62.1
+            printf 'CODEX_PRIMARY_RUNTIME_NODE_MODULES=%s\n' "$RUNNER_TEMP/rainbow-qa-tools/node_modules" >> "$GITHUB_ENV"
+          fi
+          npm run typecheck
+      - name: Capture baseline and opt-in candidate at identical checkpoints
+        shell: bash
+        timeout-minutes: 9
+        run: |
+          set -uo pipefail
+          node node_modules/vite/bin/vite.js --host 127.0.0.1 --port 5199 --strictPort > capture-artifact/vite.log 2>&1 &
+          VITE_PID=$!
+          trap 'kill "$VITE_PID" 2>/dev/null || true' EXIT
+          READY=0
+          for ATTEMPT in $(seq 1 30); do
+            if curl --silent --fail http://127.0.0.1:5199/ > /dev/null; then READY=1; break; fi
+            sleep 1
+          done
+          if [ "$READY" -ne 1 ]; then cat capture-artifact/vite.log; exit 1; fi
+          BASELINE_EXIT=0
+          timeout --signal=TERM --kill-after=15s 240s node tools/chatgpt/s06-capture.mjs --url http://127.0.0.1:5199/ --out capture-artifact/baseline --shots start,middle,end,entry07 --chromium "$RAINBOW_CAPTURE_CHROME" --add-query reviewModels=0 > capture-artifact/baseline.log 2>&1 || BASELINE_EXIT=$?
+          CANDIDATE_EXIT=0
+          timeout --signal=TERM --kill-after=15s 240s node tools/chatgpt/s06-capture.mjs --url http://127.0.0.1:5199/ --out capture-artifact/candidate --shots start,middle,end,entry07 --chromium "$RAINBOW_CAPTURE_CHROME" --query-file docs/chatgpt-s06/CANDIDATE_QUERY.txt --add-query reviewModels=0 > capture-artifact/candidate.log 2>&1 || CANDIDATE_EXIT=$?
+          printf '{"baselineExit":%s,"candidateExit":%s,"source":"Actual runtime screenshots; no generated or repainted gameplay frames."}\n' "$BASELINE_EXIT" "$CANDIDATE_EXIT" > capture-artifact/result.json
+          cat capture-artifact/baseline.log
+          cat capture-artifact/candidate.log
+          test "$BASELINE_EXIT" -eq 0 && test "$CANDIDATE_EXIT" -eq 0
+      - name: Save actual captures and diagnostics privately
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: rainbow-s06-actual-capture-${{ github.sha }}
+          path: capture-artifact/
+          if-no-files-found: warn
+          retention-days: 7
+          compression-level: 0
+          include-hidden-files: false
+          archive: true
