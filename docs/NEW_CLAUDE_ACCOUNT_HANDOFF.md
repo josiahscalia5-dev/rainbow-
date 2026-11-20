@@ -1,3 +1,13 @@
+# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 26 (2026-11-20, lead branch `ccr-08ece3a6-xcwyls`, from ~13:00 UTC)
+
+New account; session branch started at `a2261d5` = the latest of the r25 lead `ccr-a9235d04-90cw28` (its last daemon save 12:51 UTC).
+Round 25 ended 12:36–12:45 UTC when the old account hit its 5-hour limit (all four workers stopped mid-step). Nothing merged. Worktrees
+recreated from the 12:52:06 snapshots on LOCAL `-c27` branches (`docs/briefs/2026-11-20-r25/setup_worker_r26.sh`, content identical).
+**The user's detailed visual brief for every screen (binding): `docs/briefs/2026-11-20-r26/USER_VISUAL_BRIEF_R26.md`.** Four workers relaunched
+(s07, s06, s04, Benny). Map + services: **`docs/briefs/2026-11-20-r26/COORDINATION.md`**; briefs `LAUNCH_R26.md`; next-account recipe
+`setup_worker_r27.sh` (`-c28` from the newest `backups/wip/*-c27/`). On this account: World Labs API key and fal key are NOT on the
+environment (World Labs check HTTP 401 → secure form); Atlas connector still "no active Atlas account" (user: atlas.worldlabs.ai sign-up).
+
 # ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 25 (2026-11-20, lead branch `ccr-a9235d04-90cw28`, from ~11:54 UTC)
 
 New account; session branch started at `36bc533` = the latest of the r24 lead `ccr-5be1062a-0ffyej` (its last daemon save 11:43 UTC).

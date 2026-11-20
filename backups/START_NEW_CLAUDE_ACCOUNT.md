@@ -1,5 +1,15 @@
 # Paste this into Claude Code on the next Claude account
 
+## ▶▶▶▶ NEWEST (2026-11-20 ~13:20 UTC, round 26 → next account)
+Same steps and prompt as the round-24 block below, with these replacements: start the cloud session on branch **`ccr-08ece3a6-xcwyls`**
+(the round-26 lead; NOT the default branch); read the TOP of `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md` ("ROUND 26"), the user's visual brief
+`docs/briefs/2026-11-20-r26/USER_VISUAL_BRIEF_R26.md` and `docs/briefs/2026-11-20-r26/COORDINATION.md` + `LAUNCH_R26.md`; recreate the
+worktrees with `bash docs/briefs/2026-11-20-r26/setup_worker_r27.sh` (LOCAL `-c28` branches from the newest `backups/wip/*-c27/` snapshots).
+Keys: World Labs (`api.worldlabs.ai`, header `WLT-Api-Key`) and fal (`queue.fal.run`, `Authorization: Key`) live as network secrets on the
+cloud environment — a new account's environment starts WITHOUT them; check with the free reads, then the secure form.
+
+---
+
 ## ▶▶▶ NEWEST (2026-11-20 ~12:15 UTC, round 25 → next account)
 Same steps and prompt as the round-24 block below, with these replacements: start the cloud session on branch **`ccr-a9235d04-90cw28`**
 (the round-25 lead; NOT the default branch); read the TOP of `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md` ("ROUND 25") and

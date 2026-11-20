@@ -1,5 +1,13 @@
 # Benny round 23 — progress (worktree `/home/user/wt/benny`, local branch `claude/rainbow-benny-c24` = `-c23` @ `734efb6`; not committed / pushed by Benny — the lead's autosave snapshots the worktree)
 
+## (r26) WHERE I STOPPED / NEXT — 2026-11-20 ~13:15 UTC (new account; worktree `/home/user/wt/benny`, LOCAL branch `claude/rainbow-benny-c27`, port 5279)
+
+**Doing now:** (1) star step `&b20star=1`: NEW swim clip exists (`qa/benny/r23/s3_star/clip/swim06_star_NEW_*`); re-rendering ONLY the
+BEFORE swim clip (same tool `tools/benny25/swim_clip_c.mjs 06 … 6 0`, query `QUERY_BEFORE_06.txt`; script
+`/home/user/scratch/benny/clips/run_before.sh`), then label 1.0x + 0.5x and write the star verdict here.
+**Next:** (2) silky combed fur `&b20silk=1` (+ `&b20gsoft=1` soft lock edges, both in code, unproven) → `qa/benny/r25/s4_silk/`;
+(3) hat crown shape / 06 cream tint. Do NOT scale Benny.
+
 ## (r25) WHERE I STOPPED / NEXT — 2026-11-20 ~12:10 UTC (new account; worktree `/home/user/wt/benny`, LOCAL branch `claude/rainbow-benny-c26`, port 5279)
 
 **Doing now:** (1) finishing the felt-star step `&b20star=1`: the 04–08 APPROVED / BEFORE / NEW crops in `qa/benny/r23/s3_star/` are

@@ -154141,7 +154141,7 @@ index a76822b..cbb7ee4 100644
  * `fur.ts`: new BENNY20-only uniforms `uTipCol` (colour the uPile.w tips fade to; pompom keeps its pale lavender) and `uVol`
    (x highlight on up-facing fur, y darker underside). `benny20.ts`: `TUFT` block (body + arms): bigger locks (30 / arms 36),
 diff --git a/src/characters/benny/benny20.ts b/src/characters/benny/benny20.ts
-index 340e1d3..7b06f77 100644
+index 340e1d3..a978516 100644
 --- a/src/characters/benny/benny20.ts
 +++ b/src/characters/benny/benny20.ts
 @@ -100,6 +100,30 @@ if (TUFT) {
@@ -154165,11 +154165,11 @@ index 340e1d3..7b06f77 100644
 +    L.lock = [n('glx', arm ? 24 : 18), n('gly', 1.1), n('glz', 0.55), L.lock[3]];
 +    L.shade = [n('gsx', 0.55), n('gsy', 0.55), n('gsz', 0.55), n('gsw', 0.3)];
 +    L.comb = [n('gcx', 0.9), n('gcy', 0.8), 0, n('gcw', 0.45)];
-+    SILK20[k] = { silk: [n('gn', 7), n('gc', 0.35), n('gf', 0.35), n('gs', 0.3)], silk2: [n('gtp', 0.7), n('gcr', 0.45), n('gsw', 1.0), 0] };
++    SILK20[k] = { silk: [n('gn', 7), n('gc', 0.35), n('gf', 0.35), n('gs', 0.3)], silk2: [n('gtp', 0.7), n('gcr', 0.45), n('gew', 1.0), 0] };
 +  }
 +}
 +/** `&b20gsoft=1` (with b20silk, r25): soft lock edges instead of hard per-pixel cut-outs (fur.ts `B20SOFT`): the game frame
-+ *  has no MSAA, so the fur's discard edges alias into speckle that shimmers in motion; fade over `&b20gsw=` px instead */
++ *  has no MSAA, so the fur's discard edges alias into speckle that shimmers in motion; fade over `&b20gew=` px instead */
 +const SILK_SOFT = SILK && n('gsoft', 0) > 0;
 +
  /** per-screen fur exposure (LINEAR multipliers on the fur albedo above, which is solved for Screen 04). The approved

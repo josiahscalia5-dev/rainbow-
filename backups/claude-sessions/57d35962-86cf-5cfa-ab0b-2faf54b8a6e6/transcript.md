@@ -1096,3 +1096,366 @@ Connectors checked. Now recreating the worker copies from the 12:52 UTC snapshot
 
 > 🔧 **Bash** `{"command": "timeout 900 bash docs/briefs/2026-11-20-r25/setup_worker_r26.sh 2>&1 | tail -20; for x in s04 s07 s06 benny s08 s05; do b=$(git -C /home/user/wt/$x branch --show-current); n=$(git -C /home/user/wt/$x diff --name-only | wc -l); echo \"$x $b tracked-modified=$n\"; done; for x in lead06 lead07; do echo \"$x $(git -C /home/user/wt/$x diff --name-only | wc -l)\"; done", "description": "Recreate the -c27 worker worktrees from snapshots", "timeout": 900000}`
 
+### 🧑 User — 2026-11-20T13:09:29.696Z
+
+> ↩︎ result: Preparing worktree (new branch 'claude/rainbow-s04-match-c27')
+> s04: /home/user/wt/s04 on claude/rainbow-s04-match-c27 from 34cb494 + backups/wip/claude__rainbow-s04-match-c26 — dirty 5
+> Preparing worktree (new branch 'claude/rainbow-s07-match-c27')
+> s07: /home/user/wt/s07 on claude/rainbow-s07-match-c27 from 8accdad + backups/wip/claude__rainbow-s07-match-c26 — dirty 16
+> Preparing worktree (new branch 'claude/rainbow-s06-match-c27')
+> s06: /home/user/wt/s06 on claude/rainbow-s06-match-c27 from e162aec + backups/wip/claude__rainbow-s06-match-c26 — dirty 17
+> Preparing worktree (new branch 'claude/rainbow-benny-c27')
+> benny: /home/user/wt/benny on claude/rainbow-benny-c27 from 734efb6 + backups/wip/claude__rainbow-benny-c26 — dirty 17
+> Preparing worktree (new branch 'claude/rainbow-s08-scenery-c27')
+> s08: /home/user/wt/s08 on claude/rainbow-s08-scenery-c27 from 3c0fa97 + backups/wip/claude__rainbow-s08-scenery-c26 — dirty 6
+> Preparing worktree (new branch 'claude/rainbow-s05-match-c27')
+> s05: /home/user/wt/s05 on claude/rainbow-s05-match-c27 from eb7233e + backups/wip/claude__rainbow-s05-match-c26 — dirty 1
+> Preparing worktree (detached HEAD 8accdad)
+> lead07: /home/user/wt/lead07 on --detach from  …[+523 chars]
+
+### 🤖 Claude — 2026-11-20T13:09:36.264Z
+
+> 🔧 **Bash** `{"command": "for p in \"s04 claude__rainbow-s04-match-c26\" \"s07 claude__rainbow-s07-match-c26\" \"s06 claude__rainbow-s06-match-c26\" \"benny claude__rainbow-benny-c26\" \"s08 claude__rainbow-s08-scenery-c26\"; do set -- $p; a=$(git -C /home/user/wt/$1 diff --binary | sha256sum | cut -c1-12); b=$(sha256sum backups/wip/$2/tracked.patch | cut -c1-12); echo \"$1 worktree-diff $a snapshot $b $( [ $a = $b ] && echo IDENTICAL || echo DIFF)\"; done; grep -n \"tools-pixelmatch\" backups/claude-sessions/1de16074-a1ea-5d78-8ed3-5aa46f86005c/transcript.md | head -5", "description": "Verify worktrees eq …[+39 chars]`
+
+### 🧑 User — 2026-11-20T13:09:37.220Z
+
+> ↩︎ result: s04 worktree-diff 1557aa8989b8 snapshot 9db28832a745 DIFF
+> s07 worktree-diff 42a00666c5fc snapshot 247ae5dc2b88 DIFF
+> s06 worktree-diff 25ef8ab361fd snapshot baa912fcad29 DIFF
+> benny worktree-diff 44185712d566 snapshot 7e0962d09c41 DIFF
+> s08 worktree-diff 45e7934ca03e snapshot 87203d2dba12 DIFF
+> 1203:The workers rely on the pixel-diff tool at `/home/user/tools-pixelmatch`, which lived outside the repository. Checking whether it survived:
+> 1207:> 🔧 **Bash** `{"command": "ls /home/user/tools-pixelmatch 2>&1 | head; cd /home/user/rainbow- && grep -n \"tools-pixelmatch\" backups/claude-sessions/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/transcript.md | head -3 | cut -c1-900; ls tools/lead23/ | head -30", "description": "Check pixel-diff tool and how it was built"}`
+> 1211:> ↩︎ result: ls: cannot access '/home/user/tools-pixelmatch': No such file or directory
+> 1212:> 751:> 🔧 **Bash** `{"command": "mkdir -p /home/user/tools-pixelmatch && cd /home/user/tools-pixelmatch && cp /home/user/rainbow-/docs/briefs/2026-11-18-r16/pixeldiff.mjs . && head -15 pixeldiff.mjs && grep -n \"import\\|require\" pixeldiff.mjs | head; [ -f package.json ] || npm init -y >/dev/null; timeout 180 npm install --no-audit --no-fu …[+751 chars]
+
+### 🤖 Claude — 2026-11-20T13:09:40.604Z
+
+> 🔧 **Bash** `{"command": "grep -n \"tracked.patch\" scripts/rainbow-autosave.py | head -5; grep -n \"\\\"diff\\\"\" scripts/rainbow-autosave.py | head", "description": "See how autosave builds tracked.patch"}`
+
+### 🧑 User — 2026-11-20T13:09:40.649Z
+
+> ↩︎ result: 244:    the worktree's index lock), backups/wip/<branch>/: INFO.json (branch, HEAD, dirty files), tracked.patch
+> 269:            (dest / "tracked.patch").write_bytes(g("diff", "HEAD", "--binary").stdout)
+> 281:                "restore": f"git switch {br} (newest pushed tip) && git apply --binary backups/wip/{dest.name}/tracked.patch"
+> 269:            (dest / "tracked.patch").write_bytes(g("diff", "HEAD", "--binary").stdout)
+> 428:        staged = [x for x in git("diff", "--cached", "--name-only", "-z").stdout.split("\0") if x]
+> 430:        staged = [x for x in git("diff", "--cached", "--name-only", "-z").stdout.split("\0") if x]
+
+### 🤖 Claude — 2026-11-20T13:09:43.208Z
+
+> 🔧 **Bash** `{"command": "for p in \"s04 claude__rainbow-s04-match-c26\" \"s07 claude__rainbow-s07-match-c26\" \"s06 claude__rainbow-s06-match-c26\" \"benny claude__rainbow-benny-c26\" \"s08 claude__rainbow-s08-scenery-c26\"; do set -- $p; a=$(git -C /home/user/wt/$1 diff HEAD --binary | sha256sum | cut -c1-12); b=$(sha256sum backups/wip/$2/tracked.patch | cut -c1-12); echo \"$1 $a $b $( [ $a = $b ] && echo IDENTICAL || echo DIFF)\"; done; git -C /home/user/wt/s04 status --porcelain | head", "description": "Compare worktree diff HEAD with snapshot patches"}`
+
+### 🧑 User — 2026-11-20T13:09:44.234Z
+
+> ↩︎ result: s04 1557aa8989b8 9db28832a745 DIFF
+> s07 42a00666c5fc 247ae5dc2b88 DIFF
+> s06 25ef8ab361fd baa912fcad29 DIFF
+> benny 44185712d566 7e0962d09c41 DIFF
+> s08 45e7934ca03e 87203d2dba12 DIFF
+>  M src/game/Game.ts
+>  M src/world/match04.ts
+>  M src/world/match04m4.ts
+> ?? node_modules
+> ?? tools/match04/rings21.mjs
+
+### 🤖 Claude — 2026-11-20T13:09:48.130Z
+
+> 🔧 **Bash** `{"command": "for p in \"s04 claude__rainbow-s04-match-c26\" \"s07 claude__rainbow-s07-match-c26\" \"s06 claude__rainbow-s06-match-c26\" \"benny claude__rainbow-benny-c26\" \"s08 claude__rainbow-s08-scenery-c26\"; do set -- $p; a=$(git -C /home/user/wt/$1 diff HEAD --binary --full-index | grep -v '^index ' | sha256sum | cut -c1-12); b=$(grep -v '^index ' backups/wip/$2/tracked.patch | sha256sum | cut -c1-12); echo \"$1 $a $b $( [ $a = $b ] && echo IDENTICAL-content || echo DIFF)\"; done; diff <(git -C /home/user/wt/s04 diff HEAD --binary) backups/wip/claude__rainbow-s04-match-c26/tracked.patch  …[+73 chars]`
+
+### 🧑 User — 2026-11-20T13:09:48.853Z
+
+> ↩︎ result: s04 6833bbcfdcef 6833bbcfdcef IDENTICAL-content
+> s07 d6d61d76bae1 d6d61d76bae1 IDENTICAL-content
+> s06 56831edc1043 56831edc1043 IDENTICAL-content
+> benny 7933c1b72534 7933c1b72534 IDENTICAL-content
+> s08 4d6d5302c557 4d6d5302c557 IDENTICAL-content
+> 2c2
+> < index 6a4653f..2a7e591 100644
+> ---
+> > index 6a4653f3b..2a7e591a1 100644
+> 22c22
+> < index 65c878c..a20f48e 100644
+> ---
+> > index 65c878ce5..a20f48e1c 100644
+
+### 🤖 Claude — 2026-11-20T13:09:50.845Z
+
+All five worker copies match their snapshots content-for-content (only the abbreviated hash length in patch headers differs). Rebuilding the pixel tool and checking the render-slot helper.
+
+### 🤖 Claude — 2026-11-20T13:09:53.846Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/tools-pixelmatch /home/user/scratch/{s04,s06,s07,benny,lead} && cd /home/user/tools-pixelmatch && cp /home/user/rainbow-/docs/briefs/2026-11-18-r16/pixeldiff.mjs . && { [ -f package.json ] || npm init -y >/dev/null; } && timeout 180 npm install --no-audit --no-fund pixelmatch@5.3.0 pngjs@7 2>&1 | tail -1; cd /home/user/rainbow- && node /home/user/tools-pixelmatch/pixeldiff.mjs qa/match/06/r25/step1_hole/NEW/a_start.png qa/match/06/r25/step1_hole/CURRENT/a_start.png /home/user/scratch/lead/pd.png 0.1 2>&1 | tail -2; cat tools/lead25/render_slot.sh | head -30; ba …[+160 chars]`
+
+### 🧑 User — 2026-11-20T13:09:55.214Z
+
+> ↩︎ result: added 3 packages in 445ms
+> {"a":"qa/match/06/r25/step1_hole/NEW/a_start.png","b":"qa/match/06/r25/step1_hole/CURRENT/a_start.png","rows":[0,1536],"threshold":0.1,"diff_pixels":0,"total":1327104,"diff_pct":0}
+> #!/usr/bin/env bash
+> # render_slot.sh — run one heavy render (Playwright / SwiftShader / Blender / ffmpeg) while holding one of N machine-wide
+> # render slots, so the four specialist workers on this 4-CPU container take turns instead of overloading it
+> # (round 24 ran at load ~30 with repeated Playwright timeouts).
+> #   usage:  bash /home/user/rainbow-/tools/lead25/render_slot.sh <command> [args...]
+> #   N = $RENDER_SLOTS (default 2). Waits (polling every 5 s) until a slot is free; prints the wait time on stderr.
+> #   The exit code is the command's. Slots are flock(1) locks under /tmp, released automatically if the process dies.
+> #   Status:  bash /home/user/rainbow-/tools/lead25/render_slot.sh --status
+> N=${RENDER_SLOTS:-2}
+> if [ "${1:-}" = "--status" ]; then
+>   for i in $(seq 1 "$N"); do
+>     if flock -n "/tmp/rainbow-render-slot$i.lock" true 2>/dev/null; then echo "slot $i free"; else echo "slot $i busy"; fi
+>   done
+>   exit 0
+> fi
+> [ $# -gt 0 ] || { echo "usage: $0 <command> [args...]" >&2;  …[+596 chars]
+
+### 🤖 Claude — 2026-11-20T13:10:06.223Z
+
+Pixel tool works; the Screen 06 NEW start view is 0 px different from what the user saw (as required). Checking where the Screen 04 worker's unfinished glint edit stands.
+
+### 🤖 Claude — 2026-11-20T13:10:07.371Z
+
+> 🔧 **Bash** `{"command": "ls qa/match/04/r23/s3_glossy/ | head; diff <(git -C /home/user/wt/s04 diff HEAD --full-index | grep -v '^index ') <(grep -v '^index ' qa/match/04/r23/s3_glossy/code.patch) | head -40", "description": "Compare s04 worktree with K23-S3 code patch"}`
+
+### 🧑 User — 2026-11-20T13:10:07.419Z
+
+> ↩︎ result: APPROVED
+> K23-1_with_new_code
+> K23-S2_with_new_code
+> NEW
+> QUERY_K23-S3.txt
+> SWITCH.txt
+> code.patch
+> gameplay.json
+> step3_only.patch
+> swim04_NEW_K23-S3_frames
+> 392c392
+> < @@ -461,6 +769,14 @@ uniform vec3 uLane;          // r13 m04lane: x on, y clean-lane half width (u),
+> ---
+> > @@ -461,6 +769,10 @@ uniform vec3 uLane;          // r13 m04lane: x on, y clean-lane half width (u),
+> 400,403d399
+> < +uniform vec4 uLG5;           // r25 m04lgc: x crescent glints on (strength), y crescent cell length along (u), z bend (share of the
+> < +                             // line spacing), w dash threshold (higher = fewer crescents)
+> < +uniform vec4 uLG6;           // r25 m04lgc: x / y crescents from x to y u ahead of the camera hand over to the long streaks
+> < +                             // (y <= x: crescents everywhere), z crescent whiteness boost, w star sparkle at the brightest crescents
+> 407c403
+> < @@ -491,9 +807,14 @@ uniform vec4 uWU;            // r19b m04wup: x highest climb up the wall above t
+> ---
+> > @@ -491,9 +803,14 @@ uniform vec4 uWU;            // r19b m04wup: x highest climb up the wall above t
+> 423c419
+> < @@ -568,6 +889,74 @@ void main() {
+> ---
+> > @@ -568,6 +885,45 @@ void main() {
+> 454,482d449
+> < +      i …[+1967 chars]
+
+### 🤖 Claude — 2026-11-20T13:10:19.075Z
+
+Screen 04's unfinished "short crescent glints" edit (`m04lgc`) is present in its copy. Checking the workers' restored helper tools, then writing the round-26 briefs.
+
+### 🤖 Claude — 2026-11-20T13:10:20.272Z
+
+> 🔧 **Bash** `{"command": "ls /home/user/wt/benny/tools/benny25/ /home/user/wt/s06/tools/match06/ 2>&1 | head -30; ls /home/user/rainbow-/qa/match/07/r24/combo/ | head; ls /home/user/rainbow-/docs/briefs/2026-11-20-r24/ | head -20", "description": "Check restored worker tools and r24 briefs"}`
+
+### 🧑 User — 2026-11-20T13:10:20.317Z
+
+> ↩︎ result: /home/user/wt/benny/tools/benny25/:
+> label_clip_c.py
+> swim_clip_c.mjs
+> 
+> /home/user/wt/s06/tools/match06/:
+> coinrun06.mjs
+> coins06.py
+> fit_river06.py
+> fit_water06.py
+> geo06.py
+> lead23_audit_slow.mjs
+> make_floor06.py
+> make_hole06.py
+> make_masks06.py
+> make_plate06.py
+> make_ring06.py
+> make_river06.py
+> make_tiles06.py
+> measure06.py
+> motion06.mjs
+> overlay06.py
+> probe06.mjs
+> probe06_locked.json
+> r11_mouth_probe.mjs
+> r16_shots.mjs
+> r16_start.mjs
+> r18_dbg.mjs
+> r21_probe.mjs
+> r23_audit.mjs
+> r23_ripdump.mjs
+> check08
+> check08_r25
+> mkcombo.py
+> s08snap_HEAD.txt
+> s08snap_SHA256SUMS.txt
+> s08snap_SHA256SUMS_r25.txt
+> COORDINATION.md
+> LAUNCH_R24.md
+> setup_worker_r24.sh
+> setup_worker_r25.sh
+
+### 🤖 Claude — 2026-11-20T13:10:22.317Z
+
+> 🔧 **TaskUpdate** `{"taskId": "3", "status": "completed"}`
+
+### 🧑 User — 2026-11-20T13:10:22.331Z
+
+> ↩︎ result: Updated task #3 status
+
+### 🤖 Claude — 2026-11-20T13:10:22.721Z
+
+> 🔧 **TaskUpdate** `{"taskId": "4", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-20T13:10:22.735Z
+
+> ↩︎ result: Updated task #4 status
+
+### 🤖 Claude — 2026-11-20T13:10:56.028Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-20-r26/USER_VISUAL_BRIEF_R26.md", "content": "# The user's detailed visual requirements for every approved Rainbow screen (round 26, 2026-11-20 ~13:00 UTC, verbatim)\n\nBinding for EVERY specialist and every screen, together with `docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md`. The user's own words follow.\n\n---\n\nCLAUDIA — MY DETAILED VISUAL REQUIREMENTS FOR EVERY APPROVED RAINBOW SCREEN\n\nPlease use this message as my continuing visual brief for the entire game and share the relevant requirements with every specialist.\n\nMy goal …[+15059 chars]`
+
+### 🧑 User — 2026-11-20T13:10:56.087Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-20-r26/USER_VISUAL_BRIEF_R26.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T13:11:39.050Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-20-r26/LAUNCH_R26.md", "content": "# Round 26 — relaunch of four specialists (lead session branch `ccr-08ece3a6-xcwyls`, new Claude account, 2026-11-20 from ~13:00 UTC)\n\nRound 25 (lead `ccr-a9235d04-90cw28`) stopped at 12:36–12:45 UTC: the old account hit its 5-hour limit and all four workers died mid-step\n(NOT a rejection of their work). Its last daemon save `a2261d5` (12:51) holds the **12:52:06 snapshots** `backups/wip/*-c26/`. This session\nstarted from `a2261d5`; every worktree was recreated by `docs/briefs/2026-11-20-r25/setup_wor …[+10350 chars]`
+
+### 🧑 User — 2026-11-20T13:11:39.092Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-20-r26/LAUNCH_R26.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T13:11:40.434Z
+
+Now launching the four specialists in the background from their real checkpoints.
+
+### 🤖 Claude — 2026-11-20T13:11:48.730Z
+
+> 🔧 **Agent** `{"description": "Screen 07 specialist r26", "subagent_type": "water-fx-specialist", "run_in_background": true, "prompt": "You are the Screen 07 specialist (slug s07) of the Rainbow game, round 26, relaunched on a new Claude account after the previous account's usage limit stopped you mid-step at 12:37 UTC. Your work so far is restored — continue, do not restart.\n\nRead, in this order: /home/user/rainbow-/CLAUDE.md; /home/user/rainbow-/docs/briefs/2026-11-20-r26/LAUNCH_R26.md (Common + section \"s07\"); /home/user/rainbow-/docs/briefs/2026-11-20-r26/USER_VISUAL_BRIEF_R26.md (the user's new bin …[+1497 chars]`
+
+### 🧑 User — 2026-11-20T13:11:48.771Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a40be60e4fe7bb4ab (internal ID - do not mention to user. Use SendMessage with to: 'a40be60e4fe7bb4ab', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/57d35962-86cf-5cfa-ab0b-2faf54b8a6e6/tasks/a40be60e4fe7bb4ab.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-20T13:11:56.933Z
+
+> 🔧 **Agent** `{"description": "Screen 06 specialist r26", "subagent_type": "path-camera-transition-engineer", "run_in_background": true, "prompt": "You are the Screen 06 specialist (slug s06) of the Rainbow game, round 26, relaunched on a new Claude account after the previous account's usage limit stopped you mid-step at 12:36 UTC. Your work so far is restored — continue, do not restart.\n\nRead, in this order: /home/user/rainbow-/CLAUDE.md; /home/user/rainbow-/docs/briefs/2026-11-20-r26/LAUNCH_R26.md (Common + section \"s06\"); /home/user/rainbow-/docs/briefs/2026-11-20-r26/USER_VISUAL_BRIEF_R26.md (the us …[+1784 chars]`
+
+### 🧑 User — 2026-11-20T13:11:56.959Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: aa0deafcaa0d24e83 (internal ID - do not mention to user. Use SendMessage with to: 'aa0deafcaa0d24e83', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/57d35962-86cf-5cfa-ab0b-2faf54b8a6e6/tasks/aa0deafcaa0d24e83.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-20T13:12:04.984Z
+
+> 🔧 **Agent** `{"description": "Screen 04 specialist r26", "subagent_type": "washer-environment-modeler", "run_in_background": true, "prompt": "You are the Screen 04 specialist (slug s04) of the Rainbow game, round 26, relaunched on a new Claude account after the previous account's usage limit stopped you mid-step at 12:40 UTC. Your work so far is restored — continue, do not restart.\n\nRead, in this order: /home/user/rainbow-/CLAUDE.md; /home/user/rainbow-/docs/briefs/2026-11-20-r26/LAUNCH_R26.md (Common + section \"s04\"); /home/user/rainbow-/docs/briefs/2026-11-20-r26/USER_VISUAL_BRIEF_R26.md (the user's  …[+1859 chars]`
+
+### 🧑 User — 2026-11-20T13:12:05.005Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a2f947746147acb94 (internal ID - do not mention to user. Use SendMessage with to: 'a2f947746147acb94', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/57d35962-86cf-5cfa-ab0b-2faf54b8a6e6/tasks/a2f947746147acb94.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-20T13:12:12.089Z
+
+> 🔧 **Agent** `{"description": "Benny specialist r26", "subagent_type": "benny-character-artist", "run_in_background": true, "prompt": "You are the Benny specialist (slug benny) of the Rainbow game, round 26, relaunched on a new Claude account after the previous account's usage limit stopped you at 12:45 UTC. Your work so far is restored — continue, do not restart.\n\nRead, in this order: /home/user/rainbow-/CLAUDE.md; /home/user/rainbow-/docs/briefs/2026-11-20-r26/LAUNCH_R26.md (Common + section \"Benny\"); /home/user/rainbow-/docs/briefs/2026-11-20-r26/USER_VISUAL_BRIEF_R26.md (the user's new binding visua …[+1517 chars]`
+
+### 🧑 User — 2026-11-20T13:12:12.110Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a46a6cd792b4d39b7 (internal ID - do not mention to user. Use SendMessage with to: 'a46a6cd792b4d39b7', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/57d35962-86cf-5cfa-ab0b-2faf54b8a6e6/tasks/a46a6cd792b4d39b7.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-20T13:12:14.265Z
+
+Four specialists are running. Now writing the round-26 coordination map and the next-account recovery recipe.
+
+### 🤖 Claude — 2026-11-20T13:12:17.326Z
+
+> 🔧 **Bash** `{"command": "sed -e 's/setup_worker_r26.sh — the NEXT account after round 25/setup_worker_r27.sh — the NEXT account after round 26/' -e 's/-c27/-c28/g' -e 's/-c26/-c27/g' -e 's/usage: bash docs\\/briefs\\/2026-11-20-r25\\/setup_worker_r26.sh/usage: bash docs\\/briefs\\/2026-11-20-r26\\/setup_worker_r27.sh/' -e 's/the round-25 lead autosave/the round-26 lead autosave/' -e 's/in the r25 container/in the r26 container/' docs/briefs/2026-11-20-r25/setup_worker_r26.sh > docs/briefs/2026-11-20-r26/setup_worker_r27.sh && grep -n \"c2[678]\\|usage\\|NEXT\" docs/briefs/2026-11-20-r26/setup_worker_r27.s …[+151 chars]`
+
+### 🧑 User — 2026-11-20T13:12:17.411Z
+
+> ↩︎ result: 2:# setup_worker_r27.sh — the NEXT account after round 26: recreate every worker worktree on
+> 3:# NEW LOCAL -c28 branches = the worker base commit + its NEWEST autosave snapshot backups/wip/<branch-c27>/ (the round-26 lead autosave refreshes it every 5 min; read INFO.json "time").
+> 4:# The -c27 branches were LOCAL only in the r26 container (never pushed); their unfinished edits live only in those snapshots.
+> 6:# usage: bash docs/briefs/2026-11-20-r26/setup_worker_r27.sh [s04 s07 s06 benny s08 s05 lead07 lead06]
+> 31:  s04)    need $S04 claude/rainbow-s04-match-c21;   mk s04 /home/user/wt/s04 claude/rainbow-s04-match-c28 $S04 backups/wip/claude__rainbow-s04-match-c27 ;;
+> 32:  s07)    need $S07 claude/rainbow-s07-match-c18;   mk s07 /home/user/wt/s07 claude/rainbow-s07-match-c28 $S07 backups/wip/claude__rainbow-s07-match-c27 ;;
+> 33:  s06)    need $S06 claude/rainbow-s06-match-c23;   mk s06 /home/user/wt/s06 claude/rainbow-s06-match-c28 $S06 backups/wip/claude__rainbow-s06-match-c27 ;;
+> 34:  benny)  need $BEN claude/rainbow-benny-c23;       mk benny /home/user/wt/benny claude/rainbow-benny-c28 $BEN backups/wip/claude__rainbow-benny-c27 ;;
+> 35:  s08)    need $S08 claude/rainbow-s08-scenery-c17; …[+277 chars]
+
+### 🤖 Claude — 2026-11-20T13:12:37.187Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-20-r26/COORDINATION.md", "content": "# Round 26 — coordination (lead session branch `ccr-08ece3a6-xcwyls`, new Claude account, 2026-11-20 from ~13:00 UTC)\n\nUser (new account, ~13:00): \"RESTORE MY COMPLETE RAINBOW PROJECT AND CONTINUE ON THIS ACCOUNT\" — source branch `ccr-a9235d04-90cw28`;\nrestore project, conversations, tools, connectors, plugins, ten specialists, unfinished work; continue 07 → 06 → 04 → Benny, preserve 08 K23-3,\n05 per its queue; keep the review package. Plus a long **detailed visual brief for every screen** → verba …[+4487 chars]`
+
+### 🧑 User — 2026-11-20T13:12:37.224Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-20-r26/COORDINATION.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T13:12:48.750Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md'; s=open(p).read()\nblk='''# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 26 (2026-11-20, lead branch `ccr-08ece3a6-xcwyls`, from ~13:00 UTC)\n\nNew account; session branch started at `a2261d5` = the latest of the r25 lead `ccr-a9235d04-90cw28` (its last daemon save 12:51 UTC).\nRound 25 ended 12:36–12:45 UTC when the old account hit its 5-hour limit (all four workers stopped mid-step). Nothing merged. Worktrees\nrecreated from the 12:52:06 snapshots on LOCAL `-c27` branches (`docs/briefs/2026-11-20-r25/setup_worker_r26.sh`, conte …[+1833 chars]`
+
+### 🧑 User — 2026-11-20T13:12:48.842Z
+
+> ↩︎ result: 16:   **`docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`** — NEWEST: "ROUND 25" (lead `ccr-a9235d04-90cw28`, map `docs/briefs/2026-11-20-r25/COORDINATION.md`:
+
+### 🤖 Claude — 2026-11-20T13:12:49.973Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/CLAUDE.md", "offset": 14, "limit": 4}`
+
+### 🧑 User — 2026-11-20T13:12:49.999Z
+
+> ↩︎ result: 14	2. **BINDING, user-approved 2026-11-18 ~15:00 UTC: `docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md`** (the exact approved
+> 15	   scenery of 04–08 THROUGHOUT Benny's swimming; read it before any screen work). Read the TOP section of
+> 16	   **`docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`** — NEWEST: "ROUND 25" (lead `ccr-a9235d04-90cw28`, map `docs/briefs/2026-11-20-r25/COORDINATION.md`:
+> 17	   four workers on LOCAL `-c26` branches, next account `setup_worker_r26.sh`); before it "ROUND 24" (lead `ccr-5be1062a-0ffyej`, map `docs/briefs/2026-11-20-r24/COORDINATION.md`: user's Screen 07 note — S-bends, steering view, 07→08 join; four workers on LOCAL `-c25` branches); before it "ROUND 23" (lead `claude/rainbow-r22-restore-ut3m39`, `docs/briefs/2026-11-20-r23/COORDINATION.md` + `OPEN_ITEMS.md`); before it "ROUND 22" (lead `ccr-4742c19f-ez2mrs`, resume `docs/briefs/2026-11-20-r22/RESUME_R22.md`: Screen 04 generated views APPROVED, the user's Screen 04 "clean water" feedback first); before it "ROUND 21" (lead `ccr-68d26c2d-gwegce`, resume `docs/briefs/2026-11-20-r21/RESUME_R21.md`: paid artwork + up to four specialists approved); before it "ROUND 20" (lead `ccr-681a37bb-5jqfbu`, `-c21` map
+
+### 🤖 Claude — 2026-11-20T13:12:54.280Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/CLAUDE.md", "old_string": "   **`docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`** — NEWEST: \"ROUND 25\" (lead `ccr-a9235d04-90cw28`, map `docs/briefs/2026-11-20-r25/COORDINATION.md`:\n   four workers on LOCAL `-c26` branches, next account `setup_worker_r26.sh`); before it \"ROUND 24\"", "new_string": "   **`docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`** — NEWEST: \"ROUND 26\" (lead `ccr-08ece3a6-xcwyls`, map `docs/briefs/2026-11-20-r26/COORDINATION.md`;\n   **the user's detailed visual brief for every screen `docs/briefs/2026-11-20-r26/USER_VISUAL_BRIEF_R2 …[+305 chars]`
+
+### 🧑 User — 2026-11-20T13:12:54.336Z
+
+> ↩︎ result: The file /home/user/rainbow-/CLAUDE.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T13:12:56.285Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\np='backups/AGENTS_STATUS.json'; d=json.load(open(p))\nprint(list(d.keys())[:40])\nprint(json.dumps(d.get('round25',{}))[:1500])\nEOF", "description": "Inspect AGENTS_STATUS.json structure"}`
+
+### 🧑 User — 2026-11-20T13:12:56.356Z
+
+> ↩︎ result: ['_comment', 'schema', 'updated_utc', 'updated_by_session', 'running_now', 'assignments_now', 'current_focus', 'agents', 'marble_feasibility_05', 'proj05', 'previous_round_stopped', 'round2_stopped', 'round3_stopped', 'round4_done', 'backup_2026_11_17_1945', 'round4_stopped_account4', 'round5_account5', 'round6_account6', 'round9_account9', 'running_now_account8_archived', 'round12_account12', 'round13_account13', 'round14_account14', 'round15_account15', 'round16_account16', 'round17_account17', 'round18', 'round19', 'round19b', 'round20', 'round21', 'round22', 'round23', 'round24', 'round25']
+> {"lead_branch": "ccr-a9235d04-90cw28", "started_from": "ccr-5be1062a-0ffyej @ 36bc5332f9b4 (= GitHub; last r24 daemon save 11:43 UTC). Nothing merged.", "services_12_00": "World Labs API key OK (free read 5,420 credits); Marble/Atlas claude.ai connector connected but 'this sign-in has no active Atlas account' (user must finish sign-up at atlas.worldlabs.ai on this account); Hugging Face OK (josdois); Context7 claude.ai connector OK (resolve-library-id works; the context7 PLUGIN's own MCP server still needs auth); fal OK (status read HTTP 200); GitHub MCP OK (josiahscalia5-dev); Playwright MC …[+627 chars]
+
+### 🤖 Claude — 2026-11-20T13:12:58.166Z
+
+Specialists are running; I'm recording the restore state in the agents' status file, then saving to GitHub and sending you the startup report.
+
+### 🤖 Claude — 2026-11-20T13:13:09.428Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\np='backups/AGENTS_STATUS.json'; d=json.load(open(p))\nd['updated_utc']='2026-11-20T13:22:00Z'; d['updated_by_session']='ccr-08ece3a6-xcwyls (round 26 lead)'\nd['round26']={\n \"lead_branch\":\"ccr-08ece3a6-xcwyls\",\n \"started_from\":\"ccr-a9235d04-90cw28 @ a2261d5b96f7ed190af74f075eacec3a3a223665 (= GitHub; last r25 daemon save 12:51 UTC). Nothing merged.\",\n \"r25_end\":\"old account 5-hour limit (HTTP 429) at 12:36 s06, 12:37 s07, 12:40 s04, 12:45 Benny; lead transcript to 12:49:28; snapshots 12:52:06\",\n \"services_13_10\":\"GitHub MCP OK (jo …[+2349 chars]`
+
