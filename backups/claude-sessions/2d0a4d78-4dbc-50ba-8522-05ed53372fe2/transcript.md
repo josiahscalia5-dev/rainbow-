@@ -2529,3 +2529,106 @@ Your untracked files are now committed and pushed; the branch is at `ef2e8ed` an
 
 So is it getting close to my preview screens? I just want to make sure that, all the screens, the lab screens are looking like my exact approved screen that I'm wanting. Like the scenery, you know how the pink character swims through it. You know how all my approved screens look like? Like the images, you know, the approved screens. I want it to feel like those, but it's actually a game, and that pink character is swimming through all those approved screens. But I know they're images, but I want them to be my actual gaming mobile app. If that makes sense. And scenery and exact scenery and all that stuff.
 
+### 🤖 Claude — 2026-11-20T03:40:16.373Z
+
+Let me pull up the most recent side-by-side of every screen in motion so I can answer from the actual pictures, not from memory.
+
+### 🤖 Claude — 2026-11-20T03:40:17.532Z
+
+> 🔧 **Bash** `{"command": "ls -la qa/review_r21/audit/ | head -20; python3 -I -c \"\nfrom PIL import Image\nfor n in '45678': print(n, Image.open(f'qa/review_r21/audit/OVERVIEW_0{n}.png').size)\"", "description": "List the per-screen motion audit overviews"}`
+
+### 🧑 User — 2026-11-20T03:40:17.703Z
+
+> ↩︎ result: total 10000
+> drwxr-xr-x 7 root root    4096 Nov 20 03:05 .
+> drwxr-xr-x 4 root root    4096 Nov 20 03:05 ..
+> drwxr-xr-x 2 root root    4096 Nov 20 03:05 04
+> drwxr-xr-x 2 root root    4096 Nov 20 03:05 05
+> drwxr-xr-x 2 root root    4096 Nov 20 03:05 06
+> drwxr-xr-x 2 root root    4096 Nov 20 03:05 07
+> drwxr-xr-x 2 root root    4096 Nov 20 03:05 08
+> -rw-r--r-- 1 root root 1725750 Nov 20 03:05 OVERVIEW_04.png
+> -rw-r--r-- 1 root root 2064009 Nov 20 03:05 OVERVIEW_05.png
+> -rw-r--r-- 1 root root 2071501 Nov 20 03:05 OVERVIEW_06.png
+> -rw-r--r-- 1 root root 2068249 Nov 20 03:05 OVERVIEW_07.png
+> -rw-r--r-- 1 root root 2248498 Nov 20 03:05 OVERVIEW_08.png
+> -rw-r--r-- 1 root root    1035 Nov 20 03:05 QUERY_04.txt
+> -rw-r--r-- 1 root root     284 Nov 20 03:05 QUERY_05.txt
+> -rw-r--r-- 1 root root     105 Nov 20 03:05 QUERY_06.txt
+> -rw-r--r-- 1 root root     136 Nov 20 03:05 QUERY_07.txt
+> -rw-r--r-- 1 root root     234 Nov 20 03:05 QUERY_08.txt
+> -rw-r--r-- 1 root root      11 Nov 20 03:05 done.flag
+> -rw-r--r-- 1 root root    1346 Nov 20 03:05 run.sh
+> 4 (1110, 1010)
+> 5 (1110, 1010)
+> 6 (1110, 1010)
+> 7 (1110, 1010)
+> 8 (1110, 1010)
+
+### 🤖 Claude — 2026-11-20T03:40:24.525Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad; python3 -I - \"$SP\" <<'EOF'\nimport sys,glob\nfrom PIL import Image\nsp=sys.argv[1]\nrefs={'04':'references/04_through_the_five_arrows.png','05':'references/05_flow_into_the_current.png','06':'references/06_crest_the_rinse_arch.png','07':'references/07_dive_the_washer_tube.png'}\nr8=glob.glob('references/08*.png'); refs['08']=r8[0]\nrows=[]\nfor n in ['04','05','06','07','08']:\n    fs=[refs[n]]+[f'qa/review_r21/audit/{n}/{s}.png' for s in ['a_start','c_middle','d_late','e_end']]\n    H=250; ims …[+585 chars]`
+
+### 🧑 User — 2026-11-20T03:40:25.633Z
+
+> ↩︎ result: (725, 1275) ['references/08_final_spin_chamber.png']
+
+### 🤖 Claude — 2026-11-20T03:40:27.733Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/all_screens_motion.jpg"}`
+
+### 🧑 User — 2026-11-20T03:40:27.770Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:40:37.099Z
+
+That gives me a clear picture. I'll make a labelled version you can look at too: one row per screen, with your approved picture first and then the game at four points while Benny swims.
+
+### 🤖 Claude — 2026-11-20T03:40:42.653Z
+
+> 🔧 **Bash** `{"command": "mkdir -p qa/review_r22/overview && python3 -I - <<'EOF'\nfrom PIL import Image, ImageDraw, ImageFont\nrefs={'04':'references/04_through_the_five_arrows.png','05':'references/05_flow_into_the_current.png','06':'references/06_crest_the_rinse_arch.png','07':'references/07_dive_the_washer_tube.png','08':'references/08_final_spin_chamber.png'}\ncols=['YOUR APPROVED','GAME: start','swimming: middle','swimming: late','swimming: end']\nH=520; GAP=12; TOP=56; LEFT=0\nfont=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',22)\nrows=[]\nfor n in refs:\n    fs=[refs[n] …[+759 chars]`
+
+### 🧑 User — 2026-11-20T03:40:44.223Z
+
+> ↩︎ result: (1508, 2704)
+> 13
+
+### 🤖 Claude — 2026-11-20T03:40:46.827Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/review_r22/overview/ALL_SCREENS_APPROVED_vs_GAME_in_motion.png"], "caption": "Where each screen stands today. Rows top to bottom: 04, 05, 06, 07, 08. First column: your approved picture. Then the real game at the start and while Benny swims (middle, late, end).", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-20T03:40:47.793Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/review_r22/overview/ALL_SCREENS_APPROVED_vs_GAME_in_motion.png → file_uuid: 277269c9-f190-4dbb-b37d-af2b3326169a
+
+### 🤖 Claude — 2026-11-20T03:41:02.282Z
+
+Yes, that makes sense, and it's the goal everyone is working toward: your approved pictures should feel like a real world Benny swims through, looking like your painting at every moment, not just the first view.
+
+**Honest answer: the start of every screen is already very close to your pictures. Keeping that look while Benny swims deeper is where most of the remaining gap is.** I sent you a picture of where every screen stands: your approved picture first, then the real game at the start and while swimming. It comes from the last full check (end of the previous session), before this session's improvements, none of which you've approved yet.
+
+The ratings below are my rough judgement by eye, not measurements.
+
+| Screen | Start | While swimming | What still looks different |
+|---|---|---|---|
+| **08 Final Spin Chamber** | ~9 | ~8.5 (closest) | Holds the look all the way; coins a little too big |
+| **05 Flow Into the Current** | ~9 | ~8 | Near the end, the walls get smeared and there are fewer gold rings than painted |
+| **04 Five Arrows** | ~9 | ~6.5 | Inside the gold tunnel the pink water climbing the walls becomes a hazy blur and the foam disappears |
+| **07 Washer Tube** | ~9 | ~5 | Midway the view faces a close purple wall; the end turns into a pale, streaky waterfall |
+| **06 Rinse Arch** | ~8.5 | ~5 (farthest) | The rings become a centred bullseye, big white foam walls fill both sides, and the rainbow crest curving left is lost |
+
+**What's being done right now**
+- **Screen 04:** the glossy pink ribbons from the previous session replace the hazy blur and are waiting for your approval; the specialist is now continuing the foam deeper into the tunnel.
+- **Screen 07:** the previous session's fix turns the pale waterfall into a glossy cyan river; the specialist is now turning flat foam into puffy clouds.
+- **Screen 06:** next up is replacing the big foam walls with your painting's low, puffy foam clouds.
+- **Benny:** his colour now matches across every screen; the fluffy fur, pompom and star come next.
+
+**The biggest thing that would speed this up is your verdict on the artwork proposals** (3 for Screen 04, 2 for Screen 07, 2 for Screen 05). Your pictures only show the opening view. The proposals paint the parts Benny swims into later, in the style of your originals. Once you approve them, I build them into the real 3D tunnel so the scenery keeps looking painted as he swims deeper. A simple "yes", "no" or "change this" on each is enough.
+
+### 🧑 User — 2026-11-20T03:41:04.214Z
+
+Stop hook feedback:
+[command hook 2]: There are untracked files in the repository. Please commit and push these changes to the remote branch.
+
