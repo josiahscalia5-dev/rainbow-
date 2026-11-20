@@ -570,3 +570,37 @@ Typecheck passes. Three variants in parallel at early and middle.
 
 > 🔧 **Bash** `{"command": "uptime; S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04; T=/home/user/rainbow-/qa/match/04/r23/s04_tools; Q2=/home/user/rainbow-/qa/match/04/r23/s2_edge/QUERY_K23-S2.txt; SH='[[\"b_early\",0.12,null],[\"c_middle\",0.35,null]]'\n( BASE=$Q2 SHOTS=$SH bash $T/variant.sh $S/V2 5273 \"m04lgs=1&m04lgn=4&m04lgt=0.06&m04lgl2=1.6&m04lgm=0.6&m04lgw=2.5&m04lgwb=3&m04lgb=3&m04lgk=0.8&m04lgsp=0.9\" > $S/V2.out 2>&1 ) &\n( BASE=$Q2 SHOTS=$SH bash $T/variant.sh $S/V3 5274 \"m04lgs=1&m04lgn=4&m04lgt=0.06&m04lgl2=1.6&m04lgm=0.6&m04lgw=5&m04lgwb=3&m04lgb=3&m0 …[+692 chars]`
 
+### 🧑 User — 2026-11-20T10:51:34.509Z
+
+> ↩︎ result: 10:49:14 up 28 min,  0 user,  load average: 15.52, 10.86, 5.05
+> [1]   Done                    ( BASE=$Q2 SHOTS=$SH bash $T/variant.sh $S/V2 5273 "m04lgs=1&m04lgn=4&m04lgt=0.06&m04lgl2=1.6&m04lgm=0.6&m04lgw=2.5&m04lgwb=3&m04lgb=3&m04lgk=0.8&m04lgsp=0.9" > $S/V2.out 2>&1 )
+> [2]-  Done                    ( BASE=$Q2 SHOTS=$SH bash $T/variant.sh $S/V3 5274 "m04lgs=1&m04lgn=4&m04lgt=0.06&m04lgl2=1.6&m04lgm=0.6&m04lgw=5&m04lgwb=3&m04lgb=3&m04lgk=0.8&m04lgsp=0.9" > $S/V3.out 2>&1 )
+> [3]+  Done                    ( BASE=$Q2 SHOTS=$SH bash $T/variant.sh $S/V4 5275 "m04lgs=0.85&m04lgn=6&m04lgt=0.05&m04lgl2=1.0&m04lgm=0.6&m04lgw=4&m04lgwb=2.5&m04lgb=3&m04lgk=0.7&m04lgsp=1.2&m04lgon=0.5" > $S/V4.out 2>&1 )
+> done /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04/V2 2 png
+> done /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04/V3 2 png
+> done /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04/V4 2 png
+
+### 🤖 Claude — 2026-11-20T10:51:42.668Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04/sweep1_middle.png"}`
+
+### 🧑 User — 2026-11-20T10:51:42.974Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T10:51:47.392Z
+
+At thumbnail size V2–V4 read as dense squiggles, which might look busy rather than clean. Let me view V2 at full size to judge properly.
+
+### 🤖 Claude — 2026-11-20T10:51:48.516Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04/V2/c_middle.png"}`
+
+### 🧑 User — 2026-11-20T10:51:48.702Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T10:52:08.891Z
+
+> 🔧 **Bash** `{"command": "uptime; S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04; T=/home/user/rainbow-/qa/match/04/r23/s04_tools; Q2=/home/user/rainbow-/qa/match/04/r23/s2_edge/QUERY_K23-S2.txt; SH='[[\"b_early\",0.12,null],[\"c_middle\",0.35,null]]'\n( BASE=$Q2 SHOTS=$SH bash $T/variant.sh $S/V5 5273 \"m04lgs=1&m04lgn=3&m04lgt=0.06&m04lgl2=2.2&m04lgm=0.8&m04lgw=1.5&m04lgwb=6&m04lgb=4&m04lgk=0.7&m04lgsp=0.8\" > $S/V5.out 2>&1 ) &\n( BASE=$Q2 SHOTS=$SH bash $T/variant.sh $S/V6 5274 \"m04lgs=1&m04lgn=3&m04lgt=0.05&m04lgl2=2.2&m04lgm=0.8&m04lgw=2.5&m04lgwb=5.5&m04lgb= …[+667 chars]`
+

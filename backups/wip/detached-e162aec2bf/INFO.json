@@ -2,7 +2,7 @@
  "worktree": "/home/user/wt/lead06",
  "branch": "detached-e162aec2bf",
  "head": "e162aec2bfdc631913c41daa435f9d449439af4f",
- "time": "2026-11-20T10:51:36+00:00",
+ "time": "2026-11-20T10:53:21+00:00",
  "dirty_tracked": [
   "src/game/Game.ts",
   "src/world/match06.ts"
