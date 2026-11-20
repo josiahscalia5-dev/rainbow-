@@ -1187,3 +1187,338 @@ Even with every pink layer of the river shader off and the cyan lane 10 u wide, 
 > 292:  // round 8 (M4): `&m04ring / m04foam / m04bub / m04arrow / m04wave =1` sub-switches (src/world/match04m4.ts); absent = no change
 > Shell cwd was reset to /home/user/rainbow-
 
+### 🤖 Claude — 2026-11-20T04:24:10.940Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"__rainbow\\s*=\" -A3 src/game/*.ts src/*.ts 2>/dev/null | head -20; grep -n \"scene:\" src/game/Game.ts | head -5; grep -n \"drawList\\b\\|drawList(\" src/game/Game.ts | head -3", "description": "Find the QA debug API exposing the scene"}`
+
+### 🧑 User — 2026-11-20T04:24:11.003Z
+
+> ↩︎ result: src/game/Game.ts:769:  (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+> src/game/Game.ts-770-  return api;
+> src/game/Game.ts-771-}
+> 745:    drawList() {
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T04:24:12.320Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/src/game/Game.ts", "offset": 700, "limit": 70}`
+
+### 🧑 User — 2026-11-20T04:24:12.343Z
+
+> ↩︎ result: 700	      return { mode: st.mode, stage: st.stage, s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: st.coins, hearts: st.hearts, paused: st.paused, bennyY: +benny.root.position.y.toFixed(3), bennyVisible: benny.root.visible, cam: camera.position.toArray().map((x) => +x.toFixed(2)) };
+> 701	    },
+> 702	    log() { return st.log; },
+> 703	    coinDefs() { return coins.defs.map((d, i) => ({ s: d.s, lat: d.lat, taken: coins.collected[i] === 1 })); },
+> 704	    /** QA: on-screen centre (px) and diameter (px) of every untaken coin in front of the camera */
+> 705	    coinScreen() {
+> 706	      const mesh = coins.group.children[0] as THREE.InstancedMesh;
+> 707	      const m = new THREE.Matrix4(), p = new THREE.Vector3(), q = new THREE.Quaternion(), sc = new THREE.Vector3();
+> 708	      const W = renderer.domElement.clientWidth, H = renderer.domElement.clientHeight;
+> 709	      camera.updateMatrixWorld();
+> 710	      const right = new THREE.Vector3().setFromMatrixColumn(camera.matrixWorld, 0);
+> 711	      const out: { i: number; x: number; y: number; d: number }[] = [];
+> 712	      coins.defs.forEach((_, i) => {
+> 713	        if (coins.collected[i]) return;
+> 714	        mesh.getMatrixAt(i, m); m.decompose(p, q,  …[+3798 chars]
+
+### 🤖 Claude — 2026-11-20T04:24:15.515Z
+
+The debug API has `probe(x, y)`, which reports what a camera ray hits first. I'll probe the pink areas near the bottom of the frame at the middle shot.
+
+### 🤖 Claude — 2026-11-20T04:24:22.233Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad; cat > $S/probe04.mjs <<'EOF'\nimport { pathToFileURL } from 'node:url';\nconst { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);\nconst [Q, FRAC, PTS] = process.argv.slice(2);\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(Number(process.env.AUDIT_PORT ?? 5280));\nconst browser = await chromium.launch({ args: CHROMIUM_ARGS });\ntry {\n  const page = await browser.newPage({ viewport: { width: 864, height: 1 …[+1061 chars]`
+
+### 🧑 User — 2026-11-20T04:24:31.605Z
+
+> ↩︎ result: [
+>  {
+>   "x": -0.7,
+>   "y": -0.75,
+>   "hits": [
+>    {
+>     "d": 8,
+>     "obj": "m04_river<match04_projection<Scene",
+>     "p": [
+>      0.51,
+>      -28.39,
+>      -34.55
+>     ]
+>    },
+>    {
+>     "d": 8.05,
+>     "obj": "m04_water<match04_projection<Scene",
+>     "p": [
+>      0.5,
+>      -28.42,
+>      -34.57
+>     ]
+>    },
+>    {
+>     "d": 8.7,
+>     "obj": "Mesh<zone_tubes<washer_world<Scene",
+>     "p": [
+>      0.35,
+>      -28.97,
+>      -34.88
+>     ]
+>    },
+>    {
+>     "d": 9.97,
+>     "obj": "m04_ring_tunnel<match04_projection<Scene",
+>     "p": [
+>      0.05,
+>      -30.05,
+>      -35.5
+>     ]
+>    }
+>   ]
+>  },
+>  {
+>   "x": -0.3,
+>   "y": -0.9,
+>   "hits": [
+>    {
+>     "d": 6.3,
+>     "obj": "Mesh<zone_tubes<washer_world<Scene",
+>     "p": [
+>      1.7,
+>      -27.27,
+>      -33.42
+>     ]
+>    },
+>    {
+>     "d": 6.97,
+>     "obj": "m04_river<match04_projection<Scene",
+>     "p": [
+>      1.63,
+>      -27.87,
+>      -33.72
+>     ]
+>    },
+>    {
+>     "d": 7.01,
+>     "obj": "m04_water<match04_projection<Scene",
+>     "p": [
+>      1.62,
+>      -27.9,
+>      -33.73
+>     ]
+>    },
+>    {
+>     "d": 8.09,
+>     "obj": "Mesh<zone_tubes<washer_world<Scene",
+>     "p": [
+>      1.5,
+>      -28.86,
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T04:24:44.258Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -rn \"zone_tubes\" src | head -5 | cut -c1-200; grep -n \"hide\\|visible = false\\|\\.visible =\" src/world/match04.ts | head -20 | cut -c1-200", "description": "Find zone_tubes and how match04 hides base meshes"}`
+
+### 🧑 User — 2026-11-20T04:24:44.308Z
+
+> ↩︎ result: 294:    hideOld: (names) => group.children.forEach((o) => { if (names.includes(o.name)) o.visible = false; }) });
+> 397:    splash.visible = false;
+> 411:      clone.visible = true;
+> 420:        clone.traverse((o) => { if (o.userData.mv) o.visible = false; });
+> 442:            u.value *= fade; o.visible = u.value > 0.01;
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T04:24:46.313Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -rn \"zone_\\|'tubes'\\|\\\"tubes\\\"\" src --include=*.ts | grep -i \"name\" | head -10 | cut -c1-200; grep -n \"m04_water\\|'water'\" src/world/match04.ts | head; sed -n 282,296p src/world/match04.ts", "description": "Locate zone tubes naming and match04 water setup"}`
+
+### 🧑 User — 2026-11-20T04:24:46.369Z
+
+> ↩︎ result: src/world/environment.ts:50:  Object.entries(zones).forEach(([k, g]) => { g.name = 'zone_' + k; root.add(g); });
+> 201:  const [pGold, pWater, pWall] = await Promise.all([loadPatch('gold'), loadPatch('water'), loadPatch('wall')]);
+> 288:  add(wp, M.water, 'water');
+>     console.info('[match04] m04room', { k, cut });
+>   }
+>   // water plane at Benny's water level: from behind the camera, through the mouth, down the tunnel
+>   const zBack = 14, zEnd = z0 - len;
+>   const wp = new THREE.PlaneGeometry(28, zBack - zEnd, 56, 96);
+>   wp.rotateX(-Math.PI / 2).translate(0, 0, (zBack + zEnd) / 2);
+>   add(wp, M.water, 'water');
+>   // far end cap of the tunnel (the glowing vanishing point)
+>   add(new THREE.CircleGeometry(T.r, 64).translate(cx, cy, zEnd), M.gold, 'tube_end');
+> 
+>   // round 8 (M4): `&m04ring / m04foam / m04bub / m04arrow / m04wave =1` sub-switches (src/world/match04m4.ts); absent = no change
+>   const m4 = addM04({ group, shared: shared as unknown as Record<string, THREE.IUniform>, proj, cx, cy, z0, len, r: T.r, outerR: T.outerR,
+>     hideOld: (names) => group.children.forEach((o) => { if (names.includes(o.name)) o.visible = false; }) });
+> 
+>   // r11 `&m04mv=1` (lead DECISIVE TEST, qa/match/04/r11/PRO …[+107 chars]
+
+### 🤖 Claude — 2026-11-20T04:24:48.695Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 30,60p src/world/environment.ts; grep -rn \"tubes\" src/world/environment.ts | head -10 | cut -c1-180; grep -rn \"zone_tubes\\|zones.tubes\\|zone(\" src/game/Game.ts src/world/*.ts | head -10 | cut -c1-180", "description": "Read environment zones setup"}`
+
+### 🧑 User — 2026-11-20T04:24:48.789Z
+
+> ↩︎ result: /** groups toggled per scene for performance */
+>   zones: Record<'drumA' | 'basin' | 'tubes' | 'chamber', THREE.Group>;
+>   /** straight 05–07 tunnel axis (camera alignment) */
+>   tubeAxis: { path: import('./tube').TubePath; s0: number; s1: number };
+> }
+> 
+> const sm = (a: number, b: number, x: number) => {
+>   const t = THREE.MathUtils.clamp((x - a) / (b - a), 0, 1);
+>   return t * t * (3 - 2 * t);
+> };
+> 
+> export function buildEnvironment(course: Course): Environment {
+>   const root = new THREE.Group();
+>   root.name = 'washer_world';
+>   const zones = {
+>     drumA: new THREE.Group(),
+>     basin: new THREE.Group(),
+>     tubes: new THREE.Group(),
+>     chamber: new THREE.Group(),
+>   };
+>   Object.entries(zones).forEach(([k, g]) => { g.name = 'zone_' + k; root.add(g); });
+>   const goldMat = gold();
+>   const goldSoft = gold({ roughness: 0.3, emissive: 0.3 });
+>   const chromeMat = chrome();
+>   const animated: ((t: number, dt: number) => void)[] = [];
+> 
+>   // =====================================================================================
+>   // Drum A (01–02)
+>   // =====================================================================================
+>   const dA = WORLD.drumA;
+>   const drumLen = dA.zDoor - dA.zBack;
+> 31:  …[+2393 chars]
+
+### 🤖 Claude — 2026-11-20T04:24:56.251Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/src/world/match04m4.ts", "offset": 812, "limit": 26}`
+
+### 🧑 User — 2026-11-20T04:24:56.274Z
+
+> ↩︎ result: 812	varying vec4 vProj;
+> 813	varying vec3 vL;
+> 814	varying float vS;
+> 815	varying float vC;
+> 816	${PROJ05_INVERSE}
+> 817	float h21(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+> 818	float vn(vec2 p) { vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f);
+> 819	  return mix(mix(h21(i), h21(i + vec2(1, 0)), f.x), mix(h21(i + vec2(0, 1)), h21(i + vec2(1, 1)), f.x), f.y); }
+> 820	// chevron pointing down the slide: distance to the two arms
+> 821	float chev(vec2 p, float hw, float th) {
+> 822	  p.x = abs(p.x);
+> 823	  vec2 a = vec2(0.0, 0.0), b = vec2(hw, -hw * 2.3);   // long arms along the flow (painted arrows seen low)
+> 824	  vec2 pa = p - a, ba = b - a;
+> 825	  float h = clamp(dot(pa, ba) / dot(ba, ba), 0.0, 1.0);
+> 826	  return length(pa - ba * h) - th;
+> 827	}
+> 828	void main() {
+> 829	  float along = -vL.z;                                     // down the slide from Benny's checkpoint water point
+> 830	  float flow = along - uTime * 0.9;                        // the design drifts down the slide with the current
+> 831	  float lat = vS * uRivA.w + 0.9 * (vn(vec2(along * 0.07, 7.0)) - 0.5) * smoothstep(0.4, 1.6, abs(vS));
+> 832	  float fl = flow + 2.2 * (vn(vec2(along * 0.05, vS * 0 …[+447 chars]
+
+### 🤖 Claude — 2026-11-20T04:24:56.907Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/src/world/match04m4.ts", "offset": 1034, "limit": 135}`
+
+### 🧑 User — 2026-11-20T04:24:56.930Z
+
+> ↩︎ result: 1034	    col = mix(col, bc, uSB0.x * ckc * smoothstep(inner - uSB1.x, inner + 0.25 * uSB1.x, am));
+> 1035	    if (uSB1.y > 0.5) col = mix(col, vec3(0.97, 0.90, 1.0), fringe);
+> 1036	  }
+> 1037	  if (uWC.x > 0.0 && uWU.x > 0.0) {
+> 1038	    // r20 m04wcr: the painted WALL swirls are crisp glossy ribbons, not a soft pink haze — on the climbing water the pink satin
+> 1039	    // is drawn as defined magenta / hot-pink bands running along the tunnel (rising and dipping with the tongues), each with a
+> 1040	    // thin bright white-pink highlight line and a darker violet edge; the painted tile's satin light / dark flow is kept
+> 1041	    // inside the bands; world-anchored and flowing with the current; starts a hair below the old edge (no seam there)
+> 1042	    float kc = smoothstep(-0.3, 0.1, ext) * wuK;
+> 1043	    if (kc > 0.0) {
+> 1044	      float sdw = vS < 0.0 ? 0.0 : 1.0;
+> 1045	      // band coordinate: height up the wall measured as a share of THIS spot's climb (so the bands rise and dip with each
+> 1046	      // tongue, parallel to its crest, like the painted swirl lines), m04wcn bands per u of the full climb, slow wobble
+> 1047	      float q = ext / max(wuE, 0.25) * uWC.y * uWU.x * 0.6 + 0.35 * sin(fl * …[+9891 chars]
+
+### 🤖 Claude — 2026-11-20T04:25:14.234Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad; cat > $S/setq.mjs <<'EOF'\n// usage: node setq.mjs \"<base query>\" \"<overrides a=1&b=2>\"  -> base with each key replaced in place (or appended)\nconst [b, o] = process.argv.slice(2); const p = new URLSearchParams(b);\nfor (const [k, v] of new URLSearchParams(o)) p.set(k, v);\nprocess.stdout.write(p.toString());\nEOF\ncat > $S/sweep.sh <<'EOF'\n#!/usr/bin/env bash\n# usage: sweep.sh <outdir> <port> <overrides> [base query file]\nset -u\nO=$1; P=$2; X=$3; BF=${4:-/home/user/rainbow-/qa/match/04/r …[+1289 chars]`
+
+### 🤖 Claude — 2026-11-20T04:25:15.385Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/diag/diag.png"}`
+
+### 🧑 User — 2026-11-20T04:25:53.700Z
+
+> ↩︎ result: [1]   Done                    $S/sweep.sh $R/D1 5273 "m04nwhirl=0&m04nband=0"
+> [2]   Done                    $S/sweep.sh $R/D2 5274 "m04nwhirl=0&m04nband=0&m04sband=0&m04pink=0"
+> [3]-  Done                    $S/sweep.sh $R/D3 5275 "m04nwhirl=0&m04nband=0&m04sband=0&m04pink=0&m04lanew=10&m04lanes=1"
+> [4]+  Done                    $S/sweep.sh $R/D4 5276 "m04nwhirl=0&m04nband=0&m04lanew=3.2&m04lanes=0.95&m04sbi=3.2&m04pkl=3.2"
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🧑 User — 2026-11-20T04:25:53.736Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:26:13.471Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad; R=/home/user/rainbow-/qa/match/04/r23/lead_t2; unset SHOTS; export SHOTS='[[\"a_start\",0,null],[\"b_early\",0.12,null],[\"c_middle\",0.35,null],[\"d_late\",0.6,null],[\"e_end\",0.85,null],[\"f_hard_left\",0.35,-1],[\"g_hard_right\",0.35,1]]'\n$S/sweep.sh $R/C1 5273 \"m04nwhirl=0&m04nband=0\" &\n$S/sweep.sh $R/C2 5274 \"m04nwhirl=0&m04nband=0&m04lane2=0.25\" &\nwait; cd /home/user/rainbow- && for s in b_early c_middle d_late e_end f_hard_left g_hard_right; do convert qa/match/04/r23/lead_t1/BEFORE …[+800 chars]`
+
+### 🤖 Claude — 2026-11-20T04:26:14.931Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/cc1.png"}`
+
+### 🤖 Claude — 2026-11-20T04:26:15.476Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/cc2.png"}`
+
+### 🧑 User — 2026-11-20T04:27:37.472Z
+
+> ↩︎ result: [1]-  Done                    $S/sweep.sh $R/C1 5273 "m04nwhirl=0&m04nband=0"
+> [2]+  Done                    $S/sweep.sh $R/C2 5274 "m04nwhirl=0&m04nband=0&m04lane2=0.25"
+> C1 start view vs BEFORE: >25 levels 0 px; any 17625
+> C2 start view vs BEFORE: >25 levels 0 px; any 17625
+
+### 🧑 User — 2026-11-20T04:27:37.508Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-20T04:27:37.513Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:27:52.011Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad; R=qa/match/04/r23/lead_t2; convert references/04_through_the_five_arrows.png -crop 864x700+0+836 -resize 432x350 $S/z0.png; for p in C1 C2; do convert $R/$p/c_middle.png -crop 864x700+0+836 -resize 432x350 $S/z_$p.png; done; convert $S/z0.png $S/z_C1.png $S/z_C2.png +append $S/zoom.png", "description": "Crop near-water area for close comparison"}`
+
+### 🧑 User — 2026-11-20T04:27:52.482Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T04:27:53.011Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/zoom.png"}`
+
+### 🧑 User — 2026-11-20T04:27:53.043Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:28:03.314Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad; A=qa/review_r21/artwork/04/accepted; convert $A/04_gen_c_middle_p2_v1.png -resize 288x512! $S/g1.png; convert $A/04_gen_d_late_p3_v1.png -resize 288x512! $S/g2.png; convert $A/04_gen_e_end_p2_v1.png -resize 288x512! $S/g3.png; convert qa/match/04/r23/lead_t2/C2/c_middle.png -resize 288x512 $S/g4.png; convert $S/g1.png $S/g2.png $S/g3.png $S/g4.png +append $S/gen.png", "description": "Compose the three approved generated views beside C2"}`
+
+### 🧑 User — 2026-11-20T04:28:04.240Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T04:28:04.467Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/gen.png"}`
+
+### 🧑 User — 2026-11-20T04:28:04.500Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:28:25.792Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad; cat > $S/clip.sh <<'EOF'\n#!/usr/bin/env bash\n# usage: clip.sh <query file> <out mp4 prefix> <port>\nset -u\nQF=$1; OP=$2; P=$3; T=$(mktemp -d /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/clipXXXX)\ncd /home/user/wt/s04\nAUDIT_PORT=$P timeout 1500 node /home/user/rainbow-/qa/match/04/r22/tools/swim_clip_pinned.mjs 04 \"$T/f\" 2.4 \"$(cat $QF)\" > \"$T/log\" 2>&1\nffmpeg -loglevel error -y -framerate 24 -i \"$T/f/%04d.png\" -vf scale=432:768 -pix_fmt yuv420p \" …[+1044 chars]`
+
