@@ -1283,3 +1283,150 @@ Now the debug view: a temporary switch that colours each pixel by which surface 
 > 52 398 648 87 [150  63  53] ##########
 > 54 397 646 84 [148  60  48] #### …[+6768 chars]
 
+### 🤖 Claude — 2026-11-20T01:14:03.632Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "offset": 370, "limit": 30}`
+
+### 🧑 User — 2026-11-20T01:14:03.654Z
+
+> ↩︎ result: 370	        wg = mix(wg, vec3(1.35, 2.46, 2.80), clamp(x - 5.0, 0.0, 1.0));
+> 371	        pr *= mix(vec3(1.0), wg, uRWarm.x);
+> 372	      }
+> 373	      pr += vec3(1.0, 0.86, 0.55) * 0.10 * gl * smoothstep(0.0, 0.2, facing);   // moving polished sheen
+> 374	      if (uRNear.x > 0.0 && uu < uL) {
+> 375	        // r19b / r20 m04rnear: the NEAR band seen from inside. While swimming, the band of the ring Benny is in fills the
+> 376	        // top half of the view and the painted ring (160 texture rows for a whole ring) is magnified ~10x into one broad,
+> 377	        // smooth orange-copper surface. The painting's nearest gold (the washer rim) is several polished yellow-gold tubes
+> 378	        // with bright rims, thin dark grooves, hot highlights and glowing bulbs, with soft pink / violet reflections. So once
+> 379	        // a band is large on screen it resolves into that structure: N sub-bands (about uRNear.y world u each, world-
+> 380	        // anchored), each a rounded polished tube whose highlights move over it as Benny swims, a crisp warm-white rim line
+> 381	        // and a dark groove, a row of bulbs, graded toward the washer rim's yellow-gold, mirroring the pink / violet river.
+> 382	        // It  …[+1558 chars]
+
+### 🤖 Claude — 2026-11-20T01:14:51.566Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "offset": 505, "limit": 30}`
+
+### 🧑 User — 2026-11-20T01:14:51.588Z
+
+> ↩︎ result: 505	              pr += vec3(1.0, 0.62, 0.20) * 0.70 * smoothstep(3.0, 0.0, dd) * onB;
+> 506	              pr = mix(pr, vec3(1.0, 0.96, 0.80), smoothstep(1.0, 0.35, dd) * onB);
+> 507	            }
+> 508	          }
+> 509	        }
+> 510	      }
+> 511	      if (uRMat.x > 0.0) {
+> 512	        // r20 m04rmat: MIRROR-POLISHED gold like the approved tunnel (user's marked spot, crop x0-480 y380-860): the painted
+> 513	        // ring walls are darker rose-copper between the ribs (luma p25 102 / p50 122 / p75 153) with bright yellow-gold
+> 514	        // lines and highlights (p95 ~219), the game's walls were a lighter, flatter orange (135 / 157 / 183 / 232 with the
+> 515	        // ribs). Mid-tones are pressed down and made a little less yellow (copper-rose), highlights kept bright and golden.
+> 516	        float lm = dot(pr, vec3(0.30, 0.59, 0.11));
+> 517	        float hiM = smoothstep(0.45, 0.85, lm);
+> 518	        pr *= mix(1.0, 1.0 - uRMat.y + uRMat.y * hiM, uRMat.x);
+> 519	        pr.g *= mix(1.0, 1.0 - uRMat.z * (1.0 - smoothstep(0.55, 0.9, lm)), uRMat.x);
+> 520	      }
+> 521	      if (uRCr.x > 0.0) {
+> 522	        // r18 m04rpcr: the painted thin bright lip line and thin dark groove line drawn CRISP at their modele …[+1112 chars]
+
+### 🤖 Claude — 2026-11-20T01:14:53.651Z
+
+Now I'll write the soft-rib code behind the switch.
+
+### 🤖 Claude — 2026-11-20T01:15:37.507Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && python3 - <<'EOF'\np='src/world/match04m4.ts'; s=open(p).read()\ndef rep(a,b,cnt=1):\n    global s\n    assert s.count(a)==cnt, (a[:60], s.count(a)); s=s.replace(a,b)\n# 1) uniform\nrep(\"\"\"uniform float uDbg;         // TEMP r21 diagnosis\"\"\",\"\"\"uniform float uDbg;         // TEMP r21 diagnosis\nuniform vec4 uRSoft;       // r21 m04rsoft: x amount, y groove half-width (ring units), z rim roll-off (ring units), w painted hue kept\nvec3 copperSoft(float T) {\n  // r21 m04rsoft: display colours measured on the approved inner rings, indexed by their lu …[+11348 chars]`
+
+### 🧑 User — 2026-11-20T01:15:37.630Z
+
+> ↩︎ result: ok
+>       if (uRDots.x > 0.0) {
+>         // r16 m04rpdots: the painted light dots on every ring lip (yellow-white core, orange glow, irregular spacing,
+>         // ~14-16 per ring, some cells dark), on the painted bright lip line; world-anchored. Far dots keep ~1 px size
+>         // (dimmer) instead of vanishing, like the small dots on the painted far rings.
+>         float ri = floor(al / uP);
+>         float cfl = (ang + rj) / 6.2831853 * uRDots.y + 0.5 * mod(ri, 2.0);
+>         float ci = floor(cfl);
+>         float jx = (h21(vec2(ci + 1.7, ri + 3.1)) - 0.5) * 0.5;
+>         float arc = (fract(cfl) - 0.5 - jx) * 6.2831853 * rr / uRDots.y;    // world units along the ring
+>         float du = uu - uL - 0.03;                                            // world units from the painted lip line
+>         float bs = uRDots.w * (0.6 + 0.8 * h21(vec2(ci + 5.3, ri)));
+>         // pixel footprint from the wrap-free angle derivatives (fwidth(arc) jumps at every cell border -> dashed lines)
+>         float fa = rr * (abs(dax) + abs(day)), fu = fwidth(al);
+>         float ea = max(bs * 1.5, 0.9 * fa), eu = max(bs, 0.9 * fu);         // painted dots: a little longer along the lip
+>         float on = step(1.0 - uRDot …[+883 chars]
+
+### 🤖 Claude — 2026-11-20T01:15:49.292Z
+
+Next: the light dots on each ring's rim, which need to cross-fade onto the new rim crest, plus the JavaScript side of the switch.
+
+### 🤖 Claude — 2026-11-20T01:15:57.050Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && python3 - <<'EOF'\np='src/world/match04m4.ts'; s=open(p).read()\ndef rep(a,b,cnt=1):\n    global s\n    assert s.count(a)==cnt, (a[:70], s.count(a)); s=s.replace(a,b)\nrep(\"\"\"        pr += vec3(1.0, 0.62, 0.20) * 0.60 * smoothstep(3.0, 0.0, d) * on;   // orange halo\n        pr = mix(pr, vec3(1.0, 0.95, 0.76), smoothstep(1.0, 0.35, d) * on);  // yellow-white core\n      }\"\"\",\"\"\"        on *= 1.0 - fdS;                                                      // r21 m04rsoft: cross-fades onto the rim crest\n        pr += vec3(1.0, 0.62, 0.20) * 0.60 *  …[+1637 chars]`
+
+### 🧑 User — 2026-11-20T01:16:00.704Z
+
+> ↩︎ result: ok
+> tsc-exit 0
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:16:10.137Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && sed -i \"s#  page.on('pageerror', (e) => console.error('pageerror', e.message));#  page.on('pageerror', (e) => console.error('pageerror', e.message));\\n  page.on('console', (m) => { if (m.type() === 'error') console.error('console', m.text().slice(0, 400)); });#\" tools/match04/rings21.mjs && S=/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r; Q=$(cat qa/match/04/r19b/ringpaint/preview_r20/QUERY_preview.txt)\nSH='[[\"f06\",84.183,null,10],[\"f10\",88.4,null,10],[\"sR\",84.183,1,10]]'\ntimeout 600 node tools/match04/rings …[+688 chars]`
+
+### 🧑 User — 2026-11-20T01:16:40.504Z
+
+> ↩︎ result: console THREE.WebGLProgram: Shader Error 0 - VALIDATE_STATUS false
+> f06 s 84.413 lat 0 04 coins 1330
+> f10 s 88.613 lat 0 04 coins 1330
+> sR s 84.413 lat 1.65 04 coins 1330
+> console THREE.WebGLProgram: Shader Error 0 - VALIDATE_STATUS false
+> BEFORE (switch off) after code change vs original: rings identical? pct identical 28.98 upper-half max diff 255
+> Shell cwd was reset to /home/user/rainbow-
+> [This command modified 1 file you've previously read: ../wt/s04b/tools/match04/rings21.mjs. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-20T01:16:43.509Z
+
+The shader failed to compile. Let me get the exact error line.
+
+### 🤖 Claude — 2026-11-20T01:16:47.016Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && sed -i \"s#console.error('console', m.text().slice(0, 400))#{ const t = m.text(); const e = t.split('\\\\\\\\n').filter((l) => /ERROR|error:/.test(l)).slice(0, 6).join(' | '); console.error('console', t.slice(0, 120), e); }#\" tools/match04/rings21.mjs && grep -n \"console',\" tools/match04/rings21.mjs && S=/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r; Q=$(cat qa/match/04/r19b/ringpaint/preview_r20/QUERY_preview.txt); timeout 600 node tools/match04/rings21.mjs $S/x \"$Q\" '[[\"f06\",84.183,null,10]]' 2>&1 | grep -E \" …[+90 chars]`
+
+### 🧑 User — 2026-11-20T01:16:58.687Z
+
+> ↩︎ result: 19:  page.on('console', (m) => { if (m.type() === 'error') { const t = m.text(); const e = t.split('\n').filter((l) => /ERROR|error:/.test(l)).slice(0, 6).join(' | '); console.error('console', t.slice(0, 120), e); }; });
+> console THREE.WebGLProgram: Shader Error 0 - VALIDATE_STATUS false
+> Shell cwd was reset to /home/user/rainbow-
+> [This command modified 1 file you've previously read: ../wt/s04b/tools/match04/rings21.mjs. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-20T01:17:07.280Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && python3 - <<'EOF'\np='tools/match04/rings21.mjs'; s=open(p).read()\nimport re\ni=s.index(\"  page.on('console'\"); j=s.index(\"\\n\",i)\ns=s[:i]+\"\"\"  page.on('console', async (m) => { if (m.type() !== 'error') return; let t = m.text(); try { t = (await Promise.all(m.args().map((a) => a.jsonValue()))).join(' '); } catch {} const e = String(t).split('\\\\n').filter((l) => /ERROR|rror:/.test(l)).slice(0, 8).join(' | '); console.error('console', String(t).slice(0, 100), e); });\"\"\"+s[j:]\nopen(p,'w').write(s)\nEOF\nS=/tmp/claude-0/-home-user-rainbow-/5a3a …[+308 chars]`
+
+### 🧑 User — 2026-11-20T01:17:18.974Z
+
+> ↩︎ result: console THREE.WebGLProgram: Shader Error 0 - VALIDATE_STATUS false
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:17:28.845Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && python3 - <<'EOF'\np='tools/match04/rings21.mjs'; s=open(p).read()\ns=s.replace(\"console.error('console', String(t).slice(0, 100), e); });\",\"console.error('console', String(t).slice(0, 100), e); if (process.env.M04_ERRLOG) (await import('node:fs')).appendFileSync(process.env.M04_ERRLOG, String(t) + '\\\\n----\\\\n'); });\")\nopen(p,'w').write(s)\nEOF\nS=/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r; rm -f $S/err.log; Q=$(cat qa/match/04/r19b/ringpaint/preview_r20/QUERY_preview.txt); M04_ERRLOG=$S/err.log timeout 600 …[+239 chars]`
+
+### 🧑 User — 2026-11-20T01:17:40.688Z
+
+> ↩︎ result: 1
+> 1:THREE.WebGLProgram: Shader Error 0 - VALIDATE_STATUS false
+> 10:ERROR: 0:446: 'sid' : undeclared identifier
+> 11:ERROR: 0:483: 'sid' : undeclared identifier
+> 12:ERROR: 0:486: 'sid' : undeclared identifier
+> 1558 /tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r/err.log
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:17:43.004Z
+
+`sid` (the rib id) is only declared in the old branch. Adding it to the new one:
+
+### 🤖 Claude — 2026-11-20T01:17:49.313Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && python3 - <<'EOF'\np='src/world/match04m4.ts'; s=open(p).read()\na=\"\"\"          float fu = max(fwidth(uu), 1e-5);\n          float fx = fu / ribW;                                        // pixel footprint in rib units\"\"\"\nassert s.count(a)==1\ns=s.replace(a,\"\"\"          float sid = kI * 7.0 + si;                                   // world-anchored id of this rib\n          float fu = max(fwidth(uu), 1e-5);\n          float fx = fu / ribW;                                        // pixel footprint in rib units\"\"\")\nopen(p,'w').write(s)\nEOF\nS=/t …[+1003 chars]`
+

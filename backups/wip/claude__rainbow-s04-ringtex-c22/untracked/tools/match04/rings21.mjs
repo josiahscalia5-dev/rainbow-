@@ -16,6 +16,7 @@ const log = [];
 try {
   const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
   page.on('pageerror', (e) => console.error('pageerror', e.message));
+  page.on('console', async (m) => { if (m.type() !== 'error') return; let t = m.text(); try { t = (await Promise.all(m.args().map((a) => a.jsonValue()))).join(' '); } catch {} const e = String(t).split('\n').filter((l) => /ERROR|rror:/.test(l)).slice(0, 8).join(' | '); console.error('console', String(t).slice(0, 100), e); if (process.env.M04_ERRLOG) (await import('node:fs')).appendFileSync(process.env.M04_ERRLOG, String(t) + '\n----\n'); });
   await page.goto(`${vite.url}/?qa=1&dpr=1&${Q}`);
   await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 240000 });
   const shoot = async (name, target, steer, clock, fromHere) => {
