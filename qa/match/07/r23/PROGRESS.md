@@ -11,6 +11,10 @@
 * NOW: step 2 `&m07sbend=1` — the plunge (everything from the audit's 0.35 on is the 70° drop, laid as a perfectly straight chute)
   gets the painted broad S-bends: route S-offset (Benny, steering bounds, collision, coins, game water follow it), the tube stays
   straight, bands / foam / coins sweep inside it, camera looks along the straight chute (framing test). Folder `s2_sriver/`.
+  Status ~11:00 UTC: code done (route S ±1.45 u, wavelength 28 u; straight tube; core lean; coins on the core; straight-chute view;
+  un-bent sampling grid → continuity OK and identical to the match07 baseline). Proof renders running (BEFORE / NEW shots, whole-07
+  clips at real game speed, gameplay). Rejected inside this step: an extra look-ahead camera aim over the lip of the drop (Benny
+  drifted to mid-screen; `s2_sriver/rejected_lookahead/`).
 * NEXT: step 3 = foam natural variation (size + spacing, blending into the water).
 
 Worktree `/home/user/wt/s07`, LOCAL branch `claude/rainbow-s07-match-c24` (= `8accdad0` + r22 WIP: r21 code + `m07cloud` + the

@@ -2440,3 +2440,120 @@ No human input has been received since the last genuine user message in this con
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/07/r23/s2_sriver && mkdir -p diffs && for s in a_start b_early c_middle d_late e1_075 e_end e2_092 f_hard_left g_hard_right; do r=$(node /home/user/tools-pixelmatch/pixeldiff.mjs BEFORE/$s.png ../s1_satin/NEW/$s.png diffs/switchoff_$s.png 0.1 0 1536 2>&1 | grep '^{' | python3 -c \"import json,sys;print(json.loads(sys.stdin.read())['diff_pixels'])\"); n=$(node /home/user/tools-pixelmatch/pixeldiff.mjs BEFORE/$s.png NEW/$s.png diffs/new_$s.png 0.1 0 1536 2>&1 | grep '^{' | python3 -c \"import json,sys;print(json.loads(sys.stdin.read())['diff_pixels']) …[+255 chars]`
 
+### 🧑 User — 2026-11-20T10:09:38.234Z
+
+> ↩︎ result: a_start switch-off vs step1 NEW: 0 | NEW vs BEFORE: 196
+> b_early switch-off vs step1 NEW: 0 | NEW vs BEFORE: 329268
+> c_middle switch-off vs step1 NEW: 0 | NEW vs BEFORE: 878321
+> d_late switch-off vs step1 NEW: 0 | NEW vs BEFORE: 1040100
+> e1_075 switch-off vs step1 NEW: 1 | NEW vs BEFORE: 933972
+> e_end switch-off vs step1 NEW: 2 | NEW vs BEFORE: 975382
+> e2_092 switch-off vs step1 NEW: 4 | NEW vs BEFORE: 722760
+> f_hard_left switch-off vs step1 NEW: 0 | NEW vs BEFORE: 886351
+> g_hard_right switch-off vs step1 NEW: 0 | NEW vs BEFORE: 894435
+> {"a":"BEFORE/a_start.png","b":"NEW/a_start.png","rows":[180,1536],"threshold":0.1,"diff_pixels":196,"total":1171584,"diff_pct":0.0167}
+
+### 🤖 Claude — 2026-11-20T10:09:42.205Z
+
+Switch-off build reproduces step 1 (0–4 px, GPU rounding). But the NEW start view differs in 196 px; it must be 0. Let me see where.
+
+### 🤖 Claude — 2026-11-20T10:09:46.232Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/07/r23/s2_sriver && python3 -c \"\nfrom PIL import Image, ImageChops\nimport numpy as np\na=np.asarray(Image.open('BEFORE/a_start.png').convert('RGB')).astype(int); b=np.asarray(Image.open('NEW/a_start.png').convert('RGB')).astype(int)\nd=np.abs(a-b).sum(2); ys,xs=np.nonzero(d>30); print(len(ys), xs.min(), xs.max(), ys.min(), ys.max())\nImage.fromarray(np.concatenate([a[ys.min()-30:ys.max()+30, xs.min()-30:xs.max()+30], b[ys.min()-30:ys.max()+30, xs.min()-30:xs.max()+30]],1).astype('uint8')).resize(((xs.max()-xs.min()+60)*2*4,(ys.max()-ys.min()+60)* …[+178 chars]`
+
+### 🧑 User — 2026-11-20T10:09:48.177Z
+
+> ↩︎ result: 252 671 696 605 631
+
+### 🤖 Claude — 2026-11-20T10:09:50.691Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/astart_diff.png"}`
+
+### 🧑 User — 2026-11-20T10:09:51.154Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T10:10:06.050Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 - <<'EOF'\np='src/world/course.ts'; s=open(p).read()\nold=\"  readonly bend07: { x: number; amp: number; s0: number; s1: number } | null;\"\nnew=\"  readonly bend07: { x: number; amp: number; s0: number; s1: number; extra: number } | null;\"\nassert s.count(old)==1; s=s.replace(old,new)\nold=\"    let grid07: { ds: number; n: number } | null = null;\"\nnew=\"    let grid07: { ds: number; n: number; extra: number } | null = null;\"\nassert s.count(old)==1; s=s.replace(old,new)\nold=\"      grid07 = { ds: ds0, n: n0 + k };\"\nnew=\"      grid07 = { ds …[+1305 chars]`
+
+### 🧑 User — 2026-11-20T10:10:32.608Z
+
+> ↩︎ result: 66:  const b7 = m07 ? course.bend07 : null;
+> 74:  { const a = st('07'); const n = 24; let skip = m07 ? coins07.coins.length : 0; for (let i = 0; i < n; i++) { const s = a.s0 + 6 + i * ((a.s1 - a.s0 - 10 - (b7?.extra ?? 0)) / n); if (skip > 0 && s >= a.s0 + 14) { skip--; continue; } const far = m07c && skip === 0 && s >= a.s0 + 30 && m07k < 2; if (far) add('07', s, M07_FAR_LAT[m07k++], 0.9, { scale: 0.45 }); else add('07', s, m07Lat(s, 1.0 * Math.sin(i * 0.5 + 1))); } }
+> ok
+
+### 🤖 Claude — 2026-11-20T10:10:37.298Z
+
+I just edited source files while the two clip renders are running; let me check whether the QA dev server has hot-reload enabled (which could disturb running captures).
+
+### 🤖 Claude — 2026-11-20T10:10:39.665Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"hmr\\|watch\\|createServer\\|startVite\" -A3 scripts/lib/pw.mjs | head -30; tail -n 3 /home/user/rainbow-/qa/match/07/r23/s2_sriver/clipN.log /home/user/rainbow-/qa/match/07/r23/s2_sriver/clipB.log; ls /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/clipN 2>/dev/null | wc -l", "description": "Check dev server HMR settings and clip progress"}`
+
+### 🧑 User — 2026-11-20T10:10:40.549Z
+
+> ↩︎ result: 19:export async function startVite(port = 5199) {
+> 20:  const { createServer } = await import('vite');
+> 21:  const server = await createServer({ server: { port, strictPort: false, host: '127.0.0.1', hmr: false, watch: { ignored: ['**/*'] } }, logLevel: 'error' });
+> 22-  await server.listen();
+> 23-  const addr = server.resolvedUrls?.local?.[0] ?? `http://127.0.0.1:${port}/`;
+> 24-  return { url: addr.replace(/\/$/, ''), close: () => server.close() };
+> ==> /home/user/rainbow-/qa/match/07/r23/s2_sriver/clipN.log <==
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff2" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff" is outside of Vite serving allow list.
+> 
+> ==> /home/user/rainbow-/qa/match/07/r23/s2_sriver/clipB.log <==
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff2" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/ …[+257 chars]
+
+### 🤖 Claude — 2026-11-20T10:10:48.106Z
+
+> 🔧 **Bash** `{"command": "pgrep -af \"swim_clip_r21.mjs 07 /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/clipN\" | head -3", "description": "Find the NEW clip process"}`
+
+### 🧑 User — 2026-11-20T10:10:48.658Z
+
+> ↩︎ result: 12257 timeout 3600 node tools/match07/swim_clip_r21.mjs 07 /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/clipN 13 match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1&m07foam=1&m07coinsz=1&m07nearw=1&m07foamb=1&m07band=1&m07end=1&m07cloud=1&m07satin=1&m07sbend=1
+> 12260 node tools/match07/swim_clip_r21.mjs 07 /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/clipN 13 match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1&m07foam=1&m07coinsz=1&m07nearw=1&m07foamb=1&m07band=1&m07end=1&m07cloud=1&m07satin=1&m07sbend=1
+
+### 🤖 Claude — 2026-11-20T10:10:53.563Z
+
+> 🔧 **Bash** `{"command": "kill 12260 12257 2>/dev/null; sleep 3; pgrep -af \"clipN\" | grep -v pgrep | head; cd /home/user/wt/s07 && D=/home/user/rainbow-/qa/match/07/r23/s2_sriver && SP=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad && rm -rf $SP/clipN2 && QN=$(cat $D/query_NEW.txt) && (CLIP_FPS=20 CLIP_GOTO=06 CLIP_S=245 QA_PORT=5281 nohup timeout 3600 node tools/match07/swim_clip_r21.mjs 07 $SP/clipN2 13 \"$QN\" > $D/clipN.log 2>&1; echo clipN-exit $? >> $D/clipN.log) > /dev/null 2>&1 & echo started", "description": "Stop old NEW clip and restart with final code"}`
+
+### 🧑 User — 2026-11-20T10:10:57.658Z
+
+> ↩︎ result: 12252 /bin/bash -c source /root/.claude/shell-snapshots/snapshot-bash-1795167774084-5x1yiq.sh 2>/dev/null || true && export ANDROID_HOME=/opt/android-sdk ANDROID_SDK_ROOT=/opt/android-sdk : && \builtin export BUN_OPTIONS="--smol${BUN_OPTIONS:+ $BUN_OPTIONS}" && \builtin shopt -u extglob 2>/dev/null || true && { \builtin unalias -- 'which'; \builtin unset -f -- 'which'; } >/dev/null 2>&1 || true && { \builtin unalias -- 'unsetenv'; \builtin unset -f -- 'unsetenv'; } >/dev/null 2>&1 || true && { { \builtin echo 0 >| /sys/fs/cgroup/pids/process_api/cc-shell/tasks; } 2>/dev/null || :; } && eval 'cd /home/user/wt/s07 && D=/home/user/rainbow-/qa/match/07/r23/s2_sriver && SP=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad && QB=$(cat $D/query_BEFORE.txt) && QN=$(cat $D/query_NEW.txt) && rm -rf $SP/clipB $SP/clipN (CLIP_FPS=20 CLIP_GOTO=06 CLIP_S=245 QA_PORT=5280 timeout 3600 node tools/match07/swim_clip_r21.mjs 07 $SP/clipB 13 "$QB" > $D/clipB.log 2>&1; echo clipB-exit $? >> $D/clipB.log) & CLIP_FPS=20 CLIP_GOTO=06 CLIP_S=245 QA_PORT=5277 timeout 3600 node tools/match07/swim_clip_r21.mjs 07 $SP/clipN 13 "$QN" > $D/clipN.log 2>&1; echo clipN-exit $?; wait; …[+1437 chars]
+
+### 🤖 Claude — 2026-11-20T10:11:04.388Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/07/r23/s2_sriver/NEW/g_hard_right.png"}`
+
+### 🧑 User — 2026-11-20T10:11:04.515Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T10:11:12.889Z
+
+> 🔧 **Bash** `{"command": "until grep -q \"clipB-exit\" /home/user/rainbow-/qa/match/07/r23/s2_sriver/clipB.log 2>/dev/null; do sleep 10; done; tail -n 1 /home/user/rainbow-/qa/match/07/r23/s2_sriver/clipB.log; ls /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/clipB | wc -l; ls /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/clipN2 | wc -l", "description": "Wait for BEFORE clip to finish", "timeout": 3600000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T10:11:13.016Z
+
+> ↩︎ result: Command running in background with ID: bnrlvoa3t. Output is being written to: /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/tasks/bnrlvoa3t.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-20T10:11:15.302Z
+
+Meanwhile I'll record the interim state of step 2 in the progress log (no render slot needed).
+
+### 🤖 Claude — 2026-11-20T10:11:18.621Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/07/r23 && python3 - <<'EOF'\np='PROGRESS.md'; s=open(p).read()\nold='''* NEXT: step 3 = foam natural variation (size + spacing, blending into the water).\n'''\nnew='''  Status ~11:00 UTC: code done (route S ±1.45 u, wavelength 28 u; straight tube; core lean; coins on the core; straight-chute view;\n  un-bent sampling grid → continuity OK and identical to the match07 baseline). Proof renders running (BEFORE / NEW shots, whole-07\n  clips at real game speed, gameplay). Rejected inside this step: an extra look-ahead camera aim over the lip of the drop  …[+283 chars]`
+
+### 🧑 User — 2026-11-20T10:11:18.815Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-20T10:11:20.790Z
+
+I'll continue when the BEFORE clip finishes.
+

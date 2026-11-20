@@ -70,10 +70,10 @@ index 388c121..d23bbb8 100644
      if (this.axis) {
        const a = this.axis;
 diff --git a/src/gameplay/coins.ts b/src/gameplay/coins.ts
-index 0f2c1f7..3287da8 100644
+index 0f2c1f7..d7f2bdd 100644
 --- a/src/gameplay/coins.ts
 +++ b/src/gameplay/coins.ts
-@@ -61,7 +61,16 @@ export function coinLayout(course: Course): CoinDef[] {
+@@ -61,7 +61,17 @@ export function coinLayout(course: Course): CoinDef[] {
    // `?match07=1&m07coins=1` (qa/match/07/m2/NOTES.md, position only): the two trail coins right behind the painted far coins
    // (which otherwise pile up on the painted cluster) continue the painted line to the right of it, at the painted coins' size for that distance (0.45)
    const m07c = m07 && flag05('m07coins'); let m07k = 0;
@@ -87,12 +87,13 @@ index 0f2c1f7..3287da8 100644
 +    const w = THREE.MathUtils.smoothstep(s, b7.s0, b7.s0 + 8);
 +    return lat * (1 - w) + (sbC * course.bend07At(s)) / b7.amp * w;
 +  };
-+  { const a = st('07'); const n = 24; let skip = m07 ? coins07.coins.length : 0; for (let i = 0; i < n; i++) { const s = a.s0 + 6 + i * ((a.s1 - a.s0 - 10) / n); if (skip > 0 && s >= a.s0 + 14) { skip--; continue; } const far = m07c && skip === 0 && s >= a.s0 + 30 && m07k < 2; if (far) add('07', s, M07_FAR_LAT[m07k++], 0.9, { scale: 0.45 }); else add('07', s, m07Lat(s, 1.0 * Math.sin(i * 0.5 + 1))); } }
++  // (r23 m07sbend: the trail keeps the un-bent spacing — the S lengthens the plunge by b7.extra — so every coin before the plunge stays put)
++  { const a = st('07'); const n = 24; let skip = m07 ? coins07.coins.length : 0; for (let i = 0; i < n; i++) { const s = a.s0 + 6 + i * ((a.s1 - a.s0 - 10 - (b7?.extra ?? 0)) / n); if (skip > 0 && s >= a.s0 + 14) { skip--; continue; } const far = m07c && skip === 0 && s >= a.s0 + 30 && m07k < 2; if (far) add('07', s, M07_FAR_LAT[m07k++], 0.9, { scale: 0.45 }); else add('07', s, m07Lat(s, 1.0 * Math.sin(i * 0.5 + 1))); } }
    if (m07) {
      const a = st('07');
      for (const c of coins07.coins) {
 diff --git a/src/world/course.ts b/src/world/course.ts
-index 531778e..65d3671 100644
+index 531778e..a4d0397 100644
 --- a/src/world/course.ts
 +++ b/src/world/course.ts
 @@ -103,8 +103,16 @@ interface RouteData {
@@ -154,7 +155,7 @@ index 531778e..65d3671 100644
    /** world X of the straight 05 tunnel line (the meander is pos.x − line05x) */
    private readonly line05x: number;
 +  /** r23 `&m07sbend=1`: the 07 plunge S-bend (null = off) — un-bent line x, amplitude, the s range where it may be non-zero */
-+  readonly bend07: { x: number; amp: number; s0: number; s1: number } | null;
++  readonly bend07: { x: number; amp: number; s0: number; s1: number; extra: number } | null;
    private st05!: StageDef;
    private st10!: StageDef;
    private readonly N: number;
@@ -167,7 +168,7 @@ index 531778e..65d3671 100644
 +    // r23 `&m07sbend=1`: the S makes the route longer; the bend amplitude is fine-tuned (by a few hundredths of a unit) so the extra
 +    // length is a whole number of frame-table steps of the UN-BENT route — the frame table then keeps exactly the un-bent grid, so
 +    // everything before the plunge is sampled identically (continuity measured as before) and the last interval is not short
-+    let grid07: { ds: number; n: number } | null = null;
++    let grid07: { ds: number; n: number; extra: number } | null = null;
 +    if (route.bend07) {
 +      const arc = (pts: THREE.Vector3[]) => {
 +        const cv = new THREE.CatmullRomCurve3(pts, false, 'centripetal'), M = pts.length * 24;
@@ -183,7 +184,7 @@ index 531778e..65d3671 100644
 +        route = buildRoute(A);
 +        L = arc(route.points);
 +      }
-+      grid07 = { ds: ds0, n: n0 + k };
++      grid07 = { ds: ds0, n: n0 + k, extra: k * ds0 };
 +    }
      this.curve = new THREE.CatmullRomCurve3(route.points, false, 'centripetal');
      // arc-length table over curve parameter u
@@ -192,7 +193,7 @@ index 531778e..65d3671 100644
      for (const [k, i] of Object.entries(route.marks)) this.marks[k] = sAtIndex(i);
      this.straightAxes = route.straight.map((r) => ({ s0: this.marks[r.from], s1: this.marks[r.to], a: r.a, b: r.b, floorDepth: r.floorDepth }));
      this.line05x = route.straight[0].a.x;
-+    this.bend07 = route.bend07 ? { ...route.bend07, s0: this.marks['07_plunge_top'] + 2, s1: this.marks['07_plunge_bottom'] - 2 } : null;
++    this.bend07 = route.bend07 ? { ...route.bend07, s0: this.marks['07_plunge_top'] + 2, s1: this.marks['07_plunge_bottom'] - 2, extra: grid07?.extra ?? 0 } : null;
  
      // ---- stages ----
      const m = this.marks;
