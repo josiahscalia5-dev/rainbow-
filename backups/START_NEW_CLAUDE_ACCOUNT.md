@@ -1,6 +1,25 @@
 # Paste this into Claude Code on the next Claude account
 
-## ▶ NEWEST (2026-11-20 ~02:50 UTC, round 21 → next account) — use THIS prompt
+## ▶ NEWEST (2026-11-20 ~04:00 UTC, round 22 → next account) — use THIS prompt
+Before pasting: on the new account connect GitHub (+ Claude GitHub App on `josiahscalia5-dev/rainbow-`) and start a Claude Code cloud
+session on the repo, branch **`ccr-4742c19f-ez2mrs`** (round-22 lead; NOT the default branch). Connectors on claude.ai: **World Labs
+Atlas** (finish the Atlas sign-up at atlas.worldlabs.ai) and **Hugging Face**. Keys (World Labs `api.worldlabs.ai` header
+`WLT-Api-Key`; fal `queue.fal.run` `Authorization: Key`) are checked with free reads first; the secure form opens only if a check fails.
+
+> RAINBOW — continue my EXISTING game exactly where round 22 stopped. Do NOT restart, redesign, merge or delete anything.
+> 1. Follow `CLAUDE.md` (five-minute GitHub autosave first). Read `docs/briefs/2026-11-20-r22/RESUME_R22.md` (where everything stopped,
+>    my decisions and my latest Screen 04 feedback), `COORDINATION.md` in the same folder, and
+>    `docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md` (binding). My authorizations stand: paid artwork, up to four specialists,
+>    06 / 07 framing tests, Screen 08 polish, consistent approved Benny.
+> 2. Recreate the worktrees (`bash docs/briefs/2026-11-20-r22/setup_worker_r23.sh`), fetch the s06 / Benny branch tips, and continue:
+>    FIRST my Screen 04 feedback (clean water, no messy pink walls near the gold, Benny going naturally through the five arrows) with
+>    the projection of my three approved Screen 04 views; then 07, 06, Benny; then 08 / 05.
+> 3. Show me ORIGINAL APPROVED / BEFORE / NEW pictures + uninterrupted gameplay clips, labelled GOOD IMPROVEMENT / NOT AN IMPROVEMENT /
+>    NOT YET PROVEN. Still waiting for my verdict: Screen 07 and Screen 05 artwork proposals, the Screen 06 framing test.
+
+---
+
+## ▶ (2026-11-20 ~02:50 UTC, round 21 → next account) — superseded by the prompt above
 Before pasting: on the new account connect GitHub (+ Claude GitHub App on `josiahscalia5-dev/rainbow-`) and start a Claude Code
 cloud session on the repo, branch **`ccr-68d26c2d-gwegce`** (round-21 lead; NOT the default branch). Connectors on claude.ai:
 **World Labs Atlas** and **Hugging Face**. Keys (World Labs `api.worldlabs.ai` header `WLT-Api-Key`; fal `queue.fal.run`

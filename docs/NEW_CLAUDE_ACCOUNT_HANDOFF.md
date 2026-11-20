@@ -1,4 +1,15 @@
-# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 21 (2026-11-20, lead branch `ccr-68d26c2d-gwegce`) — HANDOFF READY (~02:50 UTC)
+# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 22 (2026-11-20, lead branch `ccr-4742c19f-ez2mrs`) — HANDOFF READY (~04:00 UTC)
+
+The user is moving to another Claude account again. Start the next session on **`ccr-4742c19f-ez2mrs`**. Everything is in
+**`docs/briefs/2026-11-20-r22/RESUME_R22.md`** (+ `COORDINATION.md`, launch briefs `LAUNCH_S04.md`, `LAUNCH_S04_PROJ.md`,
+`LAUNCH_S07.md`, `LAUNCH_S06.md`, `LAUNCH_BENNY.md`, recipe `setup_worker_r23.sh`). Round 22: restore verified (checkpoint `47bfbf8` +
+newer saves; 89 LFS files / 577 MB on GitHub LFS); keys re-entered (World Labs, fal); **the user APPROVED the three Screen 04 generated
+views** (`qa/review_r21/artwork/04/USER_VERDICT.md`); 04 foam heaps `m04bbd` (K22-2, small improvement); 07 `m07cloud` (worker GOOD, lead
+review pending); 06 `m06view` NOT YET PROVEN; Benny plush pile + exposure + pompom (`&benny20=1&b20expo=1&b20ppw=0.45`); 07 + 05
+generated proposals await the user ($1.32 total artwork). **The user's newest Screen 04 feedback (clean water, no messy pink walls near
+the gold, Benny swimming naturally through the five arrows) is the first task** — verbatim + diagnosis in RESUME_R22.md. Nothing merged.
+
+# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ ROUND 21 (2026-11-20, lead branch `ccr-68d26c2d-gwegce`) — HANDOFF READY (~02:50 UTC)
 
 The user is moving to another Claude account (credits). Start the next session on **`ccr-68d26c2d-gwegce`**. Everything —
 where each worker stopped, the user's new authorizations (paid artwork, up to four specialists, 06 / 07 framing tests, Screen 08

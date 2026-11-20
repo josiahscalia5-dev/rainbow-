@@ -72,3 +72,7 @@ s06 / Benny = their pushed `-c23` tips + their r22 PROGRESS.md.
   reads the real clock → pinned-clock QA tools `qa/match/04/r22/tools/`); step 2 `m04bbd` 3D foam heaps inside the tunnel — worker GOOD,
   lead: small improvement (patchy, smaller than painted) → candidate **K22-2** (`qa/match/04/r22/s2_bbd/QUERY_K22-2.txt`). Unfinished
   `m04a3sc` (chevrons vs Benny's hat) saved. Next in this worktree: projection `&m04mp=1` (`LAUNCH_S04_PROJ.md`).
+* ~03:58 USER FEEDBACK Screen 04 (verbatim in `RESUME_R22.md`): water must look CLEAN, no messy pink walls near the gold inside the
+  tunnel, Benny going naturally through the five arrows; clip speed = real game speed (not sped up). Relayed to the projection worker.
+* ~04:00 the user stopped the in-process s07 + s04-projection workers and asked to save everything for the account switch →
+  `RESUME_R22.md`, `setup_worker_r23.sh`, `backups/CONNECTORS_AND_SERVICES_R22.md`, START prompt + handoff + CLAUDE.md pointer updated.
