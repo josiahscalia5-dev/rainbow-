@@ -639,7 +639,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 4568,
-   "sha256": "3753618df688a13d14ae943ab8a39df2f2f874133bbf25613f88cf209f76cbb6"
+   "sha256": "c62952b78f8bd754244c8b621571c0085d7355110197767149bdb9e256202594"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -3164,7 +3164,7 @@
   {
    "path": "backups/wip/claude__rainbow-s06-benny06-c32/INFO.json",
    "bytes": 2213,
-   "sha256": "9945a8301fad19b69a499730feee2a1a03d40852e4050187568cc07be5128408"
+   "sha256": "08d7e15178110242a9e64a2e48abd6daa700550ee12dd63952b08e947b1fd36b"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-benny06-c32/tracked.patch",
@@ -3564,7 +3564,7 @@
   {
    "path": "backups/wip/claude__rainbow-s06-foam06-c32/INFO.json",
    "bytes": 2047,
-   "sha256": "1b179a50557e7ac5ab5175a66c893c60bf10df157f84e734872df1e810d23b37"
+   "sha256": "0dbf8060f5c6e3a41a56372b98272ea2a3226002fe24d53d03e93fac34f1ca74"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-foam06-c32/tracked.patch",
@@ -4559,7 +4559,7 @@
   {
    "path": "backups/wip/claude__rainbow-s06-match-c32/INFO.json",
    "bytes": 2723,
-   "sha256": "b7aa62d178350cf149d6b5be29a3c69fe297f316ea1816292bcbb0bfdf89d121"
+   "sha256": "d73d22cb09f1360cedd200a1d475cd969165b09f9e980c16cd0fc5e3108c4fb0"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c32/tracked.patch",
@@ -5034,7 +5034,7 @@
   {
    "path": "backups/wip/claude__rainbow-s06-scen06-c32/INFO.json",
    "bytes": 2047,
-   "sha256": "c9f690e1a75280eacbe5e3147028e7a720271a8f5ff0c39a01fc1c1c8c4b5d18"
+   "sha256": "db0538f53bb6d75239c84decbb45cdf1fc6bd7c4b40b8e25c897d9a83cd21901"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-scen06-c32/tracked.patch",
@@ -5424,7 +5424,7 @@
   {
    "path": "backups/wip/claude__rainbow-s06-water06-c32/INFO.json",
    "bytes": 2172,
-   "sha256": "be38a47d4fd65cc43b7b02014bfd52c027f3adfb48b172f45dfad8db71944c9f"
+   "sha256": "4625c8e7f437b6683c0ac079383e17fbc161278c603b6be1ea0393abd2347139"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-water06-c32/tracked.patch",
