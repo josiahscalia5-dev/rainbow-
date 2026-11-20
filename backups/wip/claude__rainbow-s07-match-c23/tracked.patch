@@ -36,7 +36,7 @@ index 017370a..025777d 100644
      }
      if (m08 && b08 && b08Rest) {
 diff --git a/src/world/match07.ts b/src/world/match07.ts
-index b9f474c..a18db9b 100644
+index b9f474c..61987fc 100644
 --- a/src/world/match07.ts
 +++ b/src/world/match07.ts
 @@ -94,6 +94,7 @@ uniform sampler2D uFoamTile;
@@ -250,7 +250,7 @@ index b9f474c..a18db9b 100644
      rivM.transparent = true;
      const t = add(toLocal(geo(tubeP, tubeUV, idxT)), wallM, 'pl_tube');
      const r = add(toLocal(geo(rivP, rivUV, idxR)), rivM, 'pl_river');
-@@ -483,6 +586,131 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -483,6 +586,130 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
      t.visible = r.visible = false;
      plungeMeshes.push(t, r);
    }
@@ -365,14 +365,13 @@ index b9f474c..a18db9b 100644
 +      const q = new THREE.Vector3();
 +      // lateral from the course centre (= the plunge river's band frame); the tube centre sits lat0 = d0·right·k off it over the
 +      // first 14 u of the drop, so the wall foot on each side is measured from the tube centre
-+      const placeP = (lat: number, s: number, up: number) => {
++      const placeP: Place = (lat, s, up) => {
 +        const f = course.sample(THREE.MathUtils.clamp(s, sA, sB));
 +        return q.copy(f.pos).addScaledVector(f.right, lat).addScaledVector(f.up, up + 0.06).applyMatrix4(groupInv).clone();
 +      };
-+      for (let ss = sA; ss < sB - 0.5; ss += 1.05 + 0.4 * rnd()) {
-+        const f = course.sample(ss);
-+        const lat0 = d0.dot(f.right) * (1 - THREE.MathUtils.smootherstep(ss, sA, sA + 14));
-+        for (const side of [-1, 1]) cluster(PL, PT, placeP, side, ss + 0.3 * rnd(), Math.max(3.2, 4.85 + side * lat0));
++      for (const side of [-1, 1]) {
++        const wallP = (ss: number) => Math.max(3.2, 4.85 + side * d0.dot(course.sample(ss).right) * (1 - THREE.MathUtils.smootherstep(ss, sA, sA + 14)));
++        bank(PL, PT, () => placeP, wallP, side, sA, sB - 0.5);
 +      }
 +      const pc = makeCloud(PL, PT, 0, 'pl_cloud');
 +      pc.visible = false;
@@ -382,7 +381,7 @@ index b9f474c..a18db9b 100644
    group.traverse((o) => o.updateMatrixWorld?.(true));
  
    return {
-@@ -493,7 +721,8 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -493,7 +720,8 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
        const clone = group.clone(true);
        clone.visible = true;
        // the plunge continuation is not in the approved picture: it never occludes the projector

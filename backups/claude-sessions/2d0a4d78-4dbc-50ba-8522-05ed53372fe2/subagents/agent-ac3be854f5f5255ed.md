@@ -714,3 +714,23 @@ Now the cluster generator: cumulus mounds plus a continuous skirt along the band
 
 > ↩︎ result: The file /home/user/wt/s07/src/world/match07.ts has been updated successfully. (file state is current in your context — no need to Read it back)
 
+### 🤖 Claude — 2026-11-20T03:23:34.865Z
+
+Now updating the two callers (level stretch and drop) to use `bank()`.
+
+### 🤖 Claude — 2026-11-20T03:23:39.024Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s07/src/world/match07.ts", "old_string": "    const aEndL = plunge ? plungeAlong : 60;\n    const LL: number[] = [], LT: number[] = [];\n    for (let a = -6; a < aEndL; a += 1.05 + 0.4 * rnd()) {\n      for (const side of [-1, 1]) {\n        const lane = laneAt(a);\n        // wall foot (tube meets the water) measured from the lane\n        const wallLat = Math.max(3.2, side > 0 ? T.ax + 4.85 - lane : lane - (T.ax - 4.85));\n        cluster(LL, LT, (lat, aa, up) => new THREE.Vector3(laneAt(aa) + lat, up, -aa), side, a + 0.3 * rnd(), wallLat);\ …[+610 chars]`
+
+### 🧑 User — 2026-11-20T03:23:39.095Z
+
+> ↩︎ result: The file /home/user/wt/s07/src/world/match07.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T03:23:43.132Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s07/src/world/match07.ts", "old_string": "      const placeP = (lat: number, s: number, up: number) => {\n        const f = course.sample(THREE.MathUtils.clamp(s, sA, sB));\n        return q.copy(f.pos).addScaledVector(f.right, lat).addScaledVector(f.up, up + 0.06).applyMatrix4(groupInv).clone();\n      };\n      for (let ss = sA; ss < sB - 0.5; ss += 1.05 + 0.4 * rnd()) {\n        const f = course.sample(ss);\n        const lat0 = d0.dot(f.right) * (1 - THREE.MathUtils.smootherstep(ss, sA, sA + 14));\n        for (const side of [-1, 1]) clust …[+620 chars]`
+
+### 🧑 User — 2026-11-20T03:23:43.173Z
+
+> ↩︎ result: The file /home/user/wt/s07/src/world/match07.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
