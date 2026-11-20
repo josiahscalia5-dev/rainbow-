@@ -1481,3 +1481,31 @@ The agent-status diff is large only because I changed the JSON indentation; rest
 >  backups/AGENTS_STATUS.json | 86 +++++++++++++++++++++++++---------------------
 >  1 file changed, 46 insertions(+), 40 deletions(-)
 
+### 🤖 Claude — 2026-11-20T12:04:16.854Z
+
+Saving now, then turning to the review package.
+
+### 🤖 Claude — 2026-11-20T12:04:19.101Z
+
+> 🔧 **Bash** `{"command": "timeout 240 bash -c 'until flock -n backups/.autosave.lock true; do sleep 2; done'; timeout 500 python3 scripts/rainbow-autosave.py --reason manual:r25-restore-and-relaunch 2>&1 | grep -E '\"result\"|\"commit\"|pushed_verified|skipping'; H=$(git rev-parse HEAD); R=$(git ls-remote origin refs/heads/ccr-a9235d04-90cw28 | cut -f1); echo \"local $H\"; echo \"remote $R\"; [ \"$H\" = \"$R\" ] && echo MATCH", "description": "Save restore state and verify on GitHub", "timeout": 800000}`
+
+### 🤖 Claude — 2026-11-20T12:04:20.449Z
+
+> 🔧 **Bash** `{"command": "grep -n \"records_with_zip\\|zipnames\" backups/claude-sessions/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/transcript.md | head -8 | cut -c1-300", "description": "Find how ZIP partition files were made"}`
+
+### 🧑 User — 2026-11-20T12:04:34.827Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "88a5312ccd24fd5df718e26e83e5f13d2ba005fd",
+> local 88a5312ccd24fd5df718e26e83e5f13d2ba005fd
+> remote 88a5312ccd24fd5df718e26e83e5f13d2ba005fd
+> MATCH
+
+### 🧑 User — 2026-11-20T12:04:34.877Z
+
+> ↩︎ result: 2892:> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/export && python3 -I - <<'EOF'\nimport json, os, hashlib, datetime, collections\nR='Rainbow_App_Review'; rec=json.load(open('export_records.json')); recs=json.load(open('records_wi
+> 2943:> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport json,subprocess,collections\nrecs=json.load(open('/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/export/records_with_zip.json'))\ninc={r['source'].split(':',1)[1] for r in recs if r['lfs']}\nout=subpro
+> 2988:> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/zip_and_test.py", "content": "#!/usr/bin/env python3\n\"\"\"Zip the staged Rainbow_App_Review into its parts, then test extraction against MANIFEST_FILES.tsv.\"\"\"\nimport hashlib
+> 3354:> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad && python3 -I - <<'EOF'\nimport json, os\nE='export'; R=os.path.join(E,'Rainbow_App_Review')\nrecs=json.load(open(f'{E}/records_with_zip.json'))\nfor r in recs:\n    if r['section'
+

@@ -338,3 +338,39 @@ I'll start by reading the briefs and my progress log in the order given.
 > slot 2 free
 > 10
 
+### 🤖 Claude — 2026-11-20T12:04:35.828Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/match/04/r23/s04_tools/screen_clip20.mjs", "content": "#!/usr/bin/env node\n// r25 s04 (QA only, read-only): uninterrupted REAL-GAMEPLAY clip of the WHOLE of Screen 04 (checkpoint -> into 05 + tail).\n// Copy of tools/lead23/screen_clip.mjs with two QA-only changes:\n//  * fps = 20, so one frame = exactly 3 game steps of 1/60 s = 0.05 s of game time AND 0.05 s of shader clock\n//    (the lead tool's 1/24 s frame rounds to 3 steps = 0.05 s, so its 24 fps \"1x\" plays at 1.2x). Encode 20 fps = 1.0x, 10 fps = 0.5x.\n//  * per frame it logs the 3D chevrons (m0 …[+4288 chars]`
+
+### 🧑 User — 2026-11-20T12:04:35.862Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/match/04/r23/s04_tools/screen_clip20.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T12:04:38.887Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"qa3d\\|freezeAt\\|state: ()\\|state()\" src/game/Game.ts | head -10; git diff src/game/Game.ts | head -40", "description": "Check QA hooks in Game.ts"}`
+
+### 🧑 User — 2026-11-20T12:04:38.935Z
+
+> ↩︎ result: 691:    freezeAt(t: number) { st.frozen = t; st.clock = t; },
+> 694:    step(n: number, dt = 1 / 60) { for (let i = 0; i < n; i++) stepSim(dt); return api.state(); },
+> 697:      return api.state();
+> 699:    state() {
+> 762:    qa3d() { return { scene, camera, renderer, composer }; },
+> diff --git a/src/game/Game.ts b/src/game/Game.ts
+> index 6a4653f..2a7e591 100644
+> --- a/src/game/Game.ts
+> +++ b/src/game/Game.ts
+> @@ -59,7 +59,14 @@ export async function startGame(canvas: HTMLCanvasElement) {
+>    scene.add(fill);
+>  
+>    const camera = new THREE.PerspectiveCamera(66, 9 / 16, 0.05, 1200);
+> -  const composer = new EffectComposer(renderer);
+> +  // r21 `?msaa=4` (Screen 04 ring edges, 2026-11-20): the scene is drawn into the composer's off-screen target, which has
+> +  // NO multisampling, so the renderer's `antialias: true` never reaches the 3D edges (stair-stepped silhouettes: the washer
+> +  // rim's inner edge, the river's cut edge, coins). With the switch the scene target is multisampled (N samples). Off
+> +  // (default): unchanged.
+> +  const msaa = Number(qs.get('msaa') ?? 0);
+> +  const composer = msaa > 0
+> +    ? new EffectComposer(renderer, new THREE.WebGLRenderTarget(1, 1, { type: THREE.HalfFloatType, sa …[+346 chars]
+
