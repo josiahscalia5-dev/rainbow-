@@ -1,5 +1,15 @@
 # Screen 07 · round 24 (water-fx-specialist) — progress log
 
+## (r27) WHERE I STOPPED / NEXT
+* r27 relaunch (new account, ~15:20 UTC). Worktree `/home/user/wt/s07`, LOCAL branch `claude/rainbow-s07-match-c28` (r26 edits restored
+  byte-identical by the lead). Ports 5277 / 5280 / 5281. Temp `/home/user/scratch/s07/`.
+* Found on relaunch: `qa/match/07/r26/final/gameplay_NEW_full.json` DID finish before the r26 stop — query = step-1 candidate & K23-3 &
+  m07look & m07join (the full candidate), **8 / 8 checks pass, 91 coins collected** (1330 -> 2240), plunge 61.02 u, 0 respawns.
+  Full NEW clip `r26/final/SCREEN07_NEW_full_K23-3_{1x,0.5x}.mp4` also complete.
+* NOW: rebuilding the s08 snapshot + combo build, then landmark stills BEFORE vs NEW (lip, bend apexes, inlet) -> `r26/final/landmarks/`.
+* NEXT: step 2 = foam refinement behind a new switch (user's r27 foam note) + inside-bend foam over Benny at the right limit (t 5.0 s);
+  step 3 (if time) = stacked coin column down the drop.
+
 ## (r26) WHERE I STOPPED / NEXT
 * r26 relaunch (new account, ~13:10 UTC). Worktree `/home/user/wt/s07`, LOCAL branch `claude/rainbow-s07-match-c27` (r25 edits incl.
   m07swing / m07look / m07join restored by the lead). Ports 5277 / 5280 / 5281. Temp `/home/user/scratch/s07/`.
