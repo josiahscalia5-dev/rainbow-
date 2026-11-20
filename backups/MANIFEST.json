@@ -624,7 +624,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 20783,
-   "sha256": "ef7cdfb155150c2af32e16e6589f21c1bad079106553106c45aa6aec574ff90e"
+   "sha256": "610b9e65f9831ccd324bd54e437b5a3ee9629bb08fef1b8e8910db85e565bed2"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -639,7 +639,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 2284,
-   "sha256": "1b084306806b50406df3d7632fe803efa8598a1c1725f898e84ef0b39ce03bab"
+   "sha256": "e7b52c68c16663726ecf04d244e98604d2164be333bf8095ca6006549e653d37"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -883,8 +883,13 @@
   },
   {
    "path": "backups/wip/claude__rainbow-benny-c24/INFO.json",
-   "bytes": 463,
-   "sha256": "56475e6c525e0c7149e26dae0dd5bab34b88f9ea9a6ce640cb0af9df2fe8d88b"
+   "bytes": 497,
+   "sha256": "d2a9b3389f954cc29bdd13b740db3d8228365d9f7ec41e79d9ca30790e7ff3c6"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-benny-c24/untracked/tools/benny23/knitprobe.mjs",
+   "bytes": 4302,
+   "sha256": "fa4f8f1e3432e1426129e532878cade3f5ce55c8de78b9f415124dc288af4bca"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-blendfoam-c19/INFO.json",
@@ -1449,7 +1454,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c24/INFO.json",
    "bytes": 586,
-   "sha256": "d7ba4dc5fd48d50b7ccda2021970bad87b5bdabeee922b24d7cd82d0a1c38d3e"
+   "sha256": "d69c3ece9e895cc3a517bbdc675d1f80ebf3be040435bbff1d336254cf500217"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c24/tracked.patch",
@@ -2214,7 +2219,7 @@
   {
    "path": "backups/wip/claude__rainbow-s05-match-c24/INFO.json",
    "bytes": 477,
-   "sha256": "7a186685b6fe7c4dfd11457b572d83acd726909e33be078c7e376b04544ad626"
+   "sha256": "3f14e3644aea6d2a2a7b64e521751a5a3570d22fa7e2fd39ecea9970972ad838"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c11/INFO.json",
@@ -2273,8 +2278,8 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c24/INFO.json",
-   "bytes": 575,
-   "sha256": "020514a6f667d8cda6810e75c617972e5f6c36ce449cb4dd1f483d9a39126f5c"
+   "bytes": 611,
+   "sha256": "5cc06221af61af7fdfdb6da1f31a12cddb327b21fefa7519f32b122133bea5a3"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c24/untracked/tools/match06/r23_audit.mjs",
@@ -2285,6 +2290,11 @@
    "path": "backups/wip/claude__rainbow-s06-match-c24/untracked/tools/match06/r23_swim.mjs",
    "bytes": 2654,
    "sha256": "ad9eac1f1447fb8b03afbe3c504fb1525b4b4762971a81473818fec1d3c27678"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s06-match-c24/untracked/tools/match06/r23_tunprobe.mjs",
+   "bytes": 2979,
+   "sha256": "2346c5047d8da81d1cb3bf561dc180f736c714c98f7d9ee0841e3e420f07ec94"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c24/untracked/tools/match06/r23_vite.mjs",
@@ -2479,7 +2489,7 @@
   {
    "path": "backups/wip/claude__rainbow-s07-match-c24/INFO.json",
    "bytes": 674,
-   "sha256": "8074d522c01760df28ec68942d46ece38921bc48980e201ec197611b312e85a9"
+   "sha256": "15a470e8ef3dd195a81368ba9b4fd4b91f42a4e13ad53262fe574fcdfa24ec21"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c24/tracked.patch",
@@ -2624,7 +2634,7 @@
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c24/INFO.json",
    "bytes": 485,
-   "sha256": "ad6e342bee7605ab14c84d590599b719fe6c95bdd58db7da783084c7c81de2f5"
+   "sha256": "6f005ba3290d22e74503c8b46fcf78f1f11185d681739d087e44b34b2a93c4f0"
   },
   {
    "path": "backups/wip/detached-34cb494137/INFO.json",
@@ -6133,8 +6143,8 @@
   },
   {
    "path": "qa/match/04/r23/PROGRESS.md",
-   "bytes": 3231,
-   "sha256": "2ce8a7b233eee257e42745c81ffd053939299884f9d408d0b38efb9eedaa0442"
+   "bytes": 3686,
+   "sha256": "baabfe56d08276ac1b0c1603b8c35abfecb9292d726d37c4f3ba87ea52b5d29a"
   },
   {
    "path": "qa/match/04/r23/QUERY_K23-1.txt",
@@ -6420,6 +6430,31 @@
    "path": "qa/match/06/r23/step1_m06fcl/1_APPROVED.png",
    "bytes": 497882,
    "sha256": "3946058c0893e97a99dd5015f3197901859475cd7ef55e09d982d232951441fe"
+  },
+  {
+   "path": "qa/match/06/r23/step1_m06fcl/BEFORE/a_start.png",
+   "bytes": 2620999,
+   "sha256": "7dd3b4fbf11bf3ba913509c0032ea1b970f785a36d0dfb23355fef20b5f48cb9"
+  },
+  {
+   "path": "qa/match/06/r23/step1_m06fcl/BEFORE/b_early.png",
+   "bytes": 2214387,
+   "sha256": "20482e3b63c7b7e9563dad679eb71568fe21da941745ee6746c6defd77912ed6"
+  },
+  {
+   "path": "qa/match/06/r23/step1_m06fcl/NEW/a_start.png",
+   "bytes": 2620999,
+   "sha256": "1874253781a8df0aeee783247dedbc303bd2206cfa905aa0094356c119914871"
+  },
+  {
+   "path": "qa/match/06/r23/step1_m06fcl/NEW/b2_early.png",
+   "bytes": 2264232,
+   "sha256": "92b9e283ce565dba8548a251d9cec1eac684fa062067a7e48d2c7950afe62c77"
+  },
+  {
+   "path": "qa/match/06/r23/step1_m06fcl/NEW/b_early.png",
+   "bytes": 2225139,
+   "sha256": "d1634cfe7b54025907c70dad9df298f71613a34cd5548a7c59b5958e4ab0431d"
   },
   {
    "path": "qa/match/06/relaunch/BRIEF_path-camera-transition-engineer.txt",

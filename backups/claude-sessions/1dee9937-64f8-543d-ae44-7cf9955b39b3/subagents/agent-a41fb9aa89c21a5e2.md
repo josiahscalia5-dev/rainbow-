@@ -778,3 +778,16 @@ While the renders run, I'll study the QA API to plan step 2 (the off-centre tunn
 >     log() { return st.log; },
 >     coinDefs() { return coins …[+4383 chars]
 
+### 🤖 Claude — 2026-11-20T04:40:16.883Z
+
+> 🔧 **Bash** `{"command": "cat > /home/user/wt/s06/tools/match06/r23_tunprobe.mjs <<'EOF'\n// r23 (QA only): where the camera, Benny and the river sit in the m06tun tunnel's cross-section along 06, and where the\n// tunnel's vanishing point / near ring centres land on screen.  node tools/match06/r23_tunprobe.mjs \"<query>\" [steer]\nimport { pathToFileURL } from 'node:url';\nconst { loadPlaywright, CHROMIUM_ARGS } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);\nconst { startVite } = await import(pathToFileURL(`${process.cwd()}/tools/match06/r23_vite.mjs`).href);\nconst [Q, STEER] …[+2861 chars]`
+
+### 🧑 User — 2026-11-20T04:40:32.606Z
+
+> ↩︎ result: {"O":[3.6182076150338065,-36.351468594869516,-132.599548800415],"ax":[-0.01983366529110457,-0.0834417425620943,-0.9963152620126431],"Rx":[0.9998019142009565,2.168404344971009e-19,-0.019903074137005226],"Ux":[-0.0016607471883342672,0.9965126570185655,-0.0834252139378453]} 198.91 242.87279039922453
+> {"s":198.91,"lat":0,"cam":[0,-1.9,0.99],"benny":[5.9,-2.96,-1.21],"riv10":[15.1,-3.47,2.01],"riv25":[28.7,0.45,-2.28],"fwAx":0.979,"vp":[660,632,0],"ring8":[978,803,1],"ring20":[785,699,1]}
+> {"s":200.927,"lat":0,"cam":[0.8,-2.09,1.79],"benny":[7.5,-3.15,-0.02],"riv10":[17.1,-3.36,1.79],"riv25":[30.2,1.31,-3.21],"fwAx":0.979,"vp":[633,591,0],"ring8":[971,892,1],"ring20":[767,711,1]}
+> {"s":202.943,"lat":0,"cam":[2.4,-2.41,3.11],"benny":[9.3,-3.3,0.97],"riv10":[19,-3.12,1.39],"riv25":[31.8,2.19,-4.19],"fwAx":0.973,"vp":[589,508,0],"ring8":[954,1011,1],"ring20":[739,714,1]}
+> {"s":204.96,"lat":0,"cam":[4.3,-2.73,4.33],"benny":[11.2,-3.42,1.66],"riv10":[20.9,-2.72,0.89],"riv25":[33.3,3.08,-5.18],"fwAx":0.961,"vp":[541,417,0],"ring8":[928,1085,1],"ring20":[707,703,1]}
+> {"s":206.977,"lat":0,"cam":[6.4,-3.01,5.21],"benny":[13.1,-3.48,2],"riv10":[22.8,-2.18,0.3],"riv25":[34.8,3.99,-6.12],"fwAx":0.946,"v …[+3551 chars]
+

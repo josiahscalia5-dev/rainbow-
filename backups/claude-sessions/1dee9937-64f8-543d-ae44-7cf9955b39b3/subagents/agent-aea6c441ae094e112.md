@@ -382,3 +382,41 @@ Let me verify my BEFORE (K23-1) reproduces the lead's C2 pictures exactly, timin
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/04/r23 && for s in a_start b_early c_middle d_late e_end f_hard_left g_hard_right; do printf \"%s \" $s; node /home/user/tools-pixelmatch/pixeldiff.mjs s04_BEFORE_K23-1/$s.png lead_t2/C2/$s.png /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/d_$s.png 0.1 180 1536 2>&1 | tail -1; done", "description": "Compare my BEFORE run with lead C2 pictures"}`
 
+### 🧑 User — 2026-11-20T04:40:14.965Z
+
+> ↩︎ result: a_start {"a":"s04_BEFORE_K23-1/a_start.png","b":"lead_t2/C2/a_start.png","rows":[180,1536],"threshold":0.1,"diff_pixels":0,"total":1171584,"diff_pct":0}
+> b_early {"a":"s04_BEFORE_K23-1/b_early.png","b":"lead_t2/C2/b_early.png","rows":[180,1536],"threshold":0.1,"diff_pixels":0,"total":1171584,"diff_pct":0}
+> c_middle {"a":"s04_BEFORE_K23-1/c_middle.png","b":"lead_t2/C2/c_middle.png","rows":[180,1536],"threshold":0.1,"diff_pixels":0,"total":1171584,"diff_pct":0}
+> d_late {"a":"s04_BEFORE_K23-1/d_late.png","b":"lead_t2/C2/d_late.png","rows":[180,1536],"threshold":0.1,"diff_pixels":0,"total":1171584,"diff_pct":0}
+> e_end {"a":"s04_BEFORE_K23-1/e_end.png","b":"lead_t2/C2/e_end.png","rows":[180,1536],"threshold":0.1,"diff_pixels":0,"total":1171584,"diff_pct":0}
+> f_hard_left {"a":"s04_BEFORE_K23-1/f_hard_left.png","b":"lead_t2/C2/f_hard_left.png","rows":[180,1536],"threshold":0.1,"diff_pixels":0,"total":1171584,"diff_pct":0}
+> g_hard_right {"a":"s04_BEFORE_K23-1/g_hard_right.png","b":"lead_t2/C2/g_hard_right.png","rows":[180,1536],"threshold":0.1,"diff_pixels":0,"total":1171584,"diff_pct":0}
+
+### 🤖 Claude — 2026-11-20T04:40:17.123Z
+
+BEFORE reproduces the lead's K23-1 pictures at 0 px. Let me add my progress block, then view the remaining shots.
+
+### 🤖 Claude — 2026-11-20T04:40:20.096Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/match/04/r23/PROGRESS.md", "old_string": "## User feedback driving this round (verbatim, 2026-11-20)", "new_string": "## (r23 s04) WHERE I STOPPED / NEXT\n* Specialist (washer-environment-modeler, worktree `/home/user/wt/s04`, local branch `claude/rainbow-s04-match-c24`, port 5273-5275,\n  brief `docs/briefs/2026-11-20-r23/LAUNCH_S04_R23.md`). Uncommitted edits only.\n* Step 0 DONE: BEFORE = K23-1 re-rendered with the pinned audit -> `s04_BEFORE_K23-1/` == lead `lead_t2/C2/` 0 px in all 7 shots.\n* NOW: step 1 (five chevrons clearly A …[+99 chars]`
+
+### 🧑 User — 2026-11-20T04:40:20.264Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/match/04/r23/PROGRESS.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T04:40:20.582Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/04/r23/lead_t2/C2/e_end.png"}`
+
+### 🧑 User — 2026-11-20T04:40:20.820Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:40:21.049Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/04/r23/lead_t2/C2/g_hard_right.png"}`
+
+### 🧑 User — 2026-11-20T04:40:21.234Z
+
+> ↩︎ result: [image]
+
