@@ -76,3 +76,5 @@ s06 / Benny = their pushed `-c23` tips + their r22 PROGRESS.md.
   tunnel, Benny going naturally through the five arrows; clip speed = real game speed (not sped up). Relayed to the projection worker.
 * ~04:00 the user stopped the in-process s07 + s04-projection workers and asked to save everything for the account switch →
   `RESUME_R22.md`, `setup_worker_r23.sh`, `backups/CONNECTORS_AND_SERVICES_R22.md`, START prompt + handoff + CLAUDE.md pointer updated.
+* ~03:52 s06 step 2 `&m06st=1` (start-view flash fix, `claude/rainbow-s06-match-c23` @ `f7b3b22`; worker: small GOOD IMPROVEMENT, first
+  ~1.3 u only; lead review pending): folder `qa/match/06/r22/step2_m06st/` on that branch. s06 next: task 3 (foam walls).
