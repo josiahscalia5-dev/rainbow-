@@ -776,3 +776,125 @@ Queued behind other workers' jobs. Meanwhile I'll prepare the final-sequence too
 
 > 🔧 **Bash** `{"command": "until grep -q \"exit done\" /home/user/scratch/s07/step2b.log 2>/dev/null; do sleep 10; done; cat /home/user/scratch/s07/step2b.log /home/user/scratch/s07/step3.log; date", "description": "Wait for tuned variants to finish", "timeout": 540000}`
 
+### 🧑 User — 2026-11-20T13:32:51.616Z
+
+> ↩︎ result: seg b exit 0
+> seg c exit 0
+> exit done
+> seg BEFORE exit 0
+> Fri Nov 20 13:32:51 UTC 2026
+
+### 🤖 Claude — 2026-11-20T13:32:55.298Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s07/s2seg && python3 -I - <<'EOF'\nfrom PIL import Image, ImageDraw\nimport os\nidx=[48,54,60,66,72,78,84,90,96,102]\nW,H=162,288\nrows=[]\nfor v in ['BEFORE','NEW','NEW_b','NEW_c']:\n    im=Image.new('RGB',(W*len(idx),H+14),'black'); d=ImageDraw.Draw(im)\n    for k,n in enumerate(idx):\n        a=Image.open(f'/home/user/scratch/s07/s2seg/{v}/{n:04d}.png').convert('RGB').resize((W,H)); im.paste(a,(k*W,14))\n        d.text((k*W+3,1),f'{v} t={n/24:.2f}',fill='white')\n    rows.append(im)\nout=Image.new('RGB',(rows[0].width,rows[0].height*4))\nfor i,r in enumera …[+159 chars]`
+
+### 🧑 User — 2026-11-20T13:32:56.253Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T13:32:57.347Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s07/s2_sheet4.png"}`
+
+### 🧑 User — 2026-11-20T13:32:57.875Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T13:33:08.068Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s07/s2seg && ffmpeg -v error -y -i BEFORE/0060.png -i NEW_b/0060.png -i BEFORE/0072.png -i NEW_b/0072.png -filter_complex \"hstack=inputs=4\" /home/user/scratch/s07/s2_b_pair.png", "description": "Side-by-side BEFORE vs variant b at t 2.5 and 3.0"}`
+
+### 🧑 User — 2026-11-20T13:33:08.868Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T13:33:09.855Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s07/s2_b_pair.png"}`
+
+### 🧑 User — 2026-11-20T13:33:10.016Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T13:33:28.253Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s07/src/game/cameraRig.ts", "old_string": "const LOOK07 = { ahead: numQc('m07lkA', 14), back: numQc('m07lkB', 2.5), up: numQc('m07lkU', 5.5), w: numQc('m07lkW', 1) };", "new_string": "// r26: back 5 / up 6.2 (was 2.5 / 5.5): about the normal 07 camera distance (Benny keeps his size; 2.5 / 5.5 made him oversized\n// and his hat blocked the centre) but higher, looking down over him — qa/match/07/r26/s2_look\nconst LOOK07 = { ahead: numQc('m07lkA', 14), back: numQc('m07lkB', 5), up: numQc('m07lkU', 6.2), w: numQc('m07lkW', 1) };"}`
+
+### 🧑 User — 2026-11-20T13:33:28.267Z
+
+> ↩︎ result: <tool_use_error>File has not been read yet. Read it first before writing to it.</tool_use_error>
+
+### 🤖 Claude — 2026-11-20T13:33:37.613Z
+
+> 🔧 **Bash** `{"command": "cat > /home/user/scratch/s07/segpair.py <<'EOF'\n# s07 r26: side-by-side labelled segment clip (BEFORE | NEW), frames at 12 fps of game time -> 1.0x (12 fps) and 0.5x (6 fps)\nimport sys, subprocess, json\nfrom pathlib import Path\nfrom PIL import Image, ImageDraw, ImageFont\nA, B, outp, title, la, lb = Path(sys.argv[1]), Path(sys.argv[2]), sys.argv[3], sys.argv[4], sys.argv[5], sys.argv[6]\nfa = sorted(A.glob('[0-9]*.png')); fb = sorted(B.glob('[0-9]*.png'))\nassert [f.name for f in fa] == [f.name for f in fb], 'frame lists differ'\ntry: font = ImageFont.truetype('/usr/share/font …[+1672 chars]`
+
+### 🧑 User — 2026-11-20T13:34:00.017Z
+
+> ↩︎ result: ok /home/user/rainbow-/qa/match/07/r26/s2_look/clip/SCREEN07_S2_look_BEFORE_vs_NEW
+> total 9140
+> drwxr-xr-x 2 root root    4096 Nov 20 13:33 .
+> drwxr-xr-x 5 root root    4096 Nov 20 13:33 ..
+> -rw-r--r-- 1 root root 5176662 Nov 20 13:33 SCREEN07_S2_look_BEFORE_vs_NEW_0.5x.mp4
+> -rw-r--r-- 1 root root 4173719 Nov 20 13:33 SCREEN07_S2_look_BEFORE_vs_NEW_1.0x.mp4
+
+### 🤖 Claude — 2026-11-20T13:34:01.304Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/src/game/cameraRig.ts", "offset": 14, "limit": 5}`
+
+### 🧑 User — 2026-11-20T13:34:01.325Z
+
+> ↩︎ result: 14	const SB07_CAM = typeof location === 'undefined' || new URLSearchParams(location.search).get('m07sbcam') !== '0';
+> 15	/** r24 `&m07look=1` tunables (QA): look-ahead along the route (u), camera pulled in toward Benny (u), raised (u), aim weight */
+> 16	const numQc = (k: string, d: number) => { const v = typeof location !== 'undefined' ? parseFloat(new URLSearchParams(location.search).get(k) ?? '') : NaN; return Number.isFinite(v) ? v : d; };
+> 17	const LOOK07 = { ahead: numQc('m07lkA', 14), back: numQc('m07lkB', 2.5), up: numQc('m07lkU', 5.5), w: numQc('m07lkW', 1) };
+> 18	/** r24 `&m07swing=1`: share of the S-bend's sideways sweep the camera does NOT follow (`?m07swK=`, 0.5) */
+
+### 🤖 Claude — 2026-11-20T13:34:03.559Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s07/src/game/cameraRig.ts", "old_string": "const LOOK07 = { ahead: numQc('m07lkA', 14), back: numQc('m07lkB', 2.5), up: numQc('m07lkU', 5.5), w: numQc('m07lkW', 1) };", "new_string": "// r26: back 5 / up 6.2 (was 2.5 / 5.5): about the normal 07 camera distance (Benny keeps his size; 2.5 / 5.5 made him oversized\n// and his hat blocked the centre) but higher, looking down over him — qa/match/07/r26/s2_look\nconst LOOK07 = { ahead: numQc('m07lkA', 14), back: numQc('m07lkB', 5), up: numQc('m07lkU', 6.2), w: numQc('m07lkW', 1) };"}`
+
+### 🧑 User — 2026-11-20T13:34:03.643Z
+
+> ↩︎ result: The file /home/user/wt/s07/src/game/cameraRig.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T13:34:05.929Z
+
+Now save step-2 stills and check step 3's render.
+
+### 🤖 Claude — 2026-11-20T13:34:08.426Z
+
+> 🔧 **Bash** `{"command": "D=/home/user/rainbow-/qa/match/07/r26/s2_look && cp /home/user/rainbow-/references/07_dive_the_washer_tube.png $D/1_ORIGINAL_APPROVED.png && for n in 0060:2.50 0072:3.00 0078:3.25 0084:3.50; do IFS=: read f t <<<\"$n\"; cp /home/user/scratch/s07/s2seg/BEFORE/$f.png $D/2_BEFORE_t$t.png; cp /home/user/scratch/s07/s2seg/NEW_b/$f.png $D/3_NEW_t$t.png; done; ls $D; cat /home/user/scratch/s07/step3.log; cd /home/user/wt/s07 && timeout 600 npx tsc --noEmit -p . ; echo tsc $?", "description": "Save step-2 stills; check step 3; typecheck"}`
+
+### 🧑 User — 2026-11-20T13:34:14.895Z
+
+> ↩︎ result: 1_ORIGINAL_APPROVED.png
+> 2_BEFORE_t2.50.png
+> 2_BEFORE_t3.00.png
+> 2_BEFORE_t3.25.png
+> 2_BEFORE_t3.50.png
+> 3_NEW_t2.50.png
+> 3_NEW_t3.00.png
+> 3_NEW_t3.25.png
+> 3_NEW_t3.50.png
+> BEFORE
+> NEW
+> clip
+> seg BEFORE exit 0
+> tsc 0
+
+### 🤖 Claude — 2026-11-20T13:34:22.893Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/match/07/r24/PROGRESS.md", "old_string": "* NOW: step 2 `&m07look=1` proof (segment t 2.0–4.6 s, BEFORE = full step-1 candidate, NEW = + m07look; start view 0 px — DONE", "new_string": "* 13:36 DONE — **STEP 2 verdict `&m07look=1` (new defaults back 5 / up 6.2, code-only change in cameraRig.ts, tsc 0): GOOD\n  IMPROVEMENT, not approved.** Proof `qa/match/07/r26/s2_look/` (1_ORIGINAL_APPROVED, 2_BEFORE_t*, 3_NEW_t* at t 2.5 / 3.0 / 3.25\n  / 3.5; start view `BEFORE|NEW/a_start.png` **0 px**; side-by-side clip `clip/SCREEN07_S2_look_BEF …[+1158 chars]`
+
+### 🧑 User — 2026-11-20T13:34:22.962Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/match/07/r24/PROGRESS.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T13:34:26.287Z
+
+Step 2 logged. Waiting for the step-3 NEW segment (the combo build must not be rebuilt until it finishes).
+
+### 🤖 Claude — 2026-11-20T13:34:27.693Z
+
+> 🔧 **Bash** `{"command": "until grep -q \"exit done\" /home/user/scratch/s07/step3.log 2>/dev/null; do sleep 10; done; cat /home/user/scratch/s07/step3.log; grep -v \"allow list\" /home/user/scratch/s07/s3_seg_NEW.log | tail -3; ls /home/user/scratch/s07/s3seg/NEW | wc -l; date", "description": "Wait for step-3 NEW segment", "timeout": 540000}`
+

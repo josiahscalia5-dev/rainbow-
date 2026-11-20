@@ -28,7 +28,19 @@
     08 8.125 vs 8.292. Up to the lip the s values are the same physical points; on the drop the same t is up to ~2 u apart (at
     t 5.0: s 344.6 BEFORE vs 345.8 NEW, both lat +2.25 — the foam overlap is not explained by that 1.2 u). The final sequence
     adds stills at corresponding route landmarks (lip, bend apexes, inlet).
-* NOW: step 2 `&m07look=1` proof (segment t 2.0–4.6 s, BEFORE = full step-1 candidate, NEW = + m07look; start view 0 px — DONE
+* 13:36 DONE — **STEP 2 verdict `&m07look=1` (new defaults back 5 / up 6.2, code-only change in cameraRig.ts, tsc 0): GOOD
+  IMPROVEMENT, not approved.** Proof `qa/match/07/r26/s2_look/` (1_ORIGINAL_APPROVED, 2_BEFORE_t*, 3_NEW_t* at t 2.5 / 3.0 / 3.25
+  / 3.5; start view `BEFORE|NEW/a_start.png` **0 px**; side-by-side clip `clip/SCREEN07_S2_look_BEFORE_vs_NEW_{1.0x,0.5x}.mp4`,
+  t 2.0–4.6 s, same steering schedule, 432 px wide segment renders).
+  - Closer: across the lip (t 2.25–3.25 s, steering left) the river + Benny fill the lower 55–65 % of the frame (BEFORE: the
+    purple wall ~70 %, the river a strip, Benny cut off at the bottom); the river runs visibly up to the brow with the coins on
+    it, and the drop river ahead shows from t 3.25 s (BEFORE 3.75 s). Benny keeps his normal size.
+  - Still differs: just before the lip (t 2.5–3.0) the river BEYOND the brow is still hidden (physically below the line of sight);
+    the pink side bands read as flat angular panels with straight streaks; thin dotted magenta arcs on the rings (pre-existing).
+  - New problem: none seen; a thin copper line across the river at t 2.5 s is in BEFORE too (pre-existing, note for later).
+  - Tried and rejected: the r25 defaults (2.5 back / 5.5 up — Benny oversized, hat blocks the centre); variant c (4 / 7.2,
+    ahead 12) — similar river share but more top-down.
+* (superseded) step 2 `&m07look=1` proof (segment t 2.0–4.6 s, BEFORE = full step-1 candidate, NEW = + m07look; start view 0 px — DONE
   `qa/match/07/r26/s2_look/{BEFORE,NEW}/a_start.png` 0 px). First look (default tunables 2.5 back / 5.5 up): route ahead shows
   ~0.5 s earlier (t 3.25 vs 3.75) and the river fills more of the lower frame, BUT Benny becomes oversized (camera ≈6.0 u from
   him vs 7.6 normal) and his hat blocks the centre at t 2.5–3.0 → tuned variants b (`m07lkB=5&m07lkU=6.2`) and c
