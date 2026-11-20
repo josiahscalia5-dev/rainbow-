@@ -4351,3 +4351,43 @@ The Screen 06 unfinished work applies cleanly. Fetching Benny's base to check it
 
 > 🔧 **Bash** `{"command": "timeout 180 git fetch --depth=5 origin +claude/rainbow-benny-c21:refs/remotes/origin/claude/rainbow-benny-c21 >/dev/null 2>&1; rm -f /tmp/claude-0/i2; GIT_INDEX_FILE=/tmp/claude-0/i2 git read-tree refs/remotes/origin/claude/rainbow-benny-c21 && GIT_INDEX_FILE=/tmp/claude-0/i2 git apply --cached --check backups/wip/claude__rainbow-benny-c21/tracked.patch && echo \"OK applies: benny WIP on $(git rev-parse --short refs/remotes/origin/claude/rainbow-benny-c21)\"; rm -f /tmp/claude-0/i2\nflock -w 280 backups/.autosave.lock true && python3 scripts/rainbow-autosave.py --reason manual:end …[+462 chars]`
 
+### 🧑 User — 2026-11-20T02:45:11.458Z
+
+> ↩︎ result: OK applies: benny WIP on bade594
+>   "commit": "47bfbf8921cb64bad8a21f0ed09072666d39b87a",
+> local 47bfbf8921cb64bad8a21f0ed09072666d39b87a remote 47bfbf8921cb64bad8a21f0ed09072666d39b87a
+> MATCH
+> 0
+> @@ ok 89/89 LFS objects (577 MB, 17 Marble/World Labs) confirmed on GitHub LFS
+> AUTOSAVE OK | branch ccr-68d26c2d-gwegce | scheduler daemon | last verified backup 2026-11-20T02:44:56+00:00 (0.2 min ago) | local 47bfbf8 remote 47bfbf8 (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-20T02:45:25.980Z
+
+RAINBOW 3D BACKUP VERIFIED
+
+Everything is saved to your GitHub repository and verified:
+- **Branch:** `ccr-68d26c2d-gwegce` at `47bfbf8921cb64bad8a21f0ed09072666d39b87a`. `git ls-remote` matches the local commit, with nothing left unsaved.
+- **Large files:** all 89 (577 MB, including the World Labs world files) are confirmed on GitHub's large-file storage.
+
+**What's saved**
+- **Chat history:** this whole conversation and every specialist's conversation, in `backups/claude-sessions/5a3a0996-c88f-53c3-8888-e587e3601a8b/`.
+- **Agents:** all 10 specialist definitions, unchanged. A ready-to-use brief for each round-21 job: Screen 04, Screen 07, Screen 06 and Benny.
+- **The two specialists that were stopped mid-work:** each had finished one step, judged a good improvement in its own log.
+  - Screen 04: crisp glossy pink water up the tunnel walls instead of the hazy blur.
+  - Screen 07: the pale waterfall at the end replaced by your cyan and magenta river in the ring tube.
+  - Their complete code is saved as patches, checked to apply cleanly, with their pictures, clips and progress notes.
+- **Generated artwork:** the three Screen 04 views I sent you for approval, plus the job ledger (5 jobs, $0.12 each = **$0.60**), the prompts and the tools that made them.
+- **Today's ring fix, the audit of all five screens, and every tool I wrote.**
+- **Servers and connectors:** `backups/CONNECTORS_AND_SERVICES_R21.md` lists every one by name (GitHub, World Labs Atlas and key, fal, Hugging Face, Playwright, plugins), with how to reconnect each. It contains no keys.
+- **Your decisions:** paid artwork, up to four specialists, the 06 and 07 view tests, Screen 08 resumed, and the consistent approved Benny are all written into the resume notes, so the next account follows them.
+
+**What can't be moved through GitHub**
+- **Sign-ins and keys:** on the new account, connect GitHub (and the Claude GitHub App), World Labs and Hugging Face in claude.ai. The World Labs and fal keys are entered only in the secure form, and only if the new account's free check says they're missing.
+- **Running workers:** the two specialists running here were stopped. The two new cloud specialists (Screen 06 and Benny) started up but never began their tasks, so nothing of theirs is lost. The new account relaunches all four from their briefs. You can archive those two idle sessions on this account.
+
+**To continue on your other account**
+1. Start a Claude Code cloud session on the repo, on branch **`ccr-68d26c2d-gwegce`**, not the default branch.
+2. Paste the prompt at the top of `backups/START_NEW_CLAUDE_ACCOUNT.md`.
+
+It reads `docs/briefs/2026-11-20-r21/RESUME_R21.md`, recreates every specialist's working copy with one script, and relaunches up to four specialists where they stopped. It will also ask for your verdict on the three Screen 04 artwork proposals, if you haven't given it here.
+
