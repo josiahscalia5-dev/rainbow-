@@ -1,7 +1,7 @@
 {
   "last_run": {
-    "time": "2026-11-20T01:45:27+00:00",
-    "reason": "manual:s04-rings-r21",
+    "time": "2026-11-20T01:47:37+00:00",
+    "reason": "hook:Stop",
     "result": "committed+pushed",
     "files_staged": 6,
     "pushed_verified": true,
@@ -10,14 +10,14 @@
     "wip_snapshots": [
       "claude/rainbow-s04-ringtex-c22: 2 modified, 12 new file(s) snapshotted"
     ],
-    "commit": "1a2167d5410387f3c244cd229ebb0a203318704f",
+    "commit": "52efaf442b6eda871f733adff6bb45c0d8eeb2be",
     "duration_s": 10
   },
   "repo": "https://github.com/josiahscalia5-dev/rainbow-",
   "branch": "ccr-68d26c2d-gwegce",
-  "last_verified_remote_sha": "1a2167d5410387f3c244cd229ebb0a203318704f",
-  "last_successful_backup_utc": "2026-11-20T01:45:27+00:00",
+  "last_verified_remote_sha": "52efaf442b6eda871f733adff6bb45c0d8eeb2be",
+  "last_successful_backup_utc": "2026-11-20T01:47:37+00:00",
   "consecutive_failures": 0,
-  "schedule": "every 5 min, container-local (scheduler=daemon status=started pid=184); see backups/RECOVERY.md for limits",
+  "schedule": "every 5 min, container-local (scheduler=daemon status=active pid=184); see backups/RECOVERY.md for limits",
   "next_scheduled_utc": "2026-11-20T01:50:00+00:00"
 }

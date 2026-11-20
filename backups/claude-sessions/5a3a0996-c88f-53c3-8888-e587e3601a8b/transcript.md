@@ -2516,3 +2516,79 @@ Everything is in `qa/match/04/r21_rings/`:
 
 Can you make it where, okay, so all my approved screens, can you make it where, in all like the scenery and everything, so all my approved screens that I want, all of them, I want them to look exactly like for my gaming app. So like, you know, like the level 4, like, you know, it goes through the very beginning of level 4 and through the 5 arrows. I want that background. See the background? See the water? See how like, the image of the proof screen looks? Look how good it looks? That's how I want my gaming app. I want to make sure the pink character goes go through the arrows neatly. Like, he goes through the, like, he's actually going inside the tunnel, which I think he's doing right now. But I just want to make sure all of them look like my, all my exact proof screens, but they're actually a gaming app. That makes sense. But when the pink character swims or moves through all my approved screens, I want to make sure that it looks my like my approved artwork, background, scenery, and the entire approved screen. Even if it's like 90% close to it, I'll be pleased.
 
+### 🤖 Claude — 2026-11-20T01:48:09.077Z
+
+I'll start by reading where each screen stands. The binding visual-goal brief and the latest round notes come first; I haven't read the binding brief in this session yet.
+
+### 🤖 Claude — 2026-11-20T01:48:09.929Z
+
+> 🔧 **Bash** `{"command": "cat docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md | head -80", "description": "Read the binding user visual goal brief"}`
+
+### 🧑 User — 2026-11-20T01:48:09.959Z
+
+> ↩︎ result: # User-approved visual goal — 2026-11-18 ~15:00 UTC (account 13) — BINDING for every specialist and every future Claude account
+> 
+> The user approved this understanding in their own words: "YES, CLAUDIA. I approve your visual-first plan for all five original
+> approved Rainbow screens." It adds to (never replaces) `docs/briefs/2026-11-18-r11/USER_ORDER_R11_STRICT.md`,
+> `docs/briefs/2026-11-18-r10/RULES_R10.md` and `docs/briefs/2026-11-18-r8/COMMON_RULES.md`.
+> 
+> ## 1. What the user wants
+> * The user ALREADY DESIGNED the game. The approved pictures `references/04_…png` … `references/08_…png` are BLUEPRINTS, not
+>   inspiration: recreate THOSE exact environments as faithfully as technically possible as real playable 3D.
+> * The scenery must look like the approved world THROUGHOUT Benny's natural swimming — start, middle, end, and while he steers hard
+>   left / right. A matching first screenshot that turns into a generic tunnel is a failure.
+> * No redesign, no simplification, no added or different scenery, no generic orange ring corridor, no flat blue/ramp water, no giant
+>   foam walls, no stretched / smeared / torn textures, no double-exposed or duplicate rings, no clipping, no style drift.
+> * Where a …[+3942 chars]
+
+### 🤖 Claude — 2026-11-20T01:48:11.087Z
+
+> 🔧 **Bash** `{"command": "ls docs/briefs/2026-11-19-r19/ docs/briefs/2026-11-19-r18/ 2>/dev/null; sed -n 1,140p docs/briefs/2026-11-19-r19/RESUME_R19.md", "description": "Read round 19 resume (where each screen stopped)"}`
+
+### 🧑 User — 2026-11-20T01:48:11.133Z
+
+> ↩︎ result: docs/briefs/2026-11-19-r18/:
+> COORDINATION.md
+> RESUME_R18.md
+> setup_worker.sh
+> 
+> docs/briefs/2026-11-19-r19/:
+> COORDINATION.md
+> RESUME_R19.md
+> setup_worker.sh
+> # Round 19 → next session: where every worker stopped (2026-11-19 ~20:15 UTC) — HANDOFF
+> 
+> Lead `ccr-d00ac5ec-gabdsh` (this account, started 19:05 UTC from the r18 lead's 18:56 save). User order ~19:40 UTC: let the
+> 04 / 05 workers finish their current batch, save + verify everything, write this note, continue in a FRESH session. All three
+> workers finished their step, wrote a "(r19) WHERE I STOPPED / NEXT" block in their own log, pushed, and stopped cleanly
+> (no unfinished code anywhere). Screen 06 + 07 were not restarted this round (usage); Screen 08 stays PAUSED by the user.
+> 
+> ## How to resume (fresh session on branch `ccr-d00ac5ec-gabdsh`)
+> 1. Bootstrap runs automatically (CLAUDE.md §1). Check `python3 -I scripts/autosave-status.py` → AUTOSAVE OK (match).
+> 2. Same account / connectors: continue each `-c19` branch on a NEW `-c20` branch from its tip below
+>    (`docs/briefs/2026-11-19-r19/setup_worker.sh`: change `-c18` → `-c19`, `-c19` → `-c20`, and `L=` to the newest lead save
+>    that holds `backups/wip/*-c19`). Fetch named branches only  …[+5048 chars]
+
+### 🤖 Claude — 2026-11-20T01:48:43.430Z
+
+> 🔧 **Bash** `{"command": "grep -n -A12 -E \"^#+ .*s0[5678]|\\*\\*s0[5678]\" docs/briefs/2026-11-19-r18/RESUME_R18.md | head -90", "description": "Read r18 resume sections for screens 05-08"}`
+
+### 🧑 User — 2026-11-20T01:48:43.463Z
+
+> ↩︎ result: 31:## s05 — Screen 05 (brief `S05_LAUNCH.md`), worktree `/home/user/wt/s05`, port 5275
+> 32-* Tip `f033f7cc`: r17 step 1 `&m05trans=1` KEPT (05 → 06 hand-over; GOOD IMPROVEMENT). Kept set: `qa/match/05/r17/KEPT_STEP1.txt`
+> 33-  (restored untracked: commit it).
+> 34-* No unfinished code. Next = task 2 (lead note): at hard left the whole LEFT wall is a smeared, radially streaked projection
+> 35-  (x 0–300, y 200–1100), a flat cut-off chunk of gold ring / paddle at x 150–300 y 440–540 (cause found in r17, see PROGRESS),
+> 36-  a hot-pink triangular smear in the bottom-left corner; near the end of 05 the walls close to the camera are radially smeared and
+> 37-  the near water is a plain cyan sheet → make it the painted crisp purple slotted wall with glossy gold bands. Then brief tasks 2–4.
+> 38-
+> 39:## s06 — Screen 06 (brief `S06_LAUNCH.md`), worktree `/home/user/wt/s06`, port 5276
+> 40-* Tip `c649fcbc`: r17 step 2 `&m06fclu=1` KEPT (bubbly soap foam; GOOD IMPROVEMENT, small). Kept set = `&m06gold=1` v2 + `&m06fclu=1`.
+> 41-* No unfinished code. Next = rank 3: the start-view flash at +1.1 u ((a) see-through ring arcs, (b) striped ring strip above the
+> 42-  crest, (c) pale ghost of the painted Benny on th …[+2795 chars]
+
+### 🤖 Claude — 2026-11-20T01:48:56.562Z
+
+> 🔧 **Bash** `{"command": "set -e\nmk() { B=$1; WT=$2; TIP=$3\n  timeout 180 git fetch --depth=50 origin \"+$B:refs/remotes/origin/$B\" >/dev/null 2>&1 || echo \"fetch fail $B\"\n  [ \"$(git rev-parse refs/remotes/origin/$B)\" = \"$(git rev-parse $TIP 2>/dev/null || echo x)\" ] || echo \"NOTE $B tip $(git rev-parse --short refs/remotes/origin/$B) (expected $TIP)\"\n  exec 9>backups/.autosave.lock; flock 9\n  git worktree add --detach --no-checkout \"$WT\" \"refs/remotes/origin/$B\" >/dev/null 2>&1\n  printf '/*\\n!/qa/pilot05/\\n!/qa/worldlabs/\\n!/qa/imageblaster/\\n!/builds/\\n!/backups/\\n' | git -C \"$W …[+663 chars]`
+
