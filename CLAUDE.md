@@ -13,7 +13,7 @@ started the full bootstrap in the background. Its summary ("RAINBOW SESSION STAR
    (Legacy prompts call `scripts/resume-newest-work.sh --tools`; it runs the bootstrap.)
 2. **BINDING, user-approved 2026-11-18 ~15:00 UTC: `docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md`** (the exact approved
    scenery of 04–08 THROUGHOUT Benny's swimming; read it before any screen work). Read the TOP section of
-   **`docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`** — NEWEST: "ROUND 20" (lead `ccr-681a37bb-5jqfbu`, `-c21` map
+   **`docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`** — NEWEST: "ROUND 21" (lead `ccr-68d26c2d-gwegce`, resume `docs/briefs/2026-11-20-r21/RESUME_R21.md`: paid artwork + up to four specialists approved); before it "ROUND 20" (lead `ccr-681a37bb-5jqfbu`, `-c21` map
    `docs/briefs/2026-11-19-r20/COORDINATION.md`: round-19b Benny + Screen 04 workers relaunched); before it "ROUND 19" (lead `ccr-d00ac5ec-gabdsh`, `-c19` map + where every worker
    stopped: `docs/briefs/2026-11-19-r19/COORDINATION.md`, `RESUME_R19.md`; Thrixel foam test = not an improvement); before it "ROUND 18" (lead `ccr-ae71d3a5-80naq2`, `-c18` map + where every worker
    stopped: `docs/briefs/2026-11-19-r18/COORDINATION.md`, `RESUME_R18.md`; Screen 08 PAUSED by the user); before it "ACCOUNT 17"

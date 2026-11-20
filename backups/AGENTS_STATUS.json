@@ -1,7 +1,7 @@
 {
  "_comment": "Machine-readable roster of the ten Rainbow specialists. Human-readable history: backups/AGENTS_STATUS.md. scripts/claude-bootstrap.sh checks every definition below (present + SHA-256). Agents load automatically from .claude/agents/ (Agent tool, subagent_type = name). Never recreate or rename them. A running specialist does NOT survive a new session or account: relaunch it from its notes + unfinished patch.",
  "schema": 1,
- "updated_utc": "2026-11-19T23:40Z",
+ "updated_utc": "2026-11-20T02:50:00Z",
  "updated_by_session": "session_01AvQv6SAH2NyYjSPRMtFps6 (round 18, lead ccr-ae71d3a5-80naq2)",
  "running_now": {
   "_note": "see round18.running (five background workers in the round-18 lead container, relaunched ~02:50 UTC from the r17 21:11 UTC WIP snapshots); Screen 08 PAUSED by the user"
@@ -1137,30 +1137,44 @@
   "relaunch": "same account: SendMessage to the agent; new session/account: -c22 branches from each newest -c21 tip + backups/wip snapshot, prompts in backups/claude-sessions/7951f197-ca4f-5615-a4e3-a23f22863243/ (Agent calls \"... r20\")"
  },
  "round21": {
-  "updated": "2026-11-20 ~02:10 UTC",
+  "updated": "2026-11-20 ~02:50 UTC (account switch)",
   "lead_branch": "ccr-68d26c2d-gwegce",
   "running": [
    {
     "screen": "04 water/foam/arrows",
     "agent": "foam-bubbles-particles",
-    "worktree": "/home/user/wt/s04",
-    "local_branch": "claude/rainbow-s04-match-c22",
-    "brief": "docs/briefs/2026-11-20-r21/S04_R21.md",
-    "proof": "qa/match/04/r21/",
-    "code_backup": "backups/wip/claude__rainbow-s04-match-c22/"
+    "state": "STOPPED after step 1 m04wgl GOOD IMPROVEMENT",
+    "code": "qa/match/04/r21/code_at_stop_full.patch on 34cb4941",
+    "brief": "docs/briefs/2026-11-20-r21/S04_R21.md"
    },
    {
     "screen": "07",
     "agent": "water-fx-specialist",
-    "worktree": "/home/user/wt/s07",
-    "local_branch": "claude/rainbow-s07-match-c22",
-    "brief": "docs/briefs/2026-11-20-r21/S07_R21.md",
-    "proof": "qa/match/07/r21/",
-    "code_backup": "backups/wip/claude__rainbow-s07-match-c22/"
+    "state": "STOPPED after step 1 m07end GOOD IMPROVEMENT",
+    "code": "qa/match/07/r21/code_at_stop_full.patch on 8accdad0",
+    "brief": "docs/briefs/2026-11-20-r21/S07_R21.md"
+   },
+   {
+    "screen": "06",
+    "agent": "path-camera-transition-engineer + reference-match-director (cloud session session_018Sg3ATJADxqD5ATsNChkL5, old account)",
+    "branch": "claude/rainbow-s06-match-c22",
+    "brief": "docs/briefs/2026-11-20-r21/S06_R21.md"
+   },
+   {
+    "screen": "Benny all screens",
+    "agent": "benny-character-artist (cloud session session_018Sg3ASkM3eaYYiggDeDayi, old account)",
+    "branch": "claude/rainbow-benny-c22",
+    "brief": "docs/briefs/2026-11-20-r21/BENNY_R21.md"
    }
   ],
   "lead_done": "Screen 04 rings m04rsoft + msaa (qa/match/04/r21_rings/NOTES.md); audit of 04-08 in motion qa/review_r21/audit/",
   "next": "06 (composition decision needed), 05 polish, Benny approved look (claude/rainbow-benny-c21 @ bade594 + WIP)",
-  "note": "workers never commit/push this round (session push rule); relaunch from the brief + backups/wip snapshot"
+  "note": "workers never commit/push this round (session push rule); relaunch from the brief + backups/wip snapshot",
+  "queued": [
+   "08 polish (coins, m08gl verdict) from 3c0fa970",
+   "05 polish (end, hard left) from eb7233e3"
+  ],
+  "artwork": "qa/review_r21/artwork/ — 5 fal nano-banana-2/edit jobs $0.60; 04 proposals await user approval",
+  "resume": "docs/briefs/2026-11-20-r21/RESUME_R21.md + setup_worker_r22.sh"
  }
 }

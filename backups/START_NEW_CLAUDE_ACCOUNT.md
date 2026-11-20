@@ -1,6 +1,26 @@
 # Paste this into Claude Code on the next Claude account
 
-## ▶ NEWEST (2026-11-19 ~20:15 UTC, round 19 → next session / account) — use THIS prompt
+## ▶ NEWEST (2026-11-20 ~02:50 UTC, round 21 → next account) — use THIS prompt
+Before pasting: on the new account connect GitHub (+ Claude GitHub App on `josiahscalia5-dev/rainbow-`) and start a Claude Code
+cloud session on the repo, branch **`ccr-68d26c2d-gwegce`** (round-21 lead; NOT the default branch). Connectors on claude.ai:
+**World Labs Atlas** and **Hugging Face**. Keys (World Labs `api.worldlabs.ai` header `WLT-Api-Key`; fal `queue.fal.run`
+`Authorization: Key`) are checked with free reads first; the secure form opens only if a check fails. The environment must allow
+`v3.fal.media`, `v3b.fal.media`, `cdn.marble.worldlabs.ai`.
+
+> RAINBOW — continue my EXISTING game exactly where round 21 stopped. Do NOT restart, redesign, merge or delete anything.
+> 1. Follow `CLAUDE.md` (five-minute GitHub autosave first). Read the TOP section of `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`
+>    ("ROUND 21"), then `docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md` (binding) and
+>    `docs/briefs/2026-11-20-r21/RESUME_R21.md` + `COORDINATION.md` (my authorizations: paid artwork, up to four specialists,
+>    06 / 07 framing tests, Screen 08 resumed, consistent approved Benny).
+> 2. Recreate the worker worktrees (`bash docs/briefs/2026-11-20-r21/setup_worker_r22.sh`) and relaunch up to four specialists from
+>    their briefs + "WHERE I STOPPED" notes (04, 07, 06, Benny; then 08 / 05 polish). Show me the Screen 04 artwork proposals
+>    (`qa/review_r21/artwork/04/FOR_APPROVAL_04_*.png`) if I have not answered yet.
+> 3. Goal: all five playable screens 04–08 look like my approved pictures WHILE Benny swims (8.5–9/10). Show ORIGINAL APPROVED /
+>    BEFORE / NEW pictures + uninterrupted gameplay clips, labelled GOOD IMPROVEMENT / NOT AN IMPROVEMENT / NOT YET PROVEN.
+
+---
+
+## ▶ (2026-11-19 ~20:15 UTC, round 19 → next session / account) — superseded by the prompt above
 Before pasting: connect GitHub (+ Claude GitHub App on `josiahscalia5-dev/rainbow-`) and start a Claude Code cloud session on the
 repo, branch **`ccr-d00ac5ec-gabdsh`** (round-19 lead; NOT the default branch). Connectors on claude.ai: World Labs Marble,
 Thrixel (`https://api.thrixel.com/mcp`, optional), Hugging Face (optional). Keys are checked with free reads first.

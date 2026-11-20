@@ -1,14 +1,14 @@
-# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 21 (2026-11-20 ~01:40 UTC, session branch `ccr-68d26c2d-gwegce`)
+# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 21 (2026-11-20, lead branch `ccr-68d26c2d-gwegce`) — HANDOFF READY (~02:50 UTC)
 
-Session opened on the r20 lead `ccr-681a37bb-5jqfbu` @ `413e419` (its later saves `36ce6a5` / `0250392` = bookkeeping only;
-nothing merged). Services verified: GitHub MCP (`get_me`), Hugging Face MCP (`josdois`), World Labs Atlas (`list_projects`
-"My project", credits available), Marble key (5,420 credits), Playwright MCP, autosave OK. Context7 plugin needs the user's
-sign-in. User task: Screen 04 tunnel bands — rounded soft-gold rims, narrow shaded grooves, copper + pink / violet / blue
-reflections, no near-black boundaries / jagged edges (marked close-ups of the rings preview `70e5595`). Done as URL switches
-on top of that preview: **`&m04rsoft=1`** (rounded-rib shading, cause + numbers in **`qa/match/04/r21_rings/NOTES.md`**) and
-**`&msaa=4`** (multisampled composer target). Code: worktree `/home/user/wt/s04b`, local branch `claude/rainbow-s04-ringtex-c22`
-from `70e5595`, uncommitted (autosave → `backups/wip/claude__rainbow-s04-ringtex-c22/`) + full patch
-`qa/match/04/r21_rings/r21_rings_vs_70e5595.patch`. Waiting for the user's verdict; nothing merged into any branch.
+The user is moving to another Claude account (credits). Start the next session on **`ccr-68d26c2d-gwegce`**. Everything —
+where each worker stopped, the user's new authorizations (paid artwork, up to four specialists, 06 / 07 framing tests, Screen 08
+resumed, consistent approved Benny), how to recreate the worktrees and relaunch — is in **`docs/briefs/2026-11-20-r21/RESUME_R21.md`**
+(+ `COORDINATION.md`, briefs `S04_R21.md`, `S07_R21.md`, `S06_R21.md`, `BENNY_R21.md`, recipe `setup_worker_r22.sh`). Done: Screen 04
+rings `m04rsoft` + `msaa` (`qa/match/04/r21_rings/NOTES.md`); audit of 04–08 in motion (`qa/review_r21/audit/`); 04 step `m04wgl`
+and 07 step `m07end` (both GOOD IMPROVEMENT, code saved as patches in `qa/match/0N/r21/`); first paid continuation views for Screen 04
+(`qa/review_r21/artwork/`, $0.60, awaiting the user's approval). Cloud sessions of the OLD account: s06 → `claude/rainbow-s06-match-c22`,
+Benny → `claude/rainbow-benny-c22` (their own autosave). Services verified: GitHub, Hugging Face (`josdois`), World Labs Atlas + key
+(5,420 credits), fal, Playwright; Context7 needs a sign-in. Nothing merged.
 
 ---
 

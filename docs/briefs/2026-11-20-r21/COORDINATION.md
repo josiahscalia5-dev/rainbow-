@@ -26,3 +26,13 @@ Deterministic shots (tools/lead21/audit_screen.mjs): start, early (12 %), middle
 | s07 | water-fx-specialist | `/home/user/wt/s07` / `claude/rainbow-s07-match-c22` (`8accdad0`) | 5277 | `S07_R21.md` |
 Next in line: 06 (composition needs a user decision: the painted off-centre tunnel vs the centred target while swimming; never
 `m06bend`), 05 polish (end + hard left), Benny's approved look on every screen (`claude/rainbow-benny-c21` @ `bade594` + WIP).
+
+## Update ~02:50 UTC — user authorized paid artwork + up to four specialists; account switch
+| Worker | Where | Result / state |
+|---|---|---|
+| s04 (in-process) | local `claude/rainbow-s04-match-c22` (never pushed) | step 1 `&m04wgl=1` GOOD IMPROVEMENT; stopped by the account switch; code `qa/match/04/r21/code_at_stop_full.patch` (base `34cb4941`) |
+| s07 (in-process) | local `claude/rainbow-s07-match-c22` (never pushed) | step 1 `&m07end=1` GOOD IMPROVEMENT; stopped; code `qa/match/07/r21/code_at_stop_full.patch` (base `8accdad0`) |
+| s06 | cloud session `session_018Sg3ATJADxqD5ATsNChkL5` → `claude/rainbow-s06-match-c22` | brief `S06_R21.md` (framing test `m06view`); asked to save + write WHERE I STOPPED |
+| Benny | cloud session `session_018Sg3ASkM3eaYYiggDeDayi` → `claude/rainbow-benny-c22` | brief `BENNY_R21.md`; asked to save + write WHERE I STOPPED |
+| artwork (lead) | `qa/review_r21/artwork/` | 5 paid fal jobs ($0.60); 04 proposals middle / late / end awaiting the user's approval |
+Resume: `RESUME_R21.md`, recipe `setup_worker_r22.sh`.
