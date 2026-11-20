@@ -1639,3 +1639,175 @@ Now I'll write the 3D foam cloud system (step 2) into match07.ts.
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 - <<'EOF'\np='src/world/match07.ts'\ns=open(p).read()\na=\"\"\"      const drop: THREE.Object3D[] = []; clone.traverse((o) => { if (o.name.startsWith('m07_pl_')) drop.push(o); });\"\"\"\nb=\"\"\"      // (r21 m07cloud: nor do the foam clouds — they only rise where the view moves away from the approved one)\n      const drop: THREE.Object3D[] = []; clone.traverse((o) => { if (o.name.startsWith('m07_pl_') || o.name.startsWith('m07_cloud')) drop.push(o); });\"\"\"\nassert s.count(a)==1; s=s.replace(a,b); open(p,'w').write(s)\nEOF\nnpx tsc --noEmit -p . …[+573 chars]`
 
+### 🧑 User — 2026-11-20T02:32:39.194Z
+
+> ↩︎ result: 95
+> a_start s 273.056 lat 0 hidden 0
+> b_early s 287.256 lat 0 hidden 0
+> f_hard_left s 314.056 lat -2.25 hidden 0
+> d_late s 343.456 lat -0.01 hidden 0
+> e_end s 372.656 lat -0 hidden 0
+
+### 🤖 Claude — 2026-11-20T02:32:53.129Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/try4/d_late.png"}`
+
+### 🧑 User — 2026-11-20T02:32:53.240Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T02:32:53.842Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/try4/e_end.png"}`
+
+### 🧑 User — 2026-11-20T02:32:53.885Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T02:32:54.597Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/try4/f_hard_left.png"}`
+
+### 🧑 User — 2026-11-20T02:32:54.665Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T02:32:55.202Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/try4/b_early.png"}`
+
+### 🧑 User — 2026-11-20T02:32:55.275Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T02:33:05.570Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 860,885p node_modules/three/src/renderers/webgl/WebGLProgram.js; K7=$(cat /home/user/rainbow-/qa/match/07/r21/K7.txt); D=/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/try4; node tools/match07/diag_r21.mjs $D \"$K7&m07end=1&m07cloud=1\" '[{\"name\":\"d_late2\",\"frac\":0.6}]' 2>&1 | grep -iv \"allow list\\|403\\|m07nearw\" | tail -6; python3 -c \"\nimport json\nd=json.load(open('$D/diag.json'))\nfor e in d:\n  print([c for c in e['calls'] if 'm07' in c[0]])\"", "description": "Check frag depth define and whether clo …[+29 chars]`
+
+### 🧑 User — 2026-11-20T02:33:28.532Z
+
+> ↩︎ result: // GLSL 3.0 conversion for built-in materials and ShaderMaterial
+> 
+> 		versionString = '#version 300 es\n';
+> 
+> 		prefixVertex = [
+> 			customVertexExtensions,
+> 			'#define attribute in',
+> 			'#define varying out',
+> 			'#define texture2D texture'
+> 		].join( '\n' ) + '\n' + prefixVertex;
+> 
+> 		prefixFragment = [
+> 			'#define varying in',
+> 			( parameters.glslVersion === GLSL3 ) ? '' : 'layout(location = 0) out highp vec4 pc_fragColor;',
+> 			( parameters.glslVersion === GLSL3 ) ? '' : '#define gl_FragColor pc_fragColor',
+> 			'#define gl_FragDepthEXT gl_FragDepth',
+> 			'#define texture2D texture',
+> 			'#define textureCube texture',
+> 			'#define texture2DProj textureProj',
+> 			'#define texture2DLodEXT textureLod',
+> 			'#define texture2DProjLodEXT textureProjLod',
+> 			'#define textureCubeLodEXT textureLod',
+> 			'#define texture2DGradEXT textureGrad',
+> 			'#define texture2DProjGradEXT textureProjGrad',
+> 			'#define textureCubeGradEXT textureGrad'
+> 		].join( '\n' ) + '\n' + prefixFragment;
+> ERROR: 0:98: 'projectionMatrix' : undeclared identifier
+> 
+>   93:   float h = b * b - c;
+>   94:   if (h < 0.0 || c < 0.0) discard;
+>   95
+> d_late2 s 343.456 lat 0 hidden 0
+> [['match07_projection/m07_tube', 1], ['match07_projection/m07_tube …[+364 chars]
+
+### 🤖 Claude — 2026-11-20T02:33:39.882Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 - <<'EOF'\np='src/world/match07.ts'\ns=open(p).read()\na=\"\"\"const CLOUD_FRAG = /* glsl */ `\nuniform vec4 uPjPost;\"\"\"\nb=\"\"\"const CLOUD_FRAG = /* glsl */ `\nuniform mat4 projectionMatrix;\nuniform vec4 uPjPost;\"\"\"\nassert s.count(a)==1; s=s.replace(a,b); open(p,'w').write(s)\nEOF\nK7=$(cat /home/user/rainbow-/qa/match/07/r21/K7.txt); D=/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/try5; node tools/match07/diag_r21.mjs $D \"$K7&m07end=1&m07cloud=1\" '[{\"name\":\"a_start\",\"frac\":0},{\"name\":\"b_earl …[+292 chars]`
+
+### 🧑 User — 2026-11-20T02:34:45.925Z
+
+> ↩︎ result: a_start s 273.056 lat 0 hidden 0
+> b_early s 287.256 lat 0 hidden 0
+> f_hard_left s 314.056 lat -2.25 hidden 0
+> d_late s 343.456 lat -0.01 hidden 0
+> e_end s 372.656 lat -0 hidden 0
+
+### 🤖 Claude — 2026-11-20T02:34:49.958Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/try5/d_late.png"}`
+
+### 🧑 User — 2026-11-20T02:34:50.004Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T02:34:50.538Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/try5/e_end.png"}`
+
+### 🧑 User — 2026-11-20T02:34:50.586Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T02:34:51.299Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/try5/f_hard_left.png"}`
+
+### 🧑 User — 2026-11-20T02:34:51.346Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T02:34:51.853Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/try5/b_early.png"}`
+
+### 🧑 User — 2026-11-20T02:34:51.915Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T02:35:34.639Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 - <<'EOF'\np='src/world/match07.ts'\ns=open(p).read()\ndef rep(a,b,cnt=1):\n    global s\n    assert s.count(a)==cnt, (a, s.count(a))\n    s=s.replace(a,b)\nrep(\"\"\"  float nv = max(dot(n, -rd), 0.0);\n  // painted foam tones (display values sampled from the approved picture): crevice, lavender-blue shadow, lilac mid, light, white\n  float tt = clamp(0.5 * nw.y + 0.38 * nv + 0.22 + 0.1 * (vTone.x - 0.5), 0.0, 1.0);\n  vec3 cCrev = vec3(0.56, 0.55, 0.88), cSh = vec3(0.67, 0.667, 0.945), cMid = vec3(0.86, 0.824, 0.976), cLt = vec3(0.973, 0.957, 0.96 …[+5082 chars]`
+
+### 🧑 User — 2026-11-20T02:36:13.770Z
+
+> ↩︎ result: b_early s 287.256 lat 0 hidden 0
+> f_hard_left s 314.056 lat -2.25 hidden 0
+> d_late s 343.456 lat -0.01 hidden 0
+> e_end s 372.656 lat -0 hidden 0
+
+### 🤖 Claude — 2026-11-20T02:36:18.050Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/try6/d_late.png"}`
+
+### 🧑 User — 2026-11-20T02:36:18.105Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T02:36:18.673Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/try6/e_end.png"}`
+
+### 🧑 User — 2026-11-20T02:36:18.721Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T02:36:26.038Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/try6/f_hard_left.png"}`
+
+### 🧑 User — 2026-11-20T02:36:26.087Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T02:36:26.702Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/try6/b_early.png"}`
+
+### 🧑 User — 2026-11-20T02:36:26.744Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T02:37:03.249Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 - <<'EOF'\np='src/world/match07.ts'\ns=open(p).read()\ndef rep(a,b,cnt=1):\n    global s\n    assert s.count(a)==cnt, (a, s.count(a))\n    s=s.replace(a,b)\nrep(\"\"\"      const placeP = (lat: number, s: number, up: number) => {\n        const ss = THREE.MathUtils.clamp(s, sA, sB);\n        const f = course.sample(ss);\n        const k = 1 - THREE.MathUtils.smootherstep(ss, sA, sA + 14);\n        return q.copy(f.pos).addScaledVector(f.right, d0.dot(f.right) * k + lat).addScaledVector(f.up, up + 0.06).applyMatrix4(groupInv).clone();\n      };\n      …[+1814 chars]`
+

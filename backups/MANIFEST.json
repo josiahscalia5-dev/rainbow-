@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 19811,
-   "sha256": "b556557c778675c6d5933d61b0a6a2e88f57af7d44948e423d0879ba293eb9bc"
+   "sha256": "aad79b315fd723c6693aadbef5e23aadd85f04618ad06f2a34e6737fc6d493ba"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -629,7 +629,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3424,
-   "sha256": "9fc75088a9dc3a647d828ba014775c48c3622116acb71d79888e96d6011644a5"
+   "sha256": "1c776e9e78e2bde5be492caf864a754332ed17c1817921d350d32ffb561d3d97"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -1404,12 +1404,12 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c22/INFO.json",
    "bytes": 560,
-   "sha256": "a93f1cbba1407823802ca305827490c7023b8509e383a6d8782eca30c3525bc8"
+   "sha256": "4934821413c561df9a205ec44c9fad04bdb129f8d6dce6bc9a97fd20896802ef"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c22/tracked.patch",
-   "bytes": 57160,
-   "sha256": "3cee2848e501d3f70c3c409f5dd7b606733ba3e96c4bdee87f7f9453952ad6e5"
+   "bytes": 60486,
+   "sha256": "97a06742738f94323dcd984c58d7e6d94bb18a03a721d8ff48e9e1597add6d1c"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c22/untracked/tools/match04/rings21.mjs",
@@ -1429,7 +1429,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-preview-c22/INFO.json",
    "bytes": 569,
-   "sha256": "11ad2c1bec2a212ae25a36d96fcd0cf4468204674e310afbe71f6ecbd9f352fc"
+   "sha256": "70d0603751328f50c7077751c6f539c068824a2340662a1f6fe09e7c9b88ffc7"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-preview-c22/tracked.patch",
@@ -1654,7 +1654,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c22/INFO.json",
    "bytes": 1341,
-   "sha256": "36b512ea2801febe526194365ea4fec4bdc8ebef369905129c5a8f2509d60e8a"
+   "sha256": "6b49ff0474c300c7019efba75b9761a08ba6c77caac13acfa040f072dfe8524d"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c22/tracked.patch",
@@ -2359,12 +2359,12 @@
   {
    "path": "backups/wip/claude__rainbow-s07-match-c22/INFO.json",
    "bytes": 596,
-   "sha256": "828ead021190796e6ca122b324008de3b1a6d3272c1cc74487c66e90be2b1ae2"
+   "sha256": "c6b255f240fc4ffc3d005863731c0998b488b7c4db33b0025e8b5ad48d744592"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c22/tracked.patch",
-   "bytes": 10688,
-   "sha256": "52a7ea050a5d3a3cd2f858729878d583e98ffc525f2a3e5be84e79035d8e710a"
+   "bytes": 21475,
+   "sha256": "6303c7c77429e6ea5467282ac737824e3c814d6f458da96eed0d72ced47f569c"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c22/untracked/tools/match07/diag_r21.mjs",
@@ -2494,27 +2494,27 @@
   {
    "path": "backups/wip/detached-34cb494137/INFO.json",
    "bytes": 440,
-   "sha256": "0b81f2ad3ee23cc71c2e65a357ee87a6bb947f0099fbd1983b696b9b460c1382"
+   "sha256": "a54297b2bf178cf03a13a8088b347fcefe20ac0dd094875f631c65339116e5c9"
   },
   {
    "path": "backups/wip/detached-3c0fa97090/INFO.json",
    "bytes": 439,
-   "sha256": "647325d94817592678d6e5b0ed953ba6741a7e5ef34590c053b6898a0184e2e3"
+   "sha256": "c857328255306547e94b5adfe3e76161c9686fdc0f8a99714193c7cbfb00dd11"
   },
   {
    "path": "backups/wip/detached-8accdad0a0/INFO.json",
    "bytes": 439,
-   "sha256": "835be1ed0efbafdf5705b9b06408022fdebe866cd8743393656a385ecaed24a3"
+   "sha256": "2edae48eda7691edebd39819216180c00ece17874a23d6f7221eb2b59e3ef4b3"
   },
   {
    "path": "backups/wip/detached-c649fcbc35/INFO.json",
    "bytes": 439,
-   "sha256": "ea3ff6acd1c49fbe7eb5671e32806dbfbf65c89be5e972c091f5680ddd6cee79"
+   "sha256": "f4411d4ca75348d165a9b88d8c6f49541430f3bcd460ac4ca1e18783d40d2391"
   },
   {
    "path": "backups/wip/detached-eb7233e364/INFO.json",
    "bytes": 439,
-   "sha256": "66f4d21afffb5c3221e004935075f21183b799e8fb0754e50588dab212ca4aa4"
+   "sha256": "7aaa6f7a121e51f96631680ec4bd3033499f2d4c5d84be2ae6f739e861f67be9"
   },
   {
    "path": "builds/rainbow-debug-06-2026-11-17-r3.apk",
@@ -5267,6 +5267,21 @@
    "sha256": "5c29bca91bbd0f19ec2f762e7cb2f1e9fe22f8a7eb921cf7e0c2255613e8658e"
   },
   {
+   "path": "qa/match/04/r21/PROGRESS.md",
+   "bytes": 3966,
+   "sha256": "e6122978cfeb4a016fcf8e114f5a31199ea4a7c7cf0926cf825f04b0b265483f"
+  },
+  {
+   "path": "qa/match/04/r21/s1_wgl/1_APPROVED.png",
+   "bytes": 392932,
+   "sha256": "1b0ccdacbb4c97e9ea67c4910080668ebaf6a6c326249ef40340bc1472676193"
+  },
+  {
+   "path": "qa/match/04/r21/s1_wgl/BEFORE_swim_clip_half.mp4",
+   "bytes": 1757987,
+   "sha256": "a4c4658d478b1d47ecd95d1167ba4bc95dd1094c986abb7faab1135e2f29cb56"
+  },
+  {
    "path": "qa/match/04/r21/s1_wgl/NEW/a_start.png",
    "bytes": 2337324,
    "sha256": "cf5379b449c2e6dfa84f37376542a69a7459556c83c1a42cfd404e2c5cf4dd11"
@@ -5305,6 +5320,61 @@
    "path": "qa/match/04/r21/s1_wgl/NEW/shots.json",
    "bytes": 1159,
    "sha256": "5c29bca91bbd0f19ec2f762e7cb2f1e9fe22f8a7eb921cf7e0c2255613e8658e"
+  },
+  {
+   "path": "qa/match/04/r21/s1_wgl/NEW_swim_clip_half.mp4",
+   "bytes": 1836528,
+   "sha256": "eb0ddaf2c035c51e4398eea43ec74e06014bc703e55350eef17e4ba26335e56a"
+  },
+  {
+   "path": "qa/match/04/r21/s1_wgl/clip_frames/BEFORE_0020.png",
+   "bytes": 1685360,
+   "sha256": "90ef5ee05816e8e6015511a834336cf9e05e4077f5b5724be5362f172ca3a620"
+  },
+  {
+   "path": "qa/match/04/r21/s1_wgl/clip_frames/BEFORE_0040.png",
+   "bytes": 1613651,
+   "sha256": "5d1da948966c20c7c38c213aa86b97f181e2e5bc0cfab16568fb436a82fc566b"
+  },
+  {
+   "path": "qa/match/04/r21/s1_wgl/clip_frames/BEFORE_0055.png",
+   "bytes": 1941139,
+   "sha256": "48153fcc4ebd58a29cc538a6ac59e721e8d703037fe4286c2d7fce921675cb57"
+  },
+  {
+   "path": "qa/match/04/r21/s1_wgl/clip_frames/BEFORE_0070.png",
+   "bytes": 1952844,
+   "sha256": "b49106f1615b02153ae8cba02421048b06e026d9ee1d0691fef94dd72d906f7c"
+  },
+  {
+   "path": "qa/match/04/r21/s1_wgl/clip_frames/NEW_0020.png",
+   "bytes": 1737731,
+   "sha256": "ece44873535645762a76a41669c549e5f96beaeff4486a6991cce56dda1a8818"
+  },
+  {
+   "path": "qa/match/04/r21/s1_wgl/clip_frames/NEW_0040.png",
+   "bytes": 1677824,
+   "sha256": "c61cae47a613d5f05ab1c924aad7e6a5332959cae9d47ff0c55d0b861f8beb62"
+  },
+  {
+   "path": "qa/match/04/r21/s1_wgl/clip_frames/NEW_0055.png",
+   "bytes": 1941139,
+   "sha256": "48153fcc4ebd58a29cc538a6ac59e721e8d703037fe4286c2d7fce921675cb57"
+  },
+  {
+   "path": "qa/match/04/r21/s1_wgl/clip_frames/NEW_0070.png",
+   "bytes": 1952844,
+   "sha256": "b49106f1615b02153ae8cba02421048b06e026d9ee1d0691fef94dd72d906f7c"
+  },
+  {
+   "path": "qa/match/04/r21/s1_wgl/code.patch",
+   "bytes": 60486,
+   "sha256": "97a06742738f94323dcd984c58d7e6d94bb18a03a721d8ff48e9e1597add6d1c"
+  },
+  {
+   "path": "qa/match/04/r21/s1_wgl/gameplay.json",
+   "bytes": 15691,
+   "sha256": "ea5b631bcb5f27ad836a8f62952ee9b2f61fe993ed4d216e55dc135ad3a73ce5"
   },
   {
    "path": "qa/match/04/r21/s1_wgl/start_pixeldiff.png",
@@ -13657,6 +13727,111 @@
    "sha256": "108af2794018a51261353aebd1a786346f911821b9a89c281652b16cc6dad39f"
   },
   {
+   "path": "qa/review_r21/artwork/04/game_frames/d_late.png",
+   "bytes": 1617681,
+   "sha256": "ecd0e26a141642ecdc175e92038560e0dca1cfd86f33f6153bd7a486bdac0208"
+  },
+  {
+   "path": "qa/review_r21/artwork/04/game_frames/e_end.png",
+   "bytes": 1580013,
+   "sha256": "0c172f9eddd92fc139a402e4fa1b64be94d8e5f3310bf4b18b1c3d298fb4e509"
+  },
+  {
+   "path": "qa/review_r21/artwork/04/game_frames/shots.json",
+   "bytes": 494,
+   "sha256": "f1c38cb0038fb66fff794bc472af25bda16c100c5c5ccf1fef0650d53ce1710f"
+  },
+  {
+   "path": "qa/review_r21/artwork/04/prompt_04.txt",
+   "bytes": 1489,
+   "sha256": "b368bb409a2318f4ee0a137f4000d68251691cc8525a3baddab9ffd2abac1427"
+  },
+  {
+   "path": "qa/review_r21/artwork/04/prompt_04_late.txt",
+   "bytes": 1596,
+   "sha256": "57db14fb85bf1690c0cdeaaf672abcf98feb673891da13cb3f2a981270490d94"
+  },
+  {
+   "path": "qa/review_r21/artwork/04/proposals/c_middle.job.json",
+   "bytes": 2272,
+   "sha256": "9781061e3254340adcd766ee926263f1f519d3d3d712d07c1422bb69b4ef366a"
+  },
+  {
+   "path": "qa/review_r21/artwork/04/proposals/c_middle_p2.job.json",
+   "bytes": 2341,
+   "sha256": "e79a6a03de3bfb2a1a70551c51acf5167f69cca1ac65ab05a499ea45fa54ef3a"
+  },
+  {
+   "path": "qa/review_r21/artwork/04/proposals/c_middle_p2_v1.png",
+   "bytes": 5282955,
+   "sha256": "f4b389aeb7430d1f27c846bb8c0927e51d3244739a3ce552d12cb89c92fd2ae3"
+  },
+  {
+   "path": "qa/review_r21/artwork/04/proposals/c_middle_v1.png",
+   "bytes": 5117237,
+   "sha256": "c2d4805605593668d9bfe0363b7a2cb146b47f83a19263230efb0662797698a9"
+  },
+  {
+   "path": "qa/review_r21/artwork/04/proposals/d_late_p2.job.json",
+   "bytes": 2335,
+   "sha256": "089735deada172e8504f4df03b78985f690a55903e0de23ec4d345bd55c7ff5d"
+  },
+  {
+   "path": "qa/review_r21/artwork/04/proposals/d_late_p2_v1.png",
+   "bytes": 5332493,
+   "sha256": "66bdcffca36373a0b2a38cce36920885955d2e53a54c00e142b1c16fe3fe5a91"
+  },
+  {
+   "path": "qa/review_r21/artwork/04/proposals/d_late_p3.job.json",
+   "bytes": 2442,
+   "sha256": "46bbb416f269885b73df680d8b5b1b2d85e6feee5bcb19f0ddc25967e26c58af"
+  },
+  {
+   "path": "qa/review_r21/artwork/04/proposals/d_late_p3_v1.png",
+   "bytes": 5240598,
+   "sha256": "e014beb41b16adad3b39cbc24444699078cd61e363cdd9b680965b96447410c8"
+  },
+  {
+   "path": "qa/review_r21/artwork/04/proposals/e_end_p2.job.json",
+   "bytes": 2332,
+   "sha256": "f9866cc8232d58a4bbc894cdaba7a00382f166ed531080640109c3c5da7a6047"
+  },
+  {
+   "path": "qa/review_r21/artwork/04/proposals/e_end_p2_v1.png",
+   "bytes": 5413677,
+   "sha256": "7e7d5861bd564d7e1cb770bfff56af335254ad4f90f6a73145339eaac26ca207"
+  },
+  {
+   "path": "qa/review_r21/artwork/07/game_frames/b_early.png",
+   "bytes": 2344571,
+   "sha256": "617da8615e69c38e46eb7a4f6002d7890ad1f87241172fe2e64bf6ee05b7ccc8"
+  },
+  {
+   "path": "qa/review_r21/artwork/07/game_frames/c_middle.png",
+   "bytes": 2233405,
+   "sha256": "bdaf7c4a849085f498ae15155235fa171094f10491812ab38581c3c5ebd6e577"
+  },
+  {
+   "path": "qa/review_r21/artwork/07/game_frames/d_late.png",
+   "bytes": 2475217,
+   "sha256": "0b72b091f084ce969ab7f97a8eaa33b83bd6f14a62d15326d28ce87161da5845"
+  },
+  {
+   "path": "qa/review_r21/artwork/07/game_frames/e_end.png",
+   "bytes": 1989666,
+   "sha256": "14f41e282ef5b66db4e2e0fe3ad2737b7549e16bc1bb3aca03dd9158e3ca6dd8"
+  },
+  {
+   "path": "qa/review_r21/artwork/07/game_frames/shots.json",
+   "bytes": 663,
+   "sha256": "accd301d7043ba4cb85fb98befa4293d254496e69cdef428a96bbe8a9f44c262"
+  },
+  {
+   "path": "qa/review_r21/artwork/LEDGER.md",
+   "bytes": 832,
+   "sha256": "5ff40d04954fef90c61a5b0f4235828adc01513a942164ae3825df562df26cf2"
+  },
+  {
    "path": "qa/review_r21/audit/04/a_start.png",
    "bytes": 2337324,
    "sha256": "cf5379b449c2e6dfa84f37376542a69a7459556c83c1a42cfd404e2c5cf4dd11"
@@ -15695,6 +15870,11 @@
    "path": "tools/lead21/clean_frame.mjs",
    "bytes": 3071,
    "sha256": "fcf75c177537230c131a3b0fe4cda7ed35afb664c8a18348b30608d7c14c86df"
+  },
+  {
+   "path": "tools/lead21/fal_view.py",
+   "bytes": 4222,
+   "sha256": "4655d44145c3a84bcddc33445663f636af826821fa64fd68527bbb6323e3706c"
   },
   {
    "path": "tools/lead_r10/refviews.py",

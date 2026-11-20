@@ -3831,3 +3831,144 @@ Hide list: `Benny`, `coins`, `m04_splash` and the `#hud` overlay. I'll write a s
 
 > 🔧 **Bash** `{"command": "sed -e 's#// Round 21 lead audit (read-only): one playable screen#// Round 21 lead CLEAN FRAMES (read-only): scenery only (no HUD, Benny, coins, splash) of one playable screen#' \\\n -e 's#      r.freezeAt(10);#      r.freezeAt(10);\\n      const { scene } = r.qa3d();\\n      for (const o of scene.children) if (/^(Benny|coins|m0[4-8]_splash)$/.test(o.name)) o.visible = false;\\n      const hud = document.getElementById(\"hud\"); if (hud) hud.style.visibility = \"hidden\";#' \\\n -e 's#AUDIT_PORT ?? 5290#AUDIT_PORT ?? 5296#' tools/lead21/audit_screen.mjs > tools/lead21/clean_frame. …[+503 chars]`
 
+### 🧑 User — 2026-11-20T02:32:43.232Z
+
+> ↩︎ result: 35:      for (const o of scene.children) if (/^(Benny|coins|m0[4-8]_splash)$/.test(o.name)) o.visible = false;
+> 36:      const hud = document.getElementById("hud"); if (hud) hud.style.visibility = "hidden";
+> 04 c_middle s 90.48 lat 0 stage 04 coins 1330
+> 04 d_late s 99.813 lat 0 stage 04 coins 1330
+> 04 e_end s 109.146 lat 0 stage 04 coins 1330
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T02:32:48.498Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/review_r21/artwork/04/game_frames && python3 -c \"\nfrom PIL import Image\no=Image.new('RGB',(3*432+20,768),'white')\nfor i,n in enumerate(['c_middle','d_late','e_end']): o.paste(Image.open(n+'.png').convert('RGB').resize((432,768),Image.LANCZOS),(i*442,0))\no.save('/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/clean04.png')\"", "description": "Preview the three clean structure frames"}`
+
+### 🧑 User — 2026-11-20T02:32:49.066Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T02:32:52.265Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/clean04.png"}`
+
+### 🧑 User — 2026-11-20T02:32:52.320Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T02:33:00.763Z
+
+> 🔧 **Bash** `{"command": "ls -la /home/user/wt/s04/qa/match/04/fal/ 2>/dev/null | head; ls /home/user/wt/s04/assets/textures/match04/ | head -30", "description": "Find Screen 04 clean plate files"}`
+
+### 🧑 User — 2026-11-20T02:33:00.800Z
+
+> ↩︎ result: total 5680
+> drwxr-xr-x  2 root root    4096 Nov 20 02:01 .
+> drwxr-xr-x 19 root root    4096 Nov 20 02:01 ..
+> -rw-r--r--  1 root root 5803562 Nov 20 02:01 1-04-five-arrows-plate_fal_nano-banana-2_2K.png
+> -rw-r--r--  1 root root    2182 Nov 20 02:01 fal_edit1_plate_request.json
+> cam04_locked.json
+> coins04.json
+> mouth04.json
+> mv04.json
+> mv04_V04-1.png
+> mv04_V04-1_fill.png
+> mv04_V04-2.png
+> mv04_V04-2_fill.png
+> patch_gold.png
+> patch_wall.png
+> patch_water.png
+> plate04.json
+> plate04_fal_alignment.json
+> plate04_fillmask.png
+> plate04_hybrid.png
+> plate04_hybrid_fal.png
+> plate04_nochev.png
+> plate04_nochev_mask.png
+> proj04.json
+> ring_paint04.json
+> splash04.json
+> splash04.png
+> tile_chev3.png
+> tile_mouth.png
+> tile_ring.png
+> tile_ring_paint.png
+> tile_ring_paint_soft.png
+> tile_ring_paint_var.png
+> tile_ring_paint_var_soft.png
+> tile_river.png
+
+### 🤖 Claude — 2026-11-20T02:33:35.067Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/lead21/fal_view.py", "content": "\"\"\"Round 21 lead: one fal `nano-banana-2/edit` job — repaint a clean frame of the REAL game (image 1: the game's own camera +\ngeometry) in the art of the user's approved original (images 2..: style / material references). Every job is logged with its\ninputs (sha256), prompt, request id, estimated cost and outputs in <out>/<name>.job.json and appended to the ledger.\nProposals only: nothing generated here is an accepted reference until the user approves it; the originals are never written.\nusage: python3 -I tools/le …[+3941 chars]`
+
+### 🧑 User — 2026-11-20T02:33:35.241Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/lead21/fal_view.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T02:33:50.438Z
+
+> 🔧 **Bash** `{"command": "A=/home/user/rainbow-/qa/review_r21/artwork/04; cat > $A/prompt_04.txt <<'EOF'\nIMAGE 1 is a frame from a 3D mobile game. Its camera is further inside the gold tunnel of the scene shown in IMAGE 2. IMAGE 2 is the art director's approved original illustration (the final design of this level).\n\nRepaint IMAGE 1 as a finished illustration in exactly the art style, materials, colours and lighting of IMAGE 2, so it looks like the same painting seen from deeper inside the tunnel:\n- polished yellow-gold telescoping rings with soft rounded rims, narrow shaded grooves, rows of warm amber …[+1230 chars]`
+
+### 🧑 User — 2026-11-20T02:34:12.913Z
+
+> ↩︎ result: submitted 01a1f6cd-9740-74b0-8ab7-360fbcd093ba
+> {
+>  "name": "c_middle",
+>  "request_id": "01a1f6cd-9740-74b0-8ab7-360fbcd093ba",
+>  "status": "COMPLETED",
+>  "estimated_cost_usd": 0.12,
+>  "outputs": [
+>   "/home/user/rainbow-/qa/review_r21/artwork/04/proposals/c_middle_v1.png"
+>  ],
+>  "seconds": 22.2,
+>  "error": null
+> }
+
+### 🤖 Claude — 2026-11-20T02:34:21.648Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/review_r21/artwork/04 && python3 -c \"\nfrom PIL import Image\ng=Image.open('game_frames/c_middle.png').convert('RGB'); p=Image.open('proposals/c_middle_v1.png').convert('RGB'); print('proposal size',p.size)\nA=Image.open('/home/user/rainbow-/references/04_through_the_five_arrows.png').convert('RGB')\no=Image.new('RGB',(3*432+20,768),'white')\nfor i,im in enumerate([A,g,p]): o.paste(im.resize((432,768),Image.LANCZOS),(i*442,0))\no.save('/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/p04_mid.png')\"", "description": "Comp …[+40 chars]`
+
+### 🧑 User — 2026-11-20T02:34:22.325Z
+
+> ↩︎ result: proposal size (1536, 2752)
+
+### 🤖 Claude — 2026-11-20T02:34:25.713Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/p04_mid.png"}`
+
+### 🧑 User — 2026-11-20T02:34:25.777Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T02:34:38.553Z
+
+> 🔧 **Bash** `{"command": "A=/home/user/rainbow-/qa/review_r21/artwork/04; cd /home/user/rainbow- && python3 - <<EOF\np='$A/prompt_04.txt'; s=open(p).read()\ns=s.replace(\"- polished yellow-gold telescoping rings with soft rounded rims, narrow shaded grooves, rows of warm amber light dots, and soft pink / violet reflections on the gold;\",\n\"- polished yellow-gold telescoping rings, bright gold all the way round (no dark bands), soft rounded rims, narrow shaded grooves, warm amber light dots sitting ON the bright gold rims, soft pink / violet reflections on the gold;\")\nopen(p,'w').write(s)\nEOF\ngrep -c  …[+416 chars]`
+
+### 🧑 User — 2026-11-20T02:35:49.425Z
+
+> ↩︎ result: 1
+>  "status": "COMPLETED",  "estimated_cost_usd": 0.12,  "error": null  <- c_middle
+>  "status": "COMPLETED",  "estimated_cost_usd": 0.12,  "error": null  <- d_late
+>  "status": "COMPLETED",  "estimated_cost_usd": 0.12,  "error": null  <- e_end
+
+### 🤖 Claude — 2026-11-20T02:35:54.866Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/review_r21/artwork/04 && python3 -c \"\nfrom PIL import Image\nrows=[]\no=Image.new('RGB',(3*360+20,2*640+10),'white')\nfor i,v in enumerate(['c_middle','d_late','e_end']):\n  o.paste(Image.open('game_frames/'+v+'.png').convert('RGB').resize((360,640),Image.LANCZOS),(i*370,0))\n  o.paste(Image.open('proposals/'+v+'_p2_v1.png').convert('RGB').resize((360,640),Image.LANCZOS),(i*370,650))\no.save('/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/p04_all.png')\"", "description": "Game frames (top) vs proposals (bottom)"}`
+
+### 🧑 User — 2026-11-20T02:35:56.061Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T02:36:03.242Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/p04_all.png"}`
+
+### 🧑 User — 2026-11-20T02:36:03.309Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T02:36:21.890Z
+
+> 🔧 **Bash** `{"command": "A=/home/user/rainbow-/qa/review_r21/artwork; cd /home/user/rainbow- && sed 's#- polished yellow-gold telescoping rings, bright gold all the way round (no dark bands)#- polished yellow-gold telescoping rings, bright gold all the way round (no dark bands), only ONE row of warm amber light dots per ring rim spaced as in IMAGE 2 (no dense star-like dot patterns)#' $A/04/prompt_04.txt > $A/04/prompt_04_late.txt && FAL_N=1 timeout 600 python3 -I tools/lead21/fal_view.py $A/04/proposals d_late_p3 $A/04/prompt_04_late.txt $A/04/game_frames/d_late.png /home/user/wt/s04/assets/textures/matc …[+811 chars]`
+
