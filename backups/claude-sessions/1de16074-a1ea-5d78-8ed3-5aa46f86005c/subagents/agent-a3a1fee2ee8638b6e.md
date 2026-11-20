@@ -1986,3 +1986,89 @@ The CURRENT render is still waiting for a free render slot. I'll queue NEW (and 
 > 41a43
 > >     if (st.stage === SCREEN && (st.s - rng.s0) / (rng.s1 - rng.s0) >= Number(process.env.CLIP_END ?? 9)) break;
 
+### 🤖 Claude — 2026-11-20T12:36:11.569Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r25/step1_hole && cat > clip.sh <<'EOF'\n#!/usr/bin/env bash\n# r25 s06 step 1: uninterrupted REAL-GAMEPLAY clip of the Screen 06 opening (checkpoint -> 32 % of 06, straight), real game speed\n# (one frame per 1/24 s of game time, water clock follows the clip clock), labelled on every frame with the playback speed\n# (tools/lead23/label_clip.py): <V>_opening_1x.mp4 + <V>_opening_0.5x.mp4.   bash clip.sh NEW CURRENT\nO=/home/user/rainbow-/qa/match/06/r25/step1_hole; cd /home/user/wt/s06\ndeclare -A TITLE=([NEW]=\"SCREEN 06 OPENING - NEW (m06hole)\ …[+796 chars]`
+
+### 🧑 User — 2026-11-20T12:36:11.653Z
+
+> ↩︎ result: slot 1 busy
+> slot 2 busy
+
+### 🤖 Claude — 2026-11-20T12:36:15.443Z
+
+While waiting for a slot, let me plan steps 2–3 from the existing r23 shots of the current candidate after the opening (22 / 35 / 47 / 60 / 85 %), next to the approved picture.
+
+### 🤖 Claude — 2026-11-20T12:36:17.701Z
+
+> 🔧 **Bash** `{"command": "ls /home/user/rainbow-/qa/match/06/r23/step3_m06rip/NEW/; cd /home/user/rainbow-/qa/match/06/r23/step3_m06rip && python3 -c \"\nfrom PIL import Image\nnames=['1_APPROVED.png','NEW/b2_early.png','NEW/c_middle.png','NEW/c2_middle.png','NEW/d_late.png','NEW/e_end.png']\nW,H=288,512\nout=Image.new('RGB',(W*6,H))\nfor i,n in enumerate(names):\n    try: out.paste(Image.open(n).convert('RGB').resize((W,H)),(i*W,0))\n    except Exception as e: print(n,e)\nout.save('/home/user/scratch/s06/view_later.png')\n\"", "description": "Grid of later 06 shots vs approved"}`
+
+### 🧑 User — 2026-11-20T12:36:18.355Z
+
+> ↩︎ result: a_start.png
+> b2_early.png
+> b_early.png
+> c2_middle.png
+> c_middle.png
+> d_late.png
+> e_end.png
+> f_hard_left.png
+> g_hard_right.png
+> h_left_early.png
+> i_right_early.png
+> shots.json
+
+### 🤖 Claude — 2026-11-20T12:36:19.615Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s06/view_later.png"}`
+
+### 🧑 User — 2026-11-20T12:36:19.655Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T12:36:34.671Z
+
+> 🔧 **Bash** `{"command": "cat /home/user/scratch/s06/render_step1.log; cat /home/user/rainbow-/qa/match/06/r25/step1_hole/NEW.log | tail; bash /home/user/rainbow-/tools/lead25/render_slot.sh --status; uptime", "description": "Check render status"}`
+
+### 🧑 User — 2026-11-20T12:36:34.770Z
+
+> ↩︎ result: slot 1 busy
+> slot 2 busy
+>  12:36:34 up 53 min,  0 user,  load average: 10.09, 9.32, 8.06
+
+### 🤖 Claude — 2026-11-20T12:36:37.166Z
+
+While waiting: the river's own material is what the user sees after the opening. Let me look at its tile next to the painted river.
+
+### 🤖 Claude — 2026-11-20T12:36:39.826Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06/assets/textures/match06 && python3 -c \"\nfrom PIL import Image\na=Image.open('tile_river6.png').convert('RGB'); f=Image.open('tile_foam6.png').convert('RGB')\nprint(a.size,f.size)\nout=Image.new('RGB',(980,400)); out.paste(a.resize((490*2,91*2)),(0,0)); out.paste(f.resize((f.size[0]*2,f.size[1]*2)) if f.size[0]<500 else f.resize((980,180)),(0,200))\nout.save('/home/user/scratch/s06/view_rivertile.png')\n\"; grep -n \"river6\\|make_river06\" /home/user/wt/s06/tools/match06/make_river06.py | head -5; sed -n 1,30p /home/user/wt/s06/tools/match06/make_river06.py" …[+53 chars]`
+
+### 🧑 User — 2026-11-20T12:36:40.031Z
+
+> ↩︎ result: (490, 91) (104, 168)
+> 5:* tile_river6.png: the painted water just below Benny's wake (s = Benny-1.66 .. Benny-0.96, lateral -1.5 .. +0.95: cyan
+> 12:usage: python3 -I tools/match06/make_river06.py <probe06.json> <cam06_locked.json> <dir> [qa dir]"""
+> 38:cv2.imwrite(f"{d}/tile_river6.png", np.clip(out, 0, 255).astype(np.uint8))
+> 49:    "note": "r6 narrow river: water |l| <= Wc, foam bank Wc..Wb (raised hb), tunnel wall rising from Wb (tools/match06/make_river06.py)",
+> 56:print("tile_river6", out.shape, "tile_foam6", Fo.shape, L["tiles"]["r6"])
+> """Screen 06 (?match06=1, r6 2026-11-17): river-water + foam-bank tiles for the NARROW fitted river (`&m06geo=1`,
+> `&m06flow=1`, qa/match/06/NOTES.md r6).
+> Measured through the locked camera: the painted river is only ~4.5 u wide at Benny (the frame edges at Benny's row are
+> lateral -2.1 .. +2.1, foam banks right there) while the game river is 7 u (+1 u bank) — the r3 floor was 2x too wide.
+> * tile_river6.png: the painted water just below Benny's wake (s = Benny-1.66 .. Benny-0.96, lateral -1.5 .. +0.95: cyan
+>   centre, magenta sides, white streaks), the two soap bubbles in it inpainted, RECTIFIED into the floor's (lateral, s)
+>   coordinates through the l …[+1364 chars]
+
+### 🤖 Claude — 2026-11-20T12:36:41.407Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s06/view_rivertile.png"}`
+
+### 🧑 User — 2026-11-20T12:36:41.426Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T12:36:41.815Z
+
+You've hit your 5-hour limit · resets 4:50pm (UTC)
+

@@ -2291,3 +2291,49 @@ It's going well. None of the four specialists has a finished result to show you 
 
 All of them are working to your note: clean water and neat scenery while Benny swims past things, judged in motion, not just from the first picture. I'll send you before-and-after pictures and labelled clips as soon as each one has a finished result, starting with Screens 07 and 06.
 
+### 🧑 User — 2026-11-20T12:36:41.905Z
+
+<system-reminder>
+<tools-used-before-summary>Edit, Monitor, Read</tools-used-before-summary>
+</system-reminder>
+
+### 🧑 User — 2026-11-20T12:36:41.905Z
+
+<task-notification>
+<task-id>a3a1fee2ee8638b6e</task-id>
+<tool-use-id>toolu_01YBRuPx8mVsb8YsYFXNemdg</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/1de16074-a1ea-5d78-8ed3-5aa46f86005c/tasks/a3a1fee2ee8638b6e.output</output-file>
+<status>failed</status>
+<summary>Agent "Screen 06 specialist r25" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 4:50pm (UTC) (error type rate_limit, HTTP 429, request id req_011ChEC2esUf2aMq2uqegBtq, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 4:50pm (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+<result>While waiting: the river's own material is what the user sees after the opening. Let me look at its tile next to the painted river.</result>
+</task-notification>
+
+### 🤖 Claude — 2026-11-20T12:36:42.219Z
+
+You've hit your 5-hour limit · resets 4:50pm (UTC)
+
+### 🧑 User — 2026-11-20T12:37:16.494Z
+
+<task-notification>
+<task-id>a6d73b58ae32de7ef</task-id>
+<tool-use-id>toolu_013P9z1ALFzgjo18nPSkPSeN</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/1de16074-a1ea-5d78-8ed3-5aa46f86005c/tasks/a6d73b58ae32de7ef.output</output-file>
+<status>failed</status>
+<summary>Agent "Screen 07 specialist r25" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 4:50pm (UTC) (error type rate_limit, HTTP 429, request id req_011ChEC5Cvs2hBzReDqm6use, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 4:50pm (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+<result>I'll start by reading the briefs and my previous progress logs in the specified order.</result>
+</task-notification>
+
+### 🧑 User — 2026-11-20T12:40:29.771Z
+
+<task-notification>
+<task-id>aadb120f8f34ac332</task-id>
+<tool-use-id>toolu_01FdN5toEK2Xk45JcVUfE9gL</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/1de16074-a1ea-5d78-8ed3-5aa46f86005c/tasks/aadb120f8f34ac332.output</output-file>
+<status>failed</status>
+<summary>Agent "Screen 04 specialist r25" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 4:50pm (UTC) (error type rate_limit, HTTP 429, request id req_011ChECKTUrZuWkKBAjdZqt9, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 4:50pm (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+<result>The NEW clip's page has loaded (it runs on the K23-S3 code), so I can now apply the crescent edit and typecheck.</result>
+</task-notification>
+
