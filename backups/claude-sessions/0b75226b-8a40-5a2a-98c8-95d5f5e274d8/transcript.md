@@ -2264,3 +2264,131 @@ Understood: build the reconstructed route as its own candidate (extending 06 and
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-20T18:52:52.243Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 300,352p src/world/course.ts | cut -c1-200; echo ----; grep -n \"WORLD\\.\\(chamber\\|plunge\\)\" src -r | cut -c1-170", "description": "Read how 08-10 are placed after the plunge and every use of the fixed chamber position"}`
+
+### 🧑 User — 2026-11-20T18:52:52.333Z
+
+> ↩︎ result: return p0.clone().add(V(0, -R * (1 - Math.cos(a)), -R * Math.sin(a)));
+>   });
+>   const p1 = pts[pts.length - 1].clone();
+>   const dPl = V(0, -Math.sin(amax), -Math.cos(amax));
+>   // straight length chosen so the bottom lands exactly on the chamber floor altitude
+>   const drop = p0.y - WORLD.plunge.bottomY;
+>   const Lstraight = (drop - 2 * R * (1 - Math.cos(amax))) / Math.sin(amax);
+>   seg(Math.ceil(Lstraight / 2), (t) => p1.clone().addScaledVector(dPl, Lstraight * t));
+>   mark('07_plunge_mid_end');
+>   const p2 = pts[pts.length - 1].clone();
+>   seg(12, (t) => {
+>     const a = -amax + amax * t;
+>     return p2.clone().add(V(0, R * (Math.cos(-amax) - Math.cos(a)), R * (Math.sin(-amax) - Math.sin(a))));
+>   });
+>   mark('07_plunge_bottom');
+>   const p3 = pts[pts.length - 1].clone();
+>   const zIn = WORLD.chamber.zBack;
+>   seg(4, (t) => V(p3.x, p3.y, p3.z + (zIn - p3.z) * t));
+>   mark('08');
+>   // ---- 08–10: Final Spin Chamber — winding stream toward the platform & towel ----
+>   const s8 = pts[pts.length - 1].clone();
+>   const plat = WORLD.platform;
+>   const end = V(plat.center.x, plat.topY + 0.45, plat.center.z + 0.6);
+>   // `?match08=1` (src/world/match08.ts, qa/match/08/NOTES.md): the 08–10 stream follows the …[+2334 chars]
+
+### 🤖 Claude — 2026-11-20T18:55:30.420Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && echo \"== imports of WORLD / absolute JSON per file\"; grep -ln \"WORLD\\b\\|WORLD\\.\" src -r | while read f; do echo \"$f: $(grep -c \"WORLD\\.\" $f)\"; done; echo \"== json assets loaded\"; grep -rhoE \"assets/[a-zA-Z0-9_/]+\\.json|textures/match0[0-9]/[a-zA-Z0-9_]+\\.json|tex\\('[a-zA-Z0-9_]+\\.json'\\)\" src | sort | uniq -c; echo \"== match07/match08 absolute hints\"; grep -n \"new THREE.Vector3([-0-9]\\|fromArray\\|matrixWorld\" src/world/match07.ts src/world/match08.ts 2>/dev/null | head -20 | cut -c1-180", "description": "List every place that uses …[+47 chars]`
+
+### 🧑 User — 2026-11-20T18:55:30.535Z
+
+> ↩︎ result: == imports of WORLD / absolute JSON per file
+> src/world/environment.ts: 6
+> src/world/course.ts: 8
+> src/vfx/bubbles.ts: 1
+> src/vfx/index.ts: 1
+> src/vfx/drumWater.ts: 2
+> src/vfx/foam.ts: 1
+> src/vfx/puddles.ts: 3
+> src/vfx/whirlpool.ts: 3
+> src/game/cameraRig.ts: 1
+> src/game/Game.ts: 5
+> == json assets loaded
+>       2 assets/textures/match06/coins06.json
+>       3 assets/textures/match06/path06.json
+>       2 assets/textures/match08/coins08.json
+>       2 assets/textures/match08/proj08.json
+>       2 assets/textures/match08/river08.json
+>       1 assets/textures/match08/splash08.json
+>       1 assets/textures/tunnel05/frame05.json
+>       1 assets/textures/tunnel05/tunnel05.json
+>       1 assets/textures/water05/proj05_flow.json
+>       2 assets/textures/water05/proj05_lut.json
+>       1 assets/textures/water05/proj05_near.json
+>       1 tex('hole06.json')
+>       1 tex('proj06.json')
+> == match07/match08 absolute hints
+> src/world/match08.ts:16:  camera: { matrixWorld: number[]; fov: number; size: [number, number] };
+> src/world/match08.ts:106:  proj.matrixWorld.fromArray(L.camera.matrixWorld);
+> src/world/match08.ts:107:  proj.matrixWorld.decompose(proj.position, proj.quaternion, proj.scale);
+> src/world/match08.ts:108:  proj.matr …[+218 chars]
+
+### 🤖 Claude — 2026-11-20T18:55:37.676Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && ls src/world/ src/game/ src/vfx/ | tr '\\n' ' '; echo; grep -n \"WORLD\\.\" src/game/Game.ts src/game/cameraRig.ts src/vfx/drumWater.ts src/vfx/whirlpool.ts src/vfx/bubbles.ts src/vfx/foam.ts src/vfx/index.ts | cut -c1-170; grep -n \"^export const WORLD\\|^  [a-zA-Z]*: {\" src/world/course.ts | head -20 | cut -c1-200", "description": "List source files and the remaining fixed-position uses"}`
+
+### 🧑 User — 2026-11-20T18:55:37.787Z
+
+> ↩︎ result: src/game/: Game.ts cameraRig.ts match.ts modules.ts  src/vfx/: bubbles.ts drumWater.ts finalWave.ts flow05.ts foam.ts glsl.ts index.ts proj05Apron.ts proj05Tunnel.ts puddles.ts riderSplash.ts spray.ts waterRibbon.ts whirlpool.ts  src/world/: course.ts environment.ts far05.ts laundryRoom.ts match06.ts match08.ts materials.ts towel.ts tube.ts 
+> src/game/Game.ts:215:    const dA = WORLD.drumA;
+> src/game/Game.ts:331:    const dA = WORLD.drumA;
+> src/game/Game.ts:448:    const P0 = WORLD.platform;
+> src/game/Game.ts:467:    const P = WORLD.platform;
+> src/game/Game.ts:521:    env.towel.mesh.position.set(WORLD.platform.center.x, WORLD.platform.topY, WORLD.platform.center.z - 1.0);
+> src/game/cameraRig.ts:295:      const B = WORLD.basin;
+> src/vfx/drumWater.ts:3: *  - surface: glossy swell filling the drum below WORLD.drumA.waterY with layered cyan / hot-pink
+> src/vfx/drumWater.ts:161:  const dA = WORLD.drumA;
+> src/vfx/whirlpool.ts:2: * Scene 03 whirlpool: a funnel-shaped water surface over the basin (WORLD.basin / funnelY) whose
+> src/vfx/whirlpool.ts:135:  const b = WORLD.basin;
+> src/vfx/whirlpool.ts:193:  const b = WORLD.basin;
+> src/vfx/bubbles.ts:182:  const dA = WORLD.drumA;
+> src/vfx/foam.ts:774:  cons …[+1091 chars]
+
+### 🤖 Claude — 2026-11-20T18:55:56.555Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 -c \"\nimport json\nL=json.load(open('assets/textures/match06/proj06.json')); print('proj06 keys', list(L.keys())); print('camera', {k:(v if k!='matrixWorld' else [round(x,4) for x in v]) for k,v in L['camera'].items()}); print('s0', L.get('s0'), 'sB', L.get('sB')); print('tiles keys', list(L.get('tiles',{}).keys())); print('tube', {k:v for k,v in L['tiles']['tube'].items() if not isinstance(v,list) or len(v)<8})\nC=json.load(open('assets/textures/match06/coins06.json')); print('coins06 keys', list(C.keys())); print(C['coins'][:3], len(C['coins'])); …[+295 chars]`
+
+### 🧑 User — 2026-11-20T18:55:56.661Z
+
+> ↩︎ result: proj06 keys ['note', 'camera', 'R', 'hA', 'sBack', 'sAhead07', 'ext', 'sB', 's0', 's1', 'Lfloor', 'tiles']
+> camera {'matrixWorld': [0.9808, 0.0, -0.1948, 0.0, -0.037, 0.9818, -0.1861, 0.0, 0.1913, 0.1897, 0.963, 0.0, 1.7205, -35.3694, -132.644, 1.0], 'fov': 62.0, 'size': [864, 1536], 'pos': [1.7205354776162962, -35.369414293064274, -132.64401919037763]}
+> s0 186.91 sB 198.91
+> tiles keys ['tube', 'floor', 'floor2', 'r6']
+> tube {'wallAngle': [-0.41151684606748806, 3.553109499657281], 'sectorDeg': [35.0, 140.0], 'vp': [660.0, 632.0], 'r': [110.0, 340.0], 'period': 58.95287321438412, 'anglePeriod': 1.8325957145940461}
+> coins06 keys ['note', 'faceTo', 'coins']
+> [{'px': [267.6, 716.1, 101], 's': 201.33735685139513, 'lat': -1.0976069803323851, 'h': 0.32196482187782216, 'scale': 0.6321554429352464, 'dist': 8.000000000000007, 'fit': 0.005887100410198964, 'pos': [-0.8081254524770993, -36.55726082372044, -140.1403445915477]}, {'px': [178.6, 623.8, 82], 's': 201.51424234193908, 'lat': -1.5947209620792568, 'h': 0.8917628426760883, 'scale': 0.51220864186187, 'dist': 7.984000000000013, 'fit': 0.6274261047394858, 'pos': [-1.3145486587545365, -35.98376066200928, -140.00303399020746]}, {'px': [234.3, 548.1 …[+506 chars]
+
+### 🤖 Claude — 2026-11-20T18:56:05.791Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\nimport json, math\nC=json.load(open('assets/textures/match06/coins06.json'))['coins']\nf=768/math.tan(math.radians(31))\nprint(f\"f_px {f:.1f}\")\nprint(\" i     px      py   size  curDist  curScale   s      lat    | depth@0.632\")\nfor i,c in enumerate(C):\n    x,y,sz=c['px']; d=f*0.632/sz\n    print(f\"{i:2d} {x:7.1f} {y:7.1f} {sz:5.0f} {c['dist']:8.2f} {c['scale']:8.3f} {c['s']:7.2f} {c['lat']:+6.2f} | {d:7.1f}\")\nEOF", "description": "Compute each painted coin's distance assuming one common coin size"}`
+
+### 🧑 User — 2026-11-20T18:56:05.874Z
+
+> ↩︎ result: f_px 1278.2
+>  i     px      py   size  curDist  curScale   s      lat    | depth@0.632
+>  0   267.6   716.1   101     8.00    0.632  201.34  -1.10 |     8.0
+>  1   178.6   623.8    82     7.98    0.512  201.51  -1.59 |     9.9
+>  2   234.3   548.1    59     9.34    0.431  202.90  -1.59 |    13.7
+>  3   319.6   521.3    43    12.18    0.410  205.63  -1.60 |    18.8
+>  4   407.6   534.0    32    11.58    0.290  205.20  -0.70 |    25.2
+>  5   505.9   586.1    22    18.58    0.320  212.19  -0.87 |    36.7
+>  6   557.5   623.0    19    20.66    0.307  214.41  -0.68 |    42.5
+>  7   594.8   644.1    19    21.88    0.325  215.76  -0.46 |    42.5
+>  8   619.1   654.7    19    22.48    0.334  216.48  -0.26 |    42.5
+>  9   642.7   662.7    16    22.82    0.286  216.95  +0.01 |    50.5
+> 10   659.5   668.0    14    23.02    0.252  217.25  +0.22 |    57.7
+> 11   675.2   675.9    13    23.38    0.238  217.70  +0.36 |    62.1
+> 12   687.8   684.4    10    23.74    0.186  218.15  +0.46 |    80.8
+> 13   696.0   692.1     7    24.04    0.132  218.51  +0.50 |   115.4
+> 14   703.4   701.1     8    24.56    0.154  219.08  +0.45 |   101.0
+> Shell cwd was reset to /home/user/rainbow-
+
