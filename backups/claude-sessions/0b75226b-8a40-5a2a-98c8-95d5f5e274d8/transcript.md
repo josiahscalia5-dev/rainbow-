@@ -1611,3 +1611,69 @@ No leftover render processes and both render slots are free; the workers ran onl
 
 > 🔧 **Bash** `{"command": "cat >> docs/briefs/2026-11-20-r29/COORDINATION.md <<'EOF'\n* **~18:35 all four workers (s06 route, s07, s05, Benny) were STOPPED by the user / the app** (task status \"killed\", ~4 min after launch;\n  the user interrupted the lead while it was republishing the review page). Do NOT relaunch them unless the user asks. No render processes\n  left running; both render slots free. Their worktrees keep whatever they had changed (snapshots `backups/wip/*-c30/`). Review-page\n  republish NOT done (source `qa/review_r28/index.html` + `qa/review_r27/web/`).\nEOF\ntimeout 600 python3 script …[+339 chars]`
 
+### 🧑 User — 2026-11-20T18:36:24.270Z
+
+> ↩︎ result: "commit": "e571c5d2a55c1f89ae4968da5b419b444995af14",
+> AUTOSAVE OK | branch ccr-ac160b4c-3hdecw | scheduler daemon | last verified backup 2026-11-20T18:36:03+00:00 (0.3 min ago) | local e571c5d remote e571c5d (match) | uncommitted 0
+> e571c5d2a55c1f89ae4968da5b419b444995af14
+> e571c5d2a55c1f89ae4968da5b419b444995af14	refs/heads/ccr-ac160b4c-3hdecw
+> 1
+
+### 🤖 Claude — 2026-11-20T18:36:26.427Z
+
+> 🔧 **TaskUpdate** `{"taskId": "4", "status": "pending", "description": "BLOCKED: s06 route worker stopped by user/app at ~18:35; relaunch only if the user asks. qa/match/06/r28/route/ stills, 1.0x/0.5x clips through 06->07, gameplay 8/8 + 91, verdict."}`
+
+### 🧑 User — 2026-11-20T18:36:26.437Z
+
+> ↩︎ result: Updated task #4 description
+
+### 🤖 Claude — 2026-11-20T18:36:26.781Z
+
+> 🔧 **TaskUpdate** `{"taskId": "3", "status": "completed"}`
+
+### 🧑 User — 2026-11-20T18:36:26.795Z
+
+> ↩︎ result: Updated task #3 status
+
+### 🤖 Claude — 2026-11-20T18:36:47.337Z
+
+RAINBOW 3D BACKUP VERIFIED
+
+Your project is restored and saving to GitHub every five minutes. All four specialists I relaunched were stopped about four minutes in, by you or the app, before any of them finished a step. I haven't restarted them and won't unless you ask.
+
+**Restoration**
+- **Recovery source:** `ccr-9652868f-lkw0w0`. Its newest save on GitHub is `31d3a8c` (18:12 UTC), which is exactly where this session started, so nothing newer existed and nothing was merged.
+- **Working branch:** `ccr-ac160b4c-3hdecw`. Latest save is `e571c5d`, and GitHub has the same commit. Draft PR #26 is a backup copy only; don't merge it.
+- **Five-minute saving:** one scheduler is running. Every save is checked against GitHub. It only runs while this environment is open.
+- **Large files and references:** all 212 large files (models, Android build, Marble worlds, Blender files) are real copies here and confirmed on GitHub. The 13 approved references are byte-identical to the originals.
+- **Unfinished work:** all 12 work copies (s04, s05, s06, s07, s08, benny, lead06, lead07, trial07, view04, view06, view07) are back. Each matches its 18:12 snapshot byte for byte. The inspection tools under `tools/lead26/trial07_recovered/` and the conversation history are restored. Nothing is missing.
+- **Specialists:** all ten definitions are present and unchanged. None is running now.
+- **Tools:**
+  - **Working:** Blender 5.3, Android SDK/Java/Gradle, Playwright with phone-size capture, FFmpeg, the pixel-comparison tools, Three.js DevTools and Spector, GitHub, fal, Hugging Face, Context7, and the World Labs key (5,420 credits).
+  - **The project builds and the screens join up:** the type check passes, and the screen-to-screen continuity test passes.
+- **Needs you:**
+  - **World Labs Atlas:** this account has no Atlas sign-up yet (atlas.worldlabs.ai). Nothing I'm doing now depends on it.
+  - **Plugins:** seven plugins from your old account aren't enabled here. I showed an install card; none are needed for the game.
+  - **Old preview links:** the old review page belonged to the previous account. I was republishing it here when the session was interrupted, so that isn't done yet.
+
+**Can I deliver approved screens that match throughout gameplay?**
+- **Start view:** yes, proven. Every screen's start view is very close to your picture (8 to 9.5 out of 10), and it is real, playable 3D: all eight gameplay checks pass and all 91 coins can be collected.
+- **While Benny moves: not proven.** After 28 rounds, the best in-motion results are 7.5 out of 10 (Screens 05 and 08). No screen holds 8.5 once he moves, so 90–95% throughout gameplay is not demonstrated.
+- **The limitation:** each approved image is one painting from one viewpoint. Projecting it onto 3D holds up near that viewpoint. As Benny advances, everything the painting never showed has to be built in plain 3D, and that is where foam turns to beads and rivers straighten. Some paintings also don't fit a continuous route: 06's painted depth needs far more distance than exists before 07 starts.
+- **Biggest untested step:** extra views of the same world further along each route (your three approved Screen 04 views, plus 31 proposals awaiting your approval), painted onto the scenery as Benny advances. Until I prove it on one screen, I can't promise 90–95% in motion.
+- **Usage:** your previous account ran out about 55 minutes after four specialists started. Running fewer at once lasts longer.
+
+These ratings are by eye, not measured. The "status" column says whether the fix has been shown working in the game.
+
+| Screen | Now (in motion) | Largest mismatch | Correction | Status |
+|---|---|---|---|---|
+| 04 | 6.5 | The laundry room and swirls vanish, the tunnel turns copper, the river becomes a straight chute, and the arrows aren't readable late in the stage | Glints and cloud-bank foam (saved candidate K27-B, unapproved); your approved 04 views painted onto the tunnel | Glints and foam demonstrated. Arrows: one attempt failed; the only options found are arrows drifting with the current or a higher camera, which needs your OK |
+| 05 | 7.5 | The end of the stage widens into a pool with scattered coins; a foam wall appears when steering hard left | Narrow channel with the coin trail continuing to the end (coded) | Not yet proven |
+| 06 | 5.5 | After about 7% the crest and river become a tilted sheet inside a centred ring target | Your authorized route test: the tunnel follows the river and the coins grow as Benny approaches (coded) | Not yet proven; rendering was stopped |
+| 07 | 5 | Bulky bead-like foam walls; the drop is a straight chute | Softer foam (start view unchanged, early checks promising); a coin trail that weaves down the drop | Partly shown; full proof not done. S-bends down the drop not yet attempted |
+| 08 | 7.5 | Late in the stage the river widens into flat sheets; spiky highlights | Keep the river narrow with foam edges to the end; softer highlights | Waiting on your K23-3 verdict (still unapproved) |
+| 09 | 3 | Still the old stand-in scene | Reuse the Screen 08 method, built from 09's own reference | Not started |
+| 10 | 3 | Still the old stand-in scene, plus the hand-over into the 11 ending video | Same method, plus the towel hiding place and the video hand-over | Not started |
+
+**Next result:** the Screen 06 route test (APPROVED / BEFORE / NEW pictures, normal- and half-speed clips through the tunnel and into 07). It's coded but not yet rendered. Say "resume" to relaunch it alone or with the others, or tell me to republish the review page first.
+
