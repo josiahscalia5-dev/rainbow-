@@ -1,0 +1,35 @@
+{
+ "name": "g_hard_right_sw",
+ "endpoint": "fal-ai/nano-banana-2/edit",
+ "request_id": "01a1f9b4-9b45-7dd3-9528-e45ab2f71393",
+ "status": "COMPLETED",
+ "resolution": "2K",
+ "aspect_ratio": "9:16",
+ "num_images": 1,
+ "estimated_cost_usd": 0.12,
+ "inputs": [
+  {
+   "path": "qa/review_r27/artwork/04/game_frames/g_hard_right.png",
+   "sha256": "395e221cdaf50bfb6da3c97a1dbb5012884b18e411212cdb4483be89ff4bfe40"
+  },
+  {
+   "path": "qa/review_r27/artwork/swatches04/gold_rings.png",
+   "sha256": "711451ca7d152283200b355a7359991ce8c2df1687c05dc0f3a13d57e8e3e796"
+  },
+  {
+   "path": "qa/review_r27/artwork/swatches04/water_lane.png",
+   "sha256": "6f221c27062a11ade247547b6e5f77b0e2b852a4bc123be18a545a1849c7f004"
+  },
+  {
+   "path": "qa/review_r27/artwork/swatches04/river_right.png",
+   "sha256": "f0925d0c282c300e52f12ef6f43e2a03188f17208c66c709a36df6efe79ce117"
+  }
+ ],
+ "prompt": "IMAGE 1 is a clean frame from a 3D mobile game (the character was removed) and defines EVERYTHING about the layout. IMAGES 2-4 are small material swatches cut from the art director's approved illustration of this level \u2014 they show ONLY surface materials, not a layout (ignore any coins in them):\nIMAGE 2 = the polished yellow-gold telescoping tunnel rings with warm light; IMAGE 3 = the glossy cyan water lane with the glowing white-cyan chevron arrows; IMAGE 4 = the glossy cyan river with hot-pink swirls, soft white-lilac foam clouds and iridescent bubbles.\n\nRepaint IMAGE 1 surface by surface with these materials, as a finished premium illustration:\n- every ring of IMAGE 1 becomes polished bright yellow-gold (IMAGE 2): bright gold all the way round, soft rounded rims, narrow shaded grooves, warm amber light dots on the rims, soft pink / violet reflections \u2014 no dark copper or brown bands;\n- the water of IMAGE 1 becomes thick glossy cyan (IMAGES 3-4) with crisp white highlight streaks that follow the lane, and the chevron arrows stay crisp glowing white-cyan exactly where IMAGE 1 has them;\n- the pink edges along the water become low, clean, glossy hot-pink / magenta satin bands, kept low so the gold stays visible;\n- the foam along both water edges becomes low, soft, rounded white-lilac foam clouds of varied sizes (IMAGE 4) \u2014 never rows of identical beads;\n- add a few iridescent soap bubbles in the air.\n\nSTRICT: do NOT change any shape, position, size or perspective from IMAGE 1. Do not add, remove or move any object: no new river curves or swirls across the lane, no extra rings, no coins. The lane, the chevrons, the tunnel opening and every ring stay exactly where they are in IMAGE 1. No character, text, HUD or user interface. Output only the repainted scene.",
+ "outputs": [
+  "qa/review_r27/artwork/04/proposals/g_hard_right_sw_v1.png"
+ ],
+ "seconds": 21.4,
+ "error": null,
+ "note": "PROPOSAL \u2014 generated view, NOT an approved reference until the user approves it"
+}

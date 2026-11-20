@@ -1,0 +1,27 @@
+{
+ "name": "d_late",
+ "endpoint": "fal-ai/nano-banana-2/edit",
+ "request_id": "01a1f6f8-3c51-7bb0-9cc9-53458f0888e9",
+ "status": "COMPLETED",
+ "resolution": "2K",
+ "aspect_ratio": "9:16",
+ "num_images": 1,
+ "estimated_cost_usd": 0.12,
+ "inputs": [
+  {
+   "path": "qa/review_r21/artwork/07/game_frames/d_late.png",
+   "sha256": "0b72b091f084ce969ab7f97a8eaa33b83bd6f14a62d15326d28ce87161da5845"
+  },
+  {
+   "path": "references/07_dive_the_washer_tube.png",
+   "sha256": "75782e387240d79436808c3b1c642040eda75fd5b58dbb76192035c7c60f78c9"
+  }
+ ],
+ "prompt": "IMAGE 1 is a frame from a 3D mobile game. Its camera is further down the washer tube of the scene shown in IMAGE 2. IMAGE 2 is the art director's approved original illustration (the final design of this level).\n\nRepaint IMAGE 1 as a finished illustration in exactly the art style, materials, colours and lighting of IMAGE 2, so it looks like the same painting seen from deeper inside the tube:\n- a deep violet-purple washer drum tube with neat rows of rounded slots (perforations) in the purple metal, crisp and evenly spaced;\n- many polished gold rings around the tube, bright gold with warm amber light dots on the rims, glowing towards the far end;\n- curved gold paddles on the left wall like in IMAGE 2;\n- a winding, glossy cyan river with crisp white highlight streaks, flanked by thick glossy hot-pink / magenta banks, the river plunging away down the tube;\n- puffy white-lilac soap-foam clouds along the water edges (soft rounded clouds, never tall columns or flat sheets);\n- a few iridescent soap bubbles in the air;\n- a warm glowing light deep at the end of the tube.\n\nSTRICT: keep the exact camera, perspective, composition and geometry of IMAGE 1 \u2014 the tube, every ring, the river path and the drop stay at the same positions and sizes. Same painterly quality and detail level as IMAGE 2 (crisp, glossy, saturated, premium). Do not add any character, mascot, hat, coins, text, HUD or user interface. Output only the repainted scene.",
+ "outputs": [
+  "qa/review_r21/artwork/07/proposals/d_late_v1.png"
+ ],
+ "seconds": 21.4,
+ "error": null,
+ "note": "PROPOSAL \u2014 generated view, NOT an approved reference until the user approves it"
+}

@@ -1,0 +1,2 @@
+Drop the Google Flow clips here: intro.mp4 (required for the video opening) and ending.mp4 (optional).
+See docs/FLOW_VIDEO.md. Files are stored with Git LFS.
