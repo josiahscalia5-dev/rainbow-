@@ -3471,3 +3471,36 @@ One new picture appeared right after that save (`qa/match/07/r21/BEFORE_K7/b_ear
 
 Okay, so what do I have to do to make my all my screens all at a 9 out of 10? And what I mean by that is that at the mostly for the while being swims, and he said what's still what's different. So make everything look like 9 out of 10. Let's try to get there, or at least 8.5, to make it exactly like my approved screens. So like, you know how my exact approved screens look like? I want that for my game mobile app screen, but actual game. So all the approved screens you see I have, that's how I want it to look like when the character moves or swims through the game, and the scenery, and the image, and everything. But actually, I want to make sure that it's the actual game. You clarify to me what I'm trying to tell you?
 
+### 🤖 Claude — 2026-11-20T02:16:23.847Z
+
+Yes, I understand. Here it is in my own words, so you can tell me if I've got it right:
+
+**Your approved pictures are the design of the game, not inspiration.** When someone plays it on their phone, the real game should look like those pictures the whole time Benny swims, steers left and right, and goes deeper in: the same scenery, water, colours, lighting, foam, rings and walls, at least 8.5 and ideally 9 out of 10. It has to be the actual playable 3D game, not a video and not a picture pasted over the screen.
+
+**Why the first moment already looks right but later moments don't.** Each painting shows one frozen view. Right now, at the start of each screen, the game paints your own artwork onto the 3D scenery, which is why the start scores about 9. Once Benny swims forward, the game has to show parts of the world your painting never showed: deeper down the tunnel, around the bends, the walls up close. That's where it drifts: blurry water, missing foam, smeared walls, or (on 06 and 07) the view turning away from your painted layout.
+
+**What it takes to reach 8.5–9 while swimming:** make every part Benny can see look like more of the same painted world.
+- **04:** crisp glossy pink water up the walls, foam all along the edges, the arrows staying neat. (A specialist is on this now.)
+- **05:** fix the end of the stage and the hard-left view. It's already close, about 8.
+- **06 and 07:** keep your painted layout on screen while swimming (06's curving crest into the off-centre tunnel, 07's long winding river), plus the end of 07. (A specialist is on 07 now.)
+- **08:** already about 8.5; the coins are a bit big.
+- **Benny:** looks like your approved Benny on every screen.
+
+**What I need from you:**
+1. **Judge the results.** I'll keep sending approved / before / new pictures from the real game plus a short swimming clip. A quick "closer" or "not closer" from you is enough. Nothing counts as done until you say so.
+2. **Screen 08:** restart it, or keep it paused? It's close already.
+3. **Screens 06 and 07:** may the specialists test keeping your painted view on screen longer while Benny swims, instead of the view swinging round? You'd see pictures before anything is kept.
+4. **Extra artwork for the parts your paintings don't show (optional).** The fastest way to 9/10 deeper into each screen is to make a few more pictures in your exact style, for example the view further down the tunnel. You'd approve them first, then I'd paint them onto the 3D scenery. This uses paid image credits, and I'd tell you the exact job and cost before running anything. Without it we keep going for free, which is slower and may top out lower.
+5. **Speed versus usage.** Right now two specialists work at a time, as you set before. More at once means faster progress, but your Claude usage limit runs out sooner; it has stopped work mid-step before. Tell me if you want 3–4 at once.
+
+The Screen 04 and Screen 07 specialists are still working. I'll show you their results as soon as each one finishes.
+
+### 🧑 User — 2026-11-20T02:16:24.028Z
+
+Stop hook feedback:
+[command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+
+### 🤖 Claude — 2026-11-20T02:16:28.450Z
+
+> 🔧 **Bash** `{"command": "flock -w 280 backups/.autosave.lock true && python3 scripts/rainbow-autosave.py --reason \"manual:stop-hook-4\" 2>&1 | grep -E '\"commit\"|skipping|rror' | head -3; B=$(git rev-parse --abbrev-ref HEAD); L=$(git rev-parse HEAD); R=$(timeout 60 git ls-remote origin refs/heads/$B | cut -f1); echo \"local $L remote $R\"; [ \"$L\" = \"$R\" ] && echo MATCH; git status --short | wc -l", "description": "Wait for lock, autosave, push and verify", "timeout": 400000}`
+

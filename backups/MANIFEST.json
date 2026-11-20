@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 19811,
-   "sha256": "ecd3abbac4b369134df96dcae66ed6e6b4b5577fbc1a0d7f0d43433f96b47536"
+   "sha256": "7f05a01b2753c243e7094e3f9d60fe21bdca9e86de4fdc40254043643dac5a23"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -629,7 +629,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3424,
-   "sha256": "0fed1fa1d53669d8fce469614e121fb77ff41f23df8f991754cd9fb4567e5a18"
+   "sha256": "0fe1705aa1862cffc4047c6d5bc6c561c4a815fd098d7d4bac3f71af1548029c"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -1404,12 +1404,12 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c22/INFO.json",
    "bytes": 560,
-   "sha256": "1fc2a20fc005c8c3286c8a27fb0430f814e0d499f5bf10c9f39208b3e83290d8"
+   "sha256": "5263f7a58fd832b5517cd55f40f421625d24a383da791016e386cf616e138271"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c22/tracked.patch",
-   "bytes": 56988,
-   "sha256": "58b7b1c09e8e5edebb257b21bca47c824b51b5dece8e2bb490e28f2658b899bd"
+   "bytes": 56986,
+   "sha256": "17520edd175ab257f64aa026cad0da8815cafef483ab64de312f4bcc2359707b"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c22/untracked/tools/match04/rings21.mjs",
@@ -1429,7 +1429,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-preview-c22/INFO.json",
    "bytes": 569,
-   "sha256": "8a64aa92c6e44e51ca5ce85f591a44176c5709ecf09af9e4b6faf4d643573e42"
+   "sha256": "82505da44c9bad99aa35e7aed4029373f4b51457390dafa65c4746a1225c32f9"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-preview-c22/tracked.patch",
@@ -1654,7 +1654,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c22/INFO.json",
    "bytes": 1341,
-   "sha256": "a3ac1e7b29ea7c970276289a3035608e802c0a6ff04893f8dbb1c41631cd3d49"
+   "sha256": "a29a7c113c2fe7927364c81b8ca5045229510e5d9c49bbb0a788bef17f983721"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c22/tracked.patch",
@@ -2358,8 +2358,13 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c22/INFO.json",
-   "bytes": 510,
-   "sha256": "43a154996ee8d7061b1ca47d69ae6327325cee39dc2d26c6e318de74b9f4512a"
+   "bytes": 559,
+   "sha256": "858e69831af03a1b970987083bd173aed24d9a0163fca90a27c6b19c9111dca1"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s07-match-c22/tracked.patch",
+   "bytes": 8284,
+   "sha256": "21789abb3687ebc8b3df8d9c560d4ff92f13b4791e1296ecf7aa2fed8f201c34"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c22/untracked/tools/match07/diag_r21.mjs",
@@ -2484,27 +2489,27 @@
   {
    "path": "backups/wip/detached-34cb494137/INFO.json",
    "bytes": 440,
-   "sha256": "caea444951b5565a569df43633967f964487ff904674258b913c47135e07503b"
+   "sha256": "ad071572b144aaca593d019e389902b3e4c6a2364ed2c38d37a9c4a837835361"
   },
   {
    "path": "backups/wip/detached-3c0fa97090/INFO.json",
    "bytes": 439,
-   "sha256": "77718decee6b83f42c27c94632fd9306d5df41d1216522bce623ba90df5bd86b"
+   "sha256": "78d270667ec9a13e7efdb3b22b5bfd896769abbd919c52aa94cdfe15c8e259fa"
   },
   {
    "path": "backups/wip/detached-8accdad0a0/INFO.json",
    "bytes": 439,
-   "sha256": "4da9e4ea06253047ef0a111ef590766d76e32577109a418c3d8713be3fee2f60"
+   "sha256": "f1b6d8c1ed05efb80be363a660b0d0fc73d5dbbc668f51183d94e7c0f27cb5bf"
   },
   {
    "path": "backups/wip/detached-c649fcbc35/INFO.json",
    "bytes": 439,
-   "sha256": "ea49843b5a1977d2b786eb45e5e366daf4bf49c4d2129a85e217cceee8631378"
+   "sha256": "20e1041c7902638ce83cf179dc912ce0c7e9c9d0c8603db5ff62a2ce89c72956"
   },
   {
    "path": "backups/wip/detached-eb7233e364/INFO.json",
    "bytes": 439,
-   "sha256": "103152aaa0e844d2a9fede8c9f9f48062baaa77558d8bf0c8525e458ab60f17a"
+   "sha256": "bf39200f34461438adcaf28fda1a3b3c4dd805bed7e616b0ae7b2d44d1c18143"
   },
   {
    "path": "builds/rainbow-debug-06-2026-11-17-r3.apk",
@@ -5255,6 +5260,11 @@
    "path": "qa/match/04/r21/s1_wgl/NEW/b_early.png",
    "bytes": 2078026,
    "sha256": "dd8cf1d3d61cbcb28743a3bdc026f787ddf20e2b9f852d4c23cd9f9367dbe2e3"
+  },
+  {
+   "path": "qa/match/04/r21/s1_wgl/NEW/c_middle.png",
+   "bytes": 1728390,
+   "sha256": "89209986381b8216d9c5695fe3183bb90d4549d34b6fe0fa61e826d4e9f482d3"
   },
   {
    "path": "qa/match/04/r21_rings/1_APPROVED.png",
