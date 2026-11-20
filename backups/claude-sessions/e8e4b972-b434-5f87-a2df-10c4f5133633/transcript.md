@@ -676,3 +676,57 @@ At +1.7 u the held painting starts to stretch for a frame. Trying a slightly ear
 
 > 🔧 **Bash** `{"command": "K6='match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1'; D=qa/match/06/r22/step2_m06st; SH=\"a_start@0 b_0.3u@0.3 c_0.6u@0.6 d_0.9u@0.9 e_1.1u@1.1 e2_1.3u@1.3 f_1.5u@1.5 f3_1.7u@1.7 g_2u@2 h_3u@3\"\nrm -rf $D/NEW $D/NEW_stw_0.75_0.85; mv $D/NEW_stw_1.0_1.1 $D/rejected_stw_1.0_1.1; mkdir -p $D/rejected_r18_stw_0.6_1.2\ntimeout 1500 node tools/match06/r18_dbg.mjs $D/NEW \"$K6&m06st=1\" $SH 2>&1 | grep -v \"^\\[match06\\]\" | tail -1\ntimeout 1500 node tools/match06/r18_dbg.mjs $D/BEFORE \"$K6\" f3_1.7u@1.7 2>&1 | grep -v \"^\\[ma …[+387 chars]`
 
+### 🧑 User — 2026-11-20T03:45:01.036Z
+
+> ↩︎ result: h_3u s 202.027 cam 1.32,-34,-134.4 coins 1690
+> f3_1.7u s 200.743 cam 1.54,-34.74,-133.41 coins 1690
+> f_1.5u s 200.56 cam 1.57,-34.83,-133.29 coins 1690
+> {"a":"qa/match/06/r22/step2_m06st/BEFORE/a_start.png","b":"qa/match/06/r22/step2_m06st/NEW/a_start.png","rows":[0,1536],"threshold":0.1,"diff_pixels":0,"total":1327104,"diff_pct":0}
+> {"a":"qa/match/06/r22/step2_m06st/BEFORE/h_3u.png","b":"qa/match/06/r22/step2_m06st/NEW/h_3u.png","rows":[0,1536],"threshold":0.1,"diff_pixels":8,"total":1327104,"diff_pct":0.0006}
+
+### 🤖 Claude — 2026-11-20T03:45:03.660Z
+
+Start 0 px; by +3 u identical to BEFORE (8 px). Now the same check together with `m06view`, plus gameplay tests.
+
+### 🤖 Claude — 2026-11-20T03:45:09.313Z
+
+> 🔧 **Bash** `{"command": "K6='match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1'; D=qa/match/06/r22/step2_m06st; SH=\"a_start@0 c_0.6u@0.6 e_1.1u@1.1 e2_1.3u@1.3 f_1.5u@1.5 f3_1.7u@1.7 g_2u@2\"\ntimeout 1500 node tools/match06/r18_dbg.mjs $D/with_m06view/BEFORE \"$K6&m06view=1\" $SH 2>&1 | grep -v \"^\\[match06\\]\" | tail -1\ntimeout 1500 node tools/match06/r18_dbg.mjs $D/with_m06view/NEW \"$K6&m06view=1&m06st=1\" $SH 2>&1 | grep -v \"^\\[match06\\]\" | tail -1\nnode /home/user/tools-pixelmatch/pixeldiff.mjs $D/with_m06view/BEFORE/a_start.png $D/with_ …[+530 chars]`
+
+### 🧑 User — 2026-11-20T03:47:40.427Z
+
+> ↩︎ result: g_2u s 200.927 cam 1.62,-34.08,-133.44 coins 1690
+> g_2u s 200.927 cam 1.62,-34.08,-133.44 coins 1690
+> {"a":"qa/match/06/r22/step2_m06st/with_m06view/BEFORE/a_start.png","b":"qa/match/06/r22/step2_m06st/with_m06view/NEW/a_start.png","rows":[0,1536],"threshold":0.1,"diff_pixels":0,"total":1327104,"diff_pct":0}
+
+### 🤖 Claude — 2026-11-20T03:47:42.267Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e8e4b972-b434-5f87-a2df-10c4f5133633/scratchpad/st5.png"}`
+
+### 🧑 User — 2026-11-20T03:47:42.453Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:47:45.681Z
+
+With `m06view` the switch comes earlier (by +1.1 u), so the gain there is only the first ~1 u (no white ghost under Benny, no ring arc through the crest). Running gameplay tests.
+
+### 🤖 Claude — 2026-11-20T03:47:48.790Z
+
+> 🔧 **Bash** `{"command": "K6='match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1'; D=qa/match/06/r22/step2_m06st; for q in \"$K6&m06st=1\" \"$K6&m06view=1&m06st=1\"; do timeout 900 node scripts/gameplay-test.mjs --q=\"$q\" >/dev/null 2>&1; python3 -c \"\nimport json;d=json.load(open('qa/gameplay_test_switch.json'));c=d['checks'];print(d['query'][-25:],'pass',d['pass'],sum(1 for v in c.values() if v['pass']),'/',len(c),'coins',c['realCoinPickups']['startCoins'],'->',c['realCoinPickups']['endCoins'],c['realCoinPickups']['collected'])\"; done | tee $D/game …[+176 chars]`
+
+### 🧑 User — 2026-11-20T03:48:02.391Z
+
+> ↩︎ result: 6gold=1&m06fclu=1&m06st=1 pass True 8 / 8 coins 1330 -> 2240 91
+> 6fclu=1&m06view=1&m06st=1 pass True 8 / 8 coins 1330 -> 2240 91
+>  "ok": true,
+>   "05->06 gap=0 dT=0.281 y=-43.35",
+>   "06->07 gap=0 dT=0.114 y=-48.53",
+
+### 🤖 Claude — 2026-11-20T03:48:04.369Z
+
+Tests pass. Recording short start-of-swim clips (BEFORE / NEW).
+
+### 🤖 Claude — 2026-11-20T03:48:08.825Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e8e4b972-b434-5f87-a2df-10c4f5133633/scratchpad; K6='match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1'; D=qa/match/06/r22/step2_m06st; rm -rf $S/c2b $S/c2n\n(CLIP_PORT=5291 timeout 900 node $S/swim_clip_log.mjs 06 $S/c2b 2 \"$K6\" > $S/c2b.log 2>&1 &)\nCLIP_PORT=5292 timeout 900 node $S/swim_clip_log.mjs 06 $S/c2n 2 \"$K6&m06st=1\" 2>&1 | tail -2; sleep 15; tail -1 $S/c2b.log\nfor k in b n; do ffmpeg -loglevel error -y -framerate 24 -i $S/c2$k/%04d.png -vf scale=432:768 -pix_fmt yuv420p -c: …[+161 chars]`
+
