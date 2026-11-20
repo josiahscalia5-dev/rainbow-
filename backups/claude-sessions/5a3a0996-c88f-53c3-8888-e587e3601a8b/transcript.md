@@ -4225,3 +4225,38 @@ Next, the coordination map and the specialists status file:
 > mcp_servers_configured: ['worldlabs']
 > plugins synced: ['Closes the gap between Claude Code and the browser. When a task needs the web, Claude Code', 'Tools to maintain and improve CLAUDE.md files - audit quality, capture session learnings, ', "TypeScript/JavaScript language server for Claude Code that runs TypeScript 7's native LSP ", 'Core skills library for Claude Code: TDD, debugging, collaboration patterns, and proven te', 'Analyze codebases and recommend tailored Claude Code automations such as hooks, skills, MC', 'Automated code review for pull requests using multiple specialized agents with confidence-', 'Python type-checke
 
+### 🤖 Claude — 2026-11-20T02:42:52.235Z
+
+> 🔧 **mcp__claude-code-remote__get_environment** `{}`
+
+### 🧑 User — 2026-11-20T02:42:58.514Z
+
+> ↩︎ result: {"environment_id":"env_01XBdWF9zzmZb6vy7Pib3uwc","name":"Default","description":"","scope":"personal","applies_to":"my personal environment: all of my future sessions that use it, not only this one","network":{"type":"unrestricted"},"environment_variable_names":null,"has_setup_script":false,"setup_script":"","network_secrets":[{"hosts":["api.worldlabs.ai"],"header_names":["WLT-Api-Key"],"name":"api.worldlabs.ai"},{"hosts":["queue.fal.run"],"header_names":["Authorization"],"name":"queue.fal.run"}],"is_current":true,"editable_by_you":true,"session_has_repository":true,"note":"Edits made with update_environment change the stored environment; see that tool for when each kind of change takes effect. `setup_script` is returned only for an environment you can edit (`setup_script_withheld` / `description_withheld` mean the organization's compliance settings keep the stored text out of this tool — they refuse a `setup_script`, `new_name` or `new_description` edit too — or that this could not be checked right now, in which case calling again may return it). `other_cloud_environments` lists the user's other cloud environments (`other_cloud_environments_not_shown` counts any left out; the fiel …[+1222 chars]
+
+### 🤖 Claude — 2026-11-20T02:43:16.293Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/backups/CONNECTORS_AND_SERVICES_R21.md", "content": "# Connectors, servers, keys and tools in use (round 21, 2026-11-20) — NAMES ONLY, no secrets\n\nLogins, connector sign-ins, API keys and running processes are tied to a Claude account / cloud environment and CANNOT be moved\nthrough GitHub. Everything else (code, assets, agents, briefs, transcripts, pictures) is in this repository. On the new account:\n\n| What | Used for | State on the old account (verified 2026-11-20) | How to restore on the new account |\n|---|---|---|---|\n| GitHub (claude.ai GitHub con …[+3302 chars]`
+
+### 🧑 User — 2026-11-20T02:43:16.456Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/backups/CONNECTORS_AND_SERVICES_R21.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T02:43:18.449Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/review_r21/artwork/04/FOR_APPROVAL_04_c_middle.png", "/home/user/rainbow-/qa/review_r21/artwork/04/FOR_APPROVAL_04_d_late.png", "/home/user/rainbow-/qa/review_r21/artwork/04/FOR_APPROVAL_04_e_end.png"], "caption": "For your approval: generated Screen 04 views deeper in the tunnel (middle, late, end). Each shows ORIGINAL APPROVED (unchanged), GAME NOW at that spot, and the GENERATED PROPOSAL. Nothing is used in the game until you approve.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-20T02:43:19.244Z
+
+> ↩︎ result: 3 files delivered to user.
+>   /home/user/rainbow-/qa/review_r21/artwork/04/FOR_APPROVAL_04_c_middle.png → file_uuid: 6ac5c097-69ad-463c-b86f-fbbc8b023fa6
+>   /home/user/rainbow-/qa/review_r21/artwork/04/FOR_APPROVAL_04_d_late.png → file_uuid: dcbd0510-b261-437f-bbc8-8a0f954be119
+>   /home/user/rainbow-/qa/review_r21/artwork/04/FOR_APPROVAL_04_e_end.png → file_uuid: b93c43b1-d8e6-4917-92dd-e7fb0deff520
+
+### 🤖 Claude — 2026-11-20T02:43:23.611Z
+
+Now the final save to GitHub, then verification: this branch, both cloud specialists' branches, Git LFS, and the chat history.
+
+### 🤖 Claude — 2026-11-20T02:43:28.017Z
+
+> 🔧 **Bash** `{"command": "flock -w 280 backups/.autosave.lock true && python3 scripts/rainbow-autosave.py --reason manual:end 2>&1 | grep -E '\"commit\"|skipping|rror' | head -3; B=$(git rev-parse --abbrev-ref HEAD); L=$(git rev-parse HEAD); R=$(timeout 60 git ls-remote origin refs/heads/$B | cut -f1); echo \"lead $B local $L remote $R\"; [ \"$L\" = \"$R\" ] && echo LEAD-MATCH\ntimeout 60 git ls-remote origin refs/heads/claude/rainbow-s06-match-c22 refs/heads/claude/rainbow-benny-c22\nfor f in docs/briefs/2026-11-20-r21/RESUME_R21.md docs/briefs/2026-11-20-r21/setup_worker_r22.sh backups/CONNECTORS_AND_SER …[+480 chars]`
+
