@@ -95,7 +95,7 @@ index 6aec240..2a9df4a 100644
      if (m08 && b08 && b08Rest) {
        // rounder body (narrower, taller) with the beanie counter-scaled to keep its size; ≈23 px right (world +x, measured fur centroid), lifted
 diff --git a/src/game/cameraRig.ts b/src/game/cameraRig.ts
-index 2a2b9eb..894dca5 100644
+index 2a2b9eb..cfc7c64 100644
 --- a/src/game/cameraRig.ts
 +++ b/src/game/cameraRig.ts
 @@ -9,6 +9,7 @@ import type { Course, StageId } from '../world/course';
@@ -184,7 +184,7 @@ index 2a2b9eb..894dca5 100644
              // keep >= 1.6 u above the water below (down the far slope), turning the view so Benny keeps his approved place
              let best = Infinity, wy = -Infinity;
              for (let k = -14; k <= 8; k += 0.5) {
-@@ -282,6 +324,15 @@ export class RideCamera {
+@@ -282,6 +324,16 @@ export class RideCamera {
              d6.normalize().lerp(dv, wv).normalize();
            }
          }
@@ -193,14 +193,15 @@ index 2a2b9eb..894dca5 100644
 +          // view yawed / pitched so the river SB.la u ahead sits at NDC SB.q (the panels' vanishing area); level (no roll)
 +          const wS = this.sbW(s);
 +          if (wS > 0) {
-+            const pose = this.sbPose(s, lat, p6.off06, p6.dir06, p.fov);
++            const pose = this.sbPose(s, lat, p6.off06, p6.dir06, SB.fov);
 +            cp6.lerp(pose.c, wS); d6.normalize().lerp(pose.d, wS).normalize();
++            p.fov += (SB.fov - p.fov) * wS; // r30b t4: telephoto storyboard framing (eased with the pose)
 +          }
 +        }
          outPos.lerp(cp6, w6);
          outTarget.lerp(cp6.addScaledVector(d6, 10), w6);
          outUp.lerp(new THREE.Vector3(0, 1, 0), w6).normalize();
-@@ -328,9 +379,57 @@ export class RideCamera {
+@@ -328,9 +380,58 @@ export class RideCamera {
      return p;
    }
  
@@ -224,7 +225,8 @@ index 2a2b9eb..894dca5 100644
 +    Q.multiplyScalar(1 / 5);
 +    const tV = Math.tan(THREE.MathUtils.degToRad(fovDeg / 2)), tH = tV * 0.5625;
 +    const vQ = new THREE.Vector3(SB.q[0] * tH, SB.q[1] * tV, 1).normalize();
-+    const D = this.sbB.D * SB.k, vB0 = this.sbB.v, vB = new THREE.Vector3(vB0.x / vB0.z, vB0.y / vB0.z + SB.by * tV, 1).normalize();
++    // the approved camera's fov was 62 deg: at SB.fov the camera backs off by tan(31)/tan(fov/2) along the same ray -> same Benny size
++    const D = this.sbB.D * SB.k * Math.tan(THREE.MathUtils.degToRad(31)) / tV, vB0 = this.sbB.v, vB = new THREE.Vector3(vB0.x / vB0.z, vB0.y / vB0.z + SB.by * tV, 1).normalize();
 +    const rot = (yaw: number, pit: number) => basis(new THREE.Vector3(Math.sin(yaw) * Math.cos(pit), Math.sin(pit), Math.cos(yaw) * Math.cos(pit)));
 +    const apply = (b: ReturnType<typeof basis>, v: THREE.Vector3) => b.R.clone().multiplyScalar(v.x).addScaledVector(b.U, v.y).addScaledVector(b.F, v.z);
 +    let C = bn.clone().sub(Q).setY(0).normalize().multiplyScalar(D).add(bn).add(new THREE.Vector3(0, D * 0.45, 0));

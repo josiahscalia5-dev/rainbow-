@@ -2,7 +2,7 @@
  "worktree": "/home/user/wt/benny06",
  "branch": "claude/rainbow-s06-benny06-c32",
  "head": "e162aec2bfdc631913c41daa435f9d449439af4f",
- "time": "2026-11-20T22:56:19+00:00",
+ "time": "2026-11-20T23:01:19+00:00",
  "dirty_tracked": [
   "src/characters/benny/benny05.ts",
   "src/characters/benny/runtime.ts",
@@ -24,6 +24,7 @@
   "assets/textures/match06/tile_hole06b.png",
   "assets/textures/match06/tile_hole06w.png",
   "src/characters/benny/benny30.ts",
+  "tools/benny30/panels.py",
   "tools/benny30/parts.py",
   "tools/benny30/sweep.mjs",
   "tools/match06/lead23_audit_slow.mjs",

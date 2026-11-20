@@ -2482,3 +2482,168 @@ The water patch applies cleanly (its texture image I'll copy directly). One foam
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && Q=$(cat /home/user/rainbow-/qa/match/06/r30b/QUERY_SB_t3.txt) && AUDIT_W=864 AUDIT_H=1536 AUDIT_PORT=5367 AUDIT_PIN=10000 AUDIT_SHOTS='[[\"s232\",232,null],[\"s250\",250,null],[\"s270\",270,null],[\"s290\",290,null],[\"s310\",310,null],[\"s330\",330,null],[\"s345\",345,null]]' timeout 1500 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/match06/r30_shots.mjs /home/user/rainbow-/qa/match/06/r30b/t3full 06 \"$Q\" 2>&1 | grep -E \"^06|rror\" | cut -c1-120; cd /home/user/rainbow-/qa/match/06/r30b/t3full && python3 -I /home/user/wt/s06/tools/matc …[+115 chars]`
 
+### 🧑 User — 2026-11-20T22:57:02.801Z
+
+> ↩︎ result: 06 s232 s 232.093 lat 0 stage 06 coins 1720
+> 06 s250 s 250.06 lat 0 stage 06 coins 1740
+> 06 s270 s 270.043 lat 0 stage 06 coins 1750
+> 06 s290 s 290.027 lat 0 stage 06 coins 1760
+> 06 s310 s 310.01 lat 0 stage 06 coins 1770
+> 06 s330 s 330.177 lat 0 stage 06 coins 1780
+> 06 s345 s 345.027 lat 0 stage 06 coins 1780
+> panel 1: s232:-0.133  s250:-0.210  s270:-0.139  s290:-0.168  s310:-0.321  s330:-0.377  s345:-0.219   -> best s 232
+> panel 2: s232:-0.108  s250:-0.189  s270:-0.204  s290:-0.284  s310:-0.162  s330:-0.249  s345:-0.207   -> best s 232
+> panel 3: s232:-0.143  s250:-0.056  s270:-0.118  s290:-0.160  s310:-0.293  s330:-0.117  s345:-0.016   -> best s 345
+> panel 4: s232:-0.193  s250:-0.041  s270:+0.024  s290:-0.033  s310:-0.119  s330:-0.099  s345:-0.115   -> best s 270
+
+### 🤖 Claude — 2026-11-20T22:57:10.442Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image, ImageDraw\nSB=Image.open('/home/user/rainbow-/docs/briefs/2026-11-20-r30/USER_S06_STORYBOARD_R30.png').convert('RGB')\nBOX=[(16,100,506,724),(520,100,1010,724),(16,790,506,1398),(520,790,1010,1398)]\nw,h=245,312\nP=[SB.crop(b).resize((w,h)) for b in BOX]\nC=[Image.open(f's{s}.png').convert('RGB').crop((28,250,811,1251)).resize((w,h)) for s in (232,250,270,290,310,330,345)]\no=Image.new('RGB',(7*(w+6),2*(h+24)),(20,14,30)); d=ImageDraw.Draw(o)\nfor i,im in enumerate(P): o.paste(im,(i*(w+6),18)); d.text((i*(w+6)+4,2),f'PANEL {i+1}',fill='whit …[+247 chars]`
+
+### 🧑 User — 2026-11-20T22:57:11.080Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T22:57:14.180Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r30b/t3full/panels_vs_candidates.png"}`
+
+### 🧑 User — 2026-11-20T22:57:14.252Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T22:57:48.001Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image; import numpy as np\ndef st(name,a):\n    a=a.reshape(-1,3).astype(float); L=a.mean(1)\n    def at(p):\n        lo,hi=np.percentile(L,[p-3,p+3]); m=(L>=lo)&(L<=hi); return a[m].mean(0).round().astype(int).tolist()\n    print(f'{name:28s} p5 {at(5)} p25 {at(25)} p50 {at(50)} p75 {at(75)} p95 {at(95)}')\nim=np.asarray(Image.open('s270.png').convert('RGB'))\nst('NEW s270 upper-left wall', im[260:420, 40:200])\nst('NEW s270 band (right)', im[300:560, 640:700])\nim2=np.asarray(Image.open('s250.png').convert('RGB'))\nst('NEW s250 ceiling wall', im …[+83 chars]`
+
+### 🧑 User — 2026-11-20T22:57:48.330Z
+
+> ↩︎ result: NEW s270 upper-left wall     p5 [76, 14, 61] p25 [144, 56, 56] p50 [173, 68, 114] p75 [213, 129, 116] p95 [243, 126, 210]
+> NEW s270 band (right)        p5 [61, 7, 58] p25 [162, 49, 125] p50 [177, 57, 135] p75 [192, 66, 142] p95 [223, 108, 184]
+> NEW s250 ceiling wall        p5 [86, 22, 73] p25 [148, 49, 110] p50 [156, 53, 126] p75 [207, 120, 87] p95 [227, 158, 124]
+
+### 🤖 Claude — 2026-11-20T22:58:07.766Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='src/world/m06sb.ts'; s=open(p).read()\ndef rep(old,new):\n    global s\n    assert s.count(old)==1, old[:80]; s=s.replace(old,new)\nrep(\"  by: num('m06sbby', 0), // NDC y shift of Benny's anchor (+ = higher)\",\n    \"  by: num('m06sbby', 0), // NDC y shift of Benny's anchor (+ = higher)\\n  // r30b t4: vertical field of view of the storyboard framing (the panels read telephoto: storyboard panel 1 = the approved view with the\\n  // background ~1.15x larger at the same Benny size); the camera backs off along the ray through Benny so h …[+2393 chars]`
+
+### 🧑 User — 2026-11-20T22:58:10.606Z
+
+> ↩︎ result: 304:            const tV = Math.tan(THREE.MathUtils.degToRad(31)), tH = tV * 0.5625, UP = new THREE.Vector3(0, 1, 0);
+> 401:    const tV = Math.tan(THREE.MathUtils.degToRad(fovDeg / 2)), tH = tV * 0.5625;
+> tsc rc=0
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T22:58:18.426Z
+
+Typecheck clean. Quick render of the telephoto framing with the brighter materials, compared panel by panel:
+
+### 🤖 Claude — 2026-11-20T22:58:24.241Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && Q=$(cat /home/user/rainbow-/qa/match/06/r30b/QUERY_SB_t3.txt) && AUDIT_W=432 AUDIT_H=768 AUDIT_PORT=5368 AUDIT_PIN=10000 AUDIT_SHOTS='[[\"s232\",232,null],[\"s250\",250,null],[\"s270\",270,null],[\"s290\",290,null],[\"s310\",310,null],[\"s330\",330,null],[\"s345\",345,null],[\"s360\",360,null]]' timeout 1500 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/match06/r30_shots.mjs /home/user/rainbow-/qa/match/06/r30b/t4 06 \"$Q\" 2>&1 | grep -E \"rror\" | head -3; cd /home/user/rainbow-/qa/match/06/r30b/t4 && python3 -I /home/user/wt/s06/tools/m …[+869 chars]`
+
+### 🧑 User — 2026-11-20T22:58:51.383Z
+
+> ↩︎ result: panel 1: s232:-0.072  s250:-0.203  s270:-0.146  s290:-0.070  s310:-0.355  s330:-0.318  s345:-0.353  s360:-0.275   -> best s 290
+> panel 2: s232:-0.201  s250:-0.303  s270:-0.213  s290:-0.267  s310:-0.264  s330:-0.210  s345:-0.353  s360:-0.411   -> best s 232
+> panel 3: s232:-0.093  s250:+0.010  s270:-0.120  s290:-0.146  s310:-0.281  s330:-0.155  s345:-0.202  s360:-0.198   -> best s 250
+> panel 4: s232:-0.161  s250:+0.038  s270:-0.010  s290:-0.039  s310:-0.207  s330:-0.197  s345:-0.329  s360:-0.410   -> best s 250
+
+### 🤖 Claude — 2026-11-20T22:58:56.029Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r30b/t4/panels_vs_t4.png"}`
+
+### 🧑 User — 2026-11-20T22:58:56.224Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-20T22:58:56.218Z
+
+[Image: original 2008x672, displayed at 2000x669. Multiply coordinates by 1.00 to map to original image.]
+
+### 🤖 Claude — 2026-11-20T22:59:13.079Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"export function withTubeStrips\" -A30 src/world/materials.ts | grep -n \"uniform\\|userData\\|uStrip\" | head", "description": "Find light-strip uniforms on the 07 tube materials"}`
+
+### 🧑 User — 2026-11-20T22:59:13.118Z
+
+> ↩︎ result: 2:157-  const uniforms = {
+> 3:158-    uStripColor: { value: new THREE.Color(s.color).multiplyScalar(s.intensity) },
+> 4:159-    uStripP: { value: new THREE.Vector4(s.count, s.width, 0, s.alt ?? 0.7) },
+> 9:164-    Object.assign(shader.uniforms, uniforms);
+> 23:178-varying vec3 vTubeAxis; varying vec3 vTubeUp; uniform vec3 uStripColor; uniform vec4 uStripP;
+> 31:186-  float t = atan(dot(P, E2), dot(P, E1)) * uStripP.x / 6.2831853; // strip index space
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T22:59:17.106Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 155,175p src/world/materials.ts | grep -n \"userData\\|return\" ", "description": "Check whether strip uniforms are exposed"}`
+
+### 🧑 User — 2026-11-20T22:59:17.140Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T22:59:20.984Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && awk 'NR>=150 && NR<=240 && /userData|^}|return mat/ {print NR\": \"$0}' src/world/materials.ts | head", "description": "Locate end of withTubeStrips"}`
+
+### 🧑 User — 2026-11-20T22:59:21.027Z
+
+> ↩︎ result: 154: }
+> 194: }`)
+> 202:   mat.userData.tubeStrips = uniforms;
+> 203:   return mat;
+> 204: }
+> 234: }
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T22:59:34.449Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='src/world/m06sb.ts'; s=open(p).read()\ndef rep(old,new):\n    global s\n    assert s.count(old)==1, old[:80]; s=s.replace(old,new)\nrep(\"  const mats: { fg?: FG; rest: { col: THREE.Color; rng: THREE.Vector3; mid: THREE.Color; mrng: THREE.Vector3 } | null; m: THREE.MeshStandardMaterial; colRest: THREE.Color }[] = [];\",\n    \"  const mats: { fg?: FG; rest: { col: THREE.Color; rng: THREE.Vector3; mid: THREE.Color; mrng: THREE.Vector3 } | null; m: THREE.MeshStandardMaterial; colRest: THREE.Color; strip?: { value: THREE.Color }; stripRes …[+1490 chars]`
+
+### 🧑 User — 2026-11-20T22:59:38.700Z
+
+> ↩︎ result: tsc rc=0
+> 6:**`&f30=1`** added to `qa/match/06/r30/QUERY_NEW_v2.txt` (= BEFORE). It switches on all three parts. Each part also has its own switch:
+> 7:* `&f30bank=1`: bubbly foam heaps along both banks plus a soft froth strip over the floor's bank band. The old `m06fclu`/`m06foam` puffs are hidden while it is on.
+> 8:* `&f30bub=1`: large iridescent soap bubbles. There are 30 big and 34 small ones along the slide, and 10 large ones in a short window right beside Benny.
+> 9:* `&f30ring=1`: a lacy white crown ring around Benny with a beaded edge, two thin drifting ripple rings and flicking droplets.
+> 12:* Heaps: `f30bs` size [1], `f30bn` lobe density [1], `f30bg` gap chance [0.12], `f30bc`/`f30bl` heap/lobe on-screen caps [0.24/0.065], `f30strip=0` turns the froth strip off.
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T22:59:49.180Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && echo \"$(cat /home/user/rainbow-/qa/match/06/r30b/QUERY_SB_t3.txt)&f30bs=0.7&f30bg=0.3&f30bc=0.16\" > /home/user/rainbow-/qa/match/06/r30b/QUERY_SB_t5.txt && Q=$(cat /home/user/rainbow-/qa/match/06/r30b/QUERY_SB_t5.txt) && AUDIT_W=432 AUDIT_H=768 AUDIT_PORT=5369 AUDIT_PIN=10000 AUDIT_SHOTS='[[\"s250\",250,null],[\"s290\",290,null],[\"s330\",330,null],[\"s345\",345,null],[\"s360\",360,null]]' timeout 1500 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/match06/r30_shots.mjs /home/user/rainbow-/qa/match/06/r30b/t5 06 \"$Q\" 2>&1 | grep -E \"rr …[+595 chars]`
+
+### 🧑 User — 2026-11-20T23:00:17.393Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T23:00:21.429Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r30b/t5/t4_vs_t5.png"}`
+
+### 🧑 User — 2026-11-20T23:00:21.655Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T23:00:53.637Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='src/world/m06sb.ts'; s=open(p).read()\ndef rep(old,new):\n    global s\n    assert s.count(old)==1, old[:80]; s=s.replace(old,new)\nrep(\"  slot: nums('m06sbslot', [1.5, 1.75, 1.25, 0.42]),\", \"  slot: nums('m06sbslot', [1.2, 1.4, 0.95, 0.32]), // r30b t6: smaller, more numerous slots (storyboard: more metal between them)\")\nrep(\"  vec3 c = mix(vec3(0.50, 0.10, 0.36), vec3(0.68, 0.18, 0.46), smoothstep(0.15, 0.6, broad));\\n  c = mix(c, vec3(0.86, 0.29, 0.52), 0.8 * smoothstep(0.6, 0.95, broad));\",\n    \"  vec3 c = mix(vec3(0.52,  …[+681 chars]`
+
+### 🧑 User — 2026-11-20T23:00:57.044Z
+
+> ↩︎ result: tsc rc=0
+> m06camk=0.65
+> m06camu=1.05
+> m06sb=1
+> w30=1
+> f30=1
+> f30bs=0.7
+> f30bg=0.3
+> f30bc=0.16
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T23:01:05.479Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && Q=$(cat /home/user/rainbow-/qa/match/06/r30/QUERY_NEW_v2.txt) && DIAG_S='[238,310]' AUDIT_PORT=5361 timeout 600 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/match06/r30b_diag.mjs /home/user/rainbow-/qa/match/06/r30b/baseline_recheck \"$Q\" 2>&1 | grep -E \"rror\" | head -3; cd /home/user/rainbow-/qa/match/06/r30b && python3 -I -c \"\nfrom PIL import Image; import numpy as np\nfor s in (238,310):\n    a=np.asarray(Image.open(f'diag/s{s}.png').convert('RGB')).astype(int); b=np.asarray(Image.open(f'baseline_recheck/s{s}.png').convert('RGB')) …[+233 chars]`
+

@@ -814,3 +814,128 @@ Equivalent procedure. Official stills now with r30_shots.mjs: BEFORE (v2, no b30
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/benny06 && V2=\"$(cat /home/user/rainbow-/qa/match/06/r30/QUERY_NEW_v2.txt)\" && M=/tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/b30/masks && SH='[[\"a_start\",0],[\"b_marked\",214.86],[\"c_238\",238],[\"d_266\",266],[\"e_310\",310],[\"g_387\",387]]' && \\\nAUDIT_W=864 AUDIT_H=1536 AUDIT_PORT=5329 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/benny30/sweep.mjs $M \"$V2\" '[[\"BEFORE\",{}]]' \"$SH\" mask 2>&1 | tail -1 && \\\nAUDIT_W=864 AUDIT_H=1536 AUDIT_PORT=5329 bash /home/user/rainbow-/tools/lead25/render_s …[+618 chars]`
 
+### 🧑 User — 2026-11-20T22:57:17.339Z
+
+> ↩︎ result: BEFORE g_387 s 387.01 stage 06
+> NEW g_387 s 387.01 stage 06
+> BEFORE_a_start.png
+> BEFORE_a_start_mask.png
+> BEFORE_b_marked.png
+> BEFORE_b_marked_mask.png
+> BEFORE_c_238.png
+> BEFORE_c_238_mask.png
+> BEFORE_d_266.png
+> BEFORE_d_266_mask.png
+> BEFORE_e_310.png
+> BEFORE_e_310_mask.png
+> BEFORE_g_387.png
+> BEFORE_g_387_mask.png
+> NEW_a_start.png
+> NEW_a_start_mask.png
+> NEW_b_marked.png
+> NEW_b_marked_mask.png
+> NEW_c_238.png
+> NEW_c_238_mask.png
+> NEW_d_266.png
+> NEW_d_266_mask.png
+> NEW_e_310.png
+> NEW_e_310_mask.png
+> NEW_g_387.png
+> NEW_g_387_mask.png
+> sweep.json
+> BEFORE a_start sweep vs r30_shots identical px share 100.0
+> BEFORE e_310 sweep vs r30_shots identical px share 61.63
+> NEW a_start sweep vs r30_shots identical px share 100.0
+> NEW e_310 sweep vs r30_shots identical px share 58.85
+> 22:57
+
+### 🤖 Claude — 2026-11-20T22:58:00.297Z
+
+> 🔧 **Bash** `{"command": "cat > /home/user/wt/benny06/tools/benny30/panels.py <<'EOF'\n\"\"\"r30 benny06: Benny close-up vs the four storyboard panels (+ approved 06 at the start).\nPainted Benny features per panel (colour): pompom top, body bottom (waterline), body centre x. Game Benny features from the\nsweep mask capture. The game crop is aligned with ONE uniform scale (pom top -> bottom height) + translation, so proportion\nerrors still show; share of pixels with max channel |dRGB| <= 20 inside the painted Benny box (half-width 0.55 x height).\nusage: python3 -I panels.py <maskdir> <outdir>   (maskdir: …[+5222 chars]`
+
+### 🧑 User — 2026-11-20T22:58:02.417Z
+
+> ↩︎ result: start_BEFORE (49.4, 37.7)
+> start_NEW (56.8, 22.4)
+> panel1_BEFORE (4.8, 68.9, 'game', {'top': 696, 'bot': 1255, 'cx': 358}, 'painted', {'top': 250, 'bot': 559, 'cx': 251})
+> panel1_NEW (4.8, 66.5, 'game', {'top': 771, 'bot': 1236, 'cx': 376}, 'painted', {'top': 250, 'bot': 559, 'cx': 251})
+> panel2_BEFORE (4.4, 70.1, 'game', {'top': 735, 'bot': 1283, 'cx': 426}, 'painted', {'top': 250, 'bot': 557, 'cx': 249})
+> panel2_NEW (4.3, 66.0, 'game', {'top': 810, 'bot': 1263, 'cx': 444}, 'painted', {'top': 250, 'bot': 557, 'cx': 249})
+> panel3_BEFORE (6.0, 62.9, 'game', {'top': 738, 'bot': 1301, 'cx': 530}, 'painted', {'top': 293, 'bot': 531, 'cx': 235})
+> panel3_NEW (4.5, 64.8, 'game', {'top': 817, 'bot': 1290, 'cx': 551}, 'painted', {'top': 293, 'bot': 531, 'cx': 235})
+> panel4_BEFORE (4.8, 64.8, 'game', {'top': 683, 'bot': 1154, 'cx': 449}, 'painted', {'top': 250, 'bot': 537, 'cx': 241})
+> panel4_NEW (3.8, 63.6, 'game', {'top': 749, 'bot': 1143, 'cx': 466}, 'painted', {'top': 250, 'bot': 537, 'cx': 241})
+
+### 🤖 Claude — 2026-11-20T22:58:21.243Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny06 && python3 - <<'EOF'\np='tools/benny30/panels.py'\ns=open(p).read()\nold=s[s.index(\"    band = np.zeros_like(reg)\"):s.index(\"    return dict(top=top, bot=bot, cx=cx)\\n\\ndef game_feats\")]\nnew=\"\"\"    band = np.zeros_like(reg); band[:, max(cx - 45, 0):cx + 45] = True\n    rows = (pk & band).sum(1); ys = np.nonzero(rows > 45)[0]; bot = int(ys.max())\n    vr = (vio & reg & band).sum(1)\n    top = next(y for y in range(ry0 + 10, ry1) if all(vr[y:y + 12] >= 18))\n\"\"\"\ns=s.replace(old,new)\nopen(p,'w').write(s)\nEOF\npython3 -I tools/benny30/panels.py …[+997 chars]`
+
+### 🤖 Claude — 2026-11-20T22:58:22.444Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/b30/pf.png"}`
+
+### 🧑 User — 2026-11-20T22:58:23.642Z
+
+> ↩︎ result: start_NEW (56.8, 22.4)
+> panel1_NEW (5.1, 65.3, 'game', {'top': 771, 'bot': 1236, 'cx': 376}, 'painted', {'top': 260, 'bot': 557, 'cx': 251})
+> panel2_NEW (4.0, 64.2, 'game', {'top': 810, 'bot': 1263, 'cx': 444}, 'painted', {'top': 319, 'bot': 555, 'cx': 249})
+> panel3_NEW (4.4, 65.3, 'game', {'top': 817, 'bot': 1290, 'cx': 551}, 'painted', {'top': 293, 'bot': 529, 'cx': 235})
+> panel4_NEW (5.1, 61.1, 'game', {'top': 749, 'bot': 1143, 'cx': 466}, 'painted', {'top': 295, 'bot': 535, 'cx': 241})
+
+### 🧑 User — 2026-11-20T22:58:23.669Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T22:58:39.005Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny06 && python3 - <<'EOF'\np='tools/benny30/panels.py'\ns=open(p).read()\ns=s.replace(\"\"\"    pf = painted_feats(pan, 80, 250, 400, 615)\"\"\",\"\"\"    pf = PAINTED[i]\"\"\")\ns=s.replace(\"\"\"SHOT = ['c_238', 'd_266', 'e_310', 'g_387']\"\"\",\"\"\"SHOT = ['c_238', 'd_266', 'e_310', 'g_387']\n# painted Benny features per panel (panel-local px), read BY EYE from 1:1 crops (colour detection is confused by the purple\n# tunnel / pink water edges): pompom top, waterline at the body centre, body centre x\nPAINTED = [dict(top=298, bot=570, cx=250), dict(top=298,  …[+372 chars]`
+
+### 🤖 Claude — 2026-11-20T22:58:39.463Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r30/benny06/BENNY_CLOSEUP_SHEET.png"}`
+
+### 🧑 User — 2026-11-20T22:58:41.370Z
+
+> ↩︎ result: start_BEFORE (49.4, 37.7)
+> start_NEW (56.8, 22.4)
+> panel1_BEFORE (5.1, 65.6, 'game', {'top': 696, 'bot': 1255, 
+> panel1_NEW (5.5, 61.9, 'game', {'top': 771, 'bot': 1236, 'cx
+> panel2_BEFORE (4.9, 62.4, 'game', {'top': 735, 'bot': 1283, 
+> panel2_NEW (5.5, 59.0, 'game', {'top': 810, 'bot': 1263, 'cx
+> panel3_BEFORE (6.1, 57.4, 'game', {'top': 738, 'bot': 1301, 
+> panel3_NEW (6.8, 58.4, 'game', {'top': 817, 'bot': 1290, 'cx
+> panel4_BEFORE (6.0, 54.5, 'game', {'top': 683, 'bot': 1154, 
+> panel4_NEW (6.7, 57.6, 'game', {'top': 749, 'bot': 1143, 'cx
+
+### 🧑 User — 2026-11-20T22:58:41.587Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T22:59:13.183Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny06 && Q=\"$(cat /home/user/rainbow-/qa/match/06/r30/QUERY_NEW_v2.txt)&b30=1\" && OUT=/tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/b30/s11 && AUDIT_W=864 AUDIT_H=1536 AUDIT_PORT=5320 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/benny30/sweep.mjs $OUT \"$Q\" '[\n[\"K3\",{}],\n[\"N1\",{\"hp\":8,\"tuck\":0.16}],\n[\"N2\",{\"pitch\":38}],\n[\"N3\",{\"hp\":8,\"tuck\":0.16,\"hy\":-0.03}]\n]' '[[\"a_start\",0],[\"d_266\",266],[\"e_310\",310]]' 2>&1 | grep -iv \"^[KN][0-9] \" | tail -3; python3 -I tools/benny30/p …[+603 chars]`
+
+### 🧑 User — 2026-11-20T23:00:32.468Z
+
+> ↩︎ result: == K3_a_start.png: benny-box  56.8%  mean|d| 22.4
+> == N1_a_start.png: benny-box  56.4%  mean|d| 23.8
+> == N2_a_start.png: benny-box  55.9%  mean|d| 27.2
+> == N3_a_start.png: benny-box  56.0%  mean|d| 27.0
+> 23:00
+
+### 🤖 Claude — 2026-11-20T23:00:35.603Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/b30/c11.png"}`
+
+### 🧑 User — 2026-11-20T23:00:35.741Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T23:00:47.083Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny06 && V2=\"$(cat /home/user/rainbow-/qa/match/06/r30/QUERY_NEW_v2.txt)\" && O=/home/user/rainbow-/qa/match/06/r30/benny06/NEW_steer && AUDIT_W=864 AUDIT_H=1536 AUDIT_PORT=5321 AUDIT_SHOTS='[[\"d_266_left\",266,-1],[\"d_266_right\",266,1],[\"e_310_left\",310,-1]]' bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/match06/r30_shots.mjs $O 06 \"$V2&b30=1\" 2>&1 | tail -3; cd /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/b30 && python3 -I -c \"\nfrom PIL import Image\no=Image.new('RGB',(3*288,512))\nfor i,s in enu …[+240 chars]`
+
+### 🤖 Claude — 2026-11-20T23:00:48.231Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/b30/steer.png"}`
+

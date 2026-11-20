@@ -42,8 +42,11 @@ export const SB = {
   q: nums('m06sbq', [0.10, 0.16]),
   k: num('m06sbk', 1.15), // r30b t3: the 3D Benny is ~20 % larger than the painted one at the approved camera
   by: num('m06sbby', 0), // NDC y shift of Benny's anchor (+ = higher)
+  // r30b t4: vertical field of view of the storyboard framing (the panels read telephoto: storyboard panel 1 = the approved view with the
+  // background ~1.15x larger at the same Benny size); the camera backs off along the ray through Benny so he keeps his size
+  fov: num('m06sbfov', 50),
   // wall slots: row pitch along the axis, arc pitch round the drum, slot length (round) and width (along) in u
-  slot: nums('m06sbslot', [1.5, 1.75, 1.25, 0.42]),
+  slot: nums('m06sbslot', [1.2, 1.4, 0.95, 0.32]), // r30b t6: smaller, more numerous slots (storyboard: more metal between them)
 };
 /** the storyboard far tunnel violet (display values, measured: p2/p4 far tunnel median) */
 export const SB_FAR = new THREE.Vector3(0.64, 0.40, 0.86);
@@ -63,19 +66,22 @@ vec3 sbWall(float th, float ax, float R, vec3 n, vec3 V, vec3 T) {
   // r30b t2: the light varies ROUND the drum (world-anchored broad bands), not with the grazing angle (which lit every far wall pixel):
   // storyboard walls p25 (151,35,100) p50 (174,44,112) p75 (223,72,132), highlights (251,139,223) as streaks only
   float broad = 0.5 + 0.25 * cos(th * 3.0 + 1.1) + 0.25 * cos(th * 2.0 - 0.4);
-  vec3 c = mix(vec3(0.50, 0.10, 0.36), vec3(0.68, 0.18, 0.46), smoothstep(0.15, 0.6, broad));
-  c = mix(c, vec3(0.86, 0.29, 0.52), 0.8 * smoothstep(0.6, 0.95, broad));
+  vec3 c = mix(vec3(0.52, 0.08, 0.40), vec3(0.72, 0.16, 0.52), smoothstep(0.15, 0.6, broad)); // r30b t6: more saturated magenta-violet
+  c = mix(c, vec3(0.90, 0.27, 0.58), 0.8 * smoothstep(0.6, 0.95, broad));
   // violet toward the sides, magenta on the ceiling (storyboard p2 ceiling vs p3 side wall)
   float side = abs(cos(th));
-  c = mix(c, vec3(0.62, 0.24, 0.62), 0.35 * side);
+  c = mix(c, vec3(0.62, 0.22, 0.70), 0.3 * side);
   float arc = th * R;
   // brushed grain along the tunnel
   float gr = sin(arc * 29.0 + sin(ax * 0.31) * 1.3) * 0.5 + sin(arc * 61.0 + ax * 0.07) * 0.5;
   c *= 1.0 + 0.05 * gr;
   // long pink-white streaks along the tunnel (narrow), a little stronger where the wall reflects the light down the tunnel
-  float st = sbStrip(th, 60.0) * (0.45 + 0.55 * smoothstep(0.2, 1.0, fw));
-  float st2 = pow(0.5 + 0.5 * cos(th * 23.0 + 1.9), 90.0) * 0.45;
-  c = mix(c, vec3(0.98, 0.58, 0.86), clamp(0.8 * st + st2, 0.0, 0.85));
+  // r30b t4: more luminous (storyboard walls p75 (223,72,132), p95 (251,139,223)): wider streaks + a soft sheen round each
+  float st = sbStrip(th, 22.0) * (0.5 + 0.5 * smoothstep(0.2, 1.0, fw));
+  float st2 = pow(0.5 + 0.5 * cos(th * 23.0 + 1.9), 50.0) * 0.5;
+  float sh = sbStrip(th, 4.0) * 0.35;
+  c = mix(c, vec3(0.90, 0.30, 0.58), sh);
+  c = mix(c, vec3(0.99, 0.60, 0.88), clamp(0.75 * st + st2, 0.0, 0.85));
   c += vec3(0.75, 0.30, 0.60) * 0.10 * pow(max(fw, 0.0), 20.0);
   // slots: rows round the drum, staggered, long axis round the drum
   vec2 pitch = vec2(uSbSlot.y, uSbSlot.x);
@@ -98,7 +104,7 @@ vec3 sbWall(float th, float ax, float R, vec3 n, vec3 V, vec3 T) {
 vec3 sbGold(float th, float v, vec3 n, vec3 V, vec3 T) {
   vec3 n2 = dot(n, V) < 0.0 ? -n : n;
   vec3 Rf = reflect(-V, n2);
-  vec3 dark = vec3(0.46, 0.13, 0.06), mid = vec3(0.80, 0.36, 0.14), gold = vec3(0.97, 0.56, 0.22), brt = vec3(0.99, 0.80, 0.45);
+  vec3 dark = vec3(0.40, 0.10, 0.05), mid = vec3(0.82, 0.34, 0.12), gold = vec3(0.99, 0.58, 0.20), brt = vec3(1.0, 0.84, 0.46);
   float body = smoothstep(0.03, 0.2, v) * smoothstep(0.97, 0.8, v);
   vec3 c = mix(dark, mid, 0.3 + 0.7 * body);
   c = mix(c, gold, 0.7 * exp(-pow((v - 0.5) / 0.26, 2.0)));
@@ -112,8 +118,8 @@ vec3 sbGold(float th, float v, vec3 n, vec3 V, vec3 T) {
   c *= 0.93 + 0.07 * sin(v * 210.0 + sin(th * 5.0));
   float acr = exp(-pow((v - 0.47) / 0.2, 2.0)) + 0.6 * exp(-pow((v - 0.72) / 0.08, 2.0));
   // r30b t2: storyboard gold p25 (223,111,51) p50 (249,145,63) p75 (253,207,112); white only in the reflection patches
-  c = mix(c, brt, clamp(0.5 * pt2 * acr + 0.12 * body, 0.0, 0.6));
-  c = mix(c, vec3(1.0, 0.95, 0.82), clamp(pt * acr * 0.85, 0.0, 0.85));
+  c = mix(c, brt, clamp(0.65 * pt2 * acr + 0.15 * body, 0.0, 0.7));
+  c = mix(c, vec3(1.0, 0.96, 0.84), clamp(pt * acr * 1.1, 0.0, 0.92));
   float fw = dot(Rf, T);
   c += vec3(0.9, 0.55, 0.25) * 0.2 * pow(max(fw, 0.0), 24.0) * (0.4 + 0.6 * body);
   float fr = pow(1.0 - abs(dot(n2, V)), 4.0);
@@ -159,17 +165,19 @@ export function buildSbBands(rings: { p: THREE.Vector3; t: THREE.Vector3; r: THR
 type FG = { uFarGlowColor: { value: THREE.Color }; uFarGlowRange: { value: THREE.Vector3 }; uMidTint: { value: THREE.Color }; uMidRange: { value: THREE.Vector3 } };
 /** `m06sbjoin`: retint Screen 07's tube (its far glow, mid tint and wall colour) while Benny is in 06; k = 1 in 06 .. 0 past s07 + j07 */
 export function makeSbJoin(tube07: THREE.Object3D) {
-  const mats: { fg?: FG; rest: { col: THREE.Color; rng: THREE.Vector3; mid: THREE.Color; mrng: THREE.Vector3 } | null; m: THREE.MeshStandardMaterial; colRest: THREE.Color }[] = [];
+  const mats: { fg?: FG; rest: { col: THREE.Color; rng: THREE.Vector3; mid: THREE.Color; mrng: THREE.Vector3 } | null; m: THREE.MeshStandardMaterial; colRest: THREE.Color; strip?: { value: THREE.Color }; stripRest?: THREE.Color }[] = [];
   tube07.traverse((o) => {
     const m = (o as THREE.Mesh).material as THREE.MeshStandardMaterial | undefined;
     if (!m || !(m as THREE.MeshStandardMaterial).isMeshStandardMaterial || mats.some((x) => x.m === m)) return;
     // withFarGlow() keeps its uniforms in userData.farGlow; perforatedMetal() (the 07 tube WALL) in userData.perfUniforms
     const pu = m.userData.perfUniforms as Partial<FG> | undefined;
     const fg = (m.userData.farGlow as FG | undefined) ?? (pu?.uFarGlowColor && pu.uFarGlowRange && pu.uMidTint && pu.uMidRange ? (pu as FG) : undefined);
-    mats.push({ fg, m, colRest: m.color.clone(),
+    const strip = (m.userData.tubeStrips as { uStripColor?: { value: THREE.Color } } | undefined)?.uStripColor;
+    mats.push({ fg, m, colRest: m.color.clone(), strip, stripRest: strip?.value.clone(),
       rest: fg ? { col: fg.uFarGlowColor.value.clone(), rng: fg.uFarGlowRange.value.clone(), mid: fg.uMidTint.value.clone(), mrng: fg.uMidRange.value.clone() } : null });
   });
-  const far = new THREE.Color(SB_FAR.x, SB_FAR.y, SB_FAR.z), wallTint = new THREE.Color(0.62, 0.42, 1.0);
+  // r30b t5: a deeper violet than the 06 haze (07's bright strip reflections on top of it read pale pink-lilac in t4)
+  const far = new THREE.Color(0.50, 0.26, 0.78), wallTint = new THREE.Color(0.62, 0.42, 1.0);
   let last = -1;
   return {
     count: mats.length,
@@ -178,10 +186,11 @@ export function makeSbJoin(tube07: THREE.Object3D) {
       for (const x of mats) {
         if (x.fg && x.rest) {
           x.fg.uFarGlowColor.value.copy(x.rest.col).lerp(far, k);
-          x.fg.uFarGlowRange.value.copy(x.rest.rng).lerp(new THREE.Vector3(40, 120, 0.55), k);
+          x.fg.uFarGlowRange.value.copy(x.rest.rng).lerp(new THREE.Vector3(40, 120, 0.4), k);
           x.fg.uMidTint.value.copy(x.rest.mid).lerp(far, k);
           x.fg.uMidRange.value.copy(x.rest.mrng).lerp(new THREE.Vector3(14, 70, 0.6), k);
         }
+        if (x.strip && x.stripRest) x.strip.value.copy(x.stripRest).multiplyScalar(1 - 0.6 * k); // 07's strip lights dimmed while seen from 06
         // walls only (the gold rings / lids keep their colour): magenta -> violet like the 06 drum
         if (x.m.metalness < 0.99) x.m.color.copy(x.colRest).lerp(x.colRest.clone().multiply(wallTint), k); // perforated wall 0.92, gold() 1
       }
