@@ -3525,3 +3525,61 @@ Saved and pushed: GitHub matches the local commit `a5e2a03`.
 
 One file is still unsaved: `qa/match/04/r21/s1_wgl/NEW/e_end.png`. The Screen 04 specialist created it a moment after that save, while rendering its first step. As long as the two specialists are working, new files will keep appearing between saves; the five-minute autosave commits them, including their unfinished code. I'll do a full save and verify when each specialist finishes.
 
+### 🧑 User — 2026-11-20T02:25:48.235Z
+
+CLAUDIA — YES, PROCEED WITH ITEMS 4 AND 5
+
+Yes, you understand what I want. Please proceed with the additional artwork and increased specialist support you described. My priority is completing ALL five original approved Rainbow screens—04, 05, 06, 07, and 08—as accurately and efficiently as possible.
+
+Item 4 — Additional artwork and paid credits: approved.
+
+I authorize you to use paid image credits and the relevant resources available to this project when there is a clear reason they could improve the match or speed up the work. Cost alone should not prevent you from using a better approach. You do not need to ask me for permission before every individual generation or routine iteration. Include the jobs, credit costs, and results in your progress updates.
+
+Create additional views only where they help complete the scenery my original pictures do not show. Use my approved originals and the game’s actual camera positions and geometry to guide those views. Keep the same architecture, water formations, colours, lighting, foam, materials, and overall design consistent between views.
+
+Show me the proposed additional artwork for visual approval before treating it as an accepted reference. Keep my original approved pictures unchanged and clearly distinguish them from newly generated views. Other useful work can continue while I review the new artwork.
+
+Item 5 — More specialists: approved.
+
+Increase to up to four specialists working at once where their tasks can run independently. I accept that this uses my Claude allowance faster. Keep the Screen 04 and Screen 07 specialists working, and use the additional capacity on the remaining work that most improves accuracy and progress.
+
+Give the specialists separate responsibilities and coordinate their changes. Continue saving their work frequently, including unfinished edits and continuation notes, so a usage interruption does not lose progress.
+
+By “faster,” I mean faster development. Keep Benny’s established gameplay speed and controls intact.
+
+The other decisions you asked about:
+
+- Screens 06 and 07: yes, test the camera framing changes that could preserve the approved composition better during swimming. The result must still support real forward movement, steering, depth, and visibility of the route. Show me the actual gameplay before keeping a candidate.
+- Screen 08: resume the remaining polish, including the coin sizing you identified. Build on the successful version already saved.
+- Keep all five screens on the completion checklist, including a consistent approved Benny throughout.
+
+My acceptance target remains the actual playable game.
+
+Match my original approved scenery throughout the swim: at the opening, deeper into each scene, around bends, when steering left and right, and at the exit. Aim for the 8.5–9/10 visual standard we discussed, supported by clear comparisons and my review.
+
+Continue showing ORIGINAL APPROVED / BEFORE / NEW images, plus uninterrupted gameplay clips. Report honestly what improved and what still differs. Paying for more resources is my authorization to proceed; I will judge the finished appearance from the results.
+
+Please continue now with this authorization and preserve all successful work.
+
+### 🤖 Claude — 2026-11-20T02:26:19.252Z
+
+Thank you, that's clear. I'll set this up now: four specialists, extra artwork, and Screen 08 resumed. First, a quick check of how loaded this machine is with two specialists already running, which affects where the new ones should run.
+
+### 🤖 Claude — 2026-11-20T02:26:20.054Z
+
+> 🔧 **Bash** `{"command": "uptime; nproc; free -g | head -2; df -h /home/user | tail -1; ps aux --sort=-%cpu | head -6 | cut -c1-150", "description": "Check CPU load, memory and disk"}`
+
+### 🧑 User — 2026-11-20T02:26:20.132Z
+
+> ↩︎ result: 02:26:20 up  1:26,  0 user,  load average: 7.44, 6.37, 4.29
+> 4
+>                total        used        free      shared  buff/cache   available
+> Mem:              15           1           0           0          13          13
+> /dev/vda        252G   38G   32G  54% /
+> USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+> root     17940  215  3.3 54961448 544988 ?     S<l  02:19  14:00 /opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-he
+> root       102  1.5  2.9 5723232 481940 ?      Sl   01:00   1:21 /opt/claude-code/bin/claude --preload /home/claude/.claude/remote/spare.sock
+> root     17966  1.3  1.5 1518478180 258728 ?   Sl   02:19   0:05 /opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-he
+> root     17906  1.1  0.6 55000332 100608 ?     S<sl 02:19   0:04 /opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-he
+> root     17888  1.0  1.0 23448560 175192 ?     Sl   02:19   0:04 node /tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpa
+

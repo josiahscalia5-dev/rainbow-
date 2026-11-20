@@ -1362,3 +1362,103 @@ Now the NEW audit render for step 1.
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && K7=$(cat /home/user/rainbow-/qa/match/07/r21/K7.txt); S=/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/cap; node scripts/capture.mjs 07 08 07d_entering_08 --q=\"$K7\" --out=$S/A 2>&1 | grep -v \"allow list\" | tail -3; node scripts/capture.mjs 07 08 07d_entering_08 --q=\"$K7&m07end=1\" --out=$S/B 2>&1 | grep -v \"allow list\" | tail -3; for n in 07 08 07d_entering_08; do node /home/user/tools-pixelmatch/pixeldiff.mjs $S/A/$n.png $S/B/$n.png $S/d_$n.png 0.1 180 1536 | tail -1; done", "description": "Prove 07 start and 08 vi …[+44 chars]`
 
+### 🧑 User — 2026-11-20T02:22:02.282Z
+
+> ↩︎ result: '[07d_entering_08] Failed to load resource: the server responded with a status of 403 (Forbidden)',
+>   '[07d_entering_08] Failed to load resource: the server responded with a status of 403 (Forbidden)'
+> ]
+>   '[07d_entering_08] Failed to load resource: the server responded with a status of 403 (Forbidden)',
+>   '[07d_entering_08] Failed to load resource: the server responded with a status of 403 (Forbidden)'
+> ]
+> {"a":"/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/cap/A/07.png","b":"/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/cap/B/07.png","rows":[180,1536],"threshold":0.1,"diff_pixels":0,"total":1171584,"diff_pct":0}
+> {"a":"/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/cap/A/08.png","b":"/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/cap/B/08.png","rows":[180,1536],"threshold":0.1,"diff_pixels":0,"total":1171584,"diff_pct":0}
+> {"a":"/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/cap/A/07d_entering_08.png","b":"/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/cap/B/07d_entering_08.pn …[+82 chars]
+
+### 🤖 Claude — 2026-11-20T02:22:18.170Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && cat > /home/user/rainbow-/qa/match/07/r21/step1_end/proof_0px.json <<'EOF'\n{\n  \"what\": \"deterministic scripts/capture.mjs, K7 vs K7&m07end=1, rows 180-1536, threshold 0.1\",\n  \"07_start_view\": 0,\n  \"08_start_view\": 0,\n  \"07d_entering_08\": 0,\n  \"audit_a_start\": 0,\n  \"audit_b_early\": 0\n}\nEOF\nK7=$(cat /home/user/rainbow-/qa/match/07/r21/K7.txt); S=/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad; time node tools/match07/swim_clip_r21.mjs 07 $S/clipN 3.6 \"$K7&m07end=1\" 0.55 2>&1 | grep -v \"allow list\"  …[+94 chars]`
+
+### 🧑 User — 2026-11-20T02:24:09.067Z
+
+> ↩︎ result: frames 86
+> 
+> real	1m50.811s
+> user	0m3.487s
+> sys	0m0.856s
+
+### 🤖 Claude — 2026-11-20T02:24:21.705Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && K7=$(cat /home/user/rainbow-/qa/match/07/r21/K7.txt); S=/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad; node tools/match07/swim_clip_r21.mjs 07 $S/clipB 3.6 \"$K7\" 0.55 2>&1 | grep -v \"allow list\" | tail -1; O=/home/user/rainbow-/qa/match/07/r21/step1_end; ffmpeg -loglevel error -y -framerate 24 -i $S/clipN/%04d.png -pix_fmt yuv420p -c:v libx264 -crf 22 $O/swim_end_NEW.mp4 && ffmpeg -loglevel error -y -framerate 24 -i $S/clipB/%04d.png -pix_fmt yuv420p -c:v libx264 -crf 22 $O/swim_end_BEFORE.mp4; ls -la $O", "descriptio …[+66 chars]`
+
+### 🧑 User — 2026-11-20T02:26:14.143Z
+
+> ↩︎ result: frames 86
+> total 6148
+> drwxr-xr-x 3 root root    4096 Nov 20 02:26 .
+> drwxr-xr-x 4 root root    4096 Nov 20 02:17 ..
+> drwxr-xr-x 2 root root    4096 Nov 20 02:18 NEW
+> -rw-r--r-- 1 root root     839 Nov 20 02:19 continuity.txt
+> -rw-r--r-- 1 root root  899482 Nov 20 02:18 diff_a_start.png
+> -rw-r--r-- 1 root root  595563 Nov 20 02:18 diff_b_early.png
+> -rw-r--r-- 1 root root   14776 Nov 20 02:19 gameplay_new.json
+> -rw-r--r-- 1 root root     211 Nov 20 02:22 proof_0px.json
+> -rw-r--r-- 1 root root 2329650 Nov 20 02:26 swim_end_BEFORE.mp4
+> -rw-r--r-- 1 root root 2428032 Nov 20 02:26 swim_end_NEW.mp4
+
+### 🤖 Claude — 2026-11-20T02:26:27.654Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad && python3 -c \"\nfrom PIL import Image\nfr=[10,35,55,70,85]\nims=[Image.open(f'clipN/{i:04d}.png') for i in fr]+[Image.open(f'clipB/{i:04d}.png') for i in fr]\nW,H=ims[0].size\nout=Image.new('RGB',(W*5,H*2))\nfor k,im in enumerate(ims): out.paste(im,((k%5)*W,(k//5)*H))\nout=out.resize((W*5//2,H))\nout.save('clip_sheet.png')\n\"", "description": "Make a contact sheet of clip frames for my own review"}`
+
+### 🧑 User — 2026-11-20T02:26:28.089Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T02:26:31.622Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/clip_sheet.png"}`
+
+### 🧑 User — 2026-11-20T02:26:31.664Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T02:26:39.693Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/07/r21/step1_end/NEW/e1_075.png"}`
+
+### 🧑 User — 2026-11-20T02:26:39.744Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T02:26:45.911Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && O=/home/user/rainbow-/qa/match/07/r21; git -C /home/user/wt/s07 diff > $O/step1_end/code.patch; cp tools/match07/diag_r21.mjs tools/match07/swim_clip_r21.mjs $O/step1_end/ ; cp /home/user/rainbow-/references/07_dive_the_washer_tube.png $O/APPROVED_07.png; sha256sum $O/APPROVED_07.png /home/user/rainbow-/references/07_dive_the_washer_tube.png | cut -c1-16; wc -l $O/step1_end/code.patch; rm -f $O/step1_end/diff_b_early.png", "description": "Save step 1 code patch and APPROVED copy"}`
+
+### 🧑 User — 2026-11-20T02:26:45.973Z
+
+> ↩︎ result: 75782e387240d794
+> 75782e387240d794
+> 364 /home/user/rainbow-/qa/match/07/r21/step1_end/code.patch
+
+### 🤖 Claude — 2026-11-20T02:26:51.103Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && git diff --stat; git diff src/game/Game.ts | head -80", "description": "Check diff stat of step 1 edits"}`
+
+### 🧑 User — 2026-11-20T02:26:51.164Z
+
+> ↩︎ result: qa/capture_log.json  | 133 ++++++++++++++++++++++++++++-----------------------
+>  src/game/Game.ts     |  19 +++++++-
+>  src/world/match07.ts |  28 +++++++----
+>  3 files changed, 111 insertions(+), 69 deletions(-)
+> diff --git a/src/game/Game.ts b/src/game/Game.ts
+> index 017370a..4616f56 100644
+> --- a/src/game/Game.ts
+> +++ b/src/game/Game.ts
+> @@ -122,7 +122,21 @@ export async function startGame(canvas: HTMLCanvasElement) {
+>    // the bottom) and the game's 07 tube (whose gold rings filled the screen mid-plunge) is hidden until 08 starts
+>    const m07Tube = MATCH['07'] && flag05('m07tube');
+>    const m07sA = course.marks['07_plunge_top'] - 4;
+> -  const m07 = MATCH['07'] ? await buildMatch07(m07Tube ? { course, sA: m07sA, sB: course.marks['07_plunge_bottom'], fade: [course.marks['07_plunge_bottom'] - 14, course.marks['07_plunge_bottom'] - 3] } : undefined) : null;
+> +  // r21 `&m07end=1` (qa/match/07/r21/PROGRESS.md): the painted plunge river runs down to the 08 inlet (fades out over the last
+> +  // 3.5 u) and the game's streaky water sheet stays away down the whole drop while Benny is in 07 (it fades back in over the
+> +  // last 3 u, so 08 starts with its own water); 08's own views are unchanged (the  …[+2442 chars]
+
