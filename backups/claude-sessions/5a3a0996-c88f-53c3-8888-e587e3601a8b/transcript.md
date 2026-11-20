@@ -2308,3 +2308,43 @@ The BEFORE clip is at frame 58 of 72; the AFTER clip takes about 7 more minutes 
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r; until grep -q -E \"CLIPS-DONE\" $S/clipA.log 2>/dev/null || grep -q -E \"pageerror|Error\" $S/clipA.log $S/clipB.log 2>/dev/null; do sleep 5; done; tail -2 $S/clipA.log; ls $S/clipA | wc -l", "description": "Wait for AFTER clip to complete", "timeout": 600000}`
 
+### 🧑 User — 2026-11-20T01:43:55.380Z
+
+> ↩︎ result: c071 s 94.913 lat 0.41 04 coins 1330
+> CLIPS-DONE
+> 73
+
+### 🤖 Claude — 2026-11-20T01:44:02.559Z
+
+Both clips are done (72 frames each). Composing the side-by-side videos: one full-frame, and one 2× zoom of your marked area, without smoothing, so any jagged pixel would show.
+
+### 🤖 Claude — 2026-11-20T01:44:10.918Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r; D=/home/user/rainbow-/qa/match/04/r21_rings; mkdir -p $S/cf $S/cz && python3 - <<EOF\nfrom PIL import Image, ImageDraw, ImageFont\nimport glob, os\nS='$S'\ntry: f=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',22)\nexcept Exception: f=ImageFont.load_default()\nfor i in range(72):\n    n=f'c{i:03d}.png'\n    a=Image.open(f'{S}/clipB/{n}').convert('RGB'); b=Image.open(f'{S}/clipA/{n}').convert('RGB')\n    o=Image.new('RGB',(874,804),(30,20,40)); d=ImageDraw.Draw(o)\n     …[+1250 chars]`
+
+### 🧑 User — 2026-11-20T01:44:51.396Z
+
+> ↩︎ result: -rw-r--r-- 1 root root 3716216 Nov 20 01:44 /home/user/rainbow-/qa/match/04/r21_rings/clip_BEFORE_vs_AFTER_swimming.mp4
+> -rw-r--r-- 1 root root 5677445 Nov 20 01:44 /home/user/rainbow-/qa/match/04/r21_rings/clip_zoom_marked_area_BEFORE_vs_AFTER.mp4
+> 3.000000
+
+### 🤖 Claude — 2026-11-20T01:44:56.546Z
+
+The videos are made (3 s each). Before sending, a visual check of AFTER frames across the clip for popping or seams in motion:
+
+### 🤖 Claude — 2026-11-20T01:44:58.946Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r; python3 -c \"\nfrom PIL import Image\no=Image.new('RGB',(4*432+30,768),'white')\nfor k,i in enumerate([8,28,48,68]):\n  o.paste(Image.open('$S/clipA/c%03d.png'%i).convert('RGB').resize((432,768),Image.LANCZOS),(k*442,0))\no.save('$S/clipA_sheet.png')\"", "description": "Contact sheet of AFTER clip frames"}`
+
+### 🧑 User — 2026-11-20T01:44:59.628Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T01:45:02.834Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r/clipA_sheet.png"}`
+
+### 🧑 User — 2026-11-20T01:45:02.883Z
+
+> ↩︎ result: [image]
+
