@@ -1,14 +1,14 @@
 {
  "_comment": "Machine-readable roster of the ten Rainbow specialists. Human-readable history: backups/AGENTS_STATUS.md. scripts/claude-bootstrap.sh checks every definition below (present + SHA-256). Agents load automatically from .claude/agents/ (Agent tool, subagent_type = name). Never recreate or rename them. A running specialist does NOT survive a new session or account: relaunch it from its notes + unfinished patch.",
  "schema": 1,
- "updated_utc": "2026-11-20T13:22:00Z",
- "updated_by_session": "ccr-08ece3a6-xcwyls (round 26 lead)",
+ "updated_utc": "2026-11-20T16:58:00Z",
+ "updated_by_session": "ccr-9652868f-lkw0w0 (round 28 lead)",
  "running_now": {
-  "_note": "round 26 lead ccr-08ece3a6-xcwyls, launched ~13:20 UTC as in-process background agents (do not survive a new session; relaunch from LAUNCH_R26.md)",
-  "s07": "water-fx-specialist — Screen 07 S-bends / steering view / 07->08 join with K23-3",
-  "s06": "path-camera-transition-engineer — Screen 06 opening blue cone (m06hole) owed comparison",
-  "s04": "washer-environment-modeler — Screen 04 verdict + arrow count, m04lgc crescents, far foam, pink edges",
-  "benny": "benny-character-artist — felt star verdict, b20silk fur"
+  "_note": "round 28 lead ccr-9652868f-lkw0w0, launched ~17:00 UTC as in-process background agents (do not survive a new session; relaunch from docs/briefs/2026-11-20-r28/LAUNCH_R28.md)",
+  "s07": "water-fx-specialist — Screen 07 m07fsoft v2 (soft varied foam) proof + clip, then coin column",
+  "s04": "washer-environment-modeler — Screen 04 crescent glints verdict, cloud banks + lower pink, arrows slide under Benny, combined clip",
+  "s05": "water-fx-specialist — Screen 05 end section + hard left (check hard right)",
+  "benny": "benny-character-artist — b20crown proof, then 06 start star colour"
  },
  "assignments_now": {
   "_read_first": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md, then backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md",
@@ -1238,5 +1238,28 @@
    "s05": "queued"
   },
   "next_account": "bash docs/briefs/2026-11-20-r26/setup_worker_r27.sh (-c28 from backups/wip/*-c27/)"
+ },
+ "round27": {
+  "lead_branch": "claude/rainbow-restore-screen-match-ijjdai",
+  "last_save": "7d3ba1081f69ced795421d2f3d070ad898e295ba (16:15 UTC)",
+  "end": "old account 5-hour limit (HTTP 429): Benny 16:11:44, s04 16:11:47, s05 16:12:34, s07 16:13:27; s06 FINISHED ~16:05; lead transcript to 16:13:27",
+  "results": "s06 steps 1+2 GOOD IMPROVEMENT (&m06hole=2&m06fade=1&m06spl=1, &m06fcn=3&m06fcg=1); Benny silk b20silk=2 NOT AN IMPROVEMENT, b20crown=1 written (proof lost with scratch); s07 m07fsoft v1 checked, v2 written; s04 m04lgcg + m04a5v written; 31 fal extra views ($3.72) = proposals awaiting approval",
+  "open_questions": "extra-view approvals; 06 route (river curving left after the opening); 09/10 playable or Flow video"
+ },
+ "round28": {
+  "lead_branch": "ccr-9652868f-lkw0w0",
+  "started_from": "claude/rainbow-restore-screen-match-ijjdai @ 7d3ba1081f69ced795421d2f3d070ad898e295ba (= GitHub, verified by ls-remote). Nothing merged.",
+  "restore": "bash docs/briefs/2026-11-20-r27/setup_worker_r28.sh + view04/06/07 -> LOCAL -c29; all 12 worktrees patch-id MATCH + untracked byte-identical to the 16:15 snapshots",
+  "services_16_50": "GitHub OK; World Labs key OK (5,420 credits live read); Atlas connector OK (My project, credits available); fal OK (auth probe 404 not 401); Hugging Face OK (josdois); Context7 connector OK; 14 account plugins synced + worldlabs local; design plugin not enabled (optional); no GPU",
+  "briefs": "docs/briefs/2026-11-20-r28/COORDINATION.md, LAUNCH_R28.md",
+  "next_account": "bash docs/briefs/2026-11-20-r28/setup_worker_r29.sh (LOCAL -c30 from backups/wip/*-c29/)",
+  "workers": {
+   "s07": "water-fx-specialist /home/user/wt/s07 claude/rainbow-s07-match-c29",
+   "s04": "washer-environment-modeler /home/user/wt/s04 claude/rainbow-s04-match-c29",
+   "s05": "water-fx-specialist /home/user/wt/s05 claude/rainbow-s05-match-c29",
+   "benny": "benny-character-artist /home/user/wt/benny claude/rainbow-benny-c29",
+   "s06": "WAITING for the user's 06 route answer (steps 1+2 done)",
+   "s08": "finished (K23-3, unapproved) read-only"
+  }
  }
 }

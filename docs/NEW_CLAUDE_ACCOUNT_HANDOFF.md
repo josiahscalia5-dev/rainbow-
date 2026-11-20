@@ -1,4 +1,14 @@
-# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 27 (2026-11-20, lead branch `claude/rainbow-restore-screen-match-ijjdai`, from ~15:11 UTC)
+# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 28 (2026-11-20, lead branch `ccr-9652868f-lkw0w0`, from ~16:36 UTC)
+
+New account; session branch started at **`7d3ba10`** = the r27 lead `claude/rainbow-restore-screen-match-ijjdai`'s last save (16:15 UTC; verified with
+`git ls-remote` after the hook's fetch failed — nothing newer, nothing merged). Round 27 stopped 16:09–16:13 UTC (old account 5-hour limit, HTTP 429).
+Worktrees recreated on LOCAL `-c29` (`setup_worker_r28.sh`) + the lead's `view04/06/07` clean-frame worktrees — **all 12 byte-identical to the 16:15
+snapshots**. On THIS account: World Labs key (5,420 credits), Atlas connector, fal, Hugging Face, Context7 connector, GitHub and all 14 account
+plugins WORK. Four workers relaunched (s07, s04, s05, Benny); s06 waits for the user's route answer. Map + services:
+**`docs/briefs/2026-11-20-r28/COORDINATION.md`**; briefs `LAUNCH_R28.md`; next-account recipe **`setup_worker_r29.sh`** (`-c30` from the newest
+`backups/wip/*-c29/`, trial07 + view04/06/07 included). Open user questions (r27): extra-view approvals, 06 route, 09/10 playable or Flow video.
+
+# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ ROUND 27 (2026-11-20, lead branch `claude/rainbow-restore-screen-match-ijjdai`, from ~15:11 UTC)
 
 New account; session branch = r26 lead `ccr-08ece3a6-xcwyls` merged up to its last save **`e655f19`** (15:03 UTC) → `e2e1d12`. Nothing else merged.
 Worktrees recreated on LOCAL `-c28` branches (`setup_worker_r27.sh`) + `trial07` separately — all byte-identical to the 15:03 snapshots. DevTools /

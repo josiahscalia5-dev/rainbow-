@@ -1134,3 +1134,387 @@ Now the "(r27) WHERE I STOPPED" block each worker kept at the top of its progres
 > * 15:30 DONE — **STEP 1 (r27) final check of the full candidate:** gameplay 8/8 + 91 coins (above); landmark stills BEFORE (r23 candidate
 >   & K23-3) vs NEW (full candidate & K23-3) at matched route landmarks, taken from the two existing 1.0x clips (same s …[+11761 chars]
 
+### 🤖 Claude — 2026-11-20T16:51:41.993Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/a72797b0-7eea-579a-8801-b0b276ae6b12/tasks/bigteo6v7.output; cd /home/user/rainbow- && sed -n 28,45p qa/match/07/r24/PROGRESS.md | cut -c1-500; ls /home/user/rainbow-/qa/match/05/r27/ 2>&1 | head; grep -rn \"pixeldiff\" docs/briefs/2026-11-20-r27/ tools/lead25/ 2>/dev/null | head -3", "description": "Check reinstall output and s07/s05 stopping detail"}`
+
+### 🧑 User — 2026-11-20T16:51:42.046Z
+
+> ↩︎ result: added 5 packages in 952ms
+> == tools-spector: `-- spectorjs@0.9.33  
+> 
+> added 2 packages in 399ms
+> == tools-pixelmatch: +-- pixelmatch@8.0.0 `-- pngjs@7.0.0  
+> 
+> added 120 packages in 4s
+> == tools-threejs-devtools: `-- threejs-devtools-mcp@0.5.0  
+> 
+> [exited with code 0]
+> * 16:20 quick check v1 (`q1_new`, lead-style audit `aud_new` vs `aud_before`, start view a_start **0 px**): the white bead row between
+>   cyan and pink is GONE (clean glossy edge, a short bubble cluster now and then); clouds keep off Benny at t 5.0 but the drop's banks
+>   are still big white ball piles (bend4 t 7.29 right bank) and the skirt still reads as a column of small balls -> v2 (same switch):
+>   drop clouds x0.82 and max scale 1.0, big domes sunk deeper, fewer heaped top lobes, skirt sunk + irregular spacing. Rendering
+>   (`/home/user/scratch/s07/v2.sh` -> `aud_new2`, `q2_new`).
+> * LEAD r27 question (magenta panel, upper right of the lead's e_end, s 375.056 lat 0): raycast probe from the combo build
+>   (`/home/user/scratch/s07/probe_panel.mjs` -> `probe_panel.json`): all 7 pixels in that panel hit **`m08_pipe` of
+>   `match08_projection`** first (~10 u from the camera) = the K23-3 Screen 08 INLET PIPE mesh (match08.ts `add(p …[+1218 chars]
+
+### 🤖 Claude — 2026-11-20T16:51:51.439Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport json,glob\nhits=[]\nfor p in glob.glob('backups/claude-sessions/*/transcript.sanitized.jsonl')+glob.glob('backups/claude-sessions/*/subagents/*.sanitized.jsonl'):\n    for line in open(p):\n        if 'pixeldiff.mjs' not in line: continue\n        try: e=json.loads(line)\n        except: continue\n        for b in (e.get('message',{}).get('content') or []):\n            if isinstance(b,dict) and b.get('type')=='tool_use' and b.get('name')=='Write' and 'pixeldiff' in str(b.get('input',{}).get('file_path','')):\n                hits.append((e.get('timest …[+391 chars]`
+
+### 🧑 User — 2026-11-20T16:51:56.752Z
+
+> ↩︎ result: === s05 diff ===
+> === s05 last messages ===
+> ide: number): number {
+> >   return 0.55 * noise1(s * 0.33 + side * 31.7) + 0.45 * noise1(s * 1.05 + side * 7.3);
+> > }
+> > /** CPU cellular "bubble dome" field (0..1) so the bank silhouette is a pile of round lumps */
+> > export function berm …[+11240 chars]
+> 
+> ### 🤖 Claude — 2026-11-20T16:09:12.377Z
+> 
+> > 🔧 **Bash** `{"command": "sleep 60; cat /home/user/scratch/s05/probe/probe.log; uptime", "description": "Check probe progress"}`
+> 
+> ### 🧑 User — 2026-11-20T16:09:12.383Z
+> 
+> > ↩︎ result: <tool_use_error>Blocked: sleep 60 followed by: cat /home/user/scratch/s05/probe/probe.log uptime. To wait for a condition, use Monitor with an until-loop (e.g. `until <check>; do sleep 2; done`). To wait for a command you started, use run_in_background: true. Do not chain shorter sleeps to work around this block.</tool_use_error>
+> 
+> ### 🤖 Claude — 2026-11-20T16:09:14.168Z
+> 
+> > 🔧 **Bash** `{"command": "cd /home/user/scratch/s05/probe; until grep -q \"t35L\\|rror\" probe.log 2>/dev/null; do sleep 10; done; cat probe.log", "description": "Wait for probe to finish both positions", "timeout": 540000}`
+> 
+> ### 🧑 User — 2026-11-20T16:12:34.514Z
+> 
+> > ↩︎ result: [render_slot] got slot 2 af …[+1297 chars]
+
+### 🤖 Claude — 2026-11-20T16:52:02.843Z
+
+> 🔧 **Bash** `{"command": "grep -l \"pixeldiff\" backups/claude-sessions/*/transcript.sanitized.jsonl backups/claude-sessions/*/subagents/*.jsonl 2>/dev/null | head; python3 -I - <<'EOF'\nimport json\np='backups/claude-sessions/c05b9d04-f7cb-5b3c-b274-a57feec84abe/transcript.sanitized.jsonl'\nfor line in open(p):\n    if 'pixeldiff' not in line: continue\n    e=json.loads(line)\n    for b in (e.get('message',{}).get('content') or []):\n        if isinstance(b,dict) and b.get('type')=='tool_use':\n            s=json.dumps(b['input'])\n            if 'pixeldiff' in s: print(e['timestamp'], s[:1800]); print()\ …[+74 chars]`
+
+### 🧑 User — 2026-11-20T16:52:03.029Z
+
+> ↩︎ result: backups/claude-sessions/1de16074-a1ea-5d78-8ed3-5aa46f86005c/transcript.sanitized.jsonl
+> backups/claude-sessions/1dee9937-64f8-543d-ae44-7cf9955b39b3/transcript.sanitized.jsonl
+> backups/claude-sessions/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/transcript.sanitized.jsonl
+> backups/claude-sessions/57d35962-86cf-5cfa-ab0b-2faf54b8a6e6/transcript.sanitized.jsonl
+> backups/claude-sessions/5a3a0996-c88f-53c3-8888-e587e3601a8b/transcript.sanitized.jsonl
+> backups/claude-sessions/5a5ce369-70d3-55d6-bc0b-9aeb236f0927/transcript.sanitized.jsonl
+> backups/claude-sessions/660b5801-7aff-5a84-b502-101fe8d932bd/transcript.sanitized.jsonl
+> backups/claude-sessions/6b384c42-43c8-55f4-abb4-6eff88bf7fb2/transcript.sanitized.jsonl
+> backups/claude-sessions/7951f197-ca4f-5615-a4e3-a23f22863243/transcript.sanitized.jsonl
+> backups/claude-sessions/8bb9eeab-1f60-5900-884e-9151051fb861/transcript.sanitized.jsonl
+> 2026-11-20T15:23:34.713Z {"command": "git grep -l \"tools-pixelmatch\" -- '*.sh' '*.md' '*.mjs' ':!backups/claude-sessions' | head -5; find . -name \"pixeldiff.mjs\" -not -path \"./node_modules/*\" 2>/dev/null | head -3", "description": "Find source of the pixel diff helper"}
+> 
+> 2026-11-20T15:23:39.132Z {"command": "mkdi …[+2699 chars]
+
+### 🤖 Claude — 2026-11-20T16:52:05.655Z
+
+The pixel-diff helper is kept in the repository; the previous lead pinned pixelmatch 5.3.0 for it. Matching that exactly:
+
+### 🤖 Claude — 2026-11-20T16:52:07.427Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/tools-pixelmatch && timeout 300 npm install --no-audit --no-fund pixelmatch@5.3.0 pngjs@7 2>&1 | tail -1 && cp /home/user/rainbow-/docs/briefs/2026-11-18-r16/pixeldiff.mjs . && node -e \"require('pixelmatch');require('pngjs');console.log('pixelmatch ok', require('pixelmatch/package.json').version)\" && ls /home/user/tools-pixelmatch", "description": "Pin pixelmatch 5.3.0 and restore pixeldiff helper", "timeout": 320000}`
+
+### 🧑 User — 2026-11-20T16:52:08.030Z
+
+> ↩︎ result: added 1 package, and changed 1 package in 348ms
+> pixelmatch ok 5.3.0
+> node_modules
+> package-lock.json
+> package.json
+> pixeldiff.mjs
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T16:52:13.478Z
+
+All tools are now in place. Next, the immediate checkpoint: I'll record this round's restore in the coordination files so a future account can pick up from here.
+
+### 🤖 Claude — 2026-11-20T16:52:13.930Z
+
+> 🔧 **TaskUpdate** `{"taskId": "2", "status": "completed"}`
+
+### 🧑 User — 2026-11-20T16:52:13.975Z
+
+> ↩︎ result: Updated task #2 status
+
+### 🤖 Claude — 2026-11-20T16:52:14.388Z
+
+> 🔧 **TaskUpdate** `{"taskId": "3", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-20T16:52:14.396Z
+
+> ↩︎ result: Updated task #3 status
+
+### 🤖 Claude — 2026-11-20T16:52:16.092Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport json;j=json.load(open('backups/AGENTS_STATUS.json'))\nprint(list(j.keys()))\nfor k in ('updated','updated_utc','round','lead_branch','assignments_now'):\n    if k in j: print(k, '=>', json.dumps(j[k])[:1500])\n\"; ls tools/lead25/; grep -n \"render_slot\" tools/lead25/render_slot.sh | head -3", "description": "Inspect agents status file and render-slot helper"}`
+
+### 🧑 User — 2026-11-20T16:52:16.184Z
+
+> ↩︎ result: ['_comment', 'schema', 'updated_utc', 'updated_by_session', 'running_now', 'assignments_now', 'current_focus', 'agents', 'marble_feasibility_05', 'proj05', 'previous_round_stopped', 'round2_stopped', 'round3_stopped', 'round4_done', 'backup_2026_11_17_1945', 'round4_stopped_account4', 'round5_account5', 'round6_account6', 'round9_account9', 'running_now_account8_archived', 'round12_account12', 'round13_account13', 'round14_account14', 'round15_account15', 'round16_account16', 'round17_account17', 'round18', 'round19', 'round19b', 'round20', 'round21', 'round22', 'round23', 'round24', 'round25', 'round26']
+> updated_utc => "2026-11-20T13:22:00Z"
+> assignments_now => {"_read_first": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md, then backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md", "_user_priority_2026-11-17": "VISUAL ONLY: scenery and look of the playable screens 04-08 must match their approved pictures (>= 90 %); do not report camera/movement details; show APPROVED | BEFORE | NEW full size + whole-frame numbers", "_two_lines": "line A = ccr-9c4a8ad6-xovgsx (= ccr-61131b9d-uj0oqb), line B = ccr-b0757dec-dj6l1o (a8c03f0 at 03:36; its session 01VCMXob was STILL autosaving at 11:48 UTC -> 65f3a89, full-g …[+1273 chars]
+
+### 🤖 Claude — 2026-11-20T16:52:20.458Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport json;j=json.load(open('backups/AGENTS_STATUS.json'))\nprint('running_now =>', json.dumps(j['running_now'])[:1200]); print()\nprint('current_focus =>', json.dumps(j['current_focus'])[:600]); print()\nprint('round26 =>', json.dumps(j['round26'])[:1500])\n\"", "description": "Show running_now and round26 entries format"}`
+
+### 🧑 User — 2026-11-20T16:52:20.511Z
+
+> ↩︎ result: running_now => {"_note": "round 26 lead ccr-08ece3a6-xcwyls, launched ~13:20 UTC as in-process background agents (do not survive a new session; relaunch from LAUNCH_R26.md)", "s07": "water-fx-specialist \u2014 Screen 07 S-bends / steering view / 07->08 join with K23-3", "s06": "path-camera-transition-engineer \u2014 Screen 06 opening blue cone (m06hole) owed comparison", "s04": "washer-environment-modeler \u2014 Screen 04 verdict + arrow count, m04lgc crescents, far foam, pink edges", "benny": "benny-character-artist \u2014 felt star verdict, b20silk fur"}
+> 
+> current_focus => "Screen 05 water \u2014 NEW APPROACH (user 2026-11-16 ~15:40): reproduce the ACTUAL approved water design by camera-matched texture projection / baking of the user's original artwork onto the real river mesh (Specialist 1, running), then animate that same design (Specialist 2, queued). Branch claude/rainbow-05-water-projection; ccr-451ea8c7-3nqlis is the protected working version (T2 default, W12 candidates). No more procedural / bloom / saturation rounds."
+> 
+> round26 => {"lead_branch": "ccr-08ece3a6-xcwyls", "started_from": "ccr-a9235d04-90cw28 @ a2261d5b96f7ed190af74f075eacec3a3a223665 (= GitHub; last r25 daemon …[+1355 chars]
+
+### 🤖 Claude — 2026-11-20T16:52:24.578Z
+
+Checking whether the round-27 review page (from the old account) is reachable from this account, since your pending decisions are on it:
+
+### 🤖 Claude — 2026-11-20T16:52:25.837Z
+
+> 🔧 **Artifact** `{"action": "read", "url": "https://claude.ai/artifact/WVqynQ46W6j3yZSGAqV3qA", "prompt": "Is this the Rainbow review page? List any user comments or approvals recorded on it."}`
+
+### 🧑 User — 2026-11-20T16:52:45.276Z
+
+> ↩︎ result: Artifact eee007f5-6a7d-4b76-a115-1e48e32e9371: artifact not found — it may have been deleted, or it has not been shared with you. If it was shared with you by email, accept the invitation in a browser first, and check that Claude Code is signed in to the invited account. Do not retry this read; tell the user now that the artifact could not be read, then go on without it.
+
+### 🤖 Claude — 2026-11-20T16:52:48.192Z
+
+That page belongs to the old account and can't be opened from here. I'll check whether its source is saved in the repository so I can republish it on this account:
+
+### 🤖 Claude — 2026-11-20T16:52:49.153Z
+
+> 🔧 **Bash** `{"command": "ls qa/review_r27/ qa/review_r27/artwork 2>&1 | head -40; find qa/review_r27 -name \"*.html\" | head; du -sh qa/review_r27", "description": "Look for saved review page source"}`
+
+### 🧑 User — 2026-11-20T16:52:49.195Z
+
+> ↩︎ result: qa/review_r27/:
+> 04
+> 05
+> 06
+> 07
+> 08
+> QUERY_04.txt
+> QUERY_05.txt
+> QUERY_06.txt
+> QUERY_07.txt
+> QUERY_08.txt
+> README.md
+> artwork
+> default
+> index.html
+> log_04.txt
+> log_05.txt
+> log_06.txt
+> log_07.txt
+> log_08.txt
+> log_default.txt
+> web
+> 
+> qa/review_r27/artwork:
+> 04
+> 05
+> 06
+> 07
+> 08
+> SELECTION_FOR_APPROVAL.json
+> prompt_04.txt
+> prompt_04_sw.txt
+> prompt_05.txt
+> prompt_06.txt
+> prompt_07.txt
+> prompt_07_p2.txt
+> prompt_08.txt
+> swatches04
+> swatches08
+> qa/review_r27/index.html
+> 325M	qa/review_r27
+
+### 🤖 Claude — 2026-11-20T16:52:52.024Z
+
+> 🔧 **Bash** `{"command": "wc -c qa/review_r27/index.html; ls qa/review_r27/web | head; du -sh qa/review_r27/web; grep -o 'src=\"[^\"]*\"' qa/review_r27/index.html | head -5; grep -c 'src=\"data:' qa/review_r27/index.html; cat qa/review_r27/artwork/SELECTION_FOR_APPROVAL.json | head -40", "description": "Inspect saved review page structure"}`
+
+### 🧑 User — 2026-11-20T16:52:52.072Z
+
+> ↩︎ result: 26413 qa/review_r27/index.html
+> 01_approved.jpg
+> 02_approved.jpg
+> 03_approved.jpg
+> 04_a_start.jpg
+> 04_approved.jpg
+> 04_b_early.jpg
+> 04_c_middle.jpg
+> 04_d_late.jpg
+> 04_e_end.jpg
+> 04_f_hard_left.jpg
+> 13M	qa/review_r27/web
+> src="web/06_saw_1x.mp4"
+> src="web/06_new_1x.mp4"
+> src="web/06_saw_05x.mp4"
+> src="web/06_new_05x.mp4"
+> src="${src}"
+> 0
+> {
+>  "04": [
+>   [
+>    "b_early",
+>    "b_early_v1",
+>    "ok"
+>   ],
+>   [
+>    "f_hard_left",
+>    "f_hard_left_sw_v1",
+>    "ok"
+>   ],
+>   [
+>    "g_hard_right",
+>    "g_hard_right_sw_v1",
+>    "bad:added arrows that are not in the game"
+>   ]
+>  ],
+>  "05": [
+>   [
+>    "b_early",
+>    "b_early_v1",
+>    "ok"
+>   ],
+>   [
+>    "c_middle",
+>    "c_middle_v1",
+>    "ok"
+>   ],
+>   [
+>    "d_late",
+>    "d_late_v1",
+>    "ok"
+>   ],
+>   [
+>    "e_end",
+>    "e_end_v1",
+>    "ok"
+>   ],
+>   [
+
+### 🤖 Claude — 2026-11-20T16:53:05.928Z
+
+> 🔧 **Bash** `{"command": "mkdir -p docs/briefs/2026-11-20-r28 && sed -e 's/setup_worker_r28.sh — the NEXT account after round 27/setup_worker_r29.sh — the NEXT account after round 28/' -e 's/NEW LOCAL -c29 branches/NEW LOCAL -c30 branches/' -e 's#backups/wip/<branch-c28>/ (the round-27 lead#backups/wip/<branch-c29>/ (the round-28 lead#' -e 's/The -c28 branches were LOCAL only in the r27 container/The -c29 branches were LOCAL only in the r28 container/' -e 's#usage: bash docs/briefs/2026-11-20-r27/setup_worker_r28.sh \\[s04 s07 s06 benny s08 s05 lead07 lead06 trial07\\]#usage: bash docs/briefs/2026-11-20-r2 …[+1288 chars]`
+
+### 🧑 User — 2026-11-20T16:53:06.029Z
+
+> ↩︎ result: 3:# NEW LOCAL -c30 branches = the worker base commit + its NEWEST autosave snapshot backups/wip/<branch-c29>/ (the round-28 lead autosave refreshes it every 5 min; read INFO.json "time").
+> 4:# The -c29 branches were LOCAL only in the r28 container (never pushed); their unfinished edits live only in those snapshots.
+> 6:# usage: bash docs/briefs/2026-11-20-r28/setup_worker_r29.sh [s04 s07 s06 benny s08 s05 lead07 lead06 trial07 view04 view06 view07]
+> 31:  s04)    need $S04 claude/rainbow-s04-match-c21;   mk s04 /home/user/wt/s04 claude/rainbow-s04-match-c30 $S04 backups/wip/claude__rainbow-s04-match-c29 ;;
+> 32:  s07)    need $S07 claude/rainbow-s07-match-c18;   mk s07 /home/user/wt/s07 claude/rainbow-s07-match-c30 $S07 backups/wip/claude__rainbow-s07-match-c29 ;;
+> 33:  s06)    need $S06 claude/rainbow-s06-match-c23;   mk s06 /home/user/wt/s06 claude/rainbow-s06-match-c30 $S06 backups/wip/claude__rainbow-s06-match-c29 ;;
+> 34:  benny)  need $BEN claude/rainbow-benny-c23;       mk benny /home/user/wt/benny claude/rainbow-benny-c29 $BEN backups/wip/claude__rainbow-benny-c29 ;;
+> 35:  s08)    need $S08 claude/rainbow-s08-scenery-c17; mk s08 /home/user/wt/s08 claude/rainbow-s08-scenery-c30 $S08 ba …[+760 chars]
+
+### 🤖 Claude — 2026-11-20T16:53:12.868Z
+
+> 🔧 **Bash** `{"command": "sed -i 's#mk benny /home/user/wt/benny claude/rainbow-benny-c29 \\$BEN#mk benny /home/user/wt/benny claude/rainbow-benny-c30 $BEN#' docs/briefs/2026-11-20-r28/setup_worker_r29.sh && grep -n \"benny)\" docs/briefs/2026-11-20-r28/setup_worker_r29.sh && bash -n docs/briefs/2026-11-20-r28/setup_worker_r29.sh && echo SYNTAX-OK; ls -d backups/wip/*-c29 2>/dev/null; grep -n \"wt\\b\\|/home/user/wt\\|worktree\" scripts/rainbow-autosave.py | head -8", "description": "Fix Benny branch name and check autosave covers worktrees"}`
+
+### 🧑 User — 2026-11-20T16:53:12.927Z
+
+> ↩︎ result: 34:  benny)  need $BEN claude/rainbow-benny-c23;       mk benny /home/user/wt/benny claude/rainbow-benny-c30 $BEN backups/wip/claude__rainbow-benny-c29 ;;
+> SYNTAX-OK
+> backups/wip/claude__rainbow-benny-c29
+> backups/wip/claude__rainbow-s04-match-c29
+> backups/wip/claude__rainbow-s05-match-c29
+> backups/wip/claude__rainbow-s06-match-c29
+> backups/wip/claude__rainbow-s07-match-c29
+> backups/wip/claude__rainbow-s08-scenery-c29
+> backups/wip/lead__trial07-c29
+> backups/wip/lead__view04-c29
+> backups/wip/lead__view06-c29
+> backups/wip/lead__view07-c29
+> 241:def snapshot_worktrees() -> list[str]:
+> 242:    """User order 2026-11-18: also preserve UNFINISHED specialist work. For every other git worktree of this repo
+> 243:    (specialists work in /home/user/wt/<sNN> on their own branches) write, read-only (--no-optional-locks: never takes
+> 244:    the worktree's index lock), backups/wip/<branch>/: INFO.json (branch, HEAD, dirty files), tracked.patch
+> 248:    wl = git("worktree", "list", "--porcelain", check=False).stdout
+> 252:        wt = Path(kv.get("worktree", ""))
+> 253:        if not wt or wt.resolve() == REPO.resolve() or not wt.exists():
+> 257:        g = lambda *a: subprocess.run(["git", "--no-optional-locks", "-C", …[+35 chars]
+
+### 🤖 Claude — 2026-11-20T16:53:15.682Z
+
+The autosave has already picked up all the restored copies as `backups/wip/*-c29` snapshots. Writing the round-28 coordination file:
+
+### 🤖 Claude — 2026-11-20T16:53:45.438Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-20-r28/COORDINATION.md", "content": "# Round 28 — coordination (lead session branch `ccr-9652868f-lkw0w0`, new Claude account, 2026-11-20 from ~16:36 UTC)\n\nUser (new account, ~16:36): \"RESTORE MY COMPLETE RAINBOW PROJECT ON THIS ACCOUNT, SAVE EVERYTHING EVERY FIVE MINUTES, AND CONTINUE FROM THE\nLATEST VERIFIED BACKUP\" — source branch **`claude/rainbow-restore-screen-match-ijjdai`** (the r27 lead). Same rules as r27: verified checkpoint +\nfive-minute autosave first; restore conversations, tools, plugins, ten specialists, every unfinis …[+7276 chars]`
+
+### 🧑 User — 2026-11-20T16:53:45.903Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-20-r28/COORDINATION.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T16:53:50.007Z
+
+Checking which specialist type round 27 used for Screen 05, so I relaunch the same one:
+
+### 🤖 Claude — 2026-11-20T16:53:52.546Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport json\np='backups/claude-sessions/c05b9d04-f7cb-5b3c-b274-a57feec84abe/transcript.sanitized.jsonl'\nfor line in open(p):\n    e=json.loads(line)\n    for b in (e.get('message',{}).get('content') or []) if e.get('type')=='assistant' else []:\n        if isinstance(b,dict) and b.get('type')=='tool_use' and b.get('name') in ('Agent','Task'):\n            i=b['input']; print(e['timestamp'], i.get('subagent_type'), '|', i.get('description'), '| run_bg', i.get('run_in_background'), '| prompt len', len(i.get('prompt','')))\n            if 'Screen 05' in i.get( …[+150 chars]`
+
+### 🧑 User — 2026-11-20T16:53:52.631Z
+
+> ↩︎ result: 2026-11-20T15:25:33.440Z water-fx-specialist | Screen 07 specialist r27 | run_bg True | prompt len 2352
+> 2026-11-20T15:25:41.040Z path-camera-transition-engineer | Screen 06 specialist r27 | run_bg True | prompt len 2206
+> 2026-11-20T15:25:48.743Z washer-environment-modeler | Screen 04 specialist r27 | run_bg True | prompt len 2291
+> 2026-11-20T15:25:56.094Z benny-character-artist | Benny specialist r27 | run_bg True | prompt len 2194
+> 2026-11-20T16:06:45.955Z water-fx-specialist | Screen 05 specialist r27 | run_bg True | prompt len 2611
+> --- s05 prompt ---
+>  You are the Screen 05 specialist (slug s05) of the Rainbow game, round 27, started now because a worker slot freed up. Screen 05 has been queued since round 19; your code is restored and clean — continue from your saved state, do not restart.
+> 
+> Read, in this order: /home/user/rainbow-/CLAUDE.md; /home/user/rainbow-/docs/briefs/2026-11-20-r27/LAUNCH_R27.md (Common + the "s05" section at the end); /home/user/rainbow-/docs/briefs/2026-11-20-r26/USER_VISUAL_BRIEF_R26.md (binding; §2, §3, §6 Screen 05, §8); /home/user/rainbow-/docs/briefs/2026-11-20-r26/LAUNCH_R26.md (Common rules only); then your own notes /home/user/wt/s05/qa/match/05/r18 …[+1969 chars]
+
+### 🤖 Claude — 2026-11-20T16:53:56.720Z
+
+> 🔧 **Bash** `{"command": "sed -i 's#| s05 | foam-bubbles-particles → see LAUNCH_R28 |#| s05 | water-fx-specialist (as in r27) |#' docs/briefs/2026-11-20-r28/COORDINATION.md && grep -n \"^| s05\" docs/briefs/2026-11-20-r28/COORDINATION.md", "description": "Correct Screen 05 specialist type in coordination"}`
+
+### 🧑 User — 2026-11-20T16:53:56.755Z
+
+> ↩︎ result: 49:| s05 | water-fx-specialist (as in r27) | `/home/user/wt/s05` `claude/rainbow-s05-match-c29` | 5275 | started fresh at r27 16:10 (only a raycast probe at t85): end section → painted winding river + coin trail; hard left bead-foam wall / paddle chunk (check hard right) |
+> [This command modified 1 file you've previously read: docs/briefs/2026-11-20-r28/COORDINATION.md. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-20T16:53:59.237Z
+
+Now the short worker brief for this round (it points to the round-27 brief, which still holds all the rules, and updates only the paths and resume points):
+
+### 🤖 Claude — 2026-11-20T16:54:21.896Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-20-r28/LAUNCH_R28.md", "content": "# Round 28 — relaunch of four specialists (lead session branch `ccr-9652868f-lkw0w0`, new Claude account, 2026-11-20 from ~16:36 UTC)\n\nRound 27 (lead `claude/rainbow-restore-screen-match-ijjdai`) stopped at 16:09–16:13 UTC: the old account hit its 5-hour limit and the four\nworkers died mid-step (NOT a rejection). Its last autosave was 16:15 (`7d3ba10`) = this session's start. Every worktree was recreated by\n`docs/briefs/2026-11-20-r27/setup_worker_r28.sh` (base commit + the 16:15 snapshot) on NEW LOCA …[+5524 chars]`
+
+### 🧑 User — 2026-11-20T16:54:22.035Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-20-r28/LAUNCH_R28.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T16:54:43.159Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nfrom pathlib import Path\n# 1) handoff top\np=Path('docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md'); s=p.read_text()\nblock='''# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 28 (2026-11-20, lead branch `ccr-9652868f-lkw0w0`, from ~16:36 UTC)\n\nNew account; session branch started at **`7d3ba10`** = the r27 lead `claude/rainbow-restore-screen-match-ijjdai`'s last save (16:15 UTC; verified with\n`git ls-remote` after the hook's fetch failed — nothing newer, nothing merged). Round 27 stopped 16:09–16:13 UTC (old account 5-hour limit, HTTP 429).\nWorktrees recreated on LOCAL `- …[+3281 chars]`
+
+### 🧑 User — 2026-11-20T16:54:43.253Z
+
+> ↩︎ result: ok
+> # ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 28 (2026-11-20, lead branch `ccr-9652868f-lkw0w0`, from
+> 
+> New account; session branch started at **`7d3ba10`** = the r27 lead `claude/rainbow-restore-screen-match-ijjdai`'s last save (16:15 UTC; verified with
+> # Paste this into Claude Code on the next Claude account
+> 
+> ## ▶▶▶▶▶▶ NEWEST (2026-11-20 ~16:55 UTC, round 28 → next account)
+> Same steps and prompt as the round-24 block below, with these replacements: start the cloud session on branch
+> **`ccr-9652868f-lkw0w0`** (the round-28 lead; NOT the default branch); read the TOP of `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.
+> 16:   **`docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`** — NEWEST: "ROUND 28" (lead `ccr-9652868f-lkw0w0`, map `docs/briefs/2026-11-20-r28/COORDINATION.md`, b
+
+### 🤖 Claude — 2026-11-20T16:54:45.218Z
+
+Now the agents status file, then an immediate manual save and remote verification:
+
+### 🤖 Claude — 2026-11-20T16:54:57.973Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport json\nfrom pathlib import Path\np=Path('backups/AGENTS_STATUS.json'); j=json.loads(p.read_text())\nj['updated_utc']='2026-11-20T16:58:00Z'; j['updated_by_session']='ccr-9652868f-lkw0w0 (round 28 lead)'\nj['round27']={\"lead_branch\":\"claude/rainbow-restore-screen-match-ijjdai\",\"last_save\":\"7d3ba1081f69ced795421d2f3d070ad898e295ba (16:15 UTC)\",\n \"end\":\"old account 5-hour limit (HTTP 429): Benny 16:11:44, s04 16:11:47, s05 16:12:34, s07 16:13:27; s06 FINISHED ~16:05; lead transcript to 16:13:27\",\n \"results\":\"s06 steps 1+2 GOOD IMPROVEMENT  …[+2732 chars]`
+

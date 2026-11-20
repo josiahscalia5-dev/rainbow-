@@ -1,6 +1,18 @@
 # Paste this into Claude Code on the next Claude account
 
-## ▶▶▶▶▶ NEWEST (2026-11-20 ~15:40 UTC, round 27 → next account)
+## ▶▶▶▶▶▶ NEWEST (2026-11-20 ~16:55 UTC, round 28 → next account)
+Same steps and prompt as the round-24 block below, with these replacements: start the cloud session on branch
+**`ccr-9652868f-lkw0w0`** (the round-28 lead; NOT the default branch); read the TOP of `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md` ("ROUND 28"),
+the user's visual brief `docs/briefs/2026-11-20-r26/USER_VISUAL_BRIEF_R26.md`, `docs/briefs/2026-11-20-r28/COORDINATION.md` + `LAUNCH_R28.md`;
+recreate the worktrees with `bash docs/briefs/2026-11-20-r28/setup_worker_r29.sh` (LOCAL `-c30` from the newest `backups/wip/*-c29/`, the
+separate `trial07` and the lead's `view04/06/07` included). If the session hook's `git fetch` fails, run `git ls-remote origin` for the lead
+branch, fetch it by name and merge before anything else. Keys: World Labs + fal worked on the round-28 account through the environment;
+check with the free reads first, then the secure form. The round-27 review page (claude.ai artifact) belonged to the old account; its source
+is `qa/review_r27/index.html` + `web/` — republish it on the new account.
+
+---
+
+## ▶▶▶▶▶ (2026-11-20 ~15:40 UTC, round 27 → next account)
 Same steps and prompt as the round-24 block below, with these replacements: start the cloud session on branch
 **`claude/rainbow-restore-screen-match-ijjdai`** (the round-27 lead; NOT the default branch); read the TOP of `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`
 ("ROUND 27"), the user's visual brief `docs/briefs/2026-11-20-r26/USER_VISUAL_BRIEF_R26.md`, `docs/briefs/2026-11-20-r27/COORDINATION.md` +
