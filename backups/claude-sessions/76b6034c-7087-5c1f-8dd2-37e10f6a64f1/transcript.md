@@ -4131,3 +4131,19 @@ The steering clip is still rendering. When it finishes I'll encode it, send it t
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r30b/proof && python3 - <<'EOF'\np='README.md'; s=open(p).read()\nold=\"`STEER_zigzag_06.mp4`: Benny steering left/right\\n   across 06 collecting coins.\"\nnew=(\"`STEER_zigzag_06_1x.mp4` (60 s, uninterrupted, real gameplay): Benny steered fully left (lateral -2.95 = the\\n\"\n     \"   wall limit) then fully right (+2.95), 90 coins picked up on the way. The schedule HOLDS the steering into the foam wall, which pins and slows\\n\"\n     \"   him (the game's existing wall behaviour, measured the same on the baseline by the Benny specialist), so t …[+620 chars]`
 
+### 🧑 User — 2026-11-20T23:50:58.482Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "5f63b57e83b4b003004e85cb0b03f6b58abd9b59",
+> GitHub: 5f63b57e83b4b003004e85cb0b03f6b58abd9b59  local: 5f63b57e83b4b003004e85cb0b03f6b58abd9b59
+
+### 🤖 Claude — 2026-11-20T23:51:02.824Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/match/06/r30b/proof/STEER_zigzag_06_1x.mp4"], "caption": "Steering test on the new Screen 06, real gameplay with no cuts: Benny steers fully left, then fully right, collecting 90 coins. Holding the steering into the foam wall slows him, which is how the game already behaved.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-20T23:51:05.608Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/match/06/r30b/proof/STEER_zigzag_06_1x.mp4 → file_uuid: f0ad258e-1067-43ad-9812-971b9d7081d4
+
