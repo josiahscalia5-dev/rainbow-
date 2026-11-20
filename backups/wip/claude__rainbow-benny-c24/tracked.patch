@@ -154055,7 +154055,7 @@ index d1de648..c96482c 100644
  }
 \ No newline at end of file
 diff --git a/src/characters/benny/benny20.ts b/src/characters/benny/benny20.ts
-index 340e1d3..cefb896 100644
+index 340e1d3..e72e2f0 100644
 --- a/src/characters/benny/benny20.ts
 +++ b/src/characters/benny/benny20.ts
 @@ -132,13 +132,28 @@ export const HAT20 = {
@@ -154087,7 +154087,7 @@ index 340e1d3..cefb896 100644
 +  '05': { v: lin('kv05', [1.3, 1.3, 1.85]), w: lin('kw05', [1.5, 1.6, 1.5]) },
 +  '06': { v: lin('kv06', [1.65, 1.8, 1.42]), w: lin('kw06', [1.6, 2.05, 1.45]) },
 +  '07': { v: lin('kv07', [1.6, 0.9, 1.86]), w: lin('kw07', [1.6, 1.7, 1.6]) },
-+  '08': { v: lin('kv08', [1.75, 1.6, 2.1]), w: lin('kw08', [2.4, 3.2, 2.6]) },
++  '08': { v: lin('kv08', [1.75, 1.6, 2.1]), w: lin('kw08', [1.3, 1.45, 1.3]) },
  };
  
  const T = (f: string) => new URL(`../../../assets/textures/benny20/${f}`, import.meta.url).href;

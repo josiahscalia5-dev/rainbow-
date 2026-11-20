@@ -11,7 +11,7 @@ index 6aec240..321c542 100644
        m06Applied = m06On;
      }
 diff --git a/src/world/match06.ts b/src/world/match06.ts
-index 831c2b4..72d2e24 100644
+index 831c2b4..277c531 100644
 --- a/src/world/match06.ts
 +++ b/src/world/match06.ts
 @@ -44,6 +44,8 @@ export interface Match06 {
@@ -72,7 +72,7 @@ index 831c2b4..72d2e24 100644
    });
  
    // river frames from the course (beyond s1: straight along the heading at s1, as tools/match06/geo06.py)
-@@ -774,6 +802,72 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+@@ -774,6 +802,75 @@ export async function buildMatch06(course: Course): Promise<Match06> {
      if (GEO && R6) { const t = Math.min(1, Math.max(0, (Math.abs(l) - R6.Wc + 0.1) / 0.5)); p.addScaledVector(fr.up, R6.hb * t * t * (3 - 2 * t)); }
      return [p, l / TF.lateralPeriod, l];
    }, TF.period), mat(tFloor, true), 'floor');
@@ -125,6 +125,9 @@ index 831c2b4..72d2e24 100644
 +        const e = Math.hypot(l / LW, ds < 0 ? ds / D0 : ds / D1);
 +        let a = (1 - THREE.MathUtils.smoothstep(e, 0.6, 1.0)) * (1 - THREE.MathUtils.smoothstep(fillAt(x, y), 0.1, 0.6));
 +        for (const [bx, by, br] of BUB06) a *= THREE.MathUtils.smoothstep(Math.hypot(x - bx, y - by), br + 2, br + 9);
++        // soft toward the approved picture's frame edges (the water behind Benny leaves the picture at its bottom edge:
++        // without this the decal ended in a straight seam there)
++        a *= THREE.MathUtils.smoothstep(Math.min(x, W - 1 - x, H - 1 - y), 0, 260);
 +        for (let c = 0; c < 3; c++) {
 +          const s00 = P[(y0 * W + x0) * 4 + c], s10 = P[(y0 * W + x1) * 4 + c], s01 = P[(y1 * W + x0) * 4 + c], s11 = P[(y1 * W + x1) * 4 + c];
 +          const sv = (s00 * (1 - fx) + s10 * fx) * (1 - fy) + (s01 * (1 - fx) + s11 * fx) * fy;
@@ -145,7 +148,7 @@ index 831c2b4..72d2e24 100644
    // r7 `&m06foam=1` (needs m06geo): puffy 3D foam clouds along both banks — the painted white-lilac foam clusters that
    // vanished as flat strips once Benny moved. Hidden at the approved view (the painting carries them there), shown once
    // the camera has left it (setAway). Not part of the projector depth bake (invisible while baking).
-@@ -896,6 +990,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+@@ -896,6 +993,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
        shared.uUseDepth.value = 1;
      },
      setAway(a) { if (foamClouds) foamClouds.visible = a > 0.5; for (const o of foamSprites) o.visible = a > 0.5; },

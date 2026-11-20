@@ -32,7 +32,7 @@ index 65c878c..a20f48e 100644
        if (mvViews.length && camera) {
          const cp = camera.getWorldPosition(_cp);
 diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
-index 2b62a35..002f589 100644
+index 2b62a35..c4aa9f8 100644
 --- a/src/world/match04m4.ts
 +++ b/src/world/match04m4.ts
 @@ -120,6 +120,15 @@ uniform float uRVar;       // r17 m04rpvar: number of painted rings stacked in t
@@ -803,7 +803,7 @@ index 2b62a35..002f589 100644
    let arrA = 0;
    if (M04.arr3d) {
      const hw = M04.num('m04a3w', 1.15), th = M04.num('m04a3t', 0.42), drop = M04.num('m04a3d', 0.95);
-@@ -1802,20 +2292,73 @@ export function addM04(ctx: M04Ctx) {
+@@ -1802,20 +2292,76 @@ export function addM04(ctx: M04Ctx) {
        m.renderOrder = 5; g.renderOrder = coreT && lum > 0 ? 6 : 4; m.name = 'm04_arrow3d'; g.name = 'm04_arrow3d_glow';   // luminous layer on top
        m.visible = g.visible = false;                                     // invisible during the projector depth bake
        group.add(g); group.add(m);
@@ -816,45 +816,48 @@ index 2b62a35..002f589 100644
    }
  
 -  out.update = (cam: THREE.Vector3, benny?: THREE.Vector3) => {
-+  // r23 `&m04wl=1`: Benny sits IN the water like the painting (r23 brief task 1: "not perched on top"). A short open water
-+  // collar round him in the lane frame (follows him, also when he steers): translucent river-cyan below, a neat broken white
-+  // spray crest on top. Its near half covers his lowest band (the water wraps his round bottom), its far half shows only
-+  // beside him as the white splash ring (his body hides the rest). m04wlr radius, m04wlh height, m04wly base (lane y),
-+  // m04wlz length stretch along the flow, m04wla water opacity, m04wlf crest strength. Benny himself is not moved / scaled.
++  // r23 `&m04wl=1`: Benny sits IN the water like the painting (r23 brief task 1: "not perched on top"; his round bottom only
++  // touched the river). A soft water patch round him in the lane frame (follows him, also when he steers) a little ABOVE the
++  // river: depth-tested, so it covers exactly the part of his body below its waterline (like real water), with a neat broken
++  // white foam ring where it meets him, fading into the river at its rim. Benny himself is not moved or scaled.
++  // m04wly waterline (lane y; river = 0.02, his bottom = -0.08), m04wlr foam-ring radius, m04wlo / m04wle radius where the
++  // patch starts fading / is gone, m04wlz stretch along the flow, m04wla patch opacity, m04wlf foam strength.
 +  let wlMesh: THREE.Mesh | null = null;
 +  if (M04.num('m04wl', 0) > 0) {
-+    const R = M04.num('m04wlr', 0.95), H = M04.num('m04wlh', 0.45);
-+    const geo = new THREE.CylinderGeometry(R, R, H, 72, 8, true).translate(0, H / 2, 0);
-+    geo.scale(1, 1, M04.num('m04wlz', 1.15));
++    const E = M04.num('m04wle', 2.0), Z = M04.num('m04wlz', 1.2);
++    const geo = new THREE.CircleGeometry(E, 96).rotateX(-Math.PI / 2);
++    geo.scale(1, 1, Z);
 +    wlMesh = new THREE.Mesh(geo, new THREE.ShaderMaterial({
 +      transparent: true, depthWrite: false, side: THREE.DoubleSide, fog: false,
-+      uniforms: { uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uTime: time, uH: { value: H },
-+        uA: { value: M04.num('m04wla', 0.8) }, uF: { value: M04.num('m04wlf', 1.0) }, uK: { value: 0 } },
++      uniforms: { uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uTime: time, uK: { value: 0 },
++        uR: { value: new THREE.Vector4(M04.num('m04wlr', 0.7), M04.num('m04wlo', 1.35), E, Z) },
++        uA: { value: M04.num('m04wla', 0.92) }, uF: { value: M04.num('m04wlf', 1.0) } },
 +      vertexShader: /* glsl */ `
-+varying vec3 vP;
-+void main() { vP = position; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
++varying vec2 vP;
++void main() { vP = position.xz; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
 +      fragmentShader: /* glsl */ `
-+uniform vec4 uPjPost; uniform vec2 uPjRes; uniform float uTime, uH, uA, uF, uK;
-+varying vec3 vP;
++uniform vec4 uPjPost; uniform vec2 uPjRes; uniform float uTime, uK, uA, uF; uniform vec4 uR;
++varying vec2 vP;
 +${PROJ05_INVERSE}
 +float h21(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
 +float vn(vec2 p) { vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f);
 +  return mix(mix(h21(i), h21(i + vec2(1, 0)), f.x), mix(h21(i + vec2(0, 1)), h21(i + vec2(1, 1)), f.x), f.y); }
 +void main() {
-+  float h = clamp(vP.y / uH, 0.0, 1.0);
-+  float a = atan(vP.x, vP.z);                                   // around Benny (0 = toward the camera / upstream side)
-+  float t = uTime;
-+  float n = vn(vec2(a * 9.0, t * 1.7)) * 0.65 + vn(vec2(a * 23.0 + 3.1, t * 3.1)) * 0.35;
-+  float top = 0.70 + 0.22 * (n - 0.5);                          // broken crest line
-+  float crest = smoothstep(top - 0.22, top, h) * (1.0 - smoothstep(top + 0.02, top + 0.20, h + 0.10 * vn(vec2(a * 41.0, h * 9.0 - t * 4.0))));
-+  float drops = step(0.82, vn(vec2(a * 55.0, h * 14.0 - t * 6.0))) * smoothstep(top, top + 0.15, h) * (1.0 - smoothstep(0.9, 1.0, h));
-+  // the water body: electric cyan with moving white streaks, fading out just under the crest
-+  float st = smoothstep(0.62, 0.95, vn(vec2(a * 7.0 + t * 0.8, h * 3.0 - t * 1.4)));
-+  vec3 water = mix(vec3(0.07, 0.68, 1.0), vec3(0.62, 0.92, 1.0), 0.55 * st);
-+  float aw = uA * (1.0 - smoothstep(top - 0.30, top - 0.04, h));
-+  float foam = clamp(crest * uF + drops * 0.8, 0.0, 1.0);
++  float r = length(vec2(vP.x, vP.y / uR.w));                     // patch fade: narrow sideways, long toward the camera
++  float rr = length(vP), a = atan(vP.x, vP.y), t = uTime;       // foam ring: round on his body
++  // water: electric cyan, long white streaks drifting past him (flow = -z), darker deep blue further out
++  float st = smoothstep(0.58, 0.95, vn(vec2(vP.x * 2.2, vP.y * 0.55 + t * 1.3))) * smoothstep(0.3, 0.9, vn(vec2(vP.x * 5.0 + 7.0, vP.y * 0.9 + t * 1.3)));
++  vec3 water = mix(vec3(0.08, 0.72, 1.0), vec3(0.05, 0.58, 1.0), smoothstep(0.8, 1.8, rr));
++  water = mix(water, vec3(0.80, 0.97, 1.0), 0.75 * st);
++  // foam ring hugging his body at the waterline: broken lace + small spray dots just outside it
++  float n = vn(vec2(a * 7.0, t * 1.5)) * 0.6 + vn(vec2(a * 19.0 + 2.0, t * 2.7)) * 0.4;
++  float ring = exp(-pow((rr - uR.x - 0.10 * (n - 0.5)) / (0.05 + 0.05 * n), 2.0));
++  float lace = smoothstep(0.45, 0.75, vn(vec2(a * 31.0, rr * 9.0 - t * 2.0)));
++  float spray = step(0.86, vn(vec2(a * 48.0, rr * 22.0 - t * 3.0))) * smoothstep(uR.x + 0.35, uR.x + 0.05, rr) * step(uR.x, rr);
++  float foam = clamp((ring * (0.55 + 0.45 * lace) + spray * 0.7) * uF, 0.0, 1.0);
 +  vec3 col = mix(water, vec3(0.97, 0.99, 1.0), foam);
-+  float alpha = max(aw, foam * 0.95) * uK;
++  float alpha = max(uA * (1.0 - smoothstep(uR.y, uR.z, r)), foam);
++  alpha *= uK;
 +  if (alpha < 0.01) discard;
 +  gl_FragColor = vec4(pjInverse(col), alpha);
 +}`,
@@ -874,12 +877,12 @@ index 2b62a35..002f589 100644
 +    if (wlMesh) {                                                       // r23 m04wl: gone at the approved start view (0 px there)
 +      const wu = (wlMesh.material as THREE.ShaderMaterial).uniforms;
 +      wu.uK.value = a2; wlMesh.visible = !!benny && a2 > 0.01;
-+      if (benny) { const bl = benny.clone().applyMatrix4(MwInv); wlMesh.position.set(bl.x, M04.num('m04wly', 0.0), bl.z); }
++      if (benny) { const bl = benny.clone().applyMatrix4(MwInv); wlMesh.position.set(bl.x, M04.num('m04wly', 0.32), bl.z); }
 +    }
      if (arrowsOut.length) {
        const cz = -a5b.z;                                                // camera local z (forward = -z)
        // r13: fade window ahead of the camera (Benny swims ≈ 6.4 u ahead of it on 04: m04a3n0/n1 ≈ 6.5/8.5 makes every
-@@ -1825,12 +2368,41 @@ export function addM04(ctx: M04Ctx) {
+@@ -1825,12 +2371,41 @@ export function addM04(ctx: M04Ctx) {
        const go = M04.num('m04a3o', 0.55);
        const b0 = M04.num('m04a3b0', 1.6), b1 = M04.num('m04a3b1', 3.0);
        const bz = M04.num('m04a3b', 0) > 0 && benny ? benny.clone().applyMatrix4(MwInv).z : null;   // Benny's local z (same frame as cz)

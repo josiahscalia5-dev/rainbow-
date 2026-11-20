@@ -2438,3 +2438,228 @@ While waiting, I'll record the step 3 build in PROGRESS.md.
 
 > 🔧 **Bash** `{"command": "L=/home/user/rainbow-/qa/match/06/r23/step3_m06rip/NEW.log; timeout 900 bash -c \"until [ -f $L ] && [ \\$(grep -c '^06' $L) -ge 3 ]; do sleep 5; done\"; grep -h \"^06\" $L | tail -3", "description": "Wait for first pinned step 3 shots", "timeout": 960000}`
 
+### 🧑 User — 2026-11-20T05:08:23.819Z
+
+> ↩︎ result: 06 a_start s 198.91 lat 0 stage 06 coins 1680
+> 06 b_early s 204.227 lat 0 stage 06 coins 1700
+> 06 b2_early s 208.627 lat 0 stage 06 coins 1700
+
+### 🤖 Claude — 2026-11-20T05:08:30.532Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06; python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\nR='/home/user/rainbow-/qa/match/06/r23/step3_m06rip/'\nfor f in ['a_start','b_early','b2_early']:\n  a=np.asarray(Image.open(R+'BEFORE/'+f+'.png').convert('RGB')).astype(int); b=np.asarray(Image.open(R+'NEW/'+f+'.png').convert('RGB')).astype(int)\n  d=np.abs(a-b).max(axis=2); ys,xs=np.nonzero(d>30)\n  print(f,'changed>30',len(ys),'bbox',(xs.min(),ys.min(),xs.max(),ys.max()) if len(ys) else None, 'any', int((d>0).sum()))\nrows=[]\nA=I …[+569 chars]`
+
+### 🧑 User — 2026-11-20T05:08:31.949Z
+
+> ↩︎ result: a_start changed>30 10 bbox (np.int64(750), np.int64(29), np.int64(786), np.int64(94)) any 1097
+> b_early changed>30 50424 bbox (np.int64(193), np.int64(872), np.int64(680), np.int64(1190)) any 113039
+> b2_early changed>30 28465 bbox (np.int64(205), np.int64(966), np.int64(682), np.int64(1124)) any 55889
+
+### 🤖 Claude — 2026-11-20T05:08:35.325Z
+
+With the pinned clock the change is confined to the area round Benny (b_early: x 193–680, y 872–1190), as intended. Looking at it.
+
+### 🤖 Claude — 2026-11-20T05:08:36.572Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/rip_pin.png"}`
+
+### 🧑 User — 2026-11-20T05:08:36.634Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T05:08:44.319Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r23/step3_m06rip/NEW/b_early.png"}`
+
+### 🧑 User — 2026-11-20T05:08:44.390Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T05:09:01.214Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/src/world/match06.ts", "offset": 848, "limit": 8}`
+
+### 🧑 User — 2026-11-20T05:09:01.262Z
+
+> ↩︎ result: 848	        ext = [Math.min(ext[0], x), Math.max(ext[1], x), Math.min(ext[2], y), Math.max(ext[3], y)];
+> 849	        const x0 = Math.floor(x), y0 = Math.floor(y), fx = x - x0, fy = y - y0, x1 = Math.min(W - 1, x0 + 1), y1 = Math.min(H - 1, y0 + 1);
+> 850	        // radial fade (elliptic in l / ds) x not where the painted Benny was filled
+> 851	        const e = Math.hypot(l / LW, ds < 0 ? ds / D0 : ds / D1);
+> 852	        let a = (1 - THREE.MathUtils.smoothstep(e, 0.6, 1.0)) * (1 - THREE.MathUtils.smoothstep(fillAt(x, y), 0.1, 0.6));
+> 853	        for (const [bx, by, br] of BUB06) a *= THREE.MathUtils.smoothstep(Math.hypot(x - bx, y - by), br + 2, br + 9);
+> 854	        for (let c = 0; c < 3; c++) {
+> 855	          const s00 = P[(y0 * W + x0) * 4 + c], s10 = P[(y0 * W + x1) * 4 + c], s01 = P[(y1 * W + x0) * 4 + c], s11 = P[(y1 * W + x1) * 4 + c];
+
+### 🤖 Claude — 2026-11-20T05:09:05.399Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "        for (const [bx, by, br] of BUB06) a *= THREE.MathUtils.smoothstep(Math.hypot(x - bx, y - by), br + 2, br + 9);", "new_string": "        for (const [bx, by, br] of BUB06) a *= THREE.MathUtils.smoothstep(Math.hypot(x - bx, y - by), br + 2, br + 9);\n        // soft toward the approved picture's frame edges (the water behind Benny leaves the picture at its bottom edge:\n        // without this the decal ended in a straight seam there)\n        a *= THREE.MathUtils.smoothstep(Math.min(x, W - 1 - x, …[+23 chars]`
+
+### 🧑 User — 2026-11-20T05:09:05.446Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T05:09:06.657Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && timeout 300 npx tsc --noEmit; echo \"tsc rc=$?\"; ls /home/user/rainbow-/qa/match/06/r23/step1_m06fcl/with_m06view/*.mp4 2>/dev/null; ls /home/user/rainbow-/qa/match/06/r23/step3_m06rip/", "description": "Type-check fade fix and check queue state"}`
+
+### 🧑 User — 2026-11-20T05:09:23.557Z
+
+> ↩︎ result: tsc rc=0
+> 1_APPROVED.png
+> BEFORE
+> BEFORE.log
+> NEW
+> NEW.log
+> code.patch
+
+### 🤖 Claude — 2026-11-20T05:09:27.739Z
+
+The fix is in before the queued clip starts. The pinned NEW render in progress uses the old decal, so I'll restart it.
+
+### 🤖 Claude — 2026-11-20T05:09:28.925Z
+
+> 🔧 **Bash** `{"command": "pkill -f \"r23_audit.mjs /home/user/rainbow-/qa/match/06/r23/step3_m06rip/NEW\" ; sleep 2; ps aux | grep -c \"[r]23_audit.mjs /home/user/rainbow-/qa/match/06/r23/step3_m06rip/NEW\"; true", "description": "Stop the outdated step 3 NEW render"}`
+
+### 🧑 User — 2026-11-20T05:09:31.228Z
+
+> ↩︎ result: 0
+
+### 🤖 Claude — 2026-11-20T05:09:34.829Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06; O=/home/user/rainbow-/qa/match/06/r23/step3_m06rip; rm -rf $O/NEW $O/NEW.log; $S/shots_pin.sh $S/q_s3_rip.txt $O/NEW 5282; grep -h done $O/NEW.log", "description": "Re-render pinned step 3 NEW with the seam fix", "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T05:09:34.927Z
+
+> ↩︎ result: Command running in background with ID: bt7bfzz3m. Output is being written to: /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/tasks/bt7bfzz3m.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-20T05:09:38.520Z
+
+While that renders, checking on the step 2 clip.
+
+### 🤖 Claude — 2026-11-20T05:09:40.686Z
+
+> 🔧 **Bash** `{"command": "ls -la /home/user/rainbow-/qa/match/06/r23/step2_m06vs0/*.mp4 /home/user/rainbow-/qa/match/06/r23/step1_m06fcl/with_m06view/*.mp4 2>/dev/null; for d in /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/clip*/f; do echo \"$d $(ls $d | wc -l)\"; done; date -u +%H:%M", "description": "Check clip progress"}`
+
+### 🧑 User — 2026-11-20T05:09:41.101Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/clip16XH/f 115
+> /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/clip4bYF/f 88
+> /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/clipmSt7/f 115
+> /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/clipxocu/f 86
+> 05:09
+
+### 🤖 Claude — 2026-11-20T05:09:47.473Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06; grep -l \"m06vs=0\" $S/../s06/*.txt >/dev/null; ps aux | grep \"[r]23_swim.mjs\" | sed 's/.*r23_swim.mjs 06 //' | cut -c1-120; python3 -I $S/strip.py $S/clip_s2.png $S/clip16XH/f/0010.png $S/clipxocu/f/0010.png $S/clip4bYF/f/0010.png $S/clip16XH/f/0022.png $S/clipxocu/f/0022.png $S/clip4bYF/f/0022.png", "description": "Identify clips and build early-frame strip"}`
+
+### 🧑 User — 2026-11-20T05:09:49.698Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/clipxocu/f 4.8 match06=1&m06geo=1&
+> /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/clipxocu/f 4.8 match06=1&m06geo=1&
+> /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/clip4bYF/f 4.8 match06=1&m06geo=1&
+> /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/clip4bYF/f 4.8 match06=1&m06geo=1&
+> //'"'"' | cut -c1-120; python3 -I $S/strip.py $S/clip_s2.png $S/clip16XH/f/0010.png $S/clipxocu/f/0010.png $S/clip4bYF/f
+> //
+
+### 🤖 Claude — 2026-11-20T05:09:52.247Z
+
+> 🔧 **Bash** `{"command": "ps aux | grep \"[r]23_swim.mjs\" | grep -o \"clip[A-Za-z0-9]*/f 4.8 .*\" | sed 's/match06=1.*m06fcl=1//' | sort -u", "description": "Map clip folders to their queries"}`
+
+### 🧑 User — 2026-11-20T05:09:53.308Z
+
+> ↩︎ result: clip4bYF/f 4.8 
+> clipxocu/f 4.8 &m06view=1&m06vs=0
+
+### 🤖 Claude — 2026-11-20T05:09:58.639Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/clip_s2.png"}`
+
+### 🧑 User — 2026-11-20T05:10:00.092Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-20T05:10:00.088Z
+
+[Image: original 2622x768, displayed at 2000x586. Multiply coordinates by 1.31 to map to original image.]
+
+### 🤖 Claude — 2026-11-20T05:10:08.039Z
+
+> 🔧 **Bash** `{"command": "L=/home/user/rainbow-/qa/match/06/r23/step3_m06rip/NEW.log; timeout 900 bash -c \"until [ -f $L ] && [ \\$(grep -c '^06' $L) -ge 3 ]; do sleep 5; done\"; grep -h \"^06\" $L | tail -1", "description": "Wait for fixed step 3 early shots", "timeout": 960000}`
+
+### 🧑 User — 2026-11-20T05:10:48.427Z
+
+> ↩︎ result: 06 b2_early s 208.627 lat 0 stage 06 coins 1700
+
+### 🤖 Claude — 2026-11-20T05:10:51.680Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r23/step3_m06rip/NEW/b_early.png"}`
+
+### 🧑 User — 2026-11-20T05:10:51.769Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T05:10:55.066Z
+
+The seam is gone; the collar and streak fan now blend softly into the river. Side-by-side with BEFORE on the same clock, plus the painting.
+
+### 🤖 Claude — 2026-11-20T05:10:59.197Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06; python3 -I -c \"\nfrom PIL import Image\nR='/home/user/rainbow-/qa/match/06/r23/step3_m06rip/'\nA=Image.open('/home/user/rainbow-/references/06_crest_the_rinse_arch.png').convert('RGB').crop((80,880,800,1380))\nrows=[]\nfor f,box in [('b_early',(80,780,800,1280)),('b2_early',(80,760,800,1260))]:\n  for d in ('BEFORE','NEW'): rows.append(Image.open(R+d+'/'+f+'.png').convert('RGB').crop(box))\nW,H=720,500\ns=Image.new('RGB',(W*2+6,H*3+12)); s.paste(A,(0,0))\nfor i in range(2): s.paste(rows[2*i], …[+185 chars]`
+
+### 🧑 User — 2026-11-20T05:11:00.257Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T05:11:03.096Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/rip_pin2.png"}`
+
+### 🧑 User — 2026-11-20T05:11:03.177Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T05:11:12.621Z
+
+> 🔧 **Bash** `{"command": "L=/home/user/rainbow-/qa/match/06/r23/step3_m06rip/NEW.log; timeout 1200 bash -c \"until grep -q 'done' $L; do sleep 5; done\"; grep -h done $L; cd /home/user/tools-pixelmatch && node pixeldiff.mjs /home/user/rainbow-/qa/match/06/r23/step3_m06rip/BEFORE/a_start.png /home/user/rainbow-/qa/match/06/r23/step3_m06rip/NEW/a_start.png - 0.1", "description": "Wait for step 3 NEW and check start view", "timeout": 1260000}`
+
+### 🧑 User — 2026-11-20T05:12:49.590Z
+
+> ↩︎ result: done /home/user/rainbow-/qa/match/06/r23/step3_m06rip/NEW rc=0
+> {"a":"/home/user/rainbow-/qa/match/06/r23/step3_m06rip/BEFORE/a_start.png","b":"/home/user/rainbow-/qa/match/06/r23/step3_m06rip/NEW/a_start.png","rows":[0,1536],"threshold":0.1,"diff_pixels":5,"total":1327104,"diff_pct":0.0004}
+
+### 🤖 Claude — 2026-11-20T05:12:52.990Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\nR='/home/user/rainbow-/qa/match/06/r23/step3_m06rip/'\na=np.asarray(Image.open(R+'BEFORE/a_start.png').convert('RGB')).astype(int); b=np.asarray(Image.open(R+'NEW/a_start.png').convert('RGB')).astype(int)\nd=np.abs(a-b).max(axis=2); ys,xs=np.nonzero(d>20)\nprint('changed>20', len(ys), list(zip(xs.tolist(),ys.tolist(),d[ys,xs].tolist()))[:12])\n\"", "description": "Locate start-view pixel differences"}`
+
+### 🧑 User — 2026-11-20T05:12:53.822Z
+
+> ↩︎ result: changed>20 14 [(750, 29, 35), (759, 29, 34), (760, 29, 34), (761, 29, 31), (779, 29, 32), (780, 29, 35), (781, 29, 36), (758, 30, 22), (782, 30, 24), (785, 31, 27), (786, 31, 47), (82, 69, 22)]
+
+### 🤖 Claude — 2026-11-20T05:12:57.661Z
+
+The 5 start-view pixels are on the HUD (pause-button rim and heart outline, capture noise); the scenery is unchanged. Now the steering and late shots of step 3.
+
+### 🤖 Claude — 2026-11-20T05:13:02.927Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06; python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\nR='/home/user/rainbow-/qa/match/06/r23/step3_m06rip/'\nfor f in ['b_early','b2_early','c_middle','c2_middle','d_late','e_end','f_hard_left','g_hard_right','h_left_early','i_right_early']:\n  a=np.asarray(Image.open(R+'BEFORE/'+f+'.png').convert('RGB')).astype(int); b=np.asarray(Image.open(R+'NEW/'+f+'.png').convert('RGB')).astype(int)\n  d=np.abs(a-b).max(axis=2); ys,xs=np.nonzero(d>30)\n  print(f,'changed>30',len(ys),'bbox',(int(xs. …[+566 chars]`
+
+### 🧑 User — 2026-11-20T05:13:05.712Z
+
+> ↩︎ result: b_early changed>30 35021 bbox (202, 872, 669, 1148)
+> b2_early changed>30 19903 bbox (211, 966, 676, 1099)
+> c_middle changed>30 5791 bbox (154, 1028, 630, 1066)
+> c2_middle changed>30 4537 bbox (148, 1000, 600, 1074)
+> d_late changed>30 8536 bbox (157, 1009, 597, 1124)
+> e_end changed>30 19538 bbox (198, 1029, 665, 1229)
+> f_hard_left changed>30 2267 bbox (193, 1029, 362, 1074)
+> g_hard_right changed>30 0 bbox None
+> h_left_early changed>30 9505 bbox (196, 893, 363, 1079)
+> i_right_early changed>30 8938 bbox (531, 893, 662, 1109)
+
+### 🤖 Claude — 2026-11-20T05:13:08.672Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/rip_pin3.png"}`
+
+### 🧑 User — 2026-11-20T05:13:08.767Z
+
+> ↩︎ result: [image]
+

@@ -1088,3 +1088,67 @@ Now render V8 + the collar (two settings) at middle, late and hard right.
 
 > ↩︎ result: {"bl":[0,0.746,-13.057],"riverProfile":[[-3.5,0.635],[-3,0.145],[-2.5,0.02],[-2,0.02],[-1.5,0.02],[-1,0.02],[-0.5,0.02],[0,0.02],[0.5,0.02],[1,0.02],[1.5,0.02],[2,0.02],[2.5,0.056],[3,0.485]],"bennyY":[-0.08,2.285],"bands":[[-0.1,0.46],[0,0.54],[0.1,0.61],[0.2,0.64],[0.3,0.63],[0.4,0.68],[0.5,0.73],[0.6,0.77],[0.7,1.01],[0.8,1.03],[0.9,1.03],[1,0.98],[1.1,0.85],[1.2,0.86],[1.3,0.83],[1.4,0.82],[1.5,0.78]],"riverName":"m04_river","grpName":"match04_projection"}
 
+### 🤖 Claude — 2026-11-20T05:08:16.422Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='src/world/match04m4.ts'; s=open(p).read()\na=s.index(\"  // r23 `&m04wl=1`: Benny sits IN the water\")\nb=s.index(\"  out.update = (cam: THREE.Vector3, benny?: THREE.Vector3, camera?: THREE.Camera) => {\")\nnew='''  // r23 `&m04wl=1`: Benny sits IN the water like the painting (r23 brief task 1: \"not perched on top\"; his round bottom only\n  // touched the river). A soft water patch round him in the lane frame (follows him, also when he steers) a little ABOVE the\n  // river: depth-tested, so it covers exactly the part of his body bel …[+3465 chars]`
+
+### 🧑 User — 2026-11-20T05:08:24.024Z
+
+> ↩︎ result: tsc=0
+
+### 🤖 Claude — 2026-11-20T05:08:28.946Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad; V=/home/user/rainbow-/qa/match/04/r23/s04_tools/variant.sh; A=$(cat $S/s1/A8.txt)\nexport SHOTS='[[\"c_middle\",0.35,null],[\"d_late\",0.6,null],[\"g_hard_right\",0.35,1]]'\n( $V $S/s1/W3 5273 \"$A&m04wl=1\" & $V $S/s1/W4 5274 \"$A&m04wl=1&m04wly=0.4&m04wlr=0.66&m04wlo=1.5&m04wle=2.2\" & wait )\nB=/home/user/rainbow-/qa/match/04/r23/s04_BEFORE_K23-1\nfor sh in c_middle d_late g_hard_right; do python3 /home/user/rainbow-/qa/match/04/r23/s04_tools/strip.py $S/strip_$sh.png $sh 150,900,720,1420 $B $S …[+99 chars]`
+
+### 🧑 User — 2026-11-20T05:10:14.447Z
+
+> ↩︎ result: done /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s1/W3 3 png
+> done /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s1/W4 3 png
+
+### 🤖 Claude — 2026-11-20T05:10:16.195Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/strip_c_middle.png"}`
+
+### 🧑 User — 2026-11-20T05:10:16.325Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T05:10:16.851Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/strip_g_hard_right.png"}`
+
+### 🧑 User — 2026-11-20T05:10:16.925Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T05:10:43.243Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 - <<'EOF'\np='src/world/match04m4.ts'; s=open(p).read()\nold=\"\"\"  vec2 q = vec2(vP.x, vP.y / uR.w);\n  float r = length(q), a = atan(q.x, q.y), t = uTime;\"\"\"\nnew=\"\"\"  float r = length(vec2(vP.x, vP.y / uR.w));                     // patch fade: narrow sideways, long toward the camera\n  float rr = length(vP), a = atan(vP.x, vP.y), t = uTime;       // foam ring: round on his body\"\"\"\nassert s.count(old)==1; s=s.replace(old,new)\nfor o,n in [(\"float ring = exp(-pow((r - uR.x\",\"float ring = exp(-pow((rr - uR.x\"),\n            (\"vec2(a …[+1435 chars]`
+
+### 🧑 User — 2026-11-20T05:12:42.484Z
+
+> ↩︎ result: 2312:    geo.scale(1, 1, Z);
+> tsc=0
+> done /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s1/W6 3 png
+> done /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s1/W5 3 png
+
+### 🤖 Claude — 2026-11-20T05:12:44.886Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/strip_g_hard_right.png"}`
+
+### 🧑 User — 2026-11-20T05:12:44.920Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T05:12:45.487Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/strip_d_late.png"}`
+
+### 🧑 User — 2026-11-20T05:12:45.536Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T05:13:00.547Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad; D=/home/user/rainbow-/qa/match/04/r23/s1_arrows; mkdir -p $D\nSW=\"$(cat $S/s1/A8.txt)&m04wl=1&m04wly=0.4&m04wlr=0.66&m04wlo=1.1&m04wle=1.65&m04wlz=1.6\"\necho \"$SW\" > $D/SWITCH.txt\nnode /home/user/rainbow-/tools/lead23/setq.mjs \"$(cat /home/user/rainbow-/qa/match/04/r23/QUERY_K23-1.txt)\" \"$SW\" > $D/QUERY_K23-S1.txt\ncat $D/SWITCH.txt; unset SHOTS\ncd /home/user/wt/s04 && AUDIT_PORT=5273 timeout 1500 node /home/user/rainbow-/qa/match/04/r23/s04_tools/audit_pinned_slow.mjs $D/NEW 04 \"$(cat  …[+561 chars]`
+
