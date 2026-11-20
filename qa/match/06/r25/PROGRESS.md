@@ -19,10 +19,10 @@
   ring tunnel. Bugs found + fixed: (1) the river floor was trimmed 20 u past the OLD 06 end (`sE`) -> water missing from ~65 %; (2) the 07
   rings / lids / slot rows were phased from the 06 start -> anchored + deepDs07 (Course.deepDs07). (3) NEW: 07 tube parts in their own group
   `tube07` (environment.ts, + gold collar at the mouth), shown ahead of Benny from s07 - 70 in 06 (Game.ts) -> he swims into the 07 mouth.
-* d2 quick check (19:30): water continuous to the exit, coin trail on the river, rings pass, 07 mouth ahead from ~50 %; 07-10 start views =
+* d2 quick check (~19:17): water continuous to the exit, coin trail on the river, rings pass, 07 mouth ahead from ~50 %; 07-10 start views =
   same geometry / rings / chamber (remaining pixel differences = water-streak + foam-lump patterns laid out by arc length: different random
   arrangement, not geometry). Known: pink OUTSIDE of the 07 tube visible on the left near the end; far view = 07 pink tube, not the painted glow.
-* NOW (19:37): full clips BEFORE + NEW (`/home/user/scratch/s06/clips.sh` -> clip_before / clip_new, r25_open_clip.mjs, 864x1536, 24 fps,
+* NOW (~19:19): full clips BEFORE + NEW (`/home/user/scratch/s06/clips.sh` -> clip_before / clip_new, r25_open_clip.mjs, 864x1536, 24 fps,
   steering straight / LEFT 30-50 % / RIGHT 50-70 % / straight, 1.5 s into 07). Then stills from the clip frames, gameplay test, README +
   proof folder `qa/match/06/r29/`.
 * NEXT: judge in motion; then camera / tunnel end into 07 / look; full proof `qa/match/06/r29/` (APPROVED / BEFORE / NEW stills, 1.0x + 0.5x

@@ -3972,3 +3972,83 @@ Both clips are rendering, which will take a while on this CPU-only machine. Mean
 
 > 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='qa/match/06/r25/PROGRESS.md'; t=open(p).read()\nold=\"* NOW: quick captures `/home/user/scratch/s06/d1_new` (06 moments) + `d1_stages_{before,new}` (07-10 start views must be identical).\"\nassert old in t\nt=t.replace(old,\"\"\"* d1 quick check (19:05): 06 start view visually identical (fur speckle from a 0.18 deg roll + 3 coin outlines); Benny now travels INSIDE the\n  ring tunnel. Bugs found + fixed: (1) the river floor was trimmed 20 u past the OLD 06 end (`sE`) -> water missing from ~65 %; (2) the 07\n  rings / lids / slot rows were phased from the 06 st …[+2288 chars]`
 
+### 🧑 User — 2026-11-20T19:20:21.602Z
+
+> ↩︎ result: "commit": "bd2a0d764c373fd8f0fbb8679feda09f04b0e7eb",
+> AUTOSAVE OK | branch ccr-ac160b4c-3hdecw | scheduler daemon | last verified backup 2026-11-20T19:19:59+00:00 (0.4 min ago) | local bd2a0d7 remote bd2a0d7 (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-20T19:20:26.308Z
+
+The saved clock shows it's actually about 19:20 UTC, so the times I wrote in the notes ran ahead again. Correcting them:
+
+### 🤖 Claude — 2026-11-20T19:20:28.765Z
+
+> 🔧 **Bash** `{"command": "date -u +%H:%M; sed -i -e 's/\\* d2 quick check (19:30)/* d2 quick check (~19:17)/' -e 's/\\* NOW (19:37): full clips BEFORE/* NOW (~19:19): full clips BEFORE/' qa/match/06/r25/PROGRESS.md && sed -i 's/^\\* ~19:37 full BEFORE \\/ NEW clips rendering/* ~19:19 full BEFORE \\/ NEW clips rendering/' docs/briefs/2026-11-20-r29/COORDINATION.md && grep -c \"19:37\\|19:30\" qa/match/06/r25/PROGRESS.md docs/briefs/2026-11-20-r29/COORDINATION.md", "description": "Correct the logged times in the notes"}`
+
+### 🧑 User — 2026-11-20T19:20:28.853Z
+
+> ↩︎ result: 19:20
+> qa/match/06/r25/PROGRESS.md:0
+> docs/briefs/2026-11-20-r29/COORDINATION.md:0
+> [This command modified 2 files you've previously read: docs/briefs/2026-11-20-r29/COORDINATION.md, qa/match/06/r25/PROGRESS.md. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-20T19:20:30.909Z
+
+While the clips render, I'll check their speed to estimate completion:
+
+### 🤖 Claude — 2026-11-20T19:20:32.022Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && for d in clip_before clip_new; do n=$(ls $d/f 2>/dev/null | wc -l); echo \"$d frames so far: $n\"; done; date -u +%H:%M:%S", "description": "Check clip rendering progress"}`
+
+### 🧑 User — 2026-11-20T19:20:32.221Z
+
+> ↩︎ result: clip_before frames so far: 6
+> clip_new frames so far: 5
+> 19:20:32
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:20:55.388Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/rainbow-/qa/match/06/r29 && cat > /home/user/rainbow-/qa/match/06/r29/make_stills.py <<'EOF'\n#!/usr/bin/env python3\n\"\"\"r29 lead: full-size ORIGINAL APPROVED / BEFORE / NEW stills of Screen 06 taken from the two continuous clips (same steering schedule),\nat the same share of the screen (start, crest, tunnel entry, steering LEFT, steering RIGHT, late, exit, first 07 frames), + one labelled\noverview sheet per group. usage: python3 -I make_stills.py <clip_before_dir> <clip_new_dir> <out_dir>\"\"\"\nimport json, sys\nfrom pathlib import Path\nfrom PIL import  …[+2927 chars]`
+
+### 🧑 User — 2026-11-20T19:20:55.526Z
+
+> ↩︎ result: written
+> 19:20:55
+> clip_before 11
+> clip_new 10
+
+### 🤖 Claude — 2026-11-20T19:21:12.238Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && until grep -q \"exit\" clip_before.log 2>/dev/null; do sleep 5; done; tail -2 clip_before.log; ls clip_before/f | wc -l", "description": "Wait for the BEFORE clip to finish rendering", "timeout": 1800000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T19:21:12.308Z
+
+> ↩︎ result: Command running in background with ID: bucl0sth9. Output is being written to: /tmp/claude-0/-home-user-rainbow-/0b75226b-8a40-5a2a-98c8-95d5f5e274d8/tasks/bucl0sth9.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-20T19:21:16.717Z
+
+While the clips render, I'll run the light checks: the type check, the official continuity test (confirms the default game is unaffected), and the continuity check with the new switch on.
+
+### 🤖 Claude — 2026-11-20T19:21:18.624Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && npx tsc --noEmit 2>&1 | tail -3; echo \"tsc rc=${PIPESTATUS[0]}\"; timeout 300 npm run -s test:continuity 2>&1 | tail -6; python3 -c \"\nimport json; B=json.load(open('/home/user/scratch/s06/cB.json')); print('m06deep continuity ok:', B['cont']['ok']); print('joins (from,to,gap,angle):', B['cont']['b'])\"", "description": "Run the type check and continuity tests", "timeout": 400000}`
+
+### 🧑 User — 2026-11-20T19:21:26.417Z
+
+> ↩︎ result: tsc rc=0
+>   "07->08 gap=0 dT=0.339 y=-113.5",
+>   "08->09 gap=0 dT=0.12 y=-113.59",
+>   "09->10 gap=0 dT=0.08 y=-113.47",
+>   "10->11 gap=0 dT=0.003 y=-110.16"
+>  ]
+> }
+> m06deep continuity ok: True
+> joins (from,to,gap,angle): [['01', '02', 0, 0.245], ['02', '03', -0.0001, 0.661], ['03', '04', 0, 0.927], ['04', '05', 0, 0.255], ['05', '06', 0, 0.28], ['06', '07', 0, 0.078], ['07', '08', 0, 0.36], ['08', '09', 0, 0.119], ['09', '10', 0, 0.08], ['10', '11', -0.0001, 0.005]]
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:21:32.035Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && until grep -q \"exit\" clip_before.log 2>/dev/null; do sleep 5; done; tail -2 clip_before.log; ls clip_before/f | wc -l; ls clip_new/f | wc -l; date -u +%H:%M:%S", "description": "Wait for the BEFORE clip to finish", "timeout": 1200000}`
+

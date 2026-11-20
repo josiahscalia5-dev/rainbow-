@@ -624,7 +624,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 23681,
-   "sha256": "98564987df67302c60604a552655d922c90dd33a81dc59baf75beee46767aaf3"
+   "sha256": "52371a66ea7c8f38d3bc9163008f7af59eec782c40fac56c614ad28509843956"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -639,7 +639,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3449,
-   "sha256": "a2104c075ed53a66079787d5c0c34e78b7bfbf6acdc38c12048e6c50ee1c82c4"
+   "sha256": "86e0e28cfa52f00610364ec9c3d72c7d3b818c77e48a926656628ec01eb9cb0b"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -1164,7 +1164,7 @@
   {
    "path": "backups/wip/claude__rainbow-benny-c30/INFO.json",
    "bytes": 1265,
-   "sha256": "b21180ca8e189b5af0f9447f3c4f7db8281ab76ebbafe1b39f43c85fbdafc449"
+   "sha256": "22c6700d2a620896a1985b2ae16109ad616b06bfe78d49a8537f112eb7b7c3e2"
   },
   {
    "path": "backups/wip/claude__rainbow-benny-c30/tracked.patch",
@@ -1874,7 +1874,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c30/INFO.json",
    "bytes": 586,
-   "sha256": "02b1fdd6b7a26d4f1d0e7f849d03387c6b226f78406b77080edbb723b1650bd5"
+   "sha256": "592beb74eb2ff0ea489ab8da065bd1967f148fb5b49a39e02f0a51b5645fdfbf"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c30/tracked.patch",
@@ -2674,7 +2674,7 @@
   {
    "path": "backups/wip/claude__rainbow-s05-match-c30/INFO.json",
    "bytes": 558,
-   "sha256": "a814b7e2ec3d3d32a63f88a2ce6fa453c37b779bf1b6159de7d41808204356d1"
+   "sha256": "c44878eb145eb8f9dec86c0471256b6ca549f86c447840b1bd8418a7b5614e32"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c30/tracked.patch",
@@ -3164,12 +3164,12 @@
   {
    "path": "backups/wip/claude__rainbow-s06-match-c30/INFO.json",
    "bytes": 1544,
-   "sha256": "07daf38829fddae8d1ab68d780bf9d5dc37213a784d0fcdc4c3af32ea9e66edd"
+   "sha256": "fdf5e21a5379ba785bb0e43610741492e1820ee00b7b58b68431ab434466ad9d"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c30/tracked.patch",
-   "bytes": 54771,
-   "sha256": "e806a412feb14effe8bf28e5066b0d1e6f29fab09f7d81ea77dbd8e8571ac22f"
+   "bytes": 61190,
+   "sha256": "d23a73e6c7f3e681c9037329d255bc3aff73b62fcd57ee7e21260182ea62c916"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c30/untracked/assets/textures/match06/coins06deep.json",
@@ -3819,7 +3819,7 @@
   {
    "path": "backups/wip/claude__rainbow-s07-match-c30/INFO.json",
    "bytes": 971,
-   "sha256": "27c70246c2b0f55dcbac9f8b69ab1d7518b459eed0382602c7ff81a6db9b3707"
+   "sha256": "e61c431482c968d8b6b5e7f2f90bc6472e0f1c8c1a50617326af899f095771a7"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c30/tracked.patch",
@@ -4114,7 +4114,7 @@
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c30/INFO.json",
    "bytes": 640,
-   "sha256": "5c0f2225971409b91b8cc0600f01a63685114024e47b6097e8e501bbbfffdb22"
+   "sha256": "7424d56c253b44ceee7f21f65490c732ab60dbafc7a51fd1bc91bbf5dfed145b"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c30/tracked.patch",
@@ -4149,7 +4149,7 @@
   {
    "path": "backups/wip/detached-8accdad0a0/INFO.json",
    "bytes": 491,
-   "sha256": "5d31396a716ad77d1cd3018699f41d8928ce3d212b928af87847b4df016c7b76"
+   "sha256": "0491c25b0cf98302a8bcea64a7cadc291554c0387cff2130656acca12fe753e2"
   },
   {
    "path": "backups/wip/detached-8accdad0a0/tracked.patch",
@@ -4164,7 +4164,7 @@
   {
    "path": "backups/wip/detached-e162aec2bf/INFO.json",
    "bytes": 701,
-   "sha256": "b533915a1a8ee71d29be8855e46e863972d69e74dce19c419cd822e08b079f3f"
+   "sha256": "83fa901f31e34657a1bb4a4294c3dece72d3b1d4607194138c02e6724bf0e02d"
   },
   {
    "path": "backups/wip/detached-e162aec2bf/tracked.patch",
@@ -4389,7 +4389,7 @@
   {
    "path": "backups/wip/lead__trial07-c30/INFO.json",
    "bytes": 927,
-   "sha256": "9caddc2d5fec3e7d23550175527d8abfe52a12e54f3ec83c4c2f2a0e3efec912"
+   "sha256": "5e033b4abcc25e73cafb6f07a6be97cb57c6d2339a8478d8deb73de038ceffcf"
   },
   {
    "path": "backups/wip/lead__trial07-c30/tracked.patch",
@@ -4479,7 +4479,7 @@
   {
    "path": "backups/wip/lead__view04-c30/INFO.json",
    "bytes": 537,
-   "sha256": "5bf9c80327163783b435cceb2174cdfd8971da8afc1ec4a66c4f24d5620f1f85"
+   "sha256": "3ea44779393c7d56e4ec1fc43e9c0a07ecc393c5d0fceb6ad8b4d622b869afe1"
   },
   {
    "path": "backups/wip/lead__view04-c30/tracked.patch",
@@ -4664,7 +4664,7 @@
   {
    "path": "backups/wip/lead__view06-c30/INFO.json",
    "bytes": 1041,
-   "sha256": "665d038dde08541249c0675624b509c1e57acdfab101b625aaf05ec35ad3f0fa"
+   "sha256": "4b762f3e2f06567e6d9af6a2161aee93e893ff9ef253d8c95e253aa0b8cc40a3"
   },
   {
    "path": "backups/wip/lead__view06-c30/tracked.patch",
@@ -4869,7 +4869,7 @@
   {
    "path": "backups/wip/lead__view07-c30/INFO.json",
    "bytes": 922,
-   "sha256": "cca8b06c6d9c5260aff79b04af8c82897b0cd71891d62111a35a10019d86bef5"
+   "sha256": "0aa5ef89a14dfb82c367924107441070e61641bfa07e240f404a132b97c29639"
   },
   {
    "path": "backups/wip/lead__view07-c30/tracked.patch",
@@ -5674,7 +5674,7 @@
   {
    "path": "docs/briefs/2026-11-20-r29/COORDINATION.md",
    "bytes": 8818,
-   "sha256": "08c1146918fb0015b8e4c576f46b7c65795805f1fd4d1e162fae989dbbb4a955"
+   "sha256": "5064d895dc49360ce25fc89ffbb172ab49679b39e1d3d41d274eda53ea035c06"
   },
   {
    "path": "docs/briefs/2026-11-20-r29/LAUNCH_R29.md",
@@ -13053,8 +13053,8 @@
   },
   {
    "path": "qa/match/06/r25/PROGRESS.md",
-   "bytes": 20977,
-   "sha256": "9095f23489dafa8b93645fb3c04d3b1eba0965f54f1cbb53d2431b2b8048a3a2"
+   "bytes": 20979,
+   "sha256": "3747a8570aa137dc43f614fc3e93c113e4848e44e8aae72b2a872380c604c631"
   },
   {
    "path": "qa/match/06/r25/step1_hole/COMPARE/README.txt",
@@ -13765,6 +13765,11 @@
    "path": "qa/match/06/r28/route/quick_r29/quick.sh",
    "bytes": 926,
    "sha256": "557ba5d9e3bbba3e09b00d3b6cfe2fb7717748154b8fa34370bfef67af5ee249"
+  },
+  {
+   "path": "qa/match/06/r29/make_stills.py",
+   "bytes": 3129,
+   "sha256": "17fb4cf8115dd5b3b13bf131d864c339af6261e545938408cf6dc42b0cd7e7f5"
   },
   {
    "path": "qa/match/06/relaunch/BRIEF_path-camera-transition-engineer.txt",
