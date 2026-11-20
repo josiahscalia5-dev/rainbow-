@@ -28,7 +28,7 @@ try {
   const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
   page.on('pageerror', (e) => console.error('pageerror', e.message));
   await page.goto(`${vite.url}/?qa=1&dpr=1${Q ? '&' + Q : ''}`);
-  await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 300000 });
+  await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 600000 });
   const rng = await page.evaluate((id) => { const r = window.__rainbow; r.goto(id); const g = r.course.stage(id); return { s0: r.state().s, s1: g.s1 }; }, SCREEN);
   let tailLeft = Math.round(Number(TAIL) * fps);
   for (let i = 0; i < 2400; i++) {
@@ -37,7 +37,7 @@ try {
     const dir = frac < 0.3 ? null : frac < 0.5 ? -1 : frac < 0.7 ? 1 : null;
     const phase = frac < 0.3 ? 'ENTRANCE (straight)' : frac < 0.5 ? 'MIDDLE (steering LEFT)' : frac < 0.7 ? 'MIDDLE (steering RIGHT)' : 'END (straight)';
     const st = await page.evaluate(([t, dt, dir]) => { const _pn = performance.now; performance.now = () => (t + dt) * 1000; const R = window.__rainbow; R.setSteer(dir); R.freezeAt(t); R.step(Math.round(dt * 60), 1 / 60); R.freezeAt(t + dt); R.step(1, 1e-4); R.drawList(); performance.now = _pn; return R.state(); }, [12 + i / fps, 1 / fps, dir]);
-    await page.screenshot({ path: `${OUT}/f/${String(i).padStart(4, '0')}.png` });
+    await page.screenshot({ path: `${OUT}/f/${String(i).padStart(4, '0')}.png`, timeout: 600000 });
     log.push({ i, t: +(i / fps).toFixed(3), stage: st.stage, s: st.s, lat: st.lat, frac: +frac.toFixed(3), phase: st.stage === SCREEN ? phase : `next screen ${st.stage}` });
     if (st.stage !== SCREEN && --tailLeft <= 0) break;
   }

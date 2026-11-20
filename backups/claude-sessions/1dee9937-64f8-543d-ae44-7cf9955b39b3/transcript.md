@@ -3272,3 +3272,177 @@ Stop hook feedback:
 
 > 🔧 **Bash** `{"command": "for i in $(seq 1 100); do pgrep -f \"rainbow-autosave.py\" >/dev/null || break; sleep 3; done; timeout 600 python3 scripts/rainbow-autosave.py --reason manual:stop-hook 2>&1 | grep -E '\"commit\"|skipping' | head -2; python3 -I scripts/autosave-status.py", "description": "Commit and push pending changes, verify remote", "timeout": 900000}`
 
+### 🧑 User — 2026-11-20T10:13:10.226Z
+
+> ↩︎ result: "commit": "669aca56be7a3603b084d905a4387fe9e941e58d",
+> AUTOSAVE OK | branch claude/rainbow-r22-restore-ut3m39 | scheduler daemon | last verified backup 2026-11-20T10:12:22+00:00 (0.8 min ago) | local 669aca5 remote 669aca5 (match) | uncommitted 15
+
+### 🤖 Claude — 2026-11-20T10:13:12.150Z
+
+Saved and pushed (`669aca5`, matching GitHub). The Screen 06 ripple test has finished. Comparing:
+
+### 🤖 Claude — 2026-11-20T10:13:15.693Z
+
+> 🔧 **Bash** `{"command": "O=qa/match/06/r23/lead_rip; ls $O/*/ | head -20; tail -2 $O/V1.log; S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/rip; for v in BEFORE V1 V2; do for s in o1_003 o2_007; do convert $O/$v/$s.png -crop 864x760+0+700 -resize 300x264 $S/${v}_$s.png 2>/dev/null; done; done; convert references/06_crest_the_rinse_arch.png -crop 864x760+0+700 -resize 300x264 $S/ap.png; convert \\( $S/ap.png $S/BEFORE_o1_003.png $S/V1_o1_003.png $S/V2_o1_003.png +append \\) \\( $S/ap.png $S/BEFORE_o2_007.png $S/V1_o2_007.png $S/V2_o2_007.png +append \\) -append $S/ripcm …[+64 chars]`
+
+### 🤖 Claude — 2026-11-20T10:13:17.063Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/rip/ripcmp.png"}`
+
+### 🧑 User — 2026-11-20T10:13:18.424Z
+
+> ↩︎ result: Exit code 1
+> qa/match/06/r23/lead_rip/BEFORE/:
+> shots.json
+> 
+> qa/match/06/r23/lead_rip/V1/:
+> shots.json
+> 
+> qa/match/06/r23/lead_rip/V2/:
+> shots.json
+> 
+> Node.js v22.23.5
+> convert-im6.q16: unable to open image `/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/rip/BEFORE_o1_003.png': No such file or directory @ error/blob.c/OpenBlob/2964.
+> convert-im6.q16: unable to open image `/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/rip/V1_o1_003.png': No such file or directory @ error/blob.c/OpenBlob/2964.
+> convert-im6.q16: unable to open image `/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/rip/V1_o1_003.png': No such file or directory @ error/blob.c/OpenBlob/2964.
+> convert-im6.q16: unable to open image `/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/rip/V2_o1_003.png': No such file or directory @ error/blob.c/OpenBlob/2964.
+> convert-im6.q16: unable to open image `/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/rip/V2_o1_003.png': No such file or directory @ error/blob.c/OpenBlob/2964.
+> convert-im6.q16: unable to open image `/tmp/claude-0 …[+1137 chars]
+
+### 🧑 User — 2026-11-20T10:13:18.466Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T10:13:20.961Z
+
+The ripple renders failed: only an empty shot list was written, no pictures. Checking the error:
+
+### 🤖 Claude — 2026-11-20T10:13:21.905Z
+
+> 🔧 **Bash** `{"command": "head -30 qa/match/06/r23/lead_rip/BEFORE.log | cut -c1-250; cat qa/match/06/r23/lead_rip/BEFORE/shots.json | head -c 400", "description": "Read the failed ripple render log"}`
+
+### 🧑 User — 2026-11-20T10:13:22.380Z
+
+> ↩︎ result: node:internal/modules/run_main:123
+>     triggerUncaughtException(
+>     ^
+> 
+> page.screenshot: Timeout 30000ms exceeded.
+> Call log:
+> [2m  - taking page screenshot[22m
+> 
+>     at /home/user/wt/s06/tools/match06/r23_audit.mjs:42:16 {
+>   log: [ '  - taking page screenshot' ],
+>   name: 'TimeoutError'
+> }
+> 
+> Node.js v22.23.5
+> []
+
+### 🤖 Claude — 2026-11-20T10:13:25.049Z
+
+The screenshot timed out after 30 s because the machine is overloaded. I'll make a lead copy of the tool with a longer screenshot timeout and re-run:
+
+### 🤖 Claude — 2026-11-20T10:13:25.914Z
+
+> 🔧 **Bash** `{"command": "sed -n 38,46p /home/user/wt/s06/tools/match06/r23_audit.mjs | cut -c1-200", "description": "Show the screenshot call in the s06 audit tool"}`
+
+### 🧑 User — 2026-11-20T10:13:26.293Z
+
+> ↩︎ result: const _pn = performance.now; if (window.__pinNow) performance.now = () => window.__pinNow; r.drawList(); performance.now = _pn;
+>       await new Promise((res) => requestAnimationFrame(() => res()));
+>       return { ...r.state(), s0, s1 };
+>     }, [STAGE, frac, steer]);
+>     await page.screenshot({ path: `${OUT}/${name}.png` });
+>     log.push({ name, frac, steer, s: st.s, lat: st.lat, stage: st.stage, coins: st.coins, s0: st.s0, s1: st.s1 });
+>     console.log(STAGE, name, 's', st.s, 'lat', st.lat, 'stage', st.stage, 'coins', st.coins);
+>   }
+> } finally { writeFileSync(`${OUT}/shots.json`, JSON.stringify(log, null, 1)); await browser.close(); await vite.close?.(); }
+
+### 🤖 Claude — 2026-11-20T10:13:31.976Z
+
+> 🔧 **Bash** `{"command": "sed 's#await page.screenshot({ path: `${OUT}/${name}.png` });#await page.screenshot({ path: `${OUT}/${name}.png`, timeout: 600000 });#; s#tools/match06/r23_vite.mjs#tools/match06/r23_vite.mjs#' /home/user/wt/s06/tools/match06/r23_audit.mjs > tools/lead23/audit06_slow.mjs && grep -c \"timeout: 600000\" tools/lead23/audit06_slow.mjs && cp tools/lead23/audit06_slow.mjs /home/user/wt/s06/tools/match06/lead23_audit_slow.mjs", "description": "Make a slow-machine copy of the 06 audit tool"}`
+
+### 🧑 User — 2026-11-20T10:13:32.939Z
+
+> ↩︎ result: 1
+
+### 🤖 Claude — 2026-11-20T10:13:37.134Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && O=/home/user/rainbow-/qa/match/06/r23/lead_rip && export AUDIT_PIN=22000 AUDIT_SHOTS='[[\"o1_003\",0.03,null],[\"o2_007\",0.07,null],[\"o3_012\",0.12,null]]' && for n in BEFORE V1 V2; do rm -rf $O/$n; AUDIT_PORT=5291 timeout 3000 node tools/match06/lead23_audit_slow.mjs $O/$n 06 \"$(cat $O/QUERY_$n.txt)\" > $O/$n.log 2>&1; done; ls $O/*/; grep -h \"TimeoutError\\|Error\" $O/*.log | head -3", "description": "Re-render Screen 06 ripple variants with long timeout", "timeout": 7200000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T10:13:48.262Z
+
+> ↩︎ result: Command running in background with ID: bvwhz3olp. Output is being written to: /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/tasks/bvwhz3olp.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-20T10:13:50.318Z
+
+My Screen 07 clip tool uses the same 30-second screenshot default. Checking it hasn't hit the same timeout:
+
+### 🤖 Claude — 2026-11-20T10:13:52.242Z
+
+> 🔧 **Bash** `{"command": "ls /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/c07/f | wc -l; cat /home/user/rainbow-/qa/match/07/r23/lead_clip/clip.log | grep -v \"outside of Vite\" | tail -5; pgrep -af \"screen_clip.mjs\" | head -2", "description": "Check Screen 07 clip for timeout failure"}`
+
+### 🧑 User — 2026-11-20T10:13:53.038Z
+
+> ↩︎ result: 195
+> 2618 /bin/bash -c source /root/.claude/shell-snapshots/snapshot-bash-1795167774084-5x1yiq.sh 2>/dev/null || true && export ANDROID_HOME=/opt/android-sdk ANDROID_SDK_ROOT=/opt/android-sdk : && \builtin export BUN_OPTIONS="--smol${BUN_OPTIONS:+ $BUN_OPTIONS}" && \builtin shopt -u extglob 2>/dev/null || true && { \builtin unalias -- 'which'; \builtin unset -f -- 'which'; } >/dev/null 2>&1 || true && { \builtin unalias -- 'unsetenv'; \builtin unset -f -- 'unsetenv'; } >/dev/null 2>&1 || true && { { \builtin echo 0 >| /sys/fs/cgroup/pids/process_api/cc-shell/tasks; } 2>/dev/null || :; } && eval 'S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad; cd /home/user/wt/lead07 && O=/home/user/rainbow-/qa/match/07/r23/lead_clip && mkdir -p $O && Q=$(cat /home/user/rainbow-/qa/match/07/r23/s1_satin/query_NEW.txt) && echo "$Q" > $O/QUERY.txt && AUDIT_PORT=5290 timeout 3400 node /home/user/rainbow-/tools/lead23/screen_clip.mjs 07 $S/c07 "$Q" 0.6 > $O/clip.log 2>&1; tail -2 $O/clip.log; cp $S/c07/frames.json $O/; python3 -I /home/user/rainbow-/tools/lead23/label_clip.py $S/c07 "SCREEN 07 ?? Dive the Washer Tube ?? candidate" $O/SCREEN07_swim_candidate 2>&1 | tai …[+383 chars]
+
+### 🤖 Claude — 2026-11-20T10:13:59.364Z
+
+Still running (195 frames). Changing the file won't affect the run already in progress, so I'll add the longer timeout to the clip tool for future runs:
+
+### 🤖 Claude — 2026-11-20T10:14:00.905Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/tools/lead23/screen_clip.mjs", "old_string": "    await page.screenshot({ path: `${OUT}/f/${String(i).padStart(4, '0')}.png` });", "new_string": "    await page.screenshot({ path: `${OUT}/f/${String(i).padStart(4, '0')}.png`, timeout: 600000 });   // shared, overloaded machine"}`
+
+### 🧑 User — 2026-11-20T10:14:01.515Z
+
+> ↩︎ result: The file /home/user/rainbow-/tools/lead23/screen_clip.mjs has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T10:14:05.095Z
+
+The other specialists' render tools have the same 30-second screenshot limit, so I'll warn them before they lose renders to it:
+
+### 🤖 Claude — 2026-11-20T10:14:07.101Z
+
+> 🔧 **SendMessage** `{"to": "aea6c441ae094e112", "summary": "warn: screenshot timeouts under load", "message": "Machine note from the lead: 4 CPU cores, load ~30 — Playwright page.screenshot() hits its default 30 s timeout (my 06 render just failed that way). In your render tools pass { timeout: 600000 } to page.screenshot (and waitForFunction) before long runs. No reply needed.", "type": "message", "recipient": "aea6c441ae094e112", "recipient_kind": "agent", "content": "Machine note from the lead: 4 CPU cores, load ~30…"}`
+
+### 🧑 User — 2026-11-20T10:14:07.159Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to aea6c441ae094e112 at its next tool round. Moved 1 running tool call to the background without stopping it, so that round no longer waits for it. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"aea6c441ae094e112","name":"aea6c441ae094e112","ref":"30829c"}}
+
+### 🤖 Claude — 2026-11-20T10:14:09.244Z
+
+> 🔧 **SendMessage** `{"to": "ad506edb73ba1c3d9", "summary": "warn: screenshot timeouts under load", "message": "Machine note from the lead: 4 CPU cores, load ~30 — Playwright page.screenshot() hits its default 30 s timeout (my 06 render just failed that way). In your render tools pass { timeout: 600000 } to page.screenshot (and waitForFunction) before long runs. No reply needed.", "type": "message", "recipient": "ad506edb73ba1c3d9", "recipient_kind": "agent", "content": "Machine note from the lead: 4 CPU cores, load ~30…"}`
+
+### 🧑 User — 2026-11-20T10:14:09.920Z
+
+> ↩︎ result: {"success":true,"message":"Resuming agent ad506ed","resumedAgentId":"ad506edb73ba1c3d9","pin":{"id":"ad506edb73ba1c3d9","name":"ad506edb73ba1c3d9","ref":"0e9742"}}
+
+### 🤖 Claude — 2026-11-20T10:14:10.897Z
+
+> 🔧 **SendMessage** `{"to": "ad6745221c2fe7d06", "summary": "warn: screenshot timeouts under load", "message": "Machine note from the lead: 4 CPU cores, load ~30 — Playwright page.screenshot() hits its default 30 s timeout (my 06 render just failed that way). In your render tools pass { timeout: 600000 } to page.screenshot (and waitForFunction) before long runs. No reply needed.", "type": "message", "recipient": "ad6745221c2fe7d06", "recipient_kind": "agent", "content": "Machine note from the lead: 4 CPU cores, load ~30…"}`
+
+### 🧑 User — 2026-11-20T10:14:10.916Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to ad6745221c2fe7d06 at its next tool round. Moved 1 running tool call to the background without stopping it, so that round no longer waits for it. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"ad6745221c2fe7d06","name":"ad6745221c2fe7d06","ref":"0fff2a"}}
+
+### 🤖 Claude — 2026-11-20T10:14:11.343Z
+
+> 🔧 **SendMessage** `{"to": "aba3e2bc1d154bfe3", "summary": "warn: screenshot timeouts under load", "message": "Machine note from the lead: 4 CPU cores, load ~30 — Playwright page.screenshot() hits its default 30 s timeout (my 06 render just failed that way). In your render tools pass { timeout: 600000 } to page.screenshot (and waitForFunction) before long runs. No reply needed.", "type": "message", "recipient": "aba3e2bc1d154bfe3", "recipient_kind": "agent", "content": "Machine note from the lead: 4 CPU cores, load ~30…"}`
+
+### 🧑 User — 2026-11-20T10:14:11.402Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to aba3e2bc1d154bfe3 at its next tool round. Moved 1 running tool call to the background without stopping it, so that round no longer waits for it. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"aba3e2bc1d154bfe3","name":"aba3e2bc1d154bfe3","ref":"0fb379"}}
+
+### 🤖 Claude — 2026-11-20T10:14:15.598Z
+
+Nothing new to show you yet:
+- **Screen 06 ripple test:** my first render produced no pictures. With four specialists sharing 4 CPU cores, each screenshot took longer than the tool's 30-second limit. I'm re-running it with a 10-minute limit, comparing the current ripple against two shallower ones right around Benny's contact with the water.
+- **Screen 07 clip:** still recording, 195 frames in. I raised the same limit for future clip runs; this one is already past the slowest part.
+- **Specialists:** I told all four about the time limit so their renders don't fail the same way.
+
+I'll send the full labelled Screen 07 clip (entrance through the exit into 08, speed shown) and the Screen 06 ripple comparison as soon as each finishes.
+

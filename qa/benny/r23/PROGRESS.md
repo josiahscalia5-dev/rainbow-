@@ -5,8 +5,10 @@
 **Done this session:** step 2 knit beanie `&b20knit=1` (chain mode, cream stripes, vertical rib cuff, violet not bluer,
 per-yarn exposure on 05–08) — GOOD IMPROVEMENT (hat), proof `qa/benny/r23/s2_knit/`, gameplay 8/8 + 91 coins.
 **Best Benny query now:** `&benny20=1&b20expo=1&b20ppw=0.45&b20tuft=1&b20knit=1` (all opt-in; default build unchanged).
-**Next:** (3) stitched felt star (`tools/benny20/knit.py` star(): the approved = soft yellow felt, darker gold rim, dashed
-stitches); then (4) fur: longer silky combed tufts (not grainy). Do NOT scale Benny. Max 2 parallel renders.
+**In progress (~10:15 UTC):** (3) stitched felt star `&b20star=1` — maps `assets/textures/benny20/star_felt{,_n}.png`
+(`knit.py` `star_mode: felt`, params `tools/benny23/star_r23.json`), per-screen `STARX20` (with `b20expo=1`); proof renders
+`qa/benny/r23/s3_star/` running (machine load ~30 → renders one at a time, 600 s screenshot timeout). Then (4) fur:
+longer silky combed tufts (not grainy). Do NOT scale Benny. Max 2 parallel renders.
 **Open on the hat (not this step):** crown dome rounder / flatter than the approved taller beanie; on 06 middle the cream
 leans a little yellow (`&b20kw06=` tunable).
 

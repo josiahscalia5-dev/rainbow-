@@ -20,7 +20,7 @@ try {
   page.on('pageerror', (e) => console.error('pageerror', e.message));
   page.on('console', (m) => { if (m.type() === 'error' && !/Failed to load resource/.test(m.text())) console.error('console', m.text().slice(0, 300)); });
   await page.goto(`${vite.url}/?qa=1&dpr=1${Q ? '&' + Q : ''}`);
-  await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 300000 });
+  await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 600000 });
   const st = await page.evaluate(async ([scr, dist, steer]) => {
     const r = window.__rainbow; r.goto(scr); const s0 = r.state().s;
     if (steer !== null) r.setSteer(steer);
@@ -69,7 +69,7 @@ try {
       try { return B.screenBox(R.camera()); } catch { return null; }
     }, v);
     await page.waitForTimeout(100);
-    await page.screenshot({ path: `${OUT}/${v.name}.png` });
+    await page.screenshot({ path: `${OUT}/${v.name}.png`, timeout: 600000 });
     log.push({ name: v.name, box });
     console.log('variant', v.name, Date.now() - t0, 'ms', 'box', box);
   }

@@ -14,7 +14,8 @@
   Status ~11:00 UTC: code done (route S ±1.45 u, wavelength 28 u; straight tube; core lean; coins on the core; straight-chute view;
   un-bent sampling grid → continuity OK and identical to the match07 baseline). Proof renders running (BEFORE / NEW shots, whole-07
   clips at real game speed, gameplay). Rejected inside this step: an extra look-ahead camera aim over the lip of the drop (Benny
-  drifted to mid-screen; `s2_sriver/rejected_lookahead/`).
+  drifted to mid-screen; `s2_sriver/rejected_lookahead/`). Render tools now use 600 s Playwright timeouts (shared machine, load ~30;
+  `tools/match07/audit_screen_r23.mjs` = the lead's audit tool with only the timeouts raised).
 * NEXT: step 3 = foam natural variation (size + spacing, blending into the water).
 
 Worktree `/home/user/wt/s07`, LOCAL branch `claude/rainbow-s07-match-c24` (= `8accdad0` + r22 WIP: r21 code + `m07cloud` + the

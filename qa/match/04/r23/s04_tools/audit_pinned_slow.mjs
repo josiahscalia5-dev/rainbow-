@@ -1,4 +1,4 @@
-// r23 s04 copy of qa/match/04/r22/tools/audit_pinned.mjs: identical except the screenshot timeout (300 s; the machine is shared).
+// r23 s04 copy of qa/match/04/r22/tools/audit_pinned.mjs: identical except the screenshot + page-ready timeouts (600 s; the machine is shared).
 // r22 S04 copy of tools/lead21/audit_screen.mjs with ONE QA-only change: performance.now() is pinned to 10 000 ms while each
 // shot is stepped and drawn, so the Screen 04 river shader (src/world/match04m4.ts reads the wall clock, pre-existing since
 // 34cb494) shows the same water phase in every run -> BEFORE / NEW differ only by the switch under test. No game code changes.
@@ -24,7 +24,7 @@ try {
   page.on('pageerror', (e) => console.error('pageerror', e.message));
   page.on('console', (m) => { if (m.type() === 'error' && /Shader|WebGL|rror/.test(m.text())) console.error('console', m.text().slice(0, 160)); });
   await page.goto(`${vite.url}/?qa=1&dpr=1&${Q}`);
-  await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 300000 });
+  await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 600000 });
   for (const [name, frac, steer] of SHOTS) {
     const st = await page.evaluate(async ([stage, frac, steer]) => {
       const r = window.__rainbow;
@@ -41,7 +41,7 @@ try {
       performance.now = _pn;
       return { ...r.state(), s0, s1 };
     }, [STAGE, frac, steer]);
-    await page.screenshot({ path: `${OUT}/${name}.png`, timeout: 300000 });
+    await page.screenshot({ path: `${OUT}/${name}.png`, timeout: 600000 });
     log.push({ name, frac, steer, s: st.s, lat: st.lat, stage: st.stage, coins: st.coins, s0: st.s0, s1: st.s1 });
     console.log(STAGE, name, 's', st.s, 'lat', st.lat, 'stage', st.stage, 'coins', st.coins);
   }

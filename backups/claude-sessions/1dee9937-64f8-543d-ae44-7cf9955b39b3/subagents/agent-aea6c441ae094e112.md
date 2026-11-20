@@ -2051,3 +2051,38 @@ Hard left also improves step by step (less pink, foam banks on both edges, gold 
 
 > 🔧 **Bash** `{"command": "D=/home/user/rainbow-/qa/match/04/r23/s2_edge; T=/home/user/rainbow-/qa/match/04/r23/s04_tools\n( $T/clip.sh $D/QUERY_K23-S2.txt $D/swim04_NEW_K23-S2 5273 & (cd /home/user/wt/s04 && AUDIT_PORT=5274 timeout 1800 node /home/user/rainbow-/qa/match/04/r22/tools/gameplay_test_5273.mjs --q=\"$(cat $D/QUERY_K23-S2.txt)\" --out=$D/gameplay.json > $D/gameplay.log 2>&1; echo gameplay_exit=$?) & wait )\npython3 -c \"\nimport json; d=json.load(open('$D/gameplay.json'))['checks']\nprint({k:v['pass'] for k,v in d.items()}, d['realCoinPickups'])\"; ls $D; for f in $D/*.mp4; do printf \"%s \" $(b …[+166 chars]`
 
+### 🧑 User — 2026-11-20T10:14:07.989Z
+
+> ↩︎ result: Command was moved to the background (ID: ba30o22b6) so that a message that arrived while it was running can reach you; it was not interrupted. Output is being written to: /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/tasks/ba30o22b6.output. You will be notified when it completes. If it is still running after 30m in the background (plus the timeout it was started with, up to the background maximum), it will be stopped and you will be notified. It is running now: do not start a second copy while it runs. If it is no longer needed, stop it with TaskStop. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-20T10:14:17.650Z
+
+My render copies already use a 300 s screenshot timeout; I'll raise them to 600 s for future runs (the running job has already loaded its script, so editing is safe).
+
+### 🤖 Claude — 2026-11-20T10:14:18.689Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/04/r23/s04_tools && sed -i 's/timeout: 300000 });/timeout: 600000 });/; s/(300 s; /(600 s; /' audit_pinned_slow.mjs swim_clip_pinned_slow.mjs && grep -n \"600000\\|600 s\" audit_pinned_slow.mjs swim_clip_pinned_slow.mjs | cut -c1-160", "description": "Raise screenshot timeout in my render copies to 600 s"}`
+
+### 🧑 User — 2026-11-20T10:14:19.424Z
+
+> ↩︎ result: audit_pinned_slow.mjs:1:// r23 s04 copy of qa/match/04/r22/tools/audit_pinned.mjs: identical except the screenshot timeout (600 s; the machine is shared).
+> audit_pinned_slow.mjs:27:  await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 600000 });
+> audit_pinned_slow.mjs:44:    await page.screenshot({ path: `${OUT}/${name}.png`, timeout: 600000 });
+> swim_clip_pinned_slow.mjs:2:// r23 s04 copy: identical to qa/match/04/r22/tools/swim_clip_pinned.mjs except the screenshot timeout (600 s; shared machine).
+> swim_clip_pinned_slow.mjs:23:  await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 600000 });
+> swim_clip_pinned_slow.mjs:30:    await page.screenshot({ path: `${OUT}/${String(i).padStart(4, "0")}.png`, timeout: 600000 });
+
+### 🤖 Claude — 2026-11-20T10:14:26.223Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/04/r23/s04_tools && sed -i '1s/identical except the screenshot timeout (600 s; the machine is shared)/identical except the screenshot + page-ready timeouts (600 s; the machine is shared)/' audit_pinned_slow.mjs && sed -i '2s/except the screenshot timeout (600 s; shared machine)/except the screenshot + page-ready timeouts (600 s; shared machine)/' swim_clip_pinned_slow.mjs && head -2 audit_pinned_slow.mjs swim_clip_pinned_slow.mjs | cut -c1-170", "description": "Correct header comments of the render copies"}`
+
+### 🧑 User — 2026-11-20T10:14:27.131Z
+
+> ↩︎ result: ==> audit_pinned_slow.mjs <==
+> // r23 s04 copy of qa/match/04/r22/tools/audit_pinned.mjs: identical except the screenshot + page-ready timeouts (600 s; the machine is shared).
+> // r22 S04 copy of tools/lead21/audit_screen.mjs with ONE QA-only change: performance.now() is pinned to 10 000 ms while each
+> 
+> ==> swim_clip_pinned_slow.mjs <==
+> #!/usr/bin/env node
+> // r23 s04 copy: identical to qa/match/04/r22/tools/swim_clip_pinned.mjs except the screenshot + page-ready timeouts (600 s; shared machine).
+

@@ -154055,10 +154055,10 @@ index d1de648..c96482c 100644
  }
 \ No newline at end of file
 diff --git a/qa/benny/r23/PROGRESS.md b/qa/benny/r23/PROGRESS.md
-index a76822b..cea17dd 100644
+index a76822b..1fa601b 100644
 --- a/qa/benny/r23/PROGRESS.md
 +++ b/qa/benny/r23/PROGRESS.md
-@@ -1,18 +1,51 @@
+@@ -1,18 +1,53 @@
 -# Benny round 23 — progress (branch `claude/rainbow-benny-c23`)
 +# Benny round 23 — progress (worktree `/home/user/wt/benny`, local branch `claude/rainbow-benny-c24` = `-c23` @ `734efb6`; not committed / pushed by Benny — the lead's autosave snapshots the worktree)
  
@@ -154073,8 +154073,10 @@ index a76822b..cea17dd 100644
 +**Done this session:** step 2 knit beanie `&b20knit=1` (chain mode, cream stripes, vertical rib cuff, violet not bluer,
 +per-yarn exposure on 05–08) — GOOD IMPROVEMENT (hat), proof `qa/benny/r23/s2_knit/`, gameplay 8/8 + 91 coins.
 +**Best Benny query now:** `&benny20=1&b20expo=1&b20ppw=0.45&b20tuft=1&b20knit=1` (all opt-in; default build unchanged).
-+**Next:** (3) stitched felt star (`tools/benny20/knit.py` star(): the approved = soft yellow felt, darker gold rim, dashed
-+stitches); then (4) fur: longer silky combed tufts (not grainy). Do NOT scale Benny. Max 2 parallel renders.
++**In progress (~10:15 UTC):** (3) stitched felt star `&b20star=1` — maps `assets/textures/benny20/star_felt{,_n}.png`
++(`knit.py` `star_mode: felt`, params `tools/benny23/star_r23.json`), per-screen `STARX20` (with `b20expo=1`); proof renders
++`qa/benny/r23/s3_star/` running (machine load ~30 → renders one at a time, 600 s screenshot timeout). Then (4) fur:
++longer silky combed tufts (not grainy). Do NOT scale Benny. Max 2 parallel renders.
 +**Open on the hat (not this step):** crown dome rounder / flatter than the approved taller beanie; on 06 middle the cream
 +leans a little yellow (`&b20kw06=` tunable).
  
@@ -154459,3 +154461,25 @@ index fccfeae..9b37c3b 100644
      json.dump(P, open(f'{out}/knit_params.json', 'w'), indent=1)
      print('wrote', out)
  
+diff --git a/tools/benny23/shots_c.mjs b/tools/benny23/shots_c.mjs
+index 15d9828..1d4e951 100644
+--- a/tools/benny23/shots_c.mjs
++++ b/tools/benny23/shots_c.mjs
+@@ -21,7 +21,7 @@ try {
+   page.on('pageerror', (e) => console.error('pageerror', e.message));
+   page.on('console', (m) => { if (m.type() === 'error' && /Shader|WebGL|rror/.test(m.text())) console.error('console', m.text().slice(0, 160)); });
+   await page.goto(`${vite.url}/?qa=1&dpr=1&${Q}`);
+-  await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 300000 });
++  await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 600000 });
+   for (const [name, frac, steer] of SHOTS) {
+     const st = await page.evaluate(async ([stage, frac, steer]) => {
+       const r = window.__rainbow;
+@@ -39,7 +39,7 @@ try {
+       try { box = window.__b20?.screenBox?.(r.camera()) ?? null; } catch (e) { box = String(e); }
+       return { ...r.state(), s0, s1, box, bs: r.bennyScreen?.() };
+     }, [STAGE, frac, steer]);
+-    await page.screenshot({ path: `${OUT}/${name}.png` });
++    await page.screenshot({ path: `${OUT}/${name}.png`, timeout: 600000 });
+     log.push({ name, frac, steer, box: st.box, bs: st.bs, s: st.s, lat: st.lat, stage: st.stage, coins: st.coins, s0: st.s0, s1: st.s1 });
+     console.log(STAGE, name, 's', st.s, 'lat', st.lat, 'stage', st.stage, 'coins', st.coins);
+   }

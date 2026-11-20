@@ -2557,3 +2557,28 @@ Meanwhile I'll record the interim state of step 2 in the progress log (no render
 
 I'll continue when the BEFORE clip finishes.
 
+### 🧑 User — 2026-11-20T10:14:09.897Z
+
+The coordinator sent a message while you were working:
+Machine note from the lead: 4 CPU cores, load ~30 — Playwright page.screenshot() hits its default 30 s timeout (my 06 render just failed that way). In your render tools pass { timeout: 600000 } to page.screenshot (and waitForFunction) before long runs. No reply needed.
+
+Address this before completing your current task.
+
+### 🤖 Claude — 2026-11-20T10:14:14.601Z
+
+The running clips use `page.screenshot()` without a timeout, so let me check whether they're still healthy, then add 600 s timeouts to my tools (and use a local copy of the lead's audit tool with the same timeouts rather than editing the lead's file).
+
+### 🤖 Claude — 2026-11-20T10:14:16.458Z
+
+> 🔧 **Bash** `{"command": "D=/home/user/rainbow-/qa/match/07/r23/s2_sriver; SP=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad; grep -v \"allow list\" $D/clipB.log $D/clipN.log | tail -6; ls $SP/clipB | wc -l; ls $SP/clipN2 | wc -l; uptime", "description": "Check clip health and machine load"}`
+
+### 🧑 User — 2026-11-20T10:14:17.152Z
+
+> ↩︎ result: 105
+> 59
+>  10:14:17 up 32 min,  0 user,  load average: 32.82, 30.79, 20.77
+
+### 🤖 Claude — 2026-11-20T10:14:22.071Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"screenshot(\\|waitForFunction(\\|setDefaultTimeout\" tools/match07/swim_clip_r21.mjs tools/match07/capture_5277.mjs tools/match07/gameplay_test_5277.mjs tools/match07/route_r23.mjs tools/match07/diag_r21.mjs | cut -c1-160", "description": "Find screenshot and wait calls in my tools"}`
+

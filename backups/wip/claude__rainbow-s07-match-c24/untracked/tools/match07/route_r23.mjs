@@ -11,7 +11,7 @@ const browser = await chromium.launch({ args: CHROMIUM_ARGS });
 try {
   const page = await browser.newPage({ viewport: { width: 216, height: 384 } });
   await page.goto(`${vite.url}/?qa=1&dpr=1&${Q}`);
-  await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 300000 });
+  await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 600000 });
   const res = await page.evaluate((L) => {
     const r = window.__rainbow, c = r.course;
     const st = c.stage('07'), m = c.marks;

@@ -24,7 +24,7 @@ const page = await browser.newPage({ viewport: { width: 216, height: 384 } });
 const errors = [];
 page.on('pageerror', (e) => errors.push(e.message));
 await page.goto(`${vite.url}/?qa=1&dpr=1&bloom=0${optQ ? '&' + optQ : ''}`);
-await page.waitForFunction(() => window.__rainbow?.ready, null, { timeout: 240000 });
+await page.waitForFunction(() => window.__rainbow?.ready, null, { timeout: 600000 });
 
 const result = await page.evaluate(() => {
   const api = window.__rainbow;

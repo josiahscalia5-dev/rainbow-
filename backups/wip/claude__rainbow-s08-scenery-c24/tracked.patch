@@ -40,7 +40,7 @@ index f8a0a2b..79c2250 100644
      bv.copy(fb.pos).addScaledVector(fb.right, bLat).addScaledVector(fb.up, BENNY_UP);
      const bd = bv.distanceTo(cam.position);
 diff --git a/tools/match08/shots08.mjs b/tools/match08/shots08.mjs
-index 2e9b53e..c87ac95 100644
+index 2e9b53e..ab744d9 100644
 --- a/tools/match08/shots08.mjs
 +++ b/tools/match08/shots08.mjs
 @@ -8,7 +8,10 @@ const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(
@@ -55,10 +55,21 @@ index 2e9b53e..c87ac95 100644
  const browser = await chromium.launch({ args: CHROMIUM_ARGS });
  const log = [];
  // [name, forward distance in world units from the checkpoint (or 'tN' = fraction N of the rest of the stage), steer]
-@@ -43,6 +46,19 @@ try {
+@@ -25,7 +28,7 @@ try {
+   const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
+   page.on('pageerror', (e) => console.error('pageerror', e.message));
+   await page.goto(`${vite.url}/?qa=1&dpr=1${Q ? '&' + Q : ''}`);
+-  await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 300000 });
++  await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 600000 });
+   for (const [name, dist, steer] of SHOTS) {
+     const st = await page.evaluate(async ([id, dist, steer, det]) => {
+       const r = window.__rainbow; r.goto(id);
+@@ -42,7 +45,20 @@ try {
+       return { ...r.state(), frames: n, s0, s1, target };
      }, [SCREEN, dist, steer, DET]);
      await page.waitForTimeout(150);
-     await page.screenshot({ path: `${OUT}/${name}.png`, timeout: 240000 });
+-    await page.screenshot({ path: `${OUT}/${name}.png`, timeout: 240000 });
++    await page.screenshot({ path: `${OUT}/${name}.png`, timeout: 600000 });
 +    // M08_COINS=1 (r23, QA only): every on-screen coin's centre and diameter in px (instance matrices + camera, as drawn)
 +    if (process.env.M08_COINS === '1') st.coinPx = await page.evaluate(() => {
 +      const api = window.__rainbow, { scene, camera } = api.qa3d(), n = api.coinDefs().length, W = 864, H = 1536;

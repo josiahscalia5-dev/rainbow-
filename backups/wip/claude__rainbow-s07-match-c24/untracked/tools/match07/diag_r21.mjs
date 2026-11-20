@@ -17,7 +17,7 @@ try {
   page.on('pageerror', (e) => console.error('pageerror', e.message));
   page.on('console', (m) => { const t = m.text(); if (m.type() === 'error' || /m07/.test(t)) console.error('console', t.slice(0, 300)); });
   await page.goto(`${vite.url}/?qa=1&dpr=1&${Q}`);
-  await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 300000 });
+  await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 600000 });
   for (const sh of SHOTS) {
     const st = await page.evaluate(async (sh) => {
       const r = window.__rainbow;
@@ -39,7 +39,7 @@ try {
       window.__hid = hid;
       return { ...r.state(), s0, s1, hidden: hid.length, calls: calls.slice(0, 40), probes, marks: r.course.marks };
     }, sh);
-    await page.screenshot({ path: `${OUT}/${sh.name}.png` });
+    await page.screenshot({ path: `${OUT}/${sh.name}.png`, timeout: 600000 });
     await page.evaluate(() => { for (const o of window.__hid ?? []) o.visible = true; window.__hid = []; });
     log.push({ name: sh.name, ...st });
     console.log(sh.name, 's', st.s, 'lat', st.lat, 'hidden', st.hidden);

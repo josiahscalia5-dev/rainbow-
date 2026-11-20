@@ -13,7 +13,9 @@
   brief `docs/briefs/2026-11-20-r23/LAUNCH_S04_R23.md`). Uncommitted edits only.
 * Step 0 DONE: BEFORE = K23-1 re-rendered with the pinned audit -> `s04_BEFORE_K23-1/` == lead `lead_t2/C2/` 0 px in all 7 shots.
 * Step 1 DONE — GOOD IMPROVEMENT (details below, "s04 Step 1"). New candidate **K23-S1** = `s1_arrows/QUERY_K23-S1.txt`.
-* NOW: step 2 (clean water edge: low bubbly foam bank instead of the hard straight lilac line; glossy long white streaks).
+* Step 2 NEARLY DONE (`s2_edge/`, switches only, no new code; query `s2_edge/QUERY_K23-S2.txt`): lower, cleaner pink edges
+  (`m04ry=0.45`) + continuous LOW foam banks on both water edges down the tunnel (`m04bbd` window 30-40 u, on the edge, sunk,
+  denser) + softer lilac fringe. 7-shot NEW audit done (start 0 px). Running: clip + gameplay. Next: step 3 = glossy lane water.
 * User confirmation ~09:55 UTC (via coordinator): "continue with the cleaner, lower pink edges. Keep the gold visible, the blue
   water clear, and show Benny travelling naturally through all five arrows." Never pink walls / wide pink.
 * QA tools (mine): `s04_tools/` (pinned audit / clip copies with a 300 s screenshot timeout, probes, variant runner `variant.sh`,

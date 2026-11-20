@@ -32,7 +32,7 @@ try {
     page.on('console', (m) => { if (m.type() === 'error') log.errors.push(`[${id}] ${m.text()}`); });
     page.on('pageerror', (e) => log.errors.push(`[${id}] pageerror ${e.message}`));
     await page.goto(`${vite.url}/?qa=1&dpr=1${typeof opt.q === "string" ? "&" + opt.q : ""}`);
-    await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 240000 });
+    await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 600000 });
     const err = await page.evaluate(() => window.__error);
     if (err) throw new Error(err);
     if (!log.renderer) log.renderer = await page.evaluate(() => { const g = document.querySelector('canvas').getContext('webgl2'); const d = g?.getExtension('WEBGL_debug_renderer_info'); return d ? g.getParameter(d.UNMASKED_RENDERER_WEBGL) : 'unknown'; });
@@ -42,7 +42,7 @@ try {
     await page.evaluate(() => document.fonts.ready);
     await page.waitForTimeout(250);
     const name = /^\d\d$/.test(id) ? `${id}.png` : `${id}.png`;
-    await page.screenshot({ path: `${outDir}/${name}`, timeout: 180000 });
+    await page.screenshot({ path: `${outDir}/${name}`, timeout: 600000 });
     const stats = await page.evaluate(() => window.__rainbow.stats());
     // The first frame after load also counts one-time GPU work (three converts each cube env map to PMREM on
     // first use). Render once more (after the screenshot) and report that per-frame cost as calls/tris.

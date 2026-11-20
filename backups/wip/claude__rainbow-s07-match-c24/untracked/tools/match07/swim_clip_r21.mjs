@@ -18,7 +18,7 @@ try {
   const page = await browser.newPage({ viewport: { width: 432, height: 768 }, deviceScaleFactor: 1 });
   page.on('pageerror', (e) => console.error('pageerror', e.message));
   await page.goto(`${vite.url}/?qa=1&dpr=1${Q ? '&' + Q : ''}`);
-  await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 300000 });
+  await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 600000 });
   // r23: CLIP_GOTO=<stage> CLIP_S=<abs s> starts from that stage's checkpoint and rides to s (e.g. from 06 to just before the 07 entrance)
   if (process.env.CLIP_GOTO) await page.evaluate(([id, sT]) => { const r = window.__rainbow; r.goto(id); let k = 0; while (r.state().s < sT && k < 12000) { r.step(1); k++; } }, [process.env.CLIP_GOTO, Number(process.env.CLIP_S)]);
   else await page.evaluate(([id, fr]) => { const r = window.__rainbow; r.goto(id); const s0 = r.state().s, s1 = r.course.stage(id).s1; const tS = s0 + fr * (s1 - s0); let k = 0; while (r.state().s < tS && k < 6000) { r.step(1); k++; } }, [SCREEN, Number(FR)]);
@@ -28,7 +28,7 @@ try {
     const dir = ph < 0.3 ? null : ph < 0.55 ? -1 : ph < 0.8 ? 1 : null;
     await page.evaluate(([t, dt, dir]) => { const R = window.__rainbow; R.setSteer(dir); R.freezeAt(t); R.step(Math.round(dt * 60), 1 / 60); R.freezeAt(t + dt); R.step(1, 1e-4); }, [12 + i / fps, 1 / fps, dir]);
     await page.evaluate(() => window.__rainbow.drawList());
-    await page.screenshot({ path: `${OUT}/${String(i).padStart(4, '0')}.png` });
+    await page.screenshot({ path: `${OUT}/${String(i).padStart(4, "0")}.png`, timeout: 600000 });
   }
   console.log('frames', n);
 } finally {
