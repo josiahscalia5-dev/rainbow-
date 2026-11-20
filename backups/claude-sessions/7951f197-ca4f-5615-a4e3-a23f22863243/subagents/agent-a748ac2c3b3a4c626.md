@@ -2636,3 +2636,18 @@ While the clip finishes, I'll implement the per-screen fur exposure (benny20 onl
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/benny && python3 - <<'EOF'\np='src/characters/benny/benny20.ts'\ns=open(p).read()\na=\"    const e = (stage && EXPO20[stage]) || [1, 1, 1];\"\nassert s.count(a)==1\ns=s.replace(a,\"    // opt-in `&b20expo=1` until proven in motion on 05–07 (step-1 pictures were made without it)\\n    const e = (EXPO_ON && stage && EXPO20[stage]) || [1, 1, 1];\")\na=\"/** beanie geometry on top of benny05's HAT05\"\ns=s.replace(a,\"const EXPO_ON = n('expo', 0) > 0;\\n\\n\"+a,1)\nopen(p,'w').write(s)\nEOF\ntimeout 300 npx tsc --noEmit -p . && echo TSC_OK && O=qa/benny/r20/step1_fur  …[+666 chars]`
 
+### 🧑 User — 2026-11-20T00:18:27.375Z
+
+> ↩︎ result: TSC_OK
+> 31
+> 4.000000
+
+### 🤖 Claude — 2026-11-20T00:18:41.384Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && cat >> qa/benny/r19b/PROGRESS.md <<'EOF'\n\n## (r20) Step 1 RESULT — `&benny20=1` fur colour + texture: GOOD IMPROVEMENT on 04 (start, f03, f06, steering, clip); 05 / 06 / 07: neon gone but fur now too DARK there → step 2\nFolder `qa/benny/r20/step1_fur/`: `APPROVED_closeup_f00.png` (lead's crop), `BEFORE_closeup_*.png` (v3), NEW `closeup_*.png`,\nfull frames `f00_start / f03_forward3u / f06_forward6u / s_left_steer / s_right_steer.png` (+ `_mask.png`), `s05/s06/s07_start`\nand `_swim3u.png`, clip `swim_clip_half.mp4` (4 s, 432×768; BEFORE clip `qa/match/ …[+2087 chars]`
+
+### 🧑 User — 2026-11-20T00:18:46.327Z
+
+> ↩︎ result: bade59419f93a04e4b7bf6bf8f94e3791c18a94b
+> bade59419f93a04e4b7bf6bf8f94e3791c18a94b	refs/heads/claude/rainbow-benny-c21
+

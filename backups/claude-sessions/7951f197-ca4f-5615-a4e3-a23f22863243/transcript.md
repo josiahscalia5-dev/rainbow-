@@ -1961,3 +1961,26 @@ The water worker reports the bank-foam step as done. I'll check the pictures mys
 >   /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/s04_step2/4_NEW_steering_right.png → file_uuid: e6e6d2f4-79e4-4ed0-b702-bb85f0d3cd3f
 >   /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/s04_step2/5_NEW_swim_clip.mp4 → file_uuid: aceabd8e-45ef-40cc-ac30-03e1cf5ab18c
 
+### 🧑 User — 2026-11-20T00:18:39.365Z
+
+> ↩︎ result: "pushed_verified": true,
+>   "commit": "551c2ca31e73df1919de8bcb91a518e62769ea07",
+> AUTOSAVE OK | branch ccr-681a37bb-5jqfbu | scheduler daemon | last verified backup 2026-11-20T00:18:22+00:00 (0.3 min ago) | local 551c2ca remote 551c2ca (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-20T00:18:44.228Z
+
+The second Screen 04 piece is done, and I checked it at full size. I've sent five files: your approved picture, before and new while swimming, new while steering right, and a swim clip.
+
+**The bank foam is now bubble heaps.**
+- **Before:** small white cloud puffs beside the river.
+- **Now:** low, wide heaps of big round glossy bubbles in a pearly lilac-white, like the bubble heaps beside Benny in your painting. They're 3D bubbles made in Blender and placed along both banks. They fade in smoothly as the swim starts and shrink away near the camera, so nothing pops in your face.
+- **Checks:** the start view is pixel-for-pixel unchanged, the coins are the same, and the game stays light enough for phones.
+- **Still different:** the bubbles look a little matte. Yours have brighter white sparkles and faint rainbow rims. Also, when Benny steers hard into a bank, the big heap gets close to covering his side. Both are on the worker's list.
+
+**What's next:**
+- **Water worker:** making the pink water on the tunnel walls crisp and glossy instead of hazy.
+- **Rings worker:** your marked fix: removing the bumps, adding many fine ribs and making the gold polished yellow.
+- **Benny worker:** still on the fur colour and texture.
+
+Both kept steps sit behind their switches. Once the rings and Benny steps are proven, I'll combine everything into one updated Screen 04 and show it to you in motion. Saved and verified on GitHub (`551c2ca`).
+
