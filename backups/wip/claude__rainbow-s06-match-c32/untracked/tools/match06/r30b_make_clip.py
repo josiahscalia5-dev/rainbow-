@@ -19,8 +19,8 @@ for m in meta:
     im = Image.open(f"{FR}/{m['i']:04d}.png").convert('RGB').resize((540, 960), Image.LANCZOS)
     c = Image.new('RGB', (540, 1024), (20, 12, 34)); c.paste(im, (0, 64)); d = ImageDraw.Draw(c)
     t, col = part(m['s'])
-    d.text((10, 6), f'SCREEN 06 r30b candidate - real gameplay, no cuts ({QN})', font=f2, fill='white')
-    d.text((10, 34), t, font=f1, fill=col); d.text((440, 6), f"t {m['t']:5.2f}s", font=f2, fill=(200, 200, 230))
+    d.text((10, 6), 'Screen 06 r30b - real gameplay, no cuts', font=f2, fill='white'); d.text((440, 6), f"t {m['t']:5.2f}s", font=f2, fill=(200, 200, 230))
+    d.text((10, 34), t, font=f2 if len(t) > 40 else f1, fill=col)
     c.save(f"{lab}/{m['i']:04d}.png")
 for spd, pts in (('1x', '1.0'), ('0.5x', '2.0')):
     subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-framerate', '24', '-i', f'{lab}/%04d.png', '-vf', f'setpts={pts}*PTS', '-r', '24',

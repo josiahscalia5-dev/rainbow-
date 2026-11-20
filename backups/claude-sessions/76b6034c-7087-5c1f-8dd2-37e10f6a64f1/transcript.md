@@ -3931,3 +3931,121 @@ None of this is approved; final approval is yours.
 
 > 🔧 **Bash** `{"command": "D=/home/user/rainbow-/qa/match/06/r30b/proof; cd /home/user/wt/s06 && python3 -I tools/match06/r30b_make_clip.py $D/clip_frames $D 396.5534884455474 \"query QUERY_SB_NEW.txt\" && ls -la $D/*.mp4 $D/HANDOFF_06_to_07.jpg && cat $D/clip_info.json | head -30", "description": "Encode the clip and build the handover sheet", "timeout": 600000}`
 
+### 🧑 User — 2026-11-20T23:37:21.673Z
+
+> ↩︎ result: done 409 frames 17.04 s
+> -rw-r--r-- 1 root root   975748 Nov 20 23:37 /home/user/rainbow-/qa/match/06/r30b/proof/HANDOFF_06_to_07.jpg
+> -rw-r--r-- 1 root root 27621958 Nov 20 23:37 /home/user/rainbow-/qa/match/06/r30b/proof/SCREEN06_r30b_into_07_0.5x.mp4
+> -rw-r--r-- 1 root root 22415314 Nov 20 23:36 /home/user/rainbow-/qa/match/06/r30b/proof/SCREEN06_r30b_into_07_1x.mp4
+> {
+>  "frames": 409,
+>  "seconds": 17.04,
+>  "s07": 396.5534884455474,
+>  "handoff_frames": [
+>   {
+>    "i": 334,
+>    "t": 13.917,
+>    "steer": null,
+>    "s": 383.528,
+>    "stage": "06",
+>    "lat": 0,
+>    "coins": 1800
+>   },
+>   {
+>    "i": 352,
+>    "t": 14.667,
+>    "steer": null,
+>    "s": 393.461,
+>    "stage": "06",
+>    "lat": 0,
+>    "coins": 1810
+>   },
+>   {
+>    "i": 364,
+>    "t": 15.167,
+>    "steer": null,
+>    "s": 400.39,
+>    "stage": "07",
+>    "lat": 0,
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T23:37:25.160Z
+
+Encoded: a 17-second normal-speed video, a half-speed version, and the handover sheet. Checking the handover frames myself before sending:
+
+### 🤖 Claude — 2026-11-20T23:37:25.660Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r30b/proof/HANDOFF_06_to_07.jpg"}`
+
+### 🧑 User — 2026-11-20T23:37:25.836Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-20T23:37:25.832Z
+
+[Image: original 2240x1094, displayed at 2000x977. Multiply coordinates by 1.12 to map to original image.]
+
+### 🤖 Claude — 2026-11-20T23:37:40.903Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='tools/match06/r30b_make_clip.py'; s=open(p).read()\ns=s.replace(\"\"\"    d.text((10, 6), f'SCREEN 06 r30b candidate - real gameplay, no cuts ({QN})', font=f2, fill='white')\n    d.text((10, 34), t, font=f1, fill=col); d.text((440, 6), f\"t {m['t']:5.2f}s\", font=f2, fill=(200, 200, 230))\"\"\",\n\"\"\"    d.text((10, 6), 'Screen 06 r30b - real gameplay, no cuts', font=f2, fill='white'); d.text((440, 6), f\"t {m['t']:5.2f}s\", font=f2, fill=(200, 200, 230))\n    d.text((10, 34), t, font=f2 if len(t) > 40 else f1, fill=col)\"\"\")\ns=s. …[+671 chars]`
+
+### 🧑 User — 2026-11-20T23:39:14.417Z
+
+> ↩︎ result: done 409 frames 17.04 s
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T23:39:18.592Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/hdr.png"}`
+
+### 🧑 User — 2026-11-20T23:39:18.612Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T23:39:22.005Z
+
+The labels are clean now. Sending you the continuous gameplay clip (normal speed and half speed) and the handover sheet:
+
+### 🤖 Claude — 2026-11-20T23:39:24.160Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/match/06/r30b/proof/SCREEN06_r30b_into_07_1x.mp4", "/home/user/rainbow-/qa/match/06/r30b/proof/SCREEN06_r30b_into_07_0.5x.mp4", "/home/user/rainbow-/qa/match/06/r30b/proof/HANDOFF_06_to_07.jpg"], "caption": "Screen 06 new candidate: one uninterrupted real-gameplay run, 17 s at normal speed (plus a half-speed copy), from the crest through the gold band and the winding slide into Screen 07. The sheet shows the exact moment the title switches to 07.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-20T23:39:26.468Z
+
+> ↩︎ result: 3 files delivered to user.
+>   /home/user/rainbow-/qa/match/06/r30b/proof/SCREEN06_r30b_into_07_1x.mp4 → file_uuid: bec525d4-4108-4398-816f-45b6ea1724d1
+>   /home/user/rainbow-/qa/match/06/r30b/proof/SCREEN06_r30b_into_07_0.5x.mp4 → file_uuid: 74efc8e7-8728-4c4d-b377-7c11d19ca540
+>   /home/user/rainbow-/qa/match/06/r30b/proof/HANDOFF_06_to_07.jpg → file_uuid: 791480d0-cb06-4da6-88e8-d2695f5647ee
+
+### 🤖 Claude — 2026-11-20T23:39:29.700Z
+
+Delivered. Checking whether the steering clip has finished:
+
+### 🤖 Claude — 2026-11-20T23:39:30.892Z
+
+> 🔧 **Bash** `{"command": "D=/home/user/rainbow-/qa/match/06/r30b/proof; ls $D/steer_frames | wc -l; tail -1 $D/steer.log | cut -c1-100; [ -f $D/steer_frames/frames.json ] && echo STEER_DONE || echo still_rendering; pgrep -f r30_clip.mjs >/dev/null && echo \"renderer running\"", "description": "Check the steering clip status"}`
+
+### 🧑 User — 2026-11-20T23:39:30.944Z
+
+> ↩︎ result: 807
+> frame 792 { s: 310.704, stage: '06', lat: 2.95, coins: 1770 }
+> still_rendering
+> renderer running
+
+### 🤖 Claude — 2026-11-20T23:39:41.242Z
+
+The steering clip is still rendering. Benny is zig-zagging across the slide, sometimes hard against the foam wall, which slows his progress, so it's taking longer than the main clip. I'll encode and send it as soon as it finishes; the watcher wakes me automatically.
+
+The continuous clip and the handover sheet are with you. In the clip, Benny swims through the purple tunnel with broad gold bands, along the winding rainbow slide, and into Screen 07 without a cut.
+
+Two things in the clip still don't match:
+- **The last second before the doorway** is already inside the opening of Screen 07's own tube, with its paddles and black slots.
+- **At the entry** the water, foam and camera change to Screen 07's current pink version, which isn't your purple 07 picture.
+
+The proof stills, sheets, videos, candidate source and notes are all saved to GitHub by the 5-minute autosave.
+
+### 🧑 User — 2026-11-20T23:39:44.146Z
+
+Stop hook feedback:
+[command hook 2]: There are untracked files in the repository. Please commit and push these changes to the remote branch.
+
