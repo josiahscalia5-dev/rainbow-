@@ -1,0 +1,93 @@
+{
+  "source_commit": "7543647ae9ea8b86589e3684013969336dd2d848",
+  "workflow_commit": "1d71646f1319a18f785dc911372896bb0489917a",
+  "workflow_run_id": 44821500723,
+  "workflow_job_id": 136583226386,
+  "artifact_id": 14671882622,
+  "artifact_sha256": "7bc601f6cf7728dd631c8d3ae71a5e904ca10024f90221497a48cf0748a756a8",
+  "artifact_bytes": 28733754,
+  "asset_count": 11,
+  "asset_bytes": 28728784,
+  "files": [
+    {
+      "path": "assets/textures/match06/plate06_hybrid.png",
+      "bytes": 2597147,
+      "git_blob_sha": "16114fb59f5cc0914dca937f1ea3dbb6cc49d87b",
+      "kind": "png",
+      "sha256": "ab64b2f51205ebe40ae7bc573767bc818cc06cb543dbaad4a45071bc723113fa"
+    },
+    {
+      "path": "assets/textures/match08/plate08_clean.png",
+      "bytes": 6591567,
+      "git_blob_sha": "3ca417e0e8795c004b8e9e85d9c3b0749ae6471e",
+      "kind": "png",
+      "sha256": "b66ecf984a565122e79912fa22b5a96916298c093334d7bf316df8c88f763d57"
+    },
+    {
+      "path": "assets/textures/match08/plate08_hybrid.png",
+      "bytes": 6078171,
+      "git_blob_sha": "94466024b768ca4c52c9d693ca638b894d7682d4",
+      "kind": "png",
+      "sha256": "f7f7230c31fb5e9c252a6c716a1af0889109c137a99d3be557345eea22b3c496"
+    },
+    {
+      "path": "assets/textures/tunnel05/wall05.png",
+      "bytes": 1633057,
+      "git_blob_sha": "b05f3fe7f5a9d3628e383a367799551b709f0477",
+      "kind": "png",
+      "sha256": "f67bb1759e80a3bd901f2aa5c79d65f8e0750e96d17476f79e3762d0209b1342"
+    },
+    {
+      "path": "assets/textures/water05/proj05_E.png",
+      "bytes": 2029538,
+      "git_blob_sha": "7f09a737bb28033ac7451b6e0f4dac58bc99234f",
+      "kind": "png",
+      "sha256": "d559ee789ec5ecdfb527ecece1417006b434643e80b75ddb3d114de214bbbb4a"
+    },
+    {
+      "path": "assets/textures/water05/proj05_T2.png",
+      "bytes": 1502225,
+      "git_blob_sha": "aaf4aeb8735be522693bf3ce3bde74ae4493067c",
+      "kind": "png",
+      "sha256": "2f355a1396dda7bb2202555e5c2c875bec1e17fd2ba0ce4b28af69c34f6a2584"
+    },
+    {
+      "path": "assets/textures/match06/tile_hole06.png",
+      "bytes": 1271412,
+      "git_blob_sha": "d6b117fc5be2a14e996932f4bb98934d27394a09",
+      "kind": "png",
+      "sha256": "6e19bdfb5c70c1537f0ace4b0533796888c75741875e7506b976363cc637a936"
+    },
+    {
+      "path": "assets/textures/match06/tile_hole06b.png",
+      "bytes": 1360127,
+      "git_blob_sha": "a4a4e9b90e74d3e251cae343f2d97afaf09f7ea1",
+      "kind": "png",
+      "sha256": "2cae107c4c88e06e208120f92ba40dd58e149b756a4ec56114b9e9a72663a3c5"
+    },
+    {
+      "path": "assets/models/benny.glb",
+      "bytes": 1126892,
+      "lfs_sha256": "40633fdd02014c6434bb61811c03bc0c61a8d456c30fbb9cd62bb9a91a0198a1",
+      "kind": "glb",
+      "sha256": "40633fdd02014c6434bb61811c03bc0c61a8d456c30fbb9cd62bb9a91a0198a1"
+    },
+    {
+      "path": "assets/models/lids05.glb",
+      "bytes": 992168,
+      "lfs_sha256": "f2cd3abeaaf219635321c1f2ffead20eb91403d73ff7ef3173380a0ecedbb22c",
+      "kind": "glb",
+      "sha256": "f2cd3abeaaf219635321c1f2ffead20eb91403d73ff7ef3173380a0ecedbb22c"
+    },
+    {
+      "path": "assets/models/rainbow_girl.glb",
+      "bytes": 3546480,
+      "lfs_sha256": "fa846773af9a593d090ec2c0ac4ea69812306fc334439b05f900bc9311f92528",
+      "kind": "glb",
+      "sha256": "fa846773af9a593d090ec2c0ac4ea69812306fc334439b05f900bc9311f92528"
+    }
+  ],
+  "restored_local": true,
+  "gameplay_rendered": false,
+  "verifiedUTC": "2026-11-20T21:36:54.316479+00:00"
+}

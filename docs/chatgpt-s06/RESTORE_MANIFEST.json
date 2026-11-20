@@ -45,39 +45,20 @@
       "tools/match06/r29_old_samples.mjs",
       "tools/match06/r29_route_probe.mjs"
     ],
-    "locallyVerifiedPaths": [
-      "assets/textures/match06/coins06deep.json",
-      "assets/textures/match06/hole06.json",
-      "assets/textures/match06/leg06deep.json",
-      "assets/textures/match06/route06deep.json",
-      "assets/textures/match06/tile_hole06w.png",
-      "tools/match06/lead23_audit_slow.mjs",
-      "tools/match06/make_hole06.py",
-      "tools/match06/r23_audit.mjs",
-      "tools/match06/r23_ripdump.mjs",
-      "tools/match06/r23_swim.mjs",
-      "tools/match06/r23_tunprobe.mjs",
-      "tools/match06/r23_vite.mjs",
-      "tools/match06/r25_frames.mjs",
-      "tools/match06/r25_holedump.mjs",
-      "tools/match06/r25_open_clip.mjs",
-      "tools/match06/r25_unwrap06.py",
-      "tools/match06/r28_probe.mjs",
-      "tools/match06/r28_quick.mjs",
-      "tools/match06/r29_coins_deep.mjs",
-      "tools/match06/r29_design_leg.py",
-      "tools/match06/r29_design_route.py",
-      "tools/match06/r29_multi.mjs",
-      "tools/match06/r29_old_samples.mjs",
-      "tools/match06/r29_route_probe.mjs"
-    ],
+    "locallyVerifiedPaths": 26,
     "linkedRemoteBlobsWithoutLocalDownload": [
       "assets/textures/match06/tile_hole06.png",
       "assets/textures/match06/tile_hole06b.png"
-    ]
+    ],
+    "linkedRemoteWithoutLocalDownload": []
   },
   "localAssetStatus": {
-    "missingImagePaths": [
+    "missingImagePaths": [],
+    "modelLfsPointersWithoutModelPayload": [],
+    "completePlayableRuntimeVerified": false,
+    "missingImagePayloads": [],
+    "lfsPointersWithoutModelPayloads": [],
+    "restoredOriginalAssets": [
       "assets/textures/match06/plate06_hybrid.png",
       "assets/textures/match08/plate08_clean.png",
       "assets/textures/match08/plate08_hybrid.png",
@@ -85,14 +66,11 @@
       "assets/textures/water05/proj05_E.png",
       "assets/textures/water05/proj05_T2.png",
       "assets/textures/match06/tile_hole06.png",
-      "assets/textures/match06/tile_hole06b.png"
-    ],
-    "modelLfsPointersWithoutModelPayload": [
+      "assets/textures/match06/tile_hole06b.png",
       "assets/models/benny.glb",
       "assets/models/lids05.glb",
       "assets/models/rainbow_girl.glb"
-    ],
-    "completePlayableRuntimeVerified": false
+    ]
   },
   "worldLabs": {
     "websiteSignInVerifiedByLead": true,
@@ -104,5 +82,15 @@
     "playableCaptureVerified": false,
     "localBrowserLaunch": "blocked by socket restrictions",
     "note": "This checkpoint preserves restoration work and QA tooling. It does not establish visual likeness or a working Android build."
+  },
+  "assetRecovery": {
+    "receipt": "docs/chatgpt-s06/ASSET_RECOVERY_RECEIPT.json",
+    "workflowCommit": "1d71646f1319a18f785dc911372896bb0489917a",
+    "runId": 44821500723,
+    "artifactId": 14671882622,
+    "restoredAssets": 11,
+    "bytes": 28728784,
+    "exactOriginalHashesVerified": true,
+    "verifiedUTC": "2026-11-20T21:36:54.316479+00:00"
   }
 }

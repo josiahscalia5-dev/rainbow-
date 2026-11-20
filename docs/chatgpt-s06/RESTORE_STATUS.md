@@ -10,7 +10,7 @@ This is an isolated restoration and tooling checkpoint. It is not an approved vi
 - Pinned lead snapshot: `f090393f19334ad2fd8a20325a7d6289eee339e8`.
 - Worker snapshot: `backups/wip/claude__rainbow-s06-match-c30`, saved at `2026-11-20T20:02:13+00:00`.
 - Six patched source files are restored from that snapshot and included in this checkpoint.
-- All 26 worker-untracked paths are linked into the candidate using their existing repository blobs; 24 have also been downloaded and verified locally.
+- All 26 worker-untracked paths are linked into the candidate using their existing repository blobs; all 26 have also been downloaded and verified locally.
 - Original worker metadata and tracked patch are preserved alongside this status document.
 
 ## Runtime preparation
@@ -20,24 +20,22 @@ This is an isolated restoration and tooling checkpoint. It is not an approved vi
 - `tools/chatgpt/s06-capture.mjs` records real game frames and simulation metadata, including steering and the crossing into Screen 07.
 - Both scripts passed syntax checks. Local browser launch is blocked by socket restrictions; no successful gameplay capture is claimed.
 
-## Incomplete local asset restoration
+## Exact local asset restoration completed
 
-The following eight image payloads are still missing locally. Their existing remote content is preserved; this checkpoint does not claim they were downloaded:
+The eight previously missing images and three original GLB model payloads are now restored. No replacement artwork or regenerated models were used.
 
-- `assets/textures/match06/plate06_hybrid.png`.
-- `assets/textures/match08/plate08_clean.png`.
-- `assets/textures/match08/plate08_hybrid.png`.
-- `assets/textures/tunnel05/wall05.png`.
-- `assets/textures/water05/proj05_E.png`.
-- `assets/textures/water05/proj05_T2.png`.
-- `assets/textures/match06/tile_hole06.png`.
-- `assets/textures/match06/tile_hole06b.png`.
+- Recovery source: `7543647ae9ea8b86589e3684013969336dd2d848`.
+- Workflow commit: `1d71646f1319a18f785dc911372896bb0489917a`.
+- GitHub Actions run: `44821500723`; job `136583226386` succeeded.
+- Private artifact: `14671882622`, containing exactly 11 original assets plus the verification manifest.
+- Restored asset bytes: `28,728,784`.
+- All eight images matched their original Git blob hashes and sizes. All three models matched their original LFS SHA-256 digests and sizes, with real GLB headers.
+- The archive digest and every extracted file were independently verified again locally before restoration.
+- Full paths, sizes, and hashes: `ASSET_RECOVERY_RECEIPT.json` beside this document.
 
-The following three local files are Git LFS pointers, not restored model payloads:
+The workflow has only read permission and is restricted to its own path on the isolated branch. It does not build, render, deploy, or use custom secrets. The artifact has one-day retention; the authoritative asset content remains in the pinned Git/LFS source.
 
-- `assets/models/benny.glb`.
-- `assets/models/lids05.glb`.
-- `assets/models/rainbow_girl.glb`.
+These 11 recovery gaps are resolved. Successful gameplay rendering remains to be demonstrated.
 
 ## World Labs and visual status
 
