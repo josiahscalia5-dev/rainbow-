@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 19803,
-   "sha256": "c727476d56469e8bd97da0bc1c0ecc4e32b1c0dcd27aa76bc7beb7709730d1be"
+   "sha256": "347888150096e98607e0325b6a61b1510b07c11244aabef48d33196a4bd75ec8"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -629,7 +629,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 2632,
-   "sha256": "b5b1a70d074a5db92ba9607a92e06c0f420a92dfaf3008d9b8a65906468adfda"
+   "sha256": "6174a5c1775abecb2dfc065afbcfc194df6a2d36ac9cdd6f1110d160b17a77a7"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -1624,12 +1624,12 @@
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c22/INFO.json",
    "bytes": 1319,
-   "sha256": "ddc349ababcb75775b8ea0c349d02e0e183ba78bdf17c859d18ad9d242ac5ab5"
+   "sha256": "b1b39ae86cf56139243a1daedc8423b623e32a32262eec3fa1bdc881ffec32b6"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c22/tracked.patch",
-   "bytes": 18478,
-   "sha256": "bd211d5544b6d9e3d63adf31b1f1e6429a9772409b58f381018ea278b9d54f99"
+   "bytes": 18658,
+   "sha256": "41a7195e0d394cdd061dc31ab460e31b156e56f77992356cef55692462853374"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c22/untracked/qa/match/04/r19b/ringpaint/preview_r20/1_APPROVED.png",

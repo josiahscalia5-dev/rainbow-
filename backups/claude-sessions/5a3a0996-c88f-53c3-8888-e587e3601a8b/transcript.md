@@ -1834,3 +1834,231 @@ That line is still there, so the cause is something else. Let me sample the pixe
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && python3 - <<'EOF'\np='src/world/match04m4.ts'; s=open(p).read()\ndef rep(a,b,cnt=1):\n    global s\n    assert s.count(a)==cnt, (a[:70], s.count(a)); s=s.replace(a,b)\nrep(\"\"\"          float rimW = clamp(max(uRSoft.z / ribW, 2.5 * fx), 0.0, 0.45); // the rim's rounded roll-off (>= 2.5 px)\"\"\",\"\"\"          float rimW = clamp(max(uRSoft.z / ribW, 3.5 * fx), 0.0, 0.45); // the rim's rounded roll-off (>= 3.5 px)\"\"\")\nrep(\"\"\"          ribC = u0L + rWL * (1.0 - 1.15 * clamp(max(uRSoft.z / rWL, 2.5 * fu / rWL), 0.0, 0.45));\"\"\",\"\"\"          rib …[+996 chars]`
 
+### 🧑 User — 2026-11-20T01:29:09.796Z
+
+> ↩︎ result: ok
+> APPROVED inner rings   luma p5   81 p25   99 p50  116 p75  147 p95  219 mean  128 | <60 0.46% | violet/pink/blue 14.3% | hard steps 89
+> b0 marked area         luma p5   75 p25  102 p50  127 p75  162 p95  229 mean  136 | <60 0.89% | violet/pink/blue 16.2% | hard steps 761
+> a7 marked area         luma p5   85 p25   97 p50  117 p75  141 p95  174 mean  122 | <60 0.04% | violet/pink/blue 20.0% | hard steps 170
+> b0 whole tunnel        luma p5   69 p25   98 p50  120 p75  153 p95  219 mean  129 | <60 3.17% | violet/pink/blue 27.3% | hard steps 1936
+> a7 whole tunnel        luma p5   72 p25   94 p50  114 p75  137 p95  184 mean  119 | <60 2.92% | violet/pink/blue 27.8% | hard steps 399
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:29:13.034Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r/z4_b0_a7.png"}`
+
+### 🧑 User — 2026-11-20T01:29:13.054Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T01:29:25.979Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && grep -n \"constructor\\|_pixelRatio = \\|samples\\|HalfFloatType\" node_modules/three/examples/jsm/postprocessing/EffectComposer.js | head -12; grep -n '\"version\"' node_modules/three/package.json", "description": "Check EffectComposer render-target handling"}`
+
+### 🧑 User — 2026-11-20T01:29:26.026Z
+
+> ↩︎ result: 3:	HalfFloatType,
+> 15:	constructor( renderer, renderTarget ) {
+> 19:		this._pixelRatio = renderer.getPixelRatio();
+> 27:			renderTarget = new WebGLRenderTarget( this._width * this._pixelRatio, this._height * this._pixelRatio, { type: HalfFloatType } );
+> 174:			this._pixelRatio = this.renderer.getPixelRatio();
+> 214:		this._pixelRatio = pixelRatio;
+> 3:  "version": "0.170.0",
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:29:30.093Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && sed -n 15,45p node_modules/three/examples/jsm/postprocessing/EffectComposer.js; sed -n 165,180p node_modules/three/examples/jsm/postprocessing/EffectComposer.js", "description": "Read EffectComposer constructor and reset"}`
+
+### 🧑 User — 2026-11-20T01:29:30.141Z
+
+> ↩︎ result: constructor( renderer, renderTarget ) {
+> 
+> 		this.renderer = renderer;
+> 
+> 		this._pixelRatio = renderer.getPixelRatio();
+> 
+> 		if ( renderTarget === undefined ) {
+> 
+> 			const size = renderer.getSize( new Vector2() );
+> 			this._width = size.width;
+> 			this._height = size.height;
+> 
+> 			renderTarget = new WebGLRenderTarget( this._width * this._pixelRatio, this._height * this._pixelRatio, { type: HalfFloatType } );
+> 			renderTarget.texture.name = 'EffectComposer.rt1';
+> 
+> 		} else {
+> 
+> 			this._width = renderTarget.width;
+> 			this._height = renderTarget.height;
+> 
+> 		}
+> 
+> 		this.renderTarget1 = renderTarget;
+> 		this.renderTarget2 = renderTarget.clone();
+> 		this.renderTarget2.texture.name = 'EffectComposer.rt2';
+> 
+> 		this.writeBuffer = this.renderTarget1;
+> 		this.readBuffer = this.renderTarget2;
+> 
+> 		this.renderToScreen = true;
+> 
+> 		this.renderer.setRenderTarget( currentRenderTarget );
+> 
+> 	}
+> 
+> 	reset( renderTarget ) {
+> 
+> 		if ( renderTarget === undefined ) {
+> 
+> 			const size = this.renderer.getSize( new Vector2() );
+> 			this._pixelRatio = this.renderer.getPixelRatio();
+> 			this._width = size.width;
+> 			this._height = size.height;
+> 
+> 			renderTarget = this.renderTarget1.clone();
+> 			renderTarget.setSize( this._width * this._pixelRati …[+80 chars]
+
+### 🤖 Claude — 2026-11-20T01:29:37.299Z
+
+In this three.js version (0.170) the composer picks up the pixel ratio by itself, so a multisampled off-screen target is a small, safe change. Adding it behind its own switch:
+
+### 🤖 Claude — 2026-11-20T01:29:40.402Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/game/Game.ts", "old_string": "  const composer = new EffectComposer(renderer);\n  composer.addPass(new RenderPass(scene, camera));", "new_string": "  // r21 `?msaa=4` (Screen 04 ring edges, 2026-11-20): the scene is drawn into the composer's off-screen target, which has\n  // NO multisampling, so the renderer's `antialias: true` never reaches the 3D edges (stair-stepped silhouettes: the washer\n  // rim's inner edge, the river's cut edge, coins). With the switch the scene target is multisampled (N samples). Off\n  // (default): unchan …[+286 chars]`
+
+### 🧑 User — 2026-11-20T01:29:40.418Z
+
+> ↩︎ result: <tool_use_error>File has not been read yet. Read it first before writing to it.</tool_use_error>
+
+### 🤖 Claude — 2026-11-20T01:29:46.050Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && npx tsc --noEmit -p . 2>&1|tail -3; S=/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r; Q=$(cat qa/match/04/r19b/ringpaint/preview_r20/QUERY_preview.txt)\nSH='[[\"f06\",84.183,null,10],[\"f10\",88.4,null,10],[\"sR\",84.183,1,10]]'\ntimeout 600 node tools/match04/rings21.mjs $S/a7m \"$Q&m04rsoft=1&msaa=4\" \"$SH\" 2>&1 | grep -E \"rror|^f06\" | head -3\npython3 /tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/stats04.py a7 a7m\ncd $S && python3 -c \"\nfrom PIL import Image\no=Image.new('RGB …[+350 chars]`
+
+### 🧑 User — 2026-11-20T01:30:11.419Z
+
+> ↩︎ result: f06 s 84.413 lat 0 04 coins 1330
+> APPROVED inner rings   luma p5   81 p25   99 p50  116 p75  147 p95  219 mean  128 | <60 0.46% | violet/pink/blue 14.3% | hard steps 89
+> a7 marked area         luma p5   85 p25   97 p50  117 p75  141 p95  174 mean  122 | <60 0.04% | violet/pink/blue 20.0% | hard steps 170
+> a7m marked area        luma p5   85 p25   97 p50  117 p75  141 p95  174 mean  122 | <60 0.04% | violet/pink/blue 20.0% | hard steps 170
+> a7 whole tunnel        luma p5   72 p25   94 p50  114 p75  137 p95  184 mean  119 | <60 2.92% | violet/pink/blue 27.8% | hard steps 399
+> a7m whole tunnel       luma p5   72 p25   94 p50  114 p75  137 p95  184 mean  119 | <60 2.92% | violet/pink/blue 27.8% | hard steps 399
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:30:14.312Z
+
+The edit didn't apply (the file has to be read first), so that run had no anti-aliasing. Redoing it:
+
+### 🤖 Claude — 2026-11-20T01:30:14.972Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04b/src/game/Game.ts", "offset": 60, "limit": 4}`
+
+### 🧑 User — 2026-11-20T01:30:14.991Z
+
+> ↩︎ result: 60	
+> 61	  const camera = new THREE.PerspectiveCamera(66, 9 / 16, 0.05, 1200);
+> 62	  const composer = new EffectComposer(renderer);
+> 63	  composer.addPass(new RenderPass(scene, camera));
+
+### 🤖 Claude — 2026-11-20T01:30:21.760Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04b/src/game/Game.ts", "old_string": "  const composer = new EffectComposer(renderer);\n  composer.addPass(new RenderPass(scene, camera));", "new_string": "  // r21 `?msaa=4` (Screen 04 ring edges, 2026-11-20): the scene is drawn into the composer's off-screen target, which has\n  // NO multisampling, so the renderer's `antialias: true` never reaches the 3D edges (stair-stepped silhouettes: the washer\n  // rim's inner edge, the river's cut edge, coins). With the switch the scene target is multisampled (N samples). Off\n  // (default): unchan …[+286 chars]`
+
+### 🧑 User — 2026-11-20T01:30:21.943Z
+
+> ↩︎ result: The file /home/user/wt/s04b/src/game/Game.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T01:30:26.901Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && npx tsc --noEmit -p . 2>&1|tail -3; S=/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r; Q=$(cat qa/match/04/r19b/ringpaint/preview_r20/QUERY_preview.txt)\nSH='[[\"f06\",84.183,null,10],[\"f10\",88.4,null,10],[\"sR\",84.183,1,10]]'\ntimeout 600 node tools/match04/rings21.mjs $S/a7m \"$Q&m04rsoft=1&msaa=4\" \"$SH\" 2>&1 | grep -E \"rror|^f06\" | head -3\npython3 /tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/stats04.py a7 a7m\ncd $S && python3 -c \"\nfrom PIL import Image\no=Image.new('RGB …[+350 chars]`
+
+### 🧑 User — 2026-11-20T01:31:01.658Z
+
+> ↩︎ result: f06 s 84.413 lat 0 04 coins 1330
+> APPROVED inner rings   luma p5   81 p25   99 p50  116 p75  147 p95  219 mean  128 | <60 0.46% | violet/pink/blue 14.3% | hard steps 89
+> a7 marked area         luma p5   85 p25   97 p50  117 p75  141 p95  174 mean  122 | <60 0.04% | violet/pink/blue 20.0% | hard steps 170
+> a7m marked area        luma p5   85 p25   97 p50  117 p75  141 p95  174 mean  122 | <60 0.04% | violet/pink/blue 19.9% | hard steps 106
+> a7 whole tunnel        luma p5   72 p25   94 p50  114 p75  137 p95  184 mean  119 | <60 2.92% | violet/pink/blue 27.8% | hard steps 399
+> a7m whole tunnel       luma p5   72 p25   94 p50  114 p75  137 p95  184 mean  119 | <60 2.91% | violet/pink/blue 27.8% | hard steps 294
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:31:05.147Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r/z4_msaa.png"}`
+
+### 🧑 User — 2026-11-20T01:31:05.169Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T01:31:32.226Z
+
+> 🔧 **TaskUpdate** `{"taskId": "2", "status": "completed"}`
+
+### 🤖 Claude — 2026-11-20T01:31:32.230Z
+
+> 🔧 **TaskUpdate** `{"taskId": "3", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-20T01:31:32.237Z
+
+> ↩︎ result: Updated task #2 status
+
+### 🧑 User — 2026-11-20T01:31:32.239Z
+
+> ↩︎ result: Updated task #3 status
+
+### 🤖 Claude — 2026-11-20T01:31:37.483Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && S=/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r; Q=$(cat qa/match/04/r19b/ringpaint/preview_r20/QUERY_preview.txt)\nSH='[[\"f00_start\",78.7,null,10],[\"f03\",81.9,null,10],[\"f06_your_camera\",84.183,null,10],[\"f10\",88.4,null,10],[\"f15\",93.5,null,10],[\"steer_left\",84.183,-1,10],[\"steer_right\",84.183,1,10]]'\ntimeout 900 node tools/match04/rings21.mjs $S/FB \"$Q\" \"$SH\" 2>&1 | grep -E \"rror|^(f|s)\" | head -9\ntimeout 900 node tools/match04/rings21.mjs $S/FA \"$Q&m04rsoft=1&msaa=4\" \"$SH\" 2>&1 | grep -E \" …[+467 chars]`
+
+### 🧑 User — 2026-11-20T01:33:15.080Z
+
+> ↩︎ result: f00_start s 78.813 lat 0 04 coins 1330
+> f03 s 82.08 lat 0 04 coins 1330
+> f06_your_camera s 84.413 lat 0 04 coins 1330
+> f10 s 88.613 lat 0 04 coins 1330
+> f15 s 93.513 lat 0 04 coins 1330
+> steer_left s 84.413 lat -1.65 04 coins 1350
+> steer_right s 84.413 lat 1.65 04 coins 1330
+> f00_start s 78.813 lat 0 04 coins 1330
+> f03 s 82.08 lat 0 04 coins 1330
+> f06_your_camera s 84.413 lat 0 04 coins 1330
+> f10 s 88.613 lat 0 04 coins 1330
+> f15 s 93.513 lat 0 04 coins 1330
+> steer_left s 84.413 lat -1.65 04 coins 1350
+> steer_right s 84.413 lat 1.65 04 coins 1330
+> start view BEFORE vs AFTER: tunnel rows max diff 114 pct >8: 0.03
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:33:23.951Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r && python3 -c \"\nfrom PIL import Image\nnames=['f03','f10','f15','steer_left','steer_right']\no=Image.new('RGB',(5*290,2*516+10),'white')\nfor i,n in enumerate(names):\n  o.paste(Image.open('FB/'+n+'.png').convert('RGB').resize((288,512),Image.LANCZOS),(i*290,0))\n  o.paste(Image.open('FA/'+n+'.png').convert('RGB').resize((288,512),Image.LANCZOS),(i*290,526))\no.save('grid_motion.png')\"", "description": "Overview grid of BEFORE (top) and AFTER (bottom) frames"}`
+
+### 🧑 User — 2026-11-20T01:33:24.917Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:33:28.190Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r/grid_motion.png"}`
+
+### 🧑 User — 2026-11-20T01:33:28.410Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T01:33:44.894Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r && python3 -c \"\nfrom PIL import Image\no=Image.new('RGB',(864*2+10,800),'white')\no.paste(Image.open('FB/f10.png').convert('RGB').crop((0,150,864,950)),(0,0)); o.paste(Image.open('FA/f10.png').convert('RGB').crop((0,150,864,950)),(874,0)); o.resize((1738//2*1,400*1)).save('f10_ab.png')\"", "description": "BEFORE/AFTER at f10 upper area"}`
+
+### 🧑 User — 2026-11-20T01:33:45.176Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:33:49.768Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r/f10_ab.png"}`
+
+### 🧑 User — 2026-11-20T01:33:49.788Z
+
+> ↩︎ result: [image]
+

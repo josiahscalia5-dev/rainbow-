@@ -1,3 +1,23 @@
+diff --git a/src/game/Game.ts b/src/game/Game.ts
+index 6a4653f..2a7e591 100644
+--- a/src/game/Game.ts
++++ b/src/game/Game.ts
+@@ -59,7 +59,14 @@ export async function startGame(canvas: HTMLCanvasElement) {
+   scene.add(fill);
+ 
+   const camera = new THREE.PerspectiveCamera(66, 9 / 16, 0.05, 1200);
+-  const composer = new EffectComposer(renderer);
++  // r21 `?msaa=4` (Screen 04 ring edges, 2026-11-20): the scene is drawn into the composer's off-screen target, which has
++  // NO multisampling, so the renderer's `antialias: true` never reaches the 3D edges (stair-stepped silhouettes: the washer
++  // rim's inner edge, the river's cut edge, coins). With the switch the scene target is multisampled (N samples). Off
++  // (default): unchanged.
++  const msaa = Number(qs.get('msaa') ?? 0);
++  const composer = msaa > 0
++    ? new EffectComposer(renderer, new THREE.WebGLRenderTarget(1, 1, { type: THREE.HalfFloatType, samples: msaa }))
++    : new EffectComposer(renderer);
+   composer.addPass(new RenderPass(scene, camera));
+   // Screen 05 test GL1 (user 2026-11-16: "the glow on the highlights is most of what makes the approved version look so
+   // shiny"): `?glow05=1` = a stronger UnrealBloom with a HIGH threshold, so only the bright highlights (streak cores,
 diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
 index 0986940..b304e89 100644
 --- a/src/world/match04m4.ts
