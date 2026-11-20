@@ -35,6 +35,17 @@ User's messages verbatim: `USER_R30.md` (+ the two pictures `USER_S06_RING_MISMA
   (painted proportions / colours), water / foam / bubbles in motion.
 * NOT approved — waiting for the user. Default build and every earlier candidate unchanged.
 
+## Parallel specialists (user ~22:00 UTC: "do multiple agents do different tasks at the same time") — launched ~22:05
+Brief `LAUNCH_R30_PARALLEL.md`; worktrees from the 22:00 s06 snapshot (`setup_r30_parallel.sh`), all four identical to s06 at launch.
+| worker | agent | worktree / LOCAL branch | switch | task |
+|---|---|---|---|---|
+| benny06 | benny-character-artist | /home/user/wt/benny06 `claude/rainbow-s06-benny06-c31` | b30* | painted Benny: smaller higher beanie, knit, dusty-pink plush |
+| water06 | water-fx-specialist | /home/user/wt/water06 `claude/rainbow-s06-water06-c31` | w30* | rainbow water in motion: sparkly veins, rainbow edges, ripples |
+| foam06 | foam-bubbles-particles | /home/user/wt/foam06 `claude/rainbow-s06-foam06-c31` | f30* | bubbly foam banks, big iridescent bubbles, splash ring |
+| scen06 | washer-environment-modeler | /home/user/wt/scen06 `claude/rainbow-s06-scen06-c31` | e30* | broad copper bands, purple drum walls, purple far tunnel |
+If this session stops: their edits are in `backups/wip/claude__rainbow-s06-<x>-c31/`; recreate with the setup script pattern (from those
+snapshots) and relaunch with the same brief. The lead combines accepted switches and renders the combined clip + gameplay test.
+
 ## Next account
 `docs/briefs/2026-11-20-r29/setup_worker_r30.sh` pattern with the newest `backups/wip/*-c31/` snapshots (copy the script, bump -c31 → -c32 and
 the wip folder names to `*-c31`).

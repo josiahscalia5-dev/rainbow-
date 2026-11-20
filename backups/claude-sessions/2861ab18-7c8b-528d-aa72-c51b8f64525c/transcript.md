@@ -4161,3 +4161,89 @@ Can u do multiple agents do different tasks at the same time make this go quicke
 
 > 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:r30-before-parallel 2>&1 | grep -E '\"commit\"'; python3 -c \"import json;print(json.load(open('backups/wip/claude__rainbow-s06-match-c31/INFO.json'))['time'])\"; grep -c \"b30hs\" backups/wip/claude__rainbow-s06-match-c31/tracked.patch; cat > docs/briefs/2026-11-20-r30/setup_r30_parallel.sh <<'EOF'\n#!/usr/bin/env bash\n# setup_r30_parallel.sh — round 30 (user ~22:20 UTC: \"do multiple agents do different tasks at the same time\"): four Screen 06 specialist\n# worktrees, each = the s06 base commit + the NEWEST s06 snapshot (back …[+1906 chars]`
 
+### 🧑 User — 2026-11-20T22:00:56.906Z
+
+> ↩︎ result: "commit": "3d182c6b10d44ee96341cf9c661779e7d12c4bcd",
+> 2026-11-20T22:00:39+00:00
+> 2
+> Preparing worktree (new branch 'claude/rainbow-s06-benny06-c31')
+> benny06: /home/user/wt/benny06 on claude/rainbow-s06-benny06-c31 — dirty 44
+> Preparing worktree (new branch 'claude/rainbow-s06-water06-c31')
+> water06: /home/user/wt/water06 on claude/rainbow-s06-water06-c31 — dirty 44
+> Preparing worktree (new branch 'claude/rainbow-s06-foam06-c31')
+> foam06: /home/user/wt/foam06 on claude/rainbow-s06-foam06-c31 — dirty 44
+> Preparing worktree (new branch 'claude/rainbow-s06-scen06-c31')
+> scen06: /home/user/wt/scen06 on claude/rainbow-s06-scen06-c31 — dirty 44
+> benny06 tracked SAME-AS-s06 ; route06curl: same
+> water06 tracked SAME-AS-s06 ; route06curl: same
+> foam06 tracked SAME-AS-s06 ; route06curl: same
+> scen06 tracked SAME-AS-s06 ; route06curl: same
+
+### 🤖 Claude — 2026-11-20T22:01:39.622Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-20-r30/LAUNCH_R30_PARALLEL.md", "content": "# Round 30 — four parallel Screen 06 specialists (lead `ccr-2644c3c0-iikckn`, launched ~22:05 UTC, user: \"do multiple agents do different tasks at the same time\")\n\nUser goal (verbatim, `USER_R30.md` §5): \"I just want it to look exactly like exactly 100% or very close to my approved screen ... The background,\nthe pink character and the rainbow water thing he goes on, the slides it goes on\". Visual references, binding:\n`references/06_crest_the_rinse_arch.png` (approved, 864×1536) and the st …[+3083 chars]`
+
+### 🧑 User — 2026-11-20T22:01:39.662Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-20-r30/LAUNCH_R30_PARALLEL.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T22:01:53.627Z
+
+> 🔧 **Agent** `{"description": "Benny matches painted Benny", "subagent_type": "benny-character-artist", "run_in_background": true, "prompt": "You are the Benny specialist in round 30 of the Rainbow 3D game (repo /home/user/rainbow-, a Vite + Three.js portrait mobile game). FIRST read /home/user/rainbow-/docs/briefs/2026-11-20-r30/LAUNCH_R30_PARALLEL.md (common rules: your worktree, switch prefix, render-slot lock, outputs, no pushing/merging, no paid jobs) and /home/user/rainbow-/docs/briefs/2026-11-20-r30/USER_R30.md §5 (the user's words). Your worktree: /home/user/wt/benny06 (LOCAL branch claude/rainbow-s …[+3018 chars]`
+
+### 🧑 User — 2026-11-20T22:01:53.659Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a548456742f589861 (internal ID - do not mention to user. Use SendMessage with to: 'a548456742f589861', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/tasks/a548456742f589861.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-20T22:02:04.527Z
+
+> 🔧 **Agent** `{"description": "Rainbow water in motion", "subagent_type": "water-fx-specialist", "run_in_background": true, "prompt": "You are the water specialist in round 30 of the Rainbow 3D game (repo /home/user/rainbow-, a Vite + Three.js portrait mobile game). FIRST read /home/user/rainbow-/docs/briefs/2026-11-20-r30/LAUNCH_R30_PARALLEL.md (common rules: your worktree, switch prefix, render-slot lock, outputs, no pushing/merging, no paid jobs) and /home/user/rainbow-/docs/briefs/2026-11-20-r30/USER_R30.md §5 (the user's words). Your worktree: /home/user/wt/water06 (LOCAL branch claude/rainbow-s06-wate …[+2376 chars]`
+
+### 🧑 User — 2026-11-20T22:02:04.559Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a080074858aed2d68 (internal ID - do not mention to user. Use SendMessage with to: 'a080074858aed2d68', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/tasks/a080074858aed2d68.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-20T22:02:13.431Z
+
+> 🔧 **Agent** `{"description": "Bubbly foam and bubbles", "subagent_type": "foam-bubbles-particles", "run_in_background": true, "prompt": "You are the foam & bubbles specialist in round 30 of the Rainbow 3D game (repo /home/user/rainbow-, a Vite + Three.js portrait mobile game). FIRST read /home/user/rainbow-/docs/briefs/2026-11-20-r30/LAUNCH_R30_PARALLEL.md (common rules: your worktree, switch prefix, render-slot lock, outputs, no pushing/merging, no paid jobs) and /home/user/rainbow-/docs/briefs/2026-11-20-r30/USER_R30.md §5 (the user's words). Your worktree: /home/user/wt/foam06 (LOCAL branch claude/rainb …[+2026 chars]`
+
+### 🧑 User — 2026-11-20T22:02:13.481Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a1355159608666d22 (internal ID - do not mention to user. Use SendMessage with to: 'a1355159608666d22', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/tasks/a1355159608666d22.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-20T22:02:23.744Z
+
+> 🔧 **Agent** `{"description": "Copper bands and purple tunnel", "subagent_type": "washer-environment-modeler", "run_in_background": true, "prompt": "You are the scenery specialist in round 30 of the Rainbow 3D game (repo /home/user/rainbow-, a Vite + Three.js portrait mobile game). FIRST read /home/user/rainbow-/docs/briefs/2026-11-20-r30/LAUNCH_R30_PARALLEL.md (common rules: your worktree, switch prefix, render-slot lock, outputs, no pushing/merging, no paid jobs) and /home/user/rainbow-/docs/briefs/2026-11-20-r30/USER_R30.md (§2, §3, §5 — the user's words). Your worktree: /home/user/wt/scen06 (LOCAL branc …[+2532 chars]`
+
+### 🧑 User — 2026-11-20T22:02:23.775Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: ad7cf7c8a10defede (internal ID - do not mention to user. Use SendMessage with to: 'ad7cf7c8a10defede', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/tasks/ad7cf7c8a10defede.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-20T22:02:26.464Z
+
+All four specialists are running in the background. I'll record them in the agent status file and the round map so a future session knows they exist and how to relaunch them, then save.
+
+### 🤖 Claude — 2026-11-20T22:02:36.766Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\np='backups/AGENTS_STATUS.json'; d=json.load(open(p))\nd['r30_parallel_06']={'_launched':'2026-11-20 ~22:05 UTC by the r30 lead ccr-2644c3c0-iikckn (user: \"do multiple agents do different tasks at the same time\")',\n '_brief':'docs/briefs/2026-11-20-r30/LAUNCH_R30_PARALLEL.md; worktrees: docs/briefs/2026-11-20-r30/setup_r30_parallel.sh',\n 'benny06':{'agent':'benny-character-artist','worktree':'/home/user/wt/benny06','branch':'claude/rainbow-s06-benny06-c31','switch':'b30*','state':'RUNNING','out':'qa/match/06/r30/benny06/'},\n 'water06':{'agent':' …[+2248 chars]`
+

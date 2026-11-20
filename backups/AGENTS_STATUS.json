@@ -1264,5 +1264,41 @@
    "s08": "finished (K23-3, unapproved) read-only"
   },
   "user_scope_decision": "2026-11-20 ~17:25 UTC: 01/02/03/11 = Google Flow videos; 04-10 incl. 09 and 10 = real playable 3D (docs/briefs/2026-11-20-r28/USER_CLARIFICATIONS_R28.md)"
+ },
+ "r30_parallel_06": {
+  "_launched": "2026-11-20 ~22:05 UTC by the r30 lead ccr-2644c3c0-iikckn (user: \"do multiple agents do different tasks at the same time\")",
+  "_brief": "docs/briefs/2026-11-20-r30/LAUNCH_R30_PARALLEL.md; worktrees: docs/briefs/2026-11-20-r30/setup_r30_parallel.sh",
+  "benny06": {
+   "agent": "benny-character-artist",
+   "worktree": "/home/user/wt/benny06",
+   "branch": "claude/rainbow-s06-benny06-c31",
+   "switch": "b30*",
+   "state": "RUNNING",
+   "out": "qa/match/06/r30/benny06/"
+  },
+  "water06": {
+   "agent": "water-fx-specialist",
+   "worktree": "/home/user/wt/water06",
+   "branch": "claude/rainbow-s06-water06-c31",
+   "switch": "w30*",
+   "state": "RUNNING",
+   "out": "qa/match/06/r30/water06/"
+  },
+  "foam06": {
+   "agent": "foam-bubbles-particles",
+   "worktree": "/home/user/wt/foam06",
+   "branch": "claude/rainbow-s06-foam06-c31",
+   "switch": "f30*",
+   "state": "RUNNING",
+   "out": "qa/match/06/r30/foam06/"
+  },
+  "scen06": {
+   "agent": "washer-environment-modeler",
+   "worktree": "/home/user/wt/scen06",
+   "branch": "claude/rainbow-s06-scen06-c31",
+   "switch": "e30*",
+   "state": "RUNNING",
+   "out": "qa/match/06/r30/scen06/"
+  }
  }
 }
