@@ -2382,3 +2382,137 @@ Now saving: refresh the code patch, run the manual autosave, and verify that Git
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && git diff 70e559572ef44d6d8be4f7d0b86c36f54149ff44 -- src tools > /home/user/rainbow-/qa/match/04/r21_rings/r21_rings_vs_70e5595.patch && git diff --stat 70e559572ef44d6d8be4f7d0b86c36f54149ff44 -- src tools && cd /home/user/rainbow- && python3 scripts/rainbow-autosave.py --reason \"manual:s04-rings-r21\" 2>&1 | tail -4; B=$(git rev-parse --abbrev-ref HEAD); L=$(git rev-parse HEAD); R=$(timeout 60 git ls-remote origin refs/heads/$B | cut -f1); echo \"branch $B local $L remote $R\"; [ \"$L\" = \"$R\" ] && echo MATCH; git show --stat --oneline HEAD | grep -E  …[+193 chars]`
 
+### 🧑 User — 2026-11-20T01:45:38.281Z
+
+> ↩︎ result: src/game/Game.ts       |   9 ++-
+>  src/world/match04m4.ts | 173 ++++++++++++++++++++++++++++++++++++++++++++++---
+>  2 files changed, 173 insertions(+), 9 deletions(-)
+>   ],
+>   "commit": "1a2167d5410387f3c244cd229ebb0a203318704f",
+>   "duration_s": 10
+> }
+> branch ccr-68d26c2d-gwegce local 1a2167d5410387f3c244cd229ebb0a203318704f remote 1a2167d5410387f3c244cd229ebb0a203318704f
+> MATCH
+>  .../wip/claude__rainbow-s04-ringtex-c22/INFO.json  |  2 +-
+> AUTOSAVE OK | branch ccr-68d26c2d-gwegce | scheduler daemon | last verified backup 2026-11-20T01:45:27+00:00 (0.2 min ago) | local 1a2167d remote 1a2167d (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-20T01:45:44.834Z
+
+The backup matches (remote = local `1a2167d`). Let me confirm the Round 21 files and the unsaved-code snapshot are really in that commit.
+
+### 🤖 Claude — 2026-11-20T01:45:46.687Z
+
+> 🔧 **Bash** `{"command": "git ls-tree -r --name-only HEAD qa/match/04/r21_rings/ | sed 's#qa/match/04/r21_rings/##' | tr '\\n' ' '; echo; git ls-tree -r --name-only HEAD backups/wip/claude__rainbow-s04-ringtex-c22/ | head; git show HEAD:backups/wip/claude__rainbow-s04-ringtex-c22/tracked.patch | grep -c \"m04rsoft\"; git log -1 --format=%H; git lfs ls-files | wc -l", "description": "Verify committed files and WIP snapshot content"}`
+
+### 🧑 User — 2026-11-20T01:46:41.759Z
+
+> ↩︎ result: 1_APPROVED.png 2_BEFORE_f06_your_camera.png 3_AFTER_f06_your_camera.png NOTES.md clip_BEFORE_vs_AFTER_swimming.mp4 clip_zoom_marked_area_BEFORE_vs_AFTER.mp4 frames/AFTER_f00_start.png frames/AFTER_f03.png frames/AFTER_f10.png frames/AFTER_f15.png frames/AFTER_steer_left.png frames/AFTER_steer_right.png frames/BEFORE_f00_start.png frames/BEFORE_f03.png frames/BEFORE_f10.png frames/BEFORE_f15.png frames/BEFORE_steer_left.png frames/BEFORE_steer_right.png r21_rings_vs_70e5595.patch rings21.mjs worker_wip_r20_unfinished.patch zoom_1_APPROVED_x0-480_y380-860.png zoom_2_BEFORE_f06_x0-480_y380-860.png zoom_3_AFTER_f06_x0-480_y380-860.png 
+> backups/wip/claude__rainbow-s04-ringtex-c22/INFO.json
+> backups/wip/claude__rainbow-s04-ringtex-c22/tracked.patch
+> backups/wip/claude__rainbow-s04-ringtex-c22/untracked/qa/match/04/r19b/ringpaint/preview_r20/1_APPROVED.png
+> backups/wip/claude__rainbow-s04-ringtex-c22/untracked/qa/match/04/r19b/ringpaint/preview_r20/2_BEFORE_v3_f06_forward6u.png
+> backups/wip/claude__rainbow-s04-ringtex-c22/untracked/qa/match/04/r19b/ringpaint/preview_r20/3_NEW_f03_forward3u.png
+> backups/wip/claude__rainbow-s04-ringtex-c22/untracked/qa/match/04/r19b/ringpaint/preview_r20/3_NEW_f …[+539 chars]
+
+### 🤖 Claude — 2026-11-20T01:46:47.076Z
+
+Everything is in the commit. The Git LFS count went from 83 to 85, so let me confirm the two new large files also reached GitHub's LFS storage.
+
+### 🤖 Claude — 2026-11-20T01:46:48.728Z
+
+> 🔧 **Bash** `{"command": "git lfs ls-files | grep -i -E \"r21|mp4\" | tail -4; timeout 120 git lfs push --dry-run origin ccr-68d26c2d-gwegce 2>&1 | grep -c \"push\" ; python3 -I scripts/verify-assets.py --help 2>&1 | head -5", "description": "Check new LFS files reached GitHub LFS", "timeout": 180000}`
+
+### 🧑 User — 2026-11-20T01:46:49.738Z
+
+> ↩︎ result: 88bd736399 * qa/review_r19/thrixel_foam/10_NEW_swim_clip_thrixel.mp4
+> 599c21c725 * qa/review_r19/thrixel_foam/9_BEFORE_swim_clip.mp4
+> 376907ddad * qa/screen_videos/2026-11-17/08_match08_benny_r5b_ride.mp4
+> baf1af4a87 * qa/screen_videos/2026-11-17/rainbow_all_screens_APPROVED_vs_NOW.mp4
+> 0
+> Rainbow recovery checks used by scripts/claude-bootstrap.sh (read-only; never changes git state).
+> 
+>     python3 -I scripts/verify-assets.py lfs-remote [--download]   every LFS object of HEAD exists on GitHub
+>                                                                    (--download: fetch each one, check SHA-256)
+>     python3 -I scripts/verify-assets.py marble                     both Marble worlds' files present, real, checksummed
+
+### 🤖 Claude — 2026-11-20T01:46:53.361Z
+
+> 🔧 **Bash** `{"command": "timeout 300 python3 -I scripts/verify-assets.py lfs-remote 2>&1 | tail -2; timeout 120 python3 -I scripts/verify-assets.py marble 2>&1 | tail -1; sha256sum -c scripts/reference.sha256 2>&1 | grep -c OK", "description": "Verify LFS on GitHub, Marble assets, references", "timeout": 450000}`
+
+### 🧑 User — 2026-11-20T01:46:54.433Z
+
+> ↩︎ result: @@ ok 85/85 LFS objects (569 MB, 17 Marble/World Labs) confirmed on GitHub LFS
+> @@ ok both worlds complete: 49 files checked, 15 real LFS binaries (splats/PLY/colliders/.blend), 71 files tracked under qa/worldlabs; credits spent 1810 of cap 6250
+> 13
+
+### 🤖 Claude — 2026-11-20T01:47:15.576Z
+
+> 🔧 **TaskUpdate** `{"taskId": "4", "status": "completed"}`
+
+### 🧑 User — 2026-11-20T01:47:15.587Z
+
+> ↩︎ result: Updated task #4 status
+
+### 🤖 Claude — 2026-11-20T01:47:34.093Z
+
+RAINBOW 3D BACKUP VERIFIED
+
+**Session and services**
+- **Branch:** `ccr-68d26c2d-gwegce` at `1a2167d5410387f3c244cd229ebb0a203318704f`. `git ls-remote` matches the local HEAD.
+- **Newest work:** this session started from the latest lead (`ccr-681a37bb-5jqfbu`). Its later saves only updated backup logs, so nothing is missing.
+- **Startup hiccup:** the first automatic fetch from GitHub failed once. Later fetches worked, and I checked the newest branches by hand.
+- **Git LFS:** 85/85 large files present locally and confirmed on GitHub LFS. 13/13 approved references are byte-identical.
+- **GitHub:** connected as josiahscalia5-dev.
+- **Hugging Face:** connected as `josdois`. The sign-in is due to renew at 04:25 UTC today; if it lapses, reconnect it in your claude.ai connector settings.
+- **World Labs:** the Atlas connector works ("My project", credits available), the Marble key authenticates (5,420 credits), and fal answers. No paid jobs were run.
+  - The two old Marble worlds return "not found" because they belong to an earlier account; their files are safe in Git LFS.
+- **Plugins:** Playwright and the WebGL browser work, as do the other synced plugins (superpowers, worldlabs, code-review and the rest). **Context7 needs your sign-in** in claude.ai connector settings before it can be used.
+- **Specialists:** all 10 definitions are present and unchanged. Background workers don't survive a new session: the Benny and Screen 04 water workers from last round are not running. Their unfinished edits are saved in `backups/wip/*-c21/`. I did the ring work myself.
+- **Tools:** Blender 5.3.0, Android SDK 34, Node 22, the Python image libraries and ffmpeg are ready. The type check and course-continuity tests pass.
+- **Five-minute autosave:** running and verified.
+- **Backup gaps:** the previous session closed without an end-of-session save, and the log has gaps when no environment was open (longest recent: 11-19 02:57–18:04 UTC).
+
+## Screen 04 tunnel bands
+
+Your second picture is the rings preview from last round (commit `70e5595`); it matches that render to 97.2 %. Pictures and both clips are above.
+
+**Why the dark lines and jagged edges appeared**
+- **Main cause:** each near band was split into smaller bands, each shaded from dark red-brown up to yellow-white, and the next one started dark again. That jump of about 160 brightness levels happened inside a single pixel, so it came out stair-stepped. The dark half of each band sat right beside the next one's brightest pixels and read as a near-black line.
+- **Second cause:** when the rims were made flush last round, the painting's dark groove was stretched across a wide strip at the end of each ring, and the "darker mid-tones" setting pushed it about 22 % darker.
+- **Whole-game cause:** the game draws the 3D scene into an off-screen image with no edge smoothing (anti-aliasing), so outlines like the washer rim stay stair-stepped.
+
+**What changed** (behind two new switches; with them off, the game is pixel-identical to before):
+- **`m04rsoft=1`:**
+  - every band is now one rounded shape in tones measured from your approved rings: copper body, a soft gold rounded rim, then a narrow red-brown groove that is never black;
+  - the two sides of every groove meet smoothly, so there is nothing left to jag;
+  - pink, violet and blue reflections change the colour without adding brightness, and a soft highlight slides over each band as Benny swims.
+- **`msaa=4`:** smooths the 3D outlines.
+
+| Your marked area | Approved | Before | After |
+|---|---|---|---|
+| Median brightness | 105 | 127 | 120 |
+| Brightest 5 % | 167 | 230 | 177 |
+| Near-black pixels | — | 0.89 % | 0.04 % |
+| Hard jagged steps | — | 761 | 112 |
+
+Across the whole tunnel, hard steps fell from 1,936 to 295, and average brightness went from 129 to 121, so nothing was simply brightened. The tunnel layout, coins and gameplay are unchanged, and the start view still shows your approved painting itself.
+
+**Still not like the approved:**
+- The rims are softer but a little less glossy-gold than your painting, especially deeper in the tunnel.
+- The straight edge of the river is still there; the water fix for it is on the other Screen 04 branch.
+- `msaa=4` makes the game a bit more expensive to draw, so it needs a check on your phone before it becomes the default.
+
+Nothing has been merged into any branch. The code is in a local working copy, autosaved, and also stored as a patch next to the pictures. Is this closer to your approved tunnel? If yes, should I add it to the combined Screen 04 preview?
+
+Everything is in `qa/match/04/r21_rings/`:
+- `NOTES.md`
+- `1_APPROVED.png`
+- `2_BEFORE_f06_your_camera.png`
+- `3_AFTER_f06_your_camera.png`
+- `clip_BEFORE_vs_AFTER_swimming.mp4`
+- `clip_zoom_marked_area_BEFORE_vs_AFTER.mp4`
+
+### 🧑 User — 2026-11-20T01:47:37.666Z
+
+Can you make it where, okay, so all my approved screens, can you make it where, in all like the scenery and everything, so all my approved screens that I want, all of them, I want them to look exactly like for my gaming app. So like, you know, like the level 4, like, you know, it goes through the very beginning of level 4 and through the 5 arrows. I want that background. See the background? See the water? See how like, the image of the proof screen looks? Look how good it looks? That's how I want my gaming app. I want to make sure the pink character goes go through the arrows neatly. Like, he goes through the, like, he's actually going inside the tunnel, which I think he's doing right now. But I just want to make sure all of them look like my, all my exact proof screens, but they're actually a gaming app. That makes sense. But when the pink character swims or moves through all my approved screens, I want to make sure that it looks my like my approved artwork, background, scenery, and the entire approved screen. Even if it's like 90% close to it, I'll be pleased.
+
