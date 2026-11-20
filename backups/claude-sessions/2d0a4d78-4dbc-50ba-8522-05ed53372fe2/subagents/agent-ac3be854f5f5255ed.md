@@ -1940,3 +1940,47 @@ Cost: +2 draw calls, 3,426 lobes (two triangles each, about 6,850 triangles) as 
 > tools
 > 405 /home/user/rainbow-/qa/match/07/r22/s1_cloud/code.patch
 
+### 🤖 Claude — 2026-11-20T03:47:44.235Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='/home/user/rainbow-/qa/match/07/r22/PROGRESS.md'\ns=open(p).read()\ns=s.replace(\"\"\"* DONE: Step 0 — restore reproduces the saved r21 step-1 result (details below).\n* NOW: r21 task 2 (flat pale foam sheets -> puffy clouds; hard left / right magenta sheets) — diagnosing.\n* NEXT: task 3 (the middle).\"\"\",\"\"\"* DONE: Step 0 — restore reproduces the saved r21 step-1 result. Step 1 `&m07cloud=1` puffy 3D foam clouds — GOOD IMPROVEMENT.\n* Candidate query now: `K7&m07end=1&m07cloud=1` (K7 = `qa/match/07/r21/K7.txt`). Code = uncommitted worktree edits; `s …[+5455 chars]`
+
+### 🧑 User — 2026-11-20T03:47:44.295Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T03:47:47.580Z
+
+Step 1 is logged. Step 2: the smeared magenta sheet in the foreground at hard left / right. Comparing crops of the painted near magenta band with ours.
+
+### 🤖 Claude — 2026-11-20T03:47:51.677Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/crops && python3 -I -c \"\nfrom PIL import Image\nref=Image.open('/home/user/rainbow-/references/07_dive_the_washer_tube.png').convert('RGB')\nref.crop((0,1120,330,1536)).save('ref_band_bl.png')\nref.crop((600,900,864,1250)).save('ref_band_r.png')\nf=Image.open('/home/user/rainbow-/qa/match/07/r22/s1_cloud/NEW/f_hard_left.png').convert('RGB')\nf.crop((100,1150,500,1536)).save('fl_band.png')\ng=Image.open('/home/user/rainbow-/qa/match/07/r22/s1_cloud/NEW/g_hard_right.png').convert('RGB')\ng.crop((3 …[+248 chars]`
+
+### 🧑 User — 2026-11-20T03:47:52.098Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T03:47:52.875Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/crops/ref_band_bl.png"}`
+
+### 🧑 User — 2026-11-20T03:47:52.889Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:47:53.608Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/crops/fl_band.png"}`
+
+### 🧑 User — 2026-11-20T03:47:53.621Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:47:54.183Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/crops/gr_band.png"}`
+
+### 🧑 User — 2026-11-20T03:47:54.206Z
+
+> ↩︎ result: [image]
+

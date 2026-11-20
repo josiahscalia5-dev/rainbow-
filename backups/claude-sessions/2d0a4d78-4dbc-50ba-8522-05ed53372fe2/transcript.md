@@ -3129,3 +3129,24 @@ Projection specialist launched. Sending you the foam step pictures and clips, th
 
 > 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\np='backups/AGENTS_STATUS.json'; d=json.load(open(p))\nr=d['round22']; r['updated']='2026-11-20T03:52Z'\nr['running'].pop('foam-bubbles-particles (s04)',None)\nr['running']['washer-environment-modeler (s04 projection)']=\"in-process; /home/user/wt/s04 local claude/rainbow-s04-match-c23 (after the foam worker's K22-2); LAUNCH_S04_PROJ.md; log qa/match/04/r22_proj/PROGRESS.md\"\nr['stopped']={\"foam-bubbles-particles (s04)\":\"stopped ~03:50 after step 2 (m04bbd, K22-2); unfinished m04a3sc patch in qa/match/04/r22/s3_unfinished/; log qa/match/04/r22/PR …[+863 chars]`
 
+### 🧑 User — 2026-11-20T03:47:52.082Z
+
+> ↩︎ result: "commit": "6fa36b8d4bf56b7b87ed2dc7fdc7a587923c9dae",
+> MATCH 6fa36b8d4bf56b7b87ed2dc7fdc7a587923c9dae
+
+### 🤖 Claude — 2026-11-20T03:47:57.761Z
+
+The Screen 04 foam specialist has finished, and the projection specialist has started building your three approved views into the game.
+
+**Last foam step on Screen 04:** foam now appears beside Benny inside the gold tunnel, where there was none before. I sent your approved picture, BEFORE and NEW from late in the tunnel, plus before and after swimming clips. My verdict is a **small improvement**. The foam is patchier and smaller than your painting's continuous foam banks, and sometimes only one side has it. It stays a candidate, not part of the game yet.
+
+**One thing it found:** the water picked up a different pattern each time a test picture was taken. It built a version of the picture tool that freezes the water's motion, so before and after pictures are now exact like-for-like comparisons. The game itself didn't change.
+
+**Projection specialist, now running:** it will paint your three approved views onto the tunnel walls, gold rings, foam banks and river, blending from your original into the middle, late and end views as Benny swims. Your views already include painted foam banks along both edges. That should cover what the foam step didn't, and the specialist will make sure the two kinds of foam don't stack.
+
+**Still on the list:** the nearest arrows sit at the height of Benny's hat, so they look like they straddle him. In your painting all five are clearly above his pompom. A fix is started but not finished.
+
+**Running now:** the Screen 04 projection, Screen 07, Screen 06 (foam walls) and Benny (fluffy fur, cream hat stripes, felt star).
+
+Everything is saved and GitHub matches (`6fa36b8`). The Screen 07 and Screen 05 proposals still need your verdict.
+
