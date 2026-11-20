@@ -446,3 +446,337 @@ I'll read the worker setup recipe from the last round so the worktrees are recre
 
 > 🔧 **Bash** `{"command": "mkdir -p /home/user/rainbow-/docs/briefs/2026-11-20-r24 && cat > /home/user/rainbow-/docs/briefs/2026-11-20-r24/setup_worker_r24.sh <<'EOF'\n#!/usr/bin/env bash\n# setup_worker_r24.sh — round 24 (new account after r23 hit its 5-hour limit at 10:19 UTC): recreate every worker worktree on\n# NEW LOCAL -c25 branches = the r23 worker's base commit + its newest autosave snapshot backups/wip/<branch-c24>/ (10:25:53 UTC).\n# The -c24 branches were LOCAL only in the r23 container (never pushed); their unfinished edits live only in those snapshots.\n# Sparse worktrees (disk), node_modules  …[+3133 chars]`
 
+### 🧑 User — 2026-11-20T10:39:16.270Z
+
+> ↩︎ result: Preparing worktree (new branch 'claude/rainbow-s04-match-c25')
+> s04: /home/user/wt/s04 on claude/rainbow-s04-match-c25 from 34cb494 + backups/wip/claude__rainbow-s04-match-c24 — dirty 5
+> Preparing worktree (new branch 'claude/rainbow-s07-match-c25')
+> s07: /home/user/wt/s07 on claude/rainbow-s07-match-c25 from 8accdad + backups/wip/claude__rainbow-s07-match-c24 — dirty 12
+> Preparing worktree (new branch 'claude/rainbow-s06-match-c25')
+> s06: /home/user/wt/s06 on claude/rainbow-s06-match-c25 from e162aec + backups/wip/claude__rainbow-s06-match-c24 — dirty 9
+> Preparing worktree (new branch 'claude/rainbow-benny-c25')
+> benny: /home/user/wt/benny on claude/rainbow-benny-c25 from 734efb6 + backups/wip/claude__rainbow-benny-c24 — dirty 15
+> Preparing worktree (new branch 'claude/rainbow-s08-scenery-c25')
+> s08: /home/user/wt/s08 on claude/rainbow-s08-scenery-c25 from 3c0fa97 + backups/wip/claude__rainbow-s08-scenery-c24 — dirty 5
+> Preparing worktree (new branch 'claude/rainbow-s05-match-c25')
+> s05: /home/user/wt/s05 on claude/rainbow-s05-match-c25 from eb7233e + backups/wip/claude__rainbow-s05-match-c24 — dirty 1
+> Preparing worktree (detached HEAD 8accdad)
+> lead07: /home/user/wt/lead07 on --detach from 8 …[+50 chars]
+
+### 🤖 Claude — 2026-11-20T10:39:24.601Z
+
+> 🔧 **TaskUpdate** `{"taskId": "1", "status": "completed"}`
+
+### 🤖 Claude — 2026-11-20T10:39:24.607Z
+
+> 🔧 **TaskUpdate** `{"taskId": "2", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-20T10:39:24.618Z
+
+> ↩︎ result: Updated task #1 status
+
+### 🧑 User — 2026-11-20T10:39:24.621Z
+
+> ↩︎ result: Updated task #2 status
+
+### 🤖 Claude — 2026-11-20T10:39:24.687Z
+
+> 🔧 **ToolSearch** `{"query": "select:mcp__World_Labs_Marble__list_projects,mcp__Hugging_Face__hf_whoami,mcp__github__get_me", "max_results": 3}`
+
+### 🧑 User — 2026-11-20T10:39:24.699Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-20T10:39:26.443Z
+
+> 🔧 **Bash** `{"command": "timeout 90 python3 -I scripts/verify-assets.py worldlabs 2>&1 | tail -8; echo ---; grep -rhoE \"queue\\.fal\\.run/[A-Za-z0-9/_.-]+/requests/[0-9a-f-]{36}(/status)?\" backups/TOOL_MANIFEST.json docs scripts 2>/dev/null | sort -u | head -3", "description": "Verify the World Labs key and find a fal status URL", "timeout": 120000}`
+
+### 🧑 User — 2026-11-20T10:39:27.769Z
+
+> ↩︎ result: @@ warn Marble API key authenticated (free read: 5420 credits); worlds draft 404, full 404; no paid job started
+> ---
+> queue.fal.run/fal-ai/nano-banana-2/requests/00000000-0000-0000-0000-000000000000/status
+> queue.fal.run/fal-ai/nano-banana-2/requests/01a1ea70-42d8-7943-b035-7bb5f129d872/status
+
+### 🤖 Claude — 2026-11-20T10:39:30.282Z
+
+> 🔧 **mcp__World_Labs_Marble__list_projects** `{}`
+
+### 🤖 Claude — 2026-11-20T10:39:30.327Z
+
+> 🔧 **mcp__Hugging_Face__hf_whoami** `{}`
+
+### 🤖 Claude — 2026-11-20T10:39:30.427Z
+
+> 🔧 **mcp__github__get_me** `{}`
+
+### 🧑 User — 2026-11-20T10:39:30.876Z
+
+> ↩︎ result: {"login":"josiahscalia5-dev","id":322329431,"profile_url":"https://github.com/josiahscalia5-dev","avatar_url":"https://avatars.githubusercontent.com/u/322329431?v=4","details":{"public_repos":11,"public_gists":0,"followers":0,"following":0,"created_at":"2026-08-29T02:18:36Z","updated_at":"2026-10-18T13:41:20Z"}}
+
+### 🤖 Claude — 2026-11-20T10:39:32.525Z
+
+> 🔧 **Bash** `{"command": "curl -s -o /dev/null -w \"fal status read HTTP %{http_code}\\n\" --max-time 30 https://queue.fal.run/fal-ai/nano-banana-2/requests/01a1ea70-42d8-7943-b035-7bb5f129d872/status; cd /home/user/rainbow- && ls .claude/agents/ | wc -l && sha256sum -c scripts/reference.sha256 2>&1 | grep -c OK; blender --version 2>/dev/null | head -1; ls /opt/android-sdk/platforms 2>/dev/null", "description": "Check fal access, agents, references, Blender, Android SDK", "timeout": 60000}`
+
+### 🧑 User — 2026-11-20T10:39:48.158Z
+
+> ↩︎ result: {"projects":[{"project_id":"proj_ad4fdb076f4a4c80934406cfefc4d30b","name":"My project","account_name":"Personal workspace","available_tools":["atlasChisel","atlasGenerate","atlasTextToImage","images2PosedRGBD","posedImages2Splats","splats2Mesh"],"credits_available":true}]}
+
+### 🧑 User — 2026-11-20T10:39:50.749Z
+
+> ↩︎ result: {"status":"authenticated","account":{"id":"68ee89f1f7918f8c0401c78a","type":"user","name":"josdois","url":"https://huggingface.co/josdois","is_pro":false},"organizations":[],"credential":{"type":"oauth","expires_at":"2026-11-20T18:21:39.000Z","scopes":["openid","profile","read-mcp","read-repos","jobs","contribute-repos","inference-api"]}}
+
+### 🧑 User — 2026-11-20T10:39:51.378Z
+
+> ↩︎ result: fal status read HTTP 200
+> 10
+> 13
+> Blender 5.3.0
+> android-34
+
+### 🤖 Claude — 2026-11-20T10:39:59.886Z
+
+> 🔧 **Bash** `{"command": "D=backups/claude-sessions/1dee9937-64f8-543d-ae44-7cf9955b39b3; ls -la $D | head -40; ls $D/* -d | head; ", "description": "List saved transcripts of the round 23 lead and its workers"}`
+
+### 🧑 User — 2026-11-20T10:39:59.934Z
+
+> ↩︎ result: total 2848
+> drwxr-xr-x  3 root root    4096 Nov 20 10:32 .
+> drwxr-xr-x 44 root root    4096 Nov 20 10:31 ..
+> drwxr-xr-x  2 root root    4096 Nov 20 10:32 subagents
+> -rw-r--r--  1 root root  237366 Nov 20 10:32 transcript.md
+> -rw-r--r--  1 root root 2664427 Nov 20 10:32 transcript.sanitized.jsonl
+> backups/claude-sessions/1dee9937-64f8-543d-ae44-7cf9955b39b3/subagents
+> backups/claude-sessions/1dee9937-64f8-543d-ae44-7cf9955b39b3/transcript.md
+> backups/claude-sessions/1dee9937-64f8-543d-ae44-7cf9955b39b3/transcript.sanitized.jsonl
+
+### 🤖 Claude — 2026-11-20T10:40:05.642Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/backups/claude-sessions/1dee9937-64f8-543d-ae44-7cf9955b39b3/subagents && ls -la; for f in *.jsonl; do echo \"== $f\"; python3 -I - \"$f\" <<'EOF'\nimport json,sys\nlines=[json.loads(l) for l in open(sys.argv[1]) if l.strip()]\n# find first user prompt text and last assistant texts\ndef texts(m):\n    c=m.get('message',{}).get('content') if isinstance(m.get('message'),dict) else None\n    if isinstance(c,str): return [c]\n    out=[]\n    for b in c or []:\n        if isinstance(b,dict) and b.get('type')=='text': out.append(b['text'])\n    return out\nfirst=[ …[+388 chars]`
+
+### 🧑 User — 2026-11-20T10:40:05.925Z
+
+> ↩︎ result: total 8084
+> drwxr-xr-x 2 root root    4096 Nov 20 10:32 .
+> drwxr-xr-x 3 root root    4096 Nov 20 10:32 ..
+> -rw-r--r-- 1 root root  187988 Nov 20 10:27 agent-a41fb9aa89c21a5e2.md
+> -rw-r--r-- 1 root root 1836502 Nov 20 10:27 agent-a41fb9aa89c21a5e2.sanitized.jsonl
+> -rw-r--r-- 1 root root  104887 Nov 20 10:32 agent-aba3e2bc1d154bfe3.md
+> -rw-r--r-- 1 root root 1064194 Nov 20 10:32 agent-aba3e2bc1d154bfe3.sanitized.jsonl
+> -rw-r--r-- 1 root root  165224 Nov 20 10:32 agent-ad506edb73ba1c3d9.md
+> -rw-r--r-- 1 root root 1550621 Nov 20 10:32 agent-ad506edb73ba1c3d9.sanitized.jsonl
+> -rw-r--r-- 1 root root  177506 Nov 20 10:32 agent-ad6745221c2fe7d06.md
+> -rw-r--r-- 1 root root 1591908 Nov 20 10:32 agent-ad6745221c2fe7d06.sanitized.jsonl
+> -rw-r--r-- 1 root root  149464 Nov 20 10:27 agent-aea6c441ae094e112.md
+> -rw-r--r-- 1 root root 1422473 Nov 20 10:27 agent-aea6c441ae094e112.sanitized.jsonl
+> == agent-a41fb9aa89c21a5e2.sanitized.jsonl
+> FIRST: You are the Screen 06 specialist for the RAINBOW game (round 23, new Claude account), also acting as your own reference-match director. Read and follow, in this order: 1. /home/user/rainbow-/CLAUDE.md (project rules; never restart or delete work) 2. /home/user/rainbow-/d …[+4656 chars]
+
+### 🤖 Claude — 2026-11-20T10:40:10.031Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && git -C /home/user/wt/s07 status --porcelain; ls qa/match/07/r23/ 2>/dev/null; find /home/user/wt/s07/qa/match/07/r23 -maxdepth 2 -newer /home/user/wt/s07/package.json 2>/dev/null | head -30", "description": "Inspect Screen 07 worker unfinished files and proof folders"}`
+
+### 🧑 User — 2026-11-20T10:40:10.120Z
+
+> ↩︎ result: M src/game/Game.ts
+>  M src/game/cameraRig.ts
+>  M src/gameplay/coins.ts
+>  M src/world/course.ts
+>  M src/world/match07.ts
+> ?? node_modules
+> ?? tools/match07/audit_screen_r23.mjs
+> ?? tools/match07/capture_5277.mjs
+> ?? tools/match07/diag_r21.mjs
+> ?? tools/match07/gameplay_test_5277.mjs
+> ?? tools/match07/route_r23.mjs
+> ?? tools/match07/swim_clip_r21.mjs
+> K7c.txt
+> PROGRESS.md
+> lead_clip
+> s1_satin
+> s2_low
+> s2_sriver
+> s2x_low_parked
+
+### 🤖 Claude — 2026-11-20T10:40:12.671Z
+
+> 🔧 **Bash** `{"command": "cat qa/match/07/r23/PROGRESS.md | tail -60; echo ====; ls qa/match/07/r23/s2_sriver; cat qa/match/07/r23/K7c.txt", "description": "Read the Screen 07 worker progress log"}`
+
+### 🧑 User — 2026-11-20T10:40:12.722Z
+
+> ↩︎ result: straight, bands / foam / coins sweep inside it, camera looks along the straight chute (framing test). Folder `s2_sriver/`.
+>   Status ~11:00 UTC: code done (route S ±1.45 u, wavelength 28 u; straight tube; core lean; coins on the core; straight-chute view;
+>   un-bent sampling grid → continuity OK and identical to the match07 baseline). Proof renders running (BEFORE / NEW shots, whole-07
+>   clips at real game speed, gameplay). Rejected inside this step: an extra look-ahead camera aim over the lip of the drop (Benny
+>   drifted to mid-screen; `s2_sriver/rejected_lookahead/`). Render tools now use 600 s Playwright timeouts (shared machine, load ~30;
+>   `tools/match07/audit_screen_r23.mjs` = the lead's audit tool with only the timeouts raised).
+> * NEXT: step 3 = foam natural variation (size + spacing, blending into the water).
+> 
+> Worktree `/home/user/wt/s07`, LOCAL branch `claude/rainbow-s07-match-c24` (= `8accdad0` + r22 WIP: r21 code + `m07cloud` + the
+> started `m07satin`). No commits, no pushes. Port 5277 (5280–5281 for parallel renders). VISUALS ONLY. Nothing is approved until
+> the user says so.
+> 
+> * APPROVED: `/home/user/rainbow-/qa/match/07/r21/APPROVED_07.png` (= `references/07_dive_the_washe …[+4460 chars]
+
+### 🤖 Claude — 2026-11-20T10:40:19.475Z
+
+> 🔧 **Bash** `{"command": "grep -n \"Step 2\" -A 30 qa/match/07/r23/PROGRESS.md | head -70; ls qa/match/07/r23/s2_sriver/NEW qa/match/07/r23/s2_sriver/BEFORE | head -40", "description": "Read the Screen 07 step 2 S-river notes"}`
+
+### 🧑 User — 2026-11-20T10:40:19.519Z
+
+> ↩︎ result: qa/match/07/r23/s2_sriver/BEFORE:
+> a_start.png
+> b_early.png
+> c_middle.png
+> d_late.png
+> e1_075.png
+> e2_092.png
+> e_end.png
+> f_hard_left.png
+> g_hard_right.png
+> shots.json
+> 
+> qa/match/07/r23/s2_sriver/NEW:
+> a_start.png
+> b_early.png
+> c_middle.png
+> d_late.png
+> e1_075.png
+> e2_092.png
+> e_end.png
+> f_hard_left.png
+> g_hard_right.png
+> shots.json
+
+### 🤖 Claude — 2026-11-20T10:40:22.325Z
+
+> 🔧 **Bash** `{"command": "head -40 qa/match/07/r23/PROGRESS.md", "description": "Read top of Screen 07 progress log"}`
+
+### 🧑 User — 2026-11-20T10:40:22.361Z
+
+> ↩︎ result: # Screen 07 · round 23 (water-fx-specialist) — progress log
+> 
+> ## (r23) WHERE I STOPPED / NEXT
+> * DONE: step 1 `&m07satin=1` (painted satin ribbons + white flares on the magenta bands) — GOOD IMPROVEMENT (s1_satin/; lead: small
+>   GOOD IMPROVEMENT). Candidate query now: `K7c&m07satin=1` (`s1_satin/query_NEW.txt`); m07cloud (fuller, rounder foam) stays in it
+>   (the user likes it).
+> * NEW USER DIRECTION (~09:55 UTC, via the lead): the river must sweep in broad S-bends (water, pink edges, foam, coin trail together)
+>   instead of "a mostly straight chute with wavy colours inside it"; then natural foam variation. Replaces the old steps 2 / 3.
+> * Parked: `&m07low=1` (wall pulled in to the water on the drop) — NOT AN IMPROVEMENT (the gold rings bend into chevrons, the foam
+>   shrank to a thin line); kept as an optional switch, off, can no longer shrink the round clouds (`s2x_low_parked/`).
+> * NOW: step 2 `&m07sbend=1` — the plunge (everything from the audit's 0.35 on is the 70° drop, laid as a perfectly straight chute)
+>   gets the painted broad S-bends: route S-offset (Benny, steering bounds, collision, coins, game water follow it), the tube stays
+>   straight, bands / foam / coins sweep inside it, c …[+2343 chars]
+
+### 🤖 Claude — 2026-11-20T10:40:32.342Z
+
+Quick status: everything is restored and the services check out. I'm writing the Screen 07 specialist's new brief with your three priorities, then relaunching it and the other three specialists.
+
+### 🤖 Claude — 2026-11-20T10:40:33.992Z
+
+> 🔧 **Bash** `{"command": "ls qa/match/07/r23/lead_clip/; cat qa/match/07/r23/lead_clip/*.txt 2>/dev/null | head -20; grep -rn \"08\" qa/match/07/r23/lead_clip/*.json 2>/dev/null | head -5; echo ----; grep -n -i \"08\" docs/briefs/2026-11-20-r23/LAUNCH_S08_R23.md | head -30", "description": "Check which Screen 08 version the lead's 07 clip used"}`
+
+### 🧑 User — 2026-11-20T10:40:34.066Z
+
+> ↩︎ result: QUERY.txt
+> SCREEN07_swim_candidate_0.5x.mp4
+> SCREEN07_swim_candidate_1x.mp4
+> frames.json
+> match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1&m07foam=1&m07coinsz=1&m07nearw=1&m07foamb=1&m07band=1&m07end=1&m07cloud=1&m07satin=1
+> 28:   "t": 0.083,
+> 55:   "t": 0.208,
+> 158:   "frac": 0.082,
+> 163:   "t": 0.708,
+> 167:   "frac": 0.087,
+> ----
+> 1:# Round 23 — Screen 08 polish (in-process `washer-environment-modeler`) — user RESUMED Screen 08 (r21, restated r23)
+> 3:Full brief: `/home/user/rainbow-/docs/briefs/2026-11-18-r15/S08_LAUNCH.md` (method, rules, proof) + binding
+> 6:* Worktree `/home/user/wt/s08`, LOCAL branch **`claude/rainbow-s08-scenery-c24`** = `claude/rainbow-s08-scenery-c17` @ `3c0fa970` (the
+> 10:* Your history: `/home/user/wt/s08/qa/match/08/r17/PROGRESS.md` (step 1 `m08vh` KEPT → K16; step 2 `m08gl` near-water glints
+> 11:  UNFINISHED, NOT YET PROVEN). Check first whether the `m08gl` code is in the worktree (`grep -n m08gl src/world/match08.ts`); if it is
+> 12:  not, look for it in `/home/user/rainbow-/backups/wip/claude__rainbow-s08-scenery-c17/` and apply it ONCE.
+> 13:* K16 = `cat /home/user/rainbow-/qa/review_r21/audit/QUERY_08.txt` (`coins08px=1` = the user's p …[+817 chars]
+
+### 🤖 Claude — 2026-11-20T10:40:39.471Z
+
+> 🔧 **Bash** `{"command": "cat qa/review_r21/audit/QUERY_08.txt; echo; ls qa/review_r21/audit/QUERY_0*.txt; cat qa/match/08/r23/PROGRESS.md 2>/dev/null | head -30", "description": "Read the latest Screen 08 query and 08 progress"}`
+
+### 🧑 User — 2026-11-20T10:40:39.525Z
+
+> ↩︎ result: match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1&m08ceil=1&m08near=1&m08cup=1&m08rw=1&m08drum=1&m08ring=1&m08cupg=1&m08bore=1&m08flange=1&m08cupw=1&m08nq=1&m08sr=1&m08vh=1
+> 
+> qa/review_r21/audit/QUERY_04.txt
+> qa/review_r21/audit/QUERY_05.txt
+> qa/review_r21/audit/QUERY_06.txt
+> qa/review_r21/audit/QUERY_07.txt
+> qa/review_r21/audit/QUERY_08.txt
+> # Screen 08 · Final Spin Chamber — round 23 progress (worktree `/home/user/wt/s08`, local branch `claude/rainbow-s08-scenery-c24`)
+> 
+> ## (r23) WHERE I STOPPED / NEXT
+> * 2026-11-20 ~09:52 UTC: round 23 started (washer-environment-modeler, in-process). Brief
+>   `docs/briefs/2026-11-20-r23/LAUNCH_S08_R23.md`. `m08gl` code is already in the worktree (commit `3c0fa970`, `grep m08gl
+>   src/world/match08.ts` -> line 433); nothing re-applied.
+> * ~10:20 UTC: step 1 (`m08gl`) 12-shot BEFORE / NEW done (verdict below, GOOD IMPROVEMENT small); its swim clips rendering.
+>   Step 2 (`&m08coinsz=1`, coin sizing) code written (uncommitted in the worktree, `npx tsc` clean); its NEW set rendering.
+> * NEXT: step 2 verdict; step 3 towel double exposure (`m08towelm`).
+> 
+> Kept set at start: `K16` = `qa/review_r21/audit/QU …[+1953 chars]
+
+### 🤖 Claude — 2026-11-20T10:40:46.228Z
+
+> 🔧 **Bash** `{"command": "cat docs/briefs/2026-11-20-r23/LAUNCH_S07_R23.md", "description": "Read the round 23 Screen 07 launch brief"}`
+
+### 🧑 User — 2026-11-20T10:40:46.258Z
+
+> ↩︎ result: # Round 23 — Screen 07 (in-process `water-fx-specialist`)
+> 
+> Full brief: `docs/briefs/2026-11-20-r21/S07_R21.md` + `docs/briefs/2026-11-20-r22/LAUNCH_S07.md` (rules, tasks, proof). This file overrides:
+> * Worktree `/home/user/wt/s07`, LOCAL branch **`claude/rainbow-s07-match-c24`** = `8accdad0` + the r22 WIP snapshot (applied ONCE by the
+>   lead at ~04:10: r21 code + step 1 `m07cloud` + the unfinished, untested `m07satin`). Do NOT re-apply `s1_cloud/code.patch` or the WIP
+>   patch. Do NOT commit / push; never run git in `/home/user/rainbow-`; port 5277 (5280–5281 free for parallel renders).
+> * Your r22 log: `qa/match/07/r22/PROGRESS.md` (step 0 restore OK, step 1 `&m07cloud=1` worker GOOD). Write r23 proof to
+>   `/home/user/rainbow-/qa/match/07/r23/<step>/` and `qa/match/07/r23/PROGRESS.md` (start with "(r23) WHERE I STOPPED / NEXT").
+> * Candidate (not user-approved): **K7c** = `$(cat /home/user/rainbow-/qa/match/07/r21/K7.txt)&m07end=1&m07cloud=1`.
+> * **Lead review of step 1 (~04:40):** flat streaky sheets → puffier cloud banks = small GOOD IMPROVEMENT (texture). But along the drop
+>   they still read as TALL WHITE FOAM WALLS lining both sides of the river (d_late, e_end); the painting shows …[+1566 chars]
+
+### 🤖 Claude — 2026-11-20T10:40:49.653Z
+
+The pixel-compare tool the specialists use lived outside the repo, so I'll rebuild it the way Round 23 did.
+
+### 🤖 Claude — 2026-11-20T10:40:51.703Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/tools-pixelmatch && cd /home/user/tools-pixelmatch && cp /home/user/rainbow-/docs/briefs/2026-11-18-r16/pixeldiff.mjs . && head -15 pixeldiff.mjs && grep -n \"import\\|require\" pixeldiff.mjs | head; [ -f package.json ] || npm init -y >/dev/null; timeout 180 npm install --no-audit --no-fund pixelmatch@5.3.0 pngjs@7 2>&1 | tail -2; ls /home/user/rainbow-/tools/lead23/", "description": "Rebuild the pixelmatch comparison tool", "timeout": 200000}`
+
+### 🧑 User — 2026-11-20T10:40:52.509Z
+
+> ↩︎ result: // QA only (not a game dependency). Usage: node pixeldiff.mjs A.png B.png [diff.png] [threshold=0.1] [yFrom yTo]
+> // Compares two same-size PNGs with Pixelmatch (anti-aliasing aware), optionally only rows yFrom..yTo-1.
+> import fs from 'node:fs';
+> import { PNG } from 'pngjs';
+> import pixelmatch from 'pixelmatch';
+> const [a, b, diffPath, thr = '0.1', y0s, y1s] = process.argv.slice(2);
+> if (!a || !b) { console.error('usage: node pixeldiff.mjs A.png B.png [diff.png] [threshold] [yFrom yTo]'); process.exit(2); }
+> const A = PNG.sync.read(fs.readFileSync(a)), B = PNG.sync.read(fs.readFileSync(b));
+> if (A.width !== B.width || A.height !== B.height) { console.error(`size mismatch ${A.width}x${A.height} vs ${B.width}x${B.height}`); process.exit(3); }
+> const W = A.width, y0 = y0s ? Math.max(0, +y0s) : 0, y1 = y1s ? Math.min(A.height, +y1s) : A.height, H = y1 - y0;
+> const crop = (img) => img.data.subarray(y0 * W * 4, y1 * W * 4);
+> const D = new PNG({ width: W, height: H });
+> const n = pixelmatch(crop(A), crop(B), D.data, W, H, { threshold: +thr });
+> if (diffPath && diffPath !== '-') fs.writeFileSync(diffPath, PNG.sync.write(D));
+> console.log(JSON.stringify({ a, b, rows: [y0, y1], threshold: +thr, diff_pixel …[+319 chars]
+
+### 🤖 Claude — 2026-11-20T10:41:11.614Z
+
+The tool is rebuilt. Next I'll write the Round 24 briefs: your Screen 07 note verbatim for the Screen 07 specialist, and a short "resume where you stopped" section for each of the other three.
+
+### 🤖 Claude — 2026-11-20T10:41:46.923Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-20-r24/LAUNCH_R24.md", "content": "# Round 24 — relaunch of the four specialists (lead session branch `ccr-5be1062a-0ffyej`, 2026-11-20 from ~10:30 UTC)\n\nRound 23 (lead `claude/rainbow-r22-restore-ut3m39`) hit the account's 5-hour limit at **10:19 UTC**; all four in-process workers\nstopped mid-step (HTTP 429). Its last save `a735ec7` (10:25) is merged into this session branch. Every worktree was recreated by\n`docs/briefs/2026-11-20-r24/setup_worker_r24.sh` = the r23 base commit + the 10:25:53 snapshot `backups/wip/<branch-c24>/`\n(file …[+9030 chars]`
+
+### 🧑 User — 2026-11-20T10:41:47.448Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-20-r24/LAUNCH_R24.md (file state is current in your context — no need to Read it back)
+
