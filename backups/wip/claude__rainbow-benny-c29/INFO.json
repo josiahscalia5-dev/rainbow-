@@ -2,7 +2,7 @@
  "worktree": "/home/user/wt/benny",
  "branch": "claude/rainbow-benny-c29",
  "head": "734efb6bc407c691c3d7d99e29b710544c82a9c5",
- "time": "2026-11-20T17:02:02+00:00",
+ "time": "2026-11-20T17:02:28+00:00",
  "dirty_tracked": [
   "assets/textures/benny20/brim.png",
   "assets/textures/benny20/brim_n.png",
@@ -12,6 +12,8 @@
   "qa/benny/r23/PROGRESS.md",
   "src/characters/benny/benny20.ts",
   "src/characters/benny/fur.ts",
+  "src/characters/benny/runtime.ts",
+  "src/game/Game.ts",
   "tools/benny20/knit.py",
   "tools/benny23/shots_c.mjs"
  ],
