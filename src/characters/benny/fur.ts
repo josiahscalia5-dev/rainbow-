@@ -35,6 +35,8 @@ export interface FurHandle {
     uTint: { value: THREE.Color };
     uComb: { value: THREE.Vector4 };
     uPile: { value: THREE.Vector4 };
+    uTipCol: { value: THREE.Color };
+    uVol: { value: THREE.Vector4 };
   };
 }
 
@@ -71,6 +73,11 @@ export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
      *  the lock top; higher: the pile thins out toward its surface → soft fuzzy edge, no hard tips), z = lock-core radius
      *  (fraction of the lock) where the strands are dense, w = unused */
     uPile: { value: new THREE.Vector4(0.35, 0.45, 0.5, 0) },
+    /** `?benny20=1`: colour the uPile.w tips fade toward (× the strand's own brightest channel); pompom default = pale lavender */
+    uTipCol: { value: new THREE.Color(0.78, 0.55, 1.0) },
+    /** `?benny20=1&b20tuft=1`: soft volume — x = highlight on surfaces facing up (upper body / cheeks), y = darkening on
+     *  surfaces facing down (underside creases), z/w unused. 0 = off */
+    uVol: { value: new THREE.Vector4(0, 0, 0, 0) },
   };
   const material = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 0.9, metalness: 0 });
   material.onBeforeCompile = (shader) => {
@@ -129,7 +136,7 @@ export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
         uniform float uClump;
         #endif
         #ifdef BENNY20
-        uniform vec4 uLock; uniform vec4 uShade; uniform vec3 uTint; uniform vec4 uComb; uniform vec4 uPile;
+        uniform vec4 uLock; uniform vec4 uShade; uniform vec3 uTint; uniform vec4 uComb; uniform vec4 uPile; uniform vec3 uTipCol; uniform vec4 uVol;
         #endif
         float fhash(vec3 p) { p = fract(p * 0.3183099 + 0.1); p *= 17.0; return fract(p.x * p.y * p.z * (p.x + p.y + p.z)); }
         vec3 fhash3(vec3 p) { return vec3(fhash(p), fhash(p + 17.31), fhash(p + 41.7)); }`,
@@ -185,7 +192,10 @@ export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
           // brightness instead of a deeper saturated violet (0 = off; body / arms keep 0)
           float tl = uPile.w * smoothstep(0.35, 1.0, lt);
           float mxc = max(diffuseColor.r, max(diffuseColor.g, diffuseColor.b));
-          diffuseColor.rgb = mix(diffuseColor.rgb, mxc * vec3(0.78, 0.55, 1.0), tl);
+          diffuseColor.rgb = mix(diffuseColor.rgb, mxc * uTipCol, tl);
+          // soft volume (b20tuft): light catches the upper body / cheeks, the underside stays in deeper rose
+          float upn = normalize(vNormal).y;
+          diffuseColor.rgb *= (1.0 + uVol.x * smoothstep(0.0, 0.9, upn) * (0.5 + 0.5 * lt)) * (1.0 - uVol.y * smoothstep(0.0, 0.8, -upn));
         }
         #else
         {

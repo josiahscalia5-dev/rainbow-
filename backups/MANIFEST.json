@@ -814,7 +814,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 11501,
-   "sha256": "e6fd3cef64977cae9428d8a55bff6fe7476f1affcbe641049dab4ad6b159a3aa"
+   "sha256": "97f1757555f5b3be2d4de3c254f7de19325fcca3735e07a76ab49559bf5239ea"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -2940,6 +2940,16 @@
    "path": "qa/benny/r22/t3/08/new/shots.json",
    "bytes": 504,
    "sha256": "bb169aeb74d7d516577cdef31e1600bc2cc9a628c428322cfebaad13f6b2ba91"
+  },
+  {
+   "path": "qa/benny/r23/s1_tuft/04/before/a_start.png",
+   "bytes": 2399431,
+   "sha256": "262968afe6a4468589e1922e7a67cbd64a0a65c2456d981fcbdb51c6e3aaaf83"
+  },
+  {
+   "path": "qa/benny/r23/s1_tuft/04/before/c_middle.png",
+   "bytes": 1739694,
+   "sha256": "2f0d60ded3e8f51add4fd57c3f1d36e06659563e846b17d70127a4cf93d57243"
   },
   {
    "path": "qa/capture_log.json",
@@ -15833,8 +15843,8 @@
   },
   {
    "path": "src/characters/benny/benny20.ts",
-   "bytes": 12533,
-   "sha256": "ef47b9a117c460a5befe08ad997bbeceb5fc160e6d21a6bb35ef9b2c6950dc33"
+   "bytes": 14867,
+   "sha256": "9f4039065643a700a977ee4c0ab46a9713d73936c152083ad21b771a8fc8834b"
   },
   {
    "path": "src/characters/benny/build.ts",
@@ -15843,8 +15853,8 @@
   },
   {
    "path": "src/characters/benny/fur.ts",
-   "bytes": 13227,
-   "sha256": "e5db49a6a78b859788edd82c472ac15743bb91ce354c1844dedf3ee780c09e96"
+   "bytes": 14060,
+   "sha256": "d5b9eb7f6a8d1aa985f044288648b65f318794da82cdb2b6e2dd785aa132ee5b"
   },
   {
    "path": "src/characters/benny/runtime.ts",
@@ -16115,6 +16125,16 @@
    "path": "tools/benny20/widths.py",
    "bytes": 956,
    "sha256": "83db4480cc7b0cea8d975fcb345b15696e7f64e446865350cec604df694658bd"
+  },
+  {
+   "path": "tools/benny23/crop_c.py",
+   "bytes": 1036,
+   "sha256": "cfd32727c25f314d8746c0fe4eaaa1451c3847311bfa27e737c8519ae55156cc"
+  },
+  {
+   "path": "tools/benny23/shots_c.mjs",
+   "bytes": 3246,
+   "sha256": "30389bff58948705dbc7049a65a804e6138ced602540a89d23bf8bdac165162f"
   },
   {
    "path": "tools/blender/build_05_river_scene.py",

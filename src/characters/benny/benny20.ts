@@ -78,6 +78,28 @@ const LOCK20: Record<string, { lock: V4; shade: V4; comb: V4; pile: V4; color: [
   },
 };
 
+/** `&b20tuft=1` (r23 step 1, opt-in): soft FLUFFY plush volume instead of the flat velvet pile — medium-short soft
+ *  tufts (bigger locks, a little longer fur, rounder tuft shading), lighter rose tips, soft highlight on the upper body /
+ *  cheeks, deeper rose only in the underside creases. Every value overridable (`&b20t<key>=`). */
+const TUFT = n('tuft', 0) > 0;
+const VOL20: Record<string, V4> = {};
+const TIP20: Record<string, [number, number, number]> = {};
+if (TUFT) {
+  const len = n('tlen', 0.08);
+  for (const k of ['fur_body', 'fur_armL', 'fur_armR']) {
+    const arm = k !== 'fur_body';
+    FUR20[k].length = arm ? len * 0.8 : len;
+    FUR20[k].gravity = n('tgr', 0.04);
+    const L = LOCK20[k];
+    L.lock = [n('tlx', arm ? 36 : 30), L.lock[1], L.lock[2], n('tlw', 180)];
+    L.shade = [n('tsx', 0.62), n('tsy', 0.65), n('tsz', 0.35), n('tsw', 0.35)];
+    L.comb = [n('tcx', 0.55), n('tcy', 1.0), L.comb[2], n('tcw', 0.5)];
+    L.pile = [n('tpx', 0.4), n('tpy', 0.6), L.pile[2], n('tpw', 0.55)];
+    VOL20[k] = [n('tvx', 0.35), n('tvy', 0.1), 0, 0];
+    TIP20[k] = [n('ttr', 1.0), n('ttg', 0.6), n('ttb', 0.82)];
+  }
+}
+
 /** per-screen fur exposure (LINEAR multipliers on the fur albedo above, which is solved for Screen 04). The approved
  *  pictures paint Benny lighter / pinker on 05–07 (fur mean ≈ (234, 82, 178), brightness median .95–.98) than on 04
  *  ((207, 74, 151), .84), while the game lights him less there. The game records its screen on
@@ -170,6 +192,10 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
     f.uniforms.uShade.value.set(...spec.shade);
     f.uniforms.uComb.value.set(...spec.comb);
     f.uniforms.uPile.value.set(...spec.pile);
+    const vol = VOL20[f.mesh.name];
+    if (vol) f.uniforms.uVol.value.set(...vol);
+    const tc = TIP20[f.mesh.name];
+    if (tc) f.uniforms.uTipCol.value.setRGB(...tc);
     mat.needsUpdate = true;
   }
 
@@ -255,7 +281,21 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
 
   // QA only (`?qa` pages, read by tools/benny20/probe.mjs): live handles for tuning without a reload
   if (QS?.has('qa') && typeof window !== 'undefined') {
-    (window as unknown as { __b20?: unknown }).__b20 = { scene, furs, hat, pom, star, HAT20, LOCK20, EXPO20, expo };
+    /** QA (tools/benny23/shots_c.mjs): Benny's screen box in pixels for the live camera returned by __rainbow.camera() */
+    const screenBox = (c: { matrixWorld: number[]; fov: number; aspect: number; near: number; far: number; width: number; height: number }) => {
+      const cam = new THREE.PerspectiveCamera(c.fov, c.aspect, c.near, c.far);
+      cam.matrixWorld.fromArray(c.matrixWorld);
+      cam.matrixWorldInverse.copy(cam.matrixWorld).invert();
+      const bb = new THREE.Box3().setFromObject(scene);
+      let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
+      for (let i = 0; i < 8; i++) {
+        const v = new THREE.Vector3(i & 1 ? bb.max.x : bb.min.x, i & 2 ? bb.max.y : bb.min.y, i & 4 ? bb.max.z : bb.min.z).project(cam);
+        const px = (v.x * 0.5 + 0.5) * c.width, py = (0.5 - v.y * 0.5) * c.height;
+        x0 = Math.min(x0, px); y0 = Math.min(y0, py); x1 = Math.max(x1, px); y1 = Math.max(y1, py);
+      }
+      return [Math.round(x0), Math.round(y0), Math.round(x1), Math.round(y1)];
+    };
+    (window as unknown as { __b20?: unknown }).__b20 = { scene, furs, hat, pom, star, HAT20, LOCK20, EXPO20, expo, screenBox };
   }
   return tick;
 }
