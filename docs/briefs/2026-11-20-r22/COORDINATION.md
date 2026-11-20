@@ -64,3 +64,7 @@ s06 / Benny = their pushed `-c23` tips + their r22 PROGRESS.md.
   `qa/review_r21/artwork/04/USER_VERDICT.md`, `accepted/04_gen_{c_middle_p2_v1,d_late_p3_v1,e_end_p2_v1}.png`. s04 foam worker asked
   to finish its current step and stop; then `washer-environment-modeler` takes the s04 worktree for the multi-plate projection
   `&m04mp=1` (`LAUNCH_S04_PROJ.md`). 07 + 05 proposals still await the user.
+* ~03:45 Benny step 3 (`@ a3a9ff5`, 3rd of 3): pompom `&b20ppw=0.45` lighter soft yarn = GOOD (lead agrees, modest); `&b20knit=1`
+  NOT YET (lavender-pink stripes, approved cream). Best Benny query: `&benny20=1&b20expo=1&b20ppw=0.45`. Branch history verified
+  intact (all earlier commits are ancestors). Lead gave GO for round 23 in the same session: b20tuft (fluffy volume, centred crops)
+  → knit cream stripes / vertical ribs → felt star; Benny size on 06 stays with the 06 specialist (framing), no Benny scaling.
