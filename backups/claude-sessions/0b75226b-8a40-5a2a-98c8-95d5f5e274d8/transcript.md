@@ -4052,3 +4052,71 @@ While the clips render, I'll run the light checks: the type check, the official 
 
 > 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && until grep -q \"exit\" clip_before.log 2>/dev/null; do sleep 5; done; tail -2 clip_before.log; ls clip_before/f | wc -l; ls clip_new/f | wc -l; date -u +%H:%M:%S", "description": "Wait for the BEFORE clip to finish", "timeout": 1200000}`
 
+### 🧑 User — 2026-11-20T19:23:22.351Z
+
+> ↩︎ result: Command was moved to the background (ID: b8ie8g5ie) so that a message that arrived while it was running can reach you; it was not interrupted. Output is being written to: /tmp/claude-0/-home-user-rainbow-/0b75226b-8a40-5a2a-98c8-95d5f5e274d8/tasks/b8ie8g5ie.output. You will be notified when it completes. If it is still running after 30m in the background (plus the timeout it was started with, up to the background maximum), it will be stopped and you will be notified. It is running now: do not start a second copy while it runs. If it is no longer needed, stop it with TaskStop. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-20T19:23:32.904Z
+
+You're right. Here is what it looks like, as pictures, right now.
+
+### 🤖 Claude — 2026-11-20T19:23:38.960Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && A=/home/user/rainbow-/qa/match/06/r28/route/quick_r29/approved_432.png && O=/home/user/rainbow-/qa/match/06/r29/quick && mkdir -p $O && montage -label 'YOUR APPROVED 06' $A -label 'BEFORE · start' q_before/a_start.png -label 'NEW · start' d2_new/a_start.png -label 'YOUR APPROVED 06' $A -label 'BEFORE · over the crest' q_before/c_early12.png -label 'NEW · over the crest' d2_new/c_early12.png -label 'YOUR APPROVED 06' $A -label 'BEFORE · into the tunnel' q_before/e_entry30.png -label 'NEW · into the tunnel' d2_new/e_entry30.png -label 'YOUR APPROVED 06'  …[+980 chars]`
+
+### 🧑 User — 2026-11-20T19:23:42.496Z
+
+> ↩︎ result: 7 Nov 20 19:23 /home/user/rainbow-/qa/match/06/r29/quick/LOOK_1_start_to_middle.jpg
+> 7 Nov 20 19:23 /home/user/rainbow-/qa/match/06/r29/quick/LOOK_2_late_to_07.jpg
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:23:44.131Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r29/quick/LOOK_1_start_to_middle.jpg"}`
+
+### 🧑 User — 2026-11-20T19:23:44.411Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-20T19:23:44.405Z
+
+[Image: original 924x2276, displayed at 812x2000. Multiply coordinates by 1.14 to map to original image.]
+
+### 🤖 Claude — 2026-11-20T19:23:55.687Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/match/06/r29/quick/LOOK_1_start_to_middle.jpg", "/home/user/rainbow-/qa/match/06/r29/quick/LOOK_2_late_to_07.jpg"], "caption": "Screen 06 in the real game. Each row: your approved picture | BEFORE | NEW at the same moment, start through to the first look at Screen 07.", "display": "render", "status": "normal"}`
+
+### 🧑 User — 2026-11-20T19:23:56.542Z
+
+> ↩︎ result: 2 files delivered to user.
+>   /home/user/rainbow-/qa/match/06/r29/quick/LOOK_1_start_to_middle.jpg → file_uuid: 7dd5b1df-17b4-4ef6-ba0d-d332e7c379e2
+>   /home/user/rainbow-/qa/match/06/r29/quick/LOOK_2_late_to_07.jpg → file_uuid: 053f649d-a193-461c-9df9-9e64c3f61f51
+
+### 🤖 Claude — 2026-11-20T19:24:10.134Z
+
+I can't honestly say the moving version looks like your approved artwork yet. The pictures I just sent show why.
+
+**What looks like your screen:**
+- **The first view** is the same as your approved picture.
+- **The tunnel itself:** the purple walls, gold rings, warm light and cyan-and-pink colours are the same family as your artwork.
+
+**What today's fix changed (the NEW column):** Benny now swims down the middle of the gold-ring tunnel with the coins on the water ahead of him. Before, the river ran off up the right-hand wall.
+
+**What does not look like your artwork once he moves, in BEFORE and NEW alike:**
+- **The crest:** the curling rainbow crest and its loop disappear within about a second.
+- **The water:** it becomes plain streaks instead of your sparkly rainbow swirls.
+- **The foam:** it becomes rows of small white puffs.
+- **The far end:** the far view turns into the next tube's pink, not your golden glow.
+
+**Why:** your painting shows the world from one spot. As soon as Benny moves, everything the painting doesn't show has to be drawn by the game's own 3D materials, and those aren't your artwork. I've changed the route and shapes, but not that underlying look, and more tweaking of the 3D materials won't make it look like your painting.
+
+**What could:** painted views of the same world further along the route, in your artwork's style, wrapped onto the 3D tunnel and water as Benny passes. A set of these for Screen 06 already exists from the earlier batch, but they're unapproved proposals. They are the one approach I can see that might carry your artwork's look into motion. It's unproven, and it's your call before I spend any credits.
+
+The continuous normal-speed videos (BEFORE and NEW, through into Screen 07) are still rendering. I'll send them as soon as they finish, and everything keeps saving to GitHub every five minutes.
+
+### 🧑 User — 2026-11-20T19:24:11.908Z
+
+Stop hook feedback:
+[command hook 2]: There are untracked files in the repository. Please commit and push these changes to the remote branch.
+
