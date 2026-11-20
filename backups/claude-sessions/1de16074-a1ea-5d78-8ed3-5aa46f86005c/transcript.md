@@ -1933,3 +1933,68 @@ I passed your note (clean water, neat scenery that matches your pictures as Benn
 
 **Next result:** Screen 07 with the whole river in broad S-bends, the river ahead kept in view while steering, and a clean water and foam join into Screen 08 (K23-3). It comes with the same labelled swim-and-steering clip at 1.0x and 0.5x speed, next to the earlier version. In parallel, Screen 06's opening comparison you're still owed: APPROVED / what you saw / NEW.
 
+### 🧑 User — 2026-11-20T12:17:25.647Z
+
+I already installed all the plugins and connectors. I already know I did.
+
+### 🤖 Claude — 2026-11-20T12:17:28.420Z
+
+Thanks. I'll check what this session can see now rather than rely on my earlier check.
+
+### 🤖 Claude — 2026-11-20T12:17:28.574Z
+
+> 🔧 **mcp__Marble_World_Labs__list_projects** `{}`
+
+### 🤖 Claude — 2026-11-20T12:17:28.725Z
+
+> 🔧 **ListPlugins** `{}`
+
+### 🧑 User — 2026-11-20T12:17:28.786Z
+
+> ↩︎ result: {"results":[]}
+
+### 🧑 User — 2026-11-20T12:17:28.994Z
+
+> ↩︎ result: this sign-in has no active Atlas account. Ask the user to open https://atlas.worldlabs.ai and finish signing up, then try again
+
+### 🤖 Claude — 2026-11-20T12:17:30.281Z
+
+> 🔧 **Bash** `{"command": "ls -la ~/.claude/plugins/synced/*/ 2>/dev/null | head -30; find ~/.claude/plugins/synced -maxdepth 3 -name plugin.json 2>/dev/null | head -20; for f in $(find ~/.claude/plugins/synced -maxdepth 4 -name plugin.json 2>/dev/null); do python3 -c \"import json;print(json.load(open('$f')).get('name'))\"; done | sort", "description": "List plugins synced to this session"}`
+
+### 🧑 User — 2026-11-20T12:17:30.817Z
+
+> ↩︎ result: total 80
+> drwxr-xr-x 10 root root 4096 Nov 20 11:54 .
+> drwxr-xr-x  3 root root 4096 Nov 20 11:50 ..
+> drwxr-xr-x  4 root root 4096 Nov 20 11:54 22bf1341-d051-4d92-9363-8d0dc8349035
+> -rw-r--r--  1 root root  175 Nov 20 11:50 22bf1341-d051-4d92-9363-8d0dc8349035.meta.json
+> drwxr-xr-x  5 root root 4096 Nov 20 11:54 2ca4e30e-2482-4c94-8644-6c26adf27391
+> -rw-r--r--  1 root root  175 Nov 20 11:50 2ca4e30e-2482-4c94-8644-6c26adf27391.meta.json
+> drwxr-xr-x  5 root root 4096 Nov 20 11:54 59d0c87c-3069-45e4-9a6a-d5a577b71374
+> -rw-r--r--  1 root root  175 Nov 20 11:50 59d0c87c-3069-45e4-9a6a-d5a577b71374.meta.json
+> drwxr-xr-x 21 root root 4096 Nov 20 11:54 6ba53849-2ee0-4cf0-957e-31c122ea1dd1
+> -rw-r--r--  1 root root  175 Nov 20 11:50 6ba53849-2ee0-4cf0-957e-31c122ea1dd1.meta.json
+> drwxr-xr-x  6 root root 4096 Nov 20 11:54 81caeb93-9dc4-426d-b730-d7cc4697571e
+> -rw-r--r--  1 root root  175 Nov 20 11:50 81caeb93-9dc4-426d-b730-d7cc4697571e.meta.json
+> drwxr-xr-x  5 root root 4096 Nov 20 11:54 a382e72d-390f-41fe-bb53-eeb7050ed284
+> -rw-r--r--  1 root root  175 Nov 20 11:50 a382e72d-390f-41fe-bb53-eeb7050ed284.meta.json
+> drwxr-xr-x  5 root root 4096 Nov 20 11:54 afe29730-8d0c-470c-801a-a52a510c0510
+> -rw-r--r--  1 r …[+466 chars]
+
+### 🤖 Claude — 2026-11-20T12:17:42.208Z
+
+> 🔧 **Bash** `{"command": "cat >> docs/briefs/2026-11-20-r25/COORDINATION.md <<'EOF'\n* ~12:25 USER: \"I already installed all the plugins and connectors.\" → Lead: this session's synced plugin list is fixed at session start\n  (11:50: 8 plugins); plugins added afterwards load in the NEXT session (the autosave records the names). Connectors installed + connected\n  (Marble World Labs, Hugging Face, Context7, Thrixel); only the World Labs Atlas service still answers \"no active Atlas account\" for this\n  login (account sign-up at atlas.worldlabs.ai — not blocking; the World Labs API key works). Do not ask t …[+126 chars]`
+
+### 🧑 User — 2026-11-20T12:17:42.275Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-20T12:17:43.219Z
+
+Noted in the round-25 coordination log so the next account doesn't ask you again either.
+
+### 🧑 User — 2026-11-20T12:17:44.099Z
+
+Stop hook feedback:
+[command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+

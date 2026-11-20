@@ -47,3 +47,7 @@ Briefs: `LAUNCH_R25.md` (this folder). If this account stops: next account recre
   → Lead: judge every step by the MOVING views (Benny passing scenery, the water around him, the background behind him), not the start
   frame; reject anything that adds mess (smears, torn / stretched textures, speckled bands, hard seams, spiky sparkles, cut-out holes,
   floating / overlapping pieces); clean water first. No likeness percentages are claimed without evidence; target 90–95 % in motion.
+* ~12:25 USER: "I already installed all the plugins and connectors." → Lead: this session's synced plugin list is fixed at session start
+  (11:50: 8 plugins); plugins added afterwards load in the NEXT session (the autosave records the names). Connectors installed + connected
+  (Marble World Labs, Hugging Face, Context7, Thrixel); only the World Labs Atlas service still answers "no active Atlas account" for this
+  login (account sign-up at atlas.worldlabs.ai — not blocking; the World Labs API key works). Do not ask the user about plugins / connectors again.

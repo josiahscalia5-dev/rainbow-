@@ -1009,3 +1009,165 @@ While waiting, I'll write the unwrap viewer/analysis script.
 > -rw-r--r-- 1 root root  757254 Nov 20 12:06 view_wdbg.png
 >  12:15:51 up 32 min,  0 user,  load average: 8.73, 8.09, 4.84
 
+### 🤖 Claude — 2026-11-20T12:16:40.506Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/1de16074-a1ea-5d78-8ed3-5aa46f86005c/tasks/bp4mm851k.output; ls -la /home/user/scratch/s06/ | grep hole; uptime; ps aux | grep -c chrom", "description": "Check dump progress"}`
+
+### 🧑 User — 2026-11-20T12:16:41.164Z
+
+> ↩︎ result: 12:16:40 up 33 min,  0 user,  load average: 8.12, 8.03, 5.00
+> 24
+
+### 🤖 Claude — 2026-11-20T12:16:44.013Z
+
+> 🔧 **Bash** `{"command": "ps aux | grep -E \"r25_holedump|render_slot\" | grep -v grep | cut -c1-200; bash /home/user/rainbow-/tools/lead25/render_slot.sh --status", "description": "Check whether the dump has a render slot"}`
+
+### 🧑 User — 2026-11-20T12:16:44.074Z
+
+> ↩︎ result: root      7009  0.0  0.0   4476  2208 ?        S    12:05   0:00 /bin/bash -c source /root/.claude/shell-snapshots/snapshot-bash-1795175659427-yvr78w.sh 2>/dev/null || true && export ANDROID_HOME=/opt
+> root      7012  0.0  0.0   2724  1804 ?        S    12:05   0:00 timeout 5400 bash /home/user/rainbow-/tools/lead25/render_slot.sh node /home/user/rainbow-/tools/lead23/screen_clip.mjs 07 /home/user/s
+> root      7013  0.0  0.0   4472  3344 ?        S    12:05   0:00 bash /home/user/rainbow-/tools/lead25/render_slot.sh node /home/user/rainbow-/tools/lead23/screen_clip.mjs 07 /home/user/scratch/s07/cl
+> root      7382  0.0  0.0   4472  3324 ?        S    12:06   0:00 bash /home/user/rainbow-/tools/lead25/render_slot.sh timeout 3000 node tools/benny25/swim_clip_c.mjs 06 /home/user/scratch/benny/clips/
+> root      7802  0.0  0.0   4476  3440 ?        Ss   12:08   0:00 /bin/bash -c source /root/.claude/shell-snapshots/snapshot-bash-1795175659427-yvr78w.sh 2>/dev/null || true && export ANDROID_HOME=/opt
+> root      7806  0.0  0.0   2724  1800 ?        S    12:08   0:00 timeout 900 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/match06/r25_holedump.mjs match06=1&m06geo=1&m06flow=1& …[+431 chars]
+
+### 🤖 Claude — 2026-11-20T12:16:52.794Z
+
+> 🔧 **Bash** `{"command": "kill 7806 7808 2>/dev/null; ls /home/user/rainbow-/node_modules/.bin | grep -E \"^(tsx|vite-node|esbuild|ts-node)$\"; cd /home/user/wt/s06 && head -40 src/world/course.ts; grep -n \"^import\\|^export\" src/world/course.ts | head -30", "description": "Cancel waiting dump; check TS runners and course.ts imports"}`
+
+### 🧑 User — 2026-11-20T12:16:52.881Z
+
+> ↩︎ result: esbuild
+> vite-node
+> /**
+>  * RAINBOW master course — ONE continuous route through the washer world.
+>  *
+>  * Units: 1 unit ≈ 5 cm at Benny's scale (Benny body radius ≈ 0.8). +Y is up (absolute altitude).
+>  * The route starts inside Drum A (scene 01/02), drains through a chute into the whirlpool basin (03),
+>  * drops down the five-arrow slide (04), winds through the perforated current tube (05), crests the
+>  * rinse arch (06), winds through the washer tube and then PLUNGES ~62 units straight down (07) before
+>  * the bottom of that same tube flares into the Final Spin Chamber inlet (08). 08–10 stay in that same
+>  * chamber; the route ends under the purple towel on the platform, where the 11 cinematic plays.
+>  *
+>  * Every stage is a range of arc-length `s` on a single centripetal Catmull-Rom spline, so position
+>  * and tangent are continuous by construction; `validateContinuity()` measures it anyway.
+>  */
+> import * as THREE from 'three';
+> import { flag05 } from '../vfx/waterRibbon';
+> import river08 from '../../assets/textures/match08/river08.json';
+> import path06 from '../../assets/textures/match06/path06.json';
+> 
+> export type StageId = '01' | '02' | '03' | '04' | '05' | '06' | '07' | '08' | '09' | '10' |  …[+1553 chars]
+
+### 🤖 Claude — 2026-11-20T12:16:57.085Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"location\\|URLSearchParams\\|constructor\\|sample(s\\|  sample\\|stage(id\" src/world/course.ts | head -30; grep -n \"new Course\" -r src | head -5; grep -n \"export function flag05\" -A8 src/vfx/waterRibbon.ts | head -12", "description": "Check how Course is built and reads flags"}`
+
+### 🧑 User — 2026-11-20T12:16:57.265Z
+
+> ↩︎ result: 402:  constructor() {
+> 520:    return this.sample(s).pos.x - this.line05x;
+> 528:  stage(id: StageId): StageDef {
+> 566:  sample(s: number, out?: CourseSample): CourseSample {
+> 588:    const f = this.sample(s);
+> 608:    const a = c.sample(sa);
+> 609:    const b = c.sample(sb);
+> 626:    const cur = c.sample(s);
+> 632:  const y = (s: number) => +c.sample(s).pos.y.toFixed(2);
+> src/game/Game.ts:98:  const course = new Course();
+
+### 🤖 Claude — 2026-11-20T12:16:59.495Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 395,420p src/world/course.ts; sed -n 560,592p src/world/course.ts; grep -n \"path06\\|match06\" src/world/course.ts | head -20; grep -n \"flag05\\b\" src/vfx/waterRibbon.ts | head -3", "description": "Read Course constructor and sample"}`
+
+### 🧑 User — 2026-11-20T12:16:59.595Z
+
+> ↩︎ result: private st10!: StageDef;
+>   private readonly N: number;
+>   private readonly ds: number;
+>   private readonly P: Float32Array;
+>   private readonly T: Float32Array;
+>   private readonly U: Float32Array;
+> 
+>   constructor() {
+>     const route = buildRoute();
+>     this.curve = new THREE.CatmullRomCurve3(route.points, false, 'centripetal');
+>     // arc-length table over curve parameter u
+>     const M = route.points.length * 24;
+>     const us: number[] = [0];
+>     const ls: number[] = [0];
+>     let prev = this.curve.getPoint(0);
+>     for (let i = 1; i <= M; i++) {
+>       const u = i / M;
+>       const p = this.curve.getPoint(u);
+>       ls.push(ls[i - 1] + p.distanceTo(prev));
+>       us.push(u);
+>       prev = p;
+>     }
+>     this.length = ls[M];
+>     const uAtS = (s: number) => {
+>       let lo = 0, hi = M;
+>       while (hi - lo > 1) {
+>     }
+>     // the stream narrows into the towel opening at the very end of 10
+>     const st10 = this.st10;
+>     return base * (1 - 0.35 * smooth(st10.s1 - 8, st10.s1, s));
+>   }
+> 
+>   sample(s: number, out?: CourseSample): CourseSample {
+>     const o = out ?? { s: 0, pos: new THREE.Vector3(), tan: new THREE.Vector3(), up: new THREE.Vector3(), right: new THREE.Vector3() };
+>     const x = THREE.Math …[+1567 chars]
+
+### 🤖 Claude — 2026-11-20T12:17:01.960Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"function q05\" -A10 src/vfx/waterRibbon.ts | head -14", "description": "Check how flags are read"}`
+
+### 🧑 User — 2026-11-20T12:17:01.990Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T12:17:06.314Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s06/tools/match06/r25_frames.ts", "content": "// r25 (QA only, no browser): the 06 river frames (pos / up / right) from the game's own course.ts under the given query, for\n// tools/match06/make_hole06.py.  cd /home/user/wt/s06 && npx vite-node tools/match06/r25_frames.ts -- \"<query>\" <out.json> [sa] [sb] [ds]\nimport { writeFileSync } from 'node:fs';\nconst args = process.argv.slice(2).filter((a) => a !== '--');\nconst [Q, OUT, SA, SB, DS] = args;\n(globalThis as unknown as { location: unknown }).location = { search: '?' + Q, href: 'http://x/?' + Q, hostname: 'x …[+574 chars]`
+
+### 🧑 User — 2026-11-20T12:17:06.345Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s06/tools/match06/r25_frames.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T12:17:08.867Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"q05\" src/vfx/waterRibbon.ts | head -5; Q=$(cat /home/user/rainbow-/qa/match/06/r24/lead_rip/QUERY_RIP.txt | tr -d '\\n'); timeout 300 nice -n 5 npx vite-node tools/match06/r25_frames.ts -- \"$Q\" /home/user/scratch/s06/frames06.json 186 236 0.05 2>&1 | tail -5", "description": "Export river frames with vite-node", "timeout": 320000}`
+
+### 🧑 User — 2026-11-20T12:17:10.843Z
+
+> ↩︎ result: 157:const q05 = (key: string): boolean => {
+> 167:export const flag05 = q05;
+> 174:export const FLOW05: number = q05('flowcam05') ? 0.5 : 1.3;
+> 196:export const SILK05: boolean = q05('silk05');
+> 197:export const PUFF05: boolean = q05('puff05');
+> frames 1001 stage06 188.9098797754344 242.87279039922498
+
+### 🤖 Claude — 2026-11-20T12:17:37.745Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s06/tools/match06/r25_unwrap06.py", "content": "#!/usr/bin/env python3\n\"\"\"r25 (Screen 06, `&m06hole=1` preparation): unwrap the projected approved plate + masks into the river floor's own coordinates\n(lateral l x course s), exactly as match06.ts builds the floor (river frame + right * l + up * bank(l)) and projects it with the\nlocked projector camera (assets/textures/match06/proj06.json). Visibility = floor self-occlusion z-buffer in the projector image.\nRiver frames from tools/match06/r25_frames.ts (the game's own course.ts under the 06 query).\n  python3 - …[+4620 chars]`
+
+### 🧑 User — 2026-11-20T12:17:37.806Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s06/tools/match06/r25_unwrap06.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T12:17:40.859Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06/tools/match06 && python3 - <<'EOF'\nimport sys, json, numpy as np\nsys.path.insert(0,'.')\nimport r25_unwrap06 as U\nL,M=U.load_layout()\nfr=json.load(open('/home/user/scratch/s06/frames06.json'))\nfor ds in [-2,-1,0,1,2,4,6,9,12]:\n    p,u,r=U.frames_at(fr,np.array([L['sB']+ds]))\n    x,y,d,z=U.project(L,M,p)\n    print(ds, round(float(x[0])), round(float(y[0])), round(float(d[0]),2))\nEOF", "description": "Sanity-check projection of the river centreline"}`
+
+### 🧑 User — 2026-11-20T12:17:41.388Z
+
+> ↩︎ result: -2 399 1557 5.68
+> -1 410 1290 5.95
+> 0 421 1083 6.39
+> 1 432 923 6.97
+> 2 442 798 7.68
+> 4 463 633 9.35
+> 6 484 552 11.23
+> 9 515 532 14.2
+> 12 549 568 17.14
+
