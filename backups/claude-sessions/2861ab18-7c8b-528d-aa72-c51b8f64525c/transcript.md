@@ -2389,3 +2389,193 @@ It's actually ~3 seconds per frame (tool-call time inflated my estimate), so abo
 
 > ↩︎ result: Command running in background with ID: b6c2vddw3. Output is being written to: /tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/tasks/b6c2vddw3.output. You will be notified when it completes. To check interim output, use Read on that file path.
 
+### 🤖 Claude — 2026-11-20T20:39:23.336Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/match/06/r30/proof/make_clip.py", "content": "\"\"\"r30 lead: label the uninterrupted NEW gameplay clip (frames from tools/match06/r30_clip.mjs) and encode 1.0x + 0.5x mp4, plus\nSTORYBOARD_vs_GAMEPLAY.jpg (the user's 4 storyboard panels above the real-gameplay frames at those route moments).\nusage: python3 -I make_clip.py <framesDir> <outDir> <s07> <f1,f2,f3,f4>   (frame indices for the storyboard panels)\"\"\"\nimport json, sys, os, subprocess\nfrom PIL import Image, ImageDraw, ImageFont\nFR, OUT, S07 = sys.argv[1], sys.argv[2], float(sys.argv[3])\nPICK …[+2910 chars]`
+
+### 🧑 User — 2026-11-20T20:39:23.417Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/match/06/r30/proof/make_clip.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T20:39:30.833Z
+
+While waiting: the start view differs from BEFORE in 0.19% of pixels by more than 20 levels. I'll check where those pixels are, so I can report exactly what moved.
+
+### 🤖 Claude — 2026-11-20T20:39:33.781Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r30 && python3 -c \"\nfrom PIL import Image; import numpy as np\nfrom scipy import ndimage\na=np.asarray(Image.open('stills_BEFORE/a_start.png').convert('RGB')).astype(int); b=np.asarray(Image.open('stills_NEW/a_start.png').convert('RGB')).astype(int)\nm=np.abs(a-b).max(axis=2)>20\nlab,n=ndimage.label(ndimage.binary_dilation(m,iterations=3)); sz=ndimage.sum(m,lab,range(1,n+1)); objs=ndimage.find_objects(lab)\nbig=sorted(zip(sz,objs),key=lambda t:-t[0])[:6]\nprint('blobs',n,'largest:'); [print(int(s), (o[1].start,o[0].start,o[1].stop,o[0].stop)) f …[+74 chars]`
+
+### 🧑 User — 2026-11-20T20:39:35.222Z
+
+> ↩︎ result: blobs 692 largest:
+> 893 (825, 628, 864, 698)
+> 115 (308, 716, 425, 772)
+> 44 (430, 736, 470, 776)
+> 37 (329, 862, 377, 898)
+> 24 (252, 1096, 291, 1146)
+> 23 (398, 1156, 428, 1198)
+
+### 🤖 Claude — 2026-11-20T20:39:40.106Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nfrom PIL import Image\nbox=(700,560,864,760)\na=Image.open('stills_BEFORE/a_start.png').convert('RGB').crop(box).resize((328,400)); b=Image.open('stills_NEW/a_start.png').convert('RGB').crop(box).resize((328,400))\no=Image.new('RGB',(670,400),(0,0,0)); o.paste(a,(0,0)); o.paste(b,(342,0)); o.save('/tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/scratchpad/startdiff.png')\"", "description": "Crop the largest start-view difference"}`
+
+### 🧑 User — 2026-11-20T20:39:40.376Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T20:39:41.961Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/scratchpad/startdiff.png"}`
+
+### 🧑 User — 2026-11-20T20:39:41.982Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T20:40:05.027Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nfrom PIL import Image; import numpy as np, glob\nb=np.asarray(Image.open('stills_NEW/a_start.png').convert('RGB')).astype(int); c=b[670,855]; print('gap colour', c)\nfs=sorted(glob.glob('/home/user/scratch/r30/clip_new/0*.png'))\nout=[]\nfor f in fs[:200:4]:\n  a=np.asarray(Image.open(f).convert('RGB')).astype(int); m=(np.abs(a-c).max(axis=2)<6); out.append((f[-8:-4], round(100*m.mean(),3)))\nprint(out)\"", "description": "Track the background gap over clip frames"}`
+
+### 🧑 User — 2026-11-20T20:40:08.616Z
+
+> ↩︎ result: gap colour [198   0 201]
+> [('0000', np.float64(0.082)), ('0004', np.float64(0.179)), ('0008', np.float64(0.136)), ('0012', np.float64(0.064)), ('0016', np.float64(0.0)), ('0020', np.float64(0.0)), ('0024', np.float64(0.0)), ('0028', np.float64(0.0)), ('0032', np.float64(0.0)), ('0036', np.float64(0.0)), ('0040', np.float64(0.0)), ('0044', np.float64(0.0)), ('0048', np.float64(0.0)), ('0052', np.float64(0.0)), ('0056', np.float64(0.0)), ('0060', np.float64(0.0)), ('0064', np.float64(0.0)), ('0068', np.float64(0.0)), ('0072', np.float64(0.0)), ('0076', np.float64(0.0)), ('0080', np.float64(0.0)), ('0084', np.float64(0.0)), ('0088', np.float64(0.0)), ('0092', np.float64(0.0)), ('0096', np.float64(0.0)), ('0100', np.float64(0.0)), ('0104', np.float64(0.0)), ('0108', np.float64(0.0))]
+
+### 🤖 Claude — 2026-11-20T20:40:30.228Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"away(p\\|away:\\|setAway\\|away =\" src/world/match06.ts | head -10", "description": "Find the away factor in match06"}`
+
+### 🧑 User — 2026-11-20T20:40:30.271Z
+
+> ↩︎ result: 48:  setAway(a: number): void;
+> 351:        float away = smoothstep(0.2, 1.2, distance(cameraPosition, uProjPos));
+> 1148:  // the camera has left it (setAway). Not part of the projector depth bake (invisible while baking).
+> 1271:    setAway(a) { if (foamClouds) foamClouds.visible = a > 0.5; for (const o of foamSprites) o.visible = a > 0.5; },
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T20:40:32.415Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 1262,1275p src/world/match06.ts; grep -n \"    away(\" src/world/match06.ts; sed -n \"$(grep -n '    away(' src/world/match06.ts | cut -d: -f1),+2p\" src/world/match06.ts", "description": "Read the per-frame away hooks"}`
+
+### 🧑 User — 2026-11-20T20:40:32.494Z
+
+> ↩︎ result: clone.traverse((o) => { if ((o as THREE.Mesh).isMesh) (o as THREE.Mesh).material = new THREE.MeshBasicMaterial({ colorWrite: false, side: THREE.DoubleSide }); });
+>       scene.add(clone);
+>       clone.updateMatrixWorld(true);
+>       renderer.setRenderTarget(depthRT);
+>       renderer.clear();
+>       renderer.render(scene, proj);
+>       renderer.setRenderTarget(prevRT);
+>       shared.uUseDepth.value = 1;
+>     },
+>     setAway(a) { if (foamClouds) foamClouds.visible = a > 0.5; for (const o of foamSprites) o.visible = a > 0.5; },
+>     setBenny(s, lat) { if (floorMat.uniforms.uRipOn.value > 0.5) floorMat.uniforms.uBen.value.set(lat, s); },
+>     away(cam) { return THREE.MathUtils.smoothstep(cam.distanceTo(shared.uProjPos.value), 0.6, 2.0); },
+>     sync(renderer, w, h) {
+>       shared.uPjPost.value.x = renderer.toneMappingExposure;
+> 1273:    away(cam) { return THREE.MathUtils.smoothstep(cam.distanceTo(shared.uProjPos.value), 0.6, 2.0); },
+>     away(cam) { return THREE.MathUtils.smoothstep(cam.distanceTo(shared.uProjPos.value), 0.6, 2.0); },
+>     sync(renderer, w, h) {
+>       shared.uPjPost.value.x = renderer.toneMappingExposure;
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T20:40:50.484Z
+
+The gap only lasts the first ~0.6 seconds of motion. To keep the stub small, I'll find exactly which part of the old straight tube those edge pixels showed in BEFORE.
+
+### 🤖 Claude — 2026-11-20T20:40:56.142Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -i \"s|for (const \\[x, y\\] of \\[\\[0, 0.5\\], \\[0, 0.2\\], \\[-0.5, 0.3\\], \\[0.5, 0.3\\], \\[0, 0.05\\]\\])|for (const [x, y] of (globalThis.__NDC ?? [[0, 0.5], [0, 0.2], [-0.5, 0.3], [0.5, 0.3], [0, 0.05]]))|; s|const res = await page.evaluate((\\[S\\]) => {|if (process.env.NDC) await page.evaluate((n) => { globalThis.__NDC = n; }, JSON.parse(process.env.NDC));\\n  const res = await page.evaluate(([S]) => {|\" tools/match06/r30_hitprobe.mjs && NDC='[[0.979,0.134],[0.99,0.10],[0.96,0.16],[0.99,0.17]]' timeout 900 node tools/match06/r30_hitprobe.mj …[+644 chars]`
+
+### 🧑 User — 2026-11-20T20:41:07.314Z
+
+> ↩︎ result: 0.979,0.134 foam_berm<foam_banks d 11.29 a 11.2 theta 111 deg rad 0.8
+> 0.99,0.1 foam_berm<foam_banks d 10.39 a 10.3 theta 123 deg rad 0.7
+> 0.96,0.16 Mesh<foam_banks<wate d 11.52 a 11.4 theta 110 deg rad 1.0
+> 0.99,0.17 Mesh<foam_banks<wate d 11.61 a 11.5 theta 102 deg rad 1.0
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T20:41:12.154Z
+
+Those hits are foam meshes that don't draw in that view, so I'll filter to Screen 06's tunnel meshes only.
+
+### 🤖 Claude — 2026-11-20T20:41:14.064Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -i \"s|out\\[\\`\\${x},\\${y}\\`\\] = r.probe(x, y);|out[\\`\\${x},\\${y}\\`] = globalThis.__NDC ? r.probe(x, y).concat(r.probe(x, y)).filter((h) => /m06_/.test(h.obj)) : r.probe(x, y);|\" tools/match06/r30_hitprobe.mjs && grep -c \"m06_/.test\" tools/match06/r30_hitprobe.mjs; grep -n \"hits.slice(0, 4)\" src/game/Game.ts", "description": "Filter probe hits to Screen 06 meshes"}`
+
+### 🧑 User — 2026-11-20T20:41:14.129Z
+
+> ↩︎ result: 1
+> 765:      return hits.slice(0, 4).map((h) => ({ d: +h.distance.toFixed(2), obj: path(h.object), p: h.point.toArray().map((v) => +v.toFixed(2)) }));
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T20:41:18.604Z
+
+The game's probe only returns the first 4 hits, so I'll compute it directly: take the live start-view camera and intersect the gap pixels' rays with the old straight tube.
+
+### 🤖 Claude — 2026-11-20T20:41:29.609Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && cat > /tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/scratchpad/cam.mjs <<'EOF'\nimport { pathToFileURL } from 'node:url';\nconst { loadPlaywright, CHROMIUM_ARGS } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);\nconst { startVite } = await import(pathToFileURL(`${process.cwd()}/tools/match06/r23_vite.mjs`).href);\nconst { chromium } = loadPlaywright(); const vite = await startVite(5301); const browser = await chromium.launch({ args: CHROMIUM_ARGS });\ntry { const page = await browser.newPage({ viewport: {  …[+1850 chars]`
+
+### 🧑 User — 2026-11-20T20:41:40.394Z
+
+> ↩︎ result: camera drum a -0.0 r -1.90 u 0.99
+> (0.979, 0.134) hit straight tube at a 109.5 theta -6 deg (dist 110.7)
+> (0.99, 0.1) hit straight tube at a 104.0 theta -14 deg (dist 105.3)
+> (0.96, 0.16) hit straight tube at a 115.3 theta 0 deg (dist 116.4)
+> (0.99, 0.17) hit straight tube at a 108.1 theta 3 deg (dist 109.2)
+> (0.94, 0.13) hit straight tube at a 118.9 theta -8 deg (dist 120.0)
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T20:42:09.860Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='src/world/match06.ts'; t=open(p).read()\nold=\"  const CURL = DEEP && new URLSearchParams(location.search).get('m06curl') === '1';\"\nassert old in t\nt=t.replace(old, old+\"\\n  let stub0: THREE.Mesh | null = null; // r30 m06curl: start-view patch of the old straight tube (see below)\",1)\nold=\"    // r30 m06curl: over the last 24 u before Screen 07's entrance\"\nnew=\"\"\"    // r30 m06curl: the approved START view looked past the bend at the old straight tube's right wall ~100-120 u deep (right frame\n    // edge, ~0.2 % of the fra …[+2278 chars]`
+
+### 🧑 User — 2026-11-20T20:42:14.716Z
+
+> ↩︎ result: 30:  s0: number;
+> tools/match06/r30_continuity.ts(2,89): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+> tools/match06/r30_continuity.ts(3,40): error TS1375: 'await' expressions are only allowed at the top level of a file when that file is a module, but this file has no imports or exports. Consider adding an empty 'export {}' to make this file a module.
+> tools/match06/r30_continuity.ts(7,37): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+> tsc-done
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T20:42:18.629Z
+
+tsc picked up my small continuity wrapper (it needs Node typings). I'll mark it as a Node-only script so the typecheck stays clean.
+
+### 🤖 Claude — 2026-11-20T20:42:22.027Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -i '1i // @ts-nocheck  (Node-only QA script run with vite-node; not part of the game build)' tools/match06/r30_continuity.ts && echo 'export {};' >> tools/match06/r30_continuity.ts && npx tsc --noEmit -p . 2>&1 | head -5; echo \"tsc rc done\"; Q=\"match06=1&m06deep=1&m06curl=1\" timeout 300 npx vite-node tools/match06/r30_continuity.ts 2>&1 | grep -m1 '\"ok\"'; cat /tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/tasks/b6c2vddw3.output 2>/dev/null | tail -2; ls /home/user/scratch/r30/clip_new/*.png | wc -l", "description": "Fix typ …[+60 chars]`
+
+### 🧑 User — 2026-11-20T20:42:28.935Z
+
+> ↩︎ result: tsc rc done
+>  "ok": true,
+> 160
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T20:42:38.343Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -i \"s|    if (st.s > sEnd) break;|    if (st.s > sEnd \\|\\| (process.env.MAXF \\&\\& log.length >= Number(process.env.MAXF))) break;|\" tools/match06/r30_clip.mjs && grep -n \"MAXF\" tools/match06/r30_clip.mjs | head -2 && AUDIT_W=864 AUDIT_H=1536 AUDIT_PORT=5302 AUDIT_SHOTS='[[\"a_start\",0,null]]' timeout 1500 node tools/match06/r30_shots.mjs /home/user/rainbow-/qa/match/06/r30/stills_NEW 06 \"$(cat /home/user/rainbow-/qa/match/06/r30/QUERY_NEW.txt)\" 2>&1 | grep -E \"^06|rror\" && cd /home/user/rainbow-/qa/match/06/r30 && python3 -c \"\nfrom PIL im …[+538 chars]`
+
+### 🧑 User — 2026-11-20T20:43:03.864Z
+
+> ↩︎ result: 31:    if (st.s > sEnd || (process.env.MAXF && log.length >= Number(process.env.MAXF))) break;
+> 06 a_start s 198.91 lat 0 stage 06 coins 1680
+> start view: >20 levels 0.222 %, >0 18.16 %
+> right-edge gap region max diff 251 magenta px 880
+
+### 🤖 Claude — 2026-11-20T20:43:19.993Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 -c \"import json;print('L.s0', json.load(open('assets/textures/match06/proj06.json'))['s0'])\" && cat > tools/match06/r30_eval.mjs <<'EOF'\n// r30 lead QA: evaluate a JS expression in the live game at the 06 checkpoint (optionally after S river distance). usage: node r30_eval.mjs \"<query>\" \"<expr using r, scene, cam>\" [S]\nimport { pathToFileURL } from 'node:url';\nconst { loadPlaywright, CHROMIUM_ARGS } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);\nconst { startVite } = await import(pathToFileURL(`${process.cwd()}/ …[+1321 chars]`
+
+### 🧑 User — 2026-11-20T20:43:31.348Z
+
+> ↩︎ result: L.s0 186.91
+> {"stub":{"visible":false,"parentVisible":true,"verts":1325},"tube":true,"s":198.91}
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T20:43:40.118Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -i 's/if (stub0) stub0.visible = s < L.s0 + 10; }/if (stub0) stub0.visible = s < L.s0 + 12 + 10; } \\/\\/ r30: approved checkpoint (L.s0 + 12) + 10 u/' src/world/match06.ts && grep -c \"L.s0 + 12 + 10\" src/world/match06.ts && sed -i 's/exists only while Benny is within his first ~10 u (setBenny)/exists only while Benny is within his first ~10 u past the approved checkpoint (setBenny)/' src/world/match06.ts && AUDIT_W=864 AUDIT_H=1536 AUDIT_PORT=5302 AUDIT_SHOTS='[[\"a_start\",0,null]]' timeout 1500 node tools/match06/r30_shots.mjs /home/user/rainbow-/q …[+766 chars]`
+

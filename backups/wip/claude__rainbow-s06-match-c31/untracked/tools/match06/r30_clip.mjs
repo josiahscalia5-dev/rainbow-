@@ -28,7 +28,7 @@ try {
     await page.screenshot({ path: `${OUT}/${String(i).padStart(4, '0')}.png` });
     log.push({ i, t: +(i / fps).toFixed(3), steer: dir, ...st });
     if (i % 24 === 0) console.log('frame', i, st);
-    if (st.s > sEnd) break;
+    if (st.s > sEnd || (process.env.MAXF && log.length >= Number(process.env.MAXF))) break;
   }
   console.log('frames', log.length, 's0', s0, 's07', s07);
 } finally {
