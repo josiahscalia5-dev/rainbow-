@@ -1,0 +1,13 @@
+05                     LAYOUT20  91.1 %  PALETTE  95.3 %
+f03_forward3u          LAYOUT20  24.2 %  PALETTE  87.9 %
+f06_forward6u          LAYOUT20  16.9 %  PALETTE  83.4 %
+f10_forward10u         LAYOUT20  12.9 %  PALETTE  83.5 %
+f20_forward20u         LAYOUT20  13.1 %  PALETTE  81.2 %
+t33_through_screen     LAYOUT20  15.2 %  PALETTE  83.9 %
+t66_through_screen     LAYOUT20   5.8 %  PALETTE  71.0 %
+t95_through_screen     LAYOUT20   5.5 %  PALETTE  57.6 %
+s_left_hard            LAYOUT20  10.2 %  PALETTE  80.6 %
+s_left_steer           LAYOUT20  13.1 %  PALETTE  83.3 %
+s_right_hard           LAYOUT20   8.7 %  PALETTE  75.5 %
+s_right_steer          LAYOUT20  12.5 %  PALETTE  84.6 %
+05                     LAYOUT20  11.7 %  PALETTE  59.2 %

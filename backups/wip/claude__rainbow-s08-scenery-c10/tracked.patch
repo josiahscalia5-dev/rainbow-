@@ -1,0 +1,13 @@
+diff --git a/src/world/match08.ts b/src/world/match08.ts
+index c3ffc9b8..9aaf2d22 100644
+--- a/src/world/match08.ts
++++ b/src/world/match08.ts
+@@ -446,7 +446,7 @@ export async function buildMatch08(): Promise<Match08> {
+   // QA only `&m08dbg=1`: every fitted surface in its own flat colour (which proxy carries which part of the frame)
+   if (flag05('m08dbg')) {
+     const pal = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#00ffff', '#ff00ff', '#ffffff', '#ff8000', '#8000ff', '#008040', '#804000', '#808080'];
+-    group.children.forEach((o, i) => { (o as THREE.Mesh).material = new THREE.MeshBasicMaterial({ color: pal[i % pal.length], side: THREE.DoubleSide }); });
++    group.children.forEach((o, i) => { if (o.name === 'm08_collar') o.visible = false; /* its clip needs the shader */ (o as THREE.Mesh).material = new THREE.MeshBasicMaterial({ color: pal[i % pal.length], side: THREE.DoubleSide }); });
+     console.log('m08dbg', group.children.map((o, i) => `${o.name}=${pal[i % pal.length]}`).join(' '));
+   }
+ 

@@ -43,6 +43,8 @@ REDACTIONS: list[tuple[re.Pattern[str], str]] = [
     (re.compile(r"(?i)\b(bearer|basic)\s+[A-Za-z0-9._~+/=\-]{16,}"), r"\1 [REDACTED]"),
     (re.compile(r"(?i)((?:api[_-]?key|secret|token|passw(?:or)?d|client[_-]?secret|access[_-]?key)[\"']?\s*[:=]\s*[\"']?)([^\s\"',}]{8,})"), r"\1[REDACTED]"),
     (re.compile(r"(https?://)[^/\s:@]+:[^/\s@]+@"), r"\1[REDACTED-CREDENTIALS]@"),
+    # a bare key pasted after the words "API key" (e.g. "here is my API key for X <32 chars>")
+    (re.compile(r"(?i)(\bapi[\s_-]*key\b[^\n]{0,60}?)\b([A-Za-z0-9_\-]{24,128})\b"), r"\1[REDACTED-API-KEY]"),
     (re.compile(r"[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}"), "[REDACTED-EMAIL]"),
 ]
 # commit trailer address is public & harmless; keep it readable
@@ -58,16 +60,18 @@ if os.path.exists(_PRIVATE_TERMS_FILE):
 
 
 def redact_text(s: str) -> str:
-    for term in PRIVATE_TERMS:
-        if term in s:
-            s = s.replace(term, "[REDACTED-PRIVATE]")
     keep = {}
     for i, e in enumerate(KEEP_EMAILS):
         tok = f"\u0000KEEP{i}\u0000"
         keep[tok] = e
         s = s.replace(e, tok)
+    # patterns first (whole e-mail addresses -> [REDACTED-EMAIL]), THEN private terms for any stray fragments,
+    # so a private term can never break up an address and leave its domain behind
     for pat, rep in REDACTIONS:
         s = pat.sub(rep, s)
+    for term in PRIVATE_TERMS:
+        if term in s:
+            s = s.replace(term, "[REDACTED-PRIVATE]")
     for tok, e in keep.items():
         s = s.replace(tok, e)
     return s
@@ -232,6 +236,22 @@ def main(repo: Path, projects_glob: str) -> int:
             text_blob = jl.lower()
             topics = [w for w in TOPIC_WORDS if w in text_blob]
             index_rows.append((info, sid, sub_count, topics))
+
+    # Keep sessions already archived in the repo (e.g. from an earlier container or Claude account)
+    # whose raw logs are not present on this machine — otherwise they would vanish from the index.
+    live = {sid for _, sid, _, _ in index_rows}
+    if out_root.is_dir():
+        for sdir in sorted(p for p in out_root.iterdir() if p.is_dir() and p.name not in live):
+            jl_path = sdir / "transcript.sanitized.jsonl"
+            if not jl_path.is_file():
+                continue
+            archived = load_jsonl(jl_path)
+            info = summarize(archived)
+            sub_count = len(list((sdir / "subagents").glob("*.sanitized.jsonl"))) if (sdir / "subagents").is_dir() else 0
+            blob = jl_path.read_text(encoding="utf-8", errors="replace").lower()
+            topics = [w for w in TOPIC_WORDS if w in blob]
+            index_rows.append((info, sdir.name, sub_count, topics))
+    index_rows.sort(key=lambda r: r[0].get("first") or "")
 
     lines = [
         "# Rainbow — Claude conversation index",

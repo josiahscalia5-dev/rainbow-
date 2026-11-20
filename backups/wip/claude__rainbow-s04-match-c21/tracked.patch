@@ -1,0 +1,139 @@
+diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
+index 2b62a35..0d6716a 100644
+--- a/src/world/match04m4.ts
++++ b/src/world/match04m4.ts
+@@ -491,6 +491,7 @@ uniform vec4 uWU;            // r19b m04wup: x highest climb up the wall above t
+ uniform vec4 uWU2;           // r19b m04wup: x / y the climb falls from full (x u ahead of Benny) to z of it (y u ahead), w soft top edge (u)
+ uniform vec4 uWU3;           // r19b m04wup: x old water edge (arc u), y tongue drift with the current (0..1), z lilac-white lace
+                              // on the climbing crest (share of the m04edge fringe), w band tile column at the crest (0 = lilac sparkle)
++uniform vec2 uFar;           // r20 m04farsm: x where the K9 telescope begins (along, local), y on — beyond it the band edges run smooth
+ uniform vec4 uWC;            // r20 m04wcr: x on (strength), y bands per u up the wall, z bright highlight lines, w dark violet edges
+ uniform vec2 uWC2;           // r20 m04wcr: x bright glossy lip just under the crest, y soft top width (u) instead of m04wus
+ uniform vec4 uA5;        // m04arr5: x on, y spacing, z first apex (along), w bar thickness along the flow
+@@ -674,6 +675,9 @@ void main() {
+         // r18 m04nwhirl meander: ahead of Benny the band edge swings in and out along the slide (world-anchored S-curves,
+         // left / right in opposite phase) instead of running as two straight rails
+         mea = uNB4.z * sin(along * 6.2832 / uNB4.w + (vS < 0.0 ? 0.0 : 3.1416)) * smoothstep(0.0, uNB2.x, d);
++        // r20 m04farsm: inside the far telescope every ring is a shrunk copy, but the meander keeps its 7 u period along the
++        // slide, so it zig-zags once per ring (sawtooth "Christmas tree" edges round the far river) — let it fade out there
++        mea *= 1.0 - uFar.y * smoothstep(uFar.x - 8.0, uFar.x, along);
+         inner += mea;
+       }
+     }
+@@ -687,7 +691,7 @@ void main() {
+       asB = as + uSS.x * 4.0 * kk * (1.0 - kk) * sin(along * 6.2832 / uSS.y + (vS < 0.0 ? 1.3 : 4.1) + 1.5 * vn(vec2(along * 0.07, vS < 0.0 ? 1.0 : 5.0)));
+     }
+     float sg = rr >= 0.0 ? 0.0 : sign(vS);       // r18 whirl: one wander for both sides (no jump where the crescents cross)
+-    float wan = uSB1.w * (vn(vec2(along * 0.11, sg * 5.0 + 2.0)) - 0.5) * 2.0;
++    float wan = uSB1.w * (vn(vec2(along * 0.11, sg * 5.0 + 2.0)) - 0.5) * 2.0 * (1.0 - uFar.y * smoothstep(uFar.x - 8.0, uFar.x, along));
+     float tb = clamp((asB + wan - inner) / max(0.1, uSB0.z - inner), 0.0, 1.0);
+     if (uWU.x > 0.0) {
+       // r19b m04wup: the painted band sequence (cyan by the lane -> violet -> hot-pink satin -> lilac sparkle) reaches only
+@@ -1039,6 +1043,8 @@ export function addM04(ctx: M04Ctx) {
+   const out: { update(cam: THREE.Vector3, benny?: THREE.Vector3): void } = { update() {} };
+   const updaters: ((a: number) => void)[] = [];
+   let endCap: THREE.Mesh | null = null;
++  let endFit: THREE.Vector3 | null = null;
++  let telA = 1e9;                              // r20 m04farsm: where the K9 telescope begins (u inside the opening)   // r20 m04endfit: the end disc's own centre (x, y) and radius under m04rfew
+ 
+   if (M04.ring) {
+     const ringTile = new THREE.TextureLoader().load(new URL('../../assets/textures/match04/tile_ring.png', import.meta.url).href, (t) => { t.needsUpdate = true; });
+@@ -1243,6 +1249,7 @@ export function addM04(ctx: M04Ctx) {
+     if (rfew) cap.setAttribute('aF', new THREE.Float32BufferAttribute(new Float32Array(nC * 2).map((_, i) => (i % 2 === 0 ? 0 : capS)), 2));
+     const cm = new THREE.Mesh(cap, gm); cm.name = 'm04_ring_glow'; group.add(cm);
+     endCap = cm;
++    if (rfew) { endFit = new THREE.Vector3(cx, cy + rfGz * (1 - capS), r * capS); telA = M04.num('m04rfa', 30); }
+     ctx.hideOld(['m04_tube', 'm04_mouth_ring', 'm04_tube_end']);
+     console.info('[match04] m04ring', { period: P, rings: ringOf[ringOf.length - 1] + 1 });
+     if (M04.mouth) {
+@@ -1283,7 +1290,9 @@ export function addM04(ctx: M04Ctx) {
+     endCap.material = new THREE.ShaderMaterial({ vertexShader: END_VERT, fragmentShader: END_FRAG, side: THREE.DoubleSide, fog: false,
+       extensions: { derivatives: true } as never,
+       uniforms: { uPlate: shared.uPlate, uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uProjVP: shared.uProjVP, uAway: away, uTime: time,
+-        uC: { value: new THREE.Vector3(cx, cy, r) },
++        // r20 `&m04endfit=1`: with the K9 telescope (m04rfew) the disc sits at the telescope's end, shrunk to its last ring —
++        // paint the distant opening in the disc's OWN frame (its centre and size), not the full-size tube's
++        uC: { value: M04.num('m04endfit', 0) > 0 && endFit ? endFit : new THREE.Vector3(cx, cy, r) },
+         uE: { value: new THREE.Vector4(M04.num('m04eg', -0.28), M04.num('m04eq', 0.78), M04.num('m04ec', 0.14), M04.num('m04eh', 0.55)) },
+         uE2: { value: new THREE.Vector4((0.02 - cy) / r, M04.num('m04el', 0.62), M04.num('m04es', 1.25), M04.num('m04ek', 1.0)) } } });
+     console.info('[match04] m04end', { water: (0.02 - cy) / r });
+@@ -1417,6 +1426,8 @@ export function addM04(ctx: M04Ctx) {
+         // highlight lines, m04wcv dark violet edges, m04wcl glossy lip under the crest, m04wcs soft top width (u)
+         uWC: { value: new THREE.Vector4(wup ? M04.num('m04wcr', 0) : 0, M04.num('m04wcn', 2.2), M04.num('m04wch', 0.8), M04.num('m04wcv', 0.55)) },
+         uWC2: { value: new THREE.Vector2(M04.num('m04wcl', 0.6), M04.num('m04wcs', 0.25)) },
++        // r20 `&m04farsm=1`: smooth band edges inside the far telescope (river along = distance inside the opening - z0)
++        uFar: { value: new THREE.Vector2(telA - z0, M04.num('m04farsm', 0) > 0 && telA < 1e8 ? 1 : 0) },
+         uWU3: { value: new THREE.Vector4(arc[nX], M04.num('m04wuv', 0.3), M04.num('m04wuw', 0.25), M04.num('m04wut', 0.28)) },
+         uNB: { value: nbU }, uNB2:{ value: new THREE.Vector4(M04.num('m04nba', 4.2), M04.num('m04nbb', 0.04), M04.num('m04nbp', 0.0), M04.num('m04nbf', 0)) },
+         uSB0: { value: new THREE.Vector4(M04.num('m04sband', 0) > 0 ? M04.num('m04sbs', 0.95) : 0, M04.num('m04sbi', 2.0), arc[nX], M04.num('m04sbl', 10)) },
+@@ -1469,6 +1480,7 @@ export function addM04(ctx: M04Ctx) {
+   // m04bbb pre-opening bin length (u), m04bbe self-light, m04bbc tint (0 white .. 3 blue-lilac), m04bbi iridescence,
+   // m04bbr roughness, m04bbk sink into the water (share of the heap height), m04bbw inside-rim heaps (0 = none), m04bbl
+   // blue-lilac shading toward each bubble's outline, m04bbg thin bright rim, m04bbh white sparkle.
++  const bankBen = new THREE.Vector4(0, -1e4, 0, 0.95);   // r20 m04bbx: Benny's body centre (world) + radius, set every frame
+   const buildBank = (clumps: { side: number; a: number; cl: number; reach: number }[], puffs: { side: number; x: number; z: number }[], nearF: number[]) => {
+     let s3 = 24683; const r3 = () => ((s3 = (s3 * 16807) % 2147483647) / 2147483647);
+     const HL = 3.3, HH = 1.43;                                  // heap length / height in the glb (u)
+@@ -1503,24 +1515,51 @@ export function addM04(ctx: M04Ctx) {
+       iridescence: M04.num('m04bbi', 0.15), iridescenceIOR: 1.3,
+       emissive: new THREE.Color('#eef3ff'), emissiveIntensity: M04.num('m04bbe', 0.12), transparent: true, depthWrite: true });
+     const rimC = new THREE.Vector4(0.74, 0.72, 0.98, M04.num('m04bbl', 0.75)), rimW = M04.num('m04bbg', 0.35), glint = M04.num('m04bbh', 0.6);
++    // r20 `&m04bbx=1` (lead notes on step 2): x on, y sparkle strength (brighter, a little larger), z faint iridescent pink / cyan
++    // rim on every bubble, w Benny clearance — a bubble that would sit IN FRONT of Benny's silhouette (seen from the camera)
++    // shrinks away, so a heap never covers him when he steers into a bank. bankBen = Benny's body centre (world) + radius.
++    const bbx = new THREE.Vector4(M04.num('m04bbx', 0) > 0 ? 1 : 0, M04.num('m04bbxs', 1.0), M04.num('m04bbxi', 0.5), M04.num('m04bbxb', 1));
++    bankBen.w = M04.num('m04bbxr', 0.95);
+     mat.onBeforeCompile = (sh) => {
+       sh.uniforms.uBNear = { value: near }; sh.uniforms.uBRim = { value: rimC }; sh.uniforms.uBRimW = { value: rimW }; sh.uniforms.uBGl = { value: glint };
++      sh.uniforms.uBX = { value: bbx }; sh.uniforms.uBen = { value: bankBen };
+       // the painted foam bubbles: pale lilac-white faces, soft blue-lilac shading toward each bubble's outline, a thin bright rim
+-      sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform vec4 uBRim;\nuniform float uBRimW;\nuniform float uBGl;')
++      sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform vec4 uBRim;\nuniform float uBRimW;\nuniform float uBGl;\nuniform vec4 uBX;')
+         .replace('#include <opaque_fragment>', `{
+     float nv = saturate(dot(normal, geometryViewDir));
+     outgoingLight = mix(outgoingLight, outgoingLight * uBRim.rgb, uBRim.a * pow(1.0 - nv, 1.4));
+     outgoingLight += vec3(1.0, 0.96, 1.0) * uBRimW * pow(1.0 - nv, 6.0);
+     // the painted white sparkle on every bubble (upper left, as the painting is lit), view-space so it rides with each bubble
+     outgoingLight = mix(outgoingLight, vec3(1.0), uBGl * smoothstep(0.93, 0.975, dot(normal, normalize(vec3(-0.45, 0.6, 0.66)))));
++    if (uBX.x > 0.5) {
++      // r20 m04bbx: the painted bubbles' crisp white sparkle (a bigger hot spot + a small second glint lower right) and a faint
++      // thin-film rim that shifts pink -> cyan round each bubble
++      float g1 = dot(normal, normalize(vec3(-0.45, 0.6, 0.66))), g2 = dot(normal, normalize(vec3(0.5, -0.35, 0.79)));
++      outgoingLight += vec3(1.0, 0.97, 1.0) * 0.22 * uBX.y * smoothstep(0.80, 0.95, g1);                    // soft glow round it
++      outgoingLight = mix(outgoingLight, vec3(1.0), clamp(uBX.y * (smoothstep(0.955, 0.985, g1) + 0.5 * smoothstep(0.978, 0.992, g2)), 0.0, 1.0));
++      float rimI = pow(1.0 - nv, 2.6) * (1.0 - pow(1.0 - nv, 9.0));
++      vec3 film = mix(vec3(1.0, 0.55, 0.88), vec3(0.45, 0.88, 1.0), 0.5 + 0.5 * sin(normal.x * 4.0 + normal.y * 2.5 + 1.0));
++      outgoingLight = mix(outgoingLight, film, uBX.z * rimI);
++    }
+   }
+   #include <opaque_fragment>`);
+-      sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nattribute vec4 aC;\nuniform vec2 uBNear;')
++      sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nattribute vec4 aC;\nuniform vec2 uBNear;\nuniform vec4 uBX;\nuniform vec4 uBen;')
+         .replace('#include <begin_vertex>', `#include <begin_vertex>
+   {
+     // r20 m04bbank: each bubble shrinks into its own centre as it nears the camera (view depth), like the sprite foam
+     vec4 cv = viewMatrix * modelMatrix * instanceMatrix * vec4(aC.xyz, 1.0);
+-    transformed = aC.xyz + (transformed - aC.xyz) * smoothstep(uBNear.x, uBNear.y, -cv.z);
++    float kS = smoothstep(uBNear.x, uBNear.y, -cv.z);
++    if (uBX.x > 0.5 && uBX.w > 0.0) {
++      // r20 m04bbx: never in front of Benny — a bubble nearer the camera than Benny whose direction overlaps his silhouette
++      // (his angular radius, grown a little) shrinks away smoothly
++      vec4 bv = viewMatrix * vec4(uBen.xyz, 1.0);
++      float bd = max(-bv.z, 0.1), cd = max(-cv.z, 0.1);
++      vec2 dA = cv.xy / cd - bv.xy / bd;
++      float rB = uBen.w / bd;
++      float front = smoothstep(-0.2, 0.6, bd - cd);
++      kS *= 1.0 - uBX.w * front * (1.0 - smoothstep(rB * 1.0, rB * 1.7, length(dA)));
++    }
++    transformed = aC.xyz + (transformed - aC.xyz) * kS;
+   }`);
+     };
+     updaters.push((a) => { holder.visible = a > 0.01; mat.opacity = a; });
+@@ -1813,6 +1852,7 @@ export function addM04(ctx: M04Ctx) {
+     time.value = performance.now() / 1000;
+     a5b.z = -cam.clone().applyMatrix4(MwInv).z;   // camera position down the slide (local along)
+     if (nbU.x > 0 && benny) { const bl = benny.clone().applyMatrix4(MwInv); nbU.y = -bl.z; nbU.z = bl.x - cx; }
++    if (benny) bankBen.set(benny.x, benny.y + M04.num('m04bbxy', 0.55), benny.z, bankBen.w);   // r20 m04bbx
+     away.value = THREE.MathUtils.smoothstep(cam.distanceTo(proj.position), fade, fade1);
+     const a2 = THREE.MathUtils.smoothstep(cam.distanceTo(proj.position), 0.4, 1.6);
+     for (const u of updaters) u(a2);

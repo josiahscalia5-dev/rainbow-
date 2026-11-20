@@ -1,0 +1,76 @@
+--- a/src/world/match04m4.ts (r23 step 1-2 code)	2026-11-20 10:43:45.724533553 +0000
++++ b/src/world/match04m4.ts	2026-11-20 11:01:28.827363018 +0000
+@@ -769,6 +769,10 @@
+ uniform vec2 uLane3;         // r13 m04lcd / m04lcw: deeper blue along the arrow line (strength, half width)
+ uniform vec2 uLane4;         // r14 m04lcn: deep-blue fade-in window ahead of the camera (start, full); off when y <= x
+ uniform vec4 uLane2;         // r13 m04lane2: x swirl detail, y gloss, z sparkle
++uniform vec4 uLG;            // r23 m04lgs: x strength, y streaks per u across, z line half width (share), w whiteness
++uniform vec4 uLG2;           // r23 m04lgs: x streak segment length (u), y meander (u), z base smoothing (mip), w far fade
++uniform vec4 uLG3;           // r24 m04lgs: x swirl bend (u), y swirl size (u), z sparkles, w dash threshold
++uniform vec4 uLG4;           // r24 m04lgs: x deeper electric-blue base (brightness shift), y glint brightness variation
+ uniform vec4 uEdge;          // r13 m04edge: x on, y half arc to the edge, z fringe width, w strength
+ uniform vec2 uSE;            // r13 m04rse / m04rsl: the climbing side water as long flowing currents (along stretch, from |lat|)
+ uniform float uTime;
+@@ -881,6 +885,45 @@
+         laneC = mix(laneC, laneC * vec3(0.42, 0.70, 1.0), uLane3.x * wl);
+       }
+     }
++    if (uLG.x > 0.0) {
++      // r23 m04lgs=1: the painted lane water is CLEAN glossy electric cyan with long thin white highlight streaks running
++      // with the flow (no soft white frosted blotches): base = the tile's gentle light / dark flow seen very smooth, re-coloured
++      // electric blue -> cyan; streaks = thin bright lines along the current, gently meandering, broken into long tapered
++      // segments that drift with the water; they fade where they would alias far away.
++      vec3 bb = mix(texture2D(uRiv, uv1, uLG2.z).rgb, texture2D(uRiv, uv2, uLG2.z).rgb, w);
++      float lbB = dot(bb, vec3(0.30, 0.55, 0.15));
++      lbB -= uLG4.x;
++      vec3 base = mix(vec3(0.00, 0.42, 0.98), vec3(0.04, 0.78, 1.00), smoothstep(0.22, 0.72, lbB));
++      base = mix(base, vec3(0.30, 0.90, 1.00), 0.35 * smoothstep(0.72, 0.95, lbB));
++      // r24: the streaks curve in soft swirls like the painted glints — lines of constant (lateral + bend * smooth 2-octave
++      // noise) (value noise is C1-smooth: no kinks; the coarse tile mip used first drew zigzag 'lightning' at its texel edges)
++      float sw = 0.0;
++      if (uLG3.x != 0.0) {
++        vec2 sp = vec2(vS / uLG3.y, fl / (uLG3.y * 2.5));
++        sw = uLG3.x * ((vn(sp + vec2(4.0, 2.0)) - 0.5) + 0.5 * (vn(sp * 2.0 + vec2(9.0, 5.0)) - 0.5));
++      }
++      float mw = vS + sw + uLG2.y * (vn(vec2(fl * 0.07, 1.0)) - 0.5) + 0.5 * uLG2.y * sin(fl * 0.31 + vS * 0.9);
++      float q = mw * uLG.y, id = floor(q), fq = fract(q) - 0.5;
++      float sg = fl / uLG2.x + h21(vec2(id, 3.0)) * 9.0, si = floor(sg), sf = fract(sg);
++      float on = step(uLG3.w, h21(vec2(id, si)));
++      float taper = smoothstep(0.0, 0.3, sf) * (1.0 - smoothstep(0.55, 1.0, sf));
++      float wq = fwidth(q);
++      float hw2 = uLG.z * (0.6 + 0.8 * h21(vec2(id, si + 5.0)));
++      float line = 1.0 - smoothstep(hw2, hw2 + 1.2 * wq, abs(fq));
++      float streak = line * on * taper * (1.0 - smoothstep(uLG2.w * 0.5, uLG2.w, wq));
++      streak *= 1.0 - uLG4.y * h21(vec2(id + 0.5, si + 9.0));                                // some glints brighter than others
++      base = mix(base, vec3(0.90, 0.99, 1.00), uLG.w * streak);
++      base += vec3(0.35, 0.75, 1.0) * 0.18 * uLG.w * streak;                                  // soft glow round each streak
++      if (uLG3.z > 0.0) {
++        // r24: small twinkling white glints scattered along the same swirl lines (the painted lane sparkles)
++        vec2 sc2 = vec2(mw * 4.0, fl * 2.2); vec2 si2 = floor(sc2), sf2 = fract(sc2) - 0.5;
++        float sh2 = h21(si2 + 31.0);
++        float tw2 = 0.55 + 0.45 * sin(uTime * 5.0 + sh2 * 40.0);
++        float spk2 = smoothstep(0.13, 0.0, length(sf2 - (vec2(h21(si2 + 3.1), h21(si2 + 7.7)) - 0.5) * 0.6)) * step(0.86, sh2) * tw2;
++        base += vec3(0.9, 0.98, 1.0) * uLG3.z * spk2 * (1.0 - smoothstep(0.3, 0.8, fwidth(sc2.x)));
++      }
++      laneC = mix(laneC, base, uLG.x);
++    }
+     laneCol = laneC;
+     col = mix(col, laneC, kl * uLane.z);
+   }
+@@ -1777,6 +1820,16 @@
+         uLane4: { value: (() => { const s = (new URLSearchParams(location.search).get('m04lcn') ?? '').split(',').map(Number);
+           return s.length === 2 && s.every(Number.isFinite) ? new THREE.Vector2(s[0], s[1]) : new THREE.Vector2(0, 0); })() },
+         uLane2: { value: new THREE.Vector4(M04.num('m04lane2', 0), M04.num('m04lgl', 1.0), M04.num('m04lsp', 0.9), M04.num('m04lbr', 0)) },
++        // r23 `&m04lgs=1` (with m04lane2): glossy lane streaks — m04lgs strength, m04lgn streaks per u across, m04lgt line half
++        // width (share of the spacing), m04lgk whiteness; m04lgl2 segment length (u), m04lgm meander (u), m04lgb base smoothing
++        // (mip bias), m04lgf far fade (line spacing per pixel)
++        uLG: { value: new THREE.Vector4(M04.num('m04lgs', 0), M04.num('m04lgn', 2.2), M04.num('m04lgt', 0.07), M04.num('m04lgk', 0.85)) },
++        uLG2: { value: new THREE.Vector4(M04.num('m04lgl2', 3.5), M04.num('m04lgm', 0.5), M04.num('m04lgb', 5.0), M04.num('m04lgf', 0.6)) },
++        // r24: m04lgw swirl bend (u; streaks curve in soft swirls), m04lgwb swirl size (u), m04lgsp sparkles,
++        // m04lgon dash threshold (higher = fewer dashes)
++        uLG3: { value: new THREE.Vector4(M04.num('m04lgw', 0), M04.num('m04lgwb', 1.5), M04.num('m04lgsp', 0), M04.num('m04lgon', 0.42)) },
++        // r24: m04lgd deeper electric-blue base (0 = as first written), m04lgv glint brightness variation (0 = all equal)
++        uLG4: { value: new THREE.Vector4(M04.num('m04lgd', 0), M04.num('m04lgv', 0), 0, 0) },
+         uEdge: { value: new THREE.Vector4(M04.num('m04edge', 0), arc[nX], M04.num('m04edgew', 0.45), M04.num('m04edges', 0.8)) },
+         uSE: { value: new THREE.Vector2(M04.num('m04rse', 1), M04.num('m04rsl', 1.2)) },
+         uPk: { value: new THREE.Vector4(M04.pink ? 1 : 0, M04.num('m04pkl', 1.05), M04.num('m04pko', 3.6), M04.num('m04pkw', 0.85)) },
