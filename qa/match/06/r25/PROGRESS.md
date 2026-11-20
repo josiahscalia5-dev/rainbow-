@@ -20,8 +20,11 @@
   frame shrink away, more river visible. NEW PROBLEM: half-shrunk heaps break into trails of tiny loose white beads (60 % bottom
   left, hard-right centre) — each sprite shrank by its OWN depth with lobe positions fixed. Fix behind `&m06fcg=1` (whole heap
   shrinks as one unit into its foot on the water, timed by the heap's distance; FOAMC_VERT `#define GROUP` + attribute `aC`;
-  tsc 0). NOW: `step2/NEW2/` (query `QUERY_NEW2.txt` = NEW + `&m06fcg=1`, only the 3 changed views) rendering. NEXT: judge, then
-  whole-06 clip BEFORE vs NEW2 (`step2/clip.sh`, 1.0x + 0.5x), gameplay with NEW2, verdict.
+  tsc 0). `step2/NEW2/` DONE (query `QUERY_NEW2.txt` = NEW + `&m06fcg=1`, only the 3 changed views; lower-third white 74.0k /
+  60.3k / 54.2k): the shrinking near heaps stay compact small cumulus heaps — the loose bead trails are gone; same foam reduction.
+  NOW (~15:41): `/home/user/scratch/s06/chain_s2.sh` = gameplay NEW2 (`step2/gameplay_NEW2.json`) then whole-06 clips
+  `step2/{BEFORE,NEW2}_whole06_{1x,0.5x}.mp4` (`step2/clip.sh`; entrance, LEFT 30-50 %, RIGHT 50-70 %, end, 0.6 s into 07).
+  NEXT: verdict step 2, then assemble `step2/COMPARE/<view>/{1_ORIGINAL_APPROVED,2_BEFORE,3_NEW}.png`.
 
 ## (r26) WHERE I STOPPED / NEXT
 * ~13:15 UTC — relaunched (new account), worktree `/home/user/wt/s06` LOCAL branch `claude/rainbow-s06-match-c27` (r25 edits incl. m06hole).

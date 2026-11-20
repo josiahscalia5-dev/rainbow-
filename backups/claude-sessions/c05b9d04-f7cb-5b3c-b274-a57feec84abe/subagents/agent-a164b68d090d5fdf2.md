@@ -628,3 +628,321 @@ Waiting for the NEW2 render (it holds or waits for a machine slot).
 
 > 🔧 **Bash** `{"command": "bash /home/user/rainbow-/tools/lead25/render_slot.sh --status; until [ -f /home/user/rainbow-/qa/match/06/r25/step2/NEW2/g_hard_right.png ] || grep -q \"exit\" /home/user/scratch/s06/r_new2.log 2>/dev/null; do sleep 15; done; cat /home/user/scratch/s06/r_new2.log; ls /home/user/rainbow-/qa/match/06/r25/step2/NEW2/", "description": "Wait for NEW2 render to finish", "timeout": 560000}`
 
+### 🧑 User — 2026-11-20T15:38:32.192Z
+
+> ↩︎ result: slot 1 busy
+> slot 2 busy
+> Command did not complete within its 560s timeout and was moved to the background (ID: bc838f293). Output is being written to: /tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/tasks/bc838f293.output. You will be notified when it completes. If it is still running after 30m in the background, it will be stopped and you will be notified. It is running now: do not start a second copy while it runs. If it is no longer needed, stop it with TaskStop. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-20T15:38:35.088Z
+
+> 🔧 **Bash** `{"command": "tail -3 /home/user/rainbow-/qa/match/06/r25/step2/NEW2.log 2>/dev/null; ls /home/user/rainbow-/qa/match/06/r25/step2/NEW2/ 2>/dev/null; bash /home/user/rainbow-/tools/lead25/render_slot.sh --status; uptime", "description": "Check NEW2 render progress and machine load"}`
+
+### 🧑 User — 2026-11-20T15:38:35.207Z
+
+> ↩︎ result: slot 1 busy
+> slot 2 busy
+>  15:38:35 up 37 min,  0 user,  load average: 7.75, 7.10, 4.31
+
+### 🤖 Claude — 2026-11-20T15:38:39.400Z
+
+> 🔧 **Bash** `{"command": "ls -la /home/user/rainbow-/qa/match/06/r25/step2/ | grep -i new2; ps aux | grep -E \"render_slot|audit06|r25_open|screen_clip|blender\" | grep -v grep | awk '{print $2, $10, substr($0, index($0,$11), 160)}' | head", "description": "Check whether render is waiting for slot"}`
+
+### 🧑 User — 2026-11-20T15:38:39.454Z
+
+> ↩︎ result: -rw-r--r-- 1 root root    0 Nov 20 15:28 NEW2.log
+> -rw-r--r-- 1 root root  195 Nov 20 15:28 QUERY_NEW2.txt
+> 8580 0:00 bash /home/user/rainbow-/tools/lead25/render_slot.sh timeout 2400 node /home/user/rainbow-/tools/lead23/audit06_slow.mjs /home/user/rainbow-/qa/match/06/r25/ste
+> 9118 0:00 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/benny23/knitprobe.mjs /home/user/scratch/benny/crown/p04 match04=1&m04ring=1&m04river=1&m04bub=1
+> 9365 0:00 /bin/bash -c source /root/.claude/shell-snapshots/snapshot-bash-1795187731654-dx7uqu.sh 2>/dev/null || true && export ANDROID_HOME=/opt/android-sdk ANDROID_SDK_
+> 9367 0:00 bash /home/user/rainbow-/tools/lead25/render_slot.sh npx tsc --noEmit -p .
+> 11877 0:00 bash /home/user/rainbow-/tools/lead25/render_slot.sh bash /home/user/scratch/s04/run_r27c.sh
+> 11912 0:00 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/benny25/swim_clip_c.mjs 04 /home/user/scratch/benny/clip04/NEW match04=1&m04ring=1&m04river=1&m0
+> 12115 0:00 bash /home/user/rainbow-/tools/lead25/render_slot.sh bash /home/user/scratch/s04/run_r27d.sh
+
+### 🤖 Claude — 2026-11-20T15:38:48.739Z
+
+The render queue is busy: two slots are in use, and s04, Benny and the lead's typecheck are also waiting. My NEW2 job has been queued since 15:28. I'll keep waiting.
+
+### 🤖 Claude — 2026-11-20T15:38:50.389Z
+
+> 🔧 **Bash** `{"command": "until [ -f /home/user/rainbow-/qa/match/06/r25/step2/NEW2/shots.json ] || grep -q \"exit\" /home/user/scratch/s06/r_new2.log 2>/dev/null; do sleep 20; done; cat /home/user/scratch/s06/r_new2.log; ls /home/user/rainbow-/qa/match/06/r25/step2/NEW2/; date -u +%H:%M", "description": "Wait for NEW2 shots to complete", "timeout": 540000}`
+
+### 🧑 User — 2026-11-20T15:39:30.542Z
+
+> ↩︎ result: NEW2 exit 0 3 png
+> c2_middle.png
+> d_late.png
+> g_hard_right.png
+> shots.json
+> 15:39
+
+### 🤖 Claude — 2026-11-20T15:39:32.536Z
+
+NEW2 is done. I'll compare BEFORE | NEW (fcn=3) | NEW2 (fcn=3 + fcg) on the lower halves of the three affected views.
+
+### 🤖 Claude — 2026-11-20T15:39:35.414Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && python3 -c \"\nfrom PIL import Image\nimport numpy as np\nS='/home/user/rainbow-/qa/match/06/r25/step2/'\nrows=['c2_middle','d_late','g_hard_right']; W=864; y0=800; H=1536-y0; sc=0.42\nout=Image.new('RGB',(int(3*W*sc),int(3*H*sc)))\nfor i,s in enumerate(rows):\n  for j,v in enumerate(['BEFORE','NEW','NEW2']):\n    a=Image.open(S+v+'/'+s+'.png').convert('RGB')\n    print(s,v,'lower-third white',(np.asarray(a)[1024:].min(2)>225).sum())\n    out.paste(a.crop((0,y0,W,1536)).resize((int(W*sc),int(H*sc)),Image.LANCZOS),(int(j*W*sc),int(i*H*sc)))\nout.save('s …[+100 chars]`
+
+### 🧑 User — 2026-11-20T15:39:36.531Z
+
+> ↩︎ result: c2_middle BEFORE lower-third white 90829
+> c2_middle NEW lower-third white 73970
+> c2_middle NEW2 lower-third white 73999
+> d_late BEFORE lower-third white 110417
+> d_late NEW lower-third white 61434
+> d_late NEW2 lower-third white 60303
+> g_hard_right BEFORE lower-third white 115904
+> g_hard_right NEW lower-third white 56613
+> g_hard_right NEW2 lower-third white 54191
+> (1088, 927)
+
+### 🤖 Claude — 2026-11-20T15:39:37.589Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s06/step2_crop3.png"}`
+
+### 🧑 User — 2026-11-20T15:39:37.628Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T15:39:46.729Z
+
+> 🔧 **Grep** `{"pattern": "heartsLostOnWallBump", "path": "/home/user/rainbow-/tools"}`
+
+### 🧑 User — 2026-11-20T15:39:46.769Z
+
+> ↩︎ result: Found 1 file
+> tools/lead_r4/gameplay_coins08px.json
+
+### 🤖 Claude — 2026-11-20T15:39:48.439Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"gameplay_NEW3\\|heartsLostOnWallBump\" /home/user/rainbow-/qa/match/06/r25/ /home/user/rainbow-/qa/match/06/r24/ 2>/dev/null | grep -v \"\\.json:\" | head; grep -rln \"gameplay_\" /home/user/rainbow-/qa/match/06/r23/*.sh /home/user/rainbow-/qa/match/06/r24/*/*.sh 2>/dev/null | head", "description": "Find how gameplay json was produced before"}`
+
+### 🧑 User — 2026-11-20T15:39:48.677Z
+
+> ↩︎ result: /home/user/rainbow-/qa/match/06/r25/PROGRESS.md:5:  as LAUNCH_R27 feared): `step1_hole/gameplay_NEW3.json` (query = NEW3, 8/8 pass, 91 coins) and `step2/{BEFORE,NEW}/` (7 shots each,
+> /home/user/rainbow-/qa/match/06/r25/step1_hole/COMPARE/README.txt:8:Gameplay with NEW: ../gameplay_NEW3.json (8/8 checks pass, 91 coins collected, no teleport / camera cut).
+
+### 🤖 Claude — 2026-11-20T15:39:50.572Z
+
+> 🔧 **Grep** `{"pattern": "heartsLostOnWallBump", "path": "/home/user/wt/s06", "glob": "!node_modules/**"}`
+
+### 🧑 User — 2026-11-20T15:39:53.030Z
+
+> ↩︎ result: Found 7 files
+> /home/user/wt/s06/scripts/gameplay-test.mjs
+> /home/user/wt/s06/qa/match/08/gameplay_test_match08.json
+> /home/user/wt/s06/qa/match/06/r6/gameplay_m06geo_flow.json
+> /home/user/wt/s06/qa/match/06/gameplay_test_match06.json
+> /home/user/wt/s06/qa/gameplay_test_switch.json
+> /home/user/wt/s06/qa/gameplay_test.json
+> /home/user/wt/s06/qa/07_to_08_continuity.md
+
+### 🤖 Claude — 2026-11-20T15:39:55.848Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 1,40p scripts/gameplay-test.mjs | grep -n -E \"argv|env|PORT|QUERY|query|out|write\" | head -20; grep -rn \"gameplay-test\" /home/user/rainbow-/backups/claude-sessions 2>/dev/null | grep -i \"s06\\|m06hole\" | head -3 | cut -c1-400", "description": "Check gameplay-test arguments"}`
+
+### 🧑 User — 2026-11-20T15:39:56.119Z
+
+> ↩︎ result: 1:#!/usr/bin/env node
+> 11://   node scripts/gameplay-test.mjs --q=river05=1 --out=qa/pilot05/wave11/tests/gameplay_river05.json
+> 13:import { writeFileSync, mkdirSync } from 'node:fs';
+> 16:const optQ = (process.argv.find((a) => a.startsWith('--q=')) ?? '').slice(4);
+> 17:const optOut = (process.argv.find((a) => a.startsWith('--out=')) ?? '').slice(6);
+> 26:await page.waitForFunction(() => window.__rainbow?.ready, null, { timeout: 240000 });
+> 32:  const out = { checks: {}, samples: [], plunge: {} };
+> /home/user/rainbow-/backups/claude-sessions/8bb9eeab-1f60-5900-884e-9151051fb861/subagents/agent-a1183ccf73271fcf7.sanitized.jsonl:30:{"agentId": "a1183ccf73271fcf7", "cwd": "/home/user/rainbow-", "entrypoint": "remote_mobile", "gitBranch": "ccr-ae71d3a5-80naq2", "isSidechain": true, "message": {"content": [{"content": "# Round 10 (account 10) — rules added to `docs/briefs/2026-11-18-r8/COMMON_R
+> /home/user/rainbow-/backups/claude-sessions/8bb9eeab-1f60-5900-884e-9151051fb861/subagents/agent-a27bc2af86f8cdd32.sanitized.jsonl:31:{"agentId": "a27bc2af86f8cdd32", "cwd": "/home/user/rainbow-", "entrypoint": "remote_mobile", "gitBranch": "ccr-ae71d3a5-80naq2", "isSidechain": true, "message": {"content" …[+489 chars]
+
+### 🤖 Claude — 2026-11-20T15:39:57.605Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 1,30p scripts/gameplay-test.mjs", "description": "Read gameplay-test header and server setup"}`
+
+### 🧑 User — 2026-11-20T15:39:57.670Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Automated gameplay + continuity test on the REAL running game (headless Chromium, WebGL).
+> // Drives Benny from 03 to the 11 ending with the deterministic simulation API and checks:
+> //  * continuous travel: s strictly increases, no position jump > speed·dt (no teleport/cut)
+> //  * camera continuity: no camera jump between steps (no hard cut), incl. the 07 plunge → 08
+> //  * 07 plunge: positive travel time, large vertical drop, 08 inlet reached from the bottom
+> //  * real coin pickups update the counter; steering into the foam wall costs a heart
+> //  * pause freezes the simulation; resume continues
+> //  * the run ends in the 11 victory with Benny hidden under the towel
+> // Writes qa/gameplay_test.json and qa/07_to_08_continuity.md. Exit 1 on failure.
+> //   node scripts/gameplay-test.mjs --q=river05=1 --out=qa/pilot05/wave11/tests/gameplay_river05.json
+> //   → the same run with URL test switches; with --q the tracked qa/ files above are NOT rewritten.
+> import { writeFileSync, mkdirSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const optQ = (process.argv.find((a) => a.startsWith('--q=')) ?? '').slice(4);
+> const optOut = (pr …[+654 chars]
+
+### 🤖 Claude — 2026-11-20T15:39:59.699Z
+
+The gameplay test hard-codes port 5213, which other workers may use at the same time. Let me check whether `startVite` falls back to a free port.
+
+### 🤖 Claude — 2026-11-20T15:40:00.416Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n -A12 \"export async function startVite\" scripts/lib/pw.mjs | head -20", "description": "Check startVite port handling"}`
+
+### 🧑 User — 2026-11-20T15:40:00.482Z
+
+> ↩︎ result: 19:export async function startVite(port = 5199) {
+> 20-  const { createServer } = await import('vite');
+> 21-  const server = await createServer({ server: { port, strictPort: false, host: '127.0.0.1', hmr: false, watch: { ignored: ['**/*'] } }, logLevel: 'error' });
+> 22-  await server.listen();
+> 23-  const addr = server.resolvedUrls?.local?.[0] ?? `http://127.0.0.1:${port}/`;
+> 24-  return { url: addr.replace(/\/$/, ''), close: () => server.close() };
+> 25-}
+> 26-
+> 27-export async function waitDone(page, timeoutMs = 180000) {
+> 28-  await page.waitForFunction(() => window.__done === true, null, { timeout: timeoutMs });
+> 29-  const err = await page.evaluate(() => window.__error);
+> 30-  if (err) throw new Error(err);
+> 31-}
+
+### 🤖 Claude — 2026-11-20T15:40:04.165Z
+
+The port falls back to a free one, so it is safe. I'll chain gameplay (NEW2) and then the whole-06 clips (BEFORE, NEW2) in the background, each taking its own render slot.
+
+### 🤖 Claude — 2026-11-20T15:40:06.691Z
+
+> 🔧 **Bash** `{"command": "cat > /home/user/scratch/s06/chain_s2.sh <<'EOF'\n#!/usr/bin/env bash\nO=/home/user/rainbow-/qa/match/06/r25/step2\ncd /home/user/wt/s06\nbash /home/user/rainbow-/tools/lead25/render_slot.sh timeout 2400 node scripts/gameplay-test.mjs \"--q=$(cat $O/QUERY_NEW2.txt)\" \"--out=$O/gameplay_NEW2.json\" > $O/gameplay_NEW2.log 2>&1\necho \"gameplay exit $? $(date -u +%H:%M)\"\nbash $O/clip.sh BEFORE NEW2\necho \"clips done $(date -u +%H:%M)\"\nEOF\nchmod +x /home/user/scratch/s06/chain_s2.sh; echo started $(date -u +%H:%M)", "description": "Write step-2 chain script"}`
+
+### 🧑 User — 2026-11-20T15:40:06.761Z
+
+> ↩︎ result: started 15:40
+
+### 🤖 Claude — 2026-11-20T15:40:08.875Z
+
+> 🔧 **Bash** `{"command": "bash /home/user/scratch/s06/chain_s2.sh > /home/user/scratch/s06/chain_s2.log 2>&1; cat /home/user/scratch/s06/chain_s2.log", "description": "Run gameplay and whole-06 clips chain", "timeout": 7200000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T15:40:08.953Z
+
+> ↩︎ result: Command running in background with ID: bkosh6p9y. Output is being written to: /tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/tasks/bkosh6p9y.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-20T15:40:14.322Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/match/06/r25/PROGRESS.md", "old_string": "  tsc 0). NOW: `step2/NEW2/` (query `QUERY_NEW2.txt` = NEW + `&m06fcg=1`, only the 3 changed views) rendering. NEXT: judge, then\n  whole-06 clip BEFORE vs NEW2 (`step2/clip.sh`, 1.0x + 0.5x), gameplay with NEW2, verdict.\n", "new_string": "  tsc 0). `step2/NEW2/` DONE (query `QUERY_NEW2.txt` = NEW + `&m06fcg=1`, only the 3 changed views; lower-third white 74.0k /\n  60.3k / 54.2k): the shrinking near heaps stay compact small cumulus heaps — the loose bead trails are gone; same foam reduction. …[+352 chars]`
+
+### 🧑 User — 2026-11-20T15:40:14.400Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/match/06/r25/PROGRESS.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T15:40:17.852Z
+
+While the chain runs, I'll assemble the step-2 comparison folder (approved | BEFORE | NEW2 for the three changed views, as hard links).
+
+### 🤖 Claude — 2026-11-20T15:40:19.960Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r25/step2 && A=../step1_hole/COMPARE/a_start/1_ORIGINAL_APPROVED.png; for v in c2_middle d_late g_hard_right; do mkdir -p COMPARE/$v; ln -f $A COMPARE/$v/1_ORIGINAL_APPROVED.png; ln -f BEFORE/$v.png COMPARE/$v/2_BEFORE.png; ln -f NEW2/$v.png COMPARE/$v/3_NEW.png; done; sha256sum $A /home/user/rainbow-/references/06_crest_the_rinse_arch.png | cut -c1-16; ls COMPARE/*", "description": "Assemble step-2 COMPARE folders"}`
+
+### 🧑 User — 2026-11-20T15:40:20.078Z
+
+> ↩︎ result: 3946058c0893e97a
+> 3946058c0893e97a
+> COMPARE/c2_middle:
+> 1_ORIGINAL_APPROVED.png
+> 2_BEFORE.png
+> 3_NEW.png
+> 
+> COMPARE/d_late:
+> 1_ORIGINAL_APPROVED.png
+> 2_BEFORE.png
+> 3_NEW.png
+> 
+> COMPARE/g_hard_right:
+> 1_ORIGINAL_APPROVED.png
+> 2_BEFORE.png
+> 3_NEW.png
+
+### 🤖 Claude — 2026-11-20T15:40:34.521Z
+
+While the chain runs, I'll plan step 3 with code reading only, no renders. First: where Screen 06's coins and river course come from.
+
+### 🤖 Claude — 2026-11-20T15:40:35.404Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n -i \"coin\" src/world/match06.ts | head -20; grep -n -i \"match06\\|m06\" src/game/Game.ts | head -30", "description": "Find coin placement for Screen 06"}`
+
+### 🧑 User — 2026-11-20T15:40:35.457Z
+
+> ↩︎ result: 10: * Every surface is textured by camera projection of the user's ORIGINAL approved pixels (HUD, title, Benny and coins
+> 28:import { buildMatch06 } from '../world/match06';
+> 69:  const M06_BUB = flag05('m06bub');
+> 70:  // r26 `&m06spl=1` (qa/match/06/r25/PROGRESS.md r26): on Screen 06 Benny's contact = a short, low lace collar (the approved picture's
+> 72:  const M06_SPL = flag05('m06spl');
+> 73:  let m06SplRest: { len: number; h: number } | null = null;
+> 123:  // `?match06=1`: the approved Screen 06 scenery on fitted 3D geometry (src/world/match06.ts); off: nothing is built
+> 124:  const m06 = MATCH['06'] ? await buildMatch06(course) : null;
+> 125:  if (m06) { m06.group.visible = false; scene.add(m06.group); m06.bakeDepth(renderer); }
+> 126:  let m06On = false;
+> 127:  let m06Applied = false;
+> 179:    if (m06) { m06On = st.stage === '06'; m06.group.visible = m06On; if (m06On) env.zones.tubes.visible = false; }
+> 545:    // `?match06=1` on Screen 06: the projected scenery carries the approved river, ripples, foam and bubbles
+> 546:    if (m06 && (m06On || m06Applied) && !(m08 && m08On)) {
+> 547:      // r7 `&m06bub=1`: the game's iridescent bubbles + Benny's splash crown / spray return once the camera l …[+1098 chars]
+
+### 🤖 Claude — 2026-11-20T15:40:37.396Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -rn -i \"coin\" src/world/*.ts src/game/*.ts | grep -i -E \"lat|place|layout|spawn|pattern\" | head -20", "description": "Find coin layout code"}`
+
+### 🧑 User — 2026-11-20T15:40:37.484Z
+
+> ↩︎ result: src/world/course.ts:117: * Coins (gameplay/coins.ts) sit on this centreline (lat 0), so they wind with the same S.
+> src/world/course.ts:137: * tunnel line; coins sit at (1 + latK·CORE_SWING) ≈ 1.62 × the course offset, so knot = coin offset / 1.62.
+> src/game/Game.ts:391:    const got = coins.update(st.clock, dt, st.s, st.lat);
+> src/game/Game.ts:516:    st.mode = 'intro'; st.t = 0; st.s = 0; st.lat = 0; st.coins = START_COINS; st.hearts = 5; st.paused = false;
+> src/game/Game.ts:707:      return { mode: st.mode, stage: st.stage, s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: st.coins, hearts: st.hearts, paused: st.paused, bennyY: +benny.root.position.y.toFixed(3), bennyVisible: benny.root.visible, cam: camera.position.toArray().map((x) => +x.toFixed(2)) };
+> src/game/Game.ts:710:    coinDefs() { return coins.defs.map((d, i) => ({ s: d.s, lat: d.lat, taken: coins.collected[i] === 1 })); },
+
+### 🤖 Claude — 2026-11-20T15:40:39.693Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 100,175p src/world/course.ts; grep -n \"06\" src/gameplay/coins.ts | head -20", "description": "Read course swing notes and 06 coin defs"}`
+
+### 🧑 User — 2026-11-20T15:40:39.772Z
+
+> ↩︎ result: }
+> 
+> interface RouteData {
+>   points: THREE.Vector3[];
+>   marks: Record<string, number>;
+>   straight: { from: string; to: string; a: THREE.Vector3; b: THREE.Vector3; floorDepth: number }[];
+> }
+> 
+> /**
+>  * 05 current (ref 05): the tunnel is a straight line; the STREAM winds inside it. The meander is the
+>  * lateral (world +X) offset of the course centreline from that line, as a function of the distance
+>  * `u` along the line (0 … L05). It is applied to the route AFTER smoothPolyline, so it is exact (the
+>  * smoothing would shave ~25 % off the amplitude) and still C¹ at both ends (offset and slope → 0).
+>  *
+>  * Shape tuned against the reference's cyan core: a small first crest under Benny at the 05
+>  * checkpoint (u≈uCrest, offset a0 to the LEFT, heading parallel to the tunnel axis), then crests
+>  * that grow toward the far end (screen: Benny → (560,700) → (450,600) → (520,520) → VP).
+>  * Coins (gameplay/coins.ts) sit on this centreline (lat 0), so they wind with the same S.
+>  */
+> export const S05 = {
+>   /** length of the straight tunnel line (units) */
+>   L: 72,
+>   /** wavelength along the line (crest → crest of the same side) */
+>   lambda: 32,
+>   /** u of the first (left) crest, where Benny rides at the 05 …[+4580 chars]
+
+### 🤖 Claude — 2026-11-20T15:40:51.302Z
+
+> 🔧 **Bash** `{"command": "cat /home/user/scratch/s06/chain_s2.log; ls /home/user/rainbow-/qa/match/06/r25/step2/ | grep -E \"gameplay|clip|mp4\"; ls /home/user/scratch/s06/clip2_BEFORE/f 2>/dev/null | wc -l; bash /home/user/rainbow-/tools/lead25/render_slot.sh --status; date -u +%H:%M", "description": "Check chain progress"}`
+
+### 🧑 User — 2026-11-20T15:40:51.445Z
+
+> ↩︎ result: clip.sh
+> gameplay_NEW2.log
+> 0
+> slot 1 busy
+> slot 2 busy
+> 15:40
+
+### 🤖 Claude — 2026-11-20T15:40:54.527Z
+
+> 🔧 **Bash** `{"command": "until grep -q \"clips done\" /home/user/scratch/s06/chain_s2.log 2>/dev/null; do sleep 30; done 2>/dev/null & W=$!; sleep 530; kill $W 2>/dev/null; cat /home/user/scratch/s06/chain_s2.log; ls /home/user/scratch/s06/clip2_BEFORE/f 2>/dev/null | wc -l; ls /home/user/scratch/s06/clip2_NEW2/f 2>/dev/null | wc -l; date -u +%H:%M", "description": "Wait up to 9 minutes for chain", "timeout": 560000}`
+

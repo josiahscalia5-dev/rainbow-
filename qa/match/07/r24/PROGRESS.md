@@ -17,8 +17,17 @@
   bend together; the inlet shows the painted river with pink edges running into 08 (BEFORE: rainbow-striped sheet + white lather slab).
   Still differs (= step 2's job): the foam is BULKY — big uniformly packed white masses (bend1 t 3.75 lower-left foreground cloud,
   bend2 t 4.96 cloud over Benny's lower left, bend4 t 7.29 both banks thick walls of white), and the coins stack in a column down the drop.
-* NEXT: step 2 = foam refinement behind a new switch (user's r27 foam note) + inside-bend foam over Benny at the right limit (t 5.0 s);
-  step 3 (if time) = stacked coin column down the drop.
+* 15:45 STEP 2 code written (NOT proven): `&m07fsoft=1` (match07.ts only, tsc 0). (a) river shader: the bank tile's bubble trim
+  (columns ~82-110 of 268, the unbroken white bead row between cyan and magenta) shows only in short irregular world-anchored
+  clusters (~a quarter of the length, each side its own); elsewhere clean magenta meets clean glossy cyan with a soft blend.
+  (b) 3D foam clouds: fewer, more varied surface bumps (40 % of lobes none); small lobes matte (no glint / rim sheen -> no beads);
+  clustered skirt with gaps and varied sizes; more gaps between mounds (+1-2.5 u now and then); the inside-of-bend heaps = one lower
+  outer heap now and then instead of two stacked rows; every lobe's river-side surface kept beyond edge-0.25 (smaller where the room
+  to the wall is tight) so no cloud reaches over the river / Benny at the steering limit. Keeps the outer-bank foam.
+  Quick check rendering: `/home/user/scratch/s07/q1_new/` (432 px, frames 0 / 65 / 90 / 119 / 120 / 147 / 175 / 198).
+* NEXT: judge the quick frames vs the BEFORE landmarks + approved; then full-size proof `qa/match/07/r27/s2_fsoft/` (APPROVED / BEFORE /
+  NEW at the landmark frames, start view 0 px) + NEW full clip 1.0x + 0.5x (BEFORE = `r26/final/SCREEN07_NEW_full_K23-3_*`).
+  Step 3 (if time) = stacked coin column down the drop.
 
 ## (r26) WHERE I STOPPED / NEXT
 * r26 relaunch (new account, ~13:10 UTC). Worktree `/home/user/wt/s07`, LOCAL branch `claude/rainbow-s07-match-c27` (r25 edits incl.
