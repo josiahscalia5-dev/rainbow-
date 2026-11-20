@@ -2321,3 +2321,43 @@ I've sent those three fixes to the worker. After that it does the full check: st
 
 Saved and verified on GitHub (`c4b319d`).
 
+### 🧑 User — 2026-11-20T00:26:47.655Z
+
+<task-notification>
+<task-id>a030a0be71298a035</task-id>
+<tool-use-id>toolu_01WaHme24m84mizxCoZqMTi6</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/tasks/a030a0be71298a035.output</output-file>
+<status>failed</status>
+<summary>Agent "Screen 04 rings r20" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 4:20am (UTC) · out of usage credits (error type rate_limit, HTTP 429, request id req_011ChDENNtasNAXkEFA3PLN2, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 4:20am (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+<result>Now the rewrite of the near-band block.</result>
+</task-notification>
+
+### 🤖 Claude — 2026-11-20T00:26:48.284Z
+
+You've hit your 5-hour limit · resets 4:20am (UTC) · out of usage credits
+
+### 🧑 User — 2026-11-20T00:27:20.205Z
+
+<task-notification>
+<task-id>a988229a9fd22c1d3</task-id>
+<tool-use-id>toolu_01BizueTifn6ZyyubLkvXcEm</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/tasks/a988229a9fd22c1d3.output</output-file>
+<status>failed</status>
+<summary>Agent "Screen 04 water/foam r20" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 4:20am (UTC) · out of usage credits (error type rate_limit, HTTP 429, request id req_011ChDEQo2icWFmdgEvAEpgy, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 4:20am (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+<result>Benny's world position comes from the splash anchor. Testing the glitch-sweep switches (`m04bbx`, `m04farsm`) on top of step 3.</result>
+</task-notification>
+
+### 🧑 User — 2026-11-20T00:27:25.498Z
+
+<task-notification>
+<task-id>a748ac2c3b3a4c626</task-id>
+<tool-use-id>toolu_01R5X2sDJfac3Z5BP7apoweP</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/tasks/a748ac2c3b3a4c626.output</output-file>
+<status>failed</status>
+<summary>Agent "Benny approved look r20" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 4:20am (UTC) · out of usage credits (error type rate_limit, HTTP 429, request id req_011ChDERBfFZDWC4qTMsMMko, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 4:20am (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+<result>Ribbed cuff now has real vertical ribs with dark purl grooves; crown has cream V columns. Kept for the cuff step. Checking the plush probe.</result>
+</task-notification>
+

@@ -2794,3 +2794,78 @@ Ribbed cuff now has real vertical ribs with dark purl grooves; crown has cream V
 
 > 🔧 **Bash** `{"command": "until [ -f /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/probe_p/probe.json ] || ! pgrep -f \"probe_p \" >/dev/null; do sleep 5; done; grep -v \"outside of Vite\" /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/probe_p.log | tail -9; cd /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/probe_p && for v in p0_plush p1_lock55 p2_len06 p3_comb04 p4_pile06 p5_col1.15 p6_col1.3; do echo -n \"$v \"; python3 -I /home/user/wt/benny/tools/benny20/score.py $v.png ${v}_mask.png | python3 -c  …[+171 chars]`
 
+### 🧑 User — 2026-11-20T00:25:13.378Z
+
+> ↩︎ result: Exit code 1
+>     at new Function (<anonymous>)
+>     at eval (eval at evaluate (:311:30), <anonymous>:1:63)
+>     at UtilityScript.evaluate (<anonymous>:313:16)
+>     at UtilityScript.<anonymous> (<anonymous>:1:44)
+>     at /home/user/wt/benny/tools/benny20/probe.mjs:32:16 {
+>   log: []
+> }
+> 
+> Node.js v22.23.5
+> p0_plush {'dy': 20, 'iou_all': 0.8927, 'iou_hat': 0.8191, 'iou_fur': 0.7377} {'mean': [199, 63, 135], 'sat': [0.6, 0.67, 0.83], 'val': [0.61, 0.78, 0.96]}
+> p1_lock55 {'dy': 20, 'iou_all': 0.8925, 'iou_hat': 0.8191, 'iou_fur': 0.7367} {'mean': [198, 62, 135], 'sat': [0.6, 0.67, 0.83], 'val': [0.61, 0.78, 0.96]}
+> p2_len06 {'dy': 20, 'iou_all': 0.8911, 'iou_hat': 0.8191, 'iou_fur': 0.7328} {'mean': [197, 61, 134], 'sat': [0.6, 0.68, 0.84], 'val': [0.6, 0.78, 0.96]}
+> p3_comb04 {'dy': 20, 'iou_all': 0.8927, 'iou_hat': 0.8191, 'iou_fur': 0.7379} {'mean': [198, 62, 134], 'sat': [0.6, 0.68, 0.84], 'val': [0.6, 0.78, 0.96]}
+> p4_pile06 {'dy': 20, 'iou_all': 0.8912, 'iou_hat': 0.8191, 'iou_fur': 0.7336} {'mean': [190, 57, 128], 'sat': [0.6, 0.69, 0.86], 'val': [0.57, 0.75, 0.93]}
+> p5_col1.15 Traceback (most recent call last):
+>   File "/home/user/wt/benny/tools/benny20/score.py", line 15, in <module>
+>     img …[+2786 chars]
+
+### 🤖 Claude — 2026-11-20T00:25:19.809Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/probe_p && python3 -I /home/user/wt/benny/tools/benny20/crop.py p0_plush.png ../c/p0.png && python3 -I -c \"\nfrom PIL import Image\nfor n in ['p0_plush','p1_lock55','p4_pile06']:\n    im=Image.open(f'{n}.png'); im.crop((190,1150,600,1420)).resize((820,540),Image.LANCZOS).save(f'../c/{n}_fur.png')\n\"", "description": "Crop plush variants"}`
+
+### 🧑 User — 2026-11-20T00:25:20.790Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T00:25:21.107Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/p0.png"}`
+
+### 🧑 User — 2026-11-20T00:25:21.139Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T00:25:21.709Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/p1_lock55_fur.png"}`
+
+### 🧑 User — 2026-11-20T00:25:21.750Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T00:25:27.407Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/p0_plush_fur.png"}`
+
+### 🧑 User — 2026-11-20T00:25:27.563Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T00:25:44.498Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && python3 - <<'EOF'\nimport json\ndef body(lock, comb, shade, pile=\"0.35,0.45,0.5,0\", ln=0.075, colr=\"0.325,0.115,0.198\"):\n    return (\"const fb=B.furs.find(f=>f.mesh.name==='fur_body');\"\n            f\"fb.uniforms.uLock.value.set({lock}); fb.uniforms.uComb.value.set({comb}); fb.uniforms.uShade.value.set({shade});\"\n            f\"fb.uniforms.uPile.value.set({pile}); fb.uniforms.uFurLen.value={ln}; fb.material.color.setRGB({colr});\"\n            f\"for (const a of B.furs.filter(f=>/arm/.test(f.mesh.name))) a.material.color.setRGB({colr});\")\nS=\" …[+1563 chars]`
+
+### 🧑 User — 2026-11-20T00:27:25.060Z
+
+> ↩︎ result: at 04 s 77.881
+> variant q0_l24 27612 ms
+> variant q1_l30 13406 ms
+> variant q2_l24_len09 12897 ms
+> variant q3_l24_crease 12470 ms
+> variant q4_l30_crease 12500 ms
+> q0_l24 {'dy': 20, 'iou_all': 0.8925, 'iou_hat': 0.8191, 'iou_fur': 0.7369} {'mean': [191, 66, 132], 'sat': [0.56, 0.64, 0.82], 'val': [0.56, 0.75, 0.96]}
+> q1_l30 {'dy': 20, 'iou_all': 0.8926, 'iou_hat': 0.8191, 'iou_fur': 0.7371} {'mean': [191, 66, 132], 'sat': [0.56, 0.65, 0.82], 'val': [0.56, 0.75, 0.96]}
+> q2_l24_len09 {'dy': 18, 'iou_all': 0.8939, 'iou_hat': 0.8247, 'iou_fur': 0.7472} {'mean': [193, 68, 133], 'sat': [0.56, 0.64, 0.81], 'val': [0.57, 0.76, 0.97]}
+> q3_l24_crease {'dy': 20, 'iou_all': 0.8925, 'iou_hat': 0.8191, 'iou_fur': 0.7369} {'mean': [193, 67, 133], 'sat': [0.56, 0.64, 0.82], 'val': [0.56, 0.76, 0.98]}
+> q4_l30_crease {'dy': 20, 'iou_all': 0.8928, 'iou_hat': 0.8191, 'iou_fur': 0.7377} {'mean': [188, 64, 129], 'sat': [0.56, 0.65, 0.83], 'val': [0.54, 0.73, 0.97]}
+
+### 🤖 Claude — 2026-11-20T00:27:25.468Z
+
+You've hit your 5-hour limit · resets 4:20am (UTC) · out of usage credits
+
