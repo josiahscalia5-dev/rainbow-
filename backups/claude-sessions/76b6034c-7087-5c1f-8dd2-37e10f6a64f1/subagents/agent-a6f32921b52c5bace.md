@@ -939,3 +939,108 @@ Equivalent procedure. Official stills now with r30_shots.mjs: BEFORE (v2, no b30
 
 > 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/b30/steer.png"}`
 
+### 🧑 User — 2026-11-20T23:01:17.294Z
+
+> ↩︎ result: 06 d_266_left s 266.01 lat -2.67 stage 06 coins 1700
+> 06 d_266_right s 266.01 lat 2.67 stage 06 coins 1680
+> 06 e_310_left s 227.043 lat -2.95 stage 06 coins 1700
+> 23:01
+
+### 🧑 User — 2026-11-20T23:01:17.324Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T23:01:27.063Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny06 && V2=\"$(cat /home/user/rainbow-/qa/match/06/r30/QUERY_NEW_v2.txt)\" && O=/home/user/rainbow-/qa/match/06/r30/benny06/BEFORE_steer && AUDIT_W=432 AUDIT_H=768 AUDIT_PORT=5322 AUDIT_SHOTS='[[\"d_266_left\",266,-1],[\"d_266_right\",266,1],[\"e_310_left\",310,-1]]' bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/match06/r30_shots.mjs $O 06 \"$V2\" 2>&1 | tail -3; date -u +%H:%M", "description": "Render BEFORE with same steering for comparison", "timeout": 900000}`
+
+### 🧑 User — 2026-11-20T23:01:42.387Z
+
+> ↩︎ result: 06 d_266_left s 266.01 lat -2.67 stage 06 coins 1700
+> 06 d_266_right s 266.01 lat 2.67 stage 06 coins 1680
+> 06 e_310_left s 227.043 lat -2.95 stage 06 coins 1700
+> 23:01
+
+### 🤖 Claude — 2026-11-20T23:02:01.584Z
+
+> 🔧 **Bash** `{"command": "cat > /home/user/wt/benny06/tools/benny30/stills.py <<'EOF'\n\"\"\"r30 benny06: labelled full-size APPROVED | BEFORE | NEW stills per standard position + one overview sheet.\nFor moving positions the 'APPROVED' column is the matching storyboard panel (scaled to frame height, labelled as such).\"\"\"\nimport numpy as np\nfrom PIL import Image, ImageDraw, ImageFont\nO = '/home/user/rainbow-/qa/match/06/r30/benny06'\nAP = Image.open('/home/user/rainbow-/references/06_crest_the_rinse_arch.png').convert('RGB')\nSB = Image.open('/home/user/rainbow-/docs/briefs/2026-11-20-r30/USER_S06_ST …[+2531 chars]`
+
+### 🧑 User — 2026-11-20T23:02:07.319Z
+
+> ↩︎ result: start frame: identical pixels outside the Benny box 100.0 % ; whole frame 89.98 %
+> APPROVED_06.png
+> BEFORE
+> BEFORE_steer
+> BENNY_CLOSEUP_SHEET.png
+> NEW
+> NEW_steer
+> OVERVIEW_SHEET.png
+> a_start_APPROVED_BEFORE_NEW.png
+> b_marked_APPROVED_BEFORE_NEW.png
+> benny_numbers.json
+> c_238_APPROVED_BEFORE_NEW.png
+> d_266_APPROVED_BEFORE_NEW.png
+> e_310_APPROVED_BEFORE_NEW.png
+> g_387_APPROVED_BEFORE_NEW.png
+
+### 🤖 Claude — 2026-11-20T23:02:12.142Z
+
+Outside the Benny box the start frame is 100 % pixel-identical. Let me verify the overview sheet renders correctly.
+
+### 🤖 Claude — 2026-11-20T23:02:12.593Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r30/benny06/OVERVIEW_SHEET.png"}`
+
+### 🧑 User — 2026-11-20T23:02:12.787Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T23:02:42.134Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/match/06/r30/benny06/NOTES.md", "content": "# r30b benny06 — painted Screen 06 Benny (`b30`)\n\nWorker: benny-character-artist, worktree `/home/user/wt/benny06` (LOCAL `claude/rainbow-s06-benny06-c32`, uncommitted), 2026-11-20 22:29–23:05 UTC\n(relaunch; continues the r30 session's `benny30.ts` start).\n\n## Query addition\n`&b30=1` (added to `qa/match/06/r30/QUERY_NEW_v2.txt`). It also switches on the benny05 base (knit / fur / pompom albedo maps baked from approved pixels).\nWithout `b30` nothing changes (benny30.ts never runs; the runtime ride pitch is  …[+4414 chars]`
+
+### 🧑 User — 2026-11-20T23:02:42.331Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/match/06/r30/benny06/NOTES.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T23:02:43.049Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny06 && npx tsc --noEmit -p . && echo TSC_OK; git status --short | grep -E \"benny|tools/benny30\"; git log --oneline -1; date -u +%H:%M", "description": "Final typecheck and worktree status"}`
+
+### 🧑 User — 2026-11-20T23:02:49.234Z
+
+> ↩︎ result: TSC_OK
+>  M src/characters/benny/benny05.ts
+>  M src/characters/benny/runtime.ts
+> ?? src/characters/benny/benny30.ts
+> ?? tools/benny30/
+> e162aec autosave: Rainbow 2026-11-20 04:09 UTC
+> 23:02
+
+### 🤖 Claude — 2026-11-20T23:03:00.662Z
+
+Benny is clearly closer to the painted Benny at the start view, but while he swims he is still not the painted one. The Benny area at the start went from 49.4 % (BEFORE v2) to 56.8 % (NEW) of pixels within 20 colour levels of the approved picture. Typecheck is clean, the edits are uncommitted in `/home/user/wt/benny06`, and nothing was pushed or merged.
+
+**Query addition:** `&b30=1`. This also turns on the benny05 knit/fur maps. With it off, nothing changes. Size knob: `&b30sc=` (default 0.92, matched to the v2 start framing). If your new framing already makes him smaller, set `&b30sc=1`; his proportions don't depend on it.
+
+**Files changed:**
+- `/home/user/wt/benny06/src/characters/benny/benny30.ts` (new). Narrower beanie that sits higher, narrower body with a fuller round base, bigger and lower arms, 32° ride lean (was 12.6°), softer and clumpier fur.
+- `/home/user/wt/benny06/src/characters/benny/runtime.ts` and `benny05.ts`: small hooks only.
+- `/home/user/wt/benny06/tools/benny30/` (new): the render sweep and measuring scripts.
+
+Rig, clips, collisions, steering and scenery are untouched. With hard left/right steering, position and coins match BEFORE exactly. Holding hard left toward s 310 stops at s 227 with hearts lost; BEFORE does exactly the same, so that is the v2 baseline, not my change. Outside the Benny box the start frame is 100 % identical.
+
+**Numbers:**
+- **Start, painted vs NEW:** hat width 287 vs 290 px (BEFORE 359); fur colour 234,86,180 vs 232,75,181.
+- **Storyboard panels 1–4** (Benny crop aligned on his own features): BEFORE 5.1 / 4.9 / 6.1 / 6.0 % → NEW 5.5 / 5.5 / 6.8 / 6.7 %. These are low for both, so treat them only as a direction.
+
+**What still differs:**
+1. While swimming the camera looks down more steeply than the panels, so the beanie looks squashed: hat plus pompom is about 45 % of his height against about 60 % painted. That needs your framing.
+2. The painted Benny sits sunk in a foam ring; the game Benny floats with his underside showing, because the water never covers him. That needs the water/foam side.
+3. The fur is fine strands rather than shaggy plush locks.
+4. He is smaller than in the panels while swimming.
+
+I rejected raising or tilting the beanie (both show a bare band under the cuff while swimming), colour shifts, and sinking him lower.
+
+Everything is in `/home/user/rainbow-/qa/match/06/r30/benny06/`; open `NOTES.md`, `OVERVIEW_SHEET.png` and `BENNY_CLOSEUP_SHEET.png` first.
+

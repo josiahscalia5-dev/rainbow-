@@ -40,6 +40,7 @@ export const SB = {
   j07: num('m06sbj07', 40),
   la: nums('m06sbla', [22, 42]),
   q: nums('m06sbq', [0.10, 0.16]),
+  qh: num('m06sbqh', 0), // r30b t6: lift (u) of the aim point above the river ahead: a flatter view of Benny (painted near-level hat)
   k: num('m06sbk', 1.15), // r30b t3: the 3D Benny is ~20 % larger than the painted one at the approved camera
   by: num('m06sbby', 0), // NDC y shift of Benny's anchor (+ = higher)
   // r30b t4: vertical field of view of the storyboard framing (the panels read telephoto: storyboard panel 1 = the approved view with the

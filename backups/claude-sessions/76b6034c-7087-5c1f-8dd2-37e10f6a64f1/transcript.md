@@ -2647,3 +2647,181 @@ Typecheck clean. Quick render of the telephoto framing with the brighter materia
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && Q=$(cat /home/user/rainbow-/qa/match/06/r30/QUERY_NEW_v2.txt) && DIAG_S='[238,310]' AUDIT_PORT=5361 timeout 600 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/match06/r30b_diag.mjs /home/user/rainbow-/qa/match/06/r30b/baseline_recheck \"$Q\" 2>&1 | grep -E \"rror\" | head -3; cd /home/user/rainbow-/qa/match/06/r30b && python3 -I -c \"\nfrom PIL import Image; import numpy as np\nfor s in (238,310):\n    a=np.asarray(Image.open(f'diag/s{s}.png').convert('RGB')).astype(int); b=np.asarray(Image.open(f'baseline_recheck/s{s}.png').convert('RGB')) …[+233 chars]`
 
+### 🧑 User — 2026-11-20T23:01:25.045Z
+
+> ↩︎ result: s238: pixels identical 59.818 %, >20 levels 17.840 %
+> s310: pixels identical 49.255 %, >20 levels 29.079 %
+
+### 🤖 Claude — 2026-11-20T23:01:32.753Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image; import numpy as np\nfor s in (238,310):\n    a=np.asarray(Image.open(f'diag/s{s}.png').convert('RGB')).astype(int); b=np.asarray(Image.open(f'baseline_recheck/s{s}.png').convert('RGB')).astype(int)\n    d=np.abs(a-b).max(2)>20\n    H=d.shape[0]\n    print(f's{s}: >20 levels  HUD+top 0-100: {100*d[:100].mean():.2f}%  tunnel 100-330: {100*d[100:330].mean():.2f}%  river 330-768: {100*d[330:].mean():.2f}%')\n    Image.fromarray((d*255).astype(np.uint8)).save(f'baseline_recheck/diffmask_s{s}.png')\"", "description": "Locate where baseline differ …[+13 chars]`
+
+### 🧑 User — 2026-11-20T23:01:33.048Z
+
+> ↩︎ result: s238: >20 levels  HUD+top 0-100: 0.00%  tunnel 100-330: 2.76%  river 330-768: 29.83%
+> s310: >20 levels  HUD+top 0-100: 0.00%  tunnel 100-330: 4.77%  river 330-768: 48.48%
+
+### 🤖 Claude — 2026-11-20T23:01:37.187Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r30b/baseline_recheck && python3 -I -c \"\nfrom PIL import Image\na=Image.open('../diag/s310.png').convert('RGB'); b=Image.open('s310.png').convert('RGB'); m=Image.open('diffmask_s310.png').convert('RGB')\no=Image.new('RGB',(432*3+20,768)); o.paste(a,(0,0)); o.paste(b,(442,0)); o.paste(m,(884,0)); o.save('s310_before_recheck_mask.png')\"", "description": "Visualize baseline difference mask"}`
+
+### 🧑 User — 2026-11-20T23:01:37.455Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T23:01:40.284Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r30b/baseline_recheck/s310_before_recheck_mask.png"}`
+
+### 🧑 User — 2026-11-20T23:01:40.324Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T23:02:14.254Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s06/tools/match06/r30b_proof.py", "content": "\"\"\"r30b lead: the user's four numbered comparisons (docs/briefs/2026-11-20-r30/USER_R30.md §6.7): for each storyboard panel\n  STORYBOARD PANEL (concept artwork = the approved target) | BASELINE (r30 v2 gameplay = the user's bottom row) | NEW (r30b gameplay)\nall three in the SAME window: the panel's own area of the game frame, (28,250)-(811,1251) of 864x1536 (storyboard panel 1 registered onto\nthe approved picture by SIFT + RANSAC, 93 inliers, Benny coincides exactly: qa/match/06/r30b/align/). Full frames are saved …[+2268 chars]`
+
+### 🧑 User — 2026-11-20T23:02:14.403Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s06/tools/match06/r30b_proof.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T23:02:22.386Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/scen06 && Q=$(cat /home/user/rainbow-/qa/match/06/r30/QUERY_NEW_v2.txt) && AUDIT_W=864 AUDIT_H=1536 AUDIT_PORT=5351 AUDIT_PIN=10000 AUDIT_SHOTS='[[\"p1_238\",238,null],[\"p2_266\",266,null],[\"p3_310\",310,null],[\"p4_387\",387,null]]' timeout 1500 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/match06/r30_shots.mjs /home/user/rainbow-/qa/match/06/r30b/proof/baseline 06 \"$Q\" 2>&1 | grep -E \"^06|rror\" | cut -c1-100", "description": "Render the baseline frames from the untouched r30 code", "timeout": 1520000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T23:02:22.424Z
+
+> ↩︎ result: Command running in background with ID: b9lecimfo. Output is being written to: /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/tasks/b9lecimfo.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-/qa/match/06/r30b/baseline_recheck; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-20T23:02:29.370Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && Q=$(cat /home/user/rainbow-/qa/match/06/r30/QUERY_NEW_v2.txt) && AUDIT_W=864 AUDIT_H=1536 AUDIT_PORT=5360 AUDIT_PIN=10000 AUDIT_SHOTS='[[\"v2_start\",0,null],[\"v2_310\",310,null]]' timeout 1500 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/match06/r30_shots.mjs /home/user/rainbow-/qa/match/06/r30b/proof/equiv_from_candidate_code 06 \"$Q\" 2>&1 | grep -E \"^06|rror\" | cut -c1-100", "description": "Render v2 from the candidate code for an equivalence check", "timeout": 1520000}`
+
+### 🧑 User — 2026-11-20T23:03:01.900Z
+
+> ↩︎ result: 06 v2_start s 198.91 lat 0 stage 06 coins 1680
+> 06 v2_310 s 310.01 lat 0 stage 06 coins 1770
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T23:03:23.895Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt && for f in src/characters/benny/benny05.ts src/characters/benny/runtime.ts; do cmp -s s06/$f water06/$f && echo \"$f: s06 == snapshot base\" || echo \"$f: DIFFERS\"; done; diff -rq s06/src benny06/src | grep -v \"m06sb\\|route06c\\|m06water30\\|m06foam30\" ; ls /home/user/rainbow-/qa/match/06/r30/benny06/ | head -20", "description": "Check Benny files are untouched before taking the specialist's"}`
+
+### 🧑 User — 2026-11-20T23:03:23.948Z
+
+> ↩︎ result: src/characters/benny/benny05.ts: s06 == snapshot base
+> src/characters/benny/runtime.ts: s06 == snapshot base
+> Files s06/src/characters/benny/benny05.ts and benny06/src/characters/benny/benny05.ts differ
+> Only in benny06/src/characters/benny: benny30.ts
+> Files s06/src/characters/benny/runtime.ts and benny06/src/characters/benny/runtime.ts differ
+> Files s06/src/game/Game.ts and benny06/src/game/Game.ts differ
+> Files s06/src/game/cameraRig.ts and benny06/src/game/cameraRig.ts differ
+> Files s06/src/gameplay/coins.ts and benny06/src/gameplay/coins.ts differ
+> Files s06/src/world/course.ts and benny06/src/world/course.ts differ
+> Files s06/src/world/match06.ts and benny06/src/world/match06.ts differ
+> APPROVED_06.png
+> BEFORE
+> BEFORE_steer
+> BENNY_CLOSEUP_SHEET.png
+> NEW
+> NEW_steer
+> NOTES.md
+> OVERVIEW_SHEET.png
+> a_start_APPROVED_BEFORE_NEW.png
+> b_marked_APPROVED_BEFORE_NEW.png
+> benny_numbers.json
+> c_238_APPROVED_BEFORE_NEW.png
+> d_266_APPROVED_BEFORE_NEW.png
+> e_310_APPROVED_BEFORE_NEW.png
+> g_387_APPROVED_BEFORE_NEW.png
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T23:03:32.128Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt && for f in src/game/Game.ts src/game/cameraRig.ts src/gameplay/coins.ts src/world/course.ts src/world/match06.ts; do cmp -s benny06/$f scen06/$f && echo \"$f: benny06 untouched\" || echo \"$f: benny06 CHANGED\"; done; cp benny06/src/characters/benny/benny05.ts benny06/src/characters/benny/runtime.ts benny06/src/characters/benny/benny30.ts s06/src/characters/benny/ && mkdir -p s06/tools/benny30 && cp -r benny06/tools/benny30/. s06/tools/benny30/ && cd s06 && timeout 200 npx tsc --noEmit -p . ; echo \"tsc rc=$?\"; cat /tmp/claude-0/-home-user-rainbow-/76b6034c-7087 …[+152 chars]`
+
+### 🧑 User — 2026-11-20T23:03:35.298Z
+
+> ↩︎ result: src/game/Game.ts: benny06 untouched
+> src/game/cameraRig.ts: benny06 untouched
+> src/gameplay/coins.ts: benny06 untouched
+> src/world/course.ts: benny06 untouched
+> src/world/match06.ts: benny06 untouched
+> tsc rc=0
+> 06 p1_238 s 238.143 lat 0 stage 06 coins 1730
+> 06 p2_266 s 266.01 lat 0 stage 06 coins 1750
+> 06 p3_310 s 310.01 lat 0 stage 06 coins 1770
+> 06 p4_387 s 387.01 lat 0 stage 06 coins 1800
+> 
+> [exited with code 0]
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T23:03:41.625Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r30b/proof && python3 -I -c \"\nfrom PIL import Image; import numpy as np\na=np.asarray(Image.open('baseline/p3_310.png').convert('RGB')).astype(int); b=np.asarray(Image.open('equiv_from_candidate_code/v2_310.png').convert('RGB')).astype(int)\nd=np.abs(a-b).max(2); print(f'v2 s310 untouched-r30-code vs candidate-code (new switches off): identical {100*(d==0).mean():.4f} %, max diff {d.max()}, >20 levels {100*(d>20).mean():.4f} %')\"", "description": "Compare baseline renders from both code versions"}`
+
+### 🧑 User — 2026-11-20T23:03:41.952Z
+
+> ↩︎ result: v2 s310 untouched-r30-code vs candidate-code (new switches off): identical 86.2728 %, max diff 255, >20 levels 8.5717 %
+
+### 🤖 Claude — 2026-11-20T23:03:46.027Z
+
+Still 8.6 % of pixels differ even with the clock pinned, so I need to find out why before claiming anything. Mapping where:
+
+### 🤖 Claude — 2026-11-20T23:03:49.305Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image; import numpy as np\na=np.asarray(Image.open('baseline/p3_310.png').convert('RGB')).astype(int); b=np.asarray(Image.open('equiv_from_candidate_code/v2_310.png').convert('RGB')).astype(int)\nd=np.abs(a-b).max(2)>20\nfor name,(y0,y1) in {'HUD 0-200':(0,200),'tunnel 200-660':(200,660),'river+benny 660-1536':(660,1536)}.items(): print(name, f'{100*d[y0:y1].mean():.2f} %')\no=Image.new('RGB',(864*3//2+20,768)); o.paste(Image.fromarray(a.astype(np.uint8)).resize((432,768)),(0,0)); o.paste(Image.fromarray(b.astype(np.uint8)).resize((432,768)),(442, …[+170 chars]`
+
+### 🧑 User — 2026-11-20T23:03:49.853Z
+
+> ↩︎ result: HUD 0-200 0.00 %
+> tunnel 200-660 0.31 %
+> river+benny 660-1536 14.87 %
+
+### 🤖 Claude — 2026-11-20T23:03:52.583Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r30b/proof/equiv_mask_s310.png"}`
+
+### 🧑 User — 2026-11-20T23:03:52.618Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T23:04:12.801Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='src/world/m06sb.ts'; s=open(p).read()\nold=\"  q: nums('m06sbq', [0.10, 0.16]),\"\nassert old in s\ns=s.replace(old, old+\"\\n  qh: num('m06sbqh', 0), // r30b t6: lift (u) of the aim point above the river ahead: a flatter view of Benny (painted near-level hat)\")\nopen(p,'w').write(s)\np='src/game/cameraRig.ts'; s=open(p).read()\nold=\"    Q.multiplyScalar(1 / 5);\"\nassert old in s\ns=s.replace(old,\"    Q.multiplyScalar(1 / 5); Q.y += SB.qh;\")\nopen(p,'w').write(s)\nEOF\ntimeout 200 npx tsc --noEmit -p . ; echo \"tsc rc=$?\"\nB=/hom …[+1484 chars]`
+
+### 🧑 User — 2026-11-20T23:04:43.434Z
+
+> ↩︎ result: tsc rc=0
+> [1]-  Done                    AUDIT_W=432 AUDIT_H=768 AUDIT_PORT=536$([ $v = a ] && echo 2 || echo 3) AUDIT_PIN=10000 AUDIT_SHOTS='[["s214.86",214.86,null],["s250",250,null],["s290",290,null],["s330",330,null]]' timeout 1500 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/match06/r30_shots.mjs $B/t6$v 06 "$Q" > $B/t6$v.log 2>&1
+> [2]+  Done                    AUDIT_W=432 AUDIT_H=768 AUDIT_PORT=536$([ $v = a ] && echo 2 || echo 3) AUDIT_PIN=10000 AUDIT_SHOTS='[["s214.86",214.86,null],["s250",250,null],["s290",290,null],["s330",330,null]]' timeout 1500 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/match06/r30_shots.mjs $B/t6$v 06 "$Q" > $B/t6$v.log 2>&1
+
+### 🤖 Claude — 2026-11-20T23:04:46.700Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r30b/t6_panels.png"}`
+
+### 🧑 User — 2026-11-20T23:04:46.745Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T23:05:33.202Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && B=/home/user/rainbow-/qa/match/06/r30b; echo \"$(cat $B/QUERY_SB_NEW.txt)&b30=1&m06sbk=0.75&m06sbqh=3\" > $B/QUERY_SB_t7.txt && Q=$(cat $B/QUERY_SB_t7.txt) && AUDIT_W=432 AUDIT_H=768 AUDIT_PORT=5364 AUDIT_PIN=10000 AUDIT_SHOTS='[[\"s0\",0,null],[\"s214.86\",214.86,null],[\"s240\",240,null],[\"s250\",250,null],[\"s290\",290,null],[\"s300\",300,null],[\"s330\",330,null],[\"s340\",340,null]]' timeout 1500 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/match06/r30_shots.mjs $B/t7 06 \"$Q\" 2>&1 | grep -E \"rror\" | head -3; cd $B && python3 -I  …[+779 chars]`
+
+### 🧑 User — 2026-11-20T23:06:01.439Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T23:06:04.353Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r30b/t7_panels.png"}`
+
+### 🧑 User — 2026-11-20T23:06:04.542Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-20T23:06:04.538Z
+
+[Image: original 2008x672, displayed at 2000x669. Multiply coordinates by 1.00 to map to original image.]
+
