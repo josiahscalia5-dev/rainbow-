@@ -203,3 +203,146 @@ I'll start by reading the required documents in order.
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-/backups && grep -rl \"V4_fine\" --include=*.md . 2>/dev/null | head; grep -rl \"V4_fine\" wip 2>/dev/null | head", "description": "Find the r26 transcript with variant definitions"}`
 
+### 🧑 User — 2026-11-20T15:26:05.921Z
+
+> ↩︎ result: ./claude-sessions/57d35962-86cf-5cfa-ab0b-2faf54b8a6e6/subagents/agent-a2f947746147acb94.md
+
+### 🤖 Claude — 2026-11-20T15:26:08.037Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/backups/claude-sessions/57d35962-86cf-5cfa-ab0b-2faf54b8a6e6/subagents/ && wc -l agent-a2f947746147acb94.md && grep -n \"V4_fine\\|V5_fine2\\|C1_cloud\\|C2_cloud_low\\|V1_\\|V2_\\|V3_\\|V0_\" agent-a2f947746147acb94.md | head -40", "description": "Locate variant definitions in r26 transcript"}`
+
+### 🧑 User — 2026-11-20T15:26:08.089Z
+
+> ↩︎ result: 1080 agent-a2f947746147acb94.md
+> 156:> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/backups/claude-sessions/1de16074-a1ea-5d78-8ed3-5aa46f86005c/subagents/ && grep -n \"lgc\\|uLG5\\|uLG6\\|s1var\\|V1_all\\|V2_near\\|V3_short\\|frames_\\|arrow\" agent-aadb120f8f34ac332.md | head -80", "description": "Search transcript for m04lgc work"}`
+> 174:> ↩︎ result: > 🔧 **Bash** `{"command": "S=/home/user/scratch/s04; cat > $S/run_s1_variants.sh <<'EOF'\n#!/usr/bin/env bash\nset -u\nS=/home/user/scratch/s04; export BASE=/home/user/rainbow-/qa/match/04/r23/s3_glossy/QUERY_K23-S3.txt\nV=/home/user/rainbow-/qa/match/04/r23/s04_tools/variant.sh\nrun() { echo \"start $1 $(date -u +%T)\"; bash $V $S/s1var/$1 5275 \"$2\"; }\nrun V0_K23-S3_newcode \"\"\nrun V1_all \"m04lgc=1\"\nrun V2_near \"m04lgc=1&m04lgc0=9&m04lgc1=15\"\nrun V3_short \"m04lgc=1&m04lgcl=0.45&m04lgn=4&m04lgco=0.55\"\necho ALL_DONE\nEOF\nchmod +x $S/run_s1_variants.sh; nohup bash /home/user/rainbow-/tools/lead …[+355 chars]`
+> 846:> start V0_base 13:40:12
+> 969:> done /home/user/scratch/s04/s1var/V0_base 4 png
+> 970:> start V1_all 13:41:23
+> 986:> ↩︎ result: done /home/user/scratch/s04/s1var/V0_base 4 png
+> 987:> start V1_all 13:41:23
+> 988:> don …[+2431 chars]
+
+### 🤖 Claude — 2026-11-20T15:26:09.731Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/backups/claude-sessions/57d35962-86cf-5cfa-ab0b-2faf54b8a6e6/subagents/ && sed -n 997,1080p agent-a2f947746147acb94.md | cut -c1-3000", "description": "Read end of r26 transcript for variant details"}`
+
+### 🧑 User — 2026-11-20T15:26:09.782Z
+
+> ↩︎ result: > 🔧 **Bash** `{"command": "cd /home/user/scratch/s04 && python3 -I -c \"\nfrom PIL import Image\nvs=['V0_base','V1_all','V2_near','V3_short']\n# bottom (near camera) crop of c_middle and d_late\nW=Image.new('RGB',(4*432,2*300))\nfor k,v in enumerate(vs):\n  for j,sh in enumerate(['c_middle','d_late']):\n    im=Image.open(f's1var/{v}/{sh}.png').convert('RGB')\n    W.paste(im.crop((0,936,864,1536)).resize((432,300)),(k*432,j*300))\nW.save('lgc_cmp.png')\nA=Image.open('/home/user/rainbow-/qa/match/04/r23/s1_arrows/APPROVED/2_ACCEPTED_GENERATED_view_c_middle.png').convert('RGB').crop((0,936,864,1536)).resize((4 …[+98 chars]`
+> 
+> ### 🧑 User — 2026-11-20T13:44:27.455Z
+> 
+> > ↩︎ result: (Bash completed with no output)
+> 
+> ### 🤖 Claude — 2026-11-20T13:44:28.334Z
+> 
+> > 🔧 **Read** `{"file_path": "/home/user/scratch/s04/lgc_cmp.png"}`
+> 
+> ### 🧑 User — 2026-11-20T13:44:28.385Z
+> 
+> > ↩︎ result: [image]
+> 
+> ### 🤖 Claude — 2026-11-20T13:44:31.100Z
+> 
+> > 🔧 **Read** `{"file_path": "/home/user/scratch/s04/lgc_acc.png"}`
+> 
+> ### 🧑 User — 2026-11-20T13:44:31.130Z
+> 
+> > ↩︎ result: [image]
+> 
+> ### 🤖 Claude — 2026-11-20T13:44:40.329Z
+> 
+> > 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 1855,1872p src/world/match04m4.ts", "descripti …[+3974 chars]
+
+### 🤖 Claude — 2026-11-20T15:26:12.778Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/backups/claude-sessions/57d35962-86cf-5cfa-ab0b-2faf54b8a6e6/ && ls -la . subagents | head -30; grep -rl \"C2_cloud_low\" /home/user/rainbow-/backups 2>/dev/null | head", "description": "Look for untruncated session logs"}`
+
+### 🧑 User — 2026-11-20T15:26:14.356Z
+
+> ↩︎ result: .:
+> total 2460
+> drwxr-xr-x  3 root root    4096 Nov 20 15:15 .
+> drwxr-xr-x 47 root root    4096 Nov 20 15:15 ..
+> drwxr-xr-x  2 root root    4096 Nov 20 15:10 subagents
+> -rw-r--r--  1 root root  198248 Nov 20 15:15 transcript.md
+> -rw-r--r--  1 root root 2304686 Nov 20 15:15 transcript.sanitized.jsonl
+> 
+> subagents:
+> total 4260
+> drwxr-xr-x 2 root root    4096 Nov 20 15:10 .
+> drwxr-xr-x 3 root root    4096 Nov 20 15:15 ..
+> -rw-r--r-- 1 root root   74971 Nov 20 15:10 agent-a2f947746147acb94.md
+> -rw-r--r-- 1 root root  860067 Nov 20 15:10 agent-a2f947746147acb94.sanitized.jsonl
+> -rw-r--r-- 1 root root   80867 Nov 20 15:10 agent-a40be60e4fe7bb4ab.md
+> -rw-r--r-- 1 root root  923632 Nov 20 15:10 agent-a40be60e4fe7bb4ab.sanitized.jsonl
+> -rw-r--r-- 1 root root  104300 Nov 20 15:10 agent-a46a6cd792b4d39b7.md
+> -rw-r--r-- 1 root root 1130273 Nov 20 15:10 agent-a46a6cd792b4d39b7.sanitized.jsonl
+> -rw-r--r-- 1 root root  108722 Nov 20 15:10 agent-aa0deafcaa0d24e83.md
+> -rw-r--r-- 1 root root 1057725 Nov 20 15:10 agent-aa0deafcaa0d24e83.sanitized.jsonl
+> /home/user/rainbow-/backups/claude-sessions/c05b9d04-f7cb-5b3c-b274-a57feec84abe/subagents/agent-ab6a292a24681adea.sanitized.jsonl
+> /home/user/rainbow-/backups/claude-ses …[+436 chars]
+
+### 🤖 Claude — 2026-11-20T15:26:17.978Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/backups/claude-sessions/57d35962-86cf-5cfa-ab0b-2faf54b8a6e6/subagents/ && python3 -I -c \"\nimport json\nfor line in open('agent-a2f947746147acb94.sanitized.jsonl'):\n    if 'run_job2.sh <<' in line:\n        d=json.loads(line)\n        def walk(o):\n            if isinstance(o,dict):\n                if o.get('type')=='tool_use': print(o['input'].get('command','')[:3000]); return\n                for v in o.values(): walk(v)\n            elif isinstance(o,list):\n                for v in o: walk(v)\n        walk(d)\n\"", "description": "Extract full run_jo …[+22 chars]`
+
+### 🧑 User — 2026-11-20T15:26:18.052Z
+
+> ↩︎ result: cat > /home/user/scratch/s04/run_job2.sh <<'EOF'
+> #!/usr/bin/env bash
+> # r26 s04 job 2: finer crescent glints (step 1) + cloud-bank foam (step 2), base = K23-S3 + m04a5=2
+> S=/home/user/scratch/s04
+> export BASE=/home/user/rainbow-/qa/match/04/r26/s0_five/QUERY_NEW_K23-S3_a5.txt
+> V=/home/user/rainbow-/qa/match/04/r23/s04_tools/variant.sh
+> run() { echo "start $1 $(date -u +%T)"; bash $V $S/$1 5275 "$2"; }
+> SHOTS='[["c_middle",0.35,null],["d_late",0.6,null]]' run s1var/V4_fine "m04lgc=1&m04lgt=0.035&m04lgn=5&m04lgcl=0.35&m04lgcb=0.12&m04lgco=0.5&m04lgcs=0.9"
+> SHOTS='[["c_middle",0.35,null],["d_late",0.6,null]]' run s1var/V5_fine2 "m04lgc=1&m04lgt=0.04&m04lgn=4&m04lgcl=0.45&m04lgcb=0.18&m04lgco=0.4&m04lgcs=0.6"
+> run s2var/C1_cloud "m04bbdc=1"
+> run s2var/C2_cloud_low "m04bbdc=1&m04ry=0.35"
+> echo ALL_DONE
+> EOF
+> chmod +x /home/user/scratch/s04/run_job2.sh; nohup bash /home/user/rainbow-/tools/lead25/render_slot.sh bash /home/user/scratch/s04/run_job2.sh > /home/user/scratch/s04/run_job2.out 2>&1 & echo started
+
+### 🤖 Claude — 2026-11-20T15:26:21.049Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/04/r23/s04_tools && head -40 audit_pinned_slow.mjs; cat /home/user/rainbow-/tools/lead25/render_slot.sh | head -30; cat /home/user/rainbow-/qa/match/04/r26/s0_five/QUERY_NEW_K23-S3_a5.txt", "description": "Inspect audit tool and render slot wrapper"}`
+
+### 🧑 User — 2026-11-20T15:26:21.108Z
+
+> ↩︎ result: // r23 s04 copy of qa/match/04/r22/tools/audit_pinned.mjs: identical except the screenshot + page-ready timeouts (600 s; the machine is shared).
+> // r22 S04 copy of tools/lead21/audit_screen.mjs with ONE QA-only change: performance.now() is pinned to 10 000 ms while each
+> // shot is stepped and drawn, so the Screen 04 river shader (src/world/match04m4.ts reads the wall clock, pre-existing since
+> // 34cb494) shows the same water phase in every run -> BEFORE / NEW differ only by the switch under test. No game code changes.
+> // Round 21 lead audit (read-only): one playable screen of the REAL game at start / early / middle / late / end and hard
+> // left / right, deterministic (fixed sim steps, frozen shader clock, one frame rendered per shot, no real-time steps).
+> // Run from the worktree whose build you want to see (vite serves the current directory):
+> //   cd <worktree> && node /home/user/rainbow-/tools/lead21/audit_screen.mjs <outDir> <stage 04..08> "<query>"
+> // Shots are fractions of the stage from its checkpoint to its end; env AUDIT_SHOTS='[["name",frac,steer],...]' overrides.
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlayw …[+4552 chars]
+
+### 🤖 Claude — 2026-11-20T15:26:24.520Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/src/world/match04m4.ts", "offset": 880, "limit": 80}`
+
+### 🧑 User — 2026-11-20T15:26:24.545Z
+
+> ↩︎ result: 880	      float wl = rk * (1.0 - smoothstep(0.2, uLane3.y, abs(vS)));
+> 881	      if (uLane4.y > uLane4.x && uLane4.x < 0.0) {
+> 882	        // r14 m04lcn=-a,b (negative start): the PAINTED deep azure keyed on the water's own brightness, so the swirls,
+> 883	        // glossy crests and white glints survive (a plain multiply flattened the lane into a dark royal-blue patch)
+> 884	        float lq = dot(laneC, vec3(0.30, 0.55, 0.15));
+> 885	        vec3 deep = mix(vec3(0.00, 0.40, 0.86), vec3(0.02, 0.66, 0.98), smoothstep(0.40, 0.88, lq));
+> 886	        deep = mix(deep, laneC, smoothstep(0.90, 0.99, lq));                                     // keep only the white glints
+> 887	        laneC = mix(laneC, deep, min(uLane3.x, 1.0) * smoothstep(-uLane4.x, uLane4.y, along - uA5b.z) * (1.0 - smoothstep(0.2, uLane3.y, abs(vS))));
+> 888	      } else {
+> 889	        laneC = mix(laneC, laneC * vec3(0.42, 0.70, 1.0), uLane3.x * wl);
+> 890	      }
+> 891	    }
+> 892	    if (uLG.x > 0.0) {
+> 893	      // r23 m04lgs=1: the painted lane water is CLEAN glossy electric cyan with long thin white highlight streaks running
+> 894	      // with the flow (no soft white frosted blotches): base = the tile's gentle light / dark flow seen  …[+5296 chars]
+

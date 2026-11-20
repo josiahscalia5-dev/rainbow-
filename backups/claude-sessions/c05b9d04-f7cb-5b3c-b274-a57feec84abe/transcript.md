@@ -1575,3 +1575,45 @@ Launching the four specialists in the background, each resuming from its saved s
 > output_file: /tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/tasks/af58530c446531445.output
 > Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
 
+### 🤖 Claude — 2026-11-20T15:25:57.321Z
+
+Now the coordination map and the handoff top section, so a sudden stop leaves accurate notes.
+
+### 🤖 Claude — 2026-11-20T15:26:20.226Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-20-r27/COORDINATION.md", "content": "# Round 27 — coordination (lead session branch `claude/rainbow-restore-screen-match-ijjdai`, new Claude account, 2026-11-20 from ~15:11 UTC)\n\nUser (new account, ~15:11): \"RESTORE MY COMPLETE RAINBOW PROJECT, ENABLE MY TOOLS AND AGENTS, AND CONTINUE FROM THE LATEST SAVE\" — source branch\n`ccr-08ece3a6-xcwyls`; verified checkpoint + five-minute autosave first; restore conversations, tools, connectors, plugins, ten specialists,\nunfinished work incl. the separate `lead/trial07-c27` trial and the DevToo …[+5718 chars]`
+
+### 🧑 User — 2026-11-20T15:26:20.272Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-20-r27/COORDINATION.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T15:26:26.481Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md", "old_string": "# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 26 (2026-11-20, lead branch `ccr-08ece3a6-xcwyls`, from ~13:00 UTC)", "new_string": "# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 27 (2026-11-20, lead branch `claude/rainbow-restore-screen-match-ijjdai`, from ~15:11 UTC)\n\nNew account; session branch = r26 lead `ccr-08ece3a6-xcwyls` merged up to its last save **`e655f19`** (15:03 UTC) → `e2e1d12`. Nothing else merged.\nWorktrees recreated on LOCAL `-c28` branches (`setup_worker_r27.sh`) + `trial07` …[+806 chars]`
+
+### 🧑 User — 2026-11-20T15:26:26.543Z
+
+> ↩︎ result: The file /home/user/rainbow-/docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T15:26:28.074Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/backups/START_NEW_CLAUDE_ACCOUNT.md", "limit": 3}`
+
+### 🧑 User — 2026-11-20T15:26:28.101Z
+
+> ↩︎ result: 1	# Paste this into Claude Code on the next Claude account
+> 2	
+> 3	## ▶▶▶▶ NEWEST (2026-11-20 ~13:20 UTC, round 26 → next account)
+
+### 🤖 Claude — 2026-11-20T15:26:33.734Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/backups/START_NEW_CLAUDE_ACCOUNT.md", "old_string": "# Paste this into Claude Code on the next Claude account\n\n## ▶▶▶▶ NEWEST (2026-11-20 ~13:20 UTC, round 26 → next account)", "new_string": "# Paste this into Claude Code on the next Claude account\n\n## ▶▶▶▶▶ NEWEST (2026-11-20 ~15:40 UTC, round 27 → next account)\nSame steps and prompt as the round-24 block below, with these replacements: start the cloud session on branch\n**`claude/rainbow-restore-screen-match-ijjdai`** (the round-27 lead; NOT the default branch); read the TOP of `d …[+757 chars]`
+
+### 🧑 User — 2026-11-20T15:26:33.851Z
+
+> ↩︎ result: The file /home/user/rainbow-/backups/START_NEW_CLAUDE_ACCOUNT.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T15:26:34.787Z
+
+> 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:r27-restore 2>&1 | tail -3; python3 -I scripts/autosave-status.py", "description": "Save restore checkpoint and verify", "timeout": 300000}`
+

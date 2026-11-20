@@ -1,4 +1,14 @@
-# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 26 (2026-11-20, lead branch `ccr-08ece3a6-xcwyls`, from ~13:00 UTC)
+# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 27 (2026-11-20, lead branch `claude/rainbow-restore-screen-match-ijjdai`, from ~15:11 UTC)
+
+New account; session branch = r26 lead `ccr-08ece3a6-xcwyls` merged up to its last save **`e655f19`** (15:03 UTC) → `e2e1d12`. Nothing else merged.
+Worktrees recreated on LOCAL `-c28` branches (`setup_worker_r27.sh`) + `trial07` separately — all byte-identical to the 15:03 snapshots. DevTools /
+Spector trial scripts + results recovered from the saved conversation (`tools/lead26/trial07_recovered/NOTES.md`). On THIS account the World Labs
+key, the Atlas connector and fal all WORK; Hugging Face not connected; 11 account plugins not enabled (install card shown). Four workers relaunched
+(s07, s06, s04, Benny). Map + services: **`docs/briefs/2026-11-20-r27/COORDINATION.md`**; briefs `LAUNCH_R27.md`; next-account recipe
+**`setup_worker_r28.sh`** (`-c29` from the newest `backups/wip/*-c28/`, trial07 included). User's new r27 request: preview + honest 1–10 rating of
+every screen in motion + fix plan → `qa/review_r27/`.
+
+# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ ROUND 26 (2026-11-20, lead branch `ccr-08ece3a6-xcwyls`, from ~13:00 UTC)
 
 New account; session branch started at `a2261d5` = the latest of the r25 lead `ccr-a9235d04-90cw28` (its last daemon save 12:51 UTC).
 Round 25 ended 12:36–12:45 UTC when the old account hit its 5-hour limit (all four workers stopped mid-step). Nothing merged. Worktrees

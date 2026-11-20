@@ -247,3 +247,52 @@ Gameplay NEW3 survived and is complete: query = NEW3, 8/8 checks pass, 91 coins.
 >     bash /home/user/rainbow-/tools/lead25/render_slot.sh timeout 2400 node /home/user/rainbow-/tools/lead23/audit06_slow.mjs "$O/$V" 06 "$(cat $O/QUERY_$V.txt)" > "$O/$V.log" 2>&1
 >   echo "$V exit $? $(ls $O/$V/*.png 2>/dev/null | w …[+2218 chars]
 
+### 🤖 Claude — 2026-11-20T15:26:08.521Z
+
+Step 2 BEFORE/NEW renders also survived. Let me verify their queries, then build one reduced contact sheet for step 1 to judge by eye.
+
+### 🤖 Claude — 2026-11-20T15:26:10.906Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r25/step2 && echo \"B: $(cat QUERY_BEFORE.txt)\"; echo \"N: $(cat QUERY_NEW.txt)\"; ls BEFORE/*.png NEW/*.png | wc -l; ls -la *.log 2>/dev/null; python3 -c \"\nfrom PIL import Image\nfor p in ['/home/user/rainbow-/qa/match/06/r25/step1_hole/COMPARE/o1_003/1_ORIGINAL_APPROVED.png','/home/user/rainbow-/qa/match/06/r25/step1_hole/NEW3/o1_003.png','/home/user/rainbow-/qa/match/06/r25/step2/NEW/c_middle.png']:\n  print(Image.open(p).size, p)\"", "description": "Check step2 queries and image sizes"}`
+
+### 🧑 User — 2026-11-20T15:26:11.136Z
+
+> ↩︎ result: B: match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1&m06st=1&m06fcl=1&m06view=1&m06vs=0&m06rip=1&m06hole=2&m06fade=1&m06spl=1
+> N: match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1&m06st=1&m06fcl=1&m06view=1&m06vs=0&m06rip=1&m06hole=2&m06fade=1&m06spl=1&m06fcn=3
+> 14
+> (864, 1536) /home/user/rainbow-/qa/match/06/r25/step1_hole/COMPARE/o1_003/1_ORIGINAL_APPROVED.png
+> (864, 1536) /home/user/rainbow-/qa/match/06/r25/step1_hole/NEW3/o1_003.png
+> (864, 1536) /home/user/rainbow-/qa/match/06/r25/step2/NEW/c_middle.png
+
+### 🤖 Claude — 2026-11-20T15:26:16.946Z
+
+> 🔧 **Bash** `{"command": "cat > /home/user/scratch/s06/sheet.py <<'EOF'\nimport sys\nfrom PIL import Image, ImageDraw\n# usage: sheet.py out.png scale \"label1|label2|..\" rowfile1,rowfile2,... ; rows separated by ';'\nout, scale, labels, rows = sys.argv[1], float(sys.argv[2]), sys.argv[3].split('|'), sys.argv[4].split(';')\nrows=[r.split(',') for r in rows]\nw,h=Image.open(rows[0][0]).size; tw,th=int(w*scale),int(h*scale)\nS=Image.new('RGB',(tw*len(rows[0]),(th+18)*len(rows)),(0,0,0)); d=ImageDraw.Draw(S)\nfor i,r in enumerate(rows):\n  for j,p in enumerate(r):\n    S.paste(Image.open(p).convert('RGB').re …[+571 chars]`
+
+### 🧑 User — 2026-11-20T15:26:17.750Z
+
+> ↩︎ result: (1086, 1989)
+
+### 🤖 Claude — 2026-11-20T15:26:18.710Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s06/step1_sheet.png"}`
+
+### 🧑 User — 2026-11-20T15:26:18.976Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T15:26:28.231Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && mkdir -p cf && for V in CURRENT NEW3; do for t in 0.20 0.45 0.70 1.00; do ffmpeg -v error -y -ss $t -i /home/user/rainbow-/qa/match/06/r25/step1_hole/${V}_opening_1x.mp4 -frames:v 1 cf/${V}_$t.png; done; done; R=\"\"; for t in 0.20 0.45 0.70 1.00; do R=\"$R;cf/CURRENT_$t.png,cf/NEW3_$t.png\"; done; python3 /home/user/scratch/s06/sheet.py clipsheet.png 0.5 \"CUR|NEW3\" \"${R#;}\" ", "description": "Extract clip frames into a comparison sheet"}`
+
+### 🧑 User — 2026-11-20T15:26:30.298Z
+
+> ↩︎ result: (540, 1992)
+
+### 🤖 Claude — 2026-11-20T15:26:31.707Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s06/clipsheet.png"}`
+
+### 🧑 User — 2026-11-20T15:26:31.877Z
+
+> ↩︎ result: [image]
+
