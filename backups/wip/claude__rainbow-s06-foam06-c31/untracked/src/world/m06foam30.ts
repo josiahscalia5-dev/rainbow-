@@ -193,7 +193,6 @@ void main() {
   float R0 = uRing.x, w = uRing.y * (0.75 + 0.6 * side);
   float u = (rho - R0) / w;                        // 0 at the body .. 1 at the band's outer edge
   if (u < -0.15 || u > 1.6) discard;
-  float ang = th * 7.0;
   float n1 = vn(vec2(th * 9.0 + uTime * 0.6, rho * 9.0 - uTime * 1.3));
   float n2 = vn(vec2(th * 23.0 - uTime * 0.9, rho * 22.0 + uTime * 0.7));
   float lace = smoothstep(0.38, 0.55, 0.62 * n1 + 0.38 * n2 + 0.25 * (1.0 - u));   // holes
@@ -265,7 +264,7 @@ export function buildFoam30(course: Course): Foam30 | null {
         const Rh = (0.55 + 0.45 * rnd()) * (big ? 1.35 : 1) * hs;   // heap radius (u)
         const Hh = (0.32 + 0.3 * rnd()) * (big ? 1.3 : 1) * hs;     // heap height (u)
         const fr = course.sample(s);
-        const lc = side * (WC + 0.45 + 0.5 * rnd());                 // on the raised bank, spilling a little onto the water
+        const lc = side * Math.min(WC + 0.45 + 0.5 * rnd(), WB + 0.1 - 0.75 * Rh); // on the raised bank, spilling a little onto the water
         const foot = fr.pos.clone().addScaledVector(fr.right, lc).addScaledVector(fr.up, HB - 0.06);
         t1.copy(fr.tan).normalize();
         const n = Math.max(8, Math.min(46, Math.round((10 + 30 * Rh) * hn)));
@@ -306,6 +305,7 @@ export function buildFoam30(course: Course): Foam30 | null {
   const bubs: Bub[] = [];
   let bubMesh: THREE.Mesh | null = null, aP: THREE.InstancedBufferAttribute | null = null, aA: THREE.InstancedBufferAttribute | null = null;
   const WIN0 = -5, WIN = num('f30bw', 46);
+  const capR = num('f30bcap', 0.062); // max bubble radius on screen (fraction of the half-height): ~95 px diameter at 1536
   if (BUB) {
     const nBig = Math.round(num('f30bbn', 30)), nSmall = Math.round(num('f30bsn', 34)), bs = num('f30bbs', 1);
     for (let i = 0; i < nBig + nSmall; i++) {
@@ -381,7 +381,6 @@ export function buildFoam30(course: Course): Foam30 | null {
         course.sample(s, fr);
         bN.copy(benny).addScaledVector(fr.up, 0.55).project(camera);
         const P = camera.projectionMatrix.elements[5];
-        const capR = num('f30bcap', 0.062);  // max bubble radius on screen (fraction of the half-height): ~95 px diameter at 1536
         for (let i = 0; i < bubs.length; i++) {
           const b = bubs[i];
           // drifting downstream (slower than Benny) inside a window that travels with him; recycled at the far end

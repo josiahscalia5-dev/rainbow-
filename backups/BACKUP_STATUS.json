@@ -1,7 +1,7 @@
 {
   "last_run": {
-    "time": "2026-11-20T22:04:20+00:00",
-    "reason": "daemon",
+    "time": "2026-11-20T22:08:14+00:00",
+    "reason": "hook:Stop",
     "result": "committed+pushed",
     "files_staged": 43,
     "pushed_verified": true,
@@ -9,8 +9,8 @@
     "note": "following session branch 'ccr-2644c3c0-iikckn' (config branch 'claude/rainbow-r22-restore-ut3m39')",
     "wip_snapshots": [
       "claude/rainbow-benny-c31: 12 modified, 10 new file(s) snapshotted",
-      "claude/rainbow-s06-benny06-c31: 8 modified, 35 new file(s) snapshotted",
-      "claude/rainbow-s06-foam06-c31: 8 modified, 35 new file(s) snapshotted",
+      "claude/rainbow-s06-benny06-c31: 9 modified, 37 new file(s) snapshotted",
+      "claude/rainbow-s06-foam06-c31: 8 modified, 36 new file(s) snapshotted",
       "detached-e162aec2bf: 2 modified, 6 new file(s) snapshotted",
       "detached-8accdad0a0: 2 modified, 0 new file(s) snapshotted",
       "claude/rainbow-s04-match-c31: 3 modified, 1 new file(s) snapshotted",
@@ -23,16 +23,16 @@
       "lead/view04-c31: 3 modified, 1 new file(s) snapshotted",
       "lead/view06-c31: 2 modified, 15 new file(s) snapshotted",
       "lead/view07-c31: 5 modified, 10 new file(s) snapshotted",
-      "claude/rainbow-s06-water06-c31: 8 modified, 35 new file(s) snapshotted"
+      "claude/rainbow-s06-water06-c31: 8 modified, 38 new file(s) snapshotted"
     ],
-    "commit": "9cb595d6f779d1b814dd0094e6a6c25f814d2b40",
-    "duration_s": 26
+    "commit": "5147f003e4348cab4c001c273b05aeb9d846520a",
+    "duration_s": 22
   },
   "repo": "https://github.com/josiahscalia5-dev/rainbow-",
   "branch": "ccr-2644c3c0-iikckn",
-  "last_verified_remote_sha": "9cb595d6f779d1b814dd0094e6a6c25f814d2b40",
-  "last_successful_backup_utc": "2026-11-20T22:04:20+00:00",
+  "last_verified_remote_sha": "5147f003e4348cab4c001c273b05aeb9d846520a",
+  "last_successful_backup_utc": "2026-11-20T22:08:14+00:00",
   "consecutive_failures": 0,
   "schedule": "every 5 min, container-local (scheduler=daemon status=active pid=632); see backups/RECOVERY.md for limits",
-  "next_scheduled_utc": "2026-11-20T22:05:00+00:00"
+  "next_scheduled_utc": "2026-11-20T22:10:00+00:00"
 }

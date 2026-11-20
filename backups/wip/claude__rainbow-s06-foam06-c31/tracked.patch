@@ -17,18 +17,19 @@ index 142e6c3c..94c18d88 100644
  
    // ---- fur clumping ----
 diff --git a/src/game/Game.ts b/src/game/Game.ts
-index 6aec2406..735b4041 100644
+index 6aec2406..300dd553 100644
 --- a/src/game/Game.ts
 +++ b/src/game/Game.ts
-@@ -26,6 +26,7 @@ import { flag05 } from '../vfx/waterRibbon';
+@@ -26,6 +26,8 @@ import { flag05 } from '../vfx/waterRibbon';
  import { MATCH } from './match';
  import { buildMatch08 } from '../world/match08';
  import { buildMatch06 } from '../world/match06';
++import { buildFoam30 } from '../world/m06foam30';
 +import { tubeCenterAt } from '../world/tube';
  import { loadBennyRuntime, loadGirlRuntime, loadWater, moduleStatus } from './modules';
  
  type Mode = 'intro' | 'ride' | 'outro' | 'end';
-@@ -67,6 +68,11 @@ export async function startGame(canvas: HTMLCanvasElement) {
+@@ -67,6 +69,11 @@ export async function startGame(canvas: HTMLCanvasElement) {
    // HDR luminance). Switch off: 0.2 / 0.35 / 0.94 exactly as before (pixel-identical default build).
    const glow05 = flag05('glow05');
    const M06_BUB = flag05('m06bub');
@@ -40,7 +41,7 @@ index 6aec2406..735b4041 100644
    const qn = (k: string, d: number) => { const v = qs.get(k); return v !== null && v !== '' && isFinite(+v) ? +v : d; };
    // (measured 2026-11-16, qa/pilot05/wave12/glow/: threshold 1.0–1.3 washed the whole river toward white — the scene's
    // linear HDR body colours pass it; 2.6 keeps only streak cores, flares and lamps → water saturation UP, 0.92 → 0.97)
-@@ -117,9 +123,12 @@ export async function startGame(canvas: HTMLCanvasElement) {
+@@ -117,9 +124,15 @@ export async function startGame(canvas: HTMLCanvasElement) {
    let m08On = false;
    let m08Applied = false;
    // `?match06=1`: the approved Screen 06 scenery on fitted 3D geometry (src/world/match06.ts); off: nothing is built
@@ -48,13 +49,16 @@ index 6aec2406..735b4041 100644
 +  // r30 `&m06curl=1`: the 06 tunnel's end wall gets its doorway exactly at Screen 07's tube mouth
 +  const m06 = MATCH['06'] ? await buildMatch06(course, { c: tubeCenterAt(env.tubeAxis.path, course.stage('07').s0), r: env.tubeAxis.path.radius(course.stage('07').s0) }) : null;
    if (m06) { m06.group.visible = false; scene.add(m06.group); m06.bakeDepth(renderer); }
++  // r30 foam06 `&f30*` (src/world/m06foam30.ts): 06 bubbly foam banks, floating iridescent bubbles, lace splash ring; null without a switch
++  const f30 = m06 ? buildFoam30(course) : null;
++  if (f30) scene.add(f30.group);
    let m06On = false;
 +  const tube07 = env.zones.tubes.getObjectByName('tube07') ?? null; // r29 m06deep only
 +  let tube07Applied = false;
    let m06Applied = false;
    // debug: ?hide=water,benny,coins,drumA,basin,tubes,chamber
    const hidden = new Set((qs.get('hide') ?? '').split(',').filter(Boolean));
-@@ -545,9 +554,28 @@ export async function startGame(canvas: HTMLCanvasElement) {
+@@ -545,9 +558,29 @@ export async function startGame(canvas: HTMLCanvasElement) {
        // carries its bubbles only there; while swimming the screen had none)
        const bub6 = M06_BUB && m06On && m06.away(camera.position) > 0.5;
        m06.setAway(m06On ? m06.away(camera.position) : 0);
@@ -70,6 +74,7 @@ index 6aec2406..735b4041 100644
 +      }
        m06Applied = m06On;
      }
++    if (f30 && m06) f30.update({ on: m06On && !(m08 && m08On), away: m06On ? m06.away(camera.position) : 0, camera, benny: benny.root.position, s: st.s, time, renderer, m06group: m06.group });
 +    // r29 `&m06deep=1`: over the LAST ~12 u of Screen 06 the 07 tube (walls, rings, lids, gold mouth collar) is shown ahead of
 +    // Benny inside the ring tunnel, so he visibly swims into it; everything else of the tube zone stays hidden in 06
 +    if (m06 && tube07 && (m06On || tube07Applied)) {

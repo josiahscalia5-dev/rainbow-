@@ -2,7 +2,7 @@
  "worktree": "/home/user/wt/view04",
  "branch": "lead/view04-c31",
  "head": "34cb494137e1030c4410d871125e6e9eef6aa4ea",
- "time": "2026-11-20T22:08:28+00:00",
+ "time": "2026-11-20T22:08:55+00:00",
  "dirty_tracked": [
   "src/game/Game.ts",
   "src/world/match04.ts",

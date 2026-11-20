@@ -634,3 +634,34 @@ Slots are free; I'll start the full-size BEFORE (v2) render now while I study th
 >   "-0.8,0.7": "m06_rings<match06_projection<Scene@54.68 | m06_rings<match06_projection<Scene@55.07",
 >   "-0.4,0.7": "m06_rings<match06_projection<Scene@83.71 | m06_tube<match06_projection<Scene@84.97" …[+6025 chars]
 
+### 🤖 Claude — 2026-11-20T22:08:28.329Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/docs/briefs/2026-11-20-r30 && python3 -c \"\nfrom PIL import Image\nim=Image.open('USER_S06_STORYBOARD_R30.png').convert('RGB'); print(im.size)\n# panel 2 (520,100,1010,724): crop band top\np=im.crop((520,100,1010,724)); p.save('/tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/scratchpad/p2.png')\nimport numpy as np\na=np.asarray(p).astype(int)\nfor (x,y) in [(250,30),(250,60),(250,90),(250,120),(250,150),(250,175),(100,120),(400,110),(330,250),(300,290),(290,260),(270,280),(60,300),(430,330),(200,230)]:\n  print((x,y),a[y,x])\n\"", "de …[+48 chars]`
+
+### 🧑 User — 2026-11-20T22:08:28.871Z
+
+> ↩︎ result: (1024, 1536)
+> (250, 30) [206 100  57]
+> (250, 60) [232 117  52]
+> (250, 90) [168  79  36]
+> (250, 120) [71 15 94]
+> (250, 150) [ 95  25 130]
+> (250, 175) [125  39 144]
+> (100, 120) [253 254 249]
+> (400, 110) [136  44  64]
+> (330, 250) [141  62 198]
+> (300, 290) [ 68 171 252]
+> (290, 260) [181 184 251]
+> (270, 280) [ 24 217 253]
+> (60, 300) [ 95  35 160]
+> (430, 330) [252 253 241]
+> (200, 230) [161  50 216]
+
+### 🤖 Claude — 2026-11-20T22:08:30.598Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/scratchpad/p2.png"}`
+
+### 🧑 User — 2026-11-20T22:08:30.637Z
+
+> ↩︎ result: [image]
+
