@@ -1127,3 +1127,85 @@ The NEW clip's page has loaded (it runs on the K23-S3 code), so I can now apply 
 
 > 🔧 **Bash** `{"command": "until grep -q \"ALL_DONE\" /home/user/scratch/s04/run_s1_variants.out; do sleep 5; done; cat /home/user/scratch/s04/run_s1_variants.out; cd /home/user/wt/s04 && AUDIT_PORT=5275 bash /home/user/rainbow-/tools/lead25/render_slot.sh timeout 900 node /home/user/rainbow-/qa/match/04/r23/s04_tools/probe_wl.mjs \"$(cat /home/user/rainbow-/qa/match/04/r23/s3_glossy/QUERY_K23-S3.txt)\" 2>&1 | grep -v \"outside of Vite\"", "description": "Wait for variants then run waterline probe", "timeout": 1200000}`
 
+### 🧑 User — 2026-11-20T12:29:55.290Z
+
+> ↩︎ result: [render_slot] got slot 2 after 106s
+> start V0_K23-S3_newcode 12:23:12
+> done /home/user/scratch/s04/s1var/V0_K23-S3_newcode 4 png
+> start V1_all 12:24:47
+> done /home/user/scratch/s04/s1var/V1_all 4 png
+> start V2_near 12:26:15
+> done /home/user/scratch/s04/s1var/V2_near 4 png
+> start V3_short 12:27:43
+> done /home/user/scratch/s04/s1var/V3_short 4 png
+> ALL_DONE
+> [render_slot] got slot 2 after 1s
+> {"frac":0.3,"steer":null,"n":0,"lat":0,"bennyLocal":[0,0.747,-11.191],"bennyRiverLocal":[0,0.747,-11.191],"riverY":0.02,"riverVertDist":0.214,"wlPos":[0.008,0.4,-0.195],"wlVisible":false,"riverSameFrame":true,"riverPos":[0,0,0]}
+> {"frac":0.3,"steer":1,"n":15,"lat":0.714,"bennyLocal":[0.714,0.726,-14.691],"bennyRiverLocal":[0.714,0.726,-14.691],"riverY":0.02,"riverVertDist":0.153,"wlPos":[0.008,0.4,-0.195],"wlVisible":false,"riverSameFrame":true,"riverPos":[0,0,0]}
+> {"frac":0.3,"steer":1,"n":30,"lat":1.65,"bennyLocal":[1.65,0.87,-18.191],"bennyRiverLocal":[1.65,0.87,-18.191],"riverY":0.02,"riverVertDist":0.213,"wlPos":[0.01,0.4,-0.195],"wlVisible":false,"riverSameFrame":true,"riverPos":[0,0,0]}
+> {"frac":0.3,"steer":1,"n":60,"lat":1.455,"bennyLocal":[1.455,0.859,-25.19],"bennyRiverLocal":[1.455,0.859,-25.19],"r …[+1082 chars]
+
+### 🤖 Claude — 2026-11-20T12:30:10.261Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"m04\\.\\(update\\|group\\)\\|m04 =\\|m04?.update\\|\\.update(camera\" src/game/Game.ts | head; grep -n \"update = (cam\\|out.update\\|update(cam\" src/world/match04.ts | head", "description": "Find how match04 update is called"}`
+
+### 🧑 User — 2026-11-20T12:30:10.316Z
+
+> ↩︎ result: 125:  const m04 = MATCH['04'] ? await buildMatch04() : null;
+> 126:  if (m04) { m04.group.visible = false; scene.add(m04.group); m04.bakeDepth(renderer); if (m04.splash) scene.add(m04.splash); }
+> 181:    if (m04) { m04On = st.stage === '04'; m04.group.visible = m04On; if (m04On) { env.zones.basin.visible = false; env.zones.tubes.visible = false; } }
+> 431:      if (m4 && camera) m4.update(camera.getWorldPosition(_cp), splash ? _bp.copy(splash.position).sub(splashOffset) : undefined, camera);
+
+### 🤖 Claude — 2026-11-20T12:30:12.456Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 405,440p src/world/match04.ts; grep -n \"m04.update\\|m04On &&\\|m04\\.tick\\|m04.frame\" src/game/Game.ts | head", "description": "Read match04 update wiring"}`
+
+### 🧑 User — 2026-11-20T12:30:12.492Z
+
+> ↩︎ result: splash,
+>     splashOffset,
+>     bakeDepth(renderer) {
+>       const prevRT = renderer.getRenderTarget();
+>       const scene = new THREE.Scene();
+>       const clone = group.clone(true);
+>       clone.visible = true;
+>       clone.traverse((o) => { if ((o as THREE.Mesh).isMesh) (o as THREE.Mesh).material = new THREE.MeshBasicMaterial({ colorWrite: false, side: THREE.DoubleSide }); });
+>       scene.add(clone);
+>       clone.updateMatrixWorld(true);
+>       renderer.setRenderTarget(depthRT);
+>       renderer.clear();
+>       renderer.render(scene, proj);
+>       // r11 m04mv: each extra view's own depth bake (its overlay copies are excluded)
+>       if (mvViews.length) {
+>         clone.traverse((o) => { if (o.userData.mv) o.visible = false; });
+>         for (const v of mvViews) { renderer.setRenderTarget(v.rt); renderer.clear(); renderer.render(scene, v.cam); }
+>       }
+>       renderer.setRenderTarget(prevRT);
+>       shared.uUseDepth.value = 1;
+>     },
+>     sync(renderer, w, h, camera?: THREE.Camera) {
+>       if (camera && !FAL04) shared.uMoved.value = THREE.MathUtils.smoothstep(camera.getWorldPosition(_cp).distanceTo(proj.position), 0.3, 2.0);
+>       shared.uPjPost.value.x = renderer.toneMappingExposure;
+>       share …[+932 chars]
+
+### 🤖 Claude — 2026-11-20T12:30:15.064Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"splash\" src/game/Game.ts | head -20", "description": "Find splash positioning in Game.ts"}`
+
+### 🧑 User — 2026-11-20T12:30:15.099Z
+
+> ↩︎ result: 116:  if (m08) { m08.group.visible = false; scene.add(m08.group); m08.bakeDepth(renderer); scene.add(m08.splash); }
+> 117:  const M08_HIDE = ['ribbon', 'foam', 'bubbles', 'splashCrown', 'spray'];
+> 126:  if (m04) { m04.group.visible = false; scene.add(m04.group); m04.bakeDepth(renderer); if (m04.splash) scene.add(m04.splash); }
+> 382:      water.splash(benny.root.position, course.sample(st.s).up, 1);
+> 408:    // so the wake/splash footprint matches the real waterline instead of the unlifted root
+> 566:      m08.splash.visible = m08On;
+> 567:      if (m08On) { m08.splash.position.copy(benny.root.position).add(m08.splashOffset); m08.splash.quaternion.copy(camera.quaternion); }
+> 569:    if (m04?.splash) {
+> 570:      m04.splash.visible = m04On;
+> 571:      if (m04On) { m04.splash.position.copy(benny.root.position).add(m04.splashOffset); m04.splash.quaternion.copy(camera.quaternion); }
+
+### 🤖 Claude — 2026-11-20T12:30:29.139Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/04/r23/s04_tools && python3 -I - <<'EOF'\np='probe_wl.mjs'; s=open(p).read()\ns=s.replace(\"r.setSteer(steer); for (let i = 0; i < n; i++) r.step(1); r.setSteer(null); r.step(1, 1e-4);\",\n            \"r.setSteer(steer); for (let i = 0; i < n; i++) r.step(1); r.setSteer(null); r.step(1, 1e-4); r.drawList();\")\ns=s.replace(\"for (const [frac, steer, n] of [[0.3, null, 0], [0.3, 1, 15], [0.3, 1, 30], [0.3, 1, 60], [0.3, 1, 120], [0.3, -1, 60], [0.3, -1, 120], [0.75, 1, 120]])\",\n            \"for (const [frac, steer, n] of [[0.3, null, 0], [0.5, 1, …[+637 chars]`
+

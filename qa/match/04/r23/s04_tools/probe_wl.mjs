@@ -11,12 +11,12 @@ try {
   const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
   await page.goto(`${vite.url}/?qa=1&dpr=1&${Q}`);
   await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 600000 });
-  for (const [frac, steer, n] of [[0.3, null, 0], [0.3, 1, 15], [0.3, 1, 30], [0.3, 1, 60], [0.3, 1, 120], [0.3, -1, 60], [0.3, -1, 120], [0.75, 1, 120]]) {
+  for (const [frac, steer, n] of [[0.3, null, 0], [0.5, 1, 15], [0.5, 1, 30], [0.5, 1, 45], [0.3, -1, 30]]) {
     const out = await page.evaluate(([frac, steer, n]) => {
       const r = window.__rainbow; const _pn = performance.now; performance.now = () => 10000;
       r.goto('04'); const s0 = r.state().s, s1 = r.course.stage('04').s1, tS = s0 + frac * (s1 - s0);
       let k = 0; while (r.state().s < tS && k < 6000) { r.step(1); k++; }
-      r.setSteer(steer); for (let i = 0; i < n; i++) r.step(1); r.setSteer(null); r.step(1, 1e-4);
+      r.setSteer(steer); for (let i = 0; i < n; i++) r.step(1); r.setSteer(null); r.step(1, 1e-4); r.drawList();
       const { scene } = r.qa3d(); const benny = scene.getObjectByName('Benny'); const river = scene.getObjectByName('m04_river');
       const wl = scene.getObjectByName('m04_waterline');
       const bw = benny.getWorldPosition(new (benny.position.constructor)());
@@ -26,7 +26,7 @@ try {
       for (let i = 0; i < pa.count; i++) { const d = Math.hypot(pa.getX(i) - br.x, pa.getZ(i) - br.z); if (d < best) { best = d; by = pa.getY(i); bx = pa.getX(i); } }
       performance.now = _pn;
       return { frac, steer, n, lat: r.state().lat, bennyLocal: bl.toArray().map((x) => +x.toFixed(3)), bennyRiverLocal: br.toArray().map((x) => +x.toFixed(3)),
-        riverY: +by.toFixed(3), riverVertDist: +best.toFixed(3), wlPos: wl.position.toArray().map((x) => +x.toFixed(3)), wlVisible: wl.visible,
+        riverY: +by.toFixed(3), riverVertDist: +best.toFixed(3), wlPos: wl.position.toArray().map((x) => +x.toFixed(3)), wlVisible: wl.visible, splash: scene.getObjectByName('Benny') && r.qa3d().scene.children.filter((o)=>o.isSprite||o.type==='Sprite').length,
         riverSameFrame: river.parent === wl.parent, riverPos: river.position.toArray() };
     }, [frac, steer, n]);
     console.log(JSON.stringify(out));

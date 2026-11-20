@@ -1666,3 +1666,61 @@ The CURRENT render doesn't depend on the fill, so I'll queue it now (it waits fo
 
 > 🔧 **Bash** `{"command": "until grep -q \"filled in\\|Error\\|Traceback\" /home/user/scratch/s06/hole_v2.log; do sleep 5; done; tail -3 /home/user/scratch/s06/hole_v2.log", "description": "Block until fill v2 finishes", "timeout": 900000}`
 
+### 🧑 User — 2026-11-20T12:28:40.986Z
+
+> ↩︎ result: it 5000 left 15132 303s
+> filled in 5299 patches 321s left 0
+> {'note': 'r25 m06hole (tools/match06/make_hole06.py)', 'K': 160.0, 'l0': -2.8, 'l1': 2.8, 's0': 197.21, 's1': 203.31, 'sB': 198.91, 'zone': {'dc': -0.25, 'hl': 1.75, 'hs': 0.85}, 'psz': 13}
+
+### 🤖 Claude — 2026-11-20T12:28:42.805Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && python3 view_fill.py hole_v2/hole06_dbg.npz fill_v2.png && python3 -c \"from PIL import Image; print(Image.open('fill_v2.png').size)\"", "description": "Render before/after fill view"}`
+
+### 🧑 User — 2026-11-20T12:28:44.247Z
+
+> ↩︎ result: (1792, 650)
+
+### 🤖 Claude — 2026-11-20T12:28:45.732Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s06/fill_v2.png"}`
+
+### 🧑 User — 2026-11-20T12:28:45.792Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T12:29:50.792Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"import pyamg\" 2>&1 | tail -1; python3 -c \"import scipy.sparse.linalg as s; print('scipy ok')\"; cat /home/user/scratch/s06/render_current.log", "description": "Check solver libraries and CURRENT render"}`
+
+### 🧑 User — 2026-11-20T12:29:51.640Z
+
+> ↩︎ result: ModuleNotFoundError: No module named 'pyamg'
+> scipy ok
+
+### 🤖 Claude — 2026-11-20T12:29:53.441Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/tools/match06/make_hole06.py", "offset": 36, "limit": 30}`
+
+### 🧑 User — 2026-11-20T12:29:53.469Z
+
+> ↩︎ result: 36	
+> 37	def main():
+> 38	    frames = sys.argv[1]
+> 39	    out = Path(sys.argv[2]) if len(sys.argv) > 2 else T
+> 40	    K = float(sys.argv[3]) if len(sys.argv) > 3 else 160
+> 41	    psz = int(sys.argv[4]) if len(sys.argv) > 4 else 13
+> 42	    t0 = time.time()
+> 43	    U = UW.unwrap(frames, K, -2.8, 2.8, -1.7, 4.4)
+> 44	    NX, NY, ls, ss, sB, Wc = U['NX'], U['NY'], U['ls'], U['ss'], U['sB'], U['Wc']
+> 45	    L2 = np.broadcast_to(ls[None, :], (NY, NX)); DS = np.broadcast_to((ss - sB)[:, None], (NY, NX))
+> 46	    x, y, W, H = U['x'], U['y'], 864, 1536
+> 47	    I = U['rgb'].astype(np.float32)
+> 48	    water = np.abs(L2) < Wc - 0.05
+> 49	    V = U['vis'] & U['inside'] & (U['mask'][..., 1] < 128) & (x > 2) & (y > 2) & (x < W - 3) & (y < H - 3)
+> 50	    # the unknown = the plate's provisional fill itself (painted Benny + painted coins, plate06_fillmask), slightly dilated;
+> 51	    # the rest of mask06's blurred red is real painted water and stays as the boundary the fill continues from
+> 52	    hole = cv2.dilate((U['fill'] > 8).astype(np.uint8), cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (int(0.08 * K) | 1,) * 2)) > 0
+> 53	    eZ = np.hypot(L2 / ZONE['hl'], (DS - ZONE['dc']) / ZONE['hs'])
+> 54	    zone = eZ < 1.12
+> 55	   …[+582 chars]
+
