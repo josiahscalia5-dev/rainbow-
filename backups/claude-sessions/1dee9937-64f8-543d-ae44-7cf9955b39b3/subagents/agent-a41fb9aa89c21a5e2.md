@@ -791,3 +791,332 @@ While the renders run, I'll study the QA API to plan step 2 (the off-centre tunn
 > {"s":204.96,"lat":0,"cam":[4.3,-2.73,4.33],"benny":[11.2,-3.42,1.66],"riv10":[20.9,-2.72,0.89],"riv25":[33.3,3.08,-5.18],"fwAx":0.961,"vp":[541,417,0],"ring8":[928,1085,1],"ring20":[707,703,1]}
 > {"s":206.977,"lat":0,"cam":[6.4,-3.01,5.21],"benny":[13.1,-3.48,2],"riv10":[22.8,-2.18,0.3],"riv25":[34.8,3.99,-6.12],"fwAx":0.946,"v …[+3551 chars]
 
+### 🤖 Claude — 2026-11-20T04:41:18.891Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/qa/match/06/r22/step3_m06fcl/with_m06view/BEFORE/b_early.png"}`
+
+### 🧑 User — 2026-11-20T04:41:18.938Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:41:19.423Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/qa/match/06/r22/step3_m06fcl/with_m06view/BEFORE/c_middle.png"}`
+
+### 🧑 User — 2026-11-20T04:41:19.574Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:42:34.939Z
+
+> 🔧 **Bash** `{"command": "O=/home/user/rainbow-/qa/match/06/r23/step1_m06fcl; grep -h \"^06\\|done\\|rror\" $O/BEFORE.log $O/NEW.log; uptime", "description": "Check render progress"}`
+
+### 🧑 User — 2026-11-20T04:42:34.971Z
+
+> ↩︎ result: 06 a_start s 198.91 lat 0 stage 06 coins 1680
+> 06 b_early s 204.227 lat 0 stage 06 coins 1700
+> 06 b2_early s 208.627 lat 0 stage 06 coins 1700
+> 06 c_middle s 214.31 lat 0 stage 06 coins 1720
+> 06 c2_middle s 219.627 lat 0 stage 06 coins 1800
+> 06 d_late s 225.31 lat 0 stage 06 coins 1800
+> 06 e_end s 236.31 lat 0 stage 06 coins 1800
+> 06 f_hard_left s 214.31 lat -2.95 stage 06 coins 1720
+> 06 g_hard_right s 214.31 lat 2.95 stage 06 coins 1680
+> 06 h_left_early s 205.51 lat -2.95 stage 06 coins 1720
+> 06 i_right_early s 205.51 lat 2.95 stage 06 coins 1680
+> done /home/user/rainbow-/qa/match/06/r23/step1_m06fcl/BEFORE rc=0
+> 06 a_start s 198.91 lat 0 stage 06 coins 1680
+> 06 b_early s 204.227 lat 0 stage 06 coins 1700
+> 06 b2_early s 208.627 lat 0 stage 06 coins 1700
+> 06 c_middle s 214.31 lat 0 stage 06 coins 1720
+> 06 c2_middle s 219.627 lat 0 stage 06 coins 1800
+> 06 d_late s 225.31 lat 0 stage 06 coins 1800
+> 06 e_end s 236.31 lat 0 stage 06 coins 1800
+> 06 f_hard_left s 214.31 lat -2.95 stage 06 coins 1720
+> 06 g_hard_right s 214.31 lat 2.95 stage 06 coins 1680
+> 06 h_left_early s 205.51 lat -2.95 stage 06 coins 1720
+> 06 i_right_early s 205.51 lat 2.95 stage 06 coins 1680
+> done /home/user/rainbow-/qa/match/06/r23/step1 …[+78 chars]
+
+### 🤖 Claude — 2026-11-20T04:42:37.505Z
+
+Both sets rendered (rc=0). Launching the `m06view` pair now, and checking the font fix plus the pictures meanwhile.
+
+### 🤖 Claude — 2026-11-20T04:42:40.004Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad; O=/home/user/rainbow-/qa/match/06/r23/step1_m06fcl/with_m06view; mkdir -p $O; $S/shots.sh $S/q_before_v.txt $O/BEFORE 5276 & $S/shots.sh $S/q_new_v.txt $O/NEW 5282 & wait; grep -h done $O/*.log", "description": "Render with-m06view BEFORE and NEW shots", "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T04:42:40.025Z
+
+> ↩︎ result: Command running in background with ID: b44cjukxg. Output is being written to: /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/tasks/b44cjukxg.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-20T04:42:40.458Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r23/step1_m06fcl/BEFORE/a_start.png"}`
+
+### 🧑 User — 2026-11-20T04:42:40.538Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:42:43.030Z
+
+Fonts render correctly now. A quick pixel triage of BEFORE vs NEW per shot to see where the foam change shows.
+
+### 🤖 Claude — 2026-11-20T04:42:43.739Z
+
+> 🔧 **Bash** `{"command": "ls /home/user/tools-pixelmatch/; head -30 /home/user/tools-pixelmatch/pixeldiff.mjs", "description": "Inspect pixel diff tool usage"}`
+
+### 🧑 User — 2026-11-20T04:42:43.788Z
+
+> ↩︎ result: node_modules
+> package-lock.json
+> package.json
+> pixeldiff.mjs
+> // QA only (not a game dependency). Usage: node pixeldiff.mjs A.png B.png [diff.png] [threshold=0.1] [yFrom yTo]
+> // Compares two same-size PNGs with Pixelmatch (anti-aliasing aware), optionally only rows yFrom..yTo-1.
+> import fs from 'node:fs';
+> import { PNG } from 'pngjs';
+> import pixelmatch from 'pixelmatch';
+> const [a, b, diffPath, thr = '0.1', y0s, y1s] = process.argv.slice(2);
+> if (!a || !b) { console.error('usage: node pixeldiff.mjs A.png B.png [diff.png] [threshold] [yFrom yTo]'); process.exit(2); }
+> const A = PNG.sync.read(fs.readFileSync(a)), B = PNG.sync.read(fs.readFileSync(b));
+> if (A.width !== B.width || A.height !== B.height) { console.error(`size mismatch ${A.width}x${A.height} vs ${B.width}x${B.height}`); process.exit(3); }
+> const W = A.width, y0 = y0s ? Math.max(0, +y0s) : 0, y1 = y1s ? Math.min(A.height, +y1s) : A.height, H = y1 - y0;
+> const crop = (img) => img.data.subarray(y0 * W * 4, y1 * W * 4);
+> const D = new PNG({ width: W, height: H });
+> const n = pixelmatch(crop(A), crop(B), D.data, W, H, { threshold: +thr });
+> if (diffPath && diffPath !== '-') fs.writeFileSync(diffPath, PNG.sync.write(D));
+> console.log(JSON.str …[+124 chars]
+
+### 🤖 Claude — 2026-11-20T04:42:46.638Z
+
+> 🔧 **Bash** `{"command": "O=/home/user/rainbow-/qa/match/06/r23/step1_m06fcl; cd /home/user/tools-pixelmatch && for f in a_start b_early b2_early c_middle c2_middle d_late e_end f_hard_left g_hard_right h_left_early i_right_early; do echo -n \"$f \"; node pixeldiff.mjs $O/BEFORE/$f.png $O/NEW/$f.png - 0.1 | python3 -c \"import json,sys; d=json.load(sys.stdin); print(d['diff_pixels'], d['diff_pct'])\"; done", "description": "Pixel diff BEFORE vs NEW per shot"}`
+
+### 🧑 User — 2026-11-20T04:42:52.297Z
+
+> ↩︎ result: a_start 0 0
+> b_early 272258 20.5152
+> b2_early 174920 13.1806
+> c_middle 233314 17.5807
+> c2_middle 257027 19.3675
+> d_late 314325 23.685
+> e_end 370368 27.908
+> f_hard_left 280060 21.1031
+> g_hard_right 220987 16.6518
+> h_left_early 248842 18.7508
+> i_right_early 233956 17.6291
+
+### 🤖 Claude — 2026-11-20T04:42:55.840Z
+
+Start view is 0 px different. For my own triage I'll build half-size APPROVED | BEFORE | NEW strips (the user-facing proof stays as separate full-size files).
+
+### 🤖 Claude — 2026-11-20T04:43:00.103Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad; cat > $S/strip.py <<'EOF'\nimport sys\nfrom PIL import Image\n# usage: strip.py out.png img1 img2 ... (each scaled to 432x768, side by side)\nout, imgs = sys.argv[1], sys.argv[2:]\nW, H = 432, 768\ns = Image.new('RGB', (W * len(imgs) + 6 * (len(imgs) - 1), H), (0, 0, 0))\nfor i, p in enumerate(imgs):\n    s.paste(Image.open(p).convert('RGB').resize((W, H), Image.LANCZOS), (i * (W + 6), 0))\ns.save(out)\nEOF\nO=/home/user/rainbow-/qa/match/06/r23/step1_m06fcl; A=/home/user/rainbow-/references/06_cr …[+219 chars]`
+
+### 🧑 User — 2026-11-20T04:43:01.978Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/0.png
+> /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/1.png
+> /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/2.png
+> /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/7a.png
+> /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/7b_d_late.png
+> /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/7b_e_end.png
+> /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/7b_g_hard_right.png
+> /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/7n_d_late.png
+> /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/7n_e_end.png
+> /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/7n_g_hard_right.png
+> /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/P1.png
+> /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/P2.png
+> /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/P …[+6245 chars]
+
+### 🤖 Claude — 2026-11-20T04:43:05.172Z
+
+The scratchpad is shared with other workers, so I'll move my files into a private `s06` subfolder to avoid collisions.
+
+### 🤖 Claude — 2026-11-20T04:43:07.523Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad; mkdir -p $S/s06 && cp $S/q_before.txt $S/q_new.txt $S/q_before_v.txt $S/q_new_v.txt $S/shots.sh $S/strip.py $S/tunprobe_before.txt $S/s06/ && mv $S/s1_*.png $S/s06/ && cat $S/s06/q_before.txt; echo; ls $S/s06", "description": "Move my scratch files to a private subfolder"}`
+
+### 🧑 User — 2026-11-20T04:43:07.929Z
+
+> ↩︎ result: match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1&m06st=1
+> 
+> q_before.txt
+> q_before_v.txt
+> q_new.txt
+> q_new_v.txt
+> s1_b_early.png
+> s1_c_middle.png
+> s1_d_late.png
+> s1_e_end.png
+> s1_g_hard_right.png
+> shots.sh
+> strip.py
+> tunprobe_before.txt
+
+### 🤖 Claude — 2026-11-20T04:43:10.156Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/s1_b_early.png"}`
+
+### 🧑 User — 2026-11-20T04:43:10.242Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:43:10.870Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/s1_d_late.png"}`
+
+### 🧑 User — 2026-11-20T04:43:10.946Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:43:11.574Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/s1_e_end.png"}`
+
+### 🧑 User — 2026-11-20T04:43:11.641Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:43:12.182Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/s1_g_hard_right.png"}`
+
+### 🧑 User — 2026-11-20T04:43:12.262Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:43:20.415Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r23/step1_m06fcl/NEW/e_end.png"}`
+
+### 🧑 User — 2026-11-20T04:43:20.492Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:43:25.154Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r23/step1_m06fcl/BEFORE/e_end.png"}`
+
+### 🧑 User — 2026-11-20T04:43:25.232Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:43:37.268Z
+
+BEFORE has a tall continuous foam wall on the left bank; NEW has low separate heaps, clearly closer. Let me check the late frame's right crest in NEW at full size, where the strip looked comb-like.
+
+### 🤖 Claude — 2026-11-20T04:43:37.774Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r23/step1_m06fcl/NEW/d_late.png"}`
+
+### 🧑 User — 2026-11-20T04:43:37.870Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:43:46.424Z
+
+NEW turns the tall continuous foam walls into low, separate heaps. Next: gameplay and continuity checks, then the clips. Checking the `m06view` renders first.
+
+### 🤖 Claude — 2026-11-20T04:43:47.715Z
+
+> 🔧 **Bash** `{"command": "O=/home/user/rainbow-/qa/match/06/r23/step1_m06fcl/with_m06view; grep -hc \"^06\" $O/*.log; grep -h done $O/*.log; cd /home/user/wt/s06 && sed -n 1,40p scripts/gameplay-test.mjs | grep -n \"port\\|q=\\|argv\\|startVite\" ", "description": "Check view renders and gameplay test options"}`
+
+### 🧑 User — 2026-11-20T04:43:47.812Z
+
+> ↩︎ result: 7
+> 7
+> 4://  * continuous travel: s strictly increases, no position jump > speed·dt (no teleport/cut)
+> 11://   node scripts/gameplay-test.mjs --q=river05=1 --out=qa/pilot05/wave11/tests/gameplay_river05.json
+> 13:import { writeFileSync, mkdirSync } from 'node:fs';
+> 14:import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 16:const optQ = (process.argv.find((a) => a.startsWith('--q=')) ?? '').slice(4);
+> 17:const optOut = (process.argv.find((a) => a.startsWith('--out=')) ?? '').slice(6);
+> 20:const vite = await startVite(5213);
+> 22:const page = await browser.newPage({ viewport: { width: 216, height: 384 } });
+
+### 🤖 Claude — 2026-11-20T04:43:54.671Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06; O=/home/user/rainbow-/qa/match/06/r23/step1_m06fcl; cd /home/user/wt/s06 && (timeout 1200 node scripts/gameplay-test.mjs --q=\"$(cat $S/q_new.txt)\" --out=$O/gameplay_NEW.json > $O/gameplay_NEW.log 2>&1; echo \"rc=$?\" >> $O/gameplay_NEW.log; timeout 1200 node scripts/gameplay-test.mjs --q=\"$(cat $S/q_new_v.txt)\" --out=$O/gameplay_NEW_m06view.json > $O/gameplay_NEW_m06view.log 2>&1; echo \"rc=$?\" >> $O/gameplay_NEW_m06view.log; timeout 600 npm run test:continuity > $O/continuity.log 2>&1; e …[+196 chars]`
+
+### 🧑 User — 2026-11-20T04:43:54.710Z
+
+> ↩︎ result: Command running in background with ID: bn9m7ul1l. Output is being written to: /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/tasks/bn9m7ul1l.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-20T04:44:47.551Z
+
+While the gameplay tests run, I'll extend the tunnel probe to also report Benny's and the route's screen positions, then compare K6 against `m06view`.
+
+### 🤖 Claude — 2026-11-20T04:44:50.441Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='tools/match06/r23_tunprobe.mjs'\ns=open(p).read()\ns=s.replace(\"vp, ring8: rc(8), ring20: rc(20) });\",\"vp, ring8: rc(8), ring20: rc(20), bS: (() => { const b = r.bennyScreen(); return [Math.round((b.x + 1) / 2 * 864), Math.round((1 - b.y) / 2 * 1536)]; })(),\\n          r6: pr(r.course.sample(st.s + 6).pos), r12: pr(r.course.sample(st.s + 12).pos), camUp: +(c.y - r.course.sample(st.s).pos.y).toFixed(2) });\")\ns=s.replace(\"next += 2;\",\"next += Number(window.__probeStep ?? 2);\")\nopen(p,'w').write(s)\nEOF\ngrep -n \"bS:\" tools/m …[+95 chars]`
+
+### 🧑 User — 2026-11-20T04:44:50.515Z
+
+> ↩︎ result: 35:          vp, ring8: rc(8), ring20: rc(20), bS: (() => { const b = r.bennyScreen(); return [Math.round((b.x + 1) / 2 * 864), Math.round((1 - b.y) / 2 * 1536)]; })(),
+
+### 🤖 Claude — 2026-11-20T04:44:52.755Z
+
+> 🔧 **Bash** `{"command": "O=/home/user/rainbow-/qa/match/06/r23/step1_m06fcl; tail -15 $O/gameplay_NEW.log; tail -5 $O/gameplay_NEW_m06view.log; tail -12 $O/continuity.log", "description": "Read gameplay and continuity results"}`
+
+### 🧑 User — 2026-11-20T04:44:52.807Z
+
+> ↩︎ result: "heartsLostOnWallBump": true
+>  },
+>  "plunge": {
+>   "tTop": 23.316666666666624,
+>   "tBottom": 29.899999999999583,
+>   "t08": 29.91666666666625,
+>   "yTop": -51.941,
+>   "yBottom": -113.144,
+>   "y08": -113.145,
+>   "travelTimeTopToInlet": 6.6,
+>   "verticalDrop": 61.2
+>  },
+>  "errors": []
+> }
+> rc=0
+>  "errors": []
+> }
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff2" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff2" is outside of Vite serving allow list.
+> rc=0
+>   "02->03 gap=-0.0001 dT=0.673 y=-11.87",
+>   "03->04 gap=0 dT=0.932 y=-19.41",
+>   "04->05 gap=0 dT=0.246 y=-40.63",
+>   "05->06 gap=0 dT=0.281 y=-43.35",
+>   "06->07 gap=0 dT=0.114 y=-48.53",
+>   "07->08 gap=0 dT=0.339 y=-113.5",
+>   "08->09 gap=0 dT=0.12 y=-113.59",
+>   "09->10 gap=0 dT=0.08 y=-113.47",
+>   "10->11 gap=0 dT=0.003 y=-110.16"
+>  ]
+> }
+> rc=0
+
+### 🤖 Claude — 2026-11-20T04:44:55.883Z
+
+> 🔧 **Bash** `{"command": "O=/home/user/rainbow-/qa/match/06/r23/step1_m06fcl; for f in gameplay_NEW gameplay_NEW_m06view; do python3 -I -c \"\nimport json,sys\nd=json.load(open('$O/$f.json'))\nks=list(d.keys()); print('$f', ks[:20])\nfor k in ('pass','passed','ok','summary','checks','coins'):\n  if k in d: print(k, json.dumps(d[k])[:600])\n\"; done; grep -n '\"ok\"' $O/continuity.log | head -3", "description": "Summarize gameplay JSON results"}`
+
+### 🧑 User — 2026-11-20T04:44:55.952Z
+
+> ↩︎ result: gameplay_NEW ['checks', 'samples', 'plunge', 'maxJumpAt', 'errors', 'pass', 'query']
+> pass true
+> checks {"pauseFreezes": {"pass": true, "sBefore": 45.495, "sPaused": 45.495, "sAfter": 49.995}, "continuousTravel": {"pass": true, "nonMonotonicSteps": 0, "steps": 2117, "respawns": 0}, "noCameraCut": {"pass": true, "maxCameraJumpPerStep": 0.728}, "noTeleport": {"pass": true, "maxBennyAltitudeJumpPerStep": 0.19, "at": {"s": 359.455, "s1": 359.655, "stage": "07", "y0": -96.412, "y1": -96.602, "t": 27.767}}, "plunge": {"pass": true, "tTop": 23.316666666666624, "tBottom": 29.899999999999583, "t08": 29.91666666666625, "yTop": -51.941, "yBottom": -113.144, "y08": -113.145, "travelTimeTopToInlet": 6.6, "ve
+> gameplay_NEW_m06view ['checks', 'samples', 'plunge', 'maxJumpAt', 'errors', 'pass', 'query']
+> pass true
+> checks {"pauseFreezes": {"pass": true, "sBefore": 45.495, "sPaused": 45.495, "sAfter": 49.995}, "continuousTravel": {"pass": true, "nonMonotonicSteps": 0, "steps": 2117, "respawns": 0}, "noCameraCut": {"pass": true, "maxCameraJumpPerStep": 0.728}, "noTeleport": {"pass": true, "maxBennyAltitudeJumpPerStep": 0.19, "at": {"s": 359.455, "s1": 359.655, "stage": "07", "y0": -96.412, "y1": -96.602, …[+228 chars]
+
+### 🤖 Claude — 2026-11-20T04:44:59.151Z
+
+> 🔧 **Bash** `{"command": "O=/home/user/rainbow-/qa/match/06/r23/step1_m06fcl; for f in gameplay_NEW gameplay_NEW_m06view; do python3 -I -c \"\nimport json\nd=json.load(open('$O/$f.json'))\nc=d['checks']; n=sum(1 for v in c.values() if v.get('pass')); print('$f', 'pass', d['pass'], n,'/',len(c), list(c.keys()))\nfor k,v in c.items():\n  if 'coin' in k.lower(): print(k, json.dumps(v)[:300])\n\"; done", "description": "Count gameplay checks and coin results"}`
+
+### 🧑 User — 2026-11-20T04:44:59.413Z
+
+> ↩︎ result: gameplay_NEW pass True 8 / 8 ['pauseFreezes', 'continuousTravel', 'noCameraCut', 'noTeleport', 'plunge', 'realCoinPickups', 'victory', 'heartsLostOnWallBump']
+> realCoinPickups {"pass": true, "startCoins": 1330, "endCoins": 2240, "collected": 91}
+> gameplay_NEW_m06view pass True 8 / 8 ['pauseFreezes', 'continuousTravel', 'noCameraCut', 'noTeleport', 'plunge', 'realCoinPickups', 'victory', 'heartsLostOnWallBump']
+> realCoinPickups {"pass": true, "startCoins": 1330, "endCoins": 2240, "collected": 91}
+

@@ -22,7 +22,7 @@ mkdirSync(outDir, { recursive: true });
 // (r22 copy: port 5277, log into the out dir)
 
 const { chromium } = loadPlaywright();
-const vite = await startVite(5277);
+const vite = await startVite(Number(process.env.QA_PORT ?? 5277));
 const browser = await chromium.launch({ args: CHROMIUM_ARGS });
 const log = { when: new Date().toISOString(), renderer: null, shots: [], errors: [] };
 try {

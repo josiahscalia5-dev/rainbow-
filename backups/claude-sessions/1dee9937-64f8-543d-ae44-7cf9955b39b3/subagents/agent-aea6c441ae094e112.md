@@ -420,3 +420,102 @@ BEFORE reproduces the lead's K23-1 pictures at 0 px. Let me add my progress bloc
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-20T04:40:35.398Z
+
+Let me probe the actual geometry at the swim shots: where Benny's top projects on screen and where each chevron sits.
+
+### 🤖 Claude — 2026-11-20T04:40:50.360Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/rainbow-/qa/match/04/r23/s04_tools && cat > /home/user/rainbow-/qa/match/04/r23/s04_tools/probe_arrows.mjs <<'EOF'\n// r23 s04 (QA only, read-only): at each audit shot report Benny's screen box, the camera, and every 3D chevron\n// (distance ahead of Benny along the lane, screen box, opacity). Run from the worktree:\n//   cd /home/user/wt/s04 && AUDIT_PORT=5274 node <this> \"<query>\"\nimport { pathToFileURL } from 'node:url';\nconst { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);\nconst [Q …[+3688 chars]`
+
+### 🧑 User — 2026-11-20T04:41:55.198Z
+
+> ↩︎ result: b_early {"s":82.08,"lat":0,"cam":[2.407,-17.365,-23.663],"fov":62.01333597366898,"benny":{"world":[1.995,-24,-28.908],"screenRoot":[410,1141],"boxMin":[242,901],"boxMax":[577,1277]},"arrows":[{"localZ":-10.84,"vis":true,"op":1,"world":[1.84,-27.92,-33.75],"screen":[428,1015],"distBenny":6.23},{"localZ":-14.84,"vis":true,"op":1,"world":[1.84,-30.04,-37.15],"screen":[441,945],"distBenny":10.21},{"localZ":-18.84,"vis":true,"op":1,"world":[1.84,-32.16,-40.54],"screen":[450,900],"distBenny":14.21},{"localZ":-22.84,"vis":true,"op":0.9,"world":[1.84,-34.28,-43.93],"screen":[456,869],"distBenny":18.2},{"localZ":-26.84,"vis":true,"op":0.05,"world":[1.84,-36.4,-47.32],"screen":[460,846],"distBenny":22.2},{"localZ":-30.84,"vis":false,"op":0,"world":[1.84,-38.52,-50.71],"screen":[463,829],"distBenny":26.2},{"localZ":-34.84,"vis":false,"op":0,"world":[1.84,-40.64,-54.11],"screen":[466,815],"distBenny":30.2},{"localZ":-38.84,"vis":false,"op":0,"world":[1.84,-42.76,-57.5],"screen":[468,804],"distBenny":34.19},{"localZ":-42.84,"vis":false,"op":0,"world":[1.84,-44.88,-60.89],"screen":[470,794],"distBenny":38.19}]}
+> c_middle {"s":90.48,"lat":0,"cam":[2.402,-21.637,-30.682],"fov":62.00319952254866,"be …[+5413 chars]
+
+### 🤖 Claude — 2026-11-20T04:42:57.047Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad && python3 -c \"\nfrom PIL import Image\na=Image.open('/home/user/rainbow-/references/04_through_the_five_arrows.png').convert('RGB')\nb=Image.open('/home/user/rainbow-/qa/match/04/r23/s04_BEFORE_K23-1/c_middle.png').convert('RGB')\nc=Image.open('/home/user/rainbow-/qa/match/04/r23/s04_BEFORE_K23-1/d_late.png').convert('RGB')\nW=Image.new('RGB',(3*432+20,560),'white')\nW.paste(a.crop((216,700,648,1400)).resize((432,700)).crop((0,0,432,560)),(0,0))\nW.paste(b.crop((216,700,648,1400)).resize((432,70 …[+225 chars]`
+
+### 🧑 User — 2026-11-20T04:42:57.638Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T04:42:59.524Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/crop_benny.png"}`
+
+### 🧑 User — 2026-11-20T04:42:59.585Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:43:22.894Z
+
+The problem is clear in the crop: the nearest chevrons stand right behind his hat with their arm ends poking out beside the brim. Let me look at the splash/wake code and how Benny's splash is placed.
+
+### 🤖 Claude — 2026-11-20T04:43:24.047Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"splash\" src/world/match04.ts | head -40; grep -rn \"m04_splash\\|splashOffset\" src --include=*.ts | grep -v \"^src/world/match04.ts\" | head -20; git diff src/game/Game.ts", "description": "Find splash code for Screen 04 and Game.ts changes"}`
+
+### 🧑 User — 2026-11-20T04:43:24.156Z
+
+> ↩︎ result: 35:  /** milestone 3: the approved splash around Benny (camera-facing card; Game places it at Benny + splashOffset); null = `&splash04=0` */
+> 36:  splash: THREE.Mesh | null;
+> 37:  splashOffset: THREE.Vector3;
+> 160:// milestone 3: Benny's splash cut from the approved picture (tools/match04/splash04.py); `&splash04=0` = none (milestone 2)
+> 161:const SPLASH04 = new URLSearchParams(location.search).get('splash04') !== '0';
+> 384:  let splash: THREE.Mesh | null = null;
+> 385:  const SP: { offset: [number, number, number]; w: number; h: number } = await fetch(tex('splash04.json')).then((r) => r.json());
+> 387:    const spTex = await new THREE.TextureLoader().loadAsync(tex('splash04.png'));
+> 389:    splash = new THREE.Mesh(new THREE.PlaneGeometry(SP.w, SP.h), new THREE.ShaderMaterial({
+> 396:    splash.name = 'm04_splash';
+> 397:    splash.visible = false;
+> 398:    splash.renderOrder = 5;
+> 401:  const splashOffset = new THREE.Vector3(...SP.offset);
+> 405:    splash,
+> 406:    splashOffset,
+> 430:      // r13: Benny's world position (Game puts the splash at Benny + splashOffset just before sync) for the m04arr3d fade
+> 431:      if (m4 && camera) m4.update(camera.getWorldPosition(_cp), splash ? _bp.copy(splash.pos …[+1903 chars]
+
+### 🤖 Claude — 2026-11-20T04:43:26.287Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/src/world/match04.ts", "offset": 370, "limit": 78}`
+
+### 🧑 User — 2026-11-20T04:43:26.305Z
+
+> ↩︎ result: 370	  gl_FragColor = vec4(pjInverse(col), cov);
+> 371	}`,
+> 372	    });
+> 373	    const meshes: THREE.Mesh[] = [];
+> 374	    group.traverse((o) => { if ((o as THREE.Mesh).isMesh) meshes.push(o as THREE.Mesh); });
+> 375	    for (const o of meshes) {
+> 376	      const c = new THREE.Mesh(o.geometry, mvMat);
+> 377	      c.name = `${o.name}_mv`; c.frustumCulled = false; c.renderOrder = (o.renderOrder || 0) + 1; c.userData.mv = true;
+> 378	      o.add(c);
+> 379	    }
+> 380	    (window as unknown as { __m04mv?: unknown }).__m04mv = { mvU, mvMat, views: mvViews };   // r12 QA only (diag04.mjs)
+> 381	    console.info('[match04] m04mv', { views: mvViews.length, overlays: meshes.length, cams: mvViews.map((v) => v.pos.toArray().map((x) => +x.toFixed(2))) });
+> 382	  }
+> 383	
+> 384	  let splash: THREE.Mesh | null = null;
+> 385	  const SP: { offset: [number, number, number]; w: number; h: number } = await fetch(tex('splash04.json')).then((r) => r.json());
+> 386	  if (SPLASH04) {
+> 387	    const spTex = await new THREE.TextureLoader().loadAsync(tex('splash04.png'));
+> 388	    spTex.colorSpace = THREE.NoColorSpace;
+> 389	    splash = new THREE.Mesh(new THREE.PlaneGeometry(SP.w, SP.h), new THREE.ShaderMaterial({
+> 390	      transparent:  …[+3283 chars]
+
+### 🤖 Claude — 2026-11-20T04:44:06.079Z
+
+I'll add a calibration to the probe: screen y of points above Benny's root, to set `m04a3sy` (his pompom top) precisely.
+
+### 🤖 Claude — 2026-11-20T04:44:10.473Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/04/r23/s04_tools && python3 - <<'EOF'\np='probe_arrows.mjs'; s=open(p).read()\ns=s.replace(\"bb = { world: wp.toArray().map((x) => +x.toFixed(3)), screenRoot: px(wp), boxMin: mn, boxMax: mx };\",\n\"const hY = [1.2, 1.4, 1.6, 1.8, 2.0, 2.2, 2.4].map((h) => [h, px(wp.clone().add(new (wp.constructor)(0, h, 0)))[1]]);\\n        bb = { world: wp.toArray().map((x) => +x.toFixed(3)), screenRoot: px(wp), boxMin: mn, boxMax: mx, hY, rootPos: benny.position.toArray().map((x) => +x.toFixed(3)), parent: benny.parent?.name };\")\nopen(p,'w').write(s)\nEOF\ncd / …[+503 chars]`
+
+### 🧑 User — 2026-11-20T04:44:46.964Z
+
+> ↩︎ result: b_early {'world': [1.995, -24, -28.908], 'screenRoot': [410, 1141], 'boxMin': [242, 901], 'boxMax': [577, 1277], 'hY': [[1.2, 1008], [1.4, 983], [1.6, 958], [1.8, 931], [2, 904], [2.2, 876], [2.4, 847]], 'rootPos': [1.995, -24, -28.908], 'parent': ''}
+> c_middle {'world': [2, -28.461, -36.032], 'screenRoot': [412, 1145], 'boxMin': [251, 906], 'boxMax': [573, 1268], 'hY': [[1.2, 1016], [1.4, 992], [1.6, 967], [1.8, 942], [2, 916], [2.2, 888], [2.4, 860]], 'rootPos': [2, -28.461, -36.032], 'parent': ''}
+> e_end {'world': [2, -38.141, -51.953], 'screenRoot': [415, 993], 'boxMin': [271, 785], 'boxMax': [558, 1100], 'hY': [[1.2, 881], [1.4, 860], [1.6, 839], [1.8, 817], [2, 794], [2.2, 771], [2.4, 746]], 'rootPos': [2, -38.141, -51.953], 'parent': ''}
+

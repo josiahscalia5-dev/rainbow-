@@ -396,3 +396,262 @@ Let me crop the painted magenta band close-up and the NEW foreground to compare 
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-20T04:40:34.462Z
+
+The streaks exist but read as thin scratches over a flat pink sheet; the painted band has broad tonal ribbons and fewer, bigger, glowing flare-shaped glints. Let me measure the painted band tones.
+
+### 🤖 Claude — 2026-11-20T04:40:39.799Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/07/r23/s1_satin && python3 -c \"\nfrom PIL import Image\nimport numpy as np\na=np.asarray(Image.open('/home/user/rainbow-/qa/match/07/r21/APPROVED_07.png').convert('RGB')).astype(float)\nfor name,(x0,y0,x1,y1) in {'left_band':(0,1100,200,1536),'right_band':(700,850,864,1150)}.items():\n  r=a[y0:y1,x0:x1].reshape(-1,3)\n  m=(r[:,0]>150)&(r[:,1]<150)&(r[:,2]>120)&(r[:,0]>r[:,1]+60)\n  mp=r[m]; L=mp.mean(1)\n  print(name,'magenta px',m.sum(),'of',len(r))\n  for q in [5,20,40,60,80,95]:\n    t=np.percentile(L,q); sel=mp[np.abs(L-t)<4]; print('  q',q,sel …[+554 chars]`
+
+### 🧑 User — 2026-11-20T04:40:40.706Z
+
+> ↩︎ result: left_band magenta px 49558 of 87200
+>   q 5 [181.  25. 152.]
+>   q 20 [204.  33. 173.]
+>   q 40 [225.  41. 191.]
+>   q 60 [243.  56. 209.]
+>   q 80 [246.  80. 232.]
+>   q 95 [249. 113. 246.]
+>   white-ish px share 0.058
+> right_band magenta px 29914 of 49200
+>   q 5 [203.  28. 171.]
+>   q 20 [222.  35. 185.]
+>   q 40 [234.  46. 202.]
+>   q 60 [243.  63. 218.]
+>   q 80 [243.  90. 237.]
+>   q 95 [246. 118. 247.]
+>   white-ish px share 0.062
+> NEW fg magenta 93986
+>   q 5 [200.  31. 168.]
+>   q 20 [219.  45. 188.]
+>   q 40 [237.  58. 208.]
+>   q 60 [243.  81. 224.]
+>   q 80 [247.  97. 236.]
+>   q 95 [249. 117. 241.]
+>   white-ish 0.021
+
+### 🤖 Claude — 2026-11-20T04:40:56.955Z
+
+Tones are in range; what differs is structure: our ribbons are ~1 u wide (reads as a flat sheet) and the glints are hairlines. Let me check the mid-distance shots before reworking.
+
+### 🤖 Claude — 2026-11-20T04:40:57.376Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/07/r23/s1_satin/NEW/b_early.png"}`
+
+### 🧑 User — 2026-11-20T04:40:57.720Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:40:57.789Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/07/r23/s1_satin/NEW/e2_092.png"}`
+
+### 🧑 User — 2026-11-20T04:40:57.838Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:41:34.614Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s07/src/world/match07.ts", "old_string": "float hash12(vec2 p) { vec3 p3 = fract(vec3(p.xyx) * 0.1031); p3 += dot(p3, p3.yzx + 33.33); return fract((p3.x + p3.y) * p3.z); }\nvec2 satinLayer(float x, float y, float side, float w, float seed, float thr) {\n  float u = x / w;\n  float fw = fwidth(u);\n  float aa = fw * 0.8 + 0.02;\n  float lane = floor(u), fx = fract(u) - 0.5;\n  float h1 = hash12(vec2(lane + seed * 17.0, side * 5.0 + seed));\n  float L = 0.8 + 1.4 * h1;\n  float yy = y / L + h1 * 9.0;\n  float seg = floor(yy), fy = fract(yy);\n  …[+4372 chars]`
+
+### 🧑 User — 2026-11-20T04:41:34.676Z
+
+> ↩︎ result: The file /home/user/wt/s07/src/world/match07.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T04:41:41.018Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s07/src/world/match07.ts", "old_string": "    float crest;\n    vec4 sb = satinBase(t, along, sd, crest);\n    float xw = xb + 0.04 * sin(along * 1.7 + sd * 2.0);\n    vec2 g1 = satinLayer(xw, along, sd, 0.075, 0.0, 0.35);\n    vec2 g2 = satinLayer(xw + 0.03, along * 1.13 + 0.7, sd, 0.12, 1.0, 0.8);\n    vec2 gl = g1 * crest + g2;\n    float procW = 1.0 - smoothstep(0.004, 0.016, fwidth(along));\n    bandC = mix(river, sb.rgb, procW * 0.85);\n    bandC = mix(bandC, vec3(1.0, 0.5, 0.96), 0.6 * min(gl.x, 1.0));\n    bandC = mix(bandC, vec3(1.0,  …[+832 chars]`
+
+### 🧑 User — 2026-11-20T04:41:41.030Z
+
+> ↩︎ result: <tool_use_error>String to replace not found in file.
+> String:     float crest;
+>     vec4 sb = satinBase(t, along, sd, crest);
+>     float xw = xb + 0.04 * sin(along * 1.7 + sd * 2.0);
+>     vec2 g1 = satinLayer(xw, along, sd, 0.075, 0.0, 0.35);
+>     vec2 g2 = satinLayer(xw + 0.03, along * 1.13 + 0.7, sd, 0.12, 1.0, 0.8);
+>     vec2 gl = g1 * crest + g2;
+>     float procW = 1.0 - smoothstep(0.004, 0.016, fwidth(along));
+>     bandC = mix(river, sb.rgb, procW * 0.85);
+>     bandC = mix(bandC, vec3(1.0, 0.5, 0.96), 0.6 * min(gl.x, 1.0));
+>     bandC = mix(bandC, vec3(1.0, 0.95, 1.0), 0.9 * min(gl.y, 1.0));</tool_use_error>
+
+### 🤖 Claude — 2026-11-20T04:41:47.436Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s07/src/world/match07.ts", "old_string": "    float crest;\n    vec4 sb = satinBase(t, along, sd, crest);\n    float xw = xb + 0.04 * sin(along * 1.7 + sd * 2.0);\n    vec2 g1 = satinLayer(xw, along, sd, 0.075, 0.0, 0.35);\n    vec2 g2 = satinLayer(xw + 0.03, along * 1.13 + 0.7, sd, 0.12, 1.0, 0.8);\n    vec2 gl = g1 * crest + g2;\n    float procW = 1.0 - smoothstep(0.004, 0.016, fwidth(along));\n    vec3 bandC = mix(river, sb.rgb, procW * 0.85);\n    bandC = mix(bandC, vec3(1.0, 0.5, 0.96), 0.6 * min(gl.x, 1.0));\n    bandC = mix(bandC, vec3( …[+837 chars]`
+
+### 🧑 User — 2026-11-20T04:41:47.496Z
+
+> ↩︎ result: The file /home/user/wt/s07/src/world/match07.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T04:41:51.514Z
+
+Quick iteration render (hard left / right, early, late) on port 5280.
+
+### 🤖 Claude — 2026-11-20T04:41:55.277Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && QN=$(cat /home/user/rainbow-/qa/match/07/r23/s1_satin/query_NEW.txt) && O=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/it1 && mkdir -p $O && AUDIT_SHOTS='[[\"b_early\",0.12,null],[\"d_late\",0.6,null],[\"f_hard_left\",0.35,-1],[\"g_hard_right\",0.35,1]]' AUDIT_PORT=5280 timeout 900 node /home/user/rainbow-/tools/lead21/audit_screen.mjs $O 07 \"$QN\" 2>&1 | grep -v \"allow list\"; python3 -c \"\nfrom PIL import Image\nn=Image.open('$O/g_hard_right.png').convert('RGB'); n.crop((320,1150,864,1536)).save('$O/crop_r.png')\nn= …[+166 chars]`
+
+### 🧑 User — 2026-11-20T04:42:15.931Z
+
+> ↩︎ result: 07 b_early s 287.256 lat 0 stage 07 coins 1960
+> 07 d_late s 343.456 lat 0 stage 07 coins 2080
+> 07 f_hard_left s 314.056 lat -2.25 stage 07 coins 1940
+> 07 g_hard_right s 314.056 lat 2.25 stage 07 coins 1950
+
+### 🤖 Claude — 2026-11-20T04:42:17.418Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/it1/g_hard_right.png"}`
+
+### 🧑 User — 2026-11-20T04:42:17.460Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:42:18.025Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/it1/crop_r.png"}`
+
+### 🧑 User — 2026-11-20T04:42:18.048Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:42:39.775Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 - <<'EOF'\np='src/world/match07.ts'; s=open(p).read()\nold_ph='''float satinPh(float xb, float y, float sd) {\n  return xb / 0.3 + 0.55 * sin(y * 0.45 + sd * 1.3) + 0.3 * sin(y * 1.1 + xb * 2.3 + sd * 0.7);\n}'''\nnew_ph='''float satinPh(float xb, float wb, float y, float sd) {\n  return xb / max(0.3, wb / 4.2) + 0.55 * sin(y * 0.45 + sd * 1.3) + 0.3 * sin(y * 1.1 + xb * 2.3 + sd * 0.7);\n}'''\nassert old_ph in s; s=s.replace(old_ph,new_ph)\ns=s.replace('''vec4 satinBase(float xb, float t, float y, float side, out float crest) {\n  float ph = satinP …[+1205 chars]`
+
+### 🧑 User — 2026-11-20T04:42:39.832Z
+
+> ↩︎ result: 193:    float t = clamp(xb / Wb, 0.0, 1.0), sd = sign(d);
+
+### 🤖 Claude — 2026-11-20T04:42:43.845Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && npx tsc --noEmit && QN=$(cat /home/user/rainbow-/qa/match/07/r23/s1_satin/query_NEW.txt) && O=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/it2 && mkdir -p $O && AUDIT_SHOTS='[[\"b_early\",0.12,null],[\"f_hard_left\",0.35,-1],[\"g_hard_right\",0.35,1]]' AUDIT_PORT=5280 timeout 900 node /home/user/rainbow-/tools/lead21/audit_screen.mjs $O 07 \"$QN\" 2>&1 | grep -v \"allow list\"; python3 -c \"\nfrom PIL import Image\nn=Image.open('$O/g_hard_right.png').convert('RGB'); n.crop((320,1150,864,1536)).save('$O/crop_r.png')\nn=Im …[+176 chars]`
+
+### 🧑 User — 2026-11-20T04:43:30.171Z
+
+> ↩︎ result: 07 b_early s 287.256 lat 0 stage 07 coins 1960
+> 07 f_hard_left s 314.056 lat -2.25 stage 07 coins 1940
+> 07 g_hard_right s 314.056 lat 2.25 stage 07 coins 1950
+
+### 🤖 Claude — 2026-11-20T04:43:32.140Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/it2/crop_r.png"}`
+
+### 🧑 User — 2026-11-20T04:43:32.162Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:43:32.763Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/it2/f_hard_left.png"}`
+
+### 🧑 User — 2026-11-20T04:43:32.839Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:43:43.599Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 - <<'EOF'\np='src/world/match07.ts'; s=open(p).read()\nold='vec2 g1 = satinFlare(ph + 0.25, along, sd, 0.0, vec2(0.9, 2.2), 0.5, 0.085, 0.32);'\nnew='vec2 g1 = satinFlare(ph + 0.25, along, sd, 0.0, vec2(0.8, 1.8), 0.38, 0.11, 0.45);'\nassert old in s; s=s.replace(old,new)\nold2='bandC = mix(bandC, vec3(1.0, 0.55, 0.97), 0.55 * min(gl.x, 1.0));'\nnew2='bandC = mix(bandC, vec3(1.0, 0.56, 0.97), 0.62 * min(gl.x, 1.0));'\nassert old2 in s; s=s.replace(old2,new2)\nopen(p,'w').write(s)\nEOF\nnpx tsc --noEmit && QN=$(cat /home/user/rainbow-/qa/match/07/r23 …[+569 chars]`
+
+### 🧑 User — 2026-11-20T04:44:31.039Z
+
+> ↩︎ result: 07 b_early s 287.256 lat 0 stage 07 coins 1960
+> 07 f_hard_left s 314.056 lat -2.25 stage 07 coins 1940
+> 07 g_hard_right s 314.056 lat 2.25 stage 07 coins 1950
+
+### 🤖 Claude — 2026-11-20T04:44:32.749Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/it3/g_hard_right.png"}`
+
+### 🧑 User — 2026-11-20T04:44:32.788Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:44:33.359Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/it3/b_early.png"}`
+
+### 🧑 User — 2026-11-20T04:44:33.402Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:44:35.228Z
+
+Let me compare with the BEFORE b_early and hard-right at the same moments.
+
+### 🤖 Claude — 2026-11-20T04:44:35.677Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/07/r23/s1_satin/BEFORE/b_early.png"}`
+
+### 🧑 User — 2026-11-20T04:44:35.726Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:44:42.486Z
+
+> 🔧 **Bash** `{"command": "ls /home/user/rainbow-/qa/match/07/r22/s1_cloud/tools/; cd /home/user/wt/s07 && head -30 tools/match07/swim_clip_r21.mjs; grep -n \"5277\\|PORT\\|argv\" tools/match07/gameplay_test_5277.mjs tools/match07/capture_5277.mjs | head; cat /home/user/rainbow-/qa/match/07/r22/s1_cloud/proof_0px.json | head -30", "description": "Inspect clip/gameplay/capture tools"}`
+
+### 🧑 User — 2026-11-20T04:44:42.533Z
+
+> ↩︎ result: capture_5277.mjs
+> gameplay_test_5277.mjs
+> #!/usr/bin/env node
+> // s07 r21: swim_clip_half.mjs that starts part-way through the stage (fraction of checkpoint → stage end), deterministic sim steps to get there.
+> //   node tools/match07/swim_clip_r21.mjs <screen> <outDir> <seconds> <query> <startFrac>
+> // Starts at the screen's checkpoint and rides the real game simulation (Benny, camera rig, course, coins unchanged) with
+> // the shader clock running: straight, then left, then right, then straight — one frame per 1/fps s → OUT/0000.png …
+> // Generalises scripts/proj05-move.mjs --zigzag. Encode: ffmpeg -framerate 24 -i OUT/%04d.png -pix_fmt yuv420p clip.mp4
+> //   node tools/lead_r13/swim_clip.mjs <screen 04..08> <outDir> <seconds> [query]
+> import { mkdirSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> const [SCREEN, OUT, SECS = '6', Q = '', FR = '0'] = process.argv.slice(2);
+> const fps = 24;
+> mkdirSync(OUT, { recursive: true });
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5277);
+> const browser = await chromium.launch({ args: CHROMIUM_ …[+2516 chars]
+
+### 🤖 Claude — 2026-11-20T04:44:46.613Z
+
+I'll make the clip tool's port configurable (my own untracked tool), then run the full NEW audit, the gameplay test and the clips in parallel on separate ports.
+
+### 🤖 Claude — 2026-11-20T04:44:47.765Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 1,40p tools/match07/capture_5277.mjs; sed -n 1,30p tools/match07/gameplay_test_5277.mjs | grep -n \"argv\\|steps\\|const\" | head -20", "description": "Read capture tool arguments"}`
+
+### 🧑 User — 2026-11-20T04:44:47.823Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // r22 s07 QA copy of scripts/capture.mjs: identical capture, dev server on port 5277; pass --out=DIR (capture_log.json goes there)
+> // Playwright capture of the REAL running game (WebGL) at the native reference sizes.
+> //   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> //   node scripts/capture.mjs 03 07           → only those
+> //   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> //   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> //   node scripts/capture.mjs --out=DIR       → custom output dir
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from '../../scripts/lib/pw.mjs';
+> 
+> const args = process.argv.slice(2);
+> const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> let ids = args.filter((a) => !a.startsWith('--'));
+> const NATIVE = { '03': [727, 1536] };
+> const plunge = ['07a_plunge_top', '07b_plunge_mid', '07c_plunge_bottom', '07d_entering_08'];
+> if (opt.plunge …[+2351 chars]
+
+### 🤖 Claude — 2026-11-20T04:44:50.237Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -i 's/const vite = await startVite(5277);/const vite = await startVite(Number(process.env.QA_PORT ?? 5277));/' tools/match07/swim_clip_r21.mjs tools/match07/capture_5277.mjs tools/match07/gameplay_test_5277.mjs && grep -n \"startVite(\" tools/match07/swim_clip_r21.mjs tools/match07/capture_5277.mjs tools/match07/gameplay_test_5277.mjs", "description": "Make QA tool ports configurable via env"}`
+
+### 🧑 User — 2026-11-20T04:44:50.323Z
+
+> ↩︎ result: tools/match07/swim_clip_r21.mjs:15:const vite = await startVite(Number(process.env.QA_PORT ?? 5277));
+> tools/match07/capture_5277.mjs:25:const vite = await startVite(Number(process.env.QA_PORT ?? 5277));
+> tools/match07/gameplay_test_5277.mjs:21:const vite = await startVite(Number(process.env.QA_PORT ?? 5277));
+
+### 🤖 Claude — 2026-11-20T04:44:56.210Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && O=/home/user/rainbow-/qa/match/07/r23/s1_satin && QN=$(cat $O/query_NEW.txt) && rm -rf $O/NEW && \\\nSH='[[\"a_start\",0,null],[\"b_early\",0.12,null],[\"c_middle\",0.35,null],[\"d_late\",0.6,null],[\"e1_075\",0.75,null],[\"e_end\",0.85,null],[\"e2_092\",0.92,null],[\"f_hard_left\",0.35,-1],[\"g_hard_right\",0.35,1]]'\n(AUDIT_SHOTS=\"$SH\" AUDIT_PORT=5280 timeout 1500 node /home/user/rainbow-/tools/lead21/audit_screen.mjs $O/NEW 07 \"$QN\" > $O/new.log 2>&1; echo audit-done >> $O/new.log) &\n(QA_PORT=5281 timeout 1500 node tools/match07/gameplay_test_5277.m …[+458 chars]`
+

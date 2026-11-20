@@ -12,7 +12,7 @@ const [SCREEN, OUT, SECS = '6', Q = '', FR = '0'] = process.argv.slice(2);
 const fps = 24;
 mkdirSync(OUT, { recursive: true });
 const { chromium } = loadPlaywright();
-const vite = await startVite(5277);
+const vite = await startVite(Number(process.env.QA_PORT ?? 5277));
 const browser = await chromium.launch({ args: CHROMIUM_ARGS });
 try {
   const page = await browser.newPage({ viewport: { width: 432, height: 768 }, deviceScaleFactor: 1 });

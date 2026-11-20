@@ -18,7 +18,7 @@ const optQ = (process.argv.find((a) => a.startsWith('--q=')) ?? '').slice(4);
 const optOut = (process.argv.find((a) => a.startsWith('--out=')) ?? '').slice(6);
 // (r22 copy: port 5277, writes only --out)
 const { chromium } = loadPlaywright();
-const vite = await startVite(5277);
+const vite = await startVite(Number(process.env.QA_PORT ?? 5277));
 const browser = await chromium.launch({ args: CHROMIUM_ARGS });
 const page = await browser.newPage({ viewport: { width: 216, height: 384 } });
 const errors = [];

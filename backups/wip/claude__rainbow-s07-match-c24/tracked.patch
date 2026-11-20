@@ -40,7 +40,7 @@ index 017370a..906c906 100644
      }
      if (m08 && b08 && b08Rest) {
 diff --git a/src/world/match07.ts b/src/world/match07.ts
-index b9f474c..9fd911d 100644
+index b9f474c..82bf087 100644
 --- a/src/world/match07.ts
 +++ b/src/world/match07.ts
 @@ -94,6 +94,9 @@ uniform sampler2D uFoamTile;
@@ -53,7 +53,7 @@ index b9f474c..9fd911d 100644
  varying vec2 vUv;
  varying vec4 vProj;
  varying vec3 vW;
-@@ -101,12 +104,49 @@ varying vec3 vN;
+@@ -101,12 +104,63 @@ varying vec3 vN;
  varying vec3 vL;
  varying float vCtr;
  ${PROJ05_INVERSE}
@@ -63,36 +63,50 @@ index b9f474c..9fd911d 100644
 +// segments at the painted scale, anti-aliased by fwidth and faded out where a lane gets thinner than ~2 px (far away the tile
 +// shows as before).
 +float hash12(vec2 p) { vec3 p3 = fract(vec3(p.xyx) * 0.1031); p3 += dot(p3, p3.yzx + 33.33); return fract((p3.x + p3.y) * p3.z); }
-+vec2 satinLayer(float x, float y, float side, float w, float seed, float thr) {
-+  float u = x / w;
++// r23 m07satin: the painted satin's tone ribbons are ~0.3 u apart at the painted near scale (3–4 light ribbons across the near
++// band), meandering gently with the flow and now and then merging; ph = ribbon coordinate (1 per ribbon), world-anchored
++float satinPh(float xb, float wb, float y, float sd) {
++  return xb / max(0.3, wb / 4.2) + 0.55 * sin(y * 0.45 + sd * 1.3) + 0.3 * sin(y * 1.1 + xb * 2.3 + sd * 0.7);
++}
++// a pointed, lens-shaped white flare (white core, soft pink glow) on ribbon lanes: u = lane coordinate (1 per lane, the flare runs
++// along fract(u) = 0.5), y = along; L = segment length range, thr = share of segments left dark, wc / wg = core / glow half-width
++// (lane units). Anti-aliased by fwidth; fades out where a lane gets thinner than a few pixels (far away the tile shows as before).
++vec2 satinFlare(float u, float y, float side, float seed, vec2 L, float thr, float wc, float wg) {
 +  float fw = fwidth(u);
-+  float aa = fw * 0.8 + 0.02;
++  float aa = fw * 0.7;
 +  float lane = floor(u), fx = fract(u) - 0.5;
 +  float h1 = hash12(vec2(lane + seed * 17.0, side * 5.0 + seed));
-+  float L = 0.8 + 1.4 * h1;
-+  float yy = y / L + h1 * 9.0;
++  float Ls = L.x + (L.y - L.x) * h1;
++  float yy = y / Ls + h1 * 9.0;
 +  float seg = floor(yy), fy = fract(yy);
 +  float h2 = hash12(vec2(lane * 1.37 + seg * 3.11 + seed, side * 2.0 + 0.5));
 +  float h3 = hash12(vec2(seg * 5.31 - lane * 0.7, side * 3.0 + seed * 1.9));
 +  float on = step(thr, h2);
-+  float c = (h3 - 0.5) * 0.3;
-+  float tp = pow(max(sin(3.14159 * fy), 0.0), 0.9);
-+  float hw = (0.16 + 0.2 * fract(h2 * 7.13)) * tp;
++  // off-centre bulge (the flare is fattest a little ahead of its middle) and pointed ends
++  float m = 0.35 + 0.3 * h3;
++  float tp = fy < m ? fy / m : (1.0 - fy) / (1.0 - m);
++  float tc = pow(clamp(tp, 0.0, 1.0), 1.25), tg = pow(clamp(tp, 0.0, 1.0), 0.7);
++  float c = (h3 - 0.5) * 0.12;
 +  float e = abs(fx - c);
-+  float halo = 1.0 - smoothstep(hw - aa, hw + aa + 0.14, e);
-+  float core = 1.0 - smoothstep(hw * 0.4 - aa, hw * 0.4 + aa, e);
-+  float k = on * (0.65 + 0.35 * fract(h3 * 13.7)) * (1.0 - smoothstep(0.35, 0.8, fw));
-+  return vec2(halo, core * tp) * k;
++  float sz = 0.7 + 0.6 * fract(h2 * 7.13);
++  float hg = wg * sz * tg, hc = wc * sz * tc;
++  float glow = 1.0 - smoothstep(0.0, hg + aa, e);
++  float core = 1.0 - smoothstep(hc - aa, hc + aa, e);
++  float k = on * (0.7 + 0.3 * fract(h3 * 13.7)) * (1.0 - smoothstep(0.08, 0.22, fw));
++  return vec2(glow * glow, core) * k;
 +}
 +// x = world distance into the band from its inner edge, t = the same as a share of the band width, y = along, side = ±1
-+// → rgb: the painted satin base (deep magenta → hot pink → light pink ribbons following the flow), a: glow, + core in the 2nd value
-+vec4 satinBase(float t, float y, float side, out float crest) {
-+  float ph = t * 1.7 + 0.22 * sin(y * 0.6 + side * 1.1) + 0.1 * sin(y * 1.45 + 0.5 + side);
++// → rgb: the painted satin base (deep magenta → hot pink → light pink ribbons following the flow), a: tone; crest = light ribbon
++vec4 satinBase(float xb, float wb, float y, float side, out float crest) {
++  float ph = satinPh(xb, wb, y, side);
 +  float tone = 0.5 + 0.5 * sin(6.2831853 * ph);
-+  crest = smoothstep(0.62, 0.95, tone);
-+  vec3 deep = vec3(0.714, 0.094, 0.596), mid = vec3(0.94, 0.18, 0.784), light = vec3(0.969, 0.41, 0.953);
-+  vec3 c = mix(deep, mid, smoothstep(0.0, 0.55, tone));
-+  c = mix(c, light, smoothstep(0.55, 1.0, tone));
++  // ribbons stronger in places and calmer in others (no even stripes)
++  float amp = 0.65 + 0.35 * sin(y * 0.31 + floor(ph) * 1.7 + side);
++  tone = 0.5 + (tone - 0.5) * amp;
++  crest = smoothstep(0.7, 0.97, tone);
++  vec3 deep = vec3(0.71, 0.098, 0.596), mid = vec3(0.92, 0.17, 0.77), light = vec3(0.965, 0.42, 0.95);
++  vec3 c = mix(deep, mid, smoothstep(0.08, 0.5, tone));
++  c = mix(c, light, smoothstep(0.62, 0.98, tone));
 +  return vec4(c, tone);
 +}
  // r16 m07nearw: [foam | magenta | trim | cyan | cyan | trim | magenta | foam] across a winding centre line, world-anchored.
@@ -106,7 +120,7 @@ index b9f474c..9fd911d 100644
    float R = uNearW.x, mw = uNearW.y;
    float Rc = R - mw;                       // cyan core half-width
    float Ro = R;                            // outer edge of the magenta band (foam beyond)
-@@ -117,7 +157,7 @@ vec3 nearWater() {
+@@ -117,7 +171,7 @@ vec3 nearWater() {
      float S = uBand.x * sin(6.2831853 * (along - uBand.z) / uBand.y);
      d -= S;
      float reach = (d > 0.0 ? -S : S) + uBand2.x;
@@ -115,7 +129,7 @@ index b9f474c..9fd911d 100644
      Ro = max(Rc + uBand2.z, reach);
    }
    float a = abs(d);
-@@ -132,15 +172,34 @@ vec3 nearWater() {
+@@ -132,15 +186,35 @@ vec3 nearWater() {
    vec3 cL = texture2D(uNearTile, vec2(u, v)).rgb;
    vec3 cR = texture2D(uNearTile, vec2(u, v + 0.5)).rgb;
    vec3 river = mix(cL, cR, smoothstep(-0.32, 0.32, d));
@@ -126,15 +140,16 @@ index b9f474c..9fd911d 100644
 +    float t = clamp(xb / Wb, 0.0, 1.0), sd = sign(d);
 +    float bm = smoothstep(-0.01, 0.05, xb) * (1.0 - smoothstep(Wb - 0.06, Wb + 0.02, xb));
 +    float crest;
-+    vec4 sb = satinBase(t, along, sd, crest);
-+    float xw = xb + 0.04 * sin(along * 1.7 + sd * 2.0);
-+    vec2 g1 = satinLayer(xw, along, sd, 0.075, 0.0, 0.35);
-+    vec2 g2 = satinLayer(xw + 0.03, along * 1.13 + 0.7, sd, 0.12, 1.0, 0.8);
-+    vec2 gl = g1 * crest + g2;
++    vec4 sb = satinBase(xb, Wb, along, sd, crest);
++    // big flares ride the light ribbons' crests (sin peak at ph = 0.25 → lane centre), a few small sparkles in between
++    float ph = satinPh(xb, Wb, along, sd);
++    vec2 g1 = satinFlare(ph + 0.25, along, sd, 0.0, vec2(0.8, 1.8), 0.38, 0.11, 0.45);
++    vec2 g2 = satinFlare(xb / 0.13 + 0.3 * sin(along * 0.8 + sd), along * 1.13 + 0.7, sd, 1.0, vec2(0.3, 0.6), 0.95, 0.12, 0.42);
++    vec2 gl = g1 * (0.35 + 0.65 * smoothstep(0.55, 0.9, sb.a)) + g2 * 0.8;
 +    float procW = 1.0 - smoothstep(0.004, 0.016, fwidth(along));
-+    vec3 bandC = mix(river, sb.rgb, procW * 0.85);
-+    bandC = mix(bandC, vec3(1.0, 0.5, 0.96), 0.6 * min(gl.x, 1.0));
-+    bandC = mix(bandC, vec3(1.0, 0.95, 1.0), 0.9 * min(gl.y, 1.0));
++    vec3 bandC = mix(river, sb.rgb, procW * 0.9);
++    bandC = mix(bandC, vec3(1.0, 0.56, 0.97), 0.62 * min(gl.x, 1.0));
++    bandC = mix(bandC, vec3(1.0, 0.96, 1.0), 0.95 * min(gl.y, 1.0));
 +    river = mix(river, bandC, bm);
 +  }
    R = Ro;
@@ -151,7 +166,7 @@ index b9f474c..9fd911d 100644
    return mix(river, foam, smoothstep(R - 0.04, R + 0.10, a));
  }
  // r16 m07wfoam: the painted foam clouds piled where the tube wall meets the water (no hard wall / floor edge when steering hard);
-@@ -162,6 +221,11 @@ vec3 riverTile() {
+@@ -162,6 +236,11 @@ vec3 riverTile() {
    return texture2D(uTile, vec2(u, v)).rgb;
  }
  vec3 tileColor() {
@@ -163,7 +178,7 @@ index b9f474c..9fd911d 100644
    // M3 '?m07tube=1' plunge surfaces (real geometry along the course): uv = (arc depth along the tube, angle / lateral)
    if (uMode > 3.5) {
      float u = (vUv.x - uRiver.x) / (uRiver.y - uRiver.x);
-@@ -175,7 +239,7 @@ vec3 tileColor() {
+@@ -175,7 +254,7 @@ vec3 tileColor() {
      return texture2D(uTile, vec2(u, v)).rgb;
    }
    if (uMode > 1.5) {
@@ -172,7 +187,7 @@ index b9f474c..9fd911d 100644
      return riverTile();
    }
    if (uMode > 0.5) {
-@@ -248,6 +312,92 @@ void main() {
+@@ -248,6 +327,92 @@ void main() {
    gl_FragColor = vec4(pjInverse(t), 1.0);
  }`;
  
@@ -265,7 +280,7 @@ index b9f474c..9fd911d 100644
  const tex = (f: string) => new URL(`../../assets/textures/match07/${f}`, import.meta.url).href;
  /** r18: numeric URL tunable (QA only), default when absent or not a number */
  const num07 = (k: string, def: number) => {
-@@ -283,6 +433,13 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -283,6 +448,13 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
    // r18: on top of m07nearw, the painted near-river proportions — narrow cyan core, thick magenta bands, world-anchored S-sweep
    // (the r17 draft '&m07nearf' was rejected: qa/match/07/r18/PROGRESS.md)
    const band = nearW && flag05('m07band');
@@ -279,7 +294,7 @@ index b9f474c..9fd911d 100644
    const [tNear, tFoam] = await Promise.all([nearW ? load('near_bank.png', THREE.RepeatWrapping) : null, nearW || wallFoamOn ? load('near_foam.png', THREE.RepeatWrapping) : null]);
    if (tNear) tNear.wrapS = THREE.ClampToEdgeWrapping;
    const [plate, tWall, tRiver, pGold, fillMask] = await Promise.all([
-@@ -351,7 +508,11 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -351,7 +523,11 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
      // foam-edge wobble 0.12 u. Tunables ?m07bA= / ?m07bL= / ?m07bC=
      uBand: { value: new THREE.Vector4(num07('m07bA', 0.6), num07('m07bL', 14), 0, band ? 1 : 0) },
      uBand2: { value: new THREE.Vector4(2.85, num07('m07bC', 1.1), 0.95, 0.12) },
@@ -291,7 +306,7 @@ index b9f474c..9fd911d 100644
    if (nearW) {
      // river centre line in the tube-local frame: the lane Benny swims (course centre, sampled at the depth) plus the painted
      // river's winding (tools/match07/river_coins07.py → river07.json, clamped so Benny stays in the cyan), continued by a gentle
-@@ -384,6 +545,7 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -384,6 +560,7 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
        const kk = THREE.MathUtils.smoothstep(along, aEnd - 4, aEnd + 6);
        // r18 m07band: the lane only (the S-sweep is added in the shader, uBand)
        ctr[k] = band ? lane : lane + painted * (1 - kk) + tail * kk;
@@ -299,7 +314,7 @@ index b9f474c..9fd911d 100644
      }
      // smooth (no kinks between samples: the bands must curve, not zigzag)
      for (let pass = 0; pass < 4; pass++) {
-@@ -436,6 +598,8 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -436,6 +613,8 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
      const f0 = course.sample(sA);
      const alongA = f0.pos.clone().sub(base).dot(Dv);
      plungeAlong = alongA;
@@ -308,7 +323,7 @@ index b9f474c..9fd911d 100644
      shared.uFade.value.set(plunge.fade[0] - sA + alongA, plunge.fade[1] - sA + alongA);
      const axisA = base.clone().addScaledVector(X, T.ax).addScaledVector(U, T.h).addScaledVector(Dv, alongA);
      const d0 = axisA.clone().sub(f0.pos.clone().addScaledVector(f0.up, T.h));
-@@ -459,7 +623,7 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -459,7 +638,7 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
        for (let j = 0; j <= nR; j++) {
          const l = -halfW + (2 * halfW * j) / nR;
          p.copy(f.pos).addScaledVector(f.right, lat0 + T.ax + l).addScaledVector(f.up, 0.06);
@@ -317,7 +332,7 @@ index b9f474c..9fd911d 100644
        }
        if (i > 0) {
          for (let j = 0; j < nT; j++) { const a = (i - 1) * (nT + 1) + j, b = a + nT + 1; idxT.push(a, b, a + 1, b, b + 1, a + 1); }
-@@ -475,7 +639,7 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -475,7 +654,7 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
      };
      // world-space vertices: the meshes are added to the scene-level group with the inverse group matrix
      const toLocal = (g: THREE.BufferGeometry) => g.applyMatrix4(groupInv);
@@ -326,7 +341,7 @@ index b9f474c..9fd911d 100644
      rivM.transparent = true;
      const t = add(toLocal(geo(tubeP, tubeUV, idxT)), wallM, 'pl_tube');
      const r = add(toLocal(geo(rivP, rivUV, idxR)), rivM, 'pl_river');
-@@ -483,6 +647,131 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -483,6 +662,131 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
      t.visible = r.visible = false;
      plungeMeshes.push(t, r);
    }
@@ -458,7 +473,7 @@ index b9f474c..9fd911d 100644
    group.traverse((o) => o.updateMatrixWorld?.(true));
  
    return {
-@@ -493,7 +782,8 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -493,7 +797,8 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
        const clone = group.clone(true);
        clone.visible = true;
        // the plunge continuation is not in the approved picture: it never occludes the projector

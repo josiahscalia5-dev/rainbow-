@@ -24,7 +24,7 @@ try {
     while (r.state().s < s1 + 2 && k < 9000) {
       const st = r.state();
       if (st.s >= next) {
-        next += 2; camera.updateMatrixWorld();
+        next += Number(window.__probeStep ?? 2); camera.updateMatrixWorld();
         const fw = new V(); camera.getWorldDirection(fw);
         const c = camera.position.clone(), ca = c.clone().sub(O).dot(ax);
         const vp = pr(c.clone().addScaledVector(ax, 5000));
@@ -32,7 +32,8 @@ try {
         const rc = (d) => pr(O.clone().addScaledVector(ax, ca + d));
         rows.push({ s: st.s, lat: st.lat, cam: cs(c), benny: cs(r.course.sample(st.s).pos.clone().addScaledVector(r.course.sample(st.s).right, st.lat)),
           riv10: cs(r.course.sample(st.s + 10).pos), riv25: cs(r.course.sample(st.s + 25).pos), fwAx: +fw.dot(ax).toFixed(3),
-          vp, ring8: rc(8), ring20: rc(20) });
+          vp, ring8: rc(8), ring20: rc(20), bS: (() => { const b = r.bennyScreen(); return [Math.round((b.x + 1) / 2 * 864), Math.round((1 - b.y) / 2 * 1536)]; })(),
+          r6: pr(r.course.sample(st.s + 6).pos), r12: pr(r.course.sample(st.s + 12).pos), camUp: +(c.y - r.course.sample(st.s).pos.y).toFixed(2) });
       }
       r.step(1); k++;
     }
