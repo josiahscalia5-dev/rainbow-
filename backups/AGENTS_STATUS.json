@@ -1,10 +1,54 @@
 {
  "_comment": "Machine-readable roster of the ten Rainbow specialists. Human-readable history: backups/AGENTS_STATUS.md. scripts/claude-bootstrap.sh checks every definition below (present + SHA-256). Agents load automatically from .claude/agents/ (Agent tool, subagent_type = name). Never recreate or rename them. A running specialist does NOT survive a new session or account: relaunch it from its notes + unfinished patch.",
  "schema": 1,
- "updated_utc": "2026-11-20T02:50:00Z",
- "updated_by_session": "session_01AvQv6SAH2NyYjSPRMtFps6 (round 18, lead ccr-ae71d3a5-80naq2)",
+ "updated_utc": "2026-11-20T04:37Z",
+ "updated_by_session": "round 23 lead, branch claude/rainbow-r22-restore-ut3m39",
  "running_now": {
-  "_note": "see round18.running (five background workers in the round-18 lead container, relaunched ~02:50 UTC from the r17 21:11 UTC WIP snapshots); Screen 08 PAUSED by the user"
+  "_note": "round 23 (new account): four in-process background agents of the lead session; LOCAL -c24 branches, never pushed; the lead autosave snapshots each worktree to backups/wip/<branch>/. Coordination: docs/briefs/2026-11-20-r23/COORDINATION.md",
+  "s04": {
+   "agent": "washer-environment-modeler",
+   "worktree": "/home/user/wt/s04",
+   "branch": "claude/rainbow-s04-match-c24",
+   "base": "34cb494137e1 + K22-2 code",
+   "port": 5273,
+   "brief": "docs/briefs/2026-11-20-r23/LAUNCH_S04_R23.md",
+   "log": "qa/match/04/r23/PROGRESS.md",
+   "started_utc": "2026-11-20T04:37Z"
+  },
+  "s07": {
+   "agent": "water-fx-specialist",
+   "worktree": "/home/user/wt/s07",
+   "branch": "claude/rainbow-s07-match-c24",
+   "base": "8accdad0a07e + r22 WIP (m07cloud + unfinished m07satin)",
+   "port": 5277,
+   "brief": "docs/briefs/2026-11-20-r23/LAUNCH_S07_R23.md",
+   "log": "qa/match/07/r23/PROGRESS.md",
+   "started_utc": "2026-11-20T04:37Z"
+  },
+  "s06": {
+   "agent": "path-camera-transition-engineer",
+   "worktree": "/home/user/wt/s06",
+   "branch": "claude/rainbow-s06-match-c24",
+   "base": "claude/rainbow-s06-match-c23 @ e162aec",
+   "port": 5276,
+   "brief": "docs/briefs/2026-11-20-r23/LAUNCH_S06_R23.md",
+   "log": "qa/match/06/r23/PROGRESS.md",
+   "started_utc": "2026-11-20T04:37Z"
+  },
+  "benny": {
+   "agent": "benny-character-artist",
+   "worktree": "/home/user/wt/benny",
+   "branch": "claude/rainbow-benny-c24",
+   "base": "claude/rainbow-benny-c23 @ 734efb6",
+   "port": 5279,
+   "brief": "docs/briefs/2026-11-20-r23/LAUNCH_BENNY_R23.md",
+   "log": "qa/benny/r23/PROGRESS.md",
+   "started_utc": "2026-11-20T04:37Z"
+  },
+  "queued": {
+   "s08_polish": "/home/user/wt/s08 claude/rainbow-s08-scenery-c24 @ 3c0fa97",
+   "s05_polish": "/home/user/wt/s05 claude/rainbow-s05-match-c24 @ eb7233e"
+  }
  },
  "assignments_now": {
   "_read_first": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md, then backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md",
@@ -1197,5 +1241,12 @@
    "water-fx-specialist (s07)": "stopped by the user ~04:00 after step 1 m07cloud (worker GOOD, lead review pending); WIP backups/wip/claude__rainbow-s07-match-c23/; log qa/match/07/r22/PROGRESS.md"
   },
   "resume": "docs/briefs/2026-11-20-r22/RESUME_R22.md"
+ },
+ "round23": {
+  "lead_branch": "claude/rainbow-r22-restore-ut3m39",
+  "started_from": "ccr-4742c19f-ez2mrs @ f4193fe (checkpoint e2d4ac4 = ancestor)",
+  "old_account_sessions": "s06 (last push 04:09) and Benny (last push 04:05) on claude/rainbow-*-c23: not visible from this account, no push by 04:34 -> treated as STOPPED; -c23 never written from this account",
+  "lead_04": "K23-1 = qa/match/04/r23/QUERY_K23-1.txt (pink walls off, pink round Benny off, calmer lane) - lead GOOD IMPROVEMENT, shown to the user ~04:35",
+  "relaunch": "bash docs/briefs/2026-11-20-r22/setup_worker_r23.sh (bases) + git apply backups/wip/claude__rainbow-<x>-c24/tracked.patch; briefs docs/briefs/2026-11-20-r23/"
  }
 }
