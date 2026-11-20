@@ -3279,3 +3279,35 @@ The decision is saved (`6c72adc`, GitHub matches). Passing your Screen 06 points
 > | 2026-11-20 03:21 | e_end_p2 | nano-banana-2/edit 2K | `01a1f6f9-268d-7603-a14e-302510bd3a80` | 1 | 0.12 | e_end_p2_v1.png |
 >  …[+239 chars]
 
+### 🤖 Claude — 2026-11-20T17:18:09.144Z
+
+Your existing paid-artwork authorization stands: useful views, each job recorded (so far 42 jobs, $5.04). Writing the Screens 09 and 10 brief now, so it's ready the moment a slot frees:
+
+### 🤖 Claude — 2026-11-20T17:18:27.105Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-20-r28/S0910_R28.md", "content": "# Screens 09 + 10 — real playable 3D (round 28; user scope decision 2026-11-20 ~17:25 UTC)\n\nUser decision (verbatim, `USER_CLARIFICATIONS_R28.md`): \"Screens 04 through 10, including both 09 and 10, must be real, playable 3D gameplay.\"\nTargets = the full-resolution originals `references/09_ride_the_final_wave.png` and `references/10_slide_into_hiding.png` (never edit them;\n`sha256sum -c scripts/reference.sha256`). Sheet for identification only: `USER_REFERENCE_SHEET_R28.jpg`.\n\n## What the user wants …[+4625 chars]`
+
+### 🧑 User — 2026-11-20T17:18:27.352Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-20-r28/S0910_R28.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T17:18:36.110Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/match/04/r27/s4_combined/c_middle_1_ORIGINAL_APPROVED.png", "/home/user/rainbow-/qa/match/04/r27/s4_combined/c_middle_2_BEFORE.png", "/home/user/rainbow-/qa/match/04/r27/s4_combined/c_middle_3_NEW.png", "/home/user/rainbow-/qa/match/04/r27/s4_combined/swim04_SIDE_BY_SIDE_BEFORE_K23-S3a5_vs_NEW_K27-B_1.0x.mp4"], "caption": "Screen 04, middle of the stage: your approved picture, BEFORE, and the NEW candidate K27-B. Then the whole stage side by side at normal speed (BEFORE left, NEW right). This is an individual playable candidate, not a combined build or Androi …[+69 chars]`
+
+### 🧑 User — 2026-11-20T17:18:37.176Z
+
+> ↩︎ result: 4 files delivered to user.
+>   /home/user/rainbow-/qa/match/04/r27/s4_combined/c_middle_1_ORIGINAL_APPROVED.png → file_uuid: 73a5119d-fea7-42d8-a35b-5305d1e1b89b
+>   /home/user/rainbow-/qa/match/04/r27/s4_combined/c_middle_2_BEFORE.png → file_uuid: 5258ae17-17fd-41c1-aa64-31b67b62d93b
+>   /home/user/rainbow-/qa/match/04/r27/s4_combined/c_middle_3_NEW.png → file_uuid: fb487239-3c19-4dce-b2f9-87f63c65e246
+>   /home/user/rainbow-/qa/match/04/r27/s4_combined/swim04_SIDE_BY_SIDE_BEFORE_K23-S3a5_vs_NEW_K27-B_1.0x.mp4 → file_uuid: 1e4dede4-a382-41a8-b43f-db95901ba4ab
+
+### 🤖 Claude — 2026-11-20T17:18:39.316Z
+
+Saving everything and checking GitHub matches:
+
+### 🤖 Claude — 2026-11-20T17:18:41.034Z
+
+> 🔧 **Bash** `{"command": "until ! pgrep -f \"rainbow-autosave.py\" >/dev/null; do sleep 3; done; python3 scripts/rainbow-autosave.py --reason manual:r28-s0910-brief 2>&1 | grep -E '\"result\"|\"commit\"|\"error\"'; git rev-parse HEAD; git ls-remote origin refs/heads/ccr-9652868f-lkw0w0", "description": "Save the 09/10 brief and verify remote", "timeout": 300000}`
+
