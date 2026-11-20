@@ -51,3 +51,15 @@ swim clip through all of 04 (straight / left / right) BEFORE + NEW → mp4 (`too
 ## Reporting
 Up to 3 finished steps, then stop. Final message to the lead: each step + switch + verdict + folders + clip paths, the new candidate
 query, mobile cost, the single most visible remaining difference.
+
+## Hand-over from the r22 foam specialist (~03:50 UTC) — read before you start
+* BEFORE for your proofs = **K22-2** = `cat /home/user/rainbow-/qa/match/04/r22/s2_bbd/QUERY_K22-2.txt` (K21-1 + 3D foam heaps
+  `m04bbd…&m04bbx=1`; lead verdict: small improvement, patchy / sometimes one-sided, smaller than the painted banks).
+* **Use the pinned-clock tools** (the river shader reads `performance.now()`, so the water differs run to run otherwise):
+  `qa/match/04/r22/tools/audit_pinned.mjs` (same arguments as `audit_screen.mjs`), pinned swim clip + gameplay test on port 5273 in
+  the same folder. Two runs of the pinned audit = 0 px.
+* Doubles to avoid: the plates' painted foam banks vs the 3D foam heaps (`m04bbd`) — decide which reads closer by eye where they
+  overlap (e.g. project painted foam on the bank geometry and keep 3D heaps only where no plate covers, or the reverse); never both
+  stacked.
+* Unfinished, unrelated: `qa/match/04/r22/s3_unfinished/m04a3sc_unfinished.patch` (chevrons straddle Benny's hat; off by default).
+  Leave it alone unless the projection makes it worse.

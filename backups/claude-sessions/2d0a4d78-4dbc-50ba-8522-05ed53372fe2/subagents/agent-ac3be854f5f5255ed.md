@@ -1763,3 +1763,180 @@ The shebang must stay on line 1; moving my comment below it.
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && K7=$(cat /home/user/rainbow-/qa/match/07/r21/K7.txt) && S=/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/cap && rm -rf $S && timeout 1500 node tools/match07/capture_5277.mjs 07 08 07a_plunge_top 07b_plunge_mid 07c_plunge_bottom 07d_entering_08 --q=\"${K7}&m07end=1\" --out=$S/bef 2>&1 | grep -v \"outside of Vite\" | cut -c1-120 && timeout 1500 node tools/match07/capture_5277.mjs 07 08 07a_plunge_top 07b_plunge_mid 07c_plunge_bottom 07d_entering_08 --q=\"${K7}&m07end=1&m07cloud=1\" --out=$S/new 2>&1 | grep -v \"outside of Vi …[+109 chars]`
 
+### 🧑 User — 2026-11-20T03:46:26.172Z
+
+> ↩︎ result: 07 → /tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/cap/bef/07.png {"stage":"07","s
+> 08 → /tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/cap/bef/08.png {"stage":"08","s
+> 07a_plunge_top → /tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/cap/bef/07a_plunge_
+> 07b_plunge_mid → /tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/cap/bef/07b_plunge_
+> 07c_plunge_bottom → /tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/cap/bef/07c_plun
+> 07d_entering_08 → /tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/cap/bef/07d_enteri
+> console errors: [
+>   '[07] Failed to load resource: the server responded with a status of 403 (Forbidden)',
+>   '[07] Failed to load resource: the server responded with a status of 403 (Forbidden)',
+>   '[07] Failed to load resource: the server responded with a status of 403 (Forbidden)',
+>   '[07] Failed to load resource: the server responded with a status of 403 (Forbidden)',
+>   '[08] Failed to load resource: the server responded with a status of 403 (Forbidden)',
+>   '[08] Failed to load  …[+2093 chars]
+
+### 🤖 Claude — 2026-11-20T03:46:28.057Z
+
+The 403s are the same font files blocked by the Vite allow list (node_modules is a symlink), identical in both runs. Diffing.
+
+### 🤖 Claude — 2026-11-20T03:46:32.207Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/cap && O=/home/user/rainbow-/qa/match/07/r22/s1_cloud && python3 -I - \"$S\" \"$O\" <<'EOF'\nimport json,subprocess,sys\nS,O=sys.argv[1],sys.argv[2]\nres={\"what\":\"deterministic scripts/capture.mjs (port-5277 copy tools/match07/capture_5277.mjs), K7e vs K7e&m07cloud=1, rows 180-1536, threshold 0.1\"}\nfor n in ['07','08','07a_plunge_top','07b_plunge_mid','07c_plunge_bottom','07d_entering_08']:\n    out=subprocess.run(['node','/home/user/tools-pixelmatch/pixeldiff.mjs',f'{S}/new/{n}.png',f'{S}/bef …[+313 chars]`
+
+### 🧑 User — 2026-11-20T03:46:34.123Z
+
+> ↩︎ result: {'what': 'deterministic scripts/capture.mjs (port-5277 copy tools/match07/capture_5277.mjs), K7e vs K7e&m07cloud=1, rows 180-1536, threshold 0.1', '07': 0, '08': 0, '07a_plunge_top': 24745, '07b_plunge_mid': 89184, '07c_plunge_bottom': 1011, '07d_entering_08': 0, 'audit_a_start': 0}
+
+### 🤖 Claude — 2026-11-20T03:46:37.054Z
+
+07 start, 08 start and 07d (entering 08) are 0 px; 07a/07b/07c differ because the clouds are visible there, as intended. A quick look at those plunge frames.
+
+### 🤖 Claude — 2026-11-20T03:46:39.761Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/cap && python3 -I -c \"\nfrom PIL import Image\nS='$S'\nims=[Image.open(f'{S}/{d}/{n}.png').convert('RGB').resize((432,768)) for d in ['bef','new'] for n in ['07a_plunge_top','07b_plunge_mid','07c_plunge_bottom']]\nsheet=Image.new('RGB',(432*3,768*2))\nfor k,im in enumerate(ims): sheet.paste(im,((k%3)*432,(k//3)*768))\nsheet.save(f'{S}/plunge_cmp.png')\"", "description": "Build plunge frame comparison sheet for review"}`
+
+### 🧑 User — 2026-11-20T03:46:40.505Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T03:46:40.809Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/cap/plunge_cmp.png"}`
+
+### 🧑 User — 2026-11-20T03:46:41.056Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:46:43.217Z
+
+All as intended. Now the continuity test (it writes `qa/continuity_report.json` and `docs/path_graph.md` in the worktree; I'll check they stay unchanged).
+
+### 🤖 Claude — 2026-11-20T03:46:44.530Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && timeout 600 npm run test:continuity 2>&1 | tail -15 > /home/user/rainbow-/qa/match/07/r22/s1_cloud/continuity.txt; cat /home/user/rainbow-/qa/match/07/r22/s1_cloud/continuity.txt; git status --short | head", "description": "Run continuity test and check worktree status", "timeout": 660000}`
+
+### 🧑 User — 2026-11-20T03:46:45.144Z
+
+> ↩︎ result: },
+>  "maxStepTangentDeg": 6.241,
+>  "boundaries": [
+>   "01->02 gap=0 dT=0.249 y=-2.4",
+>   "02->03 gap=-0.0001 dT=0.673 y=-11.87",
+>   "03->04 gap=0 dT=0.932 y=-19.41",
+>   "04->05 gap=0 dT=0.246 y=-40.63",
+>   "05->06 gap=0 dT=0.281 y=-43.35",
+>   "06->07 gap=0 dT=0.114 y=-48.53",
+>   "07->08 gap=0 dT=0.339 y=-113.5",
+>   "08->09 gap=0 dT=0.12 y=-113.59",
+>   "09->10 gap=0 dT=0.08 y=-113.47",
+>   "10->11 gap=0 dT=0.003 y=-110.16"
+>  ]
+> }
+>  M src/game/Game.ts
+>  M src/world/match07.ts
+> ?? node_modules
+> ?? tools/match07/capture_5277.mjs
+> ?? tools/match07/diag_r21.mjs
+> ?? tools/match07/gameplay_test_5277.mjs
+> ?? tools/match07/swim_clip_r21.mjs
+
+### 🤖 Claude — 2026-11-20T03:46:48.269Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && timeout 600 npm run test:continuity 2>&1 | grep -n \"ok\\|plunge\\|drop\\|07\" | head -20; diff <(cat /home/user/rainbow-/qa/match/07/r21/step1_end/continuity.txt) /home/user/rainbow-/qa/match/07/r22/s1_cloud/continuity.txt && echo \"continuity output identical to r21\"", "description": "Confirm continuity ok and compare with r21", "timeout": 660000}`
+
+### 🧑 User — 2026-11-20T03:46:48.813Z
+
+> ↩︎ result: Exit code 1
+> 6: "ok": true,
+> 8: "plunge": {
+> 9:  "entryAltitude07": -48.53,
+> 10:  "plungeTop": {
+> 14:  "plungeMid": {
+> 18:  "plungeBottom": {
+> 36:  "06->07 gap=0 dT=0.114 y=-48.53",
+> 37:  "07->08 gap=0 dT=0.339 y=-113.5",
+> 1,27d0
+> < 
+> < > rainbow-washer-game@0.1.0 test:continuity
+> < > vite-node scripts/continuity-test.ts
+> < 
+> < {
+> <  "ok": true,
+> <  "length": 435.2,
+> <  "plunge": {
+> <   "entryAltitude07": -48.53,
+> <   "plungeTop": {
+> <    "s": 310.41,
+> <    "y": -52.31
+> <   },
+> <   "plungeMid": {
+> <    "s": 349.77,
+> <    "y": -83.56
+> <   },
+> <   "plungeBottom": {
+> <    "s": 389.13,
+> <    "y": -113.49
+> <   },
+> <   "inlet08": {
+> <    "s": 389.22,
+> <    "y": -113.5
+> <   },
+> <   "verticalDrop": 61.19,
+> <   "minPitchDeg": -70
+
+### 🤖 Claude — 2026-11-20T03:46:50.755Z
+
+My first save was truncated by `tail`; saving the full output and comparing.
+
+### 🤖 Claude — 2026-11-20T03:46:52.564Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && timeout 600 npm run test:continuity > /home/user/rainbow-/qa/match/07/r22/s1_cloud/continuity.txt 2>&1; diff /home/user/rainbow-/qa/match/07/r21/step1_end/continuity.txt /home/user/rainbow-/qa/match/07/r22/s1_cloud/continuity.txt && echo \"continuity output identical to r21 (ok, all joins gap 0, drop 61.19)\"; git status --short | grep -v \"^??\"", "description": "Save full continuity output and diff with r21", "timeout": 660000}`
+
+### 🧑 User — 2026-11-20T03:46:53.175Z
+
+> ↩︎ result: continuity output identical to r21 (ok, all joins gap 0, drop 61.19)
+>  M src/game/Game.ts
+>  M src/world/match07.ts
+
+### 🤖 Claude — 2026-11-20T03:46:56.436Z
+
+All checks pass. Recording performance numbers (lobe counts and draw calls from the capture logs) before writing up the step.
+
+### 🤖 Claude — 2026-11-20T03:47:00.584Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/cap && python3 -I -c \"\nimport json\nfor d in ['bef','new']:\n  L=json.load(open('$S/'+d+'/capture_log.json'))\n  print(d, [(s['id'], s['stats']['calls'], s['stats']['triangles']) for s in L['shots']])\n\"; cd /home/user/wt/s07 && K7=$(cat /home/user/rainbow-/qa/match/07/r21/K7.txt) && timeout 300 node tools/match07/diag_r21.mjs /tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/diag3 \"${K7}&m07end=1&m07cloud=1\" '[{\"name\":\"x\",\"frac\":0,\"steer\":null}]' 2>&1 | …[+120 chars]`
+
+### 🧑 User — 2026-11-20T03:47:13.206Z
+
+> ↩︎ result: bef [('07', 153, 287709), ('08', 164, 611819), ('07a_plunge_top', 152, 345869), ('07b_plunge_mid', 72, 498807), ('07c_plunge_bottom', 134, 533527), ('07d_entering_08', 165, 611959)]
+> new [('07', 154, 290061), ('08', 164, 611819), ('07a_plunge_top', 154, 352721), ('07b_plunge_mid', 74, 505659), ('07c_plunge_bottom', 136, 540379), ('07d_entering_08', 165, 611959)]
+> console [m07cloud] cloud_level lobes 1176
+> console [m07cloud] pl_cloud lobes 2250
+
+### 🤖 Claude — 2026-11-20T03:47:16.205Z
+
+Cost: +2 draw calls, 3,426 lobes (two triangles each, about 6,850 triangles) as two instanced draws. Saving the code patch and logging step 1.
+
+### 🤖 Claude — 2026-11-20T03:47:19.562Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && git diff > /home/user/rainbow-/qa/match/07/r22/s1_cloud/code.patch && mkdir -p /home/user/rainbow-/qa/match/07/r22/s1_cloud/tools && cp tools/match07/capture_5277.mjs tools/match07/gameplay_test_5277.mjs /home/user/rainbow-/qa/match/07/r22/s1_cloud/tools/ && rm -rf /home/user/rainbow-/qa/match/07/r22/s1_cloud/draft0 /home/user/rainbow-/qa/match/07/r22/s1_cloud/draft1 /home/user/rainbow-/qa/match/07/r22/s1_cloud/draft2 /home/user/rainbow-/qa/match/07/r22/s1_cloud/draft3 /home/user/rainbow-/qa/match/07/r22/s1_cloud/draft4 /home/user/rainbow-/qa/match/07/r22/s …[+210 chars]`
+
+### 🧑 User — 2026-11-20T03:47:19.773Z
+
+> ↩︎ result: NEW
+> code.patch
+> continuity.txt
+> diff_a_start.png
+> gameplay_new.json
+> proof_0px.json
+> swim_end_BEFORE.mp4
+> swim_end_NEW.mp4
+> swim_level_BEFORE.mp4
+> swim_level_NEW.mp4
+> tools
+> 405 /home/user/rainbow-/qa/match/07/r22/s1_cloud/code.patch
+

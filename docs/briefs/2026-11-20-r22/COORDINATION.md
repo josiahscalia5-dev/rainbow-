@@ -68,3 +68,7 @@ s06 / Benny = their pushed `-c23` tips + their r22 PROGRESS.md.
   NOT YET (lavender-pink stripes, approved cream). Best Benny query: `&benny20=1&b20expo=1&b20ppw=0.45`. Branch history verified
   intact (all earlier commits are ancestors). Lead gave GO for round 23 in the same session: b20tuft (fluffy volume, centred crops)
   → knit cream stripes / vertical ribs → felt star; Benny size on 06 stays with the 06 specialist (framing), no Benny scaling.
+* ~03:50 s04 foam worker STOPPED (lead asked): step 0 restore verified (code identical; water differs only because the river shader
+  reads the real clock → pinned-clock QA tools `qa/match/04/r22/tools/`); step 2 `m04bbd` 3D foam heaps inside the tunnel — worker GOOD,
+  lead: small improvement (patchy, smaller than painted) → candidate **K22-2** (`qa/match/04/r22/s2_bbd/QUERY_K22-2.txt`). Unfinished
+  `m04a3sc` (chevrons vs Benny's hat) saved. Next in this worktree: projection `&m04mp=1` (`LAUNCH_S04_PROJ.md`).

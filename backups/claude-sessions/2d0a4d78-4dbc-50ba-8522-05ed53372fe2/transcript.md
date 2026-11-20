@@ -2973,3 +2973,159 @@ Stop hook feedback:
 
 Everything is committed and pushed. The branch is at `6019b9a`, GitHub matches, and nothing is left uncommitted.
 
+### 🧑 User — 2026-11-20T03:46:52.837Z
+
+<task-notification>
+<task-id>a019baf157b236168</task-id>
+<tool-use-id>toolu_01VuxHMtuPxizSMQkjHVVvLZ</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/tasks/a019baf157b236168.output</output-file>
+<status>completed</status>
+<summary>Agent "Screen 04 water/foam specialist r22" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>I've stopped as you asked: step 2 (foam banks inside the tunnel) is finished and proven, and I didn't start task 3. All edits are still in `/home/user/wt/s04`, uncommitted; nothing was committed or pushed and no paid jobs were run.
+
+**Step 0: the restore reproduces the saved step-1 result.**
+- The code in the worktree matches the saved round-21 patch (`git diff` vs `code_at_stop_full.patch`, 744 lines, only the `index` lines differ).
+- Start view: 0 px different from the saved one.
+- Other shots: 129k–313k px differ, and every one of them is on the river water. Rings, Benny, chevrons, coins, bubbles and HUD are identical.
+- **Cause:** the river shader takes its time from the real clock (`performance.now()` in `match04m4.ts`, already there in base 34cb494), not the audit's frozen clock. So the water swirls land at a different point in every run, including the round-21 BEFORE/NEW pairs.
+- **Fix for proofs (QA tools only, no game change):** `qa/match/04/r22/tools/audit_pinned.mjs` holds that clock fixed while each shot is drawn. Two runs give 0 px in all 7 shots. I made matching copies of the swim-clip tool and the gameplay test that run on port 5273.
+
+**Step 2: big glossy foam heaps beside Benny inside the tunnel. Verdict: GOOD IMPROVEMENT.**
+- **Switch:** `&amp;m04bbd=1&amp;m04bbd0=0.85&amp;m04bbd1=0.85&amp;m04bbdk=0.15&amp;m04bbdx=0&amp;m04bbdg=0.6&amp;m04bbdf=9&amp;m04bbdf1=12&amp;m04bbdn=2&amp;m04bbdn1=3.5&amp;m04bbx=1`
+- **Before:** once inside the tunnel there was no foam at all.
+- **Now:**
+  - The water edges carry big pearly lilac-white bubble heaps beside Benny and in the bottom corners. In d_late they sit almost where the painting's left and right foam is.
+  - A few loose bubbles appear where a heap is forming further ahead, and nothing lines the lane into the distance.
+  - The heaps never cover Benny: steering hard left or right, they stay beside him with his splash in between.
+- **Still wrong:**
+  - At some moments only one side has a heap (the painting has both).
+  - Heaps right next to the camera at hard right are bigger than the painted foreground bubbles.
+- **Rejected tries:**
+  - The round-21 `m04bbd` as it was: small white "popcorn" clumps floating in the pink water.
+  - Full-size heaps all the way down the tunnel: a white border along the lane and flat-bottomed bubbles near the camera.
+- **What the code adds:** a window that keeps the deeper heaps full size only from about Benny's depth to a few units ahead of him, and lets them stay whole near the camera. It is 22 lines on top of the round-21 code. `m04bbx` is folded in: its sparkle barely changes anything, and its clearance keeps heaps off Benny.
+- **Proof:**
+  - Start view: 0 px different from BEFORE.
+  - Gameplay: 8/8 checks pass, 91 coins, 1,330 → 2,240.
+  - Kept set with the new code and the new switches off: 0 px in all 7 shots.
+  - Type-check passes.
+
+**Not finished:** I wrote, but never ran or rendered, the task-3 chevron fix `&amp;m04a3sc=1` (a chevron fades when it would show at or below the top of Benny's hat). It is off by default and has no effect when off. It is saved separately in `s3_unfinished/m04a3sc_unfinished.patch` and also appears in the full `code.patch`; the next step is to calibrate it with `&amp;m04a3dbg=1`.
+
+**New candidate query (K22-2):** K21-1 + the switch above, saved in `/home/user/rainbow-/qa/match/04/r22/s2_bbd/QUERY_K22-2.txt`.
+
+**Most visible remaining difference:** the nearest chevrons still sit at Benny's hat height while he swims (d_late, c_middle), so they look like they straddle his hat. In the painting all five are clearly above his pompom.
+
+Everything is in `/home/user/rainbow-/qa/match/04/r22/`:
+- `PROGRESS.md` (the "(r22) WHERE I STOPPED / NEXT" block is up to date)
+- `BEFORE_K21/` (BEFORE, 7 shots)
+- `s0_verify/` (restore check and diffs)
+- `s2_bbd/NEW/` (NEW, 7 shots)
+- `s2_bbd/1_APPROVED.png`
+- `s2_bbd/start_pixeldiff.png`
+- `s2_bbd/BEFORE_swim_clip_half.mp4`
+- `s2_bbd/NEW_swim_clip_half.mp4`
+- `s2_bbd/clip_frames/`
+- `s2_bbd/gameplay.json`
+- `s2_bbd/code.patch` (full worktree diff)
+- `s2_bbd/step2_only.patch`
+- `s3_unfinished/m04a3sc_unfinished.patch`
+- `tools/` (pinned audit, pinned swim clip, gameplay test on port 5273)
+- `scratch/` (the rejected tries)</result>
+<usage><subagent_tokens>277769</subagent_tokens><tool_uses>119</tool_uses><duration_ms>1781115</duration_ms></usage>
+</task-notification>
+
+### 🤖 Claude — 2026-11-20T03:46:57.108Z
+
+The Screen 04 foam specialist has handed over. It confirms the restored code reproduces last round's result, and it reports one new good improvement: big glossy foam heaps beside Benny inside the tunnel, where there was no foam before. It also found that the water animation followed the real clock, which made repeated test pictures differ, and built a fixed-clock version of the picture tool. Checking its pictures before launching the projection work:
+
+### 🤖 Claude — 2026-11-20T03:47:00.913Z
+
+> 🔧 **Bash** `{"command": "D=qa/match/04/r22; ls $D/s2_bbd/NEW/ $D/BEFORE_K21/; SP=/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad; python3 -I - \"$SP\" <<'EOF'\nimport sys\nfrom PIL import Image\nsp=sys.argv[1]; D='qa/match/04/r22'\nfs=['references/04_through_the_five_arrows.png',f'{D}/BEFORE_K21/d_late.png',f'{D}/s2_bbd/NEW/d_late.png',f'{D}/BEFORE_K21/c_middle.png',f'{D}/s2_bbd/NEW/c_middle.png',f'{D}/s2_bbd/NEW/g_hard_right.png']\nH=520; ims=[]\nfor f in fs:\n    im=Image.open(f).convert('RGB'); ims.append(im.resize((int(im.width*H/im.height),H)))\nW=sum(i.width for i i …[+222 chars]`
+
+### 🧑 User — 2026-11-20T03:47:01.236Z
+
+> ↩︎ result: qa/match/04/r22/BEFORE_K21/:
+> a_start.png
+> b_early.png
+> c_middle.png
+> d_late.png
+> e_end.png
+> f_hard_left.png
+> g_hard_right.png
+> shots.json
+> 
+> qa/match/04/r22/s2_bbd/NEW/:
+> a_start.png
+> b_early.png
+> c_middle.png
+> d_late.png
+> e_end.png
+> f_hard_left.png
+> g_hard_right.png
+> shots.json
+
+### 🤖 Claude — 2026-11-20T03:47:02.963Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/s04_t2_check.jpg"}`
+
+### 🧑 User — 2026-11-20T03:47:02.994Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:47:19.942Z
+
+> 🔧 **Bash** `{"command": "cat qa/match/04/r22/s2_bbd/QUERY_K22-2.txt | cut -c1-200; echo; ls qa/match/04/r22/tools/; cat >> docs/briefs/2026-11-20-r22/LAUNCH_S04_PROJ.md <<'EOF'\n\n## Hand-over from the r22 foam specialist (~03:50 UTC) — read before you start\n* BEFORE for your proofs = **K22-2** = `cat /home/user/rainbow-/qa/match/04/r22/s2_bbd/QUERY_K22-2.txt` (K21-1 + 3D foam heaps\n  `m04bbd…&m04bbx=1`; lead verdict: small improvement, patchy / sometimes one-sided, smaller than the painted banks).\n* **Use the pinned-clock tools** (the river shader reads `performance.now()`, so the water differs run to …[+1328 chars]`
+
+### 🧑 User — 2026-11-20T03:47:19.997Z
+
+> ↩︎ result: match04=1&m04ring=1&m04river=1&m04bub=1&m04mouth=1&m04room=1&m04ry=0.8&m04rk=0.82&m04arr3d=1&m04a3k=66&m04a3w2=1&m04a3g=1.6&m04a3o=0.38&m04a3b=1&m04a3b0=3.0&m04a3b1=4.4&m04a3f0=25&m04a3f1=31&m04a3p=4.
+> 
+> audit_pinned.mjs
+> gameplay_test_5273.mjs
+> swim_clip_pinned.mjs
+> ok
+
+### 🤖 Claude — 2026-11-20T03:47:29.347Z
+
+> 🔧 **Agent** `{"description": "Screen 04 multi-plate projection", "subagent_type": "washer-environment-modeler", "run_in_background": true, "prompt": "You are the Rainbow project's washer-environment-modeler, acting as the texture-projection artist for playable Screen 04, round 22.\n\nThe user has APPROVED three generated continuation views of Screen 04 (middle / late / end of the gold tunnel). Your job: project them onto the real Screen 04 3D environment behind its own URL switch `&m04mp=1`, so the scenery keeps looking like the approved paintings while Benny swims deeper.\n\nRead, in this order, and follo …[+2169 chars]`
+
+### 🧑 User — 2026-11-20T03:47:29.376Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a9f2496902245e5e8 (internal ID - do not mention to user. Use SendMessage with to: 'a9f2496902245e5e8', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/tasks/a9f2496902245e5e8.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-20T03:47:30.558Z
+
+Projection specialist launched. Sending you the foam step pictures and clips, then saving:
+
+### 🤖 Claude — 2026-11-20T03:47:32.716Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/match/04/r22/s2_bbd/1_APPROVED.png", "/home/user/rainbow-/qa/match/04/r22/BEFORE_K21/d_late.png", "/home/user/rainbow-/qa/match/04/r22/s2_bbd/NEW/d_late.png"], "caption": "Screen 04 foam inside the tunnel (late), in order: 1) ORIGINAL APPROVED, 2) BEFORE, 3) NEW. Foam now appears beside Benny but is patchier than painted: small improvement, candidate only.", "status": "proactive", "display": "render"}`
+
+### 🧑 User — 2026-11-20T03:47:33.616Z
+
+> ↩︎ result: 3 files delivered to user.
+>   /home/user/rainbow-/qa/match/04/r22/s2_bbd/1_APPROVED.png → file_uuid: c976928e-cd5b-42df-8a2b-7a6804359264
+>   /home/user/rainbow-/qa/match/04/r22/BEFORE_K21/d_late.png → file_uuid: b18bdb90-410b-48cd-b48a-6bdac78c2fad
+>   /home/user/rainbow-/qa/match/04/r22/s2_bbd/NEW/d_late.png → file_uuid: 045d0213-d7ed-4bcb-af7f-76731c91f38c
+
+### 🤖 Claude — 2026-11-20T03:47:34.119Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/match/04/r22/s2_bbd/BEFORE_swim_clip_half.mp4", "/home/user/rainbow-/qa/match/04/r22/s2_bbd/NEW_swim_clip_half.mp4"], "caption": "Screen 04 swimming clips (straight, left, right): 1) BEFORE, 2) NEW with the foam heaps.", "status": "proactive"}`
+
+### 🧑 User — 2026-11-20T03:47:34.503Z
+
+> ↩︎ result: 2 files delivered to user.
+>   /home/user/rainbow-/qa/match/04/r22/s2_bbd/BEFORE_swim_clip_half.mp4 → file_uuid: 7629d25e-cd50-41ae-8e1e-d325d5548e9a
+>   /home/user/rainbow-/qa/match/04/r22/s2_bbd/NEW_swim_clip_half.mp4 → file_uuid: 0c677eec-2372-45ac-b9aa-d8d43ce14dab
+
+### 🤖 Claude — 2026-11-20T03:47:40.466Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\np='backups/AGENTS_STATUS.json'; d=json.load(open(p))\nr=d['round22']; r['updated']='2026-11-20T03:52Z'\nr['running'].pop('foam-bubbles-particles (s04)',None)\nr['running']['washer-environment-modeler (s04 projection)']=\"in-process; /home/user/wt/s04 local claude/rainbow-s04-match-c23 (after the foam worker's K22-2); LAUNCH_S04_PROJ.md; log qa/match/04/r22_proj/PROGRESS.md\"\nr['stopped']={\"foam-bubbles-particles (s04)\":\"stopped ~03:50 after step 2 (m04bbd, K22-2); unfinished m04a3sc patch in qa/match/04/r22/s3_unfinished/; log qa/match/04/r22/PR …[+863 chars]`
+
