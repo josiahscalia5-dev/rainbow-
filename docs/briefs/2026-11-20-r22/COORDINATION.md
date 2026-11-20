@@ -27,6 +27,14 @@ artwork, up to FOUR specialists at once, 06 + 07 camera-framing TESTS, Screen 08
 | s05 polish | QUEUED | from `claude/rainbow-s05-match-c19` @ `eb7233e3` | 5275 | end of 05, hard left |
 | Lead | this session | — | — | 04 artwork proposals await the user's verdict → multi-plate projection; keys |
 
+### Launched ~03:17 UTC
+* s04, s07: in-process background agents of this lead session (reports arrive here; logs `qa/match/0N/r22/PROGRESS.md`).
+* s06: cloud session `session_0179kWgNZhiYHyDdV12Eaw6e` → `claude/rainbow-s06-match-c23`.
+* Benny: cloud session `session_0179kWgM7wtBDT3n5KLuLz7o` → `claude/rainbow-benny-c23`.
+Resume after an interruption: s04 / s07 = `git worktree add -b <branch> /home/user/wt/s0N <INFO.head>` + `git apply --binary
+backups/wip/claude__rainbow-s0N-match-c23/tracked.patch`, then relaunch with `LAUNCH_S0N.md` (continue from r22 PROGRESS.md);
+s06 / Benny = their pushed `-c23` tips + their r22 PROGRESS.md.
+
 ## Candidates (NOT accepted until the user approves in motion)
 * 04: K21-1 = V4 + `&m04wgl=1` (r21 GOOD IMPROVEMENT by the worker; re-verified in r22 step 0).
 * 07: K7 + `&m07end=1` (r21 GOOD IMPROVEMENT by the worker; re-verified in r22 step 0).

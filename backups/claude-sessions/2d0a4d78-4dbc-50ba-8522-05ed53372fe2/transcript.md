@@ -1006,3 +1006,339 @@ The briefs need to be on GitHub before the cloud sessions read them. Saving now:
 
 > 🔧 **Bash** `{"command": "timeout 300 python3 scripts/rainbow-autosave.py --reason manual:r22-restore 2>&1 | tail -4; git rev-parse HEAD; timeout 60 git ls-remote origin refs/heads/ccr-4742c19f-ez2mrs", "description": "Save briefs and config to GitHub, verify", "timeout": 320000}`
 
+### 🧑 User — 2026-11-20T03:16:59.239Z
+
+> ↩︎ result: ],
+>   "commit": "0e183f053f13a554b5f2bcb8a96c83db7c2e03b4",
+>   "duration_s": 9
+> }
+> 0e183f053f13a554b5f2bcb8a96c83db7c2e03b4
+> 0e183f053f13a554b5f2bcb8a96c83db7c2e03b4	refs/heads/ccr-4742c19f-ez2mrs
+
+### 🤖 Claude — 2026-11-20T03:17:11.687Z
+
+> 🔧 **Agent** `{"description": "Screen 04 water/foam specialist r22", "subagent_type": "foam-bubbles-particles", "run_in_background": true, "prompt": "You are the Rainbow project's foam-bubbles-particles specialist, round 22, working ONLY on playable Screen 04 visuals (water, water climbing the tunnel walls, foam banks, bubbles, the five chevrons).\n\nRead, in this order, and follow exactly:\n1. /home/user/rainbow-/docs/briefs/2026-11-20-r22/LAUNCH_S04.md  (round-22 overrides: worktree, branch, folders, Step 0)\n2. /home/user/rainbow-/docs/briefs/2026-11-20-r21/S04_R21.md     (your full brief: binding rules, …[+1585 chars]`
+
+### 🧑 User — 2026-11-20T03:17:11.719Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a019baf157b236168 (internal ID - do not mention to user. Use SendMessage with to: 'a019baf157b236168', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/tasks/a019baf157b236168.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-20T03:17:18.890Z
+
+> 🔧 **Agent** `{"description": "Screen 07 specialist r22", "subagent_type": "water-fx-specialist", "run_in_background": true, "prompt": "You are the Rainbow project's water-fx-specialist, round 22, working ONLY on playable Screen 07 \"Dive the Washer Tube\" visuals.\n\nRead, in this order, and follow exactly:\n1. /home/user/rainbow-/docs/briefs/2026-11-20-r22/LAUNCH_S07.md  (round-22 overrides: worktree, branch, folders, Step 0, the user-approved framing TEST)\n2. /home/user/rainbow-/docs/briefs/2026-11-20-r21/S07_R21.md     (your full brief: binding rules, tasks, proof, reporting)\n3. The binding rules it n …[+1811 chars]`
+
+### 🧑 User — 2026-11-20T03:17:18.909Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: ac3be854f5f5255ed (internal ID - do not mention to user. Use SendMessage with to: 'ac3be854f5f5255ed', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/tasks/ac3be854f5f5255ed.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-20T03:17:26.741Z
+
+> 🔧 **mcp__claude-code-remote__create_session** `{"title": "Rainbow r22 — Screen 06 (m06view framing test)", "source_url": "https://github.com/josiahscalia5-dev/rainbow-", "source_revision": "claude/rainbow-s06-match-c22", "outcome_branch": "claude/rainbow-s06-match-c23", "tags": ["rainbow-r22", "rainbow-s06"], "prompt": "RAINBOW round 22 — Screen 06 specialist. You continue EXISTING work; do not restart, redesign, merge or delete anything.\n\nYour branch is claude/rainbow-s06-match-c23 (checked out from claude/rainbow-s06-match-c22 @ c7cac38). Push ONLY this branch. Follow CLAUDE.md (five-minute GitHub autosave must say AUTOSAVE OK … (match …[+1436 chars]`
+
+### 🤖 Claude — 2026-11-20T03:17:33.849Z
+
+> 🔧 **mcp__claude-code-remote__create_session** `{"title": "Rainbow r22 — Benny approved look (all screens)", "source_url": "https://github.com/josiahscalia5-dev/rainbow-", "source_revision": "claude/rainbow-benny-c22", "outcome_branch": "claude/rainbow-benny-c23", "tags": ["rainbow-r22", "rainbow-benny"], "prompt": "RAINBOW round 22 — Benny specialist. You continue EXISTING work; do not restart, redesign, merge or delete anything.\n\nYour branch is claude/rainbow-benny-c23 (checked out from claude/rainbow-benny-c22 @ 70d3b83b). Push ONLY this branch. Follow CLAUDE.md (five-minute GitHub autosave must say AUTOSAVE OK … (match)).\n\nYour brie …[+1460 chars]`
+
+### 🧑 User — 2026-11-20T03:17:36.976Z
+
+> ↩︎ result: {"ccr":{"id":"session_0179kWgNZhiYHyDdV12Eaw6e","title":"Rainbow r22 — Screen 06 (m06view framing test)","session_status":"SESSION_STATUS_PENDING","created_at":"2026-11-20T03:17:36.857977Z","updated_at":"2026-11-20T03:17:36.857977Z","environment_id":"env_015hWXiwzaAezq7Vt4fKPYNE","session_context":{"sources":[{"git_repository":{"url":"https://github.com/josiahscalia5-dev/rainbow-","revision":"claude/rainbow-s06-match-c22"}}],"outcomes":[{"git_repository":{"git_info":{"repo":"josiahscalia5-dev/rainbow-","branches":["claude/rainbow-s06-match-c23"]}}}],"model":"claude-opus-5-5"},"origin":"claude_code_mcp_seed","connection_status":"disconnected","tags":["rainbow-r22","rainbow-s06","config:session-created","config:auto-create-pr:draft","config:meta-mcp-own-entry"],"environment_kind":"anthropic_cloud","parent_session_id":"session_0179kWgNJzw5v4674DNtMpda","status_bucket":"SESSION_STATUS_BUCKET_WORKING","configured_model":"claude-opus-5-5"}}
+
+### 🧑 User — 2026-11-20T03:17:45.526Z
+
+> ↩︎ result: {"ccr":{"id":"session_0179kWgM7wtBDT3n5KLuLz7o","title":"Rainbow r22 — Benny approved look (all screens)","session_status":"SESSION_STATUS_PENDING","created_at":"2026-11-20T03:17:45.427218Z","updated_at":"2026-11-20T03:17:45.427218Z","environment_id":"env_015hWXiwzaAezq7Vt4fKPYNE","session_context":{"sources":[{"git_repository":{"url":"https://github.com/josiahscalia5-dev/rainbow-","revision":"claude/rainbow-benny-c22"}}],"outcomes":[{"git_repository":{"git_info":{"repo":"josiahscalia5-dev/rainbow-","branches":["claude/rainbow-benny-c23"]}}}],"model":"claude-opus-5-5"},"origin":"claude_code_mcp_seed","connection_status":"disconnected","tags":["rainbow-r22","rainbow-benny","config:session-created","config:auto-create-pr:draft","config:meta-mcp-own-entry"],"environment_kind":"anthropic_cloud","parent_session_id":"session_0179kWgNJzw5v4674DNtMpda","status_bucket":"SESSION_STATUS_BUCKET_WORKING","configured_model":"claude-opus-5-5"}}
+
+### 🤖 Claude — 2026-11-20T03:17:48.364Z
+
+All four specialists are running. Recording the new session IDs in the coordination map, then preparing the Screen 04 artwork proposals for you.
+
+### 🤖 Claude — 2026-11-20T03:17:48.812Z
+
+> 🔧 **TaskUpdate** `{"taskId": "2", "status": "completed"}`
+
+### 🧑 User — 2026-11-20T03:17:48.836Z
+
+> ↩︎ result: Updated task #2 status
+
+### 🤖 Claude — 2026-11-20T03:17:49.263Z
+
+> 🔧 **TaskUpdate** `{"taskId": "3", "status": "completed"}`
+
+### 🧑 User — 2026-11-20T03:17:49.274Z
+
+> ↩︎ result: Updated task #3 status
+
+### 🤖 Claude — 2026-11-20T03:17:49.714Z
+
+> 🔧 **TaskUpdate** `{"taskId": "4", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-20T03:17:49.724Z
+
+> ↩︎ result: Updated task #4 status
+
+### 🤖 Claude — 2026-11-20T03:17:53.566Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/docs/briefs/2026-11-20-r22/COORDINATION.md", "old_string": "## Candidates (NOT accepted until the user approves in motion)", "new_string": "### Launched ~03:17 UTC\n* s04, s07: in-process background agents of this lead session (reports arrive here; logs `qa/match/0N/r22/PROGRESS.md`).\n* s06: cloud session `session_0179kWgNZhiYHyDdV12Eaw6e` → `claude/rainbow-s06-match-c23`.\n* Benny: cloud session `session_0179kWgM7wtBDT3n5KLuLz7o` → `claude/rainbow-benny-c23`.\nResume after an interruption: s04 / s07 = `git worktree add -b <branch> /hom …[+308 chars]`
+
+### 🧑 User — 2026-11-20T03:17:53.656Z
+
+> ↩︎ result: The file /home/user/rainbow-/docs/briefs/2026-11-20-r22/COORDINATION.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T03:17:55.016Z
+
+> 🔧 **Bash** `{"command": "ls -la qa/review_r21/artwork/04/ qa/review_r21/artwork/04/proposals/ | head -40; python3 -I -c \"\nfrom PIL import Image; import glob\nfor f in sorted(glob.glob('qa/review_r21/artwork/04/FOR_APPROVAL_04_*.png')): print(f, Image.open(f).size)\"", "description": "List Screen 04 artwork proposals"}`
+
+### 🧑 User — 2026-11-20T03:17:55.201Z
+
+> ↩︎ result: qa/review_r21/artwork/04/:
+> total 15832
+> drwxr-xr-x 4 root root    4096 Nov 20 03:05 .
+> drwxr-xr-x 5 root root    4096 Nov 20 03:05 ..
+> -rw-r--r-- 1 root root 5371746 Nov 20 03:05 FOR_APPROVAL_04_c_middle.png
+> -rw-r--r-- 1 root root 5376659 Nov 20 03:05 FOR_APPROVAL_04_d_late.png
+> -rw-r--r-- 1 root root 5433141 Nov 20 03:05 FOR_APPROVAL_04_e_end.png
+> drwxr-xr-x 2 root root    4096 Nov 20 03:05 game_frames
+> -rw-r--r-- 1 root root    1489 Nov 20 03:05 prompt_04.txt
+> -rw-r--r-- 1 root root    1596 Nov 20 03:05 prompt_04_late.txt
+> drwxr-xr-x 2 root root    4096 Nov 20 03:05 proposals
+> 
+> qa/review_r21/artwork/04/proposals/:
+> total 25804
+> drwxr-xr-x 2 root root    4096 Nov 20 03:05 .
+> drwxr-xr-x 4 root root    4096 Nov 20 03:05 ..
+> -rw-r--r-- 1 root root    2272 Nov 20 03:05 c_middle.job.json
+> -rw-r--r-- 1 root root    2341 Nov 20 03:05 c_middle_p2.job.json
+> -rw-r--r-- 1 root root 5282955 Nov 20 03:05 c_middle_p2_v1.png
+> -rw-r--r-- 1 root root 5117237 Nov 20 03:05 c_middle_v1.png
+> -rw-r--r-- 1 root root    2335 Nov 20 03:05 d_late_p2.job.json
+> -rw-r--r-- 1 root root 5332493 Nov 20 03:05 d_late_p2_v1.png
+> -rw-r--r-- 1 root root    2442 Nov 20 03:05 d_late_p3.job.json
+> -rw-r--r-- 1 root root 5240598 Nov 20 03:05 …[+335 chars]
+
+### 🤖 Claude — 2026-11-20T03:17:56.825Z
+
+Let me look at one approval sheet myself before sending, to confirm it's clearly labelled.
+
+### 🤖 Claude — 2026-11-20T03:17:57.319Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/review_r21/artwork/04/FOR_APPROVAL_04_c_middle.png"}`
+
+### 🧑 User — 2026-11-20T03:17:58.185Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-20T03:17:58.175Z
+
+[Image: original 2632x1596, displayed at 2000x1213. Multiply coordinates by 1.32 to map to original image.]
+
+### 🤖 Claude — 2026-11-20T03:18:09.087Z
+
+The sheets are clearly labelled (ORIGINAL APPROVED unchanged · GAME NOW · GENERATED PROPOSAL not yet approved). Sending each proposal separately for your verdict.
+
+### 🤖 Claude — 2026-11-20T03:18:10.687Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/review_r21/artwork/04/FOR_APPROVAL_04_c_middle.png"], "caption": "Screen 04 proposal 1 of 3, MIDDLE of the tunnel. Left: your original approved picture (unchanged). Centre: the game now. Right: GENERATED PROPOSAL (not yet approved).", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-20T03:18:11.991Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/review_r21/artwork/04/FOR_APPROVAL_04_c_middle.png → file_uuid: 3f43fc9e-cd4c-4d72-bda3-67cdb827680b
+
+### 🤖 Claude — 2026-11-20T03:18:12.139Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/review_r21/artwork/04/FOR_APPROVAL_04_d_late.png"], "caption": "Screen 04 proposal 2 of 3, LATE in the tunnel. Left: original approved (unchanged). Centre: game now. Right: GENERATED PROPOSAL (not yet approved).", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-20T03:18:12.971Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/review_r21/artwork/04/FOR_APPROVAL_04_d_late.png → file_uuid: 14a9c692-fb58-4f05-8af4-54fc924771d7
+
+### 🤖 Claude — 2026-11-20T03:18:13.395Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/review_r21/artwork/04/FOR_APPROVAL_04_e_end.png"], "caption": "Screen 04 proposal 3 of 3, END of the tunnel. Left: original approved (unchanged). Centre: game now. Right: GENERATED PROPOSAL (not yet approved).", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-20T03:18:15.222Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/review_r21/artwork/04/FOR_APPROVAL_04_e_end.png → file_uuid: cc753b35-8f36-4871-ac8e-799445719945
+
+### 🤖 Claude — 2026-11-20T03:18:22.996Z
+
+> 🔧 **mcp__claude-code-remote__request_credential** `{"host": "api.worldlabs.ai", "header_name": "WLT-Api-Key", "display_name": "World Labs Marble API key", "suggested_type": "bearer", "reason": "The free Marble API check returned HTTP 401 on this new account. The key unlocks the World Labs Marble API (credit balance reads and approved Marble jobs) for the Rainbow game."}`
+
+### 🧑 User — 2026-11-20T03:18:56.256Z
+
+> ↩︎ result: {"status":"saved","host":"api.worldlabs.ai","applies_to":"environment","note":"A credential for this host is saved on this session's environment. Every session in that environment uses it, including other people's sessions when the environment is shared. The session's network proxy injects it into HTTPS requests to this host — you never see or send the value yourself. Saving it also allows HTTPS requests to this host from those sessions, so do not add the host to the environment's allowed hosts. No environment variable holds the credential, so code that reads a key from a variable finds none and may skip its work. To run such code, set that variable to a placeholder for that command, never a real value: `proxy-injected`, or a dummy in the format the code expects if it checks one. This works where the code sends the key in a header, which the proxy overwrites; a cookie the code sends instead replaces the saved cookie of that name. Tell the user this when their own scripts expect such a variable. Retry the failing request now, as-is (do not add the credential's header yourself): the proxy usually picks the credential up within a couple of seconds. Only a refusal, with the same 401/40 …[+446 chars]
+
+### 🤖 Claude — 2026-11-20T03:18:57.713Z
+
+> 🔧 **Bash** `{"command": "timeout 60 python3 -I scripts/verify-assets.py worldlabs 2>&1 | tail -4", "description": "Re-run free World Labs key check"}`
+
+### 🧑 User — 2026-11-20T03:18:58.481Z
+
+> ↩︎ result: @@ fail Marble API authentication FAILED (HTTP 401): reconnect with the secure credential form (request_credential host api.worldlabs.ai, header WLT-Api-Key) - never chat or git
+
+### 🤖 Claude — 2026-11-20T03:19:01.114Z
+
+Still 401 immediately after saving. That can be the proxy pickup delay. Let me check how the script sends the key, and open the fal form while waiting.
+
+### 🤖 Claude — 2026-11-20T03:19:02.113Z
+
+> 🔧 **Bash** `{"command": "grep -n \"WLT\\|environ\\|api.worldlabs.ai\" scripts/verify-assets.py | head -15", "description": "Inspect how key check sends the header"}`
+
+### 🧑 User — 2026-11-20T03:19:02.149Z
+
+> ↩︎ result: 8:    python3 -I scripts/verify-assets.py gap [--session-start ISO]  backup gaps (environment closed / autosave stopped)
+> 185:    the Claude environment's proxy (network secret); this never reads, prints or stores it. Only an HTTP 401/403
+> 187:    api = "https://api.worldlabs.ai/marble/v1"
+> 202:                            "(request_credential host api.worldlabs.ai, header WLT-Api-Key) - never chat or git")
+> 239:                         f"({mins/60:.1f} h) - no Claude cloud environment with the autosave was active. Nothing can be "
+> 240:                         f"saved while an environment is closed; the newest saved state is {sha[:7]}.")
+> 245:                         f"'{reason}'); anything changed in its last minutes before the environment closed may be missing")
+> 258:                     "autosave run: environment closed or idle-suspended)")
+> 263:        summary += "; previous session ended WITHOUT an end-of-session backup (its environment closed after an automatic save)"
+> 283:            "remote_head_at_report": remote, "base_ref": os.environ.get("CLAUDE_CODE_BASE_REF", ""), "steps": rows}
+> 297:           "cloud-environment settings, running processes. See `backups/TOOL_MANIFEST.json`.",  …[+3 chars]
+
+### 🤖 Claude — 2026-11-20T03:19:03.771Z
+
+> 🔧 **mcp__claude-code-remote__request_credential** `{"host": "queue.fal.run", "prefix": "Key", "display_name": "fal API key", "suggested_type": "bearer", "reason": "No fal key is configured on this new account. It is needed for the user-approved paid artwork jobs (fal nano-banana-2/edit continuation views for screens 04, 05, 07), about $0.12 per image, logged in the ledger."}`
+
+### 🧑 User — 2026-11-20T03:19:32.323Z
+
+> ↩︎ result: {"status":"saved","host":"queue.fal.run","applies_to":"environment","note":"A credential for this host is saved on this session's environment. Every session in that environment uses it, including other people's sessions when the environment is shared. The session's network proxy injects it into HTTPS requests to this host — you never see or send the value yourself. Saving it also allows HTTPS requests to this host from those sessions, so do not add the host to the environment's allowed hosts. No environment variable holds the credential, so code that reads a key from a variable finds none and may skip its work. To run such code, set that variable to a placeholder for that command, never a real value: `proxy-injected`, or a dummy in the format the code expects if it checks one. This works where the code sends the key in a header, which the proxy overwrites; a cookie the code sends instead replaces the saved cookie of that name. Tell the user this when their own scripts expect such a variable. Retry the failing request now, as-is (do not add the credential's header yourself): the proxy usually picks the credential up within a couple of seconds. Only a refusal, with the same 401/403 o …[+443 chars]
+
+### 🤖 Claude — 2026-11-20T03:19:37.835Z
+
+Both keys are saved. Retrying the free World Labs check now that the proxy has had time to pick up the key:
+
+### 🤖 Claude — 2026-11-20T03:19:39.983Z
+
+> 🔧 **Bash** `{"command": "timeout 60 python3 -I scripts/verify-assets.py worldlabs 2>&1 | tail -3; echo \"--- fal (status read on an old request id; not a billable call)\"; curl -s -o /dev/null -w 'HTTP %{http_code}\\n' --max-time 30 \"https://queue.fal.run/fal-ai/nano-banana-2/requests/01a1f6cd-9740-74b0-8ab7-360fbcd093ba/status\"", "description": "Retry World Labs check and fal status read"}`
+
+### 🧑 User — 2026-11-20T03:19:41.174Z
+
+> ↩︎ result: @@ warn Marble API key authenticated (free read: 5420 credits); worlds draft 404, full 404; no paid job started
+> --- fal (status read on an old request id; not a billable call)
+> HTTP 200
+
+### 🤖 Claude — 2026-11-20T03:19:50.646Z
+
+> 🔧 **TaskUpdate** `{"taskId": "5", "status": "completed", "description": "World Labs key saved+verified (5420 credits); fal key saved+verified (200). Atlas connector: user must finish signup at atlas.worldlabs.ai"}`
+
+### 🧑 User — 2026-11-20T03:19:50.656Z
+
+> ↩︎ result: Updated task #5 description, status
+
+### 🤖 Claude — 2026-11-20T03:19:51.347Z
+
+> 🔧 **TaskUpdate** `{"taskId": "4", "status": "completed", "description": "Sent 3 labelled sheets; verdict pending from user"}`
+
+### 🧑 User — 2026-11-20T03:19:51.357Z
+
+> ↩︎ result: Updated task #4 description, status
+
+### 🤖 Claude — 2026-11-20T03:19:53.050Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,30p tools/lead21/fal_view.py; echo ---; cat qa/review_r21/artwork/04/prompt_04.txt; echo ---; ls qa/review_r21/artwork/07/ qa/review_r21/artwork/07/game_frames/ qa/review_r21/artwork/05/game_frames/ 2>&1; cat qa/review_r21/artwork/04/proposals/c_middle_p2.job.json | head -30", "description": "Inspect fal tool, prompt template, 07 frames"}`
+
+### 🧑 User — 2026-11-20T03:19:53.104Z
+
+> ↩︎ result: """Round 21 lead: one fal `nano-banana-2/edit` job — repaint a clean frame of the REAL game (image 1: the game's own camera +
+> geometry) in the art of the user's approved original (images 2..: style / material references). Every job is logged with its
+> inputs (sha256), prompt, request id, estimated cost and outputs in <out>/<name>.job.json and appended to the ledger.
+> Proposals only: nothing generated here is an accepted reference until the user approves it; the originals are never written.
+> usage: python3 -I tools/lead21/fal_view.py <out_dir> <name> <prompt.txt> <structure.png> <ref.png> [ref2.png ...]
+> env: FAL_RES (2K), FAL_N (1), FAL_AR (9:16)"""
+> import base64, hashlib, io, json, os, subprocess, sys, time
+> from pathlib import Path
+> from PIL import Image
+> 
+> PRICE = {"0.5K": 0.06, "1K": 0.08, "2K": 0.12, "4K": 0.16}   # USD per output image (fal model page, 2026-11-20)
+> LEDGER = Path("/home/user/rainbow-/qa/review_r21/artwork/LEDGER.md")
+> out, name, prompt_f = Path(sys.argv[1]), sys.argv[2], sys.argv[3]
+> imgs = sys.argv[4:]
+> res, n, ar = os.environ.get("FAL_RES", "2K"), int(os.environ.get("FAL_N", "1")), os.environ.get("FAL_AR", "9:16")
+> out.mkdir(parents=True, exist_ok=True)
+> prompt = Path(pro …[+4644 chars]
+
+### 🤖 Claude — 2026-11-20T03:20:00.892Z
+
+> 🔧 **Bash** `{"command": "ls /home/user/wt/s07/assets/textures/match07/ 2>/dev/null | head -30; git ls-files | grep -iE \"07.*(plate|clean)|plate.*07\" | head -10; cat qa/review_r21/artwork/07/game_frames/shots.json | head -30", "description": "Find Screen 07 clean plate and frame metadata"}`
+
+### 🧑 User — 2026-11-20T03:20:00.965Z
+
+> ↩︎ result: cam07_locked.json
+> coins07.json
+> near07.json
+> near_bank.png
+> near_foam.png
+> patch_gold.png
+> patch_wall.png
+> plate07_fillmask.png
+> plate07_fillmask_soft.png
+> plate07_hybrid.png
+> proj07.json
+> river07.json
+> tile_river.png
+> tile_river_clean.png
+> tile_wall.png
+> tile_wall_clean.png
+> tile_wall_ring.png
+> tiles07.json
+> [
+>  {
+>   "name": "b_early",
+>   "frac": 0.12,
+>   "steer": null,
+>   "s": 287.256,
+>   "lat": 0,
+>   "stage": "07",
+>   "coins": 1960,
+>   "s0": 273.056,
+>   "s1": 390.1617102628636
+>  },
+>  {
+>   "name": "c_middle",
+>   "frac": 0.35,
+>   "steer": null,
+>   "s": 314.056,
+>   "lat": 0,
+>   "stage": "07",
+>   "coins": 2030,
+>   "s0": 273.056,
+>   "s1": 390.1617102628636
+>  },
+>  {
+>   "name": "d_late",
+>   "frac": 0.6,
+>   "steer": null,
+>   "s": 343.456,
+>   "lat": 0,
+>   "stage": "07",
+
+### 🤖 Claude — 2026-11-20T03:20:07.059Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad && mkdir -p $SP && python3 -I - \"$SP\" <<'EOF'\nimport sys\nfrom PIL import Image\nsp=sys.argv[1]\nfs=['references/07_dive_the_washer_tube.png','/home/user/wt/s07/assets/textures/match07/plate07_hybrid.png']+[f'qa/review_r21/artwork/07/game_frames/{n}.png' for n in ['b_early','c_middle','d_late','e_end']]\nH=520; ims=[]\nfor f in fs:\n    im=Image.open(f).convert('RGB'); ims.append(im.resize((int(im.width*H/im.height),H)))\nW=sum(i.width for i in ims)+5*len(ims); out=Image.new('RGB',(W,H),(20,20, …[+225 chars]`
+
+### 🧑 User — 2026-11-20T03:20:07.383Z
+
+> ↩︎ result: (1782, 520) [(864, 1536), (864, 1536), (864, 1536), (864, 1536), (864, 1536), (864, 1536)]
+
+### 🤖 Claude — 2026-11-20T03:20:09.027Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/s07_frames_check.jpg"}`
+
+### 🧑 User — 2026-11-20T03:20:09.049Z
+
+> ↩︎ result: [image]
+
