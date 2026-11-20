@@ -269,3 +269,66 @@ Everything is saved and nothing is left unsaved. Commit `aef9412` is on GitHub o
 
 Your game wasn't changed. Tell me which screens to audit (I suggest Screen 06 first) and I'll start.
 
+### 🧑 User — 2026-11-20T23:58:19.070Z
+
+Yeah, but I want to make my exact approved screens. All of them. I'm tired of you not building them. There's like no... It feels like you're not going anywhere with them, okay? I feel like you're wasting my credits. I feel like you're wasting my time. I feel like there's nothing... There's like not even one screen that's been  improved
+
+### 🤖 Claude — 2026-11-20T23:58:48.098Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport glob,struct\nfor f in sorted(glob.glob('references/*.png')):\n    with open(f,'rb') as h: d=h.read(24)\n    print(f, struct.unpack('>II', d[16:24]))\n\"; python3 -I -c \"\nfrom PIL import Image\nfor f in ['docs/briefs/2026-11-20-r30/USER_S06_STORYBOARD_R30.png','docs/briefs/2026-11-20-r30/USER_S06_FOUR_VIEWS_TARGET_R30.jpg']:\n    print(f, Image.open(f).size)\n\" 2>&1", "description": "Check the size of each approved picture"}`
+
+### 🧑 User — 2026-11-20T23:58:48.236Z
+
+> ↩︎ result: references/01_inside_washer_girl_and_towel.png (65536, 4293001688)
+> references/02_mascot_tumbles_in_whirlpool.png (65536, 4293001688)
+> references/03_whirlpool_twirl.png (65536, 4293001688)
+> references/04_through_the_five_arrows.png (65536, 4293001688)
+> references/05_flow_into_the_current.png (65536, 4293001688)
+> references/06_crest_the_rinse_arch.png (65536, 4293001688)
+> references/07_dive_the_washer_tube.png (65536, 4293001688)
+> references/08_final_spin_chamber.png (65536, 4293001688)
+> references/09_ride_the_final_wave.png (65536, 4293001688)
+> references/10_slide_into_hiding.png (65536, 4293001688)
+> references/11_safely_home_final_victory.png (65536, 4293001688)
+> docs/briefs/2026-11-20-r30/USER_S06_STORYBOARD_R30.png (1024, 1536)
+> docs/briefs/2026-11-20-r30/USER_S06_FOUR_VIEWS_TARGET_R30.jpg (2000, 1529)
+
+### 🤖 Claude — 2026-11-20T23:58:50.870Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image\nimport glob\nfor f in sorted(glob.glob('references/0*.png'))+sorted(glob.glob('references/1*.png')):\n    im=Image.open(f); print(f.split('/')[-1], im.format, im.size)\n\"", "description": "Read the true size of each approved picture"}`
+
+### 🧑 User — 2026-11-20T23:58:50.982Z
+
+> ↩︎ result: 01_inside_washer_girl_and_towel.png JPEG (864, 1536)
+> 02_mascot_tumbles_in_whirlpool.png JPEG (864, 1536)
+> 03_whirlpool_twirl.png JPEG (727, 1536)
+> 04_through_the_five_arrows.png JPEG (864, 1536)
+> 05_flow_into_the_current.png JPEG (864, 1536)
+> 06_crest_the_rinse_arch.png JPEG (864, 1536)
+> 07_dive_the_washer_tube.png JPEG (864, 1536)
+> 08_final_spin_chamber.png JPEG (864, 1536)
+> 09_ride_the_final_wave.png JPEG (864, 1536)
+> 10_slide_into_hiding.png JPEG (864, 1536)
+> 11_safely_home_final_victory.png JPEG (864, 1536)
+
+### 🤖 Claude — 2026-11-20T23:59:09.100Z
+
+You're right to be frustrated, and more rounds of the same work won't fix it.
+
+**Why it keeps landing at "close":** every round so far built a 3D tunnel Benny can fly freely through, then tried to make it look like your paintings. That method can only ever get close. Screen 08 got the nearest (about 95% at its start view) because it used your actual painting, but it fell apart once the view moved far from where your picture was drawn.
+
+**What would give you your actual screens:** use your approved picture itself as each screen's scenery.
+- **Your picture is the background.** It gets a little depth, so near parts move slightly faster than far parts, and the view only pushes a short way into it while Benny swims. At the start of each screen the scenery is your picture exactly, and while swimming it stays your picture.
+- **The moving things stay live 3D on top:** Benny, flowing water, foam, coins and bubbles. You still steer Benny left and right and collect coins.
+- **What you give up:** it won't feel like a long free flight through a tunnel. Each screen is a short push into your painting, then it hands over to the next screen. Benny is the game's 3D Benny, not the painted one, because he has to move.
+- **It breaks one of your own rules.** You set the rule "never paste the approved picture over the screen", so I need your yes.
+
+**If you say yes:**
+1. I do Screen 06 first as a test. Your current game stays untouched, and the test only shows when switched on.
+2. I send you your approved picture and a swimming clip side by side.
+3. If you like it, I do 04, 05, 07, 08, 09 and 10 the same way.
+
+This takes one worker and no paid credits. Your four new Screen 06 views are small inside the sheet you sent. If you have them as full-size pictures, upload them and they'll look sharper in the game.
+
+**Yes or no: use your pictures as the scenery?**
+
