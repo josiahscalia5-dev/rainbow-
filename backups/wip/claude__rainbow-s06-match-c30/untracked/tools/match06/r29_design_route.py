@@ -17,11 +17,14 @@ B = np.array(P['B']['pos']); tB = np.array(P['B']['tan'])
 CP = [d(B), (8.6, -3.45, -0.15), (11.1, -4.45, 0.62), (13.0, -5.2, 1.3), (14.2, -5.3, 1.45), (18.6, -5.65, 1.86), (25.0, -5.85, 2.15),
       (32.8, -5.45, 1.55), (38.9, -4.85, 0.72), (44.0, -4.05, 0.08), (48.5, -3.37, -0.36), (53.0, -2.58, -0.74),
       (58.0, -1.88, -1.08), (63.0, -1.12, -1.56), (72.0, -0.30, -2.32), (84.0, 0.50, -3.28), (96.0, 1.35, -4.40),
-      (104.0, 1.75, -5.00), (110.0, 1.90, -5.25), (116.0, 1.95, -5.35)]
+      (102.0, 1.60, -4.90), (108.0, 2.05, -5.20), (113.0, 2.90, -5.33), (117.5, 4.10, -5.38)]
+# r29 v2: the last ~15 u turn into the ORIGINAL 07 entrance heading (smoothed 07 start tangent, ~16.7 deg right of the axis), so the
+# whole 07+ block can stay a rigid copy (no seam re-smoothing on the 07 side, 07 distances unchanged)
 CP = [np.array(c, float) for c in CP]
 # centripetal Catmull-Rom with a phantom start point along Benny's tangent (keeps the checkpoint tangent)
 tBd = np.array([tB @ ax, tB @ Rx, tB @ Ux]); tBd /= np.linalg.norm(tBd)
-pts = [CP[0] - tBd * 2.0] + CP + [CP[-1] + (CP[-1] - CP[-2])]
+t7 = np.array(P['e7']['tan']); t7d = np.array([t7 @ ax, t7 @ Rx, t7 @ Ux]); t7d /= np.linalg.norm(t7d)
+pts = [CP[0] - tBd * 2.0] + CP + [CP[-1] + t7d * 4.5]
 def cr(p0, p1, p2, p3, n):
     def tj(ti, a, b): return ti + np.linalg.norm(b - a) ** 0.5
     t0 = 0; t1 = tj(t0, p0, p1); t2 = tj(t1, p1, p2); t3 = tj(t2, p2, p3); out = []

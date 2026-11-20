@@ -1,5 +1,24 @@
 # Screen 06 — round 25 progress (worktree `/home/user/wt/s06`, LOCAL branch `claude/rainbow-s06-match-c26`, ports 5276 / 5282 / 5283)
 
+## (r29b) WHERE I STOPPED / NEXT — lead builds `&m06deep=1` (user ~19:00 UTC: "fix Screen 06 so Benny actually swims through my approved water and tunnel"; extend / reconstruct the route + 07 connection authorized)
+* Cause (r29 quick diagnostic): the painted coin trail rebuilt in 3D at ONE coin size (depth = f*0.632/px; tools/match06/r29_route_probe.mjs) is a
+  coherent slide INSIDE the m06tun drum: up-left over the crest (axial 8-25 u, ~6 u left of / 2 u above the axis), back across the middle
+  (37-63 u), slightly below the axis down the ring tunnel to ~96 u. The old course reached the 07 entrance at 44 u, 12 u lower-right. In the
+  old game the 10 stream coins were squeezed into 7 u (s 212-219) at tiny scales.
+* `&m06deep=1` (worktree /home/user/wt/s06, all behind the switch, default + BEFORE unchanged):
+  - course.ts: route built + smoothed exactly as before, then `deepen06()` replaces the smoothed 06 points past axial 9.6 (after Benny's
+    checkpoint + the r25 hole patch) by `assets/textures/match06/route06deep.json` (tools/match06/r29_design_route.py: centre line ~1 u right of
+    coins 2-4, through coins 5-14, last ~15 u curving into the ORIGINAL 07 entrance heading) and moves every point from 07 on by ONE rigid
+    offset T = (-5.98, -3.02, -73.17); WORLD.chamber/platform/plunge moved by T (`m06deepShift()`); arc-length samples keep the original
+    spacing up to the divergence. Checked (dump_course.mjs): s <= 198.91 max diff 1.8 mm, marks 03-06 identical, 07+ = rigid copy (marks
+    +69.85 +-0.03), continuity OK (06->07 0.08 deg). 06 = s 188.91..312.73 (123.8 u, was 54).
+  - match06.ts: floor / frames / foam run to the new 07 entrance (+34 u); tunnel O, wall-tile phase kS and far end a1 PINNED (route06deep.json
+    tunnel_pin). match08.ts `shiftLayout08` + coins.ts 08 coins: moved by T. coins.ts: `coins06deep.json` (tools/match06/r29_coins_deep.mjs:
+    coins 0-1 unchanged, 2-14 on the new river at the painted pixel, approved-view size, |lat| <= 1.31).
+* NOW: quick captures `/home/user/scratch/s06/d1_new` (06 moments) + `d1_stages_{before,new}` (07-10 start views must be identical).
+* NEXT: judge in motion; then camera / tunnel end into 07 / look; full proof `qa/match/06/r29/` (APPROVED / BEFORE / NEW stills, 1.0x + 0.5x
+  clips through 06 into 07, steering, gameplay 8/8 + 91, tsc, continuity).
+
 ## (r29) WHERE I STOPPED / NEXT
 * ~18:30 UTC — relaunched (round 29, new account), worktree `/home/user/wt/s06` LOCAL branch `claude/rainbow-s06-match-c30`, port 5276,
   scratch `/home/user/scratch/s06/`. Edits restored byte-identical (m06route coded, tsc 0 per r28). Quick-shot tool = the surviving

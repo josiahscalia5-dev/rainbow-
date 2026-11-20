@@ -2925,3 +2925,342 @@ Type check passes. Now the Screen 06 world: pin the tunnel, extend the river flo
 > 14 s 290.33 lat 0.08 h 0.36 scale 0.601 dist 96.0 along-miss -0.00
 > Shell cwd was reset to /home/user/rainbow-
 
+### 🤖 Claude — 2026-11-20T19:07:12.338Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && n=$(grep -n \"smoothPolyline(pts, marks\\['03'\\]\" src/world/course.ts | cut -d: -f1); sed -n \"$n,$((n+40))p\" src/world/course.ts | cut -c1-190", "description": "Read the course steps that run after smoothing"}`
+
+### 🧑 User — 2026-11-20T19:07:12.386Z
+
+> ↩︎ result: smoothPolyline(pts, marks['03'], 2.2, 3);
+>   // 05 meander: exact lateral offset from the straight tunnel line (after smoothing, see S05)
+>   const dir05 = L05.clone().normalize();
+>   for (let i = marks['05'] + 1; i < marks['06']; i++) {
+>     const u = pts[i].clone().sub(s5).dot(dir05) * (S05.L / L05.length());
+>     pts[i].x += meander05(u);
+>   }
+>   return { points: pts, marks, straight };
+> }
+> 
+> /**
+>  * Arc-length Gaussian smoothing of the polyline from index `from` to the end (endpoints fixed).
+>  * Removes tangent kinks where independently generated segments meet; the 02 tumble helix
+>  * (before `from`) is left untouched.
+>  */
+> function smoothPolyline(pts: THREE.Vector3[], from: number, sigma: number, passes: number) {
+>   for (let pass = 0; pass < passes; pass++) {
+>     const cum: number[] = [0];
+>     for (let i = 1; i < pts.length; i++) cum.push(cum[i - 1] + pts[i].distanceTo(pts[i - 1]));
+>     const out = pts.map((p) => p.clone());
+>     for (let i = from + 1; i < pts.length - 1; i++) {
+>       const acc = new THREE.Vector3();
+>       let wsum = 0;
+>       for (let j = i - 12; j <= i + 12; j++) {
+>         if (j < from || j >= pts.length) continue;
+>         const d = cum[j] - cum[i];
+>         const w = Math.ex …[+466 chars]
+
+### 🤖 Claude — 2026-11-20T19:07:41.623Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='src/world/course.ts'; t=open(p).read()\nold_block_start = t.index(\"  const deep06 = m06 && flag05('m06deep');\")\nold_block_end = t.index(\"  mark('07');\", old_block_start)\nt = t[:old_block_start] + \"\"\"  const deep06 = m06 && flag05('m06deep');\n  applyWorldShift(new THREE.Vector3()); // the route is always generated with the ORIGINAL anchors; m06deep moves 07+ afterwards\n  seg(34, old06);\n\"\"\" + t[old_block_end:]\nold = \"\"\"  smoothPolyline(pts, marks['03'], 2.2, 3);\n  // 05 meander: exact lateral offset from the straight …[+3529 chars]`
+
+### 🧑 User — 2026-11-20T19:07:44.640Z
+
+> ↩︎ result: ok
+> tsc-done
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:07:51.599Z
+
+Type check passes. Re-running the coin placement on the restructured route, and checking that Benny's start pose now matches the original exactly:
+
+### 🤖 Claude — 2026-11-20T19:07:54.002Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && Q1=\"$(cat /home/user/rainbow-/qa/match/06/r25/step2/QUERY_NEW2.txt)&m06deep=1\" && timeout 300 npx vite-node tools/match06/r29_coins_deep.mjs -- \"$Q1\" 2>&1 | grep -v \"^\\[\" | cut -c1-170; python3 -c \"\nimport json; d=json.load(open('/home/user/scratch/s06/old_samples.json'))\no=[x for x in d if abs(x['s']-198.91)<0.3]; print('old near sB', [(x['s'], [round(v,4) for v in x['pos']]) for x in o])\"", "description": "Re-place the coins and compare Benny's start pose with the original", "timeout": 320000}`
+
+### 🧑 User — 2026-11-20T19:07:55.979Z
+
+> ↩︎ result: stages 06 188.89 309.54 07 309.54 453.06 course length 499.0
+> Benny sB pos [ 0.5408, -38.0483, -138.3222 ] tan [ -0.1158, 0.5561, -0.823 ]
+>  2 s 207.67 lat -1.31 h 0.75 scale 0.632 dist 13.7 along-miss 0.01
+>  3 s 212.41 lat -1.12 h 0.71 scale 0.632 dist 18.8 along-miss 0.01
+>  4 s 218.87 lat -0.89 h 0.70 scale 0.631 dist 25.2 along-miss -0.01
+>  5 s 226.91 lat -0.35 h 0.53 scale 0.568 dist 33.0 along-miss 0.01
+>  6 s 233.15 lat -0.08 h 0.48 scale 0.580 dist 39.0 along-miss -0.01
+>  7 s 238.33 lat -0.02 h 0.45 scale 0.654 dist 44.0 along-miss 0.00
+>  8 s 242.93 lat 0.01 h 0.47 scale 0.721 dist 48.5 along-miss 0.01
+>  9 s 247.55 lat 0.01 h 0.47 scale 0.663 dist 53.0 along-miss -0.00
+> 10 s 252.61 lat 0.02 h 0.47 scale 0.635 dist 58.0 along-miss -0.01
+> 11 s 257.67 lat -0.00 h 0.44 scale 0.641 dist 63.0 along-miss -0.01
+> 12 s 266.69 lat 0.01 h 0.45 scale 0.563 dist 72.0 along-miss 0.01
+> 13 s 278.71 lat 0.02 h 0.45 scale 0.460 dist 84.0 along-miss 0.00
+> 14 s 290.75 lat 0.06 h 0.38 scale 0.601 dist 96.0 along-miss -0.01
+> old near sB [(199, [0.5305, -37.999, -138.3958])]
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:08:09.174Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"arcLengthDivisions\\|getLengths\\|getPointAt\\|getUtoTmapping\\|new THREE.CatmullRomCurve3\\|this.length =\" src/world/course.ts | head -12 | cut -c1-200", "description": "Check how the course measures distance along the route"}`
+
+### 🧑 User — 2026-11-20T19:08:09.222Z
+
+> ↩︎ result: 250:  const chute = new THREE.CatmullRomCurve3(chuteCtrl, false, 'centripetal');
+> 466:    this.curve = new THREE.CatmullRomCurve3(route.points, false, 'centripetal');
+> 479:    this.length = ls[M];
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:08:10.887Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/src/world/course.ts", "offset": 462, "limit": 40}`
+
+### 🧑 User — 2026-11-20T19:08:10.913Z
+
+> ↩︎ result: 462	  private readonly U: Float32Array;
+> 463	
+> 464	  constructor() {
+> 465	    const route = buildRoute();
+> 466	    this.curve = new THREE.CatmullRomCurve3(route.points, false, 'centripetal');
+> 467	    // arc-length table over curve parameter u
+> 468	    const M = route.points.length * 24;
+> 469	    const us: number[] = [0];
+> 470	    const ls: number[] = [0];
+> 471	    let prev = this.curve.getPoint(0);
+> 472	    for (let i = 1; i <= M; i++) {
+> 473	      const u = i / M;
+> 474	      const p = this.curve.getPoint(u);
+> 475	      ls.push(ls[i - 1] + p.distanceTo(prev));
+> 476	      us.push(u);
+> 477	      prev = p;
+> 478	    }
+> 479	    this.length = ls[M];
+> 480	    const uAtS = (s: number) => {
+> 481	      let lo = 0, hi = M;
+> 482	      while (hi - lo > 1) {
+> 483	        const mid = (lo + hi) >> 1;
+> 484	        if (ls[mid] < s) lo = mid; else hi = mid;
+> 485	      }
+> 486	      const f = (s - ls[lo]) / Math.max(1e-6, ls[hi] - ls[lo]);
+> 487	      return us[lo] + (us[hi] - us[lo]) * f;
+> 488	    };
+> 489	    const sAtIndex = (i: number) => {
+> 490	      const u = i / (route.points.length - 1);
+> 491	      const k = Math.round(u * M);
+> 492	      return ls[k];
+> 493	    };
+> 494	    this.marks = {};
+> 495	    for (const [k, i] of Object.en …[+402 chars]
+
+### 🤖 Claude — 2026-11-20T19:08:56.836Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='src/world/course.ts'; t=open(p).read()\nold=\"  if (deep06) return { points: deepen06(pts, marks), marks, straight };\"\nassert old in t\nt=t.replace(old,\"\"\"  if (deep06) { const nOld = pts.length, d6 = deepen06(pts, marks); return { points: d6.points, marks, straight, nOld, iKeep: d6.iKeep }; }\"\"\",1)\nold=\"\"\"  applyWorldShift(T);\n  return out;\n}\"\"\"\nassert old in t\nt=t.replace(old,\"\"\"  applyWorldShift(T);\n  return { points: out, iKeep: iK };\n}\"\"\",1)\nt=t.replace(\"function deepen06(pts: THREE.Vector3[], marks: R …[+2615 chars]`
+
+### 🧑 User — 2026-11-20T19:09:00.060Z
+
+> ↩︎ result: ok
+> 217:function buildRoute(): RouteData {
+> 394:function deepen06(pts: THREE.Vector3[], marks: Record<string, number>): { points: THREE.Vector3[]; iKeep: number } {
+> src/world/course.ts(383,114): error TS2353: Object literal may only specify known properties, and 'nOld' does not exist in type 'RouteData'.
+> tsc-done
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:09:01.761Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"interface RouteData\\|type RouteData\" -A5 src/world/course.ts | head -8 | cut -c1-200", "description": "Read the route data type"}`
+
+### 🧑 User — 2026-11-20T19:09:01.822Z
+
+> ↩︎ result: 124:interface RouteData {
+> 125-  points: THREE.Vector3[];
+> 126-  marks: Record<string, number>;
+> 127-  straight: { from: string; to: string; a: THREE.Vector3; b: THREE.Vector3; floorDepth: number }[];
+> 128-}
+> 129-
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:09:13.443Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='src/world/course.ts'; t=open(p).read()\nold=\"\"\"  straight: { from: string; to: string; a: THREE.Vector3; b: THREE.Vector3; floorDepth: number }[];\n}\n\"\"\"\nassert old in t\nt=t.replace(old,\"\"\"  straight: { from: string; to: string; a: THREE.Vector3; b: THREE.Vector3; floorDepth: number }[];\n  /** r29 m06deep only: original point count and the last unchanged 06 point index (Course keeps the original arc-length samples) */\n  nOld?: number;\n  iKeep?: number;\n}\n\"\"\",1)\nt=t.replace(\"const deep = (route as { nOld?: number } …[+2168 chars]`
+
+### 🧑 User — 2026-11-20T19:09:17.300Z
+
+> ↩︎ result: tsc-done
+> /home/user/rainbow-/node_modules/esbuild/lib/main.js:737
+>           if (error) return callback(new Error(error), null);
+>                                      ^
+> 
+> Error: Invalid loader value: "8867399698681879"
+>     at /home/user/rainbow-/node_modules/esbuild/lib/main.js:737:38
+>     at responseCallbacks.<computed> (/home/user/rainbow-/node_modules/esbuild/lib/main.js:622:9)
+>     at handleIncomingPacket (/home/user/rainbow-/node_modules/esbuild/lib/main.js:676:31)
+>     at Socket.readFromStdout (/home/user/rainbow-/node_modules/esbuild/lib/main.js:600:7)
+>     at Socket.emit (node:events:519:28)
+>     at addChunk (node:internal/streams/readable:561:12)
+>     at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+>     at Socket.Readable.push (node:internal/streams/readable:392:5)
+>     at Pipe.onStreamRead (node:internal/stream_base_commons:189:23) {
+>   plugin: 'vite:esbuild',
+>   id: '/home/user/wt/s06/src/world/course.ts?0.8867399698681879',
+>   pluginCode: '/**\n' +
+>     ' * RAINBOW master course — ONE continuous route through the washer world.\n' +
+>     ' *\n' +
+>     " * Units: 1 unit ≈ 5 cm at Benny's scale (Benny body radius ≈ 0.8). +Y is up (absolute altitude).\n" +
+>     ' * The …[+11854 chars]
+
+### 🤖 Claude — 2026-11-20T19:09:20.005Z
+
+My comparison script's trick for loading the code twice didn't work under the module loader. I'll run the two versions as separate processes and compare their output instead.
+
+### 🤖 Claude — 2026-11-20T19:09:31.230Z
+
+> 🔧 **Bash** `{"command": "cat > /home/user/scratch/s06/dump_course.mjs <<'EOF'\nconst q = process.argv.slice(2).filter((a) => a !== '--')[0];\nglobalThis.location = { search: '?' + q, href: 'http://x/?' + q, hostname: 'x' };\nconst m = await import('/home/user/wt/s06/src/world/course.ts');\nconst c = new m.Course();\nconst pre = []; for (let s = 0; s <= 198.91 + 1e-9; s += 0.37) pre.push(c.sample(s).pos.toArray());\nconst fB = c.sample(198.91);\nconst post = []; const s7 = c.marks['07']; for (let s = s7; s <= c.length - 0.5; s += 0.53) post.push(c.sample(s).pos.toArray());\nconst r = m.validateContinuity ? …[+2112 chars]`
+
+### 🧑 User — 2026-11-20T19:09:32.304Z
+
+> ↩︎ result: [1]-  Done                    cd /home/user/wt/s06 && Q0=$(cat /home/user/rainbow-/qa/match/06/r25/step2/QUERY_NEW2.txt) && ( timeout 300 npx vite-node /home/user/scratch/s06/dump_course.mjs -- "$Q0" 2> /dev/null | grep '^@@' | cut -c3- > /home/user/scratch/s06/cA.json )
+> [2]+  Done                    ( cd /home/user/wt/s06 && timeout 300 npx vite-node /home/user/scratch/s06/dump_course.mjs -- "$(cat /home/user/rainbow-/qa/match/06/r25/step2/QUERY_NEW2.txt)&m06deep=1" 2> /dev/null | grep '^@@' | cut -c3- > /home/user/scratch/s06/cB.json )
+> 01..06 checkpoint (s<=198.91): max position difference 6.27e-04 units
+> Benny pose diff: pos 7.17e-05 tan 5.80e-05 up 3.20e-03
+>   mark 03               40.9952 ->   40.9952
+>   mark 04               70.4131 ->   70.4131
+>   mark 05              114.6883 ->  114.6883
+>   mark 06              188.9099 ->  188.9099
+>   mark 07              242.8728 ->  309.5308
+>   mark 07_plunge_top   306.2466 ->  374.2944
+>   mark 08              385.0563 ->  453.0596
+>   mark 09              400.6260 ->  468.6571
+>   mark 10              415.8539 ->  483.8962
+>   mark 11              431.0287 ->  498.9912
+> T (07+ moved by) [ -8.098  -2.864 -71.632] | course length 431.03 -> 499.03
+> 07+ v …[+641 chars]
+
+### 🤖 Claude — 2026-11-20T19:10:39.181Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='tools/match06/r29_design_route.py'; t=open(p).read()\nold=\"\"\"      (104.0, 1.75, -5.00), (110.0, 1.90, -5.25), (116.0, 1.95, -5.35)]\"\"\"\nassert old in t\nt=t.replace(old,\"\"\"      (102.0, 1.60, -4.90), (108.0, 2.05, -5.20), (113.0, 2.90, -5.33), (117.5, 4.10, -5.38)]\n# r29 v2: the last ~15 u turn into the ORIGINAL 07 entrance heading (smoothed 07 start tangent, ~16.7 deg right of the axis), so the\n# whole 07+ block can stay a rigid copy (no seam re-smoothing on the 07 side, 07 distances unchanged)\"\"\",1)\nold=\"pts = [CP[0] …[+4232 chars]`
+
+### 🧑 User — 2026-11-20T19:10:44.309Z
+
+> ↩︎ result: ok
+> length 109.5 u, points 74, min turn radius 6.8 u, max slope 12.9 deg down, max climb 8.2 deg
+>      0.0 u  world [ 1.0000e-01 -3.6040e+01 -1.4219e+02]  drum [ 9.6  -3.33  1.11]  tan [-0.194  0.142 -0.971]
+> end [5.3959, -51.5171, -249.2994]
+> s<=198.91 max diff 1.8e-03 | Benny up diff 3.1e-03
+> mark shifts {'07': 69.8548, '07_plunge_top': 69.8822, '08': 69.8504, '09': 69.8602, '10': 69.8654, '11': 69.8188}
+> 07+ vs rigid copy max deviation 1.1e-02 | T [ -5.978  -3.019 -73.167] | continuity True [['05', '06', 0, 0.28], ['06', '07', 0, 0.078], ['07', '08', 0, 0.36]]
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:10:59.308Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && Q1=\"$(cat /home/user/rainbow-/qa/match/06/r25/step2/QUERY_NEW2.txt)&m06deep=1\" && timeout 300 npx vite-node tools/match06/r29_coins_deep.mjs -- \"$Q1\" 2>&1 | grep -E \"^stages|^ ?[0-9]+ s\" | cut -c1-120 && python3 - <<'EOF'\np='/home/user/wt/s06/src/gameplay/coins.ts'; t=open(p).read()\nold=\"    for (const c of coins06.coins) {\"\nassert old in t, 'loop'\nt=t.replace(old,\"    // r29 `&m06deep=1`: the painted coins on the deep river (tools/match06/r29_coins_deep.mjs), at their painted pixels and sizes\\n    for (const c of (flag05('m06deep') ? coins06d …[+490 chars]`
+
+### 🧑 User — 2026-11-20T19:11:04.371Z
+
+> ↩︎ result: stages 06 188.91 312.73 07 312.73 454.91 course length 500.9
+>  2 s 207.69 lat -1.31 h 0.75 scale 0.632 dist 13.7 along-miss -0.02
+>  3 s 212.41 lat -1.12 h 0.71 scale 0.632 dist 18.8 along-miss 0.01
+>  4 s 218.87 lat -0.89 h 0.70 scale 0.631 dist 25.2 along-miss -0.01
+>  5 s 226.91 lat -0.35 h 0.53 scale 0.568 dist 33.0 along-miss 0.01
+>  6 s 233.15 lat -0.08 h 0.48 scale 0.580 dist 39.0 along-miss -0.01
+>  7 s 238.33 lat -0.02 h 0.45 scale 0.654 dist 44.0 along-miss 0.00
+>  8 s 242.93 lat 0.01 h 0.47 scale 0.721 dist 48.5 along-miss 0.01
+>  9 s 247.55 lat 0.01 h 0.47 scale 0.663 dist 53.0 along-miss -0.00
+> 10 s 252.61 lat 0.02 h 0.47 scale 0.635 dist 58.0 along-miss -0.01
+> 11 s 257.67 lat -0.00 h 0.44 scale 0.641 dist 63.0 along-miss -0.01
+> 12 s 266.69 lat 0.01 h 0.45 scale 0.563 dist 72.0 along-miss 0.01
+> 13 s 278.71 lat 0.02 h 0.45 scale 0.460 dist 84.0 along-miss 0.00
+> 14 s 290.73 lat 0.06 h 0.38 scale 0.601 dist 96.0 along-miss 0.01
+>   // `?match06=1` (qa/match/06/NOTES.md): the approved picture's 15 coins where the picture shows them (river s / lateral /
+>   // height from the locked 06 camera, assets/textures/match06/coins06.json, facing that camera) + the other 3 of the 18-coin
+>   // 06 row on the …[+941 chars]
+
+### 🤖 Claude — 2026-11-20T19:11:20.911Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -e 's#const \\[OUT, STAGE, Q\\] = process.argv.slice(2);#const [OUT, STAGE0, Q] = process.argv.slice(2); // r29: a shot may name its own stage as a 4th element#' -e 's#  for (const \\[name, frac, steer\\] of SHOTS) {#  for (const [name, frac, steer, stShot] of SHOTS) { const STAGE = stShot ?? STAGE0;#' tools/match06/r28_quick.mjs > tools/match06/r29_multi.mjs && grep -n \"STAGE\" tools/match06/r29_multi.mjs | head -5 | cut -c1-160 && cat > /home/user/scratch/s06/quick2.sh <<'EOF'\n#!/usr/bin/env bash\n# r29 lead: m06deep quick checks. $1 = out dir name, …[+1345 chars]`
+
+### 🧑 User — 2026-11-20T19:11:22.004Z
+
+> ↩︎ result: 12:const [OUT, STAGE0, Q] = process.argv.slice(2); // r29: a shot may name its own stage as a 4th element
+> 28:  for (const [name, frac, steer, stShot] of SHOTS) { const STAGE = stShot ?? STAGE0;
+> 42:    }, [STAGE, frac, steer]);
+> 45:    console.log(STAGE, name, 's', st.s, 'lat', st.lat, 'stage', st.stage, 'coins', st.coins);
+> slot 1 busy
+> slot 2 busy
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:11:24.458Z
+
+While those render, I'll record the work so far in the Screen 06 progress notes, so it survives if the session stops.
+
+### 🤖 Claude — 2026-11-20T19:11:36.209Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='qa/match/06/r25/PROGRESS.md'; t=open(p).read()\nblk='''## (r29b) WHERE I STOPPED / NEXT — lead builds `&m06deep=1` (user ~19:00 UTC: \"fix Screen 06 so Benny actually swims through my approved water and tunnel\"; extend / reconstruct the route + 07 connection authorized)\n* Cause (r29 quick diagnostic): the painted coin trail rebuilt in 3D at ONE coin size (depth = f*0.632/px; tools/match06/r29_route_probe.mjs) is a\n  coherent slide INSIDE the m06tun drum: up-left over the crest (axial 8-25 u, ~6 u left of / 2 u above the axis), back across the middle\n  (37 …[+2042 chars]`
+
+### 🧑 User — 2026-11-20T19:11:36.288Z
+
+> ↩︎ result: saved-notes
+
+### 🤖 Claude — 2026-11-20T19:11:39.278Z
+
+> 🔧 **TaskCreate** `{"subject": "Build m06deep: Screen 06 river along painted trail through the ring tunnel into 07", "description": "Route + rigid 07+ shift + coins done (tsc OK, continuity OK). Next: in-motion checks, camera, tunnel end into 07, look; then full proof qa/match/06/r29/ (APPROVED/BEFORE/NEW stills, 1.0x+0.5x clips 06->07, steering, gameplay 8/8+91).", "activeForm": "Building the Screen 06 deep route candidate"}`
+
+### 🧑 User — 2026-11-20T19:11:39.356Z
+
+> ↩︎ result: Task #6 created successfully: Build m06deep: Screen 06 river along painted trail through the ring tunnel into 07
+
+### 🤖 Claude — 2026-11-20T19:11:40.187Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && cat d1_new.log 2>/dev/null | tail -3; cat d1_stages_before.log 2>/dev/null | tail -2; ls d1_new 2>/dev/null | wc -l", "description": "Check capture progress"}`
+
+### 🧑 User — 2026-11-20T19:11:40.253Z
+
+> ↩︎ result: 06 a_start s 198.91 lat 0 stage 06 coins 1680
+> 06 b_open03 s 202.393 lat 0 stage 06 coins 1690
+> 07 s07 s 268.873 lat 0 stage 07 coins 1940
+> 2
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:11:43.763Z
+
+> 🔧 **ToolSearch** `{"query": "select:Monitor", "max_results": 1}`
+
+### 🧑 User — 2026-11-20T19:11:43.788Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-20T19:11:46.490Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && until grep -q \"exit\" d1_new.log 2>/dev/null && grep -q \"exit\" d1_stages_new.log 2>/dev/null; do sleep 3; done; tail -2 d1_new.log d1_stages_before.log d1_stages_new.log", "description": "Wait for the new-route captures and 07-10 checks to finish", "timeout": 1200000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T19:11:46.547Z
+
+> ↩︎ result: Command running in background with ID: blm4u0ilr. Output is being written to: /tmp/claude-0/-home-user-rainbow-/0b75226b-8a40-5a2a-98c8-95d5f5e274d8/tasks/blm4u0ilr.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-20T19:11:55.100Z
+
+While those render, I'll look at how the stage tubes are built, since the hand-over into 07 will need Screen 07's tube visible ahead of Benny before he reaches it.
+
+### 🤖 Claude — 2026-11-20T19:11:55.800Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 318,345p src/world/environment.ts | cut -c1-200", "description": "Read how the per-stage tube meshes are created"}`
+
+### 🧑 User — 2026-11-20T19:11:55.981Z
+
+> ↩︎ result: rimColor: '#b02a9a', rimStrength: 0.0, farGlow: { ...glowT05, mid: { color: '#8a30d2', near: 8, far: 50, amount: 0.45 } },
+>     envMap: marblePano05(), envMapRotation: marblePanoRotation05(perfPath.frame(sCam05).tan),
+>     repeatU: 64, repeatV: 1 / slotPitch05, slotHalf: [0.3, 0.16] as [number, number],
+>     offsetV: 0.5 - ((((ringSlots05[0] + slotPitch05 / 2) / slotPitch05) % 1) + 1) % 1,
+>   };
+>   if (FLOWMAP05) {
+>     // W11: the river mirrors the same Marble panorama as the tunnel metal (waterRibbon.ts, direct equirect lookup)
+>     flow05Shared.uPano.value = marblePano05();
+>     flow05Shared.uPanoRot.value.copy(marblePanoMatrix05(perfPath.frame(sCam05).tan));
+>   }
+>   // straight white-pink lengthwise streaks (ref specular-white share 5.6 % of the wall, live 0.5–2 %)
+>   const strips05: TubeStrips = WALL05
+>     ? { ...strips, intensity: 5.6, width: 0.02, alt: 0.8 }
+>     : { ...strips, intensity: 4.4, width: 0.017, alt: 0.8 };
+>   const perf05Mat = withTubeStrips(perforatedMetal(wall05), strips05, 'attribute', 'wall05');
+>   const chunk = 40;
+>   const addWall = (a0: number, a1: number, mat: THREE.Material) => {
+>     for (let a = a0; a < a1 - 0.01; a += chunk) {
+>       const b = Math.min(a1, a + chunk  …[+809 chars]
+

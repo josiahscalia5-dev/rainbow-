@@ -31,10 +31,10 @@ index 6aec2406..57a87ac2 100644
      }
      if (m08 && m08On) for (const k of ['puddles', 'finalWave']) { const o = water.parts?.[k]; if (o) o.visible = false; }
 diff --git a/src/gameplay/coins.ts b/src/gameplay/coins.ts
-index 69122b33..0c9737cd 100644
+index 69122b33..02848b97 100644
 --- a/src/gameplay/coins.ts
 +++ b/src/gameplay/coins.ts
-@@ -6,6 +6,7 @@
+@@ -6,15 +6,17 @@
   */
  import * as THREE from 'three';
  import type { Course, StageId } from '../world/course';
@@ -42,7 +42,9 @@ index 69122b33..0c9737cd 100644
  import { canvasTexture } from '../world/materials';
  import { coreLateral, flag05 } from '../vfx/waterRibbon';
  import coins08 from '../../assets/textures/match08/coins08.json';
-@@ -14,7 +15,7 @@ import coins06 from '../../assets/textures/match06/coins06.json';
+ import coins06 from '../../assets/textures/match06/coins06.json';
++import coins06deep from '../../assets/textures/match06/coins06deep.json';
+ 
  export const COIN_VALUE = 10;
  
  /** scale: coin size factor (1 = 1.0 u diameter); tilt: radians the coin leans back (top away from the camera) */
@@ -51,7 +53,7 @@ index 69122b33..0c9737cd 100644
  
  /**
   * 05 (ref 05, measured): ≈10 coins on the electric-cyan core winding to the VP. The nearest one is
-@@ -57,7 +58,13 @@ export function coinLayout(course: Course): CoinDef[] {
+@@ -57,7 +59,14 @@ export function coinLayout(course: Course): CoinDef[] {
    if (m06) {
      const a = st('06');
      for (let i = 0; i < 3; i++) add('06', a.s0 + 1 + i, -0.4 + 0.4 * i);
@@ -59,14 +61,15 @@ index 69122b33..0c9737cd 100644
 +    // r28 `&m06route=1`: the painted coins keep the approved size in the approved view, then grow to one common size (the
 +    // nearest painted coin's) as the camera leaves it (setGrow = the 06 away factor), so the far ones are not tiny when reached
 +    const grow = flag05('m06route');
-+    for (const c of coins06.coins) {
++    // r29 `&m06deep=1`: the painted coins on the deep river (tools/match06/r29_coins_deep.mjs), at their painted pixels and sizes
++    for (const c of (flag05('m06deep') ? coins06deep : coins06).coins) {
 +      const { s, lat, h, scale } = c;
 +      add(course.stageAtS(s).id, s, lat, h, { scale, faceTo: coins06.faceTo as [number, number, number], ...(grow ? { grow: Math.max(scale, 0.632) } : {}) });
 +    }
    }
    // 07 — winding trail, continuing down the plunge
    { const a = st('07'); const n = 24; for (let i = 0; i < n; i++) { const s = a.s0 + 6 + i * ((a.s1 - a.s0 - 10) / n); add('07', s, 1.0 * Math.sin(i * 0.5 + 1)); } }
-@@ -70,7 +77,8 @@ export function coinLayout(course: Course): CoinDef[] {
+@@ -70,7 +79,8 @@ export function coinLayout(course: Course): CoinDef[] {
    // (assets/textures/match08/coins08.json, from the locked 08 camera), instead of the 08 + 09 rows above
    if (m08) {
      const s0 = st('08').s0, s1 = st('11').s0;
@@ -76,7 +79,7 @@ index 69122b33..0c9737cd 100644
      const toRiver = (x: number, z: number) => {
        let best = s0, bd = Infinity;
        for (let s = s0; s <= s1; s += 0.05) { const p = course.sample(s).pos; const d = (p.x - x) ** 2 + (p.z - z) ** 2; if (d < bd) { bd = d; best = s; } }
-@@ -78,12 +86,12 @@ export function coinLayout(course: Course): CoinDef[] {
+@@ -78,12 +88,12 @@ export function coinLayout(course: Course): CoinDef[] {
        return { s: best, lat: (x - f.pos.x) * f.right.x + (z - f.pos.z) * f.right.z, y: f.pos.y };
      };
      for (const c of coins08.coins) {
@@ -91,7 +94,7 @@ index 69122b33..0c9737cd 100644
          let pick: { k: number; r: typeof r; h: number } | null = null;
          for (let k = 0.2; k <= 1.8; k += 0.01) {
            const q = [cam[0] + D[0] * k, cam[1] + D[1] * k, cam[2] + D[2] * k], rq = toRiver(q[0], q[2]), hq = q[1] - rq.y;
-@@ -113,6 +121,8 @@ export interface CoinSystem {
+@@ -113,6 +123,8 @@ export interface CoinSystem {
    update(time: number, dt: number, bennyS: number, bennyLat: number): number;
    /** mark coins before s as collected (deterministic QA checkpoint state) or reset all */
    resetUntil(s: number): void;
@@ -100,7 +103,7 @@ index 69122b33..0c9737cd 100644
  }
  
  export function createCoins(course: Course): CoinSystem {
-@@ -175,6 +185,7 @@ export function createCoins(course: Course): CoinSystem {
+@@ -175,6 +187,7 @@ export function createCoins(course: Course): CoinSystem {
    const spin = new THREE.Quaternion(), axis = new THREE.Vector3();
    const tiltQ = new THREE.Quaternion(), xAxis = new THREE.Vector3(1, 0, 0);
    const back = new THREE.Vector3();
@@ -108,7 +111,7 @@ index 69122b33..0c9737cd 100644
  
    const place = (time: number) => {
      defs.forEach((d, i) => {
-@@ -200,7 +211,8 @@ export function createCoins(course: Course): CoinSystem {
+@@ -200,7 +213,8 @@ export function createCoins(course: Course): CoinSystem {
        spin.setFromAxisAngle(axis.set(0, 1, 0), (d.faceTo ? 0.06 : d.tilt ? 0.18 : 0.35) * Math.sin(time * 2.2 + i * 0.7));
        q.multiply(spin);
        if (d.tilt) q.multiply(tiltQ.setFromAxisAngle(xAxis, -d.tilt));
@@ -118,7 +121,7 @@ index 69122b33..0c9737cd 100644
        mesh.setMatrixAt(i, m);
      });
      mesh.instanceMatrix.needsUpdate = true;
-@@ -227,6 +239,7 @@ export function createCoins(course: Course): CoinSystem {
+@@ -227,6 +241,7 @@ export function createCoins(course: Course): CoinSystem {
        place(time);
        return picked;
      },
@@ -127,7 +130,7 @@ index 69122b33..0c9737cd 100644
        for (let i = 0; i < defs.length; i++) { collected[i] = defs[i].s < s ? 1 : 0; popT[i] = -1; }
        place(0);
 diff --git a/src/world/course.ts b/src/world/course.ts
-index 99850bb3..bebae236 100644
+index 99850bb3..de953db9 100644
 --- a/src/world/course.ts
 +++ b/src/world/course.ts
 @@ -15,6 +15,7 @@ import * as THREE from 'three';
@@ -166,7 +169,17 @@ index 99850bb3..bebae236 100644
  /** funnel surface height of the whirlpool basin as a function of radius from its axis */
  export function funnelY(r: number): number {
    const b = WORLD.basin;
-@@ -277,13 +299,27 @@ function buildRoute(): RouteData {
+@@ -103,6 +125,9 @@ interface RouteData {
+   points: THREE.Vector3[];
+   marks: Record<string, number>;
+   straight: { from: string; to: string; a: THREE.Vector3; b: THREE.Vector3; floorDepth: number }[];
++  /** r29 m06deep only: original point count and the last unchanged 06 point index (Course keeps the original arc-length samples) */
++  nOld?: number;
++  iKeep?: number;
+ }
+ 
+ /**
+@@ -277,13 +302,17 @@ function buildRoute(): RouteData {
    // ends, so the 05->06 join and the whole 07 / plunge / 08 route are unchanged. Off: d06 = 0 (default route).
    const m06 = flag05('match06') || flag05('matchall');
    const d06 = (c: number[], t: number) => (m06 ? Math.sin(Math.PI * t) ** 2 * (c[0] + c[1] * Math.cos(Math.PI * t) + c[2] * Math.cos(2 * Math.PI * t)) : 0);
@@ -183,22 +196,12 @@ index 99850bb3..bebae236 100644
 -  );
 +    );
 +  const deep06 = m06 && flag05('m06deep');
-+  if (deep06) {
-+    // the first metres stay EXACTLY the original route (Benny's approved checkpoint pose and the r25 hole patch s 197.2-203.3 depend
-+    // on them): raw points up to axial aKeep along the painted tunnel axis, then the designed centre line (route06deep.json,
-+    // tools/match06/r29_design_route.py), whose last point is the moved 07 entrance
-+    const O6 = V(route06deep.O[0], route06deep.O[1], route06deep.O[2]), ax6 = V(route06deep.ax[0], route06deep.ax[1], route06deep.ax[2]);
-+    for (let i = 1; i <= 34; i++) { const p = old06(i / 34); if (p.clone().sub(O6).dot(ax6) > route06deep.aKeep) break; push(p); }
-+    for (const q of route06deep.points) push(V(q[0], q[1], q[2]));
-+    applyWorldShift(pts[pts.length - 1].clone().sub(old06(1)));
-+  } else {
-+    applyWorldShift(new THREE.Vector3());
-+    seg(34, old06);
-+  }
++  applyWorldShift(new THREE.Vector3()); // the route is always generated with the ORIGINAL anchors; m06deep moves 07+ afterwards
++  seg(34, old06);
    mark('07');
    // ---- 07: winding washer tube (the visible stretch) ----
    const s7 = pts[pts.length - 1].clone();
-@@ -324,7 +360,8 @@ function buildRoute(): RouteData {
+@@ -324,7 +353,8 @@ function buildRoute(): RouteData {
    // river (its centre line projected on the chamber floor from the locked 08 camera, assets/textures/match08/river08.json),
    // eased in over the first 3 u after the inlet and out over the last 4 u into the platform. Off: the formulas below.
    const m08 = flag05('match08') || flag05('matchall');
@@ -208,6 +211,84 @@ index 99850bb3..bebae236 100644
    const riverX = (z: number) => {
      if (z >= rz[0]) return rxs[0];
      for (let i = 1; i < rz.length; i++) if (z >= rz[i]) { const a = (z - rz[i - 1]) / (rz[i] - rz[i - 1]); return rxs[i - 1] + (rxs[i] - rxs[i - 1]) * a; }
+@@ -353,9 +383,45 @@ function buildRoute(): RouteData {
+     const u = pts[i].clone().sub(s5).dot(dir05) * (S05.L / L05.length());
+     pts[i].x += meander05(u);
+   }
++  if (deep06) { const nOld = pts.length, d6 = deepen06(pts, marks); return { points: d6.points, marks, straight, nOld, iKeep: d6.iKeep }; }
+   return { points: pts, marks, straight };
+ }
+ 
++/**
++ * r29 `&match06=1&m06deep=1` (lead, docs/briefs/2026-11-20-r29): AFTER the normal build + smoothing, the smoothed 06 points past axial
++ * aKeep (along the painted tunnel axis) are replaced by the designed centre line (route06deep.json: the painted coin trail rebuilt in
++ * 3D, down the painted ring tunnel; designed from the SMOOTHED original route, so it continues it exactly), and every point from the
++ * 07 entrance on is moved by ONE rigid offset (07 tube, plunge, 08-10 = translated copies, so those screens keep their look). Benny's
++ * approved checkpoint and everything before it stay bit-identical. Only the 06/07 seam is re-smoothed locally (first metres of 07).
++ */
++function deepen06(pts: THREE.Vector3[], marks: Record<string, number>): { points: THREE.Vector3[]; iKeep: number } {
++  const O6 = new THREE.Vector3().fromArray(route06deep.O), ax6 = new THREE.Vector3().fromArray(route06deep.ax);
++  const i06 = marks['06'], i07 = marks['07'];
++  let iK = i06;
++  while (iK + 1 < i07 && pts[iK + 1].clone().sub(O6).dot(ax6) <= route06deep.aKeep) iK++;
++  const mid = route06deep.points.map((q) => new THREE.Vector3(q[0], q[1], q[2]));
++  const T = mid[mid.length - 1].clone().sub(pts[i07]);
++  const out = [...pts.slice(0, iK + 1), ...mid.slice(0, -1), ...pts.slice(i07).map((p) => p.clone().add(T))];
++  const d = iK + 1 + mid.length - 1 - i07; // index shift of every mark from 07 on
++  for (const k of Object.keys(marks)) if (marks[k] >= i07) marks[k] += d;
++  // local seam smoothing on the 06 SIDE only (same kernel as smoothPolyline; the designed line already arrives along the original
++  // 07 entrance heading): the 07+ points stay an exact rigid copy, so 07-10 keep their geometry and distances
++  const j07 = marks['07'];
++  for (let pass = 0; pass < 3; pass++) {
++    const cum: number[] = [0];
++    for (let i = 1; i < out.length; i++) cum.push(cum[i - 1] + out[i].distanceTo(out[i - 1]));
++    const nw: THREE.Vector3[] = [];
++    for (let i = j07 - 6; i < j07; i++) {
++      const acc = new THREE.Vector3(); let ws = 0;
++      for (let j = i - 12; j <= i + 12; j++) { const w = Math.exp(-((cum[j] - cum[i]) ** 2) / (2 * 2.2 * 2.2)); acc.addScaledVector(out[j], w); ws += w; }
++      nw.push(acc.divideScalar(ws));
++    }
++    for (let i = j07 - 6; i < j07; i++) out[i].copy(nw[i - (j07 - 6)]);
++  }
++  applyWorldShift(T);
++  return { points: out, iKeep: iK };
++}
++
+ /**
+  * Arc-length Gaussian smoothing of the polyline from index `from` to the end (endpoints fixed).
+  * Removes tangent kinks where independently generated segments meet; the 02 tumble helix
+@@ -403,12 +469,16 @@ export class Course {
+     const route = buildRoute();
+     this.curve = new THREE.CatmullRomCurve3(route.points, false, 'centripetal');
+     // arc-length table over curve parameter u
+-    const M = route.points.length * 24;
++    const deep = route.nOld;
++    // r29 m06deep: the samples keep the ORIGINAL spacing in segment coordinates (original point count nOld), so every s up to
++    // the 06 divergence (all of 01-05 and Benny's 06 checkpoint) is exactly the original one; the original table otherwise.
++    const dp = deep ? (deep - 1) / (24 * deep) : 0;
++    const M = deep ? Math.ceil((route.points.length - 1) / dp) : route.points.length * 24;
+     const us: number[] = [0];
+     const ls: number[] = [0];
+     let prev = this.curve.getPoint(0);
+     for (let i = 1; i <= M; i++) {
+-      const u = i / M;
++      const u = deep ? Math.min(1, (i * dp) / (route.points.length - 1)) : i / M;
+       const p = this.curve.getPoint(u);
+       ls.push(ls[i - 1] + p.distanceTo(prev));
+       us.push(u);
+@@ -425,6 +495,12 @@ export class Course {
+       return us[lo] + (us[hi] - us[lo]) * f;
+     };
+     const sAtIndex = (i: number) => {
++      if (deep) { // r29 m06deep: original sample index for the unchanged marks, nearest sample at segment coordinate i after
++        const iK = route.iKeep ?? 0;
++        if (i <= iK) return ls[Math.min(M, Math.round((i / (deep - 1)) * deep * 24))];
++        const k = Math.min(M - 1, Math.floor(i / dp)), f = i / dp - k; // exact arc length at point i (interpolated)
++        return ls[k] + (ls[k + 1] - ls[k]) * f;
++      }
+       const u = i / (route.points.length - 1);
+       const k = Math.round(u * M);
+       return ls[k];
 diff --git a/src/world/match06.ts b/src/world/match06.ts
 index 831c2b44..1933ea73 100644
 --- a/src/world/match06.ts
