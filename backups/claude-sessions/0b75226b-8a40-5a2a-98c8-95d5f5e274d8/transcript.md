@@ -4889,3 +4889,69 @@ The gameplay rerun with the final settings has finished. Checking it:
 
 > 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && until grep -q \"exit\" clip_new2.log 2>/dev/null; do sleep 5; done; tail -2 clip_new2.log; date -u +%H:%M:%S", "description": "Wait for the final NEW video to finish rendering", "timeout": 1800000}`
 
+### 🧑 User — 2026-11-20T19:50:37.653Z
+
+> ↩︎ result: frames 242 seconds 10.08
+> clip_new2 exit 0
+> 19:50:37
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:51:35.386Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 212,262p src/world/match06.ts | cut -c1-200", "description": "Read the tunnel wall and ring colouring code"}`
+
+### 🧑 User — 2026-11-20T19:51:35.460Z
+
+> ↩︎ result: pc = mix(pc, gc, gw);
+>     }
+>   }
+>   if (uPanel > 0.5 && uFloor < 0.5 && uRing < 0.5) {
+>     // r7b m06ring: crisp perforated lilac washer metal between the rings (the painted panels: rows of short dark rounded
+>     // slots running around the tunnel, pink-white sheen toward the glow), instead of the magnified blurry far-ring crop
+>     vec3 q = vW - uAxO;
+>     float al = dot(q, uAxD);
+>     vec3 qr = q - uAxD * al;
+>     float arc = atan(dot(qr, uAxU), dot(qr, uAxR)) * length(qr);
+>     vec3 V = normalize(cameraPosition - vW);
+>     vec3 n2 = dot(nn, V) < 0.0 ? -nn : nn;
+>     float fw = dot(reflect(-V, n2), uAxD);
+>     // colours measured from the approved picture's walls (display values): shadow / median / lit magenta-purple,
+>     // lilac-blue toward the glow, near-black magenta slots (3-8 % of the wall)
+>     float lit = smoothstep(-0.7, 0.8, fw);
+>     vec3 base = mix(vec3(0.42, 0.19, 0.50), vec3(0.67, 0.34, 0.74), lit);
+>     base = mix(base, vec3(0.56, 0.38, 0.88), 0.45 * smoothstep(0.2, 0.95, fw));
+>     base += vec3(0.9, 0.6, 0.95) * 0.16 * pow(max(fw, 0.0), 8.0);
+>     float row = floor(al / 0.55);
+>     vec2 p = vec2((fract(arc / 0.62 + 0.5 * mod(row, 2.0)) - 0.5) * 0.62, (fract(al / 0.55) - 0.5) * 0. …[+2060 chars]
+
+### 🤖 Claude — 2026-11-20T19:51:50.498Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"const loadTile\\|loadTile = \" -A3 src/world/match06.ts | head -6 | cut -c1-200; ls -la assets/textures/match06/ | grep -i tube | awk '{print $5, $9}'", "description": "Find the tunnel wall texture file"}`
+
+### 🧑 User — 2026-11-20T19:51:50.566Z
+
+> ↩︎ result: 538:  const loadTile = async (name: string) => {
+> 539-    const t = await loader.loadAsync(tex(`tile_${name}.png`));
+> 540-    t.colorSpace = THREE.NoColorSpace; t.wrapS = t.wrapT = THREE.MirroredRepeatWrapping; t.anisotropy = 8;
+> 541-    t.minFilter = THREE.LinearMipmapLinearFilter; return t;
+> 870107 tile_tube.png
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:51:53.472Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && identify assets/textures/match06/tile_tube.png && convert assets/textures/match06/tile_tube.png -resize 600x600 /home/user/scratch/s06/tile_tube_view.png && echo ok", "description": "Make a viewable copy of the tunnel wall texture"}`
+
+### 🧑 User — 2026-11-20T19:51:53.633Z
+
+> ↩︎ result: assets/textures/match06/tile_tube.png PNG 384x1024 384x1024+0+0 8-bit sRGB 870107B 0.000u 0:00.000
+> ok
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:51:55.145Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s06/tile_tube_view.png"}`
+
+### 🧑 User — 2026-11-20T19:51:55.176Z
+
+> ↩︎ result: [image]
+
