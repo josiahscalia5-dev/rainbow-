@@ -1152,3 +1152,90 @@ Now render V8 + the collar (two settings) at middle, late and hard right.
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad; D=/home/user/rainbow-/qa/match/04/r23/s1_arrows; mkdir -p $D\nSW=\"$(cat $S/s1/A8.txt)&m04wl=1&m04wly=0.4&m04wlr=0.66&m04wlo=1.1&m04wle=1.65&m04wlz=1.6\"\necho \"$SW\" > $D/SWITCH.txt\nnode /home/user/rainbow-/tools/lead23/setq.mjs \"$(cat /home/user/rainbow-/qa/match/04/r23/QUERY_K23-1.txt)\" \"$SW\" > $D/QUERY_K23-S1.txt\ncat $D/SWITCH.txt; unset SHOTS\ncd /home/user/wt/s04 && AUDIT_PORT=5273 timeout 1500 node /home/user/rainbow-/qa/match/04/r23/s04_tools/audit_pinned_slow.mjs $D/NEW 04 \"$(cat  …[+561 chars]`
 
+### 🧑 User — 2026-11-20T05:15:02.985Z
+
+> ↩︎ result: m04a3sc=1&m04a3sy=2.1&m04a3sr=0.9&m04a3s0=-0.005&m04a3s1=0.03&m04a3sx=0.02&m04a3d=0.6&m04a3t=0.4&m04a3w=1.5&m04a3p=6.5&m04a3k=60&m04a3fl=26&m04a3f0=50&m04a3f1=58&m04wl=1&m04wly=0.4&m04wlr=0.66&m04wlo=1.1&m04wle=1.65&m04wlz=1.6
+> 04 a_start s 77.413 lat 0 stage 04 coins 1330
+> 04 b_early s 82.08 lat 0 stage 04 coins 1330
+> 04 c_middle s 90.48 lat 0 stage 04 coins 1330
+> 04 d_late s 99.813 lat 0 stage 04 coins 1330
+> 04 e_end s 109.146 lat 0 stage 04 coins 1330
+> 04 f_hard_left s 90.48 lat -1.65 stage 04 coins 1360
+> 04 g_hard_right s 90.48 lat 1.65 stage 04 coins 1330
+> a_start 0
+> b_early 40098
+> c_middle 33593
+> d_late 39518
+> e_end 32143
+> f_hard_left 55009
+> g_hard_right 55498
+
+### 🤖 Claude — 2026-11-20T05:15:05.768Z
+
+Start view is 0 px versus BEFORE. Let me look at the full NEW frames.
+
+### 🤖 Claude — 2026-11-20T05:15:06.315Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/04/r23/s1_arrows/NEW/c_middle.png"}`
+
+### 🧑 User — 2026-11-20T05:15:06.355Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T05:15:06.814Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/04/r23/s1_arrows/NEW/e_end.png"}`
+
+### 🧑 User — 2026-11-20T05:15:06.853Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T05:15:07.267Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/04/r23/s1_arrows/NEW/f_hard_left.png"}`
+
+### 🧑 User — 2026-11-20T05:15:07.338Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T05:15:16.472Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,60p /home/user/rainbow-/qa/match/04/r22/tools/swim_clip_pinned.mjs | cut -c1-220", "description": "Read pinned swim clip tool"}`
+
+### 🧑 User — 2026-11-20T05:15:16.511Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // r22 S04 copy of tools/lead_r13/swim_clip.mjs: port AUDIT_PORT (default 5273) and performance.now() pinned to the clip clock
+> // while each frame is stepped and drawn (the Screen 04 river shader reads the wall clock), so BEFORE / NEW clips match.
+> // Lead r13 (2026-11-18): a short REAL-GAMEPLAY swimming clip for any playable screen 04–08 (read-only).
+> // Starts at the screen's checkpoint and rides the real game simulation (Benny, camera rig, course, coins unchanged) with
+> // the shader clock running: straight, then left, then right, then straight — one frame per 1/fps s → OUT/0000.png …
+> // Generalises scripts/proj05-move.mjs --zigzag. Encode: ffmpeg -framerate 24 -i OUT/%04d.png -pix_fmt yuv420p clip.mp4
+> //   node tools/lead_r13/swim_clip.mjs <screen 04..08> <outDir> <seconds> [query]
+> import { mkdirSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> const [SCREEN, OUT, SECS = '6', Q = ''] = process.argv.slice(2);
+> const fps = 24;
+> mkdirSync(OUT, { recursive: true });
+> const { chromium } = loadPlaywright();
+> const vite = await start …[+1193 chars]
+
+### 🤖 Claude — 2026-11-20T05:15:25.943Z
+
+> 🔧 **Bash** `{"command": "T=/home/user/rainbow-/qa/match/04/r23/s04_tools; sed -e 's#await page.screenshot({ path: `${OUT}/${String(i).padStart(4, .0.)}.png` });#await page.screenshot({ path: `${OUT}/${String(i).padStart(4, \"0\")}.png`, timeout: 300000 });#' -e '2i // r23 s04 copy: identical to qa/match/04/r22/tools/swim_clip_pinned.mjs except the screenshot timeout (300 s; shared machine).' /home/user/rainbow-/qa/match/04/r22/tools/swim_clip_pinned.mjs > $T/swim_clip_pinned_slow.mjs; diff /home/user/rainbow-/qa/match/04/r22/tools/swim_clip_pinned.mjs $T/swim_clip_pinned_slow.mjs\ncat > $T/clip.sh <<'EOF' …[+1052 chars]`
+
+### 🧑 User — 2026-11-20T05:15:26.008Z
+
+> ↩︎ result: 1a2
+> > // r23 s04 copy: identical to qa/match/04/r22/tools/swim_clip_pinned.mjs except the screenshot timeout (300 s; shared machine).
+> 29c30
+> <     await page.screenshot({ path: `${OUT}/${String(i).padStart(4, '0')}.png` });
+> ---
+> >     await page.screenshot({ path: `${OUT}/${String(i).padStart(4, "0")}.png`, timeout: 300000 });
+> ok
+
+### 🤖 Claude — 2026-11-20T05:15:31.826Z
+
+> 🔧 **Bash** `{"command": "D=/home/user/rainbow-/qa/match/04/r23/s1_arrows; T=/home/user/rainbow-/qa/match/04/r23/s04_tools\n( $T/clip.sh $D/QUERY_K23-S1.txt $D/swim04_NEW_K23-S1 5273 & (cd /home/user/wt/s04 && AUDIT_PORT=5274 timeout 1500 node $T/audit_pinned_slow.mjs $D/K23-1_with_new_code 04 \"$(cat /home/user/rainbow-/qa/match/04/r23/QUERY_K23-1.txt)\" > $D/audit_k231_newcode.log 2>&1) & wait )\nfor s in a_start b_early c_middle d_late e_end f_hard_left g_hard_right; do printf \"%s \" $s; node /home/user/tools-pixelmatch/pixeldiff.mjs $D/K23-1_with_new_code/$s.png /home/user/rainbow-/qa/match/04/r23/s04 …[+340 chars]`
+

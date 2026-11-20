@@ -1,9 +1,9 @@
 # Screen 06 — round 23 progress (worktree `/home/user/wt/s06`, LOCAL branch `claude/rainbow-s06-match-c24`, port 5276)
 
 ## (r23) WHERE I STOPPED / NEXT
-* ~04:48 UTC — Step 1 (r22 step 3 `&m06fcl=1`, low foam heaps) DONE: **GOOD IMPROVEMENT** (see below; clips being encoded).
+* ~04:48 UTC — Step 1 (r22 step 3 `&m06fcl=1`, low foam heaps) DONE: **GOOD IMPROVEMENT** (see below); clips done 05:01.
 * ~05:00 UTC — Step 2 (`&m06view=1&m06vs=0`, off-centre ring tunnel held through the first second) DONE: **GOOD
-  IMPROVEMENT** as a camera-framing TEST (user decides; not in the kept set). Clip `swim_06_NEW.mp4` being recorded.
+  IMPROVEMENT** as a camera-framing TEST (user decides; not in the kept set). Clip done 05:13.
 * ~05:00 UTC — Step 3 `&m06rip=1` (the painted ripple rings round Benny carried with him) BUILT (`src/world/match06.ts`,
   1 line in `src/game/Game.ts`), `tsc` clean. First NEW render was confounded by the river's flow animation (wall clock,
   differs per run) → re-rendering BEFORE / NEW with the water clock pinned (`AUDIT_PIN=22000`, `tools/match06/r23_audit.mjs`).
@@ -61,6 +61,12 @@ r23 BEFORE base = K6 + `&m06st=1` (r22 step 2, small GOOD IMPROVEMENT, lead revi
   NEW query: `match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1&m06st=1&m06fcl=1&m06view=1&m06vs=0`
 * Start view 0 px differ (pixeldiff 0.1). Gameplay **8/8**, coins 1,330 → 2,240 = **91**, no camera cut
   (`step2_m06vs0/gameplay_NEW.json`). Continuity unchanged (camera only; `npm run test:continuity` OK in step 1).
+* Clips (4.8 s uninterrupted real gameplay from the 06 checkpoint into 07: straight, hard left, hard right, straight):
+  BEFORE = `step1_m06fcl/swim_06_NEW.mp4`, r22 `m06view` = `step1_m06fcl/with_m06view/swim_06_NEW.mp4`, NEW =
+  `step2_m06vs0/swim_06_NEW.mp4`. In the clip: 0.4 s / 0.9 s in, NEW keeps the tunnel off-centre right with big ring arcs
+  sweeping past where BEFORE already shows a centred target; ~1.5 s in NEW's target sits top-centre-right (BEFORE upper
+  left) with a big near foam cloud lower right; from the hard-left section on (~2.3 s) both are the same, and the 07
+  entry is identical (06→07 join unchanged).
 
 #### Verdict — GOOD IMPROVEMENT (as a framing test; the first second of the swim and the middle)
 * BEFORE: within the first second the gold rings swing up into a centred target at the top of the screen; by the middle it

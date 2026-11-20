@@ -2663,3 +2663,142 @@ The 5 start-view pixels are on the HUD (pause-button rim and heart outline, capt
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-20T05:13:15.168Z
+
+No artefacts when steering (no glued bubbles, no seam, the rings stay on the water side when Benny rides onto the bank); the effect is subtle late in the stage. Checking the clip queue.
+
+### 🤖 Claude — 2026-11-20T05:13:17.592Z
+
+> 🔧 **Bash** `{"command": "ls -la /home/user/rainbow-/qa/match/06/r23/*/*.mp4 /home/user/rainbow-/qa/match/06/r23/*/*/*.mp4 2>/dev/null; cat /home/user/rainbow-/qa/match/06/r23/step3_m06rip/gameplay_NEW.log 2>/dev/null | grep -v \"outside of Vite\" | tail -2; for d in /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/clip*/f; do echo \"$d $(ls $d | wc -l)\"; done; date -u +%H:%M", "description": "Check clip and gameplay status"}`
+
+### 🧑 User — 2026-11-20T05:13:18.117Z
+
+> ↩︎ result: -rw-r--r-- 1 root root 3056160 Nov 20 05:01 /home/user/rainbow-/qa/match/06/r23/step1_m06fcl/swim_06_BEFORE.mp4
+> -rw-r--r-- 1 root root 3060911 Nov 20 05:00 /home/user/rainbow-/qa/match/06/r23/step1_m06fcl/swim_06_NEW.mp4
+> /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/clip16XH/f 115
+> /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/clip4bYF/f 114
+> /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/clipmSt7/f 115
+> /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/clipxocu/f 112
+> 05:13
+
+### 🤖 Claude — 2026-11-20T05:13:21.014Z
+
+Both clips are nearly done; step 3 gameplay and clip start right after. Refreshing the step 3 code.patch with the seam fix.
+
+### 🤖 Claude — 2026-11-20T05:13:21.977Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && git diff -- src/world/match06.ts src/game/Game.ts > /home/user/rainbow-/qa/match/06/r23/step3_m06rip/code.patch; git diff --stat; git status --short | grep -v node_modules", "description": "Refresh step 3 code patch"}`
+
+### 🧑 User — 2026-11-20T05:13:22.408Z
+
+> ↩︎ result: src/game/Game.ts     |   1 +
+>  src/world/match06.ts | 100 ++++++++++++++++++++++++++++++++++++++++++++++++++-
+>  2 files changed, 100 insertions(+), 1 deletion(-)
+>  M src/game/Game.ts
+>  M src/world/match06.ts
+> ?? tools/match06/r23_audit.mjs
+> ?? tools/match06/r23_ripdump.mjs
+> ?? tools/match06/r23_swim.mjs
+> ?? tools/match06/r23_tunprobe.mjs
+> ?? tools/match06/r23_vite.mjs
+
+### 🤖 Claude — 2026-11-20T05:13:27.738Z
+
+> 🔧 **Bash** `{"command": "timeout 600 bash -c 'until [ -f /home/user/rainbow-/qa/match/06/r23/step2_m06vs0/swim_06_NEW.mp4 ]; do sleep 5; done'; ls -la /home/user/rainbow-/qa/match/06/r23/step2_m06vs0/swim_06_NEW.mp4; cd /home/user/wt/s06 && timeout 600 npm run test:continuity > /home/user/rainbow-/qa/match/06/r23/step3_m06rip/continuity.log 2>&1; echo \"rc=$?\"; grep -E '\"ok\"|05->06|06->07' /home/user/rainbow-/qa/match/06/r23/step3_m06rip/continuity.log", "description": "Wait for step 2 clip, run continuity test", "timeout": 900000}`
+
+### 🧑 User — 2026-11-20T05:13:39.353Z
+
+> ↩︎ result: -rw-r--r-- 1 root root 0 Nov 20 05:13 /home/user/rainbow-/qa/match/06/r23/step2_m06vs0/swim_06_NEW.mp4
+> rc=0
+>  "ok": true,
+>   "05->06 gap=0 dT=0.281 y=-43.35",
+>   "06->07 gap=0 dT=0.114 y=-48.53",
+
+### 🤖 Claude — 2026-11-20T05:13:43.352Z
+
+Continuity OK with the step 3 code. The step 2 mp4 was still being written when listed; verifying all clips now.
+
+### 🤖 Claude — 2026-11-20T05:13:46.210Z
+
+> 🔧 **Bash** `{"command": "for f in /home/user/rainbow-/qa/match/06/r23/step1_m06fcl/swim_06_BEFORE.mp4 /home/user/rainbow-/qa/match/06/r23/step1_m06fcl/swim_06_NEW.mp4 /home/user/rainbow-/qa/match/06/r23/step1_m06fcl/with_m06view/swim_06_NEW.mp4 /home/user/rainbow-/qa/match/06/r23/step2_m06vs0/swim_06_NEW.mp4; do echo \"$f $(stat -c %s $f) $(ffprobe -v error -show_entries stream=width,height,nb_frames -of csv=p=0 $f)\"; done; grep -h \"frames\\|rror\" /home/user/rainbow-/qa/match/06/r23/step1_m06fcl/with_m06view/swim_06_NEW.log /home/user/rainbow-/qa/match/06/r23/step2_m06vs0/swim_06_NEW.log | grep -v \"ou …[+65 chars]`
+
+### 🧑 User — 2026-11-20T05:13:46.941Z
+
+> ↩︎ result: /home/user/rainbow-/qa/match/06/r23/step1_m06fcl/swim_06_BEFORE.mp4 3056160 432,768,115
+> /home/user/rainbow-/qa/match/06/r23/step1_m06fcl/swim_06_NEW.mp4 3060911 432,768,115
+> /home/user/rainbow-/qa/match/06/r23/step1_m06fcl/with_m06view/swim_06_NEW.mp4 3091704 432,768,115
+> [mov,mp4,m4a,3gp,3g2,mj2 @ 0x55899d8ab8c0] moov atom not found
+> /home/user/rainbow-/qa/match/06/r23/step2_m06vs0/swim_06_NEW.mp4: Invalid data found when processing input
+> /home/user/rainbow-/qa/match/06/r23/step2_m06vs0/swim_06_NEW.mp4 1835056 
+> frames 115
+> 115 frames -> /home/user/rainbow-/qa/match/06/r23/step1_m06fcl/with_m06view/swim_06_NEW.mp4 (frames kept in /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/clip4bYF/f)
+> frames 115
+
+### 🤖 Claude — 2026-11-20T05:13:50.477Z
+
+> 🔧 **Bash** `{"command": "f=/home/user/rainbow-/qa/match/06/r23/step2_m06vs0/swim_06_NEW.mp4; echo \"$(stat -c %s $f) $(ffprobe -v error -show_entries stream=width,height,nb_frames -of csv=p=0 $f)\"; tail -1 /home/user/rainbow-/qa/match/06/r23/step2_m06vs0/swim_06_NEW.log", "description": "Re-verify step 2 clip after encode"}`
+
+### 🧑 User — 2026-11-20T05:13:50.610Z
+
+> ↩︎ result: 3076299 432,768,115
+> 115 frames -> /home/user/rainbow-/qa/match/06/r23/step2_m06vs0/swim_06_NEW.mp4 (frames kept in /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/clipxocu/f)
+
+### 🤖 Claude — 2026-11-20T05:13:53.798Z
+
+All four clips are complete (115 frames each, 06 into 07). Looking at the step 2 clip during steering and the descent, BEFORE vs NEW.
+
+### 🤖 Claude — 2026-11-20T05:13:56.234Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06; python3 -I $S/strip.py $S/clip_s2b.png $S/clip16XH/f/0035.png $S/clipxocu/f/0035.png $S/clip16XH/f/0055.png $S/clipxocu/f/0055.png $S/clip16XH/f/0085.png $S/clipxocu/f/0085.png", "description": "Build step 2 clip steering strip"}`
+
+### 🧑 User — 2026-11-20T05:13:56.976Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T05:13:59.466Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/clip_s2b.png"}`
+
+### 🧑 User — 2026-11-20T05:13:59.835Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-20T05:13:59.830Z
+
+[Image: original 2622x768, displayed at 2000x586. Multiply coordinates by 1.31 to map to original image.]
+
+### 🤖 Claude — 2026-11-20T05:14:13.026Z
+
+> 🔧 **Bash** `{"command": "date -u +%H:%M; python3 - <<'EOF'\np='/home/user/rainbow-/qa/match/06/r23/PROGRESS.md'\ns=open(p).read()\ns=s.replace(\"\"\"* ~04:48 UTC — Step 1 (r22 step 3 `&m06fcl=1`, low foam heaps) DONE: **GOOD IMPROVEMENT** (see below; clips being encoded).\"\"\",\"\"\"* ~04:48 UTC — Step 1 (r22 step 3 `&m06fcl=1`, low foam heaps) DONE: **GOOD IMPROVEMENT** (see below); clips done 05:01.\"\"\")\ns=s.replace(\"\"\"IMPROVEMENT** as a camera-framing TEST (user decides; not in the kept set). Clip `swim_06_NEW.mp4` being recorded.\"\"\",\"\"\"IMPROVEMENT** as a camera-framing TEST (user decides; …[+1433 chars]`
+
+### 🧑 User — 2026-11-20T05:14:13.106Z
+
+> ↩︎ result: 05:14
+> }
+> 1_APPROVED.png
+> BEFORE
+> BEFORE.log
+> NEW
+> NEW.log
+> code.patch
+> continuity.log
+> gameplay_NEW.json
+> gameplay_NEW.log
+> swim_06_NEW.log
+
+### 🤖 Claude — 2026-11-20T05:14:17.562Z
+
+> 🔧 **Bash** `{"command": "O=/home/user/rainbow-/qa/match/06/r23/step3_m06rip; python3 -I -c \"\nimport json\nd=json.load(open('$O/gameplay_NEW.json')); c=d['checks']\nprint('pass', d['pass'], sum(1 for v in c.values() if v.get('pass')), '/', len(c), c['realCoinPickups'], 'cut', c['noCameraCut'], 'tele', c['noTeleport']['pass'], d['query'][-30:])\"", "description": "Read step 3 gameplay result"}`
+
+### 🧑 User — 2026-11-20T05:14:17.733Z
+
+> ↩︎ result: pass True 8 / 8 {'pass': True, 'startCoins': 1330, 'endCoins': 2240, 'collected': 91} cut {'pass': True, 'maxCameraJumpPerStep': 0.728} tele True l=1&m06view=1&m06vs=0&m06rip=1
+
+### 🤖 Claude — 2026-11-20T05:14:26.486Z
+
+Step 3 gameplay: 8/8, 91 coins, no cut or teleport. Waiting for the step 3 clip to judge the ripple rings in motion.
+
+### 🤖 Claude — 2026-11-20T05:14:27.998Z
+
+> 🔧 **Bash** `{"command": "timeout 1500 bash -c 'until grep -q \"frames ->\" /home/user/rainbow-/qa/match/06/r23/step3_m06rip/swim_06_NEW.log 2>/dev/null; do sleep 10; done'; tail -1 /home/user/rainbow-/qa/match/06/r23/step3_m06rip/swim_06_NEW.log; date -u +%H:%M", "description": "Wait for step 3 swim clip", "timeout": 1560000}`
+
