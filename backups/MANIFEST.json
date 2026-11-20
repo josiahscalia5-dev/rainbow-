@@ -624,7 +624,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 24647,
-   "sha256": "a3a690ba78f63a82cd74bace0576c011af0bca5035abcbc33f98ef98c8a8a4bf"
+   "sha256": "eb4404ea7730c7303172589e28e5ae6d21a25abe79dd2cfbec85fa30841391ab"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -639,7 +639,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 4568,
-   "sha256": "b92441fee76226816857103f6c344bf952a4b62c1039eb7765cdb7d8ac83ee12"
+   "sha256": "8481bf26b31be8e0287d4530120b7f39f1289f96a201e2ba99cb17b161c636cf"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -3164,7 +3164,7 @@
   {
    "path": "backups/wip/claude__rainbow-s06-benny06-c32/INFO.json",
    "bytes": 2213,
-   "sha256": "2e881f08538859b719ababc136f0e214b9d10803b5aa0e28caa987025e44511e"
+   "sha256": "adf67e0e9cc6d2257bb4439b21dfe8bb4af7a29a131e65053b9843c9dff91d7b"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-benny06-c32/tracked.patch",
@@ -3564,7 +3564,7 @@
   {
    "path": "backups/wip/claude__rainbow-s06-foam06-c32/INFO.json",
    "bytes": 2047,
-   "sha256": "a49a3a47837284c1645a1c3ab826bdf80a21331cc2cb440aa7dd0870ca358114"
+   "sha256": "f80b9ec799113a72634b3c936f455ba8305833e7f117632fae3c14de538f3e9f"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-foam06-c32/tracked.patch",
@@ -4559,7 +4559,7 @@
   {
    "path": "backups/wip/claude__rainbow-s06-match-c32/INFO.json",
    "bytes": 2723,
-   "sha256": "f94078e1976cd49bc2e3274402629051f3c7c664acd29f4bbfd45f053555b2cc"
+   "sha256": "84e3707dd4ceb4f94c1fcf675d60280557433dbf61bf3f146b4b6338a0131b38"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c32/tracked.patch",
@@ -4808,8 +4808,8 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c32/untracked/tools/match06/r30b_make_clip.py",
-   "bytes": 2957,
-   "sha256": "536b9e740331195b55a9a3a12882319e703e2b7376ae6ed143f27cc95ab39752"
+   "bytes": 2962,
+   "sha256": "2aa4144bd442d18325c8bf2f6764f01713826dcd8f7ab30c55a24569ec979edd"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c32/untracked/tools/match06/r30b_make_steer.py",
@@ -5034,7 +5034,7 @@
   {
    "path": "backups/wip/claude__rainbow-s06-scen06-c32/INFO.json",
    "bytes": 2047,
-   "sha256": "818ef0ff746b2a69a1d6268728cd840c913e582f3686282ba1d32839a6e88e4c"
+   "sha256": "25468711c304e7bae568f40a0ea0e0a2d32c74ca04b6b0b505209e9961fa5561"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-scen06-c32/tracked.patch",
@@ -5424,7 +5424,7 @@
   {
    "path": "backups/wip/claude__rainbow-s06-water06-c32/INFO.json",
    "bytes": 2172,
-   "sha256": "3309bf9898718a8d82d2f33707c992484eaccc4a86d84e5962dfac9c8ece5537"
+   "sha256": "3ddb37ff2ac731108b3c52a27303c4d46877d699a1ce87ebd1fc8be41cf0451c"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-water06-c32/tracked.patch",
