@@ -537,3 +537,129 @@ Now I'll add the clustering + soft-glow option (`m04lgcg`, new uniform `uLG7`), 
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -I - <<'EOF'\np='src/world/match04m4.ts'; s=open(p).read()\ndef rep(old,new):\n    global s\n    assert s.count(old)==1, old[:60]; s=s.replace(old,new)\nrep(\"\"\"                             // (y <= x: crescents everywhere), z crescent whiteness boost, w star sparkle at the brightest crescents\n\"\"\",\"\"\"                             // (y <= x: crescents everywhere), z crescent whiteness boost, w star sparkle at the brightest crescents\nuniform vec4 uLG7;           // r27 m04lgcg: x cluster threshold (0 = off), y cluster size across (u), z clus …[+3204 chars]`
 
+### 🧑 User — 2026-11-20T15:31:33.088Z
+
+> ↩︎ result: ok
+> tsc rc=0
+
+### 🤖 Claude — 2026-11-20T15:31:46.627Z
+
+> 🔧 **Bash** `{"command": "cat /home/user/scratch/s04/run_r27a.out | tail -3; cat > /home/user/scratch/s04/run_r27b.sh <<'EOF'\n#!/usr/bin/env bash\n# r27 s04 job B: clustered + haloed crescent glints (m04lgcg), base = K23-S3 + m04a5=2, port 5273\nS=/home/user/scratch/s04\nexport BASE=/home/user/rainbow-/qa/match/04/r26/s0_five/QUERY_NEW_K23-S3_a5.txt\nV=/home/user/rainbow-/qa/match/04/r23/s04_tools/variant.sh\nrun() { echo \"start $1 $(date -u +%T)\"; bash $V $S/$1 5273 \"$2\"; }\nexport SHOTS='[[\"c_middle\",0.35,null],[\"d_late\",0.6,null]]'\nF=\"m04lgc=1&m04lgt=0.035&m04lgn=5&m04lgcl=0.35\"\nrun s1var/V …[+578 chars]`
+
+### 🧑 User — 2026-11-20T15:31:46.717Z
+
+> ↩︎ result: start s1var/V7_sparse 15:29:46
+> done /home/user/scratch/s04/s1var/V7_sparse 2 png
+> start s2var/C1_cloud 15:30:34
+> started
+
+### 🤖 Claude — 2026-11-20T15:32:12.374Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"m04a3sc\\|uA3S\\|depthTest\\|m04a3f0\\|m04a3f'\\|renderOrder\" src/world/match04m4.ts | sed -n 1,40p", "description": "Find chevron fade and depth settings"}`
+
+### 🧑 User — 2026-11-20T15:32:12.476Z
+
+> ↩︎ result: 1947:    const rmesh = new THREE.Mesh(g, rm); rmesh.name = 'm04_river'; rmesh.renderOrder = 1; group.add(rmesh);
+> 1956:      const umesh = new THREE.Mesh(gu, um); umesh.name = 'm04_river_up'; umesh.renderOrder = 1; umesh.frustumCulled = false; umesh.visible = false;
+> 1978:    mesh.name = name; mesh.frustumCulled = false; mesh.renderOrder = order; mesh.visible = false; // invisible during the projector depth bake
+> 2187:        im.instanceMatrix.needsUpdate = true; im.name = `m04_bank_heap_${gi}`; im.renderOrder = 3; im.frustumCulled = false;
+> 2354:  // r22 `&m04a3sc=1`: SCREEN clearance — as painted, all five chevrons lie AHEAD of Benny, above his pompom in the picture;
+> 2359:  const a3sc = M04.num('m04a3sc', 0) > 0;
+> 2363:    scMark = new THREE.Mesh(new THREE.SphereGeometry(0.06, 12, 8), new THREE.MeshBasicMaterial({ color: 0xff0000, depthTest: false }));
+> 2364:    scMark.renderOrder = 99; scMark.frustumCulled = false; group.parent ? group.parent.add(scMark) : group.add(scMark);
+> 2369:    const tilt = THREE.MathUtils.degToRad(M04.num('m04a3k', 38)), sp = M04.num('m04a3p', 5.0), first = M04.num('m04a3f', 3.0);
+> 2450:      m.renderOrder = 5; g.renderOrder = coreT && lum > 0 ? 6 : 4; m.name =  …[+536 chars]
+
+### 🤖 Claude — 2026-11-20T15:32:14.876Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 2350,2372p src/world/match04m4.ts; echo ...; sed -n 2420,2455p src/world/match04m4.ts; echo ...; sed -n 2515,2580p src/world/match04m4.ts", "description": "Read chevron build and per-frame fade code"}`
+
+### 🧑 User — 2026-11-20T15:32:14.942Z
+
+> ↩︎ result: // (fat white-cyan bars, apex pointing down the tunnel, cyan glow) leans back toward the camera like the painted lane seen
+>   // from above; spaced so about five are in view ahead; each fades in from 2 u ahead (Benny never clips through one) and out
+>   // far away; hidden at the approved viewpoint (the painted picture is shown there). The flat river chevrons are switched off.
+>   const arrowsOut: { mesh: THREE.Mesh; za: number; mats: THREE.MeshBasicMaterial[]; hw?: number; y?: number }[] = [];
+>   // r22 `&m04a3sc=1`: SCREEN clearance — as painted, all five chevrons lie AHEAD of Benny, above his pompom in the picture;
+>   // a chevron whose nearest bar ends would show at or below the top of his hat (projected with the real camera) and
+>   // overlapping him sideways fades out (a world-distance fade alone still left the nearest one straddling his hat).
+>   // m04a3sy Benny's top above his root (u), m04a3sr his half width (u), m04a3s0 / m04a3s1 the screen gap (NDC y, chevron
+>   // bar ends above his top) where it is gone / whole, m04a3sx sideways margin (NDC x).
+>   const a3sc = M04.num('m04a3sc', 0) > 0;
+>   const scP = new THREE.Vector3(), scQ = new THREE.Vector3(), scR = new THREE.Vector3();
+>   let …[+8759 chars]
+
+### 🤖 Claude — 2026-11-20T15:32:33.656Z
+
+> 🔧 **Bash** `{"command": "timeout 540 bash -c 'until grep -q \"ALL_DONE\" /home/user/scratch/s04/run_r27b.out; do sleep 10; done'; cat /home/user/scratch/s04/run_r27a.out /home/user/scratch/s04/run_r27b.out | grep -v \"^$\"; grep -i \"error\" /home/user/scratch/s04/s1var/V8_clu/audit.log | head -3; cd /home/user/scratch/s04 && python3 -I -c \"\nfrom PIL import Image\nvs=['V4_fine','V8_clu','V9_clu_thin','V10_clu_flow']\nW=Image.new('RGB',(4*400,2*330))\nfor k,v in enumerate(vs):\n  for j,sh in enumerate(['c_middle','d_late']):\n    im=Image.open(f's1var/{v}/{sh}.png').convert('RGB')\n    W.paste(im.crop((8 …[+153 chars]`
+
+### 🧑 User — 2026-11-20T15:35:24.379Z
+
+> ↩︎ result: start s1var/V0_base 15:26:49
+> done /home/user/scratch/s04/s1var/V0_base 4 png
+> start s1var/V4_fine 15:27:35
+> done /home/user/scratch/s04/s1var/V4_fine 2 png
+> start s1var/V5_fine2 15:28:16
+> done /home/user/scratch/s04/s1var/V5_fine2 2 png
+> start s1var/V6_thin 15:29:02
+> done /home/user/scratch/s04/s1var/V6_thin 2 png
+> start s1var/V7_sparse 15:29:46
+> done /home/user/scratch/s04/s1var/V7_sparse 2 png
+> start s2var/C1_cloud 15:30:34
+> done /home/user/scratch/s04/s2var/C1_cloud 4 png
+> start s2var/C2_cloud_low 15:31:49
+> done /home/user/scratch/s04/s2var/C2_cloud_low 4 png
+> ALL_DONE
+> [render_slot] got slot 1 after 75s
+> start s1var/V8_clu 15:33:01
+> done /home/user/scratch/s04/s1var/V8_clu 2 png
+> start s1var/V9_clu_thin 15:33:46
+> done /home/user/scratch/s04/s1var/V9_clu_thin 2 png
+> start s1var/V10_clu_flow 15:34:30
+> done /home/user/scratch/s04/s1var/V10_clu_flow 2 png
+> ALL_DONE
+
+### 🤖 Claude — 2026-11-20T15:35:25.816Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s04/lgc_full_r27b.png"}`
+
+### 🧑 User — 2026-11-20T15:35:25.857Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T15:35:36.099Z
+
+> 🔧 **Bash** `{"command": "cat > /home/user/scratch/s04/run_r27c.sh <<'EOF'\n#!/usr/bin/env bash\nS=/home/user/scratch/s04\nexport BASE=/home/user/rainbow-/qa/match/04/r26/s0_five/QUERY_NEW_K23-S3_a5.txt\nV=/home/user/rainbow-/qa/match/04/r23/s04_tools/variant.sh\nrun() { echo \"start $1 $(date -u +%T)\"; bash $V $S/$1 5273 \"$2\"; }\nexport SHOTS='[[\"c_middle\",0.35,null],[\"d_late\",0.6,null]]'\nF=\"m04lgc=1&m04lgt=0.035&m04lgn=5&m04lgcl=0.35&m04lgcb=0.08&m04lgcs=0.9&m04lgcgx=0.5&m04lgcgz=1.8\"\nrun s1var/V11_clu_dense \"$F&m04lgco=0.15&m04lgcg=0.42&m04lgch=0.4\"\nrun s1var/V12_clu_mid \"$F&m04lgco=0.25& …[+697 chars]`
+
+### 🧑 User — 2026-11-20T15:35:37.279Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T15:35:38.794Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s04/cloud_sheet.png"}`
+
+### 🧑 User — 2026-11-20T15:35:39.015Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T15:35:53.770Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s04 && python3 -I -c \"\nfrom PIL import Image\nvs=['s1var/V0_base','s2var/C1_cloud','s2var/C2_cloud_low']\nW=Image.new('RGB',(3*432,2*330))\nfor j,v in enumerate(vs):\n  for k,s in enumerate(['c_middle','e_end']):\n    im=Image.open(f'{v}/{s}.png').convert('RGB')\n    W.paste(im.crop((0,700,864,1360)).resize((432,330)),(j*432,k*330))\nW.save('cloud_mid.png')\n\"", "description": "Crop mid-distance foam region for cloud variants"}`
+
+### 🧑 User — 2026-11-20T15:35:54.367Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T15:35:55.501Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s04/cloud_mid.png"}`
+
+### 🧑 User — 2026-11-20T15:35:55.561Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T15:36:06.246Z
+
+> 🔧 **Bash** `{"command": "cat > /home/user/scratch/s04/run_r27d.sh <<'EOF'\n#!/usr/bin/env bash\nS=/home/user/scratch/s04\nexport BASE=/home/user/rainbow-/qa/match/04/r26/s0_five/QUERY_NEW_K23-S3_a5.txt\nV=/home/user/rainbow-/qa/match/04/r23/s04_tools/variant.sh\nrun() { echo \"start $1 $(date -u +%T)\"; bash $V $S/$1 5274 \"$2\"; }\nrun s2var/C3_cloud_full \"m04bbdc=1&m04ry=0.35&m04bbdcb=1.6&m04bbdcl=1.3&m04bbdcw=0.45\"\necho ALL_DONE\nEOF\nchmod +x /home/user/scratch/s04/run_r27d.sh; nohup bash /home/user/rainbow-/tools/lead25/render_slot.sh bash /home/user/scratch/s04/run_r27d.sh > /home/user/scratch/s0 …[+638 chars]`
+

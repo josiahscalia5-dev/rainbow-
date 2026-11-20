@@ -2129,3 +2129,20 @@ That's the target look for every screen. Waiting for the first candidate capture
 
 > 🔧 **Bash** `{"command": "L=/tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/scratchpad/capture_r27.log; until grep -q \"audit 07 exit\" $L; do sleep 15; done; cat $L; tail -3 /home/user/rainbow-/qa/review_r27/log_07.txt; ls /home/user/rainbow-/qa/review_r27/07", "description": "Wait for Screen 07 audit to finish", "timeout": 560000}`
 
+### 🧑 User — 2026-11-20T15:36:51.261Z
+
+> ↩︎ result: 15:28:43
+> audit 07 exit 0
+> 15:36:39
+> 07 e_end s 375.056 lat 0 stage 07 coins 2140
+> 07 f_hard_left s 315.056 lat -2.25 stage 07 coins 1940
+> 07 g_hard_right s 315.056 lat 2.25 stage 07 coins 1950
+> a_start.png
+> b_early.png
+> c_middle.png
+> d_late.png
+> e_end.png
+> f_hard_left.png
+> g_hard_right.png
+> shots.json
+
