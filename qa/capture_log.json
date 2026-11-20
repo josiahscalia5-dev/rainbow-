@@ -1,49 +1,93 @@
 {
-  "when": "2026-11-16T20:01:53.988Z",
+  "when": "2026-11-20T15:45:03.348Z",
   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
   "shots": [
     {
-      "id": "05",
-      "file": "/tmp/claude-0/-home-user-rainbow-/e4336d13-0e5b-505a-bd02-7d7760d0bf5f/scratchpad/base/05.png",
+      "id": "09",
+      "file": "/home/user/rainbow-/qa/review_r27/default/09.png",
       "size": [
         864,
         1536
       ],
       "checkpoint": {
-        "stage": "05",
-        "s": 132.4383020282329,
-        "y": -41.348424102617486
+        "stage": "09",
+        "s": 407.2896481881434,
+        "y": -113.21539341753795
       },
       "state": {
         "mode": "ride",
-        "stage": "05",
-        "s": 132.438,
+        "stage": "09",
+        "s": 407.29,
         "lat": 0,
-        "coins": 1420,
+        "coins": 2280,
         "hearts": 5,
         "paused": false,
-        "bennyY": -41.348,
+        "bennyY": -113.215,
         "bennyVisible": true,
         "cam": [
-          1.92,
-          -37.94,
-          -68.28
+          10.82,
+          -109.92,
+          -291.09
         ]
       },
       "stats": {
-        "fps": 60.3,
-        "calls": 86,
-        "triangles": 567415,
-        "geometries": 102,
-        "textures": 43,
+        "fps": 83.2,
+        "calls": 309,
+        "triangles": 637447,
+        "geometries": 322,
+        "textures": 57,
         "modules": {
           "water": "vfx/index.ts",
           "benny": "assets/models/benny.glb",
           "girl": "assets/models/rainbow_girl.glb"
         },
         "courseLength": 435.1923632433159,
-        "firstFrameCalls": 164,
-        "firstFrameTriangles": 568351
+        "firstFrameCalls": 368,
+        "firstFrameTriangles": 638155
+      }
+    },
+    {
+      "id": "10",
+      "file": "/home/user/rainbow-/qa/review_r27/default/10.png",
+      "size": [
+        864,
+        1536
+      ],
+      "checkpoint": {
+        "stage": "10",
+        "s": 423.0175862766973,
+        "y": -112.83955253201734
+      },
+      "state": {
+        "mode": "ride",
+        "stage": "10",
+        "s": 423.018,
+        "lat": 0,
+        "coins": 2500,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -112.84,
+        "bennyVisible": true,
+        "cam": [
+          10.55,
+          -110.15,
+          -306.89
+        ]
+      },
+      "stats": {
+        "fps": 69.7,
+        "calls": 282,
+        "triangles": 400383,
+        "geometries": 287,
+        "textures": 46,
+        "modules": {
+          "water": "vfx/index.ts",
+          "benny": "assets/models/benny.glb",
+          "girl": "assets/models/rainbow_girl.glb"
+        },
+        "courseLength": 435.1923632433159,
+        "firstFrameCalls": 282,
+        "firstFrameTriangles": 400383
       }
     }
   ],

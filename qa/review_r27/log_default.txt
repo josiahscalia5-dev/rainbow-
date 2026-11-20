@@ -1,0 +1,2 @@
+09 → /home/user/rainbow-/qa/review_r27/default/09.png {"stage":"09","s":407.29,"y":-113.215,"calls":309,"tris":637447,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+10 → /home/user/rainbow-/qa/review_r27/default/10.png {"stage":"10","s":423.018,"y":-112.84,"calls":282,"tris":400383,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}

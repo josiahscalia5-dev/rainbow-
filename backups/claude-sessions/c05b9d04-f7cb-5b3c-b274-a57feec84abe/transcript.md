@@ -2213,3 +2213,99 @@ The chain now skips 01–03 and 11 and only captures 09 and 10 among the non-pla
 
 > 🔧 **Bash** `{"command": "L=/tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/scratchpad/capture_r27b.log; until grep -q \"audit 08 exit\" $L; do sleep 15; done; cat $L; S=/tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/scratchpad; for n in 06 08; do python3 -I $S/sheet.py $n $S/sheet$n.jpg; done; ls $S/sheet*", "description": "Wait for Screens 06 and 08 audits", "timeout": 590000}`
 
+### 🧑 User — 2026-11-20T15:43:32.710Z
+
+> ↩︎ result: audit 04 done (from first chain)
+> 15:38:41
+> audit 06 exit 0
+> 15:42:12
+> audit 08 exit 0
+> 15:43:20
+> /tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/scratchpad/sheet.py
+> /tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/scratchpad/sheet04.jpg
+> /tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/scratchpad/sheet06.jpg
+> /tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/scratchpad/sheet07.jpg
+> /tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/scratchpad/sheet08.jpg
+
+### 🤖 Claude — 2026-11-20T15:43:34.470Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/scratchpad/sheet06.jpg"}`
+
+### 🧑 User — 2026-11-20T15:43:34.493Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T15:43:35.084Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/scratchpad/sheet08.jpg"}`
+
+### 🧑 User — 2026-11-20T15:43:35.119Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T15:43:59.500Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/review_r27 && python3 -I -c \"\nfrom PIL import Image\nim=Image.open('07/e_end.png'); im.crop((560,60,864,420)).save('/tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/scratchpad/07cube.png')\"; cat 07/shots.json | python3 -c \"import json,sys;[print(x['name'],x['s'],x['stage']) for x in json.load(sys.stdin)]\"", "description": "Crop the suspect object in Screen 07 end frame"}`
+
+### 🧑 User — 2026-11-20T15:43:59.693Z
+
+> ↩︎ result: a_start 273.056 07
+> b_early 287.456 07
+> c_middle 315.056 07
+> d_late 345.056 07
+> e_end 375.056 07
+> f_hard_left 315.056 07
+> g_hard_right 315.056 07
+
+### 🤖 Claude — 2026-11-20T15:44:00.603Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/scratchpad/07cube.png"}`
+
+### 🧑 User — 2026-11-20T15:44:00.639Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T15:44:03.760Z
+
+That's a flat, over-bright magenta perforated wall panel beside the drop, untextured compared with the rest of the tube. It's a real defect, so I'll pass it to the Screen 07 worker.
+
+### 🤖 Claude — 2026-11-20T15:44:04.097Z
+
+> 🔧 **ToolSearch** `{"query": "select:SendMessage", "max_results": 1}`
+
+### 🧑 User — 2026-11-20T15:44:04.118Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-20T15:44:10.178Z
+
+> 🔧 **SendMessage** `{"to": "a2ef265f50664b58d", "summary": "Report magenta wall defect to s07", "message": "Lead r27: a visible defect on the Screen 07 drop for your list (not a new task order, fit it in where it belongs). In the lead's preview of your 15:03 full candidate (query = qa/match/07/r26/final/NEW_full_frames.json \"query\", rendered by tools/lead21/audit_screen.mjs in a frozen copy), frame qa/review_r27/07/e_end.png (s 375.056, 85 % of 07, lat 0) shows a FLAT, over-bright saturated-magenta perforated wall panel at the upper right (x ~640–864, y ~90–330 of 864×1536): unlit / untextured-looking compared  …[+512 chars]`
+
+### 🧑 User — 2026-11-20T15:44:10.240Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to a2ef265f50664b58d at its next tool round. Moved 1 running tool call to the background without stopping it, so that round no longer waits for it. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"a2ef265f50664b58d","name":"a2ef265f50664b58d","ref":"4a8932"}}
+
+### 🤖 Claude — 2026-11-20T15:44:11.513Z
+
+Now waiting for Screen 05 and the 09/10 stand-ins.
+
+### 🤖 Claude — 2026-11-20T15:44:16.813Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && L=/tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/scratchpad/capture_r27b.log; until grep -q \"ALL_DONE\" $L; do sleep 15; done; cat $L; tail -3 qa/review_r27/log_default.txt; S=/tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/scratchpad; python3 -I $S/sheet.py 05 $S/sheet05.jpg; python3 -I -c \"\nfrom PIL import Image, ImageDraw, ImageFont\nR='qa/review_r27'; fnt=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',15)\nfs=[(R+'/web/09_approved.jpg','09 APPROVED'),(R+'/default/09.png','09  …[+428 chars]`
+
+### 🧑 User — 2026-11-20T15:45:47.570Z
+
+> ↩︎ result: audit 04 done (from first chain)
+> 15:38:41
+> audit 06 exit 0
+> 15:42:12
+> audit 08 exit 0
+> 15:43:20
+> audit 05 exit 0
+> 15:45:02
+> default exit 0
+> 15:45:41
+> ALL_DONE
+> 09 → /home/user/rainbow-/qa/review_r27/default/09.png {"stage":"09","s":407.29,"y":-113.215,"calls":309,"tris":637447,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 10 → /home/user/rainbow-/qa/review_r27/default/10.png {"stage":"10","s":423.018,"y":-112.84,"calls":282,"tris":400383,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+
