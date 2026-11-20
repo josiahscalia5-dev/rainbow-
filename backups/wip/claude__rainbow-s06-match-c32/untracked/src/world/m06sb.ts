@@ -82,7 +82,8 @@ vec3 sbWall(float th, float ax, float R, vec3 n, vec3 V, vec3 T) {
   float st2 = pow(0.5 + 0.5 * cos(th * 23.0 + 1.9), 50.0) * 0.5;
   float sh = sbStrip(th, 4.0) * 0.35;
   c = mix(c, vec3(0.90, 0.30, 0.58), sh);
-  c = mix(c, vec3(0.99, 0.60, 0.88), clamp(0.75 * st + st2, 0.0, 0.85));
+  c = mix(c, vec3(0.95, 0.62, 0.98), clamp(0.75 * st + st2, 0.0, 0.85));
+  c *= vec3(0.94, 1.0, 1.12); // r30b t10: a touch more violet (the panels read purple: bluer shadows, lilac-white highlights)
   c += vec3(0.75, 0.30, 0.60) * 0.10 * pow(max(fw, 0.0), 20.0);
   // slots: rows round the drum, staggered, long axis round the drum
   vec2 pitch = vec2(uSbSlot.y, uSbSlot.x);

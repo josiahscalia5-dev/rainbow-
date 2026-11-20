@@ -3192,3 +3192,196 @@ All five full-size frames rendered. Building the four numbered comparisons, and 
 
 > 🔧 **Bash** `{"command": "B=/home/user/rainbow-/qa/match/06/r30b/proof && python3 -I /home/user/wt/s06/tools/match06/r30b_proof.py $B/baseline $B/new $B/sheets 238,266,310,387 214.86,250,290,330 && cd $B && python3 -I -c \"\nfrom PIL import Image; import numpy as np\na=np.asarray(Image.open('baseline/start.png').convert('RGB')).astype(int); b=np.asarray(Image.open('new/start.png').convert('RGB')).astype(int)\nd=np.abs(a-b).max(2); m=np.ones(d.shape,bool); m[600:1260,200:700]=False\nprint(f'start view NEW vs BASELINE: whole frame identical {100*(d==0).mean():.2f} %, within 20 levels {100*(d<=20).mean():.2f} …[+552 chars]`
 
+### 🧑 User — 2026-11-20T23:16:10.555Z
+
+> ↩︎ result: wrote /home/user/rainbow-/qa/match/06/r30b/proof/sheets
+> start view NEW vs BASELINE: whole frame identical 76.27 %, within 20 levels 90.36 %; outside the Benny box: identical 85.99 %, within 20 levels 99.96 %
+> BASELINE start vs APPROVED picture: within 20 levels whole 76.4 %, Benny box 49.4 %
+> NEW start vs APPROVED picture: within 20 levels whole 78.2 %, Benny box 56.8 %
+> 1_PANEL1_APPROVED_BASELINE_NEW.jpg
+> 1a_APPROVED_storyboard_panel1.png
+> 1b_BASELINE_full_s238.png
+> 1c_NEW_full_s214.86.png
+> 2_PANEL2_APPROVED_BASELINE_NEW.jpg
+> 2a_APPROVED_storyboard_panel2.png
+> 2b_BASELINE_full_s266.png
+> 2c_NEW_full_s250.png
+> 3_PANEL3_APPROVED_BASELINE_NEW.jpg
+> 3a_APPROVED_storyboard_panel3.png
+> 3b_BASELINE_full_s310.png
+> 3c_NEW_full_s290.png
+> 4_PANEL4_APPROVED_BASELINE_NEW.jpg
+> 4a_APPROVED_storyboard_panel4.png
+> 4b_BASELINE_full_s387.png
+> 4c_NEW_full_s330.png
+
+### 🤖 Claude — 2026-11-20T23:16:18.846Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r30b/proof/sheets/2_PANEL2_APPROVED_BASELINE_NEW.jpg"}`
+
+### 🧑 User — 2026-11-20T23:16:18.924Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-20T23:16:18.921Z
+
+[Image: original 2445x1210, displayed at 2000x990. Multiply coordinates by 1.22 to map to original image.]
+
+### 🤖 Claude — 2026-11-20T23:16:33.827Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r30b/proof/sheets/4_PANEL4_APPROVED_BASELINE_NEW.jpg"}`
+
+### 🧑 User — 2026-11-20T23:16:33.903Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-20T23:16:33.899Z
+
+[Image: original 2445x1210, displayed at 2000x990. Multiply coordinates by 1.22 to map to original image.]
+
+### 🤖 Claude — 2026-11-20T23:16:52.743Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='src/world/m06sb.ts'; s=open(p).read()\ndef rep(old,new):\n    global s\n    assert s.count(old)==1, old[:80]; s=s.replace(old,new)\nrep(\"  c = mix(c, vec3(0.99, 0.60, 0.88), clamp(0.75 * st + st2, 0.0, 0.85));\",\n    \"  c = mix(c, vec3(0.95, 0.62, 0.98), clamp(0.75 * st + st2, 0.0, 0.85));\\n  c *= vec3(0.94, 1.0, 1.12); // r30b t10: a touch more violet (the panels read purple: bluer shadows, lilac-white highlights)\")\nopen(p,'w').write(s)\nEOF\ntimeout 200 npx tsc --noEmit -p . ; echo \"tsc rc=$?\"; B=/home/user/rainbow-/qa/match/ …[+1337 chars]`
+
+### 🧑 User — 2026-11-20T23:17:11.029Z
+
+> ↩︎ result: tsc rc=0
+> {"s":318.077,"coins":[]}
+> {"s":322.11,"coins":[]}
+> {"s":326.143,"coins":[[175,454,79]]}
+> {"s":330.177,"coins":[]}
+> {"s":334.027,"coins":[]}
+> {"s":338.06,"coins":[]}
+> {"s":342.093,"coins":[]}
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T23:17:17.512Z
+
+No large coins near the camera at s 334–342, so I'm using s 336 for comparison 4. Re-rendering the final full-size frames with the violet nudge:
+
+### 🤖 Claude — 2026-11-20T23:17:20.434Z
+
+> 🔧 **Bash** `{"command": "B=/home/user/rainbow-/qa/match/06/r30b; rm -rf $B/proof/new; cd /home/user/wt/s06 && Q=$(cat $B/QUERY_SB_NEW.txt) && AUDIT_W=864 AUDIT_H=1536 AUDIT_PORT=5369 AUDIT_PIN=10000 AUDIT_SHOTS='[[\"start\",0,null],[\"p1_214.86\",214.86,null],[\"p2_250\",250,null],[\"p3_290\",290,null],[\"p4_336\",336,null]]' timeout 1800 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/match06/r30_shots.mjs $B/proof/new 06 \"$Q\" 2>&1 | grep -E \"^06|rror\" | cut -c1-90; rm -rf $B/proof/sheets && python3 -I tools/match06/r30b_proof.py $B/proof/baseline $B/proof/new $B/proof/sheets 238,266, …[+114 chars]`
+
+### 🧑 User — 2026-11-20T23:18:01.481Z
+
+> ↩︎ result: 06 start s 198.91 lat 0 stage 06 coins 1680
+> 06 p1_214.86 s 214.86 lat 0 stage 06 coins 1700
+> 06 p2_250 s 250.06 lat 0 stage 06 coins 1740
+> 06 p3_290 s 290.027 lat 0 stage 06 coins 1760
+> 06 p4_336 s 336.043 lat 0 stage 06 coins 1780
+> wrote /home/user/rainbow-/qa/match/06/r30b/proof/sheets
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T23:18:08.427Z
+
+> 🔧 **Bash** `{"command": "B=/home/user/rainbow-/qa/match/06/r30b; cd /home/user/wt/s06 && Q=$(cat $B/QUERY_SB_NEW.txt) && AUDIT_PORT=5367 timeout 3000 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/match06/r30_clip.mjs $B/proof/clip_frames \"$Q\" 30 540 960 > $B/proof/clip.log 2>&1; echo \"exit $?\"; tail -3 $B/proof/clip.log; ls $B/proof/clip_frames | wc -l", "description": "Render the continuous gameplay clip from 06 into 07", "timeout": 3100000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T23:18:08.476Z
+
+> ↩︎ result: Command running in background with ID: b3o206h2r. Output is being written to: /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/tasks/b3o206h2r.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-20T23:18:11.518Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r30b/proof/sheets/3_PANEL3_APPROVED_BASELINE_NEW.jpg"}`
+
+### 🧑 User — 2026-11-20T23:18:11.614Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-20T23:18:11.610Z
+
+[Image: original 2445x1210, displayed at 2000x990. Multiply coordinates by 1.22 to map to original image.]
+
+### 🤖 Claude — 2026-11-20T23:18:36.836Z
+
+> 🔧 **Bash** `{"command": "B=/home/user/rainbow-/qa/match/06/r30b; cd /home/user/wt/s06 && echo \"$(cat $B/QUERY_SB_NEW.txt | sed 's/&m06sbqh=3/\\&m06sbqh=1.5\\&m06sbq=0.08,0.24/')\" > $B/QUERY_SB_t11.txt && cat $B/QUERY_SB_t11.txt | tr '&' '\\n' | tail -4 && Q=$(cat $B/QUERY_SB_t11.txt) && AUDIT_W=432 AUDIT_H=768 AUDIT_PORT=5368 AUDIT_PIN=10000 AUDIT_SHOTS='[[\"s250\",250,null],[\"s290\",290,null],[\"s300\",300,null],[\"s336\",336,null]]' timeout 1500 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/match06/r30_shots.mjs $B/t11 06 \"$Q\" 2>&1 | grep rror | head -2; cd $B && python3 -I -c \"\ …[+1050 chars]`
+
+### 🧑 User — 2026-11-20T23:19:02.102Z
+
+> ↩︎ result: m06sbk=0.88
+> m06sbby=0.1
+> m06sbqh=1.5
+> m06sbq=0.08,0.24
+
+### 🤖 Claude — 2026-11-20T23:19:05.781Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r30b/t11_panels.png"}`
+
+### 🧑 User — 2026-11-20T23:19:05.832Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T23:19:24.690Z
+
+> 🔧 **Bash** `{"command": "pkill -f \"r30_clip.mjs /home/user/rainbow-/qa/match/06/r30b/proof/clip_frames\" ; cd /home/user/rainbow-/qa/match/06/r30b && cp QUERY_SB_t11.txt QUERY_SB_NEW.txt && rm -rf proof/clip_frames && echo ok", "description": "Stop the old clip and set the final query"}`
+
+### 🧑 User — 2026-11-20T23:19:24.799Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-20T23:19:31.089Z
+
+Running the two final renders in parallel: the continuous clip (06 start → 30 units into Screen 07), and the full-size proof frames at the four moments plus the start view:
+
+### 🤖 Claude — 2026-11-20T23:19:33.251Z
+
+> 🔧 **Bash** `{"command": "B=/home/user/rainbow-/qa/match/06/r30b; cd /home/user/wt/s06 && Q=$(cat $B/QUERY_SB_NEW.txt) && AUDIT_PORT=5367 timeout 3000 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/match06/r30_clip.mjs $B/proof/clip_frames \"$Q\" 30 540 960 > $B/proof/clip.log 2>&1; echo \"exit $?\"; tail -2 $B/proof/clip.log; ls $B/proof/clip_frames | wc -l", "description": "Render the final continuous clip into Screen 07", "timeout": 3100000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T23:19:33.280Z
+
+> ↩︎ result: Command running in background with ID: boiazp977. Output is being written to: /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/tasks/boiazp977.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-/qa/match/06/r30b; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-20T23:19:36.115Z
+
+> 🔧 **Bash** `{"command": "B=/home/user/rainbow-/qa/match/06/r30b; sleep 20; rm -rf $B/proof/new; cd /home/user/wt/s06 && Q=$(cat $B/QUERY_SB_NEW.txt) && AUDIT_W=864 AUDIT_H=1536 AUDIT_PORT=5369 AUDIT_PIN=10000 AUDIT_SHOTS='[[\"start\",0,null],[\"p1_214.86\",214.86,null],[\"p2_250\",250,null],[\"p3_300\",300,null],[\"p4_336\",336,null]]' timeout 1800 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/match06/r30_shots.mjs $B/proof/new 06 \"$Q\" 2>&1 | grep -E \"^06|rror\" | cut -c1-90; rm -rf $B/proof/sheets && python3 -I tools/match06/r30b_proof.py $B/proof/baseline $B/proof/new $B/proof/sheet …[+123 chars]`
+
+### 🧑 User — 2026-11-20T23:20:59.297Z
+
+> ↩︎ result: 06 start s 198.91 lat 0 stage 06 coins 1680
+> 06 p1_214.86 s 214.86 lat 0 stage 06 coins 1700
+> 06 p2_250 s 250.06 lat 0 stage 06 coins 1740
+> 06 p3_300 s 300.11 lat 0 stage 06 coins 1760
+> 06 p4_336 s 336.043 lat 0 stage 06 coins 1780
+> wrote /home/user/rainbow-/qa/match/06/r30b/proof/sheets
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T23:21:04.128Z
+
+Final frames and the four sheets are rebuilt. Updating the task list, then running the gameplay test (steering, coins, plunge, ending) on the final candidate while the clip renders:
+
+### 🤖 Claude — 2026-11-20T23:21:04.580Z
+
+> 🔧 **TaskUpdate** `{"taskId": "3", "status": "completed"}`
+
+### 🧑 User — 2026-11-20T23:21:04.590Z
+
+> ↩︎ result: Updated task #3 status
+
+### 🤖 Claude — 2026-11-20T23:21:05.033Z
+
+> 🔧 **TaskUpdate** `{"taskId": "4", "status": "completed"}`
+
+### 🧑 User — 2026-11-20T23:21:05.046Z
+
+> ↩︎ result: Updated task #4 status
+
+### 🤖 Claude — 2026-11-20T23:21:05.486Z
+
+> 🔧 **TaskUpdate** `{"taskId": "5", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-20T23:21:05.493Z
+
+> ↩︎ result: Updated task #5 status
+
+### 🤖 Claude — 2026-11-20T23:21:08.740Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && timeout 2400 bash /home/user/rainbow-/tools/lead25/render_slot.sh node scripts/gameplay-test.mjs \"--q=$(cat /home/user/rainbow-/qa/match/06/r30b/QUERY_SB_NEW.txt)\" --out=/home/user/rainbow-/qa/match/06/r30b/proof/gameplay_NEW.json > /home/user/rainbow-/qa/match/06/r30b/proof/gameplay_NEW.log 2>&1; echo \"exit $?\"; python3 -c \"\nimport json; d=json.load(open('/home/user/rainbow-/qa/match/06/r30b/proof/gameplay_NEW.json')); c=d['checks']; print('PASS', d['pass'], {k:v.get('pass') for k,v in c.items()}); print('coins', c['realCoinPickups']); print('wall',  …[+246 chars]`
+
+### 🧑 User — 2026-11-20T23:21:08.779Z
+
+> ↩︎ result: Command running in background with ID: bmxld86v5. Output is being written to: /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/tasks/bmxld86v5.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
