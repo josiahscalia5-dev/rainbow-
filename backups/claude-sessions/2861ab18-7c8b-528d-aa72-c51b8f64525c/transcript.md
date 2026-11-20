@@ -1769,3 +1769,402 @@ I'll check how the 07 tube's centre and radius are computed, to pass the exact m
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-20T20:29:26.821Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && cat > /tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/scratchpad/hitprobe.mjs <<'EOF'\nimport { pathToFileURL } from 'node:url';\nconst { loadPlaywright, CHROMIUM_ARGS } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);\nconst { startVite } = await import(pathToFileURL(`${process.cwd()}/tools/match06/r23_vite.mjs`).href);\nconst [Q, S] = process.argv.slice(2);\nconst { chromium } = loadPlaywright(); const vite = await startVite(5295); const browser = await chromium.launch({ args: CHROMIUM_ARGS });\nconst logs  …[+1292 chars]`
+
+### 🧑 User — 2026-11-20T20:29:36.923Z
+
+> ↩︎ result: {
+>  "s": 385.177,
+>  "s07": 396.27066741997834,
+>  "hits": {
+>   "0,0.5": [
+>    {
+>     "d": 18.72,
+>     "obj": "m06_endwall<match06_projection<Scene",
+>     "p": [
+>      25.29,
+>      -65.1,
+>      -324.33
+>     ]
+>    },
+>    {
+>     "d": 71.17,
+>     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+>     "p": [
+>      32.95,
+>      -65.83,
+>      -376.21
+>     ]
+>    },
+>    {
+>     "d": 76.57,
+>     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+>     "p": [
+>      33.74,
+>      -65.91,
+>      -381.55
+>     ]
+>    },
+>    {
+>     "d": 76.74,
+>     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+>     "p": [
+>      33.77,
+>      -65.91,
+>      -381.72
+>     ]
+>    }
+>   ],
+>   "0,0.2": [
+>    {
+>     "d": 18.74,
+>     "obj": "m06_endwall<match06_projection<Scene",
+>     "p": [
+>      25.24,
+>      -68.31,
+>      -324.03
+>     ]
+>    },
+>    {
+>     "d": 26.47,
+>     "obj": "m06_floor<match06_projection<Scene",
+>     "p": [
+>      26.35,
+>      -69.74,
+>      -331.55
+>     ]
+>    },
+>    {
+>     "d": 41.31,
+>     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+>     "p": [
+>      28.48,
+>      -72.48,
+>      -345.97
+>     ]
+>    },
+>    {
+>     "d": 41.41,
+>     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+>     "p": [
+>      28.5,
+>      -72.5,
+>      -346.07
+>     ]
+>    }
+>   ],
+> Shell cwd was reset to /ho …[+16 chars]
+
+### 🤖 Claude — 2026-11-20T20:29:47.270Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && timeout 900 node tools/match06/r30_hitprobe.mjs \"$(cat /home/user/rainbow-/qa/match/06/r30/QUERY_CURL_v1.txt)\" 385 2>&1 | grep \"\\[match06\\]\"", "description": "Print the end-wall doorway log line", "timeout": 960000}`
+
+### 🧑 User — 2026-11-20T20:29:56.116Z
+
+> ↩︎ result: [match06] m06curl {aSplit: 40, a07: 200, aEnd: 206, rings: 7, ringD: 22}
+> [match06] m06curl end wall {aP: 200.3, hole: Array(2), rH: 15.05}
+> [match06] m06ring {rings: 11, spacing: 12.87, aN: 36.9, aF: 49.8}
+> [match06] m06leg {points: 40, length: 19, halfWidth: 2.6}
+> [match06] m06rip {NX: 384, NY: 490, LW: 1.45, D0: -2.4, D1: 1.3}
+> [match06] m06hole {rect: Array(4), zone: Object}
+> [match06] m06fclu {blobs: 2619, sprites: 21845}
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T20:30:36.154Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nfrom PIL import Image\na=Image.open('references/07_dive_the_washer_tube.png').convert('RGB'); b=Image.open('qa/match/06/r30/quick_v2_haze50/s9c_408.png').convert('RGB')\nw,h=360,640; out=Image.new('RGB',(2*w+10,h),(20,12,34)); out.paste(a.resize((w,h)),(0,0)); out.paste(b.resize((w,h)),(w+10,0)); out.save('/tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/scratchpad/ref07.jpg',quality=88)\"", "description": "Compare approved 07 with the current 07 entry frame"}`
+
+### 🧑 User — 2026-11-20T20:30:36.304Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T20:30:38.129Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/scratchpad/ref07.jpg"}`
+
+### 🧑 User — 2026-11-20T20:30:38.149Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T20:30:58.996Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\nimport re\np='src/world/match06.ts'; t=open(p).read()\n# 1) drop the end-wall block (superseded)\ni=t.index(\"    // r30 m06curl: the tunnel ENDS just past Screen 07's entrance in a purple washer end wall\")\nj=t.index(\"      console.info('[match06] m06curl end wall'\", i); j=t.index(\"\\n    }\\n\", j)+len(\"\\n    }\\n\")\nt=t[:i]+t[j:]\n# 2) axisAt: the last 24 u ease onto the 07 mouth (centre + radius)\nold=\"\"\"    const axisAt = (a: number) => {\n      if (ROUTE)\"\"\"\nnew=\"\"\"    // r30 m06curl: over the last 24 u before Scree …[+2038 chars]`
+
+### 🧑 User — 2026-11-20T20:31:02.010Z
+
+> ↩︎ result: wrote assets/textures/match06/route06curl.json
+> 573:      const show = m06On && st.s > course.stage('07').s0 - (M06_CURL ? 45 : 12); // r29 v2 (user): the 06 tunnel look continues until the doorway (~1 s)
+> tsc-done
+> Shell cwd was reset to /home/user/rainbow-
+> [This command modified 3 files you've previously read: ../wt/s06/src/game/Game.ts, ../wt/s06/tools/match06/r30_design_curl.py, ../wt/s06/src/world/match06.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-20T20:31:11.141Z
+
+Typecheck passes. Next a fresh look at the second half and the hand-over. I'm going with the lighter haze (80–170 units, 0.55), because more of the purple machinery stays visible in the distance.
+
+### 🤖 Claude — 2026-11-20T20:31:16.905Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && Q=\"$(cat /home/user/rainbow-/qa/match/06/r29/QUERY_NEW_FINAL.txt | sed 's/&m06haze=50,115,0.85//')&m06curl=1&m06haze=80,170,0.55\" && echo \"$Q\" > /home/user/rainbow-/qa/match/06/r30/QUERY_CURL_v3.txt && AUDIT_PORT=5296 AUDIT_SHOTS='[[\"s4_275\",275,null],[\"s6_315\",315,null],[\"s8_355\",355,null],[\"s9_372\",372,null],[\"s9b_388\",388,null],[\"s9c_395\",395,null],[\"s10_401\",401,null]]' timeout 1500 node tools/match06/r30_shots.mjs /home/user/rainbow-/qa/match/06/r30/quick_v3 06 \"$Q\" 2>&1 | grep -E \"^0[67] |rror\" && cd /home/user/rainbow-/qa/match/ …[+671 chars]`
+
+### 🧑 User — 2026-11-20T20:31:44.547Z
+
+> ↩︎ result: 06 s4_275 s 275.177 lat 0 stage 06 coins 1750
+> 06 s6_315 s 315.143 lat 0 stage 06 coins 1770
+> 06 s8_355 s 355.11 lat 0 stage 06 coins 1790
+> 06 s9_372 s 372.16 lat 0 stage 06 coins 1800
+> 06 s9b_388 s 388.11 lat 0 stage 06 coins 1800
+> 06 s9c_395 s 395.13 lat 0 stage 06 coins 1810
+> 06 s10_401 s 401.172 lat 0 stage 07 coins 1810
+
+### 🤖 Claude — 2026-11-20T20:31:46.260Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/scratchpad/v3_sheet.jpg"}`
+
+### 🧑 User — 2026-11-20T20:31:46.291Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T20:32:17.078Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -i \"s/st.s > course.stage('07').s0 - (M06_CURL ? 45 : 12)/st.s > course.stage('07').s0 - (M06_CURL ? 130 : 12)/\" src/game/Game.ts && sed -i \"s|// r30 m06curl: the 06 tunnel is closed by an end wall, so 07's tube is only ever seen THROUGH its doorway -> shown from further back|// r30 m06curl: the 06 tunnel runs straight into 07's tube (eased onto its mouth); wherever the tunnel's far end can be in view, what\\n      // lies beyond it IS 07's tube -> shown from 130 u back (only its interior, through the 06 tunnel's end, is visible from inside 06)|\" sr …[+1087 chars]`
+
+### 🧑 User — 2026-11-20T20:32:37.494Z
+
+> ↩︎ result: 574:      const show = m06On && st.s > course.stage('07').s0 - (M06_CURL ? 130 : 12); // r29 v2 (user): the 06 tunnel look continues until the doorway (~1 s)
+> 06 s3_255 s 255.01 lat 0 stage 06 coins 1740
+> 06 s4_275 s 275.177 lat 0 stage 06 coins 1750
+> 06 s5_295 s 295.16 lat 0 stage 06 coins 1760
+> 06 s6_315 s 315.143 lat 0 stage 06 coins 1770
+> 06 s7_335 s 335.127 lat 0 stage 06 coins 1780
+> [This command modified 1 file you've previously read: ../../../../../wt/s06/src/game/Game.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-20T20:32:39.416Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/scratchpad/v4_sheet.jpg"}`
+
+### 🧑 User — 2026-11-20T20:32:39.442Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T20:32:52.446Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -i \"s/st.s > course.stage('07').s0 - (M06_CURL ? 130 : 12)/st.s > course.stage('07').s0 - (M06_CURL ? 160 : 12)/; s/IS 07's tube -> shown from 130 u back/IS 07's tube -> shown from 160 u back/\" src/game/Game.ts && grep -c \"M06_CURL ? 160\" src/game/Game.ts; grep -l \"ffmpeg\\|mp4\" tools/match06/*.mjs tools/match06/*.py /home/user/rainbow-/qa/match/06/r29/*.py 2>/dev/null; ls /home/user/rainbow-/qa/match/06/r29/clips/", "description": "Widen 07 window; find clip tooling"}`
+
+### 🧑 User — 2026-11-20T20:32:52.516Z
+
+> ↩︎ result: 1
+> tools/match06/r23_swim.mjs
+> /home/user/rainbow-/qa/match/06/r29/make_side_by_side.py
+> SCREEN06_BEFORE_0.5x.mp4
+> SCREEN06_BEFORE_1x.mp4
+> Shell cwd was reset to /home/user/rainbow-
+> [This command modified 1 file you've previously read: ../wt/s06/src/game/Game.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-20T20:32:54.876Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && head -40 tools/match06/r23_swim.mjs; grep -n \"process.env\\|argv\" tools/match06/r23_swim.mjs | head -20; wc -l tools/match06/r23_swim.mjs", "description": "Read the continuous swim clip tool"}`
+
+### 🧑 User — 2026-11-20T20:32:54.939Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // r22 S04 copy of tools/lead_r13/swim_clip.mjs: port AUDIT_PORT (default 5273) and performance.now() pinned to the clip clock
+> // while each frame is stepped and drawn (the Screen 04 river shader reads the wall clock), so BEFORE / NEW clips match.
+> // Lead r13 (2026-11-18): a short REAL-GAMEPLAY swimming clip for any playable screen 04–08 (read-only).
+> // Starts at the screen's checkpoint and rides the real game simulation (Benny, camera rig, course, coins unchanged) with
+> // the shader clock running: straight, then left, then right, then straight — one frame per 1/fps s → OUT/0000.png …
+> // Generalises scripts/proj05-move.mjs --zigzag. Encode: ffmpeg -framerate 24 -i OUT/%04d.png -pix_fmt yuv420p clip.mp4
+> //   node tools/lead_r13/swim_clip.mjs <screen 04..08> <outDir> <seconds> [query]
+> import { mkdirSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> const { startVite } = await import(pathToFileURL(`${process.cwd()}/tools/match06/r23_vite.mjs`).href); // r23: fonts via symlinked node_modules
+> const [SCREEN, OUT, SECS = '6', Q = ''] = proces …[+1653 chars]
+
+### 🤖 Claude — 2026-11-20T20:33:04.927Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"import json;d=json.load(open('qa/match/06/r29/gameplay_NEW_final.json'));print(json.dumps(d)[:900])\"; grep -rln \"gameplay_NEW\\|8/8\\|checksPassed\" scripts/*.mjs scripts/*.ts tools/match06/*.mjs 2>/dev/null | head", "description": "Inspect the r29 gameplay test result and its tool"}`
+
+### 🧑 User — 2026-11-20T20:33:05.005Z
+
+> ↩︎ result: {"checks": {"pauseFreezes": {"pass": true, "sBefore": 45.495, "sPaused": 45.495, "sAfter": 49.995}, "continuousTravel": {"pass": true, "nonMonotonicSteps": 0, "steps": 2498, "respawns": 0}, "noCameraCut": {"pass": true, "maxCameraJumpPerStep": 0.728}, "noTeleport": {"pass": true, "maxBennyAltitudeJumpPerStep": 0.19, "at": {"s": 396.104, "s1": 396.304, "stage": "07", "y0": -68.24, "y1": -68.43, "t": 31.35}}, "plunge": {"pass": true, "tTop": 29.68333333333293, "tBottom": 36.249999999999226, "t08": 36.26666666666589, "yTop": -54.898, "yBottom": -116.282, "y08": -116.276, "travelTimeTopToInlet": 6.58, "verticalDrop": 61.38}, "realCoinPickups": {"pass": true, "startCoins": 1330, "endCoins": 2240, "collected": 91}, "victory": {"pass": true, "finalState": {"mode": "end", "stage": "11", "s": 500.847, "lat": -0.026, "coins": 2240, "hearts": 5, "paused": false, "bennyY": -112.626, "bennyVisible":
+
+### 🤖 Claude — 2026-11-20T20:33:06.462Z
+
+> 🔧 **Bash** `{"command": "grep -rln \"realCoinPickups\" scripts tools 2>/dev/null | head -5; grep -n \"\\\"test\\|gameplay\" package.json | head", "description": "Find the gameplay test script"}`
+
+### 🧑 User — 2026-11-20T20:33:06.503Z
+
+> ↩︎ result: scripts/gameplay-test.mjs
+> tools/lead_r4/gameplay_coins08px.json
+> 12:    "test:continuity": "vite-node scripts/continuity-test.ts",
+> 19:    "test:cinematic": "node scripts/cinematic-test.mjs"
+
+### 🤖 Claude — 2026-11-20T20:33:08.666Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,30p scripts/gameplay-test.mjs | grep -n \"argv\\|env\\|usage\\|QUERY\\|query\" ; head -12 scripts/continuity-test.ts | grep -n \"location\\|query\\|search\\|flag\" ", "description": "Check how gameplay/continuity tests take a query"}`
+
+### 🧑 User — 2026-11-20T20:33:08.706Z
+
+> ↩︎ result: 1:#!/usr/bin/env node
+> 16:const optQ = (process.argv.find((a) => a.startsWith('--q=')) ?? '').slice(4);
+> 17:const optOut = (process.argv.find((a) => a.startsWith('--out=')) ?? '').slice(6);
+
+### 🤖 Claude — 2026-11-20T20:33:10.401Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,25p scripts/continuity-test.ts; grep -n \"vite\\|port\\|url\" scripts/gameplay-test.mjs | head -8", "description": "Read continuity test header and gameplay server setup"}`
+
+### 🧑 User — 2026-11-20T20:33:10.441Z
+
+> ↩︎ result: /**
+>  * Route continuity + altitude test (run: npm run test:continuity).
+>  * Writes qa/continuity_report.json and docs/path_graph.md (altitude chart), exits 1 on failure.
+>  */
+> import { writeFileSync, mkdirSync } from 'node:fs';
+> import { Course, validateContinuity, WORLD } from '../src/world/course';
+> 
+> const c = new Course();
+> const r = validateContinuity(c);
+> mkdirSync('qa', { recursive: true });
+> mkdirSync('docs', { recursive: true });
+> writeFileSync('qa/continuity_report.json', JSON.stringify({ length: c.length, marks: c.marks, ...r }, null, 2));
+> 
+> // altitude chart (ASCII) + per-stage table
+> const rows: string[] = [];
+> rows.push('# Rainbow route graph — absolute altitudes & continuity');
+> rows.push('');
+> rows.push(`Generated by \`npm run test:continuity\`. Route length **${c.length.toFixed(1)} units** (1 unit ≈ 5 cm at Benny scale).`);
+> rows.push('One centripetal Catmull-Rom spline from scene 01 to the towel at the end of 10; scene 11 is the');
+> rows.push('victory cinematic at the route end. Result: **' + (r.ok ? 'PASS' : 'FAIL') + '**.');
+> rows.push('');
+> rows.push('| Stage | Title | s0 → s1 | length | altitude in → out | width | tube | speed |');
+> rows.push('|---|---|---|---|---|---|---|---|'); …[+669 chars]
+
+### 🤖 Claude — 2026-11-20T20:33:16.826Z
+
+The continuity test builds the route in Node, so it needs the switch passed in. I'll add a small wrapper and run it with and without the new route, alongside the default check.
+
+### 🤖 Claude — 2026-11-20T20:33:21.280Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && cat > tools/match06/r30_continuity.ts <<'EOF'\n// r30 lead: route continuity WITH a query (the default `npm run test:continuity` runs without one). usage: Q='match06=1&...' npx vite-node tools/match06/r30_continuity.ts\n(globalThis as unknown as { location: { search: string } }).location = { search: '?' + (process.env.Q ?? '') };\nconst { Course, validateContinuity } = await import('../../src/world/course');\nconst c = new Course();\nconst r = validateContinuity(c) as unknown as Record<string, unknown>;\nconst st = c.stages.map((s) => ({ id: s.id, s0: +s.s0 …[+530 chars]`
+
+### 🧑 User — 2026-11-20T20:33:22.939Z
+
+> ↩︎ result: "10->11 gap=0 dT=0.003 y=-110.16"
+>  ]
+> }
+>    "y1": -69.35
+>   },
+>   {
+>    "id": "07",
+>    "s0": 396.27,
+>    "len": 142.18,
+>    "y0": -69.35,
+>    "y1": -134.35
+>   },
+>   {
+>    "id": "08",
+>    "s0": 538.45,
+>    "len": 15.58,
+>    "y0": -134.35,
+>    "y1": -134.45
+>   },
+>   {
+>    "id": "09",
+>    "s0": 554.03,
+>    "len": 15.23,
+>    "y0": -134.45,
+>    "y1": -134.32
+>   },
+>   {
+>    "id": "10",
+>    "s0": 569.26,
+>    "len": 15.13,
+>    "y0": -134.32,
+>    "y1": -131.01
+>   },
+>   {
+>    "id": "11",
+>    "s0": 584.38,
+>    "len": 0.03,
+>    "y0": -131.01,
+>    "y1": -131
+>   }
+>  ],
+>  "report": "{\"ok\":true,\"boundaries\":[{\"from\":\"01\",\"to\":\"02\",\"s\":0.01,\"posGap\":0,\"tangentAngleDeg\":0.24,\"upAngleDeg\":0.241,\"altitude\":-2.4},{\"from\":\"02\",\"to\":\"03\",\"s\":41,\"posGap\":-0.0001,\"tangentAngleDeg\":0.67,\"upAngleDeg\":0.542,\"altitude\":-11.87},{\"from\":\"03\",\"to\":\"04\",\"s\":70.41,\"posGap\":0,\"tangentAngleDeg\":0.931,\"upAngleDeg\":0.576,\"altitude\":-19.41},{\"from\":\"04\",\"to\":\"05\",\"s\":114.69,\"posGap\":0,\"tangentAngleDeg\":0.247,\"upAngleDeg\":0.247,\"altitude\":-40.63},{\"from\":\"05\",\"to\":\"06\",\"s\":188.91,\"posGap\":0,\"tangentAngleDeg\":0.268,\"upAngleDeg\":0.249,\"altitude\":-43.34},{\"from\":\"06\ …[+438 chars]
+
+### 🤖 Claude — 2026-11-20T20:33:26.749Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 -c \"import json;d=json.load(open('qa/continuity_report.json'));print('default ok', d['ok'], 'length', round(d['length'],1))\"; git status --porcelain qa/ docs/ | head -5", "description": "Confirm default continuity result"}`
+
+### 🧑 User — 2026-11-20T20:33:26.836Z
+
+> ↩︎ result: default ok True length 435.2
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T20:33:30.192Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && Q=\"$(cat /home/user/rainbow-/qa/match/06/r30/QUERY_CURL_v3.txt)\" && cp /home/user/rainbow-/qa/match/06/r30/QUERY_CURL_v3.txt /home/user/rainbow-/qa/match/06/r30/QUERY_NEW.txt && timeout 1700 node scripts/gameplay-test.mjs --q=\"$Q\" --out=/home/user/rainbow-/qa/match/06/r30/gameplay_NEW.json 2>&1 | tail -5; python3 -c \"\nimport json;d=json.load(open('/home/user/rainbow-/qa/match/06/r30/gameplay_NEW.json'));c=d['checks'];print({k:v.get('pass') for k,v in c.items()}); print('coins', c['realCoinPickups'])\"", "description": "Run full gameplay test with the  …[+31 chars]`
+
+### 🧑 User — 2026-11-20T20:33:38.052Z
+
+> ↩︎ result: },
+>  "errors": []
+> }
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff2" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff2" is outside of Vite serving allow list.
+> {'pauseFreezes': True, 'continuousTravel': True, 'noCameraCut': True, 'noTeleport': True, 'plunge': True, 'realCoinPickups': True, 'victory': True, 'heartsLostOnWallBump': True}
+> coins {'pass': True, 'startCoins': 1330, 'endCoins': 2240, 'collected': 91}
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T20:33:51.799Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && cat > tools/match06/r30_clip.mjs <<'EOF'\n#!/usr/bin/env node\n// r30 lead (copy of r23_swim.mjs): ONE uninterrupted real-gameplay clip from the Screen 06 checkpoint until `END` u past the 07\n// entrance (no cuts, no teleports: every frame = 1/24 s of the real simulation; shader clock pinned to the clip clock), Benny steered\n// by nobody (STEER unset) or the r29 schedule (STEER=zigzag). Writes OUT/0000.png ... + OUT/frames.json (s, stage, lat, coins per frame).\n//   cd <worktree> && node tools/match06/r30_clip.mjs <outDir> \"<query>\" [END=20] [W=864] [H …[+2468 chars]`
+
+### 🧑 User — 2026-11-20T20:33:51.847Z
+
+> ↩︎ result: ok
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T20:33:56.015Z
+
+> 🔧 **Bash** `{"command": "df -h /home/user | tail -1; du -sh /home/user/rainbow-/.git 2>/dev/null | tail -1; mkdir -p /home/user/scratch/r30 && rmdir /home/user/rainbow-/qa/match/06/r30/clip_new", "description": "Check disk space for clip frames"}`
+
+### 🧑 User — 2026-11-20T20:33:56.154Z
+
+> ↩︎ result: /dev/vda        252G   48G   22G  69% /
+> 15G	/home/user/rainbow-/.git
+
+### 🤖 Claude — 2026-11-20T20:33:57.451Z
+
+> 🔧 **TaskUpdate** `{"taskId": "3", "status": "completed"}`
+
+### 🧑 User — 2026-11-20T20:33:57.462Z
+
+> ↩︎ result: Updated task #3 status
+
+### 🤖 Claude — 2026-11-20T20:33:57.901Z
+
+> 🔧 **TaskUpdate** `{"taskId": "4", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-20T20:33:57.909Z
+
+> ↩︎ result: Updated task #4 status
+
+### 🤖 Claude — 2026-11-20T20:33:59.657Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && AUDIT_PORT=5298 nohup node tools/match06/r30_clip.mjs /home/user/scratch/r30/clip_new \"$(cat /home/user/rainbow-/qa/match/06/r30/QUERY_NEW.txt)\" 24 > /home/user/scratch/r30/clip_new.log 2>&1 &\necho started; sleep 1; cat /home/user/rainbow-/qa/match/06/r30/QUERY_NEW.txt | tr '&' '\\n' | tail -4", "description": "Start the NEW clip render in background"}`
+
+### 🧑 User — 2026-11-20T20:34:00.710Z
+
+> ↩︎ result: started
+> m06vw=34,56
+> m06tswap=2
+> m06curl=1
+> m06haze=80,170,0.55
+
+### 🤖 Claude — 2026-11-20T20:34:16.254Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && AUDIT_W=864 AUDIT_H=1536 AUDIT_PORT=5299 AUDIT_SHOTS='[[\"a_start\",0,null],[\"b_marked\",214.86,null],[\"c_share30\",0.3,null],[\"d_share50\",0.5,null],[\"e_share70\",0.7,null],[\"f_share90\",0.9,null],[\"g_07first\",0.02,null,\"07\"]]' timeout 3000 node tools/match06/r30_shots.mjs /home/user/rainbow-/qa/match/06/r30/stills_BEFORE 06 \"$(cat /home/user/rainbow-/qa/match/06/r30/diag/QUERY_MARKED.txt)\" 2>&1 | grep -E \"^0[67] |rror\"; AUDIT_W=864 AUDIT_H=1536 AUDIT_PORT=5300 AUDIT_SHOTS='[[\"a_start\",0,null],[\"b_marked\",214.86,null]]' timeout 3000 node t …[+293 chars]`
+

@@ -31,7 +31,7 @@ t7 = deep[-1] - deep[-2]; t7 /= np.linalg.norm(t7)
 psi7 = math.degrees(math.atan2(t7 @ Rx, t7 @ ax)); th7 = math.degrees(math.asin(-(t7 @ Ux)))
 KEYS = [(0, 0.0, 0.0), (40, 30.0, 7.0), (52, 30.0, 7.0), (106, -14.0, 5.0), (150, psi7, th7)]
 S07 = 160.0             # river end = Screen 07 entrance (axis arc length past A_SPLIT); straight on the 07 heading from 150
-S_END = S07 + 6.0       # tube ends just past the 07 entrance: an end wall with a doorway = the 07 tube mouth (match06.ts m06curl)
+S_END = S07 + 0.3       # the tube ends at the 07 entrance, eased onto the 07 tube mouth (match06.ts m06curl)
 def ss(t): t = min(1.0, max(0.0, t)); return t * t * (3 - 2 * t)
 def heading(s):
     for (s0, p0, q0), (s1, p1, q1) in zip(KEYS, KEYS[1:]):
