@@ -1171,3 +1171,19 @@ While waiting, I'll write the unwrap viewer/analysis script.
 > 9 515 532 14.2
 > 12 549 568 17.14
 
+### 🤖 Claude — 2026-11-20T12:17:52.682Z
+
+The checkpoint lands at (421, 1083) = the painted Benny's contact, so the geometry matches the game. Now the full unwrap (light CPU job, no browser).
+
+### 🤖 Claude — 2026-11-20T12:17:53.924Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06/tools/match06 && time nice -n 5 python3 -I r25_unwrap06.py /home/user/scratch/s06/frames06.json /home/user/scratch/s06/unwrap100.npz 100 -3.6 3.6 -4 12", "description": "Unwrap plate and masks into floor space", "timeout": 600000}`
+
+### 🧑 User — 2026-11-20T12:17:58.794Z
+
+> ↩︎ result: unwrap 720 1600 visible 0.435
+> 
+> real	0m4.820s
+> user	0m3.984s
+> sys	0m0.343s
+
