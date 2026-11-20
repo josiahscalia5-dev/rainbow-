@@ -2758,3 +2758,179 @@ Now the review README.
 
 > 🔧 **Bash** `{"command": "pkill -f verify_pkg.sh; pkill -f \"verify_stage\" ; sleep 1; cd /home/user/rainbow- && timeout 240 bash -c 'until flock -n backups/.autosave.lock true; do sleep 2; done'; timeout 400 python3 scripts/rainbow-autosave.py --reason manual:review-export-freeze-2 2>&1 | grep -E '\"result\"|\"commit\"|skipping'; Y=$(git rev-parse HEAD); echo \"Y=$Y remote=$(git ls-remote origin refs/heads/ccr-5be1062a-0ffyej | cut -f1)\"; git show $Y:backups/wip/claude__rainbow-s08-scenery-c25/INFO.json | python3 -c \"import json,sys;d=json.load(sys.stdin);print(d['time'],d['dirty_tracked'],d['untracked_ …[+166 chars]`
 
+### 🧑 User — 2026-11-20T11:08:14.304Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "commit": "bf01adf096f4f888eb73bc982b4ed55012ec12c2",
+> Y=bf01adf096f4f888eb73bc982b4ed55012ec12c2 remote=bf01adf096f4f888eb73bc982b4ed55012ec12c2
+> 2026-11-20T11:07:52+00:00 ['src/gameplay/coins.ts', 'src/world/match08.ts', 'tools/match08/shots08.mjs'] ['tools/match08/r23_vite.mjs', 'tools/match08/screen_clip08.mjs']
+> 43
+
+### 🤖 Claude — 2026-11-20T11:08:25.008Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/tools/export/make_review_package.py", "old_string": "         from_branch=\"claude/rainbow-s08-scenery-c17\", query_from=(X, \"qa/match/08/r23/step1_m08gl/QUERY_NEW.txt\"),\n         progress=[(X, \"qa/match/08/r23/PROGRESS.md\")],\n         status=\"Screen 08 polish specialist — RUNNING at export time (coin sizing, towel). K16 + m08gl = newest kept set, NOT \"\n                \"user-approved (coins08px=1 = the user's preferred coin version).\"),", "new_string": "         from_branch=\"claude/rainbow-s08-scenery-c17\", query_from=(X, \" …[+442 chars]`
+
+### 🧑 User — 2026-11-20T11:08:26.247Z
+
+> ↩︎ result: The file /home/user/rainbow-/tools/export/make_review_package.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T11:08:29.132Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad; mkdir -p $S/keep && cp $S/export/Rainbow_App_Review/REVIEW_README.md $S/export/Rainbow_App_Review/.env.example $S/export/Rainbow_App_Review/2_screen_versions/apply_version.py $S/keep/ && rm -rf $S/export $S/verify_stage && mkdir -p $S/export && cd /home/user/rainbow- && timeout 1500 python3 -I tools/export/make_review_package.py bf01adf096f4f888eb73bc982b4ed55012ec12c2 $S/export 2>&1 | tail -20 && cp $S/keep/REVIEW_README.md $S/keep/.env.example $S/export/Rainbow_App_Review/ && cp $S/keep/apply_ve …[+332 chars]`
+
+### 🧑 User — 2026-11-20T11:09:15.564Z
+
+> ↩︎ result: files 2161  bytes 1943.3 MB  problems 0
+>   apk_core                             49.9 MB  3 files
+>   apk_more                             65.4 MB  5 files
+>   evid_core                            90.0 MB  253 files
+>   evid_stills                        1206.8 MB  701 files
+>   main                                 53.8 MB  495 files
+>   marble                              211.8 MB  71 files
+>   ref                                 101.3 MB  41 files
+>   version:benny_all_screens            41.3 MB  102 files
+>   version:screen04_s04                 25.1 MB  77 files
+>   version:screen05_s05                 62.3 MB  137 files
+>   version:screen06_lead_cone_test       4.9 MB  56 files
+>   version:screen06_s06                  4.9 MB  56 files
+>   version:screen07_candidate_r23        6.8 MB  55 files
+>   version:screen07_s07                  6.9 MB  65 files
+>   version:screen08_s08                 12.2 MB  44 files
+> benny_all_screens patch: ok
+> screen04_s04 patch: ok
+> screen05_s05 patch: none
+> screen06_lead_cone_test patch: ok
+> screen06_s06 patch: ok
+> screen07_candidate_r23 patch: ok
+> screen07_s07 patch: ok
+> screen08_s08 patch: ok
+
+### 🤖 Claude — 2026-11-20T11:09:20.413Z
+
+The rebuild is clean: 2,161 files, zero problems, every patch applied. I'll fix my checksum filter and start verification on the new build in the background.
+
+### 🤖 Claude — 2026-11-20T11:09:23.137Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad; python3 - <<EOF\np='$S/verify_pkg.sh'; s=open(p).read()\ns=s.replace(\"sed 's#references/##' reference.sha256 | grep -v character_references\",\"grep -v character_references reference.sha256 | sed 's#  references/#  #'\")\nopen(p,'w').write(s); print('ok')\nEOF\ngrep -n \"character_references reference\" $S/verify_pkg.sh | head -2", "description": "Fix the reference checksum filter in the verify script"}`
+
+### 🧑 User — 2026-11-20T11:09:23.346Z
+
+> ↩︎ result: ok
+> 11:(cd "$PKG/3_references/A_APPROVED_ORIGINAL_SCREENS_01-11" && grep -v character_references reference.sha256 | sed 's#  references/#  #' > "$T/ref.sha" && sha256sum -c "$T/ref.sha" | grep -c ': OK' | xargs echo "approved screens sha256 OK:")
+
+### 🤖 Claude — 2026-11-20T11:09:25.291Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad; bash $S/verify_pkg.sh $S/export/Rainbow_App_Review $S/verify_stage 2>&1 | tail -20", "description": "Verify the rebuilt package: install, typecheck, tests, build", "timeout": 5400000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T11:09:25.388Z
+
+> ↩︎ result: Command running in background with ID: bwy3v0en7. Output is being written to: /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/tasks/bwy3v0en7.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-20T11:09:27.911Z
+
+Meanwhile I'll update the README for the new commit and Screen 08's finished state.
+
+### 🤖 Claude — 2026-11-20T11:09:35.584Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/export/Rainbow_App_Review && python3 - <<'EOF'\np='REVIEW_README.md'; s=open(p).read()\nrep=[\n(\"Export: 2026-11-20 ~11:05 UTC, from ONE commit\",\"Export: 2026-11-20 ~11:10 UTC, from ONE commit\"),\n(\"commit `e71b45b939b98c2ae82d5d7750f02977f7e9269a`\",\"commit `bf01adf096f4f888eb73bc982b4ed55012ec12c2` (saved 11:07:52 UTC)\"),\n(\"(snapshot 11:00 UTC)\",\"(snapshot 11:07:52 UTC)\"),\n(\"| 08 Final Spin Chamber | `screen08_s08` | K16 + `m08gl` (softer near-water glints) — **not approved**; `coi …[+1413 chars]`
+
+### 🧑 User — 2026-11-20T11:09:35.732Z
+
+> ↩︎ result: ok
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T11:09:45.358Z
+
+> 🔧 **Bash** `{"command": "git show eb7233e3646640397f14e360f601aeff088d7536:qa/match/05/r18/PROGRESS.md | grep -n -i \"clip_new_half\\|half\" | head -5; grep -n -i \"swim_clip_half\\|half\" qa/match/04/r22/PROGRESS.md 2>/dev/null | head -5; grep -rn -i \"swim_level\\|3.6 s\" qa/match/07/r23/PROGRESS.md | head -3; grep -n -i \"swim05\\|speed\" qa/benny/r23/PROGRESS.md | head -6", "description": "Look up playback speed of unlabelled clips in notes"}`
+
+### 🧑 User — 2026-11-20T11:09:45.633Z
+
+> ↩︎ result: 36:`clip_new_half.mp4` (real gameplay, half size, 62 % of 05 → into 06, straight / hard left / hard right). 16 positions rendered
+> 59:* Pictures: APPROVED `s2_bbd/1_APPROVED.png`, BEFORE `BEFORE_K21/`, NEW `s2_bbd/NEW/` (7 shots); clips (half size, 2.4 s =
+> 60:  Screen 04 only, straight / left / right / straight, same pinned water clock) `s2_bbd/BEFORE_swim_clip_half.mp4`,
+> 61:  `s2_bbd/NEW_swim_clip_half.mp4`, frames `s2_bbd/clip_frames/` (BEFORE_ / NEW_ 0012, 0024, 0036, 0048); full worktree diff
+> 57:* clip (real gameplay, half size, from 0.03 of the stage, straight / left / right / straight, 3.6 s):
+> 58:  `s1_satin/swim_level_NEW.mp4` vs `s1_satin/swim_level_BEFORE.mp4` (= r22 step-1 NEW clip)
+> 42:  Benny's look is what is judged). Swim clip `swim05_knit_NEW.mp4` (BEFORE `swim05_BEFORE.mp4`), frames `swim05_frames/`.
+> 60:  `qa/benny/r23/s1_tuft/swim05_tuft.mp4`. Gameplay 8/8 with the switches.
+
+### 🤖 Claude — 2026-11-20T11:09:53.039Z
+
+Several clips are only labelled "half" for half size, with no speed stated, so the index will say exactly that. Next I'll generate the evidence index, plan the ZIP split and write the manifest.
+
+### 🤖 Claude — 2026-11-20T11:10:06.947Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/export && python3 -I - <<'EOF'\nimport json, os, subprocess, collections, hashlib, datetime\nR = 'Rainbow_App_Review'\nrec = json.load(open('export_records.json'))\nrecs = rec['records']\ndef part(r):\n    p, s = r['path'], r['section']\n    if s == 'evid_stills':\n        k = p.split('/')[1]\n        return {'screen04': 'assets_1', 'screen05': 'assets_1', 'all_screens_audit_r21': 'assets_1', 'screen06': 'assets_2',\n                'default_build_per_scene_screenshots': 'assets_2', 'screen07': 'a …[+3180 chars]`
+
+### 🧑 User — 2026-11-20T11:10:11.566Z
+
+> ↩︎ result: assets_1      354.9 MB
+> assets_2      285.9 MB
+> assets_3      351.0 MB
+> assets_4      215.1 MB
+> assets_5      277.2 MB
+> core          459.3 MB
+> clips 39
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T11:10:22.626Z
+
+> 🔧 **Bash** `{"command": "git diff --name-only bf01adf096f4f888eb73bc982b4ed55012ec12c2 | grep -v \"backups/claude-sessions\\|CONVERSATION_INDEX\\|backups/\" | head; echo \"---\"; git log --oneline bf01adf096f4f888eb73bc982b4ed55012ec12c2..HEAD | head -3", "description": "Check lead changes since the freeze commit"}`
+
+### 🧑 User — 2026-11-20T11:10:22.876Z
+
+> ↩︎ result: qa/match/07/r24/QUERY_BEFORE_r23cand_latest08.txt
+> tools/export/make_review_package.py
+> ---
+
+### 🤖 Claude — 2026-11-20T11:10:27.096Z
+
+Since the freeze, the lead checkout has only gained one new Screen 07 query file and my builder edit, so nothing uncommitted from the lead is missing. Now the manifest:
+
+### 🤖 Claude — 2026-11-20T11:10:43.796Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/export && python3 -I - <<'EOF'\nimport json, os, hashlib, datetime, collections\nR='Rainbow_App_Review'; rec=json.load(open('export_records.json')); recs=json.load(open('records_with_zip.json'))\nY=rec['commit']\nzips=collections.defaultdict(lambda: {'files':0,'bytes':0})\nfor r in recs: zips[r['zip']]['files']+=1; zips[r['zip']]['bytes']+=r['bytes']\nnames={'core':'Rainbow_App_Review.zip','assets_1':'Rainbow_App_Review_assets_1_of_5_stills_04_05_audit.zip','assets_2':'Rainbow_App_Review_assets_2_ …[+3777 chars]`
+
+### 🧑 User — 2026-11-20T11:10:44.048Z
+
+> ↩︎ result: {
+>  "Rainbow_App_Review_assets_1_of_5_stills_04_05_audit.zip": {
+>   "part": "assets_1",
+>   "files": 208,
+>   "bytes": 354881831,
+>   "mb": 354.9
+>  },
+>  "Rainbow_App_Review_assets_2_of_5_stills_06_default.zip": {
+>   "part": "assets_2",
+>   "files": 140,
+>   "bytes": 285889165,
+>   "mb": 285.9
+>  },
+>  "Rainbow_App_Review_assets_3_of_5_stills_07_08.zip": {
+>   "part": "assets_3",
+>   "files": 199,
+>   "bytes": 350960066,
+>   "mb": 351.0
+>  },
+>  "Rainbow_App_Review_assets_4_of_5_stills_benny.zip": {
+>   "part": "assets_4",
+>   "files": 154,
+>   "bytes": 215071585,
+>   "mb": 215.1
+>  },
+>  "Rainbow_App_Review_assets_5_of_5_marble_older_apks.zip": {
+>   "part": "assets_5",
+>   "files": 76,
+>   "bytes": 277217324,
+>   "mb": 277.2
+>  },
+>  "Rainbow_App_Review.zip": {
+>   "part": "core",
+>   "files": 1384,
+>   "bytes": 459313417,
+>   "mb": 459.3
+>  }
+> }
+> {'files': 2161, 'bytes': 1943333388, 'lfs_files_with_real_data': 66, 'lfs_bytes': 379685359}
+> Shell cwd was reset to /home/user/rainbow-
+

@@ -40,7 +40,7 @@ index 017370a..906c906 100644
      }
      if (m08 && b08 && b08Rest) {
 diff --git a/src/game/cameraRig.ts b/src/game/cameraRig.ts
-index 388c121..b10a893 100644
+index 388c121..23d24c1 100644
 --- a/src/game/cameraRig.ts
 +++ b/src/game/cameraRig.ts
 @@ -8,6 +8,15 @@ import { WORLD } from '../world/course';
@@ -53,7 +53,7 @@ index 388c121..b10a893 100644
 +const SB07_CAM = typeof location === 'undefined' || new URLSearchParams(location.search).get('m07sbcam') !== '0';
 +/** r24 `&m07look=1` tunables (QA): look-ahead along the route (u), camera pulled in toward Benny (u), raised (u), aim weight */
 +const numQc = (k: string, d: number) => { const v = typeof location !== 'undefined' ? parseFloat(new URLSearchParams(location.search).get(k) ?? '') : NaN; return Number.isFinite(v) ? v : d; };
-+const LOOK07 = { ahead: numQc('m07lkA', 12), pull: numQc('m07lkI', 2), raise: numQc('m07lkU', 2), aim: numQc('m07lkW', 0.6) };
++const LOOK07 = { ahead: numQc('m07lkA', 14), back: numQc('m07lkB', 2.5), up: numQc('m07lkU', 5.5), w: numQc('m07lkW', 1) };
 +/** r24 `&m07swing=1`: share of the S-bend's sideways sweep the camera does NOT follow (`?m07swK=`, 0.5) */
 +const SW07K = (() => { const v = typeof location !== 'undefined' ? parseFloat(new URLSearchParams(location.search).get('m07swK') ?? '') : NaN; return Number.isFinite(v) ? v : 0.5; })();
  
@@ -91,21 +91,21 @@ index 388c121..b10a893 100644
        }
      }
 +    // r24 `?match07=1&m07look=1` (qa/match/07/r24/PROGRESS.md; user ~10:35: "around t = 2.5–3.5 seconds the purple wall dominates
-+    // the screen and I lose sight of the upcoming river"): over the lip of the 70° drop the river falls away out of the line of
-+    // sight (the camera behind and above Benny looked level at the tube wall where the tube bends down). From 10 u before the lip
-+    // to 20 u after it the camera rises and comes in a little toward Benny (its line of sight clears the brow) and aims at the
-+    // river centre ahead on the route, so the river pouring over the brow stays in view, also while steering; it eases back to
-+    // the normal ride camera on the drop (smooth weights, the usual camera smoothing on top)
++    // the screen and I lose sight of the upcoming river"): over the lip of the 70° drop the river falls away below the line of
++    // sight of a camera 6 u behind Benny (the falling river is hidden behind the brow; only the tube wall where the tube bends down
++    // is left in view). From 12 u before the lip the camera comes up close over Benny's shoulder (2.5 u behind, 5.5 u above, in
++    // the ride frame, so it stays above the chute as it pitches down) and looks at the river 14 u ahead on the route (its centre:
++    // the route ahead stays centred while he steers to one side), so the river pouring over the brow and down into the first bend
++    // stays in view; 6 → 16 u into the drop it eases back to the normal ride camera (smooth weights + the usual camera smoothing)
 +    if (p7 && p7.off07 && flag05('m07look')) {
 +      const sTop = this.course.marks['07_plunge_top'];
-+      const wl = THREE.MathUtils.smoothstep(s, sTop - 10, sTop - 2) * (1 - THREE.MathUtils.smoothstep(s, sTop + 10, sTop + 20));
++      const wl = LOOK07.w * THREE.MathUtils.smoothstep(s, sTop - 12, sTop - 4) * (1 - THREE.MathUtils.smoothstep(s, sTop + 6, sTop + 16));
 +      if (wl > 0) {
 +        const fa = this.course.sample(s + LOOK07.ahead);
 +        const aim = fa.pos.clone().addScaledVector(fa.right, lat * 0.3);
-+        const fwd = outTarget.clone().sub(outPos); fwd.y = 0;
-+        if (fwd.lengthSq() > 1e-6) outPos.addScaledVector(fwd.normalize(), LOOK07.pull * wl);
-+        outPos.y += LOOK07.raise * wl;
-+        outTarget.lerp(aim, LOOK07.aim * wl);
++        const lp = benny.clone().addScaledVector(dir, -LOOK07.back).addScaledVector(up, LOOK07.up);
++        outPos.lerp(lp, wl);
++        outTarget.lerp(aim, wl);
 +      }
 +    }
      // 03 whirlpool: dynamic high angle from the near side, looking down into the vortex toward the

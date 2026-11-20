@@ -754,3 +754,107 @@ Setting up the step-3 folder, then running the NEW audit and both regressions in
 
 > 🔧 **Bash** `{"command": "D=/home/user/rainbow-/qa/match/04/r23/s3_glossy; mkdir -p $D; X=\"m04lgs=1&m04lgn=3&m04lgt=0.06&m04lgm=0.6&m04lgb=4&m04lgk=0.9&m04lgl2=1.6&m04lgw=0.35&m04lgwb=1.0&m04lgsp=1.0&m04lgd=0.17&m04lgv=0.5\"; echo \"$X\" > $D/SWITCH.txt; node /home/user/rainbow-/tools/lead23/setq.mjs \"$(cat /home/user/rainbow-/qa/match/04/r23/s2_edge/QUERY_K23-S2.txt)\" \"$X\" > $D/QUERY_K23-S3.txt; tail -c 300 $D/QUERY_K23-S3.txt; echo; grep -o \"m04lgs=[^&]*\" $D/QUERY_K23-S3.txt | wc -l\nuptime; S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04; A=/home/user/rainb …[+746 chars]`
 
+### 🧑 User — 2026-11-20T11:09:15.301Z
+
+> ↩︎ result: 3sc=1&m04a3sy=2.1&m04a3sr=0.9&m04a3s0=-0.005&m04a3s1=0.03&m04a3sx=0.02&m04a3fl=26&m04wl=1&m04wly=0.4&m04wlr=0.66&m04wlo=1.1&m04wle=1.65&m04wlz=1.6&m04edges=0.3&m04sbf=0&m04lgs=1&m04lgn=3&m04lgt=0.06&m04lgm=0.6&m04lgb=4&m04lgk=0.9&m04lgl2=1.6&m04lgw=0.35&m04lgwb=1.0&m04lgsp=1.0&m04lgd=0.17&m04lgv=0.5
+> 1
+>  11:04:17 up 43 min,  0 user,  load average: 19.97, 24.81, 19.29
+> regS2_exit=0
+> regK1_exit=0
+> new_exit=0
+> [1]   Done                    ( AUDIT_PORT=5273 timeout 1500 node $A $D/NEW 04 "$(cat $D/QUERY_K23-S3.txt)" > $S/audit_s3_new.log 2>&1; echo new_exit=$? )
+> [2]-  Done                    ( AUDIT_PORT=5274 timeout 1500 node $A $D/K23-S2_with_new_code 04 "$(cat /home/user/rainbow-/qa/match/04/r23/s2_edge/QUERY_K23-S2.txt)" > $S/audit_s3_regS2.log 2>&1; echo regS2_exit=$? )
+> [3]+  Done                    ( AUDIT_PORT=5275 timeout 1500 node $A $D/K23-1_with_new_code 04 "$(cat /home/user/rainbow-/qa/match/04/r23/QUERY_K23-1.txt)" > $S/audit_s3_regK1.log 2>&1; echo regK1_exit=$? )
+> /home/user/rainbow-/qa/match/04/r23/s3_glossy/K23-1_with_new_code:
+> a_start.png
+> b_early.png
+> c_middle.png
+> d_late.png
+> e_end.png
+> f_hard_left.png
+> g_hard_right.png
+> shots.json
+> 
+> /home/user/rainbow-/qa/match/04/r23/s3_glossy/ …[+277 chars]
+
+### 🤖 Claude — 2026-11-20T11:09:26.521Z
+
+Now start the NEW clip and gameplay test in the background, and do the pixel checks meanwhile.
+
+### 🤖 Claude — 2026-11-20T11:09:33.378Z
+
+> 🔧 **Bash** `{"command": "D=/home/user/rainbow-/qa/match/04/r23/s3_glossy; S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04; cd /home/user/wt/s04\nnohup bash -c \"bash /home/user/rainbow-/qa/match/04/r23/s04_tools/clip.sh $D/QUERY_K23-S3.txt $D/swim04_NEW_K23-S3 5273 > $S/clip_s3.out 2>&1; echo clip_exit=\\$? >> $S/clip_s3.out\" > /dev/null 2>&1 &\nnohup bash -c \"cd /home/user/wt/s04 && AUDIT_PORT=5274 timeout 1500 node /home/user/rainbow-/qa/match/04/r22/tools/gameplay_test_5273.mjs --q=\\\"\\$(cat $D/QUERY_K23-S3.txt)\\\" --out=$D/gameplay.json > $D/gameplay.log 2> …[+827 chars]`
+
+### 🧑 User — 2026-11-20T11:09:53.561Z
+
+> ↩︎ result: a_start regS2 "diff_pixels":0 | regK23-1 "diff_pixels":0 | NEW-vs-S2(rows180-1536) "diff_pixels":0
+> b_early regS2 "diff_pixels":0 | regK23-1 "diff_pixels":0 | NEW-vs-S2(rows180-1536) "diff_pixels":115786
+> c_middle regS2 "diff_pixels":0 | regK23-1 "diff_pixels":0 | NEW-vs-S2(rows180-1536) "diff_pixels":121455
+> d_late regS2 "diff_pixels":0 | regK23-1 "diff_pixels":0 | NEW-vs-S2(rows180-1536) "diff_pixels":134997
+> e_end regS2 "diff_pixels":0 | regK23-1 "diff_pixels":0 | NEW-vs-S2(rows180-1536) "diff_pixels":176303
+> f_hard_left regS2 "diff_pixels":0 | regK23-1 "diff_pixels":0 | NEW-vs-S2(rows180-1536) "diff_pixels":81735
+> g_hard_right regS2 "diff_pixels":0 | regK23-1 "diff_pixels":0 | NEW-vs-S2(rows180-1536) "diff_pixels":70746
+
+### 🤖 Claude — 2026-11-20T11:10:01.772Z
+
+> 🔧 **Bash** `{"command": "D=/home/user/rainbow-/qa/match/04/r23/s3_glossy; S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04; python3 -I -c \"\nfrom PIL import Image\nD='$D'; B='/home/user/rainbow-/qa/match/04/r23/s2_edge/NEW'\nnames=['b_early','c_middle','d_late','e_end','f_hard_left','g_hard_right']\nW=Image.new('RGB',(6*288,2*512+8),'white')\nfor i,n in enumerate(names):\n  W.paste(Image.open(f'{B}/{n}.png').convert('RGB').resize((288,512)),(i*288,0))\n  W.paste(Image.open(f'{D}/NEW/{n}.png').convert('RGB').resize((288,512)),(i*288,520))\nW.save('$S/s3_sheet.png')\" …[+61 chars]`
+
+### 🧑 User — 2026-11-20T11:10:03.168Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T11:10:06.324Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04/s3_sheet.png"}`
+
+### 🧑 User — 2026-11-20T11:10:06.540Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T11:10:11.842Z
+
+Top row is step 2, bottom row is step 3. Foam and tunnel are complete in every NEW shot. Let me check the end shot at full size against the accepted generated end view.
+
+### 🤖 Claude — 2026-11-20T11:10:12.254Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/04/r23/s3_glossy/NEW/e_end.png"}`
+
+### 🧑 User — 2026-11-20T11:10:12.326Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T11:10:12.820Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/04/r23/s1_arrows/APPROVED/2_ACCEPTED_GENERATED_view_e_end.png"}`
+
+### 🧑 User — 2026-11-20T11:10:12.890Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T11:10:26.234Z
+
+> 🔧 **Bash** `{"command": "D=/home/user/rainbow-/qa/match/04/r23/s3_glossy; S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04; python3 -I -c \"\nfrom PIL import Image\nD='$D'; B='/home/user/rainbow-/qa/match/04/r23/s2_edge/NEW'\nW=Image.new('RGB',(2*700,2*420+10),'white')\nfor r,(n,box) in enumerate([('e_end',(80,950,780,1370)),('c_middle',(80,1050,780,1470))]):\n  W.paste(Image.open(f'{B}/{n}.png').convert('RGB').crop(box),(0,r*430))\n  W.paste(Image.open(f'{D}/NEW/{n}.png').convert('RGB').crop(box),(700,r*430))\nW.save('$S/benny_patch_crop.png')\"", "description": "Cr …[+34 chars]`
+
+### 🧑 User — 2026-11-20T11:10:26.851Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T11:10:30.023Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04/benny_patch_crop.png"}`
+
+### 🧑 User — 2026-11-20T11:10:30.062Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T11:10:43.845Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04; cat $S/clip_s3.out $S/gameplay_s3.out 2>/dev/null; for d in $S/clip*/f; do echo \"$d $(ls $d | wc -l)\"; done; uptime", "description": "Check clip and gameplay progress"}`
+
+### 🧑 User — 2026-11-20T11:10:44.272Z
+
+> ↩︎ result: gameplay_exit=0
+> ls: cannot access '/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04/clip*/f': No such file or directory
+> /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04/clip*/f 0
+>  11:10:44 up 49 min,  0 user,  load average: 18.30, 24.93, 21.79
+

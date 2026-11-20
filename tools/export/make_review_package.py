@@ -150,10 +150,11 @@ VERSIONS = [
          status="Screen 07 specialist (water-fx-specialist) — RUNNING at export time on the user's 3 priorities; code mid-change "
                 "(unfinished S-bend step &m07sbend=1). NOT approved."),
     dict(name="screen08_s08", screen="08", wip="claude__rainbow-s08-scenery-c25", base="3c0fa97090afb2c0fca41898774db7247e23e522",
-         from_branch="claude/rainbow-s08-scenery-c17", query_from=(X, "qa/match/08/r23/step1_m08gl/QUERY_NEW.txt"),
+         from_branch="claude/rainbow-s08-scenery-c17", query_from=(X, "qa/match/08/r23/QUERY_CANDIDATE_K23-3.txt"),
          progress=[(X, "qa/match/08/r23/PROGRESS.md")],
-         status="Screen 08 polish specialist — RUNNING at export time (coin sizing, towel). K16 + m08gl = newest kept set, NOT "
-                "user-approved (coins08px=1 = the user's preferred coin version)."),
+         status="Screen 08 polish specialist — FINISHED 3 steps (~11:05 UTC, uncommitted, snapshotted): softer near-water glints, "
+                "coin sizes tapering like the painting, towel double exposure removed. Candidate K23-3, NOT user-approved "
+                "(coins08px=1 = the user's preferred coin version)."),
     dict(name="benny_all_screens", screen="04-08 (Benny)", wip="claude__rainbow-benny-c25", base="734efb6bc407c691c3d7d99e29b710544c82a9c5",
          from_branch="claude/rainbow-benny-c23", query_text="&benny20=1&b20expo=1&b20ppw=0.45&b20tuft=1",
          progress=[(X, "qa/benny/r23/PROGRESS.md")],
