@@ -3708,3 +3708,25 @@ You've hit your 5-hour limit · resets 9:40pm (UTC)
 <result>While that renders, I'll update the progress block.</result>
 </task-notification>
 
+### 🧑 User — 2026-11-20T17:32:08.750Z
+
+<task-notification>
+<task-id>a19a5ec306145815f</task-id>
+<tool-use-id>toolu_01VKcv7hXM1RePXRBLQUA4ms</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/a72797b0-7eea-579a-8801-b0b276ae6b12/tasks/a19a5ec306145815f.output</output-file>
+<status>failed</status>
+<summary>Agent "Screen 06 route specialist r28" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 9:40pm (UTC) (error type rate_limit, HTTP 429, request id req_011ChEaZNzgUZUXgtmJQGr6f, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 9:40pm (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+<result>Now a quick low-res shot tool (copy of the audit tool with a configurable viewport).</result>
+</task-notification>
+
+### 🧑 User — 2026-11-20T17:35:59.749Z
+
+<task-notification>
+<task-id>a51e597e4d0d0bbcb</task-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/a72797b0-7eea-579a-8801-b0b276ae6b12/tasks/a51e597e4d0d0bbcb.output</output-file>
+<status>failed</status>
+<summary>Agent "Screen 07 specialist r28" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 9:40pm (UTC) (error type rate_limit, HTTP 429, request id req_011ChEarQmZquf2hpqSLtdCj, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 9:40pm (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+</task-notification>
+
