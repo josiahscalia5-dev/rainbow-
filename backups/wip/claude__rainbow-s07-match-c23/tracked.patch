@@ -36,7 +36,7 @@ index 017370a..025777d 100644
      }
      if (m08 && b08 && b08Rest) {
 diff --git a/src/world/match07.ts b/src/world/match07.ts
-index b9f474c..4852705 100644
+index b9f474c..a18db9b 100644
 --- a/src/world/match07.ts
 +++ b/src/world/match07.ts
 @@ -94,6 +94,7 @@ uniform sampler2D uFoamTile;
@@ -98,7 +98,7 @@ index b9f474c..4852705 100644
      return riverTile();
    }
    if (uMode > 0.5) {
-@@ -248,6 +253,79 @@ void main() {
+@@ -248,6 +253,92 @@ void main() {
    gl_FragColor = vec4(pjInverse(t), 1.0);
  }`;
  
@@ -109,7 +109,7 @@ index b9f474c..4852705 100644
 +// round contact line). 2 triangles per lobe.
 +const CLOUD_VERT = /* glsl */ `
 +attribute vec4 aLobe;     // centre (group-local), radius
-+attribute vec2 aTone;     // brightness jitter, iridescence seed
++attribute vec3 aTone;     // brightness jitter, surface seed, height in the mound (0 = sunk base dome .. 1 = top bump)
 +uniform vec2 uGuard;
 +uniform vec3 uProjPos;
 +uniform float uClip;
@@ -118,19 +118,24 @@ index b9f474c..4852705 100644
 +varying vec3 vPv;
 +varying vec3 vCv;
 +varying float vR;
-+varying vec2 vTone;
++varying vec3 vTone;
 +void main() {
-+  vec4 wc = modelMatrix * vec4(aLobe.xyz, 1.0);
-+  float pres = 1.0;
++  vec3 lc = aLobe.xyz;
++  float r = aLobe.w * uCScale;
 +  if (uMagOn > 0.5) {
-+    // the same stretch guard as the projected water (1 in the approved view → no cloud there: the painted foam shows)
++    // the same stretch guard as the projected water (1 in the approved view → no cloud there: the painted foam shows); as the view
++    // magnifies the water the foam heaps up out of the water (the lobe rises from below the surface, a little smaller), it does not
++    // inflate from a point
++    vec4 w0 = modelMatrix * vec4(lc, 1.0);
 +    vec3 n = normalize(mat3(modelMatrix) * vec3(0.0, 1.0, 0.0));
-+    float cp = abs(dot(n, normalize(uProjPos - wc.xyz))), cc = abs(dot(n, normalize(cameraPosition - wc.xyz)));
-+    float mag = (cc / max(cp, 1e-3)) * (distance(uProjPos, wc.xyz) / max(distance(cameraPosition, wc.xyz), 1e-3));
-+    pres = smoothstep(uGuard.x, uGuard.y, mag);
++    float cp = abs(dot(n, normalize(uProjPos - w0.xyz))), cc = abs(dot(n, normalize(cameraPosition - w0.xyz)));
++    float mag = (cc / max(cp, 1e-3)) * (distance(uProjPos, w0.xyz) / max(distance(cameraPosition, w0.xyz), 1e-3));
++    float pres = smoothstep(uGuard.x, uGuard.y, mag);
 +    if (uClip > 0.0 && -aLobe.z > uClip) pres = 0.0;
++    lc.y -= (1.0 - pres) * (lc.y + 2.0 * r + 0.05);
++    r *= (0.55 + 0.45 * pres) * step(0.02, pres);
 +  }
-+  float r = aLobe.w * uCScale * pres;
++  vec4 wc = modelMatrix * vec4(lc, 1.0);
 +  vec4 cv = viewMatrix * wc;
 +  vCv = cv.xyz; vR = r; vTone = aTone;
 +  vec3 pv = cv.xyz + vec3(position.xy * r * 1.4, 0.0);
@@ -144,7 +149,7 @@ index b9f474c..4852705 100644
 +varying vec3 vPv;
 +varying vec3 vCv;
 +varying float vR;
-+varying vec2 vTone;
++varying vec3 vTone;
 +${PROJ05_INVERSE}
 +void main() {
 +  vec3 rd = normalize(vPv);
@@ -154,31 +159,39 @@ index b9f474c..4852705 100644
 +  if (h < 0.0 || c < 0.0) discard;
 +  float t = b - sqrt(h);
 +  vec3 hit = rd * t;
-+  vec3 n = (hit - vCv) / vR;                         // view-space sphere normal
++  vec3 n0 = (hit - vCv) / vR;                        // view-space sphere normal
 +  vec4 clip = projectionMatrix * vec4(hit, 1.0);
 +  gl_FragDepthEXT = 0.5 * clip.z / clip.w + 0.5;
-+  vec3 nw = normalize((vec4(n, 0.0) * viewMatrix).xyz); // world normal (view rotation transposed)
-+  float nv = max(dot(n, -rd), 0.0);
-+  // painted foam tones (display values sampled from the approved picture): crevice, lavender-blue shadow, lilac mid, light, white.
-+  // White only on the lobe tops facing up / the viewer; the sides and undersides lavender-blue, the lobe outlines a little darker
-+  // (so overlapping lobes read as one soft cumulus, like the painting, not as separate white balls)
-+  float rim = pow(1.0 - nv, 2.2);
-+  float tt = clamp(0.42 * nw.y + 0.3 * nv + 0.12 + 0.12 * (vTone.x - 0.5) - 0.36 * rim, 0.0, 1.0);
-+  vec3 cCrev = vec3(0.58, 0.565, 0.89), cSh = vec3(0.67, 0.667, 0.945), cMid = vec3(0.86, 0.824, 0.976), cLt = vec3(0.973, 0.957, 0.969);
-+  vec3 col = tt < 0.25 ? mix(cCrev, cSh, tt / 0.25) : tt < 0.55 ? mix(cSh, cMid, (tt - 0.25) / 0.3) : tt < 0.8 ? mix(cMid, cLt, (tt - 0.55) / 0.25) : mix(cLt, vec3(1.0), (tt - 0.8) / 0.2);
-+  // glossy foam: a soft white glint toward the light (from above and the viewer's side), a faint pink / cyan bubble sheen at the rim
++  vec3 nw0 = normalize((vec4(n0, 0.0) * viewMatrix).xyz); // world normal (view rotation transposed)
++  // the painted foam's soft bubbly surface: a small lumpy relief on each lobe (fixed to the lobe, so it does not swim)
++  vec3 q = nw0 * (5.0 + 2.0 * vTone.y) + vTone.y * 11.0;
++  vec3 bump = vec3(sin(q.x * 2.1 + 1.3 * cos(q.y * 1.7)), sin(q.y * 2.3 + 1.3 * cos(q.z * 1.3)), sin(q.z * 1.9 + 1.3 * cos(q.x * 1.1)));
++  vec3 nw = normalize(nw0 + 0.10 * bump);
 +  vec3 vw = normalize(-(vec4(rd, 0.0) * viewMatrix).xyz);
-+  vec3 L = normalize(vec3(0.0, 0.85, 0.0) + 0.45 * vw);
-+  float sp = pow(max(dot(reflect(-L, nw), vw), 0.0), 30.0);
-+  vec3 sheen = mix(vec3(0.96, 0.8, 0.98), vec3(0.8, 0.9, 1.0), 0.5 + 0.5 * sin(vTone.y * 6.28 + nw.x * 3.0));
-+  col = mix(col, sheen, 0.18 * rim) + 0.22 * sp;
++  float nv = max(dot(nw0, vw), 0.0);
++  float rim = pow(1.0 - nv, 2.0);
++  // painted cumulus shading (display values sampled from the approved foam: periwinkle shadow, blue-lilac mid, pale lilac light,
++  // white tops): the lobe's top and the mound's upper lobes light, undersides periwinkle, a darker lilac crease only where a
++  // lobe's lower edge tucks into the mass (not a dark outline all round — that reads as separate balls)
++  float upw = nw.y;
++  float tt = 0.44 + 0.36 * upw + 0.12 * nv + 0.16 * (vTone.z - 0.5) + 0.10 * (vTone.x - 0.5);
++  tt -= 0.30 * rim * smoothstep(0.25, -0.6, upw);
++  tt += 0.12 * rim * smoothstep(0.1, 0.8, upw);
++  tt = clamp(tt, 0.0, 1.0);
++  vec3 cCrev = vec3(0.588, 0.608, 0.933), cSh = vec3(0.65, 0.69, 0.968), cMid = vec3(0.77, 0.785, 0.976), cLt = vec3(0.886, 0.866, 0.976), cW = vec3(0.984, 0.976, 0.992);
++  vec3 col = tt < 0.22 ? mix(cCrev, cSh, tt / 0.22) : tt < 0.45 ? mix(cSh, cMid, (tt - 0.22) / 0.23) : tt < 0.66 ? mix(cMid, cLt, (tt - 0.45) / 0.21) : mix(cLt, cW, min((tt - 0.66) / 0.2, 1.0));
++  // glossy foam: a soft white glint toward the light (from above and the viewer's side), a faint pink / cyan bubble sheen at the rim
++  vec3 L = normalize(vec3(-0.25, 0.85, 0.0) + 0.45 * vw);
++  float sp = pow(max(dot(reflect(-L, nw), vw), 0.0), 14.0);
++  vec3 sheen = mix(vec3(0.96, 0.82, 0.98), vec3(0.8, 0.9, 1.0), 0.5 + 0.5 * sin(vTone.y * 6.28 + nw.x * 3.0));
++  col = mix(col, sheen, 0.14 * rim) + 0.16 * sp;
 +  gl_FragColor = vec4(pjInverse(clamp(col, 0.0, 1.0)), 1.0);
 +}`;
 +
  const tex = (f: string) => new URL(`../../assets/textures/match07/${f}`, import.meta.url).href;
  /** r18: numeric URL tunable (QA only), default when absent or not a number */
  const num07 = (k: string, def: number) => {
-@@ -283,6 +361,13 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -283,6 +374,13 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
    // r18: on top of m07nearw, the painted near-river proportions — narrow cyan core, thick magenta bands, world-anchored S-sweep
    // (the r17 draft '&m07nearf' was rejected: qa/match/07/r18/PROGRESS.md)
    const band = nearW && flag05('m07band');
@@ -192,7 +205,7 @@ index b9f474c..4852705 100644
    const [tNear, tFoam] = await Promise.all([nearW ? load('near_bank.png', THREE.RepeatWrapping) : null, nearW || wallFoamOn ? load('near_foam.png', THREE.RepeatWrapping) : null]);
    if (tNear) tNear.wrapS = THREE.ClampToEdgeWrapping;
    const [plate, tWall, tRiver, pGold, fillMask] = await Promise.all([
-@@ -351,7 +436,9 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -351,7 +449,9 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
      // foam-edge wobble 0.12 u. Tunables ?m07bA= / ?m07bL= / ?m07bC=
      uBand: { value: new THREE.Vector4(num07('m07bA', 0.6), num07('m07bL', 14), 0, band ? 1 : 0) },
      uBand2: { value: new THREE.Vector4(2.85, num07('m07bC', 1.1), 0.95, 0.12) },
@@ -202,7 +215,7 @@ index b9f474c..4852705 100644
    if (nearW) {
      // river centre line in the tube-local frame: the lane Benny swims (course centre, sampled at the depth) plus the painted
      // river's winding (tools/match07/river_coins07.py → river07.json, clamped so Benny stays in the cyan), continued by a gentle
-@@ -384,6 +471,7 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -384,6 +484,7 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
        const kk = THREE.MathUtils.smoothstep(along, aEnd - 4, aEnd + 6);
        // r18 m07band: the lane only (the S-sweep is added in the shader, uBand)
        ctr[k] = band ? lane : lane + painted * (1 - kk) + tail * kk;
@@ -210,7 +223,7 @@ index b9f474c..4852705 100644
      }
      // smooth (no kinks between samples: the bands must curve, not zigzag)
      for (let pass = 0; pass < 4; pass++) {
-@@ -436,6 +524,8 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -436,6 +537,8 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
      const f0 = course.sample(sA);
      const alongA = f0.pos.clone().sub(base).dot(Dv);
      plungeAlong = alongA;
@@ -219,7 +232,7 @@ index b9f474c..4852705 100644
      shared.uFade.value.set(plunge.fade[0] - sA + alongA, plunge.fade[1] - sA + alongA);
      const axisA = base.clone().addScaledVector(X, T.ax).addScaledVector(U, T.h).addScaledVector(Dv, alongA);
      const d0 = axisA.clone().sub(f0.pos.clone().addScaledVector(f0.up, T.h));
-@@ -459,7 +549,7 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -459,7 +562,7 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
        for (let j = 0; j <= nR; j++) {
          const l = -halfW + (2 * halfW * j) / nR;
          p.copy(f.pos).addScaledVector(f.right, lat0 + T.ax + l).addScaledVector(f.up, 0.06);
@@ -228,7 +241,7 @@ index b9f474c..4852705 100644
        }
        if (i > 0) {
          for (let j = 0; j < nT; j++) { const a = (i - 1) * (nT + 1) + j, b = a + nT + 1; idxT.push(a, b, a + 1, b, b + 1, a + 1); }
-@@ -475,7 +565,7 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -475,7 +578,7 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
      };
      // world-space vertices: the meshes are added to the scene-level group with the inverse group matrix
      const toLocal = (g: THREE.BufferGeometry) => g.applyMatrix4(groupInv);
@@ -237,7 +250,7 @@ index b9f474c..4852705 100644
      rivM.transparent = true;
      const t = add(toLocal(geo(tubeP, tubeUV, idxT)), wallM, 'pl_tube');
      const r = add(toLocal(geo(rivP, rivUV, idxR)), rivM, 'pl_river');
-@@ -483,6 +573,86 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -483,6 +586,131 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
      t.visible = r.visible = false;
      plungeMeshes.push(t, r);
    }
@@ -252,35 +265,82 @@ index b9f474c..4852705 100644
 +      g.setAttribute('position', new THREE.Float32BufferAttribute([-1, -1, 0, 1, -1, 0, 1, 1, 0, -1, 1, 0], 3));
 +      g.setIndex([0, 1, 2, 0, 2, 3]);
 +      g.setAttribute('aLobe', new THREE.InstancedBufferAttribute(new Float32Array(lobes), 4));
-+      g.setAttribute('aTone', new THREE.InstancedBufferAttribute(new Float32Array(tone), 2));
++      g.setAttribute('aTone', new THREE.InstancedBufferAttribute(new Float32Array(tone), 3));
 +      g.instanceCount = lobes.length / 4;
++      console.info('[m07cloud]', name, 'lobes', g.instanceCount);
 +      const m = new THREE.ShaderMaterial({
 +        vertexShader: CLOUD_VERT, fragmentShader: CLOUD_FRAG, fog: false, side: THREE.DoubleSide,
 +        uniforms: { uGuard: shared.uGuard, uProjPos: shared.uProjPos, uClip: shared.uClip, uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uMagOn: { value: magOn }, uCScale: { value: sc } },
 +      });
 +      return add(g, m, name);
 +    };
-+    /** one cumulus cluster at lateral e (outward from the band edge, sign = side), along a; place(lat, along, up) → group-local */
-+    const cluster = (out: number[], tone: number[], place: (lat: number, a: number, up: number) => THREE.Vector3, side: number, a: number, wallLat: number) => {
-+      const push = (lat: number, da: number, up: number, r: number) => {
-+        if (Math.abs(lat) + r * 0.3 > wallLat) lat = side * (wallLat - r * 0.3);
-+        const p = place(lat, a + da, up);
-+        out.push(p.x, p.y, p.z, r); tone.push(rnd(), rnd());
-+      };
-+      const edge = 2.95;
-+      // the mound: 3–4 big lobes overlapping heavily (domes rising out of the water), 1–2 lobes on top
-+      const rM = 0.36 + 0.22 * rnd(), lM = side * (edge + rM * 0.55 + 0.3 * rnd());
-+      const nB = 3 + (rnd() < 0.5 ? 1 : 0);
++    /**
++     * r22 m07cloud: one painted cumulus mound beyond the band edge on one side (side = ±1), centred at along a; place(lat, along, up)
++     * → group-local. Built like the painted foam: 2–4 big domes sunk into the water, softer lobes heaped on top of them, and many
++     * small bumps half out of every big lobe (the lumpy cauliflower outline), a few loose bubbles at the river edge. Mound size and
++     * spacing vary (no row of equal balls).
++     */
++    type Place = (lat: number, a: number, up: number) => THREE.Vector3;
++    const edge = 2.95;
++    const pushL = (out: number[], tone: number[], place: Place, side: number, wallLat: number, lat: number, along: number, up: number, r: number, lvl: number) => {
++      lat = Math.max(lat, edge - r * 0.35);
++      if (lat + r * 0.25 > wallLat) lat = wallLat - r * 0.25;
++      const p = place(side * lat, along, up);
++      out.push(p.x, p.y, p.z, r); tone.push(rnd(), rnd(), lvl);
++    };
++    const mound = (out: number[], tone: number[], place: Place, side: number, a: number, wallLat: number, S: number) => {
++      const room = Math.max(0.5, wallLat - edge);
++      const lC = edge + Math.min(room * 0.55, 0.35 * S + 0.2 + 0.25 * rnd());
++      const len = (0.8 + 0.6 * rnd()) * S;
++      const big: [number, number, number, number][] = []; // lat, along, up, r
++      const nB = 2 + Math.floor(rnd() * 3);
 +      for (let i = 0; i < nB; i++) {
-+        const r = rM * (0.7 + 0.35 * rnd());
-+        push(lM + side * (rnd() * 0.5 + (i % 2) * 0.35), (i - (nB - 1) / 2) * rM * 0.62 + (rnd() - 0.5) * 0.15, r * (0.02 + 0.12 * rnd()), r);
++        const r = (0.26 + 0.14 * rnd()) * S;
++        const l = lC + (rnd() - 0.4) * 0.55 * S, da = (nB > 1 ? i / (nB - 1) - 0.5 : 0) * len + (rnd() - 0.5) * 0.2 * S;
++        const up = -r * (0.2 + 0.3 * rnd());
++        big.push([l, a + da, up, r]); pushL(out, tone, place, side, wallLat, l, a + da, up, r, 0.15);
 +      }
-+      const nT = rnd() < 0.6 ? 2 : 1;
-+      for (let i = 0; i < nT; i++) { const r = rM * (0.5 + 0.2 * rnd()); push(lM + side * (0.15 + 0.3 * rnd()), (rnd() - 0.5) * rM, rM * (0.45 + 0.15 * rnd()), r); }
-+      // a few loose bubbles near the band edge
-+      if (rnd() < 0.55) { const r = 0.05 + 0.07 * rnd(); push(side * (edge + 0.05 + 0.25 * rnd()), (rnd() - 0.5) * 0.8, r * 0.3, r); }
-+      // a bigger mound lobe against the wall
-+      if (rnd() < 0.75) { const r = 0.38 + 0.3 * rnd(); push(side * (wallLat - 0.2), (rnd() - 0.5) * 0.6, r * 0.15, r); }
++      // softer lobes heaped on top
++      for (const [l, al, up, r] of big.slice()) {
++        if (rnd() < 0.3) continue;
++        const ru = r * (0.55 + 0.2 * rnd());
++        const th = rnd() * Math.PI * 2, el = 0.55 + 0.35 * rnd();
++        const dl = Math.cos(th) * Math.sqrt(1 - el * el), da = Math.sin(th) * Math.sqrt(1 - el * el);
++        const c: [number, number, number, number] = [l + dl * r * 0.6, al + da * r * 0.6, up + el * r * 0.62, ru];
++        big.push(c); pushL(out, tone, place, side, wallLat, c[0], c[1], c[2], ru, 0.6);
++      }
++      // small bumps half out of every big lobe (upper hemisphere and the sides; the side facing the river gets most of them)
++      for (const [l, al, up, r] of big) {
++        const nS = 2 + Math.floor(rnd() * 3);
++        for (let k = 0; k < nS; k++) {
++          const rs = r * (0.2 + 0.2 * rnd());
++          const th = rnd() * Math.PI * 2, el = -0.1 + 0.95 * rnd();
++          let dl = Math.cos(th) * Math.sqrt(1 - el * el); const da = Math.sin(th) * Math.sqrt(1 - el * el);
++          if (dl > 0 && rnd() < 0.6) dl = -dl; // toward the river
++          const cu = up + el * (r * 0.92);
++          if (cu + rs < 0.02) continue;      // under the water: never seen
++          pushL(out, tone, place, side, wallLat, l + dl * r * 0.92, al + da * r * 0.92, cu, rs, 0.4 + 0.6 * Math.max(el, 0));
++        }
++      }
++      // loose bubbles at the river edge
++      const nb = rnd() < 0.6 ? 1 + Math.floor(rnd() * 3) : 0;
++      for (let k = 0; k < nb; k++) { const r = 0.035 + 0.05 * rnd(); pushL(out, tone, place, side, wallLat, edge - 0.05 + 0.2 * rnd(), a + (rnd() - 0.5) * len, r * 0.2, r, 0.7); }
++    };
++    /** the bank's lumpy foam line right beyond the magenta band (continuous, low, small lobes: the painted foam lines the river) */
++    const skirt = (out: number[], tone: number[], place: Place, side: number, a: number, wallLat: number) => {
++      const r = 0.11 + 0.11 * rnd();
++      pushL(out, tone, place, side, wallLat, edge + r * 0.45 + 0.08 * rnd(), a, -r * (0.15 + 0.3 * rnd()), r, 0.35);
++      if (rnd() < 0.5) { const r2 = r * (0.45 + 0.25 * rnd()); pushL(out, tone, place, side, wallLat, edge + r * 0.7, a + (rnd() - 0.5) * 0.2, r * 0.45, r2, 0.75); }
++    };
++    /** a whole bank on one side from along a0 to a1: irregular mounds (size 0.75–1.5, now and then a big one against the wall, now
++     *  and then a gap) and the continuous skirt */
++    const bank = (out: number[], tone: number[], place: (s: number) => Place, wall: (a: number) => number, side: number, a0: number, a1: number) => {
++      for (let a = a0 + rnd(); a < a1; ) {
++        const S = rnd() < 0.18 ? 1.35 + 0.35 * rnd() : 0.75 + 0.5 * rnd();
++        if (rnd() > 0.12) mound(out, tone, place(a), side, a, wall(a), S);
++        a += (0.75 + 0.7 * rnd()) * S + 0.25;
++      }
++      for (let a = a0; a < a1; a += 0.3 + 0.18 * rnd()) skirt(out, tone, place(a), side, a, wall(a));
 +    };
 +    // level stretch (tube-local: x right, y up, z = -along), lane from the centre-line samples
 +    const laneAt = (along: number) => {
@@ -289,13 +349,11 @@ index b9f474c..4852705 100644
 +    };
 +    const aEndL = plunge ? plungeAlong : 60;
 +    const LL: number[] = [], LT: number[] = [];
-+    for (let a = -6; a < aEndL; a += 1.05 + 0.4 * rnd()) {
-+      for (const side of [-1, 1]) {
-+        const lane = laneAt(a);
-+        // wall foot (tube meets the water) measured from the lane
-+        const wallLat = Math.max(3.2, side > 0 ? T.ax + 4.85 - lane : lane - (T.ax - 4.85));
-+        cluster(LL, LT, (lat, aa, up) => new THREE.Vector3(laneAt(aa) + lat, up, -aa), side, a + 0.3 * rnd(), wallLat);
-+      }
++    const placeL: Place = (lat, aa, up) => new THREE.Vector3(laneAt(aa) + lat, up, -aa);
++    for (const side of [-1, 1]) {
++      // wall foot (tube meets the water) measured from the lane
++      const wallL = (a: number) => { const lane = laneAt(a); return Math.max(3.2, side > 0 ? T.ax + 4.85 - lane : lane - (T.ax - 4.85)); };
++      bank(LL, LT, () => placeL, wallL, side, -6, aEndL);
 +    }
 +    makeCloud(LL, LT, 1, 'cloud_level');
 +    if (plunge && endW) {
@@ -324,7 +382,7 @@ index b9f474c..4852705 100644
    group.traverse((o) => o.updateMatrixWorld?.(true));
  
    return {
-@@ -493,7 +663,8 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -493,7 +721,8 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
        const clone = group.clone(true);
        clone.visible = true;
        // the plunge continuation is not in the approved picture: it never occludes the projector

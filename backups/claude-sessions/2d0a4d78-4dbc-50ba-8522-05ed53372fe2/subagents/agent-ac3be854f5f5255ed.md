@@ -686,3 +686,31 @@ Painted foam tones: shadows periwinkle (152,155,240), mids (194,200,249), lights
 >    80 [240. 234. 248.]
 >    95 [248. 244. 248.]
 
+### 🤖 Claude — 2026-11-20T03:23:02.085Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s07/src/world/match07.ts", "old_string": "const CLOUD_VERT = /* glsl */ `\nattribute vec4 aLobe;     // centre (group-local), radius\nattribute vec2 aTone;     // brightness jitter, iridescence seed\nuniform vec2 uGuard;\nuniform vec3 uProjPos;\nuniform float uClip;\nuniform float uMagOn;     // 1 = level stretch: a lobe rises only where the moving view magnifies the water past what the approved view showed\nuniform float uCScale;\nvarying vec3 vPv;\nvarying vec3 vCv;\nvarying float vR;\nvarying vec2 vTone;\nvoid main() {\n  vec4 wc = modelMat …[+7407 chars]`
+
+### 🧑 User — 2026-11-20T03:23:02.122Z
+
+> ↩︎ result: The file /home/user/wt/s07/src/world/match07.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T03:23:04.125Z
+
+Now the cluster generator: cumulus mounds plus a continuous skirt along the band edge.
+
+### 🤖 Claude — 2026-11-20T03:23:08.265Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s07/src/world/match07.ts", "old_string": "    const makeCloud = (lobes: number[], tone: number[], magOn: number, name: string) => {\n      const g = new THREE.InstancedBufferGeometry();\n      g.setAttribute('position', new THREE.Float32BufferAttribute([-1, -1, 0, 1, -1, 0, 1, 1, 0, -1, 1, 0], 3));\n      g.setIndex([0, 1, 2, 0, 2, 3]);\n      g.setAttribute('aLobe', new THREE.InstancedBufferAttribute(new Float32Array(lobes), 4));\n      g.setAttribute('aTone', new THREE.InstancedBufferAttribute(new Float32Array(tone), 2));\n      g.instanceCo …[+640 chars]`
+
+### 🧑 User — 2026-11-20T03:23:08.293Z
+
+> ↩︎ result: The file /home/user/wt/s07/src/world/match07.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T03:23:31.667Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s07/src/world/match07.ts", "old_string": "    /** one cumulus cluster at lateral e (outward from the band edge, sign = side), along a; place(lat, along, up) → group-local */\n    const cluster = (out: number[], tone: number[], place: (lat: number, a: number, up: number) => THREE.Vector3, side: number, a: number, wallLat: number) => {\n      const push = (lat: number, da: number, up: number, r: number) => {\n        if (Math.abs(lat) + r * 0.3 > wallLat) lat = side * (wallLat - r * 0.3);\n        const p = place(lat, a + da, up);\n        out.p …[+5827 chars]`
+
+### 🧑 User — 2026-11-20T03:23:31.704Z
+
+> ↩︎ result: The file /home/user/wt/s07/src/world/match07.ts has been updated successfully. (file state is current in your context — no need to Read it back)
+

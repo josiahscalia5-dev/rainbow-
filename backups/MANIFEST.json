@@ -619,7 +619,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 20296,
-   "sha256": "b07b6818122ea66bcf7090980f635e9a56434a32dec493688ea905229e53c420"
+   "sha256": "d4a75ba783c8585403414cb545f610de28f7116c63681637b706938805f38559"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -634,7 +634,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 2190,
-   "sha256": "38aeafa8eb699fa7e012ffdd3c70d6799ea071aa5c4e1e016faef3125a258538"
+   "sha256": "2cd821fb1ef7ea195d10b92d82bc4748978f89b9170d5485c4e28cbfaaeba7c0"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -1424,7 +1424,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c23/INFO.json",
    "bytes": 560,
-   "sha256": "c9bd8ca8985d75e88ac9094d9b41857973afb08a4ce53e5a06b37892e17156d5"
+   "sha256": "aca0f18325d7f11e51344e7ad212ef0c4a898b42cfe5362dc10cfb97349e6043"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c23/tracked.patch",
@@ -2399,7 +2399,7 @@
   {
    "path": "backups/wip/claude__rainbow-s07-match-c23/INFO.json",
    "bytes": 596,
-   "sha256": "8bfc4fd80c554071253c1097b2e2fe1435619aa4537ab167efe65ce79c3a0f24"
+   "sha256": "a4121927824824182de8bd3f0dffacc233cdea97b50d546230cc2b38feb4bbd6"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c23/tracked.patch",
@@ -5760,6 +5760,26 @@
    "path": "qa/match/04/r22/s0_verify/worktree_now.patch",
    "bytes": 60486,
    "sha256": "97a06742738f94323dcd984c58d7e6d94bb18a03a721d8ff48e9e1597add6d1c"
+  },
+  {
+   "path": "qa/match/04/r22/scratch/bbd_try1/c_middle.png",
+   "bytes": 1734807,
+   "sha256": "23c2d387c4149f36a3441ecd63933c45d5bed3b289226ede7190480166074266"
+  },
+  {
+   "path": "qa/match/04/r22/scratch/bbd_try1/d_late.png",
+   "bytes": 1748909,
+   "sha256": "4a9d5b519622b7ec2db6d2df0031342656da0b9b12c06363d6d5a931016cffe0"
+  },
+  {
+   "path": "qa/match/04/r22/scratch/bbd_try1/f_hard_left.png",
+   "bytes": 1719830,
+   "sha256": "a1482519d2a269a7abcaf202c534c23f41b1f8aad49f8efd68db8f4d64a00ea5"
+  },
+  {
+   "path": "qa/match/04/r22/scratch/bbd_try1/shots.json",
+   "bytes": 500,
+   "sha256": "fde9837e2a080fdf3fd2919ef5a4dd99bc64a7b2aba8a9410423bb12940ba370"
   },
   {
    "path": "qa/match/04/r22/tools/audit_pinned.mjs",
