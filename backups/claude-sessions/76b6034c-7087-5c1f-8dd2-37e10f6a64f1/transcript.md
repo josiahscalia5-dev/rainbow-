@@ -4089,3 +4089,45 @@ Everything is now committed and pushed to GitHub, with nothing left untracked. T
 
 The steering clip is still rendering. When it finishes I'll encode it, send it to you and save it the same way.
 
+### 🧑 User — 2026-11-20T23:47:47.234Z
+
+<task-notification>
+<task-id>b3ya6t1am</task-id>
+<tool-use-id>toolu_01HpJEfHrkVBMdUpu68Zpbre</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/tasks/b3ya6t1am.output</output-file>
+<status>completed</status>
+<summary>Background command "Render a zig-zag steering clip on the candidate" completed (exit code 0)</summary>
+</task-notification>
+
+### 🤖 Claude — 2026-11-20T23:47:53.124Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/tasks/b3ya6t1am.output; D=/home/user/rainbow-/qa/match/06/r30b/proof; cd /home/user/wt/s06 && python3 -I tools/match06/r30b_make_steer.py $D/steer_frames $D 396.5534884455474 && ls -la $D/STEER_zigzag_06_1x.mp4", "description": "Encode the steering clip", "timeout": 900000}`
+
+### 🧑 User — 2026-11-20T23:50:11.593Z
+
+> ↩︎ result: exit 0
+> frame 1416 { s: 329.441, stage: '06', lat: 2.95, coins: 1770 }
+> frames 1440 s0 198.91 s07 396.5534884455474
+> 1441
+> 
+> [exited with code 0]
+> {'frames': 1440, 'seconds': 60.0, 'lat_min': -2.95, 'lat_max': 2.95, 'coins_gained': 90, 'stages': ['06']}
+> -rw-r--r-- 1 root root 36413260 Nov 20 23:50 /home/user/rainbow-/qa/match/06/r30b/proof/STEER_zigzag_06_1x.mp4
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T23:50:21.098Z
+
+> 🔧 **Bash** `{"command": "grep -rln \"zigzag\" qa/match/06 docs/briefs/2026-11-20-r29 docs/briefs/2026-11-20-r30 2>/dev/null | head -5; grep -n \"ZIG\\|zig\" /home/user/wt/s06/tools/match06/r30_clip.mjs | head -8", "description": "Find earlier zig-zag steering results and schedule"}`
+
+### 🧑 User — 2026-11-20T23:50:23.388Z
+
+> ↩︎ result: qa/match/06/r30b/proof/README.md
+> qa/match/06/r30b/proof/r30b_candidate_from_e162aec.patch
+> 4:// by nobody (STEER unset) or the r29 schedule (STEER=zigzag). Writes OUT/0000.png ... + OUT/frames.json (s, stage, lat, coins per frame).
+> 11:const fps = 24, ZIG = process.env.STEER === 'zigzag';
+> 26:    const dir = !ZIG ? null : ph < 0.3 ? null : ph < 0.5 ? -1 : ph < 0.7 ? 1 : null;
+
+### 🤖 Claude — 2026-11-20T23:50:39.441Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r30b/proof && python3 - <<'EOF'\np='README.md'; s=open(p).read()\nold=\"`STEER_zigzag_06.mp4`: Benny steering left/right\\n   across 06 collecting coins.\"\nnew=(\"`STEER_zigzag_06_1x.mp4` (60 s, uninterrupted, real gameplay): Benny steered fully left (lateral -2.95 = the\\n\"\n     \"   wall limit) then fully right (+2.95), 90 coins picked up on the way. The schedule HOLDS the steering into the foam wall, which pins and slows\\n\"\n     \"   him (the game's existing wall behaviour, measured the same on the baseline by the Benny specialist), so t …[+620 chars]`
+

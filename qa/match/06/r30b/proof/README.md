@@ -40,8 +40,9 @@ User's binding brief: `docs/briefs/2026-11-20-r30/USER_R30.md` §6 (the FOUR sto
 2. **Continuous clip** `SCREEN06_r30b_into_07_1x.mp4` (normal speed) / `_0.5x.mp4`: one uninterrupted real-gameplay run from the 06 checkpoint
    through crest, band, winding slide, and 30 u INTO Screen 07 (HUD title switches to 07); `HANDOFF_06_to_07.jpg` = the frames around the entrance.
 3. **Steering / coins**: `gameplay_NEW.json` — 8/8 (continuous travel, no camera cut — max step 0.728 = baseline, no teleport, 07 plunge, 91
-   real coin pickups → 2,240, steering into the foam wall costs a heart, pause, victory). `STEER_zigzag_06.mp4`: Benny steering left/right
-   across 06 collecting coins. Continuity: all stage joins gap 0, 06→07 tangent 0.002°.
+   real coin pickups → 2,240, steering into the foam wall costs a heart, pause, victory). `STEER_zigzag_06_1x.mp4` (60 s, uninterrupted, real gameplay): Benny steered fully left (lateral -2.95 = the
+   wall limit) then fully right (+2.95), 90 coins picked up on the way. The schedule HOLDS the steering into the foam wall, which pins and slows
+   him (the game's existing wall behaviour, measured the same on the baseline by the Benny specialist), so the 60 s cap ends at s 329 in 06. Continuity: all stage joins gap 0, 06→07 tangent 0.002°.
 4. **Start view**: outside Benny 99.96 % of pixels within 20 levels of BASELINE; vs the approved picture whole frame 76.4 % → 78.2 %, Benny area
    49.4 % → 56.8 % (pixels within 20 colour levels; only these are measured — no overall likeness figure is claimed).
 5. **Baseline preserved**: the same v2 frame rendered from the untouched r30 code and from the candidate code (new switches off), clock pinned:

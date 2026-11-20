@@ -1,0 +1,10 @@
+{
+ "frames": 1440,
+ "seconds": 60.0,
+ "lat_min": -2.95,
+ "lat_max": 2.95,
+ "coins_gained": 90,
+ "stages": [
+  "06"
+ ]
+}
