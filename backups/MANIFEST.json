@@ -624,7 +624,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 23681,
-   "sha256": "1ff9fc3eb4c6dda7f41218a4d9fc4bdbf41e39a962f40403c3635d060c3f710b"
+   "sha256": "b6b32a86ec2b362b2ec8c9e5681d0455cdd10e39b6c0dac10a62e5d6bf4c4a71"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -639,7 +639,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3449,
-   "sha256": "80179e28c129a1ed33a3f7f7957e152b4fe8e1e382efcab82342852bf69c2b10"
+   "sha256": "b5402136ded3a3ede1ab0a7d6ce1df3481b0f3b82e8e1f3882c8a982d9027ab5"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -1164,7 +1164,7 @@
   {
    "path": "backups/wip/claude__rainbow-benny-c30/INFO.json",
    "bytes": 1265,
-   "sha256": "4213c3290186250f585033b849128302659992f0eda027239c2e4092e6c24a3d"
+   "sha256": "dd8c88fa3d01190606c2890e28f7eddf1b76e443118c0d77635442921c92da58"
   },
   {
    "path": "backups/wip/claude__rainbow-benny-c30/tracked.patch",
@@ -1874,7 +1874,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c30/INFO.json",
    "bytes": 586,
-   "sha256": "74704ab2e9797e197f6f24a28ece72207f6ccf0feb9d3e05eaa4c576c26879e6"
+   "sha256": "f998e4ed325b7052d001184c7790bb4f3360c9a6f2f3643ffeca9d299780da60"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c30/tracked.patch",
@@ -2674,7 +2674,7 @@
   {
    "path": "backups/wip/claude__rainbow-s05-match-c30/INFO.json",
    "bytes": 558,
-   "sha256": "cf48083f5d68cdb168c513137d75a6fef4cb284cb7fb57bfd3b066cce2395551"
+   "sha256": "ea99acb3271afd646afdaf9c9abf459c5d53c15e6f6c349e6dced3d8ee3e8fbe"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-match-c30/tracked.patch",
@@ -3164,7 +3164,7 @@
   {
    "path": "backups/wip/claude__rainbow-s06-match-c30/INFO.json",
    "bytes": 1183,
-   "sha256": "b83f1c10e187a499fc696c54bad04c9273ec8d5ddb48c0fdba6bfae653029528"
+   "sha256": "0473f89b82fe900eaf36f03a280ea453b2b8c86516e193f236b67722c92d3a1c"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c30/tracked.patch",
@@ -3784,7 +3784,7 @@
   {
    "path": "backups/wip/claude__rainbow-s07-match-c30/INFO.json",
    "bytes": 971,
-   "sha256": "97f6204aba07830dd07170cb0bfaa55d3f192d20fa93256907660acba411dba7"
+   "sha256": "2b5a8653b63e0493fcab3a94f320944a8f078ec8e5857df8ae01e4dd5b7051d6"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c30/tracked.patch",
@@ -4079,7 +4079,7 @@
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c30/INFO.json",
    "bytes": 640,
-   "sha256": "a47165dc1f991dd132576e8515f1addfc77c01df869dc70164d68e438588a287"
+   "sha256": "471dcfba4f83c5970f44313e4fa3898ffa43723218f2d269352fc0ad8a61a575"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c30/tracked.patch",
@@ -4114,7 +4114,7 @@
   {
    "path": "backups/wip/detached-8accdad0a0/INFO.json",
    "bytes": 491,
-   "sha256": "19f546d2012cf50920b33fdf8c3a9fe90d391f216b123fb33599d75a8336ee19"
+   "sha256": "f0b038b4d0cd4c0a996206fbd70545c545c59b0e1b1337c8cb283029bbc06829"
   },
   {
    "path": "backups/wip/detached-8accdad0a0/tracked.patch",
@@ -4129,7 +4129,7 @@
   {
    "path": "backups/wip/detached-e162aec2bf/INFO.json",
    "bytes": 701,
-   "sha256": "9ebbb3cc0991724653d2f8de37fecbfebdaf304555d1f7d6568789be7d8a16d5"
+   "sha256": "c45aa82e57b2fdae90babe5879ea4fb86ddc781fcb5519334425ccd166e40e5c"
   },
   {
    "path": "backups/wip/detached-e162aec2bf/tracked.patch",
@@ -4354,7 +4354,7 @@
   {
    "path": "backups/wip/lead__trial07-c30/INFO.json",
    "bytes": 927,
-   "sha256": "dd3f653c29f992eb80676f65bee904ebd58d7e13a829c93dc1337ead90f2b2d8"
+   "sha256": "a6e7a6fa2a2e71dbba4ba289ca2865059406fbf6e9e1eab65e5952098df4ffc6"
   },
   {
    "path": "backups/wip/lead__trial07-c30/tracked.patch",
@@ -4444,7 +4444,7 @@
   {
    "path": "backups/wip/lead__view04-c30/INFO.json",
    "bytes": 537,
-   "sha256": "a3a17c86511dd2149ef9d138ac1f11efd0a07e6fc12cd001e1666ed3098eade9"
+   "sha256": "a1788595730ddbe25c34f4f4073e9a2f2f0cfd24960d9dc539f32b34bb8f87bb"
   },
   {
    "path": "backups/wip/lead__view04-c30/tracked.patch",
@@ -4629,7 +4629,7 @@
   {
    "path": "backups/wip/lead__view06-c30/INFO.json",
    "bytes": 1041,
-   "sha256": "569ad21e62e2a3b5e9fb352e4dc2848d2b5776cf723dbadcb28df9c0e1b9a690"
+   "sha256": "013251f6118e7cd816238efb66d5edb686ec2c1edb0986bae23644bb1bb724cd"
   },
   {
    "path": "backups/wip/lead__view06-c30/tracked.patch",
@@ -4834,7 +4834,7 @@
   {
    "path": "backups/wip/lead__view07-c30/INFO.json",
    "bytes": 922,
-   "sha256": "d193f9e056db78ff878e678ffcaee107f3583b67561d8316b93b912a15d4e0e6"
+   "sha256": "58f96f638409d43e1e8e77ddd8b8490cc7968d620f195d2fd569da91fd159992"
   },
   {
    "path": "backups/wip/lead__view07-c30/tracked.patch",

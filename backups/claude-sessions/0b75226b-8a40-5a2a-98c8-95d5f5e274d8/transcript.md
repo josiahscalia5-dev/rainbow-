@@ -2146,3 +2146,121 @@ It makes 06 about 3–5 seconds longer, needs no artwork or paid credits, and si
 
 Everything is saved to GitHub (`03fc55d`, verified) and the five-minute saving is running. The captures and notes are in `qa/match/06/r28/route/quick_r29/`.
 
+### 🧑 User — 2026-11-20T18:50:02.482Z
+
+CLAUDIA — FIX SCREEN 06 SO BENNY ACTUALLY SWIMS THROUGH MY APPROVED RAINBOW WATER AND PURPLE-AND-GOLD TUNNEL
+
+I want you to focus on correcting the actual playable 3D environment in Screen 06.
+
+My goal is simple: I want Benny to swim down the colourful water slide, following the gold coins, and travel directly into and through the purple-and-gold tunnel shown in my original approved Screen 06.
+
+I want it to feel like the exact same world from my approved image, except Benny is actually moving through it.
+
+1. Fix the actual river and tunnel alignment
+
+Please inspect the existing Screen 06 route, tunnel geometry, camera and connection into Screen 07.
+
+Your previous notes say the river course was left unchanged while the distant tunnel was shifted toward it.
+
+That may improve alignment, but I also need the river itself to preserve the curling, winding shape shown in my approved picture.
+
+Do not settle for a straight blue chute with a large gold circle at the end.
+
+Build a continuous playable path where:
+
+- Benny follows the cyan-and-pink water down the curling slide.
+- The gold coins follow that same curved water route.
+- The purple machinery surrounds the river in the correct positions.
+- The gold rings form a real tunnel that Benny enters and passes through.
+- The river continues inside the tunnel instead of appearing to travel beside it.
+- The journey connects naturally into Screen 07.
+
+If the existing route length prevents this, investigate whether the Screen 06 route and its transition into Screen 07 need to be extended or reconstructed. Preserve the successful existing versions.
+
+2. Make the environment stay visually consistent
+
+I don't want the approved appearance to exist only at the beginning.
+
+As Benny swims forward, preserve the same:
+
+- Bright cyan, pink and rainbow-coloured water.
+- Curling wave and flowing water shapes.
+- Purple perforated machine walls.
+- Thick, illuminated gold tunnel rings.
+- Warm yellow-orange lighting.
+- White foam and bubbles.
+- Gold coin trail.
+- Overall scale, depth and composition.
+
+The camera should move naturally through the scenery. Nearby rings must approach, pass around Benny and move behind him.
+
+I want Benny to travel through the approved environment—not just toward a picture of it.
+
+3. Use the tools we already have
+
+Use the existing Three.js scene, Blender, Playwright, Three.js DevTools and Spector to inspect and correct the actual geometry, camera and materials.
+
+Use the full-resolution approved Screen 06 image as the visual reference.
+
+Start with our existing models and textures. Do not spend additional World Labs or fal credits on this test unless you first establish a specific need.
+
+4. Show me proof in actual gameplay
+
+Please provide:
+
+1. My ORIGINAL APPROVED Screen 06.
+2. The current BEFORE gameplay.
+3. The corrected NEW gameplay.
+4. A continuous normal-speed video showing Benny travelling down the water slide, entering the tunnel, passing through its gold rings and continuing into Screen 07.
+5. Left and right steering checks.
+
+Show the complete route, not just the opening screenshot.
+
+5. Give me a clear result
+
+Tell me whether the corrected playable scene genuinely looks closer to my approved image throughout movement.
+
+If it works, preserve the successful candidate and show it for my approval.
+
+If it still doesn't work, explain exactly which part of the 3D construction is preventing the match and what different approach is needed.
+
+I don't want another round of small cosmetic changes while the main river and tunnel still look wrong.
+
+My goal remains approximately 90–95% likeness to my approved image throughout real gameplay, with 95% preferred.
+
+6. Preserve all existing work
+
+Continue saving everything to GitHub every five minutes while the session is active, including source code, assets, conversations, specialist progress and unfinished work.
+
+Do not overwrite my approved images or discard successful candidates.
+
+Please finish this Screen 06 correction as the next focused milestone before expanding the same approach to other screens.
+
+### 🤖 Claude — 2026-11-20T18:51:43.419Z
+
+Understood: build the reconstructed route as its own candidate (extending 06 and rebuilding its join into 07 where needed), keep every existing version, and prove it in gameplay. First I'll study the painted route in detail at full resolution, since the new 3D river must follow it.
+
+### 🤖 Claude — 2026-11-20T18:51:45.128Z
+
+> 🔧 **Bash** `{"command": "S=/home/user/scratch/s06 && cd /home/user/rainbow- && convert references/06_crest_the_rinse_arch.png -crop 864x620+0+380 +repage -resize 864x $S/ref06_mid.png && convert references/07_dive_the_washer_tube.png -resize 432x768 $S/ref07_small.png && identify $S/ref06_mid.png", "description": "Crop the approved 06 river region and shrink the approved 07 picture"}`
+
+### 🧑 User — 2026-11-20T18:51:45.506Z
+
+> ↩︎ result: /home/user/scratch/s06/ref06_mid.png PNG 864x620 864x620+0+0 8-bit sRGB 1.01029MiB 0.000u 0:00.000
+
+### 🤖 Claude — 2026-11-20T18:51:47.087Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s06/ref06_mid.png"}`
+
+### 🧑 User — 2026-11-20T18:51:47.128Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T18:51:47.437Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s06/ref07_small.png"}`
+
+### 🧑 User — 2026-11-20T18:51:47.473Z
+
+> ↩︎ result: [image]
+
