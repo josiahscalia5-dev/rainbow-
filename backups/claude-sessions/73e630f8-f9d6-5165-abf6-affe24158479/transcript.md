@@ -30,3 +30,29 @@ Tell me 1 or 2 and I'll start. I won't promise "exact" again when it isn't true.
 
 Backup: your GitHub backup is saved and the autosave is running (branch `ccr-4fcad20e-a6pp8w`, commit `0db047d`). One problem: the automatic download of your newest work from GitHub failed when this session started, so I haven't checked that everything newer is here yet.
 
+### 🧑 User — 2026-11-20T23:56:44.157Z
+
+Should I use Godot to make my all my approved screens?Use the Godot MCP plugin to work on my existing project. Don't rebuild anything. Restyle the screens I name so they look as close as possible to the attached reference image (reference/screen06_concept.jpg).
+
+REFERENCE STYLE
+- Pink fuzzy character in a purple-and-white striped beanie with a gold star.
+- Glowing blue/magenta/pink water slide that curves and winds.
+- Purple perforated tunnel walls with curved gold bands.
+- Shiny gold coins and translucent bubbles along the slide.
+- Foam or cloud puffs at the edges, with a neon, glossy look.
+
+STEP 1: AUDIT (no changes yet)
+1. List all scenes in the project and tell me which ones look like they correspond to the reference.
+2. Compare the current visuals of [LIST YOUR SCREENS HERE] against the reference. Tell me what is different: colors, backgrounds, character, coins, lighting, layout.
+3. List the assets you'd need that don't exist yet (textures, sprites, shaders). Tell me which ones I have to supply, because you can't paint the final art.
+
+STEP 2: PROPOSE
+Give me a change list per screen, in order of visual impact. Wait for my approval.
+
+STEP 3: APPLY (after approval)
+- Edit only the screens I approved.
+- Change the colors, gradients, glow, backgrounds, and layout using Godot materials, shaders, and particles where possible, and use placeholders for missing art.
+- Don't change gameplay scripts unless I ask.
+- Save every scene after each change.
+- Run the game and take a screenshot to compare against the reference, then tell me what still doesn't match.
+
