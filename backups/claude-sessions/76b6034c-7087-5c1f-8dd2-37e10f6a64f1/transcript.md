@@ -405,3 +405,206 @@ Only two generated backup-index files conflict; as the previous lead did, I'll k
 > lead__view07-c30
 > lead__view07-c31
 
+### 🤖 Claude — 2026-11-20T22:22:03.080Z
+
+Merged and committed (`34786f3`). Now I'm rebuilding the Screen 06 candidate workspace from the saved snapshot of the previous session's unfinished edits.
+
+### 🤖 Claude — 2026-11-20T22:22:04.482Z
+
+> 🔧 **Bash** `{"command": "for x in s06-match s06-benny06 s06-water06 s06-foam06 s06-scen06; do echo \"== $x\"; python3 -c \"\nimport json,sys;d=json.load(open('backups/wip/claude__rainbow-$x-c31/INFO.json'));print({k:(v if len(str(v))<300 else str(v)[:300]) for k,v in d.items()})\"; done", "description": "Show snapshot info for s06 worktrees"}`
+
+### 🧑 User — 2026-11-20T22:22:04.650Z
+
+> ↩︎ result: == s06-match
+> {'worktree': '/home/user/wt/s06', 'branch': 'claude/rainbow-s06-match-c31', 'head': 'e162aec2bfdc631913c41daa435f9d449439af4f', 'time': '2026-11-20T22:14:34+00:00', 'dirty_tracked': ['src/characters/benny/benny05.ts', 'src/game/Game.ts', 'src/game/cameraRig.ts', 'src/gameplay/coins.ts', 'src/world/course.ts', 'src/world/environment.ts', 'src/world/match06.ts', 'src/world/match08.ts'], 'untracked_copied': "['assets/textures/match06/coins06deep.json', 'assets/textures/match06/hole06.json', 'assets/textures/match06/leg06deep.json', 'assets/textures/match06/route06curl.json', 'assets/textures/match06/route06deep.json', 'assets/textures/match06/tile_hole06.png', 'assets/textures/match06/tile_hole06b.png',", 'untracked_skipped': [], 'restore': 'git switch claude/rainbow-s06-match-c31 (newest pushed tip) && git apply --binary backups/wip/claude__rainbow-s06-match-c31/tracked.patch && copy backups/wip/claude__rainbow-s06-match-c31/untracked/* into the worktree'}
+> == s06-benny06
+> {'worktree': '/home/user/wt/benny06', 'branch': 'claude/rainbow-s06-benny06-c31', 'head': 'e162aec2bfdc631913c41daa435f9d449439af4f', 'time': '2026-11-20T22:14:33+00:00', 'dirty_tracked': ['src/character …[+3788 chars]
+
+### 🤖 Claude — 2026-11-20T22:22:09.690Z
+
+> 🔧 **Bash** `{"command": "git cat-file -e e162aec2bfdc631913c41daa435f9d449439af4f^{commit} && echo BASE_OK; git log -1 --format='%h %cd %s' e162aec2bfdc631913c41daa435f9d449439af4f; ls /home/user/wt 2>&1; git worktree list", "description": "Check base commit availability and worktrees"}`
+
+### 🧑 User — 2026-11-20T22:22:09.751Z
+
+> ↩︎ result: fatal: Not a valid object name e162aec2bfdc631913c41daa435f9d449439af4f^{commit}
+> fatal: bad object e162aec2bfdc631913c41daa435f9d449439af4f
+> ls: cannot access '/home/user/wt': No such file or directory
+> /home/user/rainbow-  34786f3 [ccr-e490fceb-u85291]
+
+### 🤖 Claude — 2026-11-20T22:22:12.744Z
+
+> 🔧 **Bash** `{"command": "timeout 200 git fetch --depth=50 origin claude/rainbow-s06-match-c23 2>&1 | tail -2; git cat-file -e e162aec2bfdc631913c41daa435f9d449439af4f^{commit} && echo BASE_OK && git log -1 --format='%h %cd %s' e162aec2bfdc631913c41daa435f9d449439af4f", "description": "Fetch Screen 06 base commit from GitHub"}`
+
+### 🧑 User — 2026-11-20T22:22:52.635Z
+
+> ↩︎ result: * branch            claude/rainbow-s06-match-c23 -> FETCH_HEAD
+>  * [new branch]      claude/rainbow-s06-match-c23 -> origin/claude/rainbow-s06-match-c23
+> BASE_OK
+> e162aec Fri Nov 20 04:09:34 2026 +0000 autosave: Rainbow 2026-11-20 04:09 UTC
+
+### 🤖 Claude — 2026-11-20T22:23:03.141Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-20-r30/setup_r30b.sh", "content": "#!/usr/bin/env bash\n# setup_r30b.sh — round 30b (session ccr-e490fceb-u85291, 2026-11-20 ~22:25 UTC): recreate the Screen 06 candidate worktree and the\n# four r30 specialist worktrees from the NEWEST snapshots in backups/wip/*-c31/ (saved 22:14 UTC by the previous session) on NEW\n# LOCAL branches -c32. Nothing is merged or pushed; the five-minute autosave snapshots each worktree into backups/wip/<branch>/.\n# usage (from the lead checkout): bash docs/briefs/2026-11-20-r30/setup_r30b.sh [s06 benny06 wat …[+1241 chars]`
+
+### 🧑 User — 2026-11-20T22:23:03.280Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-20-r30/setup_r30b.sh (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T22:23:04.102Z
+
+> 🔧 **Bash** `{"command": "bash docs/briefs/2026-11-20-r30/setup_r30b.sh 2>&1 | tail -8", "description": "Recreate Screen 06 and worker worktrees", "timeout": 300000}`
+
+### 🧑 User — 2026-11-20T22:23:16.464Z
+
+> ↩︎ result: Preparing worktree (new branch 'claude/rainbow-s06-benny06-c32')
+> benny06: /home/user/wt/benny06 on claude/rainbow-s06-benny06-c32 — dirty 47
+> Preparing worktree (new branch 'claude/rainbow-s06-water06-c32')
+> water06: /home/user/wt/water06 on claude/rainbow-s06-water06-c32 — dirty 47
+> Preparing worktree (new branch 'claude/rainbow-s06-foam06-c32')
+> foam06: /home/user/wt/foam06 on claude/rainbow-s06-foam06-c32 — dirty 45
+> Preparing worktree (new branch 'claude/rainbow-s06-scen06-c32')
+> scen06: /home/user/wt/scen06 on claude/rainbow-s06-scen06-c32 — dirty 45
+
+### 🤖 Claude — 2026-11-20T22:23:19.259Z
+
+> 🔧 **Bash** `{"command": "git worktree list; cd /home/user/wt/s06 && git status --short | wc -l && (timeout 200 npx tsc --noEmit -p . 2>&1 | tail -5; echo \"tsc exit $?\")", "description": "Verify worktrees and typecheck s06 candidate", "timeout": 240000}`
+
+### 🧑 User — 2026-11-20T22:23:22.453Z
+
+> ↩︎ result: /home/user/rainbow-    d1cc068 [ccr-e490fceb-u85291]
+> /home/user/wt/benny06  e162aec [claude/rainbow-s06-benny06-c32]
+> /home/user/wt/foam06   e162aec [claude/rainbow-s06-foam06-c32]
+> /home/user/wt/s06      e162aec [claude/rainbow-s06-match-c32]
+> /home/user/wt/scen06   e162aec [claude/rainbow-s06-scen06-c32]
+> /home/user/wt/water06  e162aec [claude/rainbow-s06-water06-c32]
+> 44
+> tsc exit 0
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T22:23:27.907Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-20-r30/USER_S06_STORYBOARD_R30.png"}`
+
+### 🤖 Claude — 2026-11-20T22:23:27.921Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/references/06_crest_the_rinse_arch.png"}`
+
+### 🧑 User — 2026-11-20T22:23:27.937Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-20T22:23:28.121Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T22:23:42.023Z
+
+> 🔧 **ToolSearch** `{"query": "select:TaskCreate,TaskUpdate,TaskList", "max_results": 3}`
+
+### 🧑 User — 2026-11-20T22:23:42.030Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-20T22:23:43.085Z
+
+> 🔧 **Bash** `{"command": "ls qa/match/06/r30/ && for x in benny06 water06 foam06 scen06; do echo \"== $x\"; ls qa/match/06/r30/$x 2>/dev/null | head; done; cat qa/match/06/r30/QUERY_NEW_v2.txt; echo; ls references/ | head -20", "description": "List r30 Screen 06 outputs and queries"}`
+
+### 🧑 User — 2026-11-20T22:23:43.147Z
+
+> ↩︎ result: QUERY_CURL_v1.txt
+> QUERY_CURL_v3.txt
+> QUERY_NEW.txt
+> QUERY_NEW_v1.txt
+> QUERY_NEW_v2.txt
+> QUERY_NEW_vw3456.txt
+> diag
+> foam06
+> frame_k0.45_u0.85
+> frame_k0.5_u1.0
+> gameplay_NEW.json
+> gameplay_NEW_v2.json
+> proof
+> proof_v2
+> quick_camk
+> quick_camk2
+> quick_hold
+> quick_hold2
+> quick_v1
+> quick_v2_haze50
+> quick_v2_haze80
+> quick_v3
+> quick_v4
+> quick_vw2038
+> scen06
+> stills_BEFORE
+> stills_NEW
+> water06
+> == benny06
+> == water06
+> before
+> == foam06
+> QUERY_BEFORE_v2.txt
+> before_v2
+> == scen06
+> before
+> match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1&m06st=1&m06fcl=1&m06view=1&m06vs=0&m06rip=1&m06hole=2&m06fade=1&m06spl=1&m06fcn=3&m06fcg=1&m06deep=1&m06leg=1&m06vw=20,38&m06tswap=2&m06curl=1&m06haze=80,170,0.55&m06camk=0.65&m06camu=1.05
+> 
+> 01_inside_washer_girl_and_towel.png
+> 02_mascot_tumbles_in_whirlpool.png
+> 03_whirlpool_twirl.png
+> 04_through_the_five_arrows.png
+> 05_flow_into_the_current.png
+> 06_crest_the_rinse_arch.png
+> 07_dive_the_washer_tube.png
+> 08_final_spin_chamber.png
+> 09_ride_the_final_wave.png
+> 10_slide_into_hiding.png
+> 11_safely_home_final_victory.png
+> water
+
+### 🤖 Claude — 2026-11-20T22:23:46.974Z
+
+> 🔧 **TaskCreate** `{"subject": "Restore + verify starting point (branch, commit, worktrees, autosave)", "description": "Merge previous session's last save, recreate s06 + 4 worker worktrees on -c32, verify tsc, autosave OK, backup report.", "activeForm": "Restoring starting point"}`
+
+### 🧑 User — 2026-11-20T22:23:46.986Z
+
+> ↩︎ result: Task #1 created successfully: Restore + verify starting point (branch, commit, worktrees, autosave)
+
+### 🤖 Claude — 2026-11-20T22:23:48.274Z
+
+> 🔧 **TaskCreate** `{"subject": "Diagnose pale peach circle, crowded rings, stretched slots, neon-pink shift", "description": "Find actual causes in the scene (07 tube visibility, ring spacing, wall tile mapping, textures) with evidence images.", "activeForm": "Diagnosing scenery defects"}`
+
+### 🧑 User — 2026-11-20T22:23:48.689Z
+
+> ↩︎ result: Task #2 created successfully: Diagnose pale peach circle, crowded rings, stretched slots, neon-pink shift
+
+### 🤖 Claude — 2026-11-20T22:23:49.625Z
+
+> 🔧 **TaskCreate** `{"subject": "Build r30b candidate: route + camera framing for the 4 approved views", "description": "New URL switch in s06 worktree; tunnel geometry, gold bands (broad, world-anchored, spaced), wall perforations, far tunnel purple, camera framing per panel, 07 join.", "activeForm": "Building the four-view candidate"}`
+
+### 🧑 User — 2026-11-20T22:23:49.636Z
+
+> ↩︎ result: Task #3 created successfully: Build r30b candidate: route + camera framing for the 4 approved views
+
+### 🤖 Claude — 2026-11-20T22:23:50.876Z
+
+> 🔧 **TaskCreate** `{"subject": "Water, foam, coins, Benny toward the panels", "description": "Review worker WIP (b30/w30/f30/e30), fix scratch streaks, bead foam, coin alignment, Benny proportions.", "activeForm": "Matching water, foam, coins and Benny"}`
+
+### 🧑 User — 2026-11-20T22:23:50.886Z
+
+> ↩︎ result: Task #4 created successfully: Water, foam, coins, Benny toward the panels
+
+### 🤖 Claude — 2026-11-20T22:23:52.180Z
+
+> 🔧 **TaskCreate** `{"subject": "Proof: 4 numbered comparisons, continuous clip into 07, gameplay test", "description": "REF | BASELINE | NEW per panel at matched framing; normal-speed clip crest→07 entry; steering + coin evidence; branch + SHA; remaining differences.", "activeForm": "Producing proof captures"}`
+
+### 🧑 User — 2026-11-20T22:23:52.191Z
+
+> ↩︎ result: Task #5 created successfully: Proof: 4 numbered comparisons, continuous clip into 07, gameplay test
+
+### 🤖 Claude — 2026-11-20T22:23:56.863Z
+
+> 🔧 **Bash** `{"command": "timeout 280 python3 scripts/rainbow-autosave.py --reason manual:r30b-restore 2>&1 | tail -5; python3 -I scripts/autosave-status.py; git ls-remote origin refs/heads/ccr-e490fceb-u85291; git rev-parse HEAD; ls backups/wip | grep c32", "description": "Run a manual autosave and verify GitHub matches", "timeout": 300000}`
+

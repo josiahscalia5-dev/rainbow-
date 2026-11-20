@@ -603,8 +603,8 @@
   },
   {
    "path": "backups/BOOTSTRAP_REPORT.md",
-   "bytes": 3915,
-   "sha256": "55223bd4d7fea0dc688494d63a8f6b007b87fa70ddedfd38b4eddf6be15578cc"
+   "bytes": 3957,
+   "sha256": "c806e38363353084115f9819d9e87b41116066c541d8b6275642c457d3ad21dc"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
@@ -624,7 +624,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 24637,
-   "sha256": "e1acebeb153dba393ffd74eff3fbeecaf238ba5fb01ba02da0179e5680a3fc5a"
+   "sha256": "196078419bbd9e7578b9f7d7ede83992a8b06d879a2b7b77ffd1ef4309e20cb1"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -638,8 +638,8 @@
   },
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
-   "bytes": 2772,
-   "sha256": "e1a73d8fba8db5d491ecb68dc1e2410a2644b4d04933f13ad7369e749bfb5c5a"
+   "bytes": 2840,
+   "sha256": "c098467d385e12fbebbb49e39c9d5c056c2230ab1cdebf905841ff1f2fa63757"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -7280,6 +7280,11 @@
    "path": "docs/briefs/2026-11-20-r30/setup_r30_parallel.sh",
    "bytes": 1473,
    "sha256": "ff710c5534a1afa8aec5cd914635f5fd0f2fb9c1dcc25cb5a33e4fa9d79d662d"
+  },
+  {
+   "path": "docs/briefs/2026-11-20-r30/setup_r30b.sh",
+   "bytes": 1684,
+   "sha256": "ecf3e980715c3b87e605396b896c3bd765ea80342a98e15e02b07b35ba188edb"
   },
   {
    "path": "docs/characters/benny.md",
