@@ -730,3 +730,93 @@ Tests pass. Recording short start-of-swim clips (BEFORE / NEW).
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e8e4b972-b434-5f87-a2df-10c4f5133633/scratchpad; K6='match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1'; D=qa/match/06/r22/step2_m06st; rm -rf $S/c2b $S/c2n\n(CLIP_PORT=5291 timeout 900 node $S/swim_clip_log.mjs 06 $S/c2b 2 \"$K6\" > $S/c2b.log 2>&1 &)\nCLIP_PORT=5292 timeout 900 node $S/swim_clip_log.mjs 06 $S/c2n 2 \"$K6&m06st=1\" 2>&1 | tail -2; sleep 15; tail -1 $S/c2b.log\nfor k in b n; do ffmpeg -loglevel error -y -framerate 24 -i $S/c2$k/%04d.png -vf scale=432:768 -pix_fmt yuv420p -c: …[+161 chars]`
 
+### 🧑 User — 2026-11-20T03:51:27.010Z
+
+> ↩︎ result: 47 null s 225.363 lat 0.684 stage 06 coins 1710
+> frames 48
+> frames 48
+> 1_APPROVED.png
+> BEFORE
+> NEW
+> gameplay.txt
+> rejected_r18_stw_0.6_1.2
+> rejected_stw_1.0_1.1
+> swim_start_BEFORE.mp4
+> swim_start_NEW.mp4
+> with_m06view
+
+### 🤖 Claude — 2026-11-20T03:51:42.312Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='qa/match/06/r22/PROGRESS.md';s=open(p).read()\ns=s.replace(\"\"\"* Next: task 2 (rank-3 start-view flash at +1.1 u), then task 3 (big white foam walls → low puffy foam clouds in the lower corners),\n  each with and without `m06view`.\"\"\",\"\"\"* Step 2 (`&m06st=1`, rank-3 start-view flash) — DONE: GOOD IMPROVEMENT (small; first ~1.3 u of the swim). Candidate for the\n  kept set (lead / user decide).\n* Next: task 3 (big white foam walls → low puffy foam clouds in the lower corners), with and without `m06view`.\"\"\")\ns+=\"\"\"\n## Step 2 — start-view flash …[+2516 chars]`
+
+### 🧑 User — 2026-11-20T03:51:46.542Z
+
+> ↩︎ result: branch 'claude/rainbow-s06-match-c23' set up to track 'origin/claude/rainbow-s06-match-c23'.
+> f7b3b22a795d324d37ef54eb326a42a344a6ec0e
+> f7b3b22a795d324d37ef54eb326a42a344a6ec0e	refs/heads/claude/rainbow-s06-match-c23
+
+### 🤖 Claude — 2026-11-20T03:51:51.664Z
+
+> 🔧 **mcp__claude-code-remote__send_message** `{"session_id": "session_0179kWgNJzw5v4674DNtMpda", "message": "S06 r22 step 2 DONE — `&m06st=1` (rank-3 start-view flash). Branch claude/rainbow-s06-match-c23 @ f7b3b22a795d324d37ef54eb326a42a344a6ec0e. Shortened its hand-over (m06stw default 0.6,1.2 → 0.75,0.85; the r18 setting showed a see-through double-exposed tunnel at +1.5 u — rejected, as was 1.0,1.1 which stretched the painting for a frame). Verdict GOOD IMPROVEMENT (small, first ~1.3 u only): no white ghost under Benny, no see-through ring arcs or torn crest — painted start stays crisp, then switches cleanly to 3D; with m06view the cl …[+388 chars]`
+
+### 🧑 User — 2026-11-20T03:52:00.445Z
+
+> ↩︎ result: {"status":"delivered"}
+
+### 🤖 Claude — 2026-11-20T03:52:02.267Z
+
+Step 2 pushed and reported. Now task 3: the big white foam walls. Finding how the foam banks are built.
+
+### 🤖 Claude — 2026-11-20T03:52:03.175Z
+
+> 🔧 **Bash** `{"command": "grep -n -i \"foam\" src/world/match06.ts | head -60; grep -rn \"m06foam\\|m06fclu\" src --include=*.ts | grep -v \"^src/world/match06.ts\" | head", "description": "Locate foam code for Screen 06"}`
+
+### 🧑 User — 2026-11-20T03:52:03.215Z
+
+> ↩︎ result: 8: *   * the river floor = the water surface: the game river's width + 1 u of foam bank each side (<= Lfloor)
+> 35:    r6?: { Wc: number; Wb: number; hb: number; river: { period: number }; foamPeriod: number };
+> 45:  /** r7 `&m06foam=1`: show the 3D foam clouds once the camera has left the approved view (a = away()) */
+> 81:// r6 (qa/match/06/NOTES.md): uGeo = narrow fitted river (lateral |l| <= Wc water, Wc..Wb foam bank); uR6 = river material
+> 82:// built from the approved painted water, world-anchored and flowing downstream (uR6p = Wc, Wb, river period, foam period)
+> 88:uniform sampler2D uFoam;
+> 141:    vec3 fo = texture2D(uFoam, vec2((al - uR6p.x) / (uR6p.y - uR6p.x), vLS.y / uR6p.w)).rgb;
+> 233:        // r18 m06st: the crest-top layer. In the approved view the painted crest top (its water, the foam heaps on its bank)
+> 335:// r16 `&m06fclu=1`: one foam lobe / small bubble of the painted 06 foam heaps (camera-facing sprite; aB = centre + radius,
+> 336:// aS >= 1 = a foam lobe with bubble pores, < 1 = a small shiny bubble). Shrinks away inside uNear (u) of the camera.
+> 337:const FOAMC_VERT = /* glsl */ `
+> 354:// colours = the approved picture's foam heaps (display values, lower corners + crest …[+2870 chars]
+
+### 🤖 Claude — 2026-11-20T03:52:04.802Z
+
+> 🔧 **Bash** `{"command": "sed -n 760,845p src/world/match06.ts", "description": "Read foam bank + cloud placement code"}`
+
+### 🧑 User — 2026-11-20T03:52:04.835Z
+
+> ↩︎ result: const p = GEO ? fr.pos.clone().addScaledVector(fr.right, lx).addScaledVector(fr.up, ly)
+>       : fr.pos.clone().addScaledVector(fr.up, L.hA).addScaledVector(fr.right, L.R * Math.cos(th)).addScaledVector(fr.up, L.R * Math.sin(th));
+>     let a = th; if (a > TT.wallAngle[1]) a -= Math.PI * 2; // continuous over the wall (the part under the water is never seen)
+>     return [p, (a - TT.wallAngle[0]) / TT.anglePeriod];
+>   }, TT.period), mat(tTube), 'tube');
+>   // river floor: the game river's own width + 1 u of foam bank each side (the painted gap between the river loops then
+>   // lands on the tunnel beyond, not on a wide water slab), never wider than the tube
+>   const FC = 32;
+>   // r6 `m06geo`: the painted river is only ~4.5 u wide at Benny (tools/match06/make_river06.py): water |l| <= Wc, then a
+>   // slightly raised foam bank to Wb where the tunnel wall starts (the game river and steering are unchanged)
+>   add(grid(FC, (s, j, fr) => {
+>     const half = GEO && R6 ? R6.Wb : Math.min(L.Lfloor, course.widthAt(Math.min(s, L.s1)) / 2 + 1.0);
+>     const l = -half + (2 * half * j) / FC;
+>     const p = fr.pos.clone().addScaledVector(fr.right, l);
+>     if (GEO && R6) { const t = Math.min(1, Math.max(0, (Ma …[+5504 chars]
+
+### 🤖 Claude — 2026-11-20T03:52:33.676Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/match06.ts';s=open(p).read()\nold=\"\"\"    for (let s = L.s0 + 3; s < L.s0 + 12 + 44 + 12; s += 0.6) for (const side of [-1, 1]) {\n      const n = 4 + Math.floor(rnd() * 4); // r7c: more, smaller blobs = bubbly clusters (big ones read as plastic balls up close)\n      for (let i = 0; i < n; i++) {\n        const fr = frame(s + rnd() * 0.6), r = 0.1 + rnd() * 0.22;\n        const l = side * (R6.Wc + 0.25 + rnd() * 1.3);\n        items.push({ p: fr.pos.clone().addScaledVector(fr.right, l).addScaledVector(fr.up, R6.hb + r * 0.35 + rnd() * 0.12), r, u …[+2684 chars]`
+
+### 🧑 User — 2026-11-20T03:52:36.080Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T03:52:46.687Z
+
+> 🔧 **Bash** `{"command": "K6='match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1'\nexport AUDIT_SHOTS='[[\"a_start\", 0, null], [\"b_early\", 0.12, null], [\"b2_early\", 0.22, null], [\"c_middle\", 0.35, null], [\"c2_middle\", 0.47, null], [\"d_late\", 0.6, null], [\"e_end\", 0.85, null], [\"f_hard_left\", 0.35, -1], [\"g_hard_right\", 0.35, 1], [\"h_left_early\", 0.15, -1], [\"i_right_early\", 0.15, 1]]'\nD=qa/match/06/r22/step3_m06fcl; mkdir -p $D; cp references/06_crest_the_rinse_arch.png $D/1_APPROVED.png\n(AUDIT_PORT=5276 timeout 900 node tools/lea …[+996 chars]`
+
