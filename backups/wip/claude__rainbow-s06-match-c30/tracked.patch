@@ -321,7 +321,7 @@ index 598cb42a..60d0bc70 100644
    const ROW06_PHASE = 0.9661842;
    const rowRepeat0607 = slotRowsPerBay / ringSpacing;
 diff --git a/src/world/match06.ts b/src/world/match06.ts
-index 831c2b44..1933ea73 100644
+index 831c2b44..896566a2 100644
 --- a/src/world/match06.ts
 +++ b/src/world/match06.ts
 @@ -19,6 +19,7 @@ import * as THREE from 'three';
@@ -498,6 +498,15 @@ index 831c2b44..1933ea73 100644
    });
  
    // river frames from the course (beyond s1: straight along the heading at s1, as tools/match06/geo06.py)
+@@ -549,7 +640,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+     const Rt = Number(qs?.get("m06tunr")) || 14;
+     const vp = (TT as { vp?: [number, number] }).vp ?? [W / 2, H / 2];
+     let ax = new THREE.Vector3((vp[0] / W) * 2 - 1, 1 - (vp[1] / H) * 2, 0.5).unproject(proj).sub(proj.position).normalize();
+-    const sA = L.s0 + 12, sE = L.s0 + 12 + 44; // approved checkpoint .. end of the 06 stage
++    const sA = L.s0 + 12, sE = DEEP ? course.stage('07').s0 : L.s0 + 12 + 44; // approved checkpoint .. end of the 06 stage (r29 m06deep: the new 07 entrance)
+     if (qs?.get('m06tunax') === 'chord') ax = course.sample(sE).pos.sub(course.sample(sA).pos).normalize();
+     const C = proj.position.clone();
+     // axis through the centroid of the 06 river (perpendicular to ax), lifted `&m06tunh=` (default 3) above it
 @@ -558,9 +649,9 @@ export async function buildMatch06(course: Course): Promise<Match06> {
      cen.multiplyScalar(1 / n);
      const Ux = new THREE.Vector3(0, 1, 0).addScaledVector(ax, -ax.y).normalize(), Rx = new THREE.Vector3().crossVectors(ax, Ux).normalize();

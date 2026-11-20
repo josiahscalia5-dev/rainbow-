@@ -3571,3 +3571,97 @@ Everything is saving on schedule. Making an immediate save now to capture the la
 
 > 🔧 **Bash** `{"command": "timeout 600 python3 scripts/rainbow-autosave.py --reason manual:user-save-check 2>&1 | grep -E '\"commit\"|error|refused'; python3 -I scripts/autosave-status.py; echo \"GitHub: $(git ls-remote origin refs/heads/ccr-ac160b4c-3hdecw | cut -c1-12)  local: $(git rev-parse --short=12 HEAD)\"; python3 -c \"\nimport json\nd=json.load(open('backups/wip/claude__rainbow-s06-match-c30/INFO.json')); print('s06 snapshot', d['time'], 'files changed:', len(d['dirty_tracked']), '+ new:', len(d['untracked_copied']))\nt=json.load(open('backups/LIVE_TOOLS_STATE.json')); print('tools inventory', t['t …[+658 chars]`
 
+### 🧑 User — 2026-11-20T19:15:36.360Z
+
+> ↩︎ result: "commit": "98469e99bc47e9cc86ef9e6d5def27207876125d",
+> AUTOSAVE OK | branch ccr-ac160b4c-3hdecw | scheduler daemon | last verified backup 2026-11-20T19:15:15+00:00 (0.3 min ago) | local 98469e9 remote 98469e9 (match) | uncommitted 0
+> GitHub: 98469e99bc47  local: 98469e99bc47
+> s06 snapshot 2026-11-20T19:15:28+00:00 files changed: 6 + new: 24
+> tools inventory 2026-11-20T19:15:30+00:00
+>  plugins: claude-code-setup, code-review, context7, design, feature-dev, frontend-design, playwright, superpowers
+>  MCP servers: worldlabs
+>  specialists: 10 | work copies: 12
+>  19:15 backups/claude-sessions/0b75226b-8a40-5a2a-98c8-95d5f5e274d8/transcript.md
+
+### 🤖 Claude — 2026-11-20T19:16:03.750Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"__rainbow = \\|window.__rainbow\\b.*=\\|camera:\" src/game/Game.ts | head -6 | cut -c1-200; grep -n \"side:\" src/world/match06.ts | head -5 | cut -c1-160", "description": "Find the game's test hooks and the river material's face culling"}`
+
+### 🧑 User — 2026-11-20T19:16:03.812Z
+
+> ↩︎ result: 272:      // tumble = rolling cartwheels seen by the camera: face the lens, roll around the view axis
+> 329:  /** 02 camera: between Benny and the drum's back wall, looking past him to the door ring */
+> 466:    // camera: the 11 composition — inside the drum, platform & towel centre, open door upper-right
+> 777:  (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+> 579:    vertexShader: VERT, fragmentShader: FRAG, side: THREE.DoubleSide, fog: false,
+> 1053:    const heap = (s: number, side: number) => {
+> 1153:      clone.traverse((o) => { if ((o as THREE.Mesh).isMesh) (o as THREE.Mesh).material = new THREE.MeshBasicMaterial({ colorWrite: false, side: THREE.Doubl
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:16:12.824Z
+
+The river material is double-sided, so viewing angle isn't the cause. I'll look at the 50% frame at full size to see where along the route the water stops being drawn.
+
+### 🤖 Claude — 2026-11-20T19:16:13.168Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s06/d1_new/f_mid50.png"}`
+
+### 🧑 User — 2026-11-20T19:16:13.223Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T19:16:25.547Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"L\\.s1\\|DEEP\" src/world/match06.ts | head -20 | cut -c1-200; grep -n \"const grid = \\|sList\" src/world/match06.ts | head -8 | cut -c1-160", "description": "Find every use of the stage-end value in the Screen 06 scenery code"}`
+
+### 🧑 User — 2026-11-20T19:16:25.609Z
+
+> ↩︎ result: 501:  const DEEP = typeof location !== 'undefined' && new URLSearchParams(location.search).get('m06deep') === '1';
+> 502:  if (DEEP) L.s1 = course.stage('07').s0 + ((L as unknown as { sAhead07?: number }).sAhead07 ?? 34);
+> 592:  const f1 = course.sample(L.s1);
+> 595:    if (s <= L.s1) { const f = course.sample(s); return { pos: f.pos.clone(), up: f.up.clone(), right: f.right.clone() }; }
+> 596:    return { pos: P1.clone().addScaledVector(T1, s - L.s1), up: U1.clone(), right: R1.clone() };
+> 599:  for (let s = L.s0; s < L.s1; s += 0.5) sList.push(s);
+> 600:  for (let s = L.s1; s <= L.s1 + L.ext + 1e-6; s += 2) sList.push(s);
+> 652:    const O = DEEP ? new THREE.Vector3().fromArray(route06deep.O) : C.clone().add(cen).addScaledVector(Ux, Number.isFinite(hq) && qs?.get('m06tunh') ? hq : 3);
+> 653:    const a0 = course.sample(L.s0).pos.sub(O).dot(ax) - 6, a1 = (DEEP ? route06deep.tunnel_pin.P1a : P1.clone().sub(O).dot(ax)) + L.ext;
+> 654:    const kS = DEEP ? route06deep.tunnel_pin.kS : L.s1 - P1.clone().sub(O).dot(ax); // tile phase: same ring positions as the old tube's straight part
+> 881:    const half = GEO && R6 ? R6.Wb : Math.min(L.Lfloor, course.widthAt(Math.min(s, L.s1)) / 2 + 1.0);
+> 1057:    for  …[+714 chars]
+
+### 🤖 Claude — 2026-11-20T19:16:27.431Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 852,866p src/world/match06.ts | cut -c1-220", "description": "Read the code that trims the river floor's length"}`
+
+### 🧑 User — 2026-11-20T19:16:27.495Z
+
+> ↩︎ result: }
+>         const pm = mat(tTube);
+>         Object.assign(pm.uniforms, { uRing: { value: 1 }, uRingH: { value: h }, uUseMask: { value: 0 }, uAxO: { value: O.clone() },
+>           uAxD: { value: ax.clone() }, uAxR: { value: Rx.clone() }, uAxU: { value: Ux.clone() } });
+>         add(mergeGeometries(pads), pm, 'paddles');
+>       }
+>     }
+>     // the river floor's straight 260 u extension ran into the painted vanishing point (it hid the glowing end from the
+>     // projector -> flat disc); in the straight tunnel the river ends 20 u after the 06 stage
+>     while (sList.length && sList[sList.length - 1] > sE + 20) sList.pop();
+>   } else add(grid(RAD, (_s, j, fr) => {
+>     const th = (j / RAD) * Math.PI * 2;
+>     let lx = L.R * Math.cos(th);
+>     const ly = L.hA + L.R * Math.sin(th);
+>     if (GEO && R6) {
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:16:32.656Z
+
+Found it: one more line trims the river floor to 20 units past the OLD end of the stage. Under the switch it must use the new 07 entrance:
+
+### 🤖 Claude — 2026-11-20T19:16:34.816Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='src/world/match06.ts'; t=open(p).read()\nold=\"    const sA = L.s0 + 12, sE = L.s0 + 12 + 44; // approved checkpoint .. end of the 06 stage\"\nassert old in t\nt=t.replace(old,\"    const sA = L.s0 + 12, sE = DEEP ? course.stage('07').s0 : L.s0 + 12 + 44; // approved checkpoint .. end of the 06 stage (r29 m06deep: the new 07 entrance)\",1)\nopen(p,'w').write(t)\nEOF\nnpx tsc --noEmit 2>&1 | head -5; echo tsc-done", "description": "Extend the river floor to the new 07 entrance under the switch", "timeout": 300000}`
+
+### 🧑 User — 2026-11-20T19:16:38.716Z
+
+> ↩︎ result: tsc-done
+> Shell cwd was reset to /home/user/rainbow-
+
