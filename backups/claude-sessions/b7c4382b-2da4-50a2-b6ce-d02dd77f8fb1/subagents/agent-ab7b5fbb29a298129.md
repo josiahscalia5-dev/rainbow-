@@ -494,3 +494,79 @@ Both done. Pixel check of the regression render against the step-2 pictures.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-20T10:48:03.948Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"uRiv:\" src/world/match04m4.ts | head -3; grep -n \"uRiv\\b.*load\\|rivTex\\|river.*\\.png\\|\\.webp'\" src/world/match04m4.ts | head -10", "description": "Find the river tile texture source"}`
+
+### 🧑 User — 2026-11-20T10:48:04.027Z
+
+> ↩︎ result: 1797:        uRiv: { value: riv }, uRivA: { value: new THREE.Vector4(4, 1.7572621, 4.6517529, M04.num('m04rk', 1.0)) }, uTime: time,
+> 1784:    const riv = new THREE.TextureLoader().load(new URL('../../assets/textures/match04/tile_river3.png', import.meta.url).href, (t) => { t.needsUpdate = true; });
+
+### 🤖 Claude — 2026-11-20T10:48:07.407Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -I -c \"\nfrom PIL import Image\nim=Image.open('src/assets/textures/match04/tile_river3.png'); print(im.size, im.mode)\nim.convert('RGB').save('/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04/tile_river3_view.png')\"", "description": "Inspect the river tile texture size"}`
+
+### 🧑 User — 2026-11-20T10:48:07.533Z
+
+> ↩︎ result: Exit code 1
+> Traceback (most recent call last):
+>   File "<string>", line 3, in <module>
+>     im=Image.open('src/assets/textures/match04/tile_river3.png'); print(im.size, im.mode)
+>   File "/usr/local/lib/python3.13/site-packages/PIL/Image.py", line 3656, in open
+>     fp = builtins.open(filename, "rb")
+> FileNotFoundError: [Errno 2] No such file or directory: 'src/assets/textures/match04/tile_river3.png'
+
+### 🤖 Claude — 2026-11-20T10:48:10.037Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && find . -name \"tile_river3*\" -not -path \"./node_modules/*\" | head; ", "description": "Locate the river tile file"}`
+
+### 🧑 User — 2026-11-20T10:48:10.206Z
+
+> ↩︎ result: ./assets/textures/match04/tile_river3.png
+
+### 🤖 Claude — 2026-11-20T10:48:14.728Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -I -c \"\nfrom PIL import Image\nim=Image.open('assets/textures/match04/tile_river3.png'); print(im.size, im.mode)\nim.convert('RGB').resize((im.size[0]//2, im.size[1]//2)).save('/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04/tile_river3_view.png')\"", "description": "Make a viewable copy of the river tile"}`
+
+### 🧑 User — 2026-11-20T10:48:14.999Z
+
+> ↩︎ result: (640, 516) RGB
+
+### 🤖 Claude — 2026-11-20T10:48:17.544Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04/tile_river3_view.png"}`
+
+### 🧑 User — 2026-11-20T10:48:17.562Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T10:48:39.701Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"uniform vec4 uLG2;\\|float mw = vS\\|float on = step(0.42\\|      laneC = mix(laneC, base, uLG.x);\\|uLG2: { value\" src/world/match04m4.ts", "description": "Locate lines to extend in step-3 code"}`
+
+### 🧑 User — 2026-11-20T10:48:39.760Z
+
+> ↩︎ result: 773:uniform vec4 uLG2;           // r23 m04lgs: x streak segment length (u), y meander (u), z base smoothing (mip), w far fade
+> 895:      float mw = vS + uLG2.y * (vn(vec2(fl * 0.07, 1.0)) - 0.5) + 0.5 * uLG2.y * sin(fl * 0.31 + vS * 0.9);
+> 898:      float on = step(0.42, h21(vec2(id, si)));
+> 906:      laneC = mix(laneC, base, uLG.x);
+> 1808:        uLG2: { value: new THREE.Vector4(M04.num('m04lgl2', 3.5), M04.num('m04lgm', 0.5), M04.num('m04lgb', 5.0), M04.num('m04lgf', 0.6)) },
+
+### 🤖 Claude — 2026-11-20T10:48:54.936Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -I - <<'EOF'\np = '/home/user/wt/s04/src/world/match04m4.ts'\ns = open(p).read()\ndef rep(old, new):\n    global s\n    assert s.count(old) == 1, old\n    s = s.replace(old, new)\nrep(\"uniform vec4 uLG2;           // r23 m04lgs: x streak segment length (u), y meander (u), z base smoothing (mip), w far fade\\n\",\n    \"uniform vec4 uLG2;           // r23 m04lgs: x streak segment length (u), y meander (u), z base smoothing (mip), w far fade\\n\"\n    \"uniform vec4 uLG3;           // r24 m04lgs: x swirl follow (u per tile brightness), y its smoothin …[+2631 chars]`
+
+### 🧑 User — 2026-11-20T10:49:05.797Z
+
+> ↩︎ result: ok
+> tsc_exit=0
+
+### 🤖 Claude — 2026-11-20T10:49:08.120Z
+
+Typecheck passes. Three variants in parallel at early and middle.
+
+### 🤖 Claude — 2026-11-20T10:49:14.281Z
+
+> 🔧 **Bash** `{"command": "uptime; S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04; T=/home/user/rainbow-/qa/match/04/r23/s04_tools; Q2=/home/user/rainbow-/qa/match/04/r23/s2_edge/QUERY_K23-S2.txt; SH='[[\"b_early\",0.12,null],[\"c_middle\",0.35,null]]'\n( BASE=$Q2 SHOTS=$SH bash $T/variant.sh $S/V2 5273 \"m04lgs=1&m04lgn=4&m04lgt=0.06&m04lgl2=1.6&m04lgm=0.6&m04lgw=2.5&m04lgwb=3&m04lgb=3&m04lgk=0.8&m04lgsp=0.9\" > $S/V2.out 2>&1 ) &\n( BASE=$Q2 SHOTS=$SH bash $T/variant.sh $S/V3 5274 \"m04lgs=1&m04lgn=4&m04lgt=0.06&m04lgl2=1.6&m04lgm=0.6&m04lgw=5&m04lgwb=3&m04lgb=3&m0 …[+692 chars]`
+

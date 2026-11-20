@@ -1435,3 +1435,206 @@ All 124 large files (653 MB, including 17 Marble / World Labs files) are confirm
 
 > 🔧 **Bash** `{"command": "timeout 300 python3 scripts/rainbow-autosave.py --reason manual:r24-lfs-check-fix 2>&1 | grep -E '\"commit\"|pushed|error' | head -3; python3 -I scripts/autosave-status.py; echo \"remote: $(git ls-remote origin refs/heads/ccr-5be1062a-0ffyej | cut -f1)\"; echo \"local:  $(git rev-parse HEAD)\"; git lfs ls-files | wc -l; git lfs fsck 2>&1 | tail -1", "description": "Save, then verify remote SHA equals local HEAD and LFS", "timeout": 400000}`
 
+### 🧑 User — 2026-11-20T10:48:22.685Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "01a69b241dc58c9ba05a9c9cc9a8f872d98952cb",
+> AUTOSAVE OK | branch ccr-5be1062a-0ffyej | scheduler daemon | last verified backup 2026-11-20T10:48:02+00:00 (0.3 min ago) | local 01a69b2 remote 01a69b2 (match) | uncommitted 0
+> remote: 01a69b241dc58c9ba05a9c9cc9a8f872d98952cb
+> local:  01a69b241dc58c9ba05a9c9cc9a8f872d98952cb
+> 124
+> Git LFS fsck OK
+
+### 🤖 Claude — 2026-11-20T10:48:26.270Z
+
+The fix render has finished. I'll compare the current ripple with the fix at the three opening moments.
+
+### 🤖 Claude — 2026-11-20T10:48:31.201Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r24/lead_rip && cat /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/tasks/btkh4swgv.output; grep -i \"m06rip\\|error\" RIPZ.log | head -5; S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad; python3 -c \"\nfrom PIL import Image\nW,H=864,1536; w,h=W//3,H//3\nsheet=Image.new('RGB',(w*6,h*2))\nfor r,(va,vb) in enumerate([('RIP','RIPZ'),('V2','NORIP')]):\n  for i,shot in enumerate(['o1_003','o2_007','o3_012']):\n    for k,v in enumerate((va,vb)):\n      sheet.paste(Image.open(f'{v}/{shot}.png'). …[+378 chars]`
+
+### 🧑 User — 2026-11-20T10:48:34.321Z
+
+> ↩︎ result: RIPZ exit 0 3 png
+> 
+> [exited with code 0]
+> o1_003 RIP vs RIPZ 6.3751 %
+> o2_007 RIP vs RIPZ 1.6767 %
+> o3_012 RIP vs RIPZ 0 %
+
+### 🤖 Claude — 2026-11-20T10:48:37.624Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/rip_vs_ripz.png"}`
+
+### 🧑 User — 2026-11-20T10:48:37.818Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T10:48:59.104Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad; python3 -c \"\nfrom PIL import Image\nbox=(120,640,744,1400)\nims=[Image.open('/home/user/rainbow-/references/06_crest_the_rinse_arch.png').convert('RGB').crop((80,700,784,1460))]\nims+=[Image.open(f'{v}/o1_003.png').convert('RGB').crop(box) for v in ['NORIP','RIP','RIPZ']]\nw=ims[1].size[0]//2; h=ims[1].size[1]//2\nsheet=Image.new('RGB',(w*4,h))\nfor i,im in enumerate(ims): sheet.paste(im.resize((w,h)),(i*w,0))\nsheet.save('$S/crop_o1.png')\n\"", "description": "Crop the water under Benny for app …[+26 chars]`
+
+### 🧑 User — 2026-11-20T10:48:59.927Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T10:49:03.008Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/crop_o1.png"}`
+
+### 🧑 User — 2026-11-20T10:49:03.062Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T10:49:14.647Z
+
+> 🔧 **Bash** `{"command": "node /home/user/rainbow-/tools/lead23/setq.mjs \"$(cat QUERY_RIPZ.txt)\" \"m06view=0&m06vs=1\" > QUERY_NOVIEW_RIPZ.txt && cat QUERY_NOVIEW.txt QUERY_NOVIEW_RIPZ.txt && grep -n \"'m06vs'\\|m06vs\" /home/user/wt/lead06/src/world/match06.ts /home/user/wt/lead06/src/game/*.ts | head -5", "description": "Prepare default-camera variants"}`
+
+### 🧑 User — 2026-11-20T10:49:14.872Z
+
+> ↩︎ result: match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1&m06st=1&m06fcl=1&m06view=0&m06vs=1&m06rip=0match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1&m06st=1&m06fcl=1&m06view=0&m06vs=1&m06rip=1&m06ripz=1/home/user/wt/lead06/src/game/cameraRig.ts:30:/** `&m06vs=` share of the approved Benny→route screen separation kept over the crest (default 1; 0 = no rise) */
+> /home/user/wt/lead06/src/game/cameraRig.ts:31:const M06_VS = m06num('m06vs', 1, [1])[0];
+
+### 🤖 Claude — 2026-11-20T10:49:18.549Z
+
+> 🔧 **Bash** `{"command": "bash /home/user/rainbow-/qa/match/06/r24/lead_rip/render_lead06.sh NOVIEW NOVIEW_RIPZ", "description": "Render default-camera opening shots with and without the fix", "timeout": 3600000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T10:49:18.612Z
+
+> ↩︎ result: Command running in background with ID: bs76joc96. Output is being written to: /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/tasks/bs76joc96.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-20T10:49:25.717Z
+
+While that renders, I'll check for a debug switch that shows which surfaces still carry the projected painting.
+
+### 🤖 Claude — 2026-11-20T10:49:26.642Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/lead06 && grep -n \"uStDbg\\|m06dbg\\|stdbg\" src/world/match06.ts | head -8; grep -n \"uDbg\" src/world/match06.ts | head -5", "description": "Look for projection debug switches"}`
+
+### 🧑 User — 2026-11-20T10:49:26.869Z
+
+> ↩︎ result: 114:uniform float uStDbg;
+> 351:      if (uStDbg > 0.5) t = vec3(dbgZ * filled, (1.0 - dbgZ) * dbgB * filled, uFloor * 0.5 + 0.5 * (1.0 - vis));
+> 485:    uStDbg: { value: 0 },
+> 527:  shared.uStDbg.value = qs?.get('m06stdbg') === '1' ? 1 : 0; // QA only: red = crest layer, green = its weight, blue = floor
+> 985:  // QA only: `&m06dbg=1` tints the tube green and the river floor red (which proxy surface a pixel comes from)
+> 986:  if (typeof location !== 'undefined' && new URLSearchParams(location.search).get('m06dbg') === '1') {
+> 79:uniform vec3 uDbg;
+> 370:  if (uDbg.x + uDbg.y + uDbg.z > 0.0) gl_FragColor.rgb = mix(gl_FragColor.rgb, uDbg, 0.45);
+> 530:    uniforms: { ...shared, uTile: { value: tile }, uDbg: { value: new THREE.Vector3() }, uMask: { value: mask },
+> 988:      const u = ((o as THREE.Mesh).material as THREE.ShaderMaterial)?.uniforms?.uDbg;
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T10:49:33.247Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r24/lead_rip && node /home/user/rainbow-/tools/lead23/setq.mjs \"$(cat QUERY_RIPZ.txt)\" \"m06dbg=1\" > QUERY_DBG.txt && sleep 1 && cat /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/tasks/bs76joc96.output; uptime", "description": "Prepare a surface-debug variant and check progress"}`
+
+### 🧑 User — 2026-11-20T10:49:34.612Z
+
+> ↩︎ result: 10:49:34 up 28 min,  0 user,  load average: 20.85, 12.39, 5.68
+
+### 🤖 Claude — 2026-11-20T10:49:38.743Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/lead06 && O=/home/user/rainbow-/qa/match/06/r24/lead_rip && AUDIT_PORT=5294 AUDIT_PIN=1000 AUDIT_SHOTS='[[\"o1_003\",0.03,null],[\"o2_007\",0.07,null]]' timeout 1500 node /home/user/rainbow-/tools/lead23/audit06_slow.mjs \"$O/DBG\" 06 \"$(cat $O/QUERY_DBG.txt)\" > \"$O/DBG.log\" 2>&1; echo \"exit $? $(ls $O/DBG/*.png | wc -l)\"", "description": "Render surface-debug shots at the opening", "timeout": 3600000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T10:49:38.997Z
+
+> ↩︎ result: Command running in background with ID: bwfvlbcig. Output is being written to: /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/tasks/bwfvlbcig.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-/qa/match/06/r24/lead_rip; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-20T10:49:52.396Z
+
+RAINBOW 3D BACKUP VERIFIED
+
+- **GitHub branch:** `ccr-5be1062a-0ffyej`. This session started from your Round 23 branch `claude/rainbow-r22-restore-ut3m39`, and its final 10:25 save `a735ec7` is merged in.
+- **Commit:** `01a69b241dc58c9ba05a9c9cc9a8f872d98952cb`. `git ls-remote` on GitHub shows the same commit.
+- **Large files (Git LFS):** 124/124 real files locally, `git lfs fsck` OK, all 124 confirmed on GitHub LFS (653 MB, 17 Marble / World Labs files).
+- **Specialists:** all 10 definitions present and unchanged. Four are running again: Screen 07, Screen 04, Screen 08 polish and Benny. Screen 06 finished its steps in Round 23 and Screen 05 is queued; both worktrees are restored.
+- **Marble World Labs:** API key works (5,420 credits), the Atlas connector works (project "My project", credits available), and the plugin is installed. No paid job was started.
+- **Other services:** Hugging Face connected (`josdois`), fal key works, GitHub connected (`josiahscalia5-dev`). Blender 5.3.0, Android SDK 34, Playwright + Chromium and the Playwright MCP are ready.
+- **Five-minute autosave:** running, last save verified.
+- **Two failures at session start, both fixed:**
+  - The first GitHub fetch failed on a network hiccup; I fetched and merged by hand.
+  - The GitHub LFS check failed with "request too large": the file count passed GitHub's limit of 100 per request. The check now sends batches.
+- **Needs you:** Context7 needs a sign-in in your claude.ai connector settings; it is unavailable until then. The Round 23 background agents could not move between accounts, so I restarted them from their saved notes and unfinished edits.
+- **Backup gap:** the previous session ended without an end-of-session save, because its account hit the usage limit at 10:19 UTC. Its last automatic save (10:25) holds everything.
+
+**Screen 06 so far:** the "raised blue cone" under Benny at the opening is not caused by the new ripple effect. It is still there with the ripple switched off. I'm narrowing down which surface creates it, and a test render is running now.
+
+### 🤖 Claude — 2026-11-20T10:49:52.820Z
+
+> 🔧 **TaskUpdate** `{"taskId": "6", "status": "completed"}`
+
+### 🧑 User — 2026-11-20T10:49:52.941Z
+
+> ↩︎ result: Updated task #6 status
+
+### 🤖 Claude — 2026-11-20T10:49:57.220Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && grep -n \"SendUserFile\" backups/claude-sessions/1dee9937-64f8-543d-ae44-7cf9955b39b3/transcript.md | grep -i \"06\" | head -5", "description": "Find which Screen 06 clip the user saw"}`
+
+### 🧑 User — 2026-11-20T10:49:57.670Z
+
+> ↩︎ result: 2988:> 🔧 **SendUserFile** `{"files": ["references/06_crest_the_rinse_arch.png", "qa/match/06/r23/step1_m06fcl/BEFORE/b_early.png", "qa/match/06/r23/step3_m06rip/NEW/b_early.png", "qa/match/06/r23/step1_m06fcl/swim_06_BEFORE.mp4", "qa/match/06/r23/step3_m06rip/swim_06_NEW.mp4"], "caption": "Screen 06, early in the swim: ORIGINAL APPROVED | BEFORE | NEW (lower foam heaps, tunnel held off-centre as a framing test, ripple ring round Benny), then BEFORE and NEW clips, each 4.8 s at REAL GAME SPEED through all of 06 into 07. NOT YET close: the S-river and curving coin trail are still missing.", "status": "normal"}`
+
+### 🤖 Claude — 2026-11-20T10:50:03.360Z
+
+You saw the step-3 clip `swim_06_NEW.mp4` plus the 12% picture. I'll pull its opening frames, beside the same moments from the matching clip without the ripple.
+
+### 🤖 Claude — 2026-11-20T10:50:06.794Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r23 && S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s06clip && mkdir -p $S && for c in step3_m06rip/swim_06_NEW.mp4 step2_m06vs0/swim_06_NEW.mp4; do n=$(echo $c | cut -d/ -f1); ffprobe -v error -show_entries stream=width,height,r_frame_rate,nb_frames -of csv=p=0 $c; ffmpeg -v error -y -i $c -vf \"select='lt(t\\,1.2)',fps=5,scale=288:-1,tile=6x1\" -frames:v 1 $S/${n}_open.png; done; ls $S", "description": "Extract opening frames from the Screen 06 clips"}`
+
+### 🧑 User — 2026-11-20T10:50:08.913Z
+
+> ↩︎ result: 432,768,24/1,115
+> 432,768,24/1,115
+> step2_m06vs0_open.png
+> step3_m06rip_open.png
+
+### 🤖 Claude — 2026-11-20T10:50:13.462Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s06clip && python3 -c \"\nfrom PIL import Image\na=Image.open('$S/step2_m06vs0_open.png');b=Image.open('$S/step3_m06rip_open.png')\ns=Image.new('RGB',(a.width,a.height+b.height));s.paste(a,(0,0));s.paste(b,(0,a.height));s.save('$S/open_both.png');print(s.size)\"", "description": "Stack the two opening frame strips"}`
+
+### 🧑 User — 2026-11-20T10:50:15.042Z
+
+> ↩︎ result: (1728, 1024)
+
+### 🤖 Claude — 2026-11-20T10:50:18.445Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s06clip/open_both.png"}`
+
+### 🧑 User — 2026-11-20T10:50:18.733Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T10:50:42.103Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/tasks/bs76joc96.output /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/tasks/bwfvlbcig.output; uptime", "description": "Check render progress"}`
+
+### 🧑 User — 2026-11-20T10:50:42.500Z
+
+> ↩︎ result: 10:50:42 up 29 min,  0 user,  load average: 31.28, 17.18, 7.79
+
+### 🤖 Claude — 2026-11-20T10:50:53.875Z
+
+Your Screen 07 note is in hand and the specialist is working on it. Nothing is ready for you to review yet.
+
+- **Restored:** this session is on GitHub branch `ccr-5be1062a-0ffyej` and includes the last save from 10:25. All the services you named work: World Labs key (5,420 credits) and the Atlas connector, Hugging Face, fal, GitHub, Blender, Android and Playwright. The only one that doesn't is Context7, which needs a sign-in in your claude.ai connector settings.
+- **Specialists:** four are running again, each picking up where it stopped when the old account hit its limit at 10:19 UTC: Screen 07, Screen 04, Screen 08 polish and Benny. Screens 05 and 06 are set up and waiting.
+- **Screen 07:** the specialist has your three priorities word for word:
+  - the whole river in broad S-bends;
+  - the river ahead stays visible while steering at 2.5–3.5 s;
+  - a clean water join at 7.25–8 s.
+
+  The fuller foam stays. The last clip's settings left out all the Screen 08 settings, so its exit showed the old default Screen 08. From now on every Screen 07 clip uses the latest Screen 08: your preferred coins, all the kept scenery work, and the newest kept glint fix (not yet approved by you). When the fixes are done you'll get the same labelled clip, at real speed and half speed, with a "before" rendered the same way so the comparison is fair.
+- **Screen 06 ripple (still outstanding):** the raised blue cone at the opening is not caused by the new ripple. It is still there with the ripple switched off. Three things add up to it:
+  - a copy of the painted rings left pinned behind Benny;
+  - a bright patch with hard edges;
+  - the streaked water climbing the crest.
+
+  My first test fix removes the left-behind rings, but the cone shape remains, so it isn't solved yet. Test renders are running. Your crest, winding river and coin trail items stay on the active list.
+
+I'll report as each specialist and render finishes.
+

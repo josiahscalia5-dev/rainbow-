@@ -39,6 +39,32 @@ index f8a0a2b..79c2250 100644
      const fb = course.sample(bS);
      bv.copy(fb.pos).addScaledVector(fb.right, bLat).addScaledVector(fb.up, BENNY_UP);
      const bd = bv.distanceTo(cam.position);
+diff --git a/src/world/match08.ts b/src/world/match08.ts
+index 6caff70..f421eeb 100644
+--- a/src/world/match08.ts
++++ b/src/world/match08.ts
+@@ -176,7 +176,10 @@ void main() {
+   if (uClipIn.w > 0.5 && (distance(vW.xy, uClipIn.xy) < uClipIn.z || distance(vW.xy, uClipOut.xy) > uClipOut.z)) discard;
+   // m08towelm: the towel proxy is cut to the painted towel's outline (the depth bake does the same, so the door wall
+   // behind receives the window pixels that the rectangle used to carry at towel depth)
+-  if (uTMaskOn > 0.5 && vProj.w > 0.0 && texture2D(uTMask, vProj.xy / vProj.w * 0.5 + 0.5).r < 0.5) discard;
++  // m08towelv (uTMaskOn 2): the cut only once the camera has left the approved viewpoint (> 0.2 u, as m08fill), so the
++  // approved start view keeps its exact pixels (the cut edge there left a few magenta wall specks on the towel's top edge)
++  if (uTMaskOn > 0.5 && vProj.w > 0.0 && (uTMaskOn < 1.5 || distance(cameraPosition, uProjPos) > 0.2)
++      && texture2D(uTMask, vProj.xy / vProj.w * 0.5 + 0.5).r < 0.5) discard;
+   // m08fill fades in as the camera leaves the approved viewpoint (the approved view keeps its exact old pixels)
+   vec3 pc = patchColor();
+   if (uFillMode > 0.5) pc = mix(pc, fillColor(), smoothstep(0.2, 1.5, distance(cameraPosition, uProjPos)));
+@@ -473,7 +476,8 @@ export async function buildMatch08(): Promise<Match08> {
+   // patch scale: wall slots ≈ 2.4 u per patch, gold band ≈ 1.2 u, towel ≈ 1 u
+   const M = { wall: mat('#c25bd0', pWall, 1 / 2.4), drum: mat('#c25bd0', pWall, 1 / 2.4, 1), disc: mat('#c25bd0', pWall, 1 / 2.4, 2), floor: mat('#9c55c8', pWall, 1 / 2.4, 0, 1), gold: mat('#e8a24a', pGold, 1 / 1.2), plat: mat('#b78ad6', pWall, 1 / 2.4), towel: mat('#6c3bc4', pTowel, 1 / 1.0) };
+ 
+-  if (tMaskTex) M.towel.uniforms.uTMaskOn.value = 1;
++  // `&m08towelv=1` (r24, with m08towelm): the towel cut only away from the approved viewpoint (start view unchanged)
++  if (tMaskTex) M.towel.uniforms.uTMaskOn.value = flag05('m08towelv') ? 2 : 1;
+   // `&m08sr=1` (r15, floor, with m08swim): smooth river table + rounded remap corners (FRAG riv / swimRemap / m08nq)
+   if (swimOn && flag05('m08sr')) M.floor.uniforms.uSr.value = 1;
+   if (nearTex && NJ) {
 diff --git a/tools/match08/shots08.mjs b/tools/match08/shots08.mjs
 index 2e9b53e..ab744d9 100644
 --- a/tools/match08/shots08.mjs

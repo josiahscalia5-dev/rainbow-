@@ -537,3 +537,74 @@ Measured star colour (median RGB / hue) inside Benny's box. Some shots picked up
 >     mat.normalMap = FELT ? maps['star_felt_n.png'] : maps['star_n.png'];
 >     mat.normalScale.setScalar(FELT ? n('sfn …[+3652 chars]
 
+### 🤖 Claude — 2026-11-20T10:48:16.374Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && grep -n \"^const lin\\|^function lin\\|const n = \\|function n(\" src/characters/benny/benny20.ts; sed -n \"$(grep -n 'const lin\\|function lin' src/characters/benny/benny20.ts | head -1 | cut -d: -f1),+8p\" src/characters/benny/benny20.ts", "description": "Check how URL overrides are parsed"}`
+
+### 🧑 User — 2026-11-20T10:48:16.490Z
+
+> ↩︎ result: 27:function n(key: string, def: number): number {
+> 32:function lin(key: string, def: [number, number, number]): [number, number, number] {
+> function lin(key: string, def: [number, number, number]): [number, number, number] {
+>   const v = (QS?.get(`b20${key}`) ?? '').split(',').map(Number);
+>   return v.length === 3 && v.every(Number.isFinite) ? (v as [number, number, number]) : def;
+> }
+> 
+> /** shell-fur overrides (merged over the GLB's userData.fur and benny05's FUR05) */
+> export const FUR20: Record<string, Partial<FurParams>> = {
+>   fur_body: { shells: n('bsh', 24), length: n('blen', 0.075), gravity: n('bgr', 0.05) },
+>   fur_armL: { shells: n('ash', 16), length: n('alen', 0.07), gravity: n('agr', 0.1) },
+
+### 🤖 Claude — 2026-11-20T10:48:23.878Z
+
+> 🔧 **Bash** `{"command": "uptime; cd /home/user/wt/benny && S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/k; Q=$(cat /home/user/rainbow-/qa/benny/r23/s3_star/QUERY_NEW_06.txt); echo \"$Q\"; export AUDIT_SHOTS='[[\"a_start\",0,null],[\"c_middle\",0.35,null],[\"f_hard_left\",0.35,-1]]'; run(){ AUDIT_PORT=$2 timeout 900 node tools/benny23/shots_c.mjs $S/sx_$1 06 \"$Q&b20sx06=$3\" > $S/sxlog_$1.txt 2>&1; python3 -I tools/benny23/crop_c.py $S/sx_$1; }; time (run A 5279 0.95,1.7,0.8 & run B 5284 1.0,1.5,0.72 & wait); tail -3 $S/sxlog_A.txt $S/sxlog_B.txt", "description": "Re …[+56 chars]`
+
+### 🧑 User — 2026-11-20T10:50:06.722Z
+
+> ↩︎ result: Exit code 1
+>  10:48:23 up 27 min,  0 user,  load average: 14.35, 9.85, 4.42
+> match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1&benny20=1&b20expo=1&b20ppw=0.45&b20tuft=1&b20knit=1&b20star=1
+> 
+> real	1m42.774s
+> user	0m4.505s
+> sys	0m0.989s
+> tail: option used in invalid context -- 3
+
+### 🤖 Claude — 2026-11-20T10:50:12.644Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/k; for f in $S/sxlog_A.txt $S/sxlog_B.txt; do echo \"== $f\"; tail -n 5 $f; done; ls $S/sx_A $S/sx_B", "description": "Show probe render logs and outputs"}`
+
+### 🧑 User — 2026-11-20T10:50:12.788Z
+
+> ↩︎ result: == /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/k/sxlog_A.txt
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff" is outside of Vite serving allow list.
+> 06 a_start s 198.924 lat 0 stage 06 coins 1680
+> 06 c_middle s 215.791 lat 0 stage 06 coins 1730
+> 06 f_hard_left s 215.791 lat -2.95 stage 06 coins 1690
+> == /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/k/sxlog_B.txt
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff" is outside of Vite serving allow list.
+> 06 a_start s 198.924 lat 0 stage 06 coins 1680
+> 06 c_middle s 215.791 lat 0 stage 06 coins 1730
+> 06 f_hard_left s 215.791 lat -2.95 stage 06 coins 1690
+> /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/k/sx_A:
+> a_start.png
+> a_start_crop.png …[+278 chars]
+
+### 🤖 Claude — 2026-11-20T10:50:17.783Z
+
+Both variants rendered (the font warnings are only the HUD font through the shared `node_modules` link; Benny is unaffected). Measuring the star.
+
+### 🤖 Claude — 2026-11-20T10:50:23.118Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/k; P=/home/user/rainbow-/qa/benny/r23/s3_star; grep -o '\"lat\": [-0-9.]*' $P/06/new/shots.json | tr '\\n' ' '; echo; for v in A B; do for sh in a_start c_middle; do echo -n \"$v $sh  \"; python3 -I $S/starbox.py $S/sx_$v $sh $S/z/sx${v}_$sh.png | tail -1; done; done; python3 -I -c \"\nfrom PIL import Image\no=Image.new('RGB',(4*364,3*364),'white')\nP='$P'; S='$S'\npos={'a_start':None,'c_middle':None,'f_hard_left':(506,324)}\nfor r,sh in enumerate(['a_start','c_middle','f_hard_left']):\n    srcs=[P …[+639 chars]`
+
+### 🧑 User — 2026-11-20T10:50:52.377Z
+
+> ↩︎ result: "lat": 0 "lat": 0 "lat": -2.95 
+> A a_start  cx 555 cy 1204 area 4165 vr 0.6 median [255, 206, 43] p10 [231, 162, 8] p90 [255, 240, 95] hue 46.6
+> A c_middle  cx 417 cy 832 area 1413 vr 0.34 median [255, 255, 54] p10 [237, 180, 24] p90 [255, 255, 78] hue 60.0
+> B a_start  cx 554 cy 1203 area 3996 vr 0.57 median [255, 192, 40] p10 [242, 153, 5] p90 [255, 221, 89] hue 42.3
+> B c_middle  cx 417 cy 831 area 1887 vr 0.42 median [255, 255, 60] p10 [248, 181, 28] p90 [255, 255, 97] hue 60.0
+
