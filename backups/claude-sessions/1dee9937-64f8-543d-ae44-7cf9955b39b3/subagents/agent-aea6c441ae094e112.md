@@ -519,3 +519,186 @@ I'll add a calibration to the probe: screen y of points above Benny's root, to s
 > c_middle {'world': [2, -28.461, -36.032], 'screenRoot': [412, 1145], 'boxMin': [251, 906], 'boxMax': [573, 1268], 'hY': [[1.2, 1016], [1.4, 992], [1.6, 967], [1.8, 942], [2, 916], [2.2, 888], [2.4, 860]], 'rootPos': [2, -28.461, -36.032], 'parent': ''}
 > e_end {'world': [2, -38.141, -51.953], 'screenRoot': [415, 993], 'boxMin': [271, 785], 'boxMax': [558, 1100], 'hY': [[1.2, 881], [1.4, 860], [1.6, 839], [1.8, 817], [2, 794], [2.2, 771], [2.4, 746]], 'rootPos': [2, -38.141, -51.953], 'parent': ''}
 
+### 🤖 Claude — 2026-11-20T04:45:03.124Z
+
+Pompom top is at ~2.1 u above Benny's root (c_middle y~902, e_end ~783). Now a small sweep runner to test chevron variants on several shots in parallel ports.
+
+### 🤖 Claude — 2026-11-20T04:45:09.993Z
+
+> 🔧 **Bash** `{"command": "cat > /home/user/rainbow-/qa/match/04/r23/s04_tools/variant.sh <<'EOF'\n#!/usr/bin/env bash\n# r23 s04 (QA only): render one variant = K23-1 (or $BASE file) with overrides replaced IN PLACE, pinned clock.\n# usage: variant.sh <outdir> <port> \"<overrides a=1&b=2>\"   (env SHOTS = audit shot list JSON)\nset -u\nO=$1; P=$2; X=$3; BF=${BASE:-/home/user/rainbow-/qa/match/04/r23/QUERY_K23-1.txt}\nQ=$(node /home/user/rainbow-/tools/lead23/setq.mjs \"$(cat $BF)\" \"$X\")\nmkdir -p \"$O\"; echo \"$Q\" > \"$O/QUERY.txt\"; echo \"$X\" > \"$O/OVERRIDES.txt\"\ncd /home/user/wt/s04\nAUDIT_PORT …[+861 chars]`
+
+### 🧑 User — 2026-11-20T04:46:23.355Z
+
+> ↩︎ result: ls: cannot access '/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s1/V3/*.png': No such file or directory
+> done /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s1/V3 0 png
+> ls: cannot access '/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s1/V1/*.png': No such file or directory
+> done /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s1/V1 0 png
+> ls: cannot access '/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s1/V2/*.png': No such file or directory
+> done /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s1/V2 0 png
+> 
+> real	1m13.252s
+> user	0m4.461s
+> sys	0m0.963s
+
+### 🤖 Claude — 2026-11-20T04:46:25.502Z
+
+> 🔧 **Bash** `{"command": "tail -20 /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s1/V1/audit.log", "description": "Show variant audit log error"}`
+
+### 🧑 User — 2026-11-20T04:46:25.622Z
+
+> ↩︎ result: node:internal/modules/run_main:123
+>     triggerUncaughtException(
+>     ^
+> 
+> page.screenshot: Timeout 30000ms exceeded.
+> Call log:
+> [2m  - taking page screenshot[22m
+> 
+>     at /home/user/rainbow-/qa/match/04/r22/tools/audit_pinned.mjs:43:16 {
+>   log: [ '  - taking page screenshot' ],
+>   name: 'TimeoutError'
+> }
+> 
+> Node.js v22.23.5
+
+### 🤖 Claude — 2026-11-20T04:46:27.674Z
+
+Three parallel software-GL renders overload the 4 CPUs. I'll run two at a time.
+
+### 🤖 Claude — 2026-11-20T04:46:30.330Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s1; V=/home/user/rainbow-/qa/match/04/r23/s04_tools/variant.sh\nC=\"m04a3sc=1&m04a3sy=2.1&m04a3sr=0.9&m04a3s0=-0.005&m04a3s1=0.03&m04a3sx=0.02&m04a3p=4.5&m04a3f0=42&m04a3f1=48\"\nrm -rf $S; time ( $V $S/V1 5273 \"$C\" & $V $S/V2 5274 \"$C&m04a3w=1.5\" & wait ); tail -3 $S/V1/audit.log $S/V2/audit.log", "description": "Render two chevron variants in parallel", "timeout": 1300000}`
+
+### 🧑 User — 2026-11-20T04:47:44.730Z
+
+> ↩︎ result: Exit code 1
+> ls: cannot access '/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s1/V1/*.png': No such file or directory
+> done /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s1/V1 0 png
+> ls: cannot access '/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s1/V2/*.png': No such file or directory
+> done /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s1/V2 0 png
+> 
+> real	1m14.128s
+> user	0m2.828s
+> sys	0m0.769s
+> tail: option used in invalid context -- 3
+
+### 🤖 Claude — 2026-11-20T04:47:47.500Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s1; for f in $S/V1/audit.log $S/V2/audit.log; do echo \"== $f\"; grep -v \"outside of Vite\" $f | head -20; done; ps aux | grep -E \"chrom|vite|node\" | grep -v grep | wc -l; uptime", "description": "Inspect variant audit logs and running processes"}`
+
+### 🧑 User — 2026-11-20T04:47:47.790Z
+
+> ↩︎ result: == /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s1/V1/audit.log
+> node:internal/modules/run_main:123
+>     triggerUncaughtException(
+>     ^
+> 
+> page.screenshot: Timeout 30000ms exceeded.
+> Call log:
+> [2m  - taking page screenshot[22m
+> 
+>     at /home/user/rainbow-/qa/match/04/r22/tools/audit_pinned.mjs:43:16 {
+>   log: [ '  - taking page screenshot' ],
+>   name: 'TimeoutError'
+> }
+> 
+> Node.js v22.23.5
+> == /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s1/V2/audit.log
+> node:internal/modules/run_main:123
+>     triggerUncaughtException(
+>     ^
+> 
+> page.screenshot: Timeout 30000ms exceeded.
+> Call log:
+> [2m  - taking page screenshot[22m
+> 
+>     at /home/user/rainbow-/qa/match/04/r22/tools/audit_pinned.mjs:43:16 {
+>   log: [ '  - taking page screenshot' ],
+>   name: 'TimeoutError'
+> }
+> 
+> Node.js v22.23.5
+> 59
+>  04:47:47 up 50 min,  0 user,  load average: 27.29, 16.39, 9.86
+
+### 🤖 Claude — 2026-11-20T04:47:50.215Z
+
+> 🔧 **Bash** `{"command": "ps -eo pid,pcpu,etime,args --sort=-pcpu | head -15 | cut -c1-200", "description": "Show top CPU processes"}`
+
+### 🧑 User — 2026-11-20T04:47:50.371Z
+
+> ↩︎ result: PID %CPU     ELAPSED COMMAND
+> 15253 74.2       02:53 /opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell.real --type=gpu-process --gpu-recent-crash-count=0 --no-sandbox --disable-break
+> 15264 58.0       02:53 /opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell.real --type=gpu-process --gpu-recent-crash-count=0 --no-sandbox --disable-break
+> 16253 49.7       02:32 /opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell.real --type=gpu-process --gpu-recent-crash-count=0 --no-sandbox --disable-break
+> 16333 47.4       02:32 /opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell.real --type=gpu-process --gpu-recent-crash-count=0 --no-sandbox --disable-break
+> 16544 41.8       01:27 /opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell.real --type=gpu-process --gpu-recent-crash-count=0 --no-sandbox --disable-break
+> 17007 30.8       00:13 /opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell.real --type=gpu-process --gpu-recent-crash-co …[+1526 chars]
+
+### 🤖 Claude — 2026-11-20T04:47:55.283Z
+
+> 🔧 **Bash** `{"command": "ps -eo pid,ppid,etime,args | grep -E \"audit_pinned|probe_arrows|variant.sh\" | grep -v grep | cut -c1-160; ss -ltnp 2>/dev/null | grep -E ':527[3-5]' ", "description": "Check for leftover processes from my runs"}`
+
+### 🧑 User — 2026-11-20T04:47:55.404Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T04:47:58.082Z
+
+The machine is shared with other specialists (load ~27). I'll copy the pinned audit into my tools folder with a longer screenshot timeout (QA-only change) and run variants one at a time.
+
+### 🤖 Claude — 2026-11-20T04:48:01.136Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/04/r23/s04_tools && sed -e 's#await page.screenshot({ path: `${OUT}/${name}.png` });#await page.screenshot({ path: `${OUT}/${name}.png`, timeout: 300000 });#' -e '1i // r23 s04 copy of qa/match/04/r22/tools/audit_pinned.mjs: identical except the screenshot timeout (300 s; the machine is shared).' /home/user/rainbow-/qa/match/04/r22/tools/audit_pinned.mjs > audit_pinned_slow.mjs && diff /home/user/rainbow-/qa/match/04/r22/tools/audit_pinned.mjs audit_pinned_slow.mjs; sed -i 's#/home/user/rainbow-/qa/match/04/r22/tools/audit_pinned.mjs#/home/user/rain …[+185 chars]`
+
+### 🧑 User — 2026-11-20T04:48:01.495Z
+
+> ↩︎ result: 0a1
+> > // r23 s04 copy of qa/match/04/r22/tools/audit_pinned.mjs: identical except the screenshot timeout (300 s; the machine is shared).
+> 43c44
+> <     await page.screenshot({ path: `${OUT}/${name}.png` });
+> ---
+> >     await page.screenshot({ path: `${OUT}/${name}.png`, timeout: 300000 });
+>   timeout 1200 node /home/user/rainbow-/qa/match/04/r23/s04_tools/audit_pinned_slow.mjs "$O" 04 "$Q" > "$O/audit.log" 2>&1
+
+### 🤖 Claude — 2026-11-20T04:48:05.044Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s1; V=/home/user/rainbow-/qa/match/04/r23/s04_tools/variant.sh\nC=\"m04a3sc=1&m04a3sy=2.1&m04a3sr=0.9&m04a3s0=-0.005&m04a3s1=0.03&m04a3sx=0.02&m04a3p=4.5&m04a3f0=42&m04a3f1=48\"\nrm -rf $S; time ( $V $S/V1 5273 \"$C\" & $V $S/V2 5274 \"$C&m04a3w=1.5\" & wait ); grep -v \"outside of Vite\" $S/V1/audit.log | tail -4", "description": "Render two chevron variants with tolerant screenshot timeout", "timeout": 1300000}`
+
+### 🧑 User — 2026-11-20T04:50:23.869Z
+
+> ↩︎ result: done /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s1/V2 4 png
+> done /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s1/V1 4 png
+> 
+> real	2m18.505s
+> user	0m3.496s
+> sys	0m0.954s
+> 04 b_early s 82.08 lat 0 stage 04 coins 1330
+> 04 c_middle s 90.48 lat 0 stage 04 coins 1330
+> 04 d_late s 99.813 lat 0 stage 04 coins 1330
+> 04 e_end s 109.146 lat 0 stage 04 coins 1330
+
+### 🤖 Claude — 2026-11-20T04:50:30.487Z
+
+> 🔧 **Bash** `{"command": "cat > /home/user/rainbow-/qa/match/04/r23/s04_tools/strip.py <<'EOF'\n# r23 s04 QA helper: side-by-side crops (x0,y0,x1,y1) of the same shot from several folders -> one strip (for my own eyes only)\nimport sys\nfrom PIL import Image, ImageDraw\nout, shot, box = sys.argv[1], sys.argv[2], tuple(int(v) for v in sys.argv[3].split(','))\ndirs = sys.argv[4:]\nims = []\nfor d in dirs:\n    p = d if d.endswith('.png') else f'{d}/{shot}.png'\n    ims.append(Image.open(p).convert('RGB').crop(box))\nw, h = ims[0].size\nW = Image.new('RGB', (len(ims) * (w + 8), h + 22), 'white')\ndr = ImageDr …[+558 chars]`
+
+### 🧑 User — 2026-11-20T04:50:31.781Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T04:50:34.286Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/strip_c_middle.png"}`
+
+### 🧑 User — 2026-11-20T04:50:34.560Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:50:35.040Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/strip_d_late.png"}`
+
+### 🧑 User — 2026-11-20T04:50:35.150Z
+
+> ↩︎ result: [image]
+

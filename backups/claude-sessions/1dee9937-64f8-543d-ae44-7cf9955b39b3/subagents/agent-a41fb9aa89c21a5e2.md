@@ -1120,3 +1120,375 @@ While the gameplay tests run, I'll extend the tunnel probe to also report Benny'
 > gameplay_NEW_m06view pass True 8 / 8 ['pauseFreezes', 'continuousTravel', 'noCameraCut', 'noTeleport', 'plunge', 'realCoinPickups', 'victory', 'heartsLostOnWallBump']
 > realCoinPickups {"pass": true, "startCoins": 1330, "endCoins": 2240, "collected": 91}
 
+### 🤖 Claude — 2026-11-20T04:45:02.888Z
+
+Gameplay 8/8 with 91 coins (1,330 to 2,240) for both NEW variants; continuity OK. Now the swim clips.
+
+### 🤖 Claude — 2026-11-20T04:45:07.894Z
+
+> 🔧 **Bash** `{"command": "ffprobe -v error -show_entries stream=width,height,nb_frames,r_frame_rate -of csv=p=0 /home/user/wt/s06/qa/match/06/r22/step3_m06fcl/swim_06_NEW.mp4; S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06; cat > $S/clip.sh <<'EOF'\n#!/usr/bin/env bash\n# usage: clip.sh <query file> <out mp4 (no ext)> <port> [secs]\nset -u\nQF=$1; OP=$2; P=$3; SECS=${4:-4.8}\nT=$(mktemp -d /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/clipXXXX)\ncd /home/user/wt/s06\nAUDIT_PORT=$P timeout 2400 node tools/match06/r23_swim.mjs 0 …[+337 chars]`
+
+### 🧑 User — 2026-11-20T04:45:08.010Z
+
+> ↩︎ result: 432,768,24/1,115
+> ok
+
+### 🤖 Claude — 2026-11-20T04:45:15.271Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06; sed -i 's#-pix_fmt yuv420p -crf 20#-vf scale=432:768 -pix_fmt yuv420p -crf 20#' $S/clip.sh; O=/home/user/rainbow-/qa/match/06/r23/step1_m06fcl; ($S/clip.sh $S/q_before.txt $O/swim_06_BEFORE 5276 & $S/clip.sh $S/q_new.txt $O/swim_06_NEW 5282 & wait; $S/clip.sh $S/q_new_v.txt $O/with_m06view/swim_06_NEW 5276); tail -2 $O/swim_06_*.log $O/with_m06view/swim_06_NEW.log", "description": "Record BEFORE, NEW and NEW+m06view swim clips", "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T04:45:15.579Z
+
+> ↩︎ result: Command running in background with ID: b89ood511. Output is being written to: /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/tasks/b89ood511.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-20T04:45:16.932Z
+
+Meanwhile, a look at the `m06view` pair of step 1 (middle and end).
+
+### 🤖 Claude — 2026-11-20T04:45:19.583Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06; O=/home/user/rainbow-/qa/match/06/r23/step1_m06fcl/with_m06view; A=/home/user/rainbow-/references/06_crest_the_rinse_arch.png; for f in b_early c_middle e_end; do python3 -I $S/strip.py $S/s1v_$f.png $A $O/BEFORE/$f.png $O/NEW/$f.png; done; cd /home/user/tools-pixelmatch && node pixeldiff.mjs $O/BEFORE/a_start.png $O/NEW/a_start.png - 0.1", "description": "Build m06view strips and check start view"}`
+
+### 🧑 User — 2026-11-20T04:45:23.334Z
+
+> ↩︎ result: {"a":"/home/user/rainbow-/qa/match/06/r23/step1_m06fcl/with_m06view/BEFORE/a_start.png","b":"/home/user/rainbow-/qa/match/06/r23/step1_m06fcl/with_m06view/NEW/a_start.png","rows":[0,1536],"threshold":0.1,"diff_pixels":0,"total":1327104,"diff_pct":0}
+
+### 🤖 Claude — 2026-11-20T04:45:25.920Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/s1v_c_middle.png"}`
+
+### 🧑 User — 2026-11-20T04:45:26.087Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:45:26.662Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/s1v_e_end.png"}`
+
+### 🧑 User — 2026-11-20T04:45:27.438Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:45:33.314Z
+
+With `m06view` too, NEW keeps the banks lower and drops the white wall. Writing the step 1 code.patch while the clips render.
+
+### 🤖 Claude — 2026-11-20T04:45:34.379Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && git log -S\"const FCL = qs?.get('m06fcl')\" --oneline -- src/world/match06.ts | tail -3", "description": "Find commit that introduced m06fcl"}`
+
+### 🧑 User — 2026-11-20T04:45:34.472Z
+
+> ↩︎ result: f1cbe0f autosave: Rainbow 2026-11-20 03:53 UTC
+
+### 🤖 Claude — 2026-11-20T04:45:37.163Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && git diff f1cbe0f~1 e162aec -- src/world/match06.ts > /home/user/rainbow-/qa/match/06/r23/step1_m06fcl/code.patch; git diff f1cbe0f~1 e162aec --stat -- src/ | tail -3; grep -c \"^[+-]\" /home/user/rainbow-/qa/match/06/r23/step1_m06fcl/code.patch; git status --short | grep -v node_modules", "description": "Write m06fcl code patch and check worktree state"}`
+
+### 🧑 User — 2026-11-20T04:45:37.376Z
+
+> ↩︎ result: src/world/match06.ts | 26 +++++++++++++++++++++++---
+>  1 file changed, 23 insertions(+), 3 deletions(-)
+> 28
+> ?? tools/match06/r23_audit.mjs
+> ?? tools/match06/r23_swim.mjs
+> ?? tools/match06/r23_tunprobe.mjs
+> ?? tools/match06/r23_vite.mjs
+
+### 🤖 Claude — 2026-11-20T04:45:45.229Z
+
+While the clips render, let me check what earlier rounds concluded about the paddle-lid switch `m06pad` and other tried scenery options, so I don't repeat rejected work.
+
+### 🤖 Claude — 2026-11-20T04:45:46.577Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -rn \"m06pad\" qa/match/06/*/PROGRESS.md qa/match/06/*/NOTES.md qa/match/06/NOTES.md 2>/dev/null | head -12; grep -rln \"REJECT\\|NOT AN IMPROVEMENT\" qa/match/06/*/PROGRESS.md | head", "description": "Search history for m06pad and rejected tests"}`
+
+### 🧑 User — 2026-11-20T04:45:46.761Z
+
+> ↩︎ result: qa/match/06/r7/NOTES.md:35:| `m06pad=1` | the two painted gold paddles as 3D blades on the wall — not visible in any audit frame yet | NOT kept (opt-in, unfinished) |
+> qa/match/06/r11/PROGRESS.md
+
+### 🤖 Claude — 2026-11-20T04:45:50.346Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 1,60p qa/match/06/r7/NOTES.md; for d in r15 r16 r17; do echo \"=== $d\"; grep -n \"Verdict\\|verdict\\|GOOD\\|NOT AN\\|NOT YET\\|switch\\|Switch\" qa/match/06/$d/PROGRESS.md | head -20; done", "description": "Read r7 notes and later verdicts"}`
+
+### 🧑 User — 2026-11-20T04:45:50.873Z
+
+> ↩︎ result: # Screen 06 — round 7 (account 7, lead) — moving-view reconstruction
+> 
+> Branch `claude/rainbow-s06-match-c7` (from `-c6` @ `1e7b1112`). Nothing approved; default build untouched (all changes
+> behind sub-switches of `?match06=1`).
+> 
+> Kept set (lead's proposal, waiting for the user's verdict):
+> `match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1`
+> 
+> | switch | what it changes while Benny swims | verdict |
+> |---|---|---|
+> | `m06cam` (+`m06la=25`) | camera frame aimed along the river 25 u ahead instead of the local slope: pitch stayed −11…−28° instead of −11 → −73° (it looked straight down at the water and lost the tunnel) | KEEP |
+> | `m06tun` (r = 14) | the proxy tunnel is a STRAIGHT cylinder along the painted vanishing-point ray (the painted tunnel's shape) instead of a tube following the river's crest/drop/turn (twisted diagonal bands) | KEEP |
+> | `m06ring` | REAL modeled gold rings (two lips + bulb groove, polished-gold shading), spacing solved from the two nearest painted ring groups (485 / 355 px above the VP → 12.9 u); far tunnel tapers so the rings converge into a small glow (removed the flat pale disc) | KEEP |
+> 
+> Approved view (frozen `scripts/capture.mjs  …[+2663 chars]
+
+### 🤖 Claude — 2026-11-20T04:46:28.411Z
+
+Earlier rounds: `m06pad` (3D paddle lids) was never visible in motion and left unfinished; `m06bend` is banned. Checking the clips.
+
+### 🤖 Claude — 2026-11-20T04:46:30.757Z
+
+> 🔧 **Bash** `{"command": "O=/home/user/rainbow-/qa/match/06/r23/step1_m06fcl; tail -2 $O/swim_06_*.log $O/with_m06view/swim_06_NEW.log 2>/dev/null; ls /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/clip*/f 2>/dev/null | head -3; for d in /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/clip*/f; do ls $d | wc -l; done", "description": "Check clip progress"}`
+
+### 🧑 User — 2026-11-20T04:46:31.053Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/clip16XH/f:
+> 0000.png
+> 
+> 1
+> 1
+
+### 🤖 Claude — 2026-11-20T04:46:34.927Z
+
+Clips just started rendering frames. Meanwhile I'll write the step 1 section of PROGRESS.md (clip line to be confirmed).
+
+### 🤖 Claude — 2026-11-20T04:46:47.915Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='/home/user/rainbow-/qa/match/06/r23/PROGRESS.md'\ns=open(p).read()\ns=s.replace(\"\"\"* 04:40 UTC — started. Step 1 (finish r22 step 3 `&m06fcl=1`): `npx tsc --noEmit` clean; rendering BEFORE (K6 + `m06st=1`) and\n  NEW (+ `m06fcl=1`), with and without `m06view`, into `qa/match/06/r23/step1_m06fcl/`.\"\"\",\"\"\"* ~04:58 UTC — Step 1 (r22 step 3 `&m06fcl=1`, low foam heaps) DONE: **GOOD IMPROVEMENT** (see below; clips being encoded).\n* Next: step 2 — the off-centre tunnel / leftward crest while swimming (analysis started: `tools/match06/r23_tunprobe.mjs`).\" …[+2656 chars]`
+
+### 🧑 User — 2026-11-20T04:46:48.029Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-20T04:46:52.947Z
+
+While the clips render, I'll probe the camera variants for step 2 (no screenshots, cheap): K6, `m06view` default, and `m06view` without the rise.
+
+### 🤖 Claude — 2026-11-20T04:46:57.353Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06; cd /home/user/wt/s06; B=$(cat $S/q_new.txt); for v in \"K6:\" \"VIEW:m06view=1\" \"VIEWNR:m06view=1&m06vs=0\"; do n=${v%%:*}; o=${v#*:}; q=$B; [ -n \"$o\" ] && q=$(node /home/user/rainbow-/tools/lead23/setq.mjs \"$B\" \"$o\"); AUDIT_PORT=5283 timeout 900 node tools/match06/r23_tunprobe.mjs \"$q\" > $S/tp_$n.txt 2>&1; echo \"== $n\"; python3 -I -c \"\nimport json\nfor l in open('$S/tp_$n.txt').read().splitlines()[1:]:\n  try: d=json.loads(l)\n  except: continue\n  print(round(d['s'],1), 'cam',  …[+210 chars]`
+
+### 🧑 User — 2026-11-20T04:48:30.763Z
+
+> ↩︎ result: == K6
+> 198.9 cam [0, -1.9, 0.99] up 2.68 VP [660, 632] benny [419, 1006] r6 [484, 552] r12 [550, 569]
+> 200.9 cam [0.8, -2.09, 1.79] up 2.36 VP [633, 591] benny [419, 860] r6 [486, 566] r12 [558, 617]
+> 202.9 cam [2.4, -2.41, 3.11] up 2.7 VP [589, 508] benny [410, 829] r6 [478, 620] r12 [562, 664]
+> 205.0 cam [4.3, -2.73, 4.33] up 3.23 VP [541, 417] benny [402, 837] r6 [472, 676] r12 [570, 702]
+> 207.0 cam [6.4, -3.01, 5.21] up 3.76 VP [490, 334] benny [393, 837] r6 [473, 724] r12 [584, 732]
+> 209.0 cam [8.5, -3.23, 5.67] up 4.2 VP [436, 269] benny [384, 860] r6 [484, 762] r12 [601, 757]
+> 211.0 cam [10.6, -3.35, 5.76] up 4.51 VP [381, 227] benny [389, 899] r6 [503, 793] r12 [620, 784]
+> 213.0 cam [12.6, -3.36, 5.55] up 4.7 VP [330, 209] benny [393, 914] r6 [529, 822] r12 [639, 816]
+> 215.0 cam [14.6, -3.2, 5.12] up 4.78 VP [289, 211] benny [402, 906] r6 [556, 854] r12 [657, 856]
+> 217.1 cam [16.4, -2.86, 4.53] up 4.78 VP [262, 227] benny [423, 929] r6 [583, 891] r12 [676, 899]
+> 219.1 cam [18.2, -2.33, 3.83] up 4.75 VP [253, 252] benny [441, 945] r6 [609, 934] r12 [696, 943]
+> 220.9 cam [19.7, -1.71, 3.1] up 4.69 VP [259, 282] benny [462, 937] r6 [632, 977] r12 [716, 977]
+> 222.9 cam [21.3, -0.9, 2.27] up …[+2901 chars]
+
+### 🤖 Claude — 2026-11-20T04:49:03.099Z
+
+> 🔧 **Bash** `{"command": "for d in /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/clip*/f; do echo \"$d $(ls $d | wc -l)\"; done; uptime", "description": "Check clip frame counts"}`
+
+### 🧑 User — 2026-11-20T04:49:03.790Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/clip16XH/f 17
+> /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/clipmSt7/f 17
+>  04:49:03 up 51 min,  0 user,  load average: 23.97, 17.75, 10.84
+
+### 🤖 Claude — 2026-11-20T04:49:09.772Z
+
+The machine is heavily loaded (load ~24 on 4 cores, other workers rendering), so clips run slowly. I'll start the step 2 candidate shots now in parallel since they decide the next step.
+
+### 🤖 Claude — 2026-11-20T04:49:12.574Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06; node /home/user/rainbow-/tools/lead23/setq.mjs \"$(cat $S/q_new.txt)\" \"m06view=1&m06vs=0\" > $S/q_s2_nr.txt; cat $S/q_s2_nr.txt; echo; O=/home/user/rainbow-/qa/match/06/r23/step2_m06vs0; mkdir -p $O; $S/shots.sh $S/q_s2_nr.txt $O/NEW 5283; grep -h done $O/NEW.log", "description": "Render step 2 candidate (m06view without rise)", "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T04:49:12.679Z
+
+> ↩︎ result: Command running in background with ID: b31ed3k8t. Output is being written to: /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/tasks/b31ed3k8t.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-20T04:49:29.012Z
+
+While those render, I'll correct the timestamp in PROGRESS.md and record the step 2 diagnosis with the probe numbers.
+
+### 🤖 Claude — 2026-11-20T04:49:40.518Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06; cp $S/tp_K6.txt $S/tp_VIEW.txt $S/tp_VIEWNR.txt /home/user/rainbow-/qa/match/06/r23/step2_m06vs0/ 2>/dev/null; mkdir -p /home/user/rainbow-/qa/match/06/r23/step2_m06vs0/probe && mv /home/user/rainbow-/qa/match/06/r23/step2_m06vs0/tp_*.txt /home/user/rainbow-/qa/match/06/r23/step2_m06vs0/probe/; python3 - <<'EOF'\np='/home/user/rainbow-/qa/match/06/r23/PROGRESS.md'\ns=open(p).read()\ns=s.replace(\"* ~04:58 UTC — Step 1\",\"* ~04:48 UTC — Step 1\")\ns=s.replace(\"\"\"* Next: step 2 — the off-cen …[+2236 chars]`
+
+### 🧑 User — 2026-11-20T04:49:41.082Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-20T04:49:45.131Z
+
+> 🔧 **Bash** `{"command": "grep -c \"^06\" /home/user/rainbow-/qa/match/06/r23/step2_m06vs0/NEW.log; for d in /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/clip*/f; do echo \"$(ls $d | wc -l)\"; done", "description": "Check render and clip progress"}`
+
+### 🧑 User — 2026-11-20T04:49:45.330Z
+
+> ↩︎ result: 0
+> 22
+> 22
+
+### 🤖 Claude — 2026-11-20T04:49:53.307Z
+
+> 🔧 **ToolSearch** `{"query": "select:Monitor", "max_results": 1}`
+
+### 🧑 User — 2026-11-20T04:49:53.318Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-20T04:49:56.520Z
+
+> 🔧 **Monitor** `{"command": "L=/home/user/rainbow-/qa/match/06/r23/step2_m06vs0/NEW.log; n=0; while true; do c=$(grep -c \"^06\" $L 2>/dev/null || echo 0); if [ \"$c\" != \"$n\" ]; then n=$c; echo \"step2 shots: $c/11\"; fi; if grep -q \"done\\|rror\" $L 2>/dev/null; then grep -h \"done\\|rror\" $L | head -3; exit 0; fi; sleep 5; done", "description": "step 2 candidate shots progress (m06view no-rise)", "timeout_ms": 1800000}`
+
+### 🧑 User — 2026-11-20T04:49:56.719Z
+
+> ↩︎ result: Monitor started (task bd8ox0kp1, expires in 30m unless the source ends first; you get one notice at expiry — re-arm if you still need the watch). You will be notified on each event. Keep working — do not poll or sleep. Events may arrive while you are waiting for the user — an event is not their reply.
+
+### 🤖 Claude — 2026-11-20T04:49:59.444Z
+
+While the shots render, I'll look ahead to step 3 candidates: is there already a ripple-ring effect around Benny in the code?
+
+### 🤖 Claude — 2026-11-20T04:50:00.291Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -rln \"ripple\\|Ripple\" src | head; grep -rn \"m06bub\" src | head -5", "description": "Search for ripple effects and m06bub usage"}`
+
+### 🧑 User — 2026-11-20T04:50:01.039Z
+
+> ↩︎ result: src/world/environment.ts
+> src/world/materials.ts
+> src/vfx/waterRibbon.ts
+> src/vfx/flow05.ts
+> src/game/Game.ts
+> src/world/match06.ts:43:  /** r7 `&m06bub=1`: 0 at the approved viewpoint .. 1 once the camera has left it (the painting only covers that view) */
+> src/game/Game.ts:69:  const M06_BUB = flag05('m06bub');
+> src/game/Game.ts:543:      // r7 `&m06bub=1`: the game's iridescent bubbles + Benny's splash crown / spray return once the camera leaves the
+
+### 🤖 Claude — 2026-11-20T04:50:03.133Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"ripple\\|Ripple\" src/game/Game.ts | head -20; sed -n 530,575p src/game/Game.ts", "description": "Read ripple and splash code in Game.ts"}`
+
+### 🧑 User — 2026-11-20T04:50:03.277Z
+
+> ↩︎ result: 541:    // `?match06=1` on Screen 06: the projected scenery carries the approved river, ripples, foam and bubbles
+>       outroUpdate(dt);
+>     }
+>     girl.update(dt);
+>     const time = st.frozen ?? st.clock;
+>     env.update(time, dt);
+>     water.update(time, dt, st.s, camera);
+>     // `?match08=1` on Screen 08: the projected scenery carries the approved river, foam and bubbles
+>     if (m08 && (m08On || m08Applied)) {
+>       for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m08On; }
+>       m08Applied = m08On;
+>     }
+>     // `?match06=1` on Screen 06: the projected scenery carries the approved river, ripples, foam and bubbles
+>     if (m06 && (m06On || m06Applied) && !(m08 && m08On)) {
+>       // r7 `&m06bub=1`: the game's iridescent bubbles + Benny's splash crown / spray return once the camera leaves the
+>       // approved view (the painting
+>       // carries its bubbles only there; while swimming the screen had none)
+>       const bub6 = M06_BUB && m06On && m06.away(camera.position) > 0.5;
+>       m06.setAway(m06On ? m06.away(camera.position) : 0);
+>       for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m06On || (bub6 && (k === 'bubbles' || k === 'spla …[+1521 chars]
+
+### 🤖 Claude — 2026-11-20T04:50:06.044Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"M08_HIDE\\|wake\\|ring\" src/game/Game.ts | head -20; grep -n \"parts\\b\\|parts =\\|parts:\" src/vfx/waterRibbon.ts | head; grep -n \"ripple\" src/vfx/waterRibbon.ts | head", "description": "Find water parts hidden on Screen 06"}`
+
+### 🧑 User — 2026-11-20T04:50:06.384Z
+
+> ↩︎ result: 70:  const qn = (k: string, d: number) => { const v = qs.get(k); return v !== null && v !== '' && isFinite(+v) ? +v : d; };
+> 111:  const M08_HIDE = ['ribbon', 'foam', 'bubbles', 'splashCrown', 'spray'];
+> 128:  const zoneHidden = (k: string) => hidden.has(k);
+> 199:  const wakeAnchor = new THREE.Vector3(); // VFX: Benny's lifted body centre fed to water.wake()
+> 302:      // 02: tumbling with the swirl; the door ring above (deterministic blend from the 01 shot)
+> 325:  /** 02 camera: between Benny and the drum's back wall, looking past him to the door ring */
+> 402:    // so the wake/splash footprint matches the real waterline instead of the unlifted root
+> 403:    water.wake((benny.root.children[0] ?? benny.root).getWorldPosition(wakeAnchor), f.tan, f.right, speed, dt);
+> 420:  const cinematic = { ending: null as string | null };
+> 538:      for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m08On; }
+> 548:      for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m06On || (bub6 && (k === 'bubbles' || k === 'splashCrown' || k === 'spray')); }
+> 621:  const CHECKPOINTS: Record<string, { mode: Mode; t?: number; s?: number; lat?: number }> = {
+> 636:    '07d_ …[+2115 chars]
+
+### 🤖 Claude — 2026-11-20T04:50:19.449Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/src/world/match06.ts", "offset": 1, "limit": 135}`
+
+### 🧑 User — 2026-11-20T04:50:19.502Z
+
+> ↩︎ result: 1	/**
+> 2	 * `?match06=1` — Screen 06 approved-picture test (2026-11-17, qa/match/06/NOTES.md), the Screen 08 method.
+> 3	 * REAL 3D proxy geometry of "Crest the Rinse Arch", built around the game's own 06 river (which under the switch follows
+> 4	 * the painted river: course.ts + assets/textures/match06/path06.json) and seen from the locked approved-view camera
+> 5	 * (tools/match06/fit_river06.py → cam06_locked.json; layout tools/match06/make_tiles06.py → proj06.json):
+> 6	 *   * the perforated tunnel = a tube of radius R around the river (centre hA above the water) from behind the camera
+> 7	 *     into 07, continued straight along the river's heading so the painted far rings stay concentric
+> 8	 *   * the river floor = the water surface: the game river's width + 1 u of foam bank each side (<= Lfloor)
+> 9	 *   * a dark end cap far down the tunnel
+> 10	 * Every surface is textured by camera projection of the user's ORIGINAL approved pixels (HUD, title, Benny and coins
+> 11	 * provisionally filled locally: plate06_hybrid.png) from the locked camera, so the locked view shows the approved scenery
+> 12	 * and a moving camera sees it on geometry (parallax). Surfaces the picture never showed (or showed edge …[+5358 chars]
+
+### 🤖 Claude — 2026-11-20T04:50:20.966Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/src/world/match06.ts", "offset": 135, "limit": 300}`
+
+### 🧑 User — 2026-11-20T04:50:21.016Z
+
+> ↩︎ result: 135	    vec3 r1 = texture2D(uRiver, vec2(ax, sF / uR6p.z)).rgb;
+> 136	    vec3 r2 = texture2D(uRiver, vec2(ax, sF / (uR6p.z * 1.37) + 0.43)).rgb;
+> 137	    float bw = 0.5 + 0.5 * sin(vLS.y * 0.37 + vLS.x * 0.6) * sin(vLS.y * 0.13 + 1.7);
+> 138	    vec3 riv = mix(r1, r2, smoothstep(0.25, 0.75, bw));
+> 139	    float fr = pow(1.0 - abs(dot(nn, normalize(cameraPosition - vW))), 4.0);
+> 140	    riv += fr * 0.22 * vec3(0.9, 0.85, 1.0);
+> 141	    vec3 fo = texture2D(uFoam, vec2((al - uR6p.x) / (uR6p.y - uR6p.x), vLS.y / uR6p.w)).rgb;
+> 142	    pc = mix(riv, fo, smoothstep(uR6p.x - 0.3, uR6p.x + 0.15, al));
+> 143	  }
+> 144	  if (uRing > 0.5) {
+> 145	    // polished gold band: reflects the warm glow down the tunnel and the purple walls; a row of warm bulbs in the groove
+> 146	    vec3 V = normalize(cameraPosition - vW);
+> 147	    vec3 n2 = dot(nn, V) < 0.0 ? -nn : nn;
+> 148	    vec3 Rf = reflect(-V, n2);
+> 149	    float fw = dot(Rf, uAxD);
+> 150	    vec3 env = mix(vec3(0.46, 0.20, 0.55), vec3(1.0, 0.80, 0.50), smoothstep(-0.35, 0.9, fw));
+> 151	    env = mix(env, vec3(1.0, 0.96, 0.86), pow(max(fw, 0.0), 10.0));
+> 152	    float fres = pow(1.0 - max(dot(n2, V), 0.0), 3.0);
+> 153	    vec3 g = vec3(1.0, 0.60, 0.20) * (0.24 + 0.95 …[+17302 chars]
+
+### 🤖 Claude — 2026-11-20T04:50:32.638Z
+
+The structure is clear. While step 2 renders, I'll check the plate and masks that a possible step 3 ripple-ring decal would reuse.
+
+### 🤖 Claude — 2026-11-20T04:50:34.216Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && ls -la assets/textures/match06/ | head -30; python3 -I -c \"\nimport json; d=json.load(open('/home/user/wt/s06/assets/textures/match06/proj06.json')); print({k:(v if k!='camera' else {kk:vv for kk,vv in v.items() if kk!='matrixWorld'}) for k,v in d.items() if k!='tiles'}); print(d['tiles'].get('r6'))\"", "description": "List 06 textures and layout values"}`
+
+### 🧑 User — 2026-11-20T04:50:34.573Z
+
+> ↩︎ result: total 4368
+> drwxr-xr-x 2 root root    4096 Nov 20 04:11 .
+> drwxr-xr-x 7 root root    4096 Nov 20 04:11 ..
+> -rw-r--r-- 1 root root    1172 Nov 20 04:11 cam06_locked.json
+> -rw-r--r-- 1 root root    5103 Nov 20 04:11 coins06.json
+> -rw-r--r-- 1 root root  123234 Nov 20 04:11 mask06.png
+> -rw-r--r-- 1 root root     329 Nov 20 04:11 path06.json
+> -rw-r--r-- 1 root root     685 Nov 20 04:11 plate06.json
+> -rw-r--r-- 1 root root    9169 Nov 20 04:11 plate06_fillmask.png
+> -rw-r--r-- 1 root root 2597147 Nov 20 04:11 plate06_hybrid.png
+> -rw-r--r-- 1 root root    1736 Nov 20 04:11 proj06.json
+> -rw-r--r-- 1 root root  272755 Nov 20 04:11 tile_floor.png
+> -rw-r--r-- 1 root root  101002 Nov 20 04:11 tile_floor2.png
+> -rw-r--r-- 1 root root   29844 Nov 20 04:11 tile_foam6.png
+> -rw-r--r-- 1 root root  324413 Nov 20 04:11 tile_ring6.png
+> -rw-r--r-- 1 root root   79967 Nov 20 04:11 tile_river6.png
+> -rw-r--r-- 1 root root  870107 Nov 20 04:11 tile_tube.png
+> -rw-r--r-- 1 root root    4953 Nov 20 04:11 water06.json
+> {'note': 'Screen 06 proxy layout (tools/match06/geo06.py)', 'camera': {'fov': 62.0, 'size': [864, 1536], 'pos': [1.7205354776162962, -35.369414293064274, -132.64401919037763]}, 'R': 7.5, 'hA': 3.0, 'sBack': -12.0, …[+426 chars]
+
+### 🤖 Claude — 2026-11-20T04:50:36.915Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r23/step2_m06vs0/NEW/b_early.png"}`
+
+### 🧑 User — 2026-11-20T04:50:37.018Z
+
+> ↩︎ result: [image]
+

@@ -1,12 +1,12 @@
 diff --git a/tools/benny20/knit.py b/tools/benny20/knit.py
-index fccfeae..730793f 100644
+index fccfeae..388a438 100644
 --- a/tools/benny20/knit.py
 +++ b/tools/benny20/knit.py
-@@ -95,6 +95,73 @@ def knit_field(W, H, cols, rows, seed, rib=False, groove=0.38):
+@@ -95,6 +95,81 @@ def knit_field(W, H, cols, rows, seed, rib=False, groove=0.38):
      return hmax, rowid, var
  
  
-+def chain_field(W, H, cols, rows, seed, rw=0.8, wob=0.04):
++def chain_field(W, H, cols, rows, seed, rw=0.8, wob=0.04, relief=1.0, rbase=0.3):
 +    """r23 `knit_mode: chain` (approved 04 beanie, qa/benny/r23/s2_knit): every column is a raised ROUND rib cord made of
 +    a chain of small V stitches (two slanted legs per row) with a continuous dark groove between cords — the vertical
 +    ribbing of the approved cuff AND crown (no horizontal purl bumps, no gaps that show the wrong stripe colour).
@@ -35,22 +35,27 @@ index fccfeae..730793f 100644
 +        rowid = np.where(better & (hs > 0.05), k, rowid)
 +        var = np.where(better, rv[np.clip(k + 1, 0, rows + 2), (col % cols)], var)
 +    rowid = np.clip(rowid, 0, rows - 1)
-+    h = prof ** 0.6 * (0.3 + 0.7 * hv)
++    h = prof ** 0.6 * (rbase + (1 - rbase) * hv ** relief)
 +    var = 0.7 * var + 0.3 * cv[col % cols]
 +    return h / (h.max() + 1e-9), rowid, var
 +
 +
-+def shade2(h, lo, hi, var, fuzz, floor=0.55, gamma=0.75):
-+    """two-tone yarn: groove colour `lo` (cool shadow of the yarn) -> lit stitch top `hi`; the deepest groove a bit darker"""
++def shade2(h, lo, hi, var, fuzz, floor=0.55, gamma=0.75, tip=None, tipw=0.0):
++    """two-tone yarn: groove colour `lo` (cool shadow of the yarn) -> lit stitch top `hi`; the deepest groove a bit darker;
++    optional lighter `tip` colour on the stitch crowns (approved violet rib tops catch a lilac sheen)"""
 +    k = (np.clip(h, 0, 1) ** gamma)[..., None]
 +    dark = (floor + (1 - floor) * np.clip(h * 4, 0, 1))[..., None]
++    if tip is not None and tipw > 0:
++        e = np.clip((h - 0.7) / 0.3, 0, 1)
++        hi = hi + (tip - hi) * (e * e * (3 - 2 * e) * tipw)[..., None]
 +    c = lo * dark * (1 - k) + hi * k
 +    return c * (1 + 0.05 * var)[..., None] * (1 + 0.05 * fuzz)[..., None]
 +
 +
 +def crown_chain(p, out):
 +    W, H, cols, rows = p['crown_w'], p['crown_h'], p['crown_cols'], p['crown_rows']
-+    h, rowid, var = chain_field(W, H, cols, rows, p['seed'], rw=p.get('crown_rw', 0.86), wob=p.get('wob', 0.04))
++    h, rowid, var = chain_field(W, H, cols, rows, p['seed'], rw=p.get('crown_rw', 0.86), wob=p.get('wob', 0.04),
++                                 relief=p.get('relief', 1.0), rbase=p.get('rbase', 0.3))
 +    fz = fbm((H, W), p['seed'] + 1)
 +    vrow = 1 - (rowid + 0.5) / rows
 +    st = sorted(p['stripes'], key=lambda e: e[0])
@@ -59,16 +64,19 @@ index fccfeae..730793f 100644
 +        isv = np.where(vrow >= v0, c == 'V', isv)
 +    hi = np.where(isv[..., None], s2l(p['violet']), s2l(p['white']))
 +    lo = np.where(isv[..., None], s2l(p['violet_lo']), s2l(p['white_lo']))
-+    alb = shade2(h, lo, hi, var, fz, gamma=p.get('gamma', 0.75))
++    tip = np.where(isv[..., None], s2l(p.get('violet_tip', p['violet'])), s2l(p.get('white_tip', p['white'])))
++    alb = shade2(h, lo, hi, var, fz, gamma=p.get('gamma', 0.75), tip=tip, tipw=p.get('tipw', 0.0))
 +    Image.fromarray(l2s8(alb)).save(f'{out}/crown.png')
 +    Image.fromarray(normals(ndi.gaussian_filter(h, 0.7, mode='wrap'), p.get('crown_ns', 4.0))).save(f'{out}/crown_n.png')
 +
 +
 +def brim_chain(p, out):
 +    W, H, cols, rows = p['brim_w'], p['brim_h'], p['brim_cols'], p['brim_rows']
-+    h, rowid, var = chain_field(W, H, cols, rows, p['seed'] + 3, rw=p.get('brim_rw', 0.8), wob=p.get('wob', 0.04))
++    h, rowid, var = chain_field(W, H, cols, rows, p['seed'] + 3, rw=p.get('brim_rw', 0.8), wob=p.get('wob', 0.04),
++                                 relief=p.get('relief', 1.0), rbase=p.get('rbase', 0.3))
 +    fz = fbm((H, W), p['seed'] + 4)
-+    alb = shade2(h, s2l(p['cuff_lo'])[None, None], s2l(p['cuff'])[None, None], var, fz, gamma=p.get('gamma', 0.75))
++    alb = shade2(h, s2l(p['cuff_lo'])[None, None], s2l(p['cuff'])[None, None], var, fz, gamma=p.get('gamma', 0.75),
++                 tip=s2l(p.get('cuff_tip', p['cuff']))[None, None], tipw=p.get('tipw', 0.0))
 +    Image.fromarray(l2s8(alb)).save(f'{out}/brim.png')
 +    Image.fromarray(normals(ndi.gaussian_filter(h, 0.7, mode='wrap'), p.get('brim_ns', 5.0))).save(f'{out}/brim_n.png')
 +
@@ -76,7 +84,7 @@ index fccfeae..730793f 100644
  def shade(h, base, var, groove, fuzz):
      occ = groove + (1 - groove) * np.clip(h, 0, 1) ** 0.75
      c = base * occ[..., None] * (1 + 0.045 * var)[..., None] * (1 + 0.05 * fuzz)[..., None]
-@@ -224,9 +291,14 @@ def main():
+@@ -224,9 +299,14 @@ def main():
      if '--json' in sys.argv:
          P.update(json.load(open(sys.argv[sys.argv.index('--json') + 1])))
      os.makedirs(out, exist_ok=True)

@@ -1,27 +1,27 @@
 {
   "last_run": {
-    "time": "2026-11-20T04:40:34+00:00",
-    "reason": "hook:Stop",
+    "time": "2026-11-20T04:45:00+00:00",
+    "reason": "daemon",
     "result": "committed+pushed",
-    "files_staged": 21,
+    "files_staged": 80,
     "pushed_verified": true,
     "branch": "claude/rainbow-r22-restore-ut3m39",
     "wip_snapshots": [
-      "claude/rainbow-benny-c24: 0 modified, 1 new file(s) snapshotted",
+      "claude/rainbow-benny-c24: 1 modified, 1 new file(s) snapshotted",
       "claude/rainbow-s04-match-c24: 3 modified, 1 new file(s) snapshotted",
       "claude/rainbow-s05-match-c24: 0 modified, 0 new file(s) snapshotted",
       "claude/rainbow-s06-match-c24: 0 modified, 4 new file(s) snapshotted",
       "claude/rainbow-s07-match-c24: 2 modified, 4 new file(s) snapshotted",
       "claude/rainbow-s08-scenery-c24: 0 modified, 0 new file(s) snapshotted"
     ],
-    "commit": "de1e987f1e7662f90e477d8a40c5e377fdc8ec53",
-    "duration_s": 15
+    "commit": "1eef1b4c9383804120c7f3348e0676e1b968d55d",
+    "duration_s": 47
   },
   "repo": "https://github.com/josiahscalia5-dev/rainbow-",
   "branch": "claude/rainbow-r22-restore-ut3m39",
-  "last_verified_remote_sha": "de1e987f1e7662f90e477d8a40c5e377fdc8ec53",
-  "last_successful_backup_utc": "2026-11-20T04:40:34+00:00",
+  "last_verified_remote_sha": "1eef1b4c9383804120c7f3348e0676e1b968d55d",
+  "last_successful_backup_utc": "2026-11-20T04:45:00+00:00",
   "consecutive_failures": 0,
   "schedule": "every 5 min, container-local (scheduler=daemon status=active pid=1066); see backups/RECOVERY.md for limits",
-  "next_scheduled_utc": "2026-11-20T04:45:00+00:00"
+  "next_scheduled_utc": "2026-11-20T04:50:00+00:00"
 }

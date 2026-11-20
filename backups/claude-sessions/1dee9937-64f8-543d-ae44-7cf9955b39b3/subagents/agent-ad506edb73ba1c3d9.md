@@ -655,3 +655,161 @@ I'll make the clip tool's port configurable (my own untracked tool), then run th
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && O=/home/user/rainbow-/qa/match/07/r23/s1_satin && QN=$(cat $O/query_NEW.txt) && rm -rf $O/NEW && \\\nSH='[[\"a_start\",0,null],[\"b_early\",0.12,null],[\"c_middle\",0.35,null],[\"d_late\",0.6,null],[\"e1_075\",0.75,null],[\"e_end\",0.85,null],[\"e2_092\",0.92,null],[\"f_hard_left\",0.35,-1],[\"g_hard_right\",0.35,1]]'\n(AUDIT_SHOTS=\"$SH\" AUDIT_PORT=5280 timeout 1500 node /home/user/rainbow-/tools/lead21/audit_screen.mjs $O/NEW 07 \"$QN\" > $O/new.log 2>&1; echo audit-done >> $O/new.log) &\n(QA_PORT=5281 timeout 1500 node tools/match07/gameplay_test_5277.m …[+458 chars]`
 
+### 🧑 User — 2026-11-20T04:49:08.449Z
+
+> ↩︎ result: [1]-  Done                    ( AUDIT_SHOTS="$SH" AUDIT_PORT=5280 timeout 1500 node /home/user/rainbow-/tools/lead21/audit_screen.mjs $O/NEW 07 "$QN" > $O/new.log 2>&1; echo audit-done >> $O/new.log )
+> [2]+  Done                    ( QA_PORT=5281 timeout 1500 node tools/match07/gameplay_test_5277.mjs --q="$QN" --out=$O/gameplay > $O/gameplay.log 2>&1; echo gp-exit $? >> $O/gameplay.log )
+> clip-exit 0
+> 07 f_hard_left s 314.056 lat -2.25 stage 07 coins 1940
+> 07 g_hard_right s 314.056 lat 2.25 stage 07 coins 1950
+> audit-done
+>  "plunge": {
+>   "tTop": 23.866666666666593,
+>   "tBottom": 30.366666666666223,
+>   "t08": 30.366666666666223,
+>   "yTop": -51.95,
+>   "yBottom": -113.095,
+>   "y08": -113.095,
+>   "travelTimeTopToInlet": 6.5,
+>   "verticalDrop": 61.14
+>  },
+>  "errors": []
+> }
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff2" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff2" is outside of Vite serving allow list.
+> gp-exit 0
+
+### 🤖 Claude — 2026-11-20T04:49:11.888Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/07/r23/s1_satin && ls gameplay 2>/dev/null; python3 - <<'EOF'\nimport json,re,glob\ntxt=open('gameplay.log').read()\ni=txt.find('{'); \ntry:\n  j=json.loads(txt[i:txt.rfind('}')+1])\nexcept Exception as e:\n  print('parse',e); j=None\nif j:\n  print({k:j[k] for k in j if k not in ('plunge','steps','checks')})\n  for k in ('checks','steps'):\n    if k in j: print(k, json.dumps(j[k])[:1500])\nEOF", "description": "Summarise gameplay test result"}`
+
+### 🧑 User — 2026-11-20T04:49:12.090Z
+
+> ↩︎ result: gameplay
+> {'query': 'match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1&m07foam=1&m07coinsz=1&m07nearw=1&m07foamb=1&m07band=1&m07end=1&m07cloud=1&m07satin=1', 'out': '/home/user/rainbow-/qa/match/07/r23/s1_satin/gameplay', 'pass': True, 'errors': []}
+> checks {"pauseFreezes": true, "continuousTravel": true, "noCameraCut": true, "noTeleport": true, "plunge": true, "realCoinPickups": true, "victory": true, "heartsLostOnWallBump": true}
+
+### 🤖 Claude — 2026-11-20T04:49:14.702Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/07/r23/s1_satin && ls gameplay; python3 - <<'EOF'\nimport json\ntxt=open('gameplay.log').read(); i=txt.find('{'); j=json.loads(txt[i:txt.rfind('}')+1])\nfor k,v in j.items():\n  if k not in ('checks',): print(k, json.dumps(v)[:300])\nEOF", "description": "Show all gameplay result fields"}`
+
+### 🧑 User — 2026-11-20T04:49:14.976Z
+
+> ↩︎ result: gameplay
+> query "match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1&m07foam=1&m07coinsz=1&m07nearw=1&m07foamb=1&m07band=1&m07end=1&m07cloud=1&m07satin=1"
+> out "/home/user/rainbow-/qa/match/07/r23/s1_satin/gameplay"
+> pass true
+> plunge {"tTop": 23.866666666666593, "tBottom": 30.366666666666223, "t08": 30.366666666666223, "yTop": -51.95, "yBottom": -113.095, "y08": -113.095, "travelTimeTopToInlet": 6.5, "verticalDrop": 61.14}
+> errors []
+
+### 🤖 Claude — 2026-11-20T04:49:18.052Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/07/r23/s1_satin && ls -la gameplay/; python3 -c \"\nimport json;j=json.load(open('/home/user/rainbow-/qa/match/07/r22/s1_cloud/gameplay_new.json'));print(list(j.keys()));print({k:j[k] for k in j if 'coin' in k.lower() or 'score' in k.lower()})\"; grep -n \"coin\" /home/user/wt/s07/tools/match07/gameplay_test_5277.mjs | head", "description": "Locate coin counts in gameplay output"}`
+
+### 🧑 User — 2026-11-20T04:49:18.284Z
+
+> ↩︎ result: ls: cannot access 'gameplay/': Not a directory
+> ['checks', 'samples', 'plunge', 'maxJumpAt', 'errors', 'pass', 'query']
+> {}
+> 8://  * real coin pickups update the counter; steering into the foam wall costs a heart
+> 47:  // ---- full run 03 → 11 with a coin-seeking steering policy
+> 52:  const startCoins = prev.coins;
+> 57:  // steering policy: weave gently so Benny crosses coin lines (real pickups)
+> 61:    // coin-seeking: steer toward the lateral offset of the next untaken coin within 12 units
+> 62:    const next = api.coinDefs().find((d) => !d.taken && d.s > st.s + 0.5 && d.s < st.s + 12);
+> 77:    if (steps % 30 === 0) out.samples.push({ t: +t.toFixed(2), s: s1.s, stage: s1.stage, y: s1.bennyY, cam: s1.cam, coins: s1.coins });
+> 89:  out.checks.realCoinPickups = { pass: endState.coins > startCoins, startCoins, endCoins: endState.coins, collected: (endState.coins - startCoins) / 10 };
+> 119:  '(deterministic 60 Hz simulation, coin-seeking steering). Frames: `qa/continuity/07a…07d.png`',
+
+### 🤖 Claude — 2026-11-20T04:49:22.067Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/07/r23/s1_satin && mv gameplay gameplay_new.json && python3 -c \"\nimport json;j=json.load(open('gameplay_new.json'));c=j['checks'];print('pass',j['pass'],'n checks',len(c),'all',all((v['pass'] if isinstance(v,dict) else v) for v in c.values()));print(c['realCoinPickups']);print('plunge',j['plunge']['verticalDrop'])\"; python3 -c \"\nimport json;j=json.load(open('/home/user/rainbow-/qa/match/07/r22/s1_cloud/gameplay_new.json'));print('r22',j['checks']['realCoinPickups'])\"", "description": "Check coins and pass status"}`
+
+### 🧑 User — 2026-11-20T04:49:22.680Z
+
+> ↩︎ result: pass True n checks 8 all True
+> {'pass': True, 'startCoins': 1330, 'endCoins': 2240, 'collected': 91}
+> plunge 61.14
+> r22 {'pass': True, 'startCoins': 1330, 'endCoins': 2240, 'collected': 91}
+
+### 🤖 Claude — 2026-11-20T04:49:26.122Z
+
+Gameplay 8/8, 91 coins (1,330 → 2,240), plunge 61.14 u. Now encode the clip, diff NEW vs BEFORE and check the start view.
+
+### 🤖 Claude — 2026-11-20T04:49:30.490Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/07/r23/s1_satin && SP=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad && ls $SP/clipL_new | wc -l && ffmpeg -loglevel error -y -framerate 24 -i $SP/clipL_new/%04d.png -pix_fmt yuv420p -c:x libx264 -crf 18 swim_level_NEW.mp4 && cp /home/user/rainbow-/qa/match/07/r22/s1_cloud/swim_level_NEW.mp4 swim_level_BEFORE.mp4 && ls -la *.mp4 && rm -f diffs/new_* && for s in a_start b_early c_middle d_late e1_075 e_end e2_092 f_hard_left g_hard_right; do node /home/user/tools-pixelmatch/pixeldiff.mjs BEFORE/$s.png NEW/$s.png dif …[+321 chars]`
+
+### 🧑 User — 2026-11-20T04:49:32.285Z
+
+> ↩︎ result: 86
+> [mp4 @ 0x55b37574cb40] Invalid stream specifier: x.
+>     Last message repeated 1 times
+> [vost#0:0 @ 0x55b37574d180] Error selecting an encoder
+> Error opening output file swim_level_NEW.mp4.
+> Error opening output files: Invalid argument
+> {"a":"BEFORE/a_start.png","b":"NEW/a_start.png","rows":[180,1536],"threshold":0.1,"diff_pixels":0,"total":1171584,"diff_pct":0}
+
+### 🤖 Claude — 2026-11-20T04:49:36.448Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/07/r23/s1_satin && SP=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad && ffmpeg -loglevel error -y -framerate 24 -i $SP/clipL_new/%04d.png -pix_fmt yuv420p -crf 18 swim_level_NEW.mp4 ; cp /home/user/rainbow-/qa/match/07/r22/s1_cloud/swim_level_NEW.mp4 swim_level_BEFORE.mp4 && ls -la *.mp4 && rm -f diffs/new_* && for s in a_start b_early c_middle d_late e1_075 e_end e2_092 f_hard_left g_hard_right; do node /home/user/tools-pixelmatch/pixeldiff.mjs BEFORE/$s.png NEW/$s.png diffs/new_$s.png 0.1 0 1536 2>&1 | tail -1 |  …[+159 chars]`
+
+### 🧑 User — 2026-11-20T04:50:05.080Z
+
+> ↩︎ result: -rw-r--r-- 1 root root 1737711 Nov 20 04:49 swim_level_BEFORE.mp4
+> -rw-r--r-- 1 root root 3126017 Nov 20 04:49 swim_level_NEW.mp4
+> a_start 0
+> b_early 64170
+> c_middle 44835
+> d_late 34842
+> e1_075 33207
+> e_end 42144
+> e2_092 64675
+> f_hard_left 30876
+> g_hard_right 40400
+
+### 🤖 Claude — 2026-11-20T04:50:07.396Z
+
+Start view 0 px. Let me check a couple of clip frames while steering and the drop shots.
+
+### 🤖 Claude — 2026-11-20T04:50:09.798Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad && python3 -c \"\nfrom PIL import Image\nims=[Image.open('$SP/clipL_new/%04d.png'%i) for i in (20,45,65)]\nw,h=ims[0].size; o=Image.new('RGB',(w*3,h))\nfor k,im in enumerate(ims): o.paste(im,(k*w,0))\no.save('$SP/clip_frames_new.png')\"", "description": "Montage three clip frames for a quick look"}`
+
+### 🧑 User — 2026-11-20T04:50:10.571Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T04:50:10.848Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/clip_frames_new.png"}`
+
+### 🧑 User — 2026-11-20T04:50:10.920Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:50:11.304Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/07/r23/s1_satin/NEW/e_end.png"}`
+
+### 🧑 User — 2026-11-20T04:50:11.396Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:50:17.912Z
+
+Satin ribbons and flares also carry down the drop. Step 1 verdict is forming as GOOD IMPROVEMENT. Now the deterministic capture (07 / 08 starts, plunge frames) BEFORE vs NEW and the continuity test.
+
+### 🤖 Claude — 2026-11-20T04:50:18.961Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"continuity\" package.json; ls scripts | grep -i contin; grep -n \"startVite\\|5[0-9][0-9][0-9]\" scripts/*continuity* 2>/dev/null | head", "description": "Find continuity test script and port"}`
+
+### 🧑 User — 2026-11-20T04:50:19.639Z
+
+> ↩︎ result: 12:    "test:continuity": "vite-node scripts/continuity-test.ts",
+> continuity-test.ts
+
+### 🤖 Claude — 2026-11-20T04:50:24.962Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && O=/home/user/rainbow-/qa/match/07/r23/s1_satin && QN=$(cat $O/query_NEW.txt) && QB=$(cat /home/user/rainbow-/qa/match/07/r23/K7c.txt) && \\\n(QA_PORT=5280 timeout 1500 node tools/match07/capture_5277.mjs 07 08 07a_plunge_top 07b_plunge_mid 07c_plunge_bottom 07d_entering_08 --out=$O/capture_BEFORE --q=\"$QB\" > $O/capB.log 2>&1; echo capB $? >> $O/capB.log) &\n(QA_PORT=5281 timeout 1500 node tools/match07/capture_5277.mjs 07 08 07a_plunge_top 07b_plunge_mid 07c_plunge_bottom 07d_entering_08 --out=$O/capture_NEW --q=\"$QN\" > $O/capN.log 2>&1; echo capN $? >> …[+442 chars]`
+
