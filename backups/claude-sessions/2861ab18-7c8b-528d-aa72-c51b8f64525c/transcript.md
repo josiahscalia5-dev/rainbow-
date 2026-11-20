@@ -4103,3 +4103,61 @@ The hat hangs off Benny's body centre, so shrinking it also pulls it down; the l
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && for c in \"0.8,0.10\" \"0.75,0.18\" \"0.85,0.05\" \"0.7,0.25\"; do hs=${c%,*}; hy=${c#*,}; AUDIT_W=864 AUDIT_H=1536 AUDIT_PORT=5315 AUDIT_SHOTS='[[\"a_start\",0,null]]' timeout 900 node tools/match06/r30_shots.mjs /home/user/rainbow-/qa/benny/r30/hat_${hs}_${hy} 06 \"$(cat /home/user/rainbow-/qa/match/06/r30/QUERY_NEW_v2.txt)&benny05=1&b30hs=$hs&b30hy=$hy\" 2>&1 | grep -E \"rror\"; done; cd /home/user/rainbow-/qa/benny/r30 && python3 -c \"\nfrom PIL import Image; import numpy as np\nA=Image.open('/home/user/rainbow-/references/06_crest_the_rinse_arch.png'). …[+787 chars]`
 
+### 🧑 User — 2026-11-20T21:59:38.344Z
+
+> ↩︎ result: b05 Benny area within 20: 50.1 %
+> 0.8_0.10 Benny area within 20: 51.7 %
+> 0.75_0.18 Benny area within 20: 51.9 %
+> 0.85_0.05 Benny area within 20: 51.6 %
+> 0.7_0.25 Benny area within 20: 52.0 %
+
+### 🤖 Claude — 2026-11-20T21:59:39.996Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/scratchpad/hats.png"}`
+
+### 🧑 User — 2026-11-20T21:59:40.019Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-20T21:59:40.220Z
+
+[Request interrupted by user]
+
+### 🧑 User — 2026-11-20T21:59:40.276Z
+
+Can u do multiple agents do different tasks at the same time make this go quicker
+
+### 🤖 Claude — 2026-11-20T22:00:15.983Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && ls tools/lead25/ 2>/dev/null | head; sed -n 1,30p tools/lead25/render_slot.sh 2>/dev/null", "description": "Check the shared render-slot tool"}`
+
+### 🧑 User — 2026-11-20T22:00:16.029Z
+
+> ↩︎ result: render_slot.sh
+> #!/usr/bin/env bash
+> # render_slot.sh — run one heavy render (Playwright / SwiftShader / Blender / ffmpeg) while holding one of N machine-wide
+> # render slots, so the four specialist workers on this 4-CPU container take turns instead of overloading it
+> # (round 24 ran at load ~30 with repeated Playwright timeouts).
+> #   usage:  bash /home/user/rainbow-/tools/lead25/render_slot.sh <command> [args...]
+> #   N = $RENDER_SLOTS (default 2). Waits (polling every 5 s) until a slot is free; prints the wait time on stderr.
+> #   The exit code is the command's. Slots are flock(1) locks under /tmp, released automatically if the process dies.
+> #   Status:  bash /home/user/rainbow-/tools/lead25/render_slot.sh --status
+> N=${RENDER_SLOTS:-2}
+> if [ "${1:-}" = "--status" ]; then
+>   for i in $(seq 1 "$N"); do
+>     if flock -n "/tmp/rainbow-render-slot$i.lock" true 2>/dev/null; then echo "slot $i free"; else echo "slot $i busy"; fi
+>   done
+>   exit 0
+> fi
+> [ $# -gt 0 ] || { echo "usage: $0 <command> [args...]" >&2; exit 2; }
+> t0=$(date +%s)
+> while true; do
+>   for i in $(seq 1 "$N"); do
+>     exec {fd}>"/tmp/rainbow-render-slot$i.lock"
+>     if flock -n "$fd"; then
+>       w=$(( $(date +%s) - t0 )); [ "$w" -gt 0 ] …[+176 chars]
+
+### 🤖 Claude — 2026-11-20T22:00:27.950Z
+
+> 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:r30-before-parallel 2>&1 | grep -E '\"commit\"'; python3 -c \"import json;print(json.load(open('backups/wip/claude__rainbow-s06-match-c31/INFO.json'))['time'])\"; grep -c \"b30hs\" backups/wip/claude__rainbow-s06-match-c31/tracked.patch; cat > docs/briefs/2026-11-20-r30/setup_r30_parallel.sh <<'EOF'\n#!/usr/bin/env bash\n# setup_r30_parallel.sh — round 30 (user ~22:20 UTC: \"do multiple agents do different tasks at the same time\"): four Screen 06 specialist\n# worktrees, each = the s06 base commit + the NEWEST s06 snapshot (back …[+1906 chars]`
+
