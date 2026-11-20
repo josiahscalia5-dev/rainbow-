@@ -3311,3 +3311,46 @@ Saving everything and checking GitHub matches:
 
 > 🔧 **Bash** `{"command": "until ! pgrep -f \"rainbow-autosave.py\" >/dev/null; do sleep 3; done; python3 scripts/rainbow-autosave.py --reason manual:r28-s0910-brief 2>&1 | grep -E '\"result\"|\"commit\"|\"error\"'; git rev-parse HEAD; git ls-remote origin refs/heads/ccr-9652868f-lkw0w0", "description": "Save the 09/10 brief and verify remote", "timeout": 300000}`
 
+### 🧑 User — 2026-11-20T17:18:59.439Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "commit": "7c05d5aba4565fe701a03ec2523768236ace5214",
+> 7c05d5aba4565fe701a03ec2523768236ace5214
+> 7c05d5aba4565fe701a03ec2523768236ace5214	refs/heads/ccr-9652868f-lkw0w0
+
+### 🤖 Claude — 2026-11-20T17:19:16.633Z
+
+Your scope decision is recorded permanently: Screens 01, 02, 03 and 11 are your Google Flow videos, and Screens 04–10, including 09 and 10, are real playable 3D.
+
+- **Where it's recorded:** at the top of the game section in CLAUDE.md, where it overrides the old "09 and 10 are videos" line. It's also in the account handoff, the new-account guide and the agent status file.
+- **Your words:** your clarifications are saved word for word in `docs/briefs/2026-11-20-r28/USER_CLARIFICATIONS_R28.md`, with your reference sheet beside them.
+- **References:** all work uses the full-resolution originals in the repository, which are unchanged.
+
+**Screen 06:** your crest and lighting points went straight to the specialist building the route test. It's still running and remains the next checkpoint.
+
+**Screen 04 (finished), candidate K27-B, not approved.** I sent your approved picture, BEFORE and NEW for the middle of the stage, plus the whole stage side by side at normal speed. This is an individual playable candidate, not a combined build or Android.
+- **Closer:** the long white scratches on the water became short sparkling crescents in small groups. The far foam is now cloud-like banks instead of a bead row. The pink edges sit lower. The start view is unchanged. All 8 gameplay checks pass and all 91 coins are collected.
+- **Still different:**
+  - The river is a straight chute, without your big cyan and pink swirls.
+  - The foam is still made of shiny separate balls.
+  - In motion the rings look more copper-orange than your brighter, lit gold. The gold and the blue water do stay clearly separate, as you asked.
+- **The five arrows:** all five appear and Benny passes them inside 04, but they're gone after about 1.2 seconds. Making them fade later didn't help, so that change is off.
+  - The cause: from the current camera, Benny's body and hat cover the river up to about 14 units ahead.
+  - That leaves two real options:
+    - The arrows drift slowly downstream with the water, so he reaches them later.
+    - A higher camera like your picture's. That isn't authorized.
+
+**Screens 09 and 10:** they already exist in the game as rideable stages, but with old stand-in scenery that I rated 3 out of 10. Their brief is written, built from each one's own approved picture and reusing Screen 08's chamber method. They start in the next free specialist slot.
+- One test switch still starts the ending video at Screen 09. The brief includes moving it to the hand-over into Screen 11.
+
+**Working now:** the Screen 06 route test, Screens 07 and 05, and Benny (the star colour at the start of 06).
+
+**Saved:** commit `7c05d5aba4565fe701a03ec2523768236ace5214` is on GitHub and matches this checkout.
+
+**One decision for you:** for the five arrows on Screen 04, should they drift slowly downstream with the water, or would you rather allow a higher camera like your picture's? Or should they stay as they are for now?
+
+### 🧑 User — 2026-11-20T17:19:16.690Z
+
+Stop hook feedback:
+[command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+

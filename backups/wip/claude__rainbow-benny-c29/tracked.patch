@@ -154141,7 +154141,7 @@ index a76822b..cbb7ee4 100644
  * `fur.ts`: new BENNY20-only uniforms `uTipCol` (colour the uPile.w tips fade to; pompom keeps its pale lavender) and `uVol`
    (x highlight on up-facing fur, y darker underside). `benny20.ts`: `TUFT` block (body + arms): bigger locks (30 / arms 36),
 diff --git a/src/characters/benny/benny20.ts b/src/characters/benny/benny20.ts
-index 340e1d3..f68245c 100644
+index 340e1d3..c5e4c69 100644
 --- a/src/characters/benny/benny20.ts
 +++ b/src/characters/benny/benny20.ts
 @@ -100,6 +100,51 @@ if (TUFT) {
@@ -154409,7 +154409,7 @@ index 340e1d3..f68245c 100644
      // opt-in `&b20expo=1` until proven in motion on 05–07 (step-1 pictures were made without it)
      const e = (EXPO_ON && stage && EXPO20[stage]) || [1, 1, 1];
      tgt.set(e[0], e[1], e[2]);
-@@ -275,8 +438,24 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
+@@ -275,8 +438,26 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
      scene.getWorldPosition(pos);
      const jumped = pos.distanceTo(lastPos) > 5;
      lastPos.copy(pos);
@@ -154427,7 +154427,9 @@ index 340e1d3..f68245c 100644
 +      cur.lerp(tgt, a);
 +      kvCur.lerp(kvTgt, a);
 +      kwCur.lerp(kwTgt, a);
-+      sxCur.lerp(sxTgt, a);
++      // the 06 start→middle star blend is already smooth along the river: ease it fast (τ ≈ 0.12 s) so the middle is not
++      // left with a lagging lemon tint (first proof: middle g/r .98 instead of .93 with τ ≈ 0.33 s)
++      sxCur.lerp(sxTgt, S06A_ON && stage === '06' ? 1 - Math.exp(-dt * 8) : a);
 +    }
 +    if (starX) starX.m.color.setRGB(starX.base.r * sxCur.x, starX.base.g * sxCur.y, starX.base.b * sxCur.z);
      for (const { f, base } of expo) f.material.color.setRGB(base.r * cur.x, base.g * cur.y, base.b * cur.z);
@@ -154435,7 +154437,7 @@ index 340e1d3..f68245c 100644
    };
  
    // QA only (`?qa` pages, read by tools/benny20/probe.mjs): live handles for tuning without a reload
-@@ -295,7 +474,7 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
+@@ -295,7 +476,7 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
        }
        return [Math.round(x0), Math.round(y0), Math.round(x1), Math.round(y1)];
      };

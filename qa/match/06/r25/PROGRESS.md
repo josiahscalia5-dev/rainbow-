@@ -1,5 +1,35 @@
 # Screen 06 — round 25 progress (worktree `/home/user/wt/s06`, LOCAL branch `claude/rainbow-s06-match-c26`, ports 5276 / 5282 / 5283)
 
+## (r28) WHERE I STOPPED / NEXT
+* ~17:10 UTC — relaunched (new account), worktree `/home/user/wt/s06` LOCAL branch `claude/rainbow-s06-match-c29`, scratch
+  `/home/user/scratch/s06/`. TASK = the user-authorized route test `docs/briefs/2026-11-20-r28/S06_ROUTE_R28.md` (+ clarification
+  `USER_CLARIFICATIONS_R28.md`: keep the HIGH curling crest + the approach to the off-centre tunnel; coins / rings grow and pass).
+  BEFORE = `step2/QUERY_NEW2.txt`. Proof folder (to come) `qa/match/06/r28/route/`.
+* (A) HOW THE 06 ROUTE IS BUILT (probe `tools/match06/r28_probe.mjs`, frames via `r25_frames.mjs`):
+  - ONE Catmull-Rom course (`src/world/course.ts`): 06 = `seg(34)` from mark '06' (s 188.91) to '07' (s 242.87), + the match06 path06
+    correction (fitted to the painted river). Benny's approved checkpoint = s0+10 = 198.91 (locked camera `cam06_locked.json`,
+    C = (1.72,-35.37,-132.64), looking 11 deg left / 11 deg down). 07 starts at (11.41,-48.51,-176.25), tangent (0.26,-0.10,-0.96).
+  - Everything else follows the course automatically: m06 river floor + foam banks (match06.ts, course frames), Benny / steering
+    (course.widthAt), 06 coins = `coins06.json` (s, lat, h, scale; 15 painted coins s 201.3-219.1 + 3 on the entry), camera
+    (cameraRig: m06cam chord 25 u + m06view = approved direction held to sB+20, eased into the chord view by sB+38).
+  - Tunnel `m06tun`: ONE straight cylinder R 14, axis parallel to the projector ray through the painted vanishing point (660,632),
+    through the 06 river's centroid + 3 u: O (3.62,-36.35,-132.6), ax (-0.02,-0.083,-0.996); 260 u long; rings `m06ring/m06gold`
+    every dA from the painted ring tops. m06 group visible ONLY during stage 06 (the 07 tubes hidden meanwhile).
+  - WHERE THE PAINTED OPENING LIES vs THE ROUTE: from the locked camera the route s 199->207 = the painted climb to the crest top
+    (px 506,530; +2.5 u above Benny's water, 8 u ahead); s 207-219 the route is INSIDE the ring interior, 1.5-4 u off the tunnel
+    axis (px 551,570 -> 678,704 = the painted coin trail into the rings); from s 221 it LEAVES the picture to the lower right
+    (px 714,736 -> 972,922) and ends at the 07 start = 12.1 u off the tunnel axis (8.7 right, 8.5 down) only ~44 u ahead of the
+    camera -> that is the "river turning right up the right wall". Painted coin SIZES put the painted river much deeper (crest
+    ~18 u, far coins 50-100 u, converging on the vanishing point) - impossible with the 07 start 44 u ahead.
+  - LENGTH BUDGET: s 202.6 (end of the painted-Benny hole zone) -> 06 end: arc 40.25 vs chord 38.34 = only 1.9 u of slack; a
+    1 u extra left sweep costs +0.73 u, a deeper (x1.2) painted curl +2.2 u. Any real reshaping makes 06 longer -> every 07+ s
+    value shifts (07 geometry / point / tangent still exact).
+* (B) PLAN: `&m06route=1` = (1) TUNNEL follows the river beyond the crest: the far tunnel axis is SHIFTED (sheared) toward the
+  river - rings keep their facing (round, never turned like m06bend) - so the river stays inside the ring interior into 07;
+  near rings / approved view untouched; (2) route: the painted curl stretched deeper along the approved camera's own rays
+  (start view unchanged) - only if it reads better, `&m06rk=`; (3) coins slid along their approved-camera rays onto the river
+  (same pixels at the start); (4) camera hold / hand-over tuned to the new route. Quick low-res checks first.
+
 ## (r27) WHERE I STOPPED / NEXT
 * ~15:20 UTC — relaunched (new account), worktree `/home/user/wt/s06` LOCAL branch `claude/rainbow-s06-match-c28`. Found SURVIVED (not lost
   as LAUNCH_R27 feared): `step1_hole/gameplay_NEW3.json` (query = NEW3, 8/8 pass, 91 coins) and `step2/{BEFORE,NEW}/` (7 shots each,

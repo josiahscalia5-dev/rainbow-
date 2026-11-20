@@ -1338,3 +1338,20 @@ Now the placement of bank-fill lumps in match05far.ts and the faster taper.
 
 > 🔧 **Bash** `{"command": "cat > /home/user/scratch/s05/tools/probe_coins.mjs <<'EOF'\n// s05 r28: coin defs + drawn screen positions near the 05 end (read-only)\nimport { pathToFileURL } from 'node:url';\nconst { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);\nconst [Q, FR = '0.95', PORT = '5275'] = process.argv.slice(2);\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(Number(PORT));\nconst browser = await chromium.launch({ args: CHROMIUM_ARGS });\ntry {\n  const page = await browser.newPage({ viewport: { width: 86 …[+1865 chars]`
 
+### 🧑 User — 2026-11-20T17:19:12.623Z
+
+> ↩︎ result: [render_slot] got slot 2 after 15s   ||   == 0.85 s 180.472
+> == 0.85 s 180.472   ||      26 | 183.57 | 0.09 |  | 468,750,88 | 0.71
+>    26 | 183.57 | 0.09 |  | 468,750,88 | 0.71   ||      27 | 183.56 | 0.72 |  | 537,728,68 | 0.72
+>    27 | 183.56 | 0.72 |  | 537,728,68 | 0.72   ||      28 | 183.71 | 1.03 |  | 563,708,49 | 0.67
+>    28 | 183.71 | 1.03 |  | 563,708,49 | 0.67   ||      29 | 184 | 1.02 |  | 550,693,41 | 0.58
+>    29 | 184 | 1.02 |  | 550,693,41 | 0.58   ||      30 | 184.34 | 0.8 |  | 514,685,46 | 0.48
+>    30 | 184.34 | 0.8 |  | 514,685,46 | 0.48   ||      31 | 184.7 | 0.46 |  | 468,680,45 | 0.38
+>    31 | 184.7 | 0.46 |  | 468,680,45 | 0.38   ||      32 | 185.05 | 0.13 |  | 426,668,38 | 0.29
+>    32 | 185.05 | 0.13 |  | 426,668,38 | 0.29   ||      33 | 185.37 | -0.14 |  | 392,651,35 | 0.22
+>    33 | 185.37 | -0.14 |  | 392,651,35 | 0.22   ||      34 | 185.65 | -0.42 |  | 359,634,34 | 0.16
+>    34 | 185.65 | -0.42 |  | 359,634,34 | 0.16   ||      35 | 185.93 | -0.74 |  | 325,621,35 | 0.11
+>    35 | 185.93 | -0.74 |  | 325,621,35 | 0.11   ||      36 | 186.2 | -1.02 |  | 297,608,33 | 0.06
+>    36 | 186.2 | -1.02 |  | 297,608,33 | 0.06   ||      37 | 186.47 | -1.28 |  | 273,595,32 | 0.02
+>    37  …[+1659 chars]
+
