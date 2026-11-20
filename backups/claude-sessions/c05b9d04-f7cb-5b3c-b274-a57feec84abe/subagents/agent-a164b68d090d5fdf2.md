@@ -946,3 +946,29 @@ While the chain runs, I'll plan step 3 with code reading only, no renders. First
 
 > 🔧 **Bash** `{"command": "until grep -q \"clips done\" /home/user/scratch/s06/chain_s2.log 2>/dev/null; do sleep 30; done 2>/dev/null & W=$!; sleep 530; kill $W 2>/dev/null; cat /home/user/scratch/s06/chain_s2.log; ls /home/user/scratch/s06/clip2_BEFORE/f 2>/dev/null | wc -l; ls /home/user/scratch/s06/clip2_NEW2/f 2>/dev/null | wc -l; date -u +%H:%M", "description": "Wait up to 9 minutes for chain", "timeout": 560000}`
 
+### 🧑 User — 2026-11-20T15:49:44.597Z
+
+> ↩︎ result: gameplay exit 0 15:47
+> [1]+  Terminated              until grep -q "clips done" /home/user/scratch/s06/chain_s2.log 2> /dev/null; do
+>     sleep 30;
+> done 2> /dev/null
+> 35
+> 0
+> 15:49
+
+### 🤖 Claude — 2026-11-20T15:49:47.600Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json;d=json.load(open('/home/user/rainbow-/qa/match/06/r25/step2/gameplay_NEW2.json'))\nc=d['checks'];print('query ok', d.get('query','').endswith('m06fcg=1'), 'pass', d.get('pass'), len(c), sum(1 for v in c.values() if v.get('pass')), c['realCoinPickups'], 'errors', d.get('errors'))\"", "description": "Check NEW2 gameplay results"}`
+
+### 🧑 User — 2026-11-20T15:49:47.657Z
+
+> ↩︎ result: query ok True pass True 8 8 {'pass': True, 'startCoins': 1330, 'endCoins': 2240, 'collected': 91} errors []
+
+### 🤖 Claude — 2026-11-20T15:49:49.804Z
+
+Gameplay with NEW2 passes: 8/8 checks, 91 coins, no errors. The BEFORE clip is rendering (35 frames so far). Waiting for both clips.
+
+### 🤖 Claude — 2026-11-20T15:49:51.171Z
+
+> 🔧 **Bash** `{"command": "for i in $(seq 1 52); do grep -q \"clips done\" /home/user/scratch/s06/chain_s2.log && break; sleep 10; done; cat /home/user/scratch/s06/chain_s2.log; ls /home/user/scratch/s06/clip2_NEW2/f 2>/dev/null | wc -l; date -u +%H:%M", "description": "Wait for clips to finish", "timeout": 560000}`
+

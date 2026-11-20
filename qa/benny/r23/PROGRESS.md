@@ -2,11 +2,24 @@
 
 ## (r27) WHERE I STOPPED / NEXT — 2026-11-20 ~15:30 UTC (new account; worktree `/home/user/wt/benny`, LOCAL branch `claude/rainbow-benny-c28`, port 5279, temp `/home/user/scratch/benny/`)
 
-**Step 1 (silk `&b20silk=2`) in progress:** `gameplay_silk.json` checked = 8/8 checks, 91 coins (1,330 → 2,240), victory, no errors.
-Stills judged (crops + native body crops): fur colour unchanged (median within ≤ 5 levels of BEFORE on all 15 shots); NEW adds a
-downward-combed streak direction but the pile stays pixel-fine with dark speckles; high-frequency detail +5–14 % vs BEFORE (not softer).
-Rendering the 04 swim clip BEFORE/NEW (4.5 s, same tool + schedule) → `qa/benny/r25/s4_silk/clip/`. Verdict to follow.
-**Next:** (2) hat crown vs the approved taller beanie; (3) 06 start star amber.
+**STEP 1 VERDICT — combed silk fur `&b20silk=2`: NOT AN IMPROVEMENT (keep the switch, do NOT add it to the best query).**
+Evidence: gameplay `qa/benny/r25/s4_silk/gameplay_silk.json` = 8/8 checks, 91 coins (1,330 → 2,240), victory, no errors.
+Labelled full-size crops `qa/benny/r25/s4_silk/COMPARE/{04_a_start,04_c_middle,05..08_c_middle}/{1_ORIGINAL_APPROVED,2_BEFORE,3_NEW}.png`
+(all 15 NEW shots in `0N/new/`, BEFORE = `qa/benny/r23/s3_star/0N/new/`, same query + tool). Clips (same tool, schedule straight
+0–1.5 s, LEFT 1.5–3, RIGHT 3–4.5, speed on every frame): `qa/benny/r25/s4_silk/clip/swim04_silk_{BEFORE,NEW}_{full,benny}_{1x,0.5x}.mp4`.
+Measured: fur colour unchanged (median within ≤ 5 levels of BEFORE on all 15 shots — dusty rose kept); high-frequency detail on the
+body +5–14 % vs BEFORE (not softer); shimmer in motion unchanged (body frame-to-frame change 23.2 vs 23.6).
+Closer: on native-size close crops the pile now runs downward like the approved combed fur (04, 05, 08). Still different: at phone
+size and in motion it looks the same as BEFORE — a dense pixel-fine pile with dark speckles, not the approved smooth silky tufts with
+soft lighter tips. New problem: none. Next for fur (later): soften the per-pixel grain itself (bigger soft-edged strands / filtered
+strand alpha), not the strand direction.
+
+**Step 2 (hat crown) in progress:** approved crown on 04–08 = steep, almost vertical sides rounding off under a high pompom, with
+FIVE thinner bands above the thick cuff (cream, violet, cream, violet, cream); ours = a wide hemisphere with 3–4 thick bands.
+Probe 1 (`/home/user/scratch/benny/crown/p04|p05`, crown lathe reshaped live + pompom lifted): taller conical v2/v3 = lampshade,
+not the approved shape. Probe 2 running: steep superellipse walls (exp 3–3.5) × heights 1.0–1.3 × current map / five-band map
+(`knit.py` stripes W0 V.25 W.40 V.55 W.70 V.84, 45 rows). Then a `&b20crown=1` switch in `benny20.ts` + proof on 04–08.
+**Next:** (3) 06 start star amber.
 
 ## (r26) WHERE I STOPPED / NEXT — 2026-11-20 ~14:00 UTC (new account; worktree `/home/user/wt/benny`, LOCAL branch `claude/rainbow-benny-c27`, port 5279)
 

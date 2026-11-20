@@ -2415,3 +2415,124 @@ The preview page is published. Now I'll record the ratings and results in the re
 
 > 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:r27-preview-published 2>&1 | grep -E '\"commit\"' ; python3 -I scripts/autosave-status.py; echo \"github: $(timeout 60 git ls-remote origin refs/heads/claude/rainbow-restore-screen-match-ijjdai | cut -f1)\"; git lfs ls-files | awk '$2==\"-\"' | wc -l; ls backups/wip/ | grep c28", "description": "Save preview results and verify GitHub", "timeout": 300000}`
 
+### 🧑 User — 2026-11-20T15:49:26.966Z
+
+> ↩︎ result: "commit": "6eb362a20ad8a57352ac317d88aa97089a8620f4",
+> AUTOSAVE OK | branch claude/rainbow-restore-screen-match-ijjdai | scheduler daemon | last verified backup 2026-11-20T15:49:01+00:00 (0.4 min ago) | local 6eb362a remote 6eb362a (match) | uncommitted 1
+> github: 6eb362a20ad8a57352ac317d88aa97089a8620f4
+> 0
+> claude__rainbow-benny-c28
+> claude__rainbow-s04-match-c28
+> claude__rainbow-s05-match-c28
+> claude__rainbow-s06-match-c28
+> claude__rainbow-s07-match-c28
+> claude__rainbow-s08-scenery-c28
+> lead__trial07-c28
+> lead__view04-c28
+> lead__view06-c28
+> lead__view07-c28
+
+### 🤖 Claude — 2026-11-20T15:49:41.971Z
+
+> 🔧 **TaskUpdate** `{"taskId": "5", "status": "completed"}`
+
+### 🧑 User — 2026-11-20T15:49:41.982Z
+
+> ↩︎ result: Updated task #5 status
+
+### 🤖 Claude — 2026-11-20T15:49:42.322Z
+
+> 🔧 **TaskUpdate** `{"taskId": "6", "status": "completed"}`
+
+### 🧑 User — 2026-11-20T15:49:42.330Z
+
+> ↩︎ result: Updated task #6 status
+
+### 🤖 Claude — 2026-11-20T15:50:02.856Z
+
+**RAINBOW 3D BACKUP VERIFIED**
+
+The startup script's GitHub fetch failed at session start, which left this session two saves behind your old account. I fetched and merged those saves by hand, and every check passes now.
+
+## How your screens look right now
+
+**Preview page:** https://claude.ai/artifact/WVqynQ46W6j3yZSGAqV3qA
+
+For each screen it shows your approved picture beside the real game at seven moments: start, early, middle, late, end, hard left and hard right. Tap any phone to enlarge it. These are my ratings by eye against your approved pictures, not measured percentages:
+
+| Screen | Start | While swimming | Overall |
+|---|---|---|---|
+| 04 Five Arrows | 8 | 6 | **6.5** |
+| 05 Flow Into the Current | 9.5 | 7.5 | **7.5** |
+| 06 Crest the Rinse Arch | 8.5 | 5 | **5.5** |
+| 07 Dive the Washer Tube | 9 | 4.5 | **5** |
+| 08 Final Spin Chamber | 9 | 7.5 | **7.5** |
+| 09 Final Wave / 10 Slide Into Hiding | 3 | — | **3** |
+
+No screen is at 8.5 while swimming yet. Every screen starts almost exactly like your picture, because the opening view is your own artwork painted onto the 3D scene. Once Benny moves, the parts the picture never showed are still plain 3D:
+- the river straightens into a chute
+- foam turns into rows of identical beads
+- walls and gold rings take over the screen
+
+05 and 08 hold up best. 07 and 06 drift the most. I also found a new defect: a flat, too-bright pink wall panel near the end of 07. The Screen 07 specialist now has it.
+
+**How to get every screen to 8.5 or higher:**
+1. Keep your picture's viewpoint while Benny swims, so the river stays in the centre of the screen.
+2. Carry each river's painted S-curves, crest and coin trail through the whole stage, not just the opening.
+3. Make a few extra views of each screen's world further along the route, like your three approved Screen 04 views, and paint them onto the walls and water as Benny moves forward. This is the biggest single step. Those three views cost $0.60 in total. I'll name each job and its cost and wait for your OK before spending anything.
+4. Give each screen its own soft foam clusters, shaped from its picture.
+5. Combine every screen's best version with the approved Benny into one playable build, then one Android build for your phone.
+
+I'm not building or rating 01, 02, 03 and 11, since those are your Google Flow videos. They stay in the game as video slots and nothing is removed.
+
+## What was restored
+- **Source:** `ccr-08ece3a6-xcwyls` at `e655f1953bb543b70b46bd47c9c074bc8531fb23` (15:03 UTC).
+- **This session's branch:** `claude/rainbow-restore-screen-match-ijjdai`, newest save `6eb362a20ad8a57352ac317d88aa97089a8620f4`, and GitHub holds exactly that commit.
+- **Pull request:** draft #24, marked DO NOT MERGE, as for earlier rounds.
+- **Autosave:** running every 5 minutes. Each save includes every specialist's unfinished edits.
+- **Conversations:** the previous lead's is saved to 14:52 UTC. Your last message there (13:58) asked to save everything every 5 minutes. The four specialists' conversations end between 13:57 and 14:03, when that account hit its usage limit; none of their work was rejected.
+- **Unfinished work:** all specialist copies, plus the separate trial07 copy the recovery script missed, are byte-for-byte identical to their saved snapshots.
+- **Approved references:** 13 of 13 unchanged.
+- **Large files (Git LFS):** all real files, none missing.
+- **Specialists:** all ten definitions unchanged.
+
+## Tools
+- **Working:**
+  - GitHub
+  - World Labs key (5,420 credits)
+  - World Labs Atlas: now active; the "no active Atlas account" problem from the last two rounds is gone
+  - fal
+  - Playwright
+  - Blender 5.3
+  - Android SDK, Java and Gradle
+  - Node
+  - ffmpeg and the pixel-comparison tool
+- **DevTools and Spector:** these run as libraries inside the game page, not as Claude tools. The previous trial's files were lost with the old machine; I recovered its scripts and findings from the saved conversation. Its main finding is that captures are slow because this machine has no GPU and draws each frame on the CPU, about 5 seconds per frame.
+- **Runpod:** the old account only read its documentation; nothing was prepared or paid for.
+- **Needs you:**
+  - Hugging Face isn't connected on this account. Connect it in claude.ai → Connectors; it's optional.
+  - Context7 asks for a sign-in; it isn't needed for the game.
+  - 11 of your plugins aren't enabled on this account. I showed an install card; anything you enable loads in your next session.
+
+## Specialists
+- **Running now:**
+  - **Screen 07:** your new foam note (keep the outer-bank foam, soft varied clusters, no bead lines), the pink panel defect, and a gameplay check.
+  - **Screen 06:** first, the opening comparison you're still owed; then foam height, the crest and the winding river.
+  - **Screen 04:** short glints, soft cloud-bank foam and lower pink edges.
+  - **Benny:** a verdict on the softer fur, then the hat crown.
+- **Waiting:**
+  - **Screen 08:** finished (candidate K23-3), waiting for your verdict.
+  - **Screen 05:** next in line, for its end section and hard-left view.
+
+## Lost or unresolved
+Some temporary outputs were lost with the old machine: a few test renders, Benny's hat test sheet and two clip runs. The specialists are redoing only those. Everything you've seen before is safe in the repository.
+
+## Two questions
+1. **Screens 09 and 10:** on 17 Nov you listed them as Flow videos, so they still show old stand-in scenes. Should they stay videos, or become playable screens?
+2. **Extra-view artwork (step 3 above):** should I prepare the jobs and costs per screen for your OK?
+
+### 🧑 User — 2026-11-20T15:50:03.001Z
+
+Stop hook feedback:
+[command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+
