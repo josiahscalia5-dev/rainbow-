@@ -2638,3 +2638,123 @@ Next I'll check which app features the code implements (menus, settings, audio, 
 > capture.mjs
 > ci …[+561 chars]
 
+### 🤖 Claude — 2026-11-20T11:04:55.054Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/export/Rainbow_App_Review/2_screen_versions/apply_version.py", "content": "#!/usr/bin/env python3\n\"\"\"Make a runnable copy of one screen version (cross-platform, Python 3.8+, no dependencies).\n\n    python3 apply_version.py --list\n    python3 apply_version.py screen07_candidate_r23            # -> ../run_screen07_candidate_r23/\n    python3 apply_version.py screen04_s04 /path/to/target_dir\n\nWhat it does: copies ../1_main_project to the target, deletes the files listed in <version>/DELETED_FI …[+2242 chars]`
+
+### 🧑 User — 2026-11-20T11:04:55.631Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/export/Rainbow_App_Review/2_screen_versions/apply_version.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T11:04:57.194Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/export/Rainbow_App_Review/2_screen_versions && python3 apply_version.py --list; for v in */; do grep -l . $v/overlay/package.json $v/overlay/package-lock.json 2>/dev/null; done; echo \"(package files changed above, if any)\"", "description": "Test the version list and check dependency changes"}`
+
+### 🧑 User — 2026-11-20T11:04:57.469Z
+
+> ↩︎ result: benny_all_screens            screen 04-08 (Benny)  Benny specialist — RUNNING at export time (felt star, knit, fur). Best query not approved.
+> screen04_s04                 screen 04             Screen 04 specialist (washer-environment-modeler) — RUNNING at export time (round 24), ste
+> screen05_s05                 screen 05             Screen 05 specialist — QUEUED (not running). Last finished step r19 step 2 (committed). NO
+> screen06_lead_cone_test      screen 06             Lead test, IN PROGRESS, not proven: &m06ripz=1 + QA debug &m06wdbg=1 (diagnosis of the ope
+> screen06_s06                 screen 06             Screen 06 specialist — finished 3 steps in round 23 (uncommitted, snapshotted). Candidates
+> screen07_candidate_r23       screen 07             The exact build of the labelled Screen 07 clip the user reviewed (~10:35 UTC): rounder ful
+> screen07_s07                 screen 07             Screen 07 specialist (water-fx-specialist) — RUNNING at export time on the user's 3 priori
+> screen08_s08                 screen 08             Screen 08 polish specialist — RUNNING at export time (coin sizing, towel). K16 + m08gl = n
+> (package files changed above, if any)
+> Shell cwd was reset to /ho …[+16 chars]
+
+### 🤖 Claude — 2026-11-20T11:05:11.560Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad; cat > $S/verify_pkg.sh <<'EOF'\n#!/usr/bin/env bash\n# verify the exported (unzipped) package: main project + every screen version\nPKG=$1; T=$2; rm -rf \"$T\"; mkdir -p \"$T\"; LOG=\"$T/verify.log\"; exec > >(tee \"$LOG\") 2>&1\necho \"== verify $(date -u +%FT%TZ) pkg=$PKG\"\ncp -r \"$PKG/1_main_project\" \"$T/main\" && cd \"$T/main\"\necho \"-- node $(node -v) npm $(npm -v)\"\ntimeout 900 npm ci --prefer-offline --no-audit --no-fund > \"$T/npm_ci.log\" 2>&1; echo \"npm ci exit $? ($(tail -1 \"$T …[+1684 chars]`
+
+### 🧑 User — 2026-11-20T11:05:11.840Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-20T11:05:18.477Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad; bash $S/verify_pkg.sh $S/export/Rainbow_App_Review $S/verify_stage 2>&1 | tail -20", "description": "Verify the staged package: install, typecheck, tests, build", "timeout": 5400000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T11:05:18.549Z
+
+> ↩︎ result: Command running in background with ID: b6eoni4ze. Output is being written to: /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/tasks/b6eoni4ze.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-20T11:05:46.022Z
+
+While that runs, I'll write the README and manifest. A few facts to confirm first: the build-time URL switch variable, what `?qa=1` does, and the current Screen 06 / 07 candidate queries.
+
+### 🤖 Claude — 2026-11-20T11:05:47.528Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"VITE_RAINBOW\" src vite.config.ts | head -5; sed -n 40,50p src/game/Game.ts; grep -n \"function gotoCheckpoint\" -A6 src/game/Game.ts | head -10; cat qa/match/07/r23/s2_sriver/query_NEW.txt; echo; cat qa/match/08/r23/step1_m08gl/QUERY_NEW.txt", "description": "Confirm build-time switch variable, qa mode and candidate queries"}`
+
+### 🧑 User — 2026-11-20T11:05:47.798Z
+
+> ↩︎ result: src/vfx/waterRibbon.ts:147: * Packaged builds (Android APK) have no URL query: `VITE_RAINBOW_Q05="silk05=1&puff05=1" npm run android:debug` bakes
+> src/vfx/waterRibbon.ts:150:const BUILD_Q05: string = import.meta.env?.VITE_RAINBOW_Q05 ?? '';
+> src/game/match.ts:7: * VITE_RAINBOW_Q05 (flag05).
+> 
+> export async function startGame(canvas: HTMLCanvasElement) {
+>   const qs = new URLSearchParams(location.search);
+>   const qaMode = qs.has('qa');
+>   const renderer = createRenderer(canvas, { preserveDrawingBuffer: qaMode });
+>   const dpr = qs.has('dpr') ? Number(qs.get('dpr')) : Math.min(window.devicePixelRatio || 1, 2);
+>   renderer.setPixelRatio(dpr);
+>   const scene = new THREE.Scene();
+>   scene.environment = createCandyEnvironment(renderer);
+>   scene.background = new THREE.Color('#b23fb4');
+>   const fog = new THREE.FogExp2('#ffbde9', 0.0035);
+> match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1&m07foam=1&m07coinsz=1&m07nearw=1&m07foamb=1&m07band=1&m07end=1&m07cloud=1&m07satin=1&m07sbend=1
+> 
+> match08=1&coins08px=1&m08bw=1&m08fill=1&m08arch=1&m08swim=1&m08seam=1&m08sill=1&m08towel=1&m08far=1&m08coinv=1&m08ceil=1&m08near=1&m08cup=1&m08rw=1&m08drum=1&m08ring=1&m08cupg=1&m08bore=1&m …[+52 chars]
+
+### 🤖 Claude — 2026-11-20T11:05:52.293Z
+
+Now the review README.
+
+### 🤖 Claude — 2026-11-20T11:06:44.847Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/export/Rainbow_App_Review/REVIEW_README.md", "content": "# RAINBOW — complete app review package\n\n**Owner's goal:** the player should feel they have *entered the approved pictures*. The real mobile game (portrait, real 3D,\nThree.js + Capacitor/Android) must keep each approved picture's scenery, layout, water, colours, lighting and character look\n**while Benny swims, steers and moves between screens**, not only in the start view. Target: ≥ 9/10 likeness per playable\nscreen, judged in motion. ** …[+13698 chars]`
+
+### 🧑 User — 2026-11-20T11:06:45.458Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/export/Rainbow_App_Review/REVIEW_README.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T11:06:48.946Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/export/Rainbow_App_Review/.env.example", "content": "# Rainbow — example configuration (PLACEHOLDERS ONLY; the game itself needs none of these)\n\n# Build time: bake URL switches into a packaged build (APKs have no URL bar). Example = Screen 08 with the preferred coins.\nVITE_RAINBOW_Q05=\"match08=1&coins08px=1\"\n\n# Asset / QA tooling only. The repository's scripts do not read these variables: in the original cloud environment a\n# network proxy added the keys to requests. To use the tools elsewh …[+322 chars]`
+
+### 🧑 User — 2026-11-20T11:06:49.900Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/export/Rainbow_App_Review/.env.example (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T11:07:04.594Z
+
+> 🔧 **SendMessage** `{"to": "a9747714b21c05873", "summary": "Latest Screen 08 is now K23-3", "message": "Update from the lead: the latest Screen 08 is now K23-3 (s08 finished ~11:20 UTC) = K16 & m08gl=1&m08coinsz=1&m08towelm=1&m08towelv=1, saved in /home/user/rainbow-/qa/match/08/r23/QUERY_CANDIDATE_K23-3.txt. Steps 2–3 change only the coins above Benny and the towel on the platform; the water, foam banks and river at the 08 inlet are identical to K16 & m08gl=1, so your 07→08 water-join work is unaffected. Please use K23-3 as \"the latest Screen 08\" for the final labelled clips (NEW and the fair BEFORE). Note tha …[+498 chars]`
+
+### 🧑 User — 2026-11-20T11:07:04.677Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to a9747714b21c05873 at its next tool round. Moved 1 running tool call to the background without stopping it, so that round no longer waits for it. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"a9747714b21c05873","name":"a9747714b21c05873","ref":"7e6580"}}
+
+### 🤖 Claude — 2026-11-20T11:07:06.404Z
+
+> 🔧 **Bash** `{"command": "cat /home/user/rainbow-/../../tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/verify_stage/verify.log 2>/dev/null || cat /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/verify_stage/verify.log; uptime", "description": "Check package verification progress"}`
+
+### 🧑 User — 2026-11-20T11:07:06.756Z
+
+> ↩︎ result: == verify 2026-11-20T11:05:18Z pkg=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/export/Rainbow_App_Review
+> -- node v22.23.5 npm 10.9.9
+> npm ci exit 0 (added 124 packages in 13s)
+> main tsc exit 0 (0 lines)
+> main continuity exit 0 ::  "ok": true,   "verticalDrop": 61.19, 
+> main vite build exit 0 :: dist/assets/main-C-IFn2sp.js                                905.58 kB │ gzip: 262.77 kB ✓ built in 18.67s 
+> sha256sum: character_official_cartoon_girl_original.jpg: No such file or directory
+> sha256sum: WARNING: 1 listed file could not be read
+> approved screens sha256 OK: 12
+> character ref: official_cartoon_girl_original.jpg: OK
+> benny_all_screens: tsc exit 0 (0 lines), continuity exit 0 ::  "ok": true,
+>  11:07:06 up 45 min,  0 user,  load average: 34.48, 28.87, 21.74
+
+### 🤖 Claude — 2026-11-20T11:07:22.965Z
+
+> 🔧 **Bash** `{"command": "pkill -f verify_pkg.sh; pkill -f \"verify_stage\" ; sleep 1; cd /home/user/rainbow- && timeout 240 bash -c 'until flock -n backups/.autosave.lock true; do sleep 2; done'; timeout 400 python3 scripts/rainbow-autosave.py --reason manual:review-export-freeze-2 2>&1 | grep -E '\"result\"|\"commit\"|skipping'; Y=$(git rev-parse HEAD); echo \"Y=$Y remote=$(git ls-remote origin refs/heads/ccr-5be1062a-0ffyej | cut -f1)\"; git show $Y:backups/wip/claude__rainbow-s08-scenery-c25/INFO.json | python3 -c \"import json,sys;d=json.load(sys.stdin);print(d['time'],d['dirty_tracked'],d['untracked_ …[+166 chars]`
+

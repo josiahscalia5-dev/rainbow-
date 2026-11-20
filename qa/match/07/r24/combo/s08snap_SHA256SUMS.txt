@@ -1,6 +1,5 @@
 83952aa870df222b08d392ad373a50112e0b1fc664b7e6e173730736566e69ac  ./HEAD.txt
-ffea05ab541e8dd0dd217121467c983fb608f276d6bf0bd52acc0fff81ab9369  ./SHA256SUMS
-2f45e56ee79294b170953770bca90b42b7b60ec37d7ef91e5e4eb6a751158366  ./SNAP_TIME.txt
+ea8f00a4c155edf332688af286920a84bfb23af80dd6747ae22d01c2024fa751  ./SNAP_TIME.txt
 fe67abb168b62a46d07c40d333227135c10b75cd70e0b656d11ffbde2ab2e5f6  ./assets/textures/match08/bore08.json
 f8b8d9548c4e3f15f4d9cdaa7e6bfeecd1a3191a447b2f760af7b1cc8ecc6237  ./assets/textures/match08/cam08_locked.json
 f25b8b1bf3c323922c25dd48615f906e2d5d71971cf8cfac3a6b630cf51f54d9  ./assets/textures/match08/coins08.json
@@ -30,4 +29,4 @@ a3d73c991c0422b37fd90a351f23cb861e4fcec47834d075652901a0421e2fe8  ./assets/textu
 e0ee8c6d3d8e7fd2a715cfacb637a3bb0cc25ef9a7a2ace68735bc25e9795e94  ./assets/textures/match08/towel08_mask.png
 7d62bee8a4cc94a7245ae07ae740d4da88d3ead41327d86db65174a078f07b41  ./src/gameplay/coins.ts
 6f71c9ac42d0985a20618d926d04663f440703a8e072587af689c5da679de957  ./src/world/course.ts
-2421159b9c9efe0a8e4e2c93d6545bb23e7f304b86d3f7d4445ac1e9ce422a5a  ./src/world/match08.ts
+4b62f965410668a038f74cc2ec170d89a248be88cced5bace053395fc18cca03  ./src/world/match08.ts

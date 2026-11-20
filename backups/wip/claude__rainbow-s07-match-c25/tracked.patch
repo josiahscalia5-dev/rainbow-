@@ -135,7 +135,7 @@ index 0f2c1f7..d7f2bdd 100644
      const a = st('07');
      for (const c of coins07.coins) {
 diff --git a/src/world/course.ts b/src/world/course.ts
-index 531778e..5321b98 100644
+index 531778e..9a82521 100644
 --- a/src/world/course.ts
 +++ b/src/world/course.ts
 @@ -103,8 +103,16 @@ interface RouteData {
@@ -256,7 +256,31 @@ index 531778e..5321b98 100644
      this.P = new Float32Array(this.N * 3);
      this.T = new Float32Array(this.N * 3);
      this.U = new Float32Array(this.N * 3);
-@@ -556,6 +617,14 @@ export class Course {
+@@ -484,11 +545,23 @@ export class Course {
+     const WU = new THREE.Vector3(0, 1, 0);
+     const ups: THREE.Vector3[] = [];
+     let prevUp = WU.clone();
++    // r24 m07swing: on the S-bent 70° drop world-up projected off the tangent twists the frame (the sideways sweep turns the
++    // horizontal heading by up to ~45° on so steep a slope): 'right' then leaves the chute surface (Benny steering, coins and foam
++    // dipped under / rose off the water by up to 0.7 u per unit of lateral) and Benny rolled. There the frame's up is the chute
++    // surface's own normal — the drop's profile (one world-YZ plane) extruded along world X: up = normalize(X × tan), so 'right'
++    // = across the river IN the chute surface. Identical to the projection where the drop is not bent (tan.x = 0).
++    const bS = this.bend07 && sw07 ? this.bend07 : null;
++    const XW = new THREE.Vector3(1, 0, 0), upX = new THREE.Vector3();
+     for (let i = 0; i < this.N; i++) {
+       const t = tan[i];
+       let up = WU.clone().addScaledVector(t, -WU.dot(t));
+       if (up.lengthSq() < 1e-4) up = prevUp.clone().addScaledVector(t, -prevUp.dot(t));
+       up.normalize();
++      if (bS) {
++        const si = i * this.ds;
++        const wb = THREE.MathUtils.smoothstep(si, bS.s0 - 2, bS.s0) * (1 - THREE.MathUtils.smoothstep(si, bS.s1, bS.s1 + 2));
++        if (wb > 0) { upX.crossVectors(XW, t); if (upX.y < 0) upX.negate(); if (upX.lengthSq() > 1e-6) up.lerp(upX.normalize(), wb).normalize(); }
++      }
+       // banking from lateral curvature
+       const i0 = Math.max(0, i - 4), i1 = Math.min(this.N - 1, i + 4);
+       const k = tan[i1].clone().sub(tan[i0]).divideScalar((i1 - i0) * this.ds);
+@@ -556,6 +629,14 @@ export class Course {
      return w > 0 ? v / w : this.stageAtS(s)[key];
    }
  
