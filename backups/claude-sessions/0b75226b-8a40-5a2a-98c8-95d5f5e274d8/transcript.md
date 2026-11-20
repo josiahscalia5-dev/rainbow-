@@ -4833,3 +4833,40 @@ While both run, I'll update the progress notes and the proof README for the fina
 
 > 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='qa/match/06/r25/PROGRESS.md'; t=open(p).read()\ni=t.index('## (r29b) WHERE I STOPPED / NEXT')\nblk='''## (r29c) WHERE I STOPPED / NEXT — lead, user ~19:33 UTC: \"the SAME purple washer tunnel ... must continue throughout Screen 06, until the actual transition into Screen 07\"\n* Cause of the \"much brighter pink-and-yellow tunnel\" in the later NEW frames = the 07 tube (`tube07`) shown ahead from s07 - 70 -> now from\n  s07 - 12 only (~1 s): 30-85 % = the same purple-and-gold ring tunnel + warm glow (quick check `/home/user/scratch/s06/d3b_new`).\n* `&m06leg= …[+3296 chars]`
 
+### 🧑 User — 2026-11-20T19:41:32.492Z
+
+> ↩︎ result: "commit": "ad7343a839ce34a2569a04b28cf13f0f69f01d13",
+> AUTOSAVE OK | branch ccr-ac160b4c-3hdecw | scheduler daemon | last verified backup 2026-11-20T19:41:12+00:00 (0.3 min ago) | local ad7343a remote ad7343a (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-20T19:41:39.456Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && until grep -q \"exit\" clip_new2.log 2>/dev/null && grep -q \"gameplay exit\" gameplay_final.log 2>/dev/null; do sleep 5; done; tail -2 clip_new2.log; tail -1 gameplay_final.log; date -u +%H:%M:%S", "description": "Wait for the final NEW video and gameplay rerun", "timeout": 2400000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T19:41:39.535Z
+
+> ↩︎ result: Command running in background with ID: br19vobuh. Output is being written to: /tmp/claude-0/-home-user-rainbow-/0b75226b-8a40-5a2a-98c8-95d5f5e274d8/tasks/br19vobuh.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-20T19:41:44.814Z
+
+While it renders, I'll write the side-by-side script: each frame shows BEFORE on the left and NEW on the right with labels, game time and steering phase, encoded at normal and half speed.
+
+### 🤖 Claude — 2026-11-20T19:41:55.624Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/match/06/r29/make_side_by_side.py", "content": "#!/usr/bin/env python3\n\"\"\"r29 lead: ONE continuous BEFORE | NEW comparison video of Screen 06 (both start at the approved view, real game speed, same steering\nschedule; the shorter BEFORE holds its last frame once it has reached Screen 07). Frames from tools/match06/r25_open_clip.mjs runs.\nusage: python3 -I make_side_by_side.py <clip_before_dir> <clip_new_dir> <out_prefix>  -> <out_prefix>_1x.mp4 + _0.5x.mp4\"\"\"\nimport json, subprocess, sys, tempfile\nfrom pathlib import Path\nfrom PIL import Image,  …[+2051 chars]`
+
+### 🧑 User — 2026-11-20T19:41:55.679Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/match/06/r29/make_side_by_side.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T19:41:57.715Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && echo \"NEW frames: $(ls clip_new2/f 2>/dev/null | wc -l)\"; tail -1 gameplay_final.log 2>/dev/null; date -u +%H:%M:%S", "description": "Check progress of the final video and gameplay rerun"}`
+
+### 🧑 User — 2026-11-20T19:41:57.760Z
+
+> ↩︎ result: NEW frames: 20
+> gameplay exit 0
+> 19:41:57
+> Shell cwd was reset to /home/user/rainbow-
+
