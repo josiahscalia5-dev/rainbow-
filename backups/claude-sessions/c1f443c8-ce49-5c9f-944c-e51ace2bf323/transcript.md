@@ -1556,3 +1556,24 @@ Pinker tips are better. Baking them in and re-shooting the NEW set.
 
 > 🔧 **Bash** `{"command": "sed -i \"s/\\[n('ttr', 1.0), n('ttg', 0.6), n('ttb', 0.82)\\]/[n('ttr', 1.0), n('ttg', 0.42), n('ttb', 0.92)]/\" src/characters/benny/benny20.ts && grep -c \"ttg', 0.42\" src/characters/benny/benny20.ts && npx tsc --noEmit && SP=/tmp/claude-0/-home-user-rainbow-/c1f443c8-ce49-5c9f-944c-e51ace2bf323/scratchpad; export AUDIT_SHOTS='[[\"a_start\",0,null],[\"c_middle\",0.35,null],[\"f_hard_left\",0.35,-1]]'; for n in 04 05 06 07 08; do O=qa/benny/r23/s1_tuft/$n/new; AUDIT_PORT=5293 node tools/benny23/shots_c.mjs $O $n \"$(cat $SP/q$n.txt)&benny20=1&b20expo=1&b20ppw=0.45&b20tuft=1\" 2> …[+613 chars]`
 
+### 🧑 User — 2026-11-20T03:59:29.985Z
+
+> ↩︎ result: 1
+>  "pass": true,
+> -rw-r--r-- 1 root root 1727252 Nov 20 03:59 qa/benny/r23/s1_tuft/swim05_tuft.mp4
+> [This command modified 1 file you've previously read: src/characters/benny/benny20.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-20T03:59:44.045Z
+
+> 🔧 **Bash** `{"command": "mkdir -p qa/benny/r23 && cat > qa/benny/r23/PROGRESS.md <<'EOF'\n# Benny round 23 — progress (branch `claude/rainbow-benny-c23`)\n\n## (r23) WHERE I STOPPED / NEXT — 2026-11-20\n\n**Done:** step 1 `&b20tuft=1` (fluffy tuft volume, lighter rose tips) — GOOD IMPROVEMENT (partial), Benny-centred crops.\nBest Benny query now: `&benny20=1&b20expo=1&b20ppw=0.45&b20tuft=1` (all opt-in; default build unchanged).\n**Next (lead order 03:45 UTC):** (2) `tools/benny20/knit.py`: cream (not lavender) light stripes, vertical cuff ribs, violet\nnot bluer → re-test `b20knit=1`; (3) stitched felt s …[+2378 chars]`
+
+### 🧑 User — 2026-11-20T03:59:51.842Z
+
+> ↩︎ result: Uploading LFS objects: 100% (1/1), 1.7 MB | 0 B/s, done.
+> b9c91d0
+> b9c91d0
+
+### 🤖 Claude — 2026-11-20T03:59:57.706Z
+
+> 🔧 **mcp__claude-code-remote__send_message** `{"session_id": "session_0179kWgNJzw5v4674DNtMpda", "message": "Benny r23 — STEP 1 done: soft fluffy volume, switch &b20tuft=1 (on top of &benny20=1&b20expo=1&b20ppw=0.45). Commit b9c91d0 (pushed, remote == HEAD). Verdict: GOOD IMPROVEMENT (partial) — body now shows soft tuft clusters with lighter rose tips and a little volume instead of flat velvet; outline stays round with a soft fuzzy edge; colour stays the step-2 dusty rose. Still finer/grainier than the approved's long silky combed tufts; difference is small at gameplay size on 05–08. Rejected on the way: darker grainy v1, long-tier/ragged …[+423 chars]`
+
