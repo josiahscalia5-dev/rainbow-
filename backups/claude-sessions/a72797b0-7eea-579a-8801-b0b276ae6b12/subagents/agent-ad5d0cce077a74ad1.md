@@ -886,3 +886,75 @@ Let me view the approved reference and the lead's e_end / f_hard_left / g_hard_r
 > {
 >   float lat = vRivLat;                                   // units from the tunnel axis  …[+8222 chars]
 
+### 🤖 Claude — 2026-11-20T17:04:30.984Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"uJnLay\\|uJnP\" src/vfx/waterRibbon.ts | head; ", "description": "Find join layout usage in ribbon shader"}`
+
+### 🧑 User — 2026-11-20T17:04:31.111Z
+
+> ↩︎ result: 525: * same water — the same tile, the same far layout (uJnLay: rows by virtual depth, filled once by match05far.ts), the same
+> 532:  uJnLay: { value: null as THREE.Texture | null },
+> 534:  uJnP: { value: new THREE.Vector4(0, 1, 2, 0) },
+> 819:uniform sampler2D uJnLay; uniform vec4 uJnP;
+> 821:  float x = clamp(Z / uJnP.y, 0.0, 1.0) * (uJnP.z - 1.0);
+> 822:  float i = floor(x), f = x - i, i1 = min(i + 1.0, uJnP.z - 1.0);
+> 823:  float y0 = (i + 0.5) / uJnP.z, y1 = (i1 + 0.5) / uJnP.z;
+> 824:  a = mix(texture2D(uJnLay, vec2(0.25, y0)), texture2D(uJnLay, vec2(0.25, y1)), f);
+> 825:  b = mix(texture2D(uJnLay, vec2(0.75, y0)), texture2D(uJnLay, vec2(0.75, y1)), f);
+> 2070:        float jsv = uJnP.x + jb.w;
+
+### 🤖 Claude — 2026-11-20T17:04:35.419Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 2030,2110p src/vfx/waterRibbon.ts", "description": "Read ribbon join blending code"}`
+
+### 🧑 User — 2026-11-20T17:04:35.469Z
+
+> ↩︎ result: // ribbons stay where they are painted, only what lies along them travels; foam banks and bubbles stay still
+>         vec2 fd = pjFlowDir(u, s, mE);
+>         float k = fd.y / sqrt(1.0 + fd.x * fd.x * uPjFlow2.z * uPjFlow2.z);     // same speed along any direction
+>         float oA = (sA - s) * k, oB = (sB - s) * k;
+>         sA = s + oA; uA = u + fd.x * oA;
+>         sB = s + oB; uB = u + fd.x * oB;
+>       }
+>       float wA = 1.0 - abs(2.0 * ph - 1.0);
+>       float wEA, wEB, wNA, wNB;
+>       vec3 tA = pjTarget(uA, sA, mE, wEA, wNA);
+>       vec3 tB = pjTarget(uB, sB, mE, wEB, wNB);
+>       vec3 tgt = mix(tB, tA, wA);
+>       float wEx = mix(wEB, wEA, wA);
+>       float wNx = mix(wNB, wNA, wA);
+>       float det = mix(pjDetail(uB, sB), pjDetail(uA, sA), wA);
+>       // ?projnear05=1: the crisp tile carries its own approved streaks — the detail layer stays on the near layer only
+>       float dW = 1.0 - wEx;
+>       float wT2m = pjT2W(mE);   // share of T2 in the tile
+>       dW *= 1.0 - (1.0 - wNx) * wT2m * (1.0 - uPjNear.y);
+>       tgt = clamp(tgt + det * uPjDS.z * dW, 0.0, 1.0);
+>       if (uPjFlow2.x > 0.5 && uPjFlow2.w < 0.999) {
+>         // keep a share of the approved picture exactly where it is painted (the  …[+2600 chars]
+
+### 🤖 Claude — 2026-11-20T17:04:41.162Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 812,860p src/vfx/waterRibbon.ts; grep -n \"jnK\" src/vfx/waterRibbon.ts | head -5", "description": "Read jnRow/jnU helpers"}`
+
+### 🧑 User — 2026-11-20T17:04:41.199Z
+
+> ↩︎ result: uniform sampler2D uPjF; uniform float uPjFZ; uniform vec3 uFbC0; uniform vec3 uFbT; uniform vec3 uFbRt; uniform vec4 uFbP;
+> #ifdef M05FMAG
+> uniform float uFmD0;
+> #endif
+> #ifdef M05JOIN
+> // m05join (Screen 05 round 13): the far layout table (match05far.ts) + the far river's band mapping onto T2 (as
+> // materials.ts FPAINT_PARS: T2 columns left band -0.76 … -0.60, core -0.27, right band 0.06 … 0.45)
+> uniform sampler2D uJnLay; uniform vec4 uJnP;
+> void jnRow(float Z, out vec4 a, out vec4 b) {
+>   float x = clamp(Z / uJnP.y, 0.0, 1.0) * (uJnP.z - 1.0);
+>   float i = floor(x), f = x - i, i1 = min(i + 1.0, uJnP.z - 1.0);
+>   float y0 = (i + 0.5) / uJnP.z, y1 = (i1 + 0.5) / uJnP.z;
+>   a = mix(texture2D(uJnLay, vec2(0.25, y0)), texture2D(uJnLay, vec2(0.25, y1)), f);
+>   b = mix(texture2D(uJnLay, vec2(0.75, y0)), texture2D(uJnLay, vec2(0.75, y1)), f);
+> }
+> float jnSeg(float x, float x0, float x1, float u0, float u1) { return mix(u0, u1, clamp((x - x0) / max(x1 - x0, 1e-3), 0.0, 1.0)); }
+> float jnU(float lat, vec4 a, vec4 b) {
+>   float xB = a.x, hw = a.y, cL = a.z, wL = a.w, cR = b.x, wR = b.y, core = b.z;
+>   float a0 = xB - hw, a1 = cL - wL, a2 = cL, a3 = cL + wL, a4 = core, a5 = cR - wR, a6 = cR, a7 = cR + wR, a8 …[+1614 chars]
+
