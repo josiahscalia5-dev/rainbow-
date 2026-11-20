@@ -1662,3 +1662,7 @@ Step 2 now: the clean water edge. Let me look closely at where the water meets t
 > 1875	  // foam's m04foamn0 / m04foamn1, like the sprite bubbles) so nothing pops in the face. Tunables: m04bbs heap size,
 > 1876	  // m04bbb pre-opening bin length (u), m04bbe self-light, m04bbc tint (0 white .. 3 blue-lilac), m …[+14563 chars]
 
+### 🤖 Claude — 2026-11-20T09:53:25.142Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s04; V=/home/user/rainbow-/qa/match/04/r23/s04_tools/variant.sh; export BASE=/home/user/rainbow-/qa/match/04/r23/s1_arrows/QUERY_K23-S1.txt\nexport SHOTS='[[\"c_middle\",0.35,null],[\"d_late\",0.6,null],[\"e_end\",0.85,null],[\"g_hard_right\",0.35,1]]'\n( $V $S/s2/E1 5273 \"m04bbdf=30&m04bbdf1=40&m04bbdx=-0.25&m04bbdk=0.3\" & $V $S/s2/E2 5274 \"m04bbdf=30&m04bbdf1=40&m04bbdx=-0.25&m04bbdk=0.3&m04bbd0=0.6&m04bbd1=0.45&m04bbdg=0.4\" & wait )\nfor sh in c_middle d_late e_end; do python3 /home/user/rai …[+244 chars]`
+

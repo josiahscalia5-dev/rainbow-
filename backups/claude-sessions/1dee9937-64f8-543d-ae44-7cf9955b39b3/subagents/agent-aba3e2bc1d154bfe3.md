@@ -443,3 +443,11 @@ Let me look at the `m08gl` code path and the nq08 tile textures.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-20T09:53:04.873Z
+
+The worktree is clean at `3c0fa97`. I'll render the missing `m08gl` shots plus a00 and f06 (to check the r17 renders are still reproducible on this machine), one render at a time.
+
+### 🤖 Claude — 2026-11-20T09:53:07.884Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && K16=$(cat /home/user/rainbow-/qa/review_r21/audit/QUERY_08.txt) && Q=$(node /home/user/rainbow-/tools/lead23/setq.mjs \"$K16\" \"m08gl=1\") && echo \"$Q\" > /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/q_gl.txt && S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s1new && time (M08_DET=1 M08_ONLY=a00,f06,t33,t66,t95,f20 timeout 1500 node tools/match08/shots08.mjs 08 $S \"$Q\" 2>&1 | tail -8)", "description": "Render missing m08gl shots plus a00/f06 check", "timeout": 1600000}`
+

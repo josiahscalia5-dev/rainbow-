@@ -1495,3 +1495,67 @@ Now I'll dump the 07 route geometry in the tube frame (lane offset from the tube
 
 > ↩︎ result: s0 247.05563400776518 s1 390.1617102628636 marks {"top":312.41331806416713,"bottom":390.071167658835,"m08":390.1617102628636} coins 24
 
+### 🤖 Claude — 2026-11-20T09:53:24.590Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"meander05\\|S05\\b\\|S05 =\\|export class Course\\|constructor\\|sample(s\\|stageAtS\\|widthAt\\|buildRoute\" src/world/course.ts | head -30", "description": "Locate meander and Course API"}`
+
+### 🧑 User — 2026-11-20T09:53:24.644Z
+
+> ↩︎ result: 119:export const S05 = {
+> 147:function meander05Sine(u: number): number {
+> 148:  const { L, lambda, uCrest, a0, a1 } = S05;
+> 153:const U05_KEEP = S05.uCrest + S05.lambda / 4;
+> 170:const KNOTS05: [number, number][] = [[U05_KEEP, meander05Sine(U05_KEEP)], ...MEANDER05_KNOTS, [U05_TAIL, meander05Sine(U05_TAIL)]];
+> 171:const SLOPE05_KEEP = slopeOf(meander05Sine, U05_KEEP);
+> 172:const SLOPE05_TAIL = slopeOf(meander05Sine, U05_TAIL);
+> 186:export function meander05(u: number): number {
+> 187:  if (u <= 0 || u >= S05.L) return 0;
+> 188:  if (u <= U05_KEEP || u >= U05_TAIL) return meander05Sine(u);
+> 191:  return hermiteKnots(KNOTS05, u, SLOPE05_KEEP, SLOPE05_TAIL) + bend;
+> 195:function buildRoute(): RouteData {
+> 263:  // descent) is laid; the lateral S-offset meander05(u) is added after smoothing (see the end of
+> 264:  // buildRoute). Offset and slope vanish at both ends, so 04 and 06 join tangentially and s6 (hence
+> 267:  const L05 = V(0, -3, -S05.L);
+> 359:  // 05 meander: exact lateral offset from the straight tunnel line (after smoothing, see S05)
+> 362:    const u = pts[i].clone().sub(s5).dot(dir05) * (S05.L / L05.length());
+> 363:    pts[i].x += meander05(u);
+> 394:export class Course {
+> 411:  constructor() { …[+645 chars]
+
+### 🤖 Claude — 2026-11-20T09:53:26.471Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 340,520p src/world/course.ts", "description": "Read route smoothing and Course class"}`
+
+### 🧑 User — 2026-11-20T09:53:26.609Z
+
+> ↩︎ result: return rxs[rxs.length - 1];
+>   };
+>   const x08 = (z: number, xDefault: number) => {
+>     if (!m08) return xDefault;
+>     const wIn = smooth(0, 3, s8.z - z), wOut = smooth(0, 4, z - end.z);
+>     return s8.x + (riverX(z) - s8.x) * wIn * wOut + (end.x - s8.x) * (1 - wOut);
+>   };
+>   seg(14, (t) => V(x08(s8.z - 15 * t, s8.x + 3.6 * Math.sin(2 * Math.PI * t) * Math.sin(Math.PI * t)), s8.y, s8.z - 15 * t));
+>   mark('09');
+>   const s9 = pts[pts.length - 1].clone();
+>   seg(14, (t) => V(x08(s9.z - 15 * t, s9.x - 3.2 * Math.sin(Math.PI * t)), s9.y + 0.1 * t, s9.z - 15 * t));
+>   mark('10');
+>   const s10 = pts[pts.length - 1].clone();
+>   seg(10, (t) => {
+>     const z = s10.z + (end.z - s10.z) * t;
+>     return V(x08(z, s10.x + (end.x - s10.x) * t), s10.y + (end.y - s10.y) * smooth(0.3, 1, t), z);
+>   });
+>   mark('11');
+>   smoothPolyline(pts, marks['03'], 2.2, 3);
+>   // 05 meander: exact lateral offset from the straight tunnel line (after smoothing, see S05)
+>   const dir05 = L05.clone().normalize();
+>   for (let i = marks['05'] + 1; i < marks['06']; i++) {
+>     const u = pts[i].clone().sub(s5).dot(dir05) * (S05.L / L05.length());
+>     pts[i].x += meander05(u);
+>   }
+>   return { points: pts, marks, straight };
+> }
+> 
+> /**
+>  * Arc- …[+7144 chars]
+

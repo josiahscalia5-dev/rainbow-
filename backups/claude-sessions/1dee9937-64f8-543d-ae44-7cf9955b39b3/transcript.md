@@ -3000,3 +3000,31 @@ Sending you the Screen 06 comparison while the Screen 07 clip finishes:
 
 > 🔧 **Bash** `{"command": "for i in $(seq 1 100); do pgrep -f \"rainbow-autosave.py\" >/dev/null || break; sleep 3; done; timeout 600 python3 scripts/rainbow-autosave.py --reason manual:lead 2>&1 | grep -E '\"commit\"|skipping' | head -2; python3 -I scripts/autosave-status.py; ls /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/c07/f 2>/dev/null | wc -l", "description": "Save and verify, check clip frame count", "timeout": 900000}`
 
+### 🧑 User — 2026-11-20T09:53:28.283Z
+
+> ↩︎ result: "commit": "981afcbbc70a86afba98b8f6e21a56f2f442bc26",
+> AUTOSAVE OK | branch claude/rainbow-r22-restore-ut3m39 | scheduler daemon | last verified backup 2026-11-20T09:53:03+00:00 (0.4 min ago) | local 981afcb remote 981afcb (match) | uncommitted 0
+> 21
+
+### 🤖 Claude — 2026-11-20T09:53:36.567Z
+
+Your Screen 07 clip is still rendering, so I don't have it to show yet. Here is where things stand:
+
+**Why work paused:** the account hit its 5-hour usage limit at about 06:30 UTC and all four specialists stopped. The environment then closed, so nothing was saved between 06:35 and 09:42. No work was lost: their unfinished edits survived the restart, and the backup is pushed and matches GitHub at `981afcb`. The limit reset at 09:00 and the work resumed at 09:45.
+
+**What's running now:**
+- **Screen 04:** working on Benny swimming naturally through all five arrows. I passed on your confirmation: lower, cleaner pink edges, gold visible, clear blue water.
+- **Screen 07:** the fuller, rounder foam is kept as the candidate. Its next step is your broad S-shaped bends, where the water, pink edges, foam and coin trail curve together. It will change the channel shape and camera framing together on one section, keeping Benny, the coins and the collision on the same curve. Then it varies the foam's size and spacing.
+- **Benny:** working on the cream knit stripes.
+- **Screen 08:** polish started in the free slot: the white glints in the water below Benny, coins that look larger than painted, and the double image round the towel.
+
+**Screen 07 so far:** the satin-streak step makes the magenta bands look like glossy cloth instead of a flat smear. That's a small improvement. At hard left and right the view still faces a close purple wall over a big magenta sheet.
+
+**Screen 06:** finished three steps; I sent you the pictures and clips.
+- The foam heaps are lower and less wall-like.
+- The tunnel stays off-centre early in the swim like your picture, then drifts back to a centred target. This is a framing test that stays out until you approve it.
+- There is a ripple ring round Benny.
+- It is still NOT YET close: like 07, it lacks your winding S-river and curving coin trail.
+
+**Your Screen 07 clip:** it covers the whole of Screen 07: entrance, middle with left then right steering, end and the drop into 08. Each frame is labelled with its section, and the speed is printed on screen. You'll get a real-speed and a half-speed version as soon as it finishes; heavy machine load makes rendering slow.
+
