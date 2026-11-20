@@ -625,3 +625,94 @@ Let me view the approved reference and the lead's e_end / f_hard_left / g_hard_r
 >  * through the live locked 05 camera onto the river (coin height 1.2 u) and converted to offsets from the
 >  * tunnel line; c …[+7646 chars]
 
+### 🤖 Claude — 2026-11-20T16:57:33.708Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"^export const M05\\|^export const MATCH05\\|^const M05\\|flag05('\" src/vfx/waterRibbon.ts | head -60", "description": "List Screen 05 switches in waterRibbon.ts"}`
+
+### 🧑 User — 2026-11-20T16:57:33.763Z
+
+> ↩︎ result: 213:export const MATCH05: boolean = q05('match05');
+> 270:export const M05WD: boolean = TGTWALL05 && q05('m05wd');
+> 282:export const M05RIDE: boolean = TGTWALL05 && q05('m05ride');
+> 292:export const M05SEAM: boolean = M05RIDE && q05('m05seam');
+> 303:export const M05BLEND: boolean = M05SEAM && q05('m05blend');
+> 319:export const M05NEAR: boolean = M05RIDE && q05('m05near');
+> 335:export const M05WALL: boolean = MATCH05 && q05('m05far') && q05('m05wall');
+> 345:export const M05WTILE: boolean = MATCH05 && q05('m05far') && q05('m05wtile');
+> 359:export const M05WCRISP: number = MATCH05 && q05('m05far') ? (qv05('m05wcrisp') === '2' ? 2 : q05('m05wcrisp') ? 1 : 0) : 0;
+> 384:export const M05LIDF: boolean = MATCH05 && q05('m05far') && q05('m05lidf');
+> 392:export const M05PINK: boolean = MATCH05 && q05('m05far') && q05('m05pink');
+> 404:export const M05GEO: boolean = M05RIDE && q05('m05geo');
+> 410:export const M05FOLD: boolean = M05RIDE && q05('m05fold');
+> 417:export const M05FLAT: boolean = M05RIDE && q05('m05flat');
+> 426:export const M05FOAM: boolean = M05RIDE && q05('m05foam');
+> 432:export const M05BERM: boolean = M05RIDE && q05('m05berm');
+> 443:export const M05BANK: boolean = M05BERM && q05('m05bank');
+> 445:e …[+592 chars]
+
+### 🤖 Claude — 2026-11-20T16:57:36.490Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 205,530p src/vfx/waterRibbon.ts", "description": "Read Screen 05 switch docs in waterRibbon.ts"}`
+
+### 🧑 User — 2026-11-20T16:57:36.525Z
+
+> ↩︎ result: * approved colours. Flow: two-phase advection toward the camera (`?projflow05=0` off). Default build: every shader
+>  * program and geometry is the previous one (code behind `#ifdef PROJ05` / `if (PROJ05)`).
+>  */
+> /**
+>  * Screen 05 FULL REFERENCE MATCH (`?match05=1`, 2026-11-16, qa/pilot05/full_reference_match/): one master switch that turns
+>  * on every Screen-05 reference-match part (proj05 water + env05 tunnel / rings / fittings + hud05 + coins05 + benny05 +
+>  * splash05m + bub05 …). `on05('part')` = that part's own switch OR the master switch. Default build: all off.
+>  */
+> export const MATCH05: boolean = q05('match05');
+> export const on05 = (key: string): boolean => q05(key) || MATCH05;
+> export const PROJ05: boolean = on05('proj05');
+> /**
+>  * `?proj05=1&projfar05=1` (2026-11-16 late, tools/proj05/bake.py … far): FAR-RIVER FIX. The exact layer E and the far
+>  * block's layer F are baked a second time (assets/textures/water05/far1/) so that the far river also carries the approved
+>  * pixels where the approved picture shows bank foam / wall on top of the game's river (there the first bake had no data:
+>  * torn filler and the procedural far river showed at the far bend). Nothing else changes; with …[+25712 chars]
+
+### 🤖 Claude — 2026-11-20T16:58:09.209Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/scratch/s05/tools && cat > /home/user/scratch/s05/tools/probe_end.mjs <<'EOF'\n// s05 r28: numbers for the end section (read-only). Run from /home/user/wt/s05:\n//   node /home/user/scratch/s05/tools/probe_end.mjs \"<query>\" 0.75,0.85,0.95 [port]\nimport { pathToFileURL } from 'node:url';\nconst { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);\nconst [Q, FR = '0.85', PORT = '5275'] = process.argv.slice(2);\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(Number(PORT));\ …[+2594 chars]`
+
+### 🧑 User — 2026-11-20T16:58:09.320Z
+
+> ↩︎ result: 486:      const d = this.offset05(s);
+> 493:  offset05(s: number): number {
+> 528:    // offset05(s), so the half width is S05.extent − |offset| (smooth abs): the outer edge of each bend
+> match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1&m05fpaint=1&m05fcloud=1&m05fcoin=1&m05join=1&m05frim=1&m05vee2=1&m05bank=1&m05trans=1&m05wcrisp=1&m05pink=1
+
+### 🤖 Claude — 2026-11-20T16:58:12.876Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && Q=$(cat qa/match/05/r18/KEPT_STEP2.txt) && timeout 900 bash /home/user/rainbow-/tools/lead25/render_slot.sh node /home/user/scratch/s05/tools/probe_end.mjs \"$Q\" 0.7,0.85,0.95 5275 > /home/user/scratch/s05/probe_end.log 2>&1; tail -c 6000 /home/user/scratch/s05/probe_end.log", "description": "Run end-section probe in a render slot", "timeout": 900000}`
+
+### 🧑 User — 2026-11-20T16:59:12.820Z
+
+> ↩︎ result: "d":13},{"i":43,"x":567,"y":551,"d":13},{"i":44,"x":565,"y":549,"d":12},{"i":45,"x":562,"y":547,"d":11},{"i":46,"x":559,"y":545,"d":11},{"i":47,"x":557,"y":541,"d":10},{"i":48,"x":556,"y":537,"d":10},{"i":49,"x":607,"y":560,"d":13},{"i":50,"x":592,"y":560,"d":13},{"i":51,"x":602,"y":556,"d":12},{"i":52,"x":618,"y":550,"d":11},{"i":53,"x":623,"y":546,"d":11}]
+> == frac 0.85 s 180.472 lat 0 seam 186.52412082521383,1 fbP 6.49,3.45,6.53,1 seamS 186.52412082521383
+>    -0.9 0.3 tube05_far_wall@18.91 > Mesh@22.56
+>    -0.6 0.3 Mesh@18.38 > foam_berm@18.79
+>    -0.3 0.3 tube05_far_wall@19.28 > water_ribbon@19.47
+>    0 0.3 tube05_far_river@19.29 > tube05_far_wall@19.48
+>    0.3 0.3 tube05_far_river@19.31 > tube05_far_wall@19.55
+>    0.6 0.3 tube05_far_wall@19.07 > Mesh@19.29
+>    0.9 0.3 tube05_far_wall@18.38 > Mesh@23.05
+>    -0.9 0.15 tube05_far_wall@18.7 > Mesh@21.05
+>    -0.6 0.15 water_ribbon@17.08 > foam_far05_clouds@17.96
+>    -0.3 0.15 water_ribbon@17.3 > tube05_far_river@18.05
+>    0 0.15 water_ribbon@17.53 > tube05_far_river@17.92
+>    0.3 0.15 water_ribbon@17.86 > tube05_far_river@17.89
+>    0.6 0.15 foam_berm@17.4 > Mesh@17.45
+>    0.9 0.15 foam_far05_clouds@17.6 > foam_far05_clouds@17.62
+>    -0.9 0 foam_be …[+4799 chars]
+
+### 🤖 Claude — 2026-11-20T16:59:17.309Z
+
+> 🔧 **Bash** `{"command": "head -c 3500 /home/user/scratch/s05/probe_end.log", "description": "Show probe global numbers"}`
+
+### 🧑 User — 2026-11-20T16:59:17.347Z
+
+> ↩︎ result: {"sF05":180.0383020282329,"D0":53.24896756963126,"L":6,"sGlow05":183.02412082521383,"sCam05":126.03830202823289,"chord":6.530580380073458,"s0":114.68830202823243,"s1":188.92412082521383,"s06":188.92412082521383,"ws":[[114.7,6.7,0],[116.7,8.05,0.01],[118.7,9.5,0.03],[120.7,10.48,0.06],[122.7,11.13,0.01],[124.7,11.34,-0.14],[126.7,11.14,-0.3],[128.7,10.99,-0.41],[130.7,10.91,-0.45],[132.7,10.88,-0.47],[134.7,10.98,-0.41],[136.7,11.21,-0.26],[138.7,11.4,-0.03],[140.7,11.25,0.23],[142.7,11.05,0.37],[144.7,11.17,0.28],[146.7,11.39,0.06],[148.7,11.3,-0.18],[150.7,11.04,-0.38],[152.7,10.69,-0.58],[154.7,10.32,-0.78],[156.7,9.99,-0.96],[158.7,9.74,-1.09],[160.7,9.62,-1.15],[162.7,9.59,-1.17],[164.7,9.64,-1.14],[166.7,9.74,-1.09],[168.7,9.9,-1.01],[170.7,10.1,-0.9],[172.7,10.34,-0.77],[174.7,11.19,-0.27],[176.7,10.45,0.71],[178.7,8.85,1.54],[180.7,8.73,1.62],[182.7,9.56,1.03],[184.7,9.62,0.38],[186.7,8.79,-0.02],[188.7,8.06,-0.22],[190.7,7.57,0],[192.7,7.18,0],[194.7,7,0]],"lay":[[0,1.7,4.28,-0.39,1.97,4.35],[1,1.33,4.66,-0.96,1.71,4.34],[2,1.07,4.86,-1.49,1.35,4.22],[4,0.72,5.07,-2.31,0.76,3.98],[6,0.42,5.18,-2.93,0.52,4.01],[8,0.36,5.48,-3.44,0.53,4.48],[10,0.47,5.69,-3.58,0.63,4.83],[14, …[+2300 chars]
+

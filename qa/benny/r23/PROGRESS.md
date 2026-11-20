@@ -1,5 +1,24 @@
 # Benny round 23 — progress (worktree `/home/user/wt/benny`, local branch `claude/rainbow-benny-c24` = `-c23` @ `734efb6`; not committed / pushed by Benny — the lead's autosave snapshots the worktree)
 
+## (r28) WHERE I STOPPED / NEXT — 2026-11-20 ~16:55 UTC (new account; worktree `/home/user/wt/benny`, LOCAL branch `claude/rainbow-benny-c29`, port 5279, temp `/home/user/scratch/benny/`)
+
+**STEP 2 VERDICT — hat crown `&b20crown=1`: GOOD IMPROVEMENT (hat shape; not approved).** The r27 proof run had finished before the
+stop: all 15 NEW shots `qa/benny/r27/s5_crown/0N/new/` (same s / steer as BEFORE `qa/benny/r23/s3_star/0N/new/`, same query + tool),
+NEW clip `qa/benny/r27/s5_crown/clip/swim04_crown_NEW_{full,benny}_{1x,0.5x}.mp4` (4.5 s / 9.0 s; BEFORE =
+`qa/benny/r25/s4_silk/clip/swim04_silk_BEFORE_*`, same schedule: straight 0–1.5 s, LEFT 1.5–3, RIGHT 3–4.5), gameplay
+`qa/benny/r27/s5_crown/gameplay_crown.json` = 8/8 checks, 91 coins (1,330 → 2,240), victory, no errors, query ends `…&b20star=1&b20crown=1`.
+r28 added the labelled full-size crops `qa/benny/r27/s5_crown/COMPARE/0N_{a_start,c_middle,f_hard_left}/{1_ORIGINAL_APPROVED,2_BEFORE,3_NEW}.png`
+(15 shots; BEFORE and NEW cut with ONE common rectangle per shot = union of both Benny boxes, so Benny is the same size; `CROP.json`
+per folder; approved = `0N/approved_benny_fullhat.png`, 04 = `r23/s3_star/04/approved_benny.png`; script `/home/user/scratch/benny/crown/compare.py`).
+Closer: the crown is now the approved taller beanie with steep sides instead of a wide low dome, and above the thick ribbed cuff it
+carries five thinner alternating cream / violet bands like the approved (BEFORE: 3–4 thick bands) — visible on 04–08 at start,
+middle and hard left, and it holds while swimming and steering in the clip (pompom stays seated, no popping or gaps).
+Still different: the approved crown narrows toward the top into a rounded dome with the pompom sitting high as an almost full ball;
+ours keeps nearly vertical walls up to a broad top (slightly drum-like at 06 start / 08) and the crown hides the lower part of the
+pompom. New problem: none seen. Fur grain unchanged (separate open item).
+**Best query now (unapproved):** `&benny20=1&b20expo=1&b20ppw=0.45&b20tuft=1&b20knit=1&b20star=1&b20crown=1`.
+**Next:** step 3 = 06 start star leaning amber vs the approved lighter yellow (`b20sx06`); later: crown taper toward the top + pompom higher.
+
 ## (r27) WHERE I STOPPED / NEXT — 2026-11-20 ~15:30 UTC (new account; worktree `/home/user/wt/benny`, LOCAL branch `claude/rainbow-benny-c28`, port 5279, temp `/home/user/scratch/benny/`)
 
 **STEP 1 VERDICT — combed silk fur `&b20silk=2`: NOT AN IMPROVEMENT (keep the switch, do NOT add it to the best query).**

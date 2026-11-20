@@ -525,3 +525,189 @@ I'll make a frame-list variant of the segment tool in scratch for the quick chec
 > slot 2 free
 >  16:57:23 up 26 min,  0 user,  load average: 0.09, 0.19, 0.25
 
+### 🤖 Claude — 2026-11-20T16:57:27.435Z
+
+Both slots free. Running the v2 quick check in the background.
+
+### 🤖 Claude — 2026-11-20T16:57:28.596Z
+
+> 🔧 **Bash** `{"command": "bash /home/user/rainbow-/tools/lead25/render_slot.sh /home/user/scratch/s07/q2.sh", "description": "Render the v2 quick check frames in a render slot", "timeout": 2700000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T16:57:28.615Z
+
+> ↩︎ result: Command running in background with ID: bhrh7mi9z. Output is being written to: /tmp/claude-0/-home-user-rainbow-/a72797b0-7eea-579a-8801-b0b276ae6b12/tasks/bhrh7mi9z.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-20T16:57:29.253Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && timeout 400 npx tsc --noEmit; echo \"worktree tsc=$?\"", "description": "Typecheck the worktree"}`
+
+### 🧑 User — 2026-11-20T16:57:34.233Z
+
+> ↩︎ result: worktree tsc=0
+
+### 🤖 Claude — 2026-11-20T16:57:37.516Z
+
+While that renders, I'll prepare the judging sheet inputs.
+
+### 🤖 Claude — 2026-11-20T16:57:38.876Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/07/r26/final/landmarks && python3 -c \"\nfrom PIL import Image;import glob\nfor f in sorted(glob.glob('*.png'))[:3]: print(f, Image.open(f).size)\"; ls /home/user/rainbow-/qa/match/07/r26/s1_verdict/ | head", "description": "Check landmark image sizes and the s1 verdict folder"}`
+
+### 🧑 User — 2026-11-20T16:57:38.979Z
+
+> ↩︎ result: 1_ORIGINAL_APPROVED.png (864, 1536)
+> 2_BEFORE_a_lip_t2.71.png (540, 960)
+> 2_BEFORE_b_bend1_apex_t3.75.png (540, 960)
+> 1_ORIGINAL_APPROVED.png
+> 2_BEFORE_t2.9_steer_left.png
+> 2_BEFORE_t5.0_steer_right.png
+> 2_BEFORE_t6.4_end.png
+> 2_BEFORE_t7.4_drop.png
+> 3_NEW_t2.9_steer_left.png
+> 3_NEW_t5.0_steer_right.png
+> 3_NEW_t6.4_end.png
+> 3_NEW_t7.4_drop.png
+
+### 🤖 Claude — 2026-11-20T16:57:45.007Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s07 && mkdir -p bef && ffmpeg -loglevel error -y -i /home/user/rainbow-/qa/match/07/r26/final/SCREEN07_NEW_full_K23-3_1x.mp4 -vf \"select='eq(n\\,120)+eq(n\\,0)'\" -vsync 0 bef/f%d.png && python3 -c \"\nfrom PIL import Image;import glob\nfor f in sorted(glob.glob('bef/*.png')): print(f, Image.open(f).size)\"; ffprobe -v error -count_frames -select_streams v -show_entries stream=nb_read_frames,width,height -of csv=p=0 /home/user/rainbow-/qa/match/07/r26/final/SCREEN07_NEW_full_K23-3_1x.mp4", "description": "Extract BEFORE frames 0 and 120 from the r26 full cli …[+3 chars]`
+
+### 🧑 User — 2026-11-20T16:57:47.457Z
+
+> ↩︎ result: bef/f1.png (540, 960)
+> bef/f2.png (540, 960)
+> 540,960,213
+
+### 🤖 Claude — 2026-11-20T16:57:59.065Z
+
+> 🔧 **Bash** `{"command": "cat > /home/user/scratch/s07/sheet.py <<'EOF'\n# judging sheet (my own inspection only, not a user proof): top row BEFORE, bottom row NEW, 432x768 each\nimport sys\nfrom PIL import Image, ImageDraw\nout, pairs = sys.argv[1], sys.argv[2:]\nn = len(pairs) // 2\nS = Image.new('RGB', (432 * n, 768 * 2 + 40), 'black')\nd = ImageDraw.Draw(S)\nfor k in range(n):\n    for row, p in enumerate(pairs[2 * k:2 * k + 2]):\n        im = Image.open(p).convert('RGB').resize((432, 768), Image.LANCZOS)\n        S.paste(im, (432 * k, row * (768 + 40)))\n    d.text((432 * k + 6, 770), p.split('/')[-1] …[+103 chars]`
+
+### 🧑 User — 2026-11-20T16:57:59.103Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-20T16:58:00.967Z
+
+> 🔧 **ToolSearch** `{"query": "select:Monitor", "max_results": 1}`
+
+### 🧑 User — 2026-11-20T16:58:00.975Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-20T16:58:05.240Z
+
+> 🔧 **Monitor** `{"command": "until grep -q \"^exit\" /home/user/scratch/s07/q2_new.log 2>/dev/null; do sleep 5; done; tail -3 /home/user/scratch/s07/q2_new.log; ls /home/user/scratch/s07/q2_new", "description": "v2 quick check render finishing", "timeout_ms": 1800000}`
+
+### 🧑 User — 2026-11-20T16:58:05.265Z
+
+> ↩︎ result: Monitor started (task by466eg8r, expires in 30m unless the source ends first; you get one notice at expiry — re-arm if you still need the watch). You will be notified on each event. Keep working — do not poll or sleep. Events may arrive while you are waiting for the user — an event is not their reply.
+
+### 🤖 Claude — 2026-11-20T16:58:08.936Z
+
+> 🔧 **Bash** `{"command": "sed -n 11,42p /home/user/wt/s07/tools/match07/audit_screen_r23.mjs", "description": "Read the audit tool's shot loop"}`
+
+### 🧑 User — 2026-11-20T16:58:08.970Z
+
+> ↩︎ result: const SHOTS = process.env.AUDIT_SHOTS ? JSON.parse(process.env.AUDIT_SHOTS)
+>   : [['a_start', 0, null], ['b_early', 0.12, null], ['c_middle', 0.35, null], ['d_late', 0.6, null], ['e_end', 0.85, null],
+>      ['f_hard_left', 0.35, -1], ['g_hard_right', 0.35, 1]];
+> mkdirSync(OUT, { recursive: true });
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(Number(process.env.AUDIT_PORT ?? 5290));
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> const log = [];
+> try {
+>   const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
+>   page.on('pageerror', (e) => console.error('pageerror', e.message));
+>   page.on('console', (m) => { if (m.type() === 'error' && /Shader|WebGL|rror/.test(m.text())) console.error('console', m.text().slice(0, 160)); });
+>   await page.goto(`${vite.url}/?qa=1&dpr=1&${Q}`);
+>   await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 600000 });
+>   for (const [name, frac, steer] of SHOTS) {
+>     const st = await page.evaluate(async ([stage, frac, steer]) => {
+>       const r = window.__rainbow;
+>       r.goto(stage);
+>       const s0 = r.state().s, s1 = r.course.stage(s …[+642 chars]
+
+### 🤖 Claude — 2026-11-20T16:58:14.170Z
+
+> 🔧 **Bash** `{"command": "grep -n \"cwd\\|5277\\|argv\\|--q\\|--out\" /home/user/wt/s07/tools/match07/gameplay_test_5277.mjs | head -12; sed -n 1,30p /home/user/rainbow-/tools/lead23/label_clip.py | grep -n \"title\\|label\\|argv\" | head", "description": "Check gameplay test arguments and label script options"}`
+
+### 🧑 User — 2026-11-20T16:58:14.221Z
+
+> ↩︎ result: 2:// r22 s07 QA copy of scripts/gameplay-test.mjs: identical checks, dev server on port 5277 (the only port this worker may use); always pass --q and --out
+> 12://   node scripts/gameplay-test.mjs --q=river05=1 --out=qa/pilot05/wave11/tests/gameplay_river05.json
+> 13://   → the same run with URL test switches; with --q the tracked qa/ files above are NOT rewritten.
+> 17:const optQ = (process.argv.find((a) => a.startsWith('--q=')) ?? '').slice(4);
+> 18:const optOut = (process.argv.find((a) => a.startsWith('--out=')) ?? '').slice(6);
+> 19:// (r22 copy: port 5277, writes only --out)
+> 21:const vite = await startVite(Number(process.env.QA_PORT ?? 5277));
+> 2:"""Lead r23: label every frame of a screen_clip.mjs run (title, playback speed, phase, game time) and encode mp4s.
+> 3:usage: python3 -I label_clip.py <clipDir> <title> <out_prefix>   -> <out_prefix>_1x.mp4 (real game speed) + _0.5x.mp4"""
+> 8:d, title, outp = Path(sys.argv[1]), sys.argv[2], sys.argv[3]
+> 19:        lines = [(title, fb), (f"{spd}   t = {fr['t']:.2f} s", fs), (fr['phase'], fs)]
+
+### 🤖 Claude — 2026-11-20T16:58:22.519Z
+
+> 🔧 **Bash** `{"command": "cat > /home/user/scratch/s07/proof.sh <<'EOF'\n#!/usr/bin/env bash\n# r28 s07 step 2 proof renders (all from the combo build): start view BEFORE/NEW, full NEW clip, gameplay\nset -u\nS=/home/user/scratch/s07; P=/home/user/rainbow-/qa/match/07/r27/s2_fsoft\nmkdir -p $P $S/logs\ncd $S/combo\nwhat=${1:-all}\nif [ \"$what\" = all ] || [ \"$what\" = start ]; then\n  AUDIT_PORT=5281 AUDIT_SHOTS='[[\"a_start\",0,null]]' timeout 1500 node tools/match07/audit_screen_r23.mjs $S/st_before 07 \"$(cat $S/Q_FULL.txt)\" > $S/logs/st_before.log 2>&1\n  AUDIT_PORT=5281 AUDIT_SHOTS='[[\"a_start\",0 …[+1083 chars]`
+
+### 🧑 User — 2026-11-20T16:58:22.562Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-20T16:58:24.853Z
+
+Proof script is ready; waiting for the quick-check render to finish.
+
+### 🤖 Claude — 2026-11-20T16:58:25.658Z
+
+> 🔧 **Bash** `{"command": "cat /home/user/scratch/s07/q2_new.log; ls /home/user/scratch/s07/q2_new 2>/dev/null; uptime", "description": "Check quick check progress"}`
+
+### 🧑 User — 2026-11-20T16:58:25.693Z
+
+> ↩︎ result: 0000.png
+>  16:58:25 up 27 min,  0 user,  load average: 3.58, 1.12, 0.56
+
+### 🤖 Claude — 2026-11-20T16:58:30.521Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s07 && python3 -c \"\nfrom PIL import Image; Image.open('/home/user/rainbow-/qa/match/07/r26/final/landmarks/1_ORIGINAL_APPROVED.png').convert('RGB').resize((432,768),Image.LANCZOS).save('approved_432.png')\"", "description": "Make a reduced copy of the approved picture"}`
+
+### 🧑 User — 2026-11-20T16:58:30.725Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T16:58:33.086Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s07/approved_432.png"}`
+
+### 🧑 User — 2026-11-20T16:58:33.123Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T16:58:37.643Z
+
+> 🔧 **Monitor** `{"command": "until grep -q \"^exit\" /home/user/scratch/s07/q2_new.log 2>/dev/null; do sleep 10; done; echo DONE; tail -2 /home/user/scratch/s07/q2_new.log", "description": "v2 quick check done (second watch)", "timeout_ms": 1800000}`
+
+### 🧑 User — 2026-11-20T16:58:37.671Z
+
+> ↩︎ result: Monitor started (task bjc18cmm3, expires in 30m unless the source ends first; you get one notice at expiry — re-arm if you still need the watch). You will be notified on each event. Keep working — do not poll or sleep. Events may arrive while you are waiting for the user — an event is not their reply.
+
+### 🤖 Claude — 2026-11-20T16:58:40.395Z
+
+> 🔧 **ToolSearch** `{"query": "select:TaskStop", "max_results": 1}`
+
+### 🧑 User — 2026-11-20T16:58:40.416Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-20T16:58:42.125Z
+
+> 🔧 **TaskStop** `{"task_id": "by466eg8r"}`
+
+### 🧑 User — 2026-11-20T16:58:42.145Z
+
+> ↩︎ result: {"message":"Successfully stopped task: by466eg8r (until grep -q \"^exit\" /home/user/scratch/s07/q2_new.log 2>/dev/null; do sleep 5; done; tail -3 /home/user/scratch/s07/q2_new.log; ls /home/user/scratch/s07/q2_new)","task_id":"by466eg8r","task_type":"local_bash","command":"until grep -q \"^exit\" /home/user/scratch/s07/q2_new.log 2>/dev/null; do sleep 5; done; tail -3 /home/user/scratch/s07/q2_new.log; ls /home/user/scratch/s07/q2_new"}
+
+### 🤖 Claude — 2026-11-20T16:58:43.700Z
+
+The quick check is still rendering; I'll wait for the completion notice.
+

@@ -71,3 +71,10 @@ newest `backups/wip/*-c29/`, trial07 + view04/06/07 included).
   in `/home/user/tools-*` and `node_modules` (reinstallable), hidden reasoning + image payloads in conversation copies, running processes.
   Protected list += the finished r23–r27 lead branches (`claude/rainbow-r22-restore-ut3m39`, `ccr-5be1062a-0ffyej`, `ccr-a9235d04-90cw28`,
   `ccr-08ece3a6-xcwyls`, `claude/rainbow-restore-screen-match-ijjdai`).
+  **TRAP (found 16:57):** `claude/rainbow-r22-restore-ut3m39` is the config's own `"branch"` value — putting it in `protected_branches` makes
+  EVERY save refuse ("is a protected original branch"). Removed again at once (one manual save refused, no daemon run missed); saved `6be3641`.
+  Never add the config's `"branch"` value to the protected list.
+* ~17:10 draft PR #25 (DO NOT MERGE, backup only; the create call returned HTTP 502 but the PR exists) — subscribed to its activity.
+* ~17:12 the r27 review page (old account's artifact `WVqynQ46…` is NOT readable from this account) republished here from
+  `qa/review_r28/index.html` (= `qa/review_r27/index.html` + four status lines updated; pictures/clips from `qa/review_r27/web/`):
+  **https://claude.ai/artifact/S7TMhvuzJVvKirMBM88pjX** (private to the owner). Same ratings and extra views as r27; nothing approved.

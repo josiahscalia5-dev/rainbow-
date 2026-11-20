@@ -1,5 +1,16 @@
 # Screen 04 — round 23 (new account, lead session branch `claude/rainbow-r22-restore-ut3m39`) — lead log
 
+## (r28) WHERE I STOPPED / NEXT — s04 specialist (relaunched r28 ~16:50 UTC, worktree `/home/user/wt/s04`, LOCAL branch `claude/rainbow-s04-match-c29`)
+* Found (from the r27 transcript backup, the r27 block below was not updated before the 16:11 stop): r27 had already PICKED
+  step 1 = V11_clu_dense (`qa/match/04/r27/s1_glint/SWITCH.txt`), step 2 = C3_cloud_full (`s2_cloud/SWITCH.txt`), written their
+  APPROVED / BEFORE / NEW pictures, and added `m04a5v=2` (flat chevrons that fade just before their bars reach his pompom on
+  screen, 10.5 -> 8.5 u ahead of him, instead of the r22 fade 14-17 u ahead) = step-3 switch (`s3_arrows/SWITCH.txt`); combined
+  query `s4_combined/QUERY_K27-C.txt` (= K23-S3 + a5=2 + S1 + S2 + S3). Its last job (a5v=2 probe, K27-C audit, clip, gameplay)
+  was lost with the scratch. `npx tsc --noEmit` rc 0 (r28 16:55).
+* 16:58 job `/home/user/scratch/s04/run_r28a.sh` (render slot): a5v=2 single-factor probe BEFORE/NEW at 20/45/55/70 %, K27-C
+  7-shot audit, whole-04 clip, gameplay. Steps 1 + 2 verdicts are being written from the r27 pictures (no re-render needed).
+* NEXT: step-1/2 verdicts below; start view 0 px from the K27-C audit; step 3 verdict + clip 1.0x/0.5x + gameplay -> report.
+
 ## (r27) WHERE I STOPPED / NEXT — s04 specialist (relaunched r27 ~15:20 UTC, worktree `/home/user/wt/s04`, LOCAL branch `claude/rainbow-s04-match-c28`)
 * Worktree = r26 state restored (K23-S3 code + `m04lgc` + `m04a5` + `m04bbdc`), ports 5273/5274, scratch `/home/user/scratch/s04/`.
 * Lost r26 variant renders recovered from the r26 transcript (exact overrides) and re-rendering: `/home/user/scratch/s04/run_r27a.sh`
@@ -19,6 +30,34 @@
 * Step 1 RUNNING: variants V0..V3 rendered (`/home/user/scratch/s04/s1var/`): V1/V2 crescents = right length but too fat / C-shaped
   (white confetti), V3 busier. `run_job2.sh` renders finer ones V4_fine / V5_fine2 + step-2 cloud banks `s2var/C1_cloud`, `C2_cloud_low`.
 * NEXT: step 1 verdict; step 2 = `&m04bbdc=1` far foam cloud banks (+ lower pink `m04ry`), then gameplay with the combined query.
+
+## (r27/r28) Step 1 — near-camera glints: short crescents gathered in clusters — `qa/match/04/r27/s1_glint/` — GOOD IMPROVEMENT (not approved)
+* Switch on K23-S3 + `m04a5=2` (`s1_glint/SWITCH.txt`): `m04lgc=1&m04lgt=0.035&m04lgn=5&m04lgcl=0.35&m04lgcb=0.08&m04lgcs=0.9&
+  m04lgcgx=0.5&m04lgcgz=1.8&m04lgco=0.15&m04lgcg=0.42&m04lgch=0.4` (r25 `m04lgc` short crescents + r27 `m04lgcg` clusters along
+  the swirl ridges with a soft cyan halo). Variant picked: V11_clu_dense (V4..V7 = an even sprinkle of separate dashes; V8..V10
+  too sparse; V12 thinner clusters).
+* Pictures (full size, labelled): `c_middle_{1_ORIGINAL_APPROVED,2_BEFORE,3_NEW}.png`, `d_late_*` (APPROVED = the accepted
+  generated views c_middle / d_late), crops `near_water_crops_LEFT_BEFORE_RIGHT_NEW.png`.
+* CLOSER: the long straight white scratches near the camera are gone; the glints are now short bright crescents in small groups
+  with clear water between them, plus little star twinkles — at phone size the near water sparkles in patches like the painted
+  glint groups instead of being scratched by long lines.
+* STILL DIFFERENT: the crescents run straight down the flow (near-vertical on screen); the painted glints follow curved swirl
+  bands across the river, and the painted near water has pink / cyan swirl bands (ours stays mostly plain blue: the user's
+  "clear blue water" order wins). Some groups read a little like parallel rain marks up close.
+* New problems: none seen (lane colour unchanged, no shimmer in the stills; motion check in the step-3 clip).
+
+## (r27/r28) Step 2 — far foam as soft cloud banks + lower pink edges — `qa/match/04/r27/s2_cloud/` — GOOD IMPROVEMENT (not approved)
+* Switch (`s2_cloud/SWITCH.txt`): `m04bbdc=1&m04ry=0.35&m04bbdcb=1.6&m04bbdcl=1.3&m04bbdcw=0.45` (heaps grouped into banks, middle
+  heaps biggest, two staggered rows, gaps between banks; water sides climb 0.35 u instead of 0.45). Variant C3_cloud_full (C1 /
+  C2 thinner banks).
+* Pictures: `{b_early,c_middle,d_late,e_end}_{1_ORIGINAL_APPROVED,2_BEFORE,3_NEW}.png` (b_early APPROVED = the original painting,
+  the others = the accepted generated views).
+* CLOSER: the far foam no longer reads as an even bead row of small balls down both edges: it forms rounded cloud banks of
+  varied size with gaps, fuller like the painted banks; the pink side water is a touch lower and the gold rings come down to it.
+* STILL DIFFERENT: each bank is still built from separate glossy pearly spheres (painted banks = soft fused puffs with lilac
+  shading); the gaps between banks are wider than painted; near the end (e_end) the banks thin out; the river is straight
+  (painted = pink / cyan swirls round the bends).
+* New problems: none seen in the stills (one big near heap on the right at d_late, as in BEFORE).
 
 ## (r26) Step 0' — whole-04 clips K23-1 (BEFORE) vs K23-S3 (NEW), r25 `qa/match/04/r25/clip/` — verdict + ARROW COUNT
 * VERDICT K23-S3 vs K23-1: GOOD IMPROVEMENT for the pink sides (lower, contained, the gold rings visible down both sides instead

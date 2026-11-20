@@ -6,7 +6,7 @@ Worktrees recreated on LOCAL `-c29` (`setup_worker_r28.sh`) + the lead's `view04
 snapshots**. On THIS account: World Labs key (5,420 credits), Atlas connector, fal, Hugging Face, Context7 connector, GitHub and all 14 account
 plugins WORK. Four workers relaunched (s07, s04, s05, Benny); s06 waits for the user's route answer. Map + services:
 **`docs/briefs/2026-11-20-r28/COORDINATION.md`**; briefs `LAUNCH_R28.md`; next-account recipe **`setup_worker_r29.sh`** (`-c30` from the newest
-`backups/wip/*-c29/`, trial07 + view04/06/07 included). Open user questions (r27): extra-view approvals, 06 route, 09/10 playable or Flow video.
+`backups/wip/*-c29/`, trial07 + view04/06/07 included). Open user questions (r27): extra-view approvals, 06 route, 09/10 playable or Flow video. Review page on this account: https://claude.ai/artifact/S7TMhvuzJVvKirMBM88pjX (source `qa/review_r28/`). Draft PR #25 (DO NOT MERGE).
 
 # ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ ROUND 27 (2026-11-20, lead branch `claude/rainbow-restore-screen-match-ijjdai`, from ~15:11 UTC)
 
