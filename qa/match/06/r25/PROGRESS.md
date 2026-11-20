@@ -1,5 +1,18 @@
 # Screen 06 — round 25 progress (worktree `/home/user/wt/s06`, LOCAL branch `claude/rainbow-s06-match-c26`, ports 5276 / 5282 / 5283)
 
+## (r29d) WHERE I STOPPED / NEXT — lead, user ~19:51 UTC: the crowded gold "target" under the red mark (NEW ~14 %)
+* Diagnosis at the marked spot (`qa/match/06/r29/rings/`, CAUSE_marked_position.jpg): TWO repeating ring patterns down the long straight
+  tunnel, seen straight down its axis, all at full brightness: (1) the 3D gold rings (m06_rings, every 12.87 u to ~300 u, ~23 ahead; plain
+  walls still show the target) and (2) the wall tile `tile_tube.png` (unwrapped from the painted ring tunnel; repeats painted gold bands
+  along the tunnel — with the 3D rings hidden it still shows a target). The approved-picture projection is NOT involved (`m06tdbg=noproj`
+  unchanged). Found on the way: the wall tile is mapped transposed vs tools/match06/make_tiles06.py (tile x = depth) — the "correct"
+  orientation (`m06tswap=1`) looked washed-out pink without perforations -> not used.
+* FIX adopted: `&m06tswap=2` (keep the mapping, drop the tile's painted gold columns: x 0.18..0.88 mirrored) + `&m06haze=50,115,0.85`
+  (walls + rings + paddles fade into the painted deep-tunnel purple 0.52,0.22,0.44 between 50 and 115 u from the camera). Result: 3-5
+  substantial gold bands with purple metal between them, then deep purple (FIX_along_the_slide.jpg). Start view unaffected (projection).
+* FINAL query = `qa/match/06/r29/QUERY_NEW_FINAL.txt` (+ m06tswap=2 & m06haze). NOW (19:58): clip `clip_new3` rendering; then side-by-side
+  (`make_side_by_side.py`), stills (`make_stills.py`), gameplay rerun, send.
+
 ## (r29c) WHERE I STOPPED / NEXT — lead, user ~19:33 UTC: "the SAME purple washer tunnel ... must continue throughout Screen 06, until the actual transition into Screen 07"
 * Cause of the "much brighter pink-and-yellow tunnel" in the later NEW frames = the 07 tube (`tube07`) shown ahead from s07 - 70 -> now from
   s07 - 12 only (~1 s): 30-85 % = the same purple-and-gold ring tunnel + warm glow (quick check `/home/user/scratch/s06/d3b_new`).
