@@ -3295,3 +3295,132 @@ Before I answer yes or no, I'll measure how close the game already is to your ap
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-20T21:24:30.221Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 180,260p src/game/cameraRig.ts", "description": "Read the Screen 06 camera framing code"}`
+
+### 🧑 User — 2026-11-20T21:24:30.260Z
+
+> ↩︎ result: const lvl = (x: number) => {
+>           const T = this.course.sample(x - 3).tan.clone().add(this.course.sample(x).tan).add(this.course.sample(x + 3).tan).normalize();
+>           const U = new THREE.Vector3(0, 1, 0).addScaledVector(T, -T.y).normalize();
+>           return { T, U, R: new THREE.Vector3().crossVectors(T, U).normalize() };
+>         };
+>         // r7 `&m06cam=1` (qa/match/06/r7/NOTES.md): the frame is the CHORD toward the river M06_LA units ahead (where the
+>         // painted tunnel's rings converge) instead of the local slope. At the checkpoint the approved camera is reproduced
+>         // exactly (offsets are stored in the same frame there); over the crest the local-slope frame tipped the view to
+>         // -47° at +10 u and -73° at +30 u (looking straight down at the water, the ring tunnel above the frame).
+>         const chord = (x: number) => {
+>           const a = this.course.sample(x).pos, b = this.course.sample(Math.min(x + M06_LA, this.course.length - 1)).pos;
+>           const T = b.clone().sub(a).normalize();
+>           const U = new THREE.Vector3(0, 1, 0).addScaledVector(T, -T.y).normalize();
+>           return { T, U, R: new THREE.Vector3().crossVectors(T, U).normalize()  …[+4529 chars]
+
+### 🤖 Claude — 2026-11-20T21:25:07.413Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 260,310p src/game/cameraRig.ts; grep -n \"p6\\b\\|const p6\\|off06\\|dir06\" src/game/cameraRig.ts | head -8", "description": "Read the rest of the 06 framing code"}`
+
+### 🧑 User — 2026-11-20T21:25:07.455Z
+
+> ↩︎ result: // visibility: turn only as much as needed so Benny stays in the lower middle and the route ahead (6 / 12 u)
+>             // stays inside the frame (vertical fov 62, portrait 9:16)
+>             const tV = Math.tan(THREE.MathUtils.degToRad(31)), tH = tV * 0.5625, UP = new THREE.Vector3(0, 1, 0);
+>             const pts: [THREE.Vector3, number, number, number, number][] = [
+>               [bn, -0.5, 0.5, -0.62, 0.05],
+>               ...[6, 12].map((d) => [this.course.sample(Math.min(s + d, this.course.length - 1)).pos.clone().addScaledVector(this.course.sample(Math.min(s + d, this.course.length - 1)).right, lat * 0.5), -0.75, M06_VX, -0.45, 0.62] as [THREE.Vector3, number, number, number, number]),
+>             ];
+>             for (let it = 0; it < 3; it++) {
+>               const Rv = new THREE.Vector3().crossVectors(dv, UP).normalize(), Uv = new THREE.Vector3().crossVectors(Rv, dv);
+>               let yaw = 0, pit = 0;
+>               for (const [p, x0, x1, y0, y1] of pts) {
+>                 const r = p.clone().sub(pv), z = r.dot(dv);
+>                 if (z < 0.5) continue;
+>                 const ax = Math.atan2(r.dot(Rv), z), ay = Math.atan2(r.dot(Uv), z);
+>                 const hi = Math.atan(x1  …[+2938 chars]
+
+### 🤖 Claude — 2026-11-20T21:25:26.610Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='src/game/cameraRig.ts'; t=open(p).read()\nold=\"const M06_VIEW = M06_CAM && flag05('m06view');\"\nassert old in t\nt=t.replace(old, old+\"\"\"\n/** r30 `&m06hold=1` (lead, with m06view; user r30 \"look exactly like my approved screen ... while he swims\", docs/briefs/2026-11-20-r30):\n *  the approved framing (camera distance / height / downward angle behind Benny, so his size and place in the frame) is kept through\n *  the WHOLE of 06; it only turns with the river (yaw of the chord toward the river ahead, relative to the checkpoint)  …[+2729 chars]`
+
+### 🧑 User — 2026-11-20T21:25:29.764Z
+
+> ↩︎ result: tsc-done
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T21:25:41.032Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && Q=\"$(cat /home/user/rainbow-/qa/match/06/r30/QUERY_NEW.txt)&m06hold=1\" && AUDIT_PORT=5308 AUDIT_SHOTS='[[\"a_start\",0,null],[\"b_marked\",214.86,null],[\"c_238\",238,null],[\"d_266\",266,null],[\"e_310\",310,null],[\"f_350\",350,null],[\"g_387\",387,null],[\"h_07\",400,null]]' timeout 1500 node tools/match06/r30_shots.mjs /home/user/rainbow-/qa/match/06/r30/quick_hold 06 \"$Q\" 2>&1 | grep -E \"^0[67]|rror\" && cd /home/user/rainbow-/qa/match/06/r30 && python3 -c \"\nfrom PIL import Image, ImageDraw, ImageFont; import json\nL=json.load(open('/home/user/s …[+1253 chars]`
+
+### 🧑 User — 2026-11-20T21:26:12.314Z
+
+> ↩︎ result: 06 a_start s 198.91 lat 0 stage 06 coins 1680
+> 06 b_marked s 214.86 lat 0 stage 06 coins 1700
+> 06 c_238 s 238.143 lat 0 stage 06 coins 1730
+> 06 d_266 s 266.01 lat 0 stage 06 coins 1750
+> 06 e_310 s 310.01 lat 0 stage 06 coins 1770
+> 06 f_350 s 350.16 lat 0 stage 06 coins 1790
+> 06 g_387 s 387.01 lat 0 stage 06 coins 1800
+> 06 h_07 s 400.177 lat 0 stage 07 coins 1810
+
+### 🤖 Claude — 2026-11-20T21:26:13.843Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/scratchpad/hold.jpg"}`
+
+### 🧑 User — 2026-11-20T21:26:13.976Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T21:26:23.946Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"m06\" src/game/Game.ts | grep -i -E \"scale|size|benny\" | head -12", "description": "Look for Benny scaling on Screen 06"}`
+
+### 🧑 User — 2026-11-20T21:26:23.998Z
+
+> ↩︎ result: 72:  // r26 `&m06spl=1` (qa/match/06/r25/PROGRESS.md r26): on Screen 06 Benny's contact = a short, low lace collar (the approved picture's
+> 552:      // r7 `&m06bub=1`: the game's iridescent bubbles + Benny's splash crown / spray return once the camera leaves the
+> 558:      m06.setBenny(st.s, st.lat); // r23 `&m06rip=1` only (no-op without it)
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T21:26:30.793Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && for S in 0 214.86 266 310; do timeout 600 node tools/match06/r30_eval.mjs \"$(cat /home/user/rainbow-/qa/match/06/r30/QUERY_NEW.txt)&m06hold=1\" \"(() => { const b = r.bennyScreen(); const c = cam.position; const bp = b.benny; const d = Math.hypot(c.x-bp[0], c.y-bp[1], c.z-bp[2]); return { s: +r.state().s.toFixed(1), dist: +d.toFixed(2), camAboveBenny: +(c.y-bp[1]).toFixed(2), ndc: [b.x, b.y] }; })()\" $S 2>/dev/null | tail -1; done", "description": "Measure camera distance to Benny along the route", "timeout": 2600000}`
+
+### 🧑 User — 2026-11-20T21:27:01.199Z
+
+> ↩︎ result: {"s":198.9,"dist":6.18,"camAboveBenny":2.27,"ndc":[-0.03,-0.31]}
+> {"s":214.9,"dist":7.61,"camAboveBenny":2.22,"ndc":[-0.06,-0.19]}
+> {"s":266,"dist":8.1,"camAboveBenny":3.4,"ndc":[0.01,-0.24]}
+> {"s":310,"dist":7.7,"camAboveBenny":2.56,"ndc":[0.15,-0.25]}
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T21:27:15.625Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='src/game/cameraRig.ts'; t=open(p).read()\nold=\"const M06_HOLD = M06_VIEW && flag05('m06hold');\"\nt=t.replace(old, old+\"\"\"\n/** r30 `&m06holdk=` (default 0.78): the rig trails ~25-30 % behind while swimming (camera smoothing), so the held offset is shortened by\n *  this factor once Benny is moving (eased in over 6 u past the checkpoint) -> Benny keeps his approved size on screen */\nconst M06_HOLDK = (() => { const v = typeof location !== 'undefined' ? Number(new URLSearchParams(location.search).get('m06holdk')) : NaN; return Numb …[+971 chars]`
+
+### 🧑 User — 2026-11-20T21:27:42.145Z
+
+> ↩︎ result: {"s":214.9,"dist":6.22,"ndc":[-0.07,-0.13]}
+> {"s":266,"dist":6.77,"ndc":[0.01,-0.19]}
+> {"s":310,"dist":6.4,"ndc":[0.2,-0.2]}
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T21:27:58.401Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='src/game/cameraRig.ts'; t=open(p).read()\nold=\"const M06_HOLDK = (() =>\"\nt=t.replace(old, \"\"\"/** r30 `&m06holdt=` (degrees, default 5): view tilted up by this much once moving, so Benny sits as low in the frame as in the picture */\nconst M06_HOLDT = (() => { const v = typeof location !== 'undefined' ? Number(new URLSearchParams(location.search).get('m06holdt')) : NaN; return THREE.MathUtils.degToRad(Number.isFinite(v) ? v : 5); })();\n\"\"\"+old,1)\nold=\"              off.multiplyScalar(1 + (M06_HOLDK - 1) * THREE.MathUtils.smo …[+1572 chars]`
+
+### 🧑 User — 2026-11-20T21:28:31.981Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T21:28:33.722Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/scratchpad/hold2.jpg"}`
+
+### 🧑 User — 2026-11-20T21:28:33.742Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T21:29:07.594Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='src/game/cameraRig.ts'; t=open(p).read()\nold=\"const M06_HOLD = M06_VIEW && flag05('m06hold');\"\nt=t.replace(old, old+\"\"\"\n/** r30 `&m06camk=` (default 1 = off): the route view's approved offset (m06cam) shortened by this factor past the hold (eased in over\n *  the m06vw hand-over) -> Benny larger and lower in the frame like the approved picture / storyboard, the river ahead still in view */\nconst M06_CAMK = (() => { const v = typeof location !== 'undefined' ? Number(new URLSearchParams(location.search).get('m06camk')) : NaN; re …[+2670 chars]`
+

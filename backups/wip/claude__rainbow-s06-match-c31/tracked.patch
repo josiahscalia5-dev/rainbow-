@@ -65,6 +65,72 @@ index 6aec2406..735b4041 100644
      if (m08 && m08On) for (const k of ['puddles', 'finalWave']) { const o = water.parts?.[k]; if (o) o.visible = false; }
      if (m08 && b08 && b08Rest) {
        // rounder body (narrower, taller) with the beanie counter-scaled to keep its size; ≈23 px right (world +x, measured fur centroid), lifted
+diff --git a/src/game/cameraRig.ts b/src/game/cameraRig.ts
+index 2a2b9ebc..3bd3ec81 100644
+--- a/src/game/cameraRig.ts
++++ b/src/game/cameraRig.ts
+@@ -20,6 +20,20 @@ const M06_LA = (() => {
+  *  is held while Benny swims and eases toward the m06cam route view only as visibility needs it. Tunables (QA):
+  *  `&m06vw=a,b` hold → hand-over (u past the checkpoint, default 20,38), `&m06vx=` max route x (NDC, default 0.85) */
+ const M06_VIEW = M06_CAM && flag05('m06view');
++/** r30 `&m06hold=1` (lead, with m06view; user r30 "look exactly like my approved screen ... while he swims", docs/briefs/2026-11-20-r30):
++ *  the approved framing (camera distance / height / downward angle behind Benny, so his size and place in the frame) is kept through
++ *  the WHOLE of 06; it only turns with the river (yaw of the chord toward the river ahead, relative to the checkpoint) and tilts by
++ *  `&m06holdp=` x the chord's pitch change (default 0.6); eased into the m06cam view over the last 16 u before 07 (07 join unchanged). */
++const M06_HOLD = M06_VIEW && flag05('m06hold');
++/** r30 `&m06camk=` (default 1 = off): the route view's approved offset (m06cam) shortened by this factor past the hold (eased in over
++ *  the m06vw hand-over) -> Benny larger and lower in the frame like the approved picture / storyboard, the river ahead still in view */
++const M06_CAMK = (() => { const v = typeof location !== 'undefined' ? Number(new URLSearchParams(location.search).get('m06camk')) : NaN; return Number.isFinite(v) && v > 0 ? v : 1; })();
++/** r30 `&m06holdk=` (default 0.78): the rig trails ~25-30 % behind while swimming (camera smoothing), so the held offset is shortened by
++ *  this factor once Benny is moving (eased in over 6 u past the checkpoint) -> Benny keeps his approved size on screen */
++/** r30 `&m06holdt=` (degrees, default 5): view tilted up by this much once moving, so Benny sits as low in the frame as in the picture */
++const M06_HOLDT = (() => { const v = typeof location !== 'undefined' ? Number(new URLSearchParams(location.search).get('m06holdt')) : NaN; return THREE.MathUtils.degToRad(Number.isFinite(v) ? v : 5); })();
++const M06_HOLDK = (() => { const v = typeof location !== 'undefined' ? Number(new URLSearchParams(location.search).get('m06holdk')) : NaN; return Number.isFinite(v) && v > 0 ? v : 0.78; })();
++const M06_HOLDP = (() => { const v = typeof location !== 'undefined' ? Number(new URLSearchParams(location.search).get('m06holdp')) : NaN; return Number.isFinite(v) && v >= 0 ? v : 0.6; })();
+ const m06num = (k: string, n: number, d: number[]) => {
+   const v = typeof location !== 'undefined' ? new URLSearchParams(location.search).get(k) : null;
+   const a = (v ?? '').split(',').map(Number);
+@@ -198,8 +212,9 @@ export class RideCamera {
+           this.m06 = { s0: st6.s0, o: [o.dot(F.R), o.dot(F.U), o.dot(F.T)], d: [d.dot(F.R), d.dot(F.U), d.dot(F.T)] };
+         }
+         const F = frame6(s), M = this.m06;
++        const kC = M06_CAMK === 1 ? 1 : 1 + (M06_CAMK - 1) * THREE.MathUtils.smoothstep(s, st6.s0 + 10 + M06_VW[0], st6.s0 + 10 + M06_VW[1]);
+         const cp6 = f.pos.clone().addScaledVector(f.right, lat * 0.5)
+-          .addScaledVector(F.R, M.o[0]).addScaledVector(F.U, M.o[1]).addScaledVector(F.T, M.o[2]);
++          .addScaledVector(F.R, M.o[0] * kC).addScaledVector(F.U, M.o[1] * kC).addScaledVector(F.T, M.o[2] * kC);
+         const d6 = F.R.clone().multiplyScalar(M.d[0]).addScaledVector(F.U, M.d[1]).addScaledVector(F.T, M.d[2]);
+         if (M06_CAM) {
+           // keep the camera >= 1.6 u above the water directly below it (the chord frame is flatter than the slope), then
+@@ -222,11 +237,28 @@ export class RideCamera {
+           // the route stays visible; exactly the approved camera at the checkpoint (wv = 1), eased into the m06cam view
+           // above by the hand-over distance (so the 06→07 join is unchanged)
+           const sB = st6.s0 + 10;
+-          const wv = THREE.MathUtils.smoothstep(s, sB - 4, sB) * (1 - THREE.MathUtils.smoothstep(s, sB + M06_VW[0], sB + M06_VW[1]));
++          const s07 = this.course.stage('07').s0;
++          const wv = THREE.MathUtils.smoothstep(s, sB - 4, sB) * (M06_HOLD ? 1 - THREE.MathUtils.smoothstep(s, s07 - 16, s07 - 4)
++            : 1 - THREE.MathUtils.smoothstep(s, sB + M06_VW[0], sB + M06_VW[1]));
+           if (wv > 0) {
+             const bn = f.pos.clone().addScaledVector(f.right, lat * 0.5);
+             const pv = bn.clone().add(new THREE.Vector3(...p6.off06));
+             const dv = new THREE.Vector3(...p6.dir06).normalize();
++            if (M06_HOLD && s > sB) {
++              // r30 m06hold: turn the approved rig (offset + view) about Benny by the river's heading change since the checkpoint,
++              // and tilt it by a share of the slope change, so Benny keeps his approved size / place while the river ahead stays in view
++              const T0 = frame6(sB).T, T1 = frame6(s).T;
++              const h0 = new THREE.Vector3(T0.x, 0, T0.z).normalize(), h1 = new THREE.Vector3(T1.x, 0, T1.z).normalize();
++              const dYaw = Math.atan2(new THREE.Vector3().crossVectors(h0, h1).y, h0.dot(h1));
++              const dPit = (Math.asin(THREE.MathUtils.clamp(T1.y, -1, 1)) - Math.asin(THREE.MathUtils.clamp(T0.y, -1, 1))) * M06_HOLDP;
++              const UPw = new THREE.Vector3(0, 1, 0), qy = new THREE.Quaternion().setFromAxisAngle(UPw, dYaw);
++              const off = new THREE.Vector3(...p6.off06).applyQuaternion(qy); dv.applyQuaternion(qy);
++              const Rr = new THREE.Vector3().crossVectors(dv, UPw).normalize(), qp = new THREE.Quaternion().setFromAxisAngle(Rr, dPit);
++              off.applyQuaternion(qp); dv.applyQuaternion(qp).normalize();
++              off.multiplyScalar(1 + (M06_HOLDK - 1) * THREE.MathUtils.smoothstep(s, sB, sB + 6));
++              dv.applyAxisAngle(new THREE.Vector3().crossVectors(dv, UPw).normalize(), M06_HOLDT * THREE.MathUtils.smoothstep(s, sB, sB + 6)).normalize();
++              pv.copy(bn).add(off);
++            }
+             // keep >= 1.6 u above the water below (down the far slope), turning the view so Benny keeps his approved place
+             let best = Infinity, wy = -Infinity;
+             for (let k = -14; k <= 8; k += 0.5) {
 diff --git a/src/gameplay/coins.ts b/src/gameplay/coins.ts
 index 69122b33..49a3b460 100644
 --- a/src/gameplay/coins.ts
