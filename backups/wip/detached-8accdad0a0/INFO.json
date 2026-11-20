@@ -2,7 +2,7 @@
  "worktree": "/home/user/wt/lead07",
  "branch": "detached-8accdad0a0",
  "head": "8accdad0a07ec4e3c4189701aea9df101932c7f5",
- "time": "2026-11-20T22:10:36+00:00",
+ "time": "2026-11-20T22:14:33+00:00",
  "dirty_tracked": [
   "src/game/Game.ts",
   "src/world/match07.ts"

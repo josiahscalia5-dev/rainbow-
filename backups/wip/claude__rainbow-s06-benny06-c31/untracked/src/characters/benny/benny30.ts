@@ -37,6 +37,11 @@ export interface B30Params {
   bsx: number;
   bsy: number;
   by: number;
+  /** body lower half: superellipse exponent of its profile (GLB 2.8 = round ball; higher = broad flat-based gumdrop),
+   *  radial gain cap, and an extra width factor that grows toward the base */
+  bp: number;
+  bcap: number;
+  bw: number;
   /** fur reaches this far ABOVE the cuff's bottom edge, hidden under the cuff (body units) */
   tuck: number;
   /** arms: scale, raise, out (body units) */
@@ -60,6 +65,7 @@ const DEF: B30Params = {
   pitch: 12.6,
   hs: 1, hsy: 1, hy: 0, hz: 0,
   bsx: 1, bsy: 1, by: 0,
+  bp: 2.8, bcap: 1.5, bw: 0,
   tuck: 0.07,
   as: 1, ay: 0, ax: 0,
   fl: 0.11, fd: 96, fk: 0.55,
@@ -114,9 +120,53 @@ export function applyBenny30(scene: THREE.Object3D, furs: FurHandle[]): Benny30H
   const bald0 = body ? (body.uniforms as U).uBald.value.clone() : null;
   const hatUp = bald0 ? new THREE.Vector3(bald0.x, bald0.y, bald0.z).normalize() : new THREE.Vector3(0, 1, 0);
 
+  // lower-body reshaping works on a copy of the GLB body geometry (the cached GLB geometry is shared by every clone)
+  const geo0 = body ? (body.mesh.geometry as THREE.BufferGeometry) : null;
+  const geo = geo0 ? geo0.clone() : null;
+  if (body && geo) body.mesh.geometry = geo;
+  let shapeKey = '';
+  const reshape = (p: number, cap: number, w: number) => {
+    if (!geo0 || !geo) return;
+    const key = `${p},${cap},${w}`;
+    if (key === shapeKey) return;
+    shapeKey = key;
+    const src = geo0.attributes.position as THREE.BufferAttribute;
+    const dst = geo.attributes.position as THREE.BufferAttribute;
+    // GLB lower half: r_xz ∝ (1 − t^p0)^(1/p0), t = −y / depth (build.ts flat 0.8 → p0 2.8, cap 1.5)
+    const p0 = 2.8, depth = -BODY_BOTTOM;
+    const prof = (t: number, e: number) => Math.pow(Math.max(0, 1 - Math.pow(t, e)), 1 / e);
+    for (let i = 0; i < src.count; i++) {
+      const x = src.getX(i), y = src.getY(i), z = src.getZ(i);
+      let k = 1;
+      if (y < 0) {
+        const t = Math.min(-y / depth, 0.9999);
+        k = Math.min(cap, prof(t, p) / Math.max(1e-4, prof(t, p0))) * (1 + w * t * t);
+        k = Math.max(1, k);
+      }
+      dst.setXYZ(i, x * k, y, z * k);
+    }
+    dst.needsUpdate = true;
+    // normals welded across the UV seam / poles (duplicates by position get one normal: the shell fur stays closed)
+    geo.computeVertexNormals();
+    const n = geo.attributes.normal as THREE.BufferAttribute;
+    const acc = new Map<string, THREE.Vector3>();
+    const keyOf = (i: number) => `${src.getX(i).toFixed(4)},${src.getY(i).toFixed(4)},${src.getZ(i).toFixed(4)}`;
+    for (let i = 0; i < n.count; i++) {
+      const kk = keyOf(i);
+      const v = acc.get(kk) ?? acc.set(kk, new THREE.Vector3()).get(kk)!;
+      v.x += n.getX(i); v.y += n.getY(i); v.z += n.getZ(i);
+    }
+    for (let i = 0; i < n.count; i++) {
+      const v = acc.get(keyOf(i))!.clone().normalize();
+      n.setXYZ(i, v.x, v.y, v.z);
+    }
+    n.needsUpdate = true;
+  };
+
   const params = initialParams();
   const apply = () => {
     const P = params;
+    reshape(P.bp, P.bcap, P.bw);
     // ---- beanie: scale about the cuff's bottom centre, then raise / shift back ----
     const s = P.hs;
     hat.scale.set(base.hatScale.x * s, base.hatScale.y * s * P.hsy, base.hatScale.z * s);

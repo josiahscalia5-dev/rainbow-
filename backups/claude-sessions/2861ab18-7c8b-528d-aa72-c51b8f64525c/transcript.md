@@ -4386,3 +4386,114 @@ Stop hook feedback:
 
 > 🔧 **Bash** `{"command": "mkdir -p backups/checkpoints/r30_s06_v2 && cp -r backups/wip/claude__rainbow-s06-match-c31/. backups/checkpoints/r30_s06_v2/ && cp qa/match/06/r30/QUERY_NEW_v2.txt qa/match/06/r30/QUERY_NEW_v1.txt backups/checkpoints/r30_s06_v2/ && cat > backups/checkpoints/r30_s06_v2/README.md <<'EOF'\n# Frozen checkpoint — Screen 06 candidate v2 (round 30, 2026-11-20 22:09 UTC), before the user's \"four approved views\" brief\nBase commit e162aec2bfdc631913c41daa435f9d449439af4f (on GitHub, branch claude/rainbow-s06-match-c23 history) + `tracked.patch` + `untracked/`.\nRestore: `git worktree add …[+9933 chars]`
 
+### 🧑 User — 2026-11-20T22:10:44.005Z
+
+> ↩︎ result: INFO.json
+> QUERY_NEW_v1.txt
+> QUERY_NEW_v2.txt
+> README.md
+> tracked.patch
+> untracked
+>   "commit": "81282dc41a525f6081046b2d7bba9aec075081f8",
+> AUTOSAVE OK | branch ccr-2644c3c0-iikckn | scheduler daemon | last verified backup 2026-11-20T22:10:23+00:00 (0.3 min ago) | local 81282dc remote 81282dc (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-20T22:10:48.033Z
+
+> 🔧 **ToolSearch** `{"query": "select:SendMessage", "max_results": 1}`
+
+### 🧑 User — 2026-11-20T22:10:48.040Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-20T22:10:52.782Z
+
+> 🔧 **SendMessage** `{"to": "ad7cf7c8a10defede", "summary": "Forward user's binding brief to scenery", "message": "Lead: the user's binding brief arrived — continue your task, now with these additions (verbatim in /home/user/rainbow-/docs/briefs/2026-11-20-r30/USER_R30.md §6; target = the four storyboard panels, all mandatory). (1) The pale peach/yellow circle ahead (worst at river s 310 and 387): inspect and state its ACTUAL cause, then make the distance continue as purple machinery + gold structure (no peach, no flat disc, no background gap). (2) Also correct: blurry or stretched wall slots (small, clean, regula …[+697 chars]`
+
+### 🧑 User — 2026-11-20T22:10:52.805Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to ad7cf7c8a10defede at its next tool round. Sending this moved nothing it is running to the background just now, so the message waits for that round unless something moves sooner. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"ad7cf7c8a10defede","name":"ad7cf7c8a10defede","ref":"588d37"}}
+
+### 🤖 Claude — 2026-11-20T22:10:55.049Z
+
+> 🔧 **SendMessage** `{"to": "a080074858aed2d68", "summary": "Forward user's binding brief to water", "message": "Lead: the user's binding brief arrived — continue your task, with these water requirements (verbatim in /home/user/rainbow-/docs/briefs/2026-11-20-r30/USER_R30.md §6; target = the four storyboard panels, all mandatory): keep the approved bright cyan-blue centre, vivid pink and rainbow edges, flowing curves, reflective highlights and a sense of volume; CORRECT the long scratch-like streaks and the stretched appearance; keep the water's width, shape and visible flow consistent with the panels; real flowin …[+238 chars]`
+
+### 🧑 User — 2026-11-20T22:10:55.069Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to a080074858aed2d68 at its next tool round. Sending this moved nothing it is running to the background just now, so the message waits for that round unless something moves sooner. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"a080074858aed2d68","name":"a080074858aed2d68","ref":"97edf8"}}
+
+### 🤖 Claude — 2026-11-20T22:10:56.936Z
+
+> 🔧 **SendMessage** `{"to": "a1355159608666d22", "summary": "Forward user's binding brief to foam", "message": "Lead: the user's binding brief arrived — continue your task, with these foam requirements (verbatim in /home/user/rainbow-/docs/briefs/2026-11-20-r30/USER_R30.md §6; target = the four storyboard panels, all mandatory): foam = soft, VARIED clusters along the water with the approved bubble detail; CORRECT the thick rows of separate bead-like balls and the oversized foam walls along the banks; keep the banks aligned with the slide. Judge at river s 238, 266, 310, 387 (the four panel moments).", "type": "mes …[+132 chars]`
+
+### 🧑 User — 2026-11-20T22:10:56.949Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to a1355159608666d22 at its next tool round. Sending this moved nothing it is running to the background just now, so the message waits for that round unless something moves sooner. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"a1355159608666d22","name":"a1355159608666d22","ref":"a506e1"}}
+
+### 🤖 Claude — 2026-11-20T22:10:59.290Z
+
+> 🔧 **SendMessage** `{"to": "a548456742f589861", "summary": "Forward user's binding brief to Benny", "message": "Lead: the user's binding brief arrived — continue your task (verbatim in /home/user/rainbow-/docs/briefs/2026-11-20-r30/USER_R30.md §6; target = the four storyboard panels + the approved 06 picture): Benny must keep the approved rounded pink furry body, small arms, purple-and-white knitted beanie, fluffy purple pom-pom and yellow star; his proportions, materials AND his contact with the water (ring ripple) are part of the match; do not substitute a different mascot. The lead is adjusting the camera fram …[+278 chars]`
+
+### 🧑 User — 2026-11-20T22:10:59.302Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to a548456742f589861 at its next tool round. Sending this moved nothing it is running to the background just now, so the message waits for that round unless something moves sooner. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"a548456742f589861","name":"a548456742f589861","ref":"5b2aaf"}}
+
+### 🤖 Claude — 2026-11-20T22:11:13.634Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && B=\"$(cat /home/user/rainbow-/qa/match/06/r30/QUERY_NEW_v1.txt)\" && SH='[[\"p1_238\",238,null],[\"p2_266\",266,null],[\"p3_310\",310,null],[\"p4_387\",387,null]]' && for v in \"0.5,1.0\" \"0.45,0.85\"; do k=${v%,*}; u=${v#*,}; AUDIT_PORT=5316 AUDIT_SHOTS=\"$SH\" timeout 2400 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/match06/r30_shots.mjs /home/user/rainbow-/qa/match/06/r30/frame_k${k}_u${u} 06 \"$B&m06camk=$k&m06camu=$u\" 2>&1 | grep -E \"rror|slot\"; done; cd /home/user/rainbow-/qa/match/06/r30 && python3 -c \"\nfrom PIL import Image …[+1176 chars]`
+
+### 🧑 User — 2026-11-20T22:11:57.608Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T22:11:57.841Z
+
+You've hit your 5-hour limit · resets 1am (UTC)
+
+### 🧑 User — 2026-11-20T22:11:59.982Z
+
+<task-notification>
+<task-id>a1355159608666d22</task-id>
+<tool-use-id>toolu_011LmYbEcxuZCt5PmvrXCge7</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/tasks/a1355159608666d22.output</output-file>
+<status>failed</status>
+<summary>Agent "Bubbly foam and bubbles" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 1am (UTC) (error type rate_limit, HTTP 429, request id req_011ChEwu8u7BB6Z1TzCRfvKB, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 1am (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+<result>Now the minimal Game.ts hooks.</result>
+</task-notification>
+
+### 🧑 User — 2026-11-20T22:12:14.615Z
+
+<task-notification>
+<task-id>a080074858aed2d68</task-id>
+<tool-use-id>toolu_01Cfgn5564PdzndJWEeB1cFY</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/tasks/a080074858aed2d68.output</output-file>
+<status>failed</status>
+<summary>Agent "Rainbow water in motion" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 1am (UTC) (error type rate_limit, HTTP 429, request id req_011ChEwvD8PKVRChpQThExsZ, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 1am (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+<result>Now I'll rewrite the shader function with deeper azure base, broader magenta sides, a rainbow strip that comes and goes, and vein glow driving the cyan.</result>
+</task-notification>
+
+### 🧑 User — 2026-11-20T22:12:29.641Z
+
+<task-notification>
+<task-id>a548456742f589861</task-id>
+<tool-use-id>toolu_01NuLtnuCJzBq1g9ofQLfF7b</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/tasks/a548456742f589861.output</output-file>
+<status>failed</status>
+<summary>Agent "Benny matches painted Benny" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 1am (UTC) (error type rate_limit, HTTP 429, request id req_011ChEwwKmmNbGzt67Xf8fGJ, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 1am (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+<result>Noted: proportions, materials and water contact are judged on close crops; the camera framing is the lead's. Let me check how Benny looks in the four storyboard panels.</result>
+</task-notification>
+
+### 🧑 User — 2026-11-20T22:12:43.171Z
+
+<task-notification>
+<task-id>ad7cf7c8a10defede</task-id>
+<tool-use-id>toolu_01Q4GnZtsTP65QK6hXfGNiwg</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/tasks/ad7cf7c8a10defede.output</output-file>
+<status>failed</status>
+<summary>Agent "Copper bands and purple tunnel" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 1am (UTC) (error type rate_limit, HTTP 429, request id req_011ChEwxKiKfE8fjpyb8RxzC, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 1am (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+<result>Slots are free; I'll start the full-size BEFORE (v2) render now while I study the current state.</result>
+</task-notification>
+

@@ -47,18 +47,18 @@ def smooth(e0, e1, x):
     return t * t * (3 - 2 * t)
 
 
-# R: jagged veins (lightning-like): wavy contours elongated along the flow (y) ~1.6x, kinked by two finer jag octaves, plus a finer
+# R: jagged veins (lightning-like): wavy contours elongated along the flow (y) ~2x, kinked by two finer jag octaves, plus a finer
 # second vein family; line width ~ constant in px (the gradient is floored so flat noise extrema do not swell into blobs).
-n1 = band(4.0, 1.8, 1.0, 1.6) + 0.30 * band(20.0, 6.0) + 0.10 * band(56.0, 14.0)
-n2 = band(9.0, 3.5, 1.0, 1.5) + 0.30 * band(38.0, 10.0)
+n1 = band(3.5, 1.6, 1.0, 2.0) + 0.18 * band(16.0, 5.0) + 0.06 * band(48.0, 12.0)
+n2 = band(8.0, 3.0, 1.0, 1.8) + 0.20 * band(32.0, 9.0)
 g1, g2 = grad(n1), grad(n2)
-l1 = np.exp(-((n1 / (1.5 * np.maximum(g1, 0.5 * g1.mean()))) ** 2))
-l2 = np.exp(-((n2 / (0.9 * np.maximum(g2, 0.5 * g2.mean()))) ** 2))
+l1 = np.exp(-((n1 / (2.0 * np.maximum(g1, 0.5 * g1.mean()))) ** 2))
+l2 = np.exp(-((n2 / (1.2 * np.maximum(g2, 0.5 * g2.mean()))) ** 2))
 m1 = smooth(-0.7, 0.8, band(2.0, 1.2))  # slow on / off: broken electric flashes
 m2 = smooth(-0.1, 1.3, band(3.0, 1.5))
 veins = np.maximum(l1 * (0.3 + 0.7 * m1), 0.6 * l2 * m2)
-gv = blur(veins, 4.0)
-R = np.clip(0.8 * veins + 0.6 * gv / max(gv.max(), 1e-6), 0, 1)
+gv = blur(veins, 6.0)
+R = np.clip(0.8 * veins + 0.75 * gv / max(gv.max(), 1e-6), 0, 1)
 
 # G: warped Voronoi edges (branching caustic net), ~36 cells / tile, jagged by noise warp.
 P = rng.random((36, 2)) * N
