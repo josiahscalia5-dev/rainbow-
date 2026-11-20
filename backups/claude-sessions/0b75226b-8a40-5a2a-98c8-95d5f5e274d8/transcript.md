@@ -4955,3 +4955,185 @@ The gameplay rerun with the final settings has finished. Checking it:
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-20T19:52:13.260Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"vTile = \\|vTile=\" src/world/match06.ts | head -3 | cut -c1-160; python3 -c \"\nimport json; T=json.load(open('assets/textures/match06/proj06.json'))['tiles']['tube']; print({k:(v if not isinstance(v,list) or len(v)<6 else str(v[:6])+'...') for k,v in T.items()})\"", "description": "Check how the wall texture is oriented on the tunnel"}`
+
+### 🧑 User — 2026-11-20T19:52:13.329Z
+
+> ↩︎ result: 65:  vTile = aTile;
+> 202:      // r15 m06gold: vTile = (angle around the ring, position across the painted band: 0 = outer face edge .. 1 = far lip);
+> {'wallAngle': [-0.41151684606748806, 3.553109499657281], 'sectorDeg': [35.0, 140.0], 'vp': [660.0, 632.0], 'r': [110.0, 340.0], 'period': 58.95287321438412, 'anglePeriod': 1.8325957145940461}
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:52:26.174Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -rln \"tile_tube\" tools/ scripts/ 2>/dev/null | head -3; f=$(grep -rln \"tile_tube\" tools/ 2>/dev/null | head -1); [ -n \"$f\" ] && grep -n \"tile_tube\\|anglePeriod\\|period\\|polar\\|radius\\|np.arctan2\\|theta\\|for r in\\|r0, r1\\|rr =\" \"$f\" | head -20 | cut -c1-180", "description": "Find the tool that created the tunnel wall texture"}`
+
+### 🧑 User — 2026-11-20T19:52:26.254Z
+
+> ↩︎ result: tools/match06/make_tiles06.py
+> 4:  tile_tube.png   the painted tunnel wall (gold rings + slotted purple metal) unwrapped around the painted vanishing point
+> 22:cv2.imwrite(f"{d}/tile_tube.png", sharpen(tube).astype(np.uint8))
+> 29:L["tiles"] = {"tube": {"wallAngle": [a0, a1], "sectorDeg": ANG, "vp": VP, "r": [R1, R2], "period": TUBE_PERIOD, "anglePeriod": math.radians(ANG[1] - ANG[0])},
+> 30:              "floor": {"px": [150, 1250, 720, 1530], "lateralPeriod": 2 * g.Lf / 1.6, "period": (2 * g.Lf / 1.6) * 280 / 570}}
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:52:28.528Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 1,28p tools/match06/make_tiles06.py | cut -c1-200", "description": "Read how the wall texture was unwrapped from the painting"}`
+
+### 🧑 User — 2026-11-20T19:52:28.583Z
+
+> ↩︎ result: """Screen 06 (?match06=1): proxy layout (proj06.json) + design tiles UNWRAPPED from the plate (original approved pixels)
+> through the locked camera onto the proxy geometry's own coordinates, for the views the approved picture never resolved
+> (moving camera close to the walls / the water):
+>   tile_tube.png   the painted tunnel wall (gold rings + slotted purple metal) unwrapped around the painted vanishing point
+>                   (angle x 1/r): ring-structured, mapped on the tube as (wall angle, s), mirrored repeat
+>   tile_floor.png  the painted cyan/pink water below Benny, mapped on the floor as (lateral, s), mirrored repeat
+> usage: python3 -I tools/match06/make_tiles06.py <probe06.json> <cam06_locked.json> <dir>"""
+> import json, math, sys
+> import numpy as np, cv2
+> sys.path.insert(0, __file__.rsplit("/", 1)[0])
+> from geo06 import Geo
+> g = Geo(sys.argv[1], sys.argv[2]); d = sys.argv[3]
+> A = cv2.imread(f"{d}/plate06_hybrid.png").astype(np.float32)
+> def sharpen(img, s=2.0, k=0.5): return np.clip(img + k * (img - cv2.GaussianBlur(img, (0, 0), s)), 0, 255)
+> # tube: the painted tunnel unwrapped around its own vanishing point (rings are concentric there): rows = angle over the
+> # clean upper-left wall s …[+997 chars]
+
+### 🤖 Claude — 2026-11-20T19:53:17.024Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"add(mergeGeometries(parts)\\|, 'rings')\\|'gold')\\|add(.*'paddles')\\|'ringgold'\" src/world/match06.ts | head -6 | cut -c1-170; grep -n \"uniform float uPanel;\" src/world/match06.ts; python3 -c \"\nfrom PIL import Image; im=Image.open('/home/user/rainbow-/references/06_crest_the_rinse_arch.png').convert('RGB')\nfor p in [(680,640),(700,660),(660,600),(720,620),(640,680)]: print(p, im.getpixel(p))\"", "description": "Find the ring mesh names and sample the painted deep-tunnel colours"}`
+
+### 🧑 User — 2026-11-20T19:53:17.162Z
+
+> ↩︎ result: 821:      add(rg, rm, 'rings');
+> 856:        add(mergeGeometries(pads), pm, 'paddles');
+> 100:uniform float uPanel;
+> (680, 640) (210, 90, 138)
+> (700, 660) (225, 117, 133)
+> (660, 600) (127, 57, 107)
+> (720, 620) (141, 51, 102)
+> (640, 680) (211, 163, 247)
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:53:29.148Z
+
+Your painted deep tunnel near its far end is dark magenta-purple (around RGB 127–210, 51–90, 102–138), not a bright gold target. Adding the switches now:
+
+### 🤖 Claude — 2026-11-20T19:53:36.951Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='src/world/match06.ts'; t=open(p).read()\n# 1) uniforms declared in the fragment shader\nold=\"uniform float uPanel;\\n\"\nassert t.count(old)==1\nt=t.replace(old, old+\"\"\"// r29 lead (qa/match/06/r29/): uTSwap = the painted wall tile mapped the way tools/match06/make_tiles06.py built it (tile x = depth along\n// the tube, tile y = angle round it; it was applied transposed -> the painted gold rings ran LENGTHWISE as spokes) and only its purple\n// panel columns (x 0.18..0.88, mirrored) so the walls carry purple metal and the 3D bands  …[+1361 chars]`
+
+### 🧑 User — 2026-11-20T19:53:37.036Z
+
+> ↩︎ result: shader ok
+> 599:      uRing: { value: 0 }, uGold: { value: 0 }, uRingTex: { value: tile }, uRingH: { value: 1 }, uBendAng: { value:
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:53:46.230Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='src/world/match06.ts'; t=open(p).read()\n# uniforms in mat(): add next to uRing\nold=\"      uRing: { value: 0 }, uGold: { value: 0 },\"\nassert t.count(old)==1\nt=t.replace(old,\"      uTSwap: { value: TSWAP ? 1 : 0 }, uHaze: { value: HAZE.clone() }, uHazeCol: { value: new THREE.Vector3(0.52, 0.22, 0.44) }, uDbgFlat: { value: TDBG === 'flatwall' ? 1 : 0 },\\n\"+old,1)\n# global switch parsing right after DEEP\nold=\"  if (DEEP) L.s1 = course.stage('07').s0 + ((L as unknown as { sAhead07?: number }).sAhead07 ?? 34);\\n\"\nassert t.coun …[+1402 chars]`
+
+### 🧑 User — 2026-11-20T19:53:48.991Z
+
+> ↩︎ result: ok
+> tsc-done
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:54:03.389Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && QF=$(cat /home/user/rainbow-/qa/match/06/r29/QUERY_NEW_FINAL.txt); SH='[[\"p14\",0.14,null],[\"p30\",0.3,null],[\"p60\",0.6,null]]'; cat > diag.sh <<EOF\n#!/usr/bin/env bash\ncd /home/user/scratch/s06\nPORT=5293 ./quick2.sh g_asis \"$QF\" '$SH' &\nPORT=5294 ./quick2.sh g_norings \"$QF&m06tdbg=norings\" '$SH' &\nwait\nPORT=5293 ./quick2.sh g_flatwall \"$QF&m06tdbg=flatwall\" '$SH' &\nPORT=5294 ./quick2.sh g_swap \"$QF&m06tswap=1\" '$SH' &\nwait\nPORT=5293 ./quick2.sh g_swaphaze \"$QF&m06tswap=1&m06haze=50,115,0.85\" '$SH'\necho DIAG-DONE > diag.done\nEO …[+247 chars]`
+
+### 🧑 User — 2026-11-20T19:54:04.457Z
+
+> ↩︎ result: slot 1 busy
+> slot 2 busy
+> 19:54:04
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:54:20.131Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && until [ -f diag.done ]; do sleep 5; done; for d in g_asis g_norings g_flatwall g_swap g_swaphaze; do echo \"$d $(ls $d/*.png 2>/dev/null | wc -l) $(grep -h exit $d.log)\"; done; date -u +%H:%M:%S", "description": "Wait for the five diagnostic renders", "timeout": 1500000}`
+
+### 🧑 User — 2026-11-20T19:54:55.268Z
+
+> ↩︎ result: g_asis 3 g_asis exit 0
+> g_norings 3 g_norings exit 0
+> g_flatwall 3 g_flatwall exit 0
+> g_swap 3 g_swap exit 0
+> g_swaphaze 3 g_swaphaze exit 0
+> 19:54:55
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:55:00.786Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && A=/home/user/rainbow-/qa/match/06/r28/route/quick_r29/approved_432.png && montage -label 'YOUR APPROVED 06' $A -label '1 · NOW (as is)' g_asis/p14.png -label '2 · walls only (3D rings hidden)' g_norings/p14.png -label '3 · 3D rings only (flat walls)' g_flatwall/p14.png -label '4 · FIX: wall texture oriented right' g_swap/p14.png -label '5 · FIX + far tunnel fades to purple' g_swaphaze/p14.png -tile 6x1 -geometry 270x480+3+3 -pointsize 13 -background '#1b1029' -fill white diag14.jpg && montage -label 'NOW 30%%' g_asis/p30.png -label 'FIX+fade 30%%' g_sw …[+332 chars]`
+
+### 🧑 User — 2026-11-20T19:55:01.159Z
+
+> ↩︎ result: ok
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:55:02.666Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s06/diag14.jpg"}`
+
+### 🧑 User — 2026-11-20T19:55:02.773Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T19:55:42.250Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"      t = mix(pc, pl, w);\" src/world/match06.ts | head -2; python3 - <<'EOF'\np='/home/user/wt/s06/src/world/match06.ts'; t=open(p).read()\nold=\"      t = mix(pc, pl, w);\\n\"\nassert t.count(old)==1\nt=t.replace(old,\"\"\"      // r29 lead `&m06projw=a,b`: on the TUNNEL (walls, rings, paddles; not the river) the approved picture's projected pixels fade out as the\n      // camera leaves the approved viewpoint (camera distance a..b); before, far walls kept them while moving (re-projected painted rings\n      // = the dense 'target' down the tunn …[+957 chars]`
+
+### 🧑 User — 2026-11-20T19:55:43.262Z
+
+> ↩︎ result: 398:      t = mix(pc, pl, w);
+> ok
+> src/world/match06.ts(399,29): error TS1005: ',' expected.
+> src/world/match06.ts(399,33): error TS1005: ',' expected.
+> src/world/match06.ts(401,61): error TS1005: ';' expected.
+> tsc-done
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:55:46.556Z
+
+My comment inside the shader used backtick characters, which end the code string early. Removing them:
+
+### 🤖 Claude — 2026-11-20T19:55:48.659Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='/home/user/wt/s06/src/world/match06.ts'; t=open(p).read()\nt=t.replace(\"      // r29 lead `&m06projw=a,b`: on the TUNNEL\",\"      // r29 lead &m06projw=a,b: on the TUNNEL\",1)\nt=t.replace(\"= the dense 'target' down the tunnel). QA `&m06tdbg=noproj` = off at once.\",\"= the dense 'target' down the tunnel). QA &m06tdbg=noproj = off at once.\",1)\nopen(p,'w').write(t)\nEOF\nnpx tsc --noEmit 2>&1 | head -5; echo tsc-done", "description": "Fix the shader comment and type-check", "timeout": 300000}`
+
+### 🧑 User — 2026-11-20T19:55:51.389Z
+
+> ↩︎ result: tsc-done
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:55:55.991Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && QF=$(cat /home/user/rainbow-/qa/match/06/r29/QUERY_NEW_FINAL.txt); SH='[[\"p14\",0.14,null],[\"p30\",0.3,null],[\"p60\",0.6,null]]'; cat > diag2.sh <<EOF\n#!/usr/bin/env bash\ncd /home/user/scratch/s06\nPORT=5293 ./quick2.sh h_noproj \"$QF&m06tdbg=noproj\" '$SH' &\nPORT=5294 ./quick2.sh h_noproj_norings \"$QF&m06tdbg=noproj&m06tdbg2=x\" '$SH' &\nwait\nPORT=5293 ./quick2.sh h_fix \"$QF&m06tswap=1&m06projw=2,8\" '$SH' &\nPORT=5294 ./quick2.sh h_fixhaze \"$QF&m06tswap=1&m06projw=2,8&m06haze=50,115,0.85\" '$SH' &\nwait\necho DONE > diag2.done\nEOF\nchmod + …[+185 chars]`
+
+### 🧑 User — 2026-11-20T19:55:57.070Z
+
+> ↩︎ result: 19:55:57
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:56:05.524Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && until [ -f diag2.done ]; do sleep 4; done; A=/home/user/rainbow-/qa/match/06/r28/route/quick_r29/approved_432.png; montage -label 'YOUR APPROVED 06' $A -label '1 · NOW (as is)' g_asis/p14.png -label '2 · painting projection OFF' h_noproj/p14.png -label '3 · FIX: no projection + walls right' h_fix/p14.png -label '4 · FIX + far fade to purple' h_fixhaze/p14.png -tile 5x1 -geometry 300x533+3+3 -pointsize 14 -background '#1b1029' -fill white diag14b.jpg && montage -label 'NOW 30%%' g_asis/p30.png -label 'FIX+fade 30%%' h_fixhaze/p30.png -label 'NOW 60%%' g …[+302 chars]`
+
+### 🧑 User — 2026-11-20T19:56:37.910Z
+
+> ↩︎ result: 19:56:37
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:56:39.743Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s06/diag14b.jpg"}`
+
+### 🧑 User — 2026-11-20T19:56:39.865Z
+
+> ↩︎ result: [image]
+
