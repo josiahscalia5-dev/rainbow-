@@ -1,3 +1,11 @@
+# CURRENT OWNER VISUAL BRIEF — 2026-11-20
+
+Read `docs/briefs/2026-11-20-visual-requirements/USER_VISUAL_REQUIREMENTS.md` in full before continuing any screen work. It preserves the owner's latest message verbatim and takes precedence over older visual targets and contradictory review instructions below. The owner's target is approximately 90–95% likeness, with 95% preferred, throughout swimming, steering and transitions; do not report an unsupported achieved percentage. K23-3 remains unapproved.
+
+Use `docs/briefs/2026-11-20-visual-requirements/SPECIALIST_REQUIREMENTS.md` to brief the existing ten specialist roles and `REVIEW_AND_NEXT_STEPS.md` in the same folder for the saved-evidence review. Keep current approvals, successful work, controls and the existing video plan intact. This documentation branch does not merge specialist code or promote candidates. Saved agent status is historical; verify live workers in their actual session before describing them as running.
+
+---
+
 # RAINBOW — permanent rules for Claude Code
 
 This is an EXISTING, playable 11-screen 3D game. **Never restart it, never start from scratch, never delete work.**
