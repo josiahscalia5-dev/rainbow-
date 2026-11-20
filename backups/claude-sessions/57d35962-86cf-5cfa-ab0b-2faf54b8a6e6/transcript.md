@@ -2986,3 +2986,11 @@ You've hit your 5-hour limit · resets 6pm (UTC)
 <result>Now I'll make the five-arrow switch place the five as one compact group that Benny physically crosses inside 04 (lane distance `m04a5a`, spacing `m04a5p`).</result>
 </task-notification>
 
+### 🧑 User — 2026-11-20T14:51:59.586Z
+
+This session's worker process was restarted. If your previous turn was already complete, take no action and wait for the next event. Otherwise, continue from where you left off.
+
+### 🤖 Claude — 2026-11-20T14:52:00.762Z
+
+You've hit your 5-hour limit · resets 6pm (UTC)
+
