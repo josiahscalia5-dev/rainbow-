@@ -3415,3 +3415,64 @@ The extraction test with all seven ZIPs passes again: 2,161 / 2,161 files, nothi
 
 > 🔧 **Bash** `{"command": "timeout 240 bash -c 'until flock -n backups/.autosave.lock true; do sleep 2; done'; timeout 400 python3 scripts/rainbow-autosave.py --reason manual:review-package-delivered 2>&1 | grep -E '\"result\"|\"commit\"|skipping'; echo \"local $(git rev-parse HEAD)\"; echo \"remote $(git ls-remote origin refs/heads/ccr-5be1062a-0ffyej | cut -f1)\"; python3 -I scripts/autosave-status.py; pgrep -f autosave-daemon.sh >/dev/null && echo \"daemon running (every 5 min)\"", "description": "Final save and verification after delivery", "timeout": 700000}`
 
+### 🧑 User — 2026-11-20T11:17:38.760Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "commit": "9562188382caf23f0469feda1127994bb138748a",
+> local 9562188382caf23f0469feda1127994bb138748a
+> remote 9562188382caf23f0469feda1127994bb138748a
+> AUTOSAVE OK | branch ccr-5be1062a-0ffyej | scheduler daemon | last verified backup 2026-11-20T11:17:21+00:00 (0.3 min ago) | local 9562188 remote 9562188 (match) | uncommitted 0
+> daemon running (every 5 min)
+
+### 🤖 Claude — 2026-11-20T11:17:42.380Z
+
+> 🔧 **TaskUpdate** `{"taskId": "7", "status": "completed"}`
+
+### 🧑 User — 2026-11-20T11:17:42.410Z
+
+> ↩︎ result: Updated task #7 status
+
+### 🤖 Claude — 2026-11-20T11:17:57.711Z
+
+RAINBOW 3D BACKUP VERIFIED
+
+Everything is saved to GitHub on branch `ccr-5be1062a-0ffyej`, commit `9562188382caf23f0469feda1127994bb138748a`. GitHub shows the same commit as here, and the five-minute autosave is running.
+
+**What every save includes**
+- All code, assets, pictures, clips and notes.
+- The specialists' unfinished edits.
+- This conversation and each specialist's conversation, as sanitized transcripts with keys and secrets removed.
+- A record of the tools, plugins, MCP servers, the 10 specialists and the hooks (names only).
+
+I fixed one gap in that record: plugin names were stored as descriptions and are now proper names.
+
+**For your other Claude account**
+The instructions are at the top of `backups/START_NEW_CLAUDE_ACCOUNT.md`, with a ready-to-paste prompt. Your order is also written into `CLAUDE.md` and the handoff notes.
+
+- **Start the new session on branch `ccr-5be1062a-0ffyej`, not the GitHub default branch.** The default branch has an old start-up script that does not turn the autosave on.
+- On that branch, the five-minute autosave starts by itself; nothing to type. The prompt's first step tells the new Claude to confirm it shows "AUTOSAVE OK".
+- Optionally, make `ccr-5be1062a-0ffyej` the default branch in your GitHub repository settings (Branches), so any new session starts there automatically.
+- Plugins and connector sign-ins (World Labs, Hugging Face, Context7) belong to each account and can't be copied through GitHub. Their names are listed in the instructions, so you'll need to switch them on and sign in there.
+
+**The review package (7 ZIPs, sent above)**
+Upload `Rainbow_App_Review.zip` (392 MB) first. It holds:
+- the complete project;
+- each screen's newest version, plus a script that builds a runnable copy;
+- all 11 approved screens at original quality;
+- every gameplay clip, labelled with screen, version and playback speed;
+- `REVIEW_README.md` and the manifest.
+
+The six asset ZIPs add the full-size comparison pictures, the Marble world files and the APKs. Extract all seven into one folder and they merge. Each file is under ChatGPT's 512 MB limit.
+
+- **Checks:** the package was built from one saved commit. I unzipped it and checked every one of the 2,161 files against the manifest: none missing, all large files hold real data, and no keys, passwords or chat transcripts are inside. On the exported files, the install, type-check, path test and build all pass, and all 8 screen versions type-check and pass the path test.
+- **Missing, and stated in the README:**
+  - There's no APK of the current work; the newest is from 2026-11-17.
+  - Your Flow videos aren't in the repository.
+  - The newest work for each screen is on separate, unmerged versions, so there's no single combined build.
+  - Some screen transitions haven't been recorded with the newest changes.
+
+**Specialists**
+- Your interruption stopped the Screen 07, Screen 04 and Benny specialists mid-step. Their unfinished edits are saved, and the next account can recreate their worktrees with one script; say if you want them restarted here.
+- Screen 08 finished all three steps (softer glints, coin sizes like the painting, the towel box removed). The result is a candidate, not yet approved by you.
+- The Screen 06 "blue cone" is diagnosed, but I haven't fixed it yet. It is the hole where your painted Benny was cut out of the floor, filled with brighter plain water.
+
