@@ -201,3 +201,248 @@ Only two auto-generated backup index files conflict (the next autosave rewrites 
 > 549f252 autosave: Rainbow 2026-11-20 20:09 UTC
 > f090393 autosave: Rainbow 2026-11-20 20:02 UTC
 
+### 🤖 Claude — 2026-11-20T20:10:06.170Z
+
+Merged. Next I'll save to GitHub right away and read what round 29 found about the rings, plus the coordination map and the workers' state.
+
+### 🤖 Claude — 2026-11-20T20:10:07.423Z
+
+> 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:r30-merge-r29 2>&1 | tail -4; python3 -I scripts/autosave-status.py 2>&1 | tail -3", "description": "Run manual autosave and verify remote match", "timeout": 300000}`
+
+### 🤖 Claude — 2026-11-20T20:10:08.628Z
+
+> 🔧 **Bash** `{"command": "ls qa/match/06/r29/ qa/match/06/r29/rings/ && cat qa/match/06/r29/QUERY_NEW_FINAL.txt; echo ----; git diff 8abed78 1d1f359 -- qa/match/06/r25/PROGRESS.md", "description": "List round-29 Screen 06 files and progress"}`
+
+### 🧑 User — 2026-11-20T20:10:21.131Z
+
+> ↩︎ result: "note": "following session branch 'ccr-2644c3c0-iikckn' (config branch 'claude/rainbow-r22-restore-ut3m39')",
+>   "commit": "44a4649fd88bc3635fa4dfaaaf14172fb061fb74",
+>   "duration_s": 13
+> }
+> AUTOSAVE OK | branch ccr-2644c3c0-iikckn | scheduler daemon | last verified backup 2026-11-20T20:10:07+00:00 (0.2 min ago) | local 44a4649 remote 44a4649 (match) | uncommitted 0
+
+### 🧑 User — 2026-11-20T20:10:21.164Z
+
+> ↩︎ result: qa/match/06/r29/:
+> QUERY_BEFORE.txt
+> QUERY_NEW_FINAL.txt
+> README.md
+> clips
+> gameplay_NEW_final.json
+> gameplay_NEW_m06deep.json
+> make_side_by_side.py
+> make_stills.py
+> quick
+> rings
+> 
+> qa/match/06/r29/rings/:
+> CAUSE_marked_position.jpg
+> FIX_along_the_slide.jpg
+> g_asis
+> g_flatwall
+> g_norings
+> h_noproj
+> i_crop
+> i_cropHaze
+> i_cropHaze2
+> i_haze
+> match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1&m06st=1&m06fcl=1&m06view=1&m06vs=0&m06rip=1&m06hole=2&m06fade=1&m06spl=1&m06fcn=3&m06fcg=1&m06deep=1&m06leg=1&m06vw=34,56&m06tswap=2&m06haze=50,115,0.85
+> ----
+> diff --git a/qa/match/06/r25/PROGRESS.md b/qa/match/06/r25/PROGRESS.md
+> index fda5b9a..f312756 100644
+> --- a/qa/match/06/r25/PROGRESS.md
+> +++ b/qa/match/06/r25/PROGRESS.md
+> @@ -1,5 +1,18 @@
+>  # Screen 06 — round 25 progress (worktree `/home/user/wt/s06`, LOCAL branch `claude/rainbow-s06-match-c26`, ports 5276 / 5282 / 5283)
+>  
+> +## (r29d) WHERE I STOPPED / NEXT — lead, user ~19:51 UTC: the crowded gold "target" under the red mark (NEW ~14 %)
+> +* Diagnosis at the marked spot (`qa/match/06/r29/rings/`, CAUSE_marked_position.jpg): TWO repeating ring patterns down the long straight
+> +  tunnel, seen straight down its axis, al …[+1671 chars]
+
+### 🤖 Claude — 2026-11-20T20:10:25.048Z
+
+Round 29 had already diagnosed your red-marked "target" and had a fix rendering when that session ended. I'll look at the diagnosis and fix pictures it left.
+
+### 🤖 Claude — 2026-11-20T20:10:25.544Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r29/rings/CAUSE_marked_position.jpg"}`
+
+### 🧑 User — 2026-11-20T20:10:25.656Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T20:10:25.997Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r29/rings/FIX_along_the_slide.jpg"}`
+
+### 🧑 User — 2026-11-20T20:10:26.089Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T20:10:34.924Z
+
+> 🔧 **Bash** `{"command": "ls docs/briefs/2026-11-20-r29/ && wc -l docs/briefs/2026-11-20-r29/COORDINATION.md docs/briefs/2026-11-20-r28/S06_ROUTE_R28.md qa/match/06/r29/README.md", "description": "List round-29 brief files and sizes"}`
+
+### 🧑 User — 2026-11-20T20:10:34.955Z
+
+> ↩︎ result: COORDINATION.md
+> LAUNCH_R29.md
+> setup_worker_r30.sh
+>    83 docs/briefs/2026-11-20-r29/COORDINATION.md
+>    52 docs/briefs/2026-11-20-r28/S06_ROUTE_R28.md
+>    46 qa/match/06/r29/README.md
+>   181 total
+
+### 🤖 Claude — 2026-11-20T20:10:35.435Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-20-r28/S06_ROUTE_R28.md"}`
+
+### 🧑 User — 2026-11-20T20:10:35.448Z
+
+> ↩︎ result: 1	# Screen 06 — route candidate (round 28, USER-AUTHORIZED 2026-11-20 ~17:05 UTC)
+> 2	
+> 3	## The user's decision (verbatim excerpts, r28)
+> 4	> "Yes, I authorize you to implement and test that as a separate saved candidate." — "I authorize the separate Screen 06 route test you
+> 5	> proposed, including the river's curve after the opening and the necessary adjustments to the tunnel, camera and connection into Screen 07.
+> 6	> Build it as a separate, recoverable candidate. Keep the existing version available for comparison. Use our existing models, textures,
+> 7	> approved artwork and other saved assets first. Establish and test the route before commissioning additional artwork for this route."
+> 8	> Benny must visibly: "Approach the purple-and-gold tunnel. Follow the curling river toward its intended opening. Enter the tunnel. Swim
+> 9	> through its interior and pass its gold rings. Continue beyond those rings and into Screen 07."
+> 10	> "Preserve the approved Screen 06 opening, its distinctive curling crest, sweeping river and relationship to the off-centre tunnel."
+> 11	> "Coordinate the river geometry, cyan water, pink edges, foam banks, coin trail, Benny's movement, steering limits, collisions and …[+4583 chars]
+
+### 🤖 Claude — 2026-11-20T20:10:36.842Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-20-r29/COORDINATION.md"}`
+
+### 🧑 User — 2026-11-20T20:10:36.857Z
+
+> ↩︎ result: 1	# Round 29 — coordination (lead session branch `ccr-ac160b4c-3hdecw`, new Claude account, 2026-11-20 from ~18:21 UTC)
+> 2	
+> 3	User (new account, ~18:21): restore the project from **`ccr-9652868f-lkw0w0`** (the r28 lead), verified five-minute GitHub autosave first,
+> 4	recover every unfinished edit (s04 s05 s06 s07 s08 benny lead06 lead07 trial07 view04 view06 view07 + `tools/lead26/trial07_recovered/`),
+> 5	restore the ten specialists and the toolchain, continue the AUTHORIZED work — **Screen 06 route test = next main checkpoint** — and answer
+> 6	honestly whether the approved screens can be delivered as playable 3D that matches them THROUGHOUT gameplay (per-screen: largest
+> 7	mismatch, correction, demonstrated / unproven / blocked, what is needed). Same rules as r28: at most four specialists; nothing approved until
+> 8	the user says so; generated NEW VIEW / try artwork = proposals; 04 K27-B and 08 K23-3 = saved, unapproved candidates.
+> 9	
+> 10	## Restore audit (lead, 18:21–18:35 UTC)
+> 11	* Session branch `ccr-ac160b4c-3hdecw` started at **`31d3a8cd71970e5ab0835b112e66f9d15f555a0a`** (18:12 UTC, the r28 container's last daemon
+> 12	  save). The hook's start-time `git fetch` failed; the lead's retr …[+8308 chars]
+
+### 🤖 Claude — 2026-11-20T20:10:37.200Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r29/README.md"}`
+
+### 🧑 User — 2026-11-20T20:10:37.220Z
+
+> ↩︎ result: 1	# Screen 06 — deep route candidate `&m06deep=1` (round 29 lead, 2026-11-20 ~19:00–19:45 UTC)
+> 2	
+> 3	Individual playable candidate (worktree `/home/user/wt/s06`, LOCAL branch `claude/rainbow-s06-match-c30`; its edits are saved every five
+> 4	minutes in `backups/wip/claude__rainbow-s06-match-c30/`). NOT a combined build, NOT Android. NOT approved — waiting for the user.
+> 5	
+> 6	* BEFORE = `qa/match/06/r25/step2/QUERY_NEW2.txt` (the version the user last saw)
+> 7	* NEW = BEFORE + `&m06deep=1&m06leg=1&m06vw=34,56` (`QUERY_NEW_FINAL.txt`)
+> 8	
+> 9	## What the switch does (user's words: "Benny swims down the colourful water slide, following the gold coins, directly into and through the purple-and-gold tunnel")
+> 10	* The 06 river follows the user's painted coin trail rebuilt in 3D (every painted coin the same real size, so its painted size gives its
+> 11	  distance): up and to the left over the crest, then down the MIDDLE of the gold-ring tunnel, about 100 units deep, passing ~9 rings,
+> 12	  into Screen 07. The painted coins sit on that river at their painted positions (coins 5–14 exactly on its centre line).
+> 13	* Before, the river swerved toward the tunnel's lower-right wall within 44 units ("the river …[+3545 chars]
+
+### 🤖 Claude — 2026-11-20T20:10:51.411Z
+
+> 🔧 **ToolSearch** `{"query": "select:TaskCreate,TaskUpdate,TaskList", "max_results": 3}`
+
+### 🧑 User — 2026-11-20T20:10:51.420Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-20T20:10:52.514Z
+
+> 🔧 **Bash** `{"command": "ls /home/user/wt 2>&1 | head; ls /home/user/ ; cd /home/user/rainbow- && sed -n 1,60p docs/briefs/2026-11-20-r29/setup_worker_r30.sh", "description": "Check worktrees and read the r30 setup recipe"}`
+
+### 🧑 User — 2026-11-20T20:10:52.569Z
+
+> ↩︎ result: ls: cannot access '/home/user/wt': No such file or directory
+> rainbow-
+> #!/usr/bin/env bash
+> # setup_worker_r30.sh — the NEXT account after round 29: recreate every worker worktree on
+> # NEW LOCAL -c31 branches = the worker base commit + its NEWEST autosave snapshot backups/wip/<branch-c30>/ (the round-29 lead autosave refreshes it every 5 min; read INFO.json "time").
+> # The -c30 branches were LOCAL only in the r29 container (never pushed); their unfinished edits live only in those snapshots.
+> # Sparse worktrees (disk), node_modules symlinked. Run from the lead checkout.
+> # usage: bash docs/briefs/2026-11-20-r29/setup_worker_r30.sh [s04 s07 s06 benny s08 s05 lead07 lead06 trial07 view04 view06 view07]
+> set -euo pipefail
+> R=$(git rev-parse --show-toplevel); cd "$R"
+> mk() {  # mk <slug> <worktree> <new branch> <base commit> [wip dir]
+>   local X=$1 WT=$2 BR=$3 BASE=$4 W=${5:-}
+>   [ -e "$WT" ] && { echo "$X: $WT exists, skipped"; return; }
+>   if [ "$BR" = "--detach" ]; then git worktree add --no-checkout --detach "$WT" "$BASE" >/dev/null
+>   else git worktree add --no-checkout -b "$BR" "$WT" "$BASE" >/dev/null; fi
+>   printf '/*\n!/qa/pilot05/\n!/qa/worldlabs/\n!/qa/imageblaster/\n!/builds/\n!/backups/ …[+2912 chars]
+
+### 🤖 Claude — 2026-11-20T20:10:54.837Z
+
+> 🔧 **TaskCreate** `{"subject": "Restore session: merge r29 saves, worktrees, autosave, tools check, backup report", "description": "Merge r29 final saves (done), recreate the 12 worktrees with setup_worker_r30.sh (-c31), verify byte-identical to snapshots, verify autosave match, check connectors/plugins/agents, give the RAINBOW 3D BACKUP report.", "activeForm": "Restoring session state"}`
+
+### 🧑 User — 2026-11-20T20:10:54.851Z
+
+> ↩︎ result: Task #1 created successfully: Restore session: merge r29 saves, worktrees, autosave, tools check, backup report
+
+### 🤖 Claude — 2026-11-20T20:10:56.583Z
+
+> 🔧 **TaskCreate** `{"subject": "Diagnose the gold 'target' ring cluster at the user's red-marked spot (06)", "description": "Identify the mesh/material/texture making the concentric pattern: 3D ring spacing, ring scale, tile_tube gold columns, straight tunnel axis vs camera axis. Measure and present visually before any cosmetic change.", "activeForm": "Diagnosing the gold ring target"}`
+
+### 🧑 User — 2026-11-20T20:10:56.594Z
+
+> ↩︎ result: Task #2 created successfully: Diagnose the gold 'target' ring cluster at the user's red-marked spot (06)
+
+### 🤖 Claude — 2026-11-20T20:10:58.531Z
+
+> 🔧 **TaskCreate** `{"subject": "Build continuous 06 route per storyboard (crest → curl right + descend → gold bands → S-bend → 07 entry)", "description": "Separate URL-switch candidate on top of m06deep: curved swept tunnel with spaced substantial gold bands, purple roof/walls between, river/coins/foam/camera following the route, longer 06, rejoin 07 entry. tsc + continuity + gameplay 8/8 coins.", "activeForm": "Building the continuous 06 route"}`
+
+### 🧑 User — 2026-11-20T20:10:58.540Z
+
+> ↩︎ result: Task #3 created successfully: Build continuous 06 route per storyboard (crest → curl right + descend → gold bands → S-bend → 07 entry)
+
+### 🤖 Claude — 2026-11-20T20:11:00.039Z
+
+> 🔧 **TaskCreate** `{"subject": "Prove in gameplay: stills at the marked spot + uninterrupted clip passing under a gold band into 07", "description": "APPROVED | BEFORE | NEW stills at the same marked position; one continuous clip 06 start → under a gold band → S-bend → into 07. Save, autosave verify, report.", "activeForm": "Rendering gameplay proof"}`
+
+### 🧑 User — 2026-11-20T20:11:00.048Z
+
+> ↩︎ result: Task #4 created successfully: Prove in gameplay: stills at the marked spot + uninterrupted clip passing under a gold band into 07
+
+### 🤖 Claude — 2026-11-20T20:11:00.946Z
+
+> 🔧 **TaskUpdate** `{"taskId": "1", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-20T20:11:00.958Z
+
+> ↩︎ result: Updated task #1 status
+
+### 🤖 Claude — 2026-11-20T20:11:02.993Z
+
+> 🔧 **Bash** `{"command": "for d in backups/wip/*-c30 backups/wip/detached-*; do printf '%s ' \"$d\"; python3 -c \"import json,sys;d=json.load(open('$d/INFO.json'));print(d.get('time'),d.get('head','')[:10],len(d.get('dirty',[])) if isinstance(d.get('dirty'),list) else d.get('dirty'))\"; done; timeout 600 bash docs/briefs/2026-11-20-r29/setup_worker_r30.sh 2>&1 | tail -15", "description": "Recreate the 12 worker worktrees from newest snapshots", "timeout": 620000}`
+
+### 🧑 User — 2026-11-20T20:14:20.051Z
+
+> ↩︎ result: backups/wip/claude__rainbow-benny-c30 2026-11-20T20:02:12+00:00 734efb6bc4 None
+> backups/wip/claude__rainbow-s04-match-c30 2026-11-20T20:02:13+00:00 34cb494137 None
+> backups/wip/claude__rainbow-s05-match-c30 2026-11-20T20:02:13+00:00 eb7233e364 None
+> backups/wip/claude__rainbow-s06-match-c30 2026-11-20T20:02:13+00:00 e162aec2bf None
+> backups/wip/claude__rainbow-s07-match-c30 2026-11-20T20:02:13+00:00 8accdad0a0 None
+> backups/wip/claude__rainbow-s08-scenery-c30 2026-11-20T20:02:13+00:00 3c0fa97090 None
+> backups/wip/lead__trial07-c30 2026-11-20T20:02:14+00:00 8accdad0a0 None
+> backups/wip/lead__view04-c30 2026-11-20T20:02:15+00:00 34cb494137 None
+> backups/wip/lead__view06-c30 2026-11-20T20:02:15+00:00 e162aec2bf None
+> backups/wip/lead__view07-c30 2026-11-20T20:02:15+00:00 8accdad0a0 None
+> backups/wip/detached-34cb494137 2026-11-20T03:51:23+00:00 34cb494137 None
+> backups/wip/detached-3c0fa97090 2026-11-20T02:48:15+00:00 3c0fa97090 None
+> backups/wip/detached-8accdad0a0 2026-11-20T20:02:13+00:00 8accdad0a0 None
+> backups/wip/detached-c649fcbc35 2026-11-20T02:48:14+00:00 c649fcbc35 None
+> backups/wip/detached-e162aec2bf 2026-11-20T20:02:13+00:00 e162aec2bf None
+> backups/wip/detached-eb7233e364 2026-11-20T …[+1248 chars]
+

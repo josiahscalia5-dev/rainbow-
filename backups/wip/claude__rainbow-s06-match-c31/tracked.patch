@@ -1,0 +1,970 @@
+diff --git a/src/game/Game.ts b/src/game/Game.ts
+index 6aec2406..fc2aa78d 100644
+--- a/src/game/Game.ts
++++ b/src/game/Game.ts
+@@ -67,6 +67,10 @@ export async function startGame(canvas: HTMLCanvasElement) {
+   // HDR luminance). Switch off: 0.2 / 0.35 / 0.94 exactly as before (pixel-identical default build).
+   const glow05 = flag05('glow05');
+   const M06_BUB = flag05('m06bub');
++  // r26 `&m06spl=1` (qa/match/06/r25/PROGRESS.md r26): on Screen 06 Benny's contact = a short, low lace collar (the approved picture's
++  // shallow rounded contact ripple) instead of the long white V streak fans of ref 05; the ballistic spray dots stay hidden there
++  const M06_SPL = flag05('m06spl');
++  let m06SplRest: { len: number; h: number } | null = null;
+   const qn = (k: string, d: number) => { const v = qs.get(k); return v !== null && v !== '' && isFinite(+v) ? +v : d; };
+   // (measured 2026-11-16, qa/pilot05/wave12/glow/: threshold 1.0–1.3 washed the whole river toward white — the scene's
+   // linear HDR body colours pass it; 2.6 keeps only streak cores, flares and lamps → water saturation UP, 0.92 → 0.97)
+@@ -120,6 +124,8 @@ export async function startGame(canvas: HTMLCanvasElement) {
+   const m06 = MATCH['06'] ? await buildMatch06(course) : null;
+   if (m06) { m06.group.visible = false; scene.add(m06.group); m06.bakeDepth(renderer); }
+   let m06On = false;
++  const tube07 = env.zones.tubes.getObjectByName('tube07') ?? null; // r29 m06deep only
++  let tube07Applied = false;
+   let m06Applied = false;
+   // debug: ?hide=water,benny,coins,drumA,basin,tubes,chamber
+   const hidden = new Set((qs.get('hide') ?? '').split(',').filter(Boolean));
+@@ -545,9 +551,26 @@ export async function startGame(canvas: HTMLCanvasElement) {
+       // carries its bubbles only there; while swimming the screen had none)
+       const bub6 = M06_BUB && m06On && m06.away(camera.position) > 0.5;
+       m06.setAway(m06On ? m06.away(camera.position) : 0);
++      coins.setGrow(m06On ? m06.away(camera.position) : 1); // r28 m06route coin growth (no-op without it)
++      m06.setBenny(st.s, st.lat); // r23 `&m06rip=1` only (no-op without it)
+       for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m06On || (bub6 && (k === 'bubbles' || k === 'splashCrown' || k === 'spray')); }
++      const crownU = M06_SPL ? ((water.parts?.splashCrown as THREE.Mesh | undefined)?.material as THREE.ShaderMaterial | undefined)?.uniforms : undefined;
++      if (crownU?.uLen && crownU.uH) {
++        if (!m06SplRest) m06SplRest = { len: crownU.uLen.value as number, h: crownU.uH.value as number };
++        crownU.uLen.value = m06On ? 0.42 : m06SplRest.len;
++        crownU.uH.value = m06On ? 0.09 : m06SplRest.h;
++        const sp = water.parts?.spray; if (sp && m06On) sp.visible = false;
++      }
+       m06Applied = m06On;
+     }
++    // r29 `&m06deep=1`: over the LAST ~12 u of Screen 06 the 07 tube (walls, rings, lids, gold mouth collar) is shown ahead of
++    // Benny inside the ring tunnel, so he visibly swims into it; everything else of the tube zone stays hidden in 06
++    if (m06 && tube07 && (m06On || tube07Applied)) {
++      const show = m06On && st.s > course.stage('07').s0 - 12; // r29 v2 (user): the 06 tunnel look continues until the doorway (~1 s)
++      if (m06On) { env.zones.tubes.visible = show; for (const ch of env.zones.tubes.children) ch.visible = ch === tube07; }
++      else for (const ch of env.zones.tubes.children) ch.visible = true;
++      tube07Applied = m06On;
++    }
+     if (m08 && m08On) for (const k of ['puddles', 'finalWave']) { const o = water.parts?.[k]; if (o) o.visible = false; }
+     if (m08 && b08 && b08Rest) {
+       // rounder body (narrower, taller) with the beanie counter-scaled to keep its size; ≈23 px right (world +x, measured fur centroid), lifted
+diff --git a/src/gameplay/coins.ts b/src/gameplay/coins.ts
+index 69122b33..02848b97 100644
+--- a/src/gameplay/coins.ts
++++ b/src/gameplay/coins.ts
+@@ -6,15 +6,17 @@
+  */
+ import * as THREE from 'three';
+ import type { Course, StageId } from '../world/course';
++import { m06deepShift } from '../world/course';
+ import { canvasTexture } from '../world/materials';
+ import { coreLateral, flag05 } from '../vfx/waterRibbon';
+ import coins08 from '../../assets/textures/match08/coins08.json';
+ import coins06 from '../../assets/textures/match06/coins06.json';
++import coins06deep from '../../assets/textures/match06/coins06deep.json';
+ 
+ export const COIN_VALUE = 10;
+ 
+ /** scale: coin size factor (1 = 1.0 u diameter); tilt: radians the coin leans back (top away from the camera) */
+-export interface CoinDef { s: number; lat: number; h: number; stage: StageId; scale?: number; tilt?: number; faceTo?: [number, number, number] }
++export interface CoinDef { s: number; lat: number; h: number; stage: StageId; scale?: number; tilt?: number; faceTo?: [number, number, number]; grow?: number }
+ 
+ /**
+  * 05 (ref 05, measured): ≈10 coins on the electric-cyan core winding to the VP. The nearest one is
+@@ -57,7 +59,14 @@ export function coinLayout(course: Course): CoinDef[] {
+   if (m06) {
+     const a = st('06');
+     for (let i = 0; i < 3; i++) add('06', a.s0 + 1 + i, -0.4 + 0.4 * i);
+-    for (const c of coins06.coins) add(course.stageAtS(c.s).id, c.s, c.lat, c.h, { scale: c.scale, faceTo: coins06.faceTo as [number, number, number] });
++    // r28 `&m06route=1`: the painted coins keep the approved size in the approved view, then grow to one common size (the
++    // nearest painted coin's) as the camera leaves it (setGrow = the 06 away factor), so the far ones are not tiny when reached
++    const grow = flag05('m06route');
++    // r29 `&m06deep=1`: the painted coins on the deep river (tools/match06/r29_coins_deep.mjs), at their painted pixels and sizes
++    for (const c of (flag05('m06deep') ? coins06deep : coins06).coins) {
++      const { s, lat, h, scale } = c;
++      add(course.stageAtS(s).id, s, lat, h, { scale, faceTo: coins06.faceTo as [number, number, number], ...(grow ? { grow: Math.max(scale, 0.632) } : {}) });
++    }
+   }
+   // 07 — winding trail, continuing down the plunge
+   { const a = st('07'); const n = 24; for (let i = 0; i < n; i++) { const s = a.s0 + 6 + i * ((a.s1 - a.s0 - 10) / n); add('07', s, 1.0 * Math.sin(i * 0.5 + 1)); } }
+@@ -70,7 +79,8 @@ export function coinLayout(course: Course): CoinDef[] {
+   // (assets/textures/match08/coins08.json, from the locked 08 camera), instead of the 08 + 09 rows above
+   if (m08) {
+     const s0 = st('08').s0, s1 = st('11').s0;
+-    const cam = coins08.faceTo as [number, number, number];
++    const T8 = m06deepShift(); // r29 m06deep: the 08 chamber moved with the longer 06 route (zero when off)
++    const cam = [coins08.faceTo[0] + T8.x, coins08.faceTo[1] + T8.y, coins08.faceTo[2] + T8.z] as [number, number, number];
+     const toRiver = (x: number, z: number) => {
+       let best = s0, bd = Infinity;
+       for (let s = s0; s <= s1; s += 0.05) { const p = course.sample(s).pos; const d = (p.x - x) ** 2 + (p.z - z) ** 2; if (d < bd) { bd = d; best = s; } }
+@@ -78,12 +88,12 @@ export function coinLayout(course: Course): CoinDef[] {
+       return { s: best, lat: (x - f.pos.x) * f.right.x + (z - f.pos.z) * f.right.z, y: f.pos.y };
+     };
+     for (const c of coins08.coins) {
+-      let r = toRiver(c.x, c.z), h = c.h, scale = c.scale;
++      let r = toRiver(c.x + T8.x, c.z + T8.z), h = c.h, scale = c.scale;
+       // keep every picture coin collectible: if it lies beyond pickup reach (|lateral| > 1.1), slide it along its own view
+       // ray from the approved camera (same pixel in the approved view) to the nearest depth within reach, above the water;
+       // its size scales with the depth so it still covers the painted coin
+       if (Math.abs(r.lat) > 1.1) {
+-        const P = [c.x, r.y + c.h, c.z], D = [P[0] - cam[0], P[1] - cam[1], P[2] - cam[2]];
++        const P = [c.x + T8.x, r.y + c.h, c.z + T8.z], D = [P[0] - cam[0], P[1] - cam[1], P[2] - cam[2]];
+         let pick: { k: number; r: typeof r; h: number } | null = null;
+         for (let k = 0.2; k <= 1.8; k += 0.01) {
+           const q = [cam[0] + D[0] * k, cam[1] + D[1] * k, cam[2] + D[2] * k], rq = toRiver(q[0], q[2]), hq = q[1] - rq.y;
+@@ -113,6 +123,8 @@ export interface CoinSystem {
+   update(time: number, dt: number, bennyS: number, bennyLat: number): number;
+   /** mark coins before s as collected (deterministic QA checkpoint state) or reset all */
+   resetUntil(s: number): void;
++  /** r28 m06route: 0 = approved coin sizes .. 1 = grown (coins with `grow`) */
++  setGrow(k: number): void;
+ }
+ 
+ export function createCoins(course: Course): CoinSystem {
+@@ -175,6 +187,7 @@ export function createCoins(course: Course): CoinSystem {
+   const spin = new THREE.Quaternion(), axis = new THREE.Vector3();
+   const tiltQ = new THREE.Quaternion(), xAxis = new THREE.Vector3(1, 0, 0);
+   const back = new THREE.Vector3();
++  let growK = 0;
+ 
+   const place = (time: number) => {
+     defs.forEach((d, i) => {
+@@ -200,7 +213,8 @@ export function createCoins(course: Course): CoinSystem {
+       spin.setFromAxisAngle(axis.set(0, 1, 0), (d.faceTo ? 0.06 : d.tilt ? 0.18 : 0.35) * Math.sin(time * 2.2 + i * 0.7));
+       q.multiply(spin);
+       if (d.tilt) q.multiply(tiltQ.setFromAxisAngle(xAxis, -d.tilt));
+-      m.compose(p, q, sc.setScalar((d.scale ?? 1) * scale * (collected[i] ? 1 - (time - popT[i]) / 0.35 : 1)));
++      const base = d.grow !== undefined ? (d.scale ?? 1) + (d.grow - (d.scale ?? 1)) * growK : (d.scale ?? 1);
++      m.compose(p, q, sc.setScalar(base * scale * (collected[i] ? 1 - (time - popT[i]) / 0.35 : 1)));
+       mesh.setMatrixAt(i, m);
+     });
+     mesh.instanceMatrix.needsUpdate = true;
+@@ -227,6 +241,7 @@ export function createCoins(course: Course): CoinSystem {
+       place(time);
+       return picked;
+     },
++    setGrow(k) { growK = THREE.MathUtils.clamp(k, 0, 1); },
+     resetUntil(s) {
+       for (let i = 0; i < defs.length; i++) { collected[i] = defs[i].s < s ? 1 : 0; popT[i] = -1; }
+       place(0);
+diff --git a/src/world/course.ts b/src/world/course.ts
+index 99850bb3..6f9ac882 100644
+--- a/src/world/course.ts
++++ b/src/world/course.ts
+@@ -15,6 +15,7 @@ import * as THREE from 'three';
+ import { flag05 } from '../vfx/waterRibbon';
+ import river08 from '../../assets/textures/match08/river08.json';
+ import path06 from '../../assets/textures/match06/path06.json';
++import route06deep from '../../assets/textures/match06/route06deep.json';
+ 
+ export type StageId = '01' | '02' | '03' | '04' | '05' | '06' | '07' | '08' | '09' | '10' | '11';
+ export type TubeKind = 'none' | 'chute' | 'gold' | 'perf';
+@@ -72,6 +73,27 @@ export const WORLD = {
+   plunge: { topY: -52, bottomY: -113.6 },
+ };
+ 
++/** r29 `&m06deep=1`: the original anchors (WORLD itself is moved by the 06 route length, see m06deepShift) */
++const WORLD0 = {
++  chamber: { center: WORLD.chamber.center.clone(), zBack: WORLD.chamber.zBack, zDoor: WORLD.chamber.zDoor, floorY: WORLD.chamber.floorY },
++  platform: { center: WORLD.platform.center.clone(), topY: WORLD.platform.topY },
++  plunge: { topY: WORLD.plunge.topY, bottomY: WORLD.plunge.bottomY },
++};
++const SHIFT07 = new THREE.Vector3();
++/**
++ * r29 `&match06=1&m06deep=1` (lead, docs/briefs/2026-11-20-r29, qa/match/06/r29/): the 06 river follows the painted coin trail rebuilt
++ * in 3D and runs down the painted ring tunnel, so Screen 06 is longer. Everything from the 07 entrance on (07 tube, plunge, 08 chamber,
++ * platform, towel, 09, 10) is moved by this ONE rigid offset, so each of those screens keeps exactly its look. Zero when off.
++ */
++export function m06deepShift(): THREE.Vector3 { return SHIFT07.clone(); }
++function applyWorldShift(t: THREE.Vector3) {
++  SHIFT07.copy(t);
++  WORLD.chamber.center.copy(WORLD0.chamber.center).add(t);
++  WORLD.chamber.zBack = WORLD0.chamber.zBack + t.z; WORLD.chamber.zDoor = WORLD0.chamber.zDoor + t.z; WORLD.chamber.floorY = WORLD0.chamber.floorY + t.y;
++  WORLD.platform.center.copy(WORLD0.platform.center).add(t); WORLD.platform.topY = WORLD0.platform.topY + t.y;
++  WORLD.plunge.topY = WORLD0.plunge.topY + t.y; WORLD.plunge.bottomY = WORLD0.plunge.bottomY + t.y;
++}
++
+ /** funnel surface height of the whirlpool basin as a function of radius from its axis */
+ export function funnelY(r: number): number {
+   const b = WORLD.basin;
+@@ -103,6 +125,9 @@ interface RouteData {
+   points: THREE.Vector3[];
+   marks: Record<string, number>;
+   straight: { from: string; to: string; a: THREE.Vector3; b: THREE.Vector3; floorDepth: number }[];
++  /** r29 m06deep only: original point count and the last unchanged 06 point index (Course keeps the original arc-length samples) */
++  nOld?: number;
++  iKeep?: number;
+ }
+ 
+ /**
+@@ -277,13 +302,17 @@ function buildRoute(): RouteData {
+   // ends, so the 05->06 join and the whole 07 / plunge / 08 route are unchanged. Off: d06 = 0 (default route).
+   const m06 = flag05('match06') || flag05('matchall');
+   const d06 = (c: number[], t: number) => (m06 ? Math.sin(Math.PI * t) ** 2 * (c[0] + c[1] * Math.cos(Math.PI * t) + c[2] * Math.cos(2 * Math.PI * t)) : 0);
+-  seg(34, (t) =>
++  // r29 `&m06deep=1` (needs match06): see m06deepShift. The original anchors (WORLD0) define the original route, so the formula
++  // below is unchanged whether or not the shift was applied by an earlier Course in this page.
++  const old06 = (t: number) =>
+     V(
+-      s6.x - 4 * Math.sin(Math.PI * t) + (WORLD.chamber.center.x - s6.x) * smooth(0.4, 1, t) + d06(path06.dx, t),
++      s6.x - 4 * Math.sin(Math.PI * t) + (WORLD0.chamber.center.x - s6.x) * smooth(0.4, 1, t) + d06(path06.dx, t),
+       s6.y + 12.5 * Math.pow(Math.sin(Math.PI * Math.min(t / 0.82, 1)), 1.15) - 4.5 * smooth(0.5, 1, t) + d06(path06.dy, t),
+       s6.z - 46 * t,
+-    ),
+-  );
++    );
++  const deep06 = m06 && flag05('m06deep');
++  applyWorldShift(new THREE.Vector3()); // the route is always generated with the ORIGINAL anchors; m06deep moves 07+ afterwards
++  seg(34, old06);
+   mark('07');
+   // ---- 07: winding washer tube (the visible stretch) ----
+   const s7 = pts[pts.length - 1].clone();
+@@ -324,7 +353,8 @@ function buildRoute(): RouteData {
+   // river (its centre line projected on the chamber floor from the locked 08 camera, assets/textures/match08/river08.json),
+   // eased in over the first 3 u after the inlet and out over the last 4 u into the platform. Off: the formulas below.
+   const m08 = flag05('match08') || flag05('matchall');
+-  const rz = river08.z.filter((z) => z >= -326), rxs = river08.x.slice(0, rz.length);
++  // r29 m06deep: the painted 08 river (absolute coordinates) moves with the chamber (SHIFT07 = 0 when off)
++  const rz = river08.z.filter((z) => z >= -326).map((z) => z + SHIFT07.z), rxs = river08.x.slice(0, rz.length).map((x) => x + SHIFT07.x);
+   const riverX = (z: number) => {
+     if (z >= rz[0]) return rxs[0];
+     for (let i = 1; i < rz.length; i++) if (z >= rz[i]) { const a = (z - rz[i - 1]) / (rz[i] - rz[i - 1]); return rxs[i - 1] + (rxs[i] - rxs[i - 1]) * a; }
+@@ -353,9 +383,45 @@ function buildRoute(): RouteData {
+     const u = pts[i].clone().sub(s5).dot(dir05) * (S05.L / L05.length());
+     pts[i].x += meander05(u);
+   }
++  if (deep06) { const nOld = pts.length, d6 = deepen06(pts, marks); return { points: d6.points, marks, straight, nOld, iKeep: d6.iKeep }; }
+   return { points: pts, marks, straight };
+ }
+ 
++/**
++ * r29 `&match06=1&m06deep=1` (lead, docs/briefs/2026-11-20-r29): AFTER the normal build + smoothing, the smoothed 06 points past axial
++ * aKeep (along the painted tunnel axis) are replaced by the designed centre line (route06deep.json: the painted coin trail rebuilt in
++ * 3D, down the painted ring tunnel; designed from the SMOOTHED original route, so it continues it exactly), and every point from the
++ * 07 entrance on is moved by ONE rigid offset (07 tube, plunge, 08-10 = translated copies, so those screens keep their look). Benny's
++ * approved checkpoint and everything before it stay bit-identical. Only the 06/07 seam is re-smoothed locally (first metres of 07).
++ */
++function deepen06(pts: THREE.Vector3[], marks: Record<string, number>): { points: THREE.Vector3[]; iKeep: number } {
++  const O6 = new THREE.Vector3().fromArray(route06deep.O), ax6 = new THREE.Vector3().fromArray(route06deep.ax);
++  const i06 = marks['06'], i07 = marks['07'];
++  let iK = i06;
++  while (iK + 1 < i07 && pts[iK + 1].clone().sub(O6).dot(ax6) <= route06deep.aKeep) iK++;
++  const mid = route06deep.points.map((q) => new THREE.Vector3(q[0], q[1], q[2]));
++  const T = mid[mid.length - 1].clone().sub(pts[i07]);
++  const out = [...pts.slice(0, iK + 1), ...mid.slice(0, -1), ...pts.slice(i07).map((p) => p.clone().add(T))];
++  const d = iK + 1 + mid.length - 1 - i07; // index shift of every mark from 07 on
++  for (const k of Object.keys(marks)) if (marks[k] >= i07) marks[k] += d;
++  // local seam smoothing on the 06 SIDE only (same kernel as smoothPolyline; the designed line already arrives along the original
++  // 07 entrance heading): the 07+ points stay an exact rigid copy, so 07-10 keep their geometry and distances
++  const j07 = marks['07'];
++  for (let pass = 0; pass < 3; pass++) {
++    const cum: number[] = [0];
++    for (let i = 1; i < out.length; i++) cum.push(cum[i - 1] + out[i].distanceTo(out[i - 1]));
++    const nw: THREE.Vector3[] = [];
++    for (let i = j07 - 6; i < j07; i++) {
++      const acc = new THREE.Vector3(); let ws = 0;
++      for (let j = i - 12; j <= i + 12; j++) { const w = Math.exp(-((cum[j] - cum[i]) ** 2) / (2 * 2.2 * 2.2)); acc.addScaledVector(out[j], w); ws += w; }
++      nw.push(acc.divideScalar(ws));
++    }
++    for (let i = j07 - 6; i < j07; i++) out[i].copy(nw[i - (j07 - 6)]);
++  }
++  applyWorldShift(T);
++  return { points: out, iKeep: iK };
++}
++
+ /**
+  * Arc-length Gaussian smoothing of the polyline from index `from` to the end (endpoints fixed).
+  * Removes tangent kinks where independently generated segments meet; the 02 tumble helix
+@@ -387,6 +453,8 @@ export class Course {
+   readonly length: number;
+   readonly stages: StageDef[];
+   readonly marks: Record<string, number>; // arc-length of named marks
++  /** r29 `&m06deep=1`: added 06 length, i.e. every arc length from the 07 entrance on = original + deepDs07 (0 when off) */
++  readonly deepDs07: number;
+   /** straight tunnel stretches (05 current) — see StraightAxis */
+   readonly straightAxes: StraightAxis[];
+   /** world X of the straight 05 tunnel line (the meander is pos.x − line05x) */
+@@ -403,12 +471,16 @@ export class Course {
+     const route = buildRoute();
+     this.curve = new THREE.CatmullRomCurve3(route.points, false, 'centripetal');
+     // arc-length table over curve parameter u
+-    const M = route.points.length * 24;
++    const deep = route.nOld;
++    // r29 m06deep: the samples keep the ORIGINAL spacing in segment coordinates (original point count nOld), so every s up to
++    // the 06 divergence (all of 01-05 and Benny's 06 checkpoint) is exactly the original one; the original table otherwise.
++    const dp = deep ? (deep - 1) / (24 * deep) : 0;
++    const M = deep ? Math.ceil((route.points.length - 1) / dp) : route.points.length * 24;
+     const us: number[] = [0];
+     const ls: number[] = [0];
+     let prev = this.curve.getPoint(0);
+     for (let i = 1; i <= M; i++) {
+-      const u = i / M;
++      const u = deep ? Math.min(1, (i * dp) / (route.points.length - 1)) : i / M;
+       const p = this.curve.getPoint(u);
+       ls.push(ls[i - 1] + p.distanceTo(prev));
+       us.push(u);
+@@ -425,12 +497,20 @@ export class Course {
+       return us[lo] + (us[hi] - us[lo]) * f;
+     };
+     const sAtIndex = (i: number) => {
++      if (deep) { // r29 m06deep: original sample index for the unchanged marks, nearest sample at segment coordinate i after
++        const iK = route.iKeep ?? 0;
++        if (i <= iK) return ls[Math.min(M, Math.round((i / (deep - 1)) * deep * 24))];
++        const k = Math.min(M - 1, Math.floor(i / dp)), f = i / dp - k; // exact arc length at point i (interpolated)
++        return ls[k] + (ls[k + 1] - ls[k]) * f;
++      }
+       const u = i / (route.points.length - 1);
+       const k = Math.round(u * M);
+       return ls[k];
+     };
+     this.marks = {};
+     for (const [k, i] of Object.entries(route.marks)) this.marks[k] = sAtIndex(i);
++    // r29 m06deep: extra 06 length (07+ arc lengths are the original ones + this); 0 when off
++    this.deepDs07 = deep ? this.marks['07'] - route06deep.s07_orig : 0;
+     this.straightAxes = route.straight.map((r) => ({ s0: this.marks[r.from], s1: this.marks[r.to], a: r.a, b: r.b, floorDepth: r.floorDepth }));
+     this.line05x = route.straight[0].a.x;
+ 
+diff --git a/src/world/environment.ts b/src/world/environment.ts
+index 598cb42a..d9056e56 100644
+--- a/src/world/environment.ts
++++ b/src/world/environment.ts
+@@ -197,6 +197,11 @@ export function buildEnvironment(course: Course): Environment {
+   // 05–07 perforated tubes (incl. the 06 arch hall and the full 07 plunge)
+   // =====================================================================================
+   const s08 = course.stage('08').s0;
++  // r29 `&m06deep=1`: Screen 07's tube (walls from the 07 entrance, its rings + lids, a gold collar at the mouth) in its OWN group
++  // 'tube07' inside zones.tubes, so Game can show the mouth ahead of Benny inside the 06 ring tunnel (the rest stays hidden in 06)
++  const deep07 = course.deepDs07 > 0, s07e = course.stage('07').s0;
++  const tube07 = new THREE.Group(); tube07.name = 'tube07';
++  if (deep07) zones.tubes.add(tube07);
+   const pinkFlow = pinkFlowMaterial();
+   // refs 05–07: rich saturated magenta→violet glossy pressed metal, dense glowing slot rows, warm light
+   // far down the tunnel. Own reflection environment (no cyan studio panel) + correct inward normals.
+@@ -224,7 +229,8 @@ export function buildEnvironment(course: Course): Environment {
+   // START, not from the 05 start, so reshaping the 05 river (which changes its arc length) never slides the
+   // 06/07 rings, lids or slot rows along the tube. The phases reproduce the pre-wave-6 layout exactly
+   // (measured on that course: first 06/07 ring 5.5644 u after the 06 start; slot-row phase 0.96618 there).
+-  const s06 = course.stage('06').s0;
++  // r29 m06deep: the 07 rings / lids / slot rows keep their place on the (moved) 07 tube: anchor + the added 06 length
++  const s06 = course.stage('06').s0 + course.deepDs07;
+   const RING06_PHASE = 5.5643876;
+   const ROW06_PHASE = 0.9661842;
+   const rowRepeat0607 = slotRowsPerBay / ringSpacing;
+@@ -331,16 +337,16 @@ export function buildEnvironment(course: Course): Environment {
+     : { ...strips, intensity: 4.4, width: 0.017, alt: 0.8 };
+   const perf05Mat = withTubeStrips(perforatedMetal(wall05), strips05, 'attribute', 'wall05');
+   const chunk = 40;
+-  const addWall = (a0: number, a1: number, mat: THREE.Material) => {
++  const addWall = (a0: number, a1: number, mat: THREE.Material, into: THREE.Group = zones.tubes) => {
+     for (let a = a0; a < a1 - 0.01; a += chunk) {
+       const b = Math.min(a1, a + chunk + 0.6);
+-      zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 72, step: 0.6, frontNormals: true, axisAttr: true }), mat));
++      into.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 72, step: 0.6, frontNormals: true, axisAttr: true }), mat));
+       // glossy magenta flow sheet lining the tube floor under the stream (refs 05/07 pink banks)
+-      zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 24, step: 0.8, arc: 1.9, inset: -0.12, vScale: 6, frontNormals: true }), pinkFlow.material));
++      into.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 24, step: 0.8, arc: 1.9, inset: -0.12, vScale: 6, frontNormals: true }), pinkFlow.material));
+     }
+   };
+   addWall(s05, sGlow05, perf05Mat);
+-  addWall(sGlow05, s08, perfTubeMat);
++  if (deep07) { addWall(sGlow05, s07e, perfTubeMat); addWall(s07e, s08, perfTubeMat, tube07); } else addWall(sGlow05, s08, perfTubeMat);
+   // 06/07 rings and the 04→05 junction collar (unchanged look)
+   const ringMat = withTubeStrips(withFarGlow(gold({ color: '#ffc890', roughness: 0.12, emissive: 0.16 }), tubeGlow, 'ring'), { ...strips, color: '#fff0c8', intensity: 3.2 }, 'instance', 'ring');
+   ringMat.envMap = goldEnv;
+@@ -389,7 +395,10 @@ export function buildEnvironment(course: Course): Environment {
+   zones.tubes.add(buildRingsAt(perfPath, rings05, ringMat05, { inset: 0.02, band: band05near }));
+   const rings0607: number[] = [];
+   for (let s = s06 + RING06_PHASE - 2 * ringSpacing; s <= s08 - 1 + 1e-6; s += ringSpacing) if (s >= sGlow05 + 4) rings0607.push(s);
+-  zones.tubes.add(buildRingsAt(perfPath, rings0607, ringMat, { inset: 0.02, collar }));
++  if (deep07) {
++    zones.tubes.add(buildRingsAt(perfPath, rings0607.filter((s) => s < s07e - 0.5), ringMat, { inset: 0.02, collar }));
++    tube07.add(buildRingsAt(perfPath, [s07e + 0.4, ...rings0607.filter((s) => s >= s07e + 2)], ringMat, { inset: 0.02, collar }));
++  } else zones.tubes.add(buildRingsAt(perfPath, rings0607, ringMat, { inset: 0.02, collar }));
+   // copper nozzle lids: one symmetric pair per bay on the side walls a little above eye level,
+   // skipped where the stream climbs the wall (06 arch) so a lid never blocks the ride
+   const lidMat = withTubeStrips(withFarGlow(gold({ color: '#ffb27a', roughness: 0.16, emissive: 0.2 }), tubeGlow, 'lid'), { ...strips, color: '#fff0c8', intensity: 2.4 }, 'instance', 'lid');
+@@ -421,7 +430,13 @@ export function buildEnvironment(course: Course): Environment {
+   // 06/07: legacy hoods, unchanged
+   const lids0607: number[] = [];
+   for (let s = s06 + RING06_PHASE + ringSpacing * 0.5 - 2 * ringSpacing; s <= s08 - 6 + 1e-6; s += ringSpacing) if (s >= sGlow05 + 4) lids0607.push(s);
+-  zones.tubes.add(buildWallLids(perfPath, 0, 0, ringSpacing, lidMat, { positions: lids0607, angleDeg: 18, droopDeg: 20, size: 1.7, thickness: 0.42, stretch: 1.3, sink: 0.12, skip: lidClear }));
++  {
++    const lidOpt = { angleDeg: 18, droopDeg: 20, size: 1.7, thickness: 0.42, stretch: 1.3, sink: 0.12, skip: lidClear };
++    if (deep07) {
++      zones.tubes.add(buildWallLids(perfPath, 0, 0, ringSpacing, lidMat, { positions: lids0607.filter((s) => s < s07e), ...lidOpt }));
++      tube07.add(buildWallLids(perfPath, 0, 0, ringSpacing, lidMat, { positions: lids0607.filter((s) => s >= s07e), ...lidOpt }));
++    } else zones.tubes.add(buildWallLids(perfPath, 0, 0, ringSpacing, lidMat, { positions: lids0607, ...lidOpt }));
++  }
+ 
+   // ---- 05 far tunnel (forced perspective, calibrated for the locked 05 checkpoint eye) ----
+   {
+diff --git a/src/world/match06.ts b/src/world/match06.ts
+index 831c2b44..b4e4ac36 100644
+--- a/src/world/match06.ts
++++ b/src/world/match06.ts
+@@ -19,6 +19,7 @@ import * as THREE from 'three';
+ import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
+ import { PROJ05_INVERSE } from '../vfx/waterRibbon';
+ import type { Course } from './course';
++import route06deep from '../../assets/textures/match06/route06deep.json';
+ 
+ interface Layout06 {
+   camera: { matrixWorld: number[]; fov: number; size: [number, number]; pos: number[] };
+@@ -44,6 +45,8 @@ export interface Match06 {
+   away(cam: THREE.Vector3): number;
+   /** r7 `&m06foam=1`: show the 3D foam clouds once the camera has left the approved view (a = away()) */
+   setAway(a: number): void;
++  /** r23 `&m06rip=1`: Benny's place on the river (course s, lateral) for the painted ripple rings carried with him */
++  setBenny(s: number, lat: number): void;
+ }
+ 
+ const VERT = /* glsl */ `
+@@ -95,6 +98,16 @@ uniform vec3 uAxU;
+ uniform float uRingH;
+ uniform float uBendAng; // r11 m06bend: ring bulb angle per vertex (vTile.x) instead of around the straight axis
+ uniform float uPanel;
++// r29 lead (qa/match/06/r29/): uTSwap = the painted wall tile mapped the way tools/match06/make_tiles06.py built it (tile x = depth along
++// the tube, tile y = angle round it; it was applied transposed -> the painted gold rings ran LENGTHWISE as spokes) and only its purple
++// panel columns (x 0.18..0.88, mirrored) so the walls carry purple metal and the 3D bands carry the gold; uHaze = (near, far, strength, on):
++// walls + rings fade into the painted deep-tunnel purple uHazeCol with camera distance (the painting shows ~6 rings, then dark purple);
++// uDbgFlat (QA) = flat purple walls
++uniform float uTSwap;
++uniform vec4 uHaze;
++uniform vec3 uHazeCol;
++uniform float uDbgFlat;
++uniform vec2 uProjW;
+ // r15 m06gold: the user's painted ring band (tools/match06/make_ring06.py) along each modeled ring's profile
+ uniform float uGold;
+ uniform sampler2D uRingTex;
+@@ -112,6 +125,39 @@ uniform float uStO;
+ uniform float uStDbg;
+ uniform vec3 uProjF;
+ uniform mat4 uProjVP;
++// r23 '&m06rip=1' (qa/match/06/r23/PROGRESS.md): the approved picture's ripple rings round Benny, carried with him on the
++// river floor. uRip = the painted water round the approved Benny in the river's own coordinates (lateral x course s, premult.
++// alpha = 0 where his body was filled), uRipR = its extent (l0, l1, ds0, ds1), uBen = Benny (lateral, s), uRipA = (outward
++// drift share, drift rate /s, strength, -)
++uniform sampler2D uRip;
++uniform float uRipOn;
++uniform vec4 uRipR;
++uniform vec2 uBen;
++uniform vec4 uRipA;
++// r24 lead '&m06ripz=1' (qa/match/06/r24/lead_rip/NOTES.md; needs m06rip): the painted ripple zone round the approved Benny stays
++// pinned to the checkpoint in the projected plate — once Benny swims on, its rings, splash collar and streaks are left behind and
++// stretch into a raised-looking blue cone under him. uRipZ = on; uRip0 = the approved Benny (lateral, s). The zone hands over to
++// the river's own painted water exactly as the carried decal fades in, so only the shallow rings travelling with Benny remain.
++uniform float uRipZ;
++uniform float uWDbg;
++float gWDbg = 0.0;
++float gHDbg = 0.0;
++uniform vec2 uRip0;
++// r25 '&m06hole=1' (qa/match/06/r25/PROGRESS.md; tools/match06/make_hole06.py): the cut-out where the painted Benny was removed
++// from the plate (and the painted ring zone round his contact) shows the approved picture's own painted water continued from
++// the water around it (floor-space fill, world-pinned like the rest of the painted water) instead of the river's brighter
++// flowing material with a hard Benny-shaped edge. uHole = fill (rgb), uHoleW = cut-out weight, over uHoleR = (l0, l1, s0, s1);
++// uHoleZ = ring zone ellipse (centre s, half lateral, half along s); off exactly at the approved view.
++uniform sampler2D uHole;
++uniform sampler2D uHoleW;
++uniform float uHoleOn;
++uniform vec4 uHoleR;
++uniform vec4 uHoleZ;
++// r26 m06hole=2: the ring zone and the carried rings (m06rip) hand over together within the first steps (dAp edges)
++uniform vec2 uHoleT;
++// r26 m06fade=a,b: the painted floor (pinned at the checkpoint) dissolves as a whole into the river's own flowing water between
++// camera distances a..b from the approved viewpoint (no bounded patches / direction breaks below Benny once he swims on)
++uniform vec2 uFade;
+ varying vec4 vProj;
+ varying vec3 vW;
+ varying vec3 vN;
+@@ -122,6 +168,11 @@ float linZ(float d) { float n = uNearFar.x, f = uNearFar.y; float z = d * 2.0 -
+ void main() {
+   // ring-structured tile in the surface's own coordinates (mirrored repeat: no seams)
+   vec3 pc = texture2D(uTile, vTile).rgb;
++  if (uTSwap > 0.5 && uFloor < 0.5 && uRing < 0.5) {
++    vec2 tc = vTile; float mr = abs(fract(tc.x * 0.5) * 2.0 - 1.0); tc.x = 0.18 + 0.70 * mr;
++    pc = texture2D(uTile, tc).rgb;
++  }
++  if (uDbgFlat > 0.5 && uFloor < 0.5 && uRing < 0.5) pc = vec3(0.45, 0.22, 0.55);
+   vec3 nn = normalize(vN);
+   float al = abs(vLS.x);
+   // r18 m06st: off exactly at the approved viewpoint (the approved start view keeps its pixels), on as soon as the camera
+@@ -201,6 +252,7 @@ void main() {
+     vec3 pan = mix(base, vec3(0.24, 0.02, 0.22), slot) + vec3(0.85, 0.55, 0.95) * 0.18 * lip * (1.0 - slot);
+     pc = mix(pc, pan, 0.85);
+   }
++  if (uHaze.w > 0.5 && uFloor < 0.5) pc = mix(pc, uHazeCol, uHaze.z * smoothstep(uHaze.x, uHaze.y, distance(cameraPosition, vW)));
+   vec3 t = pc;
+   float cp = abs(dot(nn, normalize(uProjPos - vW))), cc = abs(dot(nn, normalize(cameraPosition - vW)));
+   // stretch + magnification guard: the projection is used where the current view sees the surface no more face-on and
+@@ -226,7 +278,7 @@ void main() {
+     if (inside || (stOn > 0.5 && edge > 0.0)) {
+       float vis = 1.0;
+       vec2 uvF = uv; // r18 m06st: where the plate is read (the crest-top layer below)
+-      float filled = 0.0, dbgB = 0.0, dbgZ = 0.0;
++      float filled = 0.0, dbgB = 0.0, dbgZ = 0.0, rSh = 0.0;
+       if (uUseDepth > 0.5) {
+         float zs = linZ(texture2D(uDepth, uv).r), zf = linZ(ndc.z * 0.5 + 0.5);
+         vis = 1.0 - smoothstep(0.015 * zs, 0.04 * zs + 0.05, zf - zs);
+@@ -310,7 +362,9 @@ void main() {
+             }
+             rS = (rS / 12.0) * 0.5 + mk.r * 0.5;
+           }
+-          w *= (1.0 - rS * smoothstep(0.01, 0.06, dAp) * inWater) * (1.0 - mk.g * (1.0 - hold) * inWater);
++          // r25 m06hole: the cut-out keeps the plate weight; its pixels come from the painted-water fill below instead
++          rSh = rS * inWater;
++          w *= (1.0 - rS * smoothstep(0.01, 0.06, dAp) * inWater * (1.0 - uHoleOn)) * (1.0 - mk.g * (1.0 - hold) * inWater);
+         } else w *= 1.0 - max(mk.r, mk.g) * away * inWater;
+       }
+       // r6 m06geo: painted WATER that lands on the tunnel wall (the crest-top water / far stream beside the narrow river)
+@@ -324,11 +378,50 @@ void main() {
+       if (uRing > 0.5) w *= stOn > 0.5 ? (filled > 0.5 ? 1.0 : hold) : 1.0 - smoothstep(0.2, 1.2, distance(cameraPosition, uProjPos));
+       vec3 pl = texture2D(uPlate, uv).rgb;
+       if (filled > 0.5) pl = textureLod(uPlate, uvF, 0.0).rgb;
++      if (uHoleOn > 0.5 && uFloor > 0.5 && filled < 0.5) {
++        vec2 hu = vec2((vLS.x - uHoleR.x) / (uHoleR.y - uHoleR.x), (vLS.y - uHoleR.z) / (uHoleR.w - uHoleR.z));
++        if (hu.x > 0.0 && hu.x < 1.0 && hu.y > 0.0 && hu.y < 1.0) {
++          vec4 hv = vec4(texture2D(uHole, hu).rgb, texture2D(uHoleW, hu).r);
++          float eH = length(vec2(vLS.x / uHoleZ.y, (vLS.y - uHoleZ.x) / uHoleZ.z));
++          // the cut-out at once (as the provisional fill went before), the ring zone as the carried rings fade in
++          float hW = max(clamp(max(hv.a, rSh), 0.0, 1.0) * smoothstep(0.01, 0.06, dAp), (1.0 - smoothstep(0.9, 1.1, eH)) * smoothstep(uHoleT.x, uHoleT.y, dAp));
++          pl = mix(pl, hv.rgb, hW);
++          gHDbg = hW;
++        }
++      }
++      if (uRipZ > 0.5 && uFloor > 0.5) {
++        vec2 dZ = vLS - uRip0;
++        float eZ = length(vec2(dZ.x / uRipR.y, dZ.y < 0.0 ? dZ.y / uRipR.z : dZ.y / uRipR.w));
++        float inWZ = 1.0 - smoothstep(uR6p.x - 0.2, uR6p.x + 0.1, al);
++        w *= 1.0 - (1.0 - smoothstep(0.85, 1.2, eZ)) * inWZ * smoothstep(0.15, 0.9, dAp);
++      }
++      if (uFloor > 0.5) w *= 1.0 - smoothstep(uFade.x, uFade.y, dAp);
++      // r29 lead &m06projw=a,b: on the TUNNEL (walls, rings, paddles; not the river) the approved picture's projected pixels fade out as the
++      // camera leaves the approved viewpoint (camera distance a..b); before, far walls kept them while moving (re-projected painted rings
++      // = the dense 'target' down the tunnel). QA &m06tdbg=noproj = off at once.
++      if (uFloor < 0.5) w *= 1.0 - smoothstep(uProjW.x, uProjW.y, dAp);
+       t = mix(pc, pl, w);
++      gWDbg = w;
+       if (uStDbg > 0.5) t = vec3(dbgZ * filled, (1.0 - dbgZ) * dbgB * filled, uFloor * 0.5 + 0.5 * (1.0 - vis));
+     }
+   }
++  if (uRipOn > 0.5 && uFloor > 0.5) {
++    // r23 m06rip: two copies drifting slowly outward from Benny, cross-faded (no jump), so the rings read as spreading
++    vec2 dR = vec2(vLS.x - uBen.x, vLS.y - uBen.y);
++    float ph = fract(uTime * uRipA.y);
++    vec4 acc = vec4(0.0);
++    for (int k = 0; k < 2; k++) {
++      float a = fract(ph + 0.5 * float(k));
++      vec2 q = dR / (1.0 + uRipA.x * a);
++      vec2 ru = vec2((q.x - uRipR.x) / (uRipR.y - uRipR.x), (q.y - uRipR.z) / (uRipR.w - uRipR.z));
++      if (ru.x > 0.0 && ru.x < 1.0 && ru.y > 0.0 && ru.y < 1.0) acc += texture2D(uRip, ru) * (1.0 - abs(1.0 - 2.0 * a));
++    }
++    float inW = 1.0 - smoothstep(uR6p.x - 0.2, uR6p.x + 0.1, abs(vLS.x));
++    float wr = acc.a * inW * uRipA.z * smoothstep(uHoleT.x, uHoleT.y, dAp);
++    if (acc.a > 1e-3) t = mix(t, acc.rgb / acc.a, clamp(wr, 0.0, 1.0));
++  }
+   gl_FragColor = vec4(pjInverse(t), 1.0);
++  if (uWDbg > 0.5 && uFloor > 0.5) gl_FragColor.rgb = vec3(gWDbg * (1.0 - gHDbg), gWDbg * gHDbg, 1.0 - gWDbg); // r25: green = m06hole fill
+   if (uDbg.x + uDbg.y + uDbg.z > 0.0) gl_FragColor.rgb = mix(gl_FragColor.rgb, uDbg, 0.45);
+ }`;
+ 
+@@ -337,6 +430,9 @@ void main() {
+ const FOAMC_VERT = /* glsl */ `
+ attribute vec4 aB;
+ attribute float aS;
++#ifdef GROUP
++attribute vec3 aC;
++#endif
+ uniform vec2 uNear;
+ varying vec2 vUv;
+ varying float vS;
+@@ -345,8 +441,15 @@ varying float vPx;
+ void main() {
+   vUv = uv * 2.0 - 1.0;
+   vS = aS;
++#ifdef GROUP
++  // r27 m06fcg: the whole heap shrinks as one unit into its foot on the water, timed by the heap's own distance
++  // (no trail of tiny full-spacing beads from per-lobe shrinking)
++  vF = smoothstep(uNear.x, uNear.y, -(viewMatrix * vec4(aC, 1.0)).z);
++  vec4 mv = viewMatrix * vec4(aC + (aB.xyz - aC) * vF, 1.0);
++#else
+   vec4 mv = viewMatrix * vec4(aB.xyz, 1.0);
+   vF = smoothstep(uNear.x, uNear.y, -mv.z);
++#endif
+   mv.xy += position.xy * aB.w * 2.0 * vF;
+   vPx = aB.w * vF * projectionMatrix[1][1] / max(-mv.z, 0.1); // on-screen radius (fraction of the half-height)
+   gl_Position = projectionMatrix * mv;
+@@ -412,6 +515,19 @@ const tex = (f: string) => new URL(`../../assets/textures/match06/${f}`, import.
+ 
+ export async function buildMatch06(course: Course): Promise<Match06> {
+   const L: Layout06 = await fetch(tex('proj06.json')).then((r) => r.json());
++  // r29 `&m06deep=1` (lead; src/world/course.ts m06deepShift, assets/textures/match06/route06deep.json): the course river follows the
++  // painted coin trail rebuilt in 3D down the painted ring tunnel into the moved 07 entrance. The floor, frames and foam run to the NEW
++  // 07 entrance; the tunnel stays exactly where the approved picture has it (axis origin, wall-tile phase and far end pinned).
++  const DEEP = typeof location !== 'undefined' && new URLSearchParams(location.search).get('m06deep') === '1';
++  if (DEEP) L.s1 = course.stage('07').s0 + ((L as unknown as { sAhead07?: number }).sAhead07 ?? 34);
++  // r29 lead: `&m06tswap=1` wall tile mapped as built (fixes the transposed painted rings), `&m06haze=near,far[,strength]` far-tunnel
++  // fade into the painted deep purple, `&m06tdbg=norings|flatwall` QA views (qa/match/06/r29/rings/)
++  const QS0 = typeof location !== 'undefined' ? new URLSearchParams(location.search) : null;
++  const TSWAP = QS0?.get('m06tswap') === '1', TCROP = TSWAP || QS0?.get('m06tswap') === '2', TDBG = QS0?.get('m06tdbg') ?? ''; // '2' = keep the mapping, drop the painted gold stripes
++  const hz = (QS0?.get('m06haze') ?? '').split(',').map(Number);
++  const pw = (QS0?.get('m06projw') ?? '').split(',').map(Number);
++  const PROJW = TDBG === 'noproj' ? new THREE.Vector2(0.01, 0.02) : pw.length === 2 && pw.every(Number.isFinite) && pw[1] > pw[0] ? new THREE.Vector2(pw[0], pw[1]) : new THREE.Vector2(1e4, 2e4);
++  const HAZE = hz.length >= 2 && hz.every(Number.isFinite) ? new THREE.Vector4(hz[0], hz[1], hz[2] ?? 1, 1) : new THREE.Vector4(0, 1, 0, 0);
+   const loader = new THREE.TextureLoader();
+   const plate = await loader.loadAsync(tex('plate06_hybrid.png'));
+   plate.colorSpace = THREE.NoColorSpace; // raw display values: the shader inverts the post chain itself
+@@ -493,8 +609,12 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+       uFloor: { value: floor ? 1 : 0 }, uUseMask: { value: mask ? 1 : 0 }, uStM: { value: floor ? 0 : 1 },
+       uGeo: { value: GEO ? 1 : 0 }, uR6: { value: FLOW ? 1 : 0 }, uR6p: { value: r6p },
+       uRiver: { value: tRiver ?? tile }, uFoam: { value: tFoam ?? tile },
++      uTSwap: { value: TCROP ? 1 : 0 }, uHaze: { value: HAZE.clone() }, uHazeCol: { value: new THREE.Vector3(0.52, 0.22, 0.44) }, uDbgFlat: { value: TDBG === 'flatwall' ? 1 : 0 }, uProjW: { value: PROJW.clone() },
+       uRing: { value: 0 }, uGold: { value: 0 }, uRingTex: { value: tile }, uRingH: { value: 1 }, uBendAng: { value: 0 }, uPanel: { value: 0 }, uAxO: { value: new THREE.Vector3() }, uAxD: { value: new THREE.Vector3(0, 0, -1) },
+-      uAxR: { value: new THREE.Vector3(1, 0, 0) }, uAxU: { value: new THREE.Vector3(0, 1, 0) } },
++      uAxR: { value: new THREE.Vector3(1, 0, 0) }, uAxU: { value: new THREE.Vector3(0, 1, 0) },
++      uRip: { value: tile }, uRipOn: { value: 0 }, uRipR: { value: new THREE.Vector4(-1, 1, -1, 1) }, uBen: { value: new THREE.Vector2() }, uRipZ: { value: 0 }, uHoleT: { value: new THREE.Vector2(0.15, 0.9) }, uFade: { value: new THREE.Vector2(1e4, 2e4) }, uWDbg: { value: qs?.get('m06wdbg') === '1' ? 1 : 0 }, uRip0: { value: new THREE.Vector2() },
++      uRipA: { value: new THREE.Vector4(0.06, 0.5, 1, 0) },
++      uHole: { value: tile }, uHoleW: { value: tile }, uHoleOn: { value: 0 }, uHoleR: { value: new THREE.Vector4(0, 1, 0, 1) }, uHoleZ: { value: new THREE.Vector4(0, 1, 1, 0) } },
+   });
+ 
+   // river frames from the course (beyond s1: straight along the heading at s1, as tools/match06/geo06.py)
+@@ -549,7 +669,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+     const Rt = Number(qs?.get("m06tunr")) || 14;
+     const vp = (TT as { vp?: [number, number] }).vp ?? [W / 2, H / 2];
+     let ax = new THREE.Vector3((vp[0] / W) * 2 - 1, 1 - (vp[1] / H) * 2, 0.5).unproject(proj).sub(proj.position).normalize();
+-    const sA = L.s0 + 12, sE = L.s0 + 12 + 44; // approved checkpoint .. end of the 06 stage
++    const sA = L.s0 + 12, sE = DEEP ? course.stage('07').s0 : L.s0 + 12 + 44; // approved checkpoint .. end of the 06 stage (r29 m06deep: the new 07 entrance)
+     if (qs?.get('m06tunax') === 'chord') ax = course.sample(sE).pos.sub(course.sample(sA).pos).normalize();
+     const C = proj.position.clone();
+     // axis through the centroid of the 06 river (perpendicular to ax), lifted `&m06tunh=` (default 3) above it
+@@ -558,9 +678,9 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+     cen.multiplyScalar(1 / n);
+     const Ux = new THREE.Vector3(0, 1, 0).addScaledVector(ax, -ax.y).normalize(), Rx = new THREE.Vector3().crossVectors(ax, Ux).normalize();
+     const hq = Number(qs?.get('m06tunh'));
+-    const O = C.clone().add(cen).addScaledVector(Ux, Number.isFinite(hq) && qs?.get('m06tunh') ? hq : 3);
+-    const a0 = course.sample(L.s0).pos.sub(O).dot(ax) - 6, a1 = P1.clone().sub(O).dot(ax) + L.ext;
+-    const kS = L.s1 - P1.clone().sub(O).dot(ax); // tile phase: same ring positions as the old tube's straight part
++    const O = DEEP ? new THREE.Vector3().fromArray(route06deep.O) : C.clone().add(cen).addScaledVector(Ux, Number.isFinite(hq) && qs?.get('m06tunh') ? hq : 3);
++    const a0 = course.sample(L.s0).pos.sub(O).dot(ax) - 6, a1 = (DEEP ? route06deep.tunnel_pin.P1a : P1.clone().sub(O).dot(ax)) + L.ext;
++    const kS = DEEP ? route06deep.tunnel_pin.kS : L.s1 - P1.clone().sub(O).dot(ax); // tile phase: same ring positions as the old tube's straight part
+     // r11 `&m06bend=1` (lead, qa/match/06/r11/NOTES.md): the painted tunnel BENDS down-right with the river (BLUEPRINT_06:
+     // the inner ring centres drift toward the glow; Depth Anything 3: the glow is the far end of a deep tube that turns away).
+     // The straight cylinder ignored the river's right turn after the crest, so while swimming it showed a long centred
+@@ -603,7 +723,26 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+       }
+       console.info('[match06] m06bend', { sTop, aTop: +aTop.toFixed(1), yawEndDeg: +THREE.MathUtils.radToDeg(yaw[nA - 1]).toFixed(1) });
+     }
++    // r28 `&m06route=1` (qa/match/06/r25/PROGRESS.md r28, user-authorized route test): the painted tunnel FOLLOWS the river
++    // into 07. The game river crosses the ring interior near the axis up to ~s 219, then runs down-right to the 07 start
++    // 12 u off the axis (lower right) - with the straight cylinder it swam into the tunnel's lower-right wall ("up the right
++    // wall"). Here the far tunnel axis is SHIFTED sideways (Rx / Ux, never turned: every ring keeps its facing along ax, so the
++    // rings stay round and face the route - not the rejected m06bend) between the axial distances `&m06rsh=a,b` (default
++    // 12,46: the first ring past the camera and the approved view are untouched) by the amount that puts the 07 start at
++    // `&m06rtg=x,y` from the axis (default 3,-6.5: lower middle); beyond b the shifted tunnel runs straight on (same
++    // vanishing direction as the painting).
++    const ROUTE = qs?.get('m06route') === '1';
++    const rnum = (k: string, d: number[]) => { const v = (qs?.get(k) ?? '').split(',').map(Number); return v.length === d.length && v.every(Number.isFinite) ? v : d; };
++    const [shA, shB] = rnum('m06rsh', [12, 46]), shT = rnum('m06rtg', [3, -6.5]);
++    let shE = new THREE.Vector2();
++    if (ROUTE) {
++      const q = course.sample(course.stage('07').s0).pos.sub(O), aq = q.dot(ax); q.addScaledVector(ax, -aq);
++      shE = new THREE.Vector2(q.dot(Rx) - shT[0], q.dot(Ux) - shT[1]);
++      console.info('[match06] m06route shear', { a: [shA, shB], target: shT, shift: [+shE.x.toFixed(2), +shE.y.toFixed(2)], a07: +aq.toFixed(1) });
++    }
++    const shearAt = (a: number) => { const t = THREE.MathUtils.clamp((a - shA) / (shB - shA), 0, 1), k = t * t * (3 - 2 * t); return [shE.x * k, shE.y * k]; };
+     const axisAt = (a: number) => {
++      if (ROUTE) { const [e, f] = shearAt(a); return { p: O.clone().addScaledVector(ax, a).addScaledVector(Rx, e).addScaledVector(Ux, f), t: ax, r: Rx, u: Ux }; }
+       if (!BEND) return { p: O.clone().addScaledVector(ax, a), t: ax, r: Rx, u: Ux };
+       const i = THREE.MathUtils.clamp(Math.round((a - a0) / DA), 0, nA - 1);
+       return { p: fP[i].clone().addScaledVector(fT[i], a - (a0 + i * DA)), t: fT[i], r: fR[i], u: fU[i] };
+@@ -621,7 +760,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+       const p = f.p.clone().addScaledVector(f.r, Ra * Math.cos(th)).addScaledVector(f.u, Ra * Math.sin(th));
+       pos.push(p.x, p.y, p.z);
+       let aa = th; if (aa > TT.wallAngle[1]) aa -= Math.PI * 2;
+-      tl.push((aa - TT.wallAngle[0]) / TT.anglePeriod, (a + kS) / TT.period); ls.push(0, a + kS);
++      if (TSWAP) tl.push((a + kS) / TT.period, (aa - TT.wallAngle[0]) / TT.anglePeriod); else tl.push((aa - TT.wallAngle[0]) / TT.anglePeriod, (a + kS) / TT.period); ls.push(0, a + kS);
+     }
+     const nC = RAD + 1;
+     for (let i = 0; i < rows.length - 1; i++) for (let j = 0; j < RAD; j++) { const a = i * nC + j, b = a + 1, c = a + nC, d = c + 1; idx.push(a, c, b, b, c, d); }
+@@ -708,7 +847,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+       const rm = mat(tTube);
+       Object.assign(rm.uniforms, { uRing: { value: 1 }, uGold: { value: GOLD ? 1 : 0 }, uRingTex: { value: tRing ?? tTube }, uRingH: { value: h }, uBendAng: { value: BEND ? 1 : 0 }, uUseMask: { value: 0 }, uAxO: { value: O.clone() }, uAxD: { value: ax.clone() },
+         uAxR: { value: Rx.clone() }, uAxU: { value: Ux.clone() } });
+-      add(rg, rm, 'rings');
++      add(rg, rm, 'rings').visible = TDBG !== 'norings';
+       console.info('[match06] m06ring', { rings: parts.length, spacing: +dA.toFixed(2), aN: +aN.toFixed(1), aF: +aF.toFixed(1) });
+       if (qs?.get('m06pad') === '1') {
+         // r7c `&m06pad=1`: the two painted gold paddle blades (drum lifters) on the upper-left wall, as real beveled gold
+@@ -774,6 +913,191 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+     if (GEO && R6) { const t = Math.min(1, Math.max(0, (Math.abs(l) - R6.Wc + 0.1) / 0.5)); p.addScaledVector(fr.up, R6.hb * t * t * (3 - 2 * t)); }
+     return [p, l / TF.lateralPeriod, l];
+   }, TF.period), mat(tFloor, true), 'floor');
++  const floorMat = (group.getObjectByName('m06_floor') as THREE.Mesh).material as THREE.ShaderMaterial;
++  // r29 `&m06leg=1` (lead; with m06deep; tools/match06/r29_design_leg.py -> leg06deep.json): the FALLING RIGHT BAND of the painted rinse
++  // arch (the broad rainbow band from the crest top down past Benny's right side) as a decorative water ribbon with the river's own
++  // material (painted pixels at the approved view, flowing cyan / pink water + foam edges once moving), so the crest keeps its curl and
++  // its window onto the purple wall while Benny climbs it. Where it meets the playable river it tucks 0.3 u UNDER it (river on top).
++  if (DEEP && qs?.get('m06leg') === '1' && GEO && R6) {
++    const LEG = (await fetch(tex('leg06deep.json')).then((r) => r.json())) as { points: number[][] };
++    const lp = LEG.points.map((q) => new THREE.Vector3(q[0], q[1], q[2]));
++    const hwL = Number(qs?.get('m06legw')) || 2.6, NL = 16;
++    const lpos: number[] = [], ltl: number[] = [], lls: number[] = [], lidx: number[] = [];
++    let acc = 0;
++    for (let i = 0; i < lp.length; i++) {
++      const tn = lp[Math.min(lp.length - 1, i + 1)].clone().sub(lp[Math.max(0, i - 1)]).normalize();
++      if (i > 0) acc += lp[i].distanceTo(lp[i - 1]);
++      const upv = new THREE.Vector3(0, 1, 0).addScaledVector(tn, -tn.y).normalize();
++      const rt = new THREE.Vector3().crossVectors(tn, upv).normalize();
++      for (let j = 0; j <= NL; j++) {
++        const l = -hwL + (2 * hwL * j) / NL, p = lp[i].clone().addScaledVector(rt, l);
++        let best = Infinity, bs = L.s0;
++        for (let s = L.s0; s <= L.s0 + 60; s += 0.5) { const d2 = course.sample(s).pos.distanceToSquared(p); if (d2 < best) { best = d2; bs = s; } }
++        const fr = course.sample(bs), dv = p.clone().sub(fr.pos), lat = dv.dot(fr.right), h = dv.dot(fr.up);
++        if (Math.abs(lat) < R6.Wb + 0.4 && h > -0.3) p.addScaledVector(fr.up, -0.3 - h);
++        const lr = l * (R6.Wb / hwL);
++        lpos.push(p.x, p.y, p.z); ltl.push(lr / TF.lateralPeriod, (2000 + acc) / TF.period); lls.push(lr, 2000 + acc);
++      }
++    }
++    for (let i = 0; i < lp.length - 1; i++) for (let j = 0; j < NL; j++) { const a = i * (NL + 1) + j, b = a + 1, c = a + NL + 1, d = c + 1; lidx.push(a, c, b, b, c, d); }
++    const lg = new THREE.BufferGeometry();
++    lg.setAttribute('position', new THREE.Float32BufferAttribute(lpos, 3));
++    lg.setAttribute('aTile', new THREE.Float32BufferAttribute(ltl, 2));
++    lg.setAttribute('aLS', new THREE.Float32BufferAttribute(lls, 2));
++    lg.setIndex(lidx); lg.computeVertexNormals();
++    add(lg, floorMat, 'leg');
++    console.info('[match06] m06leg', { points: lp.length, length: +acc.toFixed(1), halfWidth: hwL });
++  }
++  // r23 `&m06rip=1` (qa/match/06/r23/PROGRESS.md): the painted ripple rings round Benny (concentric white-cyan rings, the
++  // splash collar at his base, the bright streaks under him) vanished as soon as he swam: the projection pins them to the
++  // checkpoint and the flowing river material has none. Here the approved plate's water round the approved Benny is
++  // re-sampled in the river's own coordinates (lateral l x distance ds from Benny, exactly the floor surface the projector
++  // painted at the checkpoint) and carried with Benny on the floor, where his body was filled transparent; faded in only
++  // once the camera has left the approved viewpoint (start view unchanged), fading out toward its rim, water only.
++  // `&m06ripl=` half width (u, default 1.45: the painted foam heaps begin ~1.3-1.5 u out), `&m06ripd=a,b` behind / ahead
++  // of Benny (u, default 2.4,1.3),
++  // `&m06ripk=` strength (default 1), `&m06ripx=` outward drift share (default 0.06; 0 = still).
++  if (qs?.get('m06rip') === '1') {
++    const rn = (k: string, d: number) => { const v = Number(qs?.get(k)); return qs?.get(k) != null && qs?.get(k) !== '' && Number.isFinite(v) ? v : d; };
++    const rd = (qs?.get('m06ripd') ?? '').split(',').map(Number);
++    // the painted soap bubbles next to the ripples (approved-picture px: x, y, radius) stay out: carried with Benny they
++    // would look glued to him (the game's own bubbles float there while swimming)
++    const BUB06: [number, number, number][] = [[722, 1115, 14], [692, 1220, 25], [58, 1190, 15], [697, 1352, 40], [708, 1048, 7]];
++    const LW = rn('m06ripl', 1.45), D0 = -(rd.length === 2 && rd.every(Number.isFinite) ? rd[0] : 2.4), D1 = rd.length === 2 && rd.every(Number.isFinite) ? rd[1] : 1.3;
++    const sB = (L as unknown as { sB?: number }).sB ?? L.s0 + 12;
++    const fillImg = (await loader.loadAsync(tex('plate06_fillmask.png'))).image as CanvasImageSource;
++    const px = (img: CanvasImageSource) => {
++      const cv = document.createElement('canvas'); cv.width = W; cv.height = H;
++      const cx = cv.getContext('2d', { willReadFrequently: true })!; cx.drawImage(img, 0, 0, W, H);
++      return cx.getImageData(0, 0, W, H).data;
++    };
++    const P = px(plate.image as CanvasImageSource), F = px(fillImg);
++    const NX = 384, NY = Math.round((NX * (D1 - D0)) / (2 * LW));
++    const data = new Uint8Array(NX * NY * 4), v = new THREE.Vector3();
++    const fillAt = (x: number, y: number) => { // body fill, dilated 7 px (the fill edge is soft)
++      let m = 0;
++      for (let dy = -7; dy <= 7; dy += 3.5) for (let dx = -7; dx <= 7; dx += 3.5) {
++        const xi = Math.min(W - 1, Math.max(0, Math.round(x + dx))), yi = Math.min(H - 1, Math.max(0, Math.round(y + dy)));
++        m = Math.max(m, F[(yi * W + xi) * 4] / 255);
++      }
++      return m;
++    };
++    let ext = [Infinity, -Infinity, Infinity, -Infinity];
++    for (let j = 0; j < NY; j++) {
++      const ds = D0 + ((j + 0.5) / NY) * (D1 - D0), fr = frame(sB + ds);
++      for (let i = 0; i < NX; i++) {
++        const l = -LW + ((i + 0.5) / NX) * 2 * LW;
++        v.copy(fr.pos).addScaledVector(fr.right, l).project(proj);
++        const x = ((v.x + 1) / 2) * W - 0.5, y = ((1 - v.y) / 2) * H - 0.5, o = (j * NX + i) * 4;
++        if (v.z > 1 || x < 0 || y < 0 || x > W - 1 || y > H - 1) continue;
++        ext = [Math.min(ext[0], x), Math.max(ext[1], x), Math.min(ext[2], y), Math.max(ext[3], y)];
++        const x0 = Math.floor(x), y0 = Math.floor(y), fx = x - x0, fy = y - y0, x1 = Math.min(W - 1, x0 + 1), y1 = Math.min(H - 1, y0 + 1);
++        // radial fade (elliptic in l / ds) x not where the painted Benny was filled
++        const e = Math.hypot(l / LW, ds < 0 ? ds / D0 : ds / D1);
++        let a = (1 - THREE.MathUtils.smoothstep(e, 0.6, 1.0)) * (1 - THREE.MathUtils.smoothstep(fillAt(x, y), 0.1, 0.6));
++        for (const [bx, by, br] of BUB06) a *= THREE.MathUtils.smoothstep(Math.hypot(x - bx, y - by), br + 2, br + 9);
++        // soft toward the approved picture's frame edges (the water behind Benny leaves the picture at its bottom edge:
++        // without this the decal ended in a straight seam there)
++        a *= THREE.MathUtils.smoothstep(Math.min(x, W - 1 - x, H - 1 - y), 0, 260);
++        for (let c = 0; c < 3; c++) {
++          const s00 = P[(y0 * W + x0) * 4 + c], s10 = P[(y0 * W + x1) * 4 + c], s01 = P[(y1 * W + x0) * 4 + c], s11 = P[(y1 * W + x1) * 4 + c];
++          const sv = (s00 * (1 - fx) + s10 * fx) * (1 - fy) + (s01 * (1 - fx) + s11 * fx) * fy;
++          data[o + c] = Math.round(sv * a); // premultiplied
++        }
++        data[o + 3] = Math.round(255 * a);
++      }
++    }
++    const rt = new THREE.DataTexture(data, NX, NY, THREE.RGBAFormat);
++    rt.colorSpace = THREE.NoColorSpace; rt.magFilter = THREE.LinearFilter; rt.minFilter = THREE.LinearMipmapLinearFilter;
++    rt.generateMipmaps = true; rt.wrapS = rt.wrapT = THREE.ClampToEdgeWrapping; rt.anisotropy = 8; rt.needsUpdate = true;
++    Object.assign(floorMat.uniforms, { uRip: { value: rt }, uRipOn: { value: 1 }, uRipR: { value: new THREE.Vector4(-LW, LW, D0, D1) },
++      uRipA: { value: new THREE.Vector4(rn('m06ripx', 0.06), 0.5, rn('m06ripk', 1), 0) } });
++    floorMat.uniforms.uBen.value.set(0, sB);
++    if (qs?.get('m06ripz') === '1') { floorMat.uniforms.uRipZ.value = 1; floorMat.uniforms.uRip0.value.set(0, sB); }
++    console.info('[match06] m06rip', { NX, NY, LW, D0, D1, px: ext.map((q) => Math.round(q)) });
++    if (qs?.get('m06ripdbg') === '1') (window as unknown as { __m06rip?: unknown }).__m06rip = { data, NX, NY };
++  }
++  // r25 `&m06hole=1` (qa/match/06/r25/PROGRESS.md, tools/match06/make_hole06.py; needs m06geo + m06st): the user's "raised blue
++  // cone" under Benny at the opening = the cut-out where the painted Benny was removed from the projected plate, shown as the
++  // river's own brighter material with a hard Benny-shaped edge, plus the painted ripple ring left pinned below it. Here the
++  // cut-out and the painted ring zone show the approved picture's own painted water, continued from the water around them
++  // (patch fill in the floor's own coordinates, world-pinned like the rest of the painted water); the approved start view is
++  // unchanged (off exactly at the approved viewpoint), the ring zone hands over as the carried rings (`m06rip`) fade in.
++  // r26 `&m06hole=2` (qa/match/06/r25/PROGRESS.md r26 block): the same fill + the painted water's own fine sparkle carried into it
++  // (tile_hole06b.png, make_hole06.py HOLE_DSIG=0.03), and the painted ring zone hands over to the carried rings within the first
++  // steps (dAp 0.02..0.3 instead of 0.15..0.9: no half-faded ring left at the checkpoint). '1' = the r25 version, unchanged.
++  const HOLE = qs?.get('m06hole') ?? '';
++  if ((HOLE === '1' || HOLE === '2') && GEO && R6) {
++    const [hm, ht, hw] = await Promise.all([fetch(tex('hole06.json')).then((r) => r.json()), loader.loadAsync(tex(HOLE === '2' ? 'tile_hole06b.png' : 'tile_hole06.png')),
++      loader.loadAsync(tex('tile_hole06w.png'))]);
++    for (const t of [ht, hw]) {
++      t.colorSpace = THREE.NoColorSpace; t.wrapS = t.wrapT = THREE.ClampToEdgeWrapping; t.anisotropy = 8;
++      t.minFilter = THREE.LinearMipmapLinearFilter; t.magFilter = THREE.LinearFilter;
++    }
++    const z = hm.zone as { dc: number; hl: number; hs: number };
++    Object.assign(floorMat.uniforms, { uHole: { value: ht }, uHoleW: { value: hw }, uHoleOn: { value: 1 },
++      uHoleR: { value: new THREE.Vector4(hm.l0, hm.l1, hm.s0, hm.s1) }, uHoleZ: { value: new THREE.Vector4(hm.sB + z.dc, z.hl, z.hs, 0) } });
++    if (HOLE === '2') floorMat.uniforms.uHoleT.value.set(0.02, 0.3);
++    console.info('[match06] m06hole', { rect: [hm.l0, hm.l1, hm.s0, hm.s1], zone: z });
++  }
++  const fade = (qs?.get('m06fade') ?? '').split(',').map(Number);
++  if (fade.length === 2 && fade[1] > fade[0] && fade[0] >= 0) floorMat.uniforms.uFade.value.set(fade[0], fade[1]);
++  else if (qs?.get('m06fade') === '1') floorMat.uniforms.uFade.value.set(0.85, 2.2);
++  // r25 QA only `&m06holedump=1` (tools/match06/r25_holedump.mjs): the projected plate, mask06 and the body fill mask unwrapped
++  // into the river floor's own coordinates (lateral l x course s, exactly the floor surface incl. the raised banks) with the
++  // projector's own visibility (floor self-occlusion z-buffer), for tools/match06/make_hole06.py. Nothing changes on screen.
++  if (qs?.get('m06holedump') === '1' && GEO && R6 && mask) {
++    const sB = (L as unknown as { sB?: number }).sB ?? L.s0 + 12;
++    const KX = Number(qs.get('m06holek')) || 64;
++    const l0 = -R6.Wb, l1 = R6.Wb, sa = sB - 5, sb = sB + 25;
++    const NX = Math.round((l1 - l0) * KX), NY = Math.round((sb - sa) * KX);
++    const fillImg = (await loader.loadAsync(tex('plate06_fillmask.png'))).image as CanvasImageSource;
++    const pxs = (img: CanvasImageSource) => {
++      const cv = document.createElement('canvas'); cv.width = W; cv.height = H;
++      const cx = cv.getContext('2d', { willReadFrequently: true })!; cx.drawImage(img, 0, 0, W, H);
++      return cx.getImageData(0, 0, W, H).data;
++    };
++    const P = pxs(plate.image as CanvasImageSource), M = pxs(mask.image as CanvasImageSource), F = pxs(fillImg);
++    const X = new Float32Array(NX * NY), Y = new Float32Array(NX * NY), D = new Float32Array(NX * NY).fill(-1);
++    const v = new THREE.Vector3(), p = new THREE.Vector3();
++    for (let j = 0; j < NY; j++) {
++      const s = sa + ((j + 0.5) / NY) * (sb - sa), fr = frame(s);
++      for (let i = 0; i < NX; i++) {
++        const l = l0 + ((i + 0.5) / NX) * (l1 - l0);
++        const t = Math.min(1, Math.max(0, (Math.abs(l) - R6.Wc + 0.1) / 0.5));
++        p.copy(fr.pos).addScaledVector(fr.right, l).addScaledVector(fr.up, R6.hb * t * t * (3 - 2 * t));
++        v.copy(p).project(proj);
++        const o = j * NX + i;
++        X[o] = ((v.x + 1) / 2) * W - 0.5; Y[o] = ((1 - v.y) / 2) * H - 0.5;
++        if (v.z < 1 && v.z > -1 && X[o] >= 0 && Y[o] >= 0 && X[o] <= W - 1 && Y[o] <= H - 1) D[o] = p.distanceTo(proj.position);
++      }
++    }
++    // floor self-occlusion in the projector image: each texel splatted over its own pixel footprint
++    const zb = new Float32Array(W * H).fill(Infinity);
++    for (let j = 0; j < NY - 1; j++) for (let i = 0; i < NX - 1; i++) {
++      const o = j * NX + i; if (D[o] < 0) continue;
++      const r = Math.min(12, Math.ceil(Math.max(Math.abs(X[o + 1] - X[o]), Math.abs(Y[o + 1] - Y[o]), Math.abs(X[o + NX] - X[o]), Math.abs(Y[o + NX] - Y[o])) / 2) + 1);
++      const xc = Math.round(X[o]), yc = Math.round(Y[o]);
++      for (let yy = Math.max(0, yc - r); yy <= Math.min(H - 1, yc + r); yy++) for (let xx = Math.max(0, xc - r); xx <= Math.min(W - 1, xc + r); xx++) {
++        const q = yy * W + xx; if (D[o] < zb[q]) zb[q] = D[o];
++      }
++    }
++    const out = new Uint8Array(NX * NY * 8);
++    for (let o = 0; o < NX * NY; o++) {
++      if (D[o] < 0) continue;
++      const x = X[o], y = Y[o], x0 = Math.floor(x), y0 = Math.floor(y), fx = x - x0, fy = y - y0, x1 = Math.min(W - 1, x0 + 1), y1 = Math.min(H - 1, y0 + 1);
++      const bil = (A: Uint8ClampedArray, c: number) => (A[(y0 * W + x0) * 4 + c] * (1 - fx) + A[(y0 * W + x1) * 4 + c] * fx) * (1 - fy) + (A[(y1 * W + x0) * 4 + c] * (1 - fx) + A[(y1 * W + x1) * 4 + c] * fx) * fy;
++      const zq = zb[Math.round(y) * W + Math.round(x)];
++      const vis = D[o] <= zq * 1.02 + 0.05 ? 255 : 0;
++      out[o * 8] = bil(P, 0); out[o * 8 + 1] = bil(P, 1); out[o * 8 + 2] = bil(P, 2); out[o * 8 + 3] = vis;
++      out[o * 8 + 4] = bil(M, 0); out[o * 8 + 5] = bil(M, 1); out[o * 8 + 6] = bil(F, 0); out[o * 8 + 7] = 255;
++    }
++    const xy = new Uint16Array(NX * NY * 2);
++    for (let o = 0; o < NX * NY; o++) { xy[o * 2] = Math.max(0, Math.round(X[o] * 8 + 8)); xy[o * 2 + 1] = Math.max(0, Math.round(Y[o] * 8 + 8)); }
++    const b64 = (u: Uint8Array) => { let s = ''; for (let k = 0; k < u.length; k += 0x8000) s += String.fromCharCode(...u.subarray(k, k + 0x8000)); return btoa(s); };
++    (window as unknown as { __m06hole?: unknown }).__m06hole = { NX, NY, l0, l1, sa, sb, sB, Wc: R6.Wc, Wb: R6.Wb, data: b64(out), xy: b64(new Uint8Array(xy.buffer)) };
++    console.info('[match06] m06holedump', { NX, NY, l0, l1, sa, sb });
++  }
+   // r7 `&m06foam=1` (needs m06geo): puffy 3D foam clouds along both banks — the painted white-lilac foam clusters that
+   // vanished as flat strips once Benny moved. Hidden at the approved view (the painting carries them there), shown once
+   // the camera has left it (setAway). Not part of the projector depth bake (invisible while baking).
+@@ -793,7 +1117,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+       const ph = ((s - L.s0) / fclP + (side > 0 ? 0.5 : 0)) % 1; // 0..1 within one heap period, the sides half a period apart
+       return 1 - Math.abs(ph * 2 - 1); // 1 at a heap centre, 0 in the gap
+     };
+-    for (let s = L.s0 + 3; s < L.s0 + 12 + 44 + 12; s += 0.6) for (const side of [-1, 1]) {
++    for (let s = L.s0 + 3; s < (DEEP ? course.stage('07').s0 + 12 : L.s0 + 12 + 44 + 12); s += 0.6) for (const side of [-1, 1]) {
+       const n = 4 + Math.floor(rnd() * 4); // r7c: more, smaller blobs = bubbly clusters (big ones read as plastic balls up close)
+       for (let i = 0; i < n; i++) {
+         const fr = frame(s + rnd() * 0.6), r = 0.1 + rnd() * 0.22;
+@@ -821,7 +1145,8 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+       const num = (k: string, d: number) => { const v = Number(qs?.get(k)); return qs?.get(k) != null && Number.isFinite(v) ? v : d; };
+       const fcs = num('m06fcs', 1.25), fck = num('m06fck', 1), fcn = num('m06fcn', 1.4);
+       let seed2 = 9871; const rnd2 = () => ((seed2 = (seed2 * 16807) % 2147483647) / 2147483647);
+-      const aB: number[] = [], aS: number[] = [];
++      const aB: number[] = [], aS: number[] = [], aC: number[] = [];
++      const fcg = qs?.get('m06fcg') === '1'; // r27: shrink each heap as a unit (see FOAMC_VERT GROUP)
+       for (const it of items) {
+         const R = it.r * fcs, n = Math.min(24, Math.max(3, Math.round((2 + 30 * R) * fck)));
+         const t1 = new THREE.Vector3().crossVectors(it.up, new THREE.Vector3(1, 0, 0));
+@@ -836,6 +1161,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+           const hgt = (lobe ? R * (0.15 + 0.35 * rnd2()) * (1 - d / (1.2 * R)) : rho * 0.5) * (FCL ? 0.55 : 1); // r22 m06fcl: flatter heaps
+           const p = base.clone().addScaledVector(t1, Math.cos(th) * d).addScaledVector(t2, Math.sin(th) * d).addScaledVector(it.up, rho * 0.55 + Math.max(0, hgt));
+           aB.push(p.x, p.y, p.z, rho); aS.push(rnd2() + (lobe ? 1 : 0)); // aS >= 1: a foam lobe (pores), < 1: a small bubble
++          aC.push(base.x, base.y, base.z);
+         }
+       }
+       const quad = new THREE.PlaneGeometry(1, 1);
+@@ -843,9 +1169,10 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+       g.setIndex(quad.index); g.setAttribute('position', quad.attributes.position); g.setAttribute('uv', quad.attributes.uv);
+       g.setAttribute('aB', new THREE.InstancedBufferAttribute(new Float32Array(aB), 4));
+       g.setAttribute('aS', new THREE.InstancedBufferAttribute(new Float32Array(aS), 1));
++      if (fcg) g.setAttribute('aC', new THREE.InstancedBufferAttribute(new Float32Array(aC), 3));
+       g.instanceCount = aS.length;
+       for (const rim of [false, true]) {
+-        const m = new THREE.ShaderMaterial({ vertexShader: FOAMC_VERT, fragmentShader: (rim ? '#define RIM\n' : '') + FOAMC_FRAG,
++        const m = new THREE.ShaderMaterial({ vertexShader: (fcg ? '#define GROUP\n' : '') + FOAMC_VERT, fragmentShader: (rim ? '#define RIM\n' : '') + FOAMC_FRAG,
+           transparent: rim, depthWrite: !rim, fog: false,
+           uniforms: { uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uNear: { value: new THREE.Vector2(fcn * 0.5, fcn) } } });
+         const o = new THREE.Mesh(g, m);
+@@ -896,6 +1223,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+       shared.uUseDepth.value = 1;
+     },
+     setAway(a) { if (foamClouds) foamClouds.visible = a > 0.5; for (const o of foamSprites) o.visible = a > 0.5; },
++    setBenny(s, lat) { if (floorMat.uniforms.uRipOn.value > 0.5) floorMat.uniforms.uBen.value.set(lat, s); },
+     away(cam) { return THREE.MathUtils.smoothstep(cam.distanceTo(shared.uProjPos.value), 0.6, 2.0); },
+     sync(renderer, w, h) {
+       shared.uPjPost.value.x = renderer.toneMappingExposure;
+diff --git a/src/world/match08.ts b/src/world/match08.ts
+index 1c5deea4..4aca7624 100644
+--- a/src/world/match08.ts
++++ b/src/world/match08.ts
+@@ -11,6 +11,21 @@
+  */
+ import * as THREE from 'three';
+ import { PROJ05_INVERSE } from '../vfx/waterRibbon';
++import { m06deepShift } from './course';
++
++/** r29 `&m06deep=1` (src/world/course.ts m06deepShift): translate every absolute position of the fitted 08 layout by t */
++function shiftLayout08(L: Layout, t: THREE.Vector3) {
++  if (t.lengthSq() === 0) return;
++  const m = L.camera.matrixWorld; m[12] += t.x; m[13] += t.y; m[14] += t.z;
++  L.floorY += t.y;
++  L.chamber.cx += t.x; L.chamber.cy += t.y; L.chamber.zBack += t.z; L.chamber.zDoor += t.z;
++  L.arch.z += t.z; for (const c of [L.arch.outer, L.arch.inner]) { c.cx += t.x; c.cy += t.y; }
++  L.pipe.cx += t.x; L.pipe.cy += t.y; L.pipe.z0 += t.z; L.pipe.z1 += t.z;
++  L.backwall.z += t.z;
++  L.platform.cx += t.x; L.platform.cz += t.z; L.platform.topY += t.y; L.platform.rimBottomY += t.y; L.platform.floorY += t.y;
++  L.towel.cx += t.x; L.towel.cz += t.z; L.towel.y0 += t.y;
++  for (const k of Object.keys(L.spouts)) { const c = L.spouts[k].c; c[0] += t.x; c[1] += t.y; c[2] += t.z; }
++}
+ 
+ interface Layout {
+   camera: { matrixWorld: number[]; fov: number; size: [number, number] };
+@@ -95,6 +110,7 @@ void main() {
+ 
+ export async function buildMatch08(): Promise<Match08> {
+   const L: Layout = await fetch(new URL('../../assets/textures/match08/proj08.json', import.meta.url).href).then((r) => r.json());
++  shiftLayout08(L, m06deepShift()); // r29 m06deep: the whole 08 chamber moves with the longer 06 route (no-op when off)
+   const plate = await new THREE.TextureLoader().loadAsync(new URL('../../assets/textures/match08/plate08_hybrid.png', import.meta.url).href);
+   plate.colorSpace = THREE.NoColorSpace; // raw display values: the shader inverts the post chain itself
+   plate.minFilter = THREE.LinearMipmapLinearFilter;
