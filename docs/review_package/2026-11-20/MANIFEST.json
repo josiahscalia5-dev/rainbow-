@@ -390,14 +390,20 @@
       "bytes": 277217324,
       "mb": 277.2
     },
+    "Rainbow_App_Review_assets_6_newest_apks.zip": {
+      "part": "assets_6",
+      "files": 3,
+      "bytes": 49878954,
+      "mb": 49.9
+    },
     "Rainbow_App_Review.zip": {
       "part": "core",
-      "files": 1384,
-      "bytes": 459313417,
-      "mb": 459.3
+      "files": 1381,
+      "bytes": 409434463,
+      "mb": 409.4
     }
   },
-  "reassembly": "extract every ZIP into the same folder; each contains the top folder Rainbow_App_Review/; no file is in two ZIPs; only the core ZIP is needed to run the code",
+  "reassembly": "extract every ZIP (core + asset ZIPs 1–6) into the same folder; each contains the top folder Rainbow_App_Review/; no file is in two ZIPs; only the core ZIP is needed to run the code. The newest APKs are in asset ZIP 6 (moved out of the core ZIP to keep each file under 400 MB).",
   "totals": {
     "files": 2161,
     "bytes": 1943333388,

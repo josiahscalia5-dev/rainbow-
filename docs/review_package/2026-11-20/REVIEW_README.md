@@ -23,11 +23,12 @@ evidence clips (rounds 5–22 reviews, pilot-05 tests, old Image-Blaster tests);
 | `2_screen_versions/` | the **newest work per screen** — 8 unmerged versions as overlays + `apply_version.py` (section 3) | core |
 | `3_references/` | approved originals (A, B), owner-approved extra artwork (C), **unapproved** proposals (D), owner's phone recording (E) | core |
 | `4_evidence/` | gameplay clips + notes + overview sheets (core); the full-size comparison stills (asset ZIPs 1–4) | core + assets 1–4 |
-| `5_android_apk/` | newest existing APKs (core); older APKs in asset ZIP 5 | core + assets 5 |
+| `5_android_apk/` | newest existing APKs (asset ZIP 6); older APKs (asset ZIP 5) | assets 6 + 5 |
 | `6_marble_worldlabs_assets/` | the two Marble / World Labs worlds (splats, PLY, colliders, `.blend`) used for early Screen 05 work — not needed to run the game | assets 5 |
 
 **Reassembly:** every ZIP contains the same top folder `Rainbow_App_Review/`. Extract all of them into ONE folder (allow
-merging folders; no file exists in two ZIPs). Only the core ZIP is needed to run and review the code.
+merging folders; no file exists in two ZIPs). Only the core ZIP is needed to run and review the code. Asset ZIPs 1–5 are named
+`…_of_5`; asset ZIP 6 (`…_assets_6_newest_apks.zip`) was added afterwards so every file stays under 400 MB.
 
 ---
 
@@ -130,7 +131,7 @@ build.
 
 **There is no APK of the current work.** The newest existing APKs are from **2026-11-17** (debug-signed, not phone-tested by
 Claude): `rainbow-debug-match08-2026-11-17c-benny.apk` (default game + Screen 08 reconstruction + the Benny of that day) and
-`rainbow-debug-06-2026-11-17-r3.apk` (Screen 06 test build, notes in the `.md`). Five older APKs are in asset ZIP 5. To build a
+`rainbow-debug-06-2026-11-17-r3.apk` (Screen 06 test build, notes in the `.md`). These two are in asset ZIP 6; five older APKs are in asset ZIP 5. To build a
 current APK: run a version (section 3) and bake its query with `VITE_RAINBOW_Q05="<query>" npm run android:debug` — check the
 version's `src/game/match.ts` / `flag05` for which switches are read from the build variable.
 

@@ -16,8 +16,11 @@ for dp, _, fs in os.walk(R):
     for f in fs:
         rel = os.path.relpath(os.path.join(dp, f), R)
         groups.setdefault(part_of.get(rel, "core"), []).append(rel)   # generated docs (README, MANIFEST, ...) -> core
+ONLY = set(os.environ.get("ONLY_PARTS", "").split(",")) - {""}
 for part, files in sorted(groups.items()):
     zp = os.path.join(OUTD, names[part])
+    if ONLY and part not in ONLY:
+        continue
     if os.path.exists(zp):
         os.remove(zp)
     with zipfile.ZipFile(zp, "w", allowZip64=True) as z:
@@ -52,7 +55,7 @@ required = ["REVIEW_README.md", "MANIFEST.json", "MANIFEST_FILES.tsv", ".env.exa
             "1_main_project/package.json", "1_main_project/package-lock.json", "1_main_project/index.html", "1_main_project/src/main.ts",
             "1_main_project/src/game/Game.ts", "1_main_project/android/app/build.gradle", "1_main_project/assets/models/benny.glb",
             "1_main_project/assets/models/rainbow_girl.glb", "2_screen_versions/apply_version.py", "4_evidence/INDEX.md",
-            "5_android_apk/rainbow-debug-match08-2026-11-17c-benny.apk"] + \
+            "5_android_apk/rainbow-debug-match08-2026-11-17c-benny.apk", "5_android_apk/rainbow-debug-06-2026-11-17-r3.apk"] + \
            [f"3_references/A_APPROVED_ORIGINAL_SCREENS_01-11/{n}" for n in sorted(os.listdir(os.path.join(R, "3_references/A_APPROVED_ORIGINAL_SCREENS_01-11"))) if n.endswith(".png")]
 req_missing = [q for q in required if not os.path.isfile(os.path.join(T, q))]
 big = sorted(((os.path.getsize(os.path.join(dp, f)), os.path.relpath(os.path.join(dp, f), T)) for dp, _, fs in os.walk(T) for f in fs), reverse=True)[:8]
