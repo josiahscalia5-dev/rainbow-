@@ -130,7 +130,7 @@ index 69122b33..02848b97 100644
        for (let i = 0; i < defs.length; i++) { collected[i] = defs[i].s < s ? 1 : 0; popT[i] = -1; }
        place(0);
 diff --git a/src/world/course.ts b/src/world/course.ts
-index 99850bb3..de953db9 100644
+index 99850bb3..6f9ac882 100644
 --- a/src/world/course.ts
 +++ b/src/world/course.ts
 @@ -15,6 +15,7 @@ import * as THREE from 'three';
@@ -257,7 +257,16 @@ index 99850bb3..de953db9 100644
  /**
   * Arc-length Gaussian smoothing of the polyline from index `from` to the end (endpoints fixed).
   * Removes tangent kinks where independently generated segments meet; the 02 tumble helix
-@@ -403,12 +469,16 @@ export class Course {
+@@ -387,6 +453,8 @@ export class Course {
+   readonly length: number;
+   readonly stages: StageDef[];
+   readonly marks: Record<string, number>; // arc-length of named marks
++  /** r29 `&m06deep=1`: added 06 length, i.e. every arc length from the 07 entrance on = original + deepDs07 (0 when off) */
++  readonly deepDs07: number;
+   /** straight tunnel stretches (05 current) — see StraightAxis */
+   readonly straightAxes: StraightAxis[];
+   /** world X of the straight 05 tunnel line (the meander is pos.x − line05x) */
+@@ -403,12 +471,16 @@ export class Course {
      const route = buildRoute();
      this.curve = new THREE.CatmullRomCurve3(route.points, false, 'centripetal');
      // arc-length table over curve parameter u
@@ -276,7 +285,7 @@ index 99850bb3..de953db9 100644
        const p = this.curve.getPoint(u);
        ls.push(ls[i - 1] + p.distanceTo(prev));
        us.push(u);
-@@ -425,6 +495,12 @@ export class Course {
+@@ -425,12 +497,20 @@ export class Course {
        return us[lo] + (us[hi] - us[lo]) * f;
      };
      const sAtIndex = (i: number) => {
@@ -289,6 +298,28 @@ index 99850bb3..de953db9 100644
        const u = i / (route.points.length - 1);
        const k = Math.round(u * M);
        return ls[k];
+     };
+     this.marks = {};
+     for (const [k, i] of Object.entries(route.marks)) this.marks[k] = sAtIndex(i);
++    // r29 m06deep: extra 06 length (07+ arc lengths are the original ones + this); 0 when off
++    this.deepDs07 = deep ? this.marks['07'] - route06deep.s07_orig : 0;
+     this.straightAxes = route.straight.map((r) => ({ s0: this.marks[r.from], s1: this.marks[r.to], a: r.a, b: r.b, floorDepth: r.floorDepth }));
+     this.line05x = route.straight[0].a.x;
+ 
+diff --git a/src/world/environment.ts b/src/world/environment.ts
+index 598cb42a..60d0bc70 100644
+--- a/src/world/environment.ts
++++ b/src/world/environment.ts
+@@ -224,7 +224,8 @@ export function buildEnvironment(course: Course): Environment {
+   // START, not from the 05 start, so reshaping the 05 river (which changes its arc length) never slides the
+   // 06/07 rings, lids or slot rows along the tube. The phases reproduce the pre-wave-6 layout exactly
+   // (measured on that course: first 06/07 ring 5.5644 u after the 06 start; slot-row phase 0.96618 there).
+-  const s06 = course.stage('06').s0;
++  // r29 m06deep: the 07 rings / lids / slot rows keep their place on the (moved) 07 tube: anchor + the added 06 length
++  const s06 = course.stage('06').s0 + course.deepDs07;
+   const RING06_PHASE = 5.5643876;
+   const ROW06_PHASE = 0.9661842;
+   const rowRepeat0607 = slotRowsPerBay / ringSpacing;
 diff --git a/src/world/match06.ts b/src/world/match06.ts
 index 831c2b44..1933ea73 100644
 --- a/src/world/match06.ts
