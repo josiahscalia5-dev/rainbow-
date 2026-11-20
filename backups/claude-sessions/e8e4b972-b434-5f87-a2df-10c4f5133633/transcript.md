@@ -527,3 +527,152 @@ The rank-3 WIP is the `&m06st=1` switch. Checking the r18 session's notes on it,
 
 > 🔧 **Bash** `{"command": "K6='match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1'; D=qa/match/06/r22/step2_m06st; SH=\"a_start@0 b_0.3u@0.3 c_0.6u@0.6 d_0.9u@0.9 e_1.1u@1.1 f_1.5u@1.5 g_2u@2 h_3u@3\"\ntimeout 1200 node tools/match06/r18_dbg.mjs $D/BEFORE \"$K6\" $SH 2>&1 | grep -v \"^\\[match06\\]\" | tail -3\ntimeout 1200 node tools/match06/r18_dbg.mjs $D/NEW \"$K6&m06st=1\" $SH 2>&1 | grep -v \"^\\[match06\\]\" | tail -3; cp references/06_crest_the_rinse_arch.png $D/1_APPROVED.png; ls $D/NEW", "description": "Render start-view close shots BEFORE/NEW f …[+30 chars]`
 
+### 🧑 User — 2026-11-20T03:38:29.175Z
+
+> ↩︎ result: f_1.5u s 200.56 cam 1.57,-34.83,-133.29 coins 1690
+> g_2u s 200.927 cam 1.51,-34.64,-133.53 coins 1690
+> h_3u s 202.027 cam 1.32,-34,-134.4 coins 1690
+> f_1.5u s 200.56 cam 1.57,-34.83,-133.29 coins 1690
+> g_2u s 200.927 cam 1.51,-34.64,-133.53 coins 1690
+> h_3u s 202.027 cam 1.32,-34,-134.4 coins 1690
+> a_start.png
+> b_0.3u.png
+> c_0.6u.png
+> d_0.9u.png
+> e_1.1u.png
+> f_1.5u.png
+> g_2u.png
+> h_3u.png
+
+### 🤖 Claude — 2026-11-20T03:38:33.481Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e8e4b972-b434-5f87-a2df-10c4f5133633/scratchpad; D=qa/match/06/r22/step2_m06st; for n in a_start b_0.3u c_0.6u d_0.9u e_1.1u f_1.5u g_2u h_3u; do echo -n \"$n \"; node /home/user/tools-pixelmatch/pixeldiff.mjs $D/BEFORE/$n.png $D/NEW/$n.png - 0.1 | python3 -c \"import json,sys;print(json.load(sys.stdin)['diff_pct'])\"; done\npython3 -c \"\nfrom PIL import Image\nD='$D';S='$S'\nns=['b_0.3u','d_0.9u','e_1.1u','f_1.5u','h_3u']\nW=Image.new('RGB',(288*len(ns),1024))\nfor i,n in enumerate(ns):\n  for j,k in enumerate(['BEFORE','NEW']):\n    W.paste(I …[+166 chars]`
+
+### 🧑 User — 2026-11-20T03:38:36.405Z
+
+> ↩︎ result: a_start 0
+> b_0.3u 8.6616
+> c_0.6u 12.1562
+> d_0.9u 13.6217
+> e_1.1u 15.1513
+> f_1.5u 21.6229
+> g_2u 12.9364
+> h_3u 0.0006
+
+### 🤖 Claude — 2026-11-20T03:38:38.027Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e8e4b972-b434-5f87-a2df-10c4f5133633/scratchpad/st.png"}`
+
+### 🧑 User — 2026-11-20T03:38:38.248Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:38:44.386Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e8e4b972-b434-5f87-a2df-10c4f5133633/scratchpad; D=qa/match/06/r22/step2_m06st; python3 -c \"\nfrom PIL import Image\nD='$D';S='$S'\nW=Image.new('RGB',(864*2,800))\nfor j,k in enumerate(['BEFORE','NEW']):\n  W.paste(Image.open(f'{D}/{k}/f_1.5u.png').convert('RGB').crop((0,100,864,900)),(864*j,0))\nW.resize((1296,600)).save(S+'/f15.png')\"", "description": "Crop 1.5 u shots for close look"}`
+
+### 🧑 User — 2026-11-20T03:38:44.721Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T03:38:46.019Z
+
+Checking the `m06st` hand-over moment (+1.5 u) up close for double-exposed rings.
+
+### 🤖 Claude — 2026-11-20T03:38:46.970Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e8e4b972-b434-5f87-a2df-10c4f5133633/scratchpad/f15.png"}`
+
+### 🧑 User — 2026-11-20T03:38:47.008Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:38:53.482Z
+
+At +1.5 u, `m06st` replaces the old flash with a see-through double-exposed tunnel, which the rules forbid. I'll try a shorter hand-over (`m06stw`) to see if that removes it.
+
+### 🤖 Claude — 2026-11-20T03:38:58.489Z
+
+> 🔧 **Bash** `{"command": "K6='match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1'; D=qa/match/06/r22/step2_m06st; SH=\"c_0.6u@0.6 d_0.9u@0.9 e_1.1u@1.1 e2_1.3u@1.3 f_1.5u@1.5 g_2u@2\"\ntimeout 1500 node tools/match06/r18_dbg.mjs $D/NEW_stw_1.0_1.1 \"$K6&m06st=1&m06stw=1.0,1.1\" $SH 2>&1 | grep -v \"^\\[match06\\]\" | tail -1\ntimeout 1500 node tools/match06/r18_dbg.mjs $D/BEFORE \"$K6\" e2_1.3u@1.3 2>&1 | tail -1\nS=/tmp/claude-0/-home-user-rainbow-/e8e4b972-b434-5f87-a2df-10c4f5133633/scratchpad; python3 -c \"\nfrom PIL import Image\nD='$D';S='$S'\nns= …[+355 chars]`
+
+### 🧑 User — 2026-11-20T03:40:15.818Z
+
+> ↩︎ result: g_2u s 200.927 cam 1.51,-34.64,-133.53 coins 1690
+> e2_1.3u s 200.377 cam 1.59,-34.93,-133.17 coins 1690
+
+### 🤖 Claude — 2026-11-20T03:40:17.542Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e8e4b972-b434-5f87-a2df-10c4f5133633/scratchpad/st2.png"}`
+
+### 🧑 User — 2026-11-20T03:40:17.744Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:40:21.922Z
+
+A shorter hand-over (`m06stw=1.0,1.1`) looks clean: painted start held crisply to +1.5 u, then a straight switch to the 3D tunnel. Checking the exact switch moment (1.6–1.9 u).
+
+### 🤖 Claude — 2026-11-20T03:40:26.131Z
+
+> 🔧 **Bash** `{"command": "K6='match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1'; D=qa/match/06/r22/step2_m06st; SH=\"f2_1.6u@1.6 f3_1.7u@1.7 f4_1.8u@1.8 f5_1.9u@1.9\"\ntimeout 1500 node tools/match06/r18_dbg.mjs $D/NEW_stw_1.0_1.1 \"$K6&m06st=1&m06stw=1.0,1.1\" $SH 2>&1 | grep -v \"^\\[match06\\]\" | tail -4\nS=/tmp/claude-0/-home-user-rainbow-/e8e4b972-b434-5f87-a2df-10c4f5133633/scratchpad; python3 -c \"\nfrom PIL import Image\nD='$D';S='$S'\nns=['f2_1.6u','f3_1.7u','f4_1.8u','f5_1.9u']\nW=Image.new('RGB',(432*len(ns),500))\nfor i,n in enumerate(ns) …[+219 chars]`
+
+### 🧑 User — 2026-11-20T03:41:09.727Z
+
+> ↩︎ result: f2_1.6u s 200.56 cam 1.57,-34.83,-133.29 coins 1690
+> f3_1.7u s 200.743 cam 1.54,-34.74,-133.41 coins 1690
+> f4_1.8u s 200.743 cam 1.54,-34.74,-133.41 coins 1690
+> f5_1.9u s 200.927 cam 1.51,-34.64,-133.53 coins 1690
+
+### 🤖 Claude — 2026-11-20T03:41:12.128Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e8e4b972-b434-5f87-a2df-10c4f5133633/scratchpad/st3.png"}`
+
+### 🧑 User — 2026-11-20T03:41:12.176Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:41:16.793Z
+
+At +1.7 u the held painting starts to stretch for a frame. Trying a slightly earlier switch (`m06stw=0.75,0.85`).
+
+### 🤖 Claude — 2026-11-20T03:41:21.355Z
+
+> 🔧 **Bash** `{"command": "K6='match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1'; D=qa/match/06/r22/step2_m06st; SH=\"e_1.1u@1.1 e2_1.3u@1.3 f_1.5u@1.5 f3_1.7u@1.7 g_2u@2\"\ntimeout 1500 node tools/match06/r18_dbg.mjs $D/NEW_stw_0.75_0.85 \"$K6&m06st=1&m06stw=0.75,0.85\" $SH 2>&1 | grep -v \"^\\[match06\\]\" | tail -1\nS=/tmp/claude-0/-home-user-rainbow-/e8e4b972-b434-5f87-a2df-10c4f5133633/scratchpad; python3 -c \"\nfrom PIL import Image\nD='$D';S='$S'\nns=['e_1.1u','e2_1.3u','f_1.5u','f3_1.7u','g_2u']\nW=Image.new('RGB',(346*len(ns),400))\nfor i,n in …[+237 chars]`
+
+### 🧑 User — 2026-11-20T03:42:17.381Z
+
+> ↩︎ result: g_2u s 200.927 cam 1.51,-34.64,-133.53 coins 1690
+
+### 🤖 Claude — 2026-11-20T03:42:19.510Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e8e4b972-b434-5f87-a2df-10c4f5133633/scratchpad/st4.png"}`
+
+### 🧑 User — 2026-11-20T03:42:19.553Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:42:24.414Z
+
+> 🔧 **Bash** `{"command": "grep -n \"uStW\" src/world/*.ts | head", "description": "Find uStW default"}`
+
+### 🧑 User — 2026-11-20T03:42:24.446Z
+
+> ↩︎ result: src/world/match06.ts:102:// uStW = camera distance from the approved viewpoint (u) over which the approved pixels hand over to the 3D materials;
+> src/world/match06.ts:107:uniform vec2 uStW;
+> src/world/match06.ts:131:  float hold = 1.0 - smoothstep(uStW.x, uStW.y, dAp);
+> src/world/match06.ts:443:    uStW: { value: new THREE.Vector2(0.6, 1.2) },
+> src/world/match06.ts:485:  if (stw.length === 2 && stw.every(Number.isFinite)) shared.uStW.value.set(stw[0], stw[1]);
+
+### 🤖 Claude — 2026-11-20T03:42:27.641Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/match06.ts';s=open(p).read()\ns=s.replace(\"uStW: { value: new THREE.Vector2(0.6, 1.2) },\",\"uStW: { value: new THREE.Vector2(0.75, 0.85) }, // r22: short hand-over (no double-exposed tunnel, qa/match/06/r22/PROGRESS.md)\",1)\ns=s.replace(\"`&m06stw=a,b` u from it (default 0.6,1.2)\",\"`&m06stw=a,b` u from it (default 0.75,0.85 since r22; r18 had 0.6,1.2 = double-exposed tunnel at +1.5 u)\",1)\nopen(p,'w').write(s)\nEOF\ngit diff --stat; npx tsc --noEmit -p . 2>&1 | tail -3", "description": "Set m06st hand-over default and typecheck"}`
+
+### 🧑 User — 2026-11-20T03:42:30.076Z
+
+> ↩︎ result: src/world/match06.ts | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+
+### 🤖 Claude — 2026-11-20T03:42:37.782Z
+
+> 🔧 **Bash** `{"command": "K6='match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1'; D=qa/match/06/r22/step2_m06st; SH=\"a_start@0 b_0.3u@0.3 c_0.6u@0.6 d_0.9u@0.9 e_1.1u@1.1 e2_1.3u@1.3 f_1.5u@1.5 f3_1.7u@1.7 g_2u@2 h_3u@3\"\nrm -rf $D/NEW $D/NEW_stw_0.75_0.85; mv $D/NEW_stw_1.0_1.1 $D/rejected_stw_1.0_1.1; mkdir -p $D/rejected_r18_stw_0.6_1.2\ntimeout 1500 node tools/match06/r18_dbg.mjs $D/NEW \"$K6&m06st=1\" $SH 2>&1 | grep -v \"^\\[match06\\]\" | tail -1\ntimeout 1500 node tools/match06/r18_dbg.mjs $D/BEFORE \"$K6\" f3_1.7u@1.7 2>&1 | grep -v \"^\\[ma …[+387 chars]`
+

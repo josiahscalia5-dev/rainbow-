@@ -440,7 +440,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
     uProjPos: { value: proj.position.clone() },
     uTime: { value: 0 },
     uSt: { value: 0 },
-    uStW: { value: new THREE.Vector2(0.6, 1.2) },
+    uStW: { value: new THREE.Vector2(0.75, 0.85) }, // r22: short hand-over (no double-exposed tunnel, qa/match/06/r22/PROGRESS.md)
     uStK: { value: 4 / 1536 },
     uStB: { value: new THREE.Vector2(80, 160) },
     uStO: { value: 0.94 },
@@ -475,7 +475,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
   }
   const r6p = new THREE.Vector4(R6?.Wc ?? 0, R6?.Wb ?? 1, (R6?.river.period ?? 1), R6?.foamPeriod ?? 1);
   // r18 `&m06st=1` (qa/match/06/r18/PROGRESS.md): the start view without the flash — between the approved viewpoint and
-  // `&m06stw=a,b` u from it (default 0.6,1.2) the approved pixels stay (no see-through ring arcs, no tile ghosts), the painted
+  // `&m06stw=a,b` u from it (default 0.75,0.85 since r22; r18 had 0.6,1.2 = double-exposed tunnel at +1.5 u) the approved pixels stay (no see-through ring arcs, no tile ghosts), the painted
   // crest top moves with the river (no torn crest, no striped ring strip behind it), Benny's provisional fill gives way to the
   // river's painted water at once, then the rings hand over straight to the painted band. AT the approved viewpoint nothing
   // changes.
