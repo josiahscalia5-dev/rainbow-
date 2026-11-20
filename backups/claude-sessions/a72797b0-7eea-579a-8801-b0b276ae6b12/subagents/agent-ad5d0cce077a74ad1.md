@@ -1379,3 +1379,46 @@ Now the placement of bank-fill lumps in match05far.ts and the faster taper.
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='src/vfx/foam.ts'\ns=open(p).read()\nold=\"\"\"    for (let Z = 0.3; Z < zMax; Z += 0.45 + rf() * 0.7) {\n      for (const side of [-1, 1]) {\n        const n = 4 + ((rf() * 5) | 0);\n        const zc = Z + (rf() - 0.5) * 0.5, fc = rf();\n        const big = 0.3 + rf() * 0.22;\"\"\"\nnew=\"\"\"    for (let Z = 0.3; Z < zMax; Z += 0.35 + rf() * 0.55) {\n      for (const side of [-1, 1]) {\n        const n = 6 + ((rf() * 6) | 0);\n        const zc = Z + (rf() - 0.5) * 0.5, fc = rf();\n        const big = 0.16 + rf() * 0.16;\"\"\"\nassert  …[+1200 chars]`
 
+### 🧑 User — 2026-11-20T17:29:54.789Z
+
+> ↩︎ result: Command did not complete within its 600s timeout and was moved to the background (ID: b9f46rvmo). Output is being written to: /tmp/claude-0/-home-user-rainbow-/a72797b0-7eea-579a-8801-b0b276ae6b12/tasks/b9f46rvmo.output. You will be notified when it completes. If it is still running after 30m in the background, it will be stopped and you will be notified. It is running now: do not start a second copy while it runs. If it is no longer needed, stop it with TaskStop. No output had been read from it when it was moved. A program that buffers its output, or a pipe into one such as tail, can keep the output file empty until the command finishes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-20T17:30:03.014Z
+
+While that renders, I'll update the progress block.
+
+### 🤖 Claude — 2026-11-20T17:30:08.965Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/match/05/r27/PROGRESS.md", "old_string": "* 17:10 UTC — started r28. Diagnosis of the end section done (below); writing step 1 `&m05endr=1`.", "new_string": "* 17:10 UTC — started r28. Diagnosis of the end section done (below).\n* ~17:45 UTC — step 1 `&m05endr=1` code written in the worktree (tsc 0; uncommitted, the lead's autosave snapshots it):\n  `src/world/match05far.ts` (live far rows `rowLive`: channel half width 3.35 u (`m05endhw` tunable), core swinging −0.6 / −1.5 /\n  −0.9 / +0.8 / +2.2 / +2.6 at Z 10.5 … 62, taper Z zCap …  …[+872 chars]`
+
+### 🧑 User — 2026-11-20T17:30:09.106Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/match/05/r27/PROGRESS.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T17:30:17.337Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"\\.name = '\" src/vfx/foam.ts src/vfx/bubbles.ts src/vfx/index.ts src/vfx/riderSplash.ts | head -30", "description": "List foam/bubble mesh names"}`
+
+### 🧑 User — 2026-11-20T17:30:17.394Z
+
+> ↩︎ result: src/vfx/foam.ts:629:  mesh.name = 'foam_far05_clouds';
+> src/vfx/foam.ts:816:  mesh.name = 'foam_berm';
+> src/vfx/foam.ts:835:  group.name = 'foam_banks';
+> src/vfx/foam.ts:999:  whirlGroup.name = 'foam_whirlpool';
+> src/vfx/foam.ts:1060:  flank.name = 'foam_flank';
+> src/vfx/foam.ts:1095:  rafts.name = 'foam_rafts';
+> src/vfx/foam.ts:1109:  rim05.name = 'foam_rim05';
+> src/vfx/bubbles.ts:283:  mesh.name = 'bubbles_approved05';
+> src/vfx/bubbles.ts:334:  group.name = 'bubbles';
+> src/vfx/bubbles.ts:349:  big.name = 'bubbles_big';
+> src/vfx/bubbles.ts:367:  small.name = 'bubbles_small';
+> src/vfx/index.ts:69:  group.name = 'water_system';
+> src/vfx/riderSplash.ts:206:  mesh.name = 'rider_splash';
+> src/vfx/riderSplash.ts:450:  mesh.name = 'rider_splash05';
+> src/vfx/riderSplash.ts:595:  mesh.name = 'rider_splash05';
+
+### 🤖 Claude — 2026-11-20T17:30:17.572Z
+
+You've hit your 5-hour limit · resets 9:40pm (UTC)
+

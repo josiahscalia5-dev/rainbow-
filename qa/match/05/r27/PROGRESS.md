@@ -5,7 +5,16 @@ temp `/home/user/scratch/s05/`. Old notes: `/home/user/wt/s05/qa/match/05/r18/PR
 step): `/home/user/wt/s05/qa/match/05/r18/KEPT_STEP2.txt`. Lead preview of that candidate: `qa/review_r27/05/`.
 
 ## (r28) WHERE I STOPPED / NEXT
-* 17:10 UTC — started r28. Diagnosis of the end section done (below); writing step 1 `&m05endr=1`.
+* 17:10 UTC — started r28. Diagnosis of the end section done (below).
+* ~17:45 UTC — step 1 `&m05endr=1` code written in the worktree (tsc 0; uncommitted, the lead's autosave snapshots it):
+  `src/world/match05far.ts` (live far rows `rowLive`: channel half width 3.35 u (`m05endhw` tunable), core swinging −0.6 / −1.5 /
+  −0.9 / +0.8 / +2.2 / +2.6 at Z 10.5 … 62, taper Z zCap … zCap+4, back to the original rows by Z 95, weight = F-magnification),
+  `src/vfx/foam.ts` (`createFarCloud05(zMax, bankFill)`: bank-fill foam lumps, own random stream), `src/world/environment.ts`
+  (passes the flag). Quick checks v1 (taper 7 u: barely visible) → v2 (taper 4 u + bank fill: channel + foam banks, banks too bulky)
+  → v3 (smaller, lower fill lumps) rendering. A coins.ts change was tried and reverted (no 05 coins exist past the seam: the trail
+  break is the 05 coin weave swinging left before the seam vs the 06 coins on the far core; with m05endr the far core swings left,
+  so the trail now continues: first far coin x 521 → 411 px at 85 %). NOTE: the audit tool freezes the clock, so coins collected
+  just before a shot stay drawn in their pop pose (the "scattered" coins beside Benny at 85 % / 95 %): capture artefact, BEFORE and NEW alike.
 
 ## Diagnosis — end section (85 %, s 180.47) — r28 probe (`/home/user/scratch/s05/tools/probe_end.mjs`)
 * Far block seam is capped at s 186.52 (zCap 6.49 u past sF05 = 180.04) from ≈ 12 % of the stage on; at 85 % the eye is ≈ 14 u

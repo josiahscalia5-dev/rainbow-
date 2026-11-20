@@ -3680,3 +3680,31 @@ Everything is now saved to your GitHub repository on a strict 5-minute schedule,
 
 The specialists are still working (the Screen 06 route test, Screen 07's clip, Screen 05 and Benny), and their work goes to GitHub with every save.
 
+### 🧑 User — 2026-11-20T17:30:14.467Z
+
+<task-notification>
+<task-id>a83852ef198a66db2</task-id>
+<tool-use-id>toolu_01VaUx4p6N8jAR8kFPezoXg9</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/a72797b0-7eea-579a-8801-b0b276ae6b12/tasks/a83852ef198a66db2.output</output-file>
+<status>failed</status>
+<summary>Agent "Benny specialist r28" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 9:40pm (UTC) (error type rate_limit, HTTP 429, request id req_011ChEaQx8jwjc45DqModvUU, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 9:40pm (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+<result>Meanwhile, tsc on the new defaults and the PROGRESS.md update.</result>
+</task-notification>
+
+### 🤖 Claude — 2026-11-20T17:30:15.084Z
+
+You've hit your 5-hour limit · resets 9:40pm (UTC)
+
+### 🧑 User — 2026-11-20T17:30:17.624Z
+
+<task-notification>
+<task-id>ad5d0cce077a74ad1</task-id>
+<tool-use-id>toolu_01MvPz9dKSXhTRYuWe43zHKG</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/a72797b0-7eea-579a-8801-b0b276ae6b12/tasks/ad5d0cce077a74ad1.output</output-file>
+<status>failed</status>
+<summary>Agent "Screen 05 specialist r28" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 9:40pm (UTC) (error type rate_limit, HTTP 429, request id req_011ChEaRCKGakH1A8hK1CB5d, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 9:40pm (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+<result>While that renders, I'll update the progress block.</result>
+</task-notification>
+

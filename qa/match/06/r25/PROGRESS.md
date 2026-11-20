@@ -29,6 +29,14 @@
   near rings / approved view untouched; (2) route: the painted curl stretched deeper along the approved camera's own rays
   (start view unchanged) - only if it reads better, `&m06rk=`; (3) coins slid along their approved-camera rays onto the river
   (same pixels at the start); (4) camera hold / hand-over tuned to the new route. Quick low-res checks first.
+* ~17:35 (B) progress: `&m06route=1` CODED (match06.ts: far tunnel axis shifted between axial 12..46 u so the 07 start sits
+  3 / -6.5 u from it; tunables `&m06rsh=a,b`, `&m06rtg=x,y`; rings keep their facing) + painted coins GROW from the approved
+  size to one common size (0.632) as the camera leaves the approved view (coins.ts `grow`, Game.ts setGrow(away)); tsc 0.
+  Route stretch along the camera rays (`m06rk`) TRIED in the probe and DROPPED (code removed): with the 07 start only 44 u
+  ahead it folds the river (k 1.3: the river runs BACKWARD at s 226-229; k 1.15: 45 deg right/down swerve at s 223) and makes
+  06 1-4 u longer. The course is UNCHANGED (07 start, tangent and every s exact). Ring spacing found: dA 12.87 u, rings at
+  axial 11.2 / 24.1 / 36.9 (= the first PAINTED ring, Benny reaches it at ~85 %) / 49.8 ... -> Benny passes 3 rings in 06.
+  NOW: quick 432x768 BEFORE / NEW shots (`/home/user/scratch/s06/q1.sh`, waiting for a render slot).
 
 ## (r27) WHERE I STOPPED / NEXT
 * ~15:20 UTC — relaunched (new account), worktree `/home/user/wt/s06` LOCAL branch `claude/rainbow-s06-match-c28`. Found SURVIVED (not lost
