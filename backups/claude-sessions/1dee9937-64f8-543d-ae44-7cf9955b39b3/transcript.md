@@ -2034,3 +2034,146 @@ Per CLAUDE.md §2, I'm pointing the autosave config at this session's branch and
 
 > 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\np='backups/autosave.config.json'; c=json.load(open(p))\nc['branch']='claude/rainbow-r22-restore-ut3m39'\nfor b in ['ccr-4742c19f-ez2mrs','claude/rainbow-s06-match-c23','claude/rainbow-benny-c23']:\n    if b not in c['protected_branches']: c['protected_branches'].append(b)\nc['commit_trailer']='Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\\nClaude-Session: https://claude.ai/code/session_01KS3bZvZewXsKSGqCC6N8uK'\njson.dump(c,open(p,'w'),indent=2,ensure_ascii=False); print('ok', len(c['protected_branches']))\nEOF\ntimeout 600 python3 script …[+319 chars]`
 
+### 🧑 User — 2026-11-20T04:37:58.966Z
+
+> ↩︎ result: ok 102
+>   ],
+>   "commit": "fb1bcb4ece3e3719341fe1c4eb932bc86fa0d8d5",
+>   "duration_s": 14
+> }
+> AUTOSAVE OK | branch claude/rainbow-r22-restore-ut3m39 | scheduler daemon | last verified backup 2026-11-20T04:37:44+00:00 (0.2 min ago) | local fb1bcb4 remote fb1bcb4 (match) | uncommitted 0
+> fb1bcb4ece3e3719341fe1c4eb932bc86fa0d8d5
+> fb1bcb4ece3e3719341fe1c4eb932bc86fa0d8d5
+> claude__rainbow-benny-c24
+> claude__rainbow-s04-match-c24
+> claude__rainbow-s05-match-c24
+> claude__rainbow-s06-match-c24
+> claude__rainbow-s07-match-c24
+> claude__rainbow-s08-scenery-c24
+
+### 🤖 Claude — 2026-11-20T04:38:04.050Z
+
+Saved and verified: remote = local `fb1bcb4`, and all six `-c24` worktrees now have WIP snapshots. Checking LFS for the new clips and whether this branch already has a pull request:
+
+### 🤖 Claude — 2026-11-20T04:38:04.650Z
+
+> 🔧 **ToolSearch** `{"query": "select:mcp__github__list_pull_requests,mcp__github__create_pull_request", "max_results": 2}`
+
+### 🧑 User — 2026-11-20T04:38:04.660Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-20T04:38:07.107Z
+
+> 🔧 **Bash** `{"command": "git lfs ls-files | wc -l; git lfs ls-files --size | python3 -c \"\nimport sys,re;u={'B':1,'KB':1e3,'MB':1e6,'GB':1e9};t=sum(float(m.group(1))*u[m.group(2)] for l in sys.stdin for m in [re.search(r'\\(([\\d.]+) (\\w+)\\)',l)] if m);print(round(t/1e6,1),'MB')\"; timeout 120 git lfs push --dry-run origin claude/rainbow-r22-restore-ut3m39 2>/dev/null | wc -l; git check-attr filter qa/match/04/r23/lead_t2/swim04_NEW_K23-1.mp4", "description": "Count LFS files and check nothing is left to upload", "timeout": 200000}`
+
+### 🧑 User — 2026-11-20T04:38:08.532Z
+
+> ↩︎ result: 103
+> 599.3 MB
+> 0
+> qa/match/04/r23/lead_t2/swim04_NEW_K23-1.mp4: filter: lfs
+
+### 🤖 Claude — 2026-11-20T04:38:11.138Z
+
+> 🔧 **mcp__github__list_pull_requests** `{"owner": "josiahscalia5-dev", "repo": "rainbow-", "state": "all", "perPage": 8, "fields": ["number", "title", "state", "draft", "head", "base", "created_at"], "sort": "created", "direction": "desc"}`
+
+### 🧑 User — 2026-11-20T04:38:12.301Z
+
+> ↩︎ result: [{"base":{"ref":"ccr-6f431adf-7h0m8y","repo":{"full_name":"josiahscalia5-dev/rainbow-"},"sha":"81e639e16994713d5f70d0314e796d1c298eeacf"},"created_at":"2026-11-18T18:24:28Z","draft":true,"head":{"ref":"ccr-47b10cec-03c7co","repo":{"full_name":"josiahscalia5-dev/rainbow-"},"sha":"a44d7f506560b4ab96464bf6a41400b6e16fe887"},"number":21,"state":"open","title":"Rainbow account 15 lead: restore + round-15 coordination (DO NOT MERGE)"},{"base":{"ref":"ccr-6f431adf-7h0m8y","repo":{"full_name":"josiahscalia5-dev/rainbow-"},"sha":"81e639e16994713d5f70d0314e796d1c298eeacf"},"created_at":"2026-11-17T22:14:32Z","draft":true,"head":{"ref":"ccr-4bd35b15-7z45t0","repo":{"full_name":"josiahscalia5-dev/rainbow-"},"sha":"dde3e9afd25cf3fb4ebff45359d3a72eb2f31363"},"number":20,"state":"open","title":"DO NOT MERGE — Rainbow lead round 6 (account 6): moving-gameplay audit 04–08, -c6 specialists, preview 08 fix"},{"base":{"ref":"ccr-6f431adf-7h0m8y","repo":{"full_name":"josiahscalia5-dev/rainbow-"},"sha":"81e639e16994713d5f70d0314e796d1c298eeacf"},"created_at":"2026-11-17T20:57:19Z","draft":true,"head":{"ref":"ccr-32bfea9a-ea6he9","repo":{"full_name":"josiahscalia5-dev/rainbow-"},"sha":"58a78ffc961234f096 …[+2456 chars]
+
+### 🤖 Claude — 2026-11-20T04:38:15.094Z
+
+Earlier lead rounds opened draft "DO NOT MERGE" pull requests as markers. I'll do the same for this round (draft only; nothing gets merged). Checking for a PR template first:
+
+### 🤖 Claude — 2026-11-20T04:38:16.099Z
+
+> 🔧 **Bash** `{"command": "ls .github/ 2>&1; ls .github/PULL_REQUEST_TEMPLATE* .github/pull_request_template.md pull_request_template.md 2>/dev/null", "description": "Check for a pull request template"}`
+
+### 🧑 User — 2026-11-20T04:38:16.157Z
+
+> ↩︎ result: Exit code 2
+> ls: cannot access '.github/': No such file or directory
+
+### 🤖 Claude — 2026-11-20T04:38:23.567Z
+
+> 🔧 **mcp__github__create_pull_request** `{"owner": "josiahscalia5-dev", "repo": "rainbow-", "title": "DO NOT MERGE — Rainbow lead round 23 (new account): R22 restore, Screen 04 less-pink water K23-1, four -c24 specialists", "head": "claude/rainbow-r22-restore-ut3m39", "base": "ccr-6f431adf-7h0m8y", "draft": true, "body": "Marker PR for the round-23 lead session. **Do not merge** — merging needs the user's explicit OK (CLAUDE.md §1).\n\n## What this branch holds\n- Restore of the round-22 lead `ccr-4742c19f-ez2mrs` (`f4193fe`; reported checkpoint `e2d4ac4` is an ancestor). Git LFS: 103 files, ~599 MB, fsck OK.\n- Screen 04 lead step * …[+923 chars]`
+
+### 🧑 User — 2026-11-20T04:38:31.389Z
+
+> ↩︎ result: {"id":"5407827879","url":"https://github.com/josiahscalia5-dev/rainbow-/pull/22"}
+
+### 🤖 Claude — 2026-11-20T04:38:33.309Z
+
+> 🔧 **mcp__claude-code-remote__subscribe_pr_activity** `{"owner": "josiahscalia5-dev", "repo": "rainbow-", "pullNumber": 22}`
+
+### 🧑 User — 2026-11-20T04:38:36.958Z
+
+> ↩︎ result: Subscribed to activity on josiahscalia5-dev/rainbow-#22. Comments, CI status changes, reviews, and other PR events will now be delivered into this conversation as <wake reason="external-event"><event source="github" …> envelopes.
+
+### 🤖 Claude — 2026-11-20T04:38:51.273Z
+
+> 🔧 **TaskUpdate** `{"taskId": "6", "status": "completed"}`
+
+### 🧑 User — 2026-11-20T04:38:51.305Z
+
+> ↩︎ result: Updated task #6 status
+
+### 🤖 Claude — 2026-11-20T04:39:07.222Z
+
+I've restored round 22 on this account, and the first Screen 04 change from your feedback is in: the water is now mostly blue with only a little pink on the sides.
+
+RAINBOW 3D BACKUP VERIFIED
+
+**Backup and checkpoint**
+- **Repository and branch:** `josiahscalia5-dev/rainbow-`, my session branch `claude/rainbow-r22-restore-ut3m39`.
+- **Saved commit:** `fb1bcb4ece3e3719341fe1c4eb932bc86fa0d8d5`. GitHub shows the same commit (remote = local).
+- **Your checkpoint:** `e2d4ac4` resolves to `e2d4ac4b5aa32079716d3d83f9ef6a131b832305`. It is an ancestor of `ccr-4742c19f-ez2mrs`, whose tip `f4193fe` is 7 autosaves newer. Those newer saves are kept, and nothing was reset.
+- **Large files (Git LFS):** 97 files (592.8 MB) on arrival, matching your report. Now 103 files (599.3 MB) with this round's clips. All are real files, the integrity check passed, and nothing is left to upload.
+- **Autosave:** the five-minute autosave is running and verified, including the specialists' unfinished edits for all six screen/Benny work copies. Your 11 paid jobs ($1.32) are still on record; I haven't run any paid jobs this round.
+- **Three issues, all cleared:**
+  - The automatic fetch at startup failed, as on your previous account. A manual fetch worked.
+  - Your previous session ended without its final save, but its last automatic save (04:01) already held everything.
+  - The pixel-comparison tool was missing from this new container; I rebuilt it.
+
+**Unfinished work recovered (each applied once)**
+- **Screen 04 foam:** restored as saved, identical to the K22-2 code. The half-done arrows-vs-hat change is kept separately, as recorded.
+- **Screen 07:** the puffy foam clouds plus the half-started satin streaks (`m07satin`, untested).
+- **Screen 06:** the foam-wall-to-low-clouds step was built, with pictures and clips, but no verdict was written.
+- **Benny:** the knit-stripe step was in progress.
+- **Your three approved Screen 04 views:** recovered with their approval record (`qa/review_r21/artwork/04/USER_VERDICT.md`), labelled as your accepted generated views.
+
+**Screen 06 and Benny branches:** `claude/rainbow-s06-match-c23` at `e162aec` (04:09) and `claude/rainbow-benny-c23` at `734efb6` (04:05). Both are newer than the handoff. Those sessions aren't visible from this account, so I can't confirm directly that they stopped. Neither has pushed since, and they normally save every five minutes. I'm continuing their work on separate `-c24` branches and never writing to theirs.
+
+**Specialists running now (4):** Screen 04, Screen 07, Screen 06 and Benny. Screens 08 and 05 are queued for the next free slot. All ten specialist definitions are unchanged.
+
+**Services**
+- Working: GitHub, the World Labs key (5,420 credits), World Labs Atlas, fal, Playwright, Blender and the Android tools. Atlas works now; it was blocked on your previous account.
+- **Your action, optional:** the Hugging Face connector isn't attached on this account. The free public models work without it.
+
+I also opened draft pull request #22 as a "do not merge" marker for this round and I'm watching it.
+
+**Screen 04 — new version K23-1: GOOD IMPROVEMENT by my eye; your verdict decides**
+- I turned off the pink water climbing the gold walls and the pink swirl wrapped around Benny, and calmed the near water.
+- In the middle of the tunnel and through the uninterrupted swim clip:
+  - the tall pink walls beside the gold are gone,
+  - the water is mostly blue with thin pink bands at the left and right edges,
+  - the gold rings come cleanly down to the water.
+- The start view is unchanged, and the gameplay test passed (8/8 checks, 91 coins).
+- I sent you the original approved picture, BEFORE and NEW, plus BEFORE and NEW clips at real game speed and NEW at half speed.
+
+**Still different from your picture:**
+- The five arrows still sit at Benny's hat height, so he doesn't yet look like he's swimming down through them.
+- The water meets the gold in a hard straight line instead of low bubbly foam.
+- The near water looks frosted rather than glossy with long streaks.
+
+The Screen 04 specialist is working on those three now, then projecting your three approved views.
+
+**Still waiting for your verdict:** this Screen 04 version, the Screen 07 and Screen 05 artwork proposals, and the Screen 06 framing test.
+
+### 🧑 User — 2026-11-20T04:39:09.398Z
+
+Stop hook feedback:
+[command hook 2]: There are untracked files in the repository. Please commit and push these changes to the remote branch.
+

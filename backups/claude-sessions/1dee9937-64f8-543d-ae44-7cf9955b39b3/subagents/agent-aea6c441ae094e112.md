@@ -274,3 +274,93 @@ Let me look at the approved picture, the accepted generated views, and the curre
 > 2208	  const arrowsOut: { mesh: THREE.Mesh; za: number; mats: THREE.MeshBasicMaterial[]; hw?: number; y?: number }[] = [];
 > 2209	  // r22 `&m04a …[+11891 chars]
 
+### 🤖 Claude — 2026-11-20T04:37:47.393Z
+
+> 🔧 **Bash** `{"command": "ls -la /home/user/rainbow-/tools/lead23/ /home/user/rainbow-/qa/match/04/r22_proj/ /home/user/rainbow-/qa/match/04/r22_proj/* 2>/dev/null | head -60; cat /home/user/rainbow-/tools/lead23/setq.mjs", "description": "List lead23 tools and r22_proj folders, show setq helper"}`
+
+### 🧑 User — 2026-11-20T04:37:47.448Z
+
+> ↩︎ result: -rw-r--r-- 1 root root  834 Nov 20 04:03 /home/user/rainbow-/qa/match/04/r22_proj/PROGRESS.md
+> 
+> /home/user/rainbow-/qa/match/04/r22_proj/:
+> total 20
+> drwxr-xr-x  4 root root 4096 Nov 20 04:03 .
+> drwxr-xr-x 10 root root 4096 Nov 20 04:12 ..
+> -rw-r--r--  1 root root  834 Nov 20 04:03 PROGRESS.md
+> drwxr-xr-x  3 root root 4096 Nov 20 04:03 s0_cams
+> drwxr-xr-x  2 root root 4096 Nov 20 04:03 tools
+> 
+> /home/user/rainbow-/qa/match/04/r22_proj/s0_cams:
+> total 12
+> drwxr-xr-x 3 root root 4096 Nov 20 04:03 .
+> drwxr-xr-x 4 root root 4096 Nov 20 04:03 ..
+> drwxr-xr-x 2 root root 4096 Nov 20 04:03 V4
+> 
+> /home/user/rainbow-/qa/match/04/r22_proj/tools:
+> total 12
+> drwxr-xr-x 2 root root 4096 Nov 20 04:03 .
+> drwxr-xr-x 4 root root 4096 Nov 20 04:03 ..
+> -rw-r--r-- 1 root root 3485 Nov 20 04:03 cam_capture.mjs
+> 
+> /home/user/rainbow-/tools/lead23/:
+> total 24
+> drwxr-xr-x  2 root root 4096 Nov 20 04:34 .
+> drwxr-xr-x 18 root root 4096 Nov 20 04:34 ..
+> -rwxr-xr-x  1 root root  686 Nov 20 04:34 clip.sh
+> -rw-r--r--  1 root root 1179 Nov 20 04:34 probe04.mjs
+> -rw-r--r--  1 root root  282 Nov 20 04:34 setq.mjs
+> -rwxr-xr-x  1 root root  610 Nov 20 04:34 sweep.sh
+> // usage: node setq.mjs "<base query>" "<overrides a=1&b=2>"  -> base with each …[+202 chars]
+
+### 🤖 Claude — 2026-11-20T04:37:50.053Z
+
+> 🔧 **Bash** `{"command": "cat /home/user/rainbow-/tools/lead23/clip.sh /home/user/rainbow-/tools/lead23/sweep.sh /home/user/rainbow-/tools/lead23/probe04.mjs; cat /home/user/rainbow-/qa/match/04/r22_proj/PROGRESS.md; ls /home/user/rainbow-/qa/match/04/r22_proj/s0_cams/V4; cat /home/user/rainbow-/qa/match/04/r22_proj/tools/cam_capture.mjs", "description": "Show lead clip/sweep/probe tools and projection camera notes"}`
+
+### 🧑 User — 2026-11-20T04:37:50.110Z
+
+> ↩︎ result: #!/usr/bin/env bash
+> # usage: clip.sh <query file> <out mp4 prefix> <port>
+> set -u
+> QF=$1; OP=$2; P=$3; T=$(mktemp -d /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/clipXXXX)
+> cd /home/user/wt/s04
+> AUDIT_PORT=$P timeout 1500 node /home/user/rainbow-/qa/match/04/r22/tools/swim_clip_pinned.mjs 04 "$T/f" 2.4 "$(cat $QF)" > "$T/log" 2>&1
+> ffmpeg -loglevel error -y -framerate 24 -i "$T/f/%04d.png" -vf scale=432:768 -pix_fmt yuv420p "${OP}.mp4"
+> ffmpeg -loglevel error -y -framerate 12 -i "$T/f/%04d.png" -vf scale=432:768 -pix_fmt yuv420p "${OP}_halfspeed.mp4"
+> cp "$T/f/0028.png" "${OP}_frame28.png" 2>/dev/null; echo "$(ls $T/f | wc -l) frames -> ${OP}.mp4"
+> #!/usr/bin/env bash
+> # usage: sweep.sh <outdir> <port> <overrides> [base query file]
+> set -u
+> O=$1; P=$2; X=$3; BF=${4:-/home/user/rainbow-/qa/match/04/r23/lead_t1/QUERY_NEW.txt}
+> Q=$(node /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/setq.mjs "$(cat $BF)" "$X")
+> mkdir -p "$O"; echo "$Q" > "$O/QUERY.txt"
+> cd /home/user/wt/s04
+> AUDIT_PORT=$P AUDIT_SHOTS="${SHOTS:-[[\"b_early\",0.12,null],[\"c_middle\",0.35,null],[\"d_late\",0.6,null],[\"g_hard_right\",0.35,1]]}" \
+>   timeout 900 nod …[+5613 chars]
+
+### 🤖 Claude — 2026-11-20T04:37:52.352Z
+
+> 🔧 **Bash** `{"command": "cat /home/user/rainbow-/qa/match/04/r22/tools/audit_pinned.mjs | head -80; ss -ltnp 2>/dev/null | grep -E ':52[0-9][0-9]' ; nproc; free -g", "description": "Show pinned audit tool, check ports and machine resources"}`
+
+### 🧑 User — 2026-11-20T04:37:52.438Z
+
+> ↩︎ result: // r22 S04 copy of tools/lead21/audit_screen.mjs with ONE QA-only change: performance.now() is pinned to 10 000 ms while each
+> // shot is stepped and drawn, so the Screen 04 river shader (src/world/match04m4.ts reads the wall clock, pre-existing since
+> // 34cb494) shows the same water phase in every run -> BEFORE / NEW differ only by the switch under test. No game code changes.
+> // Round 21 lead audit (read-only): one playable screen of the REAL game at start / early / middle / late / end and hard
+> // left / right, deterministic (fixed sim steps, frozen shader clock, one frame rendered per shot, no real-time steps).
+> // Run from the worktree whose build you want to see (vite serves the current directory):
+> //   cd <worktree> && node /home/user/rainbow-/tools/lead21/audit_screen.mjs <outDir> <stage 04..08> "<query>"
+> // Shots are fractions of the stage from its checkpoint to its end; env AUDIT_SHOTS='[["name",frac,steer],...]' overrides.
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> const [OUT, STAGE, Q] = process.argv …[+2265 chars]
+
+### 🤖 Claude — 2026-11-20T04:37:57.011Z
+
+Let me verify my BEFORE (K23-1) reproduces the lead's C2 pictures exactly, timing the audit at the same time.
+
+### 🤖 Claude — 2026-11-20T04:38:00.156Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/rainbow-/qa/match/04/r23/s04_BEFORE_K23-1 && cd /home/user/wt/s04 && cp /home/user/rainbow-/qa/match/04/r23/QUERY_K23-1.txt /home/user/rainbow-/qa/match/04/r23/s04_BEFORE_K23-1/QUERY.txt && time (AUDIT_PORT=5273 timeout 1200 node /home/user/rainbow-/qa/match/04/r22/tools/audit_pinned.mjs /home/user/rainbow-/qa/match/04/r23/s04_BEFORE_K23-1 04 \"$(cat /home/user/rainbow-/qa/match/04/r23/QUERY_K23-1.txt)\" > /home/user/rainbow-/qa/match/04/r23/s04_BEFORE_K23-1/audit.log 2>&1); tail -8 /home/user/rainbow-/qa/match/04/r23/s04_BEFORE_K23-1/audit.log", "description": …[+69 chars]`
+
