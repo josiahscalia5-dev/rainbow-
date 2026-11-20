@@ -24,6 +24,12 @@
   cluster sizes smaller + more varied (15 % 1.1-1.4, else 0.6-1.1; BEFORE 20 % 1.4-1.8, else 0.8-1.3), drop x0.9, short gaps only,
   softer crease shading between lobes (one soft mass, not separate balls), skirt where the pink edge runs against the wall only in short
   segments (no bead row). tsc 0. Quick check rendering -> `q4_new`.
+* 17:35 v4 quick check (`q4_new`): coverage back, the drop's towering ball walls gone (t 4.96 / 7.29 right banks = low varied field),
+  clouds clear of Benny at t 5.0; BUT clusters read as many separate round balls (popcorn), less volume than the approved cumulus; a few
+  bead dots remain along the drop's pink edges. Not clearly closer. Cause found in code: with 1-3 domes the dome spacing (~1.1 S)
+  exceeds their radii sum -> separate balls.
+* 17:40 v5 written (copy of v4 `/home/user/scratch/s07/match07_v4.ts`): 2-3 domes ~0.45 S apart (melt into one cluster), sizes a bit
+  fuller (18 % 1.2-1.5, else 0.7-1.2). tsc 0. Quick check rendering -> `q5_new`.
 
 ## (r27) WHERE I STOPPED / NEXT
 * r27 relaunch (new account, ~15:20 UTC). Worktree `/home/user/wt/s07`, LOCAL branch `claude/rainbow-s07-match-c28` (r26 edits restored

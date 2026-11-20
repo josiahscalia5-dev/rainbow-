@@ -9,6 +9,7 @@ separate `trial07` and the lead's `view04/06/07` included). If the session hook'
 branch, fetch it by name and merge before anything else. Keys: World Labs + fal worked on the round-28 account through the environment;
 check with the free reads first, then the secure form. The round-27 review page (claude.ai artifact) belonged to the old account; its source
 is `qa/review_r27/index.html` + `web/` — republish it on the new account.
+**USER SCOPE DECISION (r28, ~17:25 UTC, permanent): 01, 02, 03, 11 = Google Flow videos; 04–10 INCLUDING 09 AND 10 = real playable 3D.** Verbatim + per-screen clarifications (04 / 06 / 09 / 10): `docs/briefs/2026-11-20-r28/USER_CLARIFICATIONS_R28.md`.
 
 ---
 

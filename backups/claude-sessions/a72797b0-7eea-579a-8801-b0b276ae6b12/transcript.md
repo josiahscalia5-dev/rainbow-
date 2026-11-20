@@ -2908,3 +2908,210 @@ Everything is saved: commit `3bc07be47f057111ec0f764e81e198edecdffe00` is on Git
 
 The four specialists are still working: the Screen 06 route test, plus Screens 07, 04 and 05. Their files will keep changing between saves, and the five-minute autosave keeps pushing them.
 
+### 🧑 User — 2026-11-20T17:14:08.269Z
+
+<task-notification>
+<task-id>a51b1343b376a6417</task-id>
+<tool-use-id>toolu_01SHdwJcCyWy3dpdEszRCKgJ</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/a72797b0-7eea-579a-8801-b0b276ae6b12/tasks/a51b1343b376a6417.output</output-file>
+<status>completed</status>
+<summary>Agent "Screen 04 specialist r28" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>I finished three steps on Screen 04 and stopped as instructed. Two changes look closer to the approved picture. The arrow change does not, so I left that switch off. The new combined candidate is **K27-B**. Nothing is approved until you say so, and I give no likeness percentage because none was measured.
+
+**Where I resumed:** the r27 notes were not updated before the 16:11 stop. The backed-up r27 transcript showed it had already picked the glint and foam variants, made their pictures, and written a second arrow mode, `m04a5v=2`. Its last render job was lost, so I re-ran only that: the arrow probe, then stills, a clip and the gameplay test of the combined candidate.
+
+**Step 1: near-camera glints**
+- **Switch:** `m04lgc=1&amp;m04lgt=0.035&amp;m04lgn=5&amp;m04lgcl=0.35&amp;m04lgcb=0.08&amp;m04lgcs=0.9&amp;m04lgcgx=0.5&amp;m04lgcgz=1.8&amp;m04lgco=0.15&amp;m04lgcg=0.42&amp;m04lgch=0.4`
+- **Verdict: GOOD IMPROVEMENT.** The long straight white scratches are gone. The water now sparkles with short bright crescents in small groups, with little star twinkles, like the painted glint groups.
+- **Still different:** the crescents run straight down the flow, while the painted glints curve across the swirls. Up close in the clip they line up in evenly spaced dashed columns.
+- **Proof:** `/home/user/rainbow-/qa/match/04/r27/s1_glint/`
+
+**Step 2: far foam and lower pink edges**
+- **Switch:** `m04bbdc=1&amp;m04ry=0.35&amp;m04bbdcb=1.6&amp;m04bbdcl=1.3&amp;m04bbdcw=0.45`
+- **Verdict: GOOD IMPROVEMENT.** The far foam is no longer an even row of beads. It forms rounded cloud banks of varied size with gaps, and the pink side water is a little lower with the gold coming down to it.
+- **Still different:** the banks are still built from separate shiny pearl-like balls, where the painting has soft blended puffs. The gaps are wider than painted, and the banks thin out near the end.
+- **Proof:** `/home/user/rainbow-/qa/match/04/r27/s2_cloud/`
+
+**Step 3: keeping the five arrows readable longer (`m04a5v=2`)**
+- **Verdict: NOT AN IMPROVEMENT.** The arrows stay on screen only about 0.3 s longer.
+- **New problem:** while lying flat they read as thin white lines, and a thin bar shows right behind or beside Benny's pompom.
+- **Why it can't be fixed this way:** with the current camera, Benny's body and hat cover the river from him to about 14 units ahead. An arrow there is either hidden or pokes out beside his hat, so adjusting when they fade cannot help. The real options need your decision:
+  - arrows that drift slowly downstream with the water (he would then reach some of them after Screen 04 ends);
+  - a higher camera like the painting's (not authorized).
+- **Proof:** `/home/user/rainbow-/qa/match/04/r27/s3_arrows/`
+
+**Combined candidate K27-B (steps 1 and 2, arrow switch off)**
+- **Start view:** identical to BEFORE, 0 px different over the whole frame.
+- **Arrows:** exactly five are shown, and Benny swims past all five inside Screen 04.
+- **Gameplay:** all 8 checks pass and all 91 coins are picked up (1,330 to 2,240), with no errors.
+- **Type check:** `npx tsc --noEmit` passes. I changed no code this round, and every new switch is off by default.
+- **Remaining gap:** the five arrows are still gone from about 1.2 s, so the second half of Screen 04 shows an empty river.
+- **Stills:** start, early, middle, late, end and hard left/right, each as ORIGINAL APPROVED / BEFORE / NEW where an approved picture exists (there is none for hard left/right). They are in `/home/user/rainbow-/qa/match/04/r27/s4_combined/`.
+
+The BEFORE hard left/right pictures are from the version without the five-arrow fix, because that is the only existing render.
+
+**Clips** (one take through all of Screen 04 into 05, straight / left / right / straight, same schedule as BEFORE):
+- `/home/user/rainbow-/qa/match/04/r27/s4_combined/swim04_whole_NEW_K27-B_1.0x.mp4`
+- `/home/user/rainbow-/qa/match/04/r27/s4_combined/swim04_whole_NEW_K27-B_0.5x.mp4`
+- `/home/user/rainbow-/qa/match/04/r27/s4_combined/swim04_SIDE_BY_SIDE_BEFORE_K23-S3a5_vs_NEW_K27-B_1.0x.mp4`
+- `/home/user/rainbow-/qa/match/04/r27/s4_combined/swim04_SIDE_BY_SIDE_BEFORE_K23-S3a5_vs_NEW_K27-B_0.5x.mp4`
+
+**Full candidate query** (saved in `/home/user/rainbow-/qa/match/04/r27/s4_combined/QUERY_K27-B.txt`):
+```
+match04=1&amp;m04ring=1&amp;m04river=1&amp;m04bub=1&amp;m04mouth=1&amp;m04room=1&amp;m04ry=0.35&amp;m04rk=0.82&amp;m04arr3d=1&amp;m04a3k=60&amp;m04a3w2=1&amp;m04a3g=1.6&amp;m04a3o=0.38&amp;m04a3b=1&amp;m04a3b0=3.0&amp;m04a3b1=4.4&amp;m04a3f0=50&amp;m04a3f1=58&amp;m04a3p=6.5&amp;m04a3w=1.5&amp;m04a3t=0.4&amp;m04a3d=0.6&amp;m04a3f=4&amp;m04a3y=0.1&amp;m04ringp=4.6&amp;m04ringgw=1.2&amp;m04tb=0.2&amp;m04ts=0.22&amp;m04paint=0.9&amp;m04pink=1&amp;m04pkl=2.15&amp;m04pkw=0.9&amp;m04a3hb=1&amp;m04xf=2.6&amp;m04lane=1&amp;m04lanew=2.3&amp;m04lanes=0.85&amp;m04a3co=1.0&amp;m04lane2=0.25&amp;m04lgl=1.3&amp;m04lsp=0.9&amp;m04copper=1.3&amp;m04edge=1&amp;m04rf0=1.25&amp;m04rf1=0.8&amp;m04lbr=0.14&amp;m04a3tex=1&amp;m04bulge=0.18&amp;m04lcd=1.0&amp;m04lcw=1.7&amp;m04a3fa=1.0&amp;m04a3gb=0.16&amp;m04a3tm=0.45&amp;m04a3lum=1.1&amp;m04a3rw=0.03&amp;m04foam=1&amp;m04foamr=2.5&amp;m04foamn0=4.5&amp;m04foamn1=6.5&amp;m04fclu=1&amp;m04sband=1&amp;m04end=1&amp;m04nband=0&amp;m04nwhirl=0&amp;m04nwc=1.3&amp;m04flo=1&amp;m04nwq=2&amp;m04nwr=3.2&amp;m04rpaint=1&amp;m04rpsoft=1&amp;m04rpj=0.35&amp;m04rplu=3.95&amp;m04rpgu=4.28&amp;m04rpdots=1&amp;m04rpvar=1&amp;m04rfew=1&amp;m04rfg=1.2&amp;m04rpol=1&amp;m04rpcr=1&amp;m04rflat=1&amp;m04rnear=1&amp;m04rnh=0.7&amp;m04rny=0.15&amp;m04rng=0.5&amp;m04rnhf=0.1&amp;m04rnr=0.6&amp;m04rnf=0.8&amp;m04rmat=1&amp;m04wup=0&amp;m04bbank=1&amp;m04rsoft=1&amp;msaa=4&amp;m04wgl=1&amp;m04bbd=1&amp;m04bbd0=0.85&amp;m04bbd1=1.05&amp;m04bbdk=0.3&amp;m04bbdx=-0.25&amp;m04bbdg=0.45&amp;m04bbdf=30&amp;m04bbdf1=40&amp;m04bbdn=2&amp;m04bbdn1=3.5&amp;m04bbx=1&amp;m04a3sc=1&amp;m04a3sy=2.1&amp;m04a3sr=0.9&amp;m04a3s0=-0.005&amp;m04a3s1=0.03&amp;m04a3sx=0.02&amp;m04a3fl=26&amp;m04wl=1&amp;m04wly=0.4&amp;m04wlr=0.66&amp;m04wlo=1.1&amp;m04wle=1.65&amp;m04wlz=1.6&amp;m04edges=0.3&amp;m04sbf=0&amp;m04lgs=1&amp;m04lgn=5&amp;m04lgt=0.035&amp;m04lgm=0.6&amp;m04lgb=4&amp;m04lgk=0.9&amp;m04lgl2=1.6&amp;m04lgw=0.35&amp;m04lgwb=1.0&amp;m04lgsp=1.0&amp;m04lgd=0.17&amp;m04lgv=0.5&amp;m04a5=2&amp;m04lgc=1&amp;m04lgcl=0.35&amp;m04lgcb=0.08&amp;m04lgcs=0.9&amp;m04lgcgx=0.5&amp;m04lgcgz=1.8&amp;m04lgco=0.15&amp;m04lgcg=0.42&amp;m04lgch=0.4&amp;m04bbdc=1&amp;m04bbdcb=1.6&amp;m04bbdcl=1.3&amp;m04bbdcw=0.45
+```
+`QUERY_K27-C.txt` in the same folder is the same query plus the rejected `m04a5v=2`, kept only for the record.
+
+**Most visible remaining difference vs the approved picture:** the painted river curls in big cyan and pink swirls with the five arrows still ahead of Benny at the end. Ours is a straight chute, and the arrows are gone in the second half.
+
+**Next, not started:**
+1. A decision on the arrows: drifting downstream, or the camera.
+2. Bend the glints across the swirl and break up their even spacing.
+3. Softer blended foam banks with smaller gaps, fuller near the end.
+4. The swirling river shape.
+
+The "(r28) WHERE I STOPPED / NEXT" block and the step sections are in `/home/user/rainbow-/qa/match/04/r23/PROGRESS.md`. I made no commits or pushes, ran no paid jobs, and every heavy render went through the shared render slot.</result>
+<usage><subagent_tokens>194384</subagent_tokens><tool_uses>72</tool_uses><duration_ms>1105184</duration_ms></usage>
+</task-notification>
+
+### 🤖 Claude — 2026-11-20T17:14:16.667Z
+
+Screen 04 finished three steps. Two look closer to your picture: the glints and the far foam. The arrow change didn't help, so it stays off. That frees a slot, so I'm resuming the paused Benny specialist on his remaining step:
+
+### 🤖 Claude — 2026-11-20T17:14:20.770Z
+
+> 🔧 **SendMessage** `{"to": "a83852ef198a66db2", "summary": "Resume Benny on step 3 star colour", "message": "A worker slot is free again (Screen 04 finished), so please resume. Screen 06's route test still has priority for render slots, so keep your renders economical. Continue step 3: the 06 start star colour, behind `&b20s06a=1` (written, NOT YET PROVEN; the probe stopped at 8/20). Re-render only the probe positions you need, set the defaults, then make the proof in /home/user/rainbow-/qa/benny/r28/s6_star06/: 1_ORIGINAL_APPROVED / 2_BEFORE / 3_NEW crops, plus the 06 start and 06 middle at least so the fade sho …[+538 chars]`
+
+### 🧑 User — 2026-11-20T17:14:20.807Z
+
+> ↩︎ result: {"success":true,"message":"Resuming agent a83852e","resumedAgentId":"a83852ef198a66db2","pin":{"id":"a83852ef198a66db2","name":"a83852ef198a66db2","ref":"b2afa3"}}
+
+### 🤖 Claude — 2026-11-20T17:14:21.625Z
+
+> 🔧 **Bash** `{"command": "ls qa/match/04/r27/s4_combined/ | head -40; ls qa/match/04/r27/s4_combined/*/ 2>/dev/null | head -30", "description": "List Screen 04 combined proof files"}`
+
+### 🧑 User — 2026-11-20T17:14:21.662Z
+
+> ↩︎ result: QUERY_BEFORE_K23-S3_a5.txt
+> QUERY_K27-B.txt
+> QUERY_K27-C.txt
+> a_start_1_ORIGINAL_APPROVED.png
+> a_start_2_BEFORE.png
+> a_start_3_NEW.png
+> b_early_1_ORIGINAL_APPROVED.png
+> b_early_2_BEFORE.png
+> b_early_3_NEW.png
+> c_middle_1_ORIGINAL_APPROVED.png
+> c_middle_2_BEFORE.png
+> c_middle_3_NEW.png
+> d_late_1_ORIGINAL_APPROVED.png
+> d_late_2_BEFORE.png
+> d_late_3_NEW.png
+> e_end_1_ORIGINAL_APPROVED.png
+> e_end_2_BEFORE.png
+> e_end_3_NEW.png
+> f_hard_left_2_BEFORE.png
+> f_hard_left_3_NEW.png
+> frames_NEW_K27-B.json
+> g_hard_right_2_BEFORE.png
+> g_hard_right_3_NEW.png
+> gameplay_K27-B.json
+> swim04_SIDE_BY_SIDE_BEFORE_K23-S3a5_vs_NEW_K27-B_0.5x.mp4
+> swim04_SIDE_BY_SIDE_BEFORE_K23-S3a5_vs_NEW_K27-B_1.0x.mp4
+> swim04_whole_NEW_K27-B_0.5x.mp4
+> swim04_whole_NEW_K27-B_1.0x.mp4
+> tsc.log
+
+### 🤖 Claude — 2026-11-20T17:14:26.219Z
+
+Before passing the Screen 04 result on, I'm checking its evidence myself: the gameplay record, plus a side-by-side of the middle checkpoint.
+
+### 🤖 Claude — 2026-11-20T17:14:29.275Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/04/r27/s4_combined && python3 -I -c \"\nimport json;j=json.load(open('gameplay_K27-B.json'));print({k:j[k] for k in list(j)[:12]})\" 2>&1 | cut -c1-600; S=/tmp/claude-0/-home-user-rainbow-/a72797b0-7eea-579a-8801-b0b276ae6b12/scratchpad; montage c_middle_1_ORIGINAL_APPROVED.png c_middle_2_BEFORE.png c_middle_3_NEW.png -tile 3x1 -geometry 300x533+4+0 -label '' $S/s04_mid.png 2>&1 | tail -1; identify $S/s04_mid.png", "description": "Check Screen 04 gameplay result and build check image", "timeout": 120000}`
+
+### 🧑 User — 2026-11-20T17:14:30.103Z
+
+> ↩︎ result: {'checks': {'pauseFreezes': {'pass': True, 'sBefore': 45.495, 'sPaused': 45.495, 'sAfter': 49.995}, 'continuousTravel': {'pass': True, 'nonMonotonicSteps': 0, 'steps': 2139, 'respawns': 0}, 'noCameraCut': {'pass': True, 'maxCameraJumpPerStep': 0.728}, 'noTeleport': {'pass': True, 'maxBennyAltitudeJumpPerStep': 0.19, 'at': {'s': 360.074, 's1': 360.274, 'stage': '07', 'y0': -93.088, 'y1': -93.278, 't': 27.85}}, 'plunge': {'pass': True, 'tTop': 23.699999999999935, 'tBottom': 30.283333333332894, 't08': 30.283333333332894, 'yTop': -51.836, 'yBottom': -113.243, 'y08': -113.243, 'travelTimeTopToInlet
+> /tmp/claude-0/-home-user-rainbow-/a72797b0-7eea-579a-8801-b0b276ae6b12/scratchpad/s04_mid.png PNG 924x533 924x533+0+0 16-bit sRGB 1.81741MiB 0.000u 0:00.000
+
+### 🤖 Claude — 2026-11-20T17:14:33.107Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/a72797b0-7eea-579a-8801-b0b276ae6b12/scratchpad/s04_mid.png"}`
+
+### 🧑 User — 2026-11-20T17:14:33.142Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T17:14:58.927Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && cp /root/.claude/uploads/a72797b0-7eea-579a-8801-b0b276ae6b12/bfe911c0-image.jpg docs/briefs/2026-11-20-r28/USER_REFERENCE_SHEET_R28.jpg && identify docs/briefs/2026-11-20-r28/USER_REFERENCE_SHEET_R28.jpg | cut -d' ' -f2-4; grep -n \"Structure.\\*\\*\\|VIDEOS: 01\\|REAL PLAYABLE 3D\" CLAUDE.md | cut -c1-200; ls -la references/ | grep -E \"0[0-9]|1[01]\" | awk '{print $5, $9}'", "description": "Save reference sheet and locate scope lines"}`
+
+### 🧑 User — 2026-11-20T17:16:07.687Z
+
+> ↩︎ result: JPEG 1296x816 1296x816+0+0
+> 128:* **Structure.** VIDEOS: 01 existing opening · 02 whirlpool tumble · 03 Whirlpool Twirl · 09 final wave · 10 return to
+> 129:  hiding · 11 existing ending. REAL PLAYABLE 3D: 04 Five Arrows · 05 Flow Into the Current · 06 Rinse Arch · 07 Washer
+>  
+> 4096 .
+> 4096 ..
+> 443868 01_inside_washer_girl_and_towel.png
+> 501744 02_mascot_tumbles_in_whirlpool.png
+> 385938 03_whirlpool_twirl.png
+> 392932 04_through_the_five_arrows.png
+> 484196 05_flow_into_the_current.png
+> 497882 06_crest_the_rinse_arch.png
+> 494067 07_dive_the_washer_tube.png
+> 492730 08_final_spin_chamber.png
+> 512948 09_ride_the_final_wave.png
+> 504650 10_slide_into_hiding.png
+> 481475 11_safely_home_final_victory.png
+> 4096 water
+
+### 🤖 Claude — 2026-11-20T17:16:10.911Z
+
+Writing your clarifications down word for word as a permanent brief:
+
+### 🤖 Claude — 2026-11-20T17:16:20.215Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-20-r28/USER_CLARIFICATIONS_R28.md", "content": "# The user's scope decision + visual clarifications (round 28, 2026-11-20 ~17:25 UTC, verbatim) — BINDING, permanent\n\nReference sheet the user attached (identification only; the actual work uses the full-resolution originals in `references/`, unchanged):\n`docs/briefs/2026-11-20-r28/USER_REFERENCE_SHEET_R28.jpg` (01–11 APPROVED thumbnails).\n\n## Scope (supersedes every older structure note, incl. CLAUDE.md §6 \"VIDEOS: … 09 final wave · 10 return to hiding …\" of 2026-11-17)\n> - Screens 0 …[+3292 chars]`
+
+### 🧑 User — 2026-11-20T17:16:20.372Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-20-r28/USER_CLARIFICATIONS_R28.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T17:16:22.982Z
+
+Now updating CLAUDE.md so every future session sees the new scope first, and so the old "09 and 10 are videos" line is clearly overruled:
+
+### 🤖 Claude — 2026-11-20T17:16:29.386Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nfrom pathlib import Path\np=Path('CLAUDE.md'); s=p.read_text()\nanchor='## 6. The game (authoritative brief `Rainbow_Claude_Code_Master_Prompt_11_Screens.md`)\\n'\nassert anchor in s\nnew=anchor+'''**NEWEST USER SCOPE DECISION 2026-11-20 ~17:25 UTC (round 28) — wins over EVERYTHING older in this file (incl. the 2026-11-17 \"VIDEOS: …\n09 final wave · 10 return to hiding\" line below): Screens 01, 02, 03 and 11 = the user's Google Flow videos; Screens 04 through 10, INCLUDING\n09 and 10, = real playable 3D gameplay.** Work from the full-resolution originals in …[+1052 chars]`
+
+### 🧑 User — 2026-11-20T17:16:29.479Z
+
+> ↩︎ result: ok
+> 114:**NEWEST USER SCOPE DECISION 2026-11-20 ~17:25 UTC (round 28) — wins over EVERYTHING older in this file (incl. the
+> 135:* **Structure** (SUPERSEDED 2026-11-20 for 03 / 09 / 10 — see the round-28 scope decision at the top of §6). VIDE
+
+### 🤖 Claude — 2026-11-20T17:16:32.565Z
+
+Correction: Screen 03 was already a video in the old line, so only 09 and 10 changed. Fixing that label:
+
+### 🤖 Claude — 2026-11-20T17:16:34.169Z
+
+> 🔧 **Bash** `{"command": "sed -i 's/(SUPERSEDED 2026-11-20 for 03 \\/ 09 \\/ 10 — see the round-28 scope decision at the top of §6)/(SUPERSEDED 2026-11-20 for 09 and 10, which are now PLAYABLE — see the round-28 scope decision at the top of §6)/' CLAUDE.md && grep -c \"SUPERSEDED 2026-11-20 for 09 and 10\" CLAUDE.md", "description": "Correct superseded label to 09 and 10 only"}`
+
+### 🧑 User — 2026-11-20T17:16:34.257Z
+
+> ↩︎ result: 1
+
+### 🤖 Claude — 2026-11-20T17:16:36.393Z
+
+Now the handoff, the new-account guide, the coordination file and the agents status, so the decision survives an account change:
+
+### 🤖 Claude — 2026-11-20T17:16:48.203Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nfrom pathlib import Path\nimport json\nline='**USER SCOPE DECISION (r28, ~17:25 UTC, permanent): 01, 02, 03, 11 = Google Flow videos; 04–10 INCLUDING 09 AND 10 = real playable 3D.** Verbatim + per-screen clarifications (04 / 06 / 09 / 10): `docs/briefs/2026-11-20-r28/USER_CLARIFICATIONS_R28.md`.'\n# handoff\nh=Path('docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md'); t=h.read_text()\nanchor='Draft PR #25 (DO NOT MERGE).'\nassert anchor in t and 'USER SCOPE DECISION (r28' not in t\nt=t.replace(anchor, anchor+'\\n'+line+' **Screen 06 route test AUTHORIZED (r28 ~17:05)** — br …[+2144 chars]`
+

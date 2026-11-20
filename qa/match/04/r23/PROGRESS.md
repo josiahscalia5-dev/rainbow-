@@ -14,8 +14,13 @@
   probe; combined candidate = **K27-B** (`s4_combined/QUERY_K27-B.txt`, no a5v).
 * 17:03 job `/home/user/scratch/s04/run_r28b.sh` (render slot): K27-B 7-shot audit (`/home/user/scratch/s04/newB7`), whole-04
   clip (`clip_k27b`), gameplay -> `s4_combined/gameplay_K27-B.json`.
-* NEXT: start view 0 px (newB7/a_start vs `s3_glossy/NEW/a_start.png`), label clip 1.0x + 0.5x into `s4_combined/`, side by side
-  with the r26 BEFORE clip, gameplay 8/8 + 91 -> report to the lead (3 steps done).
+* 17:13 DONE: start view 0 px, clips 1.0x + 0.5x + side by side, gameplay 8/8 + 91 (1,330 -> 2,240) — see "Combined candidate
+  K27-B" below. 3 steps finished -> STOPPED and reported to the lead.
+* NEXT (not started, needs the user's / lead's word): (a) arrows readable in the second half of 04 — only real options are arrows
+  drifting downstream with the current, or a higher painting-like camera (not authorized); (b) bend the glint crescents across
+  the swirl + break their even dashed spacing; (c) cloud banks from soft fused puffs (not separate pearly spheres), smaller gaps,
+  fuller near the end; (d) the biggest remaining look difference: the painted river curls in cyan / pink swirls, ours is a
+  straight chute.
 
 ## (r27) WHERE I STOPPED / NEXT — s04 specialist (relaunched r27 ~15:20 UTC, worktree `/home/user/wt/s04`, LOCAL branch `claude/rainbow-s04-match-c28`)
 * Worktree = r26 state restored (K23-S3 code + `m04lgc` + `m04a5` + `m04bbdc`), ports 5273/5274, scratch `/home/user/scratch/s04/`.
@@ -50,7 +55,10 @@
 * STILL DIFFERENT: the crescents run straight down the flow (near-vertical on screen); the painted glints follow curved swirl
   bands across the river, and the painted near water has pink / cyan swirl bands (ours stays mostly plain blue: the user's
   "clear blue water" order wins). Some groups read a little like parallel rain marks up close.
-* New problems: none seen (lane colour unchanged, no shimmer in the stills; motion check in the step-3 clip).
+* In motion (r28 clip K27-B, consecutive frames): the groups stream toward the camera with the water, no flicker, but up close
+  the crescents line up in evenly spaced DASHED COLUMNS along the flow (like dashed lane marks) — next refinement: bend them
+  across the swirl and break the even spacing.
+* New problems: none in colour / lane; the dashed-column regularity above is the one thing to watch.
 
 ## (r27/r28) Step 2 — far foam as soft cloud banks + lower pink edges — `qa/match/04/r27/s2_cloud/` — GOOD IMPROVEMENT (not approved)
 * Switch (`s2_cloud/SWITCH.txt`): `m04bbdc=1&m04ry=0.35&m04bbdcb=1.6&m04bbdcl=1.3&m04bbdcw=0.45` (heaps grouped into banks, middle
@@ -80,6 +88,21 @@
   or a higher camera like the painting (camera not authorized).
 * Combined candidate therefore WITHOUT a5v: **K27-B** = `qa/match/04/r27/s4_combined/QUERY_K27-B.txt` (K23-S3 + a5=2 + step 1 +
   step 2). (`QUERY_K27-C.txt` = with `m04a5v=2`, kept for the record, not the candidate.)
+
+## (r28) Combined candidate K27-B — `qa/match/04/r27/s4_combined/` — GOOD IMPROVEMENT over K23-S3 + a5=2 (not approved)
+* Query `QUERY_K27-B.txt` = BEFORE `QUERY_BEFORE_K23-S3_a5.txt` + step 1 (`s1_glint/SWITCH.txt`) + step 2 (`s2_cloud/SWITCH.txt`).
+* Stills (full size, labelled): `{a_start,b_early,c_middle,d_late,e_end}_{1_ORIGINAL_APPROVED,2_BEFORE,3_NEW}.png`,
+  `{f_hard_left,g_hard_right}_{2_BEFORE,3_NEW}.png` (BEFORE for hard L/R = K23-S3 without a5, the only existing render; no
+  approved picture exists for hard L/R).
+* Start view: NEW a_start vs BEFORE `r23/s3_glossy/NEW/a_start.png` = 0 px of 1,327,104 over the whole frame.
+* Clip (pinned clock, uninterrupted 04 -> into 05, straight / LEFT / RIGHT / straight, 3.25 s game time):
+  `swim04_whole_NEW_K27-B_1.0x.mp4` then `_0.5x.mp4`; side by side with the r26 BEFORE clip (same schedule):
+  `swim04_SIDE_BY_SIDE_BEFORE_K23-S3a5_vs_NEW_K27-B_{1.0x,0.5x}.mp4`; log `frames_NEW_K27-B.json`: exactly 5 different arrows
+  shown, all 5 passed inside 04.
+* Gameplay `gameplay_K27-B.json`: 8/8 pass, 91 coins collected, 1,330 -> 2,240, victory at 11, no errors.
+* `npx tsc --noEmit` rc 0 (`tsc.log`; no code change in r28).
+* In motion: cloud banks and short glints hold through middle, steering and end; 04 -> 05 handover unchanged. Still the five
+  arrows are gone from ~1.2 s, so the second half of 04 shows an empty lane (step 3 could not fix it with fades).
 
 ## (r26) Step 0' — whole-04 clips K23-1 (BEFORE) vs K23-S3 (NEW), r25 `qa/match/04/r25/clip/` — verdict + ARROW COUNT
 * VERDICT K23-S3 vs K23-1: GOOD IMPROVEMENT for the pink sides (lower, contained, the gold rings visible down both sides instead

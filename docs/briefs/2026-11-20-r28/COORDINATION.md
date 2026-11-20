@@ -86,3 +86,7 @@ newest `backups/wip/*-c29/`, trial07 + view04/06/07 included).
   written, NOT YET PROVEN (probe stopped 8/20). Best Benny query `…&b20star=1&b20crown=1`. Resume Benny when a slot frees.
 * ~17:10 s06 relaunched (path-camera-transition-engineer, `/home/user/wt/s06` `claude/rainbow-s06-match-c29`, port 5276) on the route test.
   Active now: s06 (route), s07, s04, s05.
+* ~17:25 USER: **USER SCOPE DECISION (r28, ~17:25 UTC, permanent): 01, 02, 03, 11 = Google Flow videos; 04–10 INCLUDING 09 AND 10 = real playable 3D.** Verbatim + per-screen clarifications (04 / 06 / 09 / 10): `docs/briefs/2026-11-20-r28/USER_CLARIFICATIONS_R28.md`.
+  Open question 3 (09 / 10) is ANSWERED: playable. 09 and 10 = new workstreams, queued for the next free slot (06 route test stays the focused
+  checkpoint). Screen 04 K27-B (glints `m04lgc…` + cloud banks `m04bbdc…`) GOOD IMPROVEMENT ×2, arrows `m04a5v=2` NOT AN IMPROVEMENT (switch off);
+  proof `qa/match/04/r27/s4_combined/`; s04 FINISHED ~17:20. Benny resumed ~17:22 on step 3 (06 start star, `b20s06a`).

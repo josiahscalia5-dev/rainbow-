@@ -111,6 +111,13 @@ update that file when its state changes. Tool versions, plugins, MCP servers, ho
 pushes or tests unless verified.
 
 ## 6. The game (authoritative brief `Rainbow_Claude_Code_Master_Prompt_11_Screens.md`)
+**NEWEST USER SCOPE DECISION 2026-11-20 ~17:25 UTC (round 28) — wins over EVERYTHING older in this file (incl. the 2026-11-17 "VIDEOS: …
+09 final wave · 10 return to hiding" line below): Screens 01, 02, 03 and 11 = the user's Google Flow videos; Screens 04 through 10, INCLUDING
+09 and 10, = real playable 3D gameplay.** Work from the full-resolution originals in `references/`. Verbatim decision + per-screen clarifications
+(04 warm-gold tunnel vs cyan water + five arrows + rings passing naturally; 06 crest + curved approach; 09 final wave + washer opening + towel
+ledge from its OWN reference; 10 towel hiding place + hand-over to the 11 Flow ending; coins and rings grow and pass naturally) — binding:
+**`docs/briefs/2026-11-20-r28/USER_CLARIFICATIONS_R28.md`** (reference sheet `USER_REFERENCE_SHEET_R28.jpg`).
+
 **PERMANENT USER ORDER 2026-11-19 ~20:50 UTC (round 19): "my approved screen" ALWAYS means the same look WHILE Benny swims /
 moves / steers — exact or very close to the approved picture in motion, never only the start view.** Judge and report every
 playable-screen result in motion (start, swimming, inside, steering + a clip). Current target: Screen 04 ≥ 8/10 while swimming;
@@ -125,7 +132,7 @@ when Benny moves/steers) → 05 → 06 → 04, at most two sessions at once (usa
 BEFORE / NEW + moving-view comparisons. Never merge PR #16 or unfinished branches without the user's OK.
 
 **NEWEST USER ORDERS (2026-11-17) — win over everything older in this section:**
-* **Structure.** VIDEOS: 01 existing opening · 02 whirlpool tumble · 03 Whirlpool Twirl · 09 final wave · 10 return to
+* **Structure** (SUPERSEDED 2026-11-20 for 09 and 10, which are now PLAYABLE — see the round-28 scope decision at the top of §6). VIDEOS: 01 existing opening · 02 whirlpool tumble · 03 Whirlpool Twirl · 09 final wave · 10 return to
   hiding · 11 existing ending. REAL PLAYABLE 3D: 04 Five Arrows · 05 Flow Into the Current · 06 Rinse Arch · 07 Washer
   Tube · 08 Final Spin Chamber. Goal ≥ 9/10 (≥ 90 %) visual likeness of each playable screen to ITS approved picture.
   Never regenerate a video, never spend paid-generation credits.

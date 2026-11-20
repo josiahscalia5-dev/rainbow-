@@ -154141,7 +154141,7 @@ index a76822b..cbb7ee4 100644
  * `fur.ts`: new BENNY20-only uniforms `uTipCol` (colour the uPile.w tips fade to; pompom keeps its pale lavender) and `uVol`
    (x highlight on up-facing fur, y darker underside). `benny20.ts`: `TUFT` block (body + arms): bigger locks (30 / arms 36),
 diff --git a/src/characters/benny/benny20.ts b/src/characters/benny/benny20.ts
-index 340e1d3..4f8f0e9 100644
+index 340e1d3..f68245c 100644
 --- a/src/characters/benny/benny20.ts
 +++ b/src/characters/benny/benny20.ts
 @@ -100,6 +100,51 @@ if (TUFT) {
@@ -154196,7 +154196,7 @@ index 340e1d3..4f8f0e9 100644
  /** per-screen fur exposure (LINEAR multipliers on the fur albedo above, which is solved for Screen 04). The approved
   *  pictures paint Benny lighter / pinker on 05–07 (fur mean ≈ (234, 82, 178), brightness median .95–.98) than on 04
   *  ((207, 74, 151), .84), while the game lights him less there. The game records its screen on
-@@ -132,17 +177,64 @@ export const HAT20 = {
+@@ -132,17 +177,67 @@ export const HAT20 = {
    starFlat: n('sf', 0.3),
  };
  
@@ -154254,10 +154254,13 @@ index 340e1d3..4f8f0e9 100644
 +/** r28 step 3 `&b20s06a=1`: the 06 START paints the felt star orange-amber (measured g/r .67 vs the approved lighter yellow .90)
 + *  while the 06 middle / hard left already match with STARX20['06']. Multiplier STARX06A at the stage start, blended into
 + *  STARX20['06'] between stage fractions `&b20s06f0=` → `&b20s06f1=` (Game.ts records the fraction on
-+ *  benny.root.userData.stageFrac; probe qa/benny/r28/s6_star06/probe/). Off: nothing changes. */
++ *  benny.root.userData.stageFrac; probe qa/benny/r28/s6_star06/probe/). Off: nothing changes.
++ *  Probe (star median, g/r): checkpoint frac .17 → 0.9,1.2,.55 = (255,171,29) .67 | 0.9,1.9,.55 = (241,216,16) .90 |
++ *  1.0,2.05,.6 = (253,224,21) .89 vs approved (251,226,34) .90; frac .26: .68 → .83; frac .345: .74 → 1.02 (light already turning
++ *  to the middle's) → fade .27 → .42 (≈ half at .345); middle frac .46 keeps STARX20['06'] (.93). */
 +const S06A_ON = n('s06a', 0) > 0;
-+const STARX06A = lin('sx06a', [0.9, 1.6, 0.55]);
-+const S06F = [n('s06f0', 0.2), n('s06f1', 0.4)];
++const STARX06A = lin('sx06a', [1.0, 2.05, 0.6]);
++const S06F = [n('s06f0', 0.27), n('s06f1', 0.42)];
 +
  const T = (f: string) => new URL(`../../../assets/textures/benny20/${f}`, import.meta.url).href;
 -const FILES = ['crown.png', 'crown_n.png', 'brim.png', 'brim_n.png', 'star.png', 'star_n.png'];
@@ -154266,7 +154269,7 @@ index 340e1d3..4f8f0e9 100644
  let loaded: Promise<Record<string, THREE.Texture | null>> | null = null;
  /** load the knit / felt maps once (missing file → null: that part keeps its benny05 look) */
  export function loadBenny20Maps(): Promise<Record<string, THREE.Texture | null>> {
-@@ -168,7 +260,7 @@ export function loadBenny20Maps(): Promise<Record<string, THREE.Texture | null>>
+@@ -168,7 +263,7 @@ export function loadBenny20Maps(): Promise<Record<string, THREE.Texture | null>>
  }
  
  /** per-frame: ease the fur albedo toward the current screen's exposure (EXPO20); returned by applyBenny20 */
@@ -154275,7 +154278,7 @@ index 340e1d3..4f8f0e9 100644
  
  /** apply after applyBenny05 (same freshly cloned scene + fur handles) */
  export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Record<string, THREE.Texture | null>): Benny20Tick {
-@@ -196,6 +288,21 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
+@@ -196,6 +291,21 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
      if (vol) f.uniforms.uVol.value.set(...vol);
      const tc = TIP20[f.mesh.name];
      if (tc) f.uniforms.uTipCol.value.setRGB(...tc);
@@ -154297,7 +154300,7 @@ index 340e1d3..4f8f0e9 100644
      mat.needsUpdate = true;
    }
  
-@@ -220,6 +327,24 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
+@@ -220,6 +330,24 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
      pom.scale.multiplyScalar(HAT20.pomScale);
      pom.position.y += HAT20.pomDY;
    }
@@ -154322,7 +154325,7 @@ index 340e1d3..4f8f0e9 100644
  
    // ---- knit maps on the crown / cuff ----
    const knit = (name: string, map: string, nmap: string, factor: [number, number, number], ns: number) => {
-@@ -234,40 +359,75 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
+@@ -234,40 +362,75 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
      if (nt) mat.normalScale.setScalar(ns);
      mat.roughness = 0.92;
      mat.metalness = 0;
@@ -154406,7 +154409,7 @@ index 340e1d3..4f8f0e9 100644
      // opt-in `&b20expo=1` until proven in motion on 05–07 (step-1 pictures were made without it)
      const e = (EXPO_ON && stage && EXPO20[stage]) || [1, 1, 1];
      tgt.set(e[0], e[1], e[2]);
-@@ -275,8 +435,24 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
+@@ -275,8 +438,24 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
      scene.getWorldPosition(pos);
      const jumped = pos.distanceTo(lastPos) > 5;
      lastPos.copy(pos);
@@ -154432,7 +154435,7 @@ index 340e1d3..4f8f0e9 100644
    };
  
    // QA only (`?qa` pages, read by tools/benny20/probe.mjs): live handles for tuning without a reload
-@@ -295,7 +471,7 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
+@@ -295,7 +474,7 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
        }
        return [Math.round(x0), Math.round(y0), Math.round(x1), Math.round(y1)];
      };

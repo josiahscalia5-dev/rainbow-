@@ -1237,3 +1237,85 @@ Let me view the approved reference and the lead's e_end / f_hard_left / g_hard_r
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && Q=\"$(cat qa/match/05/r18/KEPT_STEP2.txt)&m05endr=1\" && AUDIT_PORT=5275 AUDIT_SHOTS='[[\"c_middle\",0.35,null],[\"d_late\",0.6,null],[\"e_end\",0.85,null],[\"h_t95\",0.95,null]]' timeout 1200 bash /home/user/rainbow-/tools/lead25/render_slot.sh node /home/user/rainbow-/tools/lead21/audit_screen.mjs /home/user/scratch/s05/v1 05 \"$Q\" 2>&1 | grep -v \"allow list\" | tail -6", "description": "Render quick check of m05endr v1", "timeout": 1300000}`
 
+### 🧑 User — 2026-11-20T17:12:59.662Z
+
+> ↩︎ result: [render_slot] got slot 1 after 15s
+> 05 c_middle s 152.238 lat 0 stage 05 coins 1450
+> 05 d_late s 166.355 lat 0 stage 05 coins 1460
+> 05 e_end s 180.472 lat 0 stage 05 coins 1460
+> 05 h_t95 s 186.155 lat 0 stage 05 coins 1580
+
+### 🤖 Claude — 2026-11-20T17:13:08.188Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s05 && python3 -c \"\nfrom PIL import Image\nB='/home/user/rainbow-/qa/review_r27/05/'\nims=[B+'d_late.png','v1/d_late.png',B+'e_end.png','v1/e_end.png','v1/h_t95.png']\ns=Image.new('RGB',(5*324,576))\nfor i,k in enumerate(ims): s.paste(Image.open(k).convert('RGB').resize((324,576)),(i*324,0))\ns.save('v1_sheet.jpg',quality=85)\"", "description": "Contact sheet BEFORE vs v1"}`
+
+### 🧑 User — 2026-11-20T17:13:08.508Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T17:13:11.787Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s05/v1_sheet.jpg"}`
+
+### 🧑 User — 2026-11-20T17:13:11.806Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T17:13:25.924Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s05 && python3 -c \"\nfrom PIL import Image\na=Image.open('/home/user/rainbow-/qa/review_r27/05/e_end.png').convert('RGB').crop((0,420,864,860))\nb=Image.open('v1/e_end.png').convert('RGB').crop((0,420,864,860))\ns=Image.new('RGB',(864,880)); s.paste(a,(0,0)); s.paste(b,(0,440)); s.resize((648,660)).save('v1_mid.jpg',quality=88)\"", "description": "Crop mid region BEFORE vs v1 at e_end"}`
+
+### 🧑 User — 2026-11-20T17:13:26.119Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T17:13:27.969Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s05/v1_mid.jpg"}`
+
+### 🧑 User — 2026-11-20T17:13:27.985Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T17:14:14.213Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && grep -n \"interface FarLump05\" -A8 src/vfx/foam.ts; grep -n \"createFarCloud05(\" src/world/environment.ts", "description": "Inspect FarLump05 type and call site"}`
+
+### 🧑 User — 2026-11-20T17:14:14.249Z
+
+> ↩︎ result: 563:export interface FarLump05 {
+> 564-  /** virtual depth beyond the far seam origin sF (anchored: the virtual tunnel stays put) */
+> 565-  Z: number;
+> 566-  /** -1 left bank, +1 right bank */
+> 567-  side: number;
+> 568-  /** offset outward from the far layout's water edge (units; negative = over the water) */
+> 569-  e: number;
+> 570-  /** height above the bank surface (units, before the block's compression) */
+> 571-  lift: number;
+> 682:    const farClouds05 = M05FAR && M05FCLOUD ? createFarCloud05(Math.min(zEnd, 45)) : null;
+
+### 🤖 Claude — 2026-11-20T17:14:26.516Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='src/vfx/foam.ts'\ns=open(p).read()\nold=\"\"\"  /** height above the bank surface (units, before the block's compression) */\n  lift: number;\"\"\"\nnew=\"\"\"  /** height above the bank surface (units, before the block's compression) */\n  lift: number;\n  /** `&m05endr=1` (Screen 05 round 28): bank-fill lump — fraction 0 … 1 across the bank between the water edge and the wall */\n  f?: number;\"\"\"\nassert old in s; s=s.replace(old,new,1)\nold2=\"export function createFarCloud05(zMax: number): { mesh: THREE.InstancedMesh; lumps: Far …[+2254 chars]`
+
+### 🧑 User — 2026-11-20T17:14:26.580Z
+
+> ↩︎ result: 18:import { M05FAR, M05END, M05TRANS, createLiveFar05 } from './match05far'; // Screen 05 round 7: live-eye far tunnel (?match05=1&m05far=1)
+
+### 🤖 Claude — 2026-11-20T17:14:30.745Z
+
+Now the placement of bank-fill lumps in match05far.ts and the faster taper.
+
+### 🤖 Claude — 2026-11-20T17:14:41.451Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && python3 - <<'EOF'\np='src/world/environment.ts'\ns=open(p).read()\ns=s.replace(\"import { M05FAR, M05END, M05TRANS, createLiveFar05 } from './match05far';\",\"import { M05ENDR, M05FAR, M05END, M05TRANS, createLiveFar05 } from './match05far';\",1)\nopen(p,'w').write(s)\np='src/world/match05far.ts'\ns=open(p).read()\nold=\"  const END_C: [number, number][] = [[14, -1.4], [23, -0.9], [33, 0.8], [46, 2.2], [62, 2.6]];\"\nnew=\"  const END_C: [number, number][] = [[10.5, -0.6], [15, -1.5], [23, -0.9], [33, 0.8], [46, 2.2], [62, 2.6]];\"\nassert old in s; s=s.rep …[+2397 chars]`
+
+### 🧑 User — 2026-11-20T17:14:43.961Z
+
+> ↩︎ result: 396:        co.copy(Rt).multiplyScalar(x).addScaledVector(U, a.level + EDGE_LIFT + lift0 + l.lift);
+> tsc=0
+
+### 🤖 Claude — 2026-11-20T17:14:53.717Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -i 's|        co.copy(Rt).multiplyScalar(x).addScaledVector(U, a.level + EDGE_LIFT + lift0 + l.lift);|        co.copy(Rt).multiplyScalar(x).addScaledVector(U, a.level + EDGE_LIFT + lift0 + l.lift + 0.35 * (l.f ?? 0) ** 2);|' src/world/match05far.ts && npx tsc --noEmit && Q=\"$(cat qa/match/05/r18/KEPT_STEP2.txt)&m05endr=1\" && AUDIT_PORT=5275 AUDIT_SHOTS='[[\"d_late\",0.6,null],[\"e_end\",0.85,null],[\"h_t95\",0.95,null]]' timeout 1200 bash /home/user/rainbow-/tools/lead25/render_slot.sh node /home/user/rainbow-/tools/lead21/audit_screen.mjs /home/user/ …[+554 chars]`
+

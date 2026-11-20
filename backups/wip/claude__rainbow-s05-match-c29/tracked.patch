@@ -22,10 +22,90 @@ index d553aac..237e0d2 100644
          // half the 06 lateral swing around the far core (the trail weaves), half size (the painted far coins are small)
          const k = far05Coins.map(d.s, 0.5 * (d.lat - coreLateral(course, d.s)), 0.6 + 0.08 * Math.sin(time * 3 + ph), fcP) * 0.5;
          const o = far05Coins.open;
+diff --git a/src/vfx/foam.ts b/src/vfx/foam.ts
+index 172d033..1e132e8 100644
+--- a/src/vfx/foam.ts
++++ b/src/vfx/foam.ts
+@@ -569,6 +569,8 @@ export interface FarLump05 {
+   e: number;
+   /** height above the bank surface (units, before the block's compression) */
+   lift: number;
++  /** `&m05endr=1` (Screen 05 round 28): bank-fill lump — fraction 0 … 1 across the bank between the water edge and the wall */
++  f?: number;
+   /** radius (units, before the block's compression) */
+   r: number;
+ }
+@@ -578,7 +580,7 @@ export interface FarLump05 {
+  * Z = 0 to zMax. Same impostor material as the 05 rim lumps (fresh instance: NOT clipped at the seam — these lumps live
+  * beyond it). Matrices are written every frame by match05far.ts (scale 0 = hidden).
+  */
+-export function createFarCloud05(zMax: number): { mesh: THREE.InstancedMesh; lumps: FarLump05[] } {
++export function createFarCloud05(zMax: number, bankFill = false): { mesh: THREE.InstancedMesh; lumps: FarLump05[] } {
+   const rc = rng(5353);
+   const lumps: FarLump05[] = [];
+   const cols: [number, number, number][] = [];
+@@ -602,6 +604,26 @@ export function createFarCloud05(zMax: number): { mesh: THREE.InstancedMesh; lum
+       }
+     }
+   }
++  if (bankFill) {
++    // `&m05endr=1` (Screen 05 round 28): where the far river narrows into the painted winding channel the bank between its
++    // water edge and the wall is filled with piled foam clouds (placed across the bank by match05far.ts), rising toward the
++    // wall — the painted soft foam banks, not a flat slab. Own random stream: the edge lumps above are unchanged.
++    const rf = rng(9191);
++    for (let Z = 0.3; Z < zMax; Z += 0.45 + rf() * 0.7) {
++      for (const side of [-1, 1]) {
++        const n = 4 + ((rf() * 5) | 0);
++        const zc = Z + (rf() - 0.5) * 0.5, fc = rf();
++        const big = 0.3 + rf() * 0.22;
++        for (let k = 0; k < n; k++) {
++          const a = rf() * Math.PI * 2, d = Math.sqrt(rf());
++          const r = big * (0.5 + 0.55 * (1 - d) * rf() + 0.2 * rf());
++          const f = Math.min(1, Math.max(0, fc + Math.sin(a) * d * 0.22));
++          lumps.push({ Z: zc + Math.cos(a) * d * 0.7, side, e: 0, lift: r * (0.08 + 0.3 * (1 - d)), r, f });
++          cols.push([0.8 + 0.2 * (1 - d), rf(), rf() * 2 - 1]);
++        }
++      }
++    }
++  }
+   const { mat } = makeBankBubbleMaterial();
+   const mesh = new THREE.InstancedMesh(new THREE.PlaneGeometry(2, 2), mat, Math.max(1, lumps.length));
+   mesh.name = 'foam_far05_clouds';
+diff --git a/src/world/environment.ts b/src/world/environment.ts
+index 2632a9a..b9d1009 100644
+--- a/src/world/environment.ts
++++ b/src/world/environment.ts
+@@ -15,7 +15,7 @@ import { createFarCloud05 } from '../vfx/foam'; // Screen 05 round 12: ?…&m05f
+ import { createProj05Apron } from '../vfx/proj05Apron'; // Screen 05 test W11 (?flow05=1), advection speed (?flowcam05=1)
+ import { PROJWALL05, PROJRING05, PROJFRAME05, PROJLID05, PT_ROW, withProj05Wall, withProj05Ring, withProj05Frame, lids05Group, type WallSeg, ENV05, E5_RING_ROW, withEnv05Ring } from '../vfx/proj05Tunnel'; // Screen 05 tunnel bake tests
+ import { flow05Shared, flow05Textures } from '../vfx/flow05';
+-import { M05FAR, M05END, M05TRANS, createLiveFar05 } from './match05far'; // Screen 05 round 7: live-eye far tunnel (?match05=1&m05far=1)
++import { M05ENDR, M05FAR, M05END, M05TRANS, createLiveFar05 } from './match05far'; // Screen 05 round 7: live-eye far tunnel (?match05=1&m05far=1)
+ import { withClip05Std, m05farPre, clip05 } from '../vfx/clip05'; // Screen 05 round 8: ?…&m05far=1&m05edge=1 only (no-op otherwise)
+ import { buildLaundryRoom, LaundryRoom } from './laundryRoom';
+ import { buildTowel, TowelMesh } from './towel';
+@@ -679,7 +679,7 @@ void main() {
+     // `?match05=1&m05far=1` (round 7, src/world/match05far.ts): the far block follows the LIVE eye (world-anchored
+     // virtual tunnel, sliding seam, folds only at the stage end) instead of folding away from ≈34 u before the seam
+     // `&m05fcloud=1` (Screen 05 round 12): foam clouds along both far banks (placed every frame by match05far.ts)
+-    const farClouds05 = M05FAR && M05FCLOUD ? createFarCloud05(Math.min(zEnd, 45)) : null;
++    const farClouds05 = M05FAR && M05FCLOUD ? createFarCloud05(Math.min(zEnd, 45), M05ENDR) : null;   // m05endr (round 28): + bank-fill lumps
+     const liveFar = M05FAR ? createLiveFar05({
+       ft, farWall, farRiver, farRings, farLids, ringItems, lidItems, glow, glowMat, lay: farLay, level, zEnd, warp: warpFar,
+       radial: 64, wallSteps: 80, inset: 0.004, cols: 16, riverSteps: 120,
 diff --git a/src/world/match05far.ts b/src/world/match05far.ts
-index d8f6027..587f5f1 100644
+index d8f6027..00d4a67 100644
 --- a/src/world/match05far.ts
 +++ b/src/world/match05far.ts
+@@ -22,7 +22,7 @@ import type { ForcedTunnel, TubeWarp } from './tube';
+ import { tubeCenterAt } from './tube';
+ import type { FarRiverLayout, FarRiverRow } from './far05';
+ import type { Course, CourseSample } from './course';
+-import { EDGE_LIFT, M05BLEND, M05JOIN, M05LIDF, M05WCRISP, MATCH05, ampAt, flag05, m05blend, m05blendTime, m05eye, m05fw, m05join, m05seam } from '../vfx/waterRibbon';
++import { EDGE_LIFT, M05BLEND, M05JOIN, M05LIDF, M05WCRISP, MATCH05, ampAt, flag05, m05wcrispNum, m05blend, m05blendTime, m05eye, m05fw, m05join, m05seam } from '../vfx/waterRibbon';
+ import { clip05, m05rideS } from '../vfx/clip05';
+ import type { FarLump05 } from '../vfx/foam';
+ 
 @@ -58,6 +58,20 @@ export const M05TRANS: boolean = M05END && flag05('m05trans');
   * pickups, count and score unchanged. `far05Coins` is written by the live sync below.
   */
@@ -47,13 +127,13 @@ index d8f6027..587f5f1 100644
  export const far05Coins = {
    /** 1 while the far block is live (not at the locked eye, not fully folded) */
    live: 0,
-@@ -133,6 +147,30 @@ export function createLiveFar05(a: LiveFar05Args): (cam: THREE.Camera) => void {
+@@ -133,6 +147,31 @@ export function createLiveFar05(a: LiveFar05Args): (cam: THREE.Camera) => void {
      ROW_KEYS.forEach((k, i) => { o[k] = tr[n * ROW_KEYS.length + i] * (1 - w) + tr[(n + 1) * ROW_KEYS.length + i] * w; });
      return o;
    };
 +  // `&m05endr=1` (round 28): the far rows as the painted winding channel where swimming magnifies F (see M05ENDR); the live
 +  // eye constants (D0, zs) are declared below and read at call time
-+  const END_C: [number, number][] = [[14, -1.4], [23, -0.9], [33, 0.8], [46, 2.2], [62, 2.6]];
++  const END_C: [number, number][] = [[10.5, -0.6], [15, -1.5], [23, -0.9], [33, 0.8], [46, 2.2], [62, 2.6]];
 +  const endKn: [number, number][] = [[a.zCap, rowAt(a.zCap).xB], ...END_C.filter(([z]) => z > a.zCap + 2)];
 +  const endX = (Z: number) => {
 +    if (Z <= endKn[0][0]) return endKn[0][1];
@@ -63,14 +143,15 @@ index d8f6027..587f5f1 100644
 +    return endKn[endKn.length - 1][1];
 +  };
 +  const endRow = {} as FarRiverRow;
++  const END_HW = m05wcrispNum('m05endhw', 3.35);   // QA tunable: channel half width (u)
 +  const rowLive = (Z: number): FarRiverRow => {
 +    const r = rowAt(Z);
 +    if (!M05ENDR) return r;
 +    // magnification of the baked far picture at Z from the live eye (as m05fmag's shader weight, axial distance)
 +    const mag = (D0lock + Z) / Math.max(D0 + zOf(Z), 0.5);
-+    const w = THREE.MathUtils.smoothstep(Z, a.zCap, a.zCap + 7) * (1 - THREE.MathUtils.smoothstep(Z, 60, 95)) * THREE.MathUtils.smoothstep(mag, 1.4, 2.2);
++    const w = THREE.MathUtils.smoothstep(Z, a.zCap, a.zCap + 4) * (1 - THREE.MathUtils.smoothstep(Z, 60, 95)) * THREE.MathUtils.smoothstep(mag, 1.4, 2.2);
 +    if (w <= 0) return r;
-+    const xB = endX(Z), hw = Math.min(3.5, a.lay.chord - 0.55 - Math.abs(xB));
++    const xB = endX(Z), hw = Math.min(END_HW, a.lay.chord - 0.55 - Math.abs(xB));
 +    const d: FarRiverRow = { xB, hw, cL: xB - 0.66 * hw, wL: 0.21 * hw, cR: xB + 0.66 * hw, wR: 0.21 * hw, core: xB };
 +    ROW_KEYS.forEach((k) => { endRow[k] = r[k] + (d[k] - r[k]) * w; });
 +    return { ...endRow };
@@ -78,7 +159,7 @@ index d8f6027..587f5f1 100644
    if (M05JOIN) {
      // `&m05join=1` (Screen 05 round 13, waterRibbon.ts M05JOIN): the far layout by virtual depth for the near ribbon's
      // blend band before the seam (the seam never passes zCap) — float, read with manual interpolation (nearest)
-@@ -263,7 +301,7 @@ export function createLiveFar05(a: LiveFar05Args): (cam: THREE.Camera) => void {
+@@ -263,7 +302,7 @@ export function createLiveFar05(a: LiveFar05Args): (cam: THREE.Camera) => void {
        const fr = ft.path.frame(sReal);
        tubeCenterAt(ft.path, sReal, cr);
        const rr = ft.path.radius(sReal);
@@ -87,7 +168,7 @@ index d8f6027..587f5f1 100644
        // lift to the real river where the seam has slid (the real ribbon starts climbing toward 06 there): 0 at zs = 0
        const lift = zs > 0 ? a.riverUp(Math.min(Z, zs)) - a.riverUp(0) : 0;
        const e0 = Math.max(-ch + 0.05, r.xB - r.hw), e1 = Math.min(ch - 0.05, r.xB + r.hw);
-@@ -328,7 +366,7 @@ export function createLiveFar05(a: LiveFar05Args): (cam: THREE.Camera) => void {
+@@ -328,7 +367,7 @@ export function createLiveFar05(a: LiveFar05Args): (cam: THREE.Camera) => void {
      far05Coins.map = (s: number, dl: number, h: number, out: THREE.Vector3) => {
        const Z = s - sF;
        if (Z > a.zEnd * 0.98) return 0;
@@ -96,12 +177,27 @@ index d8f6027..587f5f1 100644
        const lift0 = zs > 0 ? a.riverUp(Math.min(Z, zs)) - a.riverUp(0) : 0;
        fco.copy(Rt).multiplyScalar(THREE.MathUtils.clamp(r.core + dl, r.cL, r.cR)).addScaledVector(U, a.level + lift0 + h);
        point(Z, fco, out);
-@@ -345,7 +383,7 @@ export function createLiveFar05(a: LiveFar05Args): (cam: THREE.Camera) => void {
+@@ -345,12 +384,19 @@ export function createLiveFar05(a: LiveFar05Args): (cam: THREE.Camera) => void {
      c.lumps.forEach((l, i) => {
        let sc = 0;
        if (l.Z > zs + 0.02) {
 -        const r = rowAt(l.Z);
+-        const x = THREE.MathUtils.clamp(l.side < 0 ? r.xB - r.hw - l.e : r.xB + r.hw + l.e, -ch, ch);
+-        co.copy(Rt).multiplyScalar(x).addScaledVector(U, a.level + EDGE_LIFT + lift0 + l.lift);
 +        const r = rowLive(l.Z);
-         const x = THREE.MathUtils.clamp(l.side < 0 ? r.xB - r.hw - l.e : r.xB + r.hw + l.e, -ch, ch);
-         co.copy(Rt).multiplyScalar(x).addScaledVector(U, a.level + EDGE_LIFT + lift0 + l.lift);
++        let e = l.e, fill = 1;
++        if (l.f !== undefined) {
++          // `&m05endr=1` (round 28): bank-fill lump across the bank between the water edge and the wall (only where the bank is wide)
++          const bank = ch - Math.abs(l.side < 0 ? r.xB - r.hw : r.xB + r.hw);
++          fill = THREE.MathUtils.smoothstep(bank, 0.9, 1.6);
++          e = 0.45 + l.f * Math.max(0, bank - 0.75);
++        }
++        const x = THREE.MathUtils.clamp(l.side < 0 ? r.xB - r.hw - e : r.xB + r.hw + e, -ch, ch);
++        co.copy(Rt).multiplyScalar(x).addScaledVector(U, a.level + EDGE_LIFT + lift0 + l.lift + 0.35 * (l.f ?? 0) ** 2);
          point(l.Z, co, cp);
+         const mag = (D0lock + l.Z) / Math.max(cp.distanceTo(eye), 0.5);
+-        sc = l.r * kOf(l.Z) * THREE.MathUtils.smoothstep(mag, 1.4, 2.2) * THREE.MathUtils.smoothstep(l.Z, zs, zs + 0.6) * (1 - open);
++        sc = l.r * fill * kOf(l.Z) * THREE.MathUtils.smoothstep(mag, 1.4, 2.2) * THREE.MathUtils.smoothstep(l.Z, zs, zs + 0.6) * (1 - open);
+       }
+       c.mesh.setMatrixAt(i, cm.makeScale(sc, sc, sc).setPosition(cp));
+     });
