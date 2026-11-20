@@ -44,6 +44,20 @@ try {
         await set('hat_crown', 'crown.png', 'map'); await set('hat_crown', 'crown_n.png', 'normalMap');
         await set('hat_brim', 'brim.png', 'map'); await set('hat_brim', 'brim_n.png', 'normalMap');
       }
+      // star (r23 step 3): sdir = URL folder with star.png / star_n.png; scol = colour factor; se = emissive intensity;
+      // sem = emissive colour; sns = normal strength; srough = roughness
+      const smat = B.scene.getObjectByName('hat_star')?.material;
+      if (smat && v.sdir) {
+        if (smat.map) { try { smat.map.image = await img(`${v.sdir}/star.png`); smat.map.needsUpdate = true; } catch {} }
+        if (smat.normalMap) { try { smat.normalMap.image = await img(`${v.sdir}/star_n.png`); smat.normalMap.needsUpdate = true; } catch {} }
+      }
+      if (smat) {
+        if (v.scol) smat.color.setRGB(...v.scol);
+        if (v.se !== undefined) smat.emissiveIntensity = v.se;
+        if (v.sem) smat.emissive.setRGB(...v.sem);
+        if (v.sns !== undefined) smat.normalScale.setScalar(v.sns);
+        if (v.srough !== undefined) smat.roughness = v.srough;
+      }
       const cm = B.scene.getObjectByName('hat_crown')?.material, bm = B.scene.getObjectByName('hat_brim')?.material;
       if (v.ccol && cm) cm.color.setRGB(...v.ccol);
       if (v.rcol && bm) bm.color.setRGB(...v.rcol);

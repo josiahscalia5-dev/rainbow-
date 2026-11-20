@@ -38,3 +38,27 @@ Replace values in place: `node /home/user/rainbow-/tools/lead23/setq.mjs "<base 
   real-speed and half-speed clips). Gameplay 8/8, 91 coins; start view 0 px.
 * ~04:40 lead review of s07 r22 step 1 `&m07cloud=1`: flat streaky pale sheets → puffier white cloud banks = small GOOD IMPROVEMENT
   (texture); still tall white foam walls along the drop where the painting shows purple slotted walls + gold rings and only low foam.
+* ~04:40–06:35 four workers ran; ~06:30 the account's 5-hour usage limit stopped s04 / s06 / Benny (HTTP 429, "resets 9am UTC"); the
+  environment then closed (last local autosave 06:35 `04949cf` committed but NOT pushed; no backup 06:35–09:42 = environment closed).
+* ~09:42 container restarted: worktrees + uncommitted edits intact (s04 5, s07 7, s06 8, Benny 10 files). Autosave pushed → `b840ce2`
+  (remote = local). All four workers resumed with SendMessage from their saved transcripts.
+* ~09:50 lead review: s07 step 1 `&m07satin=1` (worker GOOD) — magenta bands read as glossy satin instead of a flat smear = small GOOD
+  IMPROVEMENT; still a close purple wall over a huge magenta sheet at hard left / right.
+* ~09:50 s06 FINISHED 3 steps (worker): `m06fcl` GOOD (moderate), `m06view=1&m06vs=0` GOOD as framing TEST (user decides), `m06rip`
+  GOOD (small). Lead by eye: foam heaps lower (small gain); framing holds the off-centre tunnel early, drifts back to a target by the
+  middle; NOT YET close — the painting's winding S-river / curving coin trail / smaller Benny are missing. Folder `qa/match/06/r23/`.
+* **~09:55 USER (verbatim):** "The fuller, rounder Screen 07 foam looks closer to my approved artwork. Please preserve that improvement
+  as a candidate. Screen 07 still needs work on the overall river shape. My approved picture shows broad S-shaped bends where the blue
+  water, pink edges, foam, and coin trail curve together. The later views currently look like a mostly straight chute with wavy colours
+  inside it. Please inspect the channel geometry and camera framing together. Correct a representative section so the actual visible
+  river boundaries follow the approved sweeping bends. Give the foam natural variation in size and spacing so it blends into the water.
+  Build on the existing tunnel, materials, character, and successful work. Keep the playable route, camera, and collision surfaces
+  consistent with any geometry changes. ... Please provide a clearly labelled, uninterrupted SCREEN 07 clip covering the entrance,
+  middle, end, and left/right steering. Include the playback speed ... For Screen 04, continue with the cleaner, lower pink edges. Keep
+  the gold visible, the blue water clear, and show Benny travelling naturally through all five arrows. ... Keep these screens open for
+  review until the moving scenery meets the approved design."
+  → `m07cloud` = user-liked candidate (kept in K7c). s07 redirected: step 2 = S-bends (geometry + framing together, representative
+  section, route / coins / collision consistent), step 3 = foam variation. s04 told the direction is confirmed.
+* ~09:58 s08 polish launched in the freed slot (`LAUNCH_S08_R23.md`: `m08gl`, coin sizing, towel double). Lead renders a labelled
+  full Screen 07 clip of the current candidate from `/home/user/wt/lead07` (= `8accdad0` + `qa/match/07/r23/s1_satin/code.patch`) with
+  `tools/lead23/screen_clip.mjs` + `label_clip.py` (HUD-font fix from s06 `r23_vite.mjs`).

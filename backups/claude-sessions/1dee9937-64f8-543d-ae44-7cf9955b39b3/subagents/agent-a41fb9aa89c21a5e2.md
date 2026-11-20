@@ -2872,3 +2872,192 @@ No artefacts at frame 70 or 45; the ripple effect there is faint. Final type-che
 
 You've hit your 5-hour limit · resets 9am (UTC)
 
+### 🧑 User — 2026-11-20T09:49:11.345Z
+
+The coordinator sent a message while you were working:
+Resume Screen 06 after the usage-limit stop: finish step 3 (&m06rip=1 ripple rings round Benny) from where you stopped — your last note: no artefacts at frames 70 / 45, ripple faint; next were the final type-check, the step 3 verdict and the WHERE-I-STOPPED block. The container restarted at ~09:40 UTC; your worktree /home/user/wt/s06 and its uncommitted edits are intact, but any dev servers / renders you had running are gone. Same brief (docs/briefs/2026-11-20-r23/LAUNCH_S06_R23.md). After step 3, stop and send your final report (3 finished steps). Keep parallel renders to at most 2 at a time.
+
+Address this before completing your current task.
+
+### 🤖 Claude — 2026-11-20T09:49:18.018Z
+
+Resuming after the restart. First I'll confirm the worktree edits, the proof files and PROGRESS.md survived, since running jobs and possibly the scratchpad are gone.
+
+### 🤖 Claude — 2026-11-20T09:49:20.675Z
+
+> 🔧 **Bash** `{"command": "date -u +%H:%M; cd /home/user/wt/s06 && git status --short | grep -v node_modules; git diff --stat; ls -la node_modules | head -1; R=/home/user/rainbow-/qa/match/06/r23; for d in step1_m06fcl step2_m06vs0 step3_m06rip; do echo \"== $d\"; ls $R/$d; done; ls $R/step3_m06rip/NEW | wc -l; ls $R/step3_m06rip/BEFORE | wc -l; for f in $R/step1_m06fcl/*.mp4 $R/step1_m06fcl/with_m06view/*.mp4 $R/step2_m06vs0/*.mp4 $R/step3_m06rip/*.mp4; do echo \"$f $(stat -c %s $f) $(ffprobe -v error -show_entries stream=nb_frames -of csv=p=0 $f)\"; done", "description": "Verify worktree edits and proof f …[+20 chars]`
+
+### 🧑 User — 2026-11-20T09:49:21.268Z
+
+> ↩︎ result: 09:49
+>  M src/game/Game.ts
+>  M src/world/match06.ts
+> ?? tools/match06/r23_audit.mjs
+> ?? tools/match06/r23_ripdump.mjs
+> ?? tools/match06/r23_swim.mjs
+> ?? tools/match06/r23_tunprobe.mjs
+> ?? tools/match06/r23_vite.mjs
+>  src/game/Game.ts     |   1 +
+>  src/world/match06.ts | 100 ++++++++++++++++++++++++++++++++++++++++++++++++++-
+>  2 files changed, 100 insertions(+), 1 deletion(-)
+> lrwxrwxrwx 1 root root 32 Nov 20 04:11 node_modules -> /home/user/rainbow-/node_modules
+> == step1_m06fcl
+> 1_APPROVED.png
+> BEFORE
+> BEFORE.log
+> NEW
+> NEW.log
+> code.patch
+> continuity.log
+> gameplay_NEW.json
+> gameplay_NEW.log
+> gameplay_NEW_m06view.json
+> gameplay_NEW_m06view.log
+> swim_06_BEFORE.log
+> swim_06_BEFORE.mp4
+> swim_06_NEW.log
+> swim_06_NEW.mp4
+> with_m06view
+> == step2_m06vs0
+> 1_APPROVED.png
+> NEW
+> NEW.log
+> code.patch
+> gameplay_NEW.json
+> gameplay_NEW.log
+> probe
+> swim_06_NEW.log
+> swim_06_NEW.mp4
+> == step3_m06rip
+> 1_APPROVED.png
+> BEFORE
+> BEFORE.log
+> NEW
+> NEW.log
+> code.patch
+> continuity.log
+> gameplay_NEW.json
+> gameplay_NEW.log
+> swim_06_NEW.log
+> swim_06_NEW.mp4
+> 12
+> 12
+> /home/user/rainbow-/qa/match/06/r23/step1_m06fcl/swim_06_BEFORE.mp4 3056160 115
+> /home/user/rainbow-/qa/match/06/r23/step1_m06fcl/swim_06_NEW.mp4 3060911 115
+> /home/user/rainbow-/qa/match/06/r23/step1_m …[+200 chars]
+
+### 🤖 Claude — 2026-11-20T09:49:24.400Z
+
+Everything survived: the worktree edits, all step folders, and the five 115-frame clips. I'll re-check the type-check, that the step 3 patch matches the live diff, and all 13 reference checksums.
+
+### 🤖 Claude — 2026-11-20T09:49:26.426Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && timeout 300 npx tsc --noEmit; echo \"tsc rc=$?\"; git diff -- src/world/match06.ts src/game/Game.ts | md5sum; md5sum < /home/user/rainbow-/qa/match/06/r23/step3_m06rip/code.patch; cd /home/user/rainbow- && sha256sum -c scripts/reference.sha256 2>&1 | grep -c \": OK\"; sha256sum -c scripts/reference.sha256 2>&1 | grep -v \": OK\" | head -3", "description": "Type-check, patch match and reference checksums"}`
+
+### 🧑 User — 2026-11-20T09:49:41.303Z
+
+> ↩︎ result: tsc rc=0
+> b90e75004ff02c84073896ff693ad947  -
+> b90e75004ff02c84073896ff693ad947  -
+> 13
+
+### 🤖 Claude — 2026-11-20T09:49:44.893Z
+
+Type-check clean, patch matches the live diff, 13/13 references OK. Now the step 3 verdict and the final WHERE-I-STOPPED block.
+
+### 🤖 Claude — 2026-11-20T09:49:45.482Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r23/PROGRESS.md", "limit": 20}`
+
+### 🧑 User — 2026-11-20T09:49:45.508Z
+
+> ↩︎ result: 1	# Screen 06 — round 23 progress (worktree `/home/user/wt/s06`, LOCAL branch `claude/rainbow-s06-match-c24`, port 5276)
+> 2	
+> 3	## (r23) WHERE I STOPPED / NEXT
+> 4	* ~04:48 UTC — Step 1 (r22 step 3 `&m06fcl=1`, low foam heaps) DONE: **GOOD IMPROVEMENT** (see below); clips done 05:01.
+> 5	* ~05:00 UTC — Step 2 (`&m06view=1&m06vs=0`, off-centre ring tunnel held through the first second) DONE: **GOOD
+> 6	  IMPROVEMENT** as a camera-framing TEST (user decides; not in the kept set). Clip done 05:13.
+> 7	* ~05:00 UTC — Step 3 `&m06rip=1` (the painted ripple rings round Benny carried with him) BUILT (`src/world/match06.ts`,
+> 8	  1 line in `src/game/Game.ts`), `tsc` clean. First NEW render was confounded by the river's flow animation (wall clock,
+> 9	  differs per run) → re-rendering BEFORE / NEW with the water clock pinned (`AUDIT_PIN=22000`, `tools/match06/r23_audit.mjs`).
+> 10	* The machine is heavily loaded (other workers): shots ~5 min, each 4.8 s clip ~20–25 min.
+> 11	
+> 12	K6 = `match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1`
+> 13	r23 BEFORE base = K6 + `&m06st=1` (r22 step 2, small GOOD IMPROVEMENT, lead review pending; not yet in K6).
+> 14	
+> 15	## …[+736 chars]
+
+### 🤖 Claude — 2026-11-20T09:50:07.455Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='/home/user/rainbow-/qa/match/06/r23/PROGRESS.md'\ns=open(p).read()\nold_head=s[s.index(\"## (r23) WHERE I STOPPED / NEXT\"):s.index(\"K6 = `match06=1\")]\nnew_head=\"\"\"## (r23) WHERE I STOPPED / NEXT — STOPPED after 3 finished steps (final report sent to the lead, ~09:55 UTC)\n* Step 1 `&m06fcl=1` (big white foam walls → low separate puffy heaps): **GOOD IMPROVEMENT** (moderate). Candidate for K6.\n* Step 2 `&m06view=1&m06vs=0` (ring tunnel held off-centre right through the first second): **GOOD IMPROVEMENT** as a\n  camera-framing TEST — the USER decides ( …[+4637 chars]`
+
+### 🧑 User — 2026-11-20T09:50:07.508Z
+
+> ↩︎ result: # Screen 06 — round 23 progress (worktree `/home/user/wt/s06`, LOCAL branch `claude/rainbow-s06-match-c24`, port 5276)
+> 
+> ## (r23) WHERE I STOPPED / NEXT — STOPPED after 3 finished steps (final report sent to the lead, ~09:55 UTC)
+> * Step 1 `&m06fcl=1` (big white foam walls → low separate puffy heaps): **GOOD IMPROVEMENT** (moderate). Candidate for K6.
+> * Step 2 `&m06view=1&m06vs=0` (ring tunnel held off-centre right through the first second): **GOOD IMPROVEMENT** as a
+>   camera-framing TEST — the USER decides (show the clip); never in the kept set without the user's OK. No code change.
+> * Step 3 `&m06rip=1` (the painted ripple rings round Benny carried with him): **GOOD IMPROVEMENT (small)** — visible round
+>   Benny in the first ~0.7 s and up close; subtle later. Candidate for K6 (lead / user decide).
+> * Nothing committed / pushed from the worktree (lead autosave snapshots it). Uncommitted code: `src/world/match06.ts`
+>   (step 3), `src/game/Game.ts` (1 line, step 3); QA tools `tools/match06/r23_*.mjs`. Container restart ~09:40 UTC: worktree,
+>   proofs and all 5 clips intact (re-verified 09:49: `tsc` clean, step 3 `code.patch` == live diff, references 13/13 OK).
+> * Best combined query so far  …[+2269 chars]
+
+### 🤖 Claude — 2026-11-20T09:50:27.276Z
+
+All three Screen 06 steps are finished, and I've stopped as the brief says. Nothing was committed or pushed, and no paid jobs were run. After the ~09:40 restart I re-checked everything at 09:49: the worktree edits, all proof folders and the five clips are intact, the type-check is clean, step 3's `code.patch` matches the live code, and the 13 reference checksums pass. No renders are running.
+
+Every step leaves the start view unchanged, passes gameplay 8/8 with 91 coins (1,330 → 2,240) and no camera cut, and keeps the 05→06 and 06→07 joins with no gap. Each has separate full-size APPROVED / BEFORE / NEW shots (start, 12, 22, 35, 47, 60, 85 %, plus hard left/right) and a 4.8 s clip that swims through all of 06 into 07.
+
+**Step 1 `&m06fcl=1` (r22 foam code, now verdicted): GOOD IMPROVEMENT (moderate).**
+- BEFORE: a tall, unbroken white foam wall builds up along the far bank, and a foam cliff stands behind Benny on the crest.
+- NEW: low, separate puffy heaps hug the water's edge, with blue water and purple wall between them, much closer to the painting. It holds in motion and with `m06view`.
+- Still different: the heaps along the far bank follow a slightly regular rhythm, and when Benny steers hard right foam still partly covers him.
+
+**Step 2 `&m06view=1&m06vs=0`: GOOD IMPROVEMENT, as a camera-framing test only.** The user decides; it must not go into the kept set without their OK. No code changed; it uses an existing setting of the r21 test.
+- Why the tunnel turns into a target: the painted tunnel is straight, but after the crest the game river turns about 18° right and 12° down away from it. As the camera follows the river, the ring centre slides from the painted spot to the upper left.
+- Why scenery can't fix it: bending the tunnel is the banned `m06bend`, and moving the river would change the route and 07.
+- The r22 `m06view` lifted the camera up to 7 u over the crest, which threw the ring centre to the top of the screen.
+- NEW: through the first second (start, 12 %, 22 %, 35 %, and when steering) the ring tunnel stays where it is painted: right of centre at mid-height, with the purple drum wall and gold paddle lids at upper left.
+- Still different: at the crest top the river beyond is hidden for a moment (the coin line on the right shows the way). From about 47 % on, the rings drift back toward a target near the top centre. The end is unchanged.
+
+**Step 3 `&m06rip=1`: GOOD IMPROVEMENT (small).** New code in `src/world/match06.ts` plus one line in `src/game/Game.ts`.
+- It takes the painting's own water round Benny's base and carries it with him on the river. His body area is left out, and the painted bubbles and foam are cut away so nothing looks glued to him. It fades in only once Benny has moved off the start view.
+- BEFORE: once Benny swims, only white spray remains around him.
+- NEW: a lacy white-cyan collar, a deeper-blue ring band and bright streaks fanning out behind him, spreading slowly. There are no seams or stuck bubbles, and it stays on the water.
+- I fixed one problem along the way: a straight seam where the painting's bottom edge cut the ring patch.
+- Still different: the low camera flattens the rings, so they look fainter than the painted ones, and from the crest top on they are hard to see.
+- On the start shot, 5 pixels differ, all on the HUD (pause-button rim and heart outline); the scenery is unchanged.
+
+**For you and the other workers:**
+- **Wrong HUD font in shots:** each worktree's `node_modules` is a link into `/home/user/rainbow-/node_modules`, so the dev server refuses the HUD fonts and every shot falls back to a plain font. `/home/user/wt/s06/tools/match06/r23_vite.mjs` fixes this.
+- **Water differs between runs:** the 06 river runs on the real clock, so separate BEFORE and NEW renders show different water. My audit copy pins the clock for the draw (`AUDIT_PIN=22000`).
+
+**Next most visible differences:**
+1. The tunnel re-centring after the crest; only the user can decide that, because it needs a route or artwork change.
+2. The river hidden at the crest top with `m06vs=0`.
+3. Big near foam clouds at lower right that partly cover Benny.
+4. Benny cut off at the screen edge when steering hard early (same as K6).
+5. The coins along the crest.
+
+All parts so far, each still needing your or the user's OK:
+`match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1&m06st=1&m06fcl=1&m06view=1&m06vs=0&m06rip=1`
+
+Files are in `/home/user/rainbow-/qa/match/06/r23/`:
+- PROGRESS.md (verdicts, queries, timings)
+- step1_m06fcl/
+- step2_m06vs0/ (its BEFORE shots are `step1_m06fcl/NEW/`)
+- step3_m06rip/
+
+Code and QA tools (uncommitted, in the worktree):
+- /home/user/wt/s06/src/world/match06.ts
+- /home/user/wt/s06/src/game/Game.ts
+- /home/user/wt/s06/tools/match06/r23_audit.mjs
+- /home/user/wt/s06/tools/match06/r23_swim.mjs
+- /home/user/wt/s06/tools/match06/r23_vite.mjs
+- /home/user/wt/s06/tools/match06/r23_tunprobe.mjs
+- /home/user/wt/s06/tools/match06/r23_ripdump.mjs
+

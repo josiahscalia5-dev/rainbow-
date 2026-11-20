@@ -154054,6 +154054,71 @@ index d1de648..c96482c 100644
 + "tipw": 1.0
  }
 \ No newline at end of file
+diff --git a/qa/benny/r23/PROGRESS.md b/qa/benny/r23/PROGRESS.md
+index a76822b..cea17dd 100644
+--- a/qa/benny/r23/PROGRESS.md
++++ b/qa/benny/r23/PROGRESS.md
+@@ -1,18 +1,51 @@
+-# Benny round 23 — progress (branch `claude/rainbow-benny-c23`)
++# Benny round 23 — progress (worktree `/home/user/wt/benny`, local branch `claude/rainbow-benny-c24` = `-c23` @ `734efb6`; not committed / pushed by Benny — the lead's autosave snapshots the worktree)
+ 
+-## (r23) WHERE I STOPPED / NEXT — 2026-11-20
++## (r23) WHERE I STOPPED / NEXT — 2026-11-20 ~09:55 UTC (new account, in-process Benny)
+ 
+-**Done:** step 1 `&b20tuft=1` (fluffy tuft volume, lighter rose tips) — GOOD IMPROVEMENT (partial), Benny-centred crops.
+-Best Benny query now: `&benny20=1&b20expo=1&b20ppw=0.45&b20tuft=1` (all opt-in; default build unchanged).
+-**Next (lead order 03:45 UTC):** (2) `tools/benny20/knit.py`: cream (not lavender) light stripes, vertical cuff ribs, violet
+-not bluer → re-test `b20knit=1`; (3) stitched felt star. Do NOT scale Benny (06 size = Screen 06 specialist).
+-Still open on the fur: finer and grainier than the approved long silky combed strands.
++**Done this session:** step 2 knit beanie `&b20knit=1` (chain mode, cream stripes, vertical rib cuff, violet not bluer,
++per-yarn exposure on 05–08) — GOOD IMPROVEMENT (hat), proof `qa/benny/r23/s2_knit/`, gameplay 8/8 + 91 coins.
++**Best Benny query now:** `&benny20=1&b20expo=1&b20ppw=0.45&b20tuft=1&b20knit=1` (all opt-in; default build unchanged).
++**Next:** (3) stitched felt star (`tools/benny20/knit.py` star(): the approved = soft yellow felt, darker gold rim, dashed
++stitches); then (4) fur: longer silky combed tufts (not grainy). Do NOT scale Benny. Max 2 parallel renders.
++**Open on the hat (not this step):** crown dome rounder / flatter than the approved taller beanie; on 06 middle the cream
++leans a little yellow (`&b20kw06=` tunable).
+ 
+-Proof tools (new): `tools/benny23/shots_c.mjs` (= lead audit tool + Benny's projected screen box per shot, from the QA-only
+-`__b20.screenBox`) and `tools/benny23/crop_c.py` (crop centred on Benny, 675x810 like `qa/benny/r22/approved/0N_benny.png`).
++Worktree edits (uncommitted, for the lead's autosave): `tools/benny20/knit.py` (+ `knit_mode: chain`, `--nostar`),
++`tools/benny23/knit_r23.json` (map params), `tools/benny23/knitprobe.mjs` (one-load map/exposure probe),
++`assets/textures/benny20/{crown,crown_n,brim,brim_n}.png` + `knit_params.json` (regenerated), `src/characters/benny/benny20.ts`
++(neutral knit factors, `KNITX20` per-yarn exposure via a small `onBeforeCompile` on the two knit materials).
+ 
+ ## Log
+ 
++### Step 2 (lead order) — knit beanie `&b20knit=1` — GOOD IMPROVEMENT (hat)
++* Started from the unfinished `734efb6` edits (rendered as `cur`: cream stripes, but V-stitch crown with violet specks in
++  the gaps, cuff a horizontal-banded V grid, violet clipped electric blue-violet).
++* `tools/benny20/knit.py` new `knit_mode: chain` (`chain_field`, `shade2`): every column a round rib cord made of small
++  V stitches with a continuous dark groove — the vertical ribbing of the approved cuff AND crown; stripe colour follows
++  the stitch row (no wrong-colour specks); two-tone yarn (cool groove shadow → lit stitch top, lilac sheen on violet rib
++  tops). Measured on the approved 04 hat: cuff ribs ≈ 7–9 px, crown columns ≈ 8 px → crown 100 × 36 rows, cuff 108 × 14.
++  Colours solved through the live 04 light + post chain (map probe `tools/benny23/knitprobe.mjs`, 10 variants):
++  04 violet median (106,17,219) vs approved (108,18,210); light stripes cream (~(240,215,212) at the 04 start) instead
++  of the r22 lavender-pink (255,222,255, clipped).
++* `benny20.ts`: knit factors neutral `[1,1,1]`, normal strength 2.0 / 2.0; new `KNITX20` per-screen exposure for the two
++  yarns separately (violet `v`, cream `w`; the knit shader tells them apart by the map texel's g/b) — 05–08 paint the hat
++  ≈ 1.5× brighter than the game lights it; one multiplier for both yarns turned the cream lavender or the violet electric.
++  Only with `b20knit=1&b20expo=1`; `&b20kv0N=` / `&b20kw0N=` overrides. 08 / 06 re-tuned after the first pass (08 blown
++  out, 06 middle yellow).
++* Proof `/home/user/rainbow-/qa/benny/r23/s2_knit/0N/` (N = 04..08): `approved_benny.png`, `before/` = step-1 best query
++  (no knit; reused from `qa/benny/r23/s1_tuft/0N/new/` — re-render check on 04: Benny pixel-identical, only the HUD band
++  differs), `new/` = + `&b20knit=1`; `a_start / c_middle / f_hard_left` full frames + `*_crop.png`; queries
++  `QUERY_BEFORE_0N.txt` / `QUERY_NEW_0N.txt` (lead r21 `QUERY_0N.txt` + Benny switches; the newer 04 K23 / 06 / 07 / part
++  of 05 match code is not on this branch, so those screen switches are ignored — this branch's build of each screen;
++  Benny's look is what is judged). Swim clip `swim05_knit_NEW.mp4` (BEFORE `swim05_BEFORE.mp4`), frames `swim05_frames/`.
++  Gameplay `gameplay_knit.json`: 8/8 checks, 91 coins, victory, with the NEW switches.
++* Verdict by eye: the beanie now reads as a real chunky hand-knit hat like the approved — clean vertical ribs on the cuff,
++  ribbed stitch columns on the crown, CREAM light stripes and the approved purple violet (no smeared streaks, no lavender,
++  no electric blue) — on 04–08, start / middle / hard left and while swimming. Still different: the approved painting's
++  light stripes read whiter-lilac (cream chosen per the lead order), the knit is more regular than the painted one, and
++  the crown dome is rounder / flatter than the approved taller beanie (geometry, not this step).
++
++
+ ### Step 1 — `&b20tuft=1` soft fluffy plush volume — GOOD IMPROVEMENT (partial)
+ * `fur.ts`: new BENNY20-only uniforms `uTipCol` (colour the uPile.w tips fade to; pompom keeps its pale lavender) and `uVol`
+   (x highlight on up-facing fur, y darker underside). `benny20.ts`: `TUFT` block (body + arms): bigger locks (30 / arms 36),
 diff --git a/src/characters/benny/benny20.ts b/src/characters/benny/benny20.ts
 index 340e1d3..9f1cc48 100644
 --- a/src/characters/benny/benny20.ts
@@ -154169,7 +154234,7 @@ index 340e1d3..9f1cc48 100644
    return tick;
  }
 diff --git a/tools/benny20/knit.py b/tools/benny20/knit.py
-index fccfeae..388a438 100644
+index fccfeae..f6bf6cb 100644
 --- a/tools/benny20/knit.py
 +++ b/tools/benny20/knit.py
 @@ -95,6 +95,81 @@ def knit_field(W, H, cols, rows, seed, rib=False, groove=0.38):
@@ -154254,21 +154319,99 @@ index fccfeae..388a438 100644
  def shade(h, base, var, groove, fuzz):
      occ = groove + (1 - groove) * np.clip(h, 0, 1) ** 0.75
      c = base * occ[..., None] * (1 + 0.045 * var)[..., None] * (1 + 0.05 * fuzz)[..., None]
-@@ -224,9 +299,14 @@ def main():
+@@ -158,6 +233,75 @@ def star_poly():
+     return np.array(pts)
+ 
+ 
++def star_fields(p):
++    """shared star geometry fields in the planar star UV space: X, Y, signed distance to the outline (negative inside),
++    arc length along the nearest outline segment"""
++    N = p['star_px']
++    size, cy = 0.41593, 0.020078
++    u = (np.arange(N) + 0.5) / N
++    v = 1 - (np.arange(N) + 0.5) / N
++    U, V = np.meshgrid(u, v)
++    X = (U - 0.5) * size
++    Y = (V - 0.5) * size + cy
++    poly = star_poly()
++    seg_len = np.hypot(*(np.roll(poly, -1, 0) - poly).T)
++    cum = np.concatenate([[0], np.cumsum(seg_len)])
++    d = np.full(X.shape, 1e9); arc = np.zeros(X.shape)
++    for i in range(10):
++        ax, ay = poly[i]; bx, by = poly[(i + 1) % 10]
++        ex, ey = bx - ax, by - ay
++        t = np.clip(((X - ax) * ex + (Y - ay) * ey) / (ex * ex + ey * ey), 0, 1)
++        dd = np.hypot(X - ax - t * ex, Y - ay - t * ey)
++        m = dd < d
++        d = np.where(m, dd, d); arc = np.where(m, cum[i] + t * seg_len[i], arc)
++    inside = np.zeros(X.shape, bool)
++    for i in range(10):
++        ax, ay = poly[i]; bx, by = poly[(i + 1) % 10]
++        inside ^= ((ay > Y) != (by > Y)) & (X < (bx - ax) * (Y - ay) / (by - ay + 1e-12) + ax)
++    return N, X, Y, np.where(inside, -d, d), arc
++
++
++def star_felt(p, out):
++    """r23 `star_mode: felt` (approved 04 star, qa/benny/r23/s3_star): a PUFFY felt pillow — pale gold centre with a soft
++    upper-left highlight, amber toward the edge, a flat orange SEWN RIM band with a darker outline, and a running stitch of
++    light cream dashes with dark needle holes along the rim; the bevel outside the face continues the rim, darkening
++    outward (rounded felt edge, not a hard gold ring). Colours are albedo (sRGB), solved with the material factor."""
++    N, X, Y, sd, arc = star_fields(p)
++    c = lambda k: s2l(p[k])[None, None]
++    rimw = p.get('star_rimw', 0.016)
++    fz = fbm(X.shape, p['seed'] + 9, sigmas=(0.6, 1.5, 4.0), weights=(0.5, 0.3, 0.2), wrap=False)
++    # face: dome from the rim inward + highlight up-left of the centre
++    depth = np.clip((-sd - rimw) / 0.05, 0, 1)
++    face = c('star_face_lo') * (1 - np.sqrt(depth))[..., None] + c('star_face') * np.sqrt(depth)[..., None]
++    hl = np.exp(-((X + 0.025) ** 2 + (Y - 0.03) ** 2) / p.get('star_hlr', 0.0035)) * p.get('star_hl', 0.8)
++    face = face + (c('star_face_hi') - face) * hl[..., None]
++    # rim band (sewn felt edge): flat orange, slightly lighter on its inner half, dark outline at the cut edge
++    rt = np.clip(-sd / rimw, 0, 1)                 # 0 at the outline .. 1 at the rim's inner edge
++    rim = c('star_rim') * (0.9 + 0.12 * rt)[..., None]
++    out_k = np.clip(sd / 0.012, 0, 1)             # bevel outside the face: darker outward
++    edge = c('star_rim') * (1 - out_k)[..., None] + c('star_rim_dark') * out_k[..., None]
++    line = np.exp(-(sd / 0.0018) ** 2)[..., None]   # thin darker cut line at the outline
++    rim = rim * (1 - 0.35 * line)
++    blend = np.clip((-sd - rimw) / 0.004 + 0.5, 0, 1)[..., None]   # soft rim -> face seam
++    col = np.where((sd > 0)[..., None], edge * (1 - 0.35 * line), rim * (1 - blend) + face * blend)
++    col = col * (1 + 0.05 * fz)[..., None]
++    # running stitch along the rim: light dashes, dark holes in the gaps
++    sline = -rimw * p.get('star_stitch_at', 0.5)
++    band = np.exp(-((sd - sline) / p.get('star_stitch_w', 0.0026)) ** 2)
++    ph = np.mod(arc / p.get('star_stitch_pitch', 0.0145), 1.0)
++    dash = np.clip(1 - np.abs(ph - 0.3) / 0.26, 0, 1) ** 0.5
++    hole = np.exp(-((ph - 0.78) / 0.09) ** 2)
++    sd_mask = (sd < 0)[..., None]
++    col = np.where(sd_mask, col * (1 - (band * hole * 0.7)[..., None]), col)
++    col = np.where(sd_mask, col + (c('star_stitch_lt') - col) * (band * dash)[..., None], col)
++    Image.fromarray(l2s8(col)).save(f'{out}/star.png')
++    # height: pillow dome + raised rim plateau with a rounded cut edge + stitch dimples + felt fuzz
++    hgt = 0.55 + 0.45 * np.sqrt(depth) - 0.12 * np.exp(-((-sd - rimw) / 0.003) ** 2)
++    hgt = np.where(sd < 0, np.minimum(hgt, 0.5 + 0.5 * np.sqrt(np.clip(-sd / 0.006, 0, 1))), 0.5 * np.exp(-sd / 0.006))
++    hgt = hgt - 0.15 * band * hole + 0.06 * band * dash + 0.02 * fz
++    Image.fromarray(normals(ndi.gaussian_filter(hgt, 1.0), p.get('star_ns', 2.0) * N / 256)).save(f'{out}/star_n.png')
++
++
+ def star(p, out):
+     """planar UVs of benny05.starUVs on the GLB star: u = x / 0.41593 + 0.5, v = (y - 0.020078) / 0.41593 + 0.5
+     (x, y = the build.ts star shape coordinates; bbox incl. bevel 0.39993 x 0.38035, centre y +0.020078)"""
+@@ -224,9 +368,16 @@ def main():
      if '--json' in sys.argv:
          P.update(json.load(open(sys.argv[sys.argv.index('--json') + 1])))
      os.makedirs(out, exist_ok=True)
 -    crown(P, out)
 -    brim(P, out)
 -    star(P, out)
-+    if P.get('knit_mode') == 'chain':
++    if '--noknit' in sys.argv:
++        pass
++    elif P.get('knit_mode') == 'chain':
 +        crown_chain(P, out)
 +        brim_chain(P, out)
 +    else:
 +        crown(P, out)
 +        brim(P, out)
 +    if '--nostar' not in sys.argv:
-+        star(P, out)
++        (star_felt if P.get('star_mode') == 'felt' else star)(P, out)
      json.dump(P, open(f'{out}/knit_params.json', 'w'), indent=1)
      print('wrote', out)
  

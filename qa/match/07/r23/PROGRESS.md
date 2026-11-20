@@ -3,7 +3,8 @@
 ## (r23) WHERE I STOPPED / NEXT
 * DONE: step 1 `&m07satin=1` (painted satin ribbons + white flares on the magenta bands) — GOOD IMPROVEMENT (s1_satin/).
 * Candidate query now: `K7c&m07satin=1` (`s1_satin/query_NEW.txt`).
-* NOW: step 2 = lower the tall foam walls along the drop into low soft clouds (own switch).
+* NOW (resumed after the container restart ~05:15 UTC): step 2 = lower the tall foam walls along the drop into low soft clouds
+  (own switch `&m07low=1`: the drop's purple slotted wall comes down to the water just behind a narrow, low foam fringe).
 * NEXT: step 3 = the middle (close purple wall), `&m07view=1` framing test only if scenery cannot get there.
 
 Worktree `/home/user/wt/s07`, LOCAL branch `claude/rainbow-s07-match-c24` (= `8accdad0` + r22 WIP: r21 code + `m07cloud` + the
@@ -47,7 +48,7 @@ Checks:
 * Start view a_start **0 px** (rows 180–1536 and full frame). Deterministic capture K7c vs NEW (`proof_0px.json`): 07 start **0 px**,
   08 start **0 px**, 07d entering 08 **0 px** (07a / 07b / 07c differ = the bands down the drop, intended).
 * Gameplay `K7c&m07satin=1`: **8/8 pass, 91 coins, 1,330 → 2,240**, plunge drop 61.14 u (`gameplay_new.json`).
-  `npm run test:continuity`: ok, all joins gap 0, 07→08 drop 61.19 u — identical to r22 (`continuity.txt`). `tsc` clean.
+  `npm run test:continuity`: ok, all joins gap 0, 07→08 drop 61.19 u — identical to r22 (`s1_satin/continuity.txt`). `tsc` clean.
 * Code: `s1_satin/code.patch` (= full worktree diff vs `8accdad0`). QA tools now take `QA_PORT` (copies in `s1_satin/tools/`).
 
 **Verdict: GOOD IMPROVEMENT** (moderate; visible at hard left / right and in the foreground all through 07 incl. the drop; nothing

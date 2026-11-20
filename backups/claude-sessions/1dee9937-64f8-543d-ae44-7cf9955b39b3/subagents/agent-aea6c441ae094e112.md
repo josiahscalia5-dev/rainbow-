@@ -1279,3 +1279,386 @@ K23-1 rendered with the new code equals BEFORE at 0 px in all 7 shots (switches 
 
 You've hit your 5-hour limit · resets 9am (UTC)
 
+### 🧑 User — 2026-11-20T09:49:06.400Z
+
+The coordinator sent a message while you were working:
+Resume Screen 04 after the usage-limit stop: continue step 1 (arrows clearly ahead of Benny) from where you stopped. The container restarted at ~09:40 UTC but your worktree /home/user/wt/s04 and its uncommitted edits are intact (5 changed files); any dev servers / renders you had running are gone, so restart them. Your last note: K23-1 with your new code = BEFORE at 0 px in all 7 shots; you were about to inspect the clip in motion. Same brief (docs/briefs/2026-11-20-r23/LAUNCH_S04_R23.md). Other workers share this machine, so renders are slow — keep parallel renders to at most 2 at a time. Update your WHERE I STOPPED block after every finished step.
+
+Address this before completing your current task.
+
+### 🤖 Claude — 2026-11-20T09:49:10.529Z
+
+The container restarted; let me check what survived (worktree edits, my proof folder, scratchpad).
+
+### 🤖 Claude — 2026-11-20T09:49:12.780Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && git status --short | grep -v node_modules; grep -c \"m04wl\\|m04a3fl\" src/world/match04m4.ts; ls /home/user/rainbow-/qa/match/04/r23/s1_arrows /home/user/rainbow-/qa/match/04/r23/s04_tools; ls /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad 2>&1 | head; date -u; uptime", "description": "Check worktree, proof folder and scratchpad after restart"}`
+
+### 🧑 User — 2026-11-20T09:49:12.861Z
+
+> ↩︎ result: M src/game/Game.ts
+>  M src/world/match04.ts
+>  M src/world/match04m4.ts
+> ?? tools/match04/rings21.mjs
+> 11
+> /home/user/rainbow-/qa/match/04/r23/s04_tools:
+> audit_pinned_slow.mjs
+> clip.sh
+> probe_arrows.mjs
+> probe_lane.mjs
+> probe_waterline.mjs
+> strip.py
+> swim_clip_pinned_slow.mjs
+> variant.sh
+> 
+> /home/user/rainbow-/qa/match/04/r23/s1_arrows:
+> K23-1_with_new_code
+> NEW
+> QUERY_K23-S1.txt
+> SWITCH.txt
+> audit_k231_newcode.log
+> audit_new.log
+> swim04_NEW_K23-S1.mp4
+> swim04_NEW_K23-S1_frames
+> swim04_NEW_K23-S1_halfspeed.mp4
+> 0.png
+> 1.png
+> 2.png
+> 7a.png
+> 7b_d_late.png
+> 7b_e_end.png
+> 7b_g_hard_right.png
+> 7n_d_late.png
+> 7n_e_end.png
+> 7n_g_hard_right.png
+> Fri Nov 20 09:49:12 UTC 2026
+>  09:49:12 up 6 min,  0 user,  load average: 0.65, 0.83, 0.46
+
+### 🤖 Claude — 2026-11-20T09:49:15.326Z
+
+Worktree edits and my step-1 proof folder are intact. Let me update my WHERE I STOPPED block, then continue with the clip inspection.
+
+### 🤖 Claude — 2026-11-20T09:49:20.626Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/match/04/r23/PROGRESS.md", "old_string": "* Step 0 DONE: BEFORE = K23-1 re-rendered with the pinned audit -> `s04_BEFORE_K23-1/` == lead `lead_t2/C2/` 0 px in all 7 shots.\n* NOW: step 1 (five chevrons clearly AHEAD of Benny, Benny IN the water).", "new_string": "* Step 0 DONE: BEFORE = K23-1 re-rendered with the pinned audit -> `s04_BEFORE_K23-1/` == lead `lead_t2/C2/` 0 px in all 7 shots.\n* Step 1 IN PROGRESS (`s1_arrows/`, switch `s1_arrows/SWITCH.txt`, query `s1_arrows/QUERY_K23-S1.txt`): chevrons only where they\n  show ABOVE hi …[+619 chars]`
+
+### 🧑 User — 2026-11-20T09:49:20.712Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/match/04/r23/PROGRESS.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T09:49:24.528Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s04 && cd /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s04 && rm -rf cf && mkdir -p cf/b cf/n && ffmpeg -loglevel error -i /home/user/rainbow-/qa/match/04/r23/lead_t2/swim04_NEW_K23-1.mp4 cf/b/%03d.png && ffmpeg -loglevel error -i /home/user/rainbow-/qa/match/04/r23/s1_arrows/swim04_NEW_K23-S1.mp4 cf/n/%03d.png && python3 -c \"\nfrom PIL import Image\nidx=[8,16,22,28,34,40,46,54]\nW=Image.new('RGB',(len(idx)*216,2*384+10),'white')\nfor i,k in enumerate(id …[+264 chars]`
+
+### 🧑 User — 2026-11-20T09:49:26.077Z
+
+> ↩︎ result: cf
+> clip_sheet.png
+
+### 🤖 Claude — 2026-11-20T09:49:28.865Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s04/clip_sheet.png"}`
+
+### 🧑 User — 2026-11-20T09:49:29.029Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T09:49:35.106Z
+
+In motion the chevrons now stay ahead of him in every frame, but at clip scale they look small and faint near the vanishing point, especially while he steers. Let me look at full-size clip frames.
+
+### 🤖 Claude — 2026-11-20T09:49:38.213Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s04 && python3 /home/user/rainbow-/qa/match/04/r23/s04_tools/strip.py fr.png x 150,600,720,1250 /home/user/rainbow-/qa/match/04/r23/s1_arrows/swim04_NEW_K23-S1_frames/0018.png /home/user/rainbow-/qa/match/04/r23/s1_arrows/swim04_NEW_K23-S1_frames/0028.png /home/user/rainbow-/qa/match/04/r23/s1_arrows/swim04_NEW_K23-S1_frames/0040.png", "description": "Crop full-size NEW clip frames 18/28/40"}`
+
+### 🧑 User — 2026-11-20T09:49:39.662Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T09:49:42.263Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s04/fr.png"}`
+
+### 🧑 User — 2026-11-20T09:49:42.299Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T09:49:49.721Z
+
+> 🔧 **Bash** `{"command": "head -20 /home/user/rainbow-/qa/match/04/r22/tools/gameplay_test_5273.mjs | cut -c1-200; grep -n \"screenshot\\|timeout\" /home/user/rainbow-/qa/match/04/r22/tools/gameplay_test_5273.mjs | head", "description": "Read gameplay test tool usage"}`
+
+### 🧑 User — 2026-11-20T09:49:49.759Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // r22 S04 copy of scripts/gameplay-test.mjs: identical checks, only the dev-server port (AUDIT_PORT, default 5273) and the
+> // import path (run from the worktree) changed.
+> // Automated gameplay + continuity test on the REAL running game (headless Chromium, WebGL).
+> // Drives Benny from 03 to the 11 ending with the deterministic simulation API and checks:
+> //  * continuous travel: s strictly increases, no position jump > speed·dt (no teleport/cut)
+> //  * camera continuity: no camera jump between steps (no hard cut), incl. the 07 plunge → 08
+> //  * 07 plunge: positive travel time, large vertical drop, 08 inlet reached from the bottom
+> //  * real coin pickups update the counter; steering into the foam wall costs a heart
+> //  * pause freezes the simulation; resume continues
+> //  * the run ends in the 11 victory with Benny hidden under the towel
+> // Writes qa/gameplay_test.json and qa/07_to_08_continuity.md. Exit 1 on failure.
+> //   node scripts/gameplay-test.mjs --q=river05=1 --out=qa/pilot05/wave11/tests/gameplay_river05.json
+> //   → the same run with URL test switches; with --q the tracked qa/ files above are NOT rewritten.
+> import { writeFileSync, mkdirSync } from 'node:fs' …[+419 chars]
+
+### 🤖 Claude — 2026-11-20T09:49:54.527Z
+
+> 🔧 **Bash** `{"command": "D=/home/user/rainbow-/qa/match/04/r23/s1_arrows; cp /home/user/rainbow-/qa/match/04/r23/lead_t2/swim04_NEW_K23-1.mp4 $D/swim04_BEFORE_K23-1.mp4; cp /home/user/rainbow-/qa/match/04/r23/lead_t2/swim04_NEW_K23-1_halfspeed.mp4 $D/swim04_BEFORE_K23-1_halfspeed.mp4\ncd /home/user/wt/s04 && (AUDIT_PORT=5273 timeout 1800 node /home/user/rainbow-/qa/match/04/r22/tools/gameplay_test_5273.mjs --q=\"$(cat $D/QUERY_K23-S1.txt)\" --out=$D/gameplay.json > $D/gameplay.log 2>&1; echo gameplay_exit=$?) & (cd /home/user/wt/s04 && timeout 600 npx tsc --noEmit > $D/tsc.log 2>&1; echo tsc_exit=$?) ; wa …[+155 chars]`
+
+### 🧑 User — 2026-11-20T09:50:05.397Z
+
+> ↩︎ result: tsc_exit=0
+> gameplay_exit=0
+> [1]+  Done                    cd /home/user/wt/s04 && ( AUDIT_PORT=5273 timeout 1800 node /home/user/rainbow-/qa/match/04/r22/tools/gameplay_test_5273.mjs --q="$(cat $D/QUERY_K23-S1.txt)" --out=$D/gameplay.json > $D/gameplay.log 2>&1; echo gameplay_exit=$? )
+>   "victory": true,
+>   "heartsLostOnWallBump": true
+>  },
+>  "plunge": {
+>   "tTop": 23.699999999999935,
+>   "tBottom": 30.283333333332894,
+>   "t08": 30.283333333332894,
+>   "yTop": -51.836,
+>   "yBottom": -113.243,
+>   "y08": -113.243,
+>   "travelTimeTopToInlet": 6.58,
+>   "verticalDrop": 61.41
+>  },
+>  "errors": []
+> }
+
+### 🤖 Claude — 2026-11-20T09:50:08.213Z
+
+> 🔧 **Bash** `{"command": "D=/home/user/rainbow-/qa/match/04/r23/s1_arrows; python3 -c \"\nimport json; d=json.load(open('$D/gameplay.json'))\nprint({k:v for k,v in d.items() if k not in ('plunge','log','steps')} if isinstance(d,dict) else d)\" | cut -c1-1500; grep -E \"pass|PASS|coins\" $D/gameplay.log | head -12", "description": "Summarise gameplay test results"}`
+
+### 🧑 User — 2026-11-20T09:50:08.260Z
+
+> ↩︎ result: {'checks': {'pauseFreezes': {'pass': True, 'sBefore': 45.495, 'sPaused': 45.495, 'sAfter': 49.995}, 'continuousTravel': {'pass': True, 'nonMonotonicSteps': 0, 'steps': 2139, 'respawns': 0}, 'noCameraCut': {'pass': True, 'maxCameraJumpPerStep': 0.728}, 'noTeleport': {'pass': True, 'maxBennyAltitudeJumpPerStep': 0.19, 'at': {'s': 360.074, 's1': 360.274, 'stage': '07', 'y0': -93.088, 'y1': -93.278, 't': 27.85}}, 'plunge': {'pass': True, 'tTop': 23.699999999999935, 'tBottom': 30.283333333332894, 't08': 30.283333333332894, 'yTop': -51.836, 'yBottom': -113.243, 'y08': -113.243, 'travelTimeTopToInlet': 6.58, 'verticalDrop': 61.41}, 'realCoinPickups': {'pass': True, 'startCoins': 1330, 'endCoins': 2240, 'collected': 91}, 'victory': {'pass': True, 'finalState': {'mode': 'end', 'stage': '11', 's': 435.183, 'lat': -0.027, 'coins': 2240, 'hearts': 4, 'paused': False, 'bennyY': -109.61, 'bennyVisible': False, 'cam': [11.2, -99.1, -304]}}, 'heartsLostOnWallBump': {'pass': True, 'hearts': 4}}, 'samples': [{'t': 0.5, 's': 45.645, 'stage': '03', 'y': -13.457, 'cam': [-2.62, -7.96, -16.34], 'coins': 1330}, {'t': 1, 's': 50.145, 'stage': '03', 'y': -13.829, 'cam': [0.26, -8.46, -19.04], 'coins': 1350 …[+315 chars]
+
+### 🤖 Claude — 2026-11-20T09:50:17.825Z
+
+Gameplay passes 8/8 (91 coins, 1,330 to 2,240, victory), and `tsc` is clean. Now the code patch (full worktree diff plus a step-only diff).
+
+### 🤖 Claude — 2026-11-20T09:50:22.925Z
+
+> 🔧 **Bash** `{"command": "D=/home/user/rainbow-/qa/match/04/r23/s1_arrows; X=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s04/pre; rm -rf $X; mkdir -p $X\ngit -C /home/user/wt/s04 diff > $D/code.patch; wc -l $D/code.patch\nls /home/user/rainbow-/qa/match/04/r22/s2_bbd/code.patch /home/user/rainbow-/qa/match/04/r23/lead_t2/ 2>/dev/null | head -3\ncd $X && git -C /home/user/wt/s04 show HEAD:src/world/match04m4.ts > match04m4.ts && patch -s match04m4.ts < <(python3 - <<'EOF'\nimport re\ns=open('/home/user/rainbow-/qa/match/04/r22/s2_bbd/code.patch').read()\nparts=re.split( …[+473 chars]`
+
+### 🧑 User — 2026-11-20T09:50:23.003Z
+
+> ↩︎ result: 927 /home/user/rainbow-/qa/match/04/r23/s1_arrows/code.patch
+> /home/user/rainbow-/qa/match/04/r22/s2_bbd/code.patch
+> 
+> /home/user/rainbow-/qa/match/04/r23/lead_t2/:
+> 93 /home/user/rainbow-/qa/match/04/r23/s1_arrows/step1_only.patch
+> 65
+
+### 🤖 Claude — 2026-11-20T09:50:34.063Z
+
+> 🔧 **Bash** `{"command": "grep -n \"dt\\b\\|const dt\\|step(\" /home/user/rainbow-/qa/match/04/r23/s04_tools/swim_clip_pinned_slow.mjs | cut -c1-260; grep \"^[+-]\" /home/user/rainbow-/qa/match/04/r23/s1_arrows/step1_only.patch | cut -c1-110 | head -12", "description": "Check clip time step and step-only diff contents"}`
+
+### 🧑 User — 2026-11-20T09:50:34.105Z
+
+> ↩︎ result: 29:    await page.evaluate(([t, dt, dir]) => { const _pn = performance.now; performance.now = () => (t + dt) * 1000; const R = window.__rainbow; R.setSteer(dir); R.freezeAt(t); R.step(Math.round(dt * 60), 1 / 60); R.freezeAt(t + dt); R.step(1, 1e-4); window.__
+> --- a/src/world/match04m4.ts (r22 K22-2 code)
+> +++ b/src/world/match04m4.ts (r23 s04 step 1)
+> +  // r23 `&m04wl=1`: Benny sits IN the water like the painting (r23 brief task 1: "not perched on top"; his r
+> +  // touched the river). A soft water patch round him in the lane frame (follows him, also when he steers) a 
+> +  // river: depth-tested, so it covers exactly the part of his body below its waterline (like real water), wi
+> +  // white foam ring where it meets him, fading into the river at its rim. Benny himself is not moved or scal
+> +  // m04wly waterline (lane y; river = 0.02, his bottom = -0.08), m04wlr foam-ring radius, m04wlo / m04wle ra
+> +  // patch starts fading / is gone, m04wlz stretch along the flow, m04wla patch opacity, m04wlf foam strength
+> +  let wlMesh: THREE.Mesh | null = null;
+> +  if (M04.num('m04wl', 0) > 0) {
+> +    const E = M04.num('m04wle', 2.0), Z = M04.num('m04wlz', 1.2);
+> +    const geo = new THREE.CircleGeomet …[+32 chars]
+
+### 🤖 Claude — 2026-11-20T09:50:36.495Z
+
+> 🔧 **Bash** `{"command": "sed -n 24,32p /home/user/rainbow-/qa/match/04/r23/s04_tools/swim_clip_pinned_slow.mjs | cut -c1-400", "description": "Read clip frame loop for timing"}`
+
+### 🧑 User — 2026-11-20T09:50:36.523Z
+
+> ↩︎ result: await page.evaluate((id) => window.__rainbow.goto(id), SCREEN);
+>   const n = Math.round(Number(SECS) * fps);
+>   for (let i = 0; i < n; i++) {
+>     const ph = i / n;                                   // straight 0–0.3, left 0.3–0.55, right 0.55–0.8, straight
+>     const dir = ph < 0.3 ? null : ph < 0.55 ? -1 : ph < 0.8 ? 1 : null;
+>     await page.evaluate(([t, dt, dir]) => { const _pn = performance.now; performance.now = () => (t + dt) * 1000; const R = window.__rainbow; R.setSteer(dir); R.freezeAt(t); R.step(Math.round(dt * 60), 1 / 60); R.freezeAt(t + dt); R.step(1, 1e-4); window.__rainbow.drawList(); performance.now = _pn; }, [12 + i / fps, 1 / fps, dir]);
+>     await page.screenshot({ path: `${OUT}/${String(i).padStart(4, "0")}.png`, timeout: 300000 });
+>   }
+>   console.log('frames', n);
+
+### 🤖 Claude — 2026-11-20T09:50:52.913Z
+
+> 🔧 **Bash** `{"command": "T=/home/user/rainbow-/qa/match/04/r23/s04_tools; D=/home/user/rainbow-/qa/match/04/r23/s1_arrows\nsed -i -e 's#-framerate 24 -i \"$T/f/%04d.png\" -vf scale=432:768 -pix_fmt yuv420p \"${OP}.mp4\"#-framerate 20 -i \"$T/f/%04d.png\" -vf scale=432:768 -pix_fmt yuv420p \"${OP}_realspeed.mp4\"#' -e 's#-framerate 12 -i \"$T/f/%04d.png\"#-framerate 10 -i \"$T/f/%04d.png\"#' -e 's#^\\# r23 s04 (QA only).*#\\# r23 s04 (QA only): pinned swim clip through Screen 04 (straight/left/right/straight). One frame = 3 game steps of 1/60 s = 0.05 s, so 20 fps = REAL game speed, 10 fps = half speed.#'  …[+720 chars]`
+
+### 🧑 User — 2026-11-20T09:50:55.661Z
+
+> ↩︎ result: 1:#!/usr/bin/env bash
+> 2:# r23 s04 (QA only): pinned swim clip through Screen 04 (straight/left/right/straight). One frame = 3 game steps of 1/60 s = 0.05 s, so 20 fps = REAL game speed, 10 fps = half speed.
+> 3:# usage: clip.sh <query file> <out mp4 prefix> <port>
+> 8:ffmpeg -loglevel error -y -framerate 20 -i "$T/f/%04d.png" -vf scale=432:768 -pix_fmt yuv420p "${OP}_realspeed.mp4"
+> 9:ffmpeg -loglevel error -y -framerate 10 -i "$T/f/%04d.png" -vf scale=432:768 -pix_fmt yuv420p "${OP}_halfspeed.mp4"
+> swim04_BEFORE_K23-1_halfspeed_exact.mp4 5.800000
+> swim04_BEFORE_K23-1_realspeed.mp4 2.900000
+> swim04_NEW_K23-S1_halfspeed_exact.mp4 5.800000
+> swim04_NEW_K23-S1_realspeed.mp4 2.900000
+
+### 🤖 Claude — 2026-11-20T09:50:58.642Z
+
+Clips are now exactly 2.9 s (real game speed, 20 fps) and 5.8 s (half speed). Now count visible chevrons per shot with the step-1 query.
+
+### 🤖 Claude — 2026-11-20T09:51:02.371Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && AUDIT_SHOTS='[[\"b_early\",0.12,null],[\"c_middle\",0.35,null],[\"d_late\",0.6,null],[\"e_end\",0.85,null],[\"f_hard_left\",0.35,-1],[\"g_hard_right\",0.35,1]]' AUDIT_PORT=5274 timeout 1200 node /home/user/rainbow-/qa/match/04/r23/s04_tools/probe_arrows.mjs \"$(cat /home/user/rainbow-/qa/match/04/r23/s1_arrows/QUERY_K23-S1.txt)\" 2>&1 | grep -v \"outside of Vite\" | python3 -c \"\nimport sys,json\nfor line in sys.stdin:\n    if ' ' not in line: continue\n    n,j=line.split(' ',1)\n    try: d=json.loads(j)\n    except Exception: print(line[:200]); continue\n …[+286 chars]`
+
+### 🧑 User — 2026-11-20T09:51:45.222Z
+
+> ↩︎ result: b_early full(>=0.8): 4 part: 1 [(19.2, 1, 863), (25.7, 1, 829), (32.19, 1, 807), (38.69, 1, 791), (45.19, 0.66, 779)]
+> c_middle full(>=0.8): 5 part: 0 [(17.3, 1, 877), (23.79, 1, 839), (30.29, 1, 814), (36.79, 1, 796), (43.29, 0.92, 783)]
+> d_late full(>=0.8): 4 part: 2 [(14.47, 0.48, 900), (20.96, 1, 854), (27.46, 1, 824), (33.95, 1, 803), (40.45, 1, 788), (46.95, 0.3, 777)]
+> e_end full(>=0.8): 4 part: 1 [(18.18, 1, 754), (24.67, 1, 716), (31.16, 1, 691), (37.66, 1, 672), (44.16, 0.64, 658)]
+> f_hard_left full(>=0.8): 4 part: 1 [(17.37, 0.13, 880), (23.84, 1, 841), (30.33, 1, 816), (36.82, 1, 798), (43.31, 0.92, 784)]
+> g_hard_right full(>=0.8): 4 part: 1 [(17.4, 0.69, 875), (23.86, 1, 837), (30.35, 1, 812), (36.83, 1, 795), (43.33, 0.92, 782)]
+
+### 🤖 Claude — 2026-11-20T09:51:58.124Z
+
+Five chevrons are in view at every shot (4-5 whole plus one fading in or out), all above his pompom. Step 1 is complete; let me add labelled APPROVED references to the folder and record the step.
+
+### 🤖 Claude — 2026-11-20T09:52:01.182Z
+
+> 🔧 **Bash** `{"command": "D=/home/user/rainbow-/qa/match/04/r23/s1_arrows; mkdir -p $D/APPROVED && cd $D/APPROVED && cp /home/user/rainbow-/references/04_through_the_five_arrows.png 1_APPROVED_original_start_early.png && python3 -c \"\nfrom PIL import Image\nfor s,f in [('c_middle','04_gen_c_middle_p2_v1'),('d_late','04_gen_d_late_p3_v1'),('e_end','04_gen_e_end_p2_v1')]:\n    im=Image.open(f'/home/user/rainbow-/qa/review_r21/artwork/04/accepted/{f}.png').convert('RGB')\n    im.resize((864, round(864*im.height/im.width)), Image.LANCZOS).save(f'2_ACCEPTED_GENERATED_view_{s}.png')\n\"; ls -la; sha256sum -c /h …[+154 chars]`
+
+### 🧑 User — 2026-11-20T09:52:02.885Z
+
+> ↩︎ result: total 5776
+> drwxr-xr-x 2 root root    4096 Nov 20 09:52 .
+> drwxr-xr-x 6 root root    4096 Nov 20 09:52 ..
+> -rw-r--r-- 1 root root  392932 Nov 20 09:52 1_APPROVED_original_start_early.png
+> -rw-r--r-- 1 root root 1828442 Nov 20 09:52 2_ACCEPTED_GENERATED_view_c_middle.png
+> -rw-r--r-- 1 root root 1802337 Nov 20 09:52 2_ACCEPTED_GENERATED_view_d_late.png
+> -rw-r--r-- 1 root root 1872857 Nov 20 09:52 2_ACCEPTED_GENERATED_view_e_end.png
+> sha256sum: references/water/05_water_isolated_original.png: No such file or directory
+> references/water/05_water_isolated_original.png: FAILED open or read
+> sha256sum: WARNING: 13 listed files could not be read
+
+### 🤖 Claude — 2026-11-20T09:52:06.319Z
+
+> 🔧 **Bash** `{"command": "sha256sum -c scripts/reference.sha256 2>&1 | tail -2; sha256sum -c scripts/reference.sha256 2>&1 | grep -c \": OK\"", "description": "Verify the 13 protected reference images are unchanged"}`
+
+### 🧑 User — 2026-11-20T09:52:06.389Z
+
+> ↩︎ result: character_references/official_cartoon_girl_original.jpg: OK
+> references/water/05_water_isolated_original.png: OK
+> 13
+
+### 🤖 Claude — 2026-11-20T09:52:08.106Z
+
+Protected references are intact (13/13 OK). Recording step 1 in PROGRESS.md.
+
+### 🤖 Claude — 2026-11-20T09:52:25.752Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/match/04/r23/PROGRESS.md", "old_string": "* Step 1 IN PROGRESS (`s1_arrows/`, switch `s1_arrows/SWITCH.txt`, query `s1_arrows/QUERY_K23-S1.txt`): chevrons only where they\n  show ABOVE his pompom (`m04a3sc` screen clearance, calibrated `m04a3sy=2.1`), five spaced down the lane (`m04a3p=6.5`, far fade\n  50-58), flattened with distance (new `m04a3fl=26`) + Benny IN the water (new `m04wl`: raised depth-tested water patch + white foam\n  ring at his waterline). Done: 7-shot NEW audit (start 0 px), K23-1 with the new code == BEFORE 0 px ( …[+4037 chars]`
+
+### 🧑 User — 2026-11-20T09:52:25.806Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/match/04/r23/PROGRESS.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T09:52:35.612Z
+
+Step 2 now: the clean water edge. Let me look closely at where the water meets the gold in NEW versus the accepted views.
+
+### 🤖 Claude — 2026-11-20T09:52:40.068Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s04 && python3 -c \"\nfrom PIL import Image\nn=Image.open('/home/user/rainbow-/qa/match/04/r23/s1_arrows/NEW/c_middle.png').convert('RGB')\na=Image.open('/home/user/rainbow-/qa/match/04/r23/s1_arrows/APPROVED/2_ACCEPTED_GENERATED_view_c_middle.png').convert('RGB')\nd=Image.open('/home/user/rainbow-/qa/match/04/r23/s1_arrows/NEW/d_late.png').convert('RGB')\nb=Image.open('/home/user/rainbow-/qa/match/04/r23/s1_arrows/APPROVED/2_ACCEPTED_GENERATED_view_d_late.png').convert('RGB')\nW=Image.new('RGB',( …[+332 chars]`
+
+### 🧑 User — 2026-11-20T09:52:40.554Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T09:52:43.031Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s04/edge_cmp.png"}`
+
+### 🧑 User — 2026-11-20T09:52:43.066Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T09:52:49.758Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 1680,1760p src/world/match04m4.ts | cut -c1-260", "description": "Read river material construction and parameters"}`
+
+### 🧑 User — 2026-11-20T09:52:49.814Z
+
+> ↩︎ result: endCap.material = new THREE.ShaderMaterial({ vertexShader: END_VERT, fragmentShader: END_FRAG, side: THREE.DoubleSide, fog: false,
+>       extensions: { derivatives: true } as never,
+>       uniforms: { uPlate: shared.uPlate, uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uProjVP: shared.uProjVP, uAway: away, uTime: time,
+>         // r20 `&m04endfit=1`: with the K9 telescope (m04rfew) the disc sits at the telescope's end, shrunk to its last ring —
+>         // paint the distant opening in the disc's OWN frame (its centre and size), not the full-size tube's
+>         uC: { value: M04.num('m04endfit', 0) > 0 && endFit ? endFit : new THREE.Vector3(cx, cy, r) },
+>         uE: { value: new THREE.Vector4(M04.num('m04eg', -0.28), M04.num('m04eq', 0.78), M04.num('m04ec', 0.14), M04.num('m04eh', 0.55)) },
+>         uE2: { value: new THREE.Vector4((0.02 - cy) / r, M04.num('m04el', 0.62), M04.num('m04es', 1.25), M04.num('m04ek', 1.0)) } } });
+>     console.info('[match04] m04end', { water: (0.02 - cy) / r });
+>   }
+>   const a5b = new THREE.Vector4(M04.num('m04a5w', 1.3), M04.num('m04a5s', 2.2), 0, M04.num('m04a5d', 30));
+>   const nbU = new THREE.Vector4(M04.num('m04nband', 0) > 0 && M04.num('m04sband', 0) > 0  …[+4653 chars]
+
+### 🤖 Claude — 2026-11-20T09:52:52.120Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 1760,1850p src/world/match04m4.ts | cut -c1-280", "description": "Read river uniforms and edge foam setup"}`
+
+### 🧑 User — 2026-11-20T09:52:52.182Z
+
+> ↩︎ result: const riv = new THREE.TextureLoader().load(new URL('../../assets/textures/match04/tile_river3.png', import.meta.url).href, (t) => { t.needsUpdate = true; });
+>     riv.colorSpace = THREE.NoColorSpace; riv.flipY = false; riv.wrapS = riv.wrapT = THREE.RepeatWrapping;
+>     riv.minFilter = THREE.LinearMipmapLinearFilter; riv.anisotropy = 8;
+>     let sideBand: THREE.Texture | null = null;
+>     if (M04.num('m04sband', 0) > 0) {
+>       sideBand = new THREE.TextureLoader().load(new URL('../../assets/textures/match04/tile_side04.png', import.meta.url).href, (t) => { t.needsUpdate = true; });
+>       sideBand.colorSpace = THREE.NoColorSpace; sideBand.flipY = false; sideBand.wrapS = THREE.ClampToEdgeWrapping; sideBand.wrapT = THREE.RepeatWrapping;
+>       sideBand.minFilter = THREE.LinearMipmapLinearFilter; sideBand.anisotropy = 8;
+>     }
+>     // tiles04.json river3: lateral +-4 u, along 1.757 .. 6.409 u from Benny's checkpoint water point
+>     const rm = new THREE.ShaderMaterial({ vertexShader: RIVER_VERT, fragmentShader: RIVER_FRAG, side: THREE.DoubleSide, fog: false,
+>       extensions: { derivatives: true } as never, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -4,
+>       uniforms: { …[+8644 chars]
+
+### 🤖 Claude — 2026-11-20T09:53:02.681Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"m04bbd\\|m04bbank\\|m04bbx\" src/world/match04m4.ts | head -40", "description": "Locate bank foam heap code"}`
+
+### 🧑 User — 2026-11-20T09:53:02.761Z
+
+> ↩︎ result: 1869:  // r20 `&m04bbank=1` (with m04foam + m04river): the painted bank foam — LOW, WIDE heaps of BIG separate glossy pearly
+> 1879:  const bankBen = new THREE.Vector4(0, -1e4, 0, 0.95);   // r20 m04bbx: Benny's body centre (world) + radius, set every frame
+> 1906:    // r21 `&m04bbd=1`: as painted, the bubbly foam lines BOTH water edges far into the tunnel, not only round the entrance rim:
+> 1908:    // shrinking (m04bbd0 -> m04bbd1 of the rim heap size) and thinning out with depth, up to where the far telescope begins.
+> 1909:    // Own random stream (every other layout unchanged); the same instanced heaps / material / near shrink (+ m04bbx).
+> 1910:    // m04bbdg gap scale, m04bbdx inward offset from the wall (u), m04bbdk extra sink (share of the heap height).
+> 1911:    if (M04.num('m04bbd', 0) > 0 && Number.isFinite(rimL0) && rimL0 < len - 4) {
+> 1914:      const d0 = M04.num('m04bbd0', 0.55), d1 = M04.num('m04bbd1', 0.32), gS = M04.num('m04bbdg', 1), xo = M04.num('m04bbdx', 0.15);
+> 1915:      const sk2 = M04.num('m04bbdk', 0.12);
+> 1929:      console.info('[match04] m04bbd', { heaps: nD, from: rimL0, to: +aEnd.toFixed(2), xW: +xW.toFixed(3), XF });
+> 1931:    // r22 `&m04bbdf=f0` (with m04bbd;  …[+2087 chars]
+
+### 🤖 Claude — 2026-11-20T09:53:04.939Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/src/world/match04m4.ts", "offset": 1866, "limit": 185}`
+
+### 🧑 User — 2026-11-20T09:53:04.966Z
+
+> ↩︎ result: 1866	  };
+> 1867	  let seed = 4321; const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+> 1868	  const waterHalf = Math.sqrt(Math.max(0, r * r - cy * cy)); // where the water meets the tunnel wall
+> 1869	  // r20 `&m04bbank=1` (with m04foam + m04river): the painted bank foam — LOW, WIDE heaps of BIG separate glossy pearly
+> 1870	  // lilac-white bubbles with pale blue-lilac shading — as instanced Blender heaps (tools/blender/foam_bank04.py: 4 seeds in
+> 1871	  // assets/models/match04/foam_bank04.glb, ~5k triangles each; recipe from the lead's r19 m04bfoam test) in place of the
+> 1872	  // sprite cloud puffs: one heap per bank clump inside the entrance rim, the pre-opening foam banks binned into heaps (two
+> 1873	  // rows per side). Same visibility rule as all 3D foam (hidden in the approved view, fading in as the camera leaves it);
+> 1874	  // every bubble shrinks away into its own centre as it nears the camera (view depth m04bbn0 -> m04bbn1, default the
+> 1875	  // foam's m04foamn0 / m04foamn1, like the sprite bubbles) so nothing pops in the face. Tunables: m04bbs heap size,
+> 1876	  // m04bbb pre-opening bin length (u), m04bbe self-light, m04bbc tint (0 white .. 3 blue-lilac), m …[+14563 chars]
+

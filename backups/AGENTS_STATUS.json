@@ -33,7 +33,8 @@
    "port": 5276,
    "brief": "docs/briefs/2026-11-20-r23/LAUNCH_S06_R23.md",
    "log": "qa/match/06/r23/PROGRESS.md",
-   "started_utc": "2026-11-20T04:37Z"
+   "started_utc": "2026-11-20T04:37Z",
+   "state": "FINISHED 3 steps ~09:50 (m06fcl, m06view&m06vs=0 test, m06rip) - qa/match/06/r23/PROGRESS.md; worktree edits uncommitted (snapshotted)"
   },
   "benny": {
    "agent": "benny-character-artist",
@@ -46,9 +47,19 @@
    "started_utc": "2026-11-20T04:37Z"
   },
   "queued": {
-   "s08_polish": "/home/user/wt/s08 claude/rainbow-s08-scenery-c24 @ 3c0fa97",
    "s05_polish": "/home/user/wt/s05 claude/rainbow-s05-match-c24 @ eb7233e"
-  }
+  },
+  "s08": {
+   "agent": "washer-environment-modeler",
+   "worktree": "/home/user/wt/s08",
+   "branch": "claude/rainbow-s08-scenery-c24",
+   "base": "3c0fa970 (K16)",
+   "port": 5278,
+   "brief": "docs/briefs/2026-11-20-r23/LAUNCH_S08_R23.md",
+   "log": "qa/match/08/r23/PROGRESS.md",
+   "started_utc": "2026-11-20T09:58Z"
+  },
+  "_resumed": "~09:45 after the usage-limit stop (06:30) + container restart: s04, s07, Benny resumed via SendMessage"
  },
  "assignments_now": {
   "_read_first": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md, then backups/HANDOFF_2026-11-17_NEW_ACCOUNT.md",

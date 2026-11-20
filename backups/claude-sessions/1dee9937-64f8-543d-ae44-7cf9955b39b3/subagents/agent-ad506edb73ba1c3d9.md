@@ -1120,3 +1120,378 @@ The earlier chained `&&` + `&` backgrounded the variable assignments, so the con
 
 > 🔧 **Bash** `{"command": "cat /capN.log | head -5; mv /continuity.txt /home/user/rainbow-/qa/match/07/r23/s1_satin/continuity.txt && rm -f /capN.log && cat /home/user/rainbow-/qa/match/07/r23/s1_satin/continuity.txt", "description": "Move continuity output into proof folder"}`
 
+### 🧑 User — 2026-11-20T09:49:08.780Z
+
+The coordinator sent a message while you were working:
+Resume Screen 07 after the container restart: continue step 2 (lower the tall foam walls along the drop into low soft clouds) from where you stopped. Your worktree /home/user/wt/s07 and its uncommitted edits are intact; any dev servers / renders you had running are gone, so restart them. Step 1 m07satin is logged as GOOD IMPROVEMENT in qa/match/07/r23/PROGRESS.md (the lead will review it). Same brief (docs/briefs/2026-11-20-r23/LAUNCH_S07_R23.md). Other workers share this machine, so renders are slow — keep parallel renders to at most 2 at a time. Update your WHERE I STOPPED block after every finished step.
+
+Address this before completing your current task.
+
+### 🤖 Claude — 2026-11-20T09:49:12.198Z
+
+Container restarted. Let me check the worktree and the stray files, then re-run the continuity test into the right folder.
+
+### 🤖 Claude — 2026-11-20T09:49:13.403Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && git status --short | head; git diff --stat | tail -2; grep -c \"satinFlare\" src/world/match07.ts; ls -la /continuity.txt /capN.log 2>&1; ls /home/user/rainbow-/qa/match/07/r23/s1_satin/ | wc -l", "description": "Verify worktree and stray files after restart"}`
+
+### 🧑 User — 2026-11-20T09:49:13.467Z
+
+> ↩︎ result: M src/game/Game.ts
+>  M src/world/match07.ts
+> ?? node_modules
+> ?? tools/match07/capture_5277.mjs
+> ?? tools/match07/diag_r21.mjs
+> ?? tools/match07/gameplay_test_5277.mjs
+> ?? tools/match07/swim_clip_r21.mjs
+>  src/world/match07.ts | 323 +++++++++++++++++++++++++++++++++++++++++++++++++--
+>  2 files changed, 336 insertions(+), 10 deletions(-)
+> 3
+> -rw-r--r-- 1 root root 696 Nov 20 04:50 /capN.log
+> -rw-r--r-- 1 root root 839 Nov 20 04:50 /continuity.txt
+> 20
+
+### 🤖 Claude — 2026-11-20T09:49:16.203Z
+
+Both stray files are mine from that run. The continuity output was produced by the step-1 code, so I'll move it into the step-1 folder and remove the failed capture log.
+
+### 🤖 Claude — 2026-11-20T09:49:17.860Z
+
+> 🔧 **Bash** `{"command": "cat /capN.log | tail -3; mv /continuity.txt /home/user/rainbow-/qa/match/07/r23/s1_satin/continuity.txt && rm /capN.log && cd /home/user/rainbow-/qa/match/07/r23/s1_satin && diff <(grep -v \"^>\" continuity.txt) <(grep -v \"^>\" /home/user/rainbow-/qa/match/07/r22/s1_cloud/continuity.txt) && echo identical-to-r22; grep -n \"ok\\|drop\\|07->08\" continuity.txt | head -5", "description": "Move continuity output to step 1 folder"}`
+
+### 🧑 User — 2026-11-20T09:49:26.896Z
+
+> ↩︎ result: Node.js v22.23.5
+> capN 1
+> identical-to-r22
+> 6: "ok": true,
+> 37:  "07->08 gap=0 dT=0.339 y=-113.5",
+
+### 🤖 Claude — 2026-11-20T09:49:43.087Z
+
+Step 1 files are complete now (continuity identical to r22). Updating the WHERE I STOPPED block, then implementing step 2.
+
+### 🤖 Claude — 2026-11-20T09:49:46.090Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/07/r23 && python3 - <<'EOF'\np='PROGRESS.md'; s=open(p).read()\nold='''* NOW: step 2 = lower the tall foam walls along the drop into low soft clouds (own switch).'''\nnew='''* NOW (resumed after the container restart ~05:15 UTC): step 2 = lower the tall foam walls along the drop into low soft clouds\n  (own switch `&m07low=1`: the drop's purple slotted wall comes down to the water just behind a narrow, low foam fringe).'''\nassert old in s; s=s.replace(old,new)\ns=s.replace(\"identical to r22 (`continuity.txt`). `tsc` clean.\\n* Code: `s1_satin/code …[+238 chars]`
+
+### 🧑 User — 2026-11-20T09:49:46.137Z
+
+> ↩︎ result: 6:* NOW (resumed after the container restart ~05:15 UTC): step 2 = lower the tall foam walls along the drop into low soft clouds
+> 51:  `npm run test:continuity`: ok, all joins gap 0, 07→08 drop 61.19 u — identical to r22 (`s1_satin/continuity.txt`). `tsc` clean.
+
+### 🤖 Claude — 2026-11-20T09:49:47.931Z
+
+Now the step 2 code: the plunge tube's lower wall pulled in (blended in over the first metres of the drop) and a low foam fringe on the drop.
+
+### 🤖 Claude — 2026-11-20T09:50:01.848Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 - <<'EOF'\np='src/world/match07.ts'; s=open(p).read()\n# 1) switch\nold='''  const clouds = nearW && band && flag05('m07cloud');\n'''\nnew='''  const clouds = nearW && band && flag05('m07cloud');\n  // r23 '&m07low=1' (qa/match/07/r23/PROGRESS.md): down the drop the purple slotted tube wall comes down to the water just behind a\n  // narrow, LOW foam fringe (the painting) instead of a 2 u wide flat pale foam strip with a tall cloud wall on it: the plunge tube's\n  // lower wall is pulled in (wall foot ±m07lF from the tube centre at the water, the cr …[+3566 chars]`
+
+### 🧑 User — 2026-11-20T09:50:04.196Z
+
+> ↩︎ result: tsc-ok
+
+### 🤖 Claude — 2026-11-20T09:50:08.712Z
+
+Type-check passes. Iteration render of the drop shots (one render at a time, per the coordinator's limit of 2).
+
+### 🤖 Claude — 2026-11-20T09:50:12.667Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/rainbow-/qa/match/07/r23/s2_low && cd /home/user/wt/s07 && Q1=$(cat /home/user/rainbow-/qa/match/07/r23/s1_satin/query_NEW.txt) && QN=$(node /home/user/rainbow-/tools/lead23/setq.mjs \"$Q1\" \"m07low=1\") && echo \"$QN\" > /home/user/rainbow-/qa/match/07/r23/s2_low/query_NEW.txt && echo \"$Q1\" > /home/user/rainbow-/qa/match/07/r23/s2_low/query_BEFORE.txt && O=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/low1 && mkdir -p $O && AUDIT_SHOTS='[[\"c_middle\",0.35,null],[\"d_late\",0.6,null],[\"e1_075\",0.75,null],[\"e_end\",0.85 …[+206 chars]`
+
+### 🧑 User — 2026-11-20T09:50:16.690Z
+
+> ↩︎ result: Command was moved to the background (ID: b4iynzx1a) so that a message that arrived while it was running can reach you; it was not interrupted. Output is being written to: /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/tasks/b4iynzx1a.output. You will be notified when it completes. If it is still running after 30m in the background (plus the timeout it was started with, up to the background maximum), it will be stopped and you will be notified. It is running now: do not start a second copy while it runs. If it is no longer needed, stop it with TaskStop. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-20T09:50:22.513Z
+
+New user direction received: the S-shaped river replaces my step 2/3 plan. First, let me see what the background m07low render produced so I can log it before pivoting.
+
+### 🤖 Claude — 2026-11-20T09:50:24.113Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/tasks/b4iynzx1a.output | grep -v \"allow list\"; ls /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/low1/", "description": "Check background m07low render output"}`
+
+### 🧑 User — 2026-11-20T09:50:24.155Z
+
+> ↩︎ result: c_middle.png
+
+### 🤖 Claude — 2026-11-20T09:50:26.180Z
+
+Still rendering (shared machine). Meanwhile I'll study how the 07 route, river, coins, steering bounds and camera are built.
+
+### 🤖 Claude — 2026-11-20T09:50:26.837Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && wc -l src/world/course.ts && sed -n 1,80p src/world/course.ts", "description": "Read the course module header"}`
+
+### 🧑 User — 2026-11-20T09:50:26.869Z
+
+> ↩︎ result: 663 src/world/course.ts
+> /**
+>  * RAINBOW master course — ONE continuous route through the washer world.
+>  *
+>  * Units: 1 unit ≈ 5 cm at Benny's scale (Benny body radius ≈ 0.8). +Y is up (absolute altitude).
+>  * The route starts inside Drum A (scene 01/02), drains through a chute into the whirlpool basin (03),
+>  * drops down the five-arrow slide (04), winds through the perforated current tube (05), crests the
+>  * rinse arch (06), winds through the washer tube and then PLUNGES ~62 units straight down (07) before
+>  * the bottom of that same tube flares into the Final Spin Chamber inlet (08). 08–10 stay in that same
+>  * chamber; the route ends under the purple towel on the platform, where the 11 cinematic plays.
+>  *
+>  * Every stage is a range of arc-length `s` on a single centripetal Catmull-Rom spline, so position
+>  * and tangent are continuous by construction; `validateContinuity()` measures it anyway.
+>  */
+> import * as THREE from 'three';
+> import { flag05 } from '../vfx/waterRibbon';
+> import river08 from '../../assets/textures/match08/river08.json';
+> import river07 from '../../assets/textures/match07/river07.json';
+> 
+> export type StageId = '01' | '02' | '03' | '04' | '05' | '06' | '07' | '08' | '09' | …[+2225 chars]
+
+### 🤖 Claude — 2026-11-20T09:50:28.698Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 230,340p src/world/course.ts && grep -n \"river07\\|river08\\|m07\\|match07\\|flag05\" src/world/course.ts", "description": "Read the 07 portion of the course spline"}`
+
+### 🧑 User — 2026-11-20T09:50:28.739Z
+
+> ↩︎ result: push(spiralStart);
+>   mark('03');
+>   // ---- 03: whirlpool twirl — 3/4 inward turn down the funnel that dives into the drain CENTRE ----
+>   // decreasing angle from the -X side (θ=-π/2) round the far and right sides to the near (+Z) side;
+>   // r shrinks as (1-t)^1.6 so the last stretch heads radially inward = straight -Z into the drain hole.
+>   seg(60, (t) => {
+>     const th = -Math.PI / 2 - Math.PI * 1.5 * (1 - (1 - t) * (1 - t)); // angle eases out → radial finish
+>     const r = 9.6 * Math.pow(1 - t, 0.9);
+>     return V(b.center.x + r * Math.sin(th), funnelY(r) + 0.25, b.center.z + r * Math.cos(th));
+>   });
+>   mark('04');
+>   // ---- 04: five-arrow slide — steep straight drop (≈32°) inside the gold ring pipe ----
+>   const s4 = pts[pts.length - 1].clone();
+>   const pitch4 = THREE.MathUtils.degToRad(32);
+>   const d4 = V(0, -Math.sin(pitch4), -Math.cos(pitch4));
+>   // pull-down arc from the drain lip into the steep slide pitch
+>   const R4a = 9;
+>   seg(7, (t) => {
+>     const a = pitch4 * t;
+>     return s4.clone().add(V(0, -R4a * (1 - Math.cos(a)), -R4a * Math.sin(a)));
+>   });
+>   const s4b = pts[pts.length - 1].clone();
+>   seg(16, (t) => s4b.clone().addScaledVector(d4, 34 * t));
+>   // pull out of the slide  …[+6212 chars]
+
+### 🤖 Claude — 2026-11-20T09:50:34.454Z
+
+The 07 route under `match07` already follows `river07.json` (painted centre line). Let me look at that data, the coin placement and steering bounds.
+
+### 🤖 Claude — 2026-11-20T09:50:36.678Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 -c \"\nimport json;r=json.load(open('assets/textures/match07/river07.json'));print(r.keys());\nfor k in r: print(k, len(r[k]) if isinstance(r[k],list) else r[k]);\nprint('z',[round(v,1) for v in r['z']]);print('x',[round(v,2) for v in r['x']]);\nprint('along',[round(v,1) for v in r.get('along',[])][:40]);print('lat',[round(v,2) for v in r.get('lat',[])][:40])\"; grep -n \"m07coins\\|coinDefs\\|lat:\" src/world/*.ts src/game/*.ts | head -30", "description": "Inspect river07 data and coin code refs"}`
+
+### 🧑 User — 2026-11-20T09:50:36.736Z
+
+> ↩︎ result: dict_keys(['note', 'z', 'x', 'along', 'lat', 'target_x'])
+> note Screen 07 painted river centre on the water plane (tools/match07/river_coins07.py)
+> z 9
+> x 9
+> along 9
+> lat 9
+> target_x 9
+> z [-201.4, -207.2, -212.0, -219.9, -226.7, -228.4, -230.4, -232.3, -234.3]
+> x [10.1, 12.61, 9.15, 9.35, 7.13, 13.09, 12.6, 13.13, 15.45]
+> along [0.0, 5.8, 10.5, 18.4, 25.3, 27.0, 29.0, 31.0, 33.0]
+> lat [0.0, 0.73, -0.6, -1.74, -1.2, 0.33, 1.13, 1.85, 2.35]
+> src/world/match07.ts:542:    const Rv: { along: number[]; lat: number[] } = await fetch(tex('river07.json')).then((r) => r.json());
+> src/world/match07.ts:705:    type Place = (lat: number, a: number, up: number) => THREE.Vector3;
+> src/world/match07.ts:707:    const pushL = (out: number[], tone: number[], place: Place, side: number, wallLat: number, lat: number, along: number, up: number, r: number, lvl: number) => {
+> src/world/match08.ts:135:  const M = { wall: mat('#c25bd0', pWall, 1 / 2.4), floor: mat('#9c55c8', pWall, 1 / 2.4), gold: mat('#e8a24a', pGold, 1 / 1.2), plat: mat('#b78ad6', pWall, 1 / 2.4), towel: mat('#6c3bc4', pTowel, 1 / 1.0) };
+> src/game/Game.ts:147:  const m07CoinLook = !!m07 && flag05('m07coinsz');
+> src/game/Game.ts:168:    lat: 0,
+> src/game/ …[+1083 chars]
+
+### 🤖 Claude — 2026-11-20T09:50:38.561Z
+
+The m07low render finished. Quick look so I can log it as an optional switch.
+
+### 🤖 Claude — 2026-11-20T09:50:39.566Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/low1/e1_075.png"}`
+
+### 🧑 User — 2026-11-20T09:50:39.613Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T09:51:28.902Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 - <<'EOF'\np='src/world/match07.ts'; s=open(p).read()\nold=\"const footL = num07('m07lF', 3.55), lowY = num07('m07lY', 2.6), lowK = num07('m07lK', 0.6);\"\nnew=\"// (parked r23: NOT AN IMPROVEMENT — the pulled-in wall bends the gold rings into chevrons; the round clouds the user liked keep\\n  // their size unless ?m07lK < 1 is given)\\n  const footL = num07('m07lF', 3.55), lowY = num07('m07lY', 2.6), lowK = num07('m07lK', 1);\"\nassert old in s; s=s.replace(old,new)\ns=s.replace(\"const up = -r * (low > 0 ? 0.3 + 0.25 * rnd() : 0.05 + 0.25 * rnd()) …[+592 chars]`
+
+### 🧑 User — 2026-11-20T09:51:34.015Z
+
+> ↩︎ result: ok
+> // r21 Screen 07 diagnostics (read-only QA): deterministic shots like tools/lead21/audit_screen.mjs, plus per-shot hiding of
+> // named scene objects and ray probes, to see which mesh paints which part of the frame.
+> //   cd /home/user/wt/s07 && node tools/match07/diag_r21.mjs <outDir> "<query>" '<json shots>'
+> // shots: [{"name":"x","frac":0.85,"steer":null,"hide":["ribbon","foam"],"probe":[[0,0.5],[-0.5,0.2]]}]
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> const [OUT, Q, SH] = process.argv.slice(2);
+> const SHOTS = JSON.parse(SH);
+> mkdirSync(OUT, { recursive: true });
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(Number(process.env.AUDIT_PORT ?? 5277));
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> const log = [];
+> try {
+>   const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
+>   page.on('pageerror', (e) => console.error('pageerror', e.message));
+>   page.on('console', (m) => { const t = m.text(); if (m.type() === 'error' || /m07/. …[+1484 chars]
+
+### 🤖 Claude — 2026-11-20T09:51:38.104Z
+
+Now I'll dump the 07 route geometry in the tube frame (lane offset from the tube axis, coins, camera, steering bounds) to see why later views read as a straight chute.
+
+### 🤖 Claude — 2026-11-20T09:51:39.455Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 80,140p src/game/cameraRig.ts; grep -n \"maxLat\\|latMax\\|LAT_MAX\\|2\\.25\\|halfWidth\\|clampLat\\|wallBump\\|heart\" src/game/Game.ts | head -20", "description": "Read camera rig and steering bounds"}`
+
+### 🧑 User — 2026-11-20T09:51:39.520Z
+
+> ↩︎ result: /** optional straight tunnel axis + the s-range where the camera aligns to it */
+>   axis: { path: TubePath; s0: number; s1: number } | null = null;
+> 
+>   constructor(private course: Course) {}
+> 
+>   /** desired pose for Benny at (s, lateral) */
+>   desired(s: number, lat: number, outPos: THREE.Vector3, outTarget: THREE.Vector3, outUp: THREE.Vector3): CamParams {
+>     const p = camParamsAt(this.course, s);
+>     const f = this.course.sample(s);
+>     const fb = this.course.sample(Math.max(0, s - p.back * 0.5)); // smoothing of heading
+>     const dir = f.tan.clone().lerp(fb.tan, 0.35).normalize();
+>     let up = f.up.clone();
+>     if (this.axis) {
+>       const a = this.axis;
+>       const w = THREE.MathUtils.smoothstep(s, a.s0, a.s0 + 10) * (1 - THREE.MathUtils.smoothstep(s, a.s1 - 10, a.s1));
+>       if (w > 0) {
+>         const af = a.path.frame(s);
+>         dir.lerp(af.tan, w).normalize();
+>         up.lerp(af.up, w).normalize();
+>       }
+>     }
+>     up.addScaledVector(dir, -up.dot(dir)).normalize();
+>     const right = new THREE.Vector3().crossVectors(dir, up).normalize();
+>     const benny = f.pos.clone().addScaledVector(f.right, lat);
+>     const anchor = benny.clone().addScaledVector(right, -lat * (1 - p.latFollo …[+3426 chars]
+
+### 🤖 Claude — 2026-11-20T09:51:42.246Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 370,400p src/game/Game.ts; grep -n \"STAGE_CAM\\b\\|'07':\" src/game/cameraRig.ts | head; grep -n \"axis\\b\\|rig.axis\\|\\.axis =\" src/game/Game.ts | head", "description": "Read steering bounds and camera 07 params"}`
+
+### 🧑 User — 2026-11-20T09:51:42.334Z
+
+> ↩︎ result: st.mode = 'ride';
+>     st.t = 0;
+>     st.s = course.stage('03').s0;
+>     st.lat = 0;
+>     hud.setVisible(true);
+>     setStage('03');
+>     rideCam.pos.copy(camera.position);
+>     rideCam.target.copy(camera.position).add(camera.getWorldDirection(new THREE.Vector3()).multiplyScalar(10));
+>     rideCam.fov = camera.fov;
+>     hud.showHint('Drag or hold left / right to steer');
+>     setTimeout(() => hud.showHint(null), 3500);
+>   };
+> 
+>   // ---------------------------------------------------------------- ride (03–10)
+>   const rideUpdate = (dt: number) => {
+>     input.update(dt);
+>     const stg = course.stageAtS(st.s);
+>     const speed = course.prop('speed', st.s);
+>     st.s = Math.min(course.stage('11').s0, st.s + speed * dt);
+>     const halfW = course.widthAt(st.s) / 2;
+>     const safe = halfW - 0.75;
+>     st.vlat += (input.steer * 7.5 - st.vlat) * Math.min(1, dt * 8);
+>     st.lat = THREE.MathUtils.clamp(st.lat + st.vlat * dt, -halfW + 0.55, halfW - 0.55);
+>     // foam-wall bump → lose a heart (with cooldown), bounce back toward the centre
+>     st.bumpCooldown = Math.max(0, st.bumpCooldown - dt);
+>     if (Math.abs(st.lat) > safe) st.edgeTime += dt; else st.edgeTime = 0;
+>     if (st.edgeTime > 0.6 && st.bumpCooldow …[+884 chars]
+
+### 🤖 Claude — 2026-11-20T09:51:45.944Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"applyMatchCam\" -A30 src/game/cameraRig.ts | grep -n \"07\\|match07\" | head; grep -rn \"export function applyMatchCam\" src | head -2", "description": "Find match07 camera overrides"}`
+
+### 🧑 User — 2026-11-20T09:51:46.013Z
+
+> ↩︎ result: 15:24-  /** `?match07=1` only (src/game/match.ts): extra view yaw (deg, + = look LEFT → scene moves right) and camera side
+> 16:25-   *  shift (units along the view right) over the 07 stage; absent = no change */
+> 17:26-  yaw07?: number;
+> 18:27-  side07?: number;
+> 23:32-  /** `?match07=1` only (src/game/match.ts): over the 07 stage the camera sits at Benny's water point + this world offset
+> 24:33-   *  and looks along the fixed world direction dir07 (the approved picture's view down the washer tube); absent = no change */
+> 25:34-  off07?: [number, number, number];
+> 26:35-  dir07?: [number, number, number];
+> src/game/match.ts:34:export function applyMatchCam(stageCam: Partial<Record<string, CamParams>>): void {
+
+### 🤖 Claude — 2026-11-20T09:51:47.991Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 1,80p src/game/match.ts; grep -n \"off07\\|dir07\" src/game/cameraRig.ts | head", "description": "Read match camera module"}`
+
+### 🧑 User — 2026-11-20T09:51:48.041Z
+
+> ↩︎ result: /**
+>  * "Match my approved picture" test switches for the gameplay screens (2026-11-17, qa/match/NOTES.md).
+>  *   `?match02=1` … `?match10=1`  one screen each (05 has its own set; `?match05=1` turns all of those on — see
+>  *   src/vfx/waterRibbon.ts q05). `?matchall=1` = every screen switch below at once.
+>  * Every change a screen makes lives behind its switch: with no switch the game is byte-for-byte the default build
+>  * (verified by pixel comparison after every change). Packaged experiment builds read the same keys from
+>  * VITE_RAINBOW_Q05 (flag05).
+>  * File ownership (one owner per screen while work runs in parallel): see qa/match/NOTES.md.
+>  */
+> import type { CamParams } from './cameraRig';
+> import { flag05 } from '../vfx/waterRibbon';
+> 
+> export type MatchId = '02' | '03' | '04' | '06' | '07' | '08' | '09' | '10';
+> export const MATCH_IDS: MatchId[] = ['02', '03', '04', '06', '07', '08', '09', '10'];
+> const ALL = flag05('matchall');
+> export const MATCH: Record<MatchId, boolean> = Object.fromEntries(MATCH_IDS.map((id) => [id, ALL || flag05('match' + id)])) as Record<MatchId, boolean>;
+> export const matchOn = (id: string): boolean => (MATCH as Record<string, boolean>)[id] === true;
+> 
+> /**
+>  * Came …[+1962 chars]
+
+### 🤖 Claude — 2026-11-20T09:51:49.984Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 140,200p src/game/cameraRig.ts", "description": "Read the 07 camera blending code"}`
+
+### 🧑 User — 2026-11-20T09:51:50.029Z
+
+> ↩︎ result: outTarget.lerp(new THREE.Vector3(...p8.aim08), w8);
+>         outUp.lerp(new THREE.Vector3(0, 1, 0), w8).normalize();
+>       }
+>     }
+>     // `?match07=1`: the approved Screen 07 view — camera at Benny + off07 (world), looking along dir07, level; blended in
+>     // after the 07 start and out before the plunge top, so the 07→08 drop keeps its own camera (absent = no change)
+>     if (p7 && p7.off07 && p7.dir07) {
+>       const st7 = this.course.stage('07');
+>       const sTop = this.course.marks['07_plunge_top'];
+>       const w7 = THREE.MathUtils.smoothstep(s, st7.s0 + 2, st7.s0 + 12) * (1 - THREE.MathUtils.smoothstep(s, sTop - 14, sTop - 3));
+>       if (w7 > 0) {
+>         const cp7 = benny.clone().add(new THREE.Vector3(...p7.off07));
+>         outPos.lerp(cp7, w7);
+>         outTarget.lerp(cp7.addScaledVector(new THREE.Vector3(...p7.dir07), 10), w7);
+>         outUp.lerp(new THREE.Vector3(0, 1, 0), w7).normalize();
+>       }
+>     }
+>     // 03 whirlpool: dynamic high angle from the near side, looking down into the vortex toward the
+>     // drain and the porthole wall (Benny left, drain lower-right as in the reference)
+>     const st3 = this.course.stage('03');
+>     const w3 = THREE.MathUtils.smoothstep(s, st3.s …[+2594 chars]
+
+### 🤖 Claude — 2026-11-20T09:52:06.836Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/rainbow-/qa/match/07/r23/s2_sriver && cat > /home/user/wt/s07/tools/match07/route_r23.mjs <<'EOF'\n// r23 s07 (read-only QA): dump the 07 route in the fitted tube's frame (lateral off the tube axis, height, along), the coins\n// (s, lat → tube frame) and the camera, for a query.  node tools/match07/route_r23.mjs <out.json> \"<query>\"\nimport { writeFileSync, readFileSync } from 'node:fs';\nimport { pathToFileURL } from 'node:url';\nconst { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);\ncon …[+2115 chars]`
+
+### 🧑 User — 2026-11-20T09:52:13.998Z
+
+> ↩︎ result: s0 247.05563400776518 s1 390.1617102628636 marks {"top":312.41331806416713,"bottom":390.071167658835,"m08":390.1617102628636} coins 24
+

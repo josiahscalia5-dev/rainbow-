@@ -12,7 +12,39 @@
 * Specialist (washer-environment-modeler, worktree `/home/user/wt/s04`, local branch `claude/rainbow-s04-match-c24`, port 5273-5275,
   brief `docs/briefs/2026-11-20-r23/LAUNCH_S04_R23.md`). Uncommitted edits only.
 * Step 0 DONE: BEFORE = K23-1 re-rendered with the pinned audit -> `s04_BEFORE_K23-1/` == lead `lead_t2/C2/` 0 px in all 7 shots.
-* NOW: step 1 (five chevrons clearly AHEAD of Benny, Benny IN the water).
+* Step 1 DONE — GOOD IMPROVEMENT (details below, "s04 Step 1"). New candidate **K23-S1** = `s1_arrows/QUERY_K23-S1.txt`.
+* NOW: step 2 (clean water edge: low bubbly foam bank instead of the hard straight lilac line; glossy long white streaks).
+* User confirmation ~09:55 UTC (via coordinator): "continue with the cleaner, lower pink edges. Keep the gold visible, the blue
+  water clear, and show Benny travelling naturally through all five arrows." Never pink walls / wide pink.
+* QA tools (mine): `s04_tools/` (pinned audit / clip copies with a 300 s screenshot timeout, probes, variant runner `variant.sh`,
+  `clip.sh` = 20 fps real game speed + 10 fps half speed; one clip frame = 0.05 s of game time).
+
+## (r23 s04) Step 1 — Benny swims down THROUGH the five arrows; Benny IN the water — `s1_arrows/` — GOOD IMPROVEMENT
+* Switch (`s1_arrows/SWITCH.txt`, replaced in place on K23-1 with `setq.mjs`): `m04a3sc=1&m04a3sy=2.1&m04a3sr=0.9&m04a3s0=-0.005&
+  m04a3s1=0.03&m04a3sx=0.02` (chevrons show only where they lie ABOVE his pompom on screen; calibrated: his pompom top = 2.1 u over
+  his root), `m04a3d=0.6&m04a3t=0.4&m04a3w=1.5&m04a3k=60` (chunkier, wider bars), `m04a3p=6.5&m04a3f0=50&m04a3f1=58` (five spaced
+  down the lane), NEW `m04a3fl=26` (far chevrons lean flatter, like arrows painted ON the water: no ladder near the far end), NEW
+  `m04wl=1&m04wly=0.4&m04wlr=0.66&m04wlo=1.1&m04wle=1.65&m04wlz=1.6` (a soft raised water patch round him, depth-tested, so the
+  water covers his round bottom like real water, with a neat white foam lace ring at his waterline; Benny / camera untouched).
+* Why: measured lane perspective — the camera sits ~3.6 u over the water 8 u behind him, so his body covers the lane from 0 to ~14 u
+  ahead; only the band between his pompom top (y≈900) and the vanishing point (y≈694) is free. The chevrons 3–14 u ahead stood
+  behind his hat with their arm ends poking out beside the brim.
+* WHAT LOOKS CLOSER (NEW `s1_arrows/NEW/` vs BEFORE `s04_BEFORE_K23-1/`): in every swim shot (early / middle / late / end / hard
+  left / hard right) the glowing white-cyan chevrons lie AHEAD of him down the blue lane, above / beyond his pompom like the
+  painting (5 in view: 4–5 whole + 1 fading in far away or out as he reaches it), nothing round his hat; in the clip they come
+  toward him and vanish as he swims through them. His round bottom now sits IN the water with a white lace ring (was perched on it).
+* STILL DIFFERENT: the chevrons are smaller than painted (the painting's camera looks down from higher; camera not authorized);
+  the hard straight lilac water/gold edge, frosted ripple water (step 2).
+* Proof: start view 0 px (rows 180–1536); K23-1 rendered with the new code == BEFORE 0 px in all 7 shots
+  (`K23-1_with_new_code/`); gameplay `gameplay.json` 8/8 pass, 91 coins, 1,330 → 2,240; `npx tsc --noEmit` OK (`tsc.log`);
+  chevron count probe (5 in view at every shot). APPROVED: `APPROVED/1_APPROVED_original_start_early.png`, ACCEPTED GENERATED
+  views (labelled, not the original) `APPROVED/2_ACCEPTED_GENERATED_view_{c_middle,d_late,e_end}.png`.
+* Clips (pinned clock, uninterrupted through all of 04 into 05, straight / left / right / straight, 2.9 s game time):
+  `swim04_BEFORE_K23-1_realspeed.mp4` / `swim04_NEW_K23-S1_realspeed.mp4` (REAL game speed, 20 fps) and `*_halfspeed_exact.mp4`
+  (half speed, 10 fps); full-size NEW frames `swim04_NEW_K23-S1_frames/`. Code: `code.patch` (full worktree diff),
+  `step1_only.patch` (this step's hunks on top of the r22 K22-2 code).
+* Mobile cost: no new textures; one 96-segment disc with a small noise shader under Benny (~300 × 150 px of screen), two point
+  projections per chevron per frame on the CPU. Negligible.
 
 ## User feedback driving this round (verbatim, 2026-11-20)
 * ~03:58 (r22): "I don't want the water to look messy. I want it to look very clean ... like the original approved screen through

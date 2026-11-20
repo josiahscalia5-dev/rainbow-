@@ -40,7 +40,7 @@ index 017370a..906c906 100644
      }
      if (m08 && b08 && b08Rest) {
 diff --git a/src/world/match07.ts b/src/world/match07.ts
-index b9f474c..82bf087 100644
+index b9f474c..5ba3316 100644
 --- a/src/world/match07.ts
 +++ b/src/world/match07.ts
 @@ -94,6 +94,9 @@ uniform sampler2D uFoamTile;
@@ -280,7 +280,7 @@ index b9f474c..82bf087 100644
  const tex = (f: string) => new URL(`../../assets/textures/match07/${f}`, import.meta.url).href;
  /** r18: numeric URL tunable (QA only), default when absent or not a number */
  const num07 = (k: string, def: number) => {
-@@ -283,6 +448,13 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -283,6 +448,22 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
    // r18: on top of m07nearw, the painted near-river proportions — narrow cyan core, thick magenta bands, world-anchored S-sweep
    // (the r17 draft '&m07nearf' was rejected: qa/match/07/r18/PROGRESS.md)
    const band = nearW && flag05('m07band');
@@ -291,10 +291,19 @@ index b9f474c..82bf087 100644
 +  // r21 '&m07cloud=1': real 3D puffy foam clouds on both banks beyond the magenta bands (level stretch: they rise only where the view
 +  // magnifies the water — none in the approved view; drop: everywhere, with m07end)
 +  const clouds = nearW && band && flag05('m07cloud');
++  // r23 '&m07low=1' (qa/match/07/r23/PROGRESS.md): down the drop the purple slotted tube wall comes down to the water just behind a
++  // narrow, LOW foam fringe (the painting) instead of a 2 u wide flat pale foam strip with a tall cloud wall on it: the plunge tube's
++  // lower wall is pulled in (wall foot ±m07lF from the tube centre at the water, the cross-section unchanged from 2.6 u up and at
++  // the hand-over), and the drop's foam clouds become low lumps piled against that wall
++  const lowF = endW && clouds && flag05('m07low');
++  // (parked r23: NOT AN IMPROVEMENT — the pulled-in wall bends the gold rings into chevrons; the round clouds the user liked keep
++  // their size unless ?m07lK < 1 is given)
++  const footL = num07('m07lF', 3.55), lowY = num07('m07lY', 2.6), lowK = num07('m07lK', 1);
++  const lowRamp = (s: number, sA: number) => (lowF ? THREE.MathUtils.smootherstep(s, sA + 3, sA + 12) : 0);
    const [tNear, tFoam] = await Promise.all([nearW ? load('near_bank.png', THREE.RepeatWrapping) : null, nearW || wallFoamOn ? load('near_foam.png', THREE.RepeatWrapping) : null]);
    if (tNear) tNear.wrapS = THREE.ClampToEdgeWrapping;
    const [plate, tWall, tRiver, pGold, fillMask] = await Promise.all([
-@@ -351,7 +523,11 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -351,7 +532,11 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
      // foam-edge wobble 0.12 u. Tunables ?m07bA= / ?m07bL= / ?m07bC=
      uBand: { value: new THREE.Vector4(num07('m07bA', 0.6), num07('m07bL', 14), 0, band ? 1 : 0) },
      uBand2: { value: new THREE.Vector4(2.85, num07('m07bC', 1.1), 0.95, 0.12) },
@@ -306,7 +315,7 @@ index b9f474c..82bf087 100644
    if (nearW) {
      // river centre line in the tube-local frame: the lane Benny swims (course centre, sampled at the depth) plus the painted
      // river's winding (tools/match07/river_coins07.py → river07.json, clamped so Benny stays in the cyan), continued by a gentle
-@@ -384,6 +560,7 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -384,6 +569,7 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
        const kk = THREE.MathUtils.smoothstep(along, aEnd - 4, aEnd + 6);
        // r18 m07band: the lane only (the S-sweep is added in the shader, uBand)
        ctr[k] = band ? lane : lane + painted * (1 - kk) + tail * kk;
@@ -314,7 +323,7 @@ index b9f474c..82bf087 100644
      }
      // smooth (no kinks between samples: the bands must curve, not zigzag)
      for (let pass = 0; pass < 4; pass++) {
-@@ -436,6 +613,8 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -436,12 +622,15 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
      const f0 = course.sample(sA);
      const alongA = f0.pos.clone().sub(base).dot(Dv);
      plungeAlong = alongA;
@@ -323,7 +332,30 @@ index b9f474c..82bf087 100644
      shared.uFade.value.set(plunge.fade[0] - sA + alongA, plunge.fade[1] - sA + alongA);
      const axisA = base.clone().addScaledVector(X, T.ax).addScaledVector(U, T.h).addScaledVector(Dv, alongA);
      const d0 = axisA.clone().sub(f0.pos.clone().addScaledVector(f0.up, T.h));
-@@ -459,7 +638,7 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+     const ds = 0.4, nS = Math.ceil((sB - sA) / ds) + 1, nT = 160;
+     const tubeP: number[] = [], tubeUV: number[] = [], rivP: number[] = [], rivUV: number[] = [], idxT: number[] = [], idxR: number[] = [];
+-    const halfW = Math.sqrt(Math.max(T.r * T.r - T.h * T.h, 1)) + 0.15;
++    const Wf = Math.sqrt(Math.max(T.r * T.r - T.h * T.h, 1));
++    const halfW = Wf + 0.15;
+     const nR = 24;
+     const c = new THREE.Vector3(), p = new THREE.Vector3();
+     for (let i = 0; i < nS; i++) {
+@@ -450,16 +639,21 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+       const k = 1 - THREE.MathUtils.smootherstep(s, sA, sA + 14);
+       const along = alongA + (s - sA);
+       c.copy(f.pos).addScaledVector(f.up, T.h).addScaledVector(d0, k);
++      const sq = lowRamp(s, sA);
+       for (let j = 0; j <= nT; j++) {
+         const th = -Math.PI / 2 + (2 * Math.PI * j) / nT; // same angle convention as the fitted tube (x = right, y = up)
+-        p.copy(c).addScaledVector(f.right, T.r * Math.cos(th)).addScaledVector(f.up, T.r * Math.sin(th));
++        let cx = T.r * Math.cos(th);
++        const cy = T.r * Math.sin(th);
++        // r23 m07low: lower wall pulled in toward the river (full at the water line and below, none from lowY above the water)
++        if (sq > 0) cx *= 1 - sq * (1 - footL / Wf) * (1 - THREE.MathUtils.smoothstep(T.h + cy, 0, lowY));
++        p.copy(c).addScaledVector(f.right, cx).addScaledVector(f.up, cy);
+         tubeP.push(p.x, p.y, p.z); tubeUV.push(along, th);
+       }
+       const lat0 = d0.dot(f.right) * k;
        for (let j = 0; j <= nR; j++) {
          const l = -halfW + (2 * halfW * j) / nR;
          p.copy(f.pos).addScaledVector(f.right, lat0 + T.ax + l).addScaledVector(f.up, 0.06);
@@ -332,7 +364,7 @@ index b9f474c..82bf087 100644
        }
        if (i > 0) {
          for (let j = 0; j < nT; j++) { const a = (i - 1) * (nT + 1) + j, b = a + nT + 1; idxT.push(a, b, a + 1, b, b + 1, a + 1); }
-@@ -475,7 +654,7 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -475,7 +669,7 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
      };
      // world-space vertices: the meshes are added to the scene-level group with the inverse group matrix
      const toLocal = (g: THREE.BufferGeometry) => g.applyMatrix4(groupInv);
@@ -341,7 +373,7 @@ index b9f474c..82bf087 100644
      rivM.transparent = true;
      const t = add(toLocal(geo(tubeP, tubeUV, idxT)), wallM, 'pl_tube');
      const r = add(toLocal(geo(rivP, rivUV, idxR)), rivM, 'pl_river');
-@@ -483,6 +662,131 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -483,6 +677,135 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
      t.visible = r.visible = false;
      plungeMeshes.push(t, r);
    }
@@ -380,7 +412,9 @@ index b9f474c..82bf087 100644
 +      const p = place(side * lat, along, up);
 +      out.push(p.x, p.y, p.z, r); tone.push(rnd(), rnd(), lvl);
 +    };
++    let low = 0; // r23 m07low: 1 while the drop's bank is built (smaller, sunk lumps, few heaped on top)
 +    const mound = (out: number[], tone: number[], place: Place, side: number, a: number, wallLat: number, S: number) => {
++      if (low > 0) S *= lowK;
 +      const room = Math.max(0.5, wallLat - edge);
 +      const lC = edge + Math.min(room * 0.55, 0.35 * S + 0.2 + 0.25 * rnd());
 +      const len = (0.8 + 0.6 * rnd()) * S;
@@ -389,12 +423,12 @@ index b9f474c..82bf087 100644
 +      for (let i = 0; i < nB; i++) {
 +        const r = (0.34 + 0.16 * rnd()) * S;
 +        const l = lC + (rnd() - 0.4) * 0.55 * S, da = (nB > 1 ? i / (nB - 1) - 0.5 : 0) * len + (rnd() - 0.5) * 0.2 * S;
-+        const up = -r * (0.05 + 0.25 * rnd());
++        const up = -r * (low > 0 && lowK < 1 ? 0.3 + 0.25 * rnd() : 0.05 + 0.25 * rnd());
 +        big.push([l, a + da, up, r]); pushL(out, tone, place, side, wallLat, l, a + da, up, r, 0.15);
 +      }
 +      // softer lobes heaped on top
 +      for (const [l, al, up, r] of big.slice()) {
-+        if (rnd() < 0.2) continue;
++        if (rnd() < (low > 0 && lowK < 1 ? 0.65 : 0.2)) continue;
 +        const ru = r * (0.65 + 0.2 * rnd());
 +        const th = rnd() * Math.PI * 2, el = 0.55 + 0.35 * rnd();
 +        const dl = Math.cos(th) * Math.sqrt(1 - el * el), da = Math.sin(th) * Math.sqrt(1 - el * el);
@@ -461,10 +495,12 @@ index b9f474c..82bf087 100644
 +        const f = course.sample(THREE.MathUtils.clamp(s, sA, sB));
 +        return q.copy(f.pos).addScaledVector(f.right, lat).addScaledVector(f.up, up + 0.06).applyMatrix4(groupInv).clone();
 +      };
++      low = lowF ? 1 : 0;
 +      for (const side of [-1, 1]) {
-+        const wallP = (ss: number) => Math.max(3.2, 4.85 + side * d0.dot(course.sample(ss).right) * (1 - THREE.MathUtils.smootherstep(ss, sA, sA + 14)));
++        const wallP = (ss: number) => Math.max(3.2, THREE.MathUtils.lerp(4.85, footL - 0.05, lowRamp(ss, sA)) + side * d0.dot(course.sample(ss).right) * (1 - THREE.MathUtils.smootherstep(ss, sA, sA + 14)));
 +        bank(PL, PT, () => placeP, wallP, side, sA, sB - 0.5);
 +      }
++      low = 0;
 +      const pc = makeCloud(PL, PT, 0, 'pl_cloud');
 +      pc.visible = false;
 +      plungeMeshes.push(pc);
@@ -473,7 +509,7 @@ index b9f474c..82bf087 100644
    group.traverse((o) => o.updateMatrixWorld?.(true));
  
    return {
-@@ -493,7 +797,8 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+@@ -493,7 +816,8 @@ export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
        const clone = group.clone(true);
        clone.visible = true;
        // the plunge continuation is not in the approved picture: it never occludes the projector
