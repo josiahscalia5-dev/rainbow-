@@ -2257,3 +2257,28 @@ The clips came out as large-file pointers (they're stored in Git LFS). Fetching 
 
 > 🔧 **Bash** `{"command": "cat >> docs/briefs/2026-11-20-r22/COORDINATION.md <<'EOF'\n* ~03:40 s06 step 1 `&m06view=1` proof (`claude/rainbow-s06-match-c23` @ `fa509ac`; worker + lead: NOT YET PROVEN). Lead by eye\n  (`qa/review_r22/s06_t1/`, clips smudged from LFS): Benny smaller / lower + more river ahead = closer; smooth, no snaps; but the\n  centred bullseye rings + big foam walls still dominate, the off-centre tunnel / left crest is not held. Shown to the user:\n  APPROVED / BEFORE / NEW early + both clips — the user decides on m06view. s06 asked to do task 3 (foam walls) before task 2.\nEOF\nfor i in  …[+609 chars]`
 
+### 🧑 User — 2026-11-20T03:37:41.720Z
+
+> ↩︎ result: MATCH e0780fbd8659bfbcb94867fa069745ee9c78bb8d
+> 2
+> untracked: 3
+
+### 🤖 Claude — 2026-11-20T03:37:47.011Z
+
+The Screen 06 framing test is done. Your painting's composition still isn't held while Benny swims, so it stays out of the game. You have your approved picture, BEFORE and NEW from early in the stage, plus a gameplay clip of each.
+
+- **Closer:** with the test on, Benny sits smaller and lower, like in your painting, and more of the river and coin line ahead is visible. Steering is smooth, with no jumps.
+- **Still wrong:** soon after the start the gold rings form a centred bullseye, and big white foam walls fill both sides. Your painting's off-centre tunnel and the crest curving left aren't held while swimming.
+- **My verdict:** NOT YET PROVEN. The test stays out of the game unless you approve it from the clips.
+
+I've told the Screen 06 specialist to work next on turning the big foam walls into the low, puffy foam clouds from your painting. That is the most visible difference while swimming.
+
+Everything is saved and GitHub matches (`e0780fb`); the clips are stored with the other large files.
+
+Benny is working on matching his colour across all five screens, and the Screen 04 and 07 specialists are still on their steps. Your proposals are still waiting for a verdict: 3 for Screen 04, 2 for Screen 07, 2 for Screen 05.
+
+### 🧑 User — 2026-11-20T03:37:48.848Z
+
+Stop hook feedback:
+[command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+
