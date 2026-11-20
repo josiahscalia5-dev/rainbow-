@@ -1,0 +1,31 @@
+diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
+index 2b62a35..16aacb4 100644
+--- a/src/world/match04m4.ts
++++ b/src/world/match04m4.ts
+@@ -1039,6 +1039,7 @@ export function addM04(ctx: M04Ctx) {
+   const out: { update(cam: THREE.Vector3, benny?: THREE.Vector3): void } = { update() {} };
+   const updaters: ((a: number) => void)[] = [];
+   let endCap: THREE.Mesh | null = null;
++  let endFit: THREE.Vector3 | null = null;   // r20 m04endfit: the end disc's own centre (x, y) and radius under m04rfew
+ 
+   if (M04.ring) {
+     const ringTile = new THREE.TextureLoader().load(new URL('../../assets/textures/match04/tile_ring.png', import.meta.url).href, (t) => { t.needsUpdate = true; });
+@@ -1243,6 +1244,7 @@ export function addM04(ctx: M04Ctx) {
+     if (rfew) cap.setAttribute('aF', new THREE.Float32BufferAttribute(new Float32Array(nC * 2).map((_, i) => (i % 2 === 0 ? 0 : capS)), 2));
+     const cm = new THREE.Mesh(cap, gm); cm.name = 'm04_ring_glow'; group.add(cm);
+     endCap = cm;
++    if (rfew) endFit = new THREE.Vector3(cx, cy + rfGz * (1 - capS), r * capS);
+     ctx.hideOld(['m04_tube', 'm04_mouth_ring', 'm04_tube_end']);
+     console.info('[match04] m04ring', { period: P, rings: ringOf[ringOf.length - 1] + 1 });
+     if (M04.mouth) {
+@@ -1283,7 +1285,9 @@ export function addM04(ctx: M04Ctx) {
+     endCap.material = new THREE.ShaderMaterial({ vertexShader: END_VERT, fragmentShader: END_FRAG, side: THREE.DoubleSide, fog: false,
+       extensions: { derivatives: true } as never,
+       uniforms: { uPlate: shared.uPlate, uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uProjVP: shared.uProjVP, uAway: away, uTime: time,
+-        uC: { value: new THREE.Vector3(cx, cy, r) },
++        // r20 `&m04endfit=1`: with the K9 telescope (m04rfew) the disc sits at the telescope's end, shrunk to its last ring —
++        // paint the distant opening in the disc's OWN frame (its centre and size), not the full-size tube's
++        uC: { value: M04.num('m04endfit', 0) > 0 && endFit ? endFit : new THREE.Vector3(cx, cy, r) },
+         uE: { value: new THREE.Vector4(M04.num('m04eg', -0.28), M04.num('m04eq', 0.78), M04.num('m04ec', 0.14), M04.num('m04eh', 0.55)) },
+         uE2: { value: new THREE.Vector4((0.02 - cy) / r, M04.num('m04el', 0.62), M04.num('m04es', 1.25), M04.num('m04ek', 1.0)) } } });
+     console.info('[match04] m04end', { water: (0.02 - cy) / r });
