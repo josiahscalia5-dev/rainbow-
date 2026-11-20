@@ -1430,3 +1430,196 @@ The shader failed to compile. Let me get the exact error line.
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && python3 - <<'EOF'\np='src/world/match04m4.ts'; s=open(p).read()\na=\"\"\"          float fu = max(fwidth(uu), 1e-5);\n          float fx = fu / ribW;                                        // pixel footprint in rib units\"\"\"\nassert s.count(a)==1\ns=s.replace(a,\"\"\"          float sid = kI * 7.0 + si;                                   // world-anchored id of this rib\n          float fu = max(fwidth(uu), 1e-5);\n          float fx = fu / ribW;                                        // pixel footprint in rib units\"\"\")\nopen(p,'w').write(s)\nEOF\nS=/t …[+1003 chars]`
 
+### 🧑 User — 2026-11-20T01:18:34.223Z
+
+> ↩︎ result: f06 switch OFF vs original code: upper 700 rows max diff 0  pct identical (all) 68.6
+> f10 switch OFF vs original code: upper 700 rows max diff 0  pct identical (all) 65.8
+> sR switch OFF vs original code: upper 700 rows max diff 0  pct identical (all) 84.2
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:18:40.708Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r && python3 -c \"\nfrom PIL import Image\na=Image.open('b0/f06.png').convert('RGB'); b=Image.open('a1/f06.png').convert('RGB')\nbox=(20,420,380,880); w,h=box[2]-box[0],box[3]-box[1]\no=Image.new('RGB',(w*2*2+10,h*2),'white')\no.paste(a.crop(box).resize((w*2,h*2),Image.NEAREST),(0,0)); o.paste(b.crop(box).resize((w*2,h*2),Image.NEAREST),(w*2+10,0)); o.save('ab_zoom1.png')\no=Image.new('RGB',(864+10,768)); o.paste(a.resize((432,768)),(0,0)); o.paste(b.resize((432,768)),(442,0)); o.save('ab_full1.pn …[+71 chars]`
+
+### 🧑 User — 2026-11-20T01:18:41.204Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:18:43.515Z
+
+> 🔧 **TaskUpdate** `{"taskId": "1", "status": "completed"}`
+
+### 🧑 User — 2026-11-20T01:18:43.528Z
+
+> ↩︎ result: Updated task #1 status
+
+### 🤖 Claude — 2026-11-20T01:18:43.931Z
+
+> 🔧 **TaskUpdate** `{"taskId": "2", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-20T01:18:43.940Z
+
+> ↩︎ result: Updated task #2 status
+
+### 🤖 Claude — 2026-11-20T01:18:44.937Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r/ab_zoom1.png"}`
+
+### 🧑 User — 2026-11-20T01:18:44.958Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T01:19:05.110Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r && python3 - <<'EOF'\nfrom PIL import Image; import numpy as np\nb=Image.open('a1/f06.png').convert('RGB')\nb.crop((60,470,300,710)).resize((960,960),Image.NEAREST).save('a1_z4.png')\ndef stats(img, mask):\n    Y=img@[0.299,0.587,0.114]; v=Y[mask]\n    hsv=np.asarray(Image.fromarray(img.astype(np.uint8)).convert('HSV')).astype(float)\n    S=hsv[...,1][mask]/255\n    # hue families on ring pixels: pink/violet/blue = hue in 200..330 deg OR (R-G small & B high)\n    H=hsv[...,0][mask]*360/255\n     …[+1426 chars]`
+
+### 🧑 User — 2026-11-20T01:19:05.979Z
+
+> ↩︎ result: APPROVED inner rings  luma p5 81 p25 99 p50 116 p75 147 p95 219 mean 128 | <60: 0.46% | pink/violet/blue px 8.2%
+> BEFORE marked area       luma p5 75 p25 103 p50 129 p75 165 p95 231 mean 137 | <60: 0.84% | pink/violet/blue px 10.4%
+> AFTER  marked area       luma p5 91 p25 100 p50 121 p75 143 p95 182 mean 126 | <60: 0.03% | pink/violet/blue px 8.3%
+> BEFORE all tunnel f06    luma p5 67 p25 98 p50 121 p75 155 p95 219 mean 129 | <60: 3.36% | pink/violet/blue px 27.7%
+> AFTER  all tunnel f06    luma p5 69 p25 97 p50 116 p75 140 p95 188 mean 121 | <60: 3.13% | pink/violet/blue px 26.8%
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:19:18.753Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r/a1_z4.png"}`
+
+### 🧑 User — 2026-11-20T01:19:18.770Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T01:19:29.466Z
+
+Much smoother at 4×. Two spots still look stepped: a thin bright line (upper middle) and a yellow-to-dark-red edge at the right. Let me check with the debug view which surface parts they are.
+
+### 🤖 Claude — 2026-11-20T01:19:33.572Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && S=/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r; Q=$(cat qa/match/04/r19b/ringpaint/preview_r20/QUERY_preview.txt)\ntimeout 600 node tools/match04/rings21.mjs $S/ad1 \"$Q&m04rsoft=1&m04dbg=1\" '[[\"f06\",84.183,null,10]]' 2>&1 | grep rror; timeout 600 node tools/match04/rings21.mjs $S/ad2 \"$Q&m04rsoft=1&m04dbg=2\" '[[\"f06\",84.183,null,10]]' 2>&1 | grep rror\ncd $S && python3 -c \"\nfrom PIL import Image\nims=[Image.open(p).convert('RGB').crop((60,470,300,710)).resize((480,480),Image.NEAREST) for p in ['a1/f06.png',' …[+214 chars]`
+
+### 🧑 User — 2026-11-20T01:20:00.521Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:20:03.950Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r/ad_cmp.png"}`
+
+### 🧑 User — 2026-11-20T01:20:03.972Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T01:20:20.833Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r && python3 - <<'EOF'\nfrom PIL import Image; import numpy as np\na=np.asarray(Image.open('a1/f06.png').convert('RGB')).astype(int)\nd=np.asarray(Image.open('ad1/f06.png').convert('RGB')).astype(int)\nb=np.asarray(Image.open('b0/f06.png').convert('RGB')).astype(int)\nc=np.array([233.,532.]); u=np.array([0.54,0.84])\nfor t in range(-14,15):\n  x,y=(c+u*t).round().astype(int)\n  print(t,(x,y),'AFTER',a[y,x],int(a[y,x]@[.299,.587,.114]),' dbg',d[y,x],' BEFORE',int(b[y,x]@[.299,.587,.114]))\nEOF", "d …[+57 chars]`
+
+### 🧑 User — 2026-11-20T01:20:21.142Z
+
+> ↩︎ result: -14 (np.int64(225), np.int64(520)) AFTER [144  74  76] 95  dbg [  0 255   0]  BEFORE 73
+> -13 (np.int64(226), np.int64(521)) AFTER [146  77  84] 98  dbg [  0 255   0]  BEFORE 75
+> -12 (np.int64(227), np.int64(522)) AFTER [149  80  91] 101  dbg [  0 255   0]  BEFORE 80
+> -11 (np.int64(227), np.int64(523)) AFTER [153  83  94] 105  dbg [  0 255   0]  BEFORE 98
+> -10 (np.int64(228), np.int64(524)) AFTER [160  86  96] 109  dbg [  0 255   0]  BEFORE 66
+> -9 (np.int64(228), np.int64(524)) AFTER [160  86  96] 109  dbg [  0 255   0]  BEFORE 66
+> -8 (np.int64(229), np.int64(525)) AFTER [252 173 161] 195  dbg [  0 255   0]  BEFORE 79
+> -7 (np.int64(229), np.int64(526)) AFTER [253 182 138] 198  dbg [  0 255   0]  BEFORE 78
+> -6 (np.int64(230), np.int64(527)) AFTER [157  71  51] 94  dbg [184   0   0]  BEFORE 81
+> -5 (np.int64(230), np.int64(528)) AFTER [153  70  52] 92  dbg [187   0   0]  BEFORE 80
+> -4 (np.int64(231), np.int64(529)) AFTER [150  70  57] 92  dbg [193   0   0]  BEFORE 85
+> -3 (np.int64(231), np.int64(529)) AFTER [150  70  57] 92  dbg [193   0   0]  BEFORE 85
+> -2 (np.int64(232), np.int64(530)) AFTER [146  69  61] 91  dbg [199   0   0]  BEFORE 85
+> -1 (np.int64(232), np.int64(531)) AFTER [144  69  64] 90   …[+1379 chars]
+
+### 🤖 Claude — 2026-11-20T01:21:19.749Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && python3 - <<'EOF'\np='src/world/match04m4.ts'; s=open(p).read()\ndef rep(a,b,cnt=1):\n    global s\n    assert s.count(a)==cnt, (a[:70], s.count(a)); s=s.replace(a,b)\nrep(\"\"\"          float crest = exp(-pow((xs - xc) / (0.75 * rimW + fx), 2.0)) * roll;\"\"\",\"\"\"          float crest = exp(-pow((xs - xc) / (0.9 * rimW + fx), 2.0)) * roll;\"\"\")\nrep(\"\"\"          float T = mix(0.376, 0.539, pow(ramp, 1.3));                 // near end -> warm body\"\"\",\"\"\"          float T = mix(0.376, 0.585, pow(ramp, 1.6));                 // near end -> war …[+2910 chars]`
+
+### 🧑 User — 2026-11-20T01:21:44.510Z
+
+> ↩︎ result: ok
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:21:48.051Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r/ab_zoom2.png"}`
+
+### 🧑 User — 2026-11-20T01:21:48.081Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T01:21:51.744Z
+
+That looks almost unchanged from the previous attempt. Let me check whether the render really picked up the change.
+
+### 🤖 Claude — 2026-11-20T01:21:54.645Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r && python3 -c \"\nfrom PIL import Image; import numpy as np\na=np.asarray(Image.open('a1/f06.png').convert('RGB')).astype(int); b=np.asarray(Image.open('a2/f06.png').convert('RGB')).astype(int)\nd=np.abs(a-b).max(2); print('a1 vs a2 upper: max',d[:700].max(),'pct changed',(d[:700]>2).mean()*100)\"; ls -la a2/; cat err.log 2>/dev/null | head -3", "description": "Check whether AFTER render changed"}`
+
+### 🧑 User — 2026-11-20T01:21:54.999Z
+
+> ↩︎ result: a1 vs a2 upper: max 32 pct changed 14.1005291005291
+> total 5652
+> drwxr-xr-x  2 root root    4096 Nov 20 01:21 .
+> drwxr-xr-x 15 root root    4096 Nov 20 01:21 ..
+> -rw-r--r--  1 root root 1976374 Nov 20 01:21 f06.png
+> -rw-r--r--  1 root root 1761028 Nov 20 01:21 f10.png
+> -rw-r--r--  1 root root 2034587 Nov 20 01:21 sR.png
+> -rw-r--r--  1 root root     542 Nov 20 01:21 shots.json
+> 
+> ----
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:22:00.219Z
+
+The change did apply, just modestly (max 32 levels). Let me look closely at the remaining thin line and at the bright dashes near the left edge.
+
+### 🤖 Claude — 2026-11-20T01:22:03.020Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r && python3 -c \"\nfrom PIL import Image\na=Image.open('a2/f06.png').convert('RGB'); d=Image.open('ad1/f06.png').convert('RGB')\no=Image.new('RGB',(970,640),'white')\no.paste(a.crop((40,700,160,860)).resize((480,640),Image.NEAREST),(0,0)); o.paste(d.crop((40,700,160,860)).resize((480,640),Image.NEAREST),(490,0)); o.save('dash_z.png')\"", "description": "Zoom on the dash artifacts at left"}`
+
+### 🧑 User — 2026-11-20T01:22:03.209Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:22:06.322Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r/dash_z.png"}`
+
+### 🧑 User — 2026-11-20T01:22:06.342Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T01:22:47.888Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && python3 - <<'EOF'\np='src/world/match04m4.ts'; s=open(p).read()\ndef rep(a,b,cnt=1):\n    global s\n    assert s.count(a)==cnt, (a[:70], s.count(a)); s=s.replace(a,b)\nrep(\"\"\"        // r21 m04rsoft: the ring's lip + groove strip (flush since m04rflat) is one more, narrower rib: the ring's rim\n        float ribW = ls;\n        if (soft && uu >= uL) { si = Ns; xs = clamp((uu - uL) / max(uP - uL, 1e-3), 0.0, 1.0); ribW = uP - uL; }\"\"\",\"\"\"        // r21 m04rsoft: the ring's lip + groove strip (flush since m04rflat) joins its last sub-band: that last …[+2799 chars]`
+
+### 🧑 User — 2026-11-20T01:22:50.595Z
+
+> ↩︎ result: ok
+> 443:          // So every rib (the sub-bands and the ring's lip rib) is ONE rounded profile in those measured tones: copper near
+> 472:          if (uu >= uL) {
+> 473:            // the lip rib's painted rows are the dark painted groove: take the painted band colour at this angle instead
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:22:57.451Z
+
+Also smoothing the colour handover inside that merged last rib, where the painted lip rows begin:
+
+### 🤖 Claude — 2026-11-20T01:23:05.814Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && python3 - <<'EOF'\np='src/world/match04m4.ts'; s=open(p).read()\ndef rep(a,b,cnt=1):\n    global s\n    assert s.count(a)==cnt, (a[:70], s.count(a)); s=s.replace(a,b)\nrep(\"\"\"          if (uu >= uL) {\n            // the lip rib's painted rows are the dark painted groove: take the painted band colour at this angle instead\n            vec2 uvB\"\"\",\"\"\"          if (uu >= uL - 0.3) {\n            // the painted rows past the lip line are the dark painted groove: blend into the painted band colour at this\n            // angle instead (over 0.3 ring u …[+1536 chars]`
+
+### 🧑 User — 2026-11-20T01:23:30.519Z
+
+> ↩︎ result: ok
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:23:33.770Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r/ab_zoom3.png"}`
+
+### 🧑 User — 2026-11-20T01:23:33.791Z
+
+> ↩︎ result: [image]
+
