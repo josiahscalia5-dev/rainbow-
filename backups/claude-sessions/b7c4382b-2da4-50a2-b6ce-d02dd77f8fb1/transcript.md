@@ -1794,3 +1794,88 @@ The five-minute autosave daemon is mid-save right now. I'll wait for it to relea
 
 > 🔧 **Bash** `{"command": "timeout 240 bash -c 'until flock -n backups/.autosave.lock true; do sleep 2; done'; timeout 300 python3 scripts/rainbow-autosave.py --reason manual:stop-hook 2>&1 | grep -E '\"result\"|\"commit\"|skipping'; echo \"remote $(git ls-remote origin refs/heads/ccr-5be1062a-0ffyej | cut -c1-12) local $(git rev-parse --short=12 HEAD)\"; git status --porcelain | grep -v 'backups/claude-sessions/\\|CONVERSATION_INDEX' | head", "description": "Wait for the daemon, save, verify remote equals local", "timeout": 560000}`
 
+### 🧑 User — 2026-11-20T10:54:23.768Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "commit": "a2989697b29bd0643f695be4434fa7944d71363a",
+> remote a2989697b29b local a2989697b29b
+
+### 🤖 Claude — 2026-11-20T10:54:32.520Z
+
+> 🔧 **Bash** `{"command": "python3 /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/add_wdbg.py && cd /home/user/wt/lead06 && timeout 300 npx tsc --noEmit 2>&1 | tail -3; cd /home/user/rainbow-/qa/match/06/r24/lead_rip && node /home/user/rainbow-/tools/lead23/setq.mjs \"$(cat QUERY_RIPZ.txt)\" \"m06wdbg=1\" > QUERY_WDBG.txt && node /home/user/rainbow-/tools/lead23/setq.mjs \"$(cat QUERY_NORIP.txt)\" \"m06wdbg=1\" > QUERY_WDBG0.txt && cat QUERY_WDBG.txt", "description": "Apply the plate-weight debug view and prepare queries", "timeout": 330000}`
+
+### 🧑 User — 2026-11-20T10:54:43.717Z
+
+> ↩︎ result: patched
+> match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1&m06st=1&m06fcl=1&m06view=1&m06vs=0&m06rip=1&m06ripz=1&m06wdbg=1
+
+### 🤖 Claude — 2026-11-20T10:54:47.748Z
+
+> 🔧 **Bash** `{"command": "SHOTS='[[\"o1_003\",0.03,null],[\"o2_007\",0.07,null]]' bash /home/user/rainbow-/qa/match/06/r24/lead_rip/render_lead06.sh WDBG0 WDBG", "description": "Render plate-weight debug shots at the opening", "timeout": 3600000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T10:54:47.805Z
+
+> ↩︎ result: Command running in background with ID: buhua24jg. Output is being written to: /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/tasks/buhua24jg.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-20T10:54:49.909Z
+
+The debug render is running. Everything is saved (GitHub = local `a298969`), and the four specialists are still working in the background.
+
+### 🧑 User — 2026-11-20T10:54:52.876Z
+
+When When you're finished what you're doing, can you do this for me?CLAUDIA — EXPORT MY COMPLETE RAINBOW APP FOR REVIEW
+
+I want to send my existing app project to ChatGPT for a review of the whole app, including its code, assets, gameplay and visual match to ALL my approved screens.
+
+My goal remains the same: the player should feel as though they have entered my approved pictures. The actual mobile game should preserve their scenery, layout, water, colours, lighting and character appearance throughout swimming, steering and transitions.
+
+Please create a downloadable review package from the latest work in this account.
+
+1. Preserve and identify the current work
+
+Save the current work and make a consistent export. Include a manifest stating the repository, branch, full commit SHA and any uncommitted changes included.
+
+Clearly identify which version should be run. Keep unmerged experiments and unfinished specialist work separate, with their status and instructions. Preserve newer work when preparing the export.
+
+2. Include the complete source project
+
+Include the actual application source, configuration, dependency manifests and lockfiles, shaders, scripts, scene data, tests and existing Android project or wrapper.
+
+Include everything needed to understand and run the implemented app, including its opening, menus, settings, gameplay, controls, progression, transitions, audio and saving features wherever these are implemented.
+
+3. Include the real assets and approved references
+
+Include all required models, textures, materials, animations, audio and other runtime assets. Include the actual Git LFS file contents.
+
+Include ALL original approved screen images at their original quality. Clearly distinguish approved originals, approved additional artwork, current gameplay captures and unapproved proposals. Keep original Flow videos and other reference media separately labelled.
+
+4. Provide clear run and review instructions
+
+Add a REVIEW_README explaining:
+
+- The exact setup, run and build commands and required tool versions.
+- How to open each screen and which URL switches or settings are needed.
+- Which candidate changes are enabled in the recommended review version.
+- Known problems, incomplete features and unavailable dependencies.
+- Tests already run and their actual results.
+
+Describe required external services using configuration examples with placeholder values.
+
+5. Include available evidence and an Android build
+
+Include the existing gameplay recordings and comparisons, labelled with their screen, version and playback speed. State which screens or transitions have not yet been recorded.
+
+Include the latest matching APK if available. If there is no current APK, state that clearly.
+
+Deliver the source package without waiting for another lengthy video render.
+
+6. Package and verify it
+
+Prefer one ZIP called Rainbow_App_Review.zip. If it is too large to upload, create a core project ZIP and separate numbered asset ZIPs, with exact instructions for putting them back together.
+
+Exclude API keys, passwords, access tokens, private signing keys, chat transcripts, dependency caches, node_modules and the raw .git directory. Include a safe .env.example where appropriate.
+
+Test extraction, check that required files are present and that large assets contain real data, and provide an explicit list of anything missing.
+
+Give me downloadable file links so I can upload the package to ChatGPT.
+

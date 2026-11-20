@@ -1,0 +1,779 @@
+{
+ "summary": {
+  "coins_above_nearest_painted": 80,
+  "before_mean_ratio_to_painted": 1.148,
+  "new_mean_ratio_to_painted": 1.047,
+  "before_max_ratio": 1.594,
+  "new_max_ratio": 1.074
+ },
+ "shots": {
+  "a00_approved_view": [
+   {
+    "coin": 82,
+    "x": 334,
+    "y": 870,
+    "before_px": 83.9,
+    "new_px": 83.9,
+    "painted_px": 84.0
+   },
+   {
+    "coin": 83,
+    "x": 400,
+    "y": 788,
+    "before_px": 70,
+    "new_px": 70,
+    "painted_px": 70.4
+   },
+   {
+    "coin": 84,
+    "x": 467,
+    "y": 734,
+    "before_px": 58,
+    "new_px": 58,
+    "painted_px": 57.4
+   },
+   {
+    "coin": 85,
+    "x": 383,
+    "y": 629,
+    "before_px": 36,
+    "new_px": 36,
+    "painted_px": 34.6
+   },
+   {
+    "coin": 86,
+    "x": 428,
+    "y": 660,
+    "before_px": 40,
+    "new_px": 40,
+    "painted_px": 39.7
+   },
+   {
+    "coin": 87,
+    "x": 497,
+    "y": 688,
+    "before_px": 48,
+    "new_px": 48,
+    "painted_px": 48.4
+   },
+   {
+    "coin": 88,
+    "x": 479,
+    "y": 603,
+    "before_px": 24,
+    "new_px": 24,
+    "painted_px": 24.6
+   },
+   {
+    "coin": 89,
+    "x": 420,
+    "y": 617,
+    "before_px": 30,
+    "new_px": 30,
+    "painted_px": 30.4
+   },
+   {
+    "coin": 90,
+    "x": 454,
+    "y": 607,
+    "before_px": 26,
+    "new_px": 26,
+    "painted_px": 25.7
+   }
+  ],
+  "f03_forward3u": [
+   {
+    "coin": 82,
+    "x": 312,
+    "y": 919,
+    "before_px": 87.2,
+    "new_px": 87.2,
+    "painted_px": 84.0
+   },
+   {
+    "coin": 83,
+    "x": 393,
+    "y": 811,
+    "before_px": 79.4,
+    "new_px": 79.4,
+    "painted_px": 74.6
+   },
+   {
+    "coin": 84,
+    "x": 468,
+    "y": 744,
+    "before_px": 63.9,
+    "new_px": 63.6,
+    "painted_px": 59.7
+   },
+   {
+    "coin": 85,
+    "x": 377,
+    "y": 627,
+    "before_px": 39.2,
+    "new_px": 36.2,
+    "painted_px": 33.9
+   },
+   {
+    "coin": 86,
+    "x": 427,
+    "y": 660,
+    "before_px": 43.2,
+    "new_px": 42.4,
+    "painted_px": 39.7
+   },
+   {
+    "coin": 87,
+    "x": 500,
+    "y": 689,
+    "before_px": 51.5,
+    "new_px": 51.5,
+    "painted_px": 48.6
+   },
+   {
+    "coin": 88,
+    "x": 481,
+    "y": 598,
+    "before_px": 25.2,
+    "new_px": 25.2,
+    "painted_px": 24.0
+   },
+   {
+    "coin": 89,
+    "x": 419,
+    "y": 613,
+    "before_px": 31.4,
+    "new_px": 30.4,
+    "painted_px": 28.5
+   },
+   {
+    "coin": 90,
+    "x": 455,
+    "y": 602,
+    "before_px": 27.2,
+    "new_px": 26,
+    "painted_px": 24.3
+   }
+  ],
+  "f06_forward6u": [
+   {
+    "coin": 83,
+    "x": 398,
+    "y": 871,
+    "before_px": 87.3,
+    "new_px": 87.3,
+    "painted_px": 84.0
+   },
+   {
+    "coin": 84,
+    "x": 487,
+    "y": 771,
+    "before_px": 75.9,
+    "new_px": 70.4,
+    "painted_px": 66.3
+   },
+   {
+    "coin": 85,
+    "x": 378,
+    "y": 630,
+    "before_px": 45.6,
+    "new_px": 37.1,
+    "painted_px": 34.9
+   },
+   {
+    "coin": 86,
+    "x": 435,
+    "y": 666,
+    "before_px": 49.3,
+    "new_px": 44,
+    "painted_px": 41.3
+   },
+   {
+    "coin": 87,
+    "x": 518,
+    "y": 698,
+    "before_px": 58.2,
+    "new_px": 53.6,
+    "painted_px": 50.4
+   },
+   {
+    "coin": 88,
+    "x": 493,
+    "y": 593,
+    "before_px": 27.3,
+    "new_px": 25.6,
+    "painted_px": 24.0
+   },
+   {
+    "coin": 89,
+    "x": 425,
+    "y": 609,
+    "before_px": 34,
+    "new_px": 28,
+    "painted_px": 26.5
+   },
+   {
+    "coin": 90,
+    "x": 463,
+    "y": 597,
+    "before_px": 29.5,
+    "new_px": 25.6,
+    "painted_px": 24.0
+   }
+  ],
+  "f10_forward10u": [
+   {
+    "coin": 84,
+    "x": 561,
+    "y": 869,
+    "before_px": 87.3,
+    "new_px": 87.3,
+    "painted_px": 84.0
+   },
+   {
+    "coin": 85,
+    "x": 413,
+    "y": 666,
+    "before_px": 60,
+    "new_px": 43.3,
+    "painted_px": 41.3
+   },
+   {
+    "coin": 86,
+    "x": 483,
+    "y": 708,
+    "before_px": 62.2,
+    "new_px": 55.5,
+    "painted_px": 52.3
+   },
+   {
+    "coin": 87,
+    "x": 583,
+    "y": 745,
+    "before_px": 71.6,
+    "new_px": 63.4,
+    "painted_px": 60.0
+   },
+   {
+    "coin": 88,
+    "x": 541,
+    "y": 611,
+    "before_px": 31.2,
+    "new_px": 28.3,
+    "painted_px": 27.5
+   },
+   {
+    "coin": 89,
+    "x": 463,
+    "y": 627,
+    "before_px": 38.6,
+    "new_px": 35.6,
+    "painted_px": 33.9
+   },
+   {
+    "coin": 90,
+    "x": 507,
+    "y": 615,
+    "before_px": 33.4,
+    "new_px": 30.4,
+    "painted_px": 29.5
+   }
+  ],
+  "f20_forward20u": [
+   {
+    "coin": 86,
+    "x": 271,
+    "y": 988,
+    "before_px": 55,
+    "new_px": 55,
+    "painted_px": 84.0
+   },
+   {
+    "coin": 87,
+    "x": 470,
+    "y": 988,
+    "before_px": 87.4,
+    "new_px": 87.4,
+    "painted_px": 84.0
+   },
+   {
+    "coin": 88,
+    "x": 293,
+    "y": 678,
+    "before_px": 46.1,
+    "new_px": 46.1,
+    "painted_px": 45.3
+   },
+   {
+    "coin": 89,
+    "x": 178,
+    "y": 706,
+    "before_px": 56,
+    "new_px": 55.2,
+    "painted_px": 51.9
+   },
+   {
+    "coin": 90,
+    "x": 241,
+    "y": 684,
+    "before_px": 48.3,
+    "new_px": 48.3,
+    "painted_px": 47.3
+   }
+  ],
+  "s_left_steer": [
+   {
+    "coin": 82,
+    "x": 532,
+    "y": 1060,
+    "before_px": 9.2,
+    "new_px": 9.2,
+    "painted_px": 84.0
+   },
+   {
+    "coin": 83,
+    "x": 545,
+    "y": 880,
+    "before_px": 87.2,
+    "new_px": 87.2,
+    "painted_px": 84.0
+   },
+   {
+    "coin": 84,
+    "x": 578,
+    "y": 777,
+    "before_px": 74.7,
+    "new_px": 72.1,
+    "painted_px": 67.8
+   },
+   {
+    "coin": 85,
+    "x": 452,
+    "y": 636,
+    "before_px": 45.3,
+    "new_px": 38.9,
+    "painted_px": 36.4
+   },
+   {
+    "coin": 86,
+    "x": 495,
+    "y": 671,
+    "before_px": 48.9,
+    "new_px": 45.8,
+    "painted_px": 43.0
+   },
+   {
+    "coin": 87,
+    "x": 569,
+    "y": 701,
+    "before_px": 57.5,
+    "new_px": 54.4,
+    "painted_px": 50.9
+   },
+   {
+    "coin": 88,
+    "x": 513,
+    "y": 595,
+    "before_px": 27.2,
+    "new_px": 25.6,
+    "painted_px": 24.0
+   },
+   {
+    "coin": 89,
+    "x": 444,
+    "y": 610,
+    "before_px": 33.9,
+    "new_px": 29,
+    "painted_px": 27.0
+   },
+   {
+    "coin": 90,
+    "x": 482,
+    "y": 599,
+    "before_px": 29.3,
+    "new_px": 25.6,
+    "painted_px": 24.0
+   }
+  ],
+  "s_right_steer": [
+   {
+    "coin": 82,
+    "x": 30,
+    "y": 1043,
+    "before_px": 9.2,
+    "new_px": 9.2,
+    "painted_px": 84.0
+   },
+   {
+    "coin": 83,
+    "x": 248,
+    "y": 860,
+    "before_px": 87.3,
+    "new_px": 87.3,
+    "painted_px": 83.6
+   },
+   {
+    "coin": 84,
+    "x": 393,
+    "y": 764,
+    "before_px": 76.5,
+    "new_px": 68.5,
+    "painted_px": 64.6
+   },
+   {
+    "coin": 85,
+    "x": 304,
+    "y": 623,
+    "before_px": 45.6,
+    "new_px": 34.4,
+    "painted_px": 32.5
+   },
+   {
+    "coin": 86,
+    "x": 375,
+    "y": 661,
+    "before_px": 49.4,
+    "new_px": 42.5,
+    "painted_px": 39.9
+   },
+   {
+    "coin": 87,
+    "x": 466,
+    "y": 694,
+    "before_px": 58.6,
+    "new_px": 52.7,
+    "painted_px": 49.6
+   },
+   {
+    "coin": 88,
+    "x": 472,
+    "y": 591,
+    "before_px": 27.4,
+    "new_px": 25.6,
+    "painted_px": 24.0
+   },
+   {
+    "coin": 89,
+    "x": 406,
+    "y": 607,
+    "before_px": 34.1,
+    "new_px": 27.3,
+    "painted_px": 25.7
+   },
+   {
+    "coin": 90,
+    "x": 445,
+    "y": 595,
+    "before_px": 29.5,
+    "new_px": 25.6,
+    "painted_px": 24.0
+   }
+  ],
+  "s_left_hard": [
+   {
+    "coin": 84,
+    "x": 778,
+    "y": 931,
+    "before_px": 87.4,
+    "new_px": 87.4,
+    "painted_px": 84.0
+   },
+   {
+    "coin": 85,
+    "x": 544,
+    "y": 676,
+    "before_px": 71.2,
+    "new_px": 47.3,
+    "painted_px": 44.7
+   },
+   {
+    "coin": 86,
+    "x": 589,
+    "y": 725,
+    "before_px": 71.3,
+    "new_px": 59.2,
+    "painted_px": 55.6
+   },
+   {
+    "coin": 87,
+    "x": 682,
+    "y": 767,
+    "before_px": 80,
+    "new_px": 69.3,
+    "painted_px": 65.3
+   },
+   {
+    "coin": 88,
+    "x": 571,
+    "y": 617,
+    "before_px": 33.4,
+    "new_px": 31.9,
+    "painted_px": 30.4
+   },
+   {
+    "coin": 89,
+    "x": 484,
+    "y": 634,
+    "before_px": 41.5,
+    "new_px": 38.2,
+    "painted_px": 36.1
+   },
+   {
+    "coin": 90,
+    "x": 530,
+    "y": 621,
+    "before_px": 35.8,
+    "new_px": 33.4,
+    "painted_px": 31.8
+   }
+  ],
+  "s_right_hard": [
+   {
+    "coin": 84,
+    "x": 363,
+    "y": 993,
+    "before_px": 87.4,
+    "new_px": 87.4,
+    "painted_px": 84.0
+   },
+   {
+    "coin": 85,
+    "x": 223,
+    "y": 729,
+    "before_px": 70.2,
+    "new_px": 60,
+    "painted_px": 56.4
+   },
+   {
+    "coin": 86,
+    "x": 330,
+    "y": 772,
+    "before_px": 71.3,
+    "new_px": 70.4,
+    "painted_px": 66.6
+   },
+   {
+    "coin": 87,
+    "x": 455,
+    "y": 810,
+    "before_px": 81.2,
+    "new_px": 79,
+    "painted_px": 74.4
+   },
+   {
+    "coin": 88,
+    "x": 445,
+    "y": 649,
+    "before_px": 33.6,
+    "new_px": 33.6,
+    "painted_px": 38.2
+   },
+   {
+    "coin": 89,
+    "x": 364,
+    "y": 665,
+    "before_px": 41.4,
+    "new_px": 41.4,
+    "painted_px": 41.0
+   },
+   {
+    "coin": 90,
+    "x": 411,
+    "y": 652,
+    "before_px": 35.8,
+    "new_px": 35.8,
+    "painted_px": 38.6
+   }
+  ],
+  "t33_through_screen": [
+   {
+    "coin": 82,
+    "x": 298,
+    "y": 952,
+    "before_px": 87.4,
+    "new_px": 87.4,
+    "painted_px": 84.0
+   },
+   {
+    "coin": 83,
+    "x": 391,
+    "y": 830,
+    "before_px": 86.7,
+    "new_px": 83.3,
+    "painted_px": 78.1
+   },
+   {
+    "coin": 84,
+    "x": 472,
+    "y": 752,
+    "before_px": 68.2,
+    "new_px": 65.7,
+    "painted_px": 61.7
+   },
+   {
+    "coin": 85,
+    "x": 374,
+    "y": 627,
+    "before_px": 41.5,
+    "new_px": 36.1,
+    "painted_px": 33.9
+   },
+   {
+    "coin": 86,
+    "x": 427,
+    "y": 661,
+    "before_px": 45.4,
+    "new_px": 42.6,
+    "painted_px": 39.9
+   },
+   {
+    "coin": 87,
+    "x": 504,
+    "y": 691,
+    "before_px": 54,
+    "new_px": 52.3,
+    "painted_px": 49.0
+   },
+   {
+    "coin": 88,
+    "x": 483,
+    "y": 595,
+    "before_px": 26,
+    "new_px": 25.5,
+    "painted_px": 24.0
+   },
+   {
+    "coin": 89,
+    "x": 420,
+    "y": 610,
+    "before_px": 32.4,
+    "new_px": 29,
+    "painted_px": 27.0
+   },
+   {
+    "coin": 90,
+    "x": 456,
+    "y": 599,
+    "before_px": 28.1,
+    "new_px": 25.5,
+    "painted_px": 24.0
+   }
+  ],
+  "t66_through_screen": [
+   {
+    "coin": 84,
+    "x": 533,
+    "y": 821,
+    "before_px": 87.2,
+    "new_px": 81.3,
+    "painted_px": 76.4
+   },
+   {
+    "coin": 85,
+    "x": 402,
+    "y": 646,
+    "before_px": 53.8,
+    "new_px": 40.3,
+    "painted_px": 37.8
+   },
+   {
+    "coin": 86,
+    "x": 467,
+    "y": 686,
+    "before_px": 56.8,
+    "new_px": 50.8,
+    "painted_px": 48.0
+   },
+   {
+    "coin": 87,
+    "x": 561,
+    "y": 721,
+    "before_px": 66.1,
+    "new_px": 58.2,
+    "painted_px": 54.9
+   },
+   {
+    "coin": 88,
+    "x": 526,
+    "y": 599,
+    "before_px": 29.7,
+    "new_px": 25.6,
+    "painted_px": 24.0
+   },
+   {
+    "coin": 89,
+    "x": 452,
+    "y": 615,
+    "before_px": 36.8,
+    "new_px": 31.1,
+    "painted_px": 29.5
+   },
+   {
+    "coin": 90,
+    "x": 493,
+    "y": 603,
+    "before_px": 31.9,
+    "new_px": 25.9,
+    "painted_px": 24.6
+   }
+  ],
+  "t95_through_screen": [
+   {
+    "coin": 84,
+    "x": 568,
+    "y": 978,
+    "before_px": 87.5,
+    "new_px": 87.5,
+    "painted_px": 84.0
+   },
+   {
+    "coin": 85,
+    "x": 373,
+    "y": 708,
+    "before_px": 73.3,
+    "new_px": 55.7,
+    "painted_px": 52.3
+   },
+   {
+    "coin": 86,
+    "x": 450,
+    "y": 754,
+    "before_px": 73.3,
+    "new_px": 66,
+    "painted_px": 62.2
+   },
+   {
+    "coin": 87,
+    "x": 560,
+    "y": 795,
+    "before_px": 82.5,
+    "new_px": 76.1,
+    "painted_px": 71.7
+   },
+   {
+    "coin": 88,
+    "x": 497,
+    "y": 635,
+    "before_px": 33.9,
+    "new_px": 33.9,
+    "painted_px": 36.3
+   },
+   {
+    "coin": 89,
+    "x": 412,
+    "y": 652,
+    "before_px": 41.9,
+    "new_px": 41,
+    "painted_px": 38.6
+   },
+   {
+    "coin": 90,
+    "x": 459,
+    "y": 639,
+    "before_px": 36.2,
+    "new_px": 36.2,
+    "painted_px": 36.8
+   }
+  ]
+ }
+}

@@ -11,7 +11,7 @@ index 6aec240..321c542 100644
        m06Applied = m06On;
      }
 diff --git a/src/world/match06.ts b/src/world/match06.ts
-index 831c2b4..df0e5ce 100644
+index 831c2b4..a6d96d6 100644
 --- a/src/world/match06.ts
 +++ b/src/world/match06.ts
 @@ -44,6 +44,8 @@ export interface Match06 {
@@ -23,7 +23,7 @@ index 831c2b4..df0e5ce 100644
  }
  
  const VERT = /* glsl */ `
-@@ -112,6 +114,21 @@ uniform float uStO;
+@@ -112,6 +114,23 @@ uniform float uStO;
  uniform float uStDbg;
  uniform vec3 uProjF;
  uniform mat4 uProjVP;
@@ -41,11 +41,13 @@ index 831c2b4..df0e5ce 100644
 +// stretch into a raised-looking blue cone under him. uRipZ = on; uRip0 = the approved Benny (lateral, s). The zone hands over to
 +// the river's own painted water exactly as the carried decal fades in, so only the shallow rings travelling with Benny remain.
 +uniform float uRipZ;
++uniform float uWDbg;
++float gWDbg = 0.0;
 +uniform vec2 uRip0;
  varying vec4 vProj;
  varying vec3 vW;
  varying vec3 vN;
-@@ -324,10 +341,31 @@ void main() {
+@@ -324,11 +343,34 @@ void main() {
        if (uRing > 0.5) w *= stOn > 0.5 ? (filled > 0.5 ? 1.0 : hold) : 1.0 - smoothstep(0.2, 1.2, distance(cameraPosition, uProjPos));
        vec3 pl = texture2D(uPlate, uv).rgb;
        if (filled > 0.5) pl = textureLod(uPlate, uvF, 0.0).rgb;
@@ -56,6 +58,7 @@ index 831c2b4..df0e5ce 100644
 +        w *= 1.0 - (1.0 - smoothstep(0.85, 1.2, eZ)) * inWZ * smoothstep(0.15, 0.9, dAp);
 +      }
        t = mix(pc, pl, w);
++      gWDbg = w;
        if (uStDbg > 0.5) t = vec3(dbgZ * filled, (1.0 - dbgZ) * dbgB * filled, uFloor * 0.5 + 0.5 * (1.0 - vis));
      }
    }
@@ -75,20 +78,22 @@ index 831c2b4..df0e5ce 100644
 +    if (acc.a > 1e-3) t = mix(t, acc.rgb / acc.a, clamp(wr, 0.0, 1.0));
 +  }
    gl_FragColor = vec4(pjInverse(t), 1.0);
++  if (uWDbg > 0.5 && uFloor > 0.5) gl_FragColor.rgb = vec3(gWDbg, 0.0, 1.0 - gWDbg);
    if (uDbg.x + uDbg.y + uDbg.z > 0.0) gl_FragColor.rgb = mix(gl_FragColor.rgb, uDbg, 0.45);
  }`;
-@@ -494,7 +532,9 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+ 
+@@ -494,7 +536,9 @@ export async function buildMatch06(course: Course): Promise<Match06> {
        uGeo: { value: GEO ? 1 : 0 }, uR6: { value: FLOW ? 1 : 0 }, uR6p: { value: r6p },
        uRiver: { value: tRiver ?? tile }, uFoam: { value: tFoam ?? tile },
        uRing: { value: 0 }, uGold: { value: 0 }, uRingTex: { value: tile }, uRingH: { value: 1 }, uBendAng: { value: 0 }, uPanel: { value: 0 }, uAxO: { value: new THREE.Vector3() }, uAxD: { value: new THREE.Vector3(0, 0, -1) },
 -      uAxR: { value: new THREE.Vector3(1, 0, 0) }, uAxU: { value: new THREE.Vector3(0, 1, 0) } },
 +      uAxR: { value: new THREE.Vector3(1, 0, 0) }, uAxU: { value: new THREE.Vector3(0, 1, 0) },
-+      uRip: { value: tile }, uRipOn: { value: 0 }, uRipR: { value: new THREE.Vector4(-1, 1, -1, 1) }, uBen: { value: new THREE.Vector2() }, uRipZ: { value: 0 }, uRip0: { value: new THREE.Vector2() },
++      uRip: { value: tile }, uRipOn: { value: 0 }, uRipR: { value: new THREE.Vector4(-1, 1, -1, 1) }, uBen: { value: new THREE.Vector2() }, uRipZ: { value: 0 }, uWDbg: { value: qs?.get('m06wdbg') === '1' ? 1 : 0 }, uRip0: { value: new THREE.Vector2() },
 +      uRipA: { value: new THREE.Vector4(0.06, 0.5, 1, 0) } },
    });
  
    // river frames from the course (beyond s1: straight along the heading at s1, as tools/match06/geo06.py)
-@@ -774,6 +814,76 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+@@ -774,6 +818,76 @@ export async function buildMatch06(course: Course): Promise<Match06> {
      if (GEO && R6) { const t = Math.min(1, Math.max(0, (Math.abs(l) - R6.Wc + 0.1) / 0.5)); p.addScaledVector(fr.up, R6.hb * t * t * (3 - 2 * t)); }
      return [p, l / TF.lateralPeriod, l];
    }, TF.period), mat(tFloor, true), 'floor');
@@ -165,7 +170,7 @@ index 831c2b4..df0e5ce 100644
    // r7 `&m06foam=1` (needs m06geo): puffy 3D foam clouds along both banks — the painted white-lilac foam clusters that
    // vanished as flat strips once Benny moved. Hidden at the approved view (the painting carries them there), shown once
    // the camera has left it (setAway). Not part of the projector depth bake (invisible while baking).
-@@ -896,6 +1006,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+@@ -896,6 +1010,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
        shared.uUseDepth.value = 1;
      },
      setAway(a) { if (foamClouds) foamClouds.visible = a > 0.5; for (const o of foamSprites) o.visible = a > 0.5; },

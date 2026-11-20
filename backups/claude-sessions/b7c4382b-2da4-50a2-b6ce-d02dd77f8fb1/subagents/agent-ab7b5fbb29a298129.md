@@ -604,3 +604,33 @@ At thumbnail size V2–V4 read as dense squiggles, which might look busy rather 
 
 > 🔧 **Bash** `{"command": "uptime; S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04; T=/home/user/rainbow-/qa/match/04/r23/s04_tools; Q2=/home/user/rainbow-/qa/match/04/r23/s2_edge/QUERY_K23-S2.txt; SH='[[\"b_early\",0.12,null],[\"c_middle\",0.35,null]]'\n( BASE=$Q2 SHOTS=$SH bash $T/variant.sh $S/V5 5273 \"m04lgs=1&m04lgn=3&m04lgt=0.06&m04lgl2=2.2&m04lgm=0.8&m04lgw=1.5&m04lgwb=6&m04lgb=4&m04lgk=0.7&m04lgsp=0.8\" > $S/V5.out 2>&1 ) &\n( BASE=$Q2 SHOTS=$SH bash $T/variant.sh $S/V6 5274 \"m04lgs=1&m04lgn=3&m04lgt=0.05&m04lgl2=2.2&m04lgm=0.8&m04lgw=2.5&m04lgwb=5.5&m04lgb= …[+667 chars]`
 
+### 🧑 User — 2026-11-20T10:54:32.366Z
+
+> ↩︎ result: 10:52:09 up 30 min,  0 user,  load average: 27.61, 20.05, 9.71
+> [1]   Done                    ( BASE=$Q2 SHOTS=$SH bash $T/variant.sh $S/V5 5273 "m04lgs=1&m04lgn=3&m04lgt=0.06&m04lgl2=2.2&m04lgm=0.8&m04lgw=1.5&m04lgwb=6&m04lgb=4&m04lgk=0.7&m04lgsp=0.8" > $S/V5.out 2>&1 )
+> [2]-  Done                    ( BASE=$Q2 SHOTS=$SH bash $T/variant.sh $S/V6 5274 "m04lgs=1&m04lgn=3&m04lgt=0.05&m04lgl2=2.2&m04lgm=0.8&m04lgw=2.5&m04lgwb=5.5&m04lgb=4&m04lgk=0.75&m04lgsp=0.8" > $S/V6.out 2>&1 )
+> [3]+  Done                    ( BASE=$Q2 SHOTS=$SH bash $T/variant.sh $S/V7 5275 "m04lgs=0.8&m04lgn=3&m04lgt=0.06&m04lgl2=2.2&m04lgm=0.8&m04lgw=1.5&m04lgwb=6&m04lgb=4&m04lgk=0.7&m04lgsp=0.8&m04lgon=0.5" > $S/V7.out 2>&1 )
+> done /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04/V5 2 png
+> done /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04/V6 2 png
+> done /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04/V7 2 png
+
+### 🤖 Claude — 2026-11-20T10:54:37.435Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04/sweep2_middle.png"}`
+
+### 🧑 User — 2026-11-20T10:54:37.560Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T10:54:48.618Z
+
+V5 (left) is much cleaner: gentle thin glints on clear blue. V6's stronger bend kinks into lightning/crack shapes (rejected). V7's glints are too faint. Let me look at V5 full size.
+
+### 🤖 Claude — 2026-11-20T10:54:49.683Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04/V5/c_middle.png"}`
+
+### 🧑 User — 2026-11-20T10:54:49.744Z
+
+> ↩︎ result: [image]
+

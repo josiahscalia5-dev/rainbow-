@@ -37,3 +37,23 @@ Kept query: `K23-1 = K16&m08gl=1` (`step1_m08gl/QUERY_NEW.txt`).
   stretched along the curved streaks. The jagged glints right below Benny's splash come from the projected plate (separate).
 * Pictures: `qa/match/08/r23/step1_m08gl/1_APPROVED.png`, `2_BEFORE_<shot>.png` (K16), `3_NEW_<shot>.png` (all 12 shots),
   `pixel_changes.json`, `code.patch` (commit `3c0fa970`: `src/world/match08.ts`, `tools/match08/nq08.py`, `nq08g.json`).
+* Clips (r23, labelled 10:20; checked complete in r24): `step1_m08gl/clip/08_BEFORE_K16_{1x,0.5x}.mp4`,
+  `08_NEW_m08gl_{1x,0.5x}.mp4` — uninterrupted run through all of 08 (26 frames = 1.08 s at real speed) + 0.6 s of 09;
+  1x = real game speed (24 fps), 0.5x = half speed; speed + phase printed on every frame.
+
+## Step 2 — `&m08coinsz=1` (coins no larger than painted while swimming) — KEPT (GOOD IMPROVEMENT, small)
+Kept query: `K23-2 = K23-1&m08coinsz=1` (`step2_m08coinsz/QUERY_NEW.txt`). BEFORE = K23-1.
+* What changed (only with `m08coinv` + `coins08px`; count, score, pickup rules and positions unchanged): the on-screen cap
+  for a picture coin now follows the painted coin line (at each screen height at most the painted coin there, +6 %); below
+  the nearest painted coin the old cap (5.6 % of the frame height) holds. Code: `src/gameplay/coins.ts` (`code.patch`).
+* Start view 0 px (the painted coins stay exactly as they are). Other shots: only coins change (0.45–1.3 % of the frame).
+* Measured (`coin_sizes.json`, 80 coin sightings above the nearest painted coin, 12 shots): BEFORE coins were on average
+  14.8 % larger than the painted coin at the same height (worst 59 %: 71 px where 45 px is painted, at hard left);
+  NEW 4.7 % (worst 7.4 %).
+* By eye: while swimming, the far coins by the platform no longer look as big as the middle ones; the trail tapers from
+  tiny coins at the platform to bigger coins near Benny, like the painted trail. The coin beside / above Benny is unchanged.
+* Still wrong: the nearest coin (beside Benny's hat) stays at the 5.6 % cap (painted nearest coin), so the step from it
+  to the next coin is a little abrupt in the middle of the screen.
+* Pictures: `step2_m08coinsz/1_APPROVED.png`, `2_BEFORE_<shot>.png` (K23-1), `3_NEW_<shot>.png` (12 shots),
+  `pixel_changes.json`, `coin_sizes.json`, `code.patch`, `qa_tools.patch` (QA coin log + HUD-font server).
+  Clips `step2_m08coinsz/clip/08_NEW_m08coinsz_{1x,0.5x}.mp4`, BEFORE `08_BEFORE_K23-1_{1x,0.5x}.mp4` (see `CLIPS.txt`).
