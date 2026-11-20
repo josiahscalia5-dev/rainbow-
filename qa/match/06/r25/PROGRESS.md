@@ -2,12 +2,19 @@
 
 ## (r26) WHERE I STOPPED / NEXT
 * ~13:15 UTC — relaunched (new account), worktree `/home/user/wt/s06` LOCAL branch `claude/rainbow-s06-match-c27` (r25 edits incl. m06hole).
-* Step 1 judgement of the existing shots (`step1_hole/{CURRENT,NEW,WDBG_NEW}`): the bright hard-edged cone body is GONE in NEW (the cut-out
-  now shows painted water continued from around it); start view 0 px. NOT yet clean: (a) at 3 % the painted lacy ring left at the
-  checkpoint is still half visible (ring zone hands over slowly, `smoothstep(0.15, 0.9, dAp)`); (b) the fill is smooth combed stripes
-  without the painted water's sparkle, so below Benny at 3-7 % it reads as a smoother, stretched patch. Fix = `&m06hole=2` (fast ring
-  hand-over synced with the carried rings + the painted water's own fine sparkle carried into the fill). NOW: CURRENT opening clip
-  rendering (`step1_hole/clip.sh CURRENT`), building m06hole=2.
+* Step 1 judgement of the r25 shots (`step1_hole/{CURRENT,NEW,WDBG_NEW}`): the bright hard-edged cone body is GONE in NEW; start view
+  0 px (byte-identical, so only the MOVING pairs o1/o2/o3 + the clip show the repair). NOT clean: (a) at 3 % the painted lacy ring
+  left at the checkpoint still half visible (circular boundary); (b) the fill = smooth combed stripes; (c) at 12 % the pinned painted
+  floor vs the river's own water still makes bounded patches / direction breaks below Benny (where the game river leaves the painted
+  river, mask06 G hands over); (d) long white V splash streaks at his contact (ref-05 crown) instead of a shallow rounded ripple
+  (lead relayed the same points from the user's independent review, 13:09).
+* `&m06hole=2` (tile_hole06b.png = fill + mirrored painted sparkle, make_hole06.py HOLE_DSIG=0.03; ring zone + carried rings hand
+  over at dAp 0.02..0.3): shots `step1_hole/NEW2/` — left-behind ring gone at 3 %, a bit more sparkle; (c) unchanged.
+* NEW3 = NEW2 + `&m06fade=1` (the pinned painted floor dissolves as a whole into the river's own water between dAp 0.85..2.2: no
+  bounded patches) + `&m06spl=1` (06 only: crown jets 1.25->0.42 u long, 0.34->0.09 u high = low lace collar; spray dots hidden).
+  tsc 0. NOW: NEW3 shots rendering (`render.sh NEW3`). CURRENT opening clip DONE (`CURRENT_opening_{1x,0.5x}.mp4`, 26 frames,
+  1.08 s, checkpoint -> 32 %). NEXT: judge NEW3; clip of the chosen NEW (same schedule) + gameplay; COMPARE/<shot>/1_,2_,3_ files
+  (currently 3_NEW = NEW2; replace if NEW3 wins).
 
 ## (r25) WHERE I STOPPED / NEXT
 * ~12:05 UTC — started. Read CLAUDE.md, `docs/briefs/2026-11-20-r25/LAUNCH_R25.md` (s06), the lead's diagnosis

@@ -618,3 +618,243 @@ BEFORE clip rendered (144 frames). Labelling and encoding it with the same tool 
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/benny && tail -3 /home/user/scratch/benny/clips/log_06_BEFORE.txt && nice -n 5 python3 -I tools/benny25/label_clip_c.py /home/user/scratch/benny/clips/06_BEFORE \"Screen 06 · BEFORE (no felt star)\" /home/user/rainbow-/qa/benny/r23/s3_star/clip/swim06_star_BEFORE && ls -la /home/user/rainbow-/qa/benny/r23/s3_star/clip/", "description": "Label and encode the BEFORE star clip", "timeout": 600000}`
 
+### 🧑 User — 2026-11-20T13:25:35.788Z
+
+> ↩︎ result: Command was moved to the background (ID: bk20lzoql) so that a message that arrived while it was running can reach you; it was not interrupted. Output is being written to: /tmp/claude-0/-home-user-rainbow-/57d35962-86cf-5cfa-ab0b-2faf54b8a6e6/tasks/bk20lzoql.output. You will be notified when it completes. If it is still running after 30m in the background (plus the timeout it was started with, up to the background maximum), it will be stopped and you will be notified. It is running now: do not start a second copy while it runs. If it is no longer needed, stop it with TaskStop. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-20T13:25:43.548Z
+
+> 🔧 **Bash** `{"command": "until [ -f /home/user/rainbow-/qa/benny/r23/s3_star/clip/swim06_star_BEFORE_benny_0.5x.mp4 ] && ! pgrep -f label_clip_c.py >/dev/null; do sleep 10; done; cat /tmp/claude-0/-home-user-rainbow-/57d35962-86cf-5cfa-ab0b-2faf54b8a6e6/tasks/bk20lzoql.output; cd /home/user/scratch/benny && python3 -I -c \"\nfrom PIL import Image, ImageDraw, ImageFont\nfnt=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',18)\nP='/home/user/rainbow-/qa/benny/r23/s3_star/06/'\nL=[('APPROVED 06',P+'approved_benny.png'),('BEFORE middle',P+'before/c_middle_crop.png'),('NEW middle',P+'n …[+609 chars]`
+
+### 🧑 User — 2026-11-20T13:25:44.047Z
+
+> ↩︎ result: frame 96 stage 07 s 252.868 lat 2.251
+> frame 120 stage 07 s 267.297 lat 2.25
+> frames 144 seconds 6.00
+> frames 144 game seconds 6.0 crop window 462 x 554
+> total 53628
+> drwxr-xr-x 2 root root    4096 Nov 20 13:25 .
+> drwxr-xr-x 8 root root    4096 Nov 20 12:58 ..
+> -rw-r--r-- 1 root root 7895887 Nov 20 13:25 swim06_star_BEFORE_benny_0.5x.mp4
+> -rw-r--r-- 1 root root 6058031 Nov 20 13:24 swim06_star_BEFORE_benny_1x.mp4
+> -rw-r--r-- 1 root root 7709423 Nov 20 13:24 swim06_star_BEFORE_full_0.5x.mp4
+> -rw-r--r-- 1 root root 5785674 Nov 20 13:23 swim06_star_BEFORE_full_1x.mp4
+> -rw-r--r-- 1 root root 7882498 Nov 20 13:03 swim06_star_NEW_benny_0.5x.mp4
+> -rw-r--r-- 1 root root 6059612 Nov 20 13:03 swim06_star_NEW_benny_1x.mp4
+> -rw-r--r-- 1 root root 7709359 Nov 20 13:03 swim06_star_NEW_full_0.5x.mp4
+> -rw-r--r-- 1 root root 5784687 Nov 20 13:03 swim06_star_NEW_full_1x.mp4
+> 
+> [exited with code 0]
+> (1705, 400)
+
+### 🤖 Claude — 2026-11-20T13:25:44.937Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/benny/star06_sheet.png"}`
+
+### 🧑 User — 2026-11-20T13:25:44.989Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T13:25:51.311Z
+
+On 06 the NEW star is brighter and closer to the approved bright yellow than BEFORE's muddy olive-gold, but it looks flatter. I'll zoom on the stars to judge surface detail and saturation properly.
+
+### 🤖 Claude — 2026-11-20T13:25:56.171Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/benny && python3 -I -c \"\nfrom PIL import Image, ImageDraw, ImageFont\nimport colorsys\nfnt=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',16)\nP='/home/user/rainbow-/qa/benny/r23/s3_star/'\ndef c(f,fx,fy,fw):\n  i=Image.open(P+f).convert('RGB'); W,H=i.size; x=int(fx*W); y=int(fy*H); r=int(fw*W)\n  return i.crop((x-r,y-r,x+r,y+r)).resize((260,260),Image.LANCZOS)\nL=[('APPR 06',c('06/approved_benny.png',0.75,0.08,0.11)),('BEF mid',c('06/before/c_middle_crop.png',0.67,0.3,0.1)),('NEW mid',c('06/new/c_middle_crop.png',0.67,0.3,0.1)),\ …[+529 chars]`
+
+### 🧑 User — 2026-11-20T13:25:56.545Z
+
+> ↩︎ result: (1862, 260)
+
+### 🤖 Claude — 2026-11-20T13:25:57.279Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/benny/star_zoom.png"}`
+
+### 🧑 User — 2026-11-20T13:25:57.342Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T13:26:17.652Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/benny && cat > starstat.py <<'EOF'\nimport sys, numpy as np\nfrom PIL import Image\nP='/home/user/rainbow-/qa/benny/r23/s3_star/'\ndef stat(f):\n    a=np.asarray(Image.open(f).convert('RGB')).astype(float)\n    r,g,b=a[...,0],a[...,1],a[...,2]\n    m=(r>170)&(g>120)&(b<130)&(r-b>90)&(g-b>60)\n    if m.sum()<30: return None\n    px=a[m]; lum=0.299*px[:,0]+0.587*px[:,1]+0.114*px[:,2]\n    med=np.median(px,0); sat=(px.max(1)-px.min(1))/np.maximum(px.max(1),1)\n    return '%5d px  med RGB %3d %3d %3d  g/r %.2f  sat %.2f  lum p10/p90 %3d/%3d' % (m.sum(), *med, med …[+420 chars]`
+
+### 🧑 User — 2026-11-20T13:26:19.301Z
+
+> ↩︎ result: 04 APPROVED 13992 px  med RGB 251 196  41  g/r 0.78  sat 0.83  lum p10/p90 159/217
+> 04 before a_start 30052 px  med RGB 255 182  26  g/r 0.71  sat 0.89  lum p10/p90 156/222
+> 04 before c_middle 16558 px  med RGB 255 183  21  g/r 0.72  sat 0.91  lum p10/p90 161/223
+> 04 before f_hard_left 27693 px  med RGB 255 165  50  g/r 0.65  sat 0.80  lum p10/p90 151/206
+> 04 new a_start 29256 px  med RGB 255 181  39  g/r 0.71  sat 0.84  lum p10/p90 157/218
+> 04 new c_middle 15840 px  med RGB 255 181  43  g/r 0.71  sat 0.83  lum p10/p90 162/218
+> 04 new f_hard_left 27184 px  med RGB 255 166  53  g/r 0.65  sat 0.79  lum p10/p90 151/206
+> 05 APPROVED  5022 px  med RGB 252 217  24  g/r 0.86  sat 0.90  lum p10/p90 165/227
+> 05 before a_start 10625 px  med RGB 235 185  47  g/r 0.79  sat 0.79  lum p10/p90 148/210
+> 05 before c_middle 112662 px  med RGB 255 189  74  g/r 0.74  sat 0.71  lum p10/p90 170/218
+> 05 before f_hard_left  4833 px  med RGB 218 161  41  g/r 0.74  sat 0.80  lum p10/p90 138/190
+> 05 new a_start 10314 px  med RGB 255 207  56  g/r 0.81  sat 0.78  lum p10/p90 165/230
+> 05 new c_middle 112480 px  med RGB 255 190  75  g/r 0.75  sat 0.71  lum p10/p90 174/220
+> 05 new f_hard_left  4985 px  med RGB 248 180  48  g/ …[+1891 chars]
+
+### 🤖 Claude — 2026-11-20T13:26:23.659Z
+
+The mask picked up 06's orange walls and coins, so those whole-crop numbers are contaminated. Measuring only inside the star windows:
+
+### 🤖 Claude — 2026-11-20T13:26:28.406Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/benny && python3 -I -c \"\nimport numpy as np\nfrom PIL import Image\nP='/home/user/rainbow-/qa/benny/r23/s3_star/'\ndef st(f,fx,fy,fw):\n  i=Image.open(P+f).convert('RGB'); W,H=i.size; x=int(fx*W); y=int(fy*H); r=int(fw*W)\n  a=np.asarray(i.crop((x-r,y-r,x+r,y+r))).astype(float); R,G,B=a[...,0],a[...,1],a[...,2]\n  m=(R>170)&(G>120)&(B<130)&(R-B>90)\n  px=a[m]; lum=0.299*px[:,0]+0.587*px[:,1]+0.114*px[:,2]; med=np.median(px,0)\n  core=(lum>np.percentile(lum,40))\n  print('%-28s %5d px med %3d %3d %3d g/r %.2f lum p10/p50/p90 %3d/%3d/%3d  rim(orange share g/r …[+444 chars]`
+
+### 🧑 User — 2026-11-20T13:26:28.909Z
+
+> ↩︎ result: 06/approved_benny.png         5091 px med 251 223  31 g/r 0.89 lum p10/p50/p90 166/211/228  rim(orange share g/r<0.7) 0.14
+> 06/before/c_middle_crop.png   5513 px med 243 209  52 g/r 0.86 lum p10/p50/p90 164/201/232  rim(orange share g/r<0.7) 0.05
+> 06/new/c_middle_crop.png      5568 px med 250 255  55 g/r 1.02 lum p10/p50/p90 179/230/232  rim(orange share g/r<0.7) 0.04
+> 04/approved_benny.png         4519 px med 251 197  73 g/r 0.78 lum p10/p50/p90 161/198/220  rim(orange share g/r<0.7) 0.22
+> 04/before/a_start_crop.png    5181 px med 244 207  28 g/r 0.85 lum p10/p50/p90 159/198/230  rim(orange share g/r<0.7) 0.06
+> 04/new/a_start_crop.png       4399 px med 255 201  69 g/r 0.79 lum p10/p50/p90 169/202/222  rim(orange share g/r<0.7) 0.26
+
+### 🤖 Claude — 2026-11-20T13:26:39.143Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && grep -n \"STARX20\\|starX\\|sx06\\|b20sx\" src/characters/benny/benny20.ts | head -20", "description": "Locate per-screen star exposure code"}`
+
+### 🧑 User — 2026-11-20T13:26:39.283Z
+
+> ↩︎ result: 204: *  each screen's light pushes the felt toward orange there. Overridable `&b20sx0N=r,g,b`. Unlisted (04): 1. */
+> 205:export const STARX20: Record<string, [number, number, number]> = {
+> 209:  '06': lin('sx06', [0.9, 1.55, 0.62]),
+> 373:  const starX = FELT && EXPO_ON && star ? { m: star.material as THREE.MeshStandardMaterial, base: (star.material as THREE.MeshStandardMaterial).color.clone() } : null;
+> 399:    sxTgt.set(...((stage && STARX20[stage]) || [1, 1, 1]));
+> 407:    if (starX) starX.m.color.setRGB(starX.base.r * sxCur.x, starX.base.g * sxCur.y, starX.base.b * sxCur.z);
+> 428:    (window as unknown as { __b20?: unknown }).__b20 = { scene, furs, hat, pom, star, HAT20, LOCK20, EXPO20, expo, KNITX20, knitMats, STARX20, starX, screenBox };
+
+### 🤖 Claude — 2026-11-20T13:26:40.974Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && sed -n 198,212p src/characters/benny/benny20.ts; sed -n 395,410p src/characters/benny/benny20.ts; ls /home/user/rainbow-/qa/benny/r23/s3_star/06/; ls /home/user/rainbow-/qa/benny/r23/s3_star/06/probe_r24 | head", "description": "Read STARX20 table and tick code"}`
+
+### 🧑 User — 2026-11-20T13:26:41.036Z
+
+> ↩︎ result: '07': { v: lin('kv07', [1.6, 0.9, 1.86]), w: lin('kw07', [1.6, 1.7, 1.6]) },
+>   '08': { v: lin('kv08', [1.75, 1.6, 2.1]), w: lin('kw08', [1.3, 1.45, 1.3]) },
+> };
+> 
+> /** r23 step 3: per-screen felt-star exposure (LINEAR multipliers on the felt star colour; with `b20star=1&b20expo=1`).
+>  *  The approved 05–08 paint the star a brighter YELLOW gold (≈ (251, 215, 30), hue ≈ 51°) than the 04 amber (hue 42°);
+>  *  each screen's light pushes the felt toward orange there. Overridable `&b20sx0N=r,g,b`. Unlisted (04): 1. */
+> export const STARX20: Record<string, [number, number, number]> = {
+>   '05': lin('sx05', [0.9, 1.3, 0.7]),
+>   // r24: 2.1 green turned the star lemon-lime under the strong warm light of the 06 middle / hard left (probe A–D,
+>   // qa/benny/r23/s3_star/06/probe_r24/); this keeps a warm gold at the start and a clean yellow in the middle
+>   '06': lin('sx06', [0.9, 1.55, 0.62]),
+>   '07': lin('sx07', [0.9, 1.3, 0.6]),
+>   '08': lin('sx08', [0.9, 1.3, 0.75]),
+> };
+>     lastPos.copy(pos);
+>     const ke = (stage && KNITX20[stage]) || { v: [1, 1, 1], w: [1, 1, 1] };
+>     kvTgt.set(...ke.v);
+>     kwTgt.set(...ke.w);
+>     sxTgt.set(...((stage && STARX20[stage]) || [1, 1, 1]));
+>     if (first || jumped) { c …[+688 chars]
+
+### 🤖 Claude — 2026-11-20T13:26:44.952Z
+
+The combed-pile probe is done. Contact sheet of 04 and 06 Benny crops (control = current tuft look in the same frame).
+
+### 🤖 Claude — 2026-11-20T13:26:49.311Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/benny/silk && tail -1 log_pc04.txt; tail -1 log_pc06.txt; python3 -I -c \"\nfrom PIL import Image, ImageDraw, ImageFont\nimport json\nfnt=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',16)\nnames=[v['name'] for v in json.load(open('vc.json'))]\nfor scr in ['04','06']:\n  sh=json.load(open('pc%s/shots.json'%scr)); b=sh[0]['box']; print(scr,b)\n  x0,y0,x1,y1=b; x0=max(0,x0); y0=max(0,y0); x1=min(864,x1); y1=min(1536,y1)\n  if scr=='04': y1=y0+int((y1-y0)*0.86)\n  s=0.55; w=int((x1-x0)*s); h=int((y1-y0)*s)\n  o=Image.new('RGB',(5*(w+6) …[+417 chars]`
+
+### 🧑 User — 2026-11-20T13:26:50.486Z
+
+> ↩︎ result: variant c8_sq03_vlong 4863 ms box [ 103, 837, 636, 1530 ]
+> variant c8_sq03_vlong 4908 ms box [ 162, 665, 577, 1191 ]
+> 04 [103, 837, 636, 1530]
+> (1495, 666)
+> 06 [162, 665, 577, 1191]
+> (1170, 590)
+
+### 🤖 Claude — 2026-11-20T13:26:51.393Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/benny/silk/sheet_pc04.png"}`
+
+### 🧑 User — 2026-11-20T13:26:51.430Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T13:26:51.754Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/benny/silk/sheet_pc06.png"}`
+
+### 🧑 User — 2026-11-20T13:26:51.776Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T13:27:01.277Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/benny/silk && python3 -I -c \"\nfrom PIL import Image, ImageDraw, ImageFont\nfnt=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',16)\nbox=(170,1170,570,1440)\nL=[(n,Image.open('pc04/%s.png'%n).convert('RGB').crop(box)) for n in ['c7_control_tuft','c0_code_default','c2_sq018','c4_sq02_long_lz07','c8_sq03_vlong']]\na=Image.open('/home/user/rainbow-/qa/benny/r23/s3_star/04/approved_benny.png').convert('RGB'); W,H=a.size\nac=a.crop((int(0.12*W),int(0.62*H),int(0.88*W),int(0.97*H))); ac=ac.resize((400,int(400*ac.height/ac.width)),Image.LA …[+425 chars]`
+
+### 🧑 User — 2026-11-20T13:27:01.725Z
+
+> ↩︎ result: (1218, 552) (675, 810)
+
+### 🤖 Claude — 2026-11-20T13:27:02.472Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/benny/silk/body_pc04.png"}`
+
+### 🧑 User — 2026-11-20T13:27:02.521Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T13:27:23.794Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && sed -n 52,58p src/characters/benny/benny20.ts; grep -n \"function lin\\|const lin\" -A4 src/characters/benny/benny20.ts | head -8", "description": "Check body comb defaults and lin helper"}`
+
+### 🧑 User — 2026-11-20T13:27:23.855Z
+
+> ↩︎ result: shade: [n('bsx', 0.22), n('bsy', 0.3), n('bsz', 0.5), n('bsw', 0.3)],
+>     comb: [n('bcx', 0.6), n('bcy', 1.0), n('bcz', 0.1), n('bcw', 0.35)],
+>     pile: [n('bpx', 0.35), n('bpy', 0.45), n('bpz', 0.5), 0],
+>     color: lin('bcol', [0.29, 0.092, 0.172]),
+>   },
+>   fur_armL: {
+>     lock: [n('alx', 50), 0.95, n('alz', 0.9), 320],
+> 32:function lin(key: string, def: [number, number, number]): [number, number, number] {
+> 33-  const v = (QS?.get(`b20${key}`) ?? '').split(',').map(Number);
+> 34-  return v.length === 3 && v.every(Number.isFinite) ? (v as [number, number, number]) : def;
+> 35-}
+> 36-
+
+### 🤖 Claude — 2026-11-20T13:27:38.620Z
+
+> 🔧 **Bash** `{"command": "cat > /home/user/scratch/benny/silk/mkvar_d.py <<'EOF'\nimport json, sys\ndef js(qsq=0.3, qst=0.06, L=0.12, cx=0.9, lz=1.0, lw=180, gr=0.07, cw=0.5, sz=0.35, cz=0.1, lx=30, px=0.4, sy=0.65):\n    return (\"for (const f of B.furs) { const nm = f.mesh.name; if (!/^fur_(body|arm)/.test(nm)) continue; const arm = nm !== 'fur_body'; \"\n            \"const u = f.uniforms; \"\n            f\"u.uSilk.value.set({qsq}, {qst}, 0, 0); u.uLock.value.set(arm ? {lx}+6 : {lx}, u.uLock.value.y, 0.9 * {lz}, {lw}); \"\n            f\"u.uComb.value.x = {cx}; u.uComb.value.z = {cz}; u.uComb.value.w = …[+2204 chars]`
+
+### 🧑 User — 2026-11-20T13:27:38.853Z
+
+> ↩︎ result: ['c7_control_tuft', 'd0_c8', 'd1_clump', 'd2_clump_lowgrain', 'd3_bigclump', 'd4_thick', 'd5_bigclump_thick', 'd6_d5_lighttips']
+> ['c7_control_tuft', 'd0_c8', 'd1_clump', 'd2_clump_lowgrain', 'd3_bigclump', 'd4_thick', 'd5_bigclump_thick', 'd6_d5_lighttips', 'x0_cur_0.9_1.55_0.62', 'x1_0.9_1.3_0.6', 'x2_0.9_1.2_0.55', 'x3_0.85_1.1_0.5', 'x4_1.0_1.35_0.5', 'x5_0.8_1.15_0.45']
+> ['x0_cur_0.9_1.55_0.62', 'x1_0.9_1.3_0.6', 'x2_0.9_1.2_0.55', 'x3_0.85_1.1_0.5', 'x4_1.0_1.35_0.5', 'x5_0.8_1.15_0.45']
+
+### 🤖 Claude — 2026-11-20T13:27:39.610Z
+
+> 🔧 **Bash** `{"command": "/home/user/scratch/benny/silk/run_pd.sh > /home/user/scratch/benny/silk/run_pd.log 2>&1", "description": "Run fur clump and star probes", "timeout": 3600000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T13:27:39.656Z
+
+> ↩︎ result: Command running in background with ID: bhe19z85q. Output is being written to: /tmp/claude-0/-home-user-rainbow-/57d35962-86cf-5cfa-ab0b-2faf54b8a6e6/tasks/bhe19z85q.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-20T13:27:41.018Z
+
+While the probes run, I'll update the r26 block with the clip result and the star finding so far.
+
+### 🤖 Claude — 2026-11-20T13:27:48.969Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='/home/user/rainbow-/qa/benny/r23/PROGRESS.md'\ns=open(p).read()\ni=s.index('## (r26) WHERE I STOPPED'); j=s.index('## (r25) WHERE I STOPPED')\nblk='''## (r26) WHERE I STOPPED / NEXT — 2026-11-20 ~13:40 UTC (new account; worktree `/home/user/wt/benny`, LOCAL branch `claude/rainbow-benny-c27`, port 5279)\n\n**Done:** BEFORE swim clip 06 re-rendered with the same tool + schedule as NEW (`swim_clip_c.mjs 06 … 6 0`) and encoded:\n`qa/benny/r23/s3_star/clip/swim06_star_BEFORE_{full,benny}_{1x,0.5x}.mp4` (NEW = `swim06_star_NEW_*`, rendered r25).\n**Star finding  …[+1218 chars]`
+
+### 🧑 User — 2026-11-20T13:27:49.075Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-20T13:27:54.226Z
+
+> 🔧 **Bash** `{"command": "until grep -q \"PD_DONE\" /home/user/scratch/benny/silk/run_pd.log 2>/dev/null; do sleep 10; done; date -u +%H:%M:%S; cat /home/user/scratch/benny/silk/run_pd.log; cd /home/user/scratch/benny/silk && python3 -I -c \"\nfrom PIL import Image, ImageDraw, ImageFont\nimport json\nfnt=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',16)\nbox=(170,1170,570,1440)\nnames=[v['name'] for v in json.load(open('vd_fur.json'))]\na=Image.open('/home/user/rainbow-/qa/benny/r23/s3_star/04/approved_benny.png').convert('RGB'); W,H=a.size\nac=a.crop((int(0.12*W),int(0.62*H),in …[+564 chars]`
+

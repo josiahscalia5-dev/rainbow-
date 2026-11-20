@@ -709,3 +709,70 @@ While the variants render, I'll launch the step-3 (`m07join`) segment in paralle
 
 > 🔧 **Bash** `{"command": "until grep -q \"exit done\" /home/user/scratch/s07/step2b.log 2>/dev/null; do sleep 10; done; cat /home/user/scratch/s07/step2b.log /home/user/scratch/s07/step3.log; date", "description": "Wait for tuned m07look variants", "timeout": 540000}`
 
+### 🧑 User — 2026-11-20T13:25:12.811Z
+
+> ↩︎ result: Command was moved to the background (ID: bggyglylc) so that a message that arrived while it was running can reach you; it was not interrupted. Output is being written to: /tmp/claude-0/-home-user-rainbow-/57d35962-86cf-5cfa-ab0b-2faf54b8a6e6/tasks/bggyglylc.output. You will be notified when it completes. If it is still running after 30m in the background (plus the timeout it was started with, up to the background maximum), it will be stopped and you will be notified. It is running now: do not start a second copy while it runs. If it is no longer needed, stop it with TaskStop. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-20T13:25:22.352Z
+
+I'll fold the independent review into the step-1 verdict now (including the matched-position caveat), then continue with steps 2–3.
+
+### 🤖 Claude — 2026-11-20T13:25:32.543Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/match/07/r24/PROGRESS.md", "old_string": "  - New small problem: at the right-hand steering limit inside a bend (t 5.0 s, lat +2.25) the bigger \"inside of the bend\" foam\n    clouds overlap Benny's lower right (BEFORE: he sits on the pink edge beside the foam). Next fix candidate: keep the inside\n    mounds from reaching over the band edge (`mound()` size / inset with `swB`).\n* NOW: step 2 `&m07look=1` proof (segment t 2.5–3.7 s, BEFORE = full step-1 candidate, NEW = + m07look; start view 0 px).", "new_string": "  - New small prob …[+2268 chars]`
+
+### 🧑 User — 2026-11-20T13:25:32.733Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/match/07/r24/PROGRESS.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T13:25:33.303Z
+
+> 🔧 **Bash** `{"command": "cat /home/user/scratch/s07/step2b.log /home/user/scratch/s07/step3.log; ls /home/user/scratch/s07/s2seg/; date", "description": "Check variant and step-3 render progress"}`
+
+### 🧑 User — 2026-11-20T13:25:33.373Z
+
+> ↩︎ result: BEFORE
+> NEW
+> Fri Nov 20 13:25:33 UTC 2026
+
+### 🤖 Claude — 2026-11-20T13:25:35.180Z
+
+> 🔧 **Bash** `{"command": "bash /home/user/rainbow-/tools/lead25/render_slot.sh --status; pgrep -af \"render_slot\" | grep -v pgrep | cut -c1-160", "description": "Check render slot occupancy"}`
+
+### 🧑 User — 2026-11-20T13:25:35.352Z
+
+> ↩︎ result: slot 1 busy
+> slot 2 busy
+> 7388 bash /home/user/rainbow-/tools/lead25/render_slot.sh timeout 3000 node tools/match06/r25_open_clip.mjs 06 /home/user/scratch/s06/clip_CURRENT match06=1&m06
+> 7860 bash /home/user/rainbow-/tools/lead25/render_slot.sh bash /home/user/scratch/s04/run_a5clip.sh
+> 11202 bash /home/user/rainbow-/tools/lead25/render_slot.sh timeout 2400 node tools/match07/seg_clip_r24.mjs /home/user/scratch/s07/s2seg/NEW_b match07=1&m07fill
+> 11455 bash /home/user/rainbow-/tools/lead25/render_slot.sh timeout 2400 node tools/match07/seg_clip_r24.mjs /home/user/scratch/s07/s3seg/BEFORE match07=1&m07fil
+> 12026 bash /home/user/rainbow-/tools/lead25/render_slot.sh timeout 3000 node tools/match06/r25_open_clip.mjs 06 /home/user/scratch/s06/clip_NEW2 match06=1&m06ge
+> 12710 /bin/bash -c source /root/.claude/shell-snapshots/snapshot-bash-1795179818808-spv0ig.sh 2>/dev/null || true && export ANDROID_HOME=/opt/android-sdk ANDROI
+> 12823 bash /home/user/rainbow-/tools/lead25/render_slot.sh timeout 3000 node tools/benny23/knitprobe.mjs /home/user/scratch/benny/silk/pc06 match06=1&m06geo=1&m
+
+### 🤖 Claude — 2026-11-20T13:25:37.038Z
+
+Queued behind other workers' jobs. Meanwhile I'll prepare the final-sequence tooling (check the label tool's usage).
+
+### 🤖 Claude — 2026-11-20T13:25:38.136Z
+
+> 🔧 **Bash** `{"command": "head -30 /home/user/rainbow-/tools/lead23/label_clip.py | grep -n \"usage\\|argv\\|#\" | head -15; sed -n 1,18p /home/user/rainbow-/tools/lead23/screen_clip.mjs | grep \"//\"", "description": "Read label and screen clip tool usage"}`
+
+### 🧑 User — 2026-11-20T13:25:38.683Z
+
+> ↩︎ result: 1:#!/usr/bin/env python3
+> 3:usage: python3 -I label_clip.py <clipDir> <title> <out_prefix>   -> <out_prefix>_1x.mp4 (real game speed) + _0.5x.mp4"""
+> 8:d, title, outp = Path(sys.argv[1]), sys.argv[2], sys.argv[3]
+> // Lead r23: uninterrupted REAL-GAMEPLAY clip of one whole playable screen (entrance -> end, into the next screen), with the
+> // steering phase and the screen logged per frame (for labels). Real game speed: one frame per 1/24 s of game time.
+> // Steering by the share of the screen travelled: straight < 0.30, LEFT 0.30-0.50, RIGHT 0.50-0.70, straight after (end).
+> // The shader clock follows the clip clock (performance.now pinned per frame), so the water moves at its normal speed.
+> //   cd <worktree> && AUDIT_PORT=5290 node /home/user/rainbow-/tools/lead23/screen_clip.mjs <screen 04..08> <outDir> "<query>" [tailSecs]
+> // worktrees link node_modules to the main checkout: allow Vite to serve it too, else the HUD fonts fall back (s06 r23 fix)
+>   return { url: (server.resolvedUrls?.local?.[0] ?? `http://127.0.0.1:${port}/`).replace(/\/$/, ''), close: () => server.close() };
+
+### 🤖 Claude — 2026-11-20T13:25:41.050Z
+
+> 🔧 **Bash** `{"command": "until grep -q \"exit done\" /home/user/scratch/s07/step2b.log 2>/dev/null; do sleep 10; done; cat /home/user/scratch/s07/step2b.log /home/user/scratch/s07/step3.log; date", "description": "Wait for tuned variants to finish", "timeout": 540000}`
+

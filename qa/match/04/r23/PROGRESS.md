@@ -2,11 +2,29 @@
 
 ## (r26) WHERE I STOPPED / NEXT — s04 specialist (relaunched r26 ~13:10 UTC, worktree `/home/user/wt/s04`, LOCAL branch `claude/rainbow-s04-match-c27`)
 * Worktree = K23-S3 code + the unfinished r25 `m04lgc` crescent edit (tsc 0). Scratch `/home/user/scratch/s04/`. Proof `qa/match/04/r26/`.
-* Step 0' DONE (verdict below, "r26 Step 0'"): the game does NOT show five arrows — it shows a CONVEYOR (K23-1: 12 different
-  arrows during 04, K23-S3: 10 + one 0.1 s flicker; ~5 in view at a time; new ones keep arriving far away; 2-4 still ahead at the
-  end). Fix written behind `&m04a5=1` (exactly five: only the five chevrons that line up with the painted group of the start view are
-  built). tsc 0. NEW clip rendering (`/home/user/scratch/s04/clip_a5`, run_a5clip.sh) -> `qa/match/04/r26/s0_five/`.
-* NEXT: verdict of the five-arrow clip + gameplay 8/8; then step 1 `m04lgc` variants (r25 variant renders were lost with the scratch).
+* Step 0' verdict WRITTEN (below, "r26 Step 0'"). Fix written: `&m04a5=1|2` (exactly five chevrons; 2 = one compact group placed so
+  Benny's route crosses all five inside 04). tsc 0. Job `/home/user/scratch/s04/run_job1.sh` (log `run_job1.out`) renders the
+  m04a5=2 clip (`clip_a5`) then the step-1 m04lgc variants (`s1var/V0..V3`, base = K23-S3 + m04a5=2).
+* NEXT: label + judge the five-arrow clip (-> `qa/match/04/r26/s0_five/`), gameplay 8/8; then step 1 m04lgc verdict.
+
+## (r26) Step 0' — whole-04 clips K23-1 (BEFORE) vs K23-S3 (NEW), r25 `qa/match/04/r25/clip/` — verdict + ARROW COUNT
+* VERDICT K23-S3 vs K23-1: GOOD IMPROVEMENT for the pink sides (lower, contained, the gold rings visible down both sides instead
+  of pink sheets on the gold), the chevrons (a neat stack ahead above his pompom; never round his hat as in K23-1 t 1.25-1.75 s),
+  continuous low foam along both edges, clearer glossy cyan lane. (Matches the 13:09 independent review's gains list.)
+* STILL DIFFERENT (both): middle and end read as a straight flat chute (accepted views: fuller curls, cyan / pink swirls); near-camera
+  white marks are long scratches (step 1); far foam = glossy bead rows thinning toward the end (step 2); nearby ring surfaces broad
+  orange / copper / lavender, flat lighting; grey uncovered area at the very top of the opening behind the HUD (review).
+* ARROWS — what the player actually sees (frame logs `frames_*.json`, opacity > 0.3, all in the lane centre inside the view):
+  - The game builds a ROW of chevrons every `m04a3p` u down the WHOLE lane (K23-1: 20 built, 4.0 u apart; K23-S3: 13 built,
+    6.5 u apart) and a distance window shows ~5 at a time. It is a CONVEYOR, not five arrows.
+  - K23-1: 12 DIFFERENT arrows shown during the 2.6 s of 04 (4-5 at a time); 8 fade ~4 u in front of him (near fade), 4 still
+    ahead when 04 ends. K23-S3: 10 DIFFERENT arrows (5 at a time, briefly 6: a sixth flickers in for 0.1 s at the start);
+    each vanishes 14-17 u before Benny reaches it (where it meets his pompom on screen: the r22 screen-clearance fade); only 4
+    are physically crossed by his route inside 04, the 5th 0.05 s after 04 ends; 2 still ahead at the end.
+  - So NEITHER version shows exactly five, and Benny does not pass "all five".
+* FIX (behind a switch, default unchanged): `&m04a5=1` builds only the five chevrons that line up with the painted start-view group;
+  `&m04a5=2` (candidate) = ONE compact group of five (`m04a5a`=13.5 u down the lane, `m04a5p`=3.4 u apart) so all five show
+  at the start and his route crosses all five inside 04 (fifth ~0.25 s before the end). Proof: `qa/match/04/r26/s0_five/`.
 
 ## (r25) WHERE I STOPPED / NEXT — s04 specialist (relaunched r25 ~12:00 UTC, worktree `/home/user/wt/s04`, LOCAL branch `claude/rainbow-s04-match-c26`)
 * Worktree verified: `git diff` == `s3_glossy/code.patch` byte for byte (K23-S3 code complete; no patch re-applied). Scratch

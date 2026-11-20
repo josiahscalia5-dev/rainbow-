@@ -17,7 +17,22 @@
   - New small problem: at the right-hand steering limit inside a bend (t 5.0 s, lat +2.25) the bigger "inside of the bend" foam
     clouds overlap Benny's lower right (BEFORE: he sits on the pink edge beside the foam). Next fix candidate: keep the inside
     mounds from reaching over the band edge (`mound()` size / inset with `swB`).
-* NOW: step 2 `&m07look=1` proof (segment t 2.5–3.7 s, BEFORE = full step-1 candidate, NEW = + m07look; start view 0 px).
+  - Lead 13:2x: independent review of the same saved evidence (user's ChatGPT review, docs only) agrees on the gain (ending curves
+    laterally, cyan + magenta + foam + coins move together, opening kept) and lists what is still wrong: middle / strong-steering
+    views dominated by the near purple wall + gold rings, river ahead lost over the lip (step 2); wall slots stretched / blurred
+    with thin DOTTED MAGENTA ARCS crossing the rings; water narrows to a cyan strip between ANGULAR pink panels with repeated
+    MIRRORED highlights; foam often faceted; the NEW ending's near-right bank VERY LARGE (= my new small problem above); speckled
+    band + abrupt switch to plain straight water before 08 (step 3); ending coins crowd together.
+  - Comparison caveat (stated plainly): the clips are scheduled by the SHARE of the stage travelled and the S makes 07 ≈ 2.5 u
+    longer, so they are timed, not matched-position: left input 2.458 s BEFORE vs 2.500 s NEW, right 4.083 vs 4.167, entry into
+    08 8.125 vs 8.292. Up to the lip the s values are the same physical points; on the drop the same t is up to ~2 u apart (at
+    t 5.0: s 344.6 BEFORE vs 345.8 NEW, both lat +2.25 — the foam overlap is not explained by that 1.2 u). The final sequence
+    adds stills at corresponding route landmarks (lip, bend apexes, inlet).
+* NOW: step 2 `&m07look=1` proof (segment t 2.0–4.6 s, BEFORE = full step-1 candidate, NEW = + m07look; start view 0 px — DONE
+  `qa/match/07/r26/s2_look/{BEFORE,NEW}/a_start.png` 0 px). First look (default tunables 2.5 back / 5.5 up): route ahead shows
+  ~0.5 s earlier (t 3.25 vs 3.75) and the river fills more of the lower frame, BUT Benny becomes oversized (camera ≈6.0 u from
+  him vs 7.6 normal) and his hat blocks the centre at t 2.5–3.0 → tuned variants b (`m07lkB=5&m07lkU=6.2`) and c
+  (`m07lkB=4&m07lkU=7.2&m07lkA=12`) rendering. Step 3 `m07join` segment t 6.6–8.9 s rendering in parallel.
 
 ## (r25) WHERE I STOPPED / NEXT
 * r25 relaunch (new account, ~12:00 UTC). Worktree `/home/user/wt/s07`, LOCAL branch `claude/rainbow-s07-match-c26` (= `8accdad0` + my

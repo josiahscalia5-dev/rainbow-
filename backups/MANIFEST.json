@@ -624,7 +624,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 22230,
-   "sha256": "1118cd6cd22ed3a49d76a6ed1ff9ff408c92574be61d5c558955d625574248a6"
+   "sha256": "c5bb124ea9028f80d3b1554abfdd7452a16e9984ce8292e091c0e6f2f34e8b86"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -639,7 +639,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 2792,
-   "sha256": "9eb8f644c11b9094809d0b51279e3ffa33a5c0bb655517ad08d71994fd194011"
+   "sha256": "f3616da685ade0024ca136df4c4c25ef1a0f64f5be8ef2efb31e56712341738a"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -999,7 +999,7 @@
   {
    "path": "backups/wip/claude__rainbow-benny-c27/INFO.json",
    "bytes": 1084,
-   "sha256": "7bc096d1e30531a8b36f31d378128ab88f2deb81b6d3c2438f044783ec56880c"
+   "sha256": "4df992d78d86ac27d4e31511efb85693e978903d5ea5b7655d132ff5ade4b4ea"
   },
   {
    "path": "backups/wip/claude__rainbow-benny-c27/tracked.patch",
@@ -1649,7 +1649,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c27/INFO.json",
    "bytes": 586,
-   "sha256": "0e289a24515025762f756f640b52c66da88889e9f99c976693079d29aa799629"
+   "sha256": "5e479fe78a72438a0993a51e5c166a8042210644c8835a8b8aad3fc678b1c446"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c27/tracked.patch",
@@ -2429,7 +2429,7 @@
   {
    "path": "backups/wip/claude__rainbow-s05-match-c27/INFO.json",
    "bytes": 477,
-   "sha256": "319a93aab247c38714689cb9a2cc1635405d147c252f3576ef30b10757ac87b2"
+   "sha256": "ae7f253a6e40eb5fb71b4cac0e6072722cbe8a2dbd9c3ca6159b6d84b8232b46"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c11/INFO.json",
@@ -2649,7 +2649,7 @@
   {
    "path": "backups/wip/claude__rainbow-s06-match-c27/INFO.json",
    "bytes": 1090,
-   "sha256": "06f5a4cdc3b60e0e789229c895ce2b55bbfedb176a7e56e7d8f2349ffcdb2e1a"
+   "sha256": "da8a5b129ef20769a5c890898f0ea7dabae41feaa7c0159eeea39de62fb1b062"
   },
   {
    "path": "backups/wip/claude__rainbow-s06-match-c27/tracked.patch",
@@ -3079,7 +3079,7 @@
   {
    "path": "backups/wip/claude__rainbow-s07-match-c27/INFO.json",
    "bytes": 971,
-   "sha256": "08991808b91aee6efa8cc42e1e14781b98c567a7776e1f888f66d222e7ec42ff"
+   "sha256": "81a7a3884b7fb73147f41ce68038804b5973268e02c913267ee642201f5da0a8"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c27/tracked.patch",
@@ -3314,7 +3314,7 @@
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c27/INFO.json",
    "bytes": 640,
-   "sha256": "82a5d9113e586791bb736b763c3a341654f127b1bbb6ccd638630a7788bd2cdf"
+   "sha256": "7b055273b407155757c66e920a1b984c30741db03968c67575a6f88aeb994970"
   },
   {
    "path": "backups/wip/claude__rainbow-s08-scenery-c27/tracked.patch",
@@ -3349,7 +3349,7 @@
   {
    "path": "backups/wip/detached-8accdad0a0/INFO.json",
    "bytes": 491,
-   "sha256": "6ef5e3aab20a2409abeb6c679116b91c7cef598e3f76fbdd159703411388f81a"
+   "sha256": "89e4d9ee21b23fb5965c9db5507bf32054cd94501d6c0ef00fb6cf4d636191e6"
   },
   {
    "path": "backups/wip/detached-8accdad0a0/tracked.patch",
@@ -3364,7 +3364,7 @@
   {
    "path": "backups/wip/detached-e162aec2bf/INFO.json",
    "bytes": 701,
-   "sha256": "cd26547abe1410ddc39e9eab0286a89a80c8777b3b5bdc79f7ba56cbe80e2307"
+   "sha256": "b9ad724e1e4a4d457e6a5d452e5e6ca98ae9974f05640583b7a8a522ef9467a4"
   },
   {
    "path": "backups/wip/detached-e162aec2bf/tracked.patch",
@@ -4503,8 +4503,8 @@
   },
   {
    "path": "qa/benny/r23/PROGRESS.md",
-   "bytes": 8716,
-   "sha256": "22bd14e35952b63b6261447299d04172a506ff285a3f4437e41d165324e4adcf"
+   "bytes": 9565,
+   "sha256": "95470d1abff67eff74e9fb5cbeb104c86587345e83625cc883f3660f0ab0a5e6"
   },
   {
    "path": "qa/benny/r23/s2_knit/04/approved_benny.png",
@@ -5520,6 +5520,11 @@
    "path": "qa/benny/r23/s3_star/QUERY_NEW_08.txt",
    "bytes": 295,
    "sha256": "93441e72c7ed7614e093e367de6c3a790a9b3c281c7235dc1a788f6d6221ca90"
+  },
+  {
+   "path": "qa/benny/r23/s3_star/clip/swim06_star_BEFORE_benny_0.5x.mp4",
+   "bytes": 7895887,
+   "sha256": "172403d5001539451b317cbef530cd57eb8b41a3f4b23e812f33a1e1696c60f8"
   },
   {
    "path": "qa/benny/r23/s3_star/clip/swim06_star_BEFORE_benny_1x.mp4",
@@ -8048,8 +8053,8 @@
   },
   {
    "path": "qa/match/04/r23/PROGRESS.md",
-   "bytes": 14927,
-   "sha256": "a75de61ba2f56ee3aeb92323140fd243b295b9aadb3bba049f2326dec1f87a79"
+   "bytes": 16937,
+   "sha256": "edff8670596a2c6c3d725bdee6b7335304597a380ca37f130e34f2fae67c2dfa"
   },
   {
    "path": "qa/match/04/r23/QUERY_K23-1.txt",
@@ -8964,12 +8969,12 @@
   {
    "path": "qa/match/04/r26/s0_five/QUERY_NEW_K23-S3_a5.txt",
    "bytes": 1484,
-   "sha256": "93a36559174285bcbe899e355b4bb9077333dc75a33762b63e4f233ae5d42847"
+   "sha256": "52b452b2eb5c8c50ba575fe84427156f36cea11bd8afbca511fd16522ceea70e"
   },
   {
    "path": "qa/match/04/r26/s0_five/SWITCH.txt",
    "bytes": 8,
-   "sha256": "9b453a4cbfc9b943978fb71caf5bcaecf2d47dfd1d5c0c5787a59db596bff15d"
+   "sha256": "684f90243ec2c32e37e2ad74cc2dc4eb141afd2616317c2d5f0c9fa75102bda6"
   },
   {
    "path": "qa/match/06/r23/PROGRESS.md",
@@ -9798,8 +9803,68 @@
   },
   {
    "path": "qa/match/06/r25/PROGRESS.md",
-   "bytes": 5343,
-   "sha256": "dc7e802f0f93dddc056af0b3da5ea7e618078445d9f66caffc5a0177979d9b17"
+   "bytes": 6162,
+   "sha256": "6e571be2a9c3a1c03847358edafa15f72bb772c6ee55957c7cf153a92e290683"
+  },
+  {
+   "path": "qa/match/06/r25/step1_hole/COMPARE/a_start/1_ORIGINAL_APPROVED.png",
+   "bytes": 497882,
+   "sha256": "3946058c0893e97a99dd5015f3197901859475cd7ef55e09d982d232951441fe"
+  },
+  {
+   "path": "qa/match/06/r25/step1_hole/COMPARE/a_start/2_WHAT_YOU_SAW.png",
+   "bytes": 2620993,
+   "sha256": "3df0f39b99439525412a1ccd4c68f4c5841319c5413f318e254266689a4f19d9"
+  },
+  {
+   "path": "qa/match/06/r25/step1_hole/COMPARE/a_start/3_NEW.png",
+   "bytes": 2620801,
+   "sha256": "5b9c9e5a859de06b49eec8d4d29674bee6483363d4189de4e40048b8f9f74af8"
+  },
+  {
+   "path": "qa/match/06/r25/step1_hole/COMPARE/o1_003/1_ORIGINAL_APPROVED.png",
+   "bytes": 497882,
+   "sha256": "3946058c0893e97a99dd5015f3197901859475cd7ef55e09d982d232951441fe"
+  },
+  {
+   "path": "qa/match/06/r25/step1_hole/COMPARE/o1_003/2_WHAT_YOU_SAW.png",
+   "bytes": 2492024,
+   "sha256": "b177afcb5e7ff8e821fb0ae183e5541c0df9918c0343a08b50698ce995c76b7d"
+  },
+  {
+   "path": "qa/match/06/r25/step1_hole/COMPARE/o1_003/3_NEW.png",
+   "bytes": 2521596,
+   "sha256": "d721b0b3755ce099f417cd2365d953c8000d428c1df5642e32033f90a13e6c2c"
+  },
+  {
+   "path": "qa/match/06/r25/step1_hole/COMPARE/o2_007/1_ORIGINAL_APPROVED.png",
+   "bytes": 497882,
+   "sha256": "3946058c0893e97a99dd5015f3197901859475cd7ef55e09d982d232951441fe"
+  },
+  {
+   "path": "qa/match/06/r25/step1_hole/COMPARE/o2_007/2_WHAT_YOU_SAW.png",
+   "bytes": 2296408,
+   "sha256": "e1a528ce6a9bc070f7a4c75217547a91b31501d2d3ec10e719aa2b865bc57c35"
+  },
+  {
+   "path": "qa/match/06/r25/step1_hole/COMPARE/o2_007/3_NEW.png",
+   "bytes": 2418031,
+   "sha256": "0823336db6ec52156141d4c32db958354043690d4121b5e684feea0a855cc287"
+  },
+  {
+   "path": "qa/match/06/r25/step1_hole/COMPARE/o3_012/1_ORIGINAL_APPROVED.png",
+   "bytes": 497882,
+   "sha256": "3946058c0893e97a99dd5015f3197901859475cd7ef55e09d982d232951441fe"
+  },
+  {
+   "path": "qa/match/06/r25/step1_hole/COMPARE/o3_012/2_WHAT_YOU_SAW.png",
+   "bytes": 2286263,
+   "sha256": "99cbbcf1a472f5bd396d358d318d2b18a0289b4c3385808e51f9085bdc687888"
+  },
+  {
+   "path": "qa/match/06/r25/step1_hole/COMPARE/o3_012/3_NEW.png",
+   "bytes": 2346958,
+   "sha256": "86b08a489ab552b920a09e73626760411652ae08da2711ccc90a9d8a492244a6"
   },
   {
    "path": "qa/match/06/r25/step1_hole/CURRENT/a_start.png",
@@ -9825,6 +9890,16 @@
    "path": "qa/match/06/r25/step1_hole/CURRENT/shots.json",
    "bytes": 659,
    "sha256": "c6c2163459ff15d2065ca96c865f55b5af40fb03fbb2765c7159b930d3dd7053"
+  },
+  {
+   "path": "qa/match/06/r25/step1_hole/CURRENT_opening_0.5x.mp4",
+   "bytes": 1271549,
+   "sha256": "9e7741c8fa3cdbd3e06d03eb54e2130cc5c5b630da1b19aac9982fab231ec132"
+  },
+  {
+   "path": "qa/match/06/r25/step1_hole/CURRENT_opening_1x.mp4",
+   "bytes": 957039,
+   "sha256": "efe839540a76c7755e518a72261faff9f74e6c66510989a52378b961c135f5fa"
   },
   {
    "path": "qa/match/06/r25/step1_hole/NEW/a_start.png",
@@ -9890,6 +9965,11 @@
    "path": "qa/match/06/r25/step1_hole/QUERY_NEW2.txt",
    "bytes": 159,
    "sha256": "59113bde2265a96212866d4eeb9b2643e7a1690b1ebbc96982d20d2e3d66b914"
+  },
+  {
+   "path": "qa/match/06/r25/step1_hole/QUERY_NEW3.txt",
+   "bytes": 178,
+   "sha256": "20d6b3282ef2293015bcbe5c87df4d88f9a57b17b28c8bb85a2633e451020f44"
   },
   {
    "path": "qa/match/06/r25/step1_hole/QUERY_WDBG_NEW.txt",
@@ -11068,8 +11148,8 @@
   },
   {
    "path": "qa/match/07/r24/PROGRESS.md",
-   "bytes": 6599,
-   "sha256": "ad61c194aea8ef9456b649a39fba31561bdd29e78bffb23de36c048a1a4aabc0"
+   "bytes": 8420,
+   "sha256": "dd9b1e301d11fa4f5c59b3efa77a3f058bbf99b2242df1fa889d08c094701082"
   },
   {
    "path": "qa/match/07/r24/QUERY_08_latest_K16_m08gl.txt",

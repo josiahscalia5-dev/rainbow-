@@ -1,12 +1,18 @@
 # Benny round 23 — progress (worktree `/home/user/wt/benny`, local branch `claude/rainbow-benny-c24` = `-c23` @ `734efb6`; not committed / pushed by Benny — the lead's autosave snapshots the worktree)
 
-## (r26) WHERE I STOPPED / NEXT — 2026-11-20 ~13:15 UTC (new account; worktree `/home/user/wt/benny`, LOCAL branch `claude/rainbow-benny-c27`, port 5279)
+## (r26) WHERE I STOPPED / NEXT — 2026-11-20 ~13:40 UTC (new account; worktree `/home/user/wt/benny`, LOCAL branch `claude/rainbow-benny-c27`, port 5279)
 
-**Doing now:** (1) star step `&b20star=1`: NEW swim clip exists (`qa/benny/r23/s3_star/clip/swim06_star_NEW_*`); re-rendering ONLY the
-BEFORE swim clip (same tool `tools/benny25/swim_clip_c.mjs 06 … 6 0`, query `QUERY_BEFORE_06.txt`; script
-`/home/user/scratch/benny/clips/run_before.sh`), then label 1.0x + 0.5x and write the star verdict here.
-**Next:** (2) silky combed fur `&b20silk=1` (+ `&b20gsoft=1` soft lock edges, both in code, unproven) → `qa/benny/r25/s4_silk/`;
-(3) hat crown shape / 06 cream tint. Do NOT scale Benny.
+**Done:** BEFORE swim clip 06 re-rendered with the same tool + schedule as NEW (`swim_clip_c.mjs 06 … 6 0`) and encoded:
+`qa/benny/r23/s3_star/clip/swim06_star_BEFORE_{full,benny}_{1x,0.5x}.mp4` (NEW = `swim06_star_NEW_*`, rendered r25).
+**Star finding (measured inside the star window):** 04 NEW ≈ approved (median 255/201/69 vs 251/197/73, orange stitched rim
+share 0.26 vs 0.22; BEFORE 244/207/28, rim 0.06) → closer. 06 middle NEW is CLIPPED green-lemon (250/255/55, green above red,
+brightness p50 ≈ p90 → flat, stitch line almost gone) vs approved 06 251/223/31 and BEFORE 243/209/52 → NOT closer there
+(matches the lead's / user's review). Probing softer `b20sx06` values (start + middle) now (`/home/user/scratch/benny/silk/pd06*`).
+**Silk:** `&b20silk=1` (lock cones) probed: every variant reads as SPIKY shards, hotter pink → rejected. New `&b20silk=2`
+(fur.ts `B20COMB`, benny20.ts `COMB20`, `&b20q<key>=`): the soft b20tuft pile with its strand grid stretched vertically →
+downward combed fibres, no spikes, same dusty rose. First probe (pc04/pc06) promising on 04 (c8: qsq .3, qlen .12, qcx .9,
+qgr .07); second probe running (clump shading, less per-strand grain). Fixed key clash `gsw` → soft width now `&b20gew=`.
+**Next:** pick 06 star value → re-render 06 star crops + NEW clip → verdict; pick silk=2 defaults → proof `qa/benny/r25/s4_silk/`.
 
 ## (r25) WHERE I STOPPED / NEXT — 2026-11-20 ~12:10 UTC (new account; worktree `/home/user/wt/benny`, LOCAL branch `claude/rainbow-benny-c26`, port 5279)
 

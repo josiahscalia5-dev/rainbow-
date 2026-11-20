@@ -993,3 +993,362 @@ GaussianBlur drops the singleton channel; fix the broadcast.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-20T13:24:55.877Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r25/step1_hole && sed -i 's#declare -A TITLE=(\\[NEW\\]=\"SCREEN 06 OPENING - NEW (m06hole)\"#declare -A TITLE=([NEW2]=\"SCREEN 06 OPENING - NEW (m06hole=2)\" [NEW]=\"SCREEN 06 OPENING - NEW (m06hole)\"#' clip.sh && grep -n TITLE= clip.sh && cat > /home/user/scratch/s06/chain_new2.sh <<'EOF'\n#!/usr/bin/env bash\n# s06 r26: NEW2 opening clip, then gameplay 8/8 + 91 coins with the NEW2 query (each waits for a render slot)\nO=/home/user/rainbow-/qa/match/06/r25/step1_hole\nbash $O/clip.sh NEW2\ncd /home/user/wt/s06 && bash /home/user/rainbow-/tools …[+362 chars]`
+
+### 🧑 User — 2026-11-20T13:24:56.119Z
+
+> ↩︎ result: 6:declare -A TITLE=([NEW2]="SCREEN 06 OPENING - NEW (m06hole=2)" [NEW]="SCREEN 06 OPENING - NEW (m06hole)" [CURRENT]="SCREEN 06 OPENING - CURRENT (what you saw)")
+> started
+
+### 🤖 Claude — 2026-11-20T13:25:02.507Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r25/step1_hole && for s in a_start o1_003 o2_007 o3_012; do mkdir -p COMPARE/$s; cp /home/user/rainbow-/qa/match/06/r23/step3_m06rip/1_APPROVED.png COMPARE/$s/1_ORIGINAL_APPROVED.png; cp CURRENT/$s.png COMPARE/$s/2_WHAT_YOU_SAW.png; cp NEW2/$s.png COMPARE/$s/3_NEW.png; done; ls COMPARE/*; cmp /home/user/rainbow-/qa/match/06/r23/step3_m06rip/1_APPROVED.png /home/user/rainbow-/references/06_crest_the_rinse_arch.png && echo \"approved copy == reference\" || python3 -c \"\nimport numpy as np; from PIL import Image\na=np.asarray(Image.open('/home/user …[+476 chars]`
+
+### 🧑 User — 2026-11-20T13:25:03.003Z
+
+> ↩︎ result: COMPARE/a_start:
+> 1_ORIGINAL_APPROVED.png
+> 2_WHAT_YOU_SAW.png
+> 3_NEW.png
+> 
+> COMPARE/o1_003:
+> 1_ORIGINAL_APPROVED.png
+> 2_WHAT_YOU_SAW.png
+> 3_NEW.png
+> 
+> COMPARE/o2_007:
+> 1_ORIGINAL_APPROVED.png
+> 2_WHAT_YOU_SAW.png
+> 3_NEW.png
+> 
+> COMPARE/o3_012:
+> 1_ORIGINAL_APPROVED.png
+> 2_WHAT_YOU_SAW.png
+> 3_NEW.png
+> approved copy == reference
+
+### 🤖 Claude — 2026-11-20T13:25:07.493Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r25/step1_hole && python3 -c \"\nimport numpy as np; from PIL import Image\nfor s in ['a_start','o1_003','o2_007','o3_012']:\n  r=[]\n  for v in ['NEW','NEW2']:\n    a=np.asarray(Image.open(f'CURRENT/{s}.png').convert('RGB')).astype(int)[200:]; b=np.asarray(Image.open(f'{v}/{s}.png').convert('RGB')).astype(int)[200:]\n    d=np.abs(a-b).max(2); r.append(f'{v}: changed(>25) {100*(d>25).mean():.1f}%')\n  print(s, ' | '.join(r))\n\"", "description": "Measure frame change vs CURRENT per shot"}`
+
+### 🧑 User — 2026-11-20T13:25:10.062Z
+
+> ↩︎ result: a_start NEW: changed(>25) 0.0% | NEW2: changed(>25) 0.0%
+> o1_003 NEW: changed(>25) 16.5% | NEW2: changed(>25) 20.1%
+> o2_007 NEW: changed(>25) 18.4% | NEW2: changed(>25) 18.9%
+> o3_012 NEW: changed(>25) 10.5% | NEW2: changed(>25) 10.6%
+
+### 🤖 Claude — 2026-11-20T13:25:19.557Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r25/step1_hole && python3 -c \"\nfrom PIL import Image\nbox=(0,560,864,1536)\nims=[Image.open(p).convert('RGB').crop(box) for p in ['CURRENT/o3_012.png','NEW2/o3_012.png','WDBG_NEW/o3_012.png']]\nw,h=ims[0].size; s=0.5\nout=Image.new('RGB',(int(w*s)*3,int(h*s)))\nfor i,im in enumerate(ims): out.paste(im.resize((int(w*s),int(h*s))),(i*int(w*s),0))\nout.save('/home/user/scratch/s06/crop_o3.png')\n\"", "description": "Crop o3 CURRENT/NEW2/WDBG"}`
+
+### 🧑 User — 2026-11-20T13:25:20.123Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T13:25:20.953Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s06/crop_o3.png"}`
+
+### 🧑 User — 2026-11-20T13:25:21.036Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T13:25:57.140Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06/tools/match06 && grep -n \"uStW\\|m06stw\\|stW\" ../../src/world/match06.ts | head -6; sed -n 59,100p r25_unwrap06.py", "description": "Check hold window and unwrap internals"}`
+
+### 🧑 User — 2026-11-20T13:25:57.200Z
+
+> ↩︎ result: 104:// uStW = camera distance from the approved viewpoint (u) over which the approved pixels hand over to the 3D materials;
+> 109:uniform vec2 uStW;
+> 163:  float hold = 1.0 - smoothstep(uStW.x, uStW.y, dAp);
+> 511:    uStW: { value: new THREE.Vector2(0.75, 0.85) }, // r22: short hand-over (no double-exposed tunnel, qa/match/06/r22/PROGRESS.md)
+> 546:  // `&m06stw=a,b` u from it (default 0.75,0.85 since r22; r18 had 0.6,1.2 = double-exposed tunnel at +1.5 u) the approved pixels stay (no see-through ring arcs, no tile ghosts), the painted
+> 551:  const stw = (qs?.get('m06stw') ?? '').split(',').map(Number);
+> def unwrap(frames_json, K=64, l0=None, l1=None, sa=-5.0, sb=25.0):
+>     L, M = load_layout()
+>     fr = json.loads(Path(frames_json).read_text())
+>     r6 = L['tiles']['r6']; Wc, Wb, hb = r6['Wc'], r6['Wb'], r6['hb']
+>     sB = L.get('sB', L['s0'] + 12)
+>     l0 = -Wb if l0 is None else l0; l1 = Wb if l1 is None else l1
+>     NX = int(round((l1 - l0) * K)); NY = int(round((sb - sa) * K))
+>     ls = l0 + (np.arange(NX) + 0.5) / NX * (l1 - l0)
+>     ss = sB + sa + (np.arange(NY) + 0.5) / NY * (sb - sa)
+>     pos, up, rt = frames_at(fr, ss)
+>     t = np.clip((np.abs(ls) - Wc + 0.1) / 0.5, 0, 1); bank = hb * t * …[+1924 chars]
+
+### 🤖 Claude — 2026-11-20T13:26:06.756Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06/tools/match06 && timeout 300 nice -n 10 python3 -I -c \"\nimport sys; sys.path.insert(0,'.')\nimport numpy as np, r25_unwrap06 as UW\nU=UW.unwrap('/home/user/scratch/s06/frames06.json', 16, -3.5, 3.5, -2, 14)\nls,ss,sB=U['ls'],U['ss'],U['sB']\nvis=U['vis']; fill=U['fill']>8; mr=U['mask'][...,0]>3; mg=U['mask'][...,1]>128; ins=U['inside']\nprint('Wc',U['Wc'],'Wb',U['Wb'])\ncols=[np.argmin(abs(ls-v)) for v in (-3,-2,-1.5,-1,-0.5,0,0.5,1,1.5,2,3)]\nprint('ds    ' + ' '.join(f'{ls[c]:+.1f}'.rjust(5) for c in cols))\nfor j in range(0,len(ss),4):\n  row=[]\n  for c  …[+256 chars]`
+
+### 🧑 User — 2026-11-20T13:26:07.310Z
+
+> ↩︎ result: Wc 2.3 Wb 3.6
+> ds     -3.0  -2.0  -1.5  -1.0  -0.5  -0.0  +0.5  +1.0  +1.5  +2.0  +3.0
+>  -2.0     .     .     .     .     .     .     .     .     .     .     .
+>  -1.7     .     .     v     v     v     v     v     v     v     .     .
+>  -1.5     .     .     v     v     v     v     v     v     v     .     .
+>  -1.2     .     .     v     v     v     v     v     v     v     .     .
+>  -1.0     .     .     v     v     v     v     v     v     v     .     .
+>  -0.7     .     .     v     v     v     v     v     v     v     .     .
+>  -0.5     .     .     v     v     F     F     F     v     v     v     .
+>  -0.2     .     v     v     v     F     F     F     F     v     v     .
+>  +0.0     .     v     v     F     F     F     F     F     v     v     .
+>  +0.3     .     v     v     v     F     F     F     F     v     v     .
+>  +0.5     .     v     v     v     F     F     F     v     v     v     .
+>  +0.8     .     v     v     v     F     F     F     v     v     G     .
+>  +1.0     .     v     v     v     F     F     F     v     v     G     .
+>  +1.3     .     v     v     F     F     F     F     v     v     G     .
+>  +1.5     .     v     v     v     F     F     v     v     v     G     .
+>  +1.8     .     v     v     v      …[+3493 chars]
+
+### 🤖 Claude — 2026-11-20T13:26:27.113Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -rln \"splash\" src | head; grep -rn \"splash\" src/game/Game.ts | head -15", "description": "Find Benny splash effect code"}`
+
+### 🧑 User — 2026-11-20T13:26:27.183Z
+
+> ↩︎ result: src/characters/types.ts
+> src/world/match08.ts
+> src/world/match06.ts
+> src/vfx/riderSplash.ts
+> src/vfx/bubbles.ts
+> src/vfx/index.ts
+> src/vfx/waterRibbon.ts
+> src/vfx/spray.ts
+> src/game/Game.ts
+> src/game/modules.ts
+> 110:  if (m08) { m08.group.visible = false; scene.add(m08.group); m08.bakeDepth(renderer); scene.add(m08.splash); }
+> 111:  const M08_HIDE = ['ribbon', 'foam', 'bubbles', 'splashCrown', 'spray'];
+> 376:      water.splash(benny.root.position, course.sample(st.s).up, 1);
+> 402:    // so the wake/splash footprint matches the real waterline instead of the unlifted root
+> 543:      // r7 `&m06bub=1`: the game's iridescent bubbles + Benny's splash crown / spray return once the camera leaves the
+> 549:      for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m06On || (bub6 && (k === 'bubbles' || k === 'splashCrown' || k === 'spray')); }
+> 566:      m08.splash.visible = m08On;
+> 567:      if (m08On) { m08.splash.position.copy(benny.root.position).add(m08.splashOffset); m08.splash.quaternion.copy(camera.quaternion); }
+
+### 🤖 Claude — 2026-11-20T13:26:28.295Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 538,556p src/game/Game.ts", "description": "Read 06 splash visibility logic"}`
+
+### 🧑 User — 2026-11-20T13:26:28.341Z
+
+> ↩︎ result: for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m08On; }
+>       m08Applied = m08On;
+>     }
+>     // `?match06=1` on Screen 06: the projected scenery carries the approved river, ripples, foam and bubbles
+>     if (m06 && (m06On || m06Applied) && !(m08 && m08On)) {
+>       // r7 `&m06bub=1`: the game's iridescent bubbles + Benny's splash crown / spray return once the camera leaves the
+>       // approved view (the painting
+>       // carries its bubbles only there; while swimming the screen had none)
+>       const bub6 = M06_BUB && m06On && m06.away(camera.position) > 0.5;
+>       m06.setAway(m06On ? m06.away(camera.position) : 0);
+>       m06.setBenny(st.s, st.lat); // r23 `&m06rip=1` only (no-op without it)
+>       for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m06On || (bub6 && (k === 'bubbles' || k === 'splashCrown' || k === 'spray')); }
+>       m06Applied = m06On;
+>     }
+>     if (m08 && m08On) for (const k of ['puddles', 'finalWave']) { const o = water.parts?.[k]; if (o) o.visible = false; }
+>     if (m08 && b08 && b08Rest) {
+>       // rounder body (narrower, taller) with the beanie counter-scaled to keep its size; ≈23 px right (world +x, measured f …[+173 chars]
+
+### 🤖 Claude — 2026-11-20T13:26:32.192Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"splashCrown\\|spray\" src/vfx/index.ts | head -8; sed -n 1,15p src/vfx/spray.ts; grep -n \"^export\\|^ \\*\\|^/\\*\\*\" src/vfx/riderSplash.ts | head -12", "description": "Identify splash crown vs spray parts"}`
+
+### 🧑 User — 2026-11-20T13:26:32.286Z
+
+> ↩︎ result: 24:import { createSpray } from './spray';
+> 47:  /** spray/wake at Benny: call each frame while riding */
+> 55:  stats(): { instances: number; bubbles: number; smallBubbles: number; sprayCapacity: number };
+> 88:  const spray = createSpray(quality);
+> 94:  group.add(ribbon.mesh, whirl.mesh, drum.group, wave.mesh, puddles.group, foam.group, bubbles.group, spray.points, crown.mesh, crown05.mesh);
+> 96:  const parts: Record<string, THREE.Object3D> = { ribbon: ribbon.mesh, whirlpool: whirl.mesh, drum: drum.group, drumSwirl: drum.swirl, finalWave: wave.mesh, puddles: puddles.group, foam: foam.group, foamBerm: foam.berm, foamRafts: foam.rafts, foamRim05: foam.rim05, foamFlank: foam.flank, bubbles: bubbles.group, bubblesSmall: bubbles.small, bubblesBig: bubbles.big, spray: spray.points, splashCrown: crown.mesh, splash05: crown05.mesh };
+> 98:  // QA: ?waterhide=crown,spray,bubbles,foam,foamBerm,ribbon … hides water parts (isolation captures)
+> 110:  // spray fan scratch (no per-frame allocation)
+> /**
+>  * Spray droplets: one pooled THREE.Points draw for Benny's wake fans, landing splashes, the
+>  * final-wave crest spray and spout splashes. Simple ballistic CPU sim (gravity along -Y).
+>  */
+> import * as THREE  …[+1294 chars]
+
+### 🤖 Claude — 2026-11-20T13:26:40.618Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"uniform \\|export function\\|opacity\\|uAlpha\\|uniforms\" src/vfx/riderSplash.ts | head -20; grep -n \"crown\\.\\|crown05\\.\" src/vfx/index.ts | head -12", "description": "Check rider splash controls"}`
+
+### 🧑 User — 2026-11-20T13:26:40.667Z
+
+> ↩︎ result: 45:uniform float uTime;
+> 46:uniform float uR;        // waterline radius of Benny's body (units): jet roots sit on this circle
+> 47:uniform float uLen;      // max jet length (units)
+> 48:uniform float uH;        // max arc height (units)
+> 49:uniform float uStrength; // 0..1
+> 102:uniform float uStrength;
+> 137:  uniforms: Record<string, THREE.IUniform>;
+> 143:export function createRiderSplash(quality: 'high' | 'low'): RiderSplash {
+> 177:  const uniforms = withFog({ uTime: { value: 0 }, uR: { value: 0.45 }, uLen: { value: 1.25 }, uH: { value: 0.34 }, uStrength: { value: 0 } });
+> 179:    uniforms,
+> 199:    uniforms,
+> 206:      uniforms.uR.value = radius;
+> 211:      uniforms.uTime.value = time;
+> 214:      const s = uniforms.uStrength.value as number;
+> 216:      uniforms.uStrength.value = v;
+> 236:uniform float uTime;
+> 237:uniform float uR;
+> 238:uniform float uLen;
+> 239:uniform float uStrength;
+> 331:uniform float uTime;
+> 94:  group.add(ribbon.mesh, whirl.mesh, drum.group, wave.mesh, puddles.group, foam.group, bubbles.group, spray.points, crown.mesh, crown05.mesh);
+> 96:  const parts: Record<string, THREE.Object3D> = { ribbon: ribbon.mesh, whirlpool: whirl.mesh, drum: drum.group, drumSwirl: drum.swirl, finalWave: …[+723 chars]
+
+### 🤖 Claude — 2026-11-20T13:26:58.864Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 196,222p src/vfx/riderSplash.ts; sed -n 225,245p src/vfx/index.ts; grep -n \"M06_BUB =\" src/game/Game.ts", "description": "Read crown place/update and wake call"}`
+
+### 🧑 User — 2026-11-20T13:26:58.929Z
+
+> ↩︎ result: let fed = false;
+>   return {
+>     mesh,
+>     uniforms,
+>     place(center, forward, up, radius, strength) {
+>       back.copy(forward).multiplyScalar(-1);
+>       side.crossVectors(up, back).normalize(); // x × y = z  →  (side, up, back) right-handed
+>       basis.makeBasis(side, up, back);
+>       mesh.quaternion.setFromRotationMatrix(basis);
+>       mesh.position.copy(center);
+>       uniforms.uR.value = radius;
+>       target = strength;
+>       fed = true;
+>     },
+>     update(time, dt) {
+>       uniforms.uTime.value = time;
+>       if (!fed) target = 0;
+>       fed = false;
+>       const s = uniforms.uStrength.value as number;
+>       const v = dt > 0 ? s + (target - s) * Math.min(1, dt * 6) : target;
+>       uniforms.uStrength.value = v;
+>       mesh.visible = v > 0.01;
+>     },
+>   };
+> }
+> 
+> // ------------------------------------------------------------------------------------------------ 05 splash (wave 8)
+>       // radius is the chord of the fluffy ball at the water surface, so the contact foam, the crown and
+>       // the ribbon wake hug his actual footprint. (Deriving the radius from `above / BENNY_RIDE_OFFSET`
+>       // made it grow with the lift and drew a white contact band ~2x wider than the body.)
+>       const abo …[+1383 chars]
+
+### 🤖 Claude — 2026-11-20T13:27:16.917Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='src/game/Game.ts'; s=open(p).read()\na=\"  const M06_BUB = flag05('m06bub');\"\nassert s.count(a)==1\ns=s.replace(a,a+\"\\n  // r26 `&m06spl=1` (qa/match/06/r25/PROGRESS.md r26): on Screen 06 Benny's contact = a short, low lace collar (the approved picture's\\n  // shallow rounded contact ripple) instead of the long white V streak fans of ref 05; the ballistic spray dots stay hidden there\\n  const M06_SPL = flag05('m06spl');\\n  let m06SplRest: { len: number; h: number } | null = null;\",1)\na=\"      for (const k of M08_HIDE) { const …[+2231 chars]`
+
+### 🧑 User — 2026-11-20T13:27:23.332Z
+
+> ↩︎ result: Traceback (most recent call last):
+>   File "<stdin>", line 28, in <module>
+> AssertionError
+> 11:import * as THREE from 'three';
+> 34:const sm = (a: number, b: number, x: number) => THREE.MathUtils.smoothstep(x, a, b);
+> tsc=0
+
+### 🤖 Claude — 2026-11-20T13:27:26.886Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"t = mix(pc, pl, w)\" -A1 src/world/match06.ts | cat -A | cut -c1-80", "description": "Inspect exact text around mix line"}`
+
+### 🧑 User — 2026-11-20T13:27:26.935Z
+
+> ↩︎ result: 378:      t = mix(pc, pl, w);$
+> 379-      gWDbg = w;$
+
+### 🤖 Claude — 2026-11-20T13:27:36.211Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 936,945p src/world/match06.ts && python3 - <<'EOF'\np='src/world/match06.ts'; s=open(p).read()\na=\"uniform vec2 uHoleT;\\n\"\nassert s.count(a)==1\ns=s.replace(a,a+\"// r26 m06fade=a,b: the painted floor (pinned at the checkpoint) dissolves as a whole into the river's own flowing water between\\n// camera distances a..b from the approved viewpoint (no bounded patches / direction breaks below Benny once he swims on)\\nuniform vec2 uFade;\\n\",1)\na=\"      t = mix(pc, pl, w);\\n      gWDbg = w;\"\nassert s.count(a)==1\ns=s.replace(a,\"      if (uFloo …[+776 chars]`
+
+### 🧑 User — 2026-11-20T13:27:43.101Z
+
+> ↩︎ result: Object.assign(floorMat.uniforms, { uHole: { value: ht }, uHoleW: { value: hw }, uHoleOn: { value: 1 },
+>       uHoleR: { value: new THREE.Vector4(hm.l0, hm.l1, hm.s0, hm.s1) }, uHoleZ: { value: new THREE.Vector4(hm.sB + z.dc, z.hl, z.hs, 0) } });
+>     if (HOLE === '2') floorMat.uniforms.uHoleT.value.set(0.02, 0.3);
+>     console.info('[match06] m06hole', { rect: [hm.l0, hm.l1, hm.s0, hm.s1], zone: z });
+>   }
+>   // r25 QA only `&m06holedump=1` (tools/match06/r25_holedump.mjs): the projected plate, mask06 and the body fill mask unwrapped
+>   // into the river floor's own coordinates (lateral l x course s, exactly the floor surface incl. the raised banks) with the
+>   // projector's own visibility (floor self-occlusion z-buffer), for tools/match06/make_hole06.py. Nothing changes on screen.
+>   if (qs?.get('m06holedump') === '1' && GEO && R6 && mask) {
+>     const sB = (L as unknown as { sB?: number }).sB ?? L.s0 + 12;
+> tsc=0
+
+### 🤖 Claude — 2026-11-20T13:27:49.761Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r25/step1_hole && printf '%s&m06fade=1&m06spl=1\\n' \"$(tr -d '\\n' < QUERY_NEW2.txt)\" > QUERY_NEW3.txt && cat QUERY_NEW3.txt && (bash render.sh NEW3 > /home/user/scratch/s06/render_new3.out 2>&1 &); cat /home/user/scratch/s06/clip_current.out /home/user/scratch/s06/chain_new2.out; ls /home/user/scratch/s06/clip_CURRENT/f | wc -l", "description": "Queue NEW3 shots render"}`
+
+### 🧑 User — 2026-11-20T13:27:49.903Z
+
+> ↩︎ result: match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1&m06st=1&m06fcl=1&m06view=1&m06vs=0&m06rip=1&m06hole=2&m06fade=1&m06spl=1
+> CURRENT clip exit 0 26 frames
+> 26
+
+### 🤖 Claude — 2026-11-20T13:27:54.944Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r25/step1_hole && tail -5 clip_CURRENT.log; ls -la *.mp4 2>/dev/null; ffprobe -v error -show_entries format=duration -of csv=p=0 CURRENT_opening_1x.mp4 2>/dev/null", "description": "Check CURRENT clip outputs"}`
+
+### 🧑 User — 2026-11-20T13:27:55.105Z
+
+> ↩︎ result: [render_slot] got slot 1 after 518s
+> frames 26 seconds 1.08
+> frames 26 game seconds 1.08
+> -rw-r--r-- 1 root root 1271549 Nov 20 13:26 CURRENT_opening_0.5x.mp4
+> -rw-r--r-- 1 root root  957039 Nov 20 13:25 CURRENT_opening_1x.mp4
+> 1.083333
+
+### 🤖 Claude — 2026-11-20T13:27:59.023Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && ffmpeg -v error -y -i /home/user/rainbow-/qa/match/06/r25/step1_hole/CURRENT_opening_0.5x.mp4 -vf \"select='eq(n\\,0)+eq(n\\,10)+eq(n\\,24)+eq(n\\,44)',scale=216:-1,tile=4x1\" -frames:v 1 cur_clip_strip.png && python3 -c \"from PIL import Image; print(Image.open('/home/user/scratch/s06/cur_clip_strip.png').size)\"", "description": "Extract strip of CURRENT clip frames"}`
+
+### 🧑 User — 2026-11-20T13:27:59.566Z
+
+> ↩︎ result: (864, 384)
+
+### 🤖 Claude — 2026-11-20T13:28:00.345Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s06/cur_clip_strip.png"}`
+
+### 🧑 User — 2026-11-20T13:28:00.381Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T13:28:06.644Z
+
+> 🔧 **Bash** `{"command": "ps aux | grep -E \"chain_new2|clip.sh NEW2|r25_open_clip|audit06_slow\" | grep -v grep | awk '{print $2, $11, $12, $13, $14, $15}'; ls /home/user/scratch/s06/clip_NEW2/f 2>/dev/null | wc -l", "description": "Check whether NEW2 clip has started"}`
+
+### 🧑 User — 2026-11-20T13:28:06.710Z
+
+> ↩︎ result: 12022 bash /home/user/scratch/s06/chain_new2.sh   
+> 12023 bash /home/user/rainbow-/qa/match/06/r25/step1_hole/clip.sh NEW2  
+> 12026 bash /home/user/rainbow-/tools/lead25/render_slot.sh timeout 3000 node
+> 14166 bash /home/user/rainbow-/tools/lead25/render_slot.sh timeout 2400 node
+> 0
+
+### 🤖 Claude — 2026-11-20T13:28:09.347Z
+
+> 🔧 **Bash** `{"command": "kill 12022 12023 12026 2>/dev/null; sleep 1; ps aux | grep -E \"chain_new2|clip.sh NEW2\" | grep -v grep | wc -l", "description": "Cancel queued NEW2 clip chain"}`
+
+### 🧑 User — 2026-11-20T13:28:10.573Z
+
+> ↩︎ result: 0
+
+### 🤖 Claude — 2026-11-20T13:28:19.951Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='/home/user/rainbow-/qa/match/06/r25/PROGRESS.md'; s=open(p).read()\na=s.index('## (r26) WHERE I STOPPED / NEXT'); b=s.index('## (r25) WHERE I STOPPED / NEXT')\nblk=\"\"\"## (r26) WHERE I STOPPED / NEXT\n* ~13:15 UTC — relaunched (new account), worktree `/home/user/wt/s06` LOCAL branch `claude/rainbow-s06-match-c27` (r25 edits incl. m06hole).\n* Step 1 judgement of the r25 shots (`step1_hole/{CURRENT,NEW,WDBG_NEW}`): the bright hard-edged cone body is GONE in NEW; start view\n  0 px (byte-identical, so only the MOVING pairs o1/o2/o3 + the clip show the repair) …[+1447 chars]`
+
+### 🧑 User — 2026-11-20T13:28:20.034Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-20T13:28:22.084Z
+
+> 🔧 **Bash** `{"command": "until [ \"$(ls /home/user/rainbow-/qa/match/06/r25/step1_hole/NEW3/*.png 2>/dev/null | wc -l)\" -ge 4 ] || grep -q exit /home/user/scratch/s06/render_new3.out; do sleep 10; done; cat /home/user/scratch/s06/render_new3.out; date", "description": "Wait for NEW3 shots", "timeout": 560000}`
+
