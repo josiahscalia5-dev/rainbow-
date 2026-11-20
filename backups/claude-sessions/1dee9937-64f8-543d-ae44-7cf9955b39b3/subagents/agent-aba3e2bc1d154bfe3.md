@@ -1591,3 +1591,32 @@ Writing the step 2 code patch and query files while renders run.
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && sed -i 's#await page.screenshot({ path: `${OUT}/f/${String(i).padStart(4, '\"'\"'0'\"'\"')}.png` });#await page.screenshot({ path: `${OUT}/f/${String(i).padStart(4, '\"'\"'0'\"'\"')}.png`, timeout: 600000 });#' tools/match08/screen_clip08.mjs && sed -i 's#timeout: 240000 });#timeout: 600000 });#; s#null, { timeout: 300000 });#null, { timeout: 600000 });#' tools/match08/shots08.mjs && grep -n \"screenshot\\|waitForFunction\" tools/match08/screen_clip08.mjs tools/match08/shots08.mjs; D=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scr …[+226 chars]`
 
+### 🧑 User — 2026-11-20T10:14:24.527Z
+
+> ↩︎ result: tools/match08/screen_clip08.mjs:31:  await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 300000 });
+> tools/match08/screen_clip08.mjs:40:    await page.screenshot({ path: `${OUT}/f/${String(i).padStart(4, '0')}.png`, timeout: 600000 });
+> tools/match08/shots08.mjs:4:// M08_DET=1 (r15): no real-time frames before the screenshot (exactly the stepped positions, repeatable BEFORE / NEW)
+> tools/match08/shots08.mjs:31:  await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 600000 });
+> tools/match08/shots08.mjs:48:    await page.screenshot({ path: `${OUT}/${name}.png`, timeout: 600000 });
+> frames 40 seconds 1.67
+> 40
+> 11
+> [This command modified 1 file you've previously read: ../wt/s08/tools/match08/shots08.mjs. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-20T10:14:28.645Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && sed -i 's#window.__error, null, { timeout: 300000 });#window.__error, null, { timeout: 600000 });#' tools/match08/screen_clip08.mjs && grep -n \"timeout\" tools/match08/screen_clip08.mjs", "description": "Raise page-ready timeout in clip tool"}`
+
+### 🧑 User — 2026-11-20T10:14:28.804Z
+
+> ↩︎ result: 31:  await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 600000 });
+> 40:    await page.screenshot({ path: `${OUT}/f/${String(i).padStart(4, '0')}.png`, timeout: 600000 });
+
+### 🤖 Claude — 2026-11-20T10:14:31.783Z
+
+Both timeouts raised. The BEFORE clip finished (40 frames, 1.67 s of game time); NEW clip is in progress. Waiting.
+
+### 🤖 Claude — 2026-11-20T10:14:33.553Z
+
+> 🔧 **Bash** `{"command": "D=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s08r23; until [ -f $D/clip_s1_new/frames.json ] || grep -qi \"error\\|timeout\" $D/clip_s1_new.log 2>/dev/null; do sleep 5; done; cat $D/clip_s1_new.log", "description": "Wait for NEW clip of step 1", "timeout": 1800000}`
+

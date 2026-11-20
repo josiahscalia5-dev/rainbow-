@@ -48,6 +48,26 @@
 * Mobile cost: no new textures; one 96-segment disc with a small noise shader under Benny (~300 × 150 px of screen), two point
   projections per chevron per frame on the CPU. Negligible.
 
+## (r23 s04) Step 2 — cleaner, LOWER pink edges with a low foam bank where the water meets the gold — `s2_edge/` — GOOD IMPROVEMENT
+* Switch on top of K23-S1 (`s2_edge/SWITCH.txt`, replaced in place): `m04ry=0.45` (the water's sides climb 0.45 u instead of 0.8:
+  lower, narrower pink side water, the gold comes further down), `m04bbdf=30&m04bbdf1=40&m04bbdx=-0.25&m04bbdk=0.3&m04bbd1=1.05&
+  m04bbdg=0.45` (the existing glossy pearly foam heaps line BOTH water edges down the tunnel, ON the water/gold edge, low, a bit
+  denser and puffier far away — was only a 9–12 u window), `m04edges=0.3&m04sbf=0` (softer lilac fringe). No new code.
+  Candidate **K23-S2** = `s2_edge/QUERY_K23-S2.txt`.
+* WHAT LOOKS CLOSER (NEW `s2_edge/NEW/` vs step 1 `s1_arrows/NEW/` and BEFORE `s04_BEFORE_K23-1/`; compare the ACCEPTED GENERATED
+  views): low white bubbly foam banks now run along both water edges from Benny down to the chevrons, like the accepted views; the
+  gold rings come down to them; the pink at the sides is lower and thinner (mostly blue water, a little pink on the sides — the
+  user's words); the straight lilac top line is mostly covered by the foam. Early view especially close to the painting.
+* STILL DIFFERENT: the far foam rows are smaller, more separate bubbles than the painted cloud banks; near the end (e_end) the
+  banks thin out where the far telescope begins; a little lilac still shows on the upper side slope; lane water still a frosted
+  ripple (step 3).
+* Rejected tries (`scratchpad`, not kept): E1/E2 (banks without lowering the sides: banks sit on a tall pink slope), E3 (lower
+  sides only: lilac line still bare), E5 (fringe softening alone changes almost nothing).
+* Proof: start view 0 px vs BEFORE; gameplay `gameplay.json` 8/8, 91 coins, 1,330 → 2,240; code unchanged since step 1
+  (`npx tsc --noEmit` OK, `s1_arrows/code.patch`).
+* Mobile cost: more instanced foam heaps visible at once (same 4 Blender heap meshes, ~5k triangles each, instanced; the far window
+  now 30–40 u instead of 9–12 u) — the main cost of this step; worth checking on the Android build.
+
 ## User feedback driving this round (verbatim, 2026-11-20)
 * ~03:58 (r22): "I don't want the water to look messy. I want it to look very clean ... like the original approved screen through
   the 5 arrows ... he's going naturally." Pink on the left and right "near the gold part" inside the tunnel.

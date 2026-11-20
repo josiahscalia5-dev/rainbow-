@@ -2582,3 +2582,44 @@ The running clips use `page.screenshot()` without a timeout, so let me check whe
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"screenshot(\\|waitForFunction(\\|setDefaultTimeout\" tools/match07/swim_clip_r21.mjs tools/match07/capture_5277.mjs tools/match07/gameplay_test_5277.mjs tools/match07/route_r23.mjs tools/match07/diag_r21.mjs | cut -c1-160", "description": "Find screenshot and wait calls in my tools"}`
 
+### 🧑 User — 2026-11-20T10:14:24.128Z
+
+> ↩︎ result: tools/match07/swim_clip_r21.mjs:21:  await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 300000 });
+> tools/match07/swim_clip_r21.mjs:31:    await page.screenshot({ path: `${OUT}/${String(i).padStart(4, '0')}.png` });
+> tools/match07/capture_5277.mjs:35:    await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 240000 });
+> tools/match07/capture_5277.mjs:45:    await page.screenshot({ path: `${outDir}/${name}`, timeout: 180000 });
+> tools/match07/gameplay_test_5277.mjs:27:await page.waitForFunction(() => window.__rainbow?.ready, null, { timeout: 240000 });
+> tools/match07/route_r23.mjs:14:  await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 300000 });
+> tools/match07/diag_r21.mjs:20:  await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 300000 });
+> tools/match07/diag_r21.mjs:42:    await page.screenshot({ path: `${OUT}/${sh.name}.png` });
+
+### 🤖 Claude — 2026-11-20T10:14:34.270Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && for f in tools/match07/swim_clip_r21.mjs tools/match07/capture_5277.mjs tools/match07/gameplay_test_5277.mjs tools/match07/route_r23.mjs tools/match07/diag_r21.mjs; do sed -i -E 's/\\{ timeout: (240000|300000) \\}/{ timeout: 600000 }/; s/screenshot\\(\\{ path: `\\$\\{OUT\\}\\/\\$\\{String\\(i\\)\\.padStart\\(4, .0.\\)\\}\\.png` \\}\\)/screenshot({ path: `${OUT}\\/${String(i).padStart(4, \"0\")}.png`, timeout: 600000 })/; s/screenshot\\(\\{ path: `\\$\\{outDir\\}\\/\\$\\{name\\}`, timeout: 180000 \\}\\)/screenshot({ path: `${outDir}\\/${name}`, timeout: 6000 …[+997 chars]`
+
+### 🧑 User — 2026-11-20T10:14:37.318Z
+
+> ↩︎ result: tools/match07/audit_r15.mjs:27:  await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 30000
+> tools/match07/audit_r15.mjs:42:    await page.screenshot({ path: `${OUT}/${name}.png` });
+> tools/match07/audit_r16.mjs:32:  await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 30000
+> tools/match07/audit_r16.mjs:48:    await page.screenshot({ path: `${OUT}/${name}.png` });
+> tools/match07/audit_r18.mjs:34:  await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 30000
+> tools/match07/audit_r18.mjs:52:    await page.screenshot({ path: `${OUT}/${name}.png` });
+> tools/match07/coinprobe07.mjs:15:await page.waitForFunction(() => window.__rainbow?.ready === true, null, { timeout: 240000 });
+> tools/match07/motion07.mjs:15:  await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 240000
+> tools/match07/motion07.mjs:29:    await page.screenshot({ path: `${OUT}/${name}.png` });
+> tools/match07/plunge_audit_r8.mjs:25:  await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout:
+> tools/ma …[+1916 chars]
+
+### 🤖 Claude — 2026-11-20T10:14:45.767Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/07/r23 && python3 - <<'EOF'\np='PROGRESS.md'; s=open(p).read()\nold=\"  drifted to mid-screen; `s2_sriver/rejected_lookahead/`).\\n\"\nnew=\"  drifted to mid-screen; `s2_sriver/rejected_lookahead/`). Render tools now use 600 s Playwright timeouts (shared machine, load ~30;\\n  `tools/match07/audit_screen_r23.mjs` = the lead's audit tool with only the timeouts raised).\\n\"\nassert s.count(old)==1; s=s.replace(old,new); open(p,'w').write(s)\nEOF\necho ok", "description": "Note timeout change in progress log"}`
+
+### 🧑 User — 2026-11-20T10:14:46.247Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-20T10:14:47.905Z
+
+I'll continue when the BEFORE clip finishes (notification pending).
+

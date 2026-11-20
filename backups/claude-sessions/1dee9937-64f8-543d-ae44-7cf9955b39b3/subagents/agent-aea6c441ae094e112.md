@@ -2086,3 +2086,127 @@ My render copies already use a 300 s screenshot timeout; I'll raise them to 600 
 > #!/usr/bin/env node
 > // r23 s04 copy: identical to qa/match/04/r22/tools/swim_clip_pinned.mjs except the screenshot + page-ready timeouts (600 s; shared machine).
 
+### 🤖 Claude — 2026-11-20T10:14:32.059Z
+
+While the clip and gameplay run, I'll record step 2's state and read the lane-water shader for the next step (glossy streaks instead of the frosted ripple).
+
+### 🤖 Claude — 2026-11-20T10:14:34.666Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/match/04/r23/PROGRESS.md", "old_string": "* NOW: step 2 (clean water edge: low bubbly foam bank instead of the hard straight lilac line; glossy long white streaks).", "new_string": "* Step 2 NEARLY DONE (`s2_edge/`, switches only, no new code; query `s2_edge/QUERY_K23-S2.txt`): lower, cleaner pink edges\n  (`m04ry=0.45`) + continuous LOW foam banks on both water edges down the tunnel (`m04bbd` window 30-40 u, on the edge, sunk,\n  denser) + softer lilac fringe. 7-shot NEW audit done (start 0 px). Running: clip + gameplay. Next: step 3 …[+23 chars]`
+
+### 🧑 User — 2026-11-20T10:14:35.615Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/match/04/r23/PROGRESS.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T10:14:35.731Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"uLane2\\|uLane\\.\\|uLane3\\|laneC\\b\" src/world/match04m4.ts | head -30", "description": "Locate lane water shader code"}`
+
+### 🧑 User — 2026-11-20T10:14:35.770Z
+
+> ↩︎ result: 769:uniform vec2 uLane3;         // r13 m04lcd / m04lcw: deeper blue along the arrow line (strength, half width)
+> 771:uniform vec4 uLane2;         // r13 m04lane2: x swirl detail, y gloss, z sparkle
+> 842:  if (uLane.x > 0.5) {
+> 846:    float kl = 1.0 - smoothstep(uLane.y, uLane.y + 0.9, abs(vS));
+> 849:    vec3 laneC = mix(vec3(0.02, 0.42, 0.88), vec3(0.30, 0.82, 1.0), smoothstep(0.35, 0.80, lb));
+> 851:    laneC += vec3(0.55, 0.85, 1.0) * 0.35 * smoothstep(0.80, 0.97, sk);
+> 852:    if (uLane2.x > 0.0) {
+> 854:      // own swirls kept at a moderate blur (uLane2.x = detail), flowing glossy highlight ribbons, twinkling white sparkles
+> 856:      float ld = mix(lb, dot(dl, vec3(0.30, 0.55, 0.15)), uLane2.x) + uLane2.w;   // w = brighter / more turquoise
+> 857:      laneC = mix(vec3(0.00, 0.22, 0.86), vec3(0.00, 0.62, 1.00), smoothstep(0.20, 0.55, ld));
+> 858:      laneC = mix(laneC, vec3(0.16, 0.92, 1.00), smoothstep(0.55, 0.82, ld));
+> 859:      laneC = mix(laneC, vec3(0.80, 0.98, 1.00), uLane2.y * smoothstep(0.84, 0.97, ld));            // glossy crests
+> 861:      laneC += vec3(0.45, 0.85, 1.0) * 0.30 * uLane2.y * smoothstep(0.72, 0.92, rib) * (0.6 + 0.4 * sin(fl * 2.0 + vS));
+> 866:      laneC += vec3( …[+870 chars]
+
+### 🤖 Claude — 2026-11-20T10:14:39.126Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/src/world/match04m4.ts", "offset": 820, "limit": 66}`
+
+### 🧑 User — 2026-11-20T10:14:39.225Z
+
+> ↩︎ result: 820	// chevron pointing down the slide: distance to the two arms
+> 821	float chev(vec2 p, float hw, float th) {
+> 822	  p.x = abs(p.x);
+> 823	  vec2 a = vec2(0.0, 0.0), b = vec2(hw, -hw * 2.3);   // long arms along the flow (painted arrows seen low)
+> 824	  vec2 pa = p - a, ba = b - a;
+> 825	  float h = clamp(dot(pa, ba) / dot(ba, ba), 0.0, 1.0);
+> 826	  return length(pa - ba * h) - th;
+> 827	}
+> 828	void main() {
+> 829	  float along = -vL.z;                                     // down the slide from Benny's checkpoint water point
+> 830	  float flow = along - uTime * 0.9;                        // the design drifts down the slide with the current
+> 831	  float lat = vS * uRivA.w + 0.9 * (vn(vec2(along * 0.07, 7.0)) - 0.5) * smoothstep(0.4, 1.6, abs(vS));
+> 832	  float fl = flow + 2.2 * (vn(vec2(along * 0.05, vS * 0.15 + 1.0)) - 0.5);
+> 833	  float se = 1.0 + (uSE.x - 1.0) * smoothstep(uSE.y, uSE.y + 0.9, abs(vS));
+> 834	  vec2 uv1 = vec2(lat / (2.0 * uRivA.x) + 0.5, (fl - uRivA.y) / (uRivA.z * se));
+> 835	  vec2 uv2 = vec2(-lat / (2.0 * uRivA.x) * 0.96 + 0.5, (fl - uRivA.y) / (uRivA.z * se) * 0.77 + 0.37);
+> 836	  float w = smoothstep(0.3, 0.7, vn(vec2(along * 0.16, vS * 0.35 + 3.0)));
+> 837	  vec3 col = mix(textur …[+4283 chars]
+
+### 🤖 Claude — 2026-11-20T10:14:57.538Z
+
+I must not edit `src/` while the clip renders (Vite would hot-reload the page mid-clip). Let me wait for the background job.
+
+### 🤖 Claude — 2026-11-20T10:14:59.829Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/tasks/ba30o22b6.output; ls /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/ | grep clip; for d in /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/clip*/f; do ls $d | wc -l; done; uptime", "description": "Check background clip/gameplay progress"}`
+
+### 🧑 User — 2026-11-20T10:15:01.463Z
+
+> ↩︎ result: gameplay_exit=0
+> clip
+> clip.sh
+> clip2EJW
+> clip5WyI
+> clipB
+> clipL_new
+> clipN
+> clipN2
+> clipXPF1
+> clip_frames_new.png
+> clip_sheet.png
+> clipframes.png
+> clipzd60
+> 39
+> 58
+> 58
+> 58
+>  10:15:00 up 32 min,  0 user,  load average: 33.17, 31.17, 21.37
+
+### 🤖 Claude — 2026-11-20T10:15:06.799Z
+
+Gameplay already passed; the clip is at ~39/58 frames. I'll prepare the step-3 shader patch as a script now (applied only after the clip finishes).
+
+### 🤖 Claude — 2026-11-20T10:15:22.136Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s04/patch_lgs.py", "content": "# r23 s04 step 3 patch: `&m04lgs=1` glossy lane water (long thin white streaks on electric cyan, instead of the frosted ripple)\np = '/home/user/wt/s04/src/world/match04m4.ts'\ns = open(p).read()\n\n# 1) uniform declaration (next to uLane2)\nold_u = \"uniform vec4 uLane2;         // r13 m04lane2: x swirl detail, y gloss, z sparkle\\n\"\nassert s.count(old_u) == 1\ns = s.replace(old_u, old_u + \"uniform vec4 uLG;            // r23 m04lgs: x strength, y streaks per u ac …[+3114 chars]`
+
+### 🧑 User — 2026-11-20T10:15:22.491Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s04/patch_lgs.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T10:15:28.677Z
+
+> 🔧 **Bash** `{"command": "ls -t /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/ | head -3; ls /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/clip2EJW/f 2>/dev/null | wc -l; cat /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/tasks/ba30o22b6.output", "description": "Check clip frame count"}`
+
+### 🧑 User — 2026-11-20T10:15:29.034Z
+
+> ↩︎ result: clipB
+> clipN2
+> s04
+> 41
+> gameplay_exit=0
+
+### 🤖 Claude — 2026-11-20T10:15:34.289Z
+
+Clip at 41/58 frames (load ~33). Meanwhile I'll write the step-2 record (clip paths filled in once it finishes).
+
+### 🤖 Claude — 2026-11-20T10:15:44.351Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/match/04/r23/PROGRESS.md", "old_string": "* Mobile cost: no new textures; one 96-segment disc with a small noise shader under Benny (~300 × 150 px of screen), two point\n  projections per chevron per frame on the CPU. Negligible.", "new_string": "* Mobile cost: no new textures; one 96-segment disc with a small noise shader under Benny (~300 × 150 px of screen), two point\n  projections per chevron per frame on the CPU. Negligible.\n\n## (r23 s04) Step 2 — cleaner, LOWER pink edges with a low foam bank where the water meets the gold —  …[+2012 chars]`
+
+### 🧑 User — 2026-11-20T10:15:44.827Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/match/04/r23/PROGRESS.md has been updated successfully.
+
