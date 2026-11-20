@@ -1,5 +1,5 @@
 diff --git a/src/game/Game.ts b/src/game/Game.ts
-index 6aec2406..3dfcd3b5 100644
+index 6aec2406..fc2aa78d 100644
 --- a/src/game/Game.ts
 +++ b/src/game/Game.ts
 @@ -67,6 +67,10 @@ export async function startGame(canvas: HTMLCanvasElement) {
@@ -38,10 +38,10 @@ index 6aec2406..3dfcd3b5 100644
 +      }
        m06Applied = m06On;
      }
-+    // r29 `&m06deep=1`: over the last stretch of Screen 06 the 07 tube (walls, rings, lids, gold mouth collar) is shown ahead of
++    // r29 `&m06deep=1`: over the LAST ~12 u of Screen 06 the 07 tube (walls, rings, lids, gold mouth collar) is shown ahead of
 +    // Benny inside the ring tunnel, so he visibly swims into it; everything else of the tube zone stays hidden in 06
 +    if (m06 && tube07 && (m06On || tube07Applied)) {
-+      const show = m06On && st.s > course.stage('07').s0 - 70;
++      const show = m06On && st.s > course.stage('07').s0 - 12; // r29 v2 (user): the 06 tunnel look continues until the doorway (~1 s)
 +      if (m06On) { env.zones.tubes.visible = show; for (const ch of env.zones.tubes.children) ch.visible = ch === tube07; }
 +      else for (const ch of env.zones.tubes.children) ch.visible = true;
 +      tube07Applied = m06On;
