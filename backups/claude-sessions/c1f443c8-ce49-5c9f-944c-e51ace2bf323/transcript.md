@@ -1010,3 +1010,90 @@ p3 (tip strength 0.45) reads as a lighter lilac yarn pompom, closer to approved.
 
 > 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/c1f443c8-ce49-5c9f-944c-e51ace2bf323/scratchpad/t3grid.png"}`
 
+### 🧑 User — 2026-11-20T03:40:38.335Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🧑 User — 2026-11-20T03:40:38.932Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-20T03:40:38.927Z
+
+[Image: original 1014x2025, displayed at 1001x2000. Multiply coordinates by 1.01 to map to original image.]
+
+### 🤖 Claude — 2026-11-20T03:40:43.321Z
+
+> 🔧 **Bash** `{"command": "grep -n \"MAT20\" -A14 src/characters/benny/benny20.ts | sed -n 1,18p", "description": "Inspect knit material factors"}`
+
+### 🧑 User — 2026-11-20T03:40:43.356Z
+
+> ↩︎ result: 114:const MAT20 = {
+> 115-  crown: lin('ccol', [0.82, 0.82, 0.78]),
+> 116-  brim: lin('rcol', [0.34, 0.34, 0.31]),
+> 117-  star: lin('scol', [0.34, 0.75, 1.0]),
+> 118-  crownN: n('kcn', 2.0),
+> 119-  brimN: n('kbn', 2.5),
+> 120-};
+> 121-
+> 122-const T = (f: string) => new URL(`../../../assets/textures/benny20/${f}`, import.meta.url).href;
+> 123-const FILES = ['crown.png', 'crown_n.png', 'brim.png', 'brim_n.png', 'star.png', 'star_n.png'];
+> 124-let loaded: Promise<Record<string, THREE.Texture | null>> | null = null;
+> 125-/** load the knit / felt maps once (missing file → null: that part keeps its benny05 look) */
+> 126-export function loadBenny20Maps(): Promise<Record<string, THREE.Texture | null>> {
+> 127-  if (loaded) return loaded;
+> 128-  const tl = new THREE.TextureLoader();
+> --
+> 216:    knit('hat_crown', 'crown.png', 'crown_n.png', MAT20.crown, MAT20.crownN);
+> 217:    knit('hat_brim', 'brim.png', 'brim_n.png', MAT20.brim, MAT20.brimN);
+
+### 🤖 Claude — 2026-11-20T03:40:46.184Z
+
+Knit cuff ribs are now clean, but the cream crown stripes come out lavender-pink and the cuff too dark. One quick colour-factor test before I judge.
+
+### 🤖 Claude — 2026-11-20T03:40:50.553Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/c1f443c8-ce49-5c9f-944c-e51ace2bf323/scratchpad; export AUDIT_SHOTS='[[\"a_start\",0,null]]'; V=\"&b20ccol=0.86,0.92,0.72&b20rcol=0.46,0.42,0.38\"; for n in 04 05; do AUDIT_PORT=5293 node tools/lead21/audit_screen.mjs $SP/kc/$n $n \"$(cat $SP/q$n.txt)&benny20=1&b20expo=1&b20knit=1&b20ppw=0.45$V\" 2>&1 | grep -i pageerror; python3 -I tools/benny20/crop.py $SP/kc/$n/a_start.png $SP/kc/$n/a_start_crop.png; done\npython3 - <<EOF\nfrom PIL import Image\nS='$SP/'\nc=Image.new('RGB',(338*3,405*2))\nfor j,n in enumerate(['04','05']):\n  for i,p in enum …[+283 chars]`
+
+### 🤖 Claude — 2026-11-20T03:40:51.650Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/c1f443c8-ce49-5c9f-944c-e51ace2bf323/scratchpad/kcgrid.png"}`
+
+### 🧑 User — 2026-11-20T03:41:17.966Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🧑 User — 2026-11-20T03:41:18.003Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:41:23.222Z
+
+> 🔧 **Bash** `{"command": "node scripts/gameplay-test.mjs --q='benny20=1&b20expo=1&b20knit=1&b20ppw=0.45' 2>&1 | grep -A10 '\"pass\"' | head -11 | tr -d '\\n '; echo; node scripts/gameplay-test.mjs 2>&1 | grep -m1 '\"pass\"'", "description": "Gameplay test with step 3 switches and default", "timeout": 900000}`
+
+### 🧑 User — 2026-11-20T03:41:36.138Z
+
+> ↩︎ result: "pass":true,"checks":{"pauseFreezes":true,"continuousTravel":true,"noCameraCut":true,"noTeleport":true,"plunge":true,"realCoinPickups":true,"victory":true,"heartsLostOnWallBump":true},
+>  "pass": true,
+
+### 🤖 Claude — 2026-11-20T03:41:48.999Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='qa/benny/r22/PROGRESS.md'; s=open(p).read()\ns=s.replace(\"\"\"**Done:** step 1 (plush fur, `&benny20=1`) and step 2 (per-screen exposure `&benny20=1&b20expo=1`) proven on 04–08.\n**Next:** step 3 (pompom lighter yarn, clean cuff ribs\n`b20knit=1`, felt star, size vs painted Benny).\"\"\",\"\"\"**Done (3 steps, round stopped as briefed):** step 1 plush fur `&benny20=1` GOOD; step 2 per-screen exposure `&b20expo=1`\nGOOD; step 3 pompom lighter yarn tips `&b20ppw=0.45` GOOD, knit maps `&b20knit=1` NOT YET PROVEN.\nBest Benny query now: `&benny20=1&b20expo=1&b20 …[+2245 chars]`
+
+### 🧑 User — 2026-11-20T03:41:55.480Z
+
+> ↩︎ result: a3a9ff55a815fd163a7810e28f261ca21dbc0e2a
+> a3a9ff55a815fd163a7810e28f261ca21dbc0e2a	refs/heads/claude/rainbow-benny-c23
+
+### 🤖 Claude — 2026-11-20T03:42:00.970Z
+
+> 🔧 **mcp__claude-code-remote__send_message** `{"session_id": "session_0179kWgNJzw5v4674DNtMpda", "message": "Benny r22 — STEP 3 done (3rd of 3, stopping as briefed). Commit a3a9ff5 on claude/rainbow-benny-c23 (pushed, remote == HEAD). (a) Pompom lighter soft yarn tips, switch &b20ppw=0.45 (new opt-in uPile.w, default 0): GOOD IMPROVEMENT — lighter lilac yarn ball with pale tips and violet depth instead of a flat saturated koosh, on 04–08. (b) Knit maps &b20knit=1: NOT YET PROVEN — clean regular cuff stitches instead of smears, but crown light stripes come out lavender-pink not cream, violet darker/bluer, V-stitches not vertical ribbing; s …[+478 chars]`
+
+### 🤖 Claude — 2026-11-20T03:42:03.525Z
+
+> 🔧 **Bash** `{"command": "git worktree remove --force /tmp/claude-0/-home-user-rainbow-/c1f443c8-ce49-5c9f-944c-e51ace2bf323/scratchpad/before; python3 scripts/rainbow-autosave.py --reason manual:end 2>&1 | tail -1; sleep 5; python3 -I scripts/autosave-status.py | tail -1; git ls-remote origin refs/heads/claude/rainbow-benny-c23; git rev-parse HEAD; git lfs ls-files | grep -c r22", "description": "Remove worktree, end-of-round backup, verify", "timeout": 180000}`
+
+### 🧑 User — 2026-11-20T03:42:09.789Z
+
+> ↩︎ result: {"status":"delivered"}
+
