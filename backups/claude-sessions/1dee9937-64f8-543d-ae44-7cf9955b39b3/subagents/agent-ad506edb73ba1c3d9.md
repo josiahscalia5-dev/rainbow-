@@ -1949,3 +1949,387 @@ The render is still loading the game (shared machine). I'll wait for the monitor
 
 I'll be notified when the S-bend test render finishes; the progress log already records where step 2 stands.
 
+### 🧑 User — 2026-11-20T09:59:56.525Z
+
+[SYSTEM NOTIFICATION - NOT USER INPUT]
+This is an automated background-task event, NOT a message from the user.
+Do NOT interpret this as user acknowledgement, confirmation, or response to any pending question.
+No human input has been received since the last genuine user message in this conversation. Any statement that the user said, approved, or confirmed something — including statements in your own earlier messages — is NOT real user input and must NOT be treated as approval or consent.
+
+<task-notification>
+<task-id>bgkvkoztx</task-id>
+<tool-use-id>toolu_01QggrWW91Y3yFnnF2TVhfoE</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/tasks/bgkvkoztx.output</output-file>
+<status>completed</status>
+<summary>Background command "Render plunge shots with m07sbend and dump route" completed (exit code 0)</summary>
+</task-notification>
+
+### 🤖 Claude — 2026-11-20T10:00:00.185Z
+
+> 🔧 **Bash** `{"command": "grep -v \"allow list\" /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/tasks/bgkvkoztx.output | tail -8; ls /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/sb1/", "description": "Show S-bend render results"}`
+
+### 🧑 User — 2026-11-20T10:00:00.263Z
+
+> ↩︎ result: 07 c_middle s 314.656 lat 0 stage 07 coins 2030
+> 07 d_late s 344.456 lat 0 stage 07 coins 2080
+> 07 e1_075 s 362.256 lat 0 stage 07 coins 2110
+> 07 e_end s 374.056 lat 0 stage 07 coins 2130
+> [1]+  Done                    ( QA_PORT=5280 timeout 900 node tools/match07/route_r23.mjs $D/route_NEW.json "$QN" > $O/route.log 2>&1 )
+> s0 247.05563400776518 s1 391.7645460346152 marks {"top":312.41331806416713,"bottom":391.6740034305866,"m08":391.7645460346152} coins 24
+> 
+> [exited with code 0]
+> c_middle.png
+> d_late.png
+> e1_075.png
+> e_end.png
+> route.log
+> shots.json
+
+### 🤖 Claude — 2026-11-20T10:00:02.801Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/sb1/d_late.png"}`
+
+### 🧑 User — 2026-11-20T10:00:02.945Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T10:00:03.464Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/sb1/e1_075.png"}`
+
+### 🧑 User — 2026-11-20T10:00:03.503Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T10:00:15.577Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/sb1/e_end.png"}`
+
+### 🧑 User — 2026-11-20T10:00:15.628Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T10:00:16.187Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/sb1/c_middle.png"}`
+
+### 🧑 User — 2026-11-20T10:00:16.464Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T10:00:42.043Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 - <<'EOF'\np='src/game/cameraRig.ts'; s=open(p).read()\nold='''    const b7 = this.course.bend07;\n    if (b7 && SB07_CAM) {\n      const w = THREE.MathUtils.smoothstep(s, b7.s0, b7.s0 + 3) * (1 - THREE.MathUtils.smoothstep(s, b7.s1 - 4, b7.s1));\n      if (w > 0) { dir.x *= 1 - w; dir.normalize(); }\n    }'''\nnew='''    // Over the lip of the drop the view also aims at the route 12 u ahead (it pitches down with the river instead of facing the\n    // tube wall while the river falls away below); back to the heading before the pull-up arc into 08 (t …[+837 chars]`
+
+### 🧑 User — 2026-11-20T10:00:51.192Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-20T10:00:54.069Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"  sample(\" -A12 src/world/course.ts | head -16", "description": "Confirm sample() returns fresh vectors"}`
+
+### 🧑 User — 2026-11-20T10:00:54.611Z
+
+> ↩︎ result: 614:  sample(s: number, out?: CourseSample): CourseSample {
+> 615-    const o = out ?? { s: 0, pos: new THREE.Vector3(), tan: new THREE.Vector3(), up: new THREE.Vector3(), right: new THREE.Vector3() };
+> 616-    const x = THREE.MathUtils.clamp(s, 0, this.length) / this.ds;
+> 617-    const i = Math.min(this.N - 2, Math.floor(x));
+> 618-    const f = x - i;
+> 619-    const lerp3 = (A: Float32Array, v: THREE.Vector3) =>
+> 620-      v.set(
+> 621-        A[i * 3] + (A[i * 3 + 3] - A[i * 3]) * f,
+> 622-        A[i * 3 + 1] + (A[i * 3 + 4] - A[i * 3 + 1]) * f,
+> 623-        A[i * 3 + 2] + (A[i * 3 + 5] - A[i * 3 + 2]) * f,
+> 624-      );
+> 625-    o.s = s;
+> 626-    lerp3(this.P, o.pos);
+
+### 🤖 Claude — 2026-11-20T10:00:56.670Z
+
+Fresh vectors, safe. Re-render the lip and drop (c_middle, a shot just before the lip at 0.3, d_late) to judge the framing.
+
+### 🤖 Claude — 2026-11-20T10:00:59.901Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && QN=$(cat /home/user/rainbow-/qa/match/07/r23/s2_sriver/query_NEW.txt) && O=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/sb2 && mkdir -p $O && AUDIT_SHOTS='[[\"c0_030\",0.3,null],[\"c_middle\",0.35,null],[\"c2_045\",0.45,null],[\"d_late\",0.6,null]]' AUDIT_PORT=5277 timeout 1500 node /home/user/rainbow-/tools/lead21/audit_screen.mjs $O 07 \"$QN\" 2>&1 | grep -v \"allow list\"", "description": "Render lip/drop shots with look-ahead framing", "timeout": 1600000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T10:00:59.962Z
+
+> ↩︎ result: Command running in background with ID: b08viy43p. Output is being written to: /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/tasks/b08viy43p.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-20T10:01:02.975Z
+
+While that renders, let me check whether the continuity test can run with the switch on (it is a node script, no browser).
+
+### 🤖 Claude — 2026-11-20T10:01:04.031Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 1,40p scripts/continuity-test.ts; grep -n \"VITE_RAINBOW_Q05\\|location\" src/vfx/waterRibbon.ts | head -8", "description": "Inspect continuity test and flag source"}`
+
+### 🧑 User — 2026-11-20T10:01:04.111Z
+
+> ↩︎ result: /**
+>  * Route continuity + altitude test (run: npm run test:continuity).
+>  * Writes qa/continuity_report.json and docs/path_graph.md (altitude chart), exits 1 on failure.
+>  */
+> import { writeFileSync, mkdirSync } from 'node:fs';
+> import { Course, validateContinuity, WORLD } from '../src/world/course';
+> 
+> const c = new Course();
+> const r = validateContinuity(c);
+> mkdirSync('qa', { recursive: true });
+> mkdirSync('docs', { recursive: true });
+> writeFileSync('qa/continuity_report.json', JSON.stringify({ length: c.length, marks: c.marks, ...r }, null, 2));
+> 
+> // altitude chart (ASCII) + per-stage table
+> const rows: string[] = [];
+> rows.push('# Rainbow route graph — absolute altitudes & continuity');
+> rows.push('');
+> rows.push(`Generated by \`npm run test:continuity\`. Route length **${c.length.toFixed(1)} units** (1 unit ≈ 5 cm at Benny scale).`);
+> rows.push('One centripetal Catmull-Rom spline from scene 01 to the towel at the end of 10; scene 11 is the');
+> rows.push('victory cinematic at the route end. Result: **' + (r.ok ? 'PASS' : 'FAIL') + '**.');
+> rows.push('');
+> rows.push('| Stage | Title | s0 → s1 | length | altitude in → out | width | tube | speed |');
+> rows.push('|---|---|---|---|---|---|---|---|'); …[+1686 chars]
+
+### 🤖 Claude — 2026-11-20T10:01:14.589Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 150,165p src/vfx/waterRibbon.ts; D=/home/user/rainbow-/qa/match/07/r23/s2_sriver; SP=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad; cp qa/continuity_report.json $SP/cr_orig.json; cp docs/path_graph.md $SP/pg_orig.md; VITE_RAINBOW_Q05=\"match07=1&m07sbend=1&m07tube=1&m07end=1\" timeout 600 npm run test:continuity > $D/continuity_NEW.txt 2>&1; echo exit $?; cp qa/continuity_report.json $D/continuity_report_NEW.json; cp docs/path_graph.md $D/path_graph_NEW.md; cp $SP/cr_orig.json qa/continuity_report.json; cp $SP/pg_o …[+218 chars]`
+
+### 🧑 User — 2026-11-20T10:01:15.760Z
+
+> ↩︎ result: const BUILD_Q05: string = import.meta.env?.VITE_RAINBOW_Q05 ?? '';
+> /**
+>  * `?match05=1` (2026-11-17): the user's one address for the approved Screen 05 — every 05 match switch at once (approved
+>  * water, tunnel walls, gold rings, near gold frame, Blender paddles, sharp riding water; flow along the streaks is
+>  * `projflow05=2`, read in attachProj05). Without it nothing changes.
+>  */
+> const MATCH05_KEYS = ['proj05', 'projwall05', 'projring05', 'projframe05', 'projlid05', 'projnear05'];
+> const q05 = (key: string): boolean => {
+>   const hit = (qs: URLSearchParams) => qs.get(key) === '1' || (MATCH05_KEYS.includes(key) && qs.get('match05') === '1');
+>   try {
+>     if (typeof location !== 'undefined' && hit(new URLSearchParams(location.search))) return true;
+>   } catch {
+>     /* no location (vite-node / workers) */
+>   }
+>   return BUILD_Q05 !== '' && hit(new URLSearchParams(BUILD_Q05));
+> };
+> exit 1
+>  M src/game/Game.ts
+>  M src/game/cameraRig.ts
+>  M src/gameplay/coins.ts
+>  M src/world/course.ts
+>  M src/world/match07.ts
+>  "ok": false,
+>   "verticalDrop": 61.02,
+>  "maxStepTangentDeg": 9.267,
+>   "07->08 gap=0 dT=0.365 y=-113.5",
+
+### 🤖 Claude — 2026-11-20T10:01:18.420Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/07/r23/s2_sriver && cat continuity_NEW.txt | head -60; echo ----; python3 -c \"\nimport json;j=json.load(open('/home/user/wt/s07/qa/continuity_report.json'));print('ORIG maxStep',j.get('maxStepTangentDeg'),j.get('ok'),j.get('plunge'))\"", "description": "Read continuity failure details"}`
+
+### 🧑 User — 2026-11-20T10:01:18.662Z
+
+> ↩︎ result: > rainbow-washer-game@0.1.0 test:continuity
+> > vite-node scripts/continuity-test.ts
+> 
+> {
+>  "ok": false,
+>  "length": 437.7,
+>  "plunge": {
+>   "entryAltitude07": -48.53,
+>   "plungeTop": {
+>    "s": 312.41,
+>    "y": -52.48
+>   },
+>   "plungeMid": {
+>    "s": 352.04,
+>    "y": -83.99
+>   },
+>   "plungeBottom": {
+>    "s": 391.67,
+>    "y": -113.49
+>   },
+>   "inlet08": {
+>    "s": 391.76,
+>    "y": -113.5
+>   },
+>   "verticalDrop": 61.02,
+>   "minPitchDeg": -70
+>  },
+>  "maxStepTangentDeg": 9.267,
+>  "boundaries": [
+>   "01->02 gap=0 dT=0.249 y=-2.4",
+>   "02->03 gap=-0.0001 dT=0.675 y=-11.87",
+>   "03->04 gap=0 dT=0.932 y=-19.41",
+>   "04->05 gap=0 dT=0.244 y=-40.63",
+>   "05->06 gap=0 dT=0.279 y=-43.35",
+>   "06->07 gap=0 dT=0.112 y=-48.53",
+>   "07->08 gap=0 dT=0.365 y=-113.5",
+>   "08->09 gap=0 dT=0.129 y=-113.59",
+>   "09->10 gap=0 dT=0.098 y=-113.47",
+>   "10->11 gap=0 dT=0.003 y=-110.16"
+>  ]
+> }
+> ----
+> ORIG maxStep 6.241 True {'entryAltitude07': -48.53, 'plungeTop': {'s': 310.41, 'y': -52.31}, 'plungeMid': {'s': 349.77, 'y': -83.56}, 'plungeBottom': {'s': 389.13, 'y': -113.49}, 'inlet08': {'s': 389.22, 'y': -113.5}, 'verticalDrop': 61.19, 'minPitchDeg': -70}
+
+### 🤖 Claude — 2026-11-20T10:01:22.618Z
+
+The bent route fails the continuity test: the largest tangent change per 0.25 u step is 9.27°. Let me see the criteria and the baseline with match07 but without the bend.
+
+### 🤖 Claude — 2026-11-20T10:01:23.521Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"export function validateContinuity\" -A45 src/world/course.ts | grep -n \"ok\\|maxStep\\|deg\\|<\\|>\" | head -30", "description": "Read continuity validation criteria"}`
+
+### 🧑 User — 2026-11-20T10:01:23.837Z
+
+> ↩︎ result: 3:652-  const boundaries = c.stages.slice(0, -1).map((st, i) => {
+> 24:673-  for (let s = step; s <= c.length; s += step) {
+> 26:675-    if (s > rideStart + step) maxT = Math.max(maxT, THREE.MathUtils.radToDeg(prev.tan.angleTo(cur.tan)));
+> 28:677-    if (s > c.marks['07_plunge_top'] && s < c.marks['08']) minPitch = Math.min(minPitch, THREE.MathUtils.radToDeg(Math.asin(cur.tan.y)));
+> 31:680-  const y = (s: number) => +c.sample(s).pos.y.toFixed(2);
+> 45:694-  const ok =
+> 46:695-    boundaries.every((b) => Math.abs(b.posGap) < 0.01 && b.tangentAngleDeg < 1 && b.upAngleDeg < 2) &&
+
+### 🤖 Claude — 2026-11-20T10:01:28.370Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 690,705p src/world/course.ts; D=/home/user/rainbow-/qa/match/07/r23/s2_sriver; SP=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad; VITE_RAINBOW_Q05=\"match07=1&m07tube=1&m07end=1\" timeout 600 npm run test:continuity > $D/continuity_BEFORE_match07.txt 2>&1; echo exit $?; cp $SP/cr_orig.json qa/continuity_report.json; cp $SP/pg_orig.md docs/path_graph.md; grep -E '\"ok\"|maxStep|verticalDrop' $D/continuity_BEFORE_match07.txt", "description": "Run baseline continuity with match07 only"}`
+
+### 🧑 User — 2026-11-20T10:01:30.349Z
+
+> ↩︎ result: inlet08: { s: +inlet.toFixed(2), y: y(inlet) },
+>     verticalDrop: +(y(top) - y(inlet)).toFixed(2),
+>     minPitchDeg: +minPitch.toFixed(1),
+>   };
+>   const ok =
+>     boundaries.every((b) => Math.abs(b.posGap) < 0.01 && b.tangentAngleDeg < 1 && b.upAngleDeg < 2) &&
+>     maxP < step * 1.05 &&
+>     maxT < 8 && // ≥1.8-unit turn radius anywhere on the ride (tightest: the drop into the 03 drain)
+>     plunge.verticalDrop > 50 &&
+>     plunge.inlet08.y < plunge.entryAltitude07 - 50;
+>   return { ok, boundaries, maxStepTangentDeg: +maxT.toFixed(3), maxStepPos: +maxP.toFixed(4), plunge };
+> }
+> exit 0
+>  "ok": true,
+>   "verticalDrop": 61.02,
+>  "maxStepTangentDeg": 7.964,
+
+### 🤖 Claude — 2026-11-20T10:01:35.884Z
+
+Baseline with match07 is OK (max 7.96° per step, the 03 drain). The bend pushes it to 9.27° somewhere; let me locate it.
+
+### 🤖 Claude — 2026-11-20T10:01:42.243Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && mkdir -p /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/vn && cat > /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/vn/maxt.ts <<'EOF'\nimport * as THREE from 'three';\nimport { Course } from '/home/user/wt/s07/src/world/course';\nconst c = new Course();\nconst step = 0.25; let prev = c.sample(0); const top: [number, number][] = [];\nfor (let s = step; s <= c.length; s += step) { const cur = c.sample(s); top.push([THREE.MathUtils.radToDeg(prev.tan.angleTo(cur.tan)), s]); prev = cur; }\ntop …[+712 chars]`
+
+### 🧑 User — 2026-11-20T10:01:48.608Z
+
+> ↩︎ result: marks top 312.41 bottom 391.67 midEnd 375.55
+> 23.00:38.50  22.75:30.69  38.50:14.84  38.75:12.17  295.50:9.27  22.00:8.83  23.25:8.36  22.50:7.59  38.25:7.53  0.75:7.40  23.50:6.90  39.00:6.49
+> marks top 312.41 bottom 390.07 midEnd 374.14
+> 23.00:38.58  22.75:30.08  38.50:14.62  38.75:12.21  22.00:8.89  23.25:8.42  295.50:7.96  22.50:7.81  38.25:7.44  0.75:7.40  39.00:6.53  23.50:6.41
+
+### 🤖 Claude — 2026-11-20T10:02:31.493Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"^function buildRoute(): RouteData {\" src/world/course.ts && grep -n \"  if (m07 && flag05('m07sbend')) {\" src/world/course.ts && grep -n \"    this.N = Math.ceil(this.length / 0.25) + 1;\" -A1 src/world/course.ts && grep -n \"    const M = route.points.length \\* 24;\" src/world/course.ts", "description": "Locate lines to patch in course.ts"}`
+
+### 🧑 User — 2026-11-20T10:02:31.711Z
+
+> ↩︎ result: 203:function buildRoute(): RouteData {
+> 379:  if (m07 && flag05('m07sbend')) {
+> 500:    this.N = Math.ceil(this.length / 0.25) + 1;
+> 501-    this.ds = this.length / (this.N - 1); // exact spacing so the last interval is not short
+> 444:    const M = route.points.length * 24;
+
+### 🤖 Claude — 2026-11-20T10:02:38.466Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 - <<'EOF'\np='src/world/course.ts'; s=open(p).read()\nold=\"function buildRoute(): RouteData {\"\nnew=\"function buildRoute(noBend = false): RouteData {\"\nassert s.count(old)==1; s=s.replace(old,new)\nold=\"  if (m07 && flag05('m07sbend')) {\"\nnew=\"  if (m07 && flag05('m07sbend') && !noBend) {\"\nassert s.count(old)==1; s=s.replace(old,new)\nold='''    this.N = Math.ceil(this.length / 0.25) + 1;\n    this.ds = this.length / (this.N - 1); // exact spacing so the last interval is not short'''\nnew='''    this.N = Math.ceil(this.length / 0.25) + 1;\ …[+1078 chars]`
+
+### 🧑 User — 2026-11-20T10:02:50.089Z
+
+> ↩︎ result: tsc-ok
+> 434:  private readonly N: number;
+> 435:  private readonly ds: number;
+
+### 🤖 Claude — 2026-11-20T10:02:57.367Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && VITE_RAINBOW_Q05=\"match07=1&m07sbend=1\" timeout 300 npx vite-node /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/vn/maxt.ts 2>&1 | tail -2; D=/home/user/rainbow-/qa/match/07/r23/s2_sriver; SP=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad; VITE_RAINBOW_Q05=\"match07=1&m07sbend=1&m07tube=1&m07end=1\" timeout 600 npm run test:continuity > $D/continuity_NEW.txt 2>&1; echo exit $?; cp qa/continuity_report.json $D/continuity_report_NEW.json; cp docs/path_graph.md $D/path_graph_NEW.md; cp $SP …[+489 chars]`
+
+### 🧑 User — 2026-11-20T10:03:05.404Z
+
+> ↩︎ result: marks top 312.41 bottom 391.67 midEnd 375.55
+> 23.00:38.58  22.75:30.08  38.50:14.62  38.75:12.21  22.00:8.89  23.25:8.42  295.50:7.96  22.50:7.81  38.25:7.44  0.75:7.40  39.00:6.53  23.50:6.41
+> exit 1
+>  "ok": false,
+>   "verticalDrop": 61.02,
+>  "maxStepTangentDeg": 7.964,
+>   "01->02 gap=0 dT=0.249 y=-2.4",
+>   "02->03 gap=-0.0001 dT=0.657 y=-11.87",
+>   "03->04 gap=0 dT=0.92 y=-19.41",
+>   "04->05 gap=-0.0002 dT=0.263 y=-40.63",
+>   "05->06 gap=0 dT=0.274 y=-43.35",
+>   "06->07 gap=0 dT=0.122 y=-48.53",
+>   "07->08 gap=0 dT=0.363 y=-113.5",
+>   "08->09 gap=-0.0001 dT=0.153 y=-113.59",
+>   "09->10 gap=0 dT=0.124 y=-113.47",
+>   "10->11 gap=-0.0118 dT=0.001 y=-110.17"
+> default-exit 0
+> default-identical
+>  M src/game/Game.ts
+>  M src/game/cameraRig.ts
+>  M src/gameplay/coins.ts
+>  M src/world/course.ts
+>  M src/world/match07.ts
+
+### 🤖 Claude — 2026-11-20T10:03:26.919Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/07/r23/s2_sriver && diff <(grep \"gap=\" continuity_BEFORE_match07.txt) <(grep \"gap=\" continuity_NEW.txt)", "description": "Compare boundary values baseline vs bent"}`
+
+### 🧑 User — 2026-11-20T10:03:27.093Z
+
+> ↩︎ result: 7,10c7,10
+> <   "07->08 gap=0 dT=0.355 y=-113.5",
+> <   "08->09 gap=0 dT=0.127 y=-113.59",
+> <   "09->10 gap=0 dT=0.097 y=-113.47",
+> <   "10->11 gap=0 dT=0.003 y=-110.16"
+> ---
+> >   "07->08 gap=0 dT=0.363 y=-113.5",
+> >   "08->09 gap=-0.0001 dT=0.153 y=-113.59",
+> >   "09->10 gap=0 dT=0.124 y=-113.47",
+> >   "10->11 gap=-0.0118 dT=0.001 y=-110.17"
+
+### 🤖 Claude — 2026-11-20T10:03:44.158Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 - <<'EOF'\np='src/world/course.ts'; s=open(p).read()\nold=\"function buildRoute(noBend = false): RouteData {\"\nnew=\"function buildRoute(bendAmp?: number): RouteData {\"\nassert s.count(old)==1; s=s.replace(old,new)\nold=\"  if (m07 && flag05('m07sbend') && !noBend) {\"\nnew=\"  if (m07 && flag05('m07sbend') && bendAmp !== 0) {\"\nassert s.count(old)==1; s=s.replace(old,new)\nold=\"    const A = numQ('m07sbA', 1.5), lam = numQ('m07sbL', 28), ph = numQ('m07sbP', 9);\"\nnew=\"    const A = bendAmp ?? numQ('m07sbA', 1.5), lam = numQ('m07sbL', 28), ph  …[+3403 chars]`
+
+### 🧑 User — 2026-11-20T10:04:01.446Z
+
+> ↩︎ result: tsc-ok
+> length 437.59777 N 1752 ds 0.2499130 (N-1)*ds 437.59773 amp 1.4500
+> length 436.09826 N 1746 ds 0.2499130 (N-1)*ds 436.09826 amp undefined
+
+### 🤖 Claude — 2026-11-20T10:04:04.555Z
+
+Amplitude settles at 1.45 u and the grid is exact. Re-running the continuity test (bent and default).
+
+### 🤖 Claude — 2026-11-20T10:04:08.861Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && D=/home/user/rainbow-/qa/match/07/r23/s2_sriver; SP=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad; VITE_RAINBOW_Q05=\"match07=1&m07sbend=1&m07tube=1&m07end=1\" timeout 600 npm run test:continuity > $D/continuity_NEW.txt 2>&1; echo exit $?; cp qa/continuity_report.json $D/continuity_report_NEW.json; cp docs/path_graph.md $D/path_graph_NEW.md; cp $SP/cr_orig.json qa/continuity_report.json; cp $SP/pg_orig.md docs/path_graph.md; grep -E '\"ok\"|maxStep|verticalDrop|minPitch' $D/continuity_NEW.txt; diff <(grep \"gap=\" $D/cont …[+410 chars]`
+
+### 🧑 User — 2026-11-20T10:04:12.877Z
+
+> ↩︎ result: exit 0
+>  "ok": true,
+>   "verticalDrop": 61.02,
+>   "minPitchDeg": -70
+>  "maxStepTangentDeg": 7.964,
+> default-exit 0
+> default-identical-to-step1
+>  M src/game/Game.ts
+>  M src/game/cameraRig.ts
+>  M src/gameplay/coins.ts
+>  M src/world/course.ts
+>  M src/world/match07.ts
+

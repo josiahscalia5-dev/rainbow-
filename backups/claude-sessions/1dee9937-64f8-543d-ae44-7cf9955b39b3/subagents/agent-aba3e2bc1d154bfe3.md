@@ -973,3 +973,394 @@ BEFORE is done; NEW is loading. I'll wait for NEW's page to load before editing 
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-20T09:59:40.101Z
+
+> 🔧 **Bash** `{"command": "sleep 45; SP=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad; tail -2 $SP/s1_new.log", "description": "Wait for NEW render to start shots"}`
+
+### 🧑 User — 2026-11-20T09:59:40.105Z
+
+> ↩︎ result: <tool_use_error>Blocked: sleep 45 followed by: SP=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad tail -2 $SP/s1_new.log. To wait for a condition, use Monitor with an until-loop (e.g. `until <check>; do sleep 2; done`). To wait for a command you started, use run_in_background: true. Do not chain shorter sleeps to work around this block.</tool_use_error>
+
+### 🤖 Claude — 2026-11-20T09:59:41.404Z
+
+> 🔧 **ToolSearch** `{"query": "select:Monitor", "max_results": 1}`
+
+### 🧑 User — 2026-11-20T09:59:41.418Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-20T09:59:45.754Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad; until grep -q \"a00_approved_view\" $SP/s1_new.log 2>/dev/null || grep -qi \"error\" $SP/s1_new.log 2>/dev/null; do sleep 2; done; tail -2 $SP/s1_new.log", "description": "Wait until NEW render's page has loaded", "timeout": 600000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T09:59:45.976Z
+
+> ↩︎ result: Command running in background with ID: b0mpqp56k. Output is being written to: /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/tasks/b0mpqp56k.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-20T09:59:52.888Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && grep -n \"qa3d\\|coinDefs\" src/*.ts src/**/*.ts | head", "description": "Check QA API for coin access"}`
+
+### 🧑 User — 2026-11-20T09:59:52.973Z
+
+> ↩︎ result: src/game/Game.ts:710:    coinDefs() { return coins.defs.map((d, i) => ({ s: d.s, lat: d.lat, taken: coins.collected[i] === 1 })); },
+> src/game/Game.ts:769:    qa3d() { return { scene, camera, renderer, composer }; },
+
+### 🤖 Claude — 2026-11-20T09:59:55.563Z
+
+NEW's page has loaded, so source edits are safe now. Adding the QA coin log to the shot tool.
+
+### 🤖 Claude — 2026-11-20T10:00:00.972Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/tools/match08/shots08.mjs", "old_string": "    await page.waitForTimeout(150);\n    await page.screenshot({ path: `${OUT}/${name}.png`, timeout: 240000 });\n    log.push({ name, dist, steer, ...st });", "new_string": "    await page.waitForTimeout(150);\n    await page.screenshot({ path: `${OUT}/${name}.png`, timeout: 240000 });\n    // M08_COINS=1 (r23, QA only): every on-screen coin's centre and diameter in px (instance matrices + camera, as drawn)\n    if (process.env.M08_COINS === '1') st.coinPx = await page.evaluate(() => {\n      con …[+933 chars]`
+
+### 🧑 User — 2026-11-20T10:00:00.993Z
+
+> ↩︎ result: <tool_use_error>File has not been read yet. Read it first before writing to it.</tool_use_error>
+
+### 🤖 Claude — 2026-11-20T10:00:01.824Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && grep -n \"COINV_CAP\\|const coinV\\|coinVisual = \\|const frac\\|if (frac > COINV_CAP)\" src/gameplay/coins.ts", "description": "Locate coin cap lines to edit"}`
+
+### 🧑 User — 2026-11-20T10:00:01.861Z
+
+> ↩︎ result: 185:  // the approved picture's coins (faceTo) (1) never grow on screen beyond COINV_CAP of the frame height (the painted
+> 193:  const coinV = (flag05('match08') || flag05('matchall')) && flag05('m08coinv');
+> 194:  const COINV_CAP = 0.056, BENNY_UP = 0.75, BENNY_R = 0.95;
+> 198:  const coinVisual = (pos: THREE.Vector3, size: number) => {
+> 203:    const frac = size / (2 * dist * tanH); // coin diameter as a fraction of the frame height
+> 204:    if (frac > COINV_CAP) k = COINV_CAP / frac;
+
+### 🤖 Claude — 2026-11-20T10:00:03.903Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s08/tools/match08/shots08.mjs", "offset": 50, "limit": 10}`
+
+### 🧑 User — 2026-11-20T10:00:03.926Z
+
+> ↩︎ result: 50	    console.log(SCREEN, name, 's', st.s, 'lat', st.lat, 'stage', st.stage, 'frames', st.frames);
+> 51	  }
+> 52	} finally {
+> 53	  writeFileSync(`${OUT}/motion.json`, JSON.stringify({ screen: SCREEN, query: Q, deterministic: DET, shots: log }, null, 1));
+> 54	  await browser.close(); await vite.close?.();
+> 55	}
+> 56
+
+### 🤖 Claude — 2026-11-20T10:00:04.525Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s08/src/gameplay/coins.ts", "offset": 184, "limit": 25}`
+
+### 🧑 User — 2026-11-20T10:00:04.567Z
+
+> ↩︎ result: 184	  // `&m08coinv=1` (Screen 08 scenery r8, with match08; visuals only — count, score, pickup rules and positions unchanged):
+> 185	  // the approved picture's coins (faceTo) (1) never grow on screen beyond COINV_CAP of the frame height (the painted
+> 186	  // nearest coin is ≈ 5.6 %; moving forward they reached 8–9 % and dominated the foreground) and (2) shrink away while
+> 187	  // they are nearer the camera than Benny and overlap his screen box (they used to cover his body). The camera comes
+> 188	  // from the coins' own onBeforeRender (one frame old), so no camera / Game code is touched.
+> 189	  // r10 additions: (3) a picture coin Benny has passed (it can no longer be picked up: |ds| < 1 rule) fades out instead of
+> 190	  // sweeping past the camera as a frame-filling disc; (4) the pickup pop of a picture coin no longer grows ×1.8 over
+> 191	  // Benny's body / hat: it shrinks away while rising a little, and fades where it overlaps him. Cap = the painted nearest
+> 192	  // coin (≈ 5.6 % of the frame height).
+> 193	  const coinV = (flag05('match08') || flag05('matchall')) && flag05('m08coinv');
+> 194	  const COINV_CAP = 0.056, BENNY_UP = 0.75, BENNY_R = 0.95;
+> 195	  let cam: THREE.PerspectiveCam …[+778 chars]
+
+### 🤖 Claude — 2026-11-20T10:00:12.586Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/tools/match08/shots08.mjs", "old_string": "    await page.waitForTimeout(150);\n    await page.screenshot({ path: `${OUT}/${name}.png`, timeout: 240000 });\n    log.push({ name, dist, steer, ...st });", "new_string": "    await page.waitForTimeout(150);\n    await page.screenshot({ path: `${OUT}/${name}.png`, timeout: 240000 });\n    // M08_COINS=1 (r23, QA only): every on-screen coin's centre and diameter in px (instance matrices + camera, as drawn)\n    if (process.env.M08_COINS === '1') st.coinPx = await page.evaluate(() => {\n      con …[+933 chars]`
+
+### 🧑 User — 2026-11-20T10:00:12.710Z
+
+> ↩︎ result: The file /home/user/wt/s08/tools/match08/shots08.mjs has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T10:00:22.550Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s08/src/gameplay/coins.ts", "old_string": "  const coinV = (flag05('match08') || flag05('matchall')) && flag05('m08coinv');\n  const COINV_CAP = 0.056, BENNY_UP = 0.75, BENNY_R = 0.95;\n  let cam: THREE.PerspectiveCamera | null = null;\n  let bS = -1, bLat = 0;\n  const cv = new THREE.Vector3(), bv = new THREE.Vector3(), cn = new THREE.Vector3(), bn = new THREE.Vector3();\n  const coinVisual = (pos: THREE.Vector3, size: number) => {\n    if (!coinV || !cam || bS < 0) return 1;\n    const tanH = Math.tan(THREE.MathUtils.degToRad(cam.fov) / 2);\ …[+2445 chars]`
+
+### 🧑 User — 2026-11-20T10:00:22.680Z
+
+> ↩︎ result: The file /home/user/wt/s08/src/gameplay/coins.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T10:00:27.141Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && time npx tsc --noEmit 2>&1 | tail -5", "description": "Type-check the worktree", "timeout": 300000}`
+
+### 🧑 User — 2026-11-20T10:00:35.263Z
+
+> ↩︎ result: real	0m8.059s
+> user	0m4.252s
+> sys	0m0.182s
+
+### 🤖 Claude — 2026-11-20T10:00:39.876Z
+
+Type check is clean. Waiting for the NEW render to finish.
+
+### 🤖 Claude — 2026-11-20T10:00:41.923Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad; until [ -f $SP/s1/new/motion.json ]; do sleep 3; done; tail -3 $SP/s1_new.log", "description": "Wait for NEW render to finish", "timeout": 900000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T10:00:41.985Z
+
+> ↩︎ result: Command running in background with ID: bm9c1rl4g. Output is being written to: /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/tasks/bm9c1rl4g.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-20T10:00:44.658Z
+
+Meanwhile, a small helper to assemble the proof folders and report pixel differences per shot.
+
+### 🤖 Claude — 2026-11-20T10:00:50.840Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s08r23/mkproof.py", "content": "\"\"\"usage: python3 -I mkproof.py <beforeDir> <newDir> <outDir>\nCopies APPROVED / BEFORE / NEW full-size shots into outDir and prints the changed-pixel count per shot\n(whole frame and scenery rows 180-1536).\"\"\"\nimport json, shutil, sys\nfrom pathlib import Path\nimport numpy as np\nfrom PIL import Image\n\nb, n, o = map(Path, sys.argv[1:4])\no.mkdir(parents=True, exist_ok=True)\nshutil.copy('/home/user/rainbow-/references/08_final_spin_chamber.png', o / '1_APP …[+864 chars]`
+
+### 🧑 User — 2026-11-20T10:00:50.880Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s08r23/mkproof.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T10:00:53.227Z
+
+Now let me find the gameplay test that gives the "8/8 + 91 coins" check.
+
+### 🤖 Claude — 2026-11-20T10:00:54.646Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && grep -rln \"91\" qa/match/08/r17/*.md qa/match/08/r16/*.md 2>/dev/null | head; grep -n -i \"gameplay\\|8/8\\|91 coin\" qa/match/08/r16/PROGRESS.md qa/match/08/r15/PROGRESS.md 2>/dev/null | head -10", "description": "Find how gameplay 8/8 + 91 coins was verified"}`
+
+### 🧑 User — 2026-11-20T10:00:54.867Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T10:00:56.944Z
+
+> 🔧 **Bash** `{"command": "grep -rn -i \"8/8\" docs/briefs/2026-11-20-r23/*.md docs/briefs/2026-11-20-r22/*.md | head -8; ls scripts | grep -i -E \"game|play|e2e\" | head", "description": "Find gameplay test script reference"}`
+
+### 🧑 User — 2026-11-20T10:00:57.052Z
+
+> ↩︎ result: docs/briefs/2026-11-20-r23/COORDINATION.md:38:  real-speed and half-speed clips). Gameplay 8/8, 91 coins; start view 0 px.
+> docs/briefs/2026-11-20-r23/LAUNCH_BENNY_R23.md:25:which), Benny-centred crops (`tools/benny23/`), APPROVED `/home/user/wt/benny/qa/benny/r22/approved/0N_benny.png` / BEFORE / NEW, swim clip, gameplay 8/8 +
+> docs/briefs/2026-11-20-r23/LAUNCH_S04_R23.md:46:clip through all of 04 (straight / left / right) BEFORE + NEW, real speed + half speed mp4. Gameplay 8/8, 91 coins, 1,330 → 2,240.
+> docs/briefs/2026-11-20-r23/LAUNCH_S06_R23.md:22:   without `m06view`, BEFORE clip if missing, gameplay 8/8 + 91 coins, continuity OK, verdict.
+> docs/briefs/2026-11-20-r23/LAUNCH_S06_R23.md:27:end, hard left / right), uninterrupted swim clip through all of 06 into 07, gameplay 8/8 + 91 coins, `code.patch`, 3–5 line verdict in
+> docs/briefs/2026-11-20-r23/LAUNCH_S07_R23.md:26:Proof per step as in the r21 brief (APPROVED / BEFORE / NEW separate full-size shots incl. e1 0.75 / e2 0.92, clip, gameplay 8/8 +
+> docs/briefs/2026-11-20-r23/LAUNCH_S08_R23.md:28:gameplay 8/8 + 91 coins, start view 0 px, `npx tsc --noEmit`, `code.patch`, 3–5 line verdict in plain visual words (GOOD
+> docs/briefs/2026-1 …[+174 chars]
+
+### 🤖 Claude — 2026-11-20T10:00:59.330Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && sed -n 1,40p scripts/gameplay-test.mjs | grep -n -E \"startVite|port|--q|argv|usage|Usage\" ", "description": "Check gameplay test arguments and port"}`
+
+### 🧑 User — 2026-11-20T10:00:59.443Z
+
+> ↩︎ result: 4://  * continuous travel: s strictly increases, no position jump > speed·dt (no teleport/cut)
+> 11://   node scripts/gameplay-test.mjs --q=river05=1 --out=qa/pilot05/wave11/tests/gameplay_river05.json
+> 12://   → the same run with URL test switches; with --q the tracked qa/ files above are NOT rewritten.
+> 13:import { writeFileSync, mkdirSync } from 'node:fs';
+> 14:import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 16:const optQ = (process.argv.find((a) => a.startsWith('--q=')) ?? '').slice(4);
+> 17:const optOut = (process.argv.find((a) => a.startsWith('--out=')) ?? '').slice(6);
+> 20:const vite = await startVite(5213);
+> 22:const page = await browser.newPage({ viewport: { width: 216, height: 384 } });
+
+### 🤖 Claude — 2026-11-20T10:01:03.572Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad; until [ -f $SP/s1/new/motion.json ]; do sleep 3; done; mv $SP/s1/before $SP/s08r23/s1_before && mv $SP/s1/new $SP/s08r23/s1_new && mv $SP/s1_before.log $SP/s1_new.log $SP/s08r23/ && python3 -I $SP/s08r23/mkproof.py $SP/s08r23/s1_before $SP/s08r23/s1_new /home/user/rainbow-/qa/match/08/r23/step1_m08gl", "description": "Assemble step 1 proof and pixel diffs", "timeout": 600000}`
+
+### 🧑 User — 2026-11-20T10:02:05.958Z
+
+> ↩︎ result: a00_approved_view      changed       0 px  rows180+       0  (0.00 % of frame)
+> f03_forward3u          changed      22 px  rows180+      22  (0.00 % of frame)
+> f06_forward6u          changed  106666 px  rows180+  106666  (8.04 % of frame)
+> f10_forward10u         changed  108195 px  rows180+  108195  (8.15 % of frame)
+> f20_forward20u         changed       0 px  rows180+       0  (0.00 % of frame)
+> s_left_hard            changed  119126 px  rows180+  119126  (8.98 % of frame)
+> s_left_steer           changed   68905 px  rows180+   68905  (5.19 % of frame)
+> s_right_hard           changed  104595 px  rows180+  104595  (7.88 % of frame)
+> s_right_steer          changed  113033 px  rows180+  113033  (8.52 % of frame)
+> t33_through_screen     changed   53128 px  rows180+   53128  (4.00 % of frame)
+> t66_through_screen     changed  116378 px  rows180+  116378  (8.77 % of frame)
+> t95_through_screen     changed  132025 px  rows180+  132025  (9.95 % of frame)
+
+### 🤖 Claude — 2026-11-20T10:02:10.547Z
+
+Start view: 0 px changed; f20: 0 px. Now judging by eye. I'll make side-by-side crops of the near water for my own inspection.
+
+### 🤖 Claude — 2026-11-20T10:02:14.000Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s08r23 && python3 -I -c \"\nfrom PIL import Image\nfor s in ['t66_through_screen','t95_through_screen','s_left_hard','s_right_steer','f10_forward10u']:\n    a=Image.open('s1_before/'+s+'.png').convert('RGB'); b=Image.open('s1_new/'+s+'.png').convert('RGB')\n    c=Image.new('RGB',(864*2+12,700),(0,0,0)); c.paste(a.crop((0,836,864,1536)),(0,0)); c.paste(b.crop((0,836,864,1536)),(876,0)); c.resize((c.width*6//10,c.height*6//10),Image.LANCZOS).save('insp/s1_'+s+'.png')\n\"", "description": "Make BEFOR …[+39 chars]`
+
+### 🧑 User — 2026-11-20T10:02:14.977Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T10:02:17.253Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s08r23/insp/s1_t66_through_screen.png"}`
+
+### 🧑 User — 2026-11-20T10:02:17.278Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T10:02:18.301Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s08r23/insp/s1_s_left_hard.png"}`
+
+### 🧑 User — 2026-11-20T10:02:18.337Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T10:02:19.017Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s08r23/insp/s1_t95_through_screen.png"}`
+
+### 🧑 User — 2026-11-20T10:02:19.090Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T10:02:40.589Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && D=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s08r23 && QG=$(cat $D/q_gl.txt) && (AUDIT_PORT=5286 timeout 1500 node tools/match08/screen_clip08.mjs 08 $D/clip_s1_before \"$(cat $D/q_k16.txt)\" > $D/clip_s1_before.log 2>&1; AUDIT_PORT=5286 timeout 1500 node tools/match08/screen_clip08.mjs 08 $D/clip_s1_new \"$QG\" > $D/clip_s1_new.log 2>&1; M08_FONTS=1 M08_PORT=5286 M08_COINS=1 M08_DET=1 timeout 1500 node tools/match08/shots08.mjs 08 $D/s2_before \"$QG\" > $D/s2_before.log 2>&1; echo A-done)", "description": "Job A: step …[+85 chars]`
+
+### 🧑 User — 2026-11-20T10:02:40.636Z
+
+> ↩︎ result: Command running in background with ID: bvgimvxiq. Output is being written to: /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/tasks/bvgimvxiq.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-20T10:02:43.843Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && D=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s08r23 && Q2=$(node /home/user/rainbow-/tools/lead23/setq.mjs \"$(cat $D/q_gl.txt)\" \"m08coinsz=1\") && echo \"$Q2\" > $D/q_s2.txt && M08_FONTS=1 M08_PORT=5287 M08_COINS=1 M08_DET=1 timeout 1500 node tools/match08/shots08.mjs 08 $D/s2_new \"$Q2\" > $D/s2_new.log 2>&1; echo B-done; tail -3 $D/s2_new.log", "description": "Job B: step 2 NEW render with coin log", "timeout": 1600000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T10:02:43.892Z
+
+> ↩︎ result: Command running in background with ID: bx5yp5e2f. Output is being written to: /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/tasks/bx5yp5e2f.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-20T10:02:47.899Z
+
+While those run, I'll write the step 1 code patch (the `m08gl` code from commit `3c0fa97`, read-only git) and update the progress log.
+
+### 🤖 Claude — 2026-11-20T10:02:51.049Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && git show --stat 3c0fa97 | head -20 && git show 3c0fa97 -- src tools assets/textures/match08/nq08g.json > /home/user/rainbow-/qa/match/08/r23/step1_m08gl/code.patch && wc -l /home/user/rainbow-/qa/match/08/r23/step1_m08gl/code.patch && echo \"$(cat /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s08r23/q_gl.txt)\" > /home/user/rainbow-/qa/match/08/r23/step1_m08gl/QUERY_NEW.txt && cp /home/user/rainbow-/qa/review_r21/audit/QUERY_08.txt /home/user/rainbow-/qa/match/08/r23/step1_m08gl/QUERY_BEFORE_K16.txt", "description": "Writ …[+37 chars]`
+
+### 🧑 User — 2026-11-20T10:02:53.112Z
+
+> ↩︎ result: commit 3c0fa97090afb2c0fca41898774db7247e23e522
+> Author: Claude <noreply@anthropic.com>
+> Date:   Wed Nov 18 21:03:03 2026 +0000
+> 
+>     Screen 08 r17 step 2 UNFINISHED, not proven: &m08gl=1 near-water glints with their painted glow (nq08.py v7 NQ08_GLOW=1 -> nq08g); default build + K16 unchanged; Screen 08 paused by user order
+>     
+>     Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+>     Claude-Session: https://claude.ai/code/session_01VCMXoYUDAtThkAJzb9fwd7
+> 
+>  assets/textures/match08/nq08g.json                 |  29 +++++++++++++++
+>  assets/textures/match08/nq08g.png                  | Bin 0 -> 1683122 bytes
+>  qa/match/08/r17/PROGRESS.md                        |  27 ++++++++++++++
+>  .../new_raw/a00_approved_view.png                  | Bin 0 -> 2596177 bytes
+>  .../new_raw/f03_forward3u.png                      | Bin 0 -> 2502140 bytes
+>  .../new_raw/f06_forward6u.png                      | Bin 0 -> 2470300 bytes
+>  .../new_raw/f10_forward10u.png                     | Bin 0 -> 2477498 bytes
+>  .../step2_m08gl_UNFINISHED/new_raw/s_left_hard.png | Bin 0 -> 2424763 bytes
+>  .../new_raw/s_left_steer.png                       | Bin 0 -> 2507525 bytes
+>  .../new_raw/s_right_hard.png                    …[+168 chars]
+
+### 🤖 Claude — 2026-11-20T10:02:56.612Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && git show --stat=200 3c0fa97 | tail -8; grep -c \"^diff\" /home/user/rainbow-/qa/match/08/r23/step1_m08gl/code.patch; grep \"^diff\" /home/user/rainbow-/qa/match/08/r23/step1_m08gl/code.patch", "description": "Check which files the m08gl commit contains"}`
+
+### 🧑 User — 2026-11-20T10:02:56.917Z
+
+> ↩︎ result: qa/match/08/r17/step2_m08gl_UNFINISHED/new_raw/f10_forward10u.png    | Bin 0 -> 2477498 bytes
+>  qa/match/08/r17/step2_m08gl_UNFINISHED/new_raw/s_left_hard.png       | Bin 0 -> 2424763 bytes
+>  qa/match/08/r17/step2_m08gl_UNFINISHED/new_raw/s_left_steer.png      | Bin 0 -> 2507525 bytes
+>  qa/match/08/r17/step2_m08gl_UNFINISHED/new_raw/s_right_hard.png      | Bin 0 -> 2513378 bytes
+>  qa/match/08/r17/step2_m08gl_UNFINISHED/new_raw/s_right_steer.png     | Bin 0 -> 2467818 bytes
+>  src/world/match08.ts                                                 |   9 +++++++--
+>  tools/match08/nq08.py                                                |  39 ++++++++++++++++++++++++++++++++++++---
+>  13 files changed, 99 insertions(+), 5 deletions(-)
+> 3
+> diff --git a/assets/textures/match08/nq08g.json b/assets/textures/match08/nq08g.json
+> diff --git a/src/world/match08.ts b/src/world/match08.ts
+> diff --git a/tools/match08/nq08.py b/tools/match08/nq08.py
+
+### 🤖 Claude — 2026-11-20T10:02:59.233Z
+
+Good, the patch has the shader switch, the tile tool and the tile metadata. Updating the progress log now.
+
+### 🤖 Claude — 2026-11-20T10:03:10.805Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/match/08/r23/PROGRESS.md", "content": "# Screen 08 · Final Spin Chamber — round 23 progress (worktree `/home/user/wt/s08`, local branch `claude/rainbow-s08-scenery-c24`)\n\n## (r23) WHERE I STOPPED / NEXT\n* 2026-11-20 ~09:52 UTC: round 23 started (washer-environment-modeler, in-process). Brief\n  `docs/briefs/2026-11-20-r23/LAUNCH_S08_R23.md`. `m08gl` code is already in the worktree (commit `3c0fa970`, `grep m08gl\n  src/world/match08.ts` -> line 433); nothing re-applied.\n* ~10:20 UTC: step 1 (`m08gl`) 12-shot BEFORE / NEW done (verdict below, GOOD IMPRO …[+2264 chars]`
+
+### 🧑 User — 2026-11-20T10:03:10.965Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/match/08/r23/PROGRESS.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T10:03:13.378Z
+
+While renders run, I'll prepare step 3 (towel double exposure): reading how `m08towelm` and the towel material work.
+
+### 🤖 Claude — 2026-11-20T10:03:14.385Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && grep -n \"uTMask\\|towel\\|uOccOn\\|uOcc\\b\" src/world/match08.ts | head -60", "description": "Find towel mask code in match08.ts"}`
+
+### 🧑 User — 2026-11-20T10:03:15.098Z
+
+> ↩︎ result: 5: * door wall, floor/river plane, platform (top tilted toward the camera as painted), towel and the four half-dome spouts.
+> 23:  towel: { cx: number; cz: number; w: number; h: number; y0: number; d: number };
+> 57:uniform sampler2D uPatch;   // material patch cut from the approved artwork (wall slots / gold band / towel)
+> 70:uniform sampler2D uOcc;     // m08occ (door wall only): plate with towel + platform painted out (occ08.py), alpha = usable
+> 71:uniform float uOccOn;
+> 72:uniform sampler2D uTMask;   // m08towelm (towel only): the painted towel's outline in plate coordinates (towelmask08.py)
+> 73:uniform float uTMaskOn;
+> 177:  // m08towelm: the towel proxy is cut to the painted towel's outline (the depth bake does the same, so the door wall
+> 178:  // behind receives the window pixels that the rectangle used to carry at towel depth)
+> 179:  if (uTMaskOn > 0.5 && vProj.w > 0.0 && texture2D(uTMask, vProj.xy / vProj.w * 0.5 + 0.5).r < 0.5) discard;
+> 226:          // platform ends, the towel and the cups' silhouettes while swimming)
+> 231:      // m08occ: what the approved view could not see behind the towel / platform comes from the occlusion plate (the
+> 234:      if (uOccOn > 0.5) {
+> 235:        ve …[+2418 chars]
+
+### 🤖 Claude — 2026-11-20T10:03:17.179Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && sed -n 200,260p src/world/match08.ts && sed -n 680,700p src/world/match08.ts && sed -n 740,800p src/world/match08.ts", "description": "Read the projection visibility and towel/bake code"}`
+
+### 🧑 User — 2026-11-20T10:03:17.764Z
+
+> ↩︎ result: float dv = -1.0; vec2 duv = vec2(0.0);  // QA m08dbgvk
+>   if (uSwim > 0.5) {
+>     float ms = smoothstep(0.2, 1.5, distance(cameraPosition, uProjPos));
+>     if (ms > 0.0) pj = uProjVP * vec4(swimRemap(vW, ms), 1.0);
+>   }
+>   if (pj.w > 0.0) {
+>     vec3 ndc = pj.xyz / pj.w;
+>     vec2 uv = ndc.xy * 0.5 + 0.5;
+>     if (uv.x >= 0.0 && uv.x <= 1.0 && uv.y >= 0.0 && uv.y <= 1.0) {
+>       float vis = 1.0;
+>       if (uUseDepth > 0.5) {
+>         float zf = linZ(ndc.z * 0.5 + 0.5);
+>         float zs = linZ(texture2D(uDepth, uv).r);
+>         vis = 1.0 - smoothstep(0.015 * zs, 0.04 * zs + 0.05, zf - zs);
+>         // m08fill: once the camera has left the approved viewpoint, a soft hand-over to the fill (5 x 5 taps over ~3 %
+>         // of the frame) instead of a hard shadow line; at the viewpoint itself the exact single-tap test (view unchanged)
+>         float mv = uFillMode > 0.5 ? smoothstep(0.2, 1.5, distance(cameraPosition, uProjPos)) : 0.0;
+>         if (mv > 0.0) {
+>           float sv = 0.0;
+>           for (int i = -2; i <= 2; i++) for (int j = -2; j <= 2; j++) {
+>             float zt = linZ(texture2D(uDepth, uv + vec2(float(i), float(j) * 0.5625) * 0.007).r);
+>             sv += 1.0 - smoothstep(0.015 * zt, 0.04 …[+7339 chars]
+
+### 🤖 Claude — 2026-11-20T10:03:29.482Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && ls -la assets/textures/match08/towel08_mask.png assets/textures/match08/occ08_door.png 2>&1; ls qa/match/08/scenery/r8/occ/ 2>/dev/null | head; grep -rn \"towelm\" qa/match/08/scenery/*.md qa/match/08/r8*/*.md 2>/dev/null | head -8", "description": "Check towel mask and occlusion assets and r8 notes"}`
+
+### 🧑 User — 2026-11-20T10:03:29.739Z
+
+> ↩︎ result: -rw-r--r-- 1 root root 8072518 Nov 20 04:11 assets/textures/match08/occ08_door.png
+> -rw-r--r-- 1 root root   13719 Nov 20 04:11 assets/textures/match08/towel08_mask.png
+> f10_forward10u.png
+> motion.json
+> s_left_hard.png
+> s_right_hard.png
+> t66_through_screen.png
+> t95_through_screen.png
+
+### 🤖 Claude — 2026-11-20T10:03:32.733Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s08 && grep -rln \"towelm\" qa/ docs/ 2>/dev/null | head; ", "description": "Find notes mentioning m08towelm"}`
+

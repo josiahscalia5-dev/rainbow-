@@ -40,7 +40,7 @@ index 017370a..906c906 100644
      }
      if (m08 && b08 && b08Rest) {
 diff --git a/src/game/cameraRig.ts b/src/game/cameraRig.ts
-index 388c121..ef20589 100644
+index 388c121..d23bbb8 100644
 --- a/src/game/cameraRig.ts
 +++ b/src/game/cameraRig.ts
 @@ -9,6 +9,9 @@ import type { Course, StageId } from '../world/course';
@@ -53,13 +53,14 @@ index 388c121..ef20589 100644
  export interface CamParams {
    back: number; // distance behind Benny
    up: number; // height above Benny's water point
-@@ -88,6 +91,14 @@ export class RideCamera {
+@@ -88,6 +91,15 @@ export class RideCamera {
      const f = this.course.sample(s);
      const fb = this.course.sample(Math.max(0, s - p.back * 0.5)); // smoothing of heading
      const dir = f.tan.clone().lerp(fb.tan, 0.35).normalize();
 +    // r23 `?match07=1&m07sbend=1` (framing test, qa/match/07/r23/PROGRESS.md): down the plunge the view looks along the STRAIGHT
 +    // chute (the un-bent plunge lies in one YZ plane) instead of yawing with each S-bend, so the river's bends sweep across the
 +    // screen like the approved picture's S-river; the camera still rides behind Benny. `&m07sbcam=0` = yaw with the route.
++    // (r23: an extra look-ahead aim over the lip of the drop was tried and rejected — Benny drifted to mid-screen)
 +    const b7 = this.course.bend07;
 +    if (b7 && SB07_CAM) {
 +      const w = THREE.MathUtils.smoothstep(s, b7.s0, b7.s0 + 3) * (1 - THREE.MathUtils.smoothstep(s, b7.s1 - 4, b7.s1));
@@ -91,7 +92,7 @@ index 0f2c1f7..3287da8 100644
      const a = st('07');
      for (const c of coins07.coins) {
 diff --git a/src/world/course.ts b/src/world/course.ts
-index 531778e..d301dc1 100644
+index 531778e..65d3671 100644
 --- a/src/world/course.ts
 +++ b/src/world/course.ts
 @@ -103,8 +103,16 @@ interface RouteData {
@@ -111,6 +112,15 @@ index 531778e..d301dc1 100644
  /**
   * 05 current (ref 05): the tunnel is a straight line; the STREAM winds inside it. The meander is the
   * lateral (world +X) offset of the course centreline from that line, as a function of the distance
+@@ -192,7 +200,7 @@ export function meander05(u: number): number {
+ }
+ 
+ /** Generates the dense control polyline of the route (absolute coordinates). */
+-function buildRoute(): RouteData {
++function buildRoute(bendAmp?: number): RouteData {
+   const pts: THREE.Vector3[] = [];
+   const marks: Record<string, number> = {};
+   const straight: RouteData['straight'] = [];
 @@ -362,7 +370,26 @@ function buildRoute(): RouteData {
      const u = pts[i].clone().sub(s5).dot(dir05) * (S05.L / L05.length());
      pts[i].x += meander05(u);
@@ -122,9 +132,9 @@ index 531778e..d301dc1 100644
 +  // plunge top (in over d 4 → 14 u) and before the pull-up arc into 08 (out over D−16 → D−5), so the 07 level stretch, the vertical
 +  // drop and the 08 inlet keep their shape. The un-bent plunge lies in one YZ plane (x = bend07.x).
 +  let bend07: RouteData['bend07'];
-+  if (m07 && flag05('m07sbend')) {
++  if (m07 && flag05('m07sbend') && bendAmp !== 0) {
 +    const i0 = marks['07_plunge_top'], i1 = marks['07_plunge_bottom'];
-+    const A = numQ('m07sbA', 1.5), lam = numQ('m07sbL', 28), ph = numQ('m07sbP', 9);
++    const A = bendAmp ?? numQ('m07sbA', 1.5), lam = numQ('m07sbL', 28), ph = numQ('m07sbP', 9);
 +    bend07 = { x: pts[marks['07_plunge_mid_end']].x, amp: A };
 +    const d: number[] = [0];
 +    for (let i = i0 + 1; i <= i1; i++) d.push(d[d.length - 1] + pts[i].distanceTo(pts[i - 1]));
@@ -148,7 +158,37 @@ index 531778e..d301dc1 100644
    private st05!: StageDef;
    private st10!: StageDef;
    private readonly N: number;
-@@ -442,6 +471,7 @@ export class Course {
+@@ -409,7 +438,28 @@ export class Course {
+   private readonly U: Float32Array;
+ 
+   constructor() {
+-    const route = buildRoute();
++    let route = buildRoute();
++    // r23 `&m07sbend=1`: the S makes the route longer; the bend amplitude is fine-tuned (by a few hundredths of a unit) so the extra
++    // length is a whole number of frame-table steps of the UN-BENT route — the frame table then keeps exactly the un-bent grid, so
++    // everything before the plunge is sampled identically (continuity measured as before) and the last interval is not short
++    let grid07: { ds: number; n: number } | null = null;
++    if (route.bend07) {
++      const arc = (pts: THREE.Vector3[]) => {
++        const cv = new THREE.CatmullRomCurve3(pts, false, 'centripetal'), M = pts.length * 24;
++        let L = 0, q0 = cv.getPoint(0);
++        for (let i = 1; i <= M; i++) { const q = cv.getPoint(i / M); L += q.distanceTo(q0); q0 = q; }
++        return L;
++      };
++      const L0 = arc(buildRoute(0).points), n0 = Math.ceil(L0 / 0.25), ds0 = L0 / n0;
++      let A = route.bend07.amp, L = arc(route.points);
++      const k = Math.max(1, Math.round((L - L0) / ds0)), target = L0 + k * ds0;
++      for (let it = 0; it < 6 && Math.abs(L - target) > 1e-4; it++) {
++        A *= Math.sqrt((target - L0) / (L - L0)); // the extra length grows ≈ with the amplitude squared
++        route = buildRoute(A);
++        L = arc(route.points);
++      }
++      grid07 = { ds: ds0, n: n0 + k };
++    }
+     this.curve = new THREE.CatmullRomCurve3(route.points, false, 'centripetal');
+     // arc-length table over curve parameter u
+     const M = route.points.length * 24;
+@@ -442,6 +492,7 @@ export class Course {
      for (const [k, i] of Object.entries(route.marks)) this.marks[k] = sAtIndex(i);
      this.straightAxes = route.straight.map((r) => ({ s0: this.marks[r.from], s1: this.marks[r.to], a: r.a, b: r.b, floorDepth: r.floorDepth }));
      this.line05x = route.straight[0].a.x;
@@ -156,7 +196,15 @@ index 531778e..d301dc1 100644
  
      // ---- stages ----
      const m = this.marks;
-@@ -556,6 +586,14 @@ export class Course {
+@@ -469,6 +520,7 @@ export class Course {
+     // ---- dense frame table (pos, tangent, banked up) ----
+     this.N = Math.ceil(this.length / 0.25) + 1;
+     this.ds = this.length / (this.N - 1); // exact spacing so the last interval is not short
++    if (grid07) { this.ds = grid07.ds; this.N = grid07.n + 1; } // r23 m07sbend: the un-bent grid (see above)
+     this.P = new Float32Array(this.N * 3);
+     this.T = new Float32Array(this.N * 3);
+     this.U = new Float32Array(this.N * 3);
+@@ -556,6 +608,14 @@ export class Course {
      return w > 0 ? v / w : this.stageAtS(s)[key];
    }
  

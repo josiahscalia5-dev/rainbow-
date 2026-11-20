@@ -1861,3 +1861,193 @@ Lowering `RY` also re-seats the foam on the new edge (they use the same surface 
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s04; V=/home/user/rainbow-/qa/match/04/r23/s04_tools/variant.sh; export BASE=/home/user/rainbow-/qa/match/04/r23/s1_arrows/QUERY_K23-S1.txt\nexport SHOTS='[[\"b_early\",0.12,null],[\"c_middle\",0.35,null],[\"d_late\",0.6,null],[\"e_end\",0.85,null]]'\nF=\"m04ry=0.45&m04bbdf=30&m04bbdf1=40&m04bbdx=-0.25&m04bbdk=0.3\"\n( $V $S/s2/E5 5273 \"$F&m04edges=0.3&m04sbf=0\" & $V $S/s2/E6 5274 \"$F&m04edges=0.3&m04sbf=0&m04bbd1=1.05&m04bbdg=0.45\" & wait )\nfor sh in c_middle d_late e_end; do python3 /home/us …[+193 chars]`
 
+### 🧑 User — 2026-11-20T09:59:41.289Z
+
+> ↩︎ result: done /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s04/s2/E5 4 png
+> done /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s04/s2/E6 4 png
+
+### 🤖 Claude — 2026-11-20T09:59:44.791Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s04/strip_d_late.png"}`
+
+### 🧑 User — 2026-11-20T09:59:45.280Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-20T09:59:45.268Z
+
+[Image: original 2616x762, displayed at 2000x583. Multiply coordinates by 1.31 to map to original image.]
+
+### 🤖 Claude — 2026-11-20T09:59:45.349Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s04/strip_e_end.png"}`
+
+### 🧑 User — 2026-11-20T09:59:45.663Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-20T09:59:45.660Z
+
+[Image: original 2616x762, displayed at 2000x583. Multiply coordinates by 1.31 to map to original image.]
+
+### 🤖 Claude — 2026-11-20T09:59:51.802Z
+
+Softening the fringe (E5) barely changes the lilac band, so it is something else. Let me probe which mesh draws those lilac pixels at the end shot.
+
+### 🤖 Claude — 2026-11-20T09:59:57.388Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && AUDIT_PORT=5274 timeout 900 node /home/user/rainbow-/tools/lead23/probe04.mjs \"$(cat /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s04/s2/E5/QUERY.txt)\" 0.85 '[[80,796],[150,740],[40,860],[230,700],[760,760],[700,700]]' 2>&1 | grep -v \"outside of Vite\" | python3 -c \"\nimport sys,json\nt=sys.stdin.read(); i=t.find('['); d=json.loads(t[i:])\nfor p in d: print(p['x'],p['y'],[ (h.get('name'),round(h.get('distance',0),2)) if isinstance(h,dict) else h for h in (p['hits'] or [])][:4])\"\npython3 -c \"\nfrom PIL import Image …[+327 chars]`
+
+### 🧑 User — 2026-11-20T10:00:18.270Z
+
+> ↩︎ result: 80 796 [(None, 0), (None, 0)]
+> 150 740 [(None, 0), (None, 0)]
+> 40 860 [(None, 0), (None, 0)]
+> 230 700 [(None, 0), (None, 0)]
+> 760 760 [(None, 0), (None, 0), (None, 0)]
+> 700 700 [(None, 0), (None, 0), (None, 0)]
+> (80, 796) (173, 81, 64)
+> (150, 740) (175, 90, 96)
+> (40, 860) (152, 66, 54)
+> (230, 700) (140, 66, 83)
+> (760, 760) (160, 69, 58)
+> (700, 700) (194, 112, 131)
+
+### 🤖 Claude — 2026-11-20T10:00:29.431Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s04 && python3 -c \"\nfrom PIL import Image\nim=Image.open('s2/E5/e_end.png').convert('RGB')\n# find lilac pixels (high blue, high red, high green) along rows\nfor y in range(700,1100,40):\n    row=[x for x in range(0,430) if (lambda c: c[2]>200 and c[0]>170 and c[1]>150)(im.getpixel((x,y)))]\n    print(y, (min(row),max(row),len(row)) if row else None)\n\"; cd /home/user/wt/s04 && AUDIT_PORT=5274 timeout 900 node /home/user/rainbow-/tools/lead23/probe04.mjs \"$(cat /tmp/claude-0/-home-user-rainbow …[+233 chars]`
+
+### 🧑 User — 2026-11-20T10:00:55.513Z
+
+> ↩︎ result: 700 (378, 429, 50)
+> 740 (364, 392, 29)
+> 780 (255, 345, 25)
+> 820 (225, 270, 18)
+> 860 (160, 260, 46)
+> 900 (125, 338, 53)
+> 940 (71, 140, 68)
+> 980 (52, 373, 99)
+> 1020 (43, 380, 48)
+> 1060 (69, 357, 86)
+> [
+>  {
+>   "x": 120,
+>   "y": 900,
+>   "hits": [
+>    {
+>     "d": 1.67,
+>     "obj": "m04_ring_tunnel<match04_projection<Scene",
+>     "p": [
+>      2.39,
+>      -29.39,
+>      -47.05
+>     ]
+>    },
+>    {
+>     "d": 4.89,
+>     "obj": "Mesh<zone_tubes<washer_world<Scene",
+>     "p": [
+>      2.57,
+>      -26.98,
+>      -49.18
+>     ]
+>    }
+>   ]
+>  },
+>  {
+>   "x": 60,
+>   "y": 960,
+>   "hits": [
+>    {
+>     "d": 1.68,
+>     "obj": "m04_ring_tunnel<match04_projection<Scene",
+>     "p": [
+>      2.32,
+>      -29.38,
+>      -47.06
+>     ]
+>    },
+>    {
+>     "d": 4.9,
+
+### 🤖 Claude — 2026-11-20T10:01:08.827Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s04/s2/E6/c_middle.png"}`
+
+### 🧑 User — 2026-11-20T10:01:08.868Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T10:01:22.920Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s04; D=/home/user/rainbow-/qa/match/04/r23/s2_edge; mkdir -p $D\nSW=\"m04ry=0.45&m04bbdf=30&m04bbdf1=40&m04bbdx=-0.25&m04bbdk=0.3&m04edges=0.3&m04sbf=0&m04bbd1=1.05&m04bbdg=0.45\"\necho \"$SW\" > $D/SWITCH.txt; node /home/user/rainbow-/tools/lead23/setq.mjs \"$(cat /home/user/rainbow-/qa/match/04/r23/s1_arrows/QUERY_K23-S1.txt)\" \"$SW\" > $D/QUERY_K23-S2.txt\ncd /home/user/wt/s04 && AUDIT_PORT=5273 timeout 1500 node /home/user/rainbow-/qa/match/04/r23/s04_tools/audit_pinned_slow.mjs $D/NEW 04 \"$( …[+556 chars]`
+
+### 🧑 User — 2026-11-20T10:03:48.341Z
+
+> ↩︎ result: 04 a_start s 77.413 lat 0 stage 04 coins 1330
+> 04 b_early s 82.08 lat 0 stage 04 coins 1330
+> 04 c_middle s 90.48 lat 0 stage 04 coins 1330
+> 04 d_late s 99.813 lat 0 stage 04 coins 1330
+> 04 e_end s 109.146 lat 0 stage 04 coins 1330
+> 04 f_hard_left s 90.48 lat -1.65 stage 04 coins 1360
+> 04 g_hard_right s 90.48 lat 1.65 stage 04 coins 1330
+> a_start vsBEFORE=0
+> b_early vsBEFORE=175513
+> c_middle vsBEFORE=192532
+> d_late vsBEFORE=180719
+> e_end vsBEFORE=184722
+> f_hard_left vsBEFORE=163350
+> g_hard_right vsBEFORE=179589
+
+### 🤖 Claude — 2026-11-20T10:03:51.154Z
+
+Start view still 0 px. Let me check the early and hard-steer frames.
+
+### 🤖 Claude — 2026-11-20T10:03:51.653Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/04/r23/s2_edge/NEW/b_early.png"}`
+
+### 🧑 User — 2026-11-20T10:03:51.815Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T10:03:52.137Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/04/r23/s2_edge/NEW/g_hard_right.png"}`
+
+### 🧑 User — 2026-11-20T10:03:52.393Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T10:03:57.875Z
+
+Early view is notably closer to the painting (low foam banks both sides, blue water, gold above). Hard right keeps the bank beside him without covering him. Quick look at hard left, then the clip.
+
+### 🤖 Claude — 2026-11-20T10:04:00.893Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s04; python3 /home/user/rainbow-/qa/match/04/r23/s04_tools/strip.py $S/strip_fl.png f_hard_left 0,560,864,1536 /home/user/rainbow-/qa/match/04/r23/s04_BEFORE_K23-1 /home/user/rainbow-/qa/match/04/r23/s1_arrows/NEW /home/user/rainbow-/qa/match/04/r23/s2_edge/NEW", "description": "Strip hard-left BEFORE / step1 / step2"}`
+
+### 🧑 User — 2026-11-20T10:04:01.836Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T10:04:05.277Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s04/strip_fl.png"}`
+
+### 🧑 User — 2026-11-20T10:04:05.744Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-20T10:04:05.736Z
+
+[Image: original 2616x998, displayed at 2000x763. Multiply coordinates by 1.31 to map to original image.]
+
+### 🤖 Claude — 2026-11-20T10:04:09.807Z
+
+Hard left also improves step by step (less pink, foam banks on both edges, gold down to them). Step 2 is switches only (no new code), so I need its clip and gameplay run.
+
+### 🤖 Claude — 2026-11-20T10:04:13.309Z
+
+> 🔧 **Bash** `{"command": "D=/home/user/rainbow-/qa/match/04/r23/s2_edge; T=/home/user/rainbow-/qa/match/04/r23/s04_tools\n( $T/clip.sh $D/QUERY_K23-S2.txt $D/swim04_NEW_K23-S2 5273 & (cd /home/user/wt/s04 && AUDIT_PORT=5274 timeout 1800 node /home/user/rainbow-/qa/match/04/r22/tools/gameplay_test_5273.mjs --q=\"$(cat $D/QUERY_K23-S2.txt)\" --out=$D/gameplay.json > $D/gameplay.log 2>&1; echo gameplay_exit=$?) & wait )\npython3 -c \"\nimport json; d=json.load(open('$D/gameplay.json'))['checks']\nprint({k:v['pass'] for k,v in d.items()}, d['realCoinPickups'])\"; ls $D; for f in $D/*.mp4; do printf \"%s \" $(b …[+166 chars]`
+
