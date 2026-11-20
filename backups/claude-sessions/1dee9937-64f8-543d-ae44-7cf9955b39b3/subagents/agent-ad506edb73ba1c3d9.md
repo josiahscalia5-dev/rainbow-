@@ -1840,3 +1840,112 @@ While it renders, I'll update the progress log with the new direction, the parke
 >   gets the painted broad S-bends: route S-offset (Benny, steering bounds, collision, coins, game water follow it), the tube stays
 >   straight, bands / foam / coins sweep inside it, c …[+929 chars]
 
+### 🤖 Claude — 2026-11-20T09:58:47.229Z
+
+> 🔧 **Bash** `{"command": "sleep 240; cat /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/tasks/bgkvkoztx.output | grep -v \"allow list\"; ls /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/sb1/", "description": "Wait and check render progress", "timeout": 300000}`
+
+### 🧑 User — 2026-11-20T09:58:47.270Z
+
+> ↩︎ result: <tool_use_error>Blocked: sleep 240 followed by: cat /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/tasks/bgkvkoztx.output grep -v "allow list" ls /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/sb1/. To wait for a condition, use Monitor with an until-loop (e.g. `until <check>; do sleep 2; done`). To wait for a command you started, use run_in_background: true. Do not chain shorter sleeps to work around this block.</tool_use_error>
+
+### 🤖 Claude — 2026-11-20T09:58:49.608Z
+
+I'll wait for the completion notification. Meanwhile, a quick sanity check of the bent route numbers once the route dump lands.
+
+### 🤖 Claude — 2026-11-20T09:58:51.546Z
+
+> 🔧 **Bash** `{"command": "ls -la /home/user/rainbow-/qa/match/07/r23/s2_sriver/; cat /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/tasks/bgkvkoztx.output | grep -v \"allow list\"", "description": "Check route dump and render output"}`
+
+### 🧑 User — 2026-11-20T09:58:51.872Z
+
+> ↩︎ result: total 48
+> drwxr-xr-x 2 root root  4096 Nov 20 09:58 .
+> drwxr-xr-x 7 root root  4096 Nov 20 09:52 ..
+> -rw-r--r-- 1 root root   167 Nov 20 09:58 query_BEFORE.txt
+> -rw-r--r-- 1 root root   178 Nov 20 09:58 query_NEW.txt
+> -rw-r--r-- 1 root root 15570 Nov 20 09:52 route_BEFORE.json
+> -rw-r--r-- 1 root root 15688 Nov 20 09:58 route_NEW.json
+
+### 🤖 Claude — 2026-11-20T09:58:55.908Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/07/r23/s2_sriver && python3 -c \"\nimport json\nB=json.load(open('route_BEFORE.json'));N=json.load(open('route_NEW.json'))\nprint('BEFORE marks',B['marks'],'NEW marks',N['marks'],'s1',B['s1'],N['s1'])\nnb={round(r['s']):r for r in B['route']}\nprint(' s   latB   latN  upB  upN')\nfor r in N['route'][::4]:\n  b=nb.get(round(r['s']));print(r['s'], b and b['lat'], r['lat'], b and round(b['up'],1), round(r['up'],1))\nprint('coins NEW',[(c['s'],c['lat']) for c in N['coins'] if c['s']>310])\nprint('coins BEF',[(c['s'],c['lat']) for c in B['coins'] if c['s …[+81 chars]`
+
+### 🧑 User — 2026-11-20T09:58:56.013Z
+
+> ↩︎ result: BEFORE marks {'top': 312.41331806416713, 'bottom': 390.071167658835, 'm08': 390.1617102628636} NEW marks {'top': 312.41331806416713, 'bottom': 391.6740034305866, 'm08': 391.7645460346152} s1 390.1617102628636 391.7645460346152
+>  s   latB   latN  upB  upN
+> 243.1 0.296 0.296 0.3 0.3
+> 247.1 1.69 1.69 -0.0 -0.0
+> 251.1 2.502 2.502 -0.1 -0.1
+> 255.1 3.05 3.05 -0.1 -0.1
+> 259.1 3.116 3.116 -0.1 -0.1
+> 263.1 1.845 1.844 -0.0 -0.0
+> 267.1 0.101 0.101 -0.0 -0.0
+> 271.1 -0.471 -0.471 -0.0 -0.0
+> 275.1 0.292 0.292 0.0 0.0
+> 279.1 0.589 0.589 0.0 0.0
+> 283.1 -0.362 -0.362 0.0 0.0
+> 287.1 -1.305 -1.305 0.1 0.1
+> 291.1 -1.86 -1.86 0.1 0.1
+> 295.1 -2.346 -2.347 0.1 0.1
+> 299.1 -1.025 -1.025 0.1 0.1
+> 303.1 0.874 0.874 0.1 0.1
+> 307.1 2.15 2.15 0.1 0.1
+> 311.1 1.858 1.858 -0.1 -0.1
+> 315.1 1.452 1.452 -0.8 -0.8
+> 319.1 1.288 1.164 -2.6 -2.6
+> 323.1 1.201 1.566 -5.2 -5.1
+> 327.1 1.142 2.538 -8.5 -8.3
+> 331.1 1.098 2.391 -12.0 -11.8
+> 335.1 1.057 1.318 -15.7 -15.4
+> 339.1 1.018 0.076 -19.4 -18.9
+> 343.1 0.979 -0.513 -23.0 -22.5
+> 347.1 0.94 -0.002 -26.7 -26.1
+> 351.1 0.9 1.163 -30.4 -29.6
+> 355.1 0.861 2.159 -34.0 -33.1
+> 359.1 0.822 2.233 -37.7 -36.8
+> 363.1 0.782 1.291 -41.4 -40.4
+> 367.1 0.743 0.017 -45.0 -43.9
+> 371.1 0.701 -0.746 -48.7 -47.4
+> 375.1 0.65 -0.45 …[+594 chars]
+
+### 🤖 Claude — 2026-11-20T09:59:03.819Z
+
+> 🔧 **ToolSearch** `{"query": "select:Monitor", "max_results": 1}`
+
+### 🧑 User — 2026-11-20T09:59:03.839Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-20T09:59:08.682Z
+
+> 🔧 **Monitor** `{"description": "S-bend test render finishes (e_end.png written or task output shows an error)", "timeout_ms": 1500000, "command": "O=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/sb1; T=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/tasks/bgkvkoztx.output; until [ -f $O/shots.json ] || grep -qE \"Error|pageerror|Killed\" $T 2>/dev/null; do sleep 5; done; ls $O; grep -E \"Error|pageerror\" $T | head -3; echo done"}`
+
+### 🧑 User — 2026-11-20T09:59:08.714Z
+
+> ↩︎ result: Monitor started (task bxca3nkvb, expires in 25m unless the source ends first; you get one notice at expiry — re-arm if you still need the watch). You will be notified on each event. Keep working — do not poll or sleep. Events may arrive while you are waiting for the user — an event is not their reply.
+
+### 🤖 Claude — 2026-11-20T09:59:12.961Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/tasks/bgkvkoztx.output | grep -v \"allow list\" | tail -5", "description": "Check render task output so far"}`
+
+### 🧑 User — 2026-11-20T09:59:13.071Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T09:59:18.415Z
+
+The render is still loading the game (shared machine). I'll wait for the monitor event.
+
+### 🤖 Claude — 2026-11-20T09:59:20.016Z
+
+> 🔧 **Bash** `{"command": "until [ -f /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/sb1/shots.json ]; do sleep 5; done; echo ready", "description": "Wait until the S-bend render writes its shot log", "timeout": 1500000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T09:59:20.125Z
+
+> ↩︎ result: Command running in background with ID: bx00upys2. Output is being written to: /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/tasks/bx00upys2.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-20T09:59:21.934Z
+
+I'll be notified when the S-bend test render finishes; the progress log already records where step 2 stands.
+

@@ -154120,10 +154120,10 @@ index a76822b..cea17dd 100644
  * `fur.ts`: new BENNY20-only uniforms `uTipCol` (colour the uPile.w tips fade to; pompom keeps its pale lavender) and `uVol`
    (x highlight on up-facing fur, y darker underside). `benny20.ts`: `TUFT` block (body + arms): bigger locks (30 / arms 36),
 diff --git a/src/characters/benny/benny20.ts b/src/characters/benny/benny20.ts
-index 340e1d3..9f1cc48 100644
+index 340e1d3..7b6ba6d 100644
 --- a/src/characters/benny/benny20.ts
 +++ b/src/characters/benny/benny20.ts
-@@ -132,13 +132,28 @@ export const HAT20 = {
+@@ -132,17 +132,32 @@ export const HAT20 = {
    starFlat: n('sf', 0.3),
  };
  
@@ -154156,7 +154156,12 @@ index 340e1d3..9f1cc48 100644
  };
  
  const T = (f: string) => new URL(`../../../assets/textures/benny20/${f}`, import.meta.url).href;
-@@ -234,14 +249,36 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
+-const FILES = ['crown.png', 'crown_n.png', 'brim.png', 'brim_n.png', 'star.png', 'star_n.png'];
++const FILES = ['crown.png', 'crown_n.png', 'brim.png', 'brim_n.png', 'star.png', 'star_n.png', 'star_felt.png', 'star_felt_n.png'];
+ let loaded: Promise<Record<string, THREE.Texture | null>> | null = null;
+ /** load the knit / felt maps once (missing file → null: that part keeps its benny05 look) */
+ export function loadBenny20Maps(): Promise<Record<string, THREE.Texture | null>> {
+@@ -234,28 +249,54 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
      if (nt) mat.normalScale.setScalar(ns);
      mat.roughness = 0.92;
      mat.metalness = 0;
@@ -154193,8 +154198,31 @@ index 340e1d3..9f1cc48 100644
 +    : [];
  
    // ---- star: flat stitched felt patch ----
++  // r23 step 3, opt-in `&b20star=1`: puffy stitched FELT star (tools/benny20/knit.py `star_mode: felt`, params
++  // tools/benny23/star_r23.json): golden felt pillow, lighter orange sewn rim (inner band + the mesh bevel as one band),
++  // running stitch of light dashes / dark needle holes; colour solved through the live 04 light + post chain.
    const star = get('hat_star') as THREE.Mesh | undefined;
-@@ -264,6 +301,10 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
++  const FELT = n('star', 0) > 0 && !!maps['star_felt.png'];
+   if (star && maps['star.png']) {
+     star.scale.z *= HAT20.starFlat;
+     const mat = (star.material as THREE.MeshStandardMaterial).clone();
+-    mat.map = maps['star.png'];
+-    mat.normalMap = maps['star_n.png'];
+-    mat.normalScale.setScalar(1);
+-    mat.color.setRGB(...MAT20.star);
++    mat.map = FELT ? maps['star_felt.png'] : maps['star.png'];
++    mat.normalMap = FELT ? maps['star_felt_n.png'] : maps['star_n.png'];
++    mat.normalScale.setScalar(FELT ? n('sfn', 1.5) : 1);
++    mat.color.setRGB(...(FELT ? lin('sfcol', [0.55, 0.85, 1.0]) : MAT20.star));
+     mat.roughness = 0.97;
+     mat.metalness = 0;
+     mat.emissive.setRGB(1, 0.72, 0.2);
+-    mat.emissiveIntensity = n('se', 0.08);
++    mat.emissiveIntensity = FELT ? n('sfe', 0) : n('se', 0.08);
+     mat.needsUpdate = true;
+     star.material = mat;
+   }
+@@ -264,6 +305,10 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
    const expo = furs.filter((f) => /^fur_(body|arm)/.test(f.mesh.name)).map((f) => ({ f, base: f.material.color.clone() }));
    const cur = new THREE.Vector3(1, 1, 1);
    const tgt = new THREE.Vector3();
@@ -154205,7 +154233,7 @@ index 340e1d3..9f1cc48 100644
    let first = true;
    const lastPos = new THREE.Vector3();
    const pos = new THREE.Vector3();
-@@ -275,8 +316,17 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
+@@ -275,8 +320,17 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
      scene.getWorldPosition(pos);
      const jumped = pos.distanceTo(lastPos) > 5;
      lastPos.copy(pos);
@@ -154224,7 +154252,7 @@ index 340e1d3..9f1cc48 100644
    };
  
    // QA only (`?qa` pages, read by tools/benny20/probe.mjs): live handles for tuning without a reload
-@@ -295,7 +345,7 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
+@@ -295,7 +349,7 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
        }
        return [Math.round(x0), Math.round(y0), Math.round(x1), Math.round(y1)];
      };
