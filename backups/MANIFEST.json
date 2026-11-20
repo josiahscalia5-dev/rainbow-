@@ -619,7 +619,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 20297,
-   "sha256": "bc5de516159283a27ba803a16bead4063f1bfe65d1a9ce1d0e6bf90e141e4231"
+   "sha256": "33bc936036034bd29a8b9af1b39e9fe8850dd9744a48f576602b2ee0ff23952d"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -634,7 +634,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 2190,
-   "sha256": "05f2fa56fed945348f7988f513aadc59a662332cc90e3e996e94d2705dda4211"
+   "sha256": "ef3f6273257559e8b0fd078281e26207aa2e567914750ca748c6666a7395ff84"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -1424,7 +1424,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c23/INFO.json",
    "bytes": 586,
-   "sha256": "9f0c2b013a5bb9c6b0c07ab6afd20e2610fff81a97a3a268d6da3d1b554bc152"
+   "sha256": "19d0b78c52d679535c6cdd7db67f48ab86f6bcf72cb25d02fb12971edb81e3c9"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c23/tracked.patch",
@@ -2399,7 +2399,7 @@
   {
    "path": "backups/wip/claude__rainbow-s07-match-c23/INFO.json",
    "bytes": 596,
-   "sha256": "3a2a8f8aa7799303ef347effbea1405f3bac0a20f76c1dd235b54deebf76deb6"
+   "sha256": "d24320852e29ed6f1c8e60c69796013c926e4a07cd8d1000977069d73264e250"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c23/tracked.patch",
@@ -6250,6 +6250,21 @@
    "path": "qa/match/04/r22/scratch/clip_before/0054.png",
    "bytes": 1903041,
    "sha256": "5f6afaf541ddbf83692fa73f27bd584830e4f54bb89e8d4dbd9d031070899a2a"
+  },
+  {
+   "path": "qa/match/04/r22/scratch/clip_before/0055.png",
+   "bytes": 1926209,
+   "sha256": "3c3f408526c9b67f8e72bd1cdb88a11e5f39c52c56a1bcc85bb824c73ddbd085"
+  },
+  {
+   "path": "qa/match/04/r22/scratch/clip_before/0056.png",
+   "bytes": 1953862,
+   "sha256": "009afa10d43ec1c0da6f295a158a3412903290434ce4cb46b2fdc28cb70bce4f"
+  },
+  {
+   "path": "qa/match/04/r22/scratch/clip_before/0057.png",
+   "bytes": 1967110,
+   "sha256": "c8602d50a91f3d2de7c6116b0fe231b7b11ab79b0dddec28f9ae234a9d968ef3"
   },
   {
    "path": "qa/match/04/r22/scratch/crops/ref_left_mid.png",
