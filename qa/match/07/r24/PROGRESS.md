@@ -9,8 +9,17 @@
   (`qa/match/08/r23/step3_m08towelm/3_NEW_a00_approved_view.png`); forward 10 u: scenery identical, only Benny's fur shading differs.
 * r24 step-1 shots `s1_swing/BEFORE|NEW` (combo, K23-3) are complete (9 + 9). Start view a_start: 27 px (one far coin down the drop
   moved ~2 px with the S); the other shots are at stage fractions and the S makes 07 2.5 u longer, so they are not at the same s.
-* NOW: step 1 proof (clips BEFORE + NEW 1.0x / 0.5x, gameplay, continuity, verdict). NEXT: step 2 `m07look`, step 3 07→08 join,
-  labelled NEW / BEFORE sequence.
+* 12:23 DONE: BEFORE clip (r23 candidate & K23-3, combo build) rendered, 209 frames / 8.71 s, same schedule as the lead's r23 clip
+  (`clips/BEFORE_frames.json`; labelled mp4s `clips/SCREEN07_BEFORE_r23cand_K23-3_{1x,0.5x}.mp4` when the label job is done).
+  Seen in it: t 2.5–3.75 the purple tube wall fills ~70 % of the frame, the river is a thin strip at the bottom (step 2); t 7.0–8.1
+  the 08 floor ahead shows the game's default streaky sheet with white lather walls, the painted drop river ends in a dithered
+  (speckled) band at the 08 inlet, then the cut to the 08 view at t 8.13 (step 3).
+* Step 1: tsc 0; continuity with `match07=1&m07sbend=1&m07swing=1` ok (all joins gap 0, 07→08 drop 61.02 u;
+  `s1_swing/continuity_NEW.txt`, `path_graph_NEW.md`). NEW clip rendering (`clips/SCREEN07_S1_swing_NEW_K23-3_*`).
+* Step 3 code written (`&m07join=1`, Game.ts + match07.ts, tsc 0): the painted river + its round foam clouds run on along the 08
+  floor to the end of 08 + 3 u while 07 shows, the default sheet / lather walls stay away to there (no dithered band in view),
+  rows eased from the drop's square frame into the 08 frame over 3 u. Test segment queued (combo2).
+* NEXT: step 1 verdict from the clip; step 2 `m07look` segment (queued); step 3 segment; gameplay; then the labelled sequence.
 
 ## (r24) WHERE I STOPPED / NEXT
 * ~11:10 UTC: working on step 1 `&m07swing=1` (code in the worktree, diag renders good: the river sweeps across the tube floor in
