@@ -1161,3 +1161,32 @@ Let me view the approved reference and the lead's e_end / f_hard_left / g_hard_r
 >     uRivGlowR: { value: new THREE.Vector3(glow.near, glow.far, glow.strength) },
 >     /** W11: depth of the seam from the locked 05 eye (ForcedTunn …[+1878 chars]
 
+### 🤖 Claude — 2026-11-20T17:09:55.871Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s05 && sed -n 62,72p qa/match/05/r12/PROGRESS.md", "description": "Read why m05fbank was not kept"}`
+
+### 🧑 User — 2026-11-20T17:09:55.924Z
+
+> ↩︎ result: ## Item — `&m05fbank=1` (round-11 unfinished foam-bank shader) — NOT KEPT
+> * Tested once on the step-2 set at t66 / t75 / t85 / k81: the pale left far bank only gains a faint bubble-cell texture;
+>   it is still a flat pale slab, not the painted foam clouds. No visible gain → not kept (switch stays unused in the code).
+> 
+> ## Item — `&m05fedge=1` (narrow the far floor beyond the water edge to the 1.3 u rim near the seam) — NOT KEPT
+> * Tested once at t95_left / t75 / t85 / k81 / t66: no visible change. A temporary debug tint showed why: the pale wedge is
+>   the far river's own foam-rim band (the rim is drawn flat lilac), not floor beyond it. Code removed (one-line bankW
+>   override in farRiverMaterial; nothing kept).
+> 
+> ## Step 3 — `&m05fcloud=1` (class C: foam clouds along both far banks) — KEPT
+> * Kept query: `?match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1&m05fpaint=1&m05fcloud=1`
+
+### 🤖 Claude — 2026-11-20T17:10:12.088Z
+
+> 🔧 **Bash** `{"command": "date -u +%H:%M; uptime; bash /home/user/rainbow-/tools/lead25/render_slot.sh --status", "description": "Check time, load and render slots"}`
+
+### 🧑 User — 2026-11-20T17:10:12.189Z
+
+> ↩︎ result: 17:10
+>  17:10:12 up 39 min,  0 user,  load average: 6.06, 6.43, 4.23
+> slot 1 busy
+> slot 2 busy
+
