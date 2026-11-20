@@ -2392,3 +2392,183 @@ Understood: build the reconstructed route as its own candidate (extending 06 and
 > 14   703.4   701.1     8    24.56    0.154  219.08  +0.45 |   101.0
 > Shell cwd was reset to /home/user/rainbow-
 
+### 🤖 Claude — 2026-11-20T18:57:02.164Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"m06tun\\|const O =\\|centroid\\|R6\\b\\|const R =\\|sector\\|wallAngle\\|m06ring\\|m06gold\\|dA\\b\\|const DA\\|260\\|visible = \\|stageVisible\\|setStage\\|sAhead07\\|sBack\" src/world/match06.ts | head -60 | cut -c1-200", "description": "Find how the Screen 06 tunnel, rings and visibility are built"}`
+
+### 🧑 User — 2026-11-20T18:57:02.216Z
+
+> ↩︎ result: 32:    tube: { wallAngle: [number, number]; period: number; anglePeriod: number };
+> 83:// r6 (qa/match/06/NOTES.md): uGeo = narrow fitted river (lateral |l| <= Wc water, Wc..Wb foam bank); uR6 = river material
+> 86:uniform float uR6;
+> 91:// r7 m06ring: modeled gold rings (uRing = 1) around the straight tunnel axis (origin, direction, right, up)
+> 100:// r15 m06gold: the user's painted ring band (tools/match06/make_ring06.py) along each modeled ring's profile
+> 167:  if (uR6 > 0.5 && uFloor > 0.5) {
+> 201:      // r15 m06gold: vTile = (angle around the ring, position across the painted band: 0 = outer face edge .. 1 = far lip);
+> 215:    // r7b m06ring: crisp perforated lilac washer metal between the rings (the painted panels: rows of short dark rounded
+> 245:  float keep = uR6 > 0.5 && uFloor > 0.5 ? 1.0 - smoothstep(1.4, 3.0, mag) : 1.0 - smoothstep(2.5, 6.0, mag);
+> 360:      // m06ring: the modeled rings show the approved pixels only AT the approved view, their own 3D gold once away
+> 545:  const R6 = !v2 ? L.tiles.r6 : undefined;
+> 546:  const GEO = !!R6 && qs?.get('m06geo') === '1';
+> 558:  const r6p = new THREE.Vector4(R6?.Wc ?? 0, R6?.Wb ?? 1, (R6?.river.period ?? 1), R6?.foamPeriod ?? 1);
+> 576:   …[+4552 chars]
+
+### 🤖 Claude — 2026-11-20T18:57:04.305Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 600,660p src/world/match06.ts | cut -c1-230; echo ....; sed -n 715,760p src/world/match06.ts | cut -c1-230", "description": "Read the river-frame setup and the tunnel cylinder construction"}`
+
+### 🧑 User — 2026-11-20T18:57:04.354Z
+
+> ↩︎ result: const fr = frame(s);
+>       for (let j = 0; j <= cols; j++) { const [p, a, l] = vert(s, j, fr); pos.push(p.x, p.y, p.z); tile.push(a, s / sK); ls.push(l ?? 0, s); }
+>     }
+>     const n = cols + 1;
+>     for (let i = 0; i < sList.length - 1; i++) for (let j = 0; j < cols; j++) {
+>       const a = i * n + j, b = a + 1, c = a + n, d = c + 1;
+>       idx.push(a, c, b, b, c, d);
+>     }
+>     const g = new THREE.BufferGeometry();
+>     g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+>     g.setAttribute('aTile', new THREE.Float32BufferAttribute(tile, 2));
+>     g.setAttribute('aLS', new THREE.Float32BufferAttribute(ls, 2));
+>     g.setIndex(idx);
+>     g.computeVertexNormals();
+>     return g;
+>   };
+> 
+>   const group = new THREE.Group();
+>   group.name = 'match06_projection';
+>   const add = (g: THREE.BufferGeometry, m: THREE.Material, name: string) => { const o = new THREE.Mesh(g, m); o.name = 'm06_' + name; o.frustumCulled = false; group.add(o); return o; };
+>   const TT = L.tiles.tube, TF = TF2 ?? L.tiles.floor;
+>   const RAD = 128;
+>   // tunnel tube around the river: angle 0 = right, pi/2 = up; tile angle coordinate starts at the right bank
+>   // r6 `m06geo`: the tube's lower walls are drawn in so t …[+6991 chars]
+
+### 🤖 Claude — 2026-11-20T18:58:13.806Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && echo \"== environment.ts chamber section literals\"; awk 'NR>=530 && NR<=760' src/world/environment.ts | grep -nE \"set\\(-?[0-9]|Vector3\\(-?[0-9]+(\\.[0-9]+)?, -?[0-9]{2,}\" | head -12 | cut -c1-170; echo \"== towel.ts / finalWave.ts / puddles / match08 literals\"; grep -nE \"Vector3\\(-?[0-9]{1,3}(\\.[0-9]+)?, ?-[0-9]{2,}|position\\.set\\(-?[0-9]+(\\.[0-9]+)?, ?-[0-9]{2,}|-(280|332|325|101|110|113)\\b\" src/world/towel.ts src/vfx/finalWave.ts src/vfx/puddles.ts src/world/match08.ts src/game/Game.ts src/game/cameraRig.ts | head -20 | cut -c1-170; echo \"= …[+466 chars]`
+
+### 🧑 User — 2026-11-20T18:58:13.911Z
+
+> ↩︎ result: == environment.ts chamber section literals
+> 229:  screenFrame.position.set(-3.6, 1.4, 4.0);
+> 230:  screen.position.set(-3.6, 1.4, 4.35);
+> == towel.ts / finalWave.ts / puddles / match08 literals
+> src/game/Game.ts:582:    sun.target.position.copy(camera.position).add(new THREE.Vector3(0, -10, -10));
+> == coins08/splash08 keys
+> coins08 ['note', 'coins', 'faceTo']
+> splash08 ['note', 'offset', 'w', 'h']
+> river08 ['note', 'floorY', 'z', 'x', 'width']
+> coins08 sample {'coins': [{'px': [335, 862, 42], 'x': 11.303827390870174, 'z': -286.53498908278334, 'h': 0.4032561735171502, 'scale': 0.8065123470343004, 'dist': 12.272109270231285}, {'px': [400, 786, 35], 'x': 11.619675322507073, 'z': -290.4595383450082, 'h': 0.43918350244033644, 'scale': 0.8783670048806729, 'dist': 16.038562935185347}], 'faceTo': [12.848, -109.866]}
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T18:58:44.718Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/wt/s06/tools/match06 && cat > /home/user/wt/s06/tools/match06/r29_route_probe.mjs <<'EOF'\n// r29 lead (QA only, no browser): the painted 06 coin trail rebuilt in 3D at ONE common coin size (depth = f * 0.632 / painted px size,\n// monotonic-smoothed), expressed in the m06tun drum frame (axial a, radR, radU), vs the current route and the 07 start.\n//   cd /home/user/wt/s06 && npx vite-node tools/match06/r29_route_probe.mjs -- \"<query>\"\nimport * as THREE from 'three';\nimport { readFileSync } from 'node:fs';\nconst Q = process.argv.slice(2).filter((a) => a ! …[+3732 chars]`
+
+### 🧑 User — 2026-11-20T18:58:45.592Z
+
+> ↩︎ result: cam [ 1.72, -35.37, -132.64 ] ax [ -0.0198, -0.0834, -0.9963 ] f 1278.2
+> Benny sB 198.91 pos [ 0.54, -38.05, -138.32 ] tan [ -0.116, 0.556, -0.823 ] drum [ 5.9, -2.96, -1.21 ] dist 6.39
+> 07 start [ 11.37, -48.5, -176.13 ] tan [ 0.269, -0.099, -0.958 ] drum [ 44.22, 8.62, -8.49 ]
+>  0 px 267.6,716.1,101 depth 8.0 water -0.81,-37.01,-140.14 | axial 7.7 radR -4.27 radU -0.02 | r 4.3
+>  1 px 178.6,623.8,82 depth 10.2 water -2.16,-36.60,-142.04 | axial 9.5 radR -5.59 radU 0.55 | r 5.6
+>  2 px 234.3,548.1,59 depth 13.7 water -2.94,-36.10,-145.52 | axial 13.0 radR -6.30 radU 1.34 | r 6.4
+>  3 px 319.6,521.3,43 depth 18.8 water -3.51,-35.82,-150.69 | axial 18.1 radR -6.77 radU 2.05 | r 7.1
+>  4 px 407.6,534,32 depth 25.2 water -3.66,-36.07,-157.31 | axial 24.7 radR -6.79 radU 2.36 | r 7.2
+>  5 px 505.9,586.1,22 depth 36.7 water -3.35,-37.63,-168.96 | axial 36.5 radR -6.25 radU 1.77 | r 6.5
+>  6 px 557.5,623,19 depth 42.5 water -2.45,-39.11,-174.83 | axial 42.4 radR -5.23 radU 0.78 | r 5.3
+>  7 px 594.8,644.1,19 depth 44.7 water -1.37,-39.99,-177.06 | axial 44.7 radR -4.10 radU 0.09 | r 4.1
+>  8 px 619.1,654.7,19 depth 46.9 water -0.64,-40.57,-179.26 | axial 46.9 radR -3.33 radU -0.30 | r 3.3
+>  9 px 642.7,662.7 …[+627 chars]
+
+### 🤖 Claude — 2026-11-20T19:00:20.609Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"L\\.s1\\|P1\\b\\|P1 =\\|sAhead07\\|sBack\\|Lfloor\\|L\\.ext\" src/world/match06.ts | head -30 | cut -c1-220; echo ----; grep -n \"m06On\\|match06\\b\\|m06\\.\\(group\\|update\\|setVisible\\)\\|tubes\\.\\|hide07\\|'07'\" src/game/Game.ts | head -30 | cut -c1-200", "description": "Find where Screen 06 sizes its river floor and where the game toggles 06/07 visibility"}`
+
+### 🧑 User — 2026-11-20T19:00:20.673Z
+
+> ↩︎ result: 8: *   * the river floor = the water surface: the game river's width + 1 u of foam bank each side (<= Lfloor)
+> 30:  Lfloor: number;
+> 505:  const proj = new THREE.PerspectiveCamera(L.camera.fov, W / H, 0.3, L.ext + 160);
+> 586:  const f1 = course.sample(L.s1);
+> 587:  const T1 = f1.tan.clone().normalize(), P1 = f1.pos.clone(), U1 = f1.up.clone(), R1 = f1.right.clone();
+> 589:    if (s <= L.s1) { const f = course.sample(s); return { pos: f.pos.clone(), up: f.up.clone(), right: f.right.clone() }; }
+> 590:    return { pos: P1.clone().addScaledVector(T1, s - L.s1), up: U1.clone(), right: R1.clone() };
+> 593:  for (let s = L.s0; s < L.s1; s += 0.5) sList.push(s);
+> 594:  for (let s = L.s1; s <= L.s1 + L.ext + 1e-6; s += 2) sList.push(s);
+> 647:    const a0 = course.sample(L.s0).pos.sub(O).dot(ax) - 6, a1 = P1.clone().sub(O).dot(ax) + L.ext;
+> 648:    const kS = L.s1 - P1.clone().sub(O).dot(ax); // tile phase: same ring positions as the old tube's straight part
+> 875:    const half = GEO && R6 ? R6.Wb : Math.min(L.Lfloor, course.widthAt(Math.min(s, L.s1)) / 2 + 1.0);
+> 1124:  const fe = frame(L.s1 + L.ext);
+> ----
+> 28:import { buildMatch06 } from '../world/match06';
+> 33:const STAGE_ORDER: StageId[] = ['01', '02',  …[+1514 chars]
+
+### 🤖 Claude — 2026-11-20T19:00:28.030Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 -c \"\nimport json; L=json.load(open('assets/textures/match06/proj06.json')); print({k:L[k] for k in ['R','hA','sBack','sAhead07','ext','sB','s0','s1','Lfloor']}); r6=L['tiles']['r6']; print('r6', {k:v for k,v in r6.items() if not isinstance(v,(list,dict))})\"; grep -n \"zones.tubes\\|zones = \\|tubes:\" src/world/environment.ts | head -8 | cut -c1-200; grep -n \"name = \\|\\.name=\" src/world/tube.ts | head -10 | cut -c1-160", "description": "Read Screen 06 floor extents and how the stage tubes are grouped"}`
+
+### 🧑 User — 2026-11-20T19:00:28.115Z
+
+> ↩︎ result: {'R': 7.5, 'hA': 3.0, 'sBack': -12.0, 'sAhead07': 34.0, 'ext': 260.0, 'sB': 198.91, 's0': 186.91, 's1': 276.8727903992245, 'Lfloor': 6.87386354243376}
+> r6 {'note': 'r6 narrow river: water |l| <= Wc, foam bank Wc..Wb (raised hb), tunnel wall rising from Wb (tools/match06/make_river06.py)', 'Wc': 2.3, 'Wb': 3.6, 'hb': 0.18, 'foamPeriod': 1.6, 'wallFrom': 0.35}
+> 44:  const zones = {
+> 47:    tubes: new THREE.Group(),
+> 188:  zones.tubes.add(goldPipe);
+> 189:  zones.tubes.add(buildRings(goldPath, g0 + 0.2, s05 - 1, 1.6, goldMat, { tube: 0.05, inset: 0.02 }));
+> 193:    zones.tubes.add(buildRings(goldPath, s, s + 0.01, 1, goldMat, { tube: 0.07, extra: 0.4 + i * 0.22 }));
+> 337:      zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 72, step: 0.6, frontNormals: true, axisAttr: true }), mat));
+> 339:      zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 24, step: 0.8, arc: 1.9, inset: -0.12, vScale: 6, frontNormals: true }), pinkFlow.material));
+> 388:  zones.tubes.add(buildRings(perfPath, s05 + 0.3, s05 + 0.31, 1, ringMat, { inset: 0.02, collar: { depth: 0.03, lip: 0.014, width: 1.3 } }));
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:01:12.960Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"const seg = \\|function seg\\|const mark = \\|const smooth = \\|const V = \\|smoothPolyline = \\|function smoothPolyline\" src/world/course.ts | head; n=$(grep -n \"const seg = \\|function seg\" src/world/course.ts | head -1 | cut -d: -f1); sed -n \"$((n)),$((n+6))p\" src/world/course.ts | cut -c1-200; grep -n \"^import\\|flag05\" src/world/course.ts | head -12 | cut -c1-160", "description": "Read how course segments, marks and flags are defined"}`
+
+### 🧑 User — 2026-11-20T19:01:13.032Z
+
+> ↩︎ result: 82:const V = (x: number, y: number, z: number) => new THREE.Vector3(x, y, z);
+> 83:const smooth = (a: number, b: number, x: number) => {
+> 203:  const mark = (k: string) => (marks[k] = pts.length - 1);
+> 204:  const seg = (n: number, f: (t: number) => THREE.Vector3, skipFirst = true) => {
+> 364:function smoothPolyline(pts: THREE.Vector3[], from: number, sigma: number, passes: number) {
+>   const seg = (n: number, f: (t: number) => THREE.Vector3, skipFirst = true) => {
+>     for (let i = skipFirst ? 1 : 0; i <= n; i++) push(f(i / n));
+>   };
+> 
+>   // ---- 01: Benny hidden in the towel, drum A front-left floor (camera looks toward the door) ----
+>   const dA = WORLD.drumA;
+>   const hc = V(0, -0.4, 0); // swirl axis
+> 14:import * as THREE from 'three';
+> 15:import { flag05 } from '../vfx/waterRibbon';
+> 16:import river08 from '../../assets/textures/match08/river08.json';
+> 17:import path06 from '../../assets/textures/match06/path06.json';
+> 278:  const m06 = flag05('match06') || flag05('matchall');
+> 326:  const m08 = flag05('match08') || flag05('matchall');
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T19:01:15.730Z
+
+Now I'll fix the coin depths to a smooth progression (the painted sizes of the tiny far coins are only rough) and rebuild the trail in 3D.
+
+### 🤖 Claude — 2026-11-20T19:01:17.628Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && Q0=$(cat /home/user/rainbow-/qa/match/06/r25/step2/QUERY_NEW2.txt) && DEPTHS='[8,10.2,13.7,18.8,25.2,33,39,44,48.5,53,58,63,72,84,96]' OUT=/home/user/scratch/s06/route_probe2.json timeout 300 npx vite-node tools/match06/r29_route_probe.mjs -- \"$Q0\" 2>&1 | grep -E \"^ ?[0-9]+ px\" | cut -c1-150", "description": "Rebuild the painted coin trail with smoothed depths", "timeout": 320000}`
+
+### 🧑 User — 2026-11-20T19:01:19.359Z
+
+> ↩︎ result: 0 px 267.6,716.1,101 depth 8.0 water -0.81,-37.01,-140.14 | axial 7.7 radR -4.28 radU -0.02 | r 4.3
+>  1 px 178.6,623.8,82 depth 10.2 water -2.16,-36.60,-142.05 | axial 9.5 radR -5.59 radU 0.55 | r 5.6
+>  2 px 234.3,548.1,59 depth 13.7 water -2.94,-36.10,-145.52 | axial 13.0 radR -6.30 radU 1.34 | r 6.4
+>  3 px 319.6,521.3,43 depth 18.8 water -3.51,-35.82,-150.70 | axial 18.1 radR -6.77 radU 2.05 | r 7.1
+>  4 px 407.6,534,32 depth 25.2 water -3.65,-36.07,-157.26 | axial 24.7 radR -6.78 radU 2.35 | r 7.2
+>  5 px 505.9,586.1,22 depth 33.0 water -2.84,-37.45,-165.29 | axial 32.8 radR -5.81 radU 1.64 | r 6.0
+>  6 px 557.5,623,19 depth 39.0 water -2.10,-38.84,-171.34 | axial 38.9 radR -4.95 radU 0.76 | r 5.0
+>  7 px 594.8,644.1,19 depth 44.0 water -1.32,-39.93,-176.35 | axial 44.0 radR -4.06 radU 0.10 | r 4.1
+>  8 px 619.1,654.7,19 depth 48.5 water -0.72,-40.73,-180.83 | axial 48.5 radR -3.37 radU -0.33 | r 3.4
+>  9 px 642.7,662.7,16 depth 53.0 water 0.02,-41.49,-185.31 | axial 53.0 radR -2.55 radU -0.72 | r 2.6
+> 10 px 659.5,668,14 depth 58.0 water 0.60,-42.25,-190.28 | axial 58.0 radR -1.87 radU -1.06 | r 2.1
+> 11 px 675.2,675.9,13 depth 63.0 water 1.27,-43.16,-195.21 | axial 63.0 radR -1.10 radU -1.56 | r …[+344 chars]
+
