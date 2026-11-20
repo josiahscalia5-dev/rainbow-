@@ -1,3 +1,21 @@
+diff --git a/src/characters/benny/benny05.ts b/src/characters/benny/benny05.ts
+index 142e6c3c..94c18d88 100644
+--- a/src/characters/benny/benny05.ts
++++ b/src/characters/benny/benny05.ts
+@@ -243,6 +243,13 @@ export function applyBenny05(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
+   pom.position.y += dCuff + (HAT05.crownH - D.crownH) + HAT05.pomDY;
+   pom.position.x += HAT05.pomDX;
+   pom.position.z += HAT05.pomDZ;
++  // r30 lead (user r30 "the pink character ... exactly like my approved screen", docs/briefs/2026-11-20-r30/USER_R30.md, qa/benny/r30/):
++  // the approved 06 / storyboard Benny wears a SMALLER beanie sitting HIGHER (brim at ~53 % of his height, the dusty-pink body visible
++  // below it) - `&b30hs=` scales the whole beanie (crown, cuff, pom, star; about the hat's own origin), `&b30hy=` raises it (hat-parent
++  // units). Defaults 1 / 0 = unchanged.
++  { const q = typeof location !== 'undefined' ? new URLSearchParams(location.search) : null;
++    const hs = Number(q?.get('b30hs')) || 1, hy = Number(q?.get('b30hy')) || 0;
++    if (hs !== 1 || hy !== 0) { hat.scale.multiplyScalar(hs); hat.position.y += hy; } }
+   pom.scale.setScalar(HAT05.pomScale);
+ 
+   // ---- fur clumping ----
 diff --git a/src/game/Game.ts b/src/game/Game.ts
 index 6aec2406..735b4041 100644
 --- a/src/game/Game.ts
