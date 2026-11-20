@@ -882,3 +882,236 @@ The NEW clip's page has loaded (it runs on the K23-S3 code), so I can now apply 
 
 > 🔧 **Bash** `{"command": "until grep -q \"clip_exit NEW\" /home/user/scratch/s04/run_clips.out; do sleep 5; done; cat /home/user/scratch/s04/run_clips.out; tail -1 /home/user/scratch/s04/clip_NEW_K23-S3.log", "description": "Wait for NEW clip to finish", "timeout": 900000}`
 
+### 🧑 User — 2026-11-20T12:21:19.745Z
+
+> ↩︎ result: start BEFORE_K23-1 12:04:56
+> clip_exit BEFORE_K23-1 0 12:13:14
+> start NEW_K23-S3 12:13:14
+> clip_exit NEW_K23-S3 0 12:21:17
+> ALL_DONE
+> frames 65 game seconds 3.25
+
+### 🤖 Claude — 2026-11-20T12:21:26.582Z
+
+> 🔧 **Bash** `{"command": "S=/home/user/scratch/s04; cat > $S/run_s1_variants.sh <<'EOF'\n#!/usr/bin/env bash\nset -u\nS=/home/user/scratch/s04; export BASE=/home/user/rainbow-/qa/match/04/r23/s3_glossy/QUERY_K23-S3.txt\nV=/home/user/rainbow-/qa/match/04/r23/s04_tools/variant.sh\nrun() { echo \"start $1 $(date -u +%T)\"; bash $V $S/s1var/$1 5275 \"$2\"; }\nrun V0_K23-S3_newcode \"\"\nrun V1_all \"m04lgc=1\"\nrun V2_near \"m04lgc=1&m04lgc0=9&m04lgc1=15\"\nrun V3_short \"m04lgc=1&m04lgcl=0.45&m04lgn=4&m04lgco=0.55\"\necho ALL_DONE\nEOF\nchmod +x $S/run_s1_variants.sh; nohup bash /home/user/rainbow-/tools/lead …[+355 chars]`
+
+### 🧑 User — 2026-11-20T12:21:59.238Z
+
+> ↩︎ result: frames 65 game seconds 3.25 arrows swum through 4
+
+### 🤖 Claude — 2026-11-20T12:22:03.489Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport json; m=json.load(open('/home/user/scratch/s04/clip_NEW_K23-S3/frames.json'))\nprint('s0',m['s0'],'s1',m['s1'])\nfor f in m['frames'][::3]: print(f['i'], f['stage'], f['frac'], f['phase'][:12], f['lat'], [(a['z'],a['ahead'],a['op']) for a in f['arrows'] if a['vis']])\n\"", "description": "Inspect NEW clip arrow log"}`
+
+### 🧑 User — 2026-11-20T12:22:03.763Z
+
+> ↩︎ result: s0 77.413 s1 114.68830202823243
+> 0 04 0 ENTRANCE (st 0 []
+> 3 04 0.056 ENTRANCE (st 0 [(-17.34, 14.57, 0.575), (-23.84, 21.07, 0.915), (-30.34, 27.57, 0.915), (-36.84, 34.07, 0.915), (-43.34, 40.57, 0.915), (-49.84, 47.07, 0.334)]
+> 6 04 0.113 ENTRANCE (st 0 [(-23.84, 18.94, 1), (-30.34, 25.44, 1), (-36.84, 31.94, 1), (-43.34, 38.44, 1), (-49.84, 44.94, 0.696)]
+> 9 04 0.169 ENTRANCE (st 0 [(-23.84, 16.83, 0.985), (-30.34, 23.33, 1), (-36.84, 29.83, 1), (-43.34, 36.33, 1), (-49.84, 42.83, 0.962), (-56.34, 49.33, 0.014)]
+> 12 04 0.226 ENTRANCE (st 0 [(-23.84, 14.73, 0.641), (-30.34, 21.23, 1), (-36.84, 27.73, 1), (-43.34, 34.23, 1), (-49.84, 40.73, 1), (-56.34, 47.23, 0.254)]
+> 15 04 0.282 ENTRANCE (st 0 [(-30.34, 19.13, 1), (-36.84, 25.63, 1), (-43.34, 32.13, 1), (-49.84, 38.63, 1), (-56.34, 45.13, 0.635)]
+> 18 04 0.339 MIDDLE (stee -0.256 [(-30.34, 17.02, 1), (-36.84, 23.52, 1), (-43.34, 30.02, 1), (-49.84, 36.52, 1), (-56.34, 43.02, 0.942)]
+> 21 04 0.395 MIDDLE (stee -1.006 [(-36.84, 21.42, 1), (-43.34, 27.92, 1), (-49.84, 34.42, 1), (-56.34, 40.92, 1), (-62.84, 47.42, 0.22)]
+> 24 04 0.452 MIDDLE (stee -1.65 [(-36.84, 19.31, 0.728), (-43.34, 25.81, 1), (-49.84, 32.31, 1), (-56.34, 38.81, 1), (-62. …[+1733 chars]
+
+### 🤖 Claude — 2026-11-20T12:22:38.609Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/04/r23/s04_tools && python3 -I - <<'EOF'\np='label_clip20.py'; s=open(p).read()\na='''        arr = (f\"glowing arrows ahead of Benny: {av}   swum through: {th}\" if fr['stage'] == meta['screen']\n               else f\"swum through on Screen {meta['screen']}: {th}\")'''\nb='''        arr = (f\"arrows in view ahead of Benny: {av}   passed: {th}\" if fr['stage'] == meta['screen']\n               else f\"arrows passed on Screen {meta['screen']}: {th}\")'''\nassert s.count(a)==1; s=s.replace(a,b)\ns=s.replace(\"# chevrons he has swum through: any chevr …[+889 chars]`
+
+### 🧑 User — 2026-11-20T12:22:39.491Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-20T12:22:40.731Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s04/new_arrows_seq.png"}`
+
+### 🧑 User — 2026-11-20T12:22:40.785Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T12:22:47.102Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s04 && rm -rf clip_*/lab_* && nice -n 10 python3 -I /home/user/rainbow-/qa/match/04/r23/s04_tools/label_clip20.py clip_BEFORE_K23-1 \"BEFORE = K23-1 (what you last saw)\" /home/user/rainbow-/qa/match/04/r25/clip/swim04_whole_BEFORE_K23-1 && nice -n 10 python3 -I /home/user/rainbow-/qa/match/04/r23/s04_tools/label_clip20.py clip_NEW_K23-S3 \"NEW = K23-S3 (glossy clean lane water)\" /home/user/rainbow-/qa/match/04/r25/clip/swim04_whole_NEW_K23-S3 && cat run_s1_variants.out", "description": "Relabel both whole-04 clips"}`
+
+### 🧑 User — 2026-11-20T12:23:53.015Z
+
+> ↩︎ result: frames 65 game seconds 3.25 arrows passed 7
+> frames 65 game seconds 3.25 arrows passed 4
+> [render_slot] got slot 2 after 106s
+> start V0_K23-S3_newcode 12:23:12
+
+### 🤖 Claude — 2026-11-20T12:23:59.168Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s04 && C=/home/user/rainbow-/qa/match/04/r25/clip && for sp in 1.0x 0.5x; do r=20; [ $sp = 0.5x ] && r=10; nice -n 10 ffmpeg -loglevel error -y -framerate $r -i clip_BEFORE_K23-1/lab_$sp/%04d.png -framerate $r -i clip_NEW_K23-S3/lab_$sp/%04d.png -filter_complex \"[0:v][1:v]hstack=inputs=2\" -pix_fmt yuv420p -c:v libx264 -crf 20 $C/swim04_whole_SIDE_BY_SIDE_BEFORE_K23-1_vs_NEW_K23-S3_$sp.mp4; done; mkdir -p $C/frames_full_BEFORE_K23-1 $C/frames_full_NEW_K23-S3; for f in 0006 0014 0022 0030 0038 0046 0054; do cp clip_BEFORE_K23-1/f/$f.png $C/frames_full_BEFORE_ …[+401 chars]`
+
+### 🧑 User — 2026-11-20T12:24:23.166Z
+
+> ↩︎ result: Exit code 1
+> total 18876
+> drwxr-xr-x 4 root root    4096 Nov 20 12:24 .
+> drwxr-xr-x 3 root root    4096 Nov 20 12:04 ..
+> -rw-r--r-- 1 root root    1168 Nov 20 12:04 QUERY_BEFORE_K23-1.txt
+> -rw-r--r-- 1 root root    1475 Nov 20 12:04 QUERY_NEW_K23-S3.txt
+> -rw-r--r-- 1 root root  121649 Nov 20 12:24 frames_BEFORE_K23-1.json
+> -rw-r--r-- 1 root root   83862 Nov 20 12:24 frames_NEW_K23-S3.json
+> drwxr-xr-x 2 root root    4096 Nov 20 12:24 frames_full_BEFORE_K23-1
+> drwxr-xr-x 2 root root    4096 Nov 20 12:24 frames_full_NEW_K23-S3
+> -rw-r--r-- 1 root root 2692456 Nov 20 12:23 swim04_whole_BEFORE_K23-1_0.5x.mp4
+> -rw-r--r-- 1 root root 2065244 Nov 20 12:23 swim04_whole_BEFORE_K23-1_1.0x.mp4
+> -rw-r--r-- 1 root root 2709281 Nov 20 12:23 swim04_whole_NEW_K23-S3_0.5x.mp4
+> -rw-r--r-- 1 root root 2069820 Nov 20 12:23 swim04_whole_NEW_K23-S3_1.0x.mp4
+> -rw-r--r-- 1 root root 5405957 Nov 20 12:24 swim04_whole_SIDE_BY_SIDE_BEFORE_K23-1_vs_NEW_K23-S3_0.5x.mp4
+> -rw-r--r-- 1 root root 4138818 Nov 20 12:24 swim04_whole_SIDE_BY_SIDE_BEFORE_K23-1_vs_NEW_K23-S3_1.0x.mp4
+> Argument '/home/user/rainbow-/qa/match/04/r25/clip/swim04_whole_NEW_K23-S3_0.5x.mp4' provided as input filename, but '/home/user/rainbow-/qa/match/04/r25/c …[+60 chars]
+
+### 🤖 Claude — 2026-11-20T12:24:26.600Z
+
+> 🔧 **Bash** `{"command": "C=/home/user/rainbow-/qa/match/04/r25/clip; for f in $C/*.mp4; do echo \"$(basename $f) $(ffprobe -v error -show_entries format=duration -of csv=p=0 $f) s $(ffprobe -v error -select_streams v -show_entries stream=r_frame_rate,width,height -of csv=p=0 $f)\"; done; cd /home/user/scratch/s04 && python3 -I -c \"\nfrom PIL import Image\nW=Image.new('RGB',(2*540,960))\nW.paste(Image.open('clip_BEFORE_K23-1/lab_1.0x/0046.png'),(0,0)); W.paste(Image.open('clip_NEW_K23-S3/lab_1.0x/0046.png'),(540,0)); W.save('lab_check.png')\"", "description": "Verify clip durations and check a labelled fr …[+5 chars]`
+
+### 🧑 User — 2026-11-20T12:24:27.932Z
+
+> ↩︎ result: swim04_whole_BEFORE_K23-1_0.5x.mp4 6.500000 s 540,960,10/1
+> swim04_whole_BEFORE_K23-1_1.0x.mp4 3.250000 s 540,960,20/1
+> swim04_whole_NEW_K23-S3_0.5x.mp4 6.500000 s 540,960,10/1
+> swim04_whole_NEW_K23-S3_1.0x.mp4 3.250000 s 540,960,20/1
+> swim04_whole_SIDE_BY_SIDE_BEFORE_K23-1_vs_NEW_K23-S3_0.5x.mp4 6.500000 s 1080,960,10/1
+> swim04_whole_SIDE_BY_SIDE_BEFORE_K23-1_vs_NEW_K23-S3_1.0x.mp4 3.250000 s 1080,960,20/1
+
+### 🤖 Claude — 2026-11-20T12:24:28.939Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s04/lab_check.png"}`
+
+### 🧑 User — 2026-11-20T12:24:28.972Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T12:24:39.103Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s04 && python3 -I -c \"\nfrom PIL import Image\nW=Image.new('RGB',(4*540,2*960))\nfor k,n in enumerate(['0010','0022','0034','0052']):\n  W.paste(Image.open(f'clip_BEFORE_K23-1/lab_1.0x/{n}.png'),(k*540,0)); W.paste(Image.open(f'clip_NEW_K23-S3/lab_1.0x/{n}.png'),(k*540,960))\nW.resize((1620,1440)).save('clip_pairs.png')\"; cat run_s1_variants.out", "description": "Sheet of BEFORE vs NEW clip frames"}`
+
+### 🧑 User — 2026-11-20T12:24:40.091Z
+
+> ↩︎ result: [render_slot] got slot 2 after 106s
+> start V0_K23-S3_newcode 12:23:12
+
+### 🤖 Claude — 2026-11-20T12:24:41.471Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s04/clip_pairs.png"}`
+
+### 🧑 User — 2026-11-20T12:24:41.754Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T12:24:57.861Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s04 && python3 -I -c \"\nfrom PIL import Image\nW=Image.new('RGB',(3*432,768))\nB='/home/user/rainbow-/qa/match/04/r23/s3_glossy/NEW'\nfor k,n in enumerate(['f_hard_left','g_hard_right']):\n  W.paste(Image.open(f'{B}/{n}.png').convert('RGB').resize((432,768)),(k*432,0))\nW.paste(Image.open('clip_NEW_K23-S3/f/0050.png').convert('RGB').resize((432,768)),(864,0))\nW.save('ring_check.png')\"; cat run_s1_variants.out", "description": "Check hard left/right shots for ring artifact"}`
+
+### 🧑 User — 2026-11-20T12:24:58.499Z
+
+> ↩︎ result: [render_slot] got slot 2 after 106s
+> start V0_K23-S3_newcode 12:23:12
+> done /home/user/scratch/s04/s1var/V0_K23-S3_newcode 4 png
+> start V1_all 12:24:47
+
+### 🤖 Claude — 2026-11-20T12:24:59.797Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s04/ring_check.png"}`
+
+### 🧑 User — 2026-11-20T12:24:59.832Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T12:25:08.669Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s04 && python3 -I -c \"\nfrom PIL import Image\nW=Image.new('RGB',(6*288,2*432))\nfor k,n in enumerate(range(40,52)):\n  im=Image.open(f'clip_NEW_K23-S3/f/{n:04d}.png').convert('RGB').crop((200,700,864,1500)).resize((288,347))\n  W.paste(im,((k%6)*288,(k//6)*432))\nW.save('ring_seq.png')\"", "description": "Sequence crop to track the stray ring"}`
+
+### 🧑 User — 2026-11-20T12:25:09.696Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T12:25:10.797Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s04/ring_seq.png"}`
+
+### 🧑 User — 2026-11-20T12:25:10.990Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T12:25:27.198Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -rn \"lat\" src/game/Game.ts | grep -in \"bank\\|height\\|\\.y\\b\\|climb\\|curv\\|tilt\" | head -20; grep -rn \"m04wl\\|wlMesh\" src/world/match04.ts src/game/Game.ts | head", "description": "Find how Benny's height follows lateral position"}`
+
+### 🧑 User — 2026-11-20T12:25:27.340Z
+
+> ↩︎ result: 4:196:    const h = water.surfaceHeight(s, lat, time);
+> 27:700:      return { mode: st.mode, stage: st.stage, s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: st.coins, hearts: st.hearts, paused: st.paused, bennyY: +benny.root.position.y.toFixed(3), bennyVisible: benny.root.visible, cam: camera.position.toArray().map((x) => +x.toFixed(2)) };
+
+### 🤖 Claude — 2026-11-20T12:25:29.485Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 180,215p src/game/Game.ts; grep -rn \"surfaceHeight\" src --include=*.ts | head -5", "description": "Read Benny height code"}`
+
+### 🧑 User — 2026-11-20T12:25:29.542Z
+
+> ↩︎ result: if (m08) { m08On = st.stage === '08'; m08.group.visible = m08On; if (m08On) env.zones.chamber.visible = false; }
+>     if (m04) { m04On = st.stage === '04'; m04.group.visible = m04On; if (m04On) { env.zones.basin.visible = false; env.zones.tubes.visible = false; } }
+>     const inDrum = i <= 1;
+>     fog.density = inDrum ? 0.0015 : i >= 7 ? 0.0025 : 0.0035;
+>   };
+> 
+>   // girl placement helpers (she lives in laundry-room local frames)
+>   const placeGirl = (room: 'A' | 'C', local: THREE.Vector3, yaw: number) => {
+>     const anchor = room === 'A' ? env.roomA.anchor : env.roomC.anchor;
+>     if (girl.root.parent !== anchor) anchor.add(girl.root);
+>     girl.root.position.copy(local);
+>     girl.root.rotation.set(0, yaw, 0);
+>   };
+> 
+>   const bennyPose = (s: number, lat: number, time: number, out: { pos: THREE.Vector3; quat: THREE.Quaternion }) => {
+>     const f = course.sample(s);
+>     const h = water.surfaceHeight(s, lat, time);
+>     out.pos.copy(f.pos).addScaledVector(f.right, lat).addScaledVector(f.up, h + benny.radius * 0.55);
+>     const m = new THREE.Matrix4().makeBasis(new THREE.Vector3().crossVectors(f.up, f.tan).normalize(), f.up, f.tan);
+>     out.quat.setFromRotationMatrix(m);
+>     return f;
+>   };
+> 
+>   con …[+1141 chars]
+
+### 🤖 Claude — 2026-11-20T12:25:30.987Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 125,170p src/vfx/index.ts", "description": "Read water surfaceHeight function"}`
+
+### 🧑 User — 2026-11-20T12:25:31.032Z
+
+> ↩︎ result: return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+>   };
+>   const rnd = (a: number, b: number) => a + rand() * (b - a);
+>   let lastFocusSeed = -1e9;
+>   let qaCamera: THREE.Camera | null = null;
+> 
+>   /** 0 = ribbon fully shown, 1 = whirlpool surface takes over (mirrors the ribbon vertex shader) */
+>   const whirlBlend = (s: number) => smooth(st03.s0 + 0.5, st03.s0 + 3.5, s) * (1 - smooth(st04.s0 - 9, st04.s0 - 1.5, s));
+> 
+>   const surfaceHeight = (s: number, lateral: number, t: number): number => {
+>     if (s < ribbonS0) {
+>       // Drum A: absolute swell height relative to the course point
+>       const p = course.pointAt(s, lateral, 0, tmpV);
+>       const up = course.sample(s).up;
+>       return (drum.heightAt(p.x, p.z, t) - p.y) / Math.max(0.3, up.y);
+>     }
+>     const hr = ribbon.heightAt(s, lateral, t);
+>     const k = whirlBlend(s);
+>     if (k <= 0) return hr;
+>     const f = course.sample(s);
+>     const p = tmpV.copy(f.pos).addScaledVector(f.right, lateral);
+>     const b = WORLD.basin;
+>     const r = Math.hypot(p.x - b.center.x, p.z - b.center.z);
+>     const yW = funnelY(r) + FUNNEL_LIFT + whirlpoolHeight(p.x, p.z, t);
+>     const hw = (yW - p.y) / Math.max(0.3, f.up.y);
+>     return hr * (1 - k) + hw * k;
+>   };
+>  …[+1008 chars]
+

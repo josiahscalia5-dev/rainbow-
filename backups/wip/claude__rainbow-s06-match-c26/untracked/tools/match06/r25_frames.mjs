@@ -1,13 +1,13 @@
 // r25 (QA only, no browser): the 06 river frames (pos / up / right) from the game's own course.ts under the given query, for
-// tools/match06/make_hole06.py.  cd /home/user/wt/s06 && npx vite-node tools/match06/r25_frames.ts -- "<query>" <out.json> [sa] [sb] [ds]
+// tools/match06/make_hole06.py.  cd /home/user/wt/s06 && npx vite-node tools/match06/r25_frames.mjs -- "<query>" <out.json> [sa] [sb] [ds]
 import { writeFileSync } from 'node:fs';
 const args = process.argv.slice(2).filter((a) => a !== '--');
 const [Q, OUT, SA, SB, DS] = args;
-(globalThis as unknown as { location: unknown }).location = { search: '?' + Q, href: 'http://x/?' + Q, hostname: 'x' };
+globalThis.location = { search: '?' + Q, href: 'http://x/?' + Q, hostname: 'x' };
 const { Course } = await import('../../src/world/course');
 const c = new Course();
 const sa = Number(SA ?? 186), sb = Number(SB ?? 236), ds = Number(DS ?? 0.05);
-const rows: number[][] = [];
+const rows = [];
 for (let s = sa; s <= sb + 1e-9; s += ds) {
   const f = c.sample(s);
   rows.push([+s.toFixed(4), ...f.pos.toArray(), ...f.up.toArray(), ...f.right.toArray()]);

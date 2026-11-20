@@ -1065,3 +1065,234 @@ I'll start by reading the briefs and my previous progress logs in the specified 
 
 > 🔧 **Bash** `{"command": "until [ $(ls /home/user/scratch/s07/clips/BEFORE/f 2>/dev/null | wc -l) -ge 200 ] || grep -q \"^exit\" /home/user/scratch/s07/clips/BEFORE.log; do sleep 5; done; ls /home/user/scratch/s07/clips/BEFORE/f | wc -l; date", "description": "Wait for 200 BEFORE frames", "timeout": 1800000}`
 
+### 🧑 User — 2026-11-20T12:22:25.775Z
+
+> ↩︎ result: 200
+> Fri Nov 20 12:22:25 UTC 2026
+
+### 🤖 Claude — 2026-11-20T12:22:28.736Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s07 && python3 -c \"\nfrom PIL import Image\nfs=[168,174,180,186,192,196,199]\nW=Image.new('RGB',(288*len(fs),512))\nfor i,f in enumerate(fs): W.paste(Image.open(f'clips/BEFORE/f/{f:04d}.png').convert('RGB').resize((288,512)),(i*288,0))\nW.save('before_join.png')\"", "description": "Sheet of BEFORE join frames"}`
+
+### 🧑 User — 2026-11-20T12:22:29.353Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T12:22:30.341Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s07/before_join.png"}`
+
+### 🧑 User — 2026-11-20T12:22:30.526Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-20T12:22:30.522Z
+
+[Image: original 2016x512, displayed at 2000x508. Multiply coordinates by 1.01 to map to original image.]
+
+### 🤖 Claude — 2026-11-20T12:22:42.818Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s07 && python3 -c \"\nfrom PIL import Image\nW=Image.new('RGB',(864*2,1536))\nfor i,f in enumerate([176,188]): W.paste(Image.open(f'clips/BEFORE/f/{f:04d}.png').convert('RGB'),(i*864,0))\nW.resize((864,768)).save('before_join_big.png')\"; python3 -c \"\nimport json; d=json.load(open('/home/user/scratch/s07/clips/BEFORE/frames.json')) if __import__('os').path.exists('/home/user/scratch/s07/clips/BEFORE/frames.json') else None; print(d and len(d['frames']))\"", "description": "Larger view of two join frames"}`
+
+### 🧑 User — 2026-11-20T12:22:43.213Z
+
+> ↩︎ result: None
+
+### 🤖 Claude — 2026-11-20T12:22:44.267Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s07/before_join_big.png"}`
+
+### 🧑 User — 2026-11-20T12:22:44.297Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T12:23:13.799Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s07/combo && grep -n \"m08\\b\\|m08 \\|b08\\|match08\\|m08On\\|m07On\\|m07Range\\|M07_HIDE\" src/game/Game.ts | head -50", "description": "Find 07/08 visibility handling in Game.ts"}`
+
+### 🧑 User — 2026-11-20T12:23:13.888Z
+
+> ↩︎ result: 27:import { buildMatch08 } from '../world/match08';
+> 107:  // `?match08=1`: the approved Screen 08 scenery on fitted 3D geometry (src/world/match08.ts); off: nothing is built
+> 108:  const m08 = MATCH['08'] ? await buildMatch08() : null;
+> 109:  if (m08) { m08.group.visible = false; scene.add(m08.group); m08.bakeDepth(renderer); scene.add(m08.splash); }
+> 111:  // `?match08=1` Benny on Screen 08 toward the approved picture: smaller beanie, body a little higher out of the water,
+> 114:  const b08 = m08 ? { hat: benny.root.getObjectByName('hat'), body: benny.root.getObjectByName('body'), aux: benny.root.getObjectByName('AuxScene'), crown: benny.root.getObjectByName('hat_crown') as THREE.Mesh | undefined } : null;
+> 115:  const b08Rest = b08 ? { hat: b08.hat?.scale.x ?? 1, body: (b08.body?.scale ?? new THREE.Vector3(1, 1, 1)).clone(), pos: (b08.aux?.position ?? new THREE.Vector3()).clone(), y: b08.aux?.position.y ?? 0, crown: ((b08.crown?.material as THREE.MeshStandardMaterial | undefined)?.color ?? new THREE.Color()).clone() } : null;
+> 116:  let m08On = false;
+> 145:  const M07_HIDE = ['ribbon', 'foam', 'bubbles'];
+> 146:  const m07Range = [course.stage('07').s0 + 14, m07Tube ? course.stage('08').s0 …[+2039 chars]
+
+### 🤖 Claude — 2026-11-20T12:23:16.306Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/1de16074-a1ea-5d78-8ed3-5aa46f86005c/tasks/b64qa58ld.output | grep -v \"allow list\" | tail -30", "description": "Read BEFORE clip completion output"}`
+
+### 🧑 User — 2026-11-20T12:23:16.359Z
+
+> ↩︎ result: frames 209 seconds 8.71
+> exit 0
+> 209
+> Fri Nov 20 12:23:12 UTC 2026
+> 0 0 07 273.7 0 ENTRANCE (straight)
+> 12 0.5 07 280.9 0 ENTRANCE (straight)
+> 24 1 07 288.1 0 ENTRANCE (straight)
+> 36 1.5 07 295.3 0 ENTRANCE (straight)
+> 48 2 07 302.5 0 ENTRANCE (straight)
+> 60 2.5 07 309.7 -0.107 MIDDLE (steering LEFT)
+> 72 3 07 316.9 -2.25 MIDDLE (steering LEFT)
+> 84 3.5 07 324.2 -2.25 MIDDLE (steering LEFT)
+> 96 4 07 331.4 -2.25 MIDDLE (steering LEFT)
+> 108 4.5 07 338.6 -0.325 MIDDLE (steering RIGHT)
+> 120 5 07 345.8 2.25 MIDDLE (steering RIGHT)
+> 132 5.5 07 353.0 2.25 MIDDLE (steering RIGHT)
+> 144 6 07 360.2 2.25 END (straight)
+> 156 6.5 07 367.4 2.25 END (straight)
+> 168 7 07 374.7 1.29 END (straight)
+> 180 7.5 07 381.9 1.275 END (straight)
+> 192 8 07 389.0 1.275 END (straight)
+> 204 8.5 08 395.2 1.275 next screen 08
+> 
+> [exited with code 0]
+
+### 🤖 Claude — 2026-11-20T12:23:23.849Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/rainbow-/qa/match/07/r24/clips && cd /home/user/scratch/s07 && cp clips/BEFORE/frames.json /home/user/rainbow-/qa/match/07/r24/clips/BEFORE_frames.json && (nohup bash /home/user/rainbow-/tools/lead25/render_slot.sh python3 -I /home/user/rainbow-/tools/lead23/label_clip.py clips/BEFORE \"SCREEN 07 · BEFORE (r23 candidate) + latest 08 (K23-3)\" /home/user/rainbow-/qa/match/07/r24/clips/SCREEN07_BEFORE_r23cand_K23-3 > clips/BEFORE_label.log 2>&1; echo exit $? >> clips/BEFORE_label.log; cd /home/user/scratch/s07/combo && AUDIT_PORT=5281 timeout 5400 bash /home/user …[+405 chars]`
+
+### 🧑 User — 2026-11-20T12:23:23.922Z
+
+> ↩︎ result: started
+
+### 🤖 Claude — 2026-11-20T12:23:55.443Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 760,892p src/world/match07.ts", "description": "Read the cloud bank construction and plunge API"}`
+
+### 🧑 User — 2026-11-20T12:23:55.479Z
+
+> ↩︎ result: if (swB > 0) S *= THREE.MathUtils.clamp(0.25 + (0.75 * (wallLat - edge - inset)) / 1.9, 0.3, 1.3);
+>       const room = Math.max(0.5, wallLat - edge);
+>       const lC = edge + inset + Math.min(room * 0.55, 0.35 * S + 0.2 + 0.25 * rnd());
+>       const len = (0.8 + 0.6 * rnd()) * S;
+>       const big: [number, number, number, number][] = []; // lat, along, up, r
+>       const nB = 2 + Math.floor(rnd() * 3);
+>       for (let i = 0; i < nB; i++) {
+>         const r = (0.34 + 0.16 * rnd()) * S;
+>         const l = lC + (rnd() - 0.4) * 0.55 * S, da = (nB > 1 ? i / (nB - 1) - 0.5 : 0) * len + (rnd() - 0.5) * 0.2 * S;
+>         const up = -r * (low > 0 && lowK < 1 ? 0.3 + 0.25 * rnd() : 0.05 + 0.25 * rnd());
+>         big.push([l, a + da, up, r]); pushL(out, tone, place, side, wallLat, l, a + da, up, r, 0.15);
+>       }
+>       // softer lobes heaped on top
+>       for (const [l, al, up, r] of big.slice()) {
+>         if (rnd() < (low > 0 && lowK < 1 ? 0.65 : 0.2)) continue;
+>         const ru = r * (0.65 + 0.2 * rnd());
+>         const th = rnd() * Math.PI * 2, el = 0.55 + 0.35 * rnd();
+>         const dl = Math.cos(th) * Math.sqrt(1 - el * el), da = Math.sin(th) * Math.sqrt(1 - el * el);
+>         const c: [number, numbe …[+6988 chars]
+
+### 🤖 Claude — 2026-11-20T12:24:13.487Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s07 && python3 -c \"\nfrom PIL import Image\nfs=[189,190,191,192,193,194,195]\nW=Image.new('RGB',(288*len(fs),512))\nfor i,f in enumerate(fs): W.paste(Image.open(f'clips/BEFORE/f/{f:04d}.png').convert('RGB').resize((288,512)),(i*288,0))\nW.save('before_handover.png')\nimport json; d=json.load(open('clips/BEFORE/frames.json'))\nfor f in d['frames'][186:200]: print(f['i'],f['t'],f['stage'],round(f['s'],2))\n\"", "description": "Sheet of hand-over frames 189-195"}`
+
+### 🧑 User — 2026-11-20T12:24:14.442Z
+
+> ↩︎ result: 186 7.75 07 385.48
+> 187 7.792 07 386.08
+> 188 7.833 07 386.67
+> 189 7.875 07 387.26
+> 190 7.917 07 387.84
+> 191 7.958 07 388.41
+> 192 8 07 388.98
+> 193 8.042 07 389.53
+> 194 8.083 07 390.08
+> 195 8.125 08 390.62
+> 196 8.167 08 391.16
+> 197 8.208 08 391.68
+> 198 8.25 08 392.2
+> 199 8.292 08 392.7
+
+### 🤖 Claude — 2026-11-20T12:24:15.856Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s07/before_handover.png"}`
+
+### 🧑 User — 2026-11-20T12:24:16.086Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-20T12:24:16.080Z
+
+[Image: original 2016x512, displayed at 2000x508. Multiply coordinates by 1.01 to map to original image.]
+
+### 🤖 Claude — 2026-11-20T12:24:25.389Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"uHide07r\\|uHide07\\b\" src/vfx/*.ts | head; grep -n \"uHide07r\" -A6 src/vfx/waterRibbon.ts | grep -v \"^--$\" | head -40", "description": "Find the ribbon/berm hide uniforms"}`
+
+### 🧑 User — 2026-11-20T12:24:25.472Z
+
+> ↩︎ result: src/vfx/foam.ts:121:uniform vec2 uHide07;    // r8 m07foam: berm hidden on s in (x, y)
+> src/vfx/foam.ts:141:  float h7 = smoothstep(uHide07.x, uHide07.x + 3.0, s) * (1.0 - smoothstep(uHide07.y - 3.0, uHide07.y, s));
+> src/vfx/foam.ts:649:    uHide07: { value: new THREE.Vector2(...(hide07(course) ?? [0, 0])) },
+> src/vfx/waterRibbon.ts:715:uniform vec4 uHide07r;   // r8 m07foam: (s0, s1, |u| fade start, |u| fade end)
+> src/vfx/waterRibbon.ts:722:  float h7r = smoothstep(uHide07r.x, uHide07r.x + 3.0, s) * (1.0 - smoothstep(uHide07r.y - 3.0, uHide07r.y, s))
+> src/vfx/waterRibbon.ts:723:            * smoothstep(uHide07r.z, uHide07r.w, abs(u));
+> src/vfx/waterRibbon.ts:1618:    (uniforms as Record<string, THREE.IUniform>).uHide07r = { value: new THREE.Vector4(...(h ?? [0, 0]), 0.70, 0.84) };
+> 715:uniform vec4 uHide07r;   // r8 m07foam: (s0, s1, |u| fade start, |u| fade end)
+> 716-void main() {
+> 717-  float u = vUV.x;
+> 718-  float s = vUV.y;
+> 719-  #ifdef HIDE07R
+> 720-  // r8 '?match07=1&m07foam=1': the lifted white outer edges of the game's sheet step aside down the 07 plunge so the
+> 721-  // matched tube's river tile (painted soft foam banks) shows there; dithered over 3 u at both ends
+> 722:  float h7r =  …[+994 chars]
+
+### 🤖 Claude — 2026-11-20T12:24:56.957Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"interface Plunge07\\|type Plunge07\" -A8 src/world/match07.ts; grep -n \"finalWave\\|puddles\" src/game/Game.ts | head", "description": "Find Plunge07 type and finalWave handling"}`
+
+### 🧑 User — 2026-11-20T12:24:57.044Z
+
+> ↩︎ result: 433:export interface Plunge07 { course: Course; sA: number; sB: number; fade: [number, number] }
+> 434-
+> 435-export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+> 436-  const [L, TL]: [Layout07, Tiles07] = await Promise.all([fetch(tex('proj07.json')).then((r) => r.json()), fetch(tex('tiles07.json')).then((r) => r.json())]);
+> 437-  const load = async (f: string, wrap: THREE.Wrapping) => {
+> 438-    const t = await new THREE.TextureLoader().loadAsync(tex(f));
+> 439-    t.colorSpace = THREE.NoColorSpace; // raw display values: the shader inverts the post chain itself
+> 440-    t.wrapS = t.wrapT = wrap; t.minFilter = THREE.LinearMipmapLinearFilter; t.anisotropy = 8;
+> 441-    return t;
+> 567:    if (m08 && m08On) for (const k of ['puddles', 'finalWave']) { const o = water.parts?.[k]; if (o) o.visible = false; }
+
+### 🤖 Claude — 2026-11-20T12:25:19.587Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 - <<'EOF'\np='src/game/Game.ts'; s=open(p).read()\nold=\"\"\"  const s08 = course.stage('08').s0;\n  const m07Fade: [number, number] = m07End ? [s08 - 2.2, s08 - 0.1] : [course.marks['07_plunge_bottom'] - 14, course.marks['07_plunge_bottom'] - 3];\n  const m07 = MATCH['07'] ? await buildMatch07(m07Tube ? { course, sA: m07sA, sB: course.marks['07_plunge_bottom'], fade: m07Fade } : undefined) : null;\"\"\"\nnew=\"\"\"  const s08 = course.stage('08').s0;\n  // r25 `&m07join=1` (with m07end; qa/match/07/r24/PROGRESS.md, user ~10:35: \"the detailed swirl …[+5288 chars]`
+
+### 🧑 User — 2026-11-20T12:25:26.286Z
+
+> ↩︎ result: tsc 0
+
+### 🤖 Claude — 2026-11-20T12:25:34.565Z
+
+> 🔧 **Bash** `{"command": "ls /home/user/scratch/s07/clips/S1NEW/f 2>/dev/null | wc -l; cat /home/user/scratch/s07/clips/BEFORE_label.log; ls -la /home/user/rainbow-/qa/match/07/r24/clips/; date; uptime", "description": "Check labelling and S1NEW clip progress"}`
+
+### 🧑 User — 2026-11-20T12:25:34.663Z
+
+> ↩︎ result: 0
+> total 40
+> drwxr-xr-x 2 root root  4096 Nov 20 12:23 .
+> drwxr-xr-x 5 root root  4096 Nov 20 12:23 ..
+> -rw-r--r-- 1 root root 29434 Nov 20 12:23 BEFORE_frames.json
+> Fri Nov 20 12:25:34 UTC 2026
+>  12:25:34 up 42 min,  0 user,  load average: 10.37, 9.38, 6.85
+
+### 🤖 Claude — 2026-11-20T12:25:41.660Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/scratch/s07/vn && cat > /home/user/scratch/s07/vn/joinframe.ts <<'EOF'\nimport * as THREE from 'three';\nimport { Course } from '/home/user/wt/s07/src/world/course';\nconst c = new Course();\nconst sB = c.marks['07_plunge_bottom'], s08 = c.stage('08').s0, s1 = c.stage('08').s1;\nconst f3 = (v: { x: number; y: number; z: number }) => `(${v.x.toFixed(3)},${v.y.toFixed(3)},${v.z.toFixed(3)})`;\nconsole.log('sB', sB.toFixed(2), 's08', s08.toFixed(2), '08 s1', s1.toFixed(2), 'bend', JSON.stringify(c.bend07));\nfor (const s of [sB - 2, sB - 0.4, sB, sB + 0.4, sB + 2, …[+680 chars]`
+
+### 🧑 User — 2026-11-20T12:25:44.258Z
+
+> ↩︎ result: sB 392.57 s08 392.66 08 s1 408.23 bend {"x":12.907950409900659,"amp":2.0975264285097657,"s0":314.41331806416747,"s1":390.570303173429,"extra":2.499130411049229,"fade":1}
+> 390.57 pos (13.099,-113.116,-277.652) tan (0.064,-0.234,-0.970) right (0.998,0.010,0.063) unbentR (1.000,0.000,0.000) up (0.005,0.972,-0.234) unbentU (0.000,0.972,-0.234) bx 0.000
+> 392.17 pos (13.211,-113.442,-279.214) tan (0.124,-0.150,-0.981) right (0.992,0.032,0.120) unbentR (1.000,0.000,0.000) up (-0.014,0.988,-0.153) unbentU (0.000,0.988,-0.151) bx 0.000
+> 392.57 pos (13.272,-113.490,-279.606) tan (0.180,-0.090,-0.980) right (0.984,0.015,0.180) unbentR (1.000,0.000,0.000) up (0.002,0.996,-0.091) unbentU (0.000,0.996,-0.091) bx 0.000
+> 392.97 pos (13.352,-113.516,-279.997) tan (0.212,-0.048,-0.976) right (0.977,-0.015,0.213) unbentR (1.000,0.000,0.000) up (0.025,0.999,-0.044) unbentU (0.000,0.999,-0.049) bx 0.000
+> 394.57 pos (13.680,-113.559,-281.562) tan (0.180,-0.019,-0.984) right (0.953,-0.243,0.179) unbentR (1.000,0.000,0.000) up (0.243,0.970,0.026) unbentU (0.000,1.000,-0.019) bx 0.000
+> 396.66 pos (13.932,-113.587,-283.635) tan (0.002,-0.009,-1.000) right (0.798,-0.603,0.007) unbentR (1.000,0.000,0.000) up (0.603 …[+416 chars]
+

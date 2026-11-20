@@ -1257,3 +1257,412 @@ Let me zoom into the region that matters (ds −1.6..+4.5, l ±2.8) at full unwr
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-20T12:21:02.447Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s06/tools/match06/make_hole06.py", "content": "#!/usr/bin/env python3\n\"\"\"r25 Screen 06 `&m06hole=1` (qa/match/06/r25/PROGRESS.md): the user's \"raised blue cone\" under Benny at the opening.\n\nCause (lead r24, qa/match/06/r24/lead_rip/NOTES.md): where the painted Benny was cut out of the projected approved plate (mask06\nred), the river floor shows the river's own brighter flowing material once the camera leaves the approved view — a hard-edged,\nBenny-shaped bright patch that reads as a cone — and the painted lacy ripple ring stays pinned at the checkpoint be …[+7175 chars]`
+
+### 🧑 User — 2026-11-20T12:21:02.569Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s06/tools/match06/make_hole06.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T12:21:07.715Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06/tools/match06 && timeout 1200 nice -n 5 python3 -I make_hole06.py /home/user/scratch/s06/frames06.json /home/user/scratch/s06/hole_v1 160 13 2>&1 | tail -30", "description": "Run the exemplar hole fill (first try)", "timeout": 1250000}`
+
+### 🧑 User — 2026-11-20T12:21:22.641Z
+
+> ↩︎ result: grid 896 976 omega 352092 source 105951 1.4s
+> filled in 243 patches 13s left 336770
+> {'note': 'r25 m06hole (tools/match06/make_hole06.py)', 'K': 160.0, 'l0': -2.8, 'l1': 2.8, 's0': 197.21, 's1': 203.31, 'sB': 198.91, 'zone': {'dc': -0.25, 'hl': 1.75, 'hs': 0.85}, 'psz': 13}
+
+### 🤖 Claude — 2026-11-20T12:21:36.097Z
+
+The fill stopped early: front texels whose patch held fewer than 3 known texels were dropped without being filled, forming a barrier. I'll fill those from their known neighbours instead.
+
+### 🤖 Claude — 2026-11-20T12:21:38.137Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/tools/match06/make_hole06.py", "old_string": "        if tm.sum() < 3:\n            todo[py, px] = False; continue", "new_string": "        if tm.sum() < 3:  # a thin sliver: take the mean of the known texels round it\n            kk = known[max(0, py - 2):py + 3, max(0, px - 2):px + 3]\n            if kk.any(): I[py, px] = I[max(0, py - 2):py + 3, max(0, px - 2):px + 3][kk].mean(0)\n            todo[py, px] = False; known[py, px] = True; C[py, px] = Cs[py, px]; continue"}`
+
+### 🧑 User — 2026-11-20T12:21:38.196Z
+
+> ↩︎ result: The file /home/user/wt/s06/tools/match06/make_hole06.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T12:21:40.249Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/tools/match06/make_hole06.py", "old_string": "        if y0 < 0 or x0 < 0 or y1 > NY or x1 > NX:  # border: fill from the nearest known texel\n            todo[py, px] = False; known[py, px] = True; continue", "new_string": "        if y0 < 0 or x0 < 0 or y1 > NY or x1 > NX:  # grid border: the mean of the known texels round it\n            kk = known[max(0, py - 2):py + 3, max(0, px - 2):px + 3]\n            if kk.any(): I[py, px] = I[max(0, py - 2):py + 3, max(0, px - 2):px + 3][kk].mean(0)\n            todo[py, px] = False; known[py, px …[+20 chars]`
+
+### 🧑 User — 2026-11-20T12:21:40.284Z
+
+> ↩︎ result: The file /home/user/wt/s06/tools/match06/make_hole06.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T12:21:45.223Z
+
+Now run it in the background (CPU-only, niced) while I write the shader side.
+
+### 🤖 Claude — 2026-11-20T12:21:46.477Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06/tools/match06 && timeout 1800 nice -n 5 python3 -I make_hole06.py /home/user/scratch/s06/frames06.json /home/user/scratch/s06/hole_v1 160 13 > /home/user/scratch/s06/hole_v1.log 2>&1", "description": "Run the exemplar hole fill in background", "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T12:21:46.585Z
+
+> ↩︎ result: Command running in background with ID: b3nugitmz. Output is being written to: /tmp/claude-0/-home-user-rainbow-/1de16074-a1ea-5d78-8ed3-5aa46f86005c/tasks/b3nugitmz.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-20T12:22:14.498Z
+
+While the fill runs, the shader side of `&m06hole=1`. Uniforms first.
+
+### 🤖 Claude — 2026-11-20T12:22:18.543Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "uniform float uRipZ;\nuniform float uWDbg;\nfloat gWDbg = 0.0;\nuniform vec2 uRip0;", "new_string": "uniform float uRipZ;\nuniform float uWDbg;\nfloat gWDbg = 0.0;\nfloat gHDbg = 0.0;\nuniform vec2 uRip0;\n// r25 '&m06hole=1' (qa/match/06/r25/PROGRESS.md; tools/match06/make_hole06.py): the cut-out where the painted Benny was removed\n// from the plate (and the painted ring zone round his contact) shows the approved picture's own painted water continued from\n// the water around it (floor-space fill, wo …[+400 chars]`
+
+### 🧑 User — 2026-11-20T12:22:18.592Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T12:22:19.644Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "      float filled = 0.0, dbgB = 0.0, dbgZ = 0.0;", "new_string": "      float filled = 0.0, dbgB = 0.0, dbgZ = 0.0, rSh = 0.0;"}`
+
+### 🧑 User — 2026-11-20T12:22:19.683Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T12:22:21.845Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "          w *= (1.0 - rS * smoothstep(0.01, 0.06, dAp) * inWater) * (1.0 - mk.g * (1.0 - hold) * inWater);", "new_string": "          // r25 m06hole: the cut-out keeps the plate weight; its pixels come from the painted-water fill below instead\n          rSh = rS * inWater;\n          w *= (1.0 - rS * smoothstep(0.01, 0.06, dAp) * inWater * (1.0 - uHoleOn)) * (1.0 - mk.g * (1.0 - hold) * inWater);"}`
+
+### 🧑 User — 2026-11-20T12:22:21.869Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T12:22:25.998Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "      if (filled > 0.5) pl = textureLod(uPlate, uvF, 0.0).rgb;\n      if (uRipZ > 0.5 && uFloor > 0.5) {", "new_string": "      if (filled > 0.5) pl = textureLod(uPlate, uvF, 0.0).rgb;\n      if (uHoleOn > 0.5 && uFloor > 0.5 && filled < 0.5) {\n        vec2 hu = vec2((vLS.x - uHoleR.x) / (uHoleR.y - uHoleR.x), (vLS.y - uHoleR.z) / (uHoleR.w - uHoleR.z));\n        if (hu.x > 0.0 && hu.x < 1.0 && hu.y > 0.0 && hu.y < 1.0) {\n          vec4 hv = texture2D(uHole, hu);\n          float eH = length(vec2(vLS …[+440 chars]`
+
+### 🧑 User — 2026-11-20T12:22:26.050Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T12:22:27.606Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "  if (uWDbg > 0.5 && uFloor > 0.5) gl_FragColor.rgb = vec3(gWDbg, 0.0, 1.0 - gWDbg);", "new_string": "  if (uWDbg > 0.5 && uFloor > 0.5) gl_FragColor.rgb = vec3(gWDbg * (1.0 - gHDbg), gWDbg * gHDbg, 1.0 - gWDbg); // r25: green = m06hole fill"}`
+
+### 🧑 User — 2026-11-20T12:22:27.641Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T12:22:29.960Z
+
+> 🔧 **Bash** `{"command": "tail -8 /home/user/scratch/s06/hole_v1.log; ls -la /home/user/scratch/s06/hole_v1/", "description": "Check the fill log"}`
+
+### 🧑 User — 2026-11-20T12:22:29.996Z
+
+> ↩︎ result: grid 896 976 omega 352092 source 105951 1.5s
+> filled in 243 patches 16s left 336770
+> {'note': 'r25 m06hole (tools/match06/make_hole06.py)', 'K': 160.0, 'l0': -2.8, 'l1': 2.8, 's0': 197.21, 's1': 203.31, 'sB': 198.91, 'zone': {'dc': -0.25, 'hl': 1.75, 'hs': 0.85}, 'psz': 13}
+> total 5648
+> drwxr-xr-x 2 root root    4096 Nov 20 12:21 .
+> drwxr-xr-x 3 root root    4096 Nov 20 12:21 ..
+> -rw-r--r-- 1 root root     209 Nov 20 12:22 hole06.json
+> -rw-r--r-- 1 root root 4280380 Nov 20 12:22 hole06_dbg.npz
+> -rw-r--r-- 1 root root 1485368 Nov 20 12:22 tile_hole06.png
+
+### 🤖 Claude — 2026-11-20T12:22:37.220Z
+
+The fill still stops after 243 patches, so something else empties the front. Let me inspect the masks.
+
+### 🤖 Claude — 2026-11-20T12:22:40.571Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && python3 - <<'EOF'\nimport numpy as np, cv2\nfrom PIL import Image\nd=np.load('hole_v1/hole06_dbg.npz')\nOm,S,V,hole=d['Om'],d['S'],d['V'],d['hole']\nprint('V',V.mean(),'Om',Om.sum(),'S',S.sum())\nn,lab=cv2.connectedComponents(Om.astype(np.uint8))\nprint('Om comps',n-1,[int((lab==k).sum()) for k in range(1,n)][:10])\nimg=np.zeros(Om.shape+(3,),np.uint8); img[V]=(60,60,60); img[S]=(0,0,255); img[Om]=(255,0,0); img[hole&~Om]=(255,255,0)\nImage.fromarray(img[::-1]).resize((448,488)).save('dbg_masks.png')\na=d['after']; b=d['before']\nImage.fromarray(np.con …[+113 chars]`
+
+### 🧑 User — 2026-11-20T12:22:41.041Z
+
+> ↩︎ result: V 0.6479869547716628 Om 352092 S 105951
+> Om comps 1 [352092]
+
+### 🤖 Claude — 2026-11-20T12:22:42.195Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s06/dbg_masks.png"}`
+
+### 🧑 User — 2026-11-20T12:22:42.228Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T12:23:09.565Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06/tools/match06 && python3 - <<'EOF'\np='make_hole06.py'; s=open(p).read()\ns=s.replace(\"\"\"        un = todo[y0:y1, x0:x1]\n\"\"\",\"\"\"        un = todo[y0:y1, x0:x1].copy()\n\"\"\")\ns=s.replace(\"\"\"    hole = U['mask'][..., 0] > 3\n    hole = cv2.dilate(hole.astype(np.uint8), cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (int(0.12 * K) | 1,) * 2)) > 0\n\"\"\",\"\"\"    # the unknown = the plate's provisional fill itself (painted Benny + painted coins, plate06_fillmask), slightly dilated;\n    # the rest of mask06's blurred red is real painted water and s …[+579 chars]`
+
+### 🧑 User — 2026-11-20T12:23:09.618Z
+
+> ↩︎ result: 51:    hole = cv2.dilate((U['fill'] > 8).astype(np.uint8), cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (int(0.08 * K) | 1,) * 2)) > 0
+> 57:    coin = np.zeros_like(hole)
+> 58:    S = V & water & ~Om & ~bub & ~coin & ~(eZ < 1.2)  # not the rings' outer fringe either
+> 112:        un = todo[y0:y1, x0:x1].copy()
+
+### 🤖 Claude — 2026-11-20T12:23:14.389Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06/tools/match06 && timeout 1800 nice -n 5 python3 -I make_hole06.py /home/user/scratch/s06/frames06.json /home/user/scratch/s06/hole_v2 160 13 > /home/user/scratch/s06/hole_v2.log 2>&1; tail -5 /home/user/scratch/s06/hole_v2.log", "description": "Rerun the exemplar fill (v2)", "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T12:23:14.444Z
+
+> ↩︎ result: Command running in background with ID: b1h418ec0. Output is being written to: /tmp/claude-0/-home-user-rainbow-/1de16074-a1ea-5d78-8ed3-5aa46f86005c/tasks/b1h418ec0.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-20T12:23:16.061Z
+
+Meanwhile, the loader side in `buildMatch06` (texture + rect, only under `&m06hole=1`).
+
+### 🤖 Claude — 2026-11-20T12:23:17.928Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "      uRipA: { value: new THREE.Vector4(0.06, 0.5, 1, 0) } },\n  });", "new_string": "      uRipA: { value: new THREE.Vector4(0.06, 0.5, 1, 0) },\n      uHole: { value: tile }, uHoleOn: { value: 0 }, uHoleR: { value: new THREE.Vector4(0, 1, 0, 1) }, uHoleZ: { value: new THREE.Vector4(0, 1, 1, 0) } },\n  });"}`
+
+### 🧑 User — 2026-11-20T12:23:17.955Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T12:23:23.890Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "  // r25 QA only `&m06holedump=1`", "new_string": "  // r25 `&m06hole=1` (qa/match/06/r25/PROGRESS.md, tools/match06/make_hole06.py; needs m06geo + m06st): the user's \"raised blue\n  // cone\" under Benny at the opening = the cut-out where the painted Benny was removed from the projected plate, shown as the\n  // river's own brighter material with a hard Benny-shaped edge, plus the painted ripple ring left pinned below it. Here the\n  // cut-out and the painted ring zone show the approved picture's ow …[+1108 chars]`
+
+### 🧑 User — 2026-11-20T12:23:23.959Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T12:23:32.204Z
+
+Chrome decodes PNG alpha premultiplied, which would wipe the fill colours where the weight is 0. I'll store the weight as a separate greyscale texture.
+
+### 🤖 Claude — 2026-11-20T12:23:36.911Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06/tools/match06 && python3 - <<'EOF'\np='make_hole06.py'; s=open(p).read()\nold=\"\"\"    rgba = np.dstack([np.clip(I, 0, 255), hw * 255]).astype(np.uint8)\n    out.mkdir(parents=True, exist_ok=True)\n    Image.fromarray(rgba[::-1].copy(), 'RGBA').save(out / 'tile_hole06.png', optimize=True)  # row 0 = far end (texture v up)\n\"\"\"\nnew=\"\"\"    out.mkdir(parents=True, exist_ok=True)\n    # two files (a PNG alpha channel is decoded premultiplied by browsers: the fill colour under weight 0 would be lost);\n    # row 0 = the far end (texture v points up the rive …[+720 chars]`
+
+### 🧑 User — 2026-11-20T12:23:37.023Z
+
+> ↩︎ result: 15:  assets/textures/match06/tile_hole06.png  RGB = plate water with the hole + ring zone filled
+> 16:  assets/textures/match06/tile_hole06w.png L = hole weight (soft)
+> 128:    Image.fromarray(np.clip(I, 0, 255).astype(np.uint8)[::-1].copy(), 'RGB').save(out / 'tile_hole06.png', optimize=True)
+> 129:    Image.fromarray((hw * 255).astype(np.uint8)[::-1].copy(), 'L').save(out / 'tile_hole06w.png', optimize=True)
+
+### 🤖 Claude — 2026-11-20T12:23:39.774Z
+
+Now the shader/loader for the two textures.
+
+### 🤖 Claude — 2026-11-20T12:23:47.214Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='src/world/match06.ts'; s=open(p).read()\nrep=[\n(\"\"\"uniform sampler2D uHole;\nuniform float uHoleOn;\"\"\",\"\"\"uniform sampler2D uHole;\nuniform sampler2D uHoleW;\nuniform float uHoleOn;\"\"\"),\n(\"\"\"// flowing material with a hard Benny-shaped edge. uHole = fill (rgb) + hole weight (a) over uHoleR = (l0, l1, s0, s1);\"\"\",\n \"\"\"// flowing material with a hard Benny-shaped edge. uHole = fill (rgb), uHoleW = cut-out weight, over uHoleR = (l0, l1, s0, s1);\"\"\"),\n(\"\"\"          vec4 hv = texture2D(uHole, hu);\n          f …[+1594 chars]`
+
+### 🧑 User — 2026-11-20T12:23:47.361Z
+
+> ↩︎ result: 138:// flowing material with a hard Benny-shaped edge. uHole = fill (rgb), uHoleW = cut-out weight, over uHoleR = (l0, l1, s0, s1);
+> 141:uniform sampler2D uHoleW;
+> 362:          vec4 hv = vec4(texture2D(uHole, hu).rgb, texture2D(uHoleW, hu).r);
+> 566:      uHole: { value: tile }, uHoleW: { value: tile }, uHoleOn: { value: 0 }, uHoleR: { value: new THREE.Vector4(0, 1, 0, 1) }, uHoleZ: { value: new THREE.Vector4(0, 1, 1, 0) } },
+> 930:    Object.assign(floorMat.uniforms, { uHole: { value: ht }, uHoleW: { value: hw }, uHoleOn: { value: 1 },
+
+### 🤖 Claude — 2026-11-20T12:23:50.967Z
+
+> 🔧 **Bash** `{"command": "tail -4 /home/user/scratch/s06/hole_v2.log; uptime", "description": "Check fill progress"}`
+
+### 🧑 User — 2026-11-20T12:23:51.131Z
+
+> ↩︎ result: grid 896 976 omega 290809 source 200193 1.5s
+> it 500 left 259979 31s
+>  12:23:51 up 40 min,  0 user,  load average: 10.05, 8.59, 6.30
+
+### 🤖 Claude — 2026-11-20T12:23:52.825Z
+
+About 5 minutes for the fill. Meanwhile, type-check.
+
+### 🤖 Claude — 2026-11-20T12:23:53.736Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && timeout 600 nice -n 5 npx tsc --noEmit; echo \"tsc rc=$?\"", "description": "Type-check after shader/loader edits", "timeout": 620000}`
+
+### 🧑 User — 2026-11-20T12:24:02.615Z
+
+> ↩︎ result: tools/match06/r25_frames.ts(3,31): error TS2307: Cannot find module 'node:fs' or its corresponding type declarations.
+> tools/match06/r25_frames.ts(4,14): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+> tools/match06/r25_frames.ts(4,44): error TS7006: Parameter 'a' implicitly has an 'any' type.
+> tsc rc=2
+
+### 🤖 Claude — 2026-11-20T12:24:05.107Z
+
+The tsconfig picks up `tools/*.ts`; I'll make the frames exporter plain JS (vite-node still runs it).
+
+### 🤖 Claude — 2026-11-20T12:24:08.642Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06/tools/match06 && sed -e 's/(globalThis as unknown as { location: unknown })/globalThis/' -e 's/r25_frames.ts/r25_frames.mjs/' -e 's/const rows: number\\[\\]\\[\\] = \\[\\];/const rows = [];/' r25_frames.ts > r25_frames.mjs && rm r25_frames.ts && cat r25_frames.mjs && sed -i 's/r25_frames.ts/r25_frames.mjs/g' r25_unwrap06.py make_hole06.py && cd /home/user/wt/s06 && Q=$(cat /home/user/rainbow-/qa/match/06/r24/lead_rip/QUERY_RIP.txt | tr -d '\\n') && timeout 300 nice -n 5 npx vite-node tools/match06/r25_frames.mjs -- \"$Q\" /home/user/scratch/s06/frames06b.json  …[+265 chars]`
+
+### 🧑 User — 2026-11-20T12:24:18.387Z
+
+> ↩︎ result: // r25 (QA only, no browser): the 06 river frames (pos / up / right) from the game's own course.ts under the given query, for
+> // tools/match06/make_hole06.py.  cd /home/user/wt/s06 && npx vite-node tools/match06/r25_frames.mjs -- "<query>" <out.json> [sa] [sb] [ds]
+> import { writeFileSync } from 'node:fs';
+> const args = process.argv.slice(2).filter((a) => a !== '--');
+> const [Q, OUT, SA, SB, DS] = args;
+> globalThis.location = { search: '?' + Q, href: 'http://x/?' + Q, hostname: 'x' };
+> const { Course } = await import('../../src/world/course');
+> const c = new Course();
+> const sa = Number(SA ?? 186), sb = Number(SB ?? 236), ds = Number(DS ?? 0.05);
+> const rows = [];
+> for (let s = sa; s <= sb + 1e-9; s += ds) {
+>   const f = c.sample(s);
+>   rows.push([+s.toFixed(4), ...f.pos.toArray(), ...f.up.toArray(), ...f.right.toArray()]);
+> }
+> const g6 = c.stage('06');
+> writeFileSync(OUT, JSON.stringify({ query: Q, s06: [g6.s0, g6.s1], cols: 's px py pz ux uy uz rx ry rz', rows }));
+> console.log('frames', rows.length, 'stage06', g6.s0, g6.s1);
+> frames 1001 stage06 188.9098797754344 242.87279039922498
+> SAME
+> tsc rc=0
+> [This command modified 2 files you've previously read: ../wt/s06/tools/match06/make_hole06.py, ../wt …[+62 chars]
+
+### 🤖 Claude — 2026-11-20T12:24:20.827Z
+
+tsc clean, frames identical. Waiting for the fill to finish.
+
+### 🤖 Claude — 2026-11-20T12:24:21.940Z
+
+> 🔧 **Monitor** `{"command": "until grep -q \"filled in\\|Error\\|Traceback\" /home/user/scratch/s06/hole_v2.log; do sleep 5; done; tail -4 /home/user/scratch/s06/hole_v2.log", "description": "Wait for fill v2 to finish", "timeout": "1200000"}`
+
+### 🧑 User — 2026-11-20T12:24:22.002Z
+
+> ↩︎ result: Monitor started (task buoafk688, expires in 5m unless the source ends first; you get one notice at expiry — re-arm if you still need the watch). You will be notified on each event. Keep working — do not poll or sleep. Events may arrive while you are waiting for the user — an event is not their reply.
+
+### 🤖 Claude — 2026-11-20T12:24:31.120Z
+
+While the fill runs: how I ran the gameplay test in r23.
+
+### 🤖 Claude — 2026-11-20T12:24:33.478Z
+
+> 🔧 **Bash** `{"command": "head -5 /home/user/rainbow-/qa/match/06/r23/step3_m06rip/gameplay_NEW.log; tail -5 /home/user/rainbow-/qa/match/06/r23/step3_m06rip/gameplay_NEW.log; grep -n \"gameplay-test\" /home/user/rainbow-/backups/claude-sessions/1dee9937-64f8-543d-ae44-7cf9955b39b3/subagents/agent-a41fb9aa89c21a5e2.md | head -5; head -30 /home/user/wt/s06/scripts/gameplay-test.mjs | grep -n \"argv\\|PORT\\|query\\|QUERY\\|env\" ", "description": "Look up the r23 gameplay test invocation"}`
+
+### 🧑 User — 2026-11-20T12:24:33.627Z
+
+> ↩︎ result: head: cannot open '/home/user/rainbow-/qa/match/06/r23/step3_m06rip/gameplay_NEW.log' for reading: No such file or directory
+> tail: cannot open '/home/user/rainbow-/qa/match/06/r23/step3_m06rip/gameplay_NEW.log' for reading: No such file or directory
+> 1024:> 🔧 **Bash** `{"command": "O=/home/user/rainbow-/qa/match/06/r23/step1_m06fcl/with_m06view; grep -hc \"^06\" $O/*.log; grep -h done $O/*.log; cd /home/user/wt/s06 && sed -n 1,40p scripts/gameplay-test.mjs | grep -n \"port\\|q=\\|argv\\|startVite\" ", "description": "Check view renders and gameplay test options"}`
+> 1031:> 11://   node scripts/gameplay-test.mjs --q=river05=1 --out=qa/pilot05/wave11/tests/gameplay_river05.json
+> 1041:> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06; O=/home/user/rainbow-/qa/match/06/r23/step1_m06fcl; cd /home/user/wt/s06 && (timeout 1200 node scripts/gameplay-test.mjs --q=\"$(cat $S/q_new.txt)\" --out=$O/gameplay_NEW.json > $O/gameplay_NEW.log 2>&1; echo \"rc=$?\" >> $O/gameplay_NEW.log; timeout 1200 node scripts/gameplay-test.mjs --q=\"$(cat $S/q_new_v.txt)\" --out=$O/gameplay_NEW_m06view.json > $O/gameplay_NEW_m06view.log 2>&1; echo \"rc …[+1574 chars]
+
+### 🤖 Claude — 2026-11-20T12:24:36.162Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 1,40p scripts/gameplay-test.mjs | grep -n \"port\\|PORT\\|vite\\|5[0-9][0-9][0-9]\"; python3 -c \"\nimport json;d=json.load(open('/home/user/rainbow-/qa/match/06/r23/step3_m06rip/gameplay_NEW.json'));c=d['checks'];print(d['pass'], sum(1 for v in c.values() if v.get('pass')), len(c), c.get('realCoinPickups'))\"", "description": "Check gameplay test port handling and r23 result format"}`
+
+### 🧑 User — 2026-11-20T12:24:36.313Z
+
+> ↩︎ result: 4://  * continuous travel: s strictly increases, no position jump > speed·dt (no teleport/cut)
+> 13:import { writeFileSync, mkdirSync } from 'node:fs';
+> 14:import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 20:const vite = await startVite(5213);
+> 22:const page = await browser.newPage({ viewport: { width: 216, height: 384 } });
+> 25:await page.goto(`${vite.url}/?qa=1&dpr=1&bloom=0${optQ ? '&' + optQ : ''}`);
+> True 8 8 {'pass': True, 'startCoins': 1330, 'endCoins': 2240, 'collected': 91}
+
+### 🤖 Claude — 2026-11-20T12:24:38.883Z
+
+> 🔧 **Bash** `{"command": "tail -3 /home/user/scratch/s06/hole_v2.log", "description": "Fill progress"}`
+
+### 🧑 User — 2026-11-20T12:24:38.915Z
+
+> ↩︎ result: grid 896 976 omega 290809 source 200193 1.5s
+> it 500 left 259979 31s
+> it 1000 left 232115 69s
+
+### 🤖 Claude — 2026-11-20T12:24:42.982Z
+
+> 🔧 **Bash** `{"command": "head -20 /home/user/tools-pixelmatch/pixeldiff.mjs", "description": "Check pixeldiff usage"}`
+
+### 🧑 User — 2026-11-20T12:24:43.054Z
+
+> ↩︎ result: // QA only (not a game dependency). Usage: node pixeldiff.mjs A.png B.png [diff.png] [threshold=0.1] [yFrom yTo]
+> // Compares two same-size PNGs with Pixelmatch (anti-aliasing aware), optionally only rows yFrom..yTo-1.
+> import fs from 'node:fs';
+> import { PNG } from 'pngjs';
+> import pixelmatch from 'pixelmatch';
+> const [a, b, diffPath, thr = '0.1', y0s, y1s] = process.argv.slice(2);
+> if (!a || !b) { console.error('usage: node pixeldiff.mjs A.png B.png [diff.png] [threshold] [yFrom yTo]'); process.exit(2); }
+> const A = PNG.sync.read(fs.readFileSync(a)), B = PNG.sync.read(fs.readFileSync(b));
+> if (A.width !== B.width || A.height !== B.height) { console.error(`size mismatch ${A.width}x${A.height} vs ${B.width}x${B.height}`); process.exit(3); }
+> const W = A.width, y0 = y0s ? Math.max(0, +y0s) : 0, y1 = y1s ? Math.min(A.height, +y1s) : A.height, H = y1 - y0;
+> const crop = (img) => img.data.subarray(y0 * W * 4, y1 * W * 4);
+> const D = new PNG({ width: W, height: H });
+> const n = pixelmatch(crop(A), crop(B), D.data, W, H, { threshold: +thr });
+> if (diffPath && diffPath !== '-') fs.writeFileSync(diffPath, PNG.sync.write(D));
+> console.log(JSON.stringify({ a, b, rows: [y0, y1], threshold: +thr, diff_pixel …[+66 chars]
+
+### 🤖 Claude — 2026-11-20T12:24:44.136Z
+
+Now the proof render script for step 1 (same tool, shots and water-clock pin as the lead's).
+
+### 🤖 Claude — 2026-11-20T12:24:49.738Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/rainbow-/qa/match/06/r25/step1_hole && cd /home/user/rainbow-/qa/match/06/r25/step1_hole && cp /home/user/rainbow-/qa/match/06/r24/lead_rip/QUERY_RIP.txt QUERY_CURRENT.txt && printf '%s&m06hole=1\\n' \"$(tr -d '\\n' < QUERY_CURRENT.txt)\" > QUERY_NEW.txt && cat QUERY_NEW.txt && cat > render.sh <<'EOF'\n#!/usr/bin/env bash\n# r25 s06 step 1: start + the opening moments (3 / 7 / 12 % into 06) for each variant, water clock pinned (AUDIT_PIN=1000),\n# same tool + shots as the lead's r24 test (qa/match/06/r24/lead_rip/render.sh), rendered from /home/user/wt/s06.\n#  …[+779 chars]`
+
+### 🧑 User — 2026-11-20T12:24:49.820Z
+
+> ↩︎ result: match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1&m06st=1&m06fcl=1&m06view=1&m06vs=0&m06rip=1&m06hole=1
+> it 500 left 259979 31s
+> it 1000 left 232115 69s
+
+### 🤖 Claude — 2026-11-20T12:24:51.696Z
+
+The CURRENT render doesn't depend on the fill, so I'll queue it now (it waits for a render slot).
+
+### 🤖 Claude — 2026-11-20T12:24:52.801Z
+
+> 🔧 **Bash** `{"command": "bash /home/user/rainbow-/qa/match/06/r25/step1_hole/render.sh CURRENT > /home/user/scratch/s06/render_current.log 2>&1", "description": "Render CURRENT proof shots (queued for slot)", "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T12:24:52.845Z
+
+> ↩︎ result: Command running in background with ID: b8sqjviv7. Output is being written to: /tmp/claude-0/-home-user-rainbow-/1de16074-a1ea-5d78-8ed3-5aa46f86005c/tasks/b8sqjviv7.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-20T12:24:59.404Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='/home/user/rainbow-/qa/match/06/r25/PROGRESS.md'; s=open(p).read()\nold=s[s.index('* Step 1 (the user'):s.index('CURRENT (what the user saw)')]\nnew=\"\"\"* Step 1 `&m06hole=1` (the user's opening effect — the cut-out hole + the pinned painted ring filled with the approved\n  picture's own painted water continued from the water around it; keep only the carried shallow rings; start view 0 px):\n  ~12:25 BUILT — measured the hole in the river's own coordinates (`tools/match06/r25_frames.mjs` = game course frames,\n  `r25_unwrap06.py`: cut-out ds -0.6..+3.6 u, u …[+750 chars]`
+
+### 🧑 User — 2026-11-20T12:24:59.527Z
+
+> ↩︎ result: it 1000 left 232115 69s
+> it 1500 left 204290 98s
+
+### 🤖 Claude — 2026-11-20T12:25:02.955Z
+
+> 🔧 **Monitor** `{"command": "until grep -q \"filled in\\|Error\\|Traceback\" /home/user/scratch/s06/hole_v2.log; do sleep 5; done; tail -3 /home/user/scratch/s06/hole_v2.log", "description": "Wait for fill v2 to finish", "timeout": "900000"}`
+
+### 🧑 User — 2026-11-20T12:25:02.987Z
+
+> ↩︎ result: Monitor started (task bkjz1dps6, expires in 5m unless the source ends first; you get one notice at expiry — re-arm if you still need the watch). You will be notified on each event. Keep working — do not poll or sleep. Events may arrive while you are waiting for the user — an event is not their reply.
+
+### 🤖 Claude — 2026-11-20T12:25:08.564Z
+
+> 🔧 **Write** `{"file_path": "/home/user/scratch/s06/view_fill.py", "content": "import sys, numpy as np, cv2\nfrom PIL import Image\nd = np.load(sys.argv[1])\nb, a, Om = d['before'], d['after'].copy(), d['Om']\nout = sys.argv[2]\na2 = a.copy()\ncnt, _ = cv2.findContours(Om.astype(np.uint8), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)\ncv2.drawContours(a2, cnt, -1, (255, 255, 0), 1)\nimg = np.concatenate([b[::-1], a[::-1], a2[::-1]], 1)\nImage.fromarray(img).resize((img.shape[1] * 2 // 3, img.shape[0] * 2 // 3), Image.LANCZOS).save(out)\n"}`
+
+### 🧑 User — 2026-11-20T12:25:08.613Z
+
+> ↩︎ result: File created successfully at: /home/user/scratch/s06/view_fill.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T12:25:10.606Z
+
+> 🔧 **Bash** `{"command": "tail -2 /home/user/scratch/s06/hole_v2.log; cat /home/user/scratch/s06/render_current.log; bash /home/user/rainbow-/tools/lead25/render_slot.sh --status; uptime", "description": "Check progress of fill and CURRENT render"}`
+
+### 🧑 User — 2026-11-20T12:25:10.727Z
+
+> ↩︎ result: it 1000 left 232115 69s
+> it 1500 left 204290 98s
+> slot 1 busy
+> slot 2 busy
+>  12:25:10 up 41 min,  0 user,  load average: 11.01, 9.40, 6.78
+
+### 🤖 Claude — 2026-11-20T12:25:13.297Z
+
+> 🔧 **Monitor** `{"command": "until grep -q \"filled in\\|Error\\|Traceback\" /home/user/scratch/s06/hole_v2.log; do sleep 5; done; tail -3 /home/user/scratch/s06/hole_v2.log", "description": "Wait for fill v2 to finish (re-arm)", "timeout": "900000"}`
+
+### 🧑 User — 2026-11-20T12:25:13.342Z
+
+> ↩︎ result: Monitor started (task biug3cfdd, expires in 5m unless the source ends first; you get one notice at expiry — re-arm if you still need the watch). You will be notified on each event. Keep working — do not poll or sleep. Events may arrive while you are waiting for the user — an event is not their reply.
+
+### 🤖 Claude — 2026-11-20T12:25:15.233Z
+
+> 🔧 **Bash** `{"command": "until grep -q \"filled in\\|Error\\|Traceback\" /home/user/scratch/s06/hole_v2.log; do sleep 5; done; tail -3 /home/user/scratch/s06/hole_v2.log", "description": "Block until fill v2 finishes", "timeout": 900000}`
+

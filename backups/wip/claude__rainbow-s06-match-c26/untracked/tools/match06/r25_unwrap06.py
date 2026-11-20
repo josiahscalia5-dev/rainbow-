@@ -2,7 +2,7 @@
 """r25 (Screen 06, `&m06hole=1` preparation): unwrap the projected approved plate + masks into the river floor's own coordinates
 (lateral l x course s), exactly as match06.ts builds the floor (river frame + right * l + up * bank(l)) and projects it with the
 locked projector camera (assets/textures/match06/proj06.json). Visibility = floor self-occlusion z-buffer in the projector image.
-River frames from tools/match06/r25_frames.ts (the game's own course.ts under the 06 query).
+River frames from tools/match06/r25_frames.mjs (the game's own course.ts under the 06 query).
   python3 -I r25_unwrap06.py <frames.json> <out.npz> [texels_per_u] [l0 l1 sa sb  (s relative to sB)]"""
 import json, sys
 from pathlib import Path

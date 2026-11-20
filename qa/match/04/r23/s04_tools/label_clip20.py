@@ -12,7 +12,8 @@ meta = json.loads((d / 'frames.json').read_text())
 dt = meta.get('dt', 0.05)
 fb = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 30)
 fs = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 26)
-# chevrons he has swum through: any chevron that was drawn ahead of him and is now within 0.5 u of him or behind
+# chevrons he has passed: any chevron that was drawn ahead of him and is now within 0.5 u of him or behind (it may have faded
+# out behind his hat before he reaches it)
 seen, through = set(), set()
 rows = []
 for fr in meta['frames']:
@@ -31,8 +32,8 @@ for speed, rate in (('1.0x', 20), ('0.5x', 10)):
         im = Image.open(d / 'f' / f"{fr['i']:04d}.png").convert('RGB')
         dr = ImageDraw.Draw(im)
         spd = 'REAL GAME SPEED (1.0x)' if speed == '1.0x' else 'HALF SPEED (0.5x)'
-        arr = (f"glowing arrows ahead of Benny: {av}   swum through: {th}" if fr['stage'] == meta['screen']
-               else f"swum through on Screen {meta['screen']}: {th}")
+        arr = (f"arrows in view ahead of Benny: {av}   passed: {th}" if fr['stage'] == meta['screen']
+               else f"arrows passed on Screen {meta['screen']}: {th}")
         lines = [(title, fb), (f"{spd}   game time t = {fr['i'] * dt:.2f} s", fs), (fr['phase'], fs), (arr, fs)]
         y = 1536 - 20 - 46 * len(lines)
         dr.rectangle([0, y - 14, 864, 1536], fill=(20, 8, 40))
@@ -42,4 +43,4 @@ for speed, rate in (('1.0x', 20), ('0.5x', 10)):
         im.resize((540, 960), Image.LANCZOS).save(lab / f"{fr['i']:04d}.png")
     subprocess.run(['ffmpeg', '-loglevel', 'error', '-y', '-framerate', str(rate), '-i', str(lab / '%04d.png'),
                     '-pix_fmt', 'yuv420p', '-c:v', 'libx264', '-crf', '20', f'{outp}_{speed}.mp4'], check=True)
-print('frames', len(meta['frames']), 'game seconds', round(len(meta['frames']) * dt, 2), 'arrows swum through', len(through))
+print('frames', len(meta['frames']), 'game seconds', round(len(meta['frames']) * dt, 2), 'arrows passed', len(through))

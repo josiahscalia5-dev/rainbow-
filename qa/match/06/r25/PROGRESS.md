@@ -4,9 +4,15 @@
 * ~12:05 UTC — started. Read CLAUDE.md, `docs/briefs/2026-11-20-r25/LAUNCH_R25.md` (s06), the lead's diagnosis
   `qa/match/06/r24/lead_rip/NOTES.md` (cone = the cut-out hole where the painted Benny was removed from the projected painting,
   filled with the river's own brighter water, hard Benny-shaped edge; `m06ripz` removed the left-behind ring only).
-* Step 1 (the user's opening effect — blend the hole into the painted water around it, keep only shallow rings at Benny's
-  contact, start view 0 px; ORIGINAL APPROVED / CURRENT (`QUERY_RIP`) / NEW at start + o1 3 % / o2 7 % / o3 12 %, clip 1.0x + 0.5x,
-  gameplay, tsc): IN PROGRESS — measuring the hole in the river's own coordinates.
+* Step 1 `&m06hole=1` (the user's opening effect — the cut-out hole + the pinned painted ring filled with the approved
+  picture's own painted water continued from the water around it; keep only the carried shallow rings; start view 0 px):
+  ~12:25 BUILT — measured the hole in the river's own coordinates (`tools/match06/r25_frames.mjs` = game course frames,
+  `r25_unwrap06.py`: cut-out ds -0.6..+3.6 u, up to 3.5 u wide); fill tool `tools/match06/make_hole06.py` (patch fill, painted
+  water only as source), shader + loader in `src/world/match06.ts` (`m06hole`, QA dump `m06holedump`), `tsc` clean. Fill
+  texture being generated; CURRENT proof shots rendering (`qa/match/06/r25/step1_hole/render.sh`). NEXT: check the fill in
+  floor space, copy it to `assets/textures/match06/`, render NEW, compare, clip, gameplay.
+* Note (user, ~12:20, via lead): judge by the MOVING views — clean continuous painted water round Benny in motion, no hard
+  edges, no brighter patch, no left-behind rings.
 
 CURRENT (what the user saw) = `qa/match/06/r24/lead_rip/QUERY_RIP.txt`:
 `match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1&m06st=1&m06fcl=1&m06view=1&m06vs=0&m06rip=1`
