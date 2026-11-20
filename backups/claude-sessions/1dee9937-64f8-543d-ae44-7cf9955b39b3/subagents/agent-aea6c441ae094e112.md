@@ -1666,3 +1666,198 @@ Step 2 now: the clean water edge. Let me look closely at where the water meets t
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s04; V=/home/user/rainbow-/qa/match/04/r23/s04_tools/variant.sh; export BASE=/home/user/rainbow-/qa/match/04/r23/s1_arrows/QUERY_K23-S1.txt\nexport SHOTS='[[\"c_middle\",0.35,null],[\"d_late\",0.6,null],[\"e_end\",0.85,null],[\"g_hard_right\",0.35,1]]'\n( $V $S/s2/E1 5273 \"m04bbdf=30&m04bbdf1=40&m04bbdx=-0.25&m04bbdk=0.3\" & $V $S/s2/E2 5274 \"m04bbdf=30&m04bbdf1=40&m04bbdx=-0.25&m04bbdk=0.3&m04bbd0=0.6&m04bbd1=0.45&m04bbdg=0.4\" & wait )\nfor sh in c_middle d_late e_end; do python3 /home/user/rai …[+244 chars]`
 
+### 🧑 User — 2026-11-20T09:55:00.843Z
+
+> ↩︎ result: done /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s04/s2/E1 4 png
+> done /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s04/s2/E2 4 png
+
+### 🤖 Claude — 2026-11-20T09:55:02.989Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s04/strip_c_middle.png"}`
+
+### 🧑 User — 2026-11-20T09:55:03.179Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-20T09:55:03.174Z
+
+[Image: original 2616x762, displayed at 2000x583. Multiply coordinates by 1.31 to map to original image.]
+
+### 🤖 Claude — 2026-11-20T09:55:03.598Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s04/strip_e_end.png"}`
+
+### 🧑 User — 2026-11-20T09:55:03.817Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-20T09:55:03.813Z
+
+[Image: original 2616x762, displayed at 2000x583. Multiply coordinates by 1.31 to map to original image.]
+
+### 🤖 Claude — 2026-11-20T09:55:13.808Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"uEdge\" src/world/match04m4.ts | head -20", "description": "Find river edge fringe shader code"}`
+
+### 🧑 User — 2026-11-20T09:55:13.848Z
+
+> ↩︎ result: 772:uniform vec4 uEdge;          // r13 m04edge: x on, y half arc to the edge, z fringe width, w strength
+> 887:  float fringe = 0.0, edgeY = uEdge.y;
+> 908:    edgeY = uEdge.y - uSS.z * lw;
+> 911:  if (uEdge.x > 0.5) {
+> 913:    // in broken patches (no straight hard line, no tall foam): uEdge.y = half arc to the edge, z = fringe width, w = strength
+> 914:    float ew = uEdge.z * mix(1.0, 0.45, wuK);                             // r19b m04wup: a narrower lace on the climbing crest
+> 919:    col = mix(col, pinkC, uEdge.w * smoothstep(edgeY - uEdge.z * 2.2, edgeY - uEdge.z, abs(vS)) * (0.5 + 0.5 * n1));
+> 920:    fringe = uEdge.w * e * patchy * mix(1.0, uWU3.z, wuK);
+> 1780:        uEdge: { value: new THREE.Vector4(M04.num('m04edge', 0), arc[nX], M04.num('m04edgew', 0.45), M04.num('m04edges', 0.8)) },
+
+### 🤖 Claude — 2026-11-20T09:55:15.587Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/src/world/match04m4.ts", "offset": 880, "limit": 60}`
+
+### 🧑 User — 2026-11-20T09:55:15.615Z
+
+> ↩︎ result: 880	      } else {
+> 881	        laneC = mix(laneC, laneC * vec3(0.42, 0.70, 1.0), uLane3.x * wl);
+> 882	      }
+> 883	    }
+> 884	    laneCol = laneC;
+> 885	    col = mix(col, laneC, kl * uLane.z);
+> 886	  }
+> 887	  float fringe = 0.0, edgeY = uEdge.y;
+> 888	  // r19b m04wup: as painted, the water does not stop in a straight flat line against the gold wall — the pink / magenta
+> 889	  // satin bands sweep UP the tunnel sides in long rising tongues (higher round Benny, lower far ahead), their lilac crest
+> 890	  // lapping the wall. ext = arc up the wall above the old water edge, wuE = this spot's top edge (both in u).
+> 891	  float ext = abs(vS) - uWU3.x, wuE = 0.0, wuK = 0.0;
+> 892	  if (uWU.x > 0.0) {
+> 893	    float sd = vS < 0.0 ? 0.0 : 1.0;
+> 894	    float bA = uNB.x > 0.5 ? uNB.y : uA5b.z + 6.4;                       // Benny's position down the slide
+> 895	    float env = mix(1.0, uWU2.z, smoothstep(uWU2.x, uWU2.y, along - bA));
+> 896	    float ph = (along - uTime * 0.9 * uWU3.y) * 6.2832 / uWU.y + sd * 2.6 + 2.2 * vn(vec2(along * 0.06, 3.0 + sd * 6.0));
+> 897	    float tg = 0.5 + 0.5 * sin(ph);
+> 898	    tg = tg * tg * (3.0 - 2.0 * tg);                                      // long rounded crests, short troug …[+3072 chars]
+
+### 🤖 Claude — 2026-11-20T09:55:24.518Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"\\bRY\\b\" src/world/match04m4.ts | grep -v \"^\\s*//\" | cut -c1-200 | head -30", "description": "List uses of the river side height RY"}`
+
+### 🧑 User — 2026-11-20T09:55:24.610Z
+
+> ↩︎ result: 1673:  const RY = M04.num('m04ry', 1.0);                         // how high the river sides climb the wall (u above the water)
+> 1675:  const xW = Math.sqrt(Math.max(0, (r + 0.08) ** 2 - (cy - RY) ** 2)); // where the river side meets the wall
+> 1701:    const xWr = wup ? Math.sqrt(Math.max(0, Rt * Rt - (cy - RY) ** 2)) : xW;
+> 1708:      if (au <= kf) { x = (au / kf) * XF; y = 0.02; } else { const t = (au - kf) / (1 - kf); x = XF + (xWr - XF) * t; y = 0.02 + RY * t * t; }
+> 1736:      const th0 = Math.atan2(xWr, cy - RY);                   // the trough edge angle (from straight down) on its circle Rt
+> 1742:          const ex = cx + sd * xWr, ey = 0.02 + (RY - 0.02) * k;           // this row's trough edge point
+> 1846:    console.info('[match04] m04river', { xW, RY, XF });
+> 1885:    // the river surface height d u from the centre line (flat lane, the trough's side rising to RY at xW, its top edge beyond):
+> 1887:    const surfY = (d: number) => (d <= XF ? 0.02 : d >= xW ? RY : 0.02 + (RY - 0.02) * ((d - XF) / Math.max(0.1, xW - XF)) ** 2);
+> 2109:          const ys = onWall ? RY + rnd() * (f3 ? 0.25 : 0.7) * env * fch : 0.02 + RY * tt * tt;
+> 2124:          const x = side * (XF + (xW - XF) * tt - …[+153 chars]
+
+### 🤖 Claude — 2026-11-20T09:55:30.368Z
+
+Lowering `RY` also re-seats the foam on the new edge (they use the same surface function). I'll test RY 0.45 alone (E3) and with the extended edge foam (E4).
+
+### 🤖 Claude — 2026-11-20T09:55:34.475Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s04; V=/home/user/rainbow-/qa/match/04/r23/s04_tools/variant.sh; export BASE=/home/user/rainbow-/qa/match/04/r23/s1_arrows/QUERY_K23-S1.txt\nexport SHOTS='[[\"b_early\",0.12,null],[\"c_middle\",0.35,null],[\"d_late\",0.6,null],[\"e_end\",0.85,null]]'\n( $V $S/s2/E3 5273 \"m04ry=0.45\" & $V $S/s2/E4 5274 \"m04ry=0.45&m04bbdf=30&m04bbdf1=40&m04bbdx=-0.25&m04bbdk=0.3\" & wait )\nfor sh in b_early c_middle d_late e_end; do python3 /home/user/rainbow-/qa/match/04/r23/s04_tools/strip.py $S/strip_$sh.png  …[+166 chars]`
+
+### 🧑 User — 2026-11-20T09:57:11.642Z
+
+> ↩︎ result: done /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s04/s2/E4 4 png
+> done /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s04/s2/E3 4 png
+
+### 🤖 Claude — 2026-11-20T09:57:13.660Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s04/strip_c_middle.png"}`
+
+### 🧑 User — 2026-11-20T09:57:13.991Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-20T09:57:13.987Z
+
+[Image: original 2616x762, displayed at 2000x583. Multiply coordinates by 1.31 to map to original image.]
+
+### 🤖 Claude — 2026-11-20T09:57:14.257Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s04/strip_b_early.png"}`
+
+### 🧑 User — 2026-11-20T09:57:14.501Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-20T09:57:14.496Z
+
+[Image: original 2616x762, displayed at 2000x583. Multiply coordinates by 1.31 to map to original image.]
+
+### 🤖 Claude — 2026-11-20T09:57:24.356Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s04/strip_d_late.png"}`
+
+### 🧑 User — 2026-11-20T09:57:24.683Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-20T09:57:24.676Z
+
+[Image: original 2616x762, displayed at 2000x583. Multiply coordinates by 1.31 to map to original image.]
+
+### 🤖 Claude — 2026-11-20T09:57:25.010Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s04/strip_e_end.png"}`
+
+### 🧑 User — 2026-11-20T09:57:25.205Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-20T09:57:25.202Z
+
+[Image: original 2616x762, displayed at 2000x583. Multiply coordinates by 1.31 to map to original image.]
+
+### 🤖 Claude — 2026-11-20T09:57:40.758Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"uSB1.y\\|uEdge.w\\|fringe\" src/world/match04m4.ts | grep -v \"^\\s*//\" | cut -c1-220 | head -20", "description": "Find side-band fringe and edge strength usage"}`
+
+### 🧑 User — 2026-11-20T09:57:40.862Z
+
+> ↩︎ result: 772:uniform vec4 uEdge;          // r13 m04edge: x on, y half arc to the edge, z fringe width, w strength
+> 781:uniform vec4 uSB1;           // x blend width at the inner side, y re-apply the lilac-white edge fringe (0/1), z tile part used
+> 801:                             // on the climbing crest (share of the m04edge fringe), w band tile column at the crest (0 = lilac sparkle)
+> 887:  float fringe = 0.0, edgeY = uEdge.y;
+> 901:    edgeY = uWU3.x + wuE;                                                 // the lilac fringe rides the climbing crest
+> 905:    // hard line where the water meets the wall); the lilac fringe follows the lapping edge
+> 912:    // r13 m04edge: soft irregular water edge against the gold wall — pink / magenta current then a lilac-white lacy fringe
+> 913:    // in broken patches (no straight hard line, no tall foam): uEdge.y = half arc to the edge, z = fringe width, w = strength
+> 919:    col = mix(col, pinkC, uEdge.w * smoothstep(edgeY - uEdge.z * 2.2, edgeY - uEdge.z, abs(vS)) * (0.5 + 0.5 * n1));
+> 920:    fringe = uEdge.w * e * patchy * mix(1.0, uWU3.z, wuK);
+> 921:    col = mix(col, vec3(0.97, 0.90, 1.0), fringe);
+> 1035:    if (uSB1.y > 0.5) col = mix(col, vec3(0.97, 0.90, 1. …[+139 chars]
+
+### 🤖 Claude — 2026-11-20T09:57:43.031Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/src/world/match04m4.ts", "offset": 995, "limit": 45}`
+
+### 🧑 User — 2026-11-20T09:57:43.070Z
+
+> ↩︎ result: 995	    }
+> 996	    float as = abs(sv);
+> 997	    float am = rr >= 0.0 ? rr : as;                       // r18: where the bands start (whirl ellipse, else the lateral arc)
+> 998	    float asB = as;
+> 999	    if (uSS.x > 0.0) {
+> 1000	      // r18 m04sswirl: the painted pink / violet ribbons on the banks curve UP toward the wall and back down in long S-sweeps
+> 1001	      // (world-anchored; zero shift at the bands' inner start and at the water edge, so neither moves)
+> 1002	      float kk = clamp((as - inner) / max(0.1, uSB0.z - inner), 0.0, 1.0);
+> 1003	      asB = as + uSS.x * 4.0 * kk * (1.0 - kk) * sin(along * 6.2832 / uSS.y + (vS < 0.0 ? 1.3 : 4.1) + 1.5 * vn(vec2(along * 0.07, vS < 0.0 ? 1.0 : 5.0)));
+> 1004	    }
+> 1005	    float sg = rr >= 0.0 ? 0.0 : sign(vS);       // r18 whirl: one wander for both sides (no jump where the crescents cross)
+> 1006	    float wan = uSB1.w * (vn(vec2(along * 0.11, sg * 5.0 + 2.0)) - 0.5) * 2.0 * (1.0 - uFar.y * smoothstep(uFar.x - 8.0, uFar.x, along));
+> 1007	    float tb = clamp((asB + wan - inner) / max(0.1, uSB0.z - inner), 0.0, 1.0);
+> 1008	    if (uWU.x > 0.0) {
+> 1009	      // r19b m04wup: the painted band sequence (cyan by the lane -> violet -> hot-pink satin ->  …[+2303 chars]
+
+### 🤖 Claude — 2026-11-20T09:57:50.567Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s04; V=/home/user/rainbow-/qa/match/04/r23/s04_tools/variant.sh; export BASE=/home/user/rainbow-/qa/match/04/r23/s1_arrows/QUERY_K23-S1.txt\nexport SHOTS='[[\"b_early\",0.12,null],[\"c_middle\",0.35,null],[\"d_late\",0.6,null],[\"e_end\",0.85,null]]'\nF=\"m04ry=0.45&m04bbdf=30&m04bbdf1=40&m04bbdx=-0.25&m04bbdk=0.3\"\n( $V $S/s2/E5 5273 \"$F&m04edges=0.3&m04sbf=0\" & $V $S/s2/E6 5274 \"$F&m04edges=0.3&m04sbf=0&m04bbd1=1.05&m04bbdg=0.45\" & wait )\nfor sh in c_middle d_late e_end; do python3 /home/us …[+193 chars]`
+

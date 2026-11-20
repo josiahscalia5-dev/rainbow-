@@ -1,11 +1,17 @@
 # Screen 07 · round 23 (water-fx-specialist) — progress log
 
 ## (r23) WHERE I STOPPED / NEXT
-* DONE: step 1 `&m07satin=1` (painted satin ribbons + white flares on the magenta bands) — GOOD IMPROVEMENT (s1_satin/).
-* Candidate query now: `K7c&m07satin=1` (`s1_satin/query_NEW.txt`).
-* NOW (resumed after the container restart ~05:15 UTC): step 2 = lower the tall foam walls along the drop into low soft clouds
-  (own switch `&m07low=1`: the drop's purple slotted wall comes down to the water just behind a narrow, low foam fringe).
-* NEXT: step 3 = the middle (close purple wall), `&m07view=1` framing test only if scenery cannot get there.
+* DONE: step 1 `&m07satin=1` (painted satin ribbons + white flares on the magenta bands) — GOOD IMPROVEMENT (s1_satin/; lead: small
+  GOOD IMPROVEMENT). Candidate query now: `K7c&m07satin=1` (`s1_satin/query_NEW.txt`); m07cloud (fuller, rounder foam) stays in it
+  (the user likes it).
+* NEW USER DIRECTION (~09:55 UTC, via the lead): the river must sweep in broad S-bends (water, pink edges, foam, coin trail together)
+  instead of "a mostly straight chute with wavy colours inside it"; then natural foam variation. Replaces the old steps 2 / 3.
+* Parked: `&m07low=1` (wall pulled in to the water on the drop) — NOT AN IMPROVEMENT (the gold rings bend into chevrons, the foam
+  shrank to a thin line); kept as an optional switch, off, can no longer shrink the round clouds (`s2x_low_parked/`).
+* NOW: step 2 `&m07sbend=1` — the plunge (everything from the audit's 0.35 on is the 70° drop, laid as a perfectly straight chute)
+  gets the painted broad S-bends: route S-offset (Benny, steering bounds, collision, coins, game water follow it), the tube stays
+  straight, bands / foam / coins sweep inside it, camera looks along the straight chute (framing test). Folder `s2_sriver/`.
+* NEXT: step 3 = foam natural variation (size + spacing, blending into the water).
 
 Worktree `/home/user/wt/s07`, LOCAL branch `claude/rainbow-s07-match-c24` (= `8accdad0` + r22 WIP: r21 code + `m07cloud` + the
 started `m07satin`). No commits, no pushes. Port 5277 (5280–5281 for parallel renders). VISUALS ONLY. Nothing is approved until

@@ -1,0 +1,16 @@
+diff --git a/tools/match08/shots08.mjs b/tools/match08/shots08.mjs
+index 2e9b53e..98b6fc2 100644
+--- a/tools/match08/shots08.mjs
++++ b/tools/match08/shots08.mjs
+@@ -8,7 +8,10 @@ const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(
+ const [SCREEN, OUT, Q = ''] = process.argv.slice(2);
+ mkdirSync(OUT, { recursive: true });
+ const { chromium } = loadPlaywright();
+-const vite = await startVite(5270 + Number(SCREEN));
++// M08_FONTS=1 (r23, QA only): dev server that may also serve the symlinked node_modules (HUD fonts; tools/match08/r23_vite.mjs)
++const vite = process.env.M08_FONTS === '1'
++  ? await (await import(pathToFileURL(`${process.cwd()}/tools/match08/r23_vite.mjs`).href)).startVite(Number(process.env.M08_PORT ?? 5278))
++  : await startVite(5270 + Number(SCREEN));
+ const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+ const log = [];
+ // [name, forward distance in world units from the checkpoint (or 'tN' = fraction N of the rest of the stage), steer]

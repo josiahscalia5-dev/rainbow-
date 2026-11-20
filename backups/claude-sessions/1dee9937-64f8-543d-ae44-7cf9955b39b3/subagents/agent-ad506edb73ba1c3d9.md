@@ -1559,3 +1559,284 @@ Now I'll dump the 07 route geometry in the tube frame (lane offset from the tube
 > /**
 >  * Arc- …[+7144 chars]
 
+### 🤖 Claude — 2026-11-20T09:53:45.097Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && ls src/game/ src/world/ | head -40; grep -rn \"coins07\\|m07coins\\|'07'\" src/world/coins*.ts src/game/coins*.ts 2>/dev/null | head -20", "description": "Find coin placement code"}`
+
+### 🧑 User — 2026-11-20T09:53:45.239Z
+
+> ↩︎ result: src/game/:
+> Game.ts
+> cameraRig.ts
+> match.ts
+> modules.ts
+> 
+> src/world/:
+> course.ts
+> environment.ts
+> far05.ts
+> laundryRoom.ts
+> match07.ts
+> match08.ts
+> materials.ts
+> towel.ts
+> tube.ts
+
+### 🤖 Claude — 2026-11-20T09:53:47.159Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -rln \"coinDefs\\|class Coins\\|buildCoins\\|defs:\" src | head; grep -rn \"m07coins\" src | head -5", "description": "Locate coins module"}`
+
+### 🧑 User — 2026-11-20T09:53:47.304Z
+
+> ↩︎ result: src/game/Game.ts
+> src/gameplay/coins.ts
+> src/game/Game.ts:147:  const m07CoinLook = !!m07 && flag05('m07coinsz');
+> src/game/Game.ts:636:      // `&m07coinsz=1` (look only): Screen 07 coins sized against the live camera, stepping aside from Benny
+> src/gameplay/coins.ts:41:/** `?m07coins=1`: lateral offsets of the two far trail coins continuing the painted coin line (tools/match07/coinprobe07.mjs) */
+> src/gameplay/coins.ts:61:  // `?match07=1&m07coins=1` (qa/match/07/m2/NOTES.md, position only): the two trail coins right behind the painted far coins
+> src/gameplay/coins.ts:63:  const m07c = m07 && flag05('m07coins'); let m07k = 0;
+
+### 🤖 Claude — 2026-11-20T09:53:49.433Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 1,140p src/gameplay/coins.ts", "description": "Read coin definitions"}`
+
+### 🧑 User — 2026-11-20T09:53:49.509Z
+
+> ↩︎ result: /**
+>  * Gold $ coins anchored to the course (s, lateral, height). Real pickups: distance test against
+>  * Benny each frame; collected coins pop + sparkle and the counter increments by COIN_VALUE.
+>  * Layout follows the coin trails visible in the references (03 spiral trail, 04 left edge,
+>  * 05/07 snaking centre line, 06 on the arch crest, 08–10 toward the towel).
+>  */
+> import * as THREE from 'three';
+> import type { Course, StageId } from '../world/course';
+> import { canvasTexture } from '../world/materials';
+> import { coreLateral, flag05 } from '../vfx/waterRibbon';
+> import coins08 from '../../assets/textures/match08/coins08.json';
+> import coins07 from '../../assets/textures/match07/coins07.json';
+> 
+> export const COIN_VALUE = 10;
+> 
+> /** scale: coin size factor (1 = 1.0 u diameter); tilt: radians the coin leans back (top away from the camera) */
+> export interface CoinDef { s: number; lat: number; h: number; stage: StageId; scale?: number; tilt?: number; faceTo?: [number, number, number] }
+> 
+> /**
+>  * 05 (ref 05, measured): ≈10 coins on the electric-cyan core winding to the VP. The nearest one is
+>  * ≈95 px wide just above Benny's pom (474, 726), then 64 → 55 → 42 → 28 → 19 px: the spacing in depth
+>  * g …[+8007 chars]
+
+### 🤖 Claude — 2026-11-20T09:55:41.797Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -rhoE \"m07[a-zA-Z0-9]+\" src | sort | uniq -c | sort -rn | head -40; grep -n \"interface RouteData\" -A8 src/world/course.ts; grep -n \"const smooth\\b\\|function smooth\\|const smooth =\" src/world/course.ts | head -3", "description": "List used m07 switch names and RouteData"}`
+
+### 🧑 User — 2026-11-20T09:55:42.394Z
+
+> ↩︎ result: 12 m07foam
+>      10 m07end
+>      10 m07cloud
+>       9 m07foamb
+>       8 m07tube
+>       8 m07nearw
+>       8 m07band
+>       6 m07Tube
+>       5 m07satin
+>       5 m07coinsz
+>       5 m07RibbonHide
+>       5 m07End
+>       5 m07BermHide0
+>       5 m07BermHide
+>       4 m07sA
+>       4 m07low
+>       4 m07gold
+>       4 m07fill
+>       3 m07wfoam
+>       3 m07k
+>       3 m07coins
+>       3 m07ang
+>       3 m07RibbonHide0
+>       3 m07Range
+>       3 m07On
+>       3 m07BermHideOn
+>       3 m07Applied
+>       2 m07pC
+>       2 m07near
+>       2 m07lK
+>       2 m07lF
+>       2 m07c
+>       2 m07bL
+>       2 m07bC
+>       2 m07bA
+>       2 m07RibbonHideOn
+>       2 m07Fade
+>       2 m07CoinLook
+>       2 m07Cloud
+>       2 m07BennyP
+> 102:interface RouteData {
+> 103-  points: THREE.Vector3[];
+> 104-  marks: Record<string, number>;
+> 105-  straight: { from: string; to: string; a: THREE.Vector3; b: THREE.Vector3; floorDepth: number }[];
+> 106-}
+> 107-
+> 108-/**
+> 109- * 05 current (ref 05): the tunnel is a straight line; the STREAM winds inside it. The meander is the
+> 110- * lateral (world +X) offset of the course centreline from that line, as a function of the distance
+> 83:const smooth = (a: number, b: number, x: number) => {
+> 373:function smoothPolyline(pts: THREE.Vector3[], fr …[+44 chars]
+
+### 🤖 Claude — 2026-11-20T09:55:44.538Z
+
+Now the route change in `course.ts`.
+
+### 🤖 Claude — 2026-11-20T09:55:56.684Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 - <<'EOF'\np='src/world/course.ts'; s=open(p).read()\nold='''interface RouteData {\n  points: THREE.Vector3[];\n  marks: Record<string, number>;\n  straight: { from: string; to: string; a: THREE.Vector3; b: THREE.Vector3; floorDepth: number }[];\n}'''\nnew='''interface RouteData {\n  points: THREE.Vector3[];\n  marks: Record<string, number>;\n  straight: { from: string; to: string; a: THREE.Vector3; b: THREE.Vector3; floorDepth: number }[];\n  /** r23 `?match07=1&m07sbend=1`: world X of the un-bent 07 plunge line (the plunge lies in that YZ plane) + …[+2959 chars]`
+
+### 🧑 User — 2026-11-20T09:55:57.134Z
+
+> ↩︎ result: 83:const smooth = (a: number, b: number, x: number) => {
+> 400:function smoothPolyline(pts: THREE.Vector3[], from: number, sigma: number, passes: number) {
+> const smooth = (a: number, b: number, x: number) => {
+>   const t = THREE.MathUtils.clamp((x - a) / (b - a), 0, 1);
+>   return t * t * (3 - 2 * t);
+> };
+> 
+> /**
+>  * A stretch whose tunnel axis is an exact straight line a→b (the stream winds inside it). The
+>  * course lies on the line at both ends of the stretch; tube.ts aligns the tunnel axis to it.
+> 589:  widthAt(s: number): number {
+
+### 🤖 Claude — 2026-11-20T09:56:04.708Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 - <<'EOF'\np='src/world/course.ts'; s=open(p).read()\nold='''  widthAt(s: number): number {'''\nnew='''  /** r23 `&m07sbend=1`: lateral (world X) offset of the 07 plunge from its un-bent line at s (0 when off / outside the plunge) */\n  bend07At(s: number): number {\n    const b = this.bend07;\n    if (!b || s <= b.s0 || s >= b.s1) return 0;\n    const w = THREE.MathUtils.smoothstep(s, b.s0, b.s0 + 3) * (1 - THREE.MathUtils.smoothstep(s, b.s1 - 3, b.s1));\n    return (this.sample(s).pos.x - b.x) * w;\n  }\n\n  widthAt(s: number): number {'''\nassert …[+146 chars]`
+
+### 🧑 User — 2026-11-20T09:56:14.252Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-20T09:56:24.292Z
+
+Now the camera part (framing test) in `cameraRig.ts`.
+
+### 🧑 User — 2026-11-20T09:56:28.812Z
+
+Your response above was cut off mid-stream and only your next message is delivered. Write the complete response again from the start — no apology, no mention of the cut-off.
+
+### 🤖 Claude — 2026-11-20T09:56:31.488Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 1,20p src/game/cameraRig.ts | grep -n \"import\"; grep -n \"const dir = f.tan.clone().lerp(fb.tan, 0.35).normalize();\" src/game/cameraRig.ts", "description": "Check cameraRig imports and dir line"}`
+
+### 🧑 User — 2026-11-20T09:56:31.693Z
+
+> ↩︎ result: 6:import * as THREE from 'three';
+> 7:import { WORLD } from '../world/course';
+> 8:import type { Course, StageId } from '../world/course';
+> 9:import type { TubePath } from '../world/tube';
+> 10:import { applyMatchCam } from './match';
+> 90:    const dir = f.tan.clone().lerp(fb.tan, 0.35).normalize();
+
+### 🤖 Claude — 2026-11-20T09:56:37.871Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 - <<'EOF'\np='src/game/cameraRig.ts'; s=open(p).read()\nold='''    const dir = f.tan.clone().lerp(fb.tan, 0.35).normalize();\n'''\nnew='''    const dir = f.tan.clone().lerp(fb.tan, 0.35).normalize();\n    // r23 `?match07=1&m07sbend=1` (framing test, qa/match/07/r23/PROGRESS.md): down the plunge the view looks along the STRAIGHT\n    // chute (the un-bent plunge lies in one YZ plane) instead of yawing with each S-bend, so the river's bends sweep across the\n    // screen like the approved picture's S-river; the camera still rides behind Benny. `&m07 …[+819 chars]`
+
+### 🧑 User — 2026-11-20T09:56:46.141Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-20T09:56:49.038Z
+
+Now the tunnel / river / foam part in `match07.ts`. Let me re-read the current plunge-building code.
+
+### 🤖 Claude — 2026-11-20T09:56:50.135Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"if (plunge) {\" src/world/match07.ts; sed -n '/  if (plunge) {$/,/^  }$/p' src/world/match07.ts | head -80", "description": "Show the plunge mesh builder"}`
+
+### 🧑 User — 2026-11-20T09:56:50.301Z
+
+> ↩︎ result: 547:    if (plunge) {
+> 562:      if (plunge) {
+> 620:  if (plunge) {
+>     if (plunge) {
+>       let best = 1e9;
+>       for (let s = plunge.course.stage('07').s0; s < plunge.sA; s += 0.1) { const dd = plunge.course.sample(s).pos.distanceTo(b0); if (dd < best) { best = dd; sCk = s; } }
+>     }
+>     const lerpT = (xs: number[], ys: number[], x: number) => {
+>       if (x <= xs[0]) return ys[0];
+>       for (let i = 1; i < xs.length; i++) if (x <= xs[i]) return ys[i - 1] + ((ys[i] - ys[i - 1]) * (x - xs[i - 1])) / (xs[i] - xs[i - 1]);
+>       return ys[ys.length - 1];
+>     };
+>     const aEnd = Rv.along[Rv.along.length - 1];
+>     const q = new THREE.Vector3();
+>     const ctr = shared.uCtr.value;
+>     for (let k = 0; k < 64; k++) {
+>       const along = -8 + 1.5 * k;
+>       let lane = 0;
+>       if (plunge) {
+>         let s = sCk + along;
+>         for (let it = 0; it < 3; it++) s += along - q.copy(plunge.course.sample(s).pos).sub(b0).dot(Da);
+>         lane = q.copy(plunge.course.sample(s).pos).sub(b0).dot(Xa);
+>       }
+>       const painted = along < 0 ? 0 : THREE.MathUtils.clamp(lerpT(Rv.along, Rv.lat, along) - lane, -0.3, 0.3);
+>       const tail = 0.6 * Math.sin(((along - aEnd) / 18) * Math.PI * 2);
+>       const kk = T …[+3380 chars]
+
+### 🤖 Claude — 2026-11-20T09:57:26.945Z
+
+Now the plunge tube / river / clouds and the band shader in `match07.ts`.
+
+### 🤖 Claude — 2026-11-20T09:57:51.196Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 - <<'EOF'\np='src/world/match07.ts'; s=open(p).read()\n# VERT: bend attribute\nold='''varying float vCtr;\nvoid main() {\n  vUv = uv;'''\nnew='''varying float vCtr;\nattribute float aBend;    // r23 '?m07sbend=1': plunge river rows — the route's S-bend there / its amplitude (−1..1); 0 elsewhere\nvarying float vBend;\nvoid main() {\n  vUv = uv;\n  vBend = aBend;'''\nassert s.count(old)==1; s=s.replace(old,new)\n# FRAG uniforms + varying\nold='''uniform float uSatin;     // r22 '?m07satin=1': crisp painted satin streaks on the magenta bands (1 = on)\n …[+6670 chars]`
+
+### 🧑 User — 2026-11-20T09:58:01.251Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-20T09:58:05.443Z
+
+Now the coin trail down the plunge: under the switch it follows the leaning cyan core.
+
+### 🤖 Claude — 2026-11-20T09:58:10.708Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 - <<'EOF'\np='src/gameplay/coins.ts'; s=open(p).read()\nold='''if (far) add('07', s, M07_FAR_LAT[m07k++], 0.9, { scale: 0.45 }); else add('07', s, 1.0 * Math.sin(i * 0.5 + 1)); } }'''\nnew='''if (far) add('07', s, M07_FAR_LAT[m07k++], 0.9, { scale: 0.45 }); else add('07', s, m07Lat(s, 1.0 * Math.sin(i * 0.5 + 1))); } }'''\nassert s.count(old)==1; s=s.replace(old,new)\nold='''  const m07c = m07 && flag05('m07coins'); let m07k = 0;'''\nnew='''  const m07c = m07 && flag05('m07coins'); let m07k = 0;\n  // r23 `&m07sbend=1` (qa/match/07/r23/PROGRESS.md): …[+807 chars]`
+
+### 🧑 User — 2026-11-20T09:58:21.256Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-20T09:58:24.718Z
+
+Type-check passes. First test render of the plunge with the S-bend (plus a route dump) — two jobs in parallel.
+
+### 🤖 Claude — 2026-11-20T09:58:29.345Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && D=/home/user/rainbow-/qa/match/07/r23/s2_sriver && Q1=$(cat /home/user/rainbow-/qa/match/07/r23/s1_satin/query_NEW.txt) && QN=$(node /home/user/rainbow-/tools/lead23/setq.mjs \"$Q1\" \"m07sbend=1\") && echo \"$QN\" > $D/query_NEW.txt && echo \"$Q1\" > $D/query_BEFORE.txt && O=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/sb1 && mkdir -p $O\n(QA_PORT=5280 timeout 900 node tools/match07/route_r23.mjs $D/route_NEW.json \"$QN\" > $O/route.log 2>&1) &\nAUDIT_SHOTS='[[\"c_middle\",0.35,null],[\"d_late\",0.6,null],[\"e1_075\",0. …[+319 chars]`
+
+### 🧑 User — 2026-11-20T09:58:29.453Z
+
+> ↩︎ result: Command running in background with ID: bgkvkoztx. Output is being written to: /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/tasks/bgkvkoztx.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-20T09:58:31.322Z
+
+While it renders, I'll update the progress log with the new direction, the parked m07low result and the step-2 plan.
+
+### 🤖 Claude — 2026-11-20T09:58:38.014Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/07/r23 && python3 - <<'EOF'\np='PROGRESS.md'; s=open(p).read()\ni=s.index('## (r23) WHERE I STOPPED / NEXT'); j=s.index('Worktree `/home/user/wt/s07`')\nnew_block='''## (r23) WHERE I STOPPED / NEXT\n* DONE: step 1 `&m07satin=1` (painted satin ribbons + white flares on the magenta bands) — GOOD IMPROVEMENT (s1_satin/; lead: small\n  GOOD IMPROVEMENT). Candidate query now: `K7c&m07satin=1` (`s1_satin/query_NEW.txt`); m07cloud (fuller, rounder foam) stays in it\n  (the user likes it).\n* NEW USER DIRECTION (~09:55 UTC, via the lead): the river must swe …[+1062 chars]`
+
+### 🧑 User — 2026-11-20T09:58:38.198Z
+
+> ↩︎ result: # Screen 07 · round 23 (water-fx-specialist) — progress log
+> 
+> ## (r23) WHERE I STOPPED / NEXT
+> * DONE: step 1 `&m07satin=1` (painted satin ribbons + white flares on the magenta bands) — GOOD IMPROVEMENT (s1_satin/; lead: small
+>   GOOD IMPROVEMENT). Candidate query now: `K7c&m07satin=1` (`s1_satin/query_NEW.txt`); m07cloud (fuller, rounder foam) stays in it
+>   (the user likes it).
+> * NEW USER DIRECTION (~09:55 UTC, via the lead): the river must sweep in broad S-bends (water, pink edges, foam, coin trail together)
+>   instead of "a mostly straight chute with wavy colours inside it"; then natural foam variation. Replaces the old steps 2 / 3.
+> * Parked: `&m07low=1` (wall pulled in to the water on the drop) — NOT AN IMPROVEMENT (the gold rings bend into chevrons, the foam
+>   shrank to a thin line); kept as an optional switch, off, can no longer shrink the round clouds (`s2x_low_parked/`).
+> * NOW: step 2 `&m07sbend=1` — the plunge (everything from the audit's 0.35 on is the 70° drop, laid as a perfectly straight chute)
+>   gets the painted broad S-bends: route S-offset (Benny, steering bounds, collision, coins, game water follow it), the tube stays
+>   straight, bands / foam / coins sweep inside it, c …[+929 chars]
+

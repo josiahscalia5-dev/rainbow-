@@ -154234,7 +154234,7 @@ index 340e1d3..9f1cc48 100644
    return tick;
  }
 diff --git a/tools/benny20/knit.py b/tools/benny20/knit.py
-index fccfeae..f6bf6cb 100644
+index fccfeae..9b37c3b 100644
 --- a/tools/benny20/knit.py
 +++ b/tools/benny20/knit.py
 @@ -95,6 +95,81 @@ def knit_field(W, H, cols, rows, seed, rib=False, groove=0.38):
@@ -154319,7 +154319,7 @@ index fccfeae..f6bf6cb 100644
  def shade(h, base, var, groove, fuzz):
      occ = groove + (1 - groove) * np.clip(h, 0, 1) ** 0.75
      c = base * occ[..., None] * (1 + 0.045 * var)[..., None] * (1 + 0.05 * fuzz)[..., None]
-@@ -158,6 +233,75 @@ def star_poly():
+@@ -158,6 +233,74 @@ def star_poly():
      return np.array(pts)
  
  
@@ -154365,37 +154365,36 @@ index fccfeae..f6bf6cb 100644
 +    face = c('star_face_lo') * (1 - np.sqrt(depth))[..., None] + c('star_face') * np.sqrt(depth)[..., None]
 +    hl = np.exp(-((X + 0.025) ** 2 + (Y - 0.03) ** 2) / p.get('star_hlr', 0.0035)) * p.get('star_hl', 0.8)
 +    face = face + (c('star_face_hi') - face) * hl[..., None]
-+    # rim band (sewn felt edge): flat orange, slightly lighter on its inner half, dark outline at the cut edge
-+    rt = np.clip(-sd / rimw, 0, 1)                 # 0 at the outline .. 1 at the rim's inner edge
-+    rim = c('star_rim') * (0.9 + 0.12 * rt)[..., None]
-+    out_k = np.clip(sd / 0.012, 0, 1)             # bevel outside the face: darker outward
-+    edge = c('star_rim') * (1 - out_k)[..., None] + c('star_rim_dark') * out_k[..., None]
-+    line = np.exp(-(sd / 0.0018) ** 2)[..., None]   # thin darker cut line at the outline
-+    rim = rim * (1 - 0.35 * line)
++    # rim band (sewn felt edge) = the inner band (-rimw..0) + the mesh bevel outside the outline (0..~0.016) as ONE flat
++    # orange band, a little lighter inside, darkening toward the outer cut edge (rounded felt edge, not a hard gold ring)
++    rt = np.clip(-sd / rimw, 0, 1)
++    ok = np.clip((sd - p.get('star_dark0', 0.004)) / p.get('star_dark1', 0.012), 0, 1)[..., None]
++    rim = c('star_rim') * (0.94 + 0.08 * rt)[..., None]
++    rim = rim * (1 - ok) + c('star_rim_dark') * ok
 +    blend = np.clip((-sd - rimw) / 0.004 + 0.5, 0, 1)[..., None]   # soft rim -> face seam
-+    col = np.where((sd > 0)[..., None], edge * (1 - 0.35 * line), rim * (1 - blend) + face * blend)
++    col = rim * (1 - blend) + face * blend
 +    col = col * (1 + 0.05 * fz)[..., None]
-+    # running stitch along the rim: light dashes, dark holes in the gaps
-+    sline = -rimw * p.get('star_stitch_at', 0.5)
++    # running stitch along the middle of the rim band: light dashes, dark needle holes in the gaps
++    sline = p.get('star_stitch_sd', -rimw * p.get('star_stitch_at', 0.5))
 +    band = np.exp(-((sd - sline) / p.get('star_stitch_w', 0.0026)) ** 2)
 +    ph = np.mod(arc / p.get('star_stitch_pitch', 0.0145), 1.0)
 +    dash = np.clip(1 - np.abs(ph - 0.3) / 0.26, 0, 1) ** 0.5
 +    hole = np.exp(-((ph - 0.78) / 0.09) ** 2)
-+    sd_mask = (sd < 0)[..., None]
-+    col = np.where(sd_mask, col * (1 - (band * hole * 0.7)[..., None]), col)
-+    col = np.where(sd_mask, col + (c('star_stitch_lt') - col) * (band * dash)[..., None], col)
++    col = col * (1 - (band * hole * p.get('star_hole', 0.6))[..., None])
++    col = col + (c('star_stitch_lt') - col) * (band * dash * p.get('star_dash', 0.9))[..., None]
 +    Image.fromarray(l2s8(col)).save(f'{out}/star.png')
-+    # height: pillow dome + raised rim plateau with a rounded cut edge + stitch dimples + felt fuzz
-+    hgt = 0.55 + 0.45 * np.sqrt(depth) - 0.12 * np.exp(-((-sd - rimw) / 0.003) ** 2)
-+    hgt = np.where(sd < 0, np.minimum(hgt, 0.5 + 0.5 * np.sqrt(np.clip(-sd / 0.006, 0, 1))), 0.5 * np.exp(-sd / 0.006))
-+    hgt = hgt - 0.15 * band * hole + 0.06 * band * dash + 0.02 * fz
++    # height: pillow dome inside the rim + flat rim plateau with a rounded outer edge + stitch dimples + felt fuzz
++    dome = 0.6 + 0.4 * np.sqrt(depth) - 0.1 * np.exp(-((-sd - rimw) / 0.003) ** 2)
++    edge = 0.55 * np.clip(1 - ((sd - 0.002) / 0.014), 0, 1) ** 0.6
++    hgt = np.where(-sd > rimw, dome, np.minimum(0.55, edge))
++    hgt = hgt - 0.15 * band * hole + 0.05 * band * dash + 0.02 * fz
 +    Image.fromarray(normals(ndi.gaussian_filter(hgt, 1.0), p.get('star_ns', 2.0) * N / 256)).save(f'{out}/star_n.png')
 +
 +
  def star(p, out):
      """planar UVs of benny05.starUVs on the GLB star: u = x / 0.41593 + 0.5, v = (y - 0.020078) / 0.41593 + 0.5
      (x, y = the build.ts star shape coordinates; bbox incl. bevel 0.39993 x 0.38035, centre y +0.020078)"""
-@@ -224,9 +368,16 @@ def main():
+@@ -224,9 +367,16 @@ def main():
      if '--json' in sys.argv:
          P.update(json.load(open(sys.argv[sys.argv.index('--json') + 1])))
      os.makedirs(out, exist_ok=True)
