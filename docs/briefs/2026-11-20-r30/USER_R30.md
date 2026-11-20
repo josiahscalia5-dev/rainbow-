@@ -114,3 +114,8 @@ framing kept while swimming, (3) water / foam / bubbles in motion like the paint
 > manual checkpoint. Do not claim a save or test succeeded unless it was verified.
 > My goal is to watch Benny travel through the four beautiful purple-and-gold scenes in the top row and immediately recognize those same
 > approved environments throughout the journey. Keep that target unchanged, make the playable corrections, and show me the actual result.
+
+## 7. New session `ccr-e490fceb-u85291` (~22:20 UTC): the user re-sent §6 word for word with the same picture (= `USER_S06_FOUR_VIEWS_TARGET_R30.jpg`),
+## then "hello", then (~22:26) verbatim:
+> save everything to my github resporitory every 5 minutes
+(Lead: the five-minute daemon was already running; verified 22:26 UTC `d89774a` GitHub == local; continues with every specialist worktree snapshotted.)

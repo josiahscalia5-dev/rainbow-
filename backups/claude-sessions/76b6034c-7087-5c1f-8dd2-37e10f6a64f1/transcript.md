@@ -864,3 +864,452 @@ Here is the Screen 07 approved picture, since the brief requires 06 to hand over
 > 
 > New account; session branch started at **`31d3a8c`** = the r28 lead `ccr-9652868f-lkw0w0`'s last save (18:12 UTC; verified with `git l …[+5750 chars]
 
+### 🧑 User — 2026-11-20T22:26:12.451Z
+
+[Request interrupted by user]
+
+### 🧑 User — 2026-11-20T22:26:12.477Z
+
+save everything to my github resporitory every 5 minutes
+
+### 🤖 Claude — 2026-11-20T22:26:18.118Z
+
+> 🔧 **Bash** `{"command": "pgrep -af \"autosave-daemon|rainbow-autosave\" | head; python3 -I scripts/autosave-status.py; tail -6 backups/BACKUP_LOG.md | cut -c1-220; git ls-remote origin refs/heads/ccr-e490fceb-u85291; git rev-parse HEAD; git status --short | wc -l", "description": "Verify the five-minute autosave daemon is running and saving"}`
+
+### 🧑 User — 2026-11-20T22:26:19.444Z
+
+> ↩︎ result: 585 bash /home/user/rainbow-/scripts/autosave-daemon.sh
+> 5427 timeout 900 python3 /home/user/rainbow-/scripts/rainbow-autosave.py --reason daemon --quiet
+> 5430 python3 /home/user/rainbow-/scripts/rainbow-autosave.py --reason daemon --quiet
+> AUTOSAVE OK | branch ccr-e490fceb-u85291 | scheduler daemon | last verified backup 2026-11-20T22:23:56+00:00 (2.4 min ago) | local ac6577b remote ac6577b (match) | uncommitted 10
+> | 2026-11-20T22:04:20+00:00 | daemon | committed+pushed | `9cb595d6f779` | `ccr-2644c3c0-iikckn` | 43 | True |  |
+> | 2026-11-20T22:08:14+00:00 | hook:Stop | committed+pushed | `5147f003e434` | `ccr-2644c3c0-iikckn` | 43 | True |  |
+> | 2026-11-20T22:08:41+00:00 | manual:stop-hook-retry | committed+pushed | `24a5f6d4eb29` | `ccr-2644c3c0-iikckn` | 33 | True |  |
+> | 2026-11-20T22:09:20+00:00 | daemon | committed+pushed | `1f7978c8ae37` | `ccr-2644c3c0-iikckn` | 28 | True |  |
+> | 2026-11-20T22:21:08+00:00 | daemon | committed+pushed | `77ca39bdd113` | `ccr-e490fceb-u85291` | 5 | True |  |
+> | 2026-11-20T22:22:02+00:00 | bootstrap:background | committed+pushed | `d1cc0686744c` | `ccr-e490fceb-u85291` | 5 | True |  |
+> ac6577b0eae35aae44b9f8e5c725c22b6e5b758c	refs/heads/ccr-e490fceb-u85 …[+47 chars]
+
+### 🤖 Claude — 2026-11-20T22:26:23.437Z
+
+The five-minute autosave daemon is running, and a scheduled save is in progress right now. I'll wait for it to finish and confirm it reached GitHub.
+
+### 🤖 Claude — 2026-11-20T22:26:23.772Z
+
+> 🔧 **ToolSearch** `{"query": "select:Monitor", "max_results": 1}`
+
+### 🧑 User — 2026-11-20T22:26:23.784Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-20T22:26:27.936Z
+
+> 🔧 **Bash** `{"command": "until ! pgrep -f \"rainbow-autosave.py --reason daemon\" >/dev/null; do sleep 2; done; python3 -I scripts/autosave-status.py; echo \"remote: $(git ls-remote origin refs/heads/ccr-e490fceb-u85291 | cut -c1-12)  local: $(git rev-parse --short=12 HEAD)\"", "description": "Wait for the running autosave to finish, then verify", "timeout": 900000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T22:26:27.979Z
+
+> ↩︎ result: Command running in background with ID: bmlsvdh01. Output is being written to: /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/tasks/bmlsvdh01.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-20T22:26:30.744Z
+
+While that save finishes, I'll keep going on Screen 06. Next I'm checking the state of Screen 07 so the handover lands on its approved look.
+
+### 🤖 Claude — 2026-11-20T22:26:31.646Z
+
+> 🔧 **Bash** `{"command": "grep -n \"07\" docs/briefs/2026-11-20-r29/COORDINATION.md | cut -c1-330 | head -25", "description": "Check Screen 07 status in round 29 notes"}`
+
+### 🧑 User — 2026-11-20T22:26:31.678Z
+
+> ↩︎ result: 4:recover every unfinished edit (s04 s05 s06 s07 s08 benny lead06 lead07 trial07 view04 view06 view07 + `tools/lead26/trial07_recovered/`),
+> 14:* Why r28 stopped: the old account's 5-hour limit (HTTP 429) killed Benny 17:30, s05 17:30, s06 17:32, s07 17:36 and the lead (no
+> 21:  byte-identical** to the 18:12:48 snapshots (s04 1, s07 10, s06 17, Benny 10, s08 2, s05 0, lead07 0, lead06 6, trial07 10, view04 1, view06 15,
+> 22:  view07 10 untracked files; s05 now has tracked edits = the r28 `m05endr` step).
+> 27:  ffmpeg 6.1.1, ImageMagick 6.9.12, tsc OK, continuity OK (all joins gap 0, 07→08 drop 61.19).
+> 47:| s07 | water-fx-specialist | `/home/user/wt/s07` `claude/rainbow-s07-match-c30` | 5277 | `&m07fsoft=1` v5 full proof → `qa/match/07/r27/s2_fsoft/`; then `m07coinw` |
+> 51:| s08 | — FINISHED (K23-3, unapproved) | `/home/user/wt/s08` `claude/rainbow-s08-scenery-c30` | — | read-only source for s07 |
+> 52:| lead07 / lead06 | lead investigations (detached) | `/home/user/wt/lead07`, `/home/user/wt/lead06` | — | kept as restored |
+> 53:| trial07 | lead tool trial | `/home/user/wt/trial07` `lead/trial07-c30` | — | DevTools / Spector (`tools/lead26/trial07_recovered/NOTES.md`) |
+> 54:| view04/06/07 |  …[+1449 chars]
+
+### 🤖 Claude — 2026-11-20T22:26:35.079Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/tasks/bmlsvdh01.output"}`
+
+### 🧑 User — 2026-11-20T22:26:35.098Z
+
+> ↩︎ result: 1	AUTOSAVE OK | branch ccr-e490fceb-u85291 | scheduler daemon | last verified backup 2026-11-20T22:26:08+00:00 (0.3 min ago) | local d89774a remote d89774a (match) | uncommitted 0
+> 2	remote: d89774a9ee59  local: d89774a9ee59
+> 3	
+> 4	[exited with code 0]
+> 5
+
+### 🤖 Claude — 2026-11-20T22:27:20.093Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt && head -30 scen06/src/world/e30scen06.ts; echo ======; head -25 water06/src/world/m06water30.ts; echo =====; head -25 foam06/src/world/m06foam30.ts; echo ====; head -25 benny06/src/characters/benny/benny30.ts", "description": "Read headers of the four workers' new modules"}`
+
+### 🧑 User — 2026-11-20T22:27:20.153Z
+
+> ↩︎ result: /**
+>  * r30 scenery specialist (`e30*` switches, qa/match/06/r30/scen06/NOTES.md) — Screen 06 tunnel look while Benny swims, toward the
+>  * approved picture + the user's four storyboard panels. Every part is opt-in; without an `e30*` switch nothing here runs.
+>  *   `&e30band=1`  the designed curl bands (route06curl.json rings, every 22 u) as SUBSTANTIAL polished copper-gold bands: broad
+>  *                 (`&e30bw=` u, default 7.2 = a third of the spacing), deep (`&e30bd=`, default 0.95 u), two raised lips, a gently domed
+>  *                 face, long soft highlights around the ring, no bulb rows. Same projection hand-over as the old rings (start view
+>  *                 unchanged), same far haze.
+>  *   `&e30wall=1`  the tunnel walls after the start view: brushed lilac-purple drum metal with small, clean, regular rounded slots
+>  *                 (anti-aliased by pixel footprint) and a soft sheen, instead of the magnified painted wall tile (blurry, stretched
+>  *                 slots, visible tile repeats). The approved start view keeps its projected pixels.
+>  *   `&e30far=1`   the far end: Screen 07's tube is shown only over the last `&e30far07=` u (default 30, ~2 s) and the 06 tunnel's e …[+7811 chars]
+
+### 🤖 Claude — 2026-11-20T22:27:26.604Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"ffd08a\\|wallGlow\\|tubeGlow\\|glowNear\\|glowFar\\|48\\b.*105\\|105\" src/world/environment.ts | head -30", "description": "Verify the warm far-glow in Screen 07 tube materials"}`
+
+### 🧑 User — 2026-11-20T22:27:26.645Z
+
+> ↩︎ result: 209:  const tubeGlow: FarGlow = { color: '#ffd08a', near: 48, far: 105, strength: 1.5 };
+> 210:  const wallGlow: FarGlow = { ...tubeGlow, mid: { color: '#8a3cf0', near: 10, far: 42, amount: 0.55 } };
+> 226:    envMap: tubeEnv, envMapIntensity: 1.0, farGlow: wallGlow,
+> 351:  const ringMat = withTubeStrips(withFarGlow(gold({ color: '#ffc890', roughness: 0.12, emissive: 0.16 }), tubeGlow, 'ring'), { ...strips, color: '#fff0c8', intensity: 3.2 }, 'instance', 'ring');
+> 404:  const lidMat = withTubeStrips(withFarGlow(gold({ color: '#ffb27a', roughness: 0.16, emissive: 0.2 }), tubeGlow, 'lid'), { ...strips, color: '#fff0c8', intensity: 2.4 }, 'instance', 'lid');
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T22:27:35.764Z
+
+> 🔧 **Bash** `{"command": "ls -t qa/match/07/ | head; find qa/match/07 -name 'QUERY*' -newer qa/match/07 2>/dev/null | head; find qa/match/07 -name 'QUERY*' | xargs ls -t | head -5; grep -o \"match07=1[^ \\\"']*\" qa/match/06/r30/QUERY_NEW_v2.txt docs/briefs/2026-11-20-r29/*.md 2>/dev/null | head -3", "description": "Find the latest Screen 07 candidate query"}`
+
+### 🧑 User — 2026-11-20T22:27:35.814Z
+
+> ↩︎ result: rings
+> r27
+> r26
+> r24
+> r23
+> r22
+> r21
+> cam
+> geo_match07.json
+> qa/match/07/r24/s1_swing/QUERY_BEFORE.txt
+> qa/match/07/r24/s1_swing/QUERY_NEW.txt
+> qa/match/07/r24/QUERY_08_latest_K16_m08gl.txt
+> qa/match/07/r24/QUERY_08_latest_K23-3.txt
+> qa/match/07/r24/QUERY_BEFORE_r23cand_latest08.txt
+
+### 🤖 Claude — 2026-11-20T22:27:43.636Z
+
+> 🔧 **Bash** `{"command": "ls qa/match/06/r30/proof_v2 qa/match/06/r30/proof | head -40", "description": "List previous proof captures"}`
+
+### 🧑 User — 2026-11-20T22:27:43.668Z
+
+> ↩︎ result: qa/match/06/r30/proof:
+> MARKED_SPOT_approved_before_new.jpg
+> QUERY_BEFORE_marked.txt
+> QUERY_NEW.txt
+> README.md
+> SCREEN06_NEW_route_into_07_0.5x.mp4
+> SCREEN06_NEW_route_into_07_1x.mp4
+> STORYBOARD_vs_GAMEPLAY.jpg
+> make_clip.py
+> make_marked.py
+> stills_from_clip
+> 
+> qa/match/06/r30/proof_v2:
+> QUERY_NEW_v2.txt
+> README.md
+> SCREEN06_NEW_route_into_07_0.5x.mp4
+> SCREEN06_NEW_route_into_07_1x.mp4
+> STORYBOARD_vs_GAMEPLAY.jpg
+> make_clip.py
+> stills_from_clip
+
+### 🤖 Claude — 2026-11-20T22:27:46.364Z
+
+> 🔧 **Bash** `{"command": "cat qa/match/06/r30/proof_v2/README.md | head -40; ls qa/match/06/r30/proof_v2/stills_from_clip | head -30; sed -n 1,60p qa/match/06/r30/proof_v2/make_clip.py", "description": "Read previous proof README and clip maker"}`
+
+### 🧑 User — 2026-11-20T22:27:46.407Z
+
+> ↩︎ result: # Screen 06 — v2 proof (lead, 2026-11-20 ~22:10 UTC) — individual playable candidate, NOT approved, not Android
+> 
+> * v2 = `QUERY_NEW_v2.txt` = v1 (`../QUERY_NEW_v1.txt`) + `&m06camk=0.65&m06camu=1.05`: after the approved start view the camera stays 35 % closer behind
+>   Benny at the same height (eased back over the last 16 u before 07), so Benny is large and low in the frame like the approved picture and
+>   the storyboard, with the winding slide + coin trail visible above his hat. Route, scenery, start view and the 07 join unchanged.
+> * `SCREEN06_NEW_route_into_07_1x.mp4` / `_0.5x.mp4` — one uninterrupted real-gameplay clip, 06 start → into 07 (16.6 s, 399 frames).
+> * `STORYBOARD_vs_GAMEPLAY.jpg` — the user's 4 panels above the same moments of v2; full-size frames in `stills_from_clip/`.
+> * Gameplay test 8/8, 91 coins, 2,240, max camera step 0.728 (`../gameplay_NEW_v2.json`); tsc OK.
+> * Still different: Benny's look (hat shorter with cream/violet knit + thick ribbed brim and softer dusty-pink fur in the painting), the
+>   water surface (sparkly white veins + rainbow edges vs long speed streaks), bubbly foam + big iridescent bubbles, far end glows peach.
+> frame_0070.png
+> frame_0120.png
+> frame_02 …[+3487 chars]
+
+### 🤖 Claude — 2026-11-20T22:27:52.969Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/src/world/match06.ts", "offset": 500, "limit": 250}`
+
+### 🧑 User — 2026-11-20T22:27:52.986Z
+
+> ↩︎ result: 500	    float hl2 = smoothstep(0.10, 0.03, length(vUv - vec2(0.36, -0.42)));
+> 501	    col = mix(col, vec3(1.0), clamp(hl + 0.6 * hl2, 0.0, 1.0));
+> 502	  }
+> 503	  // light rim on the shadow side (the foam film seen edge-on), faintly pink <-> cyan
+> 504	  float ang = atan(vUv.y, vUv.x) + s * 6.2832;
+> 505	  vec3 iri = mix(vec3(0.98, 0.84, 0.99), vec3(0.82, 0.95, 1.0), 0.5 + 0.5 * sin(ang * 2.0 + r * 5.0));
+> 506	  float fr = smoothstep(0.66, 0.97, r) * (0.35 + 0.65 * (1.0 - clamp(lt, 0.0, 1.0)));
+> 507	  col = mix(col, iri, fr * (lobe ? 0.45 : 0.7));
+> 508	  float a = 1.0;
+> 509	#ifdef RIM
+> 510	  a = 1.0 - 0.6 * smoothstep(0.86, 1.0, r);
+> 511	#endif
+> 512	  gl_FragColor = vec4(pjInverse(clamp(col, 0.0, 1.0)), a);
+> 513	}`;
+> 514	
+> 515	const tex = (f: string) => new URL(`../../assets/textures/match06/${f}`, import.meta.url).href;
+> 516	
+> 517	export async function buildMatch06(course: Course, mouth07?: { c: THREE.Vector3; r: number }): Promise<Match06> {
+> 518	  const L: Layout06 = await fetch(tex('proj06.json')).then((r) => r.json());
+> 519	  // r29 `&m06deep=1` (lead; src/world/course.ts m06deepShift, assets/textures/match06/route06deep.json): the course river follows the
+> 520	  // painted coin trail rebuilt in 3D  …[+19111 chars]
+
+### 🤖 Claude — 2026-11-20T22:27:55.716Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/src/world/match06.ts", "offset": 749, "limit": 250}`
+
+### 🧑 User — 2026-11-20T22:27:55.734Z
+
+> ↩︎ result: 749	    // r28 `&m06route=1` (qa/match/06/r25/PROGRESS.md r28, user-authorized route test): the painted tunnel FOLLOWS the river
+> 750	    // into 07. The game river crosses the ring interior near the axis up to ~s 219, then runs down-right to the 07 start
+> 751	    // 12 u off the axis (lower right) - with the straight cylinder it swam into the tunnel's lower-right wall ("up the right
+> 752	    // wall"). Here the far tunnel axis is SHIFTED sideways (Rx / Ux, never turned: every ring keeps its facing along ax, so the
+> 753	    // rings stay round and face the route - not the rejected m06bend) between the axial distances `&m06rsh=a,b` (default
+> 754	    // 12,46: the first ring past the camera and the approved view are untouched) by the amount that puts the 07 start at
+> 755	    // `&m06rtg=x,y` from the axis (default 3,-6.5: lower middle); beyond b the shifted tunnel runs straight on (same
+> 756	    // vanishing direction as the painting).
+> 757	    const ROUTE = qs?.get('m06route') === '1';
+> 758	    const rnum = (k: string, d: number[]) => { const v = (qs?.get(k) ?? '').split(',').map(Number); return v.length === d.length && v.every(Number.isFinite) ? v : d; };
+> 759	    const [shA, shB] = rnum('m0 …[+19786 chars]
+
+### 🤖 Claude — 2026-11-20T22:28:19.105Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/backups/claude-sessions && ls -t | head -5; ls 2861ab18-7c8b-528d-aa72-c51b8f64525c/ 2>/dev/null | head; ls 2861ab18-7c8b-528d-aa72-c51b8f64525c/subagents | head -20", "description": "Locate previous session's saved agent transcripts"}`
+
+### 🧑 User — 2026-11-20T22:28:19.153Z
+
+> ↩︎ result: 76b6034c-7087-5c1f-8dd2-37e10f6a64f1
+> 2861ab18-7c8b-528d-aa72-c51b8f64525c
+> eae80a1c-be41-5f1a-858b-469afcc249da
+> e47fc047-26b4-5efa-bfda-db0784968866
+> e4336d13-0e5b-505a-bd02-7d7760d0bf5f
+> subagents
+> transcript.md
+> transcript.sanitized.jsonl
+> agent-a080074858aed2d68.md
+> agent-a080074858aed2d68.sanitized.jsonl
+> agent-a1355159608666d22.md
+> agent-a1355159608666d22.sanitized.jsonl
+> agent-a548456742f589861.md
+> agent-a548456742f589861.sanitized.jsonl
+> agent-ad7cf7c8a10defede.md
+> agent-ad7cf7c8a10defede.sanitized.jsonl
+
+### 🤖 Claude — 2026-11-20T22:28:22.908Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/backups/claude-sessions/2861ab18-7c8b-528d-aa72-c51b8f64525c/subagents && for f in agent-*.md; do echo \"=== $f $(wc -c <$f)\"; head -c 600 $f; echo; done", "description": "Peek at each saved specialist transcript"}`
+
+### 🧑 User — 2026-11-20T22:28:22.968Z
+
+> ↩︎ result: === agent-a080074858aed2d68.md 63035
+> # Subagent agent-a080074858aed2d68 — session 2861ab18-7c8b-528d-aa72-c51b8f64525c
+> 
+> ### 🧑 User — 2026-11-20T22:02:04.537Z
+> 
+> You are the water specialist in round 30 of the Rainbow 3D game (repo /home/user/rainbow-, a Vite + Three.js portrait mobile game). FIRST read /home/user/rainbow-/docs/briefs/2026-11-20-r30/LAUNCH_R30_PARALLEL.md (common rules: your worktree, switch prefix, render-slot lock, outputs, no pushing/merging, no paid jobs) and /home/user/rainbow-/docs/briefs/2026-11-20-r30/USER_R30.md §5 (the user's words). Your worktree: /home/user/wt/water06 (LOCAL branch claude/rainbow
+> === agent-a1355159608666d22.md 50944
+> # Subagent agent-a1355159608666d22 — session 2861ab18-7c8b-528d-aa72-c51b8f64525c
+> 
+> ### 🧑 User — 2026-11-20T22:02:13.462Z
+> 
+> You are the foam & bubbles specialist in round 30 of the Rainbow 3D game (repo /home/user/rainbow-, a Vite + Three.js portrait mobile game). FIRST read /home/user/rainbow-/docs/briefs/2026-11-20-r30/LAUNCH_R30_PARALLEL.md (common rules: your worktree, switch prefix, render-slot lock, outputs, no pushing/merging, no paid jobs) and /home/user/rainbow-/docs/briefs/2026-11-20-r30/USER_R30.md §5 (the user's words …[+1315 chars]
+
+### 🤖 Claude — 2026-11-20T22:28:29.424Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/prompts && for f in agent-*.md; do awk 'NR>4{ if (/^### /) exit; print }' $f > /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/prompts/${f%.md}.txt; done; wc -c /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/prompts/*; cat /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/prompts/agent-a080074858aed2d68.txt", "description": "Extract the original specialist prompts"}`
+
+### 🧑 User — 2026-11-20T22:28:29.486Z
+
+> ↩︎ result: 2874 /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/prompts/agent-a080074858aed2d68.txt
+>  2509 /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/prompts/agent-a1355159608666d22.txt
+>  3504 /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/prompts/agent-a548456742f589861.txt
+>  3014 /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/prompts/agent-ad7cf7c8a10defede.txt
+> 11901 total
+> You are the water specialist in round 30 of the Rainbow 3D game (repo /home/user/rainbow-, a Vite + Three.js portrait mobile game). FIRST read /home/user/rainbow-/docs/briefs/2026-11-20-r30/LAUNCH_R30_PARALLEL.md (common rules: your worktree, switch prefix, render-slot lock, outputs, no pushing/merging, no paid jobs) and /home/user/rainbow-/docs/briefs/2026-11-20-r30/USER_R30.md §5 (the user's words). Your worktree: /home/user/wt/water06 (LOCAL branch claude/rainbow-s06-water06-c31), switch prefix `w30`, AUDIT_PORT 5330–5339, outputs in /home/user/rainbow-/qa/match/06/r30/water06/.
+> 
+> TASK: the Screen 06 river while Benny swims must look like the rainbow water of the approved picture (r …[+2152 chars]
+
+### 🤖 Claude — 2026-11-20T22:28:52.596Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-20-r30/LAUNCH_R30B.md", "content": "# Round 30b — relaunch of the Screen 06 specialists (lead session `ccr-e490fceb-u85291`, from ~22:25 UTC)\n\nWhy: the r30 session (`ccr-2644c3c0-iikckn`) closed at ~22:14 UTC, ~10 min after launching four specialists (`LAUNCH_R30_PARALLEL.md`). Its last save\n`b9ca06c` was merged here (`34786f3`, the user: \"Continue from the latest saved version\"). Worktrees recreated from the 22:14 snapshots with\n`setup_r30b.sh` on LOCAL `-c32` branches (s06 candidate + benny06 / water06 / foam06 / scen06).\n\n**Bind …[+2317 chars]`
+
+### 🧑 User — 2026-11-20T22:28:52.738Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-20-r30/LAUNCH_R30B.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T22:28:57.797Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && cat >> docs/briefs/2026-11-20-r30/USER_R30.md <<'EOF'\n\n## 7. New session `ccr-e490fceb-u85291` (~22:20 UTC): the user re-sent §6 word for word with the same picture (= `USER_S06_FOUR_VIEWS_TARGET_R30.jpg`),\n## then \"hello\", then (~22:26) verbatim:\n> save everything to my github resporitory every 5 minutes\n(Lead: the five-minute daemon was already running; verified 22:26 UTC `d89774a` GitHub == local; continues with every specialist worktree snapshotted.)\nEOF\ncp /root/.claude/uploads/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/76b7228f-image.jpg /tmp/cmp …[+359 chars]`
+
+### 🧑 User — 2026-11-20T22:28:57.850Z
+
+> ↩︎ result: SAME_PICTURE
+
+### 🤖 Claude — 2026-11-20T22:29:02.168Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/prompts && cat agent-a548456742f589861.txt; echo; echo =====; cat agent-a1355159608666d22.txt", "description": "Read Benny and foam original prompts"}`
+
+### 🧑 User — 2026-11-20T22:29:02.210Z
+
+> ↩︎ result: You are the Benny specialist in round 30 of the Rainbow 3D game (repo /home/user/rainbow-, a Vite + Three.js portrait mobile game). FIRST read /home/user/rainbow-/docs/briefs/2026-11-20-r30/LAUNCH_R30_PARALLEL.md (common rules: your worktree, switch prefix, render-slot lock, outputs, no pushing/merging, no paid jobs) and /home/user/rainbow-/docs/briefs/2026-11-20-r30/USER_R30.md §5 (the user's words). Your worktree: /home/user/wt/benny06 (LOCAL branch claude/rainbow-s06-benny06-c31), switch prefix `b30`, AUDIT_PORT 5320–5329, outputs in /home/user/rainbow-/qa/match/06/r30/benny06/.
+> 
+> TASK: make the in-game Benny look like the PAINTED Benny of the approved Screen 06 picture (references/06_crest_the_rinse_arch.png) and of all four storyboard panels (docs/briefs/2026-11-20-r30/USER_S06_STORYBOARD_R30.png) — at the start view AND while he swims (river s 214.86, 266, 310 with the v2 query). The user's complaint: "the pink character ... want it exactly like that".
+> 
+> Measured by the lead (box x200–700, y600–1260 of the 864×1536 start frame, share of pixels within 20 colour levels of the approved picture): current game Benny 49.4 %. `&benny05=1` (src/characters/benny/benny05.ts: knit / fur / …[+4822 chars]
+
+### 🤖 Claude — 2026-11-20T22:29:06.746Z
+
+Launching the three specialists now. Each one resumes from its own saved unfinished edits and works against your four-panel target.
+
+### 🤖 Claude — 2026-11-20T22:29:20.135Z
+
+> 🔧 **Agent** `{"description": "Benny specialist r30b resume", "subagent_type": "benny-character-artist", "prompt": "You are the Benny specialist in round 30b of the Rainbow 3D game (repo /home/user/rainbow-, a Vite + Three.js portrait mobile game). This is a RELAUNCH: the previous session closed ~10 minutes after it started you. FIRST read /home/user/rainbow-/docs/briefs/2026-11-20-r30/LAUNCH_R30B.md (this round's split + changes), then /home/user/rainbow-/docs/briefs/2026-11-20-r30/LAUNCH_R30_PARALLEL.md (common rules: worktree only, switch prefix, render-slot lock tools/lead25/render_slot.sh, outputs, nev …[+3225 chars]`
+
+### 🧑 User — 2026-11-20T22:29:20.181Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a6f32921b52c5bace (internal ID - do not mention to user. Use SendMessage with to: 'a6f32921b52c5bace', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/tasks/a6f32921b52c5bace.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-20T22:29:31.338Z
+
+> 🔧 **Agent** `{"description": "Water specialist r30b resume", "subagent_type": "water-fx-specialist", "prompt": "You are the water specialist in round 30b of the Rainbow 3D game (repo /home/user/rainbow-, a Vite + Three.js portrait mobile game). This is a RELAUNCH: the previous session closed ~10 minutes after it started you. FIRST read /home/user/rainbow-/docs/briefs/2026-11-20-r30/LAUNCH_R30B.md (this round's split + changes), then /home/user/rainbow-/docs/briefs/2026-11-20-r30/LAUNCH_R30_PARALLEL.md (common rules: worktree only, switch prefix, render-slot lock tools/lead25/render_slot.sh, outputs, never  …[+3094 chars]`
+
+### 🧑 User — 2026-11-20T22:29:31.365Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: af024a21d60f7e0fd (internal ID - do not mention to user. Use SendMessage with to: 'af024a21d60f7e0fd', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/tasks/af024a21d60f7e0fd.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-20T22:29:41.194Z
+
+> 🔧 **Agent** `{"description": "Foam specialist r30b resume", "subagent_type": "foam-bubbles-particles", "prompt": "You are the foam & bubbles specialist in round 30b of the Rainbow 3D game (repo /home/user/rainbow-, a Vite + Three.js portrait mobile game). This is a RELAUNCH: the previous session closed ~10 minutes after it started you. FIRST read /home/user/rainbow-/docs/briefs/2026-11-20-r30/LAUNCH_R30B.md (this round's split + changes), then /home/user/rainbow-/docs/briefs/2026-11-20-r30/LAUNCH_R30_PARALLEL.md (common rules: worktree only, switch prefix, render-slot lock tools/lead25/render_slot.sh, outp …[+2693 chars]`
+
+### 🧑 User — 2026-11-20T22:29:41.217Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a5efed16485a78811 (internal ID - do not mention to user. Use SendMessage with to: 'a5efed16485a78811', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/tasks/a5efed16485a78811.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-20T22:29:44.286Z
+
+The three specialists are running. Meanwhile I'm on the scenery: first reading the scenery specialist's unfinished module (bands, walls, far end) to decide what to reuse.
+
+### 🤖 Claude — 2026-11-20T22:29:44.791Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/scen06/src/world/e30scen06.ts", "offset": 30}`
+
+### 🧑 User — 2026-11-20T22:29:44.812Z
+
+> ↩︎ result: 30	  };
+> 31	}
+> 32	
+> 33	/** Game.ts hook: how far before the 07 entrance Screen 07's tube is shown (null = unchanged) */
+> 34	export function e30Show07(): number | null {
+> 35	  if (typeof location === 'undefined') return null;
+> 36	  const f = e30Flags(new URLSearchParams(location.search));
+> 37	  return f.far ? Math.max(f.far07, f.fade[0] + 1) : null;
+> 38	}
+> 39	
+> 40	// polished copper-gold band (display values): th = angle round the ring (world-anchored), v = 0..1 across the band
+> 41	// (0 = the camera-facing edge), n = normal, V = to camera, T = tunnel direction at the band
+> 42	const GOLD_GLSL = /* glsl */ `
+> 43	vec3 e30Gold(float th, float v, vec3 n, vec3 V, vec3 T, vec3 U) {
+> 44	  vec3 n2 = dot(n, V) < 0.0 ? -n : n;
+> 45	  vec3 Rf = reflect(-V, n2);
+> 46	  vec3 dark = vec3(0.50, 0.19, 0.08), mid = vec3(0.86, 0.42, 0.15), gold = vec3(0.98, 0.66, 0.30), hot = vec3(1.0, 0.93, 0.74);
+> 47	  // across the band: darker toward the edges, a broad bright body, two raised lips with bright lines, two fine grooves
+> 48	  float body = smoothstep(0.02, 0.22, v) * smoothstep(0.98, 0.78, v);
+> 49	  vec3 c = mix(dark, mid, 0.25 + 0.75 * body);
+> 50	  c = mix(c, gold, 0.55 * exp(-pow((v - 0.50) / 0.22, 2.0)));
+> 51	  float lip …[+14429 chars]
+
+### 🤖 Claude — 2026-11-20T22:30:05.769Z
+
+> 🔧 **Bash** `{"command": "ls qa/match/07/r27/ | head; find qa/match/07/r27 -name \"QUERY*\" | head; find qa/match/07/r27 -name \"*.png\" | head -8", "description": "Look for latest Screen 07 candidate captures"}`
+
+### 🧑 User — 2026-11-20T22:30:05.806Z
+
+> ↩︎ result: s2_fsoft
+> qa/match/07/r27/s2_fsoft/landmarks/3_NEW_d_bend3_apex_t6.12.png
+> qa/match/07/r27/s2_fsoft/landmarks/2_BEFORE_f_inlet_last07_t8.25.png
+> qa/match/07/r27/s2_fsoft/landmarks/3_NEW_b_bend1_apex_t3.75.png
+> qa/match/07/r27/s2_fsoft/landmarks/2_BEFORE_c_bend2_apex_t4.96.png
+> qa/match/07/r27/s2_fsoft/landmarks/3_NEW_f_inlet_last07_t8.25.png
+> qa/match/07/r27/s2_fsoft/landmarks/1_ORIGINAL_APPROVED.png
+> qa/match/07/r27/s2_fsoft/landmarks/2_BEFORE_b_bend1_apex_t3.75.png
+> qa/match/07/r27/s2_fsoft/landmarks/2_BEFORE_e_bend4_apex_t7.29.png
+
+### 🤖 Claude — 2026-11-20T22:30:08.835Z
+
+> 🔧 **Bash** `{"command": "ls qa/match/07/r27/s2_fsoft/ | head -20; cat qa/match/07/r27/s2_fsoft/NOTES.md 2>/dev/null | head -30 | cut -c1-300", "description": "Read Screen 07 candidate notes"}`
+
+### 🧑 User — 2026-11-20T22:30:08.872Z
+
+> ↩︎ result: SCREEN07_NEW_fsoft_K23-3_0.5x.mp4
+> SCREEN07_NEW_fsoft_K23-3_1x.mp4
+> gameplay_NEW_fsoft.json
+> landmarks
+
+### 🤖 Claude — 2026-11-20T22:30:11.487Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/07/r27/s2_fsoft/landmarks/3_NEW_b_bend1_apex_t3.75.png"}`
+
+### 🧑 User — 2026-11-20T22:30:11.525Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T22:30:40.061Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/rainbow-/qa/match/06/r30b/align && cd /home/user/rainbow-/qa/match/06/r30b/align && cat > /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/scratchpad/align.py <<'EOF'\nimport cv2, numpy as np, json, sys\nSB = cv2.imread('/home/user/rainbow-/docs/briefs/2026-11-20-r30/USER_S06_STORYBOARD_R30.png')\nA = cv2.imread('/home/user/rainbow-/references/06_crest_the_rinse_arch.png')\nprint('storyboard', SB.shape, 'approved', A.shape)\nboxes = [(16,100,506,724),(520,100,1010,724),(16,790,506,1398),(520,790,1010,1398)]\nx0,y0,x1,y1 = boxes[0]; P = SB[ …[+1086 chars]`
+
+### 🧑 User — 2026-11-20T22:30:41.544Z
+
+> ↩︎ result: storyboard (1536, 1024, 3) approved (1536, 864, 3)
+> good 181 inliers 93
+> M [[ 1.59702872e+00 -2.38361467e-02  3.57457641e+01]
+>  [ 2.38361467e-02  1.59702872e+00  2.48466149e+02]]
+> scale panel->approved 1.59720659360468
+> panel corners in approved px [[35.7, 248.5], [818.3, 260.1], [20.9, 1245.0], [803.4, 1256.7]]
+
+### 🤖 Claude — 2026-11-20T22:30:52.258Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image\nimport json\nM=json.load(open('panel1_to_approved.json'))['M']\nA=Image.open('/home/user/rainbow-/references/06_crest_the_rinse_arch.png').convert('RGB')\nSB=Image.open('/home/user/rainbow-/docs/briefs/2026-11-20-r30/USER_S06_STORYBOARD_R30.png').convert('RGB')\nP=SB.crop((16,100,506,724))\n# warp approved into panel frame (inverse affine)\nimport numpy as np\nM=np.array(M); Mi=np.linalg.inv(np.vstack([M,[0,0,1]]))[:2]\n# PIL affine maps output->input: input = M @ [x,y,1]\nW=A.transform((490,624), Image.AFFINE, tuple(M.flatten()), resample= …[+258 chars]`
+
+### 🧑 User — 2026-11-20T22:30:52.785Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T22:30:55.291Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r30b/align/panel1_vs_approved_window.png"}`
+
+### 🧑 User — 2026-11-20T22:30:55.346Z
+
+> ↩︎ result: [image]
+
