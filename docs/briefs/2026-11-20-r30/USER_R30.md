@@ -31,3 +31,15 @@
 ## 4. Tools question (~20:36; same storyboard re-attached)
 > Can you use maybe, do you think any of the tools like maybe Marble Rural Labs or something might help this? Get these screens that
 > you're building right now, exactly like the one I just uploaded, so we get this part done?
+
+## 5. "Still not looking like my approved screen" (~21:25 + ~21:35, with our MARKED_SPOT sheet `USER_S06_MARKED_SHEET_REPLY_R30.jpg` and the
+## storyboard re-attached: "And these ones too, I forgot.")
+> The only problem I have is that it's still not looking like my approved screen. Look at it, still not looking like it. I just want it to
+> look exactly like exactly 100% or very close to my approved screen. Like, see how that goes, looks my approved screen does, and look at
+> mine. The background, the pink character and the rainbow water thing he goes on, the slides it goes on, or you know, runs on or whatever.
+> Want it exactly like that. I don't know why. Can you do it or not?
+
+Lead answer (~21:30): yes, VERY close, not literally 100 % in every moving frame. Measured: game start frame vs approved = 76.4 % of pixels
+within 20 levels overall; walls 96.8 % and lower water 96.3 %, but BENNY only 38.7 % (3D Benny: hat too tall/wide stripes, hotter pink fur,
+nearer the camera); the marked spot (1.3 s later) 4.6 %. Plan: (1) Benny to the painted proportions/colours, (2) the approved / storyboard
+framing kept while swimming, (3) water / foam / bubbles in motion like the painting. Step 2 started: `&m06camk=0.65&m06camu=1.05` (v2).

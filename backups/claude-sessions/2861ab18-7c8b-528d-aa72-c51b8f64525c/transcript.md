@@ -3424,3 +3424,79 @@ Before I answer yes or no, I'll measure how close the game already is to your ap
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='src/game/cameraRig.ts'; t=open(p).read()\nold=\"const M06_HOLD = M06_VIEW && flag05('m06hold');\"\nt=t.replace(old, old+\"\"\"\n/** r30 `&m06camk=` (default 1 = off): the route view's approved offset (m06cam) shortened by this factor past the hold (eased in over\n *  the m06vw hand-over) -> Benny larger and lower in the frame like the approved picture / storyboard, the river ahead still in view */\nconst M06_CAMK = (() => { const v = typeof location !== 'undefined' ? Number(new URLSearchParams(location.search).get('m06camk')) : NaN; re …[+2670 chars]`
 
+### 🧑 User — 2026-11-20T21:29:43.413Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T21:29:45.199Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/scratchpad/camk.jpg"}`
+
+### 🧑 User — 2026-11-20T21:29:45.314Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T21:30:03.759Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='src/game/cameraRig.ts'; t=open(p).read()\nold=\"const M06_CAMK = (() =>\"\nt=t.replace(old,\"\"\"/** r30 `&m06camu=` (default = m06camk): the same factor for the camera's HEIGHT component only (1 = keep the height: closer behind,\n *  looking down over Benny's hat at the slide ahead like the storyboard) */\nconst M06_CAMU = (() => { const v = typeof location !== 'undefined' ? Number(new URLSearchParams(location.search).get('m06camu')) : NaN; return Number.isFinite(v) && v > 0 ? v : NaN; })();\n\"\"\"+old,1)\nold=\"\"\"        const kC  …[+2189 chars]`
+
+### 🧑 User — 2026-11-20T21:30:37.468Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T21:30:39.039Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/scratchpad/camk2.jpg"}`
+
+### 🧑 User — 2026-11-20T21:30:39.072Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T21:30:53.822Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='src/game/cameraRig.ts'; t=open(p).read()\nold=\"        const eC = THREE.MathUtils.smoothstep(s, st6.s0 + 10 + M06_VW[0], st6.s0 + 10 + M06_VW[1]);\"\nnew=\"\"\"        const s07c = this.course.stage('07').s0; // r30: eased back over the last 16 u before 07 (07 join unchanged)\n        const eC = THREE.MathUtils.smoothstep(s, st6.s0 + 10 + M06_VW[0], st6.s0 + 10 + M06_VW[1]) * (1 - THREE.MathUtils.smoothstep(s, s07c - 16, s07c - 4));\"\"\"\nassert old in t; t=t.replace(old,new,1); open(p,'w').write(t)\nEOF\nnpx tsc --noEmit -p . 2>&1 | …[+658 chars]`
+
+### 🧑 User — 2026-11-20T21:30:58.141Z
+
+> ↩︎ result: m06haze=80,170,0.55
+> m06camk=0.65
+> m06camu=1.05
+> clip-started
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T21:31:00.175Z
+
+While the v2 clip renders (~20 minutes), I'll record your latest message word for word and the v2 change in the round notes.
+
+### 🤖 Claude — 2026-11-20T21:31:09.078Z
+
+> 🔧 **Bash** `{"command": "cp /root/.claude/uploads/2861ab18-7c8b-528d-aa72-c51b8f64525c/e6172293-image.jpg docs/briefs/2026-11-20-r30/USER_S06_MARKED_SHEET_REPLY_R30.jpg && cat >> docs/briefs/2026-11-20-r30/USER_R30.md <<'EOF'\n\n## 5. \"Still not looking like my approved screen\" (~21:25 + ~21:35, with our MARKED_SPOT sheet `USER_S06_MARKED_SHEET_REPLY_R30.jpg` and the\n## storyboard re-attached: \"And these ones too, I forgot.\")\n> The only problem I have is that it's still not looking like my approved screen. Look at it, still not looking like it. I just want it to\n> look exactly like exactly 100% or  …[+1868 chars]`
+
+### 🧑 User — 2026-11-20T21:31:09.144Z
+
+> ↩︎ result: 0
+
+### 🤖 Claude — 2026-11-20T21:31:11.012Z
+
+The notes are updated. The v2 clip is still loading the game; I'll wait for it to finish.
+
+### 🤖 Claude — 2026-11-20T21:31:12.461Z
+
+> 🔧 **Bash** `{"command": "sleep 30; until ! pgrep -f \"r30_clip.mjs /home/user/scratch/r30/clip_v2\" >/dev/null; do sleep 10; done; tail -1 /home/user/scratch/r30/clip_v2.log; ls /home/user/scratch/r30/clip_v2/*.png | wc -l", "description": "Wait for the v2 clip render", "timeout": 2700000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T21:31:12.507Z
+
+> ↩︎ result: Command running in background with ID: bqzvqqdd0. Output is being written to: /tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/tasks/bqzvqqdd0.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-20T21:31:14.937Z
+
+> 🔧 **TaskCreate** `{"subject": "06 v2: approved/storyboard framing while swimming (m06camk) — clip, gameplay test, comparison", "description": "Render v2 clip, run gameplay test with QUERY_NEW_v2, build storyboard+approved vs v2 sheet, save, send. Next steps after: Benny look (painted proportions), water/foam/bubbles in motion.", "activeForm": "Proving the v2 framing"}`
+
+### 🧑 User — 2026-11-20T21:31:14.946Z
+
+> ↩︎ result: Task #5 created successfully: 06 v2: approved/storyboard framing while swimming (m06camk) — clip, gameplay test, comparison
+
+### 🤖 Claude — 2026-11-20T21:31:16.928Z
+
+> 🔧 **Bash** `{"command": "until ! pgrep -f \"r30_clip.mjs /home/user/scratch/r30/clip_v2\" >/dev/null; do sleep 10; done; tail -1 /home/user/scratch/r30/clip_v2.log", "description": "Block until the v2 clip finishes", "timeout": 600000}`
+

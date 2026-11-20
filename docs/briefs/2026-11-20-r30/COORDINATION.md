@@ -28,6 +28,11 @@ User's messages verbatim: `USER_R30.md` (+ the two pictures `USER_S06_RING_MISMA
 * Checks: `npx tsc --noEmit` OK; continuity default OK and WITH the switch OK (`tools/match06/r30_continuity.ts`: all joins gap 0, 06→07
   0.003°); gameplay test 8/8, 91 coins, 2,240 (`qa/match/06/r30/gameplay_NEW.json`); start view see above.
 * Proof: `qa/match/06/r30/proof/` (marked spot APPROVED | BEFORE | NEW; uninterrupted clip 06 → 07; storyboard panel vs gameplay).
+* v2 (user ~21:25 "still not looking like my approved screen"): `QUERY_NEW_v2.txt` = v1 + `&m06camk=0.65&m06camu=1.05` (cameraRig.ts: the route
+  view's approved offset brought 35 % closer behind Benny at the same height once past the hold, eased back over the last 16 u before 07)
+  → Benny large and low like the approved picture / storyboard, the winding slide visible above his hat. Rejected on the way: `&m06hold=1`
+  (approved world framing turned with the river: Benny right size but the river ahead hidden on the descent). Not yet done: Benny's look
+  (painted proportions / colours), water / foam / bubbles in motion.
 * NOT approved — waiting for the user. Default build and every earlier candidate unchanged.
 
 ## Next account

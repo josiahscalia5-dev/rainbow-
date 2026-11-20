@@ -66,10 +66,10 @@ index 6aec2406..735b4041 100644
      if (m08 && b08 && b08Rest) {
        // rounder body (narrower, taller) with the beanie counter-scaled to keep its size; ≈23 px right (world +x, measured fur centroid), lifted
 diff --git a/src/game/cameraRig.ts b/src/game/cameraRig.ts
-index 2a2b9ebc..3bd3ec81 100644
+index 2a2b9ebc..17630555 100644
 --- a/src/game/cameraRig.ts
 +++ b/src/game/cameraRig.ts
-@@ -20,6 +20,20 @@ const M06_LA = (() => {
+@@ -20,6 +20,23 @@ const M06_LA = (() => {
   *  is held while Benny swims and eases toward the m06cam route view only as visibility needs it. Tunables (QA):
   *  `&m06vw=a,b` hold → hand-over (u past the checkpoint, default 20,38), `&m06vx=` max route x (NDC, default 0.85) */
  const M06_VIEW = M06_CAM && flag05('m06view');
@@ -80,6 +80,9 @@ index 2a2b9ebc..3bd3ec81 100644
 +const M06_HOLD = M06_VIEW && flag05('m06hold');
 +/** r30 `&m06camk=` (default 1 = off): the route view's approved offset (m06cam) shortened by this factor past the hold (eased in over
 + *  the m06vw hand-over) -> Benny larger and lower in the frame like the approved picture / storyboard, the river ahead still in view */
++/** r30 `&m06camu=` (default = m06camk): the same factor for the camera's HEIGHT component only (1 = keep the height: closer behind,
++ *  looking down over Benny's hat at the slide ahead like the storyboard) */
++const M06_CAMU = (() => { const v = typeof location !== 'undefined' ? Number(new URLSearchParams(location.search).get('m06camu')) : NaN; return Number.isFinite(v) && v > 0 ? v : NaN; })();
 +const M06_CAMK = (() => { const v = typeof location !== 'undefined' ? Number(new URLSearchParams(location.search).get('m06camk')) : NaN; return Number.isFinite(v) && v > 0 ? v : 1; })();
 +/** r30 `&m06holdk=` (default 0.78): the rig trails ~25-30 % behind while swimming (camera smoothing), so the held offset is shortened by
 + *  this factor once Benny is moving (eased in over 6 u past the checkpoint) -> Benny keeps his approved size on screen */
@@ -90,18 +93,20 @@ index 2a2b9ebc..3bd3ec81 100644
  const m06num = (k: string, n: number, d: number[]) => {
    const v = typeof location !== 'undefined' ? new URLSearchParams(location.search).get(k) : null;
    const a = (v ?? '').split(',').map(Number);
-@@ -198,8 +212,9 @@ export class RideCamera {
+@@ -198,8 +215,11 @@ export class RideCamera {
            this.m06 = { s0: st6.s0, o: [o.dot(F.R), o.dot(F.U), o.dot(F.T)], d: [d.dot(F.R), d.dot(F.U), d.dot(F.T)] };
          }
          const F = frame6(s), M = this.m06;
-+        const kC = M06_CAMK === 1 ? 1 : 1 + (M06_CAMK - 1) * THREE.MathUtils.smoothstep(s, st6.s0 + 10 + M06_VW[0], st6.s0 + 10 + M06_VW[1]);
++        const s07c = this.course.stage('07').s0; // r30: eased back over the last 16 u before 07 (07 join unchanged)
++        const eC = THREE.MathUtils.smoothstep(s, st6.s0 + 10 + M06_VW[0], st6.s0 + 10 + M06_VW[1]) * (1 - THREE.MathUtils.smoothstep(s, s07c - 16, s07c - 4));
++        const kC = 1 + (M06_CAMK - 1) * eC, kU = 1 + ((Number.isNaN(M06_CAMU) ? M06_CAMK : M06_CAMU) - 1) * eC;
          const cp6 = f.pos.clone().addScaledVector(f.right, lat * 0.5)
 -          .addScaledVector(F.R, M.o[0]).addScaledVector(F.U, M.o[1]).addScaledVector(F.T, M.o[2]);
-+          .addScaledVector(F.R, M.o[0] * kC).addScaledVector(F.U, M.o[1] * kC).addScaledVector(F.T, M.o[2] * kC);
++          .addScaledVector(F.R, M.o[0] * kC).addScaledVector(F.U, M.o[1] * kU).addScaledVector(F.T, M.o[2] * kC);
          const d6 = F.R.clone().multiplyScalar(M.d[0]).addScaledVector(F.U, M.d[1]).addScaledVector(F.T, M.d[2]);
          if (M06_CAM) {
            // keep the camera >= 1.6 u above the water directly below it (the chord frame is flatter than the slope), then
-@@ -222,11 +237,28 @@ export class RideCamera {
+@@ -222,11 +242,28 @@ export class RideCamera {
            // the route stays visible; exactly the approved camera at the checkpoint (wv = 1), eased into the m06cam view
            // above by the hand-over distance (so the 06→07 join is unchanged)
            const sB = st6.s0 + 10;
