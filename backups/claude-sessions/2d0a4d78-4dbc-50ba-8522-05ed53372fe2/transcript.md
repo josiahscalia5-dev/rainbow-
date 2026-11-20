@@ -3422,3 +3422,65 @@ Now the services inventory (names only, no secrets) and the new-account start pr
 
 > 🔧 **Bash** `{"command": "cat >> docs/briefs/2026-11-20-r22/COORDINATION.md <<'EOF'\n* ~03:58 USER FEEDBACK Screen 04 (verbatim in `RESUME_R22.md`): water must look CLEAN, no messy pink walls near the gold inside the\n  tunnel, Benny going naturally through the five arrows; clip speed = real game speed (not sped up). Relayed to the projection worker.\n* ~04:00 the user stopped the in-process s07 + s04-projection workers and asked to save everything for the account switch →\n  `RESUME_R22.md`, `setup_worker_r23.sh`, `backups/CONNECTORS_AND_SERVICES_R22.md`, START prompt + handoff + CLAUDE.md pointer updated …[+939 chars]`
 
+### 🧑 User — 2026-11-20T03:54:46.917Z
+
+> ↩︎ result: "commit": "21efc02c4ee8f70ac8460e94b89758823791a4d3",
+> REMOTE MATCH 21efc02c4ee8f70ac8460e94b89758823791a4d3
+> uncommitted: 0
+> s04 snapshot 2026-11-20T03:54:41+00:00 ['src/game/Game.ts', 'src/world/match04.ts', 'src/world/match04m4.ts']
+> s07 snapshot 2026-11-20T03:54:41+00:00 ['src/game/Game.ts', 'src/world/match07.ts']
+> agent-a019baf157b236168
+> agent-a9f2496902245e5e8
+> agent-ac3be854f5f5255ed
+
+### 🤖 Claude — 2026-11-20T03:54:53.398Z
+
+> 🔧 **Bash** `{"command": "for w in s04 s07; do git -C /home/user/wt/$w diff --binary > /tmp/claude-0/cur_$w.patch; cmp -s /tmp/claude-0/cur_$w.patch backups/wip/claude__rainbow-$w-match-c23/tracked.patch && echo \"$w: snapshot == current worktree code\" || { echo \"$w: DIFFERENT\"; diff <(grep -c '' /tmp/claude-0/cur_$w.patch) <(grep -c '' backups/wip/claude__rainbow-$w-match-c23/tracked.patch); }; done; cmp -s /tmp/claude-0/cur_s07.patch qa/match/07/r22/s1_cloud/code.patch && echo \"s07: == s1_cloud/code.patch\" || echo \"s07: differs from s1_cloud/code.patch (lines $(grep -c '' qa/match/07/r22/s1_cloud/c …[+74 chars]`
+
+### 🧑 User — 2026-11-20T03:54:53.444Z
+
+> ↩︎ result: s04: snapshot == current worktree code
+> s07: snapshot == current worktree code
+> s07: differs from s1_cloud/code.patch (lines 405)
+
+### 🤖 Claude — 2026-11-20T03:54:58.039Z
+
+> 🔧 **Bash** `{"command": "wc -l /tmp/claude-0/cur_s07.patch qa/match/07/r22/s1_cloud/code.patch | head -2; diff <(grep '^[+-]' qa/match/07/r22/s1_cloud/code.patch | grep -v '^+++\\|^---') <(grep '^[+-]' /tmp/claude-0/cur_s07.patch | grep -v '^+++\\|^---') | head -20 | cut -c1-200", "description": "Show s07 step-2 unfinished edit difference"}`
+
+### 🧑 User — 2026-11-20T03:54:58.087Z
+
+> ↩︎ result: 470 /tmp/claude-0/cur_s07.patch
+>   405 qa/match/07/r22/s1_cloud/code.patch
+> 25a26,64
+> > +uniform float uSatin;     // r22 '?m07satin=1': crisp painted satin streaks on the magenta bands (1 = on)
+> > +// r22 m07satin: the painted magenta band is glossy satin with thin, bright, lens-shaped white-pink streaks running with the flow
+> > +// (white cores, soft pink glow). The band tile (92 px across a band up to ~1.8 u wide) has them, but magnified close to the camera
+> > +// (hard left / right, the foreground) they spread into soft smears. These streaks are world-anchored lanes of random lens
+> > +// segments at the painted scale, anti-aliased by fwidth and faded out where a lane gets thinner than ~2 px (far away the tile
+> > +// shows as before).
+> > +float hash12(vec2 p) { vec3 p3 = fract(vec3(p.xyx) * 0.1031); p3 += dot(p3, p3.yzx + 33.33); return fract((p3.x + p3.y) * p3.z); }
+> > +vec2 satinLayer(float x, float y, float side, float w, float seed, float thr) {
+> > +  float u = x / w;
+> > +  float fw = fwidth(u);
+> > +  float aa = fw * 0.8 + 0.02;
+> > +  float lane = floor(u), fx = fract(u) - 0.5;
+> > +  float h1 = hash12(vec2(lane + seed * 17.0, side * 5.0 + seed));
+> > +  float L = 0.8 + 1.4 * h1;
+> > +  float y …[+257 chars]
+
+### 🤖 Claude — 2026-11-20T03:54:59.978Z
+
+Screen 07 had started step 2 (`&m07satin=1`, crisp satin streaks on the magenta bands, behind its own switch, untested). It's included in the snapshot. Adding that to the handoff and saving again:
+
+### 🤖 Claude — 2026-11-20T03:55:02.434Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/docs/briefs/2026-11-20-r22/RESUME_R22.md", "old_string": "| lead review of `qa/match/07/r22/s1_cloud/`, then step 2 hard left / right magenta sheet, step 3 the middle (`m07view` test) — `LAUNCH_S07.md` |", "new_string": "| lead review of `qa/match/07/r22/s1_cloud/`, then step 2 hard left / right magenta sheet — **already STARTED, untested: `&m07satin=1`** (crisp lens-shaped satin streaks on the magenta bands, in the WIP snapshot = worktree at stop; `s1_cloud/code.patch` = step 1 only) — then step 3 the middle (`m07view` test) — `LAUNCH_S …[+10 chars]`
+
+### 🧑 User — 2026-11-20T03:55:02.471Z
+
+> ↩︎ result: The file /home/user/rainbow-/docs/briefs/2026-11-20-r22/RESUME_R22.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T03:55:07.332Z
+
+> 🔧 **Bash** `{"command": "for i in $(seq 1 120); do pgrep -f \"rainbow-autosave.py\" >/dev/null || break; sleep 5; done; out=$(timeout 600 python3 scripts/rainbow-autosave.py --reason manual:end-2 2>&1); echo \"$out\" | grep -E '\"commit\"|skipping|rror' | head -3; for i in $(seq 1 60); do H=$(git rev-parse HEAD); R=$(timeout 60 git ls-remote origin refs/heads/ccr-4742c19f-ez2mrs | cut -f1); [ \"$H\" = \"$R\" ] && break; sleep 5; done; [ \"$H\" = \"$R\" ] && echo \"REMOTE MATCH $H\" || echo \"DIFFER local $H remote $R\"; echo \"uncommitted: $(git status --short | wc -l)\"; python3 -I scripts/autosave-statu …[+734 chars]`
+
