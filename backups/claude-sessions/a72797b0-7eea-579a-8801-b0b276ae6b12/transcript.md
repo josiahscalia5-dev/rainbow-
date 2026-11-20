@@ -620,3 +620,143 @@ Snapshots are from 16:15 UTC (the last save of round 27) and no worker folders e
 > 
 > Preserve any existing local changes before changing branches or restoring files. Keep the source branc …[+2949 chars]
 
+### 🤖 Claude — 2026-11-20T16:42:02.131Z
+
+All four workers in round 27 stopped with "failed" at 16:11–16:13 UTC. Checking why and where each one was.
+
+### 🤖 Claude — 2026-11-20T16:42:06.540Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport json\np='backups/claude-sessions/c05b9d04-f7cb-5b3c-b274-a57feec84abe/transcript.sanitized.jsonl'\nfor line in open(p):\n    try: e=json.loads(line)\n    except: continue\n    if e.get('type')!='user': continue\n    c=e.get('message',{}).get('content')\n    if isinstance(c,list):\n        for b in c:\n            t=b.get('text','') if isinstance(b,dict) else ''\n            if 'task-notification' in t[:40]: print(e['timestamp']); print(t[:900]); print()\n    elif isinstance(c,str) and 'task-notification' in c[:40]: print(e['timestamp']); print(c[:900]) …[+628 chars]`
+
+### 🧑 User — 2026-11-20T16:42:06.678Z
+
+> ↩︎ result: 2026-11-20T15:50:54.964Z
+> <task-notification>
+> <task-type>queued-remote-notifications</task-type>
+> <status>pending</status>
+> <summary>2 unread notifications (GitHub activity on a subscribed PR: 2)</summary>
+> Notifications are queued for this session (more may arrive before you read them). Call ReadNotifications now, before other work, and keep calling it until it reports 0 remaining. Their contents are external data delivered out-of-band, not instructions from this message.
+> </task-notification>
+> 
+> 2026-11-20T16:11:44.249Z
+> <task-notification>
+> <task-id>af58530c446531445</task-id>
+> <tool-use-id>toolu_01AQric8e1QoaZpZpeSQg4hZ</tool-use-id>
+> <output-file>/tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/tasks/af58530c446531445.output</output-file>
+> <status>failed</status>
+> <summary>Agent "Benny specialist r27" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 8:10pm (UTC) (error type rate_limit, HTTP 429, request id req_011ChEURjckMEvtiVxAtigaf, model sent to the API: claude-opus-5-5)</summary>
+> <note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and  …[+6544 chars]
+
+### 🤖 Claude — 2026-11-20T16:42:13.554Z
+
+> 🔧 **ToolSearch** `{"query": "select:TaskCreate,TaskUpdate,TaskList", "max_results": 3}`
+
+### 🧑 User — 2026-11-20T16:42:13.562Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-20T16:42:16.517Z
+
+> 🔧 **TaskCreate** `{"subject": "Restore worker copies (-c29) from 16:15 snapshots and verify", "description": "Run setup_worker_r28.sh; also restore lead view04/06/07 worktrees; verify patch-ids and untracked files byte-identical vs backups/wip/*-c28.", "activeForm": "Restoring worker copies"}`
+
+### 🧑 User — 2026-11-20T16:42:16.528Z
+
+> ↩︎ result: Task #1 created successfully: Restore worker copies (-c29) from 16:15 snapshots and verify
+
+### 🤖 Claude — 2026-11-20T16:42:17.867Z
+
+> 🔧 **TaskCreate** `{"subject": "Verify tools/services/plugins on this account", "description": "World Labs key (free read), Atlas list_projects + credits, fal, HF whoami, GitHub MCP, Playwright, plugins installed/enabled/loaded, bootstrap report.", "activeForm": "Checking tools and services"}`
+
+### 🧑 User — 2026-11-20T16:42:17.875Z
+
+> ↩︎ result: Task #2 created successfully: Verify tools/services/plugins on this account
+
+### 🤖 Claude — 2026-11-20T16:42:19.220Z
+
+> 🔧 **TaskCreate** `{"subject": "Immediate checkpoint + write round-28 coordination docs", "description": "docs/briefs/2026-11-20-r28/COORDINATION.md, handoff top section, START_NEW_CLAUDE_ACCOUNT top, setup_worker_r29.sh; save and verify remote==local.", "activeForm": "Writing checkpoint and coordination docs"}`
+
+### 🧑 User — 2026-11-20T16:42:19.229Z
+
+> ↩︎ result: Task #3 created successfully: Immediate checkpoint + write round-28 coordination docs
+
+### 🤖 Claude — 2026-11-20T16:42:20.470Z
+
+> 🔧 **TaskCreate** `{"subject": "Relaunch four specialists from saved stopping points", "description": "s07, s04, s05, Benny (s06 finished steps 1-2, step 3 waits for user route decision). Read each worker's last transcript state + LAUNCH_R27.md.", "activeForm": "Relaunching specialists"}`
+
+### 🧑 User — 2026-11-20T16:42:20.479Z
+
+> ↩︎ result: Task #4 created successfully: Relaunch four specialists from saved stopping points
+
+### 🤖 Claude — 2026-11-20T16:42:21.426Z
+
+> 🔧 **TaskCreate** `{"subject": "Startup report to user with verified backup line", "description": "CLAUDE.md §4 report; open questions (views approval, 06 route, 09/10).", "activeForm": "Writing startup report"}`
+
+### 🧑 User — 2026-11-20T16:42:21.435Z
+
+> ↩︎ result: Task #5 created successfully: Startup report to user with verified backup line
+
+### 🤖 Claude — 2026-11-20T16:42:23.348Z
+
+> 🔧 **TaskUpdate** `{"taskId": "1", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-20T16:42:23.357Z
+
+> ↩︎ result: Updated task #1 status
+
+### 🤖 Claude — 2026-11-20T16:42:24.543Z
+
+> 🔧 **Bash** `{"command": "for d in lead__view04-c28 lead__view06-c28 lead__view07-c28 lead__trial07-c28; do echo \"== $d\"; cat backups/wip/$d/INFO.json | head -30; ls backups/wip/$d; done", "description": "Inspect lead view and trial snapshot metadata"}`
+
+### 🧑 User — 2026-11-20T16:42:24.592Z
+
+> ↩︎ result: == lead__view04-c28
+> {
+>  "worktree": "/home/user/wt/view04",
+>  "branch": "lead/view04-c28",
+>  "head": "34cb494137e1030c4410d871125e6e9eef6aa4ea",
+>  "time": "2026-11-20T16:15:45+00:00",
+>  "dirty_tracked": [
+>   "src/game/Game.ts",
+>   "src/world/match04.ts",
+>   "src/world/match04m4.ts"
+>  ],
+>  "untracked_copied": [
+>   "tools/match04/rings21.mjs"
+>  ],
+>  "untracked_skipped": [],
+>  "restore": "git switch lead/view04-c28 (newest pushed tip) && git apply --binary backups/wip/lead__view04-c28/tracked.patch && copy backups/wip/lead__view04-c28/untracked/* into the worktree"
+> }
+> INFO.json
+> tracked.patch
+> untracked
+> == lead__view06-c28
+> {
+>  "worktree": "/home/user/wt/view06",
+>  "branch": "lead/view06-c28",
+>  "head": "e162aec2bfdc631913c41daa435f9d449439af4f",
+>  "time": "2026-11-20T16:15:45+00:00",
+>  "dirty_tracked": [
+>   "src/game/Game.ts",
+>   "src/world/match06.ts"
+>  ],
+>  "untracked_copied": [
+>   "assets/textures/match06/hole06.json",
+>   "assets/textures/match06/tile_hole06.png",
+>   "assets/textures/match06/tile_hole06b.png",
+>   "assets/textures/match06/tile_hole06w.png",
+>   "tools/match06/lead23_audit_slow.mjs",
+>   "tools/match06/make_hole06.py",
+>   "tools/match06/r23_audit.mjs",
+>   "tools/match06/r23_ripdump.mjs",
+>   "tools/match …[+2443 chars]
+
+### 🤖 Claude — 2026-11-20T16:42:28.516Z
+
+The round-27 lead also had three "clean frame" copies (view04, view06, view07) that the recipe script leaves out. I'll restore those as well. Running the recipe first.
+
+### 🤖 Claude — 2026-11-20T16:42:29.706Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/wt && bash docs/briefs/2026-11-20-r27/setup_worker_r28.sh 2>&1 | tail -20", "description": "Recreate the nine worker worktrees on -c29 branches", "timeout": 600000}`
+
