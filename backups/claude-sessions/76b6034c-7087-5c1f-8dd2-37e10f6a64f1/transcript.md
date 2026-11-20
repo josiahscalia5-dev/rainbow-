@@ -3861,3 +3861,44 @@ Saving everything to GitHub right now, and checking that the five-minute saves a
 
 > 🔧 **Bash** `{"command": "date -u +%H:%M:%S; until ! pgrep -f \"rainbow-autosave.py\" >/dev/null; do sleep 2; done; timeout 600 python3 scripts/rainbow-autosave.py --reason manual:user-save-request 2>&1 | grep -E '\"commit\"|pushed|error|ERROR' | head -5; python3 -I scripts/autosave-status.py; echo \"GitHub: $(git ls-remote origin refs/heads/ccr-e490fceb-u85291 | cut -c1-40)\"; echo \"local:  $(git rev-parse HEAD)\"; pgrep -af autosave-daemon | head -1; ls qa/match/06/r30b/proof/clip_frames | wc -l; ls qa/match/06/r30b/proof/steer_frames | wc -l", "description": "Run a manual save to GitHub and verify it", …[+19 chars]`
 
+### 🧑 User — 2026-11-20T23:27:40.092Z
+
+> ↩︎ result: 23:27:11
+>   "result": "committed+pushed",
+>   "pushed_verified": true,
+>   "commit": "7d8c6c6c0322cf176a41eb78d3e239e8196ad2c0",
+> AUTOSAVE OK | branch ccr-e490fceb-u85291 | scheduler daemon | last verified backup 2026-11-20T23:27:22+00:00 (0.3 min ago) | local 7d8c6c6 remote 7d8c6c6 (match) | uncommitted 0
+> GitHub: 7d8c6c6c0322cf176a41eb78d3e239e8196ad2c0
+> local:  7d8c6c6c0322cf176a41eb78d3e239e8196ad2c0
+> 585 bash /home/user/rainbow-/scripts/autosave-daemon.sh
+> 206
+> 236
+
+### 🤖 Claude — 2026-11-20T23:27:54.117Z
+
+Everything is saved to GitHub: commit `7d8c6c6` at 23:27 UTC. GitHub matches the local copy exactly. The automatic save also keeps running every 5 minutes on this session's branch (`ccr-e490fceb-u85291`), and it includes every specialist's unfinished work.
+
+**How it looks so far.** Screen 06 is clearly closer to your four panels, but it is not an exact match. The four comparison sheets I sent show each panel next to the old version and the new one.
+
+**What now looks like your panels:**
+- **Pale peach circle ahead: gone.** It was the far glow of Screen 07's tube, visible from far away through the end of the Screen 06 tunnel. From inside 06 it now looks violet.
+- **Gold bands:** broad, flat bands that arch over Benny and pass behind him, like panel 2, instead of the crowded target of thin rings.
+- **Walls:** clean purple-magenta metal with small, sharp rounded holes in neat rows, no longer blurry or stretched.
+- **Water:** bright cyan centre with sparkly veins and rainbow-pink edges, flowing, without the long scratch-like streaks.
+- **Foam:** soft bubble clusters and big rainbow bubbles, instead of rows of white beads and foam walls.
+- **Benny:** much closer to your painted Benny, with a narrower cream-and-violet knit beanie sitting level, a rounder dusty-pink body and small arms. In the start view, his share of pixels within 20 colour levels of your picture went from 49 % to 57 %.
+- **Panel 3:** the winding slide and its coin trail now run into the distance.
+
+**What still differs:**
+- **Gold:** less shiny than your painted gold.
+- **Walls:** less glowing than yours.
+- **Slide:** at some moments it is partly hidden behind Benny, where your panels show more of it.
+- **Last stretch of 06:** Screen 07's own tube, with its paddles and dense rings, shows at the far end. It is violet now, not peach.
+- **After the doorway:** Screen 07 still looks like its current pink version, not your purple-and-gold 07 picture. A purple 07 version exists, but it is on another branch and I haven't merged it without your OK.
+- **Panel 1:** the best match is the start of Screen 06 itself. 1.3 seconds later Benny looks a little small, as he did in the old version.
+- **Benny:** his fur is finer than the painted shaggy plush, and he floats a bit higher in the water.
+
+**Still rendering:** the continuous clip from the crest into Screen 07 (about half done) and a clip of Benny steering left and right. I'll send both when they finish. The gameplay check already passes all 8 tests: steering, coin pickups (91), no camera jumps, through to the ending.
+
+None of this is approved; final approval is yours.
+
