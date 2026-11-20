@@ -2802,3 +2802,73 @@ Step 3 gameplay: 8/8, 91 coins, no cut or teleport. Waiting for the step 3 clip 
 
 > 🔧 **Bash** `{"command": "timeout 1500 bash -c 'until grep -q \"frames ->\" /home/user/rainbow-/qa/match/06/r23/step3_m06rip/swim_06_NEW.log 2>/dev/null; do sleep 10; done'; tail -1 /home/user/rainbow-/qa/match/06/r23/step3_m06rip/swim_06_NEW.log; date -u +%H:%M", "description": "Wait for step 3 swim clip", "timeout": 1560000}`
 
+### 🧑 User — 2026-11-20T05:21:58.747Z
+
+> ↩︎ result: 115 frames -> /home/user/rainbow-/qa/match/06/r23/step3_m06rip/swim_06_NEW.mp4 (frames kept in /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/clipHUO1/f)
+> 05:21
+
+### 🤖 Claude — 2026-11-20T05:22:03.624Z
+
+Clip done. Since both clips pin the water clock per frame, BEFORE (step 2) and NEW (step 3) frames differ only by the ripple decal. Comparing the area round Benny across several moments.
+
+### 🤖 Claude — 2026-11-20T05:22:08.444Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06; python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\nB='$S/clipxocu/f/'; N='$S/clipHUO1/f/'\nfr=[4,10,16,28,45,70]\ntiles=[]\nfor i in fr:\n  a=Image.open(B+'%04d.png'%i).convert('RGB'); b=Image.open(N+'%04d.png'%i).convert('RGB')\n  d=np.abs(np.asarray(a).astype(int)-np.asarray(b).astype(int)).max(axis=2)>30\n  ys,xs=np.nonzero(d)\n  print(i,'changed',len(ys),'bbox',(int(xs.min()),int(ys.min()),int(xs.max()),int(ys.max())) if len(ys) else None)\n  box=(100,700,780,1300)\n  tiles.appen …[+299 chars]`
+
+### 🧑 User — 2026-11-20T05:22:09.607Z
+
+> ↩︎ result: 4 changed 53455 bbox (189, 839, 676, 1196)
+> 10 changed 34639 bbox (202, 882, 678, 1138)
+> 16 changed 16650 bbox (212, 959, 676, 1102)
+> 28 changed 5692 bbox (153, 1032, 632, 1065)
+> 45 changed 4068 bbox (90, 1001, 370, 1038)
+> 70 changed 18471 bbox (188, 1149, 526, 1305)
+
+### 🤖 Claude — 2026-11-20T05:22:12.502Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/clip_rip.png"}`
+
+### 🧑 User — 2026-11-20T05:22:12.570Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T05:22:20.509Z
+
+Early in the clip NEW shows the ring band and lacy collar round Benny's base. Checking frame 70 (the change sits lower in the frame there) for artefacts.
+
+### 🤖 Claude — 2026-11-20T05:22:22.703Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06; python3 -I $S/strip.py $S/clip_rip70.png $S/clipxocu/f/0070.png $S/clipHUO1/f/0070.png $S/clipxocu/f/0045.png $S/clipHUO1/f/0045.png", "description": "Strip of clip frames 70 and 45"}`
+
+### 🧑 User — 2026-11-20T05:22:23.086Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T05:22:26.591Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/clip_rip70.png"}`
+
+### 🧑 User — 2026-11-20T05:22:26.740Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T05:22:34.718Z
+
+No artefacts at frame 70 or 45; the ripple effect there is faint. Final type-check, then the step 3 verdict and the WHERE-I-STOPPED block.
+
+### 🤖 Claude — 2026-11-20T05:22:36.478Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && timeout 300 npx tsc --noEmit; echo \"tsc rc=$?\"; git diff -- src/world/match06.ts src/game/Game.ts > /home/user/rainbow-/qa/match/06/r23/step3_m06rip/code.patch; md5sum /home/user/rainbow-/qa/match/06/r23/step3_m06rip/code.patch; cd /home/user/rainbow- && sha256sum -c scripts/reference.sha256 2>&1 | tail -2; date -u +%H:%M", "description": "Final type-check, patch, reference checksums"}`
+
+### 🧑 User — 2026-11-20T05:22:40.596Z
+
+> ↩︎ result: tsc rc=0
+> b90e75004ff02c84073896ff693ad947  /home/user/rainbow-/qa/match/06/r23/step3_m06rip/code.patch
+> character_references/official_cartoon_girl_original.jpg: OK
+> references/water/05_water_isolated_original.png: OK
+> 05:22
+
+### 🤖 Claude — 2026-11-20T05:22:41.995Z
+
+You've hit your 5-hour limit · resets 9am (UTC)
+

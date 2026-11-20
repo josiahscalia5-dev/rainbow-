@@ -1239,3 +1239,43 @@ Start view is 0 px versus BEFORE. Let me look at the full NEW frames.
 
 > 🔧 **Bash** `{"command": "D=/home/user/rainbow-/qa/match/04/r23/s1_arrows; T=/home/user/rainbow-/qa/match/04/r23/s04_tools\n( $T/clip.sh $D/QUERY_K23-S1.txt $D/swim04_NEW_K23-S1 5273 & (cd /home/user/wt/s04 && AUDIT_PORT=5274 timeout 1500 node $T/audit_pinned_slow.mjs $D/K23-1_with_new_code 04 \"$(cat /home/user/rainbow-/qa/match/04/r23/QUERY_K23-1.txt)\" > $D/audit_k231_newcode.log 2>&1) & wait )\nfor s in a_start b_early c_middle d_late e_end f_hard_left g_hard_right; do printf \"%s \" $s; node /home/user/tools-pixelmatch/pixeldiff.mjs $D/K23-1_with_new_code/$s.png /home/user/rainbow-/qa/match/04/r23/s04 …[+340 chars]`
 
+### 🧑 User — 2026-11-20T05:22:30.102Z
+
+> ↩︎ result: 58 frames -> /home/user/rainbow-/qa/match/04/r23/s1_arrows/swim04_NEW_K23-S1.mp4 (frames in /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/clipzd60/f)
+> a_start 0
+> b_early 0
+> c_middle 0
+> d_late 0
+> e_end 0
+> f_hard_left 0
+> g_hard_right 0
+> total 2000
+> drwxr-xr-x 5 root root    4096 Nov 20 05:22 .
+> drwxr-xr-x 7 root root    4096 Nov 20 05:13 ..
+> drwxr-xr-x 2 root root    4096 Nov 20 05:17 K23-1_with_new_code
+> drwxr-xr-x 2 root root    4096 Nov 20 05:14 NEW
+> -rw-r--r-- 1 root root    1315 Nov 20 05:13 QUERY_K23-S1.txt
+> -rw-r--r-- 1 root root     227 Nov 20 05:13 SWITCH.txt
+> -rw-r--r-- 1 root root     919 Nov 20 05:17 audit_k231_newcode.log
+> -rw-r--r-- 1 root root     919 Nov 20 05:14 audit_new.log
+> -rw-r--r-- 1 root root  870616 Nov 20 05:22 swim04_NEW_K23-S1.mp4
+> drwxr-xr-x 2 root root    4096 Nov 20 05:22 swim04_NEW_K23-S1_frames
+> -rw-r--r-- 1 root root 1138437 Nov 20 05:22 swim04_NEW_K23-S1_halfspeed.mp4
+
+### 🤖 Claude — 2026-11-20T05:22:34.849Z
+
+K23-1 rendered with the new code equals BEFORE at 0 px in all 7 shots (switches are inert by default). Let me inspect the clip in motion against the lead's BEFORE clip.
+
+### 🤖 Claude — 2026-11-20T05:22:38.955Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad && rm -rf cf && mkdir -p cf/b cf/n && ffmpeg -loglevel error -i /home/user/rainbow-/qa/match/04/r23/lead_t2/swim04_NEW_K23-1.mp4 cf/b/%03d.png && ffmpeg -loglevel error -i /home/user/rainbow-/qa/match/04/r23/s1_arrows/swim04_NEW_K23-S1.mp4 cf/n/%03d.png && ls cf/b | wc -l && ls cf/n | wc -l && python3 -c \"\nfrom PIL import Image\nidx=[8,16,22,28,34,40,46,54]\nW=Image.new('RGB',(len(idx)*216,2*384+10),'white')\nfor i,k in enumerate(idx):\n  for r,d in enumerate(['b','n']):\n    im=Image.open(f'cf/ …[+184 chars]`
+
+### 🧑 User — 2026-11-20T05:22:42.271Z
+
+> ↩︎ result: 58
+> 58
+
+### 🤖 Claude — 2026-11-20T05:22:42.855Z
+
+You've hit your 5-hour limit · resets 9am (UTC)
+

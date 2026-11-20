@@ -2345,3 +2345,37 @@ New uncommitted files will keep appearing between saves. That's normal while the
 
 The Screen 04 specialist has confirmed its starting point exactly matches the version I showed you. It is now working on getting Benny to swim down through the five arrows, with them clearly ahead of him.
 
+### 🧑 User — 2026-11-20T05:22:42.104Z
+
+<system-reminder>
+<tools-used-before-summary>Monitor, TaskStop</tools-used-before-summary>
+</system-reminder>
+
+### 🧑 User — 2026-11-20T05:22:42.104Z
+
+<task-notification>
+<task-id>a41fb9aa89c21a5e2</task-id>
+<tool-use-id>toolu_01F2kh2wRPCMfyMDKfkrrWR6</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/tasks/a41fb9aa89c21a5e2.output</output-file>
+<status>failed</status>
+<summary>Agent "Screen 06 foam clouds + tunnel" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 9am (UTC) (error type rate_limit, HTTP 429, request id req_011ChDcw5fyLboVSg9BHTi4r, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 9am (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+<result>No artefacts at frame 70 or 45; the ripple effect there is faint. Final type-check, then the step 3 verdict and the WHERE-I-STOPPED block.</result>
+</task-notification>
+
+### 🤖 Claude — 2026-11-20T05:22:42.670Z
+
+You've hit your 5-hour limit · resets 9am (UTC)
+
+### 🧑 User — 2026-11-20T05:22:42.890Z
+
+<task-notification>
+<task-id>aea6c441ae094e112</task-id>
+<tool-use-id>toolu_01M1YKSLVQTQZmJbXSNo3XU5</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/tasks/aea6c441ae094e112.output</output-file>
+<status>failed</status>
+<summary>Agent "Screen 04 clean water + arrows" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 9am (UTC) (error type rate_limit, HTTP 429, request id req_011ChDcwCaCjWxy7zhKenRoH, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 9am (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+<result>K23-1 rendered with the new code equals BEFORE at 0 px in all 7 shots (switches are inert by default). Let me inspect the clip in motion against the lead's BEFORE clip.</result>
+</task-notification>
+
