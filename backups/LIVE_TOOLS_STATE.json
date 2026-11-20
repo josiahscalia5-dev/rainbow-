@@ -1,5 +1,5 @@
 {
- "time_utc": "2026-11-20T01:02:59+00:00",
+ "time_utc": "2026-11-20T01:08:10+00:00",
  "lead_branch": "ccr-68d26c2d-gwegce",
  "specialists_sha256_16": {
   "android-build-performance": "b0c45161860a960c",
@@ -13,7 +13,13 @@
   "washer-environment-modeler": "7abdea786d530d79",
   "water-fx-specialist": "b160f12ff93db70e"
  },
- "workers_git_worktrees": [],
+ "workers_git_worktrees": [
+  {
+   "worktree": "/home/user/wt/s04b",
+   "branch": "claude/rainbow-s04-ringtex-c22",
+   "head": "70e559572ef4"
+  }
+ ],
  "workers_status_latest_round": {
   "round9_account9": null
  },

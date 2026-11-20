@@ -603,3 +603,476 @@ Using systematic-debugging to find the root cause of the dark band boundaries be
 
 > ↩︎ result: {"status":"authenticated","account":{"id":"68ee89f1f7918f8c0401c78a","type":"user","name":"josdois","url":"https://huggingface.co/josdois","is_pro":false},"organizations":[],"credential":{"type":"oauth","expires_at":"2026-11-20T04:25:24.000Z","scopes":["openid","profile","read-mcp","read-repos","jobs","contribute-repos","inference-api"]}}
 
+### 🧑 User — 2026-11-20T01:00:06.481Z
+
+This session's worker process was restarted. If your previous turn was already complete, take no action and wait for the next event. Otherwise, continue from where you left off.
+
+### 🧑 User — 2026-11-20T01:00:15.070Z
+
+> ↩︎ result: {"projects":[{"project_id":"proj_ad4fdb076f4a4c80934406cfefc4d30b","name":"My project","account_name":"Personal workspace","available_tools":["atlasChisel","atlasGenerate","atlasTextToImage","images2PosedRGBD","posedImages2Splats","splats2Mesh"],"credits_available":true}]}
+
+### 🧑 User — 2026-11-20T01:00:15.290Z
+
+> ↩︎ result: As far as this session knows, this call did not run. Call it again if it is still wanted.
+
+### 🤖 Claude — 2026-11-20T01:00:20.625Z
+
+> 🔧 **Bash** `{"command": "timeout 90 git fetch --depth=30 origin +ccr-681a37bb-5jqfbu:refs/remotes/origin/ccr-681a37bb-5jqfbu 2>&1 | tail -2; git log --format='%h %ci %s' -6 refs/remotes/origin/ccr-681a37bb-5jqfbu; echo; git diff --stat 413e419 refs/remotes/origin/ccr-681a37bb-5jqfbu | tail -12", "description": "Fetch r20 lead and diff against this session's start", "timeout": 120000}`
+
+### 🧑 User — 2026-11-20T01:01:24.261Z
+
+> ↩︎ result: From https://github.com/josiahscalia5-dev/rainbow-
+>    413e419..0250392  ccr-681a37bb-5jqfbu -> origin/ccr-681a37bb-5jqfbu
+> 0250392 2026-11-20 00:45:03 +0000 autosave: Rainbow 2026-11-20 00:42 UTC
+> 36ce6a5 2026-11-20 00:39:27 +0000 autosave: Rainbow 2026-11-20 00:39 UTC
+> 413e419 2026-11-20 00:39:15 +0000 autosave: Rainbow 2026-11-20 00:39 UTC
+> 3a10529 2026-11-20 00:34:01 +0000 autosave: Rainbow 2026-11-20 00:33 UTC
+> ed860fc 2026-11-20 00:28:44 +0000 autosave: Rainbow 2026-11-20 00:28 UTC
+> fa64d56 2026-11-20 00:25:13 +0000 autosave: Rainbow 2026-11-20 00:25 UTC
+> 
+>  backups/BACKUP_LOG.md                                      |  1 +
+>  backups/BACKUP_STATUS.json                                 | 14 +++++++-------
+>  backups/LIVE_TOOLS_STATE.json                              |  2 +-
+>  backups/MANIFEST.json                                      |  8 ++++----
+>  .../transcript.sanitized.jsonl                             |  2 ++
+>  backups/wip/claude__rainbow-benny-c21/INFO.json            |  2 +-
+>  backups/wip/claude__rainbow-s04-match-c21/INFO.json        |  2 +-
+>  backups/wip/claude__rainbow-s04-ringtex-c21/INFO.json      |  2 +-
+>  8 files changed, 18 insertions(+), 15 deletions(-)
+
+### 🤖 Claude — 2026-11-20T01:01:35.914Z
+
+> 🔧 **Bash** `{"command": "set -e; X=s04-ringtex; WT=/home/user/wt/s04b; TIP=70e559572ef44d6d8be4f7d0b86c36f54149ff44\ntimeout 120 git fetch --depth=50 origin \"+claude/rainbow-s04-ringtex-c21:refs/remotes/origin/claude/rainbow-s04-ringtex-c21\" 2>&1 | tail -1\n[ \"$(git rev-parse refs/remotes/origin/claude/rainbow-s04-ringtex-c21)\" = \"$TIP\" ] && echo tip-ok\nmkdir -p /home/user/wt\nexec 9>backups/.autosave.lock; flock 9\ngit worktree add --no-checkout -b claude/rainbow-s04-ringtex-c22 \"$WT\" \"$TIP\" >/dev/null 2>&1\nprintf '/*\\n!/qa/pilot05/\\n!/qa/worldlabs/\\n!/qa/imageblaster/\\n!/builds/\\n!/back …[+540 chars]`
+
+### 🧑 User — 2026-11-20T01:03:48.202Z
+
+> ↩︎ result: * [new branch]      claude/rainbow-s04-ringtex-c21 -> origin/claude/rainbow-s04-ringtex-c21
+> tip-ok
+>  M src/world/match04m4.ts
+> ?? node_modules
+> ?? qa/match/04/r19b/
+> 2.1G	/home/user/wt/s04b
+> /dev/vda        252G   23G   47G  33% /
+
+### 🤖 Claude — 2026-11-20T01:03:53.480Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && wc -l src/world/match04m4.ts && grep -n -E \"m04rflat|m04rnear|m04rmat|m04rpaint|RFLAT|RNEAR|RMAT|LatheGeometry|TorusGeometry|ring\" src/world/match04m4.ts | head -80", "description": "Locate ring code in Screen 04 module"}`
+
+### 🧑 User — 2026-11-20T01:03:53.537Z
+
+> ↩︎ result: 1764 src/world/match04m4.ts
+> 3: *  m04ring  — the gold washer opening and the gold-ring tunnel as REAL modeled geometry (lathe profiles sized from the
+> 4: *             approved picture's mouth ring r 3.58 → 4.11 and the painted stacked ring bands), shaded as polished gold
+> 6: *             amber bulbs on the opening and on every ring lip). In the approved view these surfaces show the approved
+> 20: *  m04mouth — (round 9, needs m04ring) the approved GOLD WASHER OPENING: the painted mouth ring (thick polished band,
+> 22: *             -> tile_mouth.png) on a modeled mouth ring flush with the painted ring plane, mapped through the projector so
+> 31:const on = (k: string) => QS.get(k) === '1';
+> 33:  ring: on('m04ring'),
+> 47:  num: (k: string, d: number) => (QS.has(k) ? Number(QS.get(k)) : d),
+> 52:  shared: Record<string, THREE.IUniform>;
+> 56:  hideOld: (names: string[]) => void;
+> 63:attribute vec2 aF;          // r18 m04rfew: x = ring coordinate along the tunnel in painted-period units, y = ring scale
+> 84:// Each ring = a broad polished band that brightens toward its lip, a bright rounded lip with hot spots, a thin dark groove;
+> 85:// the far rings warm toward the glowing vanishing point; violet / p …[+7693 chars]
+
+### 🤖 Claude — 2026-11-20T01:03:55.924Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "offset": 56, "limit": 160}`
+
+### 🧑 User — 2026-11-20T01:03:55.960Z
+
+> ↩︎ result: 56	  hideOld: (names: string[]) => void;
+> 57	}
+> 58	
+> 59	const VERT = /* glsl */ `
+> 60	uniform mat4 uProjVP;
+> 61	attribute vec2 aK;
+> 62	#ifdef RFEW
+> 63	attribute vec2 aF;          // r18 m04rfew: x = ring coordinate along the tunnel in painted-period units, y = ring scale
+> 64	varying vec2 vF;
+> 65	#endif
+> 66	varying vec4 vProj;
+> 67	varying vec3 vW;
+> 68	varying vec3 vN;
+> 69	varying vec2 vK;
+> 70	void main() {
+> 71	  vec4 wp = modelMatrix * vec4(position, 1.0);
+> 72	  vProj = uProjVP * wp;
+> 73	  vW = wp.xyz;
+> 74	  vK = aK;
+> 75	#ifdef RFEW
+> 76	  vF = aF;
+> 77	#endif
+> 78	  vN = normalize(mat3(modelMatrix) * normal);
+> 79	  gl_Position = projectionMatrix * viewMatrix * wp;
+> 80	}`;
+> 81	
+> 82	// polished gold, art-directed in DISPLAY colours measured on the approved picture (then pjInverse like the plate):
+> 83	// groove (110,35,5) / shadow band (168,70,18) / mid (205,97,28) / lit (245,143,38) / hot lip (255,204,77) / glint.
+> 84	// Each ring = a broad polished band that brightens toward its lip, a bright rounded lip with hot spots, a thin dark groove;
+> 85	// the far rings warm toward the glowing vanishing point; violet / pink water reflections on the lower walls.
+> 86	const GOLD_FRAG = /* glsl */ `
+> 87	uniform sampler2D uPlate;
+>  …[+8288 chars]
+
+### 🤖 Claude — 2026-11-20T01:03:58.351Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "offset": 215, "limit": 330}`
+
+### 🧑 User — 2026-11-20T01:03:58.471Z
+
+> ↩︎ result: 215	    float rad = clamp(rr / 3.6, 0.0, 1.0);
+> 216	    col = mix(vec3(1.0, 0.95, 0.78), vec3(1.0, 0.72, 0.24), smoothstep(0.04, 0.30, rad));
+> 217	    col = mix(col, uGoldY > 0.5 ? vec3(0.98, 0.70, 0.22) : vec3(0.93, 0.52, 0.15), smoothstep(0.30, 0.95, rad));
+> 218	    col *= 1.0 - 0.10 * smoothstep(0.25, 0.0, abs(fract(log(max(rad, 0.01)) / log(0.72)) - 0.5)) * smoothstep(0.35, 0.7, rad);
+> 219	  } else {
+> 220	    bool mouth = vK.y < -0.5;
+> 221	    float ring = floor(vK.y + 0.5);             // integer ring index (the interpolated varying is not exact)
+> 222	    float v, tb = 0.0;
+> 223	    // gloss that moves with the view: the polished metal reflects the bright far end of the tunnel
+> 224	    float gl = pow(max(dot(R, uAxD), 0.0), 6.0);
+> 225	    if (mouth) {
+> 226	      // the washer opening: thick bright polished gold, a long vertical highlight, glowing rounded lips
+> 227	      float st = streaks(ang, 77.0);
+> 228	      v = uTone.z + 0.08 * cos(ang) + 0.20 * st + 0.08 * gl;
+> 229	      if (part > 0.5 && part < 1.5) v = uTone.z + 0.14 + 0.16 * facing + 0.10 * st;
+> 230	      if (part > 1.5 && part < 2.5) v = 0.18;
+> 231	    } else {
+> 232	      float u = fract(al / uP) * uP;                       // world u …[+25302 chars]
+
+### 🤖 Claude — 2026-11-20T01:04:01.734Z
+
+Let me zoom into your marked region on both pictures to see exactly what differs.
+
+### 🤖 Claude — 2026-11-20T01:04:05.747Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/z && cd /tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/z && python3 -c \"\nfrom PIL import Image\na=Image.open('/home/user/rainbow-/references/04_through_the_five_arrows.png').convert('RGB').resize((864,1536),Image.LANCZOS)\nc=Image.open('/home/user/wt/s04b/qa/match/04/r19b/ringpaint/preview_r20/3_NEW_f06_forward6u.png').convert('RGB')\nbox=(0,420,360,880)\nw=box[2]-box[0]; h=box[3]-box[1]\nout=Image.new('RGB',(w*2*2+20,h*2),'white')\nout.paste(a.crop(box). …[+214 chars]`
+
+### 🧑 User — 2026-11-20T01:04:06.276Z
+
+> ↩︎ result: ok
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:04:08.955Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/z/zoom_left.png"}`
+
+### 🧑 User — 2026-11-20T01:04:09.017Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T01:04:18.004Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/z && python3 -c \"\nfrom PIL import Image\nc=Image.open('/home/user/wt/s04b/qa/match/04/r19b/ringpaint/preview_r20/3_NEW_f06_forward6u.png').convert('RGB')\nc.crop((60,470,300,710)).resize((960,960),Image.NEAREST).save('zoom4_cur.png')\n\"", "description": "4x nearest-neighbour zoom of marked area"}`
+
+### 🧑 User — 2026-11-20T01:04:18.178Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:04:20.961Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/z/zoom4_cur.png"}`
+
+### 🧑 User — 2026-11-20T01:04:20.986Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T01:04:33.168Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && grep -n -E \"rflat|RFLAT|profile|Lathe|aK|setAttribute|groove|lipH|uRLip|antialias|samples|EffectComposer|renderTarget|WebGLRenderTarget\" src/world/match04m4.ts | sed -n 1,120p", "description": "Find geometry profile and AA setup"}`
+
+### 🧑 User — 2026-11-20T01:04:33.210Z
+
+> ↩︎ result: 3: *  m04ring  — the gold washer opening and the gold-ring tunnel as REAL modeled geometry (lathe profiles sized from the
+> 13: *  m04wave  — the painted swirl water without the obvious repeat (two offset samples of the swirl tile blended by a
+> 21: *             thin bright lips, dark groove) unwrapped from the approved pixels and straightened (tools/match04/mouth04.py
+> 61:attribute vec2 aK;
+> 74:  vK = aK;
+> 83:// groove (110,35,5) / shadow band (168,70,18) / mid (205,97,28) / lit (245,143,38) / hot lip (255,204,77) / glint.
+> 84:// Each ring = a broad polished band that brightens toward its lip, a bright rounded lip with hot spots, a thin dark groove;
+> 104:uniform float uCopper;     // r13 m04copper: rich polished COPPER-gold ramp (dark maroon grooves -> copper -> warm-gold highlights)
+> 112:uniform sampler2D uRTex;   // cols psi -pi..pi (0 = top, + = right), rows s 0 (painted groove) .. 1 (next groove), deeper
+> 113:uniform vec4 uRLip;        // x: painted lip-line s, y: modeled u that carries the painted lip line, z: modeled shading amount,
+> 114:                           // w: modeled u where the painted groove begins (held dark to the period end)
+> 124:uniform vec4 uRNear2;      // r19b m04rne …[+6151 chars]
+
+### 🤖 Claude — 2026-11-20T01:04:35.663Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "offset": 1085, "limit": 200}`
+
+### 🧑 User — 2026-11-20T01:04:35.684Z
+
+> ↩︎ result: 1085	  if (r > 1.0) discard;
+> 1086	  float core = smoothstep(0.17, 0.09, r);
+> 1087	  float glow = exp(-r * r / 0.06);
+> 1088	  float halo = exp(-r * r / 0.30) * (1.0 - smoothstep(0.7, 1.0, r));
+> 1089	  float streak = exp(-vUv.x * vUv.x / 0.008) * exp(-vUv.y * vUv.y / 0.30) * 0.6;
+> 1090	  vec3 col = mix(vec3(1.0, 0.62, 0.16), vec3(1.0, 0.86, 0.42), clamp(glow + streak, 0.0, 1.0));
+> 1091	  col = mix(col, vec3(1.0, 0.99, 0.90), core);
+> 1092	  float a = clamp(core + 0.85 * glow + 0.35 * halo + streak, 0.0, 1.0) * (0.75 + 0.25 * vS);
+> 1093	  gl_FragColor = vec4(pjInverse(col), a * uAlpha * vF);
+> 1094	}`;
+> 1095	
+> 1096	function lathe(prof: { r: number; a: number; part: number }[], segs: number, ringIdx: (i: number) => number) {
+> 1097	  const pts = prof.map((p) => new THREE.Vector2(p.r, p.a));
+> 1098	  const g = new THREE.LatheGeometry(pts, segs);
+> 1099	  const n = g.attributes.position.count;
+> 1100	  const k = new Float32Array(n * 2);
+> 1101	  // LatheGeometry: vertex index = seg * pts.length + j
+> 1102	  for (let i = 0; i < n; i++) { const j = i % pts.length; k[i * 2] = prof[j].part; k[i * 2 + 1] = ringIdx(j); }
+> 1103	  g.setAttribute('aK', new THREE.Float32BufferAttribute(k, 2));
+> 1104	  g.deleteAttribute('uv …[+15254 chars]
+
+### 🤖 Claude — 2026-11-20T01:04:40.632Z
+
+Update: I've found the rings shader and geometry. Now I'm rendering the exact view from your picture with debug colours so I can see which surface part makes the dark edges.
+
+### 🤖 Claude — 2026-11-20T01:04:41.538Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && grep -rl \"forward6u\\|forward\\${\" tools qa/match/04 scripts 2>/dev/null | head; ls tools/match04/ | head -50", "description": "Find the preview shot script"}`
+
+### 🧑 User — 2026-11-20T01:04:42.532Z
+
+> ↩︎ result: tools/match08/motion08.mjs
+> tools/lead_r6/motion_audit.mjs
+> tools/match04/motion04.mjs
+> tools/match04/audit04.mjs
+> qa/match/04/r11/BEFORE_extra/motion.json
+> qa/match/04/r11/BEFORE/motion.json
+> qa/match/04/motion_m3/NEW/motion.json
+> qa/match/04/motion_m3/step2_river/motion.json
+> qa/match/04/r15/s1_fclu/NEW/motion.json
+> qa/match/04/r15/s1_fclu/BEFORE/motion.json
+> ab04.mjs
+> audit04.mjs
+> bennypts04.mjs
+> blueprint04.py
+> coins04.py
+> diag04.mjs
+> fal_plate04.py
+> fit_proxies04.py
+> make_plate04.py
+> make_river04_m3.py
+> make_tiles04.py
+> metrics04.py
+> motion04.mjs
+> mouth04.py
+> mv04_fill.py
+> mv04_prep.py
+> nochev04.py
+> probe04.mjs
+> ring_paint04.py
+> ring_paint04_var.py
+> sideband04.py
+> solve_cam04.py
+> splash04.py
+> vtile04.py
+> waterline04.py
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:04:45.643Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && sed -n 1,80p tools/match04/motion04.mjs; grep -rn \"motion04\\|probe04\" qa/match/04/r18/ringpaint/NOTES.md 2>/dev/null | tail -5; grep -rn \"r20\\|preview_r20\" qa/match/04/r18/ringpaint/NOTES.md | tail -15", "description": "Read motion shot script and recent ring notes"}`
+
+### 🧑 User — 2026-11-20T01:04:45.708Z
+
+> ↩︎ result: // Screen 04 moving-camera test (read-only): from the 04 checkpoint ride forward / steer with the real game sim and
+> // screenshot what the live camera sees. usage: node tools/match04/motion04.mjs <outDir> [q]
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from '../../scripts/lib/pw.mjs';
+> const OUT = process.argv[2]; const Q = process.argv[3] ?? 'match04=1';
+> mkdirSync(OUT, { recursive: true });
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5268);
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> const log = [];
+> try {
+>   const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
+>   page.on('pageerror', (e) => console.error('pageerror', e.message));
+>   await page.goto(`${vite.url}/?qa=1&dpr=1&${Q}`);
+>   await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 240000 });
+>   // [name, forward distance (u), steer]
+>   const shots = process.env.M04_SHOTS ? JSON.parse(process.env.M04_SHOTS) : [['f00_checkpoint', 0, null], ['f03_forward3u', 3, null], ['f06_forward6u', 6, null], ['f10_forward10u', 10, null], ['f15_forwar …[+1055 chars]
+
+### 🤖 Claude — 2026-11-20T01:04:50.764Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && grep -rn -E \"antialias|samples:|EffectComposer|setPixelRatio|dpr\" src/*.ts src/**/*.ts 2>/dev/null | grep -v \"^src/world/match0[5-8]\" | head -20", "description": "Check renderer antialiasing and pixel ratio"}`
+
+### 🧑 User — 2026-11-20T01:04:50.815Z
+
+> ↩︎ result: src/game/Game.ts:12:import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
+> src/game/Game.ts:46:  const dpr = qs.has('dpr') ? Number(qs.get('dpr')) : Math.min(window.devicePixelRatio || 1, 2);
+> src/game/Game.ts:47:  renderer.setPixelRatio(dpr);
+> src/game/Game.ts:62:  const composer = new EffectComposer(renderer);
+> src/render/env.ts:51:    antialias: true,
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:04:53.406Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && sed -n 40,110p src/game/Game.ts; sed -n 40,70p src/render/env.ts", "description": "Read composer and renderer setup"}`
+
+### 🧑 User — 2026-11-20T01:04:53.447Z
+
+> ↩︎ result: const O = { hide: 0.6, walk0: 0.0, door0: 1.1, door1: 2.1, lean0: 1.9, fold0: 2.7, fold1: 3.7, hold: 6.4, badge: 3.9, cp11: 5.2 };
+> 
+> export async function startGame(canvas: HTMLCanvasElement) {
+>   const qs = new URLSearchParams(location.search);
+>   const qaMode = qs.has('qa');
+>   const renderer = createRenderer(canvas, { preserveDrawingBuffer: qaMode });
+>   const dpr = qs.has('dpr') ? Number(qs.get('dpr')) : Math.min(window.devicePixelRatio || 1, 2);
+>   renderer.setPixelRatio(dpr);
+>   const scene = new THREE.Scene();
+>   scene.environment = createCandyEnvironment(renderer);
+>   scene.background = new THREE.Color('#b23fb4');
+>   const fog = new THREE.FogExp2('#ffbde9', 0.0035);
+>   scene.fog = fog;
+>   scene.add(new THREE.HemisphereLight('#fff0ff', '#a33bb8', 1.15));
+>   const sun = new THREE.DirectionalLight('#fff4e6', 1.6);
+>   sun.position.set(0.3, 1, 0.45);
+>   scene.add(sun);
+>   scene.add(sun.target);
+>   const fill = new THREE.PointLight('#ffd8ff', 30, 30, 1.6);
+>   scene.add(fill);
+> 
+>   const camera = new THREE.PerspectiveCamera(66, 9 / 16, 0.05, 1200);
+>   const composer = new EffectComposer(renderer);
+>   composer.addPass(new RenderPass(scene, camera));
+>   // Screen 05 test GL1 (user 2026-11-16: "the glow on …[+3542 chars]
+
+### 🤖 Claude — 2026-11-20T01:05:32.859Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && S=/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r && Q=$(cat qa/match/04/r19b/ringpaint/preview_r20/QUERY_preview.txt) && time M04_SHOTS='[[\"f00\",0,null],[\"f06\",6,null]]' timeout 600 node tools/match04/motion04.mjs $S/before \"$Q\" 2>&1 | grep -v \"^\\[\" | tail -8; python3 -c \"\nfrom PIL import Image; import numpy as np\na=np.asarray(Image.open('$S/before/f06.png').convert('RGB')).astype(float)\nb=np.asarray(Image.open('qa/match/04/r19b/ringpaint/preview_r20/3_NEW_f06_forward6u.png').convert('RGB')).astype(float)\n …[+207 chars]`
+
+### 🧑 User — 2026-11-20T01:05:58.002Z
+
+> ↩︎ result: The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff2" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff2" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff" is outside of Vite serving allow list.
+> The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff" is outside of Vite serving allow list.
+> f00 s 78.735 lat 0 04 coins 1330
+> f06 s 84.183 lat 0 04 coins 1330
+> 
+> real	0m24.646s
+> user	0m1.469s
+> sys	0m0.491s
+> repro vs preview: max 255.0 pct exact 49.794439621913575 pct<=8 68.65038459683642
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:06:06.022Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r && python3 -c \"\nfrom PIL import Image; import numpy as np\na=Image.open('before/f06.png').convert('RGB'); b=Image.open('/home/user/wt/s04b/qa/match/04/r19b/ringpaint/preview_r20/3_NEW_f06_forward6u.png').convert('RGB')\no=Image.new('RGB',(864,768)); o.paste(b.resize((432,768)),(0,0)); o.paste(a.resize((432,768)),(432,0)); o.save('cmp_repro.png')\nd=np.abs(np.asarray(a).astype(int)-np.asarray(b).astype(int)).max(2); ys,xs=np.where(d>30); print(ys.min(),ys.max(),xs.min(),xs.max(), (d>30).mean()) …[+71 chars]`
+
+### 🧑 User — 2026-11-20T01:06:06.531Z
+
+> ↩︎ result: 37 1535 0 840 0.11447633342978394
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:06:12.879Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r/cmp_repro.png"}`
+
+### 🧑 User — 2026-11-20T01:06:12.919Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T01:06:24.455Z
+
+> 🔧 **TaskCreate** `{"subject": "Diagnose dark/jagged ring band edges (Screen 04)", "description": "Instrument shader + composer, confirm root causes of near-black boundaries and jagged edges in the m04rnear near bands", "activeForm": "Diagnosing ring band edges"}`
+
+### 🧑 User — 2026-11-20T01:06:24.469Z
+
+> ↩︎ result: Task #1 created successfully: Diagnose dark/jagged ring band edges (Screen 04)
+
+### 🤖 Claude — 2026-11-20T01:06:25.906Z
+
+> 🔧 **TaskCreate** `{"subject": "Implement soft rounded rims + reflections behind URL switch", "description": "Fix at source: continuous sub-band shading, AA grooves, copper with pink/violet/blue reflections; MSAA switch; keep layout/gameplay", "activeForm": "Implementing ring refinement"}`
+
+### 🧑 User — 2026-11-20T01:06:25.918Z
+
+> ↩︎ result: Task #2 created successfully: Implement soft rounded rims + reflections behind URL switch
+
+### 🤖 Claude — 2026-11-20T01:06:27.208Z
+
+> 🔧 **TaskCreate** `{"subject": "Proof: APPROVED | BEFORE | AFTER + moving clip", "description": "Full-size matching-camera comparisons (f00 + f06 + steer), zoom of marked area, short clip while Benny swims, metrics", "activeForm": "Rendering comparisons and clip"}`
+
+### 🧑 User — 2026-11-20T01:06:27.217Z
+
+> ↩︎ result: Task #3 created successfully: Proof: APPROVED | BEFORE | AFTER + moving clip
+
+### 🤖 Claude — 2026-11-20T01:06:28.115Z
+
+> 🔧 **TaskCreate** `{"subject": "Save, verify backup, report", "description": "Notes + patch in session branch, autosave verify remote==HEAD, backup report, service status", "activeForm": "Saving and verifying backup"}`
+
+### 🧑 User — 2026-11-20T01:06:28.125Z
+
+> ↩︎ result: Task #4 created successfully: Save, verify backup, report
+
+### 🤖 Claude — 2026-11-20T01:06:31.449Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && mkdir -p qa/match/04/r21_rings && git diff > qa/match/04/r21_rings/worker_wip_r20_unfinished.patch && git checkout src/world/match04m4.ts && git status --short | head -5 && wc -l qa/match/04/r21_rings/worker_wip_r20_unfinished.patch", "description": "Set aside worker's unfinished tuning as a patch"}`
+
+### 🧑 User — 2026-11-20T01:06:31.637Z
+
+> ↩︎ result: Updated 1 path from the index
+> ?? node_modules
+> ?? qa/match/04/r19b/
+> ?? qa/match/04/r21_rings/
+> 37 qa/match/04/r21_rings/worker_wip_r20_unfinished.patch
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:06:36.835Z
+
+Now the debug view: a temporary switch that colours each pixel by which surface part it belongs to and where it sits inside its sub-band.
+
+### 🤖 Claude — 2026-11-20T01:06:37.480Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04b/src/world/match04m4.ts", "offset": 544, "limit": 50}`
+
+### 🧑 User — 2026-11-20T01:06:37.501Z
+
+> ↩︎ result: 544	        float fa = rr * (abs(dax) + abs(day)), fu = fwidth(al);
+> 545	        float ea = max(bs * 1.5, 0.9 * fa), eu = max(bs, 0.9 * fu);         // painted dots: a little longer along the lip
+> 546	        float on = step(1.0 - uRDots.z, h21(vec2(ci, ri + 11.0))) * uRDots.x * min(1.0, 1.5 * bs * bs / (ea * eu) + 0.35);
+> 547	        float d = length(vec2(arc / ea, du / eu));                            // 1 = edge of the bright core
+> 548	        pr += vec3(1.0, 0.62, 0.20) * 0.60 * smoothstep(3.0, 0.0, d) * on;   // orange halo
+> 549	        pr = mix(pr, vec3(1.0, 0.95, 0.76), smoothstep(1.0, 0.35, d) * on);  // yellow-white core
+> 550	      }
+> 551	      // the painted colour replaces the procedural ramp, its streaks, star glints, lip bulbs and pink-violet tint
+> 552	      col = mix(col, pr, uRPaint);
+> 553	    }
+> 554	  }
+> 555	#ifdef RFEW
+> 556	  if (vK.y > -0.5 && uRFewW.y > 0.0) {
+> 557	    // r18 m04rfew: the light at the end of the painted telescope floods the deep rings: copper -> orange -> yellow ->
+> 558	    // warm yellow-white (the painted band medians measured ring by ring toward the vanishing point, as gains over the
+> 559	    // copper; r16 m04rwarm table), graded by how far this ring has sh …[+2346 chars]
+
+### 🤖 Claude — 2026-11-20T01:06:57.518Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && python3 - <<'EOF'\np='src/world/match04m4.ts'; s=open(p).read()\ns=s.replace(\"\"\"void main() {\n  vec3 V = normalize(cameraPosition - vW);\n  vec3 n = normalize(vN);\n  if (dot(n, V) < 0.0) n = -n;\n  vec3 q = vW - uAxO;\"\"\",\"\"\"uniform float uDbg;         // TEMP r21 diagnosis\nvoid main() {\n  float dbgSi = -1.0, dbgXs = 0.0, dbgFd = 0.0;\n  vec3 V = normalize(cameraPosition - vW);\n  vec3 n = normalize(vN);\n  if (dot(n, V) < 0.0) n = -n;\n  vec3 q = vW - uAxO;\"\"\",1)\ns=s.replace(\"\"\"        if (fd > 0.001) {\n          float lastS = step(Ns  …[+1662 chars]`
+
+### 🧑 User — 2026-11-20T01:07:43.233Z
+
+> ↩︎ result: 4
+> f06 s 84.369 lat 0 04 coins 1330
+> f06 s 84.391 lat 0 04 coins 1330
+> f06 s 84.44 lat 0 04 coins 1330
+> Shell cwd was reset to /home/user/rainbow-
+> [This command modified 1 file you've previously read: ../wt/s04b/src/world/match04m4.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-20T01:07:51.667Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r && python3 -c \"\nfrom PIL import Image\na=Image.open('before_nb/f06.png').convert('RGB'); d=Image.open('dbg1/f06.png').convert('RGB')\nbox=(40,440,340,760)\nw,h=box[2]-box[0],box[3]-box[1]\no=Image.new('RGB',(w*3*2+10,h*3),'white')\no.paste(a.crop(box).resize((w*3,h*3),Image.NEAREST),(0,0)); o.paste(d.crop(box).resize((w*3,h*3),Image.NEAREST),(w*3+10,0)); o.save('dbg_cmp.png')\nImage.blend(a,d,0.5).crop((0,300,864,1000)).save('dbg_full.png')\n\"", "description": "Side-by-side of render and debu …[+11 chars]`
+
+### 🧑 User — 2026-11-20T01:07:52.242Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:07:55.816Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r/dbg_cmp.png"}`
+
+### 🧑 User — 2026-11-20T01:07:55.839Z
+
+> ↩︎ result: [image]
+
