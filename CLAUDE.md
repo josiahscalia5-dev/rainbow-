@@ -13,7 +13,7 @@ started the full bootstrap in the background. Its summary ("RAINBOW SESSION STAR
    (Legacy prompts call `scripts/resume-newest-work.sh --tools`; it runs the bootstrap.)
 2. **BINDING, user-approved 2026-11-18 ~15:00 UTC: `docs/briefs/2026-11-18-r13/USER_VISUAL_GOAL_R13.md`** (the exact approved
    scenery of 04–08 THROUGHOUT Benny's swimming; read it before any screen work). Read the TOP section of
-   **`docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`** — NEWEST: "ROUND 28" (lead `ccr-9652868f-lkw0w0`, map `docs/briefs/2026-11-20-r28/COORDINATION.md`, briefs `LAUNCH_R28.md`;
+   **`docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`** — NEWEST: "ROUND 29" (lead `ccr-ac160b4c-3hdecw`, map `docs/briefs/2026-11-20-r29/COORDINATION.md`, briefs `LAUNCH_R29.md`; next account `setup_worker_r30.sh`); before it "ROUND 28" (lead `ccr-9652868f-lkw0w0`, map `docs/briefs/2026-11-20-r28/COORDINATION.md`, briefs `LAUNCH_R28.md`;
    four workers on LOCAL `-c29`, next account `setup_worker_r29.sh`); before it "ROUND 27" (lead `claude/rainbow-restore-screen-match-ijjdai`,
    `docs/briefs/2026-11-20-r27/COORDINATION.md`); before it "ROUND 26" (lead `ccr-08ece3a6-xcwyls`, map `docs/briefs/2026-11-20-r26/COORDINATION.md`;
    **the user's detailed visual brief for every screen `docs/briefs/2026-11-20-r26/USER_VISUAL_BRIEF_R26.md` — binding**; four workers on LOCAL

@@ -1,5 +1,11 @@
 # Screen 06 — round 25 progress (worktree `/home/user/wt/s06`, LOCAL branch `claude/rainbow-s06-match-c26`, ports 5276 / 5282 / 5283)
 
+## (r29) WHERE I STOPPED / NEXT
+* ~18:30 UTC — relaunched (round 29, new account), worktree `/home/user/wt/s06` LOCAL branch `claude/rainbow-s06-match-c30`, port 5276,
+  scratch `/home/user/scratch/s06/`. Edits restored byte-identical (m06route coded, tsc 0 per r28). Quick-shot tool = the surviving
+  `tools/match06/r28_quick.mjs` (432x768, AUDIT_PORT=5276, AUDIT_SHOTS env). NOW: quick BEFORE vs NEW (+`&m06route=1`) shots into
+  `/home/user/scratch/s06/q1/{BEFORE,NEW}/` (start / 3 / 12 / 20 / 30 / 40 / 50 / 70 / 85 / 99 % / 07 +3 / +10 % / hard L / R at 35 %).
+
 ## (r28) WHERE I STOPPED / NEXT
 * ~17:10 UTC — relaunched (new account), worktree `/home/user/wt/s06` LOCAL branch `claude/rainbow-s06-match-c29`, scratch
   `/home/user/scratch/s06/`. TASK = the user-authorized route test `docs/briefs/2026-11-20-r28/S06_ROUTE_R28.md` (+ clarification

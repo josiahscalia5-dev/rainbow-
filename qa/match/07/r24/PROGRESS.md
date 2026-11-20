@@ -1,5 +1,16 @@
 # Screen 07 · round 24 (water-fx-specialist) — progress log
 
+## (r29) WHERE I STOPPED / NEXT
+* r29 relaunch (new account, ~18:30 UTC). Worktree `/home/user/wt/s07`, LOCAL branch `claude/rainbow-s07-match-c30` (r28 edits restored
+  byte-identical by the lead). Ports 5277 / 5280 / 5281. Temp `/home/user/scratch/s07/`.
+* FOUND: the r28 proof DID finish before the stop: `qa/match/07/r27/s2_fsoft/gameplay_NEW_fsoft.json` (query = full candidate &
+  m07fsoft=1: **8 / 8 pass, 91 coins** 1330 -> 2240, plunge 61.02 u, 0 respawns) and both clips `SCREEN07_NEW_fsoft_K23-3_{1x,0.5x}.mp4`
+  (213 frames each = same as BEFORE `r26/final/SCREEN07_NEW_full_K23-3_*`).
+* DONE: s08 snapshot re-copied read-only (s08 HEAD 3c0fa97): 30 / 30 match `combo/s08snap_SHA256SUMS_r25.txt`; combo
+  `/home/user/scratch/s07/combo` rebuilt, tsc 0 (combo + worktree).
+* NEXT: confirm the clip is v5 (re-render 1-2 frames from the combo, compare), landmark stills from the clip at the r26 landmark t's
+  -> `qa/match/07/r27/s2_fsoft/landmarks/`, verdict. Then step 3 `&m07coinw=1` quick check.
+
 ## (r28) WHERE I STOPPED / NEXT
 * r28 relaunch (new account, ~16:40 UTC). Worktree `/home/user/wt/s07`, LOCAL branch `claude/rainbow-s07-match-c29` (r27 edits restored
   byte-identical by the lead). Ports 5277 / 5280 / 5281. Temp `/home/user/scratch/s07/` (recreated, empty).

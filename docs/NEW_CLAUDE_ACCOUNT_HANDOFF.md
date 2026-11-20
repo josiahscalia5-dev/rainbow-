@@ -1,4 +1,15 @@
-# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 28 (2026-11-20, lead branch `ccr-9652868f-lkw0w0`, from ~16:36 UTC)
+# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 29 (2026-11-20, lead branch `ccr-ac160b4c-3hdecw`, from ~18:21 UTC)
+
+New account; session branch started at **`31d3a8c`** = the r28 lead `ccr-9652868f-lkw0w0`'s last save (18:12 UTC; verified with `git ls-remote` after
+the hook's fetch failed — nothing newer, nothing merged). Round 28 stopped 17:30–17:36 UTC (old account 5-hour limit, HTTP 429). Worktrees recreated on
+LOCAL `-c30` (`setup_worker_r29.sh`, all 12 incl. trial07 + view04/06/07) — **all 12 byte-identical to the 18:12 snapshots**. On THIS account: World
+Labs key (5,420 credits), fal, Hugging Face, Context7 connector and GitHub WORK; the World Labs **Atlas** connector needs the user's sign-up
+(atlas.worldlabs.ai); 7 inventory plugins not enabled (not needed). Four workers relaunched (**s06 route test = priority**, s07, s05, Benny).
+Map + services: **`docs/briefs/2026-11-20-r29/COORDINATION.md`**; briefs `LAUNCH_R29.md`; next-account recipe **`setup_worker_r30.sh`** (`-c31` from
+the newest `backups/wip/*-c30/`). Binding user decisions unchanged: `docs/briefs/2026-11-20-r28/USER_CLARIFICATIONS_R28.md` (04–10 playable incl. 09 / 10),
+`S06_ROUTE_R28.md` (06 route test authorized), `docs/briefs/2026-11-20-r26/USER_VISUAL_BRIEF_R26.md`.
+
+# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ ROUND 28 (2026-11-20, lead branch `ccr-9652868f-lkw0w0`, from ~16:36 UTC)
 
 New account; session branch started at **`7d3ba10`** = the r27 lead `claude/rainbow-restore-screen-match-ijjdai`'s last save (16:15 UTC; verified with
 `git ls-remote` after the hook's fetch failed — nothing newer, nothing merged). Round 27 stopped 16:09–16:13 UTC (old account 5-hour limit, HTTP 429).

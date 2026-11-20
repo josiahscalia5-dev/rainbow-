@@ -4,6 +4,12 @@ Worktree `/home/user/wt/s05`, LOCAL branch `claude/rainbow-s05-match-c29` (base 
 temp `/home/user/scratch/s05/`. Old notes: `/home/user/wt/s05/qa/match/05/r18/PROGRESS.md`. Kept candidate (BEFORE for every
 step): `/home/user/wt/s05/qa/match/05/r18/KEPT_STEP2.txt`. Lead preview of that candidate: `qa/review_r27/05/`.
 
+## (r29) WHERE I STOPPED / NEXT
+* ~18:35 UTC — relaunched on `claude/rainbow-s05-match-c30` (worktree restored byte-identical; step-1 code = 3 files, tsc 0).
+  Quick-shot tool recreated: `/home/user/scratch/s05/quick.mjs` (= `tools/match05/r8_shots.mjs` with `VW`/`VH` viewport env).
+  NOW: quick 432×768 v3 check BEFORE (KEPT_STEP2) vs NEW (+`&m05endr=1`) at a00 / x70 / x85 / x95 / x85L / x85R / x95L / x95R
+  → `/home/user/scratch/s05/q_v3/{before,new}/`. Then judge vs approved, tune ≤ 2×, full proof in `qa/match/05/r28/s1_endr/`.
+
 ## (r28) WHERE I STOPPED / NEXT
 * 17:10 UTC — started r28. Diagnosis of the end section done (below).
 * ~17:45 UTC — step 1 `&m05endr=1` code written in the worktree (tsc 0; uncommitted, the lead's autosave snapshots it):

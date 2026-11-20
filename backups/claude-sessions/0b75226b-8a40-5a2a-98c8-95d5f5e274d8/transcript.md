@@ -1065,3 +1065,136 @@ Helper installs outside the repo were lost with the old container. Rebuilding th
 > Mem:              15           0           0           0          14          14
 > /dev/vda        252G   47G   23G  68% /
 
+### 🤖 Claude — 2026-11-20T18:32:03.843Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-20-r29/LAUNCH_R29.md", "content": "# Round 29 — relaunch of four specialists (lead session branch `ccr-ac160b4c-3hdecw`, new Claude account, 2026-11-20 from ~18:21 UTC)\n\nRound 28 (lead `ccr-9652868f-lkw0w0`) stopped at 17:30–17:36 UTC: the old account hit its 5-hour limit (HTTP 429) and the four workers\n(s06 route, s07, s05, Benny) died mid-step — NOT a rejection. Its last autosave was 18:12 (`31d3a8c`) = this session's start; the worker\nsnapshots in `backups/wip/*-c29/` are from 18:12:48. Every worktree was recreated by `docs/briefs/2 …[+7119 chars]`
+
+### 🧑 User — 2026-11-20T18:32:03.892Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-20-r29/LAUNCH_R29.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T18:32:05.962Z
+
+Launching the four workers now. The Screen 06 route test has render priority.
+
+### 🤖 Claude — 2026-11-20T18:32:20.918Z
+
+> 🔧 **Agent** `{"description": "Screen 06 route specialist r29", "subagent_type": "path-camera-transition-engineer", "run_in_background": true, "prompt": "You are the Screen 06 specialist (slug s06) of the Rainbow game, round 29 (new Claude account; lead session branch `ccr-ac160b4c-3hdecw`, lead checkout `/home/user/rainbow-`). The previous account stopped you at ~17:32 UTC on its 5-hour limit (HTTP 429) — not a rejection. Your unfinished edits were restored byte-identical (verified) into your worktree `/home/user/wt/s06`, LOCAL branch `claude/rainbow-s06-match-c30`, port 5276. Temp files: `/home/user/scrat …[+3443 chars]`
+
+### 🧑 User — 2026-11-20T18:32:20.971Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: adf2cb4b401fabf6f (internal ID - do not mention to user. Use SendMessage with to: 'adf2cb4b401fabf6f', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/0b75226b-8a40-5a2a-98c8-95d5f5e274d8/tasks/adf2cb4b401fabf6f.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-20T18:32:30.360Z
+
+> 🔧 **Agent** `{"description": "Screen 07 specialist r29", "subagent_type": "water-fx-specialist", "run_in_background": true, "prompt": "You are the Screen 07 specialist (slug s07) of the Rainbow game, round 29 (new Claude account; lead session branch `ccr-ac160b4c-3hdecw`, lead checkout `/home/user/rainbow-`). The previous account stopped you at ~17:36 UTC on its 5-hour limit (HTTP 429) — not a rejection. Your unfinished edits were restored byte-identical (verified) into `/home/user/wt/s07`, LOCAL branch `claude/rainbow-s07-match-c30`, ports 5277 / 5280 / 5281. Temp: `/home/user/scratch/s07/` (empty — the r …[+2051 chars]`
+
+### 🧑 User — 2026-11-20T18:32:30.379Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a9649fde00f8f0679 (internal ID - do not mention to user. Use SendMessage with to: 'a9649fde00f8f0679', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/0b75226b-8a40-5a2a-98c8-95d5f5e274d8/tasks/a9649fde00f8f0679.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-20T18:32:39.311Z
+
+> 🔧 **Agent** `{"description": "Screen 05 specialist r29", "subagent_type": "water-fx-specialist", "run_in_background": true, "prompt": "You are the Screen 05 specialist (slug s05) of the Rainbow game, round 29 (new Claude account; lead session branch `ccr-ac160b4c-3hdecw`, lead checkout `/home/user/rainbow-`). The previous account stopped you at ~17:30 UTC on its 5-hour limit (HTTP 429) — not a rejection. Your unfinished edits were restored byte-identical (verified) into `/home/user/wt/s05`, LOCAL branch `claude/rainbow-s05-match-c30`, port 5275. Temp: `/home/user/scratch/s05/` (empty — the r28 scratch incl …[+2029 chars]`
+
+### 🧑 User — 2026-11-20T18:32:39.331Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a31f54481a6113712 (internal ID - do not mention to user. Use SendMessage with to: 'a31f54481a6113712', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/0b75226b-8a40-5a2a-98c8-95d5f5e274d8/tasks/a31f54481a6113712.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-20T18:32:47.813Z
+
+> 🔧 **Agent** `{"description": "Benny specialist r29", "subagent_type": "benny-character-artist", "run_in_background": true, "prompt": "You are the Benny specialist (slug benny) of the Rainbow game, round 29 (new Claude account; lead session branch `ccr-ac160b4c-3hdecw`, lead checkout `/home/user/rainbow-`). The previous account stopped you at ~17:30 UTC on its 5-hour limit (HTTP 429) — not a rejection. Your unfinished edits were restored byte-identical (verified) into `/home/user/wt/benny`, LOCAL branch `claude/rainbow-benny-c30`, port 5279. Temp: `/home/user/scratch/benny/` (empty — the r28 scratch incl. s …[+1913 chars]`
+
+### 🧑 User — 2026-11-20T18:32:47.834Z
+
+> ↩︎ result: Async agent launched successfully. (This tool result is internal metadata — never quote or paste any part of it, including the agentId below, into a user-facing reply.)
+> agentId: a4831c3473aac19e7 (internal ID - do not mention to user. Use SendMessage with to: 'a4831c3473aac19e7', summary: '<5-10 word recap>' to continue this agent.)
+> The agent is working in the background. You will be notified automatically when it completes. You know nothing about its results until that notification arrives — do not report, assume, or predict them; continue other work or respond to the user in the meantime.
+> Do not duplicate this agent's work — avoid working with the same files or topics it is using.
+> output_file: /tmp/claude-0/-home-user-rainbow-/0b75226b-8a40-5a2a-98c8-95d5f5e274d8/tasks/a4831c3473aac19e7.output
+> Do NOT Read or tail this file via the shell tool — it is the full subagent JSONL transcript and reading it will overflow your context. If the user asks for progress, say the agent is still running; you'll get a completion notification.
+
+### 🤖 Claude — 2026-11-20T18:32:49.255Z
+
+> 🔧 **TaskUpdate** `{"taskId": "2", "status": "completed"}`
+
+### 🧑 User — 2026-11-20T18:32:49.267Z
+
+> ↩︎ result: Updated task #2 status
+
+### 🤖 Claude — 2026-11-20T18:32:49.611Z
+
+> 🔧 **TaskUpdate** `{"taskId": "1", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-20T18:32:49.636Z
+
+> ↩︎ result: Updated task #1 status
+
+### 🤖 Claude — 2026-11-20T18:32:51.822Z
+
+Four workers are running. Now the round-29 coordination record, plus the "start here" pointers, so the next account (if needed) starts on this branch.
+
+### 🤖 Claude — 2026-11-20T18:32:53.477Z
+
+> 🔧 **Bash** `{"command": "head -30 backups/START_NEW_CLAUDE_ACCOUNT.md | cut -c1-300; grep -n \"ccr-9652868f\" CLAUDE.md | head -3 | cut -c1-200; python3 -c \"import json;d=json.load(open('backups/autosave.config.json'));print(d.get('branch'));print(d.get('protected_branches')[-8:])\"", "description": "Inspect the new-account start file, CLAUDE.md pointer and autosave config"}`
+
+### 🧑 User — 2026-11-20T18:32:53.553Z
+
+> ↩︎ result: # Paste this into Claude Code on the next Claude account
+> 
+> ## ▶▶▶▶▶▶ NEWEST (2026-11-20 ~16:55 UTC, round 28 → next account)
+> Same steps and prompt as the round-24 block below, with these replacements: start the cloud session on branch
+> **`ccr-9652868f-lkw0w0`** (the round-28 lead; NOT the default branch); read the TOP of `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md` ("ROUND 28"),
+> the user's visual brief `docs/briefs/2026-11-20-r26/USER_VISUAL_BRIEF_R26.md`, `docs/briefs/2026-11-20-r28/COORDINATION.md` + `LAUNCH_R28.md`;
+> recreate the worktrees with `bash docs/briefs/2026-11-20-r28/setup_worker_r29.sh` (LOCAL `-c30` from the newest `backups/wip/*-c29/`, the
+> separate `trial07` and the lead's `view04/06/07` included). If the session hook's `git fetch` fails, run `git ls-remote origin` for the lead
+> branch, fetch it by name and merge before anything else. Keys: World Labs + fal worked on the round-28 account through the environment;
+> check with the free reads first, then the secure form. The round-27 review page (claude.ai artifact) belonged to the old account; its source
+> is `qa/review_r27/index.html` + `web/` — republish it on the new account.
+> **USER SCOPE DECISION (r28, ~17:25 UTC, permanent): 01, …[+2072 chars]
+
+### 🤖 Claude — 2026-11-20T18:33:20.440Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-20-r29/COORDINATION.md", "content": "# Round 29 — coordination (lead session branch `ccr-ac160b4c-3hdecw`, new Claude account, 2026-11-20 from ~18:21 UTC)\n\nUser (new account, ~18:21): restore the project from **`ccr-9652868f-lkw0w0`** (the r28 lead), verified five-minute GitHub autosave first,\nrecover every unfinished edit (s04 s05 s06 s07 s08 benny lead06 lead07 trial07 view04 view06 view07 + `tools/lead26/trial07_recovered/`),\nrestore the ten specialists and the toolchain, continue the AUTHORIZED work — **Screen 06 route test = next  …[+5922 chars]`
+
+### 🧑 User — 2026-11-20T18:33:20.472Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-20-r29/COORDINATION.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T18:33:36.209Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport re,json\np='docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md'; t=open(p).read()\nnew='''# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 29 (2026-11-20, lead branch `ccr-ac160b4c-3hdecw`, from ~18:21 UTC)\n\nNew account; session branch started at **`31d3a8c`** = the r28 lead `ccr-9652868f-lkw0w0`'s last save (18:12 UTC; verified with `git ls-remote` after\nthe hook's fetch failed — nothing newer, nothing merged). Round 28 stopped 17:30–17:36 UTC (old account 5-hour limit, HTTP 429). Worktrees recreated on\nLOCAL `-c30` (`setup_worker_r29.sh`, all 12 incl. trial07 + view04/0 …[+2948 chars]`
+
+### 🧑 User — 2026-11-20T18:33:36.375Z
+
+> ↩︎ result: ok
+> # ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 29 (2026-11-20, lead b
+> 
+> New account; session branch started at **`31d3a8c`** = the r28 lead `ccr-9652868f-lkw0w0`'s last save (18:12 UTC; verifi
+>  CLAUDE.md                           |  2 +-
+>  backups/START_NEW_CLAUDE_ACCOUNT.md | 11 ++++++++++-
+>  backups/autosave.config.json        |  7 ++++---
+>  docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md  | 13 ++++++++++++-
+>  qa/match/05/r27/PROGRESS.md         |  6 ++++++
+>  qa/match/06/r25/PROGRESS.md         |  6 ++++++
+>  6 files changed, 39 insertions(+), 6 deletions(-)
+
+### 🤖 Claude — 2026-11-20T18:33:39.550Z
+
+> 🔧 **Bash** `{"command": "git diff backups/autosave.config.json; timeout 600 python3 scripts/rainbow-autosave.py --reason manual:r29-restore-checkpoint 2>&1 | tail -4; python3 -I scripts/autosave-status.py; git rev-parse HEAD; git ls-remote origin refs/heads/ccr-ac160b4c-3hdecw", "description": "Check the config change, make a manual restore checkpoint and verify on GitHub", "timeout": 660000}`
+
