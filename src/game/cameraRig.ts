@@ -16,6 +16,17 @@ const M06_LA = (() => {
   const v = typeof location !== 'undefined' ? Number(new URLSearchParams(location.search).get('m06la')) : NaN;
   return Number.isFinite(v) && v > 5 ? v : 40;
 })();
+/** r21 `&m06view=1` (with m06cam; qa/match/06/r21/PROGRESS.md): composition test — the approved view direction / off-centre aim
+ *  is held while Benny swims and eases toward the m06cam route view only as visibility needs it. Tunables (QA):
+ *  `&m06vw=a,b` hold → hand-over (u past the checkpoint, default 16,34), `&m06vx=` max route x (NDC, default 0.55) */
+const M06_VIEW = M06_CAM && flag05('m06view');
+const m06num = (k: string, n: number, d: number[]) => {
+  const v = typeof location !== 'undefined' ? new URLSearchParams(location.search).get(k) : null;
+  const a = (v ?? '').split(',').map(Number);
+  return v && a.length === n && a.every(Number.isFinite) ? a : d;
+};
+const M06_VW = m06num('m06vw', 2, [16, 34]);
+const M06_VX = m06num('m06vx', 1, [0.55])[0];
 
 export interface CamParams {
   back: number; // distance behind Benny
@@ -200,6 +211,53 @@ export class RideCamera {
             cp6.y = wy + 1.6;
             const v1 = bn.sub(cp6).normalize();
             d6.applyQuaternion(new THREE.Quaternion().setFromUnitVectors(v0, v1));
+          }
+        }
+        if (M06_VIEW) {
+          // r21 m06view: the approved camera (checkpoint world offset + world view direction) carried with Benny, held while
+          // the route stays visible; exactly the approved camera at the checkpoint (wv = 1), eased into the m06cam view
+          // above by the hand-over distance (so the 06→07 join is unchanged)
+          const sB = st6.s0 + 10;
+          const wv = THREE.MathUtils.smoothstep(s, sB - 4, sB) * (1 - THREE.MathUtils.smoothstep(s, sB + M06_VW[0], sB + M06_VW[1]));
+          if (wv > 0) {
+            const bn = f.pos.clone().addScaledVector(f.right, lat * 0.5);
+            const pv = bn.clone().add(new THREE.Vector3(...p6.off06));
+            const dv = new THREE.Vector3(...p6.dir06).normalize();
+            // keep >= 1.6 u above the water below (down the far slope), turning the view so Benny keeps his approved place
+            let best = Infinity, wy = -Infinity;
+            for (let k = -14; k <= 8; k += 0.5) {
+              const q = this.course.sample(Math.max(0, s + k)).pos, dx = q.x - pv.x, dz = q.z - pv.z;
+              if (dx * dx + dz * dz < best) { best = dx * dx + dz * dz; wy = q.y; }
+            }
+            if (pv.y < wy + 1.6) {
+              const v0 = bn.clone().sub(pv).normalize();
+              pv.y = wy + 1.6;
+              dv.applyQuaternion(new THREE.Quaternion().setFromUnitVectors(v0, bn.clone().sub(pv).normalize()));
+            }
+            // visibility: turn only as much as needed so Benny stays in the lower middle and the route ahead (6 / 12 u)
+            // stays inside the frame (vertical fov 62, portrait 9:16)
+            const tV = Math.tan(THREE.MathUtils.degToRad(31)), tH = tV * 0.5625, UP = new THREE.Vector3(0, 1, 0);
+            const pts: [THREE.Vector3, number, number, number, number][] = [
+              [bn, -0.5, 0.5, -0.62, 0.05],
+              ...[6, 12].map((d) => [this.course.sample(Math.min(s + d, this.course.length - 1)).pos.clone().addScaledVector(this.course.sample(Math.min(s + d, this.course.length - 1)).right, lat * 0.5), -0.75, M06_VX, -0.45, 0.62] as [THREE.Vector3, number, number, number, number]),
+            ];
+            for (let it = 0; it < 3; it++) {
+              const Rv = new THREE.Vector3().crossVectors(dv, UP).normalize(), Uv = new THREE.Vector3().crossVectors(Rv, dv);
+              let yaw = 0, pit = 0;
+              for (const [p, x0, x1, y0, y1] of pts) {
+                const r = p.clone().sub(pv), z = r.dot(dv);
+                if (z < 0.5) continue;
+                const ax = Math.atan2(r.dot(Rv), z), ay = Math.atan2(r.dot(Uv), z);
+                const hi = Math.atan(x1 * tH), lo = Math.atan(x0 * tH), vhi = Math.atan(y1 * tV), vlo = Math.atan(y0 * tV);
+                if (ax > hi) yaw = Math.max(yaw, ax - hi); else if (ax < lo) yaw = Math.min(yaw, ax - lo);
+                if (ay > vhi) pit = Math.max(pit, ay - vhi); else if (ay < vlo) pit = Math.min(pit, ay - vlo);
+              }
+              if ((globalThis as any).__m06dbg) console.log('m06view', s.toFixed(2), it, yaw.toFixed(4), pit.toFixed(4), pts.map(([p]) => { const r = p.clone().sub(pv), z = r.dot(dv); return [(r.dot(Rv) / z / tH).toFixed(2), (r.dot(Uv) / z / tV).toFixed(2)].join('/'); }).join(' '));
+              if (Math.abs(yaw) < 1e-4 && Math.abs(pit) < 1e-4) break;
+              dv.applyAxisAngle(UP, -yaw).applyAxisAngle(Rv, pit).normalize();
+            }
+            cp6.lerp(pv, wv);
+            d6.normalize().lerp(dv, wv).normalize();
           }
         }
         outPos.lerp(cp6, w6);
