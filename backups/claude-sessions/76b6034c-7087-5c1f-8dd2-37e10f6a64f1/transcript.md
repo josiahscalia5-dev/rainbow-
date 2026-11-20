@@ -3757,3 +3757,99 @@ While the clips finish, I'm reviewing my own code changes once more for mistakes
 > tracked  docs/briefs/2026-11-20-r30/setup_r30b.sh
 > 0
 
+### 🤖 Claude — 2026-11-20T23:26:10.547Z
+
+The last autosave was at 23:21, and another was due by 23:26. Checking that the five-minute loop is still alive:
+
+### 🤖 Claude — 2026-11-20T23:26:11.519Z
+
+> 🔧 **Bash** `{"command": "date -u +%H:%M:%S; pgrep -af \"autosave-daemon|rainbow-autosave\" | head -5; tail -3 /home/user/rainbow-/backups/.live/*.log 2>/dev/null | tail -8 | cut -c1-200", "description": "Check the autosave daemon is still running"}`
+
+### 🧑 User — 2026-11-20T23:26:11.575Z
+
+> ↩︎ result: 23:26:11
+> 585 bash /home/user/rainbow-/scripts/autosave-daemon.sh
+> 25478 timeout 900 python3 /home/user/rainbow-/scripts/rainbow-autosave.py --reason daemon --quiet
+> 25481 python3 /home/user/rainbow-/scripts/rainbow-autosave.py --reason daemon --quiet
+
+### 🤖 Claude — 2026-11-20T23:26:16.118Z
+
+It's 23:26 and the scheduled save is running right now. I'll confirm when it lands:
+
+### 🤖 Claude — 2026-11-20T23:26:18.480Z
+
+> 🔧 **Bash** `{"command": "until ! pgrep -f \"rainbow-autosave.py --reason daemon\" >/dev/null; do sleep 3; done; python3 -I scripts/autosave-status.py; for f in qa/match/06/r30b/proof/r30b_candidate_from_e162aec.patch qa/match/06/r30b/proof/README.md qa/match/06/r30b/proof/gameplay_NEW.json; do git ls-files --error-unmatch $f >/dev/null 2>&1 && echo \"tracked  $f\" || echo \"NOT YET  $f\"; done; echo \"raw frames tracked: $(git ls-files qa/match/06/r30b/proof/clip_frames | wc -l)\"", "description": "Wait for the running autosave, then verify contents", "timeout": 900000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T23:26:18.557Z
+
+> ↩︎ result: Command running in background with ID: bbwz3vn6z. Output is being written to: /tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/tasks/bbwz3vn6z.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-20T23:26:27.251Z
+
+> 🔧 **Bash** `{"command": "head -32 backups/BOOTSTRAP_REPORT.md | cut -c1-260; echo ---; timeout 60 python3 -I scripts/verify-assets.py worldlabs 2>&1 | tail -3", "description": "Read this session's bootstrap report and check World Labs key"}`
+
+### 🧑 User — 2026-11-20T23:26:28.417Z
+
+> ↩︎ result: # Rainbow bootstrap report — BOOTSTRAP PROBLEMS
+> 
+> Generated 2026-11-20 22:22 UTC by `scripts/claude-bootstrap.sh` (mode `background`) on branch `ccr-e490fceb-u85291`.
+> The commit that contains this file is the backup itself, so its SHA is not written here; use `git log -1 -- backups/BOOTSTRAP_REPORT.md`.
+> 
+> | Step | Result | Details | s |
+> |---|---|---|---|
+> | Repository + branch | OK | josiahscalia5-dev/rainbow- on ccr-e490fceb-u85291 @ 81282dc (session started from ccr-2644c3c0-iikckn) | 0 |
+> | Resume newest work | FAIL | git fetch from GitHub failed (network / GitHub connection?) | 240 |
+> | Backup gap since last session | OK | previous save on GitHub: 81282dc 2026-11-20 22:10 UTC (manual:r30-four-views-brief-checkpoint) on ccr-2644c3c0-iikckn, ccr-e490fceb-u85291; previous session ended WITHOUT an end-of-session backup (its environment closed a
+> | Git LFS binaries (local) | OK | 218/218 real files (models, APK, kit ZIP, Marble splats/PLY/colliders/.blend), git lfs fsck OK | 3 |
+> | Git LFS on GitHub | OK | 218/218 LFS objects (1105 MB, 17 Marble/World Labs) confirmed on GitHub LFS | 3 |
+> | Approved references | OK | 13/13 byte-identical (scripts/reference.sha256, incl. the official cartoon- …[+2546 chars]
+
+### 🤖 Claude — 2026-11-20T23:26:40.269Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/76b6034c-7087-5c1f-8dd2-37e10f6a64f1/tasks/bbwz3vn6z.output"}`
+
+### 🧑 User — 2026-11-20T23:26:40.281Z
+
+> ↩︎ result: 1	AUTOSAVE OK | branch ccr-e490fceb-u85291 | scheduler daemon | last verified backup 2026-11-20T23:26:08+00:00 (0.3 min ago) | local 9ea79e7 remote 9ea79e7 (match) | uncommitted 0
+> 2	tracked  qa/match/06/r30b/proof/r30b_candidate_from_e162aec.patch
+> 3	tracked  qa/match/06/r30b/proof/README.md
+> 4	tracked  qa/match/06/r30b/proof/gameplay_NEW.json
+> 5	raw frames tracked: 0
+> 6	
+> 7	[exited with code 0]
+> 8
+
+### 🤖 Claude — 2026-11-20T23:26:46.537Z
+
+Saved and verified on GitHub at 23:26 (`9ea79e7`): the candidate patch, the README and the gameplay results are all in, and no raw frames went up. Checking clip progress:
+
+### 🤖 Claude — 2026-11-20T23:26:48.000Z
+
+> 🔧 **Bash** `{"command": "ls /home/user/rainbow-/qa/match/06/r30b/proof/clip_frames | wc -l; ls /home/user/rainbow-/qa/match/06/r30b/proof/steer_frames | wc -l; tail -1 /home/user/rainbow-/qa/match/06/r30b/proof/clip.log | cut -c1-100; tail -1 /home/user/rainbow-/qa/match/06/r30b/proof/steer.log | cut -c1-100; date -u +%H:%M", "description": "Check clip progress counts"}`
+
+### 🧑 User — 2026-11-20T23:26:48.098Z
+
+> ↩︎ result: 189
+> 202
+> frame 168 { s: 292.046, stage: '06', lat: 0, coins: 1760 }
+> frame 192 { s: 305.272, stage: '06', lat: -0.302, coins: 1750 }
+> 23:26
+
+### 🤖 Claude — 2026-11-20T23:27:01.676Z
+
+Both clips are a little over halfway. The main clip is at s 292 of about 426; the steering clip is further along. Rather than idle, I'll pause here; the clip watcher wakes me automatically when they finish, and then I'll encode the videos, send them and write the full report.
+
+Where things stand:
+
+- **Done and saved to GitHub:**
+  - The four numbered comparisons (sent to you above).
+  - The gameplay test: 8 of 8 checks pass, 91 coins collected, a wall bump costs a heart, and the camera has no new jumps.
+  - The candidate source (commit `cf1a660`) and a patch that rebuilds it exactly.
+- **Still rendering:** the continuous clip into Screen 07 and the zig-zag steering clip.
+
+### 🧑 User — 2026-11-20T23:27:04.882Z
+
+Save everything to my GitHub resporitory every 5 minutes 
+How does it look so far?
+Save everything to my GitHub resporitory
+
