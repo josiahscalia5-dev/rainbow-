@@ -2825,3 +2825,317 @@ Still 8.6 % of pixels differ even with the clock pinned, so I need to find out w
 
 [Image: original 2008x672, displayed at 2000x669. Multiply coordinates by 1.00 to map to original image.]
 
+### 🤖 Claude — 2026-11-20T23:06:23.668Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && B=/home/user/rainbow-/qa/match/06/r30b; echo \"$(cat $B/QUERY_SB_NEW.txt)&b30=1&m06sbk=0.8&m06sbby=0.1&m06sbqh=3\" > $B/QUERY_SB_t8.txt && Q=$(cat $B/QUERY_SB_t8.txt) && AUDIT_W=432 AUDIT_H=768 AUDIT_PORT=5365 AUDIT_PIN=10000 AUDIT_SHOTS='[[\"s240\",240,null],[\"s250\",250,null],[\"s290\",290,null],[\"s300\",300,null],[\"s330\",330,null],[\"s340\",340,null]]' timeout 1500 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/match06/r30_shots.mjs $B/t8 06 \"$Q\" 2>&1 | grep -E \"rror\" | head -3; cd $B && python3 -I -c \"\nfrom PIL import Image, I …[+800 chars]`
+
+### 🧑 User — 2026-11-20T23:06:48.446Z
+
+> ↩︎ result: panel 1: s240:-0.152  s250:-0.191  s290:-0.032  s300:-0.203  s330:-0.374  s340:-0.107   -> best s 290
+> panel 2: s240:-0.151  s250:-0.126  s290:-0.266  s300:-0.219  s330:-0.249  s340:-0.170   -> best s 250
+> panel 3: s240:-0.108  s250:-0.117  s290:-0.058  s300:-0.093  s330:-0.137  s340:-0.135   -> best s 290
+> panel 4: s240:-0.113  s250:-0.064  s290:-0.030  s300:-0.065  s330:-0.102  s340:-0.062   -> best s 290
+
+### 🤖 Claude — 2026-11-20T23:06:51.552Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r30b/t8_panels.png"}`
+
+### 🧑 User — 2026-11-20T23:06:51.595Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T23:07:06.521Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"\\.fov\\s*=\\|fov =\\|updateProjectionMatrix\" src/game/Game.ts src/game/cameraRig.ts | head -12", "description": "Find camera field-of-view assignments"}`
+
+### 🧑 User — 2026-11-20T23:07:06.567Z
+
+> ↩︎ result: src/game/Game.ts:100:    camera.updateProjectionMatrix();
+> src/game/Game.ts:358:    if (Math.abs(camera.fov - f) > 0.01) { camera.fov = f; camera.updateProjectionMatrix(); }
+> src/game/Game.ts:370:    rideCam.fov = camera.fov;
+> src/game/cameraRig.ts:118:  fov = 70;
+> src/game/cameraRig.ts:445:    if (Math.abs(cam.fov - this.fov) > 0.01) { cam.fov = this.fov; cam.updateProjectionMatrix(); }
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T23:07:10.606Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 340,372p src/game/Game.ts", "description": "Read the Game.ts field-of-view override"}`
+
+### 🧑 User — 2026-11-20T23:07:10.644Z
+
+> ↩︎ result: if (t >= T.rideStart) startRide();
+>   };
+> 
+>   /** 02 camera: between Benny and the drum's back wall, looking past him to the door ring */
+>   const cam02 = (b: THREE.Vector3) => {
+>     const dA = WORLD.drumA;
+>     const door = new THREE.Vector3(0, 0.3, dA.zDoor);
+>     const away = b.clone().sub(door).normalize();
+>     const pos = b.clone().addScaledVector(away, 3.0).add(new THREE.Vector3(0, 0.35, 0));
+>     const rr = Math.hypot(pos.x, pos.y);
+>     if (rr > 2.7) { pos.x *= 2.7 / rr; pos.y *= 2.7 / rr; }
+>     pos.y = Math.max(pos.y, dA.waterY + 1.0);
+>     pos.z = THREE.MathUtils.clamp(pos.z, dA.zBack + 0.4, dA.zDoor - 1);
+>     const look = b.clone().lerp(door, 0.22).add(new THREE.Vector3(0, 0.45, 0));
+>     return { pos, look };
+>   };
+> 
+>   const setFov = (f: number) => {
+>     if (Math.abs(camera.fov - f) > 0.01) { camera.fov = f; camera.updateProjectionMatrix(); }
+>   };
+> 
+>   const startRide = () => {
+>     st.mode = 'ride';
+>     st.t = 0;
+>     st.s = course.stage('03').s0;
+>     st.lat = 0;
+>     hud.setVisible(true);
+>     setStage('03');
+>     rideCam.pos.copy(camera.position);
+>     rideCam.target.copy(camera.position).add(camera.getWorldDirection(new THREE.Vector3()).multiplyScalar(10));
+>     rideCam.fov = camera.fov …[+148 chars]
+
+### 🤖 Claude — 2026-11-20T23:07:15.562Z
+
+Nothing else overrides the field of view, so I'll measure instead: the actual camera distance to Benny, the field of view and Benny's screen position, at s 250, for the two framings:
+
+### 🤖 Claude — 2026-11-20T23:07:19.392Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -i 's/      return { s: r.state().s, benny: r.bennyScreen(), hits:/      const cm = r.camera(); return { s: r.state().s, fov: +cm.fov.toFixed(2), dist: +Math.hypot(...cm.position.map((v, i) => v - r.bennyScreen().benny[i])).toFixed(2), benny: r.bennyScreen(), hits:/' tools/match06/r30b_probe.mjs && for v in t6b t8; do Q=$(cat /home/user/rainbow-/qa/match/06/r30b/QUERY_SB_$v.txt); echo \"== $v\"; PROBE='[[0,[]],[250,[]],[290,[]]]' AUDIT_PORT=5366 timeout 600 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/match06/r30b_probe.mjs \"$Q\" 2>& …[+266 chars]`
+
+### 🧑 User — 2026-11-20T23:07:45.873Z
+
+> ↩︎ result: == t6b
+> s 198.91 fov 62 dist 6.18 bennyNDC -0.03 -0.31
+> s 250.06 fov 50.04 dist 8.01 bennyNDC -0.07 -0.39
+> s 290.027 fov 50.01 dist 8.03 bennyNDC -0.03 -0.44
+> == t8
+> s 198.91 fov 62 dist 6.18 bennyNDC -0.03 -0.31
+> s 250.06 fov 50.04 dist 6.4 bennyNDC -0.07 -0.25
+> s 290.027 fov 50.01 dist 6.41 bennyNDC -0.03 -0.31
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T23:08:02.674Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"lean\\|b30num\\|num('\" src/characters/benny/benny30.ts | head -30", "description": "Find Benny ride-lean setting"}`
+
+### 🧑 User — 2026-11-20T23:08:02.708Z
+
+> ↩︎ result: 12: *  3. VIEW: a little more forward ride lean, so the rear chase camera sees the knit stripes as level bands and the pompom
+> 25:export const BENNY30: boolean = flag05('b30');
+> 32:  /** ride lean (deg, + = top forward), replaces the runtime's BENNY_RIDE_PITCH (12.6°) */
+> 87: *  (fr/fg/fb: the leaned fur already matches the painted mean colour), sinking deeper (sy < −0.07: the water never cuts him). */
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T23:08:05.936Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 26,60p src/characters/benny/benny30.ts; sed -n 80,110p src/characters/benny/benny30.ts", "description": "Read Benny b30 tunables"}`
+
+### 🧑 User — 2026-11-20T23:08:05.971Z
+
+> ↩︎ result: export interface B30Params {
+>   /** whole Benny (visual only, his own benny_root node; game placement / collision radius unchanged): scale about the body
+>    *  centre and raise (body units). The painted 06 Benny is ≈ 0.92 of the game's on-screen size at the v2 framing. */
+>   sc: number;
+>   sy: number;
+>   /** ride lean (deg, + = top forward), replaces the runtime's BENNY_RIDE_PITCH (12.6°) */
+>   pitch: number;
+>   /** beanie: uniform scale about the cuff's bottom centre, extra vertical factor, raise along the body's up (body units) */
+>   hs: number;
+>   hsy: number;
+>   hy: number;
+>   /** beanie: shift toward his back (body units, + = toward the rear camera) */
+>   hz: number;
+>   /** beanie: forward tilt about the cuff's bottom centre (deg, + = top away from the rear camera, so the chase camera
+>    *  sees the cuff and stripes as level bands like the painting) */
+>   hp: number;
+>   /** body: width (x, z) and height scale about the body's bottom, extra raise (body units) */
+>   bsx: number;
+>   bsy: number;
+>   by: number;
+>   /** body lower half: superellipse exponent of its profile (GLB 2.8 = round ball; higher = broad flat-based gumdrop),
+>    *  radial gain cap, and an extra width factor that grows toward the …[+1582 chars]
+
+### 🤖 Claude — 2026-11-20T23:08:23.318Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"pitch\" src/characters/benny/benny30.ts src/characters/benny/runtime.ts | head -20; grep -n \"__b30\\|set(\" src/characters/benny/benny30.ts | head", "description": "See how Benny's ride lean is applied"}`
+
+### 🧑 User — 2026-11-20T23:08:23.355Z
+
+> ↩︎ result: src/characters/benny/benny30.ts:33:  pitch: number;
+> src/characters/benny/benny30.ts:73:  pitch: 12.6,
+> src/characters/benny/benny30.ts:90:  pitch: 32,
+> src/characters/benny/runtime.ts:162:  let pitch = 0;
+> src/characters/benny/runtime.ts:163:  const pitchMax = ridePitch();
+> src/characters/benny/runtime.ts:187:    const pitchScale = typeof root.userData.ridePitch === 'number' ? THREE.MathUtils.clamp(root.userData.ridePitch, 0, 1) : 1;
+> src/characters/benny/runtime.ts:188:    const pitchTarget = tumble || peek ? 0 : (b30 ? THREE.MathUtils.degToRad(b30.params.pitch) : pitchMax) * pitchScale * THREE.MathUtils.smoothstep(swim, 0.5, 0.9);
+> src/characters/benny/runtime.ts:189:    pitch += (pitchTarget - pitch) * (1 - Math.exp(-dt * 7));
+> src/characters/benny/runtime.ts:193:    qLean.setFromEuler(eAxis.set(pitch, -lean * 0.6, -lean));
+> 19: * `window.__b30.set({...})` re-applies live (tools: qa/match/06/r30/benny06/).
+> 112:  set(p: Partial<B30Params>): B30Params;
+> 139:  for (const f of [...(body ? [body] : []), ...arms, ...(pomFur ? [pomFur] : [])]) furCol.set(f, f.material.color.clone());
+> 176:      const v = acc.get(kk) ?? acc.set(kk, new THREE.Vector3()).get(kk)!;
+> 197:    hat.scale.set(base.hatScal …[+400 chars]
+
+### 🤖 Claude — 2026-11-20T23:08:26.065Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 150,200p src/characters/benny/runtime.ts", "description": "Read Benny runtime orientation update"}`
+
+### 🧑 User — 2026-11-20T23:08:26.101Z
+
+> ↩︎ result: }
+>     eyesGroup.scale.setScalar(e === 'peek' ? 1.06 : 1);
+>   };
+>   setExpression('happy');
+> 
+>   // ---- secondary motion state ----
+>   let pomAngX = 0, pomVelX = 0, pomAngZ = 0, pomVelZ = 0;
+>   let lastY = 0, lastVy = 0;
+>   let blinkT = 1.7;
+>   let lean = 0;
+>   let lift = 0;
+>   const liftMax = rideLift();
+>   let pitch = 0;
+>   const pitchMax = ridePitch();
+>   const tmp = new THREE.Vector3();
+>   const qLean = new THREE.Quaternion();
+>   const qPom = new THREE.Quaternion();
+>   const eAxis = new THREE.Euler();
+> 
+>   const update: BennyRuntime['update'] = (dt, st) => {
+>     dt = Math.min(dt, 1 / 20);
+>     // clip weights
+>     const tumble = !!st.tumble;
+>     const swim = tumble ? 0 : THREE.MathUtils.clamp(st.swim, 0, 1);
+>     const peek = expression === 'peek' && !tumble ? 1 : 0;
+>     setW(aTumble, tumble ? 1 : 0);
+>     setW(aPeek, peek);
+>     setW(aSwim, peek ? 0 : swim);
+>     setW(aIdle, tumble || peek ? 0 : 1 - swim);
+>     if (aSwim) aSwim.timeScale = 0.8 + Math.min(1.2, st.speed / 14);
+>     mixer.update(dt);
+> 
+>     // ride height (see BENNY_RIDE_LIFT): eased so mode switches never pop
+>     const liftTarget = tumble || peek ? 0 : liftMax * THREE.MathUtils.smoothstep(swim, 0.5, 0.9);
+>     lift += (liftTarget - lift) *  …[+1066 chars]
+
+### 🤖 Claude — 2026-11-20T23:08:38.222Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"ridePitch\" src/game/*.ts src/characters/benny/*.ts | head; grep -n \"benny.root.quaternion\\|benny.root.lookAt\\|root.quaternion.setFromRotationMatrix\\|placeBenny\" src/game/Game.ts | head -5", "description": "Find ride-pitch usage and Benny orientation code"}`
+
+### 🧑 User — 2026-11-20T23:08:38.258Z
+
+> ↩︎ result: src/characters/benny/runtime.ts:65: * per shot with `benny.root.userData.ridePitch` (0…1, default 1), e.g. 0 in the 03 twirl where he faces the camera.
+> src/characters/benny/runtime.ts:68:function ridePitch(): number {
+> src/characters/benny/runtime.ts:163:  const pitchMax = ridePitch();
+> src/characters/benny/runtime.ts:187:    const pitchScale = typeof root.userData.ridePitch === 'number' ? THREE.MathUtils.clamp(root.userData.ridePitch, 0, 1) : 1;
+> 267:      benny.root.quaternion.setFromEuler(new THREE.Euler(0, Math.PI + 0.25, 0)); // facing the camera (inside drum)
+> 292:      benny.root.quaternion.copy(spinQ).slerp(pose.quat, tumble);
+> 415:    benny.root.quaternion.copy(pose.quat).multiply(tw).multiply(lean);
+> 455:    benny.root.quaternion.copy(pose.quat);
+> 598:        const off = new THREE.Vector3(m08On ? M08_BENNY.dx : 0, m08On ? M08_BENNY.lift : 0, 0).applyQuaternion(benny.root.quaternion.clone().invert());
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T23:08:41.609Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 440,460p src/game/Game.ts; grep -n \"const pose = \\|pose = course\\|function bennyPose\\|const bennyPose\" src/game/Game.ts | head", "description": "Read Benny ride placement in Game.ts"}`
+
+### 🧑 User — 2026-11-20T23:08:41.650Z
+
+> ↩︎ result: st.mode = 'outro';
+>     st.t = 0;
+>     setStage('11');
+>     if (cinematic.ending) {
+>       // optional Flow ending video; the real-time 11 frame (girl holds towel, FINAL SPIN COMPLETE) follows
+>       st.paused = true;
+>       void playCinematic(cinematic.ending, { onEnding: () => { st.t = Math.max(st.t, O.badge - 0.4); st.paused = false; } });
+>     }
+>   };
+>   const outroUpdate = (dt: number) => {
+>     const t = st.t;
+>     const sEnd = course.stage('11').s0;
+>     // Benny finishes sliding under the tent and is hidden (still there, just unseen)
+>     bennyPose(sEnd, 0, st.clock, pose);
+>     benny.root.position.copy(pose.pos).addScaledVector(course.sample(sEnd).tan, 0.6 * sm(0, O.hide, t));
+>     benny.root.quaternion.copy(pose.quat);
+>     benny.root.visible = t < O.hide;
+>     benny.update(dt, { swim: 0.2, steer: 0, speed: 2, time: st.clock });
+>     // door opens outward
+>     env.doorC.rotation.y = lerp(0, doorCOpen, sm(O.door0, O.door1, t));
+>     // girl: from the folding table to the door, leans in through it with her palms on the towel,
+> 206:  const bennyPose = (s: number, lat: number, time: number, out: { pos: THREE.Vector3; quat: THREE.Quaternion }) => {
+> 215:  const pose = { pos: new THREE.Vector3(), qu …[+72 chars]
+
+### 🤖 Claude — 2026-11-20T23:08:44.763Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 206,216p src/game/Game.ts; sed -n 405,418p src/game/Game.ts", "description": "Read bennyPose and ride update"}`
+
+### 🧑 User — 2026-11-20T23:08:44.804Z
+
+> ↩︎ result: const bennyPose = (s: number, lat: number, time: number, out: { pos: THREE.Vector3; quat: THREE.Quaternion }) => {
+>     const f = course.sample(s);
+>     const h = water.surfaceHeight(s, lat, time);
+>     out.pos.copy(f.pos).addScaledVector(f.right, lat).addScaledVector(f.up, h + benny.radius * 0.55);
+>     const m = new THREE.Matrix4().makeBasis(new THREE.Vector3().crossVectors(f.up, f.tan).normalize(), f.up, f.tan);
+>     out.quat.setFromRotationMatrix(m);
+>     return f;
+>   };
+> 
+>   const pose = { pos: new THREE.Vector3(), quat: new THREE.Quaternion() };
+>   const tmpV = new THREE.Vector3();
+>     const got = coins.update(st.clock, dt, st.s, st.lat);
+>     if (got) { st.coins += got * COIN_VALUE; hud.setCoins(st.coins); }
+>     setStage(stageOf(st.s));
+>     // Benny
+>     const f = bennyPose(st.s, st.lat, st.clock, pose);
+>     benny.root.position.copy(pose.pos);
+>     const lean = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 0, 1), -input.steer * 0.25);
+>     // 03 whirlpool twirl: Benny spins around his up axis while riding the vortex
+>     st.twirl = st.stage === '03' ? st.twirl + dt * 2.2 : st.twirl * Math.max(0, 1 - dt * 3);
+>     const tw = new THREE.Quaternion().setFromAxisAngle(new THREE.Ve …[+333 chars]
+
+### 🤖 Claude — 2026-11-20T23:09:02.605Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='src/game/cameraRig.ts'; s=open(p).read()\nold=\"  private sbW(s: number) {\"\nassert old in s\ns=s.replace(old,\"  sbW(s: number) { // public: Game.ts keeps Benny's on-screen tilt with the same weight\")\nopen(p,'w').write(s)\np='src/game/Game.ts'; s=open(p).read()\nold=\"    benny.update(dt, { swim: 1, steer: input.steer, speed, time: st.clock });\"\nassert s.count(old)==1\ns=s.replace(old,\"\"\"    if (SB.cam) {\n      // r30b m06sbcam: Benny leans relative to the river; down the descent the slope adds to his ride lean and tips the b …[+972 chars]`
+
+### 🧑 User — 2026-11-20T23:09:05.297Z
+
+> ↩︎ result: 149:  const rideCam = new RideCamera(course);
+> tsc rc=0
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T23:09:10.659Z
+
+Typecheck clean. Rendering two variants side by side (camera distance k = 1.0 and 0.88, both with Benny's anchor raised 0.1, since he was measured sitting low at −0.39 instead of −0.31):
+
+### 🤖 Claude — 2026-11-20T23:09:17.377Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && B=/home/user/rainbow-/qa/match/06/r30b; echo \"$(cat $B/QUERY_SB_NEW.txt)&b30=1&m06sbk=1&m06sbby=0.1&m06sbqh=3\" > $B/QUERY_SB_t9a.txt; echo \"$(cat $B/QUERY_SB_NEW.txt)&b30=1&m06sbk=0.88&m06sbby=0.1&m06sbqh=3\" > $B/QUERY_SB_t9b.txt\nfor v in a b; do Q=$(cat $B/QUERY_SB_t9$v.txt); AUDIT_W=432 AUDIT_H=768 AUDIT_PORT=536$([ $v = a ] && echo 7 || echo 8) AUDIT_PIN=10000 AUDIT_SHOTS='[[\"s250\",250,null],[\"s290\",290,null],[\"s330\",330,null]]' timeout 1500 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/match06/r30_shots.mjs $B/t9$v 06 \"$Q\" …[+923 chars]`
+
+### 🧑 User — 2026-11-20T23:09:38.885Z
+
+> ↩︎ result: [1]-  Done                    AUDIT_W=432 AUDIT_H=768 AUDIT_PORT=536$([ $v = a ] && echo 7 || echo 8) AUDIT_PIN=10000 AUDIT_SHOTS='[["s250",250,null],["s290",290,null],["s330",330,null]]' timeout 1500 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/match06/r30_shots.mjs $B/t9$v 06 "$Q" > $B/t9$v.log 2>&1
+> [2]+  Done                    AUDIT_W=432 AUDIT_H=768 AUDIT_PORT=536$([ $v = a ] && echo 7 || echo 8) AUDIT_PIN=10000 AUDIT_SHOTS='[["s250",250,null],["s290",290,null],["s330",330,null]]' timeout 1500 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/match06/r30_shots.mjs $B/t9$v 06 "$Q" > $B/t9$v.log 2>&1
+
+### 🤖 Claude — 2026-11-20T23:09:42.306Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r30b/t9_panels.png"}`
+
+### 🧑 User — 2026-11-20T23:09:42.350Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T23:09:58.946Z
+
+> 🔧 **Bash** `{"command": "date -u +%H:%M; cd /home/user/rainbow- && python3 -I scripts/autosave-status.py; cp qa/match/06/r30b/QUERY_SB_t9b.txt qa/match/06/r30b/QUERY_SB_NEW.txt; cat qa/match/06/r30b/QUERY_SB_NEW.txt", "description": "Check time and autosave, fix the NEW query"}`
+
+### 🧑 User — 2026-11-20T23:09:59.836Z
+
+> ↩︎ result: 23:09
+> AUTOSAVE OK | branch ccr-e490fceb-u85291 | scheduler daemon | last verified backup 2026-11-20T23:06:08+00:00 (3.9 min ago) | local 8aacb29 remote 8aacb29 (match) | uncommitted 8
+> match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1&m06st=1&m06fcl=1&m06view=1&m06vs=0&m06rip=1&m06hole=2&m06fade=1&m06spl=1&m06fcn=3&m06fcg=1&m06deep=1&m06leg=1&m06vw=20,38&m06tswap=2&m06curl=1&m06haze=80,170,0.55&m06camk=0.65&m06camu=1.05&m06sb=1&w30=1&f30=1&f30bs=0.7&f30bg=0.3&f30bc=0.16&b30=1&m06sbk=0.88&m06sbby=0.1&m06sbqh=3
+
+### 🤖 Claude — 2026-11-20T23:10:09.916Z
+
+> 🔧 **Bash** `{"command": "B=/home/user/rainbow-/qa/match/06/r30b; (cd /home/user/wt/s06 && Q=$(cat $B/QUERY_SB_NEW.txt) && AUDIT_W=864 AUDIT_H=1536 AUDIT_PORT=5369 AUDIT_PIN=10000 AUDIT_SHOTS='[[\"start\",0,null],[\"p1_214.86\",214.86,null],[\"p2_250\",250,null],[\"p3_290\",290,null],[\"p4_330\",330,null]]' timeout 1800 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/match06/r30_shots.mjs $B/proof/new 06 \"$Q\" > $B/proof/new.log 2>&1) & (cd /home/user/wt/scen06 && Q=$(cat /home/user/rainbow-/qa/match/06/r30/QUERY_NEW_v2.txt) && AUDIT_W=864 AUDIT_H=1536 AUDIT_PORT=5352 AUDIT_PIN=10000 AUDIT …[+390 chars]`
+

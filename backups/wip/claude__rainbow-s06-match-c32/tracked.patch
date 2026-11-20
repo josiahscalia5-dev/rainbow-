@@ -43,7 +43,7 @@ index 894a962..73508a8 100644
  
      // steering lean (roll) + slight yaw into the turn
 diff --git a/src/game/Game.ts b/src/game/Game.ts
-index 6aec240..2a9df4a 100644
+index 6aec240..c737777 100644
 --- a/src/game/Game.ts
 +++ b/src/game/Game.ts
 @@ -26,6 +26,9 @@ import { flag05 } from '../vfx/waterRibbon';
@@ -89,7 +89,23 @@ index 6aec240..2a9df4a 100644
    let m06Applied = false;
    // debug: ?hide=water,benny,coins,drumA,basin,tubes,chamber
    const hidden = new Set((qs.get('hide') ?? '').split(',').filter(Boolean));
-@@ -545,9 +563,30 @@ export async function startGame(canvas: HTMLCanvasElement) {
+@@ -397,6 +415,15 @@ export async function startGame(canvas: HTMLCanvasElement) {
+     benny.root.quaternion.copy(pose.quat).multiply(tw).multiply(lean);
+     benny.root.visible = true;
+     benny.setExpression('happy');
++    if (SB.cam) {
++      // r30b m06sbcam: Benny leans relative to the river; down the descent the slope adds to his ride lean and tips the beanie away from
++      // the camera. Keep his WORLD tilt as at the approved checkpoint (crest) where the 3D Benny matches the painted one: lean' = L0 - a0 + a(s)
++      const wT = rideCam.sbW(st.s);
++      const L0 = flag05('b30') ? (Number(new URLSearchParams(location.search).get('b30pitch')) || 32) : 12.6;
++      const a0 = THREE.MathUtils.radToDeg(Math.asin(THREE.MathUtils.clamp(course.sample(course.stage('06').s0 + 10).tan.y, -1, 1)));
++      const aS = THREE.MathUtils.radToDeg(Math.asin(THREE.MathUtils.clamp(f.tan.y, -1, 1)));
++      benny.root.userData.ridePitch = 1 + (THREE.MathUtils.clamp((L0 - a0 + aS) / L0, 0, 1) - 1) * wT;
++    }
+     benny.update(dt, { swim: 1, steer: input.steer, speed, time: st.clock });
+     // VFX anchor = the body centre AFTER the runtime's ride lift (the model is raised inside the root),
+     // so the wake/splash footprint matches the real waterline instead of the unlifted root
+@@ -545,9 +572,30 @@ export async function startGame(canvas: HTMLCanvasElement) {
        // carries its bubbles only there; while swimming the screen had none)
        const bub6 = M06_BUB && m06On && m06.away(camera.position) > 0.5;
        m06.setAway(m06On ? m06.away(camera.position) : 0);
@@ -121,7 +137,7 @@ index 6aec240..2a9df4a 100644
      if (m08 && b08 && b08Rest) {
        // rounder body (narrower, taller) with the beanie counter-scaled to keep its size; ≈23 px right (world +x, measured fur centroid), lifted
 diff --git a/src/game/cameraRig.ts b/src/game/cameraRig.ts
-index 2a2b9eb..7d3adec 100644
+index 2a2b9eb..feaa521 100644
 --- a/src/game/cameraRig.ts
 +++ b/src/game/cameraRig.ts
 @@ -9,6 +9,7 @@ import type { Course, StageId } from '../world/course';
@@ -232,7 +248,7 @@ index 2a2b9eb..7d3adec 100644
    }
  
 +  /** r30b m06sbcam weight: in after the start-view hold (m06vw hand-over), out over the last 14..3 u before 07 */
-+  private sbW(s: number) {
++  sbW(s: number) { // public: Game.ts keeps Benny's on-screen tilt with the same weight
 +    if (!SB.cam || !STAGE_CAM['06']?.off06) return 0;
 +    const st6 = this.course.stage('06'), sB = st6.s0 + 10, s07 = this.course.stage('07').s0;
 +    return THREE.MathUtils.smoothstep(s, sB + M06_VW[0], sB + M06_VW[1]) * (1 - THREE.MathUtils.smoothstep(s, s07 - 14, s07 - 3));

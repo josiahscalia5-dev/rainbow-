@@ -17,7 +17,7 @@ try {
       const r = window.__rainbow; r.goto('06');
       let k = 0; while (r.state().s < tS && k < 8000) { r.step(1); k++; }
       r.freezeAt(10); r.drawList();
-      return { s: r.state().s, benny: r.bennyScreen(), hits: pts.map(([x, y]) => ({ x, y, h: r.probe(x, y).slice(0, 3) })) };
+      const cm = r.camera(); return { s: r.state().s, fov: +cm.fov.toFixed(2), dist: +Math.hypot(...cm.position.map((v, i) => v - r.bennyScreen().benny[i])).toFixed(2), benny: r.bennyScreen(), hits: pts.map(([x, y]) => ({ x, y, h: r.probe(x, y).slice(0, 3) })) };
     }, [tS, pts]);
     console.log(JSON.stringify(out));
   }
