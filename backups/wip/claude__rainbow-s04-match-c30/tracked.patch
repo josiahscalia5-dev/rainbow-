@@ -1,5 +1,5 @@
 diff --git a/src/game/Game.ts b/src/game/Game.ts
-index 6a4653f..2a7e591 100644
+index 6a4653f3..2a7e591a 100644
 --- a/src/game/Game.ts
 +++ b/src/game/Game.ts
 @@ -59,7 +59,14 @@ export async function startGame(canvas: HTMLCanvasElement) {
@@ -19,7 +19,7 @@ index 6a4653f..2a7e591 100644
    // Screen 05 test GL1 (user 2026-11-16: "the glow on the highlights is most of what makes the approved version look so
    // shiny"): `?glow05=1` = a stronger UnrealBloom with a HIGH threshold, so only the bright highlights (streak cores,
 diff --git a/src/world/match04.ts b/src/world/match04.ts
-index 65c878c..a20f48e 100644
+index 65c878ce..a20f48e1 100644
 --- a/src/world/match04.ts
 +++ b/src/world/match04.ts
 @@ -428,7 +428,7 @@ void main() { vec4 c = texture2D(uTex, vUv); if (c.a < 0.02) discard; gl_FragCol
@@ -32,7 +32,7 @@ index 65c878c..a20f48e 100644
        if (mvViews.length && camera) {
          const cp = camera.getWorldPosition(_cp);
 diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
-index 2b62a35..e85ff44 100644
+index 2b62a355..e85ff44c 100644
 --- a/src/world/match04m4.ts
 +++ b/src/world/match04m4.ts
 @@ -120,6 +120,15 @@ uniform float uRVar;       // r17 m04rpvar: number of painted rings stacked in t

@@ -1,5 +1,5 @@
 diff --git a/src/game/Game.ts b/src/game/Game.ts
-index 6aec240..57a87ac 100644
+index 6aec2406..57a87ac2 100644
 --- a/src/game/Game.ts
 +++ b/src/game/Game.ts
 @@ -67,6 +67,10 @@ export async function startGame(canvas: HTMLCanvasElement) {
@@ -31,7 +31,7 @@ index 6aec240..57a87ac 100644
      }
      if (m08 && m08On) for (const k of ['puddles', 'finalWave']) { const o = water.parts?.[k]; if (o) o.visible = false; }
 diff --git a/src/gameplay/coins.ts b/src/gameplay/coins.ts
-index 69122b3..4c3fcc9 100644
+index 69122b33..4c3fcc97 100644
 --- a/src/gameplay/coins.ts
 +++ b/src/gameplay/coins.ts
 @@ -14,7 +14,7 @@ import coins06 from '../../assets/textures/match06/coins06.json';
@@ -94,7 +94,7 @@ index 69122b3..4c3fcc9 100644
        for (let i = 0; i < defs.length; i++) { collected[i] = defs[i].s < s ? 1 : 0; popT[i] = -1; }
        place(0);
 diff --git a/src/world/match06.ts b/src/world/match06.ts
-index 831c2b4..c1a694d 100644
+index 831c2b44..c1a694d0 100644
 --- a/src/world/match06.ts
 +++ b/src/world/match06.ts
 @@ -44,6 +44,8 @@ export interface Match06 {

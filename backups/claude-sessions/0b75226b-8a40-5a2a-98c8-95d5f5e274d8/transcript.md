@@ -518,3 +518,550 @@ The recipe is current: every snapshot is from 18:12:48 UTC (the last minutes bef
 
 > 🔧 **Bash** `{"command": "ls /home/user/wt 2>&1 | head; git worktree list | head; time bash docs/briefs/2026-11-20-r28/setup_worker_r29.sh 2>&1 | tail -20", "description": "Recreate all 12 worker worktrees from the newest snapshots", "timeout": 600000}`
 
+### 🧑 User — 2026-11-20T18:28:53.241Z
+
+> ↩︎ result: ls: cannot access '/home/user/wt': No such file or directory
+> /home/user/rainbow-  1e5f29c [ccr-ac160b4c-3hdecw]
+> Preparing worktree (new branch 'claude/rainbow-s06-match-c30')
+> s06: /home/user/wt/s06 on claude/rainbow-s06-match-c30 from e162aec + backups/wip/claude__rainbow-s06-match-c29 — dirty 21
+> Preparing worktree (new branch 'claude/rainbow-benny-c30')
+> benny: /home/user/wt/benny on claude/rainbow-benny-c30 from 734efb6 + backups/wip/claude__rainbow-benny-c29 — dirty 22
+> Preparing worktree (new branch 'claude/rainbow-s08-scenery-c30')
+> s08: /home/user/wt/s08 on claude/rainbow-s08-scenery-c30 from 3c0fa97 + backups/wip/claude__rainbow-s08-scenery-c29 — dirty 6
+> Preparing worktree (new branch 'claude/rainbow-s05-match-c30')
+> s05: /home/user/wt/s05 on claude/rainbow-s05-match-c30 from eb7233e3 + backups/wip/claude__rainbow-s05-match-c29 — dirty 4
+> Preparing worktree (detached HEAD 8accdad0)
+> lead07: /home/user/wt/lead07 on --detach from 8accdad0 + backups/wip/detached-8accdad0a0 — dirty 3
+> Preparing worktree (detached HEAD e162aec2)
+> lead06: /home/user/wt/lead06 on --detach from e162aec2 + backups/wip/detached-e162aec2bf — dirty 9
+> Preparing worktree (new branch 'lead/trial07-c30')
+> trial07: / …[+603 chars]
+
+### 🤖 Claude — 2026-11-20T18:28:55.834Z
+
+All 12 work copies were created (s04 and s07 scrolled off the top of the output). Now verifying each one byte-for-byte against its 18:12 snapshot.
+
+### 🤖 Claude — 2026-11-20T18:29:04.291Z
+
+> 🔧 **Bash** `{"command": "git worktree list; cat > /tmp/claude-0/-home-user-rainbow-/0b75226b-8a40-5a2a-98c8-95d5f5e274d8/scratchpad/verify_wt.sh <<'EOF'\n#!/usr/bin/env bash\nR=/home/user/rainbow-\nchk(){ X=$1; WT=$2; W=$3\n  [ -d \"$WT\" ] || { echo \"$X MISSING\"; return; }\n  a=$(git -C \"$WT\" diff --binary HEAD | git patch-id --stable | cut -d' ' -f1)\n  b=$( [ -s \"$R/$W/tracked.patch\" ] && git patch-id --stable < \"$R/$W/tracked.patch\" | cut -d' ' -f1 )\n  pm=$([ \"$a\" = \"$b\" ] && echo MATCH || echo \"DIFF($a vs $b)\")\n  n=0; bad=0\n  if [ -d \"$R/$W/untracked\" ]; then\n    while IFS= read - …[+1344 chars]`
+
+### 🧑 User — 2026-11-20T18:29:06.450Z
+
+> ↩︎ result: /home/user/rainbow-    a980cde7 [ccr-ac160b4c-3hdecw]
+> /home/user/wt/benny    734efb6b [claude/rainbow-benny-c30]
+> /home/user/wt/lead06   e162aec2 (detached HEAD)
+> /home/user/wt/lead07   8accdad0 (detached HEAD)
+> /home/user/wt/s04      34cb4941 [claude/rainbow-s04-match-c30]
+> /home/user/wt/s05      eb7233e3 [claude/rainbow-s05-match-c30]
+> /home/user/wt/s06      e162aec2 [claude/rainbow-s06-match-c30]
+> /home/user/wt/s07      8accdad0 [claude/rainbow-s07-match-c30]
+> /home/user/wt/s08      3c0fa970 [claude/rainbow-s08-scenery-c30]
+> /home/user/wt/trial07  8accdad0 [lead/trial07-c30]
+> /home/user/wt/view04   34cb4941 [lead/view04-c30]
+> /home/user/wt/view06   e162aec2 [lead/view06-c30]
+> /home/user/wt/view07   8accdad0 [lead/view07-c30]
+> s04: tracked patch-id MATCH; untracked 1 files, 0 differ; head 34cb4941 claude/rainbow-s04-match-c30
+> s07: tracked patch-id MATCH; untracked 10 files, 0 differ; head 8accdad0 claude/rainbow-s07-match-c30
+> s06: tracked patch-id MATCH; untracked 17 files, 0 differ; head e162aec2 claude/rainbow-s06-match-c30
+> benny: tracked patch-id MATCH; untracked 10 files, 0 differ; head 734efb6b claude/rainbow-benny-c30
+> s08: tracked patch-id MATCH; untracked 2 files, 0 differ; head 3c0fa …[+656 chars]
+
+### 🤖 Claude — 2026-11-20T18:29:10.486Z
+
+> 🔧 **Bash** `{"command": "head -40 backups/CONVERSATION_INDEX.md; ls -t backups/claude-sessions/ | head -8", "description": "Read the conversation index and newest saved sessions"}`
+
+### 🧑 User — 2026-11-20T18:29:10.546Z
+
+> ↩︎ result: # Rainbow — Claude conversation index
+> 
+> Sanitized copies of every Claude Code session transcript that is **accessible in this
+> environment** for the Rainbow project (`~/.claude/projects/-home-user-rainbow-*`).
+> Hidden model reasoning and base64 image payloads are omitted; secrets/e-mails are redacted.
+> Conversations from other computers, accounts or claude.ai chats are NOT accessible here and
+> are therefore not included.
+> 
+> Search tip: `grep -ril "07" backups/claude-sessions/*/transcript.md`
+> 
+> | Session | Title | Branch | First event (UTC) | Last event (UTC) | User msgs | Claude msgs | Subagents | Topics | Files |
+> |---|---|---|---|---|---|---|---|---|---|
+> | `515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1` | Rainbow 3D mobile game project | `ccr-6f431adf-7h0m8y` | 2026-11-15T16:32:33.845Z | 2026-11-15T18:01:07.998Z | 2 | 428 | 3 | benny, girl, water, 07, 08, plunge, autosave, backup, android, playwright, blender, meshy, screens, towel, hud, coin, shader, agents | [md](claude-sessions/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/transcript.md) · [jsonl](claude-sessions/515c677b-ab06-5e2e-a8b1-8f1fec6cb7a1/transcript.sanitized.jsonl) |
+> | `e0f002d9-e93b-5e8f-89ac-1e3fceebb58f` | Rainbow 3D game project recovery …[+13268 chars]
+
+### 🤖 Claude — 2026-11-20T18:29:12.636Z
+
+> 🔧 **Bash** `{"command": "grep -E \"ccr-9652868f\" backups/CONVERSATION_INDEX.md | cut -c1-400; echo; grep -rl \"ccr-9652868f-lkw0w0\" backups/claude-sessions/*/meta.json 2>/dev/null | head; ls backups/claude-sessions/ | wc -l", "description": "Find the r28 lead conversation in the index"}`
+
+### 🧑 User — 2026-11-20T18:29:12.706Z
+
+> ↩︎ result: | `a72797b0-7eea-579a-8801-b0b276ae6b12` | Rainbow project restore and autosave | `ccr-9652868f-lkw0w0` | 2026-11-20T16:41:10.843Z | 2026-11-20T18:04:21.838Z | 16 | 364 | 5 | benny, girl, water, 07, 08, plunge, autosave, backup, android, playwright, blender, meshy, screens, towel, hud, coin, shader, agents | [md](claude-sessions/a72797b0-7eea-579a-8801-b0b276ae6b12/transcript.md) · [jsonl](claude
+> 
+> 47
+
+### 🤖 Claude — 2026-11-20T18:29:15.564Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/backups/claude-sessions/a72797b0-7eea-579a-8801-b0b276ae6b12 && ls -la; ls subagents 2>/dev/null | head; wc -c transcript.md; grep -n \"^## \\|^### \" transcript.md | tail -40", "description": "Inspect the r28 lead saved conversation structure"}`
+
+### 🧑 User — 2026-11-20T18:29:15.624Z
+
+> ↩︎ result: total 2932
+> drwxr-xr-x  3 root root    4096 Nov 20 18:17 .
+> drwxr-xr-x 49 root root    4096 Nov 20 18:22 ..
+> drwxr-xr-x  2 root root    4096 Nov 20 18:17 subagents
+> -rw-r--r--  1 root root  282243 Nov 20 18:17 transcript.md
+> -rw-r--r--  1 root root 2703547 Nov 20 18:17 transcript.sanitized.jsonl
+> agent-a19a5ec306145815f.md
+> agent-a19a5ec306145815f.sanitized.jsonl
+> agent-a51b1343b376a6417.md
+> agent-a51b1343b376a6417.sanitized.jsonl
+> agent-a51e597e4d0d0bbcb.md
+> agent-a51e597e4d0d0bbcb.sanitized.jsonl
+> agent-a83852ef198a66db2.md
+> agent-a83852ef198a66db2.sanitized.jsonl
+> agent-ad5d0cce077a74ad1.md
+> agent-ad5d0cce077a74ad1.sanitized.jsonl
+> 282243 transcript.md
+> 3505:### 🤖 Claude — 2026-11-20T17:21:23.079Z
+> 3509:### 🤖 Claude — 2026-11-20T17:21:24.188Z
+> 3513:### 🧑 User — 2026-11-20T17:21:24.239Z
+> 3534:### 🤖 Claude — 2026-11-20T17:21:28.552Z
+> 3538:### 🤖 Claude — 2026-11-20T17:21:29.752Z
+> 3542:### 🧑 User — 2026-11-20T17:21:29.811Z
+> 3550:### 🤖 Claude — 2026-11-20T17:21:32.005Z
+> 3554:### 🤖 Claude — 2026-11-20T17:21:34.258Z
+> 3558:### 🧑 User — 2026-11-20T17:21:34.370Z
+> 3562:### 🤖 Claude — 2026-11-20T17:21:37.543Z
+> 3566:### 🤖 Claude — 2026-11-20T17:21:39.878Z
+> 3570:### 🧑 User — 2026-11-20T17:21:40.117Z
+> 3575:### 🤖 Claude —  …[+1213 chars]
+
+### 🤖 Claude — 2026-11-20T18:29:17.103Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/backups/claude-sessions/a72797b0-7eea-579a-8801-b0b276ae6b12/transcript.md", "offset": 3650, "limit": 110}`
+
+### 🧑 User — 2026-11-20T18:29:17.182Z
+
+> ↩︎ result: 3650	
+> 3651	> ↩︎ result: Monitor started (task bssjuyzga, expires in 5m unless the source ends first; you get one notice at expiry — re-arm if you still need the watch). You will be notified on each event. Keep working — do not poll or sleep. Events may arrive while you are waiting for the user — an event is not their reply.
+> 3652	
+> 3653	### 🤖 Claude — 2026-11-20T17:22:47.710Z
+> 3654	
+> 3655	> 🔧 **Bash** `{"command": "until grep '| daemon |' backups/.live/BACKUP_LOG.md | tail -1 | grep -qv '17:22:05'; do sleep 5; done; until ! pgrep -f rainbow-autosave.py >/dev/null; do sleep 2; done; grep '| daemon |' backups/.live/BACKUP_LOG.md | tail -2 | cut -c1-120; git rev-parse HEAD; git ls-remote origin refs/heads/ccr-9652868f-lkw0w0; pgrep -fc 'scripts/autosave-daemon.sh'", "description": "Wait for next scheduled save and verify remote", "timeout": 420000}`
+> 3656	
+> 3657	### 🧑 User — 2026-11-20T17:27:29.382Z
+> 3658	
+> 3659	> ↩︎ result: | 2026-11-20T17:22:05+00:00 | daemon | committed+pushed | `3ee8e77bc1d7` | `ccr-9652868f-lkw0w0` | 26 | True |  |
+> 3660	> | 2026-11-20T17:27:05+00:00 | daemon | committed+pushed | `67d390338889` | `ccr-9652868f-lkw0w0` | 23 | True |  |
+> 3661	> 67d3903388890dbd8b4a14f80c35a4 …[+7419 chars]
+
+### 🤖 Claude — 2026-11-20T18:29:21.985Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/backups/claude-sessions/a72797b0-7eea-579a-8801-b0b276ae6b12/subagents && for f in agent-*.md; do echo \"=== $f: $(head -c 300 $f | tr '\\n' ' ' | cut -c1-200)\"; done", "description": "Identify which saved subagent transcript belongs to which worker"}`
+
+### 🧑 User — 2026-11-20T18:29:22.038Z
+
+> ↩︎ result: === agent-a19a5ec306145815f.md: # Subagent agent-a19a5ec306145815f — session a72797b0-7eea-579a-8801-b0b276ae6b12  ### 🧑 User — 2026-11-20T17:04:02.485Z  You are the Screen 06 specialist (slug s06) of the Rainbow game, round 
+> === agent-a51b1343b376a6417.md: # Subagent agent-a51b1343b376a6417 — session a72797b0-7eea-579a-8801-b0b276ae6b12  ### 🧑 User — 2026-11-20T16:55:43.067Z  You are the Screen 04 specialist (slug s04) of the Rainbow game, round 
+> === agent-a51e597e4d0d0bbcb.md: # Subagent agent-a51e597e4d0d0bbcb — session a72797b0-7eea-579a-8801-b0b276ae6b12  ### 🧑 User — 2026-11-20T16:55:32.823Z  You are the Screen 07 specialist (slug s07) of the Rainbow game, round 
+> === agent-a83852ef198a66db2.md: # Subagent agent-a83852ef198a66db2 — session a72797b0-7eea-579a-8801-b0b276ae6b12  ### 🧑 User — 2026-11-20T16:56:02.876Z  You are the Benny specialist (slug benny) of the Rainbow game, round 28
+> === agent-ad5d0cce077a74ad1.md: # Subagent agent-ad5d0cce077a74ad1 — session a72797b0-7eea-579a-8801-b0b276ae6b12  ### 🧑 User — 2026-11-20T16:55:52.867Z  You are the Screen 05 specialist (slug s05) of the Rainbow game, round
+
+### 🤖 Claude — 2026-11-20T18:29:24.594Z
+
+> 🔧 **Bash** `{"command": "grep -v \"^> ↩︎ result\" agent-a19a5ec306145815f.md | grep -vE \"^\\s*$\" | grep -E \"^### 🤖|^[A-Z(]|^- |^\\* |^\\|\" | grep -v \"^### 🧑\" | tail -80 | cut -c1-400", "description": "Read the Screen 06 route worker's own notes near where it stopped"}`
+
+### 🧑 User — 2026-11-20T18:29:24.645Z
+
+> ↩︎ result: ### 🤖 Claude — 2026-11-20T17:04:04.575Z
+> I'll start by reading the task brief files in the specified order.
+> ### 🤖 Claude — 2026-11-20T17:04:05.725Z
+> ### 🤖 Claude — 2026-11-20T17:04:08.703Z
+> ### 🤖 Claude — 2026-11-20T17:04:09.901Z
+> ### 🤖 Claude — 2026-11-20T17:04:13.853Z
+> ### 🤖 Claude — 2026-11-20T17:04:14.674Z
+> ### 🤖 Claude — 2026-11-20T17:04:15.622Z
+> ### 🤖 Claude — 2026-11-20T17:04:21.131Z
+> Let me explore how the route is defined in the s06 worktree.
+> ### 🤖 Claude — 2026-11-20T17:04:22.587Z
+> ### 🤖 Claude — 2026-11-20T17:04:25.822Z
+> ### 🤖 Claude — 2026-11-20T17:04:27.866Z
+> ### 🤖 Claude — 2026-11-20T17:04:31.068Z
+> ### 🤖 Claude — 2026-11-20T17:04:32.076Z
+> ### 🤖 Claude — 2026-11-20T17:04:35.151Z
+> ### 🤖 Claude — 2026-11-20T17:04:38.535Z
+> ### 🤖 Claude — 2026-11-20T17:04:42.209Z
+> ### 🤖 Claude — 2026-11-20T17:04:46.091Z
+> ### 🤖 Claude — 2026-11-20T17:04:48.439Z
+> ### 🤖 Claude — 2026-11-20T17:04:51.700Z
+> ### 🤖 Claude — 2026-11-20T17:05:02.405Z
+> ### 🤖 Claude — 2026-11-20T17:05:05.481Z
+> ### 🤖 Claude — 2026-11-20T17:05:21.351Z
+> ### 🤖 Claude — 2026-11-20T17:05:25.254Z
+> ### 🤖 Claude — 2026-11-20T17:05:31.429Z
+> ### 🤖 Claude — 2026-11-20T17:06:12.790Z
+> ### 🤖 Claude — 2026-11-20T17:07:02.432Z
+> ### 🤖 Claude — 2026-11-20T17:07: …[+2208 chars]
+
+### 🤖 Claude — 2026-11-20T18:29:26.824Z
+
+The worker's reasoning lives in its tool calls and notes. Let me look at what it actually changed in the Screen 06 copy.
+
+### 🤖 Claude — 2026-11-20T18:29:27.727Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && git status --short | head -30; git diff --stat; ls qa/match/06/r28 2>/dev/null; grep -rn \"m06route\" src/ | head -40", "description": "Show the Screen 06 route worker's unfinished changes"}`
+
+### 🧑 User — 2026-11-20T18:29:28.029Z
+
+> ↩︎ result: M src/game/Game.ts
+>  M src/gameplay/coins.ts
+>  M src/world/match06.ts
+> ?? assets/textures/match06/hole06.json
+> ?? assets/textures/match06/tile_hole06.png
+> ?? assets/textures/match06/tile_hole06b.png
+> ?? assets/textures/match06/tile_hole06w.png
+> ?? node_modules
+> ?? tools/match06/lead23_audit_slow.mjs
+> ?? tools/match06/make_hole06.py
+> ?? tools/match06/r23_audit.mjs
+> ?? tools/match06/r23_ripdump.mjs
+> ?? tools/match06/r23_swim.mjs
+> ?? tools/match06/r23_tunprobe.mjs
+> ?? tools/match06/r23_vite.mjs
+> ?? tools/match06/r25_frames.mjs
+> ?? tools/match06/r25_holedump.mjs
+> ?? tools/match06/r25_open_clip.mjs
+> ?? tools/match06/r25_unwrap06.py
+> ?? tools/match06/r28_probe.mjs
+> ?? tools/match06/r28_quick.mjs
+>  src/game/Game.ts      |  13 +++
+>  src/gameplay/coins.ts |  17 +++-
+>  src/world/match06.ts  | 269 +++++++++++++++++++++++++++++++++++++++++++++++++-
+>  3 files changed, 291 insertions(+), 8 deletions(-)
+> src/world/match06.ts:691:    // r28 `&m06route=1` (qa/match/06/r25/PROGRESS.md r28, user-authorized route test): the painted tunnel FOLLOWS the river
+> src/world/match06.ts:699:    const ROUTE = qs?.get('m06route') === '1';
+> src/world/match06.ts:706:      console.info('[match06] m06route shear', { a: [shA, shB], target: shT …[+559 chars]
+
+### 🤖 Claude — 2026-11-20T18:29:29.630Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"r28\" qa/match/06/r25/PROGRESS.md | head; echo ----; awk '/r28/{f=1} f' qa/match/06/r25/PROGRESS.md | head -80", "description": "Read the Screen 06 worker's r28 progress notes"}`
+
+### 🧑 User — 2026-11-20T18:29:29.680Z
+
+> ↩︎ result: grep: qa/match/06/r25/PROGRESS.md: No such file or directory
+> ----
+> awk: cannot open "qa/match/06/r25/PROGRESS.md" (No such file or directory)
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T18:29:32.259Z
+
+> 🔧 **Bash** `{"command": "ls qa/match/06/r25/ qa/match/06/r28 2>&1 | head -30; grep -n \"r28\" qa/match/06/r25/PROGRESS.md | head -20", "description": "Find the Screen 06 progress notes in the lead checkout"}`
+
+### 🧑 User — 2026-11-20T18:29:32.297Z
+
+> ↩︎ result: ls: cannot access 'qa/match/06/r28': No such file or directory
+> qa/match/06/r25/:
+> PROGRESS.md
+> step1_hole
+> step2
+> 3:## (r28) WHERE I STOPPED / NEXT
+> 5:  `/home/user/scratch/s06/`. TASK = the user-authorized route test `docs/briefs/2026-11-20-r28/S06_ROUTE_R28.md` (+ clarification
+> 7:  BEFORE = `step2/QUERY_NEW2.txt`. Proof folder (to come) `qa/match/06/r28/route/`.
+> 8:* (A) HOW THE 06 ROUTE IS BUILT (probe `tools/match06/r28_probe.mjs`, frames via `r25_frames.mjs`):
+
+### 🤖 Claude — 2026-11-20T18:29:33.621Z
+
+> 🔧 **Bash** `{"command": "sed -n '1,60p' qa/match/06/r25/PROGRESS.md", "description": "Read the Screen 06 worker's stopping notes"}`
+
+### 🧑 User — 2026-11-20T18:29:33.651Z
+
+> ↩︎ result: # Screen 06 — round 25 progress (worktree `/home/user/wt/s06`, LOCAL branch `claude/rainbow-s06-match-c26`, ports 5276 / 5282 / 5283)
+> 
+> ## (r28) WHERE I STOPPED / NEXT
+> * ~17:10 UTC — relaunched (new account), worktree `/home/user/wt/s06` LOCAL branch `claude/rainbow-s06-match-c29`, scratch
+>   `/home/user/scratch/s06/`. TASK = the user-authorized route test `docs/briefs/2026-11-20-r28/S06_ROUTE_R28.md` (+ clarification
+>   `USER_CLARIFICATIONS_R28.md`: keep the HIGH curling crest + the approach to the off-centre tunnel; coins / rings grow and pass).
+>   BEFORE = `step2/QUERY_NEW2.txt`. Proof folder (to come) `qa/match/06/r28/route/`.
+> * (A) HOW THE 06 ROUTE IS BUILT (probe `tools/match06/r28_probe.mjs`, frames via `r25_frames.mjs`):
+>   - ONE Catmull-Rom course (`src/world/course.ts`): 06 = `seg(34)` from mark '06' (s 188.91) to '07' (s 242.87), + the match06 path06
+>     correction (fitted to the painted river). Benny's approved checkpoint = s0+10 = 198.91 (locked camera `cam06_locked.json`,
+>     C = (1.72,-35.37,-132.64), looking 11 deg left / 11 deg down). 07 starts at (11.41,-48.51,-176.25), tangent (0.26,-0.10,-0.96).
+>   - Everything else follows the course automatically: m06 river floor +  …[+5628 chars]
+
+### 🤖 Claude — 2026-11-20T18:29:38.700Z
+
+> 🔧 **Bash** `{"command": "grep -rln \"(r28) WHERE I STOPPED\" qa/ docs/ 2>/dev/null | head; for f in $(grep -rln \"(r28) WHERE I STOPPED\" qa/ 2>/dev/null | grep -v \"match/06\"); do echo \"######## $f\"; awk '/\\(r28\\) WHERE I STOPPED/{f=1} /\\(r27\\) WHERE I STOPPED/{f=0} f' $f | head -45 | cut -c1-330; done", "description": "Read the r28 stopping notes of the 07, 05 and Benny workers"}`
+
+### 🧑 User — 2026-11-20T18:29:46.748Z
+
+> ↩︎ result: qa/match/07/r24/PROGRESS.md
+> qa/match/05/r27/PROGRESS.md
+> qa/match/04/r23/PROGRESS.md
+> qa/match/06/r25/PROGRESS.md
+> qa/benny/r23/PROGRESS.md
+> docs/briefs/2026-11-20-r28/LAUNCH_R28.md
+> ######## qa/match/07/r24/PROGRESS.md
+> ## (r28) WHERE I STOPPED / NEXT
+> * r28 relaunch (new account, ~16:40 UTC). Worktree `/home/user/wt/s07`, LOCAL branch `claude/rainbow-s07-match-c29` (r27 edits restored
+>   byte-identical by the lead). Ports 5277 / 5280 / 5281. Temp `/home/user/scratch/s07/` (recreated, empty).
+> * CONFIRMED: the m07fsoft v2 edits are in `src/world/match07.ts` (drop clouds x0.82 l.831, swing max scale 1.0 l.830, domes sunk
+>   0.18-0.48 r l.840, 40 % lobes no bumps l.854, 45 % no heaped top lobe l.845, irregular sunk skirt l.872-874, inside-of-bend low heaps
+>   l.892-893).
+> * 16:56 DONE: s08 snapshot re-copied read-only from `/home/user/wt/s08` (HEAD 3c0fa97): **30 / 30 files match
+>   `combo/s08snap_SHA256SUMS_r25.txt`**; combo `/home/user/scratch/s07/combo` rebuilt (`combo/mkcombo.py`), tsc 0 (combo + worktree).
+>   Full candidate query recovered from `r26/final/NEW_full_frames.json` -> `/home/user/scratch/s07/Q_FULL.txt` (+ `Q_FSOFT.txt` = & m07fsoft=1).
+> * 17:01 v2 quick check (`/home/user/scratch …[+13988 chars]
+
+### 🤖 Claude — 2026-11-20T18:30:02.030Z
+
+> 🔧 **Bash** `{"command": "ls qa/review_r28/ qa/review_r27/ | head -30; python3 - <<'EOF'\nimport re,html\nt=open('qa/review_r28/index.html').read()\nt=re.sub(r'<script.*?</script>|<style.*?</style>','',t,flags=re.S)\nt=re.sub(r'<[^>]+>',' ',t); t=html.unescape(t); t=re.sub(r'[ \\t]+',' ',t); t=re.sub(r'\\n\\s*\\n+','\\n',t)\nprint(t[:9000])\nEOF", "description": "Read the latest review page's per-screen ratings"}`
+
+### 🧑 User — 2026-11-20T18:30:02.097Z
+
+> ↩︎ result: qa/review_r27/:
+> 04
+> 05
+> 06
+> 07
+> 08
+> QUERY_04.txt
+> QUERY_05.txt
+> QUERY_06.txt
+> QUERY_07.txt
+> QUERY_08.txt
+> README.md
+> artwork
+> default
+> index.html
+> log_04.txt
+> log_05.txt
+> log_06.txt
+> log_07.txt
+> log_08.txt
+> log_default.txt
+> web
+> 
+> qa/review_r28/:
+> index.html
+>  Rainbow Screen Check 
+>  Rainbow screen check 
+>  What each playable screen looks like right now while Benny swims, next to your approved picture. Captured from the real game on 20 Nov 2026 at 15:30–15:45 UTC. 
+>  Screens 01, 02, 03 and 11 are your Google Flow videos, so they are not built or rated here. Tap any phone to see it bigger. 
+>  Republished on your new Claude account on 20 Nov 2026 at about 17:10 UTC. The pictures, ratings and extra views are the same ones from the previous account (round 27, 15:30–16:09 UTC). Nothing on this page has been approved yet. The three questions on it are still open: which extra views to approve, the Screen 06 route, and whether 09 and 10 are playable. 
+>  How close each screen is while swimming 
+>  Every screen starts very close to its approved picture. The trouble begins once Benny moves: the scenery the picture never showed is still plain 3D, so the river straightens, foam turns into rows of beads and walls or rings tak …[+8036 chars]
+
+### 🤖 Claude — 2026-11-20T18:30:17.748Z
+
+> 🔧 **Bash** `{"command": "wc -l docs/briefs/2026-11-20-r28/LAUNCH_R28.md; sed -n '1,80p' docs/briefs/2026-11-20-r28/LAUNCH_R28.md | cut -c1-400; ls tools/lead25/ | head", "description": "Read the round-28 worker launch briefs and render-slot tool"}`
+
+### 🧑 User — 2026-11-20T18:30:17.798Z
+
+> ↩︎ result: 49 docs/briefs/2026-11-20-r28/LAUNCH_R28.md
+> # Round 28 — relaunch of four specialists (lead session branch `ccr-9652868f-lkw0w0`, new Claude account, 2026-11-20 from ~16:36 UTC)
+> 
+> Round 27 (lead `claude/rainbow-restore-screen-match-ijjdai`) stopped at 16:09–16:13 UTC: the old account hit its 5-hour limit and the four
+> workers died mid-step (NOT a rejection). Its last autosave was 16:15 (`7d3ba10`) = this session's start. Every worktree was recreated by
+> `docs/briefs/2026-11-20-r27/setup_worker_r28.sh` (base commit + the 16:15 snapshot) on NEW LOCAL branches **`-c29`** (same paths and ports);
+> **tracked edits verified identical (patch-id) and every untracked file byte-identical** to each snapshot. Scratch folders of round 27
+> (`/home/user/scratch/*`, dev servers, combined builds, probe variants, queued render scripts) are GONE — recreate only what is missing;
+> everything under `qa/` survived. Helper installs rebuilt: `/home/user/tools-pixelmatch/pixeldiff.mjs` (pixelmatch 5.3.0),
+> `/home/user/tools-threejs-devtools`, `/home/user/tools-spector`.
+> 
+> ## Common (all workers)
+> * ALL rules of `docs/briefs/2026-11-20-r27/LAUNCH_R27.md` "Common" still apply (read order: CLAUDE.md → `USER_VISUAL_BRIEF …[+4835 chars]
+
+### 🤖 Claude — 2026-11-20T18:30:20.134Z
+
+Helper installs outside the repo were lost with the old container. Rebuilding them while I check the bootstrap's progress and the connectors (free checks only).
+
+### 🤖 Claude — 2026-11-20T18:30:23.638Z
+
+> 🔧 **Bash** `{"command": "set -e; ls /home/user/rainbow-/docs/briefs/2026-11-18-r16/ | grep -i pixel; mkdir -p /home/user/tools-pixelmatch /home/user/tools-threejs-devtools /home/user/tools-spector\ncd /home/user/tools-pixelmatch && [ -f package.json ] || npm init -y >/dev/null; npm i --silent pixelmatch@5.3.0 pngjs@7 2>&1 | tail -2; cp /home/user/rainbow-/docs/briefs/2026-11-18-r16/pixeldiff.mjs . 2>/dev/null || true; ls\ncd /home/user/tools-threejs-devtools && [ -f package.json ] || npm init -y >/dev/null; npm i --silent threejs-devtools-mcp@0.5.0 2>&1 | tail -2\ncd /home/user/tools-spector && [ -f packa …[+282 chars]`
+
+### 🤖 Claude — 2026-11-20T18:30:24.338Z
+
+> 🔧 **Bash** `{"command": "tail -30 backups/.live/bootstrap.log | cut -c1-260", "description": "Check the background bootstrap's progress"}`
+
+### 🧑 User — 2026-11-20T18:30:30.917Z
+
+> ↩︎ result: pixeldiff.mjs
+> node_modules
+> package-lock.json
+> package.json
+> pixeldiff.mjs
+> /home/user/tools-pixelmatch/node_modules:
+> pixelmatch
+> pngjs
+> spectorjs
+> /home/user/tools-threejs-devtools/node_modules:
+> threejs-devtools-mcp
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🧑 User — 2026-11-20T18:30:30.949Z
+
+> ↩︎ result: playwright-visual-qa               definition available (no in-process subagent running) next: full-size approved | BEFORE | NEW comparisons for each accepted test
+>         benny-character-artist             definition available (no in-process subagent running) next: only if Benny's look must change (pink fluff, violet eyes, knitted sta
+>         cartoon-girl-character-artist      definition available (no in-process subagent running) next: not planned: the user's Google Flow videos cover the opening and endin
+>         animation-and-gameplay-engineer    definition available (no in-process subagent running) next: Flow video hand-over checks once the user uploads intro.mp4 / ending.m
+>         android-build-performance          definition available (no in-process subagent running) next: at the end: rebuild and verify the APK
+>   OK   Specialist agents              10/10 specialist definitions present; all SHA-256 unchanged; running: _note, s07, s04, s05, benny, s06, s09_s10
+>         draft world 5fd3d7a7-21ae-45c7-a3fe-b7ed47bdd13f (marble-1.0-draft): 7 LFS + 13 files
+>         full  world c0c9dc57-afa3-4330-b2f0-9c6d4dddfef9 (marble-1.1): 8 LFS + 13 files
+>         qa/worldlabs: 71 tracked files;  …[+2132 chars]
+
+### 🤖 Claude — 2026-11-20T18:30:38.607Z
+
+> 🔧 **ToolSearch** `{"query": "select:mcp__Marble_World_Labs__list_projects,mcp__github__get_me,mcp__Hugging_Face__hf_whoami,mcp__Context7__resolve-library-id,ListPlugins,SuggestPluginInstall,TaskCreate,TaskUpdate", "max_results": 10}`
+
+### 🧑 User — 2026-11-20T18:30:38.619Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+> [tool_reference]
+> [tool_reference]
+> [tool_reference]
+> [tool_reference]
+> [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-20T18:30:40.362Z
+
+> 🔧 **Bash** `{"command": "timeout 60 python3 -I scripts/verify-assets.py worldlabs 2>&1 | tail -4; echo \"--- fal probe (unknown model, no job)\"; curl -s -o /dev/null -w \"%{http_code}\\n\" --max-time 30 https://queue.fal.run/fal-ai/this-model-does-not-exist-probe -X POST -H 'Content-Type: application/json' -d '{}'", "description": "Free checks of the World Labs key and fal authentication"}`
+
+### 🧑 User — 2026-11-20T18:30:41.639Z
+
+> ↩︎ result: @@ warn Marble API key authenticated (free read: 5420 credits); worlds draft 404, full 404; no paid job started
+> --- fal probe (unknown model, no job)
+> 404
+
+### 🤖 Claude — 2026-11-20T18:30:43.107Z
+
+> 🔧 **mcp__Marble_World_Labs__list_projects** `{}`
+
+### 🤖 Claude — 2026-11-20T18:30:43.204Z
+
+> 🔧 **mcp__github__get_me** `{}`
+
+### 🤖 Claude — 2026-11-20T18:30:43.404Z
+
+> 🔧 **mcp__Hugging_Face__hf_whoami** `{}`
+
+### 🧑 User — 2026-11-20T18:30:43.614Z
+
+> ↩︎ result: this sign-in has no active Atlas account. Ask the user to open https://atlas.worldlabs.ai and finish signing up, then try again
+
+### 🧑 User — 2026-11-20T18:30:43.685Z
+
+> ↩︎ result: {"login":"josiahscalia5-dev","id":322329431,"profile_url":"https://github.com/josiahscalia5-dev","avatar_url":"https://avatars.githubusercontent.com/u/322329431?v=4","details":{"public_repos":11,"public_gists":0,"followers":0,"following":0,"created_at":"2026-08-29T02:18:36Z","updated_at":"2026-10-18T13:41:20Z"}}
+
+### 🧑 User — 2026-11-20T18:30:43.718Z
+
+> ↩︎ result: {"status":"authenticated","account":{"id":"68ee89f1f7918f8c0401c78a","type":"user","name":"josdois","url":"https://huggingface.co/josdois","is_pro":false},"organizations":[],"credential":{"type":"oauth","expires_at":"2026-11-21T01:42:27.000Z","scopes":["openid","profile","read-mcp","read-repos","jobs","contribute-repos","inference-api"]}}
+
+### 🤖 Claude — 2026-11-20T18:30:43.960Z
+
+> 🔧 **mcp__Context7__resolve-library-id** `{"libraryName": "Three.js", "query": "ShaderMaterial texture projection"}`
+
+### 🤖 Claude — 2026-11-20T18:30:44.004Z
+
+> 🔧 **ListPlugins** `{}`
+
+### 🧑 User — 2026-11-20T18:30:44.071Z
+
+> ↩︎ result: {"results":[]}
+
+### 🧑 User — 2026-11-20T18:31:09.656Z
+
+> ↩︎ result: Available Libraries:
+> 
+> - Title: Three.js
+> - Context7-compatible library ID: /mrdoob/three.js
+> - Description: Three.js is a JavaScript library for building 3D graphics in the browser, with WebGL and WebGPU renderers, the TSL node-based shader system, and addons for controls, loaders and CSS3D rendering.
+> - Code Snippets: 33058
+> - Source Reputation: High
+> - Benchmark Score: 71.32
+> - Versions: r110, r186, r160, r184, r180, r170, r175
+> ----------
+> - Title: Three.js
+> - Context7-compatible library ID: /llmstxt/threejs_llms-full_txt
+> - Description: Three.js is a cross-browser JavaScript library for creating 3D graphics using WebGL and WebGPU with support for modern shading through TSL (Three.js Shading Language).
+> - Code Snippets: 9181
+> - Source Reputation: High
+> - Benchmark Score: 69.54
+> ----------
+> - Title: three.js
+> - Context7-compatible library ID: /websites/threejs
+> - Description: three.js is a JavaScript 3D library that makes it easy to create and display animated 3D computer graphics in a web browser. It provides a powerful and flexible way to build interactive 3D experiences.
+> - Code Snippets: 9556
+> - Source Reputation: High
+> - Benchmark Score: 60.22
+> ----------
+> - Title: WebGPU Three.js TSL Skill
+> - Con …[+750 chars]
+
+### 🤖 Claude — 2026-11-20T18:31:17.543Z
+
+> 🔧 **TaskCreate** `{"subject": "Write r29 coordination, launch brief and next-account recipe", "description": "docs/briefs/2026-11-20-r29/: COORDINATION.md, LAUNCH_R29.md, setup_worker_r30.sh (-c31 from -c30 snapshots); handoff top + CLAUDE.md pointer; verify -c30 snapshots appear in backups/wip.", "activeForm": "Writing round-29 coordination docs"}`
+
+### 🧑 User — 2026-11-20T18:31:17.555Z
+
+> ↩︎ result: Task #1 created successfully: Write r29 coordination, launch brief and next-account recipe
+
+### 🤖 Claude — 2026-11-20T18:31:19.094Z
+
+> 🔧 **TaskCreate** `{"subject": "Relaunch four workers (s06 route, s07, s05, Benny)", "description": "s06 route test = priority (path-camera-transition-engineer); s07 m07fsoft v5 proof; s05 m05endr end section; Benny b20s06a star proof. Max 4, render_slot.sh.", "activeForm": "Relaunching workers"}`
+
+### 🧑 User — 2026-11-20T18:31:19.107Z
+
+> ↩︎ result: Task #2 created successfully: Relaunch four workers (s06 route, s07, s05, Benny)
+
+### 🤖 Claude — 2026-11-20T18:31:20.394Z
+
+> 🔧 **TaskCreate** `{"subject": "Report restoration + honest per-screen assessment to user", "description": "RAINBOW 3D BACKUP VERIFIED block, branches, LFS, specialists, tools/connectors, 04-10 assessment, capability answer.", "activeForm": "Reporting to user"}`
+
+### 🧑 User — 2026-11-20T18:31:20.404Z
+
+> ↩︎ result: Task #3 created successfully: Report restoration + honest per-screen assessment to user
+
+### 🤖 Claude — 2026-11-20T18:31:21.848Z
+
+> 🔧 **TaskCreate** `{"subject": "Deliver Screen 06 route proof (APPROVED/BEFORE/NEW + clips) to user", "description": "qa/match/06/r28/route/ stills at checkpoints, 1.0x/0.5x clips through 06->07, gameplay 8/8 + 91, verdict.", "activeForm": "Producing Screen 06 route proof"}`
+
+### 🧑 User — 2026-11-20T18:31:21.858Z
+
+> ↩︎ result: Task #4 created successfully: Deliver Screen 06 route proof (APPROVED/BEFORE/NEW + clips) to user
+
+### 🤖 Claude — 2026-11-20T18:31:22.699Z
+
+> 🔧 **TaskCreate** `{"subject": "Draft PR for session branch + subscribe", "description": "Backup-only draft PR (DO NOT MERGE) for ccr-ac160b4c-3hdecw, subscribe to activity."}`
+
+### 🧑 User — 2026-11-20T18:31:22.730Z
+
+> ↩︎ result: Task #5 created successfully: Draft PR for session branch + subscribe
+
+### 🤖 Claude — 2026-11-20T18:31:30.141Z
+
+> 🔧 **Bash** `{"command": "mkdir -p docs/briefs/2026-11-20-r29 /home/user/scratch/{s06,s07,s05,benny,lead} && sed -e 's/setup_worker_r29.sh — the NEXT account after round 28/setup_worker_r30.sh — the NEXT account after round 29/' -e 's/NEW LOCAL -c30 branches/NEW LOCAL -c31 branches/' -e 's/round-28 lead autosave/round-29 lead autosave/' -e 's/The -c29 branches were LOCAL only in the r28 container/The -c30 branches were LOCAL only in the r29 container/' -e 's#docs/briefs/2026-11-20-r28/setup_worker_r29.sh#docs/briefs/2026-11-20-r29/setup_worker_r30.sh#' -e 's/-c30 \\$S/-c31 $S/g' -e 's/-c30 \\$BEN/-c31 $BEN …[+441 chars]`
+
+### 🧑 User — 2026-11-20T18:31:30.217Z
+
+> ↩︎ result: 3:# NEW LOCAL -c31 branches = the worker base commit + its NEWEST autosave snapshot backups/wip/<branch-c29>/ (the round-29 lead autosave refreshes it every 5 min; read INFO.json "time").
+> 4:# The -c30 branches were LOCAL only in the r29 container (never pushed); their unfinished edits live only in those snapshots.
+> 31:  s04)    need $S04 claude/rainbow-s04-match-c21;   mk s04 /home/user/wt/s04 claude/rainbow-s04-match-c31 $S04 backups/wip/claude__rainbow-s04-match-c30 ;;
+> 32:  s07)    need $S07 claude/rainbow-s07-match-c18;   mk s07 /home/user/wt/s07 claude/rainbow-s07-match-c31 $S07 backups/wip/claude__rainbow-s07-match-c30 ;;
+> 33:  s06)    need $S06 claude/rainbow-s06-match-c23;   mk s06 /home/user/wt/s06 claude/rainbow-s06-match-c31 $S06 backups/wip/claude__rainbow-s06-match-c30 ;;
+> 34:  benny)  need $BEN claude/rainbow-benny-c23;       mk benny /home/user/wt/benny claude/rainbow-benny-c31 $BEN backups/wip/claude__rainbow-benny-c30 ;;
+> 35:  s08)    need $S08 claude/rainbow-s08-scenery-c17; mk s08 /home/user/wt/s08 claude/rainbow-s08-scenery-c31 $S08 backups/wip/claude__rainbow-s08-scenery-c30 ;;
+> 36:  s05)    need $S05 claude/rainbow-s05-match-c19;   mk s05 /home/user/wt/s05 claude/ra …[+1736 chars]
+
+### 🤖 Claude — 2026-11-20T18:31:33.750Z
+
+> 🔧 **Bash** `{"command": "sed -i 's/<branch-c29>/<branch-c30>/' docs/briefs/2026-11-20-r29/setup_worker_r30.sh && bash -n docs/briefs/2026-11-20-r29/setup_worker_r30.sh && echo syntax OK; nproc; free -g | head -2; df -h /home/user | tail -1", "description": "Fix recipe comment, check syntax and machine resources"}`
+
+### 🧑 User — 2026-11-20T18:31:33.880Z
+
+> ↩︎ result: syntax OK
+> 4
+>                total        used        free      shared  buff/cache   available
+> Mem:              15           0           0           0          14          14
+> /dev/vda        252G   47G   23G  68% /
+
