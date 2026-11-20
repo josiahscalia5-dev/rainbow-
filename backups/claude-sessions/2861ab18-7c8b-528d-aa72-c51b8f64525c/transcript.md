@@ -2729,3 +2729,63 @@ While the clip renders (~20 minutes), I'll save everything to GitHub and check t
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow- && python3 scripts/rainbow-autosave.py --reason manual:r30-m06curl-built 2>&1 | grep -E '\"commit\"|\"status\"' | head -3; python3 -I scripts/autosave-status.py | head -1; ls backups/wip/ | grep c31 | head; python3 -c \"import json;d=json.load(open('backups/wip/claude__rainbow-s06-match-c31/INFO.json'));print(d.get('time'), len(d.get('untracked_saved',d.get('untracked',[])) or []))\" 2>/dev/null; grep -c \"m06curl\" backups/wip/claude__rainbow-s06-match-c31/tracked.patch", "description": "Manual GitHub save; verify s06 snapshot", "timeout": 300000}`
 
+### 🧑 User — 2026-11-20T20:56:40.252Z
+
+> ↩︎ result: "commit": "1d1c6f6260b62cf4a8d496e413ade8ccce6ca959",
+> AUTOSAVE OK | branch ccr-2644c3c0-iikckn | scheduler daemon | last verified backup 2026-11-20T20:56:20+00:00 (0.3 min ago) | local 1d1c6f6 remote 1d1c6f6 (match) | uncommitted 0
+> claude__rainbow-benny-c31
+> claude__rainbow-s04-match-c31
+> claude__rainbow-s05-match-c31
+> claude__rainbow-s06-match-c31
+> claude__rainbow-s07-match-c31
+> claude__rainbow-s08-scenery-c31
+> lead__trial07-c31
+> lead__view04-c31
+> lead__view06-c31
+> lead__view07-c31
+> 2026-11-20T20:56:32+00:00 0
+> 17
+
+### 🤖 Claude — 2026-11-20T20:56:42.406Z
+
+Saved (`1d1c6f6`, GitHub matches local). The 06 snapshot includes the code changes. I'll confirm the new untracked files (route data, design and QA tools) are in it too.
+
+### 🤖 Claude — 2026-11-20T20:56:43.459Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/backups/wip/claude__rainbow-s06-match-c31 && ls untracked/assets/textures/match06/ 2>/dev/null | grep -E \"curl|deep\"; ls untracked/tools/match06/ 2>/dev/null | grep r30", "description": "Confirm new files are in the snapshot"}`
+
+### 🧑 User — 2026-11-20T20:56:43.503Z
+
+> ↩︎ result: coins06deep.json
+> leg06deep.json
+> route06curl.json
+> route06deep.json
+> r30_cam.mjs
+> r30_clip.mjs
+> r30_continuity.ts
+> r30_design_curl.py
+> r30_eval.mjs
+> r30_hitprobe.mjs
+> r30_ring_probe.mjs
+> r30_shots.mjs
+
+### 🤖 Claude — 2026-11-20T20:56:46.133Z
+
+All new files are in the snapshot. Next I'll note the camera-hold change and the far-glow behaviour in the round map.
+
+### 🤖 Claude — 2026-11-20T20:56:50.796Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && python3 - <<'EOF'\np='docs/briefs/2026-11-20-r30/COORDINATION.md'; t=open(p).read()\nold=\"through the 06 tunnel's end = the warm glow ahead). 06 = 207 u (deep 124).\"\nnew=(\"through the 06 tunnel's end = the warm glow ahead; `Game.ts`: from s07 − 175). 06 = 207 u (deep 124). Start view: a 40×70 px gap at the right \"\n     \"edge (the approved view looked past the bend at the old straight wall ~100–120 u deep) is filled by `m06_stub0` (that patch of the old straight \"\n     \"wall, visible only within 10 u past the checkpoint) → start view vs BEFORE 0. …[+631 chars]`
+
+### 🧑 User — 2026-11-20T20:56:50.895Z
+
+> ↩︎ result: 7
+
+### 🤖 Claude — 2026-11-20T20:56:52.134Z
+
+The round map is up to date. Waiting for the new clip.
+
+### 🤖 Claude — 2026-11-20T20:56:53.344Z
+
+> 🔧 **Bash** `{"command": "until ! pgrep -f \"r30_clip.mjs /home/user/scratch/r30/clip_new \" >/dev/null; do sleep 5; done; tail -2 /home/user/scratch/r30/clip_new.log; ls /home/user/scratch/r30/clip_new/*.png | wc -l", "description": "Wait for the re-rendered clip to finish", "timeout": 2400000}`
+
