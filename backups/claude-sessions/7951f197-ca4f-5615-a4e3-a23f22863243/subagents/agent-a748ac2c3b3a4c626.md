@@ -2107,3 +2107,94 @@ Relative to Benny's height, the tilted beanie (f0) sits ~36 px too low but has t
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/benny && python3 - <<'EOF'\np='src/characters/benny/fur.ts'\ns=open(p).read()\nold=\"\"\"            // wispy, separated strands toward the outside / top of a lock; dense core\n            if (lt > 0.2 && sd > mix(0.95, 0.42, smoothstep(0.35, 1.0, rr) * smoothstep(0.2, 0.9, lt))) discard;\n          }\"\"\"\nnew=\"\"\"            // dense lock core; wispy, separated strands only toward the lock's rim and tip\n            if (lt > 0.3 && rr > 0.5 && sd > mix(0.95, 0.45, smoothstep(0.5, 1.0, rr) * smoothstep(0.3, 1.0, lt))) discard;\n          }\n          // rounde …[+2589 chars]`
 
+### 🧑 User — 2026-11-19T23:59:34.299Z
+
+> ↩︎ result: TSC_OK
+> at 04 s 77.881
+> variant g0_default 32978 ms
+> variant g1_round5 16454 ms
+> variant g2_lock14 14219 ms
+> variant g3_comb13 15482 ms
+> variant g4_lock22 15486 ms
+> g0_default
+> {'dy': 14, 'iou_all': 0.8908, 'iou_hat': 0.8327, 'iou_fur': 0.7624} [0.712, 0.691] {'mean': [168, 50, 111], 'sat': [0.62, 0.69, 0.83], 'val': [0.48, 0.67, 0.82]}
+> g1_round5
+> {'dy': 14, 'iou_all': 0.8908, 'iou_hat': 0.8327, 'iou_fur': 0.7624} [0.712, 0.691] {'mean': [154, 43, 101], 'sat': [0.64, 0.71, 0.87], 'val': [0.46, 0.61, 0.75]}
+> g2_lock14
+> {'dy': 14, 'iou_all': 0.8932, 'iou_hat': 0.8327, 'iou_fur': 0.7674} [0.716, 0.691] {'mean': [157, 44, 103], 'sat': [0.64, 0.71, 0.85], 'val': [0.48, 0.62, 0.75]}
+> g3_comb13
+> {'dy': 14, 'iou_all': 0.8921, 'iou_hat': 0.8327, 'iou_fur': 0.7649} [0.712, 0.691] {'mean': [159, 46, 104], 'sat': [0.63, 0.7, 0.84], 'val': [0.49, 0.62, 0.76]}
+> g4_lock22
+> {'dy': 14, 'iou_all': 0.8918, 'iou_hat': 0.8327, 'iou_fur': 0.7643} [0.706, 0.691] {'mean': [156, 44, 102], 'sat': [0.63, 0.71, 0.86], 'val': [0.47, 0.61, 0.76]}
+
+### 🤖 Claude — 2026-11-19T23:59:45.031Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && python3 -I -c \"\nfrom PIL import Image\nfor n in ['g0_default','g2_lock14']:\n    im=Image.open(f'qa/benny/r20/probe/g/{n}.png'); im.crop((190,1150,600,1420)).resize((820,540),Image.LANCZOS).save(f'/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/{n}_fur.png')\nim=Image.open('/home/user/rainbow-/references/04_through_the_five_arrows.png'); im.crop((190,1140,600,1410)).resize((820,540),Image.LANCZOS).save('/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/ap_fur.png')\n\"", "description" …[+46 chars]`
+
+### 🧑 User — 2026-11-19T23:59:45.648Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-19T23:59:46.366Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/g2_lock14_fur.png"}`
+
+### 🧑 User — 2026-11-19T23:59:46.394Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-19T23:59:46.973Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/ap_fur.png"}`
+
+### 🧑 User — 2026-11-19T23:59:47.016Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T00:00:14.105Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && python3 - <<'EOF'\np='src/characters/benny/benny20.ts'\ns=open(p).read()\nfor a,b in [(\"baldW: n('bw', 0.17),\",\"baldW: n('bw', 0.38),\"),\n            (\"lock: [n('blx', 18), n('bly', 1.0), n('blz', 0.85), n('blw', 260)],\",\"lock: [n('blx', 24), n('bly', 1.0), n('blz', 0.85), n('blw', 300)],\"),\n            (\"comb: [n('bcx', 1.0), n('bcy', 0.85), n('bcz', 0.12), n('bcw', 0.35)],\",\"comb: [n('bcx', 1.0), n('bcy', 0.85), n('bcz', 0.1), n('bcw', 0.4)],\"),\n           ]:\n    assert s.count(a)==1, a\n    s=s.replace(a,b)\n# arms: fine soft fluff\ns=s. …[+1708 chars]`
+
+### 🧑 User — 2026-11-20T00:01:51.789Z
+
+> ↩︎ result: Exit code 1
+> TSC_OK
+>     at /home/user/wt/benny/tools/benny20/probe.mjs:32:16 {
+>   log: []
+> }
+> 
+> Node.js v22.23.5
+> h0_default
+> {'dy': 16, 'iou_all': 0.8936, 'iou_hat': 0.8288, 'iou_fur': 0.7523} [0.706, 0.691] {'mean': [182, 59, 123], 'sat': [0.59, 0.66, 0.82], 'val': [0.57, 0.72, 0.86]}
+> h1_col0.8
+> {'dy': 16, 'iou_all': 0.8936, 'iou_hat': 0.8288, 'iou_fur': 0.7523} [0.706, 0.691] {'mean': [196, 91, 151], 'sat': [0.47, 0.52, 0.65], 'val': [0.61, 0.78, 0.93]}
+> h2_col1.0
+> {'dy': 16, 'iou_all': 0.8936, 'iou_hat': 0.8288, 'iou_fur': 0.7523} [0.706, 0.691] {'mean': [216, 104, 169], 'sat': [0.45, 0.51, 0.62], 'val': [0.69, 0.86, 1.0]}
+> h3_col1.0_l30
+> Traceback (most recent call last):
+>   File "/home/user/wt/benny/tools/benny20/score.py", line 15, in <module>
+>     img = np.asarray(Image.open(sys.argv[1]).convert('RGB')).astype(int)
+>                      ~~~~~~~~~~^^^^^^^^^^^^^
+>   File "/usr/local/lib/python3.13/site-packages/PIL/Image.py", line 3656, in open
+>     fp = builtins.open(filename, "rb")
+> FileNotFoundError: [Errno 2] No such file or directory: 'qa/benny/r20/probe/h/h3_col1.0_l30.png'
+> Traceback (most recent call last):
+>   File "<string>", line 1, in <module>
+>     import json,sys; d=json.load(sys.stdin …[+925 chars]
+
+### 🤖 Claude — 2026-11-20T00:01:59.854Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && python3 -I -c \"\nfrom PIL import Image\nim=Image.open('qa/benny/r20/probe/h/h0_default.png'); im.crop((190,1150,600,1420)).resize((820,540),Image.LANCZOS).save('/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/h0_fur.png')\n\"; tail -20 /tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/tasks/*.output 2>/dev/null | grep -i \"error\" | head -5", "description": "Crop h0 fur detail"}`
+
+### 🧑 User — 2026-11-20T00:02:00.201Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T00:02:00.963Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/h0_fur.png"}`
+
+### 🧑 User — 2026-11-20T00:02:01.016Z
+
+> ↩︎ result: [image]
+

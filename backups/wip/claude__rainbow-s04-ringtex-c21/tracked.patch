@@ -1,5 +1,5 @@
 diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
-index 9abbbbb..489a68a 100644
+index 9abbbbb..56da1ae 100644
 --- a/src/world/match04m4.ts
 +++ b/src/world/match04m4.ts
 @@ -119,12 +119,14 @@ uniform float uRVar;       // r17 m04rpvar: number of painted rings stacked in t
@@ -9,8 +9,8 @@ index 9abbbbb..489a68a 100644
 -uniform vec4 uRNear;       // r19b m04rnear: x amount, y target sub-band length (world u), z/w sub-band size on screen (px) where
 -                           // the near-band detail starts / is full
 -uniform vec4 uRNear2;      // r19b m04rnear: x rounded-tube shading, y rim + groove lines, z yellow-gold grade, w pink / violet reflection
-+uniform vec4 uRNear;       // r19b m04rnear: x amount, y target sub-band length (world u), z/w sub-band angular size (world length /
-+                           // distance) where the near-band detail starts / is full
++uniform vec4 uRNear;       // r19b m04rnear: x amount, y target sub-band length (world u), z/w sub-band size on screen (px of a
++                           // 1536 px tall portrait view, from world length, distance and foreshortening) where the detail starts / is full
 +uniform vec4 uRNear2;      // r19b m04rnear: x painted band grade per sub-band, y rim + groove lines, z yellow-gold grade, w pink / violet reflection
  uniform vec4 uRNear3;      // r19b m04rnear: x bulbs on the sub-rims, y highlight lift, z corridor ring growth (m04rfg), w lip + groove size (u)
  uniform float uRNearW;     // r19b m04rnear: water plane height relative to the tunnel axis (world u)
@@ -21,7 +21,7 @@ index 9abbbbb..489a68a 100644
  #ifdef RFEW
  uniform float uRFewG;      // r18 m04rfew: height of the telescope's shrink centre (group units, from the axis; < 0 = below)
  uniform vec2 uRFewW;       // r18 m04rfew: x = ring scale where the deep rings reach warm yellow-white, y = amount (m04rfw, m04rfk)
-@@ -367,44 +369,83 @@ void main() {
+@@ -367,44 +369,86 @@ void main() {
        }
        pr += vec3(1.0, 0.86, 0.55) * 0.10 * gl * smoothstep(0.0, 0.2, facing);   // moving polished sheen
        if (uRNear.x > 0.0 && uu < uL) {
@@ -40,8 +40,9 @@ index 9abbbbb..489a68a 100644
 +        // a band is large on screen it resolves into that structure: N sub-bands (about uRNear.y world u each, world-
 +        // anchored), each a rounded polished tube whose highlights move over it as Benny swims, a crisp warm-white rim line
 +        // and a dark groove, a row of bulbs, graded toward the washer rim's yellow-gold, mirroring the pink / violet river.
-+        // It fades in with the sub-band's angular size (world length / distance: smooth over the band, no popping; a
-+        // pixel-footprint fade jumps at triangle edges); far rings keep the plain painted ring, the modelled lip stays.
++        // It fades in with the sub-band's size on screen (from its world length, distance and foreshortening: smooth over
++        // the band, no popping; a pixel-footprint fade, fwidth, jumps at triangle edges and drew diagonal seams); far
++        // rings keep the plain painted ring (few, thick rings), the modelled lip stays.
          float kI = floor(al / uP);
          float Bk = uP * pow(uRNear3.z, kI) - uRNear3.w;            // this corridor ring's band length (world u)
          float Ns = max(1.0, floor(Bk / uRNear.y + 0.5));
@@ -50,10 +51,12 @@ index 9abbbbb..489a68a 100644
          float wS = uu / ls, si = floor(wS), xs = wS - si;
          float fuN = max(fwidth(al), 1e-5);
 -        float fd = smoothstep(uRNear.z, uRNear.w, ls / fuN) * uRNear.x;
-+        float fd = smoothstep(uRNear.z, uRNear.w, lsW / max(dc, 0.2)) * uRNear.x;
++        float sinV = sqrt(max(1.0 - pow(dot(V, uAxD), 2.0), 0.0));   // the band runs along the axis: foreshortened
++        float fd = smoothstep(uRNear.z, uRNear.w, 1278.0 * lsW * sinV / max(dc, 0.2)) * uRNear.x;   // px at 62 deg / 1536 px
  #ifdef RFEW
          fd *= step(0.999, vF.y);                                     // corridor rings only (the telescope stays painted)
  #endif
++        if (uRNear5.w < -0.5) pr = vec3(fd, fract(si * 0.37 + 0.2), fract(kI * 0.25)); else   // DEBUG
          if (fd > 0.001) {
            float lastS = step(Ns - 0.5, si);                          // the last sub-band ends at the modelled lip
 -          // (a) each sub-band a rounded polished tube bulging into the tunnel: its normal tilts from facing back toward the
@@ -131,7 +134,7 @@ index 9abbbbb..489a68a 100644
            vec3 qW = vW - uAxO;
            float py = dot(qW, uAxU), Ry = dot(RT, uAxU);
            if (uRNear2.w > 0.0 && Ry < -0.02) {
-@@ -413,20 +454,19 @@ void main() {
+@@ -413,20 +457,19 @@ void main() {
              float lane = 1.0 - smoothstep(0.8, 1.7, abs(hx));
              vec3 rc = mix(vec3(0.86, 0.46, 0.82), vec3(0.64, 0.56, 0.92), lane);   // painted pink (211,118,207) / violet
              float nz = 0.5 + 0.5 * sin(hz * 0.55 + hx * 1.1 + 2.0 * sin(hz * 0.21 + hx * 0.6));
@@ -158,13 +161,13 @@ index 9abbbbb..489a68a 100644
              pr += vec3(1.0, 0.80, 0.42) * 0.22 * gS * fd * uRNear2.y;
              pr = mix(pr, vec3(1.0, 0.93, 0.70), 0.8 * cB * fd * uRNear2.y);
              pr = mix(pr, pr * vec3(0.50, 0.32, 0.26), cD * fd * uRNear2.y);
-@@ -1069,11 +1109,12 @@ export function addM04(ctx: M04Ctx) {
+@@ -1069,11 +1112,12 @@ export function addM04(ctx: M04Ctx) {
          uRPol2: { value: new THREE.Vector2(M04.num('m04rpsp', 0.25), M04.num('m04rpfr', 0)) },
          uRCr: { value: new THREE.Vector4(M04.num('m04rpcr', 0), M04.num('m04rpcb', 0.011), M04.num('m04rpcd', 0.014), M04.num('m04rpcc', 0.012)) },
          // r19b `m04rnear=1`: the near band seen from inside resolves into the painted washer rim's polished sub-bands
 -        uRNear: { value: new THREE.Vector4(M04.num('m04rnear', 0), M04.num('m04rnbs', 2.0), M04.num('m04rnw0', 45), M04.num('m04rnw1', 140)) },
 -        uRNear2: { value: new THREE.Vector4(M04.num('m04rnt', 0.5), M04.num('m04rnl', 1), M04.num('m04rng', 1), M04.num('m04rnr', 0.35)) },
-+        uRNear: { value: new THREE.Vector4(M04.num('m04rnear', 0), M04.num('m04rnbs', 2.3), M04.num('m04rnw0', 0.18), M04.num('m04rnw1', 0.4)) },
++        uRNear: { value: new THREE.Vector4(M04.num('m04rnear', 0), M04.num('m04rnbs', 2.3), M04.num('m04rnw0', 25), M04.num('m04rnw1', 50)) },
 +        uRNear2: { value: new THREE.Vector4(M04.num('m04rnt', 0.8), M04.num('m04rnl', 1), M04.num('m04rng', 1), M04.num('m04rnr', 0.35)) },
          uRNear3: { value: new THREE.Vector4(M04.num('m04rnd', 1), M04.num('m04rnh', 1), M04.num('m04rfew', 0) > 0 ? M04.num('m04rfg', 1) : 1, 0.56 * M04.num('m04ringgw', 1)) },
          uRNearW: { value: -cy },

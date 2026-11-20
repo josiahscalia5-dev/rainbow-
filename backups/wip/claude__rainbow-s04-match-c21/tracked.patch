@@ -1,3 +1,41 @@
+diff --git a/qa/match/04/r18/PROGRESS.md b/qa/match/04/r18/PROGRESS.md
+index e71220b..b631bcf 100644
+--- a/qa/match/04/r18/PROGRESS.md
++++ b/qa/match/04/r18/PROGRESS.md
+@@ -127,3 +127,33 @@ Next tasks, in order (one URL switch per step, start view 0 px, coins unchanged,
+ Tools (recreate in the scratchpad): `tools/lead_r6/motion_audit.mjs` and `tools/lead_r13/swim_clip.mjs` copied with
+ `startVite(Number(process.env.PORT || 5273))`, an `ONLY=` shot filter and a `MAXF=` frame cap (see the r18 transcript). The ≈2.0 s
+ coin over Benny is the normal pickup pop: leave coins alone. Never edit the ring shader GOLD_FRAG (s04tex owns the rings).
++
++## (r20) Round 20 — branch `claude/rainbow-s04-match-c21` (from preview v3 `09459079` = K18-5 water/foam + the rings worker's K9 rings)
++BEFORE for every r20 step = the v3 query `qa/match/04/r19/PREVIEW_QUERY_v3.txt` (+ the r20 steps kept before it). Same real-game
++shots (scratch copies of `tools/lead_r6/motion_audit.mjs` / `tools/lead_r13/swim_clip.mjs` on port 5273), coins identical in
++every BEFORE / NEW pair. The r19b unfinished edit (`m04wup`, +98 lines) was restored and committed first (`dfeb60c`).
++
++## (r20) Step 1 — the river CURVES UP the tunnel sides (no flat strip ending in a straight edge) — `&m04wup=1` — GOOD IMPROVEMENT
++Query (K20-1): v3 + `&m04wup=1` (defaults: `m04wuh` 1.7 climb up the wall (u), `m04wul` 9 tongue wavelength, `m04wud` 0.35 tongue
++depth, `m04wub` 0.6 band share at the old edge, `m04wut` 0.28 crest colour = hot-pink satin, `m04wus` 0.6 soft see-through top,
++`m04wuw` 0.25 lilac lace on the crest, `m04wun0/1` 2 / 14 + `m04wuf` 0.3 lower far ahead, `m04wuv` 0.3 drift, `m04wug` 0.1).
++`&m04sswirl=1` (r18, unproven) is NOT used: `m04wup` replaces it (sswirl only wiggled the band pattern inside the old flat strip).
++* Code (`src/world/match04m4.ts`, river only): the trough edge now ends just in front of the flattened lower wall; from it a second
++  see-through strip of the SAME river (same vertices / shader, `CLIMB` define) climbs up the wall circle 1.7 u, ramped in 1.4–4 u
++  inside the opening. On it the painted band sequence continues: the violet / hot-pink satin part of the painted side band reaches
++  the old edge, the rest climbs the wall, ending in long rounded tongues that lap up and down along the tunnel (higher round Benny,
++  lower far ahead, drifting slowly with the current) and fade softly into the gold (no hard line, no white crest). World-anchored,
++  shrinks with the K9 telescope rings, hidden in the approved view.
++* r19b defaults rejected in r20 (scratch only): a lilac-white crest column + strong lace = snowy white "plateau" tops on the walls;
++  short deep tongues (`m04wul` 6–7, `m04wud` 0.45–0.55) = pink flames. Kept: long gentle hot-pink sweeps with a soft top.
++* Start view: `node scripts/capture.mjs 04` v3 vs K20-1 → 0 px differ (pixelmatch 0 / 1,171,584, rows 180–1536; 50 draw calls both).
++* WHAT LOOKS CLOSER (f03, f06, f10, f20, steering and hard left / right, t33, t95, clip): the river was a flat cyan-pink strip whose
++  sides stopped in a straight diagonal edge with bare gold wall beside and above it; now, as painted, the glossy hot-pink / magenta
++  water sweeps UP both tunnel sides in long soft tongues and melts into the gold rings (pink-tinted gold above it), so the water
++  fills the lower part of the tunnel like a half-pipe; while steering left / right the side Benny swims toward shows pink water
++  rising up the wall beside him instead of a straight edge. Coins identical; nothing pops (the climb fades in with the 3D scene).
++* STILL WRONG: the bank foam is small white cloud-puff clumps (painted: big glossy pearly bubble heaps) — next step; the climbing
++  pink is plainer than the painted wall water (fewer cyan streaks / sparkles inside it).
++* Pictures: `qa/match/04/r19b/s1_wup/1_APPROVED.png`, `BEFORE/` (v3), `NEW/` (K20-1): a00 start view, f03, f06, f10, f20,
++  steering left / right, hard left / right, t33, t95; `BEFORE_swim_clip_half.mp4` / `NEW_swim_clip_half.mp4` (half size, 4 s
++  straight / left / right / straight, the lead's recipe).
 diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
 index 14963a9..ec403d3 100644
 --- a/src/world/match04m4.ts

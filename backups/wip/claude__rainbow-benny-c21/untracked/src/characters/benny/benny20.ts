@@ -48,21 +48,21 @@ type V4 = [number, number, number, number];
  *  the approved means: fur (207, 74, 151), pompom (133, 30, 229) */
 const LOCK20: Record<string, { lock: V4; shade: V4; comb: V4; color: [number, number, number] }> = {
   fur_body: {
-    lock: [n('blx', 18), n('bly', 1.0), n('blz', 0.85), n('blw', 260)],
+    lock: [n('blx', 24), n('bly', 1.0), n('blz', 0.85), n('blw', 300)],
     shade: [n('bsx', 0.3), n('bsy', 0.3), n('bsz', 0.5), n('bsw', 0.3)],
-    comb: [n('bcx', 1.0), n('bcy', 0.85), n('bcz', 0.12), n('bcw', 0.35)],
+    comb: [n('bcx', 1.0), n('bcy', 0.85), n('bcz', 0.1), n('bcw', 0.4)],
     color: lin('bcol', [0.23, 0.075, 0.136]),
   },
   fur_armL: {
-    lock: [n('alx', 36), 0.9, n('alz', 0.8), 240],
-    shade: [0.35, 0.25, 0.45, 0.35],
-    comb: [n('acx', 0.5), 0.8, 0.12, 0.3],
+    lock: [n('alx', 50), 0.95, n('alz', 0.9), 320],
+    shade: [0.45, 0.25, 0.3, 0.3],
+    comb: [n('acx', 0.4), 0.9, 0.08, 0.15],
     color: lin('acol', [0.23, 0.075, 0.136]),
   },
   fur_armR: {
-    lock: [n('alx', 36), 0.9, n('alz', 0.8), 240],
-    shade: [0.35, 0.25, 0.45, 0.35],
-    comb: [n('acx', 0.5), 0.8, 0.12, 0.3],
+    lock: [n('alx', 50), 0.95, n('alz', 0.9), 320],
+    shade: [0.45, 0.25, 0.3, 0.3],
+    comb: [n('acx', 0.4), 0.9, 0.08, 0.15],
     color: lin('acol', [0.23, 0.075, 0.136]),
   },
   fur_pom: {
@@ -84,7 +84,7 @@ export const HAT20 = {
    *  cameras see) comes down to the approved seat while the FRONT stays above his eyes (eye tops ≈ +0.18) */
   tilt: n('ht', -0.23),
   /** body-fur bald zone under the cuff: cos of the cone angle around the (tilted) hat up axis (GLB 0.414) */
-  baldW: n('bw', 0.17),
+  baldW: n('bw', 0.38),
   /** pompom: extra scale and lift (hat-local, after the beanie scale) */
   pomScale: n('ps', 1.03),
   pomDY: n('pdy', 0.0),
