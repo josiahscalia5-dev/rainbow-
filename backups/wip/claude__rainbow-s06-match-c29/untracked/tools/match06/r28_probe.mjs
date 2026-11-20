@@ -21,7 +21,7 @@ cen.multiplyScalar(1 / n);
 const Ux = new THREE.Vector3(0, 1, 0).addScaledVector(ax, -ax.y).normalize(), Rx = new THREE.Vector3().crossVectors(ax, Ux).normalize();
 const O = C.clone().add(cen).addScaledVector(Ux, 3);
 const px = (p) => { const q = p.clone().project(proj); return [Math.round((q.x + 1) / 2 * W), Math.round((1 - q.y) / 2 * H), q.z < 1 ? '' : 'BEHIND']; };
-console.log('cam', C.toArray().map((v) => +v.toFixed(2)), 'ax', ax.toArray().map((v) => +v.toFixed(3)), 'O', O.toArray().map((v) => +v.toFixed(2)), 'Rx', Rx.toArray().map((v) => +v.toFixed(3)), 'Ux', Ux.toArray().map((v) => +v.toFixed(3)));
+console.log('O_full', JSON.stringify(O.toArray())); console.log('cam', C.toArray().map((v) => +v.toFixed(2)), 'ax', ax.toArray().map((v) => +v.toFixed(3)), 'O', O.toArray().map((v) => +v.toFixed(2)), 'Rx', Rx.toArray().map((v) => +v.toFixed(3)), 'Ux', Ux.toArray().map((v) => +v.toFixed(3)));
 for (const id of ['05', '06', '07', '08']) { const st = c.stage(id); console.log('stage', id, st.s0.toFixed(2), st.s1.toFixed(2)); }
 console.log('marks', Object.fromEntries(Object.entries(c.marks).map(([k, v]) => [k, +v.toFixed(2)])));
 const sa = Number(SA ?? 195), sb = Number(SB ?? 262), ds = Number(DS ?? 2);

@@ -3654,3 +3654,29 @@ The new loop's first save (17:22:05) reached GitHub and matches. Recording the c
 
 > 🔧 **Bash** `{"command": "until grep '| daemon |' backups/.live/BACKUP_LOG.md | tail -1 | grep -qv '17:22:05'; do sleep 5; done; until ! pgrep -f rainbow-autosave.py >/dev/null; do sleep 2; done; grep '| daemon |' backups/.live/BACKUP_LOG.md | tail -2 | cut -c1-120; git rev-parse HEAD; git ls-remote origin refs/heads/ccr-9652868f-lkw0w0; pgrep -fc 'scripts/autosave-daemon.sh'", "description": "Wait for next scheduled save and verify remote", "timeout": 420000}`
 
+### 🧑 User — 2026-11-20T17:27:29.382Z
+
+> ↩︎ result: | 2026-11-20T17:22:05+00:00 | daemon | committed+pushed | `3ee8e77bc1d7` | `ccr-9652868f-lkw0w0` | 26 | True |  |
+> | 2026-11-20T17:27:05+00:00 | daemon | committed+pushed | `67d390338889` | `ccr-9652868f-lkw0w0` | 23 | True |  |
+> 67d3903388890dbd8b4a14f80c35a4b78107863f
+> 67d3903388890dbd8b4a14f80c35a4b78107863f	refs/heads/ccr-9652868f-lkw0w0
+> 1
+
+### 🤖 Claude — 2026-11-20T17:27:38.727Z
+
+Everything is now saved to your GitHub repository on a strict 5-minute schedule, and I've confirmed it:
+
+- **Proof:** two scheduled saves in a row landed at 17:22:05 and 17:27:05, exactly 5 minutes apart. Both reached GitHub. The latest is commit `67d3903388890dbd8b4a14f80c35a4b78107863f`, which matches this checkout exactly, and one save loop is running.
+- **What I fixed:**
+  - The old loop started its 5-minute wait only after each save finished, so saves drifted to about every 5 minutes 15–20 seconds. It now keeps an exact 5-minute rhythm.
+  - If a save I'm running by hand holds the lock at that moment, it retries every 20 seconds instead of skipping a whole turn.
+  - No work was lost before the fix: in that 16-minute window your work still went to GitHub seven times.
+- **One slip during the swap:** the new loop didn't start on the first try, so scheduled saving was off for about a minute (17:20 to 17:22). It's running now.
+- **What each save includes:** code and candidate changes, assets, screenshots and clips (large files through Git LFS), your conversation with me and every specialist's conversation (secrets filtered out), each specialist's unfinished edits, progress notes and decisions, restart instructions, and the tool, plugin and agent lists.
+- **Extra saves:** besides the 5-minute schedule, I save right after each kept improvement and when a session pauses or ends.
+- **Limits:**
+  - Saving only happens while this environment is open. If it closes, I'll report the gap rather than claim saves continued.
+  - The specialists' temporary render scratch folders aren't saved. Every finished picture and clip goes into the project and is saved.
+
+The specialists are still working (the Screen 06 route test, Screen 07's clip, Screen 05 and Benny), and their work goes to GitHub with every save.
+
