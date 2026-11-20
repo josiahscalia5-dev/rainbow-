@@ -2062,3 +2062,249 @@ The edit didn't apply (the file has to be read first), so that run had no anti-a
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-20T01:34:11.347Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && python3 - <<'EOF'\np='src/world/match04m4.ts'; s=open(p).read()\ndef rep(a,b,cnt=1):\n    global s\n    assert s.count(a)==cnt, (a[:70], s.count(a)); s=s.replace(a,b)\nrep(\"\"\"          float crest = exp(-pow((xs - xc) / (0.9 * rimW + fx), 2.0)) * roll;\"\"\",\"\"\"          float crest = exp(-pow((xs - xc) / (1.15 * rimW + fx), 2.0)) * roll;\"\"\")\nrep(\"\"\"          T *= 1.0 + 0.14 * (sheen - 0.45) * win;                      // redistributes light, no overall lift\"\"\",\"\"\"          T *= 1.0 + 0.14 * (sheen - 0.45) * win;                      //  …[+2246 chars]`
+
+### 🧑 User — 2026-11-20T01:34:48.069Z
+
+> ↩︎ result: ok
+> APPROVED inner rings   luma p5   81 p25   99 p50  116 p75  147 p95  219 mean  128 | <60 0.46% | violet/pink/blue 14.3% | hard steps 89
+> b0 marked area         luma p5   75 p25  102 p50  127 p75  162 p95  229 mean  136 | <60 0.89% | violet/pink/blue 16.2% | hard steps 761
+> a7m marked area        luma p5   85 p25   97 p50  117 p75  141 p95  174 mean  122 | <60 0.04% | violet/pink/blue 19.9% | hard steps 106
+> a8 marked area         luma p5   85 p25   97 p50  120 p75  148 p95  177 mean  125 | <60 0.04% | violet/pink/blue 19.1% | hard steps 103
+> b0 whole tunnel        luma p5   69 p25   98 p50  120 p75  153 p95  219 mean  129 | <60 3.17% | violet/pink/blue 27.3% | hard steps 1936
+> a7m whole tunnel       luma p5   72 p25   94 p50  114 p75  137 p95  184 mean  119 | <60 2.91% | violet/pink/blue 27.8% | hard steps 294
+> a8 whole tunnel        luma p5   72 p25   94 p50  115 p75  141 p95  185 mean  121 | <60 2.91% | violet/pink/blue 27.5% | hard steps 295
+> f10 FB tunnel top rows luma p5 69 p50 117 p95 237 mean 133
+> f10 FA tunnel top rows luma p5 84 p50 109 p95 172 mean 116
+> f10 a8 tunnel top rows luma p5 84 p50 111 p95 177 mean 120
+> f15 FB tunnel top rows luma p5 71 p50 123 p95 238 mean 136
+> f15 FA tu …[+151 chars]
+
+### 🤖 Claude — 2026-11-20T01:34:51.779Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r/f10_3.png"}`
+
+### 🧑 User — 2026-11-20T01:34:51.811Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T01:35:06.083Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04b && S=/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r; Q=$(cat qa/match/04/r19b/ringpaint/preview_r20/QUERY_preview.txt)\nSH='[[\"f00_start\",78.7,null,10],[\"f03\",81.9,null,10],[\"f06_your_camera\",84.183,null,10],[\"f10\",88.4,null,10],[\"f15\",93.5,null,10],[\"steer_left\",84.183,-1,10],[\"steer_right\",84.183,1,10]]'\nrm -rf $S/FA; timeout 900 node tools/match04/rings21.mjs $S/FA \"$Q&m04rsoft=1&msaa=4\" \"$SH\" 2>&1 | grep -E \"rror\" | head -3\ntimeout 900 node tools/match04/rings21.mjs $S/FB2 \"$Q\" '[[\"f06_your_cam …[+847 chars]`
+
+### 🧑 User — 2026-11-20T01:36:23.363Z
+
+> ↩︎ result: f06_your_camera final code, switches OFF vs earlier BEFORE: tunnel rows max diff 0
+> f10 final code, switches OFF vs earlier BEFORE: tunnel rows max diff 0
+> started
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T01:36:42.785Z
+
+> 🔧 **Bash** `{"command": "D=/home/user/rainbow-/qa/match/04/r21_rings; S=/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r; mkdir -p $D/frames && cd $D && python3 - <<EOF\nfrom PIL import Image\nS='$S'\nA=Image.open('/home/user/rainbow-/references/04_through_the_five_arrows.png').convert('RGB').resize((864,1536),Image.LANCZOS)\nA.save('1_APPROVED.png')\nImage.open(S+'/FB/f06_your_camera.png').convert('RGB').save('2_BEFORE_f06_your_camera.png')\nImage.open(S+'/FA/f06_your_camera.png').convert('RGB').save('3_AFTER_f06_your_camera.png')\nbox=(0,380,480,860)\nA.crop(box).resiz …[+975 chars]`
+
+### 🧑 User — 2026-11-20T01:36:50.293Z
+
+> ↩︎ result: /home/user/rainbow-/qa/match/04/r21_rings:
+> total 6948
+> drwxr-xr-x 3 root root    4096 Nov 20 01:36 .
+> drwxr-xr-x 6 root root    4096 Nov 20 01:36 ..
+> -rw-r--r-- 1 root root 2173209 Nov 20 01:36 1_APPROVED.png
+> -rw-r--r-- 1 root root 1586386 Nov 20 01:36 2_BEFORE_f06_your_camera.png
+> -rw-r--r-- 1 root root 1544015 Nov 20 01:36 3_AFTER_f06_your_camera.png
+> drwxr-xr-x 2 root root    4096 Nov 20 01:36 frames
+> -rw-r--r-- 1 root root   20436 Nov 20 01:36 r21_rings_vs_70e5595.patch
+> -rw-r--r-- 1 root root    3769 Nov 20 01:36 rings21.mjs
+> -rw-r--r-- 1 root root    2840 Nov 20 01:36 worker_wip_r20_unfinished.patch
+> -rw-r--r-- 1 root root 1020529 Nov 20 01:36 zoom_1_APPROVED_x0-480_y380-860.png
+> -rw-r--r-- 1 root root  382169 Nov 20 01:36 zoom_2_BEFORE_f06_x0-480_y380-860.png
+> -rw-r--r-- 1 root root  353980 Nov 20 01:36 zoom_3_AFTER_f06_x0-480_y380-860.png
+> 
+> /home/user/rainbow-/qa/match/04/r21_rings/frames:
+> total 18684
+> drwxr-xr-x 2 root root    4096 Nov 20 01:36 .
+> drwxr-xr-x 3 root root    4096 Nov 20 01:36 ..
+> -rw-r--r-- 1 root root 1917853 Nov 20 01:36 AFTER_f00_start.png
+> -rw-r--r-- 1 root root 1668706 Nov 20 01:36 AFTER_f03.png
+> -rw-r--r-- 1 root root 1335737 Nov 20 01:36 AFTER_f10.png
+> -rw-r--r-- 1 roo …[+599 chars]
+
+### 🤖 Claude — 2026-11-20T01:36:57.652Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r; mkdir -p $S/finB $S/finA; ln -sf $S/FB/f06_your_camera.png $S/finB/f06.png; ln -sf $S/FA/f06_your_camera.png $S/finA/f06.png; python3 /tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/stats04.py finB finA; tail -1 $S/clipB.log", "description": "Final metrics at your camera"}`
+
+### 🧑 User — 2026-11-20T01:36:58.926Z
+
+> ↩︎ result: APPROVED inner rings   luma p5   81 p25   99 p50  116 p75  147 p95  219 mean  128 | <60 0.46% | violet/pink/blue 14.3% | hard steps 89
+> finB marked area       luma p5   75 p25  102 p50  127 p75  163 p95  230 mean  136 | <60 0.89% | violet/pink/blue 16.1% | hard steps 761
+> finA marked area       luma p5   85 p25   97 p50  120 p75  148 p95  177 mean  125 | <60 0.04% | violet/pink/blue 19.1% | hard steps 112
+> finB whole tunnel      luma p5   69 p25   98 p50  120 p75  153 p95  219 mean  129 | <60 3.17% | violet/pink/blue 27.3% | hard steps 1936
+> finA whole tunnel      luma p5   72 p25   94 p50  115 p75  141 p95  185 mean  121 | <60 2.91% | violet/pink/blue 27.5% | hard steps 295
+> c008 s 81.146 lat 0.041 04 coins 1330
+
+### 🤖 Claude — 2026-11-20T01:37:03.330Z
+
+The clip renders slowly (about 10 s per frame), which would mean roughly 25 minutes for both clips. Let me check the CPU count and run BEFORE and AFTER in parallel if there's room.
+
+### 🤖 Claude — 2026-11-20T01:37:04.879Z
+
+> 🔧 **Bash** `{"command": "nproc; uptime; S=/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r; tail -1 $S/clipB.log", "description": "Check CPU count and load"}`
+
+### 🧑 User — 2026-11-20T01:37:04.951Z
+
+> ↩︎ result: 4
+>  01:37:04 up 37 min,  0 user,  load average: 3.30, 2.34, 1.58
+> c011 s 81.846 lat 0.104 04 coins 1330
+
+### 🤖 Claude — 2026-11-20T01:37:12.499Z
+
+Four cores, already almost fully used, so running both at once wouldn't help. At about 5.5 s per frame the two clips need roughly 13 minutes. Meanwhile I'll write the notes.
+
+### 🤖 Claude — 2026-11-20T01:37:37.052Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/match/04/r21_rings/NOTES.md", "content": "# Screen 04 — tunnel bands: rounded gold rims, narrow shaded grooves, no near-black / jagged edges (r21, 2026-11-20)\n\nUser (2026-11-20 ~00:55 UTC, marked close-ups — approved arrow upper-left of the front ring, game red loop on the left\nwall bands): \"softer, rounded gold rims, narrow shaded grooves, and copper surfaces with pink, violet, and blue\nreflections. Correct the prominent near-black boundaries and visible jagged edges ... Inspect the surface joins and\nshading to identify the cause. Keep the tunnel ar …[+6140 chars]`
+
+### 🧑 User — 2026-11-20T01:37:37.273Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/match/04/r21_rings/NOTES.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T01:37:40.652Z
+
+Now let me confirm the autosave picks up the new working copy's unsaved code.
+
+### 🤖 Claude — 2026-11-20T01:37:42.646Z
+
+> 🔧 **Bash** `{"command": "grep -n \"worktree\" scripts/rainbow-autosave.py | head -8; ls backups/wip | grep c22; python3 -I scripts/autosave-status.py; tail -1 /tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r/clipB.log", "description": "Check worktree snapshotting and autosave status"}`
+
+### 🧑 User — 2026-11-20T01:37:43.419Z
+
+> ↩︎ result: 241:def snapshot_worktrees() -> list[str]:
+> 242:    """User order 2026-11-18: also preserve UNFINISHED specialist work. For every other git worktree of this repo
+> 244:    the worktree's index lock), backups/wip/<branch>/: INFO.json (branch, HEAD, dirty files), tracked.patch
+> 248:    wl = git("worktree", "list", "--porcelain", check=False).stdout
+> 252:        wt = Path(kv.get("worktree", ""))
+> 278:        info = {"worktree": str(wt), "branch": br, "head": kv.get("HEAD", ""), "time": now_utc().isoformat(),
+> 282:                           f" && copy backups/wip/{dest.name}/untracked/* into the worktree"}
+> 316:    wl = git("worktree", "list", "--porcelain", check=False).stdout
+> claude__rainbow-s04-ringtex-c22
+> AUTOSAVE OK | branch ccr-68d26c2d-gwegce | scheduler daemon | last verified backup 2026-11-20T01:33:58+00:00 (3.7 min ago) | local e03a898 remote e03a898 (match) | uncommitted 1
+> c028 s 85.58 lat 1.058 04 coins 1330
+
+### 🤖 Claude — 2026-11-20T01:37:56.534Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md'; s=open(p).read()\nentry=\"\"\"# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 21 (2026-11-20 ~01:40 UTC, session branch `ccr-68d26c2d-gwegce`)\n\nSession opened on the r20 lead `ccr-681a37bb-5jqfbu` @ `413e419` (its later saves `36ce6a5` / `0250392` = bookkeeping only;\nnothing merged). Services verified: GitHub MCP (`get_me`), Hugging Face MCP (`josdois`), World Labs Atlas (`list_projects`\n\"My project\", credits available), Marble key (5,420 credits), Playwright MCP, autosave OK. Context7 plugin needs the user's\nsign-in. User task …[+1071 chars]`
+
+### 🧑 User — 2026-11-20T01:37:56.600Z
+
+> ↩︎ result: # ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 21 (2026-11-20 ~01:40 UTC, session branch `ccr
+> 
+> Session opened on the r20 lead `ccr-681a37bb-5jqfbu` @ `413e419` (its later saves `36ce6a5` / `0250392` = bookkeeping on
+> c034 s 86.746 lat 1.43 04 coins 1330
+
+### 🤖 Claude — 2026-11-20T01:38:01.712Z
+
+The still comparisons are ready, so here they are now. The clip follows when it finishes rendering.
+
+### 🤖 Claude — 2026-11-20T01:38:03.765Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/match/04/r21_rings/1_APPROVED.png", "/home/user/rainbow-/qa/match/04/r21_rings/2_BEFORE_f06_your_camera.png", "/home/user/rainbow-/qa/match/04/r21_rings/3_AFTER_f06_your_camera.png"], "caption": "Screen 04 tunnel: APPROVED | BEFORE (your current picture, same camera) | AFTER (rounded soft-gold rims, narrow shaded grooves, no near-black lines). Full size.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-20T01:38:04.882Z
+
+> ↩︎ result: 3 files delivered to user.
+>   /home/user/rainbow-/qa/match/04/r21_rings/1_APPROVED.png → file_uuid: bc79ba69-e028-4611-9c08-ec1c02df5d1f
+>   /home/user/rainbow-/qa/match/04/r21_rings/2_BEFORE_f06_your_camera.png → file_uuid: 4ac2acea-8396-41e0-b563-39b7f90cef57
+>   /home/user/rainbow-/qa/match/04/r21_rings/3_AFTER_f06_your_camera.png → file_uuid: 4803b07d-d80e-4da8-b7c6-72071a529e37
+
+### 🤖 Claude — 2026-11-20T01:38:05.917Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/match/04/r21_rings/zoom_1_APPROVED_x0-480_y380-860.png", "/home/user/rainbow-/qa/match/04/r21_rings/zoom_2_BEFORE_f06_x0-480_y380-860.png", "/home/user/rainbow-/qa/match/04/r21_rings/zoom_3_AFTER_f06_x0-480_y380-860.png"], "caption": "Your marked area at 2× (left wall bands): APPROVED | BEFORE | AFTER. BEFORE/AFTER are not smoothed, so jagged pixels show as they are.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-20T01:38:06.741Z
+
+> ↩︎ result: 3 files delivered to user.
+>   /home/user/rainbow-/qa/match/04/r21_rings/zoom_1_APPROVED_x0-480_y380-860.png → file_uuid: 4a5bc717-d0ec-41e0-85d4-cdddc26c8b12
+>   /home/user/rainbow-/qa/match/04/r21_rings/zoom_2_BEFORE_f06_x0-480_y380-860.png → file_uuid: d8c71623-4bdb-4caa-a649-91d4f9eb5383
+>   /home/user/rainbow-/qa/match/04/r21_rings/zoom_3_AFTER_f06_x0-480_y380-860.png → file_uuid: 5f51652b-b28b-4636-8585-47e767a1685d
+
+### 🤖 Claude — 2026-11-20T01:38:11.159Z
+
+> 🔧 **ToolSearch** `{"query": "select:Monitor", "max_results": 1}`
+
+### 🧑 User — 2026-11-20T01:38:11.173Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-20T01:38:22.162Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r; until grep -q -E \"CLIPS-DONE|rror\" $S/clipA.log 2>/dev/null; do sleep 5; done; tail -3 $S/clipA.log; ls $S/clipA | wc -l; ls $S/clipB | wc -l", "description": "Wait until both clips finish rendering", "timeout": 2400000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T01:38:22.221Z
+
+> ↩︎ result: Command running in background with ID: b8s359v34. Output is being written to: /tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/tasks/b8s359v34.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-20T01:38:29.181Z
+
+While the clips render, I'll gather the facts for the backup report.
+
+### 🤖 Claude — 2026-11-20T01:38:31.431Z
+
+> 🔧 **Bash** `{"command": "grep -E \"^\\s+(OK|WARN|FAIL)\" backups/.live/bootstrap.log | sed 's/  */ /g' | cut -c1-200; echo; head -12 backups/BOOTSTRAP_REPORT.md | grep -E \"Generated|mode\"; python3 -c \"\nimport json; a=json.load(open('backups/AGENTS_STATUS.json')); ag=a.get('agents',a); print(type(ag).__name__, len(ag) if hasattr(ag,'__len__') else '')\" 2>&1 | head -3; ls .claude/agents/ | wc -l", "description": "Collect bootstrap results and specialist count"}`
+
+### 🧑 User — 2026-11-20T01:38:31.560Z
+
+> ↩︎ result: OK Git LFS binaries (local) 83/83 real files (models, APK, kit ZIP, Marble splats/PLY/colliders/.blend), git lfs fsck OK
+>  OK Git LFS on GitHub 83/83 LFS objects (559 MB, 17 Marble/World Labs) confirmed on GitHub LFS
+>  OK Approved references 13/13 byte-identical (scripts/reference.sha256, incl. the official cartoon-girl reference)
+>  OK Game: 11 screens + code 11 approved screen references 01-11, source tree src/ (46 files), Android project android/, characters assets/models/*.glb
+>  OK Specialist agents 10/10 specialist definitions present; all SHA-256 unchanged; running: _note
+>  OK Marble World Labs assets both worlds complete: 49 files checked, 15 real LFS binaries (splats/PLY/colliders/.blend), 71 files tracked under qa/worldlabs; credits spent 1810 of cap 6250
+>  WARN World Labs integration Marble API key authenticated (free read: 5420 credits); worlds draft 404, full 404; no paid job started; plugin worldlabs@worldlabs installed now; Atlas connector = claude
+>  OK Node.js v22.23.5, npm 10.9.9
+>  OK npm dependencies npm ci done (99 packages; cache ~/.npm reused)
+>  OK Python QA libraries installed: opencv-python-headless scipy; Python 3.13.18; required numpy+Pillow OK; optional cv2+scipy OK
+>  …[+1240 chars]
+
+### 🤖 Claude — 2026-11-20T01:38:37.872Z
+
+> 🔧 **Bash** `{"command": "grep -E \"Claude hooks\" backups/.live/bootstrap.log | sed 's/  */ /g'; grep -rhoE \"queue\\.fal\\.run/[A-Za-z0-9/_.-]+01a1ea70[A-Za-z0-9/_-]*\" docs backups qa tools scripts 2>/dev/null | sort -u | head -3", "description": "Get plugin list and fal status endpoint"}`
+
+### 🧑 User — 2026-11-20T01:38:41.375Z
+
+> ↩︎ result: OK Claude hooks / plugins / MCP hooks: SessionStart PreCompact Stop SessionEnd; Playwright MCP connected; plugins: claude-bridge claude-code-setup claude-md-management code-review code-simplifier commit-commands context7 feature-dev frontend-design playwright security-guidance superpowers typemux-cc typescript-native-lsp worldlabs ; MCP template .mcp.json.template (no secrets)
+> queue.fal.run/fal-ai/flux/requests/01a1ea70-0000-0000-0000-000000000000/status
+> queue.fal.run/fal-ai/flux/requests/01a1ea70-42d8-7943-b035-7bb5f129d872/status
+> queue.fal.run/fal-ai/nano-banana-2/requests/01a1ea70-42d8-7943-b035-7bb5f129d872
+
+### 🤖 Claude — 2026-11-20T01:38:45.894Z
+
+> 🔧 **Bash** `{"command": "curl -s -o /dev/null -w \"fal status read: HTTP %{http_code}\\n\" --max-time 30 https://queue.fal.run/fal-ai/nano-banana-2/requests/01a1ea70-42d8-7943-b035-7bb5f129d872/status; timeout 60 python3 -I scripts/verify-assets.py worldlabs 2>&1 | tail -3", "description": "Free status reads for fal and World Labs key"}`
+
+### 🧑 User — 2026-11-20T01:38:47.453Z
+
+> ↩︎ result: fal status read: HTTP 200
+> @@ warn Marble API key authenticated (free read: 5420 credits); worlds draft 404, full 404; no paid job started
+
+### 🤖 Claude — 2026-11-20T01:38:51.020Z
+
+Both free checks pass: fal answers HTTP 200, and the Marble key authenticates with 5,420 credits. Checking on the clips:
+
+### 🤖 Claude — 2026-11-20T01:38:52.666Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r; tail -1 $S/clipB.log; tail -1 $S/clipA.log 2>/dev/null; ls $S/clipA 2>/dev/null | wc -l", "description": "Check clip rendering progress"}`
+
+### 🧑 User — 2026-11-20T01:38:52.739Z
+
+> ↩︎ result: c058 s 92.113 lat 1.264 04 coins 1330
+> 0
+
+### 🤖 Claude — 2026-11-20T01:38:57.640Z
+
+The BEFORE clip is at frame 58 of 72; the AFTER clip takes about 7 more minutes after that. I'll make the videos as soon as the background task reports done.
+
+### 🤖 Claude — 2026-11-20T01:38:59.791Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpad/r; until grep -q -E \"CLIPS-DONE\" $S/clipA.log 2>/dev/null || grep -q -E \"pageerror|Error\" $S/clipA.log $S/clipB.log 2>/dev/null; do sleep 5; done; tail -2 $S/clipA.log; ls $S/clipA | wc -l", "description": "Wait for AFTER clip to complete", "timeout": 600000}`
+

@@ -19,7 +19,7 @@ index 6a4653f..2a7e591 100644
    // Screen 05 test GL1 (user 2026-11-16: "the glow on the highlights is most of what makes the approved version look so
    // shiny"): `?glow05=1` = a stronger UnrealBloom with a HIGH threshold, so only the bright highlights (streak cores,
 diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
-index 0986940..b304e89 100644
+index 0986940..96fffdd 100644
 --- a/src/world/match04m4.ts
 +++ b/src/world/match04m4.ts
 @@ -183,7 +183,36 @@ float streaks(float ang, float ring) {
@@ -70,7 +70,7 @@ index 0986940..b304e89 100644
          // r19b / r20 m04rnear: the NEAR band seen from inside. While swimming, the band of the ring Benny is in fills the
          // top half of the view and the painted ring (160 texture rows for a whole ring) is magnified ~10x into one broad,
          // smooth orange-copper surface. The painting's nearest gold (the washer rim) is several polished yellow-gold tubes
-@@ -385,14 +416,112 @@ void main() {
+@@ -385,14 +416,119 @@ void main() {
          float Ns = max(1.0, floor(Bk / uRNear.y + 0.5));
          float ls = uL / Ns, lsW = Bk / Ns;                           // sub-band length (ring units / world u)
          float wS = uu / ls, si = floor(wS), xs = wS - si;
@@ -112,15 +112,22 @@ index 0986940..b304e89 100644
 +          float roll = smoothstep(1.0, 1.0 - rimW, xs);               // 1 on the rib, 0 at the groove edge
 +          float win = smoothstep(0.0, 0.10 + 2.0 * fx, xs) * roll;     // per-rib terms vanish at both edges
 +          float xc = 1.0 - 1.15 * rimW;                                // the rounded crest
-+          float crest = exp(-pow((xs - xc) / (0.9 * rimW + fx), 2.0)) * roll;
++          float crest = exp(-pow((xs - xc) / (1.15 * rimW + fx), 2.0)) * roll;
 +          float spot = smoothstep(0.35, 1.15, streaks(ang + rj, sid + 41.0));   // world-anchored hot parts of each rim
 +          float mvS = clamp(dot(-V, uAxD), 0.0, 1.0);
 +          float sheen = exp(-pow((xs - mix(0.45, 0.78, mvS)) / 0.22, 2.0)); // soft sheen sliding as Benny swims
 +          float lipR = step(Ns - 1.5, si);                             // the ring's own rim: a little brighter
 +          float T = mix(0.35, 0.565, pow(ramp, 1.5));                  // near end -> warm body brightening into the rim
 +          T *= 1.0 + 0.14 * (sheen - 0.45) * win;                      // redistributes light, no overall lift
++          // the polished tube mirroring the bright end of the tunnel: a soft highlight from the rib's analytic (rounded)
++          // normal that slides over it as Benny swims — a reflection, kept off the grooves
++          vec3 nA = normalize(-normalize(qr) - 0.2 * uAxD);
++          float th = (xs - 0.5) * 1.5;
++          vec3 RT = reflect(-V, normalize(nA * cos(th) + uAxD * sin(th)));
++          float fz = pow(max(dot(RT, uAxD), 0.0), 6.0);
++          T += 0.11 * fz * win * (0.55 + 0.45 * spot);
 +          T = mix(0.35, T, roll);                                      // rolls over the rim
-+          T = mix(T, 0.64 + 0.05 * lipR + 0.20 * spot, crest);         // rounded soft-gold crest, hot in places
++          T = mix(T, max(T, 0.655 + 0.05 * lipR + 0.20 * spot), crest); // rounded soft-gold crest, hot in places
 +          // the narrow shaded groove at both rib edges: a gaussian pre-filtered by the pixel footprint (box)
 +          float dE = min(xs, 1.0 - xs) * ribW;
 +          float gs = uRSoft.y, gs2 = sqrt(gs * gs + fu * fu / 6.0);
@@ -185,7 +192,7 @@ index 0986940..b304e89 100644
            float lastS = step(Ns - 0.5, si);                          // the last sub-band ends at the modelled lip
            float sid = kI * 7.0 + si;                                 // world-anchored id of this sub-band
            if (uRNear5.w > 0.0) {
-@@ -512,8 +641,9 @@ void main() {
+@@ -512,8 +648,9 @@ void main() {
          // ribs). Mid-tones are pressed down and made a little less yellow (copper-rose), highlights kept bright and golden.
          float lm = dot(pr, vec3(0.30, 0.59, 0.11));
          float hiM = smoothstep(0.45, 0.85, lm);
@@ -197,7 +204,7 @@ index 0986940..b304e89 100644
        }
        if (uRCr.x > 0.0) {
          // r18 m04rpcr: the painted thin bright lip line and thin dark groove line drawn CRISP at their modeled places
-@@ -526,8 +656,9 @@ void main() {
+@@ -526,8 +663,9 @@ void main() {
          float cB = clamp((uRCr.y + 0.5 * fu - dB) / fu, 0.0, 1.0) * min(1.0, 2.0 * uRCr.y / fu);
          float cD = clamp((uRCr.z + 0.5 * fu - dD) / fu, 0.0, 1.0) * min(1.0, 2.0 * uRCr.z / fu);
          float cC = clamp((uRCr.w + 0.5 * fu - dC) / fu, 0.0, 1.0) * min(1.0, 2.0 * uRCr.w / fu);
@@ -209,7 +216,7 @@ index 0986940..b304e89 100644
        }
        if (uRDots.x > 0.0) {
          // r16 m04rpdots: the painted light dots on every ring lip (yellow-white core, orange glow, irregular spacing,
-@@ -545,8 +676,15 @@ void main() {
+@@ -545,8 +683,15 @@ void main() {
          float ea = max(bs * 1.5, 0.9 * fa), eu = max(bs, 0.9 * fu);         // painted dots: a little longer along the lip
          float on = step(1.0 - uRDots.z, h21(vec2(ci, ri + 11.0))) * uRDots.x * min(1.0, 1.5 * bs * bs / (ea * eu) + 0.35);
          float d = length(vec2(arc / ea, du / eu));                            // 1 = edge of the bright core
@@ -225,7 +232,7 @@ index 0986940..b304e89 100644
        }
        // the painted colour replaces the procedural ramp, its streaks, star glints, lip bulbs and pink-violet tint
        col = mix(col, pr, uRPaint);
-@@ -583,6 +721,14 @@ void main() {
+@@ -583,6 +728,14 @@ void main() {
      if (uv.x >= 0.0 && uv.x <= 1.0 && uv.y >= 0.0 && uv.y <= 1.0) col = mix(texture2D(uPlate, uv).rgb, col, uAway);
    }
    gl_FragColor = vec4(pjInverse(col), 1.0);
@@ -240,18 +247,18 @@ index 0986940..b304e89 100644
  }`;
  
  /** `m04river`: the wide painted river inside the tunnel — a curved trough (flat lane, sides rising to the walls) carrying
-@@ -1140,6 +1286,10 @@ export function addM04(ctx: M04Ctx) {
+@@ -1140,6 +1293,10 @@ export function addM04(ctx: M04Ctx) {
          uRNear2: { value: new THREE.Vector4(M04.num('m04rnt', 0.8), M04.num('m04rnl', 1), M04.num('m04rng', 1), M04.num('m04rnr', 0.35)) },
          uRNear3: { value: new THREE.Vector4(M04.num('m04rnd', 1), M04.num('m04rnh', 1), M04.num('m04rfew', 0) > 0 ? M04.num('m04rfg', 1) : 1, 0.56 * M04.num('m04ringgw', 1)) },
                  uRNear4: { value: new THREE.Vector4(M04.num('m04rnbn', 28), M04.num('m04rnbf', 0.75), M04.num('m04rnhp', 4), M04.num('m04rnbz', 0.08)) },
 +        uDbg: { value: M04.num('m04dbg', 0) },
 +        // r21 `m04rsoft=1` (needs m04rnear): rounded soft-gold rims, narrow shaded grooves, luminance-preserving reflections
 +        uRSoftT: { value: 1e9 },
-+        uRSoft: { value: new THREE.Vector4(M04.num('m04rsoft', 0), M04.num('m04rsg', 0.035), M04.num('m04rsr', 0.09), M04.num('m04rsh', 0.45)) },
++        uRSoft: { value: new THREE.Vector4(M04.num('m04rsoft', 0), M04.num('m04rsg', 0.035), M04.num('m04rsr', 0.12), M04.num('m04rsh', 0.45)) },
          uRMat: { value: new THREE.Vector4(M04.num('m04rmat', 0), M04.num('m04rmd', 0.22), M04.num('m04rmy', 0.15), 0) },
          uRNear6: { value: new THREE.Vector4(M04.num('m04rnlc', 0.35), M04.num('m04rnxp', 1.6), M04.num('m04rnf', 0), M04.num('m04rnfs', 0.6)) },
          uRNear5: { value: new THREE.Vector4(M04.num('m04rnhf', 0.22), M04.num('m04rny', 0.3), M04.num('m04rno', 0.04), M04.num('m04rntex', 0)) },
-@@ -1216,7 +1366,7 @@ export function addM04(ctx: M04Ctx) {
+@@ -1216,7 +1373,7 @@ export function addM04(ctx: M04Ctx) {
        let A = 0, s0 = 1, Pc = P, tP = 0;
        for (let k = 0; k < 400 && s0 >= sMin; k++) {
          const tele = A >= aT - 1e-6;
