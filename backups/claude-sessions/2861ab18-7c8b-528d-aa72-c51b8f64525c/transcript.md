@@ -4371,3 +4371,18 @@ Stop hook feedback:
 > AUTOSAVE OK | branch ccr-2644c3c0-iikckn | scheduler daemon | last verified backup 2026-11-20T22:08:41+00:00 (0.5 min ago) | local 24a5f6d remote 24a5f6d (match) | uncommitted 0
 > untracked now: 0
 
+### 🤖 Claude — 2026-11-20T22:09:53.019Z
+
+> 🔧 **Bash** `{"command": "cp /root/.claude/uploads/2861ab18-7c8b-528d-aa72-c51b8f64525c/f10c0eda-image.jpg docs/briefs/2026-11-20-r30/USER_S06_FOUR_VIEWS_TARGET_R30.jpg && echo \"lead branch: $(git branch --show-current) @ $(git rev-parse HEAD)\"; echo \"GitHub:      $(git ls-remote origin refs/heads/$(git branch --show-current))\"; echo \"candidate s06 worktree: $(git -C /home/user/wt/s06 branch --show-current) base $(git -C /home/user/wt/s06 rev-parse HEAD) + uncommitted edits (snapshot backups/wip/claude__rainbow-s06-match-c31, $(python3 -c \"import json;print(json.load(open('backups/wip/claude__rainbow …[+162 chars]`
+
+### 🧑 User — 2026-11-20T22:09:53.556Z
+
+> ↩︎ result: lead branch: ccr-2644c3c0-iikckn @ 1f7978c8ae3758baac15624f47181b693260b5af
+> GitHub:      1f7978c8ae3758baac15624f47181b693260b5af	refs/heads/ccr-2644c3c0-iikckn
+> candidate s06 worktree: claude/rainbow-s06-match-c31 base e162aec2bfdc631913c41daa435f9d449439af4f + uncommitted edits (snapshot backups/wip/claude__rainbow-s06-match-c31, 2026-11-20T22:09:33+00:00)
+>  8 files changed, 650 insertions(+), 43 deletions(-)
+
+### 🤖 Claude — 2026-11-20T22:10:23.320Z
+
+> 🔧 **Bash** `{"command": "mkdir -p backups/checkpoints/r30_s06_v2 && cp -r backups/wip/claude__rainbow-s06-match-c31/. backups/checkpoints/r30_s06_v2/ && cp qa/match/06/r30/QUERY_NEW_v2.txt qa/match/06/r30/QUERY_NEW_v1.txt backups/checkpoints/r30_s06_v2/ && cat > backups/checkpoints/r30_s06_v2/README.md <<'EOF'\n# Frozen checkpoint — Screen 06 candidate v2 (round 30, 2026-11-20 22:09 UTC), before the user's \"four approved views\" brief\nBase commit e162aec2bfdc631913c41daa435f9d449439af4f (on GitHub, branch claude/rainbow-s06-match-c23 history) + `tracked.patch` + `untracked/`.\nRestore: `git worktree add …[+9933 chars]`
+

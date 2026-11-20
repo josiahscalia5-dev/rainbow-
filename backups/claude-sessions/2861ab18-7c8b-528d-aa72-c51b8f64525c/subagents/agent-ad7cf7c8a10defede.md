@@ -665,3 +665,27 @@ Slots are free; I'll start the full-size BEFORE (v2) render now while I study th
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-20T22:10:23.843Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/scen06 && grep -n \"const flag05\\|function flag05\\|flag05 =\" src -r | head -3; sed -n 60,75p src/game/Game.ts; git diff --stat; grep -n \"e30\\|E30\" src -r | head", "description": "Check flag helper and existing e30 usage"}`
+
+### 🧑 User — 2026-11-20T22:10:24.032Z
+
+> ↩︎ result: src/vfx/waterRibbon.ts:167:export const flag05 = q05;
+>   scene.add(fill);
+> 
+>   const camera = new THREE.PerspectiveCamera(66, 9 / 16, 0.05, 1200);
+>   const composer = new EffectComposer(renderer);
+>   composer.addPass(new RenderPass(scene, camera));
+>   // Screen 05 test GL1 (user 2026-11-16: "the glow on the highlights is most of what makes the approved version look so
+>   // shiny"): `?glow05=1` = a stronger UnrealBloom with a HIGH threshold, so only the bright highlights (streak cores,
+>   // flares, lamps) glow. Tuning without a rebuild: ?bloomS= (strength) ?bloomR= (radius) ?bloomT= (threshold, linear
+>   // HDR luminance). Switch off: 0.2 / 0.35 / 0.94 exactly as before (pixel-identical default build).
+>   const glow05 = flag05('glow05');
+>   const M06_BUB = flag05('m06bub');
+>   const M06_CURL = flag05('m06deep') && flag05('m06curl'); // r30 lead, qa/match/06/r30/
+>   // r26 `&m06spl=1` (qa/match/06/r25/PROGRESS.md r26): on Screen 06 Benny's contact = a short, low lace collar (the approved picture's
+>   // shallow rounded contact ripple) instead of the long white V streak fans of ref 05; the ballistic spray dots stay hidden there
+>   const M06_SPL = flag05('m06spl');
+>   let m06SplRest: { len: number;  …[+465 chars]
+
