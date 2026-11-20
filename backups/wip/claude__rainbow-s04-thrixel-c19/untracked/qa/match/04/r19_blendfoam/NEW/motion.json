@@ -1,0 +1,52 @@
+[
+ {
+  "name": "f01_forward1u",
+  "dist": 1,
+  "steer": null,
+  "frames": 5,
+  "s": 79.285,
+  "lat": 0,
+  "stage": "04",
+  "coins": 1330
+ },
+ {
+  "name": "f02_forward2u",
+  "dist": 2,
+  "steer": null,
+  "frames": 9,
+  "s": 80.216,
+  "lat": 0,
+  "stage": "04",
+  "coins": 1330
+ },
+ {
+  "name": "f03_forward3u",
+  "dist": 3,
+  "steer": null,
+  "frames": 13,
+  "s": 81.149,
+  "lat": 0,
+  "stage": "04",
+  "coins": 1330
+ },
+ {
+  "name": "f05_forward5u",
+  "dist": 5,
+  "steer": null,
+  "frames": 22,
+  "s": 83.249,
+  "lat": 0,
+  "stage": "04",
+  "coins": 1330
+ },
+ {
+  "name": "s3_right_steer",
+  "dist": 3,
+  "steer": 1,
+  "frames": 13,
+  "s": 81.149,
+  "lat": 0.753,
+  "stage": "04",
+  "coins": 1330
+ }
+]

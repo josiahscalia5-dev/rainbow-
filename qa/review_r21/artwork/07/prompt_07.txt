@@ -1,0 +1,12 @@
+IMAGE 1 is a frame from a 3D mobile game. Its camera is further down the washer tube of the scene shown in IMAGE 2. IMAGE 2 is the art director's approved original illustration (the final design of this level).
+
+Repaint IMAGE 1 as a finished illustration in exactly the art style, materials, colours and lighting of IMAGE 2, so it looks like the same painting seen from deeper inside the tube:
+- a deep violet-purple washer drum tube with neat rows of rounded slots (perforations) in the purple metal, crisp and evenly spaced;
+- many polished gold rings around the tube, bright gold with warm amber light dots on the rims, glowing towards the far end;
+- curved gold paddles on the left wall like in IMAGE 2;
+- a winding, glossy cyan river with crisp white highlight streaks, flanked by thick glossy hot-pink / magenta banks, the river plunging away down the tube;
+- puffy white-lilac soap-foam clouds along the water edges (soft rounded clouds, never tall columns or flat sheets);
+- a few iridescent soap bubbles in the air;
+- a warm glowing light deep at the end of the tube.
+
+STRICT: keep the exact camera, perspective, composition and geometry of IMAGE 1 — the tube, every ring, the river path and the drop stay at the same positions and sizes. Same painterly quality and detail level as IMAGE 2 (crisp, glossy, saturated, premium). Do not add any character, mascot, hat, coins, text, HUD or user interface. Output only the repainted scene.

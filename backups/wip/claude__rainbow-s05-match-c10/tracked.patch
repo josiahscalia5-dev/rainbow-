@@ -1,0 +1,135 @@
+diff --git a/src/vfx/foam.ts b/src/vfx/foam.ts
+index e0969b24..66bb09b4 100644
+--- a/src/vfx/foam.ts
++++ b/src/vfx/foam.ts
+@@ -14,8 +14,10 @@
+  */
+ import * as THREE from 'three';
+ import { type Course, WORLD, funnelY } from '../world/course';
+-import { EDGE_LIFT, coreLateral, PROJ05, flag05, M05FOAM, M05BERM, M05FLAT, M05CLOUD, m05foamK } from './waterRibbon';
+-import { flat05Dy } from './unfold05';
++import { EDGE_LIFT, coreLateral, PROJ05, flag05, M05FOAM, M05BERM, M05FLAT, M05CLOUD, M05UNF, m05foamK } from './waterRibbon';
++import { flat05Dy, unfoldAt05 } from './unfold05';
++/** m05unf scratch */
++const uo = { x: 0, z: 0 };
+ import { withClip05 } from './clip05';
+ import { SPIRAL_C, FUNNEL_LIFT } from './whirlpool';
+ import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, withFog } from './glsl';
+@@ -586,6 +588,7 @@ function createBerm(course: Course, s0: number, s1: number, skip: [number, numbe
+         const eS = e > 0 ? e * (0.1 + 0.9 * k05) : e;
+         tmp.copy(f.pos).addScaledVector(f.right, side * (hw + eS)).addScaledVector(f.up, h);
+         if (M05FLAT) tmp.y += flat05Dy(course, s, side * (hw + eS));   // m05flat (Screen 05 round 10): levelled kink
++        if (M05UNF) { unfoldAt05(course, s, side * (hw + eS), uo); tmp.x += uo.x; tmp.z += uo.z; }   // m05unf: no fold
+         tmp.toArray(pos, k * 3);
+         foam[k * 3] = e;
+         foam[k * 3 + 1] = s;
+@@ -713,6 +716,7 @@ export function createFoam(
+     const eS = e > 0 ? e * (0.1 + 0.9 * k05) : e;
+     const p = f.pos.clone().addScaledVector(f.right, side * (hw + eS)).addScaledVector(f.up, h);
+     if (M05FLAT) p.y += flat05Dy(course, ss, side * (hw + eS));   // m05flat (Screen 05 round 10): levelled kink
++    if (M05UNF) { unfoldAt05(course, ss, side * (hw + eS), uo); p.x += uo.x; p.z += uo.z; }   // m05unf: no fold
+     return p;
+   };
+   const addPuff = (list: Puff[], s: number, e: number, side: number, r: number, lift: number, ao: number) => {
+diff --git a/src/vfx/unfold05.ts b/src/vfx/unfold05.ts
+index 0b8f06ea..a92172d3 100644
+--- a/src/vfx/unfold05.ts
++++ b/src/vfx/unfold05.ts
+@@ -101,3 +101,58 @@ export function flat05Up(course: Course, s: number, lat: number): number {
+   const x = (s - t.a) / t.ds, i = Math.min(t.uy.length - 2, Math.floor(x)), w = x - i;
+   return dy / Math.max(0.5, t.uy[i] * (1 - w) + t.uy[i + 1] * w);
+ }
++
++/**
++ * `&m05unf=1` (waterRibbon.ts M05UNF): the same unfolding as unfoldDelta05 for ANY point at (s, lateral) of the 05 river
++ * frame (lateral fixed, |lateral| ≥ half width → full width): horizontal displacement (x, z) of the point that removes
++ * the crossing rows at the kink. Used for the lather bank's vertices and the rim foam (the ribbon uses unfoldDelta05 on
++ * its own rows, which gives the same result at its row spacing).
++ */
++let tightTab: { s0: number; ds: number; sig: Float32Array } | null = null;
++function tightInit(course: Course) {
++  if (tightTab) return tightTab;
++  const st = course.stage('05');
++  const s0 = st.s0 - 6, s1 = st.s1 + 8, ds = 0.2;
++  const n = Math.ceil((s1 - s0) / ds) + 1;
++  const tight = new Float32Array(n);
++  for (let i = 0; i < n; i++) {
++    const s = s0 + i * ds;
++    if (s < st.s0 - 2 || s > st.s1 + 4) continue;
++    const a = course.sample(Math.max(0, s - 0.4)), b = course.sample(s + 0.4);
++    const t = (course.widthAt(s) / 2) * (Math.acos(Math.min(1, a.tan.dot(b.tan))) / 0.8);
++    const x = Math.min(1, Math.max(0, (t - 0.45) / (0.8 - 0.45)));
++    tight[i] = x * x * (3 - 2 * x);
++  }
++  const K4 = Math.ceil(4 / ds), sig = new Float32Array(n);
++  for (let i = 0; i < n; i++) {
++    let m = 0;
++    for (let k = -K4; k <= K4; k++) { const j = i + k; if (j >= 0 && j < n) m = Math.max(m, tight[j] * (1 - Math.abs(k) / (K4 + 1))); }
++    sig[i] = SIG * m;
++  }
++  tightTab = { s0, ds, sig };
++  return tightTab;
++}
++export function unfoldAt05(course: Course, s: number, lat: number, out: { x: number; z: number }): { x: number; z: number } {
++  out.x = 0; out.z = 0;
++  const t = tightInit(course);
++  const i = Math.round((s - t.s0) / t.ds);
++  if (i < 0 || i >= t.sig.length) return out;
++  const hw = course.widthAt(s) / 2;
++  const l = Math.min(1, Math.abs(lat) / Math.max(1e-3, hw));
++  const sg = t.sig[i] * l * l * l;
++  if (sg < 0.02) return out;
++  const p0 = course.sample(s); const x0 = p0.pos.x + p0.right.x * lat, z0 = p0.pos.z + p0.right.z * lat;
++  const step = Math.min(0.2, sg / 3);
++  const K = Math.ceil((3 * sg) / step);
++  let ax = 0, az = 0, w = 0;
++  for (let k = -K; k <= K; k++) {
++    const ss = s + k * step;
++    const f = course.sample(ss);
++    const hwk = course.widthAt(ss) / 2;
++    const lk = Math.sign(lat) * Math.max(Math.abs(lat), 0) * (hwk / Math.max(1e-3, hw));   // same place across the river
++    const ww = Math.exp(-0.5 * ((k * step) / sg) ** 2);
++    ax += (f.pos.x + f.right.x * lk) * ww; az += (f.pos.z + f.right.z * lk) * ww; w += ww;
++  }
++  out.x = ax / w - x0; out.z = az / w - z0;
++  return out;
++}
+diff --git a/src/vfx/waterRibbon.ts b/src/vfx/waterRibbon.ts
+index 99f615e9..94ac7461 100644
+--- a/src/vfx/waterRibbon.ts
++++ b/src/vfx/waterRibbon.ts
+@@ -376,6 +376,12 @@ export const M05FOAM: boolean = M05RIDE && q05('m05foam');
+ export const M05BERM: boolean = M05RIDE && q05('m05berm');
+ /** `&m05cloud=1` (Screen 05 round 10, needs m05foam; src/vfx/foam.ts): big puffy foam clouds on both 05 banks while swimming */
+ export const M05CLOUD: boolean = M05FOAM && q05('m05cloud');
++/**
++ * `&m05unf=1` (Screen 05 round 10, needs m05flat; src/vfx/unfold05.ts): inside the levelled kink the water, the lather
++ * bank and the rim foam no longer fold over themselves on the inner side of each bend (they stood up as white columns /
++ * a cut face): their points are smoothed along the river toward the banks (horizontal only).
++ */
++export const M05UNF: boolean = M05FLAT && q05('m05unf');
+ /** ride factor for m05foam / m05berm: 0 at the locked 05 checkpoint, 1 after 2 u of riding (set by vfx/index.ts) */
+ export const m05foamK = { value: 0 };
+ /** m05blend: the ribbon's own clock uniform (the far river's first rows follow the ribbon's vertex wave at the seam) */
+@@ -1896,7 +1902,7 @@ export function createRibbon(course: Course, opts: { s0: number; s1: number; qua
+       rowS.push(Math.min(s1, s0 + i * ds));
+       for (let c = 0; c < vertsPerRow; c++) latN[i * vertsPerRow + c] = Math.abs(uv[(i * vertsPerRow + c) * 2]);
+     }
+-    const unf = M05FOLD ? unfoldDelta05(course, pos, rowS, vertsPerRow, latN) : new Float32Array(n * 3);
++    const unf = M05FOLD || M05UNF ? unfoldDelta05(course, pos, rowS, vertsPerRow, latN) : new Float32Array(n * 3);
+     if (M05FLAT) {
+       // m05flat: remove the bank tilt (world height of right · lateral) inside the kink window (unfold05.ts flat05Dy)
+       for (let i = 0; i < rows; i++) {
+diff --git a/tools/match05/r10_probe.mjs b/tools/match05/r10_probe.mjs
+index 1aa1085e..0d926a84 100644
+--- a/tools/match05/r10_probe.mjs
++++ b/tools/match05/r10_probe.mjs
+@@ -18,6 +18,8 @@ const ALL = {
+   s_left_steer: [6, -1], s_right_steer: [6, 1], s_left_hard: [12, -1], s_right_hard: [12, 1],
+   t33_through_screen: ['t0.33', null], t66_through_screen: ['t0.66', null], t95_through_screen: ['t0.95', null],
+   // round 10: inside the 05 -> 06 kink (s ≈ 178), straight and steered to both banks
++  t97_end: ['t0.97', null], t99_end: ['t0.99', null], t102_06: ['t1.02', null], t105_06: ['t1.05', null],
++  t88_end: ['t0.88', null], t90_end: ['t0.90', null], t92_end: ['t0.92', null], t94_end: ['t0.94', null],
+   k81_kink: ['t0.81', null], k81_kink_left: ['t0.81', -1], k81_kink_right: ['t0.81', 1],
+ };
+ // render slot (same protocol as scripts/lib/pw.mjs): one browser render at a time on the shared CPU

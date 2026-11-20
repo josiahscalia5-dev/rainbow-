@@ -1,0 +1,93 @@
+--- a/src/world/match04m4.ts (r22 K22-2 code)
++++ b/src/world/match04m4.ts (r23 s04 step 1)
+@@ -2299,6 +2299,56 @@
+     console.info('[match04] m04arr3d', { arrows: arrowsOut.length / 2, sp, tilt: M04.num('m04a3k', 38) });
+   }
+ 
++  // r23 `&m04wl=1`: Benny sits IN the water like the painting (r23 brief task 1: "not perched on top"; his round bottom only
++  // touched the river). A soft water patch round him in the lane frame (follows him, also when he steers) a little ABOVE the
++  // river: depth-tested, so it covers exactly the part of his body below its waterline (like real water), with a neat broken
++  // white foam ring where it meets him, fading into the river at its rim. Benny himself is not moved or scaled.
++  // m04wly waterline (lane y; river = 0.02, his bottom = -0.08), m04wlr foam-ring radius, m04wlo / m04wle radius where the
++  // patch starts fading / is gone, m04wlz stretch along the flow, m04wla patch opacity, m04wlf foam strength.
++  let wlMesh: THREE.Mesh | null = null;
++  if (M04.num('m04wl', 0) > 0) {
++    const E = M04.num('m04wle', 2.0), Z = M04.num('m04wlz', 1.2);
++    const geo = new THREE.CircleGeometry(E, 96).rotateX(-Math.PI / 2);
++    geo.scale(1, 1, Z);
++    wlMesh = new THREE.Mesh(geo, new THREE.ShaderMaterial({
++      transparent: true, depthWrite: false, side: THREE.DoubleSide, fog: false,
++      uniforms: { uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uTime: time, uK: { value: 0 },
++        uR: { value: new THREE.Vector4(M04.num('m04wlr', 0.7), M04.num('m04wlo', 1.35), E, Z) },
++        uA: { value: M04.num('m04wla', 0.92) }, uF: { value: M04.num('m04wlf', 1.0) } },
++      vertexShader: /* glsl */ `
++varying vec2 vP;
++void main() { vP = position.xz; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
++      fragmentShader: /* glsl */ `
++uniform vec4 uPjPost; uniform vec2 uPjRes; uniform float uTime, uK, uA, uF; uniform vec4 uR;
++varying vec2 vP;
++${PROJ05_INVERSE}
++float h21(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
++float vn(vec2 p) { vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f);
++  return mix(mix(h21(i), h21(i + vec2(1, 0)), f.x), mix(h21(i + vec2(0, 1)), h21(i + vec2(1, 1)), f.x), f.y); }
++void main() {
++  float r = length(vec2(vP.x, vP.y / uR.w));                     // patch fade: narrow sideways, long toward the camera
++  float rr = length(vP), a = atan(vP.x, vP.y), t = uTime;       // foam ring: round on his body
++  // water: electric cyan, long white streaks drifting past him (flow = -z), darker deep blue further out
++  float st = smoothstep(0.58, 0.95, vn(vec2(vP.x * 2.2, vP.y * 0.55 + t * 1.3))) * smoothstep(0.3, 0.9, vn(vec2(vP.x * 5.0 + 7.0, vP.y * 0.9 + t * 1.3)));
++  vec3 water = mix(vec3(0.08, 0.72, 1.0), vec3(0.05, 0.58, 1.0), smoothstep(0.8, 1.8, rr));
++  water = mix(water, vec3(0.80, 0.97, 1.0), 0.75 * st);
++  // foam ring hugging his body at the waterline: broken lace + small spray dots just outside it
++  float n = vn(vec2(a * 7.0, t * 1.5)) * 0.6 + vn(vec2(a * 19.0 + 2.0, t * 2.7)) * 0.4;
++  float ring = exp(-pow((rr - uR.x - 0.10 * (n - 0.5)) / (0.05 + 0.05 * n), 2.0));
++  float lace = smoothstep(0.45, 0.75, vn(vec2(a * 31.0, rr * 9.0 - t * 2.0)));
++  float spray = step(0.86, vn(vec2(a * 48.0, rr * 22.0 - t * 3.0))) * smoothstep(uR.x + 0.35, uR.x + 0.05, rr) * step(uR.x, rr);
++  float foam = clamp((ring * (0.55 + 0.45 * lace) + spray * 0.7) * uF, 0.0, 1.0);
++  vec3 col = mix(water, vec3(0.97, 0.99, 1.0), foam);
++  float alpha = max(uA * (1.0 - smoothstep(uR.y, uR.z, r)), foam);
++  alpha *= uK;
++  if (alpha < 0.01) discard;
++  gl_FragColor = vec4(pjInverse(col), alpha);
++}`,
++    }));
++    wlMesh.name = 'm04_waterline'; wlMesh.renderOrder = 5; wlMesh.frustumCulled = false; wlMesh.visible = false;
++    group.add(wlMesh);
++  }
++
+   out.update = (cam: THREE.Vector3, benny?: THREE.Vector3, camera?: THREE.Camera) => {
+     time.value = performance.now() / 1000;
+     a5b.z = -cam.clone().applyMatrix4(MwInv).z;   // camera position down the slide (local along)
+@@ -2307,6 +2357,11 @@
+     away.value = THREE.MathUtils.smoothstep(cam.distanceTo(proj.position), fade, fade1);
+     const a2 = THREE.MathUtils.smoothstep(cam.distanceTo(proj.position), 0.4, 1.6);
+     for (const u of updaters) u(a2);
++    if (wlMesh) {                                                       // r23 m04wl: gone at the approved start view (0 px there)
++      const wu = (wlMesh.material as THREE.ShaderMaterial).uniforms;
++      wu.uK.value = a2; wlMesh.visible = !!benny && a2 > 0.01;
++      if (benny) { const bl = benny.clone().applyMatrix4(MwInv); wlMesh.position.set(bl.x, M04.num('m04wly', 0.32), bl.z); }
++    }
+     if (arrowsOut.length) {
+       const cz = -a5b.z;                                                // camera local z (forward = -z)
+       // r13: fade window ahead of the camera (Benny swims ≈ 6.4 u ahead of it on 04: m04a3n0/n1 ≈ 6.5/8.5 makes every
+@@ -2327,6 +2382,10 @@
+         scW = Math.abs(scQ.copy(benny).addScaledVector(scR, M04.num('m04a3sr', 1.0)).project(camera).x - scQ.copy(benny).project(camera).x);
+       }
+       const s0 = M04.num('m04a3s0', 0.0), s1 = M04.num('m04a3s1', 0.05), sx = M04.num('m04a3sx', 0.05);
++      // r23 `&m04a3fl=D0`: chevrons farther than D0 u from the camera lean flatter (rise x D0/d), so the five read like the
++      // painted arrows lying ON the water ahead of Benny — their on-screen height shrinks with distance like the lane gaps
++      // between them (upright bars stacked into a ladder near the far end otherwise). Bar ends stay at the same water height.
++      const a3fl = M04.num('m04a3fl', 0);
+       for (let i = 0; i < arrowsOut.length; i += 2) {
+         const d = cz - arrowsOut[i].za;                                 // distance ahead of the camera
+         // r13 `&m04a3b=1`: the near fade is measured from BENNY (m04a3b0/b1 u ahead of him), so no chevron ever sits round
+@@ -2343,6 +2402,10 @@
+           const side = THREE.MathUtils.smoothstep(ov, -sx, 0);           // 1 = overlapping him sideways
+           k *= 1 - side * (1 - THREE.MathUtils.smoothstep(gapY, s0, s1));
+         }
++        if (a3fl > 0) {
++          const sc = Math.min(1, a3fl / Math.max(d, 0.5)), y0 = arrowsOut[i].y ?? 0.05;
++          for (const o of [arrowsOut[i].mesh, arrowsOut[i + 1].mesh]) { o.scale.y = sc; o.position.y = y0 * (1 - sc); }
++        }
+         const [core, glow] = arrowsOut[i].mats;
+         core.opacity = M04.num('m04a3co', 0.95) * k; glow.opacity = go * k;
+         arrowsOut[i].mesh.visible = arrowsOut[i + 1].mesh.visible = k > 0.01;

@@ -1,0 +1,26 @@
+{
+ "GAME": {
+  "file": "qa/pilot05/wave6/proof/3_threejs_gameplay.png",
+  "mad": 59.0,
+  "hue_corr": 0.809,
+  "edge_corr": 0.119,
+  "bands": {
+   "hud": 54.3,
+   "tunnel+VP": 62.3,
+   "river mid": 53.0,
+   "Benny+near water": 63.8
+  }
+ },
+ "BLENDER": {
+  "file": "qa/pilot05/wave6/proof/2_blender_layout.png",
+  "mad": 73.3,
+  "hue_corr": 0.199,
+  "edge_corr": -0.006,
+  "bands": {
+   "hud": 74.0,
+   "tunnel+VP": 66.7,
+   "river mid": 63.4,
+   "Benny+near water": 85.2
+  }
+ }
+}

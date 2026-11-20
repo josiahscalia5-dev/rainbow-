@@ -1,0 +1,83 @@
+diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
+index 094fb25a..a8fe4802 100644
+--- a/src/world/match04m4.ts
++++ b/src/world/match04m4.ts
+@@ -313,6 +313,10 @@ uniform vec4 uSB0;           // x strength, y inner |arc| where the bands start,
+ uniform vec4 uSB1;           // x blend width at the inner side, y re-apply the lilac-white edge fringe (0/1), z tile part used
+                              // (1 = cyan..lilac, less = start nearer the pink ribbon), w slow lateral wander of the bands (u)
+ uniform vec2 uSB2;           // far ahead of the camera (x -> y u) the bands smooth into long unbroken stripes (no repeat ribs)
++uniform vec4 uNB;            // r17 m04nband: x on, y Benny along (local), z Benny lateral, w inner arc hugging Benny (u)
++uniform vec4 uNB2;           // r17 m04nband: x bands back at the normal inner arc this far ahead of Benny (u), y widening behind Benny (b * d^2; < 0 = straight |b| per u)
++                             // behind Benny, z extra pinch at Benny's sides (u), w lateral follow of Benny (0..1)
++uniform vec2 uNB3;           // r17 m04nband: x width of one cyan -> pink half stripe near Benny (u; 0 = one stretched band), y tile span
+ uniform vec4 uA5;            // m04arr5: x on, y spacing, z first apex (along), w bar thickness along the flow
+ uniform vec4 uA5b;           // m04arr5: x half width, y arm slope (along per lateral), z camera along, w visible depth
+ uniform vec2 uA5n;           // r10 m04arr5: near fade-in distance (start, full) ahead of the camera; default 6.5, 9.0
+@@ -422,9 +426,19 @@ void main() {
+     // r15 m04sband: the side water carries the PAINTED swirl bands (cyan streaks by the lane -> violet -> hot-pink satin
+     // ribbon -> lilac sparkle at the wall), cut from references/04 (tools/match04/sideband04.py), by arc length across the
+     // trough and world position along it (flowing with the current), two offset samples blended like the river tile
+-    float as = abs(vS);
++    float inner = uSB0.y, sv = vS;
++    if (uNB.x > 0.5) {
++      // r17 m04nband: the painted bands sweep in close round Benny (inner edge hugging him at his position and behind
++      // him toward the camera) and curve back out to the normal lane width ahead of him (arrow lane stays cyan); the band
++      // pixels stay world-anchored and flowing, only where they start follows Benny down the slide
++      float d = along - uNB.y;
++      sv = vS - uNB.z * uNB2.w;
++      float db = max(-d, 0.0), hug = uNB.w + uNB2.y * (uNB2.y < 0.0 ? -db : db * db) - uNB2.z * exp(-d * d / 1.2);  // < 0: straight widening
++      inner = mix(min(hug, uSB0.y), uSB0.y, smoothstep(0.15 * uNB2.x, uNB2.x, d));
++    }
++    float as = abs(sv);
+     float wan = uSB1.w * (vn(vec2(along * 0.11, sign(vS) * 5.0 + 2.0)) - 0.5) * 2.0;
+-    float tb = clamp((as + wan - uSB0.y) / max(0.1, uSB0.z - uSB0.y), 0.0, 1.0);
++    float tb = clamp((as + wan - inner) / max(0.1, uSB0.z - inner), 0.0, 1.0);
+     float vb = fl / uSB0.w + (vS < 0.0 ? 0.0 : 0.43);
+     float ub = (1.0 - tb) * uSB1.z;
+     vec3 bc = mix(texture2D(uSB, vec2(ub, vb)).rgb, texture2D(uSB, vec2(ub, vb * 0.81 + 0.29)).rgb, w);
+@@ -434,7 +448,16 @@ void main() {
+       for (int i = 0; i < 6; i++) sm += texture2D(uSB, vec2(ub, vb + float(i) * 0.167), 1.0).rgb;
+       bc = mix(bc, sm / 6.0, kd);
+     }
+-    col = mix(col, bc, uSB0.x * smoothstep(uSB0.y - uSB1.x, uSB0.y + 0.25 * uSB1.x, as));
++    if (uNB.x > 0.5 && uNB3.x > 0.0) {
++      // r17 m04nband: near Benny the painted strip is walked back and forth (cyan -> hot pink -> cyan -> ...), so several
++      // alternating painted pink / cyan stripes curve round him, as in the approved picture (one stretched band otherwise)
++      float hz = clamp((uSB0.y - inner) / max(uSB0.y - uNB.w, 0.1), 0.0, 1.0);
++      float pp = 1.0 - abs(fract((as + wan - inner) / (2.0 * uNB3.x)) * 2.0 - 1.0);
++      float u2 = 1.0 - pp * uNB3.y;
++      vec3 b2 = mix(texture2D(uSB, vec2(u2, vb)).rgb, texture2D(uSB, vec2(u2, vb * 0.81 + 0.29)).rgb, w);
++      bc = mix(bc, b2, hz * (1.0 - smoothstep(uSB0.z - 0.9, uSB0.z - 0.2, as)));
++    }
++    col = mix(col, bc, uSB0.x * smoothstep(inner - uSB1.x, inner + 0.25 * uSB1.x, as));
+     if (uSB1.y > 0.5) col = mix(col, vec3(0.97, 0.90, 1.0), fringe);
+   }
+   if (uA5.x > 0.5) {
+@@ -842,6 +865,7 @@ export function addM04(ctx: M04Ctx) {
+     console.info('[match04] m04end', { water: (0.02 - cy) / r });
+   }
+   const a5b = new THREE.Vector4(M04.num('m04a5w', 1.3), M04.num('m04a5s', 2.2), 0, M04.num('m04a5d', 30));
++  const nbU = new THREE.Vector4(M04.num('m04nband', 0) > 0 && M04.num('m04sband', 0) > 0 ? 1 : 0, 0, 0, M04.num('m04nbh', 1.1));
+   const MwInv = Mw.clone().invert();
+   if (M04.river) {
+     const nX = 28, nA = Math.ceil(len / 0.5);
+@@ -906,6 +930,11 @@ export function addM04(ctx: M04Ctx) {
+         // tile (0.7), 10 u long satin stripes with a slow 0.5 u lateral wander, 0.95 strength
+         uSB: { value: sideBand }, uSB1: { value: new THREE.Vector4(M04.num('m04sbw', 0.45), M04.num('m04sbf', 1), M04.num('m04sbu', 0.7), M04.num('m04sbn', 0.5)) },
+         uSB2: { value: new THREE.Vector2(M04.num('m04sbd0', 0), M04.num('m04sbd1', 0)) },
++        // r17 `&m04nband=1` (needs m04sband): the bands round Benny — m04nbh inner arc hugging him, m04nba back to normal this far
++        // ahead of him, m04nbb widening behind him (b * d^2), m04nbr half-stripe width near him (0 = one stretched band), m04nbs tile
++        // span walked, m04nbp pinch at his sides, m04nbf lateral follow of Benny (0..1)
++        uNB3: { value: new THREE.Vector2(M04.num('m04nbr', 0.9), M04.num('m04nbs', 0.7)) },
++        uNB: { value: nbU }, uNB2: { value: new THREE.Vector4(M04.num('m04nba', 4.2), M04.num('m04nbb', 0.04), M04.num('m04nbp', 0.0), M04.num('m04nbf', 0)) },
+         uSB0: { value: new THREE.Vector4(M04.num('m04sband', 0) > 0 ? M04.num('m04sbs', 0.95) : 0, M04.num('m04sbi', 2.0), arc[nX], M04.num('m04sbl', 10)) },
+         uA5: { value: new THREE.Vector4(M04.arr5 ? 1 : 0, M04.num('m04a5p', 3.3), M04.num('m04a5f', 11.6), M04.num('m04a5t', 1.45)) },
+         uA5b: { value: a5b }, uA5n: { value: new THREE.Vector2(M04.num('m04a5n0', 6.5), M04.num('m04a5n1', 9.0)) } } });
+@@ -1161,6 +1190,7 @@ export function addM04(ctx: M04Ctx) {
+   out.update = (cam: THREE.Vector3, benny?: THREE.Vector3) => {
+     time.value = performance.now() / 1000;
+     a5b.z = -cam.clone().applyMatrix4(MwInv).z;   // camera position down the slide (local along)
++    if (nbU.x > 0 && benny) { const bl = benny.clone().applyMatrix4(MwInv); nbU.y = -bl.z; nbU.z = bl.x - cx; }
+     away.value = THREE.MathUtils.smoothstep(cam.distanceTo(proj.position), fade, fade1);
+     const a2 = THREE.MathUtils.smoothstep(cam.distanceTo(proj.position), 0.4, 1.6);
+     for (const u of updaters) u(a2);
