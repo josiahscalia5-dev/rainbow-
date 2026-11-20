@@ -1838,3 +1838,33 @@ You're pointing at the shape and material of the gold tunnel rings, not the wate
 
 > 🔧 **Bash** `{"command": "cat >> docs/briefs/2026-11-19-r20/COORDINATION.md <<'EOF'\n\n## ~00:10 UTC user: Screen 04 gold tunnel — \"a little bump on top of the gold\" + different material / layout (marked pictures)\nUser marked the approved picture (arrow, upper-left inner edge of the front ring) and the game at f06 (red circle):\n`qa/review_r20/user_marked_rings/` (1_APPROVED_user_arrow.jpg, 2_GAME_user_red_circle.jpg, zooms 3_/4_ = crop x0–480 y380–860).\nLead's reading: GAME = a few fat RAISED ring lips protruding like bumps, wide flat brown-copper wall between them, nearest ring\ncontour slightly wavy …[+665 chars]`
 
+### 🧑 User — 2026-11-20T00:15:10.923Z
+
+> ↩︎ result: "pushed_verified": true,
+>   "commit": "faf428882e2655c09b98b02911cdb9b3caa505fe",
+
+### 🤖 Claude — 2026-11-20T00:15:12.915Z
+
+> 🔧 **TaskCreate** `{"subject": "Review the rings worker's fix for the user-marked gold tunnel", "description": "Flatten bump lips, many fine flush ribs, mirror-polished yellow-gold; compare zoom crop x0-480 y380-860 at f06 with user's marked approved picture; show in motion.", "activeForm": "Waiting for the gold tunnel fix"}`
+
+### 🧑 User — 2026-11-20T00:15:12.940Z
+
+> ↩︎ result: Task #6 created successfully: Review the rings worker's fix for the user-marked gold tunnel
+
+### 🤖 Claude — 2026-11-20T00:15:18.967Z
+
+I see it now, and you're right. I zoomed into both spots you marked:
+
+- **Your approved tunnel (your arrow):** the inside is a smooth, mirror-polished yellow-gold tube lined with many thin, closely spaced ribs, like a ribbed brass pipe. Each rib is a fine bright line with a thin dark groove beside it. They're perfect circles, they sit flat in the wall, and soft blue-violet and pink reflections shine in the gold. Only the big front ring is thick.
+- **Your game (red circle):** a few fat raised rings that stick out from the wall like bumps. Between them is wide, flat, brownish-copper wall, and the nearest ring's outline is even a little wavy. That's the "bump on top of the gold" you're seeing.
+
+I've sent both of your marked pictures to the rings worker, and fixing this is now its first job, ahead of everything else it was doing. The three changes:
+
+1. **Remove the bumps:** flatten the raised rings inside the tunnel and make every ring a perfect circle. The thick front ring stays.
+2. **Match the layout:** many fine, closely spaced ribs like your painting instead of a few wide bands. I've asked it to measure the rib spacing along your arrow and copy it, from the start of the swim to deep in the tunnel and while steering.
+3. **Match the material:** polished yellow-gold that reads like a mirror, less brown-copper, with the soft violet and pink reflections.
+
+When it's done, I'll check it at full size and show you the same zoomed spot you circled next to your approved picture. You'll also get the full screen while swimming and steering, plus a clip.
+
+Your marked pictures are saved in the project and on GitHub (`faf4288`), so later sessions will know about this too.
+
