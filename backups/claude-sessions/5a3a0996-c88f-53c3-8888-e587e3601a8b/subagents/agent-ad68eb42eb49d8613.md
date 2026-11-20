@@ -1053,3 +1053,7 @@ Round 21 launch. Your complete launch brief is the file /home/user/rainbow-/docs
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-20T02:16:53.853Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 - <<'EOF'\np='src/world/match07.ts'\ns=open(p).read()\ndef rep(a,b,cnt=1):\n    global s\n    assert s.count(a)==cnt, (a, s.count(a))\n    s=s.replace(a,b)\nrep(\"\"\"vec3 nearWater(float lx, float ctr, float along) {\n  float d = lx - ctr;\"\"\",\"\"\"vec3 nearWater(float lx, float ctr, float along, float rc) {\n  float d = lx - ctr;\"\"\")\nrep(\"\"\"    Rc = uBand2.y;\n    Ro = max(Rc + uBand2.z, reach);\"\"\",\"\"\"    Rc = rc;\n    Ro = max(Rc + uBand2.z, reach);\"\"\")\nrep(\"\"\"    if (uNearOn > 0.5) return nearWater(vL.x, vCtr, -vL.z);\"\"\ …[+1925 chars]`
+

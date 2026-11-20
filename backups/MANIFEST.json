@@ -614,7 +614,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 19811,
-   "sha256": "7f05a01b2753c243e7094e3f9d60fe21bdca9e86de4fdc40254043643dac5a23"
+   "sha256": "27d6fd2d97511031649655784ef66f21fac822f28f254865b567f8aceaa1c16a"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -629,7 +629,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3424,
-   "sha256": "0fe1705aa1862cffc4047c6d5bc6c561c4a815fd098d7d4bac3f71af1548029c"
+   "sha256": "ce5789c4eb3a9d171c45d7e07f5e9cd3827904b23d85869280e2c41f362ec4e0"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -1404,7 +1404,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c22/INFO.json",
    "bytes": 560,
-   "sha256": "5263f7a58fd832b5517cd55f40f421625d24a383da791016e386cf616e138271"
+   "sha256": "2bd319e501f57d20a391870fbce58a1da1e2c98b26d1bfb8813cc87be34e6ba0"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c22/tracked.patch",
@@ -1429,7 +1429,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-preview-c22/INFO.json",
    "bytes": 569,
-   "sha256": "82505da44c9bad99aa35e7aed4029373f4b51457390dafa65c4746a1225c32f9"
+   "sha256": "be9ed6bb893d31d818a5dd3d55da1e37e14968fb909cc934a0d51dca75506182"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-preview-c22/tracked.patch",
@@ -1654,7 +1654,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c22/INFO.json",
    "bytes": 1341,
-   "sha256": "a29a7c113c2fe7927364c81b8ca5045229510e5d9c49bbb0a788bef17f983721"
+   "sha256": "a88dc5bc19f5794aa22d8c258b3c52c4fa2fe483b648410f6caf160796e46b5a"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-ringtex-c22/tracked.patch",
@@ -2359,7 +2359,7 @@
   {
    "path": "backups/wip/claude__rainbow-s07-match-c22/INFO.json",
    "bytes": 559,
-   "sha256": "858e69831af03a1b970987083bd173aed24d9a0163fca90a27c6b19c9111dca1"
+   "sha256": "d14352d3351325883e717efbb20e35048cb142290aabaa9a958f063809efe5a1"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c22/tracked.patch",
@@ -2489,27 +2489,27 @@
   {
    "path": "backups/wip/detached-34cb494137/INFO.json",
    "bytes": 440,
-   "sha256": "ad071572b144aaca593d019e389902b3e4c6a2364ed2c38d37a9c4a837835361"
+   "sha256": "ce67d78e3ffa4774031ad489a7b785161b50f342dcb4d85d984bef090df2a833"
   },
   {
    "path": "backups/wip/detached-3c0fa97090/INFO.json",
    "bytes": 439,
-   "sha256": "78d270667ec9a13e7efdb3b22b5bfd896769abbd919c52aa94cdfe15c8e259fa"
+   "sha256": "9cddc2caaba9a2c7fde5365a1ad5f55a57a04a087f7f779646ffd60ffddf4f51"
   },
   {
    "path": "backups/wip/detached-8accdad0a0/INFO.json",
    "bytes": 439,
-   "sha256": "f1b6d8c1ed05efb80be363a660b0d0fc73d5dbbc668f51183d94e7c0f27cb5bf"
+   "sha256": "24d7b8b03e5b8ba3e42572873b505b83e07648337b59dde36f89ec5d220444c6"
   },
   {
    "path": "backups/wip/detached-c649fcbc35/INFO.json",
    "bytes": 439,
-   "sha256": "20e1041c7902638ce83cf179dc912ce0c7e9c9d0c8603db5ff62a2ce89c72956"
+   "sha256": "4fb75b0a3352f879dcb4a2dd0c63a4ccdbbcb1ab520331f7f24db390267bed3f"
   },
   {
    "path": "backups/wip/detached-eb7233e364/INFO.json",
    "bytes": 439,
-   "sha256": "bf39200f34461438adcaf28fda1a3b3c4dd805bed7e616b0ae7b2d44d1c18143"
+   "sha256": "90dd981a202a495788d52bf01f225529ad3dabdefc4936a603c9709eb3291c5a"
   },
   {
    "path": "builds/rainbow-debug-06-2026-11-17-r3.apk",
@@ -5265,6 +5265,21 @@
    "path": "qa/match/04/r21/s1_wgl/NEW/c_middle.png",
    "bytes": 1728390,
    "sha256": "89209986381b8216d9c5695fe3183bb90d4549d34b6fe0fa61e826d4e9f482d3"
+  },
+  {
+   "path": "qa/match/04/r21/s1_wgl/NEW/d_late.png",
+   "bytes": 1749493,
+   "sha256": "e4c7a19ed5e480e88d0138b8e828e8bbd73576fa085452782167d7fbfad55be3"
+  },
+  {
+   "path": "qa/match/04/r21/s1_wgl/NEW/e_end.png",
+   "bytes": 1702061,
+   "sha256": "b0361b8a5df1847d34ce1056e9126cfcb0b36a8c7866d72d97bd7da6bc6282a3"
+  },
+  {
+   "path": "qa/match/04/r21/s1_wgl/NEW/f_hard_left.png",
+   "bytes": 1714675,
+   "sha256": "3cb07d1e7639e309dddc9f1f017c69c67653d707971af4e042e0e985716892fc"
   },
   {
    "path": "qa/match/04/r21_rings/1_APPROVED.png",
