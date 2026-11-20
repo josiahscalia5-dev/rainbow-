@@ -96,7 +96,7 @@ if (TUFT) {
     L.comb = [n('tcx', 0.55), n('tcy', 1.0), L.comb[2], n('tcw', 0.5)];
     L.pile = [n('tpx', 0.4), n('tpy', 0.6), L.pile[2], n('tpw', 0.55)];
     VOL20[k] = [n('tvx', 0.35), n('tvy', 0.1), 0, 0];
-    TIP20[k] = [n('ttr', 1.0), n('ttg', 0.6), n('ttb', 0.82)];
+    TIP20[k] = [n('ttr', 1.0), n('ttg', 0.42), n('ttb', 0.92)];
   }
 }
 
