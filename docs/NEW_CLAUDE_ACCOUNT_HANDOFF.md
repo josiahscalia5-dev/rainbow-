@@ -1,4 +1,13 @@
-# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 29 (2026-11-20, lead branch `ccr-ac160b4c-3hdecw`, from ~18:21 UTC)
+# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 30 (2026-11-20, lead branch `ccr-2644c3c0-iikckn`, from ~20:05 UTC)
+
+New session/account; started at `8abed78`, merged the r29 lead's last two saves (`f090393`, 20:02) on the user's "continue exactly where we
+left off" (`1d1f359`). Worktrees recreated on LOCAL `-c31` (all 12 byte-identical to the 20:02 snapshots). This environment ("Default") has NO
+network secrets: World Labs key → HTTP 401 (secure form needed), fal not set, Atlas connector needs the atlas.worldlabs.ai sign-up; plugins
+playwright + claude-code-setup not enabled (card shown). **User's r30 Screen 06 orders verbatim: `docs/briefs/2026-11-20-r30/USER_R30.md`** (ring
+"target" diagnosis first → done; storyboard route: crest → curl right + descend → gold bands → S-bend → 07). Built `&m06curl=1` (map + checks:
+**`docs/briefs/2026-11-20-r30/COORDINATION.md`**; proof `qa/match/06/r30/`). Not approved yet. No specialist workers running.
+
+# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ ROUND 29 (2026-11-20, lead branch `ccr-ac160b4c-3hdecw`, from ~18:21 UTC)
 
 New account; session branch started at **`31d3a8c`** = the r28 lead `ccr-9652868f-lkw0w0`'s last save (18:12 UTC; verified with `git ls-remote` after
 the hook's fetch failed — nothing newer, nothing merged). Round 28 stopped 17:30–17:36 UTC (old account 5-hour limit, HTTP 429). Worktrees recreated on

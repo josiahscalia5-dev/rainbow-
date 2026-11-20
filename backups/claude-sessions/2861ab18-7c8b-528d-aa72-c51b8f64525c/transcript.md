@@ -2168,3 +2168,224 @@ The continuity test builds the route in Node, so it needs the switch passed in. 
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && AUDIT_W=864 AUDIT_H=1536 AUDIT_PORT=5299 AUDIT_SHOTS='[[\"a_start\",0,null],[\"b_marked\",214.86,null],[\"c_share30\",0.3,null],[\"d_share50\",0.5,null],[\"e_share70\",0.7,null],[\"f_share90\",0.9,null],[\"g_07first\",0.02,null,\"07\"]]' timeout 3000 node tools/match06/r30_shots.mjs /home/user/rainbow-/qa/match/06/r30/stills_BEFORE 06 \"$(cat /home/user/rainbow-/qa/match/06/r30/diag/QUERY_MARKED.txt)\" 2>&1 | grep -E \"^0[67] |rror\"; AUDIT_W=864 AUDIT_H=1536 AUDIT_PORT=5300 AUDIT_SHOTS='[[\"a_start\",0,null],[\"b_marked\",214.86,null]]' timeout 3000 node t …[+293 chars]`
 
+### 🧑 User — 2026-11-20T20:36:07.695Z
+
+> ↩︎ result: 06 a_start s 198.91 lat 0 stage 06 coins 1680
+> 06 b_marked s 214.86 lat 0 stage 06 coins 1700
+> 06 c_share30 s 233.193 lat 0 stage 06 coins 1730
+> 06 d_share50 s 255.927 lat 0 stage 06 coins 1770
+> 06 e_share70 s 278.66 lat 0 stage 06 coins 1800
+> 06 f_share90 s 301.393 lat 0 stage 06 coins 1810
+> 07 g_07first s 341.128 lat 0 stage 07 coins 1950
+> 06 a_start s 198.91 lat 0 stage 06 coins 1680
+> 06 b_marked s 214.86 lat 0 stage 06 coins 1700
+> frame 0 { s: 199.461, stage: '06', lat: 0, coins: 1680 }
+> frame 24 { s: 212.687, stage: '06', lat: 0, coins: 1700 }
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T20:36:10.696Z
+
+Stills are done. The clip is still early (the parallel renders slowed it). While it runs, I'll check that your approved start view is unchanged: a pixel comparison of BEFORE vs NEW at the start.
+
+### 🤖 Claude — 2026-11-20T20:36:13.663Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r30 && python3 -c \"\nfrom PIL import Image; import numpy as np\nfor n in ['a_start','b_marked']:\n  a=np.asarray(Image.open(f'stills_BEFORE/{n}.png').convert('RGB')).astype(int); b=np.asarray(Image.open(f'stills_NEW/{n}.png').convert('RGB')).astype(int)\n  d=np.abs(a-b).max(axis=2); print(n, 'pixels differing >20 levels: %.2f %%'%(100*(d>20).mean()), ' >0: %.2f %%'%(100*(d>0).mean()), 'max', d.max())\n  if n=='a_start':\n    ys,xs=np.where(d>20); print('  diff bbox', (xs.min(),ys.min(),xs.max(),ys.max()) if len(xs) else None)\n\"; tail -1 /home/ …[+87 chars]`
+
+### 🧑 User — 2026-11-20T20:36:14.485Z
+
+> ↩︎ result: a_start pixels differing >20 levels: 0.19 %  >0: 18.13 % max 255
+>   diff bbox (np.int64(3), np.int64(2), np.int64(863), np.int64(1200))
+> b_marked pixels differing >20 levels: 44.05 %  >0: 63.83 % max 255
+> frame 24 { s: 212.687, stage: '06', lat: 0, coins: 1700 }
+
+### 🤖 Claude — 2026-11-20T20:36:37.759Z
+
+On your question about Marble World Labs, my honest view is below. First, a quick progress check on the clip render.
+
+### 🤖 Claude — 2026-11-20T20:36:38.459Z
+
+> 🔧 **Bash** `{"command": "ls /home/user/scratch/r30/clip_new/*.png | wc -l; tail -2 /home/user/scratch/r30/clip_new.log; uptime", "description": "Check clip render progress"}`
+
+### 🧑 User — 2026-11-20T20:36:38.548Z
+
+> ↩︎ result: 37
+> frame 0 { s: 199.461, stage: '06', lat: 0, coins: 1680 }
+> frame 24 { s: 212.687, stage: '06', lat: 0, coins: 1700 }
+>  20:36:38 up 42 min,  0 user,  load average: 5.37, 3.13, 1.54
+
+### 🤖 Claude — 2026-11-20T20:36:42.793Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/r30/clip_new && ls -l --time-style=+%H:%M:%S *.png | tail -6 | awk '{print $6, $7}'", "description": "Measure per-frame render time"}`
+
+### 🧑 User — 2026-11-20T20:36:42.838Z
+
+> ↩︎ result: 20:36:27 0032.png
+> 20:36:30 0033.png
+> 20:36:33 0034.png
+> 20:36:35 0035.png
+> 20:36:38 0036.png
+> 20:36:41 0037.png
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T20:36:53.571Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r30/stills_NEW/b_marked.png"}`
+
+### 🧑 User — 2026-11-20T20:36:53.656Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T20:37:07.300Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/rainbow-/qa/match/06/r30/proof && cd /home/user/rainbow-/qa/match/06/r30 && cat > proof/make_marked.py <<'EOF'\n\"\"\"r30 lead: APPROVED | BEFORE (the version the user marked) | NEW (&m06curl=1) at the user's red-marked spot (river s 214.86),\nfull-size 864x1536 gameplay frames, labelled. usage: python3 -I proof/make_marked.py (from qa/match/06/r30)\"\"\"\nfrom PIL import Image, ImageDraw, ImageFont\nR = '/home/user/rainbow-/'\nFB = '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf'; FN = '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf'\nft, fh, fs = Image …[+1092 chars]`
+
+### 🧑 User — 2026-11-20T20:37:07.618Z
+
+> ↩︎ result: (2688, 1756)
+
+### 🤖 Claude — 2026-11-20T20:37:11.064Z
+
+While the clip renders, I'll save your two uploaded images into this round's brief folder (so the next session has them) and cut the four storyboard panels out for side-by-side comparisons.
+
+### 🤖 Claude — 2026-11-20T20:37:15.817Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/rainbow-/docs/briefs/2026-11-20-r30 && cd /home/user/rainbow-/docs/briefs/2026-11-20-r30 && cp /root/.claude/uploads/2861ab18-7c8b-528d-aa72-c51b8f64525c/91dc5b3b-image.png USER_S06_RING_MISMATCH_R30.png && cp /root/.claude/uploads/2861ab18-7c8b-528d-aa72-c51b8f64525c/6d267343-image.png USER_S06_STORYBOARD_R30.png && cmp -s /root/.claude/uploads/2861ab18-7c8b-528d-aa72-c51b8f64525c/6d267343-image.png /root/.claude/uploads/2861ab18-7c8b-528d-aa72-c51b8f64525c/f6ab46c8-image.png && echo \"storyboard re-upload identical\"; python3 -c \"\nfrom PIL import Image; im= …[+435 chars]`
+
+### 🧑 User — 2026-11-20T20:37:16.262Z
+
+> ↩︎ result: storyboard re-upload identical
+> (1024, 1536)
+> white rows [0, 8, 48, 56, 80, 88, 96, 728, 760, 768, 776, 784, 1400, 1408, 1440, 1464, 1472, 1480, 1488, 1512, 1520, 1528]
+> white cols [0, 4, 8, 12, 508, 512, 516, 1012, 1016, 1020]
+
+### 🤖 Claude — 2026-11-20T20:37:19.661Z
+
+The four panels sit at fixed positions on your storyboard. Next a clip progress check, then the user decisions written down for the next session.
+
+### 🤖 Claude — 2026-11-20T20:37:20.369Z
+
+> 🔧 **Bash** `{"command": "ls /home/user/scratch/r30/clip_new/*.png | wc -l; tail -1 /home/user/scratch/r30/clip_new.log", "description": "Check clip progress"}`
+
+### 🧑 User — 2026-11-20T20:37:20.410Z
+
+> ↩︎ result: 54
+> frame 48 { s: 225.914, stage: '06', lat: 0, coins: 1720 }
+
+### 🤖 Claude — 2026-11-20T20:37:25.730Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/r30/clip_new && ls -l --time-style=+%H:%M:%S *.png | tail -4 | awk '{print $6, $7}'; date +%H:%M:%S; uptime", "description": "Measure current frame rate"}`
+
+### 🧑 User — 2026-11-20T20:37:25.800Z
+
+> ↩︎ result: 20:37:18 0053.png
+> 20:37:20 0054.png
+> 20:37:23 0055.png
+> 20:37:25 0056.png
+> 20:37:25
+>  20:37:25 up 43 min,  0 user,  load average: 4.32, 3.18, 1.63
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T20:37:28.146Z
+
+About 2.5 seconds per frame, so roughly 14 minutes to go. Meanwhile I'll record your round-30 decisions word for word and the round map, so a new account can pick up exactly here.
+
+### 🤖 Claude — 2026-11-20T20:37:36.506Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-20-r30/USER_R30.md", "content": "# Round 30 — the user's messages (verbatim), 2026-11-20 ~20:05–20:40 UTC (lead `ccr-2644c3c0-iikckn`)\n\n## 1. Session start (~20:05)\n> Continue where we were exactly left off in the chat, and make sure all the tools, all the, everything, the plugins, everything,\n> agents, everything. Make sure all of the stuff from my GitHub branch I just put on here are all enabled on this new one, this new\n> session here that I'm on right now with Claude\n\n## 2. Screen 06 ring mismatch (~20:08; image `USER_S06_RING_M …[+2565 chars]`
+
+### 🧑 User — 2026-11-20T20:37:36.562Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-20-r30/USER_R30.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T20:38:03.577Z
+
+Next the round-30 map and the top of the handoff file (newest first), so a new account knows where this stopped.
+
+### 🤖 Claude — 2026-11-20T20:38:18.772Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-20-r30/COORDINATION.md", "content": "# Round 30 — coordination (lead session branch `ccr-2644c3c0-iikckn`, 2026-11-20 from ~20:05 UTC)\n\nUser's messages verbatim: `USER_R30.md` (+ the two pictures `USER_S06_RING_MISMATCH_R30.png`, `USER_S06_STORYBOARD_R30.png`).\n\n## Restore (lead, 20:05–20:16 UTC)\n* Session branch started at `8abed78` (19:57). The hook's fetch failed; the lead's retry found the r29 lead `ccr-ac160b4c-3hdecw` two saves\n  newer (`b93b67c` 19:58, `f090393` 20:02: the r29 ring diagnosis + haze fix). Merged on the user's \ …[+2994 chars]`
+
+### 🧑 User — 2026-11-20T20:38:18.804Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-20-r30/COORDINATION.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T20:38:19.474Z
+
+> 🔧 **Bash** `{"command": "ls /home/user/scratch/r30/clip_new/*.png | wc -l; tail -1 /home/user/scratch/r30/clip_new.log", "description": "Check clip progress"}`
+
+### 🧑 User — 2026-11-20T20:38:19.533Z
+
+> ↩︎ result: 77
+> frame 72 { s: 239.14, stage: '06', lat: 0, coins: 1730 }
+
+### 🤖 Claude — 2026-11-20T20:38:26.562Z
+
+The clip is slower in this stretch (~8 s per frame; around 40 minutes left). While it runs I'll add the round-30 entry to the top of the handoff file and to the Screen 06 progress log.
+
+### 🤖 Claude — 2026-11-20T20:38:39.862Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md'; t=open(p).read()\ntop=\"\"\"# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 30 (2026-11-20, lead branch `ccr-2644c3c0-iikckn`, from ~20:05 UTC)\n\nNew session/account; started at `8abed78`, merged the r29 lead's last two saves (`f090393`, 20:02) on the user's \"continue exactly where we\nleft off\" (`1d1f359`). Worktrees recreated on LOCAL `-c31` (all 12 byte-identical to the 20:02 snapshots). This environment (\"Default\") has NO\nnetwork secrets: World Labs key → HTTP 401 (secure form needed), fal not set, Atlas connector n …[+2094 chars]`
+
+### 🧑 User — 2026-11-20T20:38:40.030Z
+
+> ↩︎ result: # ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 30 (2026-11-20, lea
+> 
+> New session/account; started at `8abed78`, merged the r29 lead's last two saves (`f090393`, 20:02) on the user's "contin
+
+### 🤖 Claude — 2026-11-20T20:38:48.524Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && git status --porcelain qa/match/06/r25/PROGRESS.md; git checkout -- qa/match/06/r25/PROGRESS.md && git status --porcelain qa/match/06/r25/PROGRESS.md && echo \"restored (clean)\"; ls /home/user/scratch/r30/clip_new/*.png | wc -l", "description": "Restore worktree progress file from git"}`
+
+### 🧑 User — 2026-11-20T20:38:48.596Z
+
+> ↩︎ result: warning: could not open directory 'qa/match/06/r25/': No such file or directory
+> error: pathspec 'qa/match/06/r25/PROGRESS.md' did not match any file(s) known to git
+> 87
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T20:38:51.272Z
+
+Nothing was changed — that folder doesn't exist in the worktree, so the copy never happened. The clip is at 87 frames; I'll check the current rate.
+
+### 🤖 Claude — 2026-11-20T20:38:52.224Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/r30/clip_new && ls -l --time-style=+%H:%M:%S *.png | tail -5 | awk '{print $6, $7}'; date +%H:%M:%S; top -bn1 | head -15 | tail -8", "description": "Check frame timing and CPU use"}`
+
+### 🧑 User — 2026-11-20T20:38:52.498Z
+
+> ↩︎ result: 20:38:37 0083.png
+> 20:38:40 0084.png
+> 20:38:43 0085.png
+> 20:38:46 0086.png
+> 20:38:49 0087.png
+> 20:38:52
+> 11019 root      12  -8   52.4g 372372  86304 S 380.0   2.3  13:35.73 chrome-he+
+>     1 root      20   0   36976   5784   5176 S   0.0   0.0   0:01.05 process_a+
+>     2 root      20   0       0      0      0 S   0.0   0.0   0:00.00 kthreadd
+>     3 root      20   0       0      0      0 S   0.0   0.0   0:00.00 pool_work+
+>     4 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker/R+
+>     5 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker/R+
+>     6 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker/R+
+>     7 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker/R+
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-20T20:38:57.031Z
+
+It's actually ~3 seconds per frame (tool-call time inflated my estimate), so about 15 minutes left. I'll set a watch for when it finishes, and meanwhile prepare the storyboard comparison.
+
+### 🤖 Claude — 2026-11-20T20:38:57.427Z
+
+> 🔧 **ToolSearch** `{"query": "select:Monitor", "max_results": 1}`
+
+### 🧑 User — 2026-11-20T20:38:57.441Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-20T20:38:59.838Z
+
+> 🔧 **Bash** `{"command": "until grep -qE \"^frames [0-9]+|pageerror|Error|rror:\" /home/user/scratch/r30/clip_new.log || ! pgrep -f \"r30_clip.mjs /home/user/scratch/r30/clip_new\" >/dev/null; do sleep 5; done; tail -3 /home/user/scratch/r30/clip_new.log; ls /home/user/scratch/r30/clip_new/*.png | wc -l", "description": "Wait for the clip render to finish or fail", "timeout": 3600000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T20:38:59.890Z
+
+> ↩︎ result: Command running in background with ID: b6c2vddw3. Output is being written to: /tmp/claude-0/-home-user-rainbow-/2861ab18-7c8b-528d-aa72-c51b8f64525c/tasks/b6c2vddw3.output. You will be notified when it completes. To check interim output, use Read on that file path.
+

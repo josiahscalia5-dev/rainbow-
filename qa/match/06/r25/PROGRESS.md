@@ -1,5 +1,14 @@
 # Screen 06 — round 25 progress (worktree `/home/user/wt/s06`, LOCAL branch `claude/rainbow-s06-match-c26`, ports 5276 / 5282 / 5283)
 
+## (r30) WHERE I STOPPED / NEXT — lead (new session `ccr-2644c3c0-iikckn`), user ~20:08-20:36 UTC (docs/briefs/2026-11-20-r30/USER_R30.md)
+* Ring "target" diagnosis measured in real gameplay (`qa/match/06/r30/diag/`, tools/match06/r30_ring_probe.mjs): straight 346 u tube, rings every
+  12.87 u, camera 11 deg off the axis -> nested circles; + tile stripes. Sent to the user ~20:18.
+* `&m06curl=1` (with m06deep; storyboard route, tools/match06/r30_design_curl.py -> route06curl.json): curved tunnel axis from virtual depth 40,
+  bands every 22 u (x1.5 wide, `&m06cbw=`), last 24 u eased onto 07's tube mouth, tube07 shown from s07-160, far coins re-spread (91 total).
+  NEW query `qa/match/06/r30/QUERY_NEW.txt`. Checks OK (tsc, continuity +switch, gameplay 8/8 91 coins). Clip + storyboard comparison:
+  `qa/match/06/r30/proof/`. NEXT (if the user wants it closer to the storyboard): storyboard-derived band / wall textures (free), wider bands,
+  denser coin trail (changes HUD totals -> ask), Benny size / camera height.
+
 ## (r29d) WHERE I STOPPED / NEXT — lead, user ~19:51 UTC: the crowded gold "target" under the red mark (NEW ~14 %)
 * Diagnosis at the marked spot (`qa/match/06/r29/rings/`, CAUSE_marked_position.jpg): TWO repeating ring patterns down the long straight
   tunnel, seen straight down its axis, all at full brightness: (1) the 3D gold rings (m06_rings, every 12.87 u to ~300 u, ~23 ahead; plain
