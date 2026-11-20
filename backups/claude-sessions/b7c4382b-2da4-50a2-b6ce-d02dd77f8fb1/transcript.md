@@ -1879,3 +1879,348 @@ Test extraction, check that required files are present and that large assets con
 
 Give me downloadable file links so I can upload the package to ChatGPT.
 
+### 🤖 Claude — 2026-11-20T10:55:26.582Z
+
+I'll build the review package now. The Screen 06 debug render keeps running in the background, and so do the four specialists. First I'll survey the project: what is in it, how big each part is, and where the experiments live.
+
+### 🤖 Claude — 2026-11-20T10:55:28.741Z
+
+> 🔧 **TaskCreate** `{"subject": "Export Rainbow_App_Review package (source, assets, references, evidence, APK, manifest, README)", "description": "User request ~10:58: consistent export at one commit; variants for unmerged worker work; LFS real data; approved vs proposals labelled; REVIEW_README; exclude secrets/transcripts/node_modules/.git; test extraction; SendUserFile links; split if too large", "activeForm": "Building the review package"}`
+
+### 🧑 User — 2026-11-20T10:55:29.259Z
+
+> ↩︎ result: Task #7 created successfully: Export Rainbow_App_Review package (source, assets, references, evidence, APK, manifest, README)
+
+### 🤖 Claude — 2026-11-20T10:55:29.733Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && ls; echo; du -sh --exclude=.git --exclude=node_modules . 2>/dev/null; for d in $(ls -A | grep -v '^.git$' | grep -v node_modules); do du -sh \"$d\" 2>/dev/null; done | sort -h | tail -25", "description": "Survey repository layout and sizes"}`
+
+### 🧑 User — 2026-11-20T10:55:30.586Z
+
+> ↩︎ result: CLAUDE.md
+> README_FIRST.md
+> REFERENCE_ORDER.md
+> Rainbow_Claude_Code_Master_Prompt_11_Screens.md
+> START_HERE_PASTE_TO_CLAUDE.md
+> TOOL_SETUP_AND_VERIFICATION.md
+> VISUAL_QA_CHECKLIST.md
+> android
+> assets
+> backups
+> builds
+> capacitor.config.ts
+> character_references
+> docs
+> index.html
+> node_modules
+> package-lock.json
+> package.json
+> public
+> qa
+> references
+> screenshots
+> scripts
+> src
+> tools
+> tsconfig.json
+> vite.config.ts
+> 
+> 5.2G	.
+> 4.0K	TOOL_SETUP_AND_VERIFICATION.md
+> 4.0K	VISUAL_QA_CHECKLIST.md
+> 4.0K	capacitor.config.ts
+> 4.0K	index.html
+> 4.0K	package.json
+> 4.0K	tsconfig.json
+> 4.0K	vite.config.ts
+> 8.0K	REFERENCE_ORDER.md
+> 12K	public
+> 20K	CLAUDE.md
+> 24K	Rainbow_Claude_Code_Master_Prompt_11_Screens.md
+> 52K	.claude
+> 80K	package-lock.json
+> 232K	character_references
+> 360K	scripts
+> 600K	android
+> 708K	tools
+> 916K	src
+> 6.4M	references
+> 17M	docs
+> 27M	assets
+> 32M	screenshots
+> 110M	builds
+> 561M	backups
+> 4.5G	qa
+
+### 🤖 Claude — 2026-11-20T10:55:35.663Z
+
+`qa/` is 4.5 GB of evidence, too big to include whole. Next I need to know exactly which files the game loads at runtime; some textures may be served from `qa/` paths.
+
+### 🤖 Claude — 2026-11-20T10:55:36.862Z
+
+> 🔧 **Bash** `{"command": "cat vite.config.ts; grep -rhoE \"['\\\"\\`](/?(qa|assets|references|public|tools|builds|docs)/[^'\\\"\\`\\$]*)\" src | sort | uniq -c | sort -rn | head -50", "description": "Find runtime asset paths referenced by the game source"}`
+
+### 🧑 User — 2026-11-20T10:55:37.041Z
+
+> ↩︎ result: import { defineConfig } from 'vite';
+> import { resolve } from 'node:path';
+> 
+> export default defineConfig({
+>   base: './',
+>   assetsInclude: ['**/*.glb'],
+>   server: { port: 5173, strictPort: false },
+>   build: {
+>     target: 'es2020',
+>     outDir: 'dist',
+>     assetsInlineLimit: 0,
+>     chunkSizeWarningLimit: 2000,
+>     rollupOptions: {
+>       input: {
+>         main: resolve(__dirname, 'index.html'),
+>       },
+>     },
+>   },
+> });
+>       1 `qa/worldlabs/05/pilot/full/pano.png
+>       1 `assets/textures/marble05_env_1024.jpg
+>       1 'assets/models/rainbow_girl.glb
+>       1 'assets/models/benny.glb
+
+### 🤖 Claude — 2026-11-20T10:55:40.915Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"function tex\\|const tex\\|tex = \\|import\\.meta\\.glob\\|new URL(\" src | head -20; grep -rhoE \"\\.\\./\\.\\./[a-zA-Z0-9_./-]+\" src | sort -u | head -30", "description": "Find how textures are resolved in the source"}`
+
+### 🧑 User — 2026-11-20T10:55:41.208Z
+
+> ↩︎ result: src/characters/girl/textures.ts:26:function tex(c: HTMLCanvasElement, opts: { repeat?: boolean; srgb?: boolean } = {}) {
+> src/characters/girl/runtime.ts:11:export async function loadGirl(url = new URL('../../../assets/models/rainbow_girl.glb', import.meta.url).href): Promise<GirlRuntime> {
+> src/characters/benny/benny05.ts:140:const T = (f: string) => new URL(`../../../assets/textures/benny05/${f}`, import.meta.url).href;
+> src/characters/benny/benny05.ts:267:    const tex = maps[spec.map];
+> src/characters/benny/runtime.ts:11:const BENNY_URL = new URL('../../../assets/models/benny.glb', import.meta.url).href;
+> src/world/match08.ts:97:  const L: Layout = await fetch(new URL('../../assets/textures/match08/proj08.json', import.meta.url).href).then((r) => r.json());
+> src/world/match08.ts:98:  const plate = await new THREE.TextureLoader().loadAsync(new URL('../../assets/textures/match08/plate08_hybrid.png', import.meta.url).href);
+> src/world/match08.ts:126:    const t = await new THREE.TextureLoader().loadAsync(new URL(`../../assets/textures/match08/patch_${name}.png`, import.meta.url).href);
+> src/world/match08.ts:194:  const SP: { offset: [number, number, number]; w: number; h: number } = await  …[+2763 chars]
+
+### 🤖 Claude — 2026-11-20T10:55:46.913Z
+
+Runtime assets live under `assets/` (27 MB on the lead branch). Next I'll measure how far each specialist's version of the code and assets differs from the lead branch, to decide how to package them.
+
+### 🤖 Claude — 2026-11-20T10:55:48.920Z
+
+> 🔧 **Bash** `{"command": "ls src/world/ | head -40; for w in s04 s05 s06 s07 s08 benny lead07; do WT=/home/user/wt/$w; echo \"== $w base $(git -C $WT rev-parse --short HEAD)\"; git diff --stat HEAD $(git -C $WT rev-parse HEAD) -- src assets public index.html package.json package-lock.json vite.config.ts android scripts | tail -1; git -C $WT diff --stat HEAD -- src assets | tail -1; du -sh $WT/assets 2>/dev/null; done", "description": "Measure differences between lead and worker code/assets"}`
+
+### 🧑 User — 2026-11-20T10:55:52.895Z
+
+> ↩︎ result: course.ts
+> environment.ts
+> far05.ts
+> laundryRoom.ts
+> match08.ts
+> materials.ts
+> towel.ts
+> tube.ts
+> == s04 base 34cb494
+>  46 files changed, 3305 insertions(+), 571 deletions(-)
+>  3 files changed, 670 insertions(+), 40 deletions(-)
+> 50M	/home/user/wt/s04/assets
+> == s05 base eb7233e
+>  98 files changed, 4468 insertions(+), 2104 deletions(-)
+> 48M	/home/user/wt/s05/assets
+> == s06 base e162aec
+>  25 files changed, 2418 insertions(+), 569 deletions(-)
+>  2 files changed, 100 insertions(+), 1 deletion(-)
+> 31M	/home/user/wt/s06/assets
+> == s07 base 8accdad
+>  30 files changed, 1322 insertions(+), 576 deletions(-)
+>  5 files changed, 501 insertions(+), 26 deletions(-)
+> 33M	/home/user/wt/s07/assets
+> == s08 base 3c0fa97
+>  21 files changed, 787 insertions(+), 161 deletions(-)
+>  2 files changed, 28 insertions(+), 3 deletions(-)
+> 38M	/home/user/wt/s08/assets
+> == benny base 734efb6
+>  55 files changed, 3540 insertions(+), 579 deletions(-)
+>  6 files changed, 135 insertions(+), 29 deletions(-)
+> 56M	/home/user/wt/benny/assets
+> == lead07 base 8accdad
+>  30 files changed, 1322 insertions(+), 576 deletions(-)
+>  2 files changed, 336 insertions(+), 10 deletions(-)
+> 33M	/home/user/wt/lead07/assets
+
+### 🤖 Claude — 2026-11-20T10:56:01.542Z
+
+> 🔧 **Bash** `{"command": "for w in s04 s05 s06 s07 s08 benny lead07; do WT=/home/user/wt/$w; echo \"== $w: $(ls $WT/src/world/ | grep -i match | tr '\\n' ' ') | benny: $(ls $WT/src/characters/benny/ 2>/dev/null | tr '\\n' ' ')\"; git -C $WT log -1 --format='   %h %ci %s' | cut -c1-140; done; cd /home/user/rainbow- && for w in s04 s05 s06 s07 s08 benny; do for v in s04 s05 s06 s07 s08 benny; do [ $w = $v ] && continue; git merge-base --is-ancestor $(git -C /home/user/wt/$w rev-parse HEAD) $(git -C /home/user/wt/$v rev-parse HEAD) 2>/dev/null && echo \"$w base is ancestor of $v base\"; done; done", "descript …[+63 chars]`
+
+### 🧑 User — 2026-11-20T10:56:05.917Z
+
+> ↩︎ result: == s04: match04.ts match04m4.ts match08.ts  | benny: benny-lab.html benny-lab.ts benny05.ts build.ts fur.ts runtime.ts textures.ts 
+>    34cb494 2026-11-20 00:17:41 +0000 Screen 04 r20 step 2: bank foam = big glossy pearly Blender bubble heaps (m04bbank=1) — GOOD IMPROVEM
+> == s05: match05far.ts  | benny: benny-lab.html benny-lab.ts benny05.ts build.ts fur.ts runtime.ts textures.ts 
+>    eb7233e 2026-11-19 19:55:30 +0000 Screen 05 r19 step 2: &m05wcrisp=1 + &m05pink=1 KEPT (crisp painted slotted far wall while swimming, pi
+> == s06: match06.ts match08.ts  | benny: benny-lab.html benny-lab.ts benny05.ts build.ts fur.ts runtime.ts textures.ts 
+>    e162aec 2026-11-20 04:09:34 +0000 autosave: Rainbow 2026-11-20 04:09 UTC
+> == s07: match07.ts match08.ts  | benny: benny-lab.html benny-lab.ts benny05.ts build.ts fur.ts runtime.ts textures.ts 
+>    8accdad 2026-11-19 02:56:47 +0000 Screen 07 r18 step 4: &m07band=1 — thick magenta bands sweeping in S-curves beside Benny (GOOD IMPROV
+> == s08: match08.ts  | benny: benny-lab.html benny-lab.ts benny05.ts build.ts fur.ts runtime.ts textures.ts 
+>    3c0fa97 2026-11-18 21:03:03 +0000 Screen 08 r17 step 2 UNFINISHED, not proven: &m08gl=1 near-water glints with th …[+506 chars]
+
+### 🤖 Claude — 2026-11-20T10:56:12.618Z
+
+> 🔧 **Bash** `{"command": "ls qa/review_r21/audit/ | head -30; head -60 qa/review_r21/audit/README.md 2>/dev/null || ls qa/review_r21/", "description": "Read the round 21 audit mapping of screens to versions"}`
+
+### 🧑 User — 2026-11-20T10:56:13.290Z
+
+> ↩︎ result: 04
+> 05
+> 06
+> 07
+> 08
+> OVERVIEW_04.png
+> OVERVIEW_05.png
+> OVERVIEW_06.png
+> OVERVIEW_07.png
+> OVERVIEW_08.png
+> QUERY_04.txt
+> QUERY_05.txt
+> QUERY_06.txt
+> QUERY_07.txt
+> QUERY_08.txt
+> done.flag
+> run.sh
+> artwork
+> audit
+
+### 🤖 Claude — 2026-11-20T10:56:16.722Z
+
+> 🔧 **Bash** `{"command": "cat qa/review_r21/audit/run.sh | head -40; for n in 04 05 06 07; do echo \"Q$n: $(cat qa/review_r21/audit/QUERY_$n.txt)\"; done; cat qa/match/04/r23/QUERY_K23-1.txt; echo; ls qa/review_r21/audit/04 | head", "description": "Read audit script and per-screen queries"}`
+
+### 🧑 User — 2026-11-20T10:56:17.388Z
+
+> ↩︎ result: set -u
+> cd /home/user/wt/s04p && timeout 1500 node /home/user/rainbow-/tools/lead21/audit_screen.mjs /home/user/rainbow-/qa/review_r21/audit/04 04 "$(cat /home/user/rainbow-/qa/review_r21/audit/QUERY_04.txt)" > /home/user/rainbow-/qa/review_r21/audit/04.log 2>&1
+> cd /home/user/wt/a05 && timeout 1500 node /home/user/rainbow-/tools/lead21/audit_screen.mjs /home/user/rainbow-/qa/review_r21/audit/05 05 "$(cat /home/user/rainbow-/qa/review_r21/audit/QUERY_05.txt)" > /home/user/rainbow-/qa/review_r21/audit/05.log 2>&1
+> cd /home/user/wt/a06 && timeout 1500 node /home/user/rainbow-/tools/lead21/audit_screen.mjs /home/user/rainbow-/qa/review_r21/audit/06 06 "$(cat /home/user/rainbow-/qa/review_r21/audit/QUERY_06.txt)" > /home/user/rainbow-/qa/review_r21/audit/06.log 2>&1
+> cd /home/user/wt/a07 && timeout 1500 node /home/user/rainbow-/tools/lead21/audit_screen.mjs /home/user/rainbow-/qa/review_r21/audit/07 07 "$(cat /home/user/rainbow-/qa/review_r21/audit/QUERY_07.txt)" > /home/user/rainbow-/qa/review_r21/audit/07.log 2>&1
+> cd /home/user/wt/a08 && timeout 1500 node /home/user/rainbow-/tools/lead21/audit_screen.mjs /home/user/rainbow-/qa/review_r21/audit/08 08 "$(cat /home/user/rainbow-/qa/review_r …[+2996 chars]
+
+### 🤖 Claude — 2026-11-20T10:56:59.499Z
+
+The plan is to freeze one commit, build every file from that commit, and include each specialist's version as an overlay. First I'll list the Git LFS files, the videos, the APKs and the Flow videos.
+
+### 🤖 Claude — 2026-11-20T10:57:01.430Z
+
+> 🔧 **Bash** `{"command": "git lfs ls-files -s | awk '{print $NF, $(NF-1)}' | sed 's/[()]//g' | awk '{split($1,a,\"/\"); d=a[1]\"/\"a[2]; print d}' | sort | uniq -c | sort -rn | head -20; echo; git lfs ls-files -s | grep -iE \"apk|flow|\\.mp4|\\.mov\" | head -20; echo; ls -la builds/ | head; grep -n -i \"mp4\\|\\.mov\\|video\" docs/FLOW_VIDEO.md | head -15", "description": "Survey LFS files, videos, APKs and Flow video locations"}`
+
+### 🧑 User — 2026-11-20T10:57:03.801Z
+
+> ↩︎ result: 110 MB/
+>      18 KB/
+> 
+> f5c42f38fc * backups/wip/claude__rainbow-s04-match-c17/untracked/qa/match/04/r17/s2_nband/NEW_swim_clip.mp4 (1.5 MB)
+> ef32a59c01 * backups/wip/claude__rainbow-s04-match-c18/untracked/qa/match/04/r18/s5_nwfix/BEFORE_swim_clip_half.mp4 (1.1 MB)
+> ada14ed057 * backups/wip/claude__rainbow-s07-match-c16/untracked/qa/match/07/r16/step2_nearw/swim_NEW_nearw.mp4 (1.4 MB)
+> 273e73c104 * builds/rainbow-debug-06-2026-11-17-r3.apk (27 MB)
+> 7f89d6ba94 * builds/rainbow-debug-T2-default.apk (7.7 MB)
+> 913d53e2b2 * builds/rainbow-debug-match08-2026-11-17.apk (21 MB)
+> 020009a783 * builds/rainbow-debug-match08-2026-11-17b.apk (22 MB)
+> 7aad3255a8 * builds/rainbow-debug-match08-2026-11-17c-benny.apk (23 MB)
+> fdbf9c695e * builds/rainbow-debug-w12-water.apk (7.4 MB)
+> dca8d754b7 * builds/rainbow-debug.apk (7.3 MB)
+> bdaf99a76b * qa/benny/r23/s2_knit/swim05_BEFORE.mp4 (1.7 MB)
+> 60e6983091 * qa/benny/r23/s2_knit/swim05_knit_NEW.mp4 (1.4 MB)
+> 3099580df1 * qa/gameplay_video/source/rainbow_gameplay_for_claudia-1_0-48.9s.mp4 (17 MB)
+> 6bc24c3bbe * qa/lead_r5/2026-11-17/tour_clips/clip_01.mp4 (5.8 MB)
+> 002ace79ba * qa/lead_r5/2026-11-17/tour_clips/clip_02.mp4 (5.1 MB)
+> fcb9f0766f * qa/lead_r5/2026-11-17/tour_c …[+3475 chars]
+
+### 🤖 Claude — 2026-11-20T10:57:16.902Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"import json;d=json.load(open('package.json'));print(json.dumps(d.get('scripts'),indent=1));print('deps',d.get('dependencies'));print('dev',d.get('devDependencies'));print('engines',d.get('engines'))\"; git ls-files | grep -iE \"\\.jks$|\\.keystore$|\\.p12$|\\.pem$|\\.env($|\\.)|secret|credential\" | head; ls qa/gameplay_video/ qa/gameplay_video/source; cat qa/gameplay_video/*.md 2>/dev/null | head -20; cat builds/rainbow-debug-06-2026-11-17-r3.md", "description": "Check scripts, deps, secret-like files, reference video, APK notes"}`
+
+### 🧑 User — 2026-11-20T10:57:17.500Z
+
+> ↩︎ result: {
+>  "dev": "vite --host 0.0.0.0",
+>  "build": "tsc --noEmit && vite build",
+>  "preview": "vite preview --host 0.0.0.0 --port 4173",
+>  "typecheck": "tsc --noEmit",
+>  "test:continuity": "vite-node scripts/continuity-test.ts",
+>  "models:export": "node scripts/export-models.mjs",
+>  "qa:capture": "node scripts/capture.mjs",
+>  "qa:compare": "python3 scripts/compare.py",
+>  "verify:refs": "sha256sum -c scripts/reference.sha256",
+>  "android:sync": "npm run build && npx cap sync android",
+>  "android:debug": "npm run android:sync && cd android && ./gradlew assembleDebug",
+>  "test:cinematic": "node scripts/cinematic-test.mjs"
+> }
+> deps {'@capacitor/android': '^6.2.0', '@capacitor/core': '^6.2.0', '@fontsource/baloo-2': '^5.1.0', 'three': '^0.170.0'}
+> dev {'@capacitor/cli': '^6.2.0', '@types/three': '^0.170.0', 'typescript': '^5.6.3', 'vite': '^5.4.11', 'vite-node': '^2.1.5'}
+> engines None
+> qa/gameplay_video/:
+> source
+> 
+> qa/gameplay_video/source:
+> rainbow_gameplay_for_claudia-1_0-48.9s.mp4
+> user_video_1fps_00-23s.png
+> user_video_1fps_24-48s.png
+> # rainbow-debug-06-2026-11-17-r3.apk — Screen 06 test build (not the default game)
+> 
+> * Built by the lead (account 4, 2026-11-17 ~19:30 UTC) from `claude/rainbow-s06-match-c4` @ ` …[+601 chars]
+
+### 🤖 Claude — 2026-11-20T10:57:50.757Z
+
+No secret files are tracked. Two more facts for the README: how a reviewer jumps to a given screen, and whether the `qa/worldlabs` panorama is a runtime asset.
+
+### 🤖 Claude — 2026-11-20T10:57:52.406Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"pano.png\" src | head -3; grep -rn \"get('stage')\\|get('start')\\|get('screen')\\|get('cp')\\|get('at')\\|params.get(\\|qs.get('s')\" src/main.ts src/game/Game.ts 2>/dev/null | head -15; grep -rln \"flowplan\" src | head -3", "description": "Find screen-jump URL params and panorama usage"}`
+
+### 🧑 User — 2026-11-20T10:57:52.689Z
+
+> ↩︎ result: src/world/materials.ts:706: * (183 KB) = `qa/worldlabs/05/pilot/full/pano.png` (4608×2304) downsampled to 1024×512, with the hemisphere
+> src/game/Game.ts
+
+### 🤖 Claude — 2026-11-20T10:57:57.144Z
+
+> 🔧 **Bash** `{"command": "grep -rnoE \"(qs|params|q|search|url)\\??\\.get\\('[a-zA-Z0-9_]+'\\)\" src/main.ts src/game/*.ts | grep -vE \"m0[4-8]|match0|benny|b20\" | sed \"s/.*get('//;s/')//\" | sort | uniq -c | sort -rn | head -40", "description": "List general URL switches read by the game"}`
+
+### 🧑 User — 2026-11-20T10:57:57.531Z
+
+> ↩︎ result: 1 tone05
+>       1 seed
+>       1 hide
+>       1 dpr
+>       1 bloom
+
+### 🤖 Claude — 2026-11-20T10:58:02.010Z
+
+The Screen 06 debug render has finished. A quick look before I continue the export:
+
+### 🤖 Claude — 2026-11-20T10:58:04.767Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r24/lead_rip && cat /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/tasks/buhua24jg.output; S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad; python3 -c \"\nfrom PIL import Image\nims=[Image.open(f'{v}/o1_003.png').convert('RGB') for v in ['NORIP','WDBG0','RIPZ','WDBG']]\nw,h=432,768\nsh=Image.new('RGB',(w*4,h))\nfor i,im in enumerate(ims): sh.paste(im.resize((w,h)),(i*w,0))\nsh.save('$S/wdbg.png')\"", "description": "Compare plate-weight debug with normal renders"}`
+
+### 🧑 User — 2026-11-20T10:58:05.494Z
+
+> ↩︎ result: WDBG0 exit 0 2 png
+> WDBG exit 0 2 png
+> 
+> [exited with code 0]
+
+### 🤖 Claude — 2026-11-20T10:58:08.461Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/wdbg.png"}`
+
+### 🧑 User — 2026-11-20T10:58:08.769Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T10:58:37.262Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/match/06/r24/lead_rip/NOTES.md", "content": "# Screen 06 — the \"raised blue cone\" under Benny at the opening (lead, round 24) — IN PROGRESS, nothing kept\n\nUser (~10:10, verbatim): \"at the opening, the new ripple effect looks like a raised blue cone underneath Benny. My approved picture\nshows a shallow ripple immediately around his contact with the water. Please make that opening effect sit naturally on the water\nsurface and blend into his wake. Preserve the successful surrounding work.\"\n\nAll shots: real game, deterministic (fixed steps, water clo …[+1976 chars]`
+
+### 🧑 User — 2026-11-20T10:58:38.147Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/match/06/r24/lead_rip/NOTES.md (file state is current in your context — no need to Read it back)
+

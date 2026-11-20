@@ -32,7 +32,7 @@ index 65c878c..a20f48e 100644
        if (mvViews.length && camera) {
          const cp = camera.getWorldPosition(_cp);
 diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
-index 2b62a35..c407aad 100644
+index 2b62a35..2cd1a52 100644
 --- a/src/world/match04m4.ts
 +++ b/src/world/match04m4.ts
 @@ -120,6 +120,15 @@ uniform float uRVar;       // r17 m04rpvar: number of painted rings stacked in t
@@ -398,7 +398,7 @@ index 2b62a35..c407aad 100644
  uniform vec4 uLane2;         // r13 m04lane2: x swirl detail, y gloss, z sparkle
 +uniform vec4 uLG;            // r23 m04lgs: x strength, y streaks per u across, z line half width (share), w whiteness
 +uniform vec4 uLG2;           // r23 m04lgs: x streak segment length (u), y meander (u), z base smoothing (mip), w far fade
-+uniform vec4 uLG3;           // r24 m04lgs: x swirl follow (u per tile brightness), y its smoothing (mip), z sparkles, w dash threshold
++uniform vec4 uLG3;           // r24 m04lgs: x swirl bend (u), y swirl size (u), z sparkles, w dash threshold
  uniform vec4 uEdge;          // r13 m04edge: x on, y half arc to the edge, z fringe width, w strength
  uniform vec2 uSE;            // r13 m04rse / m04rsl: the climbing side water as long flowing currents (along stretch, from |lat|)
  uniform float uTime;
@@ -431,12 +431,12 @@ index 2b62a35..c407aad 100644
 +      float lbB = dot(bb, vec3(0.30, 0.55, 0.15));
 +      vec3 base = mix(vec3(0.00, 0.42, 0.98), vec3(0.04, 0.78, 1.00), smoothstep(0.22, 0.72, lbB));
 +      base = mix(base, vec3(0.30, 0.90, 1.00), 0.35 * smoothstep(0.72, 0.95, lbB));
-+      // r24: the streaks follow the PAINTED swirls — lines of constant (lateral + k * smoothed tile brightness) bend along
-+      // the tile's own swirl contours (k = uLG3.x; 0 = straight lines along the flow)
++      // r24: the streaks curve in soft swirls like the painted glints — lines of constant (lateral + bend * smooth 2-octave
++      // noise) (value noise is C1-smooth: no kinks; the coarse tile mip used first drew zigzag 'lightning' at its texel edges)
 +      float sw = 0.0;
 +      if (uLG3.x != 0.0) {
-+        vec3 sb = mix(texture2D(uRiv, uv1, uLG3.y).rgb, texture2D(uRiv, uv2, uLG3.y).rgb, w);
-+        sw = uLG3.x * (dot(sb, vec3(0.30, 0.55, 0.15)) - 0.5);
++        vec2 sp = vec2(vS / uLG3.y, fl / (uLG3.y * 2.5));
++        sw = uLG3.x * ((vn(sp + vec2(4.0, 2.0)) - 0.5) + 0.5 * (vn(sp * 2.0 + vec2(9.0, 5.0)) - 0.5));
 +      }
 +      float mw = vS + sw + uLG2.y * (vn(vec2(fl * 0.07, 1.0)) - 0.5) + 0.5 * uLG2.y * sin(fl * 0.31 + vS * 0.9);
 +      float q = mw * uLG.y, id = floor(q), fq = fract(q) - 0.5;
@@ -693,9 +693,9 @@ index 2b62a35..c407aad 100644
 +        // (mip bias), m04lgf far fade (line spacing per pixel)
 +        uLG: { value: new THREE.Vector4(M04.num('m04lgs', 0), M04.num('m04lgn', 2.2), M04.num('m04lgt', 0.07), M04.num('m04lgk', 0.85)) },
 +        uLG2: { value: new THREE.Vector4(M04.num('m04lgl2', 3.5), M04.num('m04lgm', 0.5), M04.num('m04lgb', 5.0), M04.num('m04lgf', 0.6)) },
-+        // r24: m04lgw swirl follow (streaks bend along the tile's painted swirls), m04lgwb its smoothing, m04lgsp sparkles,
++        // r24: m04lgw swirl bend (u; streaks curve in soft swirls), m04lgwb swirl size (u), m04lgsp sparkles,
 +        // m04lgon dash threshold (higher = fewer dashes)
-+        uLG3: { value: new THREE.Vector4(M04.num('m04lgw', 0), M04.num('m04lgwb', 3.0), M04.num('m04lgsp', 0), M04.num('m04lgon', 0.42)) },
++        uLG3: { value: new THREE.Vector4(M04.num('m04lgw', 0), M04.num('m04lgwb', 1.5), M04.num('m04lgsp', 0), M04.num('m04lgon', 0.42)) },
          uEdge: { value: new THREE.Vector4(M04.num('m04edge', 0), arc[nX], M04.num('m04edgew', 0.45), M04.num('m04edges', 0.8)) },
          uSE: { value: new THREE.Vector2(M04.num('m04rse', 1), M04.num('m04rsl', 1.2)) },
          uPk: { value: new THREE.Vector4(M04.pink ? 1 : 0, M04.num('m04pkl', 1.05), M04.num('m04pko', 3.6), M04.num('m04pkw', 0.85)) },

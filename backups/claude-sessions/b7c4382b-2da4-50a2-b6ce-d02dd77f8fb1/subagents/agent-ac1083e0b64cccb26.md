@@ -649,3 +649,44 @@ Both variants rendered (the font warnings are only the HUD font through the shar
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/benny && S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/k; P=/home/user/rainbow-/qa/benny/r23/s3_star; mv $P/06/new $P/06/new_r23_lime && mkdir -p $P/06/probe_r24 && for v in A B C D; do mkdir -p $P/06/probe_r24/$v && cp $S/sx_$v/*_crop.png $S/sx_$v/shots.json $P/06/probe_r24/$v/; done; cp $S/sx06_cmp.png $P/06/probe_r24/star_zoom_BEFORE_NEWr23_A_B.png; cp $S/sx06_cmp2.png $P/06/probe_r24/star_zoom_A_B_C_D.png; printf 'A b20sx06=0.95,1.7,0.8\\nB b20sx06=1.0,1.5,0.72\\nC b20sx06=0.85,1.4,0.62\\nD b20sx06=0.9,1.55,0.62  (chosen = …[+595 chars]`
 
+### 🧑 User — 2026-11-20T10:57:25.925Z
+
+> ↩︎ result: 06 a_start s 198.924 lat 0 stage 06 coins 1680
+> 06 c_middle s 215.791 lat 0 stage 06 coins 1730
+> 06 f_hard_left s 215.791 lat -2.95 stage 06 coins 1690
+> a_start cx 554 cy 1205 area 4293 vr 0.62 median [248, 226, 36] p10 [222, 164, 6] p90 [255, 255, 81] hue 53.8
+> c_middle cx 416 cy 833 area 670 vr 0.25 median [246, 240, 31] p10 [221, 178, 16] p90 [255, 255, 53] hue 56.7
+
+### 🤖 Claude — 2026-11-20T10:57:33.110Z
+
+The edit was refused (file not read in this session), so that re-render reproduced the r23 lime version exactly (useful as a reproducibility check). Reading the file and applying the edit properly.
+
+### 🤖 Claude — 2026-11-20T10:57:33.756Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/benny/src/characters/benny/benny20.ts", "offset": 159, "limit": 10}`
+
+### 🧑 User — 2026-11-20T10:57:33.815Z
+
+> ↩︎ result: 159	/** r23 step 3: per-screen felt-star exposure (LINEAR multipliers on the felt star colour; with `b20star=1&b20expo=1`).
+> 160	 *  The approved 05–08 paint the star a brighter YELLOW gold (≈ (251, 215, 30), hue ≈ 51°) than the 04 amber (hue 42°);
+> 161	 *  each screen's light pushes the felt toward orange there. Overridable `&b20sx0N=r,g,b`. Unlisted (04): 1. */
+> 162	export const STARX20: Record<string, [number, number, number]> = {
+> 163	  '05': lin('sx05', [0.9, 1.3, 0.7]),
+> 164	  '06': lin('sx06', [0.95, 2.1, 0.8]),
+> 165	  '07': lin('sx07', [0.9, 1.3, 0.6]),
+> 166	  '08': lin('sx08', [0.9, 1.3, 0.75]),
+> 167	};
+> 168
+
+### 🤖 Claude — 2026-11-20T10:57:37.474Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/benny/src/characters/benny/benny20.ts", "old_string": "  '06': lin('sx06', [0.95, 2.1, 0.8]),", "new_string": "  // r24: 2.1 green turned the star lemon-lime under the strong warm light of the 06 middle / hard left (probe A–D,\n  // qa/benny/r23/s3_star/06/probe_r24/); this keeps a warm gold at the start and a clean yellow in the middle\n  '06': lin('sx06', [0.9, 1.55, 0.62]),"}`
+
+### 🧑 User — 2026-11-20T10:57:37.688Z
+
+> ↩︎ result: The file /home/user/wt/benny/src/characters/benny/benny20.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T10:57:41.868Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/k; P=/home/user/rainbow-/qa/benny/r23/s3_star; rm -rf $P/06/new; export AUDIT_SHOTS='[[\"a_start\",0,null],[\"c_middle\",0.35,null],[\"f_hard_left\",0.35,-1]]'; AUDIT_PORT=5279 timeout 900 node tools/benny23/shots_c.mjs $P/06/new 06 \"$(cat $P/QUERY_NEW_06.txt)\" 2>&1 | grep -v \"allow list\" | tail -n 4; python3 -I tools/benny23/crop_c.py $P/06/new; for sh in a_start c_middle; do echo -n \"$sh \"; python3 -I $S/starbox.py $P/06/new $sh $S/z/06_${sh}_new.png | tail -1; don …[+292 chars]`
+

@@ -634,3 +634,42 @@ V5 (left) is much cleaner: gentle thin glints on clear blue. V6's stronger bend 
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-20T10:55:04.036Z
+
+> 🔧 **Bash** `{"command": "uptime; S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04; T=/home/user/rainbow-/qa/match/04/r23/s04_tools; Q2=/home/user/rainbow-/qa/match/04/r23/s2_edge/QUERY_K23-S2.txt; SH='[[\"b_early\",0.12,null],[\"c_middle\",0.35,null]]'\n( BASE=$Q2 SHOTS=$SH bash $T/variant.sh $S/V8 5273 \"m04lgs=1&m04lgn=3&m04lgt=0.06&m04lgl2=2.2&m04lgm=1.0&m04lgw=0.9&m04lgwb=6.5&m04lgb=4&m04lgk=0.7&m04lgsp=0.8\" > $S/V8.out 2>&1 ) &\n( BASE=$Q2 SHOTS=$SH bash $T/variant.sh $S/V9 5274 \"m04lgs=1&m04lgn=3&m04lgt=0.06&m04lgl2=1.6&m04lgm=1.0&m04lgw=0.9&m04lgwb=6.5&m04lg …[+772 chars]`
+
+### 🧑 User — 2026-11-20T10:57:25.011Z
+
+> ↩︎ result: 10:55:04 up 33 min,  0 user,  load average: 26.21, 24.78, 13.48
+> [1]   Done                    ( BASE=$Q2 SHOTS=$SH bash $T/variant.sh $S/V8 5273 "m04lgs=1&m04lgn=3&m04lgt=0.06&m04lgl2=2.2&m04lgm=1.0&m04lgw=0.9&m04lgwb=6.5&m04lgb=4&m04lgk=0.7&m04lgsp=0.8" > $S/V8.out 2>&1 )
+> [2]-  Done                    ( BASE=$Q2 SHOTS=$SH bash $T/variant.sh $S/V9 5274 "m04lgs=1&m04lgn=3&m04lgt=0.06&m04lgl2=1.6&m04lgm=1.0&m04lgw=0.9&m04lgwb=6.5&m04lgb=4&m04lgk=0.8&m04lgsp=1.0" > $S/V9.out 2>&1 )
+> [3]+  Done                    ( BASE=$Q2 SHOTS=$SH bash $T/variant.sh $S/V10 5275 "m04lgs=1&m04lgn=3.5&m04lgt=0.045&m04lgl2=2.2&m04lgm=0.8&m04lgw=1.2&m04lgwb=6.5&m04lgb=4&m04lgk=0.75&m04lgsp=0.8" > $S/V10.out 2>&1 )
+> done /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04/V8 2 png
+> done /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04/V9 2 png
+> done /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04/V10 2 png
+
+### 🤖 Claude — 2026-11-20T10:57:31.905Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04/sweep3.png"}`
+
+### 🧑 User — 2026-11-20T10:57:31.979Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T10:58:01.827Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && python3 -I - <<'EOF'\np = '/home/user/wt/s04/src/world/match04m4.ts'\ns = open(p).read()\ndef rep(old, new):\n    global s\n    assert s.count(old) == 1, old\n    s = s.replace(old, new)\nrep(\"uniform vec4 uLG3;           // r24 m04lgs: x swirl follow (u per tile brightness), y its smoothing (mip), z sparkles, w dash threshold\\n\",\n    \"uniform vec4 uLG3;           // r24 m04lgs: x swirl bend (u), y swirl size (u), z sparkles, w dash threshold\\n\")\nrep(\"      // r24: the streaks follow the PAINTED swirls — lines of constant (lateral + k * smoothed ti …[+1928 chars]`
+
+### 🧑 User — 2026-11-20T10:58:15.093Z
+
+> ↩︎ result: ok
+> tsc_exit=0
+
+### 🤖 Claude — 2026-11-20T10:58:20.866Z
+
+Typecheck passes. Three variants of the smooth swirl.
+
+### 🤖 Claude — 2026-11-20T10:58:27.284Z
+
+> 🔧 **Bash** `{"command": "uptime; S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/s04; T=/home/user/rainbow-/qa/match/04/r23/s04_tools; Q2=/home/user/rainbow-/qa/match/04/r23/s2_edge/QUERY_K23-S2.txt; SH='[[\"b_early\",0.12,null],[\"c_middle\",0.35,null]]'; C=\"m04lgs=1&m04lgn=3&m04lgt=0.06&m04lgm=0.6&m04lgb=4&m04lgk=0.75\"\n( BASE=$Q2 SHOTS=$SH bash $T/variant.sh $S/V11 5273 \"$C&m04lgl2=2.2&m04lgw=0.5&m04lgwb=1.2&m04lgsp=0.8\" > $S/V11.out 2>&1 ) &\n( BASE=$Q2 SHOTS=$SH bash $T/variant.sh $S/V12 5274 \"$C&m04lgl2=2.2&m04lgw=0.8&m04lgwb=1.8&m04lgsp=0.8\" > $S/V12.out 2> …[+674 chars]`
+

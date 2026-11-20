@@ -154122,10 +154122,10 @@ index a76822b..1fa601b 100644
  * `fur.ts`: new BENNY20-only uniforms `uTipCol` (colour the uPile.w tips fade to; pompom keeps its pale lavender) and `uVol`
    (x highlight on up-facing fur, y darker underside). `benny20.ts`: `TUFT` block (body + arms): bigger locks (30 / arms 36),
 diff --git a/src/characters/benny/benny20.ts b/src/characters/benny/benny20.ts
-index 340e1d3..da0af1a 100644
+index 340e1d3..bd27fa9 100644
 --- a/src/characters/benny/benny20.ts
 +++ b/src/characters/benny/benny20.ts
-@@ -132,17 +132,42 @@ export const HAT20 = {
+@@ -132,17 +132,44 @@ export const HAT20 = {
    starFlat: n('sf', 0.3),
  };
  
@@ -154162,7 +154162,9 @@ index 340e1d3..da0af1a 100644
 + *  each screen's light pushes the felt toward orange there. Overridable `&b20sx0N=r,g,b`. Unlisted (04): 1. */
 +export const STARX20: Record<string, [number, number, number]> = {
 +  '05': lin('sx05', [0.9, 1.3, 0.7]),
-+  '06': lin('sx06', [0.95, 2.1, 0.8]),
++  // r24: 2.1 green turned the star lemon-lime under the strong warm light of the 06 middle / hard left (probe A–D,
++  // qa/benny/r23/s3_star/06/probe_r24/); this keeps a warm gold at the start and a clean yellow in the middle
++  '06': lin('sx06', [0.9, 1.55, 0.62]),
 +  '07': lin('sx07', [0.9, 1.3, 0.6]),
 +  '08': lin('sx08', [0.9, 1.3, 0.75]),
  };
@@ -154173,7 +154175,7 @@ index 340e1d3..da0af1a 100644
  let loaded: Promise<Record<string, THREE.Texture | null>> | null = null;
  /** load the knit / felt maps once (missing file → null: that part keeps its benny05 look) */
  export function loadBenny20Maps(): Promise<Record<string, THREE.Texture | null>> {
-@@ -234,36 +259,69 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
+@@ -234,36 +261,69 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
      if (nt) mat.normalScale.setScalar(ns);
      mat.roughness = 0.92;
      mat.metalness = 0;
@@ -154249,7 +154251,7 @@ index 340e1d3..da0af1a 100644
    let first = true;
    const lastPos = new THREE.Vector3();
    const pos = new THREE.Vector3();
-@@ -275,8 +333,20 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
+@@ -275,8 +335,20 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
      scene.getWorldPosition(pos);
      const jumped = pos.distanceTo(lastPos) > 5;
      lastPos.copy(pos);
@@ -154271,7 +154273,7 @@ index 340e1d3..da0af1a 100644
    };
  
    // QA only (`?qa` pages, read by tools/benny20/probe.mjs): live handles for tuning without a reload
-@@ -295,7 +365,7 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
+@@ -295,7 +367,7 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
        }
        return [Math.round(x0), Math.round(y0), Math.round(x1), Math.round(y1)];
      };
