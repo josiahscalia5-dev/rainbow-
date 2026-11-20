@@ -1866,3 +1866,299 @@ Now the material defaults and the decal build.
 
 > ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully.
 
+### 🤖 Claude — 2026-11-20T04:56:38.459Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "    return [p, l / TF.lateralPeriod, l];\n  }, TF.period), mat(tFloor, true), 'floor');", "new_string": "    return [p, l / TF.lateralPeriod, l];\n  }, TF.period), mat(tFloor, true), 'floor');\n  const floorMat = (group.getObjectByName('m06_floor') as THREE.Mesh).material as THREE.ShaderMaterial;\n  // r23 `&m06rip=1` (qa/match/06/r23/PROGRESS.md): the painted ripple rings round Benny (concentric white-cyan rings, the\n  // splash collar at his base, the bright streaks under him) vanished as soon as he …[+4482 chars]`
+
+### 🧑 User — 2026-11-20T04:56:39.043Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T04:56:46.017Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "    setAway(a) { if (foamClouds) foamClouds.visible = a > 0.5; for (const o of foamSprites) o.visible = a > 0.5; },", "new_string": "    setAway(a) { if (foamClouds) foamClouds.visible = a > 0.5; for (const o of foamSprites) o.visible = a > 0.5; },\n    setBenny(s, lat) { if (floorMat.uniforms.uRipOn.value > 0.5) floorMat.uniforms.uBen.value.set(lat, s); },"}`
+
+### 🤖 Claude — 2026-11-20T04:56:47.454Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/game/Game.ts", "old_string": "      m06.setAway(m06On ? m06.away(camera.position) : 0);", "new_string": "      m06.setAway(m06On ? m06.away(camera.position) : 0);\n      m06.setBenny(st.s, st.lat); // r23 `&m06rip=1` only (no-op without it)"}`
+
+### 🧑 User — 2026-11-20T04:56:47.469Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully.
+
+### 🧑 User — 2026-11-20T04:56:47.502Z
+
+> ↩︎ result: <tool_use_error>File has not been read yet. Read it first before writing to it.</tool_use_error>
+
+### 🤖 Claude — 2026-11-20T04:56:50.071Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/src/game/Game.ts", "offset": 540, "limit": 12}`
+
+### 🧑 User — 2026-11-20T04:56:50.738Z
+
+> ↩︎ result: 540	    }
+> 541	    // `?match06=1` on Screen 06: the projected scenery carries the approved river, ripples, foam and bubbles
+> 542	    if (m06 && (m06On || m06Applied) && !(m08 && m08On)) {
+> 543	      // r7 `&m06bub=1`: the game's iridescent bubbles + Benny's splash crown / spray return once the camera leaves the
+> 544	      // approved view (the painting
+> 545	      // carries its bubbles only there; while swimming the screen had none)
+> 546	      const bub6 = M06_BUB && m06On && m06.away(camera.position) > 0.5;
+> 547	      m06.setAway(m06On ? m06.away(camera.position) : 0);
+> 548	      for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m06On || (bub6 && (k === 'bubbles' || k === 'splashCrown' || k === 'spray')); }
+> 549	      m06Applied = m06On;
+> 550	    }
+> 551	    if (m08 && m08On) for (const k of ['puddles', 'finalWave']) { const o = water.parts?.[k]; if (o) o.visible = false; }
+
+### 🤖 Claude — 2026-11-20T04:56:53.773Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/game/Game.ts", "old_string": "      m06.setAway(m06On ? m06.away(camera.position) : 0);", "new_string": "      m06.setAway(m06On ? m06.away(camera.position) : 0);\n      m06.setBenny(st.s, st.lat); // r23 `&m06rip=1` only (no-op without it)"}`
+
+### 🧑 User — 2026-11-20T04:56:53.833Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/game/Game.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T04:56:54.530Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && timeout 300 npx tsc --noEmit; echo \"tsc rc=$?\"", "description": "Type-check after m06rip changes"}`
+
+### 🧑 User — 2026-11-20T04:56:59.115Z
+
+> ↩︎ result: src/world/match06.ts(117,16): error TS1005: ',' expected.
+> src/world/match06.ts(117,17): error TS1134: Variable declaration expected.
+> tsc rc=2
+
+### 🤖 Claude — 2026-11-20T04:57:01.137Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/src/world/match06.ts", "offset": 113, "limit": 8}`
+
+### 🧑 User — 2026-11-20T04:57:01.244Z
+
+> ↩︎ result: 113	uniform float uStO;
+> 114	uniform float uStDbg;
+> 115	uniform vec3 uProjF;
+> 116	uniform mat4 uProjVP;
+> 117	// r23 `&m06rip=1` (qa/match/06/r23/PROGRESS.md): the approved picture's ripple rings round Benny, carried with him on the
+> 118	// river floor. uRip = the painted water round the approved Benny in the river's own coordinates (lateral x course s, premult.
+> 119	// alpha = 0 where his body was filled), uRipR = its extent (l0, l1, ds0, ds1), uBen = Benny (lateral, s), uRipA = (outward
+> 120	// drift share, drift rate /s, strength, -)
+
+### 🤖 Claude — 2026-11-20T04:57:02.838Z
+
+Backticks inside the GLSL template literal; replacing them with plain quotes.
+
+### 🤖 Claude — 2026-11-20T04:57:04.293Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "// r23 `&m06rip=1` (qa/match/06/r23/PROGRESS.md): the approved picture's ripple rings round Benny, carried with him on the\n// river floor.", "new_string": "// r23 '&m06rip=1' (qa/match/06/r23/PROGRESS.md): the approved picture's ripple rings round Benny, carried with him on the\n// river floor."}`
+
+### 🧑 User — 2026-11-20T04:57:04.358Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T04:57:04.943Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && timeout 300 npx tsc --noEmit; echo \"tsc rc=$?\"", "description": "Re-run type-check"}`
+
+### 🧑 User — 2026-11-20T04:57:19.404Z
+
+> ↩︎ result: tsc rc=0
+
+### 🤖 Claude — 2026-11-20T04:57:27.525Z
+
+Type-check clean. Before full renders, a quick look at the decal itself (debug dump) to verify it holds the painted rings and not Benny's fill.
+
+### 🤖 Claude — 2026-11-20T04:57:35.230Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06; cat > /home/user/wt/s06/tools/match06/r23_ripdump.mjs <<'EOF'\n// r23 (QA only): dump the m06rip decal (raw RGBA premultiplied) + the build log.  node tools/match06/r23_ripdump.mjs \"<query>\" out.raw\nimport { writeFileSync } from 'node:fs';\nimport { pathToFileURL } from 'node:url';\nconst { loadPlaywright, CHROMIUM_ARGS } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);\nconst { startVite } = await import(pathToFileURL(`${process.cwd()}/tools/match06/r23_vite.mjs`) …[+1249 chars]`
+
+### 🧑 User — 2026-11-20T04:58:10.768Z
+
+> ↩︎ result: console [match06] m06rip {NX: 384, NY: 384, LW: 2.1, D0: -2.6, D1: 1.6}
+> decal 384 384
+
+### 🤖 Claude — 2026-11-20T04:58:18.579Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06; python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\na=np.frombuffer(open('$S/rip.raw','rb').read(),dtype=np.uint8).reshape(384,384,4).astype(float)\nal=a[...,3:4]/255.0\nbg=np.zeros((384,384,3)); bg[...]=(40,40,40)\nc=a[...,:3]+bg*(1-al)\nim=Image.fromarray(np.clip(c,0,255).astype(np.uint8))\nim=im.transpose(Image.FLIP_TOP_BOTTOM)  # row 0 = behind Benny -> show ahead at top\nim.resize((768,768)).save('$S/rip.png')\nprint('alpha>0.5 share', float((al>0.5).mean()))\n\"", "description": …[+40 chars]`
+
+### 🧑 User — 2026-11-20T04:58:19.511Z
+
+> ↩︎ result: alpha>0.5 share 0.2996148003472222
+
+### 🤖 Claude — 2026-11-20T04:58:22.479Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/rip.png"}`
+
+### 🧑 User — 2026-11-20T04:58:22.541Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:58:53.782Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06; python3 -I -c \"\nfrom PIL import Image, ImageDraw\np=Image.open('/home/user/wt/s06/assets/textures/match06/plate06_hybrid.png').convert('RGB')\nbox=(0,1000,864,1400)\nc=p.crop(box)\nd=ImageDraw.Draw(c)\nfor x in range(0,864,50): d.line([(x,0),(x,400)],fill=(255,255,0) if x%100==0 else (120,120,0))\nfor y in range(0,400,50): d.line([(0,y),(864,y)],fill=(255,255,0) if y%100==0 else (120,120,0))\nc.save('$S/plate_grid.png')\n\"", "description": "Crop plate with a pixel grid to find bubbles"}`
+
+### 🧑 User — 2026-11-20T04:58:55.025Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T04:58:58.599Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/plate_grid.png"}`
+
+### 🧑 User — 2026-11-20T04:58:58.764Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:59:19.537Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && python3 - <<'EOF'\np='src/world/match06.ts'\ns=open(p).read()\nold=\"\"\"        const e = Math.hypot(l / LW, ds < 0 ? ds / D0 : ds / D1);\n        const a = (1 - THREE.MathUtils.smoothstep(e, 0.6, 1.0)) * (1 - THREE.MathUtils.smoothstep(fillAt(x, y), 0.1, 0.6));\"\"\"\nnew=\"\"\"        const e = Math.hypot(l / LW, ds < 0 ? ds / D0 : ds / D1);\n        let a = (1 - THREE.MathUtils.smoothstep(e, 0.6, 1.0)) * (1 - THREE.MathUtils.smoothstep(fillAt(x, y), 0.1, 0.6));\n        for (const [bx, by, br] of BUB06) a *= THREE.MathUtils.smoothstep(Math.hypot(x - bx, …[+2003 chars]`
+
+### 🧑 User — 2026-11-20T05:00:02.759Z
+
+> ↩︎ result: 821:    const LW = rn('m06ripl', 1.45), D0 = -(rd.length === 2 && rd.every(Number.isFinite) ? rd[0] : 2.6), D1 = rd.length === 2 && rd.every(Number.isFinite) ? rd[1] : 1.6;
+> tsc rc=0
+> console [match06] m06rip {NX: 384, NY: 556, LW: 1.45, D0: -2.6, D1: 1.6}
+> decal 384 556
+> 384 556
+
+### 🤖 Claude — 2026-11-20T05:00:09.711Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -i '821s/? rd\\[0\\] : 2.6)/? rd[0] : 2.4)/; 821s/? rd\\[1\\] : 1.6;/? rd[1] : 1.3;/' src/world/match06.ts && sed -n 821p src/world/match06.ts && timeout 300 npx tsc --noEmit; echo \"tsc rc=$?\"; S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06; AUDIT_PORT=5283 timeout 900 node tools/match06/r23_ripdump.mjs \"$(cat $S/q_s3_rip.txt)\" $S/rip.raw 2>&1 | tail -2; python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\nraw=open('$S/rip.raw','rb').read(); n=len(raw)//4; NX=384; NY=n//NX\na=np.frombuffer(raw,dtype=n …[+323 chars]`
+
+### 🧑 User — 2026-11-20T05:00:40.931Z
+
+> ↩︎ result: const LW = rn('m06ripl', 1.45), D0 = -(rd.length === 2 && rd.every(Number.isFinite) ? rd[0] : 2.4), D1 = rd.length === 2 && rd.every(Number.isFinite) ? rd[1] : 1.3;
+> tsc rc=0
+> console [match06] m06rip {NX: 384, NY: 490, LW: 1.45, D0: -2.4, D1: 1.3}
+> decal 384 490
+> 384 490
+> [This command modified 1 file you've previously read: ../wt/s06/src/world/match06.ts. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-20T05:00:43.778Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/rip.png"}`
+
+### 🧑 User — 2026-11-20T05:00:43.808Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T05:00:54.461Z
+
+The decal now holds only the painted ripple rings, the splash collar and the bright streaks behind Benny; bubbles and foam are out. Checking the background queue before rendering step 3.
+
+### 🤖 Claude — 2026-11-20T05:00:57.372Z
+
+> 🔧 **Bash** `{"command": "ls -la /home/user/rainbow-/qa/match/06/r23/step1_m06fcl/*.mp4 /home/user/rainbow-/qa/match/06/r23/step1_m06fcl/with_m06view/*.mp4 /home/user/rainbow-/qa/match/06/r23/step2_m06vs0/*.mp4 2>/dev/null; cat /home/user/rainbow-/qa/match/06/r23/step2_m06vs0/gameplay_NEW.log | tail -3; for d in /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/clip*/f; do echo \"$d $(ls $d | wc -l)\"; done; uptime", "description": "Check clips and step 2 gameplay status"}`
+
+### 🧑 User — 2026-11-20T05:00:57.425Z
+
+> ↩︎ result: -rw-r--r-- 1 root root 1835056 Nov 20 05:00 /home/user/rainbow-/qa/match/06/r23/step1_m06fcl/swim_06_NEW.mp4
+>  },
+>  "errors": []
+> }
+> /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/clip16XH/f 115
+> /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06/clipmSt7/f 114
+>  05:00:57 up  1:03,  0 user,  load average: 18.55, 21.87, 17.43
+
+### 🤖 Claude — 2026-11-20T05:01:02.968Z
+
+> 🔧 **Bash** `{"command": "O=/home/user/rainbow-/qa/match/06/r23/step2_m06vs0; python3 -I -c \"\nimport json\nd=json.load(open('$O/gameplay_NEW.json')); c=d['checks']\nprint('pass', d['pass'], sum(1 for v in c.values() if v.get('pass')), '/', len(c), c['realCoinPickups'], 'cut', c['noCameraCut'], 'q', d['query'][-40:])\"", "description": "Read step 2 gameplay result"}`
+
+### 🧑 User — 2026-11-20T05:01:03.051Z
+
+> ↩︎ result: pass True 8 / 8 {'pass': True, 'startCoins': 1330, 'endCoins': 2240, 'collected': 91} cut {'pass': True, 'maxCameraJumpPerStep': 0.728} q clu=1&m06st=1&m06fcl=1&m06view=1&m06vs=0
+
+### 🤖 Claude — 2026-11-20T05:01:12.083Z
+
+Step 2 gameplay: 8/8, 91 coins, no camera cut. Launching the step 3 NEW shots (BEFORE = step 2 NEW, same query).
+
+### 🤖 Claude — 2026-11-20T05:01:14.631Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s06; O=/home/user/rainbow-/qa/match/06/r23/step3_m06rip; mkdir -p $O; $S/shots.sh $S/q_s3_rip.txt $O/NEW 5282; grep -h \"done\" $O/NEW.log", "description": "Render step 3 ripple-ring shots", "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T05:01:14.706Z
+
+> ↩︎ result: Command running in background with ID: b7pbvxnp5. Output is being written to: /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/tasks/b7pbvxnp5.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-20T05:01:16.571Z
+
+> 🔧 **Monitor** `{"command": "L=/home/user/rainbow-/qa/match/06/r23/step3_m06rip/NEW.log; n=-1; while true; do c=$(grep -c \"^06\" $L 2>/dev/null || echo 0); if [ \"$c\" != \"$n\" ] && [ $((c % 4)) = 1 ]; then echo \"step3 shots: $c/11\"; fi; n=$c; if grep -q \"done\\|pageerror\\|Shader\" $L 2>/dev/null; then grep -h \"done\\|pageerror\\|Shader\" $L | head -3; exit 0; fi; sleep 5; done", "description": "step 3 m06rip shots progress / errors", "timeout_ms": 1800000}`
+
+### 🧑 User — 2026-11-20T05:01:16.674Z
+
+> ↩︎ result: Monitor started (task b2e6qjt04, expires in 30m unless the source ends first; you get one notice at expiry — re-arm if you still need the watch). You will be notified on each event. Keep working — do not poll or sleep. Events may arrive while you are waiting for the user — an event is not their reply.
+
+### 🤖 Claude — 2026-11-20T05:01:24.243Z
+
+While step 3 renders, I'll write up step 2 (verdict + proof list; clip line pending) and its code note.
+
+### 🤖 Claude — 2026-11-20T05:01:39.389Z
+
+> 🔧 **Bash** `{"command": "O=/home/user/rainbow-/qa/match/06/r23; cp $O/step1_m06fcl/1_APPROVED.png $O/step2_m06vs0/1_APPROVED.png; cp $O/step1_m06fcl/1_APPROVED.png $O/step3_m06rip/1_APPROVED.png; cat > $O/step2_m06vs0/code.patch <<'EOF'\n# Step 2 (r23) needs NO code change: it is the r21 framing TEST `&m06view=1` (src/game/cameraRig.ts, M06_VIEW) run with\n# its existing tunable `&m06vs=0` (\"share of the approved Benny->route screen separation kept over the crest\", 0 = no\n# climb). The camera then keeps the approved height above the water instead of climbing up to ~7 u over the crest.\n# Query: match06 …[+3306 chars]`
+
+### 🧑 User — 2026-11-20T05:01:39.770Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-20T05:01:43.354Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/tasks/b2e6qjt04.output | tail -5; tail -5 /home/user/rainbow-/qa/match/06/r23/step3_m06rip/NEW.log", "description": "Check why step 3 monitor failed"}`
+
+### 🧑 User — 2026-11-20T05:01:43.433Z
+
+> ↩︎ result: [stderr] /bin/bash: line 2: 0
+> 0: syntax error in expression (error token is "0")
+> 
+> [exited with code 1]
+
+### 🤖 Claude — 2026-11-20T05:01:45.725Z
+
+Monitor script bug (log didn't exist yet). Re-arming with a safer counter.
+
+### 🤖 Claude — 2026-11-20T05:01:47.623Z
+
+> 🔧 **Monitor** `{"command": "L=/home/user/rainbow-/qa/match/06/r23/step3_m06rip/NEW.log; n=-1; while true; do c=0; [ -f $L ] && c=$(grep -c \"^06\" $L); if [ \"$c\" != \"$n\" ] && [ $((c % 4)) = 1 ]; then echo \"step3 shots: $c/11\"; fi; n=$c; if [ -f $L ] && grep -q \"done\\|pageerror\\|Shader\" $L; then grep -h \"done\\|pageerror\\|Shader\" $L | head -3; exit 0; fi; sleep 5; done", "description": "step 3 m06rip shots progress / errors", "timeout_ms": 1800000}`
+
+### 🧑 User — 2026-11-20T05:01:47.669Z
+
+> ↩︎ result: Monitor started (task bfaukhs9l, expires in 30m unless the source ends first; you get one notice at expiry — re-arm if you still need the watch). You will be notified on each event. Keep working — do not poll or sleep. Events may arrive while you are waiting for the user — an event is not their reply.
+
+### 🤖 Claude — 2026-11-20T05:01:52.418Z
+
+> 🔧 **Bash** `{"command": "sleep 240; tail -2 /home/user/rainbow-/qa/match/06/r23/step3_m06rip/NEW.log; ls /home/user/rainbow-/qa/match/06/r23/step1_m06fcl/*.mp4", "description": "Wait briefly then check step 3 render log", "timeout": 300000}`
+
+### 🧑 User — 2026-11-20T05:01:52.424Z
+
+> ↩︎ result: <tool_use_error>Blocked: sleep 240 followed by: tail -2 /home/user/rainbow-/qa/match/06/r23/step3_m06rip/NEW.log ls /home/user/rainbow-/qa/match/06/r23/step1_m06fcl/*.mp4. To wait for a condition, use Monitor with an until-loop (e.g. `until <check>; do sleep 2; done`). To wait for a command you started, use run_in_background: true. Do not chain shorter sleeps to work around this block.</tool_use_error>
+
+### 🤖 Claude — 2026-11-20T05:01:54.595Z
+
+First step 3 shot is in; checking the start view is unchanged.
+
+### 🤖 Claude — 2026-11-20T05:01:56.443Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/tools-pixelmatch && node pixeldiff.mjs /home/user/rainbow-/qa/match/06/r23/step2_m06vs0/NEW/a_start.png /home/user/rainbow-/qa/match/06/r23/step3_m06rip/NEW/a_start.png - 0.1; node pixeldiff.mjs /home/user/rainbow-/qa/match/06/r23/step1_m06fcl/BEFORE/a_start.png /home/user/rainbow-/qa/match/06/r23/step3_m06rip/NEW/a_start.png - 0.1", "description": "Pixel-check step 3 start view"}`
+
+### 🧑 User — 2026-11-20T05:01:57.443Z
+
+> ↩︎ result: {"a":"/home/user/rainbow-/qa/match/06/r23/step2_m06vs0/NEW/a_start.png","b":"/home/user/rainbow-/qa/match/06/r23/step3_m06rip/NEW/a_start.png","rows":[0,1536],"threshold":0.1,"diff_pixels":1,"total":1327104,"diff_pct":0.0001}
+> {"a":"/home/user/rainbow-/qa/match/06/r23/step1_m06fcl/BEFORE/a_start.png","b":"/home/user/rainbow-/qa/match/06/r23/step3_m06rip/NEW/a_start.png","rows":[0,1536],"threshold":0.1,"diff_pixels":1,"total":1327104,"diff_pct":0.0001}
+
+### 🤖 Claude — 2026-11-20T05:02:03.913Z
+
+1 pixel differs at the start view. Let me locate it.
+
+### 🤖 Claude — 2026-11-20T05:02:06.090Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\na=np.asarray(Image.open('/home/user/rainbow-/qa/match/06/r23/step2_m06vs0/NEW/a_start.png').convert('RGB')).astype(int)\nb=np.asarray(Image.open('/home/user/rainbow-/qa/match/06/r23/step3_m06rip/NEW/a_start.png').convert('RGB')).astype(int)\nd=np.abs(a-b).max(axis=2)\nys,xs=np.nonzero(d)\nprint('pixels with any change', len(ys), 'max', d.max())\nidx=np.argsort(-d[ys,xs])[:8]\nfor i in idx: print(xs[i], ys[i], d[ys[i],xs[i]], a[ys[i],xs[i]], b[ys[i],xs[i]])\n\"", "description": "Locate the changed start-view pixel"}`
+
+### 🧑 User — 2026-11-20T05:02:06.716Z
+
+> ↩︎ result: pixels with any change 19 max 186
+> 322 1017 186 [255 165 220] [ 69   0 196]
+> 289 543 16 [178 179 255] [178 195 255]
+> 373 538 9 [104 209 255] [113 215 255]
+> 288 543 8 [ 86 183 255] [ 86 191 255]
+> 291 543 7 [208 191 255] [208 198 255]
+> 292 543 6 [188 193 255] [188 199 255]
+> 375 538 6 [131 222 255] [137 226 255]
+> 374 538 6 [119 218 255] [125 221 255]
+

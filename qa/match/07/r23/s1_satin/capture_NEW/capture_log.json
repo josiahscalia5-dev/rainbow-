@@ -1,0 +1,296 @@
+{
+  "when": "2026-11-20T04:55:11.829Z",
+  "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+  "shots": [
+    {
+      "id": "07",
+      "file": "/home/user/rainbow-/qa/match/07/r23/s1_satin/capture_NEW/07.png",
+      "size": [
+        864,
+        1536
+      ],
+      "checkpoint": {
+        "stage": "07",
+        "s": 273.0556340077652,
+        "y": -49.6419435169462
+      },
+      "state": {
+        "mode": "ride",
+        "stage": "07",
+        "s": 273.056,
+        "lat": 0,
+        "coins": 1940,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -49.642,
+        "bennyVisible": true,
+        "cam": [
+          10.74,
+          -46.74,
+          -195.68
+        ]
+      },
+      "stats": {
+        "fps": 71.9,
+        "calls": 154,
+        "triangles": 290061,
+        "geometries": 163,
+        "textures": 51,
+        "modules": {
+          "water": "vfx/index.ts",
+          "benny": "assets/models/benny.glb",
+          "girl": "assets/models/rainbow_girl.glb"
+        },
+        "courseLength": 436.098256728091,
+        "firstFrameCalls": 154,
+        "firstFrameTriangles": 290061
+      }
+    },
+    {
+      "id": "08",
+      "file": "/home/user/rainbow-/qa/match/07/r23/s1_satin/capture_NEW/08.png",
+      "size": [
+        864,
+        1536
+      ],
+      "checkpoint": {
+        "stage": "08",
+        "s": 392.1617102628636,
+        "y": -113.17241270421519
+      },
+      "state": {
+        "mode": "ride",
+        "stage": "08",
+        "s": 392.162,
+        "lat": 0,
+        "coins": 2040,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -113.172,
+        "bennyVisible": true,
+        "cam": [
+          13.01,
+          -108.72,
+          -275.88
+        ]
+      },
+      "stats": {
+        "fps": 153.9,
+        "calls": 164,
+        "triangles": 611819,
+        "geometries": 185,
+        "textures": 55,
+        "modules": {
+          "water": "vfx/index.ts",
+          "benny": "assets/models/benny.glb",
+          "girl": "assets/models/rainbow_girl.glb"
+        },
+        "courseLength": 436.098256728091,
+        "firstFrameCalls": 242,
+        "firstFrameTriangles": 612755
+      }
+    },
+    {
+      "id": "07a_plunge_top",
+      "file": "/home/user/rainbow-/qa/match/07/r23/s1_satin/capture_NEW/07a_plunge_top.png",
+      "size": [
+        864,
+        1536
+      ],
+      "checkpoint": {
+        "stage": "07",
+        "s": 311.41331806416713,
+        "y": -51.87507653394495
+      },
+      "state": {
+        "mode": "ride",
+        "stage": "07",
+        "s": 311.413,
+        "lat": 0,
+        "coins": 1940,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -51.875,
+        "bennyVisible": true,
+        "cam": [
+          13.38,
+          -47.52,
+          -231.77
+        ]
+      },
+      "stats": {
+        "fps": 95.6,
+        "calls": 154,
+        "triangles": 352721,
+        "geometries": 163,
+        "textures": 51,
+        "modules": {
+          "water": "vfx/index.ts",
+          "benny": "assets/models/benny.glb",
+          "girl": "assets/models/rainbow_girl.glb"
+        },
+        "courseLength": 436.098256728091,
+        "firstFrameCalls": 154,
+        "firstFrameTriangles": 352721
+      }
+    },
+    {
+      "id": "07b_plunge_mid",
+      "file": "/home/user/rainbow-/qa/match/07/r23/s1_satin/capture_NEW/07b_plunge_mid.png",
+      "size": [
+        864,
+        1536
+      ],
+      "checkpoint": {
+        "stage": "07",
+        "s": 351.24224286150104,
+        "y": -84.1109301349098
+      },
+      "state": {
+        "mode": "ride",
+        "stage": "07",
+        "s": 351.242,
+        "lat": 0,
+        "coins": 1940,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -84.111,
+        "bennyVisible": true,
+        "cam": [
+          12.91,
+          -76.42,
+          -260.01
+        ]
+      },
+      "stats": {
+        "fps": 77.3,
+        "calls": 74,
+        "triangles": 505659,
+        "geometries": 81,
+        "textures": 43,
+        "modules": {
+          "water": "vfx/index.ts",
+          "benny": "assets/models/benny.glb",
+          "girl": "assets/models/rainbow_girl.glb"
+        },
+        "courseLength": 436.098256728091,
+        "firstFrameCalls": 74,
+        "firstFrameTriangles": 505659
+      }
+    },
+    {
+      "id": "07c_plunge_bottom",
+      "file": "/home/user/rainbow-/qa/match/07/r23/s1_satin/capture_NEW/07c_plunge_bottom.png",
+      "size": [
+        864,
+        1536
+      ],
+      "checkpoint": {
+        "stage": "07",
+        "s": 387.071167658835,
+        "y": -112.49726845420172
+      },
+      "state": {
+        "mode": "ride",
+        "stage": "07",
+        "s": 387.071,
+        "lat": 0,
+        "coins": 1940,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -112.497,
+        "bennyVisible": true,
+        "cam": [
+          12.91,
+          -106.66,
+          -272.38
+        ]
+      },
+      "stats": {
+        "fps": 80.7,
+        "calls": 136,
+        "triangles": 540379,
+        "geometries": 137,
+        "textures": 51,
+        "modules": {
+          "water": "vfx/index.ts",
+          "benny": "assets/models/benny.glb",
+          "girl": "assets/models/rainbow_girl.glb"
+        },
+        "courseLength": 436.098256728091,
+        "firstFrameCalls": 136,
+        "firstFrameTriangles": 540379
+      }
+    },
+    {
+      "id": "07d_entering_08",
+      "file": "/home/user/rainbow-/qa/match/07/r23/s1_satin/capture_NEW/07d_entering_08.png",
+      "size": [
+        864,
+        1536
+      ],
+      "checkpoint": {
+        "stage": "08",
+        "s": 390.3617102628636,
+        "y": -113.00046949589631
+      },
+      "state": {
+        "mode": "ride",
+        "stage": "08",
+        "s": 390.362,
+        "lat": 0,
+        "coins": 1940,
+        "hearts": 5,
+        "paused": false,
+        "bennyY": -113,
+        "bennyVisible": true,
+        "cam": [
+          12.95,
+          -108.1,
+          -274.31
+        ]
+      },
+      "stats": {
+        "fps": 89.6,
+        "calls": 165,
+        "triangles": 611959,
+        "geometries": 186,
+        "textures": 55,
+        "modules": {
+          "water": "vfx/index.ts",
+          "benny": "assets/models/benny.glb",
+          "girl": "assets/models/rainbow_girl.glb"
+        },
+        "courseLength": 436.098256728091,
+        "firstFrameCalls": 243,
+        "firstFrameTriangles": 612895
+      }
+    }
+  ],
+  "errors": [
+    "[07] Failed to load resource: the server responded with a status of 403 (Forbidden)",
+    "[07] Failed to load resource: the server responded with a status of 403 (Forbidden)",
+    "[07] Failed to load resource: the server responded with a status of 403 (Forbidden)",
+    "[07] Failed to load resource: the server responded with a status of 403 (Forbidden)",
+    "[08] Failed to load resource: the server responded with a status of 403 (Forbidden)",
+    "[08] Failed to load resource: the server responded with a status of 403 (Forbidden)",
+    "[08] Failed to load resource: the server responded with a status of 403 (Forbidden)",
+    "[08] Failed to load resource: the server responded with a status of 403 (Forbidden)",
+    "[07a_plunge_top] Failed to load resource: the server responded with a status of 403 (Forbidden)",
+    "[07a_plunge_top] Failed to load resource: the server responded with a status of 403 (Forbidden)",
+    "[07a_plunge_top] Failed to load resource: the server responded with a status of 403 (Forbidden)",
+    "[07a_plunge_top] Failed to load resource: the server responded with a status of 403 (Forbidden)",
+    "[07b_plunge_mid] Failed to load resource: the server responded with a status of 403 (Forbidden)",
+    "[07b_plunge_mid] Failed to load resource: the server responded with a status of 403 (Forbidden)",
+    "[07b_plunge_mid] Failed to load resource: the server responded with a status of 403 (Forbidden)",
+    "[07b_plunge_mid] Failed to load resource: the server responded with a status of 403 (Forbidden)",
+    "[07c_plunge_bottom] Failed to load resource: the server responded with a status of 403 (Forbidden)",
+    "[07c_plunge_bottom] Failed to load resource: the server responded with a status of 403 (Forbidden)",
+    "[07c_plunge_bottom] Failed to load resource: the server responded with a status of 403 (Forbidden)",
+    "[07c_plunge_bottom] Failed to load resource: the server responded with a status of 403 (Forbidden)",
+    "[07d_entering_08] Failed to load resource: the server responded with a status of 403 (Forbidden)",
+    "[07d_entering_08] Failed to load resource: the server responded with a status of 403 (Forbidden)",
+    "[07d_entering_08] Failed to load resource: the server responded with a status of 403 (Forbidden)",
+    "[07d_entering_08] Failed to load resource: the server responded with a status of 403 (Forbidden)"
+  ]
+}

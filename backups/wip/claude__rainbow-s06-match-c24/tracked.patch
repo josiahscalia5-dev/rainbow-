@@ -1,5 +1,17 @@
+diff --git a/src/game/Game.ts b/src/game/Game.ts
+index 6aec240..321c542 100644
+--- a/src/game/Game.ts
++++ b/src/game/Game.ts
+@@ -545,6 +545,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
+       // carries its bubbles only there; while swimming the screen had none)
+       const bub6 = M06_BUB && m06On && m06.away(camera.position) > 0.5;
+       m06.setAway(m06On ? m06.away(camera.position) : 0);
++      m06.setBenny(st.s, st.lat); // r23 `&m06rip=1` only (no-op without it)
+       for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m06On || (bub6 && (k === 'bubbles' || k === 'splashCrown' || k === 'spray')); }
+       m06Applied = m06On;
+     }
 diff --git a/src/world/match06.ts b/src/world/match06.ts
-index 831c2b4..14d460f 100644
+index 831c2b4..72d2e24 100644
 --- a/src/world/match06.ts
 +++ b/src/world/match06.ts
 @@ -44,6 +44,8 @@ export interface Match06 {
@@ -15,7 +27,7 @@ index 831c2b4..14d460f 100644
  uniform float uStDbg;
  uniform vec3 uProjF;
  uniform mat4 uProjVP;
-+// r23 `&m06rip=1` (qa/match/06/r23/PROGRESS.md): the approved picture's ripple rings round Benny, carried with him on the
++// r23 '&m06rip=1' (qa/match/06/r23/PROGRESS.md): the approved picture's ripple rings round Benny, carried with him on the
 +// river floor. uRip = the painted water round the approved Benny in the river's own coordinates (lateral x course s, premult.
 +// alpha = 0 where his body was filled), uRipR = its extent (l0, l1, ds0, ds1), uBen = Benny (lateral, s), uRipA = (outward
 +// drift share, drift rate /s, strength, -)
@@ -60,7 +72,7 @@ index 831c2b4..14d460f 100644
    });
  
    // river frames from the course (beyond s1: straight along the heading at s1, as tools/match06/geo06.py)
-@@ -774,6 +802,67 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+@@ -774,6 +802,72 @@ export async function buildMatch06(course: Course): Promise<Match06> {
      if (GEO && R6) { const t = Math.min(1, Math.max(0, (Math.abs(l) - R6.Wc + 0.1) / 0.5)); p.addScaledVector(fr.up, R6.hb * t * t * (3 - 2 * t)); }
      return [p, l / TF.lateralPeriod, l];
    }, TF.period), mat(tFloor, true), 'floor');
@@ -71,12 +83,16 @@ index 831c2b4..14d460f 100644
 +  // re-sampled in the river's own coordinates (lateral l x distance ds from Benny, exactly the floor surface the projector
 +  // painted at the checkpoint) and carried with Benny on the floor, where his body was filled transparent; faded in only
 +  // once the camera has left the approved viewpoint (start view unchanged), fading out toward its rim, water only.
-+  // `&m06ripl=` half width (u, default 2.1), `&m06ripd=a,b` behind / ahead of Benny (u, default 2.6,1.6),
++  // `&m06ripl=` half width (u, default 1.45: the painted foam heaps begin ~1.3-1.5 u out), `&m06ripd=a,b` behind / ahead
++  // of Benny (u, default 2.4,1.3),
 +  // `&m06ripk=` strength (default 1), `&m06ripx=` outward drift share (default 0.06; 0 = still).
 +  if (qs?.get('m06rip') === '1') {
 +    const rn = (k: string, d: number) => { const v = Number(qs?.get(k)); return qs?.get(k) != null && qs?.get(k) !== '' && Number.isFinite(v) ? v : d; };
 +    const rd = (qs?.get('m06ripd') ?? '').split(',').map(Number);
-+    const LW = rn('m06ripl', 2.1), D0 = -(rd.length === 2 && rd.every(Number.isFinite) ? rd[0] : 2.6), D1 = rd.length === 2 && rd.every(Number.isFinite) ? rd[1] : 1.6;
++    // the painted soap bubbles next to the ripples (approved-picture px: x, y, radius) stay out: carried with Benny they
++    // would look glued to him (the game's own bubbles float there while swimming)
++    const BUB06: [number, number, number][] = [[722, 1115, 14], [692, 1220, 25], [58, 1190, 15], [697, 1352, 40], [708, 1048, 7]];
++    const LW = rn('m06ripl', 1.45), D0 = -(rd.length === 2 && rd.every(Number.isFinite) ? rd[0] : 2.4), D1 = rd.length === 2 && rd.every(Number.isFinite) ? rd[1] : 1.3;
 +    const sB = (L as unknown as { sB?: number }).sB ?? L.s0 + 12;
 +    const fillImg = (await loader.loadAsync(tex('plate06_fillmask.png'))).image as CanvasImageSource;
 +    const px = (img: CanvasImageSource) => {
@@ -107,7 +123,8 @@ index 831c2b4..14d460f 100644
 +        const x0 = Math.floor(x), y0 = Math.floor(y), fx = x - x0, fy = y - y0, x1 = Math.min(W - 1, x0 + 1), y1 = Math.min(H - 1, y0 + 1);
 +        // radial fade (elliptic in l / ds) x not where the painted Benny was filled
 +        const e = Math.hypot(l / LW, ds < 0 ? ds / D0 : ds / D1);
-+        const a = (1 - THREE.MathUtils.smoothstep(e, 0.6, 1.0)) * (1 - THREE.MathUtils.smoothstep(fillAt(x, y), 0.1, 0.6));
++        let a = (1 - THREE.MathUtils.smoothstep(e, 0.6, 1.0)) * (1 - THREE.MathUtils.smoothstep(fillAt(x, y), 0.1, 0.6));
++        for (const [bx, by, br] of BUB06) a *= THREE.MathUtils.smoothstep(Math.hypot(x - bx, y - by), br + 2, br + 9);
 +        for (let c = 0; c < 3; c++) {
 +          const s00 = P[(y0 * W + x0) * 4 + c], s10 = P[(y0 * W + x1) * 4 + c], s01 = P[(y1 * W + x0) * 4 + c], s11 = P[(y1 * W + x1) * 4 + c];
 +          const sv = (s00 * (1 - fx) + s10 * fx) * (1 - fy) + (s01 * (1 - fx) + s11 * fx) * fy;
@@ -128,7 +145,7 @@ index 831c2b4..14d460f 100644
    // r7 `&m06foam=1` (needs m06geo): puffy 3D foam clouds along both banks — the painted white-lilac foam clusters that
    // vanished as flat strips once Benny moved. Hidden at the approved view (the painting carries them there), shown once
    // the camera has left it (setAway). Not part of the projector depth bake (invisible while baking).
-@@ -896,6 +985,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
+@@ -896,6 +990,7 @@ export async function buildMatch06(course: Course): Promise<Match06> {
        shared.uUseDepth.value = 1;
      },
      setAway(a) { if (foamClouds) foamClouds.visible = a > 0.5; for (const o of foamSprites) o.visible = a > 0.5; },

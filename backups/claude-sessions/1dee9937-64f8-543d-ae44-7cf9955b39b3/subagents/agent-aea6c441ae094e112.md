@@ -747,3 +747,120 @@ The machine is shared with other specialists (load ~27). I'll copy the pinned au
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad; V=/home/user/rainbow-/qa/match/04/r23/s04_tools/variant.sh\nC=\"m04a3sc=1&m04a3sy=2.1&m04a3sr=0.9&m04a3s0=-0.005&m04a3s1=0.03&m04a3sx=0.02&m04a3w=1.5&m04a3p=6.5&m04a3f0=44&m04a3f1=52&m04a3fl=23\"\n( $V $S/s1/V5 5273 \"$C&m04a3k=40\" & $V $S/s1/V6 5274 \"$C&m04a3k=55\" & wait )\nfor sh in b_early c_middle d_late e_end; do python3 /home/user/rainbow-/qa/match/04/r23/s04_tools/strip.py $S/strip_$sh.png $sh 180,560,700,1240 $S/s1/V4 $S/s1/V5 $S/s1/V6; done", "description": "Render flattened chevron va …[+58 chars]`
 
+### 🧑 User — 2026-11-20T04:57:30.439Z
+
+> ↩︎ result: done /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s1/V5 4 png
+> done /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s1/V6 4 png
+
+### 🤖 Claude — 2026-11-20T04:57:32.507Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/strip_c_middle.png"}`
+
+### 🧑 User — 2026-11-20T04:57:32.551Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:57:33.106Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/strip_e_end.png"}`
+
+### 🧑 User — 2026-11-20T04:57:33.154Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:57:41.508Z
+
+Tilt 55 with the distance flattening (V6) gives distinct chevrons with gaps like the painting, but they are thin and the far ones fade into lines. Let me check b_early/d_late, then try chunkier bars.
+
+### 🤖 Claude — 2026-11-20T04:57:42.508Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/strip_b_early.png"}`
+
+### 🧑 User — 2026-11-20T04:57:42.645Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:57:47.501Z
+
+b_early also reads correctly now (chevrons ahead, above the pompom). Next, chunkier bars and a longer visible window so five show.
+
+### 🤖 Claude — 2026-11-20T04:57:51.451Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad; V=/home/user/rainbow-/qa/match/04/r23/s04_tools/variant.sh\nC=\"m04a3sc=1&m04a3sy=2.1&m04a3sr=0.9&m04a3s0=-0.005&m04a3s1=0.03&m04a3sx=0.02\"\n( $V $S/s1/V7 5273 \"$C&m04a3d=0.7&m04a3t=0.45&m04a3w=1.6&m04a3p=7&m04a3k=55&m04a3fl=28&m04a3f0=52&m04a3f1=60\" & $V $S/s1/V8 5274 \"$C&m04a3d=0.6&m04a3t=0.4&m04a3w=1.5&m04a3p=6.5&m04a3k=60&m04a3fl=26&m04a3f0=50&m04a3f1=58\" & wait )\nfor sh in b_early c_middle d_late e_end; do python3 /home/user/rainbow-/qa/match/04/r23/s04_tools/strip.py $S/strip_$sh.png $ …[+135 chars]`
+
+### 🧑 User — 2026-11-20T05:00:12.237Z
+
+> ↩︎ result: done /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s1/V8 4 png
+> done /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s1/V7 4 png
+
+### 🤖 Claude — 2026-11-20T05:00:13.858Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/strip_c_middle.png"}`
+
+### 🧑 User — 2026-11-20T05:00:13.929Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T05:00:14.497Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/strip_d_late.png"}`
+
+### 🧑 User — 2026-11-20T05:00:14.556Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T05:00:21.077Z
+
+V8 (tilt 60, bars 0.6/0.4, spacing 6.5, flatten from 26 u) shows five distinct glowing chevrons with gaps, all above his pompom. Let me look at the full V8 frame and Benny's waterline.
+
+### 🤖 Claude — 2026-11-20T05:00:22.229Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s1/V8/d_late.png"}`
+
+### 🧑 User — 2026-11-20T05:00:22.400Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T05:00:31.886Z
+
+The chevrons now read clearly ahead of him. Benny still looks perched: his whole round bottom shows above the water. Let me compare his waterline closely with the painting.
+
+### 🤖 Claude — 2026-11-20T05:00:35.819Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad && python3 -c \"\nfrom PIL import Image\na=Image.open('/home/user/rainbow-/references/04_through_the_five_arrows.png').convert('RGB').crop((150,1100,720,1480))\nb=Image.open('s1/V8/d_late.png').convert('RGB').crop((150,980,720,1360))\nc=Image.open('s1/V8/c_middle.png').convert('RGB').crop((150,980,720,1360))\nW=Image.new('RGB',(570*3+16,380),'white'); W.paste(a,(0,0)); W.paste(b,(578,0)); W.paste(c,(1156,0)); W.save('crop_waterline.png')\"; ls /home/user/wt/s04/public/textures 2>/dev/null | head;  …[+155 chars]`
+
+### 🧑 User — 2026-11-20T05:00:36.547Z
+
+> ↩︎ result: 162:const tex = (f: string) => new URL(`../../assets/textures/match04/${f}`, import.meta.url).href;
+
+### 🤖 Claude — 2026-11-20T05:00:38.800Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/crop_waterline.png"}`
+
+### 🧑 User — 2026-11-20T05:00:38.930Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T05:01:06.817Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"benny.root.position\\|bennyLift\\|floatY\\|bob\" src/game/Game.ts | head -20; grep -n \"m04bulge\\|const RY\\|RY =\" src/world/match04m4.ts | head -10", "description": "Find Benny placement and river height code"}`
+
+### 🧑 User — 2026-11-20T05:01:06.904Z
+
+> ↩︎ result: 254:      benny.root.position.copy(start).add(new THREE.Vector3(0, -1.0 + 1.35 * peek, 0));
+> 272:      benny.root.position.copy(pose.pos).lerp(hp, inDrum);
+> 275:      const toCam = cam02(benny.root.position).pos.clone().sub(benny.root.position).normalize();
+> 309:      const c2 = cam02(benny.root.position);
+> 382:      water.splash(benny.root.position, course.sample(st.s).up, 1);
+> 398:    benny.root.position.copy(pose.pos);
+> 420:    st.log.push({ t: st.clock, s: st.s, y: benny.root.position.y, stage: st.stage });
+> 442:    benny.root.position.copy(pose.pos).addScaledVector(course.sample(sEnd).tan, 0.6 * sm(0, O.hide, t));
+> 567:      if (m08On) { m08.splash.position.copy(benny.root.position).add(m08.splashOffset); m08.splash.quaternion.copy(camera.quaternion); }
+> 571:      if (m04On) { m04.splash.position.copy(benny.root.position).add(m04.splashOffset); m04.splash.quaternion.copy(camera.quaternion); }
+> 681:    return { stage: st.stage, s: st.s, y: benny.root.position.y };
+> 700:      return { mode: st.mode, stage: st.stage, s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: st.coins, hearts: st.hearts, paused: st.paused, bennyY: +benny.root.position.y.toFixed(3), bennyVisible: benny.root.visible …[+1231 chars]
+
+### 🤖 Claude — 2026-11-20T05:01:22.989Z
+
+> 🔧 **Bash** `{"command": "cat > /home/user/rainbow-/qa/match/04/r23/s04_tools/probe_waterline.mjs <<'EOF'\n// r23 s04 (QA only, read-only): where the river surface is relative to Benny's root, his body size in his own frame, and the\n// Screen 04 lane frame. cd /home/user/wt/s04 && AUDIT_PORT=5274 node <this> \"<query>\"\nimport { pathToFileURL } from 'node:url';\nconst { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);\nconst [Q] = process.argv.slice(2);\nconst { chromium } = loadPlaywright();\nconst vite = await startVite(Number(process …[+2934 chars]`
+

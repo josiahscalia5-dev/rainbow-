@@ -860,3 +860,263 @@ The NEW capture didn't run (no log). Re-running it alone.
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && O=/home/user/rainbow-/qa/match/07/r23/s1_satin && QN=$(cat $O/query_NEW.txt) && QA_PORT=5281 timeout 1500 node tools/match07/capture_5277.mjs 07 08 07a_plunge_top 07b_plunge_mid 07c_plunge_bottom 07d_entering_08 --out=$O/capture_NEW --q=\"$QN\" > $O/capN.log 2>&1; echo capN $?; ls $O/capture_NEW", "description": "Re-run NEW deterministic capture", "timeout": 1600000}`
 
+### 🧑 User — 2026-11-20T04:59:05.551Z
+
+> ↩︎ result: capN 0
+> 07.png
+> 07a_plunge_top.png
+> 07b_plunge_mid.png
+> 07c_plunge_bottom.png
+> 07d_entering_08.png
+> 08.png
+> capture_log.json
+
+### 🤖 Claude — 2026-11-20T04:59:11.111Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/07/r23/s1_satin && python3 - <<'EOF'\nimport subprocess,json\nres={\"what\":\"deterministic capture (tools/match07/capture_5277.mjs = scripts/capture.mjs logic), K7c vs K7c&m07satin=1, full frame, threshold 0.1\"}\ndef d(a,b,out,r0=0):\n  o=subprocess.run(['node','/home/user/tools-pixelmatch/pixeldiff.mjs',a,b,out,'0.1',str(r0),'1536'],capture_output=True,text=True)\n  lines=[l for l in o.stdout.strip().splitlines() if l.startswith('{')]\n  return json.loads(lines[-1])['diff_pixels'] if lines else ('ERR '+o.stdout[-200:]+o.stderr[-200:])\nfor s in [ …[+491 chars]`
+
+### 🧑 User — 2026-11-20T04:59:19.522Z
+
+> ↩︎ result: {'what': 'deterministic capture (tools/match07/capture_5277.mjs = scripts/capture.mjs logic), K7c vs K7c&m07satin=1, full frame, threshold 0.1', '07': 0, '08': 0, '07a_plunge_top': 32564, '07b_plunge_mid': 35382, '07c_plunge_bottom': 29280, '07d_entering_08': 0, 'audit_a_start_rows180_1536': 0}
+> ['[07] Failed to load resource: the server responded with a status of 403 (Forbidden)', '[07] Failed to load resource: the server responded with a status of 403 (Forbidden)', '[07] Failed to load resource: the server responded with a status of 403 (Forbidden)', '[07] Failed to load resource: the server responded with a status of 403 (Forbidden)', '[08] Failed to load resource: the server responded with a status of 403 (Forbidden)', '[08] Failed to load resource: the server responded with a status of 403 (Forbidden)', '[08] Failed to load resource: the server responded with a status of 403 (Forbidden)', '[08] Failed to load resource: the server responded with a status of 403 (Forbidden)', '[07a_plunge_top] Failed to load resource: the server responded with a status of 403 (Forbidden)', '[07a_plunge_top] Failed to load resource: the server responded with a status of 403 (Forbidden)', '[07a_plu …[+1392 chars]
+
+### 🤖 Claude — 2026-11-20T04:59:26.016Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && O=/home/user/rainbow-/qa/match/07/r23/s1_satin && git diff > $O/code.patch && mkdir -p $O/tools && cp tools/match07/swim_clip_r21.mjs tools/match07/capture_5277.mjs tools/match07/gameplay_test_5277.mjs $O/tools/ && wc -l $O/code.patch && rm -rf $O/crops/new_right_fg.png $O/crops/before_right_fg.png && python3 -c \"\nfrom PIL import Image\nfor k in ('BEFORE','NEW'):\n  Image.open('$O/'+k+'/g_hard_right.png').convert('RGB').crop((320,1100,864,1536)).save('$O/crops/'+k.lower()+'_hard_right_band.png')\n  Image.open('$O/'+k+'/b_early.png').convert('RGB').crop((0 …[+142 chars]`
+
+### 🧑 User — 2026-11-20T04:59:28.007Z
+
+> ↩︎ result: 485 /home/user/rainbow-/qa/match/07/r23/s1_satin/code.patch
+> /home/user/rainbow-/qa/match/07/r23/s1_satin:
+> BEFORE
+> NEW
+> before.log
+> capB.log
+> capN.log
+> capture_BEFORE
+> capture_NEW
+> clip.log
+> code.patch
+> crops
+> diff_a_start.png
+> diffs
+> gameplay.log
+> gameplay_new.json
+> new.log
+> proof_0px.json
+> query_NEW.txt
+> swim_level_BEFORE.mp4
+> swim_level_NEW.mp4
+> tools
+> 
+> /home/user/rainbow-/qa/match/07/r23/s1_satin/crops:
+> approved_band_left.png
+> approved_band_right.png
+> before_early_bands.png
+> before_hard_right_band.png
+> new_early_bands.png
+> new_hard_right_band.png
+
+### 🤖 Claude — 2026-11-20T04:59:48.539Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/07/r23 && python3 - <<'EOF'\np='PROGRESS.md'; s=open(p).read()\ns=s.replace('''* NOW: step 1 = finish + test `&m07satin=1` (crisp lens-shaped satin streaks on the magenta bands; the smeared magenta sheet in the\n  foreground at hard left / right).\n* NEXT: step 2 = lower the tall foam walls along the drop into low soft clouds (own switch); step 3 = the middle (close purple wall).''','''* DONE: step 1 `&m07satin=1` (painted satin ribbons + white flares on the magenta bands) — GOOD IMPROVEMENT (s1_satin/).\n* Candidate query now: `K7c&m07satin=1` (`s1 …[+4316 chars]`
+
+### 🧑 User — 2026-11-20T04:59:48.687Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-20T04:59:50.520Z
+
+Step 1 logged. Now step 2: the tall foam walls along the drop. Let me look at the drop shots.
+
+### 🤖 Claude — 2026-11-20T04:59:50.999Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/07/r23/s1_satin/NEW/d_late.png"}`
+
+### 🧑 User — 2026-11-20T04:59:51.101Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T04:59:51.454Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/07/r23/s1_satin/NEW/e1_075.png"}`
+
+### 🧑 User — 2026-11-20T04:59:51.522Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T05:00:27.810Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad && python3 -c \"\nfrom PIL import Image\na=Image.open('/home/user/rainbow-/qa/match/07/r21/APPROVED_07.png').convert('RGB')\na.crop((180,520,864,900)).resize((1026,570),Image.LANCZOS).save('$SP/appr_mid.png')\na.crop((0,850,330,1250)).resize((495,600),Image.LANCZOS).save('$SP/appr_leftmid.png')\"", "description": "Crop painted river/foam/wall junction"}`
+
+### 🧑 User — 2026-11-20T05:00:28.815Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T05:00:28.895Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/appr_mid.png"}`
+
+### 🧑 User — 2026-11-20T05:00:28.939Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T05:00:29.462Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/appr_leftmid.png"}`
+
+### 🧑 User — 2026-11-20T05:00:29.636Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T05:00:49.267Z
+
+The painting has no flat pale strip: a thin low lumpy foam fringe sits at the band edge and the purple slotted wall rises right behind it. Let me check the tube / water geometry numbers.
+
+### 🤖 Claude — 2026-11-20T05:00:51.022Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 -c \"\nimport json;L=json.load(open('assets/textures/match07/proj07.json'));print('tube',L['tube']);import math;r=L['tube']['r'];h=L['tube']['h'];print('waterline half-chord',math.sqrt(r*r-h*h),'h/r',h/r)\"; grep -n \"uHide07\\|m07end\\|m07cloud\\|m07satin\\|m07low\" src/game/Game.ts | head -30", "description": "Read tube radius/axis height and Game.ts hooks"}`
+
+### 🧑 User — 2026-11-20T05:00:51.093Z
+
+> ↩︎ result: tube {'r': 5.843921330510962, 'ax': 0.09941569607211748, 'h': 3.0972788153823347}
+> waterline half-chord 4.955631186537675 h/r 0.5300000873063644
+> 125:  // r21 `&m07end=1` (qa/match/07/r21/PROGRESS.md): the painted plunge river runs down to the 08 inlet (fades out over the last
+> 128:  const m07End = m07Tube && flag05('m07end') && flag05('m07nearw') && flag05('m07band') && flag05('m07foam');
+> 132:  const m07RibbonHide = m07End ? ((water.parts?.ribbon as THREE.Mesh | undefined)?.material as THREE.ShaderMaterial | undefined)?.uniforms?.uHide07r : undefined;
+> 137:  const m07BermHide = m07End ? ((water.parts?.foamBerm as THREE.Mesh | undefined)?.material as THREE.ShaderMaterial | undefined)?.uniforms?.uHide07 : undefined;
+> 139:  // r22 `&m07cloud=1` (qa/match/07/r22/PROGRESS.md): the real 3D foam clouds stand on both banks, so while 07 shows the flat
+> 142:  const m07Cloud = m07End && flag05('m07cloud');
+> 579:      // r21 m07end: the game's sheet stays away over the whole width from the hand-over to the 08 start (07 only)
+
+### 🤖 Claude — 2026-11-20T05:01:30.623Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"setPlunge\\|m07Tube\\|match07\\b\\|m07\\.group\\|plungeTube\\|tunnel\" src/game/Game.ts | head -40", "description": "Find plunge/tube handling in Game.ts"}`
+
+### 🧑 User — 2026-11-20T05:01:30.717Z
+
+> ↩︎ result: 28:import { buildMatch07 } from '../world/match07';
+> 118:  // `?match07=1`: the approved Screen 07 scenery on fitted 3D geometry (src/world/match07.ts), shown from 12 u before the
+> 123:  const m07Tube = MATCH['07'] && flag05('m07tube');
+> 128:  const m07End = m07Tube && flag05('m07end') && flag05('m07nearw') && flag05('m07band') && flag05('m07foam');
+> 131:  const m07 = MATCH['07'] ? await buildMatch07(m07Tube ? { course, sA: m07sA, sB: course.marks['07_plunge_bottom'], fade: m07Fade } : undefined) : null;
+> 144:  if (m07) { m07.group.visible = false; scene.add(m07.group); m07.bakeDepth(renderer); }
+> 146:  const m07Range = [course.stage('07').s0 + 14, m07Tube ? course.stage('08').s0 : course.marks['07_plunge_top'] - 8];
+> 568:    // `?match07=1` on the visible 07 stretch: the projected scenery carries the approved tube, rings, paddles, river,
+> 572:      m07.group.visible = on;
+> 574:        for (const k of M07_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !(on && (!m07Tube || st.s < m07sA + 9)); }
+> 578:      if (m07Tube) m07.setPlunge(on && st.s >= course.marks['07_plunge_top'] - 8);
+> 630:    // `?match07=1`: no bloom on the visible 07 stretch under the switch (the artwork carries its own …[+6 chars]
+
+### 🤖 Claude — 2026-11-20T05:01:32.615Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/src/game/Game.ts", "offset": 112, "limit": 40}`
+
+### 🧑 User — 2026-11-20T05:01:32.651Z
+
+> ↩︎ result: 112	  // white-and-purple knit stripes (crown tint); everything restored when leaving 08 (qa/match/08/NOTES.md)
+> 113	  const M08_BENNY = { hat: 0.86, lift: 0.06, dx: 0.26, body: [0.94, 1.0, 0.94] as const, crown: new THREE.Color().setRGB(0.86, 1.04, 1.0) };
+> 114	  const b08 = m08 ? { hat: benny.root.getObjectByName('hat'), body: benny.root.getObjectByName('body'), aux: benny.root.getObjectByName('AuxScene'), crown: benny.root.getObjectByName('hat_crown') as THREE.Mesh | undefined } : null;
+> 115	  const b08Rest = b08 ? { hat: b08.hat?.scale.x ?? 1, body: (b08.body?.scale ?? new THREE.Vector3(1, 1, 1)).clone(), pos: (b08.aux?.position ?? new THREE.Vector3()).clone(), y: b08.aux?.position.y ?? 0, crown: ((b08.crown?.material as THREE.MeshStandardMaterial | undefined)?.color ?? new THREE.Color()).clone() } : null;
+> 116	  let m08On = false;
+> 117	  let m08Applied = false;
+> 118	  // `?match07=1`: the approved Screen 07 scenery on fitted 3D geometry (src/world/match07.ts), shown from 12 u before the
+> 119	  // 07 checkpoint until 8 u before the plunge top (the 07→08 drop keeps the game's own tube); off: nothing is built
+> 120	  // M3 `&m07tube=1` (qa/match/07/r7/NOTES): the matched tube continues as …[+3185 chars]
+
+### 🤖 Claude — 2026-11-20T05:01:33.219Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/src/game/Game.ts", "offset": 560, "limit": 40}`
+
+### 🧑 User — 2026-11-20T05:01:33.256Z
+
+> ↩︎ result: 560	    env.update(time, dt);
+> 561	    water.update(time, dt, st.s, camera);
+> 562	    // `?match08=1` on Screen 08: the projected scenery carries the approved river, foam and bubbles
+> 563	    if (m08 && (m08On || m08Applied)) {
+> 564	      for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m08On; }
+> 565	      m08Applied = m08On;
+> 566	    }
+> 567	    if (m08 && m08On) for (const k of ['puddles', 'finalWave']) { const o = water.parts?.[k]; if (o) o.visible = false; }
+> 568	    // `?match07=1` on the visible 07 stretch: the projected scenery carries the approved tube, rings, paddles, river,
+> 569	    // foam and bubbles (the game's tube zone and river are hidden there and restored outside it)
+> 570	    if (m07) {
+> 571	      const on = st.stage === '07' && st.s >= m07Range[0] && st.s < m07Range[1];
+> 572	      m07.group.visible = on;
+> 573	      if (on || m07Applied) {
+> 574	        for (const k of M07_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !(on && (!m07Tube || st.s < m07sA + 9)); }
+> 575	        env.zones.tubes.visible = on ? false : !zoneHidden('tubes') && STAGE_ORDER.indexOf(st.stage) >= STAGE_ORDER.indexOf('03') && STAGE_ORDER.indexOf(st.stage) <= STAGE_ORDER.index …[+1859 chars]
+
+### 🤖 Claude — 2026-11-20T05:01:56.009Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"plunge_top\\|plunge_bottom\" src/world/course.ts | head -10; python3 -c \"\nimport json;j=json.load(open('/home/user/rainbow-/qa/match/07/r23/s1_satin/NEW/shots.json'));print([(x['name'],round(x['s'],1)) for x in j][:3], j[0]['s0'], j[0]['s1'])\"", "description": "Find plunge marks and stage range"}`
+
+### 🧑 User — 2026-11-20T05:01:56.285Z
+
+> ↩︎ result: 302:  mark('07_plunge_top');
+> 323:  mark('07_plunge_bottom');
+> 639:    if (s > c.marks['07_plunge_top'] && s < c.marks['08']) minPitch = Math.min(minPitch, THREE.MathUtils.radToDeg(Math.asin(cur.tan.y)));
+> 643:  const top = c.marks['07_plunge_top'];
+> 644:  const bottom = c.marks['07_plunge_bottom'];
+> [('a_start', 273.1), ('b_early', 287.3), ('c_middle', 314.1)] 273.056 390.1617102628636
+
+### 🤖 Claude — 2026-11-20T05:01:58.618Z
+
+> 🔧 **Bash** `{"command": "grep -n -i \"plunge\\|07\" /home/user/rainbow-/qa/match/07/r23/s1_satin/continuity.txt | head -20", "description": "Find plunge marks in continuity output"}`
+
+### 🧑 User — 2026-11-20T05:01:59.024Z
+
+> ↩︎ result: grep: /home/user/rainbow-/qa/match/07/r23/s1_satin/continuity.txt: No such file or directory
+
+### 🤖 Claude — 2026-11-20T05:02:03.640Z
+
+> 🔧 **Bash** `{"command": "ls /home/user/rainbow-/qa/match/07/r23/ /home/user/rainbow-/qa/match/07/r23/s1_satin/ | head -40; ls -la /home/user/wt/s07/*.txt 2>/dev/null", "description": "Look for the continuity output file"}`
+
+### 🧑 User — 2026-11-20T05:02:04.013Z
+
+> ↩︎ result: Exit code 2
+> /home/user/rainbow-/qa/match/07/r23/:
+> K7c.txt
+> PROGRESS.md
+> s1_satin
+> 
+> /home/user/rainbow-/qa/match/07/r23/s1_satin/:
+> BEFORE
+> NEW
+> before.log
+> capB.log
+> capN.log
+> capture_BEFORE
+> capture_NEW
+> clip.log
+> code.patch
+> crops
+> diff_a_start.png
+> diffs
+> gameplay.log
+> gameplay_new.json
+> new.log
+> proof_0px.json
+> query_NEW.txt
+> swim_level_BEFORE.mp4
+> swim_level_NEW.mp4
+> tools
+
+### 🤖 Claude — 2026-11-20T05:02:09.725Z
+
+The earlier chained `&&` + `&` backgrounded the variable assignments, so the continuity output and the first NEW capture went to the filesystem root. Let me recover and clean up those stray files.
+
+### 🤖 Claude — 2026-11-20T05:02:10.355Z
+
+> 🔧 **Bash** `{"command": "ls -la /continuity.txt /capN.log /capture_NEW 2>&1 | head; ", "description": "Check stray outputs at filesystem root"}`
+
+### 🧑 User — 2026-11-20T05:02:10.554Z
+
+> ↩︎ result: ls: cannot access '/capture_NEW': No such file or directory
+> -rw-r--r-- 1 root root 696 Nov 20 04:50 /capN.log
+> -rw-r--r-- 1 root root 839 Nov 20 04:50 /continuity.txt
+
+### 🤖 Claude — 2026-11-20T05:02:12.651Z
+
+> 🔧 **Bash** `{"command": "cat /capN.log | head -5; mv /continuity.txt /home/user/rainbow-/qa/match/07/r23/s1_satin/continuity.txt && rm -f /capN.log && cat /home/user/rainbow-/qa/match/07/r23/s1_satin/continuity.txt", "description": "Move continuity output into proof folder"}`
+

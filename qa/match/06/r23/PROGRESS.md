@@ -2,8 +2,11 @@
 
 ## (r23) WHERE I STOPPED / NEXT
 * ~04:48 UTC — Step 1 (r22 step 3 `&m06fcl=1`, low foam heaps) DONE: **GOOD IMPROVEMENT** (see below; clips being encoded).
-* ~04:52 UTC — Step 2 (off-centre tunnel) diagnosis done (below); rendering the candidate `&m06view=1&m06vs=0` into
-  `qa/match/06/r23/step2_m06vs0/`. The machine is heavily loaded (other workers), renders / clips are slow.
+* ~05:00 UTC — Step 2 (`&m06view=1&m06vs=0`, off-centre ring tunnel held through the first second) DONE: **GOOD
+  IMPROVEMENT** as a camera-framing TEST (user decides; not in the kept set). Clip `swim_06_NEW.mp4` being recorded.
+* ~05:05 UTC — Step 3 `&m06rip=1` (the painted ripple rings round Benny carried with him) BUILT (`src/world/match06.ts`,
+  1 line in `src/game/Game.ts`), `tsc` clean; rendering `qa/match/06/r23/step3_m06rip/NEW/`.
+* The machine is heavily loaded (other workers): shots ~5 min, each 4.8 s clip ~20–25 min.
 
 K6 = `match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1`
 r23 BEFORE base = K6 + `&m06st=1` (r22 step 2, small GOOD IMPROVEMENT, lead review pending; not yet in K6).
@@ -47,6 +50,26 @@ r23 BEFORE base = K6 + `&m06st=1` (r22 step 2, small GOOD IMPROVEMENT, lead revi
 * Candidate `&m06view=1&m06vs=0` (no climb): the ring centre stays at the painted spot (≈ 655, 645) for the first ~12 u
   (~0.9 s, up to the crest top), then drifts slowly to (445, 338) at +26 u before the hand-over to the route view; Benny stays
   in the lower middle (x 406–462, y 845–1006).
+
+### Step 2 result — `&m06view=1&m06vs=0` (camera-framing TEST, user-approved test only; NOT in the kept set)
+* Switch: the r21 test `&m06view=1` with its existing tunable `&m06vs=0` (no climb over the crest). No code change
+  (`step2_m06vs0/code.patch` = note). Partial values `m06vs=0.3 / 0.5` were probed: both still climb to ~7 u mid-stage
+  (`probe/tp_VS03.txt`, `tp_VS05.txt`) — not useful.
+* BEFORE = K6 + `m06st=1` + `m06fcl=1` = `step1_m06fcl/NEW/` (same query, same shots); r22 `m06view` for reference =
+  `step1_m06fcl/with_m06view/NEW/`. NEW = BEFORE + `&m06view=1&m06vs=0` → `step2_m06vs0/NEW/` (11 full-size shots, same names).
+  NEW query: `match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1&m06st=1&m06fcl=1&m06view=1&m06vs=0`
+* Start view 0 px differ (pixeldiff 0.1). Gameplay **8/8**, coins 1,330 → 2,240 = **91**, no camera cut
+  (`step2_m06vs0/gameplay_NEW.json`). Continuity unchanged (camera only; `npm run test:continuity` OK in step 1).
+
+#### Verdict — GOOD IMPROVEMENT (as a framing test; the first second of the swim and the middle)
+* BEFORE: within the first second the gold rings swing up into a centred target at the top of the screen; by the middle it
+  sits in the upper LEFT corner. r22 `m06view` keeps it right but throws it to the very top (camera climbs ~7 u).
+* NEW: from the start through the crest top (early 12 / 22 %, middle 35 %) the ring tunnel stays where it is painted — off-
+  centre RIGHT at mid-height, rings telescoping away to the right, the purple drum wall with the gold paddle lids upper left,
+  Benny low in the middle; steering hard left / right keeps that layout (tunnel right, coin line visible).
+* Still different: at the crest top the river beyond the crest is hidden for a moment (only the coin line on the right shows
+  the way); from ~47 % on the rings drift back toward a target near the top centre (the game river turns right off the
+  painted tunnel there), and the end (85 %) is unchanged; steering hard early still cuts Benny at the screen edge (as BEFORE).
 
 ---
 ## (r22, copied from `/home/user/wt/s06/qa/match/06/r22/PROGRESS.md`) WHERE I STOPPED / NEXT
