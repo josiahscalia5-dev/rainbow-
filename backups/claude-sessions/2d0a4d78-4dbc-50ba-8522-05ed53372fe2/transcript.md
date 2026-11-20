@@ -3150,3 +3150,87 @@ The Screen 04 foam specialist has finished, and the projection specialist has st
 
 Everything is saved and GitHub matches (`6fa36b8`). The Screen 07 and Screen 05 proposals still need your verdict.
 
+### 🧑 User — 2026-11-20T03:49:43.500Z
+
+The only problem I have with screen 4 is that when he goes through the water, fan character, like, I don't know if it's because it's the speeder doing it in the video you sent me. It just feels like the water's, he's not going through it naturally, the pink character. And I feel like the corners of the water, see that, the pink, like the pink part where he goes inside the tunnel, through the, like through the 5 arrows, there's like pink on the left and right side, kind of near the gold part. It's inside the 5 arrows, we're going inside it. I don't know if that, like I said, if that's the speed of the video, maybe it's how it looks because it's going so fast, or I don't know, but I just don't want, if that is true, I don't want the pink stuff to be, I want it to look like he's more naturally going through it, the pink character, through the 5 arrow thing. Like the original, you know, like the original approved screen through the 5 arrows, I want it to get more feel like he's going through the 5 arrows, like he's going naturally. I don't want the water to look messy. I want it to look very clean. That's the whole point.
+
+### 🤖 Claude — 2026-11-20T03:50:02.758Z
+
+Thank you, that's clear and useful feedback. First, let me check your question about whether the clip was sped up, by looking at how it was recorded.
+
+### 🤖 Claude — 2026-11-20T03:50:05.054Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,25p qa/match/04/r22/tools/swim_clip_pinned.mjs | cut -c1-220; echo ----; grep -n \"fps\\|pin\\|performance\\|setTime\\|advance\\|step(\" tools/lead_r13/swim_clip.mjs | head -20; for v in BEFORE NEW; do ffprobe -v error -show_entries stream=r_frame_rate,nb_frames,width,height:format=duration -of compact qa/match/04/r22/s2_bbd/${v}_swim_clip_half.mp4; done; grep -n \"clip\" qa/match/04/r22/PROGRESS.md | head -8", "description": "Inspect how the Screen 04 clip was recorded"}`
+
+### 🧑 User — 2026-11-20T03:50:05.207Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // r22 S04 copy of tools/lead_r13/swim_clip.mjs: port AUDIT_PORT (default 5273) and performance.now() pinned to the clip clock
+> // while each frame is stepped and drawn (the Screen 04 river shader reads the wall clock), so BEFORE / NEW clips match.
+> // Lead r13 (2026-11-18): a short REAL-GAMEPLAY swimming clip for any playable screen 04–08 (read-only).
+> // Starts at the screen's checkpoint and rides the real game simulation (Benny, camera rig, course, coins unchanged) with
+> // the shader clock running: straight, then left, then right, then straight — one frame per 1/fps s → OUT/0000.png …
+> // Generalises scripts/proj05-move.mjs --zigzag. Encode: ffmpeg -framerate 24 -i OUT/%04d.png -pix_fmt yuv420p clip.mp4
+> //   node tools/lead_r13/swim_clip.mjs <screen 04..08> <outDir> <seconds> [query]
+> import { mkdirSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> const [SCREEN, OUT, SECS = '6', Q = ''] = process.argv.slice(2);
+> const fps = 24;
+> mkdirSync(OUT, { recursive: true });
+> const { chromium } = loadPlaywright();
+> const vite = await start …[+1707 chars]
+
+### 🤖 Claude — 2026-11-20T03:50:13.986Z
+
+> 🔧 **Bash** `{"command": "ls qa/match/04/r22/s2_bbd/clip_frames/ | head; SP=/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad; rm -rf $SP/f04 && mkdir -p $SP/f04 && ffmpeg -v error -i qa/match/04/r22/s2_bbd/NEW_swim_clip_half.mp4 -vf \"select='not(mod(n\\,6))',scale=-1:330\" -vsync vfr $SP/f04/%02d.png && ls $SP/f04 | wc -l && ffmpeg -v error -y -i \"$SP/f04/%02d.png\" -vf \"tile=10x1\" -frames:v 1 $SP/s04_clip_strip.jpg", "description": "Extract frame strip from Screen 04 NEW clip"}`
+
+### 🧑 User — 2026-11-20T03:50:14.290Z
+
+> ↩︎ result: BEFORE_0012.png
+> BEFORE_0024.png
+> BEFORE_0036.png
+> BEFORE_0048.png
+> NEW_0012.png
+> NEW_0024.png
+> NEW_0036.png
+> NEW_0048.png
+> 10
+
+### 🤖 Claude — 2026-11-20T03:50:16.260Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/s04_clip_strip.jpg"}`
+
+### 🧑 User — 2026-11-20T03:50:16.283Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:50:36.664Z
+
+> 🔧 **SendMessage** `{"to": "a9f2496902245e5e8", "summary": "Relay user's Screen 04 feedback, top priority", "message": "Lead: NEW USER FEEDBACK on Screen 04 (2026-11-20 ~03:55, top priority for your work). The user watched the BEFORE/NEW swim clips: \"the pink on the left and right side, kind of near the gold part ... inside the 5 arrows ... I don't want the water to look messy. I want it to look very clean ... I want it to look like he's more naturally going through it ... like the original approved screen through the 5 arrows.\"\nWhat the lead sees in the clip frames: inside the tunnel the pink/magenta water-cl …[+1239 chars]`
+
+### 🧑 User — 2026-11-20T03:50:36.682Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to a9f2496902245e5e8 at its next tool round. Sending this moved nothing it is running to the background just now, so the message waits for that round unless something moves sooner. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"a9f2496902245e5e8","name":"a9f2496902245e5e8","ref":"e7fb00"}}
+
+### 🤖 Claude — 2026-11-20T03:50:40.668Z
+
+> 🔧 **Bash** `{"command": "grep -o \"m04wup[a-z0-9]*=[^&]*\" qa/match/04/r22/s2_bbd/QUERY_K22-2.txt | head; grep -n \"flag05('m04wup')\\|'m04wup'\\|m04wgl'\" /home/user/wt/s04/src/world/match04m4.ts | head -5; WT=/home/user/wt/s04lead; [ -e $WT ] || { git worktree add --no-checkout --detach $WT 34cb494137e1030c4410d871125e6e9eef6aa4ea >/dev/null && printf '/*\\n!/qa/pilot05/\\n!/qa/worldlabs/\\n!/qa/imageblaster/\\n!/builds/\\n!/backups/\\n' | git -C $WT sparse-checkout set --no-cone --stdin && git -C $WT read-tree -mu HEAD && ln -sfn /home/user/rainbow-/node_modules $WT/node_modules && git -C $WT apply --b …[+210 chars]`
+
+### 🧑 User — 2026-11-20T03:50:45.086Z
+
+> ↩︎ result: m04wup=1
+> 1699:    const wup = M04.num('m04wup', 0) > 0;
+> 1822:        uWG: { value: new THREE.Vector4(wup ? M04.num('m04wgl', 0) : 0, M04.num('m04wgn', 2.2), M04.num('m04wgh', 0.85), M04.num('m04wgs', 0.8)) },
+> Preparing worktree (detached HEAD 34cb494)
+> s04lead ready
+>  3 files changed, 559 insertions(+), 40 deletions(-)
+
+### 🤖 Claude — 2026-11-20T03:50:48.618Z
+
+A read-only copy of Screen 04 is ready. Rendering the current version alongside one with the pink wall climb switched off, at the start, early, middle and late:
+
+### 🤖 Claude — 2026-11-20T03:50:51.973Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04lead && K=$(cat /home/user/rainbow-/qa/match/04/r22/s2_bbd/QUERY_K22-2.txt | tr -d '\\n'); NOP=$(echo \"$K\" | sed 's/m04wup=1/m04wup=0/'); O=/home/user/rainbow-/qa/review_r22/s04_pink; mkdir -p $O; export AUDIT_SHOTS='[[\"a_start\",0,null],[\"b_early\",0.12,null],[\"c_middle\",0.35,null],[\"d_late\",0.6,null]]'; AUDIT_PORT=5279 timeout 900 node /home/user/rainbow-/qa/match/04/r22/tools/audit_pinned.mjs $O/CURRENT 04 \"$K\" > $O/cur.log 2>&1; AUDIT_PORT=5279 timeout 900 node /home/user/rainbow-/qa/match/04/r22/tools/audit_pinned.mjs $O/PINK_OFF 04 \"$NOP\" > $O …[+143 chars]`
+

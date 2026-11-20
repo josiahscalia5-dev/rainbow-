@@ -619,7 +619,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 20297,
-   "sha256": "bffe620e2933d1dc3cbdcbf5b22348c32f20afa307acaade685cab91d05ffc8d"
+   "sha256": "9b8c0dfb9afb2cffd594d1f09006f8959160bb6e81ea3fa38b4fad3b6e4843de"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -634,7 +634,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 2190,
-   "sha256": "f03e12a1d8cc76daca2956602d1af4f2bf839417e998f7de9f71df8b57560c34"
+   "sha256": "dd05ceda9757f1d25352d982a2cf328f949a6b3a4d8ce06924932c033d74d0a5"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -1424,7 +1424,7 @@
   {
    "path": "backups/wip/claude__rainbow-s04-match-c23/INFO.json",
    "bytes": 586,
-   "sha256": "629dd74f49476fbd7465537d7e55ad84a84d072ba871a6deb65e16323ce18a19"
+   "sha256": "00d6351b1d151f1793de2910dc214563be5fc2437d4e24847c7a9fe2ce572d44"
   },
   {
    "path": "backups/wip/claude__rainbow-s04-match-c23/tracked.patch",
@@ -2399,7 +2399,7 @@
   {
    "path": "backups/wip/claude__rainbow-s07-match-c23/INFO.json",
    "bytes": 674,
-   "sha256": "8dc7a46e367101b4df97d8402f97295eb068ec149df0496930455c3830209cbb"
+   "sha256": "c0425036a216c1e0157b70e00fb252024db10439a32f4929315f5386acd87e5d"
   },
   {
    "path": "backups/wip/claude__rainbow-s07-match-c23/tracked.patch",
@@ -5985,6 +5985,16 @@
    "path": "qa/match/04/r22/tools/swim_clip_pinned.mjs",
    "bytes": 2521,
    "sha256": "c7763356d772a6bb51709da0c591a9211eab17d74b0a2b16a39fad5828e6f3e5"
+  },
+  {
+   "path": "qa/match/04/r22_proj/PROGRESS.md",
+   "bytes": 834,
+   "sha256": "0c53f05237cab63eedfd8f22334291a0c450f5131b28670a2123b80311c8df9b"
+  },
+  {
+   "path": "qa/match/04/r22_proj/tools/cam_capture.mjs",
+   "bytes": 3485,
+   "sha256": "8c02448eb6d9311ab44303044a3de763163a8cd83e16d281cfd568e1eaefa68c"
   },
   {
    "path": "qa/match/06/relaunch/BRIEF_path-camera-transition-engineer.txt",
@@ -15180,6 +15190,16 @@
    "path": "qa/review_r22/overview/ALL_SCREENS_APPROVED_vs_GAME_in_motion.png",
    "bytes": 7416674,
    "sha256": "61698cf806efde8dba7f7954cde97c9f7794acabc1f1077952ae826706826499"
+  },
+  {
+   "path": "qa/review_r22/s04_pink/CURRENT/a_start.png",
+   "bytes": 2337324,
+   "sha256": "cf5379b449c2e6dfa84f37376542a69a7459556c83c1a42cfd404e2c5cf4dd11"
+  },
+  {
+   "path": "qa/review_r22/s04_pink/CURRENT/b_early.png",
+   "bytes": 2068003,
+   "sha256": "195048dc87381f4d61cca26583a5e44ec19b7003dfa2ad6a9ab651da9e2062b5"
   },
   {
    "path": "qa/review_r22/s06_t1/1_APPROVED.png",

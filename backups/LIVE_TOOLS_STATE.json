@@ -1,5 +1,5 @@
 {
- "time_utc": "2026-11-20T03:48:06+00:00",
+ "time_utc": "2026-11-20T03:51:23+00:00",
  "lead_branch": "ccr-4742c19f-ez2mrs",
  "specialists_sha256_16": {
   "android-build-performance": "b0c45161860a960c",
@@ -17,6 +17,11 @@
   {
    "worktree": "/home/user/wt/s04",
    "branch": "claude/rainbow-s04-match-c23",
+   "head": "34cb494137e1"
+  },
+  {
+   "worktree": "/home/user/wt/s04lead",
+   "branch": "",
    "head": "34cb494137e1"
   },
   {

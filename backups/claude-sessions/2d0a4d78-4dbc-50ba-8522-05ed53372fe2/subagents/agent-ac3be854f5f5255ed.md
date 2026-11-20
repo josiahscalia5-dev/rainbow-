@@ -1984,3 +1984,144 @@ Step 1 is logged. Step 2: the smeared magenta sheet in the foreground at hard le
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-20T03:48:22.497Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/crops && python3 -I -c \"\nfrom PIL import Image\nt=Image.open('/home/user/wt/s07/assets/textures/match07/near_bank.png').convert('RGB')\nt.resize((t.width*2,t.height*2),Image.NEAREST).save('near_bank_x2.png')\n\"; sed -n 1,40p /home/user/wt/s07/tools/match07/near_tiles_r16.py | head -40", "description": "Enlarge near bank tile and read its generator"}`
+
+### 🧑 User — 2026-11-20T03:48:22.653Z
+
+> ↩︎ result: #!/usr/bin/env python3
+> """r16 `&m07nearw=1`: near-water tiles cut from the user's APPROVED Screen 07 picture at its painted NEAR scale.
+> 
+> (Round-15 draft: tools/match07/near_tiles_r15.py — its hand-read curve left only 132 usable rows and ran into the gold ring
+> and a big bubble. This version finds the band edge from the picture itself.)
+> 
+> Why: on the level stretch the moving camera sees the near water through `tile_river_clean.png` = the painted 6-16 u river
+> unwrapped over the whole tube floor (lateral -5..5, mirrored): magnified ~4-10x it reads as long flat pink/cyan smears and
+> the tube-wall perforations painted beside the far river lie on the water near the walls.
+> 
+> Output (reads only references/07_dive_the_washer_tube.png, never changes it):
+> * near_bank.png  — the lower-left painted magenta satin band + its bubbly white trim + the glossy cyan water beside it,
+>                    straightened along the band's inner edge (curve unwrap), periodic along the flow (cross-faded seam).
+>                    Column 0 = outer edge of the magenta band ... last column = cyan toward the river centre.
+>                    The shader mirrors it about a winding river centre line: [magenta | trim | cyan  …[+1165 chars]
+
+### 🤖 Claude — 2026-11-20T03:48:23.645Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/crops/near_bank_x2.png"}`
+
+### 🧑 User — 2026-11-20T03:48:23.666Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:48:55.710Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s07/src/world/match07.ts", "offset": 96, "limit": 55}`
+
+### 🧑 User — 2026-11-20T03:48:55.729Z
+
+> ↩︎ result: 96	uniform vec4 uBand2;      // r18 m07band: reach of Benny's lane (lane ± steer + body), cyan core half-width, min band width, foam-edge wobble
+> 97	uniform vec3 uPlC;        // r21 m07end: plunge river cyan core half-width ramp (along from, along to, half-width)
+> 98	uniform float uCloudSh;   // r22 m07cloud: the flat painted foam between the 3D foam mounds takes the mounds' periwinkle shade (0 = off)
+> 99	varying vec2 vUv;
+> 100	varying vec4 vProj;
+> 101	varying vec3 vW;
+> 102	varying vec3 vN;
+> 103	varying vec3 vL;
+> 104	varying float vCtr;
+> 105	${PROJ05_INVERSE}
+> 106	// r16 m07nearw: [foam | magenta | trim | cyan | cyan | trim | magenta | foam] across a winding centre line, world-anchored.
+> 107	// Both banks are the painted lower-left band straightened (tools/match07/near_tiles_r16.py) at about the painted near
+> 108	// scale; the right bank reads another stretch of the strip (no mirror image across the centre).
+> 109	vec3 nearWater(float lx, float ctr, float along, float rc) {
+> 110	  float d = lx - ctr;
+> 111	  float R = uNearW.x, mw = uNearW.y;
+> 112	  float Rc = R - mw;                       // cyan core half-width
+> 113	  float Ro = R;                            // outer edge of the magenta band (foam  …[+2486 chars]
+
+### 🤖 Claude — 2026-11-20T03:49:30.433Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 -I - <<'EOF'\np='src/world/match07.ts'\ns=open(p).read()\nrep=[\n(\"\"\"uniform float uCloudSh;   // r22 m07cloud: the flat painted foam between the 3D foam mounds takes the mounds' periwinkle shade (0 = off)\n\"\"\",\"\"\"uniform float uCloudSh;   // r22 m07cloud: the flat painted foam between the 3D foam mounds takes the mounds' periwinkle shade (0 = off)\nuniform float uSatin;     // r22 '?m07satin=1': crisp painted satin streaks on the magenta bands (1 = on)\n\"\"\"),\n(\"\"\"${PROJ05_INVERSE}\n// r16 m07nearw: [foam | magenta | trim | cyan | cy …[+3849 chars]`
+
+### 🧑 User — 2026-11-20T03:49:56.885Z
+
+> ↩︎ result: 07 b_early s 287.256 lat 0 stage 07 coins 1960
+> 07 c_middle s 314.056 lat 0 stage 07 coins 2030
+> 07 d_late s 343.456 lat 0 stage 07 coins 2080
+> 07 f_hard_left s 314.056 lat -2.25 stage 07 coins 1940
+> 07 g_hard_right s 314.056 lat 2.25 stage 07 coins 1950
+
+### 🤖 Claude — 2026-11-20T03:49:59.285Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/satin1/f_hard_left.png"}`
+
+### 🧑 User — 2026-11-20T03:49:59.328Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:49:59.902Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/satin1/b_early.png"}`
+
+### 🧑 User — 2026-11-20T03:49:59.953Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:50:14.513Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 -I - <<'EOF'\np='src/world/match07.ts'\ns=open(p).read()\nrep=[\n(\"\"\"  float on = step(0.4, h2);\n  float c = (h3 - 0.5) * 0.36;\"\"\",\"\"\"  float on = step(0.66, h2);\n  float c = (h3 - 0.5) * 0.36;\"\"\"),\n(\"\"\"  vec2 s1 = satinLayer(xw, y, side, 0.09, 0.0);\n  vec2 s2 = satinLayer(xw + 0.031, y * 1.13 + 0.7, side, 0.055, 1.0);\"\"\",\"\"\"  vec2 s1 = satinLayer(xw, y, side, 0.17, 0.0);\n  vec2 s2 = satinLayer(xw + 0.061, y * 1.13 + 0.7, side, 0.1, 1.0);\"\"\"),\n(\"\"\"    river = mix(river, vec3(1.0, 0.58, 0.95), bm * 0.6 * st.x);\n    r …[+836 chars]`
+
+### 🧑 User — 2026-11-20T03:50:35.894Z
+
+> ↩︎ result: 07 b_early s 287.256 lat 0 stage 07 coins 1960
+> 07 d_late s 343.456 lat 0 stage 07 coins 2080
+> 07 f_hard_left s 314.056 lat -2.25 stage 07 coins 1940
+> 07 g_hard_right s 314.056 lat 2.25 stage 07 coins 1950
+
+### 🤖 Claude — 2026-11-20T03:50:38.228Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/satin2/b_early.png"}`
+
+### 🧑 User — 2026-11-20T03:50:38.275Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:50:38.893Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/satin2/g_hard_right.png"}`
+
+### 🧑 User — 2026-11-20T03:50:38.943Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:50:43.420Z
+
+Better: hot pink with crisp streaks, and the near band at hard right is no longer a smear. Zooming in to compare the stroke character with the painted band.
+
+### 🤖 Claude — 2026-11-20T03:50:48.622Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/crops && python3 -I -c \"\nfrom PIL import Image\na=Image.open('/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/satin2/b_early.png').convert('RGB').crop((560,1100,864,1536))\nb=Image.open('/home/user/rainbow-/references/07_dive_the_washer_tube.png').convert('RGB').crop((0,1100,304,1536))\nc=Image.open('/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/satin2/g_hard_right.png').convert('RGB').crop((330,1150,634,1536)).resize((304,386 …[+198 chars]`
+
+### 🧑 User — 2026-11-20T03:50:48.941Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T03:50:49.568Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/crops/satin2_cmp.png"}`
+
+### 🧑 User — 2026-11-20T03:50:49.595Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:51:04.351Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image\nimport numpy as np, colorsys\nim=np.asarray(Image.open('/home/user/rainbow-/references/07_dive_the_washer_tube.png').convert('RGB')).astype(float)\nfor name,(y0,y1,x0,x1) in {'band_bl':(1150,1500,0,260),'band_r':(950,1200,640,864),'band_mid_l':(640,800,300,420)}.items():\n    reg=im[y0:y1,x0:x1].reshape(-1,3); R,G,B=reg.T\n    m=(R>150)&(G<170)&(B>120)&(R>B*0.9)   # magenta / pink\n    f=reg[m]; lum=f.mean(1)\n    print(name, 'frac', m.mean().round(2), [tuple(int(v) for v in f[np.abs(lum-np.percentile(lum,q))<3].mean(0).round()) for q in [5 …[+589 chars]`
+
+### 🧑 User — 2026-11-20T03:51:04.883Z
+
+> ↩︎ result: band_bl frac 0.48 [(182, 24, 152), (214, 32, 177), (240, 46, 200), (247, 75, 228), (247, 105, 243), (249, 138, 248)]
+> band_r frac 0.4 [(193, 34, 178), (224, 40, 194), (242, 55, 214), (248, 84, 238), (247, 110, 246), (246, 142, 248)]
+> band_mid_l frac 0.49 [(203, 35, 180), (227, 44, 197), (242, 62, 215), (247, 87, 236), (248, 109, 245), (250, 145, 252)]
+> ours g_hard_right 0.88 [(186, 33, 159), (212, 51, 188), (228, 66, 207), (240, 87, 227), (246, 114, 240), (248, 141, 243)]
+
