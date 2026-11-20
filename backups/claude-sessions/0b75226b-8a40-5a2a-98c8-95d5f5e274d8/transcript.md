@@ -1677,3 +1677,44 @@ These ratings are by eye, not measured. The "status" column says whether the fix
 
 **Next result:** the Screen 06 route test (APPROVED / BEFORE / NEW pictures, normal- and half-speed clips through the tunnel and into 07). It's coded but not yet rendered. Say "resume" to relaunch it alone or with the others, or tell me to republish the review page first.
 
+### 🧑 User — 2026-11-20T18:41:47.844Z
+
+Claudia, resume the existing Screen 06 test alone, continuing from its saved stopping point on "ccr-ac160b4c-3hdecw".
+
+Keep all other work preserved and leave the other specialists paused while this focused test is completed. Keep the verified five-minute GitHub backups running.
+
+First, be precise about what the current candidate changes
+
+Your saved Screen 06 notes say the river’s course is unchanged and the distant tunnel is moved to align with it. They also say the attempted river extension was dropped.
+
+Please explain that distinction briefly. I need to know whether this candidate preserves my approved curling river and creates the intended tunnel passage, or whether it only improves the tunnel’s alignment around the existing river.
+
+Complete the small diagnostic test already planned
+
+Use the existing code and assets. Finish the quick BEFORE / NEW captures covering the crest, middle, ending, steering and connection into Screen 07.
+
+If those show a convincing improvement, produce the full-size comparison and continuous normal-speed gameplay clip.
+
+The result must show Benny:
+
+- Travelling over the recognisable cyan-and-pink crest.
+- Entering the intended purple-and-gold tunnel.
+- Passing through identifiable gold rings and continuing beyond them.
+- Reaching Screen 07 through a coherent connection.
+
+Judge the river’s shape and the scenery’s appearance as well as whether Benny can pass through.
+
+If the candidate still falls short, identify the actual next correction
+
+If keeping the current river or level length prevents the approved appearance, explain what must change in the route, tunnel, camera or connection into Screen 07.
+
+The separate route-and-connection test is already authorized. Use that authorization appropriately and preserve the successful existing version.
+
+Give me a clear verdict: what improved, what still differs, and whether this approach can address the remaining difference. Identify the cause before repeating similar variants or commissioning more artwork.
+
+Use the tools already working. Optional Atlas setup, additional plugins and republishing the entire review page can wait until this test has a result.
+
+Finally, briefly clarify which screens your strong opening-view and gameplay claims cover, since Screens 09 and 10 are still listed as stand-ins.
+
+My next priority is seeing this actual playable result and making a decision from it.
+
