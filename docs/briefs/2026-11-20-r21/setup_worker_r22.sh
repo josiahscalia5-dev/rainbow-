@@ -27,9 +27,7 @@ for x in $W; do case $x in
   s06)   f claude/rainbow-s06-match-c18; git show HEAD:backups/wip/claude__rainbow-s06-match-c18/tracked.patch > /tmp/wip06.patch
          mk s06 /home/user/wt/s06 claude/rainbow-s06-match-c23 refs/remotes/origin/claude/rainbow-s06-match-c18
          git -C /home/user/wt/s06 apply --binary /tmp/wip06.patch && echo "s06: r18 rank-3 WIP restored" ;;
-  benny) f claude/rainbow-benny-c21; git show HEAD:backups/wip/claude__rainbow-benny-c21/tracked.patch > /tmp/wipb.patch
-         mk benny /home/user/wt/benny claude/rainbow-benny-c23 refs/remotes/origin/claude/rainbow-benny-c21
-         git -C /home/user/wt/benny apply --binary /tmp/wipb.patch && echo "benny: r20 WIP restored (regenerate crown_n.png with tools/benny20/knit.py)" ;;
+  benny) f claude/rainbow-benny-c22; mk benny /home/user/wt/benny claude/rainbow-benny-c23 refs/remotes/origin/claude/rainbow-benny-c22 ;;
   s08)   f claude/rainbow-s08-scenery-c17; mk s08 /home/user/wt/s08 claude/rainbow-s08-scenery-c23 refs/remotes/origin/claude/rainbow-s08-scenery-c17 ;;
   s05)   f claude/rainbow-s05-match-c19; mk s05 /home/user/wt/s05 claude/rainbow-s05-match-c23 refs/remotes/origin/claude/rainbow-s05-match-c19 ;;
 esac; done
