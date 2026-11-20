@@ -154055,21 +154055,42 @@ index d1de648..c96482c 100644
  }
 \ No newline at end of file
 diff --git a/qa/benny/r23/PROGRESS.md b/qa/benny/r23/PROGRESS.md
-index a76822b..1fa601b 100644
+index a76822b..cbb7ee4 100644
 --- a/qa/benny/r23/PROGRESS.md
 +++ b/qa/benny/r23/PROGRESS.md
-@@ -1,18 +1,53 @@
+@@ -1,18 +1,72 @@
 -# Benny round 23 — progress (branch `claude/rainbow-benny-c23`)
 +# Benny round 23 — progress (worktree `/home/user/wt/benny`, local branch `claude/rainbow-benny-c24` = `-c23` @ `734efb6`; not committed / pushed by Benny — the lead's autosave snapshots the worktree)
  
 -## (r23) WHERE I STOPPED / NEXT — 2026-11-20
-+## (r23) WHERE I STOPPED / NEXT — 2026-11-20 ~09:55 UTC (new account, in-process Benny)
++## (r25) WHERE I STOPPED / NEXT — 2026-11-20 ~12:10 UTC (new account; worktree `/home/user/wt/benny`, LOCAL branch `claude/rainbow-benny-c26`, port 5279)
  
 -**Done:** step 1 `&b20tuft=1` (fluffy tuft volume, lighter rose tips) — GOOD IMPROVEMENT (partial), Benny-centred crops.
 -Best Benny query now: `&benny20=1&b20expo=1&b20ppw=0.45&b20tuft=1` (all opt-in; default build unchanged).
 -**Next (lead order 03:45 UTC):** (2) `tools/benny20/knit.py`: cream (not lavender) light stripes, vertical cuff ribs, violet
 -not bluer → re-test `b20knit=1`; (3) stitched felt star. Do NOT scale Benny (06 size = Screen 06 specialist).
 -Still open on the fur: finer and grainier than the approved long silky combed strands.
++**Doing now:** (1) finishing the felt-star step `&b20star=1`: the 04–08 APPROVED / BEFORE / NEW crops in `qa/benny/r23/s3_star/` are
++complete (06 NEW re-rendered in r24 after the lime fix); gameplay 8/8 + 91 coins done in r24 (`gameplay_star.json`). Missing: the
++swim clip (06, BEFORE + NEW, speed on every frame, new tools `tools/benny25/swim_clip_c.mjs` + `label_clip_c.py`) and the verdict.
++**Next:** (2) silky combed fur `&b20silk=1` (shader in `fur.ts` `#ifdef B20SILK` + `SILK20` in `benny20.ts`, typecheck passed in r24;
++probe variants lost with the r24 scratchpad) → proof `qa/benny/r25/s4_silk/`; (3) hat crown shape vs the approved taller beanie, or
++06 cream leaning yellow (`&b20kw06=`). Do NOT scale Benny. Heavy renders through `tools/lead25/render_slot.sh`, one at a time.
+ 
+-Proof tools (new): `tools/benny23/shots_c.mjs` (= lead audit tool + Benny's projected screen box per shot, from the QA-only
+-`__b20.screenBox`) and `tools/benny23/crop_c.py` (crop centred on Benny, 675x810 like `qa/benny/r22/approved/0N_benny.png`).
++## (r24) summary — 2026-11-20 10:30–11:12 UTC (stopped by the user at 11:12 to switch accounts; not a rejection)
++* Star step `&b20star=1`: the 06 hard-left / middle star came out neon lemon-lime (`STARX20['06']` green 2.1). Probe A–D
++  (`qa/benny/r23/s3_star/06/probe_r24/`) → D chosen: `b20sx06` default `0.9,1.55,0.62` (warm gold at the start, clean yellow in the
++  middle). Old NEW kept as `06/new_r23_lime/`, 06 `new/` re-rendered. Gameplay with the NEW switches 8/8, 91 coins (1,330 → 2,240),
++  victory, no errors; `tsc` OK. The swim clips were rendering when the user stopped the session (lost).
++* Silky fur `&b20silk=1` started: `fur.ts` `B20SILK` (smooth streaks along each lock converging into a pointed tip instead of
++  per-strand dots, taper exponent, crease width, centre sheen; uniforms `uSilk` / `uSilk2`), `benny20.ts` `SILK20` + `&b20g*`
++  overrides. Two probe rounds on 04 (g0–g5, h1–h6): bigger locks read blotchy; fine/short variants close to the step-1 look; no
++  variant chosen yet.
++
++## (r23) WHERE I STOPPED / NEXT — 2026-11-20 ~09:55 UTC (new account, in-process Benny)
++
 +**Done this session:** step 2 knit beanie `&b20knit=1` (chain mode, cream stripes, vertical rib cuff, violet not bluer,
 +per-yarn exposure on 05–08) — GOOD IMPROVEMENT (hat), proof `qa/benny/r23/s2_knit/`, gameplay 8/8 + 91 coins.
 +**Best Benny query now:** `&benny20=1&b20expo=1&b20ppw=0.45&b20tuft=1&b20knit=1` (all opt-in; default build unchanged).
@@ -154079,9 +154100,7 @@ index a76822b..1fa601b 100644
 +longer silky combed tufts (not grainy). Do NOT scale Benny. Max 2 parallel renders.
 +**Open on the hat (not this step):** crown dome rounder / flatter than the approved taller beanie; on 06 middle the cream
 +leans a little yellow (`&b20kw06=` tunable).
- 
--Proof tools (new): `tools/benny23/shots_c.mjs` (= lead audit tool + Benny's projected screen box per shot, from the QA-only
--`__b20.screenBox`) and `tools/benny23/crop_c.py` (crop centred on Benny, 675x810 like `qa/benny/r22/approved/0N_benny.png`).
++
 +Worktree edits (uncommitted, for the lead's autosave): `tools/benny20/knit.py` (+ `knit_mode: chain`, `--nostar`),
 +`tools/benny23/knit_r23.json` (map params), `tools/benny23/knitprobe.mjs` (one-load map/exposure probe),
 +`assets/textures/benny20/{crown,crown_n,brim,brim_n}.png` + `knit_params.json` (regenerated), `src/characters/benny/benny20.ts`

@@ -1,5 +1,14 @@
 # Screen 04 — round 23 (new account, lead session branch `claude/rainbow-r22-restore-ut3m39`) — lead log
 
+## (r25) WHERE I STOPPED / NEXT — s04 specialist (relaunched r25 ~12:00 UTC, worktree `/home/user/wt/s04`, LOCAL branch `claude/rainbow-s04-match-c26`)
+* Worktree verified: `git diff` == `s3_glossy/code.patch` byte for byte (K23-S3 code complete; no patch re-applied). Scratch
+  `/home/user/scratch/s04/`. Proof folder `qa/match/04/r25/`. Heavy jobs wrapped in `tools/lead25/render_slot.sh`.
+* Step 0 RUNNING (12:05): labelled uninterrupted whole-04 clips K23-1 (BEFORE, what the user last saw) vs K23-S3 (NEW), same timing,
+  new tools `s04_tools/screen_clip20.mjs` (20 fps = exactly 0.05 s game time per frame, steering by share of 04 travelled like the
+  lead's r23 clip, chevron log per frame) + `s04_tools/label_clip20.py` (title, speed, game time, phase, arrows ahead / swum through).
+* NEXT: (1)-(3) biggest visible difference first: near-camera glints -> short painted crescents; far foam rows -> low cloud banks (no
+  bead walls); richer cyan/pink ribbon contrast round Benny; then `&m04mp=1` projection of the three accepted views.
+
 ## (r24) WHERE I STOPPED / NEXT — s04 specialist (relaunched r24, worktree `/home/user/wt/s04`, LOCAL branch `claude/rainbow-s04-match-c25`)
 * Resumed from the 10:25 snapshot (no patch re-applied). Recreated worktree verified: K23-S2 and K23-1 rendered with the final code
   == the r23 pictures, 0 px over the WHOLE frame in all 7 shots (`s3_glossy/K23-S2_with_new_code/`, `s3_glossy/K23-1_with_new_code/`).
@@ -79,6 +88,23 @@
   (`npx tsc --noEmit` OK, `s1_arrows/code.patch`).
 * Mobile cost: more instanced foam heaps visible at once (same 4 Blender heap meshes, ~5k triangles each, instanced; the far window
   now 30–40 u instead of 9–12 u) — the main cost of this step; worth checking on the Android build.
+
+## (r24 s04) Step 3 — glossy CLEAN lane water (long thin white streaks on electric cyan) — `s3_glossy/` — GOOD IMPROVEMENT
+(section written in r25 from the r24 files; the r24 run was interrupted at 11:12 just before writing it)
+* Switch on top of K23-S2 (`s3_glossy/SWITCH.txt`): `m04lgs=1&m04lgn=3&m04lgt=0.06&m04lgm=0.6&m04lgb=4&m04lgk=0.9&m04lgl2=1.6&
+  m04lgw=0.35&m04lgwb=1.0&m04lgsp=1.0&m04lgd=0.17&m04lgv=0.5` (new shader code in the lane colour of `match04m4.ts`,
+  `s3_glossy/step3_only.patch`): the frosted soft-white ripple blotches of the lane are replaced by smooth deep electric-blue ->
+  cyan water with thin white highlight streaks running with the flow in soft swirls, broken into tapered dashes of varying
+  brightness, plus small twinkling sparkles; streaks fade far away (no shimmer). Candidate **K23-S3** = `s3_glossy/QUERY_K23-S3.txt`.
+* WHAT LOOKS CLOSER (NEW `s3_glossy/NEW/` vs step 2 `s2_edge/NEW/`): the lane reads as clean glossy blue water, not frosted;
+  the streaks follow the current like the painted glints; the deeper blue makes the white chevrons and foam pop.
+* STILL DIFFERENT: near the camera the streaks are long straight scratches (the painting has short curved crescent glints along
+  swirls); far foam rows are strings of round pearly bubbles (painting: low cloud banks); pink sides are flat ribbons (painting:
+  pink swirls inside the cyan).
+* Proof: start view 0 px over the whole frame vs K23-1; K23-1 and K23-S2 rendered with the new code == their r23 pictures 0 px in
+  all 7 shots (`K23-1_with_new_code/`, `K23-S2_with_new_code/`); gameplay `gameplay.json` 8/8, 91 coins; `npx tsc --noEmit` OK;
+  clip `swim04_NEW_K23-S3_{realspeed,halfspeed}.mp4` (r23 2.9 s pinned clip tool).
+* Mobile cost: a few extra ALU ops per lane pixel (2 value-noise lookups, 1 extra texture fetch at a coarse mip); no new textures.
 
 ## User feedback driving this round (verbatim, 2026-11-20)
 * ~03:58 (r22): "I don't want the water to look messy. I want it to look very clean ... like the original approved screen through

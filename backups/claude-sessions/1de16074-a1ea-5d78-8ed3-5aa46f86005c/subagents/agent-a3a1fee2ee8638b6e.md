@@ -583,3 +583,345 @@ OpenCV is available. Let me view the hybrid plate, fill mask and mask06 side by 
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-20T12:05:33.089Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06/tools/match06 && cat r23_ripdump.mjs; echo ----; cat r23_vite.mjs; echo ----; head -60 r23_swim.mjs; ls", "description": "Read r23 QA tools"}`
+
+### 🧑 User — 2026-11-20T12:05:33.140Z
+
+> ↩︎ result: // r23 (QA only): dump the m06rip decal (raw RGBA premultiplied) + the build log.  node tools/match06/r23_ripdump.mjs "<query>" out.raw
+> import { writeFileSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> const { startVite } = await import(pathToFileURL(`${process.cwd()}/tools/match06/r23_vite.mjs`).href);
+> const [Q, OUT] = process.argv.slice(2);
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(Number(process.env.AUDIT_PORT ?? 5283));
+> const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+> try {
+>   const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
+>   page.on('console', (m) => { if (/m06rip|rror/.test(m.text())) console.log('console', m.text().slice(0, 300)); });
+>   await page.goto(`${vite.url}/?qa=1&dpr=1&${Q}&m06ripdbg=1`);
+>   await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 300000 });
+>   const r = await page.evaluate(() => { const d = window.__m06rip; return d ? { NX: d.NX, NY: d.NY, b: Array.from(d.data) } : null; });
+>   if (r) { …[+4050 chars]
+
+### 🤖 Claude — 2026-11-20T12:05:35.454Z
+
+Let me look at the lead's clip tools (speed label on every frame) and check machine load.
+
+### 🤖 Claude — 2026-11-20T12:05:36.772Z
+
+> 🔧 **Bash** `{"command": "cat /home/user/rainbow-/tools/lead23/screen_clip.mjs | head -80; echo ----; head -60 /home/user/rainbow-/tools/lead23/label_clip.py; echo; cat /home/user/rainbow-/tools/lead23/clip.sh; uptime; bash /home/user/rainbow-/tools/lead25/render_slot.sh --status", "description": "Read clip tools and check load"}`
+
+### 🧑 User — 2026-11-20T12:05:36.829Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Lead r23: uninterrupted REAL-GAMEPLAY clip of one whole playable screen (entrance -> end, into the next screen), with the
+> // steering phase and the screen logged per frame (for labels). Real game speed: one frame per 1/24 s of game time.
+> // Steering by the share of the screen travelled: straight < 0.30, LEFT 0.30-0.50, RIGHT 0.50-0.70, straight after (end).
+> // The shader clock follows the clip clock (performance.now pinned per frame), so the water moves at its normal speed.
+> //   cd <worktree> && AUDIT_PORT=5290 node /home/user/rainbow-/tools/lead23/screen_clip.mjs <screen 04..08> <outDir> "<query>" [tailSecs]
+> import { mkdirSync, writeFileSync, realpathSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> // worktrees link node_modules to the main checkout: allow Vite to serve it too, else the HUD fonts fall back (s06 r23 fix)
+> async function startVite(port) {
+>   const { createServer, searchForWorkspaceRoot } = await import(pathToFileURL(`${process.cwd()}/node_modules/vite/dist/node/index.js`).href);
+>   const root = process.cwd();
+>   const  …[+5107 chars]
+
+### 🤖 Claude — 2026-11-20T12:05:38.441Z
+
+I'll open the r25 progress log first (the account can stop at any moment).
+
+### 🤖 Claude — 2026-11-20T12:05:45.361Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/rainbow-/qa/match/06/r25 && python3 - <<'EOF'\nsrc=open('/home/user/rainbow-/qa/match/06/r23/PROGRESS.md').read()\na=src.index('## (r23) WHERE I STOPPED / NEXT'); b=src.index('K6 = `match06=1')\nr23=src[a:b].rstrip()\nout=f\"\"\"# Screen 06 — round 25 progress (worktree `/home/user/wt/s06`, LOCAL branch `claude/rainbow-s06-match-c26`, ports 5276 / 5282 / 5283)\n\n## (r25) WHERE I STOPPED / NEXT\n* ~12:05 UTC — started. Read CLAUDE.md, `docs/briefs/2026-11-20-r25/LAUNCH_R25.md` (s06), the lead's diagnosis\n  `qa/match/06/r24/lead_rip/NOTES.md` (cone = the cut-ou …[+1103 chars]`
+
+### 🧑 User — 2026-11-20T12:05:45.415Z
+
+> ↩︎ result: # Screen 06 — round 25 progress (worktree `/home/user/wt/s06`, LOCAL branch `claude/rainbow-s06-match-c26`, ports 5276 / 5282 / 5283)
+> 
+> ## (r25) WHERE I STOPPED / NEXT
+> * ~12:05 UTC — started. Read CLAUDE.md, `docs/briefs/2026-11-20-r25/LAUNCH_R25.md` (s06), the lead's diagnosis
+>   `qa/match/06/r24/lead_rip/NOTES.md` (cone = the cut-out hole where the painted Benny was removed from the projected painting,
+>   filled with the river's own brighter water, hard Benny-shaped edge; `m06ripz` removed the left-behind ring only).
+> * Step 1 (the user's opening effect — blend the hole into the painted water around it, keep only shallow rings at Benny's
+>   contact, start view 0 px; ORIGINAL APPROVED / CURRENT (`QUERY_RIP`) / NEW at start + o1 3 % / o2 7 % / o3 12 %, clip 1.0x + 0.5x,
+>   gameplay, tsc): IN PROGRESS — measuring the hole in the river's own coordinates.
+> 
+> CURRENT (what the user saw) = `qa/match/06/r24/lead_rip/QUERY_RIP.txt`:
+> `match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1&m06st=1&m06fcl=1&m06view=1&m06vs=0&m06rip=1`
+> 
+> ---
+> ## (r23, copied from `qa/match/06/r23/PROGRESS.md`) WHERE I STOPPED / NEXT — STOPPED after 3 finished steps (fin …[+617 chars]
+
+### 🤖 Claude — 2026-11-20T12:05:47.469Z
+
+Let me compare RIP vs RIPZ at o1/o2/o3 side by side (scratch view, half size).
+
+### 🤖 Claude — 2026-11-20T12:05:49.381Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r24/lead_rip && python3 -c \"\nfrom PIL import Image\nW,H=288,512\nout=Image.new('RGB',(W*3,H*2))\nfor j,v in enumerate(['RIP','RIPZ']):\n  for i,s in enumerate(['o1_003','o2_007','o3_012']):\n    out.paste(Image.open(f'{v}/{s}.png').convert('RGB').resize((W,H)),(i*W,j*H))\nout.save('/home/user/scratch/s06/view_rip_ripz.png')\n\"", "description": "Make RIP vs RIPZ comparison grid for viewing"}`
+
+### 🧑 User — 2026-11-20T12:05:49.920Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T12:05:50.817Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s06/view_rip_ripz.png"}`
+
+### 🧑 User — 2026-11-20T12:05:50.866Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T12:06:16.270Z
+
+Let me see the plate-weight debug at o2 (7 %) to know how much of the near water is still the painting there.
+
+### 🤖 Claude — 2026-11-20T12:06:17.918Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r24/lead_rip && python3 -c \"\nfrom PIL import Image\nW,H=432,768\nout=Image.new('RGB',(W*2,H))\nfor i,s in enumerate(['WDBG0/o2_007','WDBG/o1_003']):\n    out.paste(Image.open(f'{s}.png').convert('RGB').resize((W,H)),(i*W,0))\nout.save('/home/user/scratch/s06/view_wdbg.png')\n\"", "description": "Make WDBG o2 / ripz-o1 view"}`
+
+### 🧑 User — 2026-11-20T12:06:18.432Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T12:06:19.614Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s06/view_wdbg.png"}`
+
+### 🧑 User — 2026-11-20T12:06:19.644Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T12:06:29.878Z
+
+Let me get the river layout numbers (Wc, Wb, hb, sB) and the geometry of the course around the checkpoint.
+
+### 🤖 Claude — 2026-11-20T12:06:31.082Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06/assets/textures/match06 && python3 -c \"\nimport json;d=json.load(open('proj06.json'));print(json.dumps(d['tiles'],indent=0)[:1500]);print({k:d[k] for k in d if k not in ('tiles','camera')})\"; cat water06.json | head -40", "description": "Print layout tile params"}`
+
+### 🧑 User — 2026-11-20T12:06:31.171Z
+
+> ↩︎ result: {
+> "tube": {
+> "wallAngle": [
+> -0.41151684606748806,
+> 3.553109499657281
+> ],
+> "sectorDeg": [
+> 35.0,
+> 140.0
+> ],
+> "vp": [
+> 660.0,
+> 632.0
+> ],
+> "r": [
+> 110.0,
+> 340.0
+> ],
+> "period": 58.95287321438412,
+> "anglePeriod": 1.8325957145940461
+> },
+> "floor": {
+> "px": [
+> 150,
+> 1250,
+> 720,
+> 1530
+> ],
+> "lateralPeriod": 8.5923294280422,
+> "period": 4.2207934032488
+> },
+> "floor2": {
+> "s": [
+> 196.91,
+> 197.85999999999999
+> ],
+> "lateral": [
+> -1.05,
+> 0.95
+> ],
+> "lateralPeriod": 2.0,
+> "period": 2.4727272727272727,
+> "pxPerU": 220,
+> "stretch": 4.0
+> },
+> "r6": {
+> "note": "r6 narrow river: water |l| <= Wc, foam bank Wc..Wb (raised hb), tunnel wall rising from Wb (tools/match06/make_river06.py)",
+> "Wc": 2.3,
+> "Wb": 3.6,
+> "hb": 0.18,
+> "river": {
+> "s": [
+> 197.25,
+> 197.95
+> ],
+> "lateral": [
+> -1.5,
+> 0.95
+> ],
+> "period": 2.275,
+> "pxPerU": 200,
+> "stretch": 5.0
+> },
+> "foamPeriod": 1.6,
+> "wallFrom": 0.35
+> }
+> }
+> {'note': 'Screen 06 proxy layout (tools/match06/geo06.py)', 'R': 7.5, 'hA': 3.0, 'sBack': -12.0, 'sAhead07': 34.0, 'ext': 260.0, 'sB': 198.91, 's0': 186.91, 's1': 276.8727903992245, 'Lfloor': 6.87386354243376}
+> {
+> "note": "Screen 06 water surface lateral extents fitted to the painted water (tools/match06/fit_water06.py)",
+> "s": [
+> 186.91,
+> 187.41,
+> 187.91,
+> 188.41,
+> 188.91,
+> 189.41,
+> 189.91,
+> 190.4 …[+234 chars]
+
+### 🤖 Claude — 2026-11-20T12:06:34.065Z
+
+> 🔧 **Bash** `{"command": "cat /home/user/rainbow-/qa/match/06/r24/lead_rip/RIP/shots.json; cat /home/user/rainbow-/qa/match/06/r23/step3_m06rip/NEW/shots.json | head -30", "description": "Show shot positions"}`
+
+### 🧑 User — 2026-11-20T12:06:34.117Z
+
+> ↩︎ result: [
+>  {
+>   "name": "o1_003",
+>   "frac": 0.03,
+>   "steer": null,
+>   "s": 200.377,
+>   "lat": 0,
+>   "stage": "06",
+>   "coins": 1690,
+>   "s0": 198.91,
+>   "s1": 242.87279039922453
+>  },
+>  {
+>   "name": "o2_007",
+>   "frac": 0.07,
+>   "steer": null,
+>   "s": 202.027,
+>   "lat": 0,
+>   "stage": "06",
+>   "coins": 1690,
+>   "s0": 198.91,
+>   "s1": 242.87279039922453
+>  },
+>  {
+>   "name": "o3_012",
+>   "frac": 0.12,
+>   "steer": null,
+>   "s": 204.227,
+>   "lat": 0,
+>   "stage": "06",
+>   "coins": 1700,
+>   "s0": 198.91,
+>   "s1": 242.87279039922453
+>  }
+> ][
+>  {
+>   "name": "a_start",
+>   "frac": 0,
+>   "steer": null,
+>   "s": 198.91,
+>   "lat": 0,
+>   "stage": "06",
+>   "coins": 1680,
+>   "s0": 198.91,
+>   "s1": 242.87279039922453
+>  },
+>  {
+>   "name": "b_early",
+>   "frac": 0.12,
+>   "steer": null,
+>   "s": 204.227,
+>   "lat": 0,
+>   "stage": "06",
+>   "coins": 1700,
+>   "s0": 198.91,
+>   "s1": 242.87279039922453
+>  },
+>  {
+>   "name": "b2_early",
+>   "frac": 0.22,
+>   "steer": null,
+>   "s": 208.627,
+>   "lat": 0,
+>   "stage": "06",
+
+### 🤖 Claude — 2026-11-20T12:07:03.569Z
+
+Let me read the loader section to know the variable names (projector camera, plate, W/H).
+
+### 🤖 Claude — 2026-11-20T12:07:04.215Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s06/src/world/match06.ts", "offset": 440, "limit": 42}`
+
+### 🧑 User — 2026-11-20T12:07:04.248Z
+
+> ↩︎ result: 440	  }
+> 441	  // light rim on the shadow side (the foam film seen edge-on), faintly pink <-> cyan
+> 442	  float ang = atan(vUv.y, vUv.x) + s * 6.2832;
+> 443	  vec3 iri = mix(vec3(0.98, 0.84, 0.99), vec3(0.82, 0.95, 1.0), 0.5 + 0.5 * sin(ang * 2.0 + r * 5.0));
+> 444	  float fr = smoothstep(0.66, 0.97, r) * (0.35 + 0.65 * (1.0 - clamp(lt, 0.0, 1.0)));
+> 445	  col = mix(col, iri, fr * (lobe ? 0.45 : 0.7));
+> 446	  float a = 1.0;
+> 447	#ifdef RIM
+> 448	  a = 1.0 - 0.6 * smoothstep(0.86, 1.0, r);
+> 449	#endif
+> 450	  gl_FragColor = vec4(pjInverse(clamp(col, 0.0, 1.0)), a);
+> 451	}`;
+> 452	
+> 453	const tex = (f: string) => new URL(`../../assets/textures/match06/${f}`, import.meta.url).href;
+> 454	
+> 455	export async function buildMatch06(course: Course): Promise<Match06> {
+> 456	  const L: Layout06 = await fetch(tex('proj06.json')).then((r) => r.json());
+> 457	  const loader = new THREE.TextureLoader();
+> 458	  const plate = await loader.loadAsync(tex('plate06_hybrid.png'));
+> 459	  plate.colorSpace = THREE.NoColorSpace; // raw display values: the shader inverts the post chain itself
+> 460	  plate.minFilter = THREE.LinearMipmapLinearFilter;
+> 461	  plate.anisotropy = 8;
+> 462	
+> 463	  // the projector = the locked game camera the  …[+1131 chars]
+
+### 🤖 Claude — 2026-11-20T12:07:49.446Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s06/src/world/match06.ts", "old_string": "  // r7 `&m06foam=1` (needs m06geo): puffy 3D foam clouds along both banks — the painted white-lilac foam clusters that", "new_string": "  // r25 QA only `&m06holedump=1` (tools/match06/r25_holedump.mjs): the projected plate, mask06 and the body fill mask unwrapped\n  // into the river floor's own coordinates (lateral l x course s, exactly the floor surface incl. the raised banks) with the\n  // projector's own visibility (floor self-occlusion z-buffer), for tools/match06/make_hole06.py. Nothing change …[+3988 chars]`
+
+### 🧑 User — 2026-11-20T12:07:49.499Z
+
+> ↩︎ result: The file /home/user/wt/s06/src/world/match06.ts has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T12:07:55.149Z
+
+> 🔧 **Write** `{"file_path": "/home/user/wt/s06/tools/match06/r25_holedump.mjs", "content": "// r25 (QA only): dump the m06holedump floor unwrap (plate RGB + vis, mask06 R/G + body fill, projector px) to <outPrefix>.{bin,xy.bin,json}\n//   cd /home/user/wt/s06 && AUDIT_PORT=5283 node tools/match06/r25_holedump.mjs \"<query>\" <outPrefix>\nimport { writeFileSync } from 'node:fs';\nimport { pathToFileURL } from 'node:url';\nconst { loadPlaywright, CHROMIUM_ARGS } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);\nconst { startVite } = await import(pathToFileURL(`${process.cwd()}/tools/ …[+1094 chars]`
+
+### 🧑 User — 2026-11-20T12:07:55.206Z
+
+> ↩︎ result: File created successfully at: /home/user/wt/s06/tools/match06/r25_holedump.mjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T12:07:58.695Z
+
+Type-check, then run the dump (one render slot).
+
+### 🤖 Claude — 2026-11-20T12:07:59.549Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && timeout 600 npx tsc --noEmit; echo \"tsc rc=$?\"", "description": "Type-check the worktree", "timeout": 620000}`
+
+### 🧑 User — 2026-11-20T12:08:06.881Z
+
+> ↩︎ result: tsc rc=0
+
+### 🤖 Claude — 2026-11-20T12:08:09.505Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && Q=$(cat /home/user/rainbow-/qa/match/06/r24/lead_rip/QUERY_RIP.txt | tr -d '\\n') && AUDIT_PORT=5283 timeout 900 bash /home/user/rainbow-/tools/lead25/render_slot.sh node tools/match06/r25_holedump.mjs \"$Q\" /home/user/scratch/s06/hole 2>&1 | tail -20; ls -la /home/user/scratch/s06/", "description": "Dump the floor-space unwrap from the game", "timeout": 920000}`
+

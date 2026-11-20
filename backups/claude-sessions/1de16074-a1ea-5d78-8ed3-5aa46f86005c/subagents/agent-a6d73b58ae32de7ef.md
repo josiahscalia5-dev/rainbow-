@@ -547,3 +547,457 @@ I'll start by reading the briefs and my previous progress logs in the specified 
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-20T12:04:44.450Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s07 && python3 -c \"\nfrom PIL import Image\nR='/home/user/rainbow-/qa/match/07/r24/s1_swing'\nW=Image.new('RGB',(600,300))\nfor i,k in enumerate(['BEFORE','NEW']):\n  W.paste(Image.open(f'{R}/{k}/a_start.png').convert('RGB').crop((630,570,730,670)).resize((300,300),Image.NEAREST),(i*300,0))\nW.save('crop_astart.png')\"", "description": "Zoom into the start-view difference"}`
+
+### 🧑 User — 2026-11-20T12:04:44.691Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T12:04:45.925Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s07/crop_astart.png"}`
+
+### 🧑 User — 2026-11-20T12:04:45.949Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T12:04:57.028Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"sample(s *[+-]\\|sample(Math\\|lookAhead\\|aheadS\\|sample(this\" src/game/cameraRig.ts src/game/match.ts | head -30", "description": "Find camera look-ahead sampling"}`
+
+### 🧑 User — 2026-11-20T12:04:57.076Z
+
+> ↩︎ result: src/game/cameraRig.ts:98:    const fb = this.course.sample(Math.max(0, s - p.back * 0.5)); // smoothing of heading
+> src/game/cameraRig.ts:127:    const fbk = this.course.sample(Math.max(0, s - p.back));
+> src/game/cameraRig.ts:190:        const fa = this.course.sample(s + LOOK07.ahead);
+
+### 🤖 Claude — 2026-11-20T12:04:58.560Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 60,175p src/game/cameraRig.ts", "description": "Read camera rig computation"}`
+
+### 🧑 User — 2026-11-20T12:04:58.604Z
+
+> ↩︎ result: // `?matchNN=1` (src/game/match.ts): the approved picture's camera framing for that screen; no switch: no change
+> applyMatchCam(STAGE_CAM);
+> 
+> /** the blended (required) numeric keys; 05-only extras (yaw, deadZone) are read directly from STAGE_CAM */
+> type BlendKey = 'back' | 'up' | 'ahead' | 'lookUp' | 'fov' | 'latFollow' | 'roll';
+> const KEYS: BlendKey[] = ['back', 'up', 'ahead', 'lookUp', 'fov', 'latFollow', 'roll'];
+> 
+> export function camParamsAt(course: Course, s: number, blend = 8): CamParams {
+>   const acc: CamParams = { back: 0, up: 0, ahead: 0, lookUp: 0, fov: 0, latFollow: 0, roll: 0 };
+>   let w = 0;
+>   for (const st of course.stages) {
+>     const p = STAGE_CAM[st.id];
+>     if (!p) continue;
+>     const a = THREE.MathUtils.smoothstep(s, st.s0 - blend, st.s0 + blend) * (1 - THREE.MathUtils.smoothstep(s, st.s1 - blend, st.s1 + blend));
+>     if (a <= 0) continue;
+>     for (const k of KEYS) acc[k] += p[k] * a;
+>     w += a;
+>   }
+>   if (w === 0) return { ...(STAGE_CAM['03'] as CamParams) };
+>   for (const k of KEYS) acc[k] /= w;
+>   return acc;
+> }
+> 
+> export class RideCamera {
+>   readonly pos = new THREE.Vector3();
+>   readonly target = new THREE.Vector3();
+>   readonly up = new THREE.Vector3(0, 1, 0);
+>   fov  …[+5846 chars]
+
+### 🤖 Claude — 2026-11-20T12:05:06.035Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/07/r24/s1_swing && python3 -c \"\nimport json\na=json.load(open('BEFORE/shots.json'));b=json.load(open('NEW/shots.json'))\nfor x,y in zip(a,b): print(x['name'],x['s'],y['s'],x['lat'],y['lat'],x['coins'],y['coins'],x['s1'],y['s1'])\"; grep -n \"frac\\|goto\\|step(\" /home/user/wt/s07/tools/match07/audit_screen_r23.mjs | head -30", "description": "Compare shot positions BEFORE vs NEW"}`
+
+### 🧑 User — 2026-11-20T12:05:06.112Z
+
+> ↩︎ result: a_start 273.056 273.056 0 0 1940 1940 390.39551590697124 392.89463260340705
+> b_early 287.256 287.456 0 0 1960 1960 390.39551590697124 392.89463260340705
+> c_middle 314.256 315.056 0 0 2030 2030 390.39551590697124 392.89463260340705
+> d_late 343.656 345.056 0 0 2080 2080 390.39551590697124 392.89463260340705
+> e1_075 361.256 363.056 0 0 2110 2110 390.39551590697124 392.89463260340705
+> e_end 372.856 375.056 0 0 2130 2140 390.39551590697124 392.89463260340705
+> e2_092 381.056 383.456 0 0 2150 2150 390.39551590697124 392.89463260340705
+> f_hard_left 314.256 315.056 -2.25 -2.25 1940 1940 390.39551590697124 392.89463260340705
+> g_hard_right 314.256 315.056 2.25 2.25 1950 1950 390.39551590697124 392.89463260340705
+> 6:// Shots are fractions of the stage from its checkpoint to its end; env AUDIT_SHOTS='[["name",frac,steer],...]' overrides.
+> 23:  await page.goto(`${vite.url}/?qa=1&dpr=1&${Q}`);
+> 25:  for (const [name, frac, steer] of SHOTS) {
+> 26:    const st = await page.evaluate(async ([stage, frac, steer]) => {
+> 28:      r.goto(stage);
+> 30:      const tS = s0 + frac * (s1 - s0);
+> 32:      let k = 0; while (r.state().s < tS && k < 6000) { r.step(1); k++; }
+> 38:    }, [STAGE, frac, steer]);
+> 40:    log.push({ nam …[+96 chars]
+
+### 🤖 Claude — 2026-11-20T12:05:13.497Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"continuity\\|gameplay\" package.json; head -30 /home/user/rainbow-/qa/match/07/r23/s1_satin/continuity.txt; ls /home/user/rainbow-/qa/match/07/r23/; ls /home/user/rainbow-/qa/match/07/r23/s2_sriver 2>/dev/null | head -30", "description": "Check continuity/gameplay test commands and r23 outputs"}`
+
+### 🧑 User — 2026-11-20T12:05:13.544Z
+
+> ↩︎ result: 12:    "test:continuity": "vite-node scripts/continuity-test.ts",
+> 
+> > rainbow-washer-game@0.1.0 test:continuity
+> > vite-node scripts/continuity-test.ts
+> 
+> {
+>  "ok": true,
+>  "length": 435.2,
+>  "plunge": {
+>   "entryAltitude07": -48.53,
+>   "plungeTop": {
+>    "s": 310.41,
+>    "y": -52.31
+>   },
+>   "plungeMid": {
+>    "s": 349.77,
+>    "y": -83.56
+>   },
+>   "plungeBottom": {
+>    "s": 389.13,
+>    "y": -113.49
+>   },
+>   "inlet08": {
+>    "s": 389.22,
+>    "y": -113.5
+>   },
+>   "verticalDrop": 61.19,
+>   "minPitchDeg": -70
+>  },
+>  "maxStepTangentDeg": 6.241,
+>  "boundaries": [
+> K7c.txt
+> PROGRESS.md
+> lead_clip
+> s1_satin
+> s2_low
+> s2_sriver
+> s2x_low_parked
+> BEFORE
+> NEW
+> continuity_BEFORE_match07.txt
+> continuity_NEW.txt
+> continuity_default.txt
+> continuity_report_NEW.json
+> diff_a_start.png
+> diffs
+> path_graph_NEW.md
+> query_BEFORE.txt
+> query_NEW.txt
+> rejected_lookahead
+> route_BEFORE.json
+> route_NEW.json
+
+### 🤖 Claude — 2026-11-20T12:05:15.777Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/07/r23/s2_sriver && head -5 continuity_NEW.txt; grep -n \"VITE_RAINBOW_Q05\\|query\\|location\" /home/user/wt/s07/scripts/continuity-test.ts | head; head -40 path_graph_NEW.md; cat /home/user/scratch/s07/chk08.log | grep -v \"allow list\" | tail -3", "description": "Check how continuity was run with a query in r23"}`
+
+### 🧑 User — 2026-11-20T12:05:15.842Z
+
+> ↩︎ result: > rainbow-washer-game@0.1.0 test:continuity
+> > vite-node scripts/continuity-test.ts
+> 
+> {
+> # Rainbow route graph — absolute altitudes & continuity
+> 
+> Generated by `npm run test:continuity`. Route length **437.6 units** (1 unit ≈ 5 cm at Benny scale).
+> One centripetal Catmull-Rom spline from scene 01 to the towel at the end of 10; scene 11 is the
+> victory cinematic at the route end. Result: **PASS**.
+> 
+> | Stage | Title | s0 → s1 | length | altitude in → out | width | tube | speed |
+> |---|---|---|---|---|---|---|---|
+> | 01 | INSIDE THE WASHING MACHINE | 0.0 → 0.0 | 0.0 | -2.4 → -2.4 | 6 | open | 0 |
+> | 02 | WHIRLPOOL TUMBLE | 0.0 → 41.0 | 41.0 | -2.4 → -11.9 | 5 | open | 9 |
+> | 03 | WHIRLPOOL TWIRL | 41.0 → 70.4 | 29.4 | -11.9 → -19.4 | 7 | open | 9 |
+> | 04 | THROUGH THE FIVE ARROWS | 70.4 → 114.7 | 44.3 | -19.4 → -40.6 | 4.4 | gold r=4.8 | 14 |
+> | 05 | FLOW INTO THE CURRENT | 114.7 → 188.9 | 74.2 | -40.6 → -43.3 | 9 | perf r=7.6 | 11 |
+> | 06 | CREST THE RINSE ARCH | 188.9 → 247.1 | 58.1 | -43.3 → -48.5 | 7 | perf r=15 | 11 |
+> | 07 | DIVE THE WASHER TUBE | 247.1 → 391.7 | 144.6 | -48.5 → -113.5 | 5.6 | perf r=7.2 | 12 |
+> | 08 | FINAL SPIN CHAMBER | 391.7 → 407.2 | 15.6 | -113.5 → -113.6 | 4.8 | open | 9 …[+1183 chars]
+
+### 🤖 Claude — 2026-11-20T12:05:21.973Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/07/r24/combo/check08_r25 && S=/home/user/rainbow-/qa/match/08/r23/step3_m08towelm; for n in a00_approved_view f10_forward10u; do node /home/user/tools-pixelmatch/pixeldiff.mjs K23-3/$n.png $S/3_NEW_$n.png diff_$n.png 0.1 2>&1 | grep '^{' | python3 -c \"import json,sys;d=json.loads(sys.stdin.read());print('$n',d['diff_pixels'],d['diff_pct'])\"; done; python3 -c \"\nfrom PIL import Image\nimport numpy as np\nS='/home/user/rainbow-/qa/match/08/r23/step3_m08towelm'\nfor n in ['a00_approved_view','f10_forward10u']:\n  a=np.asarray(Image.open(f'K23-3/{n}. …[+543 chars]`
+
+### 🧑 User — 2026-11-20T12:05:23.648Z
+
+> ↩︎ result: Exit code 1
+> a00_approved_view 0 0
+> f10_forward10u 30780 2.3193
+> a00_approved_view 0 
+> f10_forward10u 47872 (np.int64(275), np.int64(583), np.int64(872), np.int64(1192))
+> K23-3/a00_approved_view.png ../check08/K23-3/a00_approved_view.png differ: char 39368, line 162
+
+### 🤖 Claude — 2026-11-20T12:05:25.821Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/07/r24/combo/check08_r25/cmp_f10_forward10u.png"}`
+
+### 🧑 User — 2026-11-20T12:05:25.838Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T12:05:33.270Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/07/r24 && python3 - <<'EOF'\np='PROGRESS.md'; s=open(p).read()\nhdr=\"# Screen 07 · round 24 (water-fx-specialist) — progress log\\n\"\nassert s.startswith(hdr)\nblk=\"\"\"\n## (r25) WHERE I STOPPED / NEXT\n* r25 relaunch (new account, ~12:00 UTC). Worktree `/home/user/wt/s07`, LOCAL branch `claude/rainbow-s07-match-c26` (= `8accdad0` + my\n  r24 11:43 edits, applied by the lead). Ports 5277 / 5280 / 5281. Heavy renders via `tools/lead25/render_slot.sh`. Temp\n  `/home/user/scratch/s07/`.\n* 12:10 DONE: s08 snapshot rebuilt read-only from `/home/use …[+907 chars]`
+
+### 🧑 User — 2026-11-20T12:05:33.341Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-20T12:05:42.373Z
+
+> 🔧 **Bash** `{"command": "df -h /home/user /tmp | head; du -sh /home/user/scratch 2>/dev/null", "description": "Check disk space"}`
+
+### 🧑 User — 2026-11-20T12:05:42.427Z
+
+> ↩︎ result: Filesystem      Size  Used Avail Use% Mounted on
+> /dev/vda        252G   46G   24G  66% /
+> /dev/vda        252G   46G   24G  66% /
+> 113M	/home/user/scratch
+
+### 🤖 Claude — 2026-11-20T12:05:45.999Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s07/combo && R=/home/user/rainbow-/qa/match/07/r24; mkdir -p /home/user/scratch/s07/clips; (AUDIT_PORT=5281 nohup timeout 5400 bash /home/user/rainbow-/tools/lead25/render_slot.sh node /home/user/rainbow-/tools/lead23/screen_clip.mjs 07 /home/user/scratch/s07/clips/BEFORE \"$(cat $R/QUERY_BEFORE_r23cand_latest08.txt)\" > /home/user/scratch/s07/clips/BEFORE.log 2>&1; echo exit $? >> /home/user/scratch/s07/clips/BEFORE.log) > /dev/null 2>&1 & echo started; date", "description": "Start the BEFORE clip render in the background"}`
+
+### 🧑 User — 2026-11-20T12:05:46.034Z
+
+> ↩︎ result: started
+> Fri Nov 20 12:05:46 UTC 2026
+
+### 🤖 Claude — 2026-11-20T12:05:50.633Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && timeout 900 npx tsc --noEmit; echo tsc $?; mkdir -p /home/user/rainbow-/qa/match/07/r25 2>/dev/null; R=/home/user/rainbow-/qa/match/07/r24/s1_swing; VITE_RAINBOW_Q05=\"match07=1&m07sbend=1&m07swing=1\" timeout 900 npm run test:continuity > /home/user/scratch/s07/cont_swing.txt 2>&1; echo cont $?; python3 -c \"\nimport json,re\ns=open('/home/user/scratch/s07/cont_swing.txt').read(); j=json.loads(s[s.index('{'):s.rindex('}')+1]); print(j['ok'], j['length'], j['plunge'], j['maxStepTangentDeg']); print([ (b.get('from'),b.get('to'),b.get('gap',b.get('positionGap …[+103 chars]`
+
+### 🧑 User — 2026-11-20T12:05:57.117Z
+
+> ↩︎ result: Exit code 1
+> tsc 0
+> cont 0
+> True 438.6 {'entryAltitude07': -48.53, 'plungeTop': {'s': 312.41, 'y': -52.48}, 'plungeMid': {'s': 352.49, 'y': -84.07}, 'plungeBottom': {'s': 392.57, 'y': -113.49}, 'inlet08': {'s': 392.66, 'y': -113.5}, 'verticalDrop': 61.02, 'minPitchDeg': -70} 7.964
+> Traceback (most recent call last):
+>   File "<string>", line 3, in <module>
+>     s=open('/home/user/scratch/s07/cont_swing.txt').read(); j=json.loads(s[s.index('{'):s.rindex('}')+1]); print(j['ok'], j['length'], j['plunge'], j['maxStepTangentDeg']); print([ (b.get('from'),b.get('to'),b.get('gap',b.get('positionGap'))) for b in j['boundaries']][:12])
+>                                                                                                                                                                                       ^^^^^
+> AttributeError: 'str' object has no attribute 'get'
+
+### 🤖 Claude — 2026-11-20T12:06:01.241Z
+
+> 🔧 **Bash** `{"command": "rmdir /home/user/rainbow-/qa/match/07/r25; python3 -c \"\nimport json\ns=open('/home/user/scratch/s07/cont_swing.txt').read(); j=json.loads(s[s.index('{'):s.rindex('}')+1]); print(j['boundaries'][:3]); print({k:v for k,v in j.items() if k not in ('boundaries','plunge')})\"; cp /home/user/scratch/s07/cont_swing.txt /home/user/rainbow-/qa/match/07/r24/s1_swing/continuity_NEW.txt; grep -n \"07 → 08\\|ok\\b\" /home/user/wt/s07/docs/path_graph.md 2>/dev/null | head -3; cd /home/user/wt/s07 && git status --short | grep -v \"^??\"", "description": "Inspect continuity boundaries; check gi …[+10 chars]`
+
+### 🧑 User — 2026-11-20T12:06:01.480Z
+
+> ↩︎ result: ['01->02 gap=0 dT=0.249 y=-2.4', '02->03 gap=-0.0001 dT=0.657 y=-11.87', '03->04 gap=0 dT=0.92 y=-19.41']
+> {'ok': True, 'length': 438.6, 'maxStepTangentDeg': 7.964}
+> 31:| 07 → 08 | 392.66 | 0 | 0.355 | 0.316 | -113.5 |
+> 38:## 07 → 08 deep plunge
+>  M docs/path_graph.md
+>  M qa/continuity_report.json
+>  M src/game/Game.ts
+>  M src/game/cameraRig.ts
+>  M src/gameplay/coins.ts
+>  M src/world/course.ts
+>  M src/world/match07.ts
+
+### 🤖 Claude — 2026-11-20T12:06:06.475Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && cp docs/path_graph.md /home/user/rainbow-/qa/match/07/r24/s1_swing/path_graph_NEW.md && cp qa/continuity_report.json /home/user/rainbow-/qa/match/07/r24/s1_swing/continuity_report_NEW.json && git checkout -- docs/path_graph.md qa/continuity_report.json && git status --short | grep -v \"^??\"; grep \"boundaries\" -A12 /home/user/rainbow-/qa/match/07/r24/s1_swing/continuity_report_NEW.json | head -14", "description": "Save continuity outputs to qa and restore generated files"}`
+
+### 🧑 User — 2026-11-20T12:06:06.834Z
+
+> ↩︎ result: M src/game/Game.ts
+>  M src/game/cameraRig.ts
+>  M src/gameplay/coins.ts
+>  M src/world/course.ts
+>  M src/world/match07.ts
+>   "boundaries": [
+>     {
+>       "from": "01",
+>       "to": "02",
+>       "s": 0.01,
+>       "posGap": 0,
+>       "tangentAngleDeg": 0.249,
+>       "upAngleDeg": 0.249,
+>       "altitude": -2.4
+>     },
+>     {
+>       "from": "02",
+>       "to": "03",
+
+### 🤖 Claude — 2026-11-20T12:06:11.433Z
+
+> 🔧 **Bash** `{"command": "sleep 45; ls /home/user/scratch/s07/clips/BEFORE/f 2>/dev/null | wc -l; cat /home/user/scratch/s07/clips/BEFORE.log | grep -v \"allow list\" | tail -3; uptime; bash /home/user/rainbow-/tools/lead25/render_slot.sh --status; head -30 /home/user/wt/s07/tools/match07/gameplay_test_5277.mjs", "description": "Check clip progress and gameplay tool usage"}`
+
+### 🧑 User — 2026-11-20T12:06:11.440Z
+
+> ↩︎ result: <tool_use_error>Blocked: sleep 45 followed by: ls /home/user/scratch/s07/clips/BEFORE/f wc -l cat /home/user/scratch/s07/clips/BEFORE.log grep -v "allow list" tail -3 uptime bash /home/user/rainbow-/tools/lead25/render_slot.sh --status head -30 /home/user/wt/s07/tools/match07/gameplay_test_5277.mjs. To wait for a condition, use Monitor with an until-loop (e.g. `until <check>; do sleep 2; done`). To wait for a command you started, use run_in_background: true. Do not chain shorter sleeps to work around this block.</tool_use_error>
+
+### 🤖 Claude — 2026-11-20T12:06:13.738Z
+
+> 🔧 **Bash** `{"command": "ls /home/user/scratch/s07/clips/BEFORE/f 2>/dev/null | wc -l; cat /home/user/scratch/s07/clips/BEFORE.log | grep -v \"allow list\" | tail -3; uptime; bash /home/user/rainbow-/tools/lead25/render_slot.sh --status; head -30 /home/user/wt/s07/tools/match07/gameplay_test_5277.mjs", "description": "Check clip progress and gameplay tool usage"}`
+
+### 🧑 User — 2026-11-20T12:06:13.908Z
+
+> ↩︎ result: 1
+>  12:06:13 up 22 min,  0 user,  load average: 5.52, 2.15, 1.04
+> slot 1 busy
+> slot 2 busy
+> #!/usr/bin/env node
+> // r22 s07 QA copy of scripts/gameplay-test.mjs: identical checks, dev server on port 5277 (the only port this worker may use); always pass --q and --out
+> // Automated gameplay + continuity test on the REAL running game (headless Chromium, WebGL).
+> // Drives Benny from 03 to the 11 ending with the deterministic simulation API and checks:
+> //  * continuous travel: s strictly increases, no position jump > speed·dt (no teleport/cut)
+> //  * camera continuity: no camera jump between steps (no hard cut), incl. the 07 plunge → 08
+> //  * 07 plunge: positive travel time, large vertical drop, 08 inlet reached from the bottom
+> //  * real coin pickups update the counter; steering into the foam wall costs a heart
+> //  * pause freezes the simulation; resume continues
+> //  * the run ends in the 11 victory with Benny hidden under the towel
+> // Writes qa/gameplay_test.json and qa/07_to_08_continuity.md. Exit 1 on failure.
+> //   node scripts/gameplay-test.mjs --q=river05=1 --out=qa/pilot05/wave11/tests/gameplay_river05.json
+> //   → the same run with URL test switches; with --q the tracked qa/ files above …[+921 chars]
+
+### 🤖 Claude — 2026-11-20T12:06:22.762Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s07/combo && grep -n \"m08seam\\|m08sill\\|m08swim\\|m08rw\\|m08bw\\|m08fill\\b\\|seam\" src/world/match08.ts | head -40; wc -l src/world/match08.ts src/world/match07.ts", "description": "Find 08 seam/water switches in the 08 code"}`
+
+### 🧑 User — 2026-11-20T12:06:22.830Z
+
+> ↩︎ result: 62:uniform sampler2D uFill;    // m08fill: world-anchored wall tile cut from the picture's near pipe wall (unwrap08.py)
+> 67:uniform float uSwim;        // m08swim (floor only): the painted river's banks spread to cover Benny's whole swim lane
+> 111:    float n = floor(6.2831853 * uDrum.z / uFillSize.x + 0.5);  // whole tiles around the drum: no seam
+> 120:// The rings therefore continue across the old seam instead of meeting a generic tile.
+> 153:// m08swim: lateral remap of a floor point. The middle of the painted river stays as painted, its banks (water edge,
+> 158:  // (b > 0, m08rw only: a wider lane to cover near the camera, where the painted gold arch legs hug the banks)
+> 179:  // m08towelv (uTMaskOn 2): the cut only once the camera has left the approved viewpoint (> 0.2 u, as m08fill), so the
+> 183:  // m08fill fades in as the camera leaves the approved viewpoint (the approved view keeps its exact old pixels)
+> 189:  // as m08ceil colours the door wall (identical at the drum / door-wall junction, so no seam); fades out toward the arch
+> 217:        // m08fill: once the camera has left the approved viewpoint, a soft hand-over to the fill (5 x 5 taps over ~3 %
+> 267:    // depth edge (whose arc …[+2385 chars]
+
+### 🤖 Claude — 2026-11-20T12:06:25.186Z
+
+> 🔧 **Bash** `{"command": "ls /home/user/scratch/s07/clips/BEFORE/f 2>/dev/null | wc -l; date; uptime", "description": "Check BEFORE clip frame count"}`
+
+### 🧑 User — 2026-11-20T12:06:25.237Z
+
+> ↩︎ result: 3
+> Fri Nov 20 12:06:25 UTC 2026
+>  12:06:25 up 23 min,  0 user,  load average: 6.45, 2.46, 1.15
+
+### 🤖 Claude — 2026-11-20T12:06:28.106Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 435,520p src/world/match07.ts", "description": "Read match07 build setup section"}`
+
+### 🧑 User — 2026-11-20T12:06:28.150Z
+
+> ↩︎ result: export async function buildMatch07(plunge?: Plunge07): Promise<Match07> {
+>   const [L, TL]: [Layout07, Tiles07] = await Promise.all([fetch(tex('proj07.json')).then((r) => r.json()), fetch(tex('tiles07.json')).then((r) => r.json())]);
+>   const load = async (f: string, wrap: THREE.Wrapping) => {
+>     const t = await new THREE.TextureLoader().loadAsync(tex(f));
+>     t.colorSpace = THREE.NoColorSpace; // raw display values: the shader inverts the post chain itself
+>     t.wrapS = t.wrapT = wrap; t.minFilter = THREE.LinearMipmapLinearFilter; t.anisotropy = 8;
+>     return t;
+>   };
+>   // MILESTONE 2 test switches (one factor each, qa/match/07/m2/NOTES.md); off = the MILESTONE 1 result unchanged
+>   const fixFill = flag05('m07fill');
+>   const fixAng = flag05('m07ang');
+>   const fixGold = flag05('m07gold');
+>   const fixWall = flag05('m07wall'); // the ring-bay wall tile without the painted paddle (it repeated in every bay deep in the tube)
+>   const fixRiver = flag05('m07river'); // the river tile without the slice of painted gold ring (orange smears on the near water)
+>   // M3: the clean wall tile with its painted gold rings straightened (tools/match07/straighten_wall07.py) — in the unwrap
+>   // the ring ba …[+5435 chars]
+
+### 🤖 Claude — 2026-11-20T12:06:29.544Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && sed -n 630,760p src/world/match07.ts", "description": "Read the plunge river build section"}`
+
+### 🧑 User — 2026-11-20T12:06:29.574Z
+
+> ↩︎ result: o.rotation.z = ang - Math.PI / 2; // local +y along the radius (out of the wall toward the axis)
+>   }
+>   // M3 '?m07tube=1': the matched tube continues as REAL geometry along the course from sA (just before the plunge top)
+>   // down the whole plunge to the 08 inlet — same radius and axis height as the fitted tube, the same ring-bay wall tile
+>   // (rings every bay, phase continuous with the fitted tube) and the same river tile, anchored to arc length. The fitted
+>   // proxy ends at sA's depth along its straight axis (uClip), so it no longer runs on straight through the plunge.
+>   let plungeAlong = 0;
+>   const plungeMeshes: THREE.Object3D[] = [];
+>   if (plunge) {
+>     const { course, sA, sB } = plunge;
+>     const f0 = course.sample(sA);
+>     const alongA = f0.pos.clone().sub(base).dot(Dv);
+>     plungeAlong = alongA;
+>     // r21 m07end: the plunge river's cyan core widens over the first 10 u of the drop (tunable ?m07pC=)
+>     if (endW) shared.uPlC.value.set(alongA + 4, alongA + 14, num07('m07pC', 1.5));
+>     shared.uFade.value.set(plunge.fade[0] - sA + alongA, plunge.fade[1] - sA + alongA);
+>     const axisA = base.clone().addScaledVector(X, T.ax).addScaledVector(U, T.h).addScaledVector(Dv, alongA); …[+7075 chars]
+
+### 🤖 Claude — 2026-11-20T12:06:31.561Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && git diff src/game/Game.ts; grep -n \"plunge\\b\\|sB\\b\\|fade:\" src/game/Game.ts | head -20", "description": "Show Game.ts diff and plunge hand-over"}`
+
+### 🧑 User — 2026-11-20T12:06:31.654Z
+
+> ↩︎ result: diff --git a/src/game/Game.ts b/src/game/Game.ts
+> index 017370a..906c906 100644
+> --- a/src/game/Game.ts
+> +++ b/src/game/Game.ts
+> @@ -122,7 +122,25 @@ export async function startGame(canvas: HTMLCanvasElement) {
+>    // the bottom) and the game's 07 tube (whose gold rings filled the screen mid-plunge) is hidden until 08 starts
+>    const m07Tube = MATCH['07'] && flag05('m07tube');
+>    const m07sA = course.marks['07_plunge_top'] - 4;
+> -  const m07 = MATCH['07'] ? await buildMatch07(m07Tube ? { course, sA: m07sA, sB: course.marks['07_plunge_bottom'], fade: [course.marks['07_plunge_bottom'] - 14, course.marks['07_plunge_bottom'] - 3] } : undefined) : null;
+> +  // r21 `&m07end=1` (qa/match/07/r21/PROGRESS.md): the painted plunge river runs down to the 08 inlet (fades out over the last
+> +  // 2.2 u) and the game's streaky water sheet stays away down the whole drop while Benny is in 07 (it fades back in, dithered,
+> +  // over the last 3 u, so 08 starts with its own water); 08's own views are unchanged (the hide is only set while 07 shows)
+> +  const m07End = m07Tube && flag05('m07end') && flag05('m07nearw') && flag05('m07band') && flag05('m07foam');
+> +  const s08 = course.stage('08').s0;
+> +  const m07Fade …[+4327 chars]
+
+### 🤖 Claude — 2026-11-20T12:06:33.198Z
+
+> 🔧 **Bash** `{"command": "ls /home/user/scratch/s07/clips/BEFORE/f 2>/dev/null | wc -l; date; uptime", "description": "Check BEFORE clip progress"}`
+
+### 🧑 User — 2026-11-20T12:06:33.275Z
+
+> ↩︎ result: 5
+> Fri Nov 20 12:06:33 UTC 2026
+>  12:06:33 up 23 min,  0 user,  load average: 6.61, 2.62, 1.22
+
+### 🤖 Claude — 2026-11-20T12:06:37.509Z
+
+> 🔧 **Bash** `{"command": "until [ $(ls /home/user/scratch/s07/clips/BEFORE/f 2>/dev/null | wc -l) -ge 40 ] || grep -q \"^exit\" /home/user/scratch/s07/clips/BEFORE.log; do sleep 5; done; ls /home/user/scratch/s07/clips/BEFORE/f | wc -l; date; uptime", "description": "Wait until 40 BEFORE frames exist", "timeout": 900000}`
+
+### 🧑 User — 2026-11-20T12:09:08.601Z
+
+> ↩︎ result: 40
+> Fri Nov 20 12:09:08 UTC 2026
+>  12:09:08 up 25 min,  0 user,  load average: 8.58, 5.18, 2.42
+
+### 🤖 Claude — 2026-11-20T12:09:12.412Z
+
+> 🔧 **Bash** `{"command": "cat /home/user/wt/s07/tools/match07/seg_clip_r24.mjs | head -60", "description": "Read the segment clip tool"}`
+
+### 🧑 User — 2026-11-20T12:09:12.484Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // r24 s07 (QA only): a SEGMENT of the lead's labelled-clip run (tools/lead23/screen_clip.mjs: same steering schedule by the share
+> // of the screen travelled — straight < 0.30, LEFT 0.30–0.50, RIGHT 0.50–0.70, straight after — same per-frame stepping and pinned
+> // shader clock), but it records only from game time tFrom to tTo (seconds of the clip), at FPS frames per second of game time and
+> // at a smaller viewport (same 9:16 framing) for quick framing iterations. The frames before tFrom are simulated at 24 fps exactly
+> // like the full clip, so camera smoothing / steering state are identical to the full clip at the same t.
+> //   cd <tree> && SEG_PORT=5280 node tools/match07/seg_clip_r24.mjs <outDir> "<query>" <tFrom> <tTo> [fps=12] [width=432]
+> import { mkdirSync, writeFileSync, realpathSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> async function startVite(port) {
+>   const { createServer, searchForWorkspaceRoot } = await import(pathToFileURL(`${process.cwd()}/node_modules/vite/dist/node/index.js`).href);
+>   const root = process.cwd();
+>  …[+2653 chars]
+
+### 🤖 Claude — 2026-11-20T12:09:21.234Z
+
+> 🔧 **Bash** `{"command": "until [ $(ls /home/user/scratch/s07/clips/BEFORE/f 2>/dev/null | wc -l) -ge 92 ] || grep -q \"^exit\" /home/user/scratch/s07/clips/BEFORE.log; do sleep 5; done; cd /home/user/scratch/s07 && python3 -c \"\nfrom PIL import Image\nfs=[52,60,66,72,78,84,90]\nW=Image.new('RGB',(288*len(fs),512))\nfor i,f in enumerate(fs): W.paste(Image.open(f'clips/BEFORE/f/{f:04d}.png').convert('RGB').resize((288,512)),(i*288,0))\nW.save('before_lip.png')\"; date", "description": "Wait for BEFORE lip frames and build a sheet", "timeout": 1200000}`
+

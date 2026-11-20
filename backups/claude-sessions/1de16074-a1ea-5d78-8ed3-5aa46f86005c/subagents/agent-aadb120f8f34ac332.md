@@ -374,3 +374,398 @@ I'll start by reading the briefs and my progress log in the order given.
 > +  const composer = msaa > 0
 > +    ? new EffectComposer(renderer, new THREE.WebGLRenderTarget(1, 1, { type: THREE.HalfFloatType, sa …[+346 chars]
 
+### 🤖 Claude — 2026-11-20T12:04:40.132Z
+
+Now the labelling script (20 fps = 1.0x, 10 fps = 0.5x, arrow counter on every frame).
+
+### 🤖 Claude — 2026-11-20T12:04:49.930Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/match/04/r23/s04_tools/label_clip20.py", "content": "#!/usr/bin/env python3\n\"\"\"r25 s04 (QA only): label every frame of a screen_clip20.mjs run and encode mp4s.\nCopy of tools/lead23/label_clip.py with: 20 fps = REAL game speed (one frame = 0.05 s game time), 10 fps = half speed,\ngame time t = i * 0.05 s, and a line counting the glowing chevrons (in view AHEAD of Benny / swum through so far).\nusage: python3 -I label_clip20.py <clipDir> <title> <out_prefix>   -> <out_prefix>_1.0x.mp4 + <out_prefix>_0.5x.mp4\"\"\"\nimport json, subprocess, sys\nfrom pat …[+2168 chars]`
+
+### 🧑 User — 2026-11-20T12:04:49.970Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/match/04/r23/s04_tools/label_clip20.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T12:04:56.517Z
+
+> 🔧 **Bash** `{"command": "C=/home/user/rainbow-/qa/match/04/r25/clip; S=/home/user/scratch/s04; cp /home/user/rainbow-/qa/match/04/r23/QUERY_K23-1.txt $C/QUERY_BEFORE_K23-1.txt; cp /home/user/rainbow-/qa/match/04/r23/s3_glossy/QUERY_K23-S3.txt $C/QUERY_NEW_K23-S3.txt\ncat > $S/run_clips.sh <<'EOF'\n#!/usr/bin/env bash\nset -u\nC=/home/user/rainbow-/qa/match/04/r25/clip; S=/home/user/scratch/s04; T=/home/user/rainbow-/qa/match/04/r23/s04_tools\ncd /home/user/wt/s04\nfor X in BEFORE_K23-1 NEW_K23-S3; do\n  rm -rf $S/clip_$X; echo \"start $X $(date -u +%T)\"\n  AUDIT_PORT=5274 bash /home/user/rainbow-/tools/l …[+352 chars]`
+
+### 🧑 User — 2026-11-20T12:04:56.572Z
+
+> ↩︎ result: started
+
+### 🤖 Claude — 2026-11-20T12:04:59.650Z
+
+> 🔧 **Bash** `{"command": "cat /home/user/rainbow-/qa/match/04/r23/s3_glossy/step3_only.patch | head -80; python3 -I -c \"\nimport json; d=json.load(open('/home/user/rainbow-/qa/match/04/r23/s3_glossy/gameplay.json')); print(d.get('pass')); print([k for k in d])\" ", "description": "Read step 3 patch and gameplay summary"}`
+
+### 🧑 User — 2026-11-20T12:04:59.711Z
+
+> ↩︎ result: --- a/src/world/match04m4.ts (r23 step 1-2 code)	2026-11-20 10:43:45.724533553 +0000
+> +++ b/src/world/match04m4.ts	2026-11-20 11:01:28.827363018 +0000
+> @@ -769,6 +769,10 @@
+>  uniform vec2 uLane3;         // r13 m04lcd / m04lcw: deeper blue along the arrow line (strength, half width)
+>  uniform vec2 uLane4;         // r14 m04lcn: deep-blue fade-in window ahead of the camera (start, full); off when y <= x
+>  uniform vec4 uLane2;         // r13 m04lane2: x swirl detail, y gloss, z sparkle
+> +uniform vec4 uLG;            // r23 m04lgs: x strength, y streaks per u across, z line half width (share), w whiteness
+> +uniform vec4 uLG2;           // r23 m04lgs: x streak segment length (u), y meander (u), z base smoothing (mip), w far fade
+> +uniform vec4 uLG3;           // r24 m04lgs: x swirl bend (u), y swirl size (u), z sparkles, w dash threshold
+> +uniform vec4 uLG4;           // r24 m04lgs: x deeper electric-blue base (brightness shift), y glint brightness variation
+>  uniform vec4 uEdge;          // r13 m04edge: x on, y half arc to the edge, z fringe width, w strength
+>  uniform vec2 uSE;            // r13 m04rse / m04rsl: the climbing side water as long flowing currents (along stretch, from |lat|)
+>  unifo …[+5113 chars]
+
+### 🤖 Claude — 2026-11-20T12:05:03.436Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport json; d=json.load(open('/home/user/rainbow-/qa/match/04/r23/s3_glossy/gameplay.json'))\nfor k,v in d['checks'].items(): print(k, {kk:vv for kk,vv in v.items() if kk in ('pass','coins','collected','start','end','total','score0','score1','picked')} if isinstance(v,dict) else v)\nprint(d['errors'])\" ; cat /home/user/scratch/s04/run_clips.out; tail -2 /home/user/scratch/s04/clip_BEFORE_K23-1.log", "description": "Check gameplay result and clip progress"}`
+
+### 🧑 User — 2026-11-20T12:05:03.492Z
+
+> ↩︎ result: pauseFreezes {'pass': True}
+> continuousTravel {'pass': True}
+> noCameraCut {'pass': True}
+> noTeleport {'pass': True}
+> plunge {'pass': True}
+> realCoinPickups {'pass': True, 'collected': 91}
+> victory {'pass': True}
+> heartsLostOnWallBump {'pass': True}
+> []
+> start BEFORE_K23-1 12:04:56
+
+### 🤖 Claude — 2026-11-20T12:05:04.818Z
+
+Now I'll add the (r25) block at the top of PROGRESS.md, plus the missing written Step 3 section (the r24 run was interrupted before it was written).
+
+### 🤖 Claude — 2026-11-20T12:05:05.519Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/04/r23/PROGRESS.md", "limit": 12}`
+
+### 🧑 User — 2026-11-20T12:05:05.532Z
+
+> ↩︎ result: 1	# Screen 04 — round 23 (new account, lead session branch `claude/rainbow-r22-restore-ut3m39`) — lead log
+> 2	
+> 3	## (r24) WHERE I STOPPED / NEXT — s04 specialist (relaunched r24, worktree `/home/user/wt/s04`, LOCAL branch `claude/rainbow-s04-match-c25`)
+> 4	* Resumed from the 10:25 snapshot (no patch re-applied). Recreated worktree verified: K23-S2 and K23-1 rendered with the final code
+> 5	  == the r23 pictures, 0 px over the WHOLE frame in all 7 shots (`s3_glossy/K23-S2_with_new_code/`, `s3_glossy/K23-1_with_new_code/`).
+> 6	* Step 2 DONE — GOOD IMPROVEMENT (clip frames step 1 vs step 2 compared in r24, see "Step 2" below). Candidate **K23-S2**.
+> 7	* Step 3 DONE — glossy clean lane water, `&m04lgs=1` + tuning (`s3_glossy/`, see "Step 3" below) — GOOD IMPROVEMENT. New candidate
+> 8	  **K23-S3** = `s3_glossy/QUERY_K23-S3.txt`. Up to 3 steps done -> STOPPED, reported to the lead.
+> 9	* NEXT (not started): near-camera glints shorter (painted short crescents), richer cyan/pink ribbon contrast round Benny, far foam
+> 10	  rows as cloud banks, then projection of the three accepted views (`&m04mp=1`, brief task 3).
+> 11	* Tool note: `s04_tools/clip.sh` temp folder now `$S04_SCRATCH` (default = the r24 s …[+177 chars]
+
+### 🤖 Claude — 2026-11-20T12:05:06.175Z
+
+> 🔧 **Bash** `{"command": "grep -n \"^## \" /home/user/rainbow-/qa/match/04/r23/PROGRESS.md", "description": "List PROGRESS.md section headers"}`
+
+### 🧑 User — 2026-11-20T12:05:06.205Z
+
+> ↩︎ result: 3:## (r24) WHERE I STOPPED / NEXT — s04 specialist (relaunched r24, worktree `/home/user/wt/s04`, LOCAL branch `claude/rainbow-s04-match-c25`)
+> 15:## (r23) WHERE I STOPPED / NEXT
+> 23:## (r23 s04) WHERE I STOPPED / NEXT
+> 36:## (r23 s04) Step 1 — Benny swims down THROUGH the five arrows; Benny IN the water — `s1_arrows/` — GOOD IMPROVEMENT
+> 63:## (r23 s04) Step 2 — cleaner, LOWER pink edges with a low foam bank where the water meets the gold — `s2_edge/` — GOOD IMPROVEMENT
+> 83:## User feedback driving this round (verbatim, 2026-11-20)
+> 89:## Step 1 — pink walls off (`lead_t1/`)
+> 94:## Step 2 — less pink on the water (`lead_t2/`)
+
+### 🤖 Claude — 2026-11-20T12:05:11.835Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s04 && python3 -I -c \"\nfrom PIL import Image\nB='/home/user/rainbow-/qa/match/04/r23'\nnames=['b_early','c_middle','d_late','e_end']\nW=Image.new('RGB',(4*432,3*768+16),'white')\nfor i,n in enumerate(names):\n  W.paste(Image.open(f'{B}/s2_edge/NEW/{n}.png').convert('RGB').resize((432,768)),(i*432,0))\n  W.paste(Image.open(f'{B}/s3_glossy/NEW/{n}.png').convert('RGB').resize((432,768)),(i*432,776))\nacc={'c_middle':'c_middle','d_late':'d_late','e_end':'e_end'}\nW.paste(Image.open('/home/user/rainbow-/qa/match/04/r23/s1_arrows/APPROVED/1_APPROVED_original_star …[+344 chars]`
+
+### 🧑 User — 2026-11-20T12:05:13.630Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T12:05:14.571Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s04/sheet_s2_s3_appr.png"}`
+
+### 🧑 User — 2026-11-20T12:05:15.476Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-20T12:05:15.471Z
+
+[Image: original 1728x2320, displayed at 1490x2000. Multiply coordinates by 1.16 to map to original image.]
+
+### 🤖 Claude — 2026-11-20T12:05:27.814Z
+
+Top row = step 2, middle = step 3 (K23-S3), bottom = original approved start + the three accepted generated views. I'll write the r25 block and the missing step-3 section into PROGRESS.md now.
+
+### 🤖 Claude — 2026-11-20T12:05:33.470Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/match/04/r23/PROGRESS.md", "old_string": "# Screen 04 — round 23 (new account, lead session branch `claude/rainbow-r22-restore-ut3m39`) — lead log\n\n## (r24) WHERE I STOPPED / NEXT", "new_string": "# Screen 04 — round 23 (new account, lead session branch `claude/rainbow-r22-restore-ut3m39`) — lead log\n\n## (r25) WHERE I STOPPED / NEXT — s04 specialist (relaunched r25 ~12:00 UTC, worktree `/home/user/wt/s04`, LOCAL branch `claude/rainbow-s04-match-c26`)\n* Worktree verified: `git diff` == `s3_glossy/code.patch` byte for byte (K23-S3  …[+852 chars]`
+
+### 🧑 User — 2026-11-20T12:05:33.516Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/match/04/r23/PROGRESS.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T12:05:42.124Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/match/04/r23/PROGRESS.md", "old_string": "## User feedback driving this round (verbatim, 2026-11-20)", "new_string": "## (r24 s04) Step 3 — glossy CLEAN lane water (long thin white streaks on electric cyan) — `s3_glossy/` — GOOD IMPROVEMENT\n(section written in r25 from the r24 files; the r24 run was interrupted at 11:12 just before writing it)\n* Switch on top of K23-S2 (`s3_glossy/SWITCH.txt`): `m04lgs=1&m04lgn=3&m04lgt=0.06&m04lgm=0.6&m04lgb=4&m04lgk=0.9&m04lgl2=1.6&\n  m04lgw=0.35&m04lgwb=1.0&m04lgsp=1.0&m04lgd=0.17&m04lgv=0.5` (n …[+1513 chars]`
+
+### 🧑 User — 2026-11-20T12:05:42.167Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/match/04/r23/PROGRESS.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-20T12:05:44.043Z
+
+> 🔧 **Bash** `{"command": "cat /home/user/scratch/s04/run_clips.out; tail -3 /home/user/scratch/s04/clip_BEFORE_K23-1.log; ls /home/user/scratch/s04/clip_BEFORE_K23-1/f 2>/dev/null | wc -l; uptime", "description": "Check clip render progress"}`
+
+### 🧑 User — 2026-11-20T12:05:44.078Z
+
+> ↩︎ result: start BEFORE_K23-1 12:04:56
+> frame 0 stage 04 frac 0.000
+> 9
+>  12:05:44 up 22 min,  0 user,  load average: 3.38, 1.43, 0.78
+
+### 🤖 Claude — 2026-11-20T12:05:50.234Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"m04bbd\\|m04bbank\\|bbank\" src/world/match04m4.ts | head -40", "description": "Locate bank foam code"}`
+
+### 🧑 User — 2026-11-20T12:05:50.322Z
+
+> ↩︎ result: 1922:  // r20 `&m04bbank=1` (with m04foam + m04river): the painted bank foam — LOW, WIDE heaps of BIG separate glossy pearly
+> 1959:    // r21 `&m04bbd=1`: as painted, the bubbly foam lines BOTH water edges far into the tunnel, not only round the entrance rim:
+> 1961:    // shrinking (m04bbd0 -> m04bbd1 of the rim heap size) and thinning out with depth, up to where the far telescope begins.
+> 1963:    // m04bbdg gap scale, m04bbdx inward offset from the wall (u), m04bbdk extra sink (share of the heap height).
+> 1964:    if (M04.num('m04bbd', 0) > 0 && Number.isFinite(rimL0) && rimL0 < len - 4) {
+> 1967:      const d0 = M04.num('m04bbd0', 0.55), d1 = M04.num('m04bbd1', 0.32), gS = M04.num('m04bbdg', 1), xo = M04.num('m04bbdx', 0.15);
+> 1968:      const sk2 = M04.num('m04bbdk', 0.12);
+> 1982:      console.info('[match04] m04bbd', { heaps: nD, from: rimL0, to: +aEnd.toFixed(2), xW: +xW.toFixed(3), XF });
+> 1984:    // r22 `&m04bbdf=f0` (with m04bbd; `m04bbdf1` = f1, default f0 + 3): as painted, the big glossy bank heaps lie BESIDE Benny
+> 1985:    // (his depth and a few u ahead), not as a row of small white clumps down the whole tunnel: every deeper heap (m04bbd) is
+> 1988:    const bf0 = M04.num('m04bb …[+1262 chars]
+
+### 🤖 Claude — 2026-11-20T12:05:51.665Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 1915,2110p src/world/match04m4.ts", "description": "Read bank foam heap code"}`
+
+### 🧑 User — 2026-11-20T12:05:51.782Z
+
+> ↩︎ result: const mesh = new THREE.Mesh(g, m);
+>     mesh.name = name; mesh.frustumCulled = false; mesh.renderOrder = order; mesh.visible = false; // invisible during the projector depth bake
+>     group.add(mesh);
+>     updaters.push((a) => { alpha.value = a; mesh.visible = a > 0.01; });
+>   };
+>   let seed = 4321; const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+>   const waterHalf = Math.sqrt(Math.max(0, r * r - cy * cy)); // where the water meets the tunnel wall
+>   // r20 `&m04bbank=1` (with m04foam + m04river): the painted bank foam — LOW, WIDE heaps of BIG separate glossy pearly
+>   // lilac-white bubbles with pale blue-lilac shading — as instanced Blender heaps (tools/blender/foam_bank04.py: 4 seeds in
+>   // assets/models/match04/foam_bank04.glb, ~5k triangles each; recipe from the lead's r19 m04bfoam test) in place of the
+>   // sprite cloud puffs: one heap per bank clump inside the entrance rim, the pre-opening foam banks binned into heaps (two
+>   // rows per side). Same visibility rule as all 3D foam (hidden in the approved view, fading in as the camera leaves it);
+>   // every bubble shrinks away into its own centre as it nears the camera (view depth m04bbn0 -> m04bbn1, default the …[+14512 chars]
+
+### 🤖 Claude — 2026-11-20T12:06:00.349Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/04/r23/s1_arrows/APPROVED/2_ACCEPTED_GENERATED_view_c_middle.png"}`
+
+### 🧑 User — 2026-11-20T12:06:00.398Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T12:06:05.831Z
+
+> 🔧 **Bash** `{"command": "cat /home/user/scratch/s04/run_clips.out; tail -3 /home/user/scratch/s04/clip_BEFORE_K23-1.log; ls /home/user/scratch/s04/clip_BEFORE_K23-1/f 2>/dev/null | wc -l; uptime", "description": "Check clip render progress"}`
+
+### 🧑 User — 2026-11-20T12:06:05.889Z
+
+> ↩︎ result: start BEFORE_K23-1 12:04:56
+> frame 0 stage 04 frac 0.000
+> frame 10 stage 04 frac 0.188
+> 12
+>  12:06:05 up 22 min,  0 user,  load average: 5.00, 1.93, 0.96
+
+### 🤖 Claude — 2026-11-20T12:06:14.417Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s04 && python3 -I -c \"\nfrom PIL import Image\na=Image.open('/home/user/rainbow-/qa/match/04/r23/s3_glossy/NEW/c_middle.png').convert('RGB').crop((0,1000,864,1536))\nb=Image.open('/home/user/rainbow-/qa/match/04/r23/s1_arrows/APPROVED/2_ACCEPTED_GENERATED_view_c_middle.png').convert('RGB').crop((0,1000,864,1536))\nW=Image.new('RGB',(864,1080),'white'); W.paste(a,(0,0)); W.paste(b,(0,544)); W.save('near_glints.png')\"", "description": "Crop near-camera water game vs accepted"}`
+
+### 🧑 User — 2026-11-20T12:06:15.354Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T12:06:16.597Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s04/near_glints.png"}`
+
+### 🧑 User — 2026-11-20T12:06:16.646Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T12:06:25.520Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && sed -n 760,935p src/world/match04m4.ts", "description": "Read river lane shader section"}`
+
+### 🧑 User — 2026-11-20T12:06:25.559Z
+
+> ↩︎ result: }`;
+> const RIVER_FRAG = /* glsl */ `
+> uniform sampler2D uPlate;
+> uniform vec4 uPjPost;
+> uniform vec2 uPjRes;
+> uniform float uAway;
+> uniform sampler2D uRiv;
+> uniform vec4 uRivA;          // lateral half-width, along start, along length, lateral scale
+> uniform vec3 uLane;          // r13 m04lane: x on, y clean-lane half width (u), z strength
+> uniform vec2 uLane3;         // r13 m04lcd / m04lcw: deeper blue along the arrow line (strength, half width)
+> uniform vec2 uLane4;         // r14 m04lcn: deep-blue fade-in window ahead of the camera (start, full); off when y <= x
+> uniform vec4 uLane2;         // r13 m04lane2: x swirl detail, y gloss, z sparkle
+> uniform vec4 uLG;            // r23 m04lgs: x strength, y streaks per u across, z line half width (share), w whiteness
+> uniform vec4 uLG2;           // r23 m04lgs: x streak segment length (u), y meander (u), z base smoothing (mip), w far fade
+> uniform vec4 uLG3;           // r24 m04lgs: x swirl bend (u), y swirl size (u), z sparkles, w dash threshold
+> uniform vec4 uLG4;           // r24 m04lgs: x deeper electric-blue base (brightness shift), y glint brightness variation
+> uniform vec4 uEdge;          // r13 m04edge: x on, y half arc to the edge, z fringe  …[+13663 chars]
+
+### 🤖 Claude — 2026-11-20T12:06:42.589Z
+
+> 🔧 **Bash** `{"command": "cat /home/user/scratch/s04/run_clips.out; tail -2 /home/user/scratch/s04/clip_BEFORE_K23-1.log; ls /home/user/scratch/s04/clip_NEW_K23-S3/f 2>/dev/null | wc -l; uptime", "description": "Check clip progress"}`
+
+### 🧑 User — 2026-11-20T12:06:42.663Z
+
+> ↩︎ result: start BEFORE_K23-1 12:04:56
+> frame 0 stage 04 frac 0.000
+> frame 10 stage 04 frac 0.188
+> 0
+>  12:06:42 up 23 min,  0 user,  load average: 7.34, 2.92, 1.33
+
+### 🤖 Claude — 2026-11-20T12:06:59.824Z
+
+While the clips render, I'll start step 1 (near-camera glints as short painted crescents). Let me see where the uLG uniforms are created.
+
+### 🤖 Claude — 2026-11-20T12:07:00.650Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s04 && grep -n \"uLG4\\|uLG3\\|uLG2\\|uLG:\" src/world/match04m4.ts", "description": "Locate uLG uniform declarations"}`
+
+### 🧑 User — 2026-11-20T12:07:00.733Z
+
+> ↩︎ result: 773:uniform vec4 uLG2;           // r23 m04lgs: x streak segment length (u), y meander (u), z base smoothing (mip), w far fade
+> 774:uniform vec4 uLG3;           // r24 m04lgs: x swirl bend (u), y swirl size (u), z sparkles, w dash threshold
+> 775:uniform vec4 uLG4;           // r24 m04lgs: x deeper electric-blue base (brightness shift), y glint brightness variation
+> 893:      vec3 bb = mix(texture2D(uRiv, uv1, uLG2.z).rgb, texture2D(uRiv, uv2, uLG2.z).rgb, w);
+> 895:      lbB -= uLG4.x;
+> 901:      if (uLG3.x != 0.0) {
+> 902:        vec2 sp = vec2(vS / uLG3.y, fl / (uLG3.y * 2.5));
+> 903:        sw = uLG3.x * ((vn(sp + vec2(4.0, 2.0)) - 0.5) + 0.5 * (vn(sp * 2.0 + vec2(9.0, 5.0)) - 0.5));
+> 905:      float mw = vS + sw + uLG2.y * (vn(vec2(fl * 0.07, 1.0)) - 0.5) + 0.5 * uLG2.y * sin(fl * 0.31 + vS * 0.9);
+> 907:      float sg = fl / uLG2.x + h21(vec2(id, 3.0)) * 9.0, si = floor(sg), sf = fract(sg);
+> 908:      float on = step(uLG3.w, h21(vec2(id, si)));
+> 913:      float streak = line * on * taper * (1.0 - smoothstep(uLG2.w * 0.5, uLG2.w, wq));
+> 914:      streak *= 1.0 - uLG4.y * h21(vec2(id + 0.5, si + 9.0));                                // some glints brighter than others
+> 917:      if (uLG3.z > 0.0 …[+641 chars]
+
+### 🤖 Claude — 2026-11-20T12:07:15.482Z
+
+Now I'll add the crescent-glint switch to the lane shader (new uniforms `uLG5`/`uLG6`, off by default so every existing query is unchanged).
+
+### 🤖 Claude — 2026-11-20T12:07:18.321Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04/src/world/match04m4.ts", "old_string": "uniform vec4 uLG4;           // r24 m04lgs: x deeper electric-blue base (brightness shift), y glint brightness variation\n", "new_string": "uniform vec4 uLG4;           // r24 m04lgs: x deeper electric-blue base (brightness shift), y glint brightness variation\nuniform vec4 uLG5;           // r25 m04lgc: x crescent glints on (strength), y crescent cell length along (u), z bend (share of the\n                             // line spacing), w dash threshold (higher = fewer crescents)\nuniform vec4 uLG6; …[+244 chars]`
+
+### 🧑 User — 2026-11-20T12:07:18.355Z
+
+> ↩︎ result: <tool_use_error>File has not been read yet. Read it first before writing to it.</tool_use_error>
+
+### 🤖 Claude — 2026-11-20T12:07:30.724Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04/src/world/match04m4.ts", "old_string": "      float streak = line * on * taper * (1.0 - smoothstep(uLG2.w * 0.5, uLG2.w, wq));\n      streak *= 1.0 - uLG4.y * h21(vec2(id + 0.5, si + 9.0));                                // some glints brighter than others\n      base = mix(base, vec3(0.90, 0.99, 1.00), uLG.w * streak);", "new_string": "      float streak = line * on * taper * (1.0 - smoothstep(uLG2.w * 0.5, uLG2.w, wq));\n      streak *= 1.0 - uLG4.y * h21(vec2(id + 0.5, si + 9.0));                                // some glints brighter t …[+2479 chars]`
+
+### 🧑 User — 2026-11-20T12:07:30.747Z
+
+> ↩︎ result: <tool_use_error>File has not been read yet. Read it first before writing to it.</tool_use_error>
+
+### 🤖 Claude — 2026-11-20T12:07:34.526Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/wt/s04/src/world/match04m4.ts", "old_string": "        uLG4: { value: new THREE.Vector4(M04.num('m04lgd', 0), M04.num('m04lgv', 0), 0, 0) },", "new_string": "        uLG4: { value: new THREE.Vector4(M04.num('m04lgd', 0), M04.num('m04lgv', 0), 0, 0) },\n        // r25 `&m04lgc=1` (with m04lgs): near glints as SHORT painted crescents — m04lgcl cell length along (u), m04lgcb bend\n        // (share of the line spacing), m04lgco dash threshold; m04lgc0 / m04lgc1 hand-over to the long streaks ahead of the\n        // camera (u; c1 <= c0 = crescents ev …[+359 chars]`
+
+### 🧑 User — 2026-11-20T12:07:34.651Z
+
+> ↩︎ result: <tool_use_error>File has not been read yet. Read it first before writing to it.</tool_use_error>
+
+### 🤖 Claude — 2026-11-20T12:07:39.773Z
+
+> 🔧 **Read** `{"file_path": "/home/user/wt/s04/src/world/match04m4.ts", "offset": 770, "limit": 8}`
+
+### 🧑 User — 2026-11-20T12:07:39.799Z
+
+> ↩︎ result: 770	uniform vec2 uLane4;         // r14 m04lcn: deep-blue fade-in window ahead of the camera (start, full); off when y <= x
+> 771	uniform vec4 uLane2;         // r13 m04lane2: x swirl detail, y gloss, z sparkle
+> 772	uniform vec4 uLG;            // r23 m04lgs: x strength, y streaks per u across, z line half width (share), w whiteness
+> 773	uniform vec4 uLG2;           // r23 m04lgs: x streak segment length (u), y meander (u), z base smoothing (mip), w far fade
+> 774	uniform vec4 uLG3;           // r24 m04lgs: x swirl bend (u), y swirl size (u), z sparkles, w dash threshold
+> 775	uniform vec4 uLG4;           // r24 m04lgs: x deeper electric-blue base (brightness shift), y glint brightness variation
+> 776	uniform vec4 uEdge;          // r13 m04edge: x on, y half arc to the edge, z fringe width, w strength
+> 777	uniform vec2 uSE;            // r13 m04rse / m04rsl: the climbing side water as long flowing currents (along stretch, from |lat|)
+
+### 🤖 Claude — 2026-11-20T12:07:40.528Z
+
+> 🔧 **Bash** `{"command": "cat /home/user/scratch/s04/run_clips.out; tail -2 /home/user/scratch/s04/clip_BEFORE_K23-1.log; uptime", "description": "Check clip progress"}`
+
+### 🧑 User — 2026-11-20T12:07:40.577Z
+
+> ↩︎ result: start BEFORE_K23-1 12:04:56
+> frame 10 stage 04 frac 0.188
+> frame 20 stage 04 frac 0.376
+>  12:07:40 up 24 min,  0 user,  load average: 8.28, 3.90, 1.76
+
+### 🤖 Claude — 2026-11-20T12:07:44.203Z
+
+I'll prepare the edit as a script and apply it once the NEW clip's page has loaded (so the clip runs on the exact K23-S3 code).
+
+### 🤖 Claude — 2026-11-20T12:08:00.205Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/scratch/s04/edits && cat > /home/user/scratch/s04/edits/apply_lgc.py <<'PYEOF'\nimport sys\np = '/home/user/wt/s04/src/world/match04m4.ts'\ns = open(p).read()\nreps = [\n(\"\"\"uniform vec4 uLG4;           // r24 m04lgs: x deeper electric-blue base (brightness shift), y glint brightness variation\n\"\"\",\n\"\"\"uniform vec4 uLG4;           // r24 m04lgs: x deeper electric-blue base (brightness shift), y glint brightness variation\nuniform vec4 uLG5;           // r25 m04lgc: x crescent glints on (strength), y crescent cell length along (u), z bend (share of the …[+4356 chars]`
+
+### 🧑 User — 2026-11-20T12:08:00.354Z
+
+> ↩︎ result: 1468:      uniforms: { uPlate: shared.uPlate, uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uProjVP: shared.uProjVP,
+> 1725:      uniforms: { uPlate: shared.uPlate, uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uProjVP: shared.uProjVP, uAway: away, uTime: time,
+> 1815:      uniforms: { uPlate: shared.uPlate, uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uProjVP: shared.uProjVP, uAway: away,
+> 1822:        uLane2: { value: new THREE.Vector4(M04.num('m04lane2', 0), M04.num('m04lgl', 1.0), M04.num('m04lsp', 0.9), M04.num('m04lbr', 0)) },
+> 1914:      uniforms: { uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uAlpha: alpha, uNear: { value: new THREE.Vector2(near[0], near[1]) } } });
+> 2368:      uniforms: { uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uTime: time, uK: { value: 0 },
+
+### 🤖 Claude — 2026-11-20T12:08:05.337Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s04/clip_BEFORE_K23-1/f/0002.png"}`
+
+### 🧑 User — 2026-11-20T12:08:05.415Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T12:08:08.872Z
+
+> 🔧 **Bash** `{"command": "sleep 60; cat /home/user/scratch/s04/run_clips.out; tail -2 /home/user/scratch/s04/clip_BEFORE_K23-1.log", "description": "Wait briefly and check clip progress"}`
+
+### 🧑 User — 2026-11-20T12:08:08.879Z
+
+> ↩︎ result: <tool_use_error>Blocked: sleep 60 followed by: cat /home/user/scratch/s04/run_clips.out tail -2 /home/user/scratch/s04/clip_BEFORE_K23-1.log. To wait for a condition, use Monitor with an until-loop (e.g. `until <check>; do sleep 2; done`). To wait for a command you started, use run_in_background: true. Do not chain shorter sleeps to work around this block.</tool_use_error>
+
+### 🤖 Claude — 2026-11-20T12:08:10.081Z
+
+> 🔧 **ToolSearch** `{"query": "select:Monitor", "max_results": 1}`
+
+### 🧑 User — 2026-11-20T12:08:10.092Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-20T12:08:12.672Z
+
+> 🔧 **Bash** `{"command": "until grep -q \"frame 0\" /home/user/scratch/s04/clip_NEW_K23-S3.log 2>/dev/null || grep -q \"clip_exit NEW\" /home/user/scratch/s04/run_clips.out; do sleep 3; done; cat /home/user/scratch/s04/run_clips.out; tail -2 /home/user/scratch/s04/clip_BEFORE_K23-1.log; tail -2 /home/user/scratch/s04/clip_NEW_K23-S3.log", "description": "Wait until NEW clip page has loaded", "timeout": 1800000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-20T12:08:12.847Z
+
+> ↩︎ result: Command running in background with ID: b016zwdgt. Output is being written to: /tmp/claude-0/-home-user-rainbow-/1de16074-a1ea-5d78-8ed3-5aa46f86005c/tasks/b016zwdgt.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-20T12:08:15.227Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/04/r23/s3_glossy/NEW/c_middle.png"}`
+
+### 🧑 User — 2026-11-20T12:08:15.374Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T12:08:22.611Z
+
+> 🔧 **Bash** `{"command": "until grep -q \"frame 0\" /home/user/scratch/s04/clip_NEW_K23-S3.log 2>/dev/null || grep -q \"clip_exit NEW\" /home/user/scratch/s04/run_clips.out; do sleep 3; done; cat /home/user/scratch/s04/run_clips.out; tail -2 /home/user/scratch/s04/clip_BEFORE_K23-1.log", "description": "Block until NEW clip page loaded", "timeout": 600000}`
+

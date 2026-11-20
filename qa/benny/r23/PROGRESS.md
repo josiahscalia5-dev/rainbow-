@@ -1,5 +1,24 @@
 # Benny round 23 — progress (worktree `/home/user/wt/benny`, local branch `claude/rainbow-benny-c24` = `-c23` @ `734efb6`; not committed / pushed by Benny — the lead's autosave snapshots the worktree)
 
+## (r25) WHERE I STOPPED / NEXT — 2026-11-20 ~12:10 UTC (new account; worktree `/home/user/wt/benny`, LOCAL branch `claude/rainbow-benny-c26`, port 5279)
+
+**Doing now:** (1) finishing the felt-star step `&b20star=1`: the 04–08 APPROVED / BEFORE / NEW crops in `qa/benny/r23/s3_star/` are
+complete (06 NEW re-rendered in r24 after the lime fix); gameplay 8/8 + 91 coins done in r24 (`gameplay_star.json`). Missing: the
+swim clip (06, BEFORE + NEW, speed on every frame, new tools `tools/benny25/swim_clip_c.mjs` + `label_clip_c.py`) and the verdict.
+**Next:** (2) silky combed fur `&b20silk=1` (shader in `fur.ts` `#ifdef B20SILK` + `SILK20` in `benny20.ts`, typecheck passed in r24;
+probe variants lost with the r24 scratchpad) → proof `qa/benny/r25/s4_silk/`; (3) hat crown shape vs the approved taller beanie, or
+06 cream leaning yellow (`&b20kw06=`). Do NOT scale Benny. Heavy renders through `tools/lead25/render_slot.sh`, one at a time.
+
+## (r24) summary — 2026-11-20 10:30–11:12 UTC (stopped by the user at 11:12 to switch accounts; not a rejection)
+* Star step `&b20star=1`: the 06 hard-left / middle star came out neon lemon-lime (`STARX20['06']` green 2.1). Probe A–D
+  (`qa/benny/r23/s3_star/06/probe_r24/`) → D chosen: `b20sx06` default `0.9,1.55,0.62` (warm gold at the start, clean yellow in the
+  middle). Old NEW kept as `06/new_r23_lime/`, 06 `new/` re-rendered. Gameplay with the NEW switches 8/8, 91 coins (1,330 → 2,240),
+  victory, no errors; `tsc` OK. The swim clips were rendering when the user stopped the session (lost).
+* Silky fur `&b20silk=1` started: `fur.ts` `B20SILK` (smooth streaks along each lock converging into a pointed tip instead of
+  per-strand dots, taper exponent, crease width, centre sheen; uniforms `uSilk` / `uSilk2`), `benny20.ts` `SILK20` + `&b20g*`
+  overrides. Two probe rounds on 04 (g0–g5, h1–h6): bigger locks read blotchy; fine/short variants close to the step-1 look; no
+  variant chosen yet.
+
 ## (r23) WHERE I STOPPED / NEXT — 2026-11-20 ~09:55 UTC (new account, in-process Benny)
 
 **Done this session:** step 2 knit beanie `&b20knit=1` (chain mode, cream stripes, vertical rib cuff, violet not bluer,

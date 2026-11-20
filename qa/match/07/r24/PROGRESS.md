@@ -1,5 +1,17 @@
 # Screen 07 · round 24 (water-fx-specialist) — progress log
 
+## (r25) WHERE I STOPPED / NEXT
+* r25 relaunch (new account, ~12:00 UTC). Worktree `/home/user/wt/s07`, LOCAL branch `claude/rainbow-s07-match-c26` (= `8accdad0` + my
+  r24 11:43 edits, applied by the lead). Ports 5277 / 5280 / 5281. Heavy renders via `tools/lead25/render_slot.sh`. Temp
+  `/home/user/scratch/s07/`.
+* 12:10 DONE: s08 snapshot rebuilt read-only from `/home/user/wt/s08` (K23-3, hashes `combo/s08snap_SHA256SUMS_r25.txt`); combined build
+  `/home/user/scratch/s07/combo` (tsc 0). Check `combo/check08_r25/`: 08 approved view **0 px** vs the s08 worker's own K23-3 render
+  (`qa/match/08/r23/step3_m08towelm/3_NEW_a00_approved_view.png`); forward 10 u: scenery identical, only Benny's fur shading differs.
+* r24 step-1 shots `s1_swing/BEFORE|NEW` (combo, K23-3) are complete (9 + 9). Start view a_start: 27 px (one far coin down the drop
+  moved ~2 px with the S); the other shots are at stage fractions and the S makes 07 2.5 u longer, so they are not at the same s.
+* NOW: step 1 proof (clips BEFORE + NEW 1.0x / 0.5x, gameplay, continuity, verdict). NEXT: step 2 `m07look`, step 3 07→08 join,
+  labelled NEW / BEFORE sequence.
+
 ## (r24) WHERE I STOPPED / NEXT
 * ~11:10 UTC: working on step 1 `&m07swing=1` (code in the worktree, diag renders good: the river sweeps across the tube floor in
   broad S-bends through the middle AND the end, foam banks + coins follow). Step 2 `&m07look=1` (lip camera) code written, first
