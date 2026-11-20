@@ -1,5 +1,5 @@
 diff --git a/src/characters/benny/fur.ts b/src/characters/benny/fur.ts
-index 702b2f1..1da7938 100644
+index 702b2f1..7fe1091 100644
 --- a/src/characters/benny/fur.ts
 +++ b/src/characters/benny/fur.ts
 @@ -33,6 +33,7 @@ export interface FurHandle {
@@ -59,6 +59,15 @@ index 702b2f1..1da7938 100644
          #endif
          float fhash(vec3 p) { p = fract(p * 0.3183099 + 0.1); p *= 17.0; return fract(p.x * p.y * p.z * (p.x + p.y + p.z)); }
          vec3 fhash3(vec3 p) { return vec3(fhash(p), fhash(p + 17.31), fhash(p + 41.7)); }`,
+@@ -131,7 +148,7 @@ export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
+           }
+           float lh = 1.0 - uShade.w * th;                       // this lock's length (fraction of the fur length)
+           float lt = clamp(layer / lh, 0.0, 1.0);
+-          float rl = uLock.y * pow(max(0.0, 1.0 - lt), 0.55);   // lock cross-section radius at this height
++          float rl = uLock.y * pow(max(0.0, 1.0 - lt), 0.4);    // lock cross-section radius at this height (leaf-shaped)
+           float rr = td / max(rl, 1e-3);
+           // fine strands, clumped toward the lock axis as they rise (q' = c + (q - c) / (1 - h k))
+           vec3 qs = vBase * uLock.w;
 @@ -144,13 +161,15 @@ export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
            if (layer > 0.001) {
              if (vLenMask < 0.05) discard;

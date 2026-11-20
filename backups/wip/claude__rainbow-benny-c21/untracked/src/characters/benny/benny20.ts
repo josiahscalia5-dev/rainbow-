@@ -48,22 +48,22 @@ type V4 = [number, number, number, number];
  *  the approved means: fur (207, 74, 151), pompom (133, 30, 229) */
 const LOCK20: Record<string, { lock: V4; shade: V4; comb: V4; color: [number, number, number] }> = {
   fur_body: {
-    lock: [n('blx', 24), n('bly', 1.0), n('blz', 0.85), n('blw', 300)],
+    lock: [n('blx', 24), n('bly', 1.0), n('blz', 1.0), n('blw', 180)],
     shade: [n('bsx', 0.3), n('bsy', 0.3), n('bsz', 0.5), n('bsw', 0.3)],
-    comb: [n('bcx', 1.0), n('bcy', 0.85), n('bcz', 0.1), n('bcw', 0.4)],
-    color: lin('bcol', [0.23, 0.075, 0.136]),
+    comb: [n('bcx', 0.8), n('bcy', 0.85), n('bcz', 0.1), n('bcw', 0.4)],
+    color: lin('bcol', [0.305, 0.108, 0.18]),
   },
   fur_armL: {
     lock: [n('alx', 50), 0.95, n('alz', 0.9), 320],
     shade: [0.45, 0.25, 0.3, 0.3],
     comb: [n('acx', 0.4), 0.9, 0.08, 0.15],
-    color: lin('acol', [0.23, 0.075, 0.136]),
+    color: lin('acol', [0.305, 0.108, 0.18]),
   },
   fur_armR: {
     lock: [n('alx', 50), 0.95, n('alz', 0.9), 320],
     shade: [0.45, 0.25, 0.3, 0.3],
     comb: [n('acx', 0.4), 0.9, 0.08, 0.15],
-    color: lin('acol', [0.23, 0.075, 0.136]),
+    color: lin('acol', [0.305, 0.108, 0.18]),
   },
   fur_pom: {
     lock: [n('plx', 40), n('ply', 0.8), n('plz', 1.0), n('plw', 220)],

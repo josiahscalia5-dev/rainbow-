@@ -1,5 +1,5 @@
 diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
-index 9abbbbb..56da1ae 100644
+index 9abbbbb..674a6dd 100644
 --- a/src/world/match04m4.ts
 +++ b/src/world/match04m4.ts
 @@ -119,12 +119,14 @@ uniform float uRVar;       // r17 m04rpvar: number of painted rings stacked in t
@@ -56,7 +56,7 @@ index 9abbbbb..56da1ae 100644
  #ifdef RFEW
          fd *= step(0.999, vF.y);                                     // corridor rings only (the telescope stays painted)
  #endif
-+        if (uRNear5.w < -0.5) pr = vec3(fd, fract(si * 0.37 + 0.2), fract(kI * 0.25)); else   // DEBUG
++        if (uRNear5.w < -1.5) pr = vec3(facing); else if (uRNear5.w < -0.5) pr = vec3(fd, fract(si * 0.37 + 0.2), fract(kI * 0.25)); else   // DEBUG
          if (fd > 0.001) {
            float lastS = step(Ns - 0.5, si);                          // the last sub-band ends at the modelled lip
 -          // (a) each sub-band a rounded polished tube bulging into the tunnel: its normal tilts from facing back toward the

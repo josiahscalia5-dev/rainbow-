@@ -2198,3 +2198,37 @@ Relative to Benny's height, the tilted beanie (f0) sits ~36 px too low but has t
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-20T00:02:20.675Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && python3 - <<'EOF'\np='src/characters/benny/fur.ts'\ns=open(p).read()\na=\"          float rl = uLock.y * pow(max(0.0, 1.0 - lt), 0.55);   // lock cross-section radius at this height\"\nassert s.count(a)==1\ns=s.replace(a,\"          float rl = uLock.y * pow(max(0.0, 1.0 - lt), 0.4);    // lock cross-section radius at this height (leaf-shaped)\")\nopen(p,'w').write(s)\np='src/characters/benny/benny20.ts'\ns=open(p).read()\nfor a,b in [(\"lock: [n('blx', 24), n('bly', 1.0), n('blz', 0.85), n('blw', 300)],\",\"lock: [n('blx', 24), n('bly', 1.0), n('blz', 1.0 …[+1569 chars]`
+
+### 🧑 User — 2026-11-20T00:02:56.287Z
+
+> ↩︎ result: TSC_OK
+> at 04 s 77.881
+> variant j0_default 8665 ms
+> variant j1_l30 5978 ms
+> variant j2_l20 7801 ms
+> j0_default
+> {'dy': 14, 'iou_all': 0.8913, 'iou_hat': 0.8306, 'iou_fur': 0.7619} [0.711, 0.691] {'mean': [216, 84, 148], 'sat': [0.55, 0.6, 0.72], 'val': [0.69, 0.86, 1.0]}
+> j1_l30
+> {'dy': 14, 'iou_all': 0.8909, 'iou_hat': 0.8306, 'iou_fur': 0.7613} [0.709, 0.691] {'mean': [219, 86, 151], 'sat': [0.54, 0.6, 0.71], 'val': [0.71, 0.87, 1.0]}
+> j2_l20
+> {'dy': 14, 'iou_all': 0.8917, 'iou_hat': 0.8306, 'iou_fur': 0.7621} [0.712, 0.691] {'mean': [216, 84, 148], 'sat': [0.55, 0.6, 0.72], 'val': [0.69, 0.85, 1.0]}
+
+### 🤖 Claude — 2026-11-20T00:03:01.922Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/benny && python3 -I -c \"\nfrom PIL import Image\nfor n in ['j0_default','j1_l30']:\n    im=Image.open(f'qa/benny/r20/probe/j/{n}.png'); im.crop((190,1150,600,1420)).resize((820,540),Image.LANCZOS).save(f'/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/{n}_fur.png')\n\"", "description": "Crop j0 and j1 fur detail"}`
+
+### 🧑 User — 2026-11-20T00:03:02.379Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T00:03:03.270Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/7951f197-ca4f-5615-a4e3-a23f22863243/scratchpad/c/j0_default_fur.png"}`
+
+### 🧑 User — 2026-11-20T00:03:03.332Z
+
+> ↩︎ result: [image]
+
