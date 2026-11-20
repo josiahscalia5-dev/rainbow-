@@ -1,7 +1,7 @@
 {
   "last_run": {
-    "time": "2026-11-20T19:24:38+00:00",
-    "reason": "manual:stop-hook-retry2",
+    "time": "2026-11-20T19:25:06+00:00",
+    "reason": "hook:Stop",
     "result": "committed+pushed",
     "files_staged": 17,
     "pushed_verified": true,
@@ -21,14 +21,14 @@
       "lead/view06-c30: 2 modified, 15 new file(s) snapshotted",
       "lead/view07-c30: 5 modified, 10 new file(s) snapshotted"
     ],
-    "commit": "f73a8fb917c601cc23138d3281e5fc540c30cfb4",
-    "duration_s": 21
+    "commit": "6cdff6b044fa25c18307950a64bd118026fb23fc",
+    "duration_s": 22
   },
   "repo": "https://github.com/josiahscalia5-dev/rainbow-",
   "branch": "ccr-ac160b4c-3hdecw",
-  "last_verified_remote_sha": "f73a8fb917c601cc23138d3281e5fc540c30cfb4",
-  "last_successful_backup_utc": "2026-11-20T19:24:38+00:00",
+  "last_verified_remote_sha": "6cdff6b044fa25c18307950a64bd118026fb23fc",
+  "last_successful_backup_utc": "2026-11-20T19:25:06+00:00",
   "consecutive_failures": 0,
   "schedule": "every 5 min, container-local (scheduler=daemon status=active pid=599); see backups/RECOVERY.md for limits",
-  "next_scheduled_utc": "2026-11-20T19:25:00+00:00"
+  "next_scheduled_utc": "2026-11-20T19:30:00+00:00"
 }
