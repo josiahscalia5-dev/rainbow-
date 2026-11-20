@@ -852,3 +852,41 @@ Now I'll add the clustering + soft-glow option (`m04lgcg`, new uniform `uLG7`), 
 
 > 🔧 **Bash** `{"command": "timeout 520 bash -c 'until grep -q \"ALL_DONE\" /home/user/scratch/s04/run_r27c.out; do sleep 10; done'; cat /home/user/scratch/s04/run_r27c.out; cd /home/user/scratch/s04 && python3 -I -c \"\nfrom PIL import Image\nvs=['V4_fine','V11_clu_dense','V12_clu_mid']\nW=Image.new('RGB',(3*400,2*330))\nfor k,v in enumerate(vs):\n  for j,sh in enumerate(['c_middle','d_late']):\n    im=Image.open(f's1var/{v}/{sh}.png').convert('RGB')\n    W.paste(im.crop((80,1180,480,1510)),(k*400,j*330))\nW.save('lgc_full_r27c.png')\n\"", "description": "Wait for glint variants and build crop sheet", "time …[+13 chars]`
 
+### 🧑 User — 2026-11-20T16:03:18.839Z
+
+> ↩︎ result: Exit code 1
+> Traceback (most recent call last):
+>   File "<string>", line 7, in <module>
+>     im=Image.open(f's1var/{v}/{sh}.png').convert('RGB')
+>        ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+>   File "/usr/local/lib/python3.13/site-packages/PIL/Image.py", line 3656, in open
+>     fp = builtins.open(filename, "rb")
+> FileNotFoundError: [Errno 2] No such file or directory: 's1var/V11_clu_dense/c_middle.png'
+
+### 🤖 Claude — 2026-11-20T16:03:21.537Z
+
+> 🔧 **Bash** `{"command": "ps aux | grep -E \"render_slot|run_r27\" | grep -v grep | awk '{print $2,$9,$12,$13,$14,$15,$16}'; bash /home/user/rainbow-/tools/lead25/render_slot.sh --status; uptime; date -u +%T", "description": "Check slot contention"}`
+
+### 🧑 User — 2026-11-20T16:03:21.682Z
+
+> ↩︎ result: 11877 15:35 /home/user/rainbow-/tools/lead25/render_slot.sh bash /home/user/scratch/s04/run_r27c.sh  
+> 28557 15:59 /home/user/rainbow-/tools/lead25/render_slot.sh bash /home/user/scratch/s07/v2.sh  
+> 30430 16:02 /home/user/rainbow-/tools/lead25/render_slot.sh timeout 1500 node /home/user/rainbow-/tools/lead21/clean_frame.mjs
+> 30551 16:02 /home/user/rainbow-/tools/lead25/render_slot.sh node tools/benny25/swim_clip_c.mjs 04 /home/user/scratch/benny/crown/clipNEW
+> slot 1 busy
+> slot 2 busy
+>  16:03:21 up  1:02,  0 user,  load average: 8.30, 8.13, 7.23
+> 16:03:21
+
+### 🤖 Claude — 2026-11-20T16:03:36.853Z
+
+> 🔧 **Bash** `{"command": "cat > /home/user/scratch/s04/run_r27c.sh <<'EOF'\n#!/usr/bin/env bash\nS=/home/user/scratch/s04\nexport BASE=/home/user/rainbow-/qa/match/04/r26/s0_five/QUERY_NEW_K23-S3_a5.txt\nV=/home/user/rainbow-/qa/match/04/r23/s04_tools/variant.sh\nrun() { echo \"start $1 $(date -u +%T)\"; bash $V $S/$1 5273 \"$2\"; }\nF=\"m04lgc=1&m04lgt=0.035&m04lgn=5&m04lgcl=0.35&m04lgcb=0.08&m04lgcs=0.9&m04lgcgx=0.5&m04lgcgz=1.8\"\nSHOTS='[[\"c_middle\",0.35,null],[\"d_late\",0.6,null]]' run s1var/V11_clu_dense \"$F&m04lgco=0.15&m04lgcg=0.42&m04lgch=0.4\"\nSHOTS='[[\"c_middle\",0.35,null],[\"d_late\",0.6 …[+571 chars]`
+
+### 🧑 User — 2026-11-20T16:03:36.901Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-20T16:03:43.296Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/04/r23 && python3 -I - <<'EOF'\np='PROGRESS.md'; s=open(p).read()\nold=\"\"\"* NEXT: step 1 verdict (pick one crescent variant)\"\"\"\nnew=\"\"\"* 15:35 rendered V0/V4/V5/V6/V7 + C1/C2 + C3_cloud_full (`m04bbdc=1&m04ry=0.35&m04bbdcb=1.6&m04bbdcl=1.3&m04bbdcw=0.45`, fuller banks\n  = my step-2 pick so far). V4..V7 still read as an even sprinkle of separate white dashes. NEW CODE (tsc 0, default off):\n  `&m04lgcg=t` crescents gather in clusters along the swirl ridges (+ `m04lgcgx`/`m04lgcgz` cluster size, `m04lgch` soft cyan halo,\n  uniform `uLG7`); …[+622 chars]`
+

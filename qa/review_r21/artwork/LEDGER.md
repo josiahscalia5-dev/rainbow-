@@ -26,3 +26,35 @@
   does NOT add the painting's many close gold rings (the game geometry has fewer there — a scenery task for s05). Sheets
   `05/FOR_APPROVAL_05_d_late.png`, `05/FOR_APPROVAL_05_e_end.png` — shown to the user, verdict pending.
 * Running total: 11 jobs, **$1.32** (round 21: 5 jobs $0.60; round 22: 6 jobs $0.72).
+
+### Round 27 (lead `claude/rainbow-restore-screen-match-ijjdai`, new account; user: "Yes, for the extra view artwork for step 3", 2026-11-20 ~15:55 UTC)
+* Step 3 continuation views on the r27 clean frames of each screen's newest candidate (`qa/review_r27/artwork/NN/game_frames/`). Batch plan: 27 views x $0.12 ≈ $3.24, cap $5.
+| 2026-11-20 16:00 | c_middle | nano-banana-2/edit 2K | `01a1f9af-8214-7a91-a722-c494da61f51a` | 1 | 0.12 | c_middle_v1.png |
+| 2026-11-20 16:00 | f_hard_left | nano-banana-2/edit 2K | `01a1f9af-82ee-7cf0-8fb9-2183a18c0e81` | 1 | 0.12 | f_hard_left_v1.png |
+| 2026-11-20 16:00 | d_late | nano-banana-2/edit 2K | `01a1f9af-821a-7421-a319-d11686df2763` | 1 | 0.12 | d_late_v1.png |
+| 2026-11-20 16:00 | g_hard_right | nano-banana-2/edit 2K | `01a1f9af-8328-7553-ab26-6de86447ac99` | 1 | 0.12 | g_hard_right_v1.png |
+| 2026-11-20 16:00 | b_early | nano-banana-2/edit 2K | `01a1f9af-8340-7733-9bcf-64b81c5a2bf1` | 1 | 0.12 | b_early_v1.png |
+| 2026-11-20 16:00 | e_end | nano-banana-2/edit 2K | `01a1f9af-82d2-7600-a43a-7befd6023aad` | 1 | 0.12 | e_end_v1.png |
+| 2026-11-20 16:01 | b_early | nano-banana-2/edit 2K | `01a1f9b0-759f-7171-9c3a-0664d3e3b0ff` | 1 | 0.12 | b_early_v1.png |
+| 2026-11-20 16:01 | f_hard_left | nano-banana-2/edit 2K | `01a1f9b0-7635-7e81-940e-abbcbdbc0e97` | 1 | 0.12 | f_hard_left_v1.png |
+| 2026-11-20 16:01 | g_hard_right | nano-banana-2/edit 2K | `01a1f9b0-7715-7850-b380-b605b3e91891` | 1 | 0.12 | g_hard_right_v1.png |
+| 2026-11-20 16:01 | d_late | nano-banana-2/edit 2K | `01a1f9b0-7737-7350-b47c-42180f379034` | 1 | 0.12 | d_late_v1.png |
+| 2026-11-20 16:01 | e_end | nano-banana-2/edit 2K | `01a1f9b0-7692-79e0-aae8-f75a330f708c` | 1 | 0.12 | e_end_v1.png |
+| 2026-11-20 16:01 | c_middle | nano-banana-2/edit 2K | `01a1f9b0-762a-7541-a7a7-f6043fa45118` | 1 | 0.12 | c_middle_v1.png |
+| 2026-11-20 16:01 | d_late_p2 | nano-banana-2/edit 2K | `01a1f9b0-8dad-7580-ab54-1d2db5b979e7` | 1 | 0.12 | d_late_p2_v1.png |
+| 2026-11-20 16:01 | e_end_p2 | nano-banana-2/edit 2K | `01a1f9b0-8da6-79d1-ae71-69aa731feb3c` | 1 | 0.12 | e_end_p2_v1.png |
+| 2026-11-20 16:01 | f_hard_left | nano-banana-2/edit 2K | `01a1f9b1-246b-7de3-a512-fcd641e4f9fd` | 1 | 0.12 | f_hard_left_v1.png |
+| 2026-11-20 16:01 | g_hard_right | nano-banana-2/edit 2K | `01a1f9b1-24a0-7e41-b4c3-5a454c8d1489` | 1 | 0.12 | g_hard_right_v1.png |
+| 2026-11-20 16:02 | b_early | nano-banana-2/edit 2K | `01a1f9b1-2435-71d3-9264-d316f4f5c8bb` | 1 | 0.12 | b_early_v1.png |
+| 2026-11-20 16:03 | f_hard_left | nano-banana-2/edit 2K | `01a1f9b2-4bc5-7f30-9145-59681eec20e7` | 1 | 0.12 | f_hard_left_v1.png |
+| 2026-11-20 16:03 | e_end | nano-banana-2/edit 2K | `01a1f9b2-4abe-7592-b47d-679544dcc33b` | 1 | 0.12 | e_end_v1.png |
+| 2026-11-20 16:03 | c_middle | nano-banana-2/edit 2K | `01a1f9b2-4b3f-7121-aa67-463113bdcacd` | 1 | 0.12 | c_middle_v1.png |
+| 2026-11-20 16:03 | g_hard_right | nano-banana-2/edit 2K | `01a1f9b2-4ba0-7ab2-bbe0-f563376eacee` | 1 | 0.12 | g_hard_right_v1.png |
+| 2026-11-20 16:03 | b_early | nano-banana-2/edit 2K | `01a1f9b2-4ba8-7c80-925d-7081a4090f7a` | 1 | 0.12 | b_early_v1.png |
+| 2026-11-20 16:03 | d_late | nano-banana-2/edit 2K | `01a1f9b2-4b86-7821-bab7-cedc09553613` | 1 | 0.12 | d_late_v1.png |
+| 2026-11-20 16:04 | c_middle | nano-banana-2/edit 2K | `01a1f9b3-3423-7061-822f-03af06bddb8e` | 1 | 0.12 | c_middle_v1.png |
+| 2026-11-20 16:04 | b_early | nano-banana-2/edit 2K | `01a1f9b3-3442-7161-a4a3-48debc7ea0b1` | 1 | 0.12 | b_early_v1.png |
+| 2026-11-20 16:04 | d_late | nano-banana-2/edit 2K | `01a1f9b3-344d-7aa2-98cc-a4d1a406b7c8` | 1 | 0.12 | d_late_v1.png |
+| 2026-11-20 16:04 | g_hard_right | nano-banana-2/edit 2K | `01a1f9b3-348d-7eb0-9a4d-0fb15026e91e` | 1 | 0.12 | g_hard_right_v1.png |
+| 2026-11-20 16:04 | e_end | nano-banana-2/edit 2K | `01a1f9b3-34d6-7a42-8cb5-ba1e12017120` | 1 | 0.12 | e_end_v1.png |
+| 2026-11-20 16:04 | f_hard_left | nano-banana-2/edit 2K | `01a1f9b3-34f3-7550-aaee-f99b036579db` | 1 | 0.12 | f_hard_left_v1.png |

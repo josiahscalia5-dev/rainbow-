@@ -2930,3 +2930,161 @@ Now the 08 swatches and the per-screen prompts.
 
 > ↩︎ result: File created successfully at: /home/user/rainbow-/qa/review_r27/artwork/prompt_08.txt (file state is current in your context — no need to Read it back)
 
+### 🤖 Claude — 2026-11-20T15:58:37.198Z
+
+Prompts are ready. Checking the clean-frame captures.
+
+### 🤖 Claude — 2026-11-20T15:58:39.340Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/scratchpad/clean_r27.log; ls /home/user/rainbow-/qa/review_r27/artwork/07/game_frames/ 2>/dev/null; tail -2 /home/user/rainbow-/qa/review_r27/artwork/07/clean_log.txt; bash /home/user/rainbow-/tools/lead25/render_slot.sh --status; uptime", "description": "Check clean-frame capture progress"}`
+
+### 🧑 User — 2026-11-20T15:58:39.416Z
+
+> ↩︎ result: slot 1 busy
+> slot 2 busy
+>  15:58:39 up 57 min,  0 user,  load average: 8.33, 7.94, 6.87
+
+### 🤖 Claude — 2026-11-20T15:58:41.276Z
+
+Both render slots are busy with the workers, so my captures are queued. Waiting for Screen 07's clean frames.
+
+### 🤖 Claude — 2026-11-20T15:58:43.444Z
+
+> 🔧 **Bash** `{"command": "L=/tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/scratchpad/clean_r27.log; until grep -q \"clean 07\" $L; do sleep 15; done; cat $L; ls /home/user/rainbow-/qa/review_r27/artwork/07/game_frames/", "description": "Wait for Screen 07 clean frames", "timeout": 560000}`
+
+### 🧑 User — 2026-11-20T15:59:43.565Z
+
+> ↩︎ result: clean 07 exit 0 15:59:42
+> b_early.png
+> c_middle.png
+> d_late.png
+> e_end.png
+> f_hard_left.png
+> g_hard_right.png
+> shots.json
+
+### 🤖 Claude — 2026-11-20T15:59:46.586Z
+
+Screen 07's clean frames are ready. Adding a round-27 header to the cost ledger, then starting its six views at $0.12 each.
+
+### 🤖 Claude — 2026-11-20T15:59:50.297Z
+
+> 🔧 **Bash** `{"command": "printf '\\n### Round 27 (lead `claude/rainbow-restore-screen-match-ijjdai`, new account; user: \"Yes, for the extra view artwork for step 3\", 2026-11-20 ~15:55 UTC)\\n* Step 3 continuation views on the r27 clean frames of each screen'\"'\"'s newest candidate (`qa/review_r27/artwork/NN/game_frames/`). Batch plan: 27 views x $0.12 ≈ $3.24, cap $5.\\n' >> qa/review_r21/artwork/LEDGER.md\nA=qa/review_r27/artwork; T=/home/user/wt/view07/assets/textures/match07; mkdir -p $A/07/proposals\nfor v in b_early c_middle d_late e_end f_hard_left g_hard_right; do\n  nohup python3 -I tools/lead2 …[+290 chars]`
+
+### 🧑 User — 2026-11-20T15:59:55.417Z
+
+> ↩︎ result: ==> qa/review_r27/artwork/07/proposals/b_early.log <==
+> submitted 01a1f9af-8340-7733-9bcf-64b81c5a2bf1
+> 
+> ==> qa/review_r27/artwork/07/proposals/c_middle.log <==
+> submitted 01a1f9af-8214-7a91-a722-c494da61f51a
+> 
+> ==> qa/review_r27/artwork/07/proposals/d_late.log <==
+> submitted 01a1f9af-821a-7421-a319-d11686df2763
+> 
+> ==> qa/review_r27/artwork/07/proposals/e_end.log <==
+> submitted 01a1f9af-82d2-7600-a43a-7befd6023aad
+> 
+> ==> qa/review_r27/artwork/07/proposals/f_hard_left.log <==
+> submitted 01a1f9af-82ee-7cf0-8fb9-2183a18c0e81
+> 
+> ==> qa/review_r27/artwork/07/proposals/g_hard_right.log <==
+> submitted 01a1f9af-8328-7553-ab26-6de86447ac99
+
+### 🤖 Claude — 2026-11-20T15:59:59.032Z
+
+While Screen 07's jobs run, I'll set up an automatic launcher that starts each other screen's views as soon as its clean frames finish.
+
+### 🤖 Claude — 2026-11-20T16:00:07.520Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/scratchpad; cat > $S/gen_r27.sh <<'EOF'\n#!/usr/bin/env bash\n# r27 step 3: launch fal continuation views per screen as soon as its clean frames exist (paid, user-approved; ledger qa/review_r21/artwork/LEDGER.md)\ncd /home/user/rainbow-; A=qa/review_r27/artwork; L=/tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/scratchpad/clean_r27.log\nT6=/home/user/wt/view06/assets/textures/match06; W5=qa/review_r21/artwork/05/swatches; S8=$A/swatches08\ngen() { N=$1; P=$2; shift 2; VIEWS=$1; shift; m …[+1257 chars]`
+
+### 🧑 User — 2026-11-20T16:00:08.590Z
+
+> ↩︎ result: launched
+
+### 🤖 Claude — 2026-11-20T16:00:11.205Z
+
+> 🔧 **Bash** `{"command": "A=qa/review_r27/artwork/07/proposals; until [ $(ls $A/*.job.json 2>/dev/null | wc -l) -ge 6 ]; do sleep 10; done; for f in $A/*.job.json; do python3 -c \"import json;d=json.load(open('$f'));print(d['name'],d['status'],d['estimated_cost_usd'],d['seconds'],d['error'])\"; done; ls $A/*.png", "description": "Wait for the six Screen 07 views", "timeout": 560000}`
+
+### 🧑 User — 2026-11-20T16:00:31.543Z
+
+> ↩︎ result: b_early COMPLETED 0.12 29.8 None
+> c_middle COMPLETED 0.12 21.6 None
+> d_late COMPLETED 0.12 25.6 None
+> e_end COMPLETED 0.12 34.1 None
+> f_hard_left COMPLETED 0.12 23.6 None
+> g_hard_right COMPLETED 0.12 26.3 None
+> qa/review_r27/artwork/07/proposals/b_early_v1.png
+> qa/review_r27/artwork/07/proposals/c_middle_v1.png
+> qa/review_r27/artwork/07/proposals/d_late_v1.png
+> qa/review_r27/artwork/07/proposals/e_end_v1.png
+> qa/review_r27/artwork/07/proposals/f_hard_left_v1.png
+> qa/review_r27/artwork/07/proposals/g_hard_right_v1.png
+
+### 🤖 Claude — 2026-11-20T16:00:34.305Z
+
+All six Screen 07 views came back ($0.72). Checking each against its game frame (geometry must match for projection) and your approved picture (the look).
+
+### 🤖 Claude — 2026-11-20T16:00:41.299Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/scratchpad/gensheet.py <<'EOF'\nimport sys\nfrom PIL import Image, ImageDraw, ImageFont\nn, out = sys.argv[1], sys.argv[2]; views = sys.argv[3].split(',')\nR='/home/user/rainbow-/qa/review_r27'; W=180; H=320\nfnt=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',14)\nsh=Image.new('RGB',(W*(len(views)+1),2*(H+20)),'white'); d=ImageDraw.Draw(sh)\nap=Image.open(f'{R}/web/{n}_approved.jpg').convert('RGB').resize((W,H)); sh.paste(ap,(0,20)); d.text((4,2),f'{n} APPROVED',fill='black',fon …[+760 chars]`
+
+### 🤖 Claude — 2026-11-20T16:00:42.413Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/scratchpad/gen07.jpg"}`
+
+### 🧑 User — 2026-11-20T16:00:42.744Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🧑 User — 2026-11-20T16:00:42.764Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T16:00:59.461Z
+
+> 🔧 **Bash** `{"command": "A=qa/review_r27/artwork; python3 -I - <<'EOF'\np=open('qa/review_r27/artwork/prompt_07.txt').read()\np=p.replace(\"- foam along the OUTER banks stays, as soft, varied, rounded clusters of different sizes with small gaps between them (IMAGE 5) — never tall white columns, never one bulky uniformly packed wall, never a regular line of identical white beads between the cyan water and the pink banks;\",\n\"- the white foam of IMAGE 1 is only a placeholder and is the ONE thing you may reshape: replace it with a LOW border of soft, varied, rounded foam clusters of different sizes with sm …[+1264 chars]`
+
+### 🧑 User — 2026-11-20T16:01:01.589Z
+
+> ↩︎ result: foam rule replaced: True
+> clean 07 exit 0 15:59:42
+> clean 06 exit 0 16:00:42
+
+### 🤖 Claude — 2026-11-20T16:01:10.052Z
+
+> 🔧 **Bash** `{"command": "G=/tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/scratchpad/gen_r27.log; until grep -q \"gen 06 done\" $G && [ -f qa/review_r27/artwork/07/proposals/e_end_p2.job.json ] && [ -f qa/review_r27/artwork/07/proposals/d_late_p2.job.json ]; do sleep 10; done; cat $G; for f in qa/review_r27/artwork/06/proposals/*.job.json qa/review_r27/artwork/07/proposals/*_p2.job.json; do python3 -c \"import json;d=json.load(open('$f'));print(d['name'],d['status'],d['estimated_cost_usd'],d['error'])\"; done; S=/tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe …[+888 chars]`
+
+### 🧑 User — 2026-11-20T16:01:32.680Z
+
+> ↩︎ result: gen 06 done 16:01:19
+> b_early COMPLETED 0.12 None
+> c_middle COMPLETED 0.12 None
+> d_late COMPLETED 0.12 None
+> e_end COMPLETED 0.12 None
+> f_hard_left COMPLETED 0.12 None
+> g_hard_right COMPLETED 0.12 None
+> d_late_p2 COMPLETED 0.12 None
+> e_end_p2 COMPLETED 0.12 None
+
+### 🤖 Claude — 2026-11-20T16:01:34.838Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/scratchpad/gen07p2.jpg"}`
+
+### 🧑 User — 2026-11-20T16:01:34.862Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T16:01:35.457Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/scratchpad/gen06.jpg"}`
+
+### 🧑 User — 2026-11-20T16:01:35.483Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T16:01:55.147Z
+
+> 🔧 **Bash** `{"command": "G=/tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/scratchpad/gen_r27.log; until grep -q \"GEN_ALL_DONE\" $G; do sleep 15; done; cat $G; cat /tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/scratchpad/clean_r27.log; for n in 04 05 08; do for f in qa/review_r27/artwork/$n/proposals/*.job.json; do python3 -c \"import json;d=json.load(open('$f'));print('$n',d['name'],d['status'],d['estimated_cost_usd'],(d['error'] or '')[:80])\"; done; done; S=/tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/scratchpad; python3 -I $S/g …[+337 chars]`
+

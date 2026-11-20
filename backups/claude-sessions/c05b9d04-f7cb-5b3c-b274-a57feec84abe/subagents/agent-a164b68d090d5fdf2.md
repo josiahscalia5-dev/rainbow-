@@ -983,3 +983,202 @@ Gameplay with NEW2 passes: 8/8 checks, 91 coins, no errors. The BEFORE clip is r
 
 > 🔧 **Bash** `{"command": "for i in $(seq 1 30); do grep -q \"clips done\" /home/user/scratch/s06/chain_s2.log && break; sleep 10; done; cat /home/user/scratch/s06/chain_s2.log; ls -la /home/user/rainbow-/qa/match/06/r25/step2/*.mp4; tail -2 /home/user/rainbow-/qa/match/06/r25/step2/clip_NEW2.log", "description": "Wait for NEW2 clip encode", "timeout": 400000}`
 
+### 🧑 User — 2026-11-20T16:00:28.138Z
+
+> ↩︎ result: gameplay exit 0 15:47
+> BEFORE clip exit 0 93 frames
+> NEW2 clip exit 0 93 frames
+> clips done 16:00
+> -rw-r--r-- 1 root root 4472069 Nov 20 15:53 /home/user/rainbow-/qa/match/06/r25/step2/BEFORE_whole06_0.5x.mp4
+> -rw-r--r-- 1 root root 3326724 Nov 20 15:53 /home/user/rainbow-/qa/match/06/r25/step2/BEFORE_whole06_1x.mp4
+> -rw-r--r-- 1 root root 4488729 Nov 20 16:00 /home/user/rainbow-/qa/match/06/r25/step2/NEW2_whole06_0.5x.mp4
+> -rw-r--r-- 1 root root 3338131 Nov 20 16:00 /home/user/rainbow-/qa/match/06/r25/step2/NEW2_whole06_1x.mp4
+> frames 93 seconds 3.88
+> frames 93 game seconds 3.88
+
+### 🤖 Claude — 2026-11-20T16:00:30.841Z
+
+Both clips are done: 93 frames each, 3.88 s of game time, 1.0x and 0.5x. Let me find the frames where BEFORE and NEW2 differ most and look at those.
+
+### 🤖 Claude — 2026-11-20T16:00:33.344Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && python3 -c \"\nfrom PIL import Image\nimport numpy as np, json\nfr=json.load(open('clip2_BEFORE/frames.json'))['frames']\nres=[]\nfor i in range(93):\n  a=np.asarray(Image.open(f'clip2_BEFORE/f/{i:04d}.png').convert('RGB')).astype(int); b=np.asarray(Image.open(f'clip2_NEW2/f/{i:04d}.png').convert('RGB')).astype(int)\n  res.append((i, int((np.abs(a-b).max(2)>20).sum()), int((a[1024:].min(2)>225).sum()), int((b[1024:].min(2)>225).sum()), fr[i]['phase'], fr[i]['frac']))\nfor r in res:\n  if r[1]>2000 or r[0]%10==0: print(r)\n\"", "description": "Per-frame …[+37 chars]`
+
+### 🧑 User — 2026-11-20T16:00:50.350Z
+
+> ↩︎ result: (0, 0, 21056, 21056, 'ENTRANCE (straight)', 0)
+> (10, 0, 2097, 2097, 'ENTRANCE (straight)', 0.125)
+> (20, 0, 3467, 3467, 'ENTRANCE (straight)', 0.251)
+> (30, 0, 10576, 10576, 'MIDDLE (steering LEFT)', 0.376)
+> (40, 0, 8427, 8427, 'MIDDLE (steering RIGHT)', 0.501)
+> (49, 5238, 13984, 12040, 'MIDDLE (steering RIGHT)', 0.614)
+> (50, 26905, 39166, 16783, 'MIDDLE (steering RIGHT)', 0.627)
+> (51, 46268, 52721, 17688, 'MIDDLE (steering RIGHT)', 0.639)
+> (52, 53386, 64922, 28150, 'MIDDLE (steering RIGHT)', 0.652)
+> (53, 60726, 68326, 31027, 'MIDDLE (steering RIGHT)', 0.664)
+> (54, 34828, 68662, 43309, 'MIDDLE (steering RIGHT)', 0.677)
+> (55, 20364, 86428, 70458, 'MIDDLE (steering RIGHT)', 0.689)
+> (56, 22696, 94295, 90143, 'END (straight)', 0.702)
+> (57, 72093, 132498, 111212, 'END (straight)', 0.715)
+> (58, 117832, 174665, 116451, 'END (straight)', 0.727)
+> (59, 103829, 145133, 108875, 'END (straight)', 0.74)
+> (60, 65633, 111758, 92739, 'END (straight)', 0.752)
+> (61, 16681, 102572, 99763, 'END (straight)', 0.765)
+> (63, 24180, 123700, 123096, 'END (straight)', 0.79)
+> (64, 35777, 137332, 136425, 'END (straight)', 0.802)
+> (65, 50684, 127719, 107878, 'END (straight)', 0.815)
+> (66, 18289, 83737, 71756, 'END (straight)', 0.827)
+> ( …[+136 chars]
+
+### 🤖 Claude — 2026-11-20T16:00:53.870Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s06 && R=\"\"; for i in 0052 0058 0064; do R=\"$R;clip2_BEFORE/f/$i.png,clip2_NEW2/f/$i.png\"; done; python3 sheet.py clip2sheet.png 0.36 \"BEFORE|NEW2\" \"${R#;}\"", "description": "Sheet of clip frames 52/58/64"}`
+
+### 🧑 User — 2026-11-20T16:00:54.473Z
+
+> ↩︎ result: (622, 1710)
+
+### 🤖 Claude — 2026-11-20T16:00:55.680Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s06/clip2sheet.png"}`
+
+### 🧑 User — 2026-11-20T16:00:55.753Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T16:01:23.946Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r25/step2 && mkdir -p COMPARE/clips && ln -f BEFORE_whole06_1x.mp4 COMPARE/clips/2_BEFORE_whole06_1.0x.mp4 && ln -f BEFORE_whole06_0.5x.mp4 COMPARE/clips/2_BEFORE_whole06_0.5x.mp4 && ln -f NEW2_whole06_1x.mp4 COMPARE/clips/3_NEW_whole06_1.0x.mp4 && ln -f NEW2_whole06_0.5x.mp4 COMPARE/clips/3_NEW_whole06_0.5x.mp4 && cp /home/user/scratch/s06/clip2_BEFORE/frames.json frames_BEFORE.json && cp /home/user/scratch/s06/clip2_NEW2/frames.json frames_NEW2.json && cat > COMPARE/README.txt <<'EOF'\nSCREEN 06 STEP 2 - FOAM HEIGHT (round 27, s06). Candidate o …[+1154 chars]`
+
+### 🧑 User — 2026-11-20T16:01:24.423Z
+
+> ↩︎ result: (1296, 402)
+
+### 🤖 Claude — 2026-11-20T16:01:25.882Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s06/seqsheet.png"}`
+
+### 🧑 User — 2026-11-20T16:01:25.936Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T16:01:34.873Z
+
+> 🔧 **Bash** `{"command": "grep -rn -i \"bend.*ban\\|ban.*bend\\|no bend\\|bend is\\|m06bend\" /home/user/rainbow-/qa/match/06/r23/PROGRESS.md /home/user/rainbow-/qa/match/06/r2*/NOTES.md /home/user/rainbow-/docs/briefs/2026-11-20-r2*/*.md /home/user/rainbow-/docs/briefs/2026-11-19-r*/*.md 2>/dev/null | cut -c1-400 | head -12", "description": "Search why the 06 bend is banned"}`
+
+### 🧑 User — 2026-11-20T16:01:34.939Z
+
+> ↩︎ result: /home/user/rainbow-/qa/match/06/r23/PROGRESS.md:16:  it, bend is banned, so only a route or approved-artwork decision by the user could; (2) at the crest top the river beyond is
+> /home/user/rainbow-/qa/match/06/r23/PROGRESS.md:58:  brings back twisted ring bands (r7); bending it = `m06bend` (rejected twice, never repeated); moving the river would change
+> /home/user/rainbow-/docs/briefs/2026-11-20-r21/COORDINATION.md:28:`m06bend`), 05 polish (end + hard left), Benny's approved look on every screen (`claude/rainbow-benny-c21` @ `bade594` + WIP).
+> /home/user/rainbow-/docs/briefs/2026-11-20-r21/RESUME_R21.md:40:| **s07** (water-fx-specialist, brief `S07_R21.md`) | STOPPED after step 1 **`&m07end=1` GOOD IMPROVEMENT** (the end's pale streaky waterfall → glossy cyan river with thick magenta banks in the ring tube; 0 px start, 8/8, continuity OK). Kept **K7&m07end=1** | base `8accdad0` + `qa/match/07/r21/code_at_stop_full.patch`; tools `qa/ma
+> /home/user/rainbow-/docs/briefs/2026-11-20-r21/S06_R21.md:28:speed, steering and controls unchanged; never change Benny's model or other screens. **NEVER repeat `m06bend`** (tunnel bend, rejected
+> /home/user/rainbow-/docs/briefs/2026-11-20-r23/OPEN_ITEMS …[+1345 chars]
+
+### 🤖 Claude — 2026-11-20T16:01:37.100Z
+
+> 🔧 **Bash** `{"command": "sed -n 50,66p /home/user/rainbow-/qa/match/06/r23/PROGRESS.md; sed -n 20,40p /home/user/rainbow-/docs/briefs/2026-11-20-r21/S06_R21.md", "description": "Read the m06bend rejection context"}`
+
+### 🧑 User — 2026-11-20T16:01:37.172Z
+
+> ↩︎ result: ## Step 2 — the off-centre ring tunnel while swimming (diagnosis, ~04:52 UTC)
+> * Probe `tools/match06/r23_tunprobe.mjs` (where camera / Benny / river sit in the straight `m06tun` tunnel, and where the tunnel's
+>   vanishing point = the centre of the gold rings lands on screen). Logs: `qa/match/06/r23/step2_m06vs0/probe/tp_{K6,VIEW,VIEWNR}.txt`.
+> * Why the bullseye: the painted tunnel is straight (its axis = the painted vanishing-point ray). The game river first crests
+>   slightly LEFT, then after the crest top (≈ +9 u) turns ~18° RIGHT and drops ~12° below that axis, ending near the lower-right
+>   tunnel wall. The ring centre on screen depends only on where the camera LOOKS relative to the tunnel. K6's camera follows the
+>   river, so the ring centre slides from the painted spot (660, 632) to the upper LEFT (253, 252) by +20 u = the bullseye.
+> * Scenery cannot hold it: re-aiming the straight tunnel moves the painted ring centre at the start (snap at the hand-over) and
+>   brings back twisted ring bands (r7); bending it = `m06bend` (rejected twice, never repeated); moving the river would change
+>   the route / 07. So the lever is the user-approved framing TEST.
+> * r22 `m06view` (default): the cam …[+2556 chars]
+
+### 🤖 Claude — 2026-11-20T16:01:55.248Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && git diff -- src/world/match06.ts src/game/Game.ts > /home/user/rainbow-/qa/match/06/r25/step2/code_live_at_step2.patch && wc -l /home/user/rainbow-/qa/match/06/r25/step2/code_live_at_step2.patch && grep -c \"m06fcg\\|GROUP\" /home/user/rainbow-/qa/match/06/r25/step2/code_live_at_step2.patch; sha256sum -c /home/user/rainbow-/scripts/reference.sha256 2>&1 | grep -c OK", "description": "Save live code patch and verify references"}`
+
+### 🧑 User — 2026-11-20T16:01:55.411Z
+
+> ↩︎ result: 385 /home/user/rainbow-/qa/match/06/r25/step2/code_live_at_step2.patch
+> 5
+> 13
+
+### 🤖 Claude — 2026-11-20T16:01:58.982Z
+
+> 🔧 **Bash** `{"command": "sha256sum -c scripts/reference.sha256 2>&1 | grep -c \": OK\"", "description": "Verify main-repo reference images unchanged"}`
+
+### 🧑 User — 2026-11-20T16:01:59.114Z
+
+> ↩︎ result: 13
+
+### 🤖 Claude — 2026-11-20T16:02:10.384Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/qa/match/06/r25/PROGRESS.md", "old_string": "  NOW (~15:41): `/home/user/scratch/s06/chain_s2.sh` = gameplay NEW2 (`step2/gameplay_NEW2.json`) then whole-06 clips\n  `step2/{BEFORE,NEW2}_whole06_{1x,0.5x}.mp4` (`step2/clip.sh`; entrance, LEFT 30-50 %, RIGHT 50-70 %, end, 0.6 s into 07).\n  NEXT: verdict step 2, then assemble `step2/COMPARE/<view>/{1_ORIGINAL_APPROVED,2_BEFORE,3_NEW}.png`.\n", "new_string": "  Gameplay NEW2 8/8, 91 coins (`step2/gameplay_NEW2.json`). Whole-06 clips (93 frames, 3.88 s; entrance, LEFT 30-50 %, RIGHT\n  50-7 …[+1998 chars]`
+
+### 🧑 User — 2026-11-20T16:02:10.460Z
+
+> ↩︎ result: The file /home/user/rainbow-/qa/match/06/r25/PROGRESS.md has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T16:02:13.295Z
+
+> 🔧 **Bash** `{"command": "ps aux | grep -E \"wt/s06|s06/\" | grep -v grep | awk '{print $2, substr($0, index($0,$11), 120)}' | head; ss -ltn 2>/dev/null | grep -E \":(5276|5282|5283)\\b\" || echo \"my ports free\"", "description": "Check for leftover s06 processes"}`
+
+### 🧑 User — 2026-11-20T16:02:13.495Z
+
+> ↩︎ result: my ports free
+
+### 🤖 Claude — 2026-11-20T16:02:33.072Z
+
+I finished two steps and stopped. Step 3 needs a decision from the user, so I didn't start it. Nothing was committed, pushed or paid for, and the 13 reference images are unchanged.
+
+## Step 1: the owed Screen 06 opening comparison — GOOD IMPROVEMENT
+- **Switches:** `&m06hole=2&m06fade=1&m06spl=1` (called NEW3).
+- **Gameplay:** the NEW3 gameplay run and the step-2 BEFORE/NEW shots were not lost after all, so I reused them instead of re-rendering. Gameplay passes 8/8 checks, collects 91 coins, with no teleport or camera cut.
+- **What got closer:** the bright, hard-edged blue cone under Benny is gone while he swims. The painted water runs on continuously from under him to the bottom of the screen, with no cut-out edge, no brighter patch and no left-behind ring. At 7 % and 12 % there is one coherent river below him (cyan centre, pink sides). Where he touches the water there is now a low lace collar with shallow rings instead of long white V-shaped spray. The start view is unchanged (identical files).
+- **What still differs:** the water filled in under him reads as fairly straight fanning streaks, where the approved water swirls. Only one faint shallow ring shows instead of the approved concentric rings. From about 7 % the view turns into the centred ring tunnel, so the approved composition is out of view.
+- **New problems:** none in the game. The NEW clip's title text is cut off at the right edge; this is cosmetic, and fixing it would mean re-rendering because the raw frames were lost.
+
+## Step 2: foam height — GOOD IMPROVEMENT (moderate)
+- **Switches:** `&m06fcn=3&m06fcg=1`.
+- **Fix during the step:** `m06fcn=3` on its own shrank the near foam but turned half-shrunk heaps into trails of tiny loose white beads. I added `&m06fcg=1`, which shrinks each heap as one unit into its base on the water. With it, the heaps stay compact small clouds. The typecheck is clean, and the default build is unchanged.
+- **Gameplay:** 8/8 checks, 91 coins.
+- **What got closer:** the big near foam clouds no longer cover the bottom of the screen at 47 %, 60 % and when steering hard right. In the clip, a big round foam ball at the bottom centre is replaced by water and pink edge, and the lower-left cloud is clearly smaller. Measured white foam in the lower third: 90.8k → 74.0k, 110.4k → 60.3k and 115.9k → 54.2k pixels. Every other view and clip frame is identical to BEFORE.
+- **What still differs:** at the end of the stage (about 77–83 %) a large white foam bank still fills the lower left. The approved picture keeps its foam in the lower corners.
+- **New problems:** none seen.
+
+## Step 3 (crest / winding river / curved coin trail): needs the user's decision
+From about 10 % to the end, the view is a centred gold-ring "target" with a plain river climbing the crest. Benny covers where the river goes, and later it turns right up the right wall. The painting has an off-centre tunnel with the river curving up to the left and the coins along it.
+
+The ways to change this without the user are closed:
+- Re-aiming the painted tunnel makes the start view jump.
+- Bending the tunnel (`m06bend`) was rejected twice and must never be repeated.
+- Moving the river changes the route and Screen 07.
+
+The coins already sit where the picture paints them. The only lever left is the camera test `m06view=1&m06vs=0`, which is kept as the user's unapproved candidate.
+
+**Most visible remaining difference vs the approved picture:** this composition from about 10 % on, then the end-section foam bank. Visual-only next steps, if wanted: shrink the foam bank at the end only, and add more pink and rainbow-arch detail to the river between 10 % and 50 %.
+
+## Candidate query (unapproved)
+`match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1&m06st=1&m06fcl=1&m06view=1&m06vs=0&m06rip=1&m06hole=2&m06fade=1&m06spl=1&m06fcn=3&m06fcg=1`
+
+## Files
+**Step 1** (opening, checkpoint to 32 % of 06; each view folder has `1_ORIGINAL_APPROVED.png`, `2_WHAT_YOU_SAW.png`, `3_NEW.png` at full size; the gameplay result is `gameplay_NEW3.json` in `step1_hole`):
+- Views: `/home/user/rainbow-/qa/match/06/r25/step1_hole/COMPARE/{a_start,o1_003,o2_007,o3_012}/`
+- Clips, 1.0x then 0.5x:
+  - `/home/user/rainbow-/qa/match/06/r25/step1_hole/COMPARE/clips/2_WHAT_YOU_SAW_opening_1.0x.mp4`
+  - `/home/user/rainbow-/qa/match/06/r25/step1_hole/COMPARE/clips/2_WHAT_YOU_SAW_opening_0.5x.mp4`
+  - `/home/user/rainbow-/qa/match/06/r25/step1_hole/COMPARE/clips/3_NEW_opening_1.0x.mp4`
+  - `/home/user/rainbow-/qa/match/06/r25/step1_hole/COMPARE/clips/3_NEW_opening_0.5x.mp4`
+
+**Step 2** (each view folder has `1_ORIGINAL_APPROVED.png`, `2_BEFORE.png`, `3_NEW.png`; the gameplay result is `gameplay_NEW2.json` in `step2`):
+- Views: `/home/user/rainbow-/qa/match/06/r25/step2/COMPARE/{c2_middle,d_late,g_hard_right}/`
+- Whole-06 clips (entrance, steering left then right, end, into 07), 1.0x then 0.5x:
+  - `/home/user/rainbow-/qa/match/06/r25/step2/COMPARE/clips/2_BEFORE_whole06_1.0x.mp4`
+  - `/home/user/rainbow-/qa/match/06/r25/step2/COMPARE/clips/2_BEFORE_whole06_0.5x.mp4`
+  - `/home/user/rainbow-/qa/match/06/r25/step2/COMPARE/clips/3_NEW_whole06_1.0x.mp4`
+  - `/home/user/rainbow-/qa/match/06/r25/step2/COMPARE/clips/3_NEW_whole06_0.5x.mp4`
+
+**Code and progress:**
+- Code is in `/home/user/wt/s06/src/world/match06.ts` (uncommitted, with `src/game/Game.ts`). A copy of the live diff is `/home/user/rainbow-/qa/match/06/r25/step2/code_live_at_step2.patch`.
+- The "(r27) WHERE I STOPPED / NEXT" block is at the top of `/home/user/rainbow-/qa/match/06/r25/PROGRESS.md`.
+

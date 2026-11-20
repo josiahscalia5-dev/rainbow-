@@ -17,8 +17,12 @@ strand alpha), not the strand direction.
 **Step 2 (hat crown) in progress:** approved crown on 04–08 = steep, almost vertical sides rounding off under a high pompom, with
 FIVE thinner bands above the thick cuff (cream, violet, cream, violet, cream); ours = a wide hemisphere with 3–4 thick bands.
 Probe 1 (`/home/user/scratch/benny/crown/p04|p05`, crown lathe reshaped live + pompom lifted): taller conical v2/v3 = lampshade,
-not the approved shape. Probe 2 running: steep superellipse walls (exp 3–3.5) × heights 1.0–1.3 × current map / five-band map
-(`knit.py` stripes W0 V.25 W.40 V.55 W.70 V.84, 45 rows). Then a `&b20crown=1` switch in `benny20.ts` + proof on 04–08.
+not the approved shape. Probe 2 (`q04|q05`): steep superellipse walls exp 3.5, height ×1.25, taper 0.12 + five-band map = closest
+(w5 no extra height = squat; w3 = cone). Implemented `&b20crown=1` in `benny20.ts` (`CROWN20`, overrides `&b20chk/cta/cp/cpl=`;
+rebuilds the crown lathe, lifts the pompom with the apex; with b20knit=1 uses `assets/textures/benny20/crown5{,_n}.png` from
+`tools/benny23/knit_r27_crown5.json`); `npx tsc --noEmit` OK. Proof running (`/home/user/scratch/benny/crown/proof.sh`) →
+`qa/benny/r27/s5_crown/0N/new/` (BEFORE = `qa/benny/r23/s3_star/0N/new/`), NEW clip 04 (BEFORE clip = `qa/benny/r25/s4_silk/clip/swim04_silk_BEFORE_*`,
+same query), gameplay `gameplay_crown.json`. NEW crops must use BEFORE's Benny boxes (taller hat grows the box).
 **Next:** (3) 06 start star amber.
 
 ## (r26) WHERE I STOPPED / NEXT — 2026-11-20 ~14:00 UTC (new account; worktree `/home/user/wt/benny`, LOCAL branch `claude/rainbow-benny-c27`, port 5279)

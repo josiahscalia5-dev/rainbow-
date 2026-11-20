@@ -1,1 +1,11 @@
 [render_slot] got slot 1 after 80s
+The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff2" is outside of Vite serving allow list.
+The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff2" is outside of Vite serving allow list.
+The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff" is outside of Vite serving allow list.
+The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff" is outside of Vite serving allow list.
+07 b_early s 287.456 lat 0 stage 07 coins 1960
+07 c_middle s 315.056 lat 0 stage 07 coins 2030
+07 d_late s 345.056 lat 0 stage 07 coins 2080
+07 e_end s 375.056 lat 0 stage 07 coins 2140
+07 f_hard_left s 315.056 lat -2.25 stage 07 coins 1940
+07 g_hard_right s 315.056 lat 2.25 stage 07 coins 1950

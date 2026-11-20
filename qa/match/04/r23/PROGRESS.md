@@ -4,6 +4,11 @@
 * Worktree = r26 state restored (K23-S3 code + `m04lgc` + `m04a5` + `m04bbdc`), ports 5273/5274, scratch `/home/user/scratch/s04/`.
 * Lost r26 variant renders recovered from the r26 transcript (exact overrides) and re-rendering: `/home/user/scratch/s04/run_r27a.sh`
   (V0_base, V4_fine, V5_fine2 + new V6_thin, V7_sparse; step-2 C1_cloud, C2_cloud_low), base = `qa/match/04/r26/s0_five/QUERY_NEW_K23-S3_a5.txt`.
+* 15:35 rendered V0/V4/V5/V6/V7 + C1/C2 + C3_cloud_full (`m04bbdc=1&m04ry=0.35&m04bbdcb=1.6&m04bbdcl=1.3&m04bbdcw=0.45`, fuller banks
+  = my step-2 pick so far). V4..V7 still read as an even sprinkle of separate white dashes. NEW CODE (tsc 0, default off):
+  `&m04lgcg=t` crescents gather in clusters along the swirl ridges (+ `m04lgcgx`/`m04lgcgz` cluster size, `m04lgch` soft cyan halo,
+  uniform `uLG7`); V8-V10 too sparse, V11/V12 denser queued. `&m04a5v=1` (step 3): the five chevrons lie flat and slide UNDER
+  Benny (depth-tested, bar ends beside him) instead of fading at his pompom; probe `s3var/A5V` queued (`run_r27c.sh`, slot wait ~30 min).
 * NEXT: step 1 verdict (pick one crescent variant) -> proof `qa/match/04/r27/s1_glint/`; step 2 cloud banks -> `qa/match/04/r27/s2_cloud/`;
   step 3 arrow trade-off switch + gameplay + combined whole-04 clip -> `qa/match/04/r27/s3_combined/`.
 

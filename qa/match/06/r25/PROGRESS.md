@@ -22,9 +22,25 @@
   shrinks as one unit into its foot on the water, timed by the heap's distance; FOAMC_VERT `#define GROUP` + attribute `aC`;
   tsc 0). `step2/NEW2/` DONE (query `QUERY_NEW2.txt` = NEW + `&m06fcg=1`, only the 3 changed views; lower-third white 74.0k /
   60.3k / 54.2k): the shrinking near heaps stay compact small cumulus heaps — the loose bead trails are gone; same foam reduction.
-  NOW (~15:41): `/home/user/scratch/s06/chain_s2.sh` = gameplay NEW2 (`step2/gameplay_NEW2.json`) then whole-06 clips
-  `step2/{BEFORE,NEW2}_whole06_{1x,0.5x}.mp4` (`step2/clip.sh`; entrance, LEFT 30-50 %, RIGHT 50-70 %, end, 0.6 s into 07).
-  NEXT: verdict step 2, then assemble `step2/COMPARE/<view>/{1_ORIGINAL_APPROVED,2_BEFORE,3_NEW}.png`.
+  Gameplay NEW2 8/8, 91 coins (`step2/gameplay_NEW2.json`). Whole-06 clips (93 frames, 3.88 s; entrance, LEFT 30-50 %, RIGHT
+  50-70 %, end, 0.6 s into 07): `step2/{BEFORE,NEW2}_whole06_{1x,0.5x}.mp4` (+ `frames_*.json`); frames differ ONLY 49-66.
+* **STEP 2 DONE — verdict `&m06fcn=3&m06fcg=1`: GOOD IMPROVEMENT (moderate).** Proof `step2/COMPARE/{c2_middle,d_late,g_hard_right}/`
+  `{1_ORIGINAL_APPROVED,2_BEFORE,3_NEW}.png` + `COMPARE/clips/` + `COMPARE/README.txt`.
+  - Closer: the big near foam clouds no longer cover the bottom of the frame at 47 % / 60 % / steering right (clip frame 52: the big
+    round foam ball at the bottom centre → water + pink edge; frame 58: the lower-left cloud clearly smaller); the heaps that shrink
+    stay compact small cumulus heaps, no bead trails; everything else byte-identical (start, opening, 22 / 35 / 85 %, hard left).
+  - Still differs: at the end (clip frames 61-66, ~77-83 %) a large white foam bank still fills the lower left (heaps > 3 u away);
+    the approved keeps its foam heaps in the lower corners.
+  - New problems: none seen.
+* STEP 3 NOT STARTED — needs a USER decision: the biggest visible difference from ~10 % to the end is the composition (centred
+  gold-ring "target", plain straight river climbing the crest with Benny hiding where it goes, then the river turning RIGHT up the
+  right wall) vs the painting (off-centre tunnel, river curving up LEFT, coin trail along it). Levers already exhausted / banned:
+  re-aiming the painted tunnel snaps the start view, `m06bend` rejected twice (never repeat), moving the river changes the route
+  and 07; only the camera test `m06view=1&m06vs=0` (the user's, unapproved). Coins already sit at the painted positions
+  (`coins06.json`). Possible next visual-only items: end-section foam bank (try `m06fcn` 4-5 on the end only), river detail
+  (stronger pink / rainbow arch band at 10-50 %).
+* STOPPED ~16:10 UTC after 2 finished steps + report to the lead. Candidate query = `step2/QUERY_NEW2.txt`. Code live diff
+  `step2/code_live_at_step2.patch` (match06.ts + Game.ts, tsc 0); references 13/13 OK.
 
 ## (r26) WHERE I STOPPED / NEXT
 * ~13:15 UTC — relaunched (new account), worktree `/home/user/wt/s06` LOCAL branch `claude/rainbow-s06-match-c27` (r25 edits incl. m06hole).
