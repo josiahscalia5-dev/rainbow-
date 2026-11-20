@@ -1,4 +1,14 @@
-# Screen 08 · Final Spin Chamber — round 23 progress (worktree `/home/user/wt/s08`, local branch `claude/rainbow-s08-scenery-c24`)
+# Screen 08 · Final Spin Chamber — round 23/24 progress (worktree `/home/user/wt/s08`, local branch `claude/rainbow-s08-scenery-c25`)
+
+## (r24) WHERE I STOPPED / NEXT
+* 2026-11-20 ~10:42 UTC: round 24 resumed (brief `docs/briefs/2026-11-20-r24/LAUNCH_R24.md`, s08 section). Worktree =
+  `3c0fa970` + my 10:25 edits (step 2 code in `src/gameplay/coins.ts`, QA tools); nothing re-applied. The machine was
+  rebooted: the r23 scratchpad (step 3 render, helper scripts) is gone; proof already in `qa/match/08/r23/` is intact.
+* Checked: step 1 clips complete and labelled (`step1_m08gl/clip/`, 40 frames each = 26 frames of 08 + 14 into 09; 1.0x =
+  24 fps real game speed, 0.5x = 12 fps). Step 2 12-shot BEFORE / NEW complete (verdict pending a coin-size table).
+* ~10:45 UTC rendering: step 2 NEW clip + step 3 NEW clip (port 5286); step 3 NEW 12 shots + K23-1 coin-log re-render
+  (port 5287; also checks that today's renders equal the r23 ones pixel for pixel).
+* NEXT: step 2 verdict + clip; step 3 proof + verdict; gameplay 8/8 + 91 coins; `npx tsc --noEmit`; report.
 
 ## (r23) WHERE I STOPPED / NEXT
 * 2026-11-20 ~09:52 UTC: round 23 started (washer-environment-modeler, in-process). Brief

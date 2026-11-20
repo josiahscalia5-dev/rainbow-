@@ -401,3 +401,25 @@ NumPy 2 removed `.ptp()`; fixing that.
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/k; P=/home/user/rainbow-/qa/benny/r23/s3_star; mkdir -p $S/z; for n in 04 05 06 07 08; do echo \"== $n\"; echo -n \"approved  \"; python3 -I $S/starfind.py $P/$n/approved_benny.png $S/z/${n}_appr.png 2>&1 | tail -1; for sh in a_start c_middle f_hard_left; do for v in before new; do echo -n \"$sh $v  \"; python3 -I $S/starfind.py $P/$n/$v/$sh.png $S/z/${n}_${sh}_${v}.png 24 2>&1 | tail -1; done; done; done", "description": "Measure star colour on approved, before and new"}`
 
+### 🧑 User — 2026-11-20T10:46:22.000Z
+
+> ↩︎ result: == 04
+> approved  cx 494 cy 383 area 3929 violetRing 0.31 fill 0.41 median [251, 198, 74] p10 [232, 163, 48] p90 [255, 227, 111] hue 42.1
+> a_start before  cx 511 cy 1200 area 3437 violetRing 0.78 fill 0.5 median [243, 205, 24] p10 [218, 157, 0] p90 [253, 255, 58] hue 48.9
+> a_start new  cx 462 cy 63 area 2489 violetRing 0.8 fill 0.74 median [245, 178, 25] p10 [184, 106, 0] p90 [255, 223, 117] hue 41.7
+> c_middle before  cx 462 cy 63 area 2491 violetRing 0.83 fill 0.74 median [244, 178, 25] p10 [184, 106, 0] p90 [255, 223, 117] hue 41.6
+> c_middle new  cx 462 cy 63 area 2491 violetRing 0.83 fill 0.74 median [244, 178, 25] p10 [184, 106, 0] p90 [255, 223, 117] hue 41.6
+> f_hard_left before  cx 462 cy 63 area 2487 violetRing 0.85 fill 0.74 median [245, 178, 25] p10 [184, 106, 0] p90 [255, 223, 117] hue 41.7
+> f_hard_left new  cx 462 cy 63 area 2487 violetRing 0.85 fill 0.74 median [245, 178, 25] p10 [184, 106, 0] p90 [255, 223, 117] hue 41.7
+> == 05
+> approved  cx 524 cy 80 area 4766 violetRing 0.52 fill 0.46 median [252, 219, 22] p10 [237, 163, 0] p90 [255, 248, 95] hue 51.1
+> a_start before  cx 529 cy 984 area 2889 violetRing 0.75 fill 0.49 median [222, 180, 31] p10 [203, 138, 10] p90 [237, 227, 54] h …[+3509 chars]
+
+### 🤖 Claude — 2026-11-20T10:46:27.886Z
+
+On full frames it latches onto the HUD coin icon. I'll restrict the search to Benny's projected box from `shots.json`.
+
+### 🤖 Claude — 2026-11-20T10:46:34.531Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/k; cat > $S/starbox.py <<'EOF'\n\"\"\"usage: starbox.py <shotDir> <name> <out_zoom.png>  — star inside Benny's box (shots.json), zoom 360x360 of +-26 px\"\"\"\nimport sys, json\nsys.path.insert(0, '/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/k')\nfrom PIL import Image\nimport starfind\nd, name, out = sys.argv[1:4]\nsh = [s for s in json.load(open(f'{d}/shots.json')) if s['name'] == name][0]\nb = sh['box']; im = Image.open(f'{d}/{name}.png').convert('RGB')\nx0,  …[+931 chars]`
+

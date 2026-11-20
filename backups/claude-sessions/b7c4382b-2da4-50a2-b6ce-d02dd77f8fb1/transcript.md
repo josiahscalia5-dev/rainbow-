@@ -1139,3 +1139,182 @@ Now the handoff top section and the CLAUDE.md pointer.
 
 > 🔧 **Bash** `{"command": "timeout 300 python3 scripts/rainbow-autosave.py --reason manual:r24-restore 2>&1 | tail -4; python3 -I scripts/autosave-status.py; git ls-remote origin refs/heads/ccr-5be1062a-0ffyej; git rev-parse HEAD; cat /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/tasks/bdsy26nf2.output", "description": "Save now and verify remote matches local", "timeout": 330000}`
 
+### 🧑 User — 2026-11-20T10:45:01.641Z
+
+> ↩︎ result: ],
+>   "commit": "b26dd24ef7f30c53412b7a4d467fdf6bf5599c30",
+>   "duration_s": 25
+> }
+> AUTOSAVE OK | branch ccr-5be1062a-0ffyej | scheduler daemon | last verified backup 2026-11-20T10:44:34+00:00 (0.4 min ago) | local b26dd24 remote b26dd24 (match) | uncommitted 0
+> b26dd24ef7f30c53412b7a4d467fdf6bf5599c30	refs/heads/ccr-5be1062a-0ffyej
+> b26dd24ef7f30c53412b7a4d467fdf6bf5599c30
+> NORIP exit 0 3 png
+> RIP exit 0 3 png
+
+### 🤖 Claude — 2026-11-20T10:45:04.542Z
+
+The save is verified: GitHub = local `b26dd24`. The "no ripple" and "current ripple" renders are done, so I'll compare them at the opening.
+
+### 🤖 Claude — 2026-11-20T10:45:08.266Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/r24/lead_rip && S=/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad && python3 -c \"\nfrom PIL import Image\nrows=[]\nfor shot in ['o1_003','o2_007','o3_012']:\n  ims=[Image.open(f'{v}/{shot}.png').convert('RGB') for v in ['NORIP','RIP']]\n  rows.append(ims)\nW,H=864,1536; w,h=W//3,H//3\nsheet=Image.new('RGB',(w*6,h))\nfor i,(a,b) in enumerate(rows):\n  sheet.paste(a.resize((w,h)),(i*2*w,0)); sheet.paste(b.resize((w,h)),((i*2+1)*w,0))\nsheet.save('$S/norip_vs_rip.png')\n\"; for s in o1_003 o2_007 o3_012; do node /h …[+138 chars]`
+
+### 🧑 User — 2026-11-20T10:45:11.716Z
+
+> ↩︎ result: {"a":"NORIP/o1_003.png","b":"RIP/o1_003.png","rows":[0,1536],"threshold":0.1,"diff_pixels":36166,"total":1327104,"diff_pct":2.7252}
+> {"a":"NORIP/o2_007.png","b":"RIP/o2_007.png","rows":[0,1536],"threshold":0.1,"diff_pixels":46564,"total":1327104,"diff_pct":3.5087}
+> {"a":"NORIP/o3_012.png","b":"RIP/o3_012.png","rows":[0,1536],"threshold":0.1,"diff_pixels":29709,"total":1327104,"diff_pct":2.2386}
+
+### 🤖 Claude — 2026-11-20T10:45:14.540Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/scratchpad/norip_vs_rip.png"}`
+
+### 🧑 User — 2026-11-20T10:45:14.820Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T10:45:34.919Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && grep -n \"fillmask\\|fillMask\\|m06st\\b\\|'m06st'\\|m06view\\|uFill\\|benny.*hole\\|hole\" src/world/match06.ts | head -40", "description": "Find the painted-Benny fill handling in Screen 06 code"}`
+
+### 🧑 User — 2026-11-20T10:45:35.117Z
+
+> ↩︎ result: 103:// r18 m06st (qa/match/06/r18/PROGRESS.md): the start view keeps the approved look a little longer and cleanly. uSt = on;
+> 138:  // r18 m06st: off exactly at the approved viewpoint (the approved start view keeps its pixels), on as soon as the camera
+> 182:      // r18 m06st: the rings hand over from the approved pixels straight to the painted band (never the procedural shading)
+> 222:  // r18 m06st: this close to the approved viewpoint the only surfaces this guard catches are slivers the approved view
+> 228:    // r18 m06st: just outside the projector's frame (a few px at the screen edge once the camera has moved) the frame's
+> 239:      vec2 uvF = uv; // r18 m06st: where the plate is read (the crest-top layer below)
+> 244:        // r18 m06st: the crest-top layer. In the approved view the painted crest top (its water, the foam heaps on its bank)
+> 312:          // r18 m06st: the pale ghost of the painted Benny (his provisional fill) gives way at once to the river's own
+> 503:  // r18 `&m06st=1` (qa/match/06/r18/PROGRESS.md): the start view without the flash — between the approved viewpoint and
+> 508:  const ST = qs?.get('m06st') === '1';
+> 573:  // instead), placed through the river's centroid s …[+336 chars]
+
+### 🤖 Claude — 2026-11-20T10:45:37.890Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s06 && sed -n 295,335p src/world/match06.ts", "description": "Read the painted-Benny ghost fill shader section"}`
+
+### 🧑 User — 2026-11-20T10:45:38.017Z
+
+> ↩︎ result: if (den > 1e-3) {
+>               float ze = mix(zf, zc, bw);
+>               vec4 q = uProjVP * vec4(cameraPosition + rd * ((ze - dot(cameraPosition - uProjPos, uProjF)) / den), 1.0);
+>               if (q.w > 0.0) { uvF = clamp(q.xy / q.w * 0.5 + 0.5, 0.0005, 0.9995); filled = 1.0; dbgB = bw; }
+>             }
+>           }
+>         }
+>       }
+>       float w = (stOn > 0.5 ? (filled > 0.5 ? hold : vis) * edge : vis) * keep;
+>       // r3 masks (tools/match06/make_masks06.py): where the river floor carries painted pixels that are not water (G: the
+>       // tunnel wall seen through the crest loop / beside the river) or Benny's blurry provisional fill (R), the floor
+>       // shows the painted-water tile as soon as the camera leaves the approved view (the approved view is unchanged)
+>       if (uFloor > 0.5 && uUseMask > 0.5) {
+>         vec4 mk = texture2D(uMask, uv);
+>         float away = smoothstep(0.2, 1.2, distance(cameraPosition, uProjPos));
+>         float inWater = uGeo > 0.5 ? 1.0 - smoothstep(uR6p.x - 0.2, uR6p.x + 0.1, al) : 1.0;
+>         if (stOn > 0.5) {
+>           // r18 m06st: the pale ghost of the painted Benny (his provisional fill) gives way at once to the river's own
+>           // painted-w …[+1518 chars]
+
+### 🤖 Claude — 2026-11-20T10:45:55.162Z
+
+> 🔧 **Bash** `{"command": "O=qa/match/06/r24/lead_rip && node tools/lead23/setq.mjs \"$(cat $O/QUERY_NORIP.txt)\" \"m06view=0&m06vs=1\" > $O/QUERY_NOVIEW.txt && cat $O/QUERY_NOVIEW.txt; echo; uptime; cat /tmp/claude-0/-home-user-rainbow-/b7c4382b-2da4-50a2-b6ce-d02dd77f8fb1/tasks/bdsy26nf2.output; grep -n \"m06vs\" /home/user/wt/s06/src/world/match06.ts | head -3", "description": "Prepare a default-camera variant and check render progress"}`
+
+### 🧑 User — 2026-11-20T10:45:55.480Z
+
+> ↩︎ result: match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1&m06st=1&m06fcl=1&m06view=0&m06vs=1&m06rip=0
+>  10:45:55 up 24 min,  0 user,  load average: 15.55, 6.08, 2.41
+> NORIP exit 0 3 png
+> RIP exit 0 3 png
+
+### 🤖 Claude — 2026-11-20T10:46:02.967Z
+
+> 🔧 **Bash** `{"command": "WT=/home/user/wt/lead06 && git worktree add --no-checkout --detach $WT e162aec2bfdc631913c41daa435f9d449439af4f >/dev/null 2>&1 && printf '/*\\n!/qa/pilot05/\\n!/qa/worldlabs/\\n!/qa/imageblaster/\\n!/builds/\\n!/backups/\\n' | git -C $WT sparse-checkout set --no-cone --stdin && git -C $WT read-tree -mu HEAD && ln -sfn /home/user/rainbow-/node_modules $WT/node_modules && git -C $WT apply --binary backups/wip/claude__rainbow-s06-match-c24/tracked.patch && cp -r backups/wip/claude__rainbow-s06-match-c24/untracked/. $WT/ && git -C $WT status --porcelain && diff <(git -C /home/user/wt …[+130 chars]`
+
+### 🧑 User — 2026-11-20T10:46:07.054Z
+
+> ↩︎ result: Exit code 128
+> error: can't open patch 'backups/wip/claude__rainbow-s06-match-c24/tracked.patch': No such file or directory
+
+### 🤖 Claude — 2026-11-20T10:46:11.194Z
+
+> 🔧 **Bash** `{"command": "WT=/home/user/wt/lead06 && R=/home/user/rainbow- && git -C $WT apply --binary $R/backups/wip/claude__rainbow-s06-match-c24/tracked.patch && cp -r $R/backups/wip/claude__rainbow-s06-match-c24/untracked/. $WT/ && git -C $WT status --porcelain && diff <(git -C /home/user/wt/s06 diff) <(git -C $WT diff) && echo \"lead06 == s06 code\"", "description": "Apply the s06 snapshot to the lead worktree and compare"}`
+
+### 🧑 User — 2026-11-20T10:46:12.155Z
+
+> ↩︎ result: M src/game/Game.ts
+>  M src/world/match06.ts
+> ?? node_modules
+> ?? tools/match06/lead23_audit_slow.mjs
+> ?? tools/match06/r23_audit.mjs
+> ?? tools/match06/r23_ripdump.mjs
+> ?? tools/match06/r23_swim.mjs
+> ?? tools/match06/r23_tunprobe.mjs
+> ?? tools/match06/r23_vite.mjs
+> lead06 == s06 code
+
+### 🤖 Claude — 2026-11-20T10:46:17.393Z
+
+The lead worktree has exactly the Screen 06 specialist's code. Next I'll read how the ripple decal is placed on the river, to design the fix.
+
+### 🤖 Claude — 2026-11-20T10:46:18.394Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/lead06 && sed -n 100,140p src/world/match06.ts; echo ......; sed -n 330,372p src/world/match06.ts", "description": "Read Screen 06 ripple shader code"}`
+
+### 🧑 User — 2026-11-20T10:46:18.507Z
+
+> ↩︎ result: // r15 m06gold: the user's painted ring band (tools/match06/make_ring06.py) along each modeled ring's profile
+> uniform float uGold;
+> uniform sampler2D uRingTex;
+> // r18 m06st (qa/match/06/r18/PROGRESS.md): the start view keeps the approved look a little longer and cleanly. uSt = on;
+> // uStW = camera distance from the approved viewpoint (u) over which the approved pixels hand over to the 3D materials;
+> // uStM = 1 on the tunnel / rings / end cap (the crest-top layer: see below);
+> // uStK = march step down the projector's depth map (uv, 4 px of the approved picture); uStB = crest warp band (px);
+> // uStO = depth ratio below which a surface counts as a nearer occluder (the river in front of the tunnel)
+> uniform float uSt;
+> uniform vec2 uStW;
+> uniform float uStM;
+> uniform float uStK;
+> uniform vec2 uStB;
+> uniform float uStO;
+> uniform float uStDbg;
+> uniform vec3 uProjF;
+> uniform mat4 uProjVP;
+> // r23 '&m06rip=1' (qa/match/06/r23/PROGRESS.md): the approved picture's ripple rings round Benny, carried with him on the
+> // river floor. uRip = the painted water round the approved Benny in the river's own coordinates (lateral x course s, premult.
+> // alpha = 0 where his body was filled), uRipR = its extent (l0,  …[+3143 chars]
+
+### 🤖 Claude — 2026-11-20T10:46:23.299Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/lead06 && sed -n 804,875p src/world/match06.ts; grep -n \"uBen\\b\\|uBen\\.\\|setBenny\\|ripBen\\|m06ripBen\" src/world/match06.ts src/game/Game.ts | head", "description": "Read Screen 06 ripple decal setup code"}`
+
+### 🧑 User — 2026-11-20T10:46:23.427Z
+
+> ↩︎ result: }, TF.period), mat(tFloor, true), 'floor');
+>   const floorMat = (group.getObjectByName('m06_floor') as THREE.Mesh).material as THREE.ShaderMaterial;
+>   // r23 `&m06rip=1` (qa/match/06/r23/PROGRESS.md): the painted ripple rings round Benny (concentric white-cyan rings, the
+>   // splash collar at his base, the bright streaks under him) vanished as soon as he swam: the projection pins them to the
+>   // checkpoint and the flowing river material has none. Here the approved plate's water round the approved Benny is
+>   // re-sampled in the river's own coordinates (lateral l x distance ds from Benny, exactly the floor surface the projector
+>   // painted at the checkpoint) and carried with Benny on the floor, where his body was filled transparent; faded in only
+>   // once the camera has left the approved viewpoint (start view unchanged), fading out toward its rim, water only.
+>   // `&m06ripl=` half width (u, default 1.45: the painted foam heaps begin ~1.3-1.5 u out), `&m06ripd=a,b` behind / ahead
+>   // of Benny (u, default 2.4,1.3),
+>   // `&m06ripk=` strength (default 1), `&m06ripx=` outward drift share (default 0.06; 0 = still).
+>   if (qs?.get('m06rip') === '1') {
+>     const rn = (k: string, d: number …[+5441 chars]
+
+### 🤖 Claude — 2026-11-20T10:46:54.175Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/lead06 && python3 - <<'EOF'\np='src/world/match06.ts'; s=open(p).read()\n# 1) uniforms (shader)\nold=\"uniform vec4 uRipA;\\nvarying vec4 vProj;\"\nnew=(\"uniform vec4 uRipA;\\n\"\n\"// r24 lead '&m06ripz=1' (qa/match/06/r24/lead_rip/NOTES.md; needs m06rip): the painted ripple zone round the approved Benny stays\\n\"\n\"// pinned to the checkpoint in the projected plate — once Benny swims on, its rings, splash collar and streaks are left behind and\\n\"\n\"// stretch into a raised-looking blue cone under him. uRipZ = on; uRip0 = the approved Benny (lateral, s). Th …[+1568 chars]`
+
+### 🧑 User — 2026-11-20T10:47:06.189Z
+
+> ↩︎ result: patched
+> 84:// built from the approved painted water, world-anchored and flowing downstream (uR6p = Wc, Wb, river period, foam period)
+> 87:uniform vec4 uR6p;
+> 151:    float ax = clamp(vLS.x / (2.0 * uR6p.x) + 0.5, 0.0, 1.0);
+> tsc exit 0
+> Shell cwd was reset to /home/user/rainbow-
+
