@@ -1620,3 +1620,15 @@ Both timeouts raised. The BEFORE clip finished (40 frames, 1.67 s of game time);
 
 > 🔧 **Bash** `{"command": "D=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s08r23; until [ -f $D/clip_s1_new/frames.json ] || grep -qi \"error\\|timeout\" $D/clip_s1_new.log 2>/dev/null; do sleep 5; done; cat $D/clip_s1_new.log", "description": "Wait for NEW clip of step 1", "timeout": 1800000}`
 
+### 🧑 User — 2026-11-20T10:19:39.257Z
+
+> ↩︎ result: frames 40 seconds 1.67
+
+### 🤖 Claude — 2026-11-20T10:19:41.806Z
+
+Step 3's render reported done; checking it finished all 12 shots, and labelling the step 1 clips.
+
+### 🤖 Claude — 2026-11-20T10:19:45.727Z
+
+> 🔧 **Bash** `{"command": "D=/tmp/claude-0/-home-user-rainbow-/1dee9937-64f8-543d-ae44-7cf9955b39b3/scratchpad/s08r23; cat $D/s3_new.log | tail -14; ls $D/s3_new | wc -l; O=/home/user/rainbow-/qa/match/08/r23/step1_m08gl; mkdir -p $O/clip && cd $D && python3 -I /home/user/rainbow-/tools/lead23/label_clip.py $D/clip_s1_before \"08 BEFORE (K16)\" $O/clip/08_BEFORE_K16 && python3 -I /home/user/rainbow-/tools/lead23/label_clip.py $D/clip_s1_new \"08 NEW (K16 + m08gl glints)\" $O/clip/08_NEW_m08gl && cp $D/clip_s1_new/frames.json $O/clip/frames_NEW.json && cp $D/clip_s1_before/frames.json $O/clip/frames_BEFORE.j …[+110 chars]`
+
