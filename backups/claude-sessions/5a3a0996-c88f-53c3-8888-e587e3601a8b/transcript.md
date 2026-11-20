@@ -3583,3 +3583,49 @@ Thank you, that's clear. I'll set this up now: four specialists, extra artwork, 
 > root     17906  1.1  0.6 55000332 100608 ?     S<sl 02:19   0:04 /opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-he
 > root     17888  1.0  1.0 23448560 175192 ?     Sl   02:19   0:04 node /tmp/claude-0/-home-user-rainbow-/5a3a0996-c88f-53c3-8888-e587e3601a8b/scratchpa
 
+### 🤖 Claude — 2026-11-20T02:27:02.604Z
+
+> 🔧 **mcp__claude-code-remote__get_session** `{}`
+
+### 🧑 User — 2026-11-20T02:27:02.749Z
+
+> ↩︎ result: {"ccr":{"id":"session_018Sg3AS52AWzs9dteBtUpsM","title":"Screen 04 tunnel bands refinement","session_status":"SESSION_STATUS_RUNNING","created_at":"2026-11-20T00:45:07.651853Z","updated_at":"2026-11-20T02:26:58.721820Z","environment_id":"env_01XBdWF9zzmZb6vy7Pib3uwc","session_context":{"sources":[{"git_repository":{"url":"https://github.com/josiahscalia5-dev/rainbow-","revision":"refs/heads/ccr-681a37bb-5jqfbu"}}],"outcomes":[{"git_repository":{"git_info":{"repo":"josiahscalia5-dev/rainbow-","branches":["ccr-68d26c2d-gwegce"]}}}],"model":"claude-opus-5-5","effort_level":"ultracode"},"origin":"android","connection_status":"connected","tags":["config:agent-config-recorded","config:auto-create-pr:draft","config:meta-mcp-own-entry"],"task_summary":"Checking CPU load, memory and disk","external_metadata":{"autocompact_state":{"effective_window":980000,"enabled":true,"enforced":true,"source":"model-default","threshold":901600},"container_cc_version":"2.1.329","context_usage":{"max_tokens":1000000,"used_tokens":466490},"cross_session_inbound":"available","current_branches":{"":"ccr-68d26c2d-gwegce"},"last_served_model":"claude-opus-5-5","rate_limit_info":{"isUsingOverage":false,"rateLimit …[+1151 chars]
+
+### 🤖 Claude — 2026-11-20T02:27:03.176Z
+
+> 🔧 **Bash** `{"command": "for b in claude__rainbow-s06-match-c18 claude__rainbow-benny-c21 claude__rainbow-s08-scenery-c17; do echo \"== $b\"; [ -f backups/wip/$b/INFO.json ] && python3 -c \"import json;d=json.load(open('backups/wip/$b/INFO.json'));print(d['head'][:8],d['time'],'dirty',d.get('dirty_tracked'),'untracked',len(d.get('untracked_copied',[])),'skipped',len(d.get('untracked_skipped',[])))\" || echo none; done; sed -n 1,40p qa/benny/r19b/PROGRESS.md 2>/dev/null | head -5; git -C /home/user/wt/a06 log --oneline -1", "description": "Check saved unfinished work for 06, Benny, 08"}`
+
+### 🧑 User — 2026-11-20T02:27:03.363Z
+
+> ↩︎ result: == claude__rainbow-s06-match-c18
+> c649fcbc 2026-11-19T18:56:30+00:00 dirty ['src/world/match06.ts'] untracked 1 skipped 0
+> == claude__rainbow-benny-c21
+> bade5941 2026-11-20T00:39:14+00:00 dirty ['src/characters/benny/benny20.ts', 'src/characters/benny/fur.ts', 'tools/benny20/furstat.py', 'tools/benny20/knit.py'] untracked 0 skipped 0
+> == claude__rainbow-s08-scenery-c17
+> 3c0fa970 2026-11-18T21:11:23+00:00 dirty [] untracked 0 skipped 0
+> c649fcb Screen 06 r17 step 2: foam as bubbly soap clusters (m06fclu) — GOOD IMPROVEMENT
+
+### 🤖 Claude — 2026-11-20T02:27:46.514Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-20-r21/S06_R21.md", "content": "# Round 21 — Screen 06 specialist (cloud session; act as `path-camera-transition-engineer` + `reference-match-director`)\n\nYou work ONLY on playable Screen 06 \"Crest the Rinse Arch\", VISUALS ONLY (scenery + the view while swimming). Read your role\ndefinitions `.claude/agents/path-camera-transition-engineer.md` and `.claude/agents/reference-match-director.md` and follow them.\n\n## USER DECISION 2026-11-20 ~02:20 UTC (verbatim, binding)\n\"Screens 06 and 07: yes, test the camera framing changes that could …[+5358 chars]`
+
+### 🧑 User — 2026-11-20T02:27:46.767Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-20-r21/S06_R21.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T02:28:04.921Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-20-r21/BENNY_R21.md", "content": "# Round 21 — Benny specialist (cloud session; act as `benny-character-artist`)\n\nYou work ONLY on Benny's LOOK (fur, colour, hat, pompom, star, proportions / size on screen) on all five playable screens 04–08.\nRead `.claude/agents/benny-character-artist.md` and follow it.\n\n## User orders (binding)\n2026-11-20 ~02:20 UTC: \"Keep all five screens on the completion checklist, including a consistent approved Benny throughout ...\nKeep Benny's established gameplay speed and controls intact.\" 2026-11-19 ~23 …[+4481 chars]`
+
+### 🧑 User — 2026-11-20T02:28:05.135Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-20-r21/BENNY_R21.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T02:28:09.414Z
+
+The child sessions will read these briefs from this session's branch, so I'll save first:
+
+### 🤖 Claude — 2026-11-20T02:28:12.481Z
+
+> 🔧 **Bash** `{"command": "flock -w 280 backups/.autosave.lock true && python3 scripts/rainbow-autosave.py --reason \"manual:r21-briefs-06-benny\" 2>&1 | grep -E '\"commit\"|skipping|rror' | head -2; L=$(git rev-parse HEAD); R=$(timeout 60 git ls-remote origin refs/heads/ccr-68d26c2d-gwegce | cut -f1); [ \"$L\" = \"$R\" ] && echo \"MATCH $L\"; for f in docs/briefs/2026-11-20-r21/S06_R21.md docs/briefs/2026-11-20-r21/BENNY_R21.md tools/lead21/audit_screen.mjs backups/wip/claude__rainbow-s06-match-c18/tracked.patch backups/wip/claude__rainbow-benny-c21/tracked.patch qa/review_r21/audit/OVERVIEW_06.png; do git …[+135 chars]`
+

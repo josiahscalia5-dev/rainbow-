@@ -1,9 +1,9 @@
 {
   "last_run": {
-    "time": "2026-11-20T02:21:33+00:00",
+    "time": "2026-11-20T02:26:53+00:00",
     "reason": "daemon",
     "result": "committed+pushed",
-    "files_staged": 41,
+    "files_staged": 25,
     "pushed_verified": true,
     "branch": "ccr-68d26c2d-gwegce",
     "note": "following session branch 'ccr-68d26c2d-gwegce' (config branch 'ccr-681a37bb-5jqfbu')",
@@ -16,16 +16,16 @@
       "claude/rainbow-s04-match-c22: 2 modified, 1 new file(s) snapshotted",
       "claude/rainbow-s04-ringtex-c22: 2 modified, 12 new file(s) snapshotted",
       "claude/rainbow-s04-preview-c22: 2 modified, 1 new file(s) snapshotted",
-      "claude/rainbow-s07-match-c22: 3 modified, 2 new file(s) snapshotted"
+      "claude/rainbow-s07-match-c22: 2 modified, 2 new file(s) snapshotted"
     ],
-    "commit": "a66a7061e0a2b4b76232e3c3479c6f42dd7e62c3",
-    "duration_s": 20
+    "commit": "58fafc977d6b1c02e29c3c67a6fb1ed1a2a09ee3",
+    "duration_s": 17
   },
   "repo": "https://github.com/josiahscalia5-dev/rainbow-",
   "branch": "ccr-68d26c2d-gwegce",
-  "last_verified_remote_sha": "a66a7061e0a2b4b76232e3c3479c6f42dd7e62c3",
-  "last_successful_backup_utc": "2026-11-20T02:21:33+00:00",
+  "last_verified_remote_sha": "58fafc977d6b1c02e29c3c67a6fb1ed1a2a09ee3",
+  "last_successful_backup_utc": "2026-11-20T02:26:53+00:00",
   "consecutive_failures": 0,
   "schedule": "every 5 min, container-local (scheduler=daemon status=active pid=184); see backups/RECOVERY.md for limits",
-  "next_scheduled_utc": "2026-11-20T02:25:00+00:00"
+  "next_scheduled_utc": "2026-11-20T02:30:00+00:00"
 }

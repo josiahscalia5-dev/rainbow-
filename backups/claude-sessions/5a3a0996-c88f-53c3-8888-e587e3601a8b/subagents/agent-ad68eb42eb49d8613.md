@@ -1462,3 +1462,25 @@ Now the NEW audit render for step 1.
 > +  // 3.5 u) and the game's streaky water sheet stays away down the whole drop while Benny is in 07 (it fades back in over the
 > +  // last 3 u, so 08 starts with its own water); 08's own views are unchanged (the  …[+2442 chars]
 
+### 🤖 Claude — 2026-11-20T02:26:58.924Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && git checkout -- qa/capture_log.json && python3 - <<'EOF'\np='src/game/Game.ts'\ns=open(p).read()\na=\"\"\"  // r21 `&m07end=1` (qa/match/07/r21/PROGRESS.md): the painted plunge river runs down to the 08 inlet (fades out over the last\n  // 3.5 u) and the game's streaky water sheet stays away down the whole drop while Benny is in 07 (it fades back in over the\n  // last 3 u, so 08 starts with its own water); 08's own views are unchanged (the hide is only set while 07 shows)\"\"\"\nb=\"\"\"  // r21 `&m07end=1` (qa/match/07/r21/PROGRESS.md): the painted plunge …[+896 chars]`
+
+### 🧑 User — 2026-11-20T02:27:04.354Z
+
+> ↩︎ result: src/game/Game.ts     | 19 ++++++++++++++++++-
+>  src/world/match07.ts | 28 ++++++++++++++++++++--------
+>  2 files changed, 38 insertions(+), 9 deletions(-)
+
+### 🤖 Claude — 2026-11-20T02:27:07.128Z
+
+Now the PROGRESS.md entry for step 1.
+
+### 🤖 Claude — 2026-11-20T02:27:28.679Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/match/07/r21/PROGRESS.md", "content": "# Screen 07 · round 21 (water-fx-specialist) — progress log\n\nWorktree `/home/user/wt/s07`, local branch `claude/rainbow-s07-match-c22` (from `8accdad0` = r18 step 4). Code = UNCOMMITTED edits in the\nworktree (lead autosave snapshots them); each kept step also has `code.patch` (full `git diff` at that step). Brief:\n`docs/briefs/2026-11-20-r21/S07_R21.md`. VISUALS ONLY. Nothing is approved until the user says so.\n\n* APPROVED: `/home/user/rainbow-/qa/match/07/r21/APPROVED_07.png` (= `references/07_dive_the_washer_t …[+5063 chars]`
+
+### 🧑 User — 2026-11-20T02:27:28.871Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/match/07/r21/PROGRESS.md (file state is current in your context — no need to Read it back)
+
