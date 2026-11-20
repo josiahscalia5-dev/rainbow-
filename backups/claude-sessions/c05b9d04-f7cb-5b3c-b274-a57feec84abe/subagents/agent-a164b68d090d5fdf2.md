@@ -972,3 +972,14 @@ Gameplay with NEW2 passes: 8/8 checks, 91 coins, no errors. The BEFORE clip is r
 
 > 🔧 **Bash** `{"command": "for i in $(seq 1 52); do grep -q \"clips done\" /home/user/scratch/s06/chain_s2.log && break; sleep 10; done; cat /home/user/scratch/s06/chain_s2.log; ls /home/user/scratch/s06/clip2_NEW2/f 2>/dev/null | wc -l; date -u +%H:%M", "description": "Wait for clips to finish", "timeout": 560000}`
 
+### 🧑 User — 2026-11-20T15:58:32.007Z
+
+> ↩︎ result: gameplay exit 0 15:47
+> BEFORE clip exit 0 93 frames
+> 71
+> 15:58
+
+### 🤖 Claude — 2026-11-20T15:58:37.857Z
+
+> 🔧 **Bash** `{"command": "for i in $(seq 1 30); do grep -q \"clips done\" /home/user/scratch/s06/chain_s2.log && break; sleep 10; done; cat /home/user/scratch/s06/chain_s2.log; ls -la /home/user/rainbow-/qa/match/06/r25/step2/*.mp4; tail -2 /home/user/rainbow-/qa/match/06/r25/step2/clip_NEW2.log", "description": "Wait for NEW2 clip encode", "timeout": 400000}`
+

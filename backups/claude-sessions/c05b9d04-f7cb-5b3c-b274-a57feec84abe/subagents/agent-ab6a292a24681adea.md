@@ -824,3 +824,31 @@ Now I'll add the clustering + soft-glow option (`m04lgcg`, new uniform `uLG7`), 
 
 > 🔧 **Bash** `{"command": "timeout 500 bash -c 'until grep -q \"ALL_DONE\" /home/user/scratch/s04/run_r27c.out; do sleep 10; done'; cat /home/user/scratch/s04/run_r27c.out /home/user/scratch/s04/run_r27d.out; date -u +%T", "description": "Wait for dense clustered glint variants", "timeout": 520000}`
 
+### 🧑 User — 2026-11-20T15:54:21.285Z
+
+> ↩︎ result: [render_slot] got slot 2 after 1018s
+> start s2var/C3_cloud_full 15:53:04
+> done /home/user/scratch/s04/s2var/C3_cloud_full 4 png
+> ALL_DONE
+> 15:54:21
+
+### 🤖 Claude — 2026-11-20T15:54:25.266Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/scratch/s04 && python3 -I -c \"\nfrom PIL import Image\nvs=['s2var/C2_cloud_low','s2var/C3_cloud_full']\nW=Image.new('RGB',(4*432,2*330))\nfor j,v in enumerate(vs):\n  for k,s in enumerate(['b_early','c_middle','d_late','e_end']):\n    im=Image.open(f'{v}/{s}.png').convert('RGB')\n    W.paste(im.crop((0,700,864,1360)).resize((432,330)),(k*432,j*330))\nW.save('cloud_c3.png')\n\"", "description": "Compare C2 vs C3 cloud variants"}`
+
+### 🧑 User — 2026-11-20T15:54:26.044Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T15:54:27.003Z
+
+> 🔧 **Read** `{"file_path": "/home/user/scratch/s04/cloud_c3.png"}`
+
+### 🧑 User — 2026-11-20T15:54:27.063Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T15:54:38.412Z
+
+> 🔧 **Bash** `{"command": "timeout 520 bash -c 'until grep -q \"ALL_DONE\" /home/user/scratch/s04/run_r27c.out; do sleep 10; done'; cat /home/user/scratch/s04/run_r27c.out; cd /home/user/scratch/s04 && python3 -I -c \"\nfrom PIL import Image\nvs=['V4_fine','V11_clu_dense','V12_clu_mid']\nW=Image.new('RGB',(3*400,2*330))\nfor k,v in enumerate(vs):\n  for j,sh in enumerate(['c_middle','d_late']):\n    im=Image.open(f's1var/{v}/{sh}.png').convert('RGB')\n    W.paste(im.crop((80,1180,480,1510)),(k*400,j*330))\nW.save('lgc_full_r27c.png')\n\"", "description": "Wait for glint variants and build crop sheet", "time …[+13 chars]`
+

@@ -2671,3 +2671,262 @@ Stop hook feedback:
 
 I pushed the one remaining save. Latest commit `1cea0cff0c8f918822e25aece7016fd09bab61f0` is on GitHub, with nothing left uncommitted or unpushed.
 
+### 🧑 User — 2026-11-20T15:56:19.966Z
+
+Yes, for the extra view artwork for step 3 above. I just want it to look exactly like my approved screen images. And I feel like they're not all there yet. Like, you know how, like, all my approved screen images look when you first go to them? That's how I exactly want all my mobile app game screens. But obviously not an image. Like I said, I want all my approved screen images. When you go to them, I want those exact to be on my screens for my game mobile app.
+
+### 🤖 Claude — 2026-11-20T15:56:30.547Z
+
+You've approved the extra-view artwork, so I'll set it up. First I'll check how the three approved Screen 04 views were made, what they cost, and the recorded budget, so the new views match that method.
+
+### 🤖 Claude — 2026-11-20T15:56:31.793Z
+
+> 🔧 **Bash** `{"command": "ls qa/review_r21/artwork/ qa/review_r21/artwork/04 qa/review_r21/artwork/04/accepted; find qa/review_r21/artwork -maxdepth 2 -iname \"*.md\" | head; sed -n 1,40p tools/lead21/fal_view.py", "description": "Inspect earlier artwork method and files"}`
+
+### 🧑 User — 2026-11-20T15:56:31.859Z
+
+> ↩︎ result: qa/review_r21/artwork/:
+> 04
+> 05
+> 07
+> LEDGER.md
+> 
+> qa/review_r21/artwork/04:
+> FOR_APPROVAL_04_c_middle.png
+> FOR_APPROVAL_04_d_late.png
+> FOR_APPROVAL_04_e_end.png
+> USER_VERDICT.md
+> accepted
+> game_frames
+> prompt_04.txt
+> prompt_04_late.txt
+> proposals
+> 
+> qa/review_r21/artwork/04/accepted:
+> 04_gen_c_middle_p2_v1.png
+> 04_gen_d_late_p3_v1.png
+> 04_gen_e_end_p2_v1.png
+> qa/review_r21/artwork/LEDGER.md
+> qa/review_r21/artwork/04/USER_VERDICT.md
+> """Round 21 lead: one fal `nano-banana-2/edit` job — repaint a clean frame of the REAL game (image 1: the game's own camera +
+> geometry) in the art of the user's approved original (images 2..: style / material references). Every job is logged with its
+> inputs (sha256), prompt, request id, estimated cost and outputs in <out>/<name>.job.json and appended to the ledger.
+> Proposals only: nothing generated here is an accepted reference until the user approves it; the originals are never written.
+> usage: python3 -I tools/lead21/fal_view.py <out_dir> <name> <prompt.txt> <structure.png> <ref.png> [ref2.png ...]
+> env: FAL_RES (2K), FAL_N (1), FAL_AR (9:16)"""
+> import base64, hashlib, io, json, os, subprocess, sys, time
+> from pathlib import Path
+> from PIL import Image
+> 
+> PRICE = {"0.5K": 0.06, " …[+1621 chars]
+
+### 🤖 Claude — 2026-11-20T15:56:34.264Z
+
+> 🔧 **Bash** `{"command": "cat qa/review_r21/artwork/LEDGER.md | head -40; echo ====; cat qa/review_r21/artwork/04/USER_VERDICT.md | head -30; echo ====; cat qa/review_r21/artwork/04/prompt_04.txt; echo; ls qa/review_r21/artwork/05 qa/review_r21/artwork/07 qa/review_r21/artwork/04/game_frames", "description": "Read artwork ledger, user verdict and prompt"}`
+
+### 🧑 User — 2026-11-20T15:56:34.340Z
+
+> ↩︎ result: # Round 21 generated-artwork ledger (paid jobs, user-authorised 2026-11-20 ~02:20 UTC)
+> 
+> | UTC | job | endpoint | request id | images | est. cost (USD) | result |
+> |---|---|---|---|---|---|---|
+> | 2026-11-20 02:34 | c_middle | nano-banana-2/edit 2K | `01a1f6cd-9740-74b0-8ab7-360fbcd093ba` | 1 | 0.12 | c_middle_v1.png |
+> | 2026-11-20 02:35 | c_middle_p2 | nano-banana-2/edit 2K | `01a1f6ce-536b-7643-bbfc-e21202933af2` | 1 | 0.12 | c_middle_p2_v1.png |
+> | 2026-11-20 02:35 | d_late_p2 | nano-banana-2/edit 2K | `01a1f6ce-a8c2-7c83-908b-5e7531b3aba8` | 1 | 0.12 | d_late_p2_v1.png |
+> | 2026-11-20 02:35 | e_end_p2 | nano-banana-2/edit 2K | `01a1f6cf-114d-7623-99cc-dea278ecabc0` | 1 | 0.12 | e_end_p2_v1.png |
+> | 2026-11-20 02:36 | d_late_p3 | nano-banana-2/edit 2K | `01a1f6cf-e68f-7f42-ba57-0c5b1cbb363e` | 1 | 0.12 | d_late_p3_v1.png |
+> | 2026-11-20 03:20 | d_late | nano-banana-2/edit 2K | `01a1f6f8-3c51-7bb0-9cc9-53458f0888e9` | 1 | 0.12 | d_late_v1.png |
+> | 2026-11-20 03:20 | e_end | nano-banana-2/edit 2K | `01a1f6f8-3b9c-7523-8f17-00008ec826b0` | 1 | 0.12 | e_end_v1.png |
+> | 2026-11-20 03:21 | e_end_p2 | nano-banana-2/edit 2K | `01a1f6f9-268d-7603-a14e-302510bd3a80` | 1 | 0.12 | e_end_p2_v1.png |
+>  …[+4914 chars]
+
+### 🤖 Claude — 2026-11-20T15:56:49.326Z
+
+> 🔧 **Bash** `{"command": "grep -n -i \"budget\\|\\\\$[0-9]\\|authori\" docs/briefs/2026-11-20-r21/RESUME_R21.md | head -12 | cut -c1-260; sed -n 1,25p tools/lead21/clean_frame.mjs | cut -c1-200", "description": "Check paid-artwork budget and clean-frame tool"}`
+
+### 🧑 User — 2026-11-20T15:56:49.455Z
+
+> ↩︎ result: 6:## User decisions / authorizations this round (binding — verbatim parts in the transcript `backups/claude-sessions/5a3a0996-c88f-53c3-8888-e587e3601a8b/`)
+> 51:   (`queue.fal.run`, `Authorization: Key`) only via the secure form, and only if the free checks fail; the environment must allow
+> // Round 21 lead CLEAN FRAMES (read-only): scenery only (no HUD, Benny, coins, splash) of one playable screen of the REAL game at start / early / middle / late / end and hard
+> // left / right, deterministic (fixed sim steps, frozen shader clock, one frame rendered per shot, no real-time steps).
+> // Run from the worktree whose build you want to see (vite serves the current directory):
+> //   cd <worktree> && node /home/user/rainbow-/tools/lead21/audit_screen.mjs <outDir> <stage 04..08> "<query>"
+> // Shots are fractions of the stage from its checkpoint to its end; env AUDIT_SHOTS='[["name",frac,steer],...]' overrides.
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> const [OUT, STAGE, Q] = process.argv.slice(2);
+> const SHOTS = process.en …[+1069 chars]
+
+### 🤖 Claude — 2026-11-20T15:56:51.208Z
+
+> 🔧 **Bash** `{"command": "sed -n 6,22p docs/briefs/2026-11-20-r21/RESUME_R21.md | cut -c1-330", "description": "Read the r21 authorization text"}`
+
+### 🧑 User — 2026-11-20T15:56:51.246Z
+
+> ↩︎ result: ## User decisions / authorizations this round (binding — verbatim parts in the transcript `backups/claude-sessions/5a3a0996-c88f-53c3-8888-e587e3601a8b/`)
+> 1. Goal (02:00): ALL five playable screens 04–08 must look like the approved pictures WHILE Benny swims (opening, deeper, bends,
+>    hard left / right, exit) — 8.5–9/10 in the actual playable game; ORIGINAL APPROVED / BEFORE / NEW images + uninterrupted
+>    gameplay clips; honest reports.
+> 2. **Paid artwork APPROVED (02:20, "item 4")**: use paid image credits / project resources whenever a better approach needs them; no
+>    per-job permission; report jobs + credit costs + results. Generate extra views ONLY for scenery the originals do not show, guided
+>    by the originals + the game's real camera positions and geometry; same architecture / water / colours / lighting / foam /
+>    materials. **Show proposals for visual approval before treating them as accepted references.** Originals stay unchanged and
+>    clearly separated from generated views. Other work continues while the user reviews.
+> 3. **Up to FOUR specialists at once (02:20, "item 5")**, separate responsibilities, coordinated; save often (incl. unfinished edits
+>    + continuation n …[+590 chars]
+
+### 🤖 Claude — 2026-11-20T15:57:29.534Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/scratchpad; cat > $S/clean_r27.sh <<'EOF'\n#!/usr/bin/env bash\n# r27 lead: CLEAN scenery frames (no HUD / Benny / coins / splash) for the step-3 continuation views, from the frozen 15:03 candidates\nR=/home/user/rainbow-; O=$R/qa/review_r27/artwork; SLOT=\"bash $R/tools/lead25/render_slot.sh\"; mkdir -p $O\nq() { cut -d'|' -f3- $R/qa/review_r27/QUERY_$1.txt; }\nSIX='[[\"b_early\",0.12,null],[\"c_middle\",0.35,null],[\"d_late\",0.6,null],[\"e_end\",0.85,null],[\"f_hard_left\",0.35,-1],[\"g_hard_right\",0.35,1 …[+802 chars]`
+
+### 🧑 User — 2026-11-20T15:57:30.598Z
+
+> ↩︎ result: 07|/home/user/wt/view07
+> started
+
+### 🤖 Claude — 2026-11-20T15:57:32.669Z
+
+While those render, I'll reuse the prompts and swatches that kept the game's real layout on Screens 05 and 07 last time.
+
+### 🤖 Claude — 2026-11-20T15:57:34.923Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/review_r21/artwork && cat 07/prompt_07_p2.txt; echo; echo =====; cat 05/prompt_05_p2.txt; echo; ls 05/swatches 07/proposals 07/ 2>/dev/null | head -30; find . -name \"*.job.json\" | head -3; python3 -c \"import json;d=json.load(open('$(find . -name 'e_end_p2*.job.json' -path '*07*' | head -1)'));print(d.get('inputs') or {k:v for k,v in d.items() if k!='prompt'})\" 2>/dev/null | head -c 800", "description": "Read the 07/05 swatch prompts and job inputs"}`
+
+### 🧑 User — 2026-11-20T15:57:35.058Z
+
+> ↩︎ result: IMAGE 1 is a frame from a 3D mobile game and defines EVERYTHING about the layout. IMAGES 2-5 are small material swatches cut from the art director's approved illustration of this level — they show ONLY surface materials, not a layout:
+> IMAGE 2 = the purple slotted washer-drum wall with a polished gold ring; IMAGE 3 = the glossy cyan river water; IMAGE 4 = the thick glossy hot-pink / magenta river bank; IMAGE 5 = the puffy white-lilac soap foam.
+> 
+> Repaint IMAGE 1 surface by surface with these materials, as a finished premium illustration:
+> - every wall surface of IMAGE 1 becomes the deep violet-purple metal with neat, crisp rows of rounded slots (IMAGE 2), and every ring of IMAGE 1 becomes polished bright gold with warm amber light dots;
+> - every water surface of IMAGE 1 (including any falling water) becomes the glossy cyan water of IMAGE 3 with crisp white highlight streaks;
+> - the pink streaks / edges along the water become thick glossy magenta banks (IMAGE 4);
+> - any white foam of IMAGE 1 becomes soft rounded puffy foam clouds (IMAGE 5) — never tall white columns or flat pale sheets;
+> - add a few small iridescent soap bubbles.
+> 
+> STRICT: do NOT change any shape, position, size or perspect …[+3100 chars]
+
+### 🤖 Claude — 2026-11-20T15:57:43.862Z
+
+The earlier Screen 07 swatches were the game's own texture tiles cut from your picture. Checking which tiles exist for 06 and 08.
+
+### 🤖 Claude — 2026-11-20T15:57:45.436Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && for d in /home/user/wt/view06/assets/textures/match06 /home/user/wt/s08/assets/textures/match08 /home/user/wt/view07/assets/textures/match07; do echo \"== $d\"; ls $d | grep -i -E \"tile|swatch|bank|foam|wall|river|plate\" | head -20 | tr '\\n' ' '; echo; done", "description": "List available texture swatches for 06, 07 and 08"}`
+
+### 🧑 User — 2026-11-20T15:57:45.564Z
+
+> ↩︎ result: == /home/user/wt/view06/assets/textures/match06
+> plate06.json plate06_fillmask.png plate06_hybrid.png tile_floor.png tile_floor2.png tile_foam6.png tile_hole06.png tile_hole06b.png tile_hole06w.png tile_ring6.png tile_river6.png tile_tube.png 
+> == /home/user/wt/s08/assets/textures/match08
+> patch_wall.png plate08_clean.png plate08_hybrid.png river08.json river08_near.json 
+> == /home/user/wt/view07/assets/textures/match07
+> near_bank.png near_foam.png patch_wall.png plate07_fillmask.png plate07_fillmask_soft.png plate07_hybrid.png river07.json tile_river.png tile_river_clean.png tile_wall.png tile_wall_clean.png tile_wall_ring.png tiles07.json
+
+### 🤖 Claude — 2026-11-20T15:57:51.273Z
+
+Screen 06 has its own tiles; Screen 08 only has a wall patch, so I'll cut 08's swatches from your approved picture. Checking the crop areas on a gridded copy:
+
+### 🤖 Claude — 2026-11-20T15:57:54.533Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image, ImageDraw, ImageFont\nim=Image.open('references/08_final_spin_chamber.png').convert('RGB'); d=ImageDraw.Draw(im); f=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',28)\nfor x in range(0,864,108): d.line([(x,0),(x,1536)],fill='yellow',width=2); d.text((x+4,140),str(x),fill='yellow',font=f)\nfor y in range(0,1536,128): d.line([(0,y),(864,y)],fill='yellow',width=2); d.text((4,y+4),str(y),fill='yellow',font=f)\nim.resize((432,768)).save('/tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/scratchpad/ …[+90 chars]`
+
+### 🧑 User — 2026-11-20T15:57:54.700Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T15:57:55.541Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/c05b9d04-f7cb-5b3c-b274-a57feec84abe/scratchpad/grid08.jpg"}`
+
+### 🧑 User — 2026-11-20T15:57:55.574Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T15:58:09.826Z
+
+Crop areas chosen. Checking how the job script saves outputs and the ledger before building the prompts.
+
+### 🤖 Claude — 2026-11-20T15:58:10.478Z
+
+> 🔧 **Bash** `{"command": "sed -n 40,80p tools/lead21/fal_view.py", "description": "Read the rest of the fal job script"}`
+
+### 🧑 User — 2026-11-20T15:58:10.519Z
+
+> ↩︎ result: st = {}
+> for _ in range(120):
+>     st = json.loads(curl([status_url]))
+>     if st.get("status") in ("COMPLETED", "FAILED", "ERROR", "CANCELLED"): break
+>     time.sleep(4)
+> res_j = json.loads(curl([resp_url]))
+> files = []
+> for i, im in enumerate(res_j.get("images", [])):
+>     dst = out / f"{name}_v{i + 1}.png"
+>     subprocess.run(["curl", "-sS", "--max-time", "180", "-o", str(dst), im["url"]], check=True)
+>     files.append(str(dst))
+> cost = PRICE.get(res, 0.12) * len(files)
+> job = {"name": name, "endpoint": "fal-ai/nano-banana-2/edit", "request_id": rid, "status": st.get("status"),
+>        "resolution": res, "aspect_ratio": ar, "num_images": n, "estimated_cost_usd": round(cost, 3),
+>        "inputs": [{"path": p, "sha256": hashlib.sha256(Path(p).read_bytes()).hexdigest()} for p in imgs],
+>        "prompt": prompt, "outputs": files, "seconds": round(time.time() - t0, 1),
+>        "error": None if files else json.dumps(res_j)[:600],
+>        "note": "PROPOSAL — generated view, NOT an approved reference until the user approves it"}
+> (out / f"{name}.job.json").write_text(json.dumps(job, indent=1))
+> LEDGER.parent.mkdir(parents=True, exist_ok=True)
+> if not LEDGER.exists():
+>     LEDGER.write_text("# Round 21 gener …[+617 chars]
+
+### 🤖 Claude — 2026-11-20T15:58:12.786Z
+
+> 🔧 **TaskCreate** `{"subject": "Step 3: generate continuation views 04-08 for approval", "description": "User approved (r27). Clean frames -> fal nano-banana-2/edit 2K ($0.12/view), ~27 views, cap $5. Ledger qa/review_r21/artwork/LEDGER.md. Labelled FOR_APPROVAL sheets + page update. Then specialists project accepted views.", "activeForm": "Generating continuation views"}`
+
+### 🧑 User — 2026-11-20T15:58:12.806Z
+
+> ↩︎ result: Task #7 created successfully: Step 3: generate continuation views 04-08 for approval
+
+### 🤖 Claude — 2026-11-20T15:58:13.680Z
+
+Now the 08 swatches and the per-screen prompts.
+
+### 🤖 Claude — 2026-11-20T15:58:16.433Z
+
+> 🔧 **Bash** `{"command": "A=qa/review_r27/artwork && mkdir -p $A/swatches08 && python3 -I -c \"\nfrom PIL import Image\nim=Image.open('references/08_final_spin_chamber.png').convert('RGB')\nfor n,b in {'wall_arch':(0,560,220,1100),'chamber_window_towel':(280,256,720,620),'river':(180,1300,700,1536),'foam_edge':(100,820,330,1000)}.items():\n  im.crop(b).save(f'$A/swatches08/{n}.png'); print(n, b)\n\" && cp qa/review_r21/artwork/04/prompt_04.txt $A/prompt_04.txt && cp qa/review_r21/artwork/05/prompt_05_p2.txt $A/prompt_05.txt && echo ok; ls $A", "description": "Cut 08 swatches and copy proven prompts"}`
+
+### 🧑 User — 2026-11-20T15:58:16.819Z
+
+> ↩︎ result: wall_arch (0, 560, 220, 1100)
+> chamber_window_towel (280, 256, 720, 620)
+> river (180, 1300, 700, 1536)
+> foam_edge (100, 820, 330, 1000)
+> ok
+> 07
+> prompt_04.txt
+> prompt_05.txt
+> swatches08
+
+### 🤖 Claude — 2026-11-20T15:58:23.579Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/review_r27/artwork/prompt_07.txt", "content": "IMAGE 1 is a clean frame from a 3D mobile game (the character was removed) and defines EVERYTHING about the layout. IMAGES 2-5 are small material swatches cut from the art director's approved illustration of this level — they show ONLY surface materials, not a layout:\nIMAGE 2 = the purple slotted washer-drum wall with a polished gold ring; IMAGE 3 = the glossy cyan river water; IMAGE 4 = the thick glossy hot-pink / magenta river bank; IMAGE 5 = the soft white-lilac soap foam.\n\nRepaint IMAGE 1 surface by sur …[+1289 chars]`
+
+### 🧑 User — 2026-11-20T15:58:23.663Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/review_r27/artwork/prompt_07.txt (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T15:58:29.638Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/review_r27/artwork/prompt_06.txt", "content": "IMAGE 1 is a clean frame from a 3D mobile game (the character was removed) and defines EVERYTHING about the layout. IMAGES 2-5 are small material swatches cut from the art director's approved illustration of this level — they show ONLY surface materials, not a layout:\nIMAGE 2 = the polished gold telescoping rings with warm amber light dots; IMAGE 3 = the purple slotted washer-drum tube wall; IMAGE 4 = the glossy river water: bright cyan with pink, violet and soft rainbow sheen and crisp white highlight lines; …[+1244 chars]`
+
+### 🧑 User — 2026-11-20T15:58:29.666Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/review_r27/artwork/prompt_06.txt (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T15:58:35.245Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/review_r27/artwork/prompt_08.txt", "content": "IMAGE 1 is a clean frame from a 3D mobile game (the character was removed) and defines EVERYTHING about the layout. IMAGES 2-5 are small material swatches cut from the art director's approved illustration of this level — they show ONLY surface materials, not a layout:\nIMAGE 2 = the purple slotted washer-drum wall with a polished gold arch; IMAGE 3 = the far chamber: the round chrome washer window and the folded purple towel on its gold ledge; IMAGE 4 = the glossy river water: bright cyan with thick glossy hot …[+1298 chars]`
+
+### 🧑 User — 2026-11-20T15:58:35.296Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/review_r27/artwork/prompt_08.txt (file state is current in your context — no need to Read it back)
+

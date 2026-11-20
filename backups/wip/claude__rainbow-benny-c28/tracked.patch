@@ -154141,7 +154141,7 @@ index a76822b..cbb7ee4 100644
  * `fur.ts`: new BENNY20-only uniforms `uTipCol` (colour the uPile.w tips fade to; pompom keeps its pale lavender) and `uVol`
    (x highlight on up-facing fur, y darker underside). `benny20.ts`: `TUFT` block (body + arms): bigger locks (30 / arms 36),
 diff --git a/src/characters/benny/benny20.ts b/src/characters/benny/benny20.ts
-index 340e1d3..6b5171e 100644
+index 340e1d3..ae0b33d 100644
 --- a/src/characters/benny/benny20.ts
 +++ b/src/characters/benny/benny20.ts
 @@ -100,6 +100,51 @@ if (TUFT) {
@@ -154196,11 +154196,21 @@ index 340e1d3..6b5171e 100644
  /** per-screen fur exposure (LINEAR multipliers on the fur albedo above, which is solved for Screen 04). The approved
   *  pictures paint Benny lighter / pinker on 05–07 (fur mean ≈ (234, 82, 178), brightness median .95–.98) than on 04
   *  ((207, 74, 151), .84), while the game lights him less there. The game records its screen on
-@@ -132,17 +177,46 @@ export const HAT20 = {
+@@ -132,17 +177,57 @@ export const HAT20 = {
    starFlat: n('sf', 0.3),
  };
  
 -/** colour factors (LINEAR multipliers on the knit / felt maps, solved like the fur) + knit normal strength */
++/** r27 step 2, opt-in `&b20crown=1`: the approved beanie's taller "beehive" crown. The approved 04–08 crown rises with
++ *  steep, almost vertical sides that round off under a high pompom, with FIVE thinner bands above the thick cuff (cream,
++ *  violet, cream, violet, cream); benny05's crown is a wide hemisphere r = R0·√(1 − t²) with 3–4 thick bands. New profile
++ *  (hat-local, t = 0 inside the cuff … 1 apex): r = R0·(1 − a·t)·(1 − t^p)^(1/p), height × hk; the pompom rises with the apex
++ *  (× pl). With b20knit=1 the crown wears the five-band map crown5.png (tools/benny23/knit_r27_crown5.json, 45 rows).
++ *  Probe (live lathe reshape, 04 + 05 starts): taller + linear taper = lampshade/cone (rejected); steep walls exp 3.5,
++ *  hk 1.25, a 0.12 + five bands = closest. Overrides `&b20chk=` `&b20cta=` `&b20cp=` `&b20cpl=`. */
++const CROWN_ON = n('crown', 0) > 0;
++export const CROWN20 = { hk: n('chk', 1.25), a: n('cta', 0.12), p: n('cp', 3.5), pl: n('cpl', 1) };
++
 +/** colour factors (LINEAR multipliers on the knit / felt maps, solved like the fur) + knit normal strength.
 + *  r23 step 1: the `knit_mode: chain` maps (tools/benny20/knit.py, vertical rib cords, cream light stripes) carry their
 + *  colour solved through the 04 light + post chain, so the knit factors are neutral. */
@@ -154244,11 +154254,12 @@ index 340e1d3..6b5171e 100644
  
  const T = (f: string) => new URL(`../../../assets/textures/benny20/${f}`, import.meta.url).href;
 -const FILES = ['crown.png', 'crown_n.png', 'brim.png', 'brim_n.png', 'star.png', 'star_n.png'];
-+const FILES = ['crown.png', 'crown_n.png', 'brim.png', 'brim_n.png', 'star.png', 'star_n.png', 'star_felt.png', 'star_felt_n.png'];
++const FILES = ['crown.png', 'crown_n.png', 'brim.png', 'brim_n.png', 'star.png', 'star_n.png', 'star_felt.png', 'star_felt_n.png',
++  ...(CROWN_ON ? ['crown5.png', 'crown5_n.png'] : [])];
  let loaded: Promise<Record<string, THREE.Texture | null>> | null = null;
  /** load the knit / felt maps once (missing file → null: that part keeps its benny05 look) */
  export function loadBenny20Maps(): Promise<Record<string, THREE.Texture | null>> {
-@@ -196,6 +270,21 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
+@@ -196,6 +281,21 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
      if (vol) f.uniforms.uVol.value.set(...vol);
      const tc = TIP20[f.mesh.name];
      if (tc) f.uniforms.uTipCol.value.setRGB(...tc);
@@ -154270,7 +154281,32 @@ index 340e1d3..6b5171e 100644
      mat.needsUpdate = true;
    }
  
-@@ -234,36 +323,69 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
+@@ -220,6 +320,24 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
+     pom.scale.multiplyScalar(HAT20.pomScale);
+     pom.position.y += HAT20.pomDY;
+   }
++  // ---- r27 `&b20crown=1`: taller beehive crown (see CROWN20) ----
++  const crownMesh = get('hat_crown') as THREE.Mesh | undefined;
++  if (CROWN_ON && crownMesh) {
++    const g0 = crownMesh.geometry;
++    g0.computeBoundingBox();
++    const bb = g0.boundingBox!;
++    const y0 = bb.min.y, H = bb.max.y - bb.min.y, R0 = Math.max(bb.max.x, bb.max.z, -bb.min.x, -bb.min.z);
++    const { hk, a, p, pl } = CROWN20;
++    const ts = [0, 0.05, 0.1, 0.16, 0.22, 0.28, 0.34, 0.4, 0.46, 0.52, 0.58, 0.64, 0.7, 0.75, 0.8, 0.84, 0.88, 0.91, 0.935,
++      0.955, 0.97, 0.982, 0.991, 0.997, 1];
++    const pts = ts.map((t) => new THREE.Vector2(R0 * (1 - a * t) * Math.pow(Math.max(0, 1 - Math.pow(t, p)), 1 / p), y0 + t * H * hk));
++    const g = new THREE.LatheGeometry(pts, 96);
++    // v = height fraction (horizontal knit stripes), as benny05's lathe(); u = once around (unchanged)
++    const pa = g.attributes.position as THREE.BufferAttribute, uv = g.attributes.uv as THREE.BufferAttribute;
++    for (let i = 0; i < pa.count; i++) uv.setXY(i, uv.getX(i), (pa.getY(i) - y0) / (H * hk));
++    crownMesh.geometry = g;
++    if (pom) pom.position.y += H * (hk - 1) * pl;
++  }
+ 
+   // ---- knit maps on the crown / cuff ----
+   const knit = (name: string, map: string, nmap: string, factor: [number, number, number], ns: number) => {
+@@ -234,36 +352,70 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
      if (nt) mat.normalScale.setScalar(ns);
      mat.roughness = 0.92;
      mat.metalness = 0;
@@ -154294,9 +154330,11 @@ index 340e1d3..6b5171e 100644
    };
    // procedural knit maps: opt-in `&b20knit=1` until they beat benny05's approved-pixel beanie maps (kept by default)
 -  if (n('knit', 0) > 0) {
+-    knit('hat_crown', 'crown.png', 'crown_n.png', MAT20.crown, MAT20.crownN);
 +  const KNIT_ON = n('knit', 0) > 0;
 +  if (KNIT_ON) {
-     knit('hat_crown', 'crown.png', 'crown_n.png', MAT20.crown, MAT20.crownN);
++    const c5 = CROWN_ON && !!maps['crown5.png'];
++    knit('hat_crown', c5 ? 'crown5.png' : 'crown.png', c5 ? 'crown5_n.png' : 'crown_n.png', MAT20.crown, MAT20.crownN);
      knit('hat_brim', 'brim.png', 'brim_n.png', MAT20.brim, MAT20.brimN);
    }
 +  const knitMats = KNIT_ON && EXPO_ON
@@ -154346,7 +154384,7 @@ index 340e1d3..6b5171e 100644
    let first = true;
    const lastPos = new THREE.Vector3();
    const pos = new THREE.Vector3();
-@@ -275,8 +397,20 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
+@@ -275,8 +427,20 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
      scene.getWorldPosition(pos);
      const jumped = pos.distanceTo(lastPos) > 5;
      lastPos.copy(pos);
@@ -154368,7 +154406,7 @@ index 340e1d3..6b5171e 100644
    };
  
    // QA only (`?qa` pages, read by tools/benny20/probe.mjs): live handles for tuning without a reload
-@@ -295,7 +429,7 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
+@@ -295,7 +459,7 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
        }
        return [Math.round(x0), Math.round(y0), Math.round(x1), Math.round(y1)];
      };
