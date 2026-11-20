@@ -1673,3 +1673,91 @@ Everything is now committed and pushed: this session's branch is at `f13fd4a`, a
 
 One new file is still untracked: `qa/match/04/r22/scratch/bbd_try2/d_late.png`. The Screen 04 specialist wrote it seconds after the save, so the five-minute autosave will commit it on its next run. This will keep happening while the four specialists are producing pictures, and each new file gets saved within about five minutes.
 
+### 🧑 User — 2026-11-20T03:29:43.338Z
+
+Ok proceed
+
+### 🤖 Claude — 2026-11-20T03:29:52.651Z
+
+Continuing. While the four specialists work, I'll take the next item from the lead's own queue: Screen 05 end-of-stage continuation views. The clean game frames for them were rendered last round, but no jobs were run. I'll use the swatch method that worked for Screen 07. First, a look at the frames next to your original:
+
+### 🤖 Claude — 2026-11-20T03:29:56.318Z
+
+> 🔧 **Bash** `{"command": "cat qa/review_r21/audit/QUERY_05.txt; echo; ls qa/review_r21/artwork/05/game_frames/; SP=/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad; python3 -I - \"$SP\" <<'EOF'\nimport sys\nfrom PIL import Image\nsp=sys.argv[1]\nfs=['references/05_flow_into_the_current.png','references/water/05_water_isolated_original.png','qa/review_r21/artwork/05/game_frames/d_late.png','qa/review_r21/artwork/05/game_frames/e_end.png','qa/review_r21/audit/05/f_hard_left.png']\nH=560; ims=[]\nfor f in fs:\n    im=Image.open(f).convert('RGB'); print(f, im.size); ims.append( …[+291 chars]`
+
+### 🧑 User — 2026-11-20T03:29:56.612Z
+
+> ↩︎ result: match05=1&tgtvis05=1&tgtfill05=3&tgtwall05=1&m05far=1&m05coin=1&m05ride=1&m05edge=1&m05seam=1&m05blend=1&m05foam=1&m05berm=1&m05flat=1&m05cloud=1&m05wtile=1&m05end=1&m05fmag=1&m05fpaint=1&m05fcloud=1&m05fcoin=1&m05join=1&m05frim=1&m05vee2=1&m05bank=1&m05trans=1&m05wcrisp=1&m05pink=1
+> 
+> d_late.png
+> e_end.png
+> references/05_flow_into_the_current.png (864, 1536)
+> references/water/05_water_isolated_original.png (941, 1672)
+> qa/review_r21/artwork/05/game_frames/d_late.png (864, 1536)
+> qa/review_r21/artwork/05/game_frames/e_end.png (864, 1536)
+> qa/review_r21/audit/05/f_hard_left.png (864, 1536)
+
+### 🤖 Claude — 2026-11-20T03:29:58.061Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/s05_frames_check.jpg"}`
+
+### 🧑 User — 2026-11-20T03:29:58.095Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:30:07.533Z
+
+> 🔧 **Bash** `{"command": "D=qa/review_r21/artwork/05/swatches && mkdir -p $D && SP=/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad && python3 -I - \"$D\" \"$SP\" <<'EOF'\nimport sys\nfrom PIL import Image\nD,sp=sys.argv[1],sys.argv[2]\nref=Image.open('references/05_flow_into_the_current.png').convert('RGB')\ncrops={'wall_ring_right':(600,130,864,470),'wall_paddle_left':(0,130,280,430)}\nims=[]\nfor n,b in crops.items():\n    c=ref.crop(b); c.save(f'{D}/{n}.png'); ims.append(c)\nw=Image.open('references/water/05_water_isolated_original.png').convert('RGB')\nH=340; row=[i.re …[+292 chars]`
+
+### 🧑 User — 2026-11-20T03:30:07.787Z
+
+> ↩︎ result: total 344
+> drwxr-xr-x 2 root root   4096 Nov 20 03:30 .
+> drwxr-xr-x 4 root root   4096 Nov 20 03:30 ..
+> -rw-r--r-- 1 root root 165507 Nov 20 03:30 wall_paddle_left.png
+> -rw-r--r-- 1 root root 175802 Nov 20 03:30 wall_ring_right.png
+
+### 🤖 Claude — 2026-11-20T03:30:09.324Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/s05_swatch_check.jpg"}`
+
+### 🧑 User — 2026-11-20T03:30:09.361Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:30:12.087Z
+
+Both crops still catch the edge of the title banner. Moving them below it:
+
+### 🤖 Claude — 2026-11-20T03:30:15.501Z
+
+> 🔧 **Bash** `{"command": "D=qa/review_r21/artwork/05/swatches && SP=/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad && python3 -I - \"$D\" \"$SP\" <<'EOF'\nimport sys\nfrom PIL import Image\nD,sp=sys.argv[1],sys.argv[2]\nref=Image.open('references/05_flow_into_the_current.png').convert('RGB')\ncrops={'wall_ring_right':(610,195,864,500),'wall_paddle_left':(0,195,270,470)}\nims=[]\nfor n,b in crops.items():\n    c=ref.crop(b); c.save(f'{D}/{n}.png'); ims.append(c)\nH=300; row=[i.resize((int(i.width*H/i.height),H)) for i in ims]\nW=sum(i.width for i in row)+10; out=Image.new( …[+182 chars]`
+
+### 🧑 User — 2026-11-20T03:30:15.652Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-20T03:30:17.222Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/s05_swatch_check2.jpg"}`
+
+### 🧑 User — 2026-11-20T03:30:17.245Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:30:22.206Z
+
+Clean swatches: purple slotted wall, gold rings and gold paddles, with no text, coins or Benny. Running the two Screen 05 jobs (2 × $0.12):
+
+### 🤖 Claude — 2026-11-20T03:30:27.666Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/review_r21/artwork/05/prompt_05_p2.txt", "content": "IMAGE 1 is a frame from a 3D mobile game and defines EVERYTHING about the layout. IMAGES 2-4 are material swatches cut from the art director's approved illustration of this level — they show ONLY surface materials, not a layout:\nIMAGE 2 and IMAGE 3 = the glossy violet-magenta washer-drum wall with neat rows of rounded slots, polished bright gold rings with warm light, and curved gold paddles; IMAGE 4 = the approved river water: glossy cyan with thick flowing hot-pink / magenta streaks, crisp white highl …[+1158 chars]`
+
+### 🧑 User — 2026-11-20T03:30:27.742Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/review_r21/artwork/05/prompt_05_p2.txt (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-20T03:30:33.327Z
+
+> 🔧 **Bash** `{"command": "A=qa/review_r21/artwork/05; O=$A/proposals; P=$A/prompt_05_p2.txt; REFS=\"$A/swatches/wall_ring_right.png $A/swatches/wall_paddle_left.png references/water/05_water_isolated_original.png\"; (timeout 400 python3 -I tools/lead21/fal_view.py $O d_late_p2 $P $A/game_frames/d_late.png $REFS > /tmp/claude-0/fal05d.log 2>&1 &); timeout 400 python3 -I tools/lead21/fal_view.py $O e_end_p2 $P $A/game_frames/e_end.png $REFS > /tmp/claude-0/fal05e.log 2>&1; while pgrep -f \"fal_view.py .*05/proposals d_late_p2\" >/dev/null; do sleep 2; done; tail -n 2 qa/review_r21/artwork/LEDGER.md; ls $O; S …[+821 chars]`
+

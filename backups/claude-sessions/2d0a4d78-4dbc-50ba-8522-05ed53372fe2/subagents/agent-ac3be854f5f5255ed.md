@@ -794,3 +794,246 @@ Now updating the two callers (level stretch and drop) to use `bank()`.
 
 > 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 -I - <<'EOF'\nimport re\np='src/world/match07.ts'\ns=open(p).read()\nrep=[\n(\"\"\"  float tt = 0.44 + 0.36 * upw + 0.12 * nv + 0.16 * (vTone.z - 0.5) + 0.10 * (vTone.x - 0.5);\n  tt -= 0.30 * rim * smoothstep(0.25, -0.6, upw);\n  tt += 0.12 * rim * smoothstep(0.1, 0.8, upw);\"\"\",\n\"\"\"  float tt = 0.36 + 0.46 * upw + 0.06 * nv + 0.14 * (vTone.z - 0.5) + 0.08 * (vTone.x - 0.5);\n  tt -= 0.28 * rim * smoothstep(0.25, -0.6, upw);\n  tt += 0.10 * rim * smoothstep(0.1, 0.8, upw);\"\"\"),\n(\"\"\"        const r = (0.26 + 0.14 * rnd()) * S;\n         …[+2199 chars]`
 
+### 🧑 User — 2026-11-20T03:25:40.258Z
+
+> ↩︎ result: 07 b_early s 287.256 lat 0 stage 07 coins 1960
+> 07 d_late s 343.456 lat 0 stage 07 coins 2080
+> 07 e1_075 s 361.056 lat 0 stage 07 coins 2110
+> 07 f_hard_left s 314.056 lat -2.25 stage 07 coins 1940
+> 07 g_hard_right s 314.056 lat 2.25 stage 07 coins 1950
+
+### 🤖 Claude — 2026-11-20T03:25:41.928Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/07/r22/s1_cloud/draft2/d_late.png"}`
+
+### 🧑 User — 2026-11-20T03:25:41.977Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:25:42.386Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/07/r22/s1_cloud/draft2/f_hard_left.png"}`
+
+### 🧑 User — 2026-11-20T03:25:42.434Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:25:47.688Z
+
+Draft 2 now reads as a lumpy cumulus foam bank along both sides instead of a flat sheet. It still looks whiter than the painted foam. Measuring tones against the painting.
+
+### 🤖 Claude — 2026-11-20T03:25:51.054Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\ndef stats(path, boxes):\n  im=np.asarray(Image.open(path).convert('RGB')).astype(float)\n  for name,(y0,y1,x0,x1) in boxes.items():\n    reg=im[y0:y1,x0:x1].reshape(-1,3); R,G,B=reg.T\n    m=(B>190)&(R>140)&(np.abs(R-G)<35)\n    f=reg[m]; lum=f.mean(1)\n    print(name, 'foam frac', m.mean().round(2), [tuple(f[np.abs(lum-np.percentile(lum,q))<4].mean(0).round().astype(int)) for q in [5,20,40,60,80,95]])\nstats('/home/user/rainbow-/references/07_dive_the_washer_tube.png',{'ref_lr':(1230,1420,650,864),'ref_left':(1000,1110, …[+207 chars]`
+
+### 🧑 User — 2026-11-20T03:25:51.396Z
+
+> ↩︎ result: ref_lr foam frac 0.49 [(np.int64(150), np.int64(159), np.int64(239)), (np.int64(163), np.int64(178), np.int64(248)), (np.int64(194), np.int64(200), np.int64(249)), (np.int64(226), np.int64(221), np.int64(248)), (np.int64(250), np.int64(248), np.int64(252)), (np.int64(253), np.int64(252), np.int64(253))]
+> ref_left foam frac 0.28 [(np.int64(154), np.int64(153), np.int64(239)), (np.int64(167), np.int64(170), np.int64(246)), (np.int64(191), np.int64(193), np.int64(248)), (np.int64(221), np.int64(217), np.int64(251)), (np.int64(245), np.int64(241), np.int64(254)), (np.int64(252), np.int64(250), np.int64(254))]
+> d2_right foam frac 0.64 [(np.int64(176), np.int64(186), np.int64(248)), (np.int64(213), np.int64(212), np.int64(249)), (np.int64(226), np.int64(222), np.int64(249)), (np.int64(237), np.int64(233), np.int64(251)), (np.int64(247), np.int64(244), np.int64(253)), (np.int64(253), np.int64(252), np.int64(254))]
+> d2_left foam frac 0.63 [(np.int64(180), np.int64(189), np.int64(248)), (np.int64(214), np.int64(212), np.int64(249)), (np.int64(229), np.int64(224), np.int64(250)), (np.int64(238), np.int64(234), np.int64(251)), (np.int64(245), np.int64(243), np.int64(252)), (np.int64(252), np.int …[+24 chars]
+
+### 🤖 Claude — 2026-11-20T03:26:10.992Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 -I - <<'EOF'\np='src/world/match07.ts'\ns=open(p).read()\nrep=[\n(\"\"\"  float tt = 0.36 + 0.46 * upw + 0.06 * nv + 0.14 * (vTone.z - 0.5) + 0.08 * (vTone.x - 0.5);\"\"\",\n \"\"\"  float tt = 0.26 + 0.50 * upw + 0.06 * nv + 0.14 * (vTone.z - 0.5) + 0.08 * (vTone.x - 0.5);\"\"\"),\n(\"\"\"  vec3 col = tt < 0.22 ? mix(cCrev, cSh, tt / 0.22) : tt < 0.45 ? mix(cSh, cMid, (tt - 0.22) / 0.23) : tt < 0.66 ? mix(cMid, cLt, (tt - 0.45) / 0.21) : mix(cLt, cW, min((tt - 0.66) / 0.2, 1.0));\"\"\",\n \"\"\"  vec3 col = tt < 0.2 ? mix(cCrev, cSh, tt / 0.2) : tt …[+1891 chars]`
+
+### 🧑 User — 2026-11-20T03:26:43.745Z
+
+> ↩︎ result: 385:  const clouds = nearW && band && flag05('m07cloud');
+> 594:  if (clouds) {
+> 07 b_early s 287.256 lat 0 stage 07 coins 1960
+> 07 d_late s 343.456 lat 0 stage 07 coins 2080
+> 07 e1_075 s 361.056 lat 0 stage 07 coins 2110
+> 07 f_hard_left s 314.056 lat -2.25 stage 07 coins 1940
+> 07 g_hard_right s 314.056 lat 2.25 stage 07 coins 1950
+
+### 🤖 Claude — 2026-11-20T03:26:45.157Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/07/r22/s1_cloud/draft3/d_late.png"}`
+
+### 🧑 User — 2026-11-20T03:26:45.207Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:26:45.571Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/07/r22/s1_cloud/draft3/e1_075.png"}`
+
+### 🧑 User — 2026-11-20T03:26:45.609Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:26:52.596Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\ndef stats(path, boxes):\n  im=np.asarray(Image.open(path).convert('RGB')).astype(float)\n  for name,(y0,y1,x0,x1) in boxes.items():\n    reg=im[y0:y1,x0:x1].reshape(-1,3); R,G,B=reg.T\n    m=(B>190)&(R>140)&(np.abs(R-G)<35)\n    f=reg[m]; lum=f.mean(1)\n    print(name, 'foam frac', m.mean().round(2), [tuple(int(v) for v in f[np.abs(lum-np.percentile(lum,q))<4].mean(0).round()) for q in [5,20,40,60,80,95]])\nstats('/home/user/rainbow-/qa/match/07/r22/s1_cloud/draft3/d_late.png',{'d3_right':(880,1150,650,864),'d3_left':(90 …[+66 chars]`
+
+### 🧑 User — 2026-11-20T03:26:52.847Z
+
+> ↩︎ result: d3_right foam frac 0.61 [(169, 175, 242), (205, 206, 249), (224, 219, 249), (239, 235, 251), (251, 248, 253), (254, 253, 255)]
+> d3_left foam frac 0.61 [(174, 180, 244), (204, 205, 249), (225, 221, 249), (240, 236, 251), (250, 248, 253), (252, 251, 254)]
+
+### 🤖 Claude — 2026-11-20T03:27:02.672Z
+
+Only slightly darker: the camera looks down on the bank so mostly lobe tops are visible. I'll make white depend more strongly on facing straight up and darken the lower lobes of each mound.
+
+### 🤖 Claude — 2026-11-20T03:27:08.137Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && python3 -I - <<'EOF'\np='src/world/match07.ts'\ns=open(p).read()\na=\"\"\"  float tt = 0.26 + 0.50 * upw + 0.06 * nv + 0.14 * (vTone.z - 0.5) + 0.08 * (vTone.x - 0.5);\"\"\"\nb=\"\"\"  float tt = 0.16 + 0.52 * upw + 0.08 * nv + 0.22 * (vTone.z - 0.5) + 0.08 * (vTone.x - 0.5);\"\"\"\nassert s.count(a)==1; s=s.replace(a,b); open(p,'w').write(s)\nEOF\nK7=$(cat /home/user/rainbow-/qa/match/07/r21/K7.txt) && AUDIT_PORT=5277 AUDIT_SHOTS='[[\"d_late\",0.6,null],[\"e1_075\",0.75,null],[\"f_hard_left\",0.35,-1]]' timeout 900 node /home/user/rainbow-/tools/lead21/aud …[+759 chars]`
+
+### 🧑 User — 2026-11-20T03:27:25.331Z
+
+> ↩︎ result: 07 d_late s 343.456 lat 0 stage 07 coins 2080
+> 07 e1_075 s 361.056 lat 0 stage 07 coins 2110
+> 07 f_hard_left s 314.056 lat -2.25 stage 07 coins 1940
+> right 0.61 [(165, 172, 242), (192, 197, 248), (211, 210, 249), (225, 221, 249), (241, 238, 252), (253, 252, 254)]
+> left 0.61 [(168, 175, 244), (194, 198, 248), (214, 212, 249), (228, 224, 249), (241, 238, 252), (253, 251, 254)]
+
+### 🤖 Claude — 2026-11-20T03:27:26.719Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/07/r22/s1_cloud/draft4/d_late.png"}`
+
+### 🧑 User — 2026-11-20T03:27:26.764Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:27:27.173Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/07/r22/s1_cloud/draft4/f_hard_left.png"}`
+
+### 🧑 User — 2026-11-20T03:27:27.228Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:27:39.623Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && K7=$(cat /home/user/rainbow-/qa/match/07/r21/K7.txt) && AUDIT_PORT=5277 AUDIT_SHOTS='[[\"d_late\",0.6,null],[\"e1_075\",0.75,null]]' timeout 900 node /home/user/rainbow-/tools/lead21/audit_screen.mjs /home/user/rainbow-/qa/match/07/r22/s1_cloud/draft4_cs13 07 \"${K7}&m07end=1&m07cloud=1&m07cS=1.3\" 2>&1 | grep -v \"outside of Vite\" | tail -2", "description": "Render cloud variant with larger lobe scale", "timeout": 960000}`
+
+### 🧑 User — 2026-11-20T03:27:53.755Z
+
+> ↩︎ result: 07 d_late s 343.456 lat 0 stage 07 coins 2080
+> 07 e1_075 s 361.056 lat 0 stage 07 coins 2110
+
+### 🤖 Claude — 2026-11-20T03:27:55.109Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/07/r22/s1_cloud/draft4_cs13/d_late.png"}`
+
+### 🧑 User — 2026-11-20T03:27:55.155Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:28:02.069Z
+
+At 1.3 the bank turns into a continuous foam wall (the user has rejected giant foam walls), so I keep scale 1.0, which leaves separate lumpy mounds. Rendering the full 9-shot set for draft 4.
+
+### 🤖 Claude — 2026-11-20T03:28:05.330Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && K7=$(cat /home/user/rainbow-/qa/match/07/r21/K7.txt) && AUDIT_PORT=5277 AUDIT_SHOTS='[[\"a_start\",0,null],[\"b_early\",0.12,null],[\"c_middle\",0.35,null],[\"d_late\",0.6,null],[\"e1_075\",0.75,null],[\"e_end\",0.85,null],[\"e2_092\",0.92,null],[\"f_hard_left\",0.35,-1],[\"g_hard_right\",0.35,1]]' timeout 900 node /home/user/rainbow-/tools/lead21/audit_screen.mjs /home/user/rainbow-/qa/match/07/r22/s1_cloud/NEW 07 \"${K7}&m07end=1&m07cloud=1\" 2>&1 | grep -v \"outside of Vite\" | tail -9; cd /home/user/rainbow-/qa/match/07/r22/s1_cloud && node /home/user/t …[+205 chars]`
+
+### 🧑 User — 2026-11-20T03:28:54.951Z
+
+> ↩︎ result: 07 a_start s 273.056 lat 0 stage 07 coins 1940
+> 07 b_early s 287.256 lat 0 stage 07 coins 1960
+> 07 c_middle s 314.056 lat 0 stage 07 coins 2030
+> 07 d_late s 343.456 lat 0 stage 07 coins 2080
+> 07 e1_075 s 361.056 lat 0 stage 07 coins 2110
+> 07 e_end s 372.656 lat 0 stage 07 coins 2130
+> 07 e2_092 s 380.856 lat 0 stage 07 coins 2150
+> 07 f_hard_left s 314.056 lat -2.25 stage 07 coins 1940
+> 07 g_hard_right s 314.056 lat 2.25 stage 07 coins 1950
+> {"a":"NEW/a_start.png","b":"../s0_verify/a_start.png","rows":[180,1536],"threshold":0.1,"diff_pixels":0,"total":1171584,"diff_pct":0}
+
+### 🤖 Claude — 2026-11-20T03:28:56.338Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/07/r22/s1_cloud/NEW/b_early.png"}`
+
+### 🧑 User — 2026-11-20T03:28:56.392Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:28:56.887Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/07/r22/s1_cloud/NEW/e_end.png"}`
+
+### 🧑 User — 2026-11-20T03:28:56.929Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:28:57.387Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/07/r22/s1_cloud/NEW/g_hard_right.png"}`
+
+### 🧑 User — 2026-11-20T03:28:57.434Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:28:57.840Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/07/r22/s1_cloud/NEW/c_middle.png"}`
+
+### 🧑 User — 2026-11-20T03:28:57.953Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-20T03:29:08.410Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && head -30 /home/user/rainbow-/tools/lead_r13/swim_clip.mjs; echo ----; head -40 tools/match07/swim_clip_r21.mjs; ls tools/lead_r13 2>/dev/null | head", "description": "Read swim clip tool headers"}`
+
+### 🧑 User — 2026-11-20T03:29:08.469Z
+
+> ↩︎ result: head: cannot open '/home/user/rainbow-/tools/lead_r13/swim_clip.mjs' for reading: No such file or directory
+> ----
+> #!/usr/bin/env node
+> // s07 r21: swim_clip_half.mjs that starts part-way through the stage (fraction of checkpoint → stage end), deterministic sim steps to get there.
+> //   node tools/match07/swim_clip_r21.mjs <screen> <outDir> <seconds> <query> <startFrac>
+> // Starts at the screen's checkpoint and rides the real game simulation (Benny, camera rig, course, coins unchanged) with
+> // the shader clock running: straight, then left, then right, then straight — one frame per 1/fps s → OUT/0000.png …
+> // Generalises scripts/proj05-move.mjs --zigzag. Encode: ffmpeg -framerate 24 -i OUT/%04d.png -pix_fmt yuv420p clip.mp4
+> //   node tools/lead_r13/swim_clip.mjs <screen 04..08> <outDir> <seconds> [query]
+> import { mkdirSync } from 'node:fs';
+> import { pathToFileURL } from 'node:url';
+> const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> const [SCREEN, OUT, SECS = '6', Q = '', FR = '0'] = process.argv.slice(2);
+> const fps = 24;
+> mkdirSync(OUT, { recursive: true });
+> const { chromium } = loadPlaywright();
+> const vite = await …[+1419 chars]
+
+### 🤖 Claude — 2026-11-20T03:29:11.253Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && grep -n \"startVite\\|viewport\\|fps\\|ph <\" tools/lead_r13/swim_clip.mjs | head; which ffmpeg", "description": "Check lead swim clip tool port and settings"}`
+
+### 🧑 User — 2026-11-20T03:29:11.302Z
+
+> ↩︎ result: 4:// the shader clock running: straight, then left, then right, then straight — one frame per 1/fps s → OUT/0000.png …
+> 9:const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(`${process.cwd()}/scripts/lib/pw.mjs`).href);
+> 11:const fps = 24;
+> 14:const vite = await startVite(5280 + Number(SCREEN));
+> 17:  const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
+> 22:  const n = Math.round(Number(SECS) * fps);
+> 25:    const dir = ph < 0.3 ? null : ph < 0.55 ? -1 : ph < 0.8 ? 1 : null;
+> 26:    await page.evaluate(([t, dt, dir]) => { const R = window.__rainbow; R.setSteer(dir); R.freezeAt(t); R.step(Math.round(dt * 60), 1 / 60); R.freezeAt(t + dt); R.step(1, 1e-4); }, [12 + i / fps, 1 / fps, dir]);
+> /usr/bin/ffmpeg
+
+### 🤖 Claude — 2026-11-20T03:29:15.763Z
+
+The lead's clip tool uses port 5287, which is not mine; I'll use my own `swim_clip_r21.mjs` (port 5277, half size, start fraction). Checking the r21 clip settings to match.
+
+### 🤖 Claude — 2026-11-20T03:29:16.864Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/07/r21/step1_end && for f in swim_end_NEW.mp4 swim_end_BEFORE.mp4; do ffprobe -v error -show_entries format=duration:stream=width,height,nb_frames -of compact $f; done", "description": "Check r21 clip duration and size"}`
+
+### 🧑 User — 2026-11-20T03:29:17.407Z
+
+> ↩︎ result: stream|width=432|height=768|nb_frames=86
+> format|duration=3.583333
+> stream|width=432|height=768|nb_frames=86
+> format|duration=3.583333
+
+### 🤖 Claude — 2026-11-20T03:29:20.655Z
+
+I'll record matching clips: NEW from 0.55 through the drop (BEFORE = r21's K7e `swim_end_NEW.mp4`, same settings), plus a level-stretch pair from 0.03 to show the clouds rising while swimming.
+
+### 🤖 Claude — 2026-11-20T03:29:26.468Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/wt/s07 && K7=$(cat /home/user/rainbow-/qa/match/07/r21/K7.txt) && O=/home/user/rainbow-/qa/match/07/r22/s1_cloud && S=/tmp/claude-0/-home-user-rainbow-/2d0a4d78-4dbc-50ba-8522-05ed53372fe2/scratchpad/clips && rm -rf $S && mkdir -p $S && \\\nnode tools/match07/swim_clip_r21.mjs 07 $S/end_new 3.6 \"${K7}&m07end=1&m07cloud=1\" 0.55 2>&1 | grep -v \"outside of Vite\" | tail -1 && ffmpeg -loglevel error -y -framerate 24 -i $S/end_new/%04d.png -pix_fmt yuv420p $O/swim_end_NEW.mp4 && \\\nnode tools/match07/swim_clip_r21.mjs 07 $S/lvl_new 3.6 \"${K7}&m07end=1&m07cloud=1\" 0. …[+590 chars]`
+
