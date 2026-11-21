@@ -6,7 +6,7 @@
 # PRESET="k=v&k2=v2" bakes URL switches into the build (static hosts pass no query string), e.g. PRESET="proj=1&len=7".
 set -e
 GAME=$(cd "${1:?kit game folder}" && pwd); OUT=${2:?out folder}; mkdir -p "$OUT"; OUT=$(cd "$OUT" && pwd)
-FILES="controls.js live.js swimfx.js kit.json wall.png ring.png river.png wall_own.png ring_own.png river35.png river35_detail.png puffs.png
+FILES="controls.js live.js swimfx.js kit.json wall.png ring.png river.png wall_own.png ring_own.png river35.png river35_detail.png river36.png puffs.png
        foam.png bubble.png bake.png splash.png coin.png glint.png"
 for f in $FILES; do [ -e "$GAME/$f" ] || { echo "missing $GAME/$f"; exit 1; }; cp -L "$GAME/$f" "$OUT/$f"; done
 # Benny's model as base64 text (static hosts such as claude.ai artifacts do not serve .glb); the page decodes it and parses the same GLB
