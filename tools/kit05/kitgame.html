@@ -59,13 +59,13 @@ const [wallTex, ringTex, riverTex, wallOwn, ringOwn] = await Promise.all([tex('w
 const riverTile = await tex('river_tile.png'); riverTile.wrapT = THREE.RepeatWrapping;
 const ownOf = (kind, atlas, k) => { const r = K.own?.[kind]?.rows?.[k]; return r && !q.get('noown') ? { tex: atlas, vr: [r[0] / K.own[kind].h, r[1] / K.own[kind].h] } : null; };
 const wallMat = kitMat(wallTex), ringMat = kitMat(ringTex);
-const FLOW = { uFlow: { value: 0 }, uRT: { value: new THREE.Vector3(K.river_tile.t0, K.river_tile.L, K.river_tile.painted_until) }, uRiverTile: { value: riverTile } };
+const FLOW = { uFlow: { value: 0 }, uRT: { value: new THREE.Vector3(K.river_tile.t0, K.river_tile.L, K.river_tile.painted_until), uRF: { value: K.river_tile.painted_fade ?? 4 } }, uRiverTile: { value: riverTile } };
 const riverMat = (() => { const m = kitMat(riverTex); const base = m.onBeforeCompile; m.customProgramCacheKey = () => 'kit-river';
   m.onBeforeCompile = (sh) => { base(sh); Object.assign(sh.uniforms, FLOW);
-    sh.fragmentShader = sh.fragmentShader.replace('uniform float uBias;', 'uniform float uBias; uniform float uFlow; uniform vec3 uRT; uniform sampler2D uRiverTile; varying float vKitT; varying float vKitD;')
+    sh.fragmentShader = sh.fragmentShader.replace('uniform float uBias;', 'uniform float uBias; uniform float uFlow; uniform vec3 uRT; uniform float uRF; uniform sampler2D uRiverTile; varying float vKitT; varying float vKitD;')
       .replace('diffuseColor *= texture(map, vMapUv, uBias);', `vec4 kPaint = texture(map, vMapUv, uBias);
-        vec4 kFlow = texture(uRiverTile, vec2(vMapUv.x, -(vKitT + uFlow - uRT.x) / uRT.y), uBias);   // water flows toward the camera
-        float kF = smoothstep(0.55, 0.85, vKitD / max(vKitT, 1e-3)) * (1.0 - smoothstep(uRT.z - 4.0, uRT.z, vKitT));
+        vec4 kFlow = texture(uRiverTile, vec2(vMapUv.x, -(vKitT + uFlow - uRT.x) / uRT.y), mix(uBias, 0.8, smoothstep(2.5, 9.0, vKitD)));   // flows toward the camera; softer far away (no shimmer)
+        float kF = smoothstep(0.55, 0.85, vKitD / max(vKitT, 1e-3)) * (1.0 - smoothstep(uRT.z - uRF, uRT.z, vKitT));
         diffuseColor *= mix(kFlow, kPaint, kF);`); };
   return m; })();
 
