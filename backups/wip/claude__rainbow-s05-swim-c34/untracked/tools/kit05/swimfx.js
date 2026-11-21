@@ -35,7 +35,7 @@ export function installSwimFx({ THREE, scene, splash, q }) {
   // ---------------- flat decals lying on the river (ripples, foam puffs) ----------------
   const plane = new THREE.PlaneGeometry(1, 1), Mb = new THREE.Matrix4();
   const pool = (tex, n) => Array.from({ length: n }, () => { const m = new THREE.Mesh(plane, new THREE.MeshBasicMaterial({ map: tex, transparent: true, depthWrite: false, toneMapped: false, opacity: 0, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 }));
-    m.visible = false; m.renderOrder = 4; m.frustumCulled = false; scene.add(m); return { m, age: 0, life: 0, size: 0, grow: 0, p: new THREE.Vector3(), t: new THREE.Vector3(), a0: 1 }; });
+    m.visible = false; m.renderOrder = 6; m.frustumCulled = false; scene.add(m); return { m, age: 0, life: 0, size: 0, grow: 0, p: new THREE.Vector3(), t: new THREE.Vector3(), a0: 1 }; });
   const ripples = pool(ringTex, 10), puffs = pool(foamTex, 12); let ri = 0, pi = 0;
   const place = (d, list, k, p, F, size, life, grow, a0) => { const o = list[k]; o.p.copy(p); o.t.copy(F.t); o.size = size; o.grow = grow; o.life = life; o.age = 0; o.a0 = a0;
     o.m.quaternion.setFromRotationMatrix(Mb.makeBasis(F.r, F.t, F.n)); o.m.visible = true; return o; };
@@ -60,7 +60,7 @@ export function installSwimFx({ THREE, scene, splash, q }) {
         float n = vn(vec2(vU.x * 16.0, x * 3.0)) * 0.6 + vn(vec2(vU.x * 37.0, x * 6.0 + 3.1)) * 0.4;
         float a = vA * prof * smoothstep(0.32, 0.72, n); if (a < 0.004) discard;
         gl_FragColor = vec4(vec3(0.93, 0.98, 1.0), a); }` });
-  const wake = new THREE.Mesh(wGeo, wMat); wake.frustumCulled = false; wake.renderOrder = 4; wake.visible = !OFF; scene.add(wake);
+  const wake = new THREE.Mesh(wGeo, wMat); wake.frustumCulled = false; wake.renderOrder = 6; wake.visible = !OFF; scene.add(wake);
   const v1 = new THREE.Vector3(), v2 = new THREE.Vector3();
   function updWake(o) {
     for (const h of hist) { h.age += o.dt; h.p.addScaledVector(h.t, -P.DRIFT * o.dt); }

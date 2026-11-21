@@ -30,6 +30,9 @@ function analyze(log, errors, out, pn, fps = 30) {
     const v0 = i >= 2 ? log[i - 1][key] - log[i - 2][key] : 0;
     let first = null; for (let j = i; j < end; j++) { const pred = prev[key] + v0 * (j - i + 1); if (sign * (log[j][key] - pred) > 0.002) { first = j - i; break; } }
     r.frames_to_visible_response = first;
+    // first frame whose ACCELERATION points the asked way (second difference > 0.0005 u/frame^2): the controls answered (also mid-move)
+    let acc = null; for (let j = i; j < end && j >= 2; j++) { const a2 = log[j][key] - 2 * log[j - 1][key] + log[j - 2][key]; if (sign * a2 > 0.0005) { acc = j - i; break; } }
+    r.frames_to_accel_response = acc;
     if (key === 'lat') {
       const tgt = f.lane * 0.22; let reach = null; for (let j = i; j < end; j++) if (Math.abs(log[j].lat - tgt) < 0.011) { reach = +((j - i + 1) / fps).toFixed(3); break; }
       r.target_lat = tgt; r.time_to_95pct_s = reach; const seg = log.slice(i, end), dirn = Math.sign(tgt - prev.lat) || sign;
@@ -91,7 +94,7 @@ function analyze(log, errors, out, pn, fps = 30) {
       while (pi < plan.length && plan[pi][0] <= t + 1e-9) { await swipe(plan[pi][1]); sw.push(plan[pi][1]); pi++; }
       const o = await page.evaluate(([t, dt, sp]) => { const r = window.step(t, dt, 0, sp); const s = window.state ? window.state() : {};
         return Object.assign({}, r, s, { benny: window.bennyInfo ? window.bennyInfo() : null, fx: window.swimInfo ? window.swimInfo() : null }); }, [t, i === 0 ? 0 : 1 / fps, +speed]);
-      if (renderSet.has(i)) { await page.evaluate(() => window.renderNow(1)); await page.screenshot({ path: `${out}/f_${String(i).padStart(4, '0')}.jpg`, type: 'jpeg', quality: 92, timeout: 600000 }); }
+      if (renderSet.has(i)) { await page.evaluate(() => window.renderNow(1)); const png = process.env.FMT === 'png'; await page.screenshot({ path: `${out}/f_${String(i).padStart(4, '0')}.${png ? 'png' : 'jpg'}`, ...(png ? { type: 'png' } : { type: 'jpeg', quality: 92 }), timeout: 600000 }); }
       log.push({ i, t: +t.toFixed(3), ...o, sent: sw });
     }
     fs.writeFileSync(`${out}/run_log.json`, JSON.stringify(log));

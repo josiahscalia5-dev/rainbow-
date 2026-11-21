@@ -20,7 +20,7 @@ import sys, os, json, glob, argparse
 import numpy as np, cv2
 from PIL import Image, ImageDraw, ImageFont
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
-from analyze_reference import classes, reference_in_phone_frame   # noqa: E402  (same colour classes + crop rule as the analysis)
+from analyze_reference import classes, coins, reference_in_phone_frame   # noqa: E402  (same colour classes + crop rule as the analysis)
 SKILL = os.path.dirname(HERE); REPO = os.path.abspath(os.path.join(SKILL, '..', '..', '..'))
 W, H = 412, 915
 DEFAULT_OWNERS = {   # colour region of the approved picture -> who fixes it (round-34 ownership map; override with --owners)
@@ -30,6 +30,7 @@ DEFAULT_OWNERS = {   # colour region of the approved picture -> who fixes it (ro
     'purple': 'washer-environment-modeler (perforated purple walls)',
     'foam_white': 'foam-bubbles-particles (foam banks, bubbles, splashes)',
     'near_black': 'washer-environment-modeler (dark gaps / unseen surfaces) + playwright-visual-qa (dark-patch check)',
+    'coins': 'path-camera-transition-engineer (coin layout / sizes on the painted trail)',
     'other': 'reference-match-director (triage)',
 }
 
@@ -121,6 +122,15 @@ def main():
     ref = reference_in_phone_frame(np.array(Image.open(ref_path).convert('RGB')), W, H)
     cl, _ = classes(ref); s_ref = sharp(ref, mask)
     region = np.full((H, W), 'other', dtype=object)
+    # coins first: the approved picture's painted coins (filled gold discs on the water) get their own region, so a misplaced coin
+    # trail is routed to the coin-layout owner instead of being counted as "gold" or "water"
+    rows0 = int(np.argmax(mask.any(1))) if mask.any() else 0
+    boxes = minfo.get('exclude_boxes_xyxy') or []
+    painted = coins(cl, rows0, boxes[0] if boxes else None)['xy_r_px_nearest_first']
+    cmask = np.zeros((H, W), np.uint8)
+    for x, y, r in painted:
+        cv2.circle(cmask, (int(round(x)), int(round(y))), int(round(1.4 * r + 2)), 1, -1)
+    region[cmask > 0] = 'coins'
     for k in ('water_cyan', 'pink_edge', 'gold', 'purple', 'foam_white', 'near_black'):
         region[cl[k] & (region == 'other')] = k
     idx = [int(x) for x in a.frames.split(',')] if a.frames else None
@@ -128,7 +138,7 @@ def main():
     aligned = (lambda i: True) if a.aligned == 'all' else (lambda i: False) if a.aligned == 'none' else (lambda i, s=set(int(v) for v in a.aligned.split(',')): i in s)
     out = a.out or (os.path.join(a.new if os.path.isdir(a.new) else os.path.dirname(os.path.abspath(a.new)), 'compare'))
     os.makedirs(out, exist_ok=True); tag = (a.tag + '_') if a.tag else ''
-    res = {'approved': os.path.abspath(ref_path), 'phone_frame': [W, H], 'mask': minfo,
+    res = {'approved': os.path.abspath(ref_path), 'phone_frame': [W, H], 'mask': minfo, 'painted_coins_phone_xy_r': painted,
            'rule': 'scenery = below the HUD minus the exclusion boxes; aligned frames compared pixel by pixel with the approved picture '
                    '(mean |RGB diff| < 20 levels = "within 20 levels"); formulas identical to tools/kit05/compare_r33.py', 'frames': {}}
     ref_shares = {k: float(cl[k][mask].mean()) for k in ('water_cyan', 'pink_edge', 'gold', 'purple', 'foam_white')}
@@ -147,8 +157,11 @@ def main():
                           'ssim_scenery': round(float(ssim_map(im, ref)[mask].mean()), 3),
                           'whole_frame_within_20_levels': round(float((diff < 20).mean()), 3)})
                 tot = max(1, int(bad.sum())); regs = []
-                for k in ('water_cyan', 'pink_edge', 'gold', 'purple', 'foam_white', 'near_black', 'other'):
-                    rk = (region == k) & mask
+                # + gold discs of THIS frame lying where the approved picture has water = coins drawn in the wrong place
+                c2g = cv2.morphologyEx(c2['gold'].astype(np.uint8), cv2.MORPH_OPEN, np.ones((3, 3), np.uint8)) > 0
+                reg_f = region.copy(); reg_f[c2g & np.isin(region, ['water_cyan', 'pink_edge'])] = 'coins'
+                for k in ('coins', 'water_cyan', 'pink_edge', 'gold', 'purple', 'foam_white', 'near_black', 'other'):
+                    rk = (reg_f == k) & mask
                     if rk.sum() < 50:
                         continue
                     regs.append({'region': k, 'share_of_scenery': round(float(rk.sum() / mask.sum()), 3), 'mismatch_inside': round(float(bad[rk].mean()), 3),
@@ -166,7 +179,7 @@ def main():
                 if name == 'new' and not a.no_pictures:
                     heat = cv2.applyColorMap(np.clip(diff * 4, 0, 255).astype(np.uint8), cv2.COLORMAP_INFERNO)[..., ::-1].astype(np.float32)
                     heat[~mask] = heat[~mask] * 0.25
-                    label(heat, f'DIFF  NEW vs APPROVED  f{i:04d}', 'bright = far from the approved; dimmed = HUD / Benny (not scenery)').save(os.path.join(out, f'{tag}DIFF_NEW_f{i:04d}.jpg'), quality=90)
+                    label(heat, f'DIFF  NEW vs APPROVED  f{i:04d}', 'bright = far from approved; dimmed = not scenery').save(os.path.join(out, f'{tag}DIFF_NEW_f{i:04d}.jpg'), quality=90)
             row[name] = r
             if not a.no_pictures:
                 sub = (f"scenery {100 * r['share_within_20_levels']:.1f} % within 20 levels  SSIM {r['ssim_scenery']:.2f}  colour {r['colour_look_corr']:.2f}"

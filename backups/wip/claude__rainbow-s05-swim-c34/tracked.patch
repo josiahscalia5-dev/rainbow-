@@ -1,8 +1,8 @@
 diff --git a/tools/kit05/controls.js b/tools/kit05/controls.js
-index a7405a94..50a4412f 100644
+index a7405a94..0d55095b 100644
 --- a/tools/kit05/controls.js
 +++ b/tools/kit05/controls.js
-@@ -4,20 +4,38 @@
+@@ -4,20 +4,39 @@
  // splash + droplets + bubbles on leaving / entering the water, and the follow-camera offsets.
  // Everything is driven by the game clock passed to window.step(t, dt, ...) so tests stay deterministic.
  // Benny faces +t (away from the camera, the approved picture shows his back); his model +x is the river's right (+r).
@@ -11,15 +11,17 @@ index a7405a94..50a4412f 100644
 +// straight in, swipe up under water = leap out), a buoyancy spring settles him after every landing / resurfacing; the bank is
 +// rate-limited; paws paddle alternately (power stroke down and back), his lower back flutter-kicks, and swimfx.js adds the wake,
 +// paddle ripples, kick foam and the streaming painted splash. Lateral offsets are along the path frame's r (frameAt(s)).
-+import { installSwimFx, sprayOnly } from './swimfx.js';
++// swimfx.js is loaded fail-safe: if a build forgets to copy it, the game still runs (without the wake / ripples) and says why
++const SWIMFX = await import('./swimfx.js').catch((e) => { console.warn('swimfx.js not loaded: no wake / ripples / kick foam', String(e)); return null; });
  
  export const TUNING = {
    LANE: 0.22,          // lateral offset of the side lanes (world units; river half-width ~0.30-0.35)
    LAT_MAX: 0.26,       // hard clamp of his lateral offset (keeps him in the water)
-   LANE_OMEGA: 16,      // critically damped lane spring: ~95 % of a lane change in 0.28 s, no overshoot
+-  LANE_OMEGA: 16,      // critically damped lane spring: ~95 % of a lane change in 0.28 s, no overshoot
 -  LANE_BUSY: 0.16,     // a lane change blocks the next move for this long (then the queued move starts)
 -  LEAN_K: 0.2,         // bank angle (rad) per unit lateral speed (peak lateral speed ~1.3 u/s -> ~0.26 rad)
 -  LEAN_MAX: 0.3,
++  LANE_OMEGA: 18,      // critically damped lane spring: ~95 % of a lane change in 0.26 s, no overshoot (round 32: 16 -> 0.30 s)
 +  LAT_VMAX: 1.65,      // lateral speed cap (u/s) = 0.055 u per 1/30 s frame: double swipes / reversals never jump
 +  LANE_BUSY: 0,        // (round 34: lane swipes are never blocked or queued; kept for URL compatibility)
 +  LEAN_K: 0.2, LEAN_MAX: 0.3, // (round-32 bank, superseded by BANK_*; kitgame's ?c_LEAN_K default no longer has an effect)
@@ -47,7 +49,7 @@ index a7405a94..50a4412f 100644
    DIVE_FRAC: 0.8,      // fraction of his height under the surface at the bottom of the dive (rest: 0.22)
    PITCH_K: 0.13,       // nose-up / nose-down per unit vertical speed (rad per u/s)
    PITCH_MAX: 0.28,
-@@ -50,19 +68,19 @@ export function installControls(ctx) {
+@@ -50,19 +69,19 @@ export function installControls(ctx) {
    const P = { ...TUNING };
    for (const k of Object.keys(P)) { const v = q.get('c_' + k); if (v != null && v !== '' && !isNaN(+v)) P[k] = +v; } // URL tuning, e.g. ?c_LANE=0.2
    const LEAP_H = P.LEAP_FRAC * bennyFullH, DIVE_D = (P.DIVE_FRAC - 0.22) * bennyFullH;
@@ -71,7 +73,7 @@ index a7405a94..50a4412f 100644
      hudPulse: 0, picked: 0, lastPick: null, done: false, sStop: Infinity,
    };
    const c = { lat: 0, h: 0, camLat: 0, camH: 0 }; // read by play3.html each step
-@@ -71,11 +89,18 @@ export function installControls(ctx) {
+@@ -71,11 +90,18 @@ export function installControls(ctx) {
    // ---------------- input: real touch swipes, mouse / pen drags, keyboard, test hook ----------------
    const log = []; const input = { log, swipe: (dir) => request(dir, 'api') };
    window.input = input;
@@ -93,7 +95,7 @@ index a7405a94..50a4412f 100644
    }
    // Gestures are read on the WINDOW, not only on the canvas: any full-screen overlay added later (HUD, vignette, title,
    // water layers) can never swallow a swipe. Touches that start on a real control (button, link, input, [data-noswipe])
-@@ -112,13 +137,38 @@ export function installControls(ctx) {
+@@ -112,13 +138,38 @@ export function installControls(ctx) {
    const KEYS = { ArrowLeft: 'left', KeyA: 'left', ArrowRight: 'right', KeyD: 'right', ArrowUp: 'up', KeyW: 'up', ArrowDown: 'down', KeyS: 'down' };
    window.addEventListener('keydown', (e) => { const d = KEYS[e.code]; if (!d || e.repeat) return; e.preventDefault(); request(d, 'key'); });
  
@@ -135,7 +137,7 @@ index a7405a94..50a4412f 100644
    }
  
    // ---------------- coin trail (round 32b): ONE single-file trail of 26 coins, HUD 1,420 -> 1,680 when all are collected ----------------
-@@ -189,7 +239,7 @@ export function installControls(ctx) {
+@@ -189,7 +240,7 @@ export function installControls(ctx) {
    const fxSplash = [];
    for (let i = 0; i < 3; i++) { const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: splashTex, toneMapped: false, transparent: true, depthWrite: false })); sp.renderOrder = 5; sp.visible = false; scene.add(sp); fxSplash.push({ sp, t0: -1, size: 1 }); }
    const drops = [];
@@ -144,7 +146,7 @@ index a7405a94..50a4412f 100644
    let rs = 987654; const rnd = () => ((rs = (rs * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff);
    let dropNext = 0;
    const spawnDrop = (p, v, size, life, gravity) => { const d = drops[dropNext]; dropNext = (dropNext + 1) % drops.length; d.p.copy(p); d.v.copy(v); d.size = size; d.life = life; d.age = 0; d.g = gravity; d.sp.visible = true; };
-@@ -251,43 +301,62 @@ export function installControls(ctx) {
+@@ -251,43 +302,62 @@ export function installControls(ctx) {
    function update(t, dt) {
      // own game clock = sum of dt: move timers stay consistent even if a caller's t jumps (frame hitch, paused tab, clamped dt)
      S.clock += dt > 0 ? dt : 0;
@@ -234,12 +236,12 @@ index a7405a94..50a4412f 100644
  
      // pom-pom inertia: lags behind lateral and vertical accelerations, settles with a little wobble
      dspring(S.pomSide, 9, 0.32, clamp(S.alat, -80, 80) * 0.6, dt); S.pomSide.x = clamp(S.pomSide.x, -0.5, 0.5);
-@@ -306,17 +375,24 @@ export function installControls(ctx) {
+@@ -306,17 +376,24 @@ export function installControls(ctx) {
    // extra body rotations after play3 has set his path frame + river-bend lean (local axes: x = -r, y = n, z = t)
    function orient(quat) {
      quat.multiply(qa.setFromAxisAngle(Zv, S.lean.x + S.roll)); // + = top toward +r (bank into a move to the right)
 -    quat.multiply(qa.setFromAxisAngle(Y, S.yaw.x));            // facing (+t) turns toward the move
-+    quat.multiply(qa.setFromAxisAngle(Y, S.yaw.x + 0.02 * Math.sin(S.swimClock * 7.5 + 0.6) * (1 - S.tuck)));   // toward the move + a little sway with the strokes
++    quat.multiply(qa.setFromAxisAngle(Y, S.yaw.x + 0.02 * Math.sin(S.swimClock * 7.5) * (1 - S.tuck)));   // toward the move + a little sway with the strokes
      quat.multiply(qa.setFromAxisAngle(X, -S.pitch.x));         // nose-up = top tilts back toward the camera
    }
  
@@ -256,13 +258,13 @@ index a7405a94..50a4412f 100644
  
 -  // splash stays on the water surface; leap / dive splashes, droplets and bubbles; dive tint plane
 +  // splash stays on the water surface; leap / dive splashes, droplets and bubbles; dive tint plane; swimfx (wake, ripples, kicks)
-+  const FX = installSwimFx({ THREE, scene, splash, q });
-+  const sprayTex = sprayOnly(THREE, splashTex); for (const fs of fxSplash) fs.sp.material.map = sprayTex;   // bursts without the painted fur
++  const FX = SWIMFX ? SWIMFX.installSwimFx({ THREE, scene, splash, q }) : { update() {} };
++  if (SWIMFX) { const sprayTex = SWIMFX.sprayOnly(THREE, splashTex); for (const fs of fxSplash) fs.sp.material.map = sprayTex; }   // bursts without the painted fur
 +  const ARM_X = 0.36 * bennyFullH / 0.99;   // his paw tip, sideways from his centre (model 0.46 x his scale x 0.76)
    function water(Fr, speed, dt) {
      F = Fr; nNow.copy(F.n);
      at(getS(), waterPt).addScaledVector(F.r, S.lat.x); // his water point (no bob, no leap / dive height): the water line on his body
-@@ -324,23 +400,37 @@ export function installControls(ctx) {
+@@ -324,23 +401,37 @@ export function installControls(ctx) {
      const air = smooth(0.03, 0.12, S.h);
      splash.material.opacity = 1 - air;
      splash.scale.multiplyScalar(1 + 0.25 * S.diveK);
@@ -310,7 +312,7 @@ index a7405a94..50a4412f 100644
      for (const fs of fxSplash) {
        if (fs.t0 < 0) continue; const k = (S.clock - fs.t0) / 0.45;
        if (k >= 1 || k < 0) { fs.sp.visible = false; fs.t0 = -1; continue; }
-@@ -373,7 +463,7 @@ export function installControls(ctx) {
+@@ -373,7 +464,7 @@ export function installControls(ctx) {
      const nGot = (k) => coins.filter((x) => x.got >= 0 && (x.kind || 'water') === k).length;
      return {
        s: +getS().toFixed(3), lane: S.lane, lat: +S.lat.x.toFixed(4), height: +S.h.toFixed(4), coins: getCoins(),
@@ -319,7 +321,7 @@ index a7405a94..50a4412f 100644
        lean: +S.lean.x.toFixed(3), pitch: +S.pitch.x.toFixed(3), yaw: +S.yaw.x.toFixed(3), pom: +S.pomSide.x.toFixed(3),
        camLat: +S.camLat.x.toFixed(4), camH: +S.camH.x.toFixed(4), swim: +S.swim.toFixed(3),
        got: { water: nGot('water'), lane: nGot('lane'), air: nGot('air') }, lastPick: S.lastPick, swipes: log.length,
-@@ -381,6 +471,8 @@ export function installControls(ctx) {
+@@ -381,6 +472,8 @@ export function installControls(ctx) {
      };
    }
    window.state = state;
@@ -328,3 +330,65 @@ index a7405a94..50a4412f 100644
  
    // visible (not yet collected) coins on screen, canvas pixels: projected centre and on-screen radius (the coin fills its sprite).
    // coinScreen({ pops: true }) also lists coins in their collection pop (flying up over his head, 0.4 s).
+@@ -419,11 +512,17 @@ export function installControls(ctx) {
+   }
+ 
+   // optional real-time loop for phones / desktop browsers: play3.html?live=1 (tests drive window.step themselves)
++  // Round 34: the kit page brings its own real-time loop (live.js: tap to start, meters). Two loops stepping the same game would run it
++  // at double speed (both called window.step every frame), so this fallback loop only runs on a page WITHOUT live.js: it waits until
++  // the page is ready + 0.6 s, and stops for good as soon as window.liveStats (live.js) exists.
+   if (q.get('live') === '1') {
+-    const speed = +(q.get('speed') ?? 1.4); let t0 = null, last = 0, gameT = 0;
++    const speed = +(q.get('speed') ?? 1.4); let t0 = null, last = 0, gameT = 0, readyAt = null;
+     const loop = (ts) => {
++      if (window.liveStats) return;
+       requestAnimationFrame(loop);
+       if (!window.ready) return;
++      if (readyAt === null) readyAt = ts;
++      if (ts - readyAt < 600) return;
+       if (t0 === null) { t0 = ts; last = ts; }
+       const dt = Math.min(0.05, (ts - last) / 1000); last = ts;
+       gameT += dt; window.step(gameT, dt, 0, speed); render(); // game time = sum of the clamped dt (a slow frame slows the game, never skips a move)
+diff --git a/tools/kit05/kitgame.html b/tools/kit05/kitgame.html
+index c46152f6..fdf538a8 100644
+--- a/tools/kit05/kitgame.html
++++ b/tools/kit05/kitgame.html
+@@ -136,17 +136,26 @@ const Wt = K.water, LOGR = Math.log(Wt.T1 / Wt.T0);
+ scene.add(new THREE.Mesh(grid(40, 600, (a, b) => { const t = Wt.T0 * Math.exp(b * LOGR); return [A0.clone().addScaledVector(A, t).addScaledVector(RR, lerp(-Wt.HWD, Wt.HWD, a)).addScaledVector(NUP, -K.HW), a, b]; }), riverMat));
+ 
+ // ---- Benny (round-32 Benny: mesh, bake, paddling shader) ----
+-const VERT_HEAD = `uniform float uT; uniform float uSwim; uniform vec2 uPom;
++const VERT_HEAD = `uniform float uT; uniform float uSwim; uniform vec2 uPom; uniform float uArmA; uniform float uKick; uniform float uKickA; uniform float uBobA;
+ vec3 b31rot(vec3 r, vec3 ax, float a){ float c = cos(a), s = sin(a); return r * c + cross(ax, r) * s + ax * dot(ax, r) * (1.0 - c); }`;
+ const VERT_BODY = `vec3 p = position;
+ float side = p.x >= 0.0 ? 1.0 : -1.0;
+ float wa = smoothstep(0.30, 0.37, abs(p.x)) * (1.0 - smoothstep(0.08, 0.16, abs(p.y + 0.18)));
+-float ph = uT * 7.5 + (side > 0.0 ? 0.0 : 3.14159);
++// round 34: alternating doggy-paddle. Each paw reaches forward, presses DOWN and pulls back under the water (power stroke, a little
++// slower), then lifts and swings forward again (recovery); the two paws are half a stroke apart (round 32 swung them the other way
++// round: up while pulling back). Model +z faces the camera; at uT = 0 the pose is exactly the round-32 start pose.
++float ph0 = uT * 7.5 + (side > 0.0 ? 0.0 : 3.14159);
++float ph = ph0 - 0.28 * sin(ph0);
+ vec3 piv = vec3(side * 0.31, -0.18, 0.0);
+ vec3 q = p - piv;
+-q = b31rot(q, vec3(0.0, 0.0, 1.0), side * uSwim * wa * 0.42 * sin(ph));
++q = b31rot(q, vec3(0.0, 0.0, 1.0), -side * uSwim * wa * uArmA * sin(ph));
+ q = b31rot(q, vec3(0.0, 1.0, 0.0), side * uSwim * wa * 0.5 * cos(ph));
+ p = piv + q;
++// feet: Benny has no separate feet, so the lower back facing the camera flutter-kicks in two lobes, left and right alternately
++float kz = smoothstep(0.06, 0.24, p.z) * (1.0 - smoothstep(-0.36, -0.2, p.y)) * smoothstep(0.02, 0.1, abs(p.x)) * (1.0 - smoothstep(0.26, 0.34, abs(p.x)));
++p += vec3(0.0, 0.35, 1.0) * (uKickA * 0.045 * kz * sin(uKick * 11.0 + (side > 0.0 ? 0.0 : 3.14159)));
++// the whole body lifts a little on each power stroke (twice per stroke cycle)
++float sp = sin(uT * 7.5); p.y += uBobA * sp * sp;
+ float wp = smoothstep(0.17, 0.27, p.y);
+ vec3 pp = vec3(0.0, 0.19, 0.05);
+ vec3 r = p - pp;
+@@ -159,7 +168,7 @@ vec3 transformed = p;`;
+ const gltf = await new GLTFLoader().loadAsync('benny31.glb');
+ const map = await tl.loadAsync('bake.png'); map.colorSpace = THREE.SRGBColorSpace; map.flipY = false; map.anisotropy = 8;
+ let geo = null; gltf.scene.traverse((o) => { if (o.isMesh && !geo) geo = o.geometry; });
+-const U = { uT: { value: 0 }, uSwim: { value: 1 }, uPom: { value: new THREE.Vector2() } };
++const U = { uT: { value: 0 }, uSwim: { value: 1 }, uPom: { value: new THREE.Vector2() }, uArmA: { value: 0.42 }, uKick: { value: 0 }, uKickA: { value: 1 }, uBobA: { value: 0 } };
+ const bmat = new THREE.MeshBasicMaterial({ map, color: new THREE.Color(4, 4, 4) });
+ bmat.onBeforeCompile = (sh) => {
+   Object.assign(sh.uniforms, U);

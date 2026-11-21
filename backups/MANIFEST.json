@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3885,
-   "sha256": "9a59c353ac045ccabb9a74b347c3a1ade910e3e710564d1bf3887be47db262ca"
+   "sha256": "7e6eac0b685dd664880b33e4e16a8186fb1ef4dbea7d8b39ab5b08b6ddd79339"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -2709,7 +2709,7 @@
   {
    "path": "backups/wip/claude__rainbow-s05-camera-c34/INFO.json",
    "bytes": 651,
-   "sha256": "49a524d10978ddf6e47726a8e0ee333ae1b3c0e58e61853058e691e72e01378c"
+   "sha256": "01fdbf91671e0eb46f6e4bcbf73ee1ef92575c0f049a01e58199551d43ce3dca"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-camera-c34/tracked.patch",
@@ -3164,7 +3164,7 @@
   {
    "path": "backups/wip/claude__rainbow-s05-qa-c34/INFO.json",
    "bytes": 629,
-   "sha256": "6a295037c0ef4dc448e0b273e069d4867e3620dd13c2ecbdf46793ef88cb0513"
+   "sha256": "9eaea416a3dafbb192af903a3df0280f046cc7ef4839a358952647d47af73446"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-qa-c34/untracked/docs/briefs/2026-11-21-r34/COORDINATION_R34.md",
@@ -3189,12 +3189,12 @@
   {
    "path": "backups/wip/claude__rainbow-s05-swim-c34/INFO.json",
    "bytes": 664,
-   "sha256": "ede80cefe7dd2dce7c5c73d27bcf1298cdfa7084fe7ef1d68f390e7319d2178d"
+   "sha256": "f77cbbf2658ca36a0653549af7e0b8a73e7a971816bd38990129bd59ff9314de"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-swim-c34/tracked.patch",
-   "bytes": 18846,
-   "sha256": "08e7f294d36d73ab64c7c71e382d8ca6bda9dd516cad3cee18cd593dbd02be37"
+   "bytes": 26120,
+   "sha256": "3f60eb077d19be2d536ba9ef21f2134bd375cde80b47290747f2ad2faac251f0"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-swim-c34/untracked/docs/briefs/2026-11-21-r34/COORDINATION_R34.md",
@@ -3213,18 +3213,18 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s05-swim-c34/untracked/tools/kit05/swimfx.js",
-   "bytes": 11959,
-   "sha256": "5b29ca1957bd1a4815e097a7f5c297161ffc26324bdb1891af73cdbf9c3ee41e"
+   "bytes": 12885,
+   "sha256": "ac47538c03247f06cd24a6105590f87b12721abef10b980359b6aaa0bda20862"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-visual-c34/INFO.json",
-   "bytes": 1128,
-   "sha256": "e28e8f70c7bff43e8bddc95000b699f7b6b06ee2c08bfb042fc7384ffcee2734"
+   "bytes": 1158,
+   "sha256": "084e6af7128f9849276d7896166cc39ad276ea90e1bb21cb0b5616995dfac3b4"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-visual-c34/tracked.patch",
-   "bytes": 9604,
-   "sha256": "cdb7a08f3fd68b43dcf3cafd0c46a780e15d6a3e1fe2127d7b7ba9d419e1479a"
+   "bytes": 19407,
+   "sha256": "48f5de30300e16fc7695b6d8f078588bc5c1cc40a392e07f37bb5f856fbd9cfe"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-visual-c34/untracked/docs/briefs/2026-11-21-r34/COORDINATION_R34.md",
@@ -6873,8 +6873,8 @@
   },
   {
    "path": "backups/wip/claude__rainbow-screen-builder-c34/INFO.json",
-   "bytes": 848,
-   "sha256": "90a9df3681839d960acaf666bbfce4426412fcc94d5c17155b71f7e2443e022d"
+   "bytes": 923,
+   "sha256": "258173073af457c84f4c2f4b5d9fc447a391e90a47f06c8fbd6fd74bb2e806f5"
   },
   {
    "path": "backups/wip/claude__rainbow-screen-builder-c34/untracked/.claude/skills/rainbow-screen-builder/screens.json",
@@ -6890,6 +6890,11 @@
    "path": "backups/wip/claude__rainbow-screen-builder-c34/untracked/.claude/skills/rainbow-screen-builder/scripts/compare_to_approved.py",
    "bytes": 12312,
    "sha256": "0f1b5c1cddf5e3c34af110f84b19d16ee7db014ae9c1d5bfb55e1773f926826b"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-screen-builder-c34/untracked/.claude/skills/rainbow-screen-builder/scripts/new_screen_workspace.sh",
+   "bytes": 6299,
+   "sha256": "0a5b343d05700170a8e14c239bd91f2a692500e38aefd9876ceeeb298b83a67d"
   },
   {
    "path": "backups/wip/claude__rainbow-screen-builder-c34/untracked/docs/briefs/2026-11-21-r34/COORDINATION_R34.md",
@@ -7924,7 +7929,7 @@
   {
    "path": "backups/wip/screen05-agents/LAST_SYNC_UTC",
    "bytes": 33,
-   "sha256": "3e60fa17d668984b8da724df6bf650dc5db3f6b6b63b5978b779a9982774ae47"
+   "sha256": "0ce34769618aa650bbb4ecbad2bd36414efead7a46e72bd56394a5b9e71fe571"
   },
   {
    "path": "backups/wip/screen05-agents/WORKSPACE",

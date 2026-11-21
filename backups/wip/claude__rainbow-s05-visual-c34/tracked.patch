@@ -1,8 +1,8 @@
 diff --git a/tools/kit05/bake_kit.py b/tools/kit05/bake_kit.py
-index da675394..29d5450a 100644
+index da675394..745009bd 100644
 --- a/tools/kit05/bake_kit.py
 +++ b/tools/kit05/bake_kit.py
-@@ -144,20 +144,29 @@ kit = json.load(open(os.path.join(out, 'kit.json'))); kit['own'] = {'wall': wall
+@@ -144,20 +144,39 @@ kit = json.load(open(os.path.join(out, 'kit.json'))); kit['own'] = {'wall': wall
  json.dump(kit, open(os.path.join(out, 'kit.json'), 'w'), indent=1)
  print('own pixels: wall', {k: v[2] for k, v in wall_own['rows'].items()}, 'ring', {k: v[2] for k, v in ring_own['rows'].items()})
  
@@ -22,24 +22,35 @@ index da675394..29d5450a 100644
  while r1 + 1 < VH and cov[r1 + 1] > 0.985: r1 += 1                  # first unbroken full-width run only (near water, crisp)
  RT0 = float(tv[r0, 0]); RT1 = float(tv[r1, 0])
  seg_n = 384                                                          # rows per segment (linear in t)
+-def strip(srcimg):
 +RU = 1.05; RIB_W = 1536                                              # ribbon lateral range u in [-RU, RU]
- def strip(srcimg):
++latv = np.linspace(-HWD, HWD, VW)
++def strip(srcimg, valid, shift=0.0):
++    """rows linear in t over the sharp source rows; each row only from ITS valid lateral range (inside the picture / the water art):
++    lateral positions outside it are reflected back into it (triangle wave), never clamped (clamping = the round-33 stretched bars)"""
      ts = RT0 + (np.arange(seg_n) + 0.5) / seg_n * (RT1 - RT0); rf = np.log(ts / T0) / np.log(T1 / T0) * VH - 0.5
 -    return np.stack([cv2.remap(srcimg[..., ch].astype(np.float32), np.tile(np.arange(VW, dtype=np.float32), (seg_n, 1)),
 -                                np.repeat(rf.astype(np.float32)[:, None], VW, 1), cv2.INTER_LINEAR) for ch in range(3)], -1)
 -SA, SB = strip(isoC), strip(water)
 -parts = [SA, SB, SA[::-1], SB[::-1]]; X = seg_n // 4
-+    u = np.linspace(-RU, RU, RIB_W)[None, :]; lat = river_center(ts)[:, None] + u
-+    lat = np.where(np.abs(lat) > HWD, np.sign(lat) * (2 * HWD - np.abs(lat)), lat)          # reflect at the floor edge
++    ri = np.clip(np.round(rf).astype(int), 0, VH - 1)
++    l0 = np.array([latv[valid[r]].min() + 0.01 for r in ri]); l1 = np.array([latv[valid[r]].max() - 0.01 for r in ri])
++    u = np.linspace(-RU, RU, RIB_W)[None, :]; lat = river_center(ts)[:, None] + u + shift
++    L = (l1 - l0)[:, None]; x = np.mod(lat - l0[:, None], 2 * L); lat = l0[:, None] + np.where(x > L, 2 * L - x, x)
 +    col = (lat + HWD) / (2 * HWD) * (VW - 1)
 +    return np.stack([cv2.remap(srcimg[..., ch].astype(np.float32), col.astype(np.float32), np.repeat(rf.astype(np.float32)[:, None], RIB_W, 1),
 +                               cv2.INTER_LINEAR, borderMode=cv2.BORDER_REFLECT) for ch in range(3)], -1)
-+SA, SB = strip(water), strip(isoC)
-+parts = [SA, SB, SA[:, ::-1], SB[:, ::-1]]; X = seg_n // 4
++_hsv = cv2.cvtColor(np.clip(ref, 0, 255).astype(np.uint8), cv2.COLOR_RGB2HSV); _gold = ((_hsv[..., 0] >= 5) & (_hsv[..., 0] <= 35) & (_hsv[..., 1] > 90)).astype(np.uint8)
++_gold = cv2.dilate(_gold, np.ones((15, 15), np.uint8))               # the gold ring blocks at the picture's bottom corners are not water
++validA = ok & (x >= 2) & (x < W - 3) & (_gold[yc.astype(int), xc.astype(int)] == 0); validB = validA & (isoW[..., 3] > 200)
++# A = approved (its centre behind Benny is the water-art fill), B / B' = the water art shifted sideways (so the centre lane never shows
++# the same water twice in a row), A' = A mirrored left-right
++SA, SB, SB2 = strip(water, validA), strip(isoC, validB, 0.21), strip(isoC, validB, -0.17)
++parts = [SA, SB, SA[:, ::-1], SB2[:, ::-1]]; X = seg_n // 4
  wv = ((np.arange(X) + 0.5) / X)[:, None, None]
  tile = parts[0]
  for nxt in parts[1:]:                                                # overlapping joins: blend X rows, the next part continues after them
-@@ -177,8 +186,18 @@ for cls in (CY, PK):
+@@ -177,8 +196,18 @@ for cls in (CY, PK):
      print('colour class: hue shift %.1f (x2 deg), saturation x%.2f' % (dh, ks))
  tile = cv2.cvtColor(th_.reshape(-1, 1, 3).astype(np.uint8), cv2.COLOR_HSV2RGB).reshape(tile.shape).astype(np.float32)
  Image.fromarray(np.clip(tile[::-1], 0, 255).astype(np.uint8)).save(os.path.join(out, 'river_tile.png'))   # row 0 = far end
@@ -102,10 +113,10 @@ index a80cc912..69801bc9 100644
      return {'A': A.tolist(), 'NUP': NUP.tolist(), 'RR': RR.tolist(), 'A0': A0.tolist(), 'RT': RT, 'RING_IN': RING_IN, 'RING_W': RING_W,
              'Z2': float(Z2), 'S': float(S), 'HW': float(HW), 'PN': PN.tolist(), 'PD': float(PD), 'VP': VP, 'RATIO': RATIO, 'CAM_OFF': CAM_OFF}
 diff --git a/tools/kit05/kitgame.html b/tools/kit05/kitgame.html
-index c46152f6..1dcd5ad8 100644
+index c46152f6..0ca73d3e 100644
 --- a/tools/kit05/kitgame.html
 +++ b/tools/kit05/kitgame.html
-@@ -59,39 +59,49 @@ const [wallTex, ringTex, riverTex, wallOwn, ringOwn] = await Promise.all([tex('w
+@@ -59,39 +59,56 @@ const [wallTex, ringTex, riverTex, wallOwn, ringOwn] = await Promise.all([tex('w
  const riverTile = await tex('river_tile.png'); riverTile.wrapT = THREE.RepeatWrapping;
  const ownOf = (kind, atlas, k) => { const r = K.own?.[kind]?.rows?.[k]; return r && !q.get('noown') ? { tex: atlas, vr: [r[0] / K.own[kind].h, r[1] / K.own[kind].h] } : null; };
  const wallMat = kitMat(wallTex), ringMat = kitMat(ringTex);
@@ -167,8 +178,15 @@ index c46152f6..1dcd5ad8 100644
 +        float kW = mix(1.0, uEdge.y, smoothstep(uEdge.z, uEdge.w, kZ));
 +        float kUU = kU / kW;
 +        vec4 kRib = texture(uRiverTile, vec2(clamp(kUU / (2.0 * uRT.z) + 0.5, 0.0, 1.0), -(kT + uFlow - uRT.x) / uRT.y), mix(uBias, 0.6, smoothstep(2.5, 9.0, kZ)));
-+        // foam banks beyond the river's edge (the painting's own foam strip), the edge wanders a little along the river
++        // pink edge bands (painted magenta 240,57,226 with white-pink streaks): the ribbon's own painted streaks recoloured into the
++        // painting's pink, between the cyan core and the foam; both band edges wander a little along the river (no ruler-straight lines)
 +        float kEdge = uEdge.x + 0.035 * sin(kT * 1.31 + 0.7) + 0.025 * sin(kT * 2.93 + 2.1);
++        float kIn = kEdge - (0.30 + 0.05 * sin(kT * 1.77 + (kU > 0.0 ? 2.4 : 0.3)) + 0.03 * sin(kT * 4.1 + 1.0));
++        float kPk = smoothstep(kIn - 0.04, kIn + 0.04, abs(kUU));
++        float kLum = dot(kRib.rgb, vec3(0.30, 0.59, 0.11)), kHi = smoothstep(0.45, 0.95, min(kRib.r, min(kRib.g, kRib.b)));
++        vec3 kPink = mix(vec3(0.80, 0.12, 0.76), vec3(1.0, 0.42, 0.93), smoothstep(0.35, 0.85, kLum));
++        kPink = mix(kPink, vec3(1.0, 0.86, 0.98), kHi);
++        kRib.rgb = mix(kRib.rgb, kPink, kPk * uEdge.x / max(uEdge.x, 1e-3));
 +        float kE = abs(kUU) - kEdge;
 +        vec4 kFo = texture(uFoam, vec2(kT / 1.3 + (kU > 0.0 ? 0.37 : 0.0), clamp(1.0 - kE / 0.22, 0.02, 0.98)), uBias);
 +        float kFa = smoothstep(-0.03, 0.02, kE) * max(kFo.a, smoothstep(0.04, 0.14, kE));
@@ -187,3 +205,13 @@ index c46152f6..1dcd5ad8 100644
          `); };
    return m; })();
  
+@@ -256,7 +273,8 @@ window.step = (t, dt, steer, speed) => {
+   CT.water(F, speed, dt); if (NOSPLASH) splash.visible = false;
+   for (let i = 0; i < NG; i++) {   // flowing glints: on the river surface, sliding toward the camera with the current, twinkling
+     gS[i] -= 0.55 * dt; if (gS[i] < st.s - 1.4) gS[i] += 8.5; if (gS[i] > st.s + 7.1) gS[i] -= 8.5;
+-    at(gS[i], tmp2).addScaledVector(RR, gL[i]).addScaledVector(NUP, 0.012); gPos.set([tmp2.x, tmp2.y, tmp2.z], i * 3);
++    at(gS[i], tmp2); const gT = tmp2.dot(A), gLat = tmp2.clone().sub(A0).dot(RR);   // round 34: glints ride the river (centre c(t)), never on the walls
++    tmp2.addScaledVector(RR, THREE.MathUtils.clamp(riverC(gT) + gL[i] * 0.85, -0.64, 0.64) - gLat).addScaledVector(NUP, 0.012); gPos.set([tmp2.x, tmp2.y, tmp2.z], i * 3);
+     const tw = Math.max(0, Math.sin(t * 6 + gP[i])); gAlpha[i] = (st.s > 0.02 ? 1 : 0) * tw * tw * 0.9 * THREE.MathUtils.smoothstep(gS[i], st.s - 1.4, st.s - 0.6);
+     gSize[i] = 0.035 * gSz[i] * (0.6 + tw);
+   }

@@ -109,10 +109,13 @@ const { chromium } = require('playwright'); const { spawn } = require('child_pro
       coins: { start: fr[0].coins, end: last.coins, got: (last.coins - fr[0].coins) / 10, total: layout.length, got_by_kind: last.got },
       coin_overlap: { pairs_total: overl, frames_with_overlap: overlFrames, max_pairs: maxPairs, first_frames: firstOv, pairs_r3_total: overl3, size_pops: pops },
       lanes_seen: [...new Set(fr.map((x) => x.lane))], max_abs_lat: Math.max(...fr.map((x) => Math.abs(x.lat))),
+      declutter: { frames: fr.filter((x) => x.declutter > 0).length, max: Math.max(...fr.map((x) => x.declutter || 0)) },
+      bend: { max_cam_yaw_deg: Math.max(...fr.map((x) => Math.abs(x.camYawDeg || 0))), max_cam_roll_deg: Math.max(...fr.map((x) => Math.abs(x.camRollDeg || 0))), max_guard: Math.max(...fr.map((x) => Math.abs(x.guard || 0))),
+        path: await page.evaluate(() => (window.qaPath ? window.qaPath() : null)) },
       frame0: { cam: frame0.cam, box: frame0.box, coins: frame0.coins, benny: { x: frame0.benny.x, y: frame0.benny.y, rollDeg: frame0.benny.rollDeg } },
     };
     fs.writeFileSync(outFile, JSON.stringify(res, null, 1));
-    if (process.env.DUMP) fs.writeFileSync(process.env.DUMP, JSON.stringify(fr.map((x) => ({ i: x.i, s: x.s, lat: x.lat, lane: x.lane, h: x.height, p: x.cam.p, q: x.cam.q, box: x.box, bx: x.bi.x, by: x.bi.y, roll: x.bi.rollDeg, crl: x.bi.camRollDeg, ncs: x.cs.length, cs: x.cs, coins: x.coins, tile: x.tile, endK: x.endK }))));
+    if (process.env.DUMP) fs.writeFileSync(process.env.DUMP, JSON.stringify(fr.map((x) => ({ i: x.i, s: x.s, lat: x.lat, lane: x.lane, h: x.height, p: x.cam.p, q: x.cam.q, box: x.box, bx: x.bi.x, by: x.bi.y, roll: x.bi.rollDeg, crl: x.bi.camRollDeg, ncs: x.cs.length, cs: x.cs, coins: x.coins, tile: x.tile, endK: x.endK, camLat: x.camLat, camLatEff: x.camLatEff, guard: x.guard, yaw: x.camYawDeg, roll: x.camRollDeg, decl: x.declutter }))));
     console.log(JSON.stringify(res, (k, v) => (k === 'coins' && Array.isArray(v) ? v.length : v)));
   } finally { await browser.close(); srv.kill(); }
 })();

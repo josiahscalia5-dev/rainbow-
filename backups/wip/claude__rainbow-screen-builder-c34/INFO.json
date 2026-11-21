@@ -2,10 +2,11 @@
  "worktree": "/home/user/wt/s05-builder",
  "branch": "claude/rainbow-screen-builder-c34",
  "head": "d8e047d33ea44d0ec2ff841836b55dcd6292a2ac",
- "time": "2026-11-21T18:22:42+00:00",
+ "time": "2026-11-21T18:26:23+00:00",
  "dirty_tracked": [],
  "untracked_copied": [
   ".claude/skills/rainbow-screen-builder/screens.json",
+  ".claude/skills/rainbow-screen-builder/scripts/acceptance.sh",
   ".claude/skills/rainbow-screen-builder/scripts/analyze_reference.py",
   ".claude/skills/rainbow-screen-builder/scripts/compare_to_approved.py",
   ".claude/skills/rainbow-screen-builder/scripts/new_screen_workspace.sh",
