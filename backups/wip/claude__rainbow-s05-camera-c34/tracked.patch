@@ -1,14 +1,24 @@
 diff --git a/tools/kit05/kitgame.html b/tools/kit05/kitgame.html
-index c46152f6..c9804d00 100644
+index c46152f6..60706dc3 100644
 --- a/tools/kit05/kitgame.html
 +++ b/tools/kit05/kitgame.html
-@@ -319,6 +319,10 @@ window.step(0, 0, 0, 0);
+@@ -319,6 +319,20 @@ window.step(0, 0, 0, 0);
  for (let i = 0; i < 3; i++) { renderer.render(scene, camera); await new Promise((r) => setTimeout(r, 100)); }
  window.camInfo = () => ({ p: camera.position.toArray(), q: camera.quaternion.toArray() });
  window.bennyInfo = () => { const qq = new THREE.Quaternion(), p = new THREE.Vector3(); benny.getWorldQuaternion(qq); benny.getWorldPosition(p); const up = new THREE.Vector3(0, 1, 0).applyQuaternion(qq).applyQuaternion(camera.quaternion.clone().invert()); const nW = NUP.clone().applyQuaternion(camera.quaternion.clone().invert()); const sp = p.clone().project(camera); return { rollDeg: Math.atan2(-up.x, up.y) * 180 / Math.PI, camRollDeg: Math.atan2(-nW.x, nW.y) * 180 / Math.PI, x: (sp.x * 0.5 + 0.5) * W, y: (0.5 - sp.y * 0.5) * H, dist: p.distanceTo(camera.position) }; };
 +// round 34 (S3) QA: Benny's on-screen box (canvas px) from his deformed-free mesh vertices with the current pose + camera
-+window.bennyBox = (stride = 7) => { benny.updateMatrixWorld(true); camera.updateMatrixWorld(); const a = bmesh.geometry.attributes.position, v = new THREE.Vector3(); let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
-+  for (let i = 0; i < a.count; i += stride) { v.fromBufferAttribute(a, i).applyMatrix4(bmesh.matrixWorld).project(camera); const x = (v.x + 1) / 2 * W, y = (1 - v.y) / 2 * H; x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); }
++// (the vertex shader's paddling arms, pom-pom and squash are reproduced here: the arms define his left / right extent)
++const sm = (e0, e1, x) => { const k = Math.min(1, Math.max(0, (x - e0) / (e1 - e0))); return k * k * (3 - 2 * k); };
++const rotAx = (r, ax, an) => { const c = Math.cos(an), s = Math.sin(an), cr = new THREE.Vector3().crossVectors(ax, r); return r.clone().multiplyScalar(c).addScaledVector(cr, s).addScaledVector(ax, ax.dot(r) * (1 - c)); };
++const AXX = new THREE.Vector3(1, 0, 0), AXY = new THREE.Vector3(0, 1, 0), AXZ = new THREE.Vector3(0, 0, 1);
++window.bennyBox = (stride = 3) => { benny.updateMatrixWorld(true); camera.updateMatrixWorld(); const a = bmesh.geometry.attributes.position, v = new THREE.Vector3(); let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
++  const uT = U.uT.value, uSw = U.uSwim.value, uPom = U.uPom.value, sq = 1 + 0.03 * uSw * Math.sin(uT * 15);
++  for (let i = 0; i < a.count; i += stride) { let p = new THREE.Vector3().fromBufferAttribute(a, i);
++    const side = p.x >= 0 ? 1 : -1, wa = sm(0.30, 0.37, Math.abs(p.x)) * (1 - sm(0.08, 0.16, Math.abs(p.y + 0.18))), ph = uT * 7.5 + (side > 0 ? 0 : Math.PI);
++    if (wa > 0) { const piv = new THREE.Vector3(side * 0.31, -0.18, 0); let qv = p.clone().sub(piv); qv = rotAx(qv, AXZ, side * uSw * wa * 0.42 * Math.sin(ph)); qv = rotAx(qv, AXY, side * uSw * wa * 0.5 * Math.cos(ph)); p = piv.add(qv); }
++    const wp = sm(0.17, 0.27, p.y); if (wp > 0) { const pp = new THREE.Vector3(0, 0.19, 0.05); let r = p.clone().sub(pp); r = rotAx(r, AXX, uPom.x * wp); r = rotAx(r, AXZ, uPom.y * wp); p = pp.add(r); }
++    p.y = (p.y + 0.5) * sq - 0.5; p.x /= Math.sqrt(sq); p.z /= Math.sqrt(sq);
++    v.copy(p).applyMatrix4(bmesh.matrixWorld).project(camera); const x = (v.x + 1) / 2 * W, y = (1 - v.y) / 2 * H; x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); }
 +  return { x0: +x0.toFixed(1), x1: +x1.toFixed(1), y0: +y0.toFixed(1), y1: +y1.toFixed(1) }; };
  window.ready = true;
  // round 34: ?live=1 = real-time play on a phone / browser (requestAnimationFrame loop, tap to start, FPS + swipe-response meter);

@@ -1,0 +1,82 @@
+diff --git a/tools/kit05/bake_kit.py b/tools/kit05/bake_kit.py
+index da675394..1f41d32a 100644
+--- a/tools/kit05/bake_kit.py
++++ b/tools/kit05/bake_kit.py
+@@ -144,20 +144,29 @@ kit = json.load(open(os.path.join(out, 'kit.json'))); kit['own'] = {'wall': wall
+ json.dump(kit, open(os.path.join(out, 'kit.json'), 'w'), indent=1)
+ print('own pixels: wall', {k: v[2] for k, v in wall_own['rows'].items()}, 'ring', {k: v[2] for k, v in ring_own['rows'].items()})
+ 
+-# ---------------- flowing river tile (round 33c): seamless, full-width open water only (the foam banks are on the lower walls) ----------
+-# A = the user's isolated water art, B = the approved water (+ its water-art fill), both over the kit water rows where the water art covers
+-# the FULL width; cycle = A, B, A reversed, B reversed, each join cross-faded -> period 4 x (t1 - t0), no stretched texels.
++# ---------------- flowing RIVER RIBBON tile (round 34, S1): river-local coordinates, sharp, no stretched texels ----------------
++# Round 33's tile filled the columns outside the water art's river with flow-stretched texels (blocky pink / red bars) and joined
++# t-reversed copies (X-shaped mirror pattern = the "repeating grid"). The ribbon is sampled in the game at (u = lateral - river
++# centre c(t), v = t + flow), so it bends with the world-anchored river. Source = the SHARPEST painted water (the kit rows where the
++# isolated water art covers the full floor width, t ~0.9-2.0: near Benny, ~300 px per world unit): A = the approved water (+ its
++# water-art fill), B = the user's isolated water art (colour-matched), straightened along c(t); columns beyond the floor edge
++# (|u| > 0.70 happens on the inner side of a bend) are the pink edge band REFLECTED at the floor edge (pink stays at the river's
++# edge; the foam bank is drawn over it in the game). Cycle A, B, A mirrored left-right, B mirrored, joins cross-faded: no t-reversal.
+ cov = (isoW[..., 3] > 200).mean(1)                                   # full-width coverage per log row
+ okr = np.nonzero((cov > 0.985) & (tv[:, 0] > 0.9))[0]; r0 = okr[0]; r1 = r0
+ while r1 + 1 < VH and cov[r1 + 1] > 0.985: r1 += 1                  # first unbroken full-width run only (near water, crisp)
+ RT0 = float(tv[r0, 0]); RT1 = float(tv[r1, 0])
+ seg_n = 384                                                          # rows per segment (linear in t)
++RU = 1.05; RIB_W = 1536                                              # ribbon lateral range u in [-RU, RU]
+ def strip(srcimg):
+     ts = RT0 + (np.arange(seg_n) + 0.5) / seg_n * (RT1 - RT0); rf = np.log(ts / T0) / np.log(T1 / T0) * VH - 0.5
+-    return np.stack([cv2.remap(srcimg[..., ch].astype(np.float32), np.tile(np.arange(VW, dtype=np.float32), (seg_n, 1)),
+-                                np.repeat(rf.astype(np.float32)[:, None], VW, 1), cv2.INTER_LINEAR) for ch in range(3)], -1)
+-SA, SB = strip(isoC), strip(water)
+-parts = [SA, SB, SA[::-1], SB[::-1]]; X = seg_n // 4
++    u = np.linspace(-RU, RU, RIB_W)[None, :]; lat = river_center(ts)[:, None] + u
++    lat = np.where(np.abs(lat) > HWD, np.sign(lat) * (2 * HWD - np.abs(lat)), lat)          # reflect at the floor edge
++    col = (lat + HWD) / (2 * HWD) * (VW - 1)
++    return np.stack([cv2.remap(srcimg[..., ch].astype(np.float32), col.astype(np.float32), np.repeat(rf.astype(np.float32)[:, None], RIB_W, 1),
++                               cv2.INTER_LINEAR, borderMode=cv2.BORDER_REFLECT) for ch in range(3)], -1)
++SA, SB = strip(water), strip(isoC)
++parts = [SA, SB, SA[:, ::-1], SB[:, ::-1]]; X = seg_n // 4
+ wv = ((np.arange(X) + 0.5) / X)[:, None, None]
+ tile = parts[0]
+ for nxt in parts[1:]:                                                # overlapping joins: blend X rows, the next part continues after them
+diff --git a/tools/kit05/kit_model.py b/tools/kit05/kit_model.py
+index a80cc912..69801bc9 100644
+--- a/tools/kit05/kit_model.py
++++ b/tools/kit05/kit_model.py
+@@ -42,6 +42,8 @@ HW = CAM_H + CAM_OFF[1] * RT                                         # axis heig
+ Z2 = FOC * RT / RING2_PX                                             # axial depth of painted ring 2 from the start camera
+ S = Z2 * np.log(RATIO)                                               # ring spacing: g'(Z2) = 1 and g(z + S) = RATIO * g(z) beyond Z2
+ def ring_t(k): return Z2 + (k - 2) * S                               # axial position of ring k (ring 2 = painted ring 2)
++_bd = cam_dir(432, 1180); B0 = _bd * (-CAM_H / (_bd @ NUP))          # Benny's painted water contact point (same as kitgame.html)
++TB0 = float(B0 @ A); LATB0 = float((B0 - A0) @ RR)                    # his axial start and lateral offset from the axis
+ 
+ def g(z):
+     """camera-relative apparent depth along the axis (z = true axial distance from the camera)"""
+@@ -64,6 +66,27 @@ def wall_point(theta, t, radius=RT):
+ 
+ def height_above_water(P): return np.asarray(P) @ PN - PD
+ 
++# ---- round 34 (S1): the river's WORLD-ANCHORED centre line (lateral offset along RR from the tunnel axis, world units) ----
++# Painted stretch (axial t <= ~11): measured on the APPROVED picture cast onto the kit water (tools/kit05/bake_river.py prints the
++# check): the painted coin trail (t 2.96 +0.06, 4.05 +0.28, 5.50 +0.04, 7.13 -0.31, 8.86 -0.18, 9.87 +0.07) and the cyan channel's
++# centroid (t 2.3 -0.16, 4.3 +0.21, 5.8 +0.04, 7.3 -0.26, 8.8 -0.17, 10.3 +0.34) agree: S-bends ~3 u apart, ~0.26 u to each side.
++# Apexes are joined by half-cosines (C1, zero slope at each apex = natural meanders). Beyond the painting the same character
++# continues with seeded random spacing (2.6-3.8 u, i.e. 1.9-2.7 s at 1.4 u/s) and amplitude (0.15-0.28 u): no fixed period.
++RIVER_LAT_START = LATB0                                              # the river centre passes through Benny's painted start point
++RIVER_APEX_PAINTED = [(2.30, -0.05), (4.25, 0.26), (7.80, -0.29), (10.90, 0.27)]
++RIVER_AMAX = 0.29                                                    # |centre| never exceeds this (water floor half chord 0.70)
++def _river_apexes(t_end=95.0, seed=34):
++    rng = np.random.default_rng(seed); ap = list(RIVER_APEX_PAINTED)
++    while ap[-1][0] < t_end:
++        t, a = ap[-1]; ap.append((t + rng.uniform(2.6, 3.8), -np.sign(a) * rng.uniform(0.15, 0.28)))
++    return ap
++def river_center(t):
++    """lateral offset (along RR, from the tunnel axis) of the river centre at axial t; flat behind Benny's start"""
++    t = np.atleast_1d(np.asarray(t, float)); ap = [(TB0, RIVER_LAT_START)] + _river_apexes(); ts = np.array([p[0] for p in ap]); cs = np.array([p[1] for p in ap])
++    k = np.clip(np.searchsorted(ts, t) - 1, 0, len(ts) - 2); f = np.clip((t - ts[k]) / (ts[k + 1] - ts[k]), 0, 1)
++    c = cs[k] + (cs[k + 1] - cs[k]) * (1 - np.cos(np.pi * f)) / 2
++    return np.clip(np.where(t <= ts[0], cs[0], c), -RIVER_AMAX, RIVER_AMAX)
++
+ def export():
+     return {'A': A.tolist(), 'NUP': NUP.tolist(), 'RR': RR.tolist(), 'A0': A0.tolist(), 'RT': RT, 'RING_IN': RING_IN, 'RING_W': RING_W,
+             'Z2': float(Z2), 'S': float(S), 'HW': float(HW), 'PN': PN.tolist(), 'PD': float(PD), 'VP': VP, 'RATIO': RATIO, 'CAM_OFF': CAM_OFF}

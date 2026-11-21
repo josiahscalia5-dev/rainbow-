@@ -1,0 +1,137 @@
+diff --git a/tools/kit05/controls.js b/tools/kit05/controls.js
+index a7405a94..5372ee75 100644
+--- a/tools/kit05/controls.js
++++ b/tools/kit05/controls.js
+@@ -4,20 +4,38 @@
+ // splash + droplets + bubbles on leaving / entering the water, and the follow-camera offsets.
+ // Everything is driven by the game clock passed to window.step(t, dt, ...) so tests stay deterministic.
+ // Benny faces +t (away from the camera, the approved picture shows his back); his model +x is the river's right (+r).
++// Round 34 (S2): lane swipes act at once, also in the middle of a lane change (a reversal redirects him smoothly) and in the air /
++// under water; leap and dive are Hermite / ballistic height segments that can hand over to each other (swipe down in the air = dive
++// straight in, swipe up under water = leap out), a buoyancy spring settles him after every landing / resurfacing; the bank is
++// rate-limited; paws paddle alternately (power stroke down and back), his lower back flutter-kicks, and swimfx.js adds the wake,
++// paddle ripples, kick foam and the streaming painted splash. Lateral offsets are along the path frame's r (frameAt(s)).
++import { installSwimFx } from './swimfx.js';
+ 
+ export const TUNING = {
+   LANE: 0.22,          // lateral offset of the side lanes (world units; river half-width ~0.30-0.35)
+   LAT_MAX: 0.26,       // hard clamp of his lateral offset (keeps him in the water)
+   LANE_OMEGA: 16,      // critically damped lane spring: ~95 % of a lane change in 0.28 s, no overshoot
+-  LANE_BUSY: 0.16,     // a lane change blocks the next move for this long (then the queued move starts)
+-  LEAN_K: 0.2,         // bank angle (rad) per unit lateral speed (peak lateral speed ~1.3 u/s -> ~0.26 rad)
+-  LEAN_MAX: 0.3,
++  LAT_VMAX: 1.65,      // lateral speed cap (u/s) = 0.055 u per 1/30 s frame: double swipes / reversals never jump
++  LANE_BUSY: 0,        // (round 34: lane swipes are never blocked or queued; kept for URL compatibility)
++  LEAN_K: 0.2, LEAN_MAX: 0.3, // (round-32 bank, superseded by BANK_*; kitgame's ?c_LEAN_K default no longer has an effect)
++  BANK_K: 0.15,        // bank angle (rad) per unit lateral speed: peak ~1.3 u/s -> target ~11 deg
++  BANK_MAX: 0.26,      // never more than 15 deg
++  BANK_OMEGA: 12,      // bank follows its target through a critically damped spring ...
++  BANK_RATE: 1.25,     // ... and never changes faster than 1.25 rad/s (2.4 deg per 1/30 s frame)
+   YAW_K: 0.12,         // body turns toward the move (rad per u/s)
+-  ROLL_STROKE: 0.045,  // body roll with each paddle stroke (rad)
++  ROLL_STROKE: 0.03,   // body roll with each paddle stroke (rad), smaller while banking
+   PADDLE_BOOST: 0.9,   // paddle-rate increase at full lateral speed (x1.9)
+-  LEAP_T: 0.62,        // leap duration (s)
++  ARM_AMP: 0.55,       // paw up / down swing (rad) of the paddle stroke (round 32: 0.42)
++  BOB_AMP: 0.02,       // body lift on each power stroke (model units)
++  KICK_RATE: 11,       // flutter-kick angular rate (rad/s of the kick clock)
++  LEAP_T: 0.74,        // leap duration (s): a 0.6-height leap at 0.74 s keeps every step < 0.06 u per frame (round 32: 0.62 -> 0.067)
+   LEAP_FRAC: 0.6,      // leap peak as a fraction of his full height
+-  DIVE_DOWN: 0.24, DIVE_HOLD: 0.38, DIVE_UP: 0.26, // dive phases (s); 0.24 s sink keeps every height step < 0.06 u per 1/30 s frame
++  DIVE_DOWN: 0.3, DIVE_HOLD: 0.34, DIVE_UP: 0.3, // dive phases (s); with Hermite segments every height step stays < 0.06 u per frame
++  DIVE_POP: 0.55,      // upward speed (u/s) with which he pops back through the surface (buoyancy bob takes it over)
++  VV_MAX: 1.75,        // vertical speed cap (u/s) for planned segments (slam into a dive from the air)
++  LAND_BOB: 0.3,       // share of the landing speed that becomes a buoyant dip after a leap
++  BOB_OMEGA: 11, BOB_ZETA: 0.4, // buoyancy spring (bob after landing / resurfacing)
++  V_BUFFER: 0.22,      // a leap swipe during a leap (dive during a dive) is remembered only this close to its end
+   DIVE_FRAC: 0.8,      // fraction of his height under the surface at the bottom of the dive (rest: 0.22)
+   PITCH_K: 0.13,       // nose-up / nose-down per unit vertical speed (rad per u/s)
+   PITCH_MAX: 0.28,
+@@ -50,19 +68,19 @@ export function installControls(ctx) {
+   const P = { ...TUNING };
+   for (const k of Object.keys(P)) { const v = q.get('c_' + k); if (v != null && v !== '' && !isNaN(+v)) P[k] = +v; } // URL tuning, e.g. ?c_LANE=0.2
+   const LEAP_H = P.LEAP_FRAC * bennyFullH, DIVE_D = (P.DIVE_FRAC - 0.22) * bennyFullH;
+-  const DIVE_T = P.DIVE_DOWN + P.DIVE_HOLD + P.DIVE_UP;
++  const LEAP_V0 = 4 * LEAP_H / P.LEAP_T, LEAP_G = 8 * LEAP_H / (P.LEAP_T * P.LEAP_T);   // ballistic take-off speed and gravity
+   const X = new THREE.Vector3(1, 0, 0), Y = new THREE.Vector3(0, 1, 0), Zv = new THREE.Vector3(0, 0, 1);
+   const qa = new THREE.Quaternion(), v1 = new THREE.Vector3(), v2 = new THREE.Vector3(), v3 = new THREE.Vector3();
+ 
+   // ---------------- state ----------------
+   const S = {
+-    clock: 0, swimClock: 0, lane: 0,
++    clock: 0, swimClock: 0, kickClock: 0, lane: 0,
+     lat: { x: 0, v: 0 }, alat: 0,
+-    h: 0, vh: 0, ah: 0,
++    h: 0, vh: 0, ah: 0, hm: 0, vm: 0, bob: { x: 0, v: 0 },
+     pitch: { x: 0, v: 0 }, lean: { x: 0, v: 0 }, yaw: { x: 0, v: 0 },
+     pomSide: { x: 0, v: 0 }, pomFwd: { x: 0, v: 0 },
+     camLat: { x: 0, v: 0 }, camH: { x: 0, v: 0 },
+-    move: null, queued: null, busyUntil: 0, swim: 1, roll: 0, diveK: 0,
++    move: null, queued: null, qUntil: 0, swim: 1, roll: 0, diveK: 0, tuck: 0, latK: 0, kickA: 1, events: [], lastEv: -1,
+     hudPulse: 0, picked: 0, lastPick: null, done: false, sStop: Infinity,
+   };
+   const c = { lat: 0, h: 0, camLat: 0, camH: 0 }; // read by play3.html each step
+@@ -71,11 +89,18 @@ export function installControls(ctx) {
+   // ---------------- input: real touch swipes, mouse / pen drags, keyboard, test hook ----------------
+   const log = []; const input = { log, swipe: (dir) => request(dir, 'api') };
+   window.input = input;
++  // Round 34 rules (what feels best in a runner, and why):
++  //  * left / right ALWAYS act at once, also during a lane change (a reversal redirects him smoothly from where he is, with his
++  //    current speed: no waiting, no snap), in the air and under water (the player steers a leap or a dive into the next lane —
++  //    the most responsive choice, as in Subway Surfers; queueing them made a lane change arrive up to 0.6 s late).
++  //  * down during a leap = he dives straight in from the air (smooth hand-over from his current height and speed);
++  //    up under water = he swims up and leaps out of the surface without stopping (the rising speed hands over to the leap).
++  //  * up during a leap / down during a dive is remembered only in its last V_BUFFER s (then it starts on landing / resurfacing);
++  //    earlier it is ignored, so a nervous double swipe never triggers a surprise move long after.
+   function request(dir, src) {
+     if (!['left', 'right', 'up', 'down'].includes(dir)) return false;
+-    log.push({ dir, src, clock: +S.clock.toFixed(3) });
+-    if (S.move || S.clock < S.busyUntil) { S.queued = dir; return true; } // one move at a time, queue at most one (latest wins)
+-    start(dir); return true;
++    const e = { dir, src, clock: +S.clock.toFixed(3) }; log.push(e);
++    e.result = start(dir); return true;
+   }
+   // Gestures are read on the WINDOW, not only on the canvas: any full-screen overlay added later (HUD, vignette, title,
+   // water layers) can never swallow a swipe. Touches that start on a real control (button, link, input, [data-noswipe])
+@@ -112,13 +137,38 @@ export function installControls(ctx) {
+   const KEYS = { ArrowLeft: 'left', KeyA: 'left', ArrowRight: 'right', KeyD: 'right', ArrowUp: 'up', KeyW: 'up', ArrowDown: 'down', KeyS: 'down' };
+   window.addEventListener('keydown', (e) => { const d = KEYS[e.code]; if (!d || e.repeat) return; e.preventDefault(); request(d, 'key'); });
+ 
++  // vertical moves = a list of height segments on the module clock: Hermite (p0, m0 -> p1, m1 over T) or ballistic (v0, g)
++  const herm = (g, k) => { const u = clamp(k / g.T, 0, 1), u2 = u * u, u3 = u2 * u;
++    return (2 * u3 - 3 * u2 + 1) * g.p0 + (u3 - 2 * u2 + u) * g.T * g.m0 + (-2 * u3 + 3 * u2) * g.p1 + (u3 - u2) * g.T * g.m1; };
++  const segH = (g, k) => (g.ball ? g.v0 * k - 0.5 * g.g * k * k : herm(g, k));
++  function moveAt(m, k) {   // -> { h, seg, kSeg, over }
++    let k0 = 0;
++    for (const g of m.segs) { if (k < k0 + g.T) return { h: segH(g, k - k0), seg: g, kSeg: k - k0, over: false }; k0 += g.T; }
++    const g = m.segs[m.segs.length - 1]; return { h: g.ball ? 0 : g.p1, seg: g, kSeg: g.T, over: true };
++  }
++  const moveLeft = (m) => m.segs.reduce((a, g) => a + g.T, 0) - (S.clock - m.t0);
++  const startLeap = () => { S.move = { kind: 'leap', t0: S.clock, segs: [{ name: 'air', ball: true, T: P.LEAP_T, v0: LEAP_V0, g: LEAP_G }] }; };
++  // a dive from where he is now (h0 = his move height, v0 = its speed): down -> hold -> pop back up through the surface
++  const startDive = (h0, v0) => {
++    const Td = Math.max(P.DIVE_DOWN, 1.5 * Math.abs(h0 + DIVE_D) / P.VV_MAX);
++    S.move = { kind: 'dive', t0: S.clock, segs: [{ name: 'down', T: Td, p0: h0, m0: v0, p1: -DIVE_D, m1: 0 }, { name: 'hold', T: P.DIVE_HOLD, p0: -DIVE_D, m0: 0, p1: -DIVE_D, m1: 0 },
++      { name: 'up', T: P.DIVE_UP, p0: -DIVE_D, m0: 0, p1: 0, m1: P.DIVE_POP }] };
++  };
+   function start(dir) {
+     if (dir === 'left' || dir === 'right') {
+       const nl = clamp(S.lane + (dir === 'left' ? -1 : 1), -1, 1);
+-      if (nl === S.lane) { S.pomSide.v += (dir === 'left' ? 1 : -1) * 1.2; return; } // at the river edge: only a little wobble
+-      S.lane = nl; S.busyUntil = S.clock + P.LANE_BUSY; return;
++      if (nl === S.lane) { S.pomSide.v += (dir === 'left' ? 1 : -1) * 1.2; return 'edge'; } // at the river edge: only a little wobble
++      S.lane = nl; return S.move ? 'lane (' + S.move.kind + ')' : 'lane';
++    }
++    const m = S.move;
++    if (!m) { if (dir === 'up') startLeap(); else startDive(S.hm, S.vm); return dir === 'up' ? 'leap' : 'dive'; }
++    if (m.kind === 'leap' && dir === 'down') { startDive(S.hm, S.vm); return 'dive from the air'; }
++    if (m.kind === 'dive' && dir === 'up') {   // swim up now and leap out: rising speed at the surface = the leap's take-off speed
++      const cur = moveAt(m, S.clock - m.t0), T = cur.seg.name === 'up' ? Math.max(0.12, cur.seg.T - cur.kSeg) : P.DIVE_UP;
++      S.move = { kind: 'dive', t0: S.clock, segs: [{ name: 'up', T, p0: S.hm, m0: S.vm, p1: 0, m1: LEAP_V0 }], thenLeap: true }; return 'leap out of the dive';
+     }
+-    S.move = { kind: dir === 'up' ? 'leap' : 'dive', t0: S.clock, fx: 0 };
++    if (moveLeft(m) <= P.V_BUFFER) { S.queued = dir; return 'buffered'; }   // same kind again near its end: starts on landing / resurfacing
++    return 'ignored';
+   }
+ 
+   // ---------------- coin trail (round 32b): ONE single-file trail of 26 coins, HUD 1,420 -> 1,680 when all are collected ----------------
