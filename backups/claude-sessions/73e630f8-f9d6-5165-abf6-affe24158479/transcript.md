@@ -2923,3 +2923,70 @@ I am not asking for another plan, another plugin, or another explanation. I am t
 
 Start with Screen 05 now.
 
+### 🤖 Claude — 2026-11-21T01:14:47.144Z
+
+Starting Screen 05 now. First I'm looking at its approved picture and how the game handles coins, because the coins in the pictures have to disappear when Benny collects them.
+
+### 🤖 Claude — 2026-11-21T01:14:47.595Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/references/05_flow_into_the_current.png"}`
+
+### 🧑 User — 2026-11-21T01:14:47.615Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T01:14:48.251Z
+
+> 🔧 **Bash** `{"command": "sed -n '1,80p' src/gameplay/coins.ts", "description": "Read how coins are defined and collected"}`
+
+### 🧑 User — 2026-11-21T01:14:48.317Z
+
+> ↩︎ result: /**
+>  * Gold $ coins anchored to the course (s, lateral, height). Real pickups: distance test against
+>  * Benny each frame; collected coins pop + sparkle and the counter increments by COIN_VALUE.
+>  * Layout follows the coin trails visible in the references (03 spiral trail, 04 left edge,
+>  * 05/07 snaking centre line, 06 on the arch crest, 08–10 toward the towel).
+>  */
+> import * as THREE from 'three';
+> import type { Course, StageId } from '../world/course';
+> import { canvasTexture } from '../world/materials';
+> import { coreLateral, flag05 } from '../vfx/waterRibbon';
+> import coins08 from '../../assets/textures/match08/coins08.json';
+> import coins08px from '../../assets/textures/match08/coins08px.json';
+> 
+> export const COIN_VALUE = 10;
+> 
+> /** scale: coin size factor (1 = 1.0 u diameter); tilt: radians the coin leans back (top away from the camera) */
+> export interface CoinDef { s: number; lat: number; h: number; stage: StageId; scale?: number; tilt?: number; faceTo?: [number, number, number] }
+> 
+> /**
+>  * 05 (ref 05, measured): ≈10 coins on the electric-cyan core winding to the VP. The nearest one is
+>  * ≈95 px wide just above Benny's pom (474, 726), then 64 → 55 → 42 → 28 → 19 px: the spacing in depth
+>  …[+4253 chars]
+
+### 🤖 Claude — 2026-11-21T01:15:27.748Z
+
+> 🔧 **Bash** `{"command": "sed -n '80,241p' src/gameplay/coins.ts | grep -n \"update\\|collected\\|dist\\|pick\\|resetUntil\\|defs\\|visible\\|lat\\b\\|Math.abs\" | head -40", "description": "Find the coin pickup test"}`
+
+### 🧑 User — 2026-11-21T01:15:27.788Z
+
+> ↩︎ result: 7:      // keep every picture coin collectible: if it lies beyond pickup reach (|lateral| > 1.1), slide it along its own view
+> 10:      if (Math.abs(r.lat) > 1.1) {
+> 12:        let pick: { k: number; r: typeof r; h: number } | null = null;
+> 15:          if (Math.abs(rq.lat) <= 1.0 && hq >= 0.3 && (!pick || Math.abs(k - 1) < Math.abs(pick.k - 1))) pick = { k, r: rq, h: hq };
+> 17:        if (pick) { r = pick.r; h = pick.h; scale = c.scale * pick.k; }
+> 19:      add(course.stageAtS(r.s).id, r.s, r.lat, h, { scale, faceTo: cam });
+> 22:    // 08 view — collected on the way in, never in the approved view
+> 37:  defs: CoinDef[];
+> 38:  collected: Uint8Array;
+> 39:  /** returns number of coins picked up this frame */
+> 40:  update(time: number, dt: number, bennyS: number, bennyLat: number): number;
+> 41:  /** mark coins before s as collected (deterministic QA checkpoint state) or reset all */
+> 42:  resetUntil(s: number): void;
+> 46:  const defs = coinLayout(course);
+> 93:  const mesh = new THREE.InstancedMesh(geo, [side, face, face], defs.length);
+> 98:  const collected = new Uint8Array(defs.length);
+> 99:  const popT = new Float32Array(defs.length).fill(-1);
+> 107:    defs.forEach((d, i) => {
+> 110:      if (collected …[+831 chars]
+
