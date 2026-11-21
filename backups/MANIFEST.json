@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3267,
-   "sha256": "65672702e2257d6bfd9ef78e256806480e331a9f1f67cdb059afcc8df2a48def"
+   "sha256": "cf1db9c3726914935895b4d94ed3619b6b0e4882e6eff60a94b06760f4bb6831"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -7054,7 +7054,7 @@
   {
    "path": "backups/wip/detached-d8e047d33e/INFO.json",
    "bytes": 2379,
-   "sha256": "b25c51ed43c455c100d92a476dcde34c3cdf0030d0a95a73fe6269d0da733f4c"
+   "sha256": "d012aba68c22ca46e5e11a7989e9b4e1950a5201c5f1afbdedc2625d1ae326e9"
   },
   {
    "path": "backups/wip/detached-d8e047d33e/tracked.patch",
