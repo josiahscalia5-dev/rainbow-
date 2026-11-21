@@ -2857,3 +2857,14 @@ The full run with every frame recorded is going (about 30 minutes). Saving the r
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow- && python3 scripts/rainbow-autosave.py --reason manual:r33-report-harness 2>&1 | grep -E '\"commit\"|skipping'; timeout 60 git ls-remote origin refs/heads/ccr-81d66c17-i0ooo8; git rev-parse HEAD; sha256sum -c scripts/reference.sha256 2>&1 | grep -c \": OK\"", "description": "Autosave, verify remote and approved references"}`
 
+### 🧑 User — 2026-11-21T15:24:35.720Z
+
+> ↩︎ result: "commit": "16fcbd65657537b3ff83965dab0dbca72f56e8ed",
+> 16fcbd65657537b3ff83965dab0dbca72f56e8ed	refs/heads/ccr-81d66c17-i0ooo8
+> 16fcbd65657537b3ff83965dab0dbca72f56e8ed
+> 13
+
+### 🤖 Claude — 2026-11-21T15:24:37.936Z
+
+> 🔧 **Bash** `{"command": "until grep -qE \"frame 350 |exit=|rror\" /tmp/rainbow_r33/runs/kit_full2.log 2>/dev/null; do sleep 5; done; grep -E \"frame [0-9]+ \" /tmp/rainbow_r33/runs/kit_full2.log | tail -1 | cut -c1-60; grep -E \"rror|exit=\" /tmp/rainbow_r33/runs/kit_full2.log | head -3", "description": "Wait for full run to reach frame 350", "timeout": 1500000}`
+
