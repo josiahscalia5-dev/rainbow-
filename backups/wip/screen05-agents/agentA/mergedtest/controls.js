@@ -26,7 +26,6 @@ export const TUNING = {
   SWIPE_PX: 30,        // swipe threshold (CSS px)
   COIN_R: 0.13,        // coin pick-up radius around his body segment (3D)
   BODY_LO: 0.06, BODY_HI: 0.30, // body segment above his water point (world units, scales with height)
-  R1_LAT6: 0.14, R1_LAT7: 0.18, R1_LAT8: 0.20, // run 1 coins 6-8 (beyond the reliably measured five), drifting right with the painted S-river
   END_MARGIN: 1.6,     // done this far before the last ring (S_END)
   GLIDE: 0.5,          // after done he glides to rest within this path length (exponential, no jolt)
 };
@@ -122,17 +121,21 @@ export function installControls(ctx) {
   }
 
   // ---------------- coin trail (round 32b): ONE single-file trail of 26 coins, HUD 1,420 -> 1,680 when all are collected ----------------
-  // Run 1 = the approved picture's trail (frame 0), then runs of 3-5 coins ~0.5 apart with natural gaps: two ease into a side lane,
-  // two are leap arcs, one weaves back to the centre. Never two coins closer than MIN_GAP along the path (no towers, no clusters).
+  // Run 1 = the approved picture's trail (frame 0), then runs of 3-4 coins 0.55-0.65 apart with natural gaps: two ease into a side
+  // lane, two are rising leap arcs (rising only: a coin after the top would sit right over the next one on screen), one weaves. Never two coins closer than MIN_GAP along the path (no towers, no clusters).
   // Each entry: [s, lat, h] = path length, lateral offset (+ = river right), height of the coin's lowest point above the water
   // line rule (centre = coinD * 0.75 + h above the water, as the old water coins).
+  // Run 1 coins 1-4 = the approved picture's coins, fitted on the start camera of the merged page (screen error < 3 px; agentB's
+  // rebuilt trail differs from the old one, so these replace the lead's back-projected (s, lat)); coins 5-8 continue toward the
+  // vanishing point as far right as the river allows (|lat| <= 0.22). Lateral zig-zags + 0.5-0.66 spacing were chosen with
+  // coin_overlap_model.py / coin_layout_search.py on the recorded camera path so no two coins with r >= 6 px overlap on screen.
   const RUNS = [
-    { kind: 'painting', pts: [[1.03, -0.007, 0], [1.56, 0.037, 0], [2.00, -0.073, 0], [2.44, -0.069, 0], [2.97, 0.088, 0], [3.47, P.R1_LAT6, 0], [3.97, P.R1_LAT7, 0], [4.47, P.R1_LAT8, 0]] },
-    { kind: 'lane-right', pts: [[7.0, 0.03, 0], [7.5, 0.10, 0], [8.0, 0.18, 0], [8.5, 0.22, 0]] },
-    { kind: 'leap-arc', pts: [[11.8, 0.03, 0.10], [12.3, 0.01, 0.26], [12.8, -0.01, 0.42], [13.3, -0.03, 0.24]] },
-    { kind: 'lane-left', pts: [[16.8, -0.03, 0], [17.3, -0.10, 0], [17.8, -0.18, 0], [18.3, -0.22, 0]] },
-    { kind: 'weave', pts: [[21.6, -0.08, 0], [22.1, -0.02, 0], [22.6, 0.04, 0]] },
-    { kind: 'final-arc', pts: [[26.5, -0.03, 0.12], [27.0, 0.0, 0.27], [27.5, 0.03, 0.42]] },
+    { kind: 'painting', pts: [[1.13, 0.025, 0], [1.77, 0.12, 0], [2.34, 0.15, 0], [2.94, 0.105, 0], [3.6, 0.22, 0], [4.1, 0.02, 0], [4.65, 0.21, 0], [5.2, 0.09, 0]] },
+    { kind: 'lane-right', pts: [[7.4, -0.04, 0], [8.0, 0.11, 0], [8.6, 0.22, 0], [9.2, 0.07, 0]] },
+    { kind: 'leap-arc', pts: [[12.0, 0.02, 0.10], [12.55, -0.02, 0.26], [13.1, 0.02, 0.42]] },
+    { kind: 'lane-left', pts: [[16.6, 0.04, 0], [17.25, -0.07, 0], [17.8, -0.22, 0], [18.4, -0.11, 0]] },
+    { kind: 'weave', pts: [[21.6, 0.06, 0], [22.15, -0.06, 0], [22.7, 0.06, 0], [23.25, -0.05, 0]] },
+    { kind: 'final-arc', pts: [[26.6, -0.02, 0.12], [27.15, 0.02, 0.27], [27.7, -0.02, 0.42]] },
   ];
   // level end: S_END = trail s nearest to the LAST ring (TR.XB + offsets[N-1]); a track without XB ends at its trail end.
   const TS = TR.trail_s, TEND = TS[TS.length - 1];

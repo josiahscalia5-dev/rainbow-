@@ -2228,3 +2228,17 @@ Please preserve my approved Screen 05 artwork and test the real full-length game
 
 Only show me the final video when the complete level passes all required tests.
 
+### 🤖 Claude — 2026-11-21T13:25:11.020Z
+
+Understood: no shortening, no speed-up, no scenery removed, and the test runs from your start view to the real ending. First I'm measuring what the page actually does at the end of the built track today.
+
+### 🤖 Claude — 2026-11-21T13:25:17.872Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad; cd $SP && PLAN=fixed FRAMES=0:0 NO_MP4=1 NODE_PATH=$(npm root -g) timeout 1500 node final_acceptance.cjs $SP/merged $SP/len_probe 26 1.4 > $SP/len_probe.log 2>&1; python3 -I - <<'EOF'\nimport json\nL=json.load(open('/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/len_probe/run_log.json'))\nfr=[x for x in L if 'i' in x]\nT=json.load(open('/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/merged/track_w/track.json'))\nprint('built ri …[+540 chars]`
+
+### 🧑 User — 2026-11-21T13:25:59.496Z
+
+> ↩︎ result: built river path length (trail end): 32.160000000000004 | sections (ring-to-ring copies): 14
+> frames simulated: 780 last s 36.353 tile 14
+> Shell cwd was reset to /home/user/rainbow-
+

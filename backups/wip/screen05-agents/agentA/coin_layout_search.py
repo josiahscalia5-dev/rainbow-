@@ -1,12 +1,12 @@
 # Local search on top of coin_overlap_model.py: nudges the coins of overlapping pairs (s +0..0.15, lat +-0.04) until no two coins with
-# r >= 6 px come within MARGIN px on the recorded camera path. Keeps |lat| <= 0.22, h unchanged, path gaps >= 0.45 inside a run.
+# r >= 6 px come within MARGIN px (coins 1-4 = fitted to the approved picture are frozen) on the recorded camera path. Keeps |lat| <= 0.22, h unchanged, path gaps >= 0.45 inside a run.
 # usage: python3 -I coin_layout_search.py <coins_level_logic.json> <track.json> <layout_in.json> <layout_out.json> [margin_px=2]
 import json, sys, math, importlib.util, itertools
 spec = importlib.util.spec_from_file_location('m', __file__.replace('coin_layout_search.py', 'coin_overlap_model.py'))
 sys.argv, args = sys.argv[:3], sys.argv[1:]
 M = importlib.util.module_from_spec(spec); spec.loader.exec_module(M)
 L = json.load(open(args[0])); lay = [list(c) for c in json.load(open(args[2]))]; MARGIN = float(args[4]) if len(args) > 4 else 2.0
-cams = L['cam_path']
+cams = L['cam_path']; FROZEN = {0, 1, 2, 3}  # run-1 coins fitted to the approved picture: never moved
 def pairs(lay):
     import numpy as np
     P = [M.coin_pos(*c) for c in lay]; out = {}
@@ -31,6 +31,7 @@ for it in range(12):
     best = None
     for (a, b) in pr:
         for i in (b, a):
+            if i in FROZEN: continue
             for ds, dl in itertools.product((0, 0.05, 0.1, 0.15), (-0.04, -0.02, 0, 0.02, 0.04)):
                 if ds == 0 and dl == 0: continue
                 c = list(lay[i]); c[0] = round(c[0] + ds, 3); c[1] = round(max(-0.22, min(0.22, c[1] + dl)), 3)
