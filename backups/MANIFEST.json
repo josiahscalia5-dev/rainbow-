@@ -794,7 +794,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 26528,
-   "sha256": "8107d2d9e90a7b3103ae5158eb71dd9fd3516d0f694c4c93d4f8396fcf5cbf5e"
+   "sha256": "1c19cc14ffe31a77d638ac70a6197a4de5365d16501b647d9eb4a481a4e78dec"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3153,
-   "sha256": "825e001b66a391c9510967225f48949cc56e211e600d4611795aa04b6678f197"
+   "sha256": "1f4d7907fdd482e3b6afd3d760d3960387180e9689a79a003827cbb42c206b1c"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -7734,7 +7734,7 @@
   {
    "path": "backups/wip/screen05-agents/LAST_SYNC_UTC",
    "bytes": 33,
-   "sha256": "ba642d77d3aaec1c8c5d4b24027f3cb2c0843ed3959b7370c3b9ffe199fef258"
+   "sha256": "b2b69d9111350434b3ae9f3a4e03b1eb3a90069d449c06e2f2a61ddc6e033067"
   },
   {
    "path": "backups/wip/screen05-agents/WORKSPACE",
@@ -39848,8 +39848,8 @@
   },
   {
    "path": "tools/kit05/kitgame.html",
-   "bytes": 30420,
-   "sha256": "f9cb0884eb2a19cbc1ea05aaec0230b197d8c96b79bd6495ecfc2243a1a1c177"
+   "bytes": 31174,
+   "sha256": "6f84b4fc47e35e221ae844f45db09583c97f8ffb3d798f0a913383f568a3e920"
   },
   {
    "path": "tools/kit05/painted_coins.py",
@@ -40173,8 +40173,8 @@
   },
   {
    "path": "tools/marble05/viewer/final_acceptance.cjs",
-   "bytes": 16020,
-   "sha256": "e7aa3539455e239eb1771a856f51ce1012175fd3f94d5bc5c2c89c9d393c4dad"
+   "bytes": 16000,
+   "sha256": "118202de74626e579bbec0c246de4f632574b9d7e9219b4632850828a22658cc"
   },
   {
    "path": "tools/marble05/viewer/glint.png",

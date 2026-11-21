@@ -3660,3 +3660,65 @@ The shorter shift raises the swimming frames to 0.76–0.79. I'll make it the de
 
 > 🔧 **Bash** `{"command": "until grep -qE \"exit=\" /tmp/rainbow_r33/runs/kit_full5.log 2>/dev/null; do sleep 10; done; tail -1 /tmp/rainbow_r33/runs/kit_full5.log; cd /home/user/rainbow-/tools/marble05/viewer && timeout 1800 python3 -I visual_check.py /tmp/rainbow_r33/runs/kit_full5 /home/user/rainbow-/references/05_flow_into_the_current.png > /dev/null 2>&1; timeout 300 python3 -I acceptance_verdict.py /tmp/rainbow_r33/runs/kit_full5 2>&1 | grep -E \"^# |\\| (G|V)[0-9]+ \" | sed -E 's/\\| `[^`]{140,}`/| (long value)/' | cut -c1-200", "description": "Wait for full run, then visual checks and verdict", "tim …[+15 chars]`
 
+### 🧑 User — 2026-11-21T16:28:08.028Z
+
+> ↩︎ result: exit=0
+> # Screen 05 acceptance verdict: FAIL
+> | G1 | no page / console errors | PASS | `[]` | 0 errors |
+> | G2 | WHOLE level played to its end, every frame rendered | PASS | `{"frames": 687, "images": 687, "done": true, "done_frame": 686, "s_end_target": 32, "s_end": 32.013, "plan": "coin-trail player + e
+> | G3 | forward swimming continuous at the normal speed (no freeze, no stall, no jump) | PASS | `{"min_step": 0.045999999999999375, "max_step": 0.0470000000000006, "freezes": 0, "s_end": 32.013, "posit
+> | G4 | left / right smooth (no teleport) | PASS | `{"max_step_per_frame": 0.0414, "teleports": 0}` | |d lat| per frame <= 0.06 in every frame |
+> | G5 | Benny stays inside the river | PASS | `0.22` | |lat| <= 0.30 (river half-width ~0.30-0.35) |
+> | G6 | every real touch swipe produced the intended move; each direction used repeatedly | **FAIL** | `{"ok": 20, "sent": 20, "directions": {"right": 7, "left": 7, "up": 4, "down": 2}, "failed": []}` 
+> | G7 | all three lanes used | PASS | `[0, 1, -1]` | lanes -1, 0, +1 seen |
+> | G8 | up / down correct and smooth | PASS | `{"max_step_per_frame": 0.0666, "max_height": 0.3271, "min_height": -0.3165}` | max height >= 0.15, min height <= -0.15, |d height …[+2163 chars]
+
+### 🤖 Claude — 2026-11-21T16:28:30.759Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json, numpy as np\nV=json.load(open('/tmp/rainbow_r33/runs/kit_full5/visual_check.json'))['frames']; L=np.array([r['colour_look_vs_approved'] for r in V])[:666]\nR=json.load(open('/tmp/rainbow_r33/runs/kit_full5/run_log.json')); R=[r for r in R if 's' in r and r.get('s') is not None]\nlow=np.nonzero(L<0.7225)[0]; print('frames below 0.7225:', len(low))\nfor i in low[:: max(1,len(low)//12)]: r=R[i] if i<len(R) else {}; print(i, round(float(L[i]),3), 's',r.get('s'), 'lane',r.get('lane'), 'h',r.get('height'), 'move',r.get('move'), 'coinsOnScreen', r.get('coinsOn …[+70 chars]`
+
+### 🧑 User — 2026-11-21T16:28:30.869Z
+
+> ↩︎ result: frames below 0.7225: 22
+> 25 0.722 s 1.167 lane 0 h 0 move None coinsOnScreen 8
+> 26 0.717 s 1.213 lane 0 h 0 move None coinsOnScreen 8
+> 27 0.71 s 1.26 lane 0 h 0 move None coinsOnScreen 8
+> 28 0.708 s 1.307 lane 0 h 0 move None coinsOnScreen 8
+> 29 0.706 s 1.353 lane 0 h 0 move None coinsOnScreen 8
+> 30 0.706 s 1.4 lane 0 h 0 move None coinsOnScreen 8
+> 31 0.709 s 1.447 lane 0 h 0 move None coinsOnScreen 8
+> 32 0.711 s 1.493 lane 0 h 0 move None coinsOnScreen 8
+> 33 0.712 s 1.54 lane 0 h 0 move None coinsOnScreen 8
+> 34 0.716 s 1.587 lane 0 h 0 move None coinsOnScreen 8
+> 35 0.721 s 1.633 lane 0 h 0 move None coinsOnScreen 8
+> 46 0.72 s 2.147 lane 1 h 0 move lane coinsOnScreen 8
+> 47 0.71 s 2.193 lane 1 h 0 move lane coinsOnScreen 8
+> 48 0.706 s 2.24 lane 1 h 0 move None coinsOnScreen 8
+> 49 0.702 s 2.287 lane 1 h 0 move None coinsOnScreen 8
+> 50 0.701 s 2.333 lane 1 h 0 move None coinsOnScreen 8
+> 51 0.703 s 2.38 lane 1 h 0 move None coinsOnScreen 8
+> 52 0.706 s 2.427 lane 1 h 0 move None coinsOnScreen 8
+> 53 0.71 s 2.473 lane 1 h 0 move None coinsOnScreen 8
+> 54 0.713 s 2.52 lane 1 h 0 move None coinsOnScreen 8
+> 55 0.718 s 2.567 lane 1 h 0 move None coinsOnScreen 9
+> 56 0.721 s 2.613 lane 1 h 0 move None coinsOnScreen 9
+
+### 🤖 Claude — 2026-11-21T16:28:55.711Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/kit05 && python3 - <<'EOF'\np = 'kitgame.html'; s = open(p).read()\n# 1) water: camera-relative painted water from the first frame (no start-view cross-fade); flow ramps in as Benny starts swimming\nold = \"        diffuseColor *= mix(mix(kPaintRel, kFlowW, kNearW), kPaint, kF);`); };\"\nnew = \"        diffuseColor *= mix(kPaintRel, kFlowW, kNearW);   // round 33i: no cross-fade from the world-fixed start water (ghosting)\\n        `); };\"\nassert old in s; s = s.replace(old, new)\ns = s.replace(\"float kD1 = vKitD + kPh * uFlowL * kNearF, kD2 = vKit …[+3730 chars]`
+
+### 🧑 User — 2026-11-21T16:29:00.803Z
+
+> ↩︎ result: SYNTAX_OK
+> HARNESS_OK
+> ready true
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T16:29:03.641Z
+
+The page loads cleanly. Starting the full acceptance run again:
+
+### 🤖 Claude — 2026-11-21T16:29:06.693Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/rainbow_r33 && rm -rf runs/kit_full6 && (NODE_PATH=$(npm root -g) timeout 7000 node /home/user/rainbow-/tools/marble05/viewer/final_acceptance.cjs /tmp/rainbow_r33/kitgame /tmp/rainbow_r33/runs/kit_full6 25 1.4 > /tmp/rainbow_r33/runs/kit_full6.log 2>&1; echo \"exit=$?\" >> /tmp/rainbow_r33/runs/kit_full6.log) > /dev/null 2>&1 &\nsleep 1; cd /home/user/rainbow- && python3 scripts/rainbow-autosave.py --reason manual:r33i-declutter 2>&1 | grep -E '\"commit\"|skipping'; until grep -qE \"exit=\" /tmp/rainbow_r33/runs/kit_full6.log 2>/dev/null; do sleep 10; done; tail -1 /tmp/r …[+104 chars]`
+
