@@ -6055,3 +6055,88 @@ Stop hook feedback:
 
 Everything is saved and pushed to GitHub. GitHub matches commit `da6e11e`, nothing is left unsaved, and the five-minute autosave reports OK. The specialists are still working on Screen 05 undisturbed.
 
+### 🧑 User — 2026-11-21T12:31:53.686Z
+
+Can you make sure you save all the specialists and everything? So if I go to my other Claude account that has credits, then it'll automatically set it up. So I don't have to go through all this with my other Claude account that has credits, because I'm about to run out of credits on this account. I just want to make it where it instantly set up and continue on exactly where we're at with the specialists and with my other Claude account that has credits.
+
+### 🤖 Claude — 2026-11-21T12:32:02.870Z
+
+Setting that up now. I'm writing a complete restart package into your GitHub repository, so a new Claude account continues exactly where we are with no setup from you:
+- the branch to start on
+- the specialists' exact instructions and their in-progress work
+- a one-command setup script that rebuilds the 3D test workspace
+- your binding Screen 05 requirements
+- the acceptance tests
+- which keys to re-enter
+
+The specialists won't be interrupted.
+
+### 🤖 Claude — 2026-11-21T12:32:03.779Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,40p backups/START_NEW_CLAUDE_ACCOUNT.md | cut -c1-220; ls docs/briefs/ | tail -3", "description": "Read the top of the new-account start file"}`
+
+### 🧑 User — 2026-11-21T12:32:03.831Z
+
+> ↩︎ result: # Paste this into Claude Code on the next Claude account
+> 
+> ## ▶▶▶▶▶▶▶ NEWEST (2026-11-20 ~18:33 UTC, round 29 → next account)
+> Same steps as the round-28 block below, with these replacements: start the cloud session on branch **`ccr-ac160b4c-3hdecw`** (the round-29 lead;
+> NOT the default branch); read the TOP of `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md` ("ROUND 29"), `docs/briefs/2026-11-20-r29/COORDINATION.md` +
+> `LAUNCH_R29.md`; recreate the worktrees with `bash docs/briefs/2026-11-20-r29/setup_worker_r30.sh` (LOCAL `-c31` from the newest
+> `backups/wip/*-c30/`, trial07 + view04/06/07 included). If the hook's `git fetch` fails, `git ls-remote origin` the lead branch, fetch it by name
+> and merge before anything else. Keys: World Labs + fal worked through the environment on the r29 account (free reads first, then the secure form).
+> 
+> ---
+> 
+> ## ▶▶▶▶▶▶ (2026-11-20 ~16:55 UTC, round 28 → next account)
+> Same steps and prompt as the round-24 block below, with these replacements: start the cloud session on branch
+> **`ccr-9652868f-lkw0w0`** (the round-28 lead; NOT the default branch); read the TOP of `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md` ("ROUND 28"),
+> the user's visual brief `docs/briefs/2026-11-20-r26/USER …[+2559 chars]
+
+### 🤖 Claude — 2026-11-21T12:32:14.079Z
+
+> 🔧 **Bash** `{"command": "ls tools/marble05/viewer/ && ls backups/wip/screen05-agents/agentA | head -20", "description": "Check which viewer files are already in the repository"}`
+
+### 🧑 User — 2026-11-21T12:32:14.132Z
+
+> ↩︎ result: bubble.png
+> camdbg.mjs
+> final_acceptance.cjs
+> glint.png
+> index.html
+> package.json
+> play.html
+> play3.html
+> play_shots.cjs
+> play_shots2.cjs
+> refcam_full.json
+> rings.json
+> scene05.json
+> shots.cjs
+> splash.png
+> tile_frame.json
+> track.json
+> track_clip.cjs
+> tunnel_full.json
+> visual_check.py
+> CONTROLS_NOTES.md
+> bubble.png
+> camdbg.mjs
+> compare0.py
+> controls.js
+> glint.png
+> index.html
+> out_controls
+> package.json
+> play.html
+> play2.html
+> play3.html
+> play3.orig.html
+> play_shots.cjs
+> play_shots2.cjs
+> run_full.log
+> run_logic.log
+> run_only0.log
+> scene05.json
+> shots.cjs
+

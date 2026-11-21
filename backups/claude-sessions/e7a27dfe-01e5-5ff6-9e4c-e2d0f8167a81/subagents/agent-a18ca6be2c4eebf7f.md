@@ -1464,3 +1464,38 @@ While the AFTER set renders, here are the BEFORE checker numbers already measure
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-21T12:31:30.746Z
+
+> 🔧 **Bash** `{"command": "pkill -f \"shots_w.cjs\"; cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB && python3 -I - <<'EOF'\np = 'play3.html'; s = open(p).read()\na = \"gr.addColorStop(0, 'rgba(255,253,240,1)'); gr.addColorStop(0.22, 'rgba(255,240,190,1)'); gr.addColorStop(0.5, 'rgba(255,196,92,0.85)'); gr.addColorStop(0.78, 'rgba(236,132,60,0.35)'); gr.addColorStop(1, 'rgba(200,90,160,0)');\"\nb = \"gr.addColorStop(0, 'rgba(255,253,240,1)'); gr.addColorStop(0.25, 'rgba(255,240,190,1)'); gr.addColorStop(0.5, 'rgba(255,200,110,1)'); gr.addColorStop(0.75, 'rgba(240 …[+589 chars]`
+
+### 🧑 User — 2026-11-21T12:31:33.863Z
+
+> ↩︎ result: server 9662
+
+### 🤖 Claude — 2026-11-21T12:31:38.401Z
+
+While the final AFTER set renders, I'll draft the notes file (numbers filled in after the checker runs).
+
+### 🤖 Claude — 2026-11-21T12:31:40.406Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB && grep -n \"\\[track\\]\\|\\[waterflow\\]\\|QA: ?bg\" play3.html | cut -c1-120 && wc -c waterflow.js tools/build_backing.py tools/build_track_w.py", "description": "List all marked hook lines for the notes"}`
+
+### 🧑 User — 2026-11-21T12:31:40.452Z
+
+> ↩︎ result: 16:import { createWaterFlow } from './waterflow.js'; // [waterflow]
+> 23:const TD = q.get('trk') ?? 'track_w/'; // [track] rebuilt pieces (tools/build_track_w.py); ?trk=track/ = the previous
+> 26:// QA: ?bg=%2300ff00 paints the clear colour (normally black) so any hole left in the splat track shows up in a test 
+> 35:const L2 = !q.get('trk'); // [track] very distant copies use the 35 % pieces (*_lo2)
+> 48:const WF = q.get('noflow') ? null : createWaterFlow({ TR, SC, meshes: [near, far, ...tiles.flatMap((t) => [t.hi, t.lo
+> 49:// [track] backing shells (tools/build_backing.py): 4 cm behind each piece's splats, in the piece's own local colours
+> 58:// [track] the tunnel runs on for FARK sections and ends in the painting's bright golden light (a soft glow behind th
+> 68:  else for (const t of tiles) { t.hi.visible = t.k >= kc - 1 && t.k <= kc + 1; t.lo.visible = t.k >= kc + 2 && t.k <=
+> 69:  if (nearBk) nearBk.visible = near.visible; for (const t of tiles) if (t.bk) t.bk.visible = t.hi.visible || t.lo.vis
+> 71:  if (glow) { glow.position.set(...TR.XB).add(new THREE.Vector3(...TR.offsets[last - 1])).addScaledVector(AX, 0.35); 
+> 199:  WF?.update(dt, camera); // [waterflow]
+> 202:window.qaFlow = (dt) => WF? …[+299 chars]
+
+### 🤖 Claude — 2026-11-21T12:31:43.310Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB && timeout 115 bash -c 'until grep -q \"still 0 \" out_water/after.log; do sleep 3; done'; grep -v \"GPU stall\" out_water/after.log", "description": "Wait for first final AFTER still", "timeout": 120000}`
+
