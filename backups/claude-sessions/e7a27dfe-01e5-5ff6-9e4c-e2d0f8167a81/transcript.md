@@ -1357,3 +1357,141 @@ This one I'll do differently: the camera has to follow Benny, so the tunnel itse
 > | `?projframe05=1` | near gold frame: bottom corners + bottom lip (`tube05_near_frame`) | `assets/textures/tunnel05/frame05.png` | `tools/proj05/frame_bake.py` |
 > | `?projlid05=1` | the 6 wall paddles L1 L2 L3 / R1 R2 R3 as Blender-built trays (default pucks + far pucks off) | `assets/models/lids05.glb` …[+2328 chars]
 
+### 🤖 Claude — 2026-11-21T03:12:59.854Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nfrom PIL import Image\nimport numpy as np\nim=np.asarray(Image.open('assets/textures/paint/05k0_plate.jpg').convert('RGB')).astype(float)\ns=1440/1152; MX,MY=144,192\ndef px(x,y): # frame px -> plate pixel\n    X=(x+MX)*s; Y=(y+MY)*s\n    return im[int(round(Y)),int(round(X))]\nvx,vy=482.4,457.5\nimport math\nfor ang in [90,60,120,30,150]:\n    a=math.radians(ang); prof=[]\n    for r in range(5,1100):\n        x=vx+r*math.cos(a); y=vy-r*math.sin(a)\n        if not(-MX<=x<864+MX-1 and -MY<=y<1536+MY-1): break\n        R,G,B=px(x,y)\n        gold = (R>200 and G …[+422 chars]`
+
+### 🧑 User — 2026-11-21T03:13:00.179Z
+
+> ↩︎ result: 90 [(5, 7), (259, 265)]
+> 60 [(5, 7), (147, 156)]
+> 120 [(5, 7), (11, 13), (395, 397), (407, 428), (432, 434), (668, 670)]
+> 30 [(18, 20), (38, 41), (227, 235), (237, 242)]
+> 150 [(17, 19), (138, 147), (235, 239), (243, 256), (258, 260), (437, 439), (441, 443), (456, 470), (712, 715)]
+
+### 🤖 Claude — 2026-11-21T03:13:06.713Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad && python3 -I - <<'EOF'\nfrom PIL import Image, ImageDraw\nS='/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad'\nim=Image.open('assets/textures/paint/05k0_plate.jpg').convert('RGB')\ns=1440/1152; MX,MY=144,192\nfr=im.crop((int(MX*s),int(MY*s),int((MX+864)*s),int((MY+1536)*s))).resize((864,1536))\nd=ImageDraw.Draw(fr)\nvx,vy=482.4,457.5\nfor y in range(0,1536,100): d.line([(0,y),(20,y)],fill=(255,255,255)); d.text((22,y-6),str(y),fill=(255,255,255))\nfor x in range(0 …[+245 chars]`
+
+### 🧑 User — 2026-11-21T03:13:07.204Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-21T03:13:08.727Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/plate_grid.png"}`
+
+### 🧑 User — 2026-11-21T03:13:08.785Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T03:14:19.761Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nfrom PIL import Image\nimport numpy as np, cv2\nS='/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad'\nim=np.asarray(Image.open('assets/textures/paint/05k0_plate.jpg').convert('RGB')).astype(np.float32)\ns=1440/1152; MX,MY=144,192\n# frame image at 432x768 (half res) from plate\nfr=cv2.resize(im[int(MY*s):int((MY+1536)*s), int(MX*s):int((MX+864)*s)], (432,768), interpolation=cv2.INTER_AREA)\nvx,vy=482.4/2,457.5/2\ndef scaled(k, cx=vx, cy=vy):\n    M=np.float32([[k,0,cx-k*cx],[0,k,cy-k*cy]])\n    return cv2.warpAffine(fr, M, (43 …[+836 chars]`
+
+### 🧑 User — 2026-11-21T03:14:25.418Z
+
+> ↩︎ result: wall 51.5 river 69.1 k 1.675 dx 6 dy 6
+> wall 51.6 river 68.9 k 1.700 dx 6 dy 0
+> wall 51.7 river 68.8 k 1.700 dx 6 dy 3
+> wall 51.7 river 69.1 k 1.675 dx 6 dy 3
+> wall 51.8 river 68.8 k 1.700 dx 6 dy 6
+> wall 52.0 river 68.7 k 1.725 dx 6 dy -3
+> identity baseline (k=1.0 shift 0): 0
+
+### 🤖 Claude — 2026-11-21T03:14:27.099Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/droste_k.jpg"}`
+
+### 🧑 User — 2026-11-21T03:14:27.123Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T03:15:43.682Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/paint.ts'; s=open(p).read()\ndef rep(old,new,cnt=1):\n    global s\n    assert s.count(old)==cnt, (old, s.count(old))\n    s=s.replace(old,new)\nrep(\"\"\"const SWIM = qn('paintswim', 0) > 0;\"\"\",\n\"\"\"/**\n * `&paintfly=1` (round 32b, user: \"proper third-person follow-camera … he remains approximately the same size and position on screen while\n * swimming forward … the river, purple machinery, gold bands and coins must … move past Benny\"): the 3D Benny stays at the painted Benny's\n * spot and size (paddling, steering left / right, leaning)  …[+3284 chars]`
+
+### 🧑 User — 2026-11-21T03:15:46.462Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-21T03:15:54.568Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad && timeout 500 node tools/paint/stills.mjs --q=paint=1\\&paintfly=1\\&benny31=1 --s=118,120.5,123.5,125.3,126.3,127.5 --out=$S/fly1 --tag=FLY 2>&1 | tail -2 && python3 -I -c \"\nfrom PIL import Image\nL=['118','120.5','123.5','125.3','126.3','127.5']\nims=[Image.open('$S/fly1/FLY_s%s.png'%s).convert('RGB').resize((360,640)) for s in L]\nc=Image.new('RGB',(370*len(ims),640),'white')\nfor i,im in enumerate(ims): c.paste(im,(i*370,0))\nc.save('$S/fly1_sheet.jpg',quality=88)\n\"", "description": "Captu …[+71 chars]`
+
+### 🧑 User — 2026-11-21T03:16:05.185Z
+
+> ↩︎ result: FLY stills 6
+
+### 🤖 Claude — 2026-11-21T03:16:06.758Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/fly1_sheet.jpg"}`
+
+### 🧑 User — 2026-11-21T03:16:06.845Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-21T03:16:06.836Z
+
+[Image: original 2220x640, displayed at 2000x577. Multiply coordinates by 1.11 to map to original image.]
+
+### 🤖 Claude — 2026-11-21T03:16:42.899Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='src/world/paint.ts'; s=open(p).read()\ndef rep(old,new,cnt=1):\n    global s\n    assert s.count(old)==cnt, (old, s.count(old))\n    s=s.replace(old,new)\nrep(\"FLY_W = qn('flyw', 0.3)\",\"FLY_W = qn('flyw', 0.2)\")\nrep(\"\"\"  const drawSwim = (renderer: THREE.WebGLRenderer, o: { s: number; lat: number; steer: number; time: number }, mode: number, f: number, next: number) => {\n    const Q = keys[0], t = swimT(o.s);\"\"\",\"\"\"  const drawSwim = (renderer: THREE.WebGLRenderer, o: { s: number; lat: number; steer: number; time: number }, mode: number, f: num …[+1151 chars]`
+
+### 🧑 User — 2026-11-21T03:16:45.514Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-21T03:16:51.523Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad; mkdir -p qa/match/05/fly05/clip; FRAMES_DIR=$S timeout 3000 node tools/paint/clip.mjs --q=paint=1\\&paintfly=1\\&benny31=1 --from=108 --to=198 --tag=FLY05_gameplay --weave=124:136,150:162 --out=qa/match/05/fly05/clip > $S/clipfly.log 2>&1; echo exit $?; tail -3 $S/clipfly.log", "description": "Record the normal-speed follow-camera gameplay clip", "timeout": 3200000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-21T03:16:51.564Z
+
+> ↩︎ result: Command running in background with ID: bbsyhud3o. Output is being written to: /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/tasks/bbsyhud3o.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-21T03:16:52.422Z
+
+Recording the real-speed gameplay video now (about 7 minutes). Meanwhile I'm writing up what this version is and saving the notes.
+
+### 🤖 Claude — 2026-11-21T03:17:00.818Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/match/05/fly05/README.md", "content": "# Screen 05 — `?paint=1&paintfly=1&benny31=1`: follow camera, Benny stays big, the approved picture travels past him (round 32b, 2026-11-21)\n\n**User (verbatim excerpt):** \"CORRECT THE CAMERA AND FORWARD MOVEMENT … as he swims forward, he gets smaller and eventually almost disappears … Use a\nproper third-person follow-camera, slightly above and behind Benny, so he remains approximately the same size and position on screen while swimming\nforward. The river, purple machinery, gold bands and coins must have convincin …[+1909 chars]`
+
+### 🧑 User — 2026-11-21T03:17:00.913Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/match/05/fly05/README.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-21T03:17:04.577Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md'; s=open(p).read()\nold=\"RULE from this round: do NOT change the approved artwork; no broad changes; no paid credits. Waiting for the user's verdict.\\n\"\nassert old in s\ns=s.replace(old, old+\"\"\"User then (verbatim excerpt): \"Benny … gets smaller and eventually almost disappears … THAT IS NOT WHAT I WANT … proper third-person follow-camera\n… he remains approximately the same size and position … scenery must … move past Benny\" → **`?paint=1&paintfly=1&benny31=1`**: 3D Benny fixed at\nthe painted spot/size, the approv …[+278 chars]`
+
+### 🧑 User — 2026-11-21T03:17:04.632Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-21T03:17:06.663Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad; ls $S/frames_FLY05_gameplay | wc -l", "description": "Check recording progress"}`
+
+### 🧑 User — 2026-11-21T03:17:06.702Z
+
+> ↩︎ result: 9
+
+### 🤖 Claude — 2026-11-21T03:17:10.507Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad; until [ $(ls $S/frames_FLY05_gameplay | wc -l) -ge 110 ] || ! pgrep -f clip.mjs >/dev/null; do sleep 5; done; ls $S/frames_FLY05_gameplay | wc -l", "description": "Wait until 110 frames are recorded", "timeout": 1200000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-21T03:17:10.547Z
+
+> ↩︎ result: Command running in background with ID: buk5rj1p8. Output is being written to: /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/tasks/buk5rj1p8.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-21T03:17:11.514Z
+
+The video is recording; I'll check the first part for problems as soon as it reaches the middle of Screen 05.
+
+### 🤖 Claude — 2026-11-21T03:17:14.816Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad; until [ $(ls $S/frames_FLY05_gameplay | wc -l) -ge 110 ] || ! pgrep -f clip.mjs >/dev/null; do sleep 3; done; python3 -I -c \"\nfrom PIL import Image\nL=['0010','0030','0050','0070','0090','0105']\nims=[Image.open('$S/frames_FLY05_gameplay/%s.jpg'%s).convert('RGB').resize((300,533)) for s in L]\nc=Image.new('RGB',(310*len(ims),533),'white')\nfor i,im in enumerate(ims): c.paste(im,(i*310,0))\nc.save('$S/fly_clip_early.jpg',quality=85)\n\"; echo done", "description": "Wait for early frames and build …[+36 chars]`
+

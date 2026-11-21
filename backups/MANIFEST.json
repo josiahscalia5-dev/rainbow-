@@ -794,7 +794,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 25598,
-   "sha256": "90df54e2430c33bcdd70c1766628a2cf6a211359878388d8a6112d2def980211"
+   "sha256": "e9f3390b3cf7bd448aa2220b08dd8de84a8ce1ae2154af68684d467ad2f65df8"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3056,
-   "sha256": "49831dd57b50fadb915fe172409144ef0cdbd134c56dfa9a21b94ee58985e99a"
+   "sha256": "450285f4f51781ff0a03a656242434ef60021a71cae572ff4a281e4f54c5353f"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -7788,8 +7788,8 @@
   },
   {
    "path": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md",
-   "bytes": 73329,
-   "sha256": "af4e1627e68d1864f039dd0c76f8a539989f56dc6a2ca9bc3784edc83f715815"
+   "bytes": 73849,
+   "sha256": "9963eb3f0dc5f9959ce959029d7e32939b7ff67cb1879056ed0939e14f1e9d50"
   },
   {
    "path": "docs/PARALLEL_PROGRESS.md",
@@ -16205,6 +16205,11 @@
    "path": "qa/match/04/r27/s4_combined/swim04_whole_NEW_K27-B_1.0x.mp4",
    "bytes": 2165005,
    "sha256": "5e6d53180c5319d13dae15705e39035273e802734cf583fa38de223d7ba1c8ba"
+  },
+  {
+   "path": "qa/match/05/fly05/README.md",
+   "bytes": 2420,
+   "sha256": "7a0c61d1f6fa55c0486a99e1d85f2f79d6ac17589d37f6f1e3023ed4a905593b"
   },
   {
    "path": "qa/match/05/paint05/README.md",
@@ -36658,8 +36663,8 @@
   },
   {
    "path": "src/world/paint.ts",
-   "bytes": 33241,
-   "sha256": "cbe052d2316a4b907b96e137fc45ed2a79e5235b9eb2c8aec6ed823c566a0474"
+   "bytes": 35816,
+   "sha256": "fc25bc4f3669abf08f9b5292acce3d852e38188c06041bcbfd4bc2c0bfa18b21"
   },
   {
    "path": "src/world/paint06.ts",

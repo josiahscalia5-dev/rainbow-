@@ -7,6 +7,10 @@ runtime, paddling, steering) drawn into it and swimming along the painted S-rive
 painted river and he collects them. Everything: **`qa/match/05/swim05/README.md`** (+ 10 s gameplay clip in `clip/`). Both earlier versions
 preserved (`?paint=1` = the painted version; `?match05=1&projflow05=2&benny31=1&tun05=1` = the rejected moving-camera 3D, `qa/match/05/r31_3d/`).
 RULE from this round: do NOT change the approved artwork; no broad changes; no paid credits. Waiting for the user's verdict.
+User then (verbatim excerpt): "Benny … gets smaller and eventually almost disappears … THAT IS NOT WHAT I WANT … proper third-person follow-camera
+… he remains approximately the same size and position … scenery must … move past Benny" → **`?paint=1&paintfly=1&benny31=1`**: 3D Benny fixed at
+the painted spot/size, the approved picture flies past him (self-similar tunnel zoom, 1.675 per ring, loop closes on the picture), normal speed:
+**`qa/match/05/fly05/README.md`** + clip. All earlier versions kept.
 
 # ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 31 (2026-11-21, lead branch `ccr-4fcad20e-a6pp8w`, from ~23:50 UTC 11-20)
 

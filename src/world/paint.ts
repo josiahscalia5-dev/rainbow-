@@ -90,7 +90,17 @@ const PUSH_K = qn('paintpush', 0), PAN_K = qn('paintpan', 0);
  * Tuning: `&swimspeed=` (Screen 05 travel speed factor, default 0.75), `&swimpitch=` (rad, view from above), `&swimh=` (px, his
  * height at the start spot), `&swimsplash=0` (no painted splash).
  */
-const SWIM = qn('paintswim', 0) > 0;
+/**
+ * `&paintfly=1` (round 32b, user: "proper third-person follow-camera … he remains approximately the same size and position on screen while
+ * swimming forward … the river, purple machinery, gold bands and coins must … move past Benny"): the 3D Benny stays at the painted Benny's
+ * spot and size (paddling, steering left / right, leaning) and the approved picture itself travels past him: the painting's tunnel is
+ * self-similar (each gold ring ~1.675 x the next one, all around the tunnel end), so flying forward one ring = scaling the picture by that
+ * factor about the tunnel end; the loop closes on the picture itself (short cross-fade where river / paddles differ). Coins flow toward him
+ * as in `?paint=1`. Normal game speed. Tuning: `&flyk=` (ring factor), `&flycycle=` (course units per ring), `&flyw=` (cross-fade share).
+ */
+const FLY = qn('paintfly', 0) > 0;
+const FLY_K = qn('flyk', 1.675), FLY_CYCLE = qn('flycycle', 9), FLY_W = qn('flyw', 0.2);
+const SWIM = qn('paintswim', 0) > 0 || FLY;
 const SWIM_SPEED = qn('swimspeed', 0.75), SWIM_PITCH = qn('swimpitch', 0.22), SWIM_H = qn('swimh', 470), SWIM_SPLASH = qn('swimsplash', 1);
 /** trail distance (painted-river units) Benny has covered when Screen 06 starts opening from the tunnel end */
 const SWIM_END = qn('swimend', 56), SWIM_EASE = qn('swimease', 2.0);
@@ -237,7 +247,7 @@ export async function buildPaint(course: Course, coins: { defs: CoinDef[]; colle
   if (P05) for (let t = -6; t <= 4; t += 0.01) { const [, y, dia] = pathAt(P05, t); if (y + dia / 2 <= keys[0].K.pivot[1]) { swimT0 = t; break; } }
   const swimDia0 = P05 ? pathAt(P05, swimT0)[2] : 1;
   // eased: he stays big in the foreground longer, then swims on into the tunnel end (coins use the same curve, so he still meets each)
-  const swimT = (s: number) => swimT0 + SWIM_END * Math.pow(THREE.MathUtils.clamp((s - swimS0) / Math.max(1, swimS1 - swimS0), 0, 1.12), SWIM_EASE);
+  const swimT = (s: number) => FLY ? swimT0 : swimT0 + SWIM_END * Math.pow(THREE.MathUtils.clamp((s - swimS0) / Math.max(1, swimS1 - swimS0), 0, 1.12), SWIM_EASE);
   const swimScene = new THREE.Scene();
   if (swimOpts) {
     swimScene.environment = swimOpts.environment;
@@ -273,7 +283,7 @@ export async function buildPaint(course: Course, coins: { defs: CoinDef[]; colle
   const sA = new THREE.Vector3(), sB = new THREE.Vector3(), sTan = new THREE.Vector3(), sUp = new THREE.Vector3(), sX = new THREE.Vector3(), sPos = new THREE.Vector3();
   const sM = new THREE.Matrix4(), sQ = new THREE.Quaternion(), sLean = new THREE.Quaternion(), Z_AXIS = new THREE.Vector3(0, 0, 1), bb = new THREE.Box3(), bm = new THREE.Box3();
 
-  const speedMap: Record<string, number> = swimOn ? { ...L.speed, '05': SWIM_SPEED } : L.speed;
+  const speedMap: Record<string, number> = swimOn && !FLY ? { ...L.speed, '05': SWIM_SPEED } : L.speed;
   const speedK = (s: number) => {
     let k = 1;
     for (const [id, f] of Object.entries(speedMap)) { const st = course.stage(id as StageId); k *= 1 + (f - 1) * sm(st.s0 - 4, st.s0 + 1, s) * (1 - sm(st.s1 - 2, st.s1 + 3, s)); }
@@ -288,14 +298,14 @@ export async function buildPaint(course: Course, coins: { defs: CoinDef[]; colle
   };
 
   const popStart = new Float32Array(coins.defs.length).fill(-1);
-  const size = new THREE.Vector2(), buf = new THREE.Vector2(), v3 = new THREE.Vector3();
+  const size = new THREE.Vector2(), buf = new THREE.Vector2(), v3 = new THREE.Vector3(), zoomM = new THREE.Matrix4();
 
   /** paintswim: the painted splash + the real 3D Benny at his place on the painted river (camera = the picture's own, held still) */
-  const drawSwim = (renderer: THREE.WebGLRenderer, o: { s: number; lat: number; steer: number; time: number }, mode: number, f: number, next: number) => {
-    const Q = keys[0], t = swimT(o.s);
+  const drawSwim = (renderer: THREE.WebGLRenderer, o: { s: number; lat: number; steer: number; time: number }, mode: number, f: number, next: number, splashKey = 0) => {
+    const Q = keys[splashKey], t = swimT(o.s);
     const [x, y, dia] = pathAt(P05!, t), sc = dia / swimDia0;
     const X = x + o.lat * PX_PER_LAT * sc, Y = y + dia / 2;
-    let vis = mode === 0 ? 1 : mode > 0 ? insideAt(Q, f, X, Y) : 1 - insideAt(Q, f, X, Y);
+    let vis = mode === 0 ? 1 : mode > 0 ? insideAt(keys[0], f, X, Y) : 1 - insideAt(keys[0], f, X, Y);
     if (next > 0) vis *= 1 - insideAt(keys[1], next, X, Y); // the next picture opens from the tunnel end: he swims into it
     swimHead.x = X; swimHead.y = Y - SWIM_H * 0.93 * sc; swimHead.sc = sc;
     if (vis < 0.5) return;
@@ -368,6 +378,12 @@ export async function buildPaint(course: Course, coins: { defs: CoinDef[]; colle
       if (k === keys.length - 1 && fout > 0) return [-1, fout];
       return [0, 1];
     };
+    const zoomCam = (z: number, ex_: number, ey_: number) => {
+      cam.updateProjectionMatrix();
+      const vx = (keys[0].K.vp_frame_px[0] - FW / 2) / ex_, vy = -(keys[0].K.vp_frame_px[1] - FH / 2) / ey_;
+      cam.projectionMatrix.premultiply(zoomM.set(z, 0, 0, (1 - z) * vx, 0, z, 0, (1 - z) * vy, 0, 0, 1, 0, 0, 0, 0, 1));
+      cam.projectionMatrixInverse.copy(cam.projectionMatrix).invert();
+    };
     const setCam = (k: number) => {
       const Q = keys[k], z = PUSH_K * THREE.MathUtils.clamp((o.s - rest[k]) * Q.K.push, Q.K.push_min, Q.K.push_max);
       cam.position.copy(Q.pushDir).multiplyScalar(z / Math.abs(Q.pushDir.z)); cam.position.x += camX;
@@ -384,7 +400,7 @@ export async function buildPaint(course: Course, coins: { defs: CoinDef[]; colle
       hideAll(); let any = false;
       const P = Q.coin.P, list: [number, THREE.Mesh][] = [];
       // paintswim (Screen 05 picture): the coins sit still on the painted river and Benny swims into them
-      const swimK0 = swimOn && k === 0, bT = swimT(o.s);
+      const swimK0 = swimOn && !FLY && k === 0, bT = swimT(o.s);
       for (const [i, m] of Q.coin.meshes) {
         const def = coins.defs[i], col = coins.collected[i] === 1;
         const tc = swimK0 ? swimT(def.s) : (def.s - o.s) * (vscaleOf.get(i) ?? 1);
@@ -421,12 +437,27 @@ export async function buildPaint(course: Course, coins: { defs: CoinDef[]; colle
       const [mode, f] = wipeOf(k);
       hideAll(); Q.mesh.visible = true; setU(Q.mesh, 1, mode, f, Q);
       if (Q.K.flow) (Q.mesh.material as THREE.ShaderMaterial).uniforms.flowPh.value = ((((o.time - 12.0) * Q.K.flow.rate + 0.5) % 1) + 1) % 1;
-      renderer.render(scene, cam);
+      const fly = swimOn && FLY && k === 0 ? Math.max(0, o.s - swimS0) / FLY_CYCLE : 0;
+      if (fly > 0) {
+        // paintfly: the picture travels past him — scaled about the tunnel end by FLY_K per ring, the loop closing on the picture itself
+        const phi = fly - Math.floor(fly);
+        zoomCam(Math.pow(FLY_K, phi), ex, ey); renderer.render(scene, cam);
+        if (phi > 1 - FLY_W) { setU(Q.mesh, sm(1 - FLY_W, 1, phi), mode, f, Q); zoomCam(Math.pow(FLY_K, phi - 1), ex, ey); renderer.render(scene, cam); }
+        cam.updateProjectionMatrix(); setU(Q.mesh, 1, mode, f, Q);
+      } else renderer.render(scene, cam);
       drawCoins(k, 'back', mode, f);
     }
     // Benny: each picture's own painted Benny, switched where the reveal edge passes his centre
     const bob = Math.sin(o.time * Math.PI) * 2.5;
+    // paintfly: ONE real 3D Benny at the painted spot on every picture of the chain (05 and the 06 pictures), never a painted one
+    let flyKey = -1;
+    if (swimOn && FLY) for (let k = k0; k <= k1; k++) {
+      const [mode, f] = wipeOf(k); const ins = mode === 0 ? 1 : insideAt(keys[k], f, BENNY_C[0], BENNY_C[1]);
+      if ((mode < 0 ? 1 - ins : ins) >= 0.5) flyKey = k;
+    }
+    if (flyKey >= 0) { setCam(0); drawSwim(renderer, o, 0, 1, 0, flyKey); }
     for (let k = k0; k <= k1; k++) {
+      if (swimOn && FLY) break;
       const Q = keys[k]; const [mode, f] = wipeOf(k);
       if (swimOn && k === 0) { setCam(0); drawSwim(renderer, o, mode, f, k1 > 0 ? keyProg(1, o.s) : 0); continue; }
       const ins = mode === 0 ? 1 : insideAt(Q, f, BENNY_C[0], BENNY_C[1]); const al = mode < 0 ? 1 - ins : ins;
@@ -448,7 +479,7 @@ export async function buildPaint(course: Course, coins: { defs: CoinDef[]; colle
       if (popStart[i] === -2) continue;
       const t = (o.clock - popStart[i]) / 0.4; if (t < 0 || t >= 1) continue;
       const Q = keys[coinKeys.get(i)!]; const P = Q.coin!.P;
-      if (swimOn && coinKeys.get(i) === 0) {
+      if (swimOn && !FLY && coinKeys.get(i) === 0) {
         // paintswim: the coin pops up from his pom-pom wherever he is in the picture, at his size there
         const dia = 58 * swimHead.sc * (1 - 0.55 * t);
         pm.scale.set(dia * P.sprite_px[0] / P.sprite_coin_d, dia * P.sprite_px[1] / P.sprite_coin_d, 1);
