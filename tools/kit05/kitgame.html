@@ -56,12 +56,14 @@ const kitMat = (map, extra = {}, own = null) => {   // own = { tex, vr: [v0, v1]
 const tl = new THREE.TextureLoader();
 const tex = async (f, rep = false) => { const t = await tl.loadAsync(f); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; if (rep) t.wrapS = THREE.RepeatWrapping; return t; };
 const [wallTex, ringTex, riverTex, wallOwn, ringOwn] = await Promise.all([tex('wall.png'), tex('ring.png'), tex('river.png'), tex('wall_own.png'), tex('ring_own.png')]);
-const riverTile = await tex('river_tile.png'); riverTile.wrapT = THREE.RepeatWrapping;
-const riverPink = await tex(K.river_tile?.ribbon ? 'river_pink.png' : 'river_tile.png'); riverPink.wrapT = THREE.RepeatWrapping;   // round 34: pink edge-band version of the ribbon
 // round 35 (lead): the river = the user's OWN painted river (isolated water art, colour-matched) in its world place, repeated every 3 ring
 // sections (bake_river35.py: prefix t_pre..ta + one period P, sharp painted streak detail added where the painting is softer). ?r35=0 = round-34 ribbon
 const R35 = K.river35 && q.get('r35') !== '0' ? K.river35 : null;
 const PUFFS = !!K.river35 && q.get('puffs') !== '0';   // round 35: painted foam domes + bubbles (see below)
+// the round-34 ribbon textures are only loaded when the round-34 river is asked for (?r35=0): 4 MB less to download / hold on a phone
+const tex1 = () => { const t = new THREE.DataTexture(new Uint8Array([0, 0, 0, 255]), 1, 1); t.needsUpdate = true; return t; };
+const riverTile = R35 ? tex1() : await tex('river_tile.png'); riverTile.wrapT = THREE.RepeatWrapping;
+const riverPink = R35 ? tex1() : await tex(K.river_tile?.ribbon ? 'river_pink.png' : 'river_tile.png'); riverPink.wrapT = THREE.RepeatWrapping;   // round 34: pink edge-band version of the ribbon
 const river35Tex = R35 ? await tex('river35.png') : riverTile;
 // sharp painted streaks (luminance detail, river-local), added live near the camera where the painted row is soft, streaming with the current
 const r35Det = R35?.detail ? await tl.loadAsync('river35_detail.png') : riverTile;

@@ -14,7 +14,7 @@ export function startLive({ THREE, renderer, scene, camera, W, H, q, CT }) {
     renderer.setSize(W, H, false);
     Object.assign(canvas.style, { width: (W * s).toFixed(1) + 'px', height: (H * s).toFixed(1) + 'px', position: 'fixed',
       left: ((innerWidth - W * s) / 2).toFixed(1) + 'px', top: ((innerHeight - H * s) / 2).toFixed(1) + 'px', touchAction: 'none' });
-    const hud = document.getElementById('hud'); if (hud) { hud.style.transformOrigin = 'top center'; hud.style.transform = `scale(${s.toFixed(3)})`; hud.style.top = ((innerHeight - H * s) / 2 + 10 * s).toFixed(1) + 'px'; }
+    const hud = document.getElementById('hud'); if (hud) { hud.style.zIndex = '5'; hud.style.transformOrigin = 'top center'; hud.style.transform = `scale(${s.toFixed(3)})`; hud.style.top = ((innerHeight - H * s) / 2 + 10 * s).toFixed(1) + 'px'; }
   };
   fit(); addEventListener('resize', fit);
   document.body.style.touchAction = 'none'; document.documentElement.style.overscrollBehavior = 'none';
