@@ -1,0 +1,312 @@
+{
+ "frames": 687,
+ "seconds": 22.9,
+ "errors": [],
+ "rendered": "0:900",
+ "level": {
+  "s_end_target": 32,
+  "done": true,
+  "done_frame": 686,
+  "plan": "coin-trail player + extras"
+ },
+ "built_level": {
+  "path_end": null,
+  "sections": null,
+  "sections_entered": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15
+  ],
+  "level_end_vs_path_end": null,
+  "swim_speed": 1.4
+ },
+ "position_stalls": 0,
+ "benny_pose": {
+  "max_abs_roll_deg": 7.849556767804048,
+  "max_roll_change_deg_per_frame": 2.94002802210217,
+  "worst_frame": 143,
+  "worst_s": 6.673,
+  "max_abs_camera_roll_deg": 0.7559312633799805,
+  "screen_x": [
+   136.92773803158406,
+   275.7131589303922
+  ],
+  "screen_y": [
+   556.6173251153095,
+   849.4121067660867
+  ],
+  "frames_roll_over_25": 0
+ },
+ "ending_transition": {
+  "present": true,
+  "first_frame": 666,
+  "k_at_end": 1,
+  "monotonic": true,
+  "frames": 21
+ },
+ "coin_crowding": {
+  "frames_checked": 687,
+  "frames_with_overlap": 0,
+  "max_pairs": 0,
+  "first_frames": []
+ },
+ "swipe_directions": {
+  "right": 8,
+  "left": 8,
+  "down": 4,
+  "up": 4
+ },
+ "forward": {
+  "min_step": 0.045999999999999375,
+  "max_step": 0.0470000000000006,
+  "freezes": 0,
+  "s_end": 32.013
+ },
+ "lateral": {
+  "max_step_per_frame": 0.0414,
+  "teleports_over_0_06": 0,
+  "lanes_seen": [
+   0,
+   1,
+   -1
+  ],
+  "max_abs_lat": 0.22
+ },
+ "vertical": {
+  "max_step_per_frame": 0.0666,
+  "max_height": 0.3271,
+  "min_height": -0.3165
+ },
+ "camera": {
+  "frames": 687,
+  "max_move_per_frame": 0.04967074116376462,
+  "median_move_per_frame": 0.04672206562885845,
+  "max_turn_deg_per_frame": 0
+ },
+ "coins": {
+  "start": 1420,
+  "end": 1660,
+  "got": {
+   "water": 8,
+   "lane": 10,
+   "air": 6
+  }
+ },
+ "swipes_sent": 24,
+ "swipe_responses": [
+  {
+   "swipe": "right",
+   "t": 1.467,
+   "expected_lane": 1,
+   "lane_before": 0,
+   "lane_after": 1,
+   "at_edge": false,
+   "ok": true
+  },
+  {
+   "swipe": "left",
+   "t": 2.5,
+   "expected_lane": 0,
+   "lane_before": 1,
+   "lane_after": 0,
+   "at_edge": false,
+   "ok": true
+  },
+  {
+   "swipe": "left",
+   "t": 3.667,
+   "expected_lane": -1,
+   "lane_before": 0,
+   "lane_after": -1,
+   "at_edge": false,
+   "ok": true
+  },
+  {
+   "swipe": "right",
+   "t": 4.133,
+   "expected_lane": 0,
+   "lane_before": -1,
+   "lane_after": 0,
+   "at_edge": false,
+   "ok": true
+  },
+  {
+   "swipe": "left",
+   "t": 4.633,
+   "expected_lane": -1,
+   "lane_before": 0,
+   "lane_after": -1,
+   "at_edge": false,
+   "ok": true
+  },
+  {
+   "swipe": "right",
+   "t": 5.633,
+   "expected_lane": 0,
+   "lane_before": -1,
+   "lane_after": 0,
+   "at_edge": false,
+   "ok": true
+  },
+  {
+   "swipe": "down",
+   "t": 6.067,
+   "max_height": -0.0166,
+   "min_height": -0.3165,
+   "ok": true
+  },
+  {
+   "swipe": "right",
+   "t": 7.2,
+   "expected_lane": 1,
+   "lane_before": 0,
+   "lane_after": 1,
+   "at_edge": false,
+   "ok": true
+  },
+  {
+   "swipe": "left",
+   "t": 8.467,
+   "expected_lane": 0,
+   "lane_before": 1,
+   "lane_after": 0,
+   "at_edge": false,
+   "ok": true
+  },
+  {
+   "swipe": "up",
+   "t": 9.567,
+   "max_height": 0.3271,
+   "min_height": 0,
+   "ok": true
+  },
+  {
+   "swipe": "right",
+   "t": 10.3,
+   "expected_lane": 1,
+   "lane_before": 0,
+   "lane_after": 1,
+   "at_edge": false,
+   "ok": true
+  },
+  {
+   "swipe": "up",
+   "t": 10.8,
+   "max_height": 0.3271,
+   "min_height": 0,
+   "ok": true
+  },
+  {
+   "swipe": "left",
+   "t": 11.767,
+   "expected_lane": 0,
+   "lane_before": 1,
+   "lane_after": 0,
+   "at_edge": false,
+   "ok": true
+  },
+  {
+   "swipe": "up",
+   "t": 12.3,
+   "max_height": 0.3271,
+   "min_height": 0,
+   "ok": true
+  },
+  {
+   "swipe": "left",
+   "t": 13.333,
+   "expected_lane": -1,
+   "lane_before": 0,
+   "lane_after": -1,
+   "at_edge": false,
+   "ok": true
+  },
+  {
+   "swipe": "down",
+   "t": 13.8,
+   "max_height": -0.0166,
+   "min_height": -0.3165,
+   "ok": true
+  },
+  {
+   "swipe": "right",
+   "t": 14.933,
+   "expected_lane": 0,
+   "lane_before": -1,
+   "lane_after": 0,
+   "at_edge": false,
+   "ok": true
+  },
+  {
+   "swipe": "left",
+   "t": 15.433,
+   "expected_lane": -1,
+   "lane_before": 0,
+   "lane_after": -1,
+   "at_edge": false,
+   "ok": true
+  },
+  {
+   "swipe": "right",
+   "t": 16.367,
+   "expected_lane": 0,
+   "lane_before": -1,
+   "lane_after": 0,
+   "at_edge": false,
+   "ok": true
+  },
+  {
+   "swipe": "left",
+   "t": 17.667,
+   "expected_lane": -1,
+   "lane_before": 0,
+   "lane_after": -1,
+   "at_edge": false,
+   "ok": true
+  },
+  {
+   "swipe": "right",
+   "t": 18.133,
+   "expected_lane": 0,
+   "lane_before": -1,
+   "lane_after": 0,
+   "at_edge": false,
+   "ok": true
+  },
+  {
+   "swipe": "down",
+   "t": 18.567,
+   "max_height": -0.0166,
+   "min_height": -0.3165,
+   "ok": true
+  },
+  {
+   "swipe": "down",
+   "t": 19.733,
+   "max_height": -0.0166,
+   "min_height": -0.3165,
+   "ok": true
+  },
+  {
+   "swipe": "up",
+   "t": 21.567,
+   "max_height": 0.3271,
+   "min_height": 0,
+   "ok": true
+  }
+ ],
+ "swipes_ok": 24
+}

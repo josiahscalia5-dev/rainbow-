@@ -1,0 +1,6 @@
+06 a_start s 198.91 lat 0 stage 06 coins 1680
+06 b_marked s 214.86 lat 0 stage 06 coins 1700
+06 c_266 s 266.01 lat 0 stage 06 coins 1750
+06 d_310 s 310.01 lat 0 stage 06 coins 1770
+06 e_350 s 350.16 lat 0 stage 06 coins 1790
+06 f_387 s 387.01 lat 0 stage 06 coins 1800

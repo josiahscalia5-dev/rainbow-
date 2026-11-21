@@ -1,0 +1,57 @@
+[
+ {
+  "name": "f00_start_view",
+  "scr": "04",
+  "dist": 0,
+  "steer": null,
+  "frames": 0,
+  "s": 78.337,
+  "lat": 0,
+  "stage": "04",
+  "coins": 1330
+ },
+ {
+  "name": "f03_forward3u",
+  "scr": "04",
+  "dist": 3,
+  "steer": null,
+  "frames": 13,
+  "s": 81.146,
+  "lat": 0,
+  "stage": "04",
+  "coins": 1330
+ },
+ {
+  "name": "f06_forward6u",
+  "scr": "04",
+  "dist": 6,
+  "steer": null,
+  "frames": 26,
+  "s": 84.188,
+  "lat": 0,
+  "stage": "04",
+  "coins": 1330
+ },
+ {
+  "name": "s_left_steer",
+  "scr": "04",
+  "dist": 6,
+  "steer": -1,
+  "frames": 26,
+  "s": 84.181,
+  "lat": -1.65,
+  "stage": "04",
+  "coins": 1350
+ },
+ {
+  "name": "s_right_steer",
+  "scr": "04",
+  "dist": 6,
+  "steer": 1,
+  "frames": 26,
+  "s": 84.181,
+  "lat": 1.65,
+  "stage": "04",
+  "coins": 1330
+ }
+]

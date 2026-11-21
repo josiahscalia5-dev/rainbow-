@@ -1,0 +1,108 @@
+{
+ "summary": {
+  "frames": 7,
+  "dark_patches": {
+   "frames_with_patches": 0,
+   "largest_px": 16,
+   "max_pct": 0.0,
+   "rule": "connected near-black area >= 150 px at 412x915 (approved picture: largest 8 px)"
+  },
+  "sharpness_vs_start": {
+   "min": 0.022,
+   "median": 0.96
+  },
+  "colour_look_vs_approved": {
+   "min": 0.025,
+   "median": 0.609
+  },
+  "flicker": {
+   "median_change": 60.64,
+   "max_change": 79.13,
+   "spikes_over_3x_median": 0,
+   "spike_frames": [],
+   "pop_median": 52.15771484375,
+   "pop_max": 57.0996208190918,
+   "pop_spikes": 0,
+   "pop_spike_frames": []
+  },
+  "colour_look_frame0": 0.622,
+  "frame0_vs_approved": {
+   "within_20_levels_pct": 2.3,
+   "within_20_below_hud_pct": 2.3,
+   "within_40_below_hud_pct": 9.8,
+   "mean_abs_diff_below_hud": 68.7,
+   "eighth_size_within_20_below_hud_pct": 2.6,
+   "eighth_size_within_40_below_hud_pct": 12.0
+  }
+ },
+ "frames": [
+  {
+   "frame": "16.j",
+   "black_pct": 0.0,
+   "dark_patches": 0,
+   "largest_dark_px": 0,
+   "sharpness_vs_start": 1.0,
+   "colour_look_vs_approved": 0.622,
+   "change": 0.0
+  },
+  {
+   "frame": "r0.j",
+   "black_pct": 0.0,
+   "dark_patches": 0,
+   "largest_dark_px": 0,
+   "sharpness_vs_start": 0.951,
+   "colour_look_vs_approved": 0.612,
+   "change": 62.68,
+   "pop": 52.16
+  },
+  {
+   "frame": "24.j",
+   "black_pct": 0.0,
+   "dark_patches": 0,
+   "largest_dark_px": 0,
+   "sharpness_vs_start": 0.974,
+   "colour_look_vs_approved": 0.612,
+   "change": 53.18,
+   "pop": 50.11
+  },
+  {
+   "frame": "r0.1",
+   "black_pct": 0.0,
+   "dark_patches": 0,
+   "largest_dark_px": 0,
+   "sharpness_vs_start": 0.859,
+   "colour_look_vs_approved": 0.609,
+   "change": 61.73,
+   "pop": 54.11
+  },
+  {
+   "frame": "29.j",
+   "black_pct": 0.0,
+   "dark_patches": 0,
+   "largest_dark_px": 0,
+   "sharpness_vs_start": 0.96,
+   "colour_look_vs_approved": 0.605,
+   "change": 59.55,
+   "pop": 50.83
+  },
+  {
+   "frame": "30.5",
+   "black_pct": 0.0,
+   "dark_patches": 0,
+   "largest_dark_px": 16,
+   "sharpness_vs_start": 0.965,
+   "colour_look_vs_approved": 0.604,
+   "change": 55.29,
+   "pop": 57.1
+  },
+  {
+   "frame": "31.6",
+   "black_pct": 0.0,
+   "dark_patches": 0,
+   "largest_dark_px": 0,
+   "sharpness_vs_start": 0.022,
+   "colour_look_vs_approved": 0.025,
+   "change": 79.13
+  }
+ ]
+}

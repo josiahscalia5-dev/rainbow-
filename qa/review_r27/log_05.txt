@@ -1,0 +1,9 @@
+The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff2" is outside of Vite serving allow list.
+The request url "/home/user/rainbow-/node_modules/@fontsource/baloo-2/files/baloo-2-latin-700-normal.woff" is outside of Vite serving allow list.
+05 a_start s 132.438 lat 0 stage 05 coins 1420
+05 b_early s 139.222 lat 0 stage 05 coins 1430
+05 c_middle s 152.238 lat 0 stage 05 coins 1450
+05 d_late s 166.355 lat 0 stage 05 coins 1460
+05 e_end s 180.472 lat 0 stage 05 coins 1460
+05 f_hard_left s 152.238 lat -4.837 stage 05 coins 1420
+05 g_hard_right s 152.238 lat 4.837 stage 05 coins 1420

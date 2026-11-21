@@ -1,0 +1,74 @@
+{
+ "operation_id": "0f1d7a46-40f9-4134-8db4-8d4c3fc5f9fc",
+ "created_at": "2026-11-21T10:16:53Z",
+ "updated_at": "2026-11-21T10:21:54Z",
+ "expires_at": "2026-11-21T13:16:53Z",
+ "done": true,
+ "error": null,
+ "metadata": {
+  "progress": {
+   "status": "SUCCEEDED",
+   "description": "World generation completed successfully"
+  },
+  "world_id": "3657fa05-d90a-4ad9-acdb-70f0145d5796",
+  "operation_type": "world_generation",
+  "public_model_name": "marble-1.1-plus"
+ },
+ "response": {
+  "world_id": "3657fa05-d90a-4ad9-acdb-70f0145d5796",
+  "display_name": "",
+  "tags": null,
+  "assets": {
+   "mesh": {
+    "collider_mesh_url": "https://cdn.marble.worldlabs.ai/3657fa05-d90a-4ad9-acdb-70f0145d5796/c036b000.glb",
+    "hq_mesh_url": null,
+    "full_res_mesh_url": null
+   },
+   "imagery": {
+    "pano_url": "https://cdn.marble.worldlabs.ai/3657fa05-d90a-4ad9-acdb-70f0145d5796/22de9a4f-28eb-4dfb-9598-24edcf132cfd_panos/rgb_0.png"
+   },
+   "splats": {
+    "spz_urls": {
+     "500k": "https://cdn.marble.worldlabs.ai/3657fa05-d90a-4ad9-acdb-70f0145d5796/5c15cb48-d03f-46a9-9a73-64307a44180a_ceramic_500k.spz",
+     "100k": "https://cdn.marble.worldlabs.ai/3657fa05-d90a-4ad9-acdb-70f0145d5796/cc6202a1-fa99-41f4-ae3b-2a5cfdbc9401_dust_100k.spz",
+     "150k": "https://cdn.marble.worldlabs.ai/3657fa05-d90a-4ad9-acdb-70f0145d5796/3a1b86df-0abe-458f-82cf-2fc155581fee_ceramic_150k.spz",
+     "full_res": "https://cdn.marble.worldlabs.ai/3657fa05-d90a-4ad9-acdb-70f0145d5796/b546534b-b4db-4867-bbe9-9915019f087f_ceramic.spz"
+    },
+    "semantics_metadata": {
+     "metric_scale_factor": 1.2767848,
+     "ground_plane_offset": 1.2305477
+    }
+   },
+   "thumbnail_url": "https://cdn.marble.worldlabs.ai/3657fa05-d90a-4ad9-acdb-70f0145d5796/a13e36b8-a6c8-4737-af90-813079845307_sand_mpi/thumbnail.webp",
+   "caption": "The scene is a fantastical, hyper-realistic depiction of the inside of a long, straight, cylindrical washing-machine drum tunnel, rendered with an almost dreamlike quality and an energetic, vibrant tone. The tunnel extends directly forward, narrowing to a bright, warm-golden vanishing point at its distant end. The walls of this cylindrical tunnel are a deep, glossy metallic magenta and violet, adorned with numerous long, white-pink specular streaks that run continuously along the length of the tunnel. These walls also feature regular rows of dark, capsule-shaped perforation slots, evenly distributed around the circumference between the structural rings. Approximately ten evenly spaced, identical, circular, polished, reflective yellow-gold ring bands, each flat with a double lip, divide the tunnel into equal bays, progressively shrinking in size as they recede toward the vanishing point. Within each bay, just above the water level, a small copper-gold half-dome fitting is symmetrically placed on each side wall. The entire floor of the tunnel is filled from wall to wall by a broad, thick, glossy electric-cyan river, which is interwoven with hot-pink swirling bands. This luminous river winds in smooth S-bends as it flows toward the vanishing point, its surface alive with white-blue reflections and numerous star-shaped glints. Banks of soft, white foam line both sides of the river, interspersed with transparent, iridescent soap bubbles that float gently above the water's surface. The 360 scene is faultless."
+  },
+  "created_at": null,
+  "updated_at": null,
+  "permission": {
+   "public": false,
+   "allowed_readers": [],
+   "allowed_writers": [],
+   "allow_id_access": false
+  },
+  "world_prompt": null,
+  "world_marble_url": "https://marble.worldlabs.ai/world/3657fa05-d90a-4ad9-acdb-70f0145d5796",
+  "model": null
+ },
+ "cost": {
+  "total_credits": 1580,
+  "line_items": [
+   {
+    "name": "Pano generation (image, non-pano)",
+    "credits": 80
+   },
+   {
+    "name": "Base world generation",
+    "credits": 1500
+   },
+   {
+    "name": "Variable world generation",
+    "credits": 0
+   }
+  ]
+ }
+}

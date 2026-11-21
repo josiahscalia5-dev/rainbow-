@@ -1,0 +1,150 @@
+{
+ "pass": false,
+ "checks": {
+  "L1_level_waits_for_tap": {
+   "pass": false,
+   "value": {
+    "s": 0.49,
+    "calls": 7,
+    "ticks": 7
+   },
+   "rule": "before the tap: path position 0 and no game steps (the level must not run behind the start overlay)"
+  },
+  "L2_tap_starts": {
+   "pass": true,
+   "value": true,
+   "rule": "the real tap starts the live loop"
+  },
+  "L3_one_step_per_frame": {
+   "pass": false,
+   "value": {
+    "max": 2,
+    "mean": 1.832,
+    "ticks": 268
+   },
+   "rule": "exactly one window.step per displayed frame (2 = the game runs at double speed)"
+  },
+  "L4_game_clock": {
+   "pass": false,
+   "value": {
+    "max_dt": 0.05,
+    "s_end": 32.15,
+    "s_expected_one_loop": 18.736,
+    "game_seconds_all_calls": 24.517,
+    "displayed_frames": 268
+   },
+   "rule": "dt <= 1/20 s per step; distance swum = 1.4 u per game second of ONE loop"
+  },
+  "L5_every_swipe_registered": {
+   "pass": true,
+   "value": {
+    "sent": 8,
+    "seen": 8
+   },
+   "rule": "every real touch swipe reaches the controls"
+  },
+  "L6_response_frames": {
+   "pass": false,
+   "value": [
+    "left:20",
+    "right:null",
+    "right:20",
+    "left:null",
+    "up:null",
+    "down:null",
+    "left:20",
+    "right:null"
+   ],
+   "rule": "the move is visible within 2 displayed frames of the swipe (device-independent; on a 60 Hz phone 2 frames = 33 ms)"
+  },
+  "L7_no_errors": {
+   "pass": true,
+   "value": [],
+   "rule": "0 page / console errors"
+  }
+ },
+ "swipes": [
+  {
+   "dir": "left",
+   "framesToMove": 20,
+   "swipesSeen": 1,
+   "queued": null,
+   "move": null
+  },
+  {
+   "dir": "right",
+   "framesToMove": null,
+   "swipesSeen": 2,
+   "queued": null,
+   "move": null
+  },
+  {
+   "dir": "right",
+   "framesToMove": 20,
+   "swipesSeen": 3,
+   "queued": null,
+   "move": null
+  },
+  {
+   "dir": "left",
+   "framesToMove": null,
+   "swipesSeen": 4,
+   "queued": null,
+   "move": null
+  },
+  {
+   "dir": "up",
+   "framesToMove": null,
+   "swipesSeen": 5,
+   "queued": null,
+   "move": null
+  },
+  {
+   "dir": "down",
+   "framesToMove": null,
+   "swipesSeen": 6,
+   "queued": null,
+   "move": null
+  },
+  {
+   "dir": "left",
+   "framesToMove": 20,
+   "swipesSeen": 7,
+   "queued": null,
+   "move": null
+  },
+  {
+   "dir": "right",
+   "framesToMove": null,
+   "swipesSeen": 8,
+   "queued": null,
+   "move": null
+  }
+ ],
+ "stats": {
+  "frames": 223,
+  "seconds": 198.26,
+  "avgFps": 1.1,
+  "frameMs": {
+   "p50": 866.6,
+   "p95": 1316.6,
+   "p99": 1549.9,
+   "worst": 1966.7
+  },
+  "slowFramesOver33ms": 222,
+  "swipes": 7,
+  "swipeToMoveMs": {
+   "median": 2499.7,
+   "worst": 4293.7
+  },
+  "renderer": {
+   "w": 412,
+   "h": 915,
+   "pr": 1
+  },
+  "done": true
+ },
+ "wall_seconds": 223.622,
+ "errors": [],
+ "note": "software WebGL (SwiftShader) in a 4-CPU cloud container: fps / ms here are NOT a phone measurement; frames-to-move, steps per frame and the clock checks are device-independent"
+}

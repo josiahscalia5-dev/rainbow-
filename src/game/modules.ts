@@ -13,6 +13,8 @@ export interface WaterLike {
   surfaceHeight(s: number, lateral: number, time: number): number;
   wake(pos: THREE.Vector3, forward: THREE.Vector3, right: THREE.Vector3, speed: number, dt: number): void;
   splash(pos: THREE.Vector3, up: THREE.Vector3, strength: number): void;
+  /** named sub-objects of the water system (src/vfx/index.ts `parts`), used by `?match08=1` */
+  parts?: Record<string, THREE.Object3D>;
 }
 
 const vfxMods = import.meta.glob('../vfx/index.ts');
@@ -31,6 +33,9 @@ export async function loadWater(course: Course): Promise<WaterLike> {
       const mobile = /Android|iPhone|iPad/i.test(navigator.userAgent);
       const q = qp === 'low' || (qp !== 'high' && mobile) ? 'low' : 'high';
       const w = m.createWater(course, { quality: q });
+      // `?proj05=1` only: wait for the baked approved-water textures (undefined → nothing to wait for)
+      const ready = (w as { ready?: Promise<void> }).ready;
+      if (ready) await ready;
       moduleStatus.water = 'vfx/index.ts';
       return w;
     } catch (e) {

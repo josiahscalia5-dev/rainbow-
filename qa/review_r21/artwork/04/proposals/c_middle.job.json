@@ -1,0 +1,27 @@
+{
+ "name": "c_middle",
+ "endpoint": "fal-ai/nano-banana-2/edit",
+ "request_id": "01a1f6cd-9740-74b0-8ab7-360fbcd093ba",
+ "status": "COMPLETED",
+ "resolution": "2K",
+ "aspect_ratio": "9:16",
+ "num_images": 1,
+ "estimated_cost_usd": 0.12,
+ "inputs": [
+  {
+   "path": "/home/user/rainbow-/qa/review_r21/artwork/04/game_frames/c_middle.png",
+   "sha256": "108af2794018a51261353aebd1a786346f911821b9a89c281652b16cc6dad39f"
+  },
+  {
+   "path": "/home/user/wt/s04/assets/textures/match04/plate04_hybrid_fal.png",
+   "sha256": "f623519edb8900f7f5025fe22886940dd9313c05a4fcd87ba694abeea6d5613a"
+  }
+ ],
+ "prompt": "IMAGE 1 is a frame from a 3D mobile game. Its camera is further inside the gold tunnel of the scene shown in IMAGE 2. IMAGE 2 is the art director's approved original illustration (the final design of this level).\n\nRepaint IMAGE 1 as a finished illustration in exactly the art style, materials, colours and lighting of IMAGE 2, so it looks like the same painting seen from deeper inside the tunnel:\n- polished yellow-gold telescoping rings with soft rounded rims, narrow shaded grooves, rows of warm amber light dots, and soft pink / violet reflections on the gold;\n- a thick, glossy cyan river with crisp white highlight streaks and small sparkles;\n- hot-pink and magenta satin swirl bands curving up the sides of the river, glossy, with bright white highlight lines and crisp edges;\n- low glossy white-lilac soap-bubble foam along both water edges;\n- a few iridescent soap bubbles in the air;\n- a glowing warm white light at the far end of the tunnel;\n- the five glowing white-cyan chevron arrows on the centre of the river, crisp.\n\nSTRICT: keep the exact camera, perspective, composition and geometry of IMAGE 1 \u2014 every ring, the tunnel opening, the river path, the chevrons and the far light stay at the same positions and sizes. Same painterly quality and detail level as IMAGE 2 (crisp, glossy, saturated, premium). Do not add any character, mascot, coins, text, HUD or user interface. Output only the repainted scene.",
+ "outputs": [
+  "/home/user/rainbow-/qa/review_r21/artwork/04/proposals/c_middle_v1.png"
+ ],
+ "seconds": 22.2,
+ "error": null,
+ "note": "PROPOSAL \u2014 generated view, NOT an approved reference until the user approves it"
+}

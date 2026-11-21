@@ -1,0 +1,26 @@
+{
+ "k0": {
+  "below_hud_pct": 96.2,
+  "whole_frame_pct": 87.3
+ },
+ "k1": {
+  "panel_size_pct": 94.5,
+  "game_frame_window_pct": 84.5,
+  "window_share_of_screen_pct": 57
+ },
+ "k2": {
+  "panel_size_pct": 96.7,
+  "game_frame_window_pct": 90.5,
+  "window_share_of_screen_pct": 56
+ },
+ "k3": {
+  "panel_size_pct": 96.3,
+  "game_frame_window_pct": 90.0,
+  "window_share_of_screen_pct": 60
+ },
+ "k4": {
+  "panel_size_pct": 97.2,
+  "game_frame_window_pct": 84.7,
+  "window_share_of_screen_pct": 57
+ }
+}

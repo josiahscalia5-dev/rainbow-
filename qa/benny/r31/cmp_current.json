@@ -1,0 +1,7 @@
+{
+ "CURRENT 3D (game default)": {
+  "silhouette_iou": 0.906,
+  "box_within20_pct": 43.2,
+  "box_ssim": 0.459
+ }
+}

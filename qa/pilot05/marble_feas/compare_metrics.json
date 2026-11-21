@@ -1,0 +1,18 @@
+{
+ "note": "Projection from the SAME camera reproduces the artwork wherever the mesh exists, so the locked view mainly tests coverage; the moved-camera pictures test the geometry.",
+ "water_footprint_px": 804501,
+ "coverage_of_artwork_water_by_marble_mesh": {
+  "all": 0.9949210753000929,
+  "input_rows_197_767": 0.990053098512582,
+  "below_row_767": 0.9960514385139441
+ },
+ "new_vs_artwork_mean_abs_rgb_in_water": {
+  "all": 1.4825193919377775,
+  "input_rows": 2.4241152996273216,
+  "below_row_767": 1.26387714633469
+ },
+ "marble_raw_vs_approved_mean_abs_rgb": {
+  "water_input_rows": 48.28422105691324,
+  "water_below_767": 85.23939341028282
+ }
+}
