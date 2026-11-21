@@ -803,8 +803,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 80969,
-   "sha256": "d063d3703b32c9f091a2a4f4e20043d0b0f41dc8368c4f1f303f6588ea070cc5"
+   "bytes": 81377,
+   "sha256": "2bbe00735f78c1ee0bd88d70120876b3d04b54bd6b1c761d4700efd7fe96c2b6"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3267,
-   "sha256": "60a245759c94672744c074048582414b2b5ad4d1879e3985f1d9c5d5b5e75679"
+   "sha256": "06f01d2cf31a49ee3de760801df793d80498be9a6840e64e288002d648b82c57"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -7054,7 +7054,7 @@
   {
    "path": "backups/wip/detached-d8e047d33e/INFO.json",
    "bytes": 2379,
-   "sha256": "5021babfd1b0fd14fc72b24dd439b932f0406ce4dd4654935622f45b763fc022"
+   "sha256": "6209435a3b860c9ea49b49f70b85641db17811923ca6d8927baceafe90e4e37d"
   },
   {
    "path": "backups/wip/detached-d8e047d33e/tracked.patch",
@@ -10808,8 +10808,8 @@
   },
   {
    "path": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md",
-   "bytes": 76069,
-   "sha256": "90532d856baa7b16d611530d8cf429b94b170f9e4fc1a1c057c78ceffc0572d8"
+   "bytes": 77061,
+   "sha256": "84a2fc2790219af641abcfd2c72a1942671b6a5c4973b1de3c410521919a63c1"
   },
   {
    "path": "docs/PARALLEL_PROGRESS.md",
@@ -40668,8 +40668,8 @@
   },
   {
    "path": "tools/kit05/swimfx.js",
-   "bytes": 12885,
-   "sha256": "aa3c6b11f6ddc987700705426133f83d4cdcd201a16e3099d20a6942a2d035f0"
+   "bytes": 13694,
+   "sha256": "80e243fc12e4879ddb8795804e51da0e85a147a697eee374fa4454de7bc1e871"
   },
   {
    "path": "tools/lead21/audit_screen.mjs",
