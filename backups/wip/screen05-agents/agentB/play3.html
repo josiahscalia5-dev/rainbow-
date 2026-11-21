@@ -30,9 +30,15 @@ const spark = new SparkRenderer({ renderer }); scene.add(spark);
 const flip = (m) => { m.quaternion.set(1, 0, 0, 0); return m; };
 
 // ---------- track: start piece, alternating sharp sections (bay / mirrored bay), light sections far away, tunnel end ----------
-const near = flip(new SplatMesh({ url: TD + 'near.ply' })); scene.add(near);
-const far = flip(new SplatMesh({ url: TD + 'far.ply' })); scene.add(far);
 const L2 = !q.get('trk'); // [track] very distant copies use the 35 % pieces (*_lo2)
+// [track] Android splat budget: the start piece is split along the tunnel (tools/split_near.py, u = 1.5): near_b = its front part,
+// nearA = its rear part (288k splats from far behind the start camera up to u = 1.5). nearA is hidden only when ALL of it is behind
+// the camera (exact test on its convex hull + the largest splat's reach), so nothing on screen changes. ?nosplit=1 = one piece.
+const NA = L2 && !q.get('nosplit') ? await (await fetch(TD + 'near_a_hull.json')).json() : null;
+const near = flip(new SplatMesh({ url: TD + (NA ? 'near_b.ply' : 'near.ply') })); scene.add(near);
+const nearA = NA ? flip(new SplatMesh({ url: TD + 'near_a.ply' })) : null; if (nearA) scene.add(nearA);
+const NAH = NA ? NA.hull.map((p) => new THREE.Vector3(...p)) : null, naF = new THREE.Vector3(), naD = new THREE.Vector3();
+const far = flip(new SplatMesh({ url: TD + 'far.ply' })); scene.add(far);
 const src = { hi: new SplatMesh({ url: TD + 'bay.ply' }), him: new SplatMesh({ url: TD + 'bay_m.ply' }), lo: new SplatMesh({ url: TD + 'bay_lo.ply' }), lom: new SplatMesh({ url: TD + 'bay_m_lo.ply' }),
   ...(L2 ? { lo2: new SplatMesh({ url: TD + 'bay_lo2.ply' }), lom2: new SplatMesh({ url: TD + 'bay_m_lo2.ply' }) } : {}) };
 await Promise.all([near.initialized, far.initialized, ...Object.values(src).map((m) => m.initialized)]);
@@ -45,7 +51,7 @@ for (let k = 1; k <= TR.N; k++) {
   for (const m of [hi, lo, lo2]) if (m) { m.position.set(...TR.offsets[k - 1]); m.visible = false; scene.add(m); }
   tiles.push({ k, hi, lo, lo2 });
 }
-const WF = q.get('noflow') ? null : createWaterFlow({ TR, SC, meshes: [near, far, ...tiles.flatMap((t) => [t.hi, t.lo, t.lo2].filter(Boolean))], far, amp: +(q.get('flowamp') ?? 1), speed: +(q.get('flowspeed') ?? 0.9) }); // [waterflow]
+const WF = q.get('noflow') ? null : createWaterFlow({ TR, SC, meshes: [near, nearA, far, ...tiles.flatMap((t) => [t.hi, t.lo, t.lo2])].filter(Boolean), far, amp: +(q.get('flowamp') ?? 1), speed: +(q.get('flowspeed') ?? 0.9) }); // [waterflow]
 // [track] backing shells (tools/build_backing.py): 4 cm behind each piece's splats, in the piece's own local colours; they only show
 // where the splats leave a hole (the wall bases at the section joints), instead of the black clear colour. ?noback=1 = off
 const BK = {};
@@ -197,10 +203,12 @@ window.step = (t, dt, steer, speed) => {
     if (c.got < 0 && st.s >= c.s && Math.abs(st.lat - c.lat) < 0.14) { c.got = t; coinCount += 10; coinEl.textContent = '\u{1FA99} ' + coinCount.toLocaleString('en-US'); }
     if (c.got >= 0) { const k = (t - c.got) / 0.4; c.sp.visible = k < 1; if (k < 1) { c.sp.position.copy(benny.position).addScaledVector(F.n, SC.benny_h * (1.05 + 0.6 * k)); c.sp.material.opacity = 1 - k * k; const d = SC.coin_d * 0.7 * (1 - 0.5 * k); c.sp.scale.set(d, d, 1); } }
   }
+  if (nearA) { camera.getWorldDirection(naF); let m = -1e9; for (const p of NAH) m = Math.max(m, naD.copy(p).sub(camera.position).dot(naF)); nearA.visible = near.visible && m > -NA.margin; } // [track]
   WF?.update(dt, camera); // [waterflow]
   return { s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: coinCount, tile: kcNow };
 };
 window.qaFlow = (dt) => WF?.update(dt, camera); // [waterflow] QA: advance only the water flow (camera, glints, bubbles stay)
+window.qaNearA = () => (nearA ? nearA.visible : null); // [track] QA
 window.qaVisibleSplats = () => { let n = 0; scene.traverse((o) => { if (o instanceof SplatMesh && o.visible && o.packedSplats) n += o.packedSplats.numSplats; }); return n; }; // [track] QA: Android budget check
 window.renderNow = async (n = 2) => { for (let i = 0; i < n; i++) { renderer.render(scene, camera); await new Promise((r) => setTimeout(r, 60)); } renderer.render(scene, camera); return true; };
 window.step(0, 0, 0, 0);

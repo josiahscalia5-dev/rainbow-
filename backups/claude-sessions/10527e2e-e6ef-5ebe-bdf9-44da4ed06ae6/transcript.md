@@ -1065,3 +1065,444 @@ Both specialists are working in the background. Here's where things stand.
 
 **Next:** when both specialists report back, I'll re-merge and run the full recorded test of all 228 frames plus the visual checks, then fix and re-test until everything passes. Rendering here is software-only, so one full test run probably takes one to two hours. You won't get a video until every check passes.
 
+### 🧑 User — 2026-11-21T13:01:05.611Z
+
+Claudia, I'm pleased that all 10 touch-swipes passed the first gameplay logic test and that my project was recovered and saved to GitHub.
+
+Please continue with the full visual and gameplay acceptance tests.
+
+One thing I noticed in the comparison images is that the coins look crowded or overlapping in some areas. Please make sure their placement looks natural and matches my approved Screen 05.
+
+Also, make sure the dark gaps around the water and tunnel are completely corrected, and that Benny keeps swimming naturally through every section without strange movement, blurry scenery, camera problems, or crashes.
+
+Please verify the GitHub autosave and recovery process works reliably after a restart.
+
+Most importantly, the final recording must demonstrate the entire playable level, not just a short portion, and the visual tests must compare it against my original approved artwork.
+
+Only show me the completed gameplay when it genuinely passes all required tests. If anything cannot be fixed, please explain the remaining issue rather than marking it complete.
+
+Do not spend additional credits or change my approved designs.
+
+### 🤖 Claude — 2026-11-21T13:01:18.474Z
+
+Understood. I'll take each point: coin placement against your approved picture, zero dark gaps, the whole level in the test, and a real restart test of the autosave/recovery. First I'm checking how long the playable level really is, because the current test covers 7.6 s.
+
+### 🤖 Claude — 2026-11-21T13:01:21.566Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad; cd $SP && for d in base agentB merged; do python3 -I -c \"\nimport json,sys;t=json.load(open('$d/'+('track_w/track.json' if '$d'!='base' else 'track/track.json')));print('$d', 'N',t.get('N'),'trail_s end',t['trail_s'][-1],'len offsets',len(t['offsets']), 'UA',t.get('UA'), 'keys',[k for k in t.keys()][:30])\"; done; grep -n \"level\\|finish\\|complete\\|TS\\[TS.length - 1\\]\\|s_end\\|END\" merged/play3.html | cut -c1-200 | head -20", "description": "Check the level length in each track version"}`
+
+### 🧑 User — 2026-11-21T13:01:21.724Z
+
+> ↩︎ result: base N 10 trail_s end 23.64 len offsets 10 UA 1.3 keys ['offsets', 'far_offsets', 'D', 'N', 'UA', 'UB', 'ax', 'right', 'n', 'trail', 'trail_s']
+> agentB N 14 trail_s end 32.160000000000004 len offsets 14 UA 1.3 keys ['XA', 'XB', 'offsets', 'far_offsets', 'D', 'N', 'UA', 'UB', 'ax', 'right', 'n', 'trail', 'trail_s']
+> merged N 14 trail_s end 32.160000000000004 len offsets 14 UA 1.3 keys ['XA', 'XB', 'offsets', 'far_offsets', 'D', 'N', 'UA', 'UB', 'ax', 'right', 'n', 'trail', 'trail_s']
+> 78:const at = (s, out) => { s = Math.max(0, Math.min(TS[TS.length - 1], s)); let lo = 0, hi = TS.length - 1; while (hi - lo > 1) { const m = (lo + hi) >> 1; if (TS[m] < s) lo = m; else hi = m; } const
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T13:01:26.860Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"7\\.6\\|duration\\|length\" src/ 2>/dev/null | grep -i \"05\\|stage\\|screen\" | head -15; grep -rn \"7.6 s\\|7\\.6s\\|level length\\|whole level\" docs/briefs/2026-11-21-r32/ docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md 2>/dev/null | head -10", "description": "Find the intended Screen 05 level length"}`
+
+### 🧑 User — 2026-11-21T13:01:26.938Z
+
+> ↩︎ result: src/characters/girl/build.ts:577:    [2.47, 15.8], [2.32, 16.55], [2.0, 17.05], [1.45, 17.45], [0.95, 17.6],
+> src/characters/benny/benny05.ts:31:  fur_body: { density: 96, shells: 24, length: 0.11, gravity: 0.16 },
+> src/characters/benny/benny05.ts:32:  fur_armL: { density: 120, shells: 12, length: 0.05 },
+> src/characters/benny/benny05.ts:33:  fur_armR: { density: 120, shells: 12, length: 0.05 },
+> src/characters/benny/benny05.ts:34:  fur_pom: { density: 64, shells: 18, length: 0.12, gravity: 0.03 },
+> src/characters/benny/benny05.ts:128:      for (let i = 0; i < t.values.length; i += 4) {
+> src/characters/benny/benny05.ts:367:    for (let i = 0; i < bytes.length; i += 0x8000) s += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+> src/characters/benny/build.ts:297:    arm.userData = furData({ length: 0.055, density: 96, shells: 12, root: C.pinkRoot, tip: C.pinkTip, gravity: 0.04 });
+> src/characters/benny/build.ts:422:  pomMesh.userData = furData({ length: 0.12, density: 88, shells: 16, root: C.pomRoot, tip: C.pomTip, gravity: 0.05 });
+> src/world/environment.ts:224:  // START, not from the 05 start, so reshaping the 05 river (which changes its arc length) never slides the
+> src/world/environ …[+1349 chars]
+
+### 🤖 Claude — 2026-11-21T13:01:42.967Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/references/05_flow_into_the_current.png"}`
+
+### 🧑 User — 2026-11-21T13:01:43.078Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T13:02:02.679Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad; cd $SP/merged && grep -n \"coin\" play3.html | cut -c1-330 | head -30; python3 -I -c \"\nimport json;s=json.load(open('scene05.json'));print([k for k in s]);print({k:s[k] for k in s if 'coin' in k.lower()})\" | cut -c1-1500", "description": "Inspect how water coins are placed"}`
+
+### 🧑 User — 2026-11-21T13:02:02.770Z
+
+> ↩︎ result: 12:<div id="hud"><div class="bar"><span>&#10084;&#65039; 5/5</span><span id="coins">&#129689; 1,420</span></div><div class="title">05 &middot; FLOW INTO THE CURRENT</div></div>
+> 145:// ---------- coins ----------
+> 146:const ctex = await tl.loadAsync('coin.png'); ctex.colorSpace = THREE.SRGBColorSpace;
+> 147:const coins = [];
+> 150:  const d = SC.coin_d; sp.scale.set(d * 1.15, d * 1.15, 1); at(s, sp.position).addScaledVector(frameAt(s).n, d * 0.75); sp.renderOrder = 10; scene.add(sp); coins.push({ s, lat: 0, sp, got: -1 });
+> 152:let coinCount = 1420; const coinEl = document.getElementById('coins');
+> 163:const CT = q.get('controls') === '0' ? null : installControls({ THREE, canvas: renderer.domElement, camera, q, at, frameAt, coins, scene, U, bmat, benny, splash, splashTex, bubTex, coinTex: ctex, coinD: SC.coin_d, bennyFullH: 0.99 * KH, pxW, coinEl, getS: () => st.s, getCoins: () => coinCount, render: () => renderer.render(s
+> 202:  for (const c of coins) {
+> 203:    if (c.got < 0 && (CT ? CT.hits(c) : st.s >= c.s && Math.abs(st.lat - c.lat) < 0.14)) { c.got = t; coinCount += 10; coinEl.textContent = '\u{1FA99} ' + coinCount.toLocaleString('en-US'); } // [controls] 3D pick-up distance
+> 204:    if …[+542 chars]
+
+### 🤖 Claude — 2026-11-21T13:02:05.537Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad; cd $SP/merged && sed -n 145,152p play3.html | cut -c1-400; grep -n \"addCoin\\|air\\b\\|AIR\\|hAir\" controls.js | head -20", "description": "Read coin creation code in page and controls"}`
+
+### 🧑 User — 2026-11-21T13:02:05.615Z
+
+> ↩︎ result: // ---------- coins ----------
+> const ctex = await tl.loadAsync('coin.png'); ctex.colorSpace = THREE.SRGBColorSpace;
+> const coins = [];
+> for (let i = 0; i < 40; i++) {
+>   const s = 0.45 + i * 0.32; const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: ctex, toneMapped: false, transparent: true, alphaTest: 0.35, depthWrite: false }));
+>   const d = SC.coin_d; sp.scale.set(d * 1.15, d * 1.15, 1); at(s, sp.position).addScaledVector(frameAt(s).n, d * 0.75); sp.renderOrder = 10; scene.add(sp); coins.push({ s, lat: 0, sp, got: -1 });
+> }
+> let coinCount = 1420; const coinEl = document.getElementById('coins');
+> 2:// Lanes (swipe left / right), leap (swipe up), dive (swipe down), coins in the side lanes and in the air,
+> 121:  // ---------------- coins in the side lanes and in the air (same sprites / pop as the water line) ----------------
+> 122:  const addCoin = (s, lat, hAir) => {
+> 125:    const Fs = frameAt(s); at(s, sp.position).addScaledVector(Fs.r, lat).addScaledVector(Fs.n, coinD * 0.75 + hAir);
+> 126:    sp.renderOrder = 10; scene.add(sp); coins.push({ s, lat, h: hAir, sp, got: -1, kind: hAir > 0 ? 'air' : 'lane' });
+> 128:  // air arcs over the centre lane: only reachable with a leap (the top c …[+742 chars]
+
+### 🤖 Claude — 2026-11-21T13:02:19.905Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad; cd $SP && python3 -I -c \"\nfrom PIL import Image\na=Image.open('/home/user/rainbow-/references/05_flow_into_the_current.png').convert('RGB').resize((412,915))\nb=Image.open('agentA/out_controls/a_start_frame0.png').convert('RGB')\nc=Image.open('agentA/out_controls/d_after_air_coin.png').convert('RGB')\nbox=(60,200,352,520)\nims=[x.crop(box).resize((292*2,320*2)) for x in (a,b,c)]\ns=Image.new('RGB',(584*3+20,640),'white')\nfor i,x in enumerate(ims): s.paste(x,(i*594,0))\ns.save('coins_cmp.jpg',q …[+85 chars]`
+
+### 🧑 User — 2026-11-21T13:02:20.107Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T13:02:20.966Z
+
+Comparing coin placement up close: your approved picture next to our start frame and a mid-run frame.
+
+### 🤖 Claude — 2026-11-21T13:02:22.094Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/coins_cmp.jpg"}`
+
+### 🧑 User — 2026-11-21T13:02:22.143Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T13:02:46.371Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad; cd $SP && python3 -I -c \"\nimport cv2,numpy as np\nim=cv2.imread('/home/user/rainbow-/references/05_flow_into_the_current.png'); H,W=im.shape[:2]; print(W,H)\nhsv=cv2.cvtColor(im,cv2.COLOR_BGR2HSV)\nm=((hsv[...,0]>=15)&(hsv[...,0]<=32)&(hsv[...,1]>150)&(hsv[...,2]>150)).astype(np.uint8)\nm[:int(H*0.31)]=0; m[int(H*0.52):]=0; m[:, :int(W*0.3)]=0; m[:, int(W*0.72):]=0\nm=cv2.morphologyEx(m,cv2.MORPH_CLOSE,np.ones((5,5),np.uint8))\nn,lab,st,cen=cv2.connectedComponentsWithStats(m,8)\nfor i in range( …[+185 chars]`
+
+### 🧑 User — 2026-11-21T13:02:46.591Z
+
+> ↩︎ result: 864 1536
+> coin centre (476,481) w 31 h 12 area 162
+> coin centre (527,515) w 31 h 36 area 426
+> coin centre (495,533) w 19 h 16 area 220
+> coin centre (466,546) w 28 h 22 area 480
+> coin centre (431,575) w 43 h 34 area 1082
+> coin centre (482,612) w 56 h 44 area 1717
+> coin centre (549,659) w 70 h 56 area 2653
+> coin centre (475,728) w 96 h 84 area 5312
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T13:02:56.588Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad; cd $SP/merged && python3 -I -c \"\nimport json;s=json.load(open('scene05.json'));print(s['cam']);print(s['plane']);print(len(s['trail']),s['trail'][:3],s['trail_s'][:3], s['benny_h'])\nt=json.load(open('track_w/track.json'));print(t['trail'][:3],t['trail_s'][:3],t['n'],t['right'],t['ax'])\"; cat refcam_full.json 2>/dev/null", "description": "Read the reference camera and river trail data"}`
+
+### 🧑 User — 2026-11-21T13:02:56.674Z
+
+> ↩︎ result: {'fwd': [-0.025495445361092415, -0.16103854187683883, -0.9866187563066198], 'up': [-0.483733040546248, 0.8656864685033793, -0.12879939337601617], 'fov': 64.0}
+> {'n': [-0.3769719166382767, 0.9039326595252047, 0.20198495268151698], 'd': -0.7344132882479625}
+> 262 [[0.1467720783400785, -0.5150511365172206, -1.0570727675951637], [0.13935058606797301, -0.5098565202134296, -1.0941709642546233], [0.13032642621528007, -0.5035401290915243, -1.139280498109413]] [0.0, 0.038188202124117825, 0.08462312758382158] 0.4040000000000003
+> [[0.1467720783400785, -0.5150511365172206, -1.0570727675951637], [0.14288527987390068, -0.5123306018940363, -1.0765019077986666], [0.13899848140772286, -0.5096100672708522, -1.0959310480021696]] [0.0, 0.02, 0.04] [-0.3769719166382767, 0.9039326595252047, 0.20198495268151698] [0.914978532300982, 0.3973117669760195, -0.07041054786560094] [-0.10879281978382856, 0.07487649187384926, -0.9912404518219325]
+> {
+>  "matches": 87,
+>  "inliers": 40,
+>  "fov": 64.0,
+>  "fit_err": 0.030595880025756955,
+>  "fwd": [
+>   -0.025495445361092415,
+>   -0.16103854187683883,
+>   -0.9866187563066198
+>  ],
+>  "up": [
+>   -0.483733040546248,
+>   0.8656864685033793,
+>   -0.12879939337601617
+>  ]
+> }
+> Shell cwd was reset to /home …[+14 chars]
+
+### 🤖 Claude — 2026-11-21T13:02:59.954Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad; cd $SP/merged && grep -n \"camQ0\\|SC.cam\\|camera.position.set\\|lookAt\" play3.html | cut -c1-260", "description": "Find initial camera pose in the page"}`
+
+### 🧑 User — 2026-11-21T13:02:59.998Z
+
+> ↩︎ result: 30:const camera = new THREE.PerspectiveCamera(SC.cam.fov, W / H, 0.01, 200);
+> 155:const camFwd = new THREE.Vector3(...SC.cam.fwd), camUp = new THREE.Vector3(...SC.cam.up);
+> 156:const camQ0 = new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().lookAt(new THREE.Vector3(), camFwd, camUp));
+> 159:const relQ = new THREE.Quaternion().setFromRotationMatrix(M0).invert().multiply(camQ0);
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T13:03:21.468Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad; cd $SP/merged && python3 -I - <<'EOF'\nimport json, numpy as np\nS=json.load(open('scene05.json')); T=json.load(open('track_w/track.json'))\nfwd=np.array(S['cam']['fwd']); up=np.array(S['cam']['up']); fov=np.radians(S['cam']['fov'])\nz=-fwd/np.linalg.norm(fwd); x=np.cross(up,z); x/=np.linalg.norm(x); y=np.cross(z,x)\nR=np.stack([x,y,z],1)\nn=np.array(S['plane']['n']); d=S['plane']['d']; cd=0.15038523388874458\nP=np.array(T['trail']); TS=np.array(T['trail_s'])\ndef at(s): return np.array([np.inter …[+1818 chars]`
+
+### 🧑 User — 2026-11-21T13:03:21.884Z
+
+> ↩︎ result: approved coin px(475,728) w96 -> s=1.027 lat=-0.007 dist 2.06  our sprite would be 103 px
+> approved coin px(549,659) w70 -> s=1.561 lat=+0.037 dist 2.54  our sprite would be 84 px
+> approved coin px(482,612) w56 -> s=1.995 lat=-0.073 dist 2.92  our sprite would be 73 px
+> approved coin px(431,575) w43 -> s=2.441 lat=-0.069 dist 3.31  our sprite would be 64 px
+> approved coin px(466,546) w28 -> s=2.965 lat=+0.088 dist 3.80  our sprite would be 56 px
+> approved coin px(495,533) w19 -> s=3.254 lat=+0.217 dist 4.10  our sprite would be 52 px
+> approved coin px(518,522) w14 -> s=3.510 lat=+0.359 dist 4.38  our sprite would be 48 px
+> approved coin px(535,511) w12 -> s=4.054 lat=+0.447 dist 4.70  our sprite would be 45 px
+> ours: s=0.45+0.32i
+>   our coin 0 s=0.45 at px (442,876) size 140
+>   our coin 1 s=0.77 at px (458,801) size 116
+>   our coin 2 s=1.09 at px (481,750) size 100
+>   our coin 3 s=1.41 at px (514,713) size 87
+>   our coin 4 s=1.73 at px (528,684) size 78
+>   our coin 5 s=2.05 at px (500,658) size 70
+>   our coin 6 s=2.37 at px (459,635) size 64
+>   our coin 7 s=2.69 at px (437,617) size 59
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T13:04:15.961Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad; cd $SP/merged && python3 -I - <<'EOF'\nimport json, numpy as np\nT=json.load(open('track_w/track.json')); P=np.array(T['trail']); TS=np.array(T['trail_s'])\nXA=np.array(T['XA']); XB=np.array(T['XB']); off=np.array(T['offsets'])\nprint('N',T['N'],'UA',T['UA'],'UB',T['UB'],'D',T['D'])\ndef s_of(X): k=np.argmin(np.linalg.norm(P-X,axis=1)); return TS[k], np.linalg.norm(P[k]-X)\nprint('ring A s', s_of(XA), 'ring B s', s_of(XB))\nfor k in range(T['N']): print(k+1, 'ring B of copy', [round(v,2) for v in …[+160 chars]`
+
+### 🧑 User — 2026-11-21T13:04:16.335Z
+
+> ↩︎ result: N 14 UA 1.3 UB 3.33 D [-0.3019309712164562, 0.15862300963126236, -2.0028187309351937]
+> ring A s (np.float64(0.48), np.float64(0.6882645243287713)) ring B s (np.float64(2.56), np.float64(0.6857968250701716))
+> 1 ring B of copy [np.float64(4.72), np.float64(0.68)]
+> 2 ring B of copy [np.float64(6.82), np.float64(0.69)]
+> 3 ring B of copy [np.float64(8.96), np.float64(0.68)]
+> 4 ring B of copy [np.float64(11.08), np.float64(0.69)]
+> 5 ring B of copy [np.float64(13.22), np.float64(0.68)]
+> 6 ring B of copy [np.float64(15.32), np.float64(0.69)]
+> 7 ring B of copy [np.float64(17.46), np.float64(0.68)]
+> 8 ring B of copy [np.float64(19.58), np.float64(0.69)]
+> 9 ring B of copy [np.float64(21.72), np.float64(0.68)]
+> 10 ring B of copy [np.float64(23.82), np.float64(0.69)]
+> 11 ring B of copy [np.float64(25.98), np.float64(0.68)]
+> 12 ring B of copy [np.float64(28.08), np.float64(0.69)]
+> 13 ring B of copy [np.float64(30.22), np.float64(0.68)]
+> 14 ring B of copy [np.float64(32.16), np.float64(0.75)]
+> 60:// [track] the tunnel runs on for FARK sections and ends in the painting's bright golden light (a soft glow behind the splats)
+> 61:const FARK = +(q.get('fark') ?? 9);
+> 62:const glow = (L2 && TR.XB) ? (() => { const c = do …[+605 chars]
+
+### 🤖 Claude — 2026-11-21T13:04:23.426Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"sEndT05\\s*=\\|const sF05\\|STAGE_LEN\\|stageLen\\|05:.*len\\|speed\\s*[:=]\\s*[0-9]\" src/ | head -12; grep -rn \"stages\\s*=\\|STAGES\\s*=\" src/ | head -5", "description": "Find Screen 05 length in the main game"}`
+
+### 🧑 User — 2026-11-21T13:04:23.578Z
+
+> ↩︎ result: src/characters/benny/benny31-lab.ts:49:    tick = (t) => { for (let i = 0; i < 30; i++) b.update(1 / 60, { swim: 1, steer: 0, speed: 11, time: t }); };
+> src/characters/benny/benny-lab.ts:145:      for (let t = 0; t < 0.9; t += 1 / 30) b.update(1 / 30, { swim: p.swim, steer: 0, speed: 10, time: t, tumble: p.tumble });
+> src/world/environment.ts:263:  const sF05 = Math.min(sCam05 + 54, sGlow05 - 2.5);
+> src/world/environment.ts:297:  const sEndT05 = course.stage('07').s0 + 25;
+> src/world/course.ts:460:      id, title: STAGE_TITLES[id], s0, s1, width: 5, tube: 0, tubeKind: 'none', speed: 11, refCoins: 0,
+> src/world/course.ts:464:      def('01', 0, 0.01, { width: 6, interactive: false, speed: 0 }),
+> src/world/course.ts:465:      def('02', 0.01, m['03'], { width: 5, interactive: false, speed: 9, bank: 0 }),
+> src/world/course.ts:466:      def('03', m['03'], m['04'], { width: 7, speed: 9, refCoins: 1330, bank: 2.2 }),
+> src/world/course.ts:467:      def('04', m['04'], m['05'], { width: 4.4, tube: 4.8, tubeKind: 'gold', speed: 14, refCoins: 1330 }),
+> src/world/course.ts:470:      def('05', m['05'], m['06'], { width: 9, tube: 7.6, tubeKind: 'perf', speed: 11, refCoins: 1420, bank: 0.25 }),
+> src/world/co …[+400 chars]
+
+### 🤖 Claude — 2026-11-21T13:04:26.784Z
+
+> 🔧 **Bash** `{"command": "sed -n 440,462p src/world/course.ts | cut -c1-200", "description": "Read stage boundary markers in the main game course"}`
+
+### 🧑 User — 2026-11-21T13:04:26.844Z
+
+> ↩︎ result: while (hi - lo > 1) {
+>         const mid = (lo + hi) >> 1;
+>         if (ls[mid] < s) lo = mid; else hi = mid;
+>       }
+>       const f = (s - ls[lo]) / Math.max(1e-6, ls[hi] - ls[lo]);
+>       return us[lo] + (us[hi] - us[lo]) * f;
+>     };
+>     const sAtIndex = (i: number) => {
+>       const u = i / (route.points.length - 1);
+>       const k = Math.round(u * M);
+>       return ls[k];
+>     };
+>     this.marks = {};
+>     for (const [k, i] of Object.entries(route.marks)) this.marks[k] = sAtIndex(i);
+>     this.straightAxes = route.straight.map((r) => ({ s0: this.marks[r.from], s1: this.marks[r.to], a: r.a, b: r.b, floorDepth: r.floorDepth }));
+>     this.line05x = route.straight[0].a.x;
+> 
+>     // ---- stages ----
+>     const m = this.marks;
+>     const def = (id: StageId, s0: number, s1: number, o: Partial<StageDef>): StageDef => ({
+>       id, title: STAGE_TITLES[id], s0, s1, width: 5, tube: 0, tubeKind: 'none', speed: 11, refCoins: 0,
+>       interactive: true, bank: 1, ...o,
+>     });
+
+### 🤖 Claude — 2026-11-21T13:04:29.969Z
+
+> 🔧 **Bash** `{"command": "grep -n \"\\\"test\\|continuity\\|tsx\\|vite-node\" package.json | head; ls scripts | grep -i contin", "description": "Find a script that reports stage lengths"}`
+
+### 🧑 User — 2026-11-21T13:04:30.011Z
+
+> ↩︎ result: 12:    "test:continuity": "vite-node scripts/continuity-test.ts",
+> 19:    "test:cinematic": "node scripts/cinematic-test.mjs"
+> 32:    "vite-node": "^2.1.5"
+> continuity-test.ts
+
+### 🤖 Claude — 2026-11-21T13:04:32.396Z
+
+> 🔧 **Bash** `{"command": "head -30 scripts/continuity-test.ts; cat > /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/stagelen.ts <<'EOF'\nEOF\necho", "description": "See how the continuity test builds the course"}`
+
+### 🧑 User — 2026-11-21T13:04:32.453Z
+
+> ↩︎ result: /**
+>  * Route continuity + altitude test (run: npm run test:continuity).
+>  * Writes qa/continuity_report.json and docs/path_graph.md (altitude chart), exits 1 on failure.
+>  */
+> import { writeFileSync, mkdirSync } from 'node:fs';
+> import { Course, validateContinuity, WORLD } from '../src/world/course';
+> 
+> const c = new Course();
+> const r = validateContinuity(c);
+> mkdirSync('qa', { recursive: true });
+> mkdirSync('docs', { recursive: true });
+> writeFileSync('qa/continuity_report.json', JSON.stringify({ length: c.length, marks: c.marks, ...r }, null, 2));
+> 
+> // altitude chart (ASCII) + per-stage table
+> const rows: string[] = [];
+> rows.push('# Rainbow route graph — absolute altitudes & continuity');
+> rows.push('');
+> rows.push(`Generated by \`npm run test:continuity\`. Route length **${c.length.toFixed(1)} units** (1 unit ≈ 5 cm at Benny scale).`);
+> rows.push('One centripetal Catmull-Rom spline from scene 01 to the towel at the end of 10; scene 11 is the');
+> rows.push('victory cinematic at the route end. Result: **' + (r.ok ? 'PASS' : 'FAIL') + '**.');
+> rows.push('');
+> rows.push('| Stage | Title | s0 → s1 | length | altitude in → out | width | tube | speed |');
+> rows.push('|---|---|---|---|---|---|---|---|'); …[+444 chars]
+
+### 🤖 Claude — 2026-11-21T13:04:34.155Z
+
+> 🔧 **Bash** `{"command": "grep -n \"^| 0[3-9]\\|^| 10\" docs/path_graph.md | head -10", "description": "Read stage lengths from the generated route graph"}`
+
+### 🧑 User — 2026-11-21T13:04:34.231Z
+
+> ↩︎ result: 11:| 03 | WHIRLPOOL TWIRL | 41.0 → 70.4 | 29.4 | -11.9 → -19.4 | 7 | open | 9 |
+> 12:| 04 | THROUGH THE FIVE ARROWS | 70.4 → 114.7 | 44.3 | -19.4 → -40.6 | 4.4 | gold r=4.8 | 14 |
+> 13:| 05 | FLOW INTO THE CURRENT | 114.7 → 188.9 | 74.2 | -40.6 → -43.3 | 9 | perf r=7.6 | 11 |
+> 14:| 06 | CREST THE RINSE ARCH | 188.9 → 247.1 | 58.1 | -43.3 → -48.5 | 7 | perf r=15 | 11 |
+> 15:| 07 | DIVE THE WASHER TUBE | 247.1 → 389.2 | 142.2 | -48.5 → -113.5 | 5.6 | perf r=7.2 | 12 |
+> 16:| 08 | FINAL SPIN CHAMBER | 389.2 → 404.8 | 15.6 | -113.5 → -113.6 | 4.8 | open | 9.5 |
+> 17:| 09 | RIDE THE FINAL WAVE | 404.8 → 420.0 | 15.2 | -113.6 → -113.5 | 6.4 | open | 9.5 |
+> 18:| 10 | SLIDE INTO HIDING | 420.0 → 435.2 | 15.2 | -113.5 → -110.2 | 3.8 | open | 7.5 |
+> 27:| 03 → 04 | 70.41 | 0 | 0.932 | 0.576 | -19.41 |
+> 28:| 04 → 05 | 114.69 | 0 | 0.246 | 0.246 | -40.63 |
+
+### 🤖 Claude — 2026-11-21T13:05:25.676Z
+
+> 🔧 **Bash** `{"command": "ls references/ | head -20; python3 -I -c \"\nfrom PIL import Image\nim=Image.open('references/06_crest_the_rinse_arch.png') if __import__('os').path.exists('references/06_crest_the_rinse_arch.png') else None\nprint(im.size if im else 'no')\"", "description": "List approved references"}`
+
+### 🧑 User — 2026-11-21T13:05:26.644Z
+
+> ↩︎ result: 01_inside_washer_girl_and_towel.png
+> 02_mascot_tumbles_in_whirlpool.png
+> 03_whirlpool_twirl.png
+> 04_through_the_five_arrows.png
+> 05_flow_into_the_current.png
+> 06_crest_the_rinse_arch.png
+> 07_dive_the_washer_tube.png
+> 08_final_spin_chamber.png
+> 09_ride_the_final_wave.png
+> 10_slide_into_hiding.png
+> 11_safely_home_final_victory.png
+> water
+> (864, 1536)
+
+### 🤖 Claude — 2026-11-21T13:05:29.490Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad; cd /home/user/rainbow- && python3 -I -c \"\nfrom PIL import Image\nim=Image.open('references/06_crest_the_rinse_arch.png').crop((0,0,864,130)); im.save('$SP/hud06.png')\"", "description": "Crop the Screen 06 approved HUD"}`
+
+### 🧑 User — 2026-11-21T13:05:29.689Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-21T13:05:31.554Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/hud06.png"}`
+
+### 🧑 User — 2026-11-21T13:05:31.620Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T13:05:47.183Z
+
+> 🔧 **Bash** `{"command": "cat .claude/settings.json | head -40; echo ----; cat scripts/autosave-hook.sh | head -40; echo ----; grep -n \"def \\|wip\" scripts/rainbow-autosave.py | head -40", "description": "Read hook config and autosave structure"}`
+
+### 🧑 User — 2026-11-21T13:05:47.372Z
+
+> ↩︎ result: {
+>   "hooks": {
+>     "SessionStart": [
+>       {
+>         "hooks": [
+>           { "type": "command", "command": "bash \"$CLAUDE_PROJECT_DIR/scripts/autosave-hook.sh\" SessionStart", "timeout": 600 }
+>         ]
+>       }
+>     ],
+>     "PreCompact": [
+>       {
+>         "hooks": [
+>           { "type": "command", "command": "bash \"$CLAUDE_PROJECT_DIR/scripts/autosave-hook.sh\" PreCompact", "timeout": 120 }
+>         ]
+>       }
+>     ],
+>     "Stop": [
+>       {
+>         "hooks": [
+>           { "type": "command", "command": "bash \"$CLAUDE_PROJECT_DIR/scripts/autosave-hook.sh\" Stop", "timeout": 30 }
+>         ]
+>       }
+>     ],
+>     "SessionEnd": [
+>       {
+>         "hooks": [
+>           { "type": "command", "command": "bash \"$CLAUDE_PROJECT_DIR/scripts/autosave-hook.sh\" SessionEnd", "timeout": 120 }
+>         ]
+>       }
+>     ]
+>   }
+> }
+> ----
+> #!/usr/bin/env bash
+> # Claude Code hook entry point:  autosave-hook.sh <SessionStart|PreCompact|Stop|SessionEnd>
+> # SessionStart -> scripts/claude-bootstrap.sh --hook: fetches and LISTS newer branches (merges NOTHING since 2026-11-17;
+> #   merging needs the user's OK and `claude-bootstrap.sh --resume`), restores Git LFS, re-arms the
+> #   five-minute autosave, prints a short recovery summar …[+2761 chars]
+
+### 🤖 Claude — 2026-11-21T13:05:48.645Z
+
+> 🔧 **Bash** `{"command": "sed -n 395,415p scripts/rainbow-autosave.py", "description": "Read where the autosave snapshots worktrees"}`
+
+### 🧑 User — 2026-11-21T13:05:48.690Z
+
+> ↩︎ result: str(REPO), CFG["claude_projects_glob"]], capture_output=True, text=True, timeout=300)
+>             if p.returncode != 0:
+>                 row["transcript_error"] = p.stderr.strip()[-300:]
+>         else:
+>             row["transcript_note"] = ("repo privacy could not be verified" if private is None
+>                                       else "repo is NOT private") + " — transcripts not refreshed"
+>         refresh_manifest()
+>         try:
+>             wip = snapshot_worktrees()
+>             if wip:
+>                 row["wip_snapshots"] = wip
+>         except Exception as e:  # a snapshot problem must never block the backup itself
+>             row["wip_error"] = str(e)[:300]
+>         try:
+>             snapshot_live_tools()
+>         except Exception as e:  # never blocks the backup
+>             row["live_tools_error"] = str(e)[:300]
+> 
+>         # ---- 3. stage allow-listed paths ----------------------------------------------
+>         # tracked status/log files: start from HEAD; they are refreshed from the live log only when a
+>         # real commit is made (below), so status-only runs never leave the tree dirty
+

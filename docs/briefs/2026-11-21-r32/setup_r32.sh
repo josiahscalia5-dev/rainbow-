@@ -21,5 +21,10 @@ for a in agentA agentB; do
   [ -d "$REPO/backups/wip/screen05-agents/$a" ] && cp -a "$REPO/backups/wip/screen05-agents/$a/." "$WS/$a/"
   # agentB may have rebuilt track pieces of its own: keep its saved versions (copied above) where present
 done
-echo "workspace ready: $WS (base, agentA, agentB). Stills: cd $WS/base && PAGE=play3.html STILLS='[0,2.3]' NODE_PATH=\$(npm root -g) node play_shots2.cjs out stills"
+# lead's merged page (agentB visuals + agentA controls, reproducible) and the acceptance tools at the workspace root
+python3 -I "$REPO/tools/marble05/merge_r32.py" "$WS" || echo "MERGE NEEDS A HAND: see the message above"
+for f in final_acceptance.cjs visual_check.py acceptance_verdict.py; do ln -sf "$V/$f" "$WS/$f"; done
+# the five-minute autosave copies this workspace's specialist work to backups/wip/screen05-agents/ on every run
+echo "$WS" > "$REPO/backups/wip/screen05-agents/WORKSPACE"
+echo "workspace ready: $WS (base, agentA, agentB, merged). Stills: cd $WS/base && PAGE=play3.html STILLS='[0,2.3]' NODE_PATH=\$(npm root -g) node play_shots2.cjs out stills"
 echo "Acceptance run (whole level, real touch swipes): NODE_PATH=\$(npm root -g) node $V/final_acceptance.cjs <merged folder> <outdir>; then python3 -I $V/visual_check.py <outdir> $REPO/references/05_flow_into_the_current.png"

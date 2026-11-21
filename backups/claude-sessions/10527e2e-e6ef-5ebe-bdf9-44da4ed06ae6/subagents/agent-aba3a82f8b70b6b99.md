@@ -337,3 +337,238 @@ Aim to finish within ~60 minutes. Report back a short honest summary: files chan
 
 > 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB && for i in $(seq 1 50); do grep -q 'flow frame 2' out_water/after412/log.txt && break; pgrep -f \"shots_w.cjs out_water/after412\" >/dev/null || break; sleep 10; done; grep -v GL out_water/after412/log.txt", "description": "Wait for the remaining AFTER stills", "timeout": 560000}`
 
+### 🧑 User — 2026-11-21T13:02:04.473Z
+
+> ↩︎ result: server 9426
+> ready 23.529
+> still 0 50.254 visible splats 655734
+> still 0.7 61.972 visible splats 866071
+> still 1.4 69.338 visible splats 866071
+> still 2.3 59.013 visible splats 866071
+> still 6.4 65.385 visible splats 830237
+> still 8.5 60.318 visible splats 830237
+> still 10.4 56.046 visible splats 830237
+> still 4.4 83.951 visible splats 1076408
+> flow frame 1
+> flow frame 2
+
+### 🤖 Claude — 2026-11-21T13:02:10.957Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB && for f in track_w/*.ply track/*.ply; do echo \"$f $(head -c 400 $f | grep -a 'element vertex')\"; done; python3 -c \"\nimport json; j=json.load(open('track_w/track.json'))\nimport numpy as np\nax=np.array(j['ax']); D=np.array(j['D']); DU=D@ax; print('DU',DU,'UA',j['UA'])\nT=np.array(j['trail']); TS=np.array(j['trail_s'])\nfor s in [0,0.7,1.4,2.3,4.4,6.4,8.5,10.4]:\n  p=np.array([np.interp(s,TS,T[:,k]) for k in range(3)]); u=p@ax; print(s, 'kc', int(np.floor((u-j['UA'])/DU)))\n\"", "descri …[+57 chars]`
+
+### 🧑 User — 2026-11-21T13:02:11.206Z
+
+> ↩︎ result: track_w/bay.ply element vertex 210337
+> track_w/bay_lo.ply element vertex 43420
+> track_w/bay_lo2.ply element vertex 18877
+> track_w/bay_m.ply element vertex 210337
+> track_w/bay_m_lo.ply element vertex 43420
+> track_w/bay_m_lo2.ply element vertex 18585
+> track_w/far.ply element vertex 22901
+> track_w/near.ply element vertex 456508
+> track/bay.ply element vertex 206246
+> track/bay_lo.ply element vertex 42634
+> track/bay_m.ply element vertex 206246
+> track/bay_m_lo.ply element vertex 42634
+> track/far.ply element vertex 22901
+> track/near.ply element vertex 455798
+> DU 2.03 UA 1.3
+> 0 kc -1
+> 0.7 kc 0
+> 1.4 kc 0
+> 2.3 kc 0
+> 4.4 kc 1
+> 6.4 kc 2
+> 8.5 kc 3
+> 10.4 kc 4
+
+### 🤖 Claude — 2026-11-21T13:02:37.598Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB && python3 -c \"\nimport json,numpy as np\nS=json.load(open('scene05.json')); print({k:v for k,v in S.items() if not isinstance(v,(list,dict)) or k in ('cam','plane')})\nj=json.load(open('track_w/track.json')); ax=np.array(j['ax']); T=np.array(j['trail'])\nc=np.array(S['cam'].get('pos',S['cam'].get('position',[0,0,0]))); print('cam u',c@ax,'T0 u',T[0]@ax, 'diff', (T[0]-c)@ax)\n\"; grep -v GL out_water/after412/log.txt | tail -2; ls out_water/after412", "description": "Compute camera offset  …[+29 chars]`
+
+### 🧑 User — 2026-11-21T13:02:37.747Z
+
+> ↩︎ result: {'cam': {'fwd': [-0.025495445361092415, -0.16103854187683883, -0.9866187563066198], 'up': [-0.483733040546248, 0.8656864685033793, -0.12879939337601617], 'fov': 64.0}, 'plane': {'n': [-0.3769719166382767, 0.9039326595252047, 0.20198495268151698], 'd': -0.7344132882479625}, 'benny_h': 0.4040000000000003, 'coin_d': 0.15038523388874458}
+> cam u 0.0 T0 u 0.9932803172534921 diff 0.9932803172534921
+> flow frame 1
+> flow frame 2
+> log.txt
+> s_0.7.png
+> s_0.png
+> s_1.4.png
+> s_10.4_l0.22_r0.12.png
+> s_2.3.png
+> s_4.4.png
+> s_4.4_flow1.png
+> s_4.4_flow2.png
+> s_6.4.png
+> s_8.5_l-0.22_r0.png
+
+### 🤖 Claude — 2026-11-21T13:02:47.338Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB && sed -n 1,35p play3.html | cut -c1-300 && sed -n 1,40p tools/plyio.py", "description": "Read play3 setup and PLY reader"}`
+
+### 🧑 User — 2026-11-21T13:02:47.392Z
+
+> ↩︎ result: <!doctype html>
+> <html><head><meta charset="utf-8"><title>Screen 05 full track test</title>
+> <style>
+> html,body{margin:0;background:#000;overflow:hidden;font-family:system-ui,sans-serif}canvas{display:block}
+> #hud{position:fixed;left:0;right:0;top:10px;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none}
+> .bar{display:flex;gap:28px;align-items:center;background:linear-gradient(#7b2bbf,#4a1386);border:2px solid #d9a7ff;border-radius:30px;padding:6px 22px;color:#fff;font-weight:800;font-size:22px;box-shadow:0 2px 8px #0006}
+> .title{background:#5a1aa0e0;border:2px solid #f2c14e;border-radius:20px;padding:4px 18px;color:#fff;font-weight:800;font-style:italic;font-size:17px;letter-spacing:.5px}
+> </style>
+> <script type="importmap">{"imports":{"three":"./node_modules/three/build/three.module.js","three/addons/":"./node_modules/three/examples/jsm/","@sparkjsdev/spark":"./node_modules/@sparkjsdev/spark/dist/spark.module.js"}}</script>
+> </head><body>
+> <div id="hud"><div class="bar"><span>&#10084;&#65039; 5/5</span><span id="coins">&#129689; 1,420</span></div><div class="title">05 &middot; FLOW INTO THE CURRENT</div></div>
+> <script type="module">
+> import * as THREE from 'thr …[+2409 chars]
+
+### 🤖 Claude — 2026-11-21T13:02:52.189Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB && python3 -c \"\nimport sys; sys.path.insert(0,'tools')\nimport numpy as np, json\nfrom plyio import read_ply\nj=json.load(open('track_w/track.json')); ax=np.array(j['ax'])\np=read_ply('track_w/near.ply'); w=p['xyz']*np.array([1,-1,-1]); u=w@ax\nprint('n',len(u),'u range',u.min(),u.max())\nfor t in [-0.5,0,0.5,1.0,1.3,1.5,2.0,2.3,2.5,3.0,3.33,3.5]: print(t, int((u<t).sum()))\ns=np.exp(p['scale']).max(1); print('scale pct', np.percentile(s,[50,90,99]))\n\"", "description": "Analyse near pie …[+38 chars]`
+
+### 🧑 User — 2026-11-21T13:02:52.440Z
+
+> ↩︎ result: n 456508 u range -12.815593165463685 3.5123868298232357
+> -0.5 55764
+> 0 97325
+> 0.5 152348
+> 1.0 216793
+> 1.3 259566
+> 1.5 287964
+> 2.0 352259
+> 2.3 387128
+> 2.5 410990
+> 3.0 443428
+> 3.33 454590
+> 3.5 456440
+> scale pct [0.01043594 0.02075434 0.05299806]
+
+### 🤖 Claude — 2026-11-21T13:03:32.708Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB && tools/check_stills.sh out_water/after412 s_0.png s_0.7.png s_1.4.png s_2.3.png s_4.4.png s_6.4.png s_8.5_l-0.22_r0.png s_10.4_l0.22_r0.12.png; python3 -c \"import scipy; print('scipy', scipy.__version__)\"", "description": "Run the lead's checker on the AFTER stills"}`
+
+### 🧑 User — 2026-11-21T13:03:33.686Z
+
+> ↩︎ result: f_0000_s_0.jpg                     patches 0  largest_dark_px     0  black% 0.000  look 0.623  sharp 1.000  change 0.0
+> f_0001_s_0.7.jpg                   patches 0  largest_dark_px    17  black% 0.000  look 0.609  sharp 1.049  change 58.35
+> f_0002_s_1.4.jpg                   patches 0  largest_dark_px     0  black% 0.000  look 0.586  sharp 0.959  change 59.74
+> f_0003_s_2.3.jpg                   patches 0  largest_dark_px     0  black% 0.000  look 0.637  sharp 0.998  change 63.78
+> f_0004_s_4.4.jpg                   patches 0  largest_dark_px     0  black% 0.000  look 0.610  sharp 0.918  change 56.43
+> f_0005_s_6.4.jpg                   patches 0  largest_dark_px     0  black% 0.000  look 0.621  sharp 0.990  change 55.97
+> f_0006_s_8.5_l-0.22_r0.jpg         patches 0  largest_dark_px     0  black% 0.000  look 0.601  sharp 0.938  change 67.32
+> f_0007_s_10.4_l0.22_r0.12.jpg      patches 0  largest_dark_px     4  black% 0.000  look 0.612  sharp 0.978  change 74.0
+> scipy 1.18.1
+
+### 🤖 Claude — 2026-11-21T13:03:40.712Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB && mkdir -p out_water/before412 && W=412 H=915 QS='&trk=track/&noflow=1' STILLS='[0,4.4,[10.4,0.22,0.12]]' NODE_PATH=$(npm root -g) nohup node shots_w.cjs out_water/before412 > out_water/before412/log.txt 2>&1 & echo started", "description": "Start BEFORE still render at 412x915 in background"}`
+
+### 🧑 User — 2026-11-21T13:03:40.772Z
+
+> ↩︎ result: started
+
+### 🤖 Claude — 2026-11-21T13:03:45.272Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB && python3 -c \"\nfrom PIL import Image\nfs=['s_2.3','s_4.4','s_6.4','s_8.5_l-0.22_r0','s_10.4_l0.22_r0.12']\nims=[Image.open(f'out_water/after412/{s}.png').convert('RGB').resize((309,686)) for s in fs]\ns=Image.new('RGB',(319*5,686)); [s.paste(im,(i*319,0)) for i,im in enumerate(ims)]; s.save('out_water/tmpview/a2.jpg',quality=85)\"", "description": "Preview remaining AFTER stills"}`
+
+### 🧑 User — 2026-11-21T13:03:45.474Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-21T13:03:47.654Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB/out_water/tmpview/a2.jpg"}`
+
+### 🧑 User — 2026-11-21T13:03:47.675Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T13:03:58.705Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB && head -c 600 track_w/near.ply | strings | head -30", "description": "Inspect near.ply header"}`
+
+### 🧑 User — 2026-11-21T13:03:58.769Z
+
+> ↩︎ result: format binary_little_endian 1.0
+> element vertex 456508
+> property float x
+> property float y
+> property float z
+> property float f_dc_0
+> property float f_dc_1
+> property float f_dc_2
+> property float opacity
+> property float scale_0
+> property float scale_1
+> property float scale_2
+> property float rot_0
+> property float rot_1
+> property float rot_2
+> property float rot_3
+> end_header
+> #?w\
+> Z5@y!L?
+
+### 🤖 Claude — 2026-11-21T13:04:10.116Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB && cat > tools/split_near.py <<'EOF'\n\"\"\"split_near.py <track dir> [split_u=2.0]  ([track] Android splat budget)\nSplits <track>/near.ply (456k splats, the start piece) along the tunnel axis into near_a.ply (u < split: everything from far\nbehind the start camera up to the split) and near_b.ply (u >= split). Every splat goes to exactly ONE piece, unchanged, so with\nboth drawn the picture is identical. play3.html hides near_a as soon as all of it is behind the camera (it can no longer be …[+1869 chars]`
+
+### 🧑 User — 2026-11-21T13:04:12.106Z
+
+> ↩︎ result: near 456508 -> near_a 352259 near_b 104249 hull vertices 155 margin 0.169 max splat near split 0.1353352814912796
+> -rw-r--r-- 1 root root 19726866 Nov 21 13:04 track_w/near_a.ply
+> -rw-r--r-- 1 root root     4257 Nov 21 13:04 track_w/near_a_hull.json
+> -rw-r--r-- 1 root root  5838306 Nov 21 13:04 track_w/near_b.ply
+
+### 🤖 Claude — 2026-11-21T13:04:38.002Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB && python3 - <<'EOF'\np='tools/split_near.py'; s=open(p).read()\ns=s.replace(\"sc = np.exp(a[A, 7:10]).max(1); close = u[A] > SU - 0.5\\nmargin = float(3 * np.percentile(sc[close], 99.9)) + 0.02\",\n\"sc = np.exp(a[A, 7:10]).max(1); close = u[A] > SU - 1.0\\nmargin = float(3 * sc[close].max()) + 0.02   # the largest splat's 3-sigma reach: no splat of near_a can poke in front\")\ns=s.replace(\"split_u=2.0\",\"split_u=1.5\").replace(\"else 2.0\",\"else 1.5\").replace(\"a margin = 3 sigma of n …[+361 chars]`
+
+### 🧑 User — 2026-11-21T13:04:39.010Z
+
+> ↩︎ result: near 456508 -> near_a 287964 near_b 168544 hull vertices 137 margin 0.452 max splat near split 0.14406366646289825
+> server 9504
+> ready 29.58
+
+### 🤖 Claude — 2026-11-21T13:04:39.935Z
+
+Now wire the split into play3.html.
+
+### 🤖 Claude — 2026-11-21T13:04:48.683Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB && cp play3.html out_water/tmpview/play3_before_split.html && python3 - <<'EOF'\np='play3.html'; s=open(p).read()\nold=\"const near = flip(new SplatMesh({ url: TD + 'near.ply' })); scene.add(near);\\nconst far = flip(new SplatMesh({ url: TD + 'far.ply' })); scene.add(far);\\nconst L2 = !q.get('trk'); // [track] very distant copies use the 35 % pieces (*_lo2)\\n\"\nassert s.count(old)==1\nnew=\"\"\"const L2 = !q.get('trk'); // [track] very distant copies use the 35 % pieces (*_lo2)\n// [trac …[+1687 chars]`
+
+### 🧑 User — 2026-11-21T13:04:48.776Z
+
+> ↩︎ result: 33,34d32
+> < const near = flip(new SplatMesh({ url: TD + 'near.ply' })); scene.add(near);
+> < const far = flip(new SplatMesh({ url: TD + 'far.ply' })); scene.add(far);
+> 35a34,41
+> > // [track] Android splat budget: the start piece is split along the tunnel (tools/split_near.py, u = 1.5): near_b = its front part,
+> > // nearA = its rear part (288k splats from far behind the start camera up to u = 1.5). nearA is hidden only when ALL of it is behind
+> > // the camera (exact test on its convex hull + the largest splat's reach), so nothing on screen changes. ?nosplit=1 = one piece.
+> > const NA = L2 && !q.get('nosplit') ? await (await fetch(TD + 'near_a_hull.json')).json() : null;
+> > const near = flip(new SplatMesh({ url: TD + (NA ? 'near_b.ply' : 'near.ply') })); scene.add(near);
+> > const nearA = NA ? flip(new SplatMesh({ url: TD + 'near_a.ply' })) : null; if (nearA) scene.add(nearA);
+> > const NAH = NA ? NA.hull.map((p) => new THREE.Vector3(...p)) : null, naF = new THREE.Vector3(), naD = new THREE.Vector3();
+> > const far = flip(new SplatMesh({ url: TD + 'far.ply' })); scene.add(far);
+> 48c54
+> < const WF = q.get('noflow') ? null : createWaterFlow({ TR, SC, meshes: [near, far, ...tiles.flatMap((t) => [t.hi, …[+584 chars]
+
+### 🤖 Claude — 2026-11-21T13:05:11.260Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB && cat > budget_w.cjs <<'EOF'\n// node budget_w.cjs [QS] : Android splat-budget sweep WITHOUT rendering (cheap): the whole level s = 0 -> 10.64 at 30 fps, speed 1.4,\n// Benny switching lanes -0.22 / 0 / +0.22 and the camera rising +0.12 (like a leap) on part of it. Prints the visible-splat\n// maximum, where the rear start piece (near_a) is hidden, and the count per section. Own server on 9400-9899, verified to serve THIS folder.\nconst { chromium } = require('playwright'); const { spawn } …[+2615 chars]`
+
+### 🧑 User — 2026-11-21T13:05:11.322Z
+
+> ↩︎ result: 211:window.qaNearA = () => (nearA ? nearA.visible : null); // [track] QA
+> server 9504
+> ready 29.58
+> still 0 51.229 visible splats 649235
+
+### 🤖 Claude — 2026-11-21T13:05:15.236Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB && NODE_PATH=$(npm root -g) timeout 600 node budget_w.cjs 2>&1 | tee out_water/budget_after.json | tail -3", "description": "Run the visible-splat budget sweep over the whole level", "timeout": 620000}`
+

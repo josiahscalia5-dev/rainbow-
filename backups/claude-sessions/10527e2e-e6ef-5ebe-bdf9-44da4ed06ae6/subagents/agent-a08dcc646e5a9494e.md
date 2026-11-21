@@ -566,3 +566,77 @@ Frame 0 still matches `?controls=0` pixel for pixel (100 %, max diff 0). Now the
 
 > 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && NODE_PATH=$(npm root -g) timeout 600 node live_key_check.cjs 2>&1 | cut -c1-1500; echo EXIT $?", "description": "Run live loop and keyboard check", "timeout": 660000}`
 
+### 🧑 User — 2026-11-21T13:02:17.336Z
+
+> ↩︎ result: serve.cjs: port 9015 verified to serve /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA (token + "export function installControls" in controls.js)
+> {"s_at_ready":0,"after_left":{"s":0.28,"lane":-1,"lat":-0.1823,"height":0,"coins":1420,"move":null,"queued":null,"lean":-0.148,"pitch":0,"yaw":0.089,"pom":-0.03,"camLat":-0.0177,"camH":0,"swim":1.069,"got":{"water":0,"lane":0,"air":0},"lastPick":null,"swipes":1},"error":"TimeoutError: page.waitForFunction: Timeout 300000ms exceeded."}
+> EXIT 0
+
+### 🤖 Claude — 2026-11-21T13:02:51.097Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && grep -n \"S.clock = t;\\|function update(t, dt)\\|const speed = +(q.get('speed')\\|window.step((ts - t0) / 1000, dt, 0, speed)\\|const dt = Math.min(0.05\" controls.js", "description": "Locate clock lines in controls.js"}`
+
+### 🧑 User — 2026-11-21T13:02:51.137Z
+
+> ↩︎ result: 169:  function update(t, dt) {
+> 170:    S.clock = t;
+> 323:    const speed = +(q.get('speed') ?? 1.4); let t0 = null, last = 0;
+> 328:      const dt = Math.min(0.05, (ts - last) / 1000); last = ts;
+> 329:      window.step((ts - t0) / 1000, dt, 0, speed); render();
+
+### 🤖 Claude — 2026-11-21T13:02:58.999Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && python3 -I - <<'EOF'\np='controls.js'; s=open(p).read()\nold=\"  function update(t, dt) {\\n    S.clock = t;\\n\"\nassert old in s\ns=s.replace(old,\"  function update(t, dt) {\\n    // own game clock = sum of dt: move timers stay consistent even if a caller's t jumps (frame hitch, paused tab, clamped dt)\\n    S.clock += dt > 0 ? dt : 0;\\n\")\nold=\"    const speed = +(q.get('speed') ?? 1.4); let t0 = null, last = 0;\"\nassert old in s\ns=s.replace(old,\"    const speed = +(q.get('spee …[+1443 chars]`
+
+### 🧑 User — 2026-11-21T13:02:59.060Z
+
+> ↩︎ result: 10:    const page = await browser.newPage({ viewport: { width: 206, height: 458 } });
+
+### 🤖 Claude — 2026-11-21T13:03:02.628Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && python3 -I - <<'EOF'\np='live_key_check.cjs'; s=open(p).read()\ns=s.replace(\"    const page = await browser.newPage(\",\"    page = await browser.newPage(\")\ns=s.replace(\"  const res = {}; const T0\",\"  const res = {}; let page = null; const T0\")\nopen(p,'w').write(s)\nEOF\nnode --check live_key_check.cjs && sed -n 1,30p live_key_check.cjs", "description": "Hoist page variable in live check"}`
+
+### 🧑 User — 2026-11-21T13:03:02.717Z
+
+> ↩︎ result: // Quick check of the optional real-time loop (?live=1) and the keyboard path (ArrowLeft / KeyW). Small canvas to keep SwiftShader cheap.
+> // usage: NODE_PATH=$(npm root -g) node live_key_check.cjs
+> const { chromium } = require('playwright'); const { serveHere } = require('./serve.cjs'); const fs = require('fs'); const path = require('path');
+> const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+> (async () => {
+>   const srv = await serveHere(); const port = srv.port;
+>   const browser = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
+>   const res = {}; let page = null; const T0 = Date.now(); const el = () => +((Date.now() - T0) / 1000).toFixed(1);
+>   try {
+>     page = await browser.newPage({ viewport: { width: 206, height: 458 } });
+>     page.on('pageerror', (e) => { res.pageerror = String(e).slice(0, 200); });
+>     await page.goto(`http://127.0.0.1:${port}/play3.html?w=206&h=458&live=1`);
+>     await page.waitForFunction(() => window.ready === true, null, { timeout: 600000 });
+>     res.s_at_ready = (await page.evaluate(() => window.state())).s; res.ready_at_s = el();
+>     await page.keyboard.press('Ar …[+904 chars]
+
+### 🤖 Claude — 2026-11-21T13:03:11.901Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && python3 -I - <<'EOF'\np='live_key_check.cjs'; s=open(p).read()\nold=\"    res.keyLog = await page.evaluate(() => window.input.log);\\n  } catch\"\nassert old in s\ns=s.replace(old,\"    await page.waitForFunction(() => window.state().height > 0.15, null, { timeout: 300000 }); // the arc really plays over several live frames\\n    res.mid_leap = await page.evaluate(() => window.state()); res.mid_leap_at_s = el();\\n\"+old)\nopen(p,'w').write(s)\nEOF\nnode --check live_key_check.cjs && (NO …[+707 chars]`
+
+### 🧑 User — 2026-11-21T13:03:11.943Z
+
+> ↩︎ result: Command running in background with ID: bdwdtxb0w. Output is being written to: /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/tasks/bdwdtxb0w.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-21T13:03:15.756Z
+
+While those run, I'll update the descriptive parts of `CONTROLS_NOTES.md` to match the code changes.
+
+### 🤖 Claude — 2026-11-21T13:03:30.114Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && python3 -I - <<'EOF'\np='CONTROLS_NOTES.md'; s=open(p).read()\nrep=[\n(\"const CT = q.get('controls') === '0' ? null : installControls({ THREE, canvas: renderer.domElement, q,\",\n \"const CT = q.get('controls') === '0' ? null : installControls({ THREE, canvas: renderer.domElement, camera, q,\"),\n(\"| swipe left / right (touch, ≥ 30 px, dominant axis), ← → / A D, mouse or pen drag |\",\n \"| swipe left / right (touch, ≥ 30 px, dominant axis, fires as soon as the threshold is crossed; re …[+3408 chars]`
+
+### 🧑 User — 2026-11-21T13:03:30.183Z
+
+> ↩︎ result: 92:## Verification results
+> 93-(see below — filled in from the actual run)
+
+### 🤖 Claude — 2026-11-21T13:03:33.618Z
+
+> 🔧 **Bash** `{"command": "f=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA; until [ \"$(grep -c '^EXIT' $f/live_key_check.out 2>/dev/null)\" = 1 ]; do sleep 5; done; cd $f; grep -E \"OK |BAD|EXIT\" acceptance_logic.out | cut -c1-260; grep -E \"checks|EXIT|ERROR\" swipe_test_logic.out | cut -c1-700; cut -c1-3000 live_key_check.out", "description": "Wait for all three re-runs to finish", "timeout": 2700000}`
+

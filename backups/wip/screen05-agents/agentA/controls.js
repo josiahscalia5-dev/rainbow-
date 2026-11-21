@@ -167,7 +167,8 @@ export function installControls(ctx) {
 
   // ---------------- per-step update (called first in window.step) ----------------
   function update(t, dt) {
-    S.clock = t;
+    // own game clock = sum of dt: move timers stay consistent even if a caller's t jumps (frame hitch, paused tab, clamped dt)
+    S.clock += dt > 0 ? dt : 0;
     // finished moves -> start the queued one
     if (S.move) {
       const k = S.clock - S.move.t0;
@@ -320,13 +321,13 @@ export function installControls(ctx) {
 
   // optional real-time loop for phones / desktop browsers: play3.html?live=1 (tests drive window.step themselves)
   if (q.get('live') === '1') {
-    const speed = +(q.get('speed') ?? 1.4); let t0 = null, last = 0;
+    const speed = +(q.get('speed') ?? 1.4); let t0 = null, last = 0, gameT = 0;
     const loop = (ts) => {
       requestAnimationFrame(loop);
       if (!window.ready) return;
       if (t0 === null) { t0 = ts; last = ts; }
       const dt = Math.min(0.05, (ts - last) / 1000); last = ts;
-      window.step((ts - t0) / 1000, dt, 0, speed); render();
+      gameT += dt; window.step(gameT, dt, 0, speed); render(); // game time = sum of the clamped dt (a slow frame slows the game, never skips a move)
     };
     requestAnimationFrame(loop);
   }

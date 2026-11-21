@@ -405,6 +405,15 @@ def main() -> int:
                 row["wip_snapshots"] = wip
         except Exception as e:  # a snapshot problem must never block the backup itself
             row["wip_error"] = str(e)[:300]
+        try:  # round 32: Screen 05 specialists' scratch workspace (written by setup_r32.sh) -> backups/wip/screen05-agents/
+            wsf = REPO / "backups" / "wip" / "screen05-agents" / "WORKSPACE"
+            ws = wsf.read_text().strip() if wsf.exists() else ""
+            if ws and Path(ws).is_dir():
+                p = subprocess.run(["bash", str(REPO / "tools" / "marble05" / "sync_agents_wip.sh"), ws],
+                                   capture_output=True, text=True, timeout=240)
+                row["screen05_agents_sync"] = (p.stdout.strip() or p.stderr.strip())[-120:]
+        except Exception as e:  # never blocks the backup
+            row["screen05_agents_sync_error"] = str(e)[:300]
         try:
             snapshot_live_tools()
         except Exception as e:  # never blocks the backup
