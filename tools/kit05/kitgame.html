@@ -155,7 +155,7 @@ const riverMat = (() => { const m = kitMat(riverTex); const base = m.onBeforeCom
         vec4 kPaint = mix(kP2, kP1, 1.0 - abs(1.0 - 2.0 * kPh));
         // round 36 ?proj=1: the projected painting keeps its own colours / layout; where its row is softer than needed close up (painted
         // far away), the sharp painted near streaks are added live (same streak strip as the river35 layer, streaming with the current)
-        if (uProjDet > 0.0) { float pdW = uProjDet * smoothstep(1.6, 4.5, kT) * (1.0 - smoothstep(uR35DS.z, uR35DS.w, kZ)) * smoothstep(0.35, 1.3, kZ);
+        if (uProjDet > 0.0) { float pdW = uProjDet * uFlowOn * smoothstep(1.6, 4.5, kT) * (1.0 - smoothstep(uR35DS.z, uR35DS.w, kZ)) * smoothstep(0.35, 1.3, kZ);
           vec2 pUV = vec2((kLat - kCenter(kT) + uR35D.y + uHWD) / (2.0 * uHWD), (kT + uFlow * uR35D.z) / uR35D.x);
           float pd = texture(uR35Det, pUV).r - 0.5; pd *= pd > 0.0 ? uR35DS.x : uR35DS.y; pd *= smoothstep(0.0, 0.06, pUV.x) * smoothstep(1.0, 0.94, pUV.x);
           kPaint.rgb = pd > 0.0 ? mix(kPaint.rgb, vec3(1.0), clamp(pd * pdW, 0.0, 1.0)) : kPaint.rgb * (1.0 + pd * pdW); }
