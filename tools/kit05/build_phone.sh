@@ -3,6 +3,7 @@
 #   bash tools/kit05/build_phone.sh <kit game folder made by setup_kit.sh> <out folder>
 # Copies only the files the page loads (symlinks resolved), loads three.js 0.180.0 from jsDelivr instead of node_modules, and starts in
 # the REAL-TIME phone mode (live.js: "Tap to swim", real swipes, fps + swipe-response meter) without any URL switch. Game code unchanged.
+# PRESET="k=v&k2=v2" bakes URL switches into the build (static hosts pass no query string), e.g. PRESET="proj=1&len=7".
 set -e
 GAME=$(cd "${1:?kit game folder}" && pwd); OUT=${2:?out folder}; mkdir -p "$OUT"; OUT=$(cd "$OUT" && pwd)
 FILES="controls.js live.js swimfx.js kit.json wall.png ring.png river.png wall_own.png ring_own.png river35.png river35_detail.png puffs.png
@@ -23,6 +24,11 @@ s = s.replace(old_g, "const gltf = await (async () => { const b = atob((await (a
 old = "const q = new URLSearchParams(location.search);"
 assert old in s
 s = s.replace(old, old + "\nif (!q.has('play') && !q.has('w')) q.set('play', '1');   // phone build: real-time play by default")
+import os
+pre = os.environ.get('PRESET', '')                                   # e.g. PRESET="proj=1&len=7": a fixed variant for a test link
+if pre:
+    sets = ''.join(f"q.set('{k}', '{v}'); " for k, v in (kv.split('=') for kv in pre.split('&') if kv))
+    s = s.replace("q.set('play', '1');   // phone build: real-time play by default", "q.set('play', '1');   // phone build: real-time play by default\nif (!q.has('w')) { " + sets + "}   // preset: " + pre)
 open(sys.argv[2], 'w').write(s)
 EOF
 du -sh "$OUT" | cut -f1 | xargs echo "phone build ready:" "$OUT" "size"

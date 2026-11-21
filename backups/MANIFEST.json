@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3267,
-   "sha256": "b25315baac67a02aedb54bc31f0666d5e73cf376242b51798ddc52c4ba4168dd"
+   "sha256": "6153c9eecbab3f245a8b17b4a8914539e50c20448b82a85f38f93c38a2c33305"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -7054,7 +7054,7 @@
   {
    "path": "backups/wip/detached-d8e047d33e/INFO.json",
    "bytes": 2379,
-   "sha256": "38834934e934c7a8a769005df4e6b527bc697c9af88b227139f8bf3371f4be1e"
+   "sha256": "b80725780f5395f5eb0f55579dabe39d97ee46431cf243df2ff5992beb905472"
   },
   {
    "path": "backups/wip/detached-d8e047d33e/tracked.patch",
@@ -40543,8 +40543,8 @@
   },
   {
    "path": "tools/kit05/build_phone.sh",
-   "bytes": 2414,
-   "sha256": "cd8183b22b48369d94a074934150fc9ac037de943dad4d2302d681afd6bf090a"
+   "bytes": 2993,
+   "sha256": "8f98011dc97d3fe430c7b510313103b451bad6e5c06b379d4a984ee12c45a03b"
   },
   {
    "path": "tools/kit05/cam05.py",
