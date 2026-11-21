@@ -401,7 +401,7 @@ const PQ = (k, d) => +(q.get(k) ?? d), DEG = Math.PI / 180;
 const CAMP = { look: PQ('p_look', 0.7), yawK: PQ('p_yawk', 0.7), yawMax: Math.tan(PQ('p_yawmax', 7) * DEG), yawW: PQ('p_yaww', 3.0),
   rollK: PQ('p_rollk', 0.1), rollMax: PQ('p_rollmax', 1.5) * DEG, rollW: PQ('p_rollw', 3.0), fadeIn: PQ('p_fadein', 1.2),
   leanK: PQ('p_leank', 0.3), leanMax: PQ('p_leanmax', 0.06), leanW: PQ('p_leanw', 6), byawK: PQ('p_byawk', 0.85), byawW: PQ('p_byaww', 6),
-  camK: PQ('p_camk', 0.8), camW: PQ('p_camw', 9), camFF: PQ('p_camff', 0.12), camMax: PQ('p_cammax', 0.22),
+  camK: PQ('p_camk', 0.8), camW: PQ('p_camw', 8), camFF: PQ('p_camff', 0.12), camMax: PQ('p_cammax', 0.22),
   gNeg: PQ('p_gneg', 0.07), gPos: PQ('p_gpos', 0.1), gKnee: PQ('p_gknee', 0.02), R0: PQ('p_r0', 0.42), RMAX: PQ('p_rmax', 0.58) };
 const cds = (o, target, omega, dt) => { const y = o.x - target, j = o.v + omega * y, e = Math.exp(-omega * dt); o.x = target + (y + j * dt) * e; o.v = (o.v - omega * j * dt) * e; return o.x; };
 const clampA = (x, m) => Math.max(-m, Math.min(m, x));
