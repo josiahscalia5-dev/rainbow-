@@ -151,6 +151,7 @@ export function installControls(ctx) {
   const S_DONE = S_END - P.END_MARGIN;
   // a shorter track: keep the painting run, squeeze the gaps between the later runs (spacing inside a run unchanged)
   const lastRun = RUNS[RUNS.length - 1].pts, designEnd = lastRun[lastRun.length - 1][0], avail = S_END - 1.5;
+  const squeeze = designEnd <= avail ? 1 : Math.max(0.2, (avail - (designEnd - lastRun[0][0]) - RUNS[1].pts[0][0]) / (lastRun[0][0] - RUNS[1].pts[0][0]));
   const LAYOUT = [];
   RUNS.forEach((r, ri) => { const s0 = r.pts[0][0], s0n = ri === 0 ? s0 : RUNS[1].pts[0][0] + (s0 - RUNS[1].pts[0][0]) * squeeze;
     r.pts.forEach(([s, lat, h]) => LAYOUT.push({ s: +(s0n + (s - s0)).toFixed(3), lat: clamp(lat, -P.LANE, P.LANE), h, run: ri + 1, runKind: r.kind })); });
