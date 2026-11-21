@@ -281,3 +281,466 @@ I'm on it. I'll find the painted version you liked, lock it in, and get Benny sw
 > 
 > > 🔧 **Bash** `{"command": "git fetch origin ccr-4fcad20e-a6pp8w 2>&1 | tail -1; echo \"local $(git rev-parse --short HEAD) remote $(git rev-parse --short FETCH_HEAD)\"; echo \"remote-only:\"; git log --oneline HEAD..FETCH_HEAD | head; echo \"local-only:\"; git log --oneline FETCH_HEAD..HEA …[+5884 chars]
 
+### 🤖 Claude — 2026-11-21T02:58:31.645Z
+
+> 🔧 **Bash** `{"command": "wc -l src/world/paint.ts; grep -n \"params\\|get('\\|has('\\|paint[a-z0-9]*=\" src/world/paint.ts | head -60", "description": "Inspect URL options in the painted-screen module"}`
+
+### 🧑 User — 2026-11-21T02:58:31.690Z
+
+> ↩︎ result: 346 src/world/paint.ts
+> 2: * `?paint=1` — the approved-artwork chain (round 31): consecutive screens shown as the user's OWN approved pictures, one continuous
+> 12: * Off (default): nothing here is built or drawn. `?paint06=1` (paint06.ts) is the earlier Screen-06-only candidate, kept as it was.
+> 78:/** `&paintpush=<f>`: the gentle forward ease toward the tunnel end (1 = as authored); `&paintpan=<f>`: steering parallax (1 = as authored) */
+
+### 🤖 Claude — 2026-11-21T02:58:33.204Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/paint.ts"}`
+
+### 🧑 User — 2026-11-21T02:58:33.247Z
+
+> ↩︎ result: 1	/**
+> 2	 * `?paint=1` — the approved-artwork chain (round 31): consecutive screens shown as the user's OWN approved pictures, one continuous
+> 3	 * journey. Keyframes in route order (assets/textures/paint/paint.json, tools/paint/): 05k0 = the approved Screen 05 picture,
+> 4	 * 06k0 = the approved Screen 06 picture, 06k1..06k4 = the user's four Screen 06 storyboard panels.
+> 5	 * Each keyframe = a full-screen plate (the picture's own pixels; painted HUD / Benny / collectible coins taken out; margins continued)
+> 6	 * on a depth grid: at its rest moment the view IS the picture; the view eases gently toward the tunnel end as Benny swims.
+> 7	 *  - Benny = each picture's own painted Benny as a layer: steers left/right, leans, bobs; the 3D Benny is hidden while he shows.
+> 8	 *  - Coins = the painted coins as live sprites that flow down the painted river toward Benny, timed by the game's own coin list
+> 9	 *    (overridden for these stages so every painted coin IS a game coin): collected ones pop and vanish, missed ones slide past him.
+> 10	 *  - Picture -> picture: the next picture opens from its tunnel end (soft circle); 3D game -> chain and chain -> 3D game the same way.
+> 11	 * Raw bytes in, raw byte …[+23087 chars]
+
+### 🤖 Claude — 2026-11-21T02:58:42.788Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"paintBenny\\|buildPaint\\|paint\\.draw\\|paint?.draw\\|PAINT\\b\" src --include=*.ts | grep -v \"^src/world/paint.ts\" | head -30", "description": "Find where the painted chain is used in the game loop"}`
+
+### 🧑 User — 2026-11-21T02:58:42.820Z
+
+> ↩︎ result: src/world/paint06.ts:61:export async function buildPaint06(course: Course) {
+> src/world/paint06.ts:254:  const paintBenny = (s: number) => {
+> src/world/paint06.ts:261:  return { weight, speedK, draw, paintBenny, rest, s0, s1 };
+> src/world/paint06.ts:263:export type Paint06 = Awaited<ReturnType<typeof buildPaint06>>;
+> src/game/Game.ts:28:import { buildPaint06, PAINT06_REST } from '../world/paint06';
+> src/game/Game.ts:29:import { buildPaint } from '../world/paint';
+> src/game/Game.ts:122:  const paint = flag05('paint') ? await buildPaint(course, coins) : null;
+> src/game/Game.ts:123:  const p06 = !paint && flag05('paint06') ? await buildPaint06(course) : null;
+> src/game/Game.ts:401:    benny.root.visible = !(p06 && p06.paintBenny(st.s) >= 0.5) && !(paint && paint.paintBenny(st.s) >= 0.5);
+> src/game/Game.ts:631:    if (paint && pw > 0.001) paint.draw(renderer, { s: st.s, lat: st.lat, steer: input.steer, time: st.frozen ?? st.clock, clock: st.clock });
+
+### 🤖 Claude — 2026-11-21T02:58:45.191Z
+
+> 🔧 **Bash** `{"command": "sed -n 100,135p src/game/Game.ts; echo ....; sed -n 370,420p src/game/Game.ts; echo ....; sed -n 590,650p src/game/Game.ts", "description": "Read Game.ts paint integration and render loop"}`
+
+### 🧑 User — 2026-11-21T02:58:45.250Z
+
+> ↩︎ result: const env = buildEnvironment(course);
+>   scene.add(env.group);
+>   const water = await loadWater(course);
+>   scene.add(water.group);
+>   const benny = await loadBennyRuntime();
+>   scene.add(benny.root);
+>   const girl = await loadGirlRuntime();
+>   const coins = createCoins(course);
+>   scene.add(coins.group);
+>   // `?match08=1`: the approved Screen 08 scenery on fitted 3D geometry (src/world/match08.ts); off: nothing is built
+>   const m08 = MATCH['08'] ? await buildMatch08() : null;
+>   if (m08) { m08.group.visible = false; scene.add(m08.group); m08.bakeDepth(renderer); scene.add(m08.splash); }
+>   const M08_HIDE = ['ribbon', 'foam', 'bubbles', 'splashCrown', 'spray'];
+>   // `?match08=1` Benny on Screen 08 toward the approved picture: smaller beanie, body a little higher out of the water,
+>   // white-and-purple knit stripes (crown tint); everything restored when leaving 08 (qa/match/08/NOTES.md)
+>   const M08_BENNY = { hat: 0.86, lift: 0.06, dx: 0.26, body: [0.94, 1.0, 0.94] as const, crown: new THREE.Color().setRGB(0.86, 1.04, 1.0) };
+>   const b08 = m08 ? { hat: benny.root.getObjectByName('hat'), body: benny.root.getObjectByName('body'), aux: benny.root.getObjectByName('AuxScene'), crown: benny.root.get …[+7333 chars]
+
+### 🤖 Claude — 2026-11-21T02:59:00.594Z
+
+> 🔧 **Bash** `{"command": "cat assets/textures/paint/paint.json | python3 -I -c \"\nimport json,sys; L=json.load(sys.stdin)\nprint('frame',L['frame'],'margin',L['margin'],'plate',L['plate_frame_px'],L['plate_scale'])\nprint('reveal',L['reveal'],'speed',L['speed'])\nfor K in L['keys']:\n  c=K.get('coins')\n  print(K['id'],K['screen'],K['rest'],K['files'],'benny',K['benny_frame_px'],'pivot',K['pivot'],'vp',K['vp_frame_px'])\n  if c: print('   coins D0',c['D0'],'lat',c['lat'],'n samples',len(c['samples']),'first',c['samples'][:3],'last',c['samples'][-3:],'layout',c['layout'],'pop',c['pop_frame_px'])\n\"; grep  …[+103 chars]`
+
+### 🧑 User — 2026-11-21T02:59:00.712Z
+
+> ↩︎ result: frame [864, 1536] margin [144, 192] plate [1152, 1920] 1.25
+> reveal {'06k0': {'stage': '06', 'off': 0.6, 'half': 1.6}} speed {'06': 0.5}
+> 05k0 05 {'mark': '05_crest', 'off': 0.0} {'plate': 'paint/05k0_plate.jpg', 'benny': 'paint/05k0_benny.png', 'depth': 'paint/05k0_depth.png', 'flow': 'paint/05k0_flow.png'} benny [101.6, 764.0, 740.8, 1331.2] pivot [421, 1185] vp [482.4, 457.5]
+>    coins D0 6.5 lat 0.0 n samples 281 first [[-6.0, 421.0, 6929.3, 2366.8], [-5.75, 421.0, 4773.9, 1577.9], [-5.5, 421.0, 3696.1, 1183.4]] last [[63.5, 540.0, 512.1, 11.9], [63.75, 540.0, 512.0, 11.9], [64.0, 540.0, 511.8, 11.9]] layout [-12.0, -8.5, -5.0, 5.7, 10.7, 17.2, 25.2, 33.2, 41.2, 49.2] pop [421, 800]
+> 06k0 06 {'stage': '06', 'off': 10} {'plate': 'paint/06k0_plate.jpg', 'benny': 'paint06/k0_benny.png', 'depth': 'paint06/k0_depth.png'} benny [83.19999999999999, 723.2, 753.6, 1294.4] pivot [418, 1190] vp [627.6, 556.5]
+>    coins D0 6.5 lat 0.0 n samples 333 first [[-6.0, 418.0, 6948.9, 2401.3], [-5.5, 418.0, 3715.7, 1200.6], [-5.0, 418.0, 2638.0, 800.4]] last [[159.0, 234.5, 546.5, 7.3], [159.5, 234.5, 546.5, 7.2], [160.0, 234.5, 546.5, 7.2]] layout [1.2, 2.6, 4.0] pop [418, 770]
+> 06k1 06 {'stage': '06', …[+2931 chars]
+
+### 🤖 Claude — 2026-11-21T02:59:06.323Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport json\nL=json.load(open('assets/textures/paint/paint.json'))\nc=L['keys'][0]['coins']\nfor s in c['samples']:\n  if s[0] in (-1,0,1,2,3,4,6,8,10,13,16,20,25,30,35,40,45,50,55,60,64): print(s)\n\"; python3 -I -c \"\nfrom PIL import Image\nfor p in ['references/05_flow_into_the_current.png','assets/textures/paint/05k0_plate.jpg']:\n  print(p, Image.open(p).size)\n\"", "description": "Sample the painted river trail and image sizes"}`
+
+### 🧑 User — 2026-11-21T02:59:06.483Z
+
+> ↩︎ result: [-1.0, 421.0, 1050.8, 215.2]
+> [0.0, 421.0, 960.4, 182.1]
+> [1.0, 430.3, 894.1, 157.8]
+> [2.0, 439.6, 843.4, 139.2]
+> [3.0, 448.9, 803.3, 124.6]
+> [4.0, 458.2, 770.9, 112.7]
+> [6.0, 478.5, 722.4, 94.8]
+> [8.0, 508.5, 690.9, 82.3]
+> [10.0, 538.5, 667.0, 72.8]
+> [13.0, 525.3, 639.8, 64.0]
+> [16.0, 494.4, 619.6, 58.0]
+> [20.0, 464.5, 597.5, 50.6]
+> [25.0, 433.2, 576.7, 43.2]
+> [30.0, 452.4, 556.4, 33.2]
+> [35.0, 472.8, 542.4, 25.9]
+> [40.0, 491.5, 533.8, 21.0]
+> [45.0, 506.4, 527.9, 17.4]
+> [50.0, 520.2, 523.2, 14.8]
+> [55.0, 534.0, 518.5, 13.6]
+> [60.0, 540.0, 514.6, 12.6]
+> [64.0, 540.0, 511.8, 11.9]
+> references/05_flow_into_the_current.png (864, 1536)
+> assets/textures/paint/05k0_plate.jpg (1440, 2400)
+
+### 🤖 Claude — 2026-11-21T02:59:15.659Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad && mkdir -p $S && python3 -I -c \"\nfrom PIL import Image\na=Image.open('references/05_flow_into_the_current.png').convert('RGB').resize((432,768))\nb=Image.open('assets/textures/paint/05k0_plate.jpg').convert('RGB')\n# crop plate margins: plate frame px 1152x1920 with margin 144,192 at scale 1.25\ns=1440/1152\nb=b.crop((int(144*s),int(192*s),int((144+864)*s),int((192+1536)*s))).resize((432,768))\nc=Image.new('RGB',(880,768),'white'); c.paste(a,(0,0)); c.paste(b,(448,0)); c.save('$S/ref_plate.png') …[+60 chars]`
+
+### 🧑 User — 2026-11-21T02:59:15.941Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-21T02:59:16.165Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/05/r31_3d/compare/CMP_150.jpg"}`
+
+### 🧑 User — 2026-11-21T02:59:16.349Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-21T02:59:16.344Z
+
+[Image: original 3516x1632, displayed at 2000x928. Multiply coordinates by 1.76 to map to original image.]
+
+### 🤖 Claude — 2026-11-21T02:59:43.029Z
+
+> 🔧 **Bash** `{"command": "ls tools/paint/ | head -30; ls qa/match/05/paint05/work | head; python3 -I -c \"\nimport json;d=json.load(open('qa/match/05/paint05/clip/clip_NEW_05_straight.json'));print(type(d), list(d.keys())[:20] if isinstance(d,dict) else d[:2])\"", "description": "List paint tools and inspect a recorded clip log"}`
+
+### 🧑 User — 2026-11-21T02:59:43.094Z
+
+> ↩︎ result: clip.mjs
+> coins06.py
+> export.py
+> frames_metric.py
+> plate_full.py
+> stills.mjs
+> appr_up2.png
+> benny.png
+> benny_alpha.npy
+> benny_crop.png
+> benny_matte_crop.png
+> clean.png
+> clean_up2.png
+> coin.png
+> coin_mask.npy
+> coins.json
+> <class 'dict'> ['size', 'fps', 'query', 'from', 'to', 'weave', 'frames']
+
+### 🤖 Claude — 2026-11-21T02:59:44.899Z
+
+> 🔧 **Bash** `{"command": "cat tools/paint/clip.mjs | head -120; python3 -I -c \"\nimport json;d=json.load(open('qa/match/05/paint05/clip/clip_NEW_05_straight.json'));print({k:d[k] for k in ['size','fps','query','from','to','weave']}); print(d['frames'][0]); print(d['frames'][-1]); print(len(d['frames']))\"", "description": "Read the clip recorder and its parameters"}`
+
+### 🧑 User — 2026-11-21T02:59:44.971Z
+
+> ↩︎ result: // Uninterrupted real-gameplay clip (deterministic 30 fps steps) + per-frame log.
+> // node tools/paint/clip.mjs --q=paint=1 --from=<s> --to=<s> --tag=NAME [--weave=s0:s1,s2:s3] [--size=540x960] [--out=DIR] [--keep]
+> import { mkdirSync, writeFileSync, rmSync } from 'node:fs';
+> import { execFileSync } from 'node:child_process';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from '../../scripts/lib/pw.mjs';
+> const opt = Object.fromEntries(process.argv.slice(2).map((a) => { const [k, ...r] = a.replace(/^--/, '').split('='); return [k, r.length ? r.join('=') : true]; }));
+> const [W, H] = (opt.size ?? '540x960').split('x').map(Number);
+> const out = opt.out ?? 'qa/match/05/paint05/clip'; const tag = opt.tag ?? 'clip';
+> const fdir = `${process.env.FRAMES_DIR ?? '/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/frames'}/frames_${tag}`; rmSync(fdir, { recursive: true, force: true }); mkdirSync(fdir, { recursive: true });
+> const weave = (opt.weave ? String(opt.weave).split(',').map((p) => p.split(':').map(Number)) : []);
+> const { chromium } = loadPlaywright();
+> const vite = await startVite(5300 + Math.floor(Math.random() * 60));
+> const browser = await chromium.launc …[+2136 chars]
+
+### 🤖 Claude — 2026-11-21T02:59:48.015Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport json;d=json.load(open('qa/match/05/paint05/clip/clip_NEW_05_straight.json'))\nprev=None\nfor f in d['frames']:\n  k=(f['stage'],f['benny3d'])\n  if k!=prev: print(f); prev=k\n\"; grep -n \"05_crest\" src/world/*.ts | head -5; grep -n \"gotoS\\|sideCam\\|renderNow\\|bennyVisible\" src/game/Game.ts | head", "description": "Find stage boundaries in the recorded clip"}`
+
+### 🧑 User — 2026-11-21T02:59:48.102Z
+
+> ↩︎ result: {'i': 0, 't': 0, 's': 106.467, 'lat': 0, 'stage': '04', 'coins': 1330, 'hearts': 5, 'benny3d': True}
+> {'i': 19, 't': 0.633, 's': 115.044, 'lat': 0, 'stage': '05', 'coins': 1330, 'hearts': 5, 'benny3d': False}
+> {'i': 223, 't': 7.433, 's': 188.98, 'lat': 0, 'stage': '06', 'coins': 1430, 'hearts': 5, 'benny3d': False}
+> src/world/course.ts:146:/** the original (wave 1–5) sine meander; kept verbatim up to U05_KEEP so the 04→05 join, the '05_crest'
+> src/world/course.ts:527:    // '05_crest': the first meander crest (stream furthest left, heading parallel to the tunnel
+> src/world/course.ts:534:    this.marks['05_crest'] = best;
+> src/world/environment.ts:248:  const sEye05 = course.marks['05_crest'] - (STAGE_CAM['05']?.back ?? 6.4);
+> src/world/environment.ts:260:  const sCam05 = course.marks['05_crest'] - (STAGE_CAM['05']?.back ?? 6.4);
+> 715:    gotoS(sv: number, lat = 0) { CHECKPOINTS.__s = { mode: 'ride', s: sv, lat }; return gotoCheckpoint('__s'); },
+> 728:      return { mode: st.mode, stage: st.stage, s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: st.coins, hearts: st.hearts, paused: st.paused, bennyY: +benny.root.position.y.toFixed(3), bennyVisible: benny.root.visible, cam: camera.positio …[+156 chars]
+
+### 🤖 Claude — 2026-11-21T03:00:20.877Z
+
+> 🔧 **Bash** `{"command": "grep -n \"bennyPose\" -A30 src/game/Game.ts | sed -n 1,45p | grep -v \"^--$\" | head -50; grep -n \"export async function loadBennyRuntime\\|update(dt\\|root\\.\\|lift\\|swim\" src/characters/benny/runtime.ts | head -30", "description": "Read Benny pose and runtime orientation"}`
+
+### 🧑 User — 2026-11-21T03:00:20.917Z
+
+> ↩︎ result: 190:  const bennyPose = (s: number, lat: number, time: number, out: { pos: THREE.Vector3; quat: THREE.Quaternion }) => {
+> 191-    const f = course.sample(s);
+> 192-    const h = water.surfaceHeight(s, lat, time);
+> 193-    out.pos.copy(f.pos).addScaledVector(f.right, lat).addScaledVector(f.up, h + benny.radius * 0.55);
+> 194-    const m = new THREE.Matrix4().makeBasis(new THREE.Vector3().crossVectors(f.up, f.tan).normalize(), f.up, f.tan);
+> 195-    out.quat.setFromRotationMatrix(m);
+> 196-    return f;
+> 197-  };
+> 198-
+> 199-  const pose = { pos: new THREE.Vector3(), quat: new THREE.Quaternion() };
+> 200-  const tmpV = new THREE.Vector3();
+> 201-  const wakeAnchor = new THREE.Vector3(); // VFX: Benny's lifted body centre fed to water.wake()
+> 202-  const doorAOpen = -1.9, doorCOpen = -1.95;
+> 203-
+> 204-  // ---------------------------------------------------------------- intro (01–02)
+> 205-  const introUpdate = (dt: number) => {
+> 206-    const t = st.t;
+> 207-    const wc = (water as unknown as { controls?: { drumSwirl: number; drumAgitation: number; outro: number } }).controls;
+> 208-    if (wc) {
+> 209-      wc.drumAgitation = 0.35 + 0.65 * sm(T.spin - 0.5, T.spin + 0.8, t);
+> 210-      wc.drumSwirl = sm(T.spin,  …[+3511 chars]
+
+### 🤖 Claude — 2026-11-21T03:00:36.570Z
+
+> 🔧 **Bash** `{"command": "cat qa/match/05/r31_3d/compare/compare.json; cat qa/match/05/r31_3d/compare/NEW3D_stills.json; echo; grep -n \"toneMapping\\|scene.environment\\|outputColorSpace\" src/game/Game.ts | head; grep -n \"benny31\" src/characters/benny/runtime.ts | head -5", "description": "Check which switches the 3D test used and renderer settings"}`
+
+### 🧑 User — 2026-11-21T03:00:36.613Z
+
+> ↩︎ result: {
+>  "start of Screen 05 (crest)": {
+>   "BEFORE": [
+>    8.7,
+>    9.5,
+>    56.0
+>   ],
+>   "NEW_3D": [
+>    37.8,
+>    39.0,
+>    79.9
+>   ],
+>   "PAINTED": [
+>    95.0,
+>    95.7,
+>    96.4
+>   ]
+>  },
+>  "swimming, ~1.6 s in": {
+>   "BEFORE": [
+>    5.7,
+>    6.3,
+>    55.3
+>   ],
+>   "NEW_3D": [
+>    11.1,
+>    11.9,
+>    74.6
+>   ],
+>   "PAINTED": [
+>    93.7,
+>    93.8,
+>    96.0
+>   ]
+>  },
+>  "swimming, ~3.5 s in": {
+>   "BEFORE": [
+>    5.6,
+>    5.6,
+>    55.6
+>   ],
+>   "NEW_3D": [
+>    5.0,
+>    5.1,
+>    77.5
+>   ],
+>   "PAINTED": [
+>    93.8,
+>    93.8,
+>    96.0
+>   ]
+>  },
+>  "end of Screen 05": {
+>   "BEFORE": [
+>    4.2,
+>    4.2,
+>    51.7
+>   ],
+>   "NEW_3D": [
+>    5.6,
+>    5.9,
+>    76.3
+>   ],
+>   "PAINTED": [
+>    93.9,
+>    94.0,
+>    95.4
+>   ]
+>  }
+> }[
+>  {
+>   "s": 132.44,
+>   "st": {
+>    "stage": "05",
+>    "s": 132.44,
+>    "y": -41.34860236459366
+>   }
+>  },
+>  {
+>   "s": 150,
+>   "st": {
+>    "stage": "05",
+>    "s": 150,
+>    "y": -42.16289890275696
+>   }
+>  },
+>  {
+>   "s": 170,
+>   "st": {
+>    "stage": "05",
+>    "s": 170,
+>    "y": -42.998709872262296
+>   }
+>  },
+>  {
+>   "s": 186,
+>   "st": {
+>    "stage": "05",
+>    "s": 186,
+>    "y": -43.53663812075382
+>   }
+>  }
+> ]
+> 50:  scene.environment = createCandyEnvironment(renderer);
+> 79:  if (tone05 === 'none') renderer.toneMapping = THREE.NoToneMapping;
+> 80:  else if (tone05 !== null && tone05 ! …[+420 chars]
+
+### 🤖 Claude — 2026-11-21T03:00:38.754Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"tun05\\|benny31\" qa/match/05/r31_3d/ docs/briefs/2026-11-20-r30/*.md 2>/dev/null | head -8; grep -rn \"query\\|\\?.*=1\" qa/match/05/r31_3d/*/*.json | head -5; sed -n 40,80p src/game/Game.ts", "description": "Find the 3D test URL and renderer setup"}`
+
+### 🧑 User — 2026-11-21T03:00:39.043Z
+
+> ↩︎ result: qa/match/05/r31_3d/proof/clip_NEW3D_SCREEN05_gameplay.json:7: "query": "match05=1&projflow05=2&benny31=1&tun05=1",
+> qa/match/05/r31_3d/proof/clip_NEW3D_SCREEN05_gameplay.json:7: "query": "match05=1&projflow05=2&benny31=1&tun05=1",
+> qa/match/05/r31_3d/proof/clip_NEW3D_SCREEN05_sideview.json:7: "query": "",
+> /** outro timeline marks */
+> const O = { hide: 0.6, walk0: 0.0, door0: 1.1, door1: 2.1, lean0: 1.9, fold0: 2.7, fold1: 3.7, hold: 6.4, badge: 3.9, cp11: 5.2 };
+> 
+> export async function startGame(canvas: HTMLCanvasElement) {
+>   const qs = new URLSearchParams(location.search);
+>   const qaMode = qs.has('qa');
+>   const renderer = createRenderer(canvas, { preserveDrawingBuffer: qaMode });
+>   const dpr = qs.has('dpr') ? Number(qs.get('dpr')) : Math.min(window.devicePixelRatio || 1, 2);
+>   renderer.setPixelRatio(dpr);
+>   const scene = new THREE.Scene();
+>   scene.environment = createCandyEnvironment(renderer);
+>   scene.background = new THREE.Color('#b23fb4');
+>   const fog = new THREE.FogExp2('#ffbde9', 0.0035);
+>   scene.fog = fog;
+>   scene.add(new THREE.HemisphereLight('#fff0ff', '#a33bb8', 1.15));
+>   const sun = new THREE.DirectionalLight('#fff4e6', 1.6);
+>   sun.position.set(0.3, 1, 0.45);
+>   scene.add(sun …[+1966 chars]
+
+### 🤖 Claude — 2026-11-21T03:01:39.815Z
+
+> 🔧 **Bash** `{"command": "grep -n \"speedK\\|flag05 = \\|function flag05\\|const flag05\" src/game/Game.ts src/**/*.ts | head; grep -rn \"export function flag05\\|export const flag05\" src | head -2", "description": "Find speed factor and flag helper"}`
+
+### 🧑 User — 2026-11-21T03:01:39.848Z
+
+> ↩︎ result: src/game/Game.ts:363:    const speed = course.prop('speed', st.s) * (paint ? paint.speedK(st.s) : p06 ? p06.speedK(st.s) : 1);
+> src/game/Game.ts:363:    const speed = course.prop('speed', st.s) * (paint ? paint.speedK(st.s) : p06 ? p06.speedK(st.s) : 1);
+> src/vfx/waterRibbon.ts:168:export const flag05 = q05;
+> src/world/paint.ts:211:  const speedK = (s: number) => {
+> src/world/paint.ts:344:  return { weight, speedK, draw, paintBenny, rest, keyIds: L.keys.map((K) => K.id), coinInfo, chainS0, chainS1 };
+> src/world/paint06.ts:184:  const speedK = (s: number) => 1 + (SPEED_K - 1) * sm(s0 - 4, s0 + 1, s) * (1 - sm(s1 - 2, s1 + 3, s));
+> src/world/paint06.ts:261:  return { weight, speedK, draw, paintBenny, rest, s0, s1 };
+> src/vfx/waterRibbon.ts:168:export const flag05 = q05;
+
+### 🤖 Claude — 2026-11-21T03:01:40.831Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,60p src/characters/benny/benny31.ts | head -60; grep -n \"ShaderMaterial\\|onBeforeCompile\\|fog\" src/characters/benny/benny31.ts | head", "description": "Check the improved Benny's materials"}`
+
+### 🧑 User — 2026-11-21T03:01:40.874Z
+
+> ↩︎ result: /**
+>  * `?benny31=1` — the IMPROVED 3D Benny (round 31, qa/benny/r31/README.md): a real 3D mesh rebuilt from the user's approved
+>  * Screen 06 Benny (Hunyuan3D 2, 40 k triangles) wearing the approved Benny's own colours (baked through the game's colour
+>  * chain: unlit texture x 4 shows the approved pixels after tone mapping + grade). It replaces the old model's visible parts
+>  * inside the SAME runtime, so the game moves him exactly as before (swim clip bob, ride lift / pitch, steering lean + yaw,
+>  * root placement on the river, wake / splashes). On top of that, motion the single-piece mesh does in its vertex shader:
+>  *   - paddling: both side arms stroke (fore/aft + up/down), alternating left / right, with the swim weight;
+>  *   - pom-pom: follows the runtime's pom spring (vertical acceleration, steering, speed jitter);
+>  *   - squash-and-stretch with each stroke.
+>  * Off (default): nothing here loads or runs; the old Benny is untouched.
+>  */
+> import * as THREE from 'three';
+> import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+> import { flag05 } from '../../vfx/waterRibbon';
+> 
+> export const BENNY31: boolean = flag05('benny31');
+> const GLB = new URL('../../../assets/models/be …[+2234 chars]
+
+### 🤖 Claude — 2026-11-21T03:01:47.076Z
+
+> 🔧 **Bash** `{"command": "grep -n \"composer.addPass\\|GradePass\\|grade\" src/game/Game.ts | head; grep -n \"toneMapping\" src/render/*.ts | head", "description": "Check post-processing chain"}`
+
+### 🧑 User — 2026-11-21T03:01:47.116Z
+
+> ↩︎ result: 19:import { createGradePass } from '../render/grade';
+> 64:  composer.addPass(new RenderPass(scene, camera));
+> 82:  if (useBloom) composer.addPass(bloom);
+> 83:  composer.addPass(new OutputPass());
+> 84:  composer.addPass(createGradePass());
+> src/render/env.ts:57:  renderer.toneMapping = THREE.NeutralToneMapping;
+> src/render/env.ts:58:  renderer.toneMappingExposure = 0.86;
+
+### 🤖 Claude — 2026-11-21T03:01:48.115Z
+
+> 🔧 **Bash** `{"command": "cat src/render/grade.ts | head -60", "description": "Read the colour grade pass"}`
+
+### 🧑 User — 2026-11-21T03:01:48.145Z
+
+> ↩︎ result: /** Final colour grade (display space): saturation / contrast / gentle vignette for the candy look. */
+> import * as THREE from 'three';
+> import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
+> 
+> export function createGradePass(opts: { saturation?: number; contrast?: number; vignette?: number } = {}) {
+>   return new ShaderPass({
+>     uniforms: {
+>       tDiffuse: { value: null },
+>       uSat: { value: opts.saturation ?? 1.36 },
+>       uCon: { value: opts.contrast ?? 1.15 },
+>       uVig: { value: opts.vignette ?? 0.18 },
+>     },
+>     vertexShader: /* glsl */ `varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
+>     fragmentShader: /* glsl */ `
+>       uniform sampler2D tDiffuse; uniform float uSat; uniform float uCon; uniform float uVig; varying vec2 vUv;
+>       void main(){
+>         vec4 c = texture2D(tDiffuse, vUv);
+>         float l = dot(c.rgb, vec3(0.2126, 0.7152, 0.0722));
+>         vec3 col = mix(vec3(l), c.rgb, uSat);
+>         col = (col - 0.5) * uCon + 0.5;
+>         vec2 d = vUv - 0.5; d.x *= 0.75;
+>         col *= 1.0 - uVig * smoothstep(0.25, 0.75, length(d));
+>         gl_FragColor = vec4(clamp(col, 0.0, 1.0), c.a …[+65 chars]
+
+### 🤖 Claude — 2026-11-21T03:02:13.576Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad && python3 -I -c \"\nfrom PIL import Image\nb=Image.open('assets/textures/paint/05k0_benny.png'); print(b.size, b.mode)\nbg=Image.new('RGBA',b.size,(40,40,60,255)); bg.alpha_composite(b.convert('RGBA')); bg.convert('RGB').save('$S/benny_layer.png')\n\"", "description": "Render the painted Benny layer on dark background"}`
+
+### 🧑 User — 2026-11-21T03:02:13.753Z
+
+> ↩︎ result: (799, 709) RGBA
+
+### 🤖 Claude — 2026-11-21T03:02:15.216Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/benny_layer.png"}`
+
+### 🧑 User — 2026-11-21T03:02:15.246Z
+
+> ↩︎ result: [image]
+
