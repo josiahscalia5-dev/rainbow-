@@ -140,7 +140,7 @@ def ring_param(k, a, b):
     front = b < 0.5; rad = np.where(front, RT - (RT - RING_IN) * (b / 0.5), RING_IN); tt = ring_t(k) + np.where(front, 0.0, (b - 0.5) / 0.5 * RING_W)
     return A0 + tt[..., None] * A + rad[..., None] * (np.cos(a)[..., None] * RR + np.sin(a)[..., None] * NUP)
 ring_own = own_atlas('ring', range(1, 10), [160, 160, 96, 64, 48, 32, 32, 32, 32], tileR, ring_param)
-kit = json.load(open(os.path.join(out, 'kit.json'))); kit['own'] = {'wall': wall_own, 'ring': ring_own, 'fade': [0.55, 0.85]}
+kit = json.load(open(os.path.join(out, 'kit.json'))); kit['own'] = {'wall': wall_own, 'ring': ring_own, 'fade': [0.42, 0.62]}   # round 33j: shorter own->shared cross-fade (less washed-out blending)
 json.dump(kit, open(os.path.join(out, 'kit.json'), 'w'), indent=1)
 print('own pixels: wall', {k: v[2] for k, v in wall_own['rows'].items()}, 'ring', {k: v[2] for k, v in ring_own['rows'].items()})
 

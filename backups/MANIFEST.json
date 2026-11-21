@@ -794,7 +794,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 26528,
-   "sha256": "e8f97c5f2a32d09ae9eb3deae1cd28ec9e07ea5d62b438f21b4b911f99d14f54"
+   "sha256": "b7bea6495fd8f45c9cd5a9afff33d6935b84abd22f3c37806e94b8b031febbfd"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3153,
-   "sha256": "31929339ff1299bb80059875c47038269722e7ca515a1257cc3c12e5fe2d8ff8"
+   "sha256": "35f517f757b0c3570f7e28f0ba7f4f111de766aadcc5844d9c3b9dd94cd46d2a"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -7734,7 +7734,7 @@
   {
    "path": "backups/wip/screen05-agents/LAST_SYNC_UTC",
    "bytes": 33,
-   "sha256": "2dcf7504f668a569dfc1e00f1eb6e420176f359911aa1280997ef83a600173e6"
+   "sha256": "d5a3a1efed95b4d6f3a3c4b4edfbc2aa818609cd60dd6cfd732ec86432e68d53"
   },
   {
    "path": "backups/wip/screen05-agents/WORKSPACE",
@@ -39813,8 +39813,8 @@
   },
   {
    "path": "tools/kit05/bake_kit.py",
-   "bytes": 15279,
-   "sha256": "dc6a1db3f3ee7f1c254c8f84d57026214675bc11d3deff73c981b5b3ed99b24d"
+   "bytes": 15352,
+   "sha256": "3bf61ad18191bba969ad7a07c1ebe9903aba483585d13c380075c544459d7f0d"
   },
   {
    "path": "tools/kit05/cam05.py",
@@ -40173,8 +40173,8 @@
   },
   {
    "path": "tools/marble05/viewer/final_acceptance.cjs",
-   "bytes": 16000,
-   "sha256": "118202de74626e579bbec0c246de4f632574b9d7e9219b4632850828a22658cc"
+   "bytes": 15925,
+   "sha256": "1c85b3161c0d9c654d54e4b717f84cd645f79169e7792f6e34aa6a2d8f3df26a"
   },
   {
    "path": "tools/marble05/viewer/glint.png",

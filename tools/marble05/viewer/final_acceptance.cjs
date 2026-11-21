@@ -69,8 +69,7 @@ const { chromium } = require('playwright'); const { spawn, execFileSync } = requ
         // round 33 (stricter, not looser): leaps were only ever sent under the coin arcs (2 arcs = 2 ups), so up was never used
         // "again and again" as this plan intends; extra vertical moves now go to whichever of dive / leap has been used less so far
         const nV = (d) => ev.filter((e) => e[1] === d).length, vDir = () => (nV('down') <= nV('up') ? 'down' : 'up');
-        if (ge - gs >= 1.15) { const d = vDir(); ev.push([+gs.toFixed(3), d, 'extra']); gs += DUR[d] + 0.15; }
-        if (ge - gs >= 1.15 + 0.95) { const d = vDir(); ev.push([+gs.toFixed(3), d, 'extra']); gs += DUR[d] + 0.15; }
+        for (let m = 0; m < 2; m++) { const d = vDir(); if (ge - gs < DUR[d] + 0.15) break; ev.push([+gs.toFixed(3), d, 'extra']); gs += DUR[d] + 0.15; }
         if (ge - gs >= 0.95) { const l = laneAt(gs), out = l <= 0 ? (l < 0 ? 'right' : 'left') : 'left', back = out === 'left' ? 'right' : 'left';
           ev.push([+gs.toFixed(3), out, 'extra'], [+(gs + 0.5).toFixed(3), back, 'extra']); }
       }

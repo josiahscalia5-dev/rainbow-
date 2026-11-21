@@ -3722,3 +3722,85 @@ The page loads cleanly. Starting the full acceptance run again:
 
 > 🔧 **Bash** `{"command": "cd /tmp/rainbow_r33 && rm -rf runs/kit_full6 && (NODE_PATH=$(npm root -g) timeout 7000 node /home/user/rainbow-/tools/marble05/viewer/final_acceptance.cjs /tmp/rainbow_r33/kitgame /tmp/rainbow_r33/runs/kit_full6 25 1.4 > /tmp/rainbow_r33/runs/kit_full6.log 2>&1; echo \"exit=$?\" >> /tmp/rainbow_r33/runs/kit_full6.log) > /dev/null 2>&1 &\nsleep 1; cd /home/user/rainbow- && python3 scripts/rainbow-autosave.py --reason manual:r33i-declutter 2>&1 | grep -E '\"commit\"|skipping'; until grep -qE \"exit=\" /tmp/rainbow_r33/runs/kit_full6.log 2>/dev/null; do sleep 10; done; tail -1 /tmp/r …[+104 chars]`
 
+### 🧑 User — 2026-11-21T16:37:04.044Z
+
+> ↩︎ result: "commit": "16781ed730a73e7b5d7fcc2e719e254f882b73c1",
+> [1]+  Done                    cd /tmp/rainbow_r33 && rm -rf runs/kit_full6 && ( NODE_PATH=$(npm root -g) timeout 7000 node /home/user/rainbow-/tools/marble05/viewer/final_acceptance.cjs /tmp/rainbow_r33/kitgame /tmp/rainbow_r33/runs/kit_full6 25 1.4 > /tmp/rainbow_r33/runs/kit_full6.log 2>&1; echo "exit=$?" >> /tmp/rainbow_r33/runs/kit_full6.log ) > /dev/null 2>&1
+> exit=0
+
+### 🤖 Claude — 2026-11-21T16:37:07.162Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/marble05/viewer && timeout 1800 python3 -I visual_check.py /tmp/rainbow_r33/runs/kit_full6 /home/user/rainbow-/references/05_flow_into_the_current.png > /dev/null 2>&1; timeout 300 python3 -I acceptance_verdict.py /tmp/rainbow_r33/runs/kit_full6 2>&1 | grep -E \"^# |\\| (G|V)[0-9]+ \" | sed -E 's/\\| `[^`]{140,}`/| (long value)/' | cut -c1-200", "description": "Visual checks and verdict for the latest run", "timeout": 2400000}`
+
+### 🧑 User — 2026-11-21T16:37:20.058Z
+
+> ↩︎ result: # Screen 05 acceptance verdict: FAIL
+> | G1 | no page / console errors | PASS | `[]` | 0 errors |
+> | G2 | WHOLE level played to its end, every frame rendered | PASS | `{"frames": 687, "images": 687, "done": true, "done_frame": 686, "s_end_target": 32, "s_end": 32.013, "plan": "coin-trail player + e
+> | G3 | forward swimming continuous at the normal speed (no freeze, no stall, no jump) | PASS | `{"min_step": 0.045999999999999375, "max_step": 0.0470000000000006, "freezes": 0, "s_end": 32.013, "posit
+> | G4 | left / right smooth (no teleport) | PASS | `{"max_step_per_frame": 0.0414, "teleports": 0}` | |d lat| per frame <= 0.06 in every frame |
+> | G5 | Benny stays inside the river | PASS | `0.22` | |lat| <= 0.30 (river half-width ~0.30-0.35) |
+> | G6 | every real touch swipe produced the intended move; each direction used repeatedly | **FAIL** | `{"ok": 22, "sent": 22, "directions": {"right": 9, "left": 9, "up": 2, "down": 2}, "failed": []}` 
+> | G7 | all three lanes used | PASS | `[0, 1, -1]` | lanes -1, 0, +1 seen |
+> | G8 | up / down correct and smooth | PASS | `{"max_step_per_frame": 0.0666, "max_height": 0.3271, "min_height": -0.3165}` | max height >= 0.15, min height <= -0.15, |d height| per f …[+2159 chars]
+
+### 🤖 Claude — 2026-11-21T16:37:28.908Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json, numpy as np\nV=json.load(open('/tmp/rainbow_r33/runs/kit_full6/visual_check.json'))['frames']; L=np.array([r['colour_look_vs_approved'] for r in V])[:666]\nR=[r for r in json.load(open('/tmp/rainbow_r33/runs/kit_full6/run_log.json')) if r.get('s') is not None]\nthr=0.85*L[0]; low=np.nonzero(L<thr)[0]; print('threshold', round(thr,4), 'frames below:', len(low), low.tolist()[:40])\nfor i in low[::max(1,len(low)//6)]: r=R[i]; print(i, round(float(L[i]),3), 's',r.get('s'), 'lane',r.get('lane'), 'h',round(r.get('height',0),3), 'move',r.get('move'))\"", "desc …[+50 chars]`
+
+### 🧑 User — 2026-11-21T16:37:29.031Z
+
+> ↩︎ result: threshold 0.7216 frames below: 5 [48, 49, 50, 51, 52]
+> 48 0.719 s 2.24 lane 1 h 0 move None
+> 49 0.716 s 2.287 lane 1 h 0 move None
+> 50 0.715 s 2.333 lane 1 h 0 move None
+> 51 0.717 s 2.38 lane 1 h 0 move None
+> 52 0.72 s 2.427 lane 1 h 0 move None
+
+### 🤖 Claude — 2026-11-21T16:37:34.623Z
+
+Only 5 frames remain below the bar (frames 48–52, 2.3 units in, Benny in the right lane), missing by at most 0.007. Let me look at frame 50 next to your picture:
+
+### 🤖 Claude — 2026-11-21T16:37:38.330Z
+
+> 🔧 **Bash** `{"command": "cd /tmp && python3 -c \"\nfrom PIL import Image\na=Image.open('/home/user/rainbow-/references/05_flow_into_the_current.png').convert('RGB'); sc=915/a.height; rw=round(a.width*sc); a=a.resize((rw,915)).crop(((rw-412)//2,0,(rw-412)//2+412,915))\nb=Image.open('/tmp/rainbow_r33/runs/kit_full6/f_0050.jpg').convert('RGB'); c=Image.open('/tmp/rainbow_r33/runs/kit_full6/f_0200.jpg').convert('RGB')\ns=Image.new('RGB',(412*3+20,915),'white'); s.paste(a,(0,0)); s.paste(b,(422,0)); s.paste(c,(844,0)); s.resize((s.width*2//3,610)).save('/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62 …[+118 chars]`
+
+### 🧑 User — 2026-11-21T16:37:38.494Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T16:37:40.298Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/f50.jpg"}`
+
+### 🧑 User — 2026-11-21T16:37:40.322Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T16:37:59.594Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/rainbow_r33 && python3 -c \"\nimport json; p='/tmp/rainbow_r33/kit/kit.json'; k=json.load(open(p)); k['own']['fade']=[0.42,0.62]; json.dump(k,open(p,'w'),indent=1)\" && rm -rf runs/fade_test && FRAMES=40:60 NO_MP4=1 NODE_PATH=$(npm root -g) timeout 3000 node /home/user/rainbow-/tools/marble05/viewer/final_acceptance.cjs /tmp/rainbow_r33/kitgame /tmp/rainbow_r33/runs/fade_test 25 1.4 > /tmp/rainbow_r33/runs/fade_test.log 2>&1; cd /home/user/rainbow- && python3 -I - <<'EOF'\nimport cv2, glob\nR0 = cv2.imread('references/05_flow_into_the_current.png'); _w = round(R0.shape[1]  …[+852 chars]`
+
+### 🧑 User — 2026-11-21T16:38:25.790Z
+
+> ↩︎ result: fade 0.55-0.85 (frames 40-59): [0.772, 0.78, 0.793, 0.766, 0.756, 0.742, 0.732, 0.723, 0.719, 0.716, 0.715, 0.717, 0.72, 0.723, 0.726, 0.73, 0.731, 0.733, 0.737, 0.745]
+> fade 0.42-0.62 (frames 40-59): [0.796, 0.805, 0.818, 0.79, 0.778, 0.765, 0.758, 0.749, 0.745, 0.74, 0.738, 0.738, 0.738, 0.739, 0.741, 0.743, 0.742, 0.743, 0.746, 0.753]
+> min old 0.715 min new 0.738  bar 0.7216
+
+### 🤖 Claude — 2026-11-21T16:38:36.809Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/kit05 && sed -i \"s/kit\\['own'\\] = {'wall': wall_own, 'ring': ring_own, 'fade': \\[0.55, 0.85\\]}/kit['own'] = {'wall': wall_own, 'ring': ring_own, 'fade': [0.42, 0.62]}   # round 33j: shorter own->shared cross-fade (less washed-out blending)/\" bake_kit.py && grep -c \"0.42, 0.62\" bake_kit.py; cd /home/user/rainbow-/tools/marble05/viewer && python3 - <<'EOF'\np = 'final_acceptance.cjs'; s = open(p).read()\nold = \"\"\"        if (ge - gs >= 1.15) { const d = vDir(); ev.push([+gs.toFixed(3), d, 'extra']); gs += DUR[d] + 0.15; }\n        if (ge - gs  …[+1071 chars]`
+
+### 🧑 User — 2026-11-21T16:38:54.201Z
+
+> ↩︎ result: 1
+> HARNESS_OK
+> track.json: path end 32.16 sections 16 Benny axial start 1.1
+> [0.42, 0.62]
+> started
+> [This command modified 2 files you've previously read: tools/marble05/viewer/final_acceptance.cjs, tools/kit05/bake_kit.py. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-21T16:38:58.247Z
+
+> 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:r33j-fade-harness 2>&1 | grep -E '\"commit\"|skipping'; until grep -qE \"exit=\" /tmp/rainbow_r33/runs/kit_full7.log 2>/dev/null; do sleep 10; done; tail -1 /tmp/rainbow_r33/runs/kit_full7.log; cd tools/marble05/viewer && timeout 1800 python3 -I visual_check.py /tmp/rainbow_r33/runs/kit_full7 /home/user/rainbow-/references/05_flow_into_the_current.png > /dev/null 2>&1; timeout 300 python3 -I acceptance_verdict.py /tmp/rainbow_r33/runs/kit_full7 2>&1 | grep -E \"^# |\\| (G|V)[0-9]+ \" | sed -E 's/\\| `[^`]{140,}`/| (long value)/'  …[+98 chars]`
+
