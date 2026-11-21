@@ -1611,3 +1611,190 @@ No paid credits were used. Everything is saved on GitHub (branch `claude/screen-
 
 Is this the kind of movement you want? If yes, I'll fix the flaws above on Screen 05 next: the doubling, the 05 → 06 handover, the purple patch and the coins. I won't change your artwork or touch other screens.
 
+### 🧑 User — 2026-11-21T03:31:30.850Z
+
+CLAUDIA — I WANT A STRAIGHT ANSWER. NO MORE RUNAROUNDS.
+
+Can you make my Rainbow game look as close as possible to my original approved screens AND have Benny actually swim forward through those beautiful environments like a real 3D mobile game?
+
+YES OR NO?
+
+I want:
+
+- My approved purple-and-gold tunnel, blue-and-pink winding water, foam, coins, and scenery to stay visually faithful throughout gameplay.
+- My approved-looking pink Benny to actually paddle, steer, turn, and swim forward.
+- The camera to follow Benny while gold rings, machinery, and scenery naturally approach, pass around him, and move behind him.
+- The river to follow its real S-curves, not just create the illusion of movement by enlarging and repeating a picture.
+- No visible doubling, picture transitions, stationary backgrounds, or fake movement.
+- The same quality from the beginning to the end of every playable screen.
+
+I AM BUILDING A REAL 3D ANDROID GAME, NOT AN ANIMATED PICTURE.
+
+You've already tried painted backgrounds, camera projection, repeated rings, and traditional 3D geometry.
+
+Tell me directly:
+
+1. Can you achieve BOTH the approved visual quality and genuine 3D swimming gameplay with our existing project and tools?
+2. If yes, what specific technical solution will you use that is different from the unsuccessful attempts?
+3. What visual differences will realistically remain?
+4. Can you demonstrate it on one short section of Screen 05 before spending more credits or rebuilding other screens?
+5. If you cannot deliver this, say so clearly. Do not promise 95–98% without evidence.
+
+Do not start another experiment until you've answered these questions.
+
+I don't want another long progress report, another list of plugins, or another promise.
+
+I want a truthful answer about what you can actually build. If you can do it, prove it in real gameplay. If you can't, tell me now.
+
+### 🤖 Claude — 2026-11-21T03:31:56.483Z
+
+Before I answer, one quick check so I don't tell you something false: whether a 3D capture of your actual picture was ever tried in this project.
+
+### 🤖 Claude — 2026-11-21T03:31:57.909Z
+
+> 🔧 **Bash** `{"command": "grep -rli \"splat\" src --include=*.ts | head; echo ---; grep -rl \"spz\\|gaussian\\|posedImages2Splats\\|atlasGenerate\" qa docs backups/*.md 2>/dev/null | head -10; echo ---; sed -n 1,25p qa/worldlabs/05/pilot/LEDGER.md 2>/dev/null | cut -c1-220", "description": "Check whether a splat/World Labs scene was tried before"}`
+
+### 🧑 User — 2026-11-21T03:32:50.052Z
+
+> ↩︎ result: ---
+> qa/review_c10/2026-11-18/05_1_APPROVED.jpg
+> qa/review_c10/2026-11-18/04_proposed_views/not_shown_before/V04-3_cand1_REJECTED_tiny_Benny.jpg
+> qa/review_c10/2026-11-18/04_proposed_views/V04-1_just_inside_opening.jpg
+> qa/01_side_by_side.png
+> qa/07_side_by_side.png
+> qa/review_r20/user_marked_rings/1_APPROVED_user_arrow.jpg
+> qa/review_r18/04_rings_step6_sheen/2_BEFORE_t66_through_screen.png
+> qa/review_r18/04_rings_step6_sheen/3_NEW_f06_forward6u.png
+> qa/review_r18/07_step3_foamb/3_NEW_t80_through_screen.png
+> qa/review_r21/audit/05/a_start.png
+> ---
+> # Marble World API pilot — credit ledger (user-approved cap: US$5 = 6,250 credits; no auto-recharge)
+> 
+> Key: new key saved by the user through the secure credential form (host `api.worldlabs.ai`, header
+> `WLT-Api-Key`), injected by the session proxy. It is not in git, transcripts or source files. The exposed
+> account-7 key was not reused.
+> 
+> | UTC (2026-11-16) | Call | Result | Credits before → after | Spent total |
+> |---|---|---|---:|---:|
+> | 00:52 | `GET /credits` (authentication test) | 200 | 7,000 | 0 |
+> | 00:53 | `POST /worlds:list` | 200, **0 worlds** (lists API-created worlds only) | 7,000 → 7,000 | 0 |
+> | 00:54 | `GET /worlds/f0be2178-4291-4f90-848f-6 …[+1798 chars]
+
+### 🤖 Claude — 2026-11-21T03:32:52.006Z
+
+> 🔧 **Bash** `{"command": "ls qa/pilot05/marble_feas/ 2>/dev/null | head; for f in qa/pilot05/marble_feas/NOTES.md qa/pilot05/marble_feas/README.md; do [ -f $f ] && sed -n 1,30p $f | cut -c1-260; done", "description": "Read the earlier Marble splat feasibility result"}`
+
+### 🧑 User — 2026-11-21T03:32:52.298Z
+
+> ↩︎ result: Exit code 1
+> NOTES.md
+> blender
+> compare
+> compare_metrics.json
+> geometry
+> marble_renders
+> moved
+> pano_fit_draft.json
+> pano_fit_full.json
+> scene
+> # Screen 05 — Marble feasibility test: can the existing Marble worlds reproduce the approved river's S-curve geometry and perspective?
+> 
+> Session `012NR93Q…` (2026-11-16, ~16:55–17:35 UTC), branch `ccr-e546a360-cxmton` (separate experiment branch; the
+> user's working version `ccr-451ea8c7-3nqlis` and every other protected branch untouched).
+> **No Marble API call, no credits spent, no new world.** Only the two worlds already in the repo were used
+> (`qa/worldlabs/05/pilot/full` = `c0c9dc57…` marble-1.1, `qa/worldlabs/05/pilot/draft` = `5fd3d7a7…` marble-1.0-draft).
+> The playable Three.js game is unchanged (`git diff` on `src/` = 0 lines; nothing here is wired into the game).
+> 
+> Roles, as the user asked: Marble = 3D reconstruction only. Colours, pink ribbons, glossy cyan, white highlights =
+> the user's original artwork `references/water/05_water_isolated_original.png` (registered to the approved frame:
+> `qa/pilot05/proj/align/artwork_aligned_864x1536.png`), put onto the geometry by Blender camera projection.
+> 
+> ## Answer (short)
+> * **Perspective — yes, from the one c …[+1727 chars]
+
+### 🤖 Claude — 2026-11-21T03:33:14.387Z
+
+**No.** With this project and these tools, I can't give you real 3D swimming that stays faithful to your approved pictures from start to end with no visible differences. Here are the straight answers.
+
+**1. Can I achieve both?** No. Your approved screen is one painting seen from one spot. Real 3D swimming needs a whole tunnel that can be seen from every position along the way. Everything your painting doesn't show (the sides, what's ahead, what's behind) has to be built or generated, and that part never matches the painting exactly. Every attempt in this project shows the same thing. The still painted screen measured about 94% like your picture. Every version where the camera really moves through 3D measured about 5–12%.
+
+**2. Is there a technical solution different from what failed?** There is one thing not yet tried properly, and I can't promise it works. It uses World Labs Atlas, which is already connected. Atlas would generate many views travelling down your tunnel from your picture, then combine them into a photographic-style 3D scene. Benny would swim through it with a real follow-camera, with real flowing water and coins added on top. In November the project tried a simpler version, a 3D world made from your single picture. The far third of the tunnel and the S-curved river collapsed, so it wasn't usable. The multi-view method is the step up from that. Otherwise the industry answer is a dedicated 3D environment artist who builds the tunnel by hand in Blender from your painting.
+
+**3. What differences would remain, even if it works?**
+- Details further down the tunnel would be invented, not yours.
+- Close-up areas could look soft or blurry.
+- The glow and lighting would be flatter than the painting.
+- The water would be animated, not your exact painted streaks.
+- The S-curves may not follow your painting exactly.
+- It might have to be simplified to run smoothly on cheaper Android phones.
+
+**4. Can I demonstrate it on one short section of Screen 05 first?** Yes, but it costs World Labs credits. Before spending anything I would give you the exact job and credit cost and wait for your OK. I won't touch other screens unless it works on that section.
+
+**5. What can't I deliver?** "Exactly my approved screen in every frame of genuine 3D gameplay" is beyond what I can build. A 3D environment artist would come closer than I can, but even then it would match your art in style, not pixel for pixel. Anything better than "clearly your screen, with visible differences" would be a guess, not a promise.
+
+Everything you have is saved and unchanged:
+- the painted version, `?paint=1`
+- both Benny-swimming tests
+- the rejected 3D version
+
+Do you want me to quote the credit cost for the one-section Screen 05 test? If not, I'll stop here.
+
+### 🧑 User — 2026-11-21T03:33:18.886Z
+
+Stop hook feedback:
+[command hook 2]: There are 1 unpushed commit(s) on branch 'claude/screen-05-3d-geometry-9yu7pu'. Please push these changes to the remote repository.
+
+### 🤖 Claude — 2026-11-21T03:33:21.587Z
+
+> 🔧 **Bash** `{"command": "git status --short | head -5; git log --oneline origin/claude/screen-05-3d-geometry-9yu7pu..HEAD | head; timeout 120 python3 scripts/rainbow-autosave.py --reason \"manual:end\" 2>&1 | grep -E '\"commit\"|\"status\"|error' ; git rev-parse HEAD; timeout 30 git ls-remote origin refs/heads/claude/screen-05-3d-geometry-9yu7pu", "description": "Push the remaining commit and verify the remote", "timeout": 200000}`
+
+### 🧑 User — 2026-11-21T03:33:24.527Z
+
+> ↩︎ result: 70a7df9 autosave: Rainbow 2026-11-21 03:29 UTC
+> 70a7df906c9fe8aeca1f9dea26b58d1079913547
+> 90f941ebc4f26ba29bae26a8c6c9511d228a7fae	refs/heads/claude/screen-05-3d-geometry-9yu7pu
+
+### 🤖 Claude — 2026-11-21T03:33:27.305Z
+
+> 🔧 **Bash** `{"command": "for i in 1 2 3 4; do timeout 90 git push -u origin claude/screen-05-3d-geometry-9yu7pu 2>&1 | tail -2 && break; sleep $((2**i)); done; git rev-parse HEAD; timeout 30 git ls-remote origin refs/heads/claude/screen-05-3d-geometry-9yu7pu", "description": "Push the branch and confirm remote matches", "timeout": 400000}`
+
+### 🧑 User — 2026-11-21T03:34:02.562Z
+
+> ↩︎ result: 90f941e..70a7df9  claude/screen-05-3d-geometry-9yu7pu -> claude/screen-05-3d-geometry-9yu7pu
+> branch 'claude/screen-05-3d-geometry-9yu7pu' set up to track 'origin/claude/screen-05-3d-geometry-9yu7pu'.
+> 70a7df906c9fe8aeca1f9dea26b58d1079913547
+> 70a7df906c9fe8aeca1f9dea26b58d1079913547	refs/heads/claude/screen-05-3d-geometry-9yu7pu
+
+### 🤖 Claude — 2026-11-21T03:34:05.391Z
+
+> 🔧 **ToolSearch** `{"query": "select:mcp__github__list_pull_requests,mcp__github__create_pull_request", "max_results": 2}`
+
+### 🧑 User — 2026-11-21T03:34:05.403Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-21T03:34:07.142Z
+
+> 🔧 **mcp__github__list_pull_requests** `{"owner": "josiahscalia5-dev", "repo": "rainbow-", "head": "josiahscalia5-dev:claude/screen-05-3d-geometry-9yu7pu", "state": "open", "fields": ["number", "html_url", "draft", "base"]}`
+
+### 🧑 User — 2026-11-21T03:34:07.956Z
+
+> ↩︎ result: []
+
+### 🤖 Claude — 2026-11-21T03:34:10.575Z
+
+> 🔧 **Bash** `{"command": "ls .github/ 2>/dev/null; ls .github/PULL_REQUEST_TEMPLATE* .github/pull_request_template.md 2>/dev/null; git remote show origin 2>/dev/null | grep \"HEAD branch\"", "description": "Check for a PR template and default branch"}`
+
+### 🧑 User — 2026-11-21T03:34:10.922Z
+
+> ↩︎ result: HEAD branch: ccr-6f431adf-7h0m8y
+
+### 🤖 Claude — 2026-11-21T03:34:12.113Z
+
+Everything is pushed to GitHub (remote matches commit `70a7df9`). I'm opening a draft pull request for this branch now, so the work is visible there. It's a draft: nothing gets merged.
+
+### 🤖 Claude — 2026-11-21T03:34:19.313Z
+
+> 🔧 **mcp__github__create_pull_request** `{"owner": "josiahscalia5-dev", "repo": "rainbow-", "title": "Screen 05: real 3D Benny in the approved picture (paintswim / paintfly test switches)", "head": "claude/screen-05-3d-geometry-9yu7pu", "base": "ccr-6f431adf-7h0m8y", "draft": true, "body": "Draft only — not for merging without the user's explicit OK.\n\n## What this branch adds (round 32, 2026-11-21)\nTwo URL-switch tests on top of the approved-artwork Screen 05 (`?paint=1`); the default build and `?paint=1` are unchanged.\n\n- `?paint=1&paintswim=1&benny31=1`: the approved Screen 05 picture is unchanged and held still. The real 3D B …[+1254 chars]`
+
