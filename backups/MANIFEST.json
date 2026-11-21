@@ -794,7 +794,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 25599,
-   "sha256": "ed05e39ab4b3aaf799c4eaf074ee39df29b68271306b92f4fa3101d0f4a5294a"
+   "sha256": "d099359a132b23e907f6652f2db1f7e187f018bf2553f716832b8525320757ac"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3056,
-   "sha256": "f38a994a35eee5feaf013723a16e7f41ac1a135d494ea4929e975d36d1f8a22b"
+   "sha256": "3330973942050d57e3107a65b8617163de101349cbf182e13ac76abb8d20cebd"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -35677,9 +35677,14 @@
    "sha256": "baf1af4a879a049dbcec0f2244df1a8b64c0a1424e19297b00b4d33552b497d3"
   },
   {
+   "path": "qa/spaitial/05/ALIGN_approved_vs_echo2_from_picture_camera.jpg",
+   "bytes": 513293,
+   "sha256": "1ce8620b325bb9230b9e34ebc4cca7c2c010eb635bdc8e33e4dae477c9a1e20f"
+  },
+  {
    "path": "qa/spaitial/05/LEDGER.md",
-   "bytes": 926,
-   "sha256": "7ba38baa3ff2869780c1bff7403456568d14de7d731c019a1813be6603167465"
+   "bytes": 1249,
+   "sha256": "392b0e33752b19bc558efa1cb37599f74012c17922545d8f8718a5405ed68f36"
   },
   {
    "path": "qa/spaitial/05/create.json",
