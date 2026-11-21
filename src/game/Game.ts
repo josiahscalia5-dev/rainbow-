@@ -796,7 +796,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
       const b = benny.root.position.clone();
       camera.position.copy(b).addScaledVector(f.right, dx).addScaledVector(f.up, dy).addScaledVector(f.tan, -dz);
       camera.up.copy(f.up);
-      camera.lookAt(b.clone().addScaledVector(f.tan, 6));
+      camera.lookAt(b.clone().addScaledVector(f.tan, 1.5));
       camera.fov = fov; camera.far = 2000; camera.updateProjectionMatrix();
       render(); dirty = false; return camera.position.toArray();
     },

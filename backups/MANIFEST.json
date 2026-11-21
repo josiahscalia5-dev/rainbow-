@@ -794,7 +794,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 25112,
-   "sha256": "1b91f61af72957f32efce9785d1f50d52a7f00750c31f3cad6a59d864adfee54"
+   "sha256": "18644cac3ed15373333cb8e4e81d350dd722cd758522606d665b5ec73ab1aaa1"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3271,
-   "sha256": "8c2e605761eaa95f10da220e6b022646599c865be90659f1e2ee65e101ccf48a"
+   "sha256": "ee1000a8c2f55977c3d22875e3d5ddba4e2cc6fffa4c07914f38a8ae94cb015f"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -17157,9 +17157,19 @@
    "sha256": "2addc169a63b2e8fa3476ae0b6335720ec07a8be172798b5356c07dbb9611229"
   },
   {
+   "path": "qa/match/05/r31_3d/proof/NEW3D_SCREEN05_gameplay.mp4",
+   "bytes": 10646520,
+   "sha256": "1c1009a3ff577dff4756db1de9911a234e08374123e8799a7025176d9d30ea5b"
+  },
+  {
    "path": "qa/match/05/r31_3d/proof/NEW3D_SCREEN05_sideview.mp4",
    "bytes": 2165461,
    "sha256": "2ee41a6cacee44a0895d9383403a589352ffa437d1a058f241fde65efc9f3c7c"
+  },
+  {
+   "path": "qa/match/05/r31_3d/proof/clip_NEW3D_SCREEN05_gameplay.json",
+   "bytes": 36415,
+   "sha256": "e78cc832cf09477ce858dbe4aca5da35e4fd112775717b03ae4009878fce52d0"
   },
   {
    "path": "qa/match/05/r31_3d/proof/clip_NEW3D_SCREEN05_sideview.json",
@@ -36468,8 +36478,8 @@
   },
   {
    "path": "src/game/Game.ts",
-   "bytes": 44500,
-   "sha256": "3f39d3ba446acb010986a7f4831bf33d66824e5f505fb9ace5f23de69e1ecdac"
+   "bytes": 44502,
+   "sha256": "d7cba2ba6706de0687e5d3ebfe3b960e5639f67965d8a5fb015e3b41abf28612"
   },
   {
    "path": "src/game/cameraRig.ts",
