@@ -1626,3 +1626,7 @@ The 26-coin layout has no overlaps in the model. Now I'll write it into controls
 > 157:bmat.onBeforeCompile = (sh) => {
 > 163:const bmesh = new THREE.Mesh(geo, bmat); …[+457 chars]
 
+### 🤖 Claude — 2026-11-21T13:50:28.213Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && python3 -I - <<'EOF'\np='controls.js'; s=open(p).read()\nold=\"  bmat.needsUpdate = true;\\n\"\nassert s.count(old)==1\ns=s.replace(old, old+'''  // QA: the water plane vs his mesh (min / max height of his vertices above the plane, undeformed) and the material's program key\n  window.qaWaterLine = () => { const P4 = U.uWater.value, n = new THREE.Vector3(P4.x, P4.y, P4.z); let lo = 1e9, hi = -1e9; const v = new THREE.Vector3();\n    benny.updateMatrixWorld(true); benny.traverse((o) => { i …[+1268 chars]`
+
