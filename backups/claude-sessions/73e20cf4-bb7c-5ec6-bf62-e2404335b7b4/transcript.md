@@ -2868,3 +2868,37 @@ The full run with every frame recorded is going (about 30 minutes). Saving the r
 
 > 🔧 **Bash** `{"command": "until grep -qE \"frame 350 |exit=|rror\" /tmp/rainbow_r33/runs/kit_full2.log 2>/dev/null; do sleep 5; done; grep -E \"frame [0-9]+ \" /tmp/rainbow_r33/runs/kit_full2.log | tail -1 | cut -c1-60; grep -E \"rror|exit=\" /tmp/rainbow_r33/runs/kit_full2.log | head -3", "description": "Wait for full run to reach frame 350", "timeout": 1500000}`
 
+### 🧑 User — 2026-11-21T15:28:28.180Z
+
+> ↩︎ result: frame 350 / 704 {"s":16.333,"lat":-0.1045,"coins":1550,"tile
+
+### 🤖 Claude — 2026-11-21T15:28:33.399Z
+
+The new version is much closer to your approved screen. I'll make a fresh side-by-side from the run in progress so you can see it.
+
+### 🤖 Claude — 2026-11-21T15:28:35.256Z
+
+> 🔧 **Bash** `{"command": "python3 -I tools/kit05/compare_r33.py /tmp/rainbow_r32/runs/merged_short /tmp/rainbow_r33/runs/kit_full2 qa/kit05/r33/compare_latest 0,30 2>&1 | python3 -c \"\nimport sys,json; d=json.load(sys.stdin)\nfor f,r in d['frames'].items(): print('frame',f, 'CURRENT', r.get('current'), '| KIT', r.get('kit'))\"; ls qa/kit05/r33/compare_latest", "description": "Build latest approved vs current vs kit comparison"}`
+
+### 🧑 User — 2026-11-21T15:28:35.643Z
+
+> ↩︎ result: frame 0 CURRENT {'colour_look_corr': 0.548, 'sharpness_vs_approved': 0.301, 'mean_abs_diff_levels': 60.5, 'share_within_20_levels': 0.127, 'ssim_scenery': 0.193} | KIT {'colour_look_corr': 0.992, 'sharpness_vs_approved': 0.761, 'mean_abs_diff_levels': 14.8, 'share_within_20_levels': 0.797, 'ssim_scenery': 0.757}
+> frame 30 CURRENT {'colour_look_corr': 0.25, 'sharpness_vs_approved': 0.364} | KIT {'colour_look_corr': 0.725, 'sharpness_vs_approved': 0.537}
+> APPROVED_CURRENT_KIT_f0000.jpg
+> APPROVED_CURRENT_KIT_f0030.jpg
+> compare_r33.json
+
+### 🤖 Claude — 2026-11-21T15:28:38.079Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/kit05/r33/compare_latest/APPROVED_CURRENT_KIT_f0000.jpg", "qa/kit05/r33/compare_latest/APPROVED_CURRENT_KIT_f0030.jpg"], "caption": "Left to right: your APPROVED picture | the CURRENT version (old method) | the NEW tunnel kit. First image = start view; second = 1 second later, Benny swimming and steering left. This is a progress comparison, not the finished level.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-21T15:28:38.957Z
+
+> ↩︎ result: 2 files delivered to user.
+>   /home/user/rainbow-/qa/kit05/r33/compare_latest/APPROVED_CURRENT_KIT_f0000.jpg → file_uuid: b0a03fc8-a472-496c-a863-9280bc2ea6b4
+>   /home/user/rainbow-/qa/kit05/r33/compare_latest/APPROVED_CURRENT_KIT_f0030.jpg → file_uuid: 1706d2b3-24ba-4086-9d48-d9ef7fc77bea
+
+### 🤖 Claude — 2026-11-21T15:28:46.792Z
+
+> 🔧 **Bash** `{"command": "until grep -qE \"exit=\" /tmp/rainbow_r33/runs/kit_full2.log 2>/dev/null; do sleep 5; done; tail -2 /tmp/rainbow_r33/runs/kit_full2.log | head -1 | python3 -c \"\nimport sys,json; r=json.loads(sys.stdin.read())\nfor k in ['frames','errors','position_stalls','benny_pose','coin_crowding','swipe_directions','swipes_sent','swipes_ok','coins','ending_transition','level']: print(k, json.dumps(r.get(k))[:300])\"; tail -1 /tmp/rainbow_r33/runs/kit_full2.log; ls /tmp/rainbow_r33/runs/kit_full2 | grep -c \"^f_\"", "description": "Wait for the full-level run and summarize", "timeout": 180000 …[+2 chars]`
+

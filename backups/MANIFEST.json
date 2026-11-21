@@ -794,7 +794,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 26528,
-   "sha256": "433ef6752ca6d9a234de8374acfecec7e877ced714b46051690986de066bebff"
+   "sha256": "889502b1da33f99083998df92bd5bfe263c6246caecc4096f3d19df9a3705e60"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3153,
-   "sha256": "6ea896ef75529e402baf06b9ceeb8ee153c59667c30383491990594463bb1e02"
+   "sha256": "5b2ff830aa5f6589ad15a247a108e09693a277e8515ec72d521aa9e1efb9bee4"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -7734,7 +7734,7 @@
   {
    "path": "backups/wip/screen05-agents/LAST_SYNC_UTC",
    "bytes": 33,
-   "sha256": "7f74e647d354475952254c76cb467a36d9119a4e3ac11cee8c80a2270ea0ec77"
+   "sha256": "d17780a2914c20cb1419deffdbad2ab1b46217404fe9f3f84ce713dd7808fb8e"
   },
   {
    "path": "backups/wip/screen05-agents/WORKSPACE",
@@ -15435,6 +15435,21 @@
    "path": "qa/kit05/r33/compare/compare_r33.json",
    "bytes": 885,
    "sha256": "60200dcc2a3c0e45589af6c9ec691088641eb7a32525706a650e697c6c19a30e"
+  },
+  {
+   "path": "qa/kit05/r33/compare_latest/APPROVED_CURRENT_KIT_f0000.jpg",
+   "bytes": 524347,
+   "sha256": "a485d444303ef328c61f7e6b15c305aa3dd86b420071beb6c697941714a31d44"
+  },
+  {
+   "path": "qa/kit05/r33/compare_latest/APPROVED_CURRENT_KIT_f0030.jpg",
+   "bytes": 491592,
+   "sha256": "b576c1deffe322ba5ce8578ca1e5b651ac3446c323915d7bdf8f4c680c6a4b94"
+  },
+  {
+   "path": "qa/kit05/r33/compare_latest/compare_r33.json",
+   "bytes": 699,
+   "sha256": "35273d045202215f500d340791ec71f47205810343faad218ac8db6c5b3ae3fa"
   },
   {
    "path": "qa/kit05/r33/level_v3/pose_s0.7.png",
