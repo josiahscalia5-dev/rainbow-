@@ -875,3 +875,146 @@ Now the hook lines in `play3.html`.
 > near u -4.77..-3.69 n=227 rgb=[0.69 0.46 0.7 ] lat [-0.59  0.27  0.67] h [0.5  0.75 1.04] a=0.94 sc=0.087
 > near u -3.69..-2.61 n=380 rgb=[0.59 0.48 0.8 ] lat [-0.64  0.03  0.67] h [0.33 0.58 0.87] a=0.94 sc=0.072 …[+424 chars]
 
+### 🤖 Claude — 2026-11-21T12:14:58.352Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB/out_water/diag/green.log; uptime", "description": "Check green diagnostic render log"}`
+
+### 🧑 User — 2026-11-21T12:14:58.409Z
+
+> ↩︎ result: console.warning: [.WebGL-0xac001c6800]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+> console.warning: [.WebGL-0xac001c6800]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+> console.warning: [.WebGL-0xac001c6800]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+> console.warning: [.WebGL-0xac001c6800]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)
+> ready 47.278
+>  12:14:58 up  2:22,  0 user,  load average: 3.20, 3.17, 3.51
+
+### 🤖 Claude — 2026-11-21T12:15:25.040Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB/out_water/diag/green.log | grep -v \"GPU stall\"", "description": "Check green diagnostic progress"}`
+
+### 🧑 User — 2026-11-21T12:15:25.080Z
+
+> ↩︎ result: ready 47.278
+
+### 🤖 Claude — 2026-11-21T12:15:46.867Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB/out_water/diag/green.log | grep -v \"GPU stall\"; ls /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB/out_water/diag/green/", "description": "Check green diagnostic progress"}`
+
+### 🧑 User — 2026-11-21T12:15:46.913Z
+
+> ↩︎ result: ready 47.278
+> still 0 45.066
+> s_0.png
+
+### 🤖 Claude — 2026-11-21T12:15:49.052Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB/out_water/diag/green/s_0.png"}`
+
+### 🧑 User — 2026-11-21T12:15:49.090Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T12:16:07.834Z
+
+Confirmed: the black patches are real gaps (the green test background shows through) at the wall bases on the section joints, and the far end is an open hole. I'll now modify my copy of the builder.
+
+### 🤖 Claude — 2026-11-21T12:16:22.847Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB && python3 -I - <<'EOF'\np = 'tools/build_track_w.py'; s = open(p).read()\nrep = [\n# header note\n('python3 -I build_track.py <hi.spz> <lo.spz> <scene05.json> <tile_frame.json> <outdir> [N]\"\"\"',\n 'python3 -I build_track.py <hi.spz> <lo.spz> <scene05.json> <tile_frame.json> <outdir> [N]\\n'\n 'water-fx (agentB) changes, marked [wfx]: (1) only the water channel is mirrored (walls / foam banks stay where they are; the\\n'\n 'old rule mirrored everything below 0.32 about the river line, 8  …[+2963 chars]`
+
+### 🧑 User — 2026-11-21T12:16:24.375Z
+
+> ↩︎ result: 10:water-fx (agentB) changes, marked [wfx]: (1) only the water channel is mirrored (walls / foam banks stay where they are; the
+> 31:MIR_H, MIR_LAT = 0.10, 0.95   # [wfx] mirrored = water channel only: below this height and within this distance of the river line
+> 32:WALL_OV = 0.03     # [wfx] walls overlap this much past the cut so the joint has no hairline gap
+> 33:LO2_KEEP = 0.35    # [wfx] fraction of the _lo splats kept for the very distant copies
+> 50:    mw = (h[mask] < MIR_H) & (np.abs(lat[mask] - LAT_C) < MIR_LAT)  # [wfx] only the water channel is mirrored
+> 85:    fade_in = sstep(UA - OV, UA, u); fade_out = 1 - sstep(UB, UB + OV, u)  # [wfx] full coverage across the joint
+> 97:# [wfx] very distant copies: 35 % of the light pieces, splats enlarged so the coverage stays
+> bay 210337
+> bay_m 210337
+> near 456508
+> far 22901
+> bay_lo 43420
+> bay_m_lo 43420
+> bay_lo2 18877
+> bay_m_lo2 18585
+> D [-0.302  0.159 -2.003] path length 32.16
+> total 56164
+> drwxr-xr-x 2 root root     4096 Nov 21 12:16 .
+> drwxr-xr-x 7 root root     4096 Nov 21 12:16 ..
+> -rw-r--r-- 1 root root 11779234 Nov 21 12:16 bay.ply
+> -rw-r--r-- 1 root root  2431881 Nov 21 12:16 bay_lo.ply
+> -rw-r--r-- 1 root root  1057473 Nov 21 12:16 bay_lo2.ply
+> -r …[+332 chars]
+
+### 🤖 Claude — 2026-11-21T12:16:39.220Z
+
+Now the page-side track changes (track folder switch, distant light tier, golden end glow, gap-colour backdrop).
+
+### 🤖 Claude — 2026-11-21T12:17:00.493Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB && python3 -I - <<'EOF'\np = 'tools/build_track_w.py'; s = open(p).read()\na = \"json.dump({'offsets': [o.tolist() for o in offs],\"\nassert s.count(a) == 1\ns = s.replace(a, \"json.dump({'XA': XA.tolist(), 'XB': XB.tolist(), 'offsets': [o.tolist() for o in offs],\")  # [wfx] ring centres for the end glow\nopen(p, 'w').write(s)\np = 'play3.html'; s = open(p).read()\nrep = [\n(\"if (q.get('bg')) scene.background = new THREE.Color(q.get('bg')); // QA: show gaps in the splat track in a test co …[+4932 chars]`
+
+### 🧑 User — 2026-11-21T12:17:01.711Z
+
+> ↩︎ result: bay_m_lo2 18585
+> D [-0.302  0.159 -2.003] path length 32.16
+> 39:const DV = new THREE.Vector3(...TR.D), AX = new THREE.Vector3(...TR.ax), N = new THREE.Vector3(...TR.n), DU = DV.dot(AX);
+> 62:  if (glow) { glow.position.set(...TR.XB).add(new THREE.Vector3(...TR.offsets[last - 1])).addScaledVector(AX, 0.35); } // [track]
+> 159:  showTrack(tmp.dot(AX));
+> [This command modified 1 file you've previously read: ../../../tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB/play3.html. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-21T12:17:10.649Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB && (QS='&bg=%2300ff00' STILLS='[0,4.4]' NODE_PATH=$(npm root -g) nohup node shots_w.cjs out_water/diag/green_after > out_water/diag/green_after.log 2>&1 &); echo ok", "description": "Render AFTER green-background gap diagnostic"}`
+
+### 🧑 User — 2026-11-21T12:17:10.690Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-21T12:17:13.999Z
+
+> 🔧 **Bash** `{"command": "grep -v \"GPU stall\" /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB/out_water/diag/green.log; ls /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB/out_water/diag/green", "description": "Check first green diagnostic completed"}`
+
+### 🧑 User — 2026-11-21T12:17:14.052Z
+
+> ↩︎ result: ready 47.278
+> still 0 45.066
+> still 4.4 45.939
+> s_0.png
+> s_4.4.png
+
+### 🤖 Claude — 2026-11-21T12:17:15.718Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB/out_water/diag/green/s_4.4.png"}`
+
+### 🧑 User — 2026-11-21T12:17:15.760Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T12:17:17.944Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/visual_check.py", "description": "Read the coordinator's dark-patch checker"}`
+
+### 🧑 User — 2026-11-21T12:17:18.037Z
+
+> ↩︎ result: """Per-frame visual checks for the Screen 05 acceptance run (python3 -I visual_check.py <run dir> <approved.png>):
+> black patches (near-black pixels below the HUD), sharpness vs the first frame (variance of the Laplacian), flicker (frame-to-frame
+> change spikes), and a colour-look score vs the approved picture (hue/saturation histogram overlap; motion-independent)."""
+> import sys, json, glob, numpy as np, cv2
+> d, ref = sys.argv[1:3]
+> files = sorted(glob.glob(f'{d}/f_*.jpg'))
+> R = cv2.imread(ref); R = cv2.resize(R, (412, 915))
+> def hs_hist(img):
+>     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)[150:]  # below the HUD
+>     h = cv2.calcHist([hsv], [0, 1], None, [36, 16], [0, 180, 0, 256]); return cv2.normalize(h, h, 1, 0, cv2.NORM_L1)
+> HR = hs_hist(R)
+> rows, prev, sharp0 = [], None, None
+> for f in files:
+>     im = cv2.imread(f); body = im[150:]
+>     g = cv2.cvtColor(body, cv2.COLOR_BGR2GRAY)
+>     # a dark PATCH = a connected near-black area >= 150 px at 412x915; the approved picture's own darkest spots (wall slots,
+>     # shadows) are <= 8 px there, so intentional dark details of the artwork are never counted
+>     m = (body.max(2) < 22).astype(np.uint8); nb, lab, stats, _ = cv2.connectedComponentsWithSt …[+1804 chars]
+

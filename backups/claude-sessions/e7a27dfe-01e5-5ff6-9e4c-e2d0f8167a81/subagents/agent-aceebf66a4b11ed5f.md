@@ -227,3 +227,96 @@ Now the hook lines in play3.html.
 
 > ↩︎ result: The file /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/play3.html has been updated successfully. (file state is current in your context — no need to Read it back)
 
+### 🤖 Claude — 2026-11-21T12:15:12.628Z
+
+Now the Android-portrait touch test.
+
+### 🤖 Claude — 2026-11-21T12:15:48.384Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/swipe_test.cjs", "content": "// Android-portrait swipe test for play3.html + controls.js: REAL touch swipes via CDP Input.dispatchTouchEvent on the canvas,\n// deterministic 30 fps game steps between swipes, state() logged after every swipe, 6 stills rendered (SwiftShader, slow).\n// usage: NODE_PATH=$(npm root -g) node swipe_test.cjs [--nostills] [--compare0]\nconst { chromium } = require('playwright'); const { spawn } = require('child_process'); const fs = require('fs'); const path = requi …[+9712 chars]`
+
+### 🧑 User — 2026-11-21T12:15:48.415Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/swipe_test.cjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-21T12:16:07.042Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA && node --check swipe_test.cjs && node -e \"import('./controls.js').then(m=>console.log(Object.keys(m)))\" && NODE_PATH=$(npm root -g) timeout 900 node swipe_test.cjs --nostills > run_logic.log 2>&1; tail -30 run_logic.log", "description": "Run logic-only swipe test (no stills)", "timeout": 600000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-21T12:16:07.100Z
+
+> ↩︎ result: Command running in background with ID: b9n6anz88. Output is being written to: /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/tasks/b9n6anz88.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-21T12:16:09.802Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA && diff play3.orig.html play3.html; sleep 45; cat run_logic.log", "description": "Show play3.html hook diff and test progress"}`
+
+### 🧑 User — 2026-11-21T12:16:54.854Z
+
+> ↩︎ result: 15a16
+> > import { installControls } from './controls.js'; // [controls]
+> 134a136
+> > const CT = q.get('controls') === '0' ? null : installControls({ THREE, canvas: renderer.domElement, q, at, frameAt, coins, scene, U, bmat, benny, splash, splashTex, bubTex, coinTex: ctex, coinD: SC.coin_d, bennyFullH: 0.99 * KH, pxW, coinEl, getS: () => st.s, getCoins: () => coinCount, render: () => renderer.render(scene, camera) }); // [controls] swipes / lanes / leap / dive (?controls=0 = old analog steer)
+> 137c139
+> <   st.vlat += (steer * 0.45 - st.vlat) * Math.min(1, dt * 8); st.lat = THREE.MathUtils.clamp(st.lat + st.vlat * dt, -0.3, 0.3);
+> ---
+> >   if (CT) st.lat = CT.update(t, dt).lat; else { st.vlat += (steer * 0.45 - st.vlat) * Math.min(1, dt * 8); st.lat = THREE.MathUtils.clamp(st.lat + st.vlat * dt, -0.3, 0.3); } // [controls] lanes override steer
+> 141c143
+> <   st.lean += ((-steer * 0.22 - turn * 2.2) - st.lean) * Math.min(1, dt * 5);
+> ---
+> >   st.lean += ((-(CT ? 0 : steer) * 0.22 - turn * 2.2) - st.lean) * Math.min(1, dt * 5); // [controls] lane bank is added in CT.orient
+> 144c146
+> <   benny.position.copy(tmp).addScaledVector(F.n, Math.sin(t * Math.PI * 1.6) * 0.006);
+> ---
+> >   benny.position.copy(tmp …[+1662 chars]
+
+### 🤖 Claude — 2026-11-21T12:16:59.719Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/play3.html", "old_string": "    if (c.got < 0 && (CT ? CT.hits(c) : st.s >= c.s && Math.abs(st.lat - c.lat) < 0.14)) { // [controls] 3D pick-up distance c.got = t; coinCount += 10; coinEl.textContent = '\\u{1FA99} ' + coinCount.toLocaleString('en-US'); }", "new_string": "    if (c.got < 0 && (CT ? CT.hits(c) : st.s >= c.s && Math.abs(st.lat - c.lat) < 0.14)) { c.got = t; coinCount += 10; coinEl.textContent = '\\u{1FA99} ' + coinCount.toLocaleString('en-US'); } // [contr …[+26 chars]`
+
+### 🧑 User — 2026-11-21T12:16:59.782Z
+
+> ↩︎ result: The file /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/play3.html has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-21T12:17:03.510Z
+
+> 🔧 **Bash** `{"command": "pkill -f \"swipe_test.cjs\" ; sleep 1; pkill -f \"http.server 89\" ; cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA && python3 - <<'EOF'\nimport re\ns=open('play3.html').read()\nm=re.search(r'<script type=\"module\">(.*)</script>',s,re.S).group(1)\nopen('/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/p3check.mjs','w').write(m)\nEOF\nnode --check /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/p3check.mjs && echo SYNTAX_OK", "description": "Stop the failed test and synt …[+28 chars]`
+
+### 🧑 User — 2026-11-21T12:17:04.653Z
+
+> ↩︎ result: SYNTAX_OK
+
+### 🤖 Claude — 2026-11-21T12:17:08.444Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA && NODE_PATH=$(npm root -g) timeout 900 node swipe_test.cjs --nostills > run_logic.log 2>&1; tail -30 run_logic.log", "description": "Rerun logic-only swipe test", "timeout": 600000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-21T12:17:08.481Z
+
+> ↩︎ result: Command running in background with ID: b05ikhrt4. Output is being written to: /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/tasks/b05ikhrt4.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-21T12:17:12.473Z
+
+> 🔧 **Bash** `{"command": "sleep 90; cat /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/run_logic.log; uptime", "description": "Check logic test progress"}`
+
+### 🧑 User — 2026-11-21T12:17:12.483Z
+
+> ↩︎ result: <tool_use_error>Blocked: sleep 90 followed by: cat /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/run_logic.log uptime. To wait for a condition, use Monitor with an until-loop (e.g. `until <check>; do sleep 2; done`). To wait for a command you started, use run_in_background: true. Do not chain shorter sleeps to work around this block.</tool_use_error>
+
+### 🤖 Claude — 2026-11-21T12:17:13.316Z
+
+> 🔧 **ToolSearch** `{"query": "select:Monitor", "max_results": 1}`
+
+### 🧑 User — 2026-11-21T12:17:13.326Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-21T12:17:16.123Z
+
+> 🔧 **Monitor** `{"command": "tail -n +1 -f /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/run_logic.log | grep -E --line-buffered \"ready|pageerror|console error|ERROR|checks|done|src touch|src api\"", "description": "swipe logic test progress (ready, per-swipe results, checks, errors)", "timeout_ms": 600000}`
+
+### 🧑 User — 2026-11-21T12:17:16.206Z
+
+> ↩︎ result: Monitor started (task by9mx924l, expires in 10m unless the source ends first; you get one notice at expiry — re-arm if you still need the watch). You will be notified on each event. Keep working — do not poll or sleep. Events may arrive while you are waiting for the user — an event is not their reply.
+

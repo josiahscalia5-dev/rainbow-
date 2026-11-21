@@ -5681,3 +5681,70 @@ The acceptance test and the automatic visual checker are ready. I ran the checke
 
 I'll keep going: merge the two specialists' work when they finish, run the full swipe test, and fix and retest until it passes. You'll get short written updates only, and the final video only once it passes.
 
+### 🧑 User — 2026-11-21T12:16:46.862Z
+
+Claudia, this is exactly the type of testing I want.
+
+Please continue correcting the actual causes of the dark patches without changing my original approved scenery, colors, tunnel structure, or Benny's appearance.
+
+Make sure the visual checker doesn't mistake intentional dark areas in my approved artwork for errors.
+
+After merging both specialists' work, run the complete real-swipe gameplay test again. Verify that Benny moves naturally left and right, the water and tunnel stay visually correct, and there are no freezes, crashes, collision problems, or camera errors.
+
+Only show me the final gameplay when all acceptance tests pass. If something cannot be fixed, explain the limitation rather than marking it complete.
+
+Keep saving verified progress to GitHub, and don't spend additional generation credits without my approval.
+
+### 🤖 Claude — 2026-11-21T12:16:49.861Z
+
+Good point about the intentional dark parts. Your tunnel walls have dark perforation slots by design. I'm calibrating the checker against your approved picture so only real gaps count as errors.
+
+### 🤖 Claude — 2026-11-21T12:16:54.769Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad; timeout 120 python3 -I - <<'EOF'\nimport cv2, numpy as np\nS='/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad'\ndef blobs(img, thr=22):\n    body=img[150:]; m=(body.max(2)<thr).astype(np.uint8)\n    n,lab,stats,_=cv2.connectedComponentsWithStats(m,8)\n    areas=stats[1:,cv2.CC_STAT_AREA] if n>1 else np.array([0])\n    return m.mean()*100, np.sort(areas)[::-1][:6], int((areas>=250).sum()), int(areas[areas>=250].sum())\nR=cv2.resize(cv2.imread('/home/user/rainbow-/r …[+417 chars]`
+
+### 🧑 User — 2026-11-21T12:16:55.049Z
+
+> ↩︎ result: approved: black 0.035% largest blobs [8 4 3 3 3 3]  blobs>=250px 0 (px 0)
+> frame 0 black 1.139% largest blobs [2034 1175  144   84   59   51]  blobs>=250px 2 (px 3209)
+> frame 10 black 1.344% largest blobs [1856 1495  486  203   72   58]  blobs>=250px 3 (px 3837)
+> frame 22 black 1.033% largest blobs [1832  655  293  280   78   71]  blobs>=250px 4 (px 3060)
+
+### 🤖 Claude — 2026-11-21T12:17:06.217Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad; python3 - <<'EOF'\np='/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/visual_check.py'; s=open(p).read()\ns=s.replace(\"\"\"    black = float((body.max(2) < 22).mean())\"\"\",\"\"\"    # a dark PATCH = a connected near-black area >= 150 px at 412x915; the approved picture's own darkest spots (wall slots,\n    # shadows) are <= 8 px there, so intentional dark details of the artwork are never counted\n    m = (body.max(2) < 22).astype(np.uint8); nb, lab, stats, _ =  …[+1277 chars]`
+
+### 🧑 User — 2026-11-21T12:17:06.982Z
+
+> ↩︎ result: ok
+> {
+>  "frames": 23,
+>  "dark_patches": {
+>   "frames_with_patches": 23,
+>   "largest_px": 2557,
+>   "max_pct": 1.468,
+>   "rule": "connected near-black area >= 150 px at 412x915 (approved picture: largest 8 px)"
+>  },
+>  "sharpness_vs_start": {
+> [This command modified 1 file you've previously read: ../../../tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/visual_check.py. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-21T12:17:09.385Z
+
+> 🔧 **ToolSearch** `{"query": "select:SendMessage", "max_results": 1}`
+
+### 🧑 User — 2026-11-21T12:17:09.396Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-21T12:17:15.134Z
+
+> 🔧 **SendMessage** `{"to": "a18ca6be2c4eebf7f", "summary": "Calibrated dark-patch rule for water specialist", "message": "Dark-patch acceptance rule is now calibrated — please target exactly this. Checker: /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/visual_check.py (usage: python3 -I visual_check.py <dir with f_*.jpg frames> /home/user/rainbow-/references/05_flow_into_the_current.png). A dark PATCH = a connected near-black area (max channel < 22) of ≥ 150 px at 412x915, below the HUD (rows ≥150). The APPROVED picture's own darkest spots (wall slots, shadows) are ≤ 8 px, so in …[+660 chars]`
+
+### 🧑 User — 2026-11-21T12:17:15.254Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to a18ca6be2c4eebf7f at its next tool round. Sending this moved nothing it is running to the background just now, so the message waits for that round unless something moves sooner. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"a18ca6be2c4eebf7f","name":"a18ca6be2c4eebf7f","ref":"da7ab8"}}
+
+### 🤖 Claude — 2026-11-21T12:17:19.338Z
+
+> 🔧 **Bash** `{"command": "git add tools/marble05/viewer/visual_check.py tools/marble05/viewer/final_acceptance.cjs && git commit -q -m \"Screen 05 acceptance tests: full-level real-touch swipe run (Android portrait emulation) + per-frame visual checker calibrated on the approved picture\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01DSgRGpB51Z1jjYL78aQFZJ\" && for i in 1 2 3; do timeout 300 git push -u origin claude/screen-05-3d-geometry-9yu7pu 2>&1 | tail -1 && break; sleep 5; done; git rev-parse --short HEAD; timeout 30 git ls-remote origin re …[+131 chars]`
+
