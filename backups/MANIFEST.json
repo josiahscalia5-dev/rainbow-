@@ -794,7 +794,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 26528,
-   "sha256": "7daae488870e3983cbdb5ca7e47a4a99d48d0f01fe583093d17ab1cacd7284f5"
+   "sha256": "ff6cc926b08617b06916956d8f2e3b5d0d5b8e4774438e277b2a95b044b50206"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3153,
-   "sha256": "40fbebf2490ce4f79eeeec5c6dcece07d44c4487636aa8cbbca6c1c61b91600a"
+   "sha256": "fb4e07773ff12474d46d170d4472c8c84a798f90b9631616971816a03bab1dc5"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -7734,7 +7734,7 @@
   {
    "path": "backups/wip/screen05-agents/LAST_SYNC_UTC",
    "bytes": 33,
-   "sha256": "daa42671e6de5057484901489ac5a480e4e02ac92e87dcf56c3eb823e7b80a5f"
+   "sha256": "c64df538978e052b20d50d07095fccee458a5b520efa87dfcd67df7060d5f144"
   },
   {
    "path": "backups/wip/screen05-agents/WORKSPACE",
@@ -39580,6 +39580,11 @@
    "path": "tools/imageblaster/render08.mjs",
    "bytes": 1924,
    "sha256": "69ee93dc70222750ed61bc4a8195193b0592556c5802b267a84634bba96b5709"
+  },
+  {
+   "path": "tools/kit05/cam05.py",
+   "bytes": 1448,
+   "sha256": "0dd6786ebf6c53fb340dfe71772a3a010dcba28b91650159f99b8ff1877339ef"
   },
   {
    "path": "tools/lead21/audit_screen.mjs",

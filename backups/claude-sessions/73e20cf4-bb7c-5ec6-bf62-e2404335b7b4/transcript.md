@@ -1175,3 +1175,374 @@ None of the current work needs your laptop. The only tool I found that would hav
 
 The Screen 05 swipe test is still running, at frame 10 of 228. This machine's software rendering takes about 20 seconds per frame, so the run will take roughly another 80 minutes. When it finishes I'll check the results and fix what fails before showing you anything.
 
+### 🧑 User — 2026-11-21T14:42:21.909Z
+
+How's it looking? My screen 5 or level 5 screen.CLAUDIA — SCREEN 05: FINAL VISUAL ACCURACY AND REAL 3D GAMEPLAY PLAN
+
+Claudia, I want you to focus entirely on Screen 05 — Flow Into the Current before starting work on my other approved screens.
+
+I want my ORIGINAL approved Screen 05 artwork recreated as closely as technically possible as a beautiful, fully playable 3D Android game.
+
+I do not want another interpretation, redesigned environment, or something that only resembles my approved picture.
+
+I want my original approved artwork brought to life, with Benny swimming naturally through it.
+
+1. PRESERVE EVERYTHING THAT ALREADY WORKS
+
+Before making further changes:
+
+- Save and verify all existing work on GitHub.
+- Preserve Benny's existing swipe controls, swimming animations, coin collection, camera system, and gameplay.
+- Preserve all original approved artwork unchanged.
+- Finish and verify the current specialist improvements.
+- Keep the five-minute autosave working.
+- Perform any experimental reconstruction in a separate branch or workspace.
+
+Do not restart or rebuild the entire game unnecessarily.
+
+2. RECREATE MY EXACT APPROVED SCREEN 05 APPEARANCE
+
+Use my ORIGINAL approved Screen 05 picture as the visual specification.
+
+I want the same:
+
+- Sharp purple-and-gold tunnel.
+- Beautiful golden rings and surrounding machinery.
+- Purple perforated tunnel walls.
+- Bright cyan, blue, and pink flowing river.
+- Original water shapes, splashes, and white highlights.
+- Gold coins positioned naturally along the river.
+- Original tunnel lighting, colors, depth, and perspective.
+- Benny's exact approved pink appearance, body proportions, striped hat, pom-pom, and yellow star.
+
+Everything should be recognizable as my original approved Screen 05.
+
+My visual target is 90–95% likeness, preferably 95%.
+
+Do not claim that level of accuracy without reliable visual comparisons.
+
+3. USE THE MORE PRECISE 3D RECONSTRUCTION APPROACH
+
+I want you to test your proposed method of building a controlled 3D tunnel kit directly from my approved artwork.
+
+Use carefully modeled 3D geometry for the golden rings, purple tunnel walls, winding river, and machinery.
+
+Where appropriate, extract and adapt the original artwork's textures and colors instead of allowing AI to invent new designs.
+
+Make sure textures are correctly mapped to the geometry without stretching, distortion, visible repetition, or blurriness.
+
+Preserve useful existing Gaussian-splat scenery where it genuinely improves the appearance.
+
+Test one short section first.
+
+Compare the new method directly against my approved artwork and existing game, including views while Benny swims and steers.
+
+Only extend the new reconstruction to the full Screen 05 if it demonstrably improves visual accuracy without damaging gameplay.
+
+4. MAKE BENNY MOVE LIKE A NORMAL PROFESSIONAL MOBILE GAME
+
+This is extremely important.
+
+I want players to control Benny naturally throughout Screen 05.
+
+- Swipe left: Benny smoothly moves toward the left side of the river.
+- Swipe right: Benny smoothly moves toward the right side.
+- Forward: Benny continuously swims through the real 3D environment.
+- Swipe up: Benny performs the intended upward movement or jump naturally.
+- Swipe down: Benny performs the intended downward movement or dive naturally.
+- Turning: Benny gently leans and adjusts his swimming animation.
+- Water interaction: Benny sits correctly in the water with realistic splashes and movement.
+- Camera: The camera follows smoothly without shaking or clipping.
+
+No teleporting, sudden jumps, freezing, strange animations, or unnatural character movement.
+
+The player must be controlling Benny's actual 3D position, not watching a video.
+
+5. MAKE THE ENTIRE LEVEL WORK CORRECTLY
+
+I want Benny to swim through the complete Screen 05, from the starting point to its proper ending.
+
+The full environment must remain visually consistent as he moves forward and steers.
+
+Please correct:
+
+- Black patches and missing geometry.
+- Blurry or smeared tunnel sections.
+- Incorrect tunnel shapes and colors.
+- Broken river connections.
+- Water passing incorrectly through Benny.
+- Floating or overlapping coins.
+- Unnatural camera movements.
+- Visible flickering or texture problems.
+- Crashes, freezes, or gameplay errors.
+
+Keep the beautiful appearance of my original artwork throughout the moving environment.
+
+6. TEST BEFORE SHOWING ME ANYTHING AS FINISHED
+
+Use the existing Android touch-testing and visual-comparison system.
+
+Test the complete level with real left, right, up, and down swipe inputs.
+
+Compare the actual gameplay against my approved artwork at matching camera views.
+
+Check visual accuracy at the start and throughout the moving level, including curves and transitions.
+
+Test frame rate and responsiveness on Android.
+
+Do not show me another unfinished gameplay preview for approval.
+
+Only present the final gameplay recording when the required visual and gameplay tests genuinely pass.
+
+If something cannot be fixed, provide a short, truthful explanation of the problem rather than pretending it is finished.
+
+7. DO NOT START THE OTHER SCREENS YET
+
+Once Screen 05 has passed testing and I've approved it, we can work on the other approved screens in groups of two.
+
+For now, do not start rebuilding Screens 04, 06, 07, 08, 09, or 10.
+
+Do not spend additional generation credits or buy new tools without my permission.
+
+FINAL REQUIREMENT
+
+Claudia, I want to see the same beautiful Screen 05 I originally approved, but as a real interactive 3D game.
+
+When Benny swims forward and I swipe left or right, I want the environment to remain beautiful, sharp, recognizable, and naturally connected.
+
+I want both:
+
+1. My original approved 3D artwork recreated as faithfully as possible.
+
+2. Fully functional, smooth, responsive gameplay where Benny swims through that same world.
+
+Please prioritize correcting the actual underlying visual problems rather than repeatedly producing versions that look different from my original artwork.
+
+Start with the short, accurate 3D reconstruction test, verify that it is better, and then complete Screen 05 using the strongest proven approach.
+
+Preserve all successful existing work.
+
+Screen 05 comes first. Quality and accuracy are more important than rushing to the other screens.
+
+### 🤖 Claude — 2026-11-21T14:42:29.967Z
+
+> 🔧 **Bash** `{"command": "grep -o 'frame [0-9]* / 228' /tmp/rainbow_r32/runs/merged_short.log | tail -1; tail -c 600 /tmp/rainbow_r32/runs/merged_short.log; date -u +%T; ls /tmp/rainbow_r32/runs/merged_short | head; ls /tmp/rainbow_r32/runs/merged_short | wc -l", "description": "Check baseline swipe run status"}`
+
+### 🧑 User — 2026-11-21T14:42:30.017Z
+
+> ↩︎ result: frame 30 / 228
+> 388610733},"coinsOnScreen":26,"coinOverlaps":0} 14:36:09
+> frame 30 / 228 {"s":1.4,"lat":-0.1384,"coins":1430,"tile":0,"lane":-1,"height":0,"move":"lane","queued":null,"lean":-0.177,"pitch":0,"yaw":0.094,"pom":-0.047,"camLat":-0.0062,"camH":0,"swim":1.133,"got":{"water":1,"lane":0,"air":0},"lastPick":{"kind":"water","s":1.13,"lat":0.025,"clock":0.733},"swipes":1,"done":false,"sDone":32.01,"sEnd":32.16,"endK":0,"benny":{"rollDeg":30.148591299839033,"camRollDeg":-1.801005425973181,"x":129.65871851197426,"y":694.7613850233147,"dist":1.2127665426936285},"coinsOnScreen":25,"coinOverlaps":0} 14:40:31
+> 14:42:30
+> f_0000.jpg
+> f_0001.jpg
+> f_0002.jpg
+> f_0003.jpg
+> f_0004.jpg
+> f_0005.jpg
+> f_0006.jpg
+> f_0007.jpg
+> f_0008.jpg
+> f_0009.jpg
+> 37
+
+### 🤖 Claude — 2026-11-21T14:42:32.362Z
+
+The test is about 13% through (frame 30 of 228). Let me look at the frames so far: the start, and the first swipe left.
+
+### 🤖 Claude — 2026-11-21T14:42:36.157Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/rainbow_r32/runs/merged_short && python3 -c \"\nfrom PIL import Image\nref=Image.open('/home/user/rainbow-/references/05_flow_into_the_current.png').convert('RGB').resize((412,733))\nims=[Image.open(f).convert('RGB') for f in ['f_0000.jpg','f_0015.jpg','f_0030.jpg']]\nH=ims[0].height; W=412\nsheet=Image.new('RGB',(W*4+30,H),(255,255,255))\nr2=Image.open('/home/user/rainbow-/references/05_flow_into_the_current.png').convert('RGB').resize((W,H))\nfor i,im in enumerate([r2]+ims): sheet.paste(im,(i*(W+10),0))\nsheet.save('/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf …[+141 chars]`
+
+### 🧑 User — 2026-11-21T14:42:36.318Z
+
+> ↩︎ result: (412, 915)
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T14:42:37.983Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/baseline_0_15_30.jpg"}`
+
+### 🧑 User — 2026-11-21T14:42:38.007Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T14:43:14.791Z
+
+> 🔧 **Bash** `{"command": "pkill -f \"final_acceptance.cjs /tmp/rainbow_r32/merged\" ; sleep 2; pkill -f \"http.server --bind 127.0.0.1 89\" ; cd /tmp/rainbow_r32/merged && ls; wc -c play3.html controls.js waterflow.js; python3 -c \"\nimport json\nfor f in ['refcam_full.json','tunnel_full.json','rings.json','scene05.json','tile_frame.json']:\n    d=json.load(open(f)); s=json.dumps(d); print(f, len(s), s[:600]); print()\n\"", "description": "Stop baseline run and inspect scene geometry files"}`
+
+### 🧑 User — 2026-11-21T14:43:16.919Z
+
+> ↩︎ result: CONTROLS_NOTES.md
+> MERGE_REPORT.txt
+> WATER_NOTES.md
+> acceptance_logic.cjs
+> acceptance_logic.json
+> acceptance_verdict.py
+> bake.png
+> bay.ply
+> bay_lo.ply
+> bay_m.ply
+> bay_m_lo.ply
+> benny31.glb
+> bubble.png
+> budget_w.cjs
+> camdbg.mjs
+> coin.png
+> coin_layout_search.py
+> coin_overlap_model.py
+> coin_run1_search.py
+> coins_level_check.cjs
+> coins_level_logic.json
+> coins_level_stills.json
+> compare0.json
+> compare0.py
+> compare_frame0.py
+> controls.js
+> echo2.spz
+> far.ply
+> final_acceptance.cjs
+> full_100k.spz
+> full_500k.spz
+> full_full.spz
+> glint.png
+> index.html
+> live_key_check.cjs
+> live_key_check.json
+> near.ply
+> node_modules
+> package-lock.json
+> package.json
+> play.html
+> play2.html
+> play3.html
+> play3.orig.html
+> play3_orig.html
+> play_shots.cjs
+> play_shots2.cjs
+> plus_500k.spz
+> refcam_full.json
+> rings.json
+> scene05.json
+> serve.cjs
+> shots.cjs
+> shots_w.cjs
+> splash.png
+> swipe_log.json
+> swipe_log_logic_only.json
+> swipe_test.cjs
+> tile_frame.json
+> tiles.json
+> tools
+> track
+> track.json
+> track_clip.cjs
+> track_w
+> tunnel_full.json
+> visual_check.py
+> waterflow.js
+> 27319 play3.html
+> 33915 controls.js
+>  7346 waterflow.js
+> 68580 total
+> refcam_full.json 221 {"matches": 87, "inliers": 40, "fov": 64.0, "fit_err": 0.030595880025756955, "fwd": [-0.025495445361092415, -0.16103854187683883, -0.9866187 …[+1617 chars]
+
+### 🤖 Claude — 2026-11-21T14:43:23.184Z
+
+> 🔧 **Read** `{"file_path": "/tmp/rainbow_r32/merged/play3.html"}`
+
+### 🧑 User — 2026-11-21T14:43:23.337Z
+
+> ↩︎ result: 1	<!doctype html>
+> 2	<html><head><meta charset="utf-8"><title>Screen 05 full track test</title>
+> 3	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"><!-- [controls] phones: 1 CSS px = 1 canvas px, no pinch-zoom while swiping -->
+> 4	<style>
+> 5	html,body{margin:0;background:#000;overflow:hidden;font-family:system-ui,sans-serif}canvas{display:block}
+> 6	#hud{position:fixed;left:0;right:0;top:10px;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none}
+> 7	.bar{display:flex;gap:28px;align-items:center;background:linear-gradient(#7b2bbf,#4a1386);border:2px solid #d9a7ff;border-radius:30px;padding:6px 22px;color:#fff;font-weight:800;font-size:22px;box-shadow:0 2px 8px #0006}
+> 8	.title{background:#5a1aa0e0;border:2px solid #f2c14e;border-radius:20px;padding:4px 18px;color:#fff;font-weight:800;font-style:italic;font-size:17px;letter-spacing:.5px}
+> 9	</style>
+> 10	<script type="importmap">{"imports":{"three":"./node_modules/three/build/three.module.js","three/addons/":"./node_modules/three/examples/jsm/","@sparkjsdev/spark":"./node_modules/@sparkjsdev/spark/dist/spark.module.js"}}</script>
+> 11	</head><body>
+> 12	<div id="hud"> …[+27106 chars]
+
+### 🤖 Claude — 2026-11-21T14:44:26.001Z
+
+> 🔧 **Bash** `{"command": "ls qa/pilot05/proj/tunnel/ | head -30; sed -n 1,60p qa/pilot05/proj/tunnel/NOTES.md | cut -c1-300; python3 -c \"\nfrom PIL import Image; im=Image.open('references/water/05_water_isolated_original.png'); print('water art', im.size, im.mode)\"", "description": "Read earlier Screen 05 tunnel-bake notes"}`
+
+### 🧑 User — 2026-11-21T14:44:26.095Z
+
+> ↩︎ result: NOTES.md
+> frame
+> lid
+> model
+> probe
+> # Screen 05 tunnel bake — walls, rings, near frame (status 2026-11-16 ~20:50 UTC)
+> 
+> Same method as the approved-water projection `?proj05=1`: the user's APPROVED Screen 05
+> (`references/05_flow_into_the_current.png`) unwrapped into each object's OWN coordinates and baked into textures, shown
+> through the post-chain inverse (`pjInverse`, `src/vfx/waterRibbon.ts`). Default build and the protected BEFORE are
+> untouched (verified pixel-identical, below). Nothing here is promoted: the user approves visually first.
+> 
+> | Switch | Object | Texture | Bake |
+> |---|---|---|---|
+> | `?projwall05=1` | purple perforated walls, one atlas row per bay AB…GX | `assets/textures/tunnel05/wall05.png` | `tools/proj05/tunnel_rings.py` → `tunnel_bake.py` |
+> | `?projring05=1` | gold rings (approved ring B band on every 05 ring) | `assets/textures/tunnel05/ring05.png` | `tunnel_bake.py` |
+> | `?projframe05=1` | near gold frame: bottom corners + bottom lip (`tube05_near_frame`) | `assets/textures/tunnel05/frame05.png` | `tools/proj05/frame_bake.py` |
+> | `?projlid05=1` | the 6 wall paddles L1 L2 L3 / R1 R2 R3 as Blender-built trays (default pucks + far pucks off) | `assets/models/lids05.glb` …[+3869 chars]
+
+### 🤖 Claude — 2026-11-21T14:44:41.077Z
+
+> 🔧 **TaskUpdate** `{"taskId": "2", "status": "completed", "description": "Baseline (stopped at frame ~37 of 228 to free CPU; evidence kept in /tmp/rainbow_r32/runs/merged_short): swipe works, but tunnel top = orange smear, Benny rolls ~30 deg on lane change (limit 25), lilac smear in lower water. Splat method visually capped."}`
+
+### 🧑 User — 2026-11-21T14:44:41.088Z
+
+> ↩︎ result: Updated task #2 description, status
+
+### 🤖 Claude — 2026-11-21T14:44:43.778Z
+
+> 🔧 **TaskUpdate** `{"taskId": "3", "subject": "Short-section tunnel-kit test from the original pixels vs approved + current", "description": "Experimental workspace /tmp/rainbow_r33 (copy of merged r32). Fit ring/wall/river geometry to the approved picture via the fitted camera (refcam/rings/scene05), bake textures from the ORIGINAL pixels (max-resolution periodic unwrap), add as ?kit=1 to a copy of play3.html keeping Benny/controls/coins/camera. Render s=0..~3 with lane swipes; APPROVED | CURRENT | KIT comparison + numbers. Extend only if clearly better.", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-21T14:44:43.787Z
+
+> ↩︎ result: Updated task #3 subject, description, status
+
+### 🤖 Claude — 2026-11-21T14:44:55.439Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/rainbow-/tools/kit05 && cat > /home/user/rainbow-/tools/kit05/cam05.py <<'EOF'\n\"\"\"Screen 05 kit (round 33): the approved picture's fitted camera (Marble world coordinates, camera at the origin) and helpers.\nproject(P) -> approved-picture pixel (x, y), depth. Used to fit kit geometry to the painting and to bake textures from its pixels.\"\"\"\nimport json, os, numpy as np\nHERE = os.path.dirname(os.path.abspath(__file__)); REPO = os.path.abspath(os.path.join(HERE, '..', '..'))\nV = os.path.join(REPO, 'tools', 'marble05', 'viewer')\nSC = json.load(open(os.pa …[+2162 chars]`
+
+### 🧑 User — 2026-11-21T14:44:55.674Z
+
+> ↩︎ result: focal px 1229.0569183035268 |D| 2.0316511608908288 hA hB 0.664485923169136 0.517150692441338
+> XA proj (np.float64(583.294158721597), np.float64(407.7809842404024), np.float64(1.3870506704966825)) XB proj (np.float64(498.8706021816898), np.float64(419.75057703998704), np.float64(3.3452226423199023))
+> 0 ring centre [583.3 407.8] depth 1.39
+> 1 ring centre [498.9 419.8] depth 3.35
+> 2 ring centre [476.8 422.9] depth 5.3
+> 3 ring centre [466.6 424.3] depth 7.26
+> 4 ring centre [460.8 425.2] depth 9.22
+> 5 ring centre [457.  425.7] depth 11.18
+
+### 🤖 Claude — 2026-11-21T14:44:57.187Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/rings_overlay.jpg"}`
+
+### 🧑 User — 2026-11-21T14:44:57.214Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T14:45:40.017Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport sys; sys.path.insert(0, '.')\nfrom cam05 import *\nimport cv2\nfrom PIL import Image\nimg = np.array(Image.open(REF).convert('RGB')).astype(np.float32) / 255\nhsv = cv2.cvtColor((img * 255).astype(np.uint8), cv2.COLOR_RGB2HSV).astype(np.float32)\nh, s, v = hsv[..., 0] * 2, hsv[..., 1] / 255, hsv[..., 2] / 255\ngold = (h >= 18) & (h <= 50) & (s > 0.45) & (v > 0.45)\ngold[:230] = False\nout = np.zeros_like(img); out[gold] = img[gold]\n# brightest spot near the vanishing area\nblur = cv2.GaussianBlur(img.mean(2), (0, 0), 6); y0, x0 = 300, 300\nsub = blur[ …[+495 chars]`
+
+### 🧑 User — 2026-11-21T14:45:40.285Z
+
+> ↩︎ result: brightest (vp guess) 500 481
+
+### 🤖 Claude — 2026-11-21T14:45:41.849Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/gold_mask.jpg"}`
+
+### 🧑 User — 2026-11-21T14:45:41.870Z
+
+> ↩︎ result: [image]
+
