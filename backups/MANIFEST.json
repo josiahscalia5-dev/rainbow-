@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3271,
-   "sha256": "cfdd730efe90fe8a934c5af75f8f83e3d77e0278f6edb6c6bcd1bde3b4c9e32b"
+   "sha256": "7985c1baa88a05c885adad07fd52585891c62e0ec6efcc876a3d1ed58f5efa91"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -16680,6 +16680,16 @@
    "path": "qa/match/05/r27/PROGRESS.md",
    "bytes": 3430,
    "sha256": "07c07278eb0d3c00d150d5b667b6fb9db3ec45d2df8ad4721f5191a17ecd02b1"
+  },
+  {
+   "path": "qa/match/05/r31_3d/compare/NEW3D_s132.44.png",
+   "bytes": 2472069,
+   "sha256": "4c4f91cabb21f08b50de5c480a0f09ca6d83062263ff200d683132364ad01000"
+  },
+  {
+   "path": "qa/match/05/r31_3d/compare/NEW3D_s150.png",
+   "bytes": 2408037,
+   "sha256": "88c9e00beb2b65545f67eb72a7956635fdd774bfb0204e37aaa110ba9d236070"
   },
   {
    "path": "qa/match/05/r31_3d/look/B31_s132.44.png",
