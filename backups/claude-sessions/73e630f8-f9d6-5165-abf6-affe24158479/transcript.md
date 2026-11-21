@@ -1769,3 +1769,126 @@ Writing the notes so a future session can pick this up, then saving.
 
 > 🔧 **Bash** `{"command": "cat > qa/match/06/paint06/README.md <<'EOF'\n# Screen 06 — `?paint06=1`: the user's OWN pictures as the scenery (round 31, 2026-11-21, session branch `ccr-4fcad20e-a6pp8w`)\n\n**User decision (2026-11-21 ~00:05 UTC, verbatim):** \"Yes, do Screen 06 first … I want these exact. See these all these four images? I want exactly\nthose. Okay, 100%, or at least 95%.\" + \"add any plugin or anything you need. I don't care how much it costs.\" (paid fal jobs authorised; ledger below).\nThis replaces the earlier rule \"never paste the approved picture over the screen\" FOR THIS TEST ONLY, o …[+5938 chars]`
 
+### 🧑 User — 2026-11-21T00:46:58.242Z
+
+> ↩︎ result: "commit": "aed8f9780d49abe91aea0f32978dbec1b46d8383",
+> aed8f9780d49abe91aea0f32978dbec1b46d8383
+> aed8f9780d49abe91aea0f32978dbec1b46d8383	refs/heads/ccr-4fcad20e-a6pp8w
+
+### 🤖 Claude — 2026-11-21T00:47:00.677Z
+
+> 🔧 **Bash** `{"command": "git ls-files qa/match/06/paint06/proof src/world/paint06.ts assets/textures/paint06 tools/paint06 | head -30; git status --short | grep -v claude-sessions | head", "description": "Confirm the new files are saved in git"}`
+
+### 🧑 User — 2026-11-21T00:47:00.750Z
+
+> ↩︎ result: assets/textures/paint06/k0_benny.png
+> assets/textures/paint06/k0_depth.png
+> assets/textures/paint06/k0_plate.jpg
+> assets/textures/paint06/k1_benny.png
+> assets/textures/paint06/k1_depth.png
+> assets/textures/paint06/k1_plate.jpg
+> assets/textures/paint06/k2_benny.png
+> assets/textures/paint06/k2_depth.png
+> assets/textures/paint06/k2_plate.jpg
+> assets/textures/paint06/k3_benny.png
+> assets/textures/paint06/k3_depth.png
+> assets/textures/paint06/k3_plate.jpg
+> assets/textures/paint06/k4_benny.png
+> assets/textures/paint06/k4_depth.png
+> assets/textures/paint06/k4_plate.jpg
+> assets/textures/paint06/paint06.json
+> qa/match/06/paint06/proof/0_APPROVED06_vs_GAME.jpg
+> qa/match/06/paint06/proof/1_PANEL1_vs_GAME.jpg
+> qa/match/06/paint06/proof/2_PANEL2_vs_GAME.jpg
+> qa/match/06/paint06/proof/3_PANEL3_vs_GAME.jpg
+> qa/match/06/paint06/proof/4_PANEL4_vs_GAME.jpg
+> qa/match/06/paint06/proof/SCREEN06_paint06_steer_1x.mp4
+> qa/match/06/paint06/proof/SCREEN06_paint06_straight_1x.mp4
+> src/world/paint06.ts
+> tools/paint06/clip.mjs
+> tools/paint06/fal.py
+> tools/paint06/measure.py
+> tools/paint06/register_panels.py
+> tools/paint06/step2_upscale_matte.py
+> tools/paint06/step3_plates.py
+
+### 🤖 Claude — 2026-11-21T00:47:02.531Z
+
+Everything is saved on GitHub. Checking one comparison picture before I send them to you.
+
+### 🤖 Claude — 2026-11-21T00:47:02.985Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/paint06/proof/1_PANEL1_vs_GAME.jpg"}`
+
+### 🧑 User — 2026-11-21T00:47:03.152Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T00:47:10.291Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/match/06/paint06/proof/1_PANEL1_vs_GAME.jpg", "/home/user/rainbow-/qa/match/06/paint06/proof/2_PANEL2_vs_GAME.jpg", "/home/user/rainbow-/qa/match/06/paint06/proof/3_PANEL3_vs_GAME.jpg", "/home/user/rainbow-/qa/match/06/paint06/proof/4_PANEL4_vs_GAME.jpg", "/home/user/rainbow-/qa/match/06/paint06/proof/0_APPROVED06_vs_GAME.jpg", "/home/user/rainbow-/qa/match/06/paint06/proof/SCREEN06_paint06_straight_1x.mp4", "/home/user/rainbow-/qa/match/06/paint06/proof/SCREEN06_paint06_steer_1x.mp4"], "caption": "Screen 06: your picture (left) and the running game at the sa …[+141 chars]`
+
+### 🧑 User — 2026-11-21T00:47:11.978Z
+
+> ↩︎ result: 7 files delivered to user.
+>   /home/user/rainbow-/qa/match/06/paint06/proof/1_PANEL1_vs_GAME.jpg → file_uuid: 640a2434-9bd2-4413-a92b-c23f4afe74ea
+>   /home/user/rainbow-/qa/match/06/paint06/proof/2_PANEL2_vs_GAME.jpg → file_uuid: e1e7c387-e3cb-4ec5-aa73-b19717e8ce54
+>   /home/user/rainbow-/qa/match/06/paint06/proof/3_PANEL3_vs_GAME.jpg → file_uuid: d9f039a6-793f-481d-8e2d-32938bf5a6ed
+>   /home/user/rainbow-/qa/match/06/paint06/proof/4_PANEL4_vs_GAME.jpg → file_uuid: 4f5055d5-3369-4b47-9f06-33e0c6d4e7a5
+>   /home/user/rainbow-/qa/match/06/paint06/proof/0_APPROVED06_vs_GAME.jpg → file_uuid: 9086fcde-b41f-4ba0-a6fa-72d10c2f41e3
+>   /home/user/rainbow-/qa/match/06/paint06/proof/SCREEN06_paint06_straight_1x.mp4 → file_uuid: 398b1fd0-75f1-4097-822d-78b40967d580
+>   /home/user/rainbow-/qa/match/06/paint06/proof/SCREEN06_paint06_steer_1x.mp4 → file_uuid: 82bfafc5-71e5-424c-9aef-7f764b5bd529
+
+### 🤖 Claude — 2026-11-21T00:47:21.719Z
+
+Screen 06 now shows your pictures in the running game: your approved Screen 06 picture first, then your four new pictures in order, while Benny swims and steers. Your normal game is untouched: with the test switched off, Screens 05, 06 and 07 are pixel-for-pixel the same as before. To try it, open the game with `?paint06=1` added to the address.
+
+I measured the game against each of your pictures, at your picture's own size:
+
+| Moment | Matching pixels (within 20 colour levels) |
+|---|---|
+| Your approved Screen 06 picture | 97.9% (the strip under the coin bar isn't counted) |
+| 1. Curl right over the crest | 97.7% |
+| 2. Descend through the gold band | 98.2% |
+| 3. Follow the winding slide | 97.9% |
+| 4. Connect into Screen 07 | 98.3% |
+
+All five are above your 95%. The rest is fine edges, because the game is drawn sharper than your small pictures.
+
+**How it plays:**
+- The water, the purple walls, the gold bands, the coins, the bubbles and Benny are your pictures' own pixels.
+- As Benny swims, the view glides forward into each picture: near water comes closer faster than the far tunnel.
+- Each new picture opens up from the far end of the tunnel instead of a blurry double image.
+- Benny steers left and right and leans.
+- Benny swims slower through Screen 06, so each picture gets about 3 seconds instead of under one.
+
+**What isn't exactly yours:**
+- **Top and bottom of the screen:** your pictures are wider than a phone screen, so about a sixth at the top and bottom is a continuation I generated in the same style. You can see it in the comparison pictures: grey marks where your picture ends.
+- **Picture changes:** each change takes about a second, and for that moment you see the edge where one picture meets the next.
+- **Coins:** the painted coins don't pop when Benny passes them, but the coin counter still goes up.
+- **Entering and leaving Screen 06:** you briefly see the current 3D Screens 05 and 07, which haven't had this treatment yet.
+
+The paid image jobs cost about $1.76 in total. Everything is saved to GitHub on branch `ccr-4fcad20e-a6pp8w`, and the notes for picking this up later are in `qa/match/06/paint06/README.md`. The automatic save also stored about 220 MB of temporary clip frames on GitHub before I deleted them, so the repository is that much bigger.
+
+**Is Screen 06 what you wanted?** If yes, I'll do 04, 05, 07, 08, 09 and 10 the same way, each from its own approved picture.
+
+### 🧑 User — 2026-11-21T00:47:25.472Z
+
+Claudia, DO NOT remove or redesign my original approved pink Benny.
+
+The pink character in my approved Screen 06 artwork is EXACTLY the character I want players to see.
+
+I love his fluffy rounded pink body, beautiful fur, thick knitted purple-and-white hat, fluffy pom-pom, and gold star.
+
+Keep the approved-looking Benny in my current visual candidate. Do not replace him with the older 3D model that looks different.
+
+However, I still want Benny to be a real animated 3D character eventually.
+
+Please use my original approved Benny as the strict visual reference to improve the existing 3D model. Match his body proportions, silhouette, fur, hat, pom-pom, star, materials, and lighting as closely as possible.
+
+Show APPROVED / CURRENT 3D / IMPROVED 3D comparisons at the same rear angle and size.
+
+Keep the approved-looking version available until the improved 3D character is visibly close enough for me to approve. Do not silently switch characters.
+
+My priority is preserving the exact beautiful character design I approved, while making him work naturally in my playable game.
+
