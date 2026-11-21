@@ -23,10 +23,17 @@ const { chromium } = require('playwright'); const { spawn } = require('child_pro
     await page.waitForFunction(() => window.ready === true, null, { timeout: 900000 });
     console.log('ready', (Date.now() - t0) / 1000);
     let prev = 0;
-    for (const s of JSON.parse(process.env.STILLS ?? '[0,2.3,4.4,6.4]')) {
+    // a still is s, or [s, lat, rise]: Benny's lane (-0.22 / 0 / +0.22) and a camera rise like a leap (+0.12), named s_<s>_l<lat>_r<rise>
+    for (const e of JSON.parse(process.env.STILLS ?? '[0,2.3,4.4,6.4]')) {
+      const [s, lat, rise] = Array.isArray(e) ? e : [e, 0, 0]; const nm = Array.isArray(e) ? `${s}_l${lat}_r${rise}` : `${s}`;
       const t1 = Date.now();
-      await page.evaluate(([s, p]) => { window.step(0, (s - p) / 1.4, 0, 1.4); }, [s, prev]); prev = s;
-      await page.evaluate(() => window.renderNow(3)); await page.screenshot({ path: `${out}/${pre}${s}.png`, timeout: 600000 }); console.log('still', s, (Date.now() - t1) / 1000, 'visible splats', await page.evaluate(() => window.qaVisibleSplats ? window.qaVisibleSplats() : -1));
+      await page.evaluate(([lat, rise]) => { if (window.qaPose) window.qaPose(lat, rise); }, [lat ?? 0, rise ?? 0]);
+      await page.evaluate(([s, p]) => { window.step(0, Math.max(0.3, (s - p) / 1.4), 0, (s - p) / Math.max(0.3, (s - p) / 1.4)); }, [s, prev]); prev = s;
+      await page.evaluate(() => window.renderNow(3)); await page.screenshot({ path: `${out}/${pre}${nm}.png`, timeout: 600000 }); console.log('still', s, (Date.now() - t1) / 1000, 'visible splats', await page.evaluate(() => window.qaVisibleSplats ? window.qaVisibleSplats() : -1));
+    }
+    if (process.env.TSEQ) { // n consecutive frames dt apart at the same place: only the water flow advances (flicker check)
+      const [s, n, dt] = JSON.parse(process.env.TSEQ);
+      for (let i = 1; i <= n; i++) { await page.evaluate((dt) => { window.qaFlow(dt); }, dt); await page.evaluate(() => window.renderNow(3)); await page.screenshot({ path: `${out}/${pre}${s}_flow${i}.png`, timeout: 600000 }); console.log('flow frame', i); }
     }
     if (process.env.TPAIR) { // same position, flow advanced by dt seconds (speed 0 -> camera does not move)
       const [s, dt] = JSON.parse(process.env.TPAIR);

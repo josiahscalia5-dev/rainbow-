@@ -17,7 +17,7 @@ def crit(cid, name, ok, value, rule):
 crit('G1', 'no page / console errors', len(T['errors']) == 0, T['errors'][:5], '0 errors')
 crit('G2', 'whole level played, every frame rendered', T['frames'] >= 228 and V['frames'] == T['frames'], {'frames': T['frames'], 'images': V['frames'], 's_end': T['forward'].get('s_end')}, '228 frames (7.6 s at 30 fps), one image per frame')
 f = T['forward']
-crit('G3', 'forward swimming continuous (no freeze, no jump)', f['freezes'] == 0 and f['min_step'] > 0 and f['max_step'] <= 1.5 * max(f['min_step'], 1e-9) * 1.0 + 0.02, f, 'freezes 0, every per-frame step > 0 and <= 1.5 x min step + 0.02')
+crit('G3', 'forward swimming continuous (no freeze, no jump)', f['freezes'] == 0 and f['min_step'] > 0 and f['max_step'] <= 1.5 * f['min_step'] + 0.02, f, 'freezes 0, every per-frame step > 0 and <= 1.5 x min step + 0.02')
 la = T['lateral']
 crit('G4', 'left / right smooth (no teleport)', la['teleports_over_0_06'] == 0, {'max_step_per_frame': la['max_step_per_frame'], 'teleports': la['teleports_over_0_06']}, '|d lat| per frame <= 0.06 in every frame')
 crit('G5', 'Benny stays inside the river', la.get('max_abs_lat', 9) <= 0.30, la.get('max_abs_lat'), '|lat| <= 0.30 (river half-width ~0.30-0.35)')

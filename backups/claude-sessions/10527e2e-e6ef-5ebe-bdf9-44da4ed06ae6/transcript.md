@@ -804,3 +804,193 @@ Confirmed: a left swipe moves Benny to the screen's left. Now writing the pass/f
 
 > ↩︎ result: ok
 
+### 🤖 Claude — 2026-11-21T12:51:04.727Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/marble05/viewer/acceptance_verdict.py", "content": "\"\"\"Screen 05 acceptance verdict (round 32 lead): python3 -I acceptance_verdict.py <run dir>\nReads test_results.json (final_acceptance.cjs) + visual_check.json (visual_check.py) from <run dir> and judges every criterion\nagainst FIXED thresholds (written 2026-11-21 before the first merged run; never loosened to make a run pass).\nWrites <run dir>/VERDICT.json + VERDICT.md; exit code 0 only when EVERY criterion passes.\nThe user's eight strict points map to: G4/G5/G7 smooth left-right inside the rive …[+4426 chars]`
+
+### 🧑 User — 2026-11-21T12:51:04.771Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/marble05/viewer/acceptance_verdict.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-21T12:51:10.212Z
+
+> 🔧 **Bash** `{"command": "sed -i \"s/f\\['max_step'\\] <= 1.5 \\* max(f\\['min_step'\\], 1e-9) \\* 1.0 + 0.02/f['max_step'] <= 1.5 * f['min_step'] + 0.02/\" tools/marble05/viewer/acceptance_verdict.py && grep -n \"G3\" tools/marble05/viewer/acceptance_verdict.py; SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad; for f in final_acceptance.cjs visual_check.py acceptance_verdict.py; do ln -sf /home/user/rainbow-/tools/marble05/viewer/$f $SP/$f; done; ls -la $SP", "description": "Tidy G3 rule and link lead tools into workspace root"}`
+
+### 🧑 User — 2026-11-21T12:51:10.288Z
+
+> ↩︎ result: 5:The user's eight strict points map to: G4/G5/G7 smooth left-right inside the river; G2/G3 continuous natural forward swimming;
+> 20:crit('G3', 'forward swimming continuous (no freeze, no jump)', f['freezes'] == 0 and f['min_step'] > 0 and f['max_step'] <= 1.5 * f['min_step'] + 0.02, f, 'freezes 0, every per-frame step > 0 and <= 1.5 x min step + 0.02')
+> total 108
+> drwx------ 5 root root  4096 Nov 21 12:51 .
+> drwx------ 5 root root  4096 Nov 21 12:46 ..
+> lrwxrwxrwx 1 root root    63 Nov 21 12:51 acceptance_verdict.py -> /home/user/rainbow-/tools/marble05/viewer/acceptance_verdict.py
+> drwxr-xr-x 5 root root  4096 Nov 21 12:51 agentA
+> drwxr-xr-x 7 root root  4096 Nov 21 12:46 agentB
+> drwxr-xr-x 4 root root  4096 Nov 21 12:47 base
+> -rw-r--r-- 1 root root 74792 Nov 21 12:50 cmp_left.jpg
+> lrwxrwxrwx 1 root root    62 Nov 21 12:51 final_acceptance.cjs -> /home/user/rainbow-/tools/marble05/viewer/final_acceptance.cjs
+> -rw-r--r-- 1 root root    16 Nov 21 12:47 sync.log
+> lrwxrwxrwx 1 root root    57 Nov 21 12:51 visual_check.py -> /home/user/rainbow-/tools/marble05/viewer/visual_check.py
+> [This command modified 1 file you've previously read: tools/marble05/viewer/acceptance_verdict.py. Call Read before  …[+9 chars]
+
+### 🤖 Claude — 2026-11-21T12:51:19.322Z
+
+> 🔧 **Bash** `{"command": "sed -i \"s/for f in ('final_acceptance.cjs', 'visual_check.py'):/for f in ('final_acceptance.cjs', 'visual_check.py', 'acceptance_verdict.py'):/\" tools/marble05/sync_agents_wip.sh && SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad && rm -rf $SP/dry_A && cp -a $SP/agentA $SP/dry_A && cd $SP && (time FRAMES=0:2 NO_MP4=1 NODE_PATH=$(npm root -g) timeout 1500 node final_acceptance.cjs $SP/dry_A $SP/dry_out) > $SP/dry_out.log 2>&1; tail -c 3500 $SP/dry_out.log", "description": "Dry-run the acceptance test (2 rendered frames) on a copy of agent A's  …[+26 chars]`
+
+### 🧑 User — 2026-11-21T12:52:49.161Z
+
+> ↩︎ result: 1.1,"got":{"water":9,"lane":3,"air":0},"lastPick":{"kind":"water","s":5.25,"lat":0,"clock":3.667},"swipes":7} 12:52:48
+> frame 170 / 228 {"s":7.933,"lat":0.22,"coins":1540,"tile":3,"lane":1,"height":-0.061,"move":"dive","queued":"left","lean":0,"pitch":0.111,"yaw":0,"pom":0.001,"camLat":0.11,"camH":-0.0183,"swim":1.045,"got":{"water":9,"lane":3,"air":0},"lastPick":{"kind":"water","s":5.25,"lat":0,"clock":3.667},"swipes":8} 12:52:48
+> frame 180 / 228 {"s":8.4,"lat":0.0163,"coins":1560,"tile":3,"lane":0,"height":0,"move":null,"queued":null,"lean":-0.102,"pitch":0.015,"yaw":0.067,"pom":0.002,"camLat":0.0809,"camH":-0.0044,"swim":1.032,"got":{"water":11,"lane":3,"air":0},"lastPick":{"kind":"water","s":8.45,"lat":0,"clock":5.967},"swipes":8} 12:52:48
+> frame 190 / 228 {"s":8.867,"lat":0.0002,"coins":1570,"tile":4,"lane":0,"height":0.2199,"move":"leap","queued":null,"lean":-0.002,"pitch":0.118,"yaw":0.003,"pom":0.01,"camLat":0.0244,"camH":0.0153,"swim":0.609,"got":{"water":12,"lane":3,"air":0},"lastPick":{"kind":"water","s":8.77,"lat":0,"clock":6.167},"swipes":9} 12:52:48
+> frame 200 / 228 {"s":9.333,"lat":0,"coins":1570,"tile":4,"lane":0,"height":0.1746,"move":"leap","queued":null,"lean":0,"pit …[+2342 chars]
+
+### 🤖 Claude — 2026-11-21T12:53:05.447Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='tools/marble05/viewer/final_acceptance.cjs'; s=open(p).read()\nold=\"\"\"      const tEnd = k + 1 < swipes.length ? Math.max(swipes[k + 1].t, sw.t + 0.45) : sw.t + 0.7;\n      const win = fr.filter((x) => x.t > sw.t && x.t <= tEnd + 1e-6), before = fr.filter((x) => x.t <= sw.t).pop();\"\"\"\nnew=\"\"\"      // window: from the swipe until the next swipe is sent (exclusive; the next swipe is applied in the frame it is sent) or 0.7 s\n      const tEnd = Math.min(k + 1 < swipes.length ? swipes[k + 1].t - 1e-6 : 1e9, sw.t + 0.7);\n      const win = fr.filter(( …[+603 chars]`
+
+### 🧑 User — 2026-11-21T12:53:43.509Z
+
+> ↩︎ result: 10
+> {'swipe': 'left', 't': 0.9, 'expected_lane': -1, 'lane_before': 0, 'lane_after': -1, 'at_edge': False, 'ok': True}
+> {'swipe': 'left', 't': 1.6, 'expected_lane': -1, 'lane_before': -1, 'lane_after': -1, 'at_edge': True, 'ok': True}
+> {'swipe': 'right', 't': 2.3, 'expected_lane': 0, 'lane_before': -1, 'lane_after': 0, 'at_edge': False, 'ok': True}
+> {'swipe': 'up', 't': 2.9, 'max_height': 0.2794, 'min_height': 0, 'ok': True}
+> {'swipe': 'right', 't': 3.7, 'expected_lane': 1, 'lane_before': 0, 'lane_after': 1, 'at_edge': False, 'ok': True}
+> {'swipe': 'right', 't': 4.3, 'expected_lane': 1, 'lane_before': 1, 'lane_after': 1, 'at_edge': True, 'ok': True}
+> {'swipe': 'down', 't': 4.9, 'max_height': -0.02, 'min_height': -0.2704, 'ok': True}
+> {'swipe': 'left', 't': 5.6, 'expected_lane': 0, 'lane_before': 1, 'lane_after': 0, 'at_edge': False, 'ok': True}
+> {'swipe': 'up', 't': 6.2, 'max_height': 0.2794, 'min_height': 0, 'ok': True}
+> {'swipe': 'left', 't': 6.9, 'expected_lane': -1, 'lane_before': 0, 'lane_after': -1, 'at_edge': False, 'ok': True}
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T12:53:48.889Z
+
+Swipe check now 10/10 on agent A's saved page (logic only). Next I'm preparing the merge of the two specialists' pages, with a three-way merge against the common original.
+
+### 🤖 Claude — 2026-11-21T12:53:51.840Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad; cd $SP && md5sum base/play3.html agentA/play3.orig.html agentB/play3_orig.html /home/user/rainbow-/tools/marble05/viewer/play3.html; cp agentB/play3.html /tmp/mB.html 2>/dev/null; mkdir -p $SP/mergetest && cp agentB/play3.html mergetest/B.html && cp agentA/play3.html mergetest/A.html && cp base/play3.html mergetest/O.html && cd mergetest && git merge-file -p B.html O.html A.html > M.html; echo \"conflicts: $?\"; grep -n \"<<<<<<<\\|>>>>>>>\" M.html | head", "description": "Three-way merge test of …[+22 chars]`
+
+### 🧑 User — 2026-11-21T12:53:52.058Z
+
+> ↩︎ result: d29ad72b971855ec2497801eb35506eb  base/play3.html
+> d29ad72b971855ec2497801eb35506eb  agentA/play3.orig.html
+> d29ad72b971855ec2497801eb35506eb  agentB/play3_orig.html
+> d29ad72b971855ec2497801eb35506eb  /home/user/rainbow-/tools/marble05/viewer/play3.html
+> conflicts: 4
+> 17:<<<<<<< B.html
+> 21:>>>>>>> A.html
+> 165:<<<<<<< B.html
+> 169:>>>>>>> A.html
+> 206:<<<<<<< B.html
+> 210:>>>>>>> A.html
+> 216:<<<<<<< B.html
+> 221:>>>>>>> A.html
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T12:53:54.818Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad; cd $SP/mergetest && for r in 12,25 160,172 202,224; do sed -n \"${r}p\" M.html | cut -c1-260; echo -----; done", "description": "Show the four merge conflicts"}`
+
+### 🧑 User — 2026-11-21T12:53:54.980Z
+
+> ↩︎ result: <div id="hud"><div class="bar"><span>&#10084;&#65039; 5/5</span><span id="coins">&#129689; 1,420</span></div><div class="title">05 &middot; FLOW INTO THE CURRENT</div></div>
+> <script type="module">
+> import * as THREE from 'three';
+> import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+> import { SplatMesh, SparkRenderer } from '@sparkjsdev/spark';
+> <<<<<<< B.html
+> import { createWaterFlow } from './waterflow.js'; // [waterflow]
+> =======
+> import { installControls } from './controls.js'; // [controls]
+> >>>>>>> A.html
+> const q = new URLSearchParams(location.search);
+> const W = +(q.get('w') ?? 540), H = +(q.get('h') ?? 960);
+> const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+> renderer.setPixelRatio(1); renderer.setSize(W, H); document.body.appendChild(renderer.domElement);
+> -----
+> const M0 = basis(frameAt(0));
+> const relPos = new THREE.Vector3().sub(T[0]).applyMatrix4(new THREE.Matrix4().copy(M0).transpose());
+> const relQ = new THREE.Quaternion().setFromRotationMatrix(M0).invert().multiply(camQ0);
+> const st = { s: 0, lat: 0, vlat: 0, camLat: 0, lean: 0, camF: null };
+> const tmp = new THREE.Vector3(), tmp2 = new THREE.Vector3(), Z = new THREE.Vector3(0,  …[+2775 chars]
+
+### 🤖 Claude — 2026-11-21T12:54:22.397Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/marble05/merge_r32.py", "content": "\"\"\"Round 32 lead: merge the two Screen 05 specialists' folders into one playable page (reproducible, never edits their folders).\n  python3 -I tools/marble05/merge_r32.py <workspace>     (workspace = the folder setup_r32.sh built: base/, agentA/, agentB/)\nResult: <workspace>/merged = agentB's visuals (waterflow.js, track_w/, backing shells, golden end) + agentA's controls (controls.js and its\n`// [controls]` hooks), page merged with a three-way merge of play3.html against the common original (base/play3.html); th …[+3753 chars]`
+
+### 🧑 User — 2026-11-21T12:54:22.446Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/marble05/merge_r32.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-21T12:54:32.741Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='tools/marble05/merge_r32.py'; s=open(p).read()\ns=s.replace(\"ignore=lambda d, names: [n for n in names if n.startswith(('out_',)) and os.path.isdir(os.path.join(d, n))])\",\n            \"ignore=lambda d, names: [n for n in names if (n.startswith('out_') or n == 'node_modules') and os.path.isdir(os.path.join(d, n))])\")\ns=s.replace(\"os.symlink(os.path.join(B, 'node_modules'), os.path.join(M, 'node_modules')) if not os.path.exists(os.path.join(M, 'node_modules')) else None\",\n            \"os.symlink(os.path.join(O, 'node_modules'), os.path.join(M, 'nod …[+930 chars]`
+
+### 🧑 User — 2026-11-21T12:54:32.903Z
+
+> ↩︎ result: from agentA: CONTROLS_NOTES.md
+> from agentA: acceptance_logic.cjs
+> from agentA: acceptance_logic.json
+> from agentA: acceptance_logic.out
+> from agentA: compare0.json
+> from agentA: compare0.py
+> from agentA: controls.js
+> from agentA: live_key_check.cjs
+> from agentA: play3.orig.html
+> from agentA: serve.cjs
+> from agentA: swipe_log.json
+> from agentA: swipe_log_logic_only.json
+> from agentA: swipe_test.cjs
+> from agentA: swipe_test.out
+> conflict: both added lines here -> kept both (import { createWaterFlow } from './waterflow.js'; // [waterf | import { installControls } from './controls.js'; // [control)
+> conflict: both added lines here -> kept both (let qaRise = 0; window.qaPose = (lat, rise = 0) => { st.lat  | const CT = q.get('controls') === '0' ? null : installControl)
+> conflict: camera line = agentA controls + agentB qaRise
+> conflict: end of step = agentB water update + agentA return
+> merged -> /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/merged
+> 3:<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"><!-- [controls] phones: 1 CSS px = 1 canvas p
+> 17:import { createWaterFlow } from './waterflow.js'; // [waterflow]
+> 18:imp …[+2166 chars]
+
+### 🤖 Claude — 2026-11-21T12:54:35.170Z
+
+Merge script works on the current snapshots. Running a quick logic-only pass of the merged page (one rendered frame) to catch any errors from combining the two modules.
+
+### 🤖 Claude — 2026-11-21T12:54:38.718Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad; cd $SP && (time FRAMES=0:1 NO_MP4=1 NODE_PATH=$(npm root -g) timeout 1500 node final_acceptance.cjs $SP/merged $SP/dry_merged) > $SP/dry_merged.log 2>&1; grep -v \"^frame\" $SP/dry_merged.log | tail -c 2500 | python3 -c \"\nimport sys,json\nt=sys.stdin.read(); i=t.find('{\\\"frames\\\"'); d=json.loads(t[i:t.index('\\n',i)])\nfor k in ('errors','forward','lateral','vertical','camera','coins','swipes_ok'): print(k, d[k])\nprint(t[t.index('real'):])\"", "description": "Logic-only acceptance pass on  …[+37 chars]`
+
+### 🧑 User — 2026-11-21T12:55:36.822Z
+
+> ↩︎ result: errors []
+> forward {'min_step': 0.045999999999999375, 'max_step': 0.0470000000000006, 'freezes': 0, 's_end': 10.593}
+> lateral {'max_step_per_frame': 0.0414, 'teleports_over_0_06': 0, 'lanes_seen': [0, -1, 1], 'max_abs_lat': 0.22}
+> vertical {'max_step_per_frame': 0.0569, 'max_height': 0.2794, 'min_height': -0.2704}
+> camera {'frames': 228, 'max_move_per_frame': 0.05931018233038788, 'median_move_per_frame': 0.04694518669118216, 'max_turn_deg_per_frame': 1.1468749125291293}
+> coins {'start': 1420, 'end': 1590, 'got': {'water': 14, 'lane': 3, 'air': 0}}
+> swipes_ok 10
+> real	0m58.036s
+> user	0m1.275s
+> sys	0m0.366s
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T12:55:41.743Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport json;d=json.load(open('backups/AGENTS_STATUS.json'));print(list(d.keys()));\nfor k in d:\n  v=d[k]\n  if isinstance(v,dict): print(k, list(v.keys())[:20])\n\" ; grep -n \"screen05-agents\\|r32\" backups/AGENTS_STATUS.json | head -20", "description": "Inspect the agent status file structure"}`
+
+### 🧑 User — 2026-11-21T12:55:41.806Z
+
+> ↩︎ result: ['_comment', 'schema', 'updated_utc', 'updated_by_session', 'running_now', 'assignments_now', 'current_focus', 'agents', 'marble_feasibility_05', 'proj05', 'previous_round_stopped', 'round2_stopped', 'round3_stopped', 'round4_done', 'backup_2026_11_17_1945', 'round4_stopped_account4', 'round5_account5', 'round6_account6', 'round9_account9', 'running_now_account8_archived', 'round12_account12', 'round13_account13', 'round14_account14', 'round15_account15', 'round16_account16', 'round17_account17', 'round18', 'round19', 'round19b', 'round20', 'round21', 'round22', 'round23', 'round24', 'round25', 'round26', 'round27', 'round28', 'r30_parallel_06', 'round_30b', 'round32_screen05_live']
+> running_now ['_note', 's07', 's04', 's05', 'benny', 's06', 's09_s10']
+> assignments_now ['_read_first', '_user_priority_2026-11-17', '_two_lines', 'line_B_washer-environment-modeler', 'line_B_foam-bubbles-particles', 'line_B_benny-character-artist', 'line_B_animation-and-gameplay-engineer', 'line_B_android-build-performance', 'line_A_path-camera-transition-engineer', 'line_A_main_session_screen07', 'others', 'main_session_screen08']
+> marble_feasibility_05 ['status', 'branch', 'notes', 'verdict', 'waiting_f …[+3459 chars]
+
+### 🤖 Claude — 2026-11-21T12:55:51.049Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport json, datetime\np='backups/AGENTS_STATUS.json'; d=json.load(open(p))\nnow=datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%dT%H:%MZ')\nr=d['round32_screen05_live']\nr['updated_utc']=now\nr['relaunch_account_c33']={\n 'session_branch':'ccr-c0679182-krbfci (started from claude/screen-05-3d-geometry-9yu7pu, merged its newest autosaves 12:37/12:42)',\n 'workspace':'/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad (base/, agentA/, agentB/, merged/, acc*/)',\n 'sync':'bash tools/marble05/sync_agents_wip.sh <works …[+1258 chars]`
+
+### 🧑 User — 2026-11-21T12:55:51.114Z
+
+> ↩︎ result: ok
+

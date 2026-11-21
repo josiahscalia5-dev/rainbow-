@@ -17,7 +17,7 @@ export const TUNING = {
   PADDLE_BOOST: 0.9,   // paddle-rate increase at full lateral speed (x1.9)
   LEAP_T: 0.62,        // leap duration (s)
   LEAP_FRAC: 0.6,      // leap peak as a fraction of his full height
-  DIVE_DOWN: 0.2, DIVE_HOLD: 0.42, DIVE_UP: 0.26, // dive phases (s)
+  DIVE_DOWN: 0.24, DIVE_HOLD: 0.38, DIVE_UP: 0.26, // dive phases (s); 0.24 s sink keeps every height step < 0.06 u per 1/30 s frame
   DIVE_FRAC: 0.8,      // fraction of his height under the surface at the bottom of the dive (rest: 0.22)
   PITCH_K: 0.13,       // nose-up / nose-down per unit vertical speed (rad per u/s)
   PITCH_MAX: 0.28,
@@ -43,7 +43,7 @@ function dspring(o, omega, zeta, accel, dt) {
 }
 
 export function installControls(ctx) {
-  const { THREE, canvas, q, at, frameAt, coins, scene, U, bmat, benny, splash, splashTex, bubTex, coinTex, coinD, bennyFullH, pxW, coinEl, getS, getCoins, render } = ctx;
+  const { THREE, canvas, camera, q, at, frameAt, coins, scene, U, bmat, benny, splash, splashTex, bubTex, coinTex, coinD, bennyFullH, pxW, coinEl, getS, getCoins, render } = ctx;
   const P = { ...TUNING };
   for (const k of Object.keys(P)) { const v = q.get('c_' + k); if (v != null && v !== '' && !isNaN(+v)) P[k] = +v; } // URL tuning, e.g. ?c_LANE=0.2
   const LEAP_H = P.LEAP_FRAC * bennyFullH, DIVE_D = (P.DIVE_FRAC - 0.22) * bennyFullH;
@@ -74,8 +74,13 @@ export function installControls(ctx) {
     if (S.move || S.clock < S.busyUntil) { S.queued = dir; return true; } // one move at a time, queue at most one (latest wins)
     start(dir); return true;
   }
-  if (canvas) {
-    canvas.style.touchAction = 'none';
+  // Gestures are read on the WINDOW, not only on the canvas: any full-screen overlay added later (HUD, vignette, title,
+  // water layers) can never swallow a swipe. Touches that start on a real control (button, link, input, [data-noswipe])
+  // are left alone so those still work. Only the first finger of a gesture is tracked.
+  {
+    if (canvas) canvas.style.touchAction = 'none';
+    document.documentElement.style.touchAction = 'none'; if (document.body) document.body.style.touchAction = 'none';
+    const isUI = (e) => !!(e.target && e.target.closest && e.target.closest('button, a, input, select, textarea, label, [data-noswipe]'));
     const g = { id: null, x: 0, y: 0, fired: false };
     const begin = (id, x, y) => { g.id = id; g.x = x; g.y = y; g.fired = false; };
     const moveTo = (x, y, src) => {
@@ -86,14 +91,20 @@ export function installControls(ctx) {
       request(Math.abs(dx) > Math.abs(dy) ? (dx < 0 ? 'left' : 'right') : (dy < 0 ? 'up' : 'down'), src);
     };
     const end = (x, y, src) => { if (x != null) moveTo(x, y, src); g.id = null; };
-    canvas.addEventListener('touchstart', (e) => { const t = e.changedTouches[0]; begin(t.identifier, t.clientX, t.clientY); e.preventDefault(); }, { passive: false });
-    canvas.addEventListener('touchmove', (e) => { for (const t of e.changedTouches) if (t.identifier === g.id) moveTo(t.clientX, t.clientY, 'touch'); e.preventDefault(); }, { passive: false });
-    canvas.addEventListener('touchend', (e) => { for (const t of e.changedTouches) if (t.identifier === g.id) end(t.clientX, t.clientY, 'touch'); e.preventDefault(); }, { passive: false });
-    canvas.addEventListener('touchcancel', () => { g.id = null; });
+    const tracked = (list) => { for (const t of list) if (t.identifier === g.id) return t; return null; };
+    window.addEventListener('touchstart', (e) => {
+      if (isUI(e)) return;
+      if (g.id === null || typeof g.id !== 'number' || !tracked(e.touches)) { const t = e.changedTouches[0]; begin(t.identifier, t.clientX, t.clientY); }
+      if (e.cancelable) e.preventDefault();
+    }, { passive: false });
+    window.addEventListener('touchmove', (e) => { const t = tracked(e.changedTouches); if (t) { moveTo(t.clientX, t.clientY, 'touch'); if (e.cancelable) e.preventDefault(); } }, { passive: false });
+    window.addEventListener('touchend', (e) => { const t = tracked(e.changedTouches); if (t) { end(t.clientX, t.clientY, 'touch'); if (e.cancelable) e.preventDefault(); } }, { passive: false });
+    window.addEventListener('touchcancel', (e) => { if (tracked(e.changedTouches)) g.id = null; });
     // mouse / pen drags (touch pointers are handled by the touch events above, so a finger never fires twice)
-    canvas.addEventListener('pointerdown', (e) => { if (e.pointerType !== 'touch') begin('p' + e.pointerId, e.clientX, e.clientY); });
-    canvas.addEventListener('pointermove', (e) => { if (e.pointerType !== 'touch' && g.id === 'p' + e.pointerId) moveTo(e.clientX, e.clientY, e.pointerType); });
-    canvas.addEventListener('pointerup', (e) => { if (e.pointerType !== 'touch' && g.id === 'p' + e.pointerId) end(e.clientX, e.clientY, e.pointerType); });
+    window.addEventListener('pointerdown', (e) => { if (e.pointerType !== 'touch' && !isUI(e)) begin('p' + e.pointerId, e.clientX, e.clientY); });
+    window.addEventListener('pointermove', (e) => { if (e.pointerType !== 'touch' && g.id === 'p' + e.pointerId) moveTo(e.clientX, e.clientY, e.pointerType); });
+    window.addEventListener('pointerup', (e) => { if (e.pointerType !== 'touch' && g.id === 'p' + e.pointerId) end(e.clientX, e.clientY, e.pointerType); });
+    window.addEventListener('pointercancel', (e) => { if (g.id === 'p' + e.pointerId) g.id = null; });
   }
   const KEYS = { ArrowLeft: 'left', KeyA: 'left', ArrowRight: 'right', KeyD: 'right', ArrowUp: 'up', KeyW: 'up', ArrowDown: 'down', KeyS: 'down' };
   window.addEventListener('keydown', (e) => { const d = KEYS[e.code]; if (!d || e.repeat) return; e.preventDefault(); request(d, 'key'); });
@@ -294,6 +305,18 @@ export function installControls(ctx) {
     };
   }
   window.state = state;
+
+  // camera report for tests (final_acceptance.cjs logs window.camInfo() every frame); kept if the page already defines one
+  if (camera && !window.camInfo) {
+    const d = new THREE.Vector3(), bp = new THREE.Vector3(), dv = new THREE.Vector3();
+    window.camInfo = () => {
+      camera.getWorldDirection(d); bp.copy(benny.position);
+      const r = (v) => v.toArray().map((x) => +x.toFixed(4));
+      return { pos: r(camera.position), dir: r(d), fov: camera.fov, camLat: +S.camLat.x.toFixed(4), camH: +S.camH.x.toFixed(4), toBenny: +camera.position.distanceTo(bp).toFixed(4),
+        // Benny's water point seen from the camera: height of the camera above his water level (along the river normal)
+        aboveWater: F ? +dv.copy(camera.position).sub(waterPt).dot(F.n).toFixed(4) : null };
+    };
+  }
 
   // optional real-time loop for phones / desktop browsers: play3.html?live=1 (tests drive window.step themselves)
   if (q.get('live') === '1') {

@@ -1,7 +1,8 @@
 // Android-portrait swipe test for play3.html + controls.js: REAL touch swipes via CDP Input.dispatchTouchEvent on the canvas,
 // deterministic 30 fps game steps between swipes, state() logged after every swipe, 6 stills rendered (SwiftShader, slow).
-// usage: NODE_PATH=$(npm root -g) node swipe_test.cjs [--nostills] [--compare0]
-const { chromium } = require('playwright'); const { spawn } = require('child_process'); const fs = require('fs'); const path = require('path');
+// usage: NODE_PATH=$(npm root -g) node swipe_test.cjs [--nostills] [--stills=a_start_frame0,e_dive] [--compare0] [--log=swipe_log.json]
+const { chromium } = require('playwright'); const fs = require('fs'); const path = require('path');
+const { serveHere } = require('./serve.cjs'); // ports 9000-9399, verified to serve THIS folder (8900-8989 = the lead's range)
 const SW_ARGS = ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
 const W = 412, H = 915, FPS = 30, DT = 1 / FPS, SPEED = 1.4;
 // timeline in frames (t = frame / 30): the 8 swipes of the brief, timed like a player would (side rows, air arcs)
@@ -12,11 +13,10 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 (async () => {
   const argv = process.argv.slice(2); const noStills = argv.includes('--nostills'), cmp0 = argv.includes('--compare0');
+  const only = (argv.find((a) => a.startsWith('--stills=')) || '').slice(9).split(',').filter(Boolean); // --stills=a_start_frame0,e_dive renders only these
   if (argv.includes('--only0')) return only0();
   const out = path.join(__dirname, 'out_controls'); fs.mkdirSync(out, { recursive: true });
-  const port = 8900 + Math.floor(Math.random() * 90);
-  const srv = spawn('python3', ['-m', 'http.server', String(port), '--bind', '127.0.0.1'], { cwd: __dirname, stdio: 'ignore' });
-  await sleep(1200);
+  const srv = await serveHere(); const port = srv.port;
   const browser = await chromium.launch({ args: SW_ARGS });
   const result = { device: 'Pixel-7-like portrait 412x915, dpr 1, isMobile, hasTouch', speed: SPEED, fps: FPS, swipes: [], stills: [], checks: {}, errors: [] };
   const T0 = Date.now(); const el = () => ((Date.now() - T0) / 1000).toFixed(0) + 's';
@@ -52,7 +52,7 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
     let frame = 0;
     const stepTo = (fEnd) => page.evaluate(([f0, f1, dt, sp]) => { const rows = []; for (let f = f0 + 1; f <= f1; f++) rows.push(window.step(f * dt, dt, 0, sp)); return rows; }, [frame, fEnd, DT, SPEED]).then((rows) => { frame = fEnd; return rows; });
     async function still(name) {
-      if (noStills) return;
+      if (noStills || (only.length && !only.includes(name))) return;
       const t1 = Date.now(); await page.evaluate(() => window.renderNow(1));
       const file = path.join(out, `${name}.png`); await page.screenshot({ path: file });
       const st = await page.evaluate(() => window.state()); const hud = await page.evaluate(() => document.getElementById('coins').textContent);
@@ -118,17 +118,15 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
   } catch (e) { result.errors.push('test: ' + String(e).slice(0, 400)); console.log('ERROR', e); }
   finally {
     result.wall_s = +((Date.now() - T0) / 1000).toFixed(0);
-    fs.writeFileSync(path.join(__dirname, 'swipe_log.json'), JSON.stringify(result, null, 1));
-    await browser.close(); srv.kill(); console.log('done', el());
+    fs.writeFileSync(path.join(__dirname, (argv.find((a) => a.startsWith('--log=')) || '--log=swipe_log.json').slice(6)), JSON.stringify(result, null, 1));
+    await browser.close(); srv.close(); console.log('done', el());
   }
 })();
 
 // --only0: frame 0 of the OLD code path (?controls=0) with the same device + render procedure -> out_controls/a_start_frame0_controls_off.png
 async function only0() {
   const out = path.join(__dirname, 'out_controls'); fs.mkdirSync(out, { recursive: true });
-  const port = 8900 + Math.floor(Math.random() * 90);
-  const srv = spawn('python3', ['-m', 'http.server', String(port), '--bind', '127.0.0.1'], { cwd: __dirname, stdio: 'ignore' });
-  await sleep(1200);
+  const srv = await serveHere(); const port = srv.port;
   const browser = await chromium.launch({ args: SW_ARGS });
   try {
     const context = await browser.newContext({ viewport: { width: W, height: H }, deviceScaleFactor: 1, isMobile: true, hasTouch: true });
@@ -138,5 +136,5 @@ async function only0() {
     await page.waitForFunction(() => window.ready === true, null, { timeout: 900000 });
     await page.evaluate(() => window.renderNow(1)); await page.screenshot({ path: path.join(out, 'a_start_frame0_controls_off.png') });
     console.log('only0 written', await page.evaluate(() => typeof window.state));
-  } finally { await browser.close(); srv.kill(); }
+  } finally { await browser.close(); srv.close(); }
 }

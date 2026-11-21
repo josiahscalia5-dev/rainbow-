@@ -1,11 +1,9 @@
 // Quick check of the optional real-time loop (?live=1) and the keyboard path (ArrowLeft / KeyW). Small canvas to keep SwiftShader cheap.
 // usage: NODE_PATH=$(npm root -g) node live_key_check.cjs
-const { chromium } = require('playwright'); const { spawn } = require('child_process'); const fs = require('fs'); const path = require('path');
+const { chromium } = require('playwright'); const { serveHere } = require('./serve.cjs'); const fs = require('fs'); const path = require('path');
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 (async () => {
-  const port = 8900 + Math.floor(Math.random() * 90);
-  const srv = spawn('python3', ['-m', 'http.server', String(port), '--bind', '127.0.0.1'], { cwd: __dirname, stdio: 'ignore' });
-  await sleep(1200);
+  const srv = await serveHere(); const port = srv.port;
   const browser = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
   const res = {};
   try {
@@ -22,5 +20,5 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
     res.after_w = await page.evaluate(() => window.state());
     res.keyLog = await page.evaluate(() => window.input.log);
   } catch (e) { res.error = String(e).slice(0, 300); }
-  finally { fs.writeFileSync(path.join(__dirname, 'live_key_check.json'), JSON.stringify(res, null, 1)); console.log(JSON.stringify(res)); await browser.close(); srv.kill(); }
+  finally { fs.writeFileSync(path.join(__dirname, 'live_key_check.json'), JSON.stringify(res, null, 1)); console.log(JSON.stringify(res)); await browser.close(); srv.close(); }
 })();

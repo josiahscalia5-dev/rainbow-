@@ -1,0 +1,28 @@
+{
+ "frames": 6,
+ "dark_patches": {
+  "frames_with_patches": 6,
+  "largest_px": 2451,
+  "max_pct": 1.202,
+  "rule": "connected near-black area >= 150 px at 412x915 (approved picture: largest 8 px)"
+ },
+ "sharpness_vs_start": {
+  "min": 0.951,
+  "median": 0.981
+ },
+ "colour_look_vs_approved": {
+  "min": 0.639,
+  "median": 0.654
+ },
+ "flicker": {
+  "median_change": 64.36,
+  "max_change": 68.97,
+  "spikes_over_3x_median": 0,
+  "spike_frames": [],
+  "pop_median": 57.82634162902832,
+  "pop_max": 60.54500961303711,
+  "pop_spikes": 0,
+  "pop_spike_frames": []
+ },
+ "colour_look_frame0": 0.678
+}

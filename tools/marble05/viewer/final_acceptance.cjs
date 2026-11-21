@@ -68,8 +68,9 @@ const { chromium } = require('playwright'); const { spawn, execFileSync } = requ
     const swipes = log.filter((x) => x.swipe), responses = [];
     let lane = fr[0].lane ?? 0;
     for (const [k, sw] of swipes.entries()) {
-      const tEnd = k + 1 < swipes.length ? Math.max(swipes[k + 1].t, sw.t + 0.45) : sw.t + 0.7;
-      const win = fr.filter((x) => x.t > sw.t && x.t <= tEnd + 1e-6), before = fr.filter((x) => x.t <= sw.t).pop();
+      // window: from the swipe until the next swipe is sent (exclusive; the next swipe is applied in the frame it is sent) or 0.7 s
+      const tEnd = Math.min(k + 1 < swipes.length ? swipes[k + 1].t - 1e-6 : 1e9, sw.t + 0.7);
+      const win = fr.filter((x) => x.t >= sw.t - 1e-6 && x.t <= tEnd), before = fr.filter((x) => x.t < sw.t - 1e-6).pop();
       const r = { swipe: sw.swipe, t: sw.t };
       if (sw.swipe === 'left' || sw.swipe === 'right') {
         const want = Math.max(-1, Math.min(1, lane + (sw.swipe === 'left' ? -1 : 1)));

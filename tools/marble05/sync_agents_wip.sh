@@ -24,7 +24,7 @@ for a in ['agentA', 'agentB', 'merged'] + sorted(d for d in os.listdir(SCR) if d
             if os.path.exists(q) and os.path.getmtime(q) >= os.path.getmtime(p) and os.path.getsize(q) == os.path.getsize(p): continue
             os.makedirs(os.path.dirname(q), exist_ok=True); shutil.copy2(p, q); n += 1
 os.makedirs(os.path.join(DST, 'lead'), exist_ok=True)
-for f in ('final_acceptance.cjs', 'visual_check.py'):
+for f in ('final_acceptance.cjs', 'visual_check.py', 'acceptance_verdict.py'):
     if os.path.exists(os.path.join(SCR, f)): shutil.copy2(os.path.join(SCR, f), os.path.join(DST, 'lead', f))
 open(os.path.join(DST, 'LAST_SYNC_UTC'), 'w').write(datetime.datetime.now(datetime.timezone.utc).isoformat() + '\n')
 print('synced files:', n)
