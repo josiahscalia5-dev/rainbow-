@@ -3786,3 +3786,288 @@ The gold rings show up clearly in the 3D world: the first near Benny's start, th
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad; V=$S/splatview; cd $V && PAGE=play2.html STILLS='[0,1.5,2.5,3.5,4.5,6.0,8.0,10.0]' NODE_PATH=$(npm root -g) timeout 1500 node play_shots2.cjs out_t1 stills 2>&1 | tail -9; python3 -I -c \"\nfrom PIL import Image\nS='$S'\nL=['0','1.5','2.5','3.5','4.5','6','8','10']\nims=[Image.open(S+'/splatview/out_t1/s_%s.png'%s).convert('RGB').resize((240,427)) for s in L]\nc=Image.new('RGB',(250*len(ims),427),'white')\nfor i,im in enumerate(ims): c.paste(im,(i*250,0))\nc.save(S+'/tiles_stills.jpg',quality=85)\ …[+84 chars]`
 
+### 🧑 User — 2026-11-21T10:09:03.389Z
+
+> ↩︎ result: still 0
+> still 1.5
+> still 2.5
+> still 3.5
+> still 4.5
+> still 6
+> still 8
+> still 10
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T10:09:16.406Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/wldocs; mkdir -p $S; cd $S; for u in marble/create/prompt-guides/expand marble/create/studio-tools/compose marble/models marble/release-notes api/reference/worlds/generate marble/support/account-billing api/faq marble/create/prompt-guides/multi-image-prompt api/world-generation-examples marble/create/prompt-guides/pano-prompt marble/create/prompt-guides/create-and-edit marble/export/specs; do n=$(echo $u | tr / _); timeout 30 curl -sL -o $n.md -w \"$u %{http_code} %{size_download}\\n\" https://docs …[+112 chars]`
+
+### 🧑 User — 2026-11-21T10:09:18.852Z
+
+> ↩︎ result: marble/create/prompt-guides/expand 403 70
+> marble/create/studio-tools/compose 403 70
+> marble/models 403 70
+> marble/release-notes 403 70
+> api/reference/worlds/generate 403 70
+> marble/support/account-billing 403 70
+> api/faq 403 70
+> marble/create/prompt-guides/multi-image-prompt 403 70
+> api/world-generation-examples 403 70
+> marble/create/prompt-guides/pano-prompt 403 70
+> marble/create/prompt-guides/create-and-edit 403 70
+> marble/export/specs 403 70
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T10:09:22.796Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad; cat $S/wldocs/api_faq.md; echo; ls $S/m_*; grep -v \"^$\" $S/m_marble_create_prompt-guides_expand.md | head -60", "description": "Read the Expand doc downloaded earlier"}`
+
+### 🧑 User — 2026-11-21T10:09:22.852Z
+
+> ↩︎ result: Forbidden
+> 
+> Forbidden
+> cle1::1795255758-M06pAmrFI6g886K5S275z4a35qKx8ICX
+> /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/m_api_faq.md
+> /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/m_api_models.md
+> /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/m_api_world-generation-examples.md
+> /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/m_https___docs.worldlabs.ai_api.md
+> /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/m_https___docs.worldlabs.ai_api_pricing.md
+> /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/m_https___docs.worldlabs.ai_llms.txt
+> /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/m_https___docs.worldlabs.ai_pricing.md
+> /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/m_marble_create_prompt-guides_expand.md
+> /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/m_marble_create_prompt-guides_multi-image-prompt.md
+> /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad …[+3560 chars]
+
+### 🤖 Claude — 2026-11-21T10:09:30.592Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad; grep -v \"^$\" $S/m_marble_create_prompt-guides_multi-image-prompt.md | sed -n 4,70p | cut -c1-260", "description": "Read the multi-image prompt guide"}`
+
+### 🧑 User — 2026-11-21T10:09:30.634Z
+
+> ↩︎ result: # Multi-image prompt tips
+> > Specify more details by combining multiple images.
+> [Multi-image Prompt Tips](https://www.youtube.com/embed/weTbkz5yioc)
+> # Creating worlds with multiple images with direction control
+> In the  2D input mode of omnibox, drag in or upload up to 4 images.
+> Click on the text overlay on image thumbnails to change its direction, and choose one from "Front", "Back", "Left", "Right".
+> For this mode, images without overlap allow the marble models to creatively fill in the spaces between views.
+> When you are done specifying the direction of each image, click on  Create to generate the world.
+> For image file specifications, see [Prompt guidelines →](https://docs.worldlabs.ai/marble/create/prompt-guides.md)
+> * Direction control is great for connecting different environments creatively.
+> # Creating worlds with multiple images with Auto Layout
+> In the  2D input mode of omnibox, drag in or upload up to 8 images.
+> Toggle "Auto Layout" switch to on so the world model automatically determines the relative positioning of these images.
+> In this mode, all uploaded images need to share the same aspect ratio and resolution, and should be images from the same space.
+> Currently images captur …[+2157 chars]
+
+### 🤖 Claude — 2026-11-21T10:09:33.441Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad; grep -n -i \"multi\\|azimuth\\|plus\\|reconstruct\\|expand\\|compose\\|seed\\|world_prompt\\|\\\"type\\\"\" $S/m_api_world-generation-examples.md | head -40; echo ----; grep -n -i \"expand\\|compose\\|plus\\|larger\\|size\\|studio\\|web app\\|chisel\" $S/m_api_faq.md | head -20", "description": "Check the API's multi-image, Plus and Expand support"}`
+
+### 🧑 User — 2026-11-21T10:09:33.490Z
+
+> ↩︎ result: 7:> Example-based request patterns for generating worlds from text, images, panoramas, multiple images, and video.
+> 24:    "world_prompt": {
+> 25:      "type": "text",
+> 43:    "world_prompt": {
+> 44:      "type": "image",
+> 75:    "world_prompt": {
+> 76:      "type": "image",
+> 90:## Multiple images
+> 92:Use multi-image input when you have several views of the same scene. Add
+> 93:`azimuth` values when you know where each image faces.
+> 102:    "world_prompt": {
+> 103:      "type": "multi-image",
+> 104:      "multi_image_prompt": [
+> 106:          "azimuth": 0,
+> 113:          "azimuth": 180,
+> 128:the returned `media_asset_id` in `world_prompt`. The same flow works for local
+> 135:  "world_prompt": {
+> 136:    "type": "image",
+> ----
+> 29:* An invalid `model` value. Use one of `marble-1.0-draft`, `marble-1.0`, `marble-1.1`, or `marble-1.1-plus`.
+> 61:For Gaussian splat sizes, renderer coordinate systems, and log-scale `scale_0`
+> 66:Billing for the World API is separate from billing for the Marble web app.
+> 93:### What is the difference between `marble-1.0`, `marble-1.1`, and `marble-1.1-plus`?
+> 99:* `marble-1.1-plus` provides the most expansive generation path and may add 0-1,500 variable world generation cost for larger …[+65 chars]
+
+### 🤖 Claude — 2026-11-21T10:09:36.151Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad; sed -n 60,110p $S/m_api_faq.md | grep -v \"^$\" | cut -c1-300; sed -n 88,130p $S/m_api_world-generation-examples.md | grep -v \"^$\" | cut -c1-200", "description": "Read API FAQ on billing and model differences"}`
+
+### 🧑 User — 2026-11-21T10:09:36.201Z
+
+> ↩︎ result: For Gaussian splat sizes, renderer coordinate systems, and log-scale `scale_0`
+> fields, see [Rendering Marble SPZ files in third-party engines](https://docs.worldlabs.ai/api/rendering-spz.md).
+> ### How does API billing work?
+> Billing for the World API is separate from billing for the Marble web app.
+> * Credits purchased for the Marble app cannot be used with the API
+> * API usage requires credits purchased through the World Labs Platform
+> If you plan to use the API, make sure you purchase credits on the World Labs Platform, NOT in the Marble app.
+> A Marble subscription — including a Free plan — says nothing about your API billing. The two are separate accounts even when you sign in with the same email, so being on the Marble Free plan does not mean your API usage is free.
+> ### Why was I charged when I have not used the API recently?
+> Almost certainly this is an overage charge, and it covers an earlier billing period.
+> API credits are prepaid: you buy them up front and requests draw down that balance, so normal usage produces no charge at all. But requests are admitted based on a low-balance threshold rather than a per-request cost estimate, so a request that starts while your balance is low c …[+3247 chars]
+
+### 🤖 Claude — 2026-11-21T10:09:49.458Z
+
+> 🔧 **ToolSearch** `{"query": "select:mcp__Hugging_Face__hub_repo_search,mcp__Hugging_Face__hub_repo_details", "max_results": 2}`
+
+### 🧑 User — 2026-11-21T10:09:49.468Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-21T10:09:51.165Z
+
+> 🔧 **mcp__Hugging_Face__hub_repo_search** `{"query": "HY-World", "author": "tencent", "repo_types": ["model", "space"], "limit": 15}`
+
+### 🧑 User — 2026-11-21T10:09:51.542Z
+
+> ↩︎ result: Found 2 repositories across models, spaces matching query "HY-World", author "tencent".
+> 
+> ## Models (2)
+> 
+> ### tencent/HY-World-2.0
+> 
+> **Task:** image-to-3d | **Library:** hy-world-2 | **Downloads:** 3.5K | **Likes:** 730 | **Trending Score:** 1
+> 
+> **Tags:** hy-world-2, safetensors, worldmodel, 3d, hy-world, image-to-3d, en, zh, arxiv:2604.14268, license:other, region:us
+> 
+> **Created:** 10 Apr, 2026
+> **Link:** [https://hf.co/tencent/HY-World-2.0](https://hf.co/tencent/HY-World-2.0)
+> 
+> ---
+> 
+> ### tencent/HY-WorldPlay
+> 
+> **Task:** image-to-video | **Library:** hy-worldplay | **Downloads:** 499 | **Likes:** 526 | **Trending Score:** 0
+> 
+> **Tags:** hy-worldplay, diffusers, safetensors, hunyuan3d, worldmodel, 3d-reconstruction, 3d-generation, 3d, scene-generation, image-to-3D, text-to-3D, image-to-video, en, zh, arxiv:2512.14614, license:other, eval-results, region:us
+> 
+> **Created:** 12 Dec, 2025
+> **Link:** [https://hf.co/tencent/HY-WorldPlay](https://hf.co/tencent/HY-WorldPlay)
+> 
+> ---
+> 
+> ## Spaces (0)
+> 
+> No spaces matched this query.
+
+### 🤖 Claude — 2026-11-21T10:09:51.757Z
+
+> 🔧 **mcp__Hugging_Face__hub_repo_search** `{"query": "HunyuanWorld", "repo_types": ["model", "space"], "limit": 15}`
+
+### 🧑 User — 2026-11-21T10:09:52.057Z
+
+> ↩︎ result: Found 19 repositories across models, spaces matching query "HunyuanWorld".
+> 
+> ## Models (7)
+> 
+> ### tencent/HunyuanWorld-1
+> 
+> **Task:** image-to-3d | **Library:** diffusion-single-file | **Downloads:** 5.4K | **Likes:** 606 | **Trending Score:** 0
+> 
+> **Tags:** diffusion-single-file, hunyuan3d, worldmodel, 3d-aigc, 3d-generation, 3d, scene-generation, image-to-3d, en, zh, arxiv:2507.21809, license:other, region:us
+> 
+> **Created:** 21 Jul, 2025
+> **Link:** [https://hf.co/tencent/HunyuanWorld-1](https://hf.co/tencent/HunyuanWorld-1)
+> 
+> ---
+> 
+> ### Wakeme/HunyuanWorld-1.0-PeFT
+> 
+> **Downloads:** 0 | **Likes:** 3 | **Trending Score:** 0
+> 
+> **Tags:** license:unknown, region:us
+> 
+> **Created:** 30 Jul, 2025
+> **Link:** [https://hf.co/Wakeme/HunyuanWorld-1.0-PeFT](https://hf.co/Wakeme/HunyuanWorld-1.0-PeFT)
+> 
+> ---
+> 
+> ### tencent/HunyuanWorld-Voyager
+> 
+> **Task:** image-to-video | **Library:** hunyuanworld-voyager | **Downloads:** 2.2K | **Likes:** 612 | **Trending Score:** 0
+> 
+> **Tags:** hunyuanworld-voyager, safetensors, hunyuan3d, worldmodel, 3d-aigc, 3d-generation, 3d, scene-generation, image-to-video, en, zh, arxiv:2506.04225, license:other, region:us
+> 
+> **Created:** 27 Aug, 2025
+> **Link:** [https://hf.co/tencent/HunyuanWorld …[+5037 chars]
+
+### 🤖 Claude — 2026-11-21T10:09:53.467Z
+
+> 🔧 **mcp__Hugging_Face__hub_repo_details** `{"repo_ids": ["tencent/HY-World-2.0"], "repo_type": "model"}`
+
+### 🧑 User — 2026-11-21T10:09:53.783Z
+
+> ↩︎ result: # tencent/HY-World-2.0
+> 
+> ## Overview
+> - **Author:** tencent
+> - **Task:** image-to-3d
+> - **Library:** hy-world-2
+> - **Downloads:** 24.6K | **Likes:** 730
+> - **Updated:** 21 May, 2026
+> 
+> ## Tags
+> `hy-world-2` `safetensors` `worldmodel` `3d` `hy-world` `image-to-3d` `en` `zh` `arxiv:2604.14268` `license:other` `region:us`
+> 
+> ## Metadata
+> - **Language:** en, zh
+> - **License:** other
+> 
+> ## Demo Spaces
+> - [HY-World-2.0-Demo](https://hf.co/spaces/prithivMLmods/HY-World-2.0-Demo)
+> - [TRIBE-V2-DEMO](https://hf.co/spaces/Ryukijano/TRIBE-V2-DEMO)
+> - [hy-world-2-worldmirror](https://hf.co/spaces/ZoyncTech/hy-world-2-worldmirror)
+> - [HY-World-2.0-Demo-3](https://hf.co/spaces/mohan007/HY-World-2.0-Demo-3)
+> - [TRIBE-V2-DEMO](https://hf.co/spaces/Wenluo/TRIBE-V2-DEMO)
+> - [HY-World-2.0-Demo-2](https://hf.co/spaces/mohan007/HY-World-2.0-Demo-2)
+> - [HY-World-2.0-Demo](https://hf.co/spaces/mohan007/HY-World-2.0-Demo)
+> - [HY-World-2.0-Demo-etheroi](https://hf.co/spaces/developerjeremylive/HY-World-2.0-Demo-etheroi)
+> - [TRIBE-V2-DEMO](https://hf.co/spaces/Thesilenthowler029/TRIBE-V2-DEMO)
+> - [hyworld-pano-wb](https://hf.co/spaces/Bhamburger/hyworld-pano-wb)
+> - [connectedkits-hyworld-hf](https://hf.co/spaces/shroysha/connectedkit …[+197 chars]
+
+### 🤖 Claude — 2026-11-21T10:09:55.740Z
+
+> 🔧 **ToolSearch** `{"query": "select:mcp__Hugging_Face__hf_fs", "max_results": 1}`
+
+### 🧑 User — 2026-11-21T10:09:55.752Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-21T10:09:56.949Z
+
+> 🔧 **mcp__Hugging_Face__hf_fs** `{"operations": [{"cmd": "cat", "args": ["hf://models/tencent/HY-World-2.0/README.md", "--max-bytes", "14000"]}]}`
+
+### 🧑 User — 2026-11-21T10:09:57.419Z
+
+> ↩︎ result: {"results":[{"index":0,"status":"success","result":{"uri":"hf://models/tencent/HY-World-2.0/README.md","op":"cat","path":"README.md","content":"---\nlanguage:\n- en\n- zh\nlicense: other\nlicense_name: tencent-hy-world-2.0-community\nlicense_link: https://github.com/Tencent-Hunyuan/HY-World-2.0/blob/main/License.txt\npipeline_tag: image-to-3d\nlibrary_name: hy-world-2\ntags:\n- worldmodel\n- 3d\n- hy-world\nextra_gated_eu_disallowed: true\n---\n\n<h1>HY-World 2.0: A Multi-Modal World Model for Reconstructing, Generating, and Simulating 3D Worlds</h1>\n\n[English](README.md) | [简体中文](README_zh.md)\n\n<p align=\"center\">\n  <img src=\"assets/teaser.png\" width=\"95%\" alt=\"HY-World-2.0 Teaser\">\n</p>\n\n<div align=\"center\">\n  <a href=https://3d.hunyuan.tencent.com/sceneTo3D target=\"_blank\"><img src=https://img.shields.io/badge/Official%20Site-333399.svg?logo=homepage height=22px></a>\n  <a href=https://huggingface.co/tencent/HY-World-2.0 target=\"_blank\"><img src=https://img.shields.io/badge/%F0%9F%A4%97%20Models-d96902.svg height=22px></a>\n  <a href=https://3d-models.hunyuan.tencent.com/world/ target=\"_blank\"><img src= https://img.shields.io/badge/Page-bb8a2e.svg?logo=gi …[+13283 chars]
+
+### 🤖 Claude — 2026-11-21T10:10:22.522Z
+
+I've checked all four. I can't run Expand, Compose or HY-World 2.0 from here. The one option your existing credits can pay for is Marble 1.1 Plus.
+
+| Tool | Can I run it? | Do your 3,610 credits pay? | Extends your existing world? | Chance of keeping the look |
+|---|---|---|---|---|
+| **Marble Expand** | No. It's a button in the Marble web app, not in the API this project uses. | No. The web app is billed separately from your API credits. | Yes, once: World Labs allows only one expansion per world. | Good near the join, by World Labs' own claim. But your world was made through the API, which World Labs runs as a separate account, so it may not appear in your web app at all. |
+| **Marble 1.1 Plus** | Yes. | Yes: 1,580–3,080 credits, decided by World Labs during the job. Even the maximum leaves 530 credits, so no card charge is possible. | No. It makes a new world from the same clean approved picture, and a Plus world can't be expanded afterwards. | Best of these. It's the same model family and the same input that produced your good world. Plus is World Labs' "most expansive" option, meant for larger worlds. |
+| **Marble Compose** | No (web app only). | No (web app billing). | It joins separate worlds. | Weakest. It means seams wherever two pieces meet. |
+| **HY-World 2.0** (Tencent) | No. It's free and open-source, but needs large NVIDIA graphics cards that this environment doesn't have. Only unofficial demo pages exist. | Not applicable. | No. It starts a new world from a panorama of your picture. | Unknown. Its output (3D splats or meshes) would work in our Three.js Android game with the same renderer, but its style may drift from your art. |
+
+No plugin can make the whole level exactly your picture with zero blur. Every one of these tools still builds the world from your single picture.
+
+**My recommendation: one controlled test.** Run Marble 1.1 Plus from the exact same clean Screen 05 picture. Then put it through the same checks as your current world:
+- the camera-moving-forward sheet
+- the follow-camera gameplay with the real 3D Benny
+- the inspection views
+
+It passes only if the sharp, approved-looking stretch is clearly longer than the current 2.4 seconds, with no new blur or seams. If not, I stop and tell you. The cost is 1,580–3,080 of your existing credits and no cash, but I need your yes first, because World Labs only sets the exact amount during the job.
+
+**If you want to try Expand yourself:** sign in at marble.worldlabs.ai and check whether this world appears there. I can give you its link. If it does, Expand would use your Marble web-app credits, not these.
+
+I also briefly tried repeating the best stretch of your world end to end. I've stopped that, because it repeats scenery, which you said you don't want. Nothing in your game, your approved Screen 05 or your Marble world was changed.
+
