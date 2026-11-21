@@ -917,3 +917,21 @@ Now wire the split into play3.html.
 
 > 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB; for i in $(seq 1 60); do n=$(grep -c '^still' out_water/after_final/log.txt 2>/dev/null); [ \"${n:-0}\" -ge 8 ] && break; grep -q pageerror out_water/after_final/log.txt 2>/dev/null && break; sleep 10; done; grep -v GL out_water/after_final/log.txt; date", "description": "Wait for the final AFTER stills", "timeout": 600000}`
 
+### 🧑 User — 2026-11-21T13:20:52.252Z
+
+> ↩︎ result: server 9888
+> ready 27.583
+> still 0 36.83 visible splats 655734
+> still 0.7 43.261 visible splats 866071
+> still 1.4 50.067 visible splats 866071
+> still 2.3 38.179 visible splats 613313
+> still 6.4 36.772 visible splats 830237
+> still 8.5 44.351 visible splats 830237
+> still 10.4 45.117 visible splats 830237
+> still 4.4 51.576 visible splats 823650
+> Sat Nov 21 13:20:52 UTC 2026
+
+### 🤖 Claude — 2026-11-21T13:20:59.385Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB; for i in $(seq 1 20); do grep -q 'flow frame 2' out_water/after_final/log.txt && break; sleep 6; done; tools/check_stills.sh out_water/after_final s_0.png s_0.7.png s_1.4.png s_2.3.png s_4.4.png s_6.4.png s_8.5_l-0.22_r0.png s_10.4_l0.22_r0.12.png; cat out_water/after_final/chk/summary.txt | python3 -c \"import json,sys; print(json.dumps(json.load(sys.stdin)))\"; python3 -I - <<'EOF'\nimport cv2, numpy as np\nd='out_water/after_final/'\na=[cv2.imread(d+f) for f in ['s_4.4.png','s_4.4_flow1 …[+703 chars]`
+

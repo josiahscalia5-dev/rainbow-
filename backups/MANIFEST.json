@@ -794,7 +794,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 26067,
-   "sha256": "fa6f1e771ee6142a3338a581907e912b5a8d1347e0896f3a383854746263c30d"
+   "sha256": "184642c294269855a56db103969970bd219fb1aa9e638c0927cdb7fbb389dd2f"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3271,
-   "sha256": "f1861909dd88ee9332cadf97fab4f5da0dfa2cc4ba6f946e63c0b2c7a82a539b"
+   "sha256": "2bc195fc785eb1581532b785262b1274655be3000f0bd67107117886880d7e19"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -7734,7 +7734,7 @@
   {
    "path": "backups/wip/screen05-agents/LAST_SYNC_UTC",
    "bytes": 33,
-   "sha256": "35e7e9b9f441f1b2d987f0bb2abe22afee12b4388386f89d230b6bee5f92d726"
+   "sha256": "69aab0f75832fbec422e4b5e4a102b8eb35e4d1cc2131db37dd21848f0e54bf4"
   },
   {
    "path": "backups/wip/screen05-agents/WORKSPACE",
@@ -8208,8 +8208,13 @@
   },
   {
    "path": "backups/wip/screen05-agents/agentB/out_water/after_final/log.txt",
-   "bytes": 630,
-   "sha256": "ac1e0d55f402aa2878ae32fca11f2f1c808e5de0332cf6561a6c69dac551e5e3"
+   "bytes": 669,
+   "sha256": "03eb7d5235e7f71c381988d0d8279a4e72928eb1f6cd31096c9ac5e95135a577"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentB/out_water/after_final/s_0.7.png",
+   "bytes": 725755,
+   "sha256": "43fc6a60ea7c2e983f01fec01cae2a170f071c630896d933914896c63fdde529"
   },
   {
    "path": "backups/wip/screen05-agents/agentB/out_water/after_final/s_0.png",
@@ -38773,8 +38778,8 @@
   },
   {
    "path": "tools/marble05/viewer/acceptance_verdict.py",
-   "bytes": 4856,
-   "sha256": "c030d7f610de3d8eac5fef34acb8131eeac0c1a3f26e0aa3a30768ce2207d772"
+   "bytes": 6187,
+   "sha256": "8969126aeebedfb0074e7b3560ec875dc9a84a2813f76cb238b3777400d0c1b2"
   },
   {
    "path": "tools/marble05/viewer/bubble.png",
@@ -38788,8 +38793,8 @@
   },
   {
    "path": "tools/marble05/viewer/final_acceptance.cjs",
-   "bytes": 8495,
-   "sha256": "495ab776cbb205e90ffe486a83ceae957c7b50efcfae3f135d9c49550979fa91"
+   "bytes": 12718,
+   "sha256": "0075959c0651b13c5d0d43ef9929b4fad8bc9fcadad07221d91a8b61eb8ce758"
   },
   {
    "path": "tools/marble05/viewer/glint.png",
@@ -38873,8 +38878,8 @@
   },
   {
    "path": "tools/marble05/viewer/visual_check.py",
-   "bytes": 4077,
-   "sha256": "59ffb069af2f501cd557ec10ff0150455abfa634a079bd1a5f5c32d3656c8640"
+   "bytes": 5747,
+   "sha256": "1be3777476e49a8e4bd79780262edcfb992e4164aa8e8d0aca5afbdb305f9f7f"
   },
   {
    "path": "tools/match/bake.py",

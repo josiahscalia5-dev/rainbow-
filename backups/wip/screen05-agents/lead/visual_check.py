@@ -6,7 +6,10 @@ away again (real flicker / popping), which smooth camera motion barely produces;
 import sys, json, glob, numpy as np, cv2
 d, ref = sys.argv[1:3]
 files = sorted(glob.glob(f'{d}/f_*.jpg'))
-R = cv2.imread(ref); R = cv2.resize(R, (412, 915))
+R0 = cv2.imread(ref)
+# the game keeps the approved picture's VERTICAL field of view, so a 412x915 portrait frame = the approved picture scaled to height 915
+# and centre-cropped to width 412 (round 32 lead fix: it used to be squashed to 412x915, which distorts the comparison)
+_w = round(R0.shape[1] * 915 / R0.shape[0]); R = cv2.resize(R0, (_w, 915), interpolation=cv2.INTER_AREA)[:, (_w - 412) // 2:(_w - 412) // 2 + 412]
 def hs_hist(img):
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)[150:]  # below the HUD
     h = cv2.calcHist([hsv], [0, 1], None, [36, 16], [0, 180, 0, 256]); return cv2.normalize(h, h, 1, 0, cv2.NORM_L1)
@@ -25,6 +28,19 @@ for f in files:
     chg = float(np.abs(body.astype(np.int16) - prev).mean()) if prev is not None else 0.0
     prev = body.astype(np.int16)
     rows.append({'frame': f.split('_')[-1][:4], 'black_pct': round(100 * black, 3), 'dark_patches': nblob, 'largest_dark_px': maxblob, 'sharpness_vs_start': round(sharp / sharp0, 3), 'colour_look_vs_approved': round(look, 3), 'change': round(chg, 2)})
+# frame 0 = the approved picture's camera: whole-frame likeness to the approved artwork (same crop), below the HUD (y >= 150) and all
+frame0_likeness = None
+if files:
+    F0 = cv2.imread(files[0]).astype(np.int16); A0 = R.astype(np.int16)
+    if F0.shape == A0.shape:
+        dmax = np.abs(F0 - A0).max(2)
+        frame0_likeness = {'within_20_levels_pct': round(100 * float((dmax <= 20).mean()), 1), 'within_20_below_hud_pct': round(100 * float((dmax[150:] <= 20).mean()), 1),
+                           'within_40_below_hud_pct': round(100 * float((dmax[150:] <= 40).mean()), 1), 'mean_abs_diff_below_hud': round(float(np.abs(F0 - A0)[150:].mean()), 1)}
+        # composition / colour layout at 1/8 size (52 x 114): what the eye sees at a glance, insensitive to 1-2 px texture shifts
+        f8 = cv2.resize(F0.astype(np.uint8)[150:], (52, 96), interpolation=cv2.INTER_AREA).astype(np.int16)
+        a8 = cv2.resize(A0.astype(np.uint8)[150:], (52, 96), interpolation=cv2.INTER_AREA).astype(np.int16)
+        frame0_likeness['eighth_size_within_20_below_hud_pct'] = round(100 * float((np.abs(f8 - a8).max(2) <= 20).mean()), 1)
+        frame0_likeness['eighth_size_within_40_below_hud_pct'] = round(100 * float((np.abs(f8 - a8).max(2) <= 40).mean()), 1)
 chg = np.array([r['change'] for r in rows[1:]]) if len(rows) > 1 else np.array([0.0])
 pops = []
 if len(files) >= 3:
@@ -45,5 +61,6 @@ res = {
                 'pop_median': float(np.median(pops)), 'pop_max': float(pops.max()), 'pop_spikes': int((pops > pop_lim).sum()),
                 'pop_spike_frames': [r['frame'] for r in rows if r.get('pop', 0) > pop_lim]},
     'colour_look_frame0': rows[0]['colour_look_vs_approved'] if rows else None,
+    'frame0_vs_approved': frame0_likeness,
 }
 json.dump({'summary': res, 'frames': rows}, open(f'{d}/visual_check.json', 'w'), indent=1); print(json.dumps(res, indent=1))

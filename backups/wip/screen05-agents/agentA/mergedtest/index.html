@@ -1,0 +1,30 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>splat view</title>
+<style>html,body{margin:0;background:#000;overflow:hidden}canvas{display:block}</style>
+<script type="importmap">{"imports":{"three":"./node_modules/three/build/three.module.js","three/addons/":"./node_modules/three/examples/jsm/","@sparkjsdev/spark":"./node_modules/@sparkjsdev/spark/dist/spark.module.js"}}</script>
+</head><body>
+<script type="module">
+import * as THREE from 'three';
+import { SplatMesh, SparkRenderer } from '@sparkjsdev/spark';
+const q = new URLSearchParams(location.search);
+const W = +(q.get('w') ?? 540), H = +(q.get('h') ?? 960);
+const renderer = new THREE.WebGLRenderer({ antialias: false, preserveDrawingBuffer: true });
+renderer.setPixelRatio(1); renderer.setSize(W, H); document.body.appendChild(renderer.domElement);
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(+(q.get('fov') ?? 60), W / H, 0.01, 1000);
+const spark = new SparkRenderer({ renderer }); scene.add(spark);
+const splat = new SplatMesh({ url: q.get('file') ?? 'draft_500k.spz' });
+splat.quaternion.set(1, 0, 0, 0); // Marble SPZ: OpenCV frame (y down, z forward) -> three.js
+scene.add(splat);
+await splat.initialized;
+window.bbox = (() => { try { const b = splat.getBoundingBox(); return { min: b.min.toArray(), max: b.max.toArray() }; } catch (e) { return String(e); } })();
+window.setView = async (p) => {
+  camera.fov = p.fov ?? camera.fov; camera.updateProjectionMatrix();
+  camera.position.set(...p.pos); camera.up.set(...(p.up ?? [0, 1, 0])); camera.lookAt(new THREE.Vector3(...p.look));
+  camera.updateMatrixWorld();
+  for (let i = 0; i < (p.frames ?? 6); i++) { renderer.render(scene, camera); await new Promise((r) => setTimeout(r, 120)); }
+  renderer.render(scene, camera);
+  return true;
+};
+window.ready = true;
+</script></body></html>

@@ -1901,3 +1901,265 @@ The Stop hook brought the autosave back by itself (new process 16204). One weakn
 > AUTOSAVE OK | branch ccr-c0679182-krbfci | scheduler daemon | last verified backup 2026-11-21T13:10:54+00:00 (5.2 min ago) | local 4a03c34 remote 4a03c34 (match) | uncommitted 0
 > 17074 bash /home/user/rainbow-/scripts/autosave-daemon.sh
 
+### 🤖 Claude — 2026-11-21T13:16:25.782Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/rainbow-/qa/match/05/r32 && cat > /home/user/rainbow-/qa/match/05/r32/RECOVERY_TEST.md <<'EOF'\n# Restart / recovery test — round 32 (2026-11-21 ~13:10–13:20 UTC, lead session `ccr-c0679182-krbfci`)\n\nUser order: \"verify the GitHub autosave and recovery process works reliably after a restart.\"\n\n## A. Fresh-account recovery from GitHub alone\n1. `GIT_LFS_SKIP_SMUDGE=1 git clone --depth 1 --branch ccr-c0679182-krbfci https://github.com/josiahscalia5-dev/rainbow-` (commit `4850e31`, autosave 13:06 UTC)\n   into an empty folder (what a new Claude account / new …[+3025 chars]`
+
+### 🧑 User — 2026-11-21T13:16:33.471Z
+
+> ↩︎ result: /dev/vda        252G   36G   34G  52% /
+
+### 🤖 Claude — 2026-11-21T13:16:34.582Z
+
+> 🔧 **TaskUpdate** `{"taskId": "7", "status": "completed"}`
+
+### 🧑 User — 2026-11-21T13:16:34.600Z
+
+> ↩︎ result: Updated task #7 status
+
+### 🤖 Claude — 2026-11-21T13:16:35.230Z
+
+> 🔧 **TaskUpdate** `{"taskId": "6", "status": "in_progress", "owner": "animation-and-gameplay-engineer (agent A)"}`
+
+### 🧑 User — 2026-11-21T13:16:35.265Z
+
+> ↩︎ result: Updated task #6 owner, status
+
+### 🤖 Claude — 2026-11-21T13:16:55.662Z
+
+> 🔧 **SendMessage** `{"to": "a08dcc646e5a9494e", "summary": "Small addition: expose window.coinLayout()", "message": "Small addition to the coin task (lead), no need to reply separately: please also expose `window.coinLayout()` → [{s, lat, h}] for all 26 coins (path length s, lateral offset, height above the water), plus `window.levelEnd()` → S_END minus your margin, the s at which `done` becomes true. The acceptance test generates its full-level player plan from them: a player who follows the coin trail, leaps for arcs, and adds extra dives and left/right moves in the gaps.", "type": "message", "recipient": "a08d …[+107 chars]`
+
+### 🧑 User — 2026-11-21T13:16:55.688Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to a08dcc646e5a9494e at its next tool round. Sending this moved nothing it is running to the background just now, so the message waits for that round unless something moves sooner. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"a08dcc646e5a9494e","name":"a08dcc646e5a9494e","ref":"7779b0"}}
+
+### 🤖 Claude — 2026-11-21T13:16:57.083Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/tools/marble05/viewer/final_acceptance.cjs", "offset": 38, "limit": 25}`
+
+### 🧑 User — 2026-11-21T13:16:57.104Z
+
+> ↩︎ result: 38	      const pt = (k) => [{ x: x0 + dx * k, y: y0 + dy * k, id: 1, radiusX: 8, radiusY: 8, force: 1 }];
+> 39	      await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: pt(0) });
+> 40	      for (const k of [0.25, 0.5, 0.75, 1]) { await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: pt(k) }); await new Promise((r) => setTimeout(r, 30)); }
+> 41	      await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+> 42	    };
+> 43	    // the player's inputs over the level (seconds): repeated left / right, leaps and dives
+> 44	    const plan = [[0.9, 'left'], [1.6, 'left'], [2.3, 'right'], [2.9, 'up'], [3.7, 'right'], [4.3, 'right'], [4.9, 'down'], [5.6, 'left'], [6.2, 'up'], [6.9, 'left']];
+> 45	    let pi = 0;
+> 46	    for (let i = 0; i < n; i++) {
+> 47	      const t = i / fps;
+> 48	      while (pi < plan.length && plan[pi][0] <= t) { await swipe(plan[pi][1]); log.push({ swipe: plan[pi][1], t: +t.toFixed(3) }); pi++; }
+> 49	      const o = await page.evaluate(([t, dt, sp]) => { const r = window.step(t, dt, 0, sp); return Object.assign({}, r, window.state ? window.state() : {}); }, [t, i === 0 ? 0 : 1 / fps, +speed]);
+> 50	      const cam = …[+1018 chars]
+
+### 🤖 Claude — 2026-11-21T13:17:32.322Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/tools/marble05/viewer/final_acceptance.cjs", "old_string": "    // the player's inputs over the level (seconds): repeated left / right, leaps and dives\n    const plan = [[0.9, 'left'], [1.6, 'left'], [2.3, 'right'], [2.9, 'up'], [3.7, 'right'], [4.3, 'right'], [4.9, 'down'], [5.6, 'left'], [6.2, 'up'], [6.9, 'left']];\n    let pi = 0;\n    for (let i = 0; i < n; i++) {\n      const t = i / fps;\n      while (pi < plan.length && plan[pi][0] <= t) { await swipe(plan[pi][1]); log.push({ swipe: plan[pi][1], t: +t.toFixed(3) }); pi++; }\n    …[+4639 chars]`
+
+### 🧑 User — 2026-11-21T13:17:32.384Z
+
+> ↩︎ result: The file /home/user/rainbow-/tools/marble05/viewer/final_acceptance.cjs has been updated successfully.
+
+### 🤖 Claude — 2026-11-21T13:17:44.023Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='tools/marble05/viewer/final_acceptance.cjs'; s=open(p).read()\ns=s.replace(\"console.log('frame', i, '/', n, JSON.stringify(o)\",\"console.log('frame', i, '/', n2, JSON.stringify(o)\")\nold=\"\"\"    const res = {\n      frames: fr.length, seconds: +(fr.length / fps).toFixed(2), errors, rendered: `${fa}:${fb}`,\"\"\"\nnew=\"\"\"    const ov = fr.filter((x) => x.coinOverlaps !== null && x.coinOverlaps !== undefined);\n    const dirs = {}; for (const x of swipes) dirs[x.swipe] = (dirs[x.swipe] || 0) + 1;\n    const res = {\n      frames: fr.length, seconds:  …[+793 chars]`
+
+### 🧑 User — 2026-11-21T13:17:44.111Z
+
+> ↩︎ result: syntax ok
+
+### 🤖 Claude — 2026-11-21T13:17:58.198Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='tools/marble05/viewer/acceptance_verdict.py'; s=open(p).read()\nold=s[s.index(\"crit('G2'\"):s.index(\"f = T['forward']\")]\nnew=\"\"\"lv = T.get('level') or {}\ncrit('G2', 'WHOLE level played to its end, every frame rendered', bool(lv.get('done')) and lv.get('s_end_target') is not None and T['frames'] == lv.get('done_frame', -2) + 1 and V['frames'] == T['frames'],\n     {'frames': T['frames'], 'images': V['frames'], 'done': lv.get('done'), 'done_frame': lv.get('done_frame'), 's_end_target': lv.get('s_end_target'), 's_end': T['forward'].get('s_end'), 'plan …[+1917 chars]`
+
+### 🧑 User — 2026-11-21T13:17:58.291Z
+
+> ↩︎ result: ok
+> 17:crit('G1', 'no page / console errors', len(T['errors']) == 0, T['errors'][:5], '0 error
+> 19:crit('G2', 'WHOLE level played to its end, every frame rendered', bool(lv.get('done')) 
+> 23:crit('G3', 'forward swimming continuous (no freeze, no jump)', f['freezes'] == 0 and f[
+> 25:crit('G4', 'left / right smooth (no teleport)', la['teleports_over_0_06'] == 0, {'max_s
+> 26:crit('G5', 'Benny stays inside the river', la.get('max_abs_lat', 9) <= 0.30, la.get('ma
+> 28:crit('G6', 'every real touch swipe produced the intended move; each direction used repe
+> 31:crit('G7', 'all three lanes used', {-1, 0, 1} <= set(la['lanes_seen']), la['lanes_seen'
+> 33:crit('G8', 'up / down correct and smooth', v['max_height'] >= 0.15 and v['min_height'] 
+> 36:crit('G9', 'coins collected while moving (the trail can really be followed)', got > 0 a
+> 38:crit('G11', 'coins never crowd / overlap on screen', bool(cc) and cc['frames_with_overl
+> 40:crit('G10', 'camera smooth (no shake / sudden jump / snap turn)', bool(cam) and cam['ma
+> 43:crit('V1', 'no black patches', dp['frames_with_patches'] == 0, dp, '0 frames with a con
+> 44:crit('V2', 'no blurry frames', V['sharpness_vs_start']['min'] >= 0.5, V['sharpness_vs_s
+> 45:crit('V3',  …[+258 chars]
+
+### 🤖 Claude — 2026-11-21T13:18:10.369Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='tools/marble05/viewer/acceptance_verdict.py'; s=open(p).read()\ns=s.replace(\"against FIXED thresholds (written 2026-11-21 before the first merged run; never loosened to make a run pass).\",\n\"against FIXED thresholds (written 2026-11-21 ~12:55 UTC before the first merged run; ~13:30 UTC, still before any full run, after the\\nuser's feedback: G2 = the WHOLE level to its end, G6 >= 4 swipes per direction, G9 >= 80 % of the coins, NEW G11 no overlapping coins;\\nnever loosened to make a run pass).\")\nopen(p,'w').write(s)\np='tools/marble05/viewer/visual_c …[+2166 chars]`
+
+### 🧑 User — 2026-11-21T13:18:10.765Z
+
+> ↩︎ result: ok
+>   "pop_max": 0.0,
+>   "pop_spikes": 0,
+>   "pop_spike_frames": []
+>  },
+>  "colour_look_frame0": 0.64,
+>  "frame0_vs_approved": {
+>   "within_20_levels_pct": 4.8,
+>   "within_20_below_hud_pct": 5.3,
+>   "within_40_below_hud_pct": 16.9,
+>   "mean_abs_diff_below_hud": 62.6
+>  }
+> }
+
+### 🤖 Claude — 2026-11-21T13:18:30.663Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='tools/marble05/viewer/visual_check.py'; s=open(p).read()\nold=\"\"\"                           'within_40_below_hud_pct': round(100 * float((dmax[150:] <= 40).mean()), 1), 'mean_abs_diff_below_hud': round(float(np.abs(F0 - A0)[150:].mean()), 1)}\"\"\"\nnew=\"\"\"                           'within_40_below_hud_pct': round(100 * float((dmax[150:] <= 40).mean()), 1), 'mean_abs_diff_below_hud': round(float(np.abs(F0 - A0)[150:].mean()), 1)}\n        # composition / colour layout at 1/8 size (52 x 114): what the eye sees at a glance, insensitive to 1-2 px textu …[+1356 chars]`
+
+### 🧑 User — 2026-11-21T13:18:31.409Z
+
+> ↩︎ result: "frame0_vs_approved": {
+>   "within_20_levels_pct": 4.8,
+>   "within_20_below_hud_pct": 5.3,
+>   "within_40_below_hud_pct": 16.9,
+>   "mean_abs_diff_below_hud": 62.6,
+>   "eighth_size_within_20_below_hud_pct": 5.4,
+>   "eighth_size_within_40_below_hud_pct": 19.1
+>  }
+> }
+> approved vs itself shifted 3 px: within 20 = 43.9 %
+
+### 🤖 Claude — 2026-11-21T13:18:36.109Z
+
+Even at 1/8 size only about 5 % of the start frame matches your picture within 20 levels. That means it's more than tiny texture shifts. Checking whether the overall framing or the colours are off.
+
+### 🤖 Claude — 2026-11-21T13:18:42.469Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad python3 -I - <<'EOF'\nimport cv2, numpy as np, os\nSP=os.environ['SP']\nR0=cv2.imread('references/05_flow_into_the_current.png'); F=cv2.imread(SP+'/vc_test/f_0000.jpg')\nbest=None\nfor sc in np.linspace(0.85,1.25,17):\n    h=round(915*sc); w=round(R0.shape[1]*h/R0.shape[0]); R=cv2.resize(R0,(w,h),interpolation=cv2.INTER_AREA)\n    for dy in range(-60,61,6):\n        for dx in range(-60,61,6):\n            x0=(w-412)//2+dx; y0=(h-915)//2+dy\n            if x0<0 or y0<0 or x0+412>w or y0+915>h: cont …[+829 chars]`
+
+### 🧑 User — 2026-11-21T13:18:49.571Z
+
+> ↩︎ result: best alignment: mean abs diff 47.5 at scale 1.05 dx -6 dy -18
+> approved mean BGR [201.7 128.6 140.8] mean S 177.4 mean V 228.6
+> ours f0 mean BGR [200.  131.8 154.6] mean S 161.8 mean V 227.7
+
+### 🤖 Claude — 2026-11-21T13:19:02.374Z
+
+The colours overall are the same family (average colour nearly identical), but the layout differs locally. Mapping where the biggest differences are:
+
+### 🤖 Claude — 2026-11-21T13:19:08.283Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad python3 -I - <<'EOF'\nimport cv2, numpy as np, os\nSP=os.environ['SP']\nR0=cv2.imread('references/05_flow_into_the_current.png'); w=round(R0.shape[1]*915/R0.shape[0]); A=cv2.resize(R0,(w,915),interpolation=cv2.INTER_AREA)[:,(w-412)//2:(w-412)//2+412]\nF=cv2.imread(SP+'/vc_test/f_0000.jpg')\nd=cv2.resize(np.abs(A.astype(np.int16)-F.astype(np.int16)).max(2).astype(np.uint8),(52,114),interpolation=cv2.INTER_AREA)\nhm=cv2.applyColorMap(cv2.resize(d,(412,915),interpolation=cv2.INTER_NEAREST),cv2.COLORM …[+527 chars]`
+
+### 🧑 User — 2026-11-21T13:19:08.786Z
+
+> ↩︎ result: tunnel top (150-380) mean max-channel diff 103.7
+> river mid (380-560) mean max-channel diff 103.8
+> Benny zone (450-820, x110-300) mean max-channel diff 137.0
+> bottom (820-915) mean max-channel diff 119.5
+
+### 🤖 Claude — 2026-11-21T13:19:10.685Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/diff_f0.jpg"}`
+
+### 🧑 User — 2026-11-21T13:19:10.714Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T13:19:31.525Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad; for src in \"$SP/agentA/out_controls/a_start_frame0.png:A-base-track\" \"$SP/vc_test/f_0000.jpg:merged-13:06\"; do f=${src%%:*}; nm=${src##*:}; mkdir -p $SP/vc_$nm; python3 -I -c \"\nimport cv2;cv2.imwrite('$SP/vc_$nm/f_0000.jpg',cv2.imread('$f'),[cv2.IMWRITE_JPEG_QUALITY,92])\"; echo \"$nm: $(python3 -I tools/marble05/viewer/visual_check.py $SP/vc_$nm references/05_flow_into_the_current.png | python3 -c \"import json,sys;d=json.load(sys.stdin);print('look',d['colour_look_frame0'],d['frame0_vs_ap …[+166 chars]`
+
+### 🧑 User — 2026-11-21T13:19:32.716Z
+
+> ↩︎ result: A-base-track: look 0.671 {'within_20_levels_pct': 5.6, 'within_20_below_hud_pct': 6.2, 'within_40_below_hud_pct': 17.1, 'mean_abs_diff_below_hud': 64.7, 'eighth_size_within_20_below_hud_pct': 6.6, 'eighth_size_within_40_below_hud_pct': 19.2}
+> 06: look 0.635 {'within_20_levels_pct': 4.7, 'within_20_below_hud_pct': 5.2, 'within_40_below_hud_pct': 16.9, 'mean_abs_diff_below_hud': 62.4, 'eighth_size_within_20_below_hud_pct': 5.3, 'eighth_size_within_40_below_hud_pct': 19.2}
+> /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB/out_water/:
+> after
+> after412
+> after_final
+> before
+> before412
+> before_x
+> budget_after.json
+> budget_before.json
+> diag
+> sheets
+> tmpchk
+> tmpview
+> 
+> /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB/out_water/after/:
+> s_0.7.png
+> s_0.png
+> s_1.4.png
+> s_2.3.png
+> s_4.4.png
+
+### 🤖 Claude — 2026-11-21T13:19:47.014Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad python3 -I - <<'EOF'\nimport cv2, numpy as np, os\nSP=os.environ['SP']\nR0=cv2.imread('references/05_flow_into_the_current.png'); w=round(R0.shape[1]*915/R0.shape[0]); A=cv2.resize(R0,(w,915),interpolation=cv2.INTER_AREA)[:,(w-412)//2:(w-412)//2+412]\nF=cv2.imread(SP+'/agentA/out_controls/a_start_frame0.png')\ndef benny(im):\n    hsv=cv2.cvtColor(im,cv2.COLOR_BGR2HSV)\n    # hat: white/cream knit + violet stripes; use the violet pompom+stripes: hue 125-150 (OpenCV), sat>120 ; restrict to centre ba …[+722 chars]`
+
+### 🧑 User — 2026-11-21T13:19:47.254Z
+
+> ↩︎ result: approved violet (pompom+hat stripes) blob: {'x': 117, 'y': 557, 'w': 174, 'h': 58, 'cx': 201.8, 'cy': 593.4, 'area': 4881}
+> ours frame0: {'x': 124, 'y': 513, 'w': 149, 'h': 110, 'cx': 209.3, 'cy': 571.6, 'area': 7713}
+> size ratio ours/approved: w 0.86 h 1.90; centre shift dx +8 dy -22 px
+
+### 🤖 Claude — 2026-11-21T13:19:54.085Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad python3 -I - <<'EOF'\nimport cv2, numpy as np, os\nSP=os.environ['SP']\nR0=cv2.imread('references/05_flow_into_the_current.png'); w=round(R0.shape[1]*915/R0.shape[0]); A=cv2.resize(R0,(w,915),interpolation=cv2.INTER_AREA)[:,(w-412)//2:(w-412)//2+412]\nF=cv2.imread(SP+'/agentA/out_controls/a_start_frame0.png')\nout=np.concatenate([A,np.full((915,6,3),255,np.uint8),F],1)\nfor y in range(400,915,50): cv2.line(out,(0,y),(out.shape[1],y),(255,255,255),1); cv2.putText(out,str(y),(2,y-2),cv2.FONT_HERSHEY …[+144 chars]`
+
+### 🧑 User — 2026-11-21T13:19:54.431Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-21T13:19:56.258Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/benny_cmp.jpg"}`
+
+### 🧑 User — 2026-11-21T13:19:56.284Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T13:20:05.525Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad; cd $SP/merged && grep -n \"KH\\b\\|KH =\\|0\\.9\\b\\|under\\|benny.scale\\|benny_h\" play3.html | cut -c1-240 | head -20", "description": "Find Benny size and placement code"}`
+
+### 🧑 User — 2026-11-21T13:20:05.567Z
+
+> ↩︎ result: 50:const WF = q.get('noflow') ? null : createWaterFlow({ TR, SC, meshes: [near, far, ...tiles.flatMap((t) => [t.hi, t.lo, t.lo2].filter(Boolean))], far, amp: +(q.get('flowamp') ?? 1), speed: +(q.get('flowspeed') ?? 0.9) }); // [waterflow]
+> 116:const KH = 0.9 * SC.benny_h / (0.99 * 0.78); // the painted Benny's size: ~22 % of him under the water line
+> 117:const holder = new THREE.Group(); holder.rotation.y = Math.PI; holder.scale.setScalar(KH); holder.position.y = 0.496 * KH - 0.22 * 0.99 * KH;
+> 120:const pxW = SC.benny_h / 400; // painted px -> world near Benny (the painted Benny is ~400 px from pom-pom to water)
+> 163:const CT = q.get('controls') === '0' ? null : installControls({ THREE, canvas: renderer.domElement, camera, q, at, frameAt, coins, scene, U, bmat, benny, splash, splashTex, bubTex, coinTex: ctex, coinD: SC.coin_d, bennyFullH: 0.99 * KH,
+> 188:    const tw = Math.max(0, Math.sin(t * 6 + gP[i])); gAlpha[i] = tw * tw * 0.9 * THREE.MathUtils.smoothstep(st.s - 1.4, st.s - 0.6, gS[i]);
+> 199:  const Fc = frameAt(st.s, 0.9); const Mc = basis(Fc);
+> 204:    if (c.got >= 0) { const k = (t - c.got) / 0.4; c.sp.visible = k < 1; if (k < 1) { c.sp.position.copy(benny.position).addScaledVect …[+145 chars]
+
+### 🤖 Claude — 2026-11-21T13:20:29.544Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad; cd $SP/merged && python3 -I - <<'EOF'\nimport json, numpy as np\nS=json.load(open('scene05.json')); T=json.load(open('track_w/track.json'))\nfwd=np.array(S['cam']['fwd']); up=np.array(S['cam']['up']); fov=np.radians(S['cam']['fov'])\nz=-fwd/np.linalg.norm(fwd); x=np.cross(up,z); x/=np.linalg.norm(x); y=np.cross(z,x); R=np.stack([x,y,z],1)\nP=np.array(T['trail']); TS=np.array(T['trail_s']); n=np.array(S['plane']['n'])\ndef at(s): return np.array([np.interp(s,TS,P[:,k]) for k in range(3)])\ndef pro …[+508 chars]`
+
+### 🧑 User — 2026-11-21T13:20:29.722Z
+
+> ↩︎ result: Benny at s=0.0: water line y=706, pompom top y=486, visible height 220 px, dist 1.12
+> Benny at s=0.1: water line y=666, pompom top y=461, visible height 205 px, dist 1.22
+> Benny at s=0.2: water line y=633, pompom top y=440, visible height 192 px, dist 1.31
+> Benny at s=0.3: water line y=606, pompom top y=426, visible height 181 px, dist 1.41
+> Benny at s=0.4: water line y=582, pompom top y=412, visible height 170 px, dist 1.50
+> Benny at s=0.5: water line y=562, pompom top y=401, visible height 161 px, dist 1.60
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T13:20:40.626Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad; cd $SP/merged && grep -n \"clipping\\|localClipping\\|clipPlane\\|discard\\|uWater\\|depthTest\\|depthWrite\" play3.html controls.js | cut -c1-200 | head -20", "description": "Look for water-line clipping of Benny"}`
+
+### 🧑 User — 2026-11-21T13:20:40.678Z
+
+> ↩︎ result: play3.html:65:  const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: tx, toneMapped: false, transparent: true, depthWrite: false })); sp.scale.set(2.6, 2.6, 1); sp.renderOrder = -10; scene.add(
+> play3.html:125:const splash = new THREE.Sprite(new THREE.SpriteMaterial({ map: splashTex, toneMapped: false, transparent: true, depthWrite: false }));
+> play3.html:138:  transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, toneMapped: false,
+> play3.html:143:for (let i = 0; i < 46; i++) { const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: bubTex, toneMapped: false, transparent: true, depthWrite: false, opacity: 0.85 })); sp.renderO
+> play3.html:149:  const s = 0.45 + i * 0.32; const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: ctex, toneMapped: false, transparent: true, alphaTest: 0.35, depthWrite: false }));
+> controls.js:123:    const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: coinTex, toneMapped: false, transparent: true, alphaTest: 0.35, depthWrite: false }));
+> controls.js:136:  for (let i = 0; i < 3; i++) { const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: splashTex, toneMapped: false, transparent: true, depthWrite: false })); sp.r …[+899 chars]
+

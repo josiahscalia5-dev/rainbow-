@@ -933,3 +933,174 @@ Address this before completing your current task.
 > 4://   * finds the river's own splats: height above the (sloped) water surface < ~0.1 and inside the tunnel floor
 > 8://   * adds a view-d …[+2336 chars]
 
+### 🤖 Claude — 2026-11-21T13:16:24.150Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && python3 -I -c \"\nfrom PIL import Image; import numpy as np\na=np.asarray(Image.open('coin.png').convert('RGBA')); al=a[...,3]\nprint(a.shape); ys,xs=np.where(al>0.35*255); print('bbox', xs.min(), xs.max(), ys.min(), ys.max(), 'frac w', (xs.max()-xs.min()+1)/a.shape[1], 'frac h', (ys.max()-ys.min()+1)/a.shape[0])\n\"; python3 -I -c \"\nimport json\nT=json.load(open('../agentB/track_w/track.json')); import numpy as np\ntr=np.array(T['trail']); ts=np.array(T['trail_s'])\nP=np.array(T['XB'] …[+484 chars]`
+
+### 🧑 User — 2026-11-21T13:16:24.660Z
+
+> ↩︎ result: (124, 137, 4)
+> bbox 0 136 0 123 frac w 1.0 frac h 1.0
+> S_END 32.160000000000004 dist 0.7456992810305813 trail end 32.160000000000004
+> old trail same as new for first n pts: 0.12360746796323951
+> glow [ -4.6496816    2.61503431 -31.82713475] trail end pt [ -4.31916834   1.93933823 -31.25949179] dist end->glow 0.942349584661092
+
+### 🤖 Claude — 2026-11-21T13:16:57.674Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && grep -n \"coins in the side lanes\\|const addCoin\\|AIR0\\|side-lane rows\\|for (const \\[s0, lane\\]\\|coins he missed\\|const sNow = getS();\\|function hits\\|^  }$\\|HUD coin counter\\|function state\\|got: { water\" controls.js", "description": "Locate coin code sections in controls.js"}`
+
+### 🧑 User — 2026-11-21T13:16:57.722Z
+
+> ↩︎ result: 2:// Lanes (swipe left / right), leap (swipe up), dive (swipe down), coins in the side lanes and in the air,
+> 76:  }
+> 108:  }
+> 119:  }
+> 121:  // ---------------- coins in the side lanes and in the air (same sprites / pop as the water line) ----------------
+> 122:  const addCoin = (s, lat, hAir) => {
+> 129:  const AIR0 = 0.47 - coinD * 0.75;
+> 130:  for (const s0 of [3.1, 6.7, 10.3]) { addCoin(s0 - 0.15, 0, AIR0); addCoin(s0, 0, AIR0 + 0.06); addCoin(s0 + 0.15, 0, AIR0); }
+> 131:  // side-lane rows
+> 132:  for (const [s0, lane] of [[1.6, -1], [4.4, 1], [8.0, -1], [11.6, 1]]) for (let i = 0; i < 3; i++) addCoin(s0 + i * 0.3, lane * P.LANE, 0);
+> 153:  }
+> 221:  }
+> 228:  }
+> 234:  }
+> 273:    // coins he missed (other lane / under a leap) shrink + sink away behind him instead of sliding huge past the camera;
+> 276:    const sNow = getS();
+> 284:    // HUD coin counter pulse
+> 286:  }
+> 289:  function hits(coin) {
+> 296:  }
+> 298:  function state() {
+> 305:      got: { water: nGot('water'), lane: nGot('lane'), air: nGot('air') }, lastPick: S.lastPick, swipes: log.length,
+> 307:  }
+> 320:  }
+> 333:  }
+
+### 🤖 Claude — 2026-11-21T13:17:00.597Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && sed -n 119,134p controls.js; echo ----; sed -n 268,310p controls.js", "description": "Show coin code blocks to replace"}`
+
+### 🧑 User — 2026-11-21T13:17:00.634Z
+
+> ↩︎ result: }
+> 
+>   // ---------------- coins in the side lanes and in the air (same sprites / pop as the water line) ----------------
+>   const addCoin = (s, lat, hAir) => {
+>     const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: coinTex, toneMapped: false, transparent: true, alphaTest: 0.35, depthWrite: false }));
+>     sp.scale.set(coinD * 1.15, coinD * 1.15, 1);
+>     const Fs = frameAt(s); at(s, sp.position).addScaledVector(Fs.r, lat).addScaledVector(Fs.n, coinD * 0.75 + hAir);
+>     sp.renderOrder = 10; scene.add(sp); coins.push({ s, lat, h: hAir, sp, got: -1, kind: hAir > 0 ? 'air' : 'lane' });
+>   };
+>   // air arcs over the centre lane: only reachable with a leap (the top coin sits ~0.5 above the water, his head ~0.36)
+>   const AIR0 = 0.47 - coinD * 0.75;
+>   for (const s0 of [3.1, 6.7, 10.3]) { addCoin(s0 - 0.15, 0, AIR0); addCoin(s0, 0, AIR0 + 0.06); addCoin(s0 + 0.15, 0, AIR0); }
+>   // side-lane rows
+>   for (const [s0, lane] of [[1.6, -1], [4.4, 1], [8.0, -1], [11.6, 1]]) for (let i = 0; i < 3; i++) addCoin(s0 + i * 0.3, lane * P.LANE, 0);
+> 
+>   // ---------------- water effects: leap / dive splashes, droplets, dive bubbles ----------------
+> ----
+>       if (d.life <= 0) continue; d.age += dt;
+>       …[+2777 chars]
+
+### 🤖 Claude — 2026-11-21T13:17:45.220Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && cp controls.js /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA_controls_before_r32b.js && python3 -I - <<'EOF'\np='controls.js'; s=open(p).read()\n# ---- coin builder\na=s.index(\"  // ---------------- coins in the side lanes and in the air (same sprites / pop as the water line) ----------------\")\nb=s.index(\"  // ---------------- water effects: leap / dive splashes, droplets, dive bubbles ----------------\")\nnew_coins='''  // ----------------  …[+10578 chars]`
+
+### 🧑 User — 2026-11-21T13:17:45.309Z
+
+> ↩︎ result: Exit code 1
+> 0
+
+### 🤖 Claude — 2026-11-21T13:17:54.798Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && grep -n \"HUD coin counter pulse\" -B3 -A3 controls.js; grep -n \"grow\\|nNow\" controls.js | head; diff play3.orig.html play3.html | grep '^[<>]' | cut -c1-140", "description": "Verify edited regions"}`
+
+### 🧑 User — 2026-11-21T13:17:54.854Z
+
+> ↩︎ result: 314-      d.v.addScaledVector(F.n, -d.g * dt); d.p.addScaledVector(d.v, dt); d.sp.position.copy(d.p);
+> 315-      const k = d.age / d.life, z = d.size * (0.7 + 0.5 * k); d.sp.scale.set(z, z, 1); d.sp.material.opacity = 0.9 * Math.min(1, k * 6) * (1 - k * k);
+> 316-    }
+> 317:    // HUD coin counter pulse
+> 318-    if (coinEl) { S.hudPulse = Math.max(0, S.hudPulse - dt * 4); coinEl.style.display = 'inline-block'; coinEl.style.transform = `scale(${(1 + 0.25 * Math.sin(Math.PI * S.hudPulse)).toFixed(3)})`; }
+> 319-  }
+> 320-
+> 69:  let F = null, nNow = new THREE.Vector3(0, 1, 0);
+> 282:    F = Fr; nNow.copy(F.n);
+> 326:    v1.copy(benny.position).addScaledVector(nNow, P.BODY_LO); v2.copy(benny.position).addScaledVector(nNow, P.BODY_HI);
+> > <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"><!-- [controls] phones: 1 CSS px = 
+> > import { installControls } from './controls.js'; // [controls]
+> < for (let i = 0; i < 40; i++) {
+> > for (let i = 0; i < (q.get('controls') === '0' ? 40 : 0); i++) { // [controls] the 26-coin trail is built by controls.js
+> > const CT = q.get('controls') === '0' ? null : installControls({ THREE, TR, canvas: renderer.domElement, camer …[+2130 chars]
+
+### 🤖 Claude — 2026-11-21T13:18:02.705Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && python3 -I /home/user/rainbow-/tools/marble05/merge_r32.py /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA/mergedtest 2>&1 | tail -30; grep -n \"\\[controls\\]\\|camInfo\\|qaRise\" mergedtest/play3.html | cut -c1-150", "description": "Build private merged copy with the lead's merge script"}`
+
+### 🧑 User — 2026-11-21T13:18:02.862Z
+
+> ↩︎ result: from agentA: CONTROLS_NOTES.md
+> from agentA: acceptance_logic.cjs
+> from agentA: acceptance_logic.json
+> from agentA: acceptance_logic.out
+> from agentA: compare0.json
+> from agentA: compare0.py
+> from agentA: controls.js
+> from agentA: live_key_check.cjs
+> from agentA: live_key_check.json
+> from agentA: live_key_check.out
+> from agentA: play3.orig.html
+> from agentA: serve.cjs
+> from agentA: swipe_log.json
+> from agentA: swipe_log_logic_only.json
+> from agentA: swipe_test.cjs
+> from agentA: swipe_test.out
+> from agentA: swipe_test_logic.out
+> conflict: both added lines here -> kept both (import { createWaterFlow } from './waterflow.js'; // [waterf | import { installControls } from './controls.js'; // [control)
+> conflict: both added lines here -> kept both (let qaRise = 0; window.qaPose = (lat, rise = 0) => { st.lat  | const CT = q.get('controls') === '0' ? null : installControl)
+> conflict: camera line = agentA controls + agentB qaRise
+> conflict: end of step = agentB water update + agentA return
+> merged -> /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA/mergedtest
+> 3:<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"><!-- [cont …[+2102 chars]
+
+### 🤖 Claude — 2026-11-21T13:18:24.546Z
+
+The merge works cleanly with the new hooks. Next, a logic-only check of the coins and the level end on the merged copy.
+
+### 🤖 Claude — 2026-11-21T13:18:28.796Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && python3 -I - <<'EOF'\np='controls.js'; s=open(p).read()\nold=\"  window.coinLayout = () => LAYOUT.map((L) => ({ s: L.s, lat: +L.lat.toFixed(3), h: L.h, run: L.run, runKind: L.runKind }));\"\nassert old in s\ns=s.replace(old,\"\"\"  // coinLayout(): the 26 coins as {s, lat, h} (+ run, run kind, world centre p and the river normal n there, for QA)\n  window.coinLayout = () => LAYOUT.map((L, i) => ({ s: L.s, lat: +L.lat.toFixed(3), h: L.h, run: L.run, runKind: L.runKind,\n    p: coins.find( …[+319 chars]`
+
+### 🧑 User — 2026-11-21T13:18:28.890Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-21T13:19:13.304Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA/coins_level_check.cjs", "content": "// Round 32b: logic-only check of the 26-coin trail and the level end, on any folder with play3.html + controls.js\n// (normally the private merged copy agentA/mergedtest = agentB's visuals + my controls).\n// usage: NODE_PATH=$(npm root -g) node coins_level_check.cjs <folder> [out.json] [--stills]\n// 1. frame 0: coinLayout(), levelEnd(), coinScreen() vs the approved coin centres / sizes (approved_coins.json, 864x1536 scaled to\n//    the 412x915 canvas:  …[+10900 chars]`
+
+### 🧑 User — 2026-11-21T13:19:13.330Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA/coins_level_check.cjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-21T13:19:42.193Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && python3 -I - <<'EOF'\np='coins_level_check.cjs'; s=open(p).read()\nold=\"    const appr = JSON.parse(fs.readFileSync(path.join(dir, '..', '..', 'approved_coins.json'), 'utf8').toString());\"\nassert old in s\ns=s.replace(old,\"    const apprFile = [path.join(dir, '..', 'approved_coins.json'), path.join(dir, '..', '..', 'approved_coins.json')].find((f) => fs.existsSync(f));\\n    const appr = JSON.parse(fs.readFileSync(apprFile, 'utf8'));\")\nold=\"\"\"    if (doStills) { await page.evalu …[+5872 chars]`
+
+### 🧑 User — 2026-11-21T13:19:42.346Z
+
+> ↩︎ result: ok
+> copied
+
+### 🤖 Claude — 2026-11-21T13:19:46.448Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && NODE_PATH=$(npm root -g) timeout 900 node coins_level_check.cjs mergedtest coins_level_logic.json 2>&1 | cut -c1-3500", "description": "Run logic-only coin and level-end check on merged copy", "timeout": 960000}`
+
+### 🧑 User — 2026-11-21T13:20:04.043Z
+
+> ↩︎ result: serve.cjs: port 9069 verified to serve /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA/mergedtest (token + "export function installControls" in controls.js)
+> ready 16s
+> {"layout_checks":{"count":26,"min_path_gap":0.44,"max_abs_lat":0.22,"min_h":0,"max_h":0.42,"last_coin_s":27.5,"coins_before_done":26,"hud_if_all":1680},"levelEnd":30.56,"sEnd":32.16,"frame0_match":[{"coin":1,"dx":-15.9,"dy":7,"r_ours":28.13,"r_appr":28.6},{"coin":2,"dx":-19.9,"dy":11.5,"r_ours":20.45,"r_appr":20.8},{"coin":3,"dx":-20.9,"dy":15.2,"r_ours":16.31,"r_appr":16.7},{"coin":4,"dx":-22.4,"dy":17.6,"r_ours":12.39,"r_appr":12.8},{"coin":5,"dx":-24.4,"dy":19,"r_ours":7.87,"r_appr":8.3},{"coin":6,"dx":-45.3,"dy":13.7,"r_ours":4.77,"r_appr":5.7},{"coin":7,"dx":-59.6,"dy":12.5,"r_ours":4.16,"r_appr":4.2},{"coin":8,"dx":-51.8,"dy":11.9,"r_ours":3.63,"r_appr":3.6}],"lat_search":[{"s":3.47,"lat":0.22,"err":35.1,"x":211.5,"y":331.8},{"s":3.97,"lat":0.22,"err":55.3,"x":203.6,"y":324.3},{"s":4.47,"lat":0.22,"err":50.4,"x":218.4,"y":316.6}],"frame0_overlaps":[]}
+> {"frames":691,"seconds":23.03,"done_frame":655,"done_t":21.83,"done_s":30.567,"s_final":31.052,"s_max":31.052,"coins_end": …[+1317 chars]
+
