@@ -5,3 +5,7 @@ console.warning: [.WebGL-0x2914001c1000]GL Driver Message (OpenGL, Performance, 
 console.warning: [.WebGL-0x2914001c1000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)
 ready 23.529
 still 0 50.254 visible splats 655734
+still 0.7 61.972 visible splats 866071
+still 1.4 69.338 visible splats 866071
+still 2.3 59.013 visible splats 866071
+still 6.4 65.385 visible splats 830237

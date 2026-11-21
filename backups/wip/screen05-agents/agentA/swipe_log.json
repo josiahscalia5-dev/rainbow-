@@ -818,187 +818,7 @@
     "swipes": 0
    },
    "hud": "🪙 1,420",
-   "render_s": 27.8
-  },
-  {
-   "name": "b_mid_lane_change_left",
-   "file": "b_mid_lane_change_left.png",
-   "frame": 13,
-   "t": 0.433,
-   "state": {
-    "s": 0.607,
-    "lane": -1,
-    "lat": -0.1384,
-    "height": 0,
-    "coins": 1430,
-    "move": "lane",
-    "queued": null,
-    "lean": -0.177,
-    "pitch": 0,
-    "yaw": 0.094,
-    "pom": -0.047,
-    "camLat": -0.0062,
-    "camH": 0,
-    "swim": 1.133,
-    "got": {
-     "water": 1,
-     "lane": 0,
-     "air": 0
-    },
-    "lastPick": {
-     "kind": "water",
-     "s": 0.45,
-     "lat": 0,
-     "clock": 0.233
-    },
-    "swipes": 1
-   },
-   "hud": "🪙 1,430",
-   "render_s": 29.3
-  },
-  {
-   "name": "c_leap_top",
-   "file": "c_leap_top.png",
-   "frame": 67,
-   "t": 2.233,
-   "state": {
-    "s": 3.127,
-    "lane": 0,
-    "lat": -0.0003,
-    "height": 0.2781,
-    "coins": 1500,
-    "move": "leap",
-    "queued": null,
-    "lean": 0.004,
-    "pitch": 0.075,
-    "yaw": -0.004,
-    "pom": -0.016,
-    "camLat": -0.0281,
-    "camH": 0.0522,
-    "swim": 0.31,
-    "got": {
-     "water": 2,
-     "lane": 3,
-     "air": 3
-    },
-    "lastPick": {
-     "kind": "air",
-     "s": 3.25,
-     "lat": 0,
-     "clock": 2.233
-    },
-    "swipes": 4
-   },
-   "hud": "🪙 1,500",
-   "render_s": 34.6
-  },
-  {
-   "name": "d_after_air_coin",
-   "file": "d_after_air_coin.png",
-   "frame": 72,
-   "t": 2.4,
-   "state": {
-    "s": 3.36,
-    "lane": 0,
-    "lat": 0,
-    "height": 0.1746,
-    "coins": 1510,
-    "move": "leap",
-    "queued": null,
-    "lean": 0,
-    "pitch": -0.038,
-    "yaw": 0,
-    "pom": 0.013,
-    "camLat": -0.0135,
-    "camH": 0.0733,
-    "swim": 0.772,
-    "got": {
-     "water": 3,
-     "lane": 3,
-     "air": 3
-    },
-    "lastPick": {
-     "kind": "water",
-     "s": 3.33,
-     "lat": 0,
-     "clock": 2.4
-    },
-    "swipes": 4
-   },
-   "hud": "🪙 1,510",
-   "render_s": 45.4
-  },
-  {
-   "name": "e_dive",
-   "file": "e_dive.png",
-   "frame": 102,
-   "t": 3.4,
-   "state": {
-    "s": 4.76,
-    "lane": 1,
-    "lat": 0.22,
-    "height": -0.2704,
-    "coins": 1540,
-    "move": "dive",
-    "queued": null,
-    "lean": 0,
-    "pitch": -0.034,
-    "yaw": 0,
-    "pom": 0.012,
-    "camLat": 0.0965,
-    "camH": -0.0142,
-    "swim": 1.1,
-    "got": {
-     "water": 4,
-     "lane": 5,
-     "air": 3
-    },
-    "lastPick": {
-     "kind": "lane",
-     "s": 4.7,
-     "lat": 0.22,
-     "clock": 3.3
-    },
-    "swipes": 6
-   },
-   "hud": "🪙 1,540",
-   "render_s": 40.5
-  },
-  {
-   "name": "f_resurface_splash",
-   "file": "f_resurface_splash.png",
-   "frame": 118,
-   "t": 3.933,
-   "state": {
-    "s": 5.507,
-    "lane": 1,
-    "lat": 0.22,
-    "height": 0,
-    "coins": 1550,
-    "move": null,
-    "queued": null,
-    "lean": 0,
-    "pitch": 0.102,
-    "yaw": 0,
-    "pom": -0.003,
-    "camLat": 0.109,
-    "camH": -0.012,
-    "swim": 1,
-    "got": {
-     "water": 4,
-     "lane": 6,
-     "air": 3
-    },
-    "lastPick": {
-     "kind": "lane",
-     "s": 5,
-     "lat": 0.22,
-     "clock": 3.5
-    },
-    "swipes": 6
-   },
-   "hud": "🪙 1,550",
-   "render_s": 34.3
+   "render_s": 23.9
   }
  ],
  "checks": {
@@ -1020,7 +840,7 @@
   "no_page_errors": true
  },
  "errors": [],
- "load_s": 32.3,
+ "load_s": 14.6,
  "canvas": {
   "x": 0,
   "y": 0,
@@ -1056,7 +876,7 @@
   "lat_d2": 0.0221,
   "maxAbsCamLat": 0.1095,
   "maxCamH": 0.0734,
-  "minCamH": -0.0201,
+  "minCamH": -0.0199,
   "maxAbsLat": 0.22
  },
  "final": {
@@ -2306,9 +2126,9 @@
    "s": 4.247,
    "lane": 1,
    "lat": 0.2157,
-   "h": -0.02,
+   "h": -0.0142,
    "lean": 0.04,
-   "pitch": -0.007,
+   "pitch": -0.006,
    "camLat": 0.0492,
    "camH": 0.0049,
    "coins": 1520,
@@ -2319,11 +2139,11 @@
    "s": 4.293,
    "lane": 1,
    "lat": 0.2173,
-   "h": -0.0701,
+   "h": -0.051,
    "lean": 0.028,
-   "pitch": -0.029,
+   "pitch": -0.021,
    "camLat": 0.0558,
-   "camH": 0.0038,
+   "camH": 0.0039,
    "coins": 1530,
    "move": "dive"
   },
@@ -2332,11 +2152,11 @@
    "s": 4.34,
    "lane": 1,
    "lat": 0.2183,
-   "h": -0.1352,
+   "h": -0.1017,
    "lean": 0.019,
-   "pitch": -0.065,
+   "pitch": -0.049,
    "camLat": 0.0619,
-   "camH": 0.0025,
+   "camH": 0.0027,
    "coins": 1530,
    "move": "dive"
   },
@@ -2345,11 +2165,11 @@
    "s": 4.387,
    "lane": 1,
    "lat": 0.2189,
-   "h": -0.2003,
+   "h": -0.1576,
    "lean": 0.013,
-   "pitch": -0.106,
+   "pitch": -0.082,
    "camLat": 0.0676,
-   "camH": 0.0009,
+   "camH": 0.0014,
    "coins": 1530,
    "move": "dive"
   },
@@ -2358,11 +2178,11 @@
    "s": 4.433,
    "lane": 1,
    "lat": 0.2193,
-   "h": -0.2503,
+   "h": -0.2101,
    "lean": 0.009,
-   "pitch": -0.138,
+   "pitch": -0.113,
    "camLat": 0.0728,
-   "camH": -0.0009,
+   "camH": -0.0002,
    "coins": 1530,
    "move": "dive"
   },
@@ -2371,11 +2191,11 @@
    "s": 4.48,
    "lane": 1,
    "lat": 0.2196,
-   "h": -0.2704,
+   "h": -0.2503,
    "lean": 0.006,
-   "pitch": -0.149,
+   "pitch": -0.134,
    "camLat": 0.0775,
-   "camH": -0.0031,
+   "camH": -0.0021,
    "coins": 1530,
    "move": "dive"
   },
@@ -2384,11 +2204,11 @@
    "s": 4.527,
    "lane": 1,
    "lat": 0.2197,
-   "h": -0.2704,
+   "h": -0.2698,
    "lean": 0.004,
-   "pitch": -0.137,
+   "pitch": -0.139,
    "camLat": 0.0817,
-   "camH": -0.0053,
+   "camH": -0.0042,
    "coins": 1530,
    "move": "dive"
   },
@@ -2399,9 +2219,9 @@
    "lat": 0.2198,
    "h": -0.2704,
    "lean": 0.002,
-   "pitch": -0.113,
+   "pitch": -0.126,
    "camLat": 0.0854,
-   "camH": -0.0074,
+   "camH": -0.0063,
    "coins": 1530,
    "move": "dive"
   },
@@ -2412,9 +2232,9 @@
    "lat": 0.2199,
    "h": -0.2704,
    "lean": 0.002,
-   "pitch": -0.088,
+   "pitch": -0.104,
    "camLat": 0.0887,
-   "camH": -0.0094,
+   "camH": -0.0083,
    "coins": 1540,
    "move": "dive"
   },
@@ -2425,9 +2245,9 @@
    "lat": 0.2199,
    "h": -0.2704,
    "lean": 0.001,
-   "pitch": -0.066,
+   "pitch": -0.081,
    "camLat": 0.0917,
-   "camH": -0.0112,
+   "camH": -0.0102,
    "coins": 1540,
    "move": "dive"
   },
@@ -2438,9 +2258,9 @@
    "lat": 0.22,
    "h": -0.2704,
    "lean": 0.001,
-   "pitch": -0.048,
+   "pitch": -0.06,
    "camLat": 0.0942,
-   "camH": -0.0128,
+   "camH": -0.0119,
    "coins": 1540,
    "move": "dive"
   },
@@ -2451,9 +2271,9 @@
    "lat": 0.22,
    "h": -0.2704,
    "lean": 0,
-   "pitch": -0.034,
+   "pitch": -0.044,
    "camLat": 0.0965,
-   "camH": -0.0142,
+   "camH": -0.0134,
    "coins": 1540,
    "move": "dive"
   },
@@ -2464,9 +2284,9 @@
    "lat": 0.22,
    "h": -0.2704,
    "lean": 0,
-   "pitch": -0.024,
+   "pitch": -0.031,
    "camLat": 0.0984,
-   "camH": -0.0154,
+   "camH": -0.0147,
    "coins": 1540,
    "move": "dive"
   },
@@ -2477,9 +2297,9 @@
    "lat": 0.22,
    "h": -0.2704,
    "lean": 0,
-   "pitch": -0.017,
+   "pitch": -0.022,
    "camLat": 0.1001,
-   "camH": -0.0165,
+   "camH": -0.0158,
    "coins": 1540,
    "move": "dive"
   },
@@ -2490,9 +2310,9 @@
    "lat": 0.22,
    "h": -0.2704,
    "lean": 0,
-   "pitch": -0.012,
+   "pitch": -0.015,
    "camLat": 0.1015,
-   "camH": -0.0173,
+   "camH": -0.0168,
    "coins": 1550,
    "move": "dive"
   },
@@ -2503,9 +2323,9 @@
    "lat": 0.22,
    "h": -0.2704,
    "lean": 0,
-   "pitch": -0.008,
+   "pitch": -0.011,
    "camLat": 0.1028,
-   "camH": -0.0181,
+   "camH": -0.0176,
    "coins": 1550,
    "move": "dive"
   },
@@ -2516,9 +2336,9 @@
    "lat": 0.22,
    "h": -0.2704,
    "lean": 0,
-   "pitch": -0.005,
+   "pitch": -0.007,
    "camLat": 0.1039,
-   "camH": -0.0187,
+   "camH": -0.0183,
    "coins": 1550,
    "move": "dive"
   },
@@ -2529,9 +2349,9 @@
    "lat": 0.22,
    "h": -0.2704,
    "lean": 0,
-   "pitch": -0.004,
+   "pitch": -0.005,
    "camLat": 0.1048,
-   "camH": -0.0192,
+   "camH": -0.0189,
    "coins": 1550,
    "move": "dive"
   },
@@ -2542,9 +2362,9 @@
    "lat": 0.22,
    "h": -0.2683,
    "lean": 0,
-   "pitch": -0.002,
+   "pitch": -0.003,
    "camLat": 0.1056,
-   "camH": -0.0197,
+   "camH": -0.0194,
    "coins": 1550,
    "move": "dive"
   },
@@ -2557,7 +2377,7 @@
    "lean": 0,
    "pitch": 0.006,
    "camLat": 0.1063,
-   "camH": -0.02,
+   "camH": -0.0198,
    "coins": 1550,
    "move": "dive"
   },
@@ -2570,7 +2390,7 @@
    "lean": 0,
    "pitch": 0.025,
    "camLat": 0.1068,
-   "camH": -0.0201,
+   "camH": -0.0199,
    "coins": 1550,
    "move": "dive"
   },
@@ -2583,7 +2403,7 @@
    "lean": 0,
    "pitch": 0.053,
    "camLat": 0.1073,
-   "camH": -0.0199,
+   "camH": -0.0197,
    "coins": 1550,
    "move": "dive"
   },
@@ -2596,7 +2416,7 @@
    "lean": 0,
    "pitch": 0.084,
    "camLat": 0.1077,
-   "camH": -0.0193,
+   "camH": -0.0192,
    "coins": 1550,
    "move": "dive"
   },
@@ -2609,7 +2429,7 @@
    "lean": 0,
    "pitch": 0.111,
    "camLat": 0.1081,
-   "camH": -0.0183,
+   "camH": -0.0182,
    "coins": 1550,
    "move": "dive"
   },
@@ -2620,9 +2440,9 @@
    "lat": 0.22,
    "h": -0.023,
    "lean": 0,
-   "pitch": 0.13,
+   "pitch": 0.129,
    "camLat": 0.1084,
-   "camH": -0.017,
+   "camH": -0.0169,
    "coins": 1550,
    "move": "dive"
   },
@@ -2635,7 +2455,7 @@
    "lean": 0,
    "pitch": 0.134,
    "camLat": 0.1086,
-   "camH": -0.0154,
+   "camH": -0.0153,
    "coins": 1550,
    "move": "dive"
   },
@@ -2648,7 +2468,7 @@
    "lean": 0,
    "pitch": 0.123,
    "camLat": 0.1089,
-   "camH": -0.0137,
+   "camH": -0.0136,
    "coins": 1550,
    "move": null
   },
@@ -2659,9 +2479,9 @@
    "lat": 0.22,
    "h": 0,
    "lean": 0,
-   "pitch": 0.102,
+   "pitch": 0.101,
    "camLat": 0.109,
-   "camH": -0.012,
+   "camH": -0.0119,
    "coins": 1550,
    "move": null
   },
@@ -2674,7 +2494,7 @@
    "lean": 0,
    "pitch": 0.079,
    "camLat": 0.1092,
-   "camH": -0.0104,
+   "camH": -0.0103,
    "coins": 1550,
    "move": null
   },
@@ -2687,7 +2507,7 @@
    "lean": 0,
    "pitch": 0.059,
    "camLat": 0.1093,
-   "camH": -0.0089,
+   "camH": -0.0088,
    "coins": 1550,
    "move": null
   },
@@ -3238,5 +3058,5 @@
    "move": null
   }
  ],
- "wall_s": 246
+ "wall_s": 41
 }
