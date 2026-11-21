@@ -5132,3 +5132,19 @@ First check: whether the river lines up when a section is mirrored.
 > ring B centre lat 0.037 h 0.517 R 0.986 (n=751)
 > D [-0.302  0.159 -2.003] |D| 2.032 D.ax 2.03 D.n -0.147 ax.n -0.092
 
+### 🤖 Claude — 2026-11-21T11:37:39.560Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='build_track.py'; s=open(p).read()\ndef rep(a,b):\n    global s\n    assert a in s, a[:60]; s=s.replace(a,b)\nrep(\"hi_p, lo_p, scene_p, frame_p, out = sys.argv[1:6]\\nN = int(sys.argv[6]) if len(sys.argv) > 6 else 10\",\n    \"hi_p, lo_p, scene_p, frame_p, rings_p, out = sys.argv[1:7]\\nN = int(sys.argv[7]) if len(sys.argv) > 7 else 10\\nRG = json.load(open(rings_p)); XA, XB = np.array(RG['XA']), np.array(RG['XB'])  # 3D ring centres (gold circle fits)\")\nrep(\"DH, DLAT = 0.436 - 0.665, -0.022\\nD = ax * Lt + n_plane * DH + rt * DLAT\",\n    \"D0 = XB - XA   …[+1944 chars]`
+
+### 🧑 User — 2026-11-21T11:37:41.154Z
+
+> ↩︎ result: ok
+> bay_lo 42634
+> bay_m_lo 42634
+> D [-0.236  0.187 -2.008] path length 24.5
+> offsets [[-0.236, 0.187, -2.008], [-0.472, 0.375, -4.016], [-0.708, 0.562, -6.024]]
+
+### 🤖 Claude — 2026-11-21T11:37:50.259Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad; cd $S/splatview && python3 - <<'EOF'\np='play3.html'; s=open(p).read()\ndef rep(a,b):\n    global s\n    assert a in s, a[:70]; s=s.replace(a,b)\nrep(\"for (const m of [hi, lo]) { m.position.copy(DV).multiplyScalar(k); m.visible = false; scene.add(m); }\",\n    \"for (const m of [hi, lo]) { m.position.set(...TR.offsets[k - 1]); m.visible = false; scene.add(m); }\")\nrep(\"t.lo.visible = t.k >= kc + 2 && t.k <= kc + 4; }\\n  const last = Math.min(TR.N, Math.max(1, kc + 4)); far.position.copy(DV).mu …[+976 chars]`
+

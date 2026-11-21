@@ -11,14 +11,17 @@ import os, sys, json, numpy as np
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from spz import read_spz_full, write_ply
 
-hi_p, lo_p, scene_p, frame_p, out = sys.argv[1:6]
-N = int(sys.argv[6]) if len(sys.argv) > 6 else 10
+hi_p, lo_p, scene_p, frame_p, rings_p, out = sys.argv[1:7]
+N = int(sys.argv[7]) if len(sys.argv) > 7 else 10
+RG = json.load(open(rings_p)); XA, XB = np.array(RG['XA']), np.array(RG['XB'])  # 3D ring centres (gold circle fits)
 F = json.load(open(frame_p)); ax, rt = np.array(F['ax']), np.array(F['right']); dpl = F['dpl']
 SC = json.load(open(scene_p)); n_plane = np.array(SC['plane']['n'])
 FL = np.array([1, -1, -1], np.float32)
 UA, UB = 1.30, 3.33; Lt = UB - UA
-DH, DLAT = 0.436 - 0.665, -0.022
-D = ax * Lt + n_plane * DH + rt * DLAT
+D0 = XB - XA                     # ring A -> ring B, measured in 3D
+DH = float(D0 @ n_plane)         # the water must drop by this much over one section to meet the next copy
+LAT_C = float((XA @ rt + XB @ rt) / 2)   # the tunnel's mid-plane (mirror plane)
+mirror_pt = lambda p: p - 2 * np.outer(p @ rt - LAT_C, rt)
 OV = 0.18          # half-width of the water cross-fade at each ring
 HW = 0.32          # below this height above the water a splat counts as water / foam (cross-faded, not cut)
 
@@ -41,7 +44,7 @@ def emit(d, mask, wmul, name, mirror=False):
     keep = a > 0.01
     a = np.clip(a, 1e-4, 1 - 1e-4); o['opacity'] = np.log(a / (1 - a))
     if mirror:  # reflect across the tunnel's vertical mid-plane (lateral 0); Gaussian: R' = M R diag(-1,1,1)
-        p = p - 2 * np.outer(p @ rt, rt)
+        p = mirror_pt(p)
         rl = rt * FL; M = np.eye(3) - 2 * np.outer(rl, rl)
         w, x, y, z = o['rot'].T
         R = np.stack([np.stack([1 - 2 * (y * y + z * z), 2 * (x * y - w * z), 2 * (x * z + w * y)], -1),
@@ -86,14 +89,22 @@ for tag, path in (('hi', hi_p), ('lo', lo_p)):
 T = np.array(SC['trail']); tu = T @ ax
 def eased(Q): return Q + np.outer(ramp(Q @ ax, np.zeros(len(Q))), n_plane)
 base = eased(T[tu < UB]); seg = eased(T[(tu >= UA) & (tu < UB)])
-seg_m = seg - 2 * np.outer(seg @ rt, rt)
-P = np.vstack([base] + [(seg_m if k % 2 else seg) + D * k for k in range(1, N + 1)])
+seg_m = mirror_pt(seg)
+# offsets: each copy's ring A lands exactly on the previous copy's ring B (copies alternate mirrored / normal)
+XAm, XBm = mirror_pt(XA[None])[0], mirror_pt(XB[None])[0]
+ends = XB.copy(); offs = []
+for k in range(1, N + 1):
+    a_, b_ = (XAm, XBm) if k % 2 else (XA, XB)
+    o = ends - a_; offs.append(o); ends = o + b_
+far_offs = [np.zeros(3)] + [offs[m - 1] + ((XBm if m % 2 else XB) - XB) for m in range(1, N + 1)]  # far piece after copy m
+P = np.vstack([base] + [(seg_m if k % 2 else seg) + offs[k - 1] for k in range(1, N + 1)])
+D = offs[1] - offs[0] if N > 1 else D0
 s = np.r_[0, np.cumsum(np.linalg.norm(np.diff(P, axis=0), axis=1))]
 ss = np.arange(0, s[-1], 0.02); R = np.c_[[np.interp(ss, s, P[:, i]) for i in range(3)]].T
 k = int(0.3 / 0.02); Rs = R.copy()
 for i in range(len(R)):
     a_, b_ = max(0, i - k), min(len(R), i + k + 1); Rs[i] = R[a_:b_].mean(0)
 Rs[:k] = R[:k]
-json.dump({'D': D.tolist(), 'N': N, 'UA': UA, 'UB': UB, 'ax': ax.tolist(), 'right': rt.tolist(), 'n': n_plane.tolist(),
+json.dump({'offsets': [o.tolist() for o in offs], 'far_offsets': [o.tolist() for o in far_offs], 'D': D.tolist(), 'N': N, 'UA': UA, 'UB': UB, 'ax': ax.tolist(), 'right': rt.tolist(), 'n': n_plane.tolist(),
            'trail': Rs.tolist(), 'trail_s': ss.tolist()}, open(f'{out}/track.json', 'w'))
 print('D', np.round(D, 3), 'path length', round(float(ss[-1]), 2))
