@@ -1,3 +1,10 @@
+# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 37 (2026-11-21 ~23:40 UTC, branch `ccr-1a97503a-p221vc`)
+Screen 05 ONLY. User asked for THREE buildable options before any more rebuilding (A max artwork fidelity / B natural 3D water / C arcade),
+same Benny + swipes + camera + coins in all three, real engine renders, then THE USER CHOOSES. Built as URL switches on the kit test page
+(`tools/kit05/kitgame.html` `?opt=a|b|c`; default unchanged). Recommended: **B** (painted tunnel + river drawn live from the measured water
+design). Everything, links, evidence and honest limits: **`docs/briefs/2026-11-21-r37/OPTIONS_R37.md`**; pictures + clips `qa/kit05/r37/`.
+WAITING FOR THE USER'S CHOICE — build nothing further on Screen 05 until then. No specialists running; no credits spent.
+
 # ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 35 (2026-11-21 ~19:40 UTC, branch `claude/character-swimming-mechanics-jo0h6s`)
 Screen 05 ONLY. User: "look exactly like the approved screens where the pink character can swim naturally" (`docs/briefs/2026-11-21-r35/USER_R35.md`).
 Integrated the five round-34 specialists' unsaved work (from `backups/wip/*-c34`), then: the river = the user's OWN painted river in its world place,
