@@ -2781,3 +2781,79 @@ The full-level run plays 704 frames, about 30 minutes on this machine's software
 
 > 🔧 **Bash** `{"command": "until grep -qE \"frame 300 |exit=|rror\" /tmp/rainbow_r33/runs/kit_full1.log 2>/dev/null; do sleep 5; done; grep -E \"frame [0-9]+ \" /tmp/rainbow_r33/runs/kit_full1.log | tail -1 | cut -c1-80; grep -E \"rror|exit=\" /tmp/rainbow_r33/runs/kit_full1.log | head -3", "description": "Wait for the full-level run to pass frame 300", "timeout": 1200000}`
 
+### 🧑 User — 2026-11-21T15:23:25.984Z
+
+> ↩︎ result: frame 680 / 704 {"s":31.733,"lat":0,"coins":1650,"tile":15,"lane":0,"height":0,"
+> {"frames":687,"seconds":22.9,"errors":[],"rendered":"0:228","level":{"s_end_target":32,"done":true,"done_frame":686,"plan":"coin-trail player + extras"},"built_level":{"path_end":null,"sections":null,"sections_entered":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],"level_end_vs_path_end":null,"swim_speed":1.4},"position_stalls":0,"benny_pose":{"max_abs_roll_deg":8.907684757916908,"max_roll_change_deg_per_frame":3.3275300921026054,"worst_frame":534,"worst_s":24.92,"max_abs_camera_roll_deg":0.7559312633799805,"screen_x":[109.47697038664263,303.70143362356697],"screen_y":[556.6239294152911,852.1662946830924],"frames_roll_over_25":0},"ending_transition":{"present":true,"first_frame":666,"k_at_end":1,"monotonic":true,"frames":21},"coin_crowding":{"frames_checked":687,"frames_with_overlap":110,"max_pairs":3,"first_frames":[0,1,2,3,4,5,6,7]},"swipe_directions":{"right":10,"left":10,"down":4,"up":2},"forward":{"min_step":0.045999999999999375,"max_step":0.0470000000000006,"freezes":0,"s_end":32.013},"lateral":{"max_step_per_frame":0.0414,"teleports_over_0_06":0,"lanes_seen":[0,1,-1],"max_abs_lat":0.22},"vertical":{"m …[+2845 chars]
+
+### 🤖 Claude — 2026-11-21T15:23:47.652Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/rainbow_r33/runs/kit_full1 && python3 -c \"\nimport json\np=json.load(open('plan.json')); L=p['layout']\narcs=[c for c in L if c['h']>0.15]; print('coins', len(L), 'air coins', len(arcs), [ (c['s'], c['h']) for c in arcs])\nprint('ups in plan', sum(1 for e in p['plan'] if e[1]=='up'), 'downs', sum(1 for e in p['plan'] if e[1]=='down'))\nR=json.load(open('run_log.json'))\nfor i in (0,1): r=R[i]; print('frame',i,'overlaps',r.get('coinOverlaps'), 'onScreen', r.get('coinsOnScreen'))\n\"; grep -n \"coinOverlaps\\|coinScreen\" /tmp/rainbow_r32/merged/controls.js | head -5", "des …[+56 chars]`
+
+### 🧑 User — 2026-11-21T15:23:47.742Z
+
+> ↩︎ result: coins 26 air coins 4 [(13.24, 0.26), (13.79, 0.42), (30.05, 0.27), (30.6, 0.42)]
+> ups in plan 2 downs 4
+> frame 0 overlaps 3 onScreen 9
+> frame 1 overlaps 3 onScreen 9
+> 2:// Lanes (swipe left / right), leap (swipe up), dive (swipe down), the 26-coin trail (perspective size, coinScreen), the level end,
+> 386:  // coinScreen({ pops: true }) also lists coins in their collection pop (flying up over his head, 0.4 s).
+> 388:  window.coinScreen = (opt = {}) => {
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T15:23:59.705Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/marble05/viewer && grep -n \"extra\\|gap\" final_acceptance.cjs | head -20", "description": "Find the extras logic in the acceptance harness"}`
+
+### 🧑 User — 2026-11-21T15:23:59.751Z
+
+> ↩︎ result: 46:    // fills the gaps with extra dives and left/right moves (out and back), so every direction is used again and again.
+> 64:      // extras in the gaps between coin moves: a dive, then out to the free side and back
+> 69:        if (ge - gs >= 1.15) { ev.push([+gs.toFixed(3), 'down', 'extra']); gs += DUR.down + 0.15; }
+> 71:          ev.push([+gs.toFixed(3), out, 'extra'], [+(gs + 0.5).toFixed(3), back, 'extra']); }
+> 134:      level: { s_end_target: sEnd, done: !!fr[fr.length - 1].done, done_frame: fr.findIndex((x) => x.done), plan: layout && sEnd && process.env.PLAN !== 'fixed' ? 'coin-trail player + extras' : 'fixed 7.6 s' },
+
+### 🤖 Claude — 2026-11-21T15:24:01.255Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/tools/marble05/viewer/final_acceptance.cjs", "offset": 60, "limit": 16}`
+
+### 🧑 User — 2026-11-21T15:24:01.281Z
+
+> ↩︎ result: 60	          let e = k; while (e + 1 < cs.length && cs[e + 1].h > 0.15 && cs[e + 1].s - cs[e].s < 0.8) e++;
+> 61	          const top = cs.slice(k, e + 1).reduce((a, b) => (b.h > a.h ? b : a)); add(top.s / v - 0.31, 'up', 'coin arc'); k = e;
+> 62	        }
+> 63	      }
+> 64	      // extras in the gaps between coin moves: a dive, then out to the free side and back
+> 65	      const laneAt = (t) => { let l = 0; for (const [te, d] of ev.slice().sort((a, b) => a[0] - b[0])) { if (te > t) break; if (d === 'left') l = Math.max(-1, l - 1); if (d === 'right') l = Math.min(1, l + 1); } return l; };
+> 66	      const base = ev.slice().sort((a, b) => a[0] - b[0]), marks = [[0, null], ...base, [tEnd - 0.4, null]];
+> 67	      for (let k = 0; k + 1 < marks.length; k++) {
+> 68	        let gs = marks[k][0] + (marks[k][1] ? DUR[marks[k][1]] : 0.6) + 0.15; const ge = marks[k + 1][0] - 0.45;
+> 69	        if (ge - gs >= 1.15) { ev.push([+gs.toFixed(3), 'down', 'extra']); gs += DUR.down + 0.15; }
+> 70	        if (ge - gs >= 0.95) { const l = laneAt(gs), out = l <= 0 ? (l < 0 ? 'right' : 'left') : 'left', back = out === 'left' ? 'right' : 'left';
+> 71	          ev.push([+gs.toFixed(3), out, 'extra'], [+(gs + 0.5).toFixed(3), ba …[+165 chars]
+
+### 🤖 Claude — 2026-11-21T15:24:09.255Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/tools/marble05/viewer/final_acceptance.cjs", "old_string": "        if (ge - gs >= 1.15) { ev.push([+gs.toFixed(3), 'down', 'extra']); gs += DUR.down + 0.15; }\n        if (ge - gs >= 0.95) {", "new_string": "        if (ge - gs >= 1.15) { ev.push([+gs.toFixed(3), 'down', 'extra']); gs += DUR.down + 0.15; }\n        // round 33 (stricter, not looser): leaps were only ever sent under the coin arcs (2 arcs = 2 ups), so up was never used\n        // \"again and again\" as this plan intends; a gap with room after its dive now also gets an ex …[+155 chars]`
+
+### 🧑 User — 2026-11-21T15:24:09.296Z
+
+> ↩︎ result: The file /home/user/rainbow-/tools/marble05/viewer/final_acceptance.cjs has been updated successfully.
+
+### 🤖 Claude — 2026-11-21T15:24:13.064Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/kit05 && sed -i \"s/const f = 1 - THREE.MathUtils.smoothstep(za, 6.5, 9.0);/const f = 1 - THREE.MathUtils.smoothstep(za, 5.0, 7.0);/; s/qc.set('c_LEAN_K', '0.11');   \\/\\/ gentler bank (round 33: 5 -> <3 deg per frame)/qc.set('c_LEAN_K', '0.09');   \\/\\/ gentler bank (round 33: 5 -> <3 deg per frame)/\" kitgame.html && grep -c \"smoothstep(za, 5.0, 7.0)\\|'c_LEAN_K', '0.09'\" kitgame.html && cp kitgame.html /tmp/rainbow_r33/kitgame/play3.html && cd /tmp/rainbow_r33 && (NODE_PATH=$(npm root -g) timeout 7000 node /home/user/rainbow-/tools/marble05/view …[+320 chars]`
+
+### 🧑 User — 2026-11-21T15:24:14.100Z
+
+> ↩︎ result: 2
+> started
+
+### 🤖 Claude — 2026-11-21T15:24:15.549Z
+
+The full run with every frame recorded is going (about 30 minutes). Saving the report and the stricter test to GitHub meanwhile:
+
+### 🤖 Claude — 2026-11-21T15:24:17.299Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && python3 scripts/rainbow-autosave.py --reason manual:r33-report-harness 2>&1 | grep -E '\"commit\"|skipping'; timeout 60 git ls-remote origin refs/heads/ccr-81d66c17-i0ooo8; git rev-parse HEAD; sha256sum -c scripts/reference.sha256 2>&1 | grep -c \": OK\"", "description": "Autosave, verify remote and approved references"}`
+

@@ -67,6 +67,9 @@ const { chromium } = require('playwright'); const { spawn, execFileSync } = requ
       for (let k = 0; k + 1 < marks.length; k++) {
         let gs = marks[k][0] + (marks[k][1] ? DUR[marks[k][1]] : 0.6) + 0.15; const ge = marks[k + 1][0] - 0.45;
         if (ge - gs >= 1.15) { ev.push([+gs.toFixed(3), 'down', 'extra']); gs += DUR.down + 0.15; }
+        // round 33 (stricter, not looser): leaps were only ever sent under the coin arcs (2 arcs = 2 ups), so up was never used
+        // "again and again" as this plan intends; a gap with room after its dive now also gets an extra leap
+        if (ge - gs >= DUR.up + 0.15 + 0.95) { ev.push([+gs.toFixed(3), 'up', 'extra']); gs += DUR.up + 0.15; }
         if (ge - gs >= 0.95) { const l = laneAt(gs), out = l <= 0 ? (l < 0 ? 'right' : 'left') : 'left', back = out === 'left' ? 'right' : 'left';
           ev.push([+gs.toFixed(3), out, 'extra'], [+(gs + 0.5).toFixed(3), back, 'extra']); }
       }

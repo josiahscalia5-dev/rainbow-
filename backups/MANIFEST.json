@@ -794,7 +794,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 26528,
-   "sha256": "cf9fe4f3ba826a0215427373f7bcdfbdecdddfd9a1f0fa9a0d7ac6561e624ed9"
+   "sha256": "4b123bce46b4ac4de991bff8cce03bae31e430a43a8cbd11b3f4acc52e54689a"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3153,
-   "sha256": "cdd3b9e02c0e5a0650ee757673954ad654c5538986470cdd2c8222f2f8b9f7f1"
+   "sha256": "bd734b50e36b47e07a68e2eb702ab10f937fa16bb3168a4bf4855bea500ba832"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -7734,7 +7734,7 @@
   {
    "path": "backups/wip/screen05-agents/LAST_SYNC_UTC",
    "bytes": 33,
-   "sha256": "5b553a113131a24b795817fd21673e442465197545d6ea093bc7472de76da396"
+   "sha256": "c60957d04598e35d0174fd36a9423c523577dd119f6347077050f6caf3dd3441"
   },
   {
    "path": "backups/wip/screen05-agents/WORKSPACE",
@@ -39819,7 +39819,7 @@
   {
    "path": "tools/kit05/kitgame.html",
    "bytes": 21960,
-   "sha256": "15613c58a9d14f7b2d16628e606abce3d43d683c1f6426b5a198ea039824c823"
+   "sha256": "e6120488e7f063507cd3655a73fd0aa0aeaf7abc47017ef591a945507ec412c6"
   },
   {
    "path": "tools/kit05/still_page.cjs",
@@ -40138,8 +40138,8 @@
   },
   {
    "path": "tools/marble05/viewer/final_acceptance.cjs",
-   "bytes": 15491,
-   "sha256": "7eaa078621660688a37806fe134f3024236384f91c7cc0145d6352912132ec3f"
+   "bytes": 15842,
+   "sha256": "bf0ecc50a0a31da3b102b8b43b1cbcbdee745e5b071d96147749da70ff0bf0e3"
   },
   {
    "path": "tools/marble05/viewer/glint.png",

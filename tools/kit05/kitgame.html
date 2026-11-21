@@ -175,7 +175,7 @@ const coins = []; let coinCount = 1420; const coinEl = document.getElementById('
 const bubTex = await tl.loadAsync('bubble.png'); bubTex.colorSpace = THREE.SRGBColorSpace;
 const ctex = await tl.loadAsync('coin.png'); ctex.colorSpace = THREE.SRGBColorSpace;
 const coinD = 0.15038523388874458 * bennyDist / 1.186;      // round-32 coin size, scaled to the kit's Benny distance
-const qc = new URLSearchParams(location.search); if (!qc.has('c_LEAN_K')) qc.set('c_LEAN_K', '0.11');   // gentler bank (round 33: 5 -> <3 deg per frame); controls.js unchanged
+const qc = new URLSearchParams(location.search); if (!qc.has('c_LEAN_K')) qc.set('c_LEAN_K', '0.09');   // gentler bank (round 33: 5 -> <3 deg per frame); controls.js unchanged
 const CT = installControls({ THREE, TR, canvas: renderer.domElement, camera, q: qc, at, frameAt, coins, scene, U, bmat, benny, splash, splashTex, bubTex, coinTex: ctex, coinD, bennyFullH: 0.99 * KH, pxW, coinEl, getS: () => st.s, getCoins: () => coinCount, render: () => renderer.render(scene, camera) });
 // every sprite (coins, droplets, splash) goes through the same depth curve as the scenery: far coins sit on the far river
 const patchSprite = (m) => { if (m.userData.kit) return; m.userData.kit = 1; m.onBeforeCompile = (sh) => { Object.assign(sh.uniforms, REMAP);
@@ -209,7 +209,7 @@ window.step = (t, dt, steer, speed) => {
     if (c.got >= 0) { const k = (t - c.got) / 0.4; c.sp.visible = k < 1; if (k < 1) { c.sp.position.copy(benny.position).addScaledVector(F.n, bennyH * (1.05 + 0.6 * k)); c.sp.material.opacity = 1 - k * k; const d = coinD * 0.7 * (1 - 0.5 * k); c.sp.scale.set(d, d, 1); } }
   }
   // far coins fade out beyond about ring 3 ahead (the painting shows ~6 coins), so the depth curve never stacks them at the core
-  for (const c of coins) if (c.got < 0 && c.sp.visible) { const za = tmp.copy(c.sp.position).sub(camera.position).dot(A); const f = 1 - THREE.MathUtils.smoothstep(za, 6.5, 9.0); c.sp.scale.multiplyScalar(f); c.sp.visible = f > 0.01; }
+  for (const c of coins) if (c.got < 0 && c.sp.visible) { const za = tmp.copy(c.sp.position).sub(camera.position).dot(A); const f = 1 - THREE.MathUtils.smoothstep(za, 5.0, 7.0); c.sp.scale.multiplyScalar(f); c.sp.visible = f > 0.01; }
   scene.traverse((o) => { if (o.isSprite && o !== core) patchSprite(o.material); });   // droplets created during play
   return { s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: coinCount, tile: Math.floor((st.s + bennyDist) / K.S), ...CT.state() };
 };
