@@ -1564,3 +1564,50 @@ The video is recording; I'll check the first part for problems as soon as it rea
 
 > 🔧 **Bash** `{"command": "timeout 600 python3 -I tools/paint/frames_metric.py qa/match/05/fly05/clip/clip_FLY05_gameplay.json qa/match/05/fly05/clip/clip_FLY05_gameplay_metric.json > /dev/null 2>&1; python3 -I -c \"\nimport json;print(json.dumps(json.load(open('qa/match/05/fly05/clip/clip_FLY05_gameplay_metric.json'))['summary']))\"; timeout 300 python3 scripts/rainbow-autosave.py --reason \"manual:screen05-paintfly\" 2>&1 | grep -E '\"commit\"|error' ; git rev-parse HEAD; timeout 30 git ls-remote origin refs/heads/claude/screen-05-3d-geometry-9yu7pu; git status --short | head -3", "description": "Measure  …[+56 chars]`
 
+### 🧑 User — 2026-11-21T03:19:15.185Z
+
+> ↩︎ result: {"05": {"frames": 198, "px20_median": 7.5, "px20_min": 3.9, "look20_median": 8.8, "look20_min": 4.1}, "06k0": {"frames": 42, "px20_median": 78.6, "px20_min": 77.5, "look20_median": 83.4, "look20_min": 82.3}}
+>   "commit": "97c88e451c43d81e8fcf7cba68fa6e8b2801caf5",
+> 97c88e451c43d81e8fcf7cba68fa6e8b2801caf5
+> 97c88e451c43d81e8fcf7cba68fa6e8b2801caf5	refs/heads/claude/screen-05-3d-geometry-9yu7pu
+
+### 🤖 Claude — 2026-11-21T03:19:19.957Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/match/05/fly05/clip/FLY05_gameplay.mp4", "/home/user/rainbow-/qa/match/05/fly05/PROOF_APPROVED_vs_GAMEPLAY.jpg"], "caption": "Normal-speed gameplay, about 9 s: Benny stays big while your Screen 05 flies past him. The picture shows your approved screen, then five moments from the same run.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-21T03:19:20.500Z
+
+> ↩︎ result: 2 files delivered to user.
+>   /home/user/rainbow-/qa/match/05/fly05/clip/FLY05_gameplay.mp4 → file_uuid: 4c07beeb-82cb-4c3a-a557-031268290669
+>   /home/user/rainbow-/qa/match/05/fly05/PROOF_APPROVED_vs_GAMEPLAY.jpg → file_uuid: 73ec74c2-6a33-4432-b294-cd350ee167b6
+
+### 🤖 Claude — 2026-11-21T03:19:29.602Z
+
+I've changed the camera. Benny now stays big at the spot in your painting, and your Screen 05 scenery moves past him as he swims forward.
+
+**What's in the video (normal game speed, about 9 seconds, no cuts):**
+- Benny is the real 3D Benny, seen from above and behind as in your picture. He stays the same size the whole time. He paddles, leans and steers left and right across the river.
+- The scenery is your approved picture itself, not rebuilt artwork. The gold rings, purple machinery, paddles, foam and river come toward him and pass out of the frame, with new rings coming from the tunnel end. Your painted water keeps flowing.
+- Coins come down the river at him and pop as he collects them: 1,330 → 1,420. He lost no hearts.
+- The run goes from the end of Screen 04, all through Screen 05, into Screen 06. In Screen 06 he stays the real 3D Benny, never a painted picture.
+
+**How it works:** each gold ring in your painting is about 1.7 times bigger than the next one, all around the tunnel end. So moving forward one ring means enlarging your picture by that amount, and the loop then returns to your picture exactly. That's why every frame still looks like your artwork.
+
+**Flaws you'll see:**
+- **Brief doubling:** each time a ring passes, the river and the bottom gold frame look doubled for a split second while the loop closes.
+- **Screen 05 → 06 handover:** for about half a second the view goes blurry and doubled.
+- **Straight flight:** Benny flies straight down the tunnel. The view doesn't swing around each S-bend, though the bends themselves pass under him.
+- **Purple patch:** behind Benny there's still the slightly purple patch where he was painted.
+- **Coins:** a coin sometimes overlaps his hat for an instant just before he collects it.
+- **Likeness score:** a pixel-by-pixel score against your still picture no longer means much, because the whole view is moving. It drops to about 8%. Judge it by eye.
+
+**Kept, unchanged:**
+- `?paint=1`: the painted version you liked.
+- `?paint=1&paintswim=1&benny31=1`: the previous test where Benny swims away.
+- The rejected 3D version and the default game.
+- **New one:** `?paint=1&paintfly=1&benny31=1`
+
+No paid credits were used. Everything is saved on GitHub (branch `claude/screen-05-3d-geometry-9yu7pu`, commit `97c88e4`, remote matches). The five-minute autosave is running.
+
+Is this the kind of movement you want? If yes, I'll fix the flaws above on Screen 05 next: the doubling, the 05 → 06 handover, the purple patch and the coins. I won't change your artwork or touch other screens.
+
