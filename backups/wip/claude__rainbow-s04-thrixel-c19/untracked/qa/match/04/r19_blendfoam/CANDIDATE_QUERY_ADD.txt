@@ -1,0 +1,1 @@
+m04bfoam=1&m04bfe=0.2&m04bfec=1&m04bfi=0.15&m04bfsh=0&m04bfr=0.08&m04bfc=3&m04bfs=2.6&m04bfz=-0.6&m04bfo=0.3

@@ -1,0 +1,29 @@
+{
+ "crop_rect_in_full_frame": [
+  40,
+  680,
+  432,
+  1150
+ ],
+ "union_box": [
+  23,
+  668,
+  449,
+  1162
+ ],
+ "before_box": [
+  23,
+  685,
+  436,
+  1162
+ ],
+ "new_box": [
+  23,
+  668,
+  449,
+  1162
+ ],
+ "approved": "/home/user/rainbow-/qa/benny/r27/s5_crown/06/approved_benny_fullhat.png",
+ "before_full": "/home/user/rainbow-/qa/benny/r23/s3_star/06/new/f_hard_left.png",
+ "new_full": "/home/user/rainbow-/qa/benny/r27/s5_crown/06/new/f_hard_left.png"
+}

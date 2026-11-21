@@ -9,7 +9,7 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
 
 const args = process.argv.slice(2);
-const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, v] = a.slice(2).split('='); return [k, v ?? true]; }));
+const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
 let ids = args.filter((a) => !a.startsWith('--'));
 const NATIVE = { '03': [727, 1536] };
 const plunge = ['07a_plunge_top', '07b_plunge_mid', '07c_plunge_bottom', '07d_entering_08'];
@@ -43,6 +43,12 @@ try {
     const name = /^\d\d$/.test(id) ? `${id}.png` : `${id}.png`;
     await page.screenshot({ path: `${outDir}/${name}`, timeout: 180000 });
     const stats = await page.evaluate(() => window.__rainbow.stats());
+    // The first frame after load also counts one-time GPU work (three converts each cube env map to PMREM on
+    // first use). Render once more (after the screenshot) and report that per-frame cost as calls/tris.
+    const firstFrame = { calls: stats.calls, triangles: stats.triangles };
+    await page.evaluate(() => window.__rainbow.drawList?.());
+    const steady = await page.evaluate(() => window.__rainbow.stats());
+    Object.assign(stats, { calls: steady.calls, triangles: steady.triangles, firstFrameCalls: firstFrame.calls, firstFrameTriangles: firstFrame.triangles });
     const state = await page.evaluate(() => window.__rainbow.state());
     log.shots.push({ id, file: `${outDir}/${name}`, size: [w, h], checkpoint: st, state, stats });
     console.log(id, '→', `${outDir}/${name}`, JSON.stringify({ stage: state.stage, s: state.s, y: state.bennyY, calls: stats.calls, tris: stats.triangles, modules: stats.modules }));

@@ -1,0 +1,25 @@
+{
+ "view": {
+  "id": "V04-3r",
+  "s": 113.7,
+  "units_ahead": 35,
+  "guide": "/tmp/claude-0/-home-user-rainbow-/0bf13d71-0f08-5420-86ab-4dcca5bc306c/scratchpad/audit_c10/04/t95_through_screen.png",
+  "scene": "Benny is near the far end of the same gold tunnel that image 1 shows through the opening, close to the warm glowing light at its end. The camera is INSIDE the tunnel: the outer opening, the laundry room, the porthole, the towels and the control panel of image 1 are BEHIND the camera and must NOT appear anywhere. Benny is close to the camera at the bottom centre, exactly as large as in image 1 (his hat is about one third of the screen width), not small and not far away"
+ },
+ "request_id": "01a1ee4a-5f5b-7042-9ab4-d1f85e014779",
+ "status": "COMPLETED",
+ "prompt": "Image 1 is the APPROVED game screen '04 \u00b7 Through the Five Arrows' and the only design authority. Image 2 is only a rough grey layout sketch of the camera view 35 units further along the same course: it shows where the tunnel goes, where the water runs and where Benny is. Create the full-colour game screen for image 2's camera position as it would look inside image 1's world. Benny is near the far end of the same gold tunnel that image 1 shows through the opening, close to the warm glowing light at its end. The camera is INSIDE the tunnel: the outer opening, the laundry room, the porthole, the towels and the control panel of image 1 are BEHIND the camera and must NOT appear anywhere. Benny is close to the camera at the bottom centre, exactly as large as in image 1 (his hat is about one third of the screen width), not small and not far away. Use exactly image 1's design: the rounded, thick, polished glossy gold washer rings with bright warm highlights and small glowing light points, converging toward the warm glow; the wide swirling water with broad pink-magenta swirls around a luminous cyan lane; the glowing white-cyan chevron arrows on the water pointing ahead; low, soft white foam clusters along the water edges; iridescent soap bubbles; gold dollar coins on the water; the same lighting, reflections, colour palette, detail level and polished 3D game-art style as image 1. Do not use image 2's colours, textures or shapes of details; take only the layout from it. Benny must be identical to image 1 (round pink fluffy body, purple-and-white striped knitted hat with a purple pompom and a gold star), seen from behind at the same size as in image 1, swimming in the water with a small splash. Keep the top HUD bar (heart 5/5 +, coin counter, pause button) and the purple title banner '04 \u00b7 THROUGH THE FIVE ARROWS' exactly as in image 1. Do not add any new kind of object, no orange corridor, no rows of white balls, no redesign. Portrait 9:16.",
+ "endpoint": "https://queue.fal.run/fal-ai/nano-banana-2/edit",
+ "params": {
+  "num_images": 2,
+  "aspect_ratio": "9:16",
+  "resolution": "2K",
+  "output_format": "png",
+  "sync_mode": true
+ },
+ "files": [
+  "qa/match/04/r10/refviews/pilot_retry/V04-3r_cand1.png",
+  "qa/match/04/r10/refviews/pilot_retry/V04-3r_cand2.png"
+ ],
+ "urls": []
+}

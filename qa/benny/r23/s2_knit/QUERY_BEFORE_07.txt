@@ -1,0 +1,1 @@
+match07=1&m07fill=1&m07gold=1&m07wall=1&m07coins=1&m07river=1&m07tube=1&m07ring=1&m07foam=1&m07coinsz=1&m07nearw=1&m07foamb=1&m07band=1&benny20=1&b20expo=1&b20ppw=0.45&b20tuft=1

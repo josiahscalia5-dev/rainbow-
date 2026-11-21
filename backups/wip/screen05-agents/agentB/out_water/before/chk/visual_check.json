@@ -1,0 +1,80 @@
+{
+ "summary": {
+  "frames": 6,
+  "dark_patches": {
+   "frames_with_patches": 6,
+   "largest_px": 2511,
+   "max_pct": 1.238,
+   "rule": "connected near-black area >= 150 px at 412x915 (approved picture: largest 8 px)"
+  },
+  "sharpness_vs_start": {
+   "min": 0.865,
+   "median": 0.8925000000000001
+  },
+  "colour_look_vs_approved": {
+   "min": 0.648,
+   "median": 0.6655
+  },
+  "flicker": {
+   "median_change": 65.5,
+   "max_change": 70.37,
+   "spikes_over_3x_median": 0
+  }
+ },
+ "frames": [
+  {
+   "frame": "0000",
+   "black_pct": 1.112,
+   "dark_patches": 4,
+   "largest_dark_px": 1719,
+   "sharpness_vs_start": 1.0,
+   "colour_look_vs_approved": 0.662,
+   "change": 0.0
+  },
+  {
+   "frame": "0001",
+   "black_pct": 1.077,
+   "dark_patches": 3,
+   "largest_dark_px": 2009,
+   "sharpness_vs_start": 0.913,
+   "colour_look_vs_approved": 0.693,
+   "change": 65.5
+  },
+  {
+   "frame": "0002",
+   "black_pct": 1.238,
+   "dark_patches": 4,
+   "largest_dark_px": 2511,
+   "sharpness_vs_start": 0.872,
+   "colour_look_vs_approved": 0.648,
+   "change": 70.37
+  },
+  {
+   "frame": "0003",
+   "black_pct": 0.523,
+   "dark_patches": 3,
+   "largest_dark_px": 589,
+   "sharpness_vs_start": 0.892,
+   "colour_look_vs_approved": 0.669,
+   "change": 70.17
+  },
+  {
+   "frame": "0004",
+   "black_pct": 0.988,
+   "dark_patches": 4,
+   "largest_dark_px": 1545,
+   "sharpness_vs_start": 0.865,
+   "colour_look_vs_approved": 0.67,
+   "change": 61.55
+  },
+  {
+   "frame": "0005",
+   "black_pct": 0.467,
+   "dark_patches": 3,
+   "largest_dark_px": 607,
+   "sharpness_vs_start": 0.893,
+   "colour_look_vs_approved": 0.651,
+   "change": 62.37
+  }
+ ]
+}

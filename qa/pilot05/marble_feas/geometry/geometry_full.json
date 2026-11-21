@@ -1,0 +1,673 @@
+{
+ "world": "full",
+ "camera": {
+  "f_px": 700.0,
+  "cx": 432.0,
+  "cy": 482.5,
+  "size": [
+   864,
+   1536
+  ],
+  "pitch_deg": 6.000000000000001,
+  "yaw_deg": 0.0,
+  "input_rows": [
+   197,
+   767
+  ]
+ },
+ "vp_marble_pca_axis": [
+  420.63517063753,
+  536.6122337927352
+ ],
+ "vp_approved_image": [
+  500.0,
+  481.0
+ ],
+ "tunnel_radius": 1.1926929330887226,
+ "floor_below_axis": 0.694002056805171,
+ "camera_offset_from_axis": {
+  "right": 0.15217094974376938,
+  "down": 0.19699794701571924
+ },
+ "footprint": {
+  "iou_inside_input_rows": 0.7000085492006497,
+  "iou_below_input_rows": 0.3798982372374545,
+  "iou_full_frame": 0.45032539592972953
+ },
+ "max_river_depth_marble": 15.213374256802428,
+ "max_river_depth_flat_floor": 5.419837475870713,
+ "river_rows": [
+  {
+   "row": 544,
+   "in_input": true,
+   "n": 270,
+   "t_marble": 3.7647035541522693,
+   "t_flat_floor": 5.419837475870713,
+   "ratio": 0.6946155804325956,
+   "dn_marble_over_radius": -0.13167584944154712
+  },
+  {
+   "row": 560,
+   "in_input": true,
+   "n": 310,
+   "t_marble": 3.1632333965947144,
+   "t_flat_floor": 4.328248927855267,
+   "ratio": 0.7308344435175912,
+   "dn_marble_over_radius": -0.12345613313080979
+  },
+  {
+   "row": 576,
+   "in_input": true,
+   "n": 415,
+   "t_marble": 2.6883612336685694,
+   "t_flat_floor": 3.6210000866111938,
+   "ratio": 0.7424361141577717,
+   "dn_marble_over_radius": -0.11645256909277926
+  },
+  {
+   "row": 592,
+   "in_input": true,
+   "n": 516,
+   "t_marble": 2.479248648537639,
+   "t_flat_floor": 3.106100324142677,
+   "ratio": 0.7981869192270674,
+   "dn_marble_over_radius": -0.08521019020701256
+  },
+  {
+   "row": 608,
+   "in_input": true,
+   "n": 586,
+   "t_marble": 2.3060613879196192,
+   "t_flat_floor": 2.720567186551684,
+   "ratio": 0.847639933069453,
+   "dn_marble_over_radius": -0.06267223335390637
+  },
+  {
+   "row": 624,
+   "in_input": true,
+   "n": 637,
+   "t_marble": 2.1397078807278276,
+   "t_flat_floor": 2.425973372587753,
+   "ratio": 0.8819997387050584,
+   "dn_marble_over_radius": -0.04480996469706265
+  },
+  {
+   "row": 640,
+   "in_input": true,
+   "n": 680,
+   "t_marble": 2.022630783546644,
+   "t_flat_floor": 2.1901122455008366,
+   "ratio": 0.9235283660468768,
+   "dn_marble_over_radius": -0.02993457520392334
+  },
+  {
+   "row": 656,
+   "in_input": true,
+   "n": 686,
+   "t_marble": 1.8877187332912038,
+   "t_flat_floor": 1.9969359880891207,
+   "ratio": 0.9453075834932358,
+   "dn_marble_over_radius": -0.018907460119617813
+  },
+  {
+   "row": 672,
+   "in_input": true,
+   "n": 667,
+   "t_marble": 1.7766422299253681,
+   "t_flat_floor": 1.8362236725747383,
+   "ratio": 0.9675521868390764,
+   "dn_marble_over_radius": -0.009609813932076723
+  },
+  {
+   "row": 688,
+   "in_input": true,
+   "n": 682,
+   "t_marble": 1.7026150067064987,
+   "t_flat_floor": 1.6928537922485807,
+   "ratio": 1.0057661296578675,
+   "dn_marble_over_radius": 0.0031933196788715
+  },
+  {
+   "row": 704,
+   "in_input": true,
+   "n": 744,
+   "t_marble": 1.6318921253991472,
+   "t_flat_floor": 1.5646804471105813,
+   "ratio": 1.0429555302571094,
+   "dn_marble_over_radius": 0.014651826320773728
+  },
+  {
+   "row": 720,
+   "in_input": true,
+   "n": 770,
+   "t_marble": 1.5635405723743099,
+   "t_flat_floor": 1.4572487569404835,
+   "ratio": 1.0729400625168402,
+   "dn_marble_over_radius": 0.02658806791573488
+  },
+  {
+   "row": 736,
+   "in_input": true,
+   "n": 805,
+   "t_marble": 1.5087764443723461,
+   "t_flat_floor": 1.3624330177456485,
+   "ratio": 1.1074133001186692,
+   "dn_marble_over_radius": 0.03877901758472221
+  },
+  {
+   "row": 752,
+   "in_input": true,
+   "n": 840,
+   "t_marble": 1.4493515152592047,
+   "t_flat_floor": 1.2788873078244616,
+   "ratio": 1.133291030720074,
+   "dn_marble_over_radius": 0.05095813287836164
+  },
+  {
+   "row": 768,
+   "in_input": false,
+   "n": 851,
+   "t_marble": 1.3942013968140854,
+   "t_flat_floor": 1.2050940176160005,
+   "ratio": 1.1569233407798256,
+   "dn_marble_over_radius": 0.06111264516465486
+  },
+  {
+   "row": 784,
+   "in_input": false,
+   "n": 833,
+   "t_marble": 1.3433700189040738,
+   "t_flat_floor": 1.139461875829313,
+   "ratio": 1.1789512641011832,
+   "dn_marble_over_radius": 0.06786852052920203
+  },
+  {
+   "row": 800,
+   "in_input": false,
+   "n": 807,
+   "t_marble": 1.2904985368074366,
+   "t_flat_floor": 1.0801705198763694,
+   "ratio": 1.1947174201302404,
+   "dn_marble_over_radius": 0.07444850696595195
+  },
+  {
+   "row": 816,
+   "in_input": false,
+   "n": 774,
+   "t_marble": 1.241688733071527,
+   "t_flat_floor": 1.026203161823706,
+   "ratio": 1.209983343712246,
+   "dn_marble_over_radius": 0.08074319671695578
+  },
+  {
+   "row": 832,
+   "in_input": false,
+   "n": 750,
+   "t_marble": 1.194458636389394,
+   "t_flat_floor": 0.9777570694716696,
+   "ratio": 1.2216312964475102,
+   "dn_marble_over_radius": 0.08595042441008789
+  },
+  {
+   "row": 848,
+   "in_input": false,
+   "n": 730,
+   "t_marble": 1.148661384571551,
+   "t_flat_floor": 0.9337570398331386,
+   "ratio": 1.23015017351496,
+   "dn_marble_over_radius": 0.09036056988398276
+  },
+  {
+   "row": 864,
+   "in_input": false,
+   "n": 750,
+   "t_marble": 1.1070793978723303,
+   "t_flat_floor": 0.8959535081235839,
+   "ratio": 1.2356438005258914,
+   "dn_marble_over_radius": 0.0942986259342003
+  },
+  {
+   "row": 880,
+   "in_input": false,
+   "n": 767,
+   "t_marble": 1.066678431967315,
+   "t_flat_floor": 0.8608280649924058,
+   "ratio": 1.2391306410028875,
+   "dn_marble_over_radius": 0.09812708286556913
+  },
+  {
+   "row": 896,
+   "in_input": false,
+   "n": 804,
+   "t_marble": 1.0301108512537027,
+   "t_flat_floor": 0.829903096330962,
+   "ratio": 1.2412423279390907,
+   "dn_marble_over_radius": 0.1013090652503423
+  },
+  {
+   "row": 912,
+   "in_input": false,
+   "n": 854,
+   "t_marble": 0.9962789342525981,
+   "t_flat_floor": 0.8018383480803485,
+   "ratio": 1.2424934983937257,
+   "dn_marble_over_radius": 0.10398939151068357
+  },
+  {
+   "row": 928,
+   "in_input": false,
+   "n": 864,
+   "t_marble": 0.9651022105337581,
+   "t_flat_floor": 0.7736261006747399,
+   "ratio": 1.2475047179664918,
+   "dn_marble_over_radius": 0.10645140447917557
+  },
+  {
+   "row": 944,
+   "in_input": false,
+   "n": 864,
+   "t_marble": 0.937028544585621,
+   "t_flat_floor": 0.7468551798349135,
+   "ratio": 1.2546321828988907,
+   "dn_marble_over_radius": 0.108493868320861
+  },
+  {
+   "row": 960,
+   "in_input": false,
+   "n": 864,
+   "t_marble": 0.913799545290084,
+   "t_flat_floor": 0.7218723815111161,
+   "ratio": 1.265874091729623,
+   "dn_marble_over_radius": 0.11140328278204882
+  },
+  {
+   "row": 976,
+   "in_input": false,
+   "n": 864,
+   "t_marble": 0.8912778657813819,
+   "t_flat_floor": 0.6985038213275565,
+   "ratio": 1.2759813741425845,
+   "dn_marble_over_radius": 0.11431582332613038
+  },
+  {
+   "row": 992,
+   "in_input": false,
+   "n": 864,
+   "t_marble": 0.8609223542876191,
+   "t_flat_floor": 0.6765981105095459,
+   "ratio": 1.2724279611707143,
+   "dn_marble_over_radius": 0.1147272907658089
+  },
+  {
+   "row": 1008,
+   "in_input": false,
+   "n": 864,
+   "t_marble": 0.8356964446013923,
+   "t_flat_floor": 0.6560250099807645,
+   "ratio": 1.2738789404170672,
+   "dn_marble_over_radius": 0.11672836288453672
+  },
+  {
+   "row": 1024,
+   "in_input": false,
+   "n": 864,
+   "t_marble": 0.8138279472296377,
+   "t_flat_floor": 0.6366628120813654,
+   "ratio": 1.2782715305282046,
+   "dn_marble_over_radius": 0.11841927556972379
+  },
+  {
+   "row": 1040,
+   "in_input": false,
+   "n": 864,
+   "t_marble": 0.7929360893453506,
+   "t_flat_floor": 0.6184088662772944,
+   "ratio": 1.2822197943549507,
+   "dn_marble_over_radius": 0.12004053072852483
+  },
+  {
+   "row": 1056,
+   "in_input": false,
+   "n": 864,
+   "t_marble": 0.7742938135611693,
+   "t_flat_floor": 0.6011708423845805,
+   "ratio": 1.2879763271450193,
+   "dn_marble_over_radius": 0.1216349255337252
+  },
+  {
+   "row": 1072,
+   "in_input": false,
+   "n": 864,
+   "t_marble": 0.7581846531623193,
+   "t_flat_floor": 0.5848661083609739,
+   "ratio": 1.296338841187178,
+   "dn_marble_over_radius": 0.12291531308191894
+  },
+  {
+   "row": 1088,
+   "in_input": false,
+   "n": 864,
+   "t_marble": 0.7364408345257593,
+   "t_flat_floor": 0.5694228684938679,
+   "ratio": 1.2933109561856138,
+   "dn_marble_over_radius": 0.12396667417493264
+  },
+  {
+   "row": 1104,
+   "in_input": false,
+   "n": 864,
+   "t_marble": 0.7240417883940651,
+   "t_flat_floor": 0.5547698995910896,
+   "ratio": 1.3051208959385552,
+   "dn_marble_over_radius": 0.1254463958971545
+  },
+  {
+   "row": 1120,
+   "in_input": false,
+   "n": 864,
+   "t_marble": 0.702576655551036,
+   "t_flat_floor": 0.5408525572648286,
+   "ratio": 1.2990169799770757,
+   "dn_marble_over_radius": 0.12644967412247826
+  },
+  {
+   "row": 1136,
+   "in_input": false,
+   "n": 864,
+   "t_marble": 0.6824575755459987,
+   "t_flat_floor": 0.5276145873509279,
+   "ratio": 1.2934774585602604,
+   "dn_marble_over_radius": 0.12631511384184468
+  },
+  {
+   "row": 1152,
+   "in_input": false,
+   "n": 864,
+   "t_marble": 0.667779981438422,
+   "t_flat_floor": 0.515007961178557,
+   "ratio": 1.296640113893109,
+   "dn_marble_over_radius": 0.12718455539619006
+  },
+  {
+   "row": 1168,
+   "in_input": false,
+   "n": 864,
+   "t_marble": 0.6515563594329451,
+   "t_flat_floor": 0.5029885653293631,
+   "ratio": 1.2953701223929375,
+   "dn_marble_over_radius": 0.12802378419922159
+  },
+  {
+   "row": 1184,
+   "in_input": false,
+   "n": 864,
+   "t_marble": 0.6359409963819322,
+   "t_flat_floor": 0.4915163714290253,
+   "ratio": 1.2938348208687527,
+   "dn_marble_over_radius": 0.129886395997624
+  },
+  {
+   "row": 1200,
+   "in_input": false,
+   "n": 864,
+   "t_marble": 0.6174629973178032,
+   "t_flat_floor": 0.48055402949888093,
+   "ratio": 1.284898178799354,
+   "dn_marble_over_radius": 0.128092730008221
+  },
+  {
+   "row": 1216,
+   "in_input": false,
+   "n": 864,
+   "t_marble": 0.603505239078101,
+   "t_flat_floor": 0.470071168346714,
+   "ratio": 1.2838592956055732,
+   "dn_marble_over_radius": 0.12858281712308123
+  },
+  {
+   "row": 1232,
+   "in_input": false,
+   "n": 864,
+   "t_marble": 0.5890940366789699,
+   "t_flat_floor": 0.4600329116565434,
+   "ratio": 1.28054759073147,
+   "dn_marble_over_radius": 0.12976109242976475
+  },
+  {
+   "row": 1248,
+   "in_input": false,
+   "n": 864,
+   "t_marble": 0.5814263935141104,
+   "t_flat_floor": 0.4504144012937587,
+   "ratio": 1.2908699007936608,
+   "dn_marble_over_radius": 0.1302313408738932
+  },
+  {
+   "row": 1264,
+   "in_input": false,
+   "n": 864,
+   "t_marble": 0.584769095934448,
+   "t_flat_floor": 0.441188642011509,
+   "ratio": 1.325440050469825,
+   "dn_marble_over_radius": 0.13376242248925174
+  },
+  {
+   "row": 1280,
+   "in_input": false,
+   "n": 864,
+   "t_marble": 0.5824227565890906,
+   "t_flat_floor": 0.43233238625197296,
+   "ratio": 1.3471643002234897,
+   "dn_marble_over_radius": 0.1364474581323205
+  },
+  {
+   "row": 1296,
+   "in_input": false,
+   "n": 864,
+   "t_marble": 0.5820523571095151,
+   "t_flat_floor": 0.4238238710612676,
+   "ratio": 1.3733354745971211,
+   "dn_marble_over_radius": 0.14098643624313692
+  },
+  {
+   "row": 1312,
+   "in_input": false,
+   "n": 864,
+   "t_marble": 0.5747208412323939,
+   "t_flat_floor": 0.4156430096423199,
+   "ratio": 1.3827270708268804,
+   "dn_marble_over_radius": 0.14140298035400445
+  },
+  {
+   "row": 1328,
+   "in_input": false,
+   "n": 864,
+   "t_marble": 0.5623163836430284,
+   "t_flat_floor": 0.4077712330329025,
+   "ratio": 1.3789996402165423,
+   "dn_marble_over_radius": 0.145511815229633
+  },
+  {
+   "row": 1344,
+   "in_input": false,
+   "n": 864,
+   "t_marble": 0.5563571933765821,
+   "t_flat_floor": 0.4001915855179388,
+   "ratio": 1.3902271149867618,
+   "dn_marble_over_radius": 0.1465977946915898
+  },
+  {
+   "row": 1360,
+   "in_input": false,
+   "n": 864,
+   "t_marble": 0.5403555674055531,
+   "t_flat_floor": 0.3928873427270121,
+   "ratio": 1.3753448091632863,
+   "dn_marble_over_radius": 0.14665469695851632
+  },
+  {
+   "row": 1376,
+   "in_input": false,
+   "n": 864,
+   "t_marble": 1.7106753408444648,
+   "t_flat_floor": 0.38584428512869073,
+   "ratio": 4.433589939718565,
+   "dn_marble_over_radius": 1.4646410924094047
+  },
+  {
+   "row": 1392,
+   "in_input": false,
+   "n": 864,
+   "t_marble": 1.717931572023602,
+   "t_flat_floor": 0.3790500388053746,
+   "ratio": 4.532202601635094,
+   "dn_marble_over_radius": 1.5066421823780412
+  },
+  {
+   "row": 1408,
+   "in_input": false,
+   "n": 864,
+   "t_marble": 1.7095269758705163,
+   "t_flat_floor": 0.37248896336077914,
+   "ratio": 4.589470142809926,
+   "dn_marble_over_radius": 1.5404965033052078
+  },
+  {
+   "row": 1424,
+   "in_input": false,
+   "n": 864,
+   "t_marble": 1.684040450729946,
+   "t_flat_floor": 0.3661505549609899,
+   "ratio": 4.599311479698196,
+   "dn_marble_over_radius": 1.5662005641585042
+  },
+  {
+   "row": 1440,
+   "in_input": false,
+   "n": 864,
+   "t_marble": 1.7108188864662082,
+   "t_flat_floor": 0.3600236671310648,
+   "ratio": 4.7519622809780255,
+   "dn_marble_over_radius": 1.6083011485505472
+  },
+  {
+   "row": 1456,
+   "in_input": false,
+   "n": 864,
+   "t_marble": 1.7170774755742277,
+   "t_flat_floor": 0.35409844811175983,
+   "ratio": 4.849152784290903,
+   "dn_marble_over_radius": 1.642183397736916
+  },
+  {
+   "row": 1472,
+   "in_input": false,
+   "n": 864,
+   "t_marble": 1.7252882851379598,
+   "t_flat_floor": 0.3483641994984016,
+   "ratio": 4.952541873195199,
+   "dn_marble_over_radius": 1.676072628988085
+  },
+  {
+   "row": 1488,
+   "in_input": false,
+   "n": 864,
+   "t_marble": 1.7232284054659397,
+   "t_flat_floor": 0.34281217532909714,
+   "ratio": 5.02674213309855,
+   "dn_marble_over_radius": 1.7098972761398494
+  },
+  {
+   "row": 1504,
+   "in_input": false,
+   "n": 864,
+   "t_marble": 1.7231422780928933,
+   "t_flat_floor": 0.3374338252643305,
+   "ratio": 5.106608019344418,
+   "dn_marble_over_radius": 1.7437323963888145
+  },
+  {
+   "row": 1520,
+   "in_input": false,
+   "n": 864,
+   "t_marble": 1.7328172529984096,
+   "t_flat_floor": 0.3322211256609875,
+   "ratio": 5.215855101179357,
+   "dn_marble_over_radius": 1.7776931938041882
+  }
+ ],
+ "rings": [
+  {
+   "row": 461.0,
+   "offset_px": 20.0,
+   "in_input": true,
+   "t_marble": 15.22609783858315,
+   "t_times_offset": 304.521956771663,
+   "t_cylinder_model": 47.812268789264124,
+   "ratio": 0.3184558738614398
+  },
+  {
+   "row": 447.0,
+   "offset_px": 34.0,
+   "in_input": true,
+   "t_marble": 15.652352133481338,
+   "t_times_offset": 532.1799725383655,
+   "t_cylinder_model": 28.12486399368478,
+   "ratio": 0.5565307671175211
+  },
+  {
+   "row": 433.0,
+   "offset_px": 48.0,
+   "in_input": true,
+   "t_marble": 14.852209213035328,
+   "t_times_offset": 712.9060422256957,
+   "t_cylinder_model": 19.921778662193386,
+   "ratio": 0.745526263737743
+  },
+  {
+   "row": 415.0,
+   "offset_px": 66.0,
+   "in_input": true,
+   "t_marble": 12.602011120036305,
+   "t_times_offset": 831.7327339223962,
+   "t_cylinder_model": 14.488566299777007,
+   "ratio": 0.8697900716532776
+  },
+  {
+   "row": 309.0,
+   "offset_px": 172.0,
+   "in_input": true,
+   "t_marble": 5.4239073493730565,
+   "t_times_offset": 932.9120640921657,
+   "t_cylinder_model": 5.5595661382865265,
+   "ratio": 0.9755990331728871
+  },
+  {
+   "row": 212.0,
+   "offset_px": 269.0,
+   "in_input": true,
+   "t_marble": 3.497154470642481,
+   "t_times_offset": 940.7345526028274,
+   "t_cylinder_model": 3.554815523365362,
+   "ratio": 0.9837794528734664
+  },
+  {
+   "row": 196.5,
+   "offset_px": 284.5,
+   "in_input": false,
+   "t_marble": 3.4156632652644556,
+   "t_times_offset": 971.7561989677376,
+   "t_cylinder_model": 3.3611436758709403,
+   "ratio": 1.0162205471265338
+  },
+  {
+   "row": 190.5,
+   "offset_px": 290.5,
+   "in_input": false,
+   "t_marble": 3.3752538139317023,
+   "t_times_offset": 980.5112329471596,
+   "t_cylinder_model": 3.291722463976876,
+   "ratio": 1.0253761824907646
+  }
+ ]
+}

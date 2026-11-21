@@ -1,0 +1,1133 @@
+diff --git a/src/game/Game.ts b/src/game/Game.ts
+index 6a4653f3..2a7e591a 100644
+--- a/src/game/Game.ts
++++ b/src/game/Game.ts
+@@ -59,7 +59,14 @@ export async function startGame(canvas: HTMLCanvasElement) {
+   scene.add(fill);
+ 
+   const camera = new THREE.PerspectiveCamera(66, 9 / 16, 0.05, 1200);
+-  const composer = new EffectComposer(renderer);
++  // r21 `?msaa=4` (Screen 04 ring edges, 2026-11-20): the scene is drawn into the composer's off-screen target, which has
++  // NO multisampling, so the renderer's `antialias: true` never reaches the 3D edges (stair-stepped silhouettes: the washer
++  // rim's inner edge, the river's cut edge, coins). With the switch the scene target is multisampled (N samples). Off
++  // (default): unchanged.
++  const msaa = Number(qs.get('msaa') ?? 0);
++  const composer = msaa > 0
++    ? new EffectComposer(renderer, new THREE.WebGLRenderTarget(1, 1, { type: THREE.HalfFloatType, samples: msaa }))
++    : new EffectComposer(renderer);
+   composer.addPass(new RenderPass(scene, camera));
+   // Screen 05 test GL1 (user 2026-11-16: "the glow on the highlights is most of what makes the approved version look so
+   // shiny"): `?glow05=1` = a stronger UnrealBloom with a HIGH threshold, so only the bright highlights (streak cores,
+diff --git a/src/world/match04.ts b/src/world/match04.ts
+index 65c878ce..a20f48e1 100644
+--- a/src/world/match04.ts
++++ b/src/world/match04.ts
+@@ -428,7 +428,7 @@ void main() { vec4 c = texture2D(uTex, vUv); if (c.a < 0.02) discard; gl_FragCol
+       shared.uPjPost.value.x = renderer.toneMappingExposure;
+       shared.uPjRes.value.set(w, h);
+       // r13: Benny's world position (Game puts the splash at Benny + splashOffset just before sync) for the m04arr3d fade
+-      if (m4 && camera) m4.update(camera.getWorldPosition(_cp), splash ? _bp.copy(splash.position).sub(splashOffset) : undefined);
++      if (m4 && camera) m4.update(camera.getWorldPosition(_cp), splash ? _bp.copy(splash.position).sub(splashOffset) : undefined, camera);
+       // r11 m04mv: full weight within 3 u of a view's camera, gone at 8 u (the approved camera is ~10 u from V04-1's)
+       if (mvViews.length && camera) {
+         const cp = camera.getWorldPosition(_cp);
+diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
+index 2b62a355..e85ff44c 100644
+--- a/src/world/match04m4.ts
++++ b/src/world/match04m4.ts
+@@ -120,6 +120,15 @@ uniform float uRVar;       // r17 m04rpvar: number of painted rings stacked in t
+ uniform vec4 uRPol;        // r18 m04rpol: x amount, y luma pivot, z contrast gain above it, w below it
+ uniform vec2 uRPol2;       // r18 m04rpol: x sharp sheen (reflection of the bright end), y grazing-angle brightening
+ uniform vec4 uRCr;         // r18 m04rpcr: x amount, y bright lip line half width, z dark lip-edge line half width, w band-start corner (u)
++uniform vec4 uRNear;       // r19b m04rnear: x amount, y target sub-band length (world u), z/w sub-band size on screen (px of a
++                           // 1536 px tall portrait view, from world length, distance and foreshortening) where the detail starts / is full
++uniform vec4 uRNear2;      // r19b m04rnear: x painted band grade per sub-band, y rim + groove lines, z yellow-gold grade, w pink / violet reflection
++uniform vec4 uRNear3;      // r19b m04rnear: x bulbs on the sub-rims, y highlight lift, z corridor ring growth (m04rfg), w lip + groove size (u)
++uniform vec4 uRNear4;      // r19b m04rnear: x bulbs per sub-rim, y fraction lit, z highlight core sharpness, w bulb size
++uniform vec4 uRMat;        // r20 m04rmat: x amount, y mid-tone darkening, z mid-tone de-yellowing, w spare
++uniform vec4 uRNear6;      // r20 m04rnear: x painted light riding on the band grade, y grade exponent along the sub-band, z fine machined lines, w their spacing (ring units)
++uniform vec4 uRNear5;      // r20 m04rnear: x highlight floor round the ring (0 = hot spots only), y static yellow glows, z rim line
++                           // offset before the sub-rim (ring units), w the painted band re-drawn on every sub-band (m04rntex)
+ #ifdef RFEW
+ uniform float uRFewG;      // r18 m04rfew: height of the telescope's shrink centre (group units, from the axis; < 0 = below)
+ uniform vec2 uRFewW;       // r18 m04rfew: x = ring scale where the deep rings reach warm yellow-white, y = amount (m04rfw, m04rfk)
+@@ -175,7 +184,36 @@ float streaks(float ang, float ring) {
+   }
+   return s;
+ }
++uniform float uDbg;         // TEMP r21 diagnosis
++uniform float uRSoftT;     // r21 m04rsoft: ring coordinate where the telescope (m04rfew) starts
++uniform vec4 uRSoft;       // r21 m04rsoft: x amount, y groove half-width (ring units), z rim roll-off (ring units), w painted hue kept
++vec3 copperSoft(float T) {
++  // r21 m04rsoft: display colours measured on the approved inner rings (rose-copper to orange-copper bands, soft-gold rims),
++  // indexed by their luma: groove (146,52,34) .306, near end of a band (160,66,58) .365, body (200,90,62) .469, warm body
++  // (224,106,64) .535, soft-gold rim (246,146,52) .648, hot spot on a rim (255,206,108) .821
++  vec3 c0 = vec3(0.573, 0.204, 0.133), c1 = vec3(0.627, 0.259, 0.227), c2 = vec3(0.784, 0.353, 0.243);
++  vec3 c3 = vec3(0.878, 0.416, 0.251), c4 = vec3(0.965, 0.573, 0.204), c5 = vec3(1.0, 0.808, 0.424);
++  if (T < 0.365) return mix(c0, c1, clamp((T - 0.306) / 0.059, 0.0, 1.0));
++  if (T < 0.469) return mix(c1, c2, (T - 0.365) / 0.104);
++  if (T < 0.535) return mix(c2, c3, (T - 0.469) / 0.066);
++  if (T < 0.648) return mix(c3, c4, (T - 0.535) / 0.113);
++  return mix(c4, c5, clamp((T - 0.648) / 0.173, 0.0, 1.0));
++}
++// r21 m04rsoft: the painted light dots (r16 m04rpdots) at du world-units from their line: (halo, core)
++vec2 ringDots(float ang, float rj, float ri, float du, float rr, float dax, float day, float fu) {
++  float cfl = (ang + rj) / 6.2831853 * uRDots.y + 0.5 * mod(ri, 2.0);
++  float ci = floor(cfl);
++  float jx = (h21(vec2(ci + 1.7, ri + 3.1)) - 0.5) * 0.5;
++  float arc = (fract(cfl) - 0.5 - jx) * 6.2831853 * rr / uRDots.y;
++  float bs = uRDots.w * (0.6 + 0.8 * h21(vec2(ci + 5.3, ri)));
++  float fa = rr * (abs(dax) + abs(day));
++  float ea = max(bs * 1.5, 0.9 * fa), eu = max(bs, 0.9 * fu);
++  float on = step(1.0 - uRDots.z, h21(vec2(ci, ri + 11.0))) * uRDots.x * min(1.0, 1.5 * bs * bs / (ea * eu) + 0.35);
++  float d = length(vec2(arc / ea, du / eu));
++  return vec2(smoothstep(3.0, 0.0, d), smoothstep(1.0, 0.35, d)) * on;
++}
+ void main() {
++  float dbgSi = -1.0, dbgXs = 0.0, dbgFd = 0.0;
+   vec3 V = normalize(cameraPosition - vW);
+   vec3 n = normalize(vN);
+   if (dot(n, V) < 0.0) n = -n;
+@@ -361,6 +399,260 @@ void main() {
+         pr *= mix(vec3(1.0), wg, uRWarm.x);
+       }
+       pr += vec3(1.0, 0.86, 0.55) * 0.10 * gl * smoothstep(0.0, 0.2, facing);   // moving polished sheen
++      float fdS = 0.0, ribC = -1.0;                                   // r21 m04rsoft: weight of its treatment here, rim crest
++      bool soft = uRSoft.x > 0.0;
++      if (uRNear.x > 0.0 && (uu < uL || soft)) {
++        // r19b / r20 m04rnear: the NEAR band seen from inside. While swimming, the band of the ring Benny is in fills the
++        // top half of the view and the painted ring (160 texture rows for a whole ring) is magnified ~10x into one broad,
++        // smooth orange-copper surface. The painting's nearest gold (the washer rim) is several polished yellow-gold tubes
++        // with bright rims, thin dark grooves, hot highlights and glowing bulbs, with soft pink / violet reflections. So once
++        // a band is large on screen it resolves into that structure: N sub-bands (about uRNear.y world u each, world-
++        // anchored), each a rounded polished tube whose highlights move over it as Benny swims, a crisp warm-white rim line
++        // and a dark groove, a row of bulbs, graded toward the washer rim's yellow-gold, mirroring the pink / violet river.
++        // It fades in with the sub-band's size on screen (from its world length, distance and foreshortening: smooth over
++        // the band, no popping; a pixel-footprint fade, fwidth, jumps at triangle edges and drew diagonal seams); far
++        // rings keep the plain painted ring (few, thick rings), the modelled lip stays.
++        float kI = floor(al / uP);
++        float Bk = uP * pow(uRNear3.z, kI) - uRNear3.w;            // this corridor ring's band length (world u)
++        float Ns = max(1.0, floor(Bk / uRNear.y + 0.5));
++        float ls = uL / Ns, lsW = Bk / Ns;                           // sub-band length (ring units / world u)
++        float wS = uu / ls, si = floor(wS), xs = wS - si;
++        // r21 m04rsoft: the ring's lip + groove strip (flush since m04rflat) joins its last sub-band: that last rib ends
++        // at the period end with the ring's own rounded rim (no separate thin strip)
++        float ribW = ls, u0L = (Ns - 1.0) * ls;
++        if (soft && uu >= u0L) { si = Ns - 1.0; ribW = uP - u0L; xs = clamp((uu - u0L) / ribW, 0.0, 1.0); }
++        float fuN = max(fwidth(al), 1e-5);
++        float sinV = sqrt(max(1.0 - pow(dot(V, uAxD), 2.0), 0.0));   // the band runs along the axis: foreshortened
++        float fd = smoothstep(uRNear.z, uRNear.w, 1278.0 * lsW * sinV / max(dc, 0.2)) * uRNear.x;   // px at 62 deg / 1536 px
++#ifdef RFEW
++        fd *= step(0.999, vF.y);                                     // corridor rings only (the telescope stays painted)
++        // r21 m04rsoft: fade out over the last corridor ring (the treated -> painted switch at the telescope drew a hard,
++        // stair-stepped edge where the painted rings start)
++        if (soft) fd *= 1.0 - smoothstep(uRSoftT - uP, uRSoftT, al);
++#endif
++        dbgSi = si; dbgXs = xs; dbgFd = fd;
++        if (soft) fdS = fd;
++        if (soft && fd > 0.001) {
++          // r21 m04rsoft (user 2026-11-20, marked close-ups: "softer, rounded gold rims, narrow shaded grooves, and copper
++          // surfaces with pink, violet, and blue reflections ... correct the prominent near-black boundaries and visible
++          // jagged edges"). CAUSE (measured, qa/match/04/r21_rings/NOTES.md): every sub-band was graded dark red-brown ->
++          // yellow-white and the next one started dark again — a ~160-level jump inside one pixel with no filtering
++          // (stair-stepped edges), its dark third (luma 72-89) reading as a near-black boundary next to the hot rim; the lip
++          // + groove strip, flush since m04rflat, showed the painted groove rows stretched over 0.65 ring units (luma 60-80),
++          // pressed 22 % darker by m04rmat. Approved rings: same direction (near end darker, bright rim at the far end) but a
++          // ~70-level step across a NARROW groove, rims soft gold (~150-165), body 100-135, grooves 63-90, never black.
++          // So every rib (the sub-bands; the last one runs on over the flush lip to the period end) is ONE rounded profile in those measured tones: copper near
++          // end -> warm body -> a rounded soft-gold crest -> rolls over into a narrow shaded groove. Both sides of a groove
++          // meet the same tone and every per-rib term (sheen, hot spots, reflections, lines, bulbs) is windowed to zero
++          // there -> continuous, nothing left to alias; groove and crest are pre-filtered by the pixel footprint.
++          float sid = kI * 7.0 + si;                                   // world-anchored id of this rib
++          float fu = fuN;                                              // (fwidth of the wrapped uu jumps at every period end)
++          float fx = fu / ribW;                                        // pixel footprint in rib units
++          float rimW = clamp(max(uRSoft.z / ribW, 3.5 * fx), 0.0, 0.45); // the rim's rounded roll-off (>= 3.5 px)
++          float ramp = smoothstep(0.0, 1.0 - rimW, xs);
++          float roll = smoothstep(1.0, 1.0 - rimW, xs);               // 1 on the rib, 0 at the groove edge
++          float win = smoothstep(0.0, 0.10 + 2.0 * fx, xs) * roll;     // per-rib terms vanish at both edges
++          float xc = 1.0 - 1.15 * rimW;                                // the rounded crest
++          float crest = exp(-pow((xs - xc) / (1.15 * rimW + fx), 2.0)) * roll;
++          float spot = smoothstep(0.35, 1.15, streaks(ang + rj, sid + 41.0));   // world-anchored hot parts of each rim
++          float mvS = clamp(dot(-V, uAxD), 0.0, 1.0);
++          float sheen = exp(-pow((xs - mix(0.45, 0.78, mvS)) / 0.22, 2.0)); // soft sheen sliding as Benny swims
++          float lipR = step(Ns - 1.5, si);                             // the ring's own rim: a little brighter
++          float T = mix(0.35, 0.565, pow(ramp, 1.5));                  // near end -> warm body brightening into the rim
++          T *= 1.0 + 0.14 * (sheen - 0.45) * win;                      // redistributes light, no overall lift
++          // the polished tube mirroring the bright end of the tunnel: a soft highlight from the rib's analytic (rounded)
++          // normal that slides over it as Benny swims — a reflection, kept off the grooves
++          vec3 nA = normalize(-normalize(qr) - 0.2 * uAxD);
++          float th = (xs - 0.5) * 1.5;
++          vec3 RT = reflect(-V, normalize(nA * cos(th) + uAxD * sin(th)));
++          float fz = pow(max(dot(RT, uAxD), 0.0), 6.0);
++          T += 0.11 * fz * win * (0.55 + 0.45 * spot);
++          T = mix(0.35, T, roll);                                      // rolls over the rim
++          T = mix(T, max(T, 0.655 + 0.05 * lipR + 0.20 * spot), crest); // rounded soft-gold crest, hot in places
++          // the narrow shaded groove at both rib edges: a gaussian pre-filtered by the pixel footprint (box)
++          float dE = min(xs, 1.0 - xs) * ribW;
++          float gs = uRSoft.y, gs2 = sqrt(gs * gs + fu * fu / 6.0);
++          float D = (gs / gs2) * exp(-pow(dE / gs2, 2.0));
++          T = mix(T, 0.27, 0.92 * D);
++          // colour: the measured copper -> soft-gold ramp at T, with some of the painted texel's own hue (rose, violet,
++          // yellow streaks) at the same luminance
++          float lp = max(dot(pr, vec3(0.299, 0.587, 0.114)), 0.03);
++          float kB = max(smoothstep(uL - 0.3, uL, uu), 1.0 - smoothstep(0.08, 0.38, uu));
++          if (kB > 0.0) {
++            // the painted rows past the lip line and at the ring's start are the dark, saturated painted groove: blend into
++            // the painted band colour at this angle instead (over 0.3 ring units, no seam) — only its hue is used here
++            vec2 uvB = vec2((ang + rj) / 6.2831853 + 0.5, 0.45 * uRLip.x);
++            if (uRVar > 0.5) { float iB = kI < uRVar ? kI : min(floor(h21(vec2(kI, 9.1)) * uRVar), uRVar - 1.0); uvB.y = (iB + uvB.y) / uRVar; }
++            vec3 pb = textureGrad(uRTex, uvB, vec2(dax / 6.2831853, 0.0), vec2(day / 6.2831853, 0.0)).rgb;
++            pr = mix(pr, pb, kB); lp = max(dot(pr, vec3(0.299, 0.587, 0.114)), 0.03);
++          }
++          vec3 cS = mix(copperSoft(T), clamp(pr * (T / lp), 0.0, 1.0), uRSoft.w * (1.0 - D) * (1.0 - 0.6 * crest));
++          // fine machined lines (gentle, windowed): bright ones a warm sheen, dark ones a shade, never near-black
++          if (uRNear6.z > 0.0) {
++            float cq = uu / uRNear6.w, cI = floor(cq);
++            float lpos = 0.2 + 0.6 * h21(vec2(cI + kI * 13.0, 4.7));
++            float eL = (cq - cI - lpos) * uRNear6.w;
++            float hW = 0.006 + 0.008 * h21(vec2(cI + kI * 13.0, 8.3));
++            float cL = clamp((hW + 0.5 * fu - abs(eL)) / fu, 0.0, 1.0) * min(1.0, 2.0 * hW / fu) * uRNear6.z * win;
++            cS = mix(cS, step(0.45, h21(vec2(cI + kI * 13.0, 1.9))) > 0.5 ? mix(cS, vec3(1.0, 0.86, 0.58), 0.30) : cS * 0.86, cL);
++          }
++          // pink / violet / blue reflections of the swirl water: soft world-anchored patches that slide a little with the
++          // view, at the SAME luminance as the copper under them (a hue shift, not added light or glow)
++          if (uRNear2.w > 0.0) {
++            float sv = ang + rj + 0.35 * dot(V, uAxR) + 0.25 * dot(V, uAxU);
++            float pa = smoothstep(0.15, 0.75, streaks(sv, sid + 61.0)) * exp(-pow((xs - 0.45) / 0.42, 2.0));
++            vec3 rc = ang < 0.0 ? vec3(0.66, 0.50, 0.92) : vec3(0.93, 0.47, 0.80);
++            rc = mix(rc, vec3(0.88, 0.56, 0.86), 1.0 - smoothstep(0.5, 1.4, abs(ang)));
++            rc = mix(rc, vec3(0.50, 0.58, 1.0), 0.85 * step(0.62, h21(vec2(sid, 7.7))));   // cool blue glints
++            float lc = dot(cS, vec3(0.299, 0.587, 0.114));
++            vec3 rcN = clamp(rc * (lc / max(dot(rc, vec3(0.299, 0.587, 0.114)), 0.05)), 0.0, 1.0);
++            cS = mix(cS, rcN, clamp(uRNear2.w * pa * win, 0.0, 0.72));
++          }
++          // small glowing bulbs on each sub-band's crest (the ring's own rim keeps the painted dots, moved onto its crest)
++          if (uRNear3.x > 0.0 && lipR < 0.5) {
++            float rs = kI * 7.0 + si + 1.0;
++            float eC = (xs - xc) * ribW;
++            float cfl = (ang + rj) / 6.2831853 * uRNear4.x + 0.5 * mod(si, 2.0);
++            float ci = floor(cfl);
++            float jx = (h21(vec2(ci + 1.7, rs + 3.1)) - 0.5) * 0.3;
++            float arc = (fract(cfl) - 0.5 - jx) * 6.2831853 * rr / uRNear4.x;
++            float bs = uRNear4.w * (0.6 + 0.8 * h21(vec2(ci + 5.3, rs)));
++            float faN = rr * (abs(dax) + abs(day));
++            float ea = max(bs * 1.5, 0.9 * faN), eu = max(bs, 0.9 * fu);
++            float onB = step(1.0 - uRNear4.y, h21(vec2(ci, rs + 11.0))) * uRNear3.x * min(1.0, 1.5 * bs * bs / (ea * eu) + 0.35);
++            onB *= smoothstep(0.5, 0.36, abs(fract(cfl) - 0.5));
++            float dd = length(vec2(arc / ea, eC / eu));
++            cS += vec3(1.0, 0.62, 0.20) * 0.45 * smoothstep(3.0, 0.0, dd) * onB;
++            cS = mix(cS, vec3(1.0, 0.95, 0.78), smoothstep(1.0, 0.35, dd) * onB);
++          }
++          pr = mix(pr, cS, fd);
++          // where the ring's rim crest lies (ring units), for its dots
++          float rWL = uP - u0L;
++          ribC = u0L + rWL * (1.0 - 1.15 * clamp(max(uRSoft.z / rWL, 3.5 * fu / rWL), 0.0, 0.45));
++        } else if (fd > 0.001) {
++          float lastS = step(Ns - 0.5, si);                          // the last sub-band ends at the modelled lip
++          float sid = kI * 7.0 + si;                                 // world-anchored id of this sub-band
++          if (uRNear5.w > 0.0) {
++            // (0) each sub-band wears the painted band itself at the painting's own scale (rows groove .. lip line, so it
++            // brightens into a painted lip line at its rim), turned by a different angle per sub-band (no repeat round the
++            // ring); same painted ring of the atlas as the band, same polish
++            float nV = max(uRVar, 1.0);
++            float idS = kI < uRVar ? kI : min(floor(h21(vec2(kI, 9.1)) * uRVar), uRVar - 1.0);
++            if (uRVar < 0.5) idS = 0.0;
++            float ao = (h21(vec2(sid, 2.9)) - 0.5) * 1.6;
++            vec2 uvS = vec2((ang + rj + ao) / 6.2831853 + 0.5, (idS + clamp(xs * uRLip.x, 0.004, 0.996)) / nV);
++            vec2 gA = vec2(dFdx(al), dFdy(al)) * uRLip.x * Ns / uL / nV;
++            vec3 ps = textureGrad(uRTex, uvS, vec2(dax / 6.2831853, gA.x), vec2(day / 6.2831853, gA.y)).rgb;
++            ps *= 1.0 - uRLip.z + uRLip.z * facing;
++            if (uRPol.x > 0.0) {
++              float m0 = dot(ps, vec3(0.30, 0.59, 0.11));
++              float m1 = m0 + (m0 > uRPol.y ? uRPol.z : uRPol.w) * (m0 - uRPol.y);
++              ps *= mix(1.0, m1 / max(m0, 1e-3), uRPol.x);
++            }
++            pr = mix(pr, ps, fd * uRNear5.w);
++          }
++          // (a) each sub-band graded like a painted ring band (measured on the approved picture across the washer rim and
++          // ring 0 at the top: dark red-brown just after the groove (128,50,15) -> orange (215,98,30) -> bright orange
++          // (250,152,40) -> yellow (255,215,92) at the lip), the painted texel's own light / colour variation riding on it;
++          // pink / violet texels keep their colour (only the warm copper ones are re-graded)
++          float lp = dot(pr, vec3(0.30, 0.59, 0.11));
++          float warm = smoothstep(0.2, 0.45, pr.r - pr.b);
++          float xg = clamp(0.06 + 0.94 * pow(xs, uRNear6.y) + uRNear6.x * (lp - 0.45), 0.0, 1.0);
++          float xg5 = xg * 5.0;
++          vec3 gr = mix(vec3(0.50, 0.20, 0.06), vec3(0.70, 0.27, 0.07), clamp(xg5, 0.0, 1.0));
++          gr = mix(gr, vec3(0.84, 0.38, 0.12), clamp(xg5 - 1.0, 0.0, 1.0));
++          gr = mix(gr, vec3(0.93, 0.48, 0.14), clamp(xg5 - 2.0, 0.0, 1.0));
++          gr = mix(gr, vec3(0.98, 0.60, 0.16), clamp(xg5 - 3.0, 0.0, 1.0));
++          gr = mix(gr, vec3(1.0, 0.84, 0.36), clamp(xg5 - 4.0, 0.0, 1.0));
++          gr = mix(gr, mix(gr, vec3(1.0, 0.78, 0.30), 0.35), uRNear2.z * smoothstep(0.5, 1.0, xg) * 0.6);   // yellow-gold
++          pr = mix(pr, gr * (0.85 + 0.3 * lp / 0.45), uRNear2.x * fd * warm);
++          // (f) fine machined lines across the band (the painted rings' thin bright / dark concentric lines, ~0.4-0.9 u
++          // apart, crisp): world-anchored, anti-aliased to the pixel footprint, gone where thinner than a pixel
++          if (uRNear6.z > 0.0) {
++            float cq = uu / uRNear6.w, cI = floor(cq);
++            float lpos = 0.2 + 0.6 * h21(vec2(cI + kI * 13.0, 4.7));
++            float eL = (cq - cI - lpos) * uRNear6.w;                  // ring units from this cell's line
++            float hW = 0.006 + 0.008 * h21(vec2(cI + kI * 13.0, 8.3));
++            float cL = clamp((hW + 0.5 * fuN - abs(eL)) / fuN, 0.0, 1.0) * min(1.0, 2.0 * hW / fuN);
++            float bright = step(0.45, h21(vec2(cI + kI * 13.0, 1.9)));
++            cL *= uRNear6.z * fd * (1.0 - smoothstep(0.85, 1.0, xs)) * smoothstep(0.0, 0.08, xs);
++            pr = mix(pr, bright > 0.5 ? mix(pr, vec3(1.0, 0.86, 0.58), 0.55) : pr * vec3(0.62, 0.48, 0.42), cL);
++          }
++          // (c) polished highlights that move: a highlight line along each tube's crown that slides over the tube as Benny
++          // swims (toward the rim while the sub-band is far ahead, back toward the groove once it is overhead: the polished
++          // tube mirroring the bright end of the tunnel), brightest in a few hot spots round the ring (world-anchored per
++          // sub-band, like the painted light columns), with a sharp warm-white core; plus the tube normal's own mirror term
++          float mv = clamp(dot(-V, uAxD), 0.0, 1.0);                 // 1 = looking down the tunnel at it, 0 = overhead
++          float xh = mix(0.42, 0.80, mv);
++          float spot = clamp(0.85 * streaks(ang + rj, sid + 41.0), 0.0, 1.0);
++          float hm = uRNear5.x + (1.0 - uRNear5.x) * spot;
++          float hb = exp(-pow((xs - xh) / 0.16, 2.0)) * hm, hcr = exp(-pow((xs - xh) / (0.16 / uRNear4.z), 2.0)) * spot;
++          // analytic band normal (the lathe's normals are per facet: a mirror term on them shows the facets)
++          vec3 nA = normalize(-normalize(qr) - 0.2 * uAxD);
++          float th = (xs - 0.5) * 1.5;
++          vec3 nT = normalize(nA * cos(th) + uAxD * sin(th));
++          vec3 RT = reflect(-V, nT);
++          float fz = pow(max(dot(RT, uAxD), 0.0), 8.0) * hm;
++          pr += (vec3(1.0, 0.74, 0.30) * 0.42 * (hb + fz) + vec3(1.0, 0.94, 0.74) * 0.75 * hcr) * uRNear3.y * fd;
++          // short static yellow glows on each tube's crown (the painting's yellow light columns, finer than the magnified ones)
++          float yc = smoothstep(0.5, 1.25, streaks(ang + rj + 0.7, sid + 83.0)) * exp(-pow((xs - 0.66) / 0.2, 2.0));
++          pr += vec3(1.0, 0.76, 0.34) * uRNear5.y * yc * fd;
++          // (d) soft pink / violet sheens (the painted reflections of the swirl water): soft patches on each tube's body,
++          // world-anchored round the ring and different on every sub-band, sliding a little with the view (a reflection);
++          // violet on the left, pink on the right, lilac-pink overhead (painted (211,118,207) pink / violet-blue)
++          if (uRNear2.w > 0.0) {
++            float sv = ang + rj + 0.35 * dot(V, uAxR) + 0.25 * dot(V, uAxU);
++            float pa = smoothstep(0.25, 0.85, streaks(sv, sid + 61.0)) * exp(-pow((xs - 0.42) / 0.3, 2.0));
++            vec3 rc = ang < 0.0 ? vec3(0.66, 0.50, 0.92) : vec3(0.93, 0.47, 0.80);
++            rc = mix(rc, vec3(0.88, 0.56, 0.86), 1.0 - smoothstep(0.5, 1.4, abs(ang)));
++            rc = mix(rc, vec3(0.52, 0.56, 0.98), 0.8 * step(0.6, h21(vec2(sid, 7.7))));   // some cool blue-violet glints
++            float sR = uRNear2.w * fd * pa;
++            pr = mix(pr, rc * (0.75 + 0.45 * dot(pr, vec3(0.30, 0.59, 0.11))), clamp(sR, 0.0, 0.75));
++            if (uRNear5.w < -2.5) pr = vec3(clamp(sR * 2.0, 0.0, 1.0), 0.0, pa);   // DEBUG
++          }
++          // (e) the sub-rims (not after the last sub-band: the modelled lip carries its own line, groove and dots): a thin
++          // dark groove line, a crisp warm-white rim line just before it, the rounded rim catching the light, bulbs on it
++          float bi = floor(uu / ls + 0.5);
++          if (bi > 0.5 && bi < Ns - 0.5) {
++            float e = uu - bi * ls;                                  // signed ring units from the sub-rim (< 0 = before it)
++            float eB = e + uRNear5.z, hB = 0.02, hD = 0.016;
++            float cB = clamp((hB + 0.5 * fuN - abs(eB)) / fuN, 0.0, 1.0) * min(1.0, 2.0 * hB / fuN);
++            float cD = clamp((hD + 0.5 * fuN - abs(e - 0.004)) / fuN, 0.0, 1.0) * min(1.0, 2.0 * hD / fuN);
++            float gS = exp(-pow(min(eB, 0.0) / 0.09, 2.0)) * step(e, 0.0);
++            pr += vec3(1.0, 0.80, 0.42) * 0.22 * gS * fd * uRNear2.y;
++            pr = mix(pr, vec3(1.0, 0.93, 0.70), 0.8 * cB * fd * uRNear2.y);
++            pr = mix(pr, pr * vec3(0.50, 0.32, 0.26), cD * fd * uRNear2.y);
++            if (uRNear3.x > 0.0) {
++              // a row of glowing bulbs on each sub-rim (yellow-white core, orange halo), irregular, some dark
++              float rs = kI * 7.0 + bi;
++              float cfl = (ang + rj) / 6.2831853 * uRNear4.x + 0.5 * mod(bi, 2.0);
++              float ci = floor(cfl);
++              float jx = (h21(vec2(ci + 1.7, rs + 3.1)) - 0.5) * 0.3;
++              float arc = (fract(cfl) - 0.5 - jx) * 6.2831853 * rr / uRNear4.x;
++              float bs = uRNear4.w * (0.6 + 0.8 * h21(vec2(ci + 5.3, rs)));
++              float faN = rr * (abs(dax) + abs(day));
++              float ea = max(bs * 1.5, 0.9 * faN), eu = max(bs, 0.9 * fuN);
++              float onB = step(1.0 - uRNear4.y, h21(vec2(ci, rs + 11.0))) * uRNear3.x * fd * min(1.0, 1.5 * bs * bs / (ea * eu) + 0.35);
++              float dd = length(vec2(arc / ea, eB / eu));
++              // the halo stays inside its cell (a halo cut by the cell border drew radial seams)
++              onB *= smoothstep(0.5, 0.36, abs(fract(cfl) - 0.5));
++              pr += vec3(1.0, 0.62, 0.20) * 0.70 * smoothstep(3.0, 0.0, dd) * onB;
++              pr = mix(pr, vec3(1.0, 0.96, 0.80), smoothstep(1.0, 0.35, dd) * onB);
++            }
++          }
++        }
++      }
++      if (uRMat.x > 0.0) {
++        // r20 m04rmat: MIRROR-POLISHED gold like the approved tunnel (user's marked spot, crop x0-480 y380-860): the painted
++        // ring walls are darker rose-copper between the ribs (luma p25 102 / p50 122 / p75 153) with bright yellow-gold
++        // lines and highlights (p95 ~219), the game's walls were a lighter, flatter orange (135 / 157 / 183 / 232 with the
++        // ribs). Mid-tones are pressed down and made a little less yellow (copper-rose), highlights kept bright and golden.
++        float lm = dot(pr, vec3(0.30, 0.59, 0.11));
++        float hiM = smoothstep(0.45, 0.85, lm);
++        float kM = uRMat.x * (1.0 - fdS);                              // r21 m04rsoft: its tones are measured already
++        pr *= mix(1.0, 1.0 - uRMat.y + uRMat.y * hiM, kM);
++        pr.g *= mix(1.0, 1.0 - uRMat.z * (1.0 - smoothstep(0.55, 0.9, lm)), kM);
++      }
+       if (uRCr.x > 0.0) {
+         // r18 m04rpcr: the painted thin bright lip line and thin dark groove line drawn CRISP at their modeled places
+         // (bright line where the lip bead starts to turn inward, dark line ending at the lip apex = the inner edge every
+@@ -372,8 +664,9 @@ void main() {
+         float cB = clamp((uRCr.y + 0.5 * fu - dB) / fu, 0.0, 1.0) * min(1.0, 2.0 * uRCr.y / fu);
+         float cD = clamp((uRCr.z + 0.5 * fu - dD) / fu, 0.0, 1.0) * min(1.0, 2.0 * uRCr.z / fu);
+         float cC = clamp((uRCr.w + 0.5 * fu - dC) / fu, 0.0, 1.0) * min(1.0, 2.0 * uRCr.w / fu);
+-        pr = mix(pr, vec3(1.0, 0.92, 0.66), 0.75 * cB * uRCr.x);
+-        pr = mix(pr, pr * vec3(0.55, 0.36, 0.30), max(cD, cC) * uRCr.x);   // dark red-brown groove, not black
++        float kC = uRCr.x * (1.0 - fdS);                               // r21 m04rsoft draws its own grooves / rims
++        pr = mix(pr, vec3(1.0, 0.92, 0.66), 0.75 * cB * kC);
++        pr = mix(pr, pr * vec3(0.55, 0.36, 0.30), max(cD, cC) * kC);   // dark red-brown groove, not black
+       }
+       if (uRDots.x > 0.0) {
+         // r16 m04rpdots: the painted light dots on every ring lip (yellow-white core, orange glow, irregular spacing,
+@@ -391,8 +684,15 @@ void main() {
+         float ea = max(bs * 1.5, 0.9 * fa), eu = max(bs, 0.9 * fu);         // painted dots: a little longer along the lip
+         float on = step(1.0 - uRDots.z, h21(vec2(ci, ri + 11.0))) * uRDots.x * min(1.0, 1.5 * bs * bs / (ea * eu) + 0.35);
+         float d = length(vec2(arc / ea, du / eu));                            // 1 = edge of the bright core
++        on *= 1.0 - fdS;                                                      // r21 m04rsoft: cross-fades onto the rim crest
+         pr += vec3(1.0, 0.62, 0.20) * 0.60 * smoothstep(3.0, 0.0, d) * on;   // orange halo
+         pr = mix(pr, vec3(1.0, 0.95, 0.76), smoothstep(1.0, 0.35, d) * on);  // yellow-white core
++        if (soft && fdS > 0.001 && ribC > 0.0) {
++          // r21 m04rsoft: the same dots on the crest of the ring's rounded rim
++          vec2 dt = ringDots(ang, rj, ri, uu - ribC, rr, dax, day, fu) * fdS;
++          pr += vec3(1.0, 0.62, 0.20) * 0.50 * dt.x;
++          pr = mix(pr, vec3(1.0, 0.95, 0.76), dt.y);
++        }
+       }
+       // the painted colour replaces the procedural ramp, its streaks, star glints, lip bulbs and pink-violet tint
+       col = mix(col, pr, uRPaint);
+@@ -429,6 +729,14 @@ void main() {
+     if (uv.x >= 0.0 && uv.x <= 1.0 && uv.y >= 0.0 && uv.y <= 1.0) col = mix(texture2D(uPlate, uv).rgb, col, uAway);
+   }
+   gl_FragColor = vec4(pjInverse(col), 1.0);
++  if (uDbg > 0.5) {
++    // 1: sub-band stripes (red even / blue odd, brightness = position in the sub-band), lip green, groove black
++    vec3 dc = dbgSi < 0.0 ? vec3(0.5) : (mod(dbgSi, 2.0) < 0.5 ? vec3(1.0, 0.0, 0.0) : vec3(0.0, 0.3, 1.0)) * (0.25 + 0.75 * dbgXs);
++    if (part > 0.5 && part < 1.5) dc = vec3(0.0, 1.0, 0.0);
++    if (part > 1.5 && part < 2.5) dc = vec3(0.0);
++    if (uDbg > 1.5) dc = vec3(dbgFd);
++    gl_FragColor = vec4(dc, 1.0);
++  }
+ }`;
+ 
+ /** `m04river`: the wide painted river inside the tunnel — a curved trough (flat lane, sides rising to the walls) carrying
+@@ -461,6 +769,16 @@ uniform vec3 uLane;          // r13 m04lane: x on, y clean-lane half width (u),
+ uniform vec2 uLane3;         // r13 m04lcd / m04lcw: deeper blue along the arrow line (strength, half width)
+ uniform vec2 uLane4;         // r14 m04lcn: deep-blue fade-in window ahead of the camera (start, full); off when y <= x
+ uniform vec4 uLane2;         // r13 m04lane2: x swirl detail, y gloss, z sparkle
++uniform vec4 uLG;            // r23 m04lgs: x strength, y streaks per u across, z line half width (share), w whiteness
++uniform vec4 uLG2;           // r23 m04lgs: x streak segment length (u), y meander (u), z base smoothing (mip), w far fade
++uniform vec4 uLG3;           // r24 m04lgs: x swirl bend (u), y swirl size (u), z sparkles, w dash threshold
++uniform vec4 uLG4;           // r24 m04lgs: x deeper electric-blue base (brightness shift), y glint brightness variation
++uniform vec4 uLG5;           // r25 m04lgc: x crescent glints on (strength), y crescent cell length along (u), z bend (share of the
++                             // line spacing), w dash threshold (higher = fewer crescents)
++uniform vec4 uLG6;           // r25 m04lgc: x / y crescents from x to y u ahead of the camera hand over to the long streaks
++                             // (y <= x: crescents everywhere), z crescent whiteness boost, w star sparkle at the brightest crescents
++uniform vec4 uLG7;           // r27 m04lgcg: x cluster threshold (0 = off), y cluster size across (u), z cluster length along (u),
++                             // w soft luminous halo round each crescent (strength)
+ uniform vec4 uEdge;          // r13 m04edge: x on, y half arc to the edge, z fringe width, w strength
+ uniform vec2 uSE;            // r13 m04rse / m04rsl: the climbing side water as long flowing currents (along stretch, from |lat|)
+ uniform float uTime;
+@@ -491,9 +809,14 @@ uniform vec4 uWU;            // r19b m04wup: x highest climb up the wall above t
+ uniform vec4 uWU2;           // r19b m04wup: x / y the climb falls from full (x u ahead of Benny) to z of it (y u ahead), w soft top edge (u)
+ uniform vec4 uWU3;           // r19b m04wup: x old water edge (arc u), y tongue drift with the current (0..1), z lilac-white lace
+                              // on the climbing crest (share of the m04edge fringe), w band tile column at the crest (0 = lilac sparkle)
++uniform vec2 uFar;           // r20 m04farsm: x where the K9 telescope begins (along, local), y on — beyond it the band edges run smooth
+ uniform vec4 uWC;            // r20 m04wcr: x on (strength), y bands per u up the wall, z bright highlight lines, w dark violet edges
+ uniform vec2 uWC2;           // r20 m04wcr: x bright glossy lip just under the crest, y soft top width (u) instead of m04wus
+-uniform vec4 uA5;        // m04arr5: x on, y spacing, z first apex (along), w bar thickness along the flow
++uniform vec4 uWG;            // r21 m04wgl: x on (strength), y satin bands per u up the wall, z white highlight streaks, w sparkles
++uniform vec4 uWG2;           // r21 m04wgl: x crisp top edge width (u), y bright lip under the crest, z translucent lilac top share,
++                             // w cyan streak bands low on the wall (share)
++uniform vec4 uWG3;           // r21 m04wgl: x band waviness along the flow (u), y its wavelength (u), z crease darkness, w top alpha
++uniform vec4 uA5;      // m04arr5: x on, y spacing, z first apex (along), w bar thickness along the flow
+ uniform vec4 uA5b;           // m04arr5: x half width, y arm slope (along per lateral), z camera along, w visible depth
+ uniform vec2 uA5n;           // r10 m04arr5: near fade-in distance (start, full) ahead of the camera; default 6.5, 9.0
+ varying vec4 vProj;
+@@ -568,6 +891,93 @@ void main() {
+         laneC = mix(laneC, laneC * vec3(0.42, 0.70, 1.0), uLane3.x * wl);
+       }
+     }
++    if (uLG.x > 0.0) {
++      // r23 m04lgs=1: the painted lane water is CLEAN glossy electric cyan with long thin white highlight streaks running
++      // with the flow (no soft white frosted blotches): base = the tile's gentle light / dark flow seen very smooth, re-coloured
++      // electric blue -> cyan; streaks = thin bright lines along the current, gently meandering, broken into long tapered
++      // segments that drift with the water; they fade where they would alias far away.
++      vec3 bb = mix(texture2D(uRiv, uv1, uLG2.z).rgb, texture2D(uRiv, uv2, uLG2.z).rgb, w);
++      float lbB = dot(bb, vec3(0.30, 0.55, 0.15));
++      lbB -= uLG4.x;
++      vec3 base = mix(vec3(0.00, 0.42, 0.98), vec3(0.04, 0.78, 1.00), smoothstep(0.22, 0.72, lbB));
++      base = mix(base, vec3(0.30, 0.90, 1.00), 0.35 * smoothstep(0.72, 0.95, lbB));
++      // r24: the streaks curve in soft swirls like the painted glints — lines of constant (lateral + bend * smooth 2-octave
++      // noise) (value noise is C1-smooth: no kinks; the coarse tile mip used first drew zigzag 'lightning' at its texel edges)
++      float sw = 0.0;
++      if (uLG3.x != 0.0) {
++        vec2 sp = vec2(vS / uLG3.y, fl / (uLG3.y * 2.5));
++        sw = uLG3.x * ((vn(sp + vec2(4.0, 2.0)) - 0.5) + 0.5 * (vn(sp * 2.0 + vec2(9.0, 5.0)) - 0.5));
++      }
++      float mw = vS + sw + uLG2.y * (vn(vec2(fl * 0.07, 1.0)) - 0.5) + 0.5 * uLG2.y * sin(fl * 0.31 + vS * 0.9);
++      float q = mw * uLG.y, id = floor(q), fq = fract(q) - 0.5;
++      float sg = fl / uLG2.x + h21(vec2(id, 3.0)) * 9.0, si = floor(sg), sf = fract(sg);
++      float on = step(uLG3.w, h21(vec2(id, si)));
++      float taper = smoothstep(0.0, 0.3, sf) * (1.0 - smoothstep(0.55, 1.0, sf));
++      float wq = fwidth(q);
++      float hw2 = uLG.z * (0.6 + 0.8 * h21(vec2(id, si + 5.0)));
++      float line = 1.0 - smoothstep(hw2, hw2 + 1.2 * wq, abs(fq));
++      float streak = line * on * taper * (1.0 - smoothstep(uLG2.w * 0.5, uLG2.w, wq));
++      float lgHalo = 0.0;
++      streak *= 1.0 - uLG4.y * h21(vec2(id + 0.5, si + 9.0));                                // some glints brighter than others
++      if (uLG5.x > 0.0) {
++        // r25 m04lgc=1: the painted near glints are SHORT curved crescents (fat bright middle, pointed tips, each bent a
++        // little one way or the other) sprinkled densely along the same swirl lines, not long straight scratches. Each line
++        // cell along the flow (uLG5.y u) holds at most one crescent of random length / place / bend / sideways offset; it
++        // drifts with the water like the streaks. Far ahead (uLG6.x -> y u from the camera) they hand over to the long
++        // streaks; they fade where a cell would shrink below a few pixels (no shimmer).
++        float sgc = fl / uLG5.y + h21(vec2(id, 23.0)) * 7.0, sic = floor(sgc), sfc = fract(sgc);
++        float onc = step(uLG5.w, h21(vec2(id + 0.25, sic)));
++        float gmc = 1.0;
++        if (uLG7.x > 0.0) {
++          // r27 m04lgcg: as painted, the glints gather in luminous CLUSTERS along the glossy swirl ridges (soft noise in swirl
++          // coordinates: across = the meandered line coordinate mw, along = the flow) with calm clear water between them,
++          // instead of an even sprinkle of separate white dashes ('white confetti').
++          float gn = 0.65 * vn(vec2(mw / uLG7.y, fl / uLG7.z) + vec2(3.0, 7.0)) + 0.35 * vn(vec2(mw / uLG7.y, fl / uLG7.z) * 2.3 + vec2(11.0, 1.0));
++          gmc = smoothstep(uLG7.x, uLG7.x + 0.12, gn);
++          onc *= gmc;
++        }
++        float dl = mix(0.45, 0.9, h21(vec2(id, sic + 11.0))), d0 = (1.0 - dl) * h21(vec2(id, sic + 13.0));
++        float uu = clamp((sfc - d0) / dl, 0.0, 1.0) * 2.0 - 1.0;                              // -1 .. 1 along the crescent
++        float prof = sqrt(max(0.0, 1.0 - uu * uu)) * step(d0, sfc) * step(sfc, d0 + dl);      // lens: fat middle, sharp tips
++        float bend = uLG5.z * (2.0 * h21(vec2(id, sic + 17.0)) - 1.0);
++        float fqc = fq - (h21(vec2(id, sic + 19.0)) - 0.5) * 0.45 - bend * (uu * uu - 0.35);
++        float hwc = hw2 * (0.25 + 1.1 * prof);
++        float fsg = fwidth(sgc);
++        float cres = (1.0 - smoothstep(hwc, hwc + 1.2 * wq, abs(fqc))) * smoothstep(0.0, 0.35, prof) * onc;
++        cres *= (1.0 - smoothstep(uLG2.w * 0.5, uLG2.w, wq)) * (1.0 - smoothstep(0.35, 0.7, fsg));
++        cres *= 1.0 - 0.6 * uLG4.y * h21(vec2(id + 0.5, sic + 29.0));
++        cres = min(1.0, cres * (1.0 + uLG6.z));
++        if (uLG6.w > 0.0) {
++          // a tiny four-point star on some crescents' middles (the painted water's sparkle); sv = pixels from the middle
++          float stp = step(0.8, h21(vec2(id + 0.75, sic + 31.0))) * onc;
++          vec2 sv = vec2(fqc / max(1e-4, wq), uu * 0.5 * dl / max(1e-4, fsg));
++          float star = exp(-abs(sv.x) * 0.9) * exp(-sv.y * sv.y * 0.02) + exp(-abs(sv.y) * 0.9) * exp(-sv.x * sv.x * 0.02);
++          cres = max(cres, min(1.0, uLG6.w * stp * star * smoothstep(0.0, 0.8, prof)) * (1.0 - smoothstep(0.35, 0.7, fsg)));
++        }
++        float kc = uLG5.x * (uLG6.y > uLG6.x ? 1.0 - smoothstep(uLG6.x, uLG6.y, along - uA5b.z) : 1.0);
++        streak = mix(streak, cres, kc);
++        if (uLG7.w > 0.0) {
++          // r27: a soft cyan-white halo round each crescent (the painted glints glow into the water instead of sitting on it
++          // as opaque cut-out dashes); 3.5x the crescent's width, faded like the crescent where it would alias
++          float hg = 3.5 * hwc + 1.5 * wq;
++          float halo = (1.0 - smoothstep(0.0, hg, abs(fqc))) * smoothstep(0.0, 0.6, prof) * onc;
++          halo *= (1.0 - smoothstep(uLG2.w * 0.5, uLG2.w, wq)) * (1.0 - smoothstep(0.35, 0.7, fsg));
++          lgHalo = uLG7.w * halo * kc;
++        }
++      }
++      base = mix(base, vec3(0.90, 0.99, 1.00), uLG.w * streak);
++      base += vec3(0.30, 0.70, 0.85) * lgHalo;                                                  // r27 m04lgcg halo (0 when off)
++      base += vec3(0.35, 0.75, 1.0) * 0.18 * uLG.w * streak;                                  // soft glow round each streak
++      if (uLG3.z > 0.0) {
++        // r24: small twinkling white glints scattered along the same swirl lines (the painted lane sparkles)
++        vec2 sc2 = vec2(mw * 4.0, fl * 2.2); vec2 si2 = floor(sc2), sf2 = fract(sc2) - 0.5;
++        float sh2 = h21(si2 + 31.0);
++        float tw2 = 0.55 + 0.45 * sin(uTime * 5.0 + sh2 * 40.0);
++        float spk2 = smoothstep(0.13, 0.0, length(sf2 - (vec2(h21(si2 + 3.1), h21(si2 + 7.7)) - 0.5) * 0.6)) * step(0.86, sh2) * tw2;
++        base += vec3(0.9, 0.98, 1.0) * uLG3.z * spk2 * (1.0 - smoothstep(0.3, 0.8, fwidth(sc2.x)));
++      }
++      laneC = mix(laneC, base, uLG.x);
++    }
+     laneCol = laneC;
+     col = mix(col, laneC, kl * uLane.z);
+   }
+@@ -674,6 +1084,9 @@ void main() {
+         // r18 m04nwhirl meander: ahead of Benny the band edge swings in and out along the slide (world-anchored S-curves,
+         // left / right in opposite phase) instead of running as two straight rails
+         mea = uNB4.z * sin(along * 6.2832 / uNB4.w + (vS < 0.0 ? 0.0 : 3.1416)) * smoothstep(0.0, uNB2.x, d);
++        // r20 m04farsm: inside the far telescope every ring is a shrunk copy, but the meander keeps its 7 u period along the
++        // slide, so it zig-zags once per ring (sawtooth "Christmas tree" edges round the far river) — let it fade out there
++        mea *= 1.0 - uFar.y * smoothstep(uFar.x - 8.0, uFar.x, along);
+         inner += mea;
+       }
+     }
+@@ -687,7 +1100,7 @@ void main() {
+       asB = as + uSS.x * 4.0 * kk * (1.0 - kk) * sin(along * 6.2832 / uSS.y + (vS < 0.0 ? 1.3 : 4.1) + 1.5 * vn(vec2(along * 0.07, vS < 0.0 ? 1.0 : 5.0)));
+     }
+     float sg = rr >= 0.0 ? 0.0 : sign(vS);       // r18 whirl: one wander for both sides (no jump where the crescents cross)
+-    float wan = uSB1.w * (vn(vec2(along * 0.11, sg * 5.0 + 2.0)) - 0.5) * 2.0;
++    float wan = uSB1.w * (vn(vec2(along * 0.11, sg * 5.0 + 2.0)) - 0.5) * 2.0 * (1.0 - uFar.y * smoothstep(uFar.x - 8.0, uFar.x, along));
+     float tb = clamp((asB + wan - inner) / max(0.1, uSB0.z - inner), 0.0, 1.0);
+     if (uWU.x > 0.0) {
+       // r19b m04wup: the painted band sequence (cyan by the lane -> violet -> hot-pink satin -> lilac sparkle) reaches only
+@@ -749,6 +1162,58 @@ void main() {
+       col = mix(col, vec3(1.0, 0.84, 0.97), uWC2.x * kc * (1.0 - smoothstep(0.0, 0.03 + pt, abs(dTop - 0.12))) * min(1.0, 0.04 / pt));
+     }
+   }
++  float wgTop = 0.0;                                                       // r21 m04wgl: share of the translucent lilac top (CLIMB alpha)
++  if (uWG.x > 0.0 && uWU.x > 0.0) {
++    // r21 m04wgl: the painted wall water is CRISP glossy satin, not a soft magenta haze (the 256 px band strip magnified near the
++    // camera): procedural ribbons running along the tunnel (rising and dipping with each tongue, waving gently with the flow) in
++    // the painted hot pink / magenta / violet with a few cyan streaks low down, satin sheen inside each ribbon, thin bright
++    // white-pink highlight streaks broken into long dashes, twinkling white glints, a translucent lilac top and a bright lip
++    // right under a crisp top edge. Resolution independent (distance fields + fwidth), world-anchored, flowing with the current.
++    float kc = smoothstep(-0.75, -0.2, ext) * wuK;
++    if (kc > 0.0) {
++      float sdw = vS < 0.0 ? 0.0 : 1.0;
++      float hq = ext >= 0.0 ? mix(ext, ext / max(wuE, 0.3) * uWU.x, 0.55) : ext;   // parallel to this spot's crest
++      hq += uWG3.x * sin(fl * 6.2832 / uWG3.y + sdw * 2.3 + 2.0 * vn(vec2(fl * 0.11, sdw * 4.0 + 1.0))) * smoothstep(-0.4, 0.5, ext);
++      hq += 0.06 * (vn(vec2(fl * 0.2, sdw * 7.0 + 3.0)) - 0.5);
++      float q = hq * uWG.y + sdw * 0.37;
++      float qi = floor(q), qf = fract(q), pxq = fwidth(q) + 1e-4;
++      float hv = h21(vec2(qi, sdw * 13.0 + 5.0)), hv2 = h21(vec2(qi + 41.0, sdw * 3.0 + 1.0));
++      vec3 dk, lt;
++      if (hv < 0.50)      { dk = vec3(0.93, 0.20, 0.66); lt = vec3(1.00, 0.60, 0.90); }   // hot pink
++      else if (hv < 0.84) { dk = vec3(0.76, 0.09, 0.62); lt = vec3(1.00, 0.40, 0.84); }   // magenta
++      else if (hv < 0.95) { dk = vec3(0.58, 0.20, 0.80); lt = vec3(0.90, 0.60, 1.00); }   // violet
++      else                { dk = vec3(0.86, 0.62, 0.98); lt = vec3(1.00, 0.86, 1.00); }   // pale lilac
++      float cy = uWG2.w * (1.0 - smoothstep(0.0, 0.55, ext));                // cyan streak bands low on the wall
++      if (hv2 < cy) { dk = vec3(0.05, 0.56, 0.96); lt = vec3(0.62, 0.96, 1.00); }
++      // satin sheen across the ribbon (off-centre, varying along the flow) — the painted folds of light
++      float sn = vn(vec2(fl * 0.32 + qi * 3.7, qi * 1.3 + sdw * 5.0));
++      float sh = exp(-pow((qf - (0.32 + 0.36 * hv2)) / (0.16 + 0.10 * sn), 2.0));
++      vec3 bc = mix(dk, lt, clamp(sh * (0.35 + 0.75 * sn), 0.0, 1.0));
++      // a soft darker crease where two ribbons meet (hides the colour step, crisp at any distance)
++      float dE = min(qf, 1.0 - qf);
++      bc *= 1.0 - uWG3.z * (1.0 - smoothstep(0.0, 0.10 + 1.5 * pxq, dE));
++      // thin bright highlight streaks along the flow: one per ribbon + a finer set between, broken into long dashes
++      float aa = min(1.0, 0.07 / pxq);                                      // fade the hairlines out where they would alias
++      float hl1 = 1.0 - smoothstep(0.0, 0.03 + pxq, abs(qf - (0.24 + 0.30 * hv)));
++      hl1 *= smoothstep(0.40, 0.62, vn(vec2(fl * 0.45 + hv * 20.0, qi * 2.1 + sdw * 9.0)));
++      float q3 = q * 3.0 + 0.6 * vn(vec2(fl * 0.18, sdw * 3.0 + 2.0)), p3 = fwidth(q3) + 1e-4;
++      float hl2 = 1.0 - smoothstep(0.0, 0.06 + p3, abs(fract(q3) - 0.5));
++      hl2 *= smoothstep(0.60, 0.78, vn(vec2(fl * 0.9 + floor(q3) * 5.1, floor(q3) * 0.7 + sdw * 2.0))) * min(1.0, 0.09 / p3);
++      bc = mix(bc, vec3(1.0, 0.93, 0.99), uWG.z * clamp(max(hl1 * aa, 0.75 * hl2), 0.0, 1.0));
++      // twinkling white glints (world-anchored on the flowing water)
++      vec2 gq = vec2(fl * 2.6, hq * 7.0 + sdw * 3.0); vec2 gi = floor(gq), gf = fract(gq) - 0.5;
++      float gh = h21(gi + 23.0 + sdw);
++      float gl = smoothstep(0.17, 0.0, length(gf - (vec2(h21(gi + 2.3), h21(gi + 8.9)) - 0.5) * 0.6)) * step(0.88, gh);
++      bc = mix(bc, vec3(1.0), uWG.w * gl * (0.55 + 0.45 * sin(uTime * 5.0 + gh * 37.0)) * (1.0 - smoothstep(0.25, 0.7, fwidth(gq.x))));
++      // translucent lilac top (the painted crest is see-through violet-lilac over the gold) and a bright glossy lip under the edge
++      float tq = ext > 0.0 ? smoothstep(1.0 - uWG2.z, 1.0, ext / max(wuE, 0.05)) : 0.0;
++      bc = mix(bc, mix(bc, vec3(0.84, 0.62, 1.0), 0.55), tq);
++      wgTop = tq;
++      float dTop = wuE - ext, pt = fwidth(dTop) + 1e-4;
++      bc = mix(bc, vec3(1.0, 0.90, 0.99), uWG2.y * (ext > 0.0 ? smoothstep(0.55, 0.95, wuK) : 0.0) * (1.0 - smoothstep(0.0, 0.025 + pt, abs(dTop - 0.07))) * min(1.0, 0.05 / pt));
++      col = mix(col, bc, kc * min(uWG.x, 1.0));
++    }
++  }
+   if (uA5.x > 0.5) {
+     // m04arr5: fat flat chevrons (bars between two nested V lines, ends cut along the flow), as painted
+     float k5 = floor((along - uA5.z) / uA5.y + 0.5);
+@@ -788,6 +1253,12 @@ void main() {
+   // approved view (the painted picture is shown there), fading in with the rest of the 3D scenery
+   if (uAway < 0.001 || ext > wuE) discard;
+   alpha = 1.0 - smoothstep(wuE - (uWC.x > 0.0 ? uWC2.y : uWU2.w), wuE, ext);
++  if (uWG.x > 0.0) {
++    // r21 m04wgl: a crisp top edge against the gold (anti-aliased, no soft pink haze above the water), see-through lilac top
++    float pe = fwidth(ext) + 1e-4;
++    float rk = smoothstep(0.55, 0.95, wuK);                               // where the climb ramps in at the opening: a softer edge
++    alpha = (1.0 - smoothstep(wuE - mix(uWU2.w, uWG2.x, rk) - pe, wuE, ext)) * mix(1.0, uWG3.w, wgTop);
++  }
+ #endif
+   if (uAway < 0.999 && vProj.w > 0.0) {
+     vec2 uv = vProj.xy / vProj.w * 0.5 + 0.5;
+@@ -1036,9 +1507,11 @@ export function addM04(ctx: M04Ctx) {
+   const axU = toW(cx, cy + 1, z0).sub(axO).normalize(), axR = toW(cx + 1, cy, z0).sub(axO).normalize();
+   const away = { value: 0 };
+   const fade = (M04.num('m04fade0', 0.3)), fade1 = M04.num('m04fade1', 2.5);
+-  const out: { update(cam: THREE.Vector3, benny?: THREE.Vector3): void } = { update() {} };
++  const out: { update(cam: THREE.Vector3, benny?: THREE.Vector3, camera?: THREE.Camera): void } = { update() {} };
+   const updaters: ((a: number) => void)[] = [];
+   let endCap: THREE.Mesh | null = null;
++  let endFit: THREE.Vector3 | null = null;
++  let telA = 1e9;                              // r20 m04farsm: where the K9 telescope begins (u inside the opening)   // r20 m04endfit: the end disc's own centre (x, y) and radius under m04rfew
+ 
+   if (M04.ring) {
+     const ringTile = new THREE.TextureLoader().load(new URL('../../assets/textures/match04/tile_ring.png', import.meta.url).href, (t) => { t.needsUpdate = true; });
+@@ -1053,6 +1526,18 @@ export function addM04(ctx: M04Ctx) {
+         uRPol: { value: new THREE.Vector4(M04.num('m04rpol', 0), M04.num('m04rpp', 0.42), M04.num('m04rpgh', 0.5), M04.num('m04rpgl', 0.15)) },
+         uRPol2: { value: new THREE.Vector2(M04.num('m04rpsp', 0.25), M04.num('m04rpfr', 0)) },
+         uRCr: { value: new THREE.Vector4(M04.num('m04rpcr', 0), M04.num('m04rpcb', 0.011), M04.num('m04rpcd', 0.014), M04.num('m04rpcc', 0.012)) },
++        // r19b `m04rnear=1`: the near band seen from inside resolves into the painted washer rim's polished sub-bands
++        uRNear: { value: new THREE.Vector4(M04.num('m04rnear', 0), M04.num('m04rnbs', 2.3), M04.num('m04rnw0', 25), M04.num('m04rnw1', 50)) },
++        uRNear2: { value: new THREE.Vector4(M04.num('m04rnt', 0.8), M04.num('m04rnl', 1), M04.num('m04rng', 1), M04.num('m04rnr', 0.35)) },
++        uRNear3: { value: new THREE.Vector4(M04.num('m04rnd', 1), M04.num('m04rnh', 1), M04.num('m04rfew', 0) > 0 ? M04.num('m04rfg', 1) : 1, 0.56 * M04.num('m04ringgw', 1)) },
++                uRNear4: { value: new THREE.Vector4(M04.num('m04rnbn', 28), M04.num('m04rnbf', 0.75), M04.num('m04rnhp', 4), M04.num('m04rnbz', 0.08)) },
++        uDbg: { value: M04.num('m04dbg', 0) },
++        // r21 `m04rsoft=1` (needs m04rnear): rounded soft-gold rims, narrow shaded grooves, luminance-preserving reflections
++        uRSoftT: { value: 1e9 },
++        uRSoft: { value: new THREE.Vector4(M04.num('m04rsoft', 0), M04.num('m04rsg', 0.035), M04.num('m04rsr', 0.12), M04.num('m04rsh', 0.45)) },
++        uRMat: { value: new THREE.Vector4(M04.num('m04rmat', 0), M04.num('m04rmd', 0.22), M04.num('m04rmy', 0.15), 0) },
++        uRNear6: { value: new THREE.Vector4(M04.num('m04rnlc', 0.35), M04.num('m04rnxp', 1.6), M04.num('m04rnf', 0), M04.num('m04rnfs', 0.6)) },
++        uRNear5: { value: new THREE.Vector4(M04.num('m04rnhf', 0.22), M04.num('m04rny', 0.3), M04.num('m04rno', 0.04), M04.num('m04rntex', 0)) },
+         uP: { value: M04.num('m04ringp', 2.6) }, uLipBulb: { value: M04.num('m04lipbulb', 1) }, uBulbR: { value: (r + ctx.outerR) / 2 }, uLen: { value: len }, uRingTile: { value: ringTile }, uPaint: { value: M04.num('m04paint', M04.gold ? 0.8 : 1.4) }, uGoldY: { value: M04.gold ? 1 : 0 }, uCopper: { value: M04.num('m04copper', 0) }, uBulge: { value: M04.num('m04bulge', 0) }, uMouthT: { value: 0 }, uMouthTex: { value: null }, uMouthRho: { value: new THREE.Vector3(4.45, 3.25, M04.num('m04mro', -0.10)) }, uProjPos: shared.uProjPos, uTone: { value: new THREE.Vector4(M04.num('m04tb', 0.11), M04.num('m04tl', 0.38), M04.num('m04tm', 0.5), M04.num('m04ts', 0.45)) } },
+     });
+     const gw = M04.num('m04ringgw', 1);
+@@ -1094,23 +1579,31 @@ export function addM04(ctx: M04Ctx) {
+     // groove and dots keep their painted proportions on every ring (ring coordinate in painted-period units).
+     const rfew = M04.num('m04rfew', 0) > 0;
+     const fV: number[] = [], fS: number[] = [];   // per profile point: ring coordinate (painted-period units), ring scale
++    // r20 `m04rflat=1` (user, 2026-11-20 00:10: "there's like a little bump on top of the gold ... that's what my gold tunnel
++    // texture should be like", arrow on the approved picture): the inner rings are NOT fat raised lip beads protruding from
++    // the wall but a smooth polished tube with flush, shallow ribs (a fine bright line + a thin dark groove). The ring
++    // profile's relief (lip bead inward, groove step outward, band cone) is scaled to `m04rfla` (0.15 = ~0.07 u deep, flush)
++    // about the wall radius; along-tunnel positions, ring periods, telescope and texture mapping stay the same, so the painted
++    // lip line / groove rows (and the crisp m04rpcr lines) now draw the ribs on the flush wall. Front washer rim unchanged.
++    const flat = M04.num('m04rflat', 0) > 0 ? M04.num('m04rfla', 0.15) : 1;
++    const fr = (o: number) => r + o * flat;
+     let capA = len, capS = 1;
+     if (!rfew) {
+       const nP = Math.ceil(len / P);
+       for (let k = 0; k < nP; k++) {
+         const a = k * P;
+         const pushP = (rr: number, aa: number, part: number) => { prof.push({ r: rr, a: aa, part }); ringOf.push(k); };
+-        pushP(r + 0.22, a + 0.01, 2);
+-        pushP(r + 0.17, a + 0.07, 0);
+-        pushP(r + 0.07, a + P * 0.5, 0);
++        pushP(fr(0.22), a + 0.01, 2);
++        pushP(fr(0.17), a + 0.07, 0);
++        pushP(fr(0.07), a + P * 0.5, 0);
+         // r13 `m04ringgw` widens the lip bead + dark groove (the painted rings show a deep dark recess between bands)
+-        pushP(r - 0.05, a + P - 0.56 * gw, 0);
+-        pushP(r - 0.10, a + P - 0.48 * gw, 1);
+-        pushP(r - 0.22, a + P - 0.39 * gw, 1);
+-        pushP(r - 0.28 * Math.min(gw, 1.4), a + P - 0.27 * gw, 1);
+-        pushP(r - 0.23, a + P - 0.15 * gw, 1);
+-        pushP(r - 0.08, a + P - 0.07 * gw, 2);
+-        pushP(r + 0.22, a + P - 0.01, 2);
++        pushP(fr(-0.05), a + P - 0.56 * gw, 0);
++        pushP(fr(-0.10), a + P - 0.48 * gw, 1);
++        pushP(fr(-0.22), a + P - 0.39 * gw, 1);
++        pushP(fr(-0.28 * Math.min(gw, 1.4)), a + P - 0.27 * gw, 1);
++        pushP(fr(-0.23), a + P - 0.15 * gw, 1);
++        pushP(fr(-0.08), a + P - 0.07 * gw, 2);
++        pushP(fr(0.22), a + P - 0.01, 2);
+       }
+     } else {
+       const g = M04.num('m04rfg', 1), aT = M04.num('m04rfa', 30), q = M04.num('m04rfq', 0.75), sMin = M04.num('m04rfmin', 0.03);
+@@ -1118,7 +1611,7 @@ export function addM04(ctx: M04Ctx) {
+       let A = 0, s0 = 1, Pc = P, tP = 0;
+       for (let k = 0; k < 400 && s0 >= sMin; k++) {
+         const tele = A >= aT - 1e-6;
+-        if (tele && !tP) tP = Pc;                                // telescope template period = the corridor's last
++        if (tele && !tP) { tP = Pc; gm.uniforms.uRSoftT.value = k * P; }   // (r21: where the telescope starts, ring units)
+         const PU = tele ? tP : Pc, s1 = tele ? s0 * q : 1, B = PU - L;
+         const A0 = A;
+         const pushP = (rr: number, aa: number, part: number) => {
+@@ -1128,17 +1621,17 @@ export function addM04(ctx: M04Ctx) {
+           prof.push({ r: rr, a: A0 + wa, part }); ringOf.push(k);
+           fV.push(k * P + (band ? aa * (P - L) / B : aa - (PU - P))); fS.push(s);
+         };
+-        pushP(r + 0.22, 0.01, 2);
+-        pushP(r + 0.17, 0.07, 0);
+-        if (tele) for (let i = 1; i < 6; i++) pushP(r + 0.17 + (-0.05 - 0.17) * (i / 6), 0.07 + (B - 0.07) * (i / 6), 0);
+-        else pushP(r + 0.07, PU * 0.5, 0);
+-        pushP(r - 0.05, PU - 0.56 * gw, 0);
+-        pushP(r - 0.10, PU - 0.48 * gw, 1);
+-        pushP(r - 0.22, PU - 0.39 * gw, 1);
+-        pushP(r - 0.28 * Math.min(gw, 1.4), PU - 0.27 * gw, 1);
+-        pushP(r - 0.23, PU - 0.15 * gw, 1);
+-        pushP(r - 0.08, PU - 0.07 * gw, 2);
+-        pushP(r + 0.22, PU - 0.01, 2);
++        pushP(fr(0.22), 0.01, 2);
++        pushP(fr(0.17), 0.07, 0);
++        if (tele) for (let i = 1; i < 6; i++) pushP(fr(0.17 + (-0.05 - 0.17) * (i / 6)), 0.07 + (B - 0.07) * (i / 6), 0);
++        else pushP(fr(0.07), PU * 0.5, 0);
++        pushP(fr(-0.05), PU - 0.56 * gw, 0);
++        pushP(fr(-0.10), PU - 0.48 * gw, 1);
++        pushP(fr(-0.22), PU - 0.39 * gw, 1);
++        pushP(fr(-0.28 * Math.min(gw, 1.4)), PU - 0.27 * gw, 1);
++        pushP(fr(-0.23), PU - 0.15 * gw, 1);
++        pushP(fr(-0.08), PU - 0.07 * gw, 2);
++        pushP(fr(0.22), PU - 0.01, 2);
+         A = A0 + B * (s0 + s1) / 2 + L * s1;
+         s0 = s1; if (!tele) Pc *= g;
+       }
+@@ -1243,6 +1736,7 @@ export function addM04(ctx: M04Ctx) {
+     if (rfew) cap.setAttribute('aF', new THREE.Float32BufferAttribute(new Float32Array(nC * 2).map((_, i) => (i % 2 === 0 ? 0 : capS)), 2));
+     const cm = new THREE.Mesh(cap, gm); cm.name = 'm04_ring_glow'; group.add(cm);
+     endCap = cm;
++    if (rfew) { endFit = new THREE.Vector3(cx, cy + rfGz * (1 - capS), r * capS); telA = M04.num('m04rfa', 30); }
+     ctx.hideOld(['m04_tube', 'm04_mouth_ring', 'm04_tube_end']);
+     console.info('[match04] m04ring', { period: P, rings: ringOf[ringOf.length - 1] + 1 });
+     if (M04.mouth) {
+@@ -1283,7 +1777,9 @@ export function addM04(ctx: M04Ctx) {
+     endCap.material = new THREE.ShaderMaterial({ vertexShader: END_VERT, fragmentShader: END_FRAG, side: THREE.DoubleSide, fog: false,
+       extensions: { derivatives: true } as never,
+       uniforms: { uPlate: shared.uPlate, uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uProjVP: shared.uProjVP, uAway: away, uTime: time,
+-        uC: { value: new THREE.Vector3(cx, cy, r) },
++        // r20 `&m04endfit=1`: with the K9 telescope (m04rfew) the disc sits at the telescope's end, shrunk to its last ring —
++        // paint the distant opening in the disc's OWN frame (its centre and size), not the full-size tube's
++        uC: { value: M04.num('m04endfit', 0) > 0 && endFit ? endFit : new THREE.Vector3(cx, cy, r) },
+         uE: { value: new THREE.Vector4(M04.num('m04eg', -0.28), M04.num('m04eq', 0.78), M04.num('m04ec', 0.14), M04.num('m04eh', 0.55)) },
+         uE2: { value: new THREE.Vector4((0.02 - cy) / r, M04.num('m04el', 0.62), M04.num('m04es', 1.25), M04.num('m04ek', 1.0)) } } });
+     console.info('[match04] m04end', { water: (0.02 - cy) / r });
+@@ -1378,6 +1874,24 @@ export function addM04(ctx: M04Ctx) {
+         uLane4: { value: (() => { const s = (new URLSearchParams(location.search).get('m04lcn') ?? '').split(',').map(Number);
+           return s.length === 2 && s.every(Number.isFinite) ? new THREE.Vector2(s[0], s[1]) : new THREE.Vector2(0, 0); })() },
+         uLane2: { value: new THREE.Vector4(M04.num('m04lane2', 0), M04.num('m04lgl', 1.0), M04.num('m04lsp', 0.9), M04.num('m04lbr', 0)) },
++        // r23 `&m04lgs=1` (with m04lane2): glossy lane streaks — m04lgs strength, m04lgn streaks per u across, m04lgt line half
++        // width (share of the spacing), m04lgk whiteness; m04lgl2 segment length (u), m04lgm meander (u), m04lgb base smoothing
++        // (mip bias), m04lgf far fade (line spacing per pixel)
++        uLG: { value: new THREE.Vector4(M04.num('m04lgs', 0), M04.num('m04lgn', 2.2), M04.num('m04lgt', 0.07), M04.num('m04lgk', 0.85)) },
++        uLG2: { value: new THREE.Vector4(M04.num('m04lgl2', 3.5), M04.num('m04lgm', 0.5), M04.num('m04lgb', 5.0), M04.num('m04lgf', 0.6)) },
++        // r24: m04lgw swirl bend (u; streaks curve in soft swirls), m04lgwb swirl size (u), m04lgsp sparkles,
++        // m04lgon dash threshold (higher = fewer dashes)
++        uLG3: { value: new THREE.Vector4(M04.num('m04lgw', 0), M04.num('m04lgwb', 1.5), M04.num('m04lgsp', 0), M04.num('m04lgon', 0.42)) },
++        // r24: m04lgd deeper electric-blue base (0 = as first written), m04lgv glint brightness variation (0 = all equal)
++        uLG4: { value: new THREE.Vector4(M04.num('m04lgd', 0), M04.num('m04lgv', 0), 0, 0) },
++        // r25 `&m04lgc=1` (with m04lgs): near glints as SHORT painted crescents — m04lgcl cell length along (u), m04lgcb bend
++        // (share of the line spacing), m04lgco dash threshold; m04lgc0 / m04lgc1 hand-over to the long streaks ahead of the
++        // camera (u; c1 <= c0 = crescents everywhere), m04lgcw whiteness boost, m04lgcs star sparkle. Off (0): unchanged.
++        uLG5: { value: new THREE.Vector4(M04.num('m04lgc', 0), M04.num('m04lgcl', 0.6), M04.num('m04lgcb', 0.3), M04.num('m04lgco', 0.45)) },
++        uLG6: { value: new THREE.Vector4(M04.num('m04lgc0', 0), M04.num('m04lgc1', 0), M04.num('m04lgcw', 0), M04.num('m04lgcs', 0)) },
++        // r27 `&m04lgcg=t` (with m04lgc): crescents gather in clusters along the swirl ridges — t cluster threshold (0 = off,
++        // ~0.5 = about half the water clear), m04lgcgx cluster size across (u), m04lgcgz along (u), m04lgch soft halo strength
++        uLG7: { value: new THREE.Vector4(M04.num('m04lgcg', 0), M04.num('m04lgcgx', 0.7), M04.num('m04lgcgz', 2.5), M04.num('m04lgch', 0)) },
+         uEdge: { value: new THREE.Vector4(M04.num('m04edge', 0), arc[nX], M04.num('m04edgew', 0.45), M04.num('m04edges', 0.8)) },
+         uSE: { value: new THREE.Vector2(M04.num('m04rse', 1), M04.num('m04rsl', 1.2)) },
+         uPk: { value: new THREE.Vector4(M04.pink ? 1 : 0, M04.num('m04pkl', 1.05), M04.num('m04pko', 3.6), M04.num('m04pkw', 0.85)) },
+@@ -1417,6 +1931,14 @@ export function addM04(ctx: M04Ctx) {
+         // highlight lines, m04wcv dark violet edges, m04wcl glossy lip under the crest, m04wcs soft top width (u)
+         uWC: { value: new THREE.Vector4(wup ? M04.num('m04wcr', 0) : 0, M04.num('m04wcn', 2.2), M04.num('m04wch', 0.8), M04.num('m04wcv', 0.55)) },
+         uWC2: { value: new THREE.Vector2(M04.num('m04wcl', 0.6), M04.num('m04wcs', 0.25)) },
++        // r21 `&m04wgl=1` (with m04wup): crisp glossy satin wall water — m04wgl strength, m04wgn ribbons per u up the wall, m04wgh
++        // white highlight streaks, m04wgs glints; m04wge crisp top edge (u), m04wgp bright lip, m04wgt translucent lilac top share,
++        // m04wgc cyan streak share low down; m04wga / m04wgw ribbon waviness (u) / wavelength (u), m04wgk crease, m04wgo top alpha
++        uWG: { value: new THREE.Vector4(wup ? M04.num('m04wgl', 0) : 0, M04.num('m04wgn', 2.2), M04.num('m04wgh', 0.85), M04.num('m04wgs', 0.8)) },
++        uWG2: { value: new THREE.Vector4(M04.num('m04wge', 0.04), M04.num('m04wgp', 0.7), M04.num('m04wgt', 0.25), M04.num('m04wgc', 0.35)) },
++        uWG3: { value: new THREE.Vector4(M04.num('m04wga', 0.18), M04.num('m04wgw', 6), M04.num('m04wgk', 0.12), M04.num('m04wgo', 0.85)) },
++        // r20 `&m04farsm=1`: smooth band edges inside the far telescope (river along = distance inside the opening - z0)
++        uFar: { value: new THREE.Vector2(telA - z0, M04.num('m04farsm', 0) > 0 && telA < 1e8 ? 1 : 0) },
+         uWU3: { value: new THREE.Vector4(arc[nX], M04.num('m04wuv', 0.3), M04.num('m04wuw', 0.25), M04.num('m04wut', 0.28)) },
+         uNB: { value: nbU }, uNB2:{ value: new THREE.Vector4(M04.num('m04nba', 4.2), M04.num('m04nbb', 0.04), M04.num('m04nbp', 0.0), M04.num('m04nbf', 0)) },
+         uSB0: { value: new THREE.Vector4(M04.num('m04sband', 0) > 0 ? M04.num('m04sbs', 0.95) : 0, M04.num('m04sbi', 2.0), arc[nX], M04.num('m04sbl', 10)) },
+@@ -1469,11 +1991,12 @@ export function addM04(ctx: M04Ctx) {
+   // m04bbb pre-opening bin length (u), m04bbe self-light, m04bbc tint (0 white .. 3 blue-lilac), m04bbi iridescence,
+   // m04bbr roughness, m04bbk sink into the water (share of the heap height), m04bbw inside-rim heaps (0 = none), m04bbl
+   // blue-lilac shading toward each bubble's outline, m04bbg thin bright rim, m04bbh white sparkle.
+-  const buildBank = (clumps: { side: number; a: number; cl: number; reach: number }[], puffs: { side: number; x: number; z: number }[], nearF: number[]) => {
++  const bankBen = new THREE.Vector4(0, -1e4, 0, 0.95);   // r20 m04bbx: Benny's body centre (world) + radius, set every frame
++  const buildBank = (clumps: { side: number; a: number; cl: number; reach: number }[], puffs: { side: number; x: number; z: number }[], nearF: number[], rimL0 = Infinity) => {
+     let s3 = 24683; const r3 = () => ((s3 = (s3 * 16807) % 2147483647) / 2147483647);
+     const HL = 3.3, HH = 1.43;                                  // heap length / height in the glb (u)
+     const bs = M04.num('m04bbs', 1.15), sink = M04.num('m04bbk', 0.04);
+-    const place: { x: number; y: number; z: number; s: number; yaw: number; k: number }[] = [];
++    const place: { x: number; y: number; z: number; s: number; yaw: number; k: number; deep?: number }[] = [];
+     // the river surface height d u from the centre line (flat lane, the trough's side rising to RY at xW, its top edge beyond):
+     // a heap rests on the surface a little outward of its centre line, so its bubbles are not cut flat by the rising side
+     const surfY = (d: number) => (d <= XF ? 0.02 : d >= xW ? RY : 0.02 + (RY - 0.02) * ((d - XF) / Math.max(0.1, xW - XF)) ** 2);
+@@ -1495,6 +2018,68 @@ export function addM04(ctx: M04Ctx) {
+       const s = (1.9 + 0.9 * r3()) / HL * bs, x = b.x / b.n;
+       place.push({ x, y: surfY(Math.abs(x - cx) + 0.3 * s) - sink * HH * s, z: b.z / b.n, s, yaw: (r3() - 0.5) * 0.4, k: Math.floor(r3() * 4) });
+     }
++    // r21 `&m04bbd=1`: as painted, the bubbly foam lines BOTH water edges far into the tunnel, not only round the entrance rim:
++    // past the rim banks (m04foamr) smaller, LOW heaps follow each water edge at the foot of the pink water climbing the wall,
++    // shrinking (m04bbd0 -> m04bbd1 of the rim heap size) and thinning out with depth, up to where the far telescope begins.
++    // Own random stream (every other layout unchanged); the same instanced heaps / material / near shrink (+ m04bbx).
++    // m04bbdg gap scale, m04bbdx inward offset from the wall (u), m04bbdk extra sink (share of the heap height).
++    if (M04.num('m04bbd', 0) > 0 && Number.isFinite(rimL0) && rimL0 < len - 4) {
++      let s4 = 13579; const r4 = () => ((s4 = (s4 * 16807) % 2147483647) / 2147483647);
++      const aEnd = Math.min(len - 1.5, (telA < 1e8 ? telA : len) - 1.0);
++      const d0 = M04.num('m04bbd0', 0.55), d1 = M04.num('m04bbd1', 0.32), gS = M04.num('m04bbdg', 1), xo = M04.num('m04bbdx', 0.15);
++      const sk2 = M04.num('m04bbdk', 0.12);
++      let nD = 0;
++      // r26 `&m04bbdc=1`: the far foam as SOFT CLOUD BANKS (the painted banks: rounded clusters of varied size with real gaps),
++      // not an evenly spaced bead row: heaps grouped into banks of m04bbdcn (default 3-5) — the middle heaps biggest, the ends
++      // small, staggered in two rows across the edge so the outline is a rounded cloud — each bank m04bbdcl u long (default
++      // 2.2-4.0), then an open gap of m04bbdcg u (default 2.0-5.0, wider with depth) where the pink edge and the gold show.
++      // Own random stream; sizes still shrink with depth (m04bbd0 -> m04bbd1); off (0): the r21 row unchanged.
++      if (M04.num('m04bbdc', 0) > 0) {
++        let s5 = 24601; const r5 = () => ((s5 = (s5 * 16807) % 2147483647) / 2147483647);
++        const nB = M04.num('m04bbdcn', 0), bLn = M04.num('m04bbdcl', 1), gp = M04.num('m04bbdcg', 1), rowW = M04.num('m04bbdcw', 0.35);
++        const big = M04.num('m04bbdcb', 1.25), sml = M04.num('m04bbdcs', 0.6);
++        for (const side of [-1, 1]) {
++          let a = rimL0 + 0.6 + r5() * 1.5;
++          while (a < aEnd) {
++            const f = THREE.MathUtils.clamp((a - rimL0) / Math.max(1, aEnd - rimL0), 0, 1);
++            const n = nB > 0 ? Math.round(nB) : 3 + Math.floor(r5() * 3);
++            const BL = (2.2 + r5() * 1.8) * bLn;
++            for (let j = 0; j < n; j++) {
++              const t = n > 1 ? j / (n - 1) : 0.5;
++              const bell = Math.sin(Math.PI * (0.15 + 0.7 * t));                     // 0.45 at the ends .. 1 in the middle
++              const cl = 0.9 + r5() * 1.2;
++              const s = THREE.MathUtils.clamp(cl * 1.15, 1.4, 2.8) * bs / HL * (d0 + (d1 - d0) * f) * (sml + (big - sml) * bell);
++              const row = (j % 2 === 0 ? 1 : -1) * rowW * s * (0.6 + 0.4 * r5());     // staggered: outer / inner row
++              const xi = Math.max(XF + 0.2, xW - xo - 0.9 * s + row);
++              const za = a + t * BL + (r5() - 0.5) * 0.3;
++              place.push({ x: cx + side * xi, y: surfY(xi + 0.3 * s) - (sink + sk2 * (0.7 + 0.6 * r5())) * HH * s, z: z0 - za, s, yaw: (r5() - 0.5) * 0.6, k: Math.floor(r5() * 4), deep: 1 });
++              nD++;
++            }
++            a += BL + (2.0 + r5() * 3.0) * (1 + 0.6 * f) * gp;
++          }
++        }
++      } else
++      for (const side of [-1, 1]) {
++        let a = rimL0 + 0.4 + r4() * 0.9;
++        while (a < aEnd) {
++          const f = THREE.MathUtils.clamp((a - rimL0) / Math.max(1, aEnd - rimL0), 0, 1);
++          const cl = 0.9 + r4() * 1.5;
++          const s = THREE.MathUtils.clamp(cl * 1.15, 1.4, 2.8) * bs / HL * (d0 + (d1 - d0) * f);
++          const xi = Math.max(XF + 0.2, xW - xo - 0.9 * s);
++          place.push({ x: cx + side * xi, y: surfY(xi + 0.3 * s) - (sink + sk2) * HH * s, z: z0 - a - cl / 2, s, yaw: (r4() - 0.5) * 0.35, k: Math.floor(r4() * 4), deep: 1 });
++          nD++;
++          a += cl * 0.8 + (0.35 + Math.pow(r4(), 1.5) * 2.2 * (1 + 0.8 * f)) * gS;
++        }
++      }
++      console.info('[match04] m04bbd', { heaps: nD, from: rimL0, to: +aEnd.toFixed(2), xW: +xW.toFixed(3), XF });
++    }
++    // r22 `&m04bbdf=f0` (with m04bbd; `m04bbdf1` = f1, default f0 + 3): as painted, the big glossy bank heaps lie BESIDE Benny
++    // (his depth and a few u ahead), not as a row of small white clumps down the whole tunnel: every deeper heap (m04bbd) is
++    // full size only within a window ahead of the camera and shrinks into its own bubbles' centres from f0 to f1 u (Benny swims
++    // ≈ 6.4 u ahead of the camera); the rim heaps unchanged. Off (0): every heap as before.
++    const bf0 = M04.num('m04bbdf', 0), bf1 = M04.num('m04bbdf1', bf0 + 3);
++    const farD = new THREE.Vector2(bf0 > 0 && bf1 > bf0 ? bf0 : 0, bf0 > 0 && bf1 > bf0 ? bf1 : 0);
++    const nearD = new THREE.Vector2(M04.num('m04bbdn', nearF[0]), M04.num('m04bbdn1', nearF[1]));
+     const holder = new THREE.Group(); holder.name = 'm04_bank_heaps'; holder.visible = false; group.add(holder);
+     const near = new THREE.Vector2(M04.num('m04bbn0', nearF[0]), M04.num('m04bbn1', nearF[1]));
+     const mat = new THREE.MeshPhysicalMaterial({
+@@ -1503,25 +2088,62 @@ export function addM04(ctx: M04Ctx) {
+       iridescence: M04.num('m04bbi', 0.15), iridescenceIOR: 1.3,
+       emissive: new THREE.Color('#eef3ff'), emissiveIntensity: M04.num('m04bbe', 0.12), transparent: true, depthWrite: true });
+     const rimC = new THREE.Vector4(0.74, 0.72, 0.98, M04.num('m04bbl', 0.75)), rimW = M04.num('m04bbg', 0.35), glint = M04.num('m04bbh', 0.6);
++    // r20 `&m04bbx=1` (lead notes on step 2): x on, y sparkle strength (brighter, a little larger), z faint iridescent pink / cyan
++    // rim on every bubble, w Benny clearance — a bubble that would sit IN FRONT of Benny's silhouette (seen from the camera)
++    // shrinks away, so a heap never covers him when he steers into a bank. bankBen = Benny's body centre (world) + radius.
++    const bbx = new THREE.Vector4(M04.num('m04bbx', 0) > 0 ? 1 : 0, M04.num('m04bbxs', 1.0), M04.num('m04bbxi', 0.5), M04.num('m04bbxb', 1));
++    bankBen.w = M04.num('m04bbxr', 0.95);
+     mat.onBeforeCompile = (sh) => {
+       sh.uniforms.uBNear = { value: near }; sh.uniforms.uBRim = { value: rimC }; sh.uniforms.uBRimW = { value: rimW }; sh.uniforms.uBGl = { value: glint };
++      sh.uniforms.uBX = { value: bbx }; sh.uniforms.uBen = { value: bankBen };
+       // the painted foam bubbles: pale lilac-white faces, soft blue-lilac shading toward each bubble's outline, a thin bright rim
+-      sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform vec4 uBRim;\nuniform float uBRimW;\nuniform float uBGl;')
++      sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform vec4 uBRim;\nuniform float uBRimW;\nuniform float uBGl;\nuniform vec4 uBX;')
+         .replace('#include <opaque_fragment>', `{
+     float nv = saturate(dot(normal, geometryViewDir));
+     outgoingLight = mix(outgoingLight, outgoingLight * uBRim.rgb, uBRim.a * pow(1.0 - nv, 1.4));
+     outgoingLight += vec3(1.0, 0.96, 1.0) * uBRimW * pow(1.0 - nv, 6.0);
+     // the painted white sparkle on every bubble (upper left, as the painting is lit), view-space so it rides with each bubble
+     outgoingLight = mix(outgoingLight, vec3(1.0), uBGl * smoothstep(0.93, 0.975, dot(normal, normalize(vec3(-0.45, 0.6, 0.66)))));
++    if (uBX.x > 0.5) {
++      // r20 m04bbx: the painted bubbles' crisp white sparkle (a bigger hot spot + a small second glint lower right) and a faint
++      // thin-film rim that shifts pink -> cyan round each bubble
++      float g1 = dot(normal, normalize(vec3(-0.45, 0.6, 0.66))), g2 = dot(normal, normalize(vec3(0.5, -0.35, 0.79)));
++      outgoingLight += vec3(1.0, 0.97, 1.0) * 0.22 * uBX.y * smoothstep(0.80, 0.95, g1);                    // soft glow round it
++      outgoingLight = mix(outgoingLight, vec3(1.0), clamp(uBX.y * (smoothstep(0.955, 0.985, g1) + 0.5 * smoothstep(0.978, 0.992, g2)), 0.0, 1.0));
++      float rimI = pow(1.0 - nv, 2.6) * (1.0 - pow(1.0 - nv, 9.0));
++      vec3 film = mix(vec3(1.0, 0.55, 0.88), vec3(0.45, 0.88, 1.0), 0.5 + 0.5 * sin(normal.x * 4.0 + normal.y * 2.5 + 1.0));
++      outgoingLight = mix(outgoingLight, film, uBX.z * rimI);
++    }
+   }
+   #include <opaque_fragment>`);
+-      sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nattribute vec4 aC;\nuniform vec2 uBNear;')
++      sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nattribute vec4 aC;\nuniform vec2 uBNear;\nuniform vec4 uBX;\nuniform vec4 uBen;')
+         .replace('#include <begin_vertex>', `#include <begin_vertex>
+   {
+     // r20 m04bbank: each bubble shrinks into its own centre as it nears the camera (view depth), like the sprite foam
+     vec4 cv = viewMatrix * modelMatrix * instanceMatrix * vec4(aC.xyz, 1.0);
+-    transformed = aC.xyz + (transformed - aC.xyz) * smoothstep(uBNear.x, uBNear.y, -cv.z);
++    float kS = smoothstep(uBNear.x, uBNear.y, -cv.z);
++    if (uBX.x > 0.5 && uBX.w > 0.0) {
++      // r20 m04bbx: never in front of Benny — a bubble nearer the camera than Benny whose direction overlaps his silhouette
++      // (his angular radius, grown a little) shrinks away smoothly
++      vec4 bv = viewMatrix * vec4(uBen.xyz, 1.0);
++      float bd = max(-bv.z, 0.1), cd = max(-cv.z, 0.1);
++      vec2 dA = cv.xy / cd - bv.xy / bd;
++      float rB = uBen.w / bd;
++      float front = smoothstep(-0.2, 0.6, bd - cd);
++      kS *= 1.0 - uBX.w * front * (1.0 - smoothstep(rB * 1.0, rB * 1.7, length(dA)));
++    }
++    transformed = aC.xyz + (transformed - aC.xyz) * kS;
+   }`);
++      if (farD.y > 0) {
++        // r22 m04bbdf: the deeper heaps (aDeep = 1) are full size only inside their window ahead of the camera: their own near
++        // window (m04bbdn -> m04bbdn1 u, so the big heaps stay whole at the bottom corners like the painted corner foam instead
++        // of sinking into the water as flat caps) and the far fade (m04bbdf -> m04bbdf1 u)
++        sh.uniforms.uBFar = { value: farD }; sh.uniforms.uBFarN = { value: nearD };
++        sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nattribute float aDeep;\nuniform vec2 uBFar;\nuniform vec2 uBFarN;')
++          .replace('float kS = smoothstep(uBNear.x, uBNear.y, -cv.z);',
++            'float kS = smoothstep(mix(uBNear.x, uBFarN.x, aDeep), mix(uBNear.y, uBFarN.y, aDeep), -cv.z) * (1.0 - aDeep * smoothstep(uBFar.x, uBFar.y, -cv.z));');
++        if (!sh.vertexShader.includes('uBFar.x, uBFar.y')) console.error('[match04] m04bbdf shader hook missing');
++      }
+     };
+     updaters.push((a) => { holder.visible = a > 0.01; mat.opacity = a; });
+     new GLTFLoader().loadAsync(new URL('../../assets/models/match04/foam_bank04.glb', import.meta.url).href).then((gl) => {
+@@ -1555,6 +2177,7 @@ export function addM04(ctx: M04Ctx) {
+         const mine = place.filter((p) => p.k % nG === gi);
+         if (!mine.length) return;
+         const im = new THREE.InstancedMesh(g, mat, mine.length);
++        if (farD.y > 0) g.setAttribute('aDeep', new THREE.InstancedBufferAttribute(new Float32Array(mine.map((p) => p.deep ?? 0)), 1));
+         mine.forEach((p, i) => {
+           // glb: length along +x, up +y; the river runs along -z -> yaw 90 deg (+ a little), turned round on the left bank
+           // (no negative scale: an instanced mesh would show its back faces)
+@@ -1662,7 +2285,7 @@ export function addM04(ctx: M04Ctx) {
+     // r14 m04foamn0 / m04foamn1: fade puffs out this close to the camera (big plain balls in the face while steering)
+     const nearF = [M04.num('m04foamn0', 0.6), M04.num('m04foamn1', 1.2)];
+     if (bbank) {
+-      buildBank(bkClumps.filter((c) => c.a < rimL), bkPuffs, nearF);
++      buildBank(bkClumps.filter((c) => c.a < rimL), bkPuffs, nearF, rimL);
+     } else if (clu) {
+       // r15: two passes of the same bubble instances — opaque cores, then the see-through rims blended on top
+       const fb = new THREE.Vector3(M04.num('m04fce', 0.5), M04.num('m04fcg', 1.0), M04.num('m04fcd', 1.0));
+@@ -1727,7 +2350,19 @@ export function addM04(ctx: M04Ctx) {
+   // (fat white-cyan bars, apex pointing down the tunnel, cyan glow) leans back toward the camera like the painted lane seen
+   // from above; spaced so about five are in view ahead; each fades in from 2 u ahead (Benny never clips through one) and out
+   // far away; hidden at the approved viewpoint (the painted picture is shown there). The flat river chevrons are switched off.
+-  const arrowsOut: { mesh: THREE.Mesh; za: number; mats: THREE.MeshBasicMaterial[] }[] = [];
++  const arrowsOut: { mesh: THREE.Mesh; za: number; mats: THREE.MeshBasicMaterial[]; hw?: number; y?: number }[] = [];
++  // r22 `&m04a3sc=1`: SCREEN clearance — as painted, all five chevrons lie AHEAD of Benny, above his pompom in the picture;
++  // a chevron whose nearest bar ends would show at or below the top of his hat (projected with the real camera) and
++  // overlapping him sideways fades out (a world-distance fade alone still left the nearest one straddling his hat).
++  // m04a3sy Benny's top above his root (u), m04a3sr his half width (u), m04a3s0 / m04a3s1 the screen gap (NDC y, chevron
++  // bar ends above his top) where it is gone / whole, m04a3sx sideways margin (NDC x).
++  const a3sc = M04.num('m04a3sc', 0) > 0;
++  const scP = new THREE.Vector3(), scQ = new THREE.Vector3(), scR = new THREE.Vector3();
++  let scMark: THREE.Mesh | null = null;
++  if (a3sc && M04.num('m04a3dbg', 0) > 0) {
++    scMark = new THREE.Mesh(new THREE.SphereGeometry(0.06, 12, 8), new THREE.MeshBasicMaterial({ color: 0xff0000, depthTest: false }));
++    scMark.renderOrder = 99; scMark.frustumCulled = false; group.parent ? group.parent.add(scMark) : group.add(scMark);
++  }
+   let arrA = 0;
+   if (M04.arr3d) {
+     const hw = M04.num('m04a3w', 1.15), th = M04.num('m04a3t', 0.42), drop = M04.num('m04a3d', 0.95);
+@@ -1783,7 +2418,20 @@ export function addM04(ctx: M04Ctx) {
+     const neon = M04.num('m04a3w2', 0) > 0;
+     const coreC = neon ? new THREE.Color(1.0, 1.0, 1.0) : new THREE.Color(0.86, 0.98, 1.0);
+     const glowC = neon ? new THREE.Color(0.22, 0.86, 1.0) : new THREE.Color(0.10, 0.62, 1.0);
+-    for (let a = first; a < len - 6; a += sp) {
++    // r26 `&m04a5=1|2`: EXACTLY FIVE chevrons. Without it the lane carries a row of chevrons every m04a3p u along its whole
++    // length and the fade window shows ~5 at a time — a conveyor: 10 different arrows appear during 04 and new ones keep
++    // arriving far away (still 2 ahead at the end). With it only the five that line up with the painted group of the
++    // approved start view are built (row indices m04a5i .. m04a5i + 4, default 2 = the five in view at the start), so the
++    // count goes 5 -> 0 as Benny swims through them and the lane ahead is clear after the fifth.
++    // `m04a5=2`: the five as ONE compact neat group (like the painted stack) placed so Benny's own route CROSSES all five
++    // inside 04 (measured r25: Benny's lane z runs -0.7 -> -36.7 over the 2.6 s of 04 at ~14 u/s): first chevron
++    // m04a5a u down the lane (default 13.5 = 20.3 u ahead of his start, so all five show at the start above his pompom),
++    // spacing m04a5p (default 3.4 -> the fifth is crossed ~0.25 s / 3 u before the end of 04).
++    const a5 = M04.num('m04a5', 0), a5i = Math.round(M04.num('m04a5i', 2));
++    const a5list: number[] = [];
++    if (a5 >= 2) { const a0 = M04.num('m04a5a', 13.5), p5 = M04.num('m04a5p', 3.4); for (let k = 0; k < 5; k++) a5list.push(a0 + k * p5); }
++    else for (let a = first, n = 0; a < len - 6; a += sp, n++) if (!a5 || (n >= a5i && n <= a5i + 4)) a5list.push(a);
++    for (const a of a5list) {
+       const core = new THREE.MeshBasicMaterial({ color: coreC, transparent: true, depthWrite: false, toneMapped: false, side: THREE.DoubleSide });
+       // r13 `&m04a3hb=1`: a deep-blue halo with NORMAL blending (the painted arrows pop as white bars in a blue glow; an
+       // additive halo only whitened the bright cyan water round them)
+@@ -1802,20 +2450,76 @@ export function addM04(ctx: M04Ctx) {
+       m.renderOrder = 5; g.renderOrder = coreT && lum > 0 ? 6 : 4; m.name = 'm04_arrow3d'; g.name = 'm04_arrow3d_glow';   // luminous layer on top
+       m.visible = g.visible = false;                                     // invisible during the projector depth bake
+       group.add(g); group.add(m);
+-      arrowsOut.push({ mesh: m, za: z0 - a, mats: [coreT ?? core, glow] });
++      arrowsOut.push({ mesh: m, za: z0 - a, mats: [coreT ?? core, glow], hw, y: 0.05 + M04.num('m04a3y', 0) });
+       arrowsOut.push({ mesh: g, za: z0 - a, mats: [] });
+     }
+     updaters.push((a) => { arrA = a; });
+     console.info('[match04] m04arr3d', { arrows: arrowsOut.length / 2, sp, tilt: M04.num('m04a3k', 38) });
+   }
+ 
+-  out.update = (cam: THREE.Vector3, benny?: THREE.Vector3) => {
++  // r23 `&m04wl=1`: Benny sits IN the water like the painting (r23 brief task 1: "not perched on top"; his round bottom only
++  // touched the river). A soft water patch round him in the lane frame (follows him, also when he steers) a little ABOVE the
++  // river: depth-tested, so it covers exactly the part of his body below its waterline (like real water), with a neat broken
++  // white foam ring where it meets him, fading into the river at its rim. Benny himself is not moved or scaled.
++  // m04wly waterline (lane y; river = 0.02, his bottom = -0.08), m04wlr foam-ring radius, m04wlo / m04wle radius where the
++  // patch starts fading / is gone, m04wlz stretch along the flow, m04wla patch opacity, m04wlf foam strength.
++  let wlMesh: THREE.Mesh | null = null;
++  if (M04.num('m04wl', 0) > 0) {
++    const E = M04.num('m04wle', 2.0), Z = M04.num('m04wlz', 1.2);
++    const geo = new THREE.CircleGeometry(E, 96).rotateX(-Math.PI / 2);
++    geo.scale(1, 1, Z);
++    wlMesh = new THREE.Mesh(geo, new THREE.ShaderMaterial({
++      transparent: true, depthWrite: false, side: THREE.DoubleSide, fog: false,
++      uniforms: { uPjPost: shared.uPjPost, uPjRes: shared.uPjRes, uTime: time, uK: { value: 0 },
++        uR: { value: new THREE.Vector4(M04.num('m04wlr', 0.7), M04.num('m04wlo', 1.35), E, Z) },
++        uA: { value: M04.num('m04wla', 0.92) }, uF: { value: M04.num('m04wlf', 1.0) } },
++      vertexShader: /* glsl */ `
++varying vec2 vP;
++void main() { vP = position.xz; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
++      fragmentShader: /* glsl */ `
++uniform vec4 uPjPost; uniform vec2 uPjRes; uniform float uTime, uK, uA, uF; uniform vec4 uR;
++varying vec2 vP;
++${PROJ05_INVERSE}
++float h21(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
++float vn(vec2 p) { vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f);
++  return mix(mix(h21(i), h21(i + vec2(1, 0)), f.x), mix(h21(i + vec2(0, 1)), h21(i + vec2(1, 1)), f.x), f.y); }
++void main() {
++  float r = length(vec2(vP.x, vP.y / uR.w));                     // patch fade: narrow sideways, long toward the camera
++  float rr = length(vP), a = atan(vP.x, vP.y), t = uTime;       // foam ring: round on his body
++  // water: electric cyan, long white streaks drifting past him (flow = -z), darker deep blue further out
++  float st = smoothstep(0.58, 0.95, vn(vec2(vP.x * 2.2, vP.y * 0.55 + t * 1.3))) * smoothstep(0.3, 0.9, vn(vec2(vP.x * 5.0 + 7.0, vP.y * 0.9 + t * 1.3)));
++  vec3 water = mix(vec3(0.08, 0.72, 1.0), vec3(0.05, 0.58, 1.0), smoothstep(0.8, 1.8, rr));
++  water = mix(water, vec3(0.80, 0.97, 1.0), 0.75 * st);
++  // foam ring hugging his body at the waterline: broken lace + small spray dots just outside it
++  float n = vn(vec2(a * 7.0, t * 1.5)) * 0.6 + vn(vec2(a * 19.0 + 2.0, t * 2.7)) * 0.4;
++  float ring = exp(-pow((rr - uR.x - 0.10 * (n - 0.5)) / (0.05 + 0.05 * n), 2.0));
++  float lace = smoothstep(0.45, 0.75, vn(vec2(a * 31.0, rr * 9.0 - t * 2.0)));
++  float spray = step(0.86, vn(vec2(a * 48.0, rr * 22.0 - t * 3.0))) * smoothstep(uR.x + 0.35, uR.x + 0.05, rr) * step(uR.x, rr);
++  float foam = clamp((ring * (0.55 + 0.45 * lace) + spray * 0.7) * uF, 0.0, 1.0);
++  vec3 col = mix(water, vec3(0.97, 0.99, 1.0), foam);
++  float alpha = max(uA * (1.0 - smoothstep(uR.y, uR.z, r)), foam);
++  alpha *= uK;
++  if (alpha < 0.01) discard;
++  gl_FragColor = vec4(pjInverse(col), alpha);
++}`,
++    }));
++    wlMesh.name = 'm04_waterline'; wlMesh.renderOrder = 5; wlMesh.frustumCulled = false; wlMesh.visible = false;
++    group.add(wlMesh);
++  }
++
++  out.update = (cam: THREE.Vector3, benny?: THREE.Vector3, camera?: THREE.Camera) => {
+     time.value = performance.now() / 1000;
+     a5b.z = -cam.clone().applyMatrix4(MwInv).z;   // camera position down the slide (local along)
+     if (nbU.x > 0 && benny) { const bl = benny.clone().applyMatrix4(MwInv); nbU.y = -bl.z; nbU.z = bl.x - cx; }
++    if (benny) bankBen.set(benny.x, benny.y + M04.num('m04bbxy', 0.55), benny.z, bankBen.w);   // r20 m04bbx
+     away.value = THREE.MathUtils.smoothstep(cam.distanceTo(proj.position), fade, fade1);
+     const a2 = THREE.MathUtils.smoothstep(cam.distanceTo(proj.position), 0.4, 1.6);
+     for (const u of updaters) u(a2);
++    if (wlMesh) {                                                       // r23 m04wl: gone at the approved start view (0 px there)
++      const wu = (wlMesh.material as THREE.ShaderMaterial).uniforms;
++      wu.uK.value = a2; wlMesh.visible = !!benny && a2 > 0.01;
++      if (benny) { const bl = benny.clone().applyMatrix4(MwInv); wlMesh.position.set(bl.x, M04.num('m04wly', 0.32), bl.z); }
++    }
+     if (arrowsOut.length) {
+       const cz = -a5b.z;                                                // camera local z (forward = -z)
+       // r13: fade window ahead of the camera (Benny swims ≈ 6.4 u ahead of it on 04: m04a3n0/n1 ≈ 6.5/8.5 makes every
+@@ -1825,12 +2529,58 @@ export function addM04(ctx: M04Ctx) {
+       const go = M04.num('m04a3o', 0.55);
+       const b0 = M04.num('m04a3b0', 1.6), b1 = M04.num('m04a3b1', 3.0);
+       const bz = M04.num('m04a3b', 0) > 0 && benny ? benny.clone().applyMatrix4(MwInv).z : null;   // Benny's local z (same frame as cz)
++      // r22 m04a3sc: Benny's top (NDC) and half width (NDC) with the real camera
++      let scT: THREE.Vector3 | null = null, scW = 0;
++      if (a3sc && benny && camera) {
++        camera.updateMatrixWorld();
++        scR.setFromMatrixColumn(camera.matrixWorld, 0).normalize();
++        scT = scP.copy(benny).addScaledVector(new THREE.Vector3(0, 1, 0), M04.num('m04a3sy', 2.0));
++        if (scMark) scMark.position.copy(scT);
++        scT = scT.clone().project(camera);
++        scW = Math.abs(scQ.copy(benny).addScaledVector(scR, M04.num('m04a3sr', 1.0)).project(camera).x - scQ.copy(benny).project(camera).x);
++      }
++      const s0 = M04.num('m04a3s0', 0.0), s1 = M04.num('m04a3s1', 0.05), sx = M04.num('m04a3sx', 0.05);
++      // r23 `&m04a3fl=D0`: chevrons farther than D0 u from the camera lean flatter (rise x D0/d), so the five read like the
++      // painted arrows lying ON the water ahead of Benny — their on-screen height shrinks with distance like the lane gaps
++      // between them (upright bars stacked into a ladder near the far end otherwise). Bar ends stay at the same water height.
++      const a3fl = M04.num('m04a3fl', 0);
++      // r27 `&m04a5v=1` (with m04a5): the five chevrons stay readable while Benny swims THROUGH them instead of fading out
++      // where they meet his pompom on screen (r26 trade-off: all five gone by 1.2 s, an empty lane in the second half of 04).
++      // Each lies down FLAT on the water as it nears him (rise x m04a5vf from m04a5v0 to m04a5v1 u ahead of him), so it does
++      // not stand up round his hat; it slides UNDER him (depth-tested: his body hides the middle, the bar ends show beside
++      // him) and shows behind him for a moment as he leaves it (fades m04a5vb .. m04a5vb + 1.5 u behind him).
++      // `m04a5v=2`: the same flat chevrons, but each fades out just before its flat bars would reach his pompom on screen
++      // (m04a5vh0 -> m04a5vh1 u ahead of him; measured on the =1 probe: a flat chevron ~8-10 u ahead of him lies at pompom
++      // height), so no thin bar shows beside his pompom / hat; they still stay in view far longer than the r22 fade
++      // (calibrated for UPRIGHT chevrons: gone 14-17 u ahead of him). Flattening for =2 from 18 -> 10 u by default.
++      const a5vm = M04.num('m04a5v', 0);
++      const a5v = a5vm > 0 && M04.num('m04a5', 0) > 0 && bz !== null;
++      const v0 = M04.num('m04a5v0', a5vm >= 2 ? 18 : 16), v1 = M04.num('m04a5v1', a5vm >= 2 ? 10 : 8), vf = M04.num('m04a5vf', 0.06), vb = M04.num('m04a5vb', 2.0);
++      const vh0 = M04.num('m04a5vh0', 8.5), vh1 = M04.num('m04a5vh1', 10.5);
+       for (let i = 0; i < arrowsOut.length; i += 2) {
+         const d = cz - arrowsOut[i].za;                                 // distance ahead of the camera
+         // r13 `&m04a3b=1`: the near fade is measured from BENNY (m04a3b0/b1 u ahead of him), so no chevron ever sits round
+         // his body, also where the camera closes in on him at the end of the stage
+-        const nearK = bz !== null ? THREE.MathUtils.smoothstep(bz - arrowsOut[i].za, b0, b1) : THREE.MathUtils.smoothstep(d, n0, n1);
+-        const k = arrA * nearK * (1 - THREE.MathUtils.smoothstep(d, f0, f1));
++        const nearK = a5v ? THREE.MathUtils.smoothstep(bz! - arrowsOut[i].za, -vb - 1.5, -vb)
++          : bz !== null ? THREE.MathUtils.smoothstep(bz - arrowsOut[i].za, b0, b1) : THREE.MathUtils.smoothstep(d, n0, n1);
++        let k = arrA * nearK * (1 - THREE.MathUtils.smoothstep(d, f0, f1));
++        if (a5v && a5vm >= 2) k *= THREE.MathUtils.smoothstep(bz! - arrowsOut[i].za, vh0, vh1);
++        if (scT && camera && k > 0 && !a5v) {
++          // the chevron's nearest bar ends (u = +-hw at the lane plane) are its lowest points on screen
++          const A = arrowsOut[i], hwA = A.hw ?? 1, yA = A.y ?? 0.05;
++          const e1 = scP.set(cx - hwA, yA, A.za).applyMatrix4(Mw).project(camera), y1 = e1.y, x1 = e1.x;
++          const e2 = scQ.set(cx + hwA, yA, A.za).applyMatrix4(Mw).project(camera), y2 = e2.y, x2 = e2.x;
++          const gapY = Math.min(y1, y2) - scT.y;                        // > 0: the chevron lies above Benny's top
++          const ov = Math.min(Math.max(x1, x2), scT.x + scW) - Math.max(Math.min(x1, x2), scT.x - scW);   // sideways overlap (NDC)
++          const side = THREE.MathUtils.smoothstep(ov, -sx, 0);           // 1 = overlapping him sideways
++          k *= 1 - side * (1 - THREE.MathUtils.smoothstep(gapY, s0, s1));
++        }
++        if (a3fl > 0 || a5v) {
++          let sc = a3fl > 0 ? Math.min(1, a3fl / Math.max(d, 0.5)) : 1;
++          const y0 = arrowsOut[i].y ?? 0.05;
++          if (a5v) sc *= vf + (1 - vf) * THREE.MathUtils.smoothstep(bz! - arrowsOut[i].za, v1, v0);
++          for (const o of [arrowsOut[i].mesh, arrowsOut[i + 1].mesh]) { o.scale.y = sc; o.position.y = y0 * (1 - sc); }
++        }
+         const [core, glow] = arrowsOut[i].mats;
+         core.opacity = M04.num('m04a3co', 0.95) * k; glow.opacity = go * k;
+         arrowsOut[i].mesh.visible = arrowsOut[i + 1].mesh.visible = k > 0.01;

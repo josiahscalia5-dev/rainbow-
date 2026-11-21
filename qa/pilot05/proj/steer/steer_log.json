@@ -1,0 +1,77 @@
+{
+ "q": "proj05=1",
+ "frames": [
+  {
+   "file": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/steer/proj/steer_L_025.png",
+   "steer": -1,
+   "t": 0.25,
+   "s": 135.188,
+   "cam": [
+    1.7,
+    -38.02,
+    -69.82
+   ],
+   "lat": -0.714
+  },
+  {
+   "file": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/steer/proj/steer_L_050.png",
+   "steer": -1,
+   "t": 0.5,
+   "s": 137.938,
+   "cam": [
+    0.59,
+    -38.15,
+    -72.49
+   ],
+   "lat": -2.352
+  },
+  {
+   "file": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/steer/proj/steer_L_080.png",
+   "steer": -1,
+   "t": 0.8,
+   "s": 141.238,
+   "cam": [
+    -0.92,
+    -38.14,
+    -75.98
+   ],
+   "lat": -4.566
+  },
+  {
+   "file": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/steer/proj/steer_R_025.png",
+   "steer": 1,
+   "t": 0.25,
+   "s": 135.188,
+   "cam": [
+    1.98,
+    -38,
+    -69.79
+   ],
+   "lat": 0.705
+  },
+  {
+   "file": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/steer/proj/steer_R_050.png",
+   "steer": 1,
+   "t": 0.5,
+   "s": 137.938,
+   "cam": [
+    2.96,
+    -38.08,
+    -72.17
+   ],
+   "lat": 2.342
+  },
+  {
+   "file": "/tmp/claude-0/-home-user-rainbow-/d2bbe275-7784-5e9e-8462-91d5dedde771/scratchpad/steer/proj/steer_R_080.png",
+   "steer": 1,
+   "t": 0.8,
+   "s": 141.238,
+   "cam": [
+    5.1,
+    -38.36,
+    -75.16
+   ],
+   "lat": 4.556
+  }
+ ]
+}
