@@ -1282,3 +1282,151 @@ Now wire the split into play3.html.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-21T13:36:08.237Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB; python3 - <<'EOF'\np='play3.html'; s=open(p).read()\nold=\"sp.scale.set(2.6, 2.6, 1); sp.renderOrder = -10; scene.add(sp); return sp; })() : null;\"\nassert s.count(old)==1\ns=s.replace(old, \"\"\"sp.scale.set(GS, GS, 1); sp.renderOrder = -10; scene.add(sp); return sp; })() : null;\n// [end] the light at the end opens up as Benny comes near: a bright white-gold opening drawn over the far-end disc, faded in with the\n// camera's distance to it (0 beyond 12 units, full at 4), so from far awa …[+1882 chars]`
+
+### 🧑 User — 2026-11-21T13:36:08.353Z
+
+> ↩︎ result: 66:const GS = 3.6; // [track] end-light sprite size: larger than the last ring's opening seen from any angle (2.6 left a slit at the left wall at s = 
+> 84:  const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: tx, toneMapped: false, transparent: true, depthWrite: false })); sp.scale.set(GS, GS,
+> 87:const glowNear = glow && q.get('endglow') !== '0' ? (() => { const c = document.createElement('canvas'); c.width = c.height = 256; const g = c.getC
+> 90:  const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: tx, toneMapped: false, transparent: true, depthWrite: false, opacity: 0 })); sp.scale
+> 101:  if (glow) glow.scale.setScalar(GS * (1 + 0.8 * endK));
+> 102:  if (glowNear) { glowNear.scale.setScalar(GS * (1 + 0.8 * endK)); glowNear.material.opacity = 1 - THREE.MathUtils.smoothstep(camera.position.dist
+> 119:  if (glowNear) glowNear.position.copy(glow.position).addScaledVector(AX, -0.02); // [end]
+> still 29 39.771 visible splats 631011
+> still 31 31.427 visible splats 420674
+> still 31.3 23.468 visible splats 420674
+
+### 🤖 Claude — 2026-11-21T13:36:16.786Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB; for i in $(seq 1 40); do pgrep -f \"shots_w.cjs out_water/full\" >/dev/null || break; sleep 6; done; grep -v GL out_water/full/log.txt | tail -2; mkdir -p out_water/final_end; export NODE_PATH=$(npm root -g); nohup bash -c \"W=412 H=915 STILLS='[0,20.6,29.0,31.3]' node shots_w.cjs out_water/final_end > out_water/final_end/log.txt 2>&1\" > /dev/null 2>&1 &\nsleep 1; tools/check_stills.sh out_water/full s_0.png s_12.2.png s_16.4_l-0.22_r0.png s_20.6.png s_24.8_l0.22_r0.12.png s_29.png s_31.p …[+138 chars]`
+
+### 🧑 User — 2026-11-21T13:36:42.907Z
+
+> ↩︎ result: still 31.6 23.804 visible splats 420674
+> still 32.05 20.312 visible splats 420674
+> f_0000_s_0.jpg                     patches 0  largest_dark_px     0  black% 0.000  look 0.643  sharp 1.000  change 0.0
+> f_0001_s_12.2.jpg                  patches 0  largest_dark_px     0  black% 0.000  look 0.596  sharp 0.944  change 54.86
+> f_0002_s_16.4_l-0.22_r0.jpg        patches 0  largest_dark_px     0  black% 0.000  look 0.586  sharp 0.898  change 55.64
+> f_0003_s_20.6.jpg                  patches 0  largest_dark_px     0  black% 0.000  look 0.591  sharp 0.931  change 53.19
+> f_0004_s_24.8_l0.22_r0.12.jpg      patches 0  largest_dark_px    48  black% 0.000  look 0.582  sharp 0.914  change 55.78
+> f_0005_s_29.jpg                    patches 1  largest_dark_px   787  black% 0.250  look 0.531  sharp 0.912  change 58.78
+> f_0006_s_31.jpg                    patches 0  largest_dark_px     0  black% 0.000  look 0.446  sharp 0.713  change 53.61
+> f_0007_s_31.3.jpg                  patches 0  largest_dark_px     0  black% 0.000  look 0.249  sharp 0.437  change 41.33
+> f_0008_s_31.6.jpg                  patches 0  largest_dark_px     0  black% 0.000  look 0.014  sharp 0.017  change 51.13
+> f_0009_s_32.05.jpg               …[+116 chars]
+
+### 🤖 Claude — 2026-11-21T13:36:47.438Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB; python3 -c \"\nfrom PIL import Image\nfs=['s_29','s_31','s_31.3','s_31.6','s_32.05']\nims=[Image.open(f'out_water/full/{s}.png').convert('RGB').resize((309,686)) for s in fs]\ns=Image.new('RGB',(319*5,686)); [s.paste(im,(i*319,0)) for i,im in enumerate(ims)]; s.save('out_water/tmpview/full2.jpg',quality=85)\"", "description": "Preview transition stills"}`
+
+### 🧑 User — 2026-11-21T13:36:47.676Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-21T13:36:49.828Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB/out_water/tmpview/full2.jpg"}`
+
+### 🧑 User — 2026-11-21T13:36:49.849Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T13:37:08.681Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB; for i in $(seq 1 50); do pgrep -f \"shots_w.cjs out_water/final_end\" >/dev/null || break; sleep 8; done; grep -v GL out_water/final_end/log.txt; tools/check_stills.sh out_water/final_end s_0.png s_20.6.png s_29.png s_31.3.png; python3 -I tools/endlight.py out_water/final_end/s_0.png; python3 -c \"\nfrom PIL import Image\nref=Image.open('out_water/tmpview/ref412.png').convert('RGB')\nims=[ref]+[Image.open(f'out_water/final_end/{s}.png').convert('RGB') for s in ['s_0','s_20.6','s_29','s_31. …[+271 chars]`
+
+### 🧑 User — 2026-11-21T13:40:06.675Z
+
+> ↩︎ result: server 9403
+> ready 28.858
+> still 0 52.532 visible splats 655734
+> still 20.6 44.509 visible splats 755313
+> still 29 41.781 visible splats 631011
+> still 31.3 28.575 visible splats 420674
+> f_0000_s_0.jpg                     patches 0  largest_dark_px     0  black% 0.000  look 0.642  sharp 1.000  change 0.0
+> f_0001_s_20.6.jpg                  patches 0  largest_dark_px     0  black% 0.000  look 0.587  sharp 0.909  change 56.12
+> f_0002_s_29.jpg                    patches 0  largest_dark_px     0  black% 0.000  look 0.488  sharp 0.845  change 40.84
+> f_0003_s_31.3.jpg                  patches 0  largest_dark_px     0  black% 0.000  look 0.246  sharp 0.451  change 55.3
+> final_end/s_0.png: white-gold core at (366, 235), area 95 px, diameter ~11 px
+> Sat Nov 21 13:40:06 UTC 2026
+
+### 🤖 Claude — 2026-11-21T13:40:08.964Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB/out_water/tmpview/fe.jpg"}`
+
+### 🧑 User — 2026-11-21T13:40:08.982Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T13:40:25.136Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB; cat > tools/endlight.py <<'EOF'\n\"\"\"endlight.py <img> <x> <y> [win=45]: the end light near (x, y) of a 412x915 frame: centre of the brightest spot, the core size\n(pixels with luma >= 235 connected to it) and the warm-light size (luma >= 190 connected to it). The approved picture is scaled to\nheight 915 and centre-cropped to 412 like the lead's checker.\"\"\"\nimport sys, cv2, numpy as np\nf, x0, y0 = sys.argv[1], int(sys.argv[2]), int(sys.argv[3]); win = int(sys.argv[4]) if len(sys.ar …[+1174 chars]`
+
+### 🧑 User — 2026-11-21T13:40:25.939Z
+
+> ↩︎ result: references/05_flow_into_the_current.png: brightest at (248, 287) luma 251, luma>=235: 111 px (diameter ~12 px), luma>=190: 1274 px (diameter ~40 px)
+> after_final/s_0.png: brightest at (191, 231) luma 243, luma>=235: 40 px (diameter ~7 px), luma>=190: 589 px (diameter ~27 px)
+> final_end/s_0.png: brightest at (191, 231) luma 252, luma>=235: 54 px (diameter ~8 px), luma>=190: 530 px (diameter ~26 px)
+
+### 🤖 Claude — 2026-11-21T13:40:39.829Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB; python3 -I tools/sheets.py out_water/sheets \"s0\" out_water/before412/s_0.png out_water/final_end/s_0.png \"s29_end_approach(BEFORE=previous_end_disc)\" out_water/full/s_29.png out_water/final_end/s_29.png >/dev/null && python3 -I - <<'EOF'\nfrom PIL import Image, ImageDraw, ImageFont\nfs=[('s=12.2','out_water/full/s_12.2.png'),('s=16.4 lane -0.22','out_water/full/s_16.4_l-0.22_r0.png'),('s=20.6','out_water/final_end/s_20.6.png'),('s=24.8 lane +0.22 leap','out_water/full/s_24.8_l0.22_r0.1 …[+665 chars]`
+
+### 🧑 User — 2026-11-21T13:40:40.268Z
+
+> ↩︎ result: ok
+> full_level_and_ending.jpg
+> sheet_s0.7.jpg
+> sheet_s0.jpg
+> sheet_s1.4.jpg
+> sheet_s10.4_lane+0.22_rise0.12.jpg
+> sheet_s2.3.jpg
+> sheet_s29_end_approach(BEFORE=previous_end_disc).jpg
+> sheet_s4.4.jpg
+> sheet_s6.4.jpg
+
+### 🤖 Claude — 2026-11-21T13:40:43.771Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB/out_water/sheets; mv \"sheet_s29_end_approach(BEFORE=previous_end_disc).jpg\" sheet_s29_end_approach.jpg; ls; cd ..; du -sh after412 after_final full final_end before412 diag tmpview 2>/dev/null", "description": "Tidy sheet filename and check output sizes"}`
+
+### 🧑 User — 2026-11-21T13:40:43.816Z
+
+> ↩︎ result: full_level_and_ending.jpg
+> sheet_s0.7.jpg
+> sheet_s0.jpg
+> sheet_s1.4.jpg
+> sheet_s10.4_lane+0.22_rise0.12.jpg
+> sheet_s2.3.jpg
+> sheet_s29_end_approach.jpg
+> sheet_s4.4.jpg
+> sheet_s6.4.jpg
+> 8.0M	after412
+> 8.0M	after_final
+> 12M	full
+> 3.0M	final_end
+> 2.6M	before412
+> 13M	diag
+> 4.8M	tmpview
+
+### 🤖 Claude — 2026-11-21T13:40:44.950Z
+
+Now the notes. I'll rewrite the files table, update section 1 for the flow change, and fill in section 3 with the measured numbers.
+
+### 🤖 Claude — 2026-11-21T13:41:00.811Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB; python3 - <<'EOF'\np='WATER_NOTES.md'; s=open(p).read()\n# files table\nold_tab=s[s.index('| file | what |'):s.index('Rebuild:')]\nnew_tab='''| file | what |\n|---|---|\n| `waterflow.js` | NEW. Spark 2.4 dyno **worldModifier** that makes the river's own splats flow (GPU, inside Spark's splat-generation pass) |\n| `play3.html` | edited. Hooks are marked `// [waterflow]` (flow), `// [track]` (track cleanup, splat budget, end light), `// [end]` (ending transition), `// [qa]` (QA only). Origin …[+3955 chars]`
+
+### 🧑 User — 2026-11-21T13:41:00.907Z
+
+> ↩︎ result: 5:## Files
+> 25:## 1. Water flow (`waterflow.js`)
+> 56:## 2. Track cleanup
+> 57:### (a) black patches = real holes (proved with a green test background, `?bg=%2300ff00`, `out_water/diag/green*/`)
+> 74:### (b) far end ("tube inside the tube")
+> 82:### (c) floaters / smears
+> 88:## 3. Results
+> 91:## Pitfall found (affects every specialist's captures)
+

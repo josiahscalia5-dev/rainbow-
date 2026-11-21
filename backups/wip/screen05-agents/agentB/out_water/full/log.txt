@@ -12,3 +12,5 @@ still 24.8 48.903 visible splats 717851
 still 29 39.771 visible splats 631011
 still 31 31.427 visible splats 420674
 still 31.3 23.468 visible splats 420674
+still 31.6 23.804 visible splats 420674
+still 32.05 20.312 visible splats 420674

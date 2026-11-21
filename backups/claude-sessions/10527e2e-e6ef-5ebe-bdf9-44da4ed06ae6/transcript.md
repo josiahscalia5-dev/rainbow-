@@ -2368,3 +2368,107 @@ Testing the whole tool chain end to end (acceptance → visual check → verdict
 
 > 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad; cat > $SP/same_frame.cjs <<'EOF'\n// renders the SAME game state several times: any difference = render instability (splat sort lag / flicker), not motion\nconst { chromium } = require('playwright'); const { spawn } = require('child_process'); const fs = require('fs'); const path = require('path');\n(async () => {\n  const [dir, out] = process.argv.slice(2); fs.mkdirSync(out, { recursive: true });\n  const disk = fs.readFileSync(path.join(dir, 'play3.html'), 'utf8'); let port, srv;\n  for (let k  …[+1655 chars]`
 
+### 🧑 User — 2026-11-21T13:36:12.984Z
+
+> ↩︎ result: a vs b : mean diff 9.88 levels, pixels changed >20: 13.31 %
+> b vs c : mean diff 0.00 levels, pixels changed >20: 0.00 %
+> c vs d : mean diff 0.00 levels, pixels changed >20: 0.00 %
+> a vs d : mean diff 9.88 levels, pixels changed >20: 13.31 %
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T13:36:30.793Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad; cd $SP/base/node_modules/@sparkjsdev/spark/dist && ls types | head -30; grep -rn \"sort\" types/SparkRenderer.d.ts 2>/dev/null | head -30", "description": "Look for sort-completion API in Spark 2.4"}`
+
+### 🧑 User — 2026-11-21T13:36:30.851Z
+
+> ↩︎ result: ExtSplats.d.ts
+> PackedSplats.d.ts
+> PagedSplats.d.ts
+> PagedSplatsFetcher.d.ts
+> Readback.d.ts
+> RgbaArray.d.ts
+> SparkPortals.d.ts
+> SparkRenderer.d.ts
+> SparkXr.d.ts
+> SplatAccumulator.d.ts
+> SplatEdit.d.ts
+> SplatGenerator.d.ts
+> SplatGeometry.d.ts
+> SplatLoader.d.ts
+> SplatMesh.d.ts
+> SplatPager.d.ts
+> SplatSkinning.d.ts
+> SplatWorker.d.ts
+> controls.d.ts
+> defines.d.ts
+> dyno
+> dyno.d.ts
+> generators
+> generators.d.ts
+> hands.d.ts
+> hooks.d.ts
+> index.d.ts
+> modifiers
+> modifiers.d.ts
+> shaders.d.ts
+> 19:     * for example when splat sort order or LoD updates complete. May fire
+> 132:     * Whether to sort splats radially (geometric distance) from the viewpoint (true)
+> 133:     * or by Z-depth (false). Most scenes are trained with the Z-depth `sort `metric
+> 134:     * and will render more accurately at certain viewpoints. However, radial sorting
+> 138:    sortRadial?: boolean;
+> 140:     * Minimum interval between sort calls in milliseconds.
+> 331:    sortRadial: boolean;
+> 346:    sorting: boolean;
+> 347:    sortDirty: boolean;
+> 350:    sortWorker: SplatWorker | null;
+> 351:    sortTimeoutId: ReturnType<typeof setTimeout> | undefined;
+> 352:    sortedCenter: THREE.Vector3;
+> 353:    sortedDir: THREE.Vector3;
+> 430:    sortPause: number;
+> 431:    sortDelay:  …[+50 chars]
+
+### 🤖 Claude — 2026-11-21T13:36:34.117Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad; cd $SP/base/node_modules/@sparkjsdev/spark/dist && sed -n 10,30p types/SparkRenderer.d.ts; sed -n 136,150p types/SparkRenderer.d.ts; sed -n 340,360p types/SparkRenderer.d.ts; sed -n 425,435p types/SparkRenderer.d.ts", "description": "Read SparkRenderer sort-related options"}`
+
+### 🧑 User — 2026-11-21T13:36:34.216Z
+
+> ↩︎ result: /**
+>      * Pass in your THREE.WebGLRenderer instance so Spark can perform work
+>      * outside the usual render loop. Should be created with antialias: false
+>      * (default setting) as WebGL anti-aliasing doesn't improve Gaussian Splatting
+>      * rendering and significantly reduces performance.
+>      */
+>     renderer: THREE.WebGLRenderer;
+>     /**
+>      * Callback function to be called when SparkRenderer needs to re-render,
+>      * for example when splat sort order or LoD updates complete. May fire
+>      * several times per frame; schedule a single render rather than rendering
+>      * inside the callback.
+>      */
+>     onDirty?: () => void;
+>     /**
+>      * Whether to use premultiplied alpha when accumulating splat RGB
+>      * @default true
+>      */
+>     premultipliedAlpha?: boolean;
+>     /**
+>      * Pass in a THREE.Timer to to synchronize time-based effects across different
+>      * @default true
+>      */
+>     sortRadial?: boolean;
+>     /**
+>      * Minimum interval between sort calls in milliseconds.
+>      * @default 0
+>      */
+>     minSortIntervalMs?: number;
+>     enableLod?: boolean;
+>     /**
+>      * Whether to drive LOD updates (compute lodInstances, update pager, etc.).
+>      * Set to false to use LOD ins …[+1165 chars]
+
+### 🤖 Claude — 2026-11-21T13:36:46.986Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad; cd $SP && sed -i 's#  for (let i = 0; i <= 15; i++) await p.evaluate((\\[t, dt\\]) => window.step(t, dt, 0, 1.4), \\[i / 30, i ? 1 / 30 : 0\\]);#  for (let i = 0; i <= 15; i++) { await p.evaluate(([t, dt]) => window.step(t, dt, 0, 1.4), [i / 30, i ? 1 / 30 : 0]); if (process.env.EACH) await p.evaluate(() => window.renderNow(1)); }#' same_frame.cjs && grep -c \"EACH\" same_frame.cjs && EACH=1 NODE_PATH=$(npm root -g) timeout 2400 node same_frame.cjs $SP/merged $SP/same2 && python3 -I -c \"\nimport …[+407 chars]`
+
