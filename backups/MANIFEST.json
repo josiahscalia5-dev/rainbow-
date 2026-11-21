@@ -794,7 +794,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 25599,
-   "sha256": "f59116133933c25e1690ad92d096b6a7c6819998e7a18ef4618df652b536dcde"
+   "sha256": "90b0f116ff87219a8b3bb66f6c6e36369c78a16e710073b47130857758600be7"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3056,
-   "sha256": "8a25053f6228e45c19c100f44b3e863f4c7a6cedc5eee3210a11a5325547bdb1"
+   "sha256": "54ab9e5bfb377c0e4fe0ccd5e077497c0d4fbab255800320b6f18d203357f878"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -37157,6 +37157,11 @@
    "sha256": "ba6cd6a96099bbbb43a2b62133aeb9aed96cd7329739ec370a6245a2eac31257"
   },
   {
+   "path": "tools/marble05/build_tiles.py",
+   "bytes": 3100,
+   "sha256": "a335b7a250215328f649c6ab084aeaae3d7303eee0536c5c6f981fd517c7db29"
+  },
+  {
    "path": "tools/marble05/compose.py",
    "bytes": 2940,
    "sha256": "5c908b62be07f9597f4b8975f619d6dd1406b0f092b77ed903ff3907227cb672"
@@ -37198,8 +37203,8 @@
   },
   {
    "path": "tools/marble05/spz.py",
-   "bytes": 934,
-   "sha256": "28bf68792c8428073e1e2ca0a996a6a066ea30661229e0f04b9abe78b2ab993b"
+   "bytes": 2731,
+   "sha256": "5920ebebd46bfcc820051f4c368913e8b1336e79836dcfdf3b7ba7d83a8750e3"
   },
   {
    "path": "tools/marble05/viewer/index.html",
