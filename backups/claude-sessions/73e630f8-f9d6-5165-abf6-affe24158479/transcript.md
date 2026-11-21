@@ -3703,3 +3703,94 @@ The still-scenery recordings are running, about 10 minutes. I'll measure them as
 > 05 {'frames': 198, 'px20_median': 75.7, 'px20_min': 33.5, 'look20_median': 83.7, 'look20_min': 35.7}
 > 06k0 {'frames': 83, 'px20_median': 78.6, 'px20_min':  …[+637 chars]
 
+### 🤖 Claude — 2026-11-21T01:56:00.625Z
+
+The still-scenery version scores much higher on the frame-by-frame test. Checking how steering looks in it before finalising.
+
+### 🤖 Claude — 2026-11-21T01:56:05.175Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nfrom PIL import Image\nimport json\nd='/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/frames/frames_NEW_STILL_05_06_07_steer'\nL=json.load(open('qa/match/05/paint05/clip/clip_NEW_STILL_05_06_07_steer.json'))['frames']\nwant=[138,141,144,163,167,171,207,211,228,232]\nidx=[min(range(len(L)),key=lambda i:abs(L[i]['s']-s)) for s in want]\nc=Image.new('RGB',(5*216+40,2*384+10),'white')\nfor n,i in enumerate(idx): c.paste(Image.open(f'{d}/{i:04d}.jpg').resize((216,384)),((n%5)*224,(n//5)*394))\nc.save('/tmp/claude-0/-home-user-rai …[+221 chars]`
+
+### 🧑 User — 2026-11-21T01:56:05.429Z
+
+> ↩︎ result: [(81, 138.03, 0.092, 1370), (89, 140.964, 1.118, 1370), (97, 143.897, 1.91, 1370), (149, 162.964, 0.66, 1390), (160, 166.997, 2.201, 1390), (171, 171.03, 1.293, 1390), (321, 206.98, 0.796, 1440), (343, 211.013, 2.95, 1440), (436, 228.063, -1, 1450), (457, 231.913, 2.572, 1450)]
+
+### 🤖 Claude — 2026-11-21T01:56:05.976Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/steer_still.png"}`
+
+### 🧑 User — 2026-11-21T01:56:06.028Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T01:56:30.403Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='src/world/paint.ts'; s=open(p).read()\ns=s.replace(\"const PUSH_K = qn('paintpush', 1), PAN_K = qn('paintpan', 1);\",\"\"\"// default = scenery holds still (measured: every-frame likeness 82 % / 'looks the same' 93 % in 05 vs 41 % / 54 % with the ease)\nconst PUSH_K = qn('paintpush', 0), PAN_K = qn('paintpan', 0);\"\"\")\ns=s.replace(\"/** `&paintpush=<f>`: scale of the gentle forward ease (1 = as authored, 0 = scenery holds still); `&paintpan=<f>`: steering parallax */\",\n            \"/** `&paintpush=<f>`: the gentle forward ease toward the tunnel end ( …[+1570 chars]`
+
+### 🧑 User — 2026-11-21T01:59:36.927Z
+
+> ↩︎ result: NEW_STILL_05_06_07_steer frames 578 s 106.467 -> 262.003 coins 1330 -> 1500
+> 05 {'frames': 198, 'px20_median': 75.9, 'px20_min': 65.8, 'look20_median': 83.7, 'look20_min': 72.9}
+> 06k0 {'frames': 83, 'px20_median': 78.6, 'px20_min': 44.6, 'look20_median': 85.2, 'look20_min': 47.9}
+> 06k1 {'frames': 60, 'px20_median': 55.9, 'px20_min': 16.4, 'look20_median': 64.6, 'look20_min': 19.1}
+> 06k2 {'frames': 60, 'px20_median': 63.3, 'px20_min': 15.5, 'look20_median': 71.7, 'look20_min': 18.0}
+> 06k3 {'frames': 56, 'px20_median': 62.0, 'px20_min': 32.9, 'look20_median': 69.9, 'look20_min': 38.0}
+> 06k4 {'frames': 47, 'px20_median': 67.6, 'px20_min': 47.8, 'look20_median': 75.5, 'look20_min': 54.8}
+
+### 🤖 Claude — 2026-11-21T01:59:43.261Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nfrom PIL import Image\nimport json\nd='/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/frames/frames_NEW_STILL_05_06_07_steer'\nL=json.load(open('qa/match/05/paint05/clip/clip_NEW_STILL_05_06_07_steer.json'))['frames']\nwant=[141,143.9,145,167,169,171,173]\nidx=[min(range(len(L)),key=lambda i:abs(L[i]['s']-s)) for s in want]\nc=Image.new('RGB',(7*200+60,356),'white')\nfor n,i in enumerate(idx): c.paste(Image.open(f'{d}/{i:04d}.jpg').resize((200,356)),(n*208,0))\nc.save('/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf …[+98 chars]`
+
+### 🧑 User — 2026-11-21T01:59:43.468Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-21T01:59:44.258Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/steer2.png"}`
+
+### 🧑 User — 2026-11-21T01:59:44.303Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T02:00:01.867Z
+
+> 🔧 **Bash** `{"command": "rm -f qa/match/05/paint05/compare/NEW_s*.png && timeout 1500 node tools/paint/stills.mjs --q=paint=1 --s=132.44,150,170,198.92,209.92,220.92,231.92,241.92 --out=qa/match/05/paint05/compare --tag=NEW 2>&1 | tail -1 && rm -f qa/match/05/paint05/compare/CMP_*.jpg && python3 -I - <<'EOF'\nfrom PIL import Image, ImageDraw, ImageFont\nimport numpy as np, cv2, json\nR='/home/user/rainbow-'; D=f'{R}/qa/match/05/paint05/compare'\nF=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',30); f2=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf',22)\nreg= …[+2541 chars]`
+
+### 🧑 User — 2026-11-21T02:00:16.383Z
+
+> ↩︎ result: NEW stills 8
+> 1_05_start {'BEFORE_px': np.float64(8.7), 'BEFORE_look': np.float64(9.5), 'NEW_px': np.float64(95.0), 'NEW_look': np.float64(95.7)}
+> 2_05_swimming_1.6s_later {'BEFORE_px': np.float64(5.7), 'BEFORE_look': np.float64(6.3), 'NEW_px': np.float64(93.7), 'NEW_look': np.float64(93.8)}
+> 3_05_swimming_3.4s_later {'BEFORE_px': np.float64(5.6), 'BEFORE_look': np.float64(5.6), 'NEW_px': np.float64(93.8), 'NEW_look': np.float64(93.8)}
+> 4_06_start {'BEFORE_px': np.float64(1.2), 'BEFORE_look': np.float64(1.3), 'NEW_px': np.float64(95.9), 'NEW_look': np.float64(97.7)}
+> 5_06_panel1 {'BEFORE_px': np.float64(1.2), 'BEFORE_look': np.float64(1.4), 'NEW_px': np.float64(85.3), 'NEW_look': np.float64(96.2)}
+> 6_06_panel2 {'BEFORE_px': np.float64(2.1), 'BEFORE_look': np.float64(2.3), 'NEW_px': np.float64(91.1), 'NEW_look': np.float64(97.5)}
+> 7_06_panel3 {'BEFORE_px': np.float64(1.0), 'BEFORE_look': np.float64(0.8), 'NEW_px': np.float64(90.8), 'NEW_look': np.float64(96.8)}
+> 8_06_panel4 {'BEFORE_px': np.float64(1.2), 'BEFORE_look': np.float64(1.1), 'NEW_px': np.float64(85.4), 'NEW_look': np.float64(97.4)}
+
+### 🤖 Claude — 2026-11-21T02:00:23.310Z
+
+> 🔧 **Bash** `{"command": "P=qa/match/05/paint05/proof && mkdir -p $P && cp qa/match/05/paint05/clip/NEW_STILL_05_06_07_straight.mp4 $P/NEW_04_05_06_07_straight.mp4 && cp qa/match/05/paint05/clip/NEW_STILL_05_06_07_steer.mp4 $P/NEW_04_05_06_07_steering.mp4 && cp qa/match/05/paint05/clip/BEFORE_05_06_07_straight.mp4 $P/BEFORE_04_05_06_07_straight.mp4 && cp qa/match/05/paint05/compare/CMP_*.jpg $P/ && ls -la $P | awk '{print $5, $9}'; python3 -I -c \"\nrows=[l for l in open('qa/match/06/paint06/LEDGER.md') if l.startswith('| 20') and ('p05' in l or 'p06k' in l)]\nprint(len(rows),'jobs for 05/06 coins, est USD …[+151 chars]`
+
+### 🧑 User — 2026-11-21T02:00:23.499Z
+
+> ↩︎ result: 4096 .
+> 4096 ..
+> 12288448 BEFORE_04_05_06_07_straight.mp4
+> 1357703 CMP_1_05_start.jpg
+> 1358532 CMP_2_05_swimming_1.6s_later.jpg
+> 1307050 CMP_3_05_swimming_3.4s_later.jpg
+> 1327305 CMP_4_06_start.jpg
+> 1124201 CMP_5_06_panel1.jpg
+> 1102205 CMP_6_06_panel2.jpg
+> 1050673 CMP_7_06_panel3.jpg
+> 1074964 CMP_8_06_panel4.jpg
+> 5568133 NEW_04_05_06_07_steering.mp4
+> 5170957 NEW_04_05_06_07_straight.mp4
+> 21 jobs for 05/06 coins, est USD 1.45
+
+### 🤖 Claude — 2026-11-21T02:00:49.684Z
+
+> 🔧 **Bash** `{"command": "cat > qa/match/05/paint05/README.md <<'EOF'\n# Screen 05 (+ the 05 → 06 → 07 journey) — approved-artwork chain `?paint=1` (round 31, 2026-11-21, branch `ccr-4fcad20e-a6pp8w`)\n\n**User order (2026-11-21, verbatim excerpt):** \"continue using the approved-artwork method from Screen 06 for my remaining playable screens … 1. Screen 05 …\n95–98% visual likeness … Keep my original approved Benny … scenery must remain visually consistent while Benny swims forward, steers … Keep the game genuinely\nplayable … Fix visible seams, double images, ghosting, abrupt picture changes, and duplica …[+5657 chars]`
+

@@ -12,6 +12,11 @@ IMPROVED 3D at the same rear angle and size … Do not silently switch character
 Benny's pixels baked through the game's colour chain — rear outline 0.902 → 0.956, structure 0.49 → 0.81; sides / front still plain. NOT wired into the
 game; painted Benny stays in `?paint06=1`. Everything: **`qa/benny/r31/README.md`**.
 
+Then (same round, user's order "05, 07, 04, 08, 09, 10 … start with Screen 05 now"): built **`?paint=1`** = the approved-artwork CHAIN 05 → 06 (src/world/paint.ts,
+assets/textures/paint/, tools/paint/): scenery holds still, painted water flows, painted coins are real coins (flow to Benny, pop, vanish), painted Benny steers,
+reveals between pictures, 3D at the 04→05 and 06→07 joins. Every-frame likeness straight 05: 82 % px / 93 % look (BEFORE 5 %); proof + honest limits:
+**`qa/match/05/paint05/README.md`**. Next in the user's order: Screen 07, then 04, 08, 09, 10.
+
 # ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 30b (2026-11-20, lead branch `ccr-e490fceb-u85291`, from ~22:20 UTC)
 
 The r30 session closed ~22:14; this one merged its last save `b9ca06c` (user: "Continue from the latest saved version") and recreated the

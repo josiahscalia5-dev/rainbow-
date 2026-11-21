@@ -75,8 +75,9 @@ const FRAG = /* glsl */ `
   }`;
 
 const qn = (k: string, d: number) => { const v = typeof location === 'undefined' ? null : new URLSearchParams(location.search).get(k); return v !== null && v !== '' && isFinite(+v) ? +v : d; };
-/** `&paintpush=<f>`: scale of the gentle forward ease (1 = as authored, 0 = scenery holds still); `&paintpan=<f>`: steering parallax */
-const PUSH_K = qn('paintpush', 1), PAN_K = qn('paintpan', 1);
+/** `&paintpush=<f>`: the gentle forward ease toward the tunnel end (1 = as authored); `&paintpan=<f>`: steering parallax (1 = as authored) */
+// default = scenery holds still (measured: every-frame likeness 82 % / 'looks the same' 93 % in 05 vs 41 % / 54 % with the ease)
+const PUSH_K = qn('paintpush', 0), PAN_K = qn('paintpan', 0);
 
 export async function buildPaint(course: Course, coins: { defs: CoinDef[]; collected: Uint8Array }) {
   const L: Layout = await fetch(asset('paint/paint.json')).then((r) => r.json());
@@ -271,9 +272,17 @@ export async function buildPaint(course: Course, coins: { defs: CoinDef[]; colle
           if ((which === 'back') !== (d > 0.3)) continue;
           op = clamp01((P.samples[P.samples.length - 1][0] - d) / 6);
         }
-        const [x, y, dia] = pathAt(P, d);
+        const [x, y, dia0] = pathAt(P, d);
         const ppu = PX_PER_LAT * (P.D0 / Math.max(0.35, d + P.D0));
-        const X = x + (def.lat - P.lat) * ppu, Y = y - lift;
+        let X = x + (def.lat - P.lat) * ppu; const Y = y - lift;
+        // a coin he steered away from passes visibly BESIDE him (never through his body) and fades before it grows huge
+        const dia = Math.min(dia0, 1.5 * P.sprite_coin_d);
+        if (d < 1.0) {
+          const bx = Q.K.pivot[0] + o.lat * PX_PER_LAT, dx = X - bx, clear = 185 + dia / 2;
+          if (Math.abs(dx) < clear) X = bx + Math.sign(dx || -1) * (Math.abs(dx) + (clear - Math.abs(dx)) * clamp01((1.0 - d) / 0.8));
+        }
+        if (d < -0.8) op *= clamp01((d + 2.4) / 1.6);
+        if (op <= 0.01) continue;
         point(Q.depth, X, Math.min(Y, FH + MY - 2), v3);
         const Z = -v3.z, hWorld = (dia * grow / (FH / 2)) * tanY * Z;
         m.position.copy(v3); m.scale.set(hWorld * (P.sprite_px[0] / P.sprite_coin_d), hWorld * (P.sprite_px[1] / P.sprite_coin_d), 1);

@@ -1,34 +1,50 @@
 {
- "05 start (crest)": {
-  "BEFORE": 8.7,
-  "NEW": 95.0
+ "1_05_start": {
+  "BEFORE_px": 8.7,
+  "BEFORE_look": 9.5,
+  "NEW_px": 95.0,
+  "NEW_look": 95.7
  },
- "05 swimming, 1.6 s later": {
-  "BEFORE": 5.7,
-  "NEW": 47.2
+ "2_05_swimming_1.6s_later": {
+  "BEFORE_px": 5.7,
+  "BEFORE_look": 6.3,
+  "NEW_px": 93.7,
+  "NEW_look": 93.8
  },
- "05 swimming, 3.4 s later": {
-  "BEFORE": 5.6,
-  "NEW": 34.8
+ "3_05_swimming_3.4s_later": {
+  "BEFORE_px": 5.6,
+  "BEFORE_look": 5.6,
+  "NEW_px": 93.8,
+  "NEW_look": 93.8
  },
- "06 start": {
-  "BEFORE": 1.2,
-  "NEW": 95.9
+ "4_06_start": {
+  "BEFORE_px": 1.2,
+  "BEFORE_look": 1.3,
+  "NEW_px": 95.9,
+  "NEW_look": 97.7
  },
- "06 panel 1": {
-  "BEFORE": 1.2,
-  "NEW": 85.2
+ "5_06_panel1": {
+  "BEFORE_px": 1.2,
+  "BEFORE_look": 1.4,
+  "NEW_px": 85.3,
+  "NEW_look": 96.2
  },
- "06 panel 2": {
-  "BEFORE": 2.1,
-  "NEW": 91.1
+ "6_06_panel2": {
+  "BEFORE_px": 2.1,
+  "BEFORE_look": 2.3,
+  "NEW_px": 91.1,
+  "NEW_look": 97.5
  },
- "06 panel 3": {
-  "BEFORE": 1.0,
-  "NEW": 90.8
+ "7_06_panel3": {
+  "BEFORE_px": 1.0,
+  "BEFORE_look": 0.8,
+  "NEW_px": 90.8,
+  "NEW_look": 96.8
  },
- "06 panel 4": {
-  "BEFORE": 1.2,
-  "NEW": 85.4
+ "8_06_panel4": {
+  "BEFORE_px": 1.2,
+  "BEFORE_look": 1.1,
+  "NEW_px": 85.4,
+  "NEW_look": 97.4
  }
 }
