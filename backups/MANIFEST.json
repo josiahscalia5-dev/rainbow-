@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3267,
-   "sha256": "3790c71c39094778e7a8b72fbe8c3101d7113583bc3cb541aaeeeece407cdffb"
+   "sha256": "5a4859493f0527fed0f22772b907e56f7ac8c68629f54739a02968c6887daa12"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -7054,7 +7054,7 @@
   {
    "path": "backups/wip/detached-d8e047d33e/INFO.json",
    "bytes": 2379,
-   "sha256": "a03260689ec6b66e2c0e34d3723ec0ed8e80912c62339a1d16a47e2585d9c187"
+   "sha256": "3a38cba71a89ec250ff2180fc1cf9ed99bca2927b8054b13f8499d3aafd7e42b"
   },
   {
    "path": "backups/wip/detached-d8e047d33e/tracked.patch",
@@ -40583,8 +40583,8 @@
   },
   {
    "path": "tools/kit05/kitgame.html",
-   "bytes": 58844,
-   "sha256": "9479f326c6d83ef86a62eeba9a986a5da8021c4b0d24fd6262aef1d0590efe34"
+   "bytes": 59468,
+   "sha256": "4bc60a3c08db51137c9c479de7d1dc80ad2209664b457d76f9639ed1684e040e"
   },
   {
    "path": "tools/kit05/live.js",
@@ -40670,6 +40670,11 @@
    "path": "tools/kit05/swimfx.js",
    "bytes": 13694,
    "sha256": "80e243fc12e4879ddb8795804e51da0e85a147a697eee374fa4454de7bc1e871"
+  },
+  {
+   "path": "tools/kit05/zoom_likeness.py",
+   "bytes": 3823,
+   "sha256": "5f380c27ed6a5f100ccdc907401a41b9dbf758ea100a1d68e87564e3584efa0a"
   },
   {
    "path": "tools/lead21/audit_screen.mjs",

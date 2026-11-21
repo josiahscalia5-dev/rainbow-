@@ -23,6 +23,12 @@ const W = +(q.get('w') ?? 412), H = +(q.get('h') ?? 915);
 const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
 renderer.setPixelRatio(1); renderer.setSize(W, H); document.body.appendChild(renderer.domElement);
 const K = await (await fetch('kit.json')).json();
+// round 36 TEST ?proj=1 = PURE camera-matched projection: every scenery texel stays the APPROVED picture's own pixel projected onto the fitted
+// 3D tunnel / water at its world place (no hand-over to the sharper repeating sections, no foam domes / bubbles), and the camera never rotates
+// (no yaw / roll: the painted vanishing point stays where the painting has it; it only translates with Benny's river path and lanes)
+const PROJ = q.get('proj') === '1';
+if (PROJ) for (const [k, v] of [['pfade', '-2,-1,-2,-1'], ['p_yawmax', '0'], ['p_rollmax', '0']]) if (!q.has(k)) q.set(k, v);
+const OWNFADE = PROJ ? [-2, -1] : (K.own?.fade ?? [0.42, 0.62]);
 const V3 = (a) => new THREE.Vector3(...a);
 const A = V3(K.A), NUP = V3(K.NUP), RR = V3(K.RR), A0 = V3(K.A0);
 const ringT = (k) => K.Z2 + (k - 2) * K.S;
@@ -37,7 +43,7 @@ vec3 kitRemap(vec3 wp){ vec3 d = wp - uCam; float za = dot(d, uAx); float gz = z
 const kitMat = (map, extra = {}, own = null) => {   // own = { tex, vr: [v0, v1] }: this section's OWN painted pixels (atlas rows)
   const m = new THREE.MeshBasicMaterial({ map, toneMapped: false, side: THREE.DoubleSide, ...extra });
   m.customProgramCacheKey = () => (own ? 'kit-own' : 'kit');   // three.js keys programs on the onBeforeCompile source: identical for both variants
-  const OU = own ? { uOwn: { value: own.tex }, uVr: { value: new THREE.Vector2(...own.vr) }, uFade: { value: new THREE.Vector2(...K.own.fade) } } : {};
+  const OU = own ? { uOwn: { value: own.tex }, uVr: { value: new THREE.Vector2(...own.vr) }, uFade: { value: new THREE.Vector2(...OWNFADE) } } : {};
   m.onBeforeCompile = (sh) => {
     Object.assign(sh.uniforms, REMAP, OU);
     sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\n' + REMAP_GLSL + '\nvarying float vKitT; varying float vKitD;')
@@ -196,7 +202,7 @@ for (const side of [1, -1]) {   // right: from -THW upward; left: from PI + THW 
 // the banks stay round painted puffs from every position (the round-33 wall-base strip was a flat band seen edge-on: white spikes).
 // Thicker (two rows) on the inner side of each bend. Both fade in exactly where the walls hand over from their own painted pixels
 // (distance now / distance at the start < K.own.fade), so the start view stays the approved picture. ?puffs=0 = round-34 strip.
-const FADEP = new THREE.Vector4(...(K.own?.fade ?? [0.42, 0.62]), 0, 0);
+const FADEP = new THREE.Vector4(...OWNFADE, 0, 0);
 if (PUFFS) {
   const puffTex = await tl.loadAsync('puffs.png'); puffTex.colorSpace = THREE.NoColorSpace; puffTex.anisotropy = 4;
   const rp = (() => { let x = 777; return () => ((x = (x * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff); })();
