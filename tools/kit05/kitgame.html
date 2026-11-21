@@ -91,12 +91,13 @@ const FLOW = { uFlowOn: { value: 0 }, uFlowL: { value: +(q.get('flowl') ?? 0.10)
   uEdge: { value: new THREE.Vector4(...(q.get('redge') ?? '0.80,0.60,5.0,13.0').split(',').map(Number)) },
   uR35On: { value: R35 ? 1 : 0 }, uR35: { value: river35Tex }, uR35A: { value: new THREE.Vector4(R35?.t_pre ?? 0, R35?.ta ?? 1, R35?.P ?? 1, R35 ? R35.n_pre / (R35.n_pre + R35.n_per) : 0) }, uR35B: { value: +(q.get('r35bias') ?? 0.0) },
   uR35Det: { value: r35Det }, uR35D: { value: new THREE.Vector4(R35?.detail?.L ?? 1, R35?.detail?.c0 ?? 0, +(q.get('detflow') ?? 1.0), R35?.detail ? +(q.get('detgain') ?? 1.3) : 0) }, uR35DS: { value: new THREE.Vector4(...(q.get('detshape') ?? '5,1,3,8').split(',').map(Number)) },
+  uProjDet: { value: PROJ && R35?.detail ? +(q.get('projdet') ?? 1.0) : 0 },
   uR35P: { value: new THREE.Vector3(...(q.get('pinkband') ?? '0,0.44,0.56').split(',').map(Number)) } };   // ribbon foam edge |u| near, far factor, far range
 const riverMat = (() => { const m = kitMat(riverTex); const base = m.onBeforeCompile; m.customProgramCacheKey = () => 'kit-river34';
   m.onBeforeCompile = (sh) => { base(sh); Object.assign(sh.uniforms, FLOW);
     sh.fragmentShader = sh.fragmentShader.replace('uniform float uBias;', `uniform float uBias; uniform float uFlow; uniform vec3 uRT; uniform sampler2D uRiverTile; uniform sampler2D uFoam; uniform float uHWD; uniform vec3 uWT; uniform float uFlowL; uniform float uFlowOn; varying float vKitT; varying float vKitD;
       uniform sampler2D uRiverPink; uniform sampler2D uCenter; uniform vec3 uCN; uniform vec4 uPF; uniform vec4 uEdge;
-      uniform float uR35On; uniform sampler2D uR35; uniform vec4 uR35A; uniform float uR35B; uniform sampler2D uR35Det; uniform vec4 uR35D; uniform vec4 uR35DS; uniform vec3 uR35P;
+      uniform float uR35On; uniform sampler2D uR35; uniform vec4 uR35A; uniform float uR35B; uniform sampler2D uR35Det; uniform vec4 uR35D; uniform vec4 uR35DS; uniform vec3 uR35P; uniform float uProjDet;
       // round 35: painted river texel at world axial t (continuous row coordinate: prefix rows, then the period repeats)
       float r35Row(float t){ return t < uR35A.y ? uR35A.w * clamp((t - uR35A.x) / (uR35A.y - uR35A.x), 0.0, 1.0) : uR35A.w + (1.0 - uR35A.w) * (t - uR35A.y) / uR35A.z; }
       vec4 r35(float x, float t){ float r = r35Row(t); float rw = r >= 1.0 ? uR35A.w + mod(r - uR35A.w, 1.0 - uR35A.w) : r;
@@ -152,6 +153,12 @@ const riverMat = (() => { const m = kitMat(riverTex); const base = m.onBeforeCom
         vec4 kP1 = texture(map, vec2(vMapUv.x, log(max(kT1, uWT.x) / uWT.x) / uWT.y), uBias);
         vec4 kP2 = texture(map, vec2(vMapUv.x, log(max(kT2, uWT.x) / uWT.x) / uWT.y), uBias);
         vec4 kPaint = mix(kP2, kP1, 1.0 - abs(1.0 - 2.0 * kPh));
+        // round 36 ?proj=1: the projected painting keeps its own colours / layout; where its row is softer than needed close up (painted
+        // far away), the sharp painted near streaks are added live (same streak strip as the river35 layer, streaming with the current)
+        if (uProjDet > 0.0) { float pdW = uProjDet * smoothstep(1.6, 4.5, kT) * (1.0 - smoothstep(uR35DS.z, uR35DS.w, kZ)) * smoothstep(0.35, 1.3, kZ);
+          vec2 pUV = vec2((kLat - kCenter(kT) + uR35D.y + uHWD) / (2.0 * uHWD), (kT + uFlow * uR35D.z) / uR35D.x);
+          float pd = texture(uR35Det, pUV).r - 0.5; pd *= pd > 0.0 ? uR35DS.x : uR35DS.y; pd *= smoothstep(0.0, 0.06, pUV.x) * smoothstep(1.0, 0.94, pUV.x);
+          kPaint.rgb = pd > 0.0 ? mix(kPaint.rgb, vec3(1.0), clamp(pd * pdW, 0.0, 1.0)) : kPaint.rgb * (1.0 + pd * pdW); }
         // painted -> ribbon as the camera approaches (ratio distance now / distance at the start: 1 at frame 0); far painted texels are
         // low-resolution, so they hand over sooner than the sharp near ones
         float kNF = smoothstep(3.0, 8.0, kT);

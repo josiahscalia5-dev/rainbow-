@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3267,
-   "sha256": "cf1db9c3726914935895b4d94ed3619b6b0e4882e6eff60a94b06760f4bb6831"
+   "sha256": "449ff292cdae4a1b995707e029efb4b85a132b3c33466b9e4a36e541e3088c34"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -7054,7 +7054,7 @@
   {
    "path": "backups/wip/detached-d8e047d33e/INFO.json",
    "bytes": 2379,
-   "sha256": "d012aba68c22ca46e5e11a7989e9b4e1950a5201c5f1afbdedc2625d1ae326e9"
+   "sha256": "96d7f66e46b8910b5c63fb0e396e501a8a313af299d59de82b4bf4b68a15cf3e"
   },
   {
    "path": "backups/wip/detached-d8e047d33e/tracked.patch",
@@ -40583,8 +40583,8 @@
   },
   {
    "path": "tools/kit05/kitgame.html",
-   "bytes": 59468,
-   "sha256": "4bc60a3c08db51137c9c479de7d1dc80ad2209664b457d76f9639ed1684e040e"
+   "bytes": 60391,
+   "sha256": "74b2d1c3b989d05148a4ea7ecfe918cfe14146c86a0eb7cb37613ffb7654c4d7"
   },
   {
    "path": "tools/kit05/live.js",
