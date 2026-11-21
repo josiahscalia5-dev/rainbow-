@@ -65,10 +65,51 @@ for (const t of tiles) if (BK.bay) { t.bk = new THREE.Mesh(q.get('nomirror') || 
 let kcNow = -99;
 // [track] the tunnel runs on for FARK sections and ends in the painting's bright golden light (a soft glow behind the splats)
 const FARK = +(q.get('fark') ?? 9);
-const glow = (L2 && TR.XB) ? (() => { const c = document.createElement('canvas'); c.width = c.height = 256; const g = c.getContext('2d');
-  const gr = g.createRadialGradient(128, 128, 0, 128, 128, 128); gr.addColorStop(0, 'rgba(255,250,225,1)'); gr.addColorStop(0.12, 'rgba(255,228,140,1)'); gr.addColorStop(0.3, 'rgba(255,172,60,1)'); gr.addColorStop(0.55, 'rgba(228,92,120,1)'); gr.addColorStop(0.8, 'rgba(170,52,172,1)'); gr.addColorStop(1, 'rgba(122,32,150,1)'); // opaque to the edge: the end flange of the last shell hides the corners
+const GS = 3.6; // [track] end-light sprite size: larger than the last ring's opening seen from any angle (2.6 left a slit at the left wall at s = 29)
+const glow = (L2 && TR.XB) ? (() => { const c = document.createElement('canvas'); c.width = c.height = 512; const g = c.getContext('2d');
+  // [track] round 32b: like the approved picture's vanishing point - the tunnel's purple-pink continues into the distance with thin gold
+  // rings receding toward a SMALL bright white-gold core (was: a big orange-pink disc). Opaque to the edge: the end flange of the last
+  // shell hides the corners. ?endglow=0 = the previous plain disc.
+  const R = 256, rad = (stops) => { const gr = g.createRadialGradient(R, R, 0, R, R, R); for (const [o, col] of stops) gr.addColorStop(o, col); return gr; };
+  if (q.get('endglow') === '0') { g.fillStyle = rad([[0, '#fffae1'], [0.12, '#ffe48c'], [0.3, '#ffac3c'], [0.55, '#e45c78'], [0.8, '#aa34ac'], [1, '#7a2096']]); g.fillRect(0, 0, 2 * R, 2 * R); }
+  else {
+    // the outer part (r > ~0.6, the edge of the last ring's opening) has the mean colour the far tunnel shows around it at frame 0,
+    // so no disc edge shows; inward it gets brighter: pink-magenta, soft gold rings closer and closer, a gold halo, a white-gold core
+    g.fillStyle = rad([[0, '#fff2d2'], [0.1, '#ffc896'], [0.2, '#f08cb4'], [0.32, '#d860c4'], [0.48, '#c464b8'], [0.62, '#b8749a'], [1, '#b8748a']]); g.fillRect(0, 0, 2 * R, 2 * R);
+    g.globalCompositeOperation = 'lighter';
+    for (const [rr, w, a] of [[0.13, 2, 0.16], [0.18, 2.5, 0.18], [0.245, 3, 0.2], [0.33, 4, 0.2], [0.44, 5, 0.17], [0.58, 6, 0.12]]) {
+      g.beginPath(); g.arc(R, R, rr * R, 0, 2 * Math.PI); g.strokeStyle = `rgba(255,190,90,${a})`; g.lineWidth = w; g.shadowColor = 'rgba(255,180,80,0.8)'; g.shadowBlur = w * 3; g.stroke(); }
+    g.shadowBlur = 0; g.globalCompositeOperation = 'source-over';
+    g.fillStyle = rad([[0, 'rgba(255,255,250,1)'], [0.03, 'rgba(255,253,236,1)'], [0.06, 'rgba(255,240,180,0.95)'], [0.1, 'rgba(255,214,130,0.55)'], [0.17, 'rgba(255,190,130,0.2)'], [0.26, 'rgba(255,170,150,0)']]); g.fillRect(0, 0, 2 * R, 2 * R);
+  }
+  const tx = new THREE.CanvasTexture(c); tx.colorSpace = THREE.SRGBColorSpace;
+  const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: tx, toneMapped: false, transparent: true, depthWrite: false })); sp.scale.set(GS, GS, 1); sp.renderOrder = -10; scene.add(sp); return sp; })() : null;
+// [end] the light at the end opens up as Benny comes near: a bright white-gold opening drawn over the far-end disc, faded in with the
+// camera's distance to it (0 beyond 12 units, full at 4), so from far away the end stays a small core and close up it is all light
+const glowNear = glow && q.get('endglow') !== '0' ? (() => { const c = document.createElement('canvas'); c.width = c.height = 256; const g = c.getContext('2d');
+  const gr = g.createRadialGradient(128, 128, 0, 128, 128, 128); for (const [o, col] of [[0, '#fffdf4'], [0.1, '#fff4d2'], [0.28, '#ffe2a0'], [0.5, '#ffc882'], [0.75, '#f8b08c'], [1, '#f0a096']]) gr.addColorStop(o, col);
   g.fillStyle = gr; g.fillRect(0, 0, 256, 256); const tx = new THREE.CanvasTexture(c); tx.colorSpace = THREE.SRGBColorSpace;
-  const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: tx, toneMapped: false, transparent: true, depthWrite: false })); sp.scale.set(2.6, 2.6, 1); sp.renderOrder = -10; scene.add(sp); return sp; })() : null;
+  const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: tx, toneMapped: false, transparent: true, depthWrite: false, opacity: 0 })); sp.scale.set(GS, GS, 1); sp.renderOrder = -9; scene.add(sp); return sp; })() : null;
+// [end] ending transition (round 32b): Benny swims into the golden light. S_LAST = the trail s nearest to the last ring (TR.XB + the last
+// copy's offset). Over s in [S_LAST - 1.25, S_LAST - 0.15] the strength k eases 0 -> 1: the end light grows and a warm white-gold
+// bloom (centred on the end light) fills the screen; at k = 1 the screen is entirely warm light = the hand-over to Screen 06.
+const S_LAST = (() => { const X = new THREE.Vector3(...TR.XB).add(new THREE.Vector3(...TR.offsets[TR.N - 1])); let bi = 0, bd = 1e9;
+  TR.trail.forEach((p, i) => { const d = X.distanceToSquared(new THREE.Vector3(...p)); if (d < bd) { bd = d; bi = i; } }); return TR.trail_s[bi]; })();
+const endEl = document.createElement('div'); endEl.style.cssText = 'position:fixed;inset:0;pointer-events:none;opacity:0';
+document.body.insertBefore(endEl, document.getElementById('hud'));
+let endK = 0; const endP = new THREE.Vector3();
+const updateEnd = (s) => {
+  const x = THREE.MathUtils.clamp((s - (S_LAST - 1.25)) / 1.1, 0, 1); endK = x * x * (3 - 2 * x);
+  if (glow) glow.scale.setScalar(GS * (1 + 0.8 * endK));
+  if (glowNear) { glowNear.scale.setScalar(GS * (1 + 0.8 * endK)); glowNear.material.opacity = 1 - THREE.MathUtils.smoothstep(camera.position.distanceTo(glow.position), 4, 12); }
+  if (endK <= 0) { endEl.style.opacity = '0'; return; }
+  let cx = W / 2, cy = H * 0.3;
+  if (glow) { endP.copy(glow.position).project(camera); if (endP.z < 1) { cx = THREE.MathUtils.clamp((endP.x + 1) / 2 * W, 0, W); cy = THREE.MathUtils.clamp((1 - endP.y) / 2 * H, 0, H); } }
+  const e = endK, D = Math.hypot(W, H), r1 = (0.02 + 0.5 * e) * D, r2 = r1 + (0.08 + 0.5 * e) * D, r3 = r2 + 0.4 * D;
+  endEl.style.background = `radial-gradient(circle at ${cx.toFixed(1)}px ${cy.toFixed(1)}px, rgba(255,253,242,1) 0px, rgba(255,240,190,1) ${r1.toFixed(1)}px, rgba(255,214,140,${(0.55 + 0.45 * e).toFixed(3)}) ${r2.toFixed(1)}px, rgba(255,200,130,${(e * e).toFixed(3)}) ${r3.toFixed(1)}px)`;
+  endEl.style.opacity = Math.min(1, e * 1.25).toFixed(3);
+};
+window.endK = () => endK; window.S_LAST = S_LAST; // [end]
 const showTrack = (uB) => {
   const kc = Math.floor((uB - TR.UA) / DU); if (kc === kcNow) return; kcNow = kc;
   near.visible = kc <= 1;
@@ -77,6 +118,7 @@ const showTrack = (uB) => {
   if (nearBk) nearBk.visible = near.visible; for (const t of tiles) if (t.bk) t.bk.visible = t.hi.visible || t.lo.visible || !!t.lo2?.visible; // [track]
   const last = Math.min(TR.N, Math.max(1, kc + (L2 ? FARK : 5))); far.position.set(...TR.far_offsets[last]); far.visible = !L2 || !!q.get('far');
   if (glow) { glow.position.set(...TR.XB).add(new THREE.Vector3(...TR.offsets[last - 1])).addScaledVector(AX, 0.35); } // [track]
+  if (glowNear) glowNear.position.copy(glow.position).addScaledVector(AX, -0.02); // [end]
 };
 
 // ---------- Benny's path ----------
@@ -211,6 +253,7 @@ window.step = (t, dt, steer, speed) => {
   }
   if (nearA) { camera.getWorldDirection(naF); let m = -1e9; for (const p of NAH) m = Math.max(m, naD.copy(p).sub(camera.position).dot(naF)); nearA.visible = near.visible && m > -NA.margin; } // [track]
   WF?.update(dt, camera); // [waterflow]
+  updateEnd(st.s); // [end]
   return { s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: coinCount, tile: kcNow, ...(CT ? CT.state() : {}) }; // [controls]
 };
 window.qaFlow = (dt) => WF?.update(dt, camera); // [waterflow] QA: advance only the water flow (camera, glints, bubbles stay)

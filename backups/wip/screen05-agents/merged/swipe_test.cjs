@@ -94,14 +94,13 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
     C.frame0_offsets_zero = s0.lat === 0 && s0.height === 0 && s0.camLat === 0 && s0.camH === 0;
     C.left1_to_left_lane = S[0].window.end.lane === -1 && near(S[0].window.end.lat, -0.22, 0.01);
     C.left2_clamped_at_edge = S[1].window.end.lane === -1 && near(S[1].window.end.lat, -0.22, 0.01);
-    C.left_lane_coins_collected = S[1].window.end.got.lane >= 3;
     C.right1_back_to_centre = S[2].window.end.lane === 0 && near(S[2].window.end.lat, 0, 0.03);
     C.up1_leap_peak = near(S[3].window.maxHeight, 0.6 * 0.99 * 0.471, 0.02) && S[3].window.end.height === 0;
-    C.up1_air_coins = S[3].window.end.got.air >= 2;
     C.right2_to_right_lane = S[4].window.end.lane === 1 && near(S[4].window.end.lat, 0.22, 0.01);
     C.down_dive_depth = near(S[5].window.minHeight, -(0.8 - 0.22) * 0.99 * 0.471, 0.02) && near(S[5].window.end.height, 0, 1e-6);
     C.left3_to_centre = S[6].window.end.lane === 0 && near(S[6].window.end.lat, 0, 0.03);
-    C.up2_leap_and_air_coins = S[7].window.maxHeight > 0.25 && result.final.got.air >= S[3].window.end.got.air + 2;
+    C.up2_leap = S[7].window.maxHeight > 0.25; // (round 32b: the old side-row / air-arc coin checks went with the old coin layout)
+    C.coins_increase = result.final.coins > s0.coins;
     C.hud_matches_counter = fin.hud.replace(/[^0-9]/g, '') === String(result.final.coins);
     C.camera_lat_clamped = result.smooth.maxAbsCamLat <= 0.12 + 1e-9;
     C.lat_inside_river = result.smooth.maxAbsLat <= 0.26;

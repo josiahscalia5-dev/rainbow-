@@ -4,7 +4,8 @@ against FIXED thresholds (written 2026-11-21 ~12:55 UTC before the first merged 
 user's feedback: G2 = the WHOLE level to its end, G6 >= 4 swipes per direction, G9 >= 80 % of the coins, NEW G11 no overlapping coins;
 never loosened to make a run pass). ~13:45 UTC, still before any full run, after the user's order 'cover the entire level incl. ending
 transition, do not shorten': G3 + real position stalls, NEW G12 ending transition, NEW G13 full built level / every section; V2 + V4 on
-gameplay frames (the golden-light bloom frames keep V1 dark patches + V3 flicker).
+gameplay frames (the golden-light bloom frames keep V1 dark patches + V3 flicker). ~14:20 UTC, still before any full run: NEW G14 Benny's
+on-screen tilt <= 25 deg / <= 3 deg per frame, camera roll <= 10 deg (found: up to 42 deg in the later sections).
 Writes <run dir>/VERDICT.json + VERDICT.md; exit code 0 only when EVERY criterion passes.
 The user's eight strict points map to: G4/G5/G7 smooth left-right inside the river; G2/G3 continuous natural forward swimming;
 G8 correct up/down; V1-V5 no visual errors; G1/G6/G9 no gameplay errors, real swipes control the 3D position; V4 consistent approved
@@ -42,6 +43,8 @@ cc = T.get('coin_crowding')
 crit('G11', 'coins never crowd / overlap on screen', bool(cc) and cc['frames_with_overlap'] == 0, cc, 'in every frame no two visible coins (on-screen radius >= 6 px) overlap')
 cam = T.get('camera')
 crit('G10', 'camera smooth (no shake / sudden jump / snap turn)', bool(cam) and cam['max_move_per_frame'] <= 2 * cam['median_move_per_frame'] + 0.02 and cam['max_turn_deg_per_frame'] <= 2.5, cam, 'per-frame camera move <= 2 x median + 0.02, turn <= 2.5 deg per frame')
+bp = T.get('benny_pose')
+crit('G14', 'Benny leans gently and smoothly, camera level (no awkward angles)', bool(bp) and bp['max_abs_roll_deg'] <= 25 and bp['max_roll_change_deg_per_frame'] <= 3 and bp['max_abs_camera_roll_deg'] <= 10, bp, "Benny's on-screen tilt <= 25 deg and changes <= 3 deg per frame, camera roll <= 10 deg, every gameplay frame")
 et = T.get('ending_transition') or {}
 crit('G12', 'ending transition into the golden light, smooth, completes the level', bool(et.get('present')) and et.get('monotonic') and (et.get('k_at_end') or 0) >= 0.95 and lv.get('done'), et, 'golden-light bloom present, never goes back, reaches full (>= 0.95) on the level-complete frame')
 bl = T.get('built_level') or {}; secs = bl.get('sections_entered') or []

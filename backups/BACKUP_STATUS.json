@@ -1,21 +1,21 @@
 {
   "last_run": {
-    "time": "2026-11-21T13:41:02+00:00",
+    "time": "2026-11-21T13:46:02+00:00",
     "reason": "daemon",
     "result": "committed+pushed",
-    "files_staged": 41,
+    "files_staged": 13,
     "pushed_verified": true,
     "branch": "ccr-c0679182-krbfci",
     "note": "following session branch 'ccr-c0679182-krbfci' (config branch 'claude/rainbow-r22-restore-ut3m39')",
-    "screen05_agents_sync": "synced files: 33",
-    "commit": "c741469a57309b069f59ed134e973884658eb24e",
-    "duration_s": 21
+    "screen05_agents_sync": "synced files: 4",
+    "commit": "8057132fadf0841817a477d645dde523edb9de20",
+    "duration_s": 20
   },
   "repo": "https://github.com/josiahscalia5-dev/rainbow-",
   "branch": "ccr-c0679182-krbfci",
-  "last_verified_remote_sha": "c741469a57309b069f59ed134e973884658eb24e",
-  "last_successful_backup_utc": "2026-11-21T13:41:02+00:00",
+  "last_verified_remote_sha": "8057132fadf0841817a477d645dde523edb9de20",
+  "last_successful_backup_utc": "2026-11-21T13:46:02+00:00",
   "consecutive_failures": 0,
   "schedule": "every 5 min, container-local (scheduler=daemon status=active pid=17074); see backups/RECOVERY.md for limits",
-  "next_scheduled_utc": "2026-11-21T13:45:00+00:00"
+  "next_scheduled_utc": "2026-11-21T13:50:00+00:00"
 }

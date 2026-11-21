@@ -1416,3 +1416,159 @@ The 26-coin layout has no overlaps in the model. Now I'll write it into controls
 > layout [(1.13, 0.025, 0), (1.77, 0.12, 0), (2.34, 0.15, 0), (2.94, 0.105, 0), (3.7, 0.18, 0), (4.45, 0.22, 0), (5.2, 0.1, 0), (5.85, 0.22, 0), (7.4, -0.04, 0), (8, 0.15, 0), (8.6, 0.22, 0), (9.2, 0.03, 0), (12.69, 0.02, 0.1), (13.24, -0.02, 0.26), (13.79, 0.02, 0.42), (17.99, 0.07, 0), (18.74, -0.08, 0), (19.49, -0.22, 0), (23.74, 0.06, 0), (24.29, -0.1, 0), (24.84, 0.1, 0), (25.54, -0.13, 0), (26.2, 0.08, 0), (29.5, -0.02, 0.12), (30.05, 0.02, 0.27), (30.6, -0.02, 0.42)]
 > pickups by run {1: 8, 2: 4, 3: 3, 4: 3, 5: 5, 6: 3}
 
+### 🤖 Claude — 2026-11-21T13:46:33.919Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,200p /home/user/rainbow-/tools/marble05/viewer/visual_check.py | head -80; ls -la /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/benny_cmp.jpg", "description": "Read the lead's frame-0 visual checker"}`
+
+### 🧑 User — 2026-11-21T13:46:33.966Z
+
+> ↩︎ result: """Per-frame visual checks for the Screen 05 acceptance run (python3 -I visual_check.py <run dir> <approved.png>):
+> black patches (near-black pixels below the HUD), sharpness vs the first frame (variance of the Laplacian), flicker (frame-to-frame
+> change spikes), and a colour-look score vs the approved picture (hue/saturation histogram overlap; motion-independent).
+> Round 32 lead addition: 'pop' = mean |frame_i - (frame_i-1 + frame_i+1)/2| below the HUD = a change that appears for one frame and goes
+> away again (real flicker / popping), which smooth camera motion barely produces; spikes = pop > max(3 x median, 4 levels)."""
+> import sys, json, glob, numpy as np, cv2
+> d, ref = sys.argv[1:3]
+> files = sorted(glob.glob(f'{d}/f_*.jpg'))
+> R0 = cv2.imread(ref)
+> # the game keeps the approved picture's VERTICAL field of view, so a 412x915 portrait frame = the approved picture scaled to height 915
+> # and centre-cropped to width 412 (round 32 lead fix: it used to be squashed to 412x915, which distorts the comparison)
+> _w = round(R0.shape[1] * 915 / R0.shape[0]); R = cv2.resize(R0, (_w, 915), interpolation=cv2.INTER_AREA)[:, (_w - 412) // 2:(_w - 412) // 2 + 412]
+> def hs_hist(img):
+>     hsv = cv2.cvtColor(i …[+4685 chars]
+
+### 🤖 Claude — 2026-11-21T13:46:35.342Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/benny_cmp.jpg"}`
+
+### 🧑 User — 2026-11-21T13:46:35.365Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T13:46:45.434Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad && python3 -I -c \"\nimport json, numpy as np\nA=json.load(open('agentA/track/track.json')); B=json.load(open('agentB/track_w/track.json')); O=json.load(open('base/track.json'))\nfor n,T in (('base',O),('agentA(old)',A),('agentB track_w',B)):\n    t=np.array(T['trail']); print(n, 'T0', np.round(t[0],4), '|T0| (camera at origin)', round(float(np.linalg.norm(t[0])),4), 'T at s=1', np.round(t[50],3))\n\"", "description": "Compare Benny's start point between track versions"}`
+
+### 🧑 User — 2026-11-21T13:46:45.636Z
+
+> ↩︎ result: base T0 [ 0.1468 -0.5151 -1.0571] |T0| (camera at origin) 1.185 T at s=1 [ 0.046 -0.392 -2.042]
+> agentA(old) T0 [ 0.1468 -0.5151 -1.0571] |T0| (camera at origin) 1.185 T at s=1 [ 0.046 -0.392 -2.042]
+> agentB track_w T0 [ 0.1468 -0.5151 -1.0571] |T0| (camera at origin) 1.185 T at s=1 [ 0.046 -0.392 -2.042]
+
+### 🤖 Claude — 2026-11-21T13:46:57.038Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && grep -n \"uDive\\|uWater\\|waterPt.copy\\|Benny material\" controls.js | head -20", "description": "Locate Benny material and water-plane code"}`
+
+### 🧑 User — 2026-11-21T13:46:57.088Z
+
+> ↩︎ result: 208:  // ---------------- Benny material: underwater tint while diving (0 at rest, so the approved look is unchanged) ----------------
+> 209:  U.uDive = { value: 0 }; U.uWater = { value: new THREE.Vector4(0, 1, 0, 0) };
+> 212:    prevCompile(sh, r); Object.assign(sh.uniforms, { uDive: U.uDive, uWater: U.uWater });
+> 214:    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying vec3 vB31W; uniform float uDive; uniform vec4 uWater;')
+> 215:      .replace('#include <fog_fragment>', `{ float b31d = -(dot(uWater.xyz, vB31W) + uWater.w); float b31k = uDive * smoothstep(0.0, 0.05, b31d);
+> 293:    waterPt.copy(benny.position).addScaledVector(F.n, -S.h);
+> 299:    U.uDive.value = S.diveK; U.uWater.value.set(F.n.x, F.n.y, F.n.z, -F.n.dot(waterPt));
+
+### 🤖 Claude — 2026-11-21T13:46:59.170Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && sed -n 206,222p controls.js", "description": "Show Benny material block"}`
+
+### 🧑 User — 2026-11-21T13:46:59.220Z
+
+> ↩︎ result: }
+> 
+>   // ---------------- Benny material: underwater tint while diving (0 at rest, so the approved look is unchanged) ----------------
+>   U.uDive = { value: 0 }; U.uWater = { value: new THREE.Vector4(0, 1, 0, 0) };
+>   const prevCompile = bmat.onBeforeCompile;
+>   bmat.onBeforeCompile = (sh, r) => {
+>     prevCompile(sh, r); Object.assign(sh.uniforms, { uDive: U.uDive, uWater: U.uWater });
+>     sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vB31W;').replace('#include <project_vertex>', '#include <project_vertex>\nvB31W = (modelMatrix * vec4(transformed, 1.0)).xyz;');
+>     sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying vec3 vB31W; uniform float uDive; uniform vec4 uWater;')
+>       .replace('#include <fog_fragment>', `{ float b31d = -(dot(uWater.xyz, vB31W) + uWater.w); float b31k = uDive * smoothstep(0.0, 0.05, b31d);
+>         gl_FragColor.rgb = mix(gl_FragColor.rgb, vec3(0.20, 0.66, 0.86) * (0.75 + 0.25 * gl_FragColor.rgb), b31k * 0.7); }
+>       #include <fog_fragment>`);
+>   };
+>   bmat.needsUpdate = true;
+> 
+>   // ---------------- per-step update (called first in window.step) ----------------
+>   function  …[+15 chars]
+
+### 🤖 Claude — 2026-11-21T13:47:21.430Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && python3 -I - <<'EOF'\np='controls.js'; s=open(p).read()\na=s.index(\"  // ---------------- Benny material: underwater tint while diving (0 at rest, so the approved look is unchanged) ----------------\")\nb=s.index(\"  bmat.needsUpdate = true;\\n\", a)\nnew='''  // ---------------- Benny material: the water line (round 32b) ----------------\n  // Fragments below the water plane (uWater = river normal + offset through his water point, without his bob) fade into the water:\n  // a soft band …[+2700 chars]`
+
+### 🧑 User — 2026-11-21T13:47:21.533Z
+
+> ↩︎ result: 200:    fs.t0 = S.clock; fs.size = size; fs.sp.visible = true; fs.sp.position.copy(waterPt).addScaledVector(F.n, -0.012); fs.sp.material.rotation = (rnd() - 0.5) * 0.3;
+> 204:      v2.copy(waterPt).addScaledVector(F.r, Math.cos(a) * 0.12).addScaledVector(F.n, 0.01);
+> 304:    at(getS(), waterPt).addScaledVector(F.r, S.lat.x); // his water point (no bob, no leap / dive height): the water line on his body
+> 147:  benny.position.copy(tmp).addScaledVector(F.n, Math.sin(t * Math.PI * 1.6) * 0.006 + (CT ? CT.c.h : 0)); // [controls] + leap / dive height
+
+### 🤖 Claude — 2026-11-21T13:47:44.190Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && python3 -I - <<'EOF'\np='coins_level_check.cjs'; s=open(p).read()\nold=\"    const plan = doStills ? [[L2[0].s - 0.75, 'c1_side_lane_run'], [L3[2].s - 0.02, 'c2_leap_arc'], [null, 'c3_level_end']] : [[null, null]];\\n    for (const [sT, name] of plan) { await page.evaluate(([sT, after]) => window.__auto.until(sT, after), [sT, Math.round(1.2 * fps)]); if (name) await shoot(name); }\"\nassert old in s\ns=s.replace(old,\"    const plan = doStills ? [[L2[1].s - 0.4, 'c1_side_lane_run', 0], [ …[+1076 chars]`
+
+### 🧑 User — 2026-11-21T13:47:44.534Z
+
+> ↩︎ result: from agentA: controls.js
+> conflict: both added lines here -> kept both (import { createWaterFlow } from './waterflow.js'; // [waterf | import { installControls } from './controls.js'; // [control)
+> conflict: both added lines here -> kept both (let qaRise = 0; window.qaPose = (lat, rise = 0) => { st.lat  | const CT = q.get('controls') === '0' ? null : installControl)
+> conflict: camera line = agentA controls + agentB qaRise
+> conflict: end of step = agentB water update + agentA return
+> merged -> /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA/mergedtest
+
+### 🤖 Claude — 2026-11-21T13:47:48.390Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && NODE_PATH=$(npm root -g) timeout 1800 node coins_level_check.cjs mergedtest coins_level_stills.json --stills > coins_level_stills.out 2>&1; echo EXIT $? >> coins_level_stills.out", "description": "Render 4 stills on merged copy with full-level check", "timeout": 1900000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-21T13:47:48.422Z
+
+> ↩︎ result: Command running in background with ID: bzlqsz9je. Output is being written to: /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/tasks/bzlqsz9je.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-21T13:48:01.428Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && python3 -I - <<'EOF'\np='acceptance_logic.cjs'; s=open(p).read()\nold=\"    const cams = fr.map((x) => x.cam).filter(Boolean);\\n    const camStep = cams.slice(1).map((c, k) => Math.hypot(...c.pos.map((v, j) => v - cams[k].pos[j])));\"\nassert old in s\ns=s.replace(old,\"    const cams = fr.map((x) => x.cam).filter(Boolean).map((c) => ({ ...c, pos: c.pos || c.p })); // my camInfo {pos} or the lead's merged {p, q}\\n    const camStep = cams.slice(1).map((c, k) => Math.hypot(...c.pos.map(( …[+1749 chars]`
+
+### 🧑 User — 2026-11-21T13:48:01.535Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-21T13:48:12.781Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA/compare_frame0.py", "content": "# APPROVED | frame 0 side by side (approved scaled to height 915 and centre-cropped to 412 wide, as the lead's visual_check.py does):\n# full frame and the coin region enlarged 2x, with a y grid every 50 px.\n# usage: python3 -I compare_frame0.py <frame0.png> <approved.png> <out_dir>\nimport sys, os\nfrom PIL import Image, ImageDraw\nf0, ref, out = sys.argv[1:4]\nA0 = Image.open(ref).convert('RGB'); w = round(A0.width * 915 / A0.height); A = A0.resize((w, 915) …[+1374 chars]`
+
+### 🧑 User — 2026-11-21T13:48:12.811Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA/compare_frame0.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-21T13:48:16.324Z
+
+> 🔧 **Bash** `{"command": "grep -n \"camInfo\\|endK\\|hook\\|qaRise\\|COPY\\|agentA\" /home/user/rainbow-/tools/marble05/merge_r32.py | head -20; cat /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA/coins_level_stills.out | cut -c1-300", "description": "Check merge script changes and stills progress"}`
+
+### 🧑 User — 2026-11-21T13:48:16.366Z
+
+> ↩︎ result: 2:  python3 -I tools/marble05/merge_r32.py <workspace> [out=<workspace>/merged]   (workspace = the folder setup_r32.sh built: base/, agentA/, agentB/)
+> 3:Result: <workspace>/merged = agentB's visuals (waterflow.js, track_w/, backing shells, golden end) + agentA's controls (controls.js and its
+> 4:`// [controls]` hooks), page merged with a three-way merge of play3.html against the common original (base/play3.html); the known
+> 5:"both added a line at the same place" conflicts are resolved by keeping both; anything else stops the merge. Adds one lead hook:
+> 6:window.camInfo() (camera pose per frame for the acceptance test's smoothness check)."""
+> 8:WS = sys.argv[1]; A, B, O, M = (os.path.join(WS, x) for x in ('agentA', 'agentB', 'base', 'merged'))
+> 20:        (os.symlink(os.readlink(pa), pm) if os.path.islink(pa) else shutil.copy2(pa, pm)); report.append(f'from agentA: {n}')
+> 22:        if n == 'controls.js': shutil.copy2(pa, pm); report.append('from agentA: controls.js')
+> 35:        line = a[0].replace('addScaledVector(Fc.n, CT ? CT.c.camH : 0);', 'addScaledVector(Fc.n, qaRise + (CT ? CT.c.camH : 0));')
+> 36:        assert line != a[0] and 'qaRise' in b[0], 'camera line changed shape: resolve b …[+1038 chars]
+
+### 🤖 Claude — 2026-11-21T13:48:21.861Z
+
+> 🔧 **Bash** `{"command": "until grep -q \"^EXIT\" /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA/coins_level_stills.out; do sleep 5; done; cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && grep -v \"^serve\" coins_level_stills.out | cut -c1-1800; python3 -I -c \"\nimport json; d=json.load(open('coins_level_stills.json')); print('errors', d.get('errors'), d.get('fatal'))\nfor s in d['stills']: print(s['name'], 's', s['s'], 'lane', s['lane'], 'h', s['h'], 'coins', s['coins'], 'done', s['done'], 'hud', s['hud'], 'render_s', …[+132 chars]`
+
+### 🧑 User — 2026-11-21T13:49:11.072Z
+
+> ↩︎ result: Command was moved to the background (ID: ba2wf73ti) so that a message that arrived while it was running can reach you; it was not interrupted. Output is being written to: /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/tasks/ba2wf73ti.output. You will be notified when it completes. If it is still running after 30m in the background (plus the timeout it was started with, up to the background maximum), it will be stopped and you will be notified. It is running now: do not start a second copy while it runs. If it is no longer needed, stop it with TaskStop. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-21T13:49:14.029Z
+
+> 🔧 **Bash** `{"command": "until grep -q \"^EXIT\" /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA/coins_level_stills.out; do sleep 5; done; cat /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/tasks/ba2wf73ti.output | cut -c1-1500", "description": "Wait for stills to finish", "timeout": 1800000}`
+

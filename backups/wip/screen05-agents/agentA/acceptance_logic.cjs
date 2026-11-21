@@ -3,7 +3,8 @@
 // same REAL CDP touch swipes (touchStart + 4 touchMoves 30 ms apart + touchEnd, 140 px, at x = 206, y = 640.5), the same
 // per-frame read (window.step(...) merged with window.state(), window.camInfo ? camInfo() : null) and the same automatic checks
 // -- but NO renderNow / screenshots (SwiftShader takes ~30 s per frame). Adds a per-swipe response analysis.
-// usage: NODE_PATH=$(npm root -g) node acceptance_logic.cjs [seconds=7.6] [speed=1.4]  -> acceptance_logic.json
+// usage: NODE_PATH=$(npm root -g) node acceptance_logic.cjs [seconds=7.6] [speed=1.4]  -> acceptance_logic.json (run from the folder to test,
+// e.g. node mergedtest/acceptance_logic.cjs: it serves its own folder)
 const { chromium } = require('playwright'); const fs = require('fs'); const path = require('path');
 const { serveHere } = require('./serve.cjs');
 (async () => {
@@ -81,13 +82,13 @@ const { serveHere } = require('./serve.cjs');
     });
     // smoothness extras
     const d2 = (key) => { let m = 0; for (let i = 2; i < fr.length; i++) m = Math.max(m, Math.abs(fr[i][key] - 2 * fr[i - 1][key] + fr[i - 2][key])); return +m.toFixed(5); };
-    const cams = fr.map((x) => x.cam).filter(Boolean);
+    const cams = fr.map((x) => x.cam).filter(Boolean).map((c) => ({ ...c, pos: c.pos || c.p })); // my camInfo {pos} or the lead's merged {p, q}
     const camStep = cams.slice(1).map((c, k) => Math.hypot(...c.pos.map((v, j) => v - cams[k].pos[j])));
     const extra = { lat_d2: d2('lat'), height_d2: d2('height'), camLat_d2: d2('camLat'), camH_d2: d2('camH'), maxAbsLat: Math.max(...fr.map((x) => Math.abs(x.lat))),
       maxAbsCamLat: Math.max(...fr.map((x) => Math.abs(x.camLat))), camH_range: [Math.min(...fr.map((x) => x.camH)), Math.max(...fr.map((x) => x.camH))],
       cam_pos_step_per_frame: cams.length > 1 ? { min: +Math.min(...camStep).toFixed(4), max: +Math.max(...camStep).toFixed(4) } : null,
-      cam_toBenny_range: cams.length ? [Math.min(...cams.map((c) => c.toBenny)), Math.max(...cams.map((c) => c.toBenny))] : null,
-      cam_aboveWater_min: cams.length ? Math.min(...cams.map((c) => c.aboveWater ?? 1e9)) : null,
+      cam_toBenny_range: cams.length && cams[0].toBenny != null ? [Math.min(...cams.map((c) => c.toBenny)), Math.max(...cams.map((c) => c.toBenny))] : null,
+      cam_aboveWater_min: cams.length && cams[0].aboveWater != null ? Math.min(...cams.map((c) => c.aboveWater)) : null,
       got_by_kind: fr[fr.length - 1].got, hud_end: hud, hud_matches: hud.replace(/[^0-9]/g, '') === String(fr[fr.length - 1].coins) };
     res = { what: 'logic-only replica of final_acceptance.cjs (no renderNow / screenshots)', load_s, api, touch_target_at_swipe_point: hitEl, lead_checks: lead,
       pass: { no_errors: errors.length === 0, no_freeze: lead.forward.freezes === 0, no_teleport: lead.lateral.teleports_over_0_06 === 0,

@@ -2,6 +2,12 @@ from agentA: CONTROLS_NOTES.md
 from agentA: acceptance_logic.cjs
 from agentA: acceptance_logic.json
 from agentA: acceptance_logic.out
+from agentA: coin_layout_search.py
+from agentA: coin_overlap_model.py
+from agentA: coin_run1_search.py
+from agentA: coins_level_check.cjs
+from agentA: coins_level_logic.json
+from agentA: coins_level_logic.out
 from agentA: compare0.json
 from agentA: compare0.py
 from agentA: controls.js

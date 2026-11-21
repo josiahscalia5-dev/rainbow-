@@ -81,7 +81,8 @@ const { chromium } = require('playwright'); const { spawn, execFileSync } = requ
       const o = await page.evaluate(([t, dt, sp]) => { const r = window.step(t, dt, 0, sp); return Object.assign({}, r, window.state ? window.state() : {}); }, [t, i === 0 ? 0 : 1 / fps, +speed]);
       if (o.done && n2 === nMax) n2 = i + 1;   // the level is complete: this is the last frame
       const cam = await page.evaluate(() => (window.camInfo ? window.camInfo() : null));
-      o.endK = await page.evaluate(() => (window.endK ? window.endK() : null));   // ending transition strength (golden-light bloom), 0 = gameplay
+      o.endK = await page.evaluate(() => (window.endK ? window.endK() : null));
+      o.benny = await page.evaluate(() => (window.bennyInfo ? window.bennyInfo() : null));   // Benny's on-screen tilt (deg) + position   // ending transition strength (golden-light bloom), 0 = gameplay
       // coins on screen this frame: any two visible coins (on-screen radius >= 6 px) that overlap = crowding
       const cs2 = await page.evaluate(() => (window.coinScreen ? window.coinScreen() : null));
       let coinOverlaps = null;
@@ -133,6 +134,10 @@ const { chromium } = require('playwright'); const { spawn, execFileSync } = requ
       level: { s_end_target: sEnd, done: !!fr[fr.length - 1].done, done_frame: fr.findIndex((x) => x.done), plan: layout && sEnd && process.env.PLAN !== 'fixed' ? 'coin-trail player + extras' : 'fixed 7.6 s' },
       built_level: { path_end: pathEnd, sections: nSec, sections_entered: tiles, level_end_vs_path_end: pathEnd && sEnd ? +(sEnd - pathEnd).toFixed(3) : null, swim_speed: +speed },
       position_stalls: camMoves.length ? camMoves.filter((m, k) => !(fr[k + 1].endK > 0.05) && m < 0.3 * (camMoves.slice().sort((a, b) => a - b)[camMoves.length >> 1])).length : null,
+      benny_pose: fr.some((x) => x.benny) ? (() => { const g = fr.filter((x) => x.benny && !(x.endK > 0.05)), r = g.map((x) => x.benny.rollDeg), cr = g.map((x) => x.benny.camRollDeg);
+        const dr = r.slice(1).map((v2, k) => Math.abs(v2 - r[k])), ys = g.map((x) => x.benny.y), xs = g.map((x) => x.benny.x), worst = g.reduce((a, b) => (Math.abs(b.benny.rollDeg) > Math.abs(a.benny.rollDeg) ? b : a));
+        return { max_abs_roll_deg: Math.max(...r.map(Math.abs)), max_roll_change_deg_per_frame: Math.max(...dr), worst_frame: worst.i, worst_s: worst.s, max_abs_camera_roll_deg: Math.max(...cr.map(Math.abs)),
+          screen_x: [Math.min(...xs), Math.max(...xs)], screen_y: [Math.min(...ys), Math.max(...ys)], frames_roll_over_25: r.filter((v2) => Math.abs(v2) > 25).length }; })() : null,
       ending_transition: { present: ek.some((k) => k > 0.05), first_frame: kFirst, k_at_end: ek[ek.length - 1], monotonic: ek.every((k, i) => i === 0 || k >= ek[i - 1] - 1e-3), frames: ek.filter((k) => k > 0.05).length },
       coin_crowding: ov.length ? { frames_checked: ov.length, frames_with_overlap: ov.filter((x) => x.coinOverlaps > 0).length, max_pairs: Math.max(...ov.map((x) => x.coinOverlaps)), first_frames: ov.filter((x) => x.coinOverlaps > 0).slice(0, 8).map((x) => x.i) } : null,
       swipe_directions: dirs,

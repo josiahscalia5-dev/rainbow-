@@ -54,7 +54,7 @@ const { chromium } = require('playwright'); const fs = require('fs'); const path
     const shoot = async (name) => { const t1 = Date.now(); await page.evaluate(() => window.renderNow(1)); await page.screenshot({ path: path.join(outDir, name + '.png') });
       const st = await page.evaluate(() => ({ st: window.state(), scr: window.coinScreen(), hud: document.getElementById('coins').textContent }));
       stills.push({ name, s: st.st.s, lane: st.st.lane, h: st.st.height, coins: st.st.coins, done: st.st.done, hud: st.hud, coinScreen: st.scr, render_s: +((Date.now() - t1) / 1000).toFixed(1) }); console.log('still', name, el()); };
-    if (doStills) await shoot('c0_frame0');
+    if (doStills) { await shoot('c0_frame0'); fs.mkdirSync(path.join(outDir, 'vc'), { recursive: true }); await page.screenshot({ path: path.join(outDir, 'vc', 'f_0000.jpg'), type: 'jpeg', quality: 92 }); } // same frame, the lead's visual_check input
     // ---------- whole level with the trail-following autopilot ----------
     await page.evaluate(([fps, speed, glow]) => {
       const dt = 1 / fps, A = { rows: [], ov: [], ovPop: [], pickups: [], doneAt: null, i: 0, prevCoins: window.state().coins, leaps: new Set() };
@@ -84,8 +84,8 @@ const { chromium } = require('playwright'); const fs = require('fs'); const path
     }, [fps, speed, glow]);
     // stills: R2 side-lane run (Benny moving right toward it), R3 leap arc (near the top of his leap), the level end (at rest)
     const L2 = res.layout.filter((c) => c.run === 2), L3 = res.layout.filter((c) => c.run === 3);
-    const plan = doStills ? [[L2[0].s - 0.75, 'c1_side_lane_run'], [L3[2].s - 0.02, 'c2_leap_arc'], [null, 'c3_level_end']] : [[null, null]];
-    for (const [sT, name] of plan) { await page.evaluate(([sT, after]) => window.__auto.until(sT, after), [sT, Math.round(1.2 * fps)]); if (name) await shoot(name); }
+    const plan = doStills ? [[L2[1].s - 0.4, 'c1_side_lane_run', 0], [L3[2].s - 0.15, 'c2_leap_arc', 0], [null, 'c3_level_end', 0], [null, null, Math.round(1.2 * fps)]] : [[null, null, Math.round(1.2 * fps)]];
+    for (const [sT, name, after] of plan) { await page.evaluate(([sT, after]) => window.__auto.until(sT, after), [sT, after]); if (name) await shoot(name); }
     const run = await page.evaluate(() => { const A = window.__auto; return { rows: A.rows, ov: A.ov, ovPop: A.ovPop, pickups: A.pickups, doneAt: A.doneAt, final: window.state() }; });
     const rows = run.rows; res.run = { frames: rows.length, seconds: +(rows.length / fps).toFixed(2), done_frame: run.doneAt, done_t: run.doneAt ? +(run.doneAt / fps).toFixed(2) : null,
       done_s: run.doneAt ? rows[run.doneAt - 1].s : null, s_final: rows[rows.length - 1].s, s_max: Math.max(...rows.map((r) => r.s)), coins_end: run.final.coins, got: run.final.got,

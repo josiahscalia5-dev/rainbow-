@@ -2472,3 +2472,145 @@ Testing the whole tool chain end to end (acceptance → visual check → verdict
 
 > 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad; cd $SP && sed -i 's#  for (let i = 0; i <= 15; i++) await p.evaluate((\\[t, dt\\]) => window.step(t, dt, 0, 1.4), \\[i / 30, i ? 1 / 30 : 0\\]);#  for (let i = 0; i <= 15; i++) { await p.evaluate(([t, dt]) => window.step(t, dt, 0, 1.4), [i / 30, i ? 1 / 30 : 0]); if (process.env.EACH) await p.evaluate(() => window.renderNow(1)); }#' same_frame.cjs && grep -c \"EACH\" same_frame.cjs && EACH=1 NODE_PATH=$(npm root -g) timeout 2400 node same_frame.cjs $SP/merged $SP/same2 && python3 -I -c \"\nimport …[+407 chars]`
 
+### 🧑 User — 2026-11-21T13:46:47.961Z
+
+> ↩︎ result: 1
+> Command did not complete within its 600s timeout and was moved to the background (ID: bagg0bz2w). Output is being written to: /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/tasks/bagg0bz2w.output. You will be notified when it completes. If it is still running after 30m in the background, it will be stopped and you will be notified. It is running now: do not start a second copy while it runs. If it is no longer needed, stop it with TaskStop. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-21T13:46:54.547Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad; ls -la $SP/agentB/out_water/sheets/ | awk '{print $5,$9}'; python3 -I -c \"\nfrom PIL import Image; im=Image.open('$SP/agentB/out_water/sheets/full_level_and_ending.jpg'); print(im.size)\"", "description": "List water specialist's comparison sheets"}`
+
+### 🧑 User — 2026-11-21T13:46:54.697Z
+
+> ↩︎ result: 4096 .
+> 4096 ..
+> 715306 full_level_and_ending.jpg
+> 601654 sheet_s0.7.jpg
+> 554972 sheet_s0.jpg
+> 588984 sheet_s1.4.jpg
+> 564649 sheet_s10.4_lane+0.22_rise0.12.jpg
+> 580880 sheet_s2.3.jpg
+> 506698 sheet_s29_end_approach.jpg
+> 538698 sheet_s4.4.jpg
+> 581646 sheet_s6.4.jpg
+> (3386, 965)
+
+### 🤖 Claude — 2026-11-21T13:46:57.800Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad; python3 -I -c \"\nfrom PIL import Image; im=Image.open('$SP/agentB/out_water/sheets/full_level_and_ending.jpg'); im.resize((im.width*45//100, im.height*45//100)).save('$SP/full_level_small.jpg', quality=85)\"", "description": "Downscale the full-level sheet for review"}`
+
+### 🧑 User — 2026-11-21T13:46:57.954Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-21T13:46:59.718Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/full_level_small.jpg"}`
+
+### 🧑 User — 2026-11-21T13:46:59.750Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T13:47:23.873Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad; python3 -I -c \"\nfrom PIL import Image\nims=[Image.open('$SP/agentB/out_water/sheets/'+f) for f in ('sheet_s4.4.jpg','sheet_s6.4.jpg','sheet_s10.4_lane+0.22_rise0.12.jpg')]\nprint([i.size for i in ims])\n# take the AFTER panel (rightmost third) of each\nps=[i.crop((i.width*2//3,0,i.width,i.height)) for i in ims]\nw=sum(p.width for p in ps); s=Image.new('RGB',(w,ps[0].height)); x=0\nfor p in ps: s.paste(p,(x,0)); x+=p.width\ns=s.resize((s.width*45//100,s.height*45//100)); s.save('$SP/mid_level.jp …[+82 chars]`
+
+### 🧑 User — 2026-11-21T13:47:24.092Z
+
+> ↩︎ result: [(1444, 1015), (1552, 1015), (1444, 1015)]
+
+### 🤖 Claude — 2026-11-21T13:47:26.544Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/mid_level.jpg"}`
+
+### 🧑 User — 2026-11-21T13:47:26.574Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T13:47:44.405Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad; cd $SP/agentB && grep -n \"turn\\b\\|turn =\\|st.lean\\|benny.quaternion\\|benny.rotation\\|const turn\" play3.html | cut -c1-260", "description": "Find Benny's lean and orientation code"}`
+
+### 🧑 User — 2026-11-21T13:47:44.452Z
+
+> ↩︎ result: 30:const flip = (m) => { m.quaternion.set(1, 0, 0, 0); return m; };
+> 71:  const R = 256, rad = (stops) => { const gr = g.createRadialGradient(R, R, 0, R, R, R); for (const [o, col] of stops) gr.addColorStop(o, col); return gr; };
+> 84:  const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: tx, toneMapped: false, transparent: true, depthWrite: false })); sp.scale.set(GS, GS, 1); sp.renderOrder = -10; scene.add(sp); return sp; })() : null;
+> 90:  const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: tx, toneMapped: false, transparent: true, depthWrite: false, opacity: 0 })); sp.scale.set(GS, GS, 1); sp.renderOrder = -9; scene.add(sp); return sp; })() : null;
+> 95:  TR.trail.forEach((p, i) => { const d = X.distanceToSquared(new THREE.Vector3(...p)); if (d < bd) { bd = d; bi = i; } }); return TR.trail_s[bi]; })();
+> 103:  if (endK <= 0) { endEl.style.opacity = '0'; return; }
+> 112:  const kc = Math.floor((uB - TR.UA) / DU); if (kc === kcNow) return; kcNow = kc;
+> 124:const at = (s, out) => { s = Math.max(0, Math.min(TS[TS.length - 1], s)); let lo = 0, hi = TS.length - 1; while (hi - lo > 1) { const m = (lo + hi) >> 1; if (TS[m] < s) lo = m; else hi = m; } const k = (s - TS[lo]) / Math.m …[+1722 chars]
+
+### 🤖 Claude — 2026-11-21T13:47:46.989Z
+
+> 🔧 **Bash** `{"command": "tail -5 /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/tasks/bagg0bz2w.output", "description": "Read the per-frame sort lag result"}`
+
+### 🧑 User — 2026-11-21T13:47:47.019Z
+
+> ↩︎ result: rendering every frame (as the test does): a vs b : mean diff 0.14 levels, pixels changed >20: 0.02 %
+> rendering every frame (as the test does): b vs c : mean diff 0.00 levels, pixels changed >20: 0.00 %
+> rendering every frame (as the test does): a vs d : mean diff 0.14 levels, pixels changed >20: 0.02 %
+> 
+> [exited with code 0]
+
+### 🤖 Claude — 2026-11-21T13:48:05.527Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='tools/marble05/merge_r32.py'; s=open(p).read()\nold=\"\"\"if 'window.camInfo' not in page: page = page.replace('window.ready = true;', hook + 'window.ready = true;')\"\"\"\nnew=\"\"\"if 'window.camInfo' not in page: page = page.replace('window.ready = true;', hook + 'window.ready = true;')\n# Benny's on-screen pose per frame (read-only): tilt of his up axis as seen by the camera, and where he is on screen\nbhook = (\"window.bennyInfo = () => { const q = new THREE.Quaternion(), p = new THREE.Vector3(); benny.getWorldQuaternion(q); benny.getWorldPosition(p); …[+1014 chars]`
+
+### 🧑 User — 2026-11-21T13:48:05.747Z
+
+> ↩︎ result: conflict: camera line = agentA controls + agentB qaRise
+> conflict: end of step = agentB water update + agentA return
+> merged -> /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/merged
+> 9
+
+### 🤖 Claude — 2026-11-21T13:48:18.912Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='tools/marble05/viewer/final_acceptance.cjs'; s=open(p).read()\nold=\"      o.endK = await page.evaluate(() => (window.endK ? window.endK() : null));\"\nnew=old+\"\\n      o.benny = await page.evaluate(() => (window.bennyInfo ? window.bennyInfo() : null));   // Benny's on-screen tilt (deg) + position\"\nassert old in s; s=s.replace(old,new)\nold2=\"      ending_transition: {\"\nnew2=\"\"\"      benny_pose: fr.some((x) => x.benny) ? (() => { const g = fr.filter((x) => x.benny && !(x.endK > 0.05)), r = g.map((x) => x.benny.rollDeg), cr = g.map((x) => x.benny. …[+1669 chars]`
+
+### 🧑 User — 2026-11-21T13:48:45.004Z
+
+> ↩︎ result: ok
+> {"max_abs_roll_deg": 41.643287634842224, "max_roll_change_deg_per_frame": 9.785388095653826, "worst_frame": 626, "worst_s": 29.213, "max_abs_camera_roll_deg": 8.409538670384682, "screen_x": [106.21351460567425, 322.1726008252252], "screen_y": [562.9185046097867, 850.3515420881049], "frames_roll_over_25": 137}
+> errors []
+> ending {'present': True, 'first_frame': 666, 'k_at_end': 1, 'monotonic': True, 'frames': 21}
+> t 0.0 s 0.00 roll -4.7 camRoll -4.8 benny screen (199,706) dist 1.18
+> t 1.5 s 2.10 roll -2.1 camRoll -4.6 benny screen (114,708) dist 1.17
+> t 3.0 s 4.20 roll +8.4 camRoll -3.5 benny screen (222,601) dist 1.09
+> t 4.5 s 6.30 roll +3.6 camRoll -4.0 benny screen (278,702) dist 1.21
+> t 6.0 s 8.40 roll +7.3 camRoll -3.9 benny screen (161,705) dist 1.18
+> t 7.5 s 10.50 roll +7.4 camRoll -3.3 benny screen (119,712) dist 1.17
+> t 9.0 s 12.60 roll -2.9 camRoll -4.4 benny screen (133,686) dist 1.20
+> t 10.5 s 14.70 roll +17.4 camRoll -2.7 benny screen (136,709) dist 1.17
+> t 12.0 s 16.80 roll -4.8 camRoll -5.0 benny screen (130,690) dist 1.21
+> t 13.5 s 18.90 roll +20.9 camRoll -2.2 benny screen (139,712) dist 1.18
+> t 15.0 s 21.00 roll -16.6 camRoll -5.7 benny screen (128,687) dist 1.21
+> t 16.5 s 23 …[+391 chars]
+
+### 🤖 Claude — 2026-11-21T13:49:10.441Z
+
+> 🔧 **SendMessage** `{"to": "a08dcc646e5a9494e", "summary": "Queue item 3: Benny's bend lean is up to 42°", "message": "Third item from the lead, queued after the coins and the water line. It's a measured defect over the FULL level (merged page, logic-only, 23.4 s): \"strange movement / awkward angles\", which the user forbids.\n\nMEASURED: Benny's tilt as seen on screen (angle of his up axis in camera space; the merged page now has a lead probe `window.bennyInfo()` → {rollDeg, camRollDeg, x, y, dist}):\n- It reaches ±42°. 137 frames are over 25°, worst at s 29.2.\n- It jumps by up to 9.8° in ONE frame.\n- It grow …[+1715 chars]`
+
+### 🧑 User — 2026-11-21T13:49:10.462Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to a08dcc646e5a9494e at its next tool round. Moved 1 running tool call to the background without stopping it, so that round no longer waits for it. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"a08dcc646e5a9494e","name":"a08dcc646e5a9494e","ref":"7779b0"}}
+
+### 🤖 Claude — 2026-11-21T13:49:14.501Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='tools/marble05/viewer/acceptance_verdict.py'; s=open(p).read()\nold=\"et = T.get('ending_transition') or {}\"\nnew=\"\"\"bp = T.get('benny_pose')\ncrit('G14', 'Benny leans gently and smoothly, camera level (no awkward angles)', bool(bp) and bp['max_abs_roll_deg'] <= 25 and bp['max_roll_change_deg_per_frame'] <= 3 and bp['max_abs_camera_roll_deg'] <= 10, bp, \"Benny's on-screen tilt <= 25 deg and changes <= 3 deg per frame, camera roll <= 10 deg, every gameplay frame\")\net = T.get('ending_transition') or {}\"\"\"\nassert old in s; s=s.replace(old,new)\ns=s …[+562 chars]`
+
+### 🧑 User — 2026-11-21T13:49:14.578Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-21T13:49:19.531Z
+
+While the controls specialist works through its three items, I'm recording the water specialist's finished state and saving.
+
+### 🤖 Claude — 2026-11-21T13:49:28.788Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport json, datetime\np='backups/AGENTS_STATUS.json'; d=json.load(open(p))\nnow=datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%dT%H:%MZ')\nr=d['round32_screen05_live']['relaunch_account_c33']\nr['water-fx-specialist']='DONE 14:05 UTC (agentB): 0 dark patches at 16 positions s 0 -> 32.05 (before 3/frame), visible splats <= 866k (before 1.06M), golden end = small white-gold core (no orange disc), ending transition endK over s 30.91->32.01 (window.endK, window.S_LAST), colour look -0.02..0.03 vs before; open: end light ~80 px off the painted vani …[+1801 chars]`
+

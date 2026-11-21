@@ -19,17 +19,21 @@ const { chromium } = require('playwright'); const { spawn } = require('child_pro
     await page.goto(`http://127.0.0.1:${port}/play3.html?w=412&h=915${QS}`);
     await page.waitForFunction(() => window.ready === true, null, { timeout: 900000 });
     const res = await page.evaluate(() => {
-      const out = []; const lanes = [0, -0.22, -0.22, 0, 0.22, 0.22, 0, -0.22];
-      for (let i = 0; i < 228; i++) {
-        const t = i / 30, lane = lanes[Math.floor(t)] ?? 0, rise = (t > 2.9 && t < 3.5) || (t > 6.2 && t < 6.8) ? 0.12 : 0;
+      // the WHOLE level: from s = 0 to the path end (+ a few frames), lanes change every second, leaps (camera +0.12) every 3 s
+      const out = []; const lanes = [0, -0.22, -0.22, 0, 0.22, 0.22, 0, -0.22]; const SL = window.S_LAST ?? 32.16; const n = Math.ceil((SL + 0.3) / 1.4 * 30);
+      for (let i = 0; i < n; i++) {
+        const t = i / 30, lane = lanes[Math.floor(t) % 8], rise = (t % 3) > 1.9 && (t % 3) < 2.5 ? 0.12 : 0;
         window.qaPose(lane, rise); const r = window.step(t, i ? 1 / 30 : 0, 0, 1.4);
-        out.push({ i, s: r.s, tile: r.tile, lane, rise, vis: window.qaVisibleSplats(), nearA: window.qaNearA ? window.qaNearA() : null });
+        out.push({ i, s: r.s, tile: r.tile, lane, rise, vis: window.qaVisibleSplats(), nearA: window.qaNearA ? window.qaNearA() : null, k: window.endK ? +window.endK().toFixed(4) : null });
       }
-      return out;
+      return { out, SL };
     });
-    const max = res.reduce((a, b) => (b.vis > a.vis ? b : a));
-    const per = {}; for (const r of res) per[r.tile] = Math.max(per[r.tile] ?? 0, r.vis);
-    const hide = res.find((r) => r.nearA === false);
-    console.log(JSON.stringify({ errors: errs, frames: res.length, s_end: res[res.length - 1].s, max_visible: max.vis, at: { s: max.s, tile: max.tile }, max_per_section: per, nearA_hidden_from: hide ? { s: hide.s, tile: hide.tile } : null, nearA_visible_in_section1: res.filter((r) => r.tile >= 1 && r.nearA).length }));
+    const R = res.out, max = R.reduce((a, b) => (b.vis > a.vis ? b : a));
+    const per = {}; for (const r of R) per[r.tile] = Math.max(per[r.tile] ?? 0, r.vis);
+    const hide = R.find((r) => r.nearA === false);
+    const tr = R.filter((r) => r.k > 0); const dk = tr.slice(1).map((r, j) => +(r.k - tr[j].k).toFixed(4));
+    console.log(JSON.stringify({ errors: errs, frames: R.length, s_end: R[R.length - 1].s, S_LAST: res.SL, max_visible: max.vis, at: { s: max.s, tile: max.tile }, max_per_section: per,
+      nearA_hidden_from: hide ? { s: hide.s, tile: hide.tile } : null, nearA_visible_in_section1plus: R.filter((r) => r.tile >= 1 && r.nearA).length,
+      transition: tr.length ? { first_frame: tr[0].i, first_s: tr[0].s, k1_frame: (R.find((r) => r.k >= 1) || {}).i, frames_0_to_1: tr.filter((r) => r.k < 1).length, max_dk_per_frame: Math.max(...dk), k_series: tr.filter((r) => r.k < 1).map((r) => r.k) } : null }));
   } finally { await browser.close(); srv.kill(); }
 })();

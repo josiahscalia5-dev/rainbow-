@@ -25,6 +25,7 @@ export const TUNING = {
   CAM_H_K: 0.35, CAM_H_DIVE_K: 0.08, CAM_H_OMEGA: 7.5, CAM_H_MIN: -0.03, CAM_H_MAX: 0.12, // camera follows leaps by 35 %
   SWIPE_PX: 30,        // swipe threshold (CSS px)
   COIN_R: 0.13,        // coin pick-up radius around his body segment (3D)
+  SUB_ALPHA: 0.1, DIVE_ALPHA: 0.42, SUB_BAND: 0.035, // water line: visibility below the surface at rest / diving, soft band (world units)
   BODY_LO: 0.06, BODY_HI: 0.30, // body segment above his water point (world units, scales with height)
   END_MARGIN: 0.15,    // done this far before the last ring (S_END), lead's rule
   GLIDE: 0.15,         // after done he glides to rest within this path length, never past the trail end
@@ -205,15 +206,25 @@ export function installControls(ctx) {
     }
   }
 
-  // ---------------- Benny material: underwater tint while diving (0 at rest, so the approved look is unchanged) ----------------
-  U.uDive = { value: 0 }; U.uWater = { value: new THREE.Vector4(0, 1, 0, 0) };
+  // ---------------- Benny material: the water line (round 32b) ----------------
+  // Fragments below the water plane (uWater = river normal + offset through his water point, without his bob) fade into the water:
+  // a soft band of SUB_BAND under the surface goes from his own colour to water-cyan and from fully visible to SUB_ALPHA at rest
+  // (the painting hides his submerged ~22 %), DIVE_ALPHA while diving (he stays readable under the surface, stronger tint).
+  // Visibility is a screen-space dither + discard (interleaved gradient noise), so he stays an opaque mesh: no transparency
+  // sorting against the splats, and the water / the painted splash fans behind him show through where he is discarded.
+  U.uDive = { value: 0 }; U.uWater = { value: new THREE.Vector4(0, 1, 0, 1e3) };
+  U.uSub = { value: new THREE.Vector3(P.SUB_ALPHA, P.DIVE_ALPHA, P.SUB_BAND) };
   const prevCompile = bmat.onBeforeCompile;
   bmat.onBeforeCompile = (sh, r) => {
-    prevCompile(sh, r); Object.assign(sh.uniforms, { uDive: U.uDive, uWater: U.uWater });
+    prevCompile(sh, r); Object.assign(sh.uniforms, { uDive: U.uDive, uWater: U.uWater, uSub: U.uSub });
     sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vB31W;').replace('#include <project_vertex>', '#include <project_vertex>\nvB31W = (modelMatrix * vec4(transformed, 1.0)).xyz;');
-    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying vec3 vB31W; uniform float uDive; uniform vec4 uWater;')
-      .replace('#include <fog_fragment>', `{ float b31d = -(dot(uWater.xyz, vB31W) + uWater.w); float b31k = uDive * smoothstep(0.0, 0.05, b31d);
-        gl_FragColor.rgb = mix(gl_FragColor.rgb, vec3(0.20, 0.66, 0.86) * (0.75 + 0.25 * gl_FragColor.rgb), b31k * 0.7); }
+    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying vec3 vB31W; uniform float uDive; uniform vec4 uWater; uniform vec3 uSub;')
+      .replace('#include <fog_fragment>', `{ float b31d = -(dot(uWater.xyz, vB31W) + uWater.w);           // depth below the water plane (+ = under)
+        float b31u = smoothstep(0.0, uSub.z, b31d);                                  // 0 at the line -> 1 one band below it
+        gl_FragColor.rgb = mix(gl_FragColor.rgb, vec3(0.20, 0.66, 0.86) * (0.75 + 0.25 * gl_FragColor.rgb), b31u * mix(0.6, 0.75, uDive));
+        float b31a = mix(1.0, mix(uSub.x, uSub.y, uDive), b31u);
+        float b31n = fract(52.9829189 * fract(dot(gl_FragCoord.xy, vec2(0.06711056, 0.00583715))));
+        if (b31a < 0.999 && b31n >= b31a) discard; }
       #include <fog_fragment>`);
   };
   bmat.needsUpdate = true;
@@ -290,7 +301,7 @@ export function installControls(ctx) {
   // splash stays on the water surface; leap / dive splashes, droplets and bubbles; dive tint plane
   function water(Fr, speed, dt) {
     F = Fr; nNow.copy(F.n);
-    waterPt.copy(benny.position).addScaledVector(F.n, -S.h);
+    at(getS(), waterPt).addScaledVector(F.r, S.lat.x); // his water point (no bob, no leap / dive height): the water line on his body
     splash.position.addScaledVector(F.n, -S.h);
     const air = smooth(0.03, 0.12, S.h);
     splash.material.opacity = 1 - air;

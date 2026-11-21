@@ -1,6 +1,6 @@
 {
  "what": "logic-only replica of final_acceptance.cjs (no renderNow / screenshots)",
- "load_s": 35.2,
+ "load_s": 42.9,
  "api": {
   "step": "function",
   "state": "function",
@@ -382,7 +382,7 @@
    "clock": 6.867
   }
  ],
- "wall_s": 38,
+ "wall_s": 45,
  "frames_compact": [
   [
    0,

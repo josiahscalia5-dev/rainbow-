@@ -45,6 +45,12 @@ page = '\n'.join(out)
 hook = "window.camInfo = () => ({ p: camera.position.toArray(), q: camera.quaternion.toArray() }); // [lead] acceptance test: camera pose per frame\n"
 assert page.count('window.ready = true;') == 1
 if 'window.camInfo' not in page: page = page.replace('window.ready = true;', hook + 'window.ready = true;')
+# Benny's on-screen pose per frame (read-only): tilt of his up axis as seen by the camera, and where he is on screen
+bhook = ("window.bennyInfo = () => { const q = new THREE.Quaternion(), p = new THREE.Vector3(); benny.getWorldQuaternion(q); benny.getWorldPosition(p);"
+         " const up = new THREE.Vector3(0, 1, 0).applyQuaternion(q).applyQuaternion(camera.quaternion.clone().invert());"
+         " const nW = N.clone().applyQuaternion(camera.quaternion.clone().invert()); const sp = p.clone().project(camera);"
+         " return { rollDeg: Math.atan2(-up.x, up.y) * 180 / Math.PI, camRollDeg: Math.atan2(-nW.x, nW.y) * 180 / Math.PI, x: (sp.x * 0.5 + 0.5) * W, y: (0.5 - sp.y * 0.5) * H, dist: p.distanceTo(camera.position) }; }; // [lead] acceptance test: Benny on-screen tilt / position\n")
+if 'window.bennyInfo' not in page: page = page.replace('window.ready = true;', bhook + 'window.ready = true;')
 assert '<<<<<<<' not in page and '>>>>>>>' not in page
 open(os.path.join(M, 'play3.html'), 'w').write(page); shutil.rmtree(tmp)
 open(os.path.join(M, 'MERGE_REPORT.txt'), 'w').write('\n'.join(report) + '\n')

@@ -1,7 +1,7 @@
 {
   "_comment": "Machine-readable roster of the ten Rainbow specialists. Human-readable history: backups/AGENTS_STATUS.md. scripts/claude-bootstrap.sh checks every definition below (present + SHA-256). Agents load automatically from .claude/agents/ (Agent tool, subagent_type = name). Never recreate or rename them. A running specialist does NOT survive a new session or account: relaunch it from its notes + unfinished patch.",
   "schema": 1,
-  "updated_utc": "2026-11-21T12:55Z",
+  "updated_utc": "2026-11-21T13:49Z",
   "updated_by_session": "ccr-9652868f-lkw0w0 (round 28 lead)",
   "running_now": {
     "_note": "round 28 lead ccr-9652868f-lkw0w0, launched ~17:00 UTC as in-process background agents (do not survive a new session; relaunch from docs/briefs/2026-11-20-r28/LAUNCH_R28.md)",
@@ -1347,7 +1347,7 @@
     }
   },
   "round32_screen05_live": {
-    "updated_utc": "2026-11-21T12:55Z",
+    "updated_utc": "2026-11-21T13:49Z",
     "branch": "claude/screen-05-3d-geometry-9yu7pu",
     "animation-and-gameplay-engineer": {
       "status": "running",
@@ -1379,10 +1379,16 @@
       "session_branch": "ccr-c0679182-krbfci (started from claude/screen-05-3d-geometry-9yu7pu, merged its newest autosaves 12:37/12:42)",
       "workspace": "/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad (base/, agentA/, agentB/, merged/, acc*/)",
       "sync": "bash tools/marble05/sync_agents_wip.sh <workspace> every ~5 min -> backups/wip/screen05-agents/ (now also merged/ and acc*/ logs + mp4, no per-frame jpgs)",
-      "animation-and-gameplay-engineer": "RELAUNCHED 12:49 UTC in agentA: finish verification, port fix (9000-9399 + marker), logic-only run of the lead acceptance plan -> acceptance_logic.json, fill CONTROLS_NOTES.md results",
-      "water-fx-specialist": "RELAUNCHED 12:49 UTC in agentB: verify last edits (colour clamp, golden disc), AFTER stills s=0..10.4 with visual_check, 0 dark patches, flicker check, fill WATER_NOTES.md results + sheets",
+      "animation-and-gameplay-engineer": "WORKING (agentA), queue: (1) coins = one natural trail of 26 (1420->1680) from the approved positions + painting-perspective sizes + window.coinLayout/coinScreen/levelEnd + done at S_LAST-0.15; (2) hide Benny's submerged body at the water line (approved: water line y~700, splash fans); (3) clamp river-bend lean (measured up to 42 deg, 9.8 deg/frame) to <= 25 deg, <= 3 deg/frame",
+      "water-fx-specialist": "DONE 14:05 UTC (agentB): 0 dark patches at 16 positions s 0 -> 32.05 (before 3/frame), visible splats <= 866k (before 1.06M), golden end = small white-gold core (no orange disc), ending transition endK over s 30.91->32.01 (window.endK, window.S_LAST), colour look -0.02..0.03 vs before; open: end light ~80 px off the painted vanishing point (track layout), smeared water right in front of the camera. Notes agentB/WATER_NOTES.md section 3.",
       "lead": "merge = python3 -I tools/marble05/merge_r32.py <workspace>; acceptance = final_acceptance.cjs (now: verified server, camera pose, per-swipe responses, FRAMES split/resume) + visual_check.py (+ one-frame pop flicker metric) + acceptance_verdict.py (fixed thresholds, PASS only if all G1-G10 + V1-V5 pass)",
-      "lead_logic_check_12_58": "merged snapshot, logic only: 10/10 swipes ok, lanes -1/0/1, height +0.28/-0.27, no teleports/freezes, camera max 0.059 u/frame, coins 1420->1590, 0 errors; render + visual checks pending"
+      "lead_logic_check_12_58": "merged snapshot, logic only: 10/10 swipes ok, lanes -1/0/1, height +0.28/-0.27, no teleports/freezes, camera max 0.059 u/frame, coins 1420->1590, 0 errors; render + visual checks pending",
+      "lead_findings_14_20": {
+        "level_length": "built level = 32.16 u river, 14 ring-to-ring sections = 23.0 s at 1.4 u/s (690 frames); page had NO ending (Benny + camera froze at t=23.2 s)",
+        "acceptance_tools": "final_acceptance.cjs: whole level to state().done, coin-following player plan + extra dives / left-right, coin overlap per frame, Benny pose, ending transition, built-level check, mp4 encode fixed (915 px odd height crashed the old script at the END of a run); acceptance_verdict.py G1-G14 + V1-V5",
+        "render": "~28 s/frame with both specialists rendering; render every frame => splat sort lag negligible (0.14 levels)",
+        "recovery_test": "qa/match/05/r32/RECOVERY_TEST.md (2 bugs fixed: LFS track pieces not pulled by setup_r32.sh; autosave-status self-matching pgrep)"
+      }
     }
   }
 }

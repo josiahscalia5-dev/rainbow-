@@ -16,4 +16,4 @@ for k in range(0, len(args), 3):
     sheet = Image.new('RGB', (Wt, H + 55), (24, 16, 34)); d = ImageDraw.Draw(sheet); x = 10
     for im, l in zip(ims, ['APPROVED', f'BEFORE  {lab}', f'AFTER  {lab}']):
         sheet.paste(im, (x, 45)); d.text((x, 8), l, fill=(255, 230, 150), font=font); x += im.width + 10
-    sheet.save(f'{o}/sheet_{lab}.jpg', quality=90); print('sheet', lab)
+    sheet.save(f"{o}/sheet_{lab.split()[0]}.jpg", quality=90); print('sheet', lab)
