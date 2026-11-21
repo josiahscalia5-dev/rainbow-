@@ -1546,3 +1546,185 @@ The test is about 13% through (frame 30 of 228). Let me look at the frames so fa
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-21T14:46:56.195Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport numpy as np, cv2\ngold = np.load('/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/gold.npy')\nH, W = gold.shape\nys, xs = np.nonzero(gold)\n# exclude coins / star (centre column below the vanishing area)\nkeep = ~((xs > 380) & (xs < 620) & (ys > 520) & (ys < 1000))\nxs, ys = xs[keep], ys[keep]\nvx, vy = 500, 470\nr = np.hypot(xs - vx, ys - vy); th = np.degrees(np.arctan2(-(ys - vy), xs - vx))\nhist, edges = np.histogram(np.log(r[r > 15]), bins=120)\nfor i in range(len(hist)):\n    if hist[i] > 400: print(f'r={np.exp(ed …[+139 chars]`
+
+### 🧑 User — 2026-11-21T14:46:56.384Z
+
+> ↩︎ result: r=  159.5..  165.4  n=427
+> r=  165.4..  171.5  n=425
+> r=  198.3..  205.7  n=518
+> r=  205.7..  213.3  n=726
+> r=  213.3..  221.2  n=1062
+> r=  221.2..  229.4  n=833
+> r=  229.4..  237.8  n=869
+> r=  237.8..  246.7  n=795
+> r=  246.7..  255.8  n=685
+> r=  255.8..  265.2  n=1273
+> r=  265.2..  275.1  n=1559
+> r=  275.1..  285.2  n=1836
+> r=  285.2..  295.8  n=764
+> r=  329.9..  342.1  n=658
+> r=  342.1..  354.7  n=637
+> r=  381.4..  395.6  n=541
+> r=  395.6..  410.2  n=944
+> r=  410.2..  425.4  n=778
+> r=  457.4..  474.4  n=681
+> r=  474.4..  491.9  n=3187
+> r=  491.9..  510.1  n=4548
+> r=  510.1..  529.0  n=1120
+> r=  818.1..  848.4  n=785
+> r=  848.4..  879.8  n=1841
+> r=  879.8..  912.3  n=2938
+> r=  912.3..  946.1  n=5662
+> r=  946.1..  981.1  n=7264
+> r=  981.1.. 1017.4  n=9094
+> r= 1017.4.. 1055.0  n=13969
+> r= 1055.0.. 1094.1  n=10551
+> r= 1094.1.. 1134.6  n=4615
+> r= 1134.6.. 1176.5  n=971
+
+### 🤖 Claude — 2026-11-21T14:47:01.803Z
+
+The rings aren't centred on the vanishing point (the camera sits low and off-centre in the tunnel), so I'll fit each painted ring as its own circle.
+
+### 🤖 Claude — 2026-11-21T14:47:13.838Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport numpy as np, cv2, json\ngold = np.load('/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/gold.npy').astype(np.uint8)\ng = cv2.resize(gold, (432, 768), interpolation=cv2.INTER_AREA) > 0\ng[260:500, 190:310] = False      # coins column\ng[460:768, 90:340] = False       # Benny + star region (no rings there)\nys, xs = np.nonzero(g); P = np.stack([xs, ys], 1).astype(float)\nrng = np.random.default_rng(1)\ndef circ(p):\n    (x1, y1), (x2, y2), (x3, y3) = p\n    A = np.array([[x2 - x1, y2 - y1], [x3 - x1, y3 - y1]]) * 2; b =  …[+1922 chars]`
+
+### 🧑 User — 2026-11-21T14:47:16.000Z
+
+> ↩︎ result: centre (447, 809) radius 660  inliers 885  sectors 7
+> centre (391, 828) radius 629  inliers 763  sectors 9
+> centre (435, 838) radius 610  inliers 797  sectors 11
+> centre (431, 837) radius 581  inliers 552  sectors 11
+> centre (353, 477) radius 350  inliers 1134  sectors 11
+> centre (465, 469) radius 249  inliers 975  sectors 14
+> centre (477, 466) radius 247  inliers 731  sectors 12
+
+### 🤖 Claude — 2026-11-21T14:47:17.989Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/rings_fit.jpg"}`
+
+### 🧑 User — 2026-11-21T14:47:18.006Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T14:47:35.160Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport numpy as np, cv2, json\ngold = np.load('/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/gold.npy')\nH, W = gold.shape\nys, xs = np.nonzero(gold); P = np.stack([xs, ys], 1).astype(float)\nc2 = np.array([470., 468.])\ndef fit_band(c0, rmin, rmax, excl_coins=True):\n    d = np.hypot(*(P - c0).T); m = (d > rmin) & (d < rmax)\n    if excl_coins: m &= ~((P[:, 0] > 400) & (P[:, 0] < 600) & (P[:, 1] > 520))\n    q = P[m]\n    for _ in range(3):   # iterative LSQ with trimming\n        A = np.c_[2 * q, np.ones(len(q))]; bb = (q …[+587 chars]`
+
+### 🧑 User — 2026-11-21T14:47:35.313Z
+
+> ↩︎ result: 4:106 8:153 12:262 16:171 20:116 24:122 28:147 32:115 36:105 40:146 44:126 48:129 52:118 56:90 60:93 64:82 68:121 76:73 80:76 128:117 132:139 136:134 140:141 148:101 152:63 156:110 160:318 164:193 168:225 172:157 184:61 204:65 220:75 224:136 228:254 232:548 236:1323 240:1148 244:1306 248:1460 252:1669 256:1176 260:687 264:463 268:193 272:116 276:61 284:182 288:201 292:68
+
+### 🤖 Claude — 2026-11-21T14:47:44.486Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport numpy as np, json\ngold = np.load('/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/gold.npy')\nys, xs = np.nonzero(gold); P = np.stack([xs, ys], 1).astype(float)\ncoin = (P[:, 0] > 400) & (P[:, 0] < 600) & (P[:, 1] > 520)\ndef fit(c0, rmin, rmax):\n    q = P[(np.hypot(*(P - c0).T) > rmin) & (np.hypot(*(P - c0).T) < rmax) & ~coin]\n    for _ in range(4):\n        A = np.c_[2 * q, np.ones(len(q))]; bb = (q ** 2).sum(1); sol = np.linalg.lstsq(A, bb, rcond=None)[0]\n        c = sol[:2]; r = np.sqrt(sol[2] + c @ c); res = n …[+725 chars]`
+
+### 🧑 User — 2026-11-21T14:47:44.647Z
+
+> ↩︎ result: ring2 [469.9 458.7] 246.3 1936 [-178.  179.]
+> ring3 [482.8 455.2] 150.9 336 [-20. 105.]
+> profile around ring3 centre: 2:28 4:43 6:38 8:50 10:65 12:80 14:99 16:119 18:129 20:120 22:97 24:103 26:96 28:91 30:94 32:96 34:101 36:89 38:70 40:70 42:61 44:51 46:57 48:60 50:64 52:55 54:26 58:33 60:26 62:36 64:32 70:28 72:35 74:48 76:40 78:58 134:26 136:49 138:115
+
+### 🤖 Claude — 2026-11-21T14:47:49.657Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && python3 -c \"\nfrom PIL import Image\nim=Image.open('references/05_flow_into_the_current.png').convert('RGB').crop((300,250,680,620)).resize((760,740)); im.save('/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/vp_crop.jpg',quality=90)\"", "description": "Crop the approved picture around the vanishing point"}`
+
+### 🧑 User — 2026-11-21T14:47:49.768Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-21T14:47:51.547Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/vp_crop.jpg"}`
+
+### 🧑 User — 2026-11-21T14:47:51.569Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T14:48:59.798Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/kit05 && cat > fit_tunnel.py <<'EOF'\n\"\"\"Round 33 kit: fit ONE straight tunnel with evenly spaced gold rings to the approved Screen 05 painting (camera at origin, fov 64).\nCamera coords: x right, y up, looking down -z. Unknowns: axis direction (via vanishing point vx, vy), camera offset from the axis\n(ox, oy, tunnel radius = 1), depth t2 of painted ring 2 along the axis, ring spacing S. Objective: blurred gold coverage along each\npredicted ring (rings 2..7, upper 260 deg only: the bottom is under the river). Writes tunnel_fit.json.\"\"\"\nimport  …[+2662 chars]`
+
+### 🧑 User — 2026-11-21T14:49:01.745Z
+
+> ↩︎ result: fit [ 4.318585e+02  4.487391e+02  1.461000e-01 -4.270000e-02  5.109100e+00
+>   3.264500e+00] score 1.09658944606781
+> ring 1: depth 1.713  top px (559,-338)  on-gold 0.00
+> ring 2: depth 4.872  top px (474,190)  on-gold 0.37
+> ring 3: depth 8.032  top px (457,294)  on-gold 0.02
+> ring 4: depth 11.192  top px (450,338)  on-gold 0.10
+> ring 5: depth 14.351  top px (446,363)  on-gold 0.06
+> ring 6: depth 17.511  top px (443,379)  on-gold 0.08
+> ring 7: depth 20.670  top px (441,389)  on-gold 0.10
+> ring 8: depth 23.830  top px (440,397)  on-gold 0.12
+> ring 9: depth 26.990  top px (439,403)  on-gold 0.15
+> ring 10: depth 30.149  top px (438,408)  on-gold 0.14
+
+### 🤖 Claude — 2026-11-21T14:49:12.311Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport numpy as np, cv2\nfrom PIL import Image\nfrom scipy.signal import find_peaks\nimg = np.array(Image.open('/home/user/rainbow-/references/05_flow_into_the_current.png').convert('RGB')).astype(np.float32)\nR, G, B = img[..., 0], img[..., 1], img[..., 2]\ngoldness = cv2.GaussianBlur((R - B) + 0.5 * (G - B), (0, 0), 2)   # gold/orange high, purple/pink low\nvx, vy = 500, 470\ndef profile(dx, dy, rmax):\n    t = np.arange(8, rmax); x = (vx + dx * t).astype(int); y = (vy + dy * t).astype(int)\n    ok = (x >= 0) & (x < 864) & (y >= 0) & (y < 1536); return t[ok …[+401 chars]`
+
+### 🧑 User — 2026-11-21T14:49:13.685Z
+
+> ↩︎ result: up        36 55 93 166 185 195 205 216 228 267 289 324 355 428 459
+> up-left   54 97 167 198 211 224 237 276 306 347 371 409 442 471 500 576 607 638 657
+> up-right  37 54 91 155 196 207 242 296 323 355 388 421 456
+> left      29 58 100 167 224 288 357 380 404 430
+> right     54 81 134 217 241 262 330 343
+
+### 🤖 Claude — 2026-11-21T14:49:25.627Z
+
+Automatic peak-finding is confused by the slots and lights inside each gold band. I'll read the ring positions off a zoomed, gridded crop of your painting instead.
+
+### 🤖 Claude — 2026-11-21T14:49:29.977Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && python3 -I - <<'EOF'\nfrom PIL import Image, ImageDraw\nim = Image.open('references/05_flow_into_the_current.png').convert('RGB')\nx0, y0, x1, y1, s = 330, 190, 670, 490, 2.4\nc = im.crop((x0, y0, x1, y1)).resize((int((x1 - x0) * s), int((y1 - y0) * s)), Image.LANCZOS); d = ImageDraw.Draw(c)\nfor y in range(200, 490, 20):\n    Y = (y - y0) * s; d.line([(0, Y), (24, Y)], fill=(0, 255, 0), width=2); d.text((26, Y - 6), str(y), fill=(0, 255, 0))\nfor x in range(340, 670, 20):\n    X = (x - x0) * s; d.line([(X, 0), (X, 14)], fill=(0, 255, 255), width=2); d.te …[+226 chars]`
+
+### 🧑 User — 2026-11-21T14:49:30.104Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-21T14:49:32.126Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/vp_grid.jpg"}`
+
+### 🧑 User — 2026-11-21T14:49:32.142Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T14:50:32.754Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/rainbow_r32/merged && grep -n \"TR\\.\\|TR\\[\\|export function installControls\\|opts\\.\\|at(\\|frameAt(\" controls.js | head -50; sed -n 1,40p controls.js | cut -c1-220", "description": "Check controls.js dependencies on the track"}`
+
+### 🧑 User — 2026-11-21T14:50:32.806Z
+
+> ↩︎ result: 48:export function installControls(ctx) {
+> 142:  // level end: S_END = trail s nearest to the LAST ring (TR.XB + offsets[N-1]); a track without XB ends at its trail end.
+> 143:  const TS = TR.trail_s, TEND = TS[TS.length - 1];
+> 145:    if (!TR.XB || !TR.offsets || !TR.trail) return TEND;
+> 146:    const o = TR.offsets[TR.N - 1], X = [TR.XB[0] + o[0], TR.XB[1] + o[1], TR.XB[2] + o[2]];
+> 147:    let best = 0, bd = Infinity; TR.trail.forEach((p, i) => { const d = (p[0] - X[0]) ** 2 + (p[1] - X[1]) ** 2 + (p[2] - X[2]) ** 2; if (d < bd) { bd = d; best = i; } });
+> 162:    const Fs = frameAt(L.s); at(L.s, sp.position).addScaledVector(Fs.r, L.lat).addScaledVector(Fs.n, coinD * 0.75 + L.h);
+> 234:    const p0 = benny.position.clone(), s0 = benny.scale.clone(), ch = canvas.height, cw = canvas.width, sNow = getS() + ahead, Fq = frameAt(sNow);
+> 235:    const wp = at(sNow, new THREE.Vector3()).addScaledVector(Fq.r, S.lat.x); benny.position.copy(wp).addScaledVector(Fq.n, -sink); benny.scale.setScalar(k); benny.updateMatrixWorld(true);
+> 322:    at(getS(), waterPt).addScaledVector(F.r, S.lat.x); // his water point (no bob, no leap / dive height): the water line on his body
+> 403:    const Fs = frameAt(s), p =  …[+3278 chars]
+
+### 🤖 Claude — 2026-11-21T14:51:09.243Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/rainbow_r32/merged && python3 -c \"\nimport json; SC=json.load(open('scene05.json')); print({k:(v if not isinstance(v,list) or len(v)<4 else str(len(v))+' items') for k,v in SC.items() if k!='trail'}); print('trail0', SC['trail'][0], 'len', len(SC['trail']))\nTR=json.load(open('track_w/track.json')); print('TR keys', list(TR.keys())); print('trail_s end', TR['trail_s'][-1], 'N', TR['N'])\n\"; grep -n \"coinLayout\\|levelEnd\\|export\\|ctx\\.\\w*\" controls.js | grep -o \"ctx\\.\\w*\\|window\\.\\w*\" | sort | uniq -c | head -30", "description": "Read scale values and contro …[+18 chars]`
+
+### 🧑 User — 2026-11-21T14:51:09.314Z
+
+> ↩︎ result: {'cam': {'fwd': [-0.025495445361092415, -0.16103854187683883, -0.9866187563066198], 'up': [-0.483733040546248, 0.8656864685033793, -0.12879939337601617], 'fov': 64.0}, 'plane': {'n': [-0.3769719166382767, 0.9039326595252047, 0.20198495268151698], 'd': -0.7344132882479625}, 'trail_s': '262 items', 'benny_h': 0.4040000000000003, 'coin_d': 0.15038523388874458}
+> trail0 [0.1467720783400785, -0.5150511365172206, -1.0570727675951637] len 262
+> TR keys ['XA', 'XB', 'offsets', 'far_offsets', 'D', 'N', 'UA', 'UB', 'ax', 'right', 'n', 'trail', 'trail_s']
+> trail_s end 32.160000000000004 N 14
+>       1 window.coinLayout
+>       1 window.levelEnd
+> Shell cwd was reset to /home/user/rainbow-
+
