@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3267,
-   "sha256": "37f7bd1b455d054c01659d1b8c39168e0487718350087e0f236517a071b071d4"
+   "sha256": "835d0b9d85c8368051f11687d3f4307ab1f6252343ce53f552add44d6761461c"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -7054,7 +7054,7 @@
   {
    "path": "backups/wip/detached-d8e047d33e/INFO.json",
    "bytes": 2379,
-   "sha256": "5c2cd90d5d5cd2e262cfdc5fc279010e1a9a9bbb712135c19b82ac4cbc37b9c9"
+   "sha256": "b7dfbae9d337051559a4c5526cfce12a0023ed86696bdf72ec762c1d50d0b369"
   },
   {
    "path": "backups/wip/detached-d8e047d33e/tracked.patch",
@@ -11638,8 +11638,8 @@
   },
   {
    "path": "docs/briefs/2026-11-21-r36/FEASIBILITY_R36.md",
-   "bytes": 6041,
-   "sha256": "ca5f087017a84635bc0c312522ff35ef5b7939e9bfa4f213d5c1c1a0bb9602c4"
+   "bytes": 9370,
+   "sha256": "48fc88a5dda1bc9663b3321b7ae978e94b1c466cecb8fb0008db46133366af09"
   },
   {
    "path": "docs/characters/benny.md",
