@@ -103,6 +103,13 @@ export function installSwimFx({ THREE, scene, splash, q }) {
           vec4 c1 = texture2D(map, suv - dir * (ph * L * m));
           vec4 c2 = texture2D(map, suv - dir * (fract(ph + 0.5) * L * m));
           diffuseColor *= mix(c2, c1, 1.0 - abs(1.0 - 2.0 * ph));
+          // round 35: the painted splash carries a patch of the painting's WATER around its spray; over the moving river its straight
+          // bottom edge showed as a line. Once he swims, that painted water fades (saturated texels) and the image edges fade out;
+          // the white spray and the fur at the top centre stay (strength 0 at the start frame: frame 0 unchanged)
+          float sSat = max(diffuseColor.r, max(diffuseColor.g, diffuseColor.b)) - min(diffuseColor.r, min(diffuseColor.g, diffuseColor.b));
+          float sKeep = mix(1.0, 1.0 - smoothstep(0.3, 0.62, sSat), 0.75 * smoothstep(1.0, 1.3, e) * uSplFlow);
+          float sEdge = smoothstep(0.0, 0.28, vMapUv.y) * smoothstep(0.0, 0.12, min(vMapUv.x, 1.0 - vMapUv.x));
+          diffuseColor.a *= sKeep * mix(1.0, sEdge, uSplFlow);
         } else { diffuseColor *= texture2D(map, vMapUv); }
         #endif`); };
     const key = m.customProgramCacheKey ? m.customProgramCacheKey.bind(m) : () => '';
