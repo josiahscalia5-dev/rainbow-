@@ -1140,3 +1140,38 @@ The full comparison table is saved in `docs/briefs/2026-11-21-r33/TOOL_EVALUATIO
 
 Sources: [ai-game.dev](https://ai-game.dev/), [its Three.js post](https://ai-game.dev/blog/threejs-game-development-with-ai), [its tools](https://ai-game.dev/docs/tools), [its pricing](https://ai-game.dev/pricing), [its privacy policy](https://ai-game.dev/legal/privacy), [Thrixel launch](https://gamesbeat.com/uchicago-ai-researcher-rana-hanocka-launches-thrixel-a-3d-generation-platform/), [Cuberta](https://cuberta.com/), [Cuberta specs](https://cuberta.com/specs/), [Wandy3D terms](https://wandy3d.com/terms), [Scenario YVO3D docs](https://docs.scenario.com/get-started/generation/3d-model-generation/3d-model-generation-yvo3d/index.md), [Scenario pricing](https://www.scenario.com/pricing), [Scenario privacy](https://www.scenario.com/privacy-policy), [OpenGame](https://github.com/tuannx/OpenGame), [SceneSmith paper](https://arxiv.org/html/2602.09153v1).
 
+### 🧑 User — 2026-11-21T14:33:00.412Z
+
+i enabled the remote control
+
+### 🤖 Claude — 2026-11-21T14:33:01.425Z
+
+> 🔧 **mcp__claude-code-remote__list_computer_folders** `{}`
+
+### 🧑 User — 2026-11-21T14:33:01.670Z
+
+> ↩︎ result: {"folders":[],"cannot_be_used":[{"computer_name":"LAPTOP-7BA6G3BC","folder":"claude yes","reason":"not_available","explanation":"This folder is in the user's Remote Control list, but that computer does not offer it to cloud sessions and did not say why. The usual causes: it is inside a hidden directory directly under the home directory or ~/Library, or the Claude app on that computer needs updating (on Windows, to a version that serves folders there)."}]}
+
+### 🤖 Claude — 2026-11-21T14:33:04.965Z
+
+> 🔧 **Bash** `{"command": "grep -o 'frame [0-9]* / 228' /tmp/rainbow_r32/runs/merged_short.log | tail -1; grep -o '[0-9][0-9]:[0-9][0-9]:[0-9][0-9]$' /tmp/rainbow_r32/runs/merged_short.log | tail -1; date -u +%T", "description": "Check baseline run progress"}`
+
+### 🧑 User — 2026-11-21T14:33:05.011Z
+
+> ↩︎ result: frame 10 / 228
+> 14:31:41
+> 14:33:05
+
+### 🤖 Claude — 2026-11-21T14:33:09.996Z
+
+I can see your laptop now: **LAPTOP-7BA6G3BC**, with the folder **"claude yes"**. But the laptop isn't offering that folder to cloud sessions like this one, and it didn't say why. The usual causes:
+
+1. **The Claude app on the laptop needs updating.** On Windows, only newer versions can share folders with cloud sessions. Update it, restart it and leave it open.
+2. **The folder is in a hidden location.** If "claude yes" sits inside a folder whose name starts with a dot, directly under your user folder, it can't be shared. Pick a normal folder, for example one in Documents.
+
+Your account may also not have this feature yet, because sharing a folder with a cloud session isn't available to everyone.
+
+None of the current work needs your laptop. The only tool I found that would have needed it is Cuberta (Windows/Mac only), and I don't recommend Cuberta. If you update the app and tell me, I'll check again in one step.
+
+The Screen 05 swipe test is still running, at frame 10 of 228. This machine's software rendering takes about 20 seconds per frame, so the run will take roughly another 80 minutes. When it finishes I'll check the results and fix what fails before showing you anything.
+
