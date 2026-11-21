@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3271,
-   "sha256": "909970aaf606e2648f4eeec385943571ef1329695410f8cc477d913548f83f05"
+   "sha256": "623809a5d29a560d585447091b46e254bb34285a6b593b648e204b9ffb87a64a"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -11645,6 +11645,11 @@
    "path": "docs/briefs/2026-11-21-r37/OPTIONS_R37.md",
    "bytes": 4380,
    "sha256": "bb7b3fe7c75f629492d93f4dd8991d29d1375acfc49ecfd4a3e5723659583e65"
+  },
+  {
+   "path": "docs/briefs/2026-11-21-r38/BONUS_INTEGRATION_PLAN_R38.md",
+   "bytes": 5423,
+   "sha256": "1c8cd45a07877d114848ecf028f22b612a54f2f2a0360b0d4c085005dd00b5b8"
   },
   {
    "path": "docs/characters/benny.md",
@@ -39955,6 +39960,16 @@
    "path": "references/11_safely_home_final_victory.png",
    "bytes": 481475,
    "sha256": "4f30ca59a926d6eed449a2865d35776368864bfd92c5c7f0845a96bf500397ae"
+  },
+  {
+   "path": "references/candidates/bonus_bubble_dash_chamber.webp",
+   "bytes": 409334,
+   "sha256": "5998f9d02e217ba93ed3541f516ade311558671ef02582425aa59434f999587a"
+  },
+  {
+   "path": "references/candidates/bonus_sock_rescue_laundry_tunnel.webp",
+   "bytes": 434366,
+   "sha256": "793f8824e6b2455bb62761217163ea9e9ae576420d5d9288317729a19dfc8316"
   },
   {
    "path": "references/water/05_water_isolated_original.png",
