@@ -4506,3 +4506,154 @@ The plugin route doesn't work in this cloud session, because the `/plugin` comma
 
 Nothing has been spent on SpAItial. Your Marble balance is still 2,030 credits.
 
+### 🧑 User — 2026-11-21T10:42:55.043Z
+
+ok can we do it again the enviroment settings under network secerts and do i need api key and how do i get it for api spaitial ai
+
+### 🤖 Claude — 2026-11-21T10:42:57.548Z
+
+> 🔧 **mcp__claude-code-remote__read_documentation** `{"topic": "environment.secrets", "situation": "asked"}`
+
+### 🧑 User — 2026-11-21T10:42:57.884Z
+
+> ↩︎ result: If request_credential is among your tools, call it, except for Anthropic's own hosts (see below): the person saves the key on a card, and it is stored on this session's environment. Before that, if get_environment is among your tools, make any move its description calls for, unless the person asked for the key here. If you do not have it: Tell the person there is no connector for this service, and that a read-only API token stored in the environment lets you call its API or CLI directly. They add it in the environment's settings (the cloud environment menu in the session's title bar, then Edit): under Network secrets (labeled API credentials in an app that has not updated) where that section is offered, otherwise as an environment variable, and say which variable name you will read. A new session picks it up. Never set secret values with update_environment, even if you have it; the person enters them. Never ask the person to paste a token, key or password into the chat. For the Claude API or the Claude Console, Network secrets do not work: they cannot be saved for Anthropic's own hosts, and none is ever added to a request to api.anthropic.com. In an environment's settings, a Claude …[+547 chars]
+
+### 🤖 Claude — 2026-11-21T10:42:59.742Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/sp; sed -n 2025,2095p $S/llms-full.txt; grep -n -i \"create an api key\\|create a key\\|api keys page\\|settings → \\|developer settings\\|/settings\" $S/llms-full.txt | head -15", "description": "Read SpAItial's instructions for creating an API key"}`
+
+### 🧑 User — 2026-11-21T10:42:59.803Z
+
+> ↩︎ result: ## API Reference
+> 
+> ### Authentication
+> 
+> The SpAItial Developer API uses bearer tokens. Every request must include an `Authorization` header carrying a key issued to your account.
+> 
+> Your API key is a secret
+> 
+> Keys are shown to you exactly once at creation. Store them in a secret manager, never commit them, and never ship them inside a client-side bundle.
+> 
+> #### Obtaining a key[​](#obtaining-a-key "Direct link to Obtaining a key")
+> 
+> 1. Create a key in the dashboard
+> 
+>    Keys are created from the developer portal in the SpAItial dashboard. Each key belongs to your account and spends from the same shared credit balance used by the app.
+> 
+> 2. Pick the right scopes
+> 
+>    Each key has an explicit scope set (for example `worlds:create`, `worlds:read`, `worlds:write`, `files:create`). The scope is enforced server-side; calls outside the granted scopes return `403 forbidden`. Panorama edits use `worlds:create`; listing, reading, or downloading edited panoramas uses `worlds:read`.
+> 
+> 3. Check your credits
+> 
+>    World generation spends from your shared app and API credit balance. See [Credits and Billing](https://docs.spaitial.ai/api/credits-billing.md) for plan credits, purchases, and what API actions cost. …[+2268 chars]
+
+### 🤖 Claude — 2026-11-21T10:43:12.833Z
+
+> 🔧 **mcp__claude-code-remote__request_credential** `{"host": "api.spaitial.ai", "reason": "Runs the user's Echo-2 test of Screen 05 through the SpAItial Developer API (upload the clean picture, create one Echo-2 Standard world, download its splats); the API needs the user's key as Authorization: Bearer.", "display_name": "SpAItial API key", "suggested_type": "bearer", "prefix": "Bearer"}`
+
+### 🧑 User — 2026-11-21T10:46:29.498Z
+
+> ↩︎ result: {"status":"saved","host":"api.spaitial.ai","applies_to":"environment","note":"A credential for this host is saved on this session's environment. Every session in that environment uses it, including other people's sessions when the environment is shared. The session's network proxy injects it into HTTPS requests to this host — you never see or send the value yourself. Saving it also allows HTTPS requests to this host from those sessions, so do not add the host to the environment's allowed hosts. No environment variable holds the credential, so code that reads a key from a variable finds none and may skip its work. To run such code, set that variable to a placeholder for that command, never a real value: `proxy-injected`, or a dummy in the format the code expects if it checks one. This works where the code sends the key in a header, which the proxy overwrites; a cookie the code sends instead replaces the saved cookie of that name. Tell the user this when their own scripts expect such a variable. Retry the failing request now, as-is (do not add the credential's header yourself): the proxy usually picks the credential up within a couple of seconds. Only a refusal, with the same 401/403 …[+445 chars]
+
+### 🤖 Claude — 2026-11-21T10:46:31.627Z
+
+The key is saved. Checking that it works and reading your free credit balance; both are free reads.
+
+### 🤖 Claude — 2026-11-21T10:46:34.074Z
+
+> 🔧 **Bash** `{"command": "timeout 30 curl -s https://api.spaitial.ai/v1/models | head -c 1500; echo; S=/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/sp; grep -n -i \"GET /v1/credits\\|/v1/credits\\|/v1/files\\|/v1/account\\|/v1/balance\\|image_url\\|\\\"image\\\"\\|input_image\\|echo-2\\b\" $S/llms-full.txt | head -30", "description": "Verify the SpAItial key and find the image-to-world endpoints"}`
+
+### 🧑 User — 2026-11-21T10:46:35.544Z
+
+> ↩︎ result: {"models":[{"id":"echo-2","name":"Echo 2","description":"Standard model (~10 minutes)","is_default":false,"credit_cost":160,"estimated_duration_seconds":522,"pricing":{"unit":"world","credits":160},"docs_url":"https://docs.spaitial.ai/api/generation-models#default","input_kind":"single","output_type":"splat","is_internal":false},{"id":"echo-hq","name":"Echo 2 (HQ)","description":"High quality model for more details and resolution (~ 60mins)","is_default":false,"credit_cost":800,"estimated_duration_seconds":3600,"pricing":{"unit":"world","credits":800},"docs_url":"https://docs.spaitial.ai/api/generation-models#echo-hq","input_kind":"single","output_type":"splat","is_internal":false},{"id":"echo-3","name":"Echo 3","description":"Reconstruct a world from captures taken with the SpAItial capture app","is_default":false,"credit_cost":900,"estimated_duration_seconds":3211,"pricing":{"unit":"capture_frame","base_credits":900,"credits_per_frame":1,"max_frames":5000},"docs_url":"https://docs.spaitial.ai/api/capture-worlds","input_kind":"perspective_capture","output_type":"splat","is_internal":false}]}
+> 186:* Available credits. Free users receive 800 credits each month, enough for about 5 Ech …[+3387 chars]
+
+### 🤖 Claude — 2026-11-21T10:46:38.332Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/sp; sed -n 2920,3000p $S/llms-full.txt; grep -n -i \"credits_remaining\\|balance\\|GET /v1/me\\|/v1/usage\\|insufficient\\|402\" $S/llms-full.txt | head -12", "description": "Read the file upload and world creation examples"}`
+
+### 🧑 User — 2026-11-21T10:46:38.410Z
+
+> ↩︎ result: #### Upload a file[​](#upload-a-file "Direct link to Upload a file")
+> 
+> Send a `multipart/form-data` request with a single `file` field:
+> 
+> ```bash
+> API_KEY="[REDACTED]"
+> 
+> curl -sX POST "https://api.spaitial.ai/v1/files" \
+>   -H "Authorization: Bearer $API_KEY" \
+>   -F "file=@photo.jpg"
+> 
+> ```
+> 
+> Successful uploads return `201 Created`:
+> 
+> ```json
+> {
+>   "file_id": "file_abc123",
+>   "content_type": "image/jpeg",
+>   "file_size": 1843921,
+>   "expires_at": "2026-05-21T10:42:00.000Z"
+> }
+> 
+> ```
+> 
+> Allowed file types are JPEG, PNG, WebP, and GIF. The maximum file size is 25 MB. The API checks the detected MIME type from the file bytes, not just the uploaded filename or form content type.
+> 
+> #### Use the file in a world request[​](#use-the-file-in-a-world-request "Direct link to Use the file in a world request")
+> 
+> Pass the `file_id` as the world input:
+> 
+> ```bash
+> FILE_ID=$(curl -sX POST "https://api.spaitial.ai/v1/files" \
+>   -H "Authorization: Bearer $API_KEY" \
+>   -F "file=@photo.jpg" | jq -r .file_id)
+> 
+> curl -sX POST "https://api.spaitial.ai/v1/worlds" \
+>   -H "Authorization: Bearer $API_KEY" \
+>   -H "Content-Type: application/json" \
+>   -d "{
+>     \"input\": {
+>       \"type\": \"file_id\",
+>       \"file_id\": \"$FILE_ID\"
+>  …[+3108 chars]
+
+### 🤖 Claude — 2026-11-21T10:46:42.988Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/sp; grep -n -i \"portrait\\|aspect ratio\\|landscape\\|resolution\\|output_format\\|ply\\b\" $S/llms-full.txt | head -25; sed -n 1105,1120p $S/llms-full.txt", "description": "Check SpAItial image requirements and top-up behaviour"}`
+
+### 🧑 User — 2026-11-21T10:46:43.034Z
+
+> ↩︎ result: 327:##### Resolution[​](#resolution "Direct link to Resolution")
+> 356:* Low resolution images
+> 374:1. **Check resolution**: Ensure it's at least 512x512
+> 386:| Low detail       | Use a higher resolution source       |
+> 419:* Higher resolution produces better results
+> 462:2. SpAItial detects the 2:1 panorama aspect ratio and switches into panorama mode
+> 471:* Equirectangular projection with a 2:1 aspect ratio (e.g. 4096×2048, 6144×3072)
+> 474:##### Resolution[​](#resolution "Direct link to Resolution")
+> 477:* Higher resolution produces sharper results
+> 504:* Panorama inputs can be previewed in 360° but not prompt-refined before generation — prompt-based edits only apply once the world is created
+> 545:A [style] [outdoor space] featuring [landscape elements], [architectural elements], and [time of day/weather]
+> 741:Apply your edits permanently by finalizing your draft.
+> 819:* Finalize to apply changes to the world
+> 1082:| Echo 2 (HQ)       | Higher-detail, higher-resolution worlds | ~60 minutes | 800     |
+> 1109:* Downloading, SOG/PLY/SPZ exports, and collider mesh export
+> 1145:| Echo HQ         | Higher-detail, higher-resolution worlds | ~60 minutes | 800     |
+> 1241:| Echo 2 (HQ)       | Higher-deta …[+1775 chars]
+
+### 🤖 Claude — 2026-11-21T10:46:48.499Z
+
+> 🔧 **Bash** `{"command": "mkdir -p qa/spaitial/05 && cd qa/spaitial/05 && cp ../../worldlabs/05/r32/input_05_clean.png . && timeout 120 curl -s -X POST https://api.spaitial.ai/v1/files -F \"file=@input_05_clean.png\" > upload.json; cat upload.json; FID=$(python3 -I -c \"import json;print(json.load(open('upload.json')).get('file_id',''))\"); echo \"file $FID\"; [ -n \"$FID\" ] && timeout 120 curl -s -X POST https://api.spaitial.ai/v1/worlds -H \"Content-Type: application/json\" -d \"{\\\"input\\\":{\\\"type\\\":\\\"file_id\\\",\\\"file_id\\\":\\\"$FID\\\"},\\\"model\\\":\\\"echo-2\\\",\\\"title\\\":\\\"Rain …[+162 chars]`
+
+### 🧑 User — 2026-11-21T10:46:59.760Z
+
+> ↩︎ result: {"file_id":"file_5832791cf8be44fd82c48218c00eea78","content_type":"image/png","file_size":5514567,"expires_at":"2026-11-22T10:46:53.408Z"}file file_5832791cf8be44fd82c48218c00eea78
+> {"request_id":"req_40e267ab06ec494ba4ef9a60dd6da114","status":"PENDING","created_at":"2026-11-21T10:46:54.336388+00:00","updated_at":"2026-11-21T10:46:54.336388+00:00","status_url":"https://api.spaitial.ai/v1/worlds/requests/req_40e267ab06ec494ba4ef9a60dd6da114/status","response_url":"https://api.spaitial.ai/v1/worlds/requests/req_40e267ab06ec494ba4ef9a60dd6da114","cancel_url":"https://api.spaitial.ai/v1/worlds/requests/req_40e267ab06ec494ba4ef9a60dd6da114/cancel"}
+
+### 🤖 Claude — 2026-11-21T10:47:06.260Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && cat > qa/spaitial/05/LEDGER.md <<'EOF'\n# SpAItial Echo-2 test — Screen 05 (round 32, 2026-11-21, branch `claude/screen-05-3d-geometry-9yu7pu`)\nUser: \"LET'S TEST SpAItial ECHO-2 FOR SCREEN 05 … free credits … Do not spend cash or purchase credits.\" The plugin cannot be installed in this\ncloud session (`/plugin` unavailable); the SpAItial Developer API is called directly, key saved by the user through the secure credential form\n(host `api.spaitial.ai`, Authorization: Bearer; never in git or chat). Free plan: 800 credits/month; Echo-2 Standard = 160 cr …[+962 chars]`
+
