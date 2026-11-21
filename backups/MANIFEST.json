@@ -623,8 +623,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 25102,
-   "sha256": "74b7fc04a7c756ca2143fbaf079bf1666d2a2bc92249dfd95b6a9962f6a385c9"
+   "bytes": 25110,
+   "sha256": "d80685d97971d97f94c389db54088ce589e5cf5b3bdd6802b63a807fccab051c"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -639,7 +639,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3271,
-   "sha256": "31b1dd6913de54547092de7994d80a4385002808268b9ede2f25a7d665095698"
+   "sha256": "b8e286de3fe5ae3d9127d7751a016058fc0ca9f4528789ce4b6229713fa9d100"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -14990,6 +14990,66 @@
    "path": "qa/match/05/r27/PROGRESS.md",
    "bytes": 3430,
    "sha256": "07c07278eb0d3c00d150d5b667b6fb9db3ec45d2df8ad4721f5191a17ecd02b1"
+  },
+  {
+   "path": "qa/match/06/paint06/LEDGER.md",
+   "bytes": 571,
+   "sha256": "6542b8d6c848b5e6c15e6d6012cfa5e1d25caea02870b06cb6d1cc88b74f5b3f"
+  },
+  {
+   "path": "qa/match/06/paint06/work/panel1.png",
+   "bytes": 633597,
+   "sha256": "81dadbe536b15e7e65a07b36316f3bf942fa927580b7d8207a3f7cb0022f16f3"
+  },
+  {
+   "path": "qa/match/06/paint06/work/panel1_esrgan4.png",
+   "bytes": 7974261,
+   "sha256": "5d420491df95101f0de7a59b69eac190e2d6429439e16861abadaaa2b715635d"
+  },
+  {
+   "path": "qa/match/06/paint06/work/panel1_seedvr4.png",
+   "bytes": 1885897,
+   "sha256": "a600537f9724f4929c8cf5e78cb44e74aeae8bddd3e4f0218b5b650a2423ffb8"
+  },
+  {
+   "path": "qa/match/06/paint06/work/panel1_topaz4.png",
+   "bytes": 2421815,
+   "sha256": "26d59d7ac027345d01ab3c8a460f5c01408ed4ef8a069363498f944c2de5b4ef"
+  },
+  {
+   "path": "qa/match/06/paint06/work/panel2.png",
+   "bytes": 601296,
+   "sha256": "bfb10e5150624d23d29c6e7f8c209014c95f062fdc366f682a1656854c6d302b"
+  },
+  {
+   "path": "qa/match/06/paint06/work/panel3.png",
+   "bytes": 600904,
+   "sha256": "656cac122c9ba96428db07eb2c3a018e05fba5f680a67f9dd93e110f7c2ea6ec"
+  },
+  {
+   "path": "qa/match/06/paint06/work/panel4.png",
+   "bytes": 603673,
+   "sha256": "f0620bc8c24134bfafc0c9149c49ac01451bfae0b79f0dadcaa006207c4f6b62"
+  },
+  {
+   "path": "qa/match/06/paint06/work/register.json",
+   "bytes": 2573,
+   "sha256": "a2e30c003d3fa7ef843d4c524bb1c51bd06128af0c698cb8fed7384af2d5c1c8"
+  },
+  {
+   "path": "qa/match/06/paint06/work/view_esrgan4.png",
+   "bytes": 824907,
+   "sha256": "c0cbb8ba4f52d76cefb11ddf54452e4db57f619ba62df4d61752523e188935e9"
+  },
+  {
+   "path": "qa/match/06/paint06/work/view_seedvr4.png",
+   "bytes": 902599,
+   "sha256": "9d3a1edc34dfc33f7c687318ca1f9ddff9b6bf82d69107fd75b8cb6677f25c3a"
+  },
+  {
+   "path": "qa/match/06/paint06/work/view_topaz4.png",
+   "bytes": 905888,
+   "sha256": "625044018dda3acf70261d29619f2737547f288be7088f0f947ba7f7530fc621"
   },
   {
    "path": "qa/match/06/r23/PROGRESS.md",
@@ -34220,6 +34280,16 @@
    "path": "tools/model-lab.ts",
    "bytes": 4451,
    "sha256": "4dd0d06b20730fe09663dd711e63d5c4c8a884ba91f7b84a49be540db2a7a3c8"
+  },
+  {
+   "path": "tools/paint06/fal.py",
+   "bytes": 2602,
+   "sha256": "dcbc07bb8327a46d34a8a41f3f2841cc6bf70778e91bcc5b5125d6af95eaff97"
+  },
+  {
+   "path": "tools/paint06/register_panels.py",
+   "bytes": 2436,
+   "sha256": "309024167aac590679717bdfc02532a94a4cc6f892f2c1f54b5501febe1b4ccb"
   },
   {
    "path": "tools/proj05/bake.py",

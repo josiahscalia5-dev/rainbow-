@@ -336,3 +336,438 @@ This takes one worker and no paid credits. Your four new Screen 06 views are sma
 
 Yes, do Screen 06 first Yes, but I want these exact. See these all these four images? I want exactly those. Okay, 100%, or at least 95%. Those ones. Okay, don't show me anything different. If I see anything different, I'm gonna probably be pissed.
 
+### 🤖 Claude — 2026-11-21T00:01:17.966Z
+
+Understood: your four pictures, exactly, starting with Screen 06. I'll look at how the game draws Screen 06 now, then build it.
+
+### 🤖 Claude — 2026-11-21T00:01:19.371Z
+
+> 🔧 **Bash** `{"command": "ls; echo ---; ls src | head -50; echo ---; git log --oneline -5; echo; sed -n '1,80p' docs/briefs/2026-11-20-r30/COORDINATION.md | grep -n -iE '30b|06|candidate|switch|\\?' | head -40", "description": "Look at the project layout and the Screen 06 round notes"}`
+
+### 🧑 User — 2026-11-21T00:01:19.418Z
+
+> ↩︎ result: CLAUDE.md
+> README_FIRST.md
+> REFERENCE_ORDER.md
+> Rainbow_Claude_Code_Master_Prompt_11_Screens.md
+> START_HERE_PASTE_TO_CLAUDE.md
+> TOOL_SETUP_AND_VERIFICATION.md
+> VISUAL_QA_CHECKLIST.md
+> android
+> assets
+> backups
+> builds
+> capacitor.config.ts
+> character_references
+> docs
+> index.html
+> node_modules
+> package-lock.json
+> package.json
+> public
+> qa
+> references
+> screenshots
+> scripts
+> src
+> tools
+> tsconfig.json
+> vite.config.ts
+> ---
+> characters
+> game
+> gameplay
+> main.ts
+> render
+> ui
+> vfx
+> world
+> ---
+> 495b335 autosave: Rainbow 2026-11-21 00:00 UTC
+> 3c12939 autosave: Rainbow 2026-11-20 23:59 UTC
+> 814aeba autosave: Rainbow 2026-11-20 23:58 UTC
+> aef9412 autosave: Rainbow 2026-11-20 23:57 UTC
+> 4be6112 autosave: Rainbow 2026-11-20 23:57 UTC
+> 
+> 3:User's messages verbatim: `USER_R30.md` (+ the two pictures `USER_S06_RING_MISMATCH_R30.png`, `USER_S06_STORYBOARD_R30.png`).
+> 16:  Screen 06 alone, lead does it).
+> 18:## Screen 06 (lead, in `/home/user/wt/s06`, LOCAL `claude/rainbow-s06-match-c31`; edits snapshotted every 5 min to `backups/wip/`)
+> 19:* Diagnosis (`qa/match/06/r30/diag/`, sent ~20:18): the gold "target" = mesh `m06_rings` (25 modeled rings, every 12.87 u, radius 13.6, to
+> 22:* Built `&m06curl=1` (with m06deep; `tools/match06/r30_design_curl.py`  …[+3794 chars]
+
+### 🤖 Claude — 2026-11-21T00:01:22.742Z
+
+> 🔧 **Bash** `{"command": "sed -n '1,60p' qa/match/06/r30b/proof/README.md; echo ----; cat qa/match/06/r30b/QUERY_SB_NEW.txt 2>/dev/null; ls qa/match/06/r30b/ | head -30", "description": "Read the last Screen 06 proof notes and test URL"}`
+
+### 🧑 User — 2026-11-21T00:01:22.780Z
+
+> ↩︎ result: # Screen 06 — r30b storyboard candidate: proof (lead, session `ccr-e490fceb-u85291`, 2026-11-20 ~23:30 UTC)
+> 
+> **Individual playable candidate, NOT approved.** Default build and every earlier query unchanged (verified, see "Baseline preserved").
+> User's binding brief: `docs/briefs/2026-11-20-r30/USER_R30.md` §6 (the FOUR storyboard panels = mandatory approved targets).
+> 
+> ## Exact candidate
+> * Query: `../QUERY_SB_NEW.txt` = r30 v2 (`qa/match/06/r30/QUERY_NEW_v2.txt`) + `&m06sb=1&w30=1&f30=1&f30bs=0.7&f30bg=0.3&f30bc=0.16&b30=1&m06sbk=0.88&m06sbby=0.1&m06sbqh=1.5&m06sbq=0.08,0.24`
+> * Code: commit `cf1a66036b9cfeae6ca64ecd54918110909ef448` (tree `b12c04e6df76a054ed5cc619e932f004b96ab440`) = base `e162aec` + the r30 Screen 06
+>   work + r30b, LOCAL branch `claude/rainbow-s06-r30b-candidate` in worktree `/home/user/wt/s06` (branch `claude/rainbow-s06-match-c32`, uncommitted =
+>   identical files). Recoverable from GitHub: `r30b_candidate_from_e162aec.patch` here (verified: applied onto `e162aec` it rebuilds tree `b12c04e`
+>   exactly) and the five-minute snapshot `backups/wip/claude__rainbow-s06-match-c32/`.
+>   Restore: `git fetch origin claude/rainbow-s06-match-c23 && git worktree add <dir> e162aec …[+6676 chars]
+
+### 🤖 Claude — 2026-11-21T00:01:42.361Z
+
+> 🔧 **Bash** `{"command": "ls qa/match/06/r30b/proof/ qa/match/06/r30b/proof/sheets 2>/dev/null | head -40; ls qa/match/06/r30b/align | head; ls src/world | head -60; git log --oneline -1 -- src/world/m06sb.ts", "description": "List proof pictures and the world source files"}`
+
+### 🧑 User — 2026-11-21T00:01:42.405Z
+
+> ↩︎ result: qa/match/06/r30b/proof/:
+> CANDIDATE_COMMIT.txt
+> HANDOFF_06_to_07.jpg
+> README.md
+> SCREEN06_r30b_into_07_0.5x.mp4
+> SCREEN06_r30b_into_07_1x.mp4
+> baseline
+> clip_info.json
+> equiv_from_candidate_code
+> equiv_mask_s310.png
+> gameplay_NEW.json
+> new
+> r30b_candidate_from_e162aec.patch
+> sheets
+> 
+> qa/match/06/r30b/proof/sheets:
+> 1_PANEL1_APPROVED_BASELINE_NEW.jpg
+> 1a_APPROVED_storyboard_panel1.png
+> 1b_BASELINE_full_s238.png
+> 1b_PANEL1_in_motion_s214.86.jpg
+> 1c_NEW_full_s198.91.png
+> 2_PANEL2_APPROVED_BASELINE_NEW.jpg
+> 2a_APPROVED_storyboard_panel2.png
+> 2b_BASELINE_full_s266.png
+> 2c_NEW_full_s250.png
+> 3_PANEL3_APPROVED_BASELINE_NEW.jpg
+> 3a_APPROVED_storyboard_panel3.png
+> 3b_BASELINE_full_s310.png
+> 3c_NEW_full_s300.png
+> 4_PANEL4_APPROVED_BASELINE_NEW.jpg
+> 4a_APPROVED_storyboard_panel4.png
+> 4b_BASELINE_full_s387.png
+> 4c_NEW_full_s336.png
+> panel1_to_approved.json
+> panel1_vs_approved_window.png
+> storyboard_wall_band_zoom.png
+> course.ts
+> environment.ts
+> far05.ts
+> laundryRoom.ts
+> match08.ts
+> materials.ts
+> towel.ts
+> tube.ts
+
+### 🤖 Claude — 2026-11-21T00:01:45.773Z
+
+> 🔧 **Bash** `{"command": "git log --oneline -3 --format='%h %ad %s' --date=iso -- src | head; echo; grep -rln \"match06\\|match05\\|proj05\" src | head; echo; ls src/game src/render src/gameplay; wc -l src/game/*.ts | tail -1; git branch -a 2>/dev/null | head -20", "description": "Check which game code this branch holds"}`
+
+### 🧑 User — 2026-11-21T00:01:45.822Z
+
+> ↩︎ result: d3708c6 2026-11-20 21:19:34 +0000 autosave: Rainbow 2026-11-20 21:19 UTC
+> 
+> src/characters/benny/benny05.ts
+> src/characters/benny/runtime.ts
+> src/world/environment.ts
+> src/world/tube.ts
+> src/world/materials.ts
+> src/vfx/index.ts
+> src/vfx/foam.ts
+> src/vfx/proj05Apron.ts
+> src/vfx/waterRibbon.ts
+> src/vfx/proj05Tunnel.ts
+> 
+> src/game:
+> Game.ts
+> cameraRig.ts
+> match.ts
+> modules.ts
+> 
+> src/gameplay:
+> coins.ts
+> input.ts
+> 
+> src/render:
+> env.ts
+> grade.ts
+>  1143 total
+> * ccr-4fcad20e-a6pp8w
+>   ccr-e490fceb-u85291
+>   remotes/origin/ccr-4fcad20e-a6pp8w
+>   remotes/origin/ccr-e490fceb-u85291
+
+### 🤖 Claude — 2026-11-21T00:01:53.783Z
+
+> 🔧 **Bash** `{"command": "git merge-base --is-ancestor e162aec HEAD && echo \"e162aec in history\" || echo \"e162aec NOT in history\"; wc -l src/main.ts src/game/*.ts src/world/*.ts src/gameplay/*.ts src/ui/* src/render/*.ts 2>/dev/null", "description": "Check history and source file sizes"}`
+
+### 🧑 User — 2026-11-21T00:01:53.822Z
+
+> ↩︎ result: fatal: Not a valid object name e162aec
+> e162aec NOT in history
+>     23 src/main.ts
+>    778 src/game/Game.ts
+>    196 src/game/cameraRig.ts
+>     38 src/game/match.ts
+>    131 src/game/modules.ts
+>    647 src/world/course.ts
+>    915 src/world/environment.ts
+>    321 src/world/far05.ts
+>    190 src/world/laundryRoom.ts
+>    230 src/world/match08.ts
+>   1199 src/world/materials.ts
+>    151 src/world/towel.ts
+>    800 src/world/tube.ts
+>    241 src/gameplay/coins.ts
+>     53 src/gameplay/input.ts
+>    161 src/ui/cinematicVideo.ts
+>    138 src/ui/hud.ts
+>     60 src/render/env.ts
+>     26 src/render/grade.ts
+>   6298 total
+
+### 🤖 Claude — 2026-11-21T00:01:56.966Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/game/Game.ts"}`
+
+### 🧑 User — 2026-11-21T00:01:57.070Z
+
+> ↩︎ result: 1	/**
+> 2	 * RAINBOW game: one connected 3D world, one continuous route.
+> 3	 *   intro  (01–02)  real-time cinematic: the girl drops the towel bundle (Benny hidden) into Drum A,
+> 4	 *                   closes the door and walks away; Benny peeks, then the spin tumbles him down the drain.
+> 5	 *   ride   (03–10)  interactive: auto-propelled along the course, steer left/right, real coin pickups,
+> 6	 *                   5 hearts (bumping the foam walls costs one), pause/resume.
+> 7	 *   outro  (11)     real-time victory cinematic: Benny is hidden under the towel; the SAME girl opens the
+> 8	 *                   door, folds/holds the towel without ever seeing him; FINAL SPIN COMPLETE.
+> 9	 * window.__rainbow exposes a deterministic QA API used by scripts/capture.mjs.
+> 10	 */
+> 11	import * as THREE from 'three';
+> 12	import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
+> 13	import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
+> 14	import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
+> 15	import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js';
+> 16	import { Course, StageId, WORLD } from '../world/cou …[+42757 chars]
+
+### 🤖 Claude — 2026-11-21T00:01:58.274Z
+
+Quick update: I'm reading how the game draws Screen 06 so I can put your four pictures in as the scenery. No changes yet.
+
+### 🤖 Claude — 2026-11-21T00:01:59.472Z
+
+> 🔧 **Bash** `{"command": "cat src/game/match.ts; sed -n '1,138p' src/ui/hud.ts | head -60; ls scripts | grep -iE 'capture|clip|shot' ; cat package.json | sed -n '1,30p'", "description": "Read URL switches, the HUD and the capture scripts"}`
+
+### 🧑 User — 2026-11-21T00:01:59.518Z
+
+> ↩︎ result: /**
+>  * "Match my approved picture" test switches for the gameplay screens (2026-11-17, qa/match/NOTES.md).
+>  *   `?match02=1` … `?match10=1`  one screen each (05 has its own set; `?match05=1` turns all of those on — see
+>  *   src/vfx/waterRibbon.ts q05). `?matchall=1` = every screen switch below at once.
+>  * Every change a screen makes lives behind its switch: with no switch the game is byte-for-byte the default build
+>  * (verified by pixel comparison after every change). Packaged experiment builds read the same keys from
+>  * VITE_RAINBOW_Q05 (flag05).
+>  * File ownership (one owner per screen while work runs in parallel): see qa/match/NOTES.md.
+>  */
+> import type { CamParams } from './cameraRig';
+> import { flag05 } from '../vfx/waterRibbon';
+> 
+> export type MatchId = '02' | '03' | '04' | '06' | '07' | '08' | '09' | '10';
+> export const MATCH_IDS: MatchId[] = ['02', '03', '04', '06', '07', '08', '09', '10'];
+> const ALL = flag05('matchall');
+> export const MATCH: Record<MatchId, boolean> = Object.fromEntries(MATCH_IDS.map((id) => [id, ALL || flag05('match' + id)])) as Record<MatchId, boolean>;
+> export const matchOn = (id: string): boolean => (MATCH as Record<string, boolean>)[id] === true;
+> 
+> /**
+>  * Came …[+8301 chars]
+
+### 🤖 Claude — 2026-11-21T00:02:14.475Z
+
+> 🔧 **Bash** `{"command": "cat qa/match/06/r30b/align/panel1_to_approved.json 2>/dev/null | head -40; ls qa/match/06/r30b/align", "description": "Read how panel 1 lines up with the approved Screen 06 picture"}`
+
+### 🧑 User — 2026-11-21T00:02:14.508Z
+
+> ↩︎ result: {"M": [[1.5970287225859903, -0.023836146702544036, 35.74576410931363], [0.023836146702544036, 1.5970287225859903, 248.46614885099314]], "scale": 1.59720659360468, "inliers": 93}panel1_to_approved.json
+> panel1_vs_approved_window.png
+> storyboard_wall_band_zoom.png
+
+### 🤖 Claude — 2026-11-21T00:02:15.497Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r30b/align/panel1_vs_approved_window.png"}`
+
+### 🧑 User — 2026-11-21T00:02:15.540Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T00:02:18.740Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/references/06_crest_the_rinse_arch.png"}`
+
+### 🧑 User — 2026-11-21T00:02:18.760Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T00:03:23.263Z
+
+> 🔧 **Bash** `{"command": "grep -rl \"queue.fal.run\\|fal.run\" tools scripts 2>/dev/null | head -20; ls tools | head -40; ls assets/textures | head -40", "description": "Find existing fal tools and texture folders"}`
+
+### 🧑 User — 2026-11-21T00:03:23.307Z
+
+> ↩︎ result: tools/lead_r10/refviews.py
+> tools/export/regen_review_pkg_r25.sh
+> tools/lead21/fal_view.py
+> scripts/setup-image-blaster.sh
+> blender
+> da3
+> export
+> imageblaster
+> lead21
+> lead22
+> lead23
+> lead25
+> lead26
+> lead_r10
+> lead_r4
+> lead_r5
+> lead_r6
+> make_env_geometry_ref.py
+> make_env_plate.py
+> make_env_plate_v2.py
+> make_env_plate_v3.py
+> marble05
+> match
+> match08
+> model-lab.html
+> model-lab.ts
+> proj05
+> qa
+> water-lab.html
+> water-lab.ts
+> worldlabs
+> benny05
+> marble05_env_1024.jpg
+> match08
+> tunnel05
+> water05
+
+### 🤖 Claude — 2026-11-21T00:03:24.531Z
+
+> 🔧 **Bash** `{"command": "sed -n '1,80p' tools/lead21/fal_view.py", "description": "Read the existing fal helper script"}`
+
+### 🧑 User — 2026-11-21T00:03:24.568Z
+
+> ↩︎ result: """Round 21 lead: one fal `nano-banana-2/edit` job — repaint a clean frame of the REAL game (image 1: the game's own camera +
+> geometry) in the art of the user's approved original (images 2..: style / material references). Every job is logged with its
+> inputs (sha256), prompt, request id, estimated cost and outputs in <out>/<name>.job.json and appended to the ledger.
+> Proposals only: nothing generated here is an accepted reference until the user approves it; the originals are never written.
+> usage: python3 -I tools/lead21/fal_view.py <out_dir> <name> <prompt.txt> <structure.png> <ref.png> [ref2.png ...]
+> env: FAL_RES (2K), FAL_N (1), FAL_AR (9:16)"""
+> import base64, hashlib, io, json, os, subprocess, sys, time
+> from pathlib import Path
+> from PIL import Image
+> 
+> PRICE = {"0.5K": 0.06, "1K": 0.08, "2K": 0.12, "4K": 0.16}   # USD per output image (fal model page, 2026-11-20)
+> LEDGER = Path("/home/user/rainbow-/qa/review_r21/artwork/LEDGER.md")
+> out, name, prompt_f = Path(sys.argv[1]), sys.argv[2], sys.argv[3]
+> imgs = sys.argv[4:]
+> res, n, ar = os.environ.get("FAL_RES", "2K"), int(os.environ.get("FAL_N", "1")), os.environ.get("FAL_AR", "9:16")
+> out.mkdir(parents=True, exist_ok=True)
+> prompt = Path(pro …[+3017 chars]
+
+### 🤖 Claude — 2026-11-21T00:03:35.958Z
+
+> 🔧 **Bash** `{"command": "cmp -s /root/.claude/uploads/73e630f8-f9d6-5165-abf6-affe24158479/fd02ee3d-image.png docs/briefs/2026-11-20-r30/USER_S06_STORYBOARD_R30.png && echo SAME_FILE || echo DIFFERENT_FILE; python3 -I - <<'EOF'\nfrom PIL import Image\nimport numpy as np\nfor p in ['/root/.claude/uploads/73e630f8-f9d6-5165-abf6-affe24158479/fd02ee3d-image.png','docs/briefs/2026-11-20-r30/USER_S06_STORYBOARD_R30.png']:\n    a=np.asarray(Image.open(p).convert('RGB')).astype(int)\n    print(p.split('/')[-1], a.shape)\na=np.asarray(Image.open('/root/.claude/uploads/73e630f8-f9d6-5165-abf6-affe24158479/fd02ee3d …[+662 chars]`
+
+### 🧑 User — 2026-11-21T00:03:36.463Z
+
+> ↩︎ result: SAME_FILE
+> fd02ee3d-image.png (1536, 1024, 3)
+> USER_S06_STORYBOARD_R30.png (1536, 1024, 3)
+> row runs (non-white) [(98, 724), (787, 1399)]
+> col runs top [(14, 504), (519, 1010)]
+> col runs bottom [(14, 505), (519, 1010)]
+
+### 🤖 Claude — 2026-11-21T00:03:43.686Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nfrom PIL import Image\nimport numpy as np\nfor k in range(1,5):\n    im=Image.open(f'qa/match/06/r30b/proof/sheets/{k}a_APPROVED_storyboard_panel{k}.png'); print(k, im.size)\na=np.asarray(Image.open('docs/briefs/2026-11-20-r30/USER_S06_STORYBOARD_R30.png').convert('RGB')).astype(int)\nwhite=(a.min(axis=2)>235)\nfor name,(x0,x1,y0,y1) in {'P1':(0,512,60,760),'P2':(512,1024,60,760),'P3':(0,512,760,1450),'P4':(512,1024,760,1450)}.items():\n    w=white[y0:y1,x0:x1]\n    rows=np.where(w.mean(axis=1)<0.3)[0]; cols=np.where(w.mean(axis=0)<0.3)[0]\n    print(name, 'x …[+217 chars]`
+
+### 🧑 User — 2026-11-21T00:03:43.979Z
+
+> ↩︎ result: 1 (783, 1000)
+> 2 (783, 1000)
+> 3 (783, 1000)
+> 4 (783, 1000)
+> P1 x 14 504 y 98 724
+> P2 x 519 1010 y 98 724
+> P3 x 14 504 y 787 1399
+> P4 x 519 1010 y 787 1399
+> s250.png
+> s290.png
+> s300.png
+> s336.png
+> shots.json
+
+### 🤖 Claude — 2026-11-21T00:03:48.676Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"import cv2, numpy, PIL, scipy; print(cv2.__version__, numpy.__version__, PIL.__version__, scipy.__version__)\" 2>&1; python3 -I -c \"import torch; print(torch.__version__)\" 2>&1 | tail -1; nproc; free -g | head -2", "description": "Check available image libraries and machine size"}`
+
+### 🧑 User — 2026-11-21T00:03:48.927Z
+
+> ↩︎ result: 5.1.0 2.5.3 12.3.0 1.18.1
+> ModuleNotFoundError: No module named 'torch'
+> 4
+>                total        used        free      shared  buff/cache   available
+> Mem:              15           0           0           0          14          14
+
+### 🤖 Claude — 2026-11-21T00:04:02.095Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/rainbow-/tools/paint06 /home/user/rainbow-/qa/match/06/paint06/work && cat > /home/user/rainbow-/tools/paint06/register_panels.py <<'EOF'\n\"\"\"paint06 step 1: cut the four storyboard panels out of the user's sheet and register each one onto the approved\nScreen 06 frame (864x1536) through the painted Benny they all share (SIFT on Benny's area, similarity transform).\nout: qa/match/06/paint06/work/panelK.png + register.json\"\"\"\nimport json, sys\nimport cv2, numpy as np\nfrom PIL import Image\nR = '/home/user/rainbow-'\nOUT = f'{R}/qa/match/06/paint06/work'\ …[+2219 chars]`
+
+### 🧑 User — 2026-11-21T00:04:03.016Z
+
+> ↩︎ result: 1 scale 1.5793 rot 0.55° inliers 108 err 1.21px corners [[33.0, 253.0], [809.0, 261.0], [24.0, 1244.0], [799.0, 1251.0]]
+> 2 scale 1.5692 rot 1.10° inliers 88 err 1.60px corners [[40.0, 256.0], [812.0, 271.0], [21.0, 1240.0], [793.0, 1255.0]]
+> 3 scale 1.6435 rot -0.53° inliers 133 err 1.32px corners [[8.0, 284.0], [815.0, 277.0], [17.0, 1292.0], [824.0, 1284.0]]
+> 4 scale 1.6052 rot -0.49° inliers 111 err 1.33px corners [[12.0, 297.0], [801.0, 290.0], [20.0, 1281.0], [810.0, 1274.0]]
+
+### 🤖 Claude — 2026-11-21T00:04:57.459Z
+
+> 🔧 **Bash** `{"command": "cat > /home/user/rainbow-/tools/paint06/fal.py <<'EOF'\n\"\"\"paint06: minimal fal queue client (credentials are injected by the environment proxy — no key in code).\nusage as module: from fal import run; res = run('fal-ai/esrgan', {...}, name='job', est_usd=0.01)\nEvery job is appended to qa/match/06/paint06/LEDGER.md (user authorised paid jobs 2026-11-21: \"I don't care how much it costs\").\"\"\"\nimport base64, io, json, subprocess, time\nfrom pathlib import Path\nfrom PIL import Image\n\nLEDGER = Path('/home/user/rainbow-/qa/match/06/paint06/LEDGER.md')\n\ndef data_uri(p, fmt …[+2756 chars]`
+
+### 🧑 User — 2026-11-21T00:05:01.644Z
+
+> ↩︎ result: {'image': {'content_type': 'image/png', 'file_name': None, 'file_size': None, 'width': 1964, 'height': 2508}}
+
+### 🤖 Claude — 2026-11-21T00:05:10.425Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && python3 -I - <<'EOF'\nimport sys; sys.path.insert(0,'tools/paint06')\nfrom fal import run, data_uri, download\nW='qa/match/06/paint06/work'\nfor ep, body, nm in [\n  ('fal-ai/seedvr/upscale/image', {'image_url': data_uri(f'{W}/panel1.png'), 'upscale_factor': 4}, 'seedvr4'),\n  ('fal-ai/topaz/upscale/image', {'image_url': data_uri(f'{W}/panel1.png'), 'upscale_factor': 4, 'model': 'Standard V2'}, 'topaz4'),\n]:\n    try:\n        r = run(ep, body, name='panel1_'+nm, est_usd=0.1)\n        img = r.get('image') or (r.get('images') or [None])[0]\n        print( …[+973 chars]`
+
+### 🧑 User — 2026-11-21T00:05:37.225Z
+
+> ↩︎ result: seedvr4 {'content_type': 'image/jpeg', 'file_name': '35pLYXRV8jE09Bo7bPR9s_Jte7fZJH.jpg', 'file_size': None, 'width': 1968, 'height': 2512}
+> topaz4 {'content_type': 'image/jpeg', 'file_name': 'image.jpeg', 'file_size': 2421815}
+> esrgan4 (1964, 2508) mean abs 10.91 within20 90.68
+> seedvr4 (1968, 2512) mean abs 9.08 within20 91.49
+> topaz4 (1964, 2508) mean abs 12.81 within20 83.53
+
+### 🤖 Claude — 2026-11-21T00:05:39.514Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/paint06/work/view_seedvr4.png"}`
+
+### 🧑 User — 2026-11-21T00:05:39.546Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T00:05:39.969Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/paint06/work/view_esrgan4.png"}`
+
+### 🧑 User — 2026-11-21T00:05:40.003Z
+
+> ↩︎ result: [image]
+
