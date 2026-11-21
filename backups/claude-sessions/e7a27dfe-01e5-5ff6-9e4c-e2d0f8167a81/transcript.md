@@ -2744,3 +2744,23 @@ Spark, the free renderer for this kind of 3D scene, needs a newer three.js than 
 
 > 🔧 **Bash** `{"command": "V=/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/splatview; cd $V && NODE_PATH=$(npm root -g) timeout 600 node shots.cjs draft_500k.spz out_d1 '[{\"name\":\"v0_start\",\"pos\":[0,0,0],\"look\":[0,0,-1],\"fov\":62},{\"name\":\"v1_fwd1\",\"pos\":[0,0,-1],\"look\":[0,0,-2],\"fov\":62},{\"name\":\"v2_fwd2\",\"pos\":[0,0,-2],\"look\":[0,0,-3],\"fov\":62},{\"name\":\"v3_fwd4\",\"pos\":[0,0,-4],\"look\":[0,0,-5],\"fov\":62},{\"name\":\"v4_top\",\"pos\":[0,12,-3],\"look\":[0,0,-3.01],\"fov\":70}]' 2>&1 | tail -12", "description": "Render the draft world  …[+53 chars]`
 
+### 🧑 User — 2026-11-21T03:48:21.716Z
+
+> ↩︎ result: pageerror: TypeError: Failed to resolve module specifier "three/addons/postprocessing/Pass.js". Relative references must start with either "/", "./", or "../".
+> node:internal/process/promises:394
+>     triggerUncaughtException(err, true /* fromPromise */);
+>     ^
+> 
+> page.waitForFunction: Timeout 300000ms exceeded.
+>     at /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/splatview/shots.cjs:17:16 {
+>   log: [],
+>   name: 'TimeoutError'
+> }
+> 
+> Node.js v22.23.5
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T03:48:26.831Z
+
+> 🔧 **Bash** `{"command": "V=/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/splatview; sed -i 's#\"three\":\"./node_modules/three/build/three.module.js\",#\"three\":\"./node_modules/three/build/three.module.js\",\"three/addons/\":\"./node_modules/three/examples/jsm/\",#' $V/index.html; sed -i \"s/timeout: 300000/timeout: 120000/\" $V/shots.cjs; cd $V && NODE_PATH=$(npm root -g) timeout 600 node shots.cjs draft_500k.spz out_d1 '[{\"name\":\"v0_start\",\"pos\":[0,0,0],\"look\":[0,0,-1],\"fov\":62},{\"name\":\"v1_fwd1\",\"pos\":[0,0,-1],\"look\":[0,0,-2],\"fov\":62},{\"name\" …[+293 chars]`
+
