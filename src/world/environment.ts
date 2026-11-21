@@ -289,7 +289,13 @@ export function buildEnvironment(course: Course): Environment {
   // the mid-tones toward saturated orange-gold while highlights stay bright. Default 0 = shader unchanged.
   const GOLD05 = qaNum05('gold05', 0) === 1;
   const TONE05: [number, number, number] = [1.35, 1.75, 1.3];
-  const rings05 = ringSlots05.filter((s) => Math.abs(s - sF05) > 0.5).map((s) => (Math.abs(s - sCam05 - 26) < 3 ? sCam05 + RING_A05_DEPTH : s));
+  const rings05Base = ringSlots05.filter((s) => Math.abs(s - sF05) > 0.5).map((s) => (Math.abs(s - sCam05 - 26) < 3 ? sCam05 + RING_A05_DEPTH : s));
+  // `?tun05=1` (round 31, user: "Benny must swim forward through the approved-looking tunnel"): the 05 tunnel is REAL all the way —
+  // gold rings every bay past sF05 and on into the start of 06 (no forced-perspective far block, which only works from the locked
+  // checkpoint eye), the approved purple walls repeated bay after bay instead of the 06 hall. Off: unchanged.
+  const TUN05 = qaNum05('tun05', 0) === 1;
+  const sEndT05 = course.stage('06').s0 + 40;
+  const rings05 = TUN05 ? [...rings05Base, ...Array.from({ length: Math.max(0, Math.floor((sEndT05 - sF05) / bay05) + 1) }, (_, n) => sF05 + n * bay05)] : rings05Base;
   // 05 walls: 7 dark capsule-slot rows per 14-unit bay, centred between the bands (rows 2 apart),
   // slots ≈0.6 × 0.24 units laid along the circumference (ref 05 near slots ≈10 × 28 px)
   // wave 7: 10 rows per bay (ref near walls show dense capsule rows, ≈25 px apart at the left edge; live had ≈45)
@@ -339,8 +345,8 @@ export function buildEnvironment(course: Course): Environment {
       zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 24, step: 0.8, arc: 1.9, inset: -0.12, vScale: 6, frontNormals: true }), pinkFlow.material));
     }
   };
-  addWall(s05, sGlow05, perf05Mat);
-  addWall(sGlow05, s08, perfTubeMat);
+  addWall(s05, TUN05 ? sEndT05 : sGlow05, perf05Mat);
+  addWall(TUN05 ? sEndT05 : sGlow05, s08, perfTubeMat);
   // 06/07 rings and the 04→05 junction collar (unchanged look)
   const ringMat = withTubeStrips(withFarGlow(gold({ color: '#ffc890', roughness: 0.12, emissive: 0.16 }), tubeGlow, 'ring'), { ...strips, color: '#fff0c8', intensity: 3.2 }, 'instance', 'ring');
   ringMat.envMap = goldEnv;
@@ -380,15 +386,22 @@ export function buildEnvironment(course: Course): Environment {
     for (let i = 0; i + 1 < list.length; i++) segs.push({ v0: list[i] + ptHw05, v1: list[i + 1] - ptHw05, row: PT_ROW.AB, t0: 0, t1: 1 });
     segs.push({ v0: ptA05 + ptHw05, v1: ptB05 - ptHw05, row: PT_ROW.AB, t0: 0, t1: 1 });
     // D0 of the far block is known further down; the eye sits (STAGE_CAM back) behind the crest, so depth(sF05) ≈ sF05 − sCam05 − 0.75
-    segs.push({ v0: ptB05 + ptHw05, v1: sF05, row: PT_ROW.BC, t0: 0, t1: ptSeam05(59, sF05 - sCam05 - 0.75) });
-    withProj05Wall(perf05Mat, segs.slice(-8), { anchor: sF05, period: bay05 }, 'real');
+    if (TUN05) {
+      // every bay from ring B on wears the sharpest approved bay (AB), repeated each bay (the shader's tile) — moving forward
+      // never reaches the small, blurry far rows of the picture
+      segs.push({ v0: ptB05 + ptHw05, v1: sF05 - ptHw05, row: PT_ROW.AB, t0: 0, t1: 1 });
+      withProj05Wall(perf05Mat, segs.slice(-8), { anchor: sF05 + ptHw05, period: bay05 }, 'real');
+    } else {
+      segs.push({ v0: ptB05 + ptHw05, v1: sF05, row: PT_ROW.BC, t0: 0, t1: ptSeam05(59, sF05 - sCam05 - 0.75) });
+      withProj05Wall(perf05Mat, segs.slice(-8), { anchor: sF05, period: bay05 }, 'real');
+    }
   }
   const collar = { depth: 0.022, lip: 0.012, width: 1.1 };
   // gold junction collar 04→05 (slightly heavier)
   zones.tubes.add(buildRings(perfPath, s05 + 0.3, s05 + 0.31, 1, ringMat, { inset: 0.02, collar: { depth: 0.03, lip: 0.014, width: 1.3 } }));
   zones.tubes.add(buildRingsAt(perfPath, rings05, ringMat05, { inset: 0.02, band: band05near }));
   const rings0607: number[] = [];
-  for (let s = s06 + RING06_PHASE - 2 * ringSpacing; s <= s08 - 1 + 1e-6; s += ringSpacing) if (s >= sGlow05 + 4) rings0607.push(s);
+  for (let s = s06 + RING06_PHASE - 2 * ringSpacing; s <= s08 - 1 + 1e-6; s += ringSpacing) if (s >= (TUN05 ? sEndT05 : sGlow05) + 4) rings0607.push(s);
   zones.tubes.add(buildRingsAt(perfPath, rings0607, ringMat, { inset: 0.02, collar }));
   // copper nozzle lids: one symmetric pair per bay on the side walls a little above eye level,
   // skipped where the stream climbs the wall (06 arch) so a lid never blocks the ride
@@ -420,7 +433,7 @@ export function buildEnvironment(course: Course): Environment {
   else zones.tubes.add(buildWallLids(perfPath, 0, 0, bay05, lidMat05('lid05', false), { positions: lids05, ...lid05 }));
   // 06/07: legacy hoods, unchanged
   const lids0607: number[] = [];
-  for (let s = s06 + RING06_PHASE + ringSpacing * 0.5 - 2 * ringSpacing; s <= s08 - 6 + 1e-6; s += ringSpacing) if (s >= sGlow05 + 4) lids0607.push(s);
+  for (let s = s06 + RING06_PHASE + ringSpacing * 0.5 - 2 * ringSpacing; s <= s08 - 6 + 1e-6; s += ringSpacing) if (s >= (TUN05 ? sEndT05 : sGlow05) + 4) lids0607.push(s);
   zones.tubes.add(buildWallLids(perfPath, 0, 0, ringSpacing, lidMat, { positions: lids0607, angleDeg: 18, droopDeg: 20, size: 1.7, thickness: 0.42, stretch: 1.3, sink: 0.12, skip: lidClear }));
 
   // ---- 05 far tunnel (forced perspective, calibrated for the locked 05 checkpoint eye) ----
@@ -535,6 +548,8 @@ export function buildEnvironment(course: Course): Environment {
     farLids.onBeforeRender = (_r, _s, cam) => sync(cam);
     glow.onBeforeRender = (_r, _s, cam) => { sync(cam); glowMat.uniforms.uOpacity.value = 1 - openNow; };
     zones.tubes.add(...parts);
+    // `?tun05=1`: the real tunnel continues, so the checkpoint-only far block stays out
+    if (TUN05) for (const p of parts) { p.visible = false; p.onBeforeRender = () => {}; p.layers.disableAll(); }
   }
   animated.push(pinkFlow.update);
 

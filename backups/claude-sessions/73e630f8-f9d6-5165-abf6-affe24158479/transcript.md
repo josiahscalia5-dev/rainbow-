@@ -4190,3 +4190,285 @@ I want the beauty of my approved artwork AND the real movement of my original mo
 > y +0.410  x -0.177..+0.151  z -0.104..+0.257
 > y +0.492  x -0.106..+0.082  z -0.037..+0.154
 
+### 🤖 Claude — 2026-11-21T02:23:14.544Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/characters/benny/benny31.ts", "content": "/**\n * `?benny31=1` — the IMPROVED 3D Benny (round 31, qa/benny/r31/README.md): a real 3D mesh rebuilt from the user's approved\n * Screen 06 Benny (Hunyuan3D 2, 40 k triangles) wearing the approved Benny's own colours (baked through the game's colour\n * chain: unlit texture x 4 shows the approved pixels after tone mapping + grade). It replaces the old model's visible parts\n * inside the SAME runtime, so the game moves him exactly as before (swim clip bob, ride lift / pitch, steering lean + yaw,\n * root placem …[+4845 chars]`
+
+### 🧑 User — 2026-11-21T02:23:14.578Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/src/characters/benny/benny31.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-21T02:23:15.297Z
+
+> 🔧 **Bash** `{"command": "sed -n '200,281p' src/characters/benny/runtime.ts", "description": "Read the rest of the Benny runtime update to place the hooks"}`
+
+### 🧑 User — 2026-11-21T02:23:15.331Z
+
+> ↩︎ result: const targetZ = lean * 0.9;
+>     pomVelX += (k * (targetX - pomAngX) - c * pomVelX) * dt;
+>     pomAngX += pomVelX * dt;
+>     pomVelZ += (k * (targetZ - pomAngZ) - c * pomVelZ) * dt;
+>     pomAngZ += pomVelZ * dt;
+>     qPom.setFromEuler(eAxis.set(THREE.MathUtils.clamp(pomAngX, -0.6, 0.6), 0, THREE.MathUtils.clamp(pomAngZ, -0.6, 0.6)));
+>     pom.quaternion.copy(pomRest).multiply(qPom);
+> 
+>     // blink (cartoon squash of the eyes); no blinking while dizzy
+>     blinkT -= dt;
+>     let blink = 1;
+>     if (expression !== 'dizzy') {
+>       if (blinkT < 0.14) blink = Math.abs(blinkT - 0.07) / 0.07;
+>       if (blinkT <= 0) blinkT = 2.2 + Math.random() * 2.6;
+>     }
+>     eyeL.scale.y = eyeR.scale.y = Math.max(0.08, blink);
+> 
+>     for (const f of furs) {
+>       f.uniforms.uTime.value = st.time;
+>       f.uniforms.uWind.value.set(0, 0, -Math.min(0.6, st.speed / 25));
+>     }
+>   };
+> 
+>   // ---- QA segmentation mask (`?bennyMask`, or window.__bennyQA.mask(true) in ?qa pages) ----
+>   if (typeof location !== 'undefined') {
+>     const qs = new URLSearchParams(location.search);
+>     const qa = { mask: (on: boolean) => setMask(scene, furs, on), info: () => qaInfo(root, body), b05 };
+>     if (qs.has('qa') || qs.has('bennyMask')) (w …[+2418 chars]
+
+### 🤖 Claude — 2026-11-21T02:23:30.793Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='src/characters/benny/runtime.ts'; s=open(p).read()\ns=s.replace(\"\"\"import { BENNY05, FUR05, applyBenny05, dampedClips, loadBenny05Maps } from './benny05';\"\"\",\"\"\"import { BENNY05, FUR05, applyBenny05, dampedClips, loadBenny05Maps } from './benny05';\nimport { BENNY31, attachBenny31, loadBenny31, type Benny31Assets } from './benny31';\"\"\",1)\nold=\"\"\"  const maps05 = BENNY05 ? await loadBenny05Maps() : undefined;\n  return createBennyRuntime(src.clone(true), clips, { furQuality: opts.furQuality ?? defaultFurQuality(), maps05 });\"\"\"\nnew=\"\"\ …[+2582 chars]`
+
+### 🤖 Claude — 2026-11-21T02:23:31.797Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/b31g.png"}`
+
+### 🧑 User — 2026-11-21T02:23:50.147Z
+
+> ↩︎ result: B31 stills 2
+
+### 🧑 User — 2026-11-21T02:23:50.182Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-21T02:23:57.969Z
+
+[Request interrupted by user]
+
+### 🧑 User — 2026-11-21T02:23:58.132Z
+
+CLAUDIA — IMPORTANT CORRECTION.
+
+I want Benny to swim forward through my game exactly as he did in the original playable 3D version.
+
+BUT DO NOT SACRIFICE MY NEW APPROVED-LOOKING SCENERY TO DO IT.
+
+Your latest five-frame test starts looking beautiful, but as Benny swims forward, the scenery begins looking like my older, inaccurate 3D game again.
+
+That is NOT what I want.
+
+Keep the beautiful painted version protected. Use its approved colors, textures, purple machinery, gold bands, water, foam, and overall appearance to improve the actual moving 3D environment.
+
+Use the improved 3D Benny, matching my approved character as closely as possible.
+
+Before continuing across the entire level, show me one short playable test where Benny genuinely swims forward, passes a gold band, and the scenery STILL looks close to my approved Screen 05.
+
+If the existing 3D geometry cannot support that appearance, correct the geometry and material mapping rather than reverting to the old look.
+
+I want BOTH: my approved beautiful scenery AND actual forward-moving 3D gameplay.
+
+Preserve both versions and my GitHub backups. Do not call this finished until I see the result.
+
+### 🤖 Claude — 2026-11-21T02:24:14.448Z
+
+> 🔧 **Bash** `{"command": "sed -n '360,470p' src/world/environment.ts", "description": "Read the Screen 05 wall/ring mapping and the far-tunnel block"}`
+
+### 🧑 User — 2026-11-21T02:24:14.486Z
+
+> ↩︎ result: const gold05 = (key: string, virtual: boolean, band: typeof band05 = band05) => {
+>     const m = withBandShading(withFarGlow(gold({ color: '#ffd45c', roughness: 0.13, emissive: 0.1 }), glowT05, key, virtual), GOLD05 ? { ...band, tone: TONE05 } : band, key);
+>     m.emissive.set('#e08a10');
+>     m.envMap = goldEnv05;
+>     m.envMapIntensity = 1.15;
+>     return m;
+>   };
+>   // `?projring05=1` (qa/pilot05/proj/tunnel/NOTES.md): the approved gold band baked onto the 05 rings; off = unchanged
+>   const ringMat05 = PROJRING05 ? withProj05Ring(gold05('ring05', false, band05near), true, band05near.height, 'real') : gold05('ring05', false, band05near);
+>   // `?projwall05=1`: the approved purple wall, one baked texture row per bay between two rings (src/vfx/proj05Tunnel.ts).
+>   // Depths are measured from the locked checkpoint eye; the BC bay runs from the real ring B across the seam to the far
+>   // block's first ring (virtual depth ringDv[0]), so both walls share its row (split at tSeam05, linear in depth).
+>   const ptHw05 = (band05near.width + band05near.groove + band05near.lipWidth) / 2;
+>   const ptA05 = sCam05 + RING_A05_DEPTH;
+>   const ptB05 = rings05.find((s) => s > ptA05 + 1) ?? ptA05 + 20;
+>   const pt …[+7488 chars]
+
+### 🤖 Claude — 2026-11-21T02:24:26.466Z
+
+> 🔧 **Bash** `{"command": "sed -n '173,270p' src/vfx/proj05Tunnel.ts; grep -n \"PT_ROW\\s*=\" -A3 src/vfx/proj05Tunnel.ts", "description": "Read how the approved wall rows map onto the tunnel bays"}`
+
+### 🧑 User — 2026-11-21T02:24:26.502Z
+
+> ↩︎ result: if (PROJWALL05 || PROJRING05 || PROJFRAME05) proj05Pending.push(loadTextures());
+> 
+> const size = new THREE.Vector2();
+> function livePost(renderer: THREE.WebGLRenderer) {
+>   const rt = renderer.getRenderTarget();
+>   if (rt) size.set(rt.width, rt.height); else renderer.getDrawingBufferSize(size);
+>   shared.uPjRes.value.copy(size);
+>   shared.uPjPost.value.x = renderer.toneMappingExposure;
+> }
+> 
+> /** one wall bay: tunnel coordinate range [v0, v1) (the wall's uv.y) → atlas row, t at v0 and at v1 */
+> export interface WallSeg { v0: number; v1: number; row: number; t0: number; t1: number }
+> 
+> /**
+>  * `?projwall05=1`: wrap a perforatedMetal wall material (real 05 wall or the forced-perspective far wall; both carry
+>  * `vPerfUv` = (angle round the tube 0..1 from the top, tunnel coordinate)). `segs` (≤ 8) lists the bays; anything outside
+>  * them repeats the AB row every `tile.period` units from `tile.anchor`.
+>  */
+> export function withProj05Wall<T extends THREE.MeshStandardMaterial>(mat: T, segs: WallSeg[], tile: { anchor: number; period: number }, key: string): T {
+>   const seg = Array.from({ length: N_SEG }, (_, i) => (segs[i] ? new THREE.Vector4(segs[i].v0, segs[i].v1, 0, 0) : new THREE.Vector4(1e9, 1e9, 0,  …[+4705 chars]
+
+### 🤖 Claude — 2026-11-21T02:24:50.643Z
+
+> 🔧 **Bash** `{"command": "grep -n \"^  {$\\|^  }$\" src/world/environment.ts | awk -F: '$1>420 && $1<700' | head; grep -n \"far05Debug\\|tube05_end_glow\\|zones.tubes.add(farGroup\\|const parts = \\[\" src/world/environment.ts | head", "description": "Locate the far-tunnel block boundaries"}`
+
+### 🧑 User — 2026-11-21T02:24:50.694Z
+
+> ↩︎ result: 427:  {
+> 538:  }
+> 566:  }
+> 584:  }
+> 626:  }
+> 644:  }
+> 653:  {
+> 683:  }
+> 12:import { far05Debug, farRiverLayout, farRiverGeometry } from './far05'; // path-camera (05 far tunnel block)
+> 473:    Object.assign(far05Debug, { ft, eye, sF05, bay05, ringDv, knots, realSeamRing, perfPath, level, farLay, sCam05, s05, sGlow05, rings05, band05, band05near });
+> 509:    glow.name = 'tube05_end_glow';
+> 513:    const parts = [farWall, farRiver, farRings, farLids, glow];
+
+### 🤖 Claude — 2026-11-21T02:24:52.598Z
+
+> 🔧 **Bash** `{"command": "sed -n '505,540p' src/world/environment.ts", "description": "Read the end of the far-tunnel block"}`
+
+### 🧑 User — 2026-11-21T02:24:52.640Z
+
+> ↩︎ result: if (PROJLID05) farLids.visible = false;
+>     // warm light at the very end (ref 05 VP: core ≲40 px, halo ≲120 px)
+>     const glowMat = tunnelEndGlowMaterial(new THREE.Vector4(0, 0.001, 400, 420));
+>     const glow = new THREE.Mesh(new THREE.CircleGeometry(1, 48), glowMat);
+>     glow.name = 'tube05_end_glow';
+>     glow.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeBasis(fr0.right, fr0.up, fr0.tan.clone().negate()));
+>     glow.position.copy(ft.point(zEnd, new THREE.Vector3()));
+>     glow.scale.setScalar(perfPath.radius(sF05) * ft.kOf(zEnd) * 1.35);
+>     const parts = [farWall, farRiver, farRings, farLids, glow];
+>     for (const p of parts) { p.frustumCulled = false; p.name ||= 'tube05_far'; }
+>     farWall.name = 'tube05_far_wall'; farRiver.name = 'tube05_far_river';
+>     // `?proj05=1` only: visual-only strip on the lower wall carrying the approved foam banks beyond the river edge at the
+>     // far bends (src/vfx/proj05Apron.ts); `?projbank05=0` leaves it out. No collisions; nothing else changes.
+>     if (PROJ05 && (typeof location === 'undefined' || new URLSearchParams(location.search).get('projbank05') !== '0')) {
+>       root.add(createProj05Apron(course, perfPath, sCam05 + 4, sF05)); …[+1054 chars]
+
+### 🤖 Claude — 2026-11-21T02:25:22.720Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='src/world/environment.ts'; s=open(p).read()\nold=\"\"\"  const rings05 = ringSlots05.filter((s) => Math.abs(s - sF05) > 0.5).map((s) => (Math.abs(s - sCam05 - 26) < 3 ? sCam05 + RING_A05_DEPTH : s));\"\"\"\nnew=\"\"\"  const rings05Base = ringSlots05.filter((s) => Math.abs(s - sF05) > 0.5).map((s) => (Math.abs(s - sCam05 - 26) < 3 ? sCam05 + RING_A05_DEPTH : s));\n  // `?tun05=1` (round 31, user: \"Benny must swim forward through the approved-looking tunnel\"): the 05 tunnel is REAL all the way —\n  // gold rings every bay past sF05 and on into the start o …[+3572 chars]`
+
+### 🤖 Claude — 2026-11-21T02:25:23.821Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/tun.png"}`
+
+### 🧑 User — 2026-11-21T02:25:57.529Z
+
+> ↩︎ result: TUN stills 9
+
+### 🧑 User — 2026-11-21T02:25:57.567Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T02:26:20.128Z
+
+> 🔧 **Bash** `{"command": "sed -n '230,300p' src/world/course.ts; cat > /tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/hy.ts <<'EOF'\nimport { Course } from '/home/user/rainbow-/src/world/course';\nconst c = new Course();\nconst out: string[] = [];\nfor (let s = 110; s <= 260; s += 6) { const f = c.sample(s); out.push(`${s}:${f.pos.y.toFixed(1)}/${f.pos.x.toFixed(1)}/${f.pos.z.toFixed(1)}`); }\nconsole.log(out.join('  '));\nEOF\ntimeout 120 npx vite-node /tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/hy.ts 2>&1 | tail -2", "description":  …[+102 chars]`
+
+### 🧑 User — 2026-11-21T02:26:22.576Z
+
+> ↩︎ result: mark('03');
+>   // ---- 03: whirlpool twirl — 3/4 inward turn down the funnel that dives into the drain CENTRE ----
+>   // decreasing angle from the -X side (θ=-π/2) round the far and right sides to the near (+Z) side;
+>   // r shrinks as (1-t)^1.6 so the last stretch heads radially inward = straight -Z into the drain hole.
+>   seg(60, (t) => {
+>     const th = -Math.PI / 2 - Math.PI * 1.5 * (1 - (1 - t) * (1 - t)); // angle eases out → radial finish
+>     const r = 9.6 * Math.pow(1 - t, 0.9);
+>     return V(b.center.x + r * Math.sin(th), funnelY(r) + 0.25, b.center.z + r * Math.cos(th));
+>   });
+>   mark('04');
+>   // ---- 04: five-arrow slide — steep straight drop (≈32°) inside the gold ring pipe ----
+>   const s4 = pts[pts.length - 1].clone();
+>   const pitch4 = THREE.MathUtils.degToRad(32);
+>   const d4 = V(0, -Math.sin(pitch4), -Math.cos(pitch4));
+>   // pull-down arc from the drain lip into the steep slide pitch
+>   const R4a = 9;
+>   seg(7, (t) => {
+>     const a = pitch4 * t;
+>     return s4.clone().add(V(0, -R4a * (1 - Math.cos(a)), -R4a * Math.sin(a)));
+>   });
+>   const s4b = pts[pts.length - 1].clone();
+>   seg(16, (t) => s4b.clone().addScaledVector(d4, 34 * t));
+>   // pull out of the slide into the horizontal c …[+3030 chars]
+
+### 🤖 Claude — 2026-11-21T02:26:51.449Z
+
+> 🔧 **Bash** `{"command": "grep -n \"^import\\|flag05\" src/world/course.ts | head; python3 -I - <<'EOF'\np='src/world/course.ts'; s=open(p).read()\nold=\"\"\"  // ---- 06: rinse arch — rises ~12 units, crests, curls down and to the right into the 07 tube ----\n  const s6 = pts[pts.length - 1].clone();\n  seg(34, (t) =>\n    V(\n      s6.x - 4 * Math.sin(Math.PI * t) + (WORLD.chamber.center.x - s6.x) * smooth(0.4, 1, t),\n      s6.y + 12.5 * Math.pow(Math.sin(Math.PI * Math.min(t / 0.82, 1)), 1.15) - 4.5 * smooth(0.5, 1, t),\n      s6.z - 46 * t,\n    ),\n  );\"\"\"\nnew=\"\"\"  // ---- 06: rinse arch — ris …[+1927 chars]`
+
+### 🤖 Claude — 2026-11-21T02:26:52.605Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/tun2.png"}`
+
+### 🧑 User — 2026-11-21T02:27:23.132Z
+
+> ↩︎ result: 14:import * as THREE from 'three';
+> 15:import { flag05 } from '../vfx/waterRibbon';
+> 16:import river08 from '../../assets/textures/match08/river08.json';
+> 320:  const m08 = flag05('match08') || flag05('matchall');
+> TUN2 stills 9
+
+### 🧑 User — 2026-11-21T02:27:23.168Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-21T02:27:26.164Z
+
+[Request interrupted by user]
+
+### 🧑 User — 2026-11-21T02:27:26.197Z
+
+CLAUDIA — IMPORTANT: DO NOT STRAIGHTEN MY APPROVED SCREEN 05.
+
+I want the purple-and-gold washer tunnel to continue throughout the level, but the blue-and-pink river must keep the beautiful winding S-curves shown in my original approved Screen 05.
+
+I never asked for a straight river.
+
+Fix the old pink hall appearing ahead, correct the route geometry, and keep the gold rings and purple machinery surrounding Benny as he swims forward.
+
+The water, foam, coins, tunnel, and camera must all follow the approved design.
+
+Keep my improved 3D Benny and the beautiful approved-looking scenery.
+
+Show me actual gameplay from the beginning to the end of Screen 05, with Benny swimming around the curves and through the tunnel before naturally entering Screen 06.
+
+Do not sacrifice the approved scenery to make the movement work. I want both.
+
+### 🤖 Claude — 2026-11-21T02:27:51.210Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image\na=Image.open('references/05_flow_into_the_current.png').convert('RGB').resize((540,960)); b=Image.open('qa/match/05/r31_3d/look/TUN2_s160.png').convert('RGB').resize((540,960))\nc=Image.new('RGB',(1100,960),'white'); c.paste(a,(0,0)); c.paste(b,(560,0)); c.save('/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/t160.png')\"", "description": "Put the approved Screen 05 next to the mid-Screen 05 frame"}`
+
+### 🧑 User — 2026-11-21T02:27:51.638Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-21T02:27:52.512Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/t160.png"}`
+
+### 🧑 User — 2026-11-21T02:27:52.568Z
+
+> ↩︎ result: [image]
+

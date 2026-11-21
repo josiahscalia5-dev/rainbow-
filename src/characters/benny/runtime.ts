@@ -7,6 +7,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import type { BennyRuntime } from '../types';
 import { makeFur, type FurHandle, type FurParams } from './fur';
 import { BENNY05, FUR05, applyBenny05, dampedClips, loadBenny05Maps } from './benny05';
+import { BENNY31, attachBenny31, loadBenny31, type Benny31Assets } from './benny31';
 
 const BENNY_URL = new URL('../../../assets/models/benny.glb', import.meta.url).href;
 
@@ -34,7 +35,9 @@ export async function loadBenny(opts: { furQuality?: 'high' | 'low' } = {}): Pro
   const clips: THREE.AnimationClip[] = src.userData.animations ?? [];
   // `?benny05=1` / `?match05=1` only: the maps baked from the approved Screen 05 (benny05.ts)
   const maps05 = BENNY05 ? await loadBenny05Maps() : undefined;
-  return createBennyRuntime(src.clone(true), clips, { furQuality: opts.furQuality ?? defaultFurQuality(), maps05 });
+  // `?benny31=1`: the improved Benny built from the approved Screen 06 Benny (benny31.ts) inside the same runtime
+  const b31 = BENNY31 ? await loadBenny31() : undefined;
+  return createBennyRuntime(src.clone(true), clips, { furQuality: opts.furQuality ?? defaultFurQuality(), maps05, b31 });
 }
 
 /**
@@ -74,7 +77,7 @@ function ridePitch(): number {
 export function createBennyRuntime(
   scene: THREE.Object3D,
   clips: THREE.AnimationClip[],
-  opts: { furQuality?: 'high' | 'low'; maps05?: Record<string, THREE.Texture | null> } = {},
+  opts: { furQuality?: 'high' | 'low'; maps05?: Record<string, THREE.Texture | null>; b31?: Benny31Assets } = {},
 ): BennyRuntime {
   const root = new THREE.Group();
   root.name = 'Benny';
@@ -148,6 +151,9 @@ export function createBennyRuntime(
     eyesGroup.scale.setScalar(e === 'peek' ? 1.06 : 1);
   };
   setExpression('happy');
+  // `?benny31=1`: the improved mesh rides on the same body node (clip bob, ride lift / pitch, steering lean); old parts hidden
+  const b31 = opts.b31 ? attachBenny31(body, scene, opts.b31) : null;
+  const setExpressionB = b31 ? (e: 'happy' | 'dizzy' | 'peek') => { setExpression(e); b31.hideOld(); } : setExpression;
 
   // ---- secondary motion state ----
   let pomAngX = 0, pomVelX = 0, pomAngZ = 0, pomVelZ = 0;
@@ -218,6 +224,7 @@ export function createBennyRuntime(
       f.uniforms.uTime.value = st.time;
       f.uniforms.uWind.value.set(0, 0, -Math.min(0.6, st.speed / 25));
     }
+    b31?.update(st.time, swim, pomAngX, pomAngZ);
   };
 
   // ---- QA segmentation mask (`?bennyMask`, or window.__bennyQA.mask(true) in ?qa pages) ----
@@ -228,7 +235,7 @@ export function createBennyRuntime(
     if (qs.has('bennyMask')) qa.mask(true);
   }
 
-  return { root, setExpression, update, radius: 0.8 };
+  return { root, setExpression: setExpressionB, update, radius: 0.8 };
 }
 
 /**

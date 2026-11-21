@@ -14,6 +14,8 @@
 import * as THREE from 'three';
 import { flag05 } from '../vfx/waterRibbon';
 import river08 from '../../assets/textures/match08/river08.json';
+/** `?tun05=1` (round 31): see the 06 arch below. Guarded read (no location in vite-node / workers -> false). */
+const TUN05_COURSE: boolean = (() => { try { return typeof location !== 'undefined' && new URLSearchParams(location.search).get('tun05') === '1'; } catch { return false; } })();
 
 export type StageId = '01' | '02' | '03' | '04' | '05' | '06' | '07' | '08' | '09' | '10' | '11';
 export type TubeKind = 'none' | 'chute' | 'gold' | 'perf';
@@ -270,11 +272,14 @@ function buildRoute(): RouteData {
   straight.push({ from: '05', to: '06', a: s5.clone(), b: s5.clone().add(L05), floorDepth: 3.3 });
   mark('06');
   // ---- 06: rinse arch — rises ~12 units, crests, curls down and to the right into the 07 tube ----
+  // `?tun05=1` (round 31): a low crest (2.5 units) so the long approved 05 tunnel continues straight into 06 (the 12.5-unit arch
+  // rose out of the tunnel right in front of the 05 view); the end point (hence 07, the plunge, 08 …) is the same.
+  const ARCH06 = TUN05_COURSE ? 2.5 : 12.5;
   const s6 = pts[pts.length - 1].clone();
   seg(34, (t) =>
     V(
       s6.x - 4 * Math.sin(Math.PI * t) + (WORLD.chamber.center.x - s6.x) * smooth(0.4, 1, t),
-      s6.y + 12.5 * Math.pow(Math.sin(Math.PI * Math.min(t / 0.82, 1)), 1.15) - 4.5 * smooth(0.5, 1, t),
+      s6.y + ARCH06 * Math.pow(Math.sin(Math.PI * Math.min(t / 0.82, 1)), 1.15) - 4.5 * smooth(0.5, 1, t),
       s6.z - 46 * t,
     ),
   );
