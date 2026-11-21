@@ -794,7 +794,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 25599,
-   "sha256": "7b2eb38e8e4909c661cc40a86480a92e72a71154a9b65a2cf145072c40be922d"
+   "sha256": "84ec37ec39a822eb23b8dba9654b732d07c2442bdcbfbf1490f3187cd7c048d2"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3056,
-   "sha256": "1acc3f07519ba79e713df3280a808c2ee2aea5dc561b5175d0f1d649f37bc0b2"
+   "sha256": "b10f06bcf9981db351555ed7dc8cd99ff66778bbacd18180f0b9444fb0cb3ffa"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -35687,6 +35687,11 @@
    "sha256": "95d17e48c6334441eee9a912cebf79cf2a191d557890ad8337f99c01e55e64c1"
   },
   {
+   "path": "qa/spaitial/05/echo2.spz",
+   "bytes": 37222474,
+   "sha256": "eec82544d7c9ff01abb49fb63d5dc4ec4cb6ade28e7880767164ed7792d4217c"
+  },
+  {
    "path": "qa/spaitial/05/input_05_clean.png",
    "bytes": 3581117,
    "sha256": "cfe6aba6a1091041df9b363395ab271afbd1449da0f26e44cbc538967a0043bb"
@@ -35695,6 +35700,11 @@
    "path": "qa/spaitial/05/upload.json",
    "bytes": 138,
    "sha256": "f4ea43bb91d49f31b9c8c23c0113a204496880154e69cec544964e21d0a5cae4"
+  },
+  {
+   "path": "qa/spaitial/05/world.json",
+   "bytes": 1825,
+   "sha256": "6c496dbc36dec516c32127fee3a043f64c7c158b87c4d7cb0f7c965da54eca93"
   },
   {
    "path": "qa/worldlabs/05/05_env_mask.png",
