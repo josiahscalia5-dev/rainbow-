@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3271,
-   "sha256": "0801a3ca6047bbe70a0c8bffea6c7c9a0760c6558bc3aee19ea5c8579dcff3d4"
+   "sha256": "8bf8c1f867be621c1c573c5cd2e017c0e48463de17417461951d1ab1d0865960"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -7734,7 +7734,7 @@
   {
    "path": "backups/wip/screen05-agents/LAST_SYNC_UTC",
    "bytes": 33,
-   "sha256": "ac11e3a58f2c654df3ba8358605c1f9dfb5e8d325368b4070e13f09b3aa6ad9e"
+   "sha256": "4b29d12e296266692c0ba522deb7faff0c7677094ef1d306e95f010107958da1"
   },
   {
    "path": "backups/wip/screen05-agents/WORKSPACE",
@@ -39807,6 +39807,11 @@
    "sha256": "69ee93dc70222750ed61bc4a8195193b0592556c5802b267a84634bba96b5709"
   },
   {
+   "path": "tools/kit05/CONTROLS_NOTES_R32.md",
+   "bytes": 14720,
+   "sha256": "332f7072983e81cb4800d8a7988ae006e6da3e463b1fa97e17a24c133e824e38"
+  },
+  {
    "path": "tools/kit05/bake_foam.py",
    "bytes": 1660,
    "sha256": "6c4543d98b49fa92596fce0a3b623cf6b91c82d8f1be94c422de98e53a1b26ce"
@@ -39825,6 +39830,11 @@
    "path": "tools/kit05/compare_r33.py",
    "bytes": 3705,
    "sha256": "f0013d2da29d1fa5b66b12121a588a259429b08c89df2a363660605a0ec17dbf"
+  },
+  {
+   "path": "tools/kit05/controls.js",
+   "bytes": 33915,
+   "sha256": "fe3546ec4145e731fd99e75a9e459f11970e847d504d2e1e2a360989200c02fe"
   },
   {
    "path": "tools/kit05/fit_tunnel.py",
@@ -39848,13 +39858,33 @@
   },
   {
    "path": "tools/kit05/kitgame.html",
-   "bytes": 33111,
-   "sha256": "4fbf39272505d3af8ba137efa06329b100b63ea658bf7da7c35ecf791844aa6c"
+   "bytes": 33437,
+   "sha256": "1708781ad0025d596df6aa5374966f6d17f31cf70bf3a09b30cf7dc700e1c6c1"
+  },
+  {
+   "path": "tools/kit05/live.js",
+   "bytes": 6262,
+   "sha256": "12c9108f15d4628c1f79d00a6982f627dd9c2ed7eb0fc2c560a77c347aea0005"
+  },
+  {
+   "path": "tools/kit05/live_check.cjs",
+   "bytes": 4130,
+   "sha256": "13a4748fdc032b3af9901b284580ea52795c307bbdabab78c6a77b9e02d0e769"
   },
   {
    "path": "tools/kit05/painted_coins.py",
    "bytes": 1914,
    "sha256": "3f9c16263cb5c26061523b967317e0130ff8ce28ed4c2bb4a43f35b248ffbb6c"
+  },
+  {
+   "path": "tools/kit05/render_slot.sh",
+   "bytes": 885,
+   "sha256": "0cd1cc546ae4e6168690dc7e4180b301c63c8008bbaa361e18b3a6f8a40e3d3f"
+  },
+  {
+   "path": "tools/kit05/setup_kit.sh",
+   "bytes": 2416,
+   "sha256": "b07dd5d2728d0f9a051601a24ca77bbc5e0751c49e4911fb6a2848d94b7a607b"
   },
   {
    "path": "tools/kit05/still_page.cjs",
