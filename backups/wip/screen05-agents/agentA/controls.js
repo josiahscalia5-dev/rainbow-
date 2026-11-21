@@ -26,8 +26,8 @@ export const TUNING = {
   SWIPE_PX: 30,        // swipe threshold (CSS px)
   COIN_R: 0.13,        // coin pick-up radius around his body segment (3D)
   BODY_LO: 0.06, BODY_HI: 0.30, // body segment above his water point (world units, scales with height)
-  END_MARGIN: 1.6,     // done this far before the last ring (S_END)
-  GLIDE: 0.5,          // after done he glides to rest within this path length (exponential, no jolt)
+  END_MARGIN: 0.15,    // done this far before the last ring (S_END), lead's rule
+  GLIDE: 0.15,         // after done he glides to rest within this path length, never past the trail end
 };
 
 const clamp = (x, a, b) => Math.min(b, Math.max(a, x));
@@ -121,21 +121,22 @@ export function installControls(ctx) {
   }
 
   // ---------------- coin trail (round 32b): ONE single-file trail of 26 coins, HUD 1,420 -> 1,680 when all are collected ----------------
-  // Run 1 = the approved picture's trail (frame 0), then runs of 3-4 coins 0.55-0.65 apart with natural gaps: two ease into a side
-  // lane, two are rising leap arcs (rising only: a coin after the top would sit right over the next one on screen), one weaves. Never two coins closer than MIN_GAP along the path (no towers, no clusters).
+  // Run 1 = the approved picture's trail (frame 0), then runs of 3-5 coins 0.55-0.75 apart with natural gaps up to S_LAST - 1.5: two
+  // ease into a side lane, two are rising leap arcs (rising only: a coin after the top sits right over the next one on screen), one weaves. Never two coins closer than MIN_GAP along the path (no towers, no clusters).
   // Each entry: [s, lat, h] = path length, lateral offset (+ = river right), height of the coin's lowest point above the water
   // line rule (centre = coinD * 0.75 + h above the water, as the old water coins).
   // Run 1 coins 1-4 = the approved picture's coins, fitted on the start camera of the merged page (screen error < 3 px; agentB's
   // rebuilt trail differs from the old one, so these replace the lead's back-projected (s, lat)); coins 5-8 continue toward the
-  // vanishing point as far right as the river allows (|lat| <= 0.22). Lateral zig-zags + 0.5-0.66 spacing were chosen with
-  // coin_overlap_model.py / coin_layout_search.py on the recorded camera path so no two coins with r >= 6 px overlap on screen.
+  // vanishing point as far right as the river allows (|lat| <= 0.22). The zig-zags and spacings were chosen with
+  // coin_overlap_model.py / coin_layout_search.py / coin_run1_search.py on the recorded camera path, so that no two coins with
+  // r >= 6 px overlap on screen anywhere in the level (then verified on the page with coins_level_check.cjs).
   const RUNS = [
-    { kind: 'painting', pts: [[1.13, 0.025, 0], [1.77, 0.12, 0], [2.34, 0.15, 0], [2.94, 0.105, 0], [3.6, 0.22, 0], [4.1, 0.02, 0], [4.65, 0.21, 0], [5.2, 0.09, 0]] },
-    { kind: 'lane-right', pts: [[7.4, -0.04, 0], [8.0, 0.11, 0], [8.6, 0.22, 0], [9.2, 0.07, 0]] },
-    { kind: 'leap-arc', pts: [[12.0, 0.02, 0.10], [12.55, -0.02, 0.26], [13.1, 0.02, 0.42]] },
-    { kind: 'lane-left', pts: [[16.6, 0.04, 0], [17.25, -0.07, 0], [17.8, -0.22, 0], [18.4, -0.11, 0]] },
-    { kind: 'weave', pts: [[21.6, 0.06, 0], [22.15, -0.06, 0], [22.7, 0.06, 0], [23.25, -0.05, 0]] },
-    { kind: 'final-arc', pts: [[26.6, -0.02, 0.12], [27.15, 0.02, 0.27], [27.7, -0.02, 0.42]] },
+    { kind: 'painting', pts: [[1.13, 0.025, 0], [1.77, 0.12, 0], [2.34, 0.15, 0], [2.94, 0.105, 0], [3.7, 0.18, 0], [4.45, 0.22, 0], [5.2, 0.10, 0], [5.85, 0.22, 0]] },
+    { kind: 'lane-right', pts: [[7.4, -0.04, 0], [8.0, 0.15, 0], [8.6, 0.22, 0], [9.2, 0.03, 0]] },
+    { kind: 'leap-arc', pts: [[12.69, 0.02, 0.10], [13.24, -0.02, 0.26], [13.79, 0.02, 0.42]] },
+    { kind: 'lane-left', pts: [[17.99, 0.07, 0], [18.74, -0.08, 0], [19.49, -0.22, 0]] },
+    { kind: 'weave', pts: [[23.74, 0.06, 0], [24.29, -0.10, 0], [24.84, 0.10, 0], [25.54, -0.13, 0], [26.2, 0.08, 0]] },
+    { kind: 'final-arc', pts: [[29.5, -0.02, 0.12], [30.05, 0.02, 0.27], [30.6, -0.02, 0.42]] },
   ];
   // level end: S_END = trail s nearest to the LAST ring (TR.XB + offsets[N-1]); a track without XB ends at its trail end.
   const TS = TR.trail_s, TEND = TS[TS.length - 1];
@@ -145,12 +146,11 @@ export function installControls(ctx) {
     let best = 0, bd = Infinity; TR.trail.forEach((p, i) => { const d = (p[0] - X[0]) ** 2 + (p[1] - X[1]) ** 2 + (p[2] - X[2]) ** 2; if (d < bd) { bd = d; best = i; } });
     return TS[best];
   })();
-  // done at S_END - END_MARGIN; then he glides to rest within GLIDE (s never passes S_DONE + GLIDE, which stays >= 0.9 before the
-  // trail end, so his and the camera's look-ahead windows never run off the trail and the camera stays far from the golden end disc)
-  const S_DONE = Math.min(S_END - P.END_MARGIN, TEND - 0.95 - P.GLIDE);
+  // lead's rule (round 32b): done = s >= S_END - END_MARGIN (0.15), full speed until then (no slow-down, no speed-up); the golden
+  // bloom over the last 1.25 u is agentB's. After done he only glides to rest before the trail end (the test stops at done).
+  const S_DONE = S_END - P.END_MARGIN;
   // a shorter track: keep the painting run, squeeze the gaps between the later runs (spacing inside a run unchanged)
-  const lastRun = RUNS[RUNS.length - 1].pts, designEnd = lastRun[lastRun.length - 1][0], avail = S_DONE - 2.5;
-  const squeeze = designEnd <= avail ? 1 : Math.max(0.2, (avail - (designEnd - lastRun[0][0]) - RUNS[1].pts[0][0]) / (lastRun[0][0] - RUNS[1].pts[0][0]));
+  const lastRun = RUNS[RUNS.length - 1].pts, designEnd = lastRun[lastRun.length - 1][0], avail = S_END - 1.5;
   const LAYOUT = [];
   RUNS.forEach((r, ri) => { const s0 = r.pts[0][0], s0n = ri === 0 ? s0 : RUNS[1].pts[0][0] + (s0 - RUNS[1].pts[0][0]) * squeeze;
     r.pts.forEach(([s, lat, h]) => LAYOUT.push({ s: +(s0n + (s - s0)).toFixed(3), lat: clamp(lat, -P.LANE, P.LANE), h, run: ri + 1, runKind: r.kind })); });
@@ -163,7 +163,11 @@ export function installControls(ctx) {
   }
   // painting perspective for the coin SIZE (the approved coins shrink faster with distance than true perspective):
   // sprite size x m(camera distance), piecewise linear over the lead's measured table, so far coins never crowd.
-  const MTAB = [[2.0, 0.93], [2.5, 0.84], [2.9, 0.77], [3.3, 0.67], [3.8, 0.50], [4.4, 0.32], [6.0, 0.28]];
+  // The lead's table [(2.0, .93), (2.5, .84), (2.9, .77), (3.3, .67), (3.8, .50), (4.4, .32), (6, .28)] was measured at the back-projected
+  // distances; at the fitted coin distances (2.16 / 2.80 / 3.33 / 3.85) the painted sizes need m = .97 / .91 / .87 / .77, which makes
+  // neighbours overlap while they approach. This table is the midway compromise (frame-0 coins 1-4 at 98 / 94 / 87 / 78 % of the painted
+  // radius) with which the layout above has no on-screen overlap.
+  const MTAB = [[2.0, 0.96], [2.16, 0.95], [2.8, 0.86], [3.33, 0.76], [3.85, 0.60], [4.5, 0.42], [5.0, 0.33], [5.5, 0.30]];
   const mOf = (d) => { if (d <= MTAB[0][0]) return MTAB[0][1]; for (let i = 1; i < MTAB.length; i++) if (d <= MTAB[i][0]) { const [d0, m0] = MTAB[i - 1], [d1, m1] = MTAB[i]; return m0 + (m1 - m0) * (d - d0) / (d1 - d0); } return MTAB[MTAB.length - 1][1]; };
   // per coin, every step AFTER the camera has moved (called from hits(), i.e. play3's coin loop): perspective size, and coins he
   // missed (other lane / under a leap) shrink + sink away behind him instead of sliding huge past the camera.
@@ -224,7 +228,7 @@ export function installControls(ctx) {
       else if (S.move.kind === 'dive' && k >= DIVE_T) S.move = null;
     }
     if (!S.move && S.queued && S.clock >= S.busyUntil) { const d = S.queued; S.queued = null; start(d); }
-    if (!S.done && getS() >= S_DONE) { S.done = true; S.sStop = getS() + P.GLIDE; } // level end: stays true
+    if (!S.done && getS() >= S_DONE) { S.done = true; S.sStop = Math.max(getS(), Math.min(getS() + P.GLIDE, TEND)); } // level end: stays true
 
     // lanes: critically damped spring toward the lane centre
     const vPrev = S.lat.v;

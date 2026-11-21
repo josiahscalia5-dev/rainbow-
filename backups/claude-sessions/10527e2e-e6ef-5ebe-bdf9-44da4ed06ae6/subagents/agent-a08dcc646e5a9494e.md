@@ -1290,3 +1290,53 @@ The offline model reproduces the page's overlaps almost exactly (same pairs, fra
 
 > 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && sed -i 's/^MT = \\[(2.0, 0.98).*$/MT = [(2.0, 0.96), (2.16, 0.95), (2.8, 0.86), (3.33, 0.76), (3.85, 0.60), (4.5, 0.42), (5.0, 0.33), (5.5, 0.30)]  # = controls.js MTAB/' coin_overlap_model.py && grep -n \"^MT\" coin_overlap_model.py && SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad && python3 -I coin_run1_search.py coins_level_logic.json mergedtest/track_w/track.json $SP/lay_v6.json $SP/lay_v9a.json 2>&1 | tail -5 && python3 -I coin_layout_search.py …[+232 chars]`
 
+### 🧑 User — 2026-11-21T13:31:19.494Z
+
+> ↩︎ result: 11:MT = [(2.0, 0.96), (2.16, 0.95), (2.8, 0.86), (3.33, 0.76), (3.85, 0.60), (4.5, 0.42), (5.0, 0.33), (5.5, 0.30)]  # = controls.js MTAB
+> coin5 (23.872936245429017, [np.float64(3.7), np.float64(0.22), 0], np.float64(1.5044108903742437))
+> coin 6 (np.float64(28.86149330586752), [np.float64(4.45), np.float64(0.22), 0], np.float64(1.5044108903742437))
+> coin 7 (np.float64(56.77179225643292), [np.float64(5.2), np.float64(0.1), 0], np.float64(1.5044108903742437))
+> coin 8 (np.float64(38.907702738879586), [np.float64(5.85), np.float64(0.22), 0], np.float64(1.5044108903742437))
+> [[1.13, 0.025, 0], [1.77, 0.12, 0], [2.34, 0.15, 0], [2.94, 0.105, 0], [np.float64(3.7), np.float64(0.22), 0], [np.float64(4.45), np.float64(0.22), 0], [np.float64(5.2), np.float64(0.1), 0], [np.float64(5.85), np.float64(0.22), 0]]
+> iter 8 0.5 {(15, 16): 1.5}
+> iter 9 0 {}
+> final [[1.13, 0.025, 0], [1.77, 0.12, 0], [2.34, 0.15, 0], [2.94, 0.105, 0], [3.7, 0.18, 0], [4.45, 0.22, 0], [5.2, 0.1, 0], [5.85, 0.22, 0], [7.4, -0.04, 0], [8.0, 0.15, 0], [8.6, 0.22, 0], [9.2, 0.03, 0], [12.69, 0.02, 0.1], [13.24, -0.02, 0.26], [13.79, 0.02, 0.42], [17.99, 0.04, 0], [18.74, -0.01, 0], [19.19, -0.22, 0], [19.84, -0.15, 0], [23.74, 0.06 …[+323 chars]
+
+### 🤖 Claude — 2026-11-21T13:31:30.629Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad && python3 -I - <<'EOF'\nimport json\nSP='/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad'\nlay=json.load(open(SP+'/lay_v9.json'))\nfor variant,r4 in {'a':[[17.99,0.06,0],[18.64,-0.09,0],[19.29,-0.22,0],[19.94,-0.12,0]], 'b':[[17.99,0.07,0],[18.64,-0.07,0],[19.29,-0.22,0],[19.94,-0.11,0]], 'c':[[17.99,0.05,0],[18.69,-0.1,0],[19.39,-0.22,0],[20.04,-0.12,0]]}.items():\n    …[+389 chars]`
+
+### 🧑 User — 2026-11-21T13:31:31.508Z
+
+> ↩︎ result: == a
+> 15-16 {'frames': 22, 'worst': -2.0, 'f0': 326, 'f1': 347} [(17.99, 0.06, 0), (18.64, -0.09, 0)]
+> 17-18 {'frames': 18, 'worst': -1.2, 'f0': 362, 'f1': 379} [(19.29, -0.22, 0), (19.94, -0.12, 0)]
+> page frame0 [(0, 231, 433.6, 26.48), (1, 275.6, 392.4, 17.97), (2, 236, 364.6, 12.71), (3, 205.5, 345.3, 8.06), (4, 206.7, 329.3, 4.53), (5, 178.2, 318.8, 3.98), (6, 217.5, 313.9, 3.47), (7, 203.2, 306.2, 3.03)]
+> == b
+> 15-16 {'frames': 23, 'worst': -2.2, 'f0': 326, 'f1': 348} [(17.99, 0.07, 0), (18.64, -0.07, 0)]
+> 17-18 {'frames': 20, 'worst': -1.1, 'f0': 360, 'f1': 379} [(19.29, -0.22, 0), (19.94, -0.11, 0)]
+> page frame0 [(0, 231, 433.6, 26.48), (1, 275.6, 392.4, 17.97), (2, 236, 364.6, 12.71), (3, 205.5, 345.3, 8.06), (4, 206.7, 329.3, 4.53), (5, 178.2, 318.8, 3.98), (6, 217.5, 313.9, 3.47), (7, 203.2, 306.2, 3.03)]
+> == c
+> 15-16 {'frames': 13, 'worst': -0.6, 'f0': 332, 'f1': 344} [(17.99, 0.05, 0), (18.69, -0.1, 0)]
+> 17-18 {'frames': 25, 'worst': -1.1, 'f0': 359, 'f1': 383} [(19.39, -0.22, 0), (20.04, -0.12, 0)]
+> page frame0 [(0, 231, 433.6, 26.48), (1, 275.6, 392.4, 17.97), (2, 236, 364.6, 12.71), (3, 205.5, 345.3, 8.06), (4, 206.7, 329.3, 4.53), (5, 178.2, 318.8, 3.98), (6, 217.5, 313.9, 3.4 …[+28 chars]
+
+### 🤖 Claude — 2026-11-21T13:31:41.669Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad && python3 -I - <<'EOF'\nimport json\nSP='/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad'\nlay=json.load(open(SP+'/lay_v9.json'))\nV={'d':([[17.99,0.07,0],[18.74,-0.08,0],[19.49,-0.22,0]], [[23.74,0.06,0],[24.29,-0.1,0],[24.84,0.1,0],[25.54,-0.13,0],[26.2,0.08,0]]),\n   'e':([[17.9,0.08,0],[18.6,-0.07,0],[19.35,-0.22,0]], [[23.74,0.06,0],[24.29,-0.1,0],[24.84,0.1,0],[25 …[+498 chars]`
+
+### 🧑 User — 2026-11-21T13:31:42.341Z
+
+> ↩︎ result: == d
+> page frame0 [(0, 231, 433.6, 26.48), (1, 275.6, 392.4, 17.97), (2, 236, 364.6, 12.71), (3, 205.5, 345.3, 8.06), (4, 206.7, 329.3, 4.53), (5, 178.2, 318.8, 3.98), (6, 217.5, 313.9, 3.47), (7, 203.2, 306.2, 3.03)]
+> == e
+> page frame0 [(0, 231, 433.6, 26.48), (1, 275.6, 392.4, 17.97), (2, 236, 364.6, 12.71), (3, 205.5, 345.3, 8.06), (4, 206.7, 329.3, 4.53), (5, 178.2, 318.8, 3.98), (6, 217.5, 313.9, 3.47), (7, 203.2, 306.2, 3.03)]
+
+### 🤖 Claude — 2026-11-21T13:31:50.622Z
+
+The 26-coin layout has no overlaps in the model. Now I'll write it into controls.js with the lead's end rule and the compromise size table.
+
+### 🤖 Claude — 2026-11-21T13:32:07.319Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && python3 -I - <<'EOF'\np='controls.js'; s=open(p).read()\na=s.index(\"  // Run 1 coins 1-4 = the approved picture's coins\"); b=s.index(\"  ];\\n\", a)+5\nnew='''  // Run 1 coins 1-4 = the approved picture's coins, fitted on the start camera of the merged page (screen error < 3 px; agentB's\n  // rebuilt trail differs from the old one, so these replace the lead's back-projected (s, lat)); coins 5-8 continue toward the\n  // vanishing point as far right as the river allows (|lat| <= 0.22). …[+4127 chars]`
+
