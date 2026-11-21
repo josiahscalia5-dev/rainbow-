@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3267,
-   "sha256": "6153c9eecbab3f245a8b17b4a8914539e50c20448b82a85f38f93c38a2c33305"
+   "sha256": "4a89aca45ea190baab2483399e89869b15c8f7f6a705bf4b6f4657c3ea2237c5"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -7054,7 +7054,7 @@
   {
    "path": "backups/wip/detached-d8e047d33e/INFO.json",
    "bytes": 2379,
-   "sha256": "b80725780f5395f5eb0f55579dabe39d97ee46431cf243df2ff5992beb905472"
+   "sha256": "8e21346a631ef5f255f961e000a3273779b97a6a3472bbaef6a0a752618215a6"
   },
   {
    "path": "backups/wip/detached-d8e047d33e/tracked.patch",
@@ -16335,6 +16335,46 @@
    "path": "qa/kit05/r35/compare/NEW_round35_s9.0.jpg",
    "bytes": 166648,
    "sha256": "c4595ba0bc3e1b03640788d4ccc961b49804cbcd98f194b932d9d603dad10508"
+  },
+  {
+   "path": "qa/kit05/r36/APPROVED_phone_frame.jpg",
+   "bytes": 202532,
+   "sha256": "2f00accc2ca77c2eeb966d1ae87cf3cabcb79c6979d93ada7cc6d10c5dc11cc7"
+  },
+  {
+   "path": "qa/kit05/r36/BEST_round35_5s_same_swipes.mp4",
+   "bytes": 2912340,
+   "sha256": "a8180abb0c207246aa8ab4e0ed3e22b63083648c5108754e88498901662e1eaa"
+  },
+  {
+   "path": "qa/kit05/r36/BEST_round35_s2.0.jpg",
+   "bytes": 152630,
+   "sha256": "7ec0f13df5efbc0bbaaf48555d45e60fcdd9d859a7de0fd86060021ced2b2172"
+  },
+  {
+   "path": "qa/kit05/r36/BEST_round35_s4.5.jpg",
+   "bytes": 150985,
+   "sha256": "6d1ff0496945f1806a89c3e2077d730538c06daf0129ab4b55c4f47f49f34839"
+  },
+  {
+   "path": "qa/kit05/r36/PROOF_projection_5s_real_swipes.mp4",
+   "bytes": 2618670,
+   "sha256": "b2e5206daf7d5b095cf9ce942e069f52a4580bce8d923c2a23c316aabaf2d27e"
+  },
+  {
+   "path": "qa/kit05/r36/PROOF_projection_s2.0.jpg",
+   "bytes": 149814,
+   "sha256": "75defcf0b8013456085ba7a92ca73f0784c50abba1f2776acf325bc3066f5e18"
+  },
+  {
+   "path": "qa/kit05/r36/PROOF_projection_s4.5.jpg",
+   "bytes": 138421,
+   "sha256": "2ef7b9df4dfc41260eefe32c711c7178701f20a40bf910dfd160e90327827a65"
+  },
+  {
+   "path": "qa/kit05/r36/zoomed_APPROVED_vs_BEST_vs_PROJECTION_s2.0.jpg",
+   "bytes": 418522,
+   "sha256": "59544b3e24ac27d39cd88066c7b03587ba9ee95b9612f60535aafcc41d03dff9"
   },
   {
    "path": "qa/lead_r5/2026-11-17/README.md",
@@ -40668,8 +40708,8 @@
   },
   {
    "path": "tools/kit05/swimfx.js",
-   "bytes": 13694,
-   "sha256": "80e243fc12e4879ddb8795804e51da0e85a147a697eee374fa4454de7bc1e871"
+   "bytes": 13720,
+   "sha256": "bf5ba993d6190bdde88f284c2acbe61942e7780c5172ce41958eb9215b5f02b5"
   },
   {
    "path": "tools/kit05/zoom_likeness.py",

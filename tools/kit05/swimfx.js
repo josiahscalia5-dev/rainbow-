@@ -107,9 +107,9 @@ export function installSwimFx({ THREE, scene, splash, q }) {
           // bottom edge showed as a line. Once he swims, that painted water fades (saturated texels) and the image edges fade out;
           // the white spray and the fur at the top centre stay (strength 0 at the start frame: frame 0 unchanged)
           float sSat = max(diffuseColor.r, max(diffuseColor.g, diffuseColor.b)) - min(diffuseColor.r, min(diffuseColor.g, diffuseColor.b));
-          float sKeep = mix(1.0, 1.0 - smoothstep(0.3, 0.62, sSat), 0.75 * smoothstep(1.0, 1.3, e) * uSplFlow);
+          float sKeep = mix(1.0, 1.0 - smoothstep(0.3, 0.62, sSat), 0.75 * smoothstep(1.0, 1.3, e) * step(0.001, uSplFlow));
           float sEdge = smoothstep(0.0, 0.28, vMapUv.y) * smoothstep(0.0, 0.12, min(vMapUv.x, 1.0 - vMapUv.x));
-          diffuseColor.a *= sKeep * mix(1.0, sEdge, uSplFlow);
+          diffuseColor.a *= sKeep * mix(1.0, sEdge, step(0.001, uSplFlow));
         } else { diffuseColor *= texture2D(map, vMapUv); }
         #endif`); };
     const key = m.customProgramCacheKey ? m.customProgramCacheKey.bind(m) : () => '';
