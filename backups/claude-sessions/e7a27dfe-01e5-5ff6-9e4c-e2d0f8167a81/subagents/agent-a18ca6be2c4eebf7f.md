@@ -1569,3 +1569,19 @@ The checker shows s=0 went from 3 patches (largest 2,009 px) to 0 (largest 3 px)
 > bay_m cells 48 x 64 empty filled 0 u 1.19 3.4
 > server 9474
 
+### 🤖 Claude — 2026-11-21T12:33:50.439Z
+
+While it renders, I'll write the notes file (numbers to be filled in from the checker).
+
+### 🤖 Claude — 2026-11-21T12:34:18.407Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB/WATER_NOTES.md", "content": "# Screen 05 splat track: water flow + track cleanup (water-fx specialist, agentB)\n\nAll work is inside `agentB/`. Nothing in the repository, git or agentA was touched. No paid API or credits were used.\n\n## Files\n| file | what |\n|---|---|\n| `waterflow.js` | NEW. Spark 2.4 dyno **worldModifier** that makes the river's own splats flow (GPU, inside Spark's splat-generation pass) |\n| `play3.html` | edited. Hook lines are marked `// [waterflow]` (flow) and `// [ …[+6938 chars]`
+
+### 🧑 User — 2026-11-21T12:34:18.441Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB/WATER_NOTES.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-21T12:34:21.213Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB && timeout 115 bash -c 'until grep -q \"still 0.7\" out_water/after.log; do sleep 3; done'; grep -v \"GPU stall\" out_water/after.log", "description": "Wait for AFTER stills progress", "timeout": 120000}`
+

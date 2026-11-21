@@ -6237,3 +6237,33 @@ Credits and keys don't move with your Claude account. The Marble and SpAItial cr
 
 ." And also, if you gave the prompt, so everything we set up, like the tools, the agents, everything, servers, you know, everything in this session I did with my other Claudia account.i  don't have to go all through that again.
 
+### 🤖 Claude — 2026-11-21T12:34:14.134Z
+
+Here's the prompt to paste on your other account. Start the cloud session on branch **`claude/screen-05-3d-geometry-9yu7pu`** first, not the default branch:
+
+```
+Continue Rainbow round 32 exactly where the last account stopped. Read CLAUDE.md, then docs/briefs/2026-11-21-r32/RESUME_R32.md and docs/briefs/2026-11-21-r32/USER_R32.md (my binding orders). Run `bash docs/briefs/2026-11-21-r32/setup_r32.sh` to rebuild the Screen 05 3D workspace with both specialists' newest saved work (backups/wip/screen05-agents/). Relaunch the two specialists from AGENT_A_CONTROLS.md (animation-and-gameplay-engineer) and AGENT_B_WATER.md (water-fx-specialist) only if their notes show unfinished work, then merge, run the full real-swipe acceptance test (tools/marble05/viewer/final_acceptance.cjs + visual_check.py), fix and re-test until it passes. Do not show me a video until every test passes. No credits or purchases without my OK. Keep the five-minute GitHub autosave running.
+```
+
+**Comes along automatically**, because it's all in your GitHub repository:
+- **Specialists:** all 10 specialist agents, with their instructions and saved work.
+- **Tools:** the 3D track builder, gameplay page, acceptance test and visual checker. The setup command installs the 3D renderer and rebuilds the workspace.
+- **Session hook:** the startup hook that restores everything and restarts the five-minute GitHub autosave.
+- **History and assets:** all chat history, the 3D worlds, test videos, your rules and your approved artwork.
+
+**Can't come along by itself.** These belong to your Claude account or cloud environment, not to the repository, so set them up once:
+1. **World Labs (Marble) connector:** turn it on in claude.ai Settings → Connectors on the new account.
+2. **Keys:** re-enter the World Labs and SpAItial keys only if the new Claude's free check says they're missing. It will open the secure form; never type a key in chat.
+3. **Running specialists:** a running specialist can't move between accounts. The new session restarts them from their saved instructions and work, which the prompt above already tells it to do.
+
+Your Marble credits (2,030) and SpAItial free credits (640) stay with your World Labs and SpAItial accounts, so they're still available from the new Claude account.
+
+### 🧑 User — 2026-11-21T12:34:19.608Z
+
+Stop hook feedback:
+[command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+
+### 🤖 Claude — 2026-11-21T12:34:22.055Z
+
+> 🔧 **Bash** `{"command": "while pgrep -f \"rainbow-autosave.py\" >/dev/null; do sleep 5; done; timeout 900 python3 scripts/rainbow-autosave.py --reason \"manual:stop-hook\" 2>&1 | grep -E '\"commit\"|another' | head -2; git status --short | wc -l; git rev-parse --short HEAD; timeout 30 git ls-remote origin refs/heads/claude/screen-05-3d-geometry-9yu7pu | cut -c1-7", "description": "Save and push remaining changes", "timeout": 1200000}`
+
