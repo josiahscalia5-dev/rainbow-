@@ -66,11 +66,15 @@ const [wallTex, ringTex, riverTex, wallOwn, ringOwn] = await Promise.all([tex('w
 // sections (bake_river35.py: prefix t_pre..ta + one period P, sharp painted streak detail added where the painting is softer). ?r35=0 = round-34 ribbon
 const R35 = K.river35 && q.get('r35') !== '0' ? K.river35 : null;
 const PUFFS = !!K.river35 && q.get('puffs') !== '0';   // round 35: painted foam domes + bubbles (see below)
+// round 36b TEST ?r36=1: the river = the painting's own SHARP near water laid along every bend (bake_river36.py), river-local (u = lateral
+// from the river core, v = along the river), periodic with the core; no added streak layer (it is already the sharp painted water)
+const R36 = K.river36 && q.get('r36') === '1' ? K.river36 : null;
 // the round-34 ribbon textures are only loaded when the round-34 river is asked for (?r35=0): 4 MB less to download / hold on a phone
 const tex1 = () => { const t = new THREE.DataTexture(new Uint8Array([0, 0, 0, 255]), 1, 1); t.needsUpdate = true; return t; };
 const riverTile = R35 ? tex1() : await tex('river_tile.png'); riverTile.wrapT = THREE.RepeatWrapping;
 const riverPink = R35 ? tex1() : await tex(K.river_tile?.ribbon ? 'river_pink.png' : 'river_tile.png'); riverPink.wrapT = THREE.RepeatWrapping;   // round 34: pink edge-band version of the ribbon
 const river35Tex = R35 ? await tex('river35.png') : riverTile;
+const river36Tex = R36 ? await tex('river36.png') : river35Tex;
 // sharp painted streaks (luminance detail, river-local), added live near the camera where the painted row is soft, streaming with the current
 const r35Det = R35?.detail ? await tl.loadAsync('river35_detail.png') : riverTile;
 if (R35?.detail) { r35Det.colorSpace = THREE.NoColorSpace; r35Det.wrapS = THREE.MirroredRepeatWrapping; r35Det.wrapT = THREE.RepeatWrapping; r35Det.anisotropy = 8; }
@@ -92,12 +96,15 @@ const FLOW = { uFlowOn: { value: 0 }, uFlowL: { value: +(q.get('flowl') ?? 0.10)
   uR35On: { value: R35 ? 1 : 0 }, uR35: { value: river35Tex }, uR35A: { value: new THREE.Vector4(R35?.t_pre ?? 0, R35?.ta ?? 1, R35?.P ?? 1, R35 ? R35.n_pre / (R35.n_pre + R35.n_per) : 0) }, uR35B: { value: +(q.get('r35bias') ?? 0.0) },
   uR35Det: { value: r35Det }, uR35D: { value: new THREE.Vector4(R35?.detail?.L ?? 1, R35?.detail?.c0 ?? 0, +(q.get('detflow') ?? 1.0), R35?.detail ? +(q.get('detgain') ?? 1.3) : 0) }, uR35DS: { value: new THREE.Vector4(...(q.get('detshape') ?? '5,1,3,8').split(',').map(Number)) },
   uProjDet: { value: PROJ && R35?.detail ? +(q.get('projdet') ?? 1.0) : 0 },
+  uR36On: { value: R36 ? 1 : 0 }, uR36: { value: river36Tex }, uR36A: { value: new THREE.Vector4(R36?.ta ?? 0, R36?.P ?? 1, R36?.umax ?? 1, +(q.get('r36flow') ?? 0.25)) },
   uR35P: { value: new THREE.Vector3(...(q.get('pinkband') ?? '0,0.44,0.56').split(',').map(Number)) } };   // ribbon foam edge |u| near, far factor, far range
 const riverMat = (() => { const m = kitMat(riverTex); const base = m.onBeforeCompile; m.customProgramCacheKey = () => 'kit-river34';
   m.onBeforeCompile = (sh) => { base(sh); Object.assign(sh.uniforms, FLOW);
     sh.fragmentShader = sh.fragmentShader.replace('uniform float uBias;', `uniform float uBias; uniform float uFlow; uniform vec3 uRT; uniform sampler2D uRiverTile; uniform sampler2D uFoam; uniform float uHWD; uniform vec3 uWT; uniform float uFlowL; uniform float uFlowOn; varying float vKitT; varying float vKitD;
       uniform sampler2D uRiverPink; uniform sampler2D uCenter; uniform vec3 uCN; uniform vec4 uPF; uniform vec4 uEdge;
-      uniform float uR35On; uniform sampler2D uR35; uniform vec4 uR35A; uniform float uR35B; uniform sampler2D uR35Det; uniform vec4 uR35D; uniform vec4 uR35DS; uniform vec3 uR35P; uniform float uProjDet;
+      uniform float uR35On; uniform sampler2D uR35; uniform vec4 uR35A; uniform float uR35B; uniform sampler2D uR35Det; uniform vec4 uR35D; uniform vec4 uR35DS; uniform vec3 uR35P; uniform float uProjDet; uniform float uR36On; uniform sampler2D uR36; uniform vec4 uR36A;
+      vec4 r36(float u, float t){ float r = (t - uR36A.x) / uR36A.y; vec2 uv = vec2((u + uR36A.z) / (2.0 * uR36A.z), r);
+        return textureGrad(uR36, vec2(uv.x, fract(uv.y)), dFdx(uv), dFdy(uv)); }
       // round 35: painted river texel at world axial t (continuous row coordinate: prefix rows, then the period repeats)
       float r35Row(float t){ return t < uR35A.y ? uR35A.w * clamp((t - uR35A.x) / (uR35A.y - uR35A.x), 0.0, 1.0) : uR35A.w + (1.0 - uR35A.w) * (t - uR35A.y) / uR35A.z; }
       vec4 r35(float x, float t){ float r = r35Row(t); float rw = r >= 1.0 ? uR35A.w + mod(r - uR35A.w, 1.0 - uR35A.w) : r;
@@ -110,7 +117,11 @@ const riverMat = (() => { const m = kitMat(riverTex); const base = m.onBeforeCom
         float kU = kLat - kCenter(kT);                               // river-local lateral (0 = river centre)
         // far channel like the painting: the river looks narrower (foam banks on both sides) the further ahead it is (camera-relative)
         vec4 kRib;
-        if (uR35On > 0.5) {
+        if (uR36On > 0.5) {
+          // the painted sharp near water along the bends, streaming toward the camera (two-phase flow along the river)
+          float rPh = fract(uFlow * 1.3), rL = uR36A.w * uFlowOn, kU36 = kLat - kCenter(kT);
+          kRib = mix(r36(kU36, kT + fract(rPh + 0.5) * rL), r36(kU36, kT + rPh * rL), 1.0 - abs(1.0 - 2.0 * rPh)); kRib.a = 1.0;
+        } else if (uR35On > 0.5) {
           // the painted river streaming toward the camera: two-phase flow along t (layout moves <= uFlowL, streaks stream)
           float rPh = fract(uFlow * 1.3), rL = uFlowL * uFlowOn;
           vec4 rA = r35(vMapUv.x, kT + rPh * rL), rB = r35(vMapUv.x, kT + fract(rPh + 0.5) * rL);
