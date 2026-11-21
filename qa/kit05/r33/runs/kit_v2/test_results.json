@@ -1,0 +1,195 @@
+{
+ "frames": 228,
+ "seconds": 7.6,
+ "errors": [],
+ "rendered": "0:228",
+ "level": {
+  "s_end_target": 32,
+  "done": false,
+  "done_frame": -1,
+  "plan": "fixed 7.6 s"
+ },
+ "built_level": {
+  "path_end": null,
+  "sections": null,
+  "sections_entered": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "level_end_vs_path_end": null,
+  "swim_speed": 1.4
+ },
+ "position_stalls": 0,
+ "benny_pose": {
+  "max_abs_roll_deg": 13.528226989199581,
+  "max_roll_change_deg_per_frame": 5.095257517701166,
+  "worst_frame": 211,
+  "worst_s": 9.847,
+  "max_abs_camera_roll_deg": 0.7559312633799805,
+  "screen_x": [
+   109.74158801404806,
+   303.78626111043576
+  ],
+  "screen_y": [
+   554.9323011805503,
+   849.4399119235276
+  ],
+  "frames_roll_over_25": 0
+ },
+ "ending_transition": {
+  "present": false,
+  "first_frame": -1,
+  "k_at_end": 0,
+  "monotonic": true,
+  "frames": 0
+ },
+ "coin_crowding": {
+  "frames_checked": 228,
+  "frames_with_overlap": 130,
+  "max_pairs": 4,
+  "first_frames": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ]
+ },
+ "swipe_directions": {
+  "left": 4,
+  "right": 3,
+  "up": 2,
+  "down": 1
+ },
+ "forward": {
+  "min_step": 0.045999999999999375,
+  "max_step": 0.0470000000000006,
+  "freezes": 0,
+  "s_end": 10.593
+ },
+ "lateral": {
+  "max_step_per_frame": 0.0414,
+  "teleports_over_0_06": 0,
+  "lanes_seen": [
+   0,
+   -1,
+   1
+  ],
+  "max_abs_lat": 0.22
+ },
+ "vertical": {
+  "max_step_per_frame": 0.0666,
+  "max_height": 0.3271,
+  "min_height": -0.3165
+ },
+ "camera": {
+  "frames": 228,
+  "max_move_per_frame": 0.04758982918738676,
+  "median_move_per_frame": 0.04678506828586378,
+  "max_turn_deg_per_frame": 0
+ },
+ "coins": {
+  "start": 1420,
+  "end": 1460,
+  "got": {
+   "water": 1,
+   "lane": 3,
+   "air": 0
+  }
+ },
+ "swipes_sent": 10,
+ "swipe_responses": [
+  {
+   "swipe": "left",
+   "t": 0.9,
+   "expected_lane": -1,
+   "lane_before": 0,
+   "lane_after": -1,
+   "at_edge": false,
+   "ok": true
+  },
+  {
+   "swipe": "left",
+   "t": 1.6,
+   "expected_lane": -1,
+   "lane_before": -1,
+   "lane_after": -1,
+   "at_edge": true,
+   "ok": true
+  },
+  {
+   "swipe": "right",
+   "t": 2.3,
+   "expected_lane": 0,
+   "lane_before": -1,
+   "lane_after": 0,
+   "at_edge": false,
+   "ok": true
+  },
+  {
+   "swipe": "up",
+   "t": 2.9,
+   "max_height": 0.3271,
+   "min_height": 0,
+   "ok": true
+  },
+  {
+   "swipe": "right",
+   "t": 3.7,
+   "expected_lane": 1,
+   "lane_before": 0,
+   "lane_after": 1,
+   "at_edge": false,
+   "ok": true
+  },
+  {
+   "swipe": "right",
+   "t": 4.3,
+   "expected_lane": 1,
+   "lane_before": 1,
+   "lane_after": 1,
+   "at_edge": true,
+   "ok": true
+  },
+  {
+   "swipe": "down",
+   "t": 4.9,
+   "max_height": -0.0166,
+   "min_height": -0.3165,
+   "ok": true
+  },
+  {
+   "swipe": "left",
+   "t": 5.6,
+   "expected_lane": 0,
+   "lane_before": 1,
+   "lane_after": 0,
+   "at_edge": false,
+   "ok": true
+  },
+  {
+   "swipe": "up",
+   "t": 6.2,
+   "max_height": 0.3271,
+   "min_height": 0,
+   "ok": true
+  },
+  {
+   "swipe": "left",
+   "t": 6.9,
+   "expected_lane": -1,
+   "lane_before": 0,
+   "lane_after": -1,
+   "at_edge": false,
+   "ok": true
+  }
+ ],
+ "swipes_ok": 10
+}

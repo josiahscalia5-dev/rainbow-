@@ -2330,3 +2330,120 @@ While that runs (about 10 minutes), I'll make sure the new kit tools are saved t
 
 > 🔧 **Bash** `{"command": "until grep -q \"exit=\" /tmp/rainbow_r33/runs/kit_v2.log; do sleep 5; done; tail -2 /tmp/rainbow_r33/runs/kit_v2.log | python3 -c \"\nimport sys,json\nlines=sys.stdin.read().strip().split('\\n'); print(lines[-1])\nr=json.loads(lines[0]); \nfor k in ['frames','errors','position_stalls','benny_pose','coin_crowding','swipe_directions','forward','lateral','vertical','camera','coins','swipes_sent','swipes_ok']: print(k, json.dumps(r.get(k))[:400])\nprint([ (x['swipe'],x['t'],x['ok']) for x in r['swipe_responses']])\"", "description": "Wait for kit run and summarize results", "timeout": …[+8 chars]`
 
+### 🧑 User — 2026-11-21T15:07:06.815Z
+
+> ↩︎ result: exit=0
+> frames 228
+> errors []
+> position_stalls 0
+> benny_pose {"max_abs_roll_deg": 13.528226989199581, "max_roll_change_deg_per_frame": 5.095257517701166, "worst_frame": 211, "worst_s": 9.847, "max_abs_camera_roll_deg": 0.7559312633799805, "screen_x": [109.74158801404806, 303.78626111043576], "screen_y": [554.9323011805503, 849.4399119235276], "frames_roll_over_25": 0}
+> coin_crowding {"frames_checked": 228, "frames_with_overlap": 130, "max_pairs": 4, "first_frames": [0, 1, 2, 3, 4, 5, 6, 7]}
+> swipe_directions {"left": 4, "right": 3, "up": 2, "down": 1}
+> forward {"min_step": 0.045999999999999375, "max_step": 0.0470000000000006, "freezes": 0, "s_end": 10.593}
+> lateral {"max_step_per_frame": 0.0414, "teleports_over_0_06": 0, "lanes_seen": [0, -1, 1], "max_abs_lat": 0.22}
+> vertical {"max_step_per_frame": 0.0666, "max_height": 0.3271, "min_height": -0.3165}
+> camera {"frames": 228, "max_move_per_frame": 0.04758982918738676, "median_move_per_frame": 0.04678506828586378, "max_turn_deg_per_frame": 0}
+> coins {"start": 1420, "end": 1460, "got": {"water": 1, "lane": 3, "air": 0}}
+> swipes_sent 10
+> swipes_ok 10
+> [('left', 0.9, True), ('left', 1.6, True), ('right', 2.3, True), ('up', 2.9, True), ('right', 3.7,  …[+110 chars]
+
+### 🤖 Claude — 2026-11-21T15:07:13.230Z
+
+> 🔧 **Bash** `{"command": "python3 -I tools/kit05/compare_r33.py /tmp/rainbow_r32/runs/merged_short /tmp/rainbow_r33/runs/kit_v2 /tmp/rainbow_r33/compare 0,15,30 2>&1 | tail -40", "description": "Compare approved vs current vs kit frames"}`
+
+### 🧑 User — 2026-11-21T15:07:13.568Z
+
+> ↩︎ result: "rule": "scenery = below the HUD, Benny box excluded; frame 0 compared pixel by pixel with the approved picture",
+>  "frames": {
+>   "0": {
+>    "current": {
+>     "colour_look_corr": 0.548,
+>     "sharpness_vs_approved": 0.301,
+>     "mean_abs_diff_levels": 60.5,
+>     "share_within_20_levels": 0.127,
+>     "ssim_scenery": 0.193
+>    },
+>    "kit": {
+>     "colour_look_corr": 0.984,
+>     "sharpness_vs_approved": 0.715,
+>     "mean_abs_diff_levels": 24.3,
+>     "share_within_20_levels": 0.645,
+>     "ssim_scenery": 0.614
+>    }
+>   },
+>   "15": {
+>    "current": {
+>     "colour_look_corr": 0.358,
+>     "sharpness_vs_approved": 0.337
+>    },
+>    "kit": {
+>     "colour_look_corr": 0.705,
+>     "sharpness_vs_approved": 0.596
+>    }
+>   },
+>   "30": {
+>    "current": {
+>     "colour_look_corr": 0.25,
+>     "sharpness_vs_approved": 0.364
+>    },
+>    "kit": {
+>     "colour_look_corr": 0.726,
+>     "sharpness_vs_approved": 0.635
+>    }
+>   }
+>  }
+> }
+
+### 🤖 Claude — 2026-11-21T15:07:22.076Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/rainbow_r33/compare && python3 -c \"\nfrom PIL import Image\nfor f in ['APPROVED_CURRENT_KIT_f0000.jpg','APPROVED_CURRENT_KIT_f0030.jpg']:\n    im=Image.open(f); im.resize((im.width*3//4, im.height*3//4)).save('/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/s_'+f, quality=85)\"", "description": "Downscale comparison sheets for viewing"}`
+
+### 🧑 User — 2026-11-21T15:07:22.199Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T15:07:23.990Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/s_APPROVED_CURRENT_KIT_f0000.jpg"}`
+
+### 🧑 User — 2026-11-21T15:07:24.011Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T15:07:25.235Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/s_APPROVED_CURRENT_KIT_f0030.jpg"}`
+
+### 🧑 User — 2026-11-21T15:07:25.257Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T15:07:55.894Z
+
+> 🔧 **Bash** `{"command": "D=qa/kit05/r33 && mkdir -p $D/textures $D/runs/kit_v2 $D/runs/kit_v1 $D/compare $D/stills && cp /tmp/rainbow_r33/kit/{wall.png,ring.png,river.png,kit.json,river_visible.png} $D/textures/ && cp /tmp/rainbow_r33/compare/* $D/compare/ && for r in kit_v1 kit_v2; do cp /tmp/rainbow_r33/runs/$r/{test_results.json,plan.json} $D/runs/$r/ 2>/dev/null; cp /tmp/rainbow_r33/runs/$r/screen05_swipe_run.mp4 $D/runs/$r/ 2>/dev/null; done; cp /tmp/rainbow_r33/runs/kit_v2/f_00{00,15,30,60,90}.jpg $D/runs/kit_v2/ 2>/dev/null; cp /tmp/rainbow_r33/kit/out864/kit_s0.00_l0.00.png $D/stills/kit_start_864 …[+333 chars]`
+
+### 🧑 User — 2026-11-21T15:07:55.979Z
+
+> ↩︎ result: 18M	qa/kit05/r33
+> f_0000.jpg
+> f_0015.jpg
+> f_0030.jpg
+> f_0060.jpg
+> f_0090.jpg
+> plan.json
+> screen05_swipe_run.mp4
+> test_results.json
+
+### 🤖 Claude — 2026-11-21T15:08:18.891Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-21-r33/RESUME_R33.md", "content": "# RESUME — round 33 (2026-11-21), session branch `ccr-81d66c17-i0ooo8` (Screen 05 ONLY; no other screens, no credits, no purchases)\n\n## What happened this round\n1. Tool evaluation (no installs, no money): Cuberta, SceneSim, Scenario YVO3D, AI Game Developer (ai-game.dev), Thrixel Build World,\n   onGame → none adopted. Details + sources: `docs/briefs/2026-11-21-r33/TOOL_EVALUATION_R33.md`.\n2. Baseline of the round-32 merged SPLAT build (real touch swipes, stopped at frame ~37 to free the CPU): swipes  …[+5193 chars]`
+
+### 🧑 User — 2026-11-21T15:08:18.915Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-21-r33/RESUME_R33.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-21T15:08:20.494Z
+
+> 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:r33-kit-short-test 2>&1 | grep -E '\"commit\"|skipping|error|secret'; git log -1 --format='%h'; git ls-files qa/kit05/r33 | wc -l; timeout 60 git ls-remote origin refs/heads/ccr-81d66c17-i0ooo8; git rev-parse HEAD", "description": "Save evidence and resume notes to GitHub"}`
+
