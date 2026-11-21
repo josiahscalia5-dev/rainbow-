@@ -794,7 +794,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 25599,
-   "sha256": "e8829a972c0806f21949f23aad03740bd444b34241a0fb06339e29c2da7621f0"
+   "sha256": "a92be9ad430ecfed88a0696a250f3b68c439dc94d7eb6b9e11763b860ef93915"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3056,
-   "sha256": "dbe2b9dec8a0ce35e11b2a6a56db11c29eb40ba81aa19dcf6de3b7183a8e79cc"
+   "sha256": "5b4807be7ac6e3a6c7dace36ad45dc9686481a8bc34af9e419130f6f0842d7a7"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -7734,7 +7734,7 @@
   {
    "path": "backups/wip/screen05-agents/LAST_SYNC_UTC",
    "bytes": 33,
-   "sha256": "1fc41b95fd5bd81df8eaa4b6626b371d6af599007cffd9c5e4df99fefee1aa98"
+   "sha256": "c9959c226d7d328016f7fb3dfef0e7fe243b0e5e8112e6fffd3bc3c7acda0af0"
   },
   {
    "path": "backups/wip/screen05-agents/agentA/CONTROLS_NOTES.md",
@@ -7780,6 +7780,11 @@
    "path": "backups/wip/screen05-agents/agentA/live_key_check.cjs",
    "bytes": 1922,
    "sha256": "a056439ce3f89c7671d9a8f763b7ada092157b97583f61427d3af328ea48671f"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentA/live_key_check.json",
+   "bytes": 434,
+   "sha256": "0d24b5565d0c9b5306cfe44c0b8258f41f749922bd3277c7bcd2a35b666b4296"
   },
   {
    "path": "backups/wip/screen05-agents/agentA/out_controls/_noviewport_run/a_start_frame0.png",
@@ -8025,6 +8030,21 @@
    "path": "backups/wip/screen05-agents/agentB/out_water/after/s_4.4.png",
    "bytes": 938561,
    "sha256": "6d479af6e973b40815a6e4382e94f84bf1737ace6199ed8a775fcfd7c2fbbfbb"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentB/out_water/after/s_6.4.png",
+   "bytes": 954590,
+   "sha256": "25f1a09fb22d9bc2c687babe958ff87b4dba7fb3576bce350dccd443593dae3d"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentB/out_water/after/s_6.4_t0.4.png",
+   "bytes": 955186,
+   "sha256": "9556320efbbb7fc3c57b4a2588ac4381805a4c21d1068ed5d6f92331bc48c544"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentB/out_water/after/s_6.4_t0.png",
+   "bytes": 954590,
+   "sha256": "25f1a09fb22d9bc2c687babe958ff87b4dba7fb3576bce350dccd443593dae3d"
   },
   {
    "path": "backups/wip/screen05-agents/agentB/out_water/before/chk/f_0000_s_0.jpg",

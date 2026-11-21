@@ -6294,3 +6294,15 @@ Everything is saved and pushed to GitHub. GitHub matches commit `82b22f8`, and t
 
 You've hit your 5-hour limit · resets 1:50pm (UTC)
 
+### 🧑 User — 2026-11-21T12:44:22.118Z
+
+<task-notification>
+<task-id>aceebf66a4b11ed5f</task-id>
+<tool-use-id>toolu_019opHNgdjZH82mPgmQnCmXn</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/tasks/aceebf66a4b11ed5f.output</output-file>
+<status>failed</status>
+<summary>Agent "Swipe controls for Screen 05" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 1:50pm (UTC) (error type rate_limit, HTTP 429, request id req_011ChG6RVnjybL6zAFpnFk9K, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 1:50pm (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+<result>Frame 0 with controls on is now 100 % pixel-identical to the old code path (max diff 0). Running the live/keyboard check and viewing the final stills.</result>
+</task-notification>
+

@@ -783,3 +783,37 @@ Frame 0 with controls on is now 100 % pixel-identical to the old code path (max 
 
 > 🔧 **Bash** `{"command": "until [ -s /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/live_key_check.json ]; do sleep 3; done; cat /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/live_key_check.json; date -u +%H:%M", "description": "Wait for live/keyboard check result", "timeout": 900000}`
 
+### 🧑 User — 2026-11-21T12:44:21.628Z
+
+> ↩︎ result: {
+>  "s_at_ready": 0,
+>  "after_left": {
+>   "s": 0.35,
+>   "lane": -1,
+>   "lat": -0.1823,
+>   "height": 0,
+>   "coins": 1420,
+>   "move": null,
+>   "queued": null,
+>   "lean": -0.148,
+>   "pitch": 0,
+>   "yaw": 0.089,
+>   "pom": -0.03,
+>   "camLat": -0.0177,
+>   "camH": 0,
+>   "swim": 1.069,
+>   "got": {
+>    "water": 0,
+>    "lane": 0,
+>    "air": 0
+>   },
+>   "lastPick": null,
+>   "swipes": 1
+>  },
+>  "error": "TimeoutError: page.waitForFunction: Timeout 300000ms exceeded."
+> }12:44
+
+### 🤖 Claude — 2026-11-21T12:44:22.060Z
+
+You've hit your 5-hour limit · resets 1:50pm (UTC)
+
