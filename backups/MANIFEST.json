@@ -794,7 +794,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 25598,
-   "sha256": "bfcb4fcdc6de712adae403405aa2e4e0d61d9eaeb4ea82dddc3b8a0a9216157f"
+   "sha256": "383ed710567d45c8236947cd3e3904b9e24f0d78b95af2056d8c2b8b7a1f780f"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3056,
-   "sha256": "9e0967c9e727b0b3e35a9410cddb30ae6911953275f4ebb60ded3920612c9514"
+   "sha256": "de28f8e4a2463268907997d6068e74f05f368eca214deb5679c66a2fe2cf2af3"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -7788,8 +7788,8 @@
   },
   {
    "path": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md",
-   "bytes": 72169,
-   "sha256": "75d5d862389ad6aa863f9c744ea166d38ff9898043f40433d912beac9f33c0da"
+   "bytes": 73329,
+   "sha256": "af4e1627e68d1864f039dd0c76f8a539989f56dc6a2ca9bc3784edc83f715815"
   },
   {
    "path": "docs/PARALLEL_PROGRESS.md",
@@ -17177,9 +17177,29 @@
    "sha256": "325d306c549d30e1eed5fc05aca6d9c810cc5418931a416c491c0b2e430e47d9"
   },
   {
+   "path": "qa/match/05/swim05/PROOF_APPROVED_vs_GAMEPLAY.jpg",
+   "bytes": 920219,
+   "sha256": "85e5d9b19e9099319ad69fb0c805d98bbb8109783f9f42c6f70b34ac46432172"
+  },
+  {
    "path": "qa/match/05/swim05/README.md",
    "bytes": 2675,
    "sha256": "1d3ccdeb7eda19f7432aaa17f4d8509b508e455b62680e206e21304458dc316d"
+  },
+  {
+   "path": "qa/match/05/swim05/clip/SWIM05_gameplay.mp4",
+   "bytes": 2181205,
+   "sha256": "095928bc36118a87591e0e306b64b4427f4d0f04114c89a5155a9b466ca7fc6e"
+  },
+  {
+   "path": "qa/match/05/swim05/clip/clip_SWIM05_gameplay.json",
+   "bytes": 41035,
+   "sha256": "2af5ba95cec2f2283c403fbe25009d0562c3c57be5cdf06a53b12d3f04a699bd"
+  },
+  {
+   "path": "qa/match/05/swim05/clip/clip_SWIM05_gameplay_metric.json",
+   "bytes": 24769,
+   "sha256": "96d43ceead0a14e620fc1e7d38a33b07522b5f184888dcadbc4ce6e2accbf38d"
   },
   {
    "path": "qa/match/06/paint06/LEDGER.md",
