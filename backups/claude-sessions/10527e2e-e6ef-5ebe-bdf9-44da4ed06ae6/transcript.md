@@ -2679,3 +2679,36 @@ Stop hook feedback:
 
 > 🔧 **Bash** `{"command": "while pgrep -f \"rainbow-autosave.py\" >/dev/null; do sleep 5; done; timeout 900 python3 scripts/rainbow-autosave.py --reason manual:stop-hook 2>&1 | grep -E '\"commit\"|another' | head -2; git status --short | wc -l; git rev-parse --short HEAD; git ls-remote origin refs/heads/ccr-c0679182-krbfci | cut -c1-7", "description": "Commit and push remaining changes via the autosave", "timeout": 1000000}`
 
+### 🧑 User — 2026-11-21T13:51:07.536Z
+
+> ↩︎ result: "commit": "458ac9723aa23a816af9adec20454e79a6bd9d2c",
+> 0
+> 458ac97
+> 458ac97
+
+### 🤖 Claude — 2026-11-21T13:51:08.586Z
+
+Everything is committed and pushed: GitHub matches local at `458ac97`, with no uncommitted changes left. Both specialists are still working; I'll pick up as soon as they report.
+
+### 🧑 User — 2026-11-21T13:51:10.185Z
+
+CLAUDIA — PLEASE UNDERSTAND MY EXACT GOAL FOR SCREEN 05
+
+I want my ORIGINAL approved Screen 05 artwork recreated as accurately as technically possible as a REAL, PLAYABLE 3D MOBILE GAME.
+
+I DO NOT want a new interpretation, redesigned tunnel, different scenery, or something that only loosely resembles my picture.
+
+I want the same approved purple-and-gold tunnel, bright blue and pink water, golden rings, coins, and my original pink character Benny.
+
+The difference is that I want players to actually control Benny.
+
+Players should swipe left and right, and Benny should swim smoothly and naturally through the actual 3D level, just like a professionally developed mobile game. He must continuously move forward, follow the river, collect coins, and respond naturally to controls.
+
+Use whichever technically appropriate 3D methods produce the closest faithful recreation of MY APPROVED ARTWORK, but do not redesign it.
+
+My visual goal remains 90–95% likeness, preferably 95%, with smooth, fully functional gameplay.
+
+Please keep correcting Screen 05 until it genuinely meets my visual and gameplay requirements, or clearly explain any technical limitations.
+
+My approved artwork is the design. Your job is to make that exact design come alive as a real playable 3D game.
+
