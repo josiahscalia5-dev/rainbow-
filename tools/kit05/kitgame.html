@@ -84,12 +84,13 @@ const FLOW = { uFlowOn: { value: 0 }, uFlowL: { value: +(q.get('flowl') ?? 0.10)
   uPF: { value: new THREE.Vector4(...(q.get('pfade') ?? '0.45,0.65,0.85,0.97').split(',').map(Number)) },   // painted -> ribbon fade (ratio now/start distance): near texels, far texels
   uEdge: { value: new THREE.Vector4(...(q.get('redge') ?? '0.80,0.60,5.0,13.0').split(',').map(Number)) },
   uR35On: { value: R35 ? 1 : 0 }, uR35: { value: river35Tex }, uR35A: { value: new THREE.Vector4(R35?.t_pre ?? 0, R35?.ta ?? 1, R35?.P ?? 1, R35 ? R35.n_pre / (R35.n_pre + R35.n_per) : 0) }, uR35B: { value: +(q.get('r35bias') ?? 0.0) },
-  uR35Det: { value: r35Det }, uR35D: { value: new THREE.Vector4(R35?.detail?.L ?? 1, R35?.detail?.c0 ?? 0, +(q.get('detflow') ?? 1.0), R35?.detail ? +(q.get('detgain') ?? 1.3) : 0) }, uR35DS: { value: new THREE.Vector4(...(q.get('detshape') ?? '5,1,3,8').split(',').map(Number)) } };   // ribbon foam edge |u| near, far factor, far range
+  uR35Det: { value: r35Det }, uR35D: { value: new THREE.Vector4(R35?.detail?.L ?? 1, R35?.detail?.c0 ?? 0, +(q.get('detflow') ?? 1.0), R35?.detail ? +(q.get('detgain') ?? 1.3) : 0) }, uR35DS: { value: new THREE.Vector4(...(q.get('detshape') ?? '5,1,3,8').split(',').map(Number)) },
+  uR35P: { value: new THREE.Vector3(...(q.get('pinkband') ?? '0,0.44,0.56').split(',').map(Number)) } };   // ribbon foam edge |u| near, far factor, far range
 const riverMat = (() => { const m = kitMat(riverTex); const base = m.onBeforeCompile; m.customProgramCacheKey = () => 'kit-river34';
   m.onBeforeCompile = (sh) => { base(sh); Object.assign(sh.uniforms, FLOW);
     sh.fragmentShader = sh.fragmentShader.replace('uniform float uBias;', `uniform float uBias; uniform float uFlow; uniform vec3 uRT; uniform sampler2D uRiverTile; uniform sampler2D uFoam; uniform float uHWD; uniform vec3 uWT; uniform float uFlowL; uniform float uFlowOn; varying float vKitT; varying float vKitD;
       uniform sampler2D uRiverPink; uniform sampler2D uCenter; uniform vec3 uCN; uniform vec4 uPF; uniform vec4 uEdge;
-      uniform float uR35On; uniform sampler2D uR35; uniform vec4 uR35A; uniform float uR35B; uniform sampler2D uR35Det; uniform vec4 uR35D; uniform vec4 uR35DS;
+      uniform float uR35On; uniform sampler2D uR35; uniform vec4 uR35A; uniform float uR35B; uniform sampler2D uR35Det; uniform vec4 uR35D; uniform vec4 uR35DS; uniform vec3 uR35P;
       // round 35: painted river texel at world axial t (continuous row coordinate: prefix rows, then the period repeats)
       float r35Row(float t){ return t < uR35A.y ? uR35A.w * clamp((t - uR35A.x) / (uR35A.y - uR35A.x), 0.0, 1.0) : uR35A.w + (1.0 - uR35A.w) * (t - uR35A.y) / uR35A.z; }
       vec4 r35(float x, float t){ float r = r35Row(t); float rw = r >= 1.0 ? uR35A.w + mod(r - uR35A.w, 1.0 - uR35A.w) : r;
@@ -115,6 +116,11 @@ const riverMat = (() => { const m = kitMat(riverTex); const base = m.onBeforeCom
             // streak highlights go toward white (hue kept: azure stays azure), shadows darken the painted colour
             kRib.rgb = det > 0.0 ? mix(kRib.rgb, vec3(1.0), clamp(det * dW, 0.0, 1.0)) : kRib.rgb * (1.0 + det * dW);
           }
+          // round 35: like the approved picture, the water next to both foam banks is a PINK band: saturated blue / cyan texels near the
+          // walls take the painting's magenta (channel map cyan (35,170,244) -> (244,35,227); white streaks stay white-pink, foam stays foam)
+          { float pkW = uR35P.x * smoothstep(uR35P.y, uR35P.z, abs(kLat));
+            float sat = max(kRib.b, max(kRib.r, kRib.g)) - min(kRib.r, min(kRib.g, kRib.b)), blu = step(kRib.r, kRib.b) * smoothstep(0.25, 0.5, sat);
+            kRib.rgb = mix(kRib.rgb, vec3(kRib.b, kRib.r, kRib.b * 0.93), pkW * blu); }
           kRib.a = 1.0;
         } else {
         float kW = mix(1.0, uEdge.y, smoothstep(uEdge.z, uEdge.w, kZ));
