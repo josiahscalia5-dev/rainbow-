@@ -773,8 +773,8 @@
   },
   {
    "path": "backups/BOOTSTRAP_REPORT.md",
-   "bytes": 3910,
-   "sha256": "20f85bed29dbf35a9e4f2d33acd1a4d11c9ff03b78eb1c7dcf9541c91c126f04"
+   "bytes": 3850,
+   "sha256": "dc14d82281a261627828e4c4cde0c62f6849511d161b870059ad9db5b89ca6e7"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
@@ -794,7 +794,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 26066,
-   "sha256": "f86677c6f0c3fe22a6c92100bde4e66e3bf6eaabfa96ce2e776da4806bfecad9"
+   "sha256": "e583661e1b32915630bc380658fcf44067c35369c8d1dce7a389c5ef2d6188d1"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -808,8 +808,8 @@
   },
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
-   "bytes": 3056,
-   "sha256": "5b4807be7ac6e3a6c7dace36ad45dc9686481a8bc34af9e419130f6f0842d7a7"
+   "bytes": 3271,
+   "sha256": "156c34bf75303904a6edf71695c3a19ec2a93ef9325c68b57ba6d02e8295bce4"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -7734,7 +7734,7 @@
   {
    "path": "backups/wip/screen05-agents/LAST_SYNC_UTC",
    "bytes": 33,
-   "sha256": "1fc41b95fd5bd81df8eaa4b6626b371d6af599007cffd9c5e4df99fefee1aa98"
+   "sha256": "23ab69e3af4b4588a2b1c0b4eb2a0489bcd621b7771d03fd2edc3404db620142"
   },
   {
    "path": "backups/wip/screen05-agents/agentA/CONTROLS_NOTES.md",
@@ -7765,6 +7765,11 @@
    "path": "backups/wip/screen05-agents/agentA/controls.js",
    "bytes": 20400,
    "sha256": "68e542282c586a994a393802fd0ddf73fec6a70487f2d29dff7786be5cf3b19e"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentA/final_acceptance.cjs",
+   "bytes": 5102,
+   "sha256": "da8b373c9b93f9cda31dccc6e23b3d71660755e95c9d53f07287b2e13ed55e92"
   },
   {
    "path": "backups/wip/screen05-agents/agentA/glint.png",
@@ -7902,6 +7907,16 @@
    "sha256": "fbf6f50c2a0a764f96aa019bd5a18e7a4dea8760eabd1ed44a0b6911388c7aab"
   },
   {
+   "path": "backups/wip/screen05-agents/agentA/refcam_full.json",
+   "bytes": 247,
+   "sha256": "818fd45666b921f8234df9fcfb76d1dcc2a9a1ef26c00cc0cdc662d5ed164b30"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentA/rings.json",
+   "bytes": 260,
+   "sha256": "a88982223f803e73db62d4c5733b555518cbc457109a41aca3b25cfbe01bd426"
+  },
+  {
    "path": "backups/wip/screen05-agents/agentA/scene05.json",
    "bytes": 22479,
    "sha256": "31e8335715bcbaa838351c91dcaba706c03a6bce6810e8e1e17504551a2366ad"
@@ -7930,6 +7945,11 @@
    "path": "backups/wip/screen05-agents/agentA/swipe_test.cjs",
    "bytes": 11345,
    "sha256": "cb4f74bc79997442598340cc5126a8983256c62dfcb003485a80897e04fb5bd2"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentA/tile_frame.json",
+   "bytes": 241,
+   "sha256": "3fad6f90fc4e232c6c4f9b49ead279c7bda6aa064c03afd27ec4083a011d8d36"
   },
   {
    "path": "backups/wip/screen05-agents/agentA/tiles.json",
@@ -7977,6 +7997,16 @@
    "sha256": "b26e6824e4ecf6f86855c58576e817913baa320c5ea9060b5411ee216149bc8e"
   },
   {
+   "path": "backups/wip/screen05-agents/agentA/tunnel_full.json",
+   "bytes": 309,
+   "sha256": "e6aafcb4eca806d9461712fbf0c15850b454e457aeac7caa6e69e8022f98be4d"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentA/visual_check.py",
+   "bytes": 3005,
+   "sha256": "a9418fbb11857d17dee5bfb70911514d8b7c0528e470faf98a7b5ca2468ee688"
+  },
+  {
    "path": "backups/wip/screen05-agents/agentB/WATER_NOTES.md",
    "bytes": 7308,
    "sha256": "aed7aca41a785a67fa4635ff84c63f6e2fefde658a482ec798b89a4af866e7c1"
@@ -7990,6 +8020,11 @@
    "path": "backups/wip/screen05-agents/agentB/camdbg.mjs",
    "bytes": 2100,
    "sha256": "a116ae5f27865bb991f1e14c71b090831d47a3878f40018c48ad54624d4936d5"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentB/final_acceptance.cjs",
+   "bytes": 5102,
+   "sha256": "da8b373c9b93f9cda31dccc6e23b3d71660755e95c9d53f07287b2e13ed55e92"
   },
   {
    "path": "backups/wip/screen05-agents/agentB/glint.png",
@@ -8202,6 +8237,16 @@
    "sha256": "fbf6f50c2a0a764f96aa019bd5a18e7a4dea8760eabd1ed44a0b6911388c7aab"
   },
   {
+   "path": "backups/wip/screen05-agents/agentB/refcam_full.json",
+   "bytes": 247,
+   "sha256": "818fd45666b921f8234df9fcfb76d1dcc2a9a1ef26c00cc0cdc662d5ed164b30"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentB/rings.json",
+   "bytes": 260,
+   "sha256": "a88982223f803e73db62d4c5733b555518cbc457109a41aca3b25cfbe01bd426"
+  },
+  {
    "path": "backups/wip/screen05-agents/agentB/scene05.json",
    "bytes": 22479,
    "sha256": "31e8335715bcbaa838351c91dcaba706c03a6bce6810e8e1e17504551a2366ad"
@@ -8220,6 +8265,11 @@
    "path": "backups/wip/screen05-agents/agentB/splash.png",
    "bytes": 533222,
    "sha256": "b10f6ac7af45f84ae0224678e509c37ae043fa63739596766e645e1c95774dc4"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentB/tile_frame.json",
+   "bytes": 241,
+   "sha256": "3fad6f90fc4e232c6c4f9b49ead279c7bda6aa064c03afd27ec4083a011d8d36"
   },
   {
    "path": "backups/wip/screen05-agents/agentB/tiles.json",
@@ -8350,6 +8400,16 @@
    "path": "backups/wip/screen05-agents/agentB/track_w/track.json",
    "bytes": 117839,
    "sha256": "530d0efbad916ed0150bc6c87fd5f5b6f390def5347d4e95bae60c04412d114d"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentB/tunnel_full.json",
+   "bytes": 309,
+   "sha256": "e6aafcb4eca806d9461712fbf0c15850b454e457aeac7caa6e69e8022f98be4d"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentB/visual_check.py",
+   "bytes": 3005,
+   "sha256": "a9418fbb11857d17dee5bfb70911514d8b7c0528e470faf98a7b5ca2468ee688"
   },
   {
    "path": "backups/wip/screen05-agents/agentB/waterflow.js",
@@ -37973,8 +38033,8 @@
   },
   {
    "path": "tools/marble05/sync_agents_wip.sh",
-   "bytes": 1845,
-   "sha256": "0a9fc45328ee73b7b0dc06c590e8e2be5fc044da62137ae0ce3e4bf647a232d6"
+   "bytes": 2399,
+   "sha256": "8e0664189849a7b51439fe5b4142839259e9a07473050d4ffc1ffe656ea6de74"
   },
   {
    "path": "tools/marble05/viewer/bubble.png",
@@ -37988,8 +38048,8 @@
   },
   {
    "path": "tools/marble05/viewer/final_acceptance.cjs",
-   "bytes": 5102,
-   "sha256": "da8b373c9b93f9cda31dccc6e23b3d71660755e95c9d53f07287b2e13ed55e92"
+   "bytes": 8356,
+   "sha256": "441fdc637cd737835d77202cde83291a2ebb5c250543846f6e9302998698d833"
   },
   {
    "path": "tools/marble05/viewer/glint.png",
@@ -38073,8 +38133,8 @@
   },
   {
    "path": "tools/marble05/viewer/visual_check.py",
-   "bytes": 3005,
-   "sha256": "a9418fbb11857d17dee5bfb70911514d8b7c0528e470faf98a7b5ca2468ee688"
+   "bytes": 4077,
+   "sha256": "59ffb069af2f501cd557ec10ff0150455abfa634a079bd1a5f5c32d3656c8640"
   },
   {
    "path": "tools/match/bake.py",
