@@ -4142,3 +4142,63 @@ The scan's hits are all ordinary sentences inside comments, with no code hidden 
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow- && python3 scripts/rainbow-autosave.py --reason manual:r33l-camera-coverage 2>&1 | grep -E '\"commit\"|skipping'; until grep -qE \"exit=\" /tmp/rainbow_r33/runs/kit_full9.log 2>/dev/null; do sleep 10; done; tail -1 /tmp/rainbow_r33/runs/kit_full9.log; cd tools/marble05/viewer && timeout 1800 python3 -I visual_check.py /tmp/rainbow_r33/runs/kit_full9 /home/user/rainbow-/references/05_flow_into_the_current.png > /dev/null 2>&1; timeout 300 python3 -I acceptance_verdict.py /tmp/rainbow_r33/runs/kit_full9 2>&1 | grep -E \"^# |\\*\\*FAIL\" | cut -c1-260; python3  …[+646 chars]`
 
+### 🧑 User — 2026-11-21T17:10:07.339Z
+
+> ↩︎ result: "commit": "1c1306a71438a82baa4441435f6d65a0d21b904c",
+> exit=0
+> # Screen 05 acceptance verdict: FAIL
+> | V4 | approved artwork look kept all through the level | **FAIL** | `{"frame0": 0.881, "min": 0.743, "median": 0.794}` | hue/saturation look vs approved >= 0.85 x the start frame in every frame |
+> Benny screen x [137, 276] roll max 7.8 roll rate 2.94 dirs {'right': 8, 'left': 8, 'down': 4, 'up': 4} swipes ok 24 / 24 coins 240
+> colour look 0.881 {'min': 0.004, 'median': 0.793}
+
+### 🤖 Claude — 2026-11-21T17:10:13.848Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json, numpy as np\nV=json.load(open('/tmp/rainbow_r33/runs/kit_full9/visual_check.json'))['frames']; L=np.array([r['colour_look_vs_approved'] for r in V])[:666]\nR=[r for r in json.load(open('/tmp/rainbow_r33/runs/kit_full9/run_log.json')) if r.get('s') is not None]\nthr=0.85*L[0]; low=np.nonzero(L<thr)[0]; print('bar', round(thr,4), 'frames below:', len(low), [(int(i), round(float(L[i]),3), R[i]['s'], R[i]['lane'], round(R[i]['height'],2), R[i]['move']) for i in low])\"", "description": "List the remaining low colour frames"}`
+
+### 🧑 User — 2026-11-21T17:10:13.948Z
+
+> ↩︎ result: bar 0.7488 frames below: 9 [(113, 0.743, 5.273, -1, 0, 'lane'), (114, 0.743, 5.32, -1, 0, None), (115, 0.745, 5.367, -1, 0, None), (116, 0.747, 5.413, -1, 0, None), (117, 0.748, 5.46, -1, 0, None), (655, 0.747, 30.567, 0, 0.33, 'leap'), (656, 0.744, 30.613, 0, 0.33, 'leap'), (659, 0.748, 30.753, 0, 0.28, 'leap'), (660, 0.747, 30.8, 0, 0.24, 'leap')]
+
+### 🤖 Claude — 2026-11-21T17:10:21.621Z
+
+Nine frames miss by at most 0.006: five during a left lane change around 5.3 units, and four during the final leap (Benny high in the air at 30.6–30.8 units). Here they are next to your picture:
+
+### 🤖 Claude — 2026-11-21T17:10:25.131Z
+
+> 🔧 **Bash** `{"command": "cd /tmp && python3 -c \"\nfrom PIL import Image\na=Image.open('/home/user/rainbow-/references/05_flow_into_the_current.png').convert('RGB'); sc=915/a.height; rw=round(a.width*sc); a=a.resize((rw,915)).crop(((rw-412)//2,0,(rw-412)//2+412,915))\nims=[a]+[Image.open(f'/tmp/rainbow_r33/runs/kit_full9/f_{i:04d}.jpg').convert('RGB') for i in (114,656,300)]\ns=Image.new('RGB',(412*4+30,915),'white')\nfor j,im in enumerate(ims): s.paste(im,(j*422,0))\ns.resize((s.width//2,457)).save('/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/lowframes.jpg',quality=8 …[+73 chars]`
+
+### 🧑 User — 2026-11-21T17:10:25.254Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T17:10:25.479Z
+
+You've hit your 5-hour limit · resets 6:50pm (UTC)
+
+### 🧑 User — 2026-11-21T17:10:25.522Z
+
+Claudia, I'm glad the new Screen 05 tunnel kit is showing improvement. Please preserve the sharper purple-and-gold tunnel and the existing working swipe controls.
+
+Before extending this to the entire level, please correct the four remaining issues:
+
+1. Water: Remove the stretched blue streaks and broken pink sections. Keep the river continuous, naturally flowing, and faithful to the original approved S-shaped water artwork during forward and sideways movement.
+
+2. Coins: Correct the overlapping and clustered coins. Their positions, spacing, size, and perspective should resemble my approved Screen 05 while remaining collectible in real 3D gameplay.
+
+3. Benny: Correct his excessive width, screen position, and waterline. Preserve his original pink body and striped hat, and make sure his swimming and splashes look natural.
+
+4. Turning: Fix the sudden 5° tilt jump. Benny should smoothly lean left and right without jerking, sliding off-screen, or moving unnaturally.
+
+Please keep the successful tunnel improvements and do not redesign the scenery.
+
+After fixing these issues, test the short section again using actual touch swipes. If it passes and looks substantially closer to my approved artwork, proceed to the entire approximately 23-second Screen 05 and all 14 tunnel sections.
+
+Only show me the final gameplay for approval after the full visual and gameplay tests pass. Continue protecting all successful work on GitHub.
+
+My goal is still the same beautiful original Screen 05, with Benny swimming naturally through it as a real playable 3D mobile game.
+How's it looking so far? My screen.
+
+### 🤖 Claude — 2026-11-21T17:10:26.184Z
+
+You've hit your 5-hour limit · resets 6:50pm (UTC)
+
