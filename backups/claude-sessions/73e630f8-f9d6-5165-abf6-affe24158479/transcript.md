@@ -3259,3 +3259,77 @@ Writing the new game code for the joined-up picture chain.
 
 > 🔧 **Bash** `{"command": "cat > tools/paint/coins06.py <<'EOF'\n\"\"\"Screen 06 pictures for the `?paint=1` chain with live coins: in each of the five pictures (approved 06 + four panels) the three\nnearest painted coins are erased from the background (bria eraser, then SeedVR + the panel's own pixels composited back exactly as in\npaint06) and become the game's coins; the farther tiny coins stay painted. Writes assets/textures/paint/06k<k>_plate.jpg,\n06k<k>_coin.png and work/coins06_sel.json (paint06's own assets are NOT touched).\nusage: python3 -I coins06.py select|erase|up|comp\"\"\"\nimport json, sys …[+5788 chars]`
 
+### 🧑 User — 2026-11-21T01:41:10.692Z
+
+> ↩︎ result: 0 [(267, 715, 102), (179, 623, 82), (234, 546, 59)]
+> 1 [(144, 698, 141), (168, 576, 87), (295, 584, 54)]
+> 2 [(234, 776, 78), (313, 728, 58), (406, 702, 43)]
+> 3 [(298, 714, 87), (424, 670, 61), (514, 644, 45)]
+> 4 [(498, 736, 50), (579, 708, 36), (638, 694, 27)]
+> erase 0 ok
+> erase 1 ok
+> erase 2 ok
+> erase 3 ok
+> erase 4 ok
+> comp 0 ok
+> comp 1 ok
+> comp 2 ok
+> comp 3 ok
+> comp 4 ok
+> -rw-r--r-- 1 root root   42948 Nov 21 01:41 06k0_coin.png
+> -rw-r--r-- 1 root root 1769414 Nov 21 01:41 06k0_plate.jpg
+> -rw-r--r-- 1 root root   71824 Nov 21 01:41 06k1_coin.png
+> -rw-r--r-- 1 root root 1794707 Nov 21 01:41 06k1_plate.jpg
+> -rw-r--r-- 1 root root   26510 Nov 21 01:41 06k2_coin.png
+> -rw-r--r-- 1 root root 1534353 Nov 21 01:41 06k2_plate.jpg
+> -rw-r--r-- 1 root root   27618 Nov 21 01:41 06k3_coin.png
+> -rw-r--r-- 1 root root 1738341 Nov 21 01:41 06k3_plate.jpg
+> -rw-r--r-- 1 root root   11908 Nov 21 01:41 06k4_coin.png
+> -rw-r--r-- 1 root root 1664222 Nov 21 01:41 06k4_plate.jpg
+
+### 🤖 Claude — 2026-11-21T01:41:49.879Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='tools/paint/export.py'; s=open(p).read()\nold=\"\"\"for K in P6['keys']:\n    k = K['k']\n    keys.append({'id': f'06k{k}', 'screen': '06', 'rest': {'stage': '06', 'off': REST06[k]},\n                 'files': {'plate': f'paint06/k{k}_plate.jpg', 'benny': f'paint06/k{k}_benny.png', 'depth': f'paint06/k{k}_depth.png'},\n                 'benny_frame_px': K['benny_frame_px'], 'pivot': [418, 1190], 'vp_frame_px': K['vp_frame_px'],\n                 'push': 0.022, 'push_min': -0.16, 'push_max': 0.3})\"\"\"\nnew=\"\"\"W6 = f'{R}/qa/match/06/paint06/work'\nSEL = …[+5799 chars]`
+
+### 🧑 User — 2026-11-21T01:42:36.247Z
+
+> ↩︎ result: 138:  const vscaleOf = new Map<number, number>();
+> 147:      coins.defs[i].s = rest[k] + dl; coins.defs[i].lat = K.coins!.lat; coinKeys.set(i, k); vscaleOf.set(i, K.coins!.vscale?.[n] ?? 1);
+> 263:        const d = (def.s - o.s) * (vscaleOf.get(i) ?? 1); let op = 1; const lift = 0, grow = 1;
+> 328:    keys.forEach((Q) => { if (!Q.coin) return; for (const [i] of Q.coin.meshes) { const d = (coins.defs[i].s - s) * (vscaleOf.get(i) ?? 1); const [x, y, dia] = pathAt(Q.coin.P, d); out.push({ i, d: +d.toFixed(2), x: +x.toFixed(1), y: +y.toFixed(1), dia: +dia.toFixed(1), collected: coins.collected[i] === 1 }); } });
+> keys ['05k0', '06k0', '06k1', '06k2', '06k3', '06k4']
+> 6
+
+### 🤖 Claude — 2026-11-21T01:42:44.074Z
+
+> 🔧 **Bash** `{"command": "D=qa/match/05/paint05/shots && mkdir -p $D/m06 && for k in 0 1 2 3 4; do cp $D/06k$k.png $D/m06/06p$k.png; done && python3 -I tools/paint06/measure.py $D/m06 | python3 -I -c \"import json,sys; d=json.load(sys.stdin); [print('06',k, v) for k,v in d.items()]\" && python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\na=Image.open('references/05_flow_into_the_current.png').convert('RGB'); b=Image.open('$D/05k0.png').convert('RGB')\ne=np.abs(np.asarray(a).astype(int)-np.asarray(b).astype(int)).max(axis=2)\nprint('05 k0 below HUD', round(100*(e[195:]<=20).mean(),1),'%')\nc=Image. …[+311 chars]`
+
+### 🤖 Claude — 2026-11-21T01:42:45.121Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/s06.png"}`
+
+### 🧑 User — 2026-11-21T01:42:45.819Z
+
+> ↩︎ result: 06 k0 {'below_hud_pct': 96.2, 'whole_frame_pct': 87.3}
+> 06 k1 {'panel_size_pct': 94.5, 'game_frame_window_pct': 84.5, 'window_share_of_screen_pct': 57}
+> 06 k2 {'panel_size_pct': 96.7, 'game_frame_window_pct': 90.5, 'window_share_of_screen_pct': 56}
+> 06 k3 {'panel_size_pct': 96.3, 'game_frame_window_pct': 90.0, 'window_share_of_screen_pct': 60}
+> 06 k4 {'panel_size_pct': 97.2, 'game_frame_window_pct': 84.7, 'window_share_of_screen_pct': 57}
+> 05 k0 below HUD 95.0 %
+
+### 🧑 User — 2026-11-21T01:42:45.858Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T01:42:56.659Z
+
+> 🔧 **Bash** `{"command": "(timeout 3000 node tools/paint/clip.mjs --q=paint=1 --from=106 --to=262 --tag=NEW_05_06_07_straight 2>&1 | tail -1) & (sleep 2; timeout 3000 node tools/paint/clip.mjs --q=paint=1 --from=106 --to=262 --weave=136:146,160:172,205:215,226:236 --tag=NEW_05_06_07_steer 2>&1 | tail -1); wait", "description": "Record straight and steering clips from 04 through 05, 06 into 07", "timeout": 3300000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-21T01:42:56.716Z
+
+> ↩︎ result: Command running in background with ID: bf3vub64x. Output is being written to: /tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/tasks/bf3vub64x.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-21T01:43:19.569Z
+
+> 🔧 **Bash** `{"command": "timeout 300 python3 scripts/rainbow-autosave.py --reason manual:paint-05-06 2>&1 | grep -E '\"commit\"|skipping'; cat > tools/paint/frames_metric.py <<'EOF'\n\"\"\"Likeness of EVERY gameplay frame to the approved picture for that moment (not just the matched moments).\nScreen 05 frames vs the approved Screen 05 picture (below the HUD strip); Screen 06 frames vs the picture shown at that moment\n(approved 06 until panel 1 is revealed, then each storyboard panel inside its own window). Two numbers per frame:\n  px20   = pixels within 20 colour levels (strict, pixel-exact),\n  look20 …[+3213 chars]`
+

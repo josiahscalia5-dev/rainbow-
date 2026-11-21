@@ -18,6 +18,8 @@ import type { CoinDef } from '../gameplay/coins';
 interface CoinPath {
   sprite: string; sprite_px: [number, number]; sprite_coin_d: number; stage: StageId; pop_frame_px: [number, number];
   D0: number; c: number; samples: [number, number, number, number][]; layout: number[]; lat: number;
+  /** per coin: visual distance along the painted trail per course unit (1 = the picture's own perspective, Screen 05) */
+  vscale?: number[];
 }
 interface KeyDef {
   id: string; screen: StageId; rest: { mark?: string; stage?: StageId; off: number };
@@ -133,15 +135,20 @@ export async function buildPaint(course: Course, coins: { defs: CoinDef[]; colle
 
   // ---------------------------------------------------------------- coins: the painted coins ARE the game's coins on these stages
   const coinKeys = new Map<number, number>(); // coin index -> key index
+  const vscaleOf = new Map<number, number>();
+  const queues = new Map<StageId, number[]>();
+  for (const K of L.keys) if (K.coins && !queues.has(K.coins.stage))
+    queues.set(K.coins.stage, coins.defs.map((d, i) => [d, i] as const).filter(([d]) => d.stage === K.coins!.stage).sort((a, b) => a[0].s - b[0].s).map(([, i]) => i));
   L.keys.forEach((K, k) => {
     if (!K.coins) return;
-    const idx = coins.defs.map((d, i) => [d, i] as const).filter(([d]) => d.stage === K.coins!.stage).sort((a, b) => a[0].s - b[0].s).map(([, i]) => i);
-    const lay = K.coins.layout;
-    idx.forEach((i, n) => {
-      if (n < lay.length) { coins.defs[i].s = rest[k] + lay[n]; coins.defs[i].lat = K.coins!.lat; coinKeys.set(i, k); }
-      else coins.collected[i] = 1; // more game coins than painted ones: never shown, never counted
+    const q = queues.get(K.coins.stage)!;
+    K.coins.layout.forEach((dl, n) => {
+      const i = q.shift(); if (i === undefined) return;
+      coins.defs[i].s = rest[k] + dl; coins.defs[i].lat = K.coins!.lat; coinKeys.set(i, k); vscaleOf.set(i, K.coins!.vscale?.[n] ?? 1);
     });
   });
+  // game coins of these stages with no painted coin: moved out of the course (never shown, never counted, also after QA resets)
+  for (const q of queues.values()) for (const i of q) { coins.defs[i].s = -1000 - i; coins.collected[i] = 1; }
 
   const keys = await Promise.all(L.keys.map(async (K) => {
     const [plate, benny, depth, flow] = await Promise.all([tex(K.files.plate), tex(K.files.benny), depthOf(K.files.depth), K.files.flow ? tex(K.files.flow) : Promise.resolve(null)]);
@@ -253,7 +260,7 @@ export async function buildPaint(course: Course, coins: { defs: CoinDef[]; colle
       const P = Q.coin.P, list: [number, THREE.Mesh][] = [];
       for (const [i, m] of Q.coin.meshes) {
         const def = coins.defs[i], col = coins.collected[i] === 1;
-        const d = def.s - o.s; let op = 1; const lift = 0, grow = 1;
+        const d = (def.s - o.s) * (vscaleOf.get(i) ?? 1); let op = 1; const lift = 0, grow = 1;
         if (col) continue; // collected: shown as the pop above his pom-pom (ortho, after Benny)
         {
           if (d > P.samples[P.samples.length - 1][0] || d < P.samples[0][0]) continue;
@@ -318,7 +325,7 @@ export async function buildPaint(course: Course, coins: { defs: CoinDef[]; colle
   /** QA: frame px of every visible coin of the current picture (at rest, before the gentle push) */
   const coinInfo = (s: number) => {
     const out: { i: number; d: number; x: number; y: number; dia: number; collected: boolean }[] = [];
-    keys.forEach((Q) => { if (!Q.coin) return; for (const [i] of Q.coin.meshes) { const d = coins.defs[i].s - s; const [x, y, dia] = pathAt(Q.coin.P, d); out.push({ i, d: +d.toFixed(2), x: +x.toFixed(1), y: +y.toFixed(1), dia: +dia.toFixed(1), collected: coins.collected[i] === 1 }); } });
+    keys.forEach((Q) => { if (!Q.coin) return; for (const [i] of Q.coin.meshes) { const d = (coins.defs[i].s - s) * (vscaleOf.get(i) ?? 1); const [x, y, dia] = pathAt(Q.coin.P, d); out.push({ i, d: +d.toFixed(2), x: +x.toFixed(1), y: +y.toFixed(1), dia: +dia.toFixed(1), collected: coins.collected[i] === 1 }); } });
     return out;
   };
   return { weight, speedK, draw, paintBenny, rest, keyIds: L.keys.map((K) => K.id), coinInfo, chainS0, chainS1 };

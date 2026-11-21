@@ -60,12 +60,40 @@ print('05 coin fit: D0', round(D0, 2), 'c', round(cc, 1), 'yh', round(yh, 1), 'k
 # ---- 06k0..06k4 (existing paint06 assets)
 P6 = json.load(open(f'{R}/assets/textures/paint06/paint06.json'))
 REST06 = [10, 21, 32, 43, 53]
+W6 = f'{R}/qa/match/06/paint06/work'
+SEL = json.load(open(f'{W6}/coins06_sel.json'))
+BEN = (418.0, 980.0)                     # where a coin meets Benny (behind his hat band), frame px
+def path06(sel):
+    # visual distance of each painted coin from its size, with the Screen 05 perspective (same game camera)
+    v = np.array([cc / c['d'] - D0 for c in sel]); xs = np.array([c['c'][0] for c in sel]); ys = np.array([c['c'][1] for c in sel]); ds = np.array([c['d'] for c in sel])
+    o = np.argsort(v); v, xs, ys, ds = v[o], xs[o], ys[o], ds[o]
+    uv = 1 / (v + D0); u0 = 1 / D0
+    smp = []
+    for vv in np.arange(-6.0, 160.01, 0.5):
+        uu = 1 / max(vv + D0, 0.35)
+        if vv < 0: x, y = BEN[0], BEN[1] + ky * (uu - u0)
+        elif uu >= uv[0]: t = (u0 - uu) / (u0 - uv[0]); x, y = BEN[0] + (xs[0] - BEN[0]) * t, BEN[1] + (ys[0] - BEN[1]) * t
+        elif uu <= uv[-1]: x, y = xs[-1], ys[-1]
+        else: x = float(np.interp(uu, uv[::-1], xs[::-1])); y = float(np.interp(uu, uv[::-1], ys[::-1]))
+        dia = cc * uu if (uu >= uv[0] or vv < 0) else (ds[-1] * uu / uv[-1] if uu <= uv[-1] else float(np.interp(uu, uv[::-1], ds[::-1])))
+        smp.append([round(float(vv), 2), round(float(x), 1), round(float(y), 1), round(float(dia), 1)])
+    return smp, [float(x) for x in v]
 for K in P6['keys']:
     k = K['k']
+    sel = SEL[str(k)]
+    smp, vis = path06(sel)
+    lay_d = [1.0, 2.0, 3.0] if k == 4 else [1.2, 2.6, 4.0]        # arrivals after this picture's moment, before the next reveal
+    # nearest painted coin arrives first: the coin with the smallest visual distance gets the smallest game distance
+    order = np.argsort(vis); vscale = [0.0] * len(vis); layout = [0.0] * len(vis)
+    for n, i in enumerate(order): layout[n] = lay_d[n]; vscale[n] = vis[i] / lay_d[n]
+    sp = json.load(open(f'{W6}/k{k}_coin_sprite.json')); x0, y0, x1, y1 = sp['sprite_box']
     keys.append({'id': f'06k{k}', 'screen': '06', 'rest': {'stage': '06', 'off': REST06[k]},
-                 'files': {'plate': f'paint06/k{k}_plate.jpg', 'benny': f'paint06/k{k}_benny.png', 'depth': f'paint06/k{k}_depth.png'},
+                 'files': {'plate': f'paint/06k{k}_plate.jpg', 'benny': f'paint06/k{k}_benny.png', 'depth': f'paint06/k{k}_depth.png'},
                  'benny_frame_px': K['benny_frame_px'], 'pivot': [418, 1190], 'vp_frame_px': K['vp_frame_px'],
-                 'push': 0.022, 'push_min': -0.16, 'push_max': 0.3})
+                 'push': 0.022, 'push_min': -0.16, 'push_max': 0.3,
+                 'coins': {'sprite': f'paint/06k{k}_coin.png', 'sprite_px': [x1 - x0, y1 - y0], 'sprite_coin_d': float(sp['sprite_coin_d']), 'stage': '06',
+                           'D0': round(float(D0), 3), 'c': round(float(cc), 2), 'samples': smp, 'layout': layout, 'vscale': [round(v_, 3) for v_ in vscale],
+                           'lat': 0.0, 'pop_frame_px': [418, 770]}})
 lay = {'frame': [FW, FH], 'margin': [MX, MY], 'plate_frame_px': [PW, PH], 'plate_scale': S, 'keys': keys,
        # when each keyframe is revealed over the previous one: [centre s, half width] (course units); 06k0 right at the 05->06 join
        'reveal': {'06k0': {'stage': '06', 'off': 0.6, 'half': 1.6}},
