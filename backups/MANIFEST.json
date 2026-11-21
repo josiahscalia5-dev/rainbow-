@@ -794,7 +794,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 25599,
-   "sha256": "c099a68848333ac7a0453f6fa0dc18aa044a27f62956a1b0ed9c9b6571f816e6"
+   "sha256": "41c64cf6b133e71554bd88d7b59678470c79a95f6bc6a5aba98823ffadeb1288"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3056,
-   "sha256": "6172bb2030af0cbf61f7bebcb1f727589d8f277861dd0af090810943e97c8b00"
+   "sha256": "6c6a514f32b7f7a3d1e1641d5cfefb5e2822ffd6df3dce9b684a9c9e8b3c353b"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -35972,6 +35972,11 @@
    "sha256": "80df2f0d31c935b0e0fc7f1b064c54b5e72e9e27abb49643ee6729170eb7a7c6"
   },
   {
+   "path": "qa/worldlabs/05/r32/README.md",
+   "bytes": 4075,
+   "sha256": "78cc3743bf6f8f660f5316b0d2647364802097a52a83f4350c41e2af063cac9a"
+  },
+  {
    "path": "qa/worldlabs/05/r32/draft_500k.spz",
    "bytes": 6049687,
    "sha256": "5aa3dcf786fc7d8dfd03e7fe80dad90870967e91bc9e22e5f151603073046229"
@@ -36035,6 +36040,61 @@
    "path": "qa/worldlabs/05/r32/input_05_clean.png",
    "bytes": 3581117,
    "sha256": "cfe6aba6a1091041df9b363395ab271afbd1449da0f26e44cbc538967a0043bb"
+  },
+  {
+   "path": "qa/worldlabs/05/r32/proof/ALIGN_approved_vs_world_from_picture_camera.jpg",
+   "bytes": 506134,
+   "sha256": "9ba6489114ebc12a332793b782c7dc4c47216df589e5e4ab8bdb08ceca60d020"
+  },
+  {
+   "path": "qa/worldlabs/05/r32/proof/BEYOND_good_stretch.png",
+   "bytes": 632131,
+   "sha256": "2b366352ea7969892c5fddfe65bdfdf5754385610937ee7a3c83fa1b3f63c9e4"
+  },
+  {
+   "path": "qa/worldlabs/05/r32/proof/INSPECT_3D_sheet.jpg",
+   "bytes": 401180,
+   "sha256": "829260c93d270a2c04c217b819e2769b99efbec22de13fefa015dac57518a737"
+  },
+  {
+   "path": "qa/worldlabs/05/r32/proof/INSPECT_i1_front_looking_back.png",
+   "bytes": 948412,
+   "sha256": "e27520009fa76eb5c0820d6a3bd0976d34f13e737cf51cc93a3d7ef4b6b0ceb9"
+  },
+  {
+   "path": "qa/worldlabs/05/r32/proof/INSPECT_i2_high_side.png",
+   "bytes": 945402,
+   "sha256": "a0f5e692884257153a0ca4ed2439d3b1c981a85a33977ee4882d338063adf8e8"
+  },
+  {
+   "path": "qa/worldlabs/05/r32/proof/INSPECT_i3_outside_tube.png",
+   "bytes": 372471,
+   "sha256": "07d2ad7a2d43bf33a15b3b6ad4208a6ca54cd539fc16397266f16a091b99f4e3"
+  },
+  {
+   "path": "qa/worldlabs/05/r32/proof/INSPECT_i4_behind_wide.png",
+   "bytes": 984304,
+   "sha256": "402ba100187584a7c0272fa32b8320992b0f43bde3316e0d90f154fd17a459a5"
+  },
+  {
+   "path": "qa/worldlabs/05/r32/proof/MARBLE05_gameplay_followcam.mp4",
+   "bytes": 1151148,
+   "sha256": "b32a707533c2a937c1ae466bb11452eb3e7063f335a21c3f8b160760a662fb84"
+  },
+  {
+   "path": "qa/worldlabs/05/r32/proof/PROOF_APPROVED_vs_3D_GAMEPLAY.jpg",
+   "bytes": 741269,
+   "sha256": "1735e7e9cf85e7e1755d4e65380998f5572015a69115bf16e1ee407977323711"
+  },
+  {
+   "path": "qa/worldlabs/05/r32/proof/TRAVEL_camera_0_to_5_units.jpg",
+   "bytes": 229717,
+   "sha256": "98bcababd38b5a22e20b347f9a157edb5d25dbe3d82a764c17b4c1cdcaaaffaf"
+  },
+  {
+   "path": "qa/worldlabs/05/r32/proof/clip_log.json",
+   "bytes": 6672,
+   "sha256": "d85321a12755f417ce56c07716c1d3c28374dd084fcb6ccb9f7809053993db1d"
   },
   {
    "path": "qa/worldlabs/05/rejected/README.md",
@@ -37140,6 +37200,46 @@
    "path": "tools/marble05/spz.py",
    "bytes": 934,
    "sha256": "28bf68792c8428073e1e2ca0a996a6a066ea30661229e0f04b9abe78b2ab993b"
+  },
+  {
+   "path": "tools/marble05/viewer/index.html",
+   "bytes": 1846,
+   "sha256": "aa63b96e7187f2ef74976da01ff10eecc239a1e060f85a7afb2d368af72da223"
+  },
+  {
+   "path": "tools/marble05/viewer/package.json",
+   "bytes": 307,
+   "sha256": "7fa77351920fa6c18d481f23386798ec9056450c230015f5630a75200f67e7e0"
+  },
+  {
+   "path": "tools/marble05/viewer/play.html",
+   "bytes": 9546,
+   "sha256": "0c5860d62f504be7595211cb34d497a1bd6779072e961707b259cfe9f7f0969a"
+  },
+  {
+   "path": "tools/marble05/viewer/play_shots.cjs",
+   "bytes": 2665,
+   "sha256": "d68f1a4a93a986b63ec47b0ac8b4e4d7b769db69ffc7dbe7604e6a8669460d7c"
+  },
+  {
+   "path": "tools/marble05/viewer/refcam_full.json",
+   "bytes": 247,
+   "sha256": "818fd45666b921f8234df9fcfb76d1dcc2a9a1ef26c00cc0cdc662d5ed164b30"
+  },
+  {
+   "path": "tools/marble05/viewer/scene05.json",
+   "bytes": 22479,
+   "sha256": "31e8335715bcbaa838351c91dcaba706c03a6bce6810e8e1e17504551a2366ad"
+  },
+  {
+   "path": "tools/marble05/viewer/shots.cjs",
+   "bytes": 1514,
+   "sha256": "9fad9e2be14f2f263baa0efed65389f3971ce4fc57bcdf1b9d5c834ffd3a133d"
+  },
+  {
+   "path": "tools/marble05/viewer/tunnel_full.json",
+   "bytes": 309,
+   "sha256": "e6aafcb4eca806d9461712fbf0c15850b454e457aeac7caa6e69e8022f98be4d"
   },
   {
    "path": "tools/match/bake.py",
