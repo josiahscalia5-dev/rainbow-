@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3267,
-   "sha256": "29213d83a5f46b0509370d6321222af10a0438df670e21095d50416442fd7a4a"
+   "sha256": "60a245759c94672744c074048582414b2b5ad4d1879e3985f1d9c5d5b5e75679"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -7054,7 +7054,7 @@
   {
    "path": "backups/wip/detached-d8e047d33e/INFO.json",
    "bytes": 2379,
-   "sha256": "cf794c4ebd973e58f8ec29aa5246820e13f520fb66148a97364be7470090621a"
+   "sha256": "5021babfd1b0fd14fc72b24dd439b932f0406ce4dd4654935622f45b763fc022"
   },
   {
    "path": "backups/wip/detached-d8e047d33e/tracked.patch",
@@ -11625,6 +11625,16 @@
    "path": "docs/briefs/2026-11-21-r34/notes/s5.md",
    "bytes": 1244,
    "sha256": "e60a226531463c9f8870529c2e3b9ce95181a7a9b6c15a52ea28896e8e59d7f7"
+  },
+  {
+   "path": "docs/briefs/2026-11-21-r35/RESUME_R35.md",
+   "bytes": 4798,
+   "sha256": "945e8d1f7508e3897d3c9308329515412d63e6b1b39a13c752497cfa6cf56345"
+  },
+  {
+   "path": "docs/briefs/2026-11-21-r35/USER_R35.md",
+   "bytes": 648,
+   "sha256": "7d12948552cd28220f72f132af288f691c82b63c59f08f2721ef837a3088b980"
   },
   {
    "path": "docs/characters/benny.md",
@@ -16270,6 +16280,61 @@
    "path": "qa/kit05/r34/s4/live_double_loop_evidence.json",
    "bytes": 2905,
    "sha256": "3c9b0401243d72cd646cdedd43e1a1c5e5ec57a3cd390b5204c0901bb4d37f39"
+  },
+  {
+   "path": "qa/kit05/r35/compare/APPROVED_phone_frame.jpg",
+   "bytes": 202532,
+   "sha256": "2f00accc2ca77c2eeb966d1ae87cf3cabcb79c6979d93ada7cc6d10c5dc11cc7"
+  },
+  {
+   "path": "qa/kit05/r35/compare/BEFORE_round34_s0.0.jpg",
+   "bytes": 176930,
+   "sha256": "0385a8af9a9f0df9a76398a4aec36ef2912b45e7ef486b0b01e6d7c9e08b6040"
+  },
+  {
+   "path": "qa/kit05/r35/compare/BEFORE_round34_s15.0.jpg",
+   "bytes": 174372,
+   "sha256": "4785f01527e16b145b820ae52ae9da6117d71223d05365c5bb219d2219ba8ddd"
+  },
+  {
+   "path": "qa/kit05/r35/compare/BEFORE_round34_s25.0.jpg",
+   "bytes": 169557,
+   "sha256": "ea2d6339e83ebdd97b594f776e355c55920efcea653dd1b509c78204982f6c0a"
+  },
+  {
+   "path": "qa/kit05/r35/compare/BEFORE_round34_s4.0.jpg",
+   "bytes": 156097,
+   "sha256": "2be9bafeb140a7e710e34cf92c99cea828e40ebb408809d667775cc8c88b959f"
+  },
+  {
+   "path": "qa/kit05/r35/compare/BEFORE_round34_s9.0.jpg",
+   "bytes": 172312,
+   "sha256": "c08fe63527c3ec6ad4f74eaaec93a8ebb8a256efa8c4a5dbe5531d61997d114e"
+  },
+  {
+   "path": "qa/kit05/r35/compare/NEW_round35_s0.0.jpg",
+   "bytes": 176938,
+   "sha256": "3336d06f8c6a832eab5b1c6101126c9fa9826d06b723396dc565b002055a736a"
+  },
+  {
+   "path": "qa/kit05/r35/compare/NEW_round35_s15.0.jpg",
+   "bytes": 167581,
+   "sha256": "fd14e315af1c0a4b847f49579b3cdb6904339dfa50f13d3d43363dbdfce170f0"
+  },
+  {
+   "path": "qa/kit05/r35/compare/NEW_round35_s25.0.jpg",
+   "bytes": 165319,
+   "sha256": "1051b203088a3cc6d7209220d194bf6077f28d606db6f4f9b56124acd08481b3"
+  },
+  {
+   "path": "qa/kit05/r35/compare/NEW_round35_s4.0.jpg",
+   "bytes": 156648,
+   "sha256": "2a03043da480f6c9b1946bcda4b94450f862901d4a2dd51468f8fb9ec837b27b"
+  },
+  {
+   "path": "qa/kit05/r35/compare/NEW_round35_s9.0.jpg",
+   "bytes": 166648,
+   "sha256": "c4595ba0bc3e1b03640788d4ccc961b49804cbcd98f194b932d9d603dad10508"
   },
   {
    "path": "qa/lead_r5/2026-11-17/README.md",
@@ -40478,8 +40543,8 @@
   },
   {
    "path": "tools/kit05/build_phone.sh",
-   "bytes": 1826,
-   "sha256": "ea56c5a7f50dd1320996719b845e77739cfcb661b738b62c58ff0a5a49ff37fa"
+   "bytes": 2414,
+   "sha256": "cd8183b22b48369d94a074934150fc9ac037de943dad4d2302d681afd6bf090a"
   },
   {
    "path": "tools/kit05/cam05.py",
@@ -40518,8 +40583,8 @@
   },
   {
    "path": "tools/kit05/kitgame.html",
-   "bytes": 58127,
-   "sha256": "e70205e22c7eed34191caa172544ec23fc988928be397b6306879f216b5f9e93"
+   "bytes": 58844,
+   "sha256": "9479f326c6d83ef86a62eeba9a986a5da8021c4b0d24fd6262aef1d0590efe34"
   },
   {
    "path": "tools/kit05/live.js",
