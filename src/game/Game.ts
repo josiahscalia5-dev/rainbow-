@@ -391,7 +391,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
     st.twirl = st.stage === '03' ? st.twirl + dt * 2.2 : st.twirl * Math.max(0, 1 - dt * 3);
     const tw = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), st.stage === '03' ? Math.PI + Math.sin(st.twirl) * 0.9 : 0);
     benny.root.quaternion.copy(pose.quat).multiply(tw).multiply(lean);
-    benny.root.visible = true;
+    benny.root.visible = !(p06 && p06.paintBenny(st.s) >= 0.5); // `?paint06=1`: the painted Benny replaces him on Screen 06
     benny.setExpression('happy');
     benny.update(dt, { swim: 1, steer: input.steer, speed, time: st.clock });
     // VFX anchor = the body centre AFTER the runtime's ride lift (the model is raised inside the root),

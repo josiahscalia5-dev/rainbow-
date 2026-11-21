@@ -1545,3 +1545,30 @@ Now rewriting the drawing code with the reveal transitions.
 
 > 🔧 **Bash** `{"command": "timeout 900 node scripts/capture.mjs 06p0 06p1 06p2 06p3 06p4 --q=paint06=1 --out=qa/match/06/paint06/shots 2>&1 | grep -c \"→\" && python3 -I tools/paint06/measure.py qa/match/06/paint06/shots | python3 -I -c \"import json,sys; d=json.load(sys.stdin); [print(k, v) for k,v in d.items()]\" && timeout 1500 node tools/paint06/clip.mjs 2>&1 | tail -2 && cd qa/match/06/paint06/clip && python3 -I -c \"\nfrom PIL import Image\nimport json\nL=json.load(open('clip_straight.json'))['frames']\nidx=[15,22,29,36,  150,158,166,174, 498,506,514,522]\nc=Image.new('RGB',(12*180+110,320),'white')\n …[+371 chars]`
 
+### 🧑 User — 2026-11-21T00:34:28.618Z
+
+> ↩︎ result: 5
+> k0 {'below_hud_pct': 97.9, 'whole_frame_pct': 88.7}
+> k1 {'panel_size_pct': 97.7, 'game_frame_window_pct': 87.1, 'window_share_of_screen_pct': 57}
+> k2 {'panel_size_pct': 98.2, 'game_frame_window_pct': 91.7, 'window_share_of_screen_pct': 56}
+> k3 {'panel_size_pct': 97.9, 'game_frame_window_pct': 91.6, 'window_share_of_screen_pct': 60}
+> k4 {'panel_size_pct': 98.3, 'game_frame_window_pct': 85.5, 'window_share_of_screen_pct': 57}
+> frames 541 from s 181.291 to 261.418 -> qa/match/06/paint06/clip/SCREEN06_paint06_straight_1x.mp4
+> [(15, 186.675), (22, 188.335), (29, 189.395), (36, 190.255), (150, 204.049), (158, 205.017), (166, 205.985), (174, 206.953), (498, 246.339), (506, 248.099), (514, 251.023), (522, 254.218)]
+
+### 🤖 Claude — 2026-11-21T00:34:31.063Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/trans.png"}`
+
+### 🧑 User — 2026-11-21T00:34:31.193Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-21T00:34:31.188Z
+
+[Image: original 2270x320, displayed at 2000x282. Multiply coordinates by 1.14 to map to original image.]
+
+### 🤖 Claude — 2026-11-21T00:34:46.001Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && python3 -I - <<'EOF'\np='src/world/paint06.ts'; s=open(p).read()\ns=s.replace(\"\"\"  return { weight, speedK, draw, rest, s0, s1 };\"\"\",\"\"\"  /** 0..1: is the painted Benny the one on screen (the 3D Benny is hidden while it is) */\n  const paintBenny = (s: number) => {\n    const fin = joinIn(s), fout = joinOut(s);\n    if (fin <= 0 || fout >= 1) return 0;\n    if (fin < 1) return insideAt(keys[0], fin, BENNY_C[0], BENNY_C[1]);\n    if (fout > 0) return 1 - insideAt(keys[keys.length - 1], fout, BENNY_C[0], BENNY_C[1]);\n    return 1;\n  };\n  return  …[+866 chars]`
+

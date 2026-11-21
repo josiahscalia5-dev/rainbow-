@@ -250,6 +250,14 @@ export async function buildPaint06(course: Course) {
     renderer.autoClear = prevAuto;
   };
 
-  return { weight, speedK, draw, rest, s0, s1 };
+  /** 0..1: is the painted Benny the one on screen (the 3D Benny is hidden while it is) */
+  const paintBenny = (s: number) => {
+    const fin = joinIn(s), fout = joinOut(s);
+    if (fin <= 0 || fout >= 1) return 0;
+    if (fin < 1) return insideAt(keys[0], fin, BENNY_C[0], BENNY_C[1]);
+    if (fout > 0) return 1 - insideAt(keys[keys.length - 1], fout, BENNY_C[0], BENNY_C[1]);
+    return 1;
+  };
+  return { weight, speedK, draw, paintBenny, rest, s0, s1 };
 }
 export type Paint06 = Awaited<ReturnType<typeof buildPaint06>>;
