@@ -3801,3 +3801,55 @@ The still-scenery version scores much higher on the frame-by-frame test. Checkin
 > c8c7f11369cfbc48f40c63a3d525dbfce926c79f
 > c8c7f11369cfbc48f40c63a3d525dbfce926c79f	refs/heads/ccr-4fcad20e-a6pp8w
 
+### 🤖 Claude — 2026-11-21T02:01:17.096Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/match/05/paint05/proof/NEW_04_05_06_07_straight.mp4", "/home/user/rainbow-/qa/match/05/paint05/proof/NEW_04_05_06_07_steering.mp4", "/home/user/rainbow-/qa/match/05/paint05/proof/BEFORE_04_05_06_07_straight.mp4", "/home/user/rainbow-/qa/match/05/paint05/proof/CMP_1_05_start.jpg", "/home/user/rainbow-/qa/match/05/paint05/proof/CMP_3_05_swimming_3.4s_later.jpg", "/home/user/rainbow-/qa/match/05/paint05/proof/CMP_4_06_start.jpg", "/home/user/rainbow-/qa/match/05/paint05/proof/CMP_6_06_panel2.jpg", "/home/user/rainbow-/qa/match/05/paint05/proof/CMP_8_06_panel4.jp …[+247 chars]`
+
+### 🧑 User — 2026-11-21T02:01:19.318Z
+
+> ↩︎ result: 8 files delivered to user.
+>   /home/user/rainbow-/qa/match/05/paint05/proof/NEW_04_05_06_07_straight.mp4 → file_uuid: 1c44ff15-8640-48cc-b101-8b5e262acece
+>   /home/user/rainbow-/qa/match/05/paint05/proof/NEW_04_05_06_07_steering.mp4 → file_uuid: 29fac157-6ea1-4f2e-8386-e46ed202dd75
+>   /home/user/rainbow-/qa/match/05/paint05/proof/BEFORE_04_05_06_07_straight.mp4 → file_uuid: 5bb3df4e-f706-4993-a57a-a1635cfd61a0
+>   /home/user/rainbow-/qa/match/05/paint05/proof/CMP_1_05_start.jpg → file_uuid: 58130c3a-d881-4e02-adc3-b9f38aa0e801
+>   /home/user/rainbow-/qa/match/05/paint05/proof/CMP_3_05_swimming_3.4s_later.jpg → file_uuid: 611d203e-610a-413c-871f-5acae36b5642
+>   /home/user/rainbow-/qa/match/05/paint05/proof/CMP_4_06_start.jpg → file_uuid: e89af913-de13-49df-82f7-f53817e8197d
+>   /home/user/rainbow-/qa/match/05/paint05/proof/CMP_6_06_panel2.jpg → file_uuid: 10478480-3389-443f-9a69-c3b66924a8c3
+>   /home/user/rainbow-/qa/match/05/paint05/proof/CMP_8_06_panel4.jpg → file_uuid: bf2e6bb8-cb8e-4bb5-8a01-1a8f86a54842
+
+### 🤖 Claude — 2026-11-21T02:01:32.083Z
+
+Screen 05 is finished and fully tested. It's joined to your Screen 06 pictures as one journey, and you turn it on by adding `?paint=1` to the game address. Your normal game is unchanged, and the earlier `?paint06=1` candidate is kept as it was.
+
+**What it does:**
+- **Scenery:** your own Screen 05 picture, then your approved 06 picture and your four 06 panels, with your painted Benny steering, leaning and bobbing.
+- **Water:** your painted water flows toward the viewer.
+- **Coins:** your painted coins are real coins. They come down the river, pop up from Benny's pom-pom and disappear when he collects them. If he steers away, they slide past beside him.
+- **One Benny:** the old 3D Benny never appears in any frame while your pictures are on screen.
+- **Joins:** Screen 04 opens into 05 from the far end of the tunnel, and every picture change works the same way.
+
+**Measured on every frame of the uninterrupted recordings, not just the matched moments:**
+
+| | Game today (BEFORE) | NEW, swimming straight | NEW, steering |
+|---|---|---|---|
+| Screen 05, exact pixels | 5% | 82% | 76% |
+| Screen 05, "looks the same"* | 5% | 93% | 84% |
+| Screen 06 pictures, "looks the same"* | 1–2% | 92–95% | 65–85% |
+
+\*Same comparison after a slight blur, so a one-pixel shift in a sparkle or fur strand doesn't count as different.
+
+The still pictures, with the water flow paused, measure 93.7–95.9% throughout Screen 05 and at the start of 06. In the recordings:
+- every coin was collected and popped when swimming straight (1,330 → 1,600)
+- Benny lost one heart when steering into the foam wall
+- there were no jumps
+
+**Why it isn't 95–98% in every frame:**
+- **Moving parts:** anything that moves changes pixels. The flowing water covers about a third of the screen, plus the coins and Benny's bob. That's most of the gap between 93% and 82%.
+- **Steering:** when he steers, Benny leaves his painted spot, which lowers the numbers.
+- **Picture changes:** the lowest frames are the brief, under-a-second reveals between pictures.
+- **No forward travel:** with only one picture per screen, the tunnel can't come toward you. I tried a slow forward zoom and the match fell to 41% (54% "looks the same"), so the scenery holds still while the water, coins and Benny move.
+
+That last point is the one limit of this method, and it's your call before I spend credits on Screen 07: keep the still scenery, or accept a lower match for a stronger feeling of moving forward? The forward-zoom version is still available by adding `&paintpush=1&paintpan=1`, so you can compare.
+
+This round's image jobs cost about $1.45. Everything is saved on GitHub, and the full numbers and notes are in `qa/match/05/paint05/README.md`.
+
