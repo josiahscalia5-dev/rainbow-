@@ -794,7 +794,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 25599,
-   "sha256": "d39765cc563a6724706ad1979695139db55c36c935bccf22b37b856488cce611"
+   "sha256": "4eada3a8f5e91b3e289c7e3dd08aa5b287a44712e9eea2290de1b6fca838e7b2"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3056,
-   "sha256": "f5326e87b171cbcb7a58216ee915562c27016f6918519386fde95878bcf7b02d"
+   "sha256": "20b1d9fc9421fc13527a21a2dc91ac07c3e7d6fe02a4ca123841c599c4bff7f8"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -36182,6 +36182,21 @@
    "sha256": "d85321a12755f417ce56c07716c1d3c28374dd084fcb6ccb9f7809053993db1d"
   },
   {
+   "path": "qa/worldlabs/05/r32/track/CHECK_full_mirror_vs_none.jpg",
+   "bytes": 207416,
+   "sha256": "eb8f1c843dae26b3f194dfdfa8612f76323da614a41423320b64b036e303a725"
+  },
+  {
+   "path": "qa/worldlabs/05/r32/track/README.md",
+   "bytes": 1693,
+   "sha256": "40108f6b99c3c6a3adeb22be645da2dd25a585678c290732df66d182efb4e4ee"
+  },
+  {
+   "path": "qa/worldlabs/05/r32/track/STILLS_v4_river_mirrored_only.jpg",
+   "bytes": 283000,
+   "sha256": "fef62f8289b607883f1f8be3d7eed9fc130751dab16b812596472aad7017f803"
+  },
+  {
    "path": "qa/worldlabs/05/rejected/README.md",
    "bytes": 1314,
    "sha256": "a658ce34f2ee66ab23cfd59e2a0dfba1298fae708c6ed891c7627b60abadb502"
@@ -37297,6 +37312,21 @@
    "sha256": "e0c950bde67a4bdb844d71772d9a46698d9a49dfe3a1f4d2277ed838328b1830"
   },
   {
+   "path": "tools/marble05/viewer/bubble.png",
+   "bytes": 18839,
+   "sha256": "ba5b038458c8f1a42478fe58dc529aba1a39a2fe6567e045445e236ca2695a50"
+  },
+  {
+   "path": "tools/marble05/viewer/camdbg.mjs",
+   "bytes": 2100,
+   "sha256": "a116ae5f27865bb991f1e14c71b090831d47a3878f40018c48ad54624d4936d5"
+  },
+  {
+   "path": "tools/marble05/viewer/glint.png",
+   "bytes": 4409,
+   "sha256": "cd9704801d675950df14a03c093acb9531f9ad079665e36e3bf40aeae6f08ad7"
+  },
+  {
    "path": "tools/marble05/viewer/index.html",
    "bytes": 1846,
    "sha256": "aa63b96e7187f2ef74976da01ff10eecc239a1e060f85a7afb2d368af72da223"
@@ -37312,14 +37342,29 @@
    "sha256": "0c5860d62f504be7595211cb34d497a1bd6779072e961707b259cfe9f7f0969a"
   },
   {
+   "path": "tools/marble05/viewer/play3.html",
+   "bytes": 14349,
+   "sha256": "213a46d0ad7e422b43c4eff4b344a90546c547ff7c663587719b1e77901a8740"
+  },
+  {
    "path": "tools/marble05/viewer/play_shots.cjs",
    "bytes": 2665,
    "sha256": "d68f1a4a93a986b63ec47b0ac8b4e4d7b769db69ffc7dbe7604e6a8669460d7c"
   },
   {
+   "path": "tools/marble05/viewer/play_shots2.cjs",
+   "bytes": 2804,
+   "sha256": "fbf6f50c2a0a764f96aa019bd5a18e7a4dea8760eabd1ed44a0b6911388c7aab"
+  },
+  {
    "path": "tools/marble05/viewer/refcam_full.json",
    "bytes": 247,
    "sha256": "818fd45666b921f8234df9fcfb76d1dcc2a9a1ef26c00cc0cdc662d5ed164b30"
+  },
+  {
+   "path": "tools/marble05/viewer/rings.json",
+   "bytes": 260,
+   "sha256": "a88982223f803e73db62d4c5733b555518cbc457109a41aca3b25cfbe01bd426"
   },
   {
    "path": "tools/marble05/viewer/scene05.json",
@@ -37330,6 +37375,26 @@
    "path": "tools/marble05/viewer/shots.cjs",
    "bytes": 1514,
    "sha256": "9fad9e2be14f2f263baa0efed65389f3971ce4fc57bcdf1b9d5c834ffd3a133d"
+  },
+  {
+   "path": "tools/marble05/viewer/splash.png",
+   "bytes": 533222,
+   "sha256": "b10f6ac7af45f84ae0224678e509c37ae043fa63739596766e645e1c95774dc4"
+  },
+  {
+   "path": "tools/marble05/viewer/tile_frame.json",
+   "bytes": 241,
+   "sha256": "3fad6f90fc4e232c6c4f9b49ead279c7bda6aa064c03afd27ec4083a011d8d36"
+  },
+  {
+   "path": "tools/marble05/viewer/track.json",
+   "bytes": 86716,
+   "sha256": "6933b24a952f325b6bd8282a1ef99ccb8cfcc283010c912404b1238bc6ce9354"
+  },
+  {
+   "path": "tools/marble05/viewer/track_clip.cjs",
+   "bytes": 2258,
+   "sha256": "b26e6824e4ecf6f86855c58576e817913baa320c5ea9060b5411ee216149bc8e"
   },
   {
    "path": "tools/marble05/viewer/tunnel_full.json",
