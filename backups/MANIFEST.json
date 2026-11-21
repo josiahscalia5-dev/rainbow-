@@ -794,7 +794,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 25599,
-   "sha256": "6279006d72b6fcdd8fe0af38999976786f54e0177631e845e5271e6a30584688"
+   "sha256": "aee74490b8873561b2c4762d63c53470cc997150f024c31ed11a0cd545ab8669"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3056,
-   "sha256": "1a0a99cad04eb67e55ef34e8c6718d00c828cd181b98beb6698d6eae296dae2e"
+   "sha256": "9d3fbbf0a96627427423533db4b2a29a69c0f47645d4f4cda305fa97b685fd52"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -36107,9 +36107,24 @@
    "sha256": "b32a707533c2a937c1ae466bb11452eb3e7063f335a21c3f8b160760a662fb84"
   },
   {
+   "path": "qa/worldlabs/05/r32/proof/PLUS_ALIGN_approved_vs_world.jpg",
+   "bytes": 502044,
+   "sha256": "d15bdda968200ba111a3fe6d87c2bd3c9b708a4d46d9af4aadf182454b9fcf23"
+  },
+  {
+   "path": "qa/worldlabs/05/r32/proof/PLUS_TRAVEL_camera_0_to_8_units.jpg",
+   "bytes": 206810,
+   "sha256": "b5259967d416eab6624159ae1cf5cfc283cd11f452756cb7271486aef65c99da"
+  },
+  {
    "path": "qa/worldlabs/05/r32/proof/PROOF_APPROVED_vs_3D_GAMEPLAY.jpg",
    "bytes": 741269,
    "sha256": "1735e7e9cf85e7e1755d4e65380998f5572015a69115bf16e1ee407977323711"
+  },
+  {
+   "path": "qa/worldlabs/05/r32/proof/REPEAT_TEST_v1_stills_black_far_end.jpg",
+   "bytes": 298400,
+   "sha256": "03b5a3ae9754af60046d3530d43ba9263eef4d830d04b7c3b882bb9eb5e97788"
   },
   {
    "path": "qa/worldlabs/05/r32/proof/TRAVEL_camera_0_to_5_units.jpg",
