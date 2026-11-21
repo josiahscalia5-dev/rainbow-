@@ -3628,3 +3628,49 @@ Still waiting on your choice for Screen 05:
 1. **Free phone test:** put the Marble section into the game and build an Android test version.
 2. **Second Marble world:** spend 1,580 more of your 3,610 credits to make the section longer.
 
+### 🧑 User — 2026-11-21T09:56:27.484Z
+
+So how can I make it where my proof screen, like it is now, where the pink characters swimming through it longer, like he's swimming in it, the entire screen 5 or level 5? With my approved screen 3D artwork, I want to make it look like the pink characters swimming through it naturally, and there's no, it doesn't look weird or glitches or any Any blurriness. I want to make it look very normal as it can be, like a normal gaming mobile app. But I want to keep my approved 3D artwork and approved screen like it is now. I just want it to look like he's swimming through it normally, or moving.
+
+### 🤖 Claude — 2026-11-21T09:57:06.493Z
+
+Yes, there's a way to do it, and it costs no credits. Real mobile runner games build long levels from repeating pieces. I'd take the sharpest stretch of the 3D world you already paid for, one section of tunnel between two gold rings. Then I repeat it end to end for the whole of Screen 05, joining the pieces at the gold rings, where a seam hides best. Benny swims through all of it with the follow-camera at normal speed.
+
+**What I can't promise:**
+- **Repeats:** the same section repeats, so the paddles and the river pattern come back each ring (about once a second).
+- **Seams:** a seam may show at a ring if the river doesn't line up perfectly.
+- **Softness:** it stays a little softer than your flat painting. It won't get blurrier further in, though, because we always see the sharp part.
+
+Starting the free test now: finding where the gold rings sit in the 3D world.
+
+### 🤖 Claude — 2026-11-21T09:57:11.995Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/marble05 && timeout 250 python3 -I - <<'EOF'\nimport sys, json, numpy as np\nsys.path.insert(0,'.')\nfrom spz import read_spz\nS='/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad'\nd=read_spz('/home/user/rainbow-/qa/worldlabs/05/r32/full_500k.spz')\nP=d['xyz']*np.array([1,-1,-1],np.float32); C=d['rgb']\nT=json.load(open(S+'/tunnel_full.json')); ax=np.array(T['axis']); n=np.array(json.load(open(S+'/splatview/scene05.json'))['plane']['n'])\nu=P@ax\n# tunnel centre line: per slice, centre of points far from the floor\nperp …[+462 chars]`
+
+### 🧑 User — 2026-11-21T09:57:12.607Z
+
+> ↩︎ result: u  -1.0  gold    44  all   4701  gold share 0.01 
+> u  -0.9  gold   186  all   5300  gold share 0.04 ##
+> u  -0.8  gold   145  all   6291  gold share 0.02 #
+> u  -0.7  gold   187  all   6223  gold share 0.03 #
+> u  -0.6  gold   148  all   6676  gold share 0.02 #
+> u  -0.5  gold    73  all   6812  gold share 0.01 
+> u  -0.4  gold   134  all   7225  gold share 0.02 #
+> u  -0.3  gold   273  all   8943  gold share 0.03 #
+> u  -0.2  gold   197  all   9449  gold share 0.02 #
+> u  -0.1  gold   242  all  10425  gold share 0.02 #
+> u  -0.0  gold   309  all  10960  gold share 0.03 #
+> u   0.1  gold    79  all  11186  gold share 0.01 
+> u   0.2  gold   343  all  11186  gold share 0.03 #
+> u   0.3  gold   133  all  11190  gold share 0.01 
+> u   0.4  gold   416  all  11696  gold share 0.04 ##
+> u   0.5  gold   938  all  13166  gold share 0.07 ####
+> u   0.6  gold   767  all  12931  gold share 0.06 ###
+> u   0.7  gold   955  all  12835  gold share 0.07 ####
+> u   0.8  gold   846  all  13293  gold share 0.06 ###
+> u   0.9  gold  1476  all  14753  gold share 0.10 ######
+> u   1.0  gold  1208  all  15333  gold share 0.08 ####
+> u   1.1  gold   840  all  15432  gold share 0.05 ###
+> u   1.2  gold   796  all  14355  gold share 0.06 ###
+> u   1.3 …[+3465 chars]
+
