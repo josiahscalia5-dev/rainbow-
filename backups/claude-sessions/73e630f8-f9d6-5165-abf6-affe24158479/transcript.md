@@ -3964,3 +3964,229 @@ First, a backup check: GitHub and this session disagree on the latest save.
 
 > 🔧 **Bash** `{"command": "for i in $(seq 1 40); do pgrep -f 'rainbow-autosave.py' >/dev/null || break; sleep 3; done; timeout 300 python3 scripts/rainbow-autosave.py --reason manual:resume-sync 2>&1 | grep -E '\"result\"|\"commit\"|\"error\"'; git rev-parse --short HEAD; timeout 30 git ls-remote origin refs/heads/ccr-4fcad20e-a6pp8w | cut -c1-7; python3 -I scripts/autosave-status.py 2>&1 | tail -1", "description": "Push the local saves and confirm the backup matches", "timeout": 400000}`
 
+### 🧑 User — 2026-11-21T02:20:08.625Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "commit": "5cabc27e0cc9e80de95a3c4a955349780d707ae2",
+> 5cabc27
+> 5cabc27
+> AUTOSAVE OK | branch ccr-4fcad20e-a6pp8w | scheduler daemon | last verified backup 2026-11-21T02:19:50+00:00 (0.3 min ago) | local 5cabc27 remote 5cabc27 (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-21T02:20:23.671Z
+
+> 🔧 **Bash** `{"command": "grep -n \"flag05('\\|q05\\b\\|const Q05\\|export const .*05.*= flag05\\|match05\" src/vfx/waterRibbon.ts | head -50; grep -rn \"flag05('\" src --include=*.ts | grep -o \"flag05('[a-z0-9]*')\" | sort | uniq -c | sort -rn | head -60", "description": "List the existing Screen 05 3D test switches"}`
+
+### 🧑 User — 2026-11-21T02:20:23.765Z
+
+> ↩︎ result: 152: * `?match05=1` (2026-11-17): the user's one address for the approved Screen 05 — every 05 match switch at once (approved
+> 157:const q05 = (key: string): boolean => {
+> 158:  const hit = (qs: URLSearchParams) => qs.get(key) === '1' || (MATCH05_KEYS.includes(key) && qs.get('match05') === '1');
+> 167:export const flag05 = q05;
+> 174:export const FLOW05: number = q05('flowcam05') ? 0.5 : 1.3;
+> 196:export const SILK05: boolean = q05('silk05');
+> 197:export const PUFF05: boolean = q05('puff05');
+> 198:export const RIVER05: boolean = SILK05 || PUFF05 || q05('river05');
+> 199:export const FARW05: boolean = RIVER05 || q05('farw05');
+> 200:export const FLOWMAP05: boolean = RIVER05 || q05('flow05');
+> 201:export const WATER05: boolean = q05('water05') || FARW05 || FLOWMAP05;
+> 214:export const PROJ05: boolean = q05('proj05');
+> 1693:  const FLOW2 = qs.get('projflow05') === '2' || (qs.get('match05') === '1' && qs.get('projflow05') === null);
+> 1700:  const NEAR = q05('projnear05');
+>       4 flag05('matchall')
+>       3 flag05('match08')
+>       2 flag05('projfoam05')
+>       1 flag05('projwall05')
+>       1 flag05('projring05')
+>       1 flag05('projlid05')
+>       1 flag05('projframe05')
+>       1 flag05('projbub05')
+>       1  …[+147 chars]
+
+### 🤖 Claude — 2026-11-21T02:20:25.710Z
+
+> 🔧 **Bash** `{"command": "sed -n '140,215p' src/vfx/waterRibbon.ts", "description": "Read the Screen 05 master switch definition"}`
+
+### 🧑 User — 2026-11-21T02:20:25.752Z
+
+> ↩︎ result: * colours sampled from the approved image and solved through the post chain), flow-aligned brushed streaks with
+>  * aqua / white-pink cores, deep-blue outer water, glossy near swells; the far river block (far05.ts / materials.ts)
+>  * and the 05 splash follow the same switch. Off (default): every shader and geometry is byte-for-byte the previous
+>  * one (the code sits behind `#ifdef WATER05` / `if (WATER05)`), so the default build renders pixel-identically.
+>  * Guarded read: false in vite-node / workers (no `location`).
+>  */
+> /**
+>  * Packaged builds (Android APK) have no URL query: `VITE_RAINBOW_Q05="silk05=1&puff05=1" npm run android:debug` bakes
+>  * the same 05 switches into a separate EXPERIMENT build. Unset (every normal build): '' — the default build is unchanged.
+>  */
+> const BUILD_Q05: string = import.meta.env?.VITE_RAINBOW_Q05 ?? '';
+> /**
+>  * `?match05=1` (2026-11-17): the user's one address for the approved Screen 05 — every 05 match switch at once (approved
+>  * water, tunnel walls, gold rings, near gold frame, Blender paddles, sharp riding water; flow along the streaks is
+>  * `projflow05=2`, read in attachProj05). Without it nothing changes.
+>  */
+> const MATCH05_KEYS = ['proj05', 'projwall0 …[+4497 chars]
+
+### 🤖 Claude — 2026-11-21T02:20:34.204Z
+
+> 🔧 **Bash** `{"command": "timeout 1500 node tools/paint/stills.mjs --q=\"match05=1&projflow05=2\" --s=132.44,145,160,175 --out=qa/match/05/r31_3d/look --tag=MATCH05 2>&1 | tail -1 && python3 -I - <<'EOF'\nfrom PIL import Image\nimport numpy as np\nD='qa/match/05/r31_3d/look'; A=np.asarray(Image.open('references/05_flow_into_the_current.png').convert('RGB')).astype(int)\nc=Image.new('RGB',(5*300+40,534),'white'); c.paste(Image.fromarray(A.astype(np.uint8)).resize((300,534)),(0,0))\nfor i,s in enumerate([132.44,145,160,175]):\n    im=Image.open(f'{D}/MATCH05_s{s}.png').convert('RGB'); e=np.abs(np.asarray(im) …[+357 chars]`
+
+### 🤖 Claude — 2026-11-21T02:20:35.241Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/m05.png"}`
+
+### 🧑 User — 2026-11-21T02:21:00.547Z
+
+> ↩︎ result: MATCH05 stills 4
+> 132.44 px20 below HUD 46.7
+> 145 px20 below HUD 10.9
+> 160 px20 below HUD 8.3
+> 175 px20 below HUD 5.2
+
+### 🧑 User — 2026-11-21T02:21:00.590Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T02:21:25.057Z
+
+> 🔧 **Bash** `{"command": "sed -n '1,60p' src/vfx/proj05Tunnel.ts | head -80; grep -n \"export function\\|s0\\|s1\\|range\\|sEnd\\|sStart\\|ringEvery\\|RING\\|crest\" src/vfx/proj05Tunnel.ts | head -40; wc -l src/vfx/proj05Tunnel.ts", "description": "Read how the earlier 3D Screen 05 tunnel is built and where it ends"}`
+
+### 🧑 User — 2026-11-21T02:21:25.105Z
+
+> ↩︎ result: /**
+>  * Screen 05 projection tests for the TUNNEL (2026-11-16, qa/pilot05/proj/tunnel/NOTES.md), same method as the water
+>  * (`?proj05=1`): the user's APPROVED Screen 05 picture, unwrapped into the tunnel's own coordinates and baked into
+>  * textures (tools/proj05/tunnel_rings.py + tunnel_bake.py → assets/textures/tunnel05/), so the design is anchored to the
+>  * 3D tunnel, not pasted over the screen.
+>  *   `?projwall05=1`  the purple metal WALLS: one texture row per wall bay between two gold rings (AB, BC, CD … as the
+>  *                    approved picture shows them from the locked 05 camera); u = angle round the tube, v = depth within
+>  *                    the bay. Bays the picture does not show (in front of ring A, behind the camera) repeat the AB row.
+>  *   `?projring05=1`  the gold RINGS: the band of the approved ring B unwrapped (u = angle round the ring, v = how far the
+>  *                    band stands out of the wall), on every 05 ring; the existing far glow still melts the far rings
+>  *                    into the warm throat.
+>  * The shader undoes the post chain (grade → sRGB → Neutral tone map → exposure) so the screen shows the approved
+>  * colours; bloom is measured and fed b …[+4801 chars]
+
+### 🤖 Claude — 2026-11-21T02:21:28.309Z
+
+> 🔧 **Bash** `{"command": "grep -n \"tube05\\|05_crest\\|stage('05')\\|ring05\\|rings05\\|withProj05Wall\\|withProj05Ring\\|perfTube\\|buildTube\\|'perf'\" src/world/environment.ts | head -40", "description": "Find where the Screen 05 tunnel is built"}`
+
+### 🧑 User — 2026-11-21T02:21:28.350Z
+
+> ↩︎ result: 10:import { buildTubeGeometry, buildRings, buildRingsAt, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt, ForcedTunnel, bandGeometry, wallLidGeometry, wallLidBasis, nearFrameGeometry } from './tube';
+> 15:import { PROJWALL05, PROJRING05, PROJFRAME05, PROJLID05, PT_ROW, withProj05Wall, withProj05Ring, withProj05Frame, lids05Group, type WallSeg } from '../vfx/proj05Tunnel'; // Screen 05 tunnel bake tests
+> 132:    buildTubeGeometry(chutePath, sChute0, sChute1, { radial: 36, step: 0.5, vScale: 1 }),
+> 180:  const s04 = course.stage('04').s0, s05 = course.stage('05').s0;
+> 187:  const goldPipe = new THREE.Mesh(buildTubeGeometry(goldPath, g0, s05, { radial: 56, step: 0.4 }), goldRibbed(1.25));
+> 232:  const perfTubeMat = perforatedMetal({ ...wallBase, repeatV: rowRepeat0607, offsetV: rowOffset0607, slotHalf: [0.36, 0.12] });
+> 233:  withTubeStrips(perfTubeMat, strips, 'attribute', 'wall');
+> 248:  const sEye05 = course.marks['05_crest'] - (STAGE_CAM['05']?.back ?? 6.4);
+> 260:  const sCam05 = course.marks['05_crest'] - (STAGE_CAM['05']?.back ?? 6.4);
+> 292:  const rings05 = ringSlots05.filter((s) => Math.abs(s - sF05) > 0.5).map((s) => (Math.abs(s - sCam05 - 26) < 3 ? sCam05 + RING_A05_DEPT …[+2188 chars]
+
+### 🤖 Claude — 2026-11-21T02:21:30.037Z
+
+> 🔧 **Bash** `{"command": "sed -n '240,345p' src/world/environment.ts", "description": "Read the Screen 05 tunnel construction"}`
+
+### 🧑 User — 2026-11-21T02:21:30.074Z
+
+> ↩︎ result: // ?nearfloor05=<d> units and blends back to BEFORE before ring B (40 u): radius 7.6, ring depths and spacing,
+>   // ring B onward, the far block, camera, river and gameplay are untouched.
+>   // PROMOTED 2026-11-16 ~11:45 UTC together with T1 (user: "only promote T2 if it is genuinely closer"): default 2.0 u
+>   // with ring A at 20 u = ring A centre (502,478) r 433 vs approved (474,529) r 492 (BEFORE (505,426) r 374), its arc
+>   // meets the right edge at y 241 (approved 229, BEFORE 321); B, C, D, 06, 07 pixel-identical (qa/pilot05/wave9b/T2b/).
+>   // BEFORE = ?ringa=26&nearfloor05=0 (pixel-identical to qa/pilot05/wave9/baseline/05.png).
+>   const qaNear05 = typeof location !== 'undefined' ? Number(new URLSearchParams(location.search).get('nearfloor05') ?? 2) : 2;
+>   const NEAR_FLOOR05 = Number.isFinite(qaNear05) ? qaNear05 : 0;
+>   const sEye05 = course.marks['05_crest'] - (STAGE_CAM['05']?.back ?? 6.4);
+>   const floorExtra05 = NEAR_FLOOR05 === 0 ? undefined
+>     : (s: number) => NEAR_FLOOR05 * (1 - THREE.MathUtils.smootherstep(s, sEye05 + 28, sEye05 + 38)) * THREE.MathUtils.smoothstep(s, s05 + 2, s05 + 10);
+>   const perfPath = straightTubePath(course, s05, s08, { window: 30, taper: 14, baseRa …[+8167 chars]
+
+### 🧑 User — 2026-11-21T02:21:35.908Z
+
+[Request interrupted by user]
+
+### 🧑 User — 2026-11-21T02:21:37.991Z
+
+CLAUDIA — KEEP MY NEW APPROVED SCENERY, BUT RESTORE THE REAL SWIMMING MOVEMENT.
+
+I want the beautiful artwork and scenery you've just built. DO NOT remove it or go back to the old-looking environments.
+
+But remember how Benny actually swam forward through the tunnels in my original playable game?
+
+I WANT THAT SAME REAL GAMEPLAY MOVEMENT WITH MY NEW APPROVED-LOOKING SCENERY.
+
+Benny must:
+
+1. Actually swim forward down the winding blue-and-pink river.
+2. Paddle, steer left and right, lean into turns, and interact naturally with the water.
+3. Travel through the purple-and-gold tunnel so the gold bands and surrounding scenery approach, pass him, and move behind him.
+4. Collect coins and continue naturally from one screen into the next.
+5. Look as close as possible to my original approved pink character throughout the gameplay.
+
+Use the existing 3D gameplay, movement system, and improved Benny model. Use my newly prepared approved artwork to preserve the scenery's beautiful appearance while constructing and texturing the moving 3D environment.
+
+Do not replace the scenery with the old version, and do not make Benny a stationary painted picture.
+
+Keep the current beautiful version saved separately.
+
+Show me an actual playable Screen 05 test with Benny swimming forward through the approved-looking scenery, not just water and coins moving toward a character who stays in place.
+
+I want the beauty of my approved artwork AND the real movement of my original mobile game. Both are required.
+
+### 🤖 Claude — 2026-11-21T02:22:09.002Z
+
+> 🔧 **Bash** `{"command": "sed -n '80,200p' src/characters/benny/runtime.ts", "description": "Read the Benny runtime's structure and per-frame animation"}`
+
+### 🧑 User — 2026-11-21T02:22:09.035Z
+
+> ↩︎ result: root.name = 'Benny';
+>   root.add(scene);
+> 
+>   // ---- fur upgrade ----
+>   const furs: FurHandle[] = [];
+>   const toReplace: THREE.Mesh[] = [];
+>   scene.traverse((o) => {
+>     const m = o as THREE.Mesh;
+>     if (m.isMesh && m.name.startsWith('fur_') && m.userData?.fur) toReplace.push(m);
+>   });
+>   for (const m of toReplace) {
+>     const p = { ...(m.userData.fur as FurParams) };
+>     if (BENNY05 && FUR05[m.name]) Object.assign(p, FUR05[m.name]);
+>     if (opts.furQuality === 'low') p.shells = Math.max(6, Math.round(p.shells * 0.6));
+>     const h = makeFur(m, p);
+>     m.parent!.add(h.mesh);
+>     m.parent!.remove(m);
+>     furs.push(h);
+>   }
+>   // `?benny05=1` / `?match05=1`: the Screen-05 reference-matched look, on Benny himself (benny05.ts). Off: nothing runs.
+>   const b05 = BENNY05 ? applyBenny05(scene, furs, opts.maps05 ?? {}) : null;
+>   if (BENNY05) clips = dampedClips(clips);
+> 
+>   // QA colour A/B: `?bennyTint=hat_brim:7868a0,hat_crown:e4d4e4` sets the base-colour factor of meshes whose name
+>   // starts with the given prefix (the GLB's own factors are the default; materials are shared by every clone)
+>   if (typeof location !== 'undefined') {
+>     const tint = new URLSearchParams(location.search).get('benny …[+3953 chars]
+
+### 🤖 Claude — 2026-11-21T02:22:32.089Z
+
+> 🔧 **Bash** `{"command": "mkdir -p assets/textures/benny31 && cp qa/benny/r31/gen/hunyuan2.glb assets/models/benny31.glb && cp qa/benny/r31/gen/hunyuan2_bake.png assets/textures/benny31/bake.png && python3 -I - <<'EOF'\n# measure the improved mesh in its own coordinates: bbox, and where the arms / hat / pom-pom are (for the paddle + bounce regions)\nimport json, struct, numpy as np\nb=open('assets/models/benny31.glb','rb').read(); n=struct.unpack('<I',b[12:16])[0]; j=json.loads(b[20:20+n]); bin0=20+n+8\ndef acc(i):\n    a=j['accessors'][i]; v=j['bufferViews'][a['bufferView']]; off=bin0+v.get('byteOffset',0 …[+754 chars]`
+
+### 🧑 User — 2026-11-21T02:22:32.297Z
+
+> ↩︎ result: node {'name': 'tmp25pgrq5c.ply'}
+> bbox [-0.466 -0.496 -0.34 ] [0.46  0.492 0.382]
+> y -0.496  x -0.273..+0.258  z -0.255..+0.262
+> y -0.413  x -0.336..+0.332  z -0.330..+0.348
+> y -0.331  x -0.363..+0.356  z -0.336..+0.376
+> y -0.249  x -0.461..+0.459  z -0.340..+0.382
+> y -0.167  x -0.466..+0.460  z -0.334..+0.379
+> y -0.084  x -0.427..+0.424  z -0.328..+0.362
+> y -0.002  x -0.367..+0.359  z -0.334..+0.345
+> y +0.080  x -0.354..+0.344  z -0.324..+0.333
+> y +0.163  x -0.280..+0.274  z -0.266..+0.277
+> y +0.245  x -0.207..+0.198  z -0.193..+0.270
+> y +0.327  x -0.190..+0.160  z -0.115..+0.280
+> y +0.410  x -0.177..+0.151  z -0.104..+0.257
+> y +0.492  x -0.106..+0.082  z -0.037..+0.154
+

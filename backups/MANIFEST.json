@@ -377,6 +377,11 @@
    "sha256": "40633fdd02014c6434bb61811c03bc0c61a8d456c30fbb9cd62bb9a91a0198a1"
   },
   {
+   "path": "assets/models/benny31.glb",
+   "bytes": 5492416,
+   "sha256": "168c4ba4ba1909c8295deb81b6eebfb5eb440185886cb6d9471f6caff293da26"
+  },
+  {
    "path": "assets/models/lids05.glb",
    "bytes": 992168,
    "sha256": "f2cd3abeaaf219635321c1f2ffead20eb91403d73ff7ef3173380a0ecedbb22c"
@@ -430,6 +435,11 @@
    "path": "assets/textures/benny05/star.png",
    "bytes": 49535,
    "sha256": "932bbbd451e36b7129938b581cef4f8060730cefd4e7ed47c08df32909193cce"
+  },
+  {
+   "path": "assets/textures/benny31/bake.png",
+   "bytes": 5049903,
+   "sha256": "fdb5181e4d1326d96f85f6c8ed9b7bb89bc9a0f11783d602178640a43de0d202"
   },
   {
    "path": "assets/textures/marble05_env_1024.jpg",
@@ -784,7 +794,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 25112,
-   "sha256": "822ed527ad6db63a61ae177e66129a74725d6d349b60c4c41fdd86204f17f1aa"
+   "sha256": "378be7082a27617d5dad649e377633cfdc84769808814482adea6f0ef99c6d72"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -799,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3271,
-   "sha256": "b7200bd87336e4fd671182325c7cc21be1353f51a944b49bc78703329c7126f4"
+   "sha256": "78d533909d95a26e1a5fd8ff5deea42a0471abebcf5c5295df74e235d2dfc144"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -16670,6 +16680,31 @@
    "path": "qa/match/05/r27/PROGRESS.md",
    "bytes": 3430,
    "sha256": "07c07278eb0d3c00d150d5b667b6fb9db3ec45d2df8ad4721f5191a17ecd02b1"
+  },
+  {
+   "path": "qa/match/05/r31_3d/look/MATCH05_s132.44.png",
+   "bytes": 2439538,
+   "sha256": "c5d3de9077d8cd62f62f121a7f89c7ae722a0a4351c8df3f19ce03cbc9eb30f8"
+  },
+  {
+   "path": "qa/match/05/r31_3d/look/MATCH05_s145.png",
+   "bytes": 2315730,
+   "sha256": "495cb667a2cc0eb290da0c8eb322bf06b05c4bdc71214fa96a9e8bfebfea74f8"
+  },
+  {
+   "path": "qa/match/05/r31_3d/look/MATCH05_s160.png",
+   "bytes": 2225969,
+   "sha256": "5c26bd7987bcf9223ea7e08e460542191665f84aeeb83c075d4586e212b33da0"
+  },
+  {
+   "path": "qa/match/05/r31_3d/look/MATCH05_s175.png",
+   "bytes": 1987442,
+   "sha256": "b6276143033af708d7e12260355bc3d6681d8310d2fa726dd898e42eb73242aa"
+  },
+  {
+   "path": "qa/match/05/r31_3d/look/MATCH05_stills.json",
+   "bytes": 373,
+   "sha256": "ab4435ae5b62ca16db373bc198a2d28a045628d252f9c97f2f61fe680b205c47"
   },
   {
    "path": "qa/match/06/paint06/LEDGER.md",
