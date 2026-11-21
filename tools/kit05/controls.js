@@ -392,6 +392,7 @@ export function installControls(ctx) {
 
   // splash stays on the water surface; leap / dive splashes, droplets and bubbles; dive tint plane; swimfx (wake, ripples, kicks)
   const FX = SWIMFX ? SWIMFX.installSwimFx({ THREE, scene, splash, q }) : { update() {} };
+  if (FX.setPx && camera) FX.setPx((canvas ? canvas.height : 915) * 0.5 * camera.projectionMatrix.elements[5]);   // bubble point size in px
   if (SWIMFX) { const sprayTex = SWIMFX.sprayOnly(THREE, splashTex); for (const fs of fxSplash) fs.sp.material.map = sprayTex; }   // bursts without the painted fur
   const ARM_X = 0.36 * bennyFullH / 0.99;   // his paw tip, sideways from his centre (model 0.46 x his scale x 0.76)
   function water(Fr, speed, dt) {
@@ -430,7 +431,7 @@ export function installControls(ctx) {
         v1.copy(F.n).multiplyScalar(0.45 + rnd() * 0.4).addScaledVector(F.r, sd * (0.35 + rnd() * 0.3)).addScaledVector(F.t, -0.2 - rnd() * 0.3);
         spawnDrop(v2, v1, 0.012 + rnd() * 0.014, 0.35 + rnd() * 0.15, 3.6); }
     }
-    FX.update({ dt, clock: S.clock, s: getS(), waterPt, F, lat: S.lat.x, h: S.h, armPh: S.swimClock * 7.5, kickPh: S.kickClock * P.KICK_RATE, armX: ARM_X,
+    FX.update({ dt, clock: S.clock, s: getS(), waterPt, F, lat: S.lat.x, h: S.h, latK: S.latK, armPh: S.swimClock * 7.5, kickPh: S.kickClock * P.KICK_RATE, armX: ARM_X,
       kickK: S.kickA, inWater: S.h > -0.06 && S.h < 0.04, wakeK: clamp(1 - Math.abs(S.h) / 0.05, 0, 1) * (0.8 + 0.4 * S.latK), drop: (p, v, size, life, g) => spawnDrop(p, v, size, life, g) });
     for (const fs of fxSplash) {
       if (fs.t0 < 0) continue; const k = (S.clock - fs.t0) / 0.45;

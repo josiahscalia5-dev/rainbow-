@@ -29,6 +29,10 @@ const K = await (await fetch('kit.json')).json();
 const PROJ = q.get('proj') === '1';
 if (PROJ) for (const [k, v] of [['pfade', '-2,-1,-2,-1'], ['p_yawmax', '0'], ['p_rollmax', '0']]) if (!q.has(k)) q.set(k, v);
 const OWNFADE = PROJ ? [-2, -1] : (K.own?.fade ?? [0.42, 0.62]);
+// round 36c ?move=1: the user's reference-video swimming. Benny really travels across the screen on lane changes (the camera follows only
+// 35 % of his lane offset, the on-screen guard is wider), leans more into each change; swimfx adds the foam collar, bubble trails and rings
+const MOVE = q.get('move') === '1';
+if (MOVE) for (const [k, v] of [['p_camk', '0.35'], ['p_gneg', '0.10'], ['p_gpos', '0.13'], ['c_BANK_K', '0.3']]) if (!q.has(k)) q.set(k, v);
 const V3 = (a) => new THREE.Vector3(...a);
 const A = V3(K.A), NUP = V3(K.NUP), RR = V3(K.RR), A0 = V3(K.A0);
 const ringT = (k) => K.Z2 + (k - 2) * K.S;
@@ -381,7 +385,7 @@ const coins = []; let coinCount = 1420; const coinEl = document.getElementById('
 const bubTex = await tl.loadAsync('bubble.png'); bubTex.colorSpace = THREE.SRGBColorSpace;
 const ctex = await tl.loadAsync('coin.png'); ctex.colorSpace = THREE.SRGBColorSpace;
 const coinD = 0.15038523388874458 * bennyDist / 1.186;      // round-32 coin size, scaled to the kit's Benny distance
-const qc = new URLSearchParams(location.search); if (!qc.has('c_LEAN_K')) qc.set('c_LEAN_K', '0.08'); if (!qc.has('c_BANK_RATE')) qc.set('c_BANK_RATE', '1.0');   // round 35: bank changes <= 1.9 deg per frame (on-screen tilt change incl. stroke roll + camera <= 3)
+const qc = new URLSearchParams(q.toString()); if (!qc.has('c_LEAN_K')) qc.set('c_LEAN_K', '0.08'); if (!qc.has('c_BANK_RATE')) qc.set('c_BANK_RATE', '1.0');   // round 35: bank changes <= 1.9 deg per frame (on-screen tilt change incl. stroke roll + camera <= 3)
 for (const [k, v] of [['c_CAM_LAT_K', '0.75'], ['c_CAM_LAT_MAX', '0.2'], ['c_CAM_LAT_OMEGA', '12']]) if (!qc.has(k)) qc.set(k, v);   // round 33k (gentler bank c_LEAN_K; controls.js unchanged). Round 34 S3: the camera's lane follow is now computed in step() (CAMP.cam*); CT.c.camLat is only reported
 const CT = installControls({ THREE, TR, canvas: renderer.domElement, camera, q: qc, at, frameAt, coins, scene, U, bmat, benny, splash, splashTex, bubTex, coinTex: ctex, coinD, bennyFullH: 0.99 * KH, pxW, coinEl, getS: () => st.s, getCoins: () => coinCount, render: () => renderer.render(scene, camera) });
 // coin run 1 = the APPROVED picture's coins (tools/kit05/painted_coins.py: painted centres cast onto the kit river; the far-left one

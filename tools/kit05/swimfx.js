@@ -21,14 +21,16 @@ export function sprayOnly(THREE, tex) {
 }
 export function installSwimFx({ THREE, scene, splash, q }) {
   const OFF = q.get('swimfx') === '0';
-  const P = { WAKE_AGE: 1.1, WAKE_W0: 0.085, WAKE_SPREAD: 0.3, DRIFT: 0.55, WAKE_A: 0.55, RIPPLE_T: 0.75, PUFF_T: 0.6, SPL_FLOW: 0.035 };
+  const MOVE = q.get('move') === '1';   // round 36c: the user's reference-video swimming (foam collar, bubble trails, big ripple rings, stronger wake)
+  const P = { WAKE_AGE: 1.1, WAKE_W0: 0.085, WAKE_SPREAD: 0.3, DRIFT: 0.55, WAKE_A: MOVE ? 0.85 : 0.55, RIPPLE_T: MOVE ? 1.0 : 0.75, PUFF_T: 0.6, SPL_FLOW: 0.035,
+    RIP_SIZE: MOVE ? 0.12 : 0.07, RING_EVERY: 0.55, TRAIL_RATE: 110, TRAIL_LIFE: 0.95, COLLAR_A: 0.95 };
   for (const k of Object.keys(P)) { const v = q.get('fx_' + k); if (v != null && v !== '' && !isNaN(+v)) P[k] = +v; }
   const canvasTex = (draw, n = 128) => { const c = document.createElement('canvas'); c.width = c.height = n; draw(c.getContext('2d'), n); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t; };
   // a soft broken ring (ripple) and a clustered foam puff, drawn once (no image files)
   let seed = 4242; const rnd = () => ((seed = (seed * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff);
   const ringTex = canvasTex((g, n) => { const c = n / 2; for (let i = 0; i < 90; i++) { const a = (i / 90) * Math.PI * 2, r = c * (0.78 + 0.06 * (rnd() - 0.5));
-    const gr = g.createRadialGradient(c + Math.cos(a) * r, c + Math.sin(a) * r, 0, c + Math.cos(a) * r, c + Math.sin(a) * r, n * 0.07);
-    gr.addColorStop(0, `rgba(255,255,255,${0.35 + 0.4 * rnd()})`); gr.addColorStop(1, 'rgba(255,255,255,0)'); g.fillStyle = gr; g.fillRect(0, 0, n, n); } });
+    const gr = g.createRadialGradient(c + Math.cos(a) * r, c + Math.sin(a) * r, 0, c + Math.cos(a) * r, c + Math.sin(a) * r, n * (MOVE ? 0.09 : 0.07));
+    gr.addColorStop(0, `rgba(255,255,255,${(MOVE ? 0.7 : 0.35) + (MOVE ? 0.3 : 0.4) * rnd()})`); gr.addColorStop(1, 'rgba(255,255,255,0)'); g.fillStyle = gr; g.fillRect(0, 0, n, n); } });
   const foamTex = canvasTex((g, n) => { const c = n / 2; for (let i = 0; i < 26; i++) { const a = rnd() * Math.PI * 2, d = Math.sqrt(rnd()) * c * 0.55, x = c + Math.cos(a) * d, y = c + Math.sin(a) * d, r = n * (0.06 + 0.1 * rnd());
     const gr = g.createRadialGradient(x, y, 0, x, y, r); gr.addColorStop(0, 'rgba(255,255,255,0.95)'); gr.addColorStop(0.6, 'rgba(235,248,255,0.7)'); gr.addColorStop(1, 'rgba(220,240,255,0)'); g.fillStyle = gr; g.fillRect(0, 0, n, n); } });
 
@@ -36,7 +38,49 @@ export function installSwimFx({ THREE, scene, splash, q }) {
   const plane = new THREE.PlaneGeometry(1, 1), Mb = new THREE.Matrix4();
   const pool = (tex, n) => Array.from({ length: n }, () => { const m = new THREE.Mesh(plane, new THREE.MeshBasicMaterial({ map: tex, transparent: true, depthWrite: false, toneMapped: false, opacity: 0, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 }));
     m.visible = false; m.renderOrder = 6; m.frustumCulled = false; scene.add(m); return { m, age: 0, life: 0, size: 0, grow: 0, p: new THREE.Vector3(), t: new THREE.Vector3(), a0: 1 }; });
-  const ripples = pool(ringTex, 10), puffs = pool(foamTex, 12); let ri = 0, pi = 0;
+  const ripples = pool(ringTex, MOVE ? 16 : 10), puffs = pool(foamTex, 12); let ri = 0, pi = 0;
+  // ---- round 36c (?move=1): foam collar around his waist at the water line, bubble trails streaming back from his sides ----
+  // a dense band of white foam bubbles in an ellipse annulus (the white collar hugging his waist in the user's reference video)
+  const collarTex = canvasTex((g, n) => { const c = n / 2;
+    for (let i = 0; i < 420; i++) { const a = rnd() * Math.PI * 2, r = c * (0.56 + 0.36 * Math.sqrt(rnd())), x = c + Math.cos(a) * r, y = c + Math.sin(a) * r, rr = n * (0.018 + 0.03 * rnd());
+      const gr = g.createRadialGradient(x, y, 0, x, y, rr); gr.addColorStop(0, 'rgba(255,255,255,1)'); gr.addColorStop(0.6, 'rgba(238,246,255,0.9)'); gr.addColorStop(1, 'rgba(225,238,255,0)'); g.fillStyle = gr; g.fillRect(x - rr, y - rr, 2 * rr, 2 * rr); } }, 256);
+  const collar = new THREE.Mesh(plane, new THREE.MeshBasicMaterial({ map: collarTex, transparent: true, depthWrite: false, toneMapped: false, opacity: 0, polygonOffset: true, polygonOffsetFactor: -3, polygonOffsetUnits: -3 }));
+  collar.renderOrder = 6; collar.frustumCulled = false; collar.visible = MOVE && !OFF; scene.add(collar);
+  const collar2 = collar.clone(); collar2.material = collar.material.clone(); collar2.material.map = ringTex; scene.add(collar2); collar2.visible = collar.visible;
+  const NB = 180, bPos = new Float32Array(NB * 3), bA = new Float32Array(NB), bS = new Float32Array(NB), bAge = new Float32Array(NB).fill(9), bLife = new Float32Array(NB), bSz = new Float32Array(NB);
+  const bVel = Array.from({ length: NB }, () => new THREE.Vector3()), bP = Array.from({ length: NB }, () => new THREE.Vector3()); let bNext = 0, bAcc = 0, ringAcc = 0;
+  const bubTexFx = canvasTex((g, n) => { const c = n / 2, gr = g.createRadialGradient(c, c, n * 0.18, c, c, n * 0.48);
+    gr.addColorStop(0, 'rgba(255,255,255,0.95)'); gr.addColorStop(0.55, 'rgba(245,250,255,0.95)'); gr.addColorStop(0.8, 'rgba(255,255,255,1)'); gr.addColorStop(1, 'rgba(255,255,255,0)'); g.fillStyle = gr; g.fillRect(0, 0, n, n); }, 64);
+  const bGeo = new THREE.BufferGeometry(); bGeo.setAttribute('position', new THREE.BufferAttribute(bPos, 3)); bGeo.setAttribute('aA', new THREE.BufferAttribute(bA, 1)); bGeo.setAttribute('aS', new THREE.BufferAttribute(bS, 1));
+  const bMat = new THREE.ShaderMaterial({ uniforms: { map: { value: bubTexFx }, uPx: { value: 1 } }, transparent: true, depthWrite: false, toneMapped: false,
+    vertexShader: `attribute float aA; attribute float aS; uniform float uPx; varying float vA; void main(){ vA = aA; vec4 mv = modelViewMatrix * vec4(position, 1.0); gl_PointSize = aS * uPx / -mv.z; gl_Position = projectionMatrix * mv; }`,
+    fragmentShader: `uniform sampler2D map; varying float vA; void main(){ vec4 c = texture2D(map, gl_PointCoord); if (c.a * vA < 0.01) discard; gl_FragColor = vec4(c.rgb, c.a * vA); }` });
+  const bubbles = new THREE.Points(bGeo, bMat); bubbles.frustumCulled = false; bubbles.renderOrder = 7; bubbles.visible = MOVE && !OFF; scene.add(bubbles);
+  function emitBubble(p, F, side) {
+    const k = bNext; bNext = (bNext + 1) % NB; bAge[k] = 0; bLife[k] = P.TRAIL_LIFE * (0.7 + 0.6 * rnd()); bSz[k] = 0.016 + 0.03 * rnd() * rnd();
+    bP[k].copy(p).addScaledVector(F.r, side * (0.11 + 0.05 * rnd())).addScaledVector(F.t, -0.02 - 0.05 * rnd()).addScaledVector(F.n, 0.004 + 0.01 * rnd());
+    bVel[k].copy(F.t).multiplyScalar(-P.DRIFT * (0.8 + 0.5 * rnd())).addScaledVector(F.r, side * (0.06 + 0.12 * rnd())).addScaledVector(F.n, 0.02 * rnd());
+  }
+  function updMove(o) {
+    const { F, waterPt, dt } = o;
+    // foam collar: a broken white ring + a foamy puff ring around his waist on the water, breathing with his strokes
+    const sw = 1 + 0.08 * Math.sin(o.armPh * 2) + 0.15 * (o.latK || 0);
+    for (const [m, sx, sy, a, rot] of [[collar, 0.44, 0.27, P.COLLAR_A, o.clock * 0.25], [collar2, 0.58, 0.34, P.COLLAR_A * 0.6, -o.clock * 0.4]]) {
+      m.position.copy(waterPt).addScaledVector(F.n, 0.004).addScaledVector(F.t, -0.015);
+      m.quaternion.setFromRotationMatrix(Mb.makeBasis(F.r, F.t, F.n)); m.scale.set(sx * sw, sy * sw, 1); m.material.rotation = rot;
+      m.material.opacity = a * (o.inWater ? 1 : 0) * Math.min(1, o.s / 0.25); }
+    // bubble trails from both sides of his body, streaming back toward the camera with the current
+    if (dt > 0 && o.inWater && o.s > 0.05) { bAcc += dt * P.TRAIL_RATE * (1 + 0.6 * (o.latK || 0)); while (bAcc >= 1) { bAcc -= 1; emitBubble(waterPt, F, rnd() < 0.5 ? -1 : 1); } }
+    // a big ring spreading around him every ~0.55 s
+    if (dt > 0 && o.inWater && o.s > 0.05) { ringAcc += dt; if (ringAcc >= P.RING_EVERY) { ringAcc = 0; v1.copy(waterPt).addScaledVector(F.t, -0.04); place(0, ripples, ri, v1, F, 0.26, 1.1, 1.8, 0.75); ri = (ri + 1) % ripples.length; } }
+    for (let k = 0; k < NB; k++) {
+      if (bAge[k] >= bLife[k]) { bA[k] = 0; continue; }
+      bAge[k] += dt; bP[k].addScaledVector(bVel[k], dt); bVel[k].multiplyScalar(Math.exp(-1.2 * dt));
+      const x = bAge[k] / bLife[k]; bA[k] = Math.min(1, x * 10) * (1 - x) * 0.9; bS[k] = bSz[k] * (0.8 + 0.5 * x);
+      bPos[3 * k] = bP[k].x; bPos[3 * k + 1] = bP[k].y; bPos[3 * k + 2] = bP[k].z;
+    }
+    bGeo.attributes.position.needsUpdate = true; bGeo.attributes.aA.needsUpdate = true; bGeo.attributes.aS.needsUpdate = true;
+  }
   const place = (d, list, k, p, F, size, life, grow, a0) => { const o = list[k]; o.p.copy(p); o.t.copy(F.t); o.size = size; o.grow = grow; o.life = life; o.age = 0; o.a0 = a0;
     o.m.quaternion.setFromRotationMatrix(Mb.makeBasis(F.r, F.t, F.n)); o.m.visible = true; return o; };
   const ripple = (p, F, size) => { if (OFF) return; place(0, ripples, ri, p, F, size, P.RIPPLE_T, 2.6, 0.55); ri = (ri + 1) % ripples.length; };
@@ -130,7 +174,7 @@ export function installSwimFx({ THREE, scene, splash, q }) {
     if (dt > 0 && o.inWater) {
       // paw entries: the right paw dips in at phase ~0.35 of its stroke, the left half a cycle later (alternating ripples)
       for (const [side, ph0] of [[1, 0.35], [-1, 0.35 + Math.PI]]) if (wrapCount(lastArm, o.armPh, ph0) > 0) {
-        v1.copy(waterPt).addScaledVector(F.r, side * o.armX).addScaledVector(F.t, 0.03); ripple(v1, F, 0.07);
+        v1.copy(waterPt).addScaledVector(F.r, side * o.armX).addScaledVector(F.t, 0.03); ripple(v1, F, P.RIP_SIZE);
         for (let i = 0; i < 2; i++) { v2.copy(F.n).multiplyScalar(0.5 + rnd() * 0.4).addScaledVector(F.r, side * (0.2 + rnd() * 0.3)).addScaledVector(F.t, -0.2 - rnd() * 0.3);
           o.drop(v1.clone().addScaledVector(F.n, 0.02), v2.clone(), 0.012 + rnd() * 0.012, 0.35 + rnd() * 0.15, 3.6); }
       }
@@ -142,8 +186,9 @@ export function installSwimFx({ THREE, scene, splash, q }) {
       }
     }
     lastArm = o.armPh; lastKick = o.kickPh;
+    if (MOVE) updMove(o);
     updDecals(ripples, dt); updDecals(puffs, dt);
   }
   window.swimFxInfo = () => ({ wakePts: hist.length, ripples: ripples.filter((r) => r.life > 0).length, puffs: puffs.filter((r) => r.life > 0).length, splFlow: SPL.uSplFlow.value, off: OFF });
-  return { update, P };
+  return { update, P, setPx: (px) => { bMat.uniforms.uPx.value = px; } };
 }

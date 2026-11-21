@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3267,
-   "sha256": "cdb0c89417f926dfc12ac9d03046fb1b13343a7a8076a5861d0d99a045255820"
+   "sha256": "393c87a5f21a6225891eb1ff1c46bf1e3a6a107f62d44703cd94ec93a5981d87"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -7054,7 +7054,7 @@
   {
    "path": "backups/wip/detached-d8e047d33e/INFO.json",
    "bytes": 2379,
-   "sha256": "f6db0365b3c8c06d4b07403e00df248aa554a8b4c86c5c09b4d2d96f06de1808"
+   "sha256": "a4eb22c36aa73171d5ea8046d613f6e0855f4efb5387ee07c5b81993152d677e"
   },
   {
    "path": "backups/wip/detached-d8e047d33e/tracked.patch",
@@ -40608,8 +40608,8 @@
   },
   {
    "path": "tools/kit05/controls.js",
-   "bytes": 44645,
-   "sha256": "3cef1ebfd8d25d3f43cd08284e98de532cafa76e3262497024f2cec4f8c948be"
+   "bytes": 44800,
+   "sha256": "c9c0281da22fc872eba1a505fef0d23a428cfd1c12fe7d810761f616d26afc35"
   },
   {
    "path": "tools/kit05/fit_tunnel.py",
@@ -40633,8 +40633,8 @@
   },
   {
    "path": "tools/kit05/kitgame.html",
-   "bytes": 62128,
-   "sha256": "b27ab3f381336878f35a489ee7e48f0afb65dd3f9650fe55fa96a193295365eb"
+   "bytes": 62583,
+   "sha256": "4ee6ec003848e1e146821fcc6720434e8cde1d8dcc0d67806864d32d8dc1dda2"
   },
   {
    "path": "tools/kit05/live.js",
@@ -40723,8 +40723,8 @@
   },
   {
    "path": "tools/kit05/swimfx.js",
-   "bytes": 13720,
-   "sha256": "bf5ba993d6190bdde88f284c2acbe61942e7780c5172ce41958eb9215b5f02b5"
+   "bytes": 19407,
+   "sha256": "d0e152d8feb7bf4dfc6c44fdeea7d62a8d09ec11efbbeae182655e543d875217"
   },
   {
    "path": "tools/kit05/zoom_likeness.py",
