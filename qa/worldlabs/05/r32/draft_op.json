@@ -1,0 +1,66 @@
+{
+ "operation_id": "6682dee2-3162-4b75-9c2e-62d6f4ed191b",
+ "created_at": "2026-11-21T03:41:43Z",
+ "updated_at": "2026-11-21T03:42:08Z",
+ "expires_at": "2026-11-21T06:41:42Z",
+ "done": true,
+ "error": null,
+ "metadata": {
+  "progress": {
+   "status": "SUCCEEDED",
+   "description": "World generation completed successfully"
+  },
+  "world_id": "f3226155-5633-4e41-bbd5-f58a3f584c26",
+  "operation_type": "world_generation",
+  "public_model_name": "marble-1.0-draft"
+ },
+ "response": {
+  "world_id": "f3226155-5633-4e41-bbd5-f58a3f584c26",
+  "display_name": "",
+  "tags": null,
+  "assets": {
+   "mesh": {
+    "collider_mesh_url": "https://cdn.marble.worldlabs.ai/f3226155-5633-4e41-bbd5-f58a3f584c26/dfecf4e9.glb",
+    "hq_mesh_url": null,
+    "full_res_mesh_url": null
+   },
+   "imagery": {
+    "pano_url": null
+   },
+   "splats": {
+    "spz_urls": {
+     "500k": "https://cdn.marble.worldlabs.ai/f3226155-5633-4e41-bbd5-f58a3f584c26/f43d5214-ba3a-438d-8d83-04b5543891d3_sand_500k.spz",
+     "100k": "https://cdn.marble.worldlabs.ai/f3226155-5633-4e41-bbd5-f58a3f584c26/b1c15674-2393-4b90-af96-2741f5071488_sand_100k.spz",
+     "full_res": "https://cdn.marble.worldlabs.ai/f3226155-5633-4e41-bbd5-f58a3f584c26/dad54d04-edbf-4f39-9d62-8b2baaa41eae_sand.spz"
+    },
+    "semantics_metadata": null
+   },
+   "thumbnail_url": "https://cdn.marble.worldlabs.ai/f3226155-5633-4e41-bbd5-f58a3f584c26/cc502551-9d09-4186-8886-538350e81b01_sand_mpi/thumbnail.webp",
+   "caption": "The scene is a surreal and highly stylized cylindrical tunnel, rendered with vibrant, glossy colors that evoke a dreamlike, almost futuristic atmosphere. The overall tone is energetic and whimsical, characterized by intense luminosity and fluid motion. The tunnel is a perfectly straight, cylindrical washing-machine drum, extending directly from the viewer towards a single, bright, warm-golden vanishing point. Its walls are composed of deep, glossy metallic magenta and violet surfaces, streaked with long white-pink specular highlights that run longitudinally along the tunnel's length. Regularly spaced rows of dark, capsule-shaped perforation slots are arranged around the circumference of the walls, positioned between a series of ten evenly spaced, identical, circular, polished, reflective yellow-gold ring bands. These flat bands, each featuring a subtle double lip, divide the tunnel into equal bays that diminish in size consistently towards the vanishing point. Within each bay, a small copper-gold half-dome fitting is mounted on each side wall, positioned just above the water level. The entire floor of this tunnel is filled from wall to wall with a broad, thick, glossy electric-cyan river, which is interspersed with swirling bands of hot-pink. This luminous river meanders in smooth S-bends as it flows towards the vanishing point, its surface alive with white-blue reflections and numerous star-shaped glints. Both sides of the river are lined with soft banks of white foam, from which transparent, iridescent soap bubbles gently rise and float. The 360 scene is faultless."
+  },
+  "created_at": null,
+  "updated_at": null,
+  "permission": {
+   "public": false,
+   "allowed_readers": [],
+   "allowed_writers": [],
+   "allow_id_access": false
+  },
+  "world_prompt": null,
+  "world_marble_url": "https://marble.worldlabs.ai/world/f3226155-5633-4e41-bbd5-f58a3f584c26",
+  "model": null
+ },
+ "cost": {
+  "total_credits": 230,
+  "line_items": [
+   {
+    "name": "Pano generation (image, non-pano)",
+    "credits": 80
+   },
+   {
+    "name": "Draft world generation",
+    "credits": 150
+   }
+  ]
+ }
+}

@@ -60,3 +60,11 @@ Input for both worlds: `qa/worldlabs/05/geometry_ref/2_geometry_reference_05.png
 |---|---|---|---:|---:|
 | 12:54 | `GET /credits` (new key, user-saved via secure form on the `rainbow-` environment) | 200 | 7,000 | 0 |
 | 12:54 | `worlds:generate` **marble-1.1**, Screen 08 environment-only clean plate (Image-Blaster test, user-approved) → world `32b5b2f4-32bc-4fa5-80a5-861129a528c8`, op `0de603c2-c44f-47d1-b3c6-be4c05506dce` | done ≈5.5 min; files in `qa/imageblaster/08/world/` | 7,000 → **5,420** | **1,580** |
+
+## Round 32 (2026-11-21, session branch `claude/screen-05-3d-geometry-9yu7pu`) — user: "I want to use my existing 5,420 World Labs Marble credits … not agreeing to pay $5 cash or purchase additional credits"
+Atlas (separate product, own account + credits at atlas.worldlabs.ai) is NOT usable with these credits: no Atlas job, no purchase.
+| UTC | Call | Result | Credits before → after |
+|---|---|---|---:|
+| 03:5x | `GET /credits` | 200 | 5,420 |
+| 03:5x | upload `qa/worldlabs/05/r32/input_05_clean.png` (approved 05 plate, Benny / coins / HUD removed, full frame 1080×1920) | 200 (free), asset `0d12279c-9d49-4cef-9cdd-9f9d16ae7307` | 5,420 |
+| 03:5x | `worlds:generate` **marble-1.0-draft**, operation `6682dee2-3162-4b75-9c2e-62d6f4ed191b` | started | 5,420 → (230 expected) |

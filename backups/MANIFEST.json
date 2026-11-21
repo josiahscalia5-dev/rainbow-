@@ -794,7 +794,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 25599,
-   "sha256": "05318b651619aa9fe9f22f006cd4a901beed2d91d6e2400d1cb9d43cd03c8103"
+   "sha256": "78bb264491a4f18a5a6017baf7049b92baf4cac61d127e38cd860671cda8d5c5"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3056,
-   "sha256": "8ad49eeb12ffa8f816cd38d56a348658d701c59de1b33b81d76dc6d1d063ed93"
+   "sha256": "d715c3d2d4b697f2fc4a1091ae0d67e96d245e83f6db001310d80542ea565c38"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -35758,8 +35758,8 @@
   },
   {
    "path": "qa/worldlabs/05/pilot/LEDGER.md",
-   "bytes": 6058,
-   "sha256": "41701b34b3d528bf2472a8df75c1800ef2895f06359fe37f7d828a5b3da9dd34"
+   "bytes": 6850,
+   "sha256": "73f0bcede7013ce637383bf9fd653d55f302b5914e1a4776e418e0062845c766"
   },
   {
    "path": "qa/worldlabs/05/pilot/draft/analysis/bay_coverage.png",
@@ -35970,6 +35970,36 @@
    "path": "qa/worldlabs/05/pilot/prompt_05.txt",
    "bytes": 1266,
    "sha256": "80df2f0d31c935b0e0fc7f1b064c54b5e72e9e27abb49643ee6729170eb7a7c6"
+  },
+  {
+   "path": "qa/worldlabs/05/r32/draft_500k.spz",
+   "bytes": 6049687,
+   "sha256": "5aa3dcf786fc7d8dfd03e7fe80dad90870967e91bc9e22e5f151603073046229"
+  },
+  {
+   "path": "qa/worldlabs/05/r32/draft_collider.glb",
+   "bytes": 1157140,
+   "sha256": "c5b367628512bc9fce4b10120512a145181f42f45cbe7efbfcbf35b98b94bfb2"
+  },
+  {
+   "path": "qa/worldlabs/05/r32/draft_full.spz",
+   "bytes": 26930044,
+   "sha256": "4d5fd729851ad1fa4f0b36353f49d156f41f028b634142e86bec6b0dddb6a22b"
+  },
+  {
+   "path": "qa/worldlabs/05/r32/draft_op.json",
+   "bytes": 3581,
+   "sha256": "8eaf3d9f1afd48d70e314f54f879597b25e31e5c9db0b4882a79f61dd580df23"
+  },
+  {
+   "path": "qa/worldlabs/05/r32/draft_thumb.webp",
+   "bytes": 70168,
+   "sha256": "cfff9617583fc932538619bd422bcba0cfaa1a3b4db0d14767c5f17b91606f7e"
+  },
+  {
+   "path": "qa/worldlabs/05/r32/input_05_clean.png",
+   "bytes": 3581117,
+   "sha256": "cfe6aba6a1091041df9b363395ab271afbd1449da0f26e44cbc538967a0043bb"
   },
   {
    "path": "qa/worldlabs/05/rejected/README.md",
