@@ -59,7 +59,7 @@ appr2 = np.asarray(Image.open(f'{R}/qa/match/06/paint06/work/appr06_seedvr2.png'
 A2 = cv2.resize(A, (2 * FW, 2 * FH), interpolation=cv2.INTER_LINEAR)
 # the painted outline carries light fur tips (a soft glow); on the harder mesh edge they read as a white line -> the outline
 # band (~6 px at 1x) takes the colours from just inside instead
-core = cv2.erode((A2 > 0.5).astype(np.uint8), cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (25, 25))).astype(np.float32)
+core = cv2.erode((A2 > 0.5).astype(np.uint8), cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (13, 13))).astype(np.float32)
 ext = appr2 * core[..., None]; wsum_i = core.copy(); acc_i = ext.copy()
 for sg in (2, 4, 8, 16):
     n_ = cv2.GaussianBlur(ext, (0, 0), sg); d_ = cv2.GaussianBlur(core, (0, 0), sg)[..., None]
@@ -91,16 +91,7 @@ own_m = np.clip(np.c_[own.reshape(-1, 3), np.ones(TEX * TEX)] @ Mfit, 0, 1).resh
 Lown = inverse(own_m).reshape(TEX, TEX, 3)
 # soft blend: approved bake where it has support (push-pull smoothed weight), the model's own colours elsewhere
 wgt = cv2.GaussianBlur(np.minimum(1, wsum / 0.25).astype(np.float32), (0, 0), 3)
-# fill bake holes / extend a few texels past its support (multi-scale normalized convolution, up to ~8 texels)
-fillL = Lb.copy(); have = (wsum > 0).astype(np.float32); cov = have.copy()
-for sg in (1.5, 3, 6, 12, 24):
-    num = cv2.GaussianBlur((Lb * have[..., None]).astype(np.float32), (0, 0), sg); den = cv2.GaussianBlur(have, (0, 0), sg)[..., None]
-    upd = (cov < 0.5) & (den[..., 0] > 0.05)
-    fillL[upd] = (num / np.maximum(den, 1e-4))[upd]; cov[upd] = 1
-wgt = cv2.GaussianBlur(cov, (0, 0), 2)
-wb = np.clip(wgt * 1.3, 0, 1)[..., None]
-Lfin = fillL * wb + Lown * (1 - wb)
-# gutter fill: texels outside every UV island take the nearest island colour (no white padding bleeding in at edges / mips)
+# UV islands of the mesh (rasterised triangles)
 def accessor(i):
     a = j['accessors'][i]; v = j['bufferViews'][a['bufferView']]; off = bin0 + v.get('byteOffset', 0) + a.get('byteOffset', 0)
     comp = {5126: np.float32, 5125: np.uint32, 5123: np.uint16}[a['componentType']]; nc = {'SCALAR': 1, 'VEC2': 2, 'VEC3': 3}[a['type']]
@@ -108,9 +99,26 @@ def accessor(i):
 prim = j['meshes'][0]['primitives'][0]
 UV = accessor(prim['attributes']['TEXCOORD_0']); IDX = accessor(prim['indices']).reshape(-1, 3)
 isl = np.zeros((TEX, TEX), np.uint8)
-pts = (UV[IDX] * TEX * 16).astype(np.int32)
-cv2.fillPoly(isl, list(pts), 1, lineType=cv2.LINE_8, shift=4)
+cv2.fillPoly(isl, list((UV[IDX] * TEX * 16).astype(np.int32)), 1, lineType=cv2.LINE_8, shift=4)
 isl = cv2.dilate(isl, np.ones((3, 3), np.uint8))
+nlab, lab = cv2.connectedComponents(isl, connectivity=8)
+print('UV islands', nlab - 1, 'cover', round(float(isl.mean()) * 100, 1), '% of the texture')
+# blend = closeness to a REAL projected texel of the SAME island (no colour leaking across islands); else the model's own colours
+have = wsum > 0
+Lfin = Lown.copy()
+for i in range(1, nlab):
+    ys, xs = np.where(lab == i)
+    y0, y1, x0, x1 = ys.min(), ys.max() + 1, xs.min(), xs.max() + 1
+    m = (lab[y0:y1, x0:x1] == i); h = have[y0:y1, x0:x1] & m
+    if not h.any(): continue
+    Lb_i = Lb[y0:y1, x0:x1]
+    num = cv2.GaussianBlur((Lb_i * h[..., None]).astype(np.float32), (0, 0), 2.0); den = cv2.GaussianBlur(h.astype(np.float32), (0, 0), 2.0)[..., None]
+    filled = np.where(h[..., None], Lb_i, num / np.maximum(den, 1e-4))
+    dist = cv2.distanceTransform((~h).astype(np.uint8), cv2.DIST_L2, 5)
+    w = (np.clip(1 - (dist - 2) / 8.0, 0, 1) * (den[..., 0] > 1e-3))[..., None]
+    blk = Lfin[y0:y1, x0:x1]
+    Lfin[y0:y1, x0:x1] = np.where(m[..., None], filled * w + blk * (1 - w), blk)
+# gutter fill: texels outside every UV island take the nearest island colour (no white padding bleeding in at edges / mips)
 Lg = Lfin * isl[..., None]; cv_ = isl.astype(np.float32); Lout = Lg.copy()
 for sg in (1, 2, 4, 8, 16):
     num = cv2.GaussianBlur(Lg.astype(np.float32), (0, 0), sg); den = cv2.GaussianBlur(isl.astype(np.float32), (0, 0), sg)[..., None]

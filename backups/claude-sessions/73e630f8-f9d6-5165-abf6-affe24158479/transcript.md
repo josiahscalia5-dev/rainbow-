@@ -2588,3 +2588,146 @@ The white rim didn't change, so something else is going on. Tracing the white ri
 
 > 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad && python3 -I - <<'EOF'\np='tools/benny31/bake.py'; s=open(p).read()\nold=\"A2 = cv2.resize(A, (2 * FW, 2 * FH), interpolation=cv2.INTER_LINEAR); core = (A2 > 0.85).astype(np.float32)\"\nnew=\"\"\"A2 = cv2.resize(A, (2 * FW, 2 * FH), interpolation=cv2.INTER_LINEAR)\n# the painted outline carries light fur tips (a soft glow); on the harder mesh edge they read as a white line -> the outline\n# band (~6 px at 1x) takes the colours from just inside instead\ncore = cv2.erode((A2 > 0.5).astype(np.uint8) …[+1198 chars]`
 
+### 🧑 User — 2026-11-21T01:07:00.346Z
+
+> ↩︎ result: rendered 1 to qa/benny/r31/fit/hunyuan2_baked
+>  "IMPROVED 3D": {
+>   "silhouette_iou": 0.956,
+>   "box_within20_pct": 65.6,
+>   "box_ssim": 0.795
+>  }
+> }
+
+### 🤖 Claude — 2026-11-21T01:07:02.561Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/v6.jpg"}`
+
+### 🧑 User — 2026-11-21T01:07:02.588Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T01:07:14.188Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad && sed -i 's/cv2.MORPH_ELLIPSE, (25, 25))).astype(np.float32)/cv2.MORPH_ELLIPSE, (13, 13))).astype(np.float32)/' tools/benny31/bake.py && python3 -I tools/benny31/bake.py qa/benny/r31/gen/hunyuan2.glb $SP/hunyuan2_uv_y0_p12_1536.f32 1536 qa/benny/r31/fit/hunyuan2/y0_p12.png qa/benny/r31/gen/hunyuan2_bake.png 4 >/dev/null && BLACK=1 Q=\"bake=/qa/benny/r31/gen/hunyuan2_bake.png&K=4\" timeout 900 node tools/benny31/render.mjs qa/benny/r31/gen/hunyuan2.glb qa/benny/r31/fit/hunyuan2_baked '[[0,12]]' 10 …[+732 chars]`
+
+### 🤖 Claude — 2026-11-21T01:07:15.090Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/v7.jpg"}`
+
+### 🧑 User — 2026-11-21T01:08:17.628Z
+
+> ↩︎ result: rendered 1 to qa/benny/r31/fit/hunyuan2_baked
+>  "IMPROVED 3D": {
+>   "silhouette_iou": 0.956,
+>   "box_within20_pct": 66.5,
+>   "box_ssim": 0.804
+>  }
+> }
+> /**
+>  * Real-time shell-texturing fur for Benny (mobile-safe, one draw call per furry part).
+>  *
+>  * Each fur_* mesh becomes an InstancedMesh with `shells` instances; gl_InstanceID selects the
+>  * shell layer, which is pushed out along the normal (plus a little gravity droop). A hashed 3-D
+>  * strand grid decides per-fragment whether a strand still exists at that height (tapering strands),
+>  * so the fur keeps a fluffy silhouette from every angle. Built on MeshStandardMaterial via
+>  * onBeforeCompile so scene lighting, IBL and fog all still apply.
+>  */
+> import * as THREE from 'three';
+> 
+> export interface FurParams {
+>   length: number;
+>   density: number;
+>   shells: number;
+>   root: string;
+>   tip: string;
+>   gravity?: number;
+>   bald?: [number, number, number, number];
+>   short?: [number, number, number, number, number, number];
+> }
+> 
+> export interface FurHandle {
+>   mesh: THREE.InstancedMesh;
+>   material: THREE.MeshStandardMaterial;
+>   uniforms: {
+>     uTime: { value: number };
+>     uWind: { value: THREE.Vector3 };
+>     uMaskCol: { value: THREE.Color };
+>     uRoot: { v …[+1400 chars]
+
+### 🧑 User — 2026-11-21T01:08:17.643Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T01:08:23.973Z
+
+No white line now, and only a little smear remains at the cuff ends. Now rendering him turning around, to show he's a full 3D model and not a flat picture.
+
+### 🤖 Claude — 2026-11-21T01:08:31.779Z
+
+> 🔧 **Bash** `{"command": "BLACK=1 Q=\"bake=/qa/benny/r31/gen/hunyuan2_bake.png&K=4\" timeout 1200 node tools/benny31/render.mjs qa/benny/r31/gen/hunyuan2.glb qa/benny/r31/turn_improved '[[0,12],[35,12],[70,12],[110,12],[180,12],[0,40]]' 640 2>&1 | tail -1 && BLACK=1 timeout 1200 node tools/benny31/render.mjs current qa/benny/r31/turn_current '[[180,20],[215,20],[250,20],[290,20],[0,20],[180,48]]' 640 2>&1 | tail -1 && python3 -I - <<'EOF'\nfrom PIL import Image, ImageDraw, ImageFont\nF=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',24)\nrows=[('CURRENT 3D (game today)','qa/benny/ …[+1037 chars]`
+
+### 🤖 Claude — 2026-11-21T01:08:32.285Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/benny/r31/TURNTABLE_CURRENT_vs_IMPROVED.jpg"}`
+
+### 🧑 User — 2026-11-21T01:08:44.731Z
+
+> ↩︎ result: rendered 6 to qa/benny/r31/turn_improved
+> rendered 6 to qa/benny/r31/turn_current
+
+### 🧑 User — 2026-11-21T01:08:44.746Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T01:09:18.116Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad && python3 -I - <<'EOF'\np='tools/benny31/bake.py'; s=open(p).read()\n# move the UV-island rasterisation before the blend, and make the blend island-aware + distance-based\nstart=s.index(\"# fill bake holes / extend a few texels past its support\")\nend=s.index(\"V = np.clip(Lfin / K, 0, 1)\")\nnew='''# UV islands of the mesh (rasterised triangles)\ndef accessor(i):\n    a = j['accessors'][i]; v = j['bufferViews'][a['bufferView']]; off = bin0 + v.get('byteOffset', 0) + a.get('byteOffset', 0)\n     …[+3275 chars]`
+
+### 🤖 Claude — 2026-11-21T01:09:19.275Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/turn2.jpg"}`
+
+### 🧑 User — 2026-11-21T01:10:21.607Z
+
+> ↩︎ result: Traceback (most recent call last):
+>   File "<stdin>", line 36, in <module>
+> ValueError: substring not found
+> approved samples 490355 texels hit 470111
+> UV islands cover 77.8 % of the texture
+> baked -> qa/benny/r31/gen/hunyuan2_bake.png
+> rendered 6 to qa/benny/r31/turn_improved
+
+### 🧑 User — 2026-11-21T01:10:21.623Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T01:10:24.347Z
+
+My code edit didn't apply (a text match failed), so that bake ran the old code. Fixing the edit.
+
+### 🤖 Claude — 2026-11-21T01:10:25.449Z
+
+> 🔧 **Bash** `{"command": "grep -n \"fill bake holes\\|gutter fill\\|Lg = Lfin\\|def accessor\\|V = np.clip\\|wb = np.clip\\|Lfin = \\|isl = \\|prim = \" tools/benny31/bake.py", "description": "Locate the sections to change in the bake tool"}`
+
+### 🧑 User — 2026-11-21T01:10:25.489Z
+
+> ↩︎ result: 94:# fill bake holes / extend a few texels past its support (multi-scale normalized convolution, up to ~8 texels)
+> 101:wb = np.clip(wgt * 1.3, 0, 1)[..., None]
+> 102:Lfin = fillL * wb + Lown * (1 - wb)
+> 103:# gutter fill: texels outside every UV island take the nearest island colour (no white padding bleeding in at edges / mips)
+> 104:def accessor(i):
+> 108:prim = j['meshes'][0]['primitives'][0]
+> 110:isl = np.zeros((TEX, TEX), np.uint8)
+> 113:isl = cv2.dilate(isl, np.ones((3, 3), np.uint8))
+> 114:Lg = Lfin * isl[..., None]; cv_ = isl.astype(np.float32); Lout = Lg.copy()
+> 118:Lfin = np.where(isl[..., None] > 0, Lfin, Lout)
+> 120:V = np.clip(Lfin / K, 0, 1)
+
+### 🤖 Claude — 2026-11-21T01:10:40.696Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad && python3 -I - <<'EOF'\np='tools/benny31/bake.py'; L=open(p).read().split('\\n')\n# lines are 1-based in grep: replace 94..113 (fill + blend + island raster) with the island-aware version; keep gutter fill (114..118)\nhead=L[:93]; tail=L[113:]\nnew='''# UV islands of the mesh (rasterised triangles)\ndef accessor(i):\n    a = j['accessors'][i]; v = j['bufferViews'][a['bufferView']]; off = bin0 + v.get('byteOffset', 0) + a.get('byteOffset', 0)\n    comp = {5126: np.float32, 5125: np.uint32, 5123: n …[+2889 chars]`
+
+### 🤖 Claude — 2026-11-21T01:10:41.850Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/turn2.jpg"}`
+
