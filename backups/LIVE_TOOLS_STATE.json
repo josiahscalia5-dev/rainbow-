@@ -1,5 +1,5 @@
 {
- "time_utc": "2026-11-21T23:13:50+00:00",
+ "time_utc": "2026-11-21T23:14:34+00:00",
  "lead_branch": "ccr-1a97503a-p221vc",
  "specialists_sha256_16": {
   "android-build-performance": "b0c45161860a960c",
@@ -49,8 +49,12 @@
    }
   }
  },
- "plugins_installed_locally": [],
- "plugins_enabled_user_settings": [],
+ "plugins_installed_locally": [
+  "worldlabs@worldlabs"
+ ],
+ "plugins_enabled_user_settings": [
+  "worldlabs@worldlabs"
+ ],
  "plugins_synced_from_claude_account": [
   "Accelerate design workflows \u2014 critique, design system management, UX writing, accessibilit",
   "Comprehensive feature development workflow with specialized agents for codebase exploratio",
@@ -71,7 +75,9 @@
   "playwright",
   "superpowers"
  ],
- "mcp_servers_configured": [],
+ "mcp_servers_configured": [
+  "worldlabs"
+ ],
  "hooks_project": [
   "PreCompact",
   "SessionEnd",
