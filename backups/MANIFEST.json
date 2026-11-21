@@ -763,8 +763,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 82471,
-   "sha256": "3e19c227d5aef0adff8600ac15299cfdb863997123468a186c46118d1533e316"
+   "bytes": 80969,
+   "sha256": "d063d3703b32c9f091a2a4f4e20043d0b0f41dc8368c4f1f303f6588ea070cc5"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3271,
-   "sha256": "073a5171051f68d6b6a85a2055a75797bb7234b93627cd3a4c503f29e20b0624"
+   "sha256": "64c29421416bf259caca0acfb15acfc5eeaabc1ae985160e4d829dd13abcbf25"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -7734,7 +7734,7 @@
   {
    "path": "backups/wip/screen05-agents/LAST_SYNC_UTC",
    "bytes": 33,
-   "sha256": "85160a7ca14a1116c0d3fa509a67936f1ff57724dc5b22f988a09b44bf6b7234"
+   "sha256": "1608d914e2d3b697a4d4b7e2aafae3bf2a92840c15a932ad04b43099717ccc27"
   },
   {
    "path": "backups/wip/screen05-agents/WORKSPACE",
@@ -10308,8 +10308,8 @@
   },
   {
    "path": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md",
-   "bytes": 74735,
-   "sha256": "d6060516c9287b4e1182947dd87bc30b63612e1eca0090968e62673c6bc529f4"
+   "bytes": 76069,
+   "sha256": "90532d856baa7b16d611530d8cf429b94b170f9e4fc1a1c057c78ceffc0572d8"
   },
   {
    "path": "docs/PARALLEL_PROGRESS.md",
@@ -11100,6 +11100,16 @@
    "path": "docs/briefs/2026-11-21-r33/TOOL_EVALUATION_R33.md",
    "bytes": 5924,
    "sha256": "063c388d3684c0f5b13f27d5ca9507c7e71adb8aec3e4ad7bfc087054fc21a36"
+  },
+  {
+   "path": "docs/briefs/2026-11-21-r34/COORDINATION_R34.md",
+   "bytes": 5989,
+   "sha256": "1e292a7286907560cfaf7903df7d636f1878abf74d5aead49b5356ee9929a30e"
+  },
+  {
+   "path": "docs/briefs/2026-11-21-r34/USER_R34.md",
+   "bytes": 4729,
+   "sha256": "14e8b8d295f646ca28b26f995d919fc12ba602690832544031d3b23ec6052f04"
   },
   {
    "path": "docs/characters/benny.md",

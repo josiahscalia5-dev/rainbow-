@@ -1,3 +1,13 @@
+# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 34 (2026-11-21 ~18:00 UTC, lead branch `ccr-3830a7b8-af3hrd`)
+Screen 05 ONLY: Benny's real 3D swimming + Subway-Surfers-style swipes through the ORIGINAL approved Screen 05, then a phone-playable build.
+Base = the round-33 tunnel kit (`tools/kit05/`). New shared foundation (`9a46d34`): `controls.js` now lives in `tools/kit05/`, `setup_kit.sh`
+(runnable game folder from any worktree), `render_slot.sh` (2-slot CPU lock for all Chromium renders), `live.js` + `?live=1` (REAL-TIME phone
+mode: tap to start, fps + swipe-response meter; `live_check.cjs`). FIVE specialists in parallel, each in a sparse worktree under `/home/user/wt/`
+with strict file ownership: S1 visual (winding world-anchored river, `kit.json` `river_center`), S2 Benny swimming + controls, S3 camera / path /
+coins, S4 QA (`tools/kit05/qa/run_acceptance.sh`), S5 the reusable skill `.claude/skills/rainbow-screen-builder/`. Map + rules + relaunch:
+**`docs/briefs/2026-11-21-r34/COORDINATION_R34.md`**; user's orders verbatim **`USER_R34.md`**; workers' notes `docs/briefs/2026-11-21-r34/notes/`
+(inside each worktree, snapshotted to `backups/wip/<branch>/`); status `backups/AGENTS_STATUS.json` → `round34`. Nothing approved yet; no credits spent.
+
 # ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 32c (2026-11-21 ~12:45 UTC, branch `claude/screen-05-3d-geometry-9yu7pu`)
 Screen 05 real 3D swimming test in progress: Marble splat world of the approved picture → full-length ring-to-ring track (river mirrored in alternate
 sections), real 3D Benny, follow camera; two specialists (swipe controls; water flow + dark-gap cleanup) were running. Everything to continue:
