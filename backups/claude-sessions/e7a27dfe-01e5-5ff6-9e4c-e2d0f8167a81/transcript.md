@@ -5748,3 +5748,79 @@ Good point about the intentional dark parts. Your tunnel walls have dark perfora
 
 > 🔧 **Bash** `{"command": "git add tools/marble05/viewer/visual_check.py tools/marble05/viewer/final_acceptance.cjs && git commit -q -m \"Screen 05 acceptance tests: full-level real-touch swipe run (Android portrait emulation) + per-frame visual checker calibrated on the approved picture\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01DSgRGpB51Z1jjYL78aQFZJ\" && for i in 1 2 3; do timeout 300 git push -u origin claude/screen-05-3d-geometry-9yu7pu 2>&1 | tail -1 && break; sleep 5; done; git rev-parse --short HEAD; timeout 30 git ls-remote origin re …[+131 chars]`
 
+### 🧑 User — 2026-11-21T12:17:22.922Z
+
+> ↩︎ result: branch 'claude/screen-05-3d-geometry-9yu7pu' set up to track 'origin/claude/screen-05-3d-geometry-9yu7pu'.
+> 7d60086
+> 7d60086
+
+### 🤖 Claude — 2026-11-21T12:17:26.984Z
+
+Done. The checker now flags only real gaps.
+
+**What it showed:** the largest dark spot in your approved picture is 8 pixels at phone size, which is your wall slots. So only dark areas over 150 pixels count as errors, and your intentional dark details will never be flagged. In the current build, every frame of the first second still has 2–4 real gaps of 650–2,557 pixels at the sides, where the water meets the walls. I've sent the water specialist that exact rule, with a target of zero gaps in every frame, fixed at the cause without touching your scenery, colours, tunnel or Benny.
+
+**Next:** when both specialists finish, I'll merge their work and run the full real-swipe test over the whole level. It checks:
+- smooth left and right movement, with no jumps
+- leap and dive
+- no freezes, errors or camera clipping
+- coins collected
+- no dark gaps, blur or flicker in any frame
+
+Anything that fails gets fixed and retested before you see a video. If something can't be fixed with these tools, I'll tell you exactly what and why.
+
+The test tools are saved on GitHub (commit `7d60086`). No credits are being spent.
+
+### 🧑 User — 2026-11-21T12:17:29.263Z
+
+Stop hook feedback:
+[command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+
+### 🤖 Claude — 2026-11-21T12:17:33.122Z
+
+> 🔧 **Bash** `{"command": "git status --short | head -6; git add -A backups/CONVERSATION_INDEX.md backups/claude-sessions backups/AGENTS_STATUS.json tools qa 2>/dev/null; git commit -q -m \"autosave: session transcript\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01DSgRGpB51Z1jjYL78aQFZJ\" 2>&1 | tail -1; for i in 1 2 3; do timeout 300 git push -u origin claude/screen-05-3d-geometry-9yu7pu 2>&1 | tail -1 && break; sleep 5; done; git rev-parse --short HEAD; timeout 30 git ls-remote origin refs/heads/claude/screen-05-3d-geometry-9yu7pu | cut -c1-7; …[+102 chars]`
+
+### 🧑 User — 2026-11-21T12:17:37.461Z
+
+> ↩︎ result: M backups/CONVERSATION_INDEX.md
+>  M backups/LIVE_TOOLS_STATE.json
+>  M backups/MANIFEST.json
+>  M backups/claude-sessions/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/subagents/agent-a18ca6be2c4eebf7f.md
+>  M backups/claude-sessions/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/subagents/agent-a18ca6be2c4eebf7f.sanitized.jsonl
+>  M backups/claude-sessions/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/subagents/agent-aceebf66a4b11ed5f.md
+> branch 'claude/screen-05-3d-geometry-9yu7pu' set up to track 'origin/claude/screen-05-3d-geometry-9yu7pu'.
+> 3f027ec
+> 3f027ec
+>  M backups/LIVE_TOOLS_STATE.json
+>  M backups/MANIFEST.json
+
+### 🤖 Claude — 2026-11-21T12:17:41.223Z
+
+> 🔧 **Bash** `{"command": "git add backups/LIVE_TOOLS_STATE.json backups/MANIFEST.json && git commit -q -m \"autosave: tools state and manifest\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01DSgRGpB51Z1jjYL78aQFZJ\" 2>&1 | tail -1; for i in 1 2 3; do timeout 300 git push -u origin claude/screen-05-3d-geometry-9yu7pu 2>&1 | tail -1 && break; sleep 5; done; git rev-parse --short HEAD; timeout 30 git ls-remote origin refs/heads/claude/screen-05-3d-geometry-9yu7pu | cut -c1-7; git status --short | head -3", "description": "Commit the backup state fil …[+32 chars]`
+
+### 🧑 User — 2026-11-21T12:17:44.285Z
+
+> ↩︎ result: branch 'claude/screen-05-3d-geometry-9yu7pu' set up to track 'origin/claude/screen-05-3d-geometry-9yu7pu'.
+> 362e218
+> 362e218
+>  M backups/BACKUP_LOG.md
+>  M backups/BACKUP_STATUS.json
+
+### 🤖 Claude — 2026-11-21T12:17:48.748Z
+
+> 🔧 **Bash** `{"command": "sleep 20; git add -A backups && git commit -q -m \"autosave: backup log\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01DSgRGpB51Z1jjYL78aQFZJ\" 2>&1 | tail -1; for i in 1 2 3; do timeout 300 git push -u origin claude/screen-05-3d-geometry-9yu7pu 2>&1 | tail -1 && break; sleep 5; done; git rev-parse --short HEAD; timeout 30 git ls-remote origin refs/heads/claude/screen-05-3d-geometry-9yu7pu | cut -c1-7; git status --short | wc -l", "description": "Commit the autosave log files and push", "timeout": 700000}`
+
+### 🧑 User — 2026-11-21T12:18:10.276Z
+
+> ↩︎ result: nothing to commit, working tree clean
+> branch 'claude/screen-05-3d-geometry-9yu7pu' set up to track 'origin/claude/screen-05-3d-geometry-9yu7pu'.
+> 907710b
+> 907710b
+> 0
+
+### 🤖 Claude — 2026-11-21T12:18:11.855Z
+
+Everything is committed and pushed to GitHub: commit `907710b`, GitHub matches, and nothing is left unsaved.
+
+Both specialists are still working on Screen 05, one on swipe controls and one on water and the dark gaps. When they finish, I'll merge their work and run the full real-swipe acceptance test.
+
