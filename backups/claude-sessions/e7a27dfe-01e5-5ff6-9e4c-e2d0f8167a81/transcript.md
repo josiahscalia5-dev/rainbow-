@@ -5168,3 +5168,47 @@ First check: whether the river lines up when a section is mirrored.
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad; cd $S/splatview && python3 - <<'EOF'\np='play3.html'; s=open(p).read()\na=\"  const mir = k % 2 === 1;\"\nassert a in s\ns=s.replace(a,\"  const mir = q.get('nomirror') ? false : k % 2 === 1;\")\nopen(p,'w').write(s)\nEOF\nsed -i \"s#\\${process.env.PAGE ?? 'play.html'}?file=\\${file}#\\${process.env.PAGE ?? 'play.html'}?file=\\${file}\\${process.env.QS ?? ''}#\" play_shots2.cjs; grep -c \"process.env.QS\" play_shots2.cjs; PAGE=play3.html QS='&nomirror=1' STILLS='[0,2.3,4.4]' NODE_PATH=$(npm root  …[+596 chars]`
 
+### 🧑 User — 2026-11-21T11:48:09.891Z
+
+> ↩︎ result: 1
+> still 2.3
+> still 4.4
+> Shell cwd was reset to /home/user/rainbow-
+> [This command modified 1 file you've previously read: ../../../tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/splatview/play3.html. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-21T11:48:12.020Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/mirror_vs_not.jpg"}`
+
+### 🧑 User — 2026-11-21T11:48:12.053Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T11:48:33.848Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/marble05 && timeout 120 python3 -I - <<'EOF'\nimport numpy as np\nrng=np.random.default_rng(0)\nq=rng.normal(size=(5,4)); q/=np.linalg.norm(q,axis=1,keepdims=True); q[:,0]=np.abs(q[:,0])\ndef q2m(q):\n    w,x,y,z=q.T\n    return np.stack([np.stack([1-2*(y*y+z*z),2*(x*y-w*z),2*(x*z+w*y)],-1),np.stack([2*(x*y+w*z),1-2*(x*x+z*z),2*(y*z-w*x)],-1),np.stack([2*(x*z-w*y),2*(y*z+w*x),1-2*(x*x+y*y)],-1)],-2)\nS2=np.diag([0.04,0.01,0.0001])\nrl=np.array([0.3,0.9,-0.3]); rl/=np.linalg.norm(rl); M=np.eye(3)-2*np.outer(rl,rl)\nR=q2m(q); R2=M[None]@[REDACTED-EMAIL]( …[+513 chars]`
+
+### 🧑 User — 2026-11-21T11:48:34.007Z
+
+> ↩︎ result: 0 qw 0.483 cov match err 3.47e-18 det R2 1.000
+> 1 qw 0.813 cov match err 4.77e-18 det R2 1.000
+> 2 qw 0.039 cov match err 2.26e-17 det R2 1.000
+> 3 qw 0.123 cov match err 4.34e-17 det R2 1.000
+> 4 qw 0.958 cov match err 3.82e-17 det R2 1.000
+
+### 🤖 Claude — 2026-11-21T11:49:09.097Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='build_track.py'; s=open(p).read()\ndef rep(a,b):\n    global s\n    assert a in s, a[:70]; s=s.replace(a,b)\n# mirror only the water (rings / walls / machinery are reused as they are), about the river's own centre line at the rings\nrep(\"LAT_C = float((XA @ rt + XB @ rt) / 2)   # the tunnel's mid-plane (mirror plane)\",\n    \"_T = np.array(SC['trail']); _tu = _T @ ax\\nLAT_C = float(np.mean([(_T[np.argmin(np.abs(_tu - uu))] @ rt) for uu in (UA, UB)]))  # river centre at the rings = mirror line\")\nrep(\"def emit(d, mask, wmul, name, mirror=False):\\n    P,  …[+1703 chars]`
+
+### 🧑 User — 2026-11-21T11:49:10.537Z
+
+> ↩︎ result: ok
+> 24:LAT_C = float(np.mean([(_T[np.argmin(np.abs(_tu - uu))] @ rt) for uu in (UA, UB)]))  # river centre at the rings = mirror line
+> 25:mirror_pt = lambda p: p - 2 * np.outer(p @ rt - LAT_C, rt)
+> bay_m_lo 42634
+> D [-0.302  0.159 -2.003] path length 23.64
+
+### 🤖 Claude — 2026-11-21T11:49:16.400Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad; cd $S/splatview && PAGE=play3.html STILLS='[0,2.3,4.4,6.4]' NODE_PATH=$(npm root -g) timeout 2500 node play_shots2.cjs out_tr4 stills 2>&1 | grep -v \"^\\s*at \" | tail -2; python3 -I -c \"\nfrom PIL import Image\nS='$S'\nims=[Image.open('/home/user/rainbow-/references/05_flow_into_the_current.png').convert('RGB').resize((270,480))]+[Image.open(S+'/splatview/out_tr4/s_%s.png'%s).convert('RGB').resize((270,480)) for s in ['0','2.3','4.4','6.4']]\nc=Image.new('RGB',(278*len(ims),480),'white')\nfor i …[+174 chars]`
+

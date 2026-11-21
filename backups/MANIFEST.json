@@ -794,7 +794,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 25599,
-   "sha256": "c36b4ecb7336dd2fd53587b2d83a1c42ebb258daa16e5481d784ac28f44660e4"
+   "sha256": "d39765cc563a6724706ad1979695139db55c36c935bccf22b37b856488cce611"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3056,
-   "sha256": "54e6e7c55352310d8650a8f16be515b364f567141c487ef0c866009de7e31f95"
+   "sha256": "f5326e87b171cbcb7a58216ee915562c27016f6918519386fde95878bcf7b02d"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -37248,8 +37248,8 @@
   },
   {
    "path": "tools/marble05/build_track.py",
-   "bytes": 6808,
-   "sha256": "c46feb8a66da43971f3ba45bd46a429cc85ddd636c2b05fe1e8031347d4d8d84"
+   "bytes": 6812,
+   "sha256": "97e7e0ce0e50d22eff12fb0848c84b19f118e69d17a7a0ba3d5be05515ffba45"
   },
   {
    "path": "tools/marble05/compose.py",

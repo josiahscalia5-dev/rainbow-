@@ -20,7 +20,8 @@ FL = np.array([1, -1, -1], np.float32)
 UA, UB = 1.30, 3.33; Lt = UB - UA
 D0 = XB - XA                     # ring A -> ring B, measured in 3D
 DH = float(D0 @ n_plane)         # the water must drop by this much over one section to meet the next copy
-LAT_C = float((XA @ rt + XB @ rt) / 2)   # the tunnel's mid-plane (mirror plane)
+_T = np.array(SC['trail']); _tu = _T @ ax
+LAT_C = float(np.mean([(_T[np.argmin(np.abs(_tu - uu))] @ rt) for uu in (UA, UB)]))  # river centre at the rings = mirror line
 mirror_pt = lambda p: p - 2 * np.outer(p @ rt - LAT_C, rt)
 OV = 0.18          # half-width of the water cross-fade at each ring
 HW = 0.32          # below this height above the water a splat counts as water / foam (cross-faded, not cut)
@@ -39,12 +40,13 @@ def frame_of(d):
 def emit(d, mask, wmul, name, mirror=False):
     P, u, h, lat = frame_of(d)
     p = P[mask] + np.outer(ramp(u[mask], h[mask]), n_plane)
+    mw = h[mask] < HW  # only the water / foam is mirrored
     o = {k: v[mask].copy() for k, v in d.items()}
     a = 1 / (1 + np.exp(-o['opacity'])) * wmul[mask]
     keep = a > 0.01
     a = np.clip(a, 1e-4, 1 - 1e-4); o['opacity'] = np.log(a / (1 - a))
     if mirror:  # reflect across the tunnel's vertical mid-plane (lateral 0); Gaussian: R' = M R diag(-1,1,1)
-        p = mirror_pt(p)
+        p = np.where(mw[:, None], mirror_pt(p), p)
         rl = rt * FL; M = np.eye(3) - 2 * np.outer(rl, rl)
         w, x, y, z = o['rot'].T
         R = np.stack([np.stack([1 - 2 * (y * y + z * z), 2 * (x * y - w * z), 2 * (x * z + w * y)], -1),
@@ -63,7 +65,7 @@ def emit(d, mask, wmul, name, mirror=False):
                 qq = np.zeros(4); qq[1 + j] = s / 4; qq[0] = (m[kk, jj] - m[jj, kk]) / s; qq[1 + jj] = (m[jj, j] + m[j, jj]) / s; qq[1 + kk] = (m[kk, j] + m[j, kk]) / s
                 qb[k] = qq
             q[bad] = qb
-        o['rot'] = (q / np.linalg.norm(q, axis=1, keepdims=True)).astype(np.float32)
+        o['rot'] = np.where(mw[:, None], q / np.linalg.norm(q, axis=1, keepdims=True), o['rot']).astype(np.float32)
     o['xyz'] = (p * FL).astype(np.float32)
     o = {k: v[keep] for k, v in o.items()}
     write_ply(f'{out}/{name}.ply', o); print(name, len(o['xyz']))
@@ -91,12 +93,8 @@ def eased(Q): return Q + np.outer(ramp(Q @ ax, np.zeros(len(Q))), n_plane)
 base = eased(T[tu < UB]); seg = eased(T[(tu >= UA) & (tu < UB)])
 seg_m = mirror_pt(seg)
 # offsets: each copy's ring A lands exactly on the previous copy's ring B (copies alternate mirrored / normal)
-XAm, XBm = mirror_pt(XA[None])[0], mirror_pt(XB[None])[0]
-ends = XB.copy(); offs = []
-for k in range(1, N + 1):
-    a_, b_ = (XAm, XBm) if k % 2 else (XA, XB)
-    o = ends - a_; offs.append(o); ends = o + b_
-far_offs = [np.zeros(3)] + [offs[m - 1] + ((XBm if m % 2 else XB) - XB) for m in range(1, N + 1)]  # far piece after copy m
+offs = [D0 * k for k in range(1, N + 1)]
+far_offs = [np.zeros(3)] + offs  # the far piece after copy m starts at that copy's ring B
 P = np.vstack([base] + [(seg_m if k % 2 else seg) + offs[k - 1] for k in range(1, N + 1)])
 D = offs[1] - offs[0] if N > 1 else D0
 s = np.r_[0, np.cumsum(np.linalg.norm(np.diff(P, axis=0), axis=1))]
