@@ -794,7 +794,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 26528,
-   "sha256": "7387ce47a21a8f7ee19cade5fdc69231807175fa47bbed07b2ecbfd25660def9"
+   "sha256": "7e3e3992e17dffe20fba9ecc48f076476d802f0dc49ed7b773ba0e20ef81aa1c"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3153,
-   "sha256": "15ded3b3758d538f78aeded7377b16a468ad7c1e1fe671e37b03655b4987b429"
+   "sha256": "16617cb1c509fdc3ffc217fdacee842acedb1d088ab8958ab00076c446c28599"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -7734,7 +7734,7 @@
   {
    "path": "backups/wip/screen05-agents/LAST_SYNC_UTC",
    "bytes": 33,
-   "sha256": "f4d0ab4a3fd9d7dd219febbb93137104c828505f1083b52cb8726ebd52ec3f58"
+   "sha256": "e514263722a7b8100a94d1a08d9c496e8ae214676310f03c8900c5ce5cfbcd47"
   },
   {
    "path": "backups/wip/screen05-agents/WORKSPACE",
@@ -15457,14 +15457,19 @@
    "sha256": "faea4ee09a8a59a61ba2278eea74dcc507b8ebd6ce8d3e89f477172c5831447f"
   },
   {
+   "path": "qa/kit05/r33/level_v3/pose_s0.png",
+   "bytes": 775373,
+   "sha256": "1e636452941efcc28fdaae29a8564cb6f84f3102c792fd0a0a4abb067ed80609"
+  },
+  {
    "path": "qa/kit05/r33/level_v3/pose_s15.png",
-   "bytes": 710562,
-   "sha256": "6cb94cc65a42865cc8fc6a1d73653491b3d4364b0c36ebe70f1d863b663fceab"
+   "bytes": 778729,
+   "sha256": "8f07cfd077ecd76194c0e35e3ea451df5b43e542621495c0e08e95bac6bb3f09"
   },
   {
    "path": "qa/kit05/r33/level_v3/pose_s22.png",
-   "bytes": 718110,
-   "sha256": "7d7690e5f1b6271c7d0a11d26476b4a7d353b83afb09c5343a8303c147d6a79b"
+   "bytes": 778481,
+   "sha256": "2c3ee92ee85e2809b6657706cd85b8a73ba56c429f73a44a5e946776d8f3f607"
   },
   {
    "path": "qa/kit05/r33/level_v3/pose_s29.png",
@@ -15473,8 +15478,8 @@
   },
   {
    "path": "qa/kit05/r33/level_v3/pose_s3.png",
-   "bytes": 700968,
-   "sha256": "e220810854e2cafb2745eda2e9f12a1419b0d99b4d2c3ec25e02a9179d030272"
+   "bytes": 767236,
+   "sha256": "c5c2ed08bb2803a5554f3b031db2ba4af6ffb0e693759a7782c7e4d3bae4a4a3"
   },
   {
    "path": "qa/kit05/r33/level_v3/pose_s31.5.png",
@@ -15483,8 +15488,8 @@
   },
   {
    "path": "qa/kit05/r33/level_v3/pose_s8.png",
-   "bytes": 697526,
-   "sha256": "dc71ea848ae9dea654554aa1de67241954bffe03361b218797a64c18e4d6200a"
+   "bytes": 782148,
+   "sha256": "2b17be2579c0ad3b7dc3c7bec0fdb8e1961e7d412d38efe9547469384cf922e2"
   },
   {
    "path": "qa/kit05/r33/runs/current_splat_baseline/f_0000.jpg",
@@ -15572,9 +15577,14 @@
    "sha256": "65cf3d5021738112494f49a792d5d575fe9cbd20cb3f23f162349e48423917f3"
   },
   {
+   "path": "qa/kit05/r33/textures/foam.png",
+   "bytes": 483906,
+   "sha256": "e478d8ac6889b28c0880989fc7695aaf5f61f67c05930f46c491f0b0d6a932ed"
+  },
+  {
    "path": "qa/kit05/r33/textures/kit.json",
-   "bytes": 2086,
-   "sha256": "bec484d35e001c9b96b606e153e7a4f11a31c7b6c5c6c34ecd5a10873cacb25c"
+   "bytes": 2223,
+   "sha256": "6cb98179e5b45b9ab2a663477cf6648189137cc6e0dafa1f0f65872eddc35df3"
   },
   {
    "path": "qa/kit05/r33/textures/ring.png",
@@ -15593,13 +15603,18 @@
   },
   {
    "path": "qa/kit05/r33/textures/river_tile.png",
-   "bytes": 1193594,
-   "sha256": "a4f7225990edc5f3192c190b38c5aab1f3e2b82ffbe6a139741d7cb3ed56f86f"
+   "bytes": 1191242,
+   "sha256": "c3a7e9958b8dd7ec1e4556242d7d39268b64fe9397db3733215dafdbea6c450f"
   },
   {
    "path": "qa/kit05/r33/textures/river_visible.png",
    "bytes": 21337,
    "sha256": "4bc5e0e67090fb81bbec9cea41df5de585357a5798ed92e1f1160830c127a75b"
+  },
+  {
+   "path": "qa/kit05/r33/textures/track.json",
+   "bytes": 4089,
+   "sha256": "cc8c960fb47d1b0de1facf94ba6f1bfda10b83ac18f41f36b6383b2da8cfa273"
   },
   {
    "path": "qa/kit05/r33/textures/wall.png",
@@ -39798,8 +39813,8 @@
   },
   {
    "path": "tools/kit05/bake_kit.py",
-   "bytes": 14915,
-   "sha256": "f92e7babc1b95e61a9f04cddfc15a72d50a5d1095ef2012dd7da26fcf6e226b4"
+   "bytes": 15279,
+   "sha256": "dc6a1db3f3ee7f1c254c8f84d57026214675bc11d3deff73c981b5b3ed99b24d"
   },
   {
    "path": "tools/kit05/cam05.py",
@@ -39833,8 +39848,8 @@
   },
   {
    "path": "tools/kit05/kitgame.html",
-   "bytes": 24645,
-   "sha256": "cb73b62fb8693cd79574347ae965a826ecb1e7f13f68fe87989f647fbc2cf809"
+   "bytes": 27831,
+   "sha256": "74d08bba072349903039f151f4c5cacf5d977dfb73a7be2e1657379a579ba09a"
   },
   {
    "path": "tools/kit05/still_page.cjs",

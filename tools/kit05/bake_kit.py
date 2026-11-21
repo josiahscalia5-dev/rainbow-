@@ -164,15 +164,18 @@ for nxt in parts[1:]:                                                # overlappi
     tile = np.concatenate([tile[:-X], (1 - wv) * tile[-X:] + wv * nxt[:X], nxt[X:]], 0)
 tile = np.concatenate([(1 - wv) * tile[-X:] + wv * tile[:X], tile[X:-X]], 0)   # cyclic: the end flows into the start
 NR = tile.shape[0]; L_TILE = (RT1 - RT0) * NR / seg_n
-# colour: match the flowing tile's colour distribution (Lab, per channel CDF) to the APPROVED river's visible water, so the water keeps the
-# painting's pink / cyan balance once the near water hands over to the flowing current (round 33d: colour look 0.85 -> 0.72 otherwise)
-ap = water[vis & (tv > 0.9) & (tv < 8.0)]
-def lab(x): return cv2.cvtColor(np.clip(x, 0, 255).astype(np.uint8).reshape(-1, 1, 3), cv2.COLOR_RGB2LAB).reshape(-1, 3).astype(np.float32)
-tl_, ap_ = lab(tile), lab(ap); outl = np.empty_like(tl_)
-for ch in range(3):
-    srt = np.sort(ap_[:, ch]); r = np.argsort(np.argsort(tl_[:, ch])) / max(1, len(tl_) - 1)
-    outl[:, ch] = np.interp(r, np.linspace(0, 1, len(srt)), srt)
-tile = cv2.cvtColor(outl.reshape(-1, 1, 3).astype(np.uint8), cv2.COLOR_LAB2RGB).reshape(tile.shape).astype(np.float32)
+# colour (round 33e): put the flowing tile's cyans and pinks ON the painting's own cyan / pink (median hue + saturation of the APPROVED
+# visible water), keeping every detail; a Lab CDF match tried first made the cyan greener and paler (colour look 0.70 -> 0.41)
+def hsv_of(x): return cv2.cvtColor(np.clip(x, 0, 255).astype(np.uint8).reshape(-1, 1, 3), cv2.COLOR_RGB2HSV).reshape(-1, 3).astype(np.float32)
+ap = hsv_of(water[vis & (tv > 0.9) & (tv < 8.0)]); th_ = hsv_of(tile)
+CY = lambda h: (h >= 80) & (h <= 110); PK = lambda h: (h >= 140) & (h <= 170)       # OpenCV hue units (0-180)
+for cls in (CY, PK):
+    ma, mt = cls(ap[:, 0]) & (ap[:, 1] > 120), cls(th_[:, 0]) & (th_[:, 1] > 60)
+    if ma.sum() < 100 or mt.sum() < 100: continue
+    dh = np.median(ap[ma, 0]) - np.median(th_[mt, 0]); ks = np.median(ap[ma, 1]) / max(1.0, np.median(th_[mt, 1]))
+    sel = cls(th_[:, 0]); th_[sel, 0] = np.clip(th_[sel, 0] + dh, 0, 179); th_[sel, 1] = np.clip(th_[sel, 1] * ks, 0, 255)
+    print('colour class: hue shift %.1f (x2 deg), saturation x%.2f' % (dh, ks))
+tile = cv2.cvtColor(th_.reshape(-1, 1, 3).astype(np.uint8), cv2.COLOR_HSV2RGB).reshape(tile.shape).astype(np.float32)
 Image.fromarray(np.clip(tile[::-1], 0, 255).astype(np.uint8)).save(os.path.join(out, 'river_tile.png'))   # row 0 = far end
 kit = json.load(open(os.path.join(out, 'kit.json'))); kit['river_tile'] = {'t0': RT0, 'L': L_TILE, 'painted_until': 14.0, 'painted_fade': 6.0}
 json.dump(kit, open(os.path.join(out, 'kit.json'), 'w'), indent=1); print('river tile', tile.shape, 'source rows t', round(RT0, 3), '..', round(RT1, 3), 'period', round(L_TILE, 3))

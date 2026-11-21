@@ -3227,3 +3227,162 @@ The page loads cleanly with no errors. Rendering the level with the winding rive
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-21T16:01:34.256Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/kit05 && python3 - <<'EOF'\np = 'kitgame.html'; s = open(p).read()\ns = s.replace(\"+(q.get('winding') ?? 1))\", \"+(q.get('winding') ?? 0))\")   # procedural channel off by default (round 33e: did not look like the painting)\nold = \"        diffuseColor *= mix(kFlowW, kPaint, kF);`); };\"\nnew = \"\"\"        // far river = the PAINTED river at the same distance ahead as in the approved view (camera-relative), near = the flowing current\n        vec4 kPaintRel = texture(map, vec2(vMapUv.x, log(max(vKitD, uWT.x) / uWT.x) / uWT.y), uBias);\n        flo …[+2088 chars]`
+
+### 🧑 User — 2026-11-21T16:01:43.471Z
+
+> ↩︎ result: s 22 t 15.73
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T16:01:45.071Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/level_v8.jpg"}`
+
+### 🧑 User — 2026-11-21T16:01:45.094Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T16:01:55.158Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport numpy as np, cv2, json\nR = cv2.imread('references/05_flow_into_the_current.png'); R = cv2.resize(R, (412, 915))   # same as visual_check.py (whole picture resized)\ndef hs(img):\n    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)[150:]; h = cv2.calcHist([hsv], [0, 1], None, [36, 16], [0, 180, 0, 256]); return cv2.normalize(h, h, 1, 0, cv2.NORM_L1)\nHR = hs(R)\nlook = lambda im: float(cv2.compareHist(HR, hs(im), cv2.HISTCMP_CORREL))\nV = json.load(open('/tmp/rainbow_r33/runs/kit_full2/visual_check.json'))['frames']\nfor s in (0, 3, 8, 15, 22):\n    im = cv …[+307 chars]`
+
+### 🧑 User — 2026-11-21T16:01:55.492Z
+
+> ↩︎ result: s= 0  NEW pose look 0.946   previous full run (frame 0) look 0.850
+> s= 3  NEW pose look 0.348   previous full run (frame 64) look 0.691
+> s= 8  NEW pose look 0.411   previous full run (frame 171) look 0.699
+> s=15  NEW pose look 0.434   previous full run (frame 321) look 0.695
+> s=22  NEW pose look 0.382   previous full run (frame 471) look 0.714
+
+### 🤖 Claude — 2026-11-21T16:02:00.962Z
+
+The colour-look score dropped badly while swimming, to 0.35–0.43 from about 0.70 in the previous run, so one of the last changes made things worse. I need to see which, before going further:
+
+### 🤖 Claude — 2026-11-21T16:02:03.565Z
+
+> 🔧 **Bash** `{"command": "cd /tmp && python3 -c \"\nfrom PIL import Image\na=Image.open('/tmp/rainbow_r33/runs/kit_full2/f_0171.jpg').convert('RGB'); b=Image.open('/tmp/rainbow_r33/kit/out/level/pose_s8.png').convert('RGB')\ns=Image.new('RGB',(834,915),'white'); s.paste(a,(0,0)); s.paste(b,(422,0)); s.resize((556,610)).save('/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/prev_vs_new_s8.jpg',quality=88)\"", "description": "Previous run frame vs new pose at s=8"}`
+
+### 🧑 User — 2026-11-21T16:02:03.683Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T16:02:05.389Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/prev_vs_new_s8.jpg"}`
+
+### 🧑 User — 2026-11-21T16:02:05.408Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T16:02:19.312Z
+
+> 🔧 **Bash** `{"command": "grep -n \"jpeg\\|quality\" tools/marble05/viewer/final_acceptance.cjs | head -3; python3 -I - <<'EOF'\nimport numpy as np, cv2\nR = cv2.resize(cv2.imread('references/05_flow_into_the_current.png'), (412, 915))\ndef hs(img):\n    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)[150:]; h = cv2.calcHist([hsv], [0, 1], None, [36, 16], [0, 180, 0, 256]); return cv2.normalize(h, h, 1, 0, cv2.NORM_L1)\nHR = hs(R); look = lambda im: float(cv2.compareHist(HR, hs(im), cv2.HISTCMP_CORREL))\nfor s in (0, 8, 22):\n    im = cv2.imread(f'/tmp/rainbow_r33/kit/out/level/pose_s{s}.png'); ok, enc = cv2.im …[+583 chars]`
+
+### 🧑 User — 2026-11-21T16:02:19.564Z
+
+> ↩︎ result: 98:        await page.screenshot({ path: file, type: 'jpeg', quality: 92, timeout: 600000 });
+> s=0: png 0.946  as jpeg 0.959  mean sat png 170.8
+> s=8: png 0.411  as jpeg 0.402  mean sat png 169.0
+> s=22: png 0.382  as jpeg 0.372  mean sat png 167.8
+> prev frame 171 jpeg 0.616 mean sat 176.2  approved mean sat 176.8
+
+### 🤖 Claude — 2026-11-21T16:02:23.254Z
+
+Not a file-format effect: the new frames really score lower on hue balance even though saturation is the same. Comparing which colours (hues) differ:
+
+### 🤖 Claude — 2026-11-21T16:02:28.069Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport numpy as np, cv2\nR = cv2.resize(cv2.imread('references/05_flow_into_the_current.png'), (412, 915))\ndef hh(img):\n    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)[150:]; m = hsv[..., 1] > 60\n    h = np.bincount((hsv[..., 0][m] // 10).ravel(), minlength=18)[:18]; return h / h.sum()\nnames = ['red', 'orange', 'yellow', 'yel-grn', 'green', 'grn-cyan', 'green2', 'teal', 'cyan', 'sky', 'blue', 'blue2', 'indigo', 'violet', 'purple', 'magenta', 'pink', 'rose']\nA = hh(R); P = hh(cv2.imread('/tmp/rainbow_r33/runs/kit_full2/f_0171.jpg')); N = hh(cv2.imread('/tm …[+377 chars]`
+
+### 🧑 User — 2026-11-21T16:02:28.251Z
+
+> ↩︎ result: hue (OpenCV/10)  approved  start  prev_s8  new_s8
+>   0deg red       0.069   0.044  0.037   0.035
+>  20deg orange    0.068   0.032  0.021   0.026
+>  40deg yellow    0.028   0.015  0.016   0.021
+> 180deg sky       0.101   0.139  0.295   0.222
+> 200deg blue      0.228   0.224  0.171   0.171
+> 220deg blue2     0.036   0.037  0.027   0.035
+> 240deg indigo    0.031   0.034  0.019   0.033
+> 260deg violet    0.063   0.080  0.069   0.079
+> 280deg purple    0.124   0.130  0.107   0.109
+> 300deg magenta   0.168   0.194  0.166   0.191
+> 320deg pink      0.055   0.042  0.050   0.056
+> 340deg rose      0.025   0.023  0.018   0.015
+
+### 🤖 Claude — 2026-11-21T16:02:41.093Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport numpy as np, cv2\nR = cv2.resize(cv2.imread('references/05_flow_into_the_current.png'), (412, 915))\ndef hs(img):\n    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)[150:]; h = cv2.calcHist([hsv], [0, 1], None, [36, 16], [0, 180, 0, 256]); return cv2.normalize(h, h, 1, 0, cv2.NORM_L1)\nA = hs(R); P = hs(cv2.imread('/tmp/rainbow_r33/runs/kit_full2/f_0171.jpg')); N = hs(cv2.imread('/tmp/rainbow_r33/kit/out/level/pose_s8.png'))\nfor nm, X in (('approved', A), ('prev_s8', P), ('new_s8', N)):\n    idx = np.argsort(X.ravel())[::-1][:6]; print(nm, ' '.join(f'h{(i …[+446 chars]`
+
+### 🧑 User — 2026-11-21T16:02:41.256Z
+
+> ↩︎ result: approved h200deg/s240:0.131 h190deg/s240:0.044 h300deg/s192:0.021 h300deg/s176:0.019 h310deg/s208:0.018 h280deg/s176:0.016
+> prev_s8 h190deg/s240:0.171 h200deg/s240:0.058 h200deg/s224:0.027 h190deg/s224:0.021 h300deg/s0:0.020 h200deg/s208:0.018
+> new_s8 h190deg/s240:0.069 h180deg/s240:0.059 h200deg/s192:0.044 h0deg/s0:0.034 h200deg/s176:0.032 h200deg/s208:0.019
+> prev correl 0.616 intersect 0.679 bhatta(lower=closer) 0.293
+> new correl 0.411 intersect 0.631 bhatta(lower=closer) 0.371
+
+### 🤖 Claude — 2026-11-21T16:03:03.622Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/kit05 && python3 - <<'EOF'\np = 'bake_kit.py'; s = open(p).read()\na = s.index(\"# colour: match the flowing tile's colour distribution (Lab, per channel CDF)\")\nb = s.index(\"Image.fromarray(np.clip(tile[::-1], 0, 255).astype(np.uint8)).save(os.path.join(out, 'river_tile.png'))   # row 0 = far end\")\nnew = \"\"\"# colour (round 33e): put the flowing tile's cyans and pinks ON the painting's own cyan / pink (median hue + saturation of the APPROVED\n# visible water), keeping every detail; a Lab CDF match tried first made the cyan greener and paler (col …[+1957 chars]`
+
+### 🧑 User — 2026-11-21T16:03:28.686Z
+
+> ↩︎ result: colour class: hue shift 0.0 (x2 deg), saturation x1.02
+> colour class: hue shift 1.0 (x2 deg), saturation x1.09
+> river tile (1152, 1024, 3) source rows t 0.9 .. 2.031 period 3.392
+> s= 0 look 0.946
+> s= 3 look 0.747
+> s= 8 look 0.699
+> s=15 look 0.734
+> s=22 look 0.737
+
+### 🤖 Claude — 2026-11-21T16:03:55.973Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport numpy as np, cv2\nR = cv2.resize(cv2.imread('references/05_flow_into_the_current.png'), (412, 915))\ndef hs(img):\n    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)[150:]; h = cv2.calcHist([hsv], [0, 1], None, [36, 16], [0, 180, 0, 256]); return cv2.normalize(h, h, 1, 0, cv2.NORM_L1)\nHR = hs(R); look = lambda im: float(cv2.compareHist(HR, hs(im), cv2.HISTCMP_CORREL))\nim = cv2.imread('/tmp/rainbow_r33/kit/out/level/pose_s8.png'); print('s=8 as is', round(look(im), 3))\nfor name, (y0, y1) in {'bottom frame rows 800-915': (800, 915), 'near water rows 600-9 …[+446 chars]`
+
+### 🧑 User — 2026-11-21T16:03:56.174Z
+
+> ↩︎ result: s=8 as is 0.699
+>   with approved bottom frame rows 800-915: 0.848
+>   with approved near water rows 600-915: 0.987
+>   with approved mid river rows 330-600: 0.723
+>   with approved tunnel rows 150-330: 0.698
+>   with the start-frame Benny region: 0.757
+
+### 🤖 Claude — 2026-11-21T16:04:38.320Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/kit05 && python3 - <<'EOF'\np = 'kitgame.html'; s = open(p).read()\nold = \"\"\"        float kFarW = smoothstep(2.2, 4.0, vKitD) * uWT.z;\n        diffuseColor *= mix(mix(kFlowW, kPaintRel, kFarW), kPaint, kF);`); };\"\"\"\nnew = \"\"\"        // round 33f: ALL of the water is the painted water at the same distance ahead as in the approved view (Benny is carried by the\n        // current: the near water keeps the painting's look at every moment, incl. its gold bottom rim), with the flowing current\n        // laid over it near Benny (uWT.z = share) s …[+4398 chars]`
+
+### 🧑 User — 2026-11-21T16:04:47.375Z
+
+> ↩︎ result: s= 0 look 0.945
+> s= 3 look 0.730
+> s= 8 look 0.796
+> s=15 look 0.852
+> s=22 look 0.829
+
+### 🤖 Claude — 2026-11-21T16:04:59.653Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/rainbow_r33/kit/out/level && python3 -c \"\nfrom PIL import Image\na=Image.open('/home/user/rainbow-/references/05_flow_into_the_current.png').convert('RGB'); sc=915/a.height; rw=round(a.width*sc); a=a.resize((rw,915)).crop(((rw-412)//2,0,(rw-412)//2+412,915))\nfs=['pose_s0.png','pose_s3.png','pose_s8.png','pose_s15.png','pose_s22.png']\nims=[a]+[Image.open(f).convert('RGB') for f in fs]; w,h=ims[0].size\ns=Image.new('RGB',(w*6+50,h),'white')\nfor i,im in enumerate(ims): s.paste(im,(i*(w+10),0))\ns.resize((s.width*55//100,h*55//100)).save('/tmp/claude-0/-home-user-rainbow- …[+833 chars]`
+
+### 🧑 User — 2026-11-21T16:04:59.940Z
+
+> ↩︎ result: s=3 with approved near water 600-915: 0.977
+> s=3 with approved mid river 330-600: 0.857
+> s=3 with approved tunnel 150-330: 0.748
+
+### 🤖 Claude — 2026-11-21T16:05:01.931Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/level_v9.jpg"}`
+
+### 🧑 User — 2026-11-21T16:05:01.951Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T16:05:10.344Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/rainbow_r33 && rm -rf runs/kit_full3 && (NODE_PATH=$(npm root -g) timeout 7000 node /home/user/rainbow-/tools/marble05/viewer/final_acceptance.cjs /tmp/rainbow_r33/kitgame /tmp/rainbow_r33/runs/kit_full3 25 1.4 > /tmp/rainbow_r33/runs/kit_full3.log 2>&1; echo \"exit=$?\" >> /tmp/rainbow_r33/runs/kit_full3.log) > /dev/null 2>&1 &\nsleep 1; cd /home/user/rainbow- && cp /tmp/rainbow_r33/kit/out/level/pose_s*.png qa/kit05/r33/level_v3/ && cp /tmp/rainbow_r33/kit/{river_tile.png,kit.json,track.json,foam.png} qa/kit05/r33/textures/ && python3 scripts/rainbow-autosave.py --reason …[+128 chars]`
+

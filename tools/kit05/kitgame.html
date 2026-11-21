@@ -59,10 +59,10 @@ const [wallTex, ringTex, riverTex, wallOwn, ringOwn] = await Promise.all([tex('w
 const riverTile = await tex('river_tile.png'); riverTile.wrapT = THREE.RepeatWrapping;
 const ownOf = (kind, atlas, k) => { const r = K.own?.[kind]?.rows?.[k]; return r && !q.get('noown') ? { tex: atlas, vr: [r[0] / K.own[kind].h, r[1] / K.own[kind].h] } : null; };
 const wallMat = kitMat(wallTex), ringMat = kitMat(ringTex);
-const FLOW = { uFoam: { value: null }, uHWD: { value: K.water.HWD }, uWind: { value: new THREE.Vector4(+(q.get('wamp') ?? 0.2), +(q.get('wlen') ?? 7.5), +(q.get('wnarrow') ?? 0.5), +(q.get('winding') ?? 1)) }, uFlow: { value: 0 }, uRT: { value: new THREE.Vector3(K.river_tile.t0, K.river_tile.L, K.river_tile.painted_until) }, uRF: { value: K.river_tile.painted_fade ?? 4 }, uRiverTile: { value: riverTile } };
+const FLOW = { uWT: { value: new THREE.Vector3(K.water.T0, Math.log(K.water.T1 / K.water.T0), +(q.get('nearflow') ?? 0.3)) }, uFoam: { value: null }, uHWD: { value: K.water.HWD }, uWind: { value: new THREE.Vector4(+(q.get('wamp') ?? 0.2), +(q.get('wlen') ?? 7.5), +(q.get('wnarrow') ?? 0.5), +(q.get('winding') ?? 0)) }, uFlow: { value: 0 }, uRT: { value: new THREE.Vector3(K.river_tile.t0, K.river_tile.L, K.river_tile.painted_until) }, uRF: { value: K.river_tile.painted_fade ?? 4 }, uRiverTile: { value: riverTile } };
 const riverMat = (() => { const m = kitMat(riverTex); const base = m.onBeforeCompile; m.customProgramCacheKey = () => 'kit-river';
   m.onBeforeCompile = (sh) => { base(sh); Object.assign(sh.uniforms, FLOW);
-    sh.fragmentShader = sh.fragmentShader.replace('uniform float uBias;', 'uniform float uBias; uniform float uFlow; uniform vec3 uRT; uniform float uRF; uniform sampler2D uRiverTile; uniform sampler2D uFoam; uniform float uHWD; uniform vec4 uWind; varying float vKitT; varying float vKitD;')
+    sh.fragmentShader = sh.fragmentShader.replace('uniform float uBias;', 'uniform float uBias; uniform float uFlow; uniform vec3 uRT; uniform float uRF; uniform sampler2D uRiverTile; uniform sampler2D uFoam; uniform float uHWD; uniform vec4 uWind; uniform vec3 uWT; varying float vKitT; varying float vKitD;')
       .replace('diffuseColor *= texture(map, vMapUv, uBias);', `vec4 kPaint = texture(map, vMapUv, uBias);
         vec4 kFlow = texture(uRiverTile, vec2(vMapUv.x, -(vKitT + uFlow - uRT.x) / uRT.y), mix(uBias, 0.8, smoothstep(2.5, 9.0, vKitD)));   // flows toward the camera; softer far away (no shimmer)
         float kF = smoothstep(0.55, 0.85, vKitD / max(vKitT, 1e-3)) * (1.0 - smoothstep(uRT.z - uRF, uRT.z, vKitT));
@@ -78,7 +78,13 @@ const riverMat = (() => { const m = kitMat(riverTex); const base = m.onBeforeCom
         vec4 kFo = texture(uFoam, vec2(vKitT / 1.3, clamp(1.0 - kE / 0.22, 0.02, 0.98)), uBias);
         float kFa = smoothstep(-0.02, 0.03, kE) * max(kFo.a, smoothstep(0.05, 0.16, kE));
         kFlowW.rgb = mix(kFlowW.rgb, mix(kFo.rgb, vec3(0.93, 0.9, 1.0), 0.25), kFa * kFar);
-        diffuseColor *= mix(kFlowW, kPaint, kF);`); };
+        // far river = the PAINTED river at the same distance ahead as in the approved view (camera-relative), near = the flowing current
+        vec4 kPaintRel = texture(map, vec2(vMapUv.x, log(max(vKitD, uWT.x) / uWT.x) / uWT.y), uBias);
+        // round 33f: ALL of the water is the painted water at the same distance ahead as in the approved view (Benny is carried by the
+        // current: the near water keeps the painting's look at every moment, incl. its gold bottom rim), with the flowing current
+        // laid over it near Benny (uWT.z = share) so the water visibly streams toward the camera; exact painting at the start (kF)
+        float kNearW = (1.0 - smoothstep(2.6, 4.2, vKitD)) * uWT.z;
+        diffuseColor *= mix(mix(kPaintRel, kFlowW, kNearW), kPaint, kF);`); };
   return m; })();
 
 const P = (t, th, rad) => A0.clone().addScaledVector(A, t).addScaledVector(RR, rad * Math.cos(th)).addScaledVector(NUP, rad * Math.sin(th));
@@ -194,6 +200,20 @@ const CT = installControls({ THREE, TR, canvas: renderer.domElement, camera, q: 
 const patchSprite = (m) => { if (m.userData.kit) return; m.userData.kit = 1; m.onBeforeCompile = (sh) => { Object.assign(sh.uniforms, REMAP);
   sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\n' + REMAP_GLSL).replace('vec4 mvPosition = modelViewMatrix[ 3 ];', 'vec4 mvPosition = viewMatrix * vec4(kitRemap(modelMatrix[ 3 ].xyz), 1.0);'); }; m.needsUpdate = true; };
 scene.traverse((o) => { if (o.isSprite && o !== core) patchSprite(o.material); });
+const glintTex = await tl.loadAsync('glint.png');
+const NG = 320, gS = new Float32Array(NG), gL = new Float32Array(NG), gP = new Float32Array(NG), gSz = new Float32Array(NG);
+const gPos = new Float32Array(NG * 3), gAlpha = new Float32Array(NG), gSize = new Float32Array(NG);
+const rnd = (() => { let x = 12345; return () => ((x = (x * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff); })();
+for (let i = 0; i < NG; i++) { gS[i] = rnd() * 7.5 - 1.0; gL[i] = (rnd() * 2 - 1) * 0.62; gP[i] = rnd() * 6.28; gSz[i] = 0.5 + rnd(); }
+const gGeo = new THREE.BufferGeometry(); gGeo.setAttribute('position', new THREE.BufferAttribute(gPos, 3)); gGeo.setAttribute('aAlpha', new THREE.BufferAttribute(gAlpha, 1)); gGeo.setAttribute('aSize', new THREE.BufferAttribute(gSize, 1));
+const gMat = new THREE.ShaderMaterial({ uniforms: { map: { value: glintTex }, scale: { value: H * 0.5 }, ...REMAP },
+  vertexShader: REMAP_GLSL + `
+attribute float aAlpha; attribute float aSize; varying float vA; uniform float scale;
+    void main(){ vA = aAlpha; vec4 wp = modelMatrix * vec4(position, 1.0); wp.xyz = kitRemap(wp.xyz); vec4 mv = viewMatrix * wp; gl_PointSize = aSize * scale / -mv.z; gl_Position = projectionMatrix * mv; }`,
+  fragmentShader: `uniform sampler2D map; varying float vA; void main(){ vec4 c = texture2D(map, gl_PointCoord); gl_FragColor = vec4(vec3(0.85, 0.97, 1.0) * c.r, c.r * vA); }`,
+  transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, toneMapped: false });
+const glints = new THREE.Points(gGeo, gMat); glints.frustumCulled = false; glints.renderOrder = 6; scene.add(glints);
+const tmp2 = new THREE.Vector3();
 const st = { s: 0, lat: 0, lean: 0, camLat: 0 };
 const Zax = new THREE.Vector3(0, 0, 1), tmp = new THREE.Vector3();
 const M = bennyM;
@@ -211,6 +231,13 @@ window.step = (t, dt, steer, speed) => {
   splash.position.copy(benny.position).addScaledVector(F.t, 0.05).addScaledVector(F.n, -0.01 - 23 * pxW * 0.5);
   splash.scale.set(799 * pxW * 0.8 * (1 + 0.04 * Math.sin(t * 9)), 309 * pxW * 0.8 * (1 + 0.06 * Math.sin(t * 7 + 1)), 1);
   CT.water(F, speed, dt);
+  for (let i = 0; i < NG; i++) {   // flowing glints: on the river surface, sliding toward the camera with the current, twinkling
+    gS[i] -= 0.55 * dt; if (gS[i] < st.s - 1.4) gS[i] += 8.5; if (gS[i] > st.s + 7.1) gS[i] -= 8.5;
+    at(gS[i], tmp2).addScaledVector(RR, gL[i]).addScaledVector(NUP, 0.012); gPos.set([tmp2.x, tmp2.y, tmp2.z], i * 3);
+    const tw = Math.max(0, Math.sin(t * 6 + gP[i])); gAlpha[i] = (st.s > 0.02 ? 1 : 0) * tw * tw * 0.9 * THREE.MathUtils.smoothstep(gS[i], st.s - 1.4, st.s - 0.6);
+    gSize[i] = 0.035 * gSz[i] * (0.6 + tw);
+  }
+  gGeo.attributes.position.needsUpdate = true; gGeo.attributes.aAlpha.needsUpdate = true; gGeo.attributes.aSize.needsUpdate = true;
   // follow camera = the approved picture's camera relative to Benny, + the round-32 lane / leap follow springs
   camera.position.copy(B0).negate().add(at(st.s, tmp)).addScaledVector(F.r, CT.c.camLat).addScaledVector(F.n, CT.c.camH);
   camera.quaternion.copy(camQ0); camera.updateMatrixWorld();
