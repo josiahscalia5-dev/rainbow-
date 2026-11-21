@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3153,
-   "sha256": "a133946fb28fbf89fcf435e88a9ab22adddb5358194ed0d413992a0cf8a188a0"
+   "sha256": "b1b6626d60e40b00ee322aa665c5c5aa25b424510d28f0a4ecdffe4fe0769675"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -7734,7 +7734,7 @@
   {
    "path": "backups/wip/screen05-agents/LAST_SYNC_UTC",
    "bytes": 33,
-   "sha256": "c25d65957d15b5b9d915c8e3ff543315f47c6f1cba469da05925da4c45980aa2"
+   "sha256": "68b06ec41fe7805719dc1573db90a209f1134d39dfc31f22838a7dd1aad4f928"
   },
   {
    "path": "backups/wip/screen05-agents/WORKSPACE",
@@ -9843,8 +9843,8 @@
   },
   {
    "path": "backups/wip/screen05-agents/lead/final_acceptance.cjs",
-   "bytes": 15925,
-   "sha256": "1c85b3161c0d9c654d54e4b717f84cd645f79169e7792f6e34aa6a2d8f3df26a"
+   "bytes": 16708,
+   "sha256": "f7b1e480873b56cee90ff05d34db0ad990a434975b3079035fc5383d3eb890a3"
   },
   {
    "path": "backups/wip/screen05-agents/lead/visual_check.py",
