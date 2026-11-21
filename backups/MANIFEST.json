@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3271,
-   "sha256": "abb44d271eba0c11eb764c2a35f8a19a0ec9276c6c5d748b9391b6a0503cc11a"
+   "sha256": "37a1da6bc1ece14ec9e4d9e39e328fd41c70959ee3e8a8190aeb8639550b5817"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -40658,8 +40658,8 @@
   },
   {
    "path": "tools/kit05/kitgame.html",
-   "bytes": 62583,
-   "sha256": "4ee6ec003848e1e146821fcc6720434e8cde1d8dcc0d67806864d32d8dc1dda2"
+   "bytes": 76717,
+   "sha256": "612492dce7b871ede7436b9fad1084cfbced1cff9b6f9f1b53702374c04bc12b"
   },
   {
    "path": "tools/kit05/live.js",

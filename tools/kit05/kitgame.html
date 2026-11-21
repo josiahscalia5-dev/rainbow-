@@ -19,6 +19,16 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { installControls } from './controls.js'; // round-32 swipe controls, unchanged
 const q = new URLSearchParams(location.search);
+// round 37 (2026-11-21): the user's THREE buildable options, same camera, Benny, controls, coins and reference-video movement (?move=1):
+//   ?opt=a  MAXIMUM ARTWORK FIDELITY  = the approved picture's own pixels on the 3D tunnel AND the river (round-35 painted river)
+//   ?opt=b  NATURAL 3D WATER          = the approved picture's own pixels on the tunnel; the river redrawn live (w37=1): flow-aligned
+//                                       cyan ribbons, magenta bands, star sparkles, foam domes, measured from the painting, sharp at any distance
+//   ?opt=c  ARCADE / GAME-READY       = everything redrawn clean (clean37=1: walls, gold rings, 3D gold paddles) + the simpler river (w37=2)
+// No ?opt = the round-36 default, unchanged.
+const OPT = (q.get('opt') ?? '').toLowerCase();
+for (const [k, v] of ({ a: [['ownoff', '1'], ['move', '1']], b: [['ownoff', '1'], ['move', '1'], ['w37', '1']],
+  c: [['ownoff', '1'], ['move', '1'], ['w37', '2'], ['clean37', '1']] })[OPT] ?? []) if (!q.has(k)) q.set(k, v);
+const W37 = +(q.get('w37') ?? 0), CLEAN37 = q.get('clean37') === '1';
 const W = +(q.get('w') ?? 412), H = +(q.get('h') ?? 915);
 const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
 renderer.setPixelRatio(1); renderer.setSize(W, H); document.body.appendChild(renderer.domElement);
@@ -104,7 +114,9 @@ const FLOW = { uFlowOn: { value: 0 }, uFlowL: { value: +(q.get('flowl') ?? 0.10)
   uR35Det: { value: r35Det }, uR35D: { value: new THREE.Vector4(R35?.detail?.L ?? 1, R35?.detail?.c0 ?? 0, +(q.get('detflow') ?? 1.0), R35?.detail ? +(q.get('detgain') ?? 1.3) : 0) }, uR35DS: { value: new THREE.Vector4(...(q.get('detshape') ?? '5,1,3,8').split(',').map(Number)) },
   uProjDet: { value: PROJ && R35?.detail ? +(q.get('projdet') ?? 1.0) : 0 },
   uR36On: { value: R36 ? 1 : 0 }, uR36: { value: river36Tex }, uR36A: { value: new THREE.Vector4(R36?.ta ?? 0, R36?.P ?? 1, R36?.umax ?? 1, +(q.get('r36flow') ?? 0.25)) },
-  uR35P: { value: new THREE.Vector3(...(q.get('pinkband') ?? '0,0.44,0.56').split(',').map(Number)) } };   // ribbon foam edge |u| near, far factor, far range
+  uR35P: { value: new THREE.Vector3(...(q.get('pinkband') ?? '0,0.44,0.56').split(',').map(Number)) },   // ribbon foam edge |u| near, far factor, far range
+  // round 37 (?w37=1 option B / 2 option C): the river DRAWN LIVE in river space; x = river half-width (world u), y = flow speed toward the camera
+  uW37: { value: W37 }, uW37A: { value: new THREE.Vector4(+(q.get('w37rw') ?? 0.54), +(q.get('w37flow') ?? 1.0), 0, 0) }, uW37T: { value: 0 } };
 const riverMat = (() => { const m = kitMat(riverTex); const base = m.onBeforeCompile; m.customProgramCacheKey = () => 'kit-river34';
   m.onBeforeCompile = (sh) => { base(sh); Object.assign(sh.uniforms, FLOW);
     sh.fragmentShader = sh.fragmentShader.replace('uniform float uBias;', `uniform float uBias; uniform float uFlow; uniform vec3 uRT; uniform sampler2D uRiverTile; uniform sampler2D uFoam; uniform float uHWD; uniform vec3 uWT; uniform float uFlowL; uniform float uFlowOn; varying float vKitT; varying float vKitD;
@@ -117,7 +129,81 @@ const riverMat = (() => { const m = kitMat(riverTex); const base = m.onBeforeCom
       vec4 r35(float x, float t){ float r = r35Row(t); float rw = r >= 1.0 ? uR35A.w + mod(r - uR35A.w, 1.0 - uR35A.w) : r;
         vec2 gx = vec2(dFdx(x), dFdx(r)) * exp2(uR35B), gy = vec2(dFdy(x), dFdy(r)) * exp2(uR35B);
         return textureGrad(uR35, vec2(x, rw), gx, gy); }
-      float kCenter(float t){ float x = clamp((t - uCN.x) / uCN.y, 0.0, uCN.z - 1.001); int i = int(floor(x)); return mix(texelFetch(uCenter, ivec2(i, 0), 0).r, texelFetch(uCenter, ivec2(i + 1, 0), 0).r, fract(x)); }`)
+      float kCenter(float t){ float x = clamp((t - uCN.x) / uCN.y, 0.0, uCN.z - 1.001); int i = int(floor(x)); return mix(texelFetch(uCenter, ivec2(i, 0), 0).r, texelFetch(uCenter, ivec2(i + 1, 0), 0).r, fract(x)); }
+      // ---- round 37: the approved water design drawn live (no bitmap -> sharp at every distance, flows naturally) ----
+      // colours = the user's isolated water art, measured (near half, by luminance): blue 5/50/95 % = (1,124,234) (0,164,251) (57,238,252),
+      // pink = (164,43,212) (251,34,217) (252,134,251); shares blue 83 % / pink 18 % / white 4 %
+      uniform float uW37; uniform vec4 uW37A; uniform float uW37T;
+      vec3 w37c(float r, float g, float b){ return pow(vec3(r, g, b) / 255.0, vec3(2.2)); }
+      float w37h(vec2 p){ vec3 p3 = fract(vec3(p.xyx) * 0.1031); p3 += dot(p3, p3.yzx + 33.33); return fract((p3.x + p3.y) * p3.z); }
+      float w37n(vec2 p){ vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f);
+        return mix(mix(w37h(i), w37h(i + vec2(1.0, 0.0)), f.x), mix(w37h(i + vec2(0.0, 1.0)), w37h(i + vec2(1.0, 1.0)), f.x), f.y); }
+      vec4 w37(float kT, float kLat, float kZ){
+        float simple = step(1.5, uW37), RW = uW37A.x;
+        float cs = (kCenter(kT + 0.05) - kCenter(kT - 0.05)) * 10.0;
+        float kU = (kLat - kCenter(kT)) / sqrt(1.0 + cs * cs);              // distance across the river from its winding centre line
+        float u = kU / RW, au = abs(u);
+        float tp = kT + uW37T * uW37A.y;                                    // the design streams toward the camera with the current
+        // ---- silk ribbons along the flow (each: deep blue edge -> bright cyan crest + thin highlight, then a crisp step to the next)
+        float NR = mix(7.0, 3.5, simple);
+        float mea = 0.55 * sin(tp * 0.83 + u * 2.3) + 0.35 * sin(tp * 1.71 - u * 3.1 + 1.3) + 0.7 * (w37n(vec2(u * 1.6, tp * 0.45)) - 0.5);
+        float w = u * NR * 0.5 + mea * mix(1.0, 0.35, simple);
+        float f = fract(w), fw = max(fwidth(w), 1e-4);
+        float lod = 1.0 - smoothstep(0.15, 0.5, fw);                         // ribbons thinner than ~3 px fade to their average (no grain)
+        float dropW = max(0.06, 1.5 * fw);
+        // mostly bright glossy cyan; a thin dark groove where one ribbon tucks under the next, the crest just before it
+        float sh = 0.5 + 0.38 * smoothstep(0.0, 0.85, f) - 0.42 * (1.0 - smoothstep(0.0, max(0.14, 2.0 * fw), f)) * smoothstep(0.0, 0.5 * dropW, f) - 0.42 * smoothstep(1.0 - dropW, 1.0, f);
+        sh = mix(0.6, clamp(sh, 0.0, 1.0), lod);
+        float crest = exp(-pow((f - 0.86) / max(0.045, fw * 1.2), 2.0)) * lod * smoothstep(0.3, 0.75, w37n(vec2(floor(w) * 7.13, tp * 1.4)));
+        // near the camera the painting shows broad arcs across the flow (option B only)
+        float near = (1.0 - smoothstep(0.9, 2.6, kZ)) * (1.0 - simple);
+        float arcv = sin(6.2832 * (tp * 1.15 + 0.45 * u * u));
+        sh = clamp(sh + 0.18 * near * arcv, 0.0, 1.0);
+        vec3 bD = w37c(1.0, 124.0, 234.0), bM = w37c(0.0, 164.0, 251.0), bB = w37c(57.0, 238.0, 252.0);
+        vec3 pD = w37c(164.0, 43.0, 212.0), pM = w37c(251.0, 34.0, 217.0), pB = w37c(252.0, 134.0, 251.0);
+        vec3 blue = sh < 0.55 ? mix(bD, bM, sh / 0.55) : mix(bM, bB, (sh - 0.55) / 0.45);
+        vec3 pink = sh < 0.55 ? mix(pD, pM, sh / 0.55) : mix(pM, pB, (sh - 0.55) / 0.45);
+        // magenta bands between the cyan core and the foam on both sides (wandering a little, wider on the outside of each bend)
+        float bend = clamp((kCenter(kT + 0.3) - kCenter(kT - 0.3)) * 2.0, -1.0, 1.0);
+        float pin = 0.6 + 0.06 * sin(tp * 0.71 + sign(u) * 1.7) - 0.08 * bend * sign(u) + 0.04 * (w37n(vec2(tp * 0.9, sign(u) * 5.0)) - 0.5);
+        float pkE = max(0.03, 1.5 * fwidth(u));
+        float pk = smoothstep(pin - pkE, pin + pkE, au) * (1.0 - smoothstep(0.9 - pkE, 0.9 + pkE, au));
+        pk *= mix(1.0, 0.85, simple);
+        vec3 col = mix(blue, pink, pk);
+        col = mix(col, mix(vec3(0.85, 0.97, 1.0), vec3(1.0, 0.8, 0.97), pk), crest * 0.85);
+        // glossy glow toward the bright core far ahead
+        col = mix(col, w37c(215.0, 245.0, 255.0), 0.35 * smoothstep(5.0, 16.0, kZ) * exp(-u * u * 1.5));
+        // ---- four-point star sparkles riding the current (world-sized: long across, short along, like the painted flares)
+        { vec2 g = vec2(u * mix(5.0, 3.0, simple), tp * mix(2.2, 1.4, simple)); vec2 cell = floor(g); float hh = w37h(cell + 0.37);
+          if (hh < mix(0.55, 0.35, simple)) {
+            vec2 pc = cell + vec2(0.2 + 0.6 * w37h(cell + 1.7), 0.2 + 0.6 * w37h(cell + 4.1));
+            float dx = (g.x - pc.x) / mix(5.0, 3.0, simple) * RW, dy = (g.y - pc.y) / mix(2.2, 1.4, simple);
+            float sz = 0.6 + 0.8 * w37h(cell + 9.3), tw = 0.5 + 0.5 * sin(uW37T * 3.0 + hh * 40.0); tw *= tw;
+            float st = exp(-(dx * dx + dy * dy) / (0.0001 * sz * sz)) + exp(-abs(dx) / (0.03 * sz)) * exp(-dy * dy / (0.00002 * sz)) + 0.6 * exp(-abs(dy) / (0.045 * sz)) * exp(-dx * dx / (0.00001 * sz));
+            float lodS = 1.0 - smoothstep(0.006, 0.03, max(fwidth(kU), fwidth(tp)) );
+            col = mix(col, vec3(1.0), clamp(st * tw * lodS, 0.0, 1.0)); } }
+        // ---- foam banks beyond the river edge: round lavender-white domes (world-anchored), thin bright line at the water edge
+        float edgeJ = 0.04 * (w37n(vec2(kT * 9.0, sign(u) * 3.0)) - 0.5);
+        float eE = max(0.015, 1.5 * fwidth(kU));
+        float fo = smoothstep(RW + edgeJ - eE, RW + edgeJ + eE, abs(kU));
+        if (fo > 0.0) {
+          vec3 foam;
+          float cz = mix(0.09, 0.11, simple);
+          vec2 fp = vec2(abs(kU) - RW, kT) / cz; vec2 fc = floor(fp); float best = 0.0; vec2 bn = vec2(0.0);
+          for (int j = -1; j <= 1; j++) for (int i = -1; i <= 1; i++) { vec2 c = fc + vec2(float(i), float(j));
+            vec2 o = c + vec2(0.25 + 0.5 * w37h(c + 2.3), 0.25 + 0.5 * w37h(c + 5.9)); float R = 0.55 + 0.3 * w37h(c + 8.1);
+            vec2 d = (fp - o) / R; float h = 1.0 - dot(d, d); if (h > best) { best = h; bn = d; } }
+          float hgt = sqrt(max(best, 0.0)), fl = 1.0 - smoothstep(0.25, 0.8, max(fwidth(fp.x), fwidth(fp.y)));
+          // each dome lit from the bright core ahead: white top, lavender-blue shading, deep lavender gaps (the painted soap foam)
+          float lit = clamp(0.25 + 0.6 * hgt + 0.35 * dot(normalize(vec3(bn, 0.5)), normalize(vec3(-0.3, 0.8, 0.5))), 0.0, 1.0);
+          foam = lit < 0.5 ? mix(w37c(120.0, 105.0, 205.0), w37c(190.0, 185.0, 240.0), lit / 0.5) : mix(w37c(190.0, 185.0, 240.0), w37c(252.0, 250.0, 255.0), (lit - 0.5) / 0.5);
+          foam = mix(w37c(222.0, 218.0, 250.0), foam, fl);
+          foam = mix(foam, w37c(250.0, 250.0, 255.0), simple * 0.35);
+          float rim = exp(-pow((abs(kU) - RW - edgeJ) / max(0.012, eE), 2.0));
+          col = mix(col, foam, fo); col = mix(col, vec3(1.0), rim * 0.7);
+        }
+        return vec4(col, 1.0);
+      }`)
       .replace('diffuseColor *= texture(map, vMapUv, uBias);', `
         float kLat = mix(-uHWD, uHWD, vMapUv.x);                    // lateral from the tunnel axis
         float kT = vKitT, kZ = max(vKitD, 1e-3);                     // world axial position, axial distance ahead of the camera
@@ -181,6 +267,7 @@ const riverMat = (() => { const m = kitMat(riverTex); const base = m.onBeforeCom
         // low-resolution, so they hand over sooner than the sharp near ones
         float kNF = smoothstep(3.0, 8.0, kT);
         float kWP = smoothstep(mix(uPF.x, uPF.z, kNF), mix(uPF.y, uPF.w, kNF), kZ / max(kT, 1e-3));
+        if (uW37 > 0.5) { kRib = w37(kT, kLat, kZ); kWP = 0.0; }   // round 37 options B / C: the live-drawn river everywhere (no painted hand-over)
         diffuseColor *= mix(kRib, kPaint, kWP);
         `); };
   return m; })();
@@ -195,17 +282,79 @@ const grid = (nu, nv, fn) => {   // fn(i/nu, j/nv) -> [Vector3, u, v]
 const NSEC = +(q.get('nsec') ?? 30), KMIN = -1;
 const LEVEL = +(q.get('len') ?? 32.16); // the round-32 level length (the controls' 26-coin layout is designed for it; a short test plays its first seconds)
 const lerp = (a, b, x) => a + (b - a) * x;
+// ---- round 37 option C (?clean37=1): the tunnel REDRAWN clean from the approved picture's design (no painted pixels): violet-magenta metal,
+// rows of dark slots running around the tunnel with pink light bands between them, gold rings with concentric ridges, 3D gold paddles.
+// Canvas textures (drawn once at load, mipmapped): sharp at every distance, cheap on a phone.
+const canvasTex = (w, h, draw, rep = true) => { const c = document.createElement('canvas'); c.width = w; c.height = h; draw(c.getContext('2d'), w, h);
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; if (rep) t.wrapS = THREE.RepeatWrapping; return t; };
+let cleanWallMat = null, cleanRingMat = null, cleanGoldMat = null;
+if (CLEAN37) {
+  const rr = (() => { let x = 4242; return () => ((x = (x * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff); })();
+  cleanWallMat = kitMat(canvasTex(2048, 1024, (g, w, h) => {
+    // x = around the tunnel (280 deg), y = along the axis (one ring section, 2.09 u)
+    const bg = g.createLinearGradient(0, 0, 0, h); bg.addColorStop(0, '#5b1d9e'); bg.addColorStop(0.08, '#8a2fc4'); bg.addColorStop(0.5, '#a43fd0'); bg.addColorStop(0.92, '#7d28bc'); bg.addColorStop(1, '#4a147f');
+    g.fillStyle = bg; g.fillRect(0, 0, w, h);
+    const ROWS = 7, PER = 40;
+    for (let r = 0; r < ROWS; r++) {
+      const y = h * (0.1 + 0.8 * (r + 0.5) / ROWS);
+      // pink light band between slot rows (brushed metal sheen around the tunnel)
+      const yb = y + h * 0.8 / ROWS * 0.5, lb = g.createLinearGradient(0, yb - 26, 0, yb + 26);
+      lb.addColorStop(0, 'rgba(230,90,230,0)'); lb.addColorStop(0.45, 'rgba(255,120,240,0.55)'); lb.addColorStop(0.5, 'rgba(255,225,255,0.85)'); lb.addColorStop(0.55, 'rgba(255,120,240,0.55)'); lb.addColorStop(1, 'rgba(230,90,230,0)');
+      if (r < ROWS - 1) { g.fillStyle = lb; g.fillRect(0, yb - 26, w, 52); }
+      for (let i = 0; i < PER; i++) {
+        const x = (i + 0.5 + (r % 2) * 0.5) / PER * w, sw = 34, sh = 15;
+        g.fillStyle = 'rgba(255,150,245,0.9)'; g.beginPath(); g.roundRect(x - sw / 2, y - sh / 2 + 3, sw, sh, sh / 2); g.fill();   // lit lower lip
+        g.fillStyle = '#2a0640'; g.beginPath(); g.roundRect(x - sw / 2, y - sh / 2, sw, sh, sh / 2); g.fill();
+      }
+    }
+    // glossy streaks along the tunnel (the painting's bright reflections running toward the core)
+    g.globalCompositeOperation = 'lighter';
+    for (let i = 0; i < 26; i++) { const x = rr() * w, a = 0.10 + rr() * 0.16, lw = 3 + rr() * 10;
+      const sg = g.createLinearGradient(x - lw, 0, x + lw, 0); sg.addColorStop(0, 'rgba(255,120,255,0)'); sg.addColorStop(0.5, `rgba(255,170,255,${a})`); sg.addColorStop(1, 'rgba(255,120,255,0)');
+      g.fillStyle = sg; g.fillRect(x - lw, 0, 2 * lw, h); }
+    g.globalCompositeOperation = 'source-over';
+  }));
+  cleanRingMat = kitMat(canvasTex(2048, 256, (g, w, h) => {
+    // rows 0-127: front face (outer -> inner edge), rows 128-255: inner face (front -> back)
+    const f = g.createLinearGradient(0, 0, 0, 128);
+    for (const [o, c] of [[0, '#7a3a10'], [0.1, '#e8902c'], [0.22, '#ffd27a'], [0.3, '#c86a1c'], [0.45, '#ffb84a'], [0.55, '#fff0c0'], [0.66, '#e8902c'], [0.8, '#ffcc66'], [0.92, '#b85a16'], [1, '#8a4210']]) f.addColorStop(o, c);
+    g.fillStyle = f; g.fillRect(0, 0, w, 128);
+    const n = g.createLinearGradient(0, 128, 0, 256);
+    for (const [o, c] of [[0, '#fff2c8'], [0.15, '#ffc65a'], [0.5, '#e08a2a'], [0.85, '#a85214'], [1, '#6a300c']]) n.addColorStop(o, c);
+    g.fillStyle = n; g.fillRect(0, 128, w, 128);
+    g.globalCompositeOperation = 'lighter';
+    for (let i = 0; i < 18; i++) { const x = (i + 0.3 + rr() * 0.4) / 18 * w, rg = g.createRadialGradient(x, 70, 0, x, 70, 60);
+      rg.addColorStop(0, 'rgba(255,250,220,0.75)'); rg.addColorStop(1, 'rgba(255,200,120,0)'); g.fillStyle = rg; g.fillRect(x - 60, 10, 120, 120); }
+    g.globalCompositeOperation = 'source-over';
+  }));
+  cleanGoldMat = kitMat(canvasTex(256, 256, (g, w, h) => {
+    // a paddle: u = across, v = top face (0-0.7) then front lip (0.7-1)
+    const t = g.createLinearGradient(0, 0, w, 0); for (const [o, c] of [[0, '#9a4c12'], [0.3, '#f0a040'], [0.55, '#ffe6a0'], [0.75, '#f4a63c'], [1, '#a65414']]) t.addColorStop(o, c);
+    g.fillStyle = t; g.fillRect(0, 0, w, h * 0.7);
+    const l = g.createLinearGradient(0, h * 0.7, 0, h); for (const [o, c] of [[0, '#fff4c8'], [0.3, '#ffbe58'], [1, '#8a4210']]) l.addColorStop(o, c);
+    g.fillStyle = l; g.fillRect(0, h * 0.7, w, h * 0.3);
+  }, false));
+  // 3D gold paddles (the painted lids on the walls): one per section on each side, standing out of the wall toward the river
+  const RP = 0.84, PL = 0.5;
+  for (let k = 0; k < NSEC; k++) for (const thc of [2.72, 0.42]) {
+    const t1 = ringT(k) + K.S * 0.45, dth = 0.2;
+    scene.add(new THREE.Mesh(grid(16, 8, (a, b) => {
+      const th = thc + (a - 0.5) * 2 * dth, ext = Math.sqrt(Math.max(0, 1 - (2 * a - 1) ** 2)), rIn = K.RT - (K.RT - RP) * (0.35 + 0.65 * ext);
+      if (b < 0.7) { const f = b / 0.7; return [P(t1 + PL * (1 - f), th, rIn), a, 1 - b]; }   // top face (D-shaped across), back -> front
+      const f = (b - 0.7) / 0.3; return [P(t1, th, lerp(rIn, K.RT, f)), a, 1 - b]; }), cleanGoldMat));   // front lip down to the wall
+  }
+}
 for (let k = KMIN; k < NSEC; k++) {
   const t0 = ringT(k);
   // wall section k: from ring k's front face to ring k+1's front face (the ring band covers its first RING_W)
-  const wo = ownOf('wall', wallOwn, k), ro = ownOf('ring', ringOwn, k);
-  scene.add(new THREE.Mesh(grid(160, 24, (a, b) => [P(t0 + b * K.S, lerp(K.TH0, K.TH1, a), K.RT), a, 1 - b]), wo ? kitMat(wallTex, {}, wo) : wallMat));
+  const wo = CLEAN37 ? null : ownOf('wall', wallOwn, k), ro = CLEAN37 ? null : ownOf('ring', ringOwn, k);
+  scene.add(new THREE.Mesh(grid(160, 24, (a, b) => [P(t0 + b * K.S, lerp(K.TH0, K.TH1, a), K.RT), a, 1 - b]), CLEAN37 ? cleanWallMat : (wo ? kitMat(wallTex, {}, wo) : wallMat)));
   // gold ring k: front face (outer -> inner) then inner face (front -> back)
   scene.add(new THREE.Mesh(grid(160, 8, (a, b) => {
     const th = lerp(K.TH0, K.TH1, a);
     if (b <= 0.5) { const f = b / 0.5; return [P(t0, th, K.RT - (K.RT - K.RING_IN) * f), a, 1 - b]; }
     const f = (b - 0.5) / 0.5; return [P(t0 + f * K.RING_W, th, K.RING_IN), a, 1 - b];
-  }), ro ? kitMat(ringTex, {}, ro) : ringMat));
+  }), CLEAN37 ? cleanRingMat : (ro ? kitMat(ringTex, {}, ro) : ringMat)));
 }
 // foam banks along both wall bases (round 33c): the painting's own foam, faded in only where the walls show the shared section
 // (covers the painted pink river edges that the painting has higher up its sides than the kit water), invisible at the start view
@@ -227,14 +376,17 @@ for (const side of [1, -1]) {   // right: from -THW upward; left: from PI + THW 
 // the banks stay round painted puffs from every position (the round-33 wall-base strip was a flat band seen edge-on: white spikes).
 // Thicker (two rows) on the inner side of each bend. Both fade in exactly where the walls hand over from their own painted pixels
 // (distance now / distance at the start < K.own.fade), so the start view stays the approved picture. ?puffs=0 = round-34 strip.
-const FADEP = new THREE.Vector4(...OWNFADE, 0, 0);
+const FADEP = W37 ? new THREE.Vector4(50, 60, 0, 0) : new THREE.Vector4(...OWNFADE, 0, 0);   // round 37 B / C: no painted water to hand over from -> foam + bubbles from the start
 if (PUFFS) {
   const puffTex = await tl.loadAsync('puffs.png'); puffTex.colorSpace = THREE.NoColorSpace; puffTex.anisotropy = 4;
   const rp = (() => { let x = 777; return () => ((x = (x * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff); })();
   const L = []; const HWD = K.water.HWD;
   for (const side of [1, -1]) for (let t = 0.35; t < LEVEL + 14; t += 0.08 + rp() * 0.05) {
-    const gap = Math.abs(side * HWD - riverC(t)), nr = gap > 0.92 ? 2 : 1;
-    for (let r = 0; r < nr; r++) { const w = (0.16 + rp() * 0.1) * (r ? 0.8 : 1), lat = side * (HWD - 0.005 - r * 0.07 - rp() * 0.025);
+    const gap = Math.abs(side * HWD - riverC(t)), RW37 = FLOW.uW37A.value.x, e37 = riverC(t) + side * RW37;
+    const nr = W37 ? (CLEAN37 ? 1 : (HWD - Math.abs(e37) > 0.14 ? 2 : 1)) : (gap > 0.92 ? 2 : 1);
+    for (let r = 0; r < nr; r++) { const w = (0.16 + rp() * 0.1) * (r ? 0.8 : 1) * (W37 ? 0.85 : 1);
+      // round 37 B / C: the domes stand along the WINDING river's banks (the live river's edge), not along the straight wall bases
+      const lat = W37 ? THREE.MathUtils.clamp(e37 + side * (0.035 + r * 0.075 + rp() * 0.02), -HWD + 0.02, HWD - 0.02) : side * (HWD - 0.005 - r * 0.07 - rp() * 0.025);
       const P0 = A0.clone().addScaledVector(A, t + rp() * 0.03).addScaledVector(RR, lat).addScaledVector(NUP, -K.HW - 0.01);
       L.push([t, P0.x, P0.y, P0.z, w, w * 0.5, Math.floor(rp() * 2.999), rp() < 0.5 ? -1 : 1]); }
   }
@@ -488,7 +640,7 @@ window.step = (t, dt, steer, speed) => {
   else qYaw.identity();
   radv.copy(camera.position).sub(A0); radv.addScaledVector(A, -radv.dot(A)); { const r = radv.length(), r2 = softLim(r, CAMP.RMAX, CAMP.RMAX - CAMP.R0); if (r2 < r) camera.position.addScaledVector(radv, r2 / r - 1); }   // inside the tunnel
   camera.quaternion.copy(qYaw).multiply(camQ0).multiply(qRoll.setFromAxisAngle(FWDL, st.camRoll.x)); camera.updateMatrixWorld();
-  REMAP.uCam.value.copy(camera.position); REMAP.uOwnOff.value = OWNOFF ? THREE.MathUtils.smoothstep(st.s, 0.6, 1.8) : 0; FLOW.uFlow.value = t * +(q.get('flowspeed') ?? 0.55); FLOW.uFlowOn.value = THREE.MathUtils.smoothstep(st.s, 0.0, 0.7);
+  REMAP.uCam.value.copy(camera.position); REMAP.uOwnOff.value = OWNOFF ? THREE.MathUtils.smoothstep(st.s, 0.6, 1.8) : 0; FLOW.uFlow.value = t * +(q.get('flowspeed') ?? 0.55); FLOW.uW37T.value = t; FLOW.uFlowOn.value = THREE.MathUtils.smoothstep(st.s, 0.0, 0.7);
   core.position.copy(camera.position).add(A0).addScaledVector(A, 300); core.scale.set(33, 33, 1);
   updateEnd(st.s);
   for (const c of coins) {
