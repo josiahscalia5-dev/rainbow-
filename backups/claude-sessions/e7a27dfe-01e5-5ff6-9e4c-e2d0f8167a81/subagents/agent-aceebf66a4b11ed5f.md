@@ -129,3 +129,101 @@ Write `swipe_test.cjs`: Playwright chromium with SwiftShader args (copy them fro
 > USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
 > root      3245  338  1.4 54959952 246152 ?     S<l  12:08  13:27 /opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell.real --type=gpu-process --gpu-recent-crash-count=0 --no-sandbox --disable-breakpad --headless --ozone-platform=headless --use-angle=swiftshader-webgl --enable-unsafe-swiftshader --gpu-preferences=YAAAAAAAAAAgAAAGAAAAAAAAAAAAAGAASAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAwAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAMAAAAAQAAAAAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA== --shared-files --field-trial-handle=3,i,14077737763752684697,1406311450911904481,262144 --enable-features=CDPScreenshotNewSurface,SendGPUChannelEarly --disable-features=AutoDeElevate,AvoidUnnecessaryBeforeUnlo …[+2265 chars]
 
+### 🤖 Claude — 2026-11-21T12:12:23.820Z
+
+> 🔧 **Bash** `{"command": "ls /home/user/rainbow-/references/ | head -20; python3 -c \"\nfrom PIL import Image; im=Image.open('/home/user/rainbow-/references/05_flow_into_the_current.png'); print(im.size); im.convert('RGB').resize((im.size[0]//3, im.size[1]//3)).save('/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/ref05_small.jpg')\"", "description": "Make a small preview copy of the Screen 05 reference"}`
+
+### 🧑 User — 2026-11-21T12:12:23.961Z
+
+> ↩︎ result: 01_inside_washer_girl_and_towel.png
+> 02_mascot_tumbles_in_whirlpool.png
+> 03_whirlpool_twirl.png
+> 04_through_the_five_arrows.png
+> 05_flow_into_the_current.png
+> 06_crest_the_rinse_arch.png
+> 07_dive_the_washer_tube.png
+> 08_final_spin_chamber.png
+> 09_ride_the_final_wave.png
+> 10_slide_into_hiding.png
+> 11_safely_home_final_victory.png
+> water
+> (864, 1536)
+
+### 🤖 Claude — 2026-11-21T12:12:27.858Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/ref05_small.jpg"}`
+
+### 🧑 User — 2026-11-21T12:12:27.883Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T12:13:50.794Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/controls.js", "content": "// controls.js -- Screen 05 swipe controls for play3.html (installed by the \"// [controls]\" hook lines there).\n// Lanes (swipe left / right), leap (swipe up), dive (swipe down), coins in the side lanes and in the air,\n// natural swim animation (stroke roll, faster paddling while changing lanes, lean / yaw into the move, pom-pom inertia),\n// splash + droplets + bubbles on leaving / entering the water, and the follow-camera offsets.\n// Everything is driven by th …[+19592 chars]`
+
+### 🧑 User — 2026-11-21T12:13:50.826Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/controls.js (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-21T12:13:56.000Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/controls.js", "old_string": "    splash.material.rotation = -(splash.material.rotation / 0.6 + S.lean.x) * 0.6 * -1 * -1; // keep play3's sign: rotation = -lean * 0.6\n    splash.material.rotation = splash.material.rotation - S.lean.x * 0.6;", "new_string": "    splash.material.rotation -= S.lean.x * 0.6; // play3 sets -bendLean * 0.6; add the lane bank the same way"}`
+
+### 🧑 User — 2026-11-21T12:13:56.025Z
+
+> ↩︎ result: The file /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/controls.js has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-21T12:13:59.411Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA && cp -n play3.html play3.orig.html && ls -la play3*.html", "description": "Keep a copy of the original play3.html"}`
+
+### 🧑 User — 2026-11-21T12:13:59.482Z
+
+> ↩︎ result: cp: warning: behavior of -n is non-portable and may change in future; use --update=none instead
+> -rw-r--r-- 1 root root 14349 Nov 21 11:54 play3.html
+> -rw-r--r-- 1 root root 14349 Nov 21 12:13 play3.orig.html
+
+### 🤖 Claude — 2026-11-21T12:14:00.124Z
+
+Now the hook lines in play3.html.
+
+### 🤖 Claude — 2026-11-21T12:14:02.456Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/play3.html", "old_string": "import { SplatMesh, SparkRenderer } from '@sparkjsdev/spark';\nconst q = new URLSearchParams(location.search);", "new_string": "import { SplatMesh, SparkRenderer } from '@sparkjsdev/spark';\nimport { installControls } from './controls.js'; // [controls]\nconst q = new URLSearchParams(location.search);"}`
+
+### 🧑 User — 2026-11-21T12:14:02.478Z
+
+> ↩︎ result: The file /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/play3.html has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-21T12:14:16.438Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/play3.html", "old_string": "const tmp = new THREE.Vector3(), tmp2 = new THREE.Vector3(), Z = new THREE.Vector3(0, 0, 1);\nwindow.step = (t, dt, steer, speed) => {\n  st.s += speed * dt;\n  st.vlat += (steer * 0.45 - st.vlat) * Math.min(1, dt * 8); st.lat = THREE.MathUtils.clamp(st.lat + st.vlat * dt, -0.3, 0.3);\n  const F = frameAt(st.s); const M = basis(F);\n  // lean into the river's bends (curvature) and into his own steering\n  const Fa = frameAt(st.s + 0.4); const …[+3114 chars]`
+
+### 🧑 User — 2026-11-21T12:14:16.460Z
+
+> ↩︎ result: The file /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/play3.html has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-21T12:14:20.067Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/play3.html", "old_string": "  st.camLat += (st.lat * 0.5 - st.camLat) * Math.min(1, dt * 4);\n  const Fc = frameAt(st.s, 0.9); const Mc = basis(Fc);\n  camera.position.copy(relPos).applyMatrix4(Mc).add(at(st.s, tmp)).addScaledVector(Fc.r, st.camLat);", "new_string": "  if (CT) st.camLat = CT.c.camLat; else st.camLat += (st.lat * 0.5 - st.camLat) * Math.min(1, dt * 4); // [controls] spring-smoothed + clamped\n  const Fc = frameAt(st.s, 0.9); const Mc = basis(Fc);\n  came …[+166 chars]`
+
+### 🧑 User — 2026-11-21T12:14:20.087Z
+
+> ↩︎ result: The file /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/play3.html has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-21T12:14:22.365Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/play3.html", "old_string": "    if (c.got < 0 && st.s >= c.s && Math.abs(st.lat - c.lat) < 0.14) {", "new_string": "    if (c.got < 0 && (CT ? CT.hits(c) : st.s >= c.s && Math.abs(st.lat - c.lat) < 0.14)) { // [controls] 3D pick-up distance"}`
+
+### 🧑 User — 2026-11-21T12:14:22.385Z
+
+> ↩︎ result: The file /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/play3.html has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-21T12:14:24.815Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/play3.html", "old_string": "  return { s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: coinCount, tile: kcNow };", "new_string": "  return { s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: coinCount, tile: kcNow, ...(CT ? CT.state() : {}) }; // [controls]"}`
+
+### 🧑 User — 2026-11-21T12:14:24.842Z
+
+> ↩︎ result: The file /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/play3.html has been updated successfully. (file state is current in your context — no need to Read it back)
+

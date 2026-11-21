@@ -5575,3 +5575,109 @@ Understood. You won't get another preview until the whole level passes all 8 req
 
 No credits will be spent and I won't touch other screens until you approve Screen 05. Everything is being saved to GitHub as I go.
 
+### 🧑 User — 2026-11-21T12:14:03.593Z
+
+Keep continuing the other plugins and tools that you're doing now. I just want to add this if you're having any issues CLAUDIA — SCREEN 05: STRICT GAMEPLAY REQUIREMENTS — DO NOT SHOW ME AN UNFINISHED OR BROKEN RESULT
+
+Claudia, I want to be extremely clear about what I'm asking for with Level 5, Screen 05.
+
+I want Benny, my original pink character, to swim through the entire 3D level naturally, just like a real, professionally developed mobile game.
+
+These are my non-negotiable requirements:
+
+1. Smooth left and right movement: Players must be able to swipe left or right and watch Benny move naturally across the river. No jerking, teleporting, freezing, unnatural turns, or incorrect positioning.
+
+2. Natural forward swimming: Benny must continuously move forward through the actual 3D environment. His swimming animations, body movement, turning, and camera tracking must look natural.
+
+3. Correct upward and downward movement: Jumping, diving, and returning to the water must work smoothly without strange animations or broken positioning.
+
+4. No visual errors: No black patches, broken tunnel sections, blurry scenery, stretched textures, flickering, missing geometry, floating objects, or unnatural water movement.
+
+5. No gameplay errors: No crashes, freezes, collision problems, camera clipping, control failures, or broken transitions between sections.
+
+6. Consistent approved artwork: The entire moving environment must remain as close as possible to my original approved Screen 05, including Benny, the golden tunnel, the colorful water, and the coin trail.
+
+7. Complete gameplay testing: Test the entire level from beginning to end using actual touchscreen swipe inputs on an Android portrait device or emulator. Test repeated left and right swipes, upward and downward movement, coin collection, camera movement, and transitions.
+
+8. Real playable 3D: Do not substitute a video, moving background, scripted character path, or prerecorded sequence for functioning gameplay.
+
+MOST IMPORTANT — DO NOT SHOW ME A BROKEN RESULT AS FINISHED.
+
+If Screen 05 still has errors, broken animations, crashes, blurry sections, incorrect movement, or anything that doesn't meet my requirements, do not present it to me for approval.
+
+Instead, continue correcting and retesting the problems. You may give me a brief written progress report explaining what remains broken, but do not send another unfinished gameplay preview and ask me to approve it.
+
+Only show me the final gameplay preview when it passes all the requirements above and you've verified it works correctly.
+
+If you cannot achieve these requirements with the current tools or technical approach, tell me clearly what is preventing it. Do not pretend the level is finished or claim it works without testing.
+
+I want to see Benny swimming through the full level smoothly, naturally, and without visible problems.
+
+Once you've confirmed everything is working, save and push the completed changes to GitHub and provide the final gameplay recording and test results.
+
+My goal is approximately 90–95% visual likeness to the original approved Screen 05, with fully functional, smooth 3D gameplay.
+
+Do not move on to the other screens or spend additional generation credits until I approve Screen 05.
+
+### 🤖 Claude — 2026-11-21T12:14:09.373Z
+
+Got it. I'm continuing with the same tools and the same rules: no preview until it passes, and only short progress notes until then.
+
+While the two specialists work, I'm writing the final acceptance test. It's one continuous run through the whole level, driven by real touch swipes on an emulated Android phone held upright, with automatic checks for:
+- sudden jumps in Benny's position
+- freezes
+- the camera clipping into walls
+- coins not being collected
+- errors
+
+It also checks the quality of every frame.
+
+### 🤖 Claude — 2026-11-21T12:14:28.232Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/final_acceptance.cjs", "content": "// Screen 05 acceptance run: the WHOLE level, uninterrupted, normal speed, driven by REAL touch swipes (CDP Input.dispatchTouchEvent)\n// on an Android-portrait emulation (412x915, isMobile, hasTouch). Writes every frame, an mp4, a per-frame log and automatic checks.\n// node final_acceptance.cjs <folder with play3.html> <outdir> [seconds=7.6] [speed=1.4]\nconst { chromium } = require('playwright'); const { spawn, execFileSync } = require('child_process'); const f …[+4694 chars]`
+
+### 🧑 User — 2026-11-21T12:14:28.267Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/final_acceptance.cjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-21T12:14:40.782Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/visual_check.py", "content": "\"\"\"Per-frame visual checks for the Screen 05 acceptance run (python3 -I visual_check.py <run dir> <approved.png>):\nblack patches (near-black pixels below the HUD), sharpness vs the first frame (variance of the Laplacian), flicker (frame-to-frame\nchange spikes), and a colour-look score vs the approved picture (hue/saturation histogram overlap; motion-independent).\"\"\"\nimport sys, json, glob, numpy as np, cv2\nd, ref = sys.argv[1:3]\nfiles = sorted(glob.glob(f'{d …[+1827 chars]`
+
+### 🧑 User — 2026-11-21T12:14:40.807Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/visual_check.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-21T12:14:44.356Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad; timeout 120 python3 -I $S/visual_check.py $S/splatview/out_run1 /home/user/rainbow-/references/05_flow_into_the_current.png 2>&1 | head -30", "description": "Try the visual check on the frames recorded so far"}`
+
+### 🧑 User — 2026-11-21T12:14:45.281Z
+
+> ↩︎ result: {
+>  "frames": 23,
+>  "black_patches": {
+>   "max_pct": 1.528,
+>   "frames_over_0_3pct": 23
+>  },
+>  "sharpness_vs_start": {
+>   "min": 0.979,
+>   "median": 1.058
+>  },
+>  "colour_look_vs_approved": {
+>   "min": 0.641,
+>   "median": 0.649
+>  },
+>  "flicker": {
+>   "median_change": 24.175,
+>   "max_change": 27.63,
+>   "spikes_over_3x_median": 0
+>  }
+> }
+
+### 🤖 Claude — 2026-11-21T12:14:49.758Z
+
+The acceptance test and the automatic visual checker are ready. I ran the checker on the frames recorded earlier and it confirms what still fails: dark patches cover about 1.5% of the screen in every frame, above my 0.3% limit. Sharpness holds steady through the run, with no blur buildup. The water specialist is working on the dark patches now.
+
+I'll keep going: merge the two specialists' work when they finish, run the full swipe test, and fix and retest until it passes. You'll get short written updates only, and the final video only once it passes.
+

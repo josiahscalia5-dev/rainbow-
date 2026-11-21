@@ -762,3 +762,116 @@ Let me snapshot the current state as BEFORE and start the BEFORE stills render i
 > 4230-var DynoBool = class extends DynoUniform {
 > 4231-	constructor({ key, value, update }) {
 
+### 🤖 Claude — 2026-11-21T12:12:36.832Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB/out_water/before/log.txt", "description": "Check BEFORE render progress"}`
+
+### 🧑 User — 2026-11-21T12:12:36.868Z
+
+> ↩︎ result: still 0
+> still 2.3
+> still 4.4
+> still 6.4
+
+### 🤖 Claude — 2026-11-21T12:12:39.069Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB/out_water/before/s_2.3.png"}`
+
+### 🧑 User — 2026-11-21T12:12:39.100Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T12:12:40.767Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB/out_water/before/s_4.4.png"}`
+
+### 🧑 User — 2026-11-21T12:12:40.792Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T12:12:42.124Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB/out_water/before/s_6.4.png"}`
+
+### 🧑 User — 2026-11-21T12:12:42.159Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T12:13:15.121Z
+
+Now let me write the water-flow module (Spark dyno world modifier).
+
+### 🤖 Claude — 2026-11-21T12:13:41.935Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB/waterflow.js", "content": "// waterflow.js - Screen 05 flowing water on the Marble splat track (Spark 2.4 dyno worldModifier, GPU only).\n//\n// What it does, per splat, inside Spark's splat-generation pass (no extra geometry, no textures, no CPU work per splat):\n//   * finds the river's own splats: height above the (sloped) water surface < ~0.1 and inside the tunnel floor\n//     (the same water plane the track builder uses: scene05.json plane n/d, the per-section drop DH = D.n);\n//   * m …[+6370 chars]`
+
+### 🧑 User — 2026-11-21T12:13:41.965Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB/waterflow.js (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-21T12:13:46.581Z
+
+Now the hook lines in `play3.html`.
+
+### 🤖 Claude — 2026-11-21T12:13:52.439Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB && python3 -I - <<'EOF'\np = 'play3.html'; s = open(p).read()\nrep = [\n(\"import { SplatMesh, SparkRenderer } from '@sparkjsdev/spark';\\n\",\n \"import { SplatMesh, SparkRenderer } from '@sparkjsdev/spark';\\nimport { createWaterFlow } from './waterflow.js'; // [waterflow]\\n\"),\n(\"const scene = new THREE.Scene();\\n\",\n \"const scene = new THREE.Scene();\\nif (q.get('bg')) scene.background = new THREE.Color(q.get('bg')); // QA: show gaps in the splat track in a test colour\\n\"),\n(\" …[+748 chars]`
+
+### 🧑 User — 2026-11-21T12:13:52.524Z
+
+> ↩︎ result: 16:import { createWaterFlow } from './waterflow.js'; // [waterflow]
+> 25:if (q.get('bg')) scene.background = new THREE.Color(q.get('bg')); // QA: show gaps in the splat track in a test colour
+> 43:const WF = q.get('noflow') ? null : createWaterFlow({ TR, SC, meshes: [near, far, ...tiles.flatMap((t) => [t.hi, t.lo])], far, amp: +(q.get('flowamp') ?? 1), speed: +(q.get('flowspeed') ?? 0.9) }); // [waterflow]
+> 177:  WF?.update(dt, camera); // [waterflow]
+
+### 🤖 Claude — 2026-11-21T12:14:06.190Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB && cat > shots_w.cjs <<'EOF'\n// node shots_w.cjs <outdir> ; env PAGE, QS, STILLS='[0,2.3,4.4,6.4]', W, H, PREFIX, TPAIR='[s, dt]' (extra still at the same s after dt seconds of flow)\nconst { chromium } = require('playwright'); const { spawn } = require('child_process'); const fs = require('fs');\n(async () => {\n  const [out] = process.argv.slice(2); fs.mkdirSync(out, { recursive: true });\n  const W = +(process.env.W ?? 540), H = +(process.env.H ?? 960), pre = process.env.PREFIX ?? 's_'; …[+2346 chars]`
+
+### 🧑 User — 2026-11-21T12:14:06.231Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-21T12:14:36.226Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB && cp /home/user/rainbow-/tools/marble05/build_track.py tools/build_track_w.py && cp /home/user/rainbow-/tools/marble05/spz.py tools/spz.py && python3 -I - <<'EOF'\nimport sys, json, numpy as np\nsys.path.insert(0, 'tools'); from plyio import read_ply\nSC = json.load(open('scene05.json')); F = json.load(open('../tile_frame.json'))\nn = np.array(SC['plane']['n']); ax = np.array(F['ax']); rt = np.array(F['right']); dpl = F['dpl']\nUA, UB = 1.3, 3.33; Lt = UB-UA; DH = -0.14733523072779797; FL  …[+1432 chars]`
+
+### 🧑 User — 2026-11-21T12:14:36.894Z
+
+> ↩︎ result: bay air-column splats 2042 by u: [ 47 231 377 475 456 395  58   3] [1.37 1.42 1.46 1.5  1.54 1.59 1.63 1.67 1.72]
+>    big splats (max scale>0.08): 58  >0.15: 0  low-opacity big (a<.2, sc>.04): 89
+>    bay u 1.30: lat range -1.20..1.13 h max 1.79
+>    bay u 1.80: lat range -1.23..1.13 h max 1.68
+>    bay u 2.30: lat range -1.25..1.11 h max 1.71
+>    bay u 2.80: lat range -1.25..1.09 h max 1.71
+>    bay u 3.30: lat range -1.23..1.08 h max 1.70
+> near air-column splats 9989 by u: [  24  104  227  380  946 4689 1577 2042] [-6.93 -5.85 -4.77 -3.69 -2.61 -1.53 -0.44  0.64  1.72]
+>    big splats (max scale>0.08): 2160  >0.15: 587  low-opacity big (a<.2, sc>.04): 119
+> far air-column splats 1028 by u: [134 266 213 165 113  72  37  28] [ 4.71  5.54  6.37  7.21  8.04  8.87  9.71 10.54 11.37]
+>    big splats (max scale>0.08): 1492  >0.15: 357  low-opacity big (a<.2, sc>.04): 67
+>    far u 3.40: n=9669 lat range -1.21..1.06 h max 1.67 r50=1.03
+>    far u 4.15: n=3254 lat range -1.20..1.05 h max 1.57 r50=0.97
+>    far u 4.90: n=1630 lat range -1.10..1.06 h max 1.45 r50=0.88
+>    far u 5.65: n=550 lat range -0.97..1.02 h max 1.27 r50=0.75
+>    far u 6.40: n=334 lat range -0.86..1.04 h max 1.18 r50=0.69
+>    far u 7.15: n=195  …[+291 chars]
+
+### 🤖 Claude — 2026-11-21T12:14:52.785Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB && python3 -I - <<'EOF'\nimport sys, json, numpy as np\nsys.path.insert(0, 'tools'); from plyio import read_ply\nSC = json.load(open('scene05.json')); F = json.load(open('../tile_frame.json'))\nn = np.array(SC['plane']['n']); ax = np.array(F['ax']); rt = np.array(F['right']); dpl = F['dpl']\nUA, UB = 1.3, 3.33; Lt = UB-UA; DH = -0.14733523072779797; FL = np.array([1,-1,-1])\ncam_up = np.array(SC['cam']['up']); \nT = np.array(SC['trail']); print('trail0 u lat h', T[0]@ax, T[0]@rt, T[0]@n-dpl …[+801 chars]`
+
+### 🧑 User — 2026-11-21T12:14:53.563Z
+
+> ↩︎ result: trail0 u lat h 0.9932803172534921 0.004086496389888376 0.0
+> bay u 1.37..1.42 n=47 rgb=[0.88 0.67 0.49] lat [-0.7  -0.68 -0.64] h [1.   1.05 1.19] a=0.37 sc=0.012
+> bay u 1.42..1.46 n=231 rgb=[0.83 0.46 0.27] lat [-0.7  -0.66 -0.57] h [0.94 1.05 1.19] a=0.72 sc=0.013
+> bay u 1.46..1.50 n=377 rgb=[0.79 0.41 0.3 ] lat [-0.67 -0.59 -0.48] h [0.98 1.09 1.18] a=0.76 sc=0.013
+> bay u 1.50..1.54 n=475 rgb=[0.76 0.33 0.33] lat [-0.66 -0.51 -0.36] h [1.03 1.13 1.19] a=0.69 sc=0.012
+> bay u 1.54..1.59 n=456 rgb=[0.81 0.45 0.43] lat [-0.59 -0.42 -0.31] h [1.08 1.15 1.2 ] a=0.69 sc=0.010
+> bay u 1.59..1.63 n=395 rgb=[0.88 0.51 0.47] lat [-0.51 -0.35 -0.19] h [1.12 1.17 1.2 ] a=0.72 sc=0.011
+> bay u 1.63..1.67 n=58 rgb=[0.91 0.52 0.57] lat [-0.39 -0.31 -0.12] h [1.15 1.18 1.2 ] a=0.48 sc=0.010
+> near u -6.93..-5.85 n=24 rgb=[0.75 0.43 0.62] lat [-0.07  0.38  0.59] h [1.03 1.1  1.19] a=0.91 sc=0.144
+> near u -5.85..-4.77 n=104 rgb=[0.66 0.49 0.83] lat [-0.48  0.23  0.67] h [0.81 1.   1.16] a=0.96 sc=0.153
+> near u -4.77..-3.69 n=227 rgb=[0.69 0.46 0.7 ] lat [-0.59  0.27  0.67] h [0.5  0.75 1.04] a=0.94 sc=0.087
+> near u -3.69..-2.61 n=380 rgb=[0.59 0.48 0.8 ] lat [-0.64  0.03  0.67] h [0.33 0.58 0.87] a=0.94 sc=0.072 …[+424 chars]
+
