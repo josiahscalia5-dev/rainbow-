@@ -1,3 +1,11 @@
+# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 35 (2026-11-21 ~19:40 UTC, branch `claude/character-swimming-mechanics-jo0h6s`)
+Screen 05 ONLY. User: "look exactly like the approved screens where the pink character can swim naturally" (`docs/briefs/2026-11-21-r35/USER_R35.md`).
+Integrated the five round-34 specialists' unsaved work (from `backups/wip/*-c34`), then: the river = the user's OWN painted river in its world place,
+repeating every 3 ring sections (`tools/kit05/bake_river35.py`), live painted streak detail, painted foam domes + bubbles (`bake_puffs.py`), gameplay
+fixes (S4 suite: items 1-7 + 10 PASS, phone live mode PASS), phone build `build_phone.sh` published privately at
+https://claude.ai/artifact/Jpq74VraeFhXnU2hXLQeHD. Everything + numbers + honest limits: **`docs/briefs/2026-11-21-r35/RESUME_R35.md`**; pictures
+`qa/kit05/r35/compare/`. No specialists running; no credits spent. Not approved yet.
+
 # ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 34 (2026-11-21 ~18:00 UTC, lead branch `ccr-3830a7b8-af3hrd`)
 Screen 05 ONLY: Benny's real 3D swimming + Subway-Surfers-style swipes through the ORIGINAL approved Screen 05, then a phone-playable build.
 Base = the round-33 tunnel kit (`tools/kit05/`). New shared foundation (`9a46d34`): `controls.js` now lives in `tools/kit05/`, `setup_kit.sh`
