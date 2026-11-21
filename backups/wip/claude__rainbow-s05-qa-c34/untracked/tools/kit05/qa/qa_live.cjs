@@ -27,7 +27,9 @@ const { chromium } = require('playwright'); const { spawn } = require('child_pro
     await page.evaluate(() => {
       const Q = (window.__live = { calls: 0, ticks: 0, dts: [], callsPerTick: [], lastTickCalls: 0, sAtTick: [] });
       const orig = window.step; window.step = function (t, dt, a, b) { Q.calls++; Q.dts.push(dt); return orig.apply(this, arguments); };
-      const tick = () => { Q.ticks++; Q.callsPerTick.push(Q.calls - Q.lastTickCalls); Q.lastTickCalls = Q.calls; Q.sAtTick.push(window.state ? window.state().s : null); requestAnimationFrame(tick); }; requestAnimationFrame(tick);
+      Q.hist = [];
+      const tick = () => { Q.ticks++; Q.callsPerTick.push(Q.calls - Q.lastTickCalls); Q.lastTickCalls = Q.calls; const st = window.state ? window.state() : {}; Q.sAtTick.push(st.s);
+        Q.hist.push([Q.ticks, st.swipes | 0, st.lane, st.lat, st.height, st.s]); requestAnimationFrame(tick); }; requestAnimationFrame(tick);
     });
     await new Promise((r) => setTimeout(r, 3000));
     const before = await page.evaluate(() => ({ s: window.state ? window.state().s : null, calls: window.__live.calls, ticks: window.__live.ticks }));
@@ -40,21 +42,25 @@ const { chromium } = require('playwright'); const { spawn } = require('child_pro
     await page.evaluate(() => { window.__live.callsAtTap = window.__live.calls; window.__live.ticksAtTap = window.__live.ticks; window.__live.dtsAtTap = window.__live.dts.length; });
     await tap(206, 400);   // the real "Tap to swim" tap
     const started = await page.waitForFunction(() => window.liveStats && window.liveStats().frames > 0, null, { timeout: 60000 }).then(() => true).catch(() => false);
-    const plan = ['left', 'right', 'right', 'left', 'up', 'down', 'left', 'right'], t0 = Date.now(), per = (+secs * 1000) / (plan.length + 1), sw = [];
+    // swipes are spaced in DISPLAYED FRAMES (14 frames = 0.7 game-s at the 1/20 s clamp), not wall time: here one frame takes ~1 s
+    const plan = ['left', 'right', 'right', 'left', 'up', 'down', 'left', 'right'], t0 = Date.now(), GAP = +(process.env.LIVE_GAP || 14);
     for (const d of plan) {
-      await new Promise((r) => setTimeout(r, per));
-      const a = await page.evaluate(() => ({ ticks: window.__live.ticks, st: window.state() }));
+      const tNow = await page.evaluate(() => window.__live.ticks);
+      await page.waitForFunction((n) => window.__live.ticks >= n, tNow + GAP, { timeout: 600000, polling: 200 });
       await swipe(d);
-      // frames until the move shows: lane / height starts changing in the swipe direction (polled per displayed frame, max 20 frames)
-      const res = await page.evaluate(([d, a]) => new Promise((resolve) => {
-        const t0 = window.__live.ticks, s0 = window.state(); let n = 0;
-        const chk = () => { const s = window.state(); n = window.__live.ticks - a.ticks;
-          const moved = d === 'left' ? s.lat < s0.lat - 0.004 || (s0.lane === -1 && s.lane === -1) : d === 'right' ? s.lat > s0.lat + 0.004 || (s0.lane === 1 && s.lane === 1) : d === 'up' ? s.height > 0.004 : s.height < -0.004;
-          if (moved || window.__live.ticks - t0 > 20) resolve({ framesToMove: moved ? n : null, swipesSeen: s.swipes, queued: s.queued, move: s.move }); else requestAnimationFrame(chk); };
-        requestAnimationFrame(chk); }), [d, a]);
-      sw.push({ dir: d, ...res });
     }
-    await new Promise((r) => setTimeout(r, per));
+    { const tNow = await page.evaluate(() => window.__live.ticks); await page.waitForFunction((n) => window.__live.ticks >= n, tNow + GAP, { timeout: 600000, polling: 200 }); }
+    // per swipe: displayed frames from the frame the controls registered it to the first frame with the move (from the per-frame history)
+    const hist = await page.evaluate(() => window.__live.hist), ilog = await page.evaluate(() => (window.input ? window.input.log.map((x) => x.dir) : []));
+    const sw = [];
+    for (let k = 1; k <= ilog.length; k++) {
+      const d = ilog[k - 1], r = hist.findIndex((h) => h[1] >= k); if (r < 0) { sw.push({ dir: d, framesToMove: null }); continue; }
+      const b0 = hist[Math.max(0, r - 1)]; let n = null;
+      for (let j = r; j < Math.min(hist.length, r + 20); j++) { const h = hist[j];
+        const moved = d === 'left' ? h[3] < b0[3] - 0.004 || (b0[2] === -1 && h[2] === -1) : d === 'right' ? h[3] > b0[3] + 0.004 || (b0[2] === 1 && h[2] === 1) : d === 'up' ? h[4] > b0[4] + 0.004 : h[4] < b0[4] - 0.004;
+        if (moved) { n = j - r + 1; break; } }
+      sw.push({ dir: d, registeredAtFrame: hist[r][0], framesToMove: n });
+    }
     const stats = await page.evaluate(() => window.liveStats());
     const Q = await page.evaluate(() => { const Q = window.__live; const after = Q.callsPerTick.slice(Q.ticksAtTap); const dts = Q.dts.slice(Q.dtsAtTap).filter((x) => x > 0);
       const s = window.state(); return { calls_total: Q.calls, ticks_total: Q.ticks, calls_before_tap: Q.callsAtTap, ticks_before_tap: Q.ticksAtTap,
@@ -68,7 +74,7 @@ const { chromium } = require('playwright'); const { spawn } = require('child_pro
       L3_one_step_per_frame: { pass: Q.calls_per_tick_after_tap.max <= 1 && Q.calls_per_tick_after_tap.mean <= 1.02, value: Q.calls_per_tick_after_tap, rule: 'exactly one window.step per displayed frame (2 = the game runs at double speed)' },
       L4_game_clock: { pass: Q.max_dt <= 0.0501 && Math.abs(Q.s_end - expectS) <= 0.05 + 0.02 * expectS, value: { max_dt: Q.max_dt, s_end: Q.s_end, s_expected_one_loop: +expectS.toFixed(3), game_seconds_all_calls: Q.game_seconds, displayed_frames: ticksAfter }, rule: 'dt <= 1/20 s per step; distance swum = 1.4 u per game second of ONE loop' },
       L5_every_swipe_registered: { pass: Q.swipes_seen === plan.length, value: { sent: plan.length, seen: Q.swipes_seen }, rule: 'every real touch swipe reaches the controls' },
-      L6_response_frames: { pass: sw.every((x) => x.framesToMove !== null && x.framesToMove <= 2), value: sw.map((x) => `${x.dir}:${x.framesToMove}`), rule: 'the move is visible within 2 displayed frames of the swipe (device-independent; on a 60 Hz phone 2 frames = 33 ms)' },
+      L6_response_frames: { pass: sw.length === plan.length && sw.every((x) => x.framesToMove !== null && x.framesToMove <= 2), value: sw.map((x) => `${x.dir}:${x.framesToMove}`), rule: 'the move is visible within 2 displayed frames of the frame the swipe was registered in (device-independent; 2 frames = 33 ms at 60 Hz). Swipes are 14 displayed frames apart.' },
       L7_no_errors: { pass: errors.length === 0, value: errors.slice(0, 5), rule: '0 page / console errors' },
     };
     const res = { pass: Object.values(checks).every((c) => c.pass), checks, swipes: sw, stats, wall_seconds: (Date.now() - t0) / 1000, errors,

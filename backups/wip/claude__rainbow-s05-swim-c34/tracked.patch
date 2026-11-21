@@ -1,5 +1,5 @@
 diff --git a/tools/kit05/controls.js b/tools/kit05/controls.js
-index a7405a94..0d55095b 100644
+index a7405a94..4611d6b3 100644
 --- a/tools/kit05/controls.js
 +++ b/tools/kit05/controls.js
 @@ -4,20 +4,39 @@
@@ -25,9 +25,9 @@ index a7405a94..0d55095b 100644
 +  LAT_VMAX: 1.65,      // lateral speed cap (u/s) = 0.055 u per 1/30 s frame: double swipes / reversals never jump
 +  LANE_BUSY: 0,        // (round 34: lane swipes are never blocked or queued; kept for URL compatibility)
 +  LEAN_K: 0.2, LEAN_MAX: 0.3, // (round-32 bank, superseded by BANK_*; kitgame's ?c_LEAN_K default no longer has an effect)
-+  BANK_K: 0.15,        // bank angle (rad) per unit lateral speed: peak ~1.3 u/s -> target ~11 deg
++  BANK_K: 0.22,        // bank angle (rad) per unit lateral speed (target capped at BANK_MAX; a single lane change peaks ~8 deg)
 +  BANK_MAX: 0.26,      // never more than 15 deg
-+  BANK_OMEGA: 12,      // bank follows its target through a critically damped spring ...
++  BANK_OMEGA: 14,      // bank follows its target through a critically damped spring ...
 +  BANK_RATE: 1.25,     // ... and never changes faster than 1.25 rad/s (2.4 deg per 1/30 s frame)
    YAW_K: 0.12,         // body turns toward the move (rad per u/s)
 -  ROLL_STROKE: 0.045,  // body roll with each paddle stroke (rad)

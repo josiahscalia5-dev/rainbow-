@@ -2,7 +2,7 @@
  "worktree": "/home/user/wt/s05-swim",
  "branch": "claude/rainbow-s05-swim-c34",
  "head": "d8e047d33ea44d0ec2ff841836b55dcd6292a2ac",
- "time": "2026-11-21T18:26:23+00:00",
+ "time": "2026-11-21T18:31:23+00:00",
  "dirty_tracked": [
   "tools/kit05/controls.js",
   "tools/kit05/kitgame.html"
@@ -11,6 +11,7 @@
   "docs/briefs/2026-11-21-r34/COORDINATION_R34.md",
   "docs/briefs/2026-11-21-r34/USER_R34.md",
   "docs/briefs/2026-11-21-r34/notes/s2.md",
+  "tools/kit05/live_loop_check.cjs",
   "tools/kit05/swim_check.cjs",
   "tools/kit05/swimfx.js"
  ],

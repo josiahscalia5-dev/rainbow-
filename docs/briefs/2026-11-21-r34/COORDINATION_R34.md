@@ -16,7 +16,7 @@ pixels within 20 levels, SSIM 0.76, colour 0.99 (splat world: 12.7 %). Lead comm
   Whole-level runs (~30 min): `RENDER_SLOT=2`. Usage log: `/tmp/rainbow_r34/locks/usage.log`.
 * `tools/marble05/viewer/final_acceptance.cjs <game> <out> [secs] [speed]` — frame-stepped run with REAL CDP touch swipes,
   412x915 Android-portrait emulation; `PLAN=fixed` = the 7.6 s plan; without it = whole level following the coin trail. ~2.5 s/frame.
-* `live.js` + `play3.html?live=1` — REAL-TIME mode (requestAnimationFrame, tap to start, fps + swipe-response meter, `window.liveStats()`);
+* `live.js` + `play3.html?play=1` — REAL-TIME mode (NOT `?live=1`: that is controls.js' own minimal loop; both at once = double speed) (requestAnimationFrame, tap to start, fps + swipe-response meter, `window.liveStats()`);
   `live_check.cjs <game> <out.json> [secs]` drives it with real touch swipes on the wall clock (software WebGL here: fps is not a phone's).
 * `compare_r33.py`, `tools/marble05/viewer/visual_check.py`, `acceptance_verdict.py` — likeness / dark-patch / verdict tools.
 

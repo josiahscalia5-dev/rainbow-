@@ -2,14 +2,21 @@
  "worktree": "/home/user/wt/s05-qa",
  "branch": "claude/rainbow-s05-qa-c34",
  "head": "d8e047d33ea44d0ec2ff841836b55dcd6292a2ac",
- "time": "2026-11-21T18:26:23+00:00",
+ "time": "2026-11-21T18:31:23+00:00",
  "dirty_tracked": [],
  "untracked_copied": [
   "docs/briefs/2026-11-21-r34/COORDINATION_R34.md",
   "docs/briefs/2026-11-21-r34/USER_R34.md",
+  "docs/briefs/2026-11-21-r34/notes/s4.md",
+  "qa/kit05/r34/s4/S1_stretch_tiles_marked_f0448.jpg",
+  "qa/kit05/r34/s4/S3_benny_left_paw_offscreen_f0115_crop.jpg",
+  "qa/kit05/r34/s4/live_double_loop_evidence.json",
   "tools/kit05/qa/qa_live.cjs",
   "tools/kit05/qa/qa_play.cjs",
-  "tools/kit05/qa/qa_visual.py"
+  "tools/kit05/qa/qa_verdict.py",
+  "tools/kit05/qa/qa_visual.py",
+  "tools/kit05/qa/run_acceptance.sh",
+  "tools/kit05/qa/stretch_viz.py"
  ],
  "untracked_skipped": [],
  "restore": "git switch claude/rainbow-s05-qa-c34 (newest pushed tip) && git apply --binary backups/wip/claude__rainbow-s05-qa-c34/tracked.patch && copy backups/wip/claude__rainbow-s05-qa-c34/untracked/* into the worktree"

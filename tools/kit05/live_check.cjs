@@ -1,4 +1,4 @@
-// Round 34: REAL-TIME check of play3.html?live=1 (the phone mode): Android-portrait emulation (412x915, isMobile, hasTouch), real CDP
+// Round 34: REAL-TIME check of play3.html?play=1 (the phone mode): Android-portrait emulation (412x915, isMobile, hasTouch), real CDP
 // touch swipes sent on the wall clock while the game runs on requestAnimationFrame, then window.liveStats() (fps, slow frames,
 // input -> first-frame-with-the-move latency). In this container WebGL is software-rendered (SwiftShader), so the fps here is NOT a
 // phone's fps — this proves the live loop, the tap-to-start and the touch path work; the phone's own numbers come from its meter.
@@ -16,7 +16,7 @@ const { chromium } = require('playwright'); const { spawn } = require('child_pro
     const ctx = await browser.newContext({ viewport: { width: 412, height: 915 }, deviceScaleFactor: 1, isMobile: true, hasTouch: true });
     const page = await ctx.newPage();
     page.on('pageerror', (e) => errors.push(String(e).slice(0, 300))); page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text().slice(0, 300)); });
-    await page.goto(`http://127.0.0.1:${port}/play3.html?live=1&pr=1${extra ? '&' + extra : ''}`);
+    await page.goto(`http://127.0.0.1:${port}/play3.html?play=1&pr=1${extra ? '&' + extra : ''}`);
     await page.waitForFunction(() => window.ready === true && typeof window.liveStart === 'function', null, { timeout: 600000 });
     const cdp = await ctx.newCDPSession(page);
     const tap = async (x, y) => { await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x, y, id: 1 }] }); await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] }); };

@@ -175,7 +175,9 @@ def main():
                         if zm_.sum():
                             zones[f'{zn}-{zm}'] = round(float(bad[zm_].sum() / tot), 3)
                 r['zones_share_of_all_mismatch'] = dict(sorted(zones.items(), key=lambda t: -t[1]))
-                r['route_first'] = [f"{g['region']} ({round(100 * g['share_of_all_mismatch'])} % of the mismatch) -> {g['owner']}" for g in regs[:3]]
+                # route: the three regions holding most of the mismatch + any small region that is mostly wrong (e.g. a misplaced coin trail)
+                pick = regs[:3] + [g for g in regs[3:] if g['mismatch_inside'] >= 0.5 and g['share_of_scenery'] >= 0.01 and g['region'] != 'other']
+                r['route_first'] = [f"{g['region']} ({round(100 * g['share_of_all_mismatch'])} % of all mismatch; {round(100 * g['mismatch_inside'])} % of this region off) -> {g['owner']}" for g in pick]
                 if name == 'new' and not a.no_pictures:
                     heat = cv2.applyColorMap(np.clip(diff * 4, 0, 255).astype(np.uint8), cv2.COLORMAP_INFERNO)[..., ::-1].astype(np.float32)
                     heat[~mask] = heat[~mask] * 0.25

@@ -320,7 +320,8 @@ for (let i = 0; i < 3; i++) { renderer.render(scene, camera); await new Promise(
 window.camInfo = () => ({ p: camera.position.toArray(), q: camera.quaternion.toArray() });
 window.bennyInfo = () => { const qq = new THREE.Quaternion(), p = new THREE.Vector3(); benny.getWorldQuaternion(qq); benny.getWorldPosition(p); const up = new THREE.Vector3(0, 1, 0).applyQuaternion(qq).applyQuaternion(camera.quaternion.clone().invert()); const nW = NUP.clone().applyQuaternion(camera.quaternion.clone().invert()); const sp = p.clone().project(camera); return { rollDeg: Math.atan2(-up.x, up.y) * 180 / Math.PI, camRollDeg: Math.atan2(-nW.x, nW.y) * 180 / Math.PI, x: (sp.x * 0.5 + 0.5) * W, y: (0.5 - sp.y * 0.5) * H, dist: p.distanceTo(camera.position) }; };
 window.ready = true;
-// round 34: ?live=1 = real-time play on a phone / browser (requestAnimationFrame loop, tap to start, FPS + swipe-response meter);
-// without it the page stays frame-stepped for the acceptance harness exactly as before
-if (q.get('live')) (await import('./live.js')).startLive({ THREE, renderer, scene, camera, W, H, q, CT });
+// round 34: ?play=1 = real-time play on a phone / browser (requestAnimationFrame loop, tap to start, FPS + swipe-response meter);
+// without it the page stays frame-stepped for the acceptance harness exactly as before. NOT ?live=1: controls.js runs its own
+// minimal round-32 loop for that, and two loops stepped the game twice per frame (S4 found it: double speed)
+if (q.get('play') && q.get('live') !== '1') (await import('./live.js')).startLive({ THREE, renderer, scene, camera, W, H, q, CT });
 </script></body></html>

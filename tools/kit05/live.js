@@ -1,4 +1,5 @@
-// live.js — Round 34 (2026-11-21): REAL-TIME play of the Screen 05 kit game (play3.html?live=1), for a phone / browser.
+// live.js — Round 34 (2026-11-21): REAL-TIME play of the Screen 05 kit game (play3.html?play=1), for a phone / browser.
+// (?play=1, not ?live=1: controls.js has its own minimal ?live=1 loop; running both stepped the game twice per frame.)
 // The acceptance harness steps the game frame by frame (window.step + window.renderNow); this module instead runs it on the
 // display's own clock (requestAnimationFrame), so the player swipes with a real finger and the game answers in real time.
 // It also MEASURES what the player feels: frames per second, slow frames, and the time from the end of a swipe to the first frame
