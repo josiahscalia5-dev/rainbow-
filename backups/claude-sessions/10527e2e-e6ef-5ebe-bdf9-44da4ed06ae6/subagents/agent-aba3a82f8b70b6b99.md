@@ -580,3 +580,214 @@ Now wire the split into play3.html.
 
 > 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB && rm -f track_w/near_a.ply track_w/near_b.ply track_w/near_a_hull.json && sed -i 's/split_u=1.5/split_u=1.25/; s/else 1.5/else 1.25/' tools/split_near.py && sed -i 's/(tools\\/split_near.py, u = 1.5)/(tools\\/split_near.py, u = 1.25)/; s/(288k splats from far behind the start camera up to u = 1.5)/(253k splats from far behind the start camera up to u = 1.25)/' play3.html && python3 -I tools/split_near.py track_w 1.25 && grep -n \"u = 1.25\" play3.html | cut -c1-120 && NODE_PATH=$(npm root  …[+163 chars]`
 
+### 🧑 User — 2026-11-21T13:06:35.468Z
+
+> ↩︎ result: near 456508 -> near_a 252758 near_b 203750 hull vertices 164 margin 0.378 max splat near split 0.1194329783320427
+> 34:// [track] Android splat budget: the start piece is split along the tunnel (tools/split_near.py, u = 1.25): near_b = 
+> 35:// nearA = its rear part (253k splats from far behind the start camera up to u = 1.25). nearA is hidden only when ALL
+> {"errors":[],"frames":228,"s_end":10.593,"max_visible":866071,"at":{"s":0.327,"tile":0},"max_per_section":{"0":866071,"1":823650,"2":830237,"3":830237,"4":830237,"-1":655734},"nearA_hidden_from":{"s":2.193,"tile":0},"nearA_visible_in_section1":0}
+> [This command modified 1 file you've previously read: ../../../tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB/play3.html. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-21T13:06:43.521Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB && for i in $(seq 1 40); do pgrep -f \"shots_w.cjs out_water/before412\" >/dev/null || break; sleep 10; done; grep -v GL out_water/before412/log.txt; NODE_PATH=$(npm root -g) timeout 600 node budget_w.cjs '&trk=track/&noflow=1' 2>&1 | tee out_water/budget_before.json | tail -1", "description": "Wait for BEFORE render, then BEFORE budget sweep", "timeout": 600000}`
+
+### 🧑 User — 2026-11-21T13:08:06.354Z
+
+> ↩︎ result: server 9504
+> ready 29.58
+> still 0 51.229 visible splats 649235
+> still 4.4 64.56 visible splats 1061727
+> still 10.4 69.968 visible splats 812175
+> {"errors":[],"frames":228,"s_end":10.593,"max_visible":1061727,"at":{"s":2.473,"tile":1},"max_per_section":{"0":855481,"1":1061727,"2":812175,"3":812175,"4":812175,"-1":649235},"nearA_hidden_from":null,"nearA_visible_in_section1":0}
+
+### 🤖 Claude — 2026-11-21T13:08:13.849Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB && mkdir -p out_water/diag/split_proof && (W=412 H=915 STILLS='[2.3]' PREFIX=split_ NODE_PATH=$(npm root -g) node shots_w.cjs out_water/diag/split_proof > out_water/diag/split_proof/log_split.txt 2>&1; W=412 H=915 QS='&nosplit=1' STILLS='[2.3]' PREFIX=nosplit_ NODE_PATH=$(npm root -g) node shots_w.cjs out_water/diag/split_proof > out_water/diag/split_proof/log_nosplit.txt 2>&1) > /dev/null 2>&1 &\ntools/check_stills.sh out_water/before412 s_0.png s_4.4.png s_10.4_l0.22_r0.12.png; python3 -I …[+677 chars]`
+
+### 🧑 User — 2026-11-21T13:08:14.198Z
+
+> ↩︎ result: Exit code 1
+> /bin/bash: line 12: tools/check_stills.sh: No such file or directory
+> [ WARN:0@0.007] global loadsave.cpp:279 findDecoder imread_('out_water/after412/s_4.4.png'): can't open/read file: check file path/integrity
+> [ WARN:0@0.007] global loadsave.cpp:279 findDecoder imread_('out_water/after412/s_4.4_flow1.png'): can't open/read file: check file path/integrity
+> [ WARN:0@0.007] global loadsave.cpp:279 findDecoder imread_('out_water/after412/s_4.4_flow2.png'): can't open/read file: check file path/integrity
+> Traceback (most recent call last):
+>   File "<stdin>", line 5, in <module>
+> TypeError: 'NoneType' object is not subscriptable
+
+### 🤖 Claude — 2026-11-21T13:08:21.276Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB; tools/check_stills.sh out_water/before412 s_0.png s_4.4.png s_10.4_l0.22_r0.12.png; python3 -I - <<'EOF'\nimport cv2, numpy as np\nd='out_water/after412/'\na=[cv2.imread(d+f) for f in ['s_4.4.png','s_4.4_flow1.png','s_4.4_flow2.png']]\nfor i in range(2):\n    x=a[i][150:].astype(np.int16); y=a[i+1][150:].astype(np.int16); df=np.abs(x-y)\n    lx=cv2.cvtColor(a[i][150:],cv2.COLOR_BGR2GRAY).astype(float); ly=cv2.cvtColor(a[i+1][150:],cv2.COLOR_BGR2GRAY).astype(float)\n    print(f'flow frame { …[+321 chars]`
+
+### 🧑 User — 2026-11-21T13:08:22.193Z
+
+> ↩︎ result: f_0000_s_0.jpg                     patches 3  largest_dark_px  1488  black% 0.969  look 0.659  sharp 1.000  change 0.0
+> f_0001_s_4.4.jpg                   patches 3  largest_dark_px  1345  black% 0.655  look 0.648  sharp 0.947  change 53.33
+> f_0002_s_10.4_l0.22_r0.12.jpg      patches 3  largest_dark_px   706  black% 0.472  look 0.637  sharp 0.976  change 72.33
+> flow frame 0->1: mean abs change 1.068 (0-255), pixels changed >10: 0.57 %, mean luma 152.36 -> 152.30 (delta -0.059)
+> flow frame 1->2: mean abs change 1.089 (0-255), pixels changed >10: 0.56 %, mean luma 152.30 -> 152.24 (delta -0.058)
+
+### 🤖 Claude — 2026-11-21T13:08:38.273Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB; python3 -I - <<'EOF'\nimport cv2, numpy as np\nR=cv2.resize(cv2.imread('/home/user/rainbow-/references/05_flow_into_the_current.png'),(412,915))\nB=cv2.imread('out_water/before412/s_0.png'); A=cv2.imread('out_water/after412/s_0.png')\ndef hs(img, m=None):\n    hsv=cv2.cvtColor(img,cv2.COLOR_BGR2HSV)\n    h=cv2.calcHist([hsv],[0,1],m,[36,16],[0,180,0,256]); return cv2.normalize(h,h,1,0,cv2.NORM_L1)\nmask=np.zeros((915,412),np.uint8); mask[150:]=1\nHR=hs(R,mask)\nfor nm,im in [('before',B),( …[+1161 chars]`
+
+### 🧑 User — 2026-11-21T13:08:38.544Z
+
+> ↩︎ result: before look 0.6661
+>   mean S 164.6  mean V 222.9  frac S<64 0.092 frac V<40 0.014
+> after look 0.6278
+>   mean S 162.8  mean V 230.5  frac S<64 0.085 frac V<40 0.0
+> ref mean S 176.8 mean V 227.7 frac S<64 0.096
+> rows 150 245 mean diff 31.0 before S 169.0 after S 163.0 ref S 179.0
+> rows 245 340 mean diff 41.8 before S 159.0 after S 155.0 ref S 167.0
+> rows 340 435 mean diff 51.3 before S 147.0 after S 150.0 ref S 164.0
+> rows 435 530 mean diff 7.2 before S 161.0 after S 157.0 ref S 174.0
+> rows 530 625 mean diff 6.1 before S 160.0 after S 159.0 ref S 180.0
+> rows 625 720 mean diff 2.6 before S 157.0 after S 157.0 ref S 187.0
+> rows 720 815 mean diff 8.2 before S 159.0 after S 159.0 ref S 173.0
+> rows 815 910 mean diff 9.9 before S 202.0 after S 201.0 ref S 190.0
+> rows 910 1005 mean diff 9.0 before S 199.0 after S 197.0 ref S 174.0
+
+### 🤖 Claude — 2026-11-21T13:08:42.886Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB; python3 -c \"\nimport cv2; im=cv2.imread('out_water/tmpview/diff0.jpg'); R=cv2.resize(cv2.imread('/home/user/rainbow-/references/05_flow_into_the_current.png'),(412,915)); import numpy as np\nim=np.hstack([R,im])[:520]; cv2.imwrite('out_water/tmpview/diff0c.jpg', im)\"", "description": "Crop diff view of the upper tunnel region"}`
+
+### 🧑 User — 2026-11-21T13:08:43.076Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-21T13:08:45.055Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB/out_water/tmpview/diff0c.jpg"}`
+
+### 🧑 User — 2026-11-21T13:08:45.075Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T13:09:06.064Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB; python3 -I - <<'EOF'\nimport cv2, numpy as np\nR=cv2.resize(cv2.imread('/home/user/rainbow-/references/05_flow_into_the_current.png'),(412,915))\ndef hs(img):\n    hsv=cv2.cvtColor(img,cv2.COLOR_BGR2HSV)[150:]\n    h=cv2.calcHist([hsv],[0,1],None,[36,16],[0,180,0,256]); return cv2.normalize(h,h,1,0,cv2.NORM_L1)\nHR=hs(R); L=lambda im: round(float(cv2.compareHist(HR,hs(im),cv2.HISTCMP_INTERSECT)),4)\nfor s,bn,an in [('0','s_0.png','s_0.png'),('4.4','s_4.4.png','s_4.4.png'),('10.4','s_10.4_l …[+851 chars]`
+
+### 🧑 User — 2026-11-21T13:09:06.510Z
+
+> ↩︎ result: 0 before 0.6661 after 0.6278 | before+holes filled 0.6686 | after w/ before top 0.6502 | after w/ before bottom 0.6436
+> 4.4 before 0.6508 after 0.6152 | before+holes filled 0.6523 | after w/ before top 0.6409 | after w/ before bottom 0.6263
+> 10.4 before 0.6412 after 0.6158 | before+holes filled 0.6411 | after w/ before top 0.6355 | after w/ before bottom 0.6224
+
+### 🤖 Claude — 2026-11-21T13:09:17.395Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB; grep -hv GL out_water/diag/split_proof/log_*.txt; ls out_water/diag/split_proof/; ps -eo args | grep shots_w | grep -v grep | cut -c1-80", "description": "Check split proof render status"}`
+
+### 🧑 User — 2026-11-21T13:09:17.452Z
+
+> ↩︎ result: node:internal/modules/cjs/loader:1433
+>   throw err;
+>   ^
+> 
+> Error: Cannot find module 'playwright'
+> Require stack:
+> - /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB/shots_w.cjs
+>     at Function._resolveFilename (node:internal/modules/cjs/loader:1430:15)
+>     at defaultResolveImpl (node:internal/modules/cjs/loader:1040:19)
+>     at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1045:22)
+>     at Function._load (node:internal/modules/cjs/loader:1216:25)
+>     at wrapModuleLoad (node:internal/modules/cjs/loader:254:19)
+>     at Module.require (node:internal/modules/cjs/loader:1527:12)
+>     at require (node:internal/modules/helpers:147:16)
+>     at Object.<anonymous> (/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB/shots_w.cjs:2:22)
+>     at Module._compile (node:internal/modules/cjs/loader:1781:14)
+>     at Object..js (node:internal/modules/cjs/loader:1913:10) {
+>   code: 'MODULE_NOT_FOUND',
+>   requireStack: [
+>     '/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB/shots_w.cjs'
+>   ]
+> }
+> 
+> Node.js v22.23.5
+> node:internal/modules/cjs/loader:1433
+>   throw err;
+>   ^
+> 
+> Error: Cannot find module …[+1067 chars]
+
+### 🤖 Claude — 2026-11-21T13:09:27.567Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB; export NODE_PATH=$(npm root -g); echo $NODE_PATH; mkdir -p out_water/diag/noflow412; nohup bash -c \"W=412 H=915 QS='&noflow=1' STILLS='[0]' node shots_w.cjs out_water/diag/noflow412 > out_water/diag/noflow412/log.txt 2>&1; W=412 H=915 STILLS='[2.3]' PREFIX=split_ node shots_w.cjs out_water/diag/split_proof > out_water/diag/split_proof/log_split.txt 2>&1; W=412 H=915 QS='&nosplit=1' STILLS='[2.3]' PREFIX=nosplit_ node shots_w.cjs out_water/diag/split_proof > out_water/diag/split_proof/log_ …[+121 chars]`
+
+### 🧑 User — 2026-11-21T13:09:27.712Z
+
+> ↩︎ result: /opt/node22/lib/node_modules
+> started
+
+### 🤖 Claude — 2026-11-21T13:09:36.307Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB; sed -i \"s|sheet.save(f'{o}/sheet_{lab}.jpg', quality=90); print('sheet', lab)|sheet.save(f\\\"{o}/sheet_{lab.split()[0]}.jpg\\\", quality=90); print('sheet', lab)|\" tools/sheets.py && rm -rf out_water/sheets && python3 -I tools/sheets.py out_water/sheets \\\n \"s0\" out_water/before412/s_0.png out_water/after412/s_0.png \\\n \"s4.4\" out_water/before412/s_4.4.png out_water/after412/s_4.4.png \\\n \"s10.4_lane+0.22_rise0.12\" out_water/before412/s_10.4_l0.22_r0.12.png out_water/after412/s …[+451 chars]`
+
+### 🧑 User — 2026-11-21T13:09:36.827Z
+
+> ↩︎ result: sheet s0
+> sheet s4.4
+> sheet s10.4_lane+0.22_rise0.12
+> sheet s0.7 (BEFORE=540x960)
+> sheet s1.4 (BEFORE=540x960)
+> sheet s2.3 (BEFORE=540x960)
+> sheet s6.4 (BEFORE=540x960)
+> total 3936
+> drwxr-xr-x  2 root root   4096 Nov 21 13:09 .
+> drwxr-xr-x 11 root root   4096 Nov 21 13:09 ..
+> -rw-r--r--  1 root root 601654 Nov 21 13:09 sheet_s0.7.jpg
+> -rw-r--r--  1 root root 554568 Nov 21 13:09 sheet_s0.jpg
+> -rw-r--r--  1 root root 588984 Nov 21 13:09 sheet_s1.4.jpg
+> -rw-r--r--  1 root root 564649 Nov 21 13:09 sheet_s10.4_lane+0.22_rise0.12.jpg
+> -rw-r--r--  1 root root 580880 Nov 21 13:09 sheet_s2.3.jpg
+> -rw-r--r--  1 root root 538698 Nov 21 13:09 sheet_s4.4.jpg
+> -rw-r--r--  1 root root 581646 Nov 21 13:09 sheet_s6.4.jpg
+
+### 🤖 Claude — 2026-11-21T13:09:40.621Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB; date; python3 -c \"\nfrom PIL import Image; im=Image.open('out_water/sheets/sheet_s4.4.jpg'); im.resize((im.width*2//3, im.height*2//3)).save('out_water/tmpview/sh44.jpg',quality=85)\"", "description": "Downscale a sheet for viewing"}`
+
+### 🧑 User — 2026-11-21T13:09:40.754Z
+
+> ↩︎ result: Sat Nov 21 13:09:40 UTC 2026
+
+### 🤖 Claude — 2026-11-21T13:09:42.791Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB/out_water/tmpview/sh44.jpg"}`
+
+### 🧑 User — 2026-11-21T13:09:42.820Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T13:10:02.066Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB; for i in $(seq 1 30); do [ -f out_water/diag/noflow412/s_0.png ] && break; sleep 8; done; sleep 3; grep -v GL out_water/diag/noflow412/log.txt; python3 -I - <<'EOF'\nimport cv2, numpy as np\nR=cv2.resize(cv2.imread('/home/user/rainbow-/references/05_flow_into_the_current.png'),(412,915))\ndef hs(img):\n    hsv=cv2.cvtColor(img,cv2.COLOR_BGR2HSV)[150:]\n    h=cv2.calcHist([hsv],[0,1],None,[36,16],[0,180,0,256]); return cv2.normalize(h,h,1,0,cv2.NORM_L1)\nHR=hs(R); L=lambda im: round(float(c …[+640 chars]`
+
+### 🧑 User — 2026-11-21T13:10:29.448Z
+
+> ↩︎ result: server 9694
+> ready 13.025
+> still 0 40.239 visible splats 655734
+> before 0.6661 after(flow) 0.6278 after noflow 0.6482
+> flow vs noflow mean abs diff 2.76 rows450+ 4.17
+> B bottom S 169.1 V 239.7
+> A bottom S 167.9 V 240.5
+> N bottom S 169.1 V 239.9
+
+### 🤖 Claude — 2026-11-21T13:10:51.890Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB; python3 -I - <<'EOF'\nimport cv2, numpy as np\nA=cv2.imread('out_water/after412/s_0.png'); N=cv2.imread('out_water/diag/noflow412/s_0.png')\nha=cv2.cvtColor(A,cv2.COLOR_BGR2HSV).astype(int)[150:]; hn=cv2.cvtColor(N,cv2.COLOR_BGR2HSV).astype(int)[150:]\ndS=ha[...,1]-hn[...,1]; dV=ha[...,2]-hn[...,2]; dH=(ha[...,0]-hn[...,0]+90)%180-90\nch=(np.abs(A.astype(int)-N.astype(int)).max(2)[150:]>6)\nprint('changed px %',ch.mean().round(3))\nprint('among changed: mean dS',dS[ch].mean().round(2),'mea …[+932 chars]`
+
+### 🧑 User — 2026-11-21T13:10:52.322Z
+
+> ↩︎ result: changed px % 0.318
+> among changed: mean dS -3.67 mean dV 1.85 mean |dH| 1.09
+> glint-like px (V up>15 & S down>15) % 0.08
+> V 0-150: n=600 dS 0.42 dV 12.73 |dH| 5.60
+> V 150-200: n=2702 dS -3.93 dV 6.38 |dH| 2.00
+> V 200-230: n=10254 dS -4.61 dV 4.81 |dH| 1.27
+> V 230-256: n=86548 dS -3.58 dV 1.29 |dH| 1.01
+> bins losing most (hue*10deg, sat bin): [(np.int64(190), np.int64(15), np.float64(-0.747)), (np.int64(200), np.int64(15), np.float64(-0.477)), (np.int64(260), np.int64(9), np.float64(-0.143)), (np.int64(240), np.int64(8), np.float64(-0.117)), (np.int64(200), np.int64(14), np.float64(-0.11)), (np.int64(220), np.int64(10), np.float64(-0.106))]
+> bins gaining most: [(np.int64(200), np.int64(10), np.float64(0.082)), (np.int64(260), np.int64(8), np.float64(0.092)), (np.int64(200), np.int64(13), np.float64(0.157)), (np.int64(180), np.int64(13), np.float64(0.159)), (np.int64(190), np.int64(13), np.float64(0.305)), (np.int64(190), np.int64(14), np.float64(0.436))]
+

@@ -640,3 +640,121 @@ While those run, I'll update the descriptive parts of `CONTROLS_NOTES.md` to mat
 
 > 🔧 **Bash** `{"command": "f=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA; until [ \"$(grep -c '^EXIT' $f/live_key_check.out 2>/dev/null)\" = 1 ]; do sleep 5; done; cd $f; grep -E \"OK |BAD|EXIT\" acceptance_logic.out | cut -c1-260; grep -E \"checks|EXIT|ERROR\" swipe_test_logic.out | cut -c1-700; cut -c1-3000 live_key_check.out", "description": "Wait for all three re-runs to finish", "timeout": 2700000}`
 
+### 🧑 User — 2026-11-21T13:08:25.377Z
+
+> ↩︎ result: OK  0.9 left | lane -1 | src touch clock 0.867 (exp 0.867) after: {"lane":-1,"move":"lane","queued":null,"swipes":1} lane 0 -> -1 @ 0.9 maxH 0 minH 0 coins+ 40
+> OK  1.6 left | stay -1 (left edge: wobble only) | src touch clock 1.567 (exp 1.567) after: {"lane":-1,"move":null,"queued":null,"swipes":2} lane -1 -> -1 @ null maxH 0 minH 0 coins+ 0
+> OK  2.3 right | lane 0 | src touch clock 2.267 (exp 2.267) after: {"lane":0,"move":"lane","queued":null,"swipes":3} lane -1 -> 0 @ 2.3 maxH 0 minH 0 coins+ 30
+> OK  2.9 up | leap | src touch clock 2.867 (exp 2.867) after: {"lane":0,"move":"leap","queued":null,"swipes":4} lane 0 -> 0 @ null maxH 0.2794 minH 0 coins+ 20
+> OK  3.7 right | lane +1 | src touch clock 3.667 (exp 3.667) after: {"lane":1,"move":"lane","queued":null,"swipes":5} lane 0 -> 1 @ 3.7 maxH 0 minH 0 coins+ 0
+> OK  4.3 right | stay +1 (right edge: wobble only) | src touch clock 4.267 (exp 4.267) after: {"lane":1,"move":null,"queued":null,"swipes":6} lane 1 -> 1 @ null maxH 0 minH 0 coins+ 0
+> OK  4.9 down | dive | src touch clock 4.867 (exp 4.867) after: {"lane":1,"move":"dive","queued":null,"swipes":7} lane 1 -> 1 @ null maxH -0.0142 minH -0.2704 coins+ 0
+> OK  5.6 left | queued during t …[+2081 chars]
+
+### 🤖 Claude — 2026-11-21T13:08:27.949Z
+
+All three runs pass after the clock fix. I'll pull the final numbers for the notes.
+
+### 🤖 Claude — 2026-11-21T13:08:32.650Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && python3 -I -c \"\nimport json; d=json.load(open('acceptance_logic.json'))\nprint('load_s',d['load_s'],'wall_s',d['wall_s'],'api',d['api'],'hit',d['touch_target_at_swipe_point'])\nL=d['lead_checks']; print('forward',L['forward']); print('lateral',L['lateral']); print('vertical',L['vertical']); print('coins',L['coins'],'errors',L['errors'], 'sent', L['swipes_sent'])\nprint('pass',d['pass']); print('extra',json.dumps(d['extra']))\ne=json.load(open('swipe_log_logic_only.json')); print('swipe …[+576 chars]`
+
+### 🧑 User — 2026-11-21T13:08:32.728Z
+
+> ↩︎ result: load_s 42.9 wall_s 45 api {'step': 'function', 'state': 'function', 'renderNow': 'function', 'camInfo': 'function', 'input': 'object'} hit CANVAS
+> forward {'min_step': 0.045999999999999375, 'max_step': 0.0470000000000006, 'freezes': 0}
+> lateral {'max_step_per_frame': 0.0414, 'teleports_over_0_06': 0, 'lanes_seen': [0, -1, 1]}
+> vertical {'max_step_per_frame': 0.0569, 'max_height': 0.2794, 'min_height': -0.2704}
+> coins {'start': 1420, 'end': 1590} errors [] sent 10
+> pass {'no_errors': True, 'no_freeze': True, 'no_teleport': True, 'lanes_all_seen': True, 'leap_up': True, 'dive_down': True, 'coins_increase': True, 'all_10_swipes_as_intended': True, 'renderNow_exists': True, 'camInfo_exists': True}
+> extra {"lat_d2": 0.0221, "height_d2": 0.0569, "camLat_d2": 0.0013, "camH_d2": 0.0019, "maxAbsLat": 0.22, "maxAbsCamLat": 0.11, "camH_range": [-0.0199, 0.0734], "cam_pos_step_per_frame": {"min": 0.0426, "max": 0.0593}, "cam_toBenny_range": [1.0566, 1.3804], "cam_aboveWater_min": 0.693, "got_by_kind": {"water": 14, "lane": 3, "air": 0}, "hud_end": "\ud83e\ude99 1,590", "hud_matches": true}
+> swipe_test logic: all True smooth {'camLat_d2': 0.0013, 'camH_d2': 0.0019, 'lat_d2': 0.0221, 'maxAbsCamLat': 0. …[+188 chars]
+
+### 🤖 Claude — 2026-11-21T13:09:09.579Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && python3 -I - <<'EOF'\np='CONTROLS_NOTES.md'; s=open(p).read()\nold=\"## Verification results\\n(see below — filled in from the actual run)\"\nassert old in s\nnew='''## Verification results (2026-11-21, actual runs in this folder, after every change listed above)\nAll numbers from the JSON files named; SwiftShader, Chromium headless, Pixel-7-like 412×915 portrait, real CDP touch events.\n\n### 1. `acceptance_logic.json` — the lead's `final_acceptance.cjs` plan, logic only (load 42.9 s, r …[+5370 chars]`
+
+### 🧑 User — 2026-11-21T13:09:09.685Z
+
+> ↩︎ result: 150
+> 12:52 acceptance_logic.cjs
+> 13:03 acceptance_logic.json
+> 12:54 compare0.json
+> 13:02 controls.js
+> 13:08 live_key_check.json
+> 12:51 play3.html
+> 12:51 serve.cjs
+> 12:54 swipe_log.json
+> 13:04 swipe_log_logic_only.json
+
+### 🤖 Claude — 2026-11-21T13:09:14.493Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && ls -a | grep -c serve_token; ps aux | grep -E \"http.server 9[0-3][0-9][0-9]\" | grep -v grep | wc -l; diff play3.orig.html play3.html | grep '^>' | grep -vc '\\[controls\\]'", "description": "Check for leftover servers and stray edits"}`
+
+### 🧑 User — 2026-11-21T13:09:14.546Z
+
+> ↩︎ result: 0
+> 0
+> 0
+
+### 🤖 Claude — 2026-11-21T13:09:30.415Z
+
+I've finished all five steps. In the logic-only replica of your acceptance test, every one of the 10 swipes produced the intended response, and every check your script runs passes. The real 7.6 s render was not run; only numbers were checked, plus one re-rendered still (frame 0).
+
+**Replica of `final_acceptance.cjs`** (same device, same plan, same touch events, no rendering; result in `acceptance_logic.json`)
+- `renderNow` and `camInfo` both exist as functions. The swipe point (206, 640.5) lands on the canvas.
+- No page or console errors. Forward movement never froze (0.046–0.047 u per frame).
+- Largest sideways step was 0.0414 per frame, under the 0.06 limit, with no teleports. Lanes 0, −1 and +1 were all seen.
+- Height went from +0.2794 (leap peak) to −0.2704 (dive bottom). The largest height step was 0.0569 per frame.
+- Coins went 1,420 → 1,590, and the HUD shows the same number.
+
+| t (s) | swipe | response |
+|---|---|---|
+| 0.9 | left | lane 0 → −1 |
+| 1.6 | left | already at the left edge: stays −1, pom-pom wobble only |
+| 2.3 | right | −1 → 0 |
+| 2.9 | up | leap |
+| 3.7 | right | 0 → +1 |
+| 4.3 | right | stays in the right lane (+1) |
+| 4.9 | down | dive |
+| 5.6 | left | queued during the dive, runs when it ends: +1 → 0 at 5.767 s |
+| 6.2 | up | leap |
+| 6.9 | left | 0 → −1, but **not queued**: the 0.62 s leap had already ended at 6.79 s, so it ran at once |
+
+Every swipe was handled before the next game step, so there is no timing race. The camera moves 0.043–0.059 u per frame and always stays at least 0.69 u above Benny's water level.
+
+**My own swipe test:** all 16 checks pass. Coins went 1,420 → 1,620 (water 8, side lanes 6, air 6). The re-rendered frame 0 matches the `?controls=0` start view exactly (100 % identical pixels), so the start camera is still the approved one.
+
+**Changes**
+- **Port fix:** a new `serve.cjs` serves my folder on 9000–9399. Before the browser loads anything, it writes a random token file, fetches it back and checks a marker in `controls.js`. All three of my tests use it.
+- **Bug found and fixed:** the optional `?live=1` real-time loop was passing wall-clock time but a capped time step. On a slow frame a whole leap could finish between two frames, which is why the keyboard check failed (a W press never showed a leap). The controls now keep their own game clock. After the fix, the left key moved Benny to lane −1 and W gave a full leap.
+- **Swipes now listened for on the whole window**, not just the canvas. An overlay added in the merged page can't swallow them. Touches that start on a button, link or input are left alone.
+- **Dive sink slowed from 0.2 s to 0.24 s.** Each height step now stays under 0.06 per frame, and the dive's total length is unchanged.
+- **Added `window.camInfo()`** for your test to log the camera each frame. This meant adding `camera` to my existing hook line in `play3.html`; it still differs from the original only on `// [controls]` lines.
+- The fixes didn't change my test's per-frame results.
+
+**Open issues**
+- Your plan collects **no air coins and only 3 side-lane coins**: its leaps and lane changes don't line up with where those coins sit. "Coins increase" still passes. I did not move the coins to fit the test.
+- **Merge:** the other specialist's page loads a rebuilt track (`track_w/`). My lane width (0.22) and edge limit (0.26) were set for the current river and are untested on that track; both can be tuned from the URL (`?c_LANE=`, `?c_LAT_MAX=`).
+- **Merge:** the other specialist adds a water-flow line between two of my hook lines near the end of `window.step`. Keep both.
+- Leap take-off and landing are sudden speed changes, as in a real jump; the splash and camera spring soften them.
+- In software rendering the live mode runs at several seconds per frame, so I only confirmed it works, not how it feels.
+- Only one new still was rendered (frame 0) and no clip. The other five stills in `out_controls/` are from the previous session, made before these changes.
+
+The "Verification results" section of `CONTROLS_NOTES.md` now has all of these numbers.
+
+Files are in `/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA/`:
+- controls.js
+- play3.html
+- serve.cjs
+- acceptance_logic.cjs
+- acceptance_logic.json
+- swipe_test.cjs
+- swipe_log.json
+- swipe_log_logic_only.json
+- live_key_check.cjs
+- live_key_check.json
+- compare0.json
+- out_controls/a_start_frame0.png
+- CONTROLS_NOTES.md
+

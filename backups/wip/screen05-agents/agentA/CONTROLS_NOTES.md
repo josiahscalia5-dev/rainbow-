@@ -89,5 +89,62 @@ y 640.5), the same per-frame read (`step()` merged with `state()`, `camInfo()`) 
 `renderNow` / screenshots. Adds: which element receives a touch at the swipe point, a read-only `state()` right after each swipe
 (lane / move / queued), each swipe's response vs the intended one, smoothness second differences and camera numbers.
 
-## Verification results
-(see below — filled in from the actual run)
+## Verification results (2026-11-21, actual runs in this folder, after every change listed above)
+All numbers from the JSON files named; SwiftShader, Chromium headless, Pixel-7-like 412×915 portrait, real CDP touch events.
+
+### 1. `acceptance_logic.json` — the lead's `final_acceptance.cjs` plan, logic only (load 42.9 s, run 45 s)
+* API present: `step`, `state`, `renderNow`, `camInfo` = functions; `input` = object. Element under the swipe point
+  (206, 640.5) = `CANVAS` (the HUD is `pointer-events:none`; the listeners are on the window anyway).
+* The lead's checks, verbatim: 228 frames / 7.6 s, **0 errors**; forward step 0.046–0.047 u per frame, **0 freezes**;
+  lateral **max |Δlat| 0.0414 per frame** (limit 0.06), **0 teleports**, **lanes seen 0, −1, +1**; vertical max step
+  **0.0569 per frame**, **height +0.2794 (leap peak) … −0.2704 (dive bottom)**; **coins 1,420 → 1,590** (HUD "1,590" =
+  counter); 10 swipes sent, all 10 logged as `touch`.
+* Each swipe (input clock = the last stepped frame, i.e. handled before the next `step`, no race):
+
+| t (s) | swipe | intended | state right after the swipe | result |
+|---|---|---|---|---|
+| 0.9 | left | lane −1 | lane −1, move `lane` | lane 0 → −1 from 0.9 s; +40 coins in its window (left row + water) |
+| 1.6 | left | already at the left edge | lane −1, no move | stays −1 (pom-pom wobble only) |
+| 2.3 | right | lane 0 | lane 0, move `lane` | −1 → 0 from 2.3 s; +30 |
+| 2.9 | up | leap | move `leap` | peak +0.2794, lands, +20 (water coins after landing) |
+| 3.7 | right | lane +1 | lane +1, move `lane` | 0 → +1 from 3.7 s |
+| 4.3 | right | stay in the right lane | lane +1, no move | stays +1 (wobble only) |
+| 4.9 | down | dive | move `dive` | bottom −0.2704, resurfaces |
+| 5.6 | left | queued during the dive | move `dive`, **queued `left`** | executes when the dive ends: +1 → 0 at 5.767 s; +30 |
+| 6.2 | up | leap | move `leap` | peak +0.2794; +20 |
+| 6.9 | left | lane −1 | lane −1, move `lane` | 0 → −1 from 6.9 s (the 0.62 s leap had ended at 6.79 s, so it ran at once, not queued) |
+
+* Extra numbers: max second difference per frame lat 0.0221, camLat 0.0013, camH 0.0019 (camera springs smooth);
+  |lat| ≤ 0.22, |camLat| ≤ 0.11, camH −0.020 … +0.073; camera moves 0.043–0.059 u per frame (no jumps), camera 1.06–1.38 u
+  from Benny and always ≥ 0.69 u above his water level (no clipping into the water). Coins by kind: water 14, lane 3, air 0.
+
+### 2. `swipe_log_logic_only.json` / `swipe_log.json` — my own 8-swipe test (timed for the side rows and air arcs)
+* 16 / 16 checks true (real touch, frame-0 offsets exactly 0, left / edge / right / leap / dive / queue, left-lane coins,
+  air coins on both leaps, HUD = counter, camera clamp, inside the river, no page errors). Max |Δlat| 0.0414 / frame, max
+  height step 0.0569 / frame, leap peak 0.2794 (= 0.6 × his height), dive −0.2704 (= 80 % under), coins 1,420 → 1,620
+  (water 8, lane 6, air 6). The per-frame rows are identical before and after the clock fix.
+* Frame 0, re-rendered this session (`out_controls/a_start_frame0.png`, 23.9 s) vs `?controls=0`
+  (`a_start_frame0_controls_off.png`): `compare0.json` = **100 % identical pixels, max difference 0**, so the start view
+  is still exactly the approved camera. The other five stills in `out_controls/` are from the previous session (the dive
+  still was made with the old 0.2 s sink; frame 102 is at the dive bottom in both timings). No clip was rendered.
+
+### 3. `live_key_check.json` — `?live=1` real-time loop + keyboard (206×458)
+* First run found a bug: KeyW never showed a leap because the live loop passed wall-clock `t` while clamping `dt`, so on a
+  slow SwiftShader frame the whole 0.62 s leap ended between two frames. Fixed (own clock = Σ dt; live game time = Σ clamped
+  dt). Re-run: ArrowLeft → lane −1 (lat −0.18 and moving), KeyW → `move: leap`, height 0.205, then 0.2794 at the peak a
+  few frames later; s advanced by itself 0 → 0.84; both keys logged as `key`. Real-time FEEL was not judged (SwiftShader
+  runs at several seconds per frame).
+
+### Open issues / honest limits
+* With the lead's plan Benny catches **no air coins and only 3 side-lane coins**: the air arcs (s 3.1 / 6.7 / 10.3) and side
+  rows (s 1.6, 4.4, 8.0, 11.6) do not line up with that plan's leaps and lane changes. "Coins increase" passes (+170).
+  I did not move the coins to fit the test.
+* Swipes toward the edge from an outer lane do nothing except a pom-pom wobble (by design).
+* The leap is a ballistic arc: take-off and landing are speed jumps (height second difference 0.057 at those two frames),
+  softened only by the splash, pitch spring and camera spring.
+* Merge notes for the lead: agentB's `play3.html` loads the rebuilt `track_w/` pieces; LANE 0.22 / LAT_MAX 0.26 were set
+  for the current track (river half-width ~0.30–0.35) and are untested on `track_w/` (tunable by `?c_LANE=` / `?c_LAT_MAX=`).
+  agentB adds `WF?.update(dt, camera); // [waterflow]` right after original line 173, between my coin-line and return-line
+  hooks; keep both. The old copied scripts `track_clip.cjs`, `shots.cjs`, `play_shots*.cjs` still use ports 8700–8899
+  (unchanged and not used by my tests; `track_clip.cjs` steers with `steer`, which the controls ignore).
+* All motion checks are numeric. No moving clip was rendered (software rendering only).

@@ -6,3 +6,4 @@ console.warning: [.WebGL-0x9e4001b9c00]GL Driver Message (OpenGL, Performance, G
 ready 29.58
 still 0 51.229 visible splats 649235
 still 4.4 64.56 visible splats 1061727
+still 10.4 69.968 visible splats 812175
