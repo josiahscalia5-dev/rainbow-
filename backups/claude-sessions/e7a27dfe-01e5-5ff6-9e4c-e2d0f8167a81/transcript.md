@@ -1242,3 +1242,65 @@ Nearly done recording (262 of about 300 frames). I'll send the video and compari
 
 > 🔧 **Bash** `{"command": "timeout 300 python3 scripts/rainbow-autosave.py --reason \"manual:screen05-paintswim\" 2>&1 | tail -4; git status --short | head; git rev-parse HEAD; timeout 30 git ls-remote origin refs/heads/claude/screen-05-3d-geometry-9yu7pu; git show --stat HEAD | grep -E \"paint.ts|Game.ts|swim05|HANDOFF\" | head", "description": "Save to GitHub and verify the remote matches", "timeout": 320000}`
 
+### 🧑 User — 2026-11-21T03:09:17.401Z
+
+> ↩︎ result: "note": "following session branch 'claude/screen-05-3d-geometry-9yu7pu' (config branch 'claude/rainbow-r22-restore-ut3m39')",
+>   "commit": "4ff6a8de7188c8220241bffc59d6c1bf7eab9477",
+>   "duration_s": 18
+> }
+> 4ff6a8de7188c8220241bffc59d6c1bf7eab9477
+> 4ff6a8de7188c8220241bffc59d6c1bf7eab9477	refs/heads/claude/screen-05-3d-geometry-9yu7pu
+>  qa/match/05/swim05/PROOF_APPROVED_vs_GAMEPLAY.jpg  |  Bin 0 -> 920219 bytes
+>  qa/match/05/swim05/clip/SWIM05_gameplay.mp4        |    3 +
+>  qa/match/05/swim05/clip/clip_SWIM05_gameplay.json  | 2903 ++++++++++++++++++++
+>  .../swim05/clip/clip_SWIM05_gameplay_metric.json   | 1931 +++++++++++++
+
+### 🤖 Claude — 2026-11-21T03:09:19.727Z
+
+> 🔧 **Bash** `{"command": "git diff HEAD --stat | tail -2; git log --oneline -4 -- src/world/paint.ts qa/match/05/swim05/README.md docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md | head; grep -c paintswim <(git show HEAD:src/world/paint.ts)", "description": "Confirm code and notes are committed"}`
+
+### 🧑 User — 2026-11-21T03:09:19.774Z
+
+> ↩︎ result: 6ce8299 autosave: Rainbow 2026-11-21 03:07 UTC
+> c8c7f11 autosave: Rainbow 2026-11-21 02:00 UTC
+> e218558 autosave: Rainbow 2026-11-21 01:50 UTC
+> bca6925 autosave: Rainbow 2026-11-21 01:43 UTC
+> 8
+
+### 🤖 Claude — 2026-11-21T03:09:20.529Z
+
+Everything is saved on GitHub (commit `4ff6a8d`, remote matches). Sending you the video and the comparison now.
+
+### 🤖 Claude — 2026-11-21T03:09:22.376Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/match/05/swim05/clip/SWIM05_gameplay.mp4", "/home/user/rainbow-/qa/match/05/swim05/PROOF_APPROVED_vs_GAMEPLAY.jpg"], "caption": "Real gameplay, 9.6 s: your unchanged approved Screen 05 with the real 3D Benny swimming through it. The picture shows your approved screen on the left, then five moments from the same run.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-21T03:09:22.934Z
+
+> ↩︎ result: 2 files delivered to user.
+>   /home/user/rainbow-/qa/match/05/swim05/clip/SWIM05_gameplay.mp4 → file_uuid: 81ebeaad-7fc2-4da2-8e6f-5433cfbcf7c3
+>   /home/user/rainbow-/qa/match/05/swim05/PROOF_APPROVED_vs_GAMEPLAY.jpg → file_uuid: 48243dff-6f5d-4556-86ed-312174c3cbd6
+
+### 🤖 Claude — 2026-11-21T03:09:33.165Z
+
+You're right: I had your approved screen and kept changing it. I've stopped. This version doesn't touch your artwork at all.
+
+**What's in the video (9.6 seconds of real gameplay):**
+- The scenery is your approved Screen 05 picture, the same painted version you called beautiful. The tunnel, gold bands, purple machinery and the pink-and-blue S-river are untouched, and the water still flows.
+- The pink character is the real 3D Benny. He paddles, leans and steers left and right while he swims up your painted S-river. He passes through the gold bands into the tunnel, and Screen 06 opens from there.
+- He starts in the same spot and at the same size as the Benny in your picture, then gets smaller as he swims deeper into the tunnel.
+- Coins sit on the river and he swims into them. The counter went from 1,420 to 1,510 during the run and he lost no hearts.
+
+**One visible flaw, honestly:** your picture had Benny painted in the foreground. When he swims away, the water where he was painted shows through as a slightly purple stripe down the middle of the river. It's in the comparison picture. Across every frame of Screen 05, the run measures 74% pixel likeness and 80% "looks the same" to your approved picture. The painted version with Benny parked in his painted spot measured 82% and 93%. The gap comes from Benny leaving his painted spot and that stripe, not from any change to the scenery.
+
+**Your direct question: can the current approach do what you asked?** Partly. Your painting shows the tunnel from one fixed viewpoint. Every time the camera flew forward with Benny, everything around him had to be rebuilt as 3D models, and that rebuilt world never looked like your painting. That's why every 3D version drifted from your artwork. This version keeps your picture still and moves Benny through it, the way games with painted backgrounds work. If you want the camera itself to fly through the tunnel and still look like your painting, that needs a dedicated 3D environment artist to build the tunnel properly. More rounds of tweaks from me won't get there.
+
+**Nothing lost, no credits spent:**
+- **New version:** `?paint=1&paintswim=1&benny31=1`
+- **Painted version you liked:** `?paint=1`, identical to before.
+- **Rejected 3D version:** kept as it was.
+- The default game is unchanged.
+- **Backup:** everything is on GitHub, branch `claude/screen-05-3d-geometry-9yu7pu`, commit `4ff6a8d`, remote matches, and the five-minute autosave is running. At startup the session couldn't download from GitHub, so I haven't checked for newer work on other branches.
+
+Is this what you wanted: your exact screen with Benny really swimming through it? If yes, I'll fix the purple stripe next and change nothing else. I won't touch other screens until you say so.
+
