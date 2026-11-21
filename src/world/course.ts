@@ -192,6 +192,16 @@ export function meander05(u: number): number {
   return hermiteKnots(KNOTS05, u, SLOPE05_KEEP, SLOPE05_TAIL) + bend;
 }
 
+/**
+ * `?tun05=1` (round 31): the stretch that wears the approved Screen 05 look (water, foam, bubbles, tunnel camera): 05 itself and
+ * most of 06, which continues the same purple-and-gold current up to the swing into 07. Off: exactly stage 05.
+ */
+export function look05(course: Course): StageDef {
+  const st = course.stage('05');
+  return TUN05_COURSE ? { ...st, s1: course.stage('06').s1 - 6 } : st;
+}
+export const TUN05: boolean = TUN05_COURSE;
+
 /** Generates the dense control polyline of the route (absolute coordinates). */
 function buildRoute(): RouteData {
   const pts: THREE.Vector3[] = [];
@@ -272,17 +282,28 @@ function buildRoute(): RouteData {
   straight.push({ from: '05', to: '06', a: s5.clone(), b: s5.clone().add(L05), floorDepth: 3.3 });
   mark('06');
   // ---- 06: rinse arch — rises ~12 units, crests, curls down and to the right into the 07 tube ----
-  // `?tun05=1` (round 31): a low crest (2.5 units) so the long approved 05 tunnel continues straight into 06 (the 12.5-unit arch
-  // rose out of the tunnel right in front of the 05 view); the end point (hence 07, the plunge, 08 …) is the same.
-  const ARCH06 = TUN05_COURSE ? 2.5 : 12.5;
+  // `?tun05=1` (round 31): see below — the 12.5-unit arch rose out of the tunnel right in front of the 05 view.
   const s6 = pts[pts.length - 1].clone();
-  seg(34, (t) =>
-    V(
-      s6.x - 4 * Math.sin(Math.PI * t) + (WORLD.chamber.center.x - s6.x) * smooth(0.4, 1, t),
-      s6.y + ARCH06 * Math.pow(Math.sin(Math.PI * Math.min(t / 0.82, 1)), 1.15) - 4.5 * smooth(0.5, 1, t),
-      s6.z - 46 * t,
-    ),
-  );
+  if (TUN05_COURSE) {
+    // `?tun05=1`: 06 continues the 05 current — the stream keeps winding in S-curves inside the purple-and-gold tunnel, keeps
+    // its gentle descent (no arch: a rise in front of the 05 view read as a hump of water) and swings right toward the 07 tube in
+    // its last part; same end point, so 07 onward is where it was
+    seg(34, (t) =>
+      V(
+        s6.x + 1.8 * Math.sin(2 * Math.PI * 1.2 * t) * smooth(0, 0.15, t) * (1 - smooth(0.5, 0.75, t)) + (WORLD.chamber.center.x - s6.x) * smooth(0.55, 1, t),
+        s6.y - 1.2 * t - 3.3 * smooth(0.45, 1, t),   // no crest: the current keeps its gentle descent, then drops into 07
+        s6.z - 46 * t,
+      ),
+    );
+  } else {
+    seg(34, (t) =>
+      V(
+        s6.x - 4 * Math.sin(Math.PI * t) + (WORLD.chamber.center.x - s6.x) * smooth(0.4, 1, t),
+        s6.y + 12.5 * Math.pow(Math.sin(Math.PI * Math.min(t / 0.82, 1)), 1.15) - 4.5 * smooth(0.5, 1, t),
+        s6.z - 46 * t,
+      ),
+    );
+  }
   mark('07');
   // ---- 07: winding washer tube (the visible stretch) ----
   const s7 = pts[pts.length - 1].clone();
@@ -447,7 +468,8 @@ export class Course {
       // 05: level current (ref 05 shows no tilt) → weak curvature banking. `width` is the hand-over
       // value at the 04/06 junctions; inside the current widthAt() widens the stream to fill the floor.
       def('05', m['05'], m['06'], { width: 9, tube: 7.6, tubeKind: 'perf', speed: 11, refCoins: 1420, bank: 0.25 }),
-      def('06', m['06'], m['07'], { width: 7, tube: 15, tubeKind: 'perf', speed: 11, refCoins: 1680, bank: 0.6 }),
+      // `?tun05=1`: 06 continues the approved 05 current — the same tube radius, wide river and bank (not the 06 hall)
+      def('06', m['06'], m['07'], TUN05_COURSE ? { width: 10, tube: 7.6, tubeKind: 'perf', speed: 11, refCoins: 1680, bank: 0.25 } : { width: 7, tube: 15, tubeKind: 'perf', speed: 11, refCoins: 1680, bank: 0.6 }),
       def('07', m['07'], m['08'], { width: 5.6, tube: 7.2, tubeKind: 'perf', speed: 12, refCoins: 1940 }),
       def('08', m['08'], m['09'], { width: 4.8, speed: 9.5, refCoins: 2040 }),
       def('09', m['09'], m['10'], { width: 6.4, speed: 9.5, refCoins: 2280 }),

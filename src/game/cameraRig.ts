@@ -4,7 +4,7 @@
  * as in the references. Pitch & roll follow the banked path smoothly — including the 07 plunge.
  */
 import * as THREE from 'three';
-import { WORLD } from '../world/course';
+import { WORLD, look05 } from '../world/course';
 import type { Course, StageId } from '../world/course';
 import type { TubePath } from '../world/tube';
 import { applyMatchCam } from './match';
@@ -155,7 +155,7 @@ export class RideCamera {
     // vanishing point, level (no roll). Laterally the camera rides the tunnel axis while Benny is near
     // it and eases toward him (latFollow) only as he swings wide (Gaussian dead zone), so the rings
     // stay concentric on the ref composition and Benny never leaves the frame when steering.
-    const st5 = this.course.stage('05');
+    const st5 = look05(this.course); // `?tun05=1`: the approved 05 tunnel camera continues through the 05-look stretch
     const p5 = STAGE_CAM['05'] as CamParams;
     const w5 = this.axis ? THREE.MathUtils.smoothstep(s, st5.s0 + 1, st5.s0 + 8) * (1 - THREE.MathUtils.smoothstep(s, st5.s1 - 9, st5.s1 - 1)) : 0;
     if (w5 > 0 && this.axis) {

@@ -4472,3 +4472,453 @@ Do not sacrifice the approved scenery to make the movement work. I want both.
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-21T02:28:23.217Z
+
+> 🔧 **Bash** `{"command": "grep -n \"meander05\\|function meander\\|S05 = \\|S05\\.\" src/world/course.ts | head -20", "description": "Find how Screen 05's S-curves are made"}`
+
+### 🧑 User — 2026-11-21T02:28:23.253Z
+
+> ↩︎ result: 120:export const S05 = {
+> 148:function meander05Sine(u: number): number {
+> 154:const U05_KEEP = S05.uCrest + S05.lambda / 4;
+> 171:const KNOTS05: [number, number][] = [[U05_KEEP, meander05Sine(U05_KEEP)], ...MEANDER05_KNOTS, [U05_TAIL, meander05Sine(U05_TAIL)]];
+> 172:const SLOPE05_KEEP = slopeOf(meander05Sine, U05_KEEP);
+> 173:const SLOPE05_TAIL = slopeOf(meander05Sine, U05_TAIL);
+> 187:export function meander05(u: number): number {
+> 188:  if (u <= 0 || u >= S05.L) return 0;
+> 189:  if (u <= U05_KEEP || u >= U05_TAIL) return meander05Sine(u);
+> 264:  // descent) is laid; the lateral S-offset meander05(u) is added after smoothing (see the end of
+> 268:  const L05 = V(0, -3, -S05.L);
+> 352:    const u = pts[i].clone().sub(s5).dot(dir05) * (S05.L / L05.length());
+> 353:    pts[i].x += meander05(u);
+> 507:    let best = this.st05.s0 + S05.uCrest, dMin = Infinity;
+> 508:    for (let s = this.st05.s0 + 4; s < this.st05.s0 + S05.uCrest + S05.lambda / 4; s += 0.05) {
+> 551:    // offset05(s), so the half width is S05.extent − |offset| (smooth abs): the outer edge of each bend
+> 558:      base += (2 * (S05.extent - Math.sqrt(d * d + 0.09)) - base) * k;
+
+### 🤖 Claude — 2026-11-21T02:28:25.933Z
+
+> 🔧 **Bash** `{"command": "sed -n '108,200p' src/world/course.ts", "description": "Read the Screen 05 S-curve definition"}`
+
+### 🧑 User — 2026-11-21T02:28:25.966Z
+
+> ↩︎ result: /**
+>  * 05 current (ref 05): the tunnel is a straight line; the STREAM winds inside it. The meander is the
+>  * lateral (world +X) offset of the course centreline from that line, as a function of the distance
+>  * `u` along the line (0 … L05). It is applied to the route AFTER smoothPolyline, so it is exact (the
+>  * smoothing would shave ~25 % off the amplitude) and still C¹ at both ends (offset and slope → 0).
+>  *
+>  * Shape tuned against the reference's cyan core: a small first crest under Benny at the 05
+>  * checkpoint (u≈uCrest, offset a0 to the LEFT, heading parallel to the tunnel axis), then crests
+>  * that grow toward the far end (screen: Benny → (560,700) → (450,600) → (520,520) → VP).
+>  * Coins (gameplay/coins.ts) sit on this centreline (lat 0), so they wind with the same S.
+>  */
+> export const S05 = {
+>   /** length of the straight tunnel line (units) */
+>   L: 72,
+>   /** wavelength along the line (crest → crest of the same side) */
+>   lambda: 32,
+>   /** u of the first (left) crest, where Benny rides at the 05 checkpoint */
+>   uCrest: 14,
+>   /** crest amplitude at uCrest and at uCrest + 1.5 λ (linear growth in between) */
+>   a0: 0.45,
+>   a1: 1.85,
+>   /** half extent of the stream (|offset| + half wi …[+4299 chars]
+
+### 🤖 Claude — 2026-11-21T02:28:44.428Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='src/world/course.ts'; s=open(p).read()\nold=\"\"\"  const ARCH06 = TUN05_COURSE ? 2.5 : 12.5;\n  const s6 = pts[pts.length - 1].clone();\n  seg(34, (t) =>\n    V(\n      s6.x - 4 * Math.sin(Math.PI * t) + (WORLD.chamber.center.x - s6.x) * smooth(0.4, 1, t),\n      s6.y + ARCH06 * Math.pow(Math.sin(Math.PI * Math.min(t / 0.82, 1)), 1.15) - 4.5 * smooth(0.5, 1, t),\n      s6.z - 46 * t,\n    ),\n  );\"\"\"\nnew=\"\"\"  const s6 = pts[pts.length - 1].clone();\n  if (TUN05_COURSE) {\n    // `?tun05=1`: 06 continues the long straight 05 tunnel line — the stream …[+1961 chars]`
+
+### 🤖 Claude — 2026-11-21T02:28:45.480Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/tun3.png"}`
+
+### 🧑 User — 2026-11-21T02:29:09.174Z
+
+> ↩︎ result: TUN3 stills 6
+
+### 🧑 User — 2026-11-21T02:29:09.212Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T02:29:44.512Z
+
+> 🔧 **Bash** `{"command": "grep -n \"stage('05')\\|stage('06')\\|s1\\b\\|PROJ05 &&\\|if (PROJ05)\\|uPjRange\\|pjS0\\|pjS1\\|projRange\\|sMax\\|sMin\" src/vfx/waterRibbon.ts | head -40", "description": "Find the range of river the approved water covers"}`
+
+### 🧑 User — 2026-11-21T02:29:44.549Z
+
+> ↩︎ result: 52:    const a = smooth(st.s0 - 5, st.s0 + 5, s) * (1 - smooth(st.s1 - 5, st.s1 + 5, s));
+> 73:  const st = course.stage('05');
+> 74:  if (s <= st.s0 || s >= st.s1) return 0;
+> 212: * program and geometry is the previous one (code behind `#ifdef PROJ05` / `if (PROJ05)`).
+> 230:  const st = course.stage('05');
+> 231:  if (s <= st.s0 || s >= st.s1 + 4) return { c: 0, hw };
+> 243:    const a = smooth(st.s0 - 5, st.s0 + 5, s) * (1 - smooth(st.s1 - 5, st.s1 + 5, s));
+> 396:uniform vec4 uPjLutS;      // s0, s1, lut texels, unused
+> 399:uniform vec2 uPjNS;        // s0, s1
+> 1487:  s1: number;
+> 1493:export function createRibbon(course: Course, opts: { s0: number; s1: number; quality: 'high' | 'low' }): Ribbon {
+> 1494:  const { s0, s1, quality } = opts;
+> 1497:  const rows = Math.ceil((s1 - s0) / ds) + 1;
+> 1515:    const s = Math.min(s1, s0 + i * ds);
+> 1598:    uFlow05: { value: course.stage('05').speed * FLOW05 },
+> 1630:    s1,
+> 1736:    (u.uPjLutS.value as THREE.Vector4).set(lut.E.s0, lut.E.s1, n, 0);
+> 1738:    (u.uPjNS.value as THREE.Vector2).set(lut.N.s0, lut.N.s1);
+> 1741:    ds.x = lut.D.u1 - lut.D.u0; ds.y = lut.D.s1 - lut.D.s0;
+
+### 🤖 Claude — 2026-11-21T02:29:47.987Z
+
+> 🔧 **Bash** `{"command": "sed -n '1690,1760p' src/vfx/waterRibbon.ts; grep -n \"uPjTile\\|vPjT\\|pjTile\\|T.s0\\|T.s1\\|lut.T\" src/vfx/waterRibbon.ts | head -20; ls assets/textures/water05/ | head -30; python3 -I -c \"import json; d=json.load(open('assets/textures/water05/proj05_lut.json')) if __import__('os').path.exists('assets/textures/water05/proj05_lut.json') else None; print({k:(v if not isinstance(v,list) else len(v)) for k,v in (d or {}).items()} if d else 'no lut json')\" 2>&1 | head -5", "description": "Read the approved-water layer setup and its data files"}`
+
+### 🧑 User — 2026-11-21T02:29:48.085Z
+
+> ↩︎ result: <persisted-output>
+> Output too large (31.7KB). Full output saved to: /root/.claude/projects/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/tool-results/b2iox86rs.txt
+> 
+> Preview (start and end):
+>   // still, and `projflowmix05` (share of the picture that travels; default 0.5, 1 = all) keeps the rest of the approved
+>   // picture fixed where it is painted — measured (qa/pilot05/proj/flow2/NOTES.md): similarity to the unflowed design
+>   // over a cycle 0.72 (old flow) -> 0.93, never below 0.90; direction toward the camera in every tracked frame pair.
+>   const FLOW2 = qs.get('projflow05') === '2' || (qs.get('match05') === '1' && qs.get('projflow05') === null);
+> [… 29.8KB omitted …]
+> 0.46773, 0.46282, 0.45818, 0.45388, 0.44846, 0.44294, 0.4381, 0.43434, 0.43197, 0.43123, 0.43219, 0.43469, 0.43837, 0.44268, 0.44701, 0.44996, 0.45065, 0.45113, 0.45154, 0.45198, 0.45256, 0.45333, 0.4543, 0.4554, 0.45653, 0.45756, 0.45841, 0.45904, 0.4579, 0.45385, 0.44904, 0.44402, 0.43939, 0.4356, 0.43285, 0.43112, 0.43022, 0.42994, 0.4301, 0.43063, 0.43152, 0.43282, 0.4346, 0.43689, 0.43966, 0.44279, 0.44611, 0.4494, 0.45246, 0.45516, 0.45745, 0.45936, 0.46098, 0.46242, 0.46381, 0.46519, 0.46658, 0.4679 …[+1009 chars]
+
+### 🤖 Claude — 2026-11-21T02:29:50.432Z
+
+> 🔧 **Bash** `{"command": "grep -n \"uPjT\\b\\|uPjT[A-Z]\\|pjTile\\|// T tile\\|T tile\\|uPjTA\\|lut.T\\b\\|lut\\.T\\.\" src/vfx/waterRibbon.ts | head -20", "description": "Find where the approved water tile layer is sampled"}`
+
+### 🧑 User — 2026-11-21T02:29:50.476Z
+
+> ↩︎ result: 208: *   E exact (≈ screen resolution at the locked eye), N near (full width), T tile (the rest of 05), D detail (streaks /
+> 400:uniform sampler2D uPjT;    // periodic tile (repeat along s)
+> 401:uniform vec2 uPjTS;        // start s, period L
+> 443:  vec3 t = texture2D(uPjT, vec2(u * 0.5 + 0.5, (s - uPjTS.x) / uPjTS.y)).rgb;
+> 464:  vec3 ft = texture2D(uPjWT, vec2(u * 0.5 + 0.5, (s - uPjTS.x) / uPjTS.y)).rgb;
+> 1679:  for (const k of ['uPjE', 'uPjN', 'uPjT', 'uPjD', 'uPjLut']) u[k] = { value: empty };
+> 1683:  u.uPjTS = { value: new THREE.Vector2(0, 1) };
+> 1728:    u.uPjE.value = E; u.uPjN.value = N; u.uPjT.value = T; u.uPjD.value = D;
+> 1739:    (u.uPjTS.value as THREE.Vector2).set(lut.T.a, lut.T.L);
+
+### 🤖 Claude — 2026-11-21T02:29:52.455Z
+
+> 🔧 **Bash** `{"command": "sed -n '405,520p' src/vfx/waterRibbon.ts", "description": "Read the approved-water shader layers and where they apply"}`
+
+### 🧑 User — 2026-11-21T02:29:52.490Z
+
+> ↩︎ result: uniform vec4 uPjPost;      // exposure, saturation, contrast, vignette (the live post chain)
+> uniform vec2 uPjRes;       // render target size (vignette inverse)
+> uniform float uPjDbg;      // QA ?projdbg05=1: layer map (green = exact, blue = near, red = tile)
+> uniform vec4 uPjNear;      // ?projnear05=1: on, near-flare gain, near-layer texels (w, h)
+> uniform sampler2D uPjT2;   // ?projnear05=1: the sharp near tile (mirrored repeat along s), used where E is magnified
+> uniform vec2 uPjT2S;       // its start s, period
+> uniform sampler2D uPjWT2;  // its flow map (?projflow05=2)
+> // ?projnear05=1: 1 on river the camera has APPROACHED — within ≈14–20 units of the eye (1 / gl_FragCoord.w = view
+> // depth) AND both the exact layer and the near layer magnified there. (The far river is magnified in the exact layer
+> // only, steep far banks are far, the locked view is magnified nowhere in both: none of them changes.)
+> float pjNearK(float u, float mE, float mN) {
+>   if (uPjNear.x < 0.5) return 0.0;
+>   float near = 1.0 - smoothstep(14.0, 20.0, 1.0 / max(gl_FragCoord.w, 1e-4));
+>   float edge = 1.0 - smoothstep(0.88, 0.96, abs(u));     // not on the lifted outer bank edge (steep: always magnified)
+>   return  …[+5710 chars]
+
+### 🤖 Claude — 2026-11-21T02:29:55.093Z
+
+> 🔧 **Bash** `{"command": "grep -n \"pjTarget(\\|pjW\\b\\|float pjOn\\|PROJ05 weight\\|uPjRange\\|pjMix\\|pjK\\b\" src/vfx/waterRibbon.ts | head -20", "description": "Find where the approved water blends in along the river"}`
+
+### 🧑 User — 2026-11-21T02:29:55.128Z
+
+> ↩︎ result: 431:vec3 pjTarget(float u, float s, float mE, float mN, out float wE, out float wN) {
+> 1409:    float pjK = 1.0 - vStyle.w;                    // the 05 weight (1 on 05, blended over the 04 / 06 joins)
+> 1410:    if (pjK > 0.001) {
+> 1438:      vec3 tA = pjTarget(uA, sA, mE, mN, wEA, wNA);
+> 1439:      vec3 tB = pjTarget(uB, sB, mE, mN, wEB, wNB);
+> 1448:        vec3 t0 = pjTarget(u, s, mE, mN, wE0, wN0);
+> 1474:      col = mix(col, lin, pjK);
+
+### 🤖 Claude — 2026-11-21T02:29:57.124Z
+
+> 🔧 **Bash** `{"command": "grep -n \"vStyle\\b\\|vStyle =\\|aStyle\\|style\\[\" src/vfx/waterRibbon.ts | head -20; sed -n '40,80p' src/vfx/waterRibbon.ts", "description": "Find how the 05 water style weight is defined along the route"}`
+
+### 🧑 User — 2026-11-21T02:29:57.165Z
+
+> ↩︎ result: 24: * Per-stage colour-band layout (blended across stage boundaries, baked into `aStyle`):
+> 271:attribute vec4 aStyle;   // band layout: gate, offset, half width, free-meander weight (see BAND_STYLE)
+> 285:varying vec4 vStyle;
+> 292:  vStyle = aStyle;
+> 384:varying vec4 vStyle;
+> 729:  float freeK = vStyle.w;
+> 763:  // Benny parts the bands like a bow wave (vStyle.x, ref 05): just ahead of him they narrow and
+> 769:  if (vStyle.x > 0.0) {
+> 775:    gate = mix(1.0, mix(g05, gOld, freeK), vStyle.x);
+> 776:    part = vStyle.x * hw * 0.3 * freeK * (1.0 - smoothstep(-1.0, 9.0, db));
+> 777:    near05 = mix(1.0, 0.8 + 0.2 * smoothstep(2.0, 14.0, db), sw * vStyle.x);
+> 789:  float offL = hw * (vStyle.y * near05 + mix(0.03, 0.07, freeK) * sin(s * 0.13 + 1.7)) + part + wob * 0.05 * sin(tv * 0.42 + 1.1);
+> 790:  float offR = hw * (vStyle.y * near05 + mix(0.03, 0.07, freeK) * sin(s * 0.11 + 4.2)) + part + wob * 0.05 * sin(tv * 0.37 + 3.9);
+> 792:  float wL = hw * vStyle.z * (1.0 + modA * sin(s * 0.19 + 0.4) + 0.08 * wob * sin(tv * 0.6)) * gate;
+> 793:  float wR = hw * vStyle.z * (1.0 + modA * sin(s * 0.17 + 2.9) + 0.08 * wob * sin(tv * 0.55 + 2.0)) * gate;
+> 815:    if (vStyle.x > 0.0 && uBenny.z > 0.0) {
+> 816:      float …[+2075 chars]
+
+### 🤖 Claude — 2026-11-21T02:30:02.308Z
+
+> 🔧 **Bash** `{"command": "grep -n \"'06'\\|stage('06')\\|s1 - \\|st05\\|stageAtS\" src/vfx/foam.ts | head -20; grep -n \"export function\\|const STAGE\\|Record<StageId\" src/vfx/foam.ts | head; grep -n \"foam\" src/vfx/index.ts | head -20", "description": "Find how the foam banks are set per screen"}`
+
+### 🧑 User — 2026-11-21T02:30:02.349Z
+
+> ↩︎ result: 543:  return (s) => 1 - 0.6 * sm(st.s0 - 6, st.s0 - 1, s) * (1 - sm(st.s1 - 1, st.s1 + 4, s));
+> 553:  const rows = Math.ceil((s1 - s0) / ds) + 1;
+> 603:  const st05 = course.stage('05');
+> 609:    uSt05: { value: new THREE.Vector4(st05.s0 - 1, st05.s0 + 2, st05.s1 - 1, st05.s1 + 4) },
+> 688:  const st05b = course.stage('05');
+> 690:  const low05 = (s: number) => s > st05b.s0 - 4 && s < st05b.s1 + 2;
+> 692:  const imp05S = (s: number) => s > st05b.s0 + 2 && s < st05b.s1 - 2;
+> 715:  const soap05W = (s: number) => smw(st05b.s0 - 1, st05b.s0 + 2, s) * (1 - smw(st05b.s1 - 1, st05b.s1 + 4, s));
+> 757:    for (let s = st05b.s0 + 2; s < st05b.s1 - 2; s += step) {
+> 810:  const st05 = course.stage('05');
+> 937:    const w = sm(st05.s0 + 2, st05.s0 + 7, focusS) * (1 - sm(st05.s1 - 7, st05.s1 - 2, focusS)) * rider.str * (1 - outro);
+> 1107:      rim05.visible = imp05.length > 0 && st05.s1 - 2 > focusS - 12 && st05.s0 + 2 < focusS + 130 && outro < 0.3;
+> 31:export function bermLump(s: number, side: number): number {
+> 35:export function bermDomes(s: number, e: number, side: number): number {
+> 50:export function bermHeight(e: number, hw: number, lump: number): number {
+> 65:export function bermSurface(s: number, e: numbe …[+2188 chars]
+
+### 🤖 Claude — 2026-11-21T02:30:12.299Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"stage('05')\" src --include=*.ts | grep -v \"^src/world/paint\\|benny-lab\\|model-lab\" | wc -l; grep -rn \"stage('05')\" src --include=*.ts | awk -F: '{print $1}' | sort | uniq -c; grep -n \"stage(id\\|stage(id: StageId)\\|  stage(\" src/world/course.ts", "description": "Count the places that use the Screen 05 range"}`
+
+### 🧑 User — 2026-11-21T02:30:12.366Z
+
+> ↩︎ result: 16
+>       1 src/game/Game.ts
+>       1 src/game/cameraRig.ts
+>       1 src/gameplay/coins.ts
+>       1 src/vfx/bubbles.ts
+>       1 src/vfx/flow05.ts
+>       4 src/vfx/foam.ts
+>       1 src/vfx/index.ts
+>       3 src/vfx/waterRibbon.ts
+>       1 src/world/course.ts
+>       2 src/world/environment.ts
+> 537:  stage(id: StageId): StageDef {
+
+### 🤖 Claude — 2026-11-21T02:30:14.634Z
+
+> 🔧 **Bash** `{"command": "sed -n '530,545p' src/world/course.ts; grep -rn \"stage('05')\" src/game/cameraRig.ts src/vfx/bubbles.ts src/vfx/index.ts src/vfx/flow05.ts src/game/Game.ts; grep -n \"'05'\" src/game/cameraRig.ts | head", "description": "Read the stage lookup and its 05 users in camera and effects"}`
+
+### 🧑 User — 2026-11-21T02:30:14.698Z
+
+> ↩︎ result: }
+> 
+>   stageAtS(s: number): StageDef {
+>     for (const st of this.stages) if (s < st.s1) return st;
+>     return this.stages[this.stages.length - 1];
+>   }
+> 
+>   stage(id: StageId): StageDef {
+>     return this.stages.find((s) => s.id === id)!;
+>   }
+> 
+>   /**
+>    * smoothly blended per-stage property (blend ±blend units around stage boundaries).
+>    * Accepts either argument order: prop(s, 'width') or prop('width', s).
+>    */
+>   prop(s: number, key: StageProp, blend?: number): number;
+> src/game/cameraRig.ts:158:    const st5 = this.course.stage('05');
+> src/vfx/bubbles.ts:184:  const st05 = course.stage('05');
+> src/vfx/index.ts:92:  const st05 = course.stage('05');
+> src/vfx/flow05.ts:61:  const st = course.stage('05');
+> src/game/Game.ts:609:  const st05 = course.stage('05');
+> 40:  '05': { back: 6.4, up: 3.6, ahead: 18, lookUp: -1.92, fov: 62, latFollow: 0.85, roll: 0, yaw: 2.96, deadZone: 1.0 },
+> 153:    // 05 straight current tube: the '05' preset measured in the straight tunnel's own frame — aimed
+> 158:    const st5 = this.course.stage('05');
+> 159:    const p5 = STAGE_CAM['05'] as CamParams;
+
+### 🤖 Claude — 2026-11-21T02:30:26.792Z
+
+> 🔧 **Bash** `{"command": "sed -n '30,60p;140,196p' src/game/cameraRig.ts; grep -n \"offset05(s\\|offset05 =\" src/world/course.ts | head -3", "description": "Read the camera presets and the Screen 05 straight-tube camera"}`
+
+### 🧑 User — 2026-11-21T02:30:26.833Z
+
+> ↩︎ result: off08?: [number, number, number];
+>   aim08?: [number, number, number];
+> }
+> 
+> export const STAGE_CAM: Partial<Record<StageId, CamParams>> = {
+>   '03': { back: 6.5, up: 6.5, ahead: 6, lookUp: -1.5, fov: 64, latFollow: 0.3, roll: 0.3 },
+>   '04': { back: 8.5, up: 5.2, ahead: 14, lookUp: -3.0, fov: 66, latFollow: 0.6, roll: 0.4 },
+>   // 05: level rear chase down the straight current tube, camera ON the tunnel axis (rings concentric).
+>   // Ref 05 measured at vFOV 62: VP (498, 479) → view pitched atan((up-lookUp)/(ahead+back)) ≈ 12.7°
+>   // below and yawed ≈ 3° left of the axis; Benny's waterline 711 px below the VP → up/back ≈ 0.56.
+>   '05': { back: 6.4, up: 3.6, ahead: 18, lookUp: -1.92, fov: 62, latFollow: 0.85, roll: 0, yaw: 2.96, deadZone: 1.0 },
+>   '06': { back: 5.6, up: 2.6, ahead: 12, lookUp: 3.4, fov: 66, latFollow: 0.7, roll: 0.4 },
+>   '07': { back: 6.4, up: 4.1, ahead: 18, lookUp: 1.8, fov: 62, latFollow: 0.6, roll: 0.6 },
+>   '08': { back: 6.2, up: 3.7, ahead: 16, lookUp: 0.2, fov: 62, latFollow: 0.8, roll: 0.3 },
+>   '09': { back: 6.2, up: 3.7, ahead: 15, lookUp: 0.6, fov: 62, latFollow: 0.8, roll: 0.3 },
+>   '10': { back: 5.8, up: 3.4, ahead: 11, lookUp: 1.2, fov: 62, latFollow: 0.8, roll: 0 …[+4426 chars]
+
+### 🤖 Claude — 2026-11-21T02:30:37.105Z
+
+> 🔧 **Bash** `{"command": "sed -n '540,600p' src/world/course.ts; grep -n \"tubeR\\b\\|const tubeR\\|prop('tube'\\|radius(s\" src/world/environment.ts src/world/tube.ts | head -12", "description": "Read the river width rules and how the tunnel radius is chosen"}`
+
+### 🧑 User — 2026-11-21T02:30:37.142Z
+
+> ↩︎ result: /**
+>    * smoothly blended per-stage property (blend ±blend units around stage boundaries).
+>    * Accepts either argument order: prop(s, 'width') or prop('width', s).
+>    */
+>   prop(s: number, key: StageProp, blend?: number): number;
+>   prop(key: StageProp, s: number, blend?: number): number;
+>   prop(a: number | StageProp, b: number | StageProp, blend = 6): number {
+>     const s = (typeof a === 'number' ? a : b) as number;
+>     const key = (typeof a === 'string' ? a : b) as StageProp;
+>     let v = 0, w = 0;
+>     for (const st of this.stages) {
+>       const a = smooth(st.s0 - blend, st.s0 + blend, s) * (1 - smooth(st.s1 - blend, st.s1 + blend, s));
+>       if (a > 0) { v += st[key] * a; w += a; }
+>     }
+>     return w > 0 ? v / w : this.stageAtS(s)[key];
+>   }
+> 
+>   widthAt(s: number): number {
+>     let base = this.prop(s, 'width');
+>     // 05 current (ref 05): the water fills the tube floor wall to wall. The centreline winds by
+>     // offset05(s), so the half width is S05.extent − |offset| (smooth abs): the outer edge of each bend
+>     // stays on the same tube chord (constant tunnel radius/depth in tube.ts) and the inner side of a
+>     // bend leaves a narrow bank for the foam, like a river.
+>     const st5 …[+2728 chars]
+
+### 🤖 Claude — 2026-11-21T02:30:49.233Z
+
+> 🔧 **Bash** `{"command": "grep -n \"def('06'\" src/world/course.ts; sed -n '180,190p;225,250p' src/vfx/waterRibbon.ts; grep -n \"stage('05')\" src/vfx/foam.ts src/vfx/bubbles.ts src/vfx/index.ts src/vfx/flow05.ts", "description": "Read the remaining Screen 05 range users before changing them"}`
+
+### 🧑 User — 2026-11-21T02:30:49.272Z
+
+> ↩︎ result: 460:      def('06', m['06'], m['07'], { width: 7, tube: 15, tubeKind: 'perf', speed: 11, refCoins: 1680, bank: 0.6 }),
+>  *               (channel05 below). Visual only: course.ts, widthAt(), steering, coins and collisions are untouched.
+>  *  `?flow05=1`  MATERIAL: a flow map generated from the river's own curves (flow05.ts) drives two-phase advection of
+>  *               a tileable ripple normal / height map (the three.js Water2 technique, without its render passes) —
+>  *               animated ripples, glossy highlights and the Marble panorama's reflection follow the S-curves.
+>  * All off (default): every shader program and geometry attribute is the previous one (pixel-identical build).
+>  */
+> /**
+>  * Screen 05 test W12 (2026-11-16, qa/pilot05/wave12/NOTES.md), two more single factors on top of `?river05=1` (each
+>  * switch turns river05 on; default build untouched):
+>  *  `?silk05=1`  WATER MATERIAL: the user found river05 "too grainy" — one broad ripple octave on a longer tile, the fine
+>  *               brushed cores / ripple crests / second flare set mostly removed, highlights and panorama reflections
+>  * by the far block at the checkpoint, the ride into 06 is the normal river).
+>  */
+> export  …[+1651 chars]
+
+### 🤖 Claude — 2026-11-21T02:30:51.371Z
+
+I'm now extending the approved Screen 05 look (tunnel size, water, foam and camera) along the rest of the route under the test switch, then I'll record the full run.
+
+### 🤖 Claude — 2026-11-21T02:31:08.526Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport re\np='src/world/course.ts'; s=open(p).read()\nold=\"\"\"      def('06', m['06'], m['07'], { width: 7, tube: 15, tubeKind: 'perf', speed: 11, refCoins: 1680, bank: 0.6 }),\"\"\"\nnew=\"\"\"      // `?tun05=1`: 06 continues the approved 05 current — the same tube radius, wide river and bank (not the 06 hall)\n      def('06', m['06'], m['07'], TUN05_COURSE ? { width: 10, tube: 7.6, tubeKind: 'perf', speed: 11, refCoins: 1680, bank: 0.25 } : { width: 7, tube: 15, tubeKind: 'perf', speed: 11, refCoins: 1680, bank: 0.6 }),\"\"\"\nassert old in s; s=s.replac …[+4303 chars]`
+
+### 🧑 User — 2026-11-21T02:31:11.293Z
+
+> ↩︎ result: src/vfx/foam.ts ok
+> src/vfx/bubbles.ts ok
+> src/vfx/index.ts ok
+> src/vfx/flow05.ts ok
+> cam import import { WORLD } from '../world/course';
+> ribbon import import type { Course, StageId } from '../world/course';
+> coins import import type { Course, StageId } from '../world/course';
+
+### 🤖 Claude — 2026-11-21T02:31:16.126Z
+
+> 🔧 **Bash** `{"command": "grep -n \"look05\\|from '../world/course'\\|from './course'\" src/vfx/foam.ts src/vfx/bubbles.ts src/vfx/index.ts src/vfx/flow05.ts src/game/cameraRig.ts | head -20; Q=\"match05=1&projflow05=2&benny31=1&tun05=1\" && timeout 1500 node tools/paint/stills.mjs --q=\"$Q\" --s=132.44,146,160,174,186,200,214 --out=qa/match/05/r31_3d/look --tag=TUN4 2>&1 | tail -1 && python3 -I -c \"\nfrom PIL import Image\nc=Image.new('RGB',(7*240+60,427),'white')\nfor i,s in enumerate([132.44,146,160,174,186,200,214]): c.paste(Image.open(f'qa/match/05/r31_3d/look/TUN4_s{s}.png').convert('RGB').resize((2 …[+205 chars]`
+
+### 🤖 Claude — 2026-11-21T02:31:16.926Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/tun4.png"}`
+
+### 🧑 User — 2026-11-21T02:31:39.969Z
+
+> ↩︎ result: src/vfx/foam.ts:16:import { type Course, WORLD, funnelY, look05 } from '../world/course';
+> src/vfx/foam.ts:541:  const st = look05(course);
+> src/vfx/foam.ts:603:  const st05 = look05(course);
+> src/vfx/foam.ts:688:  const st05b = look05(course);
+> src/vfx/foam.ts:810:  const st05 = look05(course);
+> src/vfx/bubbles.ts:14:import { type Course, WORLD, look05 } from '../world/course';
+> src/vfx/bubbles.ts:184:  const st05 = look05(course);
+> src/vfx/index.ts:16:import { type Course, WORLD, funnelY, look05 } from '../world/course';
+> src/vfx/index.ts:92:  const st05 = look05(course);
+> src/vfx/flow05.ts:27:import type { Course } from '../world/course';
+> src/vfx/flow05.ts:28:import { look05 } from '../world/course';
+> src/vfx/flow05.ts:62:  const st = look05(course);
+> src/game/cameraRig.ts:7:import { WORLD, look05 } from '../world/course';
+> src/game/cameraRig.ts:8:import type { Course, StageId } from '../world/course';
+> src/game/cameraRig.ts:158:    const st5 = look05(this.course); // `?tun05=1`: the approved 05 tunnel camera continues through the 05-look stretch
+> TUN4 stills 7
+
+### 🧑 User — 2026-11-21T02:31:40.003Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T02:31:57.178Z
+
+> 🔧 **Bash** `{"command": "grep -n \"export function straightTubePath\" -A40 src/world/tube.ts | grep -n \"depth\\|floorDepth\\|straight\\|radius\" | head -20", "description": "Read how the tunnel sits relative to the water"}`
+
+### 🧑 User — 2026-11-21T02:31:57.227Z
+
+> ↩︎ result: 1:30:export function straightTubePath(
+> 26:55-  // exact straight stretches (05 current): the axis is pulled onto the course's straight centre line
+> 27:56-  // (foot of the perpendicular from the stream point), so the tunnel is truly straight — no yaw
+> 29:58-  // the 04 junction; height/roll/radius/depth return to the 06 arch tube just past its foot (wRun),
+> 35:64-  for (const r of course.straightAxes ?? []) {
+
+### 🤖 Claude — 2026-11-21T02:31:59.035Z
+
+> 🔧 **Bash** `{"command": "sed -n '30,120p' src/world/tube.ts", "description": "Read the straight-tunnel path construction"}`
+
+### 🧑 User — 2026-11-21T02:31:59.075Z
+
+> ↩︎ result: export function straightTubePath(
+>   course: Course,
+>   s0: number,
+>   s1: number,
+>   opts: { window: number; taper: number; baseRadius: (s: number) => number; floorExtra?: (s: number) => number },
+> ): TubePath {
+>   const ds = 0.5;
+>   const n = Math.ceil((s1 - s0) / ds) + 1;
+>   const S = (i: number) => Math.min(s1, s0 + i * ds);
+>   const axis: THREE.Vector3[] = [];
+>   const cp: THREE.Vector3[] = [];
+>   for (let i = 0; i < n; i++) cp.push(course.sample(S(i)).pos.clone());
+>   for (let i = 0; i < n; i++) {
+>     const s = S(i);
+>     const taper = THREE.MathUtils.smoothstep(s, s0, s0 + opts.taper) * (1 - THREE.MathUtils.smoothstep(s, s1 - opts.taper, s1));
+>     const W = opts.window * taper;
+>     const k = Math.round(W / ds);
+>     let x = 0, z = 0, wsum = 0;
+>     for (let j = i - k; j <= i + k; j++) {
+>       const jj = THREE.MathUtils.clamp(j, 0, n - 1);
+>       const w = k === 0 ? 1 : 1 - Math.abs(j - i) / (k + 1);
+>       x += cp[jj].x * w; z += cp[jj].z * w; wsum += w;
+>     }
+>     axis.push(new THREE.Vector3(x / wsum, cp[i].y, z / wsum));
+>   }
+>   // exact straight stretches (05 current): the axis is pulled onto the course's straight centre line
+>   // (foot of the perpendicular from the stream point), so the tun …[+3602 chars]
+
+### 🤖 Claude — 2026-11-21T02:32:11.654Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='src/world/course.ts'; s=open(p).read()\nold=\"\"\"        s6.y + 2.5 * Math.pow(Math.sin(Math.PI * Math.min(t / 0.82, 1)), 1.15) - 4.5 * smooth(0.5, 1, t),\"\"\"\nnew=\"\"\"        s6.y - 1.2 * t - 3.3 * smooth(0.45, 1, t),   // no crest: the current keeps its gentle descent, then drops into 07\"\"\"\nassert old in s; s=s.replace(old,new,1)\ns=s.replace(\"\"\"    // `?tun05=1`: 06 continues the long straight 05 tunnel line — the stream keeps winding in S-curves inside it, crests gently\n    // (2.5 units) and only swings right toward the 07 tube in its las …[+1286 chars]`
+
+### 🤖 Claude — 2026-11-21T02:32:12.606Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/tun5.png"}`
+
+### 🧑 User — 2026-11-21T02:32:58.799Z
+
+> ↩︎ result: TUN5 stills 6
+> TUN5F stills 6
+
+### 🧑 User — 2026-11-21T02:32:58.954Z
+
+> ↩︎ result: [image]
+

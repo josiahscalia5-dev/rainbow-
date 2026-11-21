@@ -13,7 +13,7 @@
  *    islands on open water. Fixed pools, no per-frame allocation.
  */
 import * as THREE from 'three';
-import { type Course, WORLD, funnelY } from '../world/course';
+import { type Course, WORLD, funnelY, look05 } from '../world/course';
 import { EDGE_LIFT, coreLateral, PROJ05, flag05 } from './waterRibbon';
 import { SPIRAL_C, FUNNEL_LIFT } from './whirlpool';
 import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, withFog } from './glsl';
@@ -538,7 +538,7 @@ const BANK_CLEAR_CORE = 1.45;
  * is a LOW band of piled bubbles (ref ≈40–60 px); the full-height berm read as tall white heaps.
  */
 function bermScale05(course: Course): (s: number) => number {
-  const st = course.stage('05');
+  const st = look05(course);
   const sm = (a: number, b: number, x: number) => { const u = Math.min(1, Math.max(0, (x - a) / (b - a))); return u * u * (3 - 2 * u); };
   return (s) => 1 - 0.6 * sm(st.s0 - 6, st.s0 - 1, s) * (1 - sm(st.s1 - 1, st.s1 + 4, s));
 }
@@ -600,7 +600,7 @@ function createBerm(course: Course, s0: number, s1: number, skip: [number, numbe
   geo.setAttribute('aFoam', new THREE.BufferAttribute(foam, 3));
   geo.setIndex(idx);
   geo.computeVertexNormals();
-  const st05 = course.stage('05');
+  const st05 = look05(course);
   const uniforms = withFog({
     uTime: { value: 0 },
     uOutro: { value: new THREE.Vector2(0, course.stage('08').s0) },
@@ -685,7 +685,7 @@ export function createFoam(
   // wave 5: in 05 the stream-edge rim toward the VP is a LOW rim of piled bubbles (ref ≈40–60 px), not
   // tall heaps: crest puffs × 0.85, heaps × 0.6 and never stacked. Only sizes change, so the shared
   // rand() sequence (and every other stage's foam) stays identical.
-  const st05b = course.stage('05');
+  const st05b = look05(course);
   const bermK = bermScale05(course);
   const low05 = (s: number) => s > st05b.s0 - 4 && s < st05b.s1 + 2;
   /** wave 8: berm puffs drawn as fine-foam impostors (full 05 soap weight only, so 04 / 06 keep their sphere puffs) */
@@ -807,7 +807,7 @@ export function createFoam(
   group.add(whirlGroup);
 
   // ---- 05 flank banks: lather sheet + world-anchored bubble puffs fitted to the frame edges ----
-  const st05 = course.stage('05');
+  const st05 = look05(course);
   const sm = (a: number, b: number, x: number) => {
     const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
     return t * t * (3 - 2 * t);

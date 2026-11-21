@@ -11,6 +11,7 @@
  */
 import * as THREE from 'three';
 import type { Course, StageId } from '../world/course';
+import { look05, TUN05 } from '../world/course';
 import { FRAG_FX_GLSL, FRAG_TAIL, NOISE_GLSL, PALETTE, withFog } from './glsl';
 import { FLOW05_GLSL, flow05Shared, flow05Textures } from './flow05';
 
@@ -51,7 +52,7 @@ function bandStyleAt(course: Course, s: number): Style {
   for (const st of course.stages) {
     const a = smooth(st.s0 - 5, st.s0 + 5, s) * (1 - smooth(st.s1 - 5, st.s1 + 5, s));
     if (a <= 0) continue;
-    const v = BAND_STYLE[st.id] ?? BAND_DEFAULT;
+    const v = (TUN05 && st.id === '06' ? BAND_STYLE['05'] : BAND_STYLE[st.id]) ?? BAND_DEFAULT; // `?tun05=1`: approved 05 water on through 06
     for (let i = 0; i < 4; i++) o[i] += v[i] * a;
     w += a;
   }
@@ -227,7 +228,7 @@ export const proj05Pending: Promise<unknown>[] = [];
 export function channel05(course: Course, s: number): { c: number; hw: number } {
   const hw = course.widthAt(s) / 2;
   if (!FARW05) return { c: 0, hw };
-  const st = course.stage('05');
+  const st = look05(course);
   if (s <= st.s0 || s >= st.s1 + 4) return { c: 0, hw };
   const o = s - st.s0;                              // 05-relative arc length (the checkpoint is at o ≈ 17.75)
   const shL = 1.35 * smooth(25, 32, o) * (1 - smooth(39.5, 47, o));

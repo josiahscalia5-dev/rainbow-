@@ -6,6 +6,7 @@
  */
 import * as THREE from 'three';
 import type { Course, StageId } from '../world/course';
+import { TUN05 } from '../world/course';
 import { canvasTexture } from '../world/materials';
 import { coreLateral, flag05 } from '../vfx/waterRibbon';
 import coins08 from '../../assets/textures/match08/coins08.json';
@@ -49,7 +50,8 @@ export function coinLayout(course: Course): CoinDef[] {
   // 05 — on the winding cyan core (see C05)
   coins05(course, add);
   // 06 — up and over the crest (left of centre like the ref)
-  { const a = st('06'); const n = 18; for (let i = 0; i < n; i++) { const s = a.s0 + 4 + i * ((a.s1 - a.s0 - 6) / n); add('06', s, -1.3 + 0.7 * Math.sin(i * 0.4)); } }
+  if (TUN05) { const a = st('06'); for (let s = a.s0 + 5; s < a.s1 - 3; s += 6.5) add('06', s, 0, C05.h, { scale: C05.scale, tilt: C05.tilt }); } // `?tun05=1`: 05-style trail
+  else { const a = st('06'); const n = 18; for (let i = 0; i < n; i++) { const s = a.s0 + 4 + i * ((a.s1 - a.s0 - 6) / n); add('06', s, -1.3 + 0.7 * Math.sin(i * 0.4)); } }
   // 07 — winding trail, continuing down the plunge
   { const a = st('07'); const n = 24; for (let i = 0; i < n; i++) { const s = a.s0 + 6 + i * ((a.s1 - a.s0 - 10) / n); add('07', s, 1.0 * Math.sin(i * 0.5 + 1)); } }
   // 08 — S toward the platform

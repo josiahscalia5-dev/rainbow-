@@ -11,7 +11,7 @@
  * Pooled (fixed arrays, no per-frame allocation); respawned ahead when Benny passes them.
  */
 import * as THREE from 'three';
-import { type Course, WORLD } from '../world/course';
+import { type Course, WORLD, look05 } from '../world/course';
 import { BERM_OUT } from './foam';
 import { coreLateral } from './waterRibbon';
 import { FRAG_TAIL, NOISE_GLSL, withFog } from './glsl';
@@ -181,7 +181,7 @@ export function createBubbles(course: Course, opts: { quality: 'high' | 'low'; s
   group.name = 'bubbles';
   const dA = WORLD.drumA;
   const drumEnd = course.marks['02_drain'] ?? course.stage('03').s0;
-  const st05 = course.stage('05');
+  const st05 = look05(course);
 
   // ---- big (impostors) ----
   const quad = new THREE.PlaneGeometry(2, 2);

@@ -13,7 +13,7 @@
  * (BENNY_RIDE_OFFSET ≈ 0.55 for a 0.8-radius body: bottom third in the water, splash visible).
  */
 import * as THREE from 'three';
-import { type Course, WORLD, funnelY } from '../world/course';
+import { type Course, WORLD, funnelY, look05 } from '../world/course';
 import { createRibbon, PROJ05, flag05, proj05Pending } from './waterRibbon';
 import { createWhirlpool, whirlpoolHeight, FUNNEL_LIFT } from './whirlpool';
 import { createDrumWater } from './drumWater';
@@ -89,7 +89,7 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
   const crown = createRiderSplash(quality);
   // wave 8: 05 has its own splash (whitewater ropes + froth collar + low crown), cross-faded by w05 below
   const crown05 = createRiderSplash05(quality);
-  const st05 = course.stage('05');
+  const st05 = look05(course);
   const w05At = (s: number) => smooth(st05.s0 + 2, st05.s0 + 5, s) * (1 - smooth(st05.s1 - 5, st05.s1 - 2, s));
   group.add(ribbon.mesh, whirl.mesh, drum.group, wave.mesh, puddles.group, foam.group, bubbles.group, spray.points, crown.mesh, crown05.mesh);
 

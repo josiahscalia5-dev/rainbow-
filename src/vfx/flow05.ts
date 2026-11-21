@@ -25,6 +25,7 @@
  */
 import * as THREE from 'three';
 import type { Course } from '../world/course';
+import { look05 } from '../world/course';
 import { channel05, coreLateral, coreShiftW10, sbend05 } from './waterRibbon';
 
 /** lateral flow (units per unit downstream) encoded in R as 0.5 + v / (2·range) */
@@ -58,7 +59,7 @@ export interface FlowField05 {
 
 /** the river's flow field, straight from its curves (pure data: also used by the QA dump in node) */
 export function flowField05(course: Course): FlowField05 {
-  const st = course.stage('05');
+  const st = look05(course);
   const s0 = st.s0 - 2, len = st.s1 + 6 - s0;
   const data = new Uint8Array(new ArrayBuffer(FLOW_W * FLOW_H * 4));
   const rnd = mulberry32(0x05f10a);
