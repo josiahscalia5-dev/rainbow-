@@ -1,4 +1,4 @@
-"""split_near.py <track dir> [split_u=1.5]  ([track] Android splat budget)
+"""split_near.py <track dir> [split_u=1.25]  ([track] Android splat budget)
 Splits <track>/near.ply (456k splats, the start piece) along the tunnel axis into near_a.ply (u < split: everything from far
 behind the start camera up to the split) and near_b.ply (u >= split). Every splat goes to exactly ONE piece, unchanged, so with
 both drawn the picture is identical. play3.html hides near_a as soon as all of it is behind the camera (it can no longer be
@@ -7,7 +7,7 @@ Also writes near_a_hull.json: the convex-hull vertices of near_a's splat centres
 flip about X) and a margin = 3 sigma of near_a's largest splat near the split, for the page's exact "all behind" test."""
 import sys, json, numpy as np
 from scipy.spatial import ConvexHull
-d = sys.argv[1]; SU = float(sys.argv[2]) if len(sys.argv) > 2 else 1.5
+d = sys.argv[1]; SU = float(sys.argv[2]) if len(sys.argv) > 2 else 1.25
 raw = open(f'{d}/near.ply', 'rb').read(); i = raw.index(b'end_header\n') + 11
 hdr = raw[:i].decode(); n = int(hdr.split('element vertex ')[1].split()[0])
 props = [l.split()[-1] for l in hdr.splitlines() if l.startswith('property')]

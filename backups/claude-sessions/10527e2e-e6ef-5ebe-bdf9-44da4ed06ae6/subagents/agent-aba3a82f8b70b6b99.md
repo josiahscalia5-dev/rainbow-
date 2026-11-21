@@ -572,3 +572,11 @@ Now wire the split into play3.html.
 
 > 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB && NODE_PATH=$(npm root -g) timeout 600 node budget_w.cjs 2>&1 | tee out_water/budget_after.json | tail -3", "description": "Run the visible-splat budget sweep over the whole level", "timeout": 620000}`
 
+### 🧑 User — 2026-11-21T13:05:58.662Z
+
+> ↩︎ result: {"errors":[],"frames":228,"s_end":10.593,"max_visible":1076408,"at":{"s":2.473,"tile":1},"max_per_section":{"0":866071,"1":1076408,"2":830237,"3":830237,"4":830237,"-1":655734},"nearA_hidden_from":{"s":2.52,"tile":1},"nearA_visible_in_section1":1}
+
+### 🤖 Claude — 2026-11-21T13:06:08.704Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB && rm -f track_w/near_a.ply track_w/near_b.ply track_w/near_a_hull.json && sed -i 's/split_u=1.5/split_u=1.25/; s/else 1.5/else 1.25/' tools/split_near.py && sed -i 's/(tools\\/split_near.py, u = 1.5)/(tools\\/split_near.py, u = 1.25)/; s/(288k splats from far behind the start camera up to u = 1.5)/(253k splats from far behind the start camera up to u = 1.25)/' play3.html && python3 -I tools/split_near.py track_w 1.25 && grep -n \"u = 1.25\" play3.html | cut -c1-120 && NODE_PATH=$(npm root  …[+163 chars]`
+

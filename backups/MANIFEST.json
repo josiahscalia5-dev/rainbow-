@@ -794,7 +794,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 26067,
-   "sha256": "7d42cc263583b65156880e02ae7a141d272cc2edd25547c58b631e2051c26324"
+   "sha256": "c1cc8fa1e71d08d822a2628d222287352827ca852eea9cd75f63e8d42e13d8ea"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3271,
-   "sha256": "96678248aa02b8f7dbc98a0afe4f784920f08f42749389c515610c5c8739705f"
+   "sha256": "01be77f0080f1e7ddb11f91fd593495ba36973889613559079b36b5e530d384e"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -7737,6 +7737,11 @@
    "sha256": "42efc5a5aa2be2284977f28eea9d9bc6fb076c3762c701dd867afc623866bdcc"
   },
   {
+   "path": "backups/wip/screen05-agents/WORKSPACE",
+   "bytes": 82,
+   "sha256": "25591079b89645fc0986c87e7e34de20b10282452fda63be68a76f9e42af4f9c"
+  },
+  {
    "path": "backups/wip/screen05-agents/agentA/.serve_token_10793.txt",
    "bytes": 24,
    "sha256": "137ee1a573f3a84f7309f10f350585bc50d06dcde77b1ade8b64b70759929098"
@@ -9818,8 +9823,8 @@
   },
   {
    "path": "docs/briefs/2026-11-21-r32/setup_r32.sh",
-   "bytes": 2315,
-   "sha256": "f95709a0381431ee10d5c6e1b0de6a82b9f2ffc2de21dada54808d7759e1bd29"
+   "bytes": 2818,
+   "sha256": "66d597dfa19df8b80cc5cee15c5d4ded82f33dc6b31e3dee731155ff80252a78"
   },
   {
    "path": "docs/characters/benny.md",

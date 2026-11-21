@@ -31,8 +31,8 @@ const flip = (m) => { m.quaternion.set(1, 0, 0, 0); return m; };
 
 // ---------- track: start piece, alternating sharp sections (bay / mirrored bay), light sections far away, tunnel end ----------
 const L2 = !q.get('trk'); // [track] very distant copies use the 35 % pieces (*_lo2)
-// [track] Android splat budget: the start piece is split along the tunnel (tools/split_near.py, u = 1.5): near_b = its front part,
-// nearA = its rear part (288k splats from far behind the start camera up to u = 1.5). nearA is hidden only when ALL of it is behind
+// [track] Android splat budget: the start piece is split along the tunnel (tools/split_near.py, u = 1.25): near_b = its front part,
+// nearA = its rear part (253k splats from far behind the start camera up to u = 1.25). nearA is hidden only when ALL of it is behind
 // the camera (exact test on its convex hull + the largest splat's reach), so nothing on screen changes. ?nosplit=1 = one piece.
 const NA = L2 && !q.get('nosplit') ? await (await fetch(TD + 'near_a_hull.json')).json() : null;
 const near = flip(new SplatMesh({ url: TD + (NA ? 'near_b.ply' : 'near.ply') })); scene.add(near);

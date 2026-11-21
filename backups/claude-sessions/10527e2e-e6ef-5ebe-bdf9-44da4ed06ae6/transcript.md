@@ -1506,3 +1506,70 @@ Comparing coin placement up close: your approved picture next to our start frame
 >         # tracked status/log files: start from HEAD; they are refreshed from the live log only when a
 >         # real commit is made (below), so status-only runs never leave the tree dirty
 
+### 🤖 Claude — 2026-11-21T13:05:55.412Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/scripts/rainbow-autosave.py", "old_string": "        except Exception as e:  # a snapshot problem must never block the backup itself\n            row[\"wip_error\"] = str(e)[:300]\n        try:\n            snapshot_live_tools()", "new_string": "        except Exception as e:  # a snapshot problem must never block the backup itself\n            row[\"wip_error\"] = str(e)[:300]\n        try:  # round 32: Screen 05 specialists' scratch workspace (written by setup_r32.sh) -> backups/wip/screen05-agents/\n            wsf = REPO / \"backups\ …[+624 chars]`
+
+### 🧑 User — 2026-11-21T13:05:55.841Z
+
+> ↩︎ result: The file /home/user/rainbow-/scripts/rainbow-autosave.py has been updated successfully.
+
+### 🤖 Claude — 2026-11-21T13:06:01.065Z
+
+> 🔧 **Bash** `{"command": "grep -n \"^from pathlib\\|^import\\|^from\" scripts/rainbow-autosave.py | head; python3 -I -c \"import ast;ast.parse(open('scripts/rainbow-autosave.py').read());print('syntax ok')\"; echo /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad > backups/wip/screen05-agents/WORKSPACE", "description": "Check imports, syntax and record the workspace path"}`
+
+### 🧑 User — 2026-11-21T13:06:01.178Z
+
+> ↩︎ result: 21:from __future__ import annotations
+> 23:import argparse
+> 24:import datetime as dt
+> 25:import fcntl
+> 26:import fnmatch
+> 27:import hashlib
+> 28:import json
+> 29:import os
+> 30:import re
+> 31:import subprocess
+> syntax ok
+
+### 🤖 Claude — 2026-11-21T13:06:02.590Z
+
+> 🔧 **Bash** `{"command": "sed -n 32,40p scripts/rainbow-autosave.py | grep -n \"Path\"", "description": "Confirm Path is imported"}`
+
+### 🧑 User — 2026-11-21T13:06:02.625Z
+
+> ↩︎ result: 4:from pathlib import Path
+> 6:REPO = Path(__file__).resolve().parents[1]
+
+### 🤖 Claude — 2026-11-21T13:06:03.846Z
+
+Now updating `setup_r32.sh` so a fresh account also rebuilds the merged page and points the autosave at its new workspace automatically.
+
+### 🤖 Claude — 2026-11-21T13:06:06.650Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/docs/briefs/2026-11-21-r32/setup_r32.sh", "old_string": "echo \"workspace ready: $WS (base, agentA, agentB).", "new_string": "# lead's merged page (agentB visuals + agentA controls, reproducible) and the acceptance tools at the workspace root\npython3 -I \"$REPO/tools/marble05/merge_r32.py\" \"$WS\" || echo \"MERGE NEEDS A HAND: see the message above\"\nfor f in final_acceptance.cjs visual_check.py acceptance_verdict.py; do ln -sf \"$V/$f\" \"$WS/$f\"; done\n# the five-minute autosave copies this workspace's specialist work to backups/wi …[+158 chars]`
+
+### 🧑 User — 2026-11-21T13:06:06.907Z
+
+> ↩︎ result: The file /home/user/rainbow-/docs/briefs/2026-11-21-r32/setup_r32.sh has been updated successfully.
+
+### 🤖 Claude — 2026-11-21T13:06:14.179Z
+
+> 🔧 **TaskCreate** `{"subject": "Coins: natural single trail matching approved 05 (26 coins, 1420→1680), level end at golden light", "description": "Brief agent A after it reports: approved coin s/lat (1.03,-0.007)(1.56,+0.037)(2.0,-0.073)(2.44,-0.069)(2.97,+0.088), ~0.5 spacing, painting-perspective size table, no side-by-side/stacked coins, trail to level end; state().done at S_END (last ring).", "activeForm": "Rebuilding the coin trail"}`
+
+### 🧑 User — 2026-11-21T13:06:14.219Z
+
+> ↩︎ result: Task #6 created successfully: Coins: natural single trail matching approved 05 (26 coins, 1420→1680), level end at golden light
+
+### 🤖 Claude — 2026-11-21T13:06:15.551Z
+
+> 🔧 **TaskCreate** `{"subject": "Recovery test: fresh clone + setup_r32 + autosave re-arm after restart", "description": "Fresh clone of session branch, run setup_r32.sh, compare recovered specialist files with live ones, merge + logic-only acceptance; kill autosave daemon and verify hook re-arms it and a save lands with remote==local.", "activeForm": "Testing restart recovery"}`
+
+### 🧑 User — 2026-11-21T13:06:15.568Z
+
+> ↩︎ result: Task #7 created successfully: Recovery test: fresh clone + setup_r32 + autosave re-arm after restart
+
+### 🤖 Claude — 2026-11-21T13:06:17.827Z
+
+> 🔧 **Bash** `{"command": "while pgrep -f \"rainbow-autosave.py\" >/dev/null; do sleep 5; done; timeout 900 python3 scripts/rainbow-autosave.py --reason manual:r32-tools 2>&1 | grep -E '\"commit\"|screen05_agents_sync|another|error' | head -5; python3 -I scripts/autosave-status.py", "description": "Run one save with the new specialist-sync step", "timeout": 1000000}`
+
