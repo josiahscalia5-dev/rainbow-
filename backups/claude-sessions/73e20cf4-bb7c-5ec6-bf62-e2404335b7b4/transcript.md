@@ -4077,3 +4077,13 @@ The scan's hits are all ordinary sentences inside comments, with no code hidden 
 
 > 🔧 **Bash** `{"command": "python3 - <<'EOF'\np = 'docs/briefs/2026-11-21-r33/RESUME_R33.md'; s = open(p).read()\ns = s.replace(\"## Open items before the FULL Screen 05 (in order)\", \"\"\"## Round 33c-k progress (same session, up to ~17:15 UTC) — kit game page `tools/kit05/kitgame.html` (= play3.html in /tmp/rainbow_r33/kitgame)\n* Water: the PAINTED water at the same distance ahead as in the approved view (camera-relative: the near water keeps the painting's\n  look at every moment, incl. its gold bottom rim), streaming toward the camera with a two-phase flow map (`flowl` 0.10) + the round-32\n  flowing  …[+2167 chars]`
 
+### 🧑 User — 2026-11-21T16:54:32.839Z
+
+> ↩︎ result: "commit": "77f3cb83651aef9fb23040df7f76570832c530e9",
+> 77f3cb83651a
+> 77f3cb83651a
+
+### 🤖 Claude — 2026-11-21T16:54:36.758Z
+
+> 🔧 **Bash** `{"command": "until grep -qE \"exit=\" /tmp/rainbow_r33/runs/kit_full8.log 2>/dev/null; do sleep 10; done; tail -1 /tmp/rainbow_r33/runs/kit_full8.log; cd /home/user/rainbow-/tools/marble05/viewer && timeout 1800 python3 -I visual_check.py /tmp/rainbow_r33/runs/kit_full8 /home/user/rainbow-/references/05_flow_into_the_current.png > /dev/null 2>&1; timeout 300 python3 -I acceptance_verdict.py /tmp/rainbow_r33/runs/kit_full8 2>&1 | grep -E \"^# |\\| (G|V)[0-9]+ \" | sed -E 's/\\| `[^`]{120,}`/| (long value)/' | cut -c1-170; python3 -c \"\nimport json; r=json.load(open('/tmp/rainbow_r33/runs/kit_f …[+279 chars]`
+
