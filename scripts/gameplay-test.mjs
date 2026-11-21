@@ -8,9 +8,13 @@
 //  * pause freezes the simulation; resume continues
 //  * the run ends in the 11 victory with Benny hidden under the towel
 // Writes qa/gameplay_test.json and qa/07_to_08_continuity.md. Exit 1 on failure.
+//   node scripts/gameplay-test.mjs --q=river05=1 --out=qa/pilot05/wave11/tests/gameplay_river05.json
+//   → the same run with URL test switches; with --q the tracked qa/ files above are NOT rewritten.
 import { writeFileSync, mkdirSync } from 'node:fs';
 import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
 
+const optQ = (process.argv.find((a) => a.startsWith('--q=')) ?? '').slice(4);
+const optOut = (process.argv.find((a) => a.startsWith('--out=')) ?? '').slice(6);
 mkdirSync('qa', { recursive: true });
 const { chromium } = loadPlaywright();
 const vite = await startVite(5213);
@@ -18,7 +22,7 @@ const browser = await chromium.launch({ args: CHROMIUM_ARGS });
 const page = await browser.newPage({ viewport: { width: 216, height: 384 } });
 const errors = [];
 page.on('pageerror', (e) => errors.push(e.message));
-await page.goto(`${vite.url}/?qa=1&dpr=1&bloom=0`);
+await page.goto(`${vite.url}/?qa=1&dpr=1&bloom=0${optQ ? '&' + optQ : ''}`);
 await page.waitForFunction(() => window.__rainbow?.ready, null, { timeout: 240000 });
 
 const result = await page.evaluate(() => {
@@ -96,6 +100,15 @@ const result = await page.evaluate(() => {
 
 result.errors = errors;
 result.pass = Object.values(result.checks).every((c) => c.pass) && errors.length === 0;
+if (optQ) result.query = optQ;
+if (optQ || optOut) {
+  const f = optOut || 'qa/gameplay_test_switch.json';
+  writeFileSync(f, JSON.stringify(result, null, 2));
+  console.log(JSON.stringify({ query: optQ, out: f, pass: result.pass, checks: Object.fromEntries(Object.entries(result.checks).map(([k, v]) => [k, v.pass])), plunge: result.plunge, errors }, null, 1));
+  await browser.close();
+  await vite.close();
+  process.exit(result.pass ? 0 : 1);
+}
 writeFileSync('qa/gameplay_test.json', JSON.stringify(result, null, 2));
 const p = result.plunge;
 const md = [

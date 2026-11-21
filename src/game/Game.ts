@@ -13,14 +13,20 @@ import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
 import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js';
-import { Course, StageId, WORLD } from '../world/course';
+import { Course, StageId, WORLD, TUN05 } from '../world/course';
 import { buildEnvironment } from '../world/environment';
 import { createCandyEnvironment, createRenderer } from '../render/env';
 import { createGradePass } from '../render/grade';
 import { createHud } from '../ui/hud';
+import { findCinematic, playCinematic } from '../ui/cinematicVideo';
 import { createCoins, COIN_VALUE } from '../gameplay/coins';
 import { createInput } from '../gameplay/input';
 import { RideCamera } from './cameraRig';
+import { flag05 } from '../vfx/waterRibbon';
+import { MATCH } from './match';
+import { buildMatch08 } from '../world/match08';
+import { buildPaint06, PAINT06_REST } from '../world/paint06';
+import { buildPaint } from '../world/paint';
 import { loadBennyRuntime, loadGirlRuntime, loadWater, moduleStatus } from './modules';
 
 type Mode = 'intro' | 'ride' | 'outro' | 'end';
@@ -56,7 +62,22 @@ export async function startGame(canvas: HTMLCanvasElement) {
   const camera = new THREE.PerspectiveCamera(66, 9 / 16, 0.05, 1200);
   const composer = new EffectComposer(renderer);
   composer.addPass(new RenderPass(scene, camera));
-  const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), 0.2, 0.35, 0.94);
+  // Screen 05 test GL1 (user 2026-11-16: "the glow on the highlights is most of what makes the approved version look so
+  // shiny"): `?glow05=1` = a stronger UnrealBloom with a HIGH threshold, so only the bright highlights (streak cores,
+  // flares, lamps) glow. Tuning without a rebuild: ?bloomS= (strength) ?bloomR= (radius) ?bloomT= (threshold, linear
+  // HDR luminance). Switch off: 0.2 / 0.35 / 0.94 exactly as before (pixel-identical default build).
+  const glow05 = flag05('glow05');
+  const flowPlan = flag05('flowplan'); // user's Google Flow plan: videos 01–03 + 09–11, playable 04–08 (see startFlowEnding)
+  const qn = (k: string, d: number) => { const v = qs.get(k); return v !== null && v !== '' && isFinite(+v) ? +v : d; };
+  // (measured 2026-11-16, qa/pilot05/wave12/glow/: threshold 1.0–1.3 washed the whole river toward white — the scene's
+  // linear HDR body colours pass it; 2.6 keeps only streak cores, flares and lamps → water saturation UP, 0.92 → 0.97)
+  const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), qn('bloomS', glow05 ? 1.0 : 0.2), qn('bloomR', glow05 ? 0.4 : 0.35), qn('bloomT', glow05 ? 2.6 : 0.94));
+  // Tone-mapping test TM1 (same message: "use NoToneMapping or lower the exposure"): `?tone05=none` → NoToneMapping,
+  // `?tone05=0.75` → Neutral at that exposure. The OutputPass tone-maps the whole frame (not per material), so this is
+  // global by nature. Off: Neutral 0.86 (src/render/env.ts), unchanged.
+  const tone05 = qs.get('tone05');
+  if (tone05 === 'none') renderer.toneMapping = THREE.NoToneMapping;
+  else if (tone05 !== null && tone05 !== '' && isFinite(+tone05) && +tone05 > 0) renderer.toneMappingExposure = +tone05;
   const useBloom = qs.get('bloom') !== '0';
   if (useBloom) composer.addPass(bloom);
   composer.addPass(new OutputPass());
@@ -85,6 +106,21 @@ export async function startGame(canvas: HTMLCanvasElement) {
   const girl = await loadGirlRuntime();
   const coins = createCoins(course);
   scene.add(coins.group);
+  // `?match08=1`: the approved Screen 08 scenery on fitted 3D geometry (src/world/match08.ts); off: nothing is built
+  const m08 = MATCH['08'] ? await buildMatch08() : null;
+  if (m08) { m08.group.visible = false; scene.add(m08.group); m08.bakeDepth(renderer); scene.add(m08.splash); }
+  const M08_HIDE = ['ribbon', 'foam', 'bubbles', 'splashCrown', 'spray'];
+  // `?match08=1` Benny on Screen 08 toward the approved picture: smaller beanie, body a little higher out of the water,
+  // white-and-purple knit stripes (crown tint); everything restored when leaving 08 (qa/match/08/NOTES.md)
+  const M08_BENNY = { hat: 0.86, lift: 0.06, dx: 0.26, body: [0.94, 1.0, 0.94] as const, crown: new THREE.Color().setRGB(0.86, 1.04, 1.0) };
+  const b08 = m08 ? { hat: benny.root.getObjectByName('hat'), body: benny.root.getObjectByName('body'), aux: benny.root.getObjectByName('AuxScene'), crown: benny.root.getObjectByName('hat_crown') as THREE.Mesh | undefined } : null;
+  const b08Rest = b08 ? { hat: b08.hat?.scale.x ?? 1, body: (b08.body?.scale ?? new THREE.Vector3(1, 1, 1)).clone(), pos: (b08.aux?.position ?? new THREE.Vector3()).clone(), y: b08.aux?.position.y ?? 0, crown: ((b08.crown?.material as THREE.MeshStandardMaterial | undefined)?.color ?? new THREE.Color()).clone() } : null;
+  let m08On = false;
+  let m08Applied = false;
+  // `?paint06=1`: Screen 06 = the user's own five pictures (approved 06 + the four storyboard panels), src/world/paint06.ts
+  // `?paint=1`: the approved-artwork chain 05 -> 06 (src/world/paint.ts; its painted coins ARE the game's coins on those stages)
+  const paint = flag05('paint') ? await buildPaint(course, coins) : null;
+  const p06 = !paint && flag05('paint06') ? await buildPaint06(course) : null;
   // debug: ?hide=water,benny,coins,drumA,basin,tubes,chamber
   const hidden = new Set((qs.get('hide') ?? '').split(',').filter(Boolean));
   if (hidden.has('water')) water.group.visible = false;
@@ -135,8 +171,12 @@ export async function startGame(canvas: HTMLCanvasElement) {
     for (const [k, [a, b]] of Object.entries(zoneRanges)) {
       env.zones[k as keyof typeof env.zones].visible = !zoneHidden(k) && i >= STAGE_ORDER.indexOf(a) && i <= STAGE_ORDER.indexOf(b);
     }
+    if (m08) { m08On = st.stage === '08'; m08.group.visible = m08On; if (m08On) env.zones.chamber.visible = false; }
     const inDrum = i <= 1;
     fog.density = inDrum ? 0.0015 : i >= 7 ? 0.0025 : 0.0035;
+    // `?tun05=1`: the 05 tunnel is real to ~120 u ahead — the pale pink haze would wash its far rings out (the locked view used a
+    // compressed far block, so it never saw that distance); a thinner warm-violet haze keeps the far tunnel purple-and-gold
+    if (TUN05 && i >= 3 && i <= 6) { fog.density = 0.0012; fog.color.set('#c46ad0'); } else fog.color.set('#ffbde9');
   };
 
   // girl placement helpers (she lives in laundry-room local frames)
@@ -158,6 +198,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
 
   const pose = { pos: new THREE.Vector3(), quat: new THREE.Quaternion() };
   const tmpV = new THREE.Vector3();
+  const wakeAnchor = new THREE.Vector3(); // VFX: Benny's lifted body centre fed to water.wake()
   const doorAOpen = -1.9, doorCOpen = -1.95;
 
   // ---------------------------------------------------------------- intro (01–02)
@@ -319,7 +360,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
   const rideUpdate = (dt: number) => {
     input.update(dt);
     const stg = course.stageAtS(st.s);
-    const speed = course.prop('speed', st.s);
+    const speed = course.prop('speed', st.s) * (paint ? paint.speedK(st.s) : p06 ? p06.speedK(st.s) : 1);
     st.s = Math.min(course.stage('11').s0, st.s + speed * dt);
     const halfW = course.widthAt(st.s) / 2;
     const safe = halfW - 0.75;
@@ -356,10 +397,13 @@ export async function startGame(canvas: HTMLCanvasElement) {
     st.twirl = st.stage === '03' ? st.twirl + dt * 2.2 : st.twirl * Math.max(0, 1 - dt * 3);
     const tw = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), st.stage === '03' ? Math.PI + Math.sin(st.twirl) * 0.9 : 0);
     benny.root.quaternion.copy(pose.quat).multiply(tw).multiply(lean);
-    benny.root.visible = true;
+    // `?paint06=1` / `?paint=1`: the painted Benny replaces him while the approved pictures show (never two Bennys)
+    benny.root.visible = !(p06 && p06.paintBenny(st.s) >= 0.5) && !(paint && paint.paintBenny(st.s) >= 0.5);
     benny.setExpression('happy');
     benny.update(dt, { swim: 1, steer: input.steer, speed, time: st.clock });
-    water.wake(pose.pos, f.tan, f.right, speed, dt);
+    // VFX anchor = the body centre AFTER the runtime's ride lift (the model is raised inside the root),
+    // so the wake/splash footprint matches the real waterline instead of the unlifted root
+    water.wake((benny.root.children[0] ?? benny.root).getWorldPosition(wakeAnchor), f.tan, f.right, speed, dt);
     // camera
     rideCam.update(dt, st.s, st.lat, camera);
     // towel: folded in 08/09, lifted into a tent as the stream reaches it (late 09 → 10)
@@ -372,14 +416,41 @@ export async function startGame(canvas: HTMLCanvasElement) {
     env.doorC.rotation.y = 0;
     st.log.push({ t: st.clock, s: st.s, y: benny.root.position.y, stage: st.stage });
     if (st.log.length > 20000) st.log.shift();
+    // `?flowplan=1` + an ending video: the playable game ends with 08; the Flow video covers 09–11
+    if (flowPlan && cinematic.ending && st.mode === 'ride' && st.s >= course.stage('09').s0) { startFlowEnding(); return; }
     if (st.s >= course.stage('11').s0 - 0.01) startOutro();
   };
 
   // ---------------------------------------------------------------- outro (11)
+  const cinematic = { ending: null as string | null };
   const startOutro = () => {
     st.mode = 'outro';
     st.t = 0;
     setStage('11');
+    if (cinematic.ending) {
+      // optional Flow ending video; the real-time 11 frame (girl holds towel, FINAL SPIN COMPLETE) follows
+      st.paused = true;
+      void playCinematic(cinematic.ending, { onEnding: () => { st.t = Math.max(st.t, O.badge - 0.4); st.paused = false; } });
+    }
+  };
+  // `?flowplan=1` (the user's production plan, lead r3 2026-11-17): 01–03 and 09–11 are Google Flow videos, 04–08 is the
+  // playable 3D game. It only acts when a video file exists; without videos the real-time scenes play exactly as before.
+  // Coins in the stretches a video covers (03 / 09–10) are credited so a run still ends with 91 coins / 2,240.
+  const creditCoins = (pred: (s: number) => boolean) => {
+    let n = 0;
+    coins.defs.forEach((d, i) => { if (!coins.collected[i] && pred(d.s)) { coins.collected[i] = 1; n++; } });
+    st.coins += n * COIN_VALUE;
+    hud.setCoins(st.coins);
+    return n;
+  };
+  const startFlowEnding = () => {
+    creditCoins((s) => s >= course.stage('09').s0);
+    st.mode = 'outro';
+    st.t = 0;
+    setStage('11');
+    st.paused = true;
+    // reveal: the real-time 11 frame (girl holds the towel, Benny hidden, FINAL SPIN COMPLETE)
+    void playCinematic(cinematic.ending as string, { onEnding: () => { st.t = O.badge - 0.4; outroUpdate(0); st.paused = false; } });
   };
   const outroUpdate = (dt: number) => {
     const t = st.t;
@@ -441,6 +512,36 @@ export async function startGame(canvas: HTMLCanvasElement) {
   input.onTap(() => {
     if (st.mode === 'intro' && st.t > 0.5 && !qs.has('qa')) { st.t = Math.max(st.t, T.rideStart - 2.0); }
   });
+
+  // ---------------------------------------------------------------- optional Google Flow cinematics
+  // public/video/intro.mp4 shows 01 (towel loaded, door closed, girl walks away). While it plays, the live
+  // 3D intro is held on that same moment underneath, then revealed by a cross-fade and continued in real
+  // time (02 tumble -> 03 ride). Without a video the real-time 01 cinematic plays. See src/ui/cinematicVideo.ts.
+  const [introVideo, endingVideo] = await Promise.all([findCinematic('intro'), findCinematic('ending')]);
+  cinematic.ending = endingVideo;
+  const playIntroVideo = () => {
+    if (!introVideo) return;
+    if (flowPlan) {
+      // `?flowplan=1`: the Flow video covers 01–03; underneath, the ride is held on the APPROVED 04 view (the 04
+      // checkpoint, 7 u into 04 — the very start of 04 is the drain drop, whose view is still obstructed) and revealed by
+      // the cross-fade (coins before it — 03's — are credited: the video replaces that stretch)
+      startRide();
+      const s04 = course.stage('04').s0 + 7.0;
+      st.s = s04; st.lat = 0;
+      setStage('04');
+      creditCoins((s) => s < s04);
+      for (let i = 0; i < 40; i++) { rideUpdate(1 / 60); st.s = s04; st.lat = 0; }
+      rideCam.update(0, st.s, st.lat, camera, true);
+      st.paused = true;
+      void playCinematic(introVideo, { onEnding: () => { st.paused = false; } });
+      return;
+    }
+    st.t = T.cp01;
+    introUpdate(0);
+    st.paused = true;
+    void playCinematic(introVideo, { onEnding: () => { st.paused = false; } });
+  };
+  playIntroVideo();
   const togglePause = () => {
     if (st.mode !== 'ride') return;
     st.paused = !st.paused;
@@ -455,6 +556,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
     env.towel.mesh.position.set(WORLD.platform.center.x, WORLD.platform.topY, WORLD.platform.center.z - 1.0);
     env.doorC.rotation.y = 0;
     benny.root.visible = true;
+    playIntroVideo();
   };
 
   const stepSim = (dt: number) => {
@@ -470,6 +572,28 @@ export async function startGame(canvas: HTMLCanvasElement) {
     const time = st.frozen ?? st.clock;
     env.update(time, dt);
     water.update(time, dt, st.s, camera);
+    // `?match08=1` on Screen 08: the projected scenery carries the approved river, foam and bubbles
+    if (m08 && (m08On || m08Applied)) {
+      for (const k of M08_HIDE) { const o = water.parts?.[k]; if (o) o.visible = !m08On; }
+      m08Applied = m08On;
+    }
+    if (m08 && m08On) for (const k of ['puddles', 'finalWave']) { const o = water.parts?.[k]; if (o) o.visible = false; }
+    if (m08 && b08 && b08Rest) {
+      // rounder body (narrower, taller) with the beanie counter-scaled to keep its size; ≈23 px right (world +x, measured fur centroid), lifted
+      const [bx, by, bz] = m08On ? M08_BENNY.body : [1, 1, 1];
+      b08.body?.scale.set(b08Rest.body.x * bx, b08Rest.body.y * by, b08Rest.body.z * bz);
+      const hk = m08On ? M08_BENNY.hat : 1;
+      b08.hat?.scale.set(b08Rest.hat * hk / bx, b08Rest.hat * hk / by, b08Rest.hat * hk / bz);
+      if (b08.aux) {
+        const off = new THREE.Vector3(m08On ? M08_BENNY.dx : 0, m08On ? M08_BENNY.lift : 0, 0).applyQuaternion(benny.root.quaternion.clone().invert());
+        b08.aux.position.copy(b08Rest.pos).add(off);
+      }
+      const cm = b08.crown?.material as THREE.MeshStandardMaterial | undefined;
+      // (the ported benny05 maps carry the approved knit colours: no crown tint any more, the rest colour is kept)
+      cm?.color.copy(b08Rest.crown);
+      m08.splash.visible = m08On;
+      if (m08On) { m08.splash.position.copy(benny.root.position).add(m08.splashOffset); m08.splash.quaternion.copy(camera.quaternion); }
+    }
     fill.position.copy(camera.position);
     sun.target.position.copy(camera.position).add(new THREE.Vector3(0, -10, -10));
   };
@@ -479,7 +603,33 @@ export async function startGame(canvas: HTMLCanvasElement) {
   let running = !qaMode;
   let dirty = true;
   renderer.info.autoReset = false;
-  const render = () => { renderer.info.reset(); composer.render(); };
+  // glow05: the strong highlight bloom belongs to Screen 05 only — blended in over the last 6 u of 04 and out over the
+  // first 6 u of 06, so 04 / 06 / 07 keep their look and there is no pop at the joins
+  const bloomBase = { s: 0.2, r: 0.35, t: 0.94 };
+  const bloom05 = { s: bloom.strength, r: bloom.radius, t: bloom.threshold };
+  const bloomS0 = bloom.strength;
+  const dbs = new THREE.Vector2();
+  const st05 = course.stage('05');
+  const render = () => {
+    if (glow05) {
+      const w = sm(st05.s0 - 6, st05.s0, st.s) * (1 - sm(st05.s1, st05.s1 + 6, st.s));
+      bloom.strength = bloomBase.s + (bloom05.s - bloomBase.s) * w;
+      bloom.radius = bloomBase.r + (bloom05.r - bloomBase.r) * w;
+      bloom.threshold = bloomBase.t + (bloom05.t - bloomBase.t) * w;
+    }
+    // `?match08=1`: the approved artwork already carries its glow — no bloom on Screen 08 under the switch
+    if (m08) {
+      if (!glow05) bloom.strength = bloomS0;
+      if (m08On) bloom.strength = 0;
+      renderer.getDrawingBufferSize(dbs);
+      m08.sync(renderer, dbs.x, dbs.y);
+    }
+    renderer.info.reset();
+    const pw = st.mode !== 'ride' ? 0 : paint ? paint.weight(st.s) : p06 ? p06.weight(st.s) : 0;
+    if (pw < 0.999) composer.render();
+    if (p06 && pw > 0.001) p06.draw(renderer, { s: st.s, lat: st.lat, steer: input.steer, time: st.frozen ?? st.clock, w: pw });
+    if (paint && pw > 0.001) paint.draw(renderer, { s: st.s, lat: st.lat, steer: input.steer, time: st.frozen ?? st.clock, clock: st.clock });
+  };
   const frame = () => {
     const now = performance.now();
     const dt = Math.min(0.05, (now - last) / 1000);
@@ -498,7 +648,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
     '02': { mode: 'intro', t: T.cp02 },
     '03': { mode: 'ride', s: course.stage('03').s0 + 7.5, lat: 0.3 },
     '04': { mode: 'ride', s: course.stage('04').s0 + 7.0 },
-    '05': { mode: 'ride', s: course.stage('05').s0 + 30 },
+    '05': { mode: 'ride', s: course.marks['05_crest'] }, // first meander crest (course.ts S05): Benny on the stream's left crest, facing the VP down the straight tube
     '06': { mode: 'ride', s: course.stage('06').s0 + 10 },
     '07': { mode: 'ride', s: course.stage('07').s0 + 26 },
     '08': { mode: 'ride', s: course.stage('08').s0 + 2.0 },
@@ -509,6 +659,12 @@ export async function startGame(canvas: HTMLCanvasElement) {
     '07b_plunge_mid': { mode: 'ride', s: (course.marks['07_plunge_top'] + course.marks['07_plunge_bottom']) / 2 },
     '07c_plunge_bottom': { mode: 'ride', s: course.marks['07_plunge_bottom'] - 3 },
     '07d_entering_08': { mode: 'ride', s: course.stage('08').s0 + 0.2 },
+    // `?paint06=1`: the five picture moments of Screen 06 (k0 = the approved picture = '06', p1..p4 = storyboard panels)
+    ...(p06 ? Object.fromEntries(PAINT06_REST.map((r, k) => [`06p${k}`, { mode: 'ride' as Mode, s: course.stage('06').s0 + r }])) : {}),
+    ...(p06 ? { '06p_in': { mode: 'ride' as Mode, s: course.stage('06').s0 - 8 } } : {}),
+    // `?paint=1`: every picture's rest moment (05k0 = the '05' crest, 06k0 = '06', 06k1..06k4 = the storyboard panels) + 8 u before the chain
+    ...(paint ? Object.fromEntries(paint.keyIds.map((id, k) => [id, { mode: 'ride' as Mode, s: paint.rest[k] }])) : {}),
+    ...(paint ? { '05p_in': { mode: 'ride' as Mode, s: paint.chainS0 - 8 } } : {}),
   };
 
   const gotoCheckpoint = (id: string, time = 12.0) => {
@@ -542,7 +698,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
       }
     }
     // deterministic reference counter for this checkpoint (see docs: live play counts real pickups)
-    const refId = (id.slice(0, 2) as StageId);
+    const refId = (/^\d\d/.test(id) ? id.slice(0, 2) : stageOf(st.s)) as StageId;
     st.coins = course.stage(refId).refCoins || START_COINS;
     hud.setCoins(st.coins);
     hud.setHearts(5);
@@ -555,8 +711,12 @@ export async function startGame(canvas: HTMLCanvasElement) {
     ready: true,
     checkpoints: Object.keys(CHECKPOINTS),
     goto: gotoCheckpoint,
+    /** QA: jump to any ride position (same settling as a checkpoint) */
+    gotoS(sv: number, lat = 0) { CHECKPOINTS.__s = { mode: 'ride', s: sv, lat }; return gotoCheckpoint('__s'); },
     run(v = true) { running = v; last = performance.now(); },
     unfreeze() { st.frozen = null; input.override = null; },
+    /** QA: freeze the shader clock at t (frame-by-frame clips of animated water); rendering is otherwise unchanged */
+    freezeAt(t: number) { st.frozen = t; st.clock = t; },
     setSteer(v: number | null) { input.override = v; },
     /** deterministic simulation: advance n steps of dt (no rendering needed) */
     step(n: number, dt = 1 / 60) { for (let i = 0; i < n; i++) stepSim(dt); return api.state(); },
@@ -569,7 +729,33 @@ export async function startGame(canvas: HTMLCanvasElement) {
     },
     log() { return st.log; },
     coinDefs() { return coins.defs.map((d, i) => ({ s: d.s, lat: d.lat, taken: coins.collected[i] === 1 })); },
+    /** QA: on-screen centre (px) and diameter (px) of every untaken coin in front of the camera */
+    coinScreen() {
+      const mesh = coins.group.children[0] as THREE.InstancedMesh;
+      const m = new THREE.Matrix4(), p = new THREE.Vector3(), q = new THREE.Quaternion(), sc = new THREE.Vector3();
+      const W = renderer.domElement.clientWidth, H = renderer.domElement.clientHeight;
+      camera.updateMatrixWorld();
+      const right = new THREE.Vector3().setFromMatrixColumn(camera.matrixWorld, 0);
+      const out: { i: number; x: number; y: number; d: number }[] = [];
+      coins.defs.forEach((_, i) => {
+        if (coins.collected[i]) return;
+        mesh.getMatrixAt(i, m); m.decompose(p, q, sc);
+        const c = p.clone().project(camera);
+        if (c.z > 1 || c.z < -1) return;
+        const e = p.clone().addScaledVector(right, 0.5 * sc.x).project(camera);
+        const x = ((c.x + 1) / 2) * W, y = ((1 - c.y) / 2) * H;
+        if (x < -50 || x > W + 50 || y < -50 || y > H + 50) return;
+        out.push({ i, x: Math.round(x), y: Math.round(y), d: Math.round((e.x - c.x) * W) });
+      });
+      return out;
+    },
     respawns() { return st.respawns; },
+    /** QA (camera lock): the live render camera — world matrix (column-major), vertical fov, aspect, near/far */
+    camera() {
+      camera.updateMatrixWorld();
+      const W = renderer.domElement.clientWidth, H = renderer.domElement.clientHeight;
+      return { matrixWorld: camera.matrixWorld.toArray(), fov: camera.fov, aspect: camera.aspect, near: camera.near, far: camera.far, width: W, height: H, position: camera.position.toArray(), target: rideCam.target.toArray() };
+    },
     /** debug: Benny's projected screen position (NDC -1..1, z<1 = in front of camera) */
     bennyScreen() {
       const v = benny.root.getWorldPosition(new THREE.Vector3()).project(camera);
@@ -583,7 +769,40 @@ export async function startGame(canvas: HTMLCanvasElement) {
       const path = (o: THREE.Object3D) => { const a: string[] = []; let c: THREE.Object3D | null = o; while (c) { a.push(c.name || c.type); c = c.parent; } return a.slice(0, 5).join('<'); };
       return hits.slice(0, 4).map((h) => ({ d: +h.distance.toFixed(2), obj: path(h.object), p: h.point.toArray().map((v) => +v.toFixed(2)) }));
     },
+    /** QA: which scene objects issue draw calls in one render ("parent/name" → calls), most first */
+    drawList() {
+      const hits = new Map<string, number>();
+      const hooked: [THREE.Object3D, THREE.Object3D['onAfterRender']][] = [];
+      scene.traverse((o) => {
+        if (!(o as THREE.Mesh).isMesh && !(o as THREE.Points).isPoints && !(o as THREE.Line).isLine && !(o as THREE.Sprite).isSprite) return;
+        const prev = o.onAfterRender;
+        const key = (o.parent?.name ? o.parent.name + '/' : '') + (o.name || o.type);
+        hooked.push([o, prev]);
+        o.onAfterRender = (...a: Parameters<THREE.Object3D['onAfterRender']>) => { hits.set(key, (hits.get(key) ?? 0) + 1); prev.apply(o, a); };
+      });
+      render();
+      for (const [o, prev] of hooked) o.onAfterRender = prev;
+      return [...hits.entries()].sort((a, b) => b[1] - a[1]);
+    },
     togglePause,
+    /** QA (`?paint=1`): the painted coins (index, distance ahead, frame px, collected) */
+    paintCoins() { return paint ? paint.coinInfo(st.s) : []; },
+    /** QA: render the current state now (clip capture after step()) */
+    renderNow() { render(); dirty = false; return true; },
+    /** QA development camera: view Benny from (right, up, back) units in the river's own frame (e.g. 22, 5, -4 = from the side), then
+     *  render. The tunnel walls are one-sided (seen from inside), so from outside the near wall is invisible: a cutaway. */
+    sideCam(dx = 22, dy = 5, dz = 0, fov = 50) {
+      const f = course.sample(st.s);
+      const b = benny.root.position.clone();
+      camera.position.copy(b).addScaledVector(f.right, dx).addScaledVector(f.up, dy).addScaledVector(f.tan, -dz);
+      camera.up.copy(f.up);
+      camera.lookAt(b.clone().addScaledVector(f.tan, 1.5));
+      camera.fov = fov; camera.far = 2000; camera.updateProjectionMatrix();
+      render(); dirty = false; return camera.position.toArray();
+    },
+    /** QA only (read-only use by scripts/proj05-probe.mjs): the live scene, render camera and renderer, for exact
+     *  per-pixel river UV / footprint renders. Nothing calls it in the game; rendering is unchanged. */
+    qa3d() { return { scene, camera, renderer, composer }; },
     stats() {
       const i = renderer.info;
       return { fps: +fps.toFixed(1), calls: i.render.calls, triangles: i.render.triangles, geometries: i.memory.geometries, textures: i.memory.textures, modules: { ...moduleStatus }, courseLength: course.length };

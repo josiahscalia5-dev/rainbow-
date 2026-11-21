@@ -1,0 +1,58 @@
+--- src/world/match04m4.ts	2026-11-20 03:43:32.026645822 +0000
++++ src/world/match04m4.ts	2026-11-20 03:43:23.963519314 +0000
+@@ -1881,7 +1881,7 @@
+     let s3 = 24683; const r3 = () => ((s3 = (s3 * 16807) % 2147483647) / 2147483647);
+     const HL = 3.3, HH = 1.43;                                  // heap length / height in the glb (u)
+     const bs = M04.num('m04bbs', 1.15), sink = M04.num('m04bbk', 0.04);
+-    const place: { x: number; y: number; z: number; s: number; yaw: number; k: number }[] = [];
++    const place: { x: number; y: number; z: number; s: number; yaw: number; k: number; deep?: number }[] = [];
+     // the river surface height d u from the centre line (flat lane, the trough's side rising to RY at xW, its top edge beyond):
+     // a heap rests on the surface a little outward of its centre line, so its bubbles are not cut flat by the rising side
+     const surfY = (d: number) => (d <= XF ? 0.02 : d >= xW ? RY : 0.02 + (RY - 0.02) * ((d - XF) / Math.max(0.1, xW - XF)) ** 2);
+@@ -1921,13 +1921,20 @@
+           const cl = 0.9 + r4() * 1.5;
+           const s = THREE.MathUtils.clamp(cl * 1.15, 1.4, 2.8) * bs / HL * (d0 + (d1 - d0) * f);
+           const xi = Math.max(XF + 0.2, xW - xo - 0.9 * s);
+-          place.push({ x: cx + side * xi, y: surfY(xi + 0.3 * s) - (sink + sk2) * HH * s, z: z0 - a - cl / 2, s, yaw: (r4() - 0.5) * 0.35, k: Math.floor(r4() * 4) });
++          place.push({ x: cx + side * xi, y: surfY(xi + 0.3 * s) - (sink + sk2) * HH * s, z: z0 - a - cl / 2, s, yaw: (r4() - 0.5) * 0.35, k: Math.floor(r4() * 4), deep: 1 });
+           nD++;
+           a += cl * 0.8 + (0.35 + Math.pow(r4(), 1.5) * 2.2 * (1 + 0.8 * f)) * gS;
+         }
+       }
+       console.info('[match04] m04bbd', { heaps: nD, from: rimL0, to: +aEnd.toFixed(2), xW: +xW.toFixed(3), XF });
+     }
++    // r22 `&m04bbdf=f0` (with m04bbd; `m04bbdf1` = f1, default f0 + 3): as painted, the big glossy bank heaps lie BESIDE Benny
++    // (his depth and a few u ahead), not as a row of small white clumps down the whole tunnel: every deeper heap (m04bbd) is
++    // full size only within a window ahead of the camera and shrinks into its own bubbles' centres from f0 to f1 u (Benny swims
++    // ≈ 6.4 u ahead of the camera); the rim heaps unchanged. Off (0): every heap as before.
++    const bf0 = M04.num('m04bbdf', 0), bf1 = M04.num('m04bbdf1', bf0 + 3);
++    const farD = new THREE.Vector2(bf0 > 0 && bf1 > bf0 ? bf0 : 0, bf0 > 0 && bf1 > bf0 ? bf1 : 0);
++    const nearD = new THREE.Vector2(M04.num('m04bbdn', nearF[0]), M04.num('m04bbdn1', nearF[1]));
+     const holder = new THREE.Group(); holder.name = 'm04_bank_heaps'; holder.visible = false; group.add(holder);
+     const near = new THREE.Vector2(M04.num('m04bbn0', nearF[0]), M04.num('m04bbn1', nearF[1]));
+     const mat = new THREE.MeshPhysicalMaterial({
+@@ -1982,6 +1989,16 @@
+     }
+     transformed = aC.xyz + (transformed - aC.xyz) * kS;
+   }`);
++      if (farD.y > 0) {
++        // r22 m04bbdf: the deeper heaps (aDeep = 1) are full size only inside their window ahead of the camera: their own near
++        // window (m04bbdn -> m04bbdn1 u, so the big heaps stay whole at the bottom corners like the painted corner foam instead
++        // of sinking into the water as flat caps) and the far fade (m04bbdf -> m04bbdf1 u)
++        sh.uniforms.uBFar = { value: farD }; sh.uniforms.uBFarN = { value: nearD };
++        sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nattribute float aDeep;\nuniform vec2 uBFar;\nuniform vec2 uBFarN;')
++          .replace('float kS = smoothstep(uBNear.x, uBNear.y, -cv.z);',
++            'float kS = smoothstep(mix(uBNear.x, uBFarN.x, aDeep), mix(uBNear.y, uBFarN.y, aDeep), -cv.z) * (1.0 - aDeep * smoothstep(uBFar.x, uBFar.y, -cv.z));');
++        if (!sh.vertexShader.includes('uBFar.x, uBFar.y')) console.error('[match04] m04bbdf shader hook missing');
++      }
+     };
+     updaters.push((a) => { holder.visible = a > 0.01; mat.opacity = a; });
+     new GLTFLoader().loadAsync(new URL('../../assets/models/match04/foam_bank04.glb', import.meta.url).href).then((gl) => {
+@@ -2015,6 +2032,7 @@
+         const mine = place.filter((p) => p.k % nG === gi);
+         if (!mine.length) return;
+         const im = new THREE.InstancedMesh(g, mat, mine.length);
++        if (farD.y > 0) g.setAttribute('aDeep', new THREE.InstancedBufferAttribute(new Float32Array(mine.map((p) => p.deep ?? 0)), 1));
+         mine.forEach((p, i) => {
+           // glb: length along +x, up +y; the river runs along -z -> yaw 90 deg (+ a little), turned round on the left bank
+           // (no negative scale: an instanced mesh would show its back faces)

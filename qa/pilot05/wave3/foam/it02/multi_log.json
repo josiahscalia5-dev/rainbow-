@@ -1,0 +1,45 @@
+[
+  {
+    "name": "now",
+    "q": "",
+    "file": "qa/pilot05/wave3/foam/it02/05_now.png",
+    "secs": 13.685,
+    "stats": {
+      "calls": 120,
+      "tris": 629035
+    },
+    "state": {
+      "mode": "ride",
+      "stage": "05",
+      "s": 132.438,
+      "lat": 0,
+      "coins": 1420,
+      "hearts": 5,
+      "paused": false,
+      "bennyY": -41.348,
+      "bennyVisible": true,
+      "cam": [
+        1.92,
+        -37.94,
+        -68.28
+      ]
+    },
+    "bennyScreen": {
+      "x": -0.03,
+      "y": -0.37,
+      "z": 0.986,
+      "visible": true,
+      "cam": [
+        1.92,
+        -37.94,
+        -68.28
+      ],
+      "benny": [
+        1.52,
+        -41.35,
+        -74.73
+      ]
+    },
+    "errs": []
+  }
+]

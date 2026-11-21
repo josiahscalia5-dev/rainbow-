@@ -1,0 +1,61 @@
+# Round 30 — coordination (lead session branch `ccr-2644c3c0-iikckn`, 2026-11-20 from ~20:05 UTC)
+
+User's messages verbatim: `USER_R30.md` (+ the two pictures `USER_S06_RING_MISMATCH_R30.png`, `USER_S06_STORYBOARD_R30.png`).
+
+## Restore (lead, 20:05–20:16 UTC)
+* Session branch started at `8abed78` (19:57). The hook's fetch failed; the lead's retry found the r29 lead `ccr-ac160b4c-3hdecw` two saves
+  newer (`b93b67c` 19:58, `f090393` 20:02: the r29 ring diagnosis + haze fix). Merged on the user's "continue exactly where we left off"
+  (`1d1f359`; only the generated `backups/MANIFEST.json` / `LIVE_TOOLS_STATE.json` conflicted, this session's copies kept). Saved `44a4649`
+  (GitHub == local).
+* Worktrees: `docs/briefs/2026-11-20-r29/setup_worker_r30.sh` → LOCAL `-c31` (all 12), **all 12 tracked patch-id MATCH + every untracked
+  file byte-identical** to the 20:02 snapshots.
+* This account / environment ("Default", personal, no network secrets): GitHub works; World Labs API key was HTTP 401 → **re-entered by the user via the secure form ~21:22 UTC, verified
+  (free read 5,420 credits; the old world IDs 404 = previous account's worlds, files in LFS)**; Marble/Atlas connector "no active Atlas account" (atlas.worldlabs.ai sign-up); fal key not on this
+  environment; Hugging Face + Context7 connectors connected; plugins playwright + claude-code-setup NOT enabled (install card shown; the
+  Playwright LIBRARY + Chromium work, all renders use it). 10/10 specialist definitions unchanged; no worker relaunched (the user's r29 order:
+  Screen 06 alone, lead does it).
+
+## Screen 06 (lead, in `/home/user/wt/s06`, LOCAL `claude/rainbow-s06-match-c31`; edits snapshotted every 5 min to `backups/wip/`)
+* Diagnosis (`qa/match/06/r30/diag/`, sent ~20:18): the gold "target" = mesh `m06_rings` (25 modeled rings, every 12.87 u, radius 13.6, to
+  294 u ahead) down ONE straight 346 u tube, camera 6.2 u off its axis looking 11° off it → 21 nested circles within ~160 px; plus the wall
+  tile's painted gold stripes (2–3 per 59 u). Projection not involved.
+* Built `&m06curl=1` (with m06deep; `tools/match06/r30_design_curl.py` → `assets/textures/match06/route06curl.json`; `src/world/match06.ts`,
+  `course.ts`, `gameplay/coins.ts`, `game/Game.ts`): tunnel unchanged to virtual depth 40 (approved opening, crest, painted coins 0–6), then
+  its axis curls right 30° + descends 7°, S-bend (left to −14°, right onto 07's heading 15.9°), last 24 u eased onto 07's tube mouth (07's
+  gold collar = doorway); gold bands every 22 u, 1.5× wider, perpendicular to the local axis; 07 tube shown from 160 u back (seen only
+  through the 06 tunnel's end = the warm glow ahead; `Game.ts`: from s07 − 175). 06 = 207 u (deep 124). Start view: a 40×70 px gap at the right edge (the approved view looked past the bend at the old straight wall ~100–120 u deep) is filled by `m06_stub0` (that patch of the old straight wall, visible only within 10 u past the checkpoint) → start view vs BEFORE 0.13 % of pixels > 20 levels (fur speckle). Camera hold `m06vw=20,38` (the m06view default) instead of r29's 34,56: the view turns with the river during the curl (34,56 looked at the wall for ~2 s). Coins: the 8 far painted coins re-spread along the new route
+  (total 91, HUD 2,240 unchanged). Query `qa/match/06/r30/QUERY_NEW.txt` (= r29 final with `&m06curl=1&m06haze=80,170,0.55&m06vw=20,38`).
+* Checks: `npx tsc --noEmit` OK; continuity default OK and WITH the switch OK (`tools/match06/r30_continuity.ts`: all joins gap 0, 06→07
+  0.003°); gameplay test 8/8, 91 coins, 2,240 (`qa/match/06/r30/gameplay_NEW.json`); start view see above.
+* Proof: `qa/match/06/r30/proof/` (marked spot APPROVED | BEFORE | NEW; uninterrupted clip 06 → 07; storyboard panel vs gameplay).
+* v2 (user ~21:25 "still not looking like my approved screen"): `QUERY_NEW_v2.txt` = v1 + `&m06camk=0.65&m06camu=1.05` (cameraRig.ts: the route
+  view's approved offset brought 35 % closer behind Benny at the same height once past the hold, eased back over the last 16 u before 07)
+  → Benny large and low like the approved picture / storyboard, the winding slide visible above his hat. Rejected on the way: `&m06hold=1`
+  (approved world framing turned with the river: Benny right size but the river ahead hidden on the descent). Not yet done: Benny's look
+  (painted proportions / colours), water / foam / bubbles in motion.
+* NOT approved — waiting for the user. Default build and every earlier candidate unchanged.
+
+## Parallel specialists (user ~22:00 UTC: "do multiple agents do different tasks at the same time") — launched ~22:05
+Brief `LAUNCH_R30_PARALLEL.md`; worktrees from the 22:00 s06 snapshot (`setup_r30_parallel.sh`), all four identical to s06 at launch.
+| worker | agent | worktree / LOCAL branch | switch | task |
+|---|---|---|---|---|
+| benny06 | benny-character-artist | /home/user/wt/benny06 `claude/rainbow-s06-benny06-c31` | b30* | painted Benny: smaller higher beanie, knit, dusty-pink plush |
+| water06 | water-fx-specialist | /home/user/wt/water06 `claude/rainbow-s06-water06-c31` | w30* | rainbow water in motion: sparkly veins, rainbow edges, ripples |
+| foam06 | foam-bubbles-particles | /home/user/wt/foam06 `claude/rainbow-s06-foam06-c31` | f30* | bubbly foam banks, big iridescent bubbles, splash ring |
+| scen06 | washer-environment-modeler | /home/user/wt/scen06 `claude/rainbow-s06-scen06-c31` | e30* | broad copper bands, purple drum walls, purple far tunnel |
+If this session stops: their edits are in `backups/wip/claude__rainbow-s06-<x>-c31/`; recreate with the setup script pattern (from those
+snapshots) and relaunch with the same brief. The lead combines accepted switches and renders the combined clip + gameplay test.
+
+## Next account
+`docs/briefs/2026-11-20-r29/setup_worker_r30.sh` pattern with the newest `backups/wip/*-c31/` snapshots (copy the script, bump -c31 → -c32 and
+the wip folder names to `*-c31`).
+
+## Round 30b (lead session `ccr-e490fceb-u85291`, from ~22:20 UTC) — the user's "MATCH ALL FOUR APPROVED SCREEN 06 VIEWS" (USER_R30.md §6, §7)
+* Restore: merged the r30 session's last save `b9ca06c` (22:14) → `34786f3`; worktrees recreated from the 22:14 snapshots on LOCAL `-c32`
+  (`setup_r30b.sh`). Specialists relaunched (`LAUNCH_R30B.md`): water `w30`, foam `f30`, Benny `b30` — all finished, combined by the lead.
+* Lead built `&m06sb=1` (`src/world/m06sb.ts`, `route06c.ts`; hooks in match06.ts, cameraRig.ts, Game.ts): pale-peach-circle cause (07's far glow)
+  + join retint, storyboard route (curl / left sweep / late right turn, tunnel 10.5), broad bands, procedural drum walls, telephoto framing with
+  Benny at his approved place, Benny world-tilt fix. Query `qa/match/06/r30b/QUERY_SB_NEW.txt`.
+* Candidate commit `cf1a660` (tree `b12c04e`, LOCAL `claude/rainbow-s06-r30b-candidate`), reproducible patch on GitHub:
+  `qa/match/06/r30b/proof/r30b_candidate_from_e162aec.patch`. Proof + honest differences: `qa/match/06/r30b/proof/README.md`.
+* NOT approved — waiting for the user. Next account: `setup_r30b.sh` pattern with the newest `backups/wip/*-c32/` (bump to -c33).

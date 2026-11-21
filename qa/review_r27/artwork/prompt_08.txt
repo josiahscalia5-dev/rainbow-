@@ -1,0 +1,11 @@
+IMAGE 1 is a clean frame from a 3D mobile game (the character was removed) and defines EVERYTHING about the layout. IMAGES 2-5 are small material swatches cut from the art director's approved illustration of this level — they show ONLY surface materials, not a layout:
+IMAGE 2 = the purple slotted washer-drum wall with a polished gold arch; IMAGE 3 = the far chamber: the round chrome washer window and the folded purple towel on its gold ledge; IMAGE 4 = the glossy river water: bright cyan with thick glossy hot-pink / magenta edges and white highlight streaks; IMAGE 5 = the soft white-lilac foam and small bubbles along the river edge.
+
+Repaint IMAGE 1 surface by surface with these materials, as a finished premium illustration:
+- every wall surface becomes the violet-purple metal with crisp, evenly spaced rounded slots (IMAGE 2); every arch, paddle and ring becomes polished bright gold with warm light;
+- where IMAGE 1 shows the washer window, the towel and the ledge, paint them like IMAGE 3 — one single crisp towel, never doubled or ghosted;
+- the river of IMAGE 1 becomes the water of IMAGE 4: bright cyan centre with thick glossy magenta banks on both sides, highlight streaks that follow the winding river, gentle sparkles (no sharp spiky glints, no broad white sheet);
+- a low border of soft rounded foam clusters and small bubbles follows both river edges (IMAGE 5);
+- add a few small iridescent soap bubbles in the air.
+
+STRICT: do NOT change any shape, position, size or perspective from IMAGE 1. Do not add, remove or move any object: no holes, drains, extra rings, new arches or new river bends. The river, the window, the towel, the ledge and every arch stay exactly where they are in IMAGE 1. No character, coins, text, HUD or user interface. Output only the repainted scene.

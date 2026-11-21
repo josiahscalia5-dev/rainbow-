@@ -1,0 +1,8 @@
+start 21:13
+continuity exit=0
+gp default exit=0
+gp all exit=0
+cap default exit=0
+cap own exit=0
+cap all exit=0
+ALLDONE 21:18

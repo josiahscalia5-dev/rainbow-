@@ -1,0 +1,23 @@
+{
+ "worktree": "/home/user/wt/s04b",
+ "branch": "claude/rainbow-s04-ringtex-c21",
+ "head": "70e559572ef44d6d8be4f7d0b86c36f54149ff44",
+ "time": "2026-11-20T00:39:14+00:00",
+ "dirty_tracked": [
+  "src/world/match04m4.ts"
+ ],
+ "untracked_copied": [
+  "qa/match/04/r19b/ringpaint/preview_r20/1_APPROVED.png",
+  "qa/match/04/r19b/ringpaint/preview_r20/2_BEFORE_v3_f06_forward6u.png",
+  "qa/match/04/r19b/ringpaint/preview_r20/3_NEW_f03_forward3u.png",
+  "qa/match/04/r19b/ringpaint/preview_r20/3_NEW_f06_forward6u.png",
+  "qa/match/04/r19b/ringpaint/preview_r20/3_NEW_f10_forward10u.png",
+  "qa/match/04/r19b/ringpaint/preview_r20/3_NEW_f20_forward20u.png",
+  "qa/match/04/r19b/ringpaint/preview_r20/QUERY_preview.txt",
+  "qa/match/04/r19b/ringpaint/preview_r20/zoom_1_APPROVED_x0-480_y380-860.png",
+  "qa/match/04/r19b/ringpaint/preview_r20/zoom_2_BEFORE_v3_f06_x0-480_y380-860.png",
+  "qa/match/04/r19b/ringpaint/preview_r20/zoom_3_NEW_f06_x0-480_y380-860.png"
+ ],
+ "untracked_skipped": [],
+ "restore": "git switch claude/rainbow-s04-ringtex-c21 (newest pushed tip) && git apply --binary backups/wip/claude__rainbow-s04-ringtex-c21/tracked.patch && copy backups/wip/claude__rainbow-s04-ringtex-c21/untracked/* into the worktree"
+}

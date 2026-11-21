@@ -1,0 +1,17 @@
+{
+ "task_id": "b4c814db-1046-4565-b98e-685bd77b14a9",
+ "model_mesh": null,
+ "base_model": null,
+ "pbr_model": {
+  "url": "https://v3b.fal.media/files/b/0ab34ac2/MBHLZrv0AeaMNFnTvrcsW_tripo_pbr_model_b4c814db-1046-4565-b98e-685bd77b14a9.glb",
+  "content_type": "application/octet-stream",
+  "file_name": "tripo_pbr_model_b4c814db-1046-4565-b98e-685bd77b14a9.glb",
+  "file_size": 26398084
+ },
+ "rendered_image": {
+  "url": "https://v3b.fal.media/files/b/0ab34ac2/mW5nTaLveyg9k_XNGwV-v_legacy_mesh.webp",
+  "content_type": "application/octet-stream",
+  "file_name": "legacy_mesh.webp",
+  "file_size": 253020
+ }
+}

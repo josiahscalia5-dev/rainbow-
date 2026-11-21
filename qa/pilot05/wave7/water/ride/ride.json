@@ -1,0 +1,133 @@
+[
+ {
+  "t": 134,
+  "k": 0,
+  "s": 134.416,
+  "stage": "05",
+  "lat": 0,
+  "file": "qa/pilot05/wave7/water/ride/s134_0.png"
+ },
+ {
+  "t": 134,
+  "k": 1,
+  "s": 134.6,
+  "stage": "05",
+  "lat": 0,
+  "file": "qa/pilot05/wave7/water/ride/s134_1.png"
+ },
+ {
+  "t": 145,
+  "k": 0,
+  "s": 145.6,
+  "stage": "05",
+  "lat": 0,
+  "file": "qa/pilot05/wave7/water/ride/s145_0.png"
+ },
+ {
+  "t": 145,
+  "k": 1,
+  "s": 145.783,
+  "stage": "05",
+  "lat": 0,
+  "file": "qa/pilot05/wave7/water/ride/s145_1.png"
+ },
+ {
+  "t": 160,
+  "k": 0,
+  "s": 160.45,
+  "stage": "05",
+  "lat": 0,
+  "file": "qa/pilot05/wave7/water/ride/s160_0.png"
+ },
+ {
+  "t": 160,
+  "k": 1,
+  "s": 160.633,
+  "stage": "05",
+  "lat": 0,
+  "file": "qa/pilot05/wave7/water/ride/s160_1.png"
+ },
+ {
+  "t": 175,
+  "k": 0,
+  "s": 175.3,
+  "stage": "05",
+  "lat": 0,
+  "file": "qa/pilot05/wave7/water/ride/s175_0.png"
+ },
+ {
+  "t": 175,
+  "k": 1,
+  "s": 175.483,
+  "stage": "05",
+  "lat": 0,
+  "file": "qa/pilot05/wave7/water/ride/s175_1.png"
+ },
+ {
+  "t": 184,
+  "k": 0,
+  "s": 184.65,
+  "stage": "05",
+  "lat": 0,
+  "file": "qa/pilot05/wave7/water/ride/s184_0.png"
+ },
+ {
+  "t": 184,
+  "k": 1,
+  "s": 184.833,
+  "stage": "05",
+  "lat": 0,
+  "file": "qa/pilot05/wave7/water/ride/s184_1.png"
+ },
+ {
+  "t": 187,
+  "k": 0,
+  "s": 187.583,
+  "stage": "05",
+  "lat": 0,
+  "file": "qa/pilot05/wave7/water/ride/s187_0.png"
+ },
+ {
+  "t": 187,
+  "k": 1,
+  "s": 187.766,
+  "stage": "05",
+  "lat": 0,
+  "file": "qa/pilot05/wave7/water/ride/s187_1.png"
+ },
+ {
+  "t": 190,
+  "k": 0,
+  "s": 190.516,
+  "stage": "06",
+  "lat": 0,
+  "file": "qa/pilot05/wave7/water/ride/s190_0.png"
+ },
+ {
+  "t": 190,
+  "k": 1,
+  "s": 190.7,
+  "stage": "06",
+  "lat": 0,
+  "file": "qa/pilot05/wave7/water/ride/s190_1.png"
+ },
+ {
+  "t": 194,
+  "k": 0,
+  "s": 194.366,
+  "stage": "06",
+  "lat": 0,
+  "file": "qa/pilot05/wave7/water/ride/s194_0.png"
+ },
+ {
+  "t": 194,
+  "k": 1,
+  "s": 194.55,
+  "stage": "06",
+  "lat": 0,
+  "file": "qa/pilot05/wave7/water/ride/s194_1.png"
+ },
+ {
+  "errors": []
+ }
+]

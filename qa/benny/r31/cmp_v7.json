@@ -1,0 +1,12 @@
+{
+ "CURRENT 3D (game today)": {
+  "silhouette_iou": 0.902,
+  "box_within20_pct": 44.4,
+  "box_ssim": 0.49
+ },
+ "IMPROVED 3D": {
+  "silhouette_iou": 0.956,
+  "box_within20_pct": 66.5,
+  "box_ssim": 0.804
+ }
+}

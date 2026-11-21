@@ -3,7 +3,7 @@
     "SessionStart": [
       {
         "hooks": [
-          { "type": "command", "command": "bash \"$CLAUDE_PROJECT_DIR/scripts/autosave-hook.sh\" SessionStart", "timeout": 60 }
+          { "type": "command", "command": "bash \"$CLAUDE_PROJECT_DIR/scripts/autosave-hook.sh\" SessionStart", "timeout": 600 }
         ]
       }
     ],

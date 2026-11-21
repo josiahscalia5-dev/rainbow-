@@ -1,0 +1,4 @@
+# Step 2 (r23) needs NO code change: it is the r21 framing TEST `&m06view=1` (src/game/cameraRig.ts, M06_VIEW) run with
+# its existing tunable `&m06vs=0` ("share of the approved Benny->route screen separation kept over the crest", 0 = no
+# climb). The camera then keeps the approved height above the water instead of climbing up to ~7 u over the crest.
+# Query: match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1&m06st=1&m06fcl=1&m06view=1&m06vs=0

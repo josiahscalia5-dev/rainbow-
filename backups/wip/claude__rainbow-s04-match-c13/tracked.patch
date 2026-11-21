@@ -1,0 +1,22 @@
+diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
+index e5736a6..3f1935b 100644
+--- a/src/world/match04m4.ts
++++ b/src/world/match04m4.ts
+@@ -892,9 +892,15 @@ export function addM04(ctx: M04Ctx) {
+       const glow = new THREE.MeshBasicMaterial({ color: hb ? new THREE.Color(0.02, 0.50, 1.0) : glowC, transparent: true, depthWrite: false, toneMapped: false, side: THREE.DoubleSide, blending: hb ? THREE.NormalBlending : THREE.AdditiveBlending });
+       const coreT = texMat ? texMat.clone() : null;
+       if (coreT) glow.visible = false;                                   // the painted image carries its own glow
+-      const m = new THREE.Mesh(texGeo ?? base, coreT ?? core), g = new THREE.Mesh(halo, glow);
++      // r13 `&m04a3lum=x`: the painted arrows are LUMINOUS — a second, additive copy of the painted arrow image makes the
++      // white core and the cyan glow light up the water like neon glass (x = its strength)
++      const lum = M04.num('m04a3lum', 0);
++      if (coreT && lum > 0) {
++        glow.visible = true; glow.map = coreT.map; glow.color.setScalar(lum); glow.blending = THREE.AdditiveBlending;
++      }
++      const m = new THREE.Mesh(texGeo ?? base, coreT ?? core), g = new THREE.Mesh(coreT && lum > 0 ? texGeo! : halo, glow);
+       m.position.set(cx, 0, z0 - a); g.position.set(cx, 0, z0 - a - 0.002);
+-      m.renderOrder = 5; g.renderOrder = 4; m.name = 'm04_arrow3d'; g.name = 'm04_arrow3d_glow';
++      m.renderOrder = 5; g.renderOrder = coreT && lum > 0 ? 6 : 4; m.name = 'm04_arrow3d'; g.name = 'm04_arrow3d_glow';   // luminous layer on top
+       m.visible = g.visible = false;                                     // invisible during the projector depth bake
+       group.add(g); group.add(m);
+       arrowsOut.push({ mesh: m, za: z0 - a, mats: [coreT ?? core, glow] });
