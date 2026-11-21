@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3267,
-   "sha256": "367bec3263ac5ec71fbe7d76974d7be033e74f91a307828405907b5b0d55123e"
+   "sha256": "d219c28215c8d751a4c5b471ffee7bd8eca010016c5af274c91a77d2a9f6b220"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -7054,7 +7054,7 @@
   {
    "path": "backups/wip/detached-d8e047d33e/INFO.json",
    "bytes": 2379,
-   "sha256": "dd7d8f84c9f33bb697a59b822a7c8454501ced8cd43f2c375af92328fb5c72d0"
+   "sha256": "036b9c2cc9e4a620dd86e33685b2634d578b88df7f774c522ff846f8026559e9"
   },
   {
    "path": "backups/wip/detached-d8e047d33e/tracked.patch",
@@ -40468,8 +40468,8 @@
   },
   {
    "path": "tools/kit05/bake_river35.py",
-   "bytes": 10753,
-   "sha256": "7fe6cb87e5ce032490bc0363ed83db960dbb7c68c1ad815278f8d1d31fec1dfb"
+   "bytes": 12430,
+   "sha256": "b779fe27dd16d22c4560481e4ad3ac8c99ed009b5b5770342b444b987569d7e3"
   },
   {
    "path": "tools/kit05/cam05.py",
@@ -40508,8 +40508,8 @@
   },
   {
    "path": "tools/kit05/kitgame.html",
-   "bytes": 50506,
-   "sha256": "f469c7653f543d1e781c363436437abaed40c7c2103d859ba2ffbbc12691dff5"
+   "bytes": 51710,
+   "sha256": "d8c4845484bcc548c0cf5fa9bed6e4a66946a9f1c396fb1dfc38e5f0ff7958f4"
   },
   {
    "path": "tools/kit05/live.js",

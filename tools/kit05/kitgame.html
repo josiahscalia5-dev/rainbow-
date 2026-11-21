@@ -62,6 +62,9 @@ const riverPink = await tex(K.river_tile?.ribbon ? 'river_pink.png' : 'river_til
 // sections (bake_river35.py: prefix t_pre..ta + one period P, sharp painted streak detail added where the painting is softer). ?r35=0 = round-34 ribbon
 const R35 = K.river35 && q.get('r35') !== '0' ? K.river35 : null;
 const river35Tex = R35 ? await tex('river35.png') : riverTile;
+// sharp painted streaks (luminance detail, river-local), added live near the camera where the painted row is soft, streaming with the current
+const r35Det = R35?.detail ? await tl.loadAsync('river35_detail.png') : riverTile;
+if (R35?.detail) { r35Det.colorSpace = THREE.NoColorSpace; r35Det.wrapS = THREE.MirroredRepeatWrapping; r35Det.wrapT = THREE.RepeatWrapping; r35Det.anisotropy = 8; }
 const ownOf = (kind, atlas, k) => { const r = K.own?.[kind]?.rows?.[k]; return r && !q.get('noown') ? { tex: atlas, vr: [r[0] / K.own[kind].h, r[1] / K.own[kind].h] } : null; };
 const wallMat = kitMat(wallTex), ringMat = kitMat(ringTex);
 // ---- round 34 (S1): WORLD-ANCHORED winding river. The river centre c(t) (kit.json river_center_axis, measured on the painting's coin
@@ -77,12 +80,13 @@ const FLOW = { uFlowOn: { value: 0 }, uFlowL: { value: +(q.get('flowl') ?? 0.10)
   uCenter: { value: centerTex }, uCN: { value: new THREE.Vector3(RC.t0, RC.dt, RC.c.length) },
   uPF: { value: new THREE.Vector4(...(q.get('pfade') ?? '0.45,0.65,0.85,0.97').split(',').map(Number)) },   // painted -> ribbon fade (ratio now/start distance): near texels, far texels
   uEdge: { value: new THREE.Vector4(...(q.get('redge') ?? '0.80,0.60,5.0,13.0').split(',').map(Number)) },
-  uR35On: { value: R35 ? 1 : 0 }, uR35: { value: river35Tex }, uR35A: { value: new THREE.Vector4(R35?.t_pre ?? 0, R35?.ta ?? 1, R35?.P ?? 1, R35 ? R35.n_pre / (R35.n_pre + R35.n_per) : 0) }, uR35B: { value: +(q.get('r35bias') ?? 0.0) } };   // ribbon foam edge |u| near, far factor, far range
+  uR35On: { value: R35 ? 1 : 0 }, uR35: { value: river35Tex }, uR35A: { value: new THREE.Vector4(R35?.t_pre ?? 0, R35?.ta ?? 1, R35?.P ?? 1, R35 ? R35.n_pre / (R35.n_pre + R35.n_per) : 0) }, uR35B: { value: +(q.get('r35bias') ?? 0.0) },
+  uR35Det: { value: r35Det }, uR35D: { value: new THREE.Vector4(R35?.detail?.L ?? 1, R35?.detail?.c0 ?? 0, +(q.get('detflow') ?? 1.0), R35?.detail ? +(q.get('detgain') ?? 1.0) : 0) }, uR35DS: { value: new THREE.Vector4(...(q.get('detshape') ?? '1.3,0.8,2.5,7.0').split(',').map(Number)) } };   // ribbon foam edge |u| near, far factor, far range
 const riverMat = (() => { const m = kitMat(riverTex); const base = m.onBeforeCompile; m.customProgramCacheKey = () => 'kit-river34';
   m.onBeforeCompile = (sh) => { base(sh); Object.assign(sh.uniforms, FLOW);
     sh.fragmentShader = sh.fragmentShader.replace('uniform float uBias;', `uniform float uBias; uniform float uFlow; uniform vec3 uRT; uniform sampler2D uRiverTile; uniform sampler2D uFoam; uniform float uHWD; uniform vec3 uWT; uniform float uFlowL; uniform float uFlowOn; varying float vKitT; varying float vKitD;
       uniform sampler2D uRiverPink; uniform sampler2D uCenter; uniform vec3 uCN; uniform vec4 uPF; uniform vec4 uEdge;
-      uniform float uR35On; uniform sampler2D uR35; uniform vec4 uR35A; uniform float uR35B;
+      uniform float uR35On; uniform sampler2D uR35; uniform vec4 uR35A; uniform float uR35B; uniform sampler2D uR35Det; uniform vec4 uR35D; uniform vec4 uR35DS;
       // round 35: painted river texel at world axial t (continuous row coordinate: prefix rows, then the period repeats)
       float r35Row(float t){ return t < uR35A.y ? uR35A.w * clamp((t - uR35A.x) / (uR35A.y - uR35A.x), 0.0, 1.0) : uR35A.w + (1.0 - uR35A.w) * (t - uR35A.y) / uR35A.z; }
       vec4 r35(float x, float t){ float r = r35Row(t); float rw = r >= 1.0 ? uR35A.w + mod(r - uR35A.w, 1.0 - uR35A.w) : r;
@@ -100,6 +104,13 @@ const riverMat = (() => { const m = kitMat(riverTex); const base = m.onBeforeCom
           float rPh = fract(uFlow * 1.3), rL = uFlowL * uFlowOn;
           vec4 rA = r35(vMapUv.x, kT + rPh * rL), rB = r35(vMapUv.x, kT + fract(rPh + 0.5) * rL);
           kRib = mix(rB, rA, 1.0 - abs(1.0 - 2.0 * rPh));
+          float dW = kRib.a * uR35D.w * (1.0 - smoothstep(uR35DS.z, uR35DS.w, kZ));      // row softness x near-camera fade
+          if (dW > 0.001) {
+            vec2 dUV = vec2((kLat - kCenter(kT) + uR35D.y + uHWD) / (2.0 * uHWD), (kT + uFlow * uR35D.z) / uR35D.x);
+            float det = texture(uR35Det, dUV).r - 0.5; det *= det > 0.0 ? uR35DS.x : uR35DS.y;
+            kRib.rgb = max(kRib.rgb + det * dW, 0.0);
+          }
+          kRib.a = 1.0;
         } else {
         float kW = mix(1.0, uEdge.y, smoothstep(uEdge.z, uEdge.w, kZ));
         float kUU = kU / kW;

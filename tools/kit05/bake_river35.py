@@ -85,12 +85,23 @@ def rows(tt, shift):
     """isolated-art texels, colour-matched; where the art is transparent (beyond its foam banks = the wall in the painting) the foam
     is continued by inpainting from the nearest painted foam (white-lavender puffs), never left black"""
     T_, L_ = np.meshgrid(tt, lat, indexing='ij'); s = sample_iso(T_, L_ + shift[:, None]); rgb = cmatch(s); a = s[..., 3] / 255.0
-    hole = (a < 0.92).astype(np.uint8)
-    if hole.any():
-        base = np.clip(np.where(a[..., None] > 0.05, rgb / np.maximum(a[..., None], 0.05), rgb), 0, 255).astype(np.uint8)
-        fill = cv2.inpaint(base, cv2.dilate(hole, np.ones((3, 3), np.uint8)), 6, cv2.INPAINT_TELEA).astype(np.float32)
-        foam = np.array([236, 232, 250], np.float32); fill = fill * 0.5 + foam * 0.5
-        rgb = rgb * a[..., None] + fill * (1 - a[..., None])
+    # beyond the painted foam bank the isolated art is transparent: in the approved picture that is more foam (the bank runs up to the
+    # wall), so it becomes soft white-lavender foam (a little darker deeper in, like the painted puffs' shading), never smeared water
+    if (a < 0.99).any():
+        dist = cv2.distanceTransform((a < 0.5).astype(np.uint8), cv2.DIST_L2, 5)
+        shade = np.clip(dist / 60.0, 0, 1)[..., None]
+        foam = np.array([238, 234, 252], np.float32) * (1 - shade) + np.array([206, 196, 236], np.float32) * shade
+        rgb = rgb * a[..., None] + foam * (1 - a[..., None])
+    # texels whose world point falls OUTSIDE the painting (its left / right picture edge cuts the floor near the walls at t ~3.5-5.5)
+    # would be mirror images of the picture border (V-chevrons): continue them along the flow from the nearest painted rows instead
+    x, y, _ = project(world(T_, reflect(L_ + shift[:, None]))); off = (x < 1) | (x > W - 2) | (y < 1) | (y > H - 2)
+    if off.any():
+        r_ = np.arange(off.shape[0])
+        for c in np.nonzero(off.any(0))[0]:
+            v = ~off[:, c]
+            if not v.any(): continue
+            for ch in range(3): rgb[~v, c, ch] = np.interp(r_[~v], r_[v], rgb[v, c, ch])
+        print('  off-picture texels continued along the flow: %.1f %%' % (100 * off.mean()))
     return rgb
 pre = rows(tpre, np.zeros(NPRE))
 per = rows(TA + phi, dr)
@@ -105,7 +116,8 @@ LD = S                                                                     # one
 td0 = 1.40; ND = int(round(LD * PX_V)); X = int(0.25 * PX_V)              # ND rows = one period of the detail, X = cross-fade rows
 tdv = td0 + (np.arange(ND + X) + 0.5) / ND * LD                             # sampled X rows longer than one period
 TD, LD_ = np.meshgrid(tdv, lat, indexing='ij'); D = cmatch(sample_iso(TD, LD_ + c_p(tdv)[:, None] - c_p(td0)))
-Dl = D @ np.array([0.299, 0.587, 0.114]); HPs = Dl - cv2.GaussianBlur(Dl, (0, 0), float(os.environ.get('R35_SIG', 7.0)))
+SIG = float(os.environ.get('R35_SIG', 7.0))   # band split: colours / layout above ~0.03 u from the painting itself, streaks below it
+Dl = D @ np.array([0.299, 0.587, 0.114]); HPs = Dl - cv2.GaussianBlur(Dl, (0, 0), SIG)
 ww = ((np.arange(X) + 0.5) / X)[:, None]                                    # periodic: the first X rows fade in from the rows after the end
 HP = HPs[:ND].copy(); HP[:X] = HPs[:X] * ww + HPs[ND:ND + X] * (1 - ww)
 def detail_at(phi_rows, core):
@@ -116,15 +128,18 @@ def detail_at(phi_rows, core):
 def softness(tt):
     x0, y0, _ = project(world(tt, np.zeros_like(tt))); x1, y1, _ = project(world(tt, np.full_like(tt, 0.05)))
     nat = np.hypot(x1 - x0, y1 - y0) * IW / W / 0.05; return np.clip(1 - nat / (NU / (2 * HWD)), 0, 1)
-GK, GP = float(os.environ.get('R35_GAIN', 1.3)), float(os.environ.get('R35_POW', 0.6))
-g_per = softness(TA + phi) ** GP * GK
-g_pre = softness(tpre) ** GP * GK
-per = per + (g_per[:, None] * detail_at(phi, c_win))[..., None]
+GK, GP = float(os.environ.get('R35_GAIN', 1.6)), float(os.environ.get('R35_POW', 0.6))
+# where the painted row is softer than the texture grid, the GAME adds the sharp painted streaks live (river35_detail.png, streaming with the
+# current, near the camera only); the per-row weight goes into the texture's alpha. The texture itself stays the painting's own pixels.
+w_per = np.clip(softness(TA + phi) ** GP * GK, 0, 1); w_pre = np.clip(softness(tpre) ** GP * GK, 0, 1)
 c_pre = c_p(tpre)
-pre = pre + (g_pre[:, None] * detail_at(tpre - TA, c_pre))[..., None]
-
+g_per = w_per
+# the detail strip: luminance high-pass of the sharp near rows, straightened along the core (u = lateral - core + c_p(td0)), periodic
+# along the river with length LD (= one ring section); stored as 128 + 1.0 x detail (8-bit grey)
+Image.fromarray(np.clip(128 + HP[::-1], 0, 255).astype(np.uint8)).save(os.path.join(out, 'river35_detail.png'))
 tex = np.clip(np.concatenate([pre, per], 0), 0, 255).astype(np.uint8)
-Image.fromarray(tex[::-1]).save(os.path.join(out, 'river35.png'))
+alpha = (np.concatenate([w_pre, w_per])[:, None].repeat(NU, 1) * 255).astype(np.uint8)
+Image.fromarray(np.dstack([tex, alpha])[::-1], 'RGBA').save(os.path.join(out, 'river35.png'))
 print('river35.png', tex.shape, 'prefix rows', NPRE, 'period rows', NV, 'detail gain far/near', round(float(g_per.max()), 2), round(float(g_per.min()), 2))
 
 # ---- the river core line for the game: painted core up to TA, then the periodic (drift-closed) core; Benny starts on it ----
@@ -137,6 +152,6 @@ DS = 0.05; ss = np.arange(0, 60.0 + 1e-9, DS); tt = np.arange(0, 95.0 + 1e-9, DS
 cB = core(TB0 + ss); cB = cB - (cB[0] - LATB0) * np.exp(-ss / 0.8)          # Benny's painted start point is on his path
 kit['river_center'] = {'ds': DS, 'c': [round(float(x), 4) for x in cB - LATB0], 'src': 'round35 painted core (bake_river35.py)'}
 kit['river_center_axis'] = {'t0': 0.0, 'dt': DS, 'c': [round(float(x), 4) for x in core(tt)], 'lat_start': LATB0, 't_start': TB0}
-kit['river35'] = {'t_pre': T_PRE, 'ta': TA, 'P': P, 'n_pre': NPRE, 'n_per': NV, 'hwd': HWD, 'drift': DRIFT}
+kit['river35'] = {'t_pre': T_PRE, 'ta': TA, 'P': P, 'n_pre': NPRE, 'n_per': NV, 'hwd': HWD, 'drift': DRIFT, 'detail': {'L': LD, 'c0': float(c_p(td0))}}
 json.dump(kit, open(os.path.join(out, 'kit.json'), 'w'), indent=1)
 print('core range', round(float(core(tt).min()), 3), round(float(core(tt).max()), 3), 'Benny start lat', round(LATB0, 3))
