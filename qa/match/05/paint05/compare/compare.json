@@ -1,0 +1,34 @@
+{
+ "05 start (crest)": {
+  "BEFORE": 8.7,
+  "NEW": 95.0
+ },
+ "05 swimming, 1.6 s later": {
+  "BEFORE": 5.7,
+  "NEW": 47.2
+ },
+ "05 swimming, 3.4 s later": {
+  "BEFORE": 5.6,
+  "NEW": 34.8
+ },
+ "06 start": {
+  "BEFORE": 1.2,
+  "NEW": 95.9
+ },
+ "06 panel 1": {
+  "BEFORE": 1.2,
+  "NEW": 85.2
+ },
+ "06 panel 2": {
+  "BEFORE": 2.1,
+  "NEW": 91.1
+ },
+ "06 panel 3": {
+  "BEFORE": 1.0,
+  "NEW": 90.8
+ },
+ "06 panel 4": {
+  "BEFORE": 1.2,
+  "NEW": 85.4
+ }
+}

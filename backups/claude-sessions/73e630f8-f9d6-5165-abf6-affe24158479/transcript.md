@@ -3333,3 +3333,102 @@ Writing the new game code for the joined-up picture chain.
 
 > 🔧 **Bash** `{"command": "timeout 300 python3 scripts/rainbow-autosave.py --reason manual:paint-05-06 2>&1 | grep -E '\"commit\"|skipping'; cat > tools/paint/frames_metric.py <<'EOF'\n\"\"\"Likeness of EVERY gameplay frame to the approved picture for that moment (not just the matched moments).\nScreen 05 frames vs the approved Screen 05 picture (below the HUD strip); Screen 06 frames vs the picture shown at that moment\n(approved 06 until panel 1 is revealed, then each storyboard panel inside its own window). Two numbers per frame:\n  px20   = pixels within 20 colour levels (strict, pixel-exact),\n  look20 …[+3213 chars]`
 
+### 🧑 User — 2026-11-21T01:44:09.316Z
+
+> ↩︎ result: "commit": "bca69257d17a217f720c74f66ef5a3db56759940",
+> {
+>  "05": {
+>   "frames": 195,
+>   "px20_median": 5.2,
+>   "px20_min": 2.3,
+>   "look20_median": 5.1,
+>   "look20_min": 2.3
+>  },
+>  "06k0": {
+>   "frames": 41,
+>   "px20_median": 1.0,
+>   "px20_min": 0.6,
+>   "look20_median": 1.1,
+>   "look20_min": 0.5
+>  },
+>  "06k1": {
+>   "frames": 30,
+>   "px20_median": 1.9,
+>   "px20_min": 1.1,
+>   "look20_median": 1.9,
+>   "look20_min": 1.3
+>  },
+>  "06k2": {
+>   "frames": 30,
+>   "px20_median": 2.2,
+>   "px20_min": 1.3,
+>   "look20_median": 2.4,
+>   "look20_min": 1.2
+>  },
+>  "06k3": {
+>   "frames": 28,
+>   "px20_median": 0.8,
+>   "px20_min": 0.2,
+>   "look20_median": 0.6,
+>   "look20_min": 0.3
+>  },
+>  "06k4": {
+>   "frames": 24,
+>   "px20_median": 1.4,
+>   "px20_min": 1.0,
+>   "look20_median": 1.2,
+>   "look20_min": 0.8
+>  }
+> }
+
+### 🤖 Claude — 2026-11-21T01:44:24.872Z
+
+> 🔧 **Bash** `{"command": "cat > tools/paint/stills.mjs <<'EOF'\n// Full-size (864x1536) stills of the real game at given route positions (QA clock pinned at 12.0).\n// node tools/paint/stills.mjs --q=paint=1 --s=132.44,150,175 --out=DIR --tag=NEW\nimport { mkdirSync, writeFileSync } from 'node:fs';\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '../../scripts/lib/pw.mjs';\nconst opt = Object.fromEntries(process.argv.slice(2).map((a) => { const [k, ...r] = a.replace(/^--/, '').split('='); return [k, r.length ? r.join('=') : true]; }));\nconst ss = String(opt.s).split(',').map(Number); mkdirSync(o …[+1403 chars]`
+
+### 🧑 User — 2026-11-21T01:45:38.589Z
+
+> ↩︎ result: NEW stills 8
+> BEFORE stills 8
+> [1]+  Done                    ( timeout 1500 node tools/paint/stills.mjs --q=paint=1 --s=$S --out=qa/match/05/paint05/compare --tag=NEW 2>&1 | tail -1 )
+
+### 🤖 Claude — 2026-11-21T01:45:50.283Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nfrom PIL import Image, ImageDraw, ImageFont\nimport numpy as np, cv2, json\nR='/home/user/rainbow-'; D=f'{R}/qa/match/05/paint05/compare'\nF=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',30); f2=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf',22)\nreg=json.load(open(f'{R}/qa/match/06/paint06/work/register.json'))\ndef approved(s):\n    if s<188.9: return np.asarray(Image.open(f'{R}/references/05_flow_into_the_current.png').convert('RGB')), 'APPROVED Screen 05', None\n    rest=[198.92,209.92,220.92,231.92,241.92 …[+1993 chars]`
+
+### 🧑 User — 2026-11-21T01:45:53.211Z
+
+> ↩︎ result: {
+>  "05 start (crest)": {
+>   "BEFORE": 8.7,
+>   "NEW": 95.0
+>  },
+>  "05 swimming, 1.6 s later": {
+>   "BEFORE": 5.7,
+>   "NEW": 47.2
+>  },
+>  "05 swimming, 3.4 s later": {
+>   "BEFORE": 5.6,
+>   "NEW": 34.8
+>  },
+>  "06 start": {
+>   "BEFORE": 1.2,
+>   "NEW": 95.9
+>  },
+>  "06 panel 1": {
+>   "BEFORE": 1.2,
+>   "NEW": 85.2
+>  },
+>  "06 panel 2": {
+>   "BEFORE": 2.1,
+>   "NEW": 91.1
+>  },
+>  "06 panel 3": {
+>   "BEFORE": 1.0,
+>   "NEW": 90.8
+>  },
+>  "06 panel 4": {
+>   "BEFORE": 1.2,
+>   "NEW": 85.4
+>  }
+> }
+
