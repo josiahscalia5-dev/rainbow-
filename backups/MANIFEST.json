@@ -784,7 +784,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 25112,
-   "sha256": "2c69f68e050ae26c33e5efd10b86fca878f1de9461606ef83e1400556781eb4c"
+   "sha256": "cb5c5cfb4d2ab507b4a13a2342a429deef1cad98807970805bf7bf698f360b69"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -799,7 +799,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3271,
-   "sha256": "273e99a6ff6214d3ac3ea20e0cc970bd3638a7558593b8becf13f67687be3a17"
+   "sha256": "c4db2e29a12880ee301d1701730d3cf789e9d35bda168a1b1538501e12d78bf5"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -16475,6 +16475,21 @@
    "path": "qa/match/05/paint05/proof/NEW_04_05_06_07_straight.mp4",
    "bytes": 5170957,
    "sha256": "7730c9bc9d4bd45600621387e50e93cabab11802b46c3d9c39112c81e4f04286"
+  },
+  {
+   "path": "qa/match/05/paint05/proof/SCREEN05_steering_720p.mp4",
+   "bytes": 2631114,
+   "sha256": "ceba8253717448b08bd4b4add9db8a975c315ba236e497be496cb5e4db8408e5"
+  },
+  {
+   "path": "qa/match/05/paint05/proof/SCREEN05_steering_720p_halfspeed.mp4",
+   "bytes": 4198676,
+   "sha256": "2e7ef9c78d72f40f40a88c9c64e4a2bdf9b937cfb5068abb7daed0da69b495de"
+  },
+  {
+   "path": "qa/match/05/paint05/proof/clip_SCREEN05_steering_720p.json",
+   "bytes": 32907,
+   "sha256": "7d2847e7566847e513add79e674da0167c79c013c223a34fa39f8872bcaa003f"
   },
   {
    "path": "qa/match/05/paint05/shots/05k0.png",
