@@ -773,8 +773,8 @@
   },
   {
    "path": "backups/BOOTSTRAP_REPORT.md",
-   "bytes": 3850,
-   "sha256": "dc14d82281a261627828e4c4cde0c62f6849511d161b870059ad9db5b89ca6e7"
+   "bytes": 3854,
+   "sha256": "9243eb8bd2f0dad91a7a5eed174970cb575aa83018db1bfc4910394bb544f4cc"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
@@ -794,7 +794,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 26528,
-   "sha256": "e167cb39d771a5807ded850825e36108572aa6b478e3a22873b8935fbb23b1fc"
+   "sha256": "1d4578faa52cf0b3fcd4edf08cbf929273ca46d10ad4692b5d33dca1aee2475d"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -808,8 +808,8 @@
   },
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
-   "bytes": 3085,
-   "sha256": "7ad17392ef4384ce23dfec982ed24cfe16dec465ab240f459afa53fe0ca4e379"
+   "bytes": 3153,
+   "sha256": "4b69cf7bc62692738c8aad2da4ca42781511d196b853e803ec30be90cdae2ed8"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -7734,7 +7734,7 @@
   {
    "path": "backups/wip/screen05-agents/LAST_SYNC_UTC",
    "bytes": 33,
-   "sha256": "6f080cf03d0575c7297f9bf5af5d6d5a438d85bf6f8494d5760b789389c9efde"
+   "sha256": "a6c362b9ffa092b5f254ba6dfb15e4de8b8b6452d0ee4c9151e0be75414422f4"
   },
   {
    "path": "backups/wip/screen05-agents/WORKSPACE",
@@ -7765,6 +7765,11 @@
    "path": "backups/wip/screen05-agents/agentA/acceptance_logic.json",
    "bytes": 28797,
    "sha256": "791b595934aa8044643717868f36f58f72283eb5355436793824d4d8c47f8a91"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentA/acceptance_verdict.py",
+   "bytes": 8979,
+   "sha256": "8b4be6ef18577fc7a0ccf9383a70f6154b637055a623d9b3329bf3386ef4d485"
   },
   {
    "path": "backups/wip/screen05-agents/agentA/bubble.png",
@@ -8530,6 +8535,11 @@
    "path": "backups/wip/screen05-agents/agentB/WATER_NOTES.md",
    "bytes": 17319,
    "sha256": "2dfa155fddd843d8d947c2173cc92af0ad8753f3b06ab3e8984737cf5bc082f3"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentB/acceptance_verdict.py",
+   "bytes": 8979,
+   "sha256": "8b4be6ef18577fc7a0ccf9383a70f6154b637055a623d9b3329bf3386ef4d485"
   },
   {
    "path": "backups/wip/screen05-agents/agentB/bubble.png",
@@ -9842,14 +9852,24 @@
    "sha256": "1be3777476e49a8e4bd79780262edcfb992e4164aa8e8d0aca5afbdb305f9f7f"
   },
   {
+   "path": "backups/wip/screen05-agents/merged/.serve_token_10793.txt",
+   "bytes": 24,
+   "sha256": "137ee1a573f3a84f7309f10f350585bc50d06dcde77b1ade8b64b70759929098"
+  },
+  {
+   "path": "backups/wip/screen05-agents/merged/.serve_token_6918.txt",
+   "bytes": 24,
+   "sha256": "1ac5a2920682f53cce714f34205ba2b839476906e889ffff6e5a178ebd5103d2"
+  },
+  {
    "path": "backups/wip/screen05-agents/merged/CONTROLS_NOTES.md",
    "bytes": 14720,
    "sha256": "332f7072983e81cb4800d8a7988ae006e6da3e463b1fa97e17a24c133e824e38"
   },
   {
    "path": "backups/wip/screen05-agents/merged/MERGE_REPORT.txt",
-   "bytes": 1220,
-   "sha256": "bc0bec8846ede261aeab906a67ea8dd919203305e016032287a8ff16f58cc768"
+   "bytes": 1160,
+   "sha256": "dba79a842ef6ca31168e373acf1a7de0eb1de9025d5e3644f61aa512764db691"
   },
   {
    "path": "backups/wip/screen05-agents/merged/WATER_NOTES.md",
@@ -9865,6 +9885,11 @@
    "path": "backups/wip/screen05-agents/merged/acceptance_logic.json",
    "bytes": 28797,
    "sha256": "791b595934aa8044643717868f36f58f72283eb5355436793824d4d8c47f8a91"
+  },
+  {
+   "path": "backups/wip/screen05-agents/merged/acceptance_verdict.py",
+   "bytes": 8979,
+   "sha256": "8b4be6ef18577fc7a0ccf9383a70f6154b637055a623d9b3329bf3386ef4d485"
   },
   {
    "path": "backups/wip/screen05-agents/merged/bubble.png",
@@ -9907,6 +9932,11 @@
    "sha256": "71435b14d61aa9149c9d93730677243e619e652627526e392562ffa6ba665ae7"
   },
   {
+   "path": "backups/wip/screen05-agents/merged/coins_level_stills.json",
+   "bytes": 181230,
+   "sha256": "2e4ad6fd410d185ddb0e1e04bb8fc0dd29c1f844ba6b6b80aa7eb46cc2795d0e"
+  },
+  {
    "path": "backups/wip/screen05-agents/merged/compare0.json",
    "bytes": 176,
    "sha256": "8f904223ae36fe3b706c338945953a6efc603b908c1f4d2a221b3527b6f5238d"
@@ -9917,9 +9947,14 @@
    "sha256": "078185c14abdac29ce7aae21025f7f8a86349ecaa285433bbe38ab40c5181954"
   },
   {
+   "path": "backups/wip/screen05-agents/merged/compare_frame0.py",
+   "bytes": 1813,
+   "sha256": "58534bfc2ea0414d69643eca28f82d0b1529b0e20dcb1c07e0ec6a66442caecd"
+  },
+  {
    "path": "backups/wip/screen05-agents/merged/controls.js",
-   "bytes": 30886,
-   "sha256": "692f838322f75156b0b08b4986b3b8dfe88d27e6ddc898b7bfdb2c4aa0a8489c"
+   "bytes": 33915,
+   "sha256": "fe3546ec4145e731fd99e75a9e459f11970e847d504d2e1e2a360989200c02fe"
   },
   {
    "path": "backups/wip/screen05-agents/merged/final_acceptance.cjs",
@@ -9963,8 +9998,8 @@
   },
   {
    "path": "backups/wip/screen05-agents/merged/play3.html",
-   "bytes": 26744,
-   "sha256": "88c79f3ee2efc51e1bc8a2e2922836319e94c69552b852938e26c4bad36e314c"
+   "bytes": 27319,
+   "sha256": "10d46146910d68ef15a9cf79ae495c578bbf9445295b9f1252ca586d04b65ab2"
   },
   {
    "path": "backups/wip/screen05-agents/merged/play3.orig.html",
@@ -10213,8 +10248,8 @@
   },
   {
    "path": "backups/wip/screen05-agents/merged/waterflow.js",
-   "bytes": 7254,
-   "sha256": "8c4f6087a917a6b4b2e88adbaba512cbdf832225c2de3ef86f78f1c92799eb2b"
+   "bytes": 7346,
+   "sha256": "3f745873d24ec6136ced0331431d785bf2e53a0d9fb8ddf13133620d82a4ae27"
   },
   {
    "path": "builds/rainbow-debug-06-2026-11-17-r3.apk",
@@ -11050,6 +11085,11 @@
    "path": "docs/briefs/2026-11-21-r32/setup_r32.sh",
    "bytes": 3649,
    "sha256": "be91c788a88af324fb60db731fef64664b8dd84ce0a0a09bd0fbd21900d12950"
+  },
+  {
+   "path": "docs/briefs/2026-11-21-r33/TOOL_EVALUATION_R33.md",
+   "bytes": 5924,
+   "sha256": "063c388d3684c0f5b13f27d5ca9507c7e71adb8aec3e4ad7bfc087054fc21a36"
   },
   {
    "path": "docs/characters/benny.md",
