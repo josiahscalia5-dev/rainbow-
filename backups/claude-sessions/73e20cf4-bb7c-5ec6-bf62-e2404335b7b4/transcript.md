@@ -2902,3 +2902,133 @@ The new version is much closer to your approved screen. I'll make a fresh side-b
 
 > 🔧 **Bash** `{"command": "until grep -qE \"exit=\" /tmp/rainbow_r33/runs/kit_full2.log 2>/dev/null; do sleep 5; done; tail -2 /tmp/rainbow_r33/runs/kit_full2.log | head -1 | python3 -c \"\nimport sys,json; r=json.loads(sys.stdin.read())\nfor k in ['frames','errors','position_stalls','benny_pose','coin_crowding','swipe_directions','swipes_sent','swipes_ok','coins','ending_transition','level']: print(k, json.dumps(r.get(k))[:300])\"; tail -1 /tmp/rainbow_r33/runs/kit_full2.log; ls /tmp/rainbow_r33/runs/kit_full2 | grep -c \"^f_\"", "description": "Wait for the full-level run and summarize", "timeout": 180000 …[+2 chars]`
 
+### 🧑 User — 2026-11-21T15:32:02.071Z
+
+> ↩︎ result: frames 687
+> errors []
+> position_stalls 0
+> benny_pose {"max_abs_roll_deg": 7.88388539875819, "max_roll_change_deg_per_frame": 2.942814947957783, "worst_frame": 534, "worst_s": 24.92, "max_abs_camera_roll_deg": 0.7559312633799805, "screen_x": [109.47697038664263, 303.70143362356697], "screen_y": [556.6239294152911, 852.1662946830924], "frames_roll_over_
+> coin_crowding {"frames_checked": 687, "frames_with_overlap": 110, "max_pairs": 3, "first_frames": [0, 1, 2, 3, 4, 5, 6, 7]}
+> swipe_directions {"right": 10, "left": 10, "down": 4, "up": 2}
+> swipes_sent 26
+> swipes_ok 26
+> coins {"start": 1420, "end": 1650, "got": {"water": 6, "lane": 11, "air": 6}}
+> ending_transition {"present": true, "first_frame": 666, "k_at_end": 1, "monotonic": true, "frames": 21}
+> level {"s_end_target": 32, "done": true, "done_frame": 686, "plan": "coin-trail player + extras"}
+> exit=0
+> 687
+
+### 🤖 Claude — 2026-11-21T15:32:10.925Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/marble05/viewer && timeout 1800 python3 -I visual_check.py /tmp/rainbow_r33/runs/kit_full2 /home/user/rainbow-/references/05_flow_into_the_current.png 2>&1 | tail -3 | cut -c1-1500; ls /tmp/rainbow_r33/runs/kit_full2/visual_check.json && timeout 300 python3 -I acceptance_verdict.py /tmp/rainbow_r33/runs/kit_full2 2>&1 | tail -40", "description": "Run visual checks and the fixed-threshold verdict", "timeout": 2400000}`
+
+### 🧑 User — 2026-11-21T15:32:23.838Z
+
+> ↩︎ result: "eighth_size_within_40_below_hud_pct": 74.9
+>  }
+> }
+> /tmp/rainbow_r33/runs/kit_full2/visual_check.json
+> # Screen 05 acceptance verdict: FAIL
+> 
+> | id | criterion | result | value | rule |
+> |---|---|---|---|---|
+> | G1 | no page / console errors | PASS | `[]` | 0 errors |
+> | G2 | WHOLE level played to its end, every frame rendered | PASS | `{"frames": 687, "images": 687, "done": true, "done_frame": 686, "s_end_target": 32, "s_end": 32.013, "plan": "coin-trail player + extras"}` | the page reports level complete (state().done) at its level end and the run stops there; one image per frame |
+> | G3 | forward swimming continuous at the normal speed (no freeze, no stall, no jump) | PASS | `{"min_step": 0.045999999999999375, "max_step": 0.0470000000000006, "freezes": 0, "s_end": 32.013, "position_stalls": 0}` | path progress never freezes, per-frame step <= 1.5 x min + 0.02, and Benny/camera really move every gameplay frame (move >= 0.3 x median) |
+> | G4 | left / right smooth (no teleport) | PASS | `{"max_step_per_frame": 0.0414, "teleports": 0}` | |d lat| per frame <= 0.06 in every frame |
+> | G5 | Benny stays inside the river | PASS | `0.22` | |lat| <= 0.30 (river half-width ~0.30-0.35) |
+> | G6 | every r …[+3567 chars]
+
+### 🤖 Claude — 2026-11-21T15:32:37.695Z
+
+> 🔧 **Bash** `{"command": "grep -n \"built_level\\|path_end\\|sections\" final_acceptance.cjs | head -8; python3 -c \"\nimport json; V=json.load(open('/tmp/rainbow_r33/runs/kit_full2/visual_check.json')); rows=V['rows'] if 'rows' in V else V.get('frames')\nk=[x for x in rows[0].keys()]; print(k)\nimport numpy as np\nlook=np.array([r.get('look', r.get('colour_look', 0)) for r in rows]); print('look by 60-frame block:', [round(float(look[i:i+60].mean()),3) for i in range(0,len(look),60)])\"", "description": "Check how built-level info and colour look are measured"}`
+
+### 🧑 User — 2026-11-21T15:32:37.829Z
+
+> ↩︎ result: 138:      built_level: { path_end: pathEnd, sections: nSec, sections_entered: tiles, level_end_vs_path_end: pathEnd && sEnd ? +(sEnd - pathEnd).toFixed(3) : null, swim_speed: +speed },
+> ['frame', 'black_pct', 'dark_patches', 'largest_dark_px', 'sharpness_vs_start', 'colour_look_vs_approved', 'change']
+> look by 60-frame block: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+
+### 🤖 Claude — 2026-11-21T15:32:40.870Z
+
+> 🔧 **Bash** `{"command": "grep -n \"pathEnd\\|nSec\" final_acceptance.cjs | head -5; python3 -c \"\nimport json, numpy as np; V=json.load(open('/tmp/rainbow_r33/runs/kit_full2/visual_check.json')); rows=V['rows']\nlook=np.array([r['colour_look_vs_approved'] for r in rows]); print('look by 60-frame block:', [round(float(look[i:i+60].mean()),3) for i in range(0,len(look),60)]); print('frames 0-12:', look[:13].round(3).tolist())\"; grep -n \"def hs_hist\" -A 10 visual_check.py | head -14", "description": "Per-segment colour look and harness level hooks"}`
+
+### 🧑 User — 2026-11-21T15:32:41.023Z
+
+> ↩︎ result: 130:    const pathEnd = trk ? JSON.parse(fs.readFileSync(trk, 'utf8')).trail_s.slice(-1)[0] : null, nSec = trk ? JSON.parse(fs.readFileSync(trk, 'utf8')).N : null;
+> 138:      built_level: { path_end: pathEnd, sections: nSec, sections_entered: tiles, level_end_vs_path_end: pathEnd && sEnd ? +(sEnd - pathEnd).toFixed(3) : null, swim_speed: +speed },
+> Traceback (most recent call last):
+>   File "<string>", line 2, in <module>
+>     import json, numpy as np; V=json.load(open('/tmp/rainbow_r33/runs/kit_full2/visual_check.json')); rows=V['rows']
+>                                                                                                            ~^^^^^^^^
+> KeyError: 'rows'
+> 13:def hs_hist(img):
+> 14-    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)[150:]  # below the HUD
+> 15-    h = cv2.calcHist([hsv], [0, 1], None, [36, 16], [0, 180, 0, 256]); return cv2.normalize(h, h, 1, 0, cv2.NORM_L1)
+> 16-HR = hs_hist(R)
+> 17-rows, prev, sharp0 = [], None, None
+> 18-for f in files:
+> 19-    im = cv2.imread(f); body = im[150:]
+> 20-    g = cv2.cvtColor(body, cv2.COLOR_BGR2GRAY)
+> 21-    # a dark PATCH = a connected near-black area >= 150 px at 412x915; the approved picture's own darkest spots (wall slots,
+> 22-    # shado …[+190 chars]
+
+### 🤖 Claude — 2026-11-21T15:32:44.751Z
+
+> 🔧 **Bash** `{"command": "sed -n 126,131p final_acceptance.cjs | cut -c1-260; python3 -c \"\nimport json, numpy as np; V=json.load(open('/tmp/rainbow_r33/runs/kit_full2/visual_check.json')); print(list(V.keys())); rows=V.get('per_frame') or V.get('frames_detail') or []\nprint(type(rows), len(rows))\"", "description": "Read how the harness finds the built track"}`
+
+### 🧑 User — 2026-11-21T15:32:44.887Z
+
+> ↩︎ result: }
+>     const ov = fr.filter((x) => x.coinOverlaps !== null && x.coinOverlaps !== undefined);
+>     // the level as BUILT (the page's own track file): its end must be the level end (no shortened level)
+>     const trk = ['track_w/track.json', 'track.json'].map((f) => path.join(dir, f)).find((f) => fs.existsSync(f));
+>     const pathEnd = trk ? JSON.parse(fs.readFileSync(trk, 'utf8')).trail_s.slice(-1)[0] : null, nSec = trk ? JSON.parse(fs.readFileSync(trk, 'utf8')).N : null;
+>     const tiles = [...new Set(fr.map((x) => x.tile))].sort((a, b) => a - b);
+> ['summary', 'frames']
+> <class 'list'> 0
+
+### 🤖 Claude — 2026-11-21T15:32:50.245Z
+
+> 🔧 **Bash** `{"command": "grep -n \"G13\" -A 4 acceptance_verdict.py | head -8; grep -n \"colour_look\\|'look'\" visual_check.py | head -5; python3 -c \"\nimport json; V=json.load(open('/tmp/rainbow_r33/runs/kit_full2/visual_check.json')); F=V['frames']; print(F[0] if F else None); print(json.dumps(V['summary'])[:600])\"", "description": "Read G13 rule and per-frame colour data"}`
+
+### 🧑 User — 2026-11-21T15:32:50.317Z
+
+> ↩︎ result: 6:transition, do not shorten': G3 + real position stalls, NEW G12 ending transition, NEW G13 full built level / every section; V2 + V4 on
+> 7-gameplay frames (the golden-light bloom frames keep V1 dark patches + V3 flicker). ~13:48 UTC, still before any full run: NEW G14 Benny's
+> 8-on-screen tilt <= 25 deg / <= 3 deg per frame, camera roll <= 10 deg (found: up to 42 deg in the later sections).
+> 9-Writes <run dir>/VERDICT.json + VERDICT.md; exit code 0 only when EVERY criterion passes.
+> 10-The user's eight strict points map to: G4/G5/G7 smooth left-right inside the river; G2/G3 continuous natural forward swimming;
+> --
+> 51:crit('G13', 'the FULL built level: not shortened, every tunnel section and join swum through at normal speed', bl.get('level_end_vs_path_end') is not None and abs(bl['level_end_vs_path_end']) <= 0.3 and bool(secs) and max(secs) >= (bl.get('sections') or 99) - 1 and secs == list(range(min(secs), max(secs) + 1)) and bl.get('swim_speed') == 1.4,
+> 52-     bl, 'level end within 0.3 u of the built path end, sections entered without gaps up to the last one, swim speed 1.4 u/s')
+> 30:    rows.append({'frame': f.split('_')[-1][:4], 'black_pct': round(100 * black, 3), 'dark_patches':  …[+1153 chars]
+
+### 🤖 Claude — 2026-11-21T15:32:52.587Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json, numpy as np; V=json.load(open('/tmp/rainbow_r33/runs/kit_full2/visual_check.json')); F=V['frames']\nlook=np.array([r['colour_look_vs_approved'] for r in F]); print('look per 60 frames:', [round(float(look[i:i+60].mean()),3) for i in range(0,666,60)]); print('first frames', look[:16].round(3).tolist())\"", "description": "Colour look over the level"}`
+
+### 🧑 User — 2026-11-21T15:32:52.702Z
+
+> ↩︎ result: look per 60 frames: [0.713, 0.713, 0.72, 0.719, 0.733, 0.718, 0.725, 0.716, 0.731, 0.719, 0.733, 0.288]
+> first frames [0.85, 0.84, 0.829, 0.815, 0.794, 0.781, 0.769, 0.761, 0.751, 0.755, 0.744, 0.737, 0.73, 0.728, 0.725, 0.719]
+
+### 🤖 Claude — 2026-11-21T15:33:23.836Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/kit05 && python3 - <<'EOF'\np = 'bake_kit.py'; s = open(p).read()\nold = \"Image.fromarray(np.clip(tile[::-1], 0, 255).astype(np.uint8)).save(os.path.join(out, 'river_tile.png'))   # row 0 = far end\"\nnew = \"\"\"# colour: match the flowing tile's colour distribution (Lab, per channel CDF) to the APPROVED river's visible water, so the water keeps the\n# painting's pink / cyan balance once the near water hands over to the flowing current (round 33d: colour look 0.85 -> 0.72 otherwise)\nap = water[vis & (tv > 0.9) & (tv < 8.0)]\ndef lab(x): return cv2.c …[+2294 chars]`
+
+### 🧑 User — 2026-11-21T15:33:41.830Z
+
+> ↩︎ result: river tile (1152, 1024, 3) source rows t 0.9 .. 2.031 period 3.392
+> track.json: path end 32.16 sections 16 Benny axial start 1.175 first section 0
+> lrwxrwxrwx 1 root root 17 Nov 21 15:33 track.json -> ../kit/track.json
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T15:33:44.105Z
+
+Now the overlapping coins. I'll ask the running game where each coin sits on screen at the start:
+
+### 🤖 Claude — 2026-11-21T15:33:49.886Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/coins.cjs <<'EOF'\nconst { chromium } = require('playwright'); const { spawn } = require('child_process');\n(async () => {\n  const port = 9811; const srv = spawn('python3', ['-m', 'http.server', '--bind', '127.0.0.1', String(port)], { cwd: '/tmp/rainbow_r33/kitgame', stdio: 'ignore' });\n  await new Promise((r) => setTimeout(r, 1200));\n  const browser = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });\n  c …[+752 chars]`
+

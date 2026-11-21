@@ -211,7 +211,7 @@ window.step = (t, dt, steer, speed) => {
   // far coins fade out beyond about ring 3 ahead (the painting shows ~6 coins), so the depth curve never stacks them at the core
   for (const c of coins) if (c.got < 0 && c.sp.visible) { const za = tmp.copy(c.sp.position).sub(camera.position).dot(A); const f = 1 - THREE.MathUtils.smoothstep(za, 5.0, 7.0); c.sp.scale.multiplyScalar(f); c.sp.visible = f > 0.01; }
   scene.traverse((o) => { if (o.isSprite && o !== core) patchSprite(o.material); });   // droplets created during play
-  return { s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: coinCount, tile: Math.floor((st.s + bennyDist) / K.S), ...CT.state() };
+  return { s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: coinCount, tile: Math.floor((K.level.tB0 + st.s - K.level.ring0) / K.S) - K.level.k0,   // ring section Benny is in (0 = the start section) ...CT.state() };
 };
 // ending (as round 32b): over the last 1.25 u before the level end the warm white-gold light grows from the core and fills the screen
 const S_LAST = LEVEL; const endEl = document.createElement('div'); endEl.style.cssText = 'position:fixed;inset:0;pointer-events:none;opacity:0';

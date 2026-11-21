@@ -164,6 +164,23 @@ for nxt in parts[1:]:                                                # overlappi
     tile = np.concatenate([tile[:-X], (1 - wv) * tile[-X:] + wv * nxt[:X], nxt[X:]], 0)
 tile = np.concatenate([(1 - wv) * tile[-X:] + wv * tile[:X], tile[X:-X]], 0)   # cyclic: the end flows into the start
 NR = tile.shape[0]; L_TILE = (RT1 - RT0) * NR / seg_n
+# colour: match the flowing tile's colour distribution (Lab, per channel CDF) to the APPROVED river's visible water, so the water keeps the
+# painting's pink / cyan balance once the near water hands over to the flowing current (round 33d: colour look 0.85 -> 0.72 otherwise)
+ap = water[vis & (tv > 0.9) & (tv < 8.0)]
+def lab(x): return cv2.cvtColor(np.clip(x, 0, 255).astype(np.uint8).reshape(-1, 1, 3), cv2.COLOR_RGB2LAB).reshape(-1, 3).astype(np.float32)
+tl_, ap_ = lab(tile), lab(ap); outl = np.empty_like(tl_)
+for ch in range(3):
+    srt = np.sort(ap_[:, ch]); r = np.argsort(np.argsort(tl_[:, ch])) / max(1, len(tl_) - 1)
+    outl[:, ch] = np.interp(r, np.linspace(0, 1, len(srt)), srt)
+tile = cv2.cvtColor(outl.reshape(-1, 1, 3).astype(np.uint8), cv2.COLOR_LAB2RGB).reshape(tile.shape).astype(np.float32)
 Image.fromarray(np.clip(tile[::-1], 0, 255).astype(np.uint8)).save(os.path.join(out, 'river_tile.png'))   # row 0 = far end
 kit = json.load(open(os.path.join(out, 'kit.json'))); kit['river_tile'] = {'t0': RT0, 'L': L_TILE, 'painted_until': 14.0, 'painted_fade': 6.0}
 json.dump(kit, open(os.path.join(out, 'kit.json'), 'w'), indent=1); print('river tile', tile.shape, 'source rows t', round(RT0, 3), '..', round(RT1, 3), 'period', round(L_TILE, 3))
+
+# ---------------- built level for the acceptance test (track.json in the game folder) ----------------
+LEVEL = 32.16; bdir = cam_dir(432, 1180); B0 = bdir * (-CAM_H / (bdir @ NUP)); tB0 = float(B0 @ A)
+sec = lambda tb: int(np.floor((tb - ring_t(0)) / S)); k0 = sec(tB0)
+trk = {'trail_s': [round(x, 4) for x in np.arange(0, LEVEL + 1e-9, 0.05).tolist()] + ([LEVEL] if abs(np.arange(0, LEVEL + 1e-9, 0.05)[-1] - LEVEL) > 1e-6 else []),
+       'N': sec(tB0 + LEVEL) - k0 + 1, 'kit': {'tB0': tB0, 'ring0': float(ring_t(0)), 'k0': k0}}
+json.dump(trk, open(os.path.join(out, 'track.json'), 'w')); print('track.json: path end', trk['trail_s'][-1], 'sections', trk['N'], 'Benny axial start', round(tB0, 3), 'first section', k0)
+kit = json.load(open(os.path.join(out, 'kit.json'))); kit['level'] = trk['kit']; json.dump(kit, open(os.path.join(out, 'kit.json'), 'w'), indent=1)
