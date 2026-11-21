@@ -1,6 +1,6 @@
 {
- "time_utc": "2026-11-21T19:17:37+00:00",
- "lead_branch": "ccr-3830a7b8-af3hrd",
+ "time_utc": "2026-11-21T19:54:42+00:00",
+ "lead_branch": "claude/character-swimming-mechanics-jo0h6s",
  "specialists_sha256_16": {
   "android-build-performance": "b0c45161860a960c",
   "animation-and-gameplay-engineer": "c48094c3ed3d22e7",
@@ -15,28 +15,8 @@
  },
  "workers_git_worktrees": [
   {
-   "worktree": "/home/user/wt/s05-builder",
-   "branch": "claude/rainbow-screen-builder-c34",
-   "head": "d8e047d33ea4"
-  },
-  {
-   "worktree": "/home/user/wt/s05-camera",
-   "branch": "claude/rainbow-s05-camera-c34",
-   "head": "d8e047d33ea4"
-  },
-  {
-   "worktree": "/home/user/wt/s05-qa",
-   "branch": "claude/rainbow-s05-qa-c34",
-   "head": "d8e047d33ea4"
-  },
-  {
-   "worktree": "/home/user/wt/s05-swim",
-   "branch": "claude/rainbow-s05-swim-c34",
-   "head": "d8e047d33ea4"
-  },
-  {
-   "worktree": "/home/user/wt/s05-visual",
-   "branch": "claude/rainbow-s05-visual-c34",
+   "worktree": "/home/user/wt/integ",
+   "branch": "",
    "head": "d8e047d33ea4"
   }
  ],
@@ -82,23 +62,21 @@
   "worldlabs@worldlabs"
  ],
  "plugins_synced_from_claude_account": [
+  "Frontend design skill for UI/UX implementation",
+  "Automated code review for pull requests using multiple specialized agents with confidence-",
   "Accelerate design workflows \u2014 critique, design system management, UX writing, accessibilit",
   "Comprehensive feature development workflow with specialized agents for codebase exploratio",
-  "Frontend design skill for UI/UX implementation",
-  "Analyze codebases and recommend tailored Claude Code automations such as hooks, skills, MC",
-  "Automated code review for pull requests using multiple specialized agents with confidence-",
   "Core skills library for Claude Code: TDD, debugging, collaboration patterns, and proven te",
-  "Upstash Context7 MCP server for up-to-date documentation lookup. Connects to Context7's ho",
-  "Browser automation and end-to-end testing MCP server by Microsoft. Enables Claude to inter"
+  "Generate and edit explorable 3D Gaussian-splat worlds from a text prompt, image, 360 panor",
+  "Upstash Context7 MCP server for up-to-date documentation lookup. Connects to Context7's ho"
  ],
  "plugins_synced_from_claude_account_names": [
-  "claude-code-setup",
   "code-review",
   "context7",
   "design",
   "feature-dev",
   "frontend-design",
-  "playwright",
+  "spaitial-ai",
   "superpowers"
  ],
  "mcp_servers_configured": [
