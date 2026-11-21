@@ -70,3 +70,4 @@ Atlas (separate product, own account + credits at atlas.worldlabs.ai) is NOT usa
 | 03:5x | `worlds:generate` **marble-1.0-draft**, operation `6682dee2-3162-4b75-9c2e-62d6f4ed191b` | started | 5,420 → (230 expected) |
 | 03:4x | draft done: world `f3226155-5633-4e41-bbd5-f58a3f584c26` (splats 100k / 500k / full, collider) | 200 | 5,420 → **5,190** (230) |
 | 04:0x | user: "U can use 1580 for full quality from my credits" → `worlds:generate` **marble-1.1**, operation `b03e1e8d-f200-4a8d-b16a-91128a11643d` | started | 5,190 → (1,580 expected → 3,610) |
+| 04:14 | full done: world `8bb4cf11-9615-4879-8f2f-8a1cb6002ff7` (splats 100k / 500k / full, collider, pano) | 200 | 5,190 → **3,610** (1,580) |

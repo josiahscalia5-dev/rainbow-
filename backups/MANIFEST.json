@@ -794,7 +794,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 25599,
-   "sha256": "a71a0b3b12828c72826d798c47bc67b0a31aa774af7b504c0d6b7df6d7397ada"
+   "sha256": "5a9961bac28925003a3647a082565fd32eeb966d192d750afa943583a2116e71"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3056,
-   "sha256": "19fb386e2779dce6bd73c7b1b9526e85ec6aee7ad5ea3d418f7cd60ff8b4d32a"
+   "sha256": "a4ec101b1229c14438999368924fcd2628db8debd8ef794108438408d8c12cf4"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -35758,8 +35758,8 @@
   },
   {
    "path": "qa/worldlabs/05/pilot/LEDGER.md",
-   "bytes": 7195,
-   "sha256": "945a6b27fce7cc90edee08230bb065d0d30f3f19357f364dce8385b5043cf01f"
+   "bytes": 7343,
+   "sha256": "a31444d22aad3f01ef2f5aad2c9d021863beb59d2c0e45a6301fee7ccfd74489"
   },
   {
    "path": "qa/worldlabs/05/pilot/draft/analysis/bay_coverage.png",
@@ -35997,9 +35997,39 @@
    "sha256": "cfff9617583fc932538619bd422bcba0cfaa1a3b4db0d14767c5f17b91606f7e"
   },
   {
+   "path": "qa/worldlabs/05/r32/full_100k.spz",
+   "bytes": 1441736,
+   "sha256": "278b11f8234178f220fc4e05fd227f91c3a95429a71e3776e74723ee374dada1"
+  },
+  {
+   "path": "qa/worldlabs/05/r32/full_500k.spz",
+   "bytes": 7755663,
+   "sha256": "a6047d4531c1144f71cb5affc462ad5900001c827301b273729c4fc09f8da6fd"
+  },
+  {
+   "path": "qa/worldlabs/05/r32/full_collider.glb",
+   "bytes": 1037648,
+   "sha256": "f03c1aa9d7ba3c3124823078c23ed621e496d90334b55bfebc6290226b26d032"
+  },
+  {
+   "path": "qa/worldlabs/05/r32/full_full.spz",
+   "bytes": 29778823,
+   "sha256": "988ccb131c4247294dd674152e487385cc82f41ab84a5969ca75f1f23d8165ba"
+  },
+  {
    "path": "qa/worldlabs/05/r32/full_op.json",
    "bytes": 3684,
    "sha256": "9738685ce9e5b024524a9366d35f8e2393d8447f07a1ec26ed5e78f5b40e6980"
+  },
+  {
+   "path": "qa/worldlabs/05/r32/full_pano.png",
+   "bytes": 16130773,
+   "sha256": "261f8053ad28b199fb5a1d4ee1dc99b2fef88c994c4d2bd3dd05123d754a3e1d"
+  },
+  {
+   "path": "qa/worldlabs/05/r32/full_thumb.webp",
+   "bytes": 76496,
+   "sha256": "e16c249b55eb55b0cbdc0d836f52ffb8aa8e0bc63737eafb171a618ae6bf8d17"
   },
   {
    "path": "qa/worldlabs/05/r32/input_05_clean.png",
