@@ -1345,5 +1345,34 @@
    "patch": "qa/match/06/r30b/proof/r30b_candidate_from_e162aec.patch",
    "approved": false
   }
+ },
+ "round32_screen05_live": {
+  "updated_utc": "2026-11-21T12:07Z",
+  "branch": "claude/screen-05-3d-geometry-9yu7pu",
+  "animation-and-gameplay-engineer": {
+   "status": "running",
+   "task": "Screen 05 swipe controls (lanes, leap, dive, air coins, follow camera) in the Marble splat track test page",
+   "workdir": "scratchpad agentA (copy of tools/marble05/viewer + node_modules)",
+   "deliverables": [
+    "controls.js",
+    "play3.html hooks // [controls]",
+    "swipe_test.cjs",
+    "CONTROLS_NOTES.md"
+   ],
+   "relaunch": "brief = user message 2026-11-21 \"SCREEN 05: NATURAL 3D SWIMMING AND SWIPE CONTROLS\"; base files tools/marble05/viewer/"
+  },
+  "water-fx-specialist": {
+   "status": "running",
+   "task": "Screen 05 water flow on the splat river + visual cleanup (black gaps at water/wall edges, far tunnel end) without changing approved colours",
+   "workdir": "scratchpad agentB",
+   "deliverables": [
+    "waterflow.js",
+    "play3.html hooks // [waterflow]",
+    "rebuilt track pieces",
+    "WATER_NOTES.md"
+   ],
+   "relaunch": "brief = same user message; builder tools/marble05/build_track.py"
+  },
+  "lead": "merges both, records the full-level swipe-driven gameplay clip; no credits spent; other screens wait for the user to approve 05 + credits"
  }
 }
