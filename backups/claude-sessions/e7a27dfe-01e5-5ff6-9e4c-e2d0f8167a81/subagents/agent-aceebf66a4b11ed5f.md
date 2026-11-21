@@ -824,3 +824,20 @@ Usage limit has reset — please continue exactly where you stopped (you had jus
 
 Address this before completing your current task.
 
+### 🤖 Claude — 2026-11-21T14:01:13.666Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA && python3 - <<'EOF'\np='CONTROLS_NOTES.md'; s=open(p).read()\ns=s.replace(\"\"\"## Verification results\n(see below — filled in from the actual run)\n\"\"\",\"\"\"## Verification results (final run 2026-11-21 ~12:40 UTC, final code)\n* `swipe_test.cjs`: **16/16 checks true** (`swipe_log.json` → `checks`). All 8 swipes arrived as real `touch` events\n  (CDP touch → DOM touchstart/move/end on the canvas; `window.input.swipe` not used). Per swipe (lane / lat at the next swipe):\n  left → −1 / …[+3053 chars]`
+
+### 🧑 User — 2026-11-21T14:01:13.743Z
+
+> ↩︎ result: _noviewport_run
+> _run2_before_coin_scale_fade
+> a_start_frame0.png
+> a_start_frame0_controls_off.png
+> b_mid_lane_change_left.png
+> c_leap_top.png
+> d_after_air_coin.png
+> e_dive.png
+> f_resurface_splash.png
+> 13
+
