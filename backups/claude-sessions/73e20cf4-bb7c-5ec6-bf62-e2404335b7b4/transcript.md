@@ -1093,3 +1093,50 @@ The baseline run has started; software rendering here is slow, so it'll take a w
 
 > 🔧 **Bash** `{"command": "sleep 1; python3 scripts/rainbow-autosave.py --reason manual:r33-tool-evaluation 2>&1 | tail -3; git log -1 --format=%H; timeout 60 git ls-remote origin refs/heads/ccr-81d66c17-i0ooo8; git log -1 --format=%h -- docs/briefs/2026-11-21-r33/TOOL_EVALUATION_R33.md", "description": "Save the evaluation to GitHub and verify remote"}`
 
+### 🧑 User — 2026-11-21T14:30:53.094Z
+
+> ↩︎ result: "commit": "ad8f54552571aecdb432c47079a4b06e0c1302cb",
+>   "duration_s": 15
+> }
+> ad8f54552571aecdb432c47079a4b06e0c1302cb
+> ad8f54552571aecdb432c47079a4b06e0c1302cb	refs/heads/ccr-81d66c17-i0ooo8
+> ad8f545
+
+### 🤖 Claude — 2026-11-21T14:30:54.010Z
+
+> 🔧 **TaskUpdate** `{"taskId": "5", "status": "completed"}`
+
+### 🧑 User — 2026-11-21T14:30:54.028Z
+
+> ↩︎ result: Updated task #5 status
+
+### 🤖 Claude — 2026-11-21T14:31:09.393Z
+
+I don't recommend adopting AI Game Developer, Thrixel Build World, or any of the earlier three tools. Nothing I found suggests any of them can bring Screen 05 closer to your approved picture than what we already have. Nothing was installed, no accounts were created, no money or credits were spent, and your artwork wasn't uploaded anywhere.
+
+**AI Game Developer (ai-game.dev)**
+- **Your Three.js project:** its Three.js support was announced six days ago and is documented only for new games built from its own starter projects. Opening an existing project gets one marketing line and no instructions. It never mentions the 3D-capture technology your Screen 05 world is built from (Gaussian splats, drawn by the Spark library).
+- **What it would add:** it claims screenshots, scene inspection, touch input and pass/fail playtests. We already run all of these here: real finger swipes on an Android portrait screen, a screenshot every frame, Benny's position and the camera read from the live game, and automatic checks. It doesn't claim to compare the game against a reference picture, which we already do.
+- **What it is underneath:** its command-line tool is built on the same Claude agent I am, so it wouldn't see the differences any better.
+- **Cost and privacy:** even the free plan needs an account sign-in, and paid plans are $25–199 a month.
+
+**Thrixel Build World** generates new 3D models with AI, which is the new interpretation you've ruled out. We tested it once in round 19, with your sign-in, on Screen 04's foam, and it was not an improvement.
+
+**onGame** and **SceneSim** don't turn up anywhere under those names. If you have links, send them and I'll check.
+
+**Cuberta and Scenario YVO3D:**
+- **Cuberta** builds roads, buildings and terrain from its own kit pieces and runs only on Windows or Mac. Under its maker's terms, free outputs belong to them and are non-commercial.
+- **Scenario YVO3D** paints new textures with AI and is designed for single objects, not tunnels. It may also use your uploads to improve its models.
+
+**The actual obstacle** is that your approved Screen 05 is one painting from one viewpoint. While Benny swims and moves left and right, the game has to show walls, river bends and sides the painting never shows. Every tool above fills those gaps with AI-generated art or its own kit, so none of them solves this.
+
+**What I'd do instead:**
+1. **Finish the current Screen 05 build.** A short test is running now: 7.6 seconds of swimming with real left, right, up and down swipes. When it finishes I'll check it for glitches, black patches, flicker, Benny tilting or leaving the river, and colour likeness to your picture, then fix what fails. I won't show you a preview that doesn't pass.
+2. **Build a tunnel kit from your original painting's pixels.** It would have separate pieces for the ring section, the purple perforated wall, the gold rings and the S-shaped river, with textures cut and repeated from your painting itself, not repainted by AI. That keeps the tunnel sharp along the whole level and is lighter on Android phones. Our Blender specialist can build it for free. A human 3D artist could also make it, but that would cost money and need your OK.
+
+If you still want to try AI Game Developer hands-on, you'd have to create a free account and sign in yourself. I'd then test it only on a copy of Screen 05.
+
+The full comparison table is saved in `docs/briefs/2026-11-21-r33/TOOL_EVALUATION_R33.md`. Your branch `ccr-81d66c17-i0ooo8` is on GitHub at commit `ad8f545`, the GitHub copy matches this machine, and the five-minute autosave is running again.
+
+Sources: [ai-game.dev](https://ai-game.dev/), [its Three.js post](https://ai-game.dev/blog/threejs-game-development-with-ai), [its tools](https://ai-game.dev/docs/tools), [its pricing](https://ai-game.dev/pricing), [its privacy policy](https://ai-game.dev/legal/privacy), [Thrixel launch](https://gamesbeat.com/uchicago-ai-researcher-rana-hanocka-launches-thrixel-a-3d-generation-platform/), [Cuberta](https://cuberta.com/), [Cuberta specs](https://cuberta.com/specs/), [Wandy3D terms](https://wandy3d.com/terms), [Scenario YVO3D docs](https://docs.scenario.com/get-started/generation/3d-model-generation/3d-model-generation-yvo3d/index.md), [Scenario pricing](https://www.scenario.com/pricing), [Scenario privacy](https://www.scenario.com/privacy-policy), [OpenGame](https://github.com/tuannx/OpenGame), [SceneSmith paper](https://arxiv.org/html/2602.09153v1).
+
