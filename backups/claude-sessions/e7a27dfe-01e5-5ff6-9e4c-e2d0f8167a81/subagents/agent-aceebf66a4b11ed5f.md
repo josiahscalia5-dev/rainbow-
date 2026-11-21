@@ -715,3 +715,71 @@ While the final run goes, a small extra check of the two paths the main test doe
 
 > 🔧 **Bash** `{"command": "until grep -qE \"FINISHED\" /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/run_full.log; do sleep 3; done; cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA; grep -vE \"dbus|GL Driver\" run_full.log; cat compare0.json", "description": "Wait for final run and frame-0 comparison", "timeout": 2400000}`
 
+### 🧑 User — 2026-11-21T12:36:22.768Z
+
+> ↩︎ result: ready 32s
+> still a_start_frame0 frame 0 60s
+> still b_mid_lane_change_left frame 13 90s
+> still c_leap_top frame 67 125s
+> still d_after_air_coin frame 72 170s
+> still e_dive frame 102 211s
+> still f_resurface_splash frame 118 246s
+> left src touch t 0.3 -> lane -1 lat -0.2183 maxH 0 minH 0 coins + 0
+> left src touch t 0.733 -> lane -1 lat -0.22 maxH 0 minH 0 coins + 30
+> right src touch t 1.667 -> lane 0 lat -0.0249 maxH 0 minH 0 coins + 10
+> up src touch t 1.9 -> lane 0 lat -0 maxH 0.2794 minH 0 coins + 50
+> right src touch t 2.667 -> lane 1 lat 0.2133 maxH 0 minH 0 coins + 0
+> down src touch t 3 -> lane 1 lat 0.22 maxH 0 minH -0.2704 coins + 30
+> left src touch t 4.067 -> lane 0 lat 0.0027 maxH 0 minH 0 coins + 20
+> up src touch t 4.467 -> lane 0 lat 0 maxH 0.2794 minH 0 coins + 50
+> checks {"all_swipes_from_real_touch":true,"frame0_offsets_zero":true,"left1_to_left_lane":true,"left2_clamped_at_edge":true,"left_lane_coins_collected":true,"right1_back_to_centre":true,"up1_leap_peak":true,"up1_air_coins":true,"right2_to_right_lane":true,"down_dive_depth":true,"left3_to_centre":true,"up2_leap_and_air_coins":true,"hud_matches_counter":true,"camera_lat_clamped":true,"lat_inside_river":true,"no_page_errors":true} …[+195 chars]
+
+### 🤖 Claude — 2026-11-21T12:36:23.738Z
+
+Frame 0 with controls on is now 100 % pixel-identical to the old code path (max diff 0). Running the live/keyboard check and viewing the final stills.
+
+### 🤖 Claude — 2026-11-21T12:36:26.021Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA && NODE_PATH=$(npm root -g) timeout 900 node live_key_check.cjs 2>&1 | grep -vE \"dbus|GL Driver\" | tail -3", "description": "Check live loop and keyboard controls", "timeout": 900000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-21T12:36:26.063Z
+
+> ↩︎ result: Command running in background with ID: bbajpq2s5. Output is being written to: /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/tasks/bbajpq2s5.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-21T12:36:27.316Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/out_controls/e_dive.png"}`
+
+### 🧑 User — 2026-11-21T12:36:27.341Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T12:36:28.714Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/out_controls/b_mid_lane_change_left.png"}`
+
+### 🧑 User — 2026-11-21T12:36:28.754Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T12:36:37.088Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/out_controls/c_leap_top.png"}`
+
+### 🧑 User — 2026-11-21T12:36:37.196Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T12:36:38.392Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/out_controls/f_resurface_splash.png"}`
+
+### 🧑 User — 2026-11-21T12:36:38.454Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T12:36:44.899Z
+
+> 🔧 **Bash** `{"command": "until [ -s /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/live_key_check.json ]; do sleep 3; done; cat /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/live_key_check.json; date -u +%H:%M", "description": "Wait for live/keyboard check result", "timeout": 900000}`
+

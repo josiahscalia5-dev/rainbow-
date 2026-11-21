@@ -3,7 +3,7 @@
   "frames": 1,
   "dark_patches": {
    "frames_with_patches": 0,
-   "largest_px": 3,
+   "largest_px": 2,
    "max_pct": 0.0,
    "rule": "connected near-black area >= 150 px at 412x915 (approved picture: largest 8 px)"
   },
@@ -12,8 +12,8 @@
    "median": 1.0
   },
   "colour_look_vs_approved": {
-   "min": 0.644,
-   "median": 0.644
+   "min": 0.658,
+   "median": 0.658
   },
   "flicker": {
    "median_change": 0.0,
@@ -26,9 +26,9 @@
    "frame": "0000",
    "black_pct": 0.0,
    "dark_patches": 0,
-   "largest_dark_px": 3,
+   "largest_dark_px": 2,
    "sharpness_vs_start": 1.0,
-   "colour_look_vs_approved": 0.644,
+   "colour_look_vs_approved": 0.658,
    "change": 0.0
   }
  ]

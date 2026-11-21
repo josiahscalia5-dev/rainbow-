@@ -16,7 +16,7 @@ SC = json.load(open(scene_p)); F = json.load(open(frame_p)); RG = json.load(open
 n = np.array(SC['plane']['n']); ax = np.array(F['ax']); rt = np.array(F['right']); dpl = F['dpl']
 XA, XB = np.array(RG['XA']), np.array(RG['XB'])
 UA, UB = 1.30, 3.33; LT = UB - UA; DH = float((XB - XA) @ n); FL = np.array([1, -1, -1])
-DU, NA, MARGIN, FLANGE = 0.05, 64, 0.04, 1.2
+DU, NA, MARGIN, FLANGE, SAT = 0.05, 64, 0.04, 1.2, 1.35
 
 def srgb2lin(c):
     return np.where(c <= 0.04045, c / 12.92, ((c + 0.055) / 1.055) ** 2.4)
@@ -58,6 +58,8 @@ def build(name):
         new = (~filled) & (wn > 0)
         R[new] = Rn[new] / wn[new]; C[new] = Cn[new] / wn[new][:, None]; filled |= new
     R = np.nan_to_num(R, nan=1.1); C = np.nan_to_num(C, nan=0.3)
+    # averaging neighbouring splats greys the colour; give back the saturation of the surface it stands in for
+    lum = (C @ np.array([0.2126, 0.7152, 0.0722]))[..., None]; C = np.clip(lum + (C - lum) * SAT, 0, 1)
     # light smoothing of the radius so the shell does not poke through a noisy surface
     Rp = np.pad(R, ((1, 1), (0, 0)), mode='edge')
     R = np.maximum(R, (Rp[:-2] + Rp[2:] + np.roll(R, 1, 1) + np.roll(R, -1, 1)) / 4) + MARGIN
