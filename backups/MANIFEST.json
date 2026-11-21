@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3056,
-   "sha256": "68f4ac4b73f0ba99ca1d1d9fb85c3ad9f58bca9dcf7c2b882c9aa2bb95fb41ec"
+   "sha256": "19fb386e2779dce6bd73c7b1b9526e85ec6aee7ad5ea3d418f7cd60ff8b4d32a"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -35995,6 +35995,11 @@
    "path": "qa/worldlabs/05/r32/draft_thumb.webp",
    "bytes": 70168,
    "sha256": "cfff9617583fc932538619bd422bcba0cfaa1a3b4db0d14767c5f17b91606f7e"
+  },
+  {
+   "path": "qa/worldlabs/05/r32/full_op.json",
+   "bytes": 3684,
+   "sha256": "9738685ce9e5b024524a9366d35f8e2393d8447f07a1ec26ed5e78f5b40e6980"
   },
   {
    "path": "qa/worldlabs/05/r32/input_05_clean.png",
