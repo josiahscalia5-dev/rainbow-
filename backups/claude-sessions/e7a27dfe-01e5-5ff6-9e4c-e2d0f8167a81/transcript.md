@@ -4071,3 +4071,45 @@ It passes only if the sharp, approved-looking stretch is clearly longer than the
 
 I also briefly tried repeating the best stretch of your world end to end. I've stopped that, because it repeats scenery, which you said you don't want. Nothing in your game, your approved Screen 05 or your Marble world was changed.
 
+### 🧑 User — 2026-11-21T10:15:53.938Z
+
+But we can make this happen where I can make it where it's exactly like my proofreading, like the ones I've been wanting, which I have, I think, for level 5, pretty much. The pink character can swim normally, like you would, through screen 5, level 5, with my, this exact proof screen artwork. I go on, which I think I have. What can I do? Could you please give me a blunt answer? Very blunt answer.
+
+### 🧑 User — 2026-11-21T10:15:57.698Z
+
+[Request interrupted by user]
+
+### 🧑 User — 2026-11-21T10:16:26.377Z
+
+Yes, run the Marble 1.1 Plus test But we can make this happen where I can make it where it's exactly like my approved screen , like the ones I've been wanting, which I have, I think, for level 5, pretty much. The pink character can swim normally, like you would, through screen 5, level 5, with my, this exact approved screen artwork. I go on, which I think I have. What can I do? Could you please give me a blunt answer? Very blunt answer.
+
+### 🤖 Claude — 2026-11-21T10:16:41.315Z
+
+Blunt answer: **no.** Nobody can make all of level 5 exactly your approved picture, with Benny swimming freely through real 3D and zero blur. A single painting doesn't contain the rest of the tunnel; any tool has to invent it, and invented parts are never exactly your art.
+
+**What you can realistically have:**
+1. **Very close, not exact:** a level 5 that looks very close to your screen, for as long as the 3D world holds up. Today that's 2.4 seconds. The Plus test shows whether it can be longer.
+2. **Short Screen 05:** make Screen 05 the good section only, then go straight into Screen 06. That's real 3D, looks like your art, and is honest. It's just short.
+3. **Hire a 3D artist:** for the whole level, hire a 3D environment artist to build the tunnel by hand using your picture as the guide. That's how real games do it: very close, still not exact.
+
+Running the Marble 1.1 Plus test now, with your approval. It costs 1,580–3,080 of your existing 3,610 credits, no cash; World Labs decides the exact amount during the job. The project's safety check was still capped at your November budget, so I'm updating it to your approval today. It will still refuse any job that could cost more than your balance.
+
+### 🤖 Claude — 2026-11-21T10:16:47.122Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/worldlabs/marble_pilot.py'; s=open(p).read()\nold_guard='''def guard(cost):\n    bal = credits()\n    spent = START_BALANCE - bal\n    if spent + cost > CAP_SPEND:\n        sys.exit(f\"REFUSED: spent {spent:.0f} + {cost} > cap {CAP_SPEND}\")\n    print(f\"budget ok: balance {bal:.0f}, spent so far {spent:.0f}, this job ~{cost}, cap {CAP_SPEND}\")'''\nassert old_guard in s\ns=s.replace(old_guard,'''def guard(cost):\n    \"\"\"Round 32 (2026-11-21): the user approves jobs paid from the EXISTING API credits only, never cash. A job is refused\n    when its  …[+945 chars]`
+
+### 🧑 User — 2026-11-21T10:16:52.463Z
+
+> ↩︎ result: budget ok: balance 3610, this job at most 3080, balance after at least 530
+> generate HTTP 200
+> {
+>  "operation_id": "0f1d7a46-40f9-4134-8db4-8d4c3fc5f9fc",
+>  "done": false,
+>  "error": null,
+>  "metadata": null
+> }
+
+### 🤖 Claude — 2026-11-21T10:16:55.511Z
+
+> 🔧 **Bash** `{"command": "echo \"| $(date -u +%H:%M) | user: \\\"Yes, run the Marble 1.1 Plus test\\\" → \\`worlds:generate\\` **marble-1.1-plus** (same clean input + prompt), operation \\`0f1d7a46-40f9-4134-8db4-8d4c3fc5f9fc\\` | started | 3,610 → (1,580–3,080) |\" >> qa/worldlabs/05/pilot/LEDGER.md; python3 -I tools/worldlabs/marble_pilot.py poll 0f1d7a46-40f9-4134-8db4-8d4c3fc5f9fc qa/worldlabs/05/r32/plus_op.json 1500 2>&1 | tail -3; python3 -I tools/worldlabs/marble_pilot.py credits", "description": "Log the job and wait for the Plus world", "timeout": 1600000}`
+

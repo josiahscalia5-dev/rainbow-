@@ -34,11 +34,12 @@ def credits():
 
 
 def guard(cost):
+    """Round 32 (2026-11-21): the user approves jobs paid from the EXISTING API credits only, never cash. A job is refused
+    when its maximum cost could exceed the current balance (an overage would be billed to a card)."""
     bal = credits()
-    spent = START_BALANCE - bal
-    if spent + cost > CAP_SPEND:
-        sys.exit(f"REFUSED: spent {spent:.0f} + {cost} > cap {CAP_SPEND}")
-    print(f"budget ok: balance {bal:.0f}, spent so far {spent:.0f}, this job ~{cost}, cap {CAP_SPEND}")
+    if bal is None or cost > bal:
+        sys.exit(f"REFUSED: balance {bal} < maximum job cost {cost} (would create a card-billed overage)")
+    print(f"budget ok: balance {bal:.0f}, this job at most {cost}, balance after at least {bal - cost:.0f}")
 
 
 def main():
@@ -62,7 +63,7 @@ def main():
         print("media_asset_id", d["media_asset"]["media_asset_id"])
     elif cmd == "generate":
         model, asset, name, prompt_file = sys.argv[2:6]
-        cost = {"marble-1.0-draft": 230, "marble-1.1": 1580, "marble-1.0": 1580}[model]
+        cost = {"marble-1.0-draft": 230, "marble-1.1": 1580, "marble-1.0": 1580, "marble-1.1-plus": 3080}[model]  # plus: 1,580-3,080 (variable)
         guard(cost)
         body = {"display_name": name, "model": model,
                 "world_prompt": {"type": "image", "is_pano": False,

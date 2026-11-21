@@ -794,7 +794,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 25599,
-   "sha256": "cb0acb04b05f4a493c9659f696d5e0caf572f53d357ae1d60809b83deba12401"
+   "sha256": "78c0e3af3a71f072f4d4dd12237e57098f8c198babe62ef3250f74c860b8cdd8"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3056,
-   "sha256": "5ac90e6a518add9245de4aac7ac722bf11fa482993cdfbd2aac0218700fb0644"
+   "sha256": "d48092c87635653fd763004d675a3b7ebecdef818dddae2c376f851a8975ef77"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -35758,8 +35758,8 @@
   },
   {
    "path": "qa/worldlabs/05/pilot/LEDGER.md",
-   "bytes": 7343,
-   "sha256": "a31444d22aad3f01ef2f5aad2c9d021863beb59d2c0e45a6301fee7ccfd74489"
+   "bytes": 7555,
+   "sha256": "8dbf8cfcf63725fef3b7ce34bc6ac8e9edec846c90018e47a369067d5b78c4d6"
   },
   {
    "path": "qa/worldlabs/05/pilot/draft/analysis/bay_coverage.png",
@@ -37538,8 +37538,8 @@
   },
   {
    "path": "tools/worldlabs/marble_pilot.py",
-   "bytes": 4470,
-   "sha256": "61a0701d526f4dcb9287f79dee7da70259290a5106eb4781c8947e9a81e51c15"
+   "bytes": 4758,
+   "sha256": "c19eb911e49cd03690c32fbf313ce01f5f7a3d3b1a506e0ea7a61860cd06c4e2"
   },
   {
    "path": "tsconfig.json",
