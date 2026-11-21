@@ -32,19 +32,32 @@ def benny_alpha(scale=1.0, ring=True, dil=0):
     return cv2.resize(full, (w, h), interpolation=cv2.INTER_LINEAR)
 
 def window(k, scale, src_scale=1.0, src=None):
-    """warp keyframe k's own picture into plate coords at `scale`: returns rgb (float), coverage alpha"""
+    """warp keyframe k's own picture into plate coords at `scale`: returns rgb (float), coverage alpha.
+    With an upscaled `src` (SeedVR), the detail comes from it but the picture is back-projected onto the user's original
+    (3 iterations: its area-downscale equals the original exactly), then only the small rotation is resampled (cubic)."""
     pw, ph = int(round(PW * scale)), int(round(PH * scale))
-    if k == 0:
-        img = np.asarray(Image.open(src or f'{R}/references/06_crest_the_rinse_arch.png').convert('RGB')).astype(np.float32)
-        A = np.array([[scale / src_scale, 0, MX * scale], [0, scale / src_scale, MY * scale]], np.float32)
-    else:
-        img = np.asarray(Image.open(src or f'{W}/panel{k}.png').convert('RGB')).astype(np.float32)
-        if src:  # upscaled panel: resample to exactly 4x the panel size first
-            w0, h0 = REG[str(k)]['size']; img = cv2.resize(img, (w0 * 4, h0 * 4), interpolation=cv2.INTER_AREA)
-        M = np.array(REG[str(k)]['M'], np.float32)
-        A = M.copy(); A[:, :2] /= src_scale; A *= scale; A[0, 2] += MX * scale; A[1, 2] += MY * scale
-    rgb = cv2.warpAffine(img, A, (pw, ph), flags=cv2.INTER_CUBIC if scale / src_scale < 1.01 else cv2.INTER_AREA, borderMode=cv2.BORDER_REFLECT)
-    cov = cv2.warpAffine(np.ones(img.shape[:2], np.float32), A, (pw, ph), flags=cv2.INTER_LINEAR, borderValue=0)
+    orig = np.asarray(Image.open(f'{R}/references/06_crest_the_rinse_arch.png' if k == 0 else f'{W}/panel{k}.png').convert('RGB')).astype(np.float32)
+    h0, w0 = orig.shape[:2]
+    if k == 0: M = np.array([[1, 0, 0], [0, 1, 0]], np.float32)
+    else: M = np.array(REG[str(k)]['M'], np.float32)
+    A = M.copy(); A *= scale; A[0, 2] += MX * scale; A[1, 2] += MY * scale
+    if src is None:
+        rgb = cv2.warpAffine(orig, A, (pw, ph), flags=cv2.INTER_CUBIC, borderMode=cv2.BORDER_REFLECT)
+        cov = cv2.warpAffine(np.ones((h0, w0), np.float32), A, (pw, ph), flags=cv2.INTER_LINEAR, borderValue=0)
+        return rgb, cov
+    f = float(np.hypot(A[0, 0], A[1, 0]))                     # original px -> plate px
+    tw, th = int(round(w0 * f)), int(round(h0 * f))
+    U = np.asarray(Image.open(src).convert('RGB')).astype(np.float32)
+    U = cv2.resize(cv2.resize(U, (w0 * int(round(src_scale)), h0 * int(round(src_scale))), interpolation=cv2.INTER_AREA), (tw, th), interpolation=cv2.INTER_AREA)
+    X = U.copy()
+    for _ in range(3):
+        d = cv2.resize(X, (w0, h0), interpolation=cv2.INTER_AREA)
+        X = X + cv2.resize(orig - d, (tw, th), interpolation=cv2.INTER_CUBIC)
+    X = X.clip(0, 255)
+    # X is the original resampled by (tw/w0, th/h0) ~ f: map X px -> plate px = A * diag(w0/tw, h0/th)
+    A2 = A.copy(); A2[:, 0] *= w0 / tw; A2[:, 1] *= h0 / th
+    rgb = cv2.warpAffine(X, A2, (pw, ph), flags=cv2.INTER_CUBIC, borderMode=cv2.BORDER_REFLECT)
+    cov = cv2.warpAffine(np.ones((th, tw), np.float32), A2, (pw, ph), flags=cv2.INTER_LINEAR, borderValue=0)
     return rgb, cov
 
 def prep(k):
@@ -84,9 +97,34 @@ def fill(k):
             'prompt': PROMPT, 'output_format': 'png', 'safety_tolerance': '5', 'seed': 606 + k}, name=f'k{k}_fill', est_usd=0.05)
     download(r['images'][0]['url'], f'{W}/k{k}_fill.png'); print(k, 'fill', Image.open(f'{W}/k{k}_fill.png').size)
 
+def invented_coins(k):
+    """gold coins the fill invented OUTSIDE the user's picture (compact saturated-yellow blobs; the long copper bands are
+    elongated arcs and are kept) -> mask at fill scale"""
+    im = cv2.imread(f'{W}/k{k}_fill.png'); hsv = cv2.cvtColor(im, cv2.COLOR_BGR2HSV)
+    yel = ((hsv[..., 0] >= 17) & (hsv[..., 0] <= 34) & (hsv[..., 1] > 110) & (hsv[..., 2] > 150)).astype(np.uint8)
+    yel = cv2.morphologyEx(yel, cv2.MORPH_CLOSE, np.ones((5, 5), np.uint8))
+    outside = np.asarray(Image.open(f'{W}/k{k}_mask.png')) > 127
+    n, lab, stats, _ = cv2.connectedComponentsWithStats(yel, 8)
+    out = np.zeros(yel.shape, np.uint8); found = []
+    for i in range(1, n):
+        x, y, w, h, a = stats[i]
+        if a < 120: continue
+        blob = lab == i
+        if outside[blob].mean() < 0.6: continue          # mostly inside the user's picture -> theirs, keep
+        fillr = a / float(w * h); asp = w / float(h)
+        if fillr < 0.45 or not (0.25 < asp < 4.0): continue   # arcs / bands
+        out[blob] = 1; found.append([int(x), int(y), int(w), int(h)])
+    out = cv2.dilate(out, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (31, 31)))
+    out &= outside.astype(np.uint8)  # never touch the user's own pixels
+    return out, found
+
 def erase(k):
     from fal import run, data_uri, download
-    r = run('fal-ai/bria/eraser', {'image_url': data_uri(f'{W}/k{k}_fill.png'), 'mask_url': data_uri(f'{W}/k{k}_bmask.png'), 'mask_type': 'manual'},
+    coins, found = invented_coins(k)
+    bm = (np.asarray(Image.open(f'{W}/k{k}_bmask.png')) > 127) | (coins > 0)
+    Image.fromarray((bm * 255).astype(np.uint8)).save(f'{W}/k{k}_emask.png')
+    print(k, 'invented coins erased:', found)
+    r = run('fal-ai/bria/eraser', {'image_url': data_uri(f'{W}/k{k}_fill.png'), 'mask_url': data_uri(f'{W}/k{k}_emask.png'), 'mask_type': 'manual'},
             name=f'k{k}_erase', est_usd=0.04)
     download(r['image']['url'], f'{W}/k{k}_clean.png'); print(k, 'erase', Image.open(f'{W}/k{k}_clean.png').size)
 

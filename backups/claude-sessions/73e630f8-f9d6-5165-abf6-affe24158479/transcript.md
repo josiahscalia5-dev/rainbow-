@@ -915,3 +915,154 @@ The Benny cut-out is clean. Now I'm working out where Screen 06 starts and ends 
 
 > ↩︎ result: [image]
 
+### 🧑 User — 2026-11-21T00:11:08.554Z
+
+[Request interrupted by user]
+
+### 🧑 User — 2026-11-21T00:12:23.192Z
+
+Ok
+
+### 🤖 Claude — 2026-11-21T00:12:47.374Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && python3 -I - <<'EOF'\np='tools/paint06/step3_plates.py'; s=open(p).read()\ns=s.replace(\"\"\"def erase(k):\n    from fal import run, data_uri, download\n    r = run('fal-ai/bria/eraser', {'image_url': data_uri(f'{W}/k{k}_fill.png'), 'mask_url': data_uri(f'{W}/k{k}_bmask.png'), 'mask_type': 'manual'},\"\"\",\"\"\"def invented_coins(k):\n    \\\"\\\"\\\"gold coins the fill invented OUTSIDE the user's picture (compact saturated-yellow blobs; the long copper bands are\n    elongated arcs and are kept) -> mask at fill scale\\\"\\\"\\\"\n    im = cv2.imread(f'{ …[+2005 chars]`
+
+### 🧑 User — 2026-11-21T00:13:34.588Z
+
+> ↩︎ result: 3 fill (864, 1440)
+> 0 fill (864, 1440)
+> 4 fill (864, 1440)
+> 2 fill (864, 1440)
+> 0 invented coins erased: [[720, 0, 44, 36], [0, 27, 40, 49], [752, 56, 17, 14], [468, 168, 16, 14], [340, 196, 28, 22], [824, 755, 40, 57]]
+> 4 invented coins erased: [[813, 0, 16, 16], [326, 279, 17, 14], [0, 1132, 220, 198], [599, 1192, 265, 205]]
+> 2 invented coins erased: [[519, 112, 10, 28]]
+> 3 invented coins erased: [[320, 1120, 205, 189], [202, 1215, 27, 42]]
+> 1 invented coins erased: [[0, 268, 36, 52], [780, 364, 33, 72], [349, 1131, 273, 230], [0, 1372, 21, 16]]
+> 4 erase (864, 1440)
+> 0 erase (864, 1440)
+> 3 erase (864, 1440)
+> 2 erase (864, 1440)
+> 1 erase (864, 1440)
+
+### 🤖 Claude — 2026-11-21T00:13:35.643Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/paint06/work/view_clean_all.png"}`
+
+### 🧑 User — 2026-11-21T00:13:35.692Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T00:13:45.869Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && python3 -I tools/paint06/step3_plates.py up 0 1 2 3 4 && python3 -I tools/paint06/step3_plates.py comp 0 1 2 3 4 && cd qa/match/06/paint06/work && python3 -I - <<'EOF'\nfrom PIL import Image\nimport numpy as np, json\n# rest frame vs the user's panel (inside the panel's own window) — pixels within 20 levels\nW='.'\nreg=json.load(open('register.json'))\nimport cv2\nfor k in range(1,5):\n    rf=np.asarray(Image.open(f'k{k}_rest_frame.png').convert('RGB')).astype(np.float32)  # frame at 1.25x\n    rf1=cv2.resize(rf,(864,1536),interpolation=cv2.INTER_AREA)\n  …[+778 chars]`
+
+### 🧑 User — 2026-11-21T00:14:05.638Z
+
+> ↩︎ result: 2 up (1728, 2880)
+> 3 up (1728, 2880)
+> 1 up (1728, 2880)
+> 4 up (1728, 2880)
+> 0 up (1728, 2880)
+> 0 comp ok
+> 4 comp ok
+> 2 comp ok
+> 1 comp ok
+> 3 comp ok
+> panel 1: frame back-projected onto the panel: within 20 levels 83.1 %, mean abs 11.9
+> panel 2: frame back-projected onto the panel: within 20 levels 84.7 %, mean abs 11.1
+> panel 3: frame back-projected onto the panel: within 20 levels 83.6 %, mean abs 11.8
+> panel 4: frame back-projected onto the panel: within 20 levels 83.4 %, mean abs 11.7
+> (1440, 2400) (838, 714)
+
+### 🤖 Claude — 2026-11-21T00:14:15.421Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nfrom PIL import Image\nimport numpy as np, cv2\np=np.asarray(Image.open('panel1.png').convert('RGB')).astype(np.float32); h,w=p.shape[:2]\ndef score(img):\n    e=np.abs(img-p).max(axis=2)[3:-3,3:-3]; return round(100*(e<=20).mean(),1), round(e.mean(),1)\nup=np.asarray(Image.open('panel1_seedvr4.png').convert('RGB')).astype(np.float32); print('seedvr size', up.shape)\nprint('resize->4x->down', score(cv2.resize(cv2.resize(up,(w*4,h*4),interpolation=cv2.INTER_AREA),(w,h),interpolation=cv2.INTER_AREA)))\nprint('crop->down', score(cv2.resize(up[:h*4,:w*4],(w,h),in …[+619 chars]`
+
+### 🧑 User — 2026-11-21T00:14:16.696Z
+
+> ↩︎ result: seedvr size (2512, 1968, 3)
+> resize->4x->down (np.float64(93.8), np.float32(8.1))
+> crop->down (np.float64(76.5), np.float32(16.0))
+> bicubic 1.6x round trip (np.float64(99.6), np.float32(3.1))
+> shift -0.5 -0.5 (np.float64(85.5), np.float32(10.9))
+> shift -0.5 -0.25 (np.float64(85.0), np.float32(11.4))
+> shift -0.5 0.0 (np.float64(80.5), np.float32(13.6))
+> shift -0.25 -0.5 (np.float64(85.8), np.float32(10.9))
+> shift -0.25 -0.25 (np.float64(85.3), np.float32(11.4))
+> shift -0.25 0.0 (np.float64(80.1), np.float32(14.0))
+> shift 0.0 -0.5 (np.float64(82.3), np.float32(12.4))
+> shift 0.0 -0.25 (np.float64(81.8), np.float32(13.1))
+> shift 0.25 -0.5 (np.float64(77.9), np.float32(14.4))
+> shift 0.25 -0.25 (np.float64(77.4), np.float32(15.0))
+
+### 🤖 Claude — 2026-11-21T00:14:29.133Z
+
+The 83% came from a resampling mistake in my own code, not from the pictures, so I'm fixing it. I'm also tuning the sharpening so your panel's colours stay exact while it gains fine detail.
+
+### 🤖 Claude — 2026-11-21T00:14:34.993Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nfrom PIL import Image\nimport numpy as np, cv2\np=np.asarray(Image.open('panel1.png').convert('RGB')).astype(np.float32); h,w=p.shape[:2]\nU4=cv2.resize(np.asarray(Image.open('panel1_seedvr4.png').convert('RGB')).astype(np.float32),(w*4,h*4),interpolation=cv2.INTER_AREA)\nf=1.97; tw,th=int(w*f),int(h*f)\nU=cv2.resize(U4,(tw,th),interpolation=cv2.INTER_AREA)\nB=cv2.resize(p,(tw,th),interpolation=cv2.INTER_CUBIC)\ndef score(img):\n    d=cv2.resize(img,(w,h),interpolation=cv2.INTER_AREA); e=np.abs(d-p).max(axis=2)[3:-3,3:-3]; return round(100*(e<=20).mean(),1)\n …[+775 chars]`
+
+### 🧑 User — 2026-11-21T00:14:35.565Z
+
+> ↩︎ result: bicubic 99.8 9.07
+> seedvr 95.5 14.34
+> detail-transfer sigma 0.8 100.0 14.48
+> detail-transfer sigma 1.2 97.5 17.16
+> detail-transfer sigma 1.6 90.4 18.59
+> detail-transfer sigma 2.2 80.0 19.43
+> back-projection iters 1 100.0 14.76
+> back-projection iters 3 100.0 15.29
+> back-projection iters 6 100.0 15.47
+
+### 🤖 Claude — 2026-11-21T00:14:41.152Z
+
+Back-projection gives 100% of pixels matching your panel within 20 levels at the panel's own size, and it's still as sharp as the AI-sharpened version. Applying it to all five pictures.
+
+### 🤖 Claude — 2026-11-21T00:14:55.308Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && python3 -I - <<'EOF'\np='tools/paint06/step3_plates.py'; s=open(p).read()\nold=s[s.index('def window(k, scale'):s.index('def prep(k):')]\nnew='''def window(k, scale, src_scale=1.0, src=None):\n    \"\"\"warp keyframe k's own picture into plate coords at `scale`: returns rgb (float), coverage alpha.\n    With an upscaled `src` (SeedVR), the detail comes from it but the picture is back-projected onto the user's original\n    (3 iterations: its area-downscale equals the original exactly), then only the small rotation is resampled (cubic).\"\"\"\n    pw, ph = …[+3287 chars]`
+
+### 🧑 User — 2026-11-21T00:15:00.951Z
+
+> ↩︎ result: 3 comp ok
+> 1 comp ok
+> 4 comp ok
+> 0 comp ok
+> 2 comp ok
+> k0: within 20 levels 99.1 %  mean abs 1.7
+> k1: within 20 levels 93.2 %  mean abs 6.3
+> k2: within 20 levels 94.1 %  mean abs 5.8
+> k3: within 20 levels 92.6 %  mean abs 6.6
+> k4: within 20 levels 93.0 %  mean abs 6.3
+
+### 🤖 Claude — 2026-11-21T00:15:08.042Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nfrom PIL import Image\nimport numpy as np, json, cv2\nreg=json.load(open('register.json'))\nfor k in range(1,5):\n    rf=np.asarray(Image.open(f'k{k}_rest_frame.png').convert('RGB')).astype(np.float32)\n    rf1=cv2.resize(rf,(864,1536),interpolation=cv2.INTER_AREA)\n    p=np.asarray(Image.open(f'panel{k}.png').convert('RGB')).astype(np.float32)\n    M=np.array(reg[str(k)]['M'],np.float32)\n    fw=cv2.warpAffine(p,M,(864,1536),flags=cv2.INTER_CUBIC)\n    cov=cv2.warpAffine(np.ones(p.shape[:2],np.float32),M,(864,1536))>0.999\n    cov=cv2.erode(cov.astype(np.uin …[+319 chars]`
+
+### 🧑 User — 2026-11-21T00:15:08.946Z
+
+> ↩︎ result: k1: inside the panel window (57 % of the phone frame): within 20 levels 91.1 %, mean abs 7.3
+> k2: inside the panel window (56 % of the phone frame): within 20 levels 92.0 %, mean abs 6.9
+> k3: inside the panel window (60 % of the phone frame): within 20 levels 90.6 %, mean abs 7.6
+> k4: inside the panel window (57 % of the phone frame): within 20 levels 90.9 %, mean abs 7.4
+
+### 🤖 Claude — 2026-11-21T00:15:17.349Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nfrom PIL import Image\nimport numpy as np, json, cv2\nreg=json.load(open('register.json'))\nfor k in range(1,5):\n    rf=np.asarray(Image.open(f'k{k}_rest_frame.png').convert('RGB')).astype(np.float32)   # frame px * 1.25\n    p=np.asarray(Image.open(f'panel{k}.png').convert('RGB')).astype(np.float32); h,w=p.shape[:2]\n    M=np.array(reg[str(k)]['M'],np.float64); sc=np.hypot(M[0,0],M[1,0]); f=1.25*sc\n    small=cv2.resize(rf,(int(round(rf.shape[1]/f)),int(round(rf.shape[0]/f))),interpolation=cv2.INTER_AREA)\n    # small px -> frame px*1.25 = *f ; panel px ->  …[+420 chars]`
+
+### 🧑 User — 2026-11-21T00:15:17.989Z
+
+> ↩︎ result: k1: at the panel's own size: within 20 levels 95.5 %, mean abs 5.59
+> k2: at the panel's own size: within 20 levels 95.5 %, mean abs 5.36
+> k3: at the panel's own size: within 20 levels 94.2 %, mean abs 6.15
+> k4: at the panel's own size: within 20 levels 97.5 %, mean abs 4.18
+
+### 🤖 Claude — 2026-11-21T00:15:22.798Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/paint06/work/view_rest_all.png"}`
+
+### 🧑 User — 2026-11-21T00:15:22.971Z
+
+> ↩︎ result: [image]
+

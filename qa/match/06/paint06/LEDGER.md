@@ -14,3 +14,17 @@
 | 2026-11-21 00:09 | k1_fill | fal-ai/flux-pro/v1/fill | `01a1fb6f-c792-7c43-8b6a-df9f73c5333e` | 0.050 | True | 22 |
 | 2026-11-21 00:10 | k1_fill | fal-ai/flux-pro/v1/fill | `01a1fb70-65de-7f63-971c-dd6080e25d23` | 0.050 | True | 25 |
 | 2026-11-21 00:10 | k1_erase | fal-ai/bria/eraser | `01a1fb70-c9a4-7983-88ab-c38e30eb103e` | 0.040 | True | 15 |
+| 2026-11-21 00:13 | k3_fill | fal-ai/flux-pro/v1/fill | `01a1fb72-d06a-7212-83b0-c5835ebd85a1` | 0.050 | True | 22 |
+| 2026-11-21 00:13 | k0_fill | fal-ai/flux-pro/v1/fill | `01a1fb72-d06b-7511-8d0e-db64195dcf0c` | 0.050 | True | 22 |
+| 2026-11-21 00:13 | k4_fill | fal-ai/flux-pro/v1/fill | `01a1fb72-d09f-7511-9456-f3169ddeadb3` | 0.050 | True | 22 |
+| 2026-11-21 00:13 | k2_fill | fal-ai/flux-pro/v1/fill | `01a1fb72-d07f-7a51-82ed-942bb26ef252` | 0.050 | True | 25 |
+| 2026-11-21 00:13 | k3_erase | fal-ai/bria/eraser | `01a1fb73-34c6-7131-bbbb-80de41571282` | 0.040 | True | 15 |
+| 2026-11-21 00:13 | k4_erase | fal-ai/bria/eraser | `01a1fb73-3513-7461-8f71-316f9e29146b` | 0.040 | True | 15 |
+| 2026-11-21 00:13 | k0_erase | fal-ai/bria/eraser | `01a1fb73-3524-7bc1-bf75-a7ce5f2c98f5` | 0.040 | True | 16 |
+| 2026-11-21 00:13 | k2_erase | fal-ai/bria/eraser | `01a1fb73-3613-7042-b8c5-44769342c66e` | 0.040 | True | 16 |
+| 2026-11-21 00:13 | k1_erase | fal-ai/bria/eraser | `01a1fb73-3625-72f0-bd86-1ddd37d2c63d` | 0.040 | True | 19 |
+| 2026-11-21 00:13 | k2_clean_up2 | fal-ai/seedvr/upscale/image | `01a1fb73-b756-7852-8a6c-a4e26da8664a` | 0.100 | True | 7 |
+| 2026-11-21 00:13 | k3_clean_up2 | fal-ai/seedvr/upscale/image | `01a1fb73-b6fd-75d3-b03a-c5a384a09b69` | 0.100 | True | 9 |
+| 2026-11-21 00:13 | k1_clean_up2 | fal-ai/seedvr/upscale/image | `01a1fb73-b743-7ac2-8f9f-7c86f81d6698` | 0.100 | True | 10 |
+| 2026-11-21 00:13 | k4_clean_up2 | fal-ai/seedvr/upscale/image | `01a1fb73-b7a1-7772-82a5-b4fe2cbe5a5f` | 0.100 | True | 10 |
+| 2026-11-21 00:13 | k0_clean_up2 | fal-ai/seedvr/upscale/image | `01a1fb73-b73d-7dd2-9221-9fc219d4a54c` | 0.100 | True | 13 |
