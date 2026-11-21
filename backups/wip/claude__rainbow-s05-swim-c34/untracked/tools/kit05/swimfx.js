@@ -8,6 +8,17 @@
 //    spray streaks outward and back with the current. Its top centre (the painted fur at his waist) is never distorted, and the
 //    distortion strength is 0 at the start frame (frame 0 stays pixel-identical to the approved start view).
 // Driven only by the game clock passed in update() (deterministic tests). ?swimfx=0 turns all of it off.
+// the painted splash WITHOUT the painted fur at its top centre (for the leap / dive bursts, which appear where he is not)
+export function sprayOnly(THREE, tex) {
+  const img = tex.image, c = document.createElement('canvas'); c.width = img.width; c.height = img.height; const g = c.getContext('2d'); g.drawImage(img, 0, 0);
+  const d = g.getImageData(0, 0, c.width, c.height), a = d.data;
+  for (let y = 0; y < c.height; y++) for (let x = 0; x < c.width; x++) {
+    const e = Math.hypot((x / c.width - 0.5) / 0.26, (y / c.height) / 0.5), k = Math.min(1, Math.max(0, (e - 0.95) / 0.3)), i = (y * c.width + x) * 4;
+    const pink = a[i] > a[i + 1] + 60 && a[i + 2] > a[i + 1] + 20 ? 0.15 : 1;   // stray fur-coloured texels outside the ellipse
+    a[i + 3] = Math.round(a[i + 3] * k * k * (3 - 2 * k) * pink);
+  }
+  g.putImageData(d, 0, 0); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
+}
 export function installSwimFx({ THREE, scene, splash, q }) {
   const OFF = q.get('swimfx') === '0';
   const P = { WAKE_AGE: 1.1, WAKE_W0: 0.085, WAKE_SPREAD: 0.3, DRIFT: 0.55, WAKE_A: 0.55, RIPPLE_T: 0.75, PUFF_T: 0.6, SPL_FLOW: 0.035 };
