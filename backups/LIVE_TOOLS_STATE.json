@@ -1,5 +1,5 @@
 {
- "time_utc": "2026-11-21T12:52:47+00:00",
+ "time_utc": "2026-11-21T13:02:35+00:00",
  "lead_branch": "claude/screen-05-3d-geometry-9yu7pu",
  "specialists_sha256_16": {
   "android-build-performance": "b0c45161860a960c",
@@ -56,12 +56,13 @@
   "worldlabs@worldlabs"
  ],
  "plugins_synced_from_claude_account": [
+  "Generate and edit explorable 3D Gaussian-splat worlds from a text prompt, image, 360 panor",
+  "Core skills library for Claude Code: TDD, debugging, collaboration patterns, and proven te",
   "Accelerate design workflows \u2014 critique, design system management, UX writing, accessibilit",
+  "Automated code review for pull requests using multiple specialized agents with confidence-",
   "Comprehensive feature development workflow with specialized agents for codebase exploratio",
   "Frontend design skill for UI/UX implementation",
-  "Upstash Context7 MCP server for up-to-date documentation lookup. Connects to Context7's ho",
-  "Automated code review for pull requests using multiple specialized agents with confidence-",
-  "Core skills library for Claude Code: TDD, debugging, collaboration patterns, and proven te"
+  "Upstash Context7 MCP server for up-to-date documentation lookup. Connects to Context7's ho"
  ],
  "plugins_synced_from_claude_account_names": [
   "code-review",
@@ -69,6 +70,7 @@
   "design",
   "feature-dev",
   "frontend-design",
+  "spaitial-ai",
   "superpowers"
  ],
  "mcp_servers_configured": [
