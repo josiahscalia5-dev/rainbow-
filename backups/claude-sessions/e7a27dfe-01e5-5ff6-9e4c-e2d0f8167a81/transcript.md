@@ -4966,3 +4966,40 @@ All saved and pushed: GitHub shows the same commit as this session (`c7f96ac`), 
 
 I haven't started on your Screen 05 → 06 level. Building it from mixed track pieces, plus the Screen 06 Echo-2 world for 160 free SpAItial credits, still needs your yes.
 
+### 🧑 User — 2026-11-21T11:26:27.792Z
+
+CLAUDIA — YES, CONTINUE THE FREE SCREEN 05 GAMEPLAY TEST.
+
+I want you to finish testing the repeating 3D tunnel approach, because you've reported approximately 7 seconds of real forward swimming without the scenery smearing.
+
+But there are important conditions.
+
+My main goal remains a real 3D Android game that looks approximately 94–95% like my approved Screen 05, if that quality is achievable.
+
+Think Subway Surfers, except Benny swims through my beautiful purple-and-gold tunnel.
+
+You may reuse gold rings and compatible tunnel structures, but I DO NOT want an obviously repeating river pattern every second.
+
+Please focus on:
+
+1. Fixing the black opening at the far end of the tunnel.
+2. Making the blue-and-pink S-shaped river continuous throughout Screen 05.
+3. Making water flow naturally, with varied reflections, foam, bubbles, and splashes.
+4. Preventing visible seams, mismatched colors, glitches, and blurry areas.
+5. Keeping Benny large and clearly visible with a natural follow-camera.
+6. Making Benny genuinely paddle, swim forward, steer, and lean around curves.
+7. Making the gold rings and purple machinery approach, pass around Benny, and disappear behind him naturally.
+8. Preserving the beautiful original approved artwork's colors, proportions, lighting, and overall appearance.
+
+Use the successful sharp 3D sections we already have. Do not replace them with generic 3D scenery.
+
+FIRST: Finish the full-length Screen 05 test using the existing assets, without spending additional credits.
+
+THEN: Show me an uninterrupted, normal-speed gameplay recording. I want to see the complete level, especially the river bends and places where sections join.
+
+If the result genuinely looks natural and stays beautiful throughout Screen 05, we can proceed with generating and testing the approved Screen 06 environment using the available free SpAItial credits.
+
+Keep everything protected on GitHub. Don't overwrite my original artwork, successful Marble worlds, Echo-2 world, or existing playable game.
+
+I want to see the real gameplay working beautifully before we move forward.
+
