@@ -2299,3 +2299,34 @@ While that runs (about 10 minutes), I'll make sure the new kit tools are saved t
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow- && python3 scripts/rainbow-autosave.py --reason manual:r33-kit-tools 2>&1 | grep -E '\"commit\"|skipping|error' ; git log -1 --format='%h %s'; git show --stat HEAD | grep -E \"kit05\" | head; timeout 60 git ls-remote origin refs/heads/ccr-81d66c17-i0ooo8; git rev-parse HEAD", "description": "Autosave kit tools and verify remote"}`
 
+### 🧑 User — 2026-11-21T15:04:58.972Z
+
+> ↩︎ result: "commit": "d98815839df30f5a0647e203b7735440a492634a",
+> d988158 autosave: Rainbow 2026-11-21 15:04 UTC
+>  tools/kit05/bake_kit.py                            |  16 ++-
+>  tools/kit05/kitgame.html                           |   4 +-
+>  tools/kit05/still_page.cjs                         |  13 +++
+> d98815839df30f5a0647e203b7735440a492634a	refs/heads/ccr-81d66c17-i0ooo8
+> d98815839df30f5a0647e203b7735440a492634a
+
+### 🤖 Claude — 2026-11-21T15:05:22.618Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/kit05/compare_r33.py", "content": "\"\"\"Round 33: APPROVED | CURRENT (round-32 splat build) | KIT, measured the same way.\npython3 -I compare_r33.py <current run dir> <kit run dir> <outdir> [frames=0,15,30]\nFrame 0 = the approved camera in both builds, so it is compared pixel by pixel with the approved picture (scaled to the 412 x 915 phone\nframe: same vertical field of view, sides cropped). Scenery = everything below the HUD minus a generous box around Benny (both builds\nuse the same Benny model, so he is not part of the scenery comparison). Later  …[+3233 chars]`
+
+### 🧑 User — 2026-11-21T15:05:22.646Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/kit05/compare_r33.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-21T15:05:23.572Z
+
+> 🔧 **Bash** `{"command": "grep -E \"frame [0-9]+ \" /tmp/rainbow_r33/runs/kit_v2.log | tail -1 | cut -c1-30; grep -c . /tmp/rainbow_r33/runs/kit_v2.log", "description": "Check kit run progress"}`
+
+### 🧑 User — 2026-11-21T15:05:23.611Z
+
+> ↩︎ result: frame 60 / 228 {"s":2.8,"lat":
+> 7
+
+### 🤖 Claude — 2026-11-21T15:05:26.651Z
+
+> 🔧 **Bash** `{"command": "until grep -q \"exit=\" /tmp/rainbow_r33/runs/kit_v2.log; do sleep 5; done; tail -2 /tmp/rainbow_r33/runs/kit_v2.log | python3 -c \"\nimport sys,json\nlines=sys.stdin.read().strip().split('\\n'); print(lines[-1])\nr=json.loads(lines[0]); \nfor k in ['frames','errors','position_stalls','benny_pose','coin_crowding','swipe_directions','forward','lateral','vertical','camera','coins','swipes_sent','swipes_ok']: print(k, json.dumps(r.get(k))[:400])\nprint([ (x['swipe'],x['t'],x['ok']) for x in r['swipe_responses']])\"", "description": "Wait for kit run and summarize results", "timeout": …[+8 chars]`
+

@@ -794,7 +794,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 26528,
-   "sha256": "b735a877eab0b2276aa27113e92dddb8c8d64e4e7f4c2a707acbefa496e911a3"
+   "sha256": "c97fd92c7435d084cf6a722e226a6fbdc7855b8fe82b04c2b18612f7f482a8e2"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3153,
-   "sha256": "54ba316710cd62854459be8df76b699599d2de4c7b2cc96675a0efe7fa5a4696"
+   "sha256": "a515482df235c6d1fb193fce7d695555633426e6dfe0dc5b09955e26a4b73512"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -7734,7 +7734,7 @@
   {
    "path": "backups/wip/screen05-agents/LAST_SYNC_UTC",
    "bytes": 33,
-   "sha256": "c89c617ea70360b5106e6375574b9a4278e87efd882c12a4694f395a3990628f"
+   "sha256": "40fa3de78dd99c067922b4b29217b4e68c1fcfb67f20e77bb0dbbe7f3ff3378c"
   },
   {
    "path": "backups/wip/screen05-agents/WORKSPACE",
@@ -39590,6 +39590,11 @@
    "path": "tools/kit05/cam05.py",
    "bytes": 1448,
    "sha256": "0dd6786ebf6c53fb340dfe71772a3a010dcba28b91650159f99b8ff1877339ef"
+  },
+  {
+   "path": "tools/kit05/compare_r33.py",
+   "bytes": 3705,
+   "sha256": "f0013d2da29d1fa5b66b12121a588a259429b08c89df2a363660605a0ec17dbf"
   },
   {
    "path": "tools/kit05/fit_tunnel.py",
