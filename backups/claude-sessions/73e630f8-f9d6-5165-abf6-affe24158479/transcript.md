@@ -5213,3 +5213,59 @@ The left arm now visibly strokes up and down. The right arm is mostly hidden by 
 
 > 🔧 **Bash** `{"command": "cp qa/match/05/r31_3d/compare/CMP_150.jpg qa/match/05/r31_3d/proof/CMP_swimming_1.6s.jpg && cp qa/match/05/r31_3d/compare/CMP_186.jpg qa/match/05/r31_3d/proof/CMP_end_of_05.jpg && cp qa/match/05/r31_3d/compare/CMP_132.44.jpg qa/match/05/r31_3d/proof/CMP_start_of_05.jpg && cat > qa/match/05/r31_3d/README.md <<'EOF'\n# Screen 05 — REAL 3D forward swimming with the approved look (round 31, 2026-11-21, branch `ccr-4fcad20e-a6pp8w`)\n\nUser (2026-11-21, verbatim excerpts): \"I AM BUILDING A PLAYABLE 3D ANDROID GAME, NOT AN IMAGE APP OR SLIDESHOW … Benny must actually swim forward …\nth …[+4671 chars]`
 
+### 🧑 User — 2026-11-21T02:57:46.634Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "commit": "82048383bbe7d329d76b0127c51d303ec5771a0d",
+> 82048383bbe7d329d76b0127c51d303ec5771a0d
+> 82048383bbe7d329d76b0127c51d303ec5771a0d	refs/heads/ccr-4fcad20e-a6pp8w
+
+### 🤖 Claude — 2026-11-21T02:57:50.511Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/match/05/r31_3d/proof/NEW3D_SCREEN05_gameplay.mp4", "/home/user/rainbow-/qa/match/05/r31_3d/proof/NEW3D_SCREEN05_sideview.mp4", "/home/user/rainbow-/qa/match/05/r31_3d/proof/CMP_swimming_1.6s.jpg", "/home/user/rainbow-/qa/match/05/r31_3d/proof/CMP_end_of_05.jpg"], "caption": "1) Real 3D Screen 05 at normal speed: Benny swims forward through the tunnel, paddles, steers, collects coins, into 06. 2) Side camera proving Benny and the tunnel are in real 3D space. 3–4) APPROVED | BEFORE | NEW real 3D | painted candidate.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-21T02:57:51.831Z
+
+> ↩︎ result: 4 files delivered to user.
+>   /home/user/rainbow-/qa/match/05/r31_3d/proof/NEW3D_SCREEN05_gameplay.mp4 → file_uuid: 57e5ee07-d862-4901-a530-07ff6a288eac
+>   /home/user/rainbow-/qa/match/05/r31_3d/proof/NEW3D_SCREEN05_sideview.mp4 → file_uuid: a111ec36-1cec-4f71-82ff-6a48fe2df33a
+>   /home/user/rainbow-/qa/match/05/r31_3d/proof/CMP_swimming_1.6s.jpg → file_uuid: 753fd794-4b38-4b3a-a9e9-d9bd20bd0db6
+>   /home/user/rainbow-/qa/match/05/r31_3d/proof/CMP_end_of_05.jpg → file_uuid: f5f664ac-a024-44b0-8ce3-283f8280779c
+
+### 🤖 Claude — 2026-11-21T02:58:06.446Z
+
+Yes, it's a game app, and Benny now really swims. I've sent a normal-speed recording of the real 3D version of Screen 05, plus a side-camera recording and comparison pictures.
+
+**What the gameplay video shows** (end of 04, all of 05, into 06):
+- Benny is the improved 3D model made from your approved Benny. He swims forward, steers left and right, leans into turns, and bobs. His left arm visibly paddles; the right arm is mostly hidden by the splash.
+- The tunnel is real 3D. The gold rings come toward him and pass behind him, the purple walls and gold paddles slide past, and the bubbly foam banks run alongside.
+- The river keeps your Screen 05 S-curves (I didn't straighten 05). Coins are collected as he swims through them (1,330 → 1,440).
+- The old pink hall is gone: the purple-and-gold tunnel carries on into Screen 06.
+
+**The side-camera video:** the camera sits outside the tunnel with the near wall cut away, so you can see Benny on the river inside it and the gold rings passing around him.
+
+**Nothing was lost:**
+- With the test switches off, your normal game is pixel-for-pixel the same as before.
+- The painted version is kept separately at `?paint=1`.
+- The new version runs with `?match05=1&projflow05=2&benny31=1&tun05=1`.
+
+**How close it looks:** clearly closer than the game today, but not yet as close as the painted version:
+
+| | Game today | New real 3D | Painted version |
+|---|---|---|---|
+| Colours match your picture | 52–56% | 75–80% | 96% |
+| Pixel match while swimming | 4–6% | 5–11% | 94% |
+
+The pixel match can't be high during real forward movement, because the rings and curves are in a different place on screen every frame. The side-by-side pictures are the fairer check.
+
+**Still different from your picture, and how I'll fix each:**
+1. **River pattern:** your bright pink-and-cyan S-curve pattern is only painted onto the first part of the river; further on it turns patchy. I'll extend your approved water pattern along the whole river so it follows the curves. This is the biggest gap.
+2. **River ahead:** in your picture the river winds all the way to a tiny point of light. Here the tunnel curves away sooner. I'll lengthen the straight part of the tunnel.
+3. **Far end:** it shows a pale glow instead of your bright orange light with rings closing in.
+4. **Walls and paddles:** the walls are slightly too pink and the paddles plainer than yours.
+5. **Benny:** his sides are still plain, and the right arm is hard to see paddling.
+
+Everything is saved on GitHub (commit `8204838`), with notes in `qa/match/05/r31_3d/README.md`. I won't call Screen 05 finished until you've seen these fixes.
+
+Is this the right direction? If yes, I'll start with the river pattern (point 1). It needs a few small paid image jobs.
+

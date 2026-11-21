@@ -794,7 +794,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 25112,
-   "sha256": "9904d4c48a4f2f4d4d255b0b9b3675165f0671964256d10a1935e1bdb84697bb"
+   "sha256": "bdfacbc4b6984bd9208e38dbe0dbd539373bdf8298539aea7ca9cff9fe61f4c6"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3271,
-   "sha256": "92d5fe3fec9135f309b1be20ab7ec808e438b79902d050023941b8e7967f1bbc"
+   "sha256": "767c063bb35a7622ae52698a08b049e2ebf5ec6d7bec418e5f75cad135aa207e"
   },
   {
    "path": "backups/MCP_SETUP.md",
