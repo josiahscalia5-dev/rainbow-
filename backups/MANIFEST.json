@@ -704,7 +704,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 25112,
-   "sha256": "9a22ab1cfb9d6db5716bfc3fadc26355fb71e5634c841e962a872bf19ac46c24"
+   "sha256": "3dd34c489ccd9678e0f20b5d6bbe9c031c9ad7091f5d042c45ae51bf4d587d54"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -719,7 +719,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3271,
-   "sha256": "f6c8e4ea9fef2dece4938ceaf659e9060d11092da33ec112e8be36764e3a4645"
+   "sha256": "98d581988250ba1319db15fc906ca107a10ee5977a64702de0863085d6cebbb3"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -7698,8 +7698,8 @@
   },
   {
    "path": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md",
-   "bytes": 71053,
-   "sha256": "00f075e84fea6c123a9d7fb4229a8ce00dd7259abba0b4e13af45bda888e9245"
+   "bytes": 71589,
+   "sha256": "ec9884c73ccde5a5bd3514df8d6e00dad733185c0658e0a433822d63f3a4a691"
   },
   {
    "path": "docs/PARALLEL_PROGRESS.md",

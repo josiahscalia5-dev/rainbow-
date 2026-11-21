@@ -7,6 +7,11 @@ the panel's size), 97.9 % of the approved picture below the HUD. Default build p
 (proof pictures + clips in `proof/`, paid-job ledger `LEDGER.md`, rebuild steps `tools/paint06/`). Waiting for the user's verdict; if approved, the
 same method for 04, 05, 07, 08, 09, 10 (user asked for "all of them").
 
+Then (same round, user: "DO NOT remove or redesign my original approved pink Benny … improve the existing 3D model … APPROVED / CURRENT 3D /
+IMPROVED 3D at the same rear angle and size … Do not silently switch characters"): improved 3D Benny candidate = Hunyuan3D 2 mesh + the approved
+Benny's pixels baked through the game's colour chain — rear outline 0.902 → 0.956, structure 0.49 → 0.81; sides / front still plain. NOT wired into the
+game; painted Benny stays in `?paint06=1`. Everything: **`qa/benny/r31/README.md`**.
+
 # ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 30b (2026-11-20, lead branch `ccr-e490fceb-u85291`, from ~22:20 UTC)
 
 The r30 session closed ~22:14; this one merged its last save `b9ca06c` (user: "Continue from the latest saved version") and recreated the

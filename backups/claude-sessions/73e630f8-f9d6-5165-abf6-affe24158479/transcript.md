@@ -2792,3 +2792,29 @@ My code edit didn't apply (a text match failed), so that bake ran the old code. 
 
 > 🔧 **Bash** `{"command": "npx tsc --noEmit 2>&1 | head -3; python3 -I -c \"\nrows=[l for l in open('qa/match/06/paint06/LEDGER.md') if l.startswith('| 20') and 'benny31' in l]\nprint(len(rows),'benny jobs, est USD', round(sum(float(l.split('|')[5]) for l in rows),2))\"; cat > qa/benny/r31/README.md <<'EOF'\n# Benny round 31 — improving the 3D Benny toward the APPROVED Screen 06 Benny (2026-11-21, branch `ccr-4fcad20e-a6pp8w`)\n\n**User (verbatim, 2026-11-21):** \"DO NOT remove or redesign my original approved pink Benny … Keep the approved-looking Benny in my current visual\ncandidate. Do not replace him w …[+4469 chars]`
 
+### 🧑 User — 2026-11-21T01:13:00.387Z
+
+> ↩︎ result: 7 benny jobs, est USD 2.41
+> Traceback (most recent call last):
+>   File "<stdin>", line 9, in <module>
+> ValueError: substring not found
+>   "commit": "946ecdd2d719f6fde7a4c861f3d4e20f69f8a419",
+> 946ecdd2d719f6fde7a4c861f3d4e20f69f8a419
+> 946ecdd2d719f6fde7a4c861f3d4e20f69f8a419	refs/heads/ccr-4fcad20e-a6pp8w
+> qa/benny/r31/gen/hunyuan2.glb
+> qa/benny/r31/gen/hunyuan2_bake.png
+> qa/benny/r31/proof/APPROVED_CURRENT3D_IMPROVED3D.jpg
+> qa/benny/r31/proof/APPROVED_CURRENT3D_IMPROVED3D.json
+> qa/benny/r31/proof/APPROVED_CURRENT3D_IMPROVED3D_0_full.png
+> qa/benny/r31/proof/APPROVED_CURRENT3D_IMPROVED3D_1_full.png
+> qa/benny/r31/proof/APPROVED_CURRENT3D_IMPROVED3D_2_full.png
+> qa/benny/r31/proof/TURNAROUND_CURRENT3D_vs_IMPROVED3D.jpg
+
+### 🤖 Claude — 2026-11-21T01:13:02.668Z
+
+The handoff note didn't insert (a text match failed). Fixing that.
+
+### 🤖 Claude — 2026-11-21T01:13:06.541Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md'; s=open(p).read()\nadd=\"\"\"Then (same round, user: \"DO NOT remove or redesign my original approved pink Benny … improve the existing 3D model … APPROVED / CURRENT 3D /\nIMPROVED 3D at the same rear angle and size … Do not silently switch characters\"): improved 3D Benny candidate = Hunyuan3D 2 mesh + the approved\nBenny's pixels baked through the game's colour chain — rear outline 0.902 → 0.956, structure 0.49 → 0.81; sides / front still plain. NOT wired into the\ngame; painted Benny stays in `?paint06=1`. Everything: …[+457 chars]`
+
