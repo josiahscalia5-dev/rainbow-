@@ -332,3 +332,7 @@ This takes one worker and no paid credits. Your four new Screen 06 views are sma
 
 **Yes or no: use your pictures as the scenery?**
 
+### 🧑 User — 2026-11-21T00:00:34.340Z
+
+Yes, do Screen 06 first Yes, but I want these exact. See these all these four images? I want exactly those. Okay, 100%, or at least 95%. Those ones. Okay, don't show me anything different. If I see anything different, I'm gonna probably be pissed.
+
