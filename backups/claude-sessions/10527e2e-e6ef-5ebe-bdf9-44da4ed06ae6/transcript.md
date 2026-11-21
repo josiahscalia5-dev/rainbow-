@@ -1805,3 +1805,99 @@ Fresh-clone setup now completes cleanly. Comparing the recovered files with the 
 
 > 🔧 **Bash** `{"command": "echo \"before: $(pgrep -f autosave-daemon.sh | tr '\\n' ' ')\"; pkill -f autosave-daemon.sh; sleep 2; echo \"after kill: $(pgrep -f autosave-daemon.sh | tr '\\n' ' ')[none expected]\"; python3 -I scripts/autosave-status.py | cut -c1-160; echo '{}' | bash scripts/autosave-hook.sh Stop; sleep 5; echo \"after Stop hook: $(pgrep -af autosave-daemon.sh | head -2)\"", "description": "Kill the autosave daemon and let the Stop hook re-arm it"}`
 
+### 🧑 User — 2026-11-21T13:15:39.892Z
+
+> ↩︎ result: before: 616 
+> after kill: [none expected]
+> AUTOSAVE OK | branch ccr-c0679182-krbfci | scheduler daemon | last verified backup 2026-11-21T13:10:54+00:00 (4.7 min ago) | local 8a6a09e remote 8a6a09e (match
+> after Stop hook: 16204 bash /home/user/rainbow-/scripts/autosave-daemon.sh
+
+### 🤖 Claude — 2026-11-21T13:15:42.807Z
+
+The Stop hook brought the autosave back by itself (new process 16204). One weakness: while it was dead, the status check still said "AUTOSAVE OK". Checking why.
+
+### 🤖 Claude — 2026-11-21T13:15:43.655Z
+
+> 🔧 **Bash** `{"command": "grep -n \"daemon\\|scheduler\\|pgrep\\|pid\" scripts/autosave-status.py | head -20", "description": "See how status detects the scheduler"}`
+
+### 🧑 User — 2026-11-21T13:15:43.702Z
+
+> ↩︎ result: 7:Checks: scheduler alive (cron entry or daemon process), age of the last verified backup, last result,
+> 42:    _, cron = sh("bash", "-c", "crontab -l 2>/dev/null | grep -c rainbow-autosave; pgrep -x cron >/dev/null && echo cron-up || echo cron-down")
+> 43:    _, daemon = sh("bash", "-c", "pgrep -f scripts/autosave-daemon.sh >/dev/null && echo up || echo down")
+> 44:    sched = "cron" if ("cron-up" in cron and not cron.startswith("0")) else ("daemon" if daemon == "up" else "NONE")
+> 46:        problems.append("no scheduler running (no cron entry and no daemon) — run: bash scripts/install-autosave-scheduler.sh")
+> 52:            problems.append(f"GAP: last verified backup was {age_min} min ago ({last_ok}); the environment may have been closed or the scheduler stopped")
+> 66:        "time_utc": now.isoformat(), "branch": branch, "scheduler": sched,
+> 76:        print(f"{verdict} | branch {branch} | scheduler {sched} | last verified backup {last_ok} ({age_min} min ago) | "
+
+### 🤖 Claude — 2026-11-21T13:15:49.457Z
+
+> 🔧 **Bash** `{"command": "sed -i 's#pgrep -f scripts/autosave-daemon.sh >/dev/null \\&\\& echo up || echo down#pgrep -f \"scripts/autosave-[d]aemon.sh\" >/dev/null \\&\\& echo up || echo down#' scripts/autosave-status.py && sed -n 43p scripts/autosave-status.py; grep -rn 'pgrep -f [^\"]*autosave-daemon' scripts/*.sh scripts/*.py | head -5", "description": "Fix the self-matching daemon check"}`
+
+### 🧑 User — 2026-11-21T13:15:49.551Z
+
+> ↩︎ result: _, daemon = sh("bash", "-c", "pgrep -f "scripts/autosave-[d]aemon.sh" >/dev/null && echo up || echo down")
+
+### 🤖 Claude — 2026-11-21T13:15:53.674Z
+
+> 🔧 **Bash** `{"command": "sed -i \"43s#\\\"pgrep -f \\\"scripts/autosave-\\[d\\]aemon.sh\\\" >/dev/null#\\\"pgrep -f 'scripts/autosave-[d]aemon.sh' >/dev/null#\" scripts/autosave-status.py && sed -n 43p scripts/autosave-status.py && python3 -I -c \"import ast;ast.parse(open('scripts/autosave-status.py').read());print('syntax ok')\"; grep -rn \"pgrep -f\" scripts/install-autosave-scheduler.sh scripts/autosave-daemon.sh scripts/claude-bootstrap.sh 2>/dev/null | head -6", "description": "Repair quoting in the status check"}`
+
+### 🧑 User — 2026-11-21T13:15:53.782Z
+
+> ↩︎ result: _, daemon = sh("bash", "-c", "pgrep -f 'scripts/autosave-[d]aemon.sh' >/dev/null && echo up || echo down")
+> syntax ok
+
+### 🤖 Claude — 2026-11-21T13:15:55.422Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"autosave-daemon\" scripts/install-autosave-scheduler.sh scripts/claude-bootstrap.sh | head -8", "description": "Check how the installer detects a running daemon"}`
+
+### 🧑 User — 2026-11-21T13:15:55.455Z
+
+> ↩︎ result: scripts/install-autosave-scheduler.sh:4:#   * no cron available -> falls back to a detached loop daemon (scripts/autosave-daemon.sh)
+> scripts/install-autosave-scheduler.sh:31:chmod +x "$RUNNER" "$REPO/scripts/autosave-daemon.sh" "$REPO/scripts/rainbow-autosave.py" 2>/dev/null
+> scripts/install-autosave-scheduler.sh:52:setsid nohup "$REPO/scripts/autosave-daemon.sh" >> "$LOGD/daemon.log" 2>&1 < /dev/null &
+
+### 🤖 Claude — 2026-11-21T13:15:57.129Z
+
+> 🔧 **Bash** `{"command": "sed -n 40,55p scripts/install-autosave-scheduler.sh; head -20 scripts/autosave-daemon.sh", "description": "Read the daemon start logic"}`
+
+### 🧑 User — 2026-11-21T13:15:57.179Z
+
+> ↩︎ result: echo "scheduler=cron status=active entry='$LINE'"
+>     exit 0
+>   fi
+>   echo "cron daemon could not start; falling back to loop daemon" >&2
+> fi
+> 
+> # fallback: detached loop daemon with pidfile
+> PIDF="$LOGD/daemon.pid"
+> if [ -f "$PIDF" ] && kill -0 "$(cat "$PIDF")" 2>/dev/null; then
+>   echo "scheduler=daemon status=active pid=$(cat "$PIDF")"
+>   exit 0
+> fi
+> setsid nohup "$REPO/scripts/autosave-daemon.sh" >> "$LOGD/daemon.log" 2>&1 < /dev/null &
+> echo $! > "$PIDF"
+> echo "scheduler=daemon status=started pid=$(cat "$PIDF")"
+> #!/usr/bin/env bash
+> # Fallback scheduler used only when cron is unavailable: one autosave every 300 s, measured START TO START
+> # (2026-11-20 r28: the old loop slept 300 s AFTER each save, so saves drifted to ~5 min 15-20 s, and a tick that found
+> # another save holding the lock was skipped for a whole extra 5 minutes). Now: if a tick is skipped because another
+> # save holds the lock (no new row in backups/.live/BACKUP_LOG.md), retry every 20 s for up to ~4 min, then keep the 300 s rhythm.
+> REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+> LOG="$REPO/backups/.live/BACKUP_LOG.md"   # live log: every run (also no-change) appends a row
+> rows() { [ -f "$LOG" ] && wc -l < "$LOG" || ech …[+366 chars]
+
+### 🤖 Claude — 2026-11-21T13:16:00.205Z
+
+> 🔧 **Bash** `{"command": "pkill -f \"scripts/autosave-[d]aemon.sh\"; sleep 2; echo \"1) daemon killed:\"; python3 -I scripts/autosave-status.py | cut -c1-200; echo '{}' | bash scripts/autosave-hook.sh Stop; sleep 4; echo \"2) after the Stop hook (fires after every turn / on restart):\"; python3 -I scripts/autosave-status.py | cut -c1-200; pgrep -af \"scripts/autosave-[d]aemon.sh\"", "description": "Re-test: dead daemon detected, then re-armed by the hook"}`
+
+### 🧑 User — 2026-11-21T13:16:07.537Z
+
+> ↩︎ result: 1) daemon killed:
+> AUTOSAVE PROBLEM | branch ccr-c0679182-krbfci | scheduler NONE | last verified backup 2026-11-21T13:10:54+00:00 (5.1 min ago) | local 8a6a09e remote 8a6a09e (match) | uncommitted 24
+>   - no scheduler running (no cron entry and no daemon) — run: bash scripts/install-autosave-scheduler.sh
+> 2) after the Stop hook (fires after every turn / on restart):
+> AUTOSAVE OK | branch ccr-c0679182-krbfci | scheduler daemon | last verified backup 2026-11-21T13:10:54+00:00 (5.2 min ago) | local 4a03c34 remote 4a03c34 (match) | uncommitted 0
+> 17074 bash /home/user/rainbow-/scripts/autosave-daemon.sh
+

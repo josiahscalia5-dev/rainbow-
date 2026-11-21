@@ -794,7 +794,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 26067,
-   "sha256": "b53b208da331664397a8d997cade2cb5e1553176ea38718fa705bc71a839cf7d"
+   "sha256": "fa6f1e771ee6142a3338a581907e912b5a8d1347e0896f3a383854746263c30d"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3271,
-   "sha256": "a6c258dc75a995862635979694fb9fabbf9bbdce274b1d5e40f4706b4eb7a38e"
+   "sha256": "f1861909dd88ee9332cadf97fab4f5da0dfa2cc4ba6f946e63c0b2c7a82a539b"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -7734,7 +7734,7 @@
   {
    "path": "backups/wip/screen05-agents/LAST_SYNC_UTC",
    "bytes": 33,
-   "sha256": "efea81ae717620b63a89e069c43b41d5ef140eb614d3c7c488c61f1359d8da7c"
+   "sha256": "35e7e9b9f441f1b2d987f0bb2abe22afee12b4388386f89d230b6bee5f92d726"
   },
   {
    "path": "backups/wip/screen05-agents/WORKSPACE",
@@ -8207,6 +8207,16 @@
    "sha256": "ce35b08b200b30c9017de61421328244bd0720a0d77c9e7e87fdd034a89d6f8b"
   },
   {
+   "path": "backups/wip/screen05-agents/agentB/out_water/after_final/log.txt",
+   "bytes": 630,
+   "sha256": "ac1e0d55f402aa2878ae32fca11f2f1c808e5de0332cf6561a6c69dac551e5e3"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentB/out_water/after_final/s_0.png",
+   "bytes": 733927,
+   "sha256": "a0b76dcee3fb634932fe2d9dfb065688b3e4b361272e8d51cd1d26494106e2bd"
+  },
+  {
    "path": "backups/wip/screen05-agents/agentB/out_water/before/chk/f_0000_s_0.jpg",
    "bytes": 145411,
    "sha256": "a388e67925ea819b013bea715002c391befa42ae1f0805e91bdbb5a8ea09e075"
@@ -8432,6 +8442,26 @@
    "sha256": "36cda92adbf907056a267878c373de852135173cf0c9b359f6eb525b8c99018c"
   },
   {
+   "path": "backups/wip/screen05-agents/agentB/out_water/diag/v2_bullseye_disc/log.txt",
+   "bytes": 7986,
+   "sha256": "b85b8aba91fe781b9894986134bd7635809688b9a10b213f08b1b590531e63d8"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentB/out_water/diag/v2_bullseye_disc/s_0.png",
+   "bytes": 735307,
+   "sha256": "c1e95f7e7dd6eeaa72aa968d74f572a6a637f4fca4f2d1041332993e37fd6e4e"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentB/out_water/diag/v2_bullseye_disc/s_2.3.png",
+   "bytes": 704676,
+   "sha256": "813f02f995eb25d63e4c9d2ff89bc0621b355e86fd5ad1611d01870499a42a8d"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentB/out_water/diag/v2_bullseye_disc/s_4.4.png",
+   "bytes": 699891,
+   "sha256": "d801ce0cd7c1585664f1129025ee610bdb2e3dd941e9b9e2f40438c30c85aeeb"
+  },
+  {
    "path": "backups/wip/screen05-agents/agentB/out_water/diag/xsec_mid.png",
    "bytes": 23086,
    "sha256": "917cf1c420e759efc76699ea4152b5bfb41ba7d393f47a8051b90b619e418318"
@@ -8507,6 +8537,11 @@
    "sha256": "b9c5a5aee2719e51c5431102cb65ddd5c56540370a30cb8d7ca43139613b8414"
   },
   {
+   "path": "backups/wip/screen05-agents/agentB/out_water/tmpview/dS.jpg",
+   "bytes": 165403,
+   "sha256": "07dd50260bd73c882f3156a949e834fbf951a913627ce75af46dae164e4f53c3"
+  },
+  {
    "path": "backups/wip/screen05-agents/agentB/out_water/tmpview/diff0.jpg",
    "bytes": 566932,
    "sha256": "ee92b34f60e49ae2e77747a23ce9dd813aa7932d9faf3a266edac83e0894158a"
@@ -8522,6 +8557,11 @@
    "sha256": "ba209bc28cf9d4e96b353d495e05aef1df6a57a28eded2210d1290f88b8d026c"
   },
   {
+   "path": "backups/wip/screen05-agents/agentB/out_water/tmpview/play3_v1.html",
+   "bytes": 19676,
+   "sha256": "4d35aa0c5f8c7a74d46bb0e092c95e82ccb84892f4cc3a14e8bf03beefcda3f6"
+  },
+  {
    "path": "backups/wip/screen05-agents/agentB/out_water/tmpview/sh44.jpg",
    "bytes": 221142,
    "sha256": "af410a7102a78caab9e9e765e867755de21b44579ccf7963725c18b0a7016945"
@@ -8530,6 +8570,16 @@
    "path": "backups/wip/screen05-agents/agentB/out_water/tmpview/v1.jpg",
    "bytes": 282296,
    "sha256": "06e9cb941dde4219552278f652851aa61fbce6138be07c677d1604dfbf373b16"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentB/out_water/tmpview/v2top.jpg",
+   "bytes": 314947,
+   "sha256": "5cbb738b5698710cfcbd065bf94d988a84d74b4c12a303451b7b1f0093e56f73"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentB/out_water/tmpview/waterflow_v1.js",
+   "bytes": 6929,
+   "sha256": "de590ec0dabc29ece9b6fe6f174d76bf6cc2c0efe64569fec5d69b3d77b2f8e5"
   },
   {
    "path": "backups/wip/screen05-agents/agentB/package.json",
@@ -8768,8 +8818,8 @@
   },
   {
    "path": "backups/wip/screen05-agents/agentB/waterflow.js",
-   "bytes": 6929,
-   "sha256": "de590ec0dabc29ece9b6fe6f174d76bf6cc2c0efe64569fec5d69b3d77b2f8e5"
+   "bytes": 7254,
+   "sha256": "8c4f6087a917a6b4b2e88adbaba512cbdf832225c2de3ef86f78f1c92799eb2b"
   },
   {
    "path": "backups/wip/screen05-agents/lead/acceptance_verdict.py",
@@ -18595,6 +18645,11 @@
    "path": "qa/match/05/r31_3d/proof/clip_NEW3D_SCREEN05_sideview.json",
    "bytes": 13082,
    "sha256": "325d306c549d30e1eed5fc05aca6d9c810cc5418931a416c491c0b2e430e47d9"
+  },
+  {
+   "path": "qa/match/05/r32/RECOVERY_TEST.md",
+   "bytes": 3284,
+   "sha256": "38d0b34f3ba89207959d488182c2eb751e280be7b488c38115fd14fb04147a66"
   },
   {
    "path": "qa/match/05/swim05/PROOF_APPROVED_vs_GAMEPLAY.jpg",

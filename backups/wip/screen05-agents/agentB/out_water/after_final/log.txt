@@ -5,3 +5,4 @@ console.warning: [.WebGL-0x17e4001b6800]GL Driver Message (OpenGL, Performance, 
 console.warning: [.WebGL-0x17e4001b6800]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)
 ready 27.583
 still 0 36.83 visible splats 655734
+still 0.7 43.261 visible splats 866071
