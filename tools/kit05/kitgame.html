@@ -221,6 +221,8 @@ attribute float aAlpha; attribute float aSize; varying float vA; uniform float s
   transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, toneMapped: false });
 const glints = new THREE.Points(gGeo, gMat); glints.frustumCulled = false; glints.renderOrder = 6; scene.add(glints);
 const tmp2 = new THREE.Vector3();
+const MTABK = [[2.0, 0.96], [2.16, 0.95], [2.8, 0.86], [3.33, 0.76], [3.85, 0.60], [4.5, 0.42], [5.0, 0.33], [5.5, 0.30]];
+const mOfK = (d) => { if (d <= MTABK[0][0]) return MTABK[0][1]; for (let i = 1; i < MTABK.length; i++) if (d <= MTABK[i][0]) { const [d0, m0] = MTABK[i - 1], [d1, m1] = MTABK[i]; return m0 + (m1 - m0) * (d - d0) / (d1 - d0); } return MTABK[MTABK.length - 1][1]; };
 const st = { s: 0, lat: 0, lean: 0, camLat: 0 };
 const Zax = new THREE.Vector3(0, 0, 1), tmp = new THREE.Vector3();
 const M = bennyM;
@@ -256,6 +258,9 @@ window.step = (t, dt, steer, speed) => {
     if (c.got >= 0) { const k = (t - c.got) / 0.4; c.sp.visible = k < 1; if (k < 1) { c.sp.position.copy(benny.position).addScaledVector(F.n, bennyH * (1.05 + 0.6 * k)); c.sp.material.opacity = 1 - k * k; const d = coinD * 0.7 * (1 - 0.5 * k); c.sp.scale.set(d, d, 1); } }
   }
   // far coins fade out beyond about ring 3 ahead (the painting shows ~6 coins), so the depth curve never stacks them at the core
+  // the controls shrink coins by camera distance (their table imitated the painting's coin sizes in the splat world); the kit's depth
+  // curve already gives the painted sizes, so that extra shrink is undone here (same table as controls.js, MTAB)
+  for (const c of coins) if (c.got < 0 && c.sp.visible) c.sp.scale.multiplyScalar(1 / mOfK(camera.position.distanceTo(c.sp.position)));
   for (const c of coins) if (c.got < 0 && c.sp.visible) { const za = tmp.copy(c.sp.position).sub(camera.position).dot(A); const f = 1 - THREE.MathUtils.smoothstep(za, 9.5, 12.0); c.sp.scale.multiplyScalar(f); c.sp.visible = f > 0.01; }
   scene.traverse((o) => { if (o.isSprite && o !== core) patchSprite(o.material); });   // droplets created during play
   return { s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: coinCount, tile: Math.floor((K.level.tB0 + st.s - K.level.ring0) / K.S) - K.level.k0, ...CT.state() };   // tile = ring section Benny is in (0 = start)

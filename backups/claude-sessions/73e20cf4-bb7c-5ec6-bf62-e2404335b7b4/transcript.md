@@ -3519,3 +3519,18 @@ Pickup uses each coin's 3D position (`p0`) and its distance along the river (`s`
 > [(230.8, 432.5, 20.04), (273.1, 393.5, 9.68), (235.8, 364.8, 4.03), (218.2, 342.5, 2.93), (226.4, 325.1, 2.08), (243.5, 317.3, 1.61), (247.7, 310.3, 0.5)]
 > Shell cwd was reset to /home/user/rainbow-
 
+### 🤖 Claude — 2026-11-21T16:16:38.022Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/kit05 && python3 - <<'EOF'\np = 'kitgame.html'; s = open(p).read()\nold = \"  for (const c of coins) if (c.got < 0 && c.sp.visible) { const za = tmp.copy(c.sp.position).sub(camera.position).dot(A);\"\nnew = \"\"\"  // the controls shrink coins by camera distance (their table imitated the painting's coin sizes in the splat world); the kit's depth\n  // curve already gives the painted sizes, so that extra shrink is undone here (same table as controls.js, MTAB)\n  for (const c of coins) if (c.got < 0 && c.sp.visible) c.sp.scale.multiplyScalar(1 / mOfK(cam …[+1900 chars]`
+
+### 🧑 User — 2026-11-21T16:16:42.553Z
+
+> ↩︎ result: overlapping pairs 0
+> kit    [(230.8, 432.5, 24.51), (273.1, 393.5, 18.22), (235.8, 364.8, 13.45), (218.2, 342.5, 9.76), (226.4, 325.1, 6.94), (243.5, 317.3, 5.37)]
+> painted [(227,434,25),(274,390,18.4),(234,357,14.5),(206,342,11.4),(227,325,7.5),(244,317,5.4)]
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T16:16:48.847Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/rainbow_r33 && rm -rf runs/kit_full4 && (NODE_PATH=$(npm root -g) timeout 7000 node /home/user/rainbow-/tools/marble05/viewer/final_acceptance.cjs /tmp/rainbow_r33/kitgame /tmp/rainbow_r33/runs/kit_full4 25 1.4 > /tmp/rainbow_r33/runs/kit_full4.log 2>&1; echo \"exit=$?\" >> /tmp/rainbow_r33/runs/kit_full4.log) > /dev/null 2>&1 &\nsleep 1; cd /home/user/rainbow- && python3 scripts/rainbow-autosave.py --reason manual:r33g-painted-coins 2>&1 | grep -E '\"commit\"|skipping'", "description": "Start full acceptance run; save progress"}`
+
