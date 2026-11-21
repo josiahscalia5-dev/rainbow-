@@ -498,8 +498,8 @@
   },
   {
    "path": "assets/textures/paint06/k0_benny.png",
-   "bytes": 1329446,
-   "sha256": "5f41256a389ccf4c802f6f32b39ce2bf44c768405b276a7764f6bdc6b1769c5a"
+   "bytes": 1329215,
+   "sha256": "587f7e834bc13a795aacac9e50a2a14927b6d91bc72f21fc52b39e95caf014b0"
   },
   {
    "path": "assets/textures/paint06/k0_depth.png",
@@ -508,13 +508,13 @@
   },
   {
    "path": "assets/textures/paint06/k0_plate.jpg",
-   "bytes": 1773903,
-   "sha256": "23ad931321fe62a739d58b7ed0341161a3e3668257042f9cf14f4f99f13d2926"
+   "bytes": 1773373,
+   "sha256": "8123fca258f4ac7c018e526967a1adffac98d6734db9090c01123b8c673e6fe8"
   },
   {
    "path": "assets/textures/paint06/k1_benny.png",
-   "bytes": 1248589,
-   "sha256": "cff8e0b6c22e9cc15d66261aee26dd82e717b054545c50a90795256f752d3cd3"
+   "bytes": 1248248,
+   "sha256": "b5d32e686c503c83ca1c96922e6e55a141781c75ab3f96e31ef5054df4dd7249"
   },
   {
    "path": "assets/textures/paint06/k1_depth.png",
@@ -523,13 +523,13 @@
   },
   {
    "path": "assets/textures/paint06/k1_plate.jpg",
-   "bytes": 1808871,
-   "sha256": "ab78eac64cafc403e2bccfd08eab2a0646a09aa64a944ec970c6afd56b8a9ca6"
+   "bytes": 1806664,
+   "sha256": "9f5ffe2f20c7a1b5568876e1668cd00f1d6d71046f343ed2ab5a67a328fb955f"
   },
   {
    "path": "assets/textures/paint06/k2_benny.png",
-   "bytes": 1253255,
-   "sha256": "ffd0bc64de21bd9270f50d2d77027deca472deb6d16f0077b2a7e4d5c8ecc611"
+   "bytes": 1252795,
+   "sha256": "454bef4fe3548688693843472b083539e1c66948ff185ca7bd05ce3b996f142c"
   },
   {
    "path": "assets/textures/paint06/k2_depth.png",
@@ -538,13 +538,13 @@
   },
   {
    "path": "assets/textures/paint06/k2_plate.jpg",
-   "bytes": 1543534,
-   "sha256": "638a3c24dc8fc40640b254b26247140f5a5c2c7e2b280b50e5d8c6e163f71daa"
+   "bytes": 1541172,
+   "sha256": "ffbb329dacb374aeb5e18ec39798eae557693f5d1ee8151bfe8dba05ca79b237"
   },
   {
    "path": "assets/textures/paint06/k3_benny.png",
-   "bytes": 1233380,
-   "sha256": "264bafa84516779a8fed0c8032d199f5068c3aa69ede4cc4fa563de1c22f0cdb"
+   "bytes": 1233174,
+   "sha256": "421d15549b6d0990b8f246c6be39f57500cc9dd62558c239f85308d0e231ca83"
   },
   {
    "path": "assets/textures/paint06/k3_depth.png",
@@ -553,13 +553,13 @@
   },
   {
    "path": "assets/textures/paint06/k3_plate.jpg",
-   "bytes": 1746850,
-   "sha256": "c7deb9681c8465c389ad519675bd677ac4b79e0c17b381eaf7adace7e19ced5d"
+   "bytes": 1744652,
+   "sha256": "17a544b4acaf2c2f78c78d404ab7f9d762ab9741ffba31cd0b61ad55e6077e6a"
   },
   {
    "path": "assets/textures/paint06/k4_benny.png",
-   "bytes": 1245379,
-   "sha256": "8fa638fed3d484ad6247526069dfab0e8a7c81abc74c77377a703c5bb4313a1e"
+   "bytes": 1245360,
+   "sha256": "c134aa5a865918a02cab5fa85a5e5cc5dcb5a08737dbfee7d4ed514fff593c00"
   },
   {
    "path": "assets/textures/paint06/k4_depth.png",
@@ -568,8 +568,8 @@
   },
   {
    "path": "assets/textures/paint06/k4_plate.jpg",
-   "bytes": 1669193,
-   "sha256": "0226b25914820de5d7e051335e0e60f1b03c4ff50b3517ebd99198f94dc39e95"
+   "bytes": 1666657,
+   "sha256": "9496d9989c20d8f5240863ca1bca83325069db070481b01f84a5d2346fc96db8"
   },
   {
    "path": "assets/textures/paint06/paint06.json",
@@ -704,7 +704,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 25111,
-   "sha256": "8712dc29f59c6aa5d1ef8d0c3867a562ead89b4db7c99c7d0349819484b5c3ab"
+   "sha256": "a9d9679d47dafd4d272b638a4455362a598ffd1b8889b67abad44d8258ab7e2d"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -719,7 +719,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3271,
-   "sha256": "c75976850d0320d0924c10995443183f241d7f3079aa2091009daf3d64354711"
+   "sha256": "56582dcb21a864d587f686def2607fba244b04c5731c044142f80973d436a708"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -11278,8 +11278,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 5139,
-   "sha256": "f12b51bc45d7369d232d3441c82d8c23a5e2ebd1745c87f843dc8d341d72298a"
+   "bytes": 5135,
+   "sha256": "c5c71db99b3af7497179a810d5e7c7dc4f66952dd7ae333f41ecd4cd7300fb3f"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -15077,54 +15077,89 @@
    "sha256": "aebf975dea0bc65169a7f35b7bd3960df2d048eb46387c183978fc4ee16c00e3"
   },
   {
+   "path": "qa/match/06/paint06/clip/frames_straight/0000.jpg",
+   "bytes": 147503,
+   "sha256": "208861c4c3a0ccb06c7377df81192712d7650a5037ea102db9c8820a55ddc3c2"
+  },
+  {
+   "path": "qa/match/06/paint06/clip/frames_straight/0001.jpg",
+   "bytes": 141747,
+   "sha256": "7ff007290e2fe8d1d9651b47b9b3e1ced41fafe761c702397438d3eaeaf2041d"
+  },
+  {
+   "path": "qa/match/06/paint06/clip/frames_straight/0002.jpg",
+   "bytes": 137636,
+   "sha256": "0746c7496e4f4ffc160e896800e71f07da64edc55b86adce008111deb7711aa9"
+  },
+  {
+   "path": "qa/match/06/paint06/clip/frames_straight/0003.jpg",
+   "bytes": 136651,
+   "sha256": "60ebe4977f6351ffb18314c40f2127ae1cc5de1279f31142128cc4677cc80727"
+  },
+  {
+   "path": "qa/match/06/paint06/clip/frames_straight/0004.jpg",
+   "bytes": 137674,
+   "sha256": "9a38c4714ca4245b8e54ab4a1626271eb402ea7ccfa4667358d6fe3930ceb357"
+  },
+  {
+   "path": "qa/match/06/paint06/clip/frames_straight/0005.jpg",
+   "bytes": 138648,
+   "sha256": "a27d10855b53f072a6fda6786cfd83aa852e7c189e1cd40cd58d4377a251d9bb"
+  },
+  {
+   "path": "qa/match/06/paint06/clip/frames_straight/0006.jpg",
+   "bytes": 139401,
+   "sha256": "eb9c778078d92114015dd109e3d4365ac452869d97c3147fd277152047c45212"
+  },
+  {
    "path": "qa/match/06/paint06/shots/06p0.png",
-   "bytes": 2707673,
-   "sha256": "c6d9b13b291c3031bfe5a6c3576b5624a1bc4e1ff51740636531a25fa8327f08"
+   "bytes": 2705158,
+   "sha256": "79f49dba5b4560e712a202e3eceeb6ea490cc8af0054a13b55f9bc62d0fb7bb6"
   },
   {
    "path": "qa/match/06/paint06/shots/06p1.png",
-   "bytes": 2649249,
-   "sha256": "be330076c9c6ce0d9ff731cd270354c1db963b52fc59d4f752e383bfa2d2a18d"
+   "bytes": 2646964,
+   "sha256": "8440caf931cc8f804d590db1101c0c600660bda9a65bca04ae7f3b6dc502dbdd"
   },
   {
    "path": "qa/match/06/paint06/shots/06p2.png",
-   "bytes": 2530332,
-   "sha256": "534b5aa702c23086dbbb9e0d8e725cc347d518a71c915385d91d0b9eb82ab676"
+   "bytes": 2527661,
+   "sha256": "2fa43fda0b1e8a5281b6ab75fa9aa498966e7d44ef0301e8247cd4d67bc52bf5"
   },
   {
    "path": "qa/match/06/paint06/shots/06p3.png",
-   "bytes": 2564361,
-   "sha256": "a298fb6a4ca0d8fe7ee54e9257f4f1a9b09fa6a0d98a47555046798166dbb302"
+   "bytes": 2561607,
+   "sha256": "d827a40e976a223c158de8fc6d1d01d731bd0781298a7d594774a9722ab3c11d"
   },
   {
    "path": "qa/match/06/paint06/shots/06p4.png",
-   "bytes": 2588708,
-   "sha256": "2da095774fc37acb88ad83e2b8e2d89a146a3d71191e609e2084974107cdb922"
+   "bytes": 2585242,
+   "sha256": "0bfe0ba747c3d49f2a40b95c6e18f997670840881c39eed71a3251281d13617a"
   },
   {
    "path": "qa/match/06/paint06/shots/err_k1.png",
-   "bytes": 8919,
-   "sha256": "d17be8620f0c2286d8c0f9f3a4844c49ab3f3a7312d7a2704093843da75211ef"
+   "bytes": 9314,
+   "sha256": "efb68710eb113715ecdd44447741bd5ce53c63af05eaaaaf27a639666cc856b7"
   },
   {
    "path": "qa/match/06/paint06/shots/err_k2.png",
-   "bytes": 7251,
-   "sha256": "06ea2bedd20c2953d087c276d848f08316cb9ce1638894828f7d06a242c0fec1"
+   "bytes": 7589,
+   "sha256": "b2490ff0b828b5fdaf46fe3365a373da828622c5d80a431a8c3acae9b3e4db3e"
   },
   {
    "path": "qa/match/06/paint06/shots/err_k3.png",
-   "bytes": 7329,
-   "sha256": "8726fa7906b6276523803e215e5accbb419da8552847c4b132b67ceba01d5151"
+   "bytes": 7795,
+   "sha256": "8d1fe293d879e5752ce78873c062ae1f67574a8e0305e2274f721edc0c7050a5"
   },
   {
    "path": "qa/match/06/paint06/shots/err_k4.png",
-   "bytes": 6358,
-   "sha256": "a0b3d47ff51eaa07c894bd1338a07b2bec0220dbda1c548896a466c31270a5b2"
+   "bytes": 6881,
+   "sha256": "f5002cebabeadfb7c4e0fe21495dab70012f0789e7784c3be59d76fae0de42e6"
   },
   {
    "path": "qa/match/06/paint06/shots/metrics.json",
    "bytes": 494,
-   "sha256": "ba410c5c38d1dc194e88e16b719ea7e51b0589fae3cdcaa691358db4e235ca57"
+   "sha256": "eb788a36e5900c8aecdff93297bd292b22e1f4a20005e2e96d761fae00db2101"
   },
   {
    "path": "qa/match/06/paint06/shots1080/06p1.png",
@@ -15163,8 +15198,8 @@
   },
   {
    "path": "qa/match/06/paint06/work/k0_benny.png",
-   "bytes": 1336181,
-   "sha256": "8aacda0fa8ad2456da98ea2e80ff7fbd63811ac3ecbbd3c84a706324d56f8284"
+   "bytes": 1336007,
+   "sha256": "6e0056fd035b068a36fc5d965ce404fbfee8a5225253e082c42abd97bec3a56f"
   },
   {
    "path": "qa/match/06/paint06/work/k0_bmask.png",
@@ -15208,13 +15243,13 @@
   },
   {
    "path": "qa/match/06/paint06/work/k0_plate.png",
-   "bytes": 5592850,
-   "sha256": "e4b3fc6d7cb7124ea94440b7476d02829ea13cb3e50ab7bfbfd67b7c21738434"
+   "bytes": 5589344,
+   "sha256": "5466a82ceff0905d11268da880ad81649701a4db5535d3be03d2e0a7ab25ee1e"
   },
   {
    "path": "qa/match/06/paint06/work/k0_rest_frame.png",
-   "bytes": 3767898,
-   "sha256": "89ac73527351f160314be62d92975ffe54546cf98ee212cbe472f5c0babe8ddd"
+   "bytes": 3762905,
+   "sha256": "4928050f1936c738688084413d08375a4e2def218bedc50557a50dfb29f2daa5"
   },
   {
    "path": "qa/match/06/paint06/work/k1_benny.json",
@@ -15223,8 +15258,8 @@
   },
   {
    "path": "qa/match/06/paint06/work/k1_benny.png",
-   "bytes": 1253217,
-   "sha256": "f2717607a9f71e21be794979dfe0a0b8bd0123943195f37da6acf5f88371191a"
+   "bytes": 1253056,
+   "sha256": "8fb76525beb1249547ed2c8e8cbf49267673ef897f3383d072fcda2516931006"
   },
   {
    "path": "qa/match/06/paint06/work/k1_bmask.png",
@@ -15268,13 +15303,13 @@
   },
   {
    "path": "qa/match/06/paint06/work/k1_plate.png",
-   "bytes": 5567618,
-   "sha256": "23bdbe0ed0076988603c5c806bc1cb49a84f65509b525aee8e964f861a873b3d"
+   "bytes": 5566302,
+   "sha256": "220382c10731852c47eed60e922aa6125ecd133b5da2e302978fcba50054bb80"
   },
   {
    "path": "qa/match/06/paint06/work/k1_rest_frame.png",
-   "bytes": 3567754,
-   "sha256": "620f50f087c576ea46bd2fa458ec5e9f781a4fded62f426170da430a0379c83d"
+   "bytes": 3566424,
+   "sha256": "82b19b1d4685792c257bde904b49d29cf2907c04e48879ed06c160d3aedaaae9"
   },
   {
    "path": "qa/match/06/paint06/work/k2_benny.json",
@@ -15283,8 +15318,8 @@
   },
   {
    "path": "qa/match/06/paint06/work/k2_benny.png",
-   "bytes": 1257987,
-   "sha256": "f0b3afdcb863f3c6fd3ba20f2c9e7a263422e8e9030f7ef4ef6b3b1de2bc46f2"
+   "bytes": 1257511,
+   "sha256": "4dab276f35b11f6b0ccaef32118f7721facf8058f42d2e06e9bededec2ca8704"
   },
   {
    "path": "qa/match/06/paint06/work/k2_bmask.png",
@@ -15328,13 +15363,13 @@
   },
   {
    "path": "qa/match/06/paint06/work/k2_plate.png",
-   "bytes": 5037146,
-   "sha256": "5df3272d40ee1eaa6f3e0aa46fc1f999597db33167d32e82b6653046b60d693e"
+   "bytes": 5035294,
+   "sha256": "642c9ef46793b6115ec2e90d183422c81b1567d718ab2543cb92ae0fc58efbd0"
   },
   {
    "path": "qa/match/06/paint06/work/k2_rest_frame.png",
-   "bytes": 3319851,
-   "sha256": "3e520b386f58a55ceb49ea117d4fecceb369984eaa7dd0ebe5c245270194ee37"
+   "bytes": 3317833,
+   "sha256": "e6b72ea0976718ace24580d5f70ae1111e3e68ff04e3ef498e1275b59a74eb62"
   },
   {
    "path": "qa/match/06/paint06/work/k3_benny.json",
@@ -15343,8 +15378,8 @@
   },
   {
    "path": "qa/match/06/paint06/work/k3_benny.png",
-   "bytes": 1238138,
-   "sha256": "67349ba91e20322d4351660a0f64a328a667cadb0e06c96be119b267a97d1237"
+   "bytes": 1238162,
+   "sha256": "8a99fa5ad88b81c4c2cad123456517756c62dd40637cbe53ddb71f7ca750a788"
   },
   {
    "path": "qa/match/06/paint06/work/k3_bmask.png",
@@ -15388,13 +15423,13 @@
   },
   {
    "path": "qa/match/06/paint06/work/k3_plate.png",
-   "bytes": 5368386,
-   "sha256": "41891be156329b7838c2e0ce3d47d39a41de931d1229f8de462461c243a48fd8"
+   "bytes": 5368581,
+   "sha256": "cbeff63dddcceb8bc30a8aa36b7e2c43e455148eb97ef45c9dc1b3958d5628a9"
   },
   {
    "path": "qa/match/06/paint06/work/k3_rest_frame.png",
-   "bytes": 3440394,
-   "sha256": "bc21ec424a2c794e2901dc41fd58e918016b0323aaafa22ee84f3768697bef6f"
+   "bytes": 3440221,
+   "sha256": "f01d97a2060c127d380dcfcee97a3fda48000eea6d9c629fa9ee3a6f14b16db7"
   },
   {
    "path": "qa/match/06/paint06/work/k4_benny.json",
@@ -15403,8 +15438,8 @@
   },
   {
    "path": "qa/match/06/paint06/work/k4_benny.png",
-   "bytes": 1249129,
-   "sha256": "5d94f06d49540d982bd28afde103b1e8f477f3de1b23be40b412c219928c2d2c"
+   "bytes": 1249180,
+   "sha256": "cbd0c6eca5971596de897153788696e73fe0ce4f3e24149a6deb7222ced5c90d"
   },
   {
    "path": "qa/match/06/paint06/work/k4_bmask.png",
@@ -15448,13 +15483,13 @@
   },
   {
    "path": "qa/match/06/paint06/work/k4_plate.png",
-   "bytes": 5297746,
-   "sha256": "ec70c103ad8e581df163537bd82fd5379e4eebbf3a2cc0d5d5072e7128e41e7d"
+   "bytes": 5296531,
+   "sha256": "cf18ec247242e357889bd28aee9194eefb908ed95782c49d7f51792e1320c02c"
   },
   {
    "path": "qa/match/06/paint06/work/k4_rest_frame.png",
-   "bytes": 3456160,
-   "sha256": "c231d67fc17437e58ddb0699ae3ee79de110ae5a851e91bee1752715cccc9ce3"
+   "bytes": 3454401,
+   "sha256": "ab4da0d9cb5f259c7c4be6b4d2e0d7dd5463fe47fa27461d41dbc5c58fbfd355"
   },
   {
    "path": "qa/match/06/paint06/work/panel1.png",
@@ -34198,8 +34233,8 @@
   },
   {
    "path": "src/game/Game.ts",
-   "bytes": 41774,
-   "sha256": "16ae8c4f5bed33c74625c330c23086865f18b586baf1bd9840b52b8ef81ca0ba"
+   "bytes": 41995,
+   "sha256": "68ab734e7ae3705789c771ad1a5d2c14c6446832f20ea31345578bb9f181a468"
   },
   {
    "path": "src/game/cameraRig.ts",
@@ -34782,6 +34817,11 @@
    "sha256": "4dd0d06b20730fe09663dd711e63d5c4c8a884ba91f7b84a49be540db2a7a3c8"
   },
   {
+   "path": "tools/paint06/clip.mjs",
+   "bytes": 2899,
+   "sha256": "8c8391cdda715139cdde456e20af4ecce3f9955908b0620437a36008d354f470"
+  },
+  {
    "path": "tools/paint06/fal.py",
    "bytes": 2602,
    "sha256": "dcbc07bb8327a46d34a8a41f3f2841cc6bf70778e91bcc5b5125d6af95eaff97"
@@ -34803,8 +34843,8 @@
   },
   {
    "path": "tools/paint06/step3_plates.py",
-   "bytes": 12779,
-   "sha256": "a61aa324addef3ccf1be64bcaee27b669c9c0d6792bc9e2107b86e69e2cd8b43"
+   "bytes": 14464,
+   "sha256": "9386de7b508a10f86ea967aadaec512f00df35fe3d4ed39ad9c11dd0df940411"
   },
   {
    "path": "tools/paint06/step4_export.py",

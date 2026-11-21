@@ -43,7 +43,9 @@ def window(k, scale, src_scale=1.0, src=None):
     A = M.copy(); A *= scale; A[0, 2] += MX * scale; A[1, 2] += MY * scale
     if src is None:
         rgb = cv2.warpAffine(orig, A, (pw, ph), flags=cv2.INTER_CUBIC, borderMode=cv2.BORDER_REFLECT)
-        cov = cv2.warpAffine(np.ones((h0, w0), np.float32), A, (pw, ph), flags=cv2.INTER_LINEAR, borderValue=0)
+        one = np.ones((h0, w0), np.float32)
+        if k > 0: one[:2] = 0; one[-2:] = 0; one[:, :2] = 0; one[:, -2:] = 0   # panel edge pixels are mixed with the sheet's white gutter
+        cov = cv2.warpAffine(one, A, (pw, ph), flags=cv2.INTER_LINEAR, borderValue=0)
         return rgb, cov
     f = float(np.hypot(A[0, 0], A[1, 0]))                     # original px -> plate px
     tw, th = int(round(w0 * f)), int(round(h0 * f))
@@ -57,7 +59,11 @@ def window(k, scale, src_scale=1.0, src=None):
     # X is the original resampled by (tw/w0, th/h0) ~ f: map X px -> plate px = A * diag(w0/tw, h0/th)
     A2 = A.copy(); A2[:, 0] *= w0 / tw; A2[:, 1] *= h0 / th
     rgb = cv2.warpAffine(X, A2, (pw, ph), flags=cv2.INTER_CUBIC, borderMode=cv2.BORDER_REFLECT)
-    cov = cv2.warpAffine(np.ones((th, tw), np.float32), A2, (pw, ph), flags=cv2.INTER_LINEAR, borderValue=0)
+    one = np.ones((th, tw), np.float32)
+    if k > 0:
+        bx, by = int(np.ceil(2 * tw / w0)), int(np.ceil(2 * th / h0))
+        one[:by] = 0; one[-by:] = 0; one[:, :bx] = 0; one[:, -bx:] = 0   # panel edge pixels are mixed with the sheet's white gutter
+    cov = cv2.warpAffine(one, A2, (pw, ph), flags=cv2.INTER_LINEAR, borderValue=0)
     # second back-projection, through the SAME chain as the check (plate -> 864 game frame -> panel size -> rotate back),
     # so the plate seen at the user's panel size equals their panel (only inside the panel's window)
     if k > 0:
@@ -158,6 +164,23 @@ def comp(k):
     else: rgb, cov = window(k, S, src_scale=4.0, src=f'{W}/panel{k}_seedvr4.png')
     a = (cov > 0.999).astype(np.float32)
     a = cv2.erode(a, np.ones((7, 7), np.uint8)); a = cv2.GaussianBlur(a, (0, 0), 3) * a
+    if k == 0:
+        for x0, y0, x1, y1 in HUD_BOXES:
+            hb = np.zeros_like(a); hb[int((MY + y0) * S):int((MY + y1) * S), int((MX + x0) * S):int((MX + x1) * S)] = 1
+            a = np.minimum(a, 1 - cv2.GaussianBlur(hb, (0, 0), 4))
+    # seam removal: carry the colour difference (user's picture - filled plate) found just inside the window outward into
+    # the filled area, fading over ~60 plate px — the user's own pixels are untouched, only the continuation is shifted
+    inn = cv2.erode((cov > 0.999).astype(np.uint8), np.ones((5, 5), np.uint8)).astype(np.float32)
+    band = inn * (1 - cv2.erode(inn, np.ones((41, 41), np.uint8)))
+    D = (rgb - base) * band[..., None]
+    num = cv2.GaussianBlur(D, (0, 0), 10); den = cv2.GaussianBlur(band, (0, 0), 10)[..., None]
+    ext = num / np.maximum(den, 1e-3)
+    dist = cv2.distanceTransform((inn < 0.5).astype(np.uint8), cv2.DIST_L2, 5)
+    wgt = np.exp(-dist / 60.0) * (cv2.GaussianBlur(band, (0, 0), 40) > 1e-4)
+    base = (base + ext * wgt[..., None]).clip(0, 255)
+    a = cv2.GaussianBlur((cov > 0.999).astype(np.float32), (0, 0), 1) * cv2.erode(a, np.ones((1, 1), np.uint8))
+    a = np.minimum(cv2.erode((cov > 0.999).astype(np.float32), np.ones((9, 9), np.uint8)), 1.0)
+    a = cv2.GaussianBlur(a, (0, 0), 4) * (cov > 0.999)
     if k == 0:
         for x0, y0, x1, y1 in HUD_BOXES:
             hb = np.zeros_like(a); hb[int((MY + y0) * S):int((MY + y1) * S), int((MX + x0) * S):int((MX + x1) * S)] = 1

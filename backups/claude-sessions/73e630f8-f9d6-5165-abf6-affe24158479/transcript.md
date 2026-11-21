@@ -1362,3 +1362,94 @@ All five moments are on screen in the real running game, under the live HUD. Mea
 
 > 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/paint06/shots/06p2.png"}`
 
+### 🧑 User — 2026-11-21T00:22:36.997Z
+
+> ↩︎ result: "commit": "59bd4e8a8fa3a35c19daec75a33530c540076f3e",
+>   "duration_s": 20
+> }
+> 59bd4e8 autosave: Rainbow 2026-11-21 00:22 UTC
+
+### 🧑 User — 2026-11-21T00:22:37.056Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T00:23:02.838Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='tools/paint06/step3_plates.py'; s=open(p).read()\nold=\"\"\"    plate_a = a.copy()\n    b = np.zeros_like(a); fy, fx = int(MY * S), int(MX * S)\"\"\"\nnew=\"\"\"    # seam removal: carry the colour difference (user's picture - filled plate) found just inside the window outward into\n    # the filled area, fading over ~60 plate px — the user's own pixels are untouched, only the continuation is shifted\n    inn = cv2.erode((cov > 0.999).astype(np.uint8), np.ones((5, 5), np.uint8)).astype(np.float32)\n    band = inn * (1 - cv2.erode(inn, np.ones((41, 41), np. …[+1801 chars]`
+
+### 🧑 User — 2026-11-21T00:23:52.964Z
+
+> ↩︎ result: 2 comp ok
+> 0 comp ok
+> 1 comp ok
+> 4 comp ok
+> 3 comp ok
+> 5
+> k0 {'below_hud_pct': 97.9, 'whole_frame_pct': 88.7}
+> k1 {'panel_size_pct': 97.8, 'game_frame_window_pct': 87.2, 'window_share_of_screen_pct': 57}
+> k2 {'panel_size_pct': 98.2, 'game_frame_window_pct': 91.7, 'window_share_of_screen_pct': 56}
+> k3 {'panel_size_pct': 98.0, 'game_frame_window_pct': 91.6, 'window_share_of_screen_pct': 60}
+> k4 {'panel_size_pct': 98.3, 'game_frame_window_pct': 85.5, 'window_share_of_screen_pct': 57}
+
+### 🤖 Claude — 2026-11-21T00:23:54.718Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/seam.png"}`
+
+### 🧑 User — 2026-11-21T00:23:54.748Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T00:23:59.669Z
+
+A thin light line is still visible at your panel's bottom edge. I suspect the outermost row of pixels in each panel blends into the white gap of your sheet. Checking that.
+
+### 🤖 Claude — 2026-11-21T00:24:01.724Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\nfor k in (1,2,3,4):\n    p=np.asarray(Image.open(f'qa/match/06/paint06/work/panel{k}.png').convert('RGB')).astype(int)\n    rows=[round(p[i].mean(),1) for i in (0,1,2,3,-4,-3,-2,-1)]; cols=[round(p[:,i].mean(),1) for i in (0,1,2,-3,-2,-1)]\n    print(k, 'rows top..bottom', rows, 'cols', cols)\n\"", "description": "Check the brightness of each panel's edge rows"}`
+
+### 🧑 User — 2026-11-21T00:24:01.948Z
+
+> ↩︎ result: 1 rows top..bottom [np.float64(208.2), np.float64(102.2), np.float64(109.2), np.float64(115.3), np.float64(154.0), np.float64(153.6), np.float64(152.4), np.float64(226.8)] cols [np.float64(213.8), np.float64(161.5), np.float64(168.1), np.float64(146.6), np.float64(142.0), np.float64(169.1)]
+> 2 rows top..bottom [np.float64(213.8), np.float64(118.2), np.float64(122.0), np.float64(121.5), np.float64(143.6), np.float64(143.0), np.float64(142.1), np.float64(224.2)] cols [np.float64(155.0), np.float64(138.4), np.float64(141.7), np.float64(152.3), np.float64(146.4), np.float64(181.5)]
+> 3 rows top..bottom [np.float64(236.9), np.float64(110.9), np.float64(100.7), np.float64(100.7), np.float64(148.4), np.float64(147.6), np.float64(147.9), np.float64(228.2)] cols [np.float64(219.2), np.float64(143.2), np.float64(148.0), np.float64(153.8), np.float64(153.8), np.float64(160.1)]
+> 4 rows top..bottom [np.float64(236.2), np.float64(102.3), np.float64(91.8), np.float64(95.1), np.float64(147.4), np.float64(146.0), np.float64(149.1), np.float64(235.3)] cols [np.float64(192.1), np.float64(157.4), np.float64(160.4), np.float64(168.3), np.float64(160.6), np.float64(192.6)]
+
+### 🤖 Claude — 2026-11-21T00:24:06.741Z
+
+Confirmed: the first and last row and column of each panel are partly the white of your sheet. I'll leave those 2 edge pixels out.
+
+### 🤖 Claude — 2026-11-21T00:24:15.504Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='tools/paint06/step3_plates.py'; s=open(p).read()\ns=s.replace(\"\"\"        rgb = cv2.warpAffine(orig, A, (pw, ph), flags=cv2.INTER_CUBIC, borderMode=cv2.BORDER_REFLECT)\n        cov = cv2.warpAffine(np.ones((h0, w0), np.float32), A, (pw, ph), flags=cv2.INTER_LINEAR, borderValue=0)\"\"\",\"\"\"        rgb = cv2.warpAffine(orig, A, (pw, ph), flags=cv2.INTER_CUBIC, borderMode=cv2.BORDER_REFLECT)\n        one = np.ones((h0, w0), np.float32)\n        if k > 0: one[:2] = 0; one[-2:] = 0; one[:, :2] = 0; one[:, -2:] = 0   # panel edge pixels are mixed with the s …[+1652 chars]`
+
+### 🧑 User — 2026-11-21T00:25:05.295Z
+
+> ↩︎ result: 2
+> 0 comp ok
+> 3 comp ok
+> 4 comp ok
+> 1 comp ok
+> 2 comp ok
+> 5
+> k0 {'below_hud_pct': 97.9, 'whole_frame_pct': 88.7}
+> k1 {'panel_size_pct': 97.7, 'game_frame_window_pct': 87.1, 'window_share_of_screen_pct': 57}
+> k2 {'panel_size_pct': 98.2, 'game_frame_window_pct': 91.7, 'window_share_of_screen_pct': 56}
+> k3 {'panel_size_pct': 97.9, 'game_frame_window_pct': 91.6, 'window_share_of_screen_pct': 60}
+> k4 {'panel_size_pct': 98.3, 'game_frame_window_pct': 85.5, 'window_share_of_screen_pct': 57}
+
+### 🤖 Claude — 2026-11-21T00:25:06.992Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/seam.png"}`
+
+### 🧑 User — 2026-11-21T00:25:07.031Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T00:25:19.332Z
+
+The line at the bottom is gone. Now recording a clip of Benny swimming through all of Screen 06 into Screen 07, using the real game step by step.
+
+### 🤖 Claude — 2026-11-21T00:25:33.450Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='src/game/Game.ts'; s=open(p).read()\ns=s.replace(\"\"\"    ...(p06 ? Object.fromEntries(PAINT06_REST.map((r, k) => [`06p${k}`, { mode: 'ride' as Mode, s: course.stage('06').s0 + r }])) : {}),\"\"\",\"\"\"    ...(p06 ? Object.fromEntries(PAINT06_REST.map((r, k) => [`06p${k}`, { mode: 'ride' as Mode, s: course.stage('06').s0 + r }])) : {}),\n    ...(p06 ? { '06p_in': { mode: 'ride' as Mode, s: course.stage('06').s0 - 8 } } : {}),\"\"\",1)\ns=s.replace(\"\"\"    togglePause,\n    /** QA only (read-only use\"\"\",\"\"\"    togglePause,\n    /** QA: render the  …[+3365 chars]`
+

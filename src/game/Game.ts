@@ -653,6 +653,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
     '07d_entering_08': { mode: 'ride', s: course.stage('08').s0 + 0.2 },
     // `?paint06=1`: the five picture moments of Screen 06 (k0 = the approved picture = '06', p1..p4 = storyboard panels)
     ...(p06 ? Object.fromEntries(PAINT06_REST.map((r, k) => [`06p${k}`, { mode: 'ride' as Mode, s: course.stage('06').s0 + r }])) : {}),
+    ...(p06 ? { '06p_in': { mode: 'ride' as Mode, s: course.stage('06').s0 - 8 } } : {}),
   };
 
   const gotoCheckpoint = (id: string, time = 12.0) => {
@@ -771,6 +772,8 @@ export async function startGame(canvas: HTMLCanvasElement) {
       return [...hits.entries()].sort((a, b) => b[1] - a[1]);
     },
     togglePause,
+    /** QA: render the current state now (clip capture after step()) */
+    renderNow() { render(); dirty = false; return true; },
     /** QA only (read-only use by scripts/proj05-probe.mjs): the live scene, render camera and renderer, for exact
      *  per-pixel river UV / footprint renders. Nothing calls it in the game; rendering is unchanged. */
     qa3d() { return { scene, camera, renderer, composer }; },
