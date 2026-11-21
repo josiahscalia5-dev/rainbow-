@@ -794,7 +794,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 25599,
-   "sha256": "7f329344becfdedca352928a837df82fda180761072d2e31350427eb403cfa0c"
+   "sha256": "b1d8ff1fea1a4c3c3ae47a6cdf5ba2a4138ae32e98641087eced94f72632b66d"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -808,8 +808,8 @@
   },
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
-   "bytes": 3056,
-   "sha256": "7ddd3e265a1126dfd4573c3d21f47719dcd56c288435b959236d189e6b89a8c5"
+   "bytes": 3169,
+   "sha256": "8b213da14097aa2ad638b845e6ccc0fbd0c263c4be773bb6b2a1f63a3cfd4e27"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -7734,7 +7734,7 @@
   {
    "path": "backups/wip/screen05-agents/LAST_SYNC_UTC",
    "bytes": 33,
-   "sha256": "0387b111ac3676dd167b482cd9edb7e00c7a36adff0dbfffd7a86defe3b367ce"
+   "sha256": "ed68f263ddcb67f566733bbb5dffde7248439fb33bddd14bed5b8ab83f54d761"
   },
   {
    "path": "backups/wip/screen05-agents/agentA/CONTROLS_NOTES.md",

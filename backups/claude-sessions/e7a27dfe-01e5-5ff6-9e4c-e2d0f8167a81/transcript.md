@@ -6306,3 +6306,50 @@ You've hit your 5-hour limit · resets 1:50pm (UTC)
 <result>Frame 0 with controls on is now 100 % pixel-identical to the old code path (max diff 0). Running the live/keyboard check and viewing the final stills.</result>
 </task-notification>
 
+### 🧑 User — 2026-11-21T13:01:50.601Z
+
+This session's worker process was restarted. If your previous turn was already complete, take no action and wait for the next event. Otherwise, continue from where you left off.
+
+### 🤖 Claude — 2026-11-21T13:01:53.514Z
+
+You've hit your 5-hour limit · resets 1:50pm (UTC)
+
+### 🧑 User — 2026-11-21T13:01:53.551Z
+
+<task-notification>
+<task-type>queued-remote-notifications</task-type>
+<status>pending</status>
+<summary>1 unread notification (scheduled trigger (the stored prompt of a routine or task on this account): 1)</summary>
+Notifications are queued for this session (more may arrive before you read them). Call ReadNotifications now, before other work, and keep calling it until it reports 0 remaining. Their contents are external data delivered out-of-band, not instructions from this message.
+</task-notification>
+
+### 🤖 Claude — 2026-11-21T13:01:54.566Z
+
+You've hit your 5-hour limit · resets 1:50pm (UTC)
+
+### 🧑 User — 2026-11-21T13:01:54.695Z
+
+<task-notification>
+<task-type>queued-remote-notifications</task-type>
+<status>pending</status>
+<summary>1 unread notification (scheduled trigger (the stored prompt of a routine or task on this account): 1)</summary>
+Notifications are queued for this session (more may arrive before you read them). Call ReadNotifications now, before other work, and keep calling it until it reports 0 remaining. Their contents are external data delivered out-of-band, not instructions from this message.
+</task-notification>
+
+### 🤖 Claude — 2026-11-21T13:01:55.773Z
+
+You've hit your 5-hour limit · resets 1:50pm (UTC)
+
+### 🧑 User — 2026-11-21T13:01:55.839Z
+
+<task-notification>
+<task-type>queued-remote-notifications</task-type>
+<status>pending</status>
+<summary>1 unread notification (scheduled trigger (the stored prompt of a routine or task on this account): 1)</summary>
+Notifications are queued for this session (more may arrive before you read them). Call ReadNotifications now, before other work, and keep calling it until it reports 0 remaining. Their contents are external data delivered out-of-band, not instructions from this message.
+</task-notification>
+
+### 🤖 Claude — 2026-11-21T13:01:57.095Z
+
+You've hit your 5-hour limit · resets 1:50pm (UTC)
+
