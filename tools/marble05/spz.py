@@ -42,3 +42,21 @@ def write_ply(path, d):
     arr = np.c_[d['xyz'], d['dc'], d['opacity'][:, None], d['scale'], d['rot']].astype('<f4')
     with open(path, 'wb') as f:
         f.write(hdr.encode()); f.write(arr.tobytes())
+
+
+def subset_spz(src, dst, keep):
+    """Write an SPZ with only the splats where `keep` is True (any version: every attribute block is sliced as raw bytes)."""
+    raw = gzip.decompress(open(src, 'rb').read())
+    magic, version, n, sh, frac, flags, res = struct.unpack_from('<IIIBBBB', raw, 0)
+    rot_b = 4 if version >= 3 else 3
+    sh_dim = {0: 0, 1: 3, 2: 8, 3: 15}[sh] * 3
+    sizes = [9, 1, 3, 3, rot_b, sh_dim]
+    o = 16; parts = []
+    k = np.asarray(keep, bool); m = int(k.sum())
+    for s in sizes:
+        if s == 0: continue
+        blk = np.frombuffer(raw, np.uint8, n * s, o).reshape(n, s); o += n * s
+        parts.append(blk[k].tobytes())
+    hdr = struct.pack('<IIIBBBB', magic, version, m, sh, frac, flags, res)
+    open(dst, 'wb').write(gzip.compress(hdr + b''.join(parts) + raw[o:], 6))
+    return m
