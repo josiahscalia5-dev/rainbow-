@@ -43,15 +43,19 @@ const src = { hi: new SplatMesh({ url: TD + 'bay.ply' }), him: new SplatMesh({ u
   ...(L2 ? { lo2: new SplatMesh({ url: TD + 'bay_lo2.ply' }), lom2: new SplatMesh({ url: TD + 'bay_m_lo2.ply' }) } : {}) };
 await Promise.all([near.initialized, far.initialized, ...Object.values(src).map((m) => m.initialized)]);
 const DV = new THREE.Vector3(...TR.D), AX = new THREE.Vector3(...TR.ax), N = new THREE.Vector3(...TR.n), DU = DV.dot(AX);
+// [end] round 32c: EXT more copies continue the tunnel BEYOND the path end (visual only, Benny never reaches them), so the end light stays
+// small and far away (approved-like) until the ending transition instead of becoming a big flat disc close ahead. ?endext=0 = none
+const EXT = L2 ? +(q.get('endext') ?? 5) : 0, NT = TR.N + EXT;
+const OFF = (k) => (k <= TR.N ? new THREE.Vector3(...TR.offsets[k - 1]) : DV.clone().multiplyScalar(k)); // offsets[k-1] = k * D exactly
 const tiles = [];
-for (let k = 1; k <= TR.N; k++) {
+for (let k = 1; k <= NT; k++) {
   const mir = q.get('nomirror') ? false : k % 2 === 1;
   const hi = flip(new SplatMesh({ packedSplats: (mir ? src.him : src.hi).packedSplats })), lo = flip(new SplatMesh({ packedSplats: (mir ? src.lom : src.lo).packedSplats }));
   const lo2 = L2 ? flip(new SplatMesh({ packedSplats: (mir ? src.lom2 : src.lo2).packedSplats })) : null;
-  for (const m of [hi, lo, lo2]) if (m) { m.position.set(...TR.offsets[k - 1]); m.visible = false; scene.add(m); }
+  for (const m of [hi, lo, lo2]) if (m) { m.position.copy(OFF(k)); m.visible = false; scene.add(m); }
   tiles.push({ k, hi, lo, lo2 });
 }
-const WF = q.get('noflow') ? null : createWaterFlow({ TR, SC, meshes: [near, nearA, far, ...tiles.flatMap((t) => [t.hi, t.lo, t.lo2])].filter(Boolean), far, amp: +(q.get('flowamp') ?? 1), speed: +(q.get('flowspeed') ?? 0.9) }); // [waterflow]
+const WF = q.get('noflow') ? null : createWaterFlow({ TR, SC, meshes: [near, nearA, far, ...tiles.flatMap((t) => [t.hi, t.lo, t.lo2])].filter(Boolean), far, kmax: L2 ? NT + 1 : null, amp: +(q.get('flowamp') ?? 1), speed: +(q.get('flowspeed') ?? 0.9) }); // [waterflow]
 // [track] backing shells (tools/build_backing.py): 4 cm behind each piece's splats, in the piece's own local colours; they only show
 // where the splats leave a hole (the wall bases at the section joints), instead of the black clear colour. ?noback=1 = off
 const BK = {};
@@ -59,7 +63,7 @@ if (L2 && !q.get('noback')) for (const nm of ['near', 'bay', 'bay_m']) { const j
   g.setAttribute('position', new THREE.Float32BufferAttribute(j.pos, 3)); g.setAttribute('color', new THREE.Float32BufferAttribute(j.col, 3)); g.setIndex(j.idx); BK[nm] = g; }
 const bkMat = q.get('bkdebug') ? new THREE.MeshBasicMaterial({ color: 0xff0000, side: THREE.DoubleSide }) : new THREE.MeshBasicMaterial({ vertexColors: true, toneMapped: false, side: THREE.DoubleSide });
 const nearBk = BK.near ? new THREE.Mesh(BK.near, bkMat) : null; if (nearBk) scene.add(nearBk);
-for (const t of tiles) if (BK.bay) { t.bk = new THREE.Mesh(q.get('nomirror') || t.k % 2 === 0 ? BK.bay : BK.bay_m, bkMat); t.bk.position.set(...TR.offsets[t.k - 1]); t.bk.visible = false; scene.add(t.bk); }
+for (const t of tiles) if (BK.bay) { t.bk = new THREE.Mesh(q.get('nomirror') || t.k % 2 === 0 ? BK.bay : BK.bay_m, bkMat); t.bk.position.copy(OFF(t.k)); t.bk.visible = false; scene.add(t.bk); }
 let kcNow = -99;
 // [track] the tunnel runs on for FARK sections and ends in the painting's bright golden light (a soft glow behind the splats)
 const FARK = +(q.get('fark') ?? 9);
@@ -82,8 +86,8 @@ const glow = (L2 && TR.XB) ? (() => { const c = document.createElement('canvas')
   }
   const tx = new THREE.CanvasTexture(c); tx.colorSpace = THREE.SRGBColorSpace;
   const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: tx, toneMapped: false, transparent: true, depthWrite: false })); sp.scale.set(GS, GS, 1); sp.renderOrder = -10; scene.add(sp); return sp; })() : null;
-// [end] the light at the end opens up as Benny comes near: a bright white-gold opening drawn over the far-end disc, faded in with the
-// camera's distance to it (0 beyond 12 units, full at 4), so from far away the end stays a small core and close up it is all light
+// [end] the light opening: a bright white-gold disc drawn over the far-end disc, faded in only from S_LAST - 2.25 (gentle pre-glow)
+// and fully inside the ending transition (see updateEnd), so during gameplay the end stays a small core far away
 const glowNear = glow && q.get('endglow') !== '0' ? (() => { const c = document.createElement('canvas'); c.width = c.height = 256; const g = c.getContext('2d');
   const gr = g.createRadialGradient(128, 128, 0, 128, 128, 128); for (const [o, col] of [[0, '#fffdf4'], [0.1, '#fff4d2'], [0.28, '#ffe2a0'], [0.5, '#ffc882'], [0.75, '#f8b08c'], [1, '#f0a096']]) gr.addColorStop(o, col);
   g.fillStyle = gr; g.fillRect(0, 0, 256, 256); const tx = new THREE.CanvasTexture(c); tx.colorSpace = THREE.SRGBColorSpace;
@@ -98,8 +102,9 @@ document.body.insertBefore(endEl, document.getElementById('hud'));
 let endK = 0; const endP = new THREE.Vector3();
 const updateEnd = (s) => {
   const x = THREE.MathUtils.clamp((s - (S_LAST - 1.25)) / 1.1, 0, 1); endK = x * x * (3 - 2 * x);
-  if (glow) glow.scale.setScalar(GS * (1 + 0.8 * endK));
-  if (glowNear) { glowNear.scale.setScalar(GS * (1 + 0.8 * endK)); glowNear.material.opacity = 1 - THREE.MathUtils.smoothstep(camera.position.distanceTo(glow.position), 4, 12); }
+  if (glow) glow.scale.setScalar(GS * (1 + 2 * endK));
+  // the light opens only in the transition window; before it just a gentle pre-glow (0 -> 0.3) over the last unit (round 32c)
+  if (glowNear) { const pre = 0.3 * THREE.MathUtils.smoothstep(s, S_LAST - 2.25, S_LAST - 1.25); glowNear.scale.setScalar(GS * (1 + 2 * endK)); glowNear.material.opacity = pre + (1 - pre) * endK; }
   if (endK <= 0) { endEl.style.opacity = '0'; return; }
   let cx = W / 2, cy = H * 0.3;
   if (glow) { endP.copy(glow.position).project(camera); if (endP.z < 1) { cx = THREE.MathUtils.clamp((endP.x + 1) / 2 * W, 0, W); cy = THREE.MathUtils.clamp((1 - endP.y) / 2 * H, 0, H); } }
@@ -114,8 +119,8 @@ const showTrack = (uB) => {
   if (!L2) { for (const t of tiles) { t.hi.visible = t.k >= kc - 1 && t.k <= kc + 1; t.lo.visible = t.k >= kc + 2 && t.k <= kc + 5; } }
   else for (const t of tiles) { t.hi.visible = t.k >= kc - 1 && t.k <= kc + 1; t.lo.visible = t.k >= kc + 2 && t.k <= kc + 3; t.lo2.visible = t.k >= kc + 4 && t.k <= kc + FARK; } // [track]
   if (nearBk) nearBk.visible = near.visible; for (const t of tiles) if (t.bk) t.bk.visible = t.hi.visible || t.lo.visible || !!t.lo2?.visible; // [track]
-  const last = Math.min(TR.N, Math.max(1, kc + (L2 ? FARK : 5))); far.position.set(...TR.far_offsets[last]); far.visible = !L2 || !!q.get('far');
-  if (glow) { glow.position.set(...TR.XB).add(new THREE.Vector3(...TR.offsets[last - 1])).addScaledVector(AX, 0.35); } // [track]
+  const last = Math.min(NT, Math.max(1, kc + (L2 ? FARK : 5))); far.position.set(...TR.far_offsets[Math.min(last, TR.N)]); far.visible = !L2 || !!q.get('far');
+  if (glow) { glow.position.set(...TR.XB).add(OFF(last)).addScaledVector(AX, 0.35); } // [track]
   if (glowNear) glowNear.position.copy(glow.position).addScaledVector(AX, -0.02); // [end]
 };
 
