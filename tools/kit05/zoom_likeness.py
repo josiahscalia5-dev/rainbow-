@@ -19,7 +19,7 @@ mask = np.ones((H, W), bool); mask[:125] = False; mask[400:780, 50:362] = False
 def warp(k, dx, dy):
     # output pixel (x, y) <- approved at VP + (x + x0 - dx - VP) / k
     M = np.array([[1 / k, 0, VP[0] - (VP[0] - x0 + dx) / k], [0, 1 / k, VP[1] - (VP[1] + dy) / k]], np.float32)
-    return cv2.warpAffine(REF, M, (W, H), flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_REFLECT)
+    return cv2.warpAffine(REF, M, (W, H), flags=cv2.INTER_LINEAR | cv2.WARP_INVERSE_MAP, borderMode=cv2.BORDER_REFLECT)
 def ssim(a, b):
     a = cv2.cvtColor(a.astype(np.uint8), cv2.COLOR_RGB2GRAY).astype(np.float32); b = cv2.cvtColor(b.astype(np.uint8), cv2.COLOR_RGB2GRAY).astype(np.float32)
     g = lambda x: cv2.GaussianBlur(x, (0, 0), 1.5); ma, mb = g(a), g(b); va, vb, cab = g(a * a) - ma ** 2, g(b * b) - mb ** 2, g(a * b) - ma * mb

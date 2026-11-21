@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3267,
-   "sha256": "5a4859493f0527fed0f22772b907e56f7ac8c68629f54739a02968c6887daa12"
+   "sha256": "65672702e2257d6bfd9ef78e256806480e331a9f1f67cdb059afcc8df2a48def"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -7054,7 +7054,7 @@
   {
    "path": "backups/wip/detached-d8e047d33e/INFO.json",
    "bytes": 2379,
-   "sha256": "3a38cba71a89ec250ff2180fc1cf9ed99bca2927b8054b13f8499d3aafd7e42b"
+   "sha256": "b25c51ed43c455c100d92a476dcde34c3cdf0030d0a95a73fe6269d0da733f4c"
   },
   {
    "path": "backups/wip/detached-d8e047d33e/tracked.patch",
@@ -40673,8 +40673,8 @@
   },
   {
    "path": "tools/kit05/zoom_likeness.py",
-   "bytes": 3823,
-   "sha256": "5f380c27ed6a5f100ccdc907401a41b9dbf758ea100a1d68e87564e3584efa0a"
+   "bytes": 3846,
+   "sha256": "d33659b75a79adedefa8ffba2e66e3c530f21a22831138b87ef7d3203939d809"
   },
   {
    "path": "tools/lead21/audit_screen.mjs",
