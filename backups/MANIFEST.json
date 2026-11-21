@@ -744,7 +744,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3271,
-   "sha256": "5df804460db6062bfac7f0a54bda487a7c6586f8032bbf3783944afa33e04d3a"
+   "sha256": "325990cbbbc6e7ccf321757249cf098250a19bc138ae4f41f7ae36dff7624132"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -16142,6 +16142,16 @@
    "sha256": "5e6d53180c5319d13dae15705e39035273e802734cf583fa38de223d7ba1c8ba"
   },
   {
+   "path": "qa/match/05/paint05/clip/NEW_05_06_07_straight.mp4",
+   "bytes": 7825652,
+   "sha256": "69bb18da53b784946c419bd9e663f8e46c5698af91579998abe940300d230ea2"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/clip_NEW_05_06_07_straight.json",
+   "bytes": 79978,
+   "sha256": "0b278979fbadf648fee5652a6f91cc5aa0225ab3448aa8dd427284d548ee891f"
+  },
+  {
    "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0000.jpg",
    "bytes": 172790,
    "sha256": "78689e46234c361cd9602a3a31b05ff3bf5a2d4390b1b16281e76a0506f611fe"
@@ -16267,6 +16277,856 @@
    "sha256": "49974c692f255f97ca7d2d3cf115dce27c005e792847425e77d09aa6117620c6"
   },
   {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0025.jpg",
+   "bytes": 190015,
+   "sha256": "c6f97301e007c88676981938891f8001510bf74b33569056611869978c2b7bbf"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0026.jpg",
+   "bytes": 190452,
+   "sha256": "77ff5c00093cd53e9079fda278dd967056ec97312dd5276079df6259ea18c32f"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0027.jpg",
+   "bytes": 192382,
+   "sha256": "b7997ec90b9437eb4d8a93e6aa7e8317c6fa026d3bacf3e93c30ba360a06c7e2"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0028.jpg",
+   "bytes": 193784,
+   "sha256": "13e05921e8b3c9f059cddf5b63044afc084801097be2b7cef87681f48e63b984"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0029.jpg",
+   "bytes": 195812,
+   "sha256": "6795d42f82bfcc3d5250920a417a0694587e846e9b33d5e3a9995002ed2f23b4"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0030.jpg",
+   "bytes": 197224,
+   "sha256": "7815eb96d858621204f3dac51e23114bb1d564dc1eaa3923228653513f5bde7d"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0031.jpg",
+   "bytes": 198022,
+   "sha256": "ae16dbdeb8d4514ad983c7f1b4f6e05f4396e393d02d005c0cf6effe816ecb6c"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0032.jpg",
+   "bytes": 198112,
+   "sha256": "ab7f0f25c342997b81dff15f9f8730b72fb515a16106dd2c29cd768c9bd7a3d8"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0033.jpg",
+   "bytes": 198593,
+   "sha256": "6a9bd8892bace7c82930bffd3211454cc23b139169e4f11a092dc1c3fe00d971"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0034.jpg",
+   "bytes": 198336,
+   "sha256": "47e6e25ad6fd41671b205e38f943bdee8f880e1e5cc36a011f9481921aeb4bb7"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0035.jpg",
+   "bytes": 197025,
+   "sha256": "135869535087e5b9449af3648ac4f80bcc0f990fe390d712c2564f193afc34fa"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0036.jpg",
+   "bytes": 196699,
+   "sha256": "d0a9d13b98c8e6468e8462b47af2b243f7e40ca85b09f6987289cc2a03c12984"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0037.jpg",
+   "bytes": 196359,
+   "sha256": "7154739506a17cd99a9d8d072ced5c063e4f978ff475f27b2e0994f039ba4366"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0038.jpg",
+   "bytes": 197395,
+   "sha256": "494d73815c6275e39bc6124d4356173203115c0bac3e13cfd5411f0a3cbe3cba"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0039.jpg",
+   "bytes": 197572,
+   "sha256": "0e14ab845be21b70b2a6f4fba2e2560f2dc15527f23b5bcecfca3d6f3fd7048a"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0040.jpg",
+   "bytes": 197854,
+   "sha256": "91ad87a8324be79bd82dbebba9df3e97e724b03ed5ca02ed7420517fd9fefe87"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0041.jpg",
+   "bytes": 198311,
+   "sha256": "aa27d1ddd8bd20af685dca09c5287a688331905e04848b7e925ae5ae10f6cc83"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0042.jpg",
+   "bytes": 198033,
+   "sha256": "4cf6540d72caa607e08350738ff58a99dcd4f242a99b21b8833a41255450f714"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0043.jpg",
+   "bytes": 198093,
+   "sha256": "dffcc1f9b609220c742fe01b1728e2678d8cb4747f4b5f72414f2b3cd60e6233"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0044.jpg",
+   "bytes": 198515,
+   "sha256": "e2294a3e86ac2b0a4160f2c6b70f96ab3ad3b3f77d97e92d06c4498cfcac56f6"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0045.jpg",
+   "bytes": 198482,
+   "sha256": "110f9cebedbdcc3ac4096d28c5d15624acdb152fb2d875a28339a21af8a3e18c"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0046.jpg",
+   "bytes": 200033,
+   "sha256": "0e159e300321a1c217f9aef0c0aaaa14696afe089d55738aafbae80572b0398a"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0047.jpg",
+   "bytes": 200379,
+   "sha256": "cdd95e8b43fa6f8c6280552ecf994036741a9cae70aa08622489afb0456b7852"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0048.jpg",
+   "bytes": 201506,
+   "sha256": "f09a4dd991f41c62b126e9a5efa1f6008be3033deb85845e7d0d873b862317b6"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0049.jpg",
+   "bytes": 202238,
+   "sha256": "57a436959e9b72042aa0141d6061a4440dc97494b1e8df48282e7e63d6ffd845"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0050.jpg",
+   "bytes": 201033,
+   "sha256": "765de79b44c4f94cc15084a12525f8b2507d509a39117a4d5b73dfd2f2cf35d3"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0051.jpg",
+   "bytes": 200160,
+   "sha256": "205b7cd3fe34701e2248c9a0746eb68113a1de27287b80b3309dae5d0350fba3"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0052.jpg",
+   "bytes": 199389,
+   "sha256": "bf7d8fd25bc588d60790c05100d3b5efe7a5edd0b4d083d168bee412fef12740"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0053.jpg",
+   "bytes": 200575,
+   "sha256": "71c3c9c98ab01f5ed5f56e99b2abfbe013edff0427d821e933e42983bb174c25"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0054.jpg",
+   "bytes": 200042,
+   "sha256": "6996f9067dc5ad73c9293425d4c935068bafdff250ff0476b3393d5b28c7ba3d"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0055.jpg",
+   "bytes": 199707,
+   "sha256": "270f21ad255a96b30f67aa62d90046b2f1a98ebe9855282bf9a42255a0bc55a9"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0056.jpg",
+   "bytes": 200193,
+   "sha256": "88bf8aa442bf79f6526951fabe908fe975c4420d2d7e0a09c9343b903b5f4523"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0057.jpg",
+   "bytes": 202074,
+   "sha256": "acb8a5962e4f8c4d9faab50fdc16535e758738c0b3d6c26e6f2631e45e3debbd"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0058.jpg",
+   "bytes": 202530,
+   "sha256": "af94a84148f38929c36b3e03489e5c9836aea11fdf3ff0b0feb9a1e9e3857516"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0059.jpg",
+   "bytes": 202505,
+   "sha256": "63c425c85a81e1084ca5cf80d5ac36a7305c10e34c92c36450b1c5e11aa44652"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0060.jpg",
+   "bytes": 203485,
+   "sha256": "9269cb58ad5a6a677fcff270e4a8508405a619ff7984c45ab9e9cb2db030c5a0"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0061.jpg",
+   "bytes": 203090,
+   "sha256": "eea73289d120408f3604c6b23e792e0536531087e12c4d8c32c49409e73219c8"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0062.jpg",
+   "bytes": 203531,
+   "sha256": "1ddfc2db5118b8203090f80c2d2007669b57622a3d0369ef06fa7ddc73002486"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0063.jpg",
+   "bytes": 204540,
+   "sha256": "7b679e5e77b5745c3f7094ba5979fc60a4c0dd21edc91e6eac1e939dabcb20d1"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0064.jpg",
+   "bytes": 204308,
+   "sha256": "8caeaac8514dd97a64a97f0bd33584d59bd86b205464fd9ba81db5464d3ece27"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0065.jpg",
+   "bytes": 204540,
+   "sha256": "a5e709de8e1a0dd4b235b9b02f795a2520870b6236c0648971d93e50ec7c39ed"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0066.jpg",
+   "bytes": 205040,
+   "sha256": "3bae9bf3c5128f22a7978d25c699384c7749e43de6a32c57cc30eaf986bae35a"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0067.jpg",
+   "bytes": 206645,
+   "sha256": "0e00b48834ae15f7dc856270173a380c8bc40d146365be160b784d29e082e5a4"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0068.jpg",
+   "bytes": 207116,
+   "sha256": "af63b0c259689717962cbf021ea11c6ca40a94318398c14bd82d174b46d84ef1"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0069.jpg",
+   "bytes": 208216,
+   "sha256": "7d403bd8f31c8b4f11b39137890ad799447f9379f3ae37cdfc5178663f2f0b12"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0070.jpg",
+   "bytes": 208209,
+   "sha256": "877907c2163c9f5b128ad47def80215ccad3c6e1e7b1e6e957ba257320db9885"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0071.jpg",
+   "bytes": 207841,
+   "sha256": "462d571d136d5b4ca11b2b52037d40776e031a67c50539aaabf80e7d4be34162"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0072.jpg",
+   "bytes": 206771,
+   "sha256": "4682e3048a85eb02c2f941b93533ea7384747bcbee816174deefa2c3c1dad588"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0073.jpg",
+   "bytes": 206538,
+   "sha256": "05f4eb363f04020b35004691691747a52381477aec419afc6bf4a7eb27748625"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0074.jpg",
+   "bytes": 207801,
+   "sha256": "1be7716e82bfd9bef06cae1bc799066dc7c019507a965bb172eb8e4acc77c430"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0075.jpg",
+   "bytes": 207355,
+   "sha256": "8bf896dc4265a37d46566ba35fe3957eba9757dd364b43d7dc6ba12a3a3d990d"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0076.jpg",
+   "bytes": 207493,
+   "sha256": "f92c42f5167e3b2510e7658dc6fc4ebb6439589c2409715c9773ccf79438e118"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0077.jpg",
+   "bytes": 207288,
+   "sha256": "a76e37a266d14d3b977f52201d580c21818e20b957bd55418e85bbc676b24de9"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0078.jpg",
+   "bytes": 207385,
+   "sha256": "b62934517dd7cb64f61d31b9744aa62b35c84739f4246c260eb4cb9c9ce04330"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0079.jpg",
+   "bytes": 206712,
+   "sha256": "1fa63ea056d0369fba94c75b2a84a1342059706ab850a30edcffa2614b9c4a74"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0080.jpg",
+   "bytes": 204855,
+   "sha256": "9eb55b3e865862c5bfa1a7595a2aea42207e153b76f99199da1455bec525b3c7"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0081.jpg",
+   "bytes": 204266,
+   "sha256": "de578e47909d74fcc4772e27429bbc9b027ad558e201a7beb3ee264f9f6a60d8"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0082.jpg",
+   "bytes": 204356,
+   "sha256": "7ae17010463e21185497dcece4b56856ec9f57e4d03596648bd52aab9c0fe514"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0083.jpg",
+   "bytes": 203599,
+   "sha256": "bd6ff386a2d277daf8fce1d3493edd742976ab42f6b70cf73ef97e4a66db8d37"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0084.jpg",
+   "bytes": 203934,
+   "sha256": "20975fd163dba8d50d70daf40e3d8965348cbc7fb67050ff6c9ea31e1b9f99ba"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0085.jpg",
+   "bytes": 204478,
+   "sha256": "f1032cceeac5f268548baa4bb33009325e626bcbebf472297a89e5facfaa1aad"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0086.jpg",
+   "bytes": 205010,
+   "sha256": "f304efc7b7e4a0d17b5476a1562ae454e94958cf617d8ca99c2d0d094f74fa35"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0087.jpg",
+   "bytes": 206102,
+   "sha256": "645e52cc552a791fac384cf10e2165180be0063c61dd9dc51af2d903304ec87b"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0088.jpg",
+   "bytes": 205358,
+   "sha256": "2e93edc9651eb0605c073eabb29d8acb020e1426cbebb8c2b4b71f0a63f735c7"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0089.jpg",
+   "bytes": 205565,
+   "sha256": "12047566776530d7758a499b71f72e737b68cd38ee1f531d6e30a4741bfbc6e6"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0090.jpg",
+   "bytes": 204280,
+   "sha256": "07fb0b21b621fc1a7f6ba4f78f228345500a0981ade1911c3a53ac89f55bee7f"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0091.jpg",
+   "bytes": 204494,
+   "sha256": "75871f1813b4242d6897d5f89bb6a73c0c76f0808cb13aea326365258d8f8ecf"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0092.jpg",
+   "bytes": 206281,
+   "sha256": "276c6913671890abf96bdb1f4ef52a1cc79cfbe007f3d08772554c1a11cccef7"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0093.jpg",
+   "bytes": 208042,
+   "sha256": "d282327823fc5ad05e2bb67c58a6c2e33258d6f7d9143198903c2730036fffcb"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0094.jpg",
+   "bytes": 210122,
+   "sha256": "7f3f2c9af7045821937fae7ce7d85364d6ab6e8de6b8d9646d1976d58b88c5b9"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0095.jpg",
+   "bytes": 210372,
+   "sha256": "0c9b0182fd6b9b2c59eebda1cbca1c25a454f6b5cfad99ddacf8a752610c0300"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0096.jpg",
+   "bytes": 209199,
+   "sha256": "2cadecbe200f96393ffb5d094419c49ad03a599b2460b70b3bc105d98234b350"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0097.jpg",
+   "bytes": 209602,
+   "sha256": "8dfa08e9ea57d07a62060c30058560b968853f7c80005bbc9046786554ff1132"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0098.jpg",
+   "bytes": 208433,
+   "sha256": "800a2ad30b73ff2d103cb144fad801dc09f6bbebc104830d1bfde99122b094e8"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0099.jpg",
+   "bytes": 208834,
+   "sha256": "e1a8f7d5f8b9e390c0c5038c03c10df8429a222ff700213242e2e5ca80c7e169"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0100.jpg",
+   "bytes": 208894,
+   "sha256": "73867441fa60daf7dd0e2db6a75d0e1399f529f7bcb5df9ec686065724f3e0e7"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0101.jpg",
+   "bytes": 208208,
+   "sha256": "5f27adae5013e4a3d30a121ae776015d3d9bb93bfa69934db325ddaffd4d0e5c"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0102.jpg",
+   "bytes": 207608,
+   "sha256": "e1299e8524b1266caa5228e5a9778f3420ac02503c3ffffd340910d21db06104"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0103.jpg",
+   "bytes": 207632,
+   "sha256": "6f56ceb1d6c60e95b9a14fb9782f1b60d1c8b3325ecb0116f82549c3a98b79d0"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0104.jpg",
+   "bytes": 208258,
+   "sha256": "6422406d591395dcd29b59340ca08f82bbfb372c8255b78e7634b748859fb1d0"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0105.jpg",
+   "bytes": 209386,
+   "sha256": "f90fd96b99b3cfbe2f78106c0164b349c7e6c81f0076230f4b4146cecc9174df"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0106.jpg",
+   "bytes": 208293,
+   "sha256": "8e47420b1ee803b778ef536c33e45871ed86c025a4ff80edcb5f6050553c85b6"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0107.jpg",
+   "bytes": 207487,
+   "sha256": "ead6dcd7e8937dc1d8336c5da7dd5ae112896378972b87864b255a7099e4392e"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0108.jpg",
+   "bytes": 207397,
+   "sha256": "dcec0af29ad241ada3408db88ee7479736a08ea666d102641a2f2370efeb12e1"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0109.jpg",
+   "bytes": 205559,
+   "sha256": "e000042c1bb008fd60a1a332e29d7946041a46a251e235e7364a18268c46b28a"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0110.jpg",
+   "bytes": 203546,
+   "sha256": "b7d2bfea0e814eb9983e3493c8d37ae12113418895c66ebcd65d88a3a6b12654"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0111.jpg",
+   "bytes": 204013,
+   "sha256": "f6a71c878deb050bfaf728ef81e3fbef04edc76cd6f30aadfaf9c019229a1aa6"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0112.jpg",
+   "bytes": 204568,
+   "sha256": "c4c13b017e16e7ad01a0a78c588f59565de7aaa6aa5faa0c5d770781df023ce2"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0113.jpg",
+   "bytes": 204876,
+   "sha256": "271d11a00c80dc2ed21fc9fac4afe3e105f960d1824013f7e3db8ffdde5d641d"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0114.jpg",
+   "bytes": 204522,
+   "sha256": "8d4d8cc5177394be74ea894b9e5b6d95b2212be2f34025d7b9f1d61b8c95c333"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0115.jpg",
+   "bytes": 205386,
+   "sha256": "5b268ddc458485236600972be37f2048de47ccc648e04be1a38058c6b23b9197"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0116.jpg",
+   "bytes": 205218,
+   "sha256": "2a57ff445bd84364f399db944271ca7d1906d68d8c6e5141b6bfc57e7e842cc5"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0117.jpg",
+   "bytes": 204829,
+   "sha256": "08c6c28735db4d433d3bc5b20104a0e63e65271f427c856a024fa7a75871fd91"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0118.jpg",
+   "bytes": 204510,
+   "sha256": "ed4c53247011e5db27087a9a2e7d5bd84c0d419bdf25fd68b1f1876e9f612e43"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0119.jpg",
+   "bytes": 205330,
+   "sha256": "44ec74330cbbdcf01fdf1128cfc5af03cdd0ed78bb7edeaec1d5e9bde7419160"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0120.jpg",
+   "bytes": 205151,
+   "sha256": "7db649a1540739c0bc1c18d34d5036469fa7ea133711e8297aed4a01be916fe5"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0121.jpg",
+   "bytes": 205781,
+   "sha256": "0e1a3e40375d3c0b3922ebb188ea7e44f2e2ec0a965accf3ce0573437f457cf5"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0122.jpg",
+   "bytes": 206876,
+   "sha256": "62db222524b1b2db56cdb9ff1e0668aca6ac3cb9f8e9ef8b014fd064f3452482"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0123.jpg",
+   "bytes": 207499,
+   "sha256": "2e2295521376f136a879cbc57574cb28e89fcbff051b8d789079212845abb816"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0124.jpg",
+   "bytes": 207311,
+   "sha256": "b87ccf0d530e4cca14c9cf0375e7ed6244af86809565808e0bcc77defb207470"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0125.jpg",
+   "bytes": 206738,
+   "sha256": "c86e12e15d2c643fc676058aa1d58ba0ad101270449d0801e03cc1794d222e4a"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0126.jpg",
+   "bytes": 207385,
+   "sha256": "044622f032dd2405cf4345ec838c28c725daf8bbe948e76676ada2c6923e6555"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0127.jpg",
+   "bytes": 208197,
+   "sha256": "8fdf71aae9a1eb987249de02da4abb385eb0be94d7b37f601facb9524b2bfb25"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0128.jpg",
+   "bytes": 206805,
+   "sha256": "62e4f1cbbc2cc93b07e546235eb3b3308d48d5fd9735aea14b4db91ef8b1d6b1"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0129.jpg",
+   "bytes": 204275,
+   "sha256": "82243b2a5c1d7fac8eeed95eb84fb321d41aece1471d7d1f05d91d24d944d21b"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0130.jpg",
+   "bytes": 202843,
+   "sha256": "3522409c202e5d4535c9c85d11e1da7071bd6061095b4eb3d5d6e964a48090cc"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0131.jpg",
+   "bytes": 202479,
+   "sha256": "d9e8729d39ac446933e79056d423359ca4b414d4cd895ee111ae53cc0c9f62f1"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0132.jpg",
+   "bytes": 203322,
+   "sha256": "f6c4bda5ebacc0df84804806880c3457c98b18c99a8abf6d46a6eb4f79103e75"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0133.jpg",
+   "bytes": 203193,
+   "sha256": "d7619c7b7f01f753f5a9e347f3e08c866ea3c182525402d6d16d07ff0f38bedb"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0134.jpg",
+   "bytes": 204999,
+   "sha256": "b3a5a449de060c51a14289281b4340058d8be4e4bdfd0dc584da5b9a1645bbef"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0135.jpg",
+   "bytes": 205853,
+   "sha256": "c6379468cc5ad16f0bf2dba18ead46baf084fcca952e6ea361dfeeb2912751c0"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0136.jpg",
+   "bytes": 203770,
+   "sha256": "7ab40ad79858c765434cdc8b918632e20021801359790d3381293cc19d9f616e"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0137.jpg",
+   "bytes": 202638,
+   "sha256": "6b8d3d4f00186b577430a3fe9fa10e1a13c04c892d48d4edaee85e370ef81927"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0138.jpg",
+   "bytes": 201124,
+   "sha256": "47a62b717f3d9eb50143e14082aba248bd8e837c0c6b9bd24c9137892c5b1cfb"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0139.jpg",
+   "bytes": 199501,
+   "sha256": "e150240d0eae4c9162bc1389ccf414d30e677ae0faf864a4a15314baee5b88bd"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0140.jpg",
+   "bytes": 197045,
+   "sha256": "89f8977779568dfaf2d1e202c6c1a2758b3aa83c04f48aa614291f342191af51"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0141.jpg",
+   "bytes": 196052,
+   "sha256": "14e5bbc245ce3ab40e788496a1e8ec1c714d8fbd47d66d40afd41cd0bb75b09b"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0142.jpg",
+   "bytes": 195629,
+   "sha256": "3cf48aad26fab857490a9eeb1e46c6841386250f1e7fe4e2d1fc23514d3b6997"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0143.jpg",
+   "bytes": 194791,
+   "sha256": "0f8044df8d521d120e48929bd51ac52f04534669a0d5ddaeded5021a88f6892b"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0144.jpg",
+   "bytes": 193887,
+   "sha256": "fb804367b48cea3c96198d666578acad8d2a28bf1bef08ce3c00c99de2c2349f"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0145.jpg",
+   "bytes": 191642,
+   "sha256": "269a576e5bc0724bb68e95f967befa8673b475a623756a437dea67441ded84ed"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0146.jpg",
+   "bytes": 191237,
+   "sha256": "8116cad2e152f74a9d5efadb672daf48e02e011ee2127d5767f77282a6b0d0c9"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0147.jpg",
+   "bytes": 190197,
+   "sha256": "375eb40f4e73bdccf12fc991788b3fe4f3bb344bfcad2f59c7cade8e4ccd7608"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0148.jpg",
+   "bytes": 187703,
+   "sha256": "7804b08347d69ece6a64c86252099e7727e27d317aa19af068afda3414629fd2"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0149.jpg",
+   "bytes": 187516,
+   "sha256": "7a73e4594ee4fdc6898cc7bb4f464b45554e9dc1704eb97036d0b5d4dc8a840d"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0150.jpg",
+   "bytes": 186876,
+   "sha256": "1981a8f823e29dcc9e7f2790f309420103d4e525850ecb5c72488c3233955146"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0151.jpg",
+   "bytes": 185181,
+   "sha256": "f04fd0a278603018687704d6e0740ca9355fdc7f2a617558ddb80eacce4e5b3b"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0152.jpg",
+   "bytes": 182909,
+   "sha256": "10586f2b88157822c92594bf83d01dce7653dc5c16d45392545a0041e2086b37"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0153.jpg",
+   "bytes": 183753,
+   "sha256": "2540407feebec4152a9adbe6aacd6b194953a7b9dcdf4da3d0b27e80ab4952f1"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0154.jpg",
+   "bytes": 183221,
+   "sha256": "3f137340454d3182c9e48100fc977f9a95294c9420eafb2c91e093b10a45acb5"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0155.jpg",
+   "bytes": 182108,
+   "sha256": "9fc6e03197484a470395e90be1303570f0f4f6466d5f47c99b6d98f337a5f93b"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0156.jpg",
+   "bytes": 179948,
+   "sha256": "c1d6fa96bfe54a36fbf587fdaef9762faeba32e022f9028a799511a1ba432aab"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0157.jpg",
+   "bytes": 178404,
+   "sha256": "e101f6cb71c56f2f6be7be9ac8f11883e7c46dfbe1183e8d50b980e2c3cd9306"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0158.jpg",
+   "bytes": 176895,
+   "sha256": "24b2f21437b27653a4fe5a5716bda55dd736acd01413ae169b370a8365eb99f8"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0159.jpg",
+   "bytes": 175755,
+   "sha256": "e7f57d581203465c918a4598f7878aaa8d0cf68c2794c4684cc8aafa54752bfd"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0160.jpg",
+   "bytes": 175315,
+   "sha256": "edfc479d89f86bb6e489abbb74d21aa6620af0bd0cf2828e287746760bc55fe5"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0161.jpg",
+   "bytes": 175414,
+   "sha256": "5677252053ef7efece0e1c05c64b78f9ba79c2765425b062aa32487e82bcf1cd"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0162.jpg",
+   "bytes": 174120,
+   "sha256": "b5b46eb2e443fcaec2c29875360431f568b50248df37e9bad9831bcea12e1d10"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0163.jpg",
+   "bytes": 173897,
+   "sha256": "bd84105b403259a5430ce48e70d75c2018965dcb1542da721ef8ed351de607de"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0164.jpg",
+   "bytes": 172939,
+   "sha256": "77d802af89b2f05006dba44dbfa38232afe4b1f61bb0866301a079759c8c00e4"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0165.jpg",
+   "bytes": 172325,
+   "sha256": "58944cf9d8f946805620177012c0a64c1a980c634c48fc78eea16a41a10a818b"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0166.jpg",
+   "bytes": 172153,
+   "sha256": "5350e35cf658c727206d65ed283b6c5a8a6c1703989a26254d8c20d417bc1162"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0167.jpg",
+   "bytes": 172048,
+   "sha256": "c2ca90b5c2214c6ea9c3bd6568853359cfa738c358304323c0d64b810cf93132"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0168.jpg",
+   "bytes": 173742,
+   "sha256": "ded71293dd417a9617185a64563d2e2496696a83f40d9d04f41d487af6ab1a69"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0169.jpg",
+   "bytes": 174210,
+   "sha256": "33a58dc8244d46f4bbc976ce463fd74d251ef45643a10ffa71e51d35550fea51"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0170.jpg",
+   "bytes": 173823,
+   "sha256": "c2401af9628ab67aa24539a699ce252c8abad852a3c10e1ba9deee4187479252"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0171.jpg",
+   "bytes": 173847,
+   "sha256": "3ac91548fc43f117313a58e98afb3e09fb9b15e53f4e0ab43e5a7ff9e355d266"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0172.jpg",
+   "bytes": 173529,
+   "sha256": "b574920d72b7204d879e5e6ba21326577742f60eabd5941bec6871984187f0ec"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0173.jpg",
+   "bytes": 173941,
+   "sha256": "7a389c1b5e9f95b653349bad5fa162f0814074f21887cef73826b23bc6358af9"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0174.jpg",
+   "bytes": 174220,
+   "sha256": "4bafc92e6805eed36632fe5021bd4b299db5d1b5b0cbfd7b528951f49b481841"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0175.jpg",
+   "bytes": 174294,
+   "sha256": "1ada4b4316eb5541da03af09053434827cb1a03edbede73e3b6522a70e7d2d39"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0176.jpg",
+   "bytes": 172690,
+   "sha256": "a94e8acb1a07ba35111b26029f0857bcf52cfb790bffdc319448aa91ca7d4288"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0177.jpg",
+   "bytes": 171449,
+   "sha256": "f90f53dffc7609035bca43a441924b3a17ba7a54b10272860090b2b4daaac1a1"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0178.jpg",
+   "bytes": 169936,
+   "sha256": "c2dd91101fa49233378b1ed3d77086064d97706d803e945fbe2f9569550a0767"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0179.jpg",
+   "bytes": 169207,
+   "sha256": "afce0f9d2f81d53c083eb394969d1929a931a7fb5edd026232a85a81ee076f7b"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0180.jpg",
+   "bytes": 167691,
+   "sha256": "48e2f9f0d810aa6a7a1cfb3bc030da6d8421b7e9002be606df1aa3e8a136252f"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0181.jpg",
+   "bytes": 164926,
+   "sha256": "03cc67a9f8420e89a134c20d63a2cc451ae149c102bf437bccee6fc8bb50eb5d"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0182.jpg",
+   "bytes": 163040,
+   "sha256": "962244e2b3224d58aa32984baebc665d78543a4fa9f1bf6edc203e9347fb397b"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0183.jpg",
+   "bytes": 161423,
+   "sha256": "072f545fedf12c52849ca3b1723c68f7a2945885e970a65fa1634a0be49095ad"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0184.jpg",
+   "bytes": 159291,
+   "sha256": "53052da1129e035b97409f9925eacc13931800586b824875f3ac182d895d1e8e"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0185.jpg",
+   "bytes": 158611,
+   "sha256": "77fc181a1feeb07de482bb2c3ff715a161448efc860cc0570e50e6dcf7b89db2"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0186.jpg",
+   "bytes": 158627,
+   "sha256": "b1b01b3bd37cea9d3b0cdb43b43769e1cc63a009dfaab35ae63d186e34beb58f"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0187.jpg",
+   "bytes": 157964,
+   "sha256": "0686c09fb71472777e06780903467158f7db41e2a63ce69429ed81fb605ea5e9"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0188.jpg",
+   "bytes": 156316,
+   "sha256": "317f08a723540eb1964fe345d36b0d76ffa92cc023038b4767bc06331b15e94c"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0189.jpg",
+   "bytes": 155145,
+   "sha256": "9262834cbffc23a71ff25a8a6c588c2baed017de2dfafa8d1ee15cd7e0bf0b45"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0190.jpg",
+   "bytes": 154261,
+   "sha256": "e4b6243c7d67699d2c583a4efdc88e72988f08442ed75d8707f68bd10e1d8f27"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0191.jpg",
+   "bytes": 152760,
+   "sha256": "737dc88112c5f481148ef789d4d45ff4fa85b1c4fc5150872f03ba578b2227d7"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0192.jpg",
+   "bytes": 153762,
+   "sha256": "b6184bb99286cea897a0c1433dfc6696f8109c74775dc32144ea37787ea7a4c1"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0193.jpg",
+   "bytes": 154273,
+   "sha256": "feceeb3eff31bd10b18fde93bc8ef816ff4c56a271bd052db8d6d44030548c14"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0194.jpg",
+   "bytes": 153929,
+   "sha256": "e7da8122982d39326149cd8fec6a451409ea0bb2cf95c5cb3dd5e3abef5a560e"
+  },
+  {
    "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0000.jpg",
    "bytes": 173014,
    "sha256": "4662aac6b3faa40d2e23aacaad39d6bb65fb29699ac048168b8bde68d10ba826"
@@ -16385,6 +17245,2776 @@
    "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0023.jpg",
    "bytes": 221943,
    "sha256": "4c9ccbaf794055c04efe749b3670503848b1c29d094df108edff3ee8d34689ee"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0024.jpg",
+   "bytes": 221899,
+   "sha256": "bb305941113180175cbf8d3c51ac5113266f437f2d2c61db7c6be99df5dc9ec0"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0025.jpg",
+   "bytes": 222115,
+   "sha256": "a9140b0bb4863534f67f3a56a029b5ffddd8dbeeb7c6191e45e9e98b84b75220"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0026.jpg",
+   "bytes": 222257,
+   "sha256": "0b987d517c3d61d40cbdc2c25a65d29b00f6f74a39b89d18c3b3dfe54fbf17d4"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0027.jpg",
+   "bytes": 222852,
+   "sha256": "bedcf7148a678497b7e7b250b7c24094f750a6d1c15c0bce7ae6d3a8ae68c4ec"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0028.jpg",
+   "bytes": 224195,
+   "sha256": "2c157adf64d93ee8e3111b05fc044740f703f06f4ce0e1e59c5a827efcacd2c2"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0029.jpg",
+   "bytes": 222855,
+   "sha256": "4db79d2d0845518fc4de4da4e926b0d97b0664dc73d5a3688942c80910dbe774"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0030.jpg",
+   "bytes": 221941,
+   "sha256": "d0493bf46e977020f15055f288e3a1285e832b8b72a67098c467579942eb8a0e"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0031.jpg",
+   "bytes": 221434,
+   "sha256": "f020bf69b6f57d5b588bc3f92aa82f4fed9e7e87bae763061428a3f3c9adb191"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0032.jpg",
+   "bytes": 221155,
+   "sha256": "d8d65fd71e860359893db64d659d3ac8987463c615d771a7bde02e33db53db6d"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0033.jpg",
+   "bytes": 221377,
+   "sha256": "c2c871f09bb6a6aef110b4b8642506322c6c5738da650c6131d49799415e0b1b"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0034.jpg",
+   "bytes": 222368,
+   "sha256": "7914ac7a43d74151803ea500333471e92b2341fb331f44b420f95cfea56bcf8c"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0035.jpg",
+   "bytes": 223337,
+   "sha256": "2bdc574670ca9913ffcbf2281e3522e38abeb0204c4118ad7d902eae57a28e2a"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0036.jpg",
+   "bytes": 222901,
+   "sha256": "da32e9fd3e35d6766820386a349a9e2deb27523a13d099caf6ec4f9b257da02b"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0037.jpg",
+   "bytes": 222456,
+   "sha256": "03e354947e4d5aa024dbaa1999f7fe8c5147ba5491ae2589417e91cbe08ec6d3"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0038.jpg",
+   "bytes": 222795,
+   "sha256": "ebbbba49a77c5d7b1ac55a089fd82043eeb056fb66f39ac5621aa57e46f9ca1f"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0039.jpg",
+   "bytes": 223282,
+   "sha256": "baa860d439180cb34fb54f62338ed0534c59a7167b177ac60792dd9594760057"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0040.jpg",
+   "bytes": 220678,
+   "sha256": "d092018f1c594920abc78af412837973e312408d4cce5d63e02b2f42b298bf4d"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0041.jpg",
+   "bytes": 220231,
+   "sha256": "07afceb14529da451492003d7b312c7707cdb4a7c8528dd670c51aaf7c2ee27c"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0042.jpg",
+   "bytes": 220209,
+   "sha256": "da51bf126b483988791ea873d0cc1acbc198fcb66581e76a321511ed2d927020"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0043.jpg",
+   "bytes": 220593,
+   "sha256": "0fd47c50262d1806f4020d8f6731afb66967e57a1557809febb94c5871d8b842"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0044.jpg",
+   "bytes": 221220,
+   "sha256": "1a9357f156e65acbf31f7b238c24f9b7feb81374d1950e0f0df4dbfe34ed683b"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0045.jpg",
+   "bytes": 221492,
+   "sha256": "645d2e68c90f6966b1cba99bc7d5f416c1b60b6ff198d35f2f4e9af61a80f4fb"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0046.jpg",
+   "bytes": 221999,
+   "sha256": "c269cb143ea0d6020dfcf495562a24f32329933844507e742f16a0390087e6a0"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0047.jpg",
+   "bytes": 222138,
+   "sha256": "4d4d72447fc805f4a1f1eb14b638f0c56d520b5f2849c482e006a56478d17fac"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0048.jpg",
+   "bytes": 222731,
+   "sha256": "e8073f6de12cd0297ca5bd8a190d262b40bc21e8145c039fe475818c376d9fbd"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0049.jpg",
+   "bytes": 223136,
+   "sha256": "db495b89949db1b74ce02a451fb4d24efb5e8a60ce62b869592fa8983aea4f3b"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0050.jpg",
+   "bytes": 223604,
+   "sha256": "9e49345405d82af3caa5366c7b448e519795e62c0ab8880fd057314a6753e440"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0051.jpg",
+   "bytes": 223802,
+   "sha256": "4ddf03aad1109624603ffed004da58b8a9a4cda37fda7bdb87529f957197a7d8"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0052.jpg",
+   "bytes": 223617,
+   "sha256": "d8403f41ee2b3db859a4bbac6137973ecb01efc4327b1cb55c93ea730f9e3c27"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0053.jpg",
+   "bytes": 223646,
+   "sha256": "8751fda702b041943d63cfe2a28cb01ead7e37490414c238dc85b0bccf82ec6b"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0054.jpg",
+   "bytes": 223995,
+   "sha256": "d33fb630302e728529565d1474f042b501eef9d0d0b3a62de02c515ec3dc9b5b"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0055.jpg",
+   "bytes": 224944,
+   "sha256": "9bd30b41c6de94ab7f5c58a93cefb2e08d0712ac48f678ed279d5b422993e2ef"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0056.jpg",
+   "bytes": 224210,
+   "sha256": "824e6b053b6db6e3f62cfc829e51835e80190a992cc0ac6681aa9f78c4343d1e"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0057.jpg",
+   "bytes": 223438,
+   "sha256": "7c62b64a358ee9b51753253ed70a7d61d1985df527a7f51483690ff424178572"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0058.jpg",
+   "bytes": 223396,
+   "sha256": "f4a08f09fe97f92e35465f9e3939bee126e146f9837b462c3c4bc9f53da10cbc"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0059.jpg",
+   "bytes": 223787,
+   "sha256": "9116714526af3c07258cb2cdfbd17454d00c4cdd826b1d512c88d1d9734648a7"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0060.jpg",
+   "bytes": 224401,
+   "sha256": "c8b61ea77a0dfccacbe6d13e997c9ef5c611df48b1233068d43b96bc8188a69f"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0061.jpg",
+   "bytes": 226022,
+   "sha256": "2cfc61931a00c04f50bc2770ebf829dd4cdcb0dceb3db36e2929eb53bcb9fd79"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0062.jpg",
+   "bytes": 226833,
+   "sha256": "d50e7d60835b5038b208ce0505a88a1156abd30d5b910fbe129d73c0f874b2a4"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0063.jpg",
+   "bytes": 226589,
+   "sha256": "e4c8d066562647c6e9c35daed9ac2ee6e87fb091dca359ee251902aad74ed20c"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0064.jpg",
+   "bytes": 227400,
+   "sha256": "262df2abb9a6480fde797268cc603e276b22e2240737bc87a20e2cf5b9e9c394"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0065.jpg",
+   "bytes": 228595,
+   "sha256": "9efd3c17727f2865b602e58aff235256eb3d4813ee1c2da17b5198b1c834f2d7"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0066.jpg",
+   "bytes": 230150,
+   "sha256": "6551c90e6f64e8881ecd5c3d5fbf90fe6b842331dfc32741f22ea03f1f5d985e"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0067.jpg",
+   "bytes": 229087,
+   "sha256": "3769ae4c4ef6613373f75056a7f4de2955b3db439a86a720fb9c20117096ab0d"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0068.jpg",
+   "bytes": 229107,
+   "sha256": "47a9712ae7a2ed80f1e8bbb7aaa434ce104a4a9061d215dce753db129edac573"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0069.jpg",
+   "bytes": 228326,
+   "sha256": "3f2603ff3bf8027287698c30e87a6138a5ed010720ced4bf3575513354a7bf1e"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0070.jpg",
+   "bytes": 226644,
+   "sha256": "29ddfe0fe0c693e7bcdcd48c8af145b0bfd05d672b1acc298c0a3f0d9c10c486"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0071.jpg",
+   "bytes": 225754,
+   "sha256": "bf6403409983da2a694cd4b6ffd58a4a12d42feec37a497d1b6b0f16969879ca"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0072.jpg",
+   "bytes": 224908,
+   "sha256": "43cf64694f87b7842f9a6e79b4e9ba1eee76ba6d1ecc96963c93859ab0b3300c"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0073.jpg",
+   "bytes": 224249,
+   "sha256": "525d8059ed8245eebf1215366e6959506a7e9c231a5cb1c21fa463d8b5c4b01f"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0074.jpg",
+   "bytes": 223755,
+   "sha256": "e2fa6a888d2139bde9ce4ba171ae094cc5637b0ffa3f72cd3a9941fa4fc7d61a"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0075.jpg",
+   "bytes": 223663,
+   "sha256": "944252807f7f79cd3267d0f07d864a92e6def174633656cc39b615415edf5af8"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0076.jpg",
+   "bytes": 223720,
+   "sha256": "b00665e89ba404c553fcab822630384be23da7b86917d0a2778060b27bd50bff"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0077.jpg",
+   "bytes": 223856,
+   "sha256": "71252eb28d20ccbf69cc9ebd76585d96ab2343ea06916650b4f86bd2997d1635"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0078.jpg",
+   "bytes": 223956,
+   "sha256": "72f4375dfa367335c546ac28c08f3afc0a79f1b490309791010caf426990e567"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0079.jpg",
+   "bytes": 222107,
+   "sha256": "2d99ae3af29cebe8d9fa048ddf7f620c51e90c9c80422f6ceb9bbc23a4e352f7"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0080.jpg",
+   "bytes": 221875,
+   "sha256": "c2b8d1c49f765d12bd0d954531425ed7bf36a894a35a06a156d2bf59d4f9dc4a"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0081.jpg",
+   "bytes": 222227,
+   "sha256": "d6aea41db4c0a76489643f54843226e0fe299a1e1f217d6dad434f8b16e1a8aa"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0082.jpg",
+   "bytes": 221819,
+   "sha256": "b6e924715c967c3b35623d6319fedfa3d21dec9c5f342ccf78472855f7fabdc1"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0083.jpg",
+   "bytes": 221351,
+   "sha256": "c1aaab483780abc964d65179276d309d22f22045fb9e7f7904bffad923d79344"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0084.jpg",
+   "bytes": 221056,
+   "sha256": "f0bd025957e418c3dfb5b2958a58dd3bab3d7224dc1387e883c10933ab619e43"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0085.jpg",
+   "bytes": 221184,
+   "sha256": "04162f6f6f492737401d77f2a2c84d29f3ebe5c9ef538218578b582e862a984a"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0086.jpg",
+   "bytes": 221108,
+   "sha256": "dbe133edd5021b530482246f46031ed09aab449eca86ff850c9bf38339a883c9"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0087.jpg",
+   "bytes": 221540,
+   "sha256": "115f1cac8b4c2b51a2407390dc51e813e6231ff2875839a4d201b17e08a8c6ae"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0088.jpg",
+   "bytes": 222923,
+   "sha256": "f3b980d179df89d7f738ef06f4a341b025fec91fa0b01d7391d92572e5eaadb9"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0089.jpg",
+   "bytes": 223362,
+   "sha256": "5085e245c1fe8621ec54ea5bcfcde20e51088a08bf7ed04b43b483921b1bbfab"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0090.jpg",
+   "bytes": 222727,
+   "sha256": "97bf2905c2c8f9ec89f9ac045e8e77909835812b5a0d5a5ee28b22e10642f700"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0091.jpg",
+   "bytes": 222384,
+   "sha256": "670dbaf4ebd809b7472ea6bdbcf4e586cfdb9b46a4ec113acde04895e739b938"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0092.jpg",
+   "bytes": 222562,
+   "sha256": "7ce08ec8eab15ed7b1d7f9cd59b8ce2c951bff37b31bc267ff447cd4b347669a"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0093.jpg",
+   "bytes": 222738,
+   "sha256": "39a7156615bdfe7d198ec46bcb045715bb4126213c229d53cacdfe1d5a918ea6"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0094.jpg",
+   "bytes": 220534,
+   "sha256": "6b3729a34cf191bd61330bec73e69189ba597e156dd7e5024a51a7b9df1b8d43"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0095.jpg",
+   "bytes": 221198,
+   "sha256": "3b3aa6af9e9670f6891d3221b162544e1a212095cc0c4a039dac990ab18925a4"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0096.jpg",
+   "bytes": 220450,
+   "sha256": "d1911c9cb74d8a0160c0bea936770485398af2daa514380f27770284d0d5d623"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0097.jpg",
+   "bytes": 220214,
+   "sha256": "f09789359775cfc150011558af87fd8744bd26d34a2e66ff4717eb07cf8dd57b"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0098.jpg",
+   "bytes": 220613,
+   "sha256": "62dbff8c2ed4968b1041f54ddb1321ab0156b337ed2fae8a18b4957575a77c12"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0099.jpg",
+   "bytes": 221202,
+   "sha256": "4906386c9e831ff6ac395f968777488c2972ec9784aa3393efb04206621bb739"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0100.jpg",
+   "bytes": 221401,
+   "sha256": "d10dafbb61bf9feca2a756161d4135aad345483471619037cfcde3185a47742f"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0101.jpg",
+   "bytes": 221772,
+   "sha256": "a28abab0fa789651e9aef7253212ad25066277eb3f8730a34a1a6793a9589b1e"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0102.jpg",
+   "bytes": 222392,
+   "sha256": "58f1bb2371b5a79416b9d58a45b2555b0052391f12725a7fd803ffb3d264f304"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0103.jpg",
+   "bytes": 222699,
+   "sha256": "7a46de7151928e6caa18e539080321586ffa5afb6a3bf56e25857702ba8e0bad"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0104.jpg",
+   "bytes": 223369,
+   "sha256": "bf93ec0ddabe0b1faf8bbac15649454ec890158e19ded3292147a7f8658b6291"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0105.jpg",
+   "bytes": 223257,
+   "sha256": "04f0729644bfc6e493ff9863cb28dcc3865e011dd6b5ccf04f79694a1c4f053e"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0106.jpg",
+   "bytes": 223231,
+   "sha256": "ca5e3fda7453cc7ebeb3695cee97548c8f53aee2ebdda85a9c72034164120741"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0107.jpg",
+   "bytes": 223005,
+   "sha256": "2c83cbd2e0e8d0e7cc41b5f82045356d2dd436702ae69f9018b79db111cd29f0"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0108.jpg",
+   "bytes": 222995,
+   "sha256": "4d164c3622f46d6767e01d3811b56cdf6dae40cf1847ba94847b88086998f533"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0109.jpg",
+   "bytes": 222691,
+   "sha256": "db517c078b58fab8fe378b0368bd14f1c4221c29410d6eaeb97ae4f9c30e063e"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0110.jpg",
+   "bytes": 222540,
+   "sha256": "6bd77b76960d766a7c925e616d3607b7faa2a96cf763f25cbbaacac494253df8"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0111.jpg",
+   "bytes": 220279,
+   "sha256": "49e6c6873752daa6ddce65d7305ede6a5d95b6f7c293737b95f0a7f6be579c5d"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0112.jpg",
+   "bytes": 219982,
+   "sha256": "c5c70840ebbc49b861f1f186a130ff01206e00c334d8ee19cbc39c0ae45215b9"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0113.jpg",
+   "bytes": 219838,
+   "sha256": "88962f17b79815868b2f196a20f045141fe968d4972766d1fceee8e36a1f1ed3"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0114.jpg",
+   "bytes": 220835,
+   "sha256": "1c0a07a049046a5899b3b52fc4ad181566fb173d3dd844b0876d3843dfa5fbd0"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0115.jpg",
+   "bytes": 222066,
+   "sha256": "98bea09d0c978568deab7e44a6538cb94ff0edc10616cc3c63e99ccbdaf76499"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0116.jpg",
+   "bytes": 221640,
+   "sha256": "daae42969172bdca2cba4069177609a0bead8c0a8f5f9d45b21c227017e83861"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0117.jpg",
+   "bytes": 221361,
+   "sha256": "d5a94accdd2849985e2dbba7a4626a5a1c0b1c693b00cf832200de98b28a974f"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0118.jpg",
+   "bytes": 221465,
+   "sha256": "8d7204389b2b68d07a788ac50aa707e5bf83ddebc190fc5178acd10124eca779"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0119.jpg",
+   "bytes": 222006,
+   "sha256": "7121cdb2e647e9dd6b6b1b614ff0f929a15f8160712cd3a05211a4be4a422f86"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0120.jpg",
+   "bytes": 222548,
+   "sha256": "b0b23524d2a6e791e20fea3cc74d7676751420b4dd2da58f6c8bd08d2a973a83"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0121.jpg",
+   "bytes": 223756,
+   "sha256": "d9f17cf0be53dbe7e4678095cc89e00f8e1df3fe07b4e5d44b54ca354fd6de79"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0122.jpg",
+   "bytes": 223997,
+   "sha256": "80592a870d7e6636408b969924791c1bb9e1269c446fa833155f483db4d0c825"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0123.jpg",
+   "bytes": 222725,
+   "sha256": "ea277f3be1e6c2913cb392c5c043684a8af2a57894c04334e472c6fbfe4046b1"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0124.jpg",
+   "bytes": 222533,
+   "sha256": "20788c6af23583f26585aa0370e8cef451204465fc364942f94c3cbdd4a4d3d9"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0125.jpg",
+   "bytes": 222752,
+   "sha256": "d1bf102d5a42210bddcdf64b8e0e8e35f49b13c10e89f34c01cf59770c666d85"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0126.jpg",
+   "bytes": 222608,
+   "sha256": "d7b8a35481732241c80d75f5b3d2e83684eeef84ba8449008f1eeafb2577c871"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0127.jpg",
+   "bytes": 223178,
+   "sha256": "be08efce2cae408e8d6a0f033f6fd051ca9828e884268d4a48b989000efbbb1b"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0128.jpg",
+   "bytes": 223904,
+   "sha256": "fc4c55fd7272cad0b5147236655d13cc435b3f508fbe67683248d1b12bd6f647"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0129.jpg",
+   "bytes": 224226,
+   "sha256": "9cd2b8db157ce72a65476d7135310629fe299d59c60ca74cc313d91655da5181"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0130.jpg",
+   "bytes": 223297,
+   "sha256": "e6baaefb1a7d2c4769fdee814419c15875293f737d8430b79468b0fa0a72ffd6"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0131.jpg",
+   "bytes": 222778,
+   "sha256": "ed5dce72d33e760a7ed9b4246d069f0eaa20893be3b83ab7ac74674afcd7f6c4"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0132.jpg",
+   "bytes": 220235,
+   "sha256": "aa394d7e22bee3a44e2b9c260fbfb58f4aa789c37f3184492f8041865dff33e6"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0133.jpg",
+   "bytes": 219676,
+   "sha256": "dec74127d057ad5b533ec537d69faf3951867a87d2923ccaf50e451e9b49c0bb"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0134.jpg",
+   "bytes": 219522,
+   "sha256": "497423bf181d0f503066f8d7663a7967a3b35e9412f653a2376e626c56539308"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0135.jpg",
+   "bytes": 219520,
+   "sha256": "66b86810b0f744d0e1110b19a96698741b7255e8c459db8aadac6566832e154c"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0136.jpg",
+   "bytes": 219646,
+   "sha256": "7e994bf26aa3ff1c61d632dbb8c094496f5771effe3b675aacdd8c9f7202ad07"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0137.jpg",
+   "bytes": 220442,
+   "sha256": "2bc501b9cf33f2c3ee930548e5b004d8b406c159b9ae18d336b9aeb46fe5aefe"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0138.jpg",
+   "bytes": 220655,
+   "sha256": "0d4522559a61fd59db799102fccf0fe183fed3ce1792204f3d940b2a7f09f9ad"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0139.jpg",
+   "bytes": 221481,
+   "sha256": "75e7399717efceb6abfb1edc2cfa583029f6bbe85ba90f7ceb05f5bfb49974c4"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0140.jpg",
+   "bytes": 222137,
+   "sha256": "ea5c9b63e2aa65fc502d1f4556c4146afb6ca79d6fc448396ac33652428dda93"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0141.jpg",
+   "bytes": 223252,
+   "sha256": "db29d21c470bacfec9813d7167ad99b0696d5256148393c4aea1cf76c736f1db"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0142.jpg",
+   "bytes": 223493,
+   "sha256": "c88942745e8ff088db0f940b134479cc1f43a90d28253a34b9ca4403c04c62ff"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0143.jpg",
+   "bytes": 223109,
+   "sha256": "fcfa515c3f640839090cd713c8b7deb047e5e0c714ddf2af2c74df9bba232220"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0144.jpg",
+   "bytes": 222443,
+   "sha256": "39143e44e507160732bf76ea1b53bb129167527afbd2c358d5e03d42ff994311"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0145.jpg",
+   "bytes": 222680,
+   "sha256": "336664e8645656acdfcbce6639db8d5b4316ec16913360c5822c9d64bf207d9c"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0146.jpg",
+   "bytes": 222326,
+   "sha256": "1a1ed4b82e5882d2f2f7a47a52f185604c57874e314fc2128e2fd5cc61416c63"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0147.jpg",
+   "bytes": 222412,
+   "sha256": "35f32db17782f287eb8ebf7a96e300d6c9c6ef3845435e33d68bc971555d619b"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0148.jpg",
+   "bytes": 223279,
+   "sha256": "989c869c43bf0eb85506cff1249ea145b1db2b12c2e2cfa4346e512503ec8fac"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0149.jpg",
+   "bytes": 223337,
+   "sha256": "8239223ccc048d6bb620c14764e939b5ce7e0d2474abc557fb56fbd9eacee85c"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0150.jpg",
+   "bytes": 222338,
+   "sha256": "f82768d094a9b0994934ee2c344ebf4f99a4a0a5e8ad98336c653ba0718cced8"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0151.jpg",
+   "bytes": 222149,
+   "sha256": "19e899f11beeb92923e64e7c850f846ba393d9e9fe4f9458577410560cb885d6"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0152.jpg",
+   "bytes": 221913,
+   "sha256": "e0da8b59c8e20286abdb6cb6139c01f67b5e52da5f57edfeb044209e1000307c"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0153.jpg",
+   "bytes": 222122,
+   "sha256": "417880a5e03778b21f3ac82e738fc53f6a1fcef0bc6a2dd068fb2301a7b02243"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0154.jpg",
+   "bytes": 220371,
+   "sha256": "1a0bafbf5e69e064f4b52cd5239dede99b6a0ef9a5097cdbb2df1418d60d86fe"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0155.jpg",
+   "bytes": 220529,
+   "sha256": "a8dd37b73529616523435268fc7f26c369ea99f3918342f7dcb6aadb0c6e5c63"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0156.jpg",
+   "bytes": 219453,
+   "sha256": "4d31d4a5d7d0913d1c4a443fdd7f716e0b92e98fe399cd58f50949e9b92b013d"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0157.jpg",
+   "bytes": 219209,
+   "sha256": "248805c810f6ed06fa0565df405b6fed889cf3fa2647200ea156fe0d926bec23"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0158.jpg",
+   "bytes": 219398,
+   "sha256": "0cf466ab179044bb359749d7fac5c79af9e61a1acaf70ddfac254542bc7a04a6"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0159.jpg",
+   "bytes": 219958,
+   "sha256": "3b9ecd551231a6dd4e6b490f27dc4a814d5cf367fde8651516be49e7e258ae93"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0160.jpg",
+   "bytes": 219819,
+   "sha256": "21968c307d9880e6de834bc7151c74f655a337f877f9ec229a5019cc5c215bcc"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0161.jpg",
+   "bytes": 220297,
+   "sha256": "237895d0d8e53630ac62a58b7d3dad6651bd7f4f353162ee493283efe3a309fb"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0162.jpg",
+   "bytes": 220998,
+   "sha256": "4291ff782c01066fd01a1957f52dcc27fc850911b425ee9c2ade7f2029f14409"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0163.jpg",
+   "bytes": 221370,
+   "sha256": "e6eee8d6a66791ef1dcaf4ce92dd5c99ac7bee6b152e9131d2b76d410d4fd29a"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0164.jpg",
+   "bytes": 222218,
+   "sha256": "4a381c5f185c9d45537769438d180b9f8bcd5cc5005822e1df3e0a9d33b965e1"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0165.jpg",
+   "bytes": 222415,
+   "sha256": "6708f92ceb690155b1f84e19f67e9503a2b542c6fc61c565786e430c6c27ccaf"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0166.jpg",
+   "bytes": 222422,
+   "sha256": "1a34e5a28f7b6a970af61b4bc14e69e8c8c101a7345fd4365a6ddbdf6519e2f7"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0167.jpg",
+   "bytes": 221967,
+   "sha256": "3e424df266dd20d6bdbf604a57a6a5df974defa9a89482d017361bd0ef246c8e"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0168.jpg",
+   "bytes": 221939,
+   "sha256": "78cf0d49aa259d32ae2a357593e9f16a9495ee5ba9a8b5b5cadffabd63819538"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0169.jpg",
+   "bytes": 221663,
+   "sha256": "5afe8e0f90605c09cbfb3a9ce5da499e02353c6dad71bebb0420ddefbc317582"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0170.jpg",
+   "bytes": 221658,
+   "sha256": "b3cb3c2024905f665004798a8711300e641a333c6d1603c0a6a2f02533944c10"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0171.jpg",
+   "bytes": 221870,
+   "sha256": "74df4dd4be02e7af6929e7ffdfc5e7ee0205cea42d0b036afa09f99771f3b095"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0172.jpg",
+   "bytes": 221687,
+   "sha256": "1237844d2715716577ef45099c0749a254b20ed97d90e0dd72a35352d49b08fe"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0173.jpg",
+   "bytes": 221741,
+   "sha256": "5141d3739cfb634a01efa4ba9adf20a7aaf6721e2ea8b356281dfecb673c2524"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0174.jpg",
+   "bytes": 222134,
+   "sha256": "54afea0b525a15e6e82d2c1ab05972eca31d9d2d9bfb3ebf6c9c2404fe9f5902"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0175.jpg",
+   "bytes": 223065,
+   "sha256": "d0ae20536acfe8b640b64e430543a55f52e45c2447a98b30aba4173aeecdbd80"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0176.jpg",
+   "bytes": 222370,
+   "sha256": "b093475993d7a18405cbed52d66a6dc877699c48cc764568cbf9bf003525926d"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0177.jpg",
+   "bytes": 218853,
+   "sha256": "348b7972d2d713a137b9a0fd19b02bb5061562a66389356029991c2bce3edc30"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0178.jpg",
+   "bytes": 218524,
+   "sha256": "cfaea7c04f2a0853f176951a687e5deabf1998d120baf6c30680252fe66f3e27"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0179.jpg",
+   "bytes": 218538,
+   "sha256": "438368254da1e8bc7985a967a813cfb23a36d72ab01066e98aa3028109a1cf84"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0180.jpg",
+   "bytes": 219251,
+   "sha256": "1dac2cf75dc237ce8bed5a2864ba0ecce5f0d628d1d6639bc1ac345c35ba1044"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0181.jpg",
+   "bytes": 220625,
+   "sha256": "9d95df4b040bc86091e9bb3694950c5aff59984477cdc5b6d581eb3352d13c85"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0182.jpg",
+   "bytes": 220824,
+   "sha256": "b7d203f81ed538c0eb63a9935d6a989dc53685b94ebf1737820767ed9711b263"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0183.jpg",
+   "bytes": 220123,
+   "sha256": "40061450e2c37093d5c95cb8f68037ab734bee613e98095bbe7fac94335ef5e4"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0184.jpg",
+   "bytes": 220044,
+   "sha256": "b148c804f6798571df61370d65fe372c6ac91384846934437379577102c64f3d"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0185.jpg",
+   "bytes": 220796,
+   "sha256": "d21d2b53dcee7e0ba66f93c455967d2948470fc69c977ec77f519f6e28359624"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0186.jpg",
+   "bytes": 221164,
+   "sha256": "21e3cfdf934024916d2eeaf9f5f3b89ff290cfe77031af2f964a7a13eeb2c045"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0187.jpg",
+   "bytes": 222145,
+   "sha256": "38088295482c58e6d8ab87c2bf554e4cce28db5eb7a61184722433a57b42082a"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0188.jpg",
+   "bytes": 222828,
+   "sha256": "a25dfef08cf10e36f0254e4b5026b71d543d2eb75070a0b223ff33a9ef63633d"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0189.jpg",
+   "bytes": 223011,
+   "sha256": "1323fb37d887a26df26de988f8ddb28ff96869be50fe7ec786cab5f7498734ca"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0190.jpg",
+   "bytes": 222080,
+   "sha256": "3a0fc525290fdd33bb5584b10ab9eac72cb79619f52787058dcd68e805f95701"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0191.jpg",
+   "bytes": 221703,
+   "sha256": "d9ef6094d022af037dff2c9f70e1fbc604b77f98d40226a77eb57fc83b03414c"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0192.jpg",
+   "bytes": 221474,
+   "sha256": "22790c0979005c57076821e2b31c16375ed8e987779cfedfb2b7153a8cca64f4"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0193.jpg",
+   "bytes": 221277,
+   "sha256": "4c16160f9528ee9b46db24493c81afdb6a8816abc50d4c82f2c93fdb351a9e70"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0194.jpg",
+   "bytes": 220816,
+   "sha256": "a0cec36e89b3df47ba0517060a72e79c7e99427e07d7dfe4478d80ecdaf3128e"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0195.jpg",
+   "bytes": 220909,
+   "sha256": "68499a45642c28896daf442c7206b418bbd3e2f5173c36e6067553f37aedfb1e"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0196.jpg",
+   "bytes": 220800,
+   "sha256": "517b4f01448136163421c7a7133b290cb1dfe4dfd8de5944b03bd677ca497ca0"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0197.jpg",
+   "bytes": 220798,
+   "sha256": "86d8885b46f23df9b47a34d382cb960ef2e5ac8a415db685ffb51459ae5ba1ad"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0198.jpg",
+   "bytes": 220823,
+   "sha256": "b8ced8434b8891ae9d5248f633c7f1b5a7e0a0bec786de996ef50305599740eb"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0199.jpg",
+   "bytes": 218121,
+   "sha256": "320e0f032e667f2132ffb96f62f4761b2deafafca045b958b84af70218a7453e"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0200.jpg",
+   "bytes": 218243,
+   "sha256": "41339e61dedea6323c529abe851663f1b78989a94637998f824cb218dba36b8d"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0201.jpg",
+   "bytes": 219053,
+   "sha256": "00eaf0ab3177c66753eb6f38eaaeb3261354d084da1611b5302729222d1980e4"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0202.jpg",
+   "bytes": 219074,
+   "sha256": "753fcd5644edb80077101276a25b4d128ad9768de872200336565a8571a6a7c1"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0203.jpg",
+   "bytes": 219077,
+   "sha256": "c57f3e06e9dda17c407f86efa7afdcd8fe43f937a80156e7055de17436d71a1e"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0204.jpg",
+   "bytes": 218913,
+   "sha256": "dfad0550badb23469812de6bf6c40894991831bcec1be17da97a4f4e9859b9de"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0205.jpg",
+   "bytes": 219331,
+   "sha256": "6f61e0e7f00ad6232b5f79ccecf05234b84a2c9a74c148ba4a0f33064b9d8f15"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0206.jpg",
+   "bytes": 219405,
+   "sha256": "20d480ef533e70ab5856304ecdd078a57500a1f0ae0d65f2bb58ac2e72de0aee"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0207.jpg",
+   "bytes": 220094,
+   "sha256": "5fa6149fa315a736cbbb0e6134de8a9d19da4c45f25cbdc63c929101e8972739"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0208.jpg",
+   "bytes": 221712,
+   "sha256": "5b7d52183ae141318d708e415ff36d5f189b17e7d4f46717ace2b92b68833fb8"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0209.jpg",
+   "bytes": 222172,
+   "sha256": "b824b4aa4a0668a06bf00af7bd3d37abdf21dcceef60409056e0ebda69b29593"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0210.jpg",
+   "bytes": 221227,
+   "sha256": "590464b2df607d1e494c22c089ea0bb22a731eeac8d81ceef2b3e2a7289a5b9b"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0211.jpg",
+   "bytes": 220969,
+   "sha256": "e1c89bb8bbb9d040755e630106d871f65abcec0c3968b80efc21263cedebda41"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0212.jpg",
+   "bytes": 220847,
+   "sha256": "d7f164d9400266cdcc6cce399f616bfff72eed4b0597b56a436b896b7a225e2b"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0213.jpg",
+   "bytes": 220925,
+   "sha256": "db9c219a8bdddda7564129e5490bbd1526f53707b93449c697a4ddd21bae26cd"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0214.jpg",
+   "bytes": 221538,
+   "sha256": "f7edeee90bd355f9c9dbca92069754019b6132eaea173f45d26527c25f530ee3"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0215.jpg",
+   "bytes": 222346,
+   "sha256": "8016366786e9461f6953bab38d3964022d06877a28e8c5239e4489bd3cf033b9"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0216.jpg",
+   "bytes": 221328,
+   "sha256": "ba39bc343520d0f59e843fa304dfa8f5565c4a6f0c89d636a96b6aac62130d8c"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0217.jpg",
+   "bytes": 220804,
+   "sha256": "e187df3127359026fa5a6ad5bff1aa31f4ce31815214492c1a9ee0fe913d0999"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0218.jpg",
+   "bytes": 220719,
+   "sha256": "00777ac14cec39a0d6a21565f3a636d018d1de129d60aa962f028ffdfc6adf1f"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0219.jpg",
+   "bytes": 220913,
+   "sha256": "37a2a19f5025876352d90225f87831fd8eaca8902060ac46a0a17f12b9470bf3"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0220.jpg",
+   "bytes": 220208,
+   "sha256": "785c31a38610abc5176c2ece9bcd39f6579836d63c344f2b40e3dc92c98769fd"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0221.jpg",
+   "bytes": 219794,
+   "sha256": "1db90dca9287ee08af3e16b7e2851394861387c9bfc08a0754e3df8a95e6ffeb"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0222.jpg",
+   "bytes": 221904,
+   "sha256": "c4151740cc3035d31a94be57c2eb1aae7a9886e832293dfb0917855cb1d39ecb"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0223.jpg",
+   "bytes": 224042,
+   "sha256": "d7fd7c8997b3a32be3c239afda784fe80876b7f54edb66cdfa349c5d6739a999"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0224.jpg",
+   "bytes": 224640,
+   "sha256": "f55eb835a29f31cb3f55c4ba90d9450f850524ebddf69262bc65c744327b3276"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0225.jpg",
+   "bytes": 223819,
+   "sha256": "9e8c4d783ac58e647993572a7a30240bbeaa44500330d7356560b65ae9cc69d0"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0226.jpg",
+   "bytes": 228234,
+   "sha256": "add86f8cf6f91651a6e87882eba44444915c02f1200de3bad1043fc85df7eca0"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0227.jpg",
+   "bytes": 229975,
+   "sha256": "53f6df370bfbb3c8d78aa879ed5229151c4eb9c547fbcbcb9ed7f663bf519134"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0228.jpg",
+   "bytes": 231993,
+   "sha256": "96ec3097d21b70f297f7f1ba357ba2d521caa9da64e2ce0d732b0b6ee113dff3"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0229.jpg",
+   "bytes": 232554,
+   "sha256": "39b522ef3f95380f4cab4a93a52a72bd01b07d9a8f7ed85558e6279cc011bf87"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0230.jpg",
+   "bytes": 232362,
+   "sha256": "0dabe08fa82412d4bce5059282f7b41dc71e81515a6158593bc5aa248f06c291"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0231.jpg",
+   "bytes": 232335,
+   "sha256": "ca4b2f050da5062b1820121ae095396c847ab53d1c2956f47e41942bd29924e1"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0232.jpg",
+   "bytes": 232028,
+   "sha256": "2ca10643e59341fb25404898c71b9ee4151febef9017e91ae63e98e20d225312"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0233.jpg",
+   "bytes": 232593,
+   "sha256": "bf95f6a978e80d548566d825f020d6d839e3c5c93359181bf8abe75aaf4b2b61"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0234.jpg",
+   "bytes": 232634,
+   "sha256": "be493e2f6c9fdf2e77af7b97b49f1f7b8a255d4536aae879a047c324a53cfca8"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0235.jpg",
+   "bytes": 231811,
+   "sha256": "9c568f9377cd08a2fdd47606a5d530cf5c65a624b6e2f2ecd9f09874059ce33e"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0236.jpg",
+   "bytes": 230771,
+   "sha256": "0733f50ec853c3c3980baf91d0600b83921d522a1e99eeafba8bb02e87f2f59b"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0237.jpg",
+   "bytes": 230355,
+   "sha256": "167b712a8e13e7a1fe855453b013ddbcbeb19ebc317c23b1da820dcf95425a50"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0238.jpg",
+   "bytes": 231207,
+   "sha256": "cb964f881d815f3e6de28e37f6ddbe089d75de36e2ddbb744676eb88c05fefde"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0239.jpg",
+   "bytes": 231737,
+   "sha256": "36132fbf268084654670d43fd5cbef9076c244b13c85cf2e0bb27057d86810d4"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0240.jpg",
+   "bytes": 232770,
+   "sha256": "2ab19465bf0e47ba6f4ba72dd69d4c4e23154e0f027d006147c92364c9d6ca65"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0241.jpg",
+   "bytes": 231993,
+   "sha256": "27ed8a199138b9a0be8308d81cbb7fd99b7e27af0496091a5644b1578be63a2f"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0242.jpg",
+   "bytes": 231391,
+   "sha256": "78f5a1c8f90a58e5cbff6b8158cd874100e6fb75ccb2cf7314ca3a36df2e28dc"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0243.jpg",
+   "bytes": 230635,
+   "sha256": "efcceef42e900be919e0de2da01a9a608a41b851010e79fa84bd8f77634e4aa0"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0244.jpg",
+   "bytes": 231089,
+   "sha256": "49debb131997f695a31b5fa905a61a2b422a7f4a9f86e9270b1ddab576f5fff0"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0245.jpg",
+   "bytes": 232083,
+   "sha256": "b742ad06573fd9169adf32ab202fded36be31bcc11e80c719f9eed52e7ea9238"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0246.jpg",
+   "bytes": 232681,
+   "sha256": "ba00106f6cefe95ace05f5848f66ae01cb0d3bec8eb6a83862826f475610f38e"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0247.jpg",
+   "bytes": 232868,
+   "sha256": "c81b3d19602368b0c02b299a9720b5d1878d6192bcfeb48f6cc7e2a5a330e491"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0248.jpg",
+   "bytes": 232139,
+   "sha256": "0b1561b5149e43cfa98b17606076d8eb370275dd605fe932df308ab52ade6d68"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0249.jpg",
+   "bytes": 231982,
+   "sha256": "aec52aceba7f7ebbaf97de707e9b3646071ce190c95bdb5ada4f1cafcc7dde46"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0250.jpg",
+   "bytes": 230773,
+   "sha256": "3eda3cb91b2129f8a8e41d445b08fcb0b7acaa2f7773e58825db611fdaa2e98a"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0251.jpg",
+   "bytes": 230543,
+   "sha256": "bc309fef12a2253f9428488a012b027a3cf88d7729e959de410ab11d450c5e3f"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0252.jpg",
+   "bytes": 230472,
+   "sha256": "c67fade3aec14881d515775316c31989aac3514c67e70089c9cda02ef253272d"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0253.jpg",
+   "bytes": 230508,
+   "sha256": "0932efcd4063fa04c35556d6b5e57d1d973176f24b1fe8d6b7afdba7871ac521"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0254.jpg",
+   "bytes": 230621,
+   "sha256": "5a65c47522148d0d6449df7d40c4d63b57785e7b28b14afd3d126b52bb876283"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0255.jpg",
+   "bytes": 230676,
+   "sha256": "db038da7be39668b00411754756e65227b49ba71981a45dae2043756da843b02"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0256.jpg",
+   "bytes": 230554,
+   "sha256": "1a850f1504943af283a39389797154fcc92859548d9cbc0d5a5242d906a69952"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0257.jpg",
+   "bytes": 230232,
+   "sha256": "7ae87696a1fb05eb4ad1a6fd4f1a4f2284ccf90a23151bffef433961a05e2148"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0258.jpg",
+   "bytes": 230456,
+   "sha256": "a42b4e1f57efb6491360ed7ffa7fff19f2c7fe366de8ddf360e46db8bab4cfe5"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0259.jpg",
+   "bytes": 230572,
+   "sha256": "de7d44116aeca48a92cf4c7a0d6337586f15d13446e71be3aadbd95302d711e1"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0260.jpg",
+   "bytes": 230864,
+   "sha256": "532644d1d13f6c120ae7f88207a7c08cc51f0be6e8b36b498f3586ad6a4b8509"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0261.jpg",
+   "bytes": 231921,
+   "sha256": "d39a48a1716e289fef1d84dc90954681037d06aef7bb07cb60d469acd42554e6"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0262.jpg",
+   "bytes": 232205,
+   "sha256": "90dabe656aad1003b928281c136973a72b610893c9bc4212be1e13d3ce0934a6"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0263.jpg",
+   "bytes": 232367,
+   "sha256": "dc4b2d78e336e39e027788246239e22aa8a8e54143a75cd2c2e6a0b08268772e"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0264.jpg",
+   "bytes": 232418,
+   "sha256": "0904e3797c94f75b77df9baa00c53839a61b8422bd5edc93e9a53962b2997e78"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0265.jpg",
+   "bytes": 231813,
+   "sha256": "e3037929a38971bb4b77d1a9d3c80453596210fadffb0e144af10750d975912a"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0266.jpg",
+   "bytes": 230997,
+   "sha256": "fb4b7eaf075f48e2d164b950d190ebcac09cee313aae25eb9a72a26305b165bf"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0267.jpg",
+   "bytes": 230481,
+   "sha256": "4f3323570e1d02283c844add3b76edeef0cd91c634b16f09ebbc463ab766ae73"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0268.jpg",
+   "bytes": 231251,
+   "sha256": "dbe2ca7be15c56c43bb2bce84cf9066aea22cbcfc2a42e4b08cf1a79754a2fc5"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0269.jpg",
+   "bytes": 231754,
+   "sha256": "4322e18378aa836141bc5dd10066f1dd3e381beb37f3e2d91f843821a50f5006"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0270.jpg",
+   "bytes": 232406,
+   "sha256": "705bd4b0fef2512f7745b19509f12cfd49774141c90775f02b6fadff2b12a889"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0271.jpg",
+   "bytes": 231492,
+   "sha256": "9c91790a2ec67da98569d3eddb390829e7728a0cb59d529c5d6ba508f067955b"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0272.jpg",
+   "bytes": 230674,
+   "sha256": "3f97aa283bbbb09e002acca4afe03ef9f4883c0c23204989564d6aeb00fd3fa9"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0273.jpg",
+   "bytes": 229795,
+   "sha256": "93cae7660e6b4f090014426f7648ccaf98220433eec1977af1f267fb751dc0a7"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0274.jpg",
+   "bytes": 230939,
+   "sha256": "54250b2c15a5ab2d81616e8d26b49bdfaf21716cf8e684270202fb24599127ef"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0275.jpg",
+   "bytes": 232321,
+   "sha256": "71aae1f063ead69ebe9fdcd2ffd0dfdc734ca75dcd19ad9034573b327a156f85"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0276.jpg",
+   "bytes": 234150,
+   "sha256": "96179749890ab794c88d6839076c7b6e39c9bdc778aefc045833f049de01bde1"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0277.jpg",
+   "bytes": 238724,
+   "sha256": "541ee98f19b865ad5557c65ac4211847254a6ed924a4de9e8cd26ec022d65df8"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0278.jpg",
+   "bytes": 234110,
+   "sha256": "6456ddc10cb7d6fa670f8a54028e5ca57376a14d98b24da2cb383c9980fde5ae"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0279.jpg",
+   "bytes": 233252,
+   "sha256": "85f88802a7a1ae92592907103a625c1c88abd699ea5a73e05c4520b60632a119"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0280.jpg",
+   "bytes": 231786,
+   "sha256": "628b16a0bc02986225c84ea8ff6e14e91b0724241e3bf9acfbefc9b1c0d460d0"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0281.jpg",
+   "bytes": 230706,
+   "sha256": "81e5e8679c2adea2bca241577b7cf504ea3915a326bef5ed312b77f97c0999ac"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0282.jpg",
+   "bytes": 230421,
+   "sha256": "b62560bacd18d746bd26514965aa1ebe5217d40e14b892b8def9f0a454a18a68"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0283.jpg",
+   "bytes": 230486,
+   "sha256": "cb702b53408b8c7b54fda8bd29adc6d778d19e9d4d570f0615daf1f238012881"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0284.jpg",
+   "bytes": 230771,
+   "sha256": "af109ca30b50daef05a07943cdf510ae0959677b3d50b285d739230588afa55b"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0285.jpg",
+   "bytes": 230933,
+   "sha256": "7c15447abb009b23a43b144fe047f7f40158fda0e1b39c1a8b09dbe12921ef0a"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0286.jpg",
+   "bytes": 230735,
+   "sha256": "546420a381d436397a5c01f6a2c8e89571c8801e706f02ed977752676185f962"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0287.jpg",
+   "bytes": 230854,
+   "sha256": "1082e91d9d34ea12262ffb277aa7d87e8d3725bfcd0e2bdfe221ac7d8e82a39b"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0288.jpg",
+   "bytes": 230804,
+   "sha256": "28df9b11cee215d023a126600d8886186df723a17ef2e402d040430ced4458d5"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0289.jpg",
+   "bytes": 230911,
+   "sha256": "40c7600873b8e3a7d7473562a86dcfb0795c06ff02aeaf4aca5885128b8ed487"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0290.jpg",
+   "bytes": 231022,
+   "sha256": "f5b3618e2ef84e01b5900b770419f75f50050143ddd05ddef8e61ff1b8e4f33f"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0291.jpg",
+   "bytes": 232042,
+   "sha256": "93be1b379dff871b54eef712af510354fc9c779cdcf08fec8b3f1964b4110a06"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0292.jpg",
+   "bytes": 232236,
+   "sha256": "8296372987c1b88b910dc5ecddd4b4b3573d263a104371d932edb309fd95c7bf"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0293.jpg",
+   "bytes": 232980,
+   "sha256": "3fe9aff5aca8bc07ece4838eb8b71c85337e5624e2e2db9f590e399c3030cf69"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0294.jpg",
+   "bytes": 233130,
+   "sha256": "57f8be61b98ea86bf5c17fc7aaa4205879e060da6b0c18a2463f60074712ee39"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0295.jpg",
+   "bytes": 232523,
+   "sha256": "e13d59d31d8121bb281d588acc2a2e7ebe1af3c304cd79ecfd32124fd00437db"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0296.jpg",
+   "bytes": 231641,
+   "sha256": "1229f201bf15f73e0d7cd1934fe47a85d21e4941ab31c308b53a3e4eb7469aae"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0297.jpg",
+   "bytes": 231406,
+   "sha256": "6ea6fb6ed5587bd5c1a423e1f8597a346f709d367ed252efa9cc5da66b34229a"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0298.jpg",
+   "bytes": 232122,
+   "sha256": "56c5897d5e5bcb2ebac8a9e016413c46cc91de80ef97aaa897699e326b87ad6f"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0299.jpg",
+   "bytes": 232637,
+   "sha256": "57da918fcffb4d7448bb52172575dcb9f9d95cb545d51e226e89d19461f472fb"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0300.jpg",
+   "bytes": 233565,
+   "sha256": "fb48f4be564cb471febd8c1927a895704abbabb9fe5a1c056d4e6b00e37db953"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0301.jpg",
+   "bytes": 232738,
+   "sha256": "5dfbc70d84bd193c27cbff2f1c6f9c4409889deae4cf67cddefb93ffd1df2ab5"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0302.jpg",
+   "bytes": 232120,
+   "sha256": "b1f679311299f6249f4043c4d6849415fbe971461a7f41d4bd0dad61263b5fcd"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0303.jpg",
+   "bytes": 231225,
+   "sha256": "c236e70b413dc2ed197ab7bfe5ec996b5925ec48485407ff248633d01a8e0dac"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0304.jpg",
+   "bytes": 231888,
+   "sha256": "5682bf07822d9ad4565cb20645747dac4084ab24ee79cb299337c81e847b4bef"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0305.jpg",
+   "bytes": 232602,
+   "sha256": "5a017ea30fa64e889426684d81dc21767253e77fbd22a637160b4e18b8dc4eb3"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0306.jpg",
+   "bytes": 232992,
+   "sha256": "6b8e434140f9cf124b44b84a0854a09b59b5fbf813f55e14e7a70c4fc7bb65cc"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0307.jpg",
+   "bytes": 232803,
+   "sha256": "663154d0a9062fe200b9bd76e45ab4928d5b2aecca16669932ca9f2c2dda9c0f"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0308.jpg",
+   "bytes": 231476,
+   "sha256": "bb359b7cbf6909c67f0e31ae98b5896ccf6a00babdd0da4eb9fb8f65fac824ed"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0309.jpg",
+   "bytes": 230430,
+   "sha256": "895048d7d5c43025810c96c61a71bac19158e2d0e743013cbf31c00e622b7699"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0310.jpg",
+   "bytes": 229208,
+   "sha256": "89addfe853bf3cc6094fd3ba45d2d94701719305245b691587b2ae6411b7cc51"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0311.jpg",
+   "bytes": 229837,
+   "sha256": "01df1ac3e4aaf8717be5a847df46ce186aaf439f490be69bfb63de3b84b3d785"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0312.jpg",
+   "bytes": 230023,
+   "sha256": "9ef193bb9e38318c05a325c0f9afafa12f192860229bac5b77123452ec6b2a86"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0313.jpg",
+   "bytes": 226527,
+   "sha256": "308784f62f7d5b94e7b3b1cc01ba281b398e916389deb1e83364191fccfc64c2"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0314.jpg",
+   "bytes": 229667,
+   "sha256": "7c6c60a61d672420e42914d7bb7a2a3fc3aa25d89bc999261c61aae3c9ad20af"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0315.jpg",
+   "bytes": 228644,
+   "sha256": "973316437fc02495d3d1dfc4303df1aee21b04b668879bed7a4a5f80d2377324"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0316.jpg",
+   "bytes": 228188,
+   "sha256": "dba1a6a3f14fede6a712afa7f8832c778bdcea497da919efdb653ce4b017e52f"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0317.jpg",
+   "bytes": 226816,
+   "sha256": "ff490956182be86498893243452a6f457a1070bf7ef4e57e563b7da288d2d926"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0318.jpg",
+   "bytes": 224222,
+   "sha256": "e5409bcb5c71ee0823d5a28d07f3b0ee66a24443a5ac2c4c5a5ef64c516ef941"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0319.jpg",
+   "bytes": 222621,
+   "sha256": "5c4944c02e2e92ccd91e08fbd1b2421202660d8301e6f4d1e93ee2a75f8964aa"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0320.jpg",
+   "bytes": 222341,
+   "sha256": "fa85f1fa355854f1653c78e612965a0e431685d41cc54c99ec19ab32a93535f8"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0321.jpg",
+   "bytes": 223010,
+   "sha256": "57712a2a50307db8b857674ab70530a1a9402dc32e0311ce3db800c20b0ffbea"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0322.jpg",
+   "bytes": 223133,
+   "sha256": "1e1c10a0e7482292af4923bc76db1dfc2c7af02f5468ae5eb9d7089ca4301cbb"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0323.jpg",
+   "bytes": 223706,
+   "sha256": "63bd20dfbbc38cf270dbc6cc6f2470ed60238a1eda5328de849939c065ca7cb9"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0324.jpg",
+   "bytes": 222845,
+   "sha256": "13714d12acd76e1dca8dbfb6fae70ce360b12aa90b978064de0d4e5f3ba5322b"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0325.jpg",
+   "bytes": 221943,
+   "sha256": "2ecf37c30c6743abbd24bc3c0813bba0b6a07e70f8b8f9179fbaa19cb26adc5d"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0326.jpg",
+   "bytes": 220941,
+   "sha256": "e1135cc1d71326d2becdb72117681eb07342734717b26047ac05102b5b842477"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0327.jpg",
+   "bytes": 220594,
+   "sha256": "c0bd7e631dc038b0231411e60039c05b14dd2f7efe0d8c18610e51774a0efae4"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0328.jpg",
+   "bytes": 221148,
+   "sha256": "fed69c3e63b9c8c631394e177fceac49f4c2525112bbc566c596776c7f10f8b3"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0329.jpg",
+   "bytes": 221861,
+   "sha256": "1e98d78ec664d8c9e7507411cd04532641b1cc0b2389c3c7f06285cd98383654"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0330.jpg",
+   "bytes": 222482,
+   "sha256": "150ddcb737b5d086a1956bac523c6bd6a0da35a29b6d2dfbb2c11d75a1f99231"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0331.jpg",
+   "bytes": 221720,
+   "sha256": "5af73bb208432ec7938fbe8f97923d778a3ea841e746effa6b9e50a6c88c59d8"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0332.jpg",
+   "bytes": 221405,
+   "sha256": "602a5264450d43621f2358cd008dd14e9b1a78ccf34a52133d5b4975cb4be94c"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0333.jpg",
+   "bytes": 220350,
+   "sha256": "a09deeb68c2c5a6c3cfb4eb1d7e3c752c630672a0257a52eb2005ab1a0217731"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0334.jpg",
+   "bytes": 221164,
+   "sha256": "0622680dc1e021143e3885e9d6aa235621187492911857f0bc26689444cdfb15"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0335.jpg",
+   "bytes": 222308,
+   "sha256": "9875b27b47fa56b99dcec78fbed699e10b65f86f69d110b7b57e48a1713f3439"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0336.jpg",
+   "bytes": 224371,
+   "sha256": "a45117c86e6c5e5db21eaad58d78a4466980fd9b88255123457789b4b50812a7"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0337.jpg",
+   "bytes": 229121,
+   "sha256": "918658a11cb834f6c070cacf066eb1395f996d1a0ec92391b862afb71734fb18"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0338.jpg",
+   "bytes": 224426,
+   "sha256": "e17f01b97c1bdbea8bdb382641a0eb4e95e8cfa718039470f178c6f3a884bd76"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0339.jpg",
+   "bytes": 222778,
+   "sha256": "b967570fd0001824af4c4cdecf71f9f28f8487b4661139927a4d0d52a2afaf39"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0340.jpg",
+   "bytes": 221418,
+   "sha256": "d04a9c24e585d06089e91ab159c4353c0f79bf8e8384889006bfedf970f91606"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0341.jpg",
+   "bytes": 220636,
+   "sha256": "bb8e77fffa252d78088ef6dd6b72845f66468cc2a5290090fa42fb6b404ecd0c"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0342.jpg",
+   "bytes": 220337,
+   "sha256": "2700b884201aba35f398447d9d668907321b7c7fc42860046da294a5db2f5d9e"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0343.jpg",
+   "bytes": 219924,
+   "sha256": "94f7b8f09a9bbc9e1e7bef64967cdb73030fca288ee35d380804f0e8d8d16b5e"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0344.jpg",
+   "bytes": 219772,
+   "sha256": "4a3c0f07117775cb1577b41b3e21c05d2d409a9f7439d0719f03c7eb78f2695e"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0345.jpg",
+   "bytes": 219674,
+   "sha256": "ad7426e328e4657af1fdbf0905b0670ded250e5fba4288c5c1e6da76a13a1f99"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0346.jpg",
+   "bytes": 219949,
+   "sha256": "0186a9bf42e0a630813c5a33a702c7ad988d0f3129af387623eb01160d70c214"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0347.jpg",
+   "bytes": 219768,
+   "sha256": "4f7d8238da0384bc5cd7b4bf9eb7b002cc5b2e91ae276ece1c4e880b1fc79d7c"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0348.jpg",
+   "bytes": 219517,
+   "sha256": "1f8d11c7e6ada1cc5ec6bc892e720d65e78ae24f9183111f5e07d77e4202fe27"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0349.jpg",
+   "bytes": 219367,
+   "sha256": "ddfad5919ac3df0e91aa5f10451d6856dc2851a135a5e93e92c7ce6458560ac3"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0350.jpg",
+   "bytes": 219913,
+   "sha256": "242613586ef4bd102f57d12436963bb6b9f7ad1ea062859b62ab9402a2f839d7"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0351.jpg",
+   "bytes": 221051,
+   "sha256": "62d57186a26dbfebbe4e8a5399676b6e7ed91b069b8d6bbddafde6285000edb2"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0352.jpg",
+   "bytes": 221045,
+   "sha256": "8630f838758edc5363170c939ba191367e7d82df8ea3c06ef10ac51e3dcead70"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0353.jpg",
+   "bytes": 221485,
+   "sha256": "93d8699c81544d5d524fd5ee00e7c9322df417771f0383cb07ad4404a6738c17"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0354.jpg",
+   "bytes": 221287,
+   "sha256": "4f708d9d07212fadf8bf853495ab235e39373939214b5acb28e62f80324252a6"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0355.jpg",
+   "bytes": 220731,
+   "sha256": "df7b120b8fe2491a233add62c40b4957902b08d46dddf0dbd9e3d9bd736d0c76"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0356.jpg",
+   "bytes": 219665,
+   "sha256": "27ff1e4d1521d65d5ea37c5a4872fc2f3933a20980d99a9aca3135c47bbe0d47"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0357.jpg",
+   "bytes": 219313,
+   "sha256": "2392d8b9d0c7f0b4da962ab8c7a38ae1152ffff032704c553c43bee1d137ad4a"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0358.jpg",
+   "bytes": 219964,
+   "sha256": "42cfd4b4a689deb17618d1a80007b009eedf6e894cf12c6ef2e050307e46a4f7"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0359.jpg",
+   "bytes": 220605,
+   "sha256": "c0f0bed49283a2545a76cebd730ca77c9895e78367899759847acb6b3864c51e"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0360.jpg",
+   "bytes": 221276,
+   "sha256": "d00861d029127919a8dee39fe86e8666ea214c775cf70ed62361ffeff75cf0aa"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0361.jpg",
+   "bytes": 220791,
+   "sha256": "ff0a87fc044ab30fa4ca65edc854243923d8e0abdaac58bb2e3f2034a9948c0a"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0362.jpg",
+   "bytes": 219870,
+   "sha256": "34a93528dc01c44c427d2055ec86a7a187694d8cc6ec855a48bca86de99b54e4"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0363.jpg",
+   "bytes": 219250,
+   "sha256": "268822f22f4e8764b5a38cbfc25f35c8423959094f40a47f89a1cc109778c356"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0364.jpg",
+   "bytes": 219720,
+   "sha256": "0ab969074aa97cdeebba39e9955aee0b02727e53d90b1f407a1c212c5b1321e6"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0365.jpg",
+   "bytes": 220451,
+   "sha256": "43e7c8682bf413c5a829d64e47a85df5601cd5b8237d4bd8d55a306764ce9799"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0366.jpg",
+   "bytes": 221210,
+   "sha256": "0c6fcc43623fd045b22fcaab5af365a0138fb1b6feef41bf3256f2a1c667ae42"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0367.jpg",
+   "bytes": 220883,
+   "sha256": "4b954ea72e72967c91ac4fe64463c2b329ff1fdc91bff16e119a8f80bf72e8b8"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0368.jpg",
+   "bytes": 219849,
+   "sha256": "754f0fa03ddc10ad36044415ec7387b723cd08d54b1ff249fdce8b33c58288f9"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0369.jpg",
+   "bytes": 218370,
+   "sha256": "86c41c4dc3ffaa7b3b02db88f6f4ed4f11d4bf9d444fc93fb4730b9a993b6d83"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0370.jpg",
+   "bytes": 216938,
+   "sha256": "6f76fa45fe3251d5419154f8cb2428d9366ef4db9e810969e22b006564be8c97"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0371.jpg",
+   "bytes": 214781,
+   "sha256": "b6ff51a15417353452705cb495a6b923f58fb40b267582e62c7b3598e968c9f8"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0372.jpg",
+   "bytes": 210801,
+   "sha256": "42245612f8200c85f5e4acf2908b4db879ca44936282c3ac145160e62ce1b029"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0373.jpg",
+   "bytes": 203663,
+   "sha256": "0d596b0bc3eac4c4e21b9edad61dc8c5546e9dd56a2e7516c8baa4923d218005"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0374.jpg",
+   "bytes": 206253,
+   "sha256": "3ab8a47ff8aea1f3509a78c7435ded500c0ae3450e09e8cc43e3bd59cabe05b8"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0375.jpg",
+   "bytes": 204591,
+   "sha256": "cff9f4141f36db58f8c99c6b731cb9829b8b8232ed080417bed04f06935eb0aa"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0376.jpg",
+   "bytes": 203151,
+   "sha256": "0a98b1808e39d10be7771a95bd5bcdd9a0985abb6d0005d1a8b592b555c93a06"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0377.jpg",
+   "bytes": 201353,
+   "sha256": "6e15fde493ec2d25aab167062a2c5ea05b62e1f8ad9ee2564af75367a5cafddf"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0378.jpg",
+   "bytes": 199519,
+   "sha256": "30f96694814885cdd8e4b5a9810d2c2fe3cfebe12ba3fc56dd9d804701ee79bf"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0379.jpg",
+   "bytes": 197996,
+   "sha256": "dd56697d932c04a3b1e00e4a87f930b163dba9dc5232f7d0132d3870fa0aad55"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0380.jpg",
+   "bytes": 198002,
+   "sha256": "b7dfe1d3bc4080ea86133f288e0f0ef9d8b7c4fccbb19c58a629d34f369db405"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0381.jpg",
+   "bytes": 198987,
+   "sha256": "32f6b815be6c62bca4ee9b7f2b33b919399cec7641f802089b030b4e037157e2"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0382.jpg",
+   "bytes": 199030,
+   "sha256": "8826c06dfb1e4aa0f6905800f081dab98781d59d82ef55252e4e9d7067786e0d"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0383.jpg",
+   "bytes": 199532,
+   "sha256": "693b3611c98df63e57acad3a24dc934da7cebec7bb05570a85a5393fa05dff27"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0384.jpg",
+   "bytes": 199559,
+   "sha256": "e5ee18efa0737030f5aef7c58c166e6156baef01b355a26c368965dd4108d316"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0385.jpg",
+   "bytes": 199037,
+   "sha256": "d6714b321920218860ec882572391818dc8ff30e25bcb340a09064a9ff8734dc"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0386.jpg",
+   "bytes": 197844,
+   "sha256": "800318d00e8febd82d600a7e949d6f6b782e6d556e52d138b1d95b4661703a62"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0387.jpg",
+   "bytes": 197525,
+   "sha256": "e03ad5667f59001a705d0733bea528a4e81f0ced09cffe7437da00ca82ee5c82"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0388.jpg",
+   "bytes": 198313,
+   "sha256": "29eba71fbe34b07ef04556dcd23535a82b6ee70077a13f85b05c1a6a90c783be"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0389.jpg",
+   "bytes": 198895,
+   "sha256": "544311bdf05421a382ddc9a7b69c1f09a58d44a01df2547a2d1bbd96aea36e28"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0390.jpg",
+   "bytes": 199558,
+   "sha256": "99c833ecc61dc7e96d5529aabadf926fb119cead3ec27a81a4fabac32fe34d2e"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0391.jpg",
+   "bytes": 198503,
+   "sha256": "eae0aff15d19ea6c1fdffd6b3826dccf5d45743fd4d947b51009309d950f84b2"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0392.jpg",
+   "bytes": 197857,
+   "sha256": "89710687e960d0a1adb8c0dec4ddef413df076e7c946d42455d1089cd84321d2"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0393.jpg",
+   "bytes": 196833,
+   "sha256": "56ae21f59bea1e17814f06fa5a12c8f20a126f1dddadcb99ad6ad95d3aa75323"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0394.jpg",
+   "bytes": 197391,
+   "sha256": "d6e55ba5569c0c265609d417b50df1bb03ca8b769f1527b5f558cbb75eabbe79"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0395.jpg",
+   "bytes": 198714,
+   "sha256": "7041dfc1efa8c4f6386a959ae8ec822bbfd00cdd8fea36616eff75fecda3e463"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0396.jpg",
+   "bytes": 200330,
+   "sha256": "0b82e95cd531a353b09f703a9f608f56168f8c0bb51efec82daecea6272d6c0a"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0397.jpg",
+   "bytes": 204291,
+   "sha256": "0dfc27b38916eb593c2d8b06fa8eba697e33550377fd3b933fb84506fffc0ff1"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0398.jpg",
+   "bytes": 200572,
+   "sha256": "a89f07f27d321a441ba3c878a18bfa43980972ffc4244527bc2d28420dfadfad"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0399.jpg",
+   "bytes": 199234,
+   "sha256": "a9f1242b9b4adcaffb5cefa54c2b584023d67ae87324369ee0520c45a762fc1a"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0400.jpg",
+   "bytes": 197723,
+   "sha256": "beaba96dfadcb060d5d0a7bbdc2ff121ebcca0b1ccf15d0e9126f02c6d373750"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0401.jpg",
+   "bytes": 197422,
+   "sha256": "f14ddbcc39e8750722fa04635434df9fe6c5abb9c47a069253229f0143c4ccbe"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0402.jpg",
+   "bytes": 197325,
+   "sha256": "78e7b03ba2ea9f256ce3e78c8bf038fe1e992203d2ecffac1819ba26019dca6c"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0403.jpg",
+   "bytes": 197538,
+   "sha256": "4f74a9ae6d7762d54be7fbf188346be342022cfc1d72aa0b1085f53f4348b437"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0404.jpg",
+   "bytes": 197711,
+   "sha256": "e4dfdbd8cbc280110c6b1fc32a10eeac968ab9a0db64aa74256ce768657e9f57"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0405.jpg",
+   "bytes": 197791,
+   "sha256": "fa21d358e30e27ba68df13c16d45d2645647a88e9baba2d6aca4f86aa595634d"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0406.jpg",
+   "bytes": 197936,
+   "sha256": "7d82bf97a6a8071f6345a0bdaa2d6bbb641cf8700910850fd4bc0d58a9dc0356"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0407.jpg",
+   "bytes": 197944,
+   "sha256": "69b94a37c6c3ef3ac67ed616d20a7da7a738f7fc413b3e8066eb9a1d18190d9d"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0408.jpg",
+   "bytes": 197738,
+   "sha256": "ee1545c0946a4f7b8bcf6acd8fe18ea26ce72d3e30dee1e07437f258c736a6ba"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0409.jpg",
+   "bytes": 197992,
+   "sha256": "f13cb414ac59d0f58104c57cd5bf4811bb91316ba2ce3abb684f96eb808ed9b4"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0410.jpg",
+   "bytes": 198251,
+   "sha256": "ea02d8a8909e03a49be04039b37e49edd55f0614c4a3a4a580c0c5794461fdb9"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0411.jpg",
+   "bytes": 199192,
+   "sha256": "429ec9abef647116e02e74017466270c82de1a4cff9b32ac4ea869373adb4c5c"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0412.jpg",
+   "bytes": 199364,
+   "sha256": "db5f02a86da5c3d822357dfbda139f8038e39f89030c7e4ab7708b6a310c85a5"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0413.jpg",
+   "bytes": 199944,
+   "sha256": "61bfbecf06069367c9a6a8ed3b574ccd511a55078c5984c4b0042de4fa422bc4"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0414.jpg",
+   "bytes": 200077,
+   "sha256": "caacc00eb804f626b3867d04f08d287867d3b399540abb309188a87e98d67adc"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0415.jpg",
+   "bytes": 199497,
+   "sha256": "3090aaf5051aabc1e1a41142ce5c133b03e67e175463bc7787b1708584662dfa"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0416.jpg",
+   "bytes": 198459,
+   "sha256": "af9aa929698f68b29c183e42b36f0c880049d4dbbec037f825915823fbe9a13b"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0417.jpg",
+   "bytes": 198412,
+   "sha256": "d022327a5b9d93f57695071c4e5e2c2c83f62261cbd0eb3ca4303a181d842b27"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0418.jpg",
+   "bytes": 199233,
+   "sha256": "d5504f4124658ce5f1f7cbda7ec3bd66a8721e0ec915b2f51d2637506421591f"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0419.jpg",
+   "bytes": 199985,
+   "sha256": "ad2f9ba435348b276c11dcd9005863423edea2b84d23704f3a24fa69955b3f76"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0420.jpg",
+   "bytes": 200912,
+   "sha256": "693a7dc1601f9799ede5f770a960b356410ba07b5d4074d6d1d1a28ac0b8edfd"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0421.jpg",
+   "bytes": 200289,
+   "sha256": "722eab2f7b263619dceffac4d0f9bcfc617bc0ef6cd493a76313847c6789bb79"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0422.jpg",
+   "bytes": 199723,
+   "sha256": "ed11464fda7e7632e25d415737f8bed91953013b74c27dd06a94253c6396ab5e"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0423.jpg",
+   "bytes": 198726,
+   "sha256": "0f038fb6ab738a7044d25b25a2fce9d212f25232459b05718a1ff360f624ad9b"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0424.jpg",
+   "bytes": 199067,
+   "sha256": "34643b847661f3bf6e9123510c04975ec8b2b483e4fcf043ecf035c142cbc437"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0425.jpg",
+   "bytes": 200072,
+   "sha256": "bc66017d26d94e0eadb29a365c633945b4a3a193539d721df1885f116f3bdf67"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0426.jpg",
+   "bytes": 200595,
+   "sha256": "211626e1734196371b071c2fc528a66ff3954dcd4e332169559dc26ae5e5303c"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0427.jpg",
+   "bytes": 200459,
+   "sha256": "ef257ed5265e39d97d648c5f0a1652b1524a94f0310295dac0bb297e538a41ed"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0428.jpg",
+   "bytes": 200030,
+   "sha256": "353c89d398a4f1a3f59f824b8b0afdd330d4be7010a1a2ff2219797658a3090a"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0429.jpg",
+   "bytes": 200545,
+   "sha256": "c8cf2bc62f0fc23975cb17f4216ee6be6c2a99f3681e0ffc537fa2538d3806f4"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0430.jpg",
+   "bytes": 201094,
+   "sha256": "105faf9e8858d84cc39741c40d90fcb9fb55c4fb9c8d9c09157867fca7980613"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0431.jpg",
+   "bytes": 202843,
+   "sha256": "3242f3f4c30641d43b40b433fdef19d3839424c687f90e55ff0c3db026ed92cf"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0432.jpg",
+   "bytes": 205972,
+   "sha256": "606d4de28e51945584abcee7b28932bd9bb8326ec91ae605020dd950ce202c40"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0433.jpg",
+   "bytes": 207238,
+   "sha256": "a0c9ebd2f30967f563a219bbe44a2b487067c4e1c459a10863bef4271f58affe"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0434.jpg",
+   "bytes": 204749,
+   "sha256": "747892f8b9215a5bec785cfaa4c76a1d1cb0509897580cebb23f46eb2bfbf121"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0435.jpg",
+   "bytes": 211537,
+   "sha256": "d6de864d779090f2a0e997e3f435d79cffb1be712796a8fa3061f12da74d1157"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0436.jpg",
+   "bytes": 212910,
+   "sha256": "0a496146b75823ea38b3793ab942b20cff6dd639158d05d9e8e5f37cc5f442e7"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0437.jpg",
+   "bytes": 212533,
+   "sha256": "7111405f286c2de9d105369f9daef7308c61bf16c8149ae0259412a6cac84975"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0438.jpg",
+   "bytes": 213066,
+   "sha256": "1d022f4d8d8fe695dcd2b6c7c427047aee9ba12873fad7c2d861784082f7cada"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0439.jpg",
+   "bytes": 213373,
+   "sha256": "8de665b38a560fbbad7a4de3cb8e86be27934c417c701493786b445de01bd5e1"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0440.jpg",
+   "bytes": 214242,
+   "sha256": "7b38e0556f33f5962ba2175074232e4a2f20c8373d1d8fcca38b5406d8058d63"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0441.jpg",
+   "bytes": 215194,
+   "sha256": "beb0e0e90eeb6a510fcf7ffd1fddc498c836cefd89fab8f6bd7e6681a21832f5"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0442.jpg",
+   "bytes": 215248,
+   "sha256": "e7dd87379a95b7c1c377b1964cffb7fff991864afe9b2fd4bb9a1bcf7152c777"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0443.jpg",
+   "bytes": 215459,
+   "sha256": "a2611eb248875db52de805d25ba2f70cd9baec33cb9b5bf6ac8b6ba712f07264"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0444.jpg",
+   "bytes": 215571,
+   "sha256": "a2b1d89366a6fb61cdfff6755b032e949637def14003044241c2791aac631742"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0445.jpg",
+   "bytes": 214850,
+   "sha256": "eff32c6320591b875d7046d360ea9f9685b7b6ac3a037e2c355f0afcebffd17e"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0446.jpg",
+   "bytes": 213829,
+   "sha256": "dd8b6718a13d502dd17d7a32c6884fd691835aeae8cf4b4c623c6a6b7ec812e8"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0447.jpg",
+   "bytes": 213482,
+   "sha256": "0ed2e2bdd48eaac575aa6d14b04decc258d0c18ff4925a7f238af8291adc7b93"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0448.jpg",
+   "bytes": 214151,
+   "sha256": "afa77b05afdaab850afcd75b240dffb615b645f6c7301e125a563d160f91ad44"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0449.jpg",
+   "bytes": 214551,
+   "sha256": "55cee4b7ad170607e7939a281a58cbb6c5b5a405a6474e9218b8158cd13400ed"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0450.jpg",
+   "bytes": 215448,
+   "sha256": "809d5e5b202cd6cbaec5f118a5dc0e666b253093ebf95a4b3eb43de4606fcea2"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0451.jpg",
+   "bytes": 214476,
+   "sha256": "390fd06cb61c6e10a6120d8ccbd4970820f0da5504e39342378dead72df2a500"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0452.jpg",
+   "bytes": 213679,
+   "sha256": "a431d5e081163b141927ef05ea285b12a7dd30841b9e7f42d2a2fce629692be3"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0453.jpg",
+   "bytes": 213061,
+   "sha256": "5c8f5318db6b111c70077f4f957c18d7500a201d938a1b162c0885c922608221"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0454.jpg",
+   "bytes": 213360,
+   "sha256": "eea4f01d16e5a82aa1c28e4eecc85be70889cb8b0765a1df606055ee88f3f196"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0455.jpg",
+   "bytes": 214453,
+   "sha256": "2ec165bf2451a50a51c27dfcf898d9984e5f373b7ef625eff1e53d9172231cbf"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0456.jpg",
+   "bytes": 216490,
+   "sha256": "69a3d047a8f101a4e666e76c0068eaa2b1c042b4008d7ae0aab3fdc437999d69"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0457.jpg",
+   "bytes": 221160,
+   "sha256": "66e48737340f6c3db0e45e8b4254c1a2f9a5b69209e96dac9ce37681438f0e63"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0458.jpg",
+   "bytes": 216734,
+   "sha256": "dc6ac281df91a63b975b30e8a8010a85002f763c5519bec8ddd98206c8c952b7"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0459.jpg",
+   "bytes": 215141,
+   "sha256": "6d5448a83b6b755fd07765ea628b1ecb30dca0282a20dc1c1e9083b4d427c5de"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0460.jpg",
+   "bytes": 213786,
+   "sha256": "42ef84bb814090d5fd2a5ee38c22e82c7ca19597b290d5264fc3a3629ebf2902"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0461.jpg",
+   "bytes": 212957,
+   "sha256": "dee40d6da322f089db308b6b263e7a601c40cf7d63fdf02363a928a20d7031da"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0462.jpg",
+   "bytes": 212512,
+   "sha256": "4c1f1da138828d787f7b21524d063e74aa193a04d8341be09f8561a910e7bc8b"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0463.jpg",
+   "bytes": 212772,
+   "sha256": "701be1ca2da1710ff2a7a86f2e2f990eb7b6ba5d7e5d5ad5036ed975c9624aa4"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0464.jpg",
+   "bytes": 213038,
+   "sha256": "2b436725284f5a2f7db04ee466942adc254f2aa351b5e1b03701218e117e0926"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0465.jpg",
+   "bytes": 212948,
+   "sha256": "1b25e959712b2932572267582f007035bccd0c42196afaad616a81d85dfec53b"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0466.jpg",
+   "bytes": 213303,
+   "sha256": "d51f8f9a2953d8106e6a6b85611acf0778ea6cf8f4212b2f3973929f40c28d9c"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0467.jpg",
+   "bytes": 212773,
+   "sha256": "186630e0e3927def46326e3181a20a5e99ad5b3e6274e8fe1792b5e7d8d2d69d"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0468.jpg",
+   "bytes": 212803,
+   "sha256": "06a438f165f04a46fb2d36c69ca92797c6d121ce4decbc4127f172849808bd37"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0469.jpg",
+   "bytes": 213016,
+   "sha256": "665c1ea9ba40b8b67059127df0d2f300fdd0fa360cf13e2af95acef756615240"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0470.jpg",
+   "bytes": 213668,
+   "sha256": "7e51080347071626fac8cb9b04f7980469010e8454041dcf141775539fb0fa85"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0471.jpg",
+   "bytes": 214721,
+   "sha256": "83bbf0b1b13baeb0b9e37b1acd501ecd8164fa2b36b26110b5f737c6c661b3ba"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0472.jpg",
+   "bytes": 214967,
+   "sha256": "c032cf201f24940bad2df8287049fa227acf92a8f4e2895967e923a8cbb7f193"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0473.jpg",
+   "bytes": 215537,
+   "sha256": "5a74d9a03d915367501355403b02087c529577317d5d7f2cff67f56e59f3dabd"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0474.jpg",
+   "bytes": 215683,
+   "sha256": "3c745f9181ec2adac99a5800e811291cb107925e14548d6ae8f2bb78015e1584"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0475.jpg",
+   "bytes": 215038,
+   "sha256": "da58eaed1d61399842a1809ab363e38d588f56846ae76273c28ef06e49164893"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0476.jpg",
+   "bytes": 214195,
+   "sha256": "3be98ef07c5f55d8865164cf65d6c2b493c25e91a50ff888cdf615c179854fd4"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0477.jpg",
+   "bytes": 213851,
+   "sha256": "0b2e9457a0cfb98df5496e68c0ee483fcc276e10ac1abcbb0ef64de852bb711e"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0478.jpg",
+   "bytes": 214640,
+   "sha256": "370c03c4ff79ec093fb0b12a4517e5113cd428c726f4b4604499c890547058fc"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0479.jpg",
+   "bytes": 215273,
+   "sha256": "2cd73d07d7d0fa525bffb466a49e3b33abb6708d3ff98aed8a54748f578d7f1f"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0480.jpg",
+   "bytes": 216060,
+   "sha256": "13668f6fe83b97a71255068de64d0bdcb955051dde09fa46fe4a29932538df3a"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0481.jpg",
+   "bytes": 215446,
+   "sha256": "c77ef208a86eccad920743aaf6cb4d90be4c3c8921a6768e1e94278b9592d0e4"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0482.jpg",
+   "bytes": 215176,
+   "sha256": "313e1a3446383fd8e06d6f939c336c6f8a13a7813f8e96f9afc6469db1c70531"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0483.jpg",
+   "bytes": 214373,
+   "sha256": "2d70427ce3ec93e29de1311592f63fa651b298758bcaa74060e7a6b0a86cb2f3"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0484.jpg",
+   "bytes": 214563,
+   "sha256": "1b53bffb0b8e5fe0bc8a8072741e88a53b0b6142143152791e0e5a2507ca5b2b"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0485.jpg",
+   "bytes": 214794,
+   "sha256": "0e4a6c5a20a671c624514be02bdcde84235a52d61a63f7bec48ce1aa8cf9dd02"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0486.jpg",
+   "bytes": 214397,
+   "sha256": "2958836a07838c8d0535f5ea835517ccd47e2d3f1c074ffaaa5448cd6528180b"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0487.jpg",
+   "bytes": 214427,
+   "sha256": "267a65bd98a360eb61d174a60694141db42d744e20aad79d16ed367149efb221"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0488.jpg",
+   "bytes": 215568,
+   "sha256": "6dd388a00c95e8975a540e6f96131d64d8f87981fdf90254b12035b20e2890ae"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0489.jpg",
+   "bytes": 215788,
+   "sha256": "adc4fa5dd223ab3b44f4d325f9e0e94a9d6263ddbee109fc682ebc7967fab39a"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0490.jpg",
+   "bytes": 209482,
+   "sha256": "99143f7239cfc64b71a993456575dda505804e6a0ebb65bdf155a5270ee8e87d"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0491.jpg",
+   "bytes": 213382,
+   "sha256": "d29e8f41db9c5e2db5a598d521b09de4e19f5d4df98c1c1153e20e0972f1890e"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0492.jpg",
+   "bytes": 212969,
+   "sha256": "9f2c645161434ce7f1803d93fa66e47ba34d8f4422654b8bc543e370af8493bc"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0493.jpg",
+   "bytes": 211877,
+   "sha256": "2003f4de1fc708b5e9a9278bd9f040091dff83e57c028b887a2c02ebf9c04f79"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0494.jpg",
+   "bytes": 211593,
+   "sha256": "41723436af4b20746225b3b4366e1294797e5e3437bc0eab52513dbbcf5e6e74"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0495.jpg",
+   "bytes": 211380,
+   "sha256": "1b1fdc16c9f04545e23e5f46d23e99a713e90fc7828c3e11e6db48279a1ebc75"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0496.jpg",
+   "bytes": 211129,
+   "sha256": "d230b80b6fcb0c3264ae3ed0d41b000c10d41d3907321270411e95d1f39ac7c3"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0497.jpg",
+   "bytes": 211179,
+   "sha256": "c7be8c43516765b6f033cfebcc921b7f6566c91b086fa2593052d2c3eab17eca"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0498.jpg",
+   "bytes": 211167,
+   "sha256": "7cc7c1a59b6447552807272ddb9727857dc29e01ac20fab13b8be6f890acf3eb"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0499.jpg",
+   "bytes": 211035,
+   "sha256": "012946a5db3d0522bdcefa33b0a67b05626f312bdddbef5156c909b0f42d1ab7"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0500.jpg",
+   "bytes": 211461,
+   "sha256": "1eb233bc785877b35616b654e7b5e66028eb03bacdc3bdd84211921e08b3eee0"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0501.jpg",
+   "bytes": 212716,
+   "sha256": "c48e61a93cbbe394f752be33471b9d209d89b520f0c32eb94a55131f9e1008b4"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0502.jpg",
+   "bytes": 212527,
+   "sha256": "7be350584afb979e75d2d907a243a6b3efc4bb22891492e9912396488fabd51b"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0503.jpg",
+   "bytes": 213194,
+   "sha256": "de1b686630e46f8f30ed4fc1156a8995c836ffcb42fd2dfcbb8c5fdc5480c67a"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0504.jpg",
+   "bytes": 213044,
+   "sha256": "0b26b8795e79212db1dd34acde31c4913c0c0c53ecc9840ed4371fdbecd8490e"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0505.jpg",
+   "bytes": 212348,
+   "sha256": "f3c87b456ef9ed6763685c91bb6b42ebb67762732424efd0acb6ded092e97a50"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0506.jpg",
+   "bytes": 211281,
+   "sha256": "6f2ce819aba703189e096c7f955c6f5b112a5e984756570aade8d61fadad41b0"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0507.jpg",
+   "bytes": 210843,
+   "sha256": "17cfb2bba729a7867e4eac9e00199815a94b063b2a9b1cc8f8f26b43b9041447"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0508.jpg",
+   "bytes": 211694,
+   "sha256": "4a911e8fa5023dd28b42ea999c7900922963e609756fc25920cffc2091f9c7b0"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0509.jpg",
+   "bytes": 212738,
+   "sha256": "833aef8ec40ee2cde2de2ebe0860a205fe224fcb3df7f284cfc1c2bb2f36d56a"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0510.jpg",
+   "bytes": 214021,
+   "sha256": "e8bdcfe86b686345a15551017573ba3c4baec4e74c5ac2fa9d78bfb443bf07bb"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0511.jpg",
+   "bytes": 215463,
+   "sha256": "11eea803a3c309a1361206eb97dc598d7160b528cd51ee4a655d60c8cd9d98db"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0512.jpg",
+   "bytes": 216313,
+   "sha256": "357b8aff8da66caf1d78fbd0ebfcdf85634558cf944252734b46f4b7fc6fd999"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0513.jpg",
+   "bytes": 211962,
+   "sha256": "031a422570711605efdc59ba868242091e20318609cef90aa7d5d9607190badd"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0514.jpg",
+   "bytes": 211868,
+   "sha256": "c7fe7d9b778dd93a2a2265946011634d8fdd08527b8e0e33a6a02180577c7371"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0515.jpg",
+   "bytes": 212213,
+   "sha256": "cb5e69ea825124cea129c260a92a7af5819190fa55f01d3c958bc50499ae0016"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0516.jpg",
+   "bytes": 212581,
+   "sha256": "2919323d7f251945eb552b1dc4c6ee924d6df234df86056626bde11bf3d3004a"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0517.jpg",
+   "bytes": 212451,
+   "sha256": "0cd1e15eafdc815d8536d134ff3ddac6de80b5300236f6f32b4468943e4a2346"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0518.jpg",
+   "bytes": 211685,
+   "sha256": "7e6f370ba8c4e8a6cf78b10d0a0133b31918c575144ca9a1b47c6816125b5feb"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0519.jpg",
+   "bytes": 211722,
+   "sha256": "600a1282afa5470b801d9ecbef4fc02881caf4d93f72919fe770be1d4cb8ade7"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0520.jpg",
+   "bytes": 210825,
+   "sha256": "c568c3c74c2d694e12f5f39ff7cedf41ab1c501012f7e40d62308d241d7bd11b"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0521.jpg",
+   "bytes": 210354,
+   "sha256": "d5d4f9c39ded8d8c5ee46542908e20c847c2ce9c4dec0c729ef4cb7dbaebe67f"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0522.jpg",
+   "bytes": 210088,
+   "sha256": "231e8afb62dfdfd39639aba0fe8879e3c49e3ed5309c1fa1d90dd78c46d42572"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0523.jpg",
+   "bytes": 210062,
+   "sha256": "3c8f801261c804952e231a1e881f2ff2888c880f07f79fc71b651d0b14001d0f"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0524.jpg",
+   "bytes": 210102,
+   "sha256": "af8f98b85c6c85e0747a3b3784325c04b9533cb6b701fee02a5a4dba5131909c"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0525.jpg",
+   "bytes": 210035,
+   "sha256": "613696808164870488d7d8ae51d191e7814d91ec36c1a2d1742689ebdb3c0bbf"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0526.jpg",
+   "bytes": 210024,
+   "sha256": "8bbde03c80974a6b740496207991e5b127d2ce68f386a50a3a7229f0a3666512"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0527.jpg",
+   "bytes": 209767,
+   "sha256": "890817e9da7df1a25ae56d256031b442b7e43e3cfe3eb172660441a9a47083d2"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0528.jpg",
+   "bytes": 209719,
+   "sha256": "1e650fd3d6d28a01016965881fd17a76c650ca925da8b03e0c7791156605ebea"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0529.jpg",
+   "bytes": 209974,
+   "sha256": "23ad9fb29c4ce69067ae94ecd09b59768988bc81abb904db51203718f2930635"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0530.jpg",
+   "bytes": 209870,
+   "sha256": "86fa68edd19b8d149b85490bcfc8195a5568fdffe2fe84a9c18b50bdb2989f14"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0531.jpg",
+   "bytes": 211151,
+   "sha256": "fa0c2b049b1c836e97d8379f96e45d392d79c223928552f7d9fe3059ecd1af49"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0532.jpg",
+   "bytes": 210983,
+   "sha256": "ce06df819186de1104d61a307caded1f142da3d5eb9cfa41884541930f311272"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0533.jpg",
+   "bytes": 211509,
+   "sha256": "17bcab1ff21c27d8ba68dfae422a29dd58cd653690f0b59b683460b885008c1d"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0534.jpg",
+   "bytes": 211442,
+   "sha256": "9a5953552c867fb22217ddc72a7e58edd49318d11651f132e00f824acdb686dd"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0535.jpg",
+   "bytes": 210768,
+   "sha256": "b5c31407f8d23fb2237e0c994163bbdd662b21155f5d1eef60d5f5d8b972ca46"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0536.jpg",
+   "bytes": 209623,
+   "sha256": "01372311545ae1fb065338a9b9ca60647ed0d5e7d8b54caf7f65e877d4bc2f05"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0537.jpg",
+   "bytes": 209080,
+   "sha256": "58ca83ed8a57da4fdce181c768d5afc5694e39c92c70c3e24e0c3ca6040c20b7"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0538.jpg",
+   "bytes": 209331,
+   "sha256": "c6c6e7d58b8f3d8ca8e2fcac2dd3e5637991d78f9631e2e55473e4ed7d869a77"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0539.jpg",
+   "bytes": 208851,
+   "sha256": "30b4c76a8b75af848a3b7ff3abab4472ebc4df06f4dd7ebdc3ed736592e5fd9a"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0540.jpg",
+   "bytes": 208453,
+   "sha256": "7934550ab9f9fdada08f9ad66c7c3e2212ba485ac18d9e4e5487455b2fe15020"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0541.jpg",
+   "bytes": 205115,
+   "sha256": "47d01760718dc4195b275a2ddfb04f2bd446847f13752db425c4d75c85f2da16"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0542.jpg",
+   "bytes": 201047,
+   "sha256": "11a3e1fb4d8197966ee8dbc18670af9aa7422c10bfe9bf3fc7cf199dede9c74a"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0543.jpg",
+   "bytes": 191212,
+   "sha256": "f53e444d20ce7c0776022f9808697dea133a0f8dab18ba3edbfe1dd34d311339"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0544.jpg",
+   "bytes": 194282,
+   "sha256": "3538cb8ded387385be54d2a530be5bb454a0ee76969db7e6c648989567648e9a"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0545.jpg",
+   "bytes": 200015,
+   "sha256": "5e86f7c05b5d05731cf05ce6ef5e07389eb56a2a6b97934ade2ce9404f701f79"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0546.jpg",
+   "bytes": 200562,
+   "sha256": "d5644da9a871ca5322df2017c8a4809fc5d3bb0d033204661da242940dd45c46"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0547.jpg",
+   "bytes": 199153,
+   "sha256": "350ffc693ec38396f2398f5014a351005fcefd51df08472d6fa4e512f16b66b1"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0548.jpg",
+   "bytes": 199567,
+   "sha256": "b1d6d9d808a01a7f473b4a45f2e50f2e7fd859b207b840245fc6aeb0a24b9500"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0549.jpg",
+   "bytes": 200383,
+   "sha256": "723392602399496adaf1f25be66eba4dd1b8446eb04fc0b741c38d1f1ec286d5"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0550.jpg",
+   "bytes": 200650,
+   "sha256": "699d56b8f34d20e107243b4d7a9058f724dc8728c6c2fa8c64ee85d20f5b4869"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0551.jpg",
+   "bytes": 201092,
+   "sha256": "9dbd1aa5195dadfc672ac69675f03536229ab59d2d9b3239ed67a231743198cf"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0552.jpg",
+   "bytes": 201256,
+   "sha256": "11d999b061e325dc4a5fe5e3ac2e282e535d1eba11b776bdc843db0bba387f08"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0553.jpg",
+   "bytes": 201386,
+   "sha256": "9ee0c69f43d4a640f0d28155027adff4ccccd4b6448581d34c4fa54e724200f2"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0554.jpg",
+   "bytes": 201211,
+   "sha256": "d807ba0d96bfa15b6c796a697e587bc1f6ceb2499980706c69a9d15c1c43330b"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0555.jpg",
+   "bytes": 202568,
+   "sha256": "feca77f68c80fe66c609d4c49c464c704060aa7c71b97fd67dd42d1657a64c2f"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0556.jpg",
+   "bytes": 203528,
+   "sha256": "accc28945935e3bdbac73ed5c85b7c2b8897729bc07f680c169dd881582f5e98"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0557.jpg",
+   "bytes": 203596,
+   "sha256": "ffd404ab327f36fd012e0e96e12cfe35a383de0e29fde02f1d8c481c7c56aea3"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0558.jpg",
+   "bytes": 204661,
+   "sha256": "39986750b22ede20516b4334e20472dc87a72cd36eedc7ff8648f4ba9136d1b6"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0559.jpg",
+   "bytes": 204765,
+   "sha256": "bda0e9563a9dd3345e78a14a3a5706d8f90b3ff7102afd7e5272b4accb9b0125"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0560.jpg",
+   "bytes": 205025,
+   "sha256": "98d01d7d20ea23ac27a06587cc811a09e4191c5df225f46d3cc6fe81074672f7"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0561.jpg",
+   "bytes": 205358,
+   "sha256": "1aceb5b9ddb10ec2f2997900c33d11903dcb4cec1523e43dc41acb3d4f4740ec"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0562.jpg",
+   "bytes": 205511,
+   "sha256": "a4104b0e587326db4b65d3d573ba02350fd990d205493a4b88488d0a7391e8db"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0563.jpg",
+   "bytes": 206044,
+   "sha256": "79b35948910cbbc9de23b67bf83762ba9d9195e7de25e11474363c7a1b345d6d"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0564.jpg",
+   "bytes": 207061,
+   "sha256": "85b1b049f659192693fe6aaa7a385fddadebc770c0a1766490a6a740ac4fcd17"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0565.jpg",
+   "bytes": 207098,
+   "sha256": "c5866e5812f70a862e2a213c1264157f33c7d4ca592465c3472f49921989581d"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0566.jpg",
+   "bytes": 206972,
+   "sha256": "cc3772d45df14eb7757005c80c0a44726cf846d2c0001d90250165f5e06140ec"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0567.jpg",
+   "bytes": 207557,
+   "sha256": "9b53df44080d738de08bd4ceffb9525f510818cff586a274ab3d8af1527ff6d0"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0568.jpg",
+   "bytes": 207768,
+   "sha256": "8089568f2c93ba5a87376861f0bbf7887c368887be1252a6054b72bf0a9fc96d"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0569.jpg",
+   "bytes": 206969,
+   "sha256": "b26004cffd9fa27b4200e94928c523c846bb2cf98f604d05fd148f8df22eec85"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0570.jpg",
+   "bytes": 206500,
+   "sha256": "41eeffcc35264149ad4e2a2b0723ddc7302dea91272b12d377cc9f141705635a"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0571.jpg",
+   "bytes": 205631,
+   "sha256": "01cc7ad2ee03a1a7fc31008c2c8fdd83d497657a44dc989c5bd64ea5ecfbf8c7"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0572.jpg",
+   "bytes": 204597,
+   "sha256": "451a339f0efff32c1b67b994e64580a7ac9140b8fa9e4c5d285a6834a781d15e"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0573.jpg",
+   "bytes": 203102,
+   "sha256": "d4866433b7b33053558c628418dcdf6533cb9d19c35412029ef5cafc0934cd9a"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0574.jpg",
+   "bytes": 202082,
+   "sha256": "c8e3e2554ff30d6aa2b8de50b1a30f6346cdca64439085c6f40dcf9c1ba93ace"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0575.jpg",
+   "bytes": 201338,
+   "sha256": "6cde333b7e5b22eb39ec3c1edd4d5c8661606dfa25e25b107c52474d6b16c8e8"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0576.jpg",
+   "bytes": 200825,
+   "sha256": "71355fba13b340f8b149f779669fc57cd07f7f663e1867dbd1ef7325bbd54148"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0577.jpg",
+   "bytes": 201224,
+   "sha256": "db3b14d28ee03b494de6cc6fe792870ac1dad3aa570e10bf4d47426740b3f119"
   },
   {
    "path": "qa/match/05/paint05/shots/05k0.png",
