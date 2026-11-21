@@ -162,7 +162,12 @@ def core(t):
     return np.where(t < TA, c_p(np.maximum(t, 0.5)), cper)
 kit = json.load(open(os.path.join(out, 'kit.json')))
 DS = 0.05; ss = np.arange(0, 60.0 + 1e-9, DS); tt = np.arange(0, 95.0 + 1e-9, DS)
-cB = core(TB0 + ss); cB = cB - (cB[0] - LATB0) * np.exp(-ss / 0.8)          # Benny's painted start point is on his path
+# Benny's LANE CENTRE line: the painted river core, except (1) he starts at his painted spot (0.1 right of the cyan core there) and
+# eases onto the core over the first 1.8 u (value and slope 0 at the start = the approved start frame), and (2) it is held 0.27 u
+# from the tunnel axis (soft knee) so his outer lane + body stay on the water at the sharpest painted bends (core reaches 0.31 there)
+LANE_LIM, LANE_KNEE = 0.27, 0.2
+cB = core(TB0 + ss); m_ = np.abs(cB); cB = np.where(m_ > LANE_KNEE, np.sign(cB) * (LANE_KNEE + (LANE_LIM - LANE_KNEE) * np.tanh((m_ - LANE_KNEE) / (LANE_LIM - LANE_KNEE))), cB)
+x_ = np.clip(ss / 1.8, 0, 1); cB = LATB0 + (cB - LATB0) * x_ * x_ * (3 - 2 * x_)
 kit['river_center'] = {'ds': DS, 'c': [round(float(x), 4) for x in cB - LATB0], 'src': 'round35 painted core (bake_river35.py)'}
 kit['river_center_axis'] = {'t0': 0.0, 'dt': DS, 'c': [round(float(x), 4) for x in core(tt)], 'lat_start': LATB0, 't_start': TB0}
 kit['river35'] = {'t_pre': T_PRE, 'ta': TA, 'P': P, 'n_pre': NPRE, 'n_per': NV, 'hwd': HWD, 'drift': DRIFT, 'detail': {'L': LD, 'c0': float(c_p(td0))}}
