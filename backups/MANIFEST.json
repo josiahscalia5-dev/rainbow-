@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3271,
-   "sha256": "b55cc883d2fd328c3a6e91d620ffc2eedc19be36d8fab2723ed101a44385c8d7"
+   "sha256": "294df82c0a3c6cf3a3038882c53e9624c4a7ae2b7ca95805cbb49a5b75f51038"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -16415,6 +16415,21 @@
    "path": "qa/kit05/r37/APPROVED_phone_frame.jpg",
    "bytes": 202532,
    "sha256": "2f00accc2ca77c2eeb966d1ae87cf3cabcb79c6979d93ada7cc6d10c5dc11cc7"
+  },
+  {
+   "path": "qa/kit05/r37/CLIP_A_7.6s_real_swipes.mp4",
+   "bytes": 4823163,
+   "sha256": "b519699d8de71d49d7a4e17851c7a7f9a6a7c1d9bdced71b2c476c511c8d41a4"
+  },
+  {
+   "path": "qa/kit05/r37/CLIP_B_7.6s_real_swipes.mp4",
+   "bytes": 4803302,
+   "sha256": "cf326544f36044b9f49184e1dbc3b09ef82dfdf99aad710bb8dade569d621056"
+  },
+  {
+   "path": "qa/kit05/r37/CLIP_C_7.6s_real_swipes.mp4",
+   "bytes": 4514227,
+   "sha256": "e0a4eb9cd978942284150a17b5365b089e57700a5756c3877409d065529891a9"
   },
   {
    "path": "qa/kit05/r37/OPTION_A_s0.0_l0.jpg",
