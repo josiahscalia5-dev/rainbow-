@@ -704,7 +704,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 25112,
-   "sha256": "32cc4c7907b22d26e6e87660151d0e9e857f9ee728ffa36cbb177680eff99dec"
+   "sha256": "b3349817533698f497f79a3978cc111a76ebba465fa0cdc86c77099c5079ebe5"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -719,7 +719,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3271,
-   "sha256": "1bcf74a1bb905d7eba2d3282a2c75b7fb7de204f634c14841d30f539f3d28877"
+   "sha256": "315cebccbc494292d58c15ba4a3e5a39b32a230502a285c3bf32ba61152d64ab"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -16117,14 +16117,104 @@
    "sha256": "5e6d53180c5319d13dae15705e39035273e802734cf583fa38de223d7ba1c8ba"
   },
   {
+   "path": "qa/match/05/paint05/work/appr_up2.png",
+   "bytes": 2131242,
+   "sha256": "c76c1703cd6780bca3a6fac797188ebc55bb517e5907f455938af418db1ca9da"
+  },
+  {
+   "path": "qa/match/05/paint05/work/benny.png",
+   "bytes": 1199237,
+   "sha256": "2b4293b132ffd7801067057d4560a1e423202b9384bd96e2c9efaac796ff979d"
+  },
+  {
+   "path": "qa/match/05/paint05/work/benny_alpha.npy",
+   "bytes": 5308544,
+   "sha256": "3644b958aff7ab3e63fd9b4ddf2901d91619b8aa229944dc3a30bb839f20f5d5"
+  },
+  {
+   "path": "qa/match/05/paint05/work/benny_crop.png",
+   "bytes": 644732,
+   "sha256": "0058be42eec2c91e952d85e050abe46a2ad7f19261634f25c5275ece9ac88b34"
+  },
+  {
+   "path": "qa/match/05/paint05/work/benny_matte_crop.png",
+   "bytes": 283885,
+   "sha256": "f06c09652703b0ef697febcf17800725c22688d8dd2a38f11be28548d06813e1"
+  },
+  {
+   "path": "qa/match/05/paint05/work/clean.png",
+   "bytes": 2802663,
+   "sha256": "1e65fed1651313c6266c5b1042b76540a901941bed11d5847f67e3466e4545e0"
+  },
+  {
+   "path": "qa/match/05/paint05/work/clean_up2.png",
+   "bytes": 1989609,
+   "sha256": "e48807ced6a9ca5e5d4eb4a8cdf0a8070d16c7d2ca0074e7fca627aa195c9482"
+  },
+  {
+   "path": "qa/match/05/paint05/work/coin.png",
+   "bytes": 38316,
+   "sha256": "40f844d688e5ae1f8a12e3edd3b62e0a8e57b155cbd940333d142deb0fdc7753"
+  },
+  {
+   "path": "qa/match/05/paint05/work/coin_mask.npy",
+   "bytes": 1327232,
+   "sha256": "8d0bc4c9ee7e32cd5be8b79dfbe68a64aa63604f588d9b40601189fbaab0f236"
+  },
+  {
+   "path": "qa/match/05/paint05/work/coins.json",
+   "bytes": 750,
+   "sha256": "6fd7a8bc6f75376732256947dd25c2c0c4a2dd77e66361866a92777c9e224ef1"
+  },
+  {
+   "path": "qa/match/05/paint05/work/ctx.png",
+   "bytes": 1515353,
+   "sha256": "28b3738dec699d9b40985adf3e655644c1b4f8a62aa991235fcdfe24855516a3"
+  },
+  {
+   "path": "qa/match/05/paint05/work/depth_raw.png",
+   "bytes": 151761,
+   "sha256": "b41ca803ebc06e603601bae8cca64f525ac54f1479b5b59cdf27744a9fd5596a"
+  },
+  {
+   "path": "qa/match/05/paint05/work/emask.png",
+   "bytes": 4909,
+   "sha256": "03a7432975c66fb57ea053c75d17cc20af4c1829df16f73b6d63bb22251623c0"
+  },
+  {
+   "path": "qa/match/05/paint05/work/fill.png",
+   "bytes": 2268790,
+   "sha256": "905ee0ebc737f5889a692099c4834ffd59e461f9894b49f5c71de29d5659e4ac"
+  },
+  {
+   "path": "qa/match/05/paint05/work/layers.json",
+   "bytes": 95,
+   "sha256": "de9a779effd81fd580b3ff01754d8542e834f50547d7230505f25775dc9b0532"
+  },
+  {
+   "path": "qa/match/05/paint05/work/mask.png",
+   "bytes": 4095,
+   "sha256": "ba6bf7842bd8fbc4c62d1ec41435ca6d99b5a3c141b8f8a2866e3049e7b110f0"
+  },
+  {
+   "path": "qa/match/05/paint05/work/plate.png",
+   "bytes": 5656440,
+   "sha256": "7c2ed23529f404cb474a29eb3eb639d7a10e7ed497da8d4c4081103b1a70f9dc"
+  },
+  {
+   "path": "qa/match/05/paint05/work/rest_frame_nocoins.png",
+   "bytes": 3709293,
+   "sha256": "6e79cc30ae31d5666cbcacb534a5b1db4ee217b7037c0ffe84684d693eeec46f"
+  },
+  {
    "path": "qa/match/05/r27/PROGRESS.md",
    "bytes": 3430,
    "sha256": "07c07278eb0d3c00d150d5b667b6fb9db3ec45d2df8ad4721f5191a17ecd02b1"
   },
   {
    "path": "qa/match/06/paint06/LEDGER.md",
-   "bytes": 4933,
-   "sha256": "f9f8fcc65ee1b651ee64761300a4e9278af0eed7ec6468c723219dbe5423a5f9"
+   "bytes": 6192,
+   "sha256": "8a117fcbcd95c61adfd14ad44cf8bddbdba9b33c09a594626207e8e164059860"
   },
   {
    "path": "qa/match/06/paint06/README.md",
@@ -35915,6 +36005,11 @@
    "path": "tools/model-lab.ts",
    "bytes": 4451,
    "sha256": "4dd0d06b20730fe09663dd711e63d5c4c8a884ba91f7b84a49be540db2a7a3c8"
+  },
+  {
+   "path": "tools/paint/plate_full.py",
+   "bytes": 11331,
+   "sha256": "3de451a231b8fe74d5cb3590bcb2a26d32c67c8e26061f86dafa261c9a2d0f71"
   },
   {
    "path": "tools/paint06/benny_gen3d.py",
