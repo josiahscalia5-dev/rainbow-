@@ -1303,3 +1303,59 @@ Now the page-side track changes (track folder switch, distant light tier, golden
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-21T12:26:52.911Z
+
+Holes are gone (19 green px left, at the open far end around the glow). Now adding a flow-only QA hook, then rendering the full AFTER set.
+
+### 🤖 Claude — 2026-11-21T12:26:57.906Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB && python3 -I - <<'EOF'\np = 'play3.html'; s = open(p).read()\nrep = [(\"sp.scale.set(3.0, 3.0, 1); sp.renderOrder = -10;\", \"sp.scale.set(2.4, 2.4, 1); sp.renderOrder = -10;\"),\n       (\"window.qaVisibleSplats = \", \"window.qaFlow = (dt) => WF?.update(dt, camera); // [waterflow] QA: advance only the water flow (camera, glints, bubbles stay)\\nwindow.qaVisibleSplats = \")]\nfor a, b in rep:\n    assert s.count(a) == 1, a; s = s.replace(a, b)\nopen(p, 'w').write(s)\np = 'shots_w.cjs'; s  …[+459 chars]`
+
+### 🧑 User — 2026-11-21T12:26:57.987Z
+
+> ↩︎ result: started
+
+### 🤖 Claude — 2026-11-21T12:27:03.831Z
+
+While the AFTER set renders, let me check the builder diff and gather numbers for the notes.
+
+### 🤖 Claude — 2026-11-21T12:27:05.980Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB && diff /home/user/rainbow-/tools/marble05/build_track.py tools/build_track_w.py; ls -la track_w; grep -n \"\\[waterflow\\]\" play3.html | cut -c1-220", "description": "Show builder diff, rebuilt files and hook lines"}`
+
+### 🧑 User — 2026-11-21T12:27:06.136Z
+
+> ↩︎ result: 9c9,13
+> < python3 -I build_track.py <hi.spz> <lo.spz> <scene05.json> <tile_frame.json> <outdir> [N]"""
+> ---
+> > python3 -I build_track.py <hi.spz> <lo.spz> <scene05.json> <tile_frame.json> <outdir> [N]
+> > water-fx (agentB) changes, marked [wfx]: (1) only the water channel is mirrored (walls / foam banks stay where they are; the
+> > old rule mirrored everything below 0.32 about the river line, 8 cm off the tunnel centre -> wall gaps); (2) the cross-fade
+> > keeps full coverage at every joint (incoming copy is opaque at the ring, outgoing fades after it) instead of two 50 % layers;
+> > (3) walls overlap 3 cm at the cut; (4) *_lo2 = 35 % subsample of *_lo with enlarged splats for very distant copies."""
+> 26a31,33
+> > MIR_H, MIR_LAT = 0.10, 0.95   # [wfx] mirrored = water channel only: below this height and within this distance of the river line
+> > WALL_OV = 0.03     # [wfx] walls overlap this much past the cut so the joint has no hairline gap
+> > LO2_KEEP = 0.35    # [wfx] fraction of the _lo splats kept for the very distant copies
+> 43c50
+> <     mw = h[mask] < HW  # only the water / foam is mirrored
+> ---
+> >     mw = (h[mask] < MIR_H) & (np.abs(lat[mask] - LAT_C) < MIR_LAT)  # [wfx] only the water channel  …[+3124 chars]
+
+### 🤖 Claude — 2026-11-21T12:27:09.627Z
+
+> 🔧 **Bash** `{"command": "uptime; grep -v \"GPU stall\" /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB/out_water/after.log", "description": "Check load and AFTER progress"}`
+
+### 🧑 User — 2026-11-21T12:27:09.673Z
+
+> ↩︎ result: 12:27:09 up  2:34,  0 user,  load average: 7.01, 7.01, 5.55
+
+### 🤖 Claude — 2026-11-21T12:27:14.033Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB && until grep -q \"tpair done\\|pageerror\\|Error\" out_water/after.log; do sleep 5; done; grep -v \"GPU stall\" out_water/after.log", "description": "Wait in background for the AFTER render to finish", "timeout": 900000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-21T12:27:14.137Z
+
+> ↩︎ result: Command running in background with ID: bujn08mbd. Output is being written to: /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/tasks/bujn08mbd.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
