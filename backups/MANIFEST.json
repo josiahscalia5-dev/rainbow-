@@ -763,8 +763,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 74062,
-   "sha256": "e063def9c946f1cbb26e074f23efd160f90ee9d2a08d657d2139d05b5aef34c6"
+   "bytes": 75334,
+   "sha256": "470f94f229a35f86128625a6fe11d948bb6bf489836ad3317b9daf44b2fb8511"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -794,7 +794,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 25599,
-   "sha256": "c78a32ecc7fa13952822c8451ec770e0cedad3849d188e59ba0e418a267ca4f3"
+   "sha256": "e36cc72c42b721e140e429e8aea0d081d170f676a087362509fb3119744f59a7"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3056,
-   "sha256": "16a0097d3a47ebe4bb666294cb558da8eae3a7b9f618d92cc8f9b9ee265c5d0a"
+   "sha256": "59f18afdf810b5235523a8840549bb1a3b5e1d6703bfb5d26352d9fcba2566e6"
   },
   {
    "path": "backups/MCP_SETUP.md",
