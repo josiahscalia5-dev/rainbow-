@@ -5186,3 +5186,30 @@ The paddling is too subtle: his arms barely move. I'm making the strokes bigger 
 
 > 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/paddle.png"}`
 
+### 🧑 User — 2026-11-21T02:56:14.871Z
+
+> ↩︎ result: NEW3D_SCREEN05_gameplay frames 259 s 110.463 -> 206.075 coins 1330 -> 1440
+
+### 🧑 User — 2026-11-21T02:56:14.895Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T02:56:22.216Z
+
+The left arm now visibly strokes up and down. The right arm is mostly hidden by the white splash behind him. Checking that your normal game is still unchanged, then saving everything.
+
+### 🤖 Claude — 2026-11-21T02:56:25.664Z
+
+> 🔧 **Bash** `{"command": "B=/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad; timeout 900 node scripts/capture.mjs 05 06 07 --out=$B/after_default3 2>&1 | grep -c \"→\"; python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\nB='$B'\nfor i in ('05','06','07'):\n    a=np.asarray(Image.open(f'{B}/after_default/{i}.png').convert('RGB')).astype(int); b=np.asarray(Image.open(f'{B}/after_default3/{i}.png').convert('RGB')).astype(int)\n    d=np.abs(a-b).max(axis=2); print(i, 'IDENTICAL to the session-start default' if d.max()==0 else f'DIFFERS: {(d>0).mean()*100:.3f}% px')\"" …[+82 chars]`
+
+### 🧑 User — 2026-11-21T02:57:04.126Z
+
+> ↩︎ result: 3
+> 05 IDENTICAL to the session-start default
+> 06 IDENTICAL to the session-start default
+> 07 IDENTICAL to the session-start default
+
+### 🤖 Claude — 2026-11-21T02:57:26.437Z
+
+> 🔧 **Bash** `{"command": "cp qa/match/05/r31_3d/compare/CMP_150.jpg qa/match/05/r31_3d/proof/CMP_swimming_1.6s.jpg && cp qa/match/05/r31_3d/compare/CMP_186.jpg qa/match/05/r31_3d/proof/CMP_end_of_05.jpg && cp qa/match/05/r31_3d/compare/CMP_132.44.jpg qa/match/05/r31_3d/proof/CMP_start_of_05.jpg && cat > qa/match/05/r31_3d/README.md <<'EOF'\n# Screen 05 — REAL 3D forward swimming with the approved look (round 31, 2026-11-21, branch `ccr-4fcad20e-a6pp8w`)\n\nUser (2026-11-21, verbatim excerpts): \"I AM BUILDING A PLAYABLE 3D ANDROID GAME, NOT AN IMAGE APP OR SLIDESHOW … Benny must actually swim forward …\nth …[+4671 chars]`
+

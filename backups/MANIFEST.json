@@ -794,7 +794,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 25112,
-   "sha256": "326557bea270fd28ed97a6d481f177172c1b99a618820a37654e178cf5639f7e"
+   "sha256": "9904d4c48a4f2f4d4d255b0b9b3675165f0671964256d10a1935e1bdb84697bb"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3271,
-   "sha256": "5fef79a5f8661ef1d11b5ff11bd70f5287d70c9e36de96c4380534198141fb4d"
+   "sha256": "92d5fe3fec9135f309b1be20ab7ec808e438b79902d050023941b8e7967f1bbc"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -12418,8 +12418,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 6131,
-   "sha256": "25cc943da700887237e3b5641535e8747817b757a9db4b849d50c28c54d97c4d"
+   "bytes": 3373,
+   "sha256": "a95071e3638726a98db6f5b7401c04b29bde36e32fb7ad93e2ca1574570072b7"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -16682,6 +16682,11 @@
    "sha256": "07c07278eb0d3c00d150d5b667b6fb9db3ec45d2df8ad4721f5191a17ecd02b1"
   },
   {
+   "path": "qa/match/05/r31_3d/README.md",
+   "bytes": 4614,
+   "sha256": "1f49780ab699e338df7d81b4d92371f6a1c18af7850df2074828e27f84401fef"
+  },
+  {
    "path": "qa/match/05/r31_3d/compare/BEFORE_s132.44.png",
    "bytes": 2096576,
    "sha256": "bbc0d6ae8f80c47f897d4c5251f8fc22111caf01cb40532f1c05d209de1c966a"
@@ -17157,9 +17162,24 @@
    "sha256": "2addc169a63b2e8fa3476ae0b6335720ec07a8be172798b5356c07dbb9611229"
   },
   {
+   "path": "qa/match/05/r31_3d/proof/CMP_end_of_05.jpg",
+   "bytes": 1546400,
+   "sha256": "cc2dac1937283dad8d70c68adfd994d3c68a9f0345f33535da32c9fc59df0af0"
+  },
+  {
+   "path": "qa/match/05/r31_3d/proof/CMP_start_of_05.jpg",
+   "bytes": 1669631,
+   "sha256": "36481011695432df0d88b25b7c014a2eb81565601ff02ca845c2f92abb594140"
+  },
+  {
+   "path": "qa/match/05/r31_3d/proof/CMP_swimming_1.6s.jpg",
+   "bytes": 1652459,
+   "sha256": "a01e3178bb5abbaccb1d074cd1f9f79caff353c3a5c867196891e05e11e93910"
+  },
+  {
    "path": "qa/match/05/r31_3d/proof/NEW3D_SCREEN05_gameplay.mp4",
-   "bytes": 10646520,
-   "sha256": "1c1009a3ff577dff4756db1de9911a234e08374123e8799a7025176d9d30ea5b"
+   "bytes": 10669874,
+   "sha256": "a3069a5ce1fbb60517b05b36bc7708997b11390d6989447886ed1c58a176d87b"
   },
   {
    "path": "qa/match/05/r31_3d/proof/NEW3D_SCREEN05_sideview.mp4",
