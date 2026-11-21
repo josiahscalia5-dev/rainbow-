@@ -5003,3 +5003,90 @@ Keep everything protected on GitHub. Don't overwrite my original artwork, succes
 
 I want to see the real gameplay working beautifully before we move forward.
 
+### 🤖 Claude — 2026-11-21T11:27:23.496Z
+
+Yes. Starting the free full-length Screen 05 test with the 3D sections we already have. No credits, and nothing existing gets overwritten.
+
+**My plan for your 8 points:**
+1. **River:** use the sharp ring-to-ring section of your Marble world, alternating normal and left-right-mirrored copies, so the S-river keeps bending left, right, left. That's a continuing S, not one pattern repeating every second.
+2. **Joins:** cut the walls exactly at a gold ring, so the ring hides the join, and cross-fade the water across each join.
+3. **Far end:** fix the black hole with the world's own far tunnel and gold glow, placed at the end of the track.
+4. **Water and Benny:** add flowing glints, bubbles and splashes around Benny on top.
+
+Then I'll record the whole level at normal speed.
+
+First check: whether the river lines up when a section is mirrored.
+
+### 🤖 Claude — 2026-11-21T11:27:27.352Z
+
+> 🔧 **Bash** `{"command": "timeout 120 python3 -I - <<'EOF'\nimport json, numpy as np\nS='/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad'\nF=json.load(open(S+'/tile_frame.json')); ax,n_,rt=(np.array(F[k]) for k in ('ax','n','right'))\nSC=json.load(open(S+'/splatview/scene05.json')); T=np.array(SC['trail']); n=np.array(SC['plane']['n'])\nu=T@ax; lat=T@rt\nfor uu in [1.1,1.3,1.6,2.0,2.4,2.8,3.1,3.33]:\n    i=np.argmin(np.abs(u-uu)); print('u %.2f trail lateral %.3f'%(u[i],lat[i]))\n# tunnel centre lateral at the rings (from the earlier circle fits): A lat 0.00 at u1.4, B -0. …[+100 chars]`
+
+### 🧑 User — 2026-11-21T11:27:27.692Z
+
+> ↩︎ result: u 1.08 trail lateral -0.001
+> u 1.30 trail lateral -0.008
+> u 1.59 trail lateral -0.000
+> u 2.00 trail lateral 0.027
+> u 2.40 trail lateral 0.108
+> u 2.81 trail lateral 0.157
+> u 3.10 trail lateral 0.047
+> u 3.33 trail lateral -0.016
+
+### 🤖 Claude — 2026-11-21T11:28:24.251Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/marble05/build_track.py", "content": "\"\"\"Screen 05 full-length track from the sharp first section of the Marble world (no credits, no new art).\nPieces (PLY, Marble/OpenCV local frame like the SPZ):\n  near      the world as the approved picture shows it, up to ring B (walls cut at the ring, water cross-faded past it)\n  bay[_m]   ring A -> ring B section, water cross-faded at both ends; _m = mirrored left/right (river bends the other way)\n  *_lo      the same from the 100k-splat world (distant sections / phones)\n  far       the world beyond ring B …[+5485 chars]`
+
+### 🧑 User — 2026-11-21T11:28:24.290Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/marble05/build_track.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-21T11:28:26.904Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad; mkdir -p $S/splatview/track && cd /home/user/rainbow-/tools/marble05 && timeout 900 python3 -I build_track.py /home/user/rainbow-/qa/worldlabs/05/r32/full_500k.spz /home/user/rainbow-/qa/worldlabs/05/r32/full_100k.spz $S/splatview/scene05.json $S/tile_frame.json $S/splatview/track 10; ls -la $S/splatview/track", "description": "Build the track pieces (sharp, mirrored, light, far end)", "timeout": 920000}`
+
+### 🧑 User — 2026-11-21T11:28:28.605Z
+
+> ↩︎ result: bay 206246
+> bay_m 206246
+> near 455798
+> far 22901
+> bay_lo 42634
+> bay_m_lo 42634
+> D [-0.155 -0.064 -2.057] path length 24.86
+> total 53508
+> drwxr-xr-x  2 root root     4096 Nov 21 11:28 .
+> drwxr-xr-x 18 root root     4096 Nov 21 11:28 ..
+> -rw-r--r--  1 root root 11550138 Nov 21 11:28 bay.ply
+> -rw-r--r--  1 root root  2387865 Nov 21 11:28 bay_lo.ply
+> -rw-r--r--  1 root root 11550138 Nov 21 11:28 bay_m.ply
+> -rw-r--r--  1 root root  2387865 Nov 21 11:28 bay_m_lo.ply
+> -rw-r--r--  1 root root  1282817 Nov 21 11:28 far.ply
+> -rw-r--r--  1 root root 25525050 Nov 21 11:28 near.ply
+> -rw-r--r--  1 root root    90574 Nov 21 11:28 track.json
+
+### 🤖 Claude — 2026-11-21T11:29:05.942Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad; cd /home/user/rainbow- && timeout 120 python3 -I - <<'EOF'\nimport numpy as np\nfrom PIL import Image\nS='/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad'\nb=np.asarray(Image.open('assets/textures/paint/05k0_benny.png').convert('RGBA')).astype(np.float32)/255\nH,W=b.shape[:2]; y0=400\nc=b[y0:].copy(); hh,ww=c.shape[:2]\nyy,xx=np.mgrid[0:hh,0:ww].astype(np.float32)\na=c[...,3]\na*=np.clip((yy-10)/50,0,1)                                   # soft top edge\ne=np.hypot …[+1426 chars]`
+
+### 🧑 User — 2026-11-21T11:29:06.364Z
+
+> ↩︎ result: splash 799 309 pivot row in crop 126
+> lrwxrwxrwx 1 root root     52 Nov 21 04:24 bake.png -> /home/user/rainbow-/assets/textures/benny31/bake.png
+> -rw-r--r-- 1 root root  18839 Nov 21 11:29 bubble.png
+> lrwxrwxrwx 1 root root     53 Nov 21 04:24 coin.png -> /home/user/rainbow-/assets/textures/paint/05_coin.png
+> -rw-r--r-- 1 root root   4409 Nov 21 11:29 glint.png
+> -rw-r--r-- 1 root root 533222 Nov 21 11:29 splash.png
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T11:30:00.807Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/splatview/play3.html", "content": "<!doctype html>\n<html><head><meta charset=\"utf-8\"><title>Screen 05 full track test</title>\n<style>\nhtml,body{margin:0;background:#000;overflow:hidden;font-family:system-ui,sans-serif}canvas{display:block}\n#hud{position:fixed;left:0;right:0;top:10px;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none}\n.bar{display:flex;gap:28px;align-items:center;background:linear-gradient(#7b2bbf,#4a1386);border:2px solid #d9a7ff;border-radius: …[+13998 chars]`
+
+### 🧑 User — 2026-11-21T11:30:00.834Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/splatview/play3.html (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-21T11:30:11.331Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad; V=$S/splatview; sed -i \"s/timeout: 180000/timeout: 900000/\" $V/play_shots2.cjs; sed -i \"s#await page.screenshot({ path: \\`\\${out}/s_\\${s}.png\\` });#await page.screenshot({ path: \\`\\${out}/s_\\${s}.png\\`, timeout: 600000 });#\" $V/play_shots2.cjs; grep -c \"600000\" $V/play_shots2.cjs; cd $V && PAGE=play3.html STILLS='[0,1.2,2.3,4.4,6.4,9.0]' NODE_PATH=$(npm root -g) timeout 3000 node play_shots2.cjs out_tr1 stills 2>&1 | grep -v \"^\\s*at \" | tail -8; python3 -I -c \"\nfrom PIL import I …[+501 chars]`
+
