@@ -68,3 +68,5 @@ Atlas (separate product, own account + credits at atlas.worldlabs.ai) is NOT usa
 | 03:5x | `GET /credits` | 200 | 5,420 |
 | 03:5x | upload `qa/worldlabs/05/r32/input_05_clean.png` (approved 05 plate, Benny / coins / HUD removed, full frame 1080×1920) | 200 (free), asset `0d12279c-9d49-4cef-9cdd-9f9d16ae7307` | 5,420 |
 | 03:5x | `worlds:generate` **marble-1.0-draft**, operation `6682dee2-3162-4b75-9c2e-62d6f4ed191b` | started | 5,420 → (230 expected) |
+| 03:4x | draft done: world `f3226155-5633-4e41-bbd5-f58a3f584c26` (splats 100k / 500k / full, collider) | 200 | 5,420 → **5,190** (230) |
+| 04:0x | user: "U can use 1580 for full quality from my credits" → `worlds:generate` **marble-1.1**, operation `b03e1e8d-f200-4a8d-b16a-91128a11643d` | started | 5,190 → (1,580 expected → 3,610) |

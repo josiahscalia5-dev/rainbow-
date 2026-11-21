@@ -794,7 +794,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 25599,
-   "sha256": "506a056d767ca95ee100306ecf8485370dde369ae5eb6a94ee0c440705502045"
+   "sha256": "a71a0b3b12828c72826d798c47bc67b0a31aa774af7b504c0d6b7df6d7397ada"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3056,
-   "sha256": "7c928c700758001790f9cea823778e870272e321f6f5f6b0db024ec8da4b245f"
+   "sha256": "68f4ac4b73f0ba99ca1d1d9fb85c3ad9f58bca9dcf7c2b882c9aa2bb95fb41ec"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -35758,8 +35758,8 @@
   },
   {
    "path": "qa/worldlabs/05/pilot/LEDGER.md",
-   "bytes": 6850,
-   "sha256": "73f0bcede7013ce637383bf9fd653d55f302b5914e1a4776e418e0062845c766"
+   "bytes": 7195,
+   "sha256": "945a6b27fce7cc90edee08230bb065d0d30f3f19357f364dce8385b5043cf01f"
   },
   {
    "path": "qa/worldlabs/05/pilot/draft/analysis/bay_coverage.png",
@@ -37095,6 +37095,11 @@
    "path": "tools/marble05/splatlib.py",
    "bytes": 5026,
    "sha256": "8edae45854b1842e90865bfb84d4598e5aa35f08f4330d343c188e0213e129fe"
+  },
+  {
+   "path": "tools/marble05/spz.py",
+   "bytes": 934,
+   "sha256": "28bf68792c8428073e1e2ca0a996a6a066ea30661229e0f04b9abe78b2ab993b"
   },
   {
    "path": "tools/match/bake.py",
