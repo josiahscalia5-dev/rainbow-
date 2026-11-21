@@ -4395,3 +4395,114 @@ No, I'm not saying that. You can have a real game where Benny swims through all 
 
 Everything is saved on GitHub (commit `e9c5889`). Your approved Screen 05, both Marble worlds and every gameplay version are unchanged.
 
+### 🧑 User — 2026-11-21T10:39:18.316Z
+
+I installed the SpAItial plugin, run the Echo-2 test
+
+### 🤖 Claude — 2026-11-21T10:39:19.649Z
+
+> 🔧 **ListPlugins** `{"keywords": ["spaitial"]}`
+
+### 🧑 User — 2026-11-21T10:39:19.705Z
+
+> ↩︎ result: {"results":[]}
+
+### 🤖 Claude — 2026-11-21T10:39:19.998Z
+
+> 🔧 **ToolSearch** `{"query": "+spaitial", "max_results": 10}`
+
+### 🧑 User — 2026-11-21T10:39:20.012Z
+
+> ↩︎ result: No matching deferred tools found
+
+### 🤖 Claude — 2026-11-21T10:39:23.959Z
+
+> 🔧 **Bash** `{"command": "for u in https://api.spaitial.ai https://docs.spaitial.ai https://spaitial.ai https://mcp.spaitial.ai; do timeout 20 curl -s -o /dev/null -w \"$u %{http_code}\\n\" $u; done", "description": "Check which SpAItial hosts are reachable"}`
+
+### 🧑 User — 2026-11-21T10:39:26.470Z
+
+> ↩︎ result: https://api.spaitial.ai 200
+> https://docs.spaitial.ai 200
+> https://spaitial.ai 200
+> https://mcp.spaitial.ai 200
+
+### 🤖 Claude — 2026-11-21T10:39:30.038Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/sp; mkdir -p $S; cd $S; for u in llms.txt llms-full.txt; do timeout 30 curl -sL -o $u -w \"$u %{http_code} %{size_download}\\n\" https://docs.spaitial.ai/$u; done; head -c 3000 llms.txt; echo; grep -i -n \"credit\\|free\\|price\\|api key\\|authorization\\|header\\|echo-2\\|echo 2\\|/v1/\" llms-full.txt 2>/dev/null | head -40", "description": "Read the SpAItial API docs index"}`
+
+### 🧑 User — 2026-11-21T10:39:31.026Z
+
+> ↩︎ result: llms.txt 200 13188
+> llms-full.txt 200 268944
+> # SpAItial Developer Docs
+> 
+> > SpAItial turns a single image into an immersive 3D world. Product guides and developer API reference.
+> 
+> - [Turn your ideasinto immersive worlds.](https://docs.spaitial.ai/index.md): SpAItial turns a single image into an immersive 3D world. Read product guides and the developer API reference.
+> 
+> 
+> ## Product Documentation
+> 
+> > Guides for creating, editing, and exploring SpAItial worlds.
+> 
+> - [Notifications](https://docs.spaitial.ai/account/notifications.md): Manage notification preferences in SpAItial
+> - [Profile](https://docs.spaitial.ai/account/profile.md): Manage your SpAItial profile and public information
+> - [Sign Up & Login](https://docs.spaitial.ai/account/signup-login.md): Create your SpAItial account and access the platform
+> - [Create Your First World](https://docs.spaitial.ai/create/first-world.md): Step-by-step guide to creating your first 3D world in SpAItial
+> - [Generation States](https://docs.spaitial.ai/create/generation-states.md): Understanding the different states during world generation
+> - [Image Guide](https://docs.spaitial.ai/create/image-guide.md): Best practices for reference images in SpAItial
+> - [Ima …[+5968 chars]
+
+### 🤖 Claude — 2026-11-21T10:39:34.515Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/sp; grep -n -i \"x-api-key\\|bearer\\|api key\\|api_key\\|authorization:\\|base url\\|https://api.spaitial\\|/v1/\\|mcp.spaitial\" $S/llms-full.txt | head -30", "description": "Find SpAItial API authentication details"}`
+
+### 🧑 User — 2026-11-21T10:39:34.575Z
+
+> ↩︎ result: 1185:Developer API access is public for all users. API keys use the same shared credit balance as the app.
+> 1354:* Echo 3 worlds return the reconstructed camera of every frame, from `GET /v1/worlds/requests/{request_id}/cameras` or as `cameras.json` in a zip
+> 1355:* Check your account's frame limit per capture with `GET /v1/captures/limits`
+> 1776:* Billing, credits, and API keys
+> 2030:The SpAItial Developer API uses bearer tokens. Every request must include an `Authorization` header carrying a key issued to your account.
+> 2032:Your API key is a secret
+> 2063:Pass the key in the standard `Authorization: Bearer <key>` header:
+> 2066:curl https://api.spaitial.ai/v1/models \
+> 2067:  -H "Authorization: Bearer spt_live_..."
+> 2081:* Do not put API keys in client-side code, mobile apps, or anything shipped to end users. Calls must be made from a server you control.
+> 2098:| POST `/v1/worlds`                              | `worlds:create` | Create a world from one capture ZIP, or from several scans of one space. |
+> 2099:| GET `/v1/captures/process-quote`               | `worlds:create` | Get the price and ETA for a frame count.                                 |
+> 2100:| GET `/v1/captures/limits`            …[+2492 chars]
+
+### 🤖 Claude — 2026-11-21T10:39:45.394Z
+
+> 🔧 **mcp__claude-code-remote__request_credential** `{"host": "api.spaitial.ai", "reason": "The user asked for a SpAItial Echo-2 test of Screen 05; the plugin cannot be installed in this cloud session, so the test calls the SpAItial Developer API directly, which needs the user's API key (Authorization: Bearer).", "display_name": "SpAItial API key", "suggested_type": "bearer", "prefix": "Bearer"}`
+
+### 🧑 User — 2026-11-21T10:41:30.618Z
+
+> ↩︎ result: The user doesn't want to proceed with this tool use. The tool use was rejected (eg. if it was a file edit, the new_string was NOT written to the file). To tell you how to proceed, the user said:
+> User declined to provide the secret
+
+### 🤖 Claude — 2026-11-21T10:41:35.584Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/worldlabs/05/r32/input_05_clean.png"], "caption": "Your approved Screen 05 with Benny, coins and the score bar removed. It's the same clean picture the Marble worlds were made from, for SpAItial's Image-to-World.", "status": "normal", "display": "attach"}`
+
+### 🧑 User — 2026-11-21T10:41:36.317Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/worldlabs/05/r32/input_05_clean.png → file_uuid: 347b4cf9-7171-4590-9b2b-e778cf8a9e7a
+
+### 🤖 Claude — 2026-11-21T10:41:40.986Z
+
+I can't run the Echo-2 test from this session without your key, and I won't ask for it again. Two ways forward that don't need a key here:
+
+1. **You make the world on spaitial.ai (easiest).** Use Image-to-World with the clean Screen 05 picture I just sent you. That's your approved artwork with Benny, coins and the score bar removed, the same input the Marble worlds used. Pick Echo 2 Standard, 160 of your free 800 monthly credits; HQ would use all 800. When it's done, export the world as **.spz** or **.ply** and upload that file here. I'll then run exactly the test you asked for, at no cost:
+   - forward camera movement first
+   - then the real 3D Benny with the follow-camera
+   - beginning, middle and end at normal speed
+   - a direct comparison with Marble's 2.4-second section, and a plain answer on whether Echo-2 does better.
+2. **Add the key later.** You can enter it yourself in this environment's settings, under network secrets: host `api.spaitial.ai`, header `Authorization: Bearer`. Then I'll call SpAItial directly.
+
+The plugin route doesn't work in this cloud session, because the `/plugin` command isn't available here. It would work in Claude Code on your own computer.
+
+Nothing has been spent on SpAItial. Your Marble balance is still 2,030 credits.
+
