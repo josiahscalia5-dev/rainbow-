@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3271,
-   "sha256": "17a1a9ada3aa0df7fa451d4d84cd9899b058b24989a82cdaf3e2e55e25a99511"
+   "sha256": "d8be591f62faccd34bc12896fa755a8cb54494e1d736673383a72730f845ad87"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -10808,8 +10808,8 @@
   },
   {
    "path": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md",
-   "bytes": 77061,
-   "sha256": "84a2fc2790219af641abcfd2c72a1942671b6a5c4973b1de3c410521919a63c1"
+   "bytes": 77915,
+   "sha256": "2134e907e25ecdc8cc6d623ed49d1091e04f68c85a99be30b026a22671e6df8c"
   },
   {
    "path": "docs/PARALLEL_PROGRESS.md",
@@ -11640,6 +11640,11 @@
    "path": "docs/briefs/2026-11-21-r36/FEASIBILITY_R36.md",
    "bytes": 9370,
    "sha256": "48fc88a5dda1bc9663b3321b7ae978e94b1c466cecb8fb0008db46133366af09"
+  },
+  {
+   "path": "docs/briefs/2026-11-21-r37/OPTIONS_R37.md",
+   "bytes": 4380,
+   "sha256": "bb7b3fe7c75f629492d93f4dd8991d29d1375acfc49ecfd4a3e5723659583e65"
   },
   {
    "path": "docs/characters/benny.md",
@@ -16405,6 +16410,71 @@
    "path": "qa/kit05/r36b/REFERENCE_VIDEO_vs_MOVE_foam_collar.png",
    "bytes": 431956,
    "sha256": "1c2320ad603b633a2f8066099a9d2095a873c925402271c101af34c9586486d8"
+  },
+  {
+   "path": "qa/kit05/r37/APPROVED_phone_frame.jpg",
+   "bytes": 202532,
+   "sha256": "2f00accc2ca77c2eeb966d1ae87cf3cabcb79c6979d93ada7cc6d10c5dc11cc7"
+  },
+  {
+   "path": "qa/kit05/r37/OPTION_A_s0.0_l0.jpg",
+   "bytes": 174563,
+   "sha256": "244691fc10dcc5079776b570c367b7ea53bc34a4f18bcccdc564525b481c5a6b"
+  },
+  {
+   "path": "qa/kit05/r37/OPTION_A_s4.5_l-1.jpg",
+   "bytes": 163923,
+   "sha256": "be543e93a0056826e2c25c38df249776ddeccb5d7bbdba1763fc8298b51ba48e"
+  },
+  {
+   "path": "qa/kit05/r37/OPTION_A_s4.5_l0.jpg",
+   "bytes": 167645,
+   "sha256": "3d84cccbdc071972d059b7a686a2acf61952dd0a03d8b61f595f826ac7456b5d"
+  },
+  {
+   "path": "qa/kit05/r37/OPTION_A_s8.5_l0.jpg",
+   "bytes": 165325,
+   "sha256": "618241fd40de1f4e3c9406fe9cc0fba221bcd996e061aca950291adc2f8254fa"
+  },
+  {
+   "path": "qa/kit05/r37/OPTION_B_s0.0_l0.jpg",
+   "bytes": 163183,
+   "sha256": "d7b47287d7a51f4531066a70645ab65772464ed4db9e5d174a76f409191793eb"
+  },
+  {
+   "path": "qa/kit05/r37/OPTION_B_s4.5_l-1.jpg",
+   "bytes": 161965,
+   "sha256": "15455631e82bfb99516d3e8bf096a8a7b6b33a155293e25c59b23fc54f70fd1b"
+  },
+  {
+   "path": "qa/kit05/r37/OPTION_B_s4.5_l0.jpg",
+   "bytes": 164048,
+   "sha256": "36f5aa98ce76316a2b118a31785a80d7b834ab4b0225a612b228ebf23d365c93"
+  },
+  {
+   "path": "qa/kit05/r37/OPTION_B_s8.5_l0.jpg",
+   "bytes": 164759,
+   "sha256": "ced7d16c86671a7e0b7c374790de582949988783f82b1a5424f6054848f1e586"
+  },
+  {
+   "path": "qa/kit05/r37/OPTION_C_s0.0_l0.jpg",
+   "bytes": 155556,
+   "sha256": "c9f18d71fcb875405f60315908529d0ba2ed5e86f36a07f748c9c793f18d0354"
+  },
+  {
+   "path": "qa/kit05/r37/OPTION_C_s4.5_l-1.jpg",
+   "bytes": 155795,
+   "sha256": "47b976af2a3921d4d48f3ba8ce79701acf3ea23c9bbfb5b61d0c4747ef994cf2"
+  },
+  {
+   "path": "qa/kit05/r37/OPTION_C_s4.5_l0.jpg",
+   "bytes": 158164,
+   "sha256": "ce460d6c6354fd980f86ed25b9cdb1fe166e2784833ac89701657d0e179dbf07"
+  },
+  {
+   "path": "qa/kit05/r37/OPTION_C_s8.5_l0.jpg",
+   "bytes": 159001,
+   "sha256": "581e9207a9ef00c50c32c517b5a3816ecab74025713ce70d7a968919fc06f0e5"
   },
   {
    "path": "qa/lead_r5/2026-11-17/README.md",
