@@ -794,7 +794,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 26528,
-   "sha256": "3c1d5f548d86ce572b5d29412d92751774da8c790cfd391320a5502dff140cde"
+   "sha256": "db0c50afb241cc9f89b3cc64dea1d3a857ad86593fef8593125cdec3d8a44cd6"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3153,
-   "sha256": "a4dd89fcf2fa1e3ca71ba082f78ab1496799a41213d3f68ac34d251cfb25ccfe"
+   "sha256": "9dce5ef24d16560004b37736200303304f0092a83a255e2b966bd9f0e6023f6e"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -7734,7 +7734,7 @@
   {
    "path": "backups/wip/screen05-agents/LAST_SYNC_UTC",
    "bytes": 33,
-   "sha256": "30dc8c03549ef01f56d827db9ace476801dc437de7be97cbf8e9d20b90e71e30"
+   "sha256": "37ae7a8a24d8794ad0a8695141dd9cb7cd14c1d9b62cb66803bddcc2dc5de8fd"
   },
   {
    "path": "backups/wip/screen05-agents/WORKSPACE",
@@ -39582,6 +39582,11 @@
    "sha256": "69ee93dc70222750ed61bc4a8195193b0592556c5802b267a84634bba96b5709"
   },
   {
+   "path": "tools/kit05/bake_kit.py",
+   "bytes": 6396,
+   "sha256": "7a7748398097292a01dcc92473bfa9870a228e29572d99d26a63c8639e75e73f"
+  },
+  {
    "path": "tools/kit05/cam05.py",
    "bytes": 1448,
    "sha256": "0dd6786ebf6c53fb340dfe71772a3a010dcba28b91650159f99b8ff1877339ef"
@@ -39590,6 +39595,11 @@
    "path": "tools/kit05/fit_tunnel.py",
    "bytes": 2841,
    "sha256": "9bf32a1cbd8227d1fefc1d7304e6ade39a250734d235fd5bbf36dc2795b9ee39"
+  },
+  {
+   "path": "tools/kit05/kit_model.py",
+   "bytes": 5728,
+   "sha256": "00679ca62438a340e5920550c5def4b7905b5d9f6debbfb9f2b2495d9151d0f4"
   },
   {
    "path": "tools/lead21/audit_screen.mjs",
