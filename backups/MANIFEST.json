@@ -794,7 +794,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 26067,
-   "sha256": "1a22d5cf307ca2fd41e6cdf5b1deccf5188a29e02ad08339c606a2a9c3e80bd5"
+   "sha256": "cd2e1f8baed1e98b00117134a37bf216ed8b4d9b8e7bacb4327f087e8a6d7032"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3271,
-   "sha256": "01a4cff5e6a5c1c073084f135ce506da31bbf4dc54e831d21772dba6af571237"
+   "sha256": "76b6b6139d4edd958253c0b1ef4a32a8e36c394d4c528d389328586c1bfa74d1"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -7734,7 +7734,7 @@
   {
    "path": "backups/wip/screen05-agents/LAST_SYNC_UTC",
    "bytes": 33,
-   "sha256": "8a7fea1771d80dea04305e97b9ce5b9bb1f38c8defaa475383dd40673b349801"
+   "sha256": "3b6ba9ddf42d3c9e5f21e35bab4be8465520b121801e7d1f90ad5c2cda5edfa8"
   },
   {
    "path": "backups/wip/screen05-agents/WORKSPACE",
@@ -7823,8 +7823,8 @@
   },
   {
    "path": "backups/wip/screen05-agents/agentA/controls.js",
-   "bytes": 32404,
-   "sha256": "0f415473a077be2138db292dfd8df76a7b737cde51fcb76bd654eff4739d36c2"
+   "bytes": 33915,
+   "sha256": "fe3546ec4145e731fd99e75a9e459f11970e847d504d2e1e2a360989200c02fe"
   },
   {
    "path": "backups/wip/screen05-agents/agentA/final_acceptance.cjs",
@@ -7855,6 +7855,11 @@
    "path": "backups/wip/screen05-agents/agentA/mergedtest/.serve_token_18725.txt",
    "bytes": 24,
    "sha256": "20b53f5eceafdc32f3a3c0b91b30edf095987b855b3857adc4ec91f1cf6fe8e5"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentA/mergedtest/.serve_token_2029.txt",
+   "bytes": 24,
+   "sha256": "0a551b83829d0f009fe8576b631e98cdb6eb49cd27786b97ba706ce672d7a1c5"
   },
   {
    "path": "backups/wip/screen05-agents/agentA/mergedtest/.serve_token_21614.txt",
@@ -7953,8 +7958,8 @@
   },
   {
    "path": "backups/wip/screen05-agents/agentA/mergedtest/controls.js",
-   "bytes": 32404,
-   "sha256": "0f415473a077be2138db292dfd8df76a7b737cde51fcb76bd654eff4739d36c2"
+   "bytes": 33915,
+   "sha256": "fe3546ec4145e731fd99e75a9e459f11970e847d504d2e1e2a360989200c02fe"
   },
   {
    "path": "backups/wip/screen05-agents/agentA/mergedtest/final_acceptance.cjs",
@@ -8948,8 +8953,8 @@
   },
   {
    "path": "backups/wip/screen05-agents/agentB/out_water/budget_after_full_r32c.json",
-   "bytes": 0,
-   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+   "bytes": 675,
+   "sha256": "3537972354f1503dd6c5ca494f186b292b47aa46eade56cc034892a2e61effda"
   },
   {
    "path": "backups/wip/screen05-agents/agentB/out_water/budget_before.json",
@@ -9090,6 +9095,31 @@
    "path": "backups/wip/screen05-agents/agentB/out_water/diag/xsec_ringB.png",
    "bytes": 18371,
    "sha256": "46176105fb0562531dbd949bdb4b7abd5bebf2f11627b77d13266c0b57943370"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentB/out_water/end32c/log.txt",
+   "bytes": 744,
+   "sha256": "4e5665d258c4972d91cdda63db3d5beeec66149a4a8e193944319deb6c83e803"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentB/out_water/end32c/s_16.png",
+   "bytes": 710054,
+   "sha256": "c043f0a918bb9ce70133785bd6f6acfdc9e95bd3c5a73e52047bf220e8d95952"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentB/out_water/end32c/s_20_l-0.22_r0.png",
+   "bytes": 710067,
+   "sha256": "86ac2505d859fa55601cbea86f0c7d9f4358b36d838d5fb935f0d061bfe7b7f2"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentB/out_water/end32c/s_24.png",
+   "bytes": 715146,
+   "sha256": "45a5601797250dee86047b1d8009f15158682bda7d6ad9191a4053a241118342"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentB/out_water/end32c/s_27_l0.22_r0.12.png",
+   "bytes": 716501,
+   "sha256": "9f77b2a2c9a9d354bf7606af675db9a7eb4b8d2b226918b44c356be31e47b4d6"
   },
   {
    "path": "backups/wip/screen05-agents/agentB/out_water/final_end/chk/f_0000_s_0.jpg",

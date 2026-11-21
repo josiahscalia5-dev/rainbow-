@@ -3040,3 +3040,14 @@ You've hit your 5-hour limit · resets 5:40pm (UTC)
 <result>The 26-coin layout has no overlaps in the model. Now I'll write it into controls.js with the lead's end rule and the compromise size table.</result>
 </task-notification>
 
+### 🧑 User — 2026-11-21T13:57:47.871Z
+
+<task-notification>
+<task-id>aba3a82f8b70b6b99</task-id>
+<tool-use-id>toolu_01G2AYEk7jeJh35rFphFTDJh</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/tasks/aba3a82f8b70b6b99.output</output-file>
+<status>failed</status>
+<summary>Agent "Screen 05 water flow + cleanup (resume)" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 5:40pm (UTC) (error type rate_limit, HTTP 429, request id req_011ChGC2GSNVdhxQy1HJVvjY, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 5:40pm (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+</task-notification>
+
