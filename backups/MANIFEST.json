@@ -794,7 +794,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 26528,
-   "sha256": "ad23548f852748b026a79a0d2b9bda6cd6edb40837e1c8a06847cc96bfb65288"
+   "sha256": "7387ce47a21a8f7ee19cade5fdc69231807175fa47bbed07b2ecbfd25660def9"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3153,
-   "sha256": "15fa34acec40471bbc5a304693e1ad6c51fa3d9d82daf7f1be423fe0750d85ae"
+   "sha256": "15ded3b3758d538f78aeded7377b16a468ad7c1e1fe671e37b03655b4987b429"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -7734,7 +7734,7 @@
   {
    "path": "backups/wip/screen05-agents/LAST_SYNC_UTC",
    "bytes": 33,
-   "sha256": "6ddcebe9bf211986f7ca4aaa848b7a52fcef8a0ab32088f7b59434b766ba2a55"
+   "sha256": "f4d0ab4a3fd9d7dd219febbb93137104c828505f1083b52cb8726ebd52ec3f58"
   },
   {
    "path": "backups/wip/screen05-agents/WORKSPACE",
@@ -39833,8 +39833,8 @@
   },
   {
    "path": "tools/kit05/kitgame.html",
-   "bytes": 24650,
-   "sha256": "03523d37d2e23e509a89e353d308093ea17f7dd26845261896ed8a625053ce0a"
+   "bytes": 24645,
+   "sha256": "cb73b62fb8693cd79574347ae965a826ecb1e7f13f68fe87989f647fbc2cf809"
   },
   {
    "path": "tools/kit05/still_page.cjs",
