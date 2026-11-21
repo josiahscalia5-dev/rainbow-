@@ -25,6 +25,7 @@ import { RideCamera } from './cameraRig';
 import { flag05 } from '../vfx/waterRibbon';
 import { MATCH } from './match';
 import { buildMatch08 } from '../world/match08';
+import { buildPaint06, PAINT06_REST } from '../world/paint06';
 import { loadBennyRuntime, loadGirlRuntime, loadWater, moduleStatus } from './modules';
 
 type Mode = 'intro' | 'ride' | 'outro' | 'end';
@@ -115,6 +116,8 @@ export async function startGame(canvas: HTMLCanvasElement) {
   const b08Rest = b08 ? { hat: b08.hat?.scale.x ?? 1, body: (b08.body?.scale ?? new THREE.Vector3(1, 1, 1)).clone(), pos: (b08.aux?.position ?? new THREE.Vector3()).clone(), y: b08.aux?.position.y ?? 0, crown: ((b08.crown?.material as THREE.MeshStandardMaterial | undefined)?.color ?? new THREE.Color()).clone() } : null;
   let m08On = false;
   let m08Applied = false;
+  // `?paint06=1`: Screen 06 = the user's own five pictures (approved 06 + the four storyboard panels), src/world/paint06.ts
+  const p06 = flag05('paint06') ? await buildPaint06(course) : null;
   // debug: ?hide=water,benny,coins,drumA,basin,tubes,chamber
   const hidden = new Set((qs.get('hide') ?? '').split(',').filter(Boolean));
   if (hidden.has('water')) water.group.visible = false;
@@ -351,7 +354,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
   const rideUpdate = (dt: number) => {
     input.update(dt);
     const stg = course.stageAtS(st.s);
-    const speed = course.prop('speed', st.s);
+    const speed = course.prop('speed', st.s) * (p06 ? p06.speedK(st.s) : 1);
     st.s = Math.min(course.stage('11').s0, st.s + speed * dt);
     const halfW = course.widthAt(st.s) / 2;
     const safe = halfW - 0.75;
@@ -615,7 +618,9 @@ export async function startGame(canvas: HTMLCanvasElement) {
       m08.sync(renderer, dbs.x, dbs.y);
     }
     renderer.info.reset();
-    composer.render();
+    const pw = p06 && st.mode === 'ride' ? p06.weight(st.s) : 0;
+    if (pw < 0.999) composer.render();
+    if (p06 && pw > 0.001) p06.draw(renderer, { s: st.s, lat: st.lat, steer: input.steer, time: st.frozen ?? st.clock, w: pw });
   };
   const frame = () => {
     const now = performance.now();
@@ -646,6 +651,8 @@ export async function startGame(canvas: HTMLCanvasElement) {
     '07b_plunge_mid': { mode: 'ride', s: (course.marks['07_plunge_top'] + course.marks['07_plunge_bottom']) / 2 },
     '07c_plunge_bottom': { mode: 'ride', s: course.marks['07_plunge_bottom'] - 3 },
     '07d_entering_08': { mode: 'ride', s: course.stage('08').s0 + 0.2 },
+    // `?paint06=1`: the five picture moments of Screen 06 (k0 = the approved picture = '06', p1..p4 = storyboard panels)
+    ...(p06 ? Object.fromEntries(PAINT06_REST.map((r, k) => [`06p${k}`, { mode: 'ride' as Mode, s: course.stage('06').s0 + r }])) : {}),
   };
 
   const gotoCheckpoint = (id: string, time = 12.0) => {

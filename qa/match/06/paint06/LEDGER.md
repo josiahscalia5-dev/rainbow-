@@ -28,3 +28,8 @@
 | 2026-11-21 00:13 | k1_clean_up2 | fal-ai/seedvr/upscale/image | `01a1fb73-b743-7ac2-8f9f-7c86f81d6698` | 0.100 | True | 10 |
 | 2026-11-21 00:13 | k4_clean_up2 | fal-ai/seedvr/upscale/image | `01a1fb73-b7a1-7772-82a5-b4fe2cbe5a5f` | 0.100 | True | 10 |
 | 2026-11-21 00:13 | k0_clean_up2 | fal-ai/seedvr/upscale/image | `01a1fb73-b73d-7dd2-9221-9fc219d4a54c` | 0.100 | True | 13 |
+| 2026-11-21 00:16 | k4_depth | fal-ai/image-preprocessors/depth-anything/v2 | `01a1fb76-1b99-72c3-a086-3692baae0336` | 0.010 | True | 3 |
+| 2026-11-21 00:16 | k0_depth | fal-ai/image-preprocessors/depth-anything/v2 | `01a1fb76-1c2a-7532-bba0-a4c68f036d5d` | 0.010 | True | 3 |
+| 2026-11-21 00:16 | k1_depth | fal-ai/image-preprocessors/depth-anything/v2 | `01a1fb76-1c79-7b93-b25a-287b4cb4ea0c` | 0.010 | True | 3 |
+| 2026-11-21 00:16 | k3_depth | fal-ai/image-preprocessors/depth-anything/v2 | `01a1fb76-1c9a-7d50-806f-ec8b5e714193` | 0.010 | True | 6 |
+| 2026-11-21 00:16 | k2_depth | fal-ai/image-preprocessors/depth-anything/v2 | `01a1fb76-1ca7-7431-a806-4a1f90d04937` | 0.010 | True | 7 |

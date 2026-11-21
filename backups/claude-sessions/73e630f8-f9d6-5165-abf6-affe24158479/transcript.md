@@ -1066,3 +1066,265 @@ Back-projection gives 100% of pixels matching your panel within 20 levels at the
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-21T00:16:19.250Z
+
+All five full-screen pictures are ready, and each one looks like your panel. Next is depth maps, so near water moves faster than the far tunnel while Benny swims, and then the game code.
+
+### 🤖 Claude — 2026-11-21T00:16:22.949Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && python3 -I - <<'EOF'\nimport sys; sys.path.insert(0,'tools/paint06')\nfrom fal import run, data_uri, download\nfrom concurrent.futures import ThreadPoolExecutor\nfrom PIL import Image\nW='qa/match/06/paint06/work'\ndef dep(k):\n    r=run('fal-ai/image-preprocessors/depth-anything/v2', {'image_url': data_uri(f'{W}/k{k}_clean.png')}, name=f'k{k}_depth', est_usd=0.01)\n    img=r.get('image') or r.get('images',[{}])[0]\n    download(img['url'], f'{W}/k{k}_depth_raw.png'); im=Image.open(f'{W}/k{k}_depth_raw.png'); return k, im.mode, im.size\nwith ThreadPoolExe …[+392 chars]`
+
+### 🧑 User — 2026-11-21T00:16:31.020Z
+
+> ↩︎ result: (0, 'RGB', (864, 1440))
+> (1, 'RGB', (864, 1440))
+> (2, 'RGB', (864, 1440))
+> (3, 'RGB', (864, 1440))
+> (4, 'RGB', (864, 1440))
+> 56:  renderer.outputColorSpace = THREE.SRGBColorSpace;
+> 57:  renderer.toneMapping = THREE.NeutralToneMapping;
+> /** Final colour grade (display space): saturation / contrast / gentle vignette for the candy look. */
+> import * as THREE from 'three';
+> import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
+> 
+> export function createGradePass(opts: { saturation?: number; contrast?: number; vignette?: number } = {}) {
+>   return new ShaderPass({
+>     uniforms: {
+>       tDiffuse: { value: null },
+>       uSat: { value: opts.saturation ?? 1.36 },
+>       uCon: { value: opts.contrast ?? 1.15 },
+>       uVig: { value: opts.vignette ?? 0.18 },
+>     },
+>     vertexShader: /* glsl */ `varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
+>     fragmentShader: /* glsl */ `
+>       uniform sampler2D tDiffuse; uniform float uSat; uniform float uCon; uniform float uVig; varying vec2 vUv;
+>       void main(){
+>         vec4 c = texture2D(tDiffuse, vUv);
+>         float l = dot(c.rgb, vec3(0.2126, 0.7152, 0.0722));
+>         vec3 c …[+294 chars]
+
+### 🤖 Claude — 2026-11-21T00:16:36.861Z
+
+> 🔧 **Bash** `{"command": "grep -n \"import\\|load\\|url\\|new URL\\|\\.jpg\\|\\.png\\|\\.webp\" src/world/match08.ts | head -20; ls -la assets/textures/match08 | head; cat .gitattributes 2>/dev/null | head; ls public | head", "description": "See how existing screens load their picture files"}`
+
+### 🧑 User — 2026-11-21T00:16:36.914Z
+
+> ↩︎ result: 12:import * as THREE from 'three';
+> 13:import { PROJ05_INVERSE } from '../vfx/waterRibbon';
+> 97:  const L: Layout = await fetch(new URL('../../assets/textures/match08/proj08.json', import.meta.url).href).then((r) => r.json());
+> 98:  const plate = await new THREE.TextureLoader().loadAsync(new URL('../../assets/textures/match08/plate08_hybrid.png', import.meta.url).href);
+> 125:  const loadPatch = async (name: string) => {
+> 126:    const t = await new THREE.TextureLoader().loadAsync(new URL(`../../assets/textures/match08/patch_${name}.png`, import.meta.url).href);
+> 129:  const [pWall, pGold, pTowel] = await Promise.all([loadPatch('wall'), loadPatch('gold'), loadPatch('towel')]);
+> 194:  const SP: { offset: [number, number, number]; w: number; h: number } = await fetch(new URL('../../assets/textures/match08/splash08.json', import.meta.url).href).then((r) => r.json());
+> 195:  const spTex = await new THREE.TextureLoader().loadAsync(new URL('../../assets/textures/match08/splash08.png', import.meta.url).href);
+> total 13072
+> drwxr-xr-x 2 root root    4096 Nov 20 23:51 .
+> drwxr-xr-x 6 root root    4096 Nov 20 23:51 ..
+> -rw-r--r-- 1 root root     684 Nov 20 23:51 cam08_locked.json
+> -rw-r--r-- 1 root root   …[+832 chars]
+
+### 🤖 Claude — 2026-11-21T00:16:45.845Z
+
+> 🔧 **Bash** `{"command": "mkdir -p assets/textures/paint06 && cat > tools/paint06/step4_export.py <<'EOF'\n\"\"\"paint06 step 4: game assets -> assets/textures/paint06/ (plates JPEG q94, Benny layers PNG RGBA, smoothed depth PNG, layout JSON)\"\"\"\nimport json\nimport cv2, numpy as np\nfrom PIL import Image\nR = '/home/user/rainbow-'; W = f'{R}/qa/match/06/paint06/work'; O = f'{R}/assets/textures/paint06'\nimport sys; sys.path.insert(0, f'{R}/tools/paint06')\nfrom step3_plates import FW, FH, MX, MY, PW, PH, S\nlay = {'frame': [FW, FH], 'margin': [MX, MY], 'plate_frame_px': [PW, PH], 'plate_scale': S, 'key …[+1181 chars]`
+
+### 🧑 User — 2026-11-21T00:16:50.377Z
+
+> ↩︎ result: {"frame": [864, 1536], "margin": [144, 192], "plate_frame_px": [1152, 1920], "plate_scale": 1.25, "keys": [{"k": 0, "benny_frame_px": [83.19999999999999, 723.2, 753.6, 1294.4]}, {"k": 1, "benny_frame_px": [83.19999999999999, 723.2, 753.6, 1294.4]}, {"k": 2, "benny_frame_px": [83.19999999999999, 723.2, 753.6, 1294.4]}, {"k": 3, "benny_frame_px": [83.19999999999999, 723.2, 753.6, 1294.4]}, {"k": 4, 
+> total 14296
+> drwxr-xr-x 2 root root    4096 Nov 21 00:16 .
+> drwxr-xr-x 7 root root    4096 Nov 21 00:16 ..
+> -rw-r--r-- 1 root root 1329446 Nov 21 00:16 k0_benny.png
+> -rw-r--r-- 1 root root   12201 Nov 21 00:16 k0_depth.png
+> -rw-r--r-- 1 root root 1773903 Nov 21 00:16 k0_plate.jpg
+> -rw-r--r-- 1 root root 1209564 Nov 21 00:16 k1_benny.png
+> -rw-r--r-- 1 root root   11458 Nov 21 00:16 k1_depth.png
+> -rw-r--r-- 1 root root 1761797 Nov 21 00:16 k1_plate.jpg
+> -rw-r--r-- 1 root root 1218908 Nov 21 00:16 k2_benny.png
+> -rw-r--r-- 1 root root   10598 Nov 21 00:16 k2_depth.png
+> -rw-r--r-- 1 root root 1506120 Nov 21 00:16 k2_plate.jpg
+> -rw-r--r-- 1 root root 1197229 Nov 21 00:16 k3_benny.png
+> -rw-r--r-- 1 root root   10335 Nov 21 00:16 k3_depth.png
+> -rw-r--r-- 1 root root 1707502 Nov 21 00:16 k3_plate.jpg
+> -rw-r--r-- …[+245 chars]
+
+### 🤖 Claude — 2026-11-21T00:16:53.308Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/assets/textures/paint06 && python3 -I -c \"\nfrom PIL import Image\nc=Image.new('L',(5*200,320),255)\nfor i in range(5): c.paste(Image.open(f'k{i}_depth.png'),(i*200,0))\nc.save('/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/depths.png')\"", "description": "Make a preview strip of the five depth maps"}`
+
+### 🧑 User — 2026-11-21T00:16:53.414Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-21T00:16:54.907Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/depths.png"}`
+
+### 🧑 User — 2026-11-21T00:16:54.947Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T00:17:36.784Z
+
+The depth maps look right: the far tunnel reads as far and the water near Benny as near. Now writing the game code. It's all behind a test switch, so your current game stays untouched.
+
+### 🤖 Claude — 2026-11-21T00:18:14.894Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/src/world/paint06.ts", "content": "/**\n * `?paint06=1` — Screen 06 shown as the user's OWN pictures (user decision 2026-11-21: \"Yes, do Screen 06 first … I want\n * these exact … all these four images\"). Five keyframes: k0 = the approved Screen 06 picture, k1..k4 = the four storyboard\n * panels (\"1 curl right over the crest · 2 descend through the gold band · 3 follow the winding slide · 4 connect into\n * Screen 07\"). Each keyframe is a full-screen plate (the panel's own pixels inside its window, the phone frame's extra\n * height continued around it — …[+10313 chars]`
+
+### 🧑 User — 2026-11-21T00:18:14.934Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/src/world/paint06.ts (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-21T00:18:25.782Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && python3 -I - <<'EOF'\np='src/game/Game.ts'; s=open(p).read()\ns=s.replace(\"import { buildMatch08 } from '../world/match08';\\n\",\"import { buildMatch08 } from '../world/match08';\\nimport { buildPaint06, PAINT06_REST } from '../world/paint06';\\n\",1)\ns=s.replace(\"\"\"  let m08On = false;\n  let m08Applied = false;\"\"\",\"\"\"  let m08On = false;\n  let m08Applied = false;\n  // `?paint06=1`: Screen 06 = the user's own five pictures (approved 06 + the four storyboard panels), src/world/paint06.ts\n  const p06 = flag05('paint06') ? await buildPaint06( …[+1317 chars]`
+
+### 🧑 User — 2026-11-21T00:18:28.327Z
+
+> ↩︎ result: 28:import { buildPaint06, PAINT06_REST } from '../world/paint06';
+> 119:  // `?paint06=1`: Screen 06 = the user's own five pictures (approved 06 + the four storyboard panels), src/world/paint06.ts
+> 120:  const p06 = flag05('paint06') ? await buildPaint06(course) : null;
+> 357:    const speed = course.prop('speed', st.s) * (p06 ? p06.speedK(st.s) : 1);
+> 621:    const pw = p06 && st.mode === 'ride' ? p06.weight(st.s) : 0;
+> 623:    if (p06 && pw > 0.001) p06.draw(renderer, { s: st.s, lat: st.lat, steer: input.steer, time: st.frozen ?? st.clock, w: pw });
+> 654:    // `?paint06=1`: the five picture moments of Screen 06 (k0 = the approved picture = '06', p1..p4 = storyboard panels)
+> 655:    ...(p06 ? Object.fromEntries(PAINT06_REST.map((r, k) => [`06p${k}`, { mode: 'ride' as Mode, s: course.stage('06').s0 + r }])) : {}),
+> 1:/** Touch-drag / half-screen press / keyboard steering → steer value in [-1, 1]. */
+> 3:  steer: number;
+> 19:    steer: 0,
+> 28:      state.steer += (t - state.steer) * Math.min(1, dt * 10);
+
+### 🤖 Claude — 2026-11-21T00:18:29.960Z
+
+Typecheck passes. Now running the game in the browser to capture your five picture moments.
+
+### 🤖 Claude — 2026-11-21T00:18:30.617Z
+
+> 🔧 **Bash** `{"command": "sed -n '1,60p' scripts/capture.mjs", "description": "Read how the project captures screenshots"}`
+
+### 🧑 User — 2026-11-21T00:18:30.645Z
+
+> ↩︎ result: #!/usr/bin/env node
+> // Playwright capture of the REAL running game (WebGL) at the native reference sizes.
+> //   node scripts/capture.mjs                 → screenshots/01.png … 11.png (+ qa/capture_log.json)
+> //   node scripts/capture.mjs 03 07           → only those
+> //   node scripts/capture.mjs --plunge        → qa/continuity/07a…07d.png descent proof frames
+> //   node scripts/capture.mjs --size=1080x1920 → extra Android-size set into screenshots/1080x1920/
+> //   node scripts/capture.mjs --out=DIR       → custom output dir
+> import { mkdirSync, writeFileSync } from 'node:fs';
+> import { loadPlaywright, CHROMIUM_ARGS, startVite } from './lib/pw.mjs';
+> 
+> const args = process.argv.slice(2);
+> const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, ...r] = a.slice(2).split('='); return [k, r.length ? r.join('=') : true]; }));
+> let ids = args.filter((a) => !a.startsWith('--'));
+> const NATIVE = { '03': [727, 1536] };
+> const plunge = ['07a_plunge_top', '07b_plunge_mid', '07c_plunge_bottom', '07d_entering_08'];
+> if (opt.plunge) ids = plunge;
+> if (!ids.length) ids = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> const size = typeof opt.size === 'str …[+3162 chars]
+
+### 🤖 Claude — 2026-11-21T00:18:32.499Z
+
+> 🔧 **Bash** `{"command": "timeout 900 node scripts/capture.mjs 06p0 06p1 06p2 06p3 06p4 --q=paint06=1 --out=qa/match/06/paint06/shots 2>&1 | tail -12", "description": "Capture the five picture moments in the running game", "timeout": 960000}`
+
+### 🧑 User — 2026-11-21T00:19:06.317Z
+
+> ↩︎ result: 06p0 → qa/match/06/paint06/shots/06p0.png {"stage":"06","s":198.924,"y":-37.537,"calls":2,"tris":30722,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 06p1 → qa/match/06/paint06/shots/06p1.png {"stage":"06","s":209.924,"y":-32.103,"calls":2,"tris":30722,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 06p2 → qa/match/06/paint06/shots/06p2.png {"stage":"06","s":220.924,"y":-34.788,"calls":2,"tris":30722,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 06p3 → qa/match/06/paint06/shots/06p3.png {"stage":"06","s":231.924,"y":-42.22,"calls":2,"tris":30722,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+> 06p4 → qa/match/06/paint06/shots/06p4.png {"stage":"06","s":241.924,"y":-47.303,"calls":2,"tris":30722,"modules":{"water":"vfx/index.ts","benny":"assets/models/benny.glb","girl":"assets/models/rainbow_girl.glb"}}
+
+### 🤖 Claude — 2026-11-21T00:19:09.002Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/paint06/shots && python3 -I -c \"\nfrom PIL import Image\nc=Image.new('RGB',(5*300+40,534),'white')\nfor i in range(5): c.paste(Image.open(f'06p{i}.png').convert('RGB').resize((300,534)),(i*310,0))\nc.save('/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/shots.png')\"", "description": "Make a preview strip of the five captures"}`
+
+### 🧑 User — 2026-11-21T00:19:09.472Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-21T00:19:11.118Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/shots.png"}`
+
+### 🧑 User — 2026-11-21T00:19:11.168Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T00:19:22.754Z
+
+All five moments are on screen in the real running game, under the live HUD. Measuring each against your pictures now, then recording a clip of Benny swimming through Screen 06.
+
+### 🤖 Claude — 2026-11-21T00:19:30.759Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && which ffmpeg; python3 -I - <<'EOF'\nfrom PIL import Image\nimport numpy as np, json, cv2\nW='qa/match/06/paint06/work'; S='qa/match/06/paint06/shots'\nreg=json.load(open(f'{W}/register.json'))\nres={}\nappr=np.asarray(Image.open('references/06_crest_the_rinse_arch.png').convert('RGB')).astype(np.float32)\ng=np.asarray(Image.open(f'{S}/06p0.png').convert('RGB')).astype(np.float32)\ne=np.abs(g-appr).max(axis=2)\nhud=np.zeros(e.shape,bool); hud[:195,:]=True\nprint('k0 vs approved 06: whole frame', round(100*(e<=20).mean(),1), '% | outside the HUD strip', rou …[+1491 chars]`
+
+### 🧑 User — 2026-11-21T00:19:31.803Z
+
+> ↩︎ result: /usr/bin/ffmpeg
+> k0 vs approved 06: whole frame 83.4 % | outside the HUD strip 91.9 %
+> k1 vs panel 1: at the panel size 87.1 % within 20 levels (mean 10.2); in the game frame 83.6 % (panel area = 57 % of the screen)
+> k2 vs panel 2: at the panel size 87.2 % within 20 levels (mean 9.7); in the game frame 85.2 % (panel area = 56 % of the screen)
+> k3 vs panel 3: at the panel size 86.8 % within 20 levels (mean 10.2); in the game frame 84.5 % (panel area = 60 % of the screen)
+> k4 vs panel 4: at the panel size 89.6 % within 20 levels (mean 8.5); in the game frame 84.5 % (panel area = 57 % of the screen)
+
+### 🤖 Claude — 2026-11-21T00:19:55.077Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='src/world/paint06.ts'; s=open(p).read()\ns=s.replace(\"void main(){ vec4 c = texture2D(map, vUv); gl_FragColor = vec4(c.rgb, c.a * opacity); }`;\",\n\"void main(){ vec4 c = texture2D(map, vUv, -0.45); gl_FragColor = vec4(c.rgb, c.a * opacity); }`; // bias: plates are 1.25x the 864 frame -> level 0 at rest, mips only when pushed\")\ns=s.replace(\"const bob = Math.sin(o.time * 3.1) * 3;\",\"const bob = Math.sin(o.time * Math.PI) * 2.5; // 2 s bob; zero at whole seconds (QA clock 12.0 = the picture exactly)\")\nopen(p,'w').write(s)\nEOF\ngrep -n \"bias\\|cons …[+400 chars]`
+
+### 🧑 User — 2026-11-21T00:20:38.929Z
+
+> ↩︎ result: 43:  void main(){ vec4 c = texture2D(map, vUv, -0.45); gl_FragColor = vec4(c.rgb, c.a * opacity); }`; // bias: plates are 1.25x the 864 frame -> level 0 at rest, mips only when pushed
+> 188:    const bob = Math.sin(o.time * Math.PI) * 2.5; // 2 s bob; zero at whole seconds (QA clock 12.0 = the picture exactly)
+> 5
+> 1
+
+### 🤖 Claude — 2026-11-21T00:20:48.852Z
+
+> 🔧 **Bash** `{"command": "cat > tools/paint06/measure.py <<'EOF'\n\"\"\"paint06: game capture vs the user's pictures. k0 vs references/06 (below the HUD strip = the live HUD covers the painted one);\nk1..k4 vs the storyboard panel: (a) at the panel's own size (the game frame area-downscaled onto the panel), (b) in the game frame\n(panel cubic-upscaled into its registered window). Pixels within 20 colour levels (max over RGB), the project's usual measure.\"\"\"\nimport json, sys\nimport cv2, numpy as np\nfrom PIL import Image\nR = '/home/user/rainbow-'; W = f'{R}/qa/match/06/paint06/work'\nshots = sys.argv[ …[+1971 chars]`
+
+### 🧑 User — 2026-11-21T00:20:50.193Z
+
+> ↩︎ result: {
+>  "k0": {
+>   "below_hud_pct": 97.8,
+>   "whole_frame_pct": 88.6
+>  },
+>  "k1": {
+>   "panel_size_pct": 95.4,
+>   "game_frame_window_pct": 89.8,
+>   "window_share_of_screen_pct": 57
+>  },
+>  "k2": {
+>   "panel_size_pct": 94.8,
+>   "game_frame_window_pct": 91.3,
+>   "window_share_of_screen_pct": 56
+>  },
+>  "k3": {
+>   "panel_size_pct": 94.0,
+>   "game_frame_window_pct": 90.1,
+>   "window_share_of_screen_pct": 60
+>  },
+>  "k4": {
+>   "panel_size_pct": 97.2,
+>   "game_frame_window_pct": 90.3,
+>   "window_share_of_screen_pct": 57
+>  }
+> }
+> {
+>  "k1": {
+>   "panel_size_pct": 95.2,
+>   "game_frame_window_pct": 90.5,
+>   "window_share_of_screen_pct": 57
+>  }
+> }
+
+### 🤖 Claude — 2026-11-21T00:20:53.869Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/paint06/shots && python3 -I -c \"\nfrom PIL import Image\nc=Image.new('L',(4*250+30,320),128)\nfor i,k in enumerate([1,2,3,4]): c.paste(Image.open(f'err_k{k}.png').resize((250,320)),(i*260,0))\nc.save('/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/err.png')\"", "description": "Preview where the remaining differences are"}`
+
+### 🧑 User — 2026-11-21T00:20:54.001Z
+
+> ↩︎ result: (Bash completed with no output)
+
