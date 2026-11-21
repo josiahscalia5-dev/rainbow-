@@ -1,9 +1,9 @@
 {
   "last_run": {
-    "time": "2026-11-21T19:55:06+00:00",
+    "time": "2026-11-21T20:00:06+00:00",
     "reason": "daemon",
     "result": "committed+pushed",
-    "files_staged": 41,
+    "files_staged": 4,
     "pushed_verified": true,
     "branch": "claude/character-swimming-mechanics-jo0h6s",
     "note": "following session branch 'claude/character-swimming-mechanics-jo0h6s' (config branch 'claude/rainbow-r22-restore-ut3m39')",
@@ -11,14 +11,14 @@
     "wip_snapshots": [
       "detached-d8e047d33e: 7 modified, 37 new file(s) snapshotted"
     ],
-    "commit": "e68c0f2a81a9e7070e97b8d5f56228ea1858f115",
-    "duration_s": 20
+    "commit": "e2c34aa2015abf2aa6bbf32dbc017ced1e9d6f6a",
+    "duration_s": 13
   },
   "repo": "https://github.com/josiahscalia5-dev/rainbow-",
   "branch": "claude/character-swimming-mechanics-jo0h6s",
-  "last_verified_remote_sha": "e68c0f2a81a9e7070e97b8d5f56228ea1858f115",
-  "last_successful_backup_utc": "2026-11-21T19:55:06+00:00",
+  "last_verified_remote_sha": "e2c34aa2015abf2aa6bbf32dbc017ced1e9d6f6a",
+  "last_successful_backup_utc": "2026-11-21T20:00:06+00:00",
   "consecutive_failures": 0,
   "schedule": "every 5 min, container-local (scheduler=daemon status=active pid=532); see backups/RECOVERY.md for limits",
-  "next_scheduled_utc": "2026-11-21T20:00:00+00:00"
+  "next_scheduled_utc": "2026-11-21T20:05:00+00:00"
 }

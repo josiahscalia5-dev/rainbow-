@@ -14,6 +14,7 @@ mkdir -p "$WS/kit" "$WS/game"; WS=$(cd "$WS" && pwd)
 if [ -z "$SKIP_BAKE" ] || [ ! -f "$WS/kit/kit.json" ]; then
   python3 -I "$SRC/tools/kit05/bake_kit.py" "$WS/kit" >"$WS/kit/bake.log" 2>&1 || { tail -20 "$WS/kit/bake.log"; exit 1; }
   python3 -I "$SRC/tools/kit05/bake_foam.py" "$WS/kit" >>"$WS/kit/bake.log" 2>&1
+  python3 -I "$SRC/tools/kit05/bake_river35.py" "$WS/kit" >>"$WS/kit/bake.log" 2>&1 || { tail -20 "$WS/kit/bake.log"; exit 1; }
 fi
 cd "$WS/game"
 for f in "$WS"/kit/*.png "$WS/kit/kit.json"; do ln -sf "$f" "$(basename "$f")"; done
