@@ -2163,3 +2163,68 @@ The colours overall are the same family (average colour nearly identical), but t
 > controls.js:123:    const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: coinTex, toneMapped: false, transparent: true, alphaTest: 0.35, depthWrite: false }));
 > controls.js:136:  for (let i = 0; i < 3; i++) { const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: splashTex, toneMapped: false, transparent: true, depthWrite: false })); sp.r …[+899 chars]
 
+### 🤖 Claude — 2026-11-21T13:21:05.397Z
+
+> 🔧 **SendMessage** `{"to": "a08dcc646e5a9494e", "summary": "Queue: hide Benny's submerged body at water line", "message": "Second item from the lead, queued AFTER the coin task. It's a measured mismatch with the approved picture.\n\nFINDING:\n- In frame 0 Benny's pompom top lands where the painting has it (y ≈ 486 vs the painted ~450–490 at 412×915, approved scaled to height 915 and centre-cropped).\n- But his whole lower body is drawn ON TOP of the water. The page has no water-line clipping; your uWater tint only acts while diving. So the ~22 % that should be submerged shows down to y ≈ 800.\n- In the painting t …[+1811 chars]`
+
+### 🧑 User — 2026-11-21T13:21:05.432Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to a08dcc646e5a9494e at its next tool round. Sending this moved nothing it is running to the background just now, so the message waits for that round unless something moves sooner. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"a08dcc646e5a9494e","name":"a08dcc646e5a9494e","ref":"7779b0"}}
+
+### 🤖 Claude — 2026-11-21T13:21:07.862Z
+
+While both specialists work, I'm timing how long one rendered frame takes, to plan the full-level recording (about 690 frames):
+
+### 🤖 Claude — 2026-11-21T13:21:10.886Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad; cd $SP && rm -rf timing && (FRAMES=0:6 NO_MP4=1 NODE_PATH=$(npm root -g) timeout 3000 node final_acceptance.cjs $SP/merged $SP/timing > $SP/timing.log 2>&1); ls -la --time-style=+%H:%M:%S timing/f_000*.jpg | awk '{print $6, $7}'; uptime", "description": "Time six rendered frames of the merged page", "timeout": 3200000}`
+
+### 🧑 User — 2026-11-21T13:24:27.271Z
+
+> ↩︎ result: 13:21:59 timing/f_0000.jpg
+> 13:22:30 timing/f_0001.jpg
+> 13:23:03 timing/f_0002.jpg
+> 13:23:30 timing/f_0003.jpg
+> 13:23:56 timing/f_0004.jpg
+> 13:24:24 timing/f_0005.jpg
+>  13:24:27 up 52 min,  0 user,  load average: 9.48, 7.80, 6.48
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T13:24:40.969Z
+
+About 28 s per frame right now, while both specialists are also rendering. Once they finish it should be faster, and I'll split the recording across several browsers. Even so, a full-level run will take a few hours.
+
+**Done since your last message:**
+- **Restart test:** done, with two real bugs found and fixed:
+  1. A fresh account's setup would have silently loaded 133-byte placeholder files instead of the specialists' 3D track pieces. The setup now downloads them, and refuses to say "ready" if any placeholder remains. After the fix, all 168 saved specialist files came back byte-identical from GitHub, and the recovered level played with 10/10 swipes.
+  2. The autosave status check said "OK" even when the five-minute autosave process was dead. It now reports the problem correctly, and I confirmed the session hook restarts the autosave and saves immediately (GitHub matches local).
+  
+  The autosave now also saves the specialists' unfinished work itself. Full write-up: `qa/match/05/r32/RECOVERY_TEST.md`.
+- **Coins:** I measured your painting's coin positions. The controls specialist is rebuilding them as one single-file trail: 26 coins (1,420 → 1,680, the number on your approved Screen 06 HUD), placed where your painting has them, with no overlaps. The test now checks every frame for overlapping coins.
+- **Whole level:** the page will get a real ending at the golden light, about 23 s of swimming. The test plays all of it like a player following the coins, with extra left/right/up/down swipes.
+- **Comparison with your artwork:** the checker now frames your picture correctly and reports a direct start-frame comparison.
+
+**Something you should know now:**
+- **Biggest single mismatch, being fixed:** Benny's underwater half is drawn on top of the water. That hides your painted splash fans and makes him look about 25 % bigger and lower than your painted Benny. The controls specialist will fix it after the coins.
+- **Gap that remains even after these fixes:** pixel-for-pixel, the 3D start view matches your painting far less closely than your 94–95 % goal. Only about 5–6 % of the start frame is within 20 colour levels of your picture, and the colour-mix score is 0.64–0.67. The overall colours are the same family, but the 3D-reconstructed tunnel is softer and more orange than your crisp purple tunnel. That comes from the 3D-world approach itself, and fixing coins, Benny's water line and the tunnel end won't close it.
+
+I'll report the final numbers with the test results rather than hide them. I'll continue when the specialists report back.
+
+### 🧑 User — 2026-11-21T13:24:43.167Z
+
+Claudia, I'm glad you caught the 7.6-second test limitation.
+
+Please verify the actual complete playable length of Screen 05, from the starting point to the real ending and transition.
+
+I don't want just 7.6 seconds of working gameplay if the actual level is longer.
+
+The final acceptance test must cover the entire level, including every river curve, golden tunnel section, geometry join, collectible, and ending transition.
+
+Make sure Benny can continuously swim forward, move naturally left and right, jump and dive, and complete the whole level without errors, crashes, blurry scenery, dark gaps, or camera problems.
+
+Do not shorten the level, accelerate gameplay unnaturally, or remove scenery just to make the test pass.
+
+Please preserve my approved Screen 05 artwork and test the real full-length gameplay.
+
+Only show me the final video when the complete level passes all required tests.
+

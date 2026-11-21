@@ -68,12 +68,12 @@ const { chromium } = require('playwright'); const fs = require('fs'); const path
         for (const c of L) if (c.h >= 0.3 && !A.leaps.has(c.s)) { const ds = c.s - st.s; if (ds <= V * LEAP_T / 2 + 0.01 && ds > V * LEAP_T / 2 - 0.04) { A.leaps.add(c.s); window.input.swipe('up'); } }
         window.step(i * dt + dt, dt, 0, speed);
         const s2 = window.state(), scr = window.coinScreen(), scrP = window.coinScreen({ pops: true }), cam = window.camInfo ? window.camInfo() : null;
-        const cp = cam ? (cam.p || cam.pos) : null;
+        const cp = cam ? (cam.p || cam.pos) : null, cq = cam && cam.q ? cam.q.map((x) => +x.toFixed(6)) : null;
         const v = scr.filter((c) => c.r >= 6); for (let a = 0; a < v.length; a++) for (let b = a + 1; b < v.length; b++) { const d = Math.hypot(v[a].x - v[b].x, v[a].y - v[b].y); if (d < v[a].r + v[b].r) A.ov.push({ f: i + 1, a: v[a].i, b: v[b].i, gap: +(d - v[a].r - v[b].r).toFixed(1) }); }
         const vp = scrP.filter((c) => c.r >= 6); for (let a = 0; a < vp.length; a++) for (let b = a + 1; b < vp.length; b++) { const d = Math.hypot(vp[a].x - vp[b].x, vp[a].y - vp[b].y); if (d < vp[a].r + vp[b].r && (vp[a].pop || vp[b].pop)) A.ovPop.push({ f: i + 1, a: vp[a].i, b: vp[b].i }); }
         if (s2.coins !== A.prevCoins) { A.pickups.push({ f: i + 1, s: s2.s, last: s2.lastPick }); A.prevCoins = s2.coins; }
         A.rows.push({ f: i + 1, s: s2.s, lane: s2.lane, lat: s2.lat, h: s2.height, coins: s2.coins, move: s2.move, done: s2.done, n: scr.length, maxR: scr.length ? Math.max(...scr.map((c) => c.r)) : 0,
-          cam: cp ? cp.map((x) => +x.toFixed(4)) : null, camGlow: cp && glow ? +Math.hypot(cp[0] - glow[0], cp[1] - glow[1], cp[2] - glow[2]).toFixed(3) : null });
+          cam: cp ? cp.map((x) => +x.toFixed(4)) : null, camQ: cq, camGlow: cp && glow ? +Math.hypot(cp[0] - glow[0], cp[1] - glow[1], cp[2] - glow[2]).toFixed(3) : null });
         if (s2.done && A.doneAt === null) A.doneAt = i + 1;
         A.i++;
       };
@@ -98,6 +98,8 @@ const { chromium } = require('playwright'); const fs = require('fs'); const path
     // the 10 sample points along the level (frame indices evenly spread up to done) for the overlap report
     const nS = run.doneAt || rows.length; res.run.samples = Array.from({ length: 10 }, (_, j) => rows[Math.min(nS - 1, Math.round((j + 1) * nS / 10) - 1)]).map((r) => ({ f: r.f, s: r.s, visible: r.n, maxR: r.maxR, overlaps: run.ov.filter((o) => o.f === r.f).length }));
     res.rows_compact = rows.map((r) => [r.f, r.s, r.lane, r.lat, r.h, r.coins, r.move, r.done ? 1 : 0, r.n, r.camGlow]);
+    res.cam_path = rows.map((r) => [r.s, r.cam, r.camQ]);
+    res.screen0 = f0.screen; res.fov = await page.evaluate(() => { const p = window.qaCoinProject(1, 0, 0); return p; });
     console.log(JSON.stringify({ layout_checks: res.layout_checks, levelEnd: res.levelEnd, sEnd: res.sEnd, frame0_match: res.frame0.match, lat_search: res.frame0.lat_search, frame0_overlaps: res.frame0.overlaps }, null, 0));
     console.log(JSON.stringify(Object.fromEntries(Object.entries(res.run).filter(([k]) => k !== 'samples'))), '\nsamples', JSON.stringify(res.run.samples));
     res.errors = errors; res.stills = stills;

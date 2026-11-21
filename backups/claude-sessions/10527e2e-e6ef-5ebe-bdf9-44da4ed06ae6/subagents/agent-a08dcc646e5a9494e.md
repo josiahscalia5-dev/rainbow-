@@ -1104,3 +1104,110 @@ The merge works cleanly with the new hooks. Next, a logic-only check of the coin
 > {"layout_checks":{"count":26,"min_path_gap":0.44,"max_abs_lat":0.22,"min_h":0,"max_h":0.42,"last_coin_s":27.5,"coins_before_done":26,"hud_if_all":1680},"levelEnd":30.56,"sEnd":32.16,"frame0_match":[{"coin":1,"dx":-15.9,"dy":7,"r_ours":28.13,"r_appr":28.6},{"coin":2,"dx":-19.9,"dy":11.5,"r_ours":20.45,"r_appr":20.8},{"coin":3,"dx":-20.9,"dy":15.2,"r_ours":16.31,"r_appr":16.7},{"coin":4,"dx":-22.4,"dy":17.6,"r_ours":12.39,"r_appr":12.8},{"coin":5,"dx":-24.4,"dy":19,"r_ours":7.87,"r_appr":8.3},{"coin":6,"dx":-45.3,"dy":13.7,"r_ours":4.77,"r_appr":5.7},{"coin":7,"dx":-59.6,"dy":12.5,"r_ours":4.16,"r_appr":4.2},{"coin":8,"dx":-51.8,"dy":11.9,"r_ours":3.63,"r_appr":3.6}],"lat_search":[{"s":3.47,"lat":0.22,"err":35.1,"x":211.5,"y":331.8},{"s":3.97,"lat":0.22,"err":55.3,"x":203.6,"y":324.3},{"s":4.47,"lat":0.22,"err":50.4,"x":218.4,"y":316.6}],"frame0_overlaps":[]}
 > {"frames":691,"seconds":23.03,"done_frame":655,"done_t":21.83,"done_s":30.567,"s_final":31.052,"s_max":31.052,"coins_end": …[+1317 chars]
 
+### 🤖 Claude — 2026-11-21T13:21:04.291Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && python3 -I - <<'EOF'\np='coins_level_check.cjs'; s=open(p).read()\nold=\"pickups: run.pickups.length, overlaps_r6: run.ov.length, overlaps_first: run.ov.slice(0, 12),\"\nassert old in s\ns=s.replace(old,\"pickups: run.pickups.length, overlaps_r6: run.ov.length, overlaps_first: run.ov.slice(0, 12), overlap_pairs: (() => { const g = {}; for (const o of run.ov) { const k = o.a + '-' + o.b; g[k] = g[k] || { frames: 0, worst: 0, f0: o.f, f1: o.f }; g[k].frames++; g[k].worst = Math.min(g[k].wo …[+1405 chars]`
+
+### 🧑 User — 2026-11-21T13:21:07.466Z
+
+> ↩︎ result: Command was moved to the background (ID: bamxcp1j1) so that a message that arrived while it was running can reach you; it was not interrupted. Output is being written to: /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/tasks/bamxcp1j1.output. You will be notified when it completes. If it is still running after 30m in the background (plus the timeout it was started with, up to the background maximum), it will be stopped and you will be notified. It is running now: do not start a second copy while it runs. If it is no longer needed, stop it with TaskStop. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-21T13:21:11.405Z
+
+> 🔧 **Bash** `{"command": "until [ -s /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/tasks/bamxcp1j1.output ] && grep -q \"fit2d\\|Traceback\\|None\" /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/tasks/bamxcp1j1.output; do sleep 3; done; sleep 1; cat /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/tasks/bamxcp1j1.output", "description": "Wait for overlap analysis output", "timeout": 900000}`
+
+### 🧑 User — 2026-11-21T13:21:31.067Z
+
+> ↩︎ result: None
+> fit2d [{'s': 1.13, 'lat': 0.025, 'err': 0.6, 'r': 26.5}, {'s': 1.77, 'lat': 0.12, 'err': 0.2, 'r': 18}, {'s': 2.34, 'lat': 0.15, 'err': 0.2, 'r': 12.7}, {'s': 2.94, 'lat': 0.105, 'err': 2.8, 'r': 8.1}, {'s': 3.28, 'lat': 0.22, 'err': 13.7, 'r': 5.7}, {'s': 3.19, 'lat': 0.22, 'err': 31, 'r': 6.3}, {'s': 4.47, 'lat': 0.22, 'err': 39.2, 'r': 3.6}, {'s': 4.62, 'lat': 0.22, 'err': 49.4, 'r': 3.5}]
+> 4-5 {'frames': 42, 'worst': -6.6, 'f0': 6, 'f1': 47} [(2.97, 0.088, 0), (3.47, 0.14, 0)]
+> 3-4 {'frames': 5, 'worst': -0.2, 'f0': 14, 'f1': 18} [(2.44, -0.069, 0), (2.97, 0.088, 0)]
+> 5-6 {'frames': 56, 'worst': -14.6, 'f0': 14, 'f1': 69} [(3.47, 0.14, 0), (3.97, 0.18, 0)]
+> 8-9 {'frames': 30, 'worst': -5, 'f0': 92, 'f1': 121} [(7, 0.03, 0), (7.5, 0.1, 0)]
+> 9-10 {'frames': 51, 'worst': -8.3, 'f0': 101, 'f1': 151} [(7.5, 0.1, 0), (8, 0.18, 0)]
+> 14-15 {'frames': 30, 'worst': -37.4, 'f0': 242, 'f1': 271} [(12.8, -0.01, 0.42), (13.3, -0.03, 0.24)]
+> 17-18 {'frames': 39, 'worst': -6.2, 'f0': 311, 'f1': 349} [(17.3, -0.1, 0), (17.8, -0.18, 0)]
+> 16-17 {'frames': 31, 'worst': -5.8, 'f0': 320, 'f1': 350} [(16.8, -0.03, 0), (17.3, -0.1, 0)]
+> 18-19 {'frames': 23, 'worst': -4.8, 'f0': 341, 'f1': 363} [(17.8, -0. …[+236 chars]
+
+### 🤖 Claude — 2026-11-21T13:22:11.871Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && python3 -I - <<'EOF'\np='coins_level_check.cjs'; s=open(p).read()\nold=\"        const cp = cam ? (cam.p || cam.pos) : null;\\n        const v = scr\"\nassert old in s\ns=s.replace(old,\"        const cp = cam ? (cam.p || cam.pos) : null, cq = cam && cam.q ? cam.q.map((x) => +x.toFixed(6)) : null;\\n        const v = scr\")\nold=\"          cam: cp ? cp.map((x) => +x.toFixed(4)) : null, camGlow:\"\nassert old in s\ns=s.replace(old,\"          cam: cp ? cp.map((x) => +x.toFixed(4)) : null …[+840 chars]`
+
+### 🧑 User — 2026-11-21T13:22:55.735Z
+
+> ↩︎ result: None 691 [0.047, [-0.06, 0.0166, -0.0588], [-0.085522, 0.008815, 0.243594, 0.966059]] {'x': 152.1295697530987, 'y': 196.01890509202505, 'r': -0.679144944686541, 'dist': 27.78294469012081, 'm': 0.28}
+
+### 🤖 Claude — 2026-11-21T13:23:21.495Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA/coin_overlap_model.py", "content": "# Offline model of the coin trail on screen: replays the recorded camera path (coins_level_logic.json -> cam_path) and projects\n# any candidate layout [(s, lat, h)] with the page's rules (sprite coinD*1.15*m(dist), canvas 412x915, fov 64), to find on-screen\n# overlaps (both radii >= 6 px) before a page run. A coin counts as on the trail until Benny is 0.1 before it (then it is picked).\n# usage: python3 -I coin_overlap_model.py <coins_level_logic.json> < …[+3384 chars]`
+
+### 🧑 User — 2026-11-21T13:23:21.531Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA/coin_overlap_model.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-21T13:23:24.125Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && python3 -I coin_overlap_model.py coins_level_logic.json mergedtest/track_w/track.json", "description": "Validate offline model against page overlaps"}`
+
+### 🧑 User — 2026-11-21T13:23:24.449Z
+
+> ↩︎ result: 4-5 {'frames': 42, 'worst': np.float64(-6.7), 'f0': 6, 'f1': 47} [(2.97, 0.088, 0), (3.47, 0.14, 0)]
+> 3-4 {'frames': 5, 'worst': np.float64(-0.2), 'f0': 14, 'f1': 18} [(2.44, -0.069, 0), (2.97, 0.088, 0)]
+> 5-6 {'frames': 56, 'worst': np.float64(-14.6), 'f0': 14, 'f1': 69} [(3.47, 0.14, 0), (3.97, 0.18, 0)]
+> 8-9 {'frames': 31, 'worst': np.float64(-5.0), 'f0': 91, 'f1': 121} [(7, 0.03, 0), (7.5, 0.1, 0)]
+> 9-10 {'frames': 51, 'worst': np.float64(-8.3), 'f0': 101, 'f1': 151} [(7.5, 0.1, 0), (8, 0.18, 0)]
+> 14-15 {'frames': 31, 'worst': np.float64(-42.8), 'f0': 242, 'f1': 272} [(12.8, -0.01, 0.42), (13.3, -0.03, 0.24)]
+> 17-18 {'frames': 39, 'worst': np.float64(-6.1), 'f0': 311, 'f1': 349} [(17.3, -0.1, 0), (17.8, -0.18, 0)]
+> 16-17 {'frames': 31, 'worst': np.float64(-5.8), 'f0': 320, 'f1': 350} [(16.8, -0.03, 0), (17.3, -0.1, 0)]
+> 18-19 {'frames': 22, 'worst': np.float64(-4.8), 'f0': 342, 'f1': 363} [(17.8, -0.18, 0), (18.3, -0.22, 0)]
+> 20-21 {'frames': 29, 'worst': np.float64(-6.9), 'f0': 422, 'f1': 450} [(21.6, -0.08, 0), (22.1, -0.02, 0)]
+> 21-22 {'frames': 14, 'worst': np.float64(-3.1), 'f0': 441, 'f1': 454} [(22.1, -0.02, 0), (22.6, 0.04, 0)]
+> frame1 screen [(0, np.float64(215.4), np.float64(446 …[+661 chars]
+
+### 🤖 Claude — 2026-11-21T13:23:38.863Z
+
+The offline model reproduces the page's overlaps almost exactly (same pairs, frames and depths), so I can design the layout offline.
+
+### 🤖 Claude — 2026-11-21T13:23:44.559Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && cat > /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/lay_v2.json <<'EOF'\n[[1.13,0.025,0],[1.77,0.12,0],[2.34,0.15,0],[2.94,0.105,0],[3.45,0.22,0],[3.98,0.10,0],[4.52,0.20,0],[5.06,0.08,0],\n [7.3,-0.02,0],[7.85,0.10,0],[8.4,0.22,0],[8.95,0.12,0],\n [11.9,0.02,0.10],[12.45,-0.02,0.26],[13.0,0.02,0.42],\n [16.6,0.02,0],[17.15,-0.10,0],[17.7,-0.22,0],[18.25,-0.12,0],\n [21.4,0.06,0],[21.95,-0.06,0],[22.5,0.06,0],[23.05,-0.05,0],\n [26.6,-0.02,0.12],[27.15 …[+318 chars]`
+
+### 🧑 User — 2026-11-21T13:23:44.941Z
+
+> ↩︎ result: 3-4 {'frames': 25, 'worst': -3.9, 'f0': 7, 'f1': 31} [(2.94, 0.105, 0), (3.45, 0.22, 0)]
+> 8-9 {'frames': 12, 'worst': -1.2, 'f0': 106, 'f1': 117} [(7.3, -0.02, 0), (7.85, 0.1, 0)]
+> 10-11 {'frames': 27, 'worst': -3.5, 'f0': 130, 'f1': 156} [(8.4, 0.22, 0), (8.95, 0.12, 0)]
+> 15-16 {'frames': 35, 'worst': -3.7, 'f0': 298, 'f1': 338} [(16.6, 0.02, 0), (17.15, -0.1, 0)]
+> 16-17 {'frames': 31, 'worst': -2.5, 'f0': 312, 'f1': 342} [(17.15, -0.1, 0), (17.7, -0.22, 0)]
+> frame1 screen [(0, 230.9, 438.5, 27.3), (1, 275.6, 395.3, 18.4), (2, 235.1, 366.5, 13.1), (3, 204.1, 346.5, 8.4), (4, 210.7, 333.0, 5.0), (5, 183.9, 322.4, 4.2), (6, 214.4, 315.9, 3.6), (7, 198.5, 307.6, 3.2)]
+> page frame0 [(0, 215.7, 440.7, 28.13), (1, 255.8, 404.1, 20.45), (2, 214.9, 379.8, 16.31), (3, 183, 360.1, 12.39), (4, 201.9, 344.3, 7.87), (5, 198.2, 331.2, 4.77), (6, 197.6, 323.5, 4.16), (7, 215.6, 316.3, 3.63)]
+
+### 🤖 Claude — 2026-11-21T13:24:03.618Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && cat > /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/lay_v3.json <<'EOF'\n[[1.13,0.025,0],[1.77,0.12,0],[2.34,0.15,0],[2.94,0.105,0],[3.55,0.22,0],[4.1,0.10,0],[4.65,0.21,0],[5.2,0.09,0],\n [7.4,-0.04,0],[8.0,0.09,0],[8.6,0.22,0],[9.2,0.11,0],\n [12.0,0.02,0.10],[12.55,-0.02,0.26],[13.1,0.02,0.42],\n [16.6,0.04,0],[17.2,-0.09,0],[17.8,-0.22,0],[18.4,-0.11,0],\n [21.6,0.06,0],[22.15,-0.06,0],[22.7,0.06,0],[23.25,-0.05,0],\n [26.6,-0.02,0.12],[27.15,0.02, …[+322 chars]`
+
+### 🧑 User — 2026-11-21T13:24:03.961Z
+
+> ↩︎ result: 3-4 {'frames': 7, 'worst': -0.4, 'f0': 20, 'f1': 26} [(2.94, 0.105, 0), (3.55, 0.22, 0)]
+> 4-5 {'frames': 19, 'worst': -4.8, 'f0': 34, 'f1': 52} [(3.55, 0.22, 0), (4.1, 0.1, 0)]
+> 15-16 {'frames': 11, 'worst': -1.1, 'f0': 323, 'f1': 333} [(16.6, 0.04, 0), (17.2, -0.09, 0)]
+> frame1 screen [(0, 230.9, 438.5, 27.3), (1, 275.6, 395.3, 18.4), (2, 235.1, 366.5, 13.1), (3, 204.1, 346.5, 8.4), (4, 206.9, 330.9, 4.6), (5, 188.1, 320.7, 4.1), (6, 215.9, 314.2, 3.5), (7, 201.4, 306.2, 3.1)]
+> page frame0 [(0, 215.7, 440.7, 28.13), (1, 255.8, 404.1, 20.45), (2, 214.9, 379.8, 16.31), (3, 183, 360.1, 12.39), (4, 201.9, 344.3, 7.87), (5, 198.2, 331.2, 4.77), (6, 197.6, 323.5, 4.16), (7, 215.6, 316.3, 3.63)]
+
+### 🤖 Claude — 2026-11-21T13:24:17.532Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && cat > /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/lay_v4.json <<'EOF'\n[[1.13,0.025,0],[1.77,0.12,0],[2.34,0.15,0],[2.94,0.105,0],[3.6,0.22,0],[4.2,0.06,0],[4.75,0.20,0],[5.3,0.07,0],\n [7.4,-0.04,0],[8.0,0.09,0],[8.6,0.22,0],[9.2,0.11,0],\n [12.0,0.02,0.10],[12.55,-0.02,0.26],[13.1,0.02,0.42],\n [16.6,0.07,0],[17.2,-0.08,0],[17.8,-0.22,0],[18.4,-0.11,0],\n [21.6,0.06,0],[22.15,-0.06,0],[22.7,0.06,0],[23.25,-0.05,0],\n [26.6,-0.02,0.12],[27.15,0.02,0 …[+806 chars]`
+
+### 🧑 User — 2026-11-21T13:24:18.125Z
+
+> ↩︎ result: 4-5 {'frames': 13, 'worst': -2.2, 'f0': 36, 'f1': 48} [(3.6, 0.22, 0), (4.2, 0.06, 0)]
+> 15-16 {'frames': 32, 'worst': -2.2, 'f0': 303, 'f1': 334} [(16.6, 0.07, 0), (17.2, -0.08, 0)]
+> frame1 screen [(0, 230.9, 438.5, 27.3), (1, 275.6, 395.3, 18.4), (2, 235.1, 366.5, 13.1), (3, 204.1, 346.5, 8.4), (4, 205.1, 330.0, 4.6), (5, 187.0, 318.6, 3.9), (6, 214.0, 312.8, 3.4), (7, 200.5, 304.9, 3.0)]
+> page frame0 [(0, 215.7, 440.7, 28.13), (1, 255.8, 404.1, 20.45), (2, 214.9, 379.8, 16.31), (3, 183, 360.1, 12.39), (4, 201.9, 344.3, 7.87), (5, 198.2, 331.2, 4.77), (6, 197.6, 323.5, 4.16), (7, 215.6, 316.3, 3.63)]
+
+### 🤖 Claude — 2026-11-21T13:24:40.756Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && cat > coin_layout_search.py <<'EOF'\n# Local search on top of coin_overlap_model.py: nudges the coins of overlapping pairs (s +0..0.15, lat +-0.04) until no two coins with\n# r >= 6 px come within MARGIN px on the recorded camera path. Keeps |lat| <= 0.22, h unchanged, path gaps >= 0.45 inside a run.\n# usage: python3 -I coin_layout_search.py <coins_level_logic.json> <track.json> <layout_in.json> <layout_out.json> [margin_px=2]\nimport json, sys, math, importlib.util, itertools\nspec = i …[+2693 chars]`
+

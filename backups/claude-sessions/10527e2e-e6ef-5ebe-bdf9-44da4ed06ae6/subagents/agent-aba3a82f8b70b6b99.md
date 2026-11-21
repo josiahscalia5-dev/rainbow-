@@ -935,3 +935,73 @@ Now wire the split into play3.html.
 
 > 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB; for i in $(seq 1 20); do grep -q 'flow frame 2' out_water/after_final/log.txt && break; sleep 6; done; tools/check_stills.sh out_water/after_final s_0.png s_0.7.png s_1.4.png s_2.3.png s_4.4.png s_6.4.png s_8.5_l-0.22_r0.png s_10.4_l0.22_r0.12.png; cat out_water/after_final/chk/summary.txt | python3 -c \"import json,sys; print(json.dumps(json.load(sys.stdin)))\"; python3 -I - <<'EOF'\nimport cv2, numpy as np\nd='out_water/after_final/'\na=[cv2.imread(d+f) for f in ['s_4.4.png','s_4.4_flow1 …[+703 chars]`
 
+### 🧑 User — 2026-11-21T13:23:01.808Z
+
+> ↩︎ result: f_0000_s_0.jpg                     patches 0  largest_dark_px     0  black% 0.000  look 0.644  sharp 1.000  change 0.0
+> f_0001_s_0.7.jpg                   patches 0  largest_dark_px    17  black% 0.000  look 0.619  sharp 1.045  change 58.4
+> f_0002_s_1.4.jpg                   patches 0  largest_dark_px     0  black% 0.000  look 0.604  sharp 0.957  change 59.8
+> f_0003_s_2.3.jpg                   patches 0  largest_dark_px     0  black% 0.000  look 0.654  sharp 0.993  change 63.87
+> f_0004_s_4.4.jpg                   patches 0  largest_dark_px     0  black% 0.000  look 0.625  sharp 0.916  change 56.38
+> f_0005_s_6.4.jpg                   patches 0  largest_dark_px     0  black% 0.000  look 0.634  sharp 0.987  change 56.02
+> f_0006_s_8.5_l-0.22_r0.jpg         patches 0  largest_dark_px     0  black% 0.000  look 0.611  sharp 0.935  change 67.36
+> f_0007_s_10.4_l0.22_r0.12.jpg      patches 0  largest_dark_px     4  black% 0.000  look 0.623  sharp 0.975  change 74.02
+> {"frames": 8, "dark_patches": {"frames_with_patches": 0, "largest_px": 17, "max_pct": 0.0, "rule": "connected near-black area >= 150 px at 412x915 (approved picture: largest 8 px)"}, "sharpness_vs_start": {"min": 0.916, "median": 0.981} …[+739 chars]
+
+### 🤖 Claude — 2026-11-21T13:23:04.588Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/marble05/viewer; ls -la --time-style=+%H:%M visual_check.py; grep -n \"150\\|< 22\\|pop\\|within\" visual_check.py | head -30", "description": "Check what changed in the lead's checker"}`
+
+### 🧑 User — 2026-11-21T13:23:04.758Z
+
+> ↩︎ result: -rw-r--r-- 1 root root 5747 13:18 visual_check.py
+> 4:Round 32 lead addition: 'pop' = mean |frame_i - (frame_i-1 + frame_i+1)/2| below the HUD = a change that appears for one frame and goes
+> 5:away again (real flicker / popping), which smooth camera motion barely produces; spikes = pop > max(3 x median, 4 levels)."""
+> 14:    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)[150:]  # below the HUD
+> 19:    im = cv2.imread(f); body = im[150:]
+> 21:    # a dark PATCH = a connected near-black area >= 150 px at 412x915; the approved picture's own darkest spots (wall slots,
+> 23:    m = (body.max(2) < 22).astype(np.uint8); nb, lab, stats, _ = cv2.connectedComponentsWithStats(m, 8)
+> 25:    big = areas[areas * sc >= 150]; black = float(big.sum() / m.size); nblob = int(len(big)); maxblob = int((areas.max() if len(areas) else 0) * sc)
+> 31:# frame 0 = the approved picture's camera: whole-frame likeness to the approved artwork (same crop), below the HUD (y >= 150) and all
+> 37:        frame0_likeness = {'within_20_levels_pct': round(100 * float((dmax <= 20).mean()), 1), 'within_20_below_hud_pct': round(100 * float((dmax[150:] <= 20).mean()), 1),
+> 38:                           'within_40_below_hud_pct': round(100 *  …[+1379 chars]
+
+### 🤖 Claude — 2026-11-21T13:23:11.949Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB; python3 -I - <<'EOF'\nimport cv2, numpy as np\nfor d in ['out_water/after412/','out_water/after_final/']:\n    A,B,C=[cv2.imread(d+f)[150:].astype(np.float32) for f in ['s_4.4.png','s_4.4_flow1.png','s_4.4_flow2.png']]\n    print(d,'pop (lead formula) of the middle flow frame:', round(float(np.abs(B-(A+C)/2).mean()),3), 'levels (spike limit >= 4)')\nEOF\ntools/check_stills.sh out_water/before412 s_0.png s_4.4.png s_10.4_l0.22_r0.12.png; python3 -c \"\nimport json\nfor d in ['before412','af …[+236 chars]`
+
+### 🧑 User — 2026-11-21T13:23:13.023Z
+
+> ↩︎ result: out_water/after412/ pop (lead formula) of the middle flow frame: 0.675 levels (spike limit >= 4)
+> out_water/after_final/ pop (lead formula) of the middle flow frame: 0.58 levels (spike limit >= 4)
+> f_0000_s_0.jpg                     patches 3  largest_dark_px  1488  black% 0.969  look 0.672  sharp 1.000  change 0.0
+> f_0001_s_4.4.jpg                   patches 3  largest_dark_px  1345  black% 0.655  look 0.654  sharp 0.947  change 53.33
+> f_0002_s_10.4_l0.22_r0.12.jpg      patches 3  largest_dark_px   706  black% 0.472  look 0.641  sharp 0.976  change 72.33
+> before412 frame0_vs_approved {'within_20_levels_pct': 5.7, 'within_20_below_hud_pct': 6.4, 'within_40_below_hud_pct': 17.3, 'mean_abs_diff_below_hud': 64.5, 'eighth_size_within_20_below_hud_pct': 6.9, 'eighth_size_within_40_below_hud_pct': 19.4}
+> after412 frame0_vs_approved {'within_20_levels_pct': 5.0, 'within_20_below_hud_pct': 5.5, 'within_40_below_hud_pct': 17.1, 'mean_abs_diff_below_hud': 62.5, 'eighth_size_within_20_below_hud_pct': 6.1, 'eighth_size_within_40_below_hud_pct': 19.5}
+> after_final frame0_vs_approved {'within_20_levels_pct': 5.3, 'within_20_below_hud_pct': 5.9, 'within_40_below_hud_pct': 17.3, 'mean_abs_diff_below_hud': …[+95 chars]
+
+### 🤖 Claude — 2026-11-21T13:23:19.155Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,18p /home/user/rainbow-/tools/marble05/viewer/visual_check.py; cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB; tools/check_stills.sh out_water/before s_0.png s_0.7.png s_1.4.png s_2.3.png s_4.4.png s_6.4.png; python3 -c \"\nimport json\nfor d in ['before','before412','after412','after_final']:\n    j=json.load(open(f'out_water/{d}/chk/visual_check.json'))\n    print(d, [(r['frame'], r['dark_patches'], r['largest_dark_px'], r['colour_look_vs_approved']) for r in j['frames']])\"", "description": "Read checker header and tabulate  …[+21 chars]`
+
+### 🧑 User — 2026-11-21T13:23:20.180Z
+
+> ↩︎ result: """Per-frame visual checks for the Screen 05 acceptance run (python3 -I visual_check.py <run dir> <approved.png>):
+> black patches (near-black pixels below the HUD), sharpness vs the first frame (variance of the Laplacian), flicker (frame-to-frame
+> change spikes), and a colour-look score vs the approved picture (hue/saturation histogram overlap; motion-independent).
+> Round 32 lead addition: 'pop' = mean |frame_i - (frame_i-1 + frame_i+1)/2| below the HUD = a change that appears for one frame and goes
+> away again (real flicker / popping), which smooth camera motion barely produces; spikes = pop > max(3 x median, 4 levels)."""
+> import sys, json, glob, numpy as np, cv2
+> d, ref = sys.argv[1:3]
+> files = sorted(glob.glob(f'{d}/f_*.jpg'))
+> R0 = cv2.imread(ref)
+> # the game keeps the approved picture's VERTICAL field of view, so a 412x915 portrait frame = the approved picture scaled to height 915
+> # and centre-cropped to width 412 (round 32 lead fix: it used to be squashed to 412x915, which distorts the comparison)
+> _w = round(R0.shape[1] * 915 / R0.shape[0]); R = cv2.resize(R0, (_w, 915), interpolation=cv2.INTER_AREA)[:, (_w - 412) // 2:(_w - 412) // 2 + 412]
+> def hs_hist(img):
+>     hsv = cv2.cvtColor(i …[+1597 chars]
+
+### 🤖 Claude — 2026-11-21T13:23:31.013Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB; for i in $(seq 1 40); do n=$(grep -c '^still' out_water/diag/split_proof/log_nosplit.txt 2>/dev/null); [ \"${n:-0}\" -ge 4 ] && break; sleep 8; done; grep -v GL out_water/diag/split_proof/log_nosplit.txt; python3 -I - <<'EOF'\nimport cv2, numpy as np\nfor s in ['0','0.7','1.4','2.3']:\n    A=cv2.imread(f'out_water/after_final/s_{s}.png').astype(int); B=cv2.imread(f'out_water/diag/split_proof/nosplit_{s}.png').astype(int)\n    d=np.abs(A-B).max(2); print(f's={s}: split vs one piece: max cha …[+183 chars]`
+

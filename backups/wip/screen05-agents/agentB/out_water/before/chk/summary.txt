@@ -11,8 +11,8 @@
   "median": 0.981
  },
  "colour_look_vs_approved": {
-  "min": 0.639,
-  "median": 0.654
+  "min": 0.644,
+  "median": 0.658
  },
  "flicker": {
   "median_change": 64.36,
@@ -24,5 +24,13 @@
   "pop_spikes": 0,
   "pop_spike_frames": []
  },
- "colour_look_frame0": 0.678
+ "colour_look_frame0": 0.682,
+ "frame0_vs_approved": {
+  "within_20_levels_pct": 4.2,
+  "within_20_below_hud_pct": 4.6,
+  "within_40_below_hud_pct": 13.8,
+  "mean_abs_diff_below_hud": 68.8,
+  "eighth_size_within_20_below_hud_pct": 5.3,
+  "eighth_size_within_40_below_hud_pct": 14.8
+ }
 }

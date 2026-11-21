@@ -12,8 +12,8 @@
    "median": 0.976
   },
   "colour_look_vs_approved": {
-   "min": 0.637,
-   "median": 0.648
+   "min": 0.641,
+   "median": 0.654
   },
   "flicker": {
    "median_change": 62.83,
@@ -25,7 +25,15 @@
    "pop_spikes": 0,
    "pop_spike_frames": []
   },
-  "colour_look_frame0": 0.659
+  "colour_look_frame0": 0.672,
+  "frame0_vs_approved": {
+   "within_20_levels_pct": 5.7,
+   "within_20_below_hud_pct": 6.4,
+   "within_40_below_hud_pct": 17.3,
+   "mean_abs_diff_below_hud": 64.5,
+   "eighth_size_within_20_below_hud_pct": 6.9,
+   "eighth_size_within_40_below_hud_pct": 19.4
+  }
  },
  "frames": [
   {
@@ -34,7 +42,7 @@
    "dark_patches": 3,
    "largest_dark_px": 1488,
    "sharpness_vs_start": 1.0,
-   "colour_look_vs_approved": 0.659,
+   "colour_look_vs_approved": 0.672,
    "change": 0.0
   },
   {
@@ -43,7 +51,7 @@
    "dark_patches": 3,
    "largest_dark_px": 1345,
    "sharpness_vs_start": 0.947,
-   "colour_look_vs_approved": 0.648,
+   "colour_look_vs_approved": 0.654,
    "change": 53.33,
    "pop": 54.67
   },
@@ -53,7 +61,7 @@
    "dark_patches": 3,
    "largest_dark_px": 706,
    "sharpness_vs_start": 0.976,
-   "colour_look_vs_approved": 0.637,
+   "colour_look_vs_approved": 0.641,
    "change": 72.33
   }
  ]

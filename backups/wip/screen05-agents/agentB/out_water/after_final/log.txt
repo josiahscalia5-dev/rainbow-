@@ -12,3 +12,5 @@ still 6.4 36.772 visible splats 830237
 still 8.5 44.351 visible splats 830237
 still 10.4 45.117 visible splats 830237
 still 4.4 51.576 visible splats 823650
+flow frame 1
+flow frame 2
