@@ -4841,3 +4841,85 @@ The Echo-2 world is finished. Downloading it now to test whether Benny can swim 
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad; until [ -f $S/splatview/out_e2/t_15.png ] || ! pgrep -f \"shots.cjs echo2_front\" >/dev/null; do sleep 10; done; python3 -I -c \"\nfrom PIL import Image\nS='$S'\nL=['t_0','t_2','t_4','t_6','t_8','t_10','t_12','t_15']\nims=[Image.open('/home/user/rainbow-/qa/worldlabs/05/r32/input_05_clean.png').convert('RGB').resize((220,391))]+[Image.open(S+'/splatview/out_e2/%s.png'%s).convert('RGB').resize((220,391)) for s in L]\nc=Image.new('RGB',(228*len(ims),391),'white')\nfor i,im in enumerate(ims): c.paste …[+251 chars]`
 
+### 🧑 User — 2026-11-21T11:21:27.266Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-21T11:21:29.977Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/echo_travel.jpg"}`
+
+### 🧑 User — 2026-11-21T11:21:30.017Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-21T11:21:30.013Z
+
+[Image: original 2052x391, displayed at 2000x381. Multiply coordinates by 1.03 to map to original image.]
+
+### 🤖 Claude — 2026-11-21T11:21:44.830Z
+
+> 🔧 **Bash** `{"command": "cat >> qa/spaitial/05/LEDGER.md <<'EOF'\n\n## Result (forward-camera test, `ECHO2_TRAVEL_camera_0_to_15_units.jpg`)\n* From the picture's camera Echo-2 lines up with the approved Screen 05 better than Marble (99 matched points vs 40).\n* Moving forward: sharp to ~2 units, river starts smearing at ~4, smeared at 6, broken by 10 (tunnel radius ~1.8 units here).\n  That is about the same usable stretch as the Marble world (2.4 s), NOT a clear improvement. Benny follow-camera test not run\n  (the user's condition was \"if forward movement works\" for a longer section).\nEOF\ngit add q …[+638 chars]`
+
+### 🧑 User — 2026-11-21T11:21:47.680Z
+
+> ↩︎ result: branch 'claude/screen-05-3d-geometry-9yu7pu' set up to track 'origin/claude/screen-05-3d-geometry-9yu7pu'.
+> 475e16a48725df3ac99307a0d0706885eb6a8b94
+> 475e16a48725df3ac99307a0d0706885eb6a8b94	refs/heads/claude/screen-05-3d-geometry-9yu7pu
+
+### 🤖 Claude — 2026-11-21T11:21:49.836Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/spaitial/05/ECHO2_TRAVEL_camera_0_to_15_units.jpg"], "caption": "Echo-2 test. First picture is your approved Screen 05; the rest are the camera moving forward through the Echo-2 world. Sharp at first, the river smears from the 4th view, broken by the 7th.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-21T11:21:50.230Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/spaitial/05/ECHO2_TRAVEL_camera_0_to_15_units.jpg → file_uuid: 1e74ae8b-9e8c-46cf-b048-21214a70fbeb
+
+### 🤖 Claude — 2026-11-21T11:21:56.670Z
+
+Echo-2 is not an improvement on Marble. From your picture's camera it matches your approved Screen 05 better than Marble did. Once the camera moves forward, though, it stays sharp only about as long as Marble's 2.4 seconds, then the river smears, and further on the world breaks up. I didn't run the Benny follow-camera test on it, because you asked for that only if the forward movement held up for longer. It used 160 of your free SpAItial credits and no cash.
+
+**Your question: can Benny swim through it normally, like a real game, with your approved screen?**
+
+**In any single AI world, no, not for a whole level.** Marble, Marble Plus and Echo-2 all hit the same limit. Each builds the world from your one picture, so you get about 2–3 seconds of real swimming before the river smears. That's a limit of building from one picture, not of any one tool.
+
+**For a whole level, there is a way.** I tested it earlier today: the repeating tunnel, which joins copies of the sharpest stretch of your Marble world end to end. Your painting is itself a tunnel of identical gold rings, so this stays true to it. In the test Benny swam about 7 seconds and the scenery stayed as sharp at the end as at the start, with no smearing. It still needs fixing before it plays like a real game:
+- **Black far end:** the tunnel end showed a black hole.
+- **Repeating river:** the river pattern repeats at every ring.
+- **Not in the game yet:** it then has to go into the actual game for a phone test.
+
+All of that is free, no credits.
+
+Everything is saved on GitHub (commit `475e16a`): your approved Screen 05, all the worlds (Marble ×3, Echo-2) and every gameplay version. Your remaining credits: Marble 2,030, SpAItial 640 free this month.
+
+Should I finish the repeating tunnel and send you the full Screen 05 gameplay video?
+
+### 🧑 User — 2026-11-21T11:21:56.841Z
+
+CLAUDIA — MY FINAL GAMEPLAY AND VISUAL ACCEPTANCE REQUIREMENTS
+
+I will be thrilled if my finished Screen 05 looks approximately 94–95% like my original approved artwork.
+
+I am NOT demanding a perfect 100% pixel-for-pixel match.
+
+But I AM demanding a real, playable 3D Android swimming game.
+
+Think Subway Surfers, but instead of running, Benny swims through my beautiful approved 3D world.
+
+Benny must paddle, move forward, steer left and right, and lean naturally as the river curves.
+
+The camera must follow him. The gold rings, tunnel, machinery and scenery must actually pass around him as he moves forward.
+
+I want the beautiful approved Screen 05 appearance maintained throughout the ENTIRE level, not only at the starting camera angle.
+
+The gameplay should look clean, sharp, natural and polished. No noticeable blurring, smearing, disappearing scenery, glitches, repeated sections or unnatural camera movement.
+
+Continue evaluating SpAItial Echo-2, but judge it by REAL forward-moving gameplay, not just a beautiful starting screenshot or a similarity score.
+
+Show me one uninterrupted, normal-speed recording from the beginning of Screen 05 into Screen 06, with Benny swimming naturally the entire time.
+
+If we can reach roughly 94–95% visual likeness during actual gameplay with smooth movement and no obvious visual defects, I will be happy to approve it.
+
+Please preserve my original artwork and all successful game versions.
+
