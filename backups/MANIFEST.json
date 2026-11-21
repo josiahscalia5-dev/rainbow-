@@ -497,6 +497,31 @@
    "sha256": "98908db1793187b3369137833f6e1566b3f2bb81e2bff226acfbe000d59f821b"
   },
   {
+   "path": "assets/textures/paint/05_coin.png",
+   "bytes": 38339,
+   "sha256": "0d01e87bea65a468bcc80d042a1285203ec8a2ffd72919c26d3cee0818c8aedb"
+  },
+  {
+   "path": "assets/textures/paint/05k0_benny.png",
+   "bytes": 1192629,
+   "sha256": "da09dbdc7f2efaa83ee80e98b70d15bc929728f2a3de39e889d492cdd1957d30"
+  },
+  {
+   "path": "assets/textures/paint/05k0_depth.png",
+   "bytes": 10380,
+   "sha256": "bf9a725e94298ee1636b01a0a8dc392e2a88336ff96d6a1ed487089e5f78425d"
+  },
+  {
+   "path": "assets/textures/paint/05k0_plate.jpg",
+   "bytes": 1808425,
+   "sha256": "e21ac3b97d0f3b376fe62c75857b9bd8ff0c62fcb1c06cd640eee38c3825c783"
+  },
+  {
+   "path": "assets/textures/paint/paint.json",
+   "bytes": 21486,
+   "sha256": "7424b97caf4afac8b86ed81d803a4543f44e5530e32acf90e183457985c808b1"
+  },
+  {
    "path": "assets/textures/paint06/k0_benny.png",
    "bytes": 1329215,
    "sha256": "587f7e834bc13a795aacac9e50a2a14927b6d91bc72f21fc52b39e95caf014b0"
@@ -704,7 +729,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 25112,
-   "sha256": "b3349817533698f497f79a3978cc111a76ebba465fa0cdc86c77099c5079ebe5"
+   "sha256": "4f0db04c20187c557844b591bdc76169372729b5e1b2c9ad9397cfe971a12d77"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -719,7 +744,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3271,
-   "sha256": "315cebccbc494292d58c15ba4a3e5a39b32a230502a285c3bf32ba61152d64ab"
+   "sha256": "5df804460db6062bfac7f0a54bda487a7c6586f8032bbf3783944afa33e04d3a"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -12328,8 +12353,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 3373,
-   "sha256": "a12177c2159c2328e44345267c406b625cd9fd1c96ab966499b9fbc358712397"
+   "bytes": 1174,
+   "sha256": "a9bb9a124d075cdd224b46f870e627a8c10e4c0e74837aac325f920ba64ccda7"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -16115,6 +16140,266 @@
    "path": "qa/match/04/r27/s4_combined/swim04_whole_NEW_K27-B_1.0x.mp4",
    "bytes": 2165005,
    "sha256": "5e6d53180c5319d13dae15705e39035273e802734cf583fa38de223d7ba1c8ba"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0000.jpg",
+   "bytes": 172790,
+   "sha256": "78689e46234c361cd9602a3a31b05ff3bf5a2d4390b1b16281e76a0506f611fe"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0001.jpg",
+   "bytes": 173498,
+   "sha256": "6520e15e021e07039a7a85238057369f5577660483da082f07498e874299649c"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0002.jpg",
+   "bytes": 175254,
+   "sha256": "9e41796125dd3464b316a2e272114efc74900f87f42619f49099219755a2a5b8"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0003.jpg",
+   "bytes": 174813,
+   "sha256": "ec60629e6d275d0ccef597b0ed7b6afc5738e8437e3c668cd6f1996d635cce31"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0004.jpg",
+   "bytes": 174636,
+   "sha256": "874adef76048174c5fc6cedb3fdf7e169777280f1ec5d220ff6193e1ad6615a4"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0005.jpg",
+   "bytes": 174543,
+   "sha256": "37c58bfff32133f996d69d0d49e2305f6a82a179050fd45bd3a3942c138e8f57"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0006.jpg",
+   "bytes": 174655,
+   "sha256": "01f14e947e871021eb505f04e375db5a81c33287289e8573116f0729dcd84d66"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0007.jpg",
+   "bytes": 173035,
+   "sha256": "a028df28db3e6f51add3dc19b5bd7a8c9361f031757c9d57296aaec1057865c2"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0008.jpg",
+   "bytes": 172440,
+   "sha256": "a0da32e68e8d375195e704fc0ee846d6821c0334caa14a36c80d55a7b5e8f8a8"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0009.jpg",
+   "bytes": 171464,
+   "sha256": "be946055a7daad42072794c111d2a2a4de07bb009e1b1719caa42e1242fa55a7"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0010.jpg",
+   "bytes": 172149,
+   "sha256": "65766b755519e14617101659c4918a57750df6b222cdf6abf32527e3abb69f94"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0011.jpg",
+   "bytes": 172043,
+   "sha256": "c2304340ec3caea3e9421b74e4e6735391b5184b7550baf36f7f2c2f972da5a5"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0012.jpg",
+   "bytes": 172216,
+   "sha256": "a12a21dad8ed84a26ae1e41dd6c5ebd9ea4785fa15c3c2f54264d829fea3ba9d"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0013.jpg",
+   "bytes": 174997,
+   "sha256": "00b5542a2348a58276680350c61038729e5d92fb788fd8a95693aed881f4861d"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0014.jpg",
+   "bytes": 176103,
+   "sha256": "234b5604ec02b2b2b176a264952e4a231182996d91576e57e11165571cc312f3"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0015.jpg",
+   "bytes": 178595,
+   "sha256": "6518a2e5c608e8047ef1f0f5c1f3b46aa28d253fd75918db428d02a578675534"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0016.jpg",
+   "bytes": 180244,
+   "sha256": "a78527340e5e4f397d1aff269adee9a92943f7b15bf6dbcf4a574c99992094c8"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0017.jpg",
+   "bytes": 182933,
+   "sha256": "14dfab8647d3732fb1d43e3faf1b441b5ae59da143a27bb62812ce19920d6728"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0018.jpg",
+   "bytes": 184804,
+   "sha256": "d88aa5b1748e30ef3ac3f80f816afcebf297697cd3833a19232a00f493229082"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0019.jpg",
+   "bytes": 186424,
+   "sha256": "328b1124cd49eadc02475ed1a2be7bf5ec8be2d240738e55456ca34db7f731f8"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0020.jpg",
+   "bytes": 186723,
+   "sha256": "77eaa40c0da1769304683cebf57792fa23826edaa62553430018a761bb8c7c42"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0021.jpg",
+   "bytes": 189505,
+   "sha256": "34932eae67f7b7d072beddc5d7048670b05dad6bd527ed4f4b4b4a0b819b33b0"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0022.jpg",
+   "bytes": 189604,
+   "sha256": "60a57934e296437adee92a2bd8c71514322bce19bd6911e0d79f5e91cfc111dd"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0023.jpg",
+   "bytes": 189578,
+   "sha256": "5abb5b59e5cdfa5416b6d3f8764458b1306422e6dec77c941b832896d0a74509"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_BEFORE_05_06_07_straight/0024.jpg",
+   "bytes": 189231,
+   "sha256": "49974c692f255f97ca7d2d3cf115dce27c005e792847425e77d09aa6117620c6"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0000.jpg",
+   "bytes": 173014,
+   "sha256": "4662aac6b3faa40d2e23aacaad39d6bb65fb29699ac048168b8bde68d10ba826"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0001.jpg",
+   "bytes": 173673,
+   "sha256": "b2a380db57a17f5da699780331e44ffa94696817d79e91c9ba431e25a5a0030f"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0002.jpg",
+   "bytes": 175534,
+   "sha256": "72c710332e96ece3cdbe35baab54e530c144d808a0f2b608c2121686b6ac5036"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0003.jpg",
+   "bytes": 175051,
+   "sha256": "f139076144f12908d9d41709d8b8dbcf98c4d72f1cca1a11a85dfd962bb1477a"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0004.jpg",
+   "bytes": 174946,
+   "sha256": "54269d4b50244c9837f900ec88209976c900bda7763ca481723fee54be21bc7f"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0005.jpg",
+   "bytes": 174851,
+   "sha256": "092ffc32d1fc975c282c45deecfc24b9fb72f7b8b6e141e219a917e40d012e02"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0006.jpg",
+   "bytes": 175016,
+   "sha256": "0979ad39d8b797bc10171d909820aa7c0e9dabe2c51f490bef5cccd0e5f417a0"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0007.jpg",
+   "bytes": 173202,
+   "sha256": "3be84eeb28a65ac4225304baba528ec77a29b210215602dfc6a6d51dd4dcc0af"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0008.jpg",
+   "bytes": 172549,
+   "sha256": "94fe595dee9b8552e76289cc1a28c18bc2ef5c39f67334db178f12c448ade04b"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0009.jpg",
+   "bytes": 171419,
+   "sha256": "fe08463d360f49714960e60959ec340ba18741330b4788a768af582094e7152a"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0010.jpg",
+   "bytes": 172428,
+   "sha256": "284f641d64d416117d6907f4ab092b407b0606e39218557c81b34e48daad4e4e"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0011.jpg",
+   "bytes": 172355,
+   "sha256": "36b35caefa436c1533126bfa77bf034b67393c11db45ebce1c60e1dbde678888"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0012.jpg",
+   "bytes": 172580,
+   "sha256": "f05f6dc361c5b11386daa7801cb1692691f21cb188be3f0638597b81a35520eb"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0013.jpg",
+   "bytes": 175449,
+   "sha256": "0b07f18d52a69e03c1c8b2e95ddc6a42c693a259bed03234d6fc5ac3b78367bc"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0014.jpg",
+   "bytes": 176305,
+   "sha256": "90e13ae5cc01e4d3adee91a0392a4597cb5eb3144bec6b7dc348b16ba6c89f12"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0015.jpg",
+   "bytes": 179251,
+   "sha256": "1cfb8dd96b70fd3425ed0f853d0636446a39138795cdd22e02fb4e06e2ee606c"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0016.jpg",
+   "bytes": 185088,
+   "sha256": "0607335e122de9fdb374cff216e1f0638951251ad022ae0be4ff9289a19619dc"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0017.jpg",
+   "bytes": 192949,
+   "sha256": "0183923bc18d32c769895e788cb1c3ac14afd6e5db837134b45980ec966d7660"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0018.jpg",
+   "bytes": 196990,
+   "sha256": "04b5fe086bd6d43a7f93cdac7f7181e11ff07b490cf3013fb5027587b3bded5a"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0019.jpg",
+   "bytes": 208666,
+   "sha256": "9bd231cef4e4c3084f9ea03e561130eca9c8fec1d4222cd766a5af1f1a46ca88"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0020.jpg",
+   "bytes": 213455,
+   "sha256": "4db6845c4d2c12c70a80093d909b3afcd1f9f56c7bfffd272b6c69f5552c3dad"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0021.jpg",
+   "bytes": 216752,
+   "sha256": "089d1f25cddea51b2accacfe2ebac0676673ba438a8c6b364b0ee09aa90b4489"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0022.jpg",
+   "bytes": 222004,
+   "sha256": "2a255bade5e1f8082d0421b228b98904a03f8acf86c9ba93104fde86b08cc2a1"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/frames_NEW_05_06_07_straight/0023.jpg",
+   "bytes": 221943,
+   "sha256": "4c9ccbaf794055c04efe749b3670503848b1c29d094df108edff3ee8d34689ee"
+  },
+  {
+   "path": "qa/match/05/paint05/shots/05k0.png",
+   "bytes": 2682207,
+   "sha256": "da3bd191a0e5707f6a4a03aa222200f3f9b3c057c997bed3012b2c3a7b64008e"
+  },
+  {
+   "path": "qa/match/05/paint05/shots/06k0.png",
+   "bytes": 2705158,
+   "sha256": "79f49dba5b4560e712a202e3eceeb6ea490cc8af0054a13b55f9bc62d0fb7bb6"
+  },
+  {
+   "path": "qa/match/05/paint05/shots/06k2.png",
+   "bytes": 2527661,
+   "sha256": "2fa43fda0b1e8a5281b6ab75fa9aa498966e7d44ef0301e8247cd4d67bc52bf5"
   },
   {
    "path": "qa/match/05/paint05/work/appr_up2.png",
@@ -35398,8 +35683,8 @@
   },
   {
    "path": "src/game/Game.ts",
-   "bytes": 42089,
-   "sha256": "abcaa43a8e0af99c55d85d0e08c2ec6fcc0b6e59e4a1b7a60eda79e32ac8a5e2"
+   "bytes": 43378,
+   "sha256": "10cbe9dc742586ee344798ad3cc5b7d0adf15fc5023f5823d931014e429d9996"
   },
   {
    "path": "src/game/cameraRig.ts",
@@ -35550,6 +35835,11 @@
    "path": "src/world/materials.ts",
    "bytes": 67390,
    "sha256": "74b99da44871917d29a302fc807fb5f49203ff3d5662b4a6ff694b5b97b5a3ef"
+  },
+  {
+   "path": "src/world/paint.ts",
+   "bytes": 18529,
+   "sha256": "4e7c4069869b7f808dc7577dbf1a70f2024dc32a743e2dd1da235002b3be8d46"
   },
   {
    "path": "src/world/paint06.ts",
@@ -36005,6 +36295,16 @@
    "path": "tools/model-lab.ts",
    "bytes": 4451,
    "sha256": "4dd0d06b20730fe09663dd711e63d5c4c8a884ba91f7b84a49be540db2a7a3c8"
+  },
+  {
+   "path": "tools/paint/clip.mjs",
+   "bytes": 2803,
+   "sha256": "66b73b41139c1bee31d5bb146a2c35f47ca59fea960cc641cf9ce36c9b812295"
+  },
+  {
+   "path": "tools/paint/export.py",
+   "bytes": 5403,
+   "sha256": "60aca24cc927f5afb0c63449656c2632333afaefad962464ad9d9777db439112"
   },
   {
    "path": "tools/paint/plate_full.py",

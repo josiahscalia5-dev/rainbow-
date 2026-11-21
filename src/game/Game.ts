@@ -26,6 +26,7 @@ import { flag05 } from '../vfx/waterRibbon';
 import { MATCH } from './match';
 import { buildMatch08 } from '../world/match08';
 import { buildPaint06, PAINT06_REST } from '../world/paint06';
+import { buildPaint } from '../world/paint';
 import { loadBennyRuntime, loadGirlRuntime, loadWater, moduleStatus } from './modules';
 
 type Mode = 'intro' | 'ride' | 'outro' | 'end';
@@ -117,7 +118,9 @@ export async function startGame(canvas: HTMLCanvasElement) {
   let m08On = false;
   let m08Applied = false;
   // `?paint06=1`: Screen 06 = the user's own five pictures (approved 06 + the four storyboard panels), src/world/paint06.ts
-  const p06 = flag05('paint06') ? await buildPaint06(course) : null;
+  // `?paint=1`: the approved-artwork chain 05 -> 06 (src/world/paint.ts; its painted coins ARE the game's coins on those stages)
+  const paint = flag05('paint') ? await buildPaint(course, coins) : null;
+  const p06 = !paint && flag05('paint06') ? await buildPaint06(course) : null;
   // debug: ?hide=water,benny,coins,drumA,basin,tubes,chamber
   const hidden = new Set((qs.get('hide') ?? '').split(',').filter(Boolean));
   if (hidden.has('water')) water.group.visible = false;
@@ -354,7 +357,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
   const rideUpdate = (dt: number) => {
     input.update(dt);
     const stg = course.stageAtS(st.s);
-    const speed = course.prop('speed', st.s) * (p06 ? p06.speedK(st.s) : 1);
+    const speed = course.prop('speed', st.s) * (paint ? paint.speedK(st.s) : p06 ? p06.speedK(st.s) : 1);
     st.s = Math.min(course.stage('11').s0, st.s + speed * dt);
     const halfW = course.widthAt(st.s) / 2;
     const safe = halfW - 0.75;
@@ -391,7 +394,8 @@ export async function startGame(canvas: HTMLCanvasElement) {
     st.twirl = st.stage === '03' ? st.twirl + dt * 2.2 : st.twirl * Math.max(0, 1 - dt * 3);
     const tw = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), st.stage === '03' ? Math.PI + Math.sin(st.twirl) * 0.9 : 0);
     benny.root.quaternion.copy(pose.quat).multiply(tw).multiply(lean);
-    benny.root.visible = !(p06 && p06.paintBenny(st.s) >= 0.5); // `?paint06=1`: the painted Benny replaces him on Screen 06
+    // `?paint06=1` / `?paint=1`: the painted Benny replaces him while the approved pictures show (never two Bennys)
+    benny.root.visible = !(p06 && p06.paintBenny(st.s) >= 0.5) && !(paint && paint.paintBenny(st.s) >= 0.5);
     benny.setExpression('happy');
     benny.update(dt, { swim: 1, steer: input.steer, speed, time: st.clock });
     // VFX anchor = the body centre AFTER the runtime's ride lift (the model is raised inside the root),
@@ -618,9 +622,10 @@ export async function startGame(canvas: HTMLCanvasElement) {
       m08.sync(renderer, dbs.x, dbs.y);
     }
     renderer.info.reset();
-    const pw = p06 && st.mode === 'ride' ? p06.weight(st.s) : 0;
+    const pw = st.mode !== 'ride' ? 0 : paint ? paint.weight(st.s) : p06 ? p06.weight(st.s) : 0;
     if (pw < 0.999) composer.render();
     if (p06 && pw > 0.001) p06.draw(renderer, { s: st.s, lat: st.lat, steer: input.steer, time: st.frozen ?? st.clock, w: pw });
+    if (paint && pw > 0.001) paint.draw(renderer, { s: st.s, lat: st.lat, steer: input.steer, time: st.frozen ?? st.clock, clock: st.clock });
   };
   const frame = () => {
     const now = performance.now();
@@ -654,6 +659,9 @@ export async function startGame(canvas: HTMLCanvasElement) {
     // `?paint06=1`: the five picture moments of Screen 06 (k0 = the approved picture = '06', p1..p4 = storyboard panels)
     ...(p06 ? Object.fromEntries(PAINT06_REST.map((r, k) => [`06p${k}`, { mode: 'ride' as Mode, s: course.stage('06').s0 + r }])) : {}),
     ...(p06 ? { '06p_in': { mode: 'ride' as Mode, s: course.stage('06').s0 - 8 } } : {}),
+    // `?paint=1`: every picture's rest moment (05k0 = the '05' crest, 06k0 = '06', 06k1..06k4 = the storyboard panels) + 8 u before the chain
+    ...(paint ? Object.fromEntries(paint.keyIds.map((id, k) => [id, { mode: 'ride' as Mode, s: paint.rest[k] }])) : {}),
+    ...(paint ? { '05p_in': { mode: 'ride' as Mode, s: paint.chainS0 - 8 } } : {}),
   };
 
   const gotoCheckpoint = (id: string, time = 12.0) => {
@@ -687,7 +695,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
       }
     }
     // deterministic reference counter for this checkpoint (see docs: live play counts real pickups)
-    const refId = (id.slice(0, 2) as StageId);
+    const refId = (/^\d\d/.test(id) ? id.slice(0, 2) : stageOf(st.s)) as StageId;
     st.coins = course.stage(refId).refCoins || START_COINS;
     hud.setCoins(st.coins);
     hud.setHearts(5);
@@ -700,6 +708,8 @@ export async function startGame(canvas: HTMLCanvasElement) {
     ready: true,
     checkpoints: Object.keys(CHECKPOINTS),
     goto: gotoCheckpoint,
+    /** QA: jump to any ride position (same settling as a checkpoint) */
+    gotoS(sv: number, lat = 0) { CHECKPOINTS.__s = { mode: 'ride', s: sv, lat }; return gotoCheckpoint('__s'); },
     run(v = true) { running = v; last = performance.now(); },
     unfreeze() { st.frozen = null; input.override = null; },
     /** QA: freeze the shader clock at t (frame-by-frame clips of animated water); rendering is otherwise unchanged */
@@ -772,6 +782,8 @@ export async function startGame(canvas: HTMLCanvasElement) {
       return [...hits.entries()].sort((a, b) => b[1] - a[1]);
     },
     togglePause,
+    /** QA (`?paint=1`): the painted coins (index, distance ahead, frame px, collected) */
+    paintCoins() { return paint ? paint.coinInfo(st.s) : []; },
     /** QA: render the current state now (clip capture after step()) */
     renderNow() { render(); dirty = false; return true; },
     /** QA only (read-only use by scripts/proj05-probe.mjs): the live scene, render camera and renderer, for exact
