@@ -5517,3 +5517,61 @@ When both finish, I'll merge their work and record one continuous, normal-speed 
 
 Rendering on this machine is slow (about 25–45 seconds per frame), so expect the final video in a few hours. No credits are being spent, and everything stays protected on GitHub.
 
+### 🧑 User — 2026-11-21T12:09:43.833Z
+
+CLAUDIA — SCREEN 05: STRICT GAMEPLAY REQUIREMENTS — DO NOT SHOW ME AN UNFINISHED OR BROKEN RESULT
+
+Claudia, I want to be extremely clear about what I'm asking for with Level 5, Screen 05.
+
+I want Benny, my original pink character, to swim through the entire 3D level naturally, just like a real, professionally developed mobile game.
+
+These are my non-negotiable requirements:
+
+1. Smooth left and right movement: Players must be able to swipe left or right and watch Benny move naturally across the river. No jerking, teleporting, freezing, unnatural turns, or incorrect positioning.
+
+2. Natural forward swimming: Benny must continuously move forward through the actual 3D environment. His swimming animations, body movement, turning, and camera tracking must look natural.
+
+3. Correct upward and downward movement: Jumping, diving, and returning to the water must work smoothly without strange animations or broken positioning.
+
+4. No visual errors: No black patches, broken tunnel sections, blurry scenery, stretched textures, flickering, missing geometry, floating objects, or unnatural water movement.
+
+5. No gameplay errors: No crashes, freezes, collision problems, camera clipping, control failures, or broken transitions between sections.
+
+6. Consistent approved artwork: The entire moving environment must remain as close as possible to my original approved Screen 05, including Benny, the golden tunnel, the colorful water, and the coin trail.
+
+7. Complete gameplay testing: Test the entire level from beginning to end using actual touchscreen swipe inputs on an Android portrait device or emulator. Test repeated left and right swipes, upward and downward movement, coin collection, camera movement, and transitions.
+
+8. Real playable 3D: Do not substitute a video, moving background, scripted character path, or prerecorded sequence for functioning gameplay.
+
+MOST IMPORTANT — DO NOT SHOW ME A BROKEN RESULT AS FINISHED.
+
+If Screen 05 still has errors, broken animations, crashes, blurry sections, incorrect movement, or anything that doesn't meet my requirements, do not present it to me for approval.
+
+Instead, continue correcting and retesting the problems. You may give me a brief written progress report explaining what remains broken, but do not send another unfinished gameplay preview and ask me to approve it.
+
+Only show me the final gameplay preview when it passes all the requirements above and you've verified it works correctly.
+
+If you cannot achieve these requirements with the current tools or technical approach, tell me clearly what is preventing it. Do not pretend the level is finished or claim it works without testing.
+
+I want to see Benny swimming through the full level smoothly, naturally, and without visible problems.
+
+Once you've confirmed everything is working, save and push the completed changes to GitHub and provide the final gameplay recording and test results.
+
+My goal is approximately 90–95% visual likeness to the original approved Screen 05, with fully functional, smooth 3D gameplay.
+
+Do not move on to the other screens or spend additional generation credits until I approve Screen 05.
+
+### 🤖 Claude — 2026-11-21T12:09:52.142Z
+
+Understood. You won't get another preview until the whole level passes all 8 requirements in my own testing. Until then, only short written progress notes.
+
+**Where it stands now:**
+- **Two specialists are still working in parallel:** one on the swipe controls (lanes, leap, dive, camera), one on flowing water and on removing the dark gaps and the narrow tunnel end. I'll merge their work, then test the whole level start to finish with real touch swipes, and fix and retest until it passes.
+- **Still broken right now:** small dark gaps where the water meets the walls inside the repeated sections, a narrower "tube inside a tube" look at the far end, frozen water, and no swipe control yet.
+
+**Two limits I can already name:**
+- **No real Android device here.** This environment has no phone and can't run a real Android emulator. I test in a browser set up to behave like an Android phone held upright, with real touch-swipe events. A true on-device test needs a test build installed on your phone.
+- **Softer than your painting.** The 3D world is built from your picture and looks a little softer than the painting itself. If that keeps it clearly below your 90–95% likeness or your "no blurriness" rule, I'll tell you plainly rather than send it as finished.
+
+No credits will be spent and I won't touch other screens until you approve Screen 05. Everything is being saved to GitHub as I go.
+
