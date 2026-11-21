@@ -66,3 +66,43 @@ well past them (doubled far rings ~4 s in); (3) a camera that turns with the riv
 `tools/kit05/kitgame.html` (`?proj=1`, `?projdet=`), `tools/kit05/zoom_likeness.py`, `tools/kit05/build_phone.sh` (`PRESET=`),
 proof pictures / clips `qa/kit05/r36/`. Playable proof (private): https://claude.ai/artifact/QuYqNSZBhfnZdBEh9DBY2s
 Default game and the round-35 version unchanged (`?proj=1` is off by default).
+
+# Round 36b/c — the user's "third option" (faithful artwork-matched 3D) + the reference-video movement
+
+User (verbatim excerpts): "completing our existing real 3D tunnel using additional high-resolution, artwork-matched texture detail wherever
+the original image lacks enough information … First test a representative 8–10-second section containing at least two river bends … If the
+missing detail cannot be generated or reconstructed faithfully using existing tools, tell me exactly which textures or models would need
+manual artwork". Then (with a phone video of another Screen 05 build): "I want the movement … how the pink character goes through it … But I
+want the same water as my original screen 5."
+
+## Built (test switches only; default and round-35 version unchanged)
+* `?r36=1` — river = the painting's own SHARP near water (isolated water art rows t 1.0-3.4 = one painted bend; colour + hue matched to the
+  approved near water), straightened along the painted core and laid along every bend of the world river (mirrored for bends the other
+  way: pink band on the outer side as painted), `bake_river36.py`. A 64-px patch-quilting variant was tried first: rejected (blocks).
+  Includes `?ownoff=1`: far own-pixel sections stop ghosting (no doubled rings near the core after ~1 u).
+* `?move=1` — the reference-video movement: Benny really crosses the screen on lane changes (camera follows 35 % of his lane offset, was
+  80 %), stronger lean, a dense white foam collar at his water line, bubble trails streaming back from his sides, big ripple rings.
+
+## 9-second test (2 bends, 12 real CDP touch swipes incl. reversals, a leap and a dive; identical for both; every 15th frame measured)
+| | BEST (round 35) | NEW `r36=1` |
+|---|---|---|
+| zoom-matched likeness px / layout / SSIM | 20.5 % / 22.9 % / 0.239 | 20.6 % / 23.0 % / 0.231 |
+| colour look | 0.937 | 0.932 |
+| sharpness vs approved (whole scenery / river) | 0.58 / 0.53 | 0.68 / 0.55 |
+| controls | every swipe answered next frame, lanes -1/0/+1, max step 0.047 u/frame, 0 errors | identical |
+Verdict: sharper (+17 % overall) and no ghost rings, but NOT a meaningful likeness gain by the numbers.
+
+## Why the third option cannot reach "sharp up close" from the painting alone (measured, phone px per world unit)
+| surface | painting provides | needed at the screen bottom / edges (0.7-1.5 u away) |
+|---|---|---|
+| water across the flow | 500 | 490-1020 |
+| water along the flow | 220-750 (low viewing angle) | 490-1020 |
+| nearest wall section, around / along | ~200 / ~50 | 490-1020 |
+## Needs NEW artwork vs reconstructable
+* Walls (slot grid on violet-magenta plates + light strips): regular -> can be REDRAWN sharp from measurements (no new art).
+* Gold ring front faces (repeating light pattern): regular -> redrawable.
+* Water seen up close: the painting has no along-flow detail at close range -> a hand-painted close-up (top-down) water tile in the
+  painting's style is needed for truly crisp streaks under the camera.
+* Gold paddles / machinery lids: only small painted shapes -> need a modelled 3D shape textured to match (Blender).
+Files: `qa/kit05/r36b/` (both 9 s clips, move-mode stills, reference-video comparison). Playable test (private):
+https://claude.ai/artifact/MU3iQqPSuqLSxWw7oVT2e3 (r36 + move, 12 units ≈ 8.6 s).
