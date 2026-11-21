@@ -16,14 +16,16 @@ import type { Course, StageId } from './course';
 import type { CoinDef } from '../gameplay/coins';
 
 interface CoinPath {
-  sprite: string; sprite_px: [number, number]; sprite_coin_d: number; stage: StageId;
+  sprite: string; sprite_px: [number, number]; sprite_coin_d: number; stage: StageId; pop_frame_px: [number, number];
   D0: number; c: number; samples: [number, number, number, number][]; layout: number[]; lat: number;
 }
 interface KeyDef {
   id: string; screen: StageId; rest: { mark?: string; stage?: StageId; off: number };
-  files: { plate: string; benny: string; depth: string };
+  files: { plate: string; benny: string; depth: string; flow?: string };
   benny_frame_px: [number, number, number, number]; pivot: [number, number]; vp_frame_px: [number, number];
   push: number; push_min: number; push_max: number; coins?: CoinPath;
+  /** the painted water flows toward the viewer inside this mask: px per cycle at the frame bottom, cycles per second */
+  flow?: { amp: number; rate: number };
 }
 interface Layout {
   frame: [number, number]; margin: [number, number]; plate_frame_px: [number, number]; plate_scale: number;
@@ -43,12 +45,24 @@ const CAM_PER_LAT = 0.02;
 const BENNY_C: [number, number] = [420, 1000];
 
 const VERT = /* glsl */ `varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`;
+// Flowing water (keys with a flow mask): the painted water slides away from the tunnel end toward the viewer, two phases half a
+// cycle apart cross-faded (the design stays the picture's own; at phase 0.5 - every whole second from the QA clock 12.0 - the
+// offset is zero, so the rest moment is the picture exactly).
 const FRAG = /* glsl */ `
   uniform sampler2D map; uniform float opacity;
   uniform vec4 frameMap; uniform vec2 vp; uniform float radius; uniform float feather; uniform float wipe;
+  uniform sampler2D flowMap; uniform float flowOn; uniform vec2 vpUv; uniform vec2 platePx; uniform float flowAmp; uniform float flowPh;
   varying vec2 vUv;
   void main(){
-    vec4 c = texture2D(map, vUv, -0.45);
+    vec4 c;
+    if (flowOn > 0.5) {
+      float m = texture2D(flowMap, vUv).r;
+      vec2 dpx = (vUv - vpUv) * platePx; float dl = max(length(dpx), 1.0);
+      vec2 off = (dpx / dl) * flowAmp * (dl / platePx.y) / platePx * m;
+      float p1 = flowPh, p2 = fract(flowPh + 0.5);
+      vec4 c1 = texture2D(map, vUv - off * (p1 - 0.5), -0.45), c2 = texture2D(map, vUv - off * (p2 - 0.5), -0.45);
+      c = mix(c1, c2, abs(2.0 * p1 - 1.0));
+    } else c = texture2D(map, vUv, -0.45);
     float a = c.a * opacity;
     if (wipe != 0.0) {
       vec2 F = vec2(gl_FragCoord.x * frameMap.x + frameMap.y, gl_FragCoord.y * frameMap.z + frameMap.w);
@@ -107,7 +121,8 @@ export async function buildPaint(course: Course, coins: { defs: CoinDef[]; colle
     return g;
   };
   const mat = (map: THREE.Texture) => new THREE.ShaderMaterial({
-    uniforms: { map: { value: map }, opacity: { value: 1 }, frameMap: { value: new THREE.Vector4() }, vp: { value: new THREE.Vector2() }, radius: { value: 0 }, feather: { value: FEATHER }, wipe: { value: 0 } },
+    uniforms: { map: { value: map }, opacity: { value: 1 }, frameMap: { value: new THREE.Vector4() }, vp: { value: new THREE.Vector2() }, radius: { value: 0 }, feather: { value: FEATHER }, wipe: { value: 0 },
+      flowMap: { value: null as THREE.Texture | null }, flowOn: { value: 0 }, vpUv: { value: new THREE.Vector2() }, platePx: { value: new THREE.Vector2(PW, PH) }, flowAmp: { value: 0 }, flowPh: { value: 0.5 } },
     vertexShader: VERT, fragmentShader: FRAG, transparent: true, depthTest: false, depthWrite: false, toneMapped: false, side: THREE.DoubleSide,
   });
 
@@ -129,8 +144,13 @@ export async function buildPaint(course: Course, coins: { defs: CoinDef[]; colle
   });
 
   const keys = await Promise.all(L.keys.map(async (K) => {
-    const [plate, benny, depth] = await Promise.all([tex(K.files.plate), tex(K.files.benny), depthOf(K.files.depth)]);
+    const [plate, benny, depth, flow] = await Promise.all([tex(K.files.plate), tex(K.files.benny), depthOf(K.files.depth), K.files.flow ? tex(K.files.flow) : Promise.resolve(null)]);
     const mesh = new THREE.Mesh(plateGeometry(depth), mat(plate)); mesh.frustumCulled = false; mesh.visible = false; scene.add(mesh);
+    if (flow && K.flow) {
+      const U = (mesh.material as THREE.ShaderMaterial).uniforms;
+      U.flowMap.value = flow; U.flowOn.value = 1; U.flowAmp.value = K.flow.amp;
+      U.vpUv.value.set((K.vp_frame_px[0] + MX) / PW, 1 - (K.vp_frame_px[1] + MY) / PH);
+    }
     const [bx0, by0, bx1, by1] = K.benny_frame_px, bw = bx1 - bx0, bh = by1 - by0, [px, py] = K.pivot;
     const pivot = new THREE.Group(); const quad = new THREE.Mesh(new THREE.PlaneGeometry(bw, bh), mat(benny));
     quad.position.set(bx0 + bw / 2 - px, -(by0 + bh / 2 - py), 0); pivot.add(quad); pivot.visible = false; oScene.add(pivot);
@@ -146,10 +166,12 @@ export async function buildPaint(course: Course, coins: { defs: CoinDef[]; colle
     return { K, mesh, depth, pivot, quad, vp: new THREE.Vector2(vx, vy), pushDir, rMax: rMax + FEATHER, coin };
   }));
   // one sprite mesh per coin of each key (shared texture); kept in `scene`, toggled per render
+  const pops = new Map<number, THREE.Mesh>();
   keys.forEach((Q) => {
     if (!Q.coin) return;
     for (const [i, k] of coinKeys) if (keys[k] === Q) {
       const m = new THREE.Mesh(Q.coin.geo, mat(Q.coin.tex)); m.visible = false; m.frustumCulled = false; scene.add(m); Q.coin.meshes.set(i, m);
+      const pm = new THREE.Mesh(Q.coin.geo, mat(Q.coin.tex)); pm.visible = false; oScene.add(pm); pops.set(i, pm);
     }
   });
 
@@ -231,14 +253,9 @@ export async function buildPaint(course: Course, coins: { defs: CoinDef[]; colle
       const P = Q.coin.P, list: [number, THREE.Mesh][] = [];
       for (const [i, m] of Q.coin.meshes) {
         const def = coins.defs[i], col = coins.collected[i] === 1;
-        let d = def.s - o.s, op = 1, lift = 0, grow = 1;
-        if (col) {
-          // pop only a coin collected in play just now (|d| small), never coins marked collected by a checkpoint jump
-          if (popStart[i] < 0) { if (Math.abs(d) > 1.6) continue; popStart[i] = o.clock; }
-          const t = (o.clock - popStart[i]) / 0.35; if (t >= 1 || t < 0) continue;
-          d = 0.4; op = 1 - t; lift = 150 * t; grow = 1 + 0.5 * t;
-          if (which !== 'front') continue;
-        } else {
+        const d = def.s - o.s; let op = 1; const lift = 0, grow = 1;
+        if (col) continue; // collected: shown as the pop above his pom-pom (ortho, after Benny)
+        {
           if (d > P.samples[P.samples.length - 1][0] || d < P.samples[0][0]) continue;
           if ((which === 'back') !== (d > 0.3)) continue;
           op = clamp01((P.samples[P.samples.length - 1][0] - d) / 6);
@@ -260,6 +277,7 @@ export async function buildPaint(course: Course, coins: { defs: CoinDef[]; colle
       const Q = keys[k]; setCam(k);
       const [mode, f] = wipeOf(k);
       hideAll(); Q.mesh.visible = true; setU(Q.mesh, 1, mode, f, Q);
+      if (Q.K.flow) (Q.mesh.material as THREE.ShaderMaterial).uniforms.flowPh.value = ((((o.time - 12.0) * Q.K.flow.rate + 0.5) % 1) + 1) % 1;
       renderer.render(scene, cam);
       drawCoins(k, 'back', mode, f);
     }
@@ -275,8 +293,25 @@ export async function buildPaint(course: Course, coins: { defs: CoinDef[]; colle
       renderer.render(oScene, oCam);
     }
     for (const R of keys) R.pivot.visible = false;
-    // coins that have passed him / are popping: in front of Benny
+    // coins that have passed him: in front of Benny
     for (let k = k0; k <= k1; k++) { setCam(k); const [mode, f] = wipeOf(k); drawCoins(k, 'front', mode, f); }
+    // collected coins: a small coin flies up from his pom-pom and fades (0.4 s) — only coins collected in play just now
+    let anyPop = false;
+    oScene.children.forEach((c) => { if (c !== undefined && (c as THREE.Mesh).isMesh) c.visible = false; });
+    for (const [i, pm] of pops) {
+      if (coins.collected[i] !== 1) { popStart[i] = -1; continue; }
+      if (popStart[i] < 0) { if (Math.abs(coins.defs[i].s - o.s) > 1.6) { popStart[i] = -2; continue; } popStart[i] = o.clock; }
+      if (popStart[i] === -2) continue;
+      const t = (o.clock - popStart[i]) / 0.4; if (t < 0 || t >= 1) continue;
+      const Q = keys[coinKeys.get(i)!]; const P = Q.coin!.P;
+      const dia = 58 * (1 - 0.55 * t);
+      pm.scale.set(dia * P.sprite_px[0] / P.sprite_coin_d, dia * P.sprite_px[1] / P.sprite_coin_d, 1);
+      pm.position.set(P.pop_frame_px[0] - FW / 2 + o.lat * PX_PER_LAT, FH / 2 - (P.pop_frame_px[1] - 170 * t), 0);
+      const U = (pm.material as THREE.ShaderMaterial).uniforms; U.opacity.value = 1 - t * t; U.wipe.value = 0;
+      pm.visible = true; anyPop = true;
+    }
+    if (anyPop) renderer.render(oScene, oCam);
+    for (const pm of pops.values()) pm.visible = false;
     hideAll();
     renderer.autoClear = prevAuto;
   };

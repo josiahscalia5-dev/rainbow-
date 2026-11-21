@@ -50,3 +50,14 @@
 | 2026-11-21 01:20 | p05_depth | fal-ai/image-preprocessors/depth-anything/v2 | `01a1fbb0-bda1-7f92-a20e-7e3b47289fc0` | 0.100 | True | 4 |
 | 2026-11-21 01:20 | p05_clean_up2 | fal-ai/seedvr/upscale/image | `01a1fbb0-bcb1-7672-922e-752ba5a60a11` | 0.100 | True | 9 |
 | 2026-11-21 01:20 | p05_appr_up2 | fal-ai/seedvr/upscale/image | `01a1fbb0-bda5-76e0-9398-da84770634dd` | 0.100 | True | 10 |
+| 2026-11-21 01:36 | p05_watermask | fal-ai/evf-sam | `01a1fbbe-984c-7ce3-a597-10e2a76a2cbb` | 0.010 | True | 59 |
+| 2026-11-21 01:40 | p06k0_erase_coins | fal-ai/bria/eraser | `01a1fbc3-3c87-79e1-bfbd-6fcb6488a6d3` | 0.040 | True | 13 |
+| 2026-11-21 01:40 | p06k1_erase_coins | fal-ai/bria/eraser | `01a1fbc3-3caa-7341-9213-9986df996fab` | 0.040 | True | 13 |
+| 2026-11-21 01:40 | p06k4_erase_coins | fal-ai/bria/eraser | `01a1fbc3-3cc5-74c1-80b2-f95067e37460` | 0.040 | True | 13 |
+| 2026-11-21 01:40 | p06k3_erase_coins | fal-ai/bria/eraser | `01a1fbc3-3cb2-7230-b4a2-8d601e5c7c83` | 0.040 | True | 13 |
+| 2026-11-21 01:40 | p06k2_erase_coins | fal-ai/bria/eraser | `01a1fbc3-3cc7-7c21-8c4d-01abc3f3b3e3` | 0.040 | True | 19 |
+| 2026-11-21 01:41 | p06k0_clean_c_up2 | fal-ai/seedvr/upscale/image | `01a1fbc3-70e3-7400-b31f-c1b5f3dd7121` | 0.100 | True | 9 |
+| 2026-11-21 01:41 | p06k1_clean_c_up2 | fal-ai/seedvr/upscale/image | `01a1fbc3-7118-7821-9f90-abed41a21a2a` | 0.100 | True | 9 |
+| 2026-11-21 01:41 | p06k3_clean_c_up2 | fal-ai/seedvr/upscale/image | `01a1fbc3-71dd-7c63-8069-95c8c1c3a331` | 0.100 | True | 10 |
+| 2026-11-21 01:41 | p06k4_clean_c_up2 | fal-ai/seedvr/upscale/image | `01a1fbc3-725f-7113-a6d8-8e97004de8eb` | 0.100 | True | 10 |
+| 2026-11-21 01:41 | p06k2_clean_c_up2 | fal-ai/seedvr/upscale/image | `01a1fbc3-8aaa-7871-bee1-fb34733a3876` | 0.100 | True | 9 |

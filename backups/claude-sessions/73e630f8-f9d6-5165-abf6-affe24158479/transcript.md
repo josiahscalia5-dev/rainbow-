@@ -3187,3 +3187,75 @@ Writing the new game code for the joined-up picture chain.
 
 > 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport sys; sys.path.insert(0,'tools/paint06')\nfrom fal import run, data_uri, download\nfrom PIL import Image\nimport numpy as np\nW='qa/match/05/paint05/work'\nfor ep,body,nm in [('fal-ai/evf-sam',{'prompt':'the glowing water river','image_url':data_uri(f'{W}/clean.png'),'mask_only':True,'use_grounding_dino':False},'p05_watermask')]:\n    try:\n        r=run(ep,body,name=nm,est_usd=0.01); img=r.get('image') or r.get('images',[{}])[0]\n        download(img['url'],f'{W}/water_mask_raw.png'); m=np.asarray(Image.open(f'{W}/water_mask_raw.png').convert('L')); pr …[+294 chars]`
 
+### 🧑 User — 2026-11-21T01:36:33.332Z
+
+> ↩︎ result: p05_watermask ok (1440, 864) 0.318
+> 
+> [exited with code 0]
+
+### 🤖 Claude — 2026-11-21T01:36:37.393Z
+
+> 🔧 **Bash** `{"command": "ls qa/match/05/paint05/clip/; python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\nm=Image.open('qa/match/05/paint05/work/water_mask_raw.png').convert('L'); c=Image.open('qa/match/05/paint05/work/clean.png').convert('RGB')\nmm=np.asarray(m)>127; a=np.asarray(c).copy(); a[~mm]=(a[~mm]*0.25).astype(np.uint8)\nImage.fromarray(a).resize((432,720)).save('/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/wm.png')\"", "description": "Preview the river outline on the Screen 05 picture"}`
+
+### 🧑 User — 2026-11-21T01:36:37.755Z
+
+> ↩︎ result: BEFORE_05_06_07_straight.mp4
+> NEW_05_06_07_straight.mp4
+> clip_BEFORE_05_06_07_straight.json
+> clip_NEW_05_06_07_straight.json
+> frames_BEFORE_05_06_07_straight
+> frames_NEW_05_06_07_straight
+
+### 🤖 Claude — 2026-11-21T01:36:38.487Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/wm.png"}`
+
+### 🧑 User — 2026-11-21T01:36:38.510Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T01:37:25.302Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\n# flow mask for 05k0 (plate-aligned, 1/4 of the 1x plate): the main river component, soft edge\nimport numpy as np, cv2\nfrom PIL import Image\nm=(np.asarray(Image.open('qa/match/05/paint05/work/water_mask_raw.png').convert('L'))>127).astype(np.uint8)\nn,lab,st,_=cv2.connectedComponentsWithStats(m,8); big=1+np.argmax(st[1:,4]); m=(lab==big).astype(np.float32)\nm=cv2.GaussianBlur(cv2.resize(m,(288,480),interpolation=cv2.INTER_AREA),(0,0),2)\nImage.fromarray((m*255).astype(np.uint8)).save('assets/textures/paint/05k0_flow.png'); print('flow mask', m.shape, round …[+8682 chars]`
+
+### 🧑 User — 2026-11-21T01:37:28.640Z
+
+> ↩︎ result: flow mask (480, 288) 0.315
+> keys ['05k0', '06k0', '06k1', '06k2', '06k3', '06k4']
+
+### 🤖 Claude — 2026-11-21T01:37:38.562Z
+
+> 🔧 **Bash** `{"command": "timeout 900 node scripts/capture.mjs 05k0 --q=paint=1 --out=qa/match/05/paint05/shots 2>&1 | grep -c \"→\" && python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\na=Image.open('references/05_flow_into_the_current.png').convert('RGB'); b=Image.open('qa/match/05/paint05/shots/05k0.png').convert('RGB')\ne=np.abs(np.asarray(a).astype(int)-np.asarray(b).astype(int)).max(axis=2)\nprint('05 rest vs approved: whole frame', round(100*(e<=20).mean(),1), '% | below HUD', round(100*(e[195:]<=20).mean(),1),'%')\" && timeout 2400 node tools/paint/clip.mjs --q=paint=1 --from=106 --to=192 …[+712 chars]`
+
+### 🤖 Claude — 2026-11-21T01:37:39.612Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/clip05b.png"}`
+
+### 🧑 User — 2026-11-21T01:38:47.118Z
+
+> ↩︎ result: 1
+> 05 rest vs approved: whole frame 85.2 % | below HUD 95.0 %
+> NEW_05_straight frames 241 s 106.467 -> 192.13 coins 1330 -> 1430
+> [(18, 114.628, 1330), (24, 117.05, 1340), (30, 119.325, 1350), (36, 121.53, 1350), (60, 130.33, 1360), (61, 130.697, 1360), (62, 131.064, 1360), (63, 131.43, 1360), (64, 131.797, 1360), (65, 132.164, 1360), (90, 141.33, 1370), (120, 152.33, 1390)]
+
+### 🧑 User — 2026-11-21T01:38:47.253Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T01:39:46.444Z
+
+> 🔧 **Bash** `{"command": "sed -i \"s/'layout': \\[-16.0, -12.5, -9.0\\]/'layout': [-12.0, -8.5, -5.0]/\" tools/paint/export.py && python3 -I tools/paint/export.py | tail -1 && python3 -I - <<'EOF'\n# find the painted coins in the five Screen 06 pictures (rest frames, frame px) -> candidates for collectible coins\nimport numpy as np, cv2, json\nfrom PIL import Image\nW='qa/match/06/paint06/work'\nout={}\nfor k in range(5):\n    rf=np.asarray(Image.open(f'{W}/k{k}_rest_frame.png').convert('RGB'))       # 1080x1920 (frame x1.25)\n    a=cv2.resize(rf,(864,1536),interpolation=cv2.INTER_AREA)\n    hsv=cv2.cvtCol …[+822 chars]`
+
+### 🧑 User — 2026-11-21T01:39:48.124Z
+
+> ↩︎ result: keys ['05k0', '06k0', '06k1', '06k2', '06k3', '06k4']
+> 0 [(179, 623, 82), (234, 546, 59), (320, 521, 43), (408, 533, 33), (651, 665, 32), (506, 586, 23), (558, 622, 20), (595, 644, 20), (620, 654, 19), (676, 676, 16)]
+> 1 [(144, 698, 141), (168, 576, 87), (295, 584, 54), (383, 620, 40), (458, 664, 34), (516, 691, 29), (630, 749, 20), (696, 780, 16), (823, 700, 10), (731, 814, 10)]
+> 2 [(222, 776, 69), (482, 690, 33), (542, 690, 25), (584, 692, 20), (233, 495, 18)]
+> 3 [(424, 670, 61), (514, 644, 45), (558, 621, 36), (578, 598, 29), (552, 575, 27), (510, 562, 21), (742, 503, 17), (471, 554, 12), (452, 551, 11), (402, 544, 9)]
+> 4 [(638, 694, 27), (682, 685, 20), (662, 206, 18), (714, 682, 16), (735, 678, 10), (753, 676, 8)]
+
+### 🤖 Claude — 2026-11-21T01:40:36.801Z
+
+> 🔧 **Bash** `{"command": "cat > tools/paint/coins06.py <<'EOF'\n\"\"\"Screen 06 pictures for the `?paint=1` chain with live coins: in each of the five pictures (approved 06 + four panels) the three\nnearest painted coins are erased from the background (bria eraser, then SeedVR + the panel's own pixels composited back exactly as in\npaint06) and become the game's coins; the farther tiny coins stay painted. Writes assets/textures/paint/06k<k>_plate.jpg,\n06k<k>_coin.png and work/coins06_sel.json (paint06's own assets are NOT touched).\nusage: python3 -I coins06.py select|erase|up|comp\"\"\"\nimport json, sys …[+5788 chars]`
+

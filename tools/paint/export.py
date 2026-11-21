@@ -48,13 +48,14 @@ for d in np.arange(-6.0, 64.01, 0.25):
     else: y = float(np.interp(uu, U[::-1], yy[::-1])); dia = float(np.interp(uu, U[::-1], sz[::-1]))
     samples.append([round(float(d), 2), round(float(x), 1), round(float(y), 1), round(float(dia), 1)])
 cb = Image.open(f'{W}/coin.png').size
-keys.append({'id': '05k0', 'screen': '05', 'rest': {'mark': '05_crest', 'off': 0.0}, 'files': {'plate': 'paint/05k0_plate.jpg', 'benny': 'paint/05k0_benny.png', 'depth': 'paint/05k0_depth.png'},
+keys.append({'id': '05k0', 'screen': '05', 'rest': {'mark': '05_crest', 'off': 0.0}, 'files': {'plate': 'paint/05k0_plate.jpg', 'benny': 'paint/05k0_benny.png', 'depth': 'paint/05k0_depth.png', 'flow': 'paint/05k0_flow.png'},
              'benny_frame_px': [round(v, 1) for v in L['benny_frame_px']], 'pivot': [421, 1185], 'vp_frame_px': vp05,
              'push': 0.003, 'push_min': -0.06, 'push_max': 0.2,
              'coins': {'sprite': 'paint/05_coin.png', 'sprite_px': [cb[0] / S, cb[1] / S], 'sprite_coin_d': float(coins[0]['d']), 'stage': '05',
                        'D0': round(float(D0), 3), 'c': round(float(cc), 2), 'samples': samples,
                        # paint-mode coin layout for this stage: distances from the rest moment (the 7 painted coins + 3 pre-crest ones, all on the core)
-                       'layout': [-16.0, -12.5, -9.0] + [float(c['dist']) for c in coins], 'lat': 0.0}})
+                       'layout': [-12.0, -8.5, -5.0] + [float(c['dist']) for c in coins], 'lat': 0.0,
+                       'pop_frame_px': [421, 800]}, 'flow': {'amp': 30, 'rate': 1.5}})
 print('05 coin fit: D0', round(D0, 2), 'c', round(cc, 1), 'yh', round(yh, 1), 'k', round(ky, 1))
 # ---- 06k0..06k4 (existing paint06 assets)
 P6 = json.load(open(f'{R}/assets/textures/paint06/paint06.json'))

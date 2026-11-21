@@ -23,7 +23,8 @@
    "files": {
     "plate": "paint/05k0_plate.jpg",
     "benny": "paint/05k0_benny.png",
-    "depth": "paint/05k0_depth.png"
+    "depth": "paint/05k0_depth.png",
+    "flow": "paint/05k0_flow.png"
    },
    "benny_frame_px": [
     101.6,
@@ -1741,9 +1742,9 @@
      ]
     ],
     "layout": [
-     -16.0,
-     -12.5,
-     -9.0,
+     -12.0,
+     -8.5,
+     -5.0,
      5.7,
      10.7,
      17.2,
@@ -1752,7 +1753,15 @@
      41.2,
      49.2
     ],
-    "lat": 0.0
+    "lat": 0.0,
+    "pop_frame_px": [
+     421,
+     800
+    ]
+   },
+   "flow": {
+    "amp": 30,
+    "rate": 1.5
    }
   },
   {
