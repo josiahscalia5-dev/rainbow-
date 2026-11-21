@@ -513,8 +513,8 @@
   },
   {
    "path": "assets/textures/paint06/k1_benny.png",
-   "bytes": 1209564,
-   "sha256": "d03f8430614ba0229da6313b716953142ff1a4b98131b30f597b5ae86120db91"
+   "bytes": 1248589,
+   "sha256": "cff8e0b6c22e9cc15d66261aee26dd82e717b054545c50a90795256f752d3cd3"
   },
   {
    "path": "assets/textures/paint06/k1_depth.png",
@@ -523,13 +523,13 @@
   },
   {
    "path": "assets/textures/paint06/k1_plate.jpg",
-   "bytes": 1761797,
-   "sha256": "bc63b43f1123f97bb5aeadee75ba2355e8c73b6a9d5b0486a0d318429ee6b957"
+   "bytes": 1808871,
+   "sha256": "ab78eac64cafc403e2bccfd08eab2a0646a09aa64a944ec970c6afd56b8a9ca6"
   },
   {
    "path": "assets/textures/paint06/k2_benny.png",
-   "bytes": 1218908,
-   "sha256": "8891c9f14039a3abdcad1da5d6a90b081c476204ada3f6dfb1787191b4850880"
+   "bytes": 1253255,
+   "sha256": "ffd0bc64de21bd9270f50d2d77027deca472deb6d16f0077b2a7e4d5c8ecc611"
   },
   {
    "path": "assets/textures/paint06/k2_depth.png",
@@ -538,13 +538,13 @@
   },
   {
    "path": "assets/textures/paint06/k2_plate.jpg",
-   "bytes": 1506120,
-   "sha256": "1d181fce23a2a7d674875c451c4566fe9298736e4af87b1bdcd03fda65ae0e02"
+   "bytes": 1543534,
+   "sha256": "638a3c24dc8fc40640b254b26247140f5a5c2c7e2b280b50e5d8c6e163f71daa"
   },
   {
    "path": "assets/textures/paint06/k3_benny.png",
-   "bytes": 1197229,
-   "sha256": "010fad09aad9d145ab01d30e600c8088687008b91e0d72531e4b1ae5caf605e8"
+   "bytes": 1233380,
+   "sha256": "264bafa84516779a8fed0c8032d199f5068c3aa69ede4cc4fa563de1c22f0cdb"
   },
   {
    "path": "assets/textures/paint06/k3_depth.png",
@@ -553,13 +553,13 @@
   },
   {
    "path": "assets/textures/paint06/k3_plate.jpg",
-   "bytes": 1707502,
-   "sha256": "9c8f046cf47695af214f6ffacde6be0891015b0bfe0c2063c085f852e462f4e3"
+   "bytes": 1746850,
+   "sha256": "c7deb9681c8465c389ad519675bd677ac4b79e0c17b381eaf7adace7e19ced5d"
   },
   {
    "path": "assets/textures/paint06/k4_benny.png",
-   "bytes": 1210568,
-   "sha256": "0b8f57854b5980b63cb9c3a0c68a961521ce76edfced7a49624d10deb3736b09"
+   "bytes": 1245379,
+   "sha256": "8fa638fed3d484ad6247526069dfab0e8a7c81abc74c77377a703c5bb4313a1e"
   },
   {
    "path": "assets/textures/paint06/k4_depth.png",
@@ -568,8 +568,8 @@
   },
   {
    "path": "assets/textures/paint06/k4_plate.jpg",
-   "bytes": 1629795,
-   "sha256": "954747298e2636669a414d499f50b58a3c3a4cb33ee846878526b390e8a56487"
+   "bytes": 1669193,
+   "sha256": "0226b25914820de5d7e051335e0e60f1b03c4ff50b3517ebd99198f94dc39e95"
   },
   {
    "path": "assets/textures/paint06/paint06.json",
@@ -704,7 +704,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 25111,
-   "sha256": "fab532c44571990ac3edeb6ee33db24561821ed1265998770721d2246ec2968e"
+   "sha256": "8712dc29f59c6aa5d1ef8d0c3867a562ead89b4db7c99c7d0349819484b5c3ab"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -719,7 +719,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3271,
-   "sha256": "61c2a6b1d103500f22148359bd4dfbabd2e5e4405e7998b19576124b371d3adf"
+   "sha256": "c75976850d0320d0924c10995443183f241d7f3079aa2091009daf3d64354711"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -11278,8 +11278,8 @@
   },
   {
    "path": "qa/capture_log.json",
-   "bytes": 5137,
-   "sha256": "6089f692042b64970152c9194c972d0e8ef49b2d5cb38133928870fa73bc70e2"
+   "bytes": 5139,
+   "sha256": "f12b51bc45d7369d232d3441c82d8c23a5e2ebd1745c87f843dc8d341d72298a"
   },
   {
    "path": "qa/capture_log_1080x1920.json",
@@ -15083,48 +15083,48 @@
   },
   {
    "path": "qa/match/06/paint06/shots/06p1.png",
-   "bytes": 2599128,
-   "sha256": "e16e600944380df0e30a75eecb2b9dc4a21cf6b48c7712d1ce8eec8cf6f5122c"
+   "bytes": 2649249,
+   "sha256": "be330076c9c6ce0d9ff731cd270354c1db963b52fc59d4f752e383bfa2d2a18d"
   },
   {
    "path": "qa/match/06/paint06/shots/06p2.png",
-   "bytes": 2483705,
-   "sha256": "fdf75f93b2665e682308757f872bfa01428080dbaaa44c5d29eb70e3940fdfd9"
+   "bytes": 2530332,
+   "sha256": "534b5aa702c23086dbbb9e0d8e725cc347d518a71c915385d91d0b9eb82ab676"
   },
   {
    "path": "qa/match/06/paint06/shots/06p3.png",
-   "bytes": 2520405,
-   "sha256": "2bbbdf2557cf0a02e8f578bacabba7db1d4dcacb833497c9d8dd9a7c22a1de59"
+   "bytes": 2564361,
+   "sha256": "a298fb6a4ca0d8fe7ee54e9257f4f1a9b09fa6a0d98a47555046798166dbb302"
   },
   {
    "path": "qa/match/06/paint06/shots/06p4.png",
-   "bytes": 2541170,
-   "sha256": "8c75f41d60960b249feb52c8f1ba196e9680b1296ccfd609b283f5990692d4c1"
+   "bytes": 2588708,
+   "sha256": "2da095774fc37acb88ad83e2b8e2d89a146a3d71191e609e2084974107cdb922"
   },
   {
    "path": "qa/match/06/paint06/shots/err_k1.png",
-   "bytes": 15577,
-   "sha256": "c359c164ee3f52642d71bdb6a3dc8901bc4bc71605e956df749ba9501c87f133"
+   "bytes": 8919,
+   "sha256": "d17be8620f0c2286d8c0f9f3a4844c49ab3f3a7312d7a2704093843da75211ef"
   },
   {
    "path": "qa/match/06/paint06/shots/err_k2.png",
-   "bytes": 17665,
-   "sha256": "f56bf50bc560fbff180bd3ed64a767c4854c3a1ef57dca4fa212ff7ae731dd18"
+   "bytes": 7251,
+   "sha256": "06ea2bedd20c2953d087c276d848f08316cb9ce1638894828f7d06a242c0fec1"
   },
   {
    "path": "qa/match/06/paint06/shots/err_k3.png",
-   "bytes": 17999,
-   "sha256": "d202876ad12777f936c3bf69e6f9f9004d7d187e3083b0caa5cefbcc6dc682de"
+   "bytes": 7329,
+   "sha256": "8726fa7906b6276523803e215e5accbb419da8552847c4b132b67ceba01d5151"
   },
   {
    "path": "qa/match/06/paint06/shots/err_k4.png",
-   "bytes": 10894,
-   "sha256": "399f2881adad0816df222eac33d47fd06f901011e23ca4669dcd1a80c1a10ddb"
+   "bytes": 6358,
+   "sha256": "a0b3d47ff51eaa07c894bd1338a07b2bec0220dbda1c548896a466c31270a5b2"
   },
   {
    "path": "qa/match/06/paint06/shots/metrics.json",
    "bytes": 494,
-   "sha256": "55a33de5cc953b9aa030048f053498e8ef200f9d8cca908bd43f7fcb09666cff"
+   "sha256": "ba410c5c38d1dc194e88e16b719ea7e51b0589fae3cdcaa691358db4e235ca57"
   },
   {
    "path": "qa/match/06/paint06/shots1080/06p1.png",
@@ -15223,8 +15223,8 @@
   },
   {
    "path": "qa/match/06/paint06/work/k1_benny.png",
-   "bytes": 1215448,
-   "sha256": "8644789305880153302c1aa86c3f30c472131092bb8860828792fbcc76ba62d8"
+   "bytes": 1253217,
+   "sha256": "f2717607a9f71e21be794979dfe0a0b8bd0123943195f37da6acf5f88371191a"
   },
   {
    "path": "qa/match/06/paint06/work/k1_bmask.png",
@@ -15268,13 +15268,13 @@
   },
   {
    "path": "qa/match/06/paint06/work/k1_plate.png",
-   "bytes": 5484146,
-   "sha256": "70cf8eb1da0d1d1ac663d9e466e0603faef7b5442925dc42b4c88203d0fa1288"
+   "bytes": 5567618,
+   "sha256": "23bdbe0ed0076988603c5c806bc1cb49a84f65509b525aee8e964f861a873b3d"
   },
   {
    "path": "qa/match/06/paint06/work/k1_rest_frame.png",
-   "bytes": 3469203,
-   "sha256": "a7ae4ec8d269abe8a1f8db8a9d7e8690e73843e2a17ca22e2bdfcfe47e55a9ff"
+   "bytes": 3567754,
+   "sha256": "620f50f087c576ea46bd2fa458ec5e9f781a4fded62f426170da430a0379c83d"
   },
   {
    "path": "qa/match/06/paint06/work/k2_benny.json",
@@ -15283,8 +15283,8 @@
   },
   {
    "path": "qa/match/06/paint06/work/k2_benny.png",
-   "bytes": 1225112,
-   "sha256": "a2b976f5ddd84844c313f96d5323e57121f1e9a1ea26af6efa1bc64c7b632c34"
+   "bytes": 1257987,
+   "sha256": "f0b3afdcb863f3c6fd3ba20f2c9e7a263422e8e9030f7ef4ef6b3b1de2bc46f2"
   },
   {
    "path": "qa/match/06/paint06/work/k2_bmask.png",
@@ -15328,13 +15328,13 @@
   },
   {
    "path": "qa/match/06/paint06/work/k2_plate.png",
-   "bytes": 4966649,
-   "sha256": "aca6aa956fdfd1397520d3ef243cd41e3f7d153a3dd0bf1f0a58720042620e70"
+   "bytes": 5037146,
+   "sha256": "5df3272d40ee1eaa6f3e0aa46fc1f999597db33167d32e82b6653046b60d693e"
   },
   {
    "path": "qa/match/06/paint06/work/k2_rest_frame.png",
-   "bytes": 3236590,
-   "sha256": "214a72922c66d5be0f05ec22ac710fb5df88782a727b15396e262b0ebef5fb7c"
+   "bytes": 3319851,
+   "sha256": "3e520b386f58a55ceb49ea117d4fecceb369984eaa7dd0ebe5c245270194ee37"
   },
   {
    "path": "qa/match/06/paint06/work/k3_benny.json",
@@ -15343,8 +15343,8 @@
   },
   {
    "path": "qa/match/06/paint06/work/k3_benny.png",
-   "bytes": 1203135,
-   "sha256": "4fb5fd20207de60d37ae9e2fb6baf39d388403991ffe1914b9f46770a9f74e08"
+   "bytes": 1238138,
+   "sha256": "67349ba91e20322d4351660a0f64a328a667cadb0e06c96be119b267a97d1237"
   },
   {
    "path": "qa/match/06/paint06/work/k3_bmask.png",
@@ -15388,13 +15388,13 @@
   },
   {
    "path": "qa/match/06/paint06/work/k3_plate.png",
-   "bytes": 5295212,
-   "sha256": "2e5638e2794c40534196f62994164e619721bd51db16e48d5981c95a4ad49b1c"
+   "bytes": 5368386,
+   "sha256": "41891be156329b7838c2e0ce3d47d39a41de931d1229f8de462461c243a48fd8"
   },
   {
    "path": "qa/match/06/paint06/work/k3_rest_frame.png",
-   "bytes": 3352929,
-   "sha256": "6a6cbd78782ad05152e398c404547d10dc2d27d8ae5d693f8803df5740783c7a"
+   "bytes": 3440394,
+   "sha256": "bc21ec424a2c794e2901dc41fd58e918016b0323aaafa22ee84f3768697bef6f"
   },
   {
    "path": "qa/match/06/paint06/work/k4_benny.json",
@@ -15403,8 +15403,8 @@
   },
   {
    "path": "qa/match/06/paint06/work/k4_benny.png",
-   "bytes": 1215813,
-   "sha256": "eaa896be24e1dbf512b0b070817267d8a51b6d5962685ac6f13db9f87613773b"
+   "bytes": 1249129,
+   "sha256": "5d94f06d49540d982bd28afde103b1e8f477f3de1b23be40b412c219928c2d2c"
   },
   {
    "path": "qa/match/06/paint06/work/k4_bmask.png",
@@ -15448,13 +15448,13 @@
   },
   {
    "path": "qa/match/06/paint06/work/k4_plate.png",
-   "bytes": 5221623,
-   "sha256": "a06cefc9d03b71040f3162f0a84b9069f3576ccf42c57775a5b51c683a779c4c"
+   "bytes": 5297746,
+   "sha256": "ec70c103ad8e581df163537bd82fd5379e4eebbf3a2cc0d5d5072e7128e41e7d"
   },
   {
    "path": "qa/match/06/paint06/work/k4_rest_frame.png",
-   "bytes": 3368938,
-   "sha256": "663ccfe207e5270af5af600a485a39304d958baefb4830b359bfedf5c702c179"
+   "bytes": 3456160,
+   "sha256": "c231d67fc17437e58ddb0699ae3ee79de110ae5a851e91bee1752715cccc9ce3"
   },
   {
    "path": "qa/match/06/paint06/work/panel1.png",
@@ -34803,8 +34803,8 @@
   },
   {
    "path": "tools/paint06/step3_plates.py",
-   "bytes": 11487,
-   "sha256": "273dd5afa6415d24d358360bde89a47536b479663f805e98e300d4de615a9ffe"
+   "bytes": 12779,
+   "sha256": "a61aa324addef3ccf1be64bcaee27b669c9c0d6792bc9e2107b86e69e2cd8b43"
   },
   {
    "path": "tools/paint06/step4_export.py",

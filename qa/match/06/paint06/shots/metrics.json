@@ -4,23 +4,23 @@
   "whole_frame_pct": 88.6
  },
  "k1": {
-  "panel_size_pct": 95.4,
-  "game_frame_window_pct": 89.8,
+  "panel_size_pct": 97.8,
+  "game_frame_window_pct": 87.1,
   "window_share_of_screen_pct": 57
  },
  "k2": {
-  "panel_size_pct": 94.8,
-  "game_frame_window_pct": 91.3,
+  "panel_size_pct": 98.2,
+  "game_frame_window_pct": 91.7,
   "window_share_of_screen_pct": 56
  },
  "k3": {
-  "panel_size_pct": 94.0,
-  "game_frame_window_pct": 90.1,
+  "panel_size_pct": 98.0,
+  "game_frame_window_pct": 91.5,
   "window_share_of_screen_pct": 60
  },
  "k4": {
-  "panel_size_pct": 97.2,
-  "game_frame_window_pct": 90.3,
+  "panel_size_pct": 98.3,
+  "game_frame_window_pct": 85.4,
   "window_share_of_screen_pct": 57
  }
 }

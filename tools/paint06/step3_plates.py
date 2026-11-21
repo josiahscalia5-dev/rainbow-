@@ -58,6 +58,24 @@ def window(k, scale, src_scale=1.0, src=None):
     A2 = A.copy(); A2[:, 0] *= w0 / tw; A2[:, 1] *= h0 / th
     rgb = cv2.warpAffine(X, A2, (pw, ph), flags=cv2.INTER_CUBIC, borderMode=cv2.BORDER_REFLECT)
     cov = cv2.warpAffine(np.ones((th, tw), np.float32), A2, (pw, ph), flags=cv2.INTER_LINEAR, borderValue=0)
+    # second back-projection, through the SAME chain as the check (plate -> 864 game frame -> panel size -> rotate back),
+    # so the plate seen at the user's panel size equals their panel (only inside the panel's window)
+    if k > 0:
+        sc = float(np.hypot(M[0, 0], M[1, 0]))
+        fx, fy = int(round(MX * scale)), int(round(MY * scale))
+        Mf = (M / sc).astype(np.float32); Mfi = cv2.invertAffineTransform(Mf)
+        sw, sh = int(round(FW / sc)), int(round(FH / sc))
+        win = cov > 0.999
+        for _ in range(4):
+            fr = rgb[fy:fy + int(round(FH * scale)), fx:fx + int(round(FW * scale))]
+            g = cv2.resize(fr, (FW, FH), interpolation=cv2.INTER_AREA)
+            small = cv2.resize(g, (sw, sh), interpolation=cv2.INTER_AREA)
+            b = cv2.warpAffine(small, Mfi, (w0, h0), flags=cv2.INTER_CUBIC, borderMode=cv2.BORDER_REFLECT)
+            r = orig - b
+            r_small = cv2.warpAffine(r, Mf, (sw, sh), flags=cv2.INTER_CUBIC, borderValue=0)
+            r_plate = cv2.resize(r_small, (int(round(FW * scale)), int(round(FH * scale))), interpolation=cv2.INTER_CUBIC)
+            upd = np.zeros_like(rgb); upd[fy:fy + r_plate.shape[0], fx:fx + r_plate.shape[1]] = r_plate
+            rgb = np.where(win[..., None], (rgb + upd).clip(0, 255), rgb)
     return rgb, cov
 
 def prep(k):
