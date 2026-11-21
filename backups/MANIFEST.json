@@ -624,7 +624,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 25110,
-   "sha256": "d80685d97971d97f94c389db54088ce589e5cf5b3bdd6802b63a807fccab051c"
+   "sha256": "72d419b045a0467d1853563e5a336c603b171b6b75a8817a2efa3dc87b439c76"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -639,7 +639,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3271,
-   "sha256": "b8e286de3fe5ae3d9127d7751a016058fc0ca9f4528789ce4b6229713fa9d100"
+   "sha256": "b31233da66f8e2d2aadf143cb0cdb75bad2a981516e3c6244c0fcde789eae80e"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -14993,8 +14993,108 @@
   },
   {
    "path": "qa/match/06/paint06/LEDGER.md",
-   "bytes": 571,
-   "sha256": "6542b8d6c848b5e6c15e6d6012cfa5e1d25caea02870b06cb6d1cc88b74f5b3f"
+   "bytes": 1670,
+   "sha256": "f06d9fec51cc5983f50ac7d4ccfdb19e036d2e4e3cfe3b4959093e3aac4f5bd1"
+  },
+  {
+   "path": "qa/match/06/paint06/work/appr06_seedvr2.png",
+   "bytes": 2292323,
+   "sha256": "f87b43939de0f38c0c2eeca1940fab29e0746dc54c3295869d385cc39cfeabbb"
+  },
+  {
+   "path": "qa/match/06/paint06/work/benny_crop_appr.png",
+   "bytes": 727780,
+   "sha256": "3b7e108fccf305aa2870a43f8dc2fe94cdb447bc09c099b1a129a60a3b66e927"
+  },
+  {
+   "path": "qa/match/06/paint06/work/benny_matte_raw.png",
+   "bytes": 849483,
+   "sha256": "a39d8f0082b046c35d8eb0d66a62deb95e9f26045b492de4c96c7382802b8bfb"
+  },
+  {
+   "path": "qa/match/06/paint06/work/k0_bmask.png",
+   "bytes": 3756,
+   "sha256": "345bf9fa65ec9de2ebabba15566197369709f1c17c16732eafb3ec34cec594c5"
+  },
+  {
+   "path": "qa/match/06/paint06/work/k0_ctx.png",
+   "bytes": 1616552,
+   "sha256": "ac3f6bb9c501247bf6f0ef924725853af290501cde953898c9e0b740b7565d9d"
+  },
+  {
+   "path": "qa/match/06/paint06/work/k0_mask.png",
+   "bytes": 4094,
+   "sha256": "8569c8ca78455a71f35d7159ea848c6b82a4584c69cc565c2a9632782e44a5eb"
+  },
+  {
+   "path": "qa/match/06/paint06/work/k1_bmask.png",
+   "bytes": 3756,
+   "sha256": "345bf9fa65ec9de2ebabba15566197369709f1c17c16732eafb3ec34cec594c5"
+  },
+  {
+   "path": "qa/match/06/paint06/work/k1_clean.png",
+   "bytes": 2806835,
+   "sha256": "338857bd016e41bf3f409cc043a8d1e0c94a7bc1e02521f751e800ee87bec559"
+  },
+  {
+   "path": "qa/match/06/paint06/work/k1_ctx.png",
+   "bytes": 1062284,
+   "sha256": "4301308d769398f3487670aa5970d564e146119dff6fb14ebbcac4fc628f7905"
+  },
+  {
+   "path": "qa/match/06/paint06/work/k1_fill.png",
+   "bytes": 2298255,
+   "sha256": "c7a24d043e8c99ed0bbf81080736c1e9a7c5b22df7324fb5b1660550173a7833"
+  },
+  {
+   "path": "qa/match/06/paint06/work/k1_mask.png",
+   "bytes": 4201,
+   "sha256": "75483758898e79d12b27bc4b6ec082cca49c80ecbbb84d5d8024d6d4ec25c852"
+  },
+  {
+   "path": "qa/match/06/paint06/work/k2_bmask.png",
+   "bytes": 3756,
+   "sha256": "345bf9fa65ec9de2ebabba15566197369709f1c17c16732eafb3ec34cec594c5"
+  },
+  {
+   "path": "qa/match/06/paint06/work/k2_ctx.png",
+   "bytes": 1013426,
+   "sha256": "ddc756c539fecf051535929f6afd2da8cad2769a4dd95d1a8810bbb061c566d3"
+  },
+  {
+   "path": "qa/match/06/paint06/work/k2_mask.png",
+   "bytes": 4315,
+   "sha256": "5262148caf33eabc39e468a766eadc7141944f7eb314863025c7d54711e9d2e0"
+  },
+  {
+   "path": "qa/match/06/paint06/work/k3_bmask.png",
+   "bytes": 3756,
+   "sha256": "345bf9fa65ec9de2ebabba15566197369709f1c17c16732eafb3ec34cec594c5"
+  },
+  {
+   "path": "qa/match/06/paint06/work/k3_ctx.png",
+   "bytes": 1070191,
+   "sha256": "1214af4df99fa4968ef21f00408e8e383e44c56c93ba2c9589301b2b268591b0"
+  },
+  {
+   "path": "qa/match/06/paint06/work/k3_mask.png",
+   "bytes": 4173,
+   "sha256": "e93fcca991e843f7917da309b2e7088cae7b7c062aed263fcdb8f6f652e70a1b"
+  },
+  {
+   "path": "qa/match/06/paint06/work/k4_bmask.png",
+   "bytes": 3756,
+   "sha256": "345bf9fa65ec9de2ebabba15566197369709f1c17c16732eafb3ec34cec594c5"
+  },
+  {
+   "path": "qa/match/06/paint06/work/k4_ctx.png",
+   "bytes": 1033347,
+   "sha256": "de56d75c331a1d2142f6f3f423c9c86f24218aeca514b254c027feac3f3edd89"
+  },
+  {
+   "path": "qa/match/06/paint06/work/k4_mask.png",
+   "bytes": 4176,
+   "sha256": "18f96ed86e04110d2303d318b608ed2a48c539e4e2ddff430d51d0e1e41bb91c"
   },
   {
    "path": "qa/match/06/paint06/work/panel1.png",
@@ -15022,14 +15122,29 @@
    "sha256": "bfb10e5150624d23d29c6e7f8c209014c95f062fdc366f682a1656854c6d302b"
   },
   {
+   "path": "qa/match/06/paint06/work/panel2_seedvr4.png",
+   "bytes": 1862915,
+   "sha256": "18029163792f757dc590cb7b898f15bcf64b88fc3e72cff40194fbca448595c7"
+  },
+  {
    "path": "qa/match/06/paint06/work/panel3.png",
    "bytes": 600904,
    "sha256": "656cac122c9ba96428db07eb2c3a018e05fba5f680a67f9dd93e110f7c2ea6ec"
   },
   {
+   "path": "qa/match/06/paint06/work/panel3_seedvr4.png",
+   "bytes": 1831165,
+   "sha256": "aeb6cae117241d6fed8426962e10349679d9c9ca57f683b19bc7ca074d2f6953"
+  },
+  {
    "path": "qa/match/06/paint06/work/panel4.png",
    "bytes": 603673,
    "sha256": "f0620bc8c24134bfafc0c9149c49ac01451bfae0b79f0dadcaa006207c4f6b62"
+  },
+  {
+   "path": "qa/match/06/paint06/work/panel4_seedvr4.png",
+   "bytes": 1849730,
+   "sha256": "631cd21dd765e25bde886d749b424f5a6a0cd5832caf1e61988a2b06deb56b32"
   },
   {
    "path": "qa/match/06/paint06/work/register.json",
@@ -15040,6 +15155,16 @@
    "path": "qa/match/06/paint06/work/view_esrgan4.png",
    "bytes": 824907,
    "sha256": "c0cbb8ba4f52d76cefb11ddf54452e4db57f619ba62df4d61752523e188935e9"
+  },
+  {
+   "path": "qa/match/06/paint06/work/view_k1_fill.png",
+   "bytes": 1923375,
+   "sha256": "c948af7b7b218a89d638c597fddae4a8f4d94f9fdbe5234a36161a582effbbf5"
+  },
+  {
+   "path": "qa/match/06/paint06/work/view_matte.png",
+   "bytes": 261475,
+   "sha256": "214b86cc7bd593c5460daadcc91d5588a54782096720bdf2c023dab9730ec580"
   },
   {
    "path": "qa/match/06/paint06/work/view_seedvr4.png",
@@ -34290,6 +34415,16 @@
    "path": "tools/paint06/register_panels.py",
    "bytes": 2436,
    "sha256": "309024167aac590679717bdfc02532a94a4cc6f892f2c1f54b5501febe1b4ccb"
+  },
+  {
+   "path": "tools/paint06/step2_upscale_matte.py",
+   "bytes": 1575,
+   "sha256": "05121659012be30a822a6a5756fcb06ef47e9de46c2b58945318e74213d825ed"
+  },
+  {
+   "path": "tools/paint06/step3_plates.py",
+   "bytes": 9134,
+   "sha256": "34a6bc9e430cc279ba8cd7f30575c913d391aef078a9afce92be561f0f62b267"
   },
   {
    "path": "tools/proj05/bake.py",

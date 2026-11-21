@@ -771,3 +771,147 @@ Quick update: I'm reading how the game draws Screen 06 so I can put your four pi
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-21T00:06:01.564Z
+
+SeedVR gives the sharpest, most faithful result, so I'll use it. Running it on the other three pictures and the approved Screen 06 picture, and cutting the painted Benny out.
+
+### 🤖 Claude — 2026-11-21T00:06:08.523Z
+
+> 🔧 **Bash** `{"command": "cat > tools/paint06/step2_upscale_matte.py <<'EOF'\n\"\"\"paint06 step 2 (paid, fal): faithful 4x upscale of panels 2-4 (SeedVR2 — chosen over ESRGAN/Topaz on panel 1: crispest wall\nslots, best round-trip fidelity), 2x upscale of the approved Screen 06 frame, Benny matte (BiRefNet) from the approved frame.\"\"\"\nimport sys, json\nfrom concurrent.futures import ThreadPoolExecutor\nsys.path.insert(0, '/home/user/rainbow-/tools/paint06')\nfrom fal import run, data_uri, download\nfrom PIL import Image\nR = '/home/user/rainbow-'; W = f'{R}/qa/match/06/paint06/work'\ndef up(src, dst,  …[+1213 chars]`
+
+### 🧑 User — 2026-11-21T00:06:22.087Z
+
+> ↩︎ result: ('panel2_seedvr4', 'ok')
+> ('panel3_seedvr4', 'ok')
+> ('panel4_seedvr4', 'ok')
+> ('appr06_seedvr2', 'ok')
+> ('matte', 'ok')
+
+### 🤖 Claude — 2026-11-21T00:06:26.809Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nfrom PIL import Image\nimport numpy as np\nW='/home/user/rainbow-/qa/match/06/paint06/work'\nm=Image.open(f'{W}/benny_matte_raw.png'); print(m.mode, m.size)\na=np.asarray(m)\nal=a[...,3] if a.shape[-1]==4 else a\nprint('alpha range', al.min(), al.max(), 'fg frac', (al>128).mean())\nys,xs=np.where(al>128); print('bbox in crop', xs.min(), xs.max(), ys.min(), ys.max(), '-> frame', xs.min()+120, xs.max()+120, ys.min()+680, ys.max()+680)\n# preview: matte over checker\nc=np.asarray(Image.open(f'{W}/benny_crop_appr.png').convert('RGB')).astype(float)\nbg=np.zeros_l …[+341 chars]`
+
+### 🧑 User — 2026-11-21T00:06:27.041Z
+
+> ↩︎ result: RGBA (624, 590)
+> alpha range 0 255 fg frac 0.317082246849196
+> bbox in crop 81 515 45 510 -> frame 201 635 725 1190
+> 2 (1968, 2512)
+> 3 (1968, 2464)
+> 4 (1968, 2464)
+> (1728, 3072)
+
+### 🤖 Claude — 2026-11-21T00:06:28.015Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/paint06/work/view_matte.png"}`
+
+### 🧑 User — 2026-11-21T00:06:28.036Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T00:07:11.479Z
+
+The Benny cut-out is clean. Now I'm working out where Screen 06 starts and ends in the game and how fast Benny moves through it, so each of your four pictures appears at the right moment.
+
+### 🤖 Claude — 2026-11-21T00:07:16.172Z
+
+> 🔧 **Bash** `{"command": "grep -n \"'06'\\|'07'\\|'05'\\|speed\\|refCoins\" src/world/course.ts | head -40; cat > /tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/stages.ts <<'EOF'\nimport { Course } from '/home/user/rainbow-/src/world/course';\nconst c = new Course();\nfor (const id of ['04','05','06','07','08'] as const) { const s = c.stage(id); const sp=[0,0.25,0.5,0.75,1].map(f=>c.prop('speed', s.s0+(s.s1-s.s0)*f).toFixed(1)); console.log(id, s.s0.toFixed(2), s.s1.toFixed(2), 'len', (s.s1-s.s0).toFixed(1), 'speed', sp.join(','), 'width', c.widthAt((s.s0+s.s1)/2).toFixed …[+370 chars]`
+
+### 🧑 User — 2026-11-21T00:07:18.218Z
+
+> ↩︎ result: 18:export type StageId = '01' | '02' | '03' | '04' | '05' | '06' | '07' | '08' | '09' | '10' | '11';
+> 20:export type StageProp = 'width' | 'tube' | 'speed' | 'bank';
+> 33:  /** auto-propulsion speed (units / s) */
+> 34:  speed: number;
+> 36:  refCoins: number;
+> 55:  '05': 'FLOW INTO THE CURRENT',
+> 56:  '06': 'CREST THE RINSE ARCH',
+> 57:  '07': 'DIVE THE WASHER TUBE',
+> 259:  mark('05');
+> 270:  straight.push({ from: '05', to: '06', a: s5.clone(), b: s5.clone().add(L05), floorDepth: 3.3 });
+> 271:  mark('06');
+> 281:  mark('07');
+> 346:  for (let i = marks['05'] + 1; i < marks['06']; i++) {
+> 434:      id, title: STAGE_TITLES[id], s0, s1, width: 5, tube: 0, tubeKind: 'none', speed: 11, refCoins: 0,
+> 438:      def('01', 0, 0.01, { width: 6, interactive: false, speed: 0 }),
+> 439:      def('02', 0.01, m['03'], { width: 5, interactive: false, speed: 9, bank: 0 }),
+> 440:      def('03', m['03'], m['04'], { width: 7, speed: 9, refCoins: 1330, bank: 2.2 }),
+> 441:      def('04', m['04'], m['05'], { width: 4.4, tube: 4.8, tubeKind: 'gold', speed: 14, refCoins: 1330 }),
+> 444:      def('05', m['05'], m['06'], { width: 9, tube: 7.6, tubeKind: 'perf', speed: 11, refCoins: 1420, bank: 0.25 }),
+> 445:      def('06', m['06'], m …[+1057 chars]
+
+### 🤖 Claude — 2026-11-21T00:08:22.232Z
+
+> 🔧 **Bash** `{"command": "cat > tools/paint06/step3_plates.py <<'EOF'\n\"\"\"paint06 step 3: full-screen plates for the five Screen 06 keyframes (k0 = the approved Screen 06 picture, k1..k4 = the\nuser's four storyboard panels). Each panel keeps its OWN pixels inside its registered window; only what lies outside the\npanel (the phone frame is taller than a panel) + the HUD boxes (k0) + Benny's spot are painted by fal flux-pro fill, so a\nBenny layer (the panel's own Benny pixels) can move when the player steers.\nusage: python3 -I step3_plates.py prep|fill|up|comp <k...>\"\"\"\nimport json, sys\nfrom concu …[+7516 chars]`
+
+### 🧑 User — 2026-11-21T00:08:49.947Z
+
+> ↩︎ result: 0 mask frac 0.496
+> 3 mask frac 0.692
+> 1 mask frac 0.711
+> 4 mask frac 0.711
+> 2 mask frac 0.715
+> 1 fill (864, 1440)
+
+### 🤖 Claude — 2026-11-21T00:09:05.727Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/paint06/work && python3 -I -c \"\nfrom PIL import Image\na=Image.open('k1_fill.png').convert('RGB').resize((544,1120)); b=Image.open('k1_ctx.png').convert('RGB').resize((544,1120))\nc=Image.new('RGB',(1100,1120),'white'); c.paste(b,(0,0)); c.paste(a,(556,0)); c.save('view_k1_fill.png')\"", "description": "Make a side-by-side preview of the panel 1 fill"}`
+
+### 🧑 User — 2026-11-21T00:09:06.224Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-21T00:09:07.249Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/paint06/work/view_k1_fill.png"}`
+
+### 🧑 User — 2026-11-21T00:09:07.294Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T00:09:27.309Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && python3 -I - <<'EOF'\nimport re\np='tools/paint06/step3_plates.py'; s=open(p).read()\ns=s.replace(\"MX, MY = 112, 128             # plate margin (frame px) for pull-back + steering pan\\nPW, PH = FW + 2 * MX, FH + 2 * MY   # 1088 x 1792 (1x plate)\\nS = 1.5                       # final plate scale -> 1632 x 2688\",\n\"MX, MY = 144, 192             # plate margin (frame px) for pull-back + steering pan\\nPW, PH = FW + 2 * MX, FH + 2 * MY   # 1152 x 1920 (frame px), aspect 0.6 = flux fill's own output size at F\\nF = 0.75                      # fill scale  …[+2719 chars]`
+
+### 🧑 User — 2026-11-21T00:09:51.476Z
+
+> ↩︎ result: 78:          "No people, no characters, no animals, no objects floating on the water, no text, no UI, no logos.")
+> 4 mask frac 0.747 (864, 1440)
+> 2 mask frac 0.751 (864, 1440)
+> 0 mask frac 0.558 (864, 1440)
+> 1 mask frac 0.747 (864, 1440)
+> 3 mask frac 0.731 (864, 1440)
+> 1 fill (864, 1440)
+> (864, 1440)
+
+### 🤖 Claude — 2026-11-21T00:09:52.532Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/paint06/work/view_k1_fill.png"}`
+
+### 🧑 User — 2026-11-21T00:09:52.569Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T00:10:07.927Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && python3 -I - <<'EOF'\np='tools/paint06/step3_plates.py'; s=open(p).read()\n# outpaint mask = outside window (+HUD); Benny stays in the context (erased afterwards by bria eraser)\ns=s.replace(\"\"\"    mask |= b > 0.12\n    # context for the masked area\"\"\",\"\"\"    benny_mask = b > 0.12\n    # context for the masked area\"\"\")\ns=s.replace(\"\"\"    Image.fromarray((mask * 255).astype(np.uint8)).save(f'{W}/k{k}_mask.png')\n    print(k, 'mask frac'\"\"\",\"\"\"    Image.fromarray((mask * 255).astype(np.uint8)).save(f'{W}/k{k}_mask.png')\n    Image.from …[+1568 chars]`
+
+### 🧑 User — 2026-11-21T00:10:51.746Z
+
+> ↩︎ result: 4 mask frac 0.654 (864, 1440)
+> 0 mask frac 0.465 (864, 1440)
+> 1 mask frac 0.658 (864, 1440)
+> 2 mask frac 0.662 (864, 1440)
+> 3 mask frac 0.638 (864, 1440)
+> 1 fill (864, 1440)
+> 1 erase (864, 1440)
+> (864, 1440)
+
+### 🤖 Claude — 2026-11-21T00:10:52.881Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/paint06/work/view_k1_fill.png"}`
+
+### 🧑 User — 2026-11-21T00:10:52.928Z
+
+> ↩︎ result: [image]
+
