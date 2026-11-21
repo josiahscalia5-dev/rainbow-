@@ -258,6 +258,12 @@ export function installControls(ctx) {
       d.v.addScaledVector(F.n, -d.g * dt); d.p.addScaledVector(d.v, dt); d.sp.position.copy(d.p);
       const k = d.age / d.life, z = d.size * (0.7 + 0.5 * k); d.sp.scale.set(z, z, 1); d.sp.material.opacity = 0.9 * Math.min(1, k * 6) * (1 - k * k);
     }
+    // coins he missed (other lane / under a leap) sink away behind him instead of sliding huge past the camera
+    const sNow = getS();
+    for (const k of coins) {
+      if (k.got >= 0) continue;
+      const o = 1 - smooth(0.12, 0.5, sNow - k.s); k.sp.visible = o > 0.01; k.sp.material.opacity = o;
+    }
     // HUD coin counter pulse
     if (coinEl) { S.hudPulse = Math.max(0, S.hudPulse - dt * 4); coinEl.style.display = 'inline-block'; coinEl.style.transform = `scale(${(1 + 0.25 * Math.sin(Math.PI * S.hudPulse)).toFixed(3)})`; }
   }

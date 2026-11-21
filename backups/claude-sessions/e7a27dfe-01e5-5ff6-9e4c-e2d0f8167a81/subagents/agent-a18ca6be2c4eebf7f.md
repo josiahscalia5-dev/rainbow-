@@ -1359,3 +1359,94 @@ While the AFTER set renders, let me check the builder diff and gather numbers fo
 > ↩︎ result: Command running in background with ID: bujn08mbd. Output is being written to: /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/tasks/bujn08mbd.output. You will be notified when it completes. To check interim output, use Read on that file path.
 > Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
 
+### 🤖 Claude — 2026-11-21T12:27:22.058Z
+
+While the AFTER set renders, here are the BEFORE checker numbers already measured: 3, 3, 4, 3 dark patches at s = 0, 2.3, 4.4, 6.4 (largest 2,009 px). Waiting for the render to finish.
+
+### 🤖 Claude — 2026-11-21T12:27:23.834Z
+
+> 🔧 **Bash** `{"command": "sleep 100; grep -v \"GPU stall\" /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB/out_water/after.log", "description": "Check AFTER render progress after a pause", "timeout": 130000}`
+
+### 🧑 User — 2026-11-21T12:27:23.845Z
+
+> ↩︎ result: <tool_use_error>Blocked: sleep 100 followed by: grep -v "GPU stall" /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB/out_water/after.log. To wait for a condition, use Monitor with an until-loop (e.g. `until <check>; do sleep 2; done`). To wait for a command you started, use run_in_background: true. Do not chain shorter sleeps to work around this block.</tool_use_error>
+
+### 🤖 Claude — 2026-11-21T12:27:26.289Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB && timeout 110 bash -c 'until grep -q \"still 0.7\" out_water/after.log; do sleep 3; done'; grep -v \"GPU stall\" out_water/after.log", "description": "Wait for the first AFTER stills", "timeout": 120000}`
+
+### 🧑 User — 2026-11-21T12:29:16.454Z
+
+> ↩︎ result: ready 33.199
+> still 0 58.667 visible splats -1
+
+### 🤖 Claude — 2026-11-21T12:29:21.075Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB && tail -12 play3.html | cut -c1-200", "description": "Inspect end of page script"}`
+
+### 🧑 User — 2026-11-21T12:29:21.143Z
+
+> ↩︎ result: if (c.got >= 0) { const k = (t - c.got) / 0.4; c.sp.visible = k < 1; if (k < 1) { c.sp.position.copy(benny.position).addScaledVector(F.n, SC.benny_h * (1.05 + 0.6 * k)); c.sp.material.opacity = 1 
+>   }
+>   WF?.update(dt, camera); // [waterflow]
+>   return { s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: coinCount, tile: kcNow };
+> };
+> window.qaFlow = (dt) => WF?.update(dt, camera); // [waterflow] QA: advance only the water flow (camera, glints, bubbles stay)
+> window.qaVisibleSplats = () => { let n = 0; scene.traverse((o) => { if (o instanceof SplatMesh && o.visible && o.packedSplats) n += o.packedSplats.numSplats; }); return n; }; // [track] QA: Android bu
+> window.renderNow = async (n = 2) => { for (let i = 0; i < n; i++) { renderer.render(scene, camera); await new Promise((r) => setTimeout(r, 60)); } renderer.render(scene, camera); return true; };
+> window.step(0, 0, 0, 0);
+> for (let i = 0; i < 6; i++) { renderer.render(scene, camera); await new Promise((r) => setTimeout(r, 150)); }
+> window.ready = true;
+> </script></body></html>
+
+### 🤖 Claude — 2026-11-21T12:29:27.535Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB && grep -n \"visible splats\\|qaFlow\" shots_w.cjs | cut -c1-250", "description": "Check capture script QA calls"}`
+
+### 🧑 User — 2026-11-21T12:29:27.590Z
+
+> ↩︎ result: 22:      await page.evaluate(() => window.renderNow(3)); await page.screenshot({ path: `${out}/${pre}${s}.png`, timeout: 600000 }); console.log('still', s, (Date.now() - t1) / 1000, 'visible splats', await page.evaluate(() => window.qaVisibleSplats ?
+> 28:      await page.evaluate((dt) => { window.qaFlow(dt); }, dt);
+
+### 🤖 Claude — 2026-11-21T12:29:29.793Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB/out_water/after/s_0.png"}`
+
+### 🧑 User — 2026-11-21T12:29:29.836Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T12:29:45.861Z
+
+> 🔧 **Bash** `{"command": "pkill -f \"shots_w.cjs\" ; cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB && python3 -I - <<'EOF'\np = 'shots_w.cjs'; s = open(p).read()\na = \"\"\"  const port = 8900 + Math.floor(Math.random() * 90);\n  const srv = spawn('python3', ['-m', 'http.server', String(port)], { cwd: __dirname, stdio: 'ignore' });\n  await new Promise((r) => setTimeout(r, 1200));\n\"\"\"\nb = \"\"\"  // own server on a free port, verified to serve THIS folder (another specialist runs servers on similar ports)\n  let port, srv;\n  for (let tries = 0; ; tries++) …[+877 chars]`
+
+### 🧑 User — 2026-11-21T12:29:50.026Z
+
+> ↩︎ result: server 9645
+> console.warning: [.WebGL-0x1a74001b9c00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+
+### 🤖 Claude — 2026-11-21T12:29:54.051Z
+
+> 🔧 **Bash** `{"command": "ls /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/ | grep -i \"play3\\|orig\\|shots\" ; ss -ltnp 2>/dev/null | grep -E \":8[6-9][0-9][0-9]|:9[4-8][0-9][0-9]\" | head", "description": "Check for name clashes and listening ports"}`
+
+### 🧑 User — 2026-11-21T12:29:54.130Z
+
+> ↩︎ result: play3.html
+> play3.orig.html
+> play_shots.cjs
+> play_shots2.cjs
+> shots.cjs
+
+### 🤖 Claude — 2026-11-21T12:30:00.186Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB && until grep -q \"tpair done\\|pageerror\\|Error\" out_water/after.log; do sleep 5; done; grep -v \"GPU stall\" out_water/after.log", "description": "Wait in background for AFTER render completion", "timeout": 1200000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-21T12:30:00.239Z
+
+> ↩︎ result: Command running in background with ID: bopm814g2. Output is being written to: /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/tasks/bopm814g2.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-21T12:30:02.968Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB && timeout 110 bash -c 'until grep -q \"still 0 \" out_water/after.log; do sleep 3; done'; grep -v \"GPU stall\" out_water/after.log", "description": "Wait for the first valid AFTER still", "timeout": 120000}`
+

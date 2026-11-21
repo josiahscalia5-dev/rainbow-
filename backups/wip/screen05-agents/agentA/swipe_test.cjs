@@ -12,6 +12,7 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 (async () => {
   const argv = process.argv.slice(2); const noStills = argv.includes('--nostills'), cmp0 = argv.includes('--compare0');
+  if (argv.includes('--only0')) return only0();
   const out = path.join(__dirname, 'out_controls'); fs.mkdirSync(out, { recursive: true });
   const port = 8900 + Math.floor(Math.random() * 90);
   const srv = spawn('python3', ['-m', 'http.server', String(port), '--bind', '127.0.0.1'], { cwd: __dirname, stdio: 'ignore' });
@@ -121,3 +122,21 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
     await browser.close(); srv.kill(); console.log('done', el());
   }
 })();
+
+// --only0: frame 0 of the OLD code path (?controls=0) with the same device + render procedure -> out_controls/a_start_frame0_controls_off.png
+async function only0() {
+  const out = path.join(__dirname, 'out_controls'); fs.mkdirSync(out, { recursive: true });
+  const port = 8900 + Math.floor(Math.random() * 90);
+  const srv = spawn('python3', ['-m', 'http.server', String(port), '--bind', '127.0.0.1'], { cwd: __dirname, stdio: 'ignore' });
+  await sleep(1200);
+  const browser = await chromium.launch({ args: SW_ARGS });
+  try {
+    const context = await browser.newContext({ viewport: { width: W, height: H }, deviceScaleFactor: 1, isMobile: true, hasTouch: true });
+    const page = await context.newPage();
+    page.on('pageerror', (e) => console.log('pageerror:', String(e).slice(0, 300)));
+    await page.goto(`http://127.0.0.1:${port}/play3.html?w=${W}&h=${H}&controls=0`);
+    await page.waitForFunction(() => window.ready === true, null, { timeout: 900000 });
+    await page.evaluate(() => window.renderNow(1)); await page.screenshot({ path: path.join(out, 'a_start_frame0_controls_off.png') });
+    console.log('only0 written', await page.evaluate(() => typeof window.state));
+  } finally { await browser.close(); srv.kill(); }
+}

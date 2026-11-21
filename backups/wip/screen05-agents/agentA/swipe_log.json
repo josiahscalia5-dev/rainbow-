@@ -818,7 +818,7 @@
     "swipes": 0
    },
    "hud": "🪙 1,420",
-   "render_s": 29.8
+   "render_s": 23.3
   },
   {
    "name": "b_mid_lane_change_left",
@@ -854,7 +854,7 @@
     "swipes": 1
    },
    "hud": "🪙 1,430",
-   "render_s": 26.1
+   "render_s": 26.9
   },
   {
    "name": "c_leap_top",
@@ -890,7 +890,7 @@
     "swipes": 4
    },
    "hud": "🪙 1,500",
-   "render_s": 32.9
+   "render_s": 33.1
   },
   {
    "name": "d_after_air_coin",
@@ -926,7 +926,7 @@
     "swipes": 4
    },
    "hud": "🪙 1,510",
-   "render_s": 38.8
+   "render_s": 40.4
   },
   {
    "name": "e_dive",
@@ -962,7 +962,7 @@
     "swipes": 6
    },
    "hud": "🪙 1,540",
-   "render_s": 34.5
+   "render_s": 38.1
   },
   {
    "name": "f_resurface_splash",
@@ -998,7 +998,7 @@
     "swipes": 6
    },
    "hud": "🪙 1,550",
-   "render_s": 34.9
+   "render_s": 33.6
   }
  ],
  "checks": {
@@ -1019,10 +1019,8 @@
   "lat_inside_river": true,
   "no_page_errors": true
  },
- "errors": [
-  "test: Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:8926/play3.html?w=412&h=915&controls=0\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:8926/play3.html?w=412&h=915&controls=0\", waiting until \"load\"\u001b[22m\n"
- ],
- "load_s": 46.9,
+ "errors": [],
+ "load_s": 17.1,
  "canvas": {
   "x": 0,
   "y": 0,
@@ -3240,5 +3238,5 @@
    "move": null
   }
  ],
- "wall_s": 246
+ "wall_s": 215
 }
