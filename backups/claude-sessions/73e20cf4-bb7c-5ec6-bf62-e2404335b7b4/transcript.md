@@ -3804,3 +3804,163 @@ Only 5 frames remain below the bar (frames 48–52, 2.3 units in, Benny in the r
 
 > 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:r33j-fade-harness 2>&1 | grep -E '\"commit\"|skipping'; until grep -qE \"exit=\" /tmp/rainbow_r33/runs/kit_full7.log 2>/dev/null; do sleep 10; done; tail -1 /tmp/rainbow_r33/runs/kit_full7.log; cd tools/marble05/viewer && timeout 1800 python3 -I visual_check.py /tmp/rainbow_r33/runs/kit_full7 /home/user/rainbow-/references/05_flow_into_the_current.png > /dev/null 2>&1; timeout 300 python3 -I acceptance_verdict.py /tmp/rainbow_r33/runs/kit_full7 2>&1 | grep -E \"^# |\\| (G|V)[0-9]+ \" | sed -E 's/\\| `[^`]{140,}`/| (long value)/'  …[+98 chars]`
 
+### 🧑 User — 2026-11-21T16:47:07.349Z
+
+> ↩︎ result: "commit": "838c724be7ec0654648a2d49f4481e8fdfbe4ed0",
+> exit=0
+> # Screen 05 acceptance verdict: FAIL
+> | G1 | no page / console errors | PASS | `[]` | 0 errors |
+> | G2 | WHOLE level played to its end, every frame rendered | PASS | `{"frames": 687, "images": 687, "done": true, "done_frame": 686, "s_end_target": 32, "s_end": 32.013, "plan": "c
+> | G3 | forward swimming continuous at the normal speed (no freeze, no stall, no jump) | PASS | `{"min_step": 0.045999999999999375, "max_step": 0.0470000000000006, "freezes": 0, "s_
+> | G4 | left / right smooth (no teleport) | PASS | `{"max_step_per_frame": 0.0414, "teleports": 0}` | |d lat| per frame <= 0.06 in every frame |
+> | G5 | Benny stays inside the river | PASS | `0.22` | |lat| <= 0.30 (river half-width ~0.30-0.35) |
+> | G6 | every real touch swipe produced the intended move; each direction used repeatedly | **FAIL** | `{"ok": 21, "sent": 21, "directions": {"right": 8, "left": 8, "up": 2, "down":
+> | G7 | all three lanes used | PASS | `[0, 1, -1]` | lanes -1, 0, +1 seen |
+> | G8 | up / down correct and smooth | PASS | `{"max_step_per_frame": 0.0666, "max_height": 0.3271, "min_height": -0.3165}` | max height >= 0.15, min height <= -0.15, |d height| per
+>  …[+1959 chars]
+
+### 🤖 Claude — 2026-11-21T16:47:47.827Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && python3 -I - <<'EOF'\nimport numpy as np, cv2, json\nfrom PIL import Image\nW, H = 412, 915\nref = np.array(Image.open('references/05_flow_into_the_current.png').convert('RGB')).astype(np.float32)\ncln = np.array(Image.open('qa/worldlabs/05/r32/input_05_clean.png').convert('RGB').resize((864, 1536), Image.LANCZOS)).astype(np.float32)\nm = (np.abs(ref - cln).mean(2) > 30).astype(np.uint8); m[:205] = 0; m[:700] = 0          # Benny + splash below the coins\nn, lab, st, _ = cv2.connectedComponentsWithStats(m, 8); k = 1 + np.argmax(st[1:, 4]); x, y, w, h = st …[+748 chars]`
+
+### 🧑 User — 2026-11-21T16:47:48.213Z
+
+> ↩︎ result: painted Benny+splash bbox (412x915 frame): x 19-385  y 416-781  (w 365, h 364)
+> kit Benny centre x over the level: min 109 max 304 (frame centre 206); y 557-849
+
+### 🤖 Claude — 2026-11-21T16:47:57.308Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport json\nfrom PIL import Image\nR = json.load(open('/tmp/rainbow_r33/runs/kit_full7/run_log.json')); R = [(i, r) for i, r in enumerate(R) if r.get('benny')]\niL = min(R, key=lambda t: t[1]['benny']['x'])[0]; iR = max(R, key=lambda t: t[1]['benny']['x'])[0]; print('leftmost frame', iL, 'rightmost frame', iR)\na = Image.open('references/05_flow_into_the_current.png').convert('RGB'); sc = 915 / a.height; rw = round(a.width * sc); a = a.resize((rw, 915)).crop(((rw - 412) // 2, 0, (rw - 412) // 2 + 412, 915))\nims = [a] + [Image.open(f'/tmp/rainbow_r33/runs/ki …[+392 chars]`
+
+### 🧑 User — 2026-11-21T16:47:57.444Z
+
+> ↩︎ result: leftmost frame 120 rightmost frame 52
+
+### 🤖 Claude — 2026-11-21T16:47:59.426Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/benny_cmp.jpg"}`
+
+### 🧑 User — 2026-11-21T16:47:59.449Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T16:48:23.946Z
+
+> 🔧 **Bash** `{"command": "grep -n \"function water\" -A 22 /tmp/rainbow_r32/merged/controls.js | grep -n \"splash\" | cut -c1-230 | head -12", "description": "Read how the controls place the splash"}`
+
+### 🧑 User — 2026-11-21T16:48:23.974Z
+
+> ↩︎ result: 4:323-    splash.position.addScaledVector(F.n, -S.h);
+> 6:325-    splash.material.opacity = 1 - air;
+> 7:326-    splash.scale.multiplyScalar(1 + 0.25 * S.diveK);
+> 8:327-    splash.material.rotation -= S.lean.x * 0.6; // play3 sets -bendLean * 0.6; add the lane bank the same way
+> 15:334-      if (m.fx === 1 && k > P.DIVE_DOWN + P.DIVE_HOLD + P.DIVE_UP * 0.55) { m.fx = 2; burst(0.9, 12, speed); } // resurfacing splash
+
+### 🤖 Claude — 2026-11-21T16:48:37.809Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/kit05 && python3 - <<'EOF'\np = 'kitgame.html'; s = open(p).read()\nold = \"const benny = new THREE.Group(); benny.add(holder); scene.add(benny);\"\nnew = \"\"\"const benny = new THREE.Group(); benny.add(holder); scene.add(benny);\n// round 33k QA / fit switches: ?bscale=sx,sy,sz (Benny's size per axis vs the round-32 size), ?bdrop=u (move him along the up axis), ?nobenny=1\nconst BS = (q.get('bscale') ?? '1,1,1').split(',').map(Number); bmesh.scale.set(BS[0], BS[1], BS[2]); bmesh.position.y = +(q.get('bdrop') ?? 0) / KH;\nif (q.get('nobenny')) holder. …[+1042 chars]`
+
+### 🧑 User — 2026-11-21T16:48:53.241Z
+
+> ↩︎ result: pose_s0.7.png
+> pose_s0.png
+> pose_s0_nobenny_1.png
+> pose_s0_splashdt_0.png
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T16:49:02.294Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport numpy as np, cv2\nfrom PIL import Image\nd = '/tmp/rainbow_r33/kit/out/level/'\nk = np.array(Image.open(d + 'pose_s0.png').convert('RGB')).astype(np.float32); kn = np.array(Image.open(d + 'pose_s0_nobenny_1.png').convert('RGB')).astype(np.float32)\nmk = (np.abs(k - kn).mean(2) > 25).astype(np.uint8); mk[:300] = 0\nn, lab, st, _ = cv2.connectedComponentsWithStats(mk, 8); i = 1 + np.argmax(st[1:, 4]); kx, ky, kw, kh = st[i, :4]\nprint('kit Benny bbox: x %d-%d y %d-%d  (w %d h %d)' % (kx, kx + kw, ky, ky + kh, kw, kh))\n# painted Benny: pink / purple / st …[+1475 chars]`
+
+### 🧑 User — 2026-11-21T16:49:02.682Z
+
+> ↩︎ result: kit Benny bbox: x 76-375 y 473-778  (w 299 h 305)
+> painted Benny bbox: x 119-312 y 537-709  (w 192 h 172)
+> ratio kit/painted: width 1.55 height 1.77 ; centre x kit 226 painted 216 ; bottom kit 778 painted 709
+> splash drawn over the water changes 26629 pixels
+
+### 🤖 Claude — 2026-11-21T16:49:15.597Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport numpy as np, cv2\nfrom PIL import Image\nref = np.array(Image.open('references/05_flow_into_the_current.png').convert('RGB')).astype(np.float32)\ncln = np.array(Image.open('qa/worldlabs/05/r32/input_05_clean.png').convert('RGB').resize((864, 1536), Image.LANCZOS)).astype(np.float32)\nhsv = cv2.cvtColor(ref.astype(np.uint8), cv2.COLOR_RGB2HSV)\ndiff = np.abs(ref - cln).mean(2) > 30\n# Benny = pink fur, purple / white hat stripes, purple pom-pom, yellow star; NOT the cyan-white splash (low saturation + blue hue excluded)\nben = diff & ~(((hsv[..., 0] >=  …[+1006 chars]`
+
+### 🧑 User — 2026-11-21T16:49:15.956Z
+
+> ↩︎ result: painted Benny (union) bbox frame px: x 60-344 y 429-767  w 284 h 338
+
+### 🤖 Claude — 2026-11-21T16:49:18.044Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/ben_mask.png"}`
+
+### 🧑 User — 2026-11-21T16:49:18.066Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T16:49:47.414Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/kit05 && python3 - <<'EOF'\np = 'kitgame.html'; s = open(p).read()\ns = s.replace(\"const BS = (q.get('bscale') ?? '1,1,1').split(',').map(Number);\", \"const BS = (q.get('bscale') ?? '0.76,0.82,0.8').split(',').map(Number);   // round 33k: the painted Benny's outline (226 x 250 px vs 299 x 305)\")\ns = s.replace(\"depthTest: q.get('splashdt') !== '0' }));\", \"depthTest: q.get('splashdt') === '1' }));   // round 33k: the painted splash lies over the water as in the approved picture\")\nold = \"const qc = new URLSearchParams(location.search); if (!qc.h …[+1962 chars]`
+
+### 🧑 User — 2026-11-21T16:49:58.015Z
+
+> ↩︎ result: kit Benny now: x 76-375 y 473-778 (w 299 h 305)   painted: x 86-312 y 459-709 (w 226 h 250)
+
+### 🤖 Claude — 2026-11-21T16:50:01.345Z
+
+No change at all, so something resets Benny's scale each frame. Checking the controls for that:
+
+### 🤖 Claude — 2026-11-21T16:50:02.548Z
+
+> 🔧 **Bash** `{"command": "grep -n \"scale\\.\\(set\\|setScalar\\|copy\\)\" /tmp/rainbow_r32/merged/controls.js | cut -c1-200 | head -10; grep -n \"children\\|traverse\" /tmp/rainbow_r32/merged/controls.js | cut -c1-160 | head -6", "description": "Find where Benny's scale is set by the controls"}`
+
+### 🧑 User — 2026-11-21T16:50:02.594Z
+
+> ↩︎ result: 163:    sp.scale.set(COIN_SIZE, COIN_SIZE, 1); sp.renderOrder = 10; scene.add(sp);
+> 181:    k.sp.visible = z > 0.01; k.sp.scale.set(COIN_SIZE * z, COIN_SIZE * z, 1);
+> 235:    const wp = at(sNow, new THREE.Vector3()).addScaledVector(Fq.r, S.lat.x); benny.position.copy(wp).addScaledVector(Fq.n, -sink); benny.scale.setScalar(k); benny.updateMatrixWorld(true);
+> 239:    benny.position.copy(p0); benny.scale.copy(s0); benny.updateMatrixWorld(true);
+> 348:      fs.sp.scale.set(799 * pxW * 0.8 * z, 309 * pxW * 0.8 * z * (1.25 - 0.4 * k), 1); fs.sp.material.opacity = 0.95 * (1 - k * k);
+> 354:      const k = d.age / d.life, z = d.size * (0.7 + 0.5 * k); d.sp.scale.set(z, z, 1); d.sp.material.opacity = 0.9 * Math.min(1, k * 6) * (1 - k * k);
+> 237:    benny.traverse((o) => { if (!o.isMesh) return; const a = o.geometry.attributes.position; for (let i = 0; i < a.count; i += 3) { v.fromBufferAttribute(a,
+> 244:    benny.updateMatrixWorld(true); benny.traverse((o) => { if (!o.isMesh) return; const a = o.geometry.attributes.position; for (let i = 0; i < a.count; i +
+> 246:    benny.traverse((o) => { if (!o.isMesh) return; const a = o.geometry.attributes.position; for (let i = 0; i < a.count; i += 5) { v.fromBu …[+16 chars]
+
+### 🤖 Claude — 2026-11-21T16:50:09.580Z
+
+> 🔧 **Bash** `{"command": "grep -c \"0.76,0.82,0.8\" /tmp/rainbow_r33/kitgame/play3.html; ls -la --time-style=+%T /tmp/rainbow_r33/kit/out/level/pose_s0.png /tmp/rainbow_r33/kit/out/level/pose_s0_nobenny_1.png; grep -n \"bmesh.scale\\|const bmesh\" /tmp/rainbow_r33/kitgame/play3.html | cut -c1-200", "description": "Verify the scale change reached the page"}`
+
+### 🧑 User — 2026-11-21T16:50:09.622Z
+
+> ↩︎ result: 1
+> -rw-r--r-- 1 root root 781770 16:49:52 /tmp/rainbow_r33/kit/out/level/pose_s0.png
+> -rw-r--r-- 1 root root 758640 16:49:57 /tmp/rainbow_r33/kit/out/level/pose_s0_nobenny_1.png
+> 170:const bmesh = new THREE.Mesh(geo, bmat); bmesh.frustumCulled = false;
+> 183:const BS = (q.get('bscale') ?? '0.76,0.82,0.8').split(',').map(Number);   // round 33k: the painted Benny's outline (226 x 250 px vs 299 x 305) bmesh.scale.set(BS[0], BS[1], BS[2]); bmesh.position
+
+### 🤖 Claude — 2026-11-21T16:50:12.777Z
+
+Same mistake as earlier: my comment landed in the middle of the line and commented out the scale command after it. Fixing it properly and checking that Benny's scale actually changes:
+
+### 🤖 Claude — 2026-11-21T16:50:20.934Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/kit05 && python3 - <<'EOF'\np = 'kitgame.html'; s = open(p).read()\nold = \"const BS = (q.get('bscale') ?? '0.76,0.82,0.8').split(',').map(Number);   // round 33k: the painted Benny's outline (226 x 250 px vs 299 x 305) bmesh.scale.set(BS[0], BS[1], BS[2]);\"\nnew = \"// round 33k: Benny scaled to the painted Benny's outline (measured 226 x 250 px vs 299 x 305 px at 412 x 915)\\nconst BS = (q.get('bscale') ?? '0.76,0.82,0.8').split(',').map(Number); bmesh.scale.set(BS[0], BS[1], BS[2]);\"\nassert old in s; s = s.replace(old, new); open(p, 'w').write(s) …[+1308 chars]`
+
+### 🧑 User — 2026-11-21T16:50:31.037Z
+
+> ↩︎ result: lines with code after a // comment (check): 0
+> kit Benny now: x 108-333 y 502-759 (w 225 h 257)   painted: x 86-312 y 459-709 (w 226 h 250)
+
+### 🤖 Claude — 2026-11-21T16:50:52.709Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/kit05 && python3 - <<'EOF'\np = 'kitgame.html'; s = open(p).read()\nold = \"bmesh.position.y = +(q.get('bdrop') ?? 0) / KH;\"\nnew = \"bmesh.position.y = +(q.get('bdrop') ?? 0.085) / KH; bmesh.position.x = +(q.get('bshift') ?? 0.04) / KH;   // painted position: 45 px higher, 21 px left\"\nassert old in s; s = s.replace(old, new); open(p, 'w').write(s)\nEOF\ncp kitgame.html /tmp/rainbow_r33/kitgame/play3.html && cd /tmp && NODE_PATH=$(npm root -g) timeout 900 node /tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/poses.cj …[+1496 chars]`
+
+### 🧑 User — 2026-11-21T16:51:03.626Z
+
+> ↩︎ result: kit Benny now: x 130-360 y 452-727 (w 230 h 275)   painted: x 86-312 y 459-709 (w 226 h 250)
+
+### 🤖 Claude — 2026-11-21T16:51:08.144Z
+
+He moved right instead of left (the model is turned to face down the river, so the side axis is flipped). The top now matches (452 against painted 459). Flipping the sideways shift:
+
+### 🤖 Claude — 2026-11-21T16:51:17.944Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/kit05 && sed -i \"s/bmesh.position.x = +(q.get('bshift') ?? 0.04) \\/ KH;/bmesh.position.x = +(q.get('bshift') ?? -0.04) \\/ KH;/\" kitgame.html && grep -c \"bshift') ?? -0.04\" kitgame.html && cp kitgame.html /tmp/rainbow_r33/kitgame/play3.html && cd /tmp && NODE_PATH=$(npm root -g) timeout 900 node /tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/poses.cjs /tmp/rainbow_r33/kitgame /tmp/rainbow_r33/kit/out/level '[0]' 2>&1 | grep -i error; NODE_PATH=$(npm root -g) timeout 900 node /tmp/claude-0/-home-user-rainbow-/73e2 …[+1318 chars]`
+
