@@ -994,3 +994,74 @@ Merge script works on the current snapshots. Running a quick logic-only pass of 
 
 > ↩︎ result: ok
 
+### 🤖 Claude — 2026-11-21T12:55:56.078Z
+
+> 🔧 **Bash** `{"command": "head -40 backups/BOOTSTRAP_REPORT.md | cut -c1-400; tail -3 backups/.live/bootstrap.log 2>/dev/null", "description": "Read the current bootstrap report"}`
+
+### 🧑 User — 2026-11-21T12:55:56.121Z
+
+> ↩︎ result: # Rainbow bootstrap report — BOOTSTRAP PROBLEMS
+> 
+> Generated 2026-11-21 12:47 UTC by `scripts/claude-bootstrap.sh` (mode `background`) on branch `ccr-c0679182-krbfci`.
+> The commit that contains this file is the backup itself, so its SHA is not written here; use `git log -1 -- backups/BOOTSTRAP_REPORT.md`.
+> 
+> | Step | Result | Details | s |
+> |---|---|---|---|
+> | Repository + branch | OK | josiahscalia5-dev/rainbow- on ccr-c0679182-krbfci @ 50f15f8 (session started from claude/screen-05-3d-geometry-9yu7pu) | 0 |
+> | Resume newest work | FAIL | git fetch from GitHub failed (network / GitHub connection?) | 240 |
+> | Backup gap since last session | OK | previous save on GitHub: 50f15f8 2026-11-21 12:35 UTC (hook:Stop) on ccr-c0679182-krbfci, claude/screen-05-3d-geometry-9yu7pu; previous session ended WITHOUT an end-of-session backup (its environment closed after an automatic save); 22 gap(s) > 10 min in the last 72 h of the autosave log, longest 11-19 02:57-18:04 UTC (15.1 h) | 0 |
+> | Git LFS binaries (local) | OK | 278/278 real files (models, APK, kit ZIP, Marble splats/PLY/colliders/.blend), git lfs fsck OK | 4 |
+> | Git LFS on GitHub | OK | 278/278 LFS objects (1714 MB, 28 Marble/World Labs) confi …[+2765 chars]
+
+### 🤖 Claude — 2026-11-21T12:55:59.761Z
+
+> 🔧 **Bash** `{"command": "curl -s -o /dev/null -w \"%{http_code}\\n\" --max-time 20 https://api.spaitial.ai/v1/models; cd /home/user/rainbow- && git lfs ls-files 2>/dev/null | wc -l", "description": "Free read check of the SpAItial API key"}`
+
+### 🧑 User — 2026-11-21T12:56:01.077Z
+
+> ↩︎ result: 401
+> 278
+
+### 🤖 Claude — 2026-11-21T12:56:09.307Z
+
+> 🔧 **Bash** `{"command": "timeout 900 python3 scripts/rainbow-autosave.py --reason manual:r32-relaunch 2>&1 | grep -E '\"commit\"|\"pushed\"|another|verified' | head -4; python3 -I scripts/autosave-status.py; git rev-parse HEAD; git ls-remote origin refs/heads/ccr-c0679182-krbfci", "description": "Save now and verify remote matches local", "timeout": 1000000}`
+
+### 🧑 User — 2026-11-21T12:56:10.596Z
+
+> ↩︎ result: another autosave is running; skipping
+> AUTOSAVE OK | branch ccr-c0679182-krbfci | scheduler daemon | last verified backup 2026-11-21T12:50:54+00:00 (5.2 min ago) | local 4cadf2b remote 4cadf2b (match) | uncommitted 40
+> 4cadf2bca17cc806a41e92b7048f5ceafbbcafc8
+> 4cadf2bca17cc806a41e92b7048f5ceafbbcafc8	refs/heads/ccr-c0679182-krbfci
+
+### 🤖 Claude — 2026-11-21T12:56:23.256Z
+
+Both specialists are working in the background. Here's where things stand.
+
+**Backup report.** I'm not printing "RAINBOW 3D BACKUP VERIFIED" because one startup check failed:
+- **What failed:** at startup the bootstrap's "resume newest work" step couldn't reach GitHub and timed out. I fetched by hand a few minutes later and it worked. The lead branch had two newer saves (12:37 and 12:42 UTC) holding both specialists' last work, so I merged them into this session's branch. No other branch was touched.
+- **GitHub save:** branch `ccr-c0679182-krbfci`, commit `4cadf2bca17cc806a41e92b7048f5ceafbbcafc8`. The copy on GitHub matches the local one, and the five-minute autosave is running ("AUTOSAVE OK … match").
+- **Large files (Git LFS):** all 278 are present locally and confirmed on GitHub. All 13 approved reference pictures are unchanged.
+- **Tools:** Blender 5.3.0, the Android SDK, Playwright with Chromium, ffmpeg and the build tests are all OK. The Playwright connector is connected.
+- **World Labs (Marble):** the key works on a free check and shows 2,030 credits. Nothing has been spent.
+- **SpAItial:** the key isn't on this account (a free check was refused). It isn't needed for this work, so I haven't asked you for it.
+- **Gaps:** the previous session ended without a final save, and the log shows a 4-hour gap with no saves on 11-21 between 04:54 and 08:54 UTC.
+
+**Round 32 so far:**
+- **Workspace:** rebuilt from both specialists' saved work. Their saved work is copied into the repository every ~5 minutes so the autosave pushes it.
+- **Specialists:** neither had finished (both notes still had empty results sections). I relaunched both from where they stopped:
+  - the controls specialist is finishing its verification;
+  - the water specialist is finishing the water flow and the black-patch cleanup, with its before/after pictures.
+- **Acceptance test fixes:**
+  - It now checks that it loads the right folder (a shared port could silently load another specialist's page).
+  - It now records the camera position in every frame.
+  - It now checks that each of the 10 swipes did what it should.
+- **Pass/fail rules:** I wrote a verdict script with fixed thresholds before any results existed: 10 gameplay checks and 5 visual checks, including zero black patches in every frame. It passes only if every check passes.
+- **Merge:** a repeatable script now combines the two specialists' pages. The four overlaps were both of them adding a line at the same spot, so both lines are kept.
+- **First gameplay check:** a logic-only run of the merged page (no pictures, so no visual checks yet) passed:
+  - all 10 real touch swipes did the right thing, and all three lanes were used;
+  - the leap reached +0.28 and the dive −0.27;
+  - Benny never jumped sideways, forward swimming never froze, and the camera was smooth;
+  - coins went from 1,420 to 1,590, with no errors.
+
+**Next:** when both specialists report back, I'll re-merge and run the full recorded test of all 228 frames plus the visual checks, then fix and re-test until everything passes. Rendering here is software-only, so one full test run probably takes one to two hours. You won't get a video until every check passes.
+
