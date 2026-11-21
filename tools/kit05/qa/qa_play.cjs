@@ -163,7 +163,7 @@ const sub = (a, b) => a.map((v, i) => v - b[i]), dot = (a, b) => a.reduce((s, v,
         up: () => ({ ev: [[0, 'up']], len: 0.8, dl: 0 }), down: () => ({ ev: [[0, 'down']], len: 1.05, dl: 0 }),
         shiftL: (l) => (l > -1 ? { ev: [[0, 'left']], len: 0.45, dl: -1 } : null), shiftR: (l) => (l < 1 ? { ev: [[0, 'right']], len: 0.45, dl: 1 } : null),
       };
-      const SEQ = ['reversal', 'up', 'shiftL', 'reversal', 'airSteer', 'double', 'down', 'shiftR', 'diveSteer', 'shiftR', 'reversal', 'double', 'up', 'airSteer', 'down', 'shiftL', 'diveSteer', 'shiftL', 'up', 'down', 'reversal', 'shiftR'];
+      const SEQ = ['reversal', 'up', 'shiftL', 'reversal', 'airSteer', 'double', 'reversal', 'down', 'shiftR', 'diveSteer', 'shiftR', 'reversal', 'double', 'up', 'airSteer', 'down', 'shiftL', 'diveSteer', 'shiftL', 'up', 'down', 'reversal', 'shiftR'];
       let t = 0.8, lane = 0, k = 0; const curveTimes = peaks.map((x) => x.i / fps - 0.15).filter((x) => x > 0.8 && x < tEnd - 1.5).sort((a, b) => a - b);
       while (t < tEnd - 1.6) {
         let kind = SEQ[k % SEQ.length]; const ct = curveTimes.find((c) => c >= t && c < t + 1.0);

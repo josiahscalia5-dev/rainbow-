@@ -326,7 +326,7 @@ const PATH = (() => {
   const startBlend = (a) => { const v0 = a[i0], d0 = (a[i0 + 1] - a[i0 - 1]) / (2 * ds);
     for (let i = 0; i < n; i++) { const s = s0 + i * ds; if (s < 0) a[i] = 0; else if (s < LB) { const x = s / LB; a[i] -= (v0 + d0 * s) * (1 - x * x * (3 - 2 * x)); } } return a; };
   // keep Benny's widest reach on the water: |latB0 + pB| <= WALL_LIM (water half-width 0.70 - his lane 0.26 - arms 0.22), soft knee
-  const WALL_LIM = 0.22, KNEE = 0.15, keepIn = (a) => { for (let i = 0; i < n; i++) { const qv = latB0 + a[i], m = Math.abs(qv);
+  const WALL_LIM = +(q.get('p_wall') ?? 0.27), KNEE = 0.2, keepIn = (a) => { for (let i = 0; i < n; i++) { const qv = latB0 + a[i], m = Math.abs(qv);
     if (m > KNEE) a[i] = Math.sign(qv) * (KNEE + (WALL_LIM - KNEE) * Math.tanh((m - KNEE) / (WALL_LIM - KNEE))) - latB0; } return a; };
   const b = startBlend(keepIn(gauss(raw, 0.12 / ds))), c = startBlend(gauss(b, 0.45 / ds));
   const d1 = (a) => { const o = new Float64Array(n); for (let i = 1; i < n - 1; i++) o[i] = (a[i + 1] - a[i - 1]) / (2 * ds); o[0] = o[1]; o[n - 1] = o[n - 2]; return o; };
@@ -398,9 +398,9 @@ const M = bennyM;
 // body on screen), swings a few degrees into the bend about his river point (he stays put on screen; the depth curve remaps along the fixed
 // tunnel axis from the camera POSITION, so a turned camera still sees the painted ring ratio) and rolls ~1-2 deg with the curve.
 const PQ = (k, d) => +(q.get(k) ?? d), DEG = Math.PI / 180;
-const CAMP = { look: PQ('p_look', 0.7), yawK: PQ('p_yawk', 0.35), yawMax: Math.tan(PQ('p_yawmax', 3.5) * DEG), yawW: PQ('p_yaww', 3.0),
+const CAMP = { look: PQ('p_look', 0.7), yawK: PQ('p_yawk', 0.5), yawMax: Math.tan(PQ('p_yawmax', 5.5) * DEG), yawW: PQ('p_yaww', 3.0),
   rollK: PQ('p_rollk', 0.1), rollMax: PQ('p_rollmax', 2.0) * DEG, rollW: PQ('p_rollw', 3.0), fadeIn: PQ('p_fadein', 1.2),
-  leanK: PQ('p_leank', 0.3), leanMax: PQ('p_leanmax', 0.1), leanW: PQ('p_leanw', 6), byawK: PQ('p_byawk', 0.85), byawW: PQ('p_byaww', 6),
+  leanK: PQ('p_leank', 0.3), leanMax: PQ('p_leanmax', 0.06), leanW: PQ('p_leanw', 6), byawK: PQ('p_byawk', 0.85), byawW: PQ('p_byaww', 6),
   camK: PQ('p_camk', 0.8), camW: PQ('p_camw', 12), camFF: PQ('p_camff', 0.12), camMax: PQ('p_cammax', 0.22),
   gNeg: PQ('p_gneg', 0.07), gPos: PQ('p_gpos', 0.1), gKnee: PQ('p_gknee', 0.02), R0: PQ('p_r0', 0.42), RMAX: PQ('p_rmax', 0.58) };
 const cds = (o, target, omega, dt) => { const y = o.x - target, j = o.v + omega * y, e = Math.exp(-omega * dt); o.x = target + (y + j * dt) * e; o.v = (o.v - omega * j * dt) * e; return o.x; };
@@ -438,7 +438,7 @@ window.step = (t, dt, steer, speed) => {
   // swing-out: his lane offset relative to the camera stays within about +-0.06 u even for rapid left-right swipes) + a soft guard
   const latV = dt > 0 ? (st.lat - st.latPrev) / dt : 0; st.latPrev = st.lat;
   cds(st.camF, clampA(CAMP.camK * (st.lat + CAMP.camFF * latV), CAMP.camMax), CAMP.camW, dt);
-  const sc = st.s, eLane = st.lat - st.camF.x;                                       // his lane offset relative to the camera's
+  const sc = st.s, eLane = st.lat + (pB(sc) - pC(sc)) - st.camF.x;                  // his offset relative to the camera's (lane + Benny path vs smoother camera path, round 35)
   const eKeep = eLane < 0 ? -softLim(-eLane, CAMP.gNeg, CAMP.gKnee) : softLim(eLane, CAMP.gPos, CAMP.gKnee);
   st.guard = eLane - eKeep; st.camLat = st.camF.x + st.guard;
   rC.copy(RR).addScaledVector(A, -pC1(sc)).normalize();
