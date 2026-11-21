@@ -4186,3 +4186,50 @@ Everything is saved and pushed to GitHub. That includes the ledger entry for the
 
 The Plus job is still running on World Labs' side. Should I go ahead and check its result?
 
+### 🧑 User — 2026-11-21T10:18:32.068Z
+
+Yes, check the Plus result I wanted to get my approved screen. So are you saying that I have no chance of building my entire screen and making it a normal game where you just walking through or swimming through my approved screen or artwork? Is that what you're saying?
+
+### 🤖 Claude — 2026-11-21T10:18:34.038Z
+
+Checking the Plus result now (free read).
+
+### 🤖 Claude — 2026-11-21T10:18:36.620Z
+
+> 🔧 **Bash** `{"command": "python3 -I tools/worldlabs/marble_pilot.py poll 0f1d7a46-40f9-4134-8db4-8d4c3fc5f9fc qa/worldlabs/05/r32/plus_op.json 600 2>&1 | tail -2; python3 -I tools/worldlabs/marble_pilot.py credits; python3 -I -c \"\nimport json;d=json.load(open('qa/worldlabs/05/r32/plus_op.json'));r=d.get('response') or {}\nprint('world',r.get('world_id')); a=r.get('assets') or {}; print('semantics',(a.get('splats') or {}).get('semantics_metadata')); print({k:bool(v) for k,v in ((a.get('splats') or {}).get('spz_urls') or {}).items()})\"", "description": "Check the Plus job result and the credit balance",  …[+18 chars]`
+
+### 🧑 User — 2026-11-21T10:21:59.952Z
+
+> ↩︎ result: 187s {'status': 'IN_PROGRESS', 'description': 'World generation in progress'}
+> HTTP 200 done True error None
+> 2030.0
+> world 3657fa05-d90a-4ad9-acdb-70f0145d5796
+> semantics {'metric_scale_factor': 1.2767848, 'ground_plane_offset': 1.2305477}
+> {'500k': True, '100k': True, '150k': True, 'full_res': True}
+
+### 🤖 Claude — 2026-11-21T10:22:01.834Z
+
+The Plus world is done. It cost 1,580 credits, the lowest possible amount, so your balance is 2,030. Downloading it and running the same checks as before.
+
+### 🤖 Claude — 2026-11-21T10:22:08.437Z
+
+> 🔧 **Bash** `{"command": "echo \"| $(date -u +%H:%M) | plus done: world \\`3657fa05-d90a-4ad9-acdb-70f0145d5796\\` (splats 100k / 150k / 500k / full) | 200 | 3,610 → **2,030** (1,580) |\" >> qa/worldlabs/05/pilot/LEDGER.md; cd qa/worldlabs/05/r32 && python3 -I - <<'EOF'\nimport json, urllib.request\na=json.load(open('plus_op.json'))['response']['assets']\nitems={'plus_500k.spz':a['splats']['spz_urls']['500k'],'plus_full.spz':a['splats']['spz_urls']['full_res']}\nif a.get('mesh',{}).get('collider_mesh_url'): items['plus_collider.glb']=a['mesh']['collider_mesh_url']\nif a.get('imagery',{}).get('pano_url'): i …[+978 chars]`
+
+### 🧑 User — 2026-11-21T10:22:12.103Z
+
+> ↩︎ result: plus_500k.spz
+> plus_full.spz
+> plus_collider.glb
+> plus_pano.png
+> -rw-r--r-- 1 root root  7812010 Nov 21 10:22 plus_500k.spz
+> -rw-r--r-- 1 root root  1640604 Nov 21 10:22 plus_collider.glb
+> -rw-r--r-- 1 root root 29989067 Nov 21 10:22 plus_full.spz
+> -rw-r--r-- 1 root root     3929 Nov 21 10:21 plus_op.json
+> -rw-r--r-- 1 root root 16484228 Nov 21 10:22 plus_pano.png
+> full_500k n 500000 splats ahead by distance: [266098, 120869, 7661, 1550, 577, 4]
+> plus_500k n 500000 splats ahead by distance: [215075, 160967, 19046, 3501, 1017, 133]
+
+### 🤖 Claude — 2026-11-21T10:22:17.957Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad; V=$S/splatview; cd $V && NODE_PATH=$(npm root -g) timeout 600 node shots.cjs plus_500k.spz out_pl1 '[{\"name\":\"guess\",\"pos\":[0,0,0],\"look\":[0,0.105,-1],\"fov\":95}]' 2>&1 | tail -2; python3 -I /home/user/rainbow-/tools/marble05/align.py $V/out_pl1/guess.png /home/user/rainbow-/qa/worldlabs/05/r32/input_05_clean.png 95 0,0.105,-1 $S/refcam_plus.json $S/align_plus.jpg", "description": "Find your picture's camera inside the Plus world", "timeout": 620000}`
+
