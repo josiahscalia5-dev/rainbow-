@@ -794,7 +794,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 26528,
-   "sha256": "82aef92805e2dfed68cde8e78a520a7111163da32ab81815ed423208d5b701aa"
+   "sha256": "3ef9a3f030a653ad089835de370025873dcf04ddc956f52a28f6fa8ebc8432f7"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3153,
-   "sha256": "39e7ef25e8cbe516800e05d26d8043cbcbc0124318d313f6cc86af21295d2eb6"
+   "sha256": "7869241a9382f20ff9badef3e1139700d122ebc83e093850b4cf5b2a3240ab97"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -7734,7 +7734,7 @@
   {
    "path": "backups/wip/screen05-agents/LAST_SYNC_UTC",
    "bytes": 33,
-   "sha256": "b44a734240daeb26f8bddbac426712ef766083aa4e2f2c9c37c9e52bd119b3d5"
+   "sha256": "22ca1fc62faf912d16a4d7c83f0a40f62b7cee6e0c11e4c7468148a1d1b3add6"
   },
   {
    "path": "backups/wip/screen05-agents/WORKSPACE",
@@ -39848,8 +39848,8 @@
   },
   {
    "path": "tools/kit05/kitgame.html",
-   "bytes": 29722,
-   "sha256": "c5cb06af2a7e8e47e1f6e1ee8999ff554b7c954e507f5201729dceeb415408d0"
+   "bytes": 30420,
+   "sha256": "f9cb0884eb2a19cbc1ea05aaec0230b197d8c96b79bd6495ecfc2243a1a1c177"
   },
   {
    "path": "tools/kit05/painted_coins.py",

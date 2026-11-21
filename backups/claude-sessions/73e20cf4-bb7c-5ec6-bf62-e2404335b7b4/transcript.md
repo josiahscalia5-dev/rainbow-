@@ -3534,3 +3534,120 @@ Pickup uses each coin's 3D position (`p0`) and its distance along the river (`s`
 
 > 🔧 **Bash** `{"command": "cd /tmp/rainbow_r33 && rm -rf runs/kit_full4 && (NODE_PATH=$(npm root -g) timeout 7000 node /home/user/rainbow-/tools/marble05/viewer/final_acceptance.cjs /tmp/rainbow_r33/kitgame /tmp/rainbow_r33/runs/kit_full4 25 1.4 > /tmp/rainbow_r33/runs/kit_full4.log 2>&1; echo \"exit=$?\" >> /tmp/rainbow_r33/runs/kit_full4.log) > /dev/null 2>&1 &\nsleep 1; cd /home/user/rainbow- && python3 scripts/rainbow-autosave.py --reason manual:r33g-painted-coins 2>&1 | grep -E '\"commit\"|skipping'", "description": "Start full acceptance run; save progress"}`
 
+### 🧑 User — 2026-11-21T16:17:05.624Z
+
+> ↩︎ result: "commit": "97e054dae885413929de195e613b630a568176e5",
+
+### 🤖 Claude — 2026-11-21T16:17:15.053Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport numpy as np, cv2, json\nR0 = cv2.imread('references/05_flow_into_the_current.png'); _w = round(R0.shape[1] * 915 / R0.shape[0]); R = cv2.resize(R0, (_w, 915), interpolation=cv2.INTER_AREA)[:, (_w - 412) // 2:(_w - 412) // 2 + 412]\ndef hs(img):\n    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)[150:]; h = cv2.calcHist([hsv], [0, 1], None, [36, 16], [0, 180, 0, 256]); return cv2.normalize(h, h, 1, 0, cv2.NORM_L1)\nHR = hs(R); look = lambda im: float(cv2.compareHist(HR, hs(im), cv2.HISTCMP_CORREL))\nfor fr in (0, 90, 171, 321):\n    im = cv2.imread(f'/tmp/r …[+479 chars]`
+
+### 🧑 User — 2026-11-21T16:17:15.328Z
+
+> ↩︎ result: frame 0: 0.968  near water->0.995  mid river->0.983  tunnel->0.969  Benny box->0.998
+> frame 90: 0.780  near water->0.977  mid river->0.903  tunnel->0.788  Benny box->0.965
+> frame 171: 0.715  near water->0.972  mid river->0.856  tunnel->0.719  Benny box->0.949
+> frame 321: 0.801  near water->0.969  mid river->0.909  tunnel->0.803  Benny box->0.978
+
+### 🤖 Claude — 2026-11-21T16:17:17.986Z
+
+My calculation gives 0.968 for the first frame, while the test reports 0.85 for the same frame, so the test must compute something slightly different. Reading its exact formula:
+
+### 🤖 Claude — 2026-11-21T16:17:18.940Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/marble05/viewer && sed -n 8,16p visual_check.py | cut -c1-220; grep -n \"look = \\|look=\" visual_check.py | cut -c1-220", "description": "Read the colour-look formula in visual_check.py"}`
+
+### 🧑 User — 2026-11-21T16:17:18.995Z
+
+> ↩︎ result: files = sorted(glob.glob(f'{d}/f_*.jpg'))
+> R0 = cv2.imread(ref)
+> # the game keeps the approved picture's VERTICAL field of view, so a 412x915 portrait frame = the approved picture scaled to height 915
+> # and centre-cropped to width 412 (round 32 lead fix: it used to be squashed to 412x915, which distorts the comparison)
+> _w = round(R0.shape[1] * 915 / R0.shape[0]); R = cv2.resize(R0, (_w, 915), interpolation=cv2.INTER_AREA)[:, (_w - 412) // 2:(_w - 412) // 2 + 412]
+> def hs_hist(img):
+>     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)[150:]  # below the HUD
+>     h = cv2.calcHist([hsv], [0, 1], None, [36, 16], [0, 180, 0, 256]); return cv2.normalize(h, h, 1, 0, cv2.NORM_L1)
+> HR = hs_hist(R)
+> 27:    look = float(cv2.compareHist(HR, hs_hist(im), cv2.HISTCMP_INTERSECT))
+
+### 🤖 Claude — 2026-11-21T16:17:21.413Z
+
+The test measures histogram intersection: the share of colour mass the frame has in common with your picture, 1.0 being identical. Same region analysis with that measure:
+
+### 🤖 Claude — 2026-11-21T16:17:26.583Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && python3 -I - <<'EOF'\nimport numpy as np, cv2, json\nR0 = cv2.imread('references/05_flow_into_the_current.png'); _w = round(R0.shape[1] * 915 / R0.shape[0]); R = cv2.resize(R0, (_w, 915), interpolation=cv2.INTER_AREA)[:, (_w - 412) // 2:(_w - 412) // 2 + 412]\ndef hs(img):\n    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)[150:]; h = cv2.calcHist([hsv], [0, 1], None, [36, 16], [0, 180, 0, 256]); return cv2.normalize(h, h, 1, 0, cv2.NORM_L1)\nHR = hs(R); look = lambda im: float(cv2.compareHist(HR, hs(im), cv2.HISTCMP_INTERSECT))\nV = json.load(open('/tmp/rain …[+797 chars]`
+
+### 🧑 User — 2026-11-21T16:17:26.818Z
+
+> ↩︎ result: per 60 frames: [0.704, 0.705, 0.723, 0.712, 0.728, 0.712, 0.725, 0.716, 0.73, 0.715, 0.726, 0.286]  frames below 0.7225: 389
+> frame 0: 0.850  near water->0.928  mid river->0.885  tunnel->0.864  Benny box->0.949
+> frame 90: 0.703  near water->0.843  mid river->0.789  tunnel->0.735  Benny box->0.818
+> frame 171: 0.711  near water->0.861  mid river->0.793  tunnel->0.729  Benny box->0.826
+> frame 321: 0.694  near water->0.851  mid river->0.792  tunnel->0.707  Benny box->0.838
+> frame 500: 0.745  near water->0.872  mid river->0.820  tunnel->0.760  Benny box->0.850
+
+### 🤖 Claude — 2026-11-21T16:17:42.018Z
+
+> 🔧 **Bash** `{"command": "sed -i \"s#const \\[dir, out, list\\] = process.argv.slice(2);#const [dir, out, list, qs = ''] = process.argv.slice(2);#; s#play3.html?w=412&h=915\\`#play3.html?w=412\\&h=915\\${qs}\\`#; s#\\${out}/pose_s\\${target}.png#\\${out}/pose_s\\${target}\\${qs.replace(/[^a-z0-9.]/gi, '_')}.png#\" /tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/poses.cjs && grep -n \"qs\" /tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/poses.cjs | head -3; cd /tmp && for qs in \"&nearflow=0\" \"&nearflow=0.15\"; do NODE_PATH=$(npm root -g) …[+583 chars]`
+
+### 🧑 User — 2026-11-21T16:18:09.540Z
+
+> ↩︎ result: 4:  const [dir, out, list, qs = ''] = process.argv.slice(2); const port = 9744 + Math.floor(Math.random() * 50); const srv = spawn('python3', ['-m', 'http.server', '--bind', '127.0.0.1', String(port)], { cwd: dir, stdio: 'ignore' });
+> 8:  await page.goto(`http://127.0.0.1:${port}/play3.html?w=412&h=915${qs}`); await page.waitForFunction(() => window.ready === true, null, { timeout: 600000 });
+> 11:    await page.evaluate(() => window.renderNow(1)); await page.screenshot({ path: `${out}/pose_s${target}${qs.replace(/[^a-z0-9.]/gi, '_')}.png` }); console.log('s', target, 't', t.toFixed(2)); }
+> pose_s15.png
+> pose_s15_nearflow_0.15.png
+> pose_s15_nearflow_0.png
+> pose_s8.png
+> pose_s8_nearflow_0.15.png
+> pose_s8_nearflow_0.png
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T16:18:14.566Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport cv2\nR0 = cv2.imread('references/05_flow_into_the_current.png'); _w = round(R0.shape[1] * 915 / R0.shape[0]); R = cv2.resize(R0, (_w, 915), interpolation=cv2.INTER_AREA)[:, (_w - 412) // 2:(_w - 412) // 2 + 412]\ndef hs(img):\n    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)[150:]; h = cv2.calcHist([hsv], [0, 1], None, [36, 16], [0, 180, 0, 256]); return cv2.normalize(h, h, 1, 0, cv2.NORM_L1)\nHR = hs(R); look = lambda f: float(cv2.compareHist(HR, hs(cv2.imdecode(cv2.imencode('.jpg', cv2.imread(f), [cv2.IMWRITE_JPEG_QUALITY, 92])[1], 1)), cv2.HISTCMP_INT …[+373 chars]`
+
+### 🧑 User — 2026-11-21T16:18:14.874Z
+
+> ↩︎ result: s=8: nearflow 0.3 (now) 0.719   0.15 0.752   0 0.841
+> s=15: nearflow 0.3 (now) 0.745   0.15 0.764   0 0.836
+> start pose 0.838
+
+### 🤖 Claude — 2026-11-21T16:18:37.711Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/kit05 && python3 - <<'EOF'\np = 'kitgame.html'; s = open(p).read()\nold = \"\"\"        vec4 kPaintRel = texture(map, vec2(vMapUv.x, log(max(vKitD, uWT.x) / uWT.x) / uWT.y), uBias);\"\"\"\nnew = \"\"\"        // the painted water itself streams toward the camera (two-phase flow map: two samples shifted along the river, cross-faded\n        // in a loop): the streaks and glints move, the colours and big shapes stay the painting's (round 33h; uFlowL = shift length)\n        float kPh = fract(uFlow * 1.3), kNearF = 1.0 - smoothstep(3.0, 5.0, vKitD);\n     …[+1342 chars]`
+
+### 🧑 User — 2026-11-21T16:18:37.828Z
+
+> ↩︎ result: OK
+> frame 110 / 704 {"s":5.133,"la
+
+### 🤖 Claude — 2026-11-21T16:18:39.721Z
+
+The full run still going uses the old overlay and would fail the colour check, so I'll stop it. First a quick score check on the flow-map version, then a fresh full run:
+
+### 🤖 Claude — 2026-11-21T16:18:46.273Z
+
+> 🔧 **Bash** `{"command": "pkill -f \"final_acceptance.cjs /tmp/rainbow_r33/kitgame /tmp/rainbow_r33/runs/kit_full4\"; sleep 2; cp /home/user/rainbow-/tools/kit05/kitgame.html /tmp/rainbow_r33/kitgame/play3.html && cd /tmp && NODE_PATH=$(npm root -g) timeout 1500 node /tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/poses.cjs /tmp/rainbow_r33/kitgame /tmp/rainbow_r33/kit/out/level '[0, 3, 8, 15, 22]' 2>&1 | grep -i error; cd /home/user/rainbow- && python3 -I - <<'EOF'\nimport cv2\nR0 = cv2.imread('references/05_flow_into_the_current.png'); _w = round(R0.shape[1] * 915 / R0.s …[+746 chars]`
+
+### 🧑 User — 2026-11-21T16:18:57.232Z
+
+> ↩︎ result: {0: 0.838, 3: 0.747, 8: 0.768, 15: 0.765, 22: 0.763}  threshold 0.85 x start = 0.713
+
+### 🤖 Claude — 2026-11-21T16:19:10.492Z
+
+> 🔧 **Bash** `{"command": "cd /tmp && NODE_PATH=$(npm root -g) timeout 1500 node /tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/poses.cjs /tmp/rainbow_r33/kitgame /tmp/rainbow_r33/kit/out/level '[3, 8, 15, 22]' \"&flowl=0.10\" 2>&1 | grep -i error; cd /home/user/rainbow- && python3 -I - <<'EOF'\nimport cv2\nR0 = cv2.imread('references/05_flow_into_the_current.png'); _w = round(R0.shape[1] * 915 / R0.shape[0]); R = cv2.resize(R0, (_w, 915), interpolation=cv2.INTER_AREA)[:, (_w - 412) // 2:(_w - 412) // 2 + 412]\ndef hs(img):\n    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)[1 …[+477 chars]`
+
+### 🧑 User — 2026-11-21T16:19:18.789Z
+
+> ↩︎ result: {3: 0.763, 8: 0.788, 15: 0.779, 22: 0.779}
+
+### 🤖 Claude — 2026-11-21T16:19:20.422Z
+
+The shorter shift raises the swimming frames to 0.76–0.79. I'll make it the default and run the complete acceptance test again:
+
+### 🤖 Claude — 2026-11-21T16:19:23.727Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/kit05 && sed -i \"s/uFlowL: { value: +(q.get('flowl') ?? 0.18) }/uFlowL: { value: +(q.get('flowl') ?? 0.10) }/\" kitgame.html && grep -c \"flowl') ?? 0.10\" kitgame.html && cp kitgame.html /tmp/rainbow_r33/kitgame/play3.html && cd /tmp/rainbow_r33 && rm -rf runs/kit_full5 && (NODE_PATH=$(npm root -g) timeout 7000 node /home/user/rainbow-/tools/marble05/viewer/final_acceptance.cjs /tmp/rainbow_r33/kitgame /tmp/rainbow_r33/runs/kit_full5 25 1.4 > /tmp/rainbow_r33/runs/kit_full5.log 2>&1; echo \"exit=$?\" >> /tmp/rainbow_r33/runs/kit_full5.log) > /dev/nul …[+208 chars]`
+
