@@ -85,8 +85,8 @@ float wf_hash(int i) { return fract(sin(float(i) * 12.9898 + 4.1414) * 43758.545
             float sp = pow(max(dot(R, WF_L), 0.0), 40.0);
             float tw = smoothstep(0.6, 1.0, 0.5 + 0.5 * sin(t * 3.1 + hs * 6.2832));
             vec3 c = ${outputs.gsplat}.rgba.rgb;
-            c *= 1.0 + 0.10 * r * w;
-            c += w * (0.26 * sp + 0.10 * sp * tw) * vec3(0.85, 0.97, 1.0);
+            c *= 1.0 + 0.08 * r * w;                                   // brightness only: hue and saturation unchanged
+            c += w * (0.11 * sp + 0.08 * sp * tw) * vec3(0.80, 0.96, 1.0); // sparse white-cyan glints (kept small: whitening lowers saturation)
             ${outputs.gsplat}.rgba.rgb = c;
             ${outputs.gsplat}.center += WF_RT * (0.0035 * w * sin(t * 2.3 + u * 7.0 + hs * 6.2832));
           }
