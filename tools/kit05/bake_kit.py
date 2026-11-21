@@ -118,7 +118,7 @@ print('wrote', out)
 # ---------------- per-section OWN pixels (round 33b): exact painting at the start, cross-faded to the sharp tile as Benny approaches ----
 from PIL import Image as _I
 tileW = np.array(_I.open(os.path.join(out, 'wall.png'))).astype(np.float32); tileR = np.array(_I.open(os.path.join(out, 'ring.png'))).astype(np.float32)
-srcO = cv2.GaussianBlur(ref, (0, 0), 0.6)
+srcO = ref                                   # own pixels: no pre-blur (the atlas rows oversample the painting 2-3x)
 def own_atlas(kind, ks, heights, tile, param):
     rows, meta, y0 = [], {}, 0
     for k, hh in zip(ks, heights):
@@ -143,3 +143,19 @@ ring_own = own_atlas('ring', range(1, 10), [160, 160, 96, 64, 48, 32, 32, 32, 32
 kit = json.load(open(os.path.join(out, 'kit.json'))); kit['own'] = {'wall': wall_own, 'ring': ring_own, 'fade': [0.55, 0.85]}
 json.dump(kit, open(os.path.join(out, 'kit.json'), 'w'), indent=1)
 print('own pixels: wall', {k: v[2] for k, v in wall_own['rows'].items()}, 'ring', {k: v[2] for k, v in ring_own['rows'].items()})
+
+# ---------------- flowing river tile (round 33b): seamless, from the user's isolated water art (colour-matched) + approved water ---------
+RT0, RTL = 0.95, 4.5                                     # tile = kit water t in [0.95, 5.45] (crisp part of the water art), period 4.5 u
+NR = 1536; B = 0.9                                       # rows (341 / u), cross-fade length at the seam
+tt = RT0 - B + (np.arange(int(NR * (RTL + B) / RTL)) + 0.5) * RTL / NR
+src_t = np.where((isoW[..., 3] > 200)[..., None], isoC, water)           # water art where it has water, else the approved water texel
+rowf = np.log(tt / T0) / np.log(T1 / T0) * VH - 0.5                      # fractional row of the log-spaced water grid
+seg = np.stack([cv2.remap(src_t[..., ch].astype(np.float32), np.tile(np.arange(VW, dtype=np.float32), (len(tt), 1)),
+                          np.repeat(rowf.astype(np.float32)[:, None], VW, 1), cv2.INTER_LINEAR) for ch in range(3)], -1)
+nb = len(tt) - NR                                        # rows before the tile start (t in [RT0 - B, RT0))
+tile = seg[nb:].copy()
+wv = ((np.arange(NR) - (NR - nb)) / nb).clip(0, 1)[:, None, None]          # last B: blend into the rows just before the start
+tile[NR - nb:] = (1 - wv[NR - nb:]) * tile[NR - nb:] + wv[NR - nb:] * seg[:nb]
+Image.fromarray(np.clip(tile[::-1], 0, 255).astype(np.uint8)).save(os.path.join(out, 'river_tile.png'))   # row 0 = far end
+kit = json.load(open(os.path.join(out, 'kit.json'))); kit['river_tile'] = {'t0': RT0, 'L': RTL, 'painted_until': 16.0}
+json.dump(kit, open(os.path.join(out, 'kit.json'), 'w'), indent=1); print('river tile', tile.shape)

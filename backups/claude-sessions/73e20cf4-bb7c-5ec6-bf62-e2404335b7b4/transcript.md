@@ -2519,3 +2519,88 @@ While that runs (about 10 minutes), I'll make sure the new kit tools are saved t
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-21T15:11:27.777Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/rainbow_r33/kitgame && cat > /tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/dbg.cjs <<'EOF'\nconst { chromium } = require('playwright'); const { spawn } = require('child_process');\n(async () => {\n  const port = 9733; const srv = spawn('python3', ['-m', 'http.server', '--bind', '127.0.0.1', String(port)], { cwd: '/tmp/rainbow_r33/kitgame', stdio: 'ignore' });\n  await new Promise((r) => setTimeout(r, 1200));\n  const browser = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ig …[+1430 chars]`
+
+### 🧑 User — 2026-11-21T15:11:34.337Z
+
+> ↩︎ result: warning: [.WebGL-0x1d2400187800]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+> warning: [.WebGL-0x1d2400187800]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+> warning: [.WebGL-0x1d2400187800]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+> warning: [.WebGL-0x1d2400187800]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)
+> own vs noown: mean diff 0.0 changed px 0.0
+> 2048 {'0': [0, 512, 0.072], '1': [512, 1024, 0.631], '2': [1024, 1280, 0.728], '3': [1280, 1472, 0.727], '4': [1472, 1600, 0.728], '5': [1600, 1696, 0.725], '6': [1696, 1760, 0.728], '7': [1760, 1824, 0.728]}
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T15:11:45.624Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/kit05 && python3 - <<'EOF'\np = 'kitgame.html'; s = open(p).read()\nold = \"  const OU = own ? {\"\nnew = \"  m.customProgramCacheKey = () => (own ? 'kit-own' : 'kit');   // three.js keys programs on the onBeforeCompile source: identical for both variants\\n  const OU = own ? {\"\nassert old in s; s = s.replace(old, new, 1); open(p, 'w').write(s)\nEOF\ncp kitgame.html /tmp/rainbow_r33/kitgame/play3.html && NODE_PATH=$(npm root -g) timeout 600 node /tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/dbg.cjs >/dev/null; pyth …[+894 chars]`
+
+### 🧑 User — 2026-11-21T15:11:52.103Z
+
+> ↩︎ result: own vs noown: mean diff 7.16 changed px 0.13
+> kit v2 (shared texture): {'colour_look_corr': 0.984, 'sharpness_vs_approved': 0.715, 'mean_abs_diff_levels': 24.3, 'share_within_20_levels': 0.645, 'ssim_scenery': 0.614}
+> kit + own pixels     : {'colour_look_corr': 0.991, 'sharpness_vs_approved': 0.565, 'mean_abs_diff_levels': 14.4, 'share_within_20_levels': 0.803, 'ssim_scenery': 0.763}
+
+### 🤖 Claude — 2026-11-21T15:12:16.509Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/kit05 && python3 - <<'EOF'\np = 'bake_kit.py'; s = open(p).read()\ns = s.replace(\"srcO = cv2.GaussianBlur(ref, (0, 0), 0.6)\", \"srcO = ref                                   # own pixels: no pre-blur (the atlas rows oversample the painting 2-3x)\")\nopen(p, 'w').write(s)\np = 'kitgame.html'; s = open(p).read()\n# sharper texture filtering: negative mip bias for every kit texture lookup (own and shared), q ?kbias= to tune\ns = s.replace(\"const REMAP = { uCam: { value: new THREE.Vector3() }, uAx: { value: A.clone() }, uZ2: { value: K.Z2 } };\",\n       …[+2078 chars]`
+
+### 🧑 User — 2026-11-21T15:12:38.287Z
+
+> ↩︎ result: 5
+> own pixels: wall {0: 0.072, 1: 0.631, 2: 0.728, 3: 0.727, 4: 0.728, 5: 0.725, 6:
+> kit + own + sharper: {'colour_look_corr': 0.992, 'sharpness_vs_approved': 0.75, 'mean_abs_diff_levels': 14.6, 'share_within_20_levels': 0.8, 'ssim_scenery': 0.759}
+
+### 🤖 Claude — 2026-11-21T15:13:33.681Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/kit05 && cat >> bake_kit.py <<'EOF'\n\n# ---------------- flowing river tile (round 33b): seamless, from the user's isolated water art (colour-matched) + approved water ---------\nRT0, RTL = 0.95, 4.5                                     # tile = kit water t in [0.95, 5.45] (crisp part of the water art), period 4.5 u\nNR = 1536; B = 0.9                                       # rows (341 / u), cross-fade length at the seam\ntt = RT0 - B + (np.arange(int(NR * (RTL + B) / RTL)) + 0.5) * RTL / NR\nsrc_t = np.where((isoW[..., 3] > 200)[..., None], isoC, water …[+1496 chars]`
+
+### 🧑 User — 2026-11-21T15:13:49.692Z
+
+> ↩︎ result: river tile (1536, 1024, 3)
+
+### 🤖 Claude — 2026-11-21T15:13:51.557Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/river_tile.jpg"}`
+
+### 🧑 User — 2026-11-21T15:13:51.586Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T15:14:22.932Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np = 'kitgame.html'; s = open(p).read()\n# 1) load the river tile\ns = s.replace(\"tex('wall_own.png'), tex('ring_own.png')]);\", \"tex('wall_own.png'), tex('ring_own.png')]);\\nconst riverTile = await tex('river_tile.png'); riverTile.wrapT = THREE.RepeatWrapping;\")\n# 2) river material: painted water (own pixels) at its painted distance, flowing seamless tile once Benny gets close / beyond the painting\nold = \"const wallMat = kitMat(wallTex), ringMat = kitMat(ringTex), riverMat = kitMat(riverTex);\"\nnew = \"\"\"const wallMat = kitMat(wallTex), ringMat = kitMa …[+5122 chars]`
+
+### 🧑 User — 2026-11-21T15:14:32.421Z
+
+> ↩︎ result: s 0.7 t 0.50
+> s 3 t 2.17
+> s 8 t 5.73
+> s 15 t 10.73
+> s 22 t 15.73
+> s 29 t 20.73
+> s 31.5 t 22.50
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T15:14:36.394Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/rainbow_r33/kit/out/level && python3 -c \"\nfrom PIL import Image\nfs=['pose_s0.7.png','pose_s3.png','pose_s8.png','pose_s15.png','pose_s22.png','pose_s29.png','pose_s31.5.png']\nims=[Image.open(f).convert('RGB') for f in fs]; w,h=ims[0].size\ns=Image.new('RGB',(w*7+60,h),'white')\nfor i,im in enumerate(ims): s.paste(im,(i*(w+10),0))\ns.resize((s.width//2,h//2)).save('/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/level_poses.jpg',quality=85)\"", "description": "Contact sheet across the whole level"}`
+
+### 🧑 User — 2026-11-21T15:14:36.574Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T15:14:38.291Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/level_poses.jpg"}`
+
+### 🧑 User — 2026-11-21T15:14:38.316Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T15:15:15.445Z
+
+> 🔧 **Bash** `{"command": "D=qa/kit05/r33 && mkdir -p $D/level_v3 $D/stills && cp /tmp/rainbow_r33/kit/out/level/*.png $D/level_v3/ && cp /tmp/rainbow_r33/kit/out/dbg.png $D/stills/kit_own_start_412x915.png && cp /tmp/rainbow_r33/compare_own/compare_r33.json $D/compare/compare_own_pixels_frame0.json && cp /tmp/rainbow_r33/kit/{wall_own.png,ring_own.png,river_tile.png,kit.json} $D/textures/ && python3 - <<'EOF'\np = 'docs/briefs/2026-11-21-r33/RESUME_R33.md'; s = open(p).read()\ns = s.replace(\"## Open items before the FULL Screen 05 (in order)\", \"\"\"## Round 33b progress (same session, ~15:40 UTC)\n* Own …[+1751 chars]`
+

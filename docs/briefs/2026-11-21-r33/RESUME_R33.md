@@ -33,6 +33,19 @@
    | frames 15 / 30 sharpness | 0.34 / 0.36 | 0.60 / 0.64 |
    => the kit is the stronger approach (user's rule: extend only if demonstrably better without damaging gameplay: met).
 
+## Round 33b progress (same session, ~15:40 UTC)
+* Own-pixel LOD: first 8 wall sections + 9 rings carry their OWN painted pixels (atlases `wall_own.png`, `ring_own.png`), cross-faded
+  to the sharp shared section as Benny approaches (ratio distance-now / distance-at-start 0.85 -> 0.55). BUG FOUND + FIXED: three.js keyed
+  all kit shader programs on the same onBeforeCompile source, so the own-pixel materials silently used the plain program
+  (`customProgramCacheKey`). Texture mip bias -0.7 (`?kbias=`). Start frame scenery: 80.0 % within 20 levels (was 64.5), mean diff 14.6
+  (24.3), SSIM 0.76 (0.61), colour 0.992, sharpness 0.75 (`qa/kit05/r33/compare/compare_own_pixels_frame0.json`).
+* Whole-level kit (32.16 u, round-32 coin layout, ending = warm golden light like round 32b): stills `qa/kit05/r33/level_v3/`.
+  Tunnel consistent to the end. RIVER NOT GOOD YET: the flowing tile (`river_tile.png`, water art t 0.95-5.45, period 4.5 u, seam
+  cross-fade 0.9 u) shows blocky pink/red bars + a repeating grid in the mid / far distance and a horizontal seam where painted -> tile.
+  Cause: tile columns outside the water art's river were filled with flow-stretched texels; far distance squeezes many periods.
+  Next: river ribbon + foam banks architecture (river width/S from the painting, banks textured from the painted foam), or a two-phase
+  flow-map water shader (no seam), far-distance mip bias >= 0; then the whole-level acceptance.
+
 ## Open items before the FULL Screen 05 (in order)
 1. Start view → ~90 %: per-section "own pixels" textures for the first ~6 sections (exact painting at frame 0), cross-faded to the
    sharper periodic tile as the camera approaches (LOD cross-fade). Same for rings.

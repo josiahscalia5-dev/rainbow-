@@ -794,7 +794,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 26528,
-   "sha256": "719bfa16516a0f49833db9fa6ca3785bbb45ac3d441d2da248847620ae5fb182"
+   "sha256": "3c3a3d85a4d9c1c8d96484695b3180581b6847879bd4fe8beb8be746fe0cec80"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3153,
-   "sha256": "c1ebe7f70538764a31d57c30911aafad635bfaa636bd333b078c9319a1329add"
+   "sha256": "9399d0dd78962bcadb7b71ee518b81a7f44270e9df5940ff515e10c1622fe0ca"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -7734,7 +7734,7 @@
   {
    "path": "backups/wip/screen05-agents/LAST_SYNC_UTC",
    "bytes": 33,
-   "sha256": "2485ed9f52e47095d2aa0ec46a59129c311274699eb7418655d11f6926383db1"
+   "sha256": "26846937d3cb5df8ba00eab30759035a534a308cd2680711a60c8e6a8cb97ccd"
   },
   {
    "path": "backups/wip/screen05-agents/WORKSPACE",
@@ -11088,8 +11088,8 @@
   },
   {
    "path": "docs/briefs/2026-11-21-r33/RESUME_R33.md",
-   "bytes": 5659,
-   "sha256": "7402690bcd9419e128fad8c73fe45bda4b5605f2433757c7fea6d4034b5b913c"
+   "bytes": 7106,
+   "sha256": "ccadcfad9cf8433a2dac759c40b58bcdbd24e8bb9e551826c99e7f2542f957bb"
   },
   {
    "path": "docs/briefs/2026-11-21-r33/TOOL_EVALUATION_R33.md",
@@ -15422,9 +15422,49 @@
    "sha256": "6598aed5576628ddf41add0731b42ece26c1df4a10e84a2ab50a155bd13581c7"
   },
   {
+   "path": "qa/kit05/r33/compare/compare_own_pixels_frame0.json",
+   "bytes": 511,
+   "sha256": "c664fd81c05dc337c979513341365e573d4ef56b15afe5f2fec77f2e81993987"
+  },
+  {
    "path": "qa/kit05/r33/compare/compare_r33.json",
    "bytes": 885,
    "sha256": "60200dcc2a3c0e45589af6c9ec691088641eb7a32525706a650e697c6c19a30e"
+  },
+  {
+   "path": "qa/kit05/r33/level_v3/pose_s0.7.png",
+   "bytes": 686139,
+   "sha256": "faea4ee09a8a59a61ba2278eea74dcc507b8ebd6ce8d3e89f477172c5831447f"
+  },
+  {
+   "path": "qa/kit05/r33/level_v3/pose_s15.png",
+   "bytes": 710562,
+   "sha256": "6cb94cc65a42865cc8fc6a1d73653491b3d4364b0c36ebe70f1d863b663fceab"
+  },
+  {
+   "path": "qa/kit05/r33/level_v3/pose_s22.png",
+   "bytes": 718110,
+   "sha256": "7d7690e5f1b6271c7d0a11d26476b4a7d353b83afb09c5343a8303c147d6a79b"
+  },
+  {
+   "path": "qa/kit05/r33/level_v3/pose_s29.png",
+   "bytes": 725957,
+   "sha256": "caf7ff406306c865c73c616a4b8e10b6e70a0fcb2d5a3c10718d53553fc4526f"
+  },
+  {
+   "path": "qa/kit05/r33/level_v3/pose_s3.png",
+   "bytes": 700968,
+   "sha256": "e220810854e2cafb2745eda2e9f12a1419b0d99b4d2c3ec25e02a9179d030272"
+  },
+  {
+   "path": "qa/kit05/r33/level_v3/pose_s31.5.png",
+   "bytes": 598607,
+   "sha256": "2f8bf0ade79934e6551ccd19713edd9abb7b3865dfd87562d316b8822e1202f4"
+  },
+  {
+   "path": "qa/kit05/r33/level_v3/pose_s8.png",
+   "bytes": 697526,
+   "sha256": "dc71ea848ae9dea654554aa1de67241954bffe03361b218797a64c18e4d6200a"
   },
   {
    "path": "qa/kit05/r33/runs/current_splat_baseline/f_0000.jpg",
@@ -15502,14 +15542,19 @@
    "sha256": "34c3864e92cd16f4812b166c7ad78c3c7a1cd978084067f69328b7454e104de6"
   },
   {
+   "path": "qa/kit05/r33/stills/kit_own_start_412x915.png",
+   "bytes": 782936,
+   "sha256": "963a44f6e8c5fdbff8baaeee2829a0cc5ff998e8c41cac1519ffd19a10292031"
+  },
+  {
    "path": "qa/kit05/r33/stills/kit_start_864x1536.png",
    "bytes": 2432726,
    "sha256": "65cf3d5021738112494f49a792d5d575fe9cbd20cb3f23f162349e48423917f3"
   },
   {
    "path": "qa/kit05/r33/textures/kit.json",
-   "bytes": 1030,
-   "sha256": "98848f408e0ef986bfabab23b4e18c4d6531856aad2f5bfd1b7ce3ba79b4f101"
+   "bytes": 2086,
+   "sha256": "bec484d35e001c9b96b606e153e7a4f11a31c7b6c5c6c34ecd5a10873cacb25c"
   },
   {
    "path": "qa/kit05/r33/textures/ring.png",
@@ -15517,9 +15562,19 @@
    "sha256": "4b927845f52a2d1674635d5eba1da711e9099c3ba2d7abf360514574568f0a06"
   },
   {
+   "path": "qa/kit05/r33/textures/ring_own.png",
+   "bytes": 1317521,
+   "sha256": "9a9428b5b7a575302c705757f4b1f28e8c1127c4f73e51f6638c87165f9e2f70"
+  },
+  {
    "path": "qa/kit05/r33/textures/river.png",
    "bytes": 2206477,
    "sha256": "185db5b8f4a0791cc40eec6ca3ff2ac502f4bc167b15fdc82b719c4a22b7fbed"
+  },
+  {
+   "path": "qa/kit05/r33/textures/river_tile.png",
+   "bytes": 1193594,
+   "sha256": "a4f7225990edc5f3192c190b38c5aab1f3e2b82ffbe6a139741d7cb3ed56f86f"
   },
   {
    "path": "qa/kit05/r33/textures/river_visible.png",
@@ -15530,6 +15585,11 @@
    "path": "qa/kit05/r33/textures/wall.png",
    "bytes": 2109511,
    "sha256": "8675762b371ae08b244116542cb64f4c3eef2b96f49b98a88053fa7a039bb701"
+  },
+  {
+   "path": "qa/kit05/r33/textures/wall_own.png",
+   "bytes": 4389382,
+   "sha256": "59b971eddb4550e108cd0a86622a5dc56c72920233ae3c1c335fd8188dfbd4bb"
   },
   {
    "path": "qa/lead_r5/2026-11-17/README.md",
@@ -39713,8 +39773,8 @@
   },
   {
    "path": "tools/kit05/bake_kit.py",
-   "bytes": 10926,
-   "sha256": "eed92dbed9c5d2f3cad4a87bb42f72e768884cc23b373816804738807956111d"
+   "bytes": 12628,
+   "sha256": "25de95130e0993663858064ba1061c0590ce71a1b0cad87a9487a3a45e101b27"
   },
   {
    "path": "tools/kit05/cam05.py",
@@ -39748,8 +39808,8 @@
   },
   {
    "path": "tools/kit05/kitgame.html",
-   "bytes": 17494,
-   "sha256": "747ee85f73e1b733197dbffe2be0dfd4e487b5c5def5501cc31acc09ff5529f6"
+   "bytes": 20336,
+   "sha256": "2992619e2a92d588437cc38fbcdc6a085935ae79da8935fa92a9475afd8327e0"
   },
   {
    "path": "tools/kit05/still_page.cjs",
