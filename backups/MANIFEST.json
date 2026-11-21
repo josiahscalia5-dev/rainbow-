@@ -73,8 +73,8 @@
   },
   {
    "path": "CLAUDE.md",
-   "bytes": 22762,
-   "sha256": "eebf95f3bc6b880b2c6a4ac984fb7ff5de33a088caeef89e23f76fb9bb7998a6"
+   "bytes": 23008,
+   "sha256": "ab5412c29cd68c00a8a77147be21d1a78b53a32e78f968878e54e483d2393cad"
   },
   {
    "path": "README_FIRST.md",
@@ -763,8 +763,8 @@
   },
   {
    "path": "backups/AGENTS_STATUS.json",
-   "bytes": 75334,
-   "sha256": "470f94f229a35f86128625a6fe11d948bb6bf489836ad3317b9daf44b2fb8511"
+   "bytes": 75589,
+   "sha256": "e24f9615563cef07ac47587dfadcc103f5f690973a4baf9b908dec62630c69bb"
   },
   {
    "path": "backups/AGENTS_STATUS.md",
@@ -794,7 +794,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 25599,
-   "sha256": "130aa4ccdf9113b328b9633f94646e1260881de50144ff5e819fc9b184f9336c"
+   "sha256": "8f408621306771297f431ef1962bc8a488238d56f9062357a3003e3d6e201812"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3056,
-   "sha256": "d7c5b78925ebdb14887a5dbba67fddf9bdcb61730b2023142ff9b549666d8698"
+   "sha256": "76660b8f7ec3cf8ef17403518bff6453ba927d5277daafdbf18d16c433128586"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -823,8 +823,8 @@
   },
   {
    "path": "backups/START_NEW_CLAUDE_ACCOUNT.md",
-   "bytes": 33440,
-   "sha256": "62b3383f72e8454af61a2fb011fdd04cd87f4d8bb83941fa1b32f85671f79ea5"
+   "bytes": 35014,
+   "sha256": "510637b3e69ed3c89f9b62f8854c0aed9a8cd56bddf1816f61e9e5b657a50b50"
   },
   {
    "path": "backups/TOOL_MANIFEST.json",
@@ -7734,7 +7734,7 @@
   {
    "path": "backups/wip/screen05-agents/LAST_SYNC_UTC",
    "bytes": 33,
-   "sha256": "6e2e64dbadeef64982e6a63bf5eade97004e17623828733a8f775a7db1b9fd26"
+   "sha256": "6f73a064d8e8ce8f1505ab20237890055027a07c161fea2d584098aee06f8d39"
   },
   {
    "path": "backups/wip/screen05-agents/agentA/CONTROLS_NOTES.md",
@@ -7758,8 +7758,8 @@
   },
   {
    "path": "backups/wip/screen05-agents/agentA/controls.js",
-   "bytes": 19960,
-   "sha256": "b9a5421ea4ec194f42ddf50f5fcf7f46db8c01aafc01000747befe6509dc548e"
+   "bytes": 20400,
+   "sha256": "68e542282c586a994a393802fd0ddf73fec6a70487f2d29dff7786be5cf3b19e"
   },
   {
    "path": "backups/wip/screen05-agents/agentA/glint.png",
@@ -7770,6 +7770,11 @@
    "path": "backups/wip/screen05-agents/agentA/index.html",
    "bytes": 1846,
    "sha256": "aa63b96e7187f2ef74976da01ff10eecc239a1e060f85a7afb2d368af72da223"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentA/live_key_check.cjs",
+   "bytes": 1922,
+   "sha256": "a056439ce3f89c7671d9a8f763b7ada092157b97583f61427d3af328ea48671f"
   },
   {
    "path": "backups/wip/screen05-agents/agentA/out_controls/_noviewport_run/a_start_frame0.png",
@@ -7787,9 +7792,49 @@
    "sha256": "398e5534944049f0bcb2f95b6017d87dcf945d88da5fda03a7a5a11894809391"
   },
   {
-   "path": "backups/wip/screen05-agents/agentA/out_controls/a_start_frame0.png",
+   "path": "backups/wip/screen05-agents/agentA/out_controls/_run2_before_coin_scale_fade/a_frame0_diff_overlay.png",
+   "bytes": 167608,
+   "sha256": "b33ff219ba1571b2ca82a3d76f558e86b1e1490dcaa38692c80301ac6320294f"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentA/out_controls/_run2_before_coin_scale_fade/a_start_frame0.png",
    "bytes": 747466,
    "sha256": "e936d17e8b2270bda4b8c10196c30092f3cb326ebe8a9b6eb630da8c6a3b41b2"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentA/out_controls/_run2_before_coin_scale_fade/b_mid_lane_change_left.png",
+   "bytes": 719998,
+   "sha256": "90090712fdb44165d5df04192a9b0b75e583185147911b0172310d41324df186"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentA/out_controls/_run2_before_coin_scale_fade/c_leap_top.png",
+   "bytes": 707008,
+   "sha256": "b01ead3bea82b5384cd4b7cdee67652a64afd290454c2878051ab9c9e53074d9"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentA/out_controls/_run2_before_coin_scale_fade/d_after_air_coin.png",
+   "bytes": 724215,
+   "sha256": "5dbe2088daaede790c1778fa139fc0608a21f38b873b7ece72d16924e9847a4c"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentA/out_controls/_run2_before_coin_scale_fade/e_dive.png",
+   "bytes": 719939,
+   "sha256": "eb9922d2c0f414f643d7ac2d51b1f0e9e1548b0a63a049c7e284415515061ff2"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentA/out_controls/_run2_before_coin_scale_fade/f_resurface_splash.png",
+   "bytes": 764979,
+   "sha256": "a25178621e682b143b0708c9157399997786f0cc35843d037e6a11497d6bc2d1"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentA/out_controls/a_start_frame0.png",
+   "bytes": 745425,
+   "sha256": "06e3465b96bee02f32e2187b192a0adec4c20a0a2d6cf4686b5117eda17219cd"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentA/out_controls/a_start_frame0_controls_off.png",
+   "bytes": 745425,
+   "sha256": "06e3465b96bee02f32e2187b192a0adec4c20a0a2d6cf4686b5117eda17219cd"
   },
   {
    "path": "backups/wip/screen05-agents/agentA/out_controls/b_mid_lane_change_left.png",
@@ -7947,6 +7992,11 @@
    "sha256": "aa63b96e7187f2ef74976da01ff10eecc239a1e060f85a7afb2d368af72da223"
   },
   {
+   "path": "backups/wip/screen05-agents/agentB/out_water/after/s_0.png",
+   "bytes": 989257,
+   "sha256": "1797e35fa135c45b5b2a277f1c6d347b1e18e19b8c60e123281420dad359bb69"
+  },
+  {
    "path": "backups/wip/screen05-agents/agentB/out_water/before/chk/f_0000_s_0.jpg",
    "bytes": 212409,
    "sha256": "d80b2f2b3d6dee6fb312294723dbb5c3831782de873b36972963e422e9f2d1b6"
@@ -8062,6 +8112,21 @@
    "sha256": "46176105fb0562531dbd949bdb4b7abd5bebf2f11627b77d13266c0b57943370"
   },
   {
+   "path": "backups/wip/screen05-agents/agentB/out_water/tmpchk/chk/f_0000.jpg",
+   "bytes": 204748,
+   "sha256": "fadd08148e639bf1c69c7d2d0836724911c0213b946703ae3e62a68b7c21e5e7"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentB/out_water/tmpchk/chk/visual_check.json",
+   "bytes": 649,
+   "sha256": "dfdf3fabd0da85f16008b57299d87e0ca8da3d2d91e43296556a9bb78ea8591c"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentB/out_water/tmpchk/s_0.png",
+   "bytes": 989257,
+   "sha256": "1797e35fa135c45b5b2a277f1c6d347b1e18e19b8c60e123281420dad359bb69"
+  },
+  {
    "path": "backups/wip/screen05-agents/agentB/package.json",
    "bytes": 307,
    "sha256": "7fa77351920fa6c18d481f23386798ec9056450c230015f5630a75200f67e7e0"
@@ -8078,8 +8143,8 @@
   },
   {
    "path": "backups/wip/screen05-agents/agentB/play3.html",
-   "bytes": 18294,
-   "sha256": "bff754fbc2aedc23462bdd3b3fab05e76d44c4f88a4d05299d3a5178f58803b4"
+   "bytes": 18363,
+   "sha256": "ec5e08fec0a148e028f9c9656ad37239ba023c1ff3db56def346a83c3b946e85"
   },
   {
    "path": "backups/wip/screen05-agents/agentB/play3_orig.html",
@@ -8318,8 +8383,8 @@
   },
   {
    "path": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md",
-   "bytes": 73849,
-   "sha256": "9963eb3f0dc5f9959ce959029d7e32939b7ff67cb1879056ed0939e14f1e9d50"
+   "bytes": 74735,
+   "sha256": "d6060516c9287b4e1182947dd87bc30b63612e1eca0090968e62673c6bc529f4"
   },
   {
    "path": "docs/PARALLEL_PROGRESS.md",
@@ -9070,6 +9135,31 @@
    "path": "docs/briefs/2026-11-20-r30/setup_r30b.sh",
    "bytes": 1684,
    "sha256": "ecf3e980715c3b87e605396b896c3bd765ea80342a98e15e02b07b35ba188edb"
+  },
+  {
+   "path": "docs/briefs/2026-11-21-r32/AGENT_A_CONTROLS.md",
+   "bytes": 1658,
+   "sha256": "8223362363a8fc0e969ddd525afcc3cff6c6cedfd00781be8840a45df0a554c2"
+  },
+  {
+   "path": "docs/briefs/2026-11-21-r32/AGENT_B_WATER.md",
+   "bytes": 1606,
+   "sha256": "993870e30476c3f9bacc8e93a98dd0c5153cc2b6ede8e2e5d3291f1de2d6349f"
+  },
+  {
+   "path": "docs/briefs/2026-11-21-r32/RESUME_R32.md",
+   "bytes": 4198,
+   "sha256": "b67b204c85086fd77406e52be401a9785952eb268566c5967ac5b63b5dd0f80c"
+  },
+  {
+   "path": "docs/briefs/2026-11-21-r32/USER_R32.md",
+   "bytes": 3018,
+   "sha256": "4c00b60db83c510881261fab4a01eb4bb66a6b182e15226054e55253b73a5c35"
+  },
+  {
+   "path": "docs/briefs/2026-11-21-r32/setup_r32.sh",
+   "bytes": 2315,
+   "sha256": "f95709a0381431ee10d5c6e1b0de6a82b9f2ffc2de21dada54808d7759e1bd29"
   },
   {
    "path": "docs/characters/benny.md",

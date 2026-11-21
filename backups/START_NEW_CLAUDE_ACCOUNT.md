@@ -1,5 +1,23 @@
 # Paste this into Claude Code on the next Claude account
 
+## ▶▶▶▶▶▶▶▶ NEWEST (2026-11-21, round 32 → next account) — Screen 05 real 3D swimming test
+1. Start the cloud session on branch **`claude/screen-05-3d-geometry-9yu7pu`** (NOT the default branch). If the hook's `git fetch` fails, run
+   `git ls-remote origin refs/heads/claude/screen-05-3d-geometry-9yu7pu`, fetch it by name and merge before anything else.
+2. Paste this prompt:
+
+> Continue Rainbow round 32 exactly where the last account stopped. Read CLAUDE.md, then `docs/briefs/2026-11-21-r32/RESUME_R32.md` and
+> `docs/briefs/2026-11-21-r32/USER_R32.md` (my binding orders). Run `bash docs/briefs/2026-11-21-r32/setup_r32.sh` to rebuild the Screen 05 3D
+> workspace with both specialists' newest saved work (`backups/wip/screen05-agents/`). Relaunch the two specialists from
+> `AGENT_A_CONTROLS.md` (animation-and-gameplay-engineer) and `AGENT_B_WATER.md` (water-fx-specialist) only if their notes show unfinished work,
+> then merge, run the full real-swipe acceptance test (`tools/marble05/viewer/final_acceptance.cjs` + `visual_check.py`), fix and re-test until it
+> passes. Do not show me a video until every test passes. No credits or purchases without my OK. Keep the five-minute GitHub autosave running.
+
+3. Keys: re-enter only if the free checks fail (World Labs `api.worldlabs.ai` header `WLT-Api-Key`; SpAItial `api.spaitial.ai` Bearer) — via the
+   secure credential form, never in chat. Plugins: World Labs (Marble) connector; the SpAItial plugin cannot be installed in cloud sessions (the API
+   is called directly with the key).
+
+---
+
 ## ▶▶▶▶▶▶▶ NEWEST (2026-11-20 ~18:33 UTC, round 29 → next account)
 Same steps as the round-28 block below, with these replacements: start the cloud session on branch **`ccr-ac160b4c-3hdecw`** (the round-29 lead;
 NOT the default branch); read the TOP of `docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md` ("ROUND 29"), `docs/briefs/2026-11-20-r29/COORDINATION.md` +

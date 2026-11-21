@@ -258,11 +258,16 @@ export function installControls(ctx) {
       d.v.addScaledVector(F.n, -d.g * dt); d.p.addScaledVector(d.v, dt); d.sp.position.copy(d.p);
       const k = d.age / d.life, z = d.size * (0.7 + 0.5 * k); d.sp.scale.set(z, z, 1); d.sp.material.opacity = 0.9 * Math.min(1, k * 6) * (1 - k * k);
     }
-    // coins he missed (other lane / under a leap) sink away behind him instead of sliding huge past the camera
+    // coins he missed (other lane / under a leap) shrink + sink away behind him instead of sliding huge past the camera;
+    // the added lane / air coins grow in during the first 0.4 s of travel, so frame 0 stays exactly the approved picture.
+    // (scale, not opacity: the coin material uses alphaTest 0.35, an opacity fade would pop)
     const sNow = getS();
     for (const k of coins) {
       if (k.got >= 0) continue;
-      const o = 1 - smooth(0.12, 0.5, sNow - k.s); k.sp.visible = o > 0.01; k.sp.material.opacity = o;
+      const gone = smooth(0.06, 0.36, sNow - k.s), grow = k.kind ? smooth(0, 0.4, sNow) : 1, z = grow * (1 - gone);
+      if (!k.p0) k.p0 = k.sp.position.clone();
+      k.sp.visible = z > 0.01; k.sp.scale.set(coinD * 1.15 * z, coinD * 1.15 * z, 1);
+      k.sp.position.copy(k.p0).addScaledVector(F.n, -0.09 * gone);
     }
     // HUD coin counter pulse
     if (coinEl) { S.hudPulse = Math.max(0, S.hudPulse - dt * 4); coinEl.style.display = 'inline-block'; coinEl.style.transform = `scale(${(1 + 0.25 * Math.sin(Math.PI * S.hudPulse)).toFixed(3)})`; }

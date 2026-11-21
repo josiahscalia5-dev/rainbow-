@@ -1499,3 +1499,62 @@ While the final AFTER set renders, I'll draft the notes file (numbers filled in 
 
 > 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB && timeout 115 bash -c 'until grep -q \"still 0 \" out_water/after.log; do sleep 3; done'; grep -v \"GPU stall\" out_water/after.log", "description": "Wait for first final AFTER still", "timeout": 120000}`
 
+### 🧑 User — 2026-11-21T12:32:43.657Z
+
+> ↩︎ result: server 9662
+> ready 15.516
+> still 0 54.797 visible splats 655734
+
+### 🤖 Claude — 2026-11-21T12:32:45.973Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB/out_water/after/s_0.png"}`
+
+### 🧑 User — 2026-11-21T12:32:46.024Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T12:32:47.659Z
+
+Far end now continues into warm golden light, no black patches visible. Quick checker run on this first still while the rest render.
+
+### 🤖 Claude — 2026-11-21T12:32:49.649Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB && mkdir -p out_water/tmpchk && cp out_water/after/s_0.png out_water/tmpchk/ && bash tools/check_stills.sh out_water/tmpchk", "description": "Run dark-patch checker on first AFTER still"}`
+
+### 🧑 User — 2026-11-21T12:32:50.429Z
+
+> ↩︎ result: f_0000 = s_0.png
+> 0000 patches 0 largest 3 black% 0.0 look 0.644
+
+### 🤖 Claude — 2026-11-21T12:32:55.173Z
+
+The checker shows s=0 went from 3 patches (largest 2,009 px) to 0 (largest 3 px), but its colour-look score dropped from 0.693 to 0.644. Let me find out why before going further.
+
+### 🤖 Claude — 2026-11-21T12:33:02.829Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB && python3 -I - <<'EOF'\nimport cv2, numpy as np\nR = cv2.resize(cv2.imread('/home/user/rainbow-/references/05_flow_into_the_current.png'), (412, 915))\ndef hs(img):\n    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)[150:]\n    h = cv2.calcHist([hsv], [0, 1], None, [36, 16], [0, 180, 0, 256]); return cv2.normalize(h, h, 1, 0, cv2.NORM_L1)\nHR = hs(R)\nims = {k: cv2.resize(cv2.imread(f), (412, 915), interpolation=cv2.INTER_AREA) for k, f in [('before', 'out_water/before/s_0.png'), ('after', 'ou …[+1060 chars]`
+
+### 🧑 User — 2026-11-21T12:33:03.284Z
+
+> ↩︎ result: before 0.683
+> after 0.634
+> green1_flow_oldtrack 0.644
+> green_after_newtrack 0.631
+> ref hue% [2.0999999046325684, 4.400000095367432, 4.5, 1.899999976158142, 1.399999976158142, 1.600000023841858, 0.699999988079071, 0.10000000149011612, 0.10000000149011612, 0.10000000149011612, 0.0, 0.0, 0.10000000149011612, 0.0, 0.0, 0.10000000149011612, 0.10000000149011612, 0.20000000298023224, 3.5, 6.699999809265137, 17.200000762939453, 4.300000190734863, 2.299999952316284, 1.5, 1.5, 2.0, 2.5999999046325684, 3.799999952316284, 5.5, 6.800000190734863, 10.899999618530273, 6.199999809265137, 3.700000047683716, 1.7999999523162842, 1.100000023841858, 1.2999999523162842]
+> before hue% [2.700000047683716, 4.400000095367432, 3.9000000953674316, 2.5, 1.5, 1.399999976158142, 0.699999988079071, 0.10000000149011612, 0.10000000149011612, 0.0, 0.0, 0.0, 0.0, 0.0, 0.10000000149011612, 0.10000000149011612, 0.10000000149011612, 0.30000001192092896, 2.0999999046325684, 6.699999809265137, 13.5, 4.800000190734863, 2.799999952316284, 2.0999999046325684, 2.0, 2.200000047683716, 3.799999952316284, 4.5, 7.699999809265137, 9.100000381469727, 9.800000190734863, 4.0, 2.9000000953674316, 1.5, 1.2999999523162842, 1.0]
+> after hue% [2. …[+1502 chars]
+
+### 🤖 Claude — 2026-11-21T12:33:20.184Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB && python3 -I - <<'EOF'\nimport cv2, numpy as np\nR = cv2.resize(cv2.imread('/home/user/rainbow-/references/05_flow_into_the_current.png'), (412, 915))\ndef hs(img):\n    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)[150:]\n    h = cv2.calcHist([hsv], [0, 1], None, [36, 16], [0, 180, 0, 256]); return cv2.normalize(h, h, 1, 0, cv2.NORM_L1)\nHR = hs(R); L = lambda im: round(float(cv2.compareHist(HR, hs(im), cv2.HISTCMP_INTERSECT)), 3)\nB = cv2.resize(cv2.imread('out_water/before/s_0.png'), (412, …[+838 chars]`
+
+### 🧑 User — 2026-11-21T12:33:20.475Z
+
+> ↩︎ result: after with before rows 150-260: 0.651
+> after with before rows 260-360: 0.637
+> after with before rows 360-480: 0.649
+> after with before rows 480-915: 0.655
+> after with before rows 150-915: 0.683
+> bright low-sat px after 68471 before 57417
+> ref 56392
+

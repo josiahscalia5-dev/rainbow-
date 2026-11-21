@@ -6140,3 +6140,44 @@ The specialists won't be interrupted.
 > scene05.json
 > shots.cjs
 
+### 🤖 Claude — 2026-11-21T12:32:25.572Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/rainbow-/docs/briefs/2026-11-21-r32 && cat > /home/user/rainbow-/docs/briefs/2026-11-21-r32/setup_r32.sh <<'EOF'\n#!/usr/bin/env bash\n# Round 32 → next Claude account: recreate the Screen 05 3D test workspace from the repository in one command (free, no credits).\n#   bash docs/briefs/2026-11-21-r32/setup_r32.sh [workspace=/tmp/rainbow_r32]\n# Creates: <ws>/base (viewer + three.js 0.180 + Spark 2.4.0 + rebuilt track), <ws>/agentA and <ws>/agentB (each specialist's newest\n# saved work from backups/wip/screen05-agents/ on top of the base). Nothing in the reposi …[+2112 chars]`
+
+### 🧑 User — 2026-11-21T12:32:25.685Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-21T12:32:48.729Z
+
+> 🔧 **Bash** `{"command": "D=/home/user/rainbow-/docs/briefs/2026-11-21-r32; cat > $D/USER_R32.md <<'EOF'\n# Round 32 — the user's binding orders for Screen 05 (2026-11-21), verbatim excerpts\n\n* \"I will be thrilled if my finished Screen 05 looks approximately 94–95% like my original approved artwork. I am NOT demanding a perfect 100%\n  pixel-for-pixel match. But I AM demanding a real, playable 3D Android swimming game. Think Subway Surfers, but instead of running, Benny swims\n  through my beautiful approved 3D world.\"\n* \"You may reuse gold rings and compatible tunnel structures, but I DO NOT want an …[+5944 chars]`
+
+### 🧑 User — 2026-11-21T12:32:48.799Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-21T12:33:06.548Z
+
+> 🔧 **Bash** `{"command": "D=/home/user/rainbow-/docs/briefs/2026-11-21-r32; cat > $D/RESUME_R32.md <<'EOF'\n# RESUME — round 32 (2026-11-21), lead branch `claude/screen-05-3d-geometry-9yu7pu`, draft PR #28 (never merge without the user's OK)\n\n## Where we are (Screen 05 only — the user forbids other screens and new credits until Screen 05 is approved)\n* Approach that works: a REAL 3D splat world reconstructed from the approved Screen 05 picture (Marble full world `qa/worldlabs/05/r32/full_500k.spz`,\n  World Labs world `8bb4cf11-…`), rendered with Spark 2.4.0 on three.js 0.180 in a standalone page (`tool …[+3785 chars]`
+
+### 🧑 User — 2026-11-21T12:33:06.709Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-21T12:33:07.942Z
+
+Now the start instructions for the new account, plus pointers in the project's main instructions file so a new session finds this automatically.
+
+### 🤖 Claude — 2026-11-21T12:33:21.067Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='backups/START_NEW_CLAUDE_ACCOUNT.md'; s=open(p).read()\nhead='# Paste this into Claude Code on the next Claude account\\n'\nassert s.startswith(head)\nblock='''\n## ▶▶▶▶▶▶▶▶ NEWEST (2026-11-21, round 32 → next account) — Screen 05 real 3D swimming test\n1. Start the cloud session on branch **`claude/screen-05-3d-geometry-9yu7pu`** (NOT the default branch). If the hook's `git fetch` fails, run\n   `git ls-remote origin refs/heads/claude/screen-05-3d-geometry-9yu7pu`, fetch it by name and merge before anything else.\n2. Paste this prompt:\n\n> Continue Rainbow  …[+2868 chars]`
+
+### 🧑 User — 2026-11-21T12:33:21.158Z
+
+> ↩︎ result: ok
+> 16:   **`docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md`** — NEWEST: "ROUND 32c" (branch `claude/screen-05-3d-geometry-9yu7pu`, Screen 05 real 3D swimming test with
+
+### 🤖 Claude — 2026-11-21T12:33:27.226Z
+
+> 🔧 **Bash** `{"command": "bash -n docs/briefs/2026-11-21-r32/setup_r32.sh && echo \"setup script syntax ok\"; bash tools/marble05/sync_agents_wip.sh; python3 -I - <<'EOF'\nimport json\np='backups/AGENTS_STATUS.json'; d=json.load(open(p))\nr=d.get('round32_screen05_live',{})\nr['next_account']='Relaunch from docs/briefs/2026-11-21-r32/AGENT_A_CONTROLS.md and AGENT_B_WATER.md after `bash docs/briefs/2026-11-21-r32/setup_r32.sh`; saved work backups/wip/screen05-agents/ (synced every 5 min, LAST_SYNC_UTC); resume RESUME_R32.md'\nd['round32_screen05_live']=r; json.dump(d,open(p,'w'),indent=1); print('agents sta …[+472 chars]`
+

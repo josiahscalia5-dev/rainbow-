@@ -1,3 +1,10 @@
+# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 32c (2026-11-21 ~12:45 UTC, branch `claude/screen-05-3d-geometry-9yu7pu`)
+Screen 05 real 3D swimming test in progress: Marble splat world of the approved picture → full-length ring-to-ring track (river mirrored in alternate
+sections), real 3D Benny, follow camera; two specialists (swipe controls; water flow + dark-gap cleanup) were running. Everything to continue:
+**`docs/briefs/2026-11-21-r32/RESUME_R32.md`** (state + next steps), `USER_R32.md` (binding orders: no video until every acceptance test passes;
+no other screens / credits until Screen 05 is approved), `setup_r32.sh` (one-command workspace), `AGENT_A_CONTROLS.md`, `AGENT_B_WATER.md`;
+specialists' saved work `backups/wip/screen05-agents/`. New-account steps: TOP of `backups/START_NEW_CLAUDE_ACCOUNT.md`.
+
 # ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 32 (2026-11-21 ~03:00 UTC, branch `claude/screen-05-3d-geometry-9yu7pu`)
 
 User (verbatim): "THE NEW REAL 3D SCREEN 05 IS NOT APPROVED … preserve BOTH versions … Stop changing my artwork … I just want the goddamn pink

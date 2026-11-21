@@ -699,3 +699,19 @@ While that runs, the comparison script for frame 0 (controls on vs the old code 
 > ↩︎ result: Command running in background with ID: braeukpq7. Output is being written to: /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/tasks/braeukpq7.output. You will be notified when it completes. To check interim output, use Read on that file path.
 > Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
 
+### 🤖 Claude — 2026-11-21T12:32:17.624Z
+
+While the final run goes, a small extra check of the two paths the main test does not cover: the `?live=1` real-time loop and keyboard arrows.
+
+### 🤖 Claude — 2026-11-21T12:32:24.704Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/live_key_check.cjs", "content": "// Quick check of the optional real-time loop (?live=1) and the keyboard path (ArrowLeft / KeyW). Small canvas to keep SwiftShader cheap.\n// usage: NODE_PATH=$(npm root -g) node live_key_check.cjs\nconst { chromium } = require('playwright'); const { spawn } = require('child_process'); const fs = require('fs'); const path = require('path');\nconst sleep = (ms) => new Promise((r) => setTimeout(r, ms));\n(async () => {\n  const port = 8900 + Math.floor(Math.ran …[+1487 chars]`
+
+### 🧑 User — 2026-11-21T12:32:24.768Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/live_key_check.cjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-21T12:32:27.849Z
+
+> 🔧 **Bash** `{"command": "until grep -qE \"FINISHED\" /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/run_full.log; do sleep 3; done; cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA; grep -vE \"dbus|GL Driver\" run_full.log; cat compare0.json", "description": "Wait for final run and frame-0 comparison", "timeout": 2400000}`
+

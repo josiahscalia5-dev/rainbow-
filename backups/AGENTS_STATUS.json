@@ -1373,6 +1373,7 @@
    ],
    "relaunch": "brief = same user message; builder tools/marble05/build_track.py"
   },
-  "lead": "merges both, records the full-level swipe-driven gameplay clip; no credits spent; other screens wait for the user to approve 05 + credits"
+  "lead": "merges both, records the full-level swipe-driven gameplay clip; no credits spent; other screens wait for the user to approve 05 + credits",
+  "next_account": "Relaunch from docs/briefs/2026-11-21-r32/AGENT_A_CONTROLS.md and AGENT_B_WATER.md after `bash docs/briefs/2026-11-21-r32/setup_r32.sh`; saved work backups/wip/screen05-agents/ (synced every 5 min, LAST_SYNC_UTC); resume RESUME_R32.md"
  }
 }

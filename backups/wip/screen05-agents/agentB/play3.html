@@ -58,9 +58,9 @@ let kcNow = -99;
 // [track] the tunnel runs on for FARK sections and ends in the painting's bright golden light (a soft glow behind the splats)
 const FARK = +(q.get('fark') ?? 9);
 const glow = (L2 && TR.XB) ? (() => { const c = document.createElement('canvas'); c.width = c.height = 256; const g = c.getContext('2d');
-  const gr = g.createRadialGradient(128, 128, 0, 128, 128, 128); gr.addColorStop(0, 'rgba(255,253,240,1)'); gr.addColorStop(0.22, 'rgba(255,240,190,1)'); gr.addColorStop(0.5, 'rgba(255,196,92,0.85)'); gr.addColorStop(0.78, 'rgba(236,132,60,0.35)'); gr.addColorStop(1, 'rgba(200,90,160,0)');
+  const gr = g.createRadialGradient(128, 128, 0, 128, 128, 128); gr.addColorStop(0, 'rgba(255,253,240,1)'); gr.addColorStop(0.25, 'rgba(255,240,190,1)'); gr.addColorStop(0.5, 'rgba(255,200,110,1)'); gr.addColorStop(0.75, 'rgba(240,150,95,1)'); gr.addColorStop(1, 'rgba(196,96,150,1)'); // opaque to the edge: the end flange of the last shell hides the corners
   g.fillStyle = gr; g.fillRect(0, 0, 256, 256); const tx = new THREE.CanvasTexture(c); tx.colorSpace = THREE.SRGBColorSpace;
-  const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: tx, toneMapped: false, transparent: true, depthWrite: false })); sp.scale.set(2.4, 2.4, 1); sp.renderOrder = -10; scene.add(sp); return sp; })() : null;
+  const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: tx, toneMapped: false, transparent: true, depthWrite: false })); sp.scale.set(2.6, 2.6, 1); sp.renderOrder = -10; scene.add(sp); return sp; })() : null;
 const showTrack = (uB) => {
   const kc = Math.floor((uB - TR.UA) / DU); if (kc === kcNow) return; kcNow = kc;
   near.visible = kc <= 1;
