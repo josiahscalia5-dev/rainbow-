@@ -5832,3 +5832,81 @@ Don't show me the only time you can show me the preview and the video of my leve
 
 Understood. You'll only see a video of Screen 05 once it works the way you've asked and has passed every check. Until then, at most a short written update. If it can't meet that standard with these tools, I'll tell you plainly instead of sending anything.
 
+### 🧑 User — 2026-11-21T12:25:19.673Z
+
+make sure u save everything to my github resporsitory all agents tools and specalists and tools and everything chat history and dont intereput the agents or tasks just want to make sure u save everything
+
+### 🤖 Claude — 2026-11-21T12:25:29.395Z
+
+Saving everything now without interrupting the specialists. Their in-progress work lives in separate working folders outside the project, so I'm adding a copy job that saves those into your GitHub repository every 5 minutes, alongside the regular autosave.
+
+### 🤖 Claude — 2026-11-21T12:25:31.554Z
+
+> 🔧 **Bash** `{"command": "timeout 60 python3 -I scripts/autosave-status.py 2>&1 | grep AUTOSAVE | head -1; ls backups/claude-sessions/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/ backups/claude-sessions/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/subagents 2>/dev/null | head; python3 -I -c \"\nimport json;d=json.load(open('backups/LIVE_TOOLS_STATE.json'));print(list(d.keys())[:15])\"", "description": "Check the autosave and what it already saves"}`
+
+### 🧑 User — 2026-11-21T12:25:32.213Z
+
+> ↩︎ result: AUTOSAVE OK | branch claude/screen-05-3d-geometry-9yu7pu | scheduler daemon | last verified backup 2026-11-21T12:22:19+00:00 (3.2 min ago) | local a731ac3 remote a731ac3 (match) | uncommitted 0
+> backups/claude-sessions/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/:
+> subagents
+> transcript.md
+> transcript.sanitized.jsonl
+> 
+> backups/claude-sessions/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/subagents:
+> agent-a18ca6be2c4eebf7f.md
+> agent-a18ca6be2c4eebf7f.sanitized.jsonl
+> agent-aceebf66a4b11ed5f.md
+> agent-aceebf66a4b11ed5f.sanitized.jsonl
+> ['time_utc', 'lead_branch', 'specialists_sha256_16', 'workers_git_worktrees', 'workers_status_latest_round', 'plugins_installed_locally', 'plugins_enabled_user_settings', 'plugins_synced_from_claude_account', 'plugins_synced_from_claude_account_names', 'mcp_servers_configured', 'hooks_project', 'note']
+
+### 🤖 Claude — 2026-11-21T12:25:40.336Z
+
+> 🔧 **Bash** `{"command": "cat > tools/marble05/sync_agents_wip.sh <<'EOF'\n#!/usr/bin/env bash\n# Copies (read-only) the Screen 05 specialists' in-progress work from their scratch folders into the repository so the five-minute\n# autosave pushes it to GitHub: code, pages, notes, logs, test pictures, rebuilt track pieces. node_modules and the source worlds\n# (already in qa/worldlabs, qa/spaitial) are skipped. Never writes into the agents' folders.\nSCR=/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad\nDST=/home/user/rainbow-/backups/wip/screen05-agents\nfor a in agentA agen …[+970 chars]`
+
+### 🧑 User — 2026-11-21T12:25:40.424Z
+
+> ↩︎ result: no rsync
+> 4.0K	backups/wip/screen05-agents/LAST_SYNC_UTC
+> 4.0K	backups/wip/screen05-agents/agentA
+> 4.0K	backups/wip/screen05-agents/agentB
+> 16K	backups/wip/screen05-agents/lead
+> 3
+
+### 🤖 Claude — 2026-11-21T12:25:49.545Z
+
+> 🔧 **Bash** `{"command": "cat > tools/marble05/sync_agents_wip.sh <<'EOF'\n#!/usr/bin/env bash\n# Copies (read-only) the Screen 05 specialists' in-progress work from their scratch folders into the repository so the five-minute\n# autosave pushes it to GitHub: code, pages, notes, logs, test pictures, rebuilt track pieces. node_modules, symlinks and the source\n# worlds (already in qa/worldlabs, qa/spaitial) are skipped. Never writes into the agents' folders.\npython3 -I - <<'PY'\nimport os, shutil, datetime\nSCR = '/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad'\nDST = '/h …[+1545 chars]`
+
+### 🧑 User — 2026-11-21T12:25:49.747Z
+
+> ↩︎ result: synced files: 105
+> 4.0K	backups/wip/screen05-agents/LAST_SYNC_UTC
+> 58M	backups/wip/screen05-agents/agentA
+> 120M	backups/wip/screen05-agents/agentB
+> 16K	backups/wip/screen05-agents/lead
+> 108
+
+### 🤖 Claude — 2026-11-21T12:25:56.369Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport json;c=json.load(open('backups/autosave.config.json'))\nfor k,v in c.items():\n  if k not in ('protected_branches',): print(k, (v if not isinstance(v,list) else v[:40]))\" | head -30; grep -n \"max_file\\|MAX_FILE\\|5 \\* 1024\\|MB\" scripts/rainbow-autosave.py | head -10", "description": "Check what the autosave includes and its file size limits"}`
+
+### 🧑 User — 2026-11-21T12:25:56.440Z
+
+> ↩︎ result: project RAINBOW — 11-screen 3D mobile game
+> repo_full_name josiahscalia5-dev/rainbow-
+> remote_name origin
+> remote_url_must_contain github.com/josiahscalia5-dev/rainbow-
+> branch claude/rainbow-r22-restore-ut3m39
+> session_branch_patterns ['ccr-*', 'claude/*']
+> commit_trailer Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+> Claude-Session: https://claude.ai/code/session_01KS3bZvZewXsKSGqCC6N8uK
+> claude_projects_glob ~/.claude/projects/-home-user-rainbow-*
+> allowlist ['*.md', '.gitignore', '.gitattributes', '.claude/agents', '.claude/skills', '.claude/commands', '.claude/rules', '.claude/settings.json', '.mcp.json.template', 'package.json', 'package-lock.json', 'tsconfig.json', 'tsconfig.node.json', 'vite.config.ts', 'capacitor.config.ts', 'index.html', 'src', 'public', 'assets', 'references', 'character_references', 'screenshots', 'qa', 'docs', 'scripts', 'tools', 'tests', 'backups', 'android', 'builds']
+> status_only_paths ['backups/BACKUP_STATUS.json', 'backups/BACKUP_LOG.md']
+> max_plain_git_file_mb 49
+> push_retries 4
+> original_branch_note PROTECTED, never pushed to by the autosave: ccr-6f431adf-7h0m8y = untouched original from the first Claude account (81e639e); claude/rainbow-3d-recover …[+6024 chars]
+
+### 🤖 Claude — 2026-11-21T12:26:01.892Z
+
+> 🔧 **Bash** `{"command": "nohup setsid bash -c 'while true; do bash /home/user/rainbow-/tools/marble05/sync_agents_wip.sh >> /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/sync_agents.log 2>&1; sleep 300; done' >/dev/null 2>&1 & sleep 1; pgrep -fa \"sync_agents_wip\" | head -2; timeout 900 python3 scripts/rainbow-autosave.py --reason \"manual:save-agents-wip\" 2>&1 | grep -E '\"commit\"|error|skip|another' | head -5; git rev-parse --short HEAD; timeout 30 git ls-remote origin refs/heads/claude/screen-05-3d-geometry-9yu7pu | cut -c1-7; git ls-files backups/wip/screen05-age …[+103 chars]`
+

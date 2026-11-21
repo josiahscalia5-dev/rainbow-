@@ -1,0 +1,62 @@
+{
+ "summary": {
+  "frames": 4,
+  "dark_patches": {
+   "frames_with_patches": 4,
+   "largest_px": 2009,
+   "max_pct": 1.077,
+   "rule": "connected near-black area >= 150 px at 412x915 (approved picture: largest 8 px)"
+  },
+  "sharpness_vs_start": {
+   "min": 0.947,
+   "median": 0.978
+  },
+  "colour_look_vs_approved": {
+   "min": 0.651,
+   "median": 0.6695
+  },
+  "flicker": {
+   "median_change": 62.37,
+   "max_change": 63.05,
+   "spikes_over_3x_median": 0
+  }
+ },
+ "frames": [
+  {
+   "frame": "0.jp",
+   "black_pct": 1.077,
+   "dark_patches": 3,
+   "largest_dark_px": 2009,
+   "sharpness_vs_start": 1.0,
+   "colour_look_vs_approved": 0.693,
+   "change": 0.0
+  },
+  {
+   "frame": "2.3.",
+   "black_pct": 0.523,
+   "dark_patches": 3,
+   "largest_dark_px": 589,
+   "sharpness_vs_start": 0.977,
+   "colour_look_vs_approved": 0.669,
+   "change": 63.05
+  },
+  {
+   "frame": "4.4.",
+   "black_pct": 0.988,
+   "dark_patches": 4,
+   "largest_dark_px": 1545,
+   "sharpness_vs_start": 0.947,
+   "colour_look_vs_approved": 0.67,
+   "change": 61.55
+  },
+  {
+   "frame": "6.4.",
+   "black_pct": 0.467,
+   "dark_patches": 3,
+   "largest_dark_px": 607,
+   "sharpness_vs_start": 0.979,
+   "colour_look_vs_approved": 0.651,
+   "change": 62.37
+  }
+ ]
+}

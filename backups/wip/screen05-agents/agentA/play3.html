@@ -1,0 +1,186 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Screen 05 full track test</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"><!-- [controls] phones: 1 CSS px = 1 canvas px, no pinch-zoom while swiping -->
+<style>
+html,body{margin:0;background:#000;overflow:hidden;font-family:system-ui,sans-serif}canvas{display:block}
+#hud{position:fixed;left:0;right:0;top:10px;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none}
+.bar{display:flex;gap:28px;align-items:center;background:linear-gradient(#7b2bbf,#4a1386);border:2px solid #d9a7ff;border-radius:30px;padding:6px 22px;color:#fff;font-weight:800;font-size:22px;box-shadow:0 2px 8px #0006}
+.title{background:#5a1aa0e0;border:2px solid #f2c14e;border-radius:20px;padding:4px 18px;color:#fff;font-weight:800;font-style:italic;font-size:17px;letter-spacing:.5px}
+</style>
+<script type="importmap">{"imports":{"three":"./node_modules/three/build/three.module.js","three/addons/":"./node_modules/three/examples/jsm/","@sparkjsdev/spark":"./node_modules/@sparkjsdev/spark/dist/spark.module.js"}}</script>
+</head><body>
+<div id="hud"><div class="bar"><span>&#10084;&#65039; 5/5</span><span id="coins">&#129689; 1,420</span></div><div class="title">05 &middot; FLOW INTO THE CURRENT</div></div>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { SplatMesh, SparkRenderer } from '@sparkjsdev/spark';
+import { installControls } from './controls.js'; // [controls]
+const q = new URLSearchParams(location.search);
+const W = +(q.get('w') ?? 540), H = +(q.get('h') ?? 960);
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(1); renderer.setSize(W, H); document.body.appendChild(renderer.domElement);
+renderer.toneMapping = THREE.NeutralToneMapping; renderer.toneMappingExposure = 0.86;
+const SC = await (await fetch('scene05.json')).json();
+const TR = await (await fetch('track.json')).json();
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(SC.cam.fov, W / H, 0.01, 200);
+const spark = new SparkRenderer({ renderer }); scene.add(spark);
+const flip = (m) => { m.quaternion.set(1, 0, 0, 0); return m; };
+
+// ---------- track: start piece, alternating sharp sections (bay / mirrored bay), light sections far away, tunnel end ----------
+const near = flip(new SplatMesh({ url: 'near.ply' })); scene.add(near);
+const far = flip(new SplatMesh({ url: 'far.ply' })); scene.add(far);
+const src = { hi: new SplatMesh({ url: 'bay.ply' }), him: new SplatMesh({ url: 'bay_m.ply' }), lo: new SplatMesh({ url: 'bay_lo.ply' }), lom: new SplatMesh({ url: 'bay_m_lo.ply' }) };
+await Promise.all([near.initialized, far.initialized, ...Object.values(src).map((m) => m.initialized)]);
+const DV = new THREE.Vector3(...TR.D), AX = new THREE.Vector3(...TR.ax), N = new THREE.Vector3(...TR.n), DU = DV.dot(AX);
+const tiles = [];
+for (let k = 1; k <= TR.N; k++) {
+  const mir = q.get('nomirror') ? false : k % 2 === 1;
+  const hi = flip(new SplatMesh({ packedSplats: (mir ? src.him : src.hi).packedSplats })), lo = flip(new SplatMesh({ packedSplats: (mir ? src.lom : src.lo).packedSplats }));
+  for (const m of [hi, lo]) { m.position.set(...TR.offsets[k - 1]); m.visible = false; scene.add(m); }
+  tiles.push({ k, hi, lo });
+}
+let kcNow = -99;
+const showTrack = (uB) => {
+  const kc = Math.floor((uB - TR.UA) / DU); if (kc === kcNow) return; kcNow = kc;
+  near.visible = kc <= 1;
+  for (const t of tiles) { t.hi.visible = t.k >= kc - 1 && t.k <= kc + 1; t.lo.visible = t.k >= kc + 2 && t.k <= kc + 5; }
+  const last = Math.min(TR.N, Math.max(1, kc + 5)); far.position.set(...TR.far_offsets[last]); far.visible = true;
+};
+
+// ---------- Benny's path ----------
+const T = TR.trail.map((p) => new THREE.Vector3(...p)), TS = TR.trail_s;
+const at = (s, out) => { s = Math.max(0, Math.min(TS[TS.length - 1], s)); let lo = 0, hi = TS.length - 1; while (hi - lo > 1) { const m = (lo + hi) >> 1; if (TS[m] < s) lo = m; else hi = m; } const k = (s - TS[lo]) / Math.max(1e-6, TS[hi] - TS[lo]); return out.lerpVectors(T[lo], T[hi], k); };
+const a = new THREE.Vector3(), b = new THREE.Vector3();
+const frameAt = (s, win = 0.35) => { at(s - win * 0.3, a); at(s + win, b); const t = b.sub(a).normalize().clone(); const n = N.clone().addScaledVector(t, -t.dot(N)).normalize(); const r = new THREE.Vector3().crossVectors(t, n).normalize(); return { t, r, n }; };
+const basis = (F) => new THREE.Matrix4().makeBasis(F.r.clone().negate(), F.n, F.t);
+
+// ---------- Benny (the improved 3D Benny: mesh, bake and paddling shader as in the game) ----------
+const VERT_HEAD = `uniform float uT; uniform float uSwim; uniform vec2 uPom;
+vec3 b31rot(vec3 r, vec3 ax, float a){ float c = cos(a), s = sin(a); return r * c + cross(ax, r) * s + ax * dot(ax, r) * (1.0 - c); }`;
+const VERT_BODY = `vec3 p = position;
+float side = p.x >= 0.0 ? 1.0 : -1.0;
+float wa = smoothstep(0.30, 0.37, abs(p.x)) * (1.0 - smoothstep(0.08, 0.16, abs(p.y + 0.18)));
+float ph = uT * 7.5 + (side > 0.0 ? 0.0 : 3.14159);
+vec3 piv = vec3(side * 0.31, -0.18, 0.0);
+vec3 q = p - piv;
+q = b31rot(q, vec3(0.0, 0.0, 1.0), side * uSwim * wa * 0.42 * sin(ph));
+q = b31rot(q, vec3(0.0, 1.0, 0.0), side * uSwim * wa * 0.5 * cos(ph));
+p = piv + q;
+float wp = smoothstep(0.17, 0.27, p.y);
+vec3 pp = vec3(0.0, 0.19, 0.05);
+vec3 r = p - pp;
+r = b31rot(r, vec3(1.0, 0.0, 0.0), uPom.x * wp);
+r = b31rot(r, vec3(0.0, 0.0, 1.0), uPom.y * wp);
+p = pp + r;
+float sq = 1.0 + 0.03 * uSwim * sin(uT * 15.0);
+p.y = (p.y + 0.5) * sq - 0.5; p.xz /= sqrt(sq);
+vec3 transformed = p;`;
+const gltf = await new GLTFLoader().loadAsync('benny31.glb');
+const map = await new THREE.TextureLoader().loadAsync('bake.png'); map.colorSpace = THREE.SRGBColorSpace; map.flipY = false; map.anisotropy = 8;
+let geo = null; gltf.scene.traverse((o) => { if (o.isMesh && !geo) geo = o.geometry; });
+const U = { uT: { value: 0 }, uSwim: { value: 1 }, uPom: { value: new THREE.Vector2() } };
+const bmat = new THREE.MeshBasicMaterial({ map, color: new THREE.Color(4, 4, 4) });
+bmat.onBeforeCompile = (sh) => {
+  Object.assign(sh.uniforms, U);
+  sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\n' + VERT_HEAD).replace('#include <begin_vertex>', VERT_BODY);
+  sh.fragmentShader = sh.fragmentShader.replace('#include <colorspace_fragment>', `#include <colorspace_fragment>
+    { vec3 col = gl_FragColor.rgb; float l = dot(col, vec3(0.2126, 0.7152, 0.0722)); col = mix(vec3(l), col, 1.36); col = (col - 0.5) * 1.15 + 0.5; gl_FragColor.rgb = clamp(col, 0.0, 1.0); }`);
+};
+const bmesh = new THREE.Mesh(geo, bmat); bmesh.frustumCulled = false;
+const KH = 0.9 * SC.benny_h / (0.99 * 0.78); // the painted Benny's size: ~22 % of him under the water line
+const holder = new THREE.Group(); holder.rotation.y = Math.PI; holder.scale.setScalar(KH); holder.position.y = 0.496 * KH - 0.22 * 0.99 * KH;
+holder.add(bmesh);
+const benny = new THREE.Group(); benny.add(holder); scene.add(benny);
+const pxW = SC.benny_h / 400; // painted px -> world near Benny (the painted Benny is ~400 px from pom-pom to water)
+
+// ---------- water life: his painted splash, flowing glints, bubbles ----------
+const tl = new THREE.TextureLoader();
+const splashTex = await tl.loadAsync('splash.png'); splashTex.colorSpace = THREE.SRGBColorSpace;
+const splash = new THREE.Sprite(new THREE.SpriteMaterial({ map: splashTex, toneMapped: false, transparent: true, depthWrite: false }));
+splash.renderOrder = 5; scene.add(splash);
+const glintTex = await tl.loadAsync('glint.png');
+const NG = 320, gS = new Float32Array(NG), gL = new Float32Array(NG), gP = new Float32Array(NG), gSz = new Float32Array(NG);
+const gPos = new Float32Array(NG * 3), gAlpha = new Float32Array(NG), gSize = new Float32Array(NG);
+const rnd = (() => { let x = 12345; return () => ((x = (x * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff); })();
+for (let i = 0; i < NG; i++) { gS[i] = rnd() * 7.5 - 1.0; gL[i] = (rnd() * 2 - 1) * 0.62; gP[i] = rnd() * 6.28; gSz[i] = 0.5 + rnd(); }
+const gGeo = new THREE.BufferGeometry(); gGeo.setAttribute('position', new THREE.BufferAttribute(gPos, 3)); gGeo.setAttribute('aAlpha', new THREE.BufferAttribute(gAlpha, 1)); gGeo.setAttribute('aSize', new THREE.BufferAttribute(gSize, 1));
+const gMat = new THREE.ShaderMaterial({
+  uniforms: { map: { value: glintTex }, scale: { value: H * 0.5 } },
+  vertexShader: `attribute float aAlpha; attribute float aSize; varying float vA; uniform float scale;
+    void main(){ vA = aAlpha; vec4 mv = modelViewMatrix * vec4(position, 1.0); gl_PointSize = aSize * scale / -mv.z; gl_Position = projectionMatrix * mv; }`,
+  fragmentShader: `uniform sampler2D map; varying float vA; void main(){ vec4 c = texture2D(map, gl_PointCoord); gl_FragColor = vec4(vec3(0.85, 0.97, 1.0) * c.r, c.r * vA); }`,
+  transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, toneMapped: false,
+});
+const glints = new THREE.Points(gGeo, gMat); glints.frustumCulled = false; glints.renderOrder = 6; scene.add(glints);
+const bubTex = await tl.loadAsync('bubble.png'); bubTex.colorSpace = THREE.SRGBColorSpace;
+const bubbles = [];
+for (let i = 0; i < 46; i++) { const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: bubTex, toneMapped: false, transparent: true, depthWrite: false, opacity: 0.85 })); sp.renderOrder = 7; scene.add(sp); bubbles.push({ sp, s: rnd() * 7.5 - 1.0, lat: (rnd() < 0.5 ? -1 : 1) * (0.45 + rnd() * 0.4), hgt: 0.02 + rnd() * 0.14, size: 0.022 + rnd() * 0.05, ph: rnd() * 6.28 }); }
+
+// ---------- coins ----------
+const ctex = await tl.loadAsync('coin.png'); ctex.colorSpace = THREE.SRGBColorSpace;
+const coins = [];
+for (let i = 0; i < 40; i++) {
+  const s = 0.45 + i * 0.32; const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: ctex, toneMapped: false, transparent: true, alphaTest: 0.35, depthWrite: false }));
+  const d = SC.coin_d; sp.scale.set(d * 1.15, d * 1.15, 1); at(s, sp.position).addScaledVector(frameAt(s).n, d * 0.75); sp.renderOrder = 10; scene.add(sp); coins.push({ s, lat: 0, sp, got: -1 });
+}
+let coinCount = 1420; const coinEl = document.getElementById('coins');
+
+// ---------- follow camera: at the start exactly the approved picture's camera, then the same relation to Benny ----------
+const camFwd = new THREE.Vector3(...SC.cam.fwd), camUp = new THREE.Vector3(...SC.cam.up);
+const camQ0 = new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().lookAt(new THREE.Vector3(), camFwd, camUp));
+const M0 = basis(frameAt(0));
+const relPos = new THREE.Vector3().sub(T[0]).applyMatrix4(new THREE.Matrix4().copy(M0).transpose());
+const relQ = new THREE.Quaternion().setFromRotationMatrix(M0).invert().multiply(camQ0);
+const st = { s: 0, lat: 0, vlat: 0, camLat: 0, lean: 0, camF: null };
+const tmp = new THREE.Vector3(), tmp2 = new THREE.Vector3(), Z = new THREE.Vector3(0, 0, 1);
+const CT = q.get('controls') === '0' ? null : installControls({ THREE, canvas: renderer.domElement, q, at, frameAt, coins, scene, U, bmat, benny, splash, splashTex, bubTex, coinTex: ctex, coinD: SC.coin_d, bennyFullH: 0.99 * KH, pxW, coinEl, getS: () => st.s, getCoins: () => coinCount, render: () => renderer.render(scene, camera) }); // [controls] swipes / lanes / leap / dive (?controls=0 = old analog steer)
+window.step = (t, dt, steer, speed) => {
+  st.s += speed * dt;
+  if (CT) st.lat = CT.update(t, dt).lat; else { st.vlat += (steer * 0.45 - st.vlat) * Math.min(1, dt * 8); st.lat = THREE.MathUtils.clamp(st.lat + st.vlat * dt, -0.3, 0.3); } // [controls] lanes override steer
+  const F = frameAt(st.s); const M = basis(F);
+  // lean into the river's bends (curvature) and into his own steering
+  const Fa = frameAt(st.s + 0.4); const turn = F.t.clone().cross(Fa.t).dot(F.n);
+  st.lean += ((-(CT ? 0 : steer) * 0.22 - turn * 2.2) - st.lean) * Math.min(1, dt * 5); // [controls] lane bank is added in CT.orient
+  at(st.s, tmp).addScaledVector(F.r, st.lat);
+  showTrack(tmp.dot(AX));
+  benny.position.copy(tmp).addScaledVector(F.n, Math.sin(t * Math.PI * 1.6) * 0.006 + (CT ? CT.c.h : 0)); // [controls] + leap / dive height
+  benny.quaternion.setFromRotationMatrix(M).multiply(new THREE.Quaternion().setFromAxisAngle(Z, st.lean));
+  if (CT) CT.orient(benny.quaternion); // [controls] bank / yaw into the move, stroke roll, nose up / down
+  U.uT.value = t; U.uSwim.value = 1; U.uPom.value.set(Math.sin(t * 5.0) * 0.06 + steer * 0.1, steer * 0.18 + st.lean * 0.4);
+  if (CT) CT.anim(st.lean); // [controls] paddle rate, arm tuck, pom-pom inertia
+  // painted splash around his waist, travelling with him, wobbling
+  splash.position.copy(benny.position).addScaledVector(F.t, 0.05).addScaledVector(F.n, -0.01 - 23 * pxW * 0.5);
+  splash.scale.set(799 * pxW * 0.8 * (1 + 0.04 * Math.sin(t * 9)), 309 * pxW * 0.8 * (1 + 0.06 * Math.sin(t * 7 + 1)), 1);
+  splash.material.rotation = -st.lean * 0.6;
+  if (CT) CT.water(F, speed, dt); // [controls] splash stays on the surface, leap / dive splashes, droplets, bubbles
+  // flowing glints: fixed on the river surface, sliding toward the camera with the current, twinkling
+  for (let i = 0; i < NG; i++) {
+    gS[i] -= 0.55 * dt; if (gS[i] < st.s - 1.4) gS[i] += 8.5; if (gS[i] > st.s + 7.1) gS[i] -= 8.5;
+    const Fg = frameAt(gS[i], 0.2); at(gS[i], tmp2).addScaledVector(Fg.r, gL[i]).addScaledVector(Fg.n, 0.012);
+    gPos.set([tmp2.x, tmp2.y, tmp2.z], i * 3);
+    const tw = Math.max(0, Math.sin(t * 6 + gP[i])); gAlpha[i] = tw * tw * 0.9 * THREE.MathUtils.smoothstep(st.s - 1.4, st.s - 0.6, gS[i]);
+    gSize[i] = 0.035 * gSz[i] * (0.6 + tw);
+  }
+  gGeo.attributes.position.needsUpdate = true; gGeo.attributes.aAlpha.needsUpdate = true; gGeo.attributes.aSize.needsUpdate = true;
+  for (const bb of bubbles) {
+    bb.s -= 0.35 * dt; if (bb.s < st.s - 1.4) bb.s += 8.5;
+    const Fb = frameAt(bb.s, 0.2); at(bb.s, bb.sp.position).addScaledVector(Fb.r, bb.lat).addScaledVector(Fb.n, bb.hgt + 0.02 * Math.sin(t * 2 + bb.ph));
+    const z = bb.size * (1 + 0.05 * Math.sin(t * 3 + bb.ph)); bb.sp.scale.set(z, z, 1);
+  }
+  // follow camera; steering followed by half, gently smoothed
+  if (CT) st.camLat = CT.c.camLat; else st.camLat += (st.lat * 0.5 - st.camLat) * Math.min(1, dt * 4); // [controls] spring-smoothed + clamped
+  const Fc = frameAt(st.s, 0.9); const Mc = basis(Fc);
+  camera.position.copy(relPos).applyMatrix4(Mc).add(at(st.s, tmp)).addScaledVector(Fc.r, st.camLat).addScaledVector(Fc.n, CT ? CT.c.camH : 0); // [controls] + leap follow
+  camera.quaternion.setFromRotationMatrix(Mc).multiply(relQ).multiply(new THREE.Quaternion().setFromAxisAngle(Z, st.lean * 0.12)); camera.updateMatrixWorld();
+  for (const c of coins) {
+    if (c.got < 0 && (CT ? CT.hits(c) : st.s >= c.s && Math.abs(st.lat - c.lat) < 0.14)) { c.got = t; coinCount += 10; coinEl.textContent = '\u{1FA99} ' + coinCount.toLocaleString('en-US'); } // [controls] 3D pick-up distance
+    if (c.got >= 0) { const k = (t - c.got) / 0.4; c.sp.visible = k < 1; if (k < 1) { c.sp.position.copy(benny.position).addScaledVector(F.n, SC.benny_h * (1.05 + 0.6 * k)); c.sp.material.opacity = 1 - k * k; const d = SC.coin_d * 0.7 * (1 - 0.5 * k); c.sp.scale.set(d, d, 1); } }
+  }
+  return { s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: coinCount, tile: kcNow, ...(CT ? CT.state() : {}) }; // [controls]
+};
+window.renderNow = async (n = 2) => { for (let i = 0; i < n; i++) { renderer.render(scene, camera); await new Promise((r) => setTimeout(r, 60)); } renderer.render(scene, camera); return true; };
+window.step(0, 0, 0, 0);
+for (let i = 0; i < 6; i++) { renderer.render(scene, camera); await new Promise((r) => setTimeout(r, 150)); }
+window.ready = true;
+</script></body></html>
