@@ -366,3 +366,116 @@ Now the Android-portrait touch test.
 > checks {"all_swipes_from_real_touch":true,"frame0_offsets_zero":true,"left1_to_left_lane":true,"left2_clamped_at_edge":true,"left_lane_coins_collected":true,"right1_back_to_centre":true,"up1_leap_peak":true,"up1_air_coins":true,"right2_to_right_lane":true,"down_dive_depth":true,"left3_to_centre":true,"up2_leap_and_air_coins":true,"hud_matches_counter":true,"camera_lat_clamped":true,"lat_inside_river":true,"no_page_errors":true}
 > done 61s
 
+### 🤖 Claude — 2026-11-21T12:18:19.781Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA && python3 -c \"\nimport json; r=json.load(open('swipe_log.json'))\nprint('load',r['load_s'],'smooth',r['smooth']); print('final',r['final']); print('hud',r['final_hud'])\nprint([ (x['dir'],x['source'],x['after_swipe']['move'],x['after_swipe']['queued']) for x in r['swipes']])\nfor row in r['rows'][55:80:2]: print(row)\n\"", "description": "Inspect smoothness metrics and leap rows"}`
+
+### 🧑 User — 2026-11-21T12:18:19.887Z
+
+> ↩︎ result: load 59 smooth {'camLat_d2': 0.0013, 'camH_d2': 0.0014, 'lat_d2': 0.0221, 'maxAbsCamLat': 0.1095, 'maxCamH': 0.0597, 'minCamH': -0.0169, 'maxAbsLat': 0.22}
+> final {'s': 7.56, 'lane': 0, 'lat': 0, 'height': 0, 'coins': 1620, 'move': None, 'queued': None, 'lean': 0, 'pitch': -0.012, 'yaw': 0, 'pom': 0.001, 'camLat': 0.0007, 'camH': 0.0286, 'swim': 1, 'got': {'water': 8, 'lane': 6, 'air': 6}, 'lastPick': {'kind': 'water', 's': 7.49, 'lat': 0, 'clock': 5.267}, 'swipes': 8}
+> hud 🪙 1,620
+> [('left', 'touch', 'lane', None), ('left', 'touch', None, None), ('right', 'touch', 'lane', None), ('up', 'touch', 'leap', None), ('right', 'touch', 'lane', None), ('down', 'touch', 'dive', None), ('left', 'touch', 'lane', None), ('up', 'touch', 'leap', None)]
+> {'f': 56, 's': 2.613, 'lane': 0, 'lat': -0.0377, 'h': 0, 'lean': 0.156, 'pitch': 0, 'camLat': -0.0937, 'camH': 0, 'coins': 1470, 'move': None}
+> {'f': 58, 's': 2.707, 'lane': 0, 'lat': -0.0163, 'h': 0.0569, 'lean': 0.102, 'pitch': 0.018, 'camLat': -0.0807, 'camH': 0.0002, 'coins': 1470, 'move': 'leap'}
+> {'f': 60, 's': 2.8, 'lane': 0, 'lat': -0.0067, 'h': 0.1513, 'lean': 0.056, 'pitch': 0.083, 'camLat': -0.0669, 'camH': 0.0028, 'coins': 1470, 'move': 'le …[+1522 chars]
+
+### 🤖 Claude — 2026-11-21T12:18:30.493Z
+
+All 16 logic checks pass with real touch input. Small tuning (camera vertical follow was lagging to ~21 %), then the stills run.
+
+### 🤖 Claude — 2026-11-21T12:18:33.448Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA && sed -i 's/CAM_H_OMEGA: 5,/CAM_H_OMEGA: 7.5,/' controls.js && grep -n \"CAM_H_OMEGA\" controls.js | head -2 && cp swipe_log.json swipe_log_logic_only.json && (NODE_PATH=$(npm root -g) timeout 1800 node swipe_test.cjs --compare0 > run_full.log 2>&1)", "description": "Tune camera vertical follow, run full test with stills", "timeout": 1800000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-21T12:18:33.504Z
+
+> ↩︎ result: Command running in background with ID: blvbnm2d2. Output is being written to: /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/tasks/blvbnm2d2.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-21T12:18:36.117Z
+
+> 🔧 **Monitor** `{"command": "tail -n +1 -F /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/run_full.log 2>/dev/null | grep -E --line-buffered \"ready|still|pageerror|console error|ERROR|checks|^done\"", "description": "full swipe test with stills: ready, each still, checks, errors", "timeout_ms": 1800000}`
+
+### 🧑 User — 2026-11-21T12:18:36.145Z
+
+> ↩︎ result: Monitor started (task br2d15ejp, expires in 30m unless the source ends first; you get one notice at expiry — re-arm if you still need the watch). You will be notified on each event. Keep working — do not poll or sleep. Events may arrive while you are waiting for the user — an event is not their reply.
+
+### 🤖 Claude — 2026-11-21T12:19:05.563Z
+
+> 🔧 **Write** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/CONTROLS_NOTES.md", "content": "# Screen 05 swipe controls: `controls.js` + hook lines in `play3.html`\n\n## What changed\n* **New ES module `controls.js`** (`installControls(ctx)`): input, lanes, leap, dive, body animation, pom-pom inertia,\n  extra coins, 3D coin pick-up, leap/dive splashes + droplets + bubbles, underwater tint while diving, camera offsets,\n  `window.state()`, `window.input`, optional real-time loop (`?live=1`).\n* **`play3.html`**: 12 hook lines, every one ends with `//  …[+6608 chars]`
+
+### 🧑 User — 2026-11-21T12:19:05.595Z
+
+> ↩︎ result: File created successfully at: /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/CONTROLS_NOTES.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-21T12:19:08.525Z
+
+> 🔧 **Bash** `{"command": "until grep -qE \"c_leap_top|ERROR|pageerror|^done\" /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/run_full.log; do sleep 3; done; cat /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/run_full.log", "description": "Wait for first three stills", "timeout": 900000}`
+
+### 🧑 User — 2026-11-21T12:20:47.959Z
+
+> ↩︎ result: ready 44s
+> still a_start_frame0 frame 0 72s
+> still b_mid_lane_change_left frame 13 98s
+> still c_leap_top frame 67 132s
+
+### 🤖 Claude — 2026-11-21T12:20:48.873Z
+
+Faster than expected (~30 s per still). Let me look at the first three.
+
+### 🤖 Claude — 2026-11-21T12:20:50.160Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/out_controls/a_start_frame0.png"}`
+
+### 🧑 User — 2026-11-21T12:20:50.241Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T12:20:51.510Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/out_controls/b_mid_lane_change_left.png"}`
+
+### 🧑 User — 2026-11-21T12:20:51.524Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T12:20:52.810Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/out_controls/c_leap_top.png"}`
+
+### 🧑 User — 2026-11-21T12:20:52.899Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T12:21:05.280Z
+
+> 🔧 **Bash** `{"command": "pkill -f \"swipe_test.cjs\" ; sleep 1; pkill -f \"http.server 89\"; cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA && mkdir -p out_controls/_noviewport_run && mv out_controls/*.png out_controls/_noviewport_run/ 2>/dev/null; ls out_controls/_noviewport_run", "description": "Stop the run and set aside the shrunk stills"}`
+
+### 🧑 User — 2026-11-21T12:21:06.447Z
+
+> ↩︎ result: a_start_frame0.png
+> b_mid_lane_change_left.png
+> c_leap_top.png
+
+### 🤖 Claude — 2026-11-21T12:21:10.873Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/play3.html", "old_string": "<html><head><meta charset=\"utf-8\"><title>Screen 05 full track test</title>", "new_string": "<html><head><meta charset=\"utf-8\"><title>Screen 05 full track test</title>\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no\"><!-- [controls] phones: 1 CSS px = 1 canvas px, no pinch-zoom while swiping -->"}`
+
+### 🧑 User — 2026-11-21T12:21:10.905Z
+
+> ↩︎ result: The file /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/play3.html has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-21T12:21:13.179Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA && (NODE_PATH=$(npm root -g) timeout 1800 node swipe_test.cjs --compare0 > run_full.log 2>&1)", "description": "Rerun full swipe test with stills and frame-0 comparison", "timeout": 1800000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-21T12:21:13.228Z
+
+> ↩︎ result: Command running in background with ID: bba7uhagl. Output is being written to: /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/tasks/bba7uhagl.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-21T12:21:16.723Z
+
+> 🔧 **Bash** `{"command": "until grep -qE \"c_leap_top|ERROR|pageerror|^done\" /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/run_full.log; do sleep 3; done; grep -vE \"dbus|GL Driver\" /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/run_full.log", "description": "Wait for first three stills of the rerun", "timeout": 900000}`
+

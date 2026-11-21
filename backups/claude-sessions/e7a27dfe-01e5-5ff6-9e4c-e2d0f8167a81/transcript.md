@@ -5824,3 +5824,11 @@ Everything is committed and pushed to GitHub: commit `907710b`, GitHub matches, 
 
 Both specialists are still working on Screen 05, one on swipe controls and one on water and the dark gaps. When they finish, I'll merge their work and run the full real-swipe acceptance test.
 
+### 🧑 User — 2026-11-21T12:21:33.275Z
+
+Don't show me the only time you can show me the preview and the video of my level 5 or screen 5 is if it's working accurately, exactly accurately like I've been asking. If it doesn't, then don't even show me.
+
+### 🤖 Claude — 2026-11-21T12:21:34.783Z
+
+Understood. You'll only see a video of Screen 05 once it works the way you've asked and has passed every check. Until then, at most a short written update. If it can't meet that standard with these tools, I'll tell you plainly instead of sending anything.
+
