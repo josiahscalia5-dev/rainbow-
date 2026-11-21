@@ -6441,3 +6441,21 @@ Stop hook feedback:
 > ca68dad
 > ca68dad
 
+### 🤖 Claude — 2026-11-21T14:01:46.969Z
+
+Saved and pushed: GitHub matches commit `ca68dad`.
+
+Progress note, still no video since Screen 05 hasn't passed yet:
+- **Swipe controls specialist: finished.** It tested on a phone-sized portrait screen with real touch swipes, and all 16 of its checks pass:
+  - left and right move Benny smoothly between lanes, and the river edge stops him at the side
+  - swiping up makes him leap, swiping down makes him dive, and he comes back up cleanly
+  - coins on the water, in the side lanes and in the air are collected, and the counter is always right
+  - the camera follows without jumping
+  - the opening view is still exactly your approved picture
+- **Still open from its report:**
+  - the coins show a faint square halo
+  - a quick-swipe check in the real-time mode timed out on this slow machine
+- **Water specialist:** still finishing the flowing water and the dark-gap cleanup.
+
+Next: merge both, fix the coin halos, then run the full acceptance test over the whole level.
+

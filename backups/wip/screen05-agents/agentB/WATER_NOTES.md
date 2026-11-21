@@ -34,7 +34,8 @@ Per splat, in world coordinates (so the pattern runs straight across the copied 
   1 +/- 8 % (brightness only: hue and saturation of the painted cyan/pink streaks stay the painting's).
 * **varied reflections**: each splat gets a ripple normal from the analytic slope of the same waves; the view ray is
   reflected and compared with the light from the golden tunnel end -> sparse white-cyan glints that move with the waves
-  and change as the camera moves (+0.11 max, +0.08 twinkle).
+  and change as the camera moves (+0.07 max, +0.06 twinkle; brightening is capped so no channel clips, which keeps
+  saturation; a first version with +0.26 whitened the water and lowered the colour-look score, see Results).
 * **sideways shimmer**: water splats sway up to 3.5 mm sideways with the flow phase.
 * everything fades out between 5 and 9 units from the camera.
 URL switches: `?noflow=1` off, `?flowamp=0.5`, `?flowspeed=1.2`.
@@ -70,7 +71,7 @@ The far piece is the reconstruction beyond ring B: its radius shrinks from 1.03 
 perspective baked into the geometry) and it is very sparse (a few hundred big splats) - that is the narrow inner tube.
 Fix: the far piece is no longer drawn (`?far=1` shows it); instead the copies run on 9 sections ahead (sections 2-3
 ahead use `*_lo`, 4-9 ahead use the new `*_lo2` = 35 % of `*_lo`, ~18.7k splats, splats enlarged so coverage stays)
-and the last ring opens into an opaque golden light disc (canvas radial gradient white -> gold -> orange -> magenta,
+and the last ring opens into an opaque golden light disc (canvas radial gradient white -> gold -> orange -> magenta -> tunnel purple,
 2.6 units, behind the splats; the last shell's end flange hides its square corners).
 
 ### (c) floaters / smears

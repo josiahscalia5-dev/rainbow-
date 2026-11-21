@@ -69,5 +69,36 @@ deterministically at 30 fps (speed 1.4) between swipes; logs `state()` before/af
 summary; renders 6 stills to `out_controls/`; writes `swipe_log.json` (+ every step row and the input log).
 `--compare0` also renders frame 0 with `?controls=0` (`out_controls/a_start_frame0_controls_off.png`).
 
-## Verification results
-(see below — filled in from the actual run)
+## Verification results (final run 2026-11-21 ~12:40 UTC, final code)
+* `swipe_test.cjs`: **16/16 checks true** (`swipe_log.json` → `checks`). All 8 swipes arrived as real `touch` events
+  (CDP touch → DOM touchstart/move/end on the canvas; `window.input.swipe` not used). Per swipe (lane / lat at the next swipe):
+  left → −1 / −0.218 · left → −1 / −0.220 (edge clamp) · right → 0 / −0.025 (0.23 s later) · up → leap peak 0.2794 ·
+  right → 1 / 0.213 · down → dive bottom −0.2704 · left → 0 / 0.003 · up → leap peak 0.2794.
+  Coins 1,420 → 1,620 (8 water, 6 side-lane, 6 air); HUD text equals the counter. Max |lat| 0.22, max |camLat| 0.1095
+  (clamp 0.12), camH −0.020…+0.073; max per-step 2nd difference camLat 0.0013 / camH 0.0019 (no jerks). No page errors.
+* **Frame 0 = old code path, pixel for pixel**: `compare0.py` → `compare0.json`: 100.0 % identical, max diff 0, comparing
+  `out_controls/a_start_frame0.png` (controls on) with `a_start_frame0_controls_off.png` (`?controls=0`).
+* Stills (412×915, SwiftShader, ~25–40 s each): `out_controls/a_start_frame0.png`, `b_mid_lane_change_left.png`
+  (banked into the move), `c_leap_top.png` (whole body out of the water, collected air coins popping above him, HUD 1,500),
+  `d_after_air_coin.png` (descending, HUD 1,510), `e_dive.png` (only the pom-pom above the water, bubbles, right lane),
+  `f_resurface_splash.png`. Earlier runs kept for reference in `out_controls/_noviewport_run/` (the viewport bug, below) and
+  `out_controls/_run2_before_coin_scale_fade/`.
+* `live_key_check.cjs` (`live_key_check.json`): `?live=1` RAF loop runs (s 0 → 0.35) and ArrowLeft changed lane to −1 with
+  bank/yaw. The follow-up KeyW leap check timed out (300 s) under SwiftShader (each live frame takes many seconds); the leap
+  itself uses the same `request()` path verified by the touch test, but the live-mode leap is NOT confirmed.
+
+## Fixes found by the test
+* `play3.html` had no `<meta name="viewport">`: on a phone (isMobile) the 412×915 canvas was drawn shrunk into the top-left
+  corner of a 980-px layout. Added a viewport meta (marked `<!-- [controls] -->`).
+* Missed coins (other lane / under a leap) used to slide huge past the camera; they now shrink + sink away behind him.
+  The added lane/air coins grow in during the first 0.4 s of travel so frame 0 stays exactly the approved picture
+  (scale, not opacity: the coin material has alphaTest 0.35).
+
+## Honest issues / not done
+* The underwater tint (`uDive`) is effectively invisible: the water splats already hide everything below the surface,
+  so in a dive only the pom-pom shows. Harmless (0 at rest).
+* Coin sprites show square cyan/blue halos around the gold coin (pre-existing `05_coin.png` + alphaTest; visible in frame 0 too).
+* Lane changes during a leap/dive are queued, not air-strafed (per "one move at a time").
+* `steer` in `window.step` is ignored while controls are on; `track_clip.cjs` clips need `?controls=0` for the old sine steering.
+* No motion clip rendered (software rendering too slow); smoothness is shown numerically, not by video.
+* Water coins under a dive are still collected (the pick-up segment reaches 0.03 above the water); diving does not dodge.
