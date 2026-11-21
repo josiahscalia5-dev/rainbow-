@@ -4087,3 +4087,58 @@ The scan's hits are all ordinary sentences inside comments, with no code hidden 
 
 > 🔧 **Bash** `{"command": "until grep -qE \"exit=\" /tmp/rainbow_r33/runs/kit_full8.log 2>/dev/null; do sleep 10; done; tail -1 /tmp/rainbow_r33/runs/kit_full8.log; cd /home/user/rainbow-/tools/marble05/viewer && timeout 1800 python3 -I visual_check.py /tmp/rainbow_r33/runs/kit_full8 /home/user/rainbow-/references/05_flow_into_the_current.png > /dev/null 2>&1; timeout 300 python3 -I acceptance_verdict.py /tmp/rainbow_r33/runs/kit_full8 2>&1 | grep -E \"^# |\\| (G|V)[0-9]+ \" | sed -E 's/\\| `[^`]{120,}`/| (long value)/' | cut -c1-170; python3 -c \"\nimport json; r=json.load(open('/tmp/rainbow_r33/runs/kit_f …[+279 chars]`
 
+### 🧑 User — 2026-11-21T17:01:29.474Z
+
+> ↩︎ result: exit=0
+> # Screen 05 acceptance verdict: FAIL
+> | G1 | no page / console errors | PASS | `[]` | 0 errors |
+> | G2 | WHOLE level played to its end, every frame rendered | PASS | (long value) | the page reports level complete (state().done) at its level end and the run stops there
+> | G3 | forward swimming continuous at the normal speed (no freeze, no stall, no jump) | PASS | `{"min_step": 0.045999999999999375, "max_step": 0.0470000000000006, "freeze
+> | G4 | left / right smooth (no teleport) | PASS | `{"max_step_per_frame": 0.0414, "teleports": 0}` | |d lat| per frame <= 0.06 in every frame |
+> | G5 | Benny stays inside the river | PASS | `0.22` | |lat| <= 0.30 (river half-width ~0.30-0.35) |
+> | G6 | every real touch swipe produced the intended move; each direction used repeatedly | **FAIL** | `{"ok": 21, "sent": 21, "directions": {"right": 8, "left": 8, "up": 
+> | G7 | all three lanes used | PASS | `[0, 1, -1]` | lanes -1, 0, +1 seen |
+> | G8 | up / down correct and smooth | PASS | `{"max_step_per_frame": 0.0666, "max_height": 0.3271, "min_height": -0.3165}` | max height >= 0.15, min height <= -0.15, |d h
+> | G9 | coins collected while moving (the trail can really be followed) | PASS | `{"start": 142 …[+1855 chars]
+
+### 🤖 Claude — 2026-11-21T17:01:41.601Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json; R=[r for r in json.load(open('/tmp/rainbow_r33/runs/kit_full8/run_log.json')) if r.get('s') is not None]\nfor i in (40,50,60,120,130): r=R[i]; print(i, 'lat', r['lat'], 'lane', r['lane'], 'camLat', r.get('camLat'), 'benny x', round(r['benny']['x']), 'dist', round(r['benny']['dist'],3))\"; grep -n \"camLat\" /tmp/rainbow_r32/merged/controls.js | cut -c1-200 | head -6", "description": "Check camera side offset during lane changes"}`
+
+### 🧑 User — 2026-11-21T17:01:41.691Z
+
+> ↩︎ result: 40 lat 0 lane 0 camLat 0 benny x 206 dist 1.386
+> 50 lat 0.1951 lane 1 camLat 0.0336 benny x 296 dist 1.386
+> 60 lat 0.2197 lane 1 camLat 0.1228 benny x 260 dist 1.388
+> 120 lat -0.2157 lane -1 camLat -0.0744 benny x 128 dist 1.399
+> 130 lat -0.0249 lane 0 camLat -0.1078 benny x 252 dist 1.385
+> 64:    camLat: { x: 0, v: 0 }, camH: { x: 0, v: 0 },
+> 68:  const c = { lat: 0, h: 0, camLat: 0, camH: 0 }; // read by play3.html each step
+> 297:    cds(S.camLat, clamp(S.lat.x * P.CAM_LAT_K, -P.CAM_LAT_MAX, P.CAM_LAT_MAX), P.CAM_LAT_OMEGA, dt);
+> 298:    S.camLat.x = clamp(S.camLat.x, -P.CAM_LAT_MAX, P.CAM_LAT_MAX);
+> 302:    c.lat = S.lat.x; c.h = S.h; c.camLat = S.camLat.x; c.camH = S.camH.x;
+> 378:      camLat: +S.camLat.x.toFixed(4), camH: +S.camH.x.toFixed(4), swim: +S.swim.toFixed(3),
+
+### 🤖 Claude — 2026-11-21T17:01:56.762Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json, numpy as np\nV=json.load(open('/tmp/rainbow_r33/runs/kit_full8/visual_check.json'))['frames']; L=np.array([r['colour_look_vs_approved'] for r in V])[:666]\nR=[r for r in json.load(open('/tmp/rainbow_r33/runs/kit_full8/run_log.json')) if r.get('s') is not None]\nthr=0.85*L[0]; low=np.nonzero(L<thr)[0]; print('bar', round(thr,3), 'frames below:', len(low), [(int(i), round(float(L[i]),3), R[i]['s'], R[i]['lane'], round(R[i]['benny']['x'])) for i in low[:12]])\"", "description": "Locate frames below the colour bar"}`
+
+### 🧑 User — 2026-11-21T17:01:56.872Z
+
+> ↩︎ result: bar 0.749 frames below: 10 [(113, 0.743, 5.273, -1, 134), (114, 0.741, 5.32, -1, 124), (115, 0.74, 5.367, -1, 118), (116, 0.742, 5.413, -1, 116), (117, 0.742, 5.46, -1, 117), (118, 0.746, 5.507, -1, 120), (655, 0.746, 30.567, 0, 204), (656, 0.745, 30.613, 0, 204), (659, 0.748, 30.753, 0, 205), (660, 0.746, 30.8, 0, 205)]
+
+### 🤖 Claude — 2026-11-21T17:02:09.632Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/kit05 && sed -i \"s/for (const \\[k, v\\] of \\[\\['c_CAM_LAT_K', '0.75'\\], \\['c_CAM_LAT_MAX', '0.2'\\]\\])/for (const [k, v] of [['c_CAM_LAT_K', '0.75'], ['c_CAM_LAT_MAX', '0.2'], ['c_CAM_LAT_OMEGA', '12']])/\" kitgame.html && grep -c \"c_CAM_LAT_OMEGA', '12'\" kitgame.html && cp kitgame.html /tmp/rainbow_r33/kitgame/play3.html; cd /home/user/rainbow-/tools/marble05/viewer && python3 - <<'EOF'\np = 'final_acceptance.cjs'; s = open(p).read()\nold = \"      plan = ev.sort((a, b) => a[0] - b[0]).map(([t, d, why]) => [t, d, why]);\"\nnew = \"\"\"      / …[+1436 chars]`
+
+### 🧑 User — 2026-11-21T17:02:10.721Z
+
+> ↩︎ result: 1
+> HARNESS_OK
+> started
+> [This command modified 1 file you've previously read: final_acceptance.cjs. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-21T17:02:18.473Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && python3 scripts/rainbow-autosave.py --reason manual:r33l-camera-coverage 2>&1 | grep -E '\"commit\"|skipping'; until grep -qE \"exit=\" /tmp/rainbow_r33/runs/kit_full9.log 2>/dev/null; do sleep 10; done; tail -1 /tmp/rainbow_r33/runs/kit_full9.log; cd tools/marble05/viewer && timeout 1800 python3 -I visual_check.py /tmp/rainbow_r33/runs/kit_full9 /home/user/rainbow-/references/05_flow_into_the_current.png > /dev/null 2>&1; timeout 300 python3 -I acceptance_verdict.py /tmp/rainbow_r33/runs/kit_full9 2>&1 | grep -E \"^# |\\*\\*FAIL\" | cut -c1-260; python3  …[+646 chars]`
+

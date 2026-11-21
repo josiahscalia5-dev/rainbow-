@@ -208,7 +208,7 @@ const bubTex = await tl.loadAsync('bubble.png'); bubTex.colorSpace = THREE.SRGBC
 const ctex = await tl.loadAsync('coin.png'); ctex.colorSpace = THREE.SRGBColorSpace;
 const coinD = 0.15038523388874458 * bennyDist / 1.186;      // round-32 coin size, scaled to the kit's Benny distance
 const qc = new URLSearchParams(location.search); if (!qc.has('c_LEAN_K')) qc.set('c_LEAN_K', '0.09');
-for (const [k, v] of [['c_CAM_LAT_K', '0.75'], ['c_CAM_LAT_MAX', '0.2']]) if (!qc.has(k)) qc.set(k, v);   // camera follows lane changes more: Benny stays fully on screen (round 33k)   // gentler bank (round 33: 5 -> <3 deg per frame); controls.js unchanged
+for (const [k, v] of [['c_CAM_LAT_K', '0.75'], ['c_CAM_LAT_MAX', '0.2'], ['c_CAM_LAT_OMEGA', '12']]) if (!qc.has(k)) qc.set(k, v);   // camera follows lane changes more: Benny stays fully on screen (round 33k)   // gentler bank (round 33: 5 -> <3 deg per frame); controls.js unchanged
 const CT = installControls({ THREE, TR, canvas: renderer.domElement, camera, q: qc, at, frameAt, coins, scene, U, bmat, benny, splash, splashTex, bubTex, coinTex: ctex, coinD, bennyFullH: 0.99 * KH, pxW, coinEl, getS: () => st.s, getCoins: () => coinCount, render: () => renderer.render(scene, camera) });
 // coin run 1 = the APPROVED picture's coins (tools/kit05/painted_coins.py: painted centres cast onto the kit river; the far-left one
 // moved into the left lane), 2 more at the painted spacing; run 2 (same-lane coins that stacked on screen at 0.6 u spacing) moved into

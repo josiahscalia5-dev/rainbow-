@@ -73,6 +73,17 @@ const { chromium } = require('playwright'); const { spawn, execFileSync } = requ
         if (ge - gs >= 0.95) { const l = laneAt(gs), out = l <= 0 ? (l < 0 ? 'right' : 'left') : 'left', back = out === 'left' ? 'right' : 'left';
           ev.push([+gs.toFixed(3), out, 'extra'], [+(gs + 0.5).toFixed(3), back, 'extra']); }
       }
+      // round 33 (coverage, stricter): if the gaps were too short for >= 4 leaps and >= 4 dives, add them where the plan is free
+      // longest, spread over the level (a player may leap / dive anywhere; a skipped coin or two is part of real play)
+      for (const d of ['up', 'down', 'up', 'down', 'up', 'down', 'up', 'down']) {
+        if (ev.filter((e) => e[1] === d).length >= 4) continue;
+        let best = null, bestGap = 0;
+        for (let t = 1.0; t < tEnd - 1.6; t += 0.05) {
+          const clear = Math.min(...ev.map(([te, de]) => (te > t ? te - t - DUR[d] - 0.12 : t - te - DUR[de] - 0.12)));
+          if (clear > bestGap) { bestGap = clear; best = t; }
+        }
+        if (best !== null && bestGap > 0) ev.push([+best.toFixed(3), d, 'extra (coverage)']);
+      }
       plan = ev.sort((a, b) => a[0] - b[0]).map(([t, d, why]) => [t, d, why]);
       nMax = Math.ceil((tEnd + 0.6) * fps);
     }
