@@ -610,3 +610,51 @@ While that runs, the comparison script for frame 0 (controls on vs the old code 
 
 > 🔧 **Bash** `{"command": "until grep -qE \"FINISHED\" /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/run_full.log; do sleep 3; done; cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA; grep -vE \"dbus|GL Driver\" run_full.log; cat run_only0.log | grep -vE \"dbus|GL Driver\"; ls -la out_controls", "description": "Wait for final full run and frame-0 render", "timeout": 2400000}`
 
+### 🧑 User — 2026-11-21T12:31:07.541Z
+
+> ↩︎ result: ready 17s
+> still a_start_frame0 frame 0 40s
+> still b_mid_lane_change_left frame 13 68s
+> still c_leap_top frame 67 102s
+> still d_after_air_coin frame 72 142s
+> still e_dive frame 102 181s
+> still f_resurface_splash frame 118 214s
+> left src touch t 0.3 -> lane -1 lat -0.2183 maxH 0 minH 0 coins + 0
+> left src touch t 0.733 -> lane -1 lat -0.22 maxH 0 minH 0 coins + 30
+> right src touch t 1.667 -> lane 0 lat -0.0249 maxH 0 minH 0 coins + 10
+> up src touch t 1.9 -> lane 0 lat -0 maxH 0.2794 minH 0 coins + 50
+> right src touch t 2.667 -> lane 1 lat 0.2133 maxH 0 minH 0 coins + 0
+> down src touch t 3 -> lane 1 lat 0.22 maxH 0 minH -0.2704 coins + 30
+> left src touch t 4.067 -> lane 0 lat 0.0027 maxH 0 minH 0 coins + 20
+> up src touch t 4.467 -> lane 0 lat 0 maxH 0.2794 minH 0 coins + 50
+> checks {"all_swipes_from_real_touch":true,"frame0_offsets_zero":true,"left1_to_left_lane":true,"left2_clamped_at_edge":true,"left_lane_coins_collected":true,"right1_back_to_centre":true,"up1_leap_peak":true,"up1_air_coins":true,"right2_to_right_lane":true,"down_dive_depth":true,"left3_to_centre":true,"up2_leap_and_air_coins":true,"hud_matches_counter":true,"camera_lat_clamped":true,"lat_inside_river":true,"no_page_errors":true} …[+653 chars]
+
+### 🤖 Claude — 2026-11-21T12:31:11.202Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA && python3 -I compare0.py \"$PWD\" && python3 -c \"\nimport json; r=json.load(open('swipe_log.json'))\nprint('load',r['load_s'],'wall',r['wall_s'],'smooth',r['smooth']); print('final',r['final']); print('hud',r['final_hud'],'errors',r['errors'])\nfor s in r['stills']: print(s['name'], s['t'], 'lane',s['state']['lane'],'lat',s['state']['lat'],'h',s['state']['height'],'lean',s['state']['lean'],'pitch',s['state']['pitch'],'coins',s['state']['coins'],'hud',s['hud'],'render_s',s['render_s'])\n\" …[+71 chars]`
+
+### 🧑 User — 2026-11-21T12:31:11.538Z
+
+> ↩︎ result: {"size": [412, 915], "identical_pixels_pct": 98.31, "within_2_levels_pct": 98.316, "within_20_levels_pct": 98.345, "max_diff": 253, "mean_abs_diff": 1.6432, "rows_with_diff_gt2": [237, 420, 157]}
+> load 17.1 wall 215 smooth {'camLat_d2': 0.0013, 'camH_d2': 0.0019, 'lat_d2': 0.0221, 'maxAbsCamLat': 0.1095, 'maxCamH': 0.0734, 'minCamH': -0.0201, 'maxAbsLat': 0.22}
+> final {'s': 7.56, 'lane': 0, 'lat': 0, 'height': 0, 'coins': 1620, 'move': None, 'queued': None, 'lean': 0, 'pitch': -0.012, 'yaw': 0, 'pom': 0.001, 'camLat': 0.0007, 'camH': 0.016, 'swim': 1, 'got': {'water': 8, 'lane': 6, 'air': 6}, 'lastPick': {'kind': 'water', 's': 7.49, 'lat': 0, 'clock': 5.267}, 'swipes': 8}
+> hud 🪙 1,620 errors []
+> a_start_frame0 0 lane 0 lat 0 h 0 lean 0 pitch 0 coins 1420 hud 🪙 1,420 render_s 23.3
+> b_mid_lane_change_left 0.433 lane -1 lat -0.1384 h 0 lean -0.177 pitch 0 coins 1430 hud 🪙 1,430 render_s 26.9
+> c_leap_top 2.233 lane 0 lat -0.0003 h 0.2781 lean 0.004 pitch 0.075 coins 1500 hud 🪙 1,500 render_s 33.1
+> d_after_air_coin 2.4 lane 0 lat 0 h 0.1746 lean 0 pitch -0.038 coins 1510 hud 🪙 1,510 render_s 40.4
+> e_dive 3.4 lane 1 lat 0.22 h -0.2704 lean 0 pitch -0.034 coins 1540 hud 🪙 1,540 render_s 38.1
+> f_re …[+96 chars]
+
+### 🤖 Claude — 2026-11-21T12:31:20.272Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA && python3 -I - <<'EOF'\nfrom PIL import Image\nimport numpy as np\na=np.asarray(Image.open('out_controls/a_start_frame0.png').convert('RGB')).astype(int)\nb=np.asarray(Image.open('out_controls/a_start_frame0_controls_off.png').convert('RGB')).astype(int)\nd=np.abs(a-b).max(2)>2\nys,xs=np.where(d); print('bbox x',xs.min(),xs.max(),'y',ys.min(),ys.max())\n# label connected blobs coarsely\nfrom scipy import ndimage\nlab,n=ndimage.label(ndimage.binary_dilation(d,iterations=2)); print('blobs',n …[+445 chars]`
+
+### 🧑 User — 2026-11-21T12:31:24.010Z
+
+> ↩︎ result: bbox x 144 230 y 237 420
+> blobs 3
+> 0 x 145 209 y 235 293 px 2065 mean colour (controls on) [191. 197. 129.]
+> 1 x 203 233 y 296 332 px 741 mean colour (controls on) [188. 196. 140.]
+> 2 x 142 211 y 348 423 px 3542 mean colour (controls on) [195. 198. 123.]
+
