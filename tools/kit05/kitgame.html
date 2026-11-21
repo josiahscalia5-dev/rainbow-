@@ -105,12 +105,13 @@ const riverMat = (() => { const m = kitMat(riverTex); const base = m.onBeforeCom
           float rPh = fract(uFlow * 1.3), rL = uFlowL * uFlowOn;
           vec4 rA = r35(vMapUv.x, kT + rPh * rL), rB = r35(vMapUv.x, kT + fract(rPh + 0.5) * rL);
           kRib = mix(rB, rA, 1.0 - abs(1.0 - 2.0 * rPh));
-          float dW = kRib.a * uR35D.w * (1.0 - smoothstep(uR35DS.z, uR35DS.w, kZ));      // row softness x near-camera fade
+          float dW = kRib.a * uR35D.w * (1.0 - smoothstep(uR35DS.z, uR35DS.w, kZ)) * smoothstep(0.35, 1.3, kZ);   // row softness x distance window (no straight bars right under the camera)
           if (dW > 0.001) {
             vec2 dUV = vec2((kLat - kCenter(kT) + uR35D.y + uHWD) / (2.0 * uHWD), (kT + uFlow * uR35D.z) / uR35D.x);
             float det = texture(uR35Det, dUV).r - 0.5; det *= det > 0.0 ? uR35DS.x : uR35DS.y;
             det *= smoothstep(0.0, 0.06, dUV.x) * smoothstep(1.0, 0.94, dUV.x);   // no mirrored streak copies (W marks) at the strip's edges
-            kRib.rgb = max(kRib.rgb + det * dW, 0.0);
+            // streak highlights go toward white (hue kept: azure stays azure), shadows darken the painted colour
+            kRib.rgb = det > 0.0 ? mix(kRib.rgb, vec3(1.0), clamp(det * dW, 0.0, 1.0)) : kRib.rgb * (1.0 + det * dW);
           }
           kRib.a = 1.0;
         } else {

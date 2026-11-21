@@ -138,6 +138,19 @@ g_per = w_per
 # along the river with length LD (= one ring section); stored as 128 + 1.0 x detail (8-bit grey)
 Image.fromarray(np.clip(128 + HP[::-1], 0, 255).astype(np.uint8)).save(os.path.join(out, 'river35_detail.png'))
 tex = np.clip(np.concatenate([pre, per], 0), 0, 255).astype(np.uint8)
+# hue: the isolated art's water is a little greener-cyan than the APPROVED picture's azure water (measured: hue 95-100 = 32 % of the
+# saturated texels vs 19 % in the approved water). Quantile-match the hue of the blue / cyan texels (OpenCV hue 85-125) and their
+# saturation to the approved NEAR water's (t < 3.2, coins / Benny excluded; the painting's farther water is ~6 deg greener); pinks, purples and the white foam are left exactly as painted.
+def hsv8(x): return cv2.cvtColor(x.reshape(-1, 1, 3).astype(np.uint8), cv2.COLOR_RGB2HSV).reshape(-1, 3).astype(np.float32)
+ah = hsv8(np.clip(aw[okm & (TG < 3.2)], 0, 255));   # the NEAR painted water (what fills the screen while swimming)
+ah = ah[(ah[:, 1] > 60) & (ah[:, 0] >= 85) & (ah[:, 0] <= 125)]
+th = hsv8(tex); selb = (th[:, 1] > 40) & (th[:, 0] >= 85) & (th[:, 0] <= 125)
+qs = np.linspace(0, 100, 101); srcq = np.percentile(th[selb, 0], qs); dstq = np.percentile(ah[:, 0], qs)
+hm = np.interp(th[selb, 0], srcq, dstq); edge = np.clip(np.minimum(th[selb, 0] - 85, 125 - th[selb, 0]) / 5.0, 0, 1)
+th[selb, 0] = th[selb, 0] + (hm - th[selb, 0]) * edge
+th[selb, 1] = np.clip(th[selb, 1] * np.median(ah[:, 1]) / max(1.0, np.median(th[selb, 1])), 0, 255)
+tex = cv2.cvtColor(th.reshape(-1, 1, 3).astype(np.uint8), cv2.COLOR_HSV2RGB).reshape(tex.shape)
+print('hue match (blue/cyan texels): median hue %.1f -> %.1f' % (np.median(srcq), np.median(dstq)))
 alpha = (np.concatenate([w_pre, w_per])[:, None].repeat(NU, 1) * 255).astype(np.uint8)
 Image.fromarray(np.dstack([tex, alpha])[::-1], 'RGBA').save(os.path.join(out, 'river35.png'))
 print('river35.png', tex.shape, 'prefix rows', NPRE, 'period rows', NV, 'detail gain far/near', round(float(g_per.max()), 2), round(float(g_per.min()), 2))
