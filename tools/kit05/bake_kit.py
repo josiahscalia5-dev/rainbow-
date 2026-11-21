@@ -90,9 +90,19 @@ xc, yc = np.clip(x, 0, W - 1), np.clip(y, 0, H - 1)
 # along the flow (linear between the last visible texel before and the first after, per column = per lateral position)
 water = cv2.remap(cv2.GaussianBlur(ref, (0, 0), 0.6), xc.astype(np.float32), yc.astype(np.float32), cv2.INTER_LINEAR)
 vis = ok & (cover_obj[yc.astype(int), xc.astype(int)] == 0)
-rows = np.arange(VH)
-for c in range(VW):
-    v = vis[:, c]
+# the hidden spots are filled from the user's ORIGINAL isolated Screen 05 water artwork (same design, no Benny / coins), sampled at the
+# same kit water coordinates and colour-matched (per channel mean / spread over the commonly visible water), feathered over ~8 texels
+iso = np.array(Image.open(os.path.join(REPO, 'references/water/05_water_isolated_original.png')).convert('RGBA').resize((W, H), Image.LANCZOS)).astype(np.float32)
+isoW = cv2.remap(cv2.GaussianBlur(iso, (0, 0), 0.6), xc.astype(np.float32), yc.astype(np.float32), cv2.INTER_LINEAR)
+both = vis & (isoW[..., 3] > 200) & (tv < 4.0)
+isoC = isoW[..., :3].copy()
+for ch in range(3):
+    a, b = water[..., ch][both], isoW[..., ch][both]; isoC[..., ch] = (isoC[..., ch] - b.mean()) / max(1e-3, b.std()) * a.std() + a.mean()
+fillw = cv2.GaussianBlur((~vis).astype(np.float32), (0, 0), 4.0); fillw = np.maximum(fillw, (~vis).astype(np.float32))
+water = water * (1 - fillw[..., None]) + isoC * fillw[..., None]
+rows = np.arange(VH); hole = isoW[..., 3] <= 200
+for c in range(VW):                                        # where even the water artwork has no water (outside its river), continue along the flow
+    v = ~(hole[:, c] & ~vis[:, c])
     if v.all() or not v.any(): continue
     for ch in range(3): water[~v, c, ch] = np.interp(rows[~v], rows[v], water[v, c, ch])
 water8 = np.clip(water, 0, 255).astype(np.uint8)

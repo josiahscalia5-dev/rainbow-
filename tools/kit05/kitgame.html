@@ -57,7 +57,7 @@ const grid = (nu, nv, fn) => {   // fn(i/nu, j/nv) -> [Vector3, u, v]
   const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); g.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2)); g.setIndex(idx); return g;
 };
 const NSEC = +(q.get('nsec') ?? 30), KMIN = -1;
-const LEVEL = +(q.get('len') ?? 6.0);   // short-section test: 6 units of river (~4.3 s at 1.4 u/s, ~2.9 ring spacings)
+const LEVEL = +(q.get('len') ?? 32.16); // the round-32 level length (the controls' 26-coin layout is designed for it; a short test plays its first seconds)
 const lerp = (a, b, x) => a + (b - a) * x;
 for (let k = KMIN; k < NSEC; k++) {
   const t0 = ringT(k);
@@ -172,6 +172,8 @@ window.step = (t, dt, steer, speed) => {
     if (c.got < 0 && CT.hits(c)) { c.got = t; coinCount += 10; coinEl.textContent = '\u{1FA99} ' + coinCount.toLocaleString('en-US'); }
     if (c.got >= 0) { const k = (t - c.got) / 0.4; c.sp.visible = k < 1; if (k < 1) { c.sp.position.copy(benny.position).addScaledVector(F.n, bennyH * (1.05 + 0.6 * k)); c.sp.material.opacity = 1 - k * k; const d = coinD * 0.7 * (1 - 0.5 * k); c.sp.scale.set(d, d, 1); } }
   }
+  // far coins fade out beyond about ring 3 ahead (the painting shows ~6 coins), so the depth curve never stacks them at the core
+  for (const c of coins) if (c.got < 0 && c.sp.visible) { const za = tmp.copy(c.sp.position).sub(camera.position).dot(A); const f = 1 - THREE.MathUtils.smoothstep(za, 6.5, 9.0); c.sp.scale.multiplyScalar(f); c.sp.visible = f > 0.01; }
   scene.traverse((o) => { if (o.isSprite && o !== core) patchSprite(o.material); });   // droplets created during play
   return { s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: coinCount, tile: Math.floor((st.s + bennyDist) / K.S), ...CT.state() };
 };

@@ -2187,3 +2187,115 @@ Only 13 feature matches, so the isolated water art isn't pixel-identical to the 
 > frame 10 / 144 {"s":0.467,"lat":0,"coins":1420,"tile":0,"lane":0,"height":0,"move":null,"queued":null,"lean":0,"pitch":0,"yaw":0,"pom":0,"camLat":0,"camH":0,"swim":1,"got":{"water":0,"lane":0,"air":0},"lastPick":null,"swipes":0,"done":false,"sDone":5.85,"sEnd":6,"endK":0,"benny":{"rollDeg":-0.828376
 > frame 20 / 144 {"s":0.933,"lat":0.0221,"coins":1420,"tile":1,"lane":1,"height":0,"move":"lane","queued":null,"lean":0.037,"pitch":0,"yaw":-0.016,"pom":0.012,"camLat":0.0002,"camH":0,"swim":1.15,"got":{"water":0,"lane":0,"air":0},"lastPick":null,"swipes":1,"done":false,"sDone":5.85,"sEnd":6,"endK":0,
 
+### 🤖 Claude — 2026-11-21T15:01:25.603Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/rainbow_r33/kit && NODE_PATH=$(npm root -g) timeout 900 node /home/user/rainbow-/tools/kit05/kit_stills.cjs /tmp/rainbow_r33/kit /tmp/rainbow_r33/kit/out864 '[[0,0,0,0]]' 864 1536 2>&1 | tail -2; ls /tmp/rainbow_r32/merged/out* -d 2>/dev/null; ls /home/user/rainbow-/qa/match/05/ | head; find /home/user/rainbow-/backups/wip/screen05-agents -name \"*frame0*.png\" | head", "description": "Render kit start at approved size; find existing splat start frame", "timeout": 900000}`
+
+### 🧑 User — 2026-11-21T15:01:31.150Z
+
+> ↩︎ result: /tmp/rainbow_r33/kit/out864/kit_s0.00_l0.00.png {"s":0,"lat":0,"camLat":0,"bennyDist":1.387,"bennyH":0.473} 2776 ms
+> fly05
+> paint05
+> r27
+> r31_3d
+> r32
+> swim05
+> /home/user/rainbow-/backups/wip/screen05-agents/agentA/mergedtest/out_coins/approved_vs_frame0_full.png
+> /home/user/rainbow-/backups/wip/screen05-agents/agentA/mergedtest/out_coins/approved_vs_frame0_benny.png
+> /home/user/rainbow-/backups/wip/screen05-agents/agentA/mergedtest/out_coins/c0_frame0.png
+> /home/user/rainbow-/backups/wip/screen05-agents/agentA/mergedtest/out_coins/approved_vs_frame0_coins.png
+> /home/user/rainbow-/backups/wip/screen05-agents/agentA/out_controls/_run2_before_coin_scale_fade/a_frame0_diff_overlay.png
+> /home/user/rainbow-/backups/wip/screen05-agents/agentA/out_controls/_run2_before_coin_scale_fade/a_start_frame0.png
+> /home/user/rainbow-/backups/wip/screen05-agents/agentA/out_controls/a_start_frame0_controls_off.png
+> /home/user/rainbow-/backups/wip/screen05-agents/agentA/out_controls/a_start_frame0.png
+> /home/user/rainbow-/backups/wip/screen05-agents/agentA/out_controls/_noviewport_run/a_start_frame0.png
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T15:01:40.240Z
+
+> 🔧 **Bash** `{"command": "cat > /home/user/rainbow-/tools/kit05/still_page.cjs <<'EOF'\n// One screenshot of a page (play3.html of a folder) after it reports ready, optionally after window.step poses.\n// node still_page.cjs <folder> <page> <out.png> <w> <h>\nconst { chromium } = require('playwright'); const { spawn } = require('child_process'); const fs = require('fs'); const path = require('path');\n(async () => {\n  const [dir, pg, out, w, h] = process.argv.slice(2); const disk = fs.readFileSync(path.join(dir, pg), 'utf8'); let port, srv;\n  for (let i = 0; i < 20 && !srv; i++) { port = 9100 + Math.floo …[+1134 chars]`
+
+### 🧑 User — 2026-11-21T15:01:40.286Z
+
+> ↩︎ result: frame 50 / 144 {"s":2.333,"lat":0.0377,"
+
+### 🤖 Claude — 2026-11-21T15:01:43.643Z
+
+> 🔧 **Bash** `{"command": "until grep -q \"exit=\" /tmp/rainbow_r33/runs/kit_v1.log; do sleep 5; done; tail -c 2500 /tmp/rainbow_r33/runs/kit_v1.log | grep -v \"^frame\" | cut -c1-2500", "description": "Wait for the kit swipe run to finish", "timeout": 600000}`
+
+### 🧑 User — 2026-11-21T15:02:23.721Z
+
+> ↩︎ result: 49,"dist":1.3867440955512096},"coinsOnScreen":19,"coinOverlaps":84} 15:02:12
+> {"frames":127,"seconds":4.23,"errors":[],"rendered":"0:228","level":{"s_end_target":5.85,"done":true,"done_frame":126,"plan":"coin-trail player + extras"},"built_level":{"path_end":null,"sections":null,"sections_entered":[0,1,2,3],"level_end_vs_path_end":null,"swim_speed":1.4},"position_stalls":0,"benny_pose":{"max_abs_roll_deg":13.492988372168508,"max_roll_change_deg_per_frame":5.059945725389501,"worst_frame":98,"worst_s":4.573,"max_abs_camera_roll_deg":0.7559312633799805,"screen_x":[170.61588588871064,303.70143362356697],"screen_y":[699.7228244748994,707.7349028176455],"frames_roll_over_25":0},"ending_transition":{"present":false,"first_frame":-1,"k_at_end":0,"monotonic":true,"frames":0},"coin_crowding":{"frames_checked":127,"frames_with_overlap":127,"max_pairs":84,"first_frames":[0,1,2,3,4,5,6,7]},"swipe_directions":{"right":3,"left":2},"forward":{"min_step":0.045999999999999375,"max_step":0.0470000000000006,"freezes":0,"s_end":5.88},"lateral":{"max_step_per_frame":0.0414,"teleports_over_0_06":0,"lanes_seen":[0,1],"max_abs_lat":0.22},"vertical":{"max_step_per_frame":0,"max_height":0,"min_height":0},"cam …[+768 chars]
+
+### 🤖 Claude — 2026-11-21T15:02:41.206Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/rainbow_r33/runs/kit_v1 && python3 -c \"\nfrom PIL import Image\nfs=['f_0000.jpg','f_0030.jpg','f_0060.jpg','f_0098.jpg','f_0120.jpg']\nims=[Image.open(f).convert('RGB') for f in fs]; w,h=ims[0].size\ns=Image.new('RGB',(w*5+40,h),'white')\nfor i,im in enumerate(ims): s.paste(im,(i*(w+10),0))\ns.resize((s.width*2//3,h*2//3)).save('/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/kit_run_v1.jpg',quality=85)\"", "description": "Contact sheet of kit run frames"}`
+
+### 🧑 User — 2026-11-21T15:02:41.326Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T15:02:43.261Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/kit_run_v1.jpg"}`
+
+### 🧑 User — 2026-11-21T15:02:43.288Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T15:03:27.013Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/rainbow_r33/runs/kit_v1 && python3 -c \"\nimport json\nL=json.load(open('run_log.json'))\nprev=None\nfor i,r in enumerate(L):\n    b=r.get('benny',{}); \n    if 90<=i<=102: print(i, r.get('s'), 'lat',r.get('lat'), 'lane',r.get('lane'), 'move',r.get('move'), 'lean',r.get('lean'), 'yaw',r.get('yaw'), 'roll',round(b.get('rollDeg',0),2), 'pick', (r.get('lastPick') or {}).get('kind'))\n\"", "description": "Inspect Benny tilt around frame 98"}`
+
+### 🧑 User — 2026-11-21T15:03:27.072Z
+
+> ↩︎ result: 90 4.06 lat 0.22 lane 1 move None lean 0 yaw 0 roll -0.76 pick lane
+> 91 4.107 lat 0.22 lane 1 move None lean 0 yaw 0 roll -1.25 pick lane
+> 92 4.153 lat 0.22 lane 1 move None lean 0 yaw 0 roll -1.61 pick lane
+> 93 4.2 lat 0.22 lane 1 move None lean 0 yaw 0 roll -1.83 pick lane
+> 94 4.247 lat 0.22 lane 1 move None lean 0 yaw 0 roll -1.89 pick lane
+> 95 4.293 lat 0.22 lane 1 move None lean 0 yaw 0 roll -1.78 pick lane
+> 96 4.34 lat 0.22 lane 1 move None lean 0 yaw 0 roll -1.52 pick lane
+> 97 None lat None lane None move None lean None yaw None roll 0 pick None
+> 98 4.387 lat 0.1979 lane 0 move lane lean -0.037 yaw 0.016 roll 1.52 pick lane
+> 99 4.433 lat 0.1565 lane 0 move lane lean -0.101 yaw 0.047 roll 6.49 pick lane
+> 100 4.48 lat 0.1155 lane 0 move lane lean -0.153 yaw 0.076 roll 10.76 pick lane
+> 101 4.527 lat 0.0816 lane 0 move lane lean -0.177 yaw 0.094 roll 13.1 pick lane
+> 102 4.573 lat 0.056 lane 0 move None lean -0.175 yaw 0.098 roll 13.49 pick lane
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T15:04:03.535Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/kit05 && python3 - <<'EOF'\np = 'bake_kit.py'; s = open(p).read()\nold = \"\"\"rows = np.arange(VH)\nfor c in range(VW):\n    v = vis[:, c]\n    if v.all() or not v.any(): continue\n    for ch in range(3): water[~v, c, ch] = np.interp(rows[~v], rows[v], water[v, c, ch])\nwater8 = np.clip(water, 0, 255).astype(np.uint8)\"\"\"\nnew = \"\"\"# the hidden spots are filled from the user's ORIGINAL isolated Screen 05 water artwork (same design, no Benny / coins), sampled at the\n# same kit water coordinates and colour-matched (per channel mean / spread over t …[+1670 chars]`
+
+### 🧑 User — 2026-11-21T15:04:16.986Z
+
+> ↩︎ result: ring: visible texels 0.995
+> water: visible texels 0.75 half width 0.7
+> wrote /tmp/rainbow_r33/kit
+
+### 🤖 Claude — 2026-11-21T15:04:18.577Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/river_near.jpg"}`
+
+### 🧑 User — 2026-11-21T15:04:18.609Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T15:04:37.375Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np = 'kitgame.html'; s = open(p).read()\ns = s.replace(\"const LEVEL = +(q.get('len') ?? 6.0);   // short-section test: 6 units of river (~4.3 s at 1.4 u/s, ~2.9 ring spacings)\",\n              \"const LEVEL = +(q.get('len') ?? 32.16); // the round-32 level length (the controls' 26-coin layout is designed for it; a short test plays its first seconds)\")\nold = \"  scene.traverse((o) => { if (o.isSprite && o !== core) patchSprite(o.material); });   // droplets created during play\"\nnew = \"\"\"  // far coins fade out beyond about ring 3 ahead (the painting shows …[+838 chars]`
+
+### 🧑 User — 2026-11-21T15:04:38.507Z
+
+> ↩︎ result: started
+
+### 🤖 Claude — 2026-11-21T15:04:40.635Z
+
+While that runs (about 10 minutes), I'll make sure the new kit tools are saved to GitHub.
+
+### 🤖 Claude — 2026-11-21T15:04:42.433Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && python3 scripts/rainbow-autosave.py --reason manual:r33-kit-tools 2>&1 | grep -E '\"commit\"|skipping|error' ; git log -1 --format='%h %s'; git show --stat HEAD | grep -E \"kit05\" | head; timeout 60 git ls-remote origin refs/heads/ccr-81d66c17-i0ooo8; git rev-parse HEAD", "description": "Autosave kit tools and verify remote"}`
+
