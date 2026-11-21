@@ -1069,3 +1069,16 @@ error: failed to push some refs to 'https://github.com/josiahscalia5-dev/rainbow
 | 2026-11-21T01:35:55+00:00 | daemon | committed+pushed | `9f2a2b5b57b3` | `ccr-4fcad20e-a6pp8w` | 224 | True |  |
 | 2026-11-21T01:40:54+00:00 | daemon | committed+pushed | `e0bba82238af` | `ccr-4fcad20e-a6pp8w` | 272 | True |  |
 | 2026-11-21T01:43:19+00:00 | manual:paint-05-06 | committed+pushed | `bca69257d17a` | `ccr-4fcad20e-a6pp8w` | 626 | True |  |
+| 2026-11-21T01:45:54+00:00 | daemon | committed+pushed | `479daa9c596a` | `ccr-4fcad20e-a6pp8w` | 1085 | True |  |
+| 2026-11-21T01:47:05+00:00 | manual:stop-hook | error | `—` | `ccr-4fcad20e-a6pp8w` | 0 | False | git add failed (1): The following paths are ignored by one of your .gitignore files:
+qa/match/04/r25/clip/frames_full_BEFORE_K23-1
+qa/match/04/r25/clip/frames_full_NEW_K23-S3
+hint: Use -f if you really want to add them.
+hint: Turn this message off by running
+hint: "git config advice.addIgnoredFile f |
+| 2026-11-21T01:47:27+00:00 | manual:stop-hook | error | `—` | `ccr-4fcad20e-a6pp8w` | 0 | False | git add failed (1): The following paths are ignored by one of your .gitignore files:
+qa/match/04/r25/clip/frames_full_BEFORE_K23-1
+qa/match/04/r25/clip/frames_full_NEW_K23-S3
+hint: Use -f if you really want to add them.
+hint: Turn this message off by running
+hint: "git config advice.addIgnoredFile f |
