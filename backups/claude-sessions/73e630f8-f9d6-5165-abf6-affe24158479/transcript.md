@@ -3794,3 +3794,10 @@ The still-scenery version scores much higher on the frame-by-frame test. Checkin
 
 > 🔧 **Bash** `{"command": "cat > qa/match/05/paint05/README.md <<'EOF'\n# Screen 05 (+ the 05 → 06 → 07 journey) — approved-artwork chain `?paint=1` (round 31, 2026-11-21, branch `ccr-4fcad20e-a6pp8w`)\n\n**User order (2026-11-21, verbatim excerpt):** \"continue using the approved-artwork method from Screen 06 for my remaining playable screens … 1. Screen 05 …\n95–98% visual likeness … Keep my original approved Benny … scenery must remain visually consistent while Benny swims forward, steers … Keep the game genuinely\nplayable … Fix visible seams, double images, ghosting, abrupt picture changes, and duplica …[+5657 chars]`
 
+### 🧑 User — 2026-11-21T02:01:12.507Z
+
+> ↩︎ result: "result": "committed+pushed",
+>   "commit": "c8c7f11369cfbc48f40c63a3d525dbfce926c79f",
+> c8c7f11369cfbc48f40c63a3d525dbfce926c79f
+> c8c7f11369cfbc48f40c63a3d525dbfce926c79f	refs/heads/ccr-4fcad20e-a6pp8w
+
