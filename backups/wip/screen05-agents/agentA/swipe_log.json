@@ -818,7 +818,7 @@
     "swipes": 0
    },
    "hud": "🪙 1,420",
-   "render_s": 23.3
+   "render_s": 27.8
   },
   {
    "name": "b_mid_lane_change_left",
@@ -854,7 +854,7 @@
     "swipes": 1
    },
    "hud": "🪙 1,430",
-   "render_s": 26.9
+   "render_s": 29.3
   },
   {
    "name": "c_leap_top",
@@ -890,7 +890,7 @@
     "swipes": 4
    },
    "hud": "🪙 1,500",
-   "render_s": 33.1
+   "render_s": 34.6
   },
   {
    "name": "d_after_air_coin",
@@ -926,7 +926,7 @@
     "swipes": 4
    },
    "hud": "🪙 1,510",
-   "render_s": 40.4
+   "render_s": 45.4
   },
   {
    "name": "e_dive",
@@ -962,7 +962,7 @@
     "swipes": 6
    },
    "hud": "🪙 1,540",
-   "render_s": 38.1
+   "render_s": 40.5
   },
   {
    "name": "f_resurface_splash",
@@ -998,7 +998,7 @@
     "swipes": 6
    },
    "hud": "🪙 1,550",
-   "render_s": 33.6
+   "render_s": 34.3
   }
  ],
  "checks": {
@@ -1020,7 +1020,7 @@
   "no_page_errors": true
  },
  "errors": [],
- "load_s": 17.1,
+ "load_s": 32.3,
  "canvas": {
   "x": 0,
   "y": 0,
@@ -3238,5 +3238,5 @@
    "move": null
   }
  ],
- "wall_s": 215
+ "wall_s": 246
 }
