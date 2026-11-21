@@ -1945,3 +1945,245 @@ The clean plate lines up pixel-for-pixel with your painting outside the removed 
 > -rw-r--r-- 1 root root    3987 Nov 21 14:55 wall_sourcecopy.png
 > Shell cwd was reset to /home/user/rainbow-
 
+### 🤖 Claude — 2026-11-21T14:56:55.380Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/kit05/kit05.html", "content": "<!doctype html>\n<html><head><meta charset=\"utf-8\"><title>Screen 05 tunnel kit test</title>\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no\">\n<style>\nhtml,body{margin:0;background:#000;overflow:hidden;font-family:system-ui,sans-serif}canvas{display:block}\n#hud{position:fixed;left:0;right:0;top:10px;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none}\n.bar{display:flex;gap:28px;align-items:center;background:linear-gradient(#7b2bbf …[+11282 chars]`
+
+### 🧑 User — 2026-11-21T14:56:55.414Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/kit05/kit05.html (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-21T14:57:02.630Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/kit05/kit_stills.cjs", "content": "// Render kit05.html stills at given poses (headless Chromium, SwiftShader WebGL2, Android-portrait size).\n// node kit_stills.cjs <folder with kit05.html> <outdir> '<json list of [s, lat, camLat, t]>' [w=412] [h=915] [query]\nconst { chromium } = require('playwright'); const { spawn } = require('child_process'); const fs = require('fs'); const path = require('path');\n(async () => {\n  const [dir, out, poses = '[[0,0,0,0]]', w = '412', h = '915', extra = ''] = process.argv.slice(2); fs.mkdirSync(out, { recursive: true …[+1643 chars]`
+
+### 🧑 User — 2026-11-21T14:57:02.658Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/kit05/kit_stills.cjs (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-21T14:57:04.286Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/rainbow_r33/kit && ln -sf /home/user/rainbow-/tools/kit05/kit05.html kit05.html && NODE_PATH=$(npm root -g) timeout 900 node /home/user/rainbow-/tools/kit05/kit_stills.cjs /tmp/rainbow_r33/kit /tmp/rainbow_r33/kit/out '[[0,0,0,0]]' 864 1536 2>&1 | tail -5", "description": "Render the kit start view at the approved picture size", "timeout": 900000}`
+
+### 🧑 User — 2026-11-21T14:57:08.859Z
+
+> ↩︎ result: /tmp/rainbow_r33/kit/out/kit_s0.00_l0.00.png {"s":0,"lat":0,"camLat":0,"bennyDist":1.387,"bennyH":0.473} 1666 ms
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T14:57:13.152Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/rainbow_r33/kit/out && python3 -c \"\nfrom PIL import Image\na=Image.open('/home/user/rainbow-/references/05_flow_into_the_current.png').convert('RGB'); b=Image.open('kit_s0.00_l0.00.png').convert('RGB')\ns=Image.new('RGB',(864*2+20,1536),'white'); s.paste(a,(0,0)); s.paste(b,(884,0)); s.resize((874,768)).save('/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/kit_vs_approved_0.jpg',quality=88)\"", "description": "Side-by-side approved vs kit start view"}`
+
+### 🧑 User — 2026-11-21T14:57:13.338Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T14:57:15.163Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/kit_vs_approved_0.jpg"}`
+
+### 🧑 User — 2026-11-21T14:57:15.196Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T14:57:45.378Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/rainbow_r33/kit && NODE_PATH=$(npm root -g) timeout 900 node /home/user/rainbow-/tools/kit05/kit_stills.cjs /tmp/rainbow_r33/kit /tmp/rainbow_r33/kit/out '[[0.7,0,0,0.5],[1.4,0,0,1.0],[2.09,0,0,1.5],[1.4,-0.22,-0.11,1.0],[1.4,0.22,0.11,1.0]]' 412 915 2>&1 | tail -7; cd out && python3 -c \"\nfrom PIL import Image\nfs=['kit_s0.70_l0.00.png','kit_s1.40_l0.00.png','kit_s2.09_l0.00.png','kit_s1.40_l-0.22.png','kit_s1.40_l0.22.png']\nims=[Image.open(f).convert('RGB') for f in fs]; w,h=ims[0].size\ns=Image.new('RGB',(w*5+40,h),'white')\nfor i,im in enumerate(ims): s.paste(im,(i*( …[+244 chars]`
+
+### 🧑 User — 2026-11-21T14:57:50.148Z
+
+> ↩︎ result: /tmp/rainbow_r33/kit/out/kit_s0.70_l0.00.png {"s":0.7,"lat":0,"camLat":0,"bennyDist":1.387,"bennyH":0.473} 1239 ms
+> /tmp/rainbow_r33/kit/out/kit_s1.40_l0.00.png {"s":1.4,"lat":0,"camLat":0,"bennyDist":1.387,"bennyH":0.473} 300 ms
+> /tmp/rainbow_r33/kit/out/kit_s2.09_l0.00.png {"s":2.09,"lat":0,"camLat":0,"bennyDist":1.387,"bennyH":0.473} 283 ms
+> /tmp/rainbow_r33/kit/out/kit_s1.40_l-0.22.png {"s":1.4,"lat":-0.22,"camLat":-0.11,"bennyDist":1.387,"bennyH":0.473} 300 ms
+> /tmp/rainbow_r33/kit/out/kit_s1.40_l0.22.png {"s":1.4,"lat":0.22,"camLat":0.11,"bennyDist":1.387,"bennyH":0.473} 307 ms
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T14:57:51.935Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/kit_moving.jpg"}`
+
+### 🧑 User — 2026-11-21T14:57:51.961Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T14:58:11.658Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nfrom PIL import Image\nim=Image.open('references/water/05_water_isolated_original.png'); print(im.size, im.mode, im.getextrema())\nbg=Image.new('RGBA',im.size,(40,40,40,255)); bg.alpha_composite(im.convert('RGBA')); bg.convert('RGB').resize((470,836)).save('/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/water_iso.jpg',quality=85)\"", "description": "View the user's original isolated water artwork"}`
+
+### 🧑 User — 2026-11-21T14:58:11.842Z
+
+> ↩︎ result: (941, 1672) RGBA ((0, 255), (0, 255), (0, 255), (0, 255))
+
+### 🤖 Claude — 2026-11-21T14:58:14.100Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/water_iso.jpg"}`
+
+### 🧑 User — 2026-11-21T14:58:14.125Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T14:58:31.321Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport numpy as np, cv2\nfrom PIL import Image\nref = np.array(Image.open('references/05_flow_into_the_current.png').convert('RGB'))\niso = np.array(Image.open('references/water/05_water_isolated_original.png').convert('RGBA'))\nisoS = cv2.resize(iso, (864, 1536), interpolation=cv2.INTER_AREA)\na = isoS[..., 3] > 200\ng1 = cv2.cvtColor(ref, cv2.COLOR_RGB2GRAY); g2 = cv2.cvtColor(isoS[..., :3], cv2.COLOR_RGB2GRAY)\nsift = cv2.SIFT_create(4000)\nm1 = np.zeros_like(g1); m1[560:1536] = 255; m1[700:1260, 220:660] = 0      # river area of the approved picture, with …[+1427 chars]`
+
+### 🧑 User — 2026-11-21T14:58:31.989Z
+
+> ↩︎ result: matches 13 inliers 6
+> [[-3.840000e-02 -2.939000e-01  4.495195e+02]
+>  [-6.997000e-01  8.819000e-01  1.834280e+02]
+>  [-1.100000e-03  3.000000e-04  1.000000e+00]]
+> similarity [[  0.7037  -0.8699 649.6393]
+>  [  0.8699   0.7037 -44.4577]] inliers 4
+> aligned: median |iso - approved| on visible river 69.0 share < 20 levels 0.123
+
+### 🤖 Claude — 2026-11-21T14:58:34.904Z
+
+Only 13 feature matches, so the isolated water art isn't pixel-identical to the water in the approved picture. Let me compare them directly to see how different they are.
+
+### 🤖 Claude — 2026-11-21T14:58:38.147Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nfrom PIL import Image\na=Image.open('references/05_flow_into_the_current.png').convert('RGB').resize((432,768))\niso=Image.open('references/water/05_water_isolated_original.png').convert('RGBA').resize((432,768)); bg=Image.new('RGBA',(432,768),(40,40,40,255)); bg.alpha_composite(iso)\ns=Image.new('RGB',(874,500),'white'); s.paste(a.crop((0,240,432,740)),(0,0)); s.paste(bg.convert('RGB').crop((0,240,432,740)),(442,0)); s.save('/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/iso_vs_ref.jpg',quality=85)\"", "description": "Side-by-side …[+39 chars]`
+
+### 🧑 User — 2026-11-21T14:58:38.299Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-21T14:58:40.000Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/iso_vs_ref.jpg"}`
+
+### 🧑 User — 2026-11-21T14:58:40.017Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T14:59:27.408Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/marble05/viewer && grep -o \"window\\.[a-zA-Z_]*\" final_acceptance.cjs | sort | uniq -c; grep -n \"state()\\|CT.state\\|qaVisible\" final_acceptance.cjs | head; grep -n \"state: \\|state()\\s*{\" /tmp/rainbow_r32/merged/controls.js | head -5; grep -n \"^  return {\" -A 12 /tmp/rainbow_r32/merged/controls.js | head -30", "description": "List page hooks used by the acceptance harness"}`
+
+### 🧑 User — 2026-11-21T14:59:27.471Z
+
+> ↩︎ result: 2 window.bennyInfo
+>       3 window.camInfo
+>       3 window.coinLayout
+>       2 window.coinScreen
+>       2 window.endK
+>       3 window.levelEnd
+>       1 window.ready
+>       1 window.renderNow
+>       2 window.state
+>       1 window.step
+> 45:    // until state().done, as a player who follows the coin trail (lane changes before side-lane runs, a leap under each air arc) and
+> 81:      const o = await page.evaluate(([t, dt, sp]) => { const r = window.step(t, dt, 0, sp); return Object.assign({}, r, window.state ? window.state() : {}); }, [t, i === 0 ? 0 : 1 / fps, +speed]);
+> 372:  function state() {
+> 437:  return { c, update, orient, anim, water, hits, state, fwd, P };
+> 438-}
+
+### 🤖 Claude — 2026-11-21T14:59:29.195Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/rainbow_r32/merged && sed -n 48,70p controls.js | cut -c1-250; grep -n \"window\\.\\(state\\|coinLayout\\|levelEnd\\|coinScreen\\)\" controls.js | cut -c1-200", "description": "Read controls.js setup and window hooks"}`
+
+### 🧑 User — 2026-11-21T14:59:29.254Z
+
+> ↩︎ result: export function installControls(ctx) {
+>   const { THREE, TR, canvas, camera, q, at, frameAt, coins, scene, U, bmat, benny, splash, splashTex, bubTex, coinTex, coinD, bennyFullH, pxW, coinEl, getS, getCoins, render } = ctx;
+>   const P = { ...TUNING };
+>   for (const k of Object.keys(P)) { const v = q.get('c_' + k); if (v != null && v !== '' && !isNaN(+v)) P[k] = +v; } // URL tuning, e.g. ?c_LANE=0.2
+>   const LEAP_H = P.LEAP_FRAC * bennyFullH, DIVE_D = (P.DIVE_FRAC - 0.22) * bennyFullH;
+>   const DIVE_T = P.DIVE_DOWN + P.DIVE_HOLD + P.DIVE_UP;
+>   const X = new THREE.Vector3(1, 0, 0), Y = new THREE.Vector3(0, 1, 0), Zv = new THREE.Vector3(0, 0, 1);
+>   const qa = new THREE.Quaternion(), v1 = new THREE.Vector3(), v2 = new THREE.Vector3(), v3 = new THREE.Vector3();
+> 
+>   // ---------------- state ----------------
+>   const S = {
+>     clock: 0, swimClock: 0, lane: 0,
+>     lat: { x: 0, v: 0 }, alat: 0,
+>     h: 0, vh: 0, ah: 0,
+>     pitch: { x: 0, v: 0 }, lean: { x: 0, v: 0 }, yaw: { x: 0, v: 0 },
+>     pomSide: { x: 0, v: 0 }, pomFwd: { x: 0, v: 0 },
+>     camLat: { x: 0, v: 0 }, camH: { x: 0, v: 0 },
+>     move: null, queued: null, busyUntil: 0, swim: 1, roll: 0, diveK: 0,
+>     hudPulse: 0, picked: 0, lastPick: n …[+464 chars]
+
+### 🤖 Claude — 2026-11-21T14:59:34.501Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/rainbow_r32/merged && sed -n 140,186p controls.js | cut -c1-260", "description": "Read the coin layout and level-end logic"}`
+
+### 🧑 User — 2026-11-21T14:59:34.535Z
+
+> ↩︎ result: { kind: 'final-arc', pts: [[29.5, -0.02, 0.12], [30.05, 0.02, 0.27], [30.6, -0.02, 0.42]] },
+>   ];
+>   // level end: S_END = trail s nearest to the LAST ring (TR.XB + offsets[N-1]); a track without XB ends at its trail end.
+>   const TS = TR.trail_s, TEND = TS[TS.length - 1];
+>   const S_END = (() => {
+>     if (!TR.XB || !TR.offsets || !TR.trail) return TEND;
+>     const o = TR.offsets[TR.N - 1], X = [TR.XB[0] + o[0], TR.XB[1] + o[1], TR.XB[2] + o[2]];
+>     let best = 0, bd = Infinity; TR.trail.forEach((p, i) => { const d = (p[0] - X[0]) ** 2 + (p[1] - X[1]) ** 2 + (p[2] - X[2]) ** 2; if (d < bd) { bd = d; best = i; } });
+>     return TS[best];
+>   })();
+>   // lead's rule (round 32b): done = s >= S_END - END_MARGIN (0.15), full speed until then (no slow-down, no speed-up); the golden
+>   // bloom over the last 1.25 u is agentB's. After done he only glides to rest before the trail end (the test stops at done).
+>   const S_DONE = S_END - P.END_MARGIN;
+>   // a shorter track: keep the painting run, squeeze the gaps between the later runs (spacing inside a run unchanged)
+>   const lastRun = RUNS[RUNS.length - 1].pts, designEnd = lastRun[lastRun.length - 1][0], avail = S_END - 1.5;
+>   const squeeze = designEnd  …[+3301 chars]
+
+### 🤖 Claude — 2026-11-21T14:59:57.138Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/kit05 && python3 - <<'EOF'\np = 'bake_kit.py'; s = open(p).read()\ns = s.replace(\"\"\"cover = (np.abs(ref - cln).mean(2) > 30).astype(np.uint8)\ncover[:205] = 1                                                     # HUD bar + title (and the repainted rows behind them)\ncover = cv2.dilate(cover, np.ones((9, 9), np.uint8))\"\"\", \"\"\"cover_obj = cv2.dilate((np.abs(ref - cln).mean(2) > 30).astype(np.uint8), np.ones((9, 9), np.uint8))   # Benny, splash, coins, star\ncover = cover_obj.copy(); cover[:205] = 1                            # + HUD bar and titl …[+1812 chars]`
+
+### 🧑 User — 2026-11-21T15:00:09.585Z
+
+> ↩︎ result: wall: visible texels 0.821 copies used [1391684, 329924, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+> ring: visible texels 0.995
+> water: visible texels 0.75 half width 0.7
+> wrote /tmp/rainbow_r33/kit
+
+### 🤖 Claude — 2026-11-21T15:00:30.733Z
+
+> 🔧 **Bash** `{"command": "grep -n \"mvPosition = modelViewMatrix\" /tmp/rainbow_r32/merged/node_modules/three/src/renderers/shaders/ShaderLib/sprite.glsl.js", "description": "Find the sprite shader line to patch"}`
+
+### 🧑 User — 2026-11-21T15:00:30.776Z
+
+> ↩︎ result: 15:	vec4 mvPosition = modelViewMatrix[ 3 ];
+
+### 🤖 Claude — 2026-11-21T15:00:54.189Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nsrc = open('kit05.html').read()\nhead, body = src.split('// ---- pose: s = distance swum', 1)\nhead = head.replace('<title>Screen 05 tunnel kit test</title>', '<title>Screen 05 tunnel kit game test</title>')\nhead = head.replace(\"\"\"const NSEC = +(q.get('nsec') ?? 30), KMIN = -1;\"\"\", \"\"\"const NSEC = +(q.get('nsec') ?? 30), KMIN = -1;\nconst LEVEL = +(q.get('len') ?? 6.0);   // short-section test: 6 units of river (~4.3 s at 1.4 u/s, ~2.9 ring spacings)\"\"\")\nhead = head.replace(\"import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';\", \"imp …[+5772 chars]`
+
+### 🧑 User — 2026-11-21T15:00:54.267Z
+
+> ↩︎ result: bake.png
+> benny31.glb
+> bubble.png
+> coin.png
+> controls.js
+> glint.png
+> kit.json
+> node_modules
+> play3.html
+> ring.png
+> river.png
+> splash.png
+> wall.png
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T15:01:00.257Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/rainbow_r33 && mkdir -p runs && NODE_PATH=$(npm root -g) timeout 3000 node /home/user/rainbow-/tools/marble05/viewer/final_acceptance.cjs /tmp/rainbow_r33/kitgame /tmp/rainbow_r33/runs/kit_v1 7.6 1.4 > /tmp/rainbow_r33/runs/kit_v1.log 2>&1; echo \"exit=$?\" >> /tmp/rainbow_r33/runs/kit_v1.log; tail -c 1500 /tmp/rainbow_r33/runs/kit_v1.log", "description": "Run real-swipe acceptance test on the kit short section", "timeout": 3100000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-21T15:01:00.314Z
+
+> ↩︎ result: Command running in background with ID: b9m1kz3bq. Output is being written to: /tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/tasks/b9m1kz3bq.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-21T15:01:02.378Z
+
+> 🔧 **Bash** `{"command": "until grep -qE \"frame 20 |exit=|Error|error\" /tmp/rainbow_r33/runs/kit_v1.log 2>/dev/null; do sleep 3; done; grep -E \"frame [0-9]+ |exit=|rror\" /tmp/rainbow_r33/runs/kit_v1.log | cut -c1-300 | tail -4", "description": "Wait for first frames of the kit swipe run", "timeout": 900000}`
+
+### 🧑 User — 2026-11-21T15:01:17.441Z
+
+> ↩︎ result: frame 0 / 144 {"s":0,"lat":0,"coins":1420,"tile":0,"lane":0,"height":0,"move":null,"queued":null,"lean":0,"pitch":0,"yaw":0,"pom":0,"camLat":0,"camH":0,"swim":1,"got":{"water":0,"lane":0,"air":0},"lastPick":null,"swipes":0,"done":false,"sDone":5.85,"sEnd":6,"endK":0,"benny":{"rollDeg":0.755931263379
+> frame 10 / 144 {"s":0.467,"lat":0,"coins":1420,"tile":0,"lane":0,"height":0,"move":null,"queued":null,"lean":0,"pitch":0,"yaw":0,"pom":0,"camLat":0,"camH":0,"swim":1,"got":{"water":0,"lane":0,"air":0},"lastPick":null,"swipes":0,"done":false,"sDone":5.85,"sEnd":6,"endK":0,"benny":{"rollDeg":-0.828376
+> frame 20 / 144 {"s":0.933,"lat":0.0221,"coins":1420,"tile":1,"lane":1,"height":0,"move":"lane","queued":null,"lean":0.037,"pitch":0,"yaw":-0.016,"pom":0.012,"camLat":0.0002,"camH":0,"swim":1.15,"got":{"water":0,"lane":0,"air":0},"lastPick":null,"swipes":1,"done":false,"sDone":5.85,"sEnd":6,"endK":0,
+

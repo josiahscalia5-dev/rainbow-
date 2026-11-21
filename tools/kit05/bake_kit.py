@@ -13,9 +13,8 @@ from kit_model import *
 out = sys.argv[1]; os.makedirs(out, exist_ok=True)
 ref = np.array(Image.open(os.path.join(REPO, 'references/05_flow_into_the_current.png')).convert('RGB')).astype(np.float32)
 cln = np.array(Image.open(os.path.join(REPO, 'qa/worldlabs/05/r32/input_05_clean.png')).convert('RGB').resize((W, H), Image.LANCZOS)).astype(np.float32)
-cover = (np.abs(ref - cln).mean(2) > 30).astype(np.uint8)
-cover[:205] = 1                                                     # HUD bar + title (and the repainted rows behind them)
-cover = cv2.dilate(cover, np.ones((9, 9), np.uint8))
+cover_obj = cv2.dilate((np.abs(ref - cln).mean(2) > 30).astype(np.uint8), np.ones((9, 9), np.uint8))   # Benny, splash, coins, star
+cover = cover_obj.copy(); cover[:205] = 1                            # + HUD bar and title (and the repainted rows behind them)
 src = np.where(cover[..., None] > 0, cln, ref)                        # original pixels, clean plate only under Benny / coins / HUD
 srcm = cv2.GaussianBlur(src, (0, 0), 0.6)                             # tiny pre-blur against aliasing in the farther samples
 
@@ -41,7 +40,8 @@ def best_of(copies, P_of, extra_ok=None):
         P = P_of(c); x, y, z = project(P)
         ok = (z > 0.05) & (x >= 1) & (x < W - 2) & (y >= 1) & (y < H - 2) & (height_above_water(P) > -0.005)
         if extra_ok is not None: ok &= extra_ok(c, P)
-        d = np.where(ok, g(np.asarray(P) @ A), np.inf)
+        cov = cover[np.clip(y, 0, H - 1).astype(int), np.clip(x, 0, W - 1).astype(int)] > 0
+        d = np.where(ok, g(np.asarray(P) @ A) * np.where(cov, 4.0, 1.0), np.inf)   # original pixels first; the clean plate only as last resort
         if best_d is None: best_d, best_x, best_y = d, x, y
         else:
             m = d < best_d; best_d = np.where(m, d, best_d); best_x = np.where(m, x, best_x); best_y = np.where(m, y, best_y)
@@ -85,8 +85,18 @@ lat = np.linspace(-HWD, HWD, VW)[None, :].repeat(VH, 0)
 tv = T0 * (T1 / T0) ** ((np.arange(VH)[:, None] + 0.5) / VH) * np.ones((1, VW))
 Pw = A0 + tv[..., None] * A + lat[..., None] * RR - HW * NUP
 x, y, z = project(Pw); ok = (z > 0.05) & (x >= 0) & (x < W - 1) & (y >= 0) & (y < H - 1)
-water = sample(np.clip(x, 0, W - 1), np.clip(y, 0, H - 1)); water8 = np.clip(water, 0, 255).astype(np.uint8)
-if (~ok).any(): water8 = cv2.inpaint(water8, (~ok).astype(np.uint8), 5, cv2.INPAINT_TELEA)
+xc, yc = np.clip(x, 0, W - 1), np.clip(y, 0, H - 1)
+# the water comes ONLY from the original pixels; where Benny / his splash / coins / the star cover it, the painted streaks are continued
+# along the flow (linear between the last visible texel before and the first after, per column = per lateral position)
+water = cv2.remap(cv2.GaussianBlur(ref, (0, 0), 0.6), xc.astype(np.float32), yc.astype(np.float32), cv2.INTER_LINEAR)
+vis = ok & (cover_obj[yc.astype(int), xc.astype(int)] == 0)
+rows = np.arange(VH)
+for c in range(VW):
+    v = vis[:, c]
+    if v.all() or not v.any(): continue
+    for ch in range(3): water[~v, c, ch] = np.interp(rows[~v], rows[v], water[v, c, ch])
+water8 = np.clip(water, 0, 255).astype(np.uint8)
+Image.fromarray((vis * 255).astype(np.uint8)[::-1]).save(os.path.join(out, 'river_visible.png'))
 Image.fromarray(water8[::-1]).save(os.path.join(out, 'river.png'))      # row 0 = far end (texture v = 1 at the top)
 print('water: visible texels', round(float(ok.mean()), 3), 'half width', round(HWD, 3))
 
