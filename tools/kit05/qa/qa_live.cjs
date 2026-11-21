@@ -1,4 +1,4 @@
-// S4 (round 34) — REAL-TIME check of play3.html?live=1 (the phone mode). Improved copy of tools/kit05/live_check.cjs (stricter):
+// S4 (round 34) — REAL-TIME check of play3.html?play=1 (the phone mode). Improved copy of tools/kit05/live_check.cjs (stricter):
 // Android-portrait emulation (412x915, isMobile, hasTouch), the real "Tap to swim" tap, real CDP touch swipes on the wall clock.
 // Adds what the old check could not see (all device-independent):
 //  * the level must NOT run behind the start overlay (Benny's path position before the tap must stay 0)
@@ -21,7 +21,7 @@ const { chromium } = require('playwright'); const { spawn } = require('child_pro
       userAgent: 'Mozilla/5.0 (Linux; Android 14; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Mobile Safari/537.36' });
     const page = await ctx.newPage();
     page.on('pageerror', (e) => errors.push(String(e).slice(0, 300))); page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text().slice(0, 300)); });
-    await page.goto(`http://127.0.0.1:${port}/play3.html?live=1&pr=1${extra ? '&' + extra : ''}`);
+    await page.goto(`http://127.0.0.1:${port}/play3.html?play=1&pr=1${extra ? '&' + extra : ''}`);
     await page.waitForFunction(() => window.ready === true && typeof window.liveStart === 'function', null, { timeout: 600000 });
     // instrumentation (test side only): count window.step calls and the browser's displayed frames; remember the dt of every call
     await page.evaluate(() => {

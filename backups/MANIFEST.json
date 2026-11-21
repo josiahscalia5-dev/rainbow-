@@ -57,6 +57,46 @@
    "sha256": "5243193dd80bca38f015f2e18395b23994dd32afc72e54aebb75c35faa3a70dc"
   },
   {
+   "path": ".claude/skills/rainbow-screen-builder/LESSONS.md",
+   "bytes": 7318,
+   "sha256": "a052de1848577a4e66d58b319606c2bf26f6ed57aa38104ffe4f3266da926023"
+  },
+  {
+   "path": ".claude/skills/rainbow-screen-builder/SKILL.md",
+   "bytes": 11128,
+   "sha256": "2e81b37cc96549c21f7c899e3f5c4f074fd03b7d1ef26463dae5dbe57aac8f3b"
+  },
+  {
+   "path": ".claude/skills/rainbow-screen-builder/screens.json",
+   "bytes": 7534,
+   "sha256": "5202904dd5afa9836b443cacadbc2c68c115205ae03c890a3a985d3d2d2948c6"
+  },
+  {
+   "path": ".claude/skills/rainbow-screen-builder/scripts/acceptance.sh",
+   "bytes": 6610,
+   "sha256": "ff760c1fd082f1ae7f62609a8f35033bbc7feda37bbbe949f3f62049ca32dbba"
+  },
+  {
+   "path": ".claude/skills/rainbow-screen-builder/scripts/analyze_reference.py",
+   "bytes": 22045,
+   "sha256": "60452f41243d2a33662208826894fb42e5764b5274c0dc5298c0187526017da0"
+  },
+  {
+   "path": ".claude/skills/rainbow-screen-builder/scripts/compare_to_approved.py",
+   "bytes": 13733,
+   "sha256": "b25ec8efa17a04f745e1397fe23f68a755fd6b54f2bbc5bed84ad9a69be08d47"
+  },
+  {
+   "path": ".claude/skills/rainbow-screen-builder/scripts/new_screen_workspace.sh",
+   "bytes": 6299,
+   "sha256": "0a5b343d05700170a8e14c239bd91f2a692500e38aefd9876ceeeb298b83a67d"
+  },
+  {
+   "path": ".claude/skills/rainbow-screen-builder/scripts/validate_05.sh",
+   "bytes": 6021,
+   "sha256": "8f3ef93330bbb1bb9bc2c4011fe1189ff8666ed70a868eff7ed1c66d70373f56"
+  },
+  {
    "path": ".gitattributes",
    "bytes": 803,
    "sha256": "6ca3fba523e4df3a2e2480867dcfd64d1cd723e0da3bd2928d9e722e0e4b0438"
@@ -809,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3267,
-   "sha256": "cc5df489a41134948169a664655558c077ff368aa9316df81c9ec9e8c6a955d9"
+   "sha256": "9e1ee9221fb12d95846cab0ed762b936dac763a4cef47479e009ca3bf2c170d3"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -7012,6 +7052,201 @@
    "sha256": "951e5b8c19842e7fd07dac42edbe4023f6bff6df9bf1e3153994ec11d4c58d56"
   },
   {
+   "path": "backups/wip/detached-d8e047d33e/INFO.json",
+   "bytes": 2379,
+   "sha256": "2e720e2408ee58f0ebdf6e11eb0cef2ba9e8e5d4647b908016248f25720c42a5"
+  },
+  {
+   "path": "backups/wip/detached-d8e047d33e/tracked.patch",
+   "bytes": 82135,
+   "sha256": "bce8a2d79ca8068ad15e8175a42281003834bde0dcfc2e15b7da21db2c4765ff"
+  },
+  {
+   "path": "backups/wip/detached-d8e047d33e/untracked/.claude/skills/rainbow-screen-builder/LESSONS.md",
+   "bytes": 7318,
+   "sha256": "a052de1848577a4e66d58b319606c2bf26f6ed57aa38104ffe4f3266da926023"
+  },
+  {
+   "path": "backups/wip/detached-d8e047d33e/untracked/.claude/skills/rainbow-screen-builder/SKILL.md",
+   "bytes": 11128,
+   "sha256": "2e81b37cc96549c21f7c899e3f5c4f074fd03b7d1ef26463dae5dbe57aac8f3b"
+  },
+  {
+   "path": "backups/wip/detached-d8e047d33e/untracked/.claude/skills/rainbow-screen-builder/screens.json",
+   "bytes": 7534,
+   "sha256": "5202904dd5afa9836b443cacadbc2c68c115205ae03c890a3a985d3d2d2948c6"
+  },
+  {
+   "path": "backups/wip/detached-d8e047d33e/untracked/.claude/skills/rainbow-screen-builder/scripts/acceptance.sh",
+   "bytes": 6610,
+   "sha256": "ff760c1fd082f1ae7f62609a8f35033bbc7feda37bbbe949f3f62049ca32dbba"
+  },
+  {
+   "path": "backups/wip/detached-d8e047d33e/untracked/.claude/skills/rainbow-screen-builder/scripts/analyze_reference.py",
+   "bytes": 22045,
+   "sha256": "60452f41243d2a33662208826894fb42e5764b5274c0dc5298c0187526017da0"
+  },
+  {
+   "path": "backups/wip/detached-d8e047d33e/untracked/.claude/skills/rainbow-screen-builder/scripts/compare_to_approved.py",
+   "bytes": 13733,
+   "sha256": "b25ec8efa17a04f745e1397fe23f68a755fd6b54f2bbc5bed84ad9a69be08d47"
+  },
+  {
+   "path": "backups/wip/detached-d8e047d33e/untracked/.claude/skills/rainbow-screen-builder/scripts/new_screen_workspace.sh",
+   "bytes": 6299,
+   "sha256": "0a5b343d05700170a8e14c239bd91f2a692500e38aefd9876ceeeb298b83a67d"
+  },
+  {
+   "path": "backups/wip/detached-d8e047d33e/untracked/.claude/skills/rainbow-screen-builder/scripts/validate_05.sh",
+   "bytes": 6021,
+   "sha256": "8f3ef93330bbb1bb9bc2c4011fe1189ff8666ed70a868eff7ed1c66d70373f56"
+  },
+  {
+   "path": "backups/wip/detached-d8e047d33e/untracked/docs/briefs/2026-11-21-r34/COORDINATION_R34.md",
+   "bytes": 5989,
+   "sha256": "1e292a7286907560cfaf7903df7d636f1878abf74d5aead49b5356ee9929a30e"
+  },
+  {
+   "path": "backups/wip/detached-d8e047d33e/untracked/docs/briefs/2026-11-21-r34/USER_R34.md",
+   "bytes": 4729,
+   "sha256": "14e8b8d295f646ca28b26f995d919fc12ba602690832544031d3b23ec6052f04"
+  },
+  {
+   "path": "backups/wip/detached-d8e047d33e/untracked/docs/briefs/2026-11-21-r34/notes/s2.md",
+   "bytes": 3297,
+   "sha256": "305a403659805e16fad4204b3f1ab7ff35cc7d1bb7c76935403f4bd6efaf7a56"
+  },
+  {
+   "path": "backups/wip/detached-d8e047d33e/untracked/docs/briefs/2026-11-21-r34/notes/s4.md",
+   "bytes": 4219,
+   "sha256": "5914a1828758033e44bfa64c80d1da94c53369d794ca626dfde0a7111a0db237"
+  },
+  {
+   "path": "backups/wip/detached-d8e047d33e/untracked/docs/briefs/2026-11-21-r34/notes/s5.md",
+   "bytes": 1244,
+   "sha256": "e60a226531463c9f8870529c2e3b9ce95181a7a9b6c15a52ea28896e8e59d7f7"
+  },
+  {
+   "path": "backups/wip/detached-d8e047d33e/untracked/qa/kit05/r34/s1/before/before_s0.0_l0.jpg",
+   "bytes": 174537,
+   "sha256": "3857b4a8367e1ca889cd0abb89c6248d63e314e4bcd35b17b2d617861f05002c"
+  },
+  {
+   "path": "backups/wip/detached-d8e047d33e/untracked/qa/kit05/r34/s1/before/before_s15.0_l0.jpg",
+   "bytes": 177870,
+   "sha256": "f5303ff41f980840dce8120e0a0ba1f939cab0e973a6de79fadc7f536bacc6a0"
+  },
+  {
+   "path": "backups/wip/detached-d8e047d33e/untracked/qa/kit05/r34/s1/before/before_s22.0_l0.jpg",
+   "bytes": 174833,
+   "sha256": "89068d0e2f46c3535af89bdf4603d72dff655e5597ac31209c5363d921672d5b"
+  },
+  {
+   "path": "backups/wip/detached-d8e047d33e/untracked/qa/kit05/r34/s1/before/before_s29.0_l0.jpg",
+   "bytes": 176681,
+   "sha256": "8825df9a992213624b33e372088d6cf497cdb513f10c7055f5f5178c0eb609e0"
+  },
+  {
+   "path": "backups/wip/detached-d8e047d33e/untracked/qa/kit05/r34/s1/before/before_s3.0_l0.jpg",
+   "bytes": 160520,
+   "sha256": "126ea5126027813e9a644bfe5c5fb9cef7fc0a3d5096d43ab6435c8a1305b111"
+  },
+  {
+   "path": "backups/wip/detached-d8e047d33e/untracked/qa/kit05/r34/s1/before/before_s31.5_l0.jpg",
+   "bytes": 102628,
+   "sha256": "c44878e3a1268fd5cf2741d0d09b024f4efb67f9db0ac0264334674be63728d0"
+  },
+  {
+   "path": "backups/wip/detached-d8e047d33e/untracked/qa/kit05/r34/s1/before/before_s8.0_l0.jpg",
+   "bytes": 174793,
+   "sha256": "af482df8c8008c7e6884481f3bc018bf3a44db557b0e16258c22d0ed6920df40"
+  },
+  {
+   "path": "backups/wip/detached-d8e047d33e/untracked/qa/kit05/r34/s1/before/before_stills.json",
+   "bytes": 6858,
+   "sha256": "43b7de43ce11ab551322cdaa1da0050e745e6251dc200c282acb0eb65cf6b91d"
+  },
+  {
+   "path": "backups/wip/detached-d8e047d33e/untracked/qa/kit05/r34/s1/before/metrics.json",
+   "bytes": 1172,
+   "sha256": "ee6b3508384a48c93429ca31382739c9d3b282682b3407812297b8414647c1f7"
+  },
+  {
+   "path": "backups/wip/detached-d8e047d33e/untracked/qa/kit05/r34/s3/logic_run.cjs",
+   "bytes": 12076,
+   "sha256": "68b3c772cc661bd23d7b912c90227d7065d0b7fa2ca3cfc250baf9855a2546df"
+  },
+  {
+   "path": "backups/wip/detached-d8e047d33e/untracked/qa/kit05/r34/s4/S1_stretch_tiles_marked_f0448.jpg",
+   "bytes": 222720,
+   "sha256": "9c7eb47c85f9b3c07f687225d5bd411cb389ed5c5b1ba2183ed69048bb1a26e2"
+  },
+  {
+   "path": "backups/wip/detached-d8e047d33e/untracked/qa/kit05/r34/s4/S3_benny_left_paw_offscreen_f0115_crop.jpg",
+   "bytes": 85683,
+   "sha256": "da49d7568f019601ceecb28191fdeb3acc37259a0f1e6024f91fb88dae8ad483"
+  },
+  {
+   "path": "backups/wip/detached-d8e047d33e/untracked/qa/kit05/r34/s4/live_double_loop_evidence.json",
+   "bytes": 2905,
+   "sha256": "3c9b0401243d72cd646cdedd43e1a1c5e5ec57a3cd390b5204c0901bb4d37f39"
+  },
+  {
+   "path": "backups/wip/detached-d8e047d33e/untracked/tools/kit05/live_loop_check.cjs",
+   "bytes": 4465,
+   "sha256": "a57035bc5f3645e7d3f8623d82f0f07e701c3e4f5bd2c193a467fb3373eb555f"
+  },
+  {
+   "path": "backups/wip/detached-d8e047d33e/untracked/tools/kit05/qa/qa_live.cjs",
+   "bytes": 9544,
+   "sha256": "b52fa238fc944da5894db7c37d583e64f51ba6ef048a8941b00f100c816ee1fb"
+  },
+  {
+   "path": "backups/wip/detached-d8e047d33e/untracked/tools/kit05/qa/qa_play.cjs",
+   "bytes": 22777,
+   "sha256": "80a2465b707569d1ec4d62a317d9d6332e091c40c7515aaedf8386db098847a2"
+  },
+  {
+   "path": "backups/wip/detached-d8e047d33e/untracked/tools/kit05/qa/qa_verdict.py",
+   "bytes": 35439,
+   "sha256": "d3620713c2997fb3245de040b7c6595c7fbf8b7cdccdbfb47059aa31e12ab347"
+  },
+  {
+   "path": "backups/wip/detached-d8e047d33e/untracked/tools/kit05/qa/qa_visual.py",
+   "bytes": 20308,
+   "sha256": "48e36ca458ad096f8a79011e3a4750f8a1bacb9b5122af048abd806e0ea46538"
+  },
+  {
+   "path": "backups/wip/detached-d8e047d33e/untracked/tools/kit05/qa/run_acceptance.sh",
+   "bytes": 4885,
+   "sha256": "10c50ba7d5433ba2c47e2fb4ad96e34a94bbc2d3fb093b804e93228999b6d95f"
+  },
+  {
+   "path": "backups/wip/detached-d8e047d33e/untracked/tools/kit05/qa/stretch_viz.py",
+   "bytes": 1097,
+   "sha256": "fc011044349a4490cb63e868dd03c9c569459e32b20802ef04f24694f0c6f23d"
+  },
+  {
+   "path": "backups/wip/detached-d8e047d33e/untracked/tools/kit05/s1_compare.py",
+   "bytes": 3389,
+   "sha256": "8d0dd0c078a8dbf34b281caa7a8ddb29e3c7149b9635b000cff11637e4ffb688"
+  },
+  {
+   "path": "backups/wip/detached-d8e047d33e/untracked/tools/kit05/s1_stills.cjs",
+   "bytes": 3532,
+   "sha256": "5ae62271361b7f1ce0cf31e4743c362d3b36a533ace898056d3589d0c9da2dad"
+  },
+  {
+   "path": "backups/wip/detached-d8e047d33e/untracked/tools/kit05/swim_check.cjs",
+   "bytes": 9941,
+   "sha256": "2c5f9e33fa0b590c018931ce8f0714e563c6d6cfc49a1315e1381d5f6e8fb2a9"
+  },
+  {
+   "path": "backups/wip/detached-d8e047d33e/untracked/tools/kit05/swimfx.js",
+   "bytes": 12885,
+   "sha256": "aa3c6b11f6ddc987700705426133f83d4cdcd201a16e3099d20a6942a2d035f0"
+  },
+  {
    "path": "backups/wip/detached-e162aec2bf/INFO.json",
    "bytes": 701,
    "sha256": "300e646617d0440c7ea1b6b9d9af1f3246d49c10960b66a078e1161c1c3096be"
@@ -11375,6 +11610,21 @@
    "path": "docs/briefs/2026-11-21-r34/USER_R34.md",
    "bytes": 4729,
    "sha256": "14e8b8d295f646ca28b26f995d919fc12ba602690832544031d3b23ec6052f04"
+  },
+  {
+   "path": "docs/briefs/2026-11-21-r34/notes/s2.md",
+   "bytes": 3297,
+   "sha256": "305a403659805e16fad4204b3f1ab7ff35cc7d1bb7c76935403f4bd6efaf7a56"
+  },
+  {
+   "path": "docs/briefs/2026-11-21-r34/notes/s4.md",
+   "bytes": 4219,
+   "sha256": "5914a1828758033e44bfa64c80d1da94c53369d794ca626dfde0a7111a0db237"
+  },
+  {
+   "path": "docs/briefs/2026-11-21-r34/notes/s5.md",
+   "bytes": 1244,
+   "sha256": "e60a226531463c9f8870529c2e3b9ce95181a7a9b6c15a52ea28896e8e59d7f7"
   },
   {
    "path": "docs/characters/benny.md",
@@ -15955,6 +16205,71 @@
    "path": "qa/kit05/r34/lead/preview_full/test_results.json",
    "bytes": 4976,
    "sha256": "cca0da8ca09d553d3c14a8b7a9a766afba49a8a3cf9304c0e2266f3b0d1042a5"
+  },
+  {
+   "path": "qa/kit05/r34/s1/before/before_s0.0_l0.jpg",
+   "bytes": 174537,
+   "sha256": "3857b4a8367e1ca889cd0abb89c6248d63e314e4bcd35b17b2d617861f05002c"
+  },
+  {
+   "path": "qa/kit05/r34/s1/before/before_s15.0_l0.jpg",
+   "bytes": 177870,
+   "sha256": "f5303ff41f980840dce8120e0a0ba1f939cab0e973a6de79fadc7f536bacc6a0"
+  },
+  {
+   "path": "qa/kit05/r34/s1/before/before_s22.0_l0.jpg",
+   "bytes": 174833,
+   "sha256": "89068d0e2f46c3535af89bdf4603d72dff655e5597ac31209c5363d921672d5b"
+  },
+  {
+   "path": "qa/kit05/r34/s1/before/before_s29.0_l0.jpg",
+   "bytes": 176681,
+   "sha256": "8825df9a992213624b33e372088d6cf497cdb513f10c7055f5f5178c0eb609e0"
+  },
+  {
+   "path": "qa/kit05/r34/s1/before/before_s3.0_l0.jpg",
+   "bytes": 160520,
+   "sha256": "126ea5126027813e9a644bfe5c5fb9cef7fc0a3d5096d43ab6435c8a1305b111"
+  },
+  {
+   "path": "qa/kit05/r34/s1/before/before_s31.5_l0.jpg",
+   "bytes": 102628,
+   "sha256": "c44878e3a1268fd5cf2741d0d09b024f4efb67f9db0ac0264334674be63728d0"
+  },
+  {
+   "path": "qa/kit05/r34/s1/before/before_s8.0_l0.jpg",
+   "bytes": 174793,
+   "sha256": "af482df8c8008c7e6884481f3bc018bf3a44db557b0e16258c22d0ed6920df40"
+  },
+  {
+   "path": "qa/kit05/r34/s1/before/before_stills.json",
+   "bytes": 6858,
+   "sha256": "43b7de43ce11ab551322cdaa1da0050e745e6251dc200c282acb0eb65cf6b91d"
+  },
+  {
+   "path": "qa/kit05/r34/s1/before/metrics.json",
+   "bytes": 1172,
+   "sha256": "ee6b3508384a48c93429ca31382739c9d3b282682b3407812297b8414647c1f7"
+  },
+  {
+   "path": "qa/kit05/r34/s3/logic_run.cjs",
+   "bytes": 12076,
+   "sha256": "68b3c772cc661bd23d7b912c90227d7065d0b7fa2ca3cfc250baf9855a2546df"
+  },
+  {
+   "path": "qa/kit05/r34/s4/S1_stretch_tiles_marked_f0448.jpg",
+   "bytes": 222720,
+   "sha256": "9c7eb47c85f9b3c07f687225d5bd411cb389ed5c5b1ba2183ed69048bb1a26e2"
+  },
+  {
+   "path": "qa/kit05/r34/s4/S3_benny_left_paw_offscreen_f0115_crop.jpg",
+   "bytes": 85683,
+   "sha256": "da49d7568f019601ceecb28191fdeb3acc37259a0f1e6024f91fb88dae8ad483"
+  },
+  {
+   "path": "qa/kit05/r34/s4/live_double_loop_evidence.json",
+   "bytes": 2905,
+   "sha256": "3c9b0401243d72cd646cdedd43e1a1c5e5ec57a3cd390b5204c0901bb4d37f39"
   },
   {
    "path": "qa/lead_r5/2026-11-17/README.md",
@@ -40148,8 +40463,8 @@
   },
   {
    "path": "tools/kit05/bake_kit.py",
-   "bytes": 15352,
-   "sha256": "3bf61ad18191bba969ad7a07c1ebe9903aba483585d13c380075c544459d7f0d"
+   "bytes": 19970,
+   "sha256": "6cf2f1b968406434f584c46b2dbca21824173c8d99116745ec78426a6ba69576"
   },
   {
    "path": "tools/kit05/cam05.py",
@@ -40163,8 +40478,8 @@
   },
   {
    "path": "tools/kit05/controls.js",
-   "bytes": 33915,
-   "sha256": "fe3546ec4145e731fd99e75a9e459f11970e847d504d2e1e2a360989200c02fe"
+   "bytes": 44645,
+   "sha256": "3cef1ebfd8d25d3f43cd08284e98de532cafa76e3262497024f2cec4f8c948be"
   },
   {
    "path": "tools/kit05/fit_tunnel.py",
@@ -40178,8 +40493,8 @@
   },
   {
    "path": "tools/kit05/kit_model.py",
-   "bytes": 5728,
-   "sha256": "00679ca62438a340e5920550c5def4b7905b5d9f6debbfb9f2b2495d9151d0f4"
+   "bytes": 7897,
+   "sha256": "3a19c93457b27e39efb58933241229ffa0c9b4cb363add6db6c699afca8197db"
   },
   {
    "path": "tools/kit05/kit_stills.cjs",
@@ -40188,8 +40503,8 @@
   },
   {
    "path": "tools/kit05/kitgame.html",
-   "bytes": 33611,
-   "sha256": "681c19ca8ea5bb4d9f07c9d9d8369e1821b7eef543c3dfc103f635fb6b2526f2"
+   "bytes": 48768,
+   "sha256": "4e6c4336f29556fe942c401b7055813b2dd451a7238b936a980c95c75caccdbb"
   },
   {
    "path": "tools/kit05/live.js",
@@ -40202,9 +40517,44 @@
    "sha256": "c34384e4f3617f65f62b0a0ca90a06f8689c2061164b58d686bd7101c5e82281"
   },
   {
+   "path": "tools/kit05/live_loop_check.cjs",
+   "bytes": 4465,
+   "sha256": "a57035bc5f3645e7d3f8623d82f0f07e701c3e4f5bd2c193a467fb3373eb555f"
+  },
+  {
    "path": "tools/kit05/painted_coins.py",
    "bytes": 1914,
    "sha256": "3f9c16263cb5c26061523b967317e0130ff8ce28ed4c2bb4a43f35b248ffbb6c"
+  },
+  {
+   "path": "tools/kit05/qa/qa_live.cjs",
+   "bytes": 9544,
+   "sha256": "312e2d8188d23f733235ba5572615d897d90d5f4be3f2ef3297a8ce8df4087bf"
+  },
+  {
+   "path": "tools/kit05/qa/qa_play.cjs",
+   "bytes": 22777,
+   "sha256": "80a2465b707569d1ec4d62a317d9d6332e091c40c7515aaedf8386db098847a2"
+  },
+  {
+   "path": "tools/kit05/qa/qa_verdict.py",
+   "bytes": 35439,
+   "sha256": "d3620713c2997fb3245de040b7c6595c7fbf8b7cdccdbfb47059aa31e12ab347"
+  },
+  {
+   "path": "tools/kit05/qa/qa_visual.py",
+   "bytes": 20308,
+   "sha256": "48e36ca458ad096f8a79011e3a4750f8a1bacb9b5122af048abd806e0ea46538"
+  },
+  {
+   "path": "tools/kit05/qa/run_acceptance.sh",
+   "bytes": 4885,
+   "sha256": "10c50ba7d5433ba2c47e2fb4ad96e34a94bbc2d3fb093b804e93228999b6d95f"
+  },
+  {
+   "path": "tools/kit05/qa/stretch_viz.py",
+   "bytes": 1097,
+   "sha256": "fc011044349a4490cb63e868dd03c9c569459e32b20802ef04f24694f0c6f23d"
   },
   {
    "path": "tools/kit05/render_slot.sh",
@@ -40212,14 +40562,34 @@
    "sha256": "0cd1cc546ae4e6168690dc7e4180b301c63c8008bbaa361e18b3a6f8a40e3d3f"
   },
   {
+   "path": "tools/kit05/s1_compare.py",
+   "bytes": 3389,
+   "sha256": "8d0dd0c078a8dbf34b281caa7a8ddb29e3c7149b9635b000cff11637e4ffb688"
+  },
+  {
+   "path": "tools/kit05/s1_stills.cjs",
+   "bytes": 3532,
+   "sha256": "5ae62271361b7f1ce0cf31e4743c362d3b36a533ace898056d3589d0c9da2dad"
+  },
+  {
    "path": "tools/kit05/setup_kit.sh",
-   "bytes": 2416,
-   "sha256": "b07dd5d2728d0f9a051601a24ca77bbc5e0751c49e4911fb6a2848d94b7a607b"
+   "bytes": 2500,
+   "sha256": "f28d53bc5b7d3f7b3db6037996b8f16ef1c157842ab7b2a35cc7c599f4574e08"
   },
   {
    "path": "tools/kit05/still_page.cjs",
    "bytes": 1489,
    "sha256": "d52c7cbeea2febae4fa07e44c5cbcfe0db74e9db6533462f05daa85ca2c59a6a"
+  },
+  {
+   "path": "tools/kit05/swim_check.cjs",
+   "bytes": 9941,
+   "sha256": "2c5f9e33fa0b590c018931ce8f0714e563c6d6cfc49a1315e1381d5f6e8fb2a9"
+  },
+  {
+   "path": "tools/kit05/swimfx.js",
+   "bytes": 12885,
+   "sha256": "aa3c6b11f6ddc987700705426133f83d4cdcd201a16e3099d20a6942a2d035f0"
   },
   {
    "path": "tools/lead21/audit_screen.mjs",
