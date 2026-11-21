@@ -3922,3 +3922,17 @@ Stop hook feedback:
 
 > 🔧 **Bash** `{"command": "git status --short | grep '^??' | head; for i in $(seq 1 60); do pgrep -f 'rainbow-autosave.py' >/dev/null || break; sleep 3; done; timeout 300 python3 scripts/rainbow-autosave.py --reason manual:stop-hook 2>&1 | grep -E '\"result\"|\"commit\"|\"error\"'; git status --short | grep '^??' | head; git rev-parse HEAD; timeout 30 git ls-remote origin refs/heads/ccr-4fcad20e-a6pp8w", "description": "Save the new clip files to GitHub and verify", "timeout": 500000}`
 
+### 🧑 User — 2026-11-21T02:06:35.851Z
+
+> ↩︎ result: ?? qa/match/05/paint05/proof/SCREEN05_steering_720p.mp4
+> ?? qa/match/05/paint05/proof/SCREEN05_steering_720p_halfspeed.mp4
+> ?? qa/match/05/paint05/proof/clip_SCREEN05_steering_720p.json
+>   "result": "committed+pushed",
+>   "commit": "b78a88ef1f4f79f4e48dce47b75492de31a51c76",
+> b78a88ef1f4f79f4e48dce47b75492de31a51c76
+> b78a88ef1f4f79f4e48dce47b75492de31a51c76	refs/heads/ccr-4fcad20e-a6pp8w
+
+### 🤖 Claude — 2026-11-21T02:06:37.901Z
+
+The two Screen 05 videos are now saved on GitHub, along with the per-frame log of that recording. They're in commit `b78a88e` on branch `ccr-4fcad20e-a6pp8w`, and the GitHub copy matches this one exactly. Nothing is left unsaved.
+
