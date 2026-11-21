@@ -54,6 +54,7 @@ const FRAG = /* glsl */ `
   uniform sampler2D map; uniform float opacity;
   uniform vec4 frameMap; uniform vec2 vp; uniform float radius; uniform float feather; uniform float wipe;
   uniform sampler2D flowMap; uniform float flowOn; uniform vec2 vpUv; uniform vec2 platePx; uniform float flowAmp; uniform float flowPh;
+  uniform float cutV;
   varying vec2 vUv;
   void main(){
     vec4 c;
@@ -66,6 +67,8 @@ const FRAG = /* glsl */ `
       c = mix(c1, c2, abs(2.0 * p1 - 1.0));
     } else c = texture2D(map, vUv, -0.45);
     float a = c.a * opacity;
+    // paintswim: only the painted splash below his body travels with the 3D Benny (his painted body / hat are cut away)
+    if (cutV > 0.0) { a *= 1.0 - smoothstep(cutV - 0.06, cutV + 0.01, vUv.y); vec2 e = (vUv - vec2(0.5, 0.2)) / vec2(0.5, 0.26); a *= 1.0 - smoothstep(0.7, 1.0, length(e)); }
     if (wipe != 0.0) {
       vec2 F = vec2(gl_FragCoord.x * frameMap.x + frameMap.y, gl_FragCoord.y * frameMap.z + frameMap.w);
       float inside = 1.0 - smoothstep(radius - feather, radius, length(F - vp));
@@ -78,8 +81,23 @@ const qn = (k: string, d: number) => { const v = typeof location === 'undefined'
 /** `&paintpush=<f>`: the gentle forward ease toward the tunnel end (1 = as authored); `&paintpan=<f>`: steering parallax (1 = as authored) */
 // default = scenery holds still (measured: every-frame likeness 82 % / 'looks the same' 93 % in 05 vs 41 % / 54 % with the ease)
 const PUSH_K = qn('paintpush', 0), PAN_K = qn('paintpan', 0);
+/**
+ * `&paintswim=1` (round 32, user 2026-11-21: "I just want the pink character to swim around my approved screen … I want my exact
+ * approved screen"): the approved Screen 05 picture stays EXACTLY as in `?paint=1` (same plate, same flowing water, held still);
+ * the REAL 3D Benny (game runtime: swim clip, paddling, pom-pom spring, steering lean) is drawn into that picture and swims along
+ * the painted S-river from his painted spot, through the gold bands, into the tunnel end, getting smaller with the picture's own
+ * perspective. Coins sit still on the painted river and he swims into them. Off: `?paint=1` is unchanged.
+ * Tuning: `&swimspeed=` (Screen 05 travel speed factor, default 0.75), `&swimpitch=` (rad, view from above), `&swimh=` (px, his
+ * height at the start spot), `&swimsplash=0` (no painted splash).
+ */
+const SWIM = qn('paintswim', 0) > 0;
+const SWIM_SPEED = qn('swimspeed', 0.75), SWIM_PITCH = qn('swimpitch', 0.22), SWIM_H = qn('swimh', 470), SWIM_SPLASH = qn('swimsplash', 1);
+/** trail distance (painted-river units) Benny has covered when Screen 06 starts opening from the tunnel end */
+const SWIM_END = qn('swimend', 56), SWIM_EASE = qn('swimease', 2.0);
 
-export async function buildPaint(course: Course, coins: { defs: CoinDef[]; collected: Uint8Array }) {
+export interface SwimOpts { root: THREE.Object3D; home: THREE.Object3D; environment: THREE.Texture | null }
+
+export async function buildPaint(course: Course, coins: { defs: CoinDef[]; collected: Uint8Array }, swimOpts?: SwimOpts) {
   const L: Layout = await fetch(asset('paint/paint.json')).then((r) => r.json());
   const [FW, FH] = L.frame, [MX, MY] = L.margin, [PW, PH] = L.plate_frame_px;
   const A0 = FW / FH, tanY = Math.tan(THREE.MathUtils.degToRad(FOV / 2));
@@ -129,7 +147,7 @@ export async function buildPaint(course: Course, coins: { defs: CoinDef[]; colle
   };
   const mat = (map: THREE.Texture) => new THREE.ShaderMaterial({
     uniforms: { map: { value: map }, opacity: { value: 1 }, frameMap: { value: new THREE.Vector4() }, vp: { value: new THREE.Vector2() }, radius: { value: 0 }, feather: { value: FEATHER }, wipe: { value: 0 },
-      flowMap: { value: null as THREE.Texture | null }, flowOn: { value: 0 }, vpUv: { value: new THREE.Vector2() }, platePx: { value: new THREE.Vector2(PW, PH) }, flowAmp: { value: 0 }, flowPh: { value: 0.5 } },
+      flowMap: { value: null as THREE.Texture | null }, flowOn: { value: 0 }, vpUv: { value: new THREE.Vector2() }, platePx: { value: new THREE.Vector2(PW, PH) }, flowAmp: { value: 0 }, flowPh: { value: 0.5 }, cutV: { value: -1 } },
     vertexShader: VERT, fragmentShader: FRAG, transparent: true, depthTest: false, depthWrite: false, toneMapped: false, side: THREE.DoubleSide,
   });
 
@@ -208,9 +226,57 @@ export async function buildPaint(course: Course, coins: { defs: CoinDef[]; colle
   const radiusAt = (Q: { rMax: number }, f: number) => Q.rMax * Math.pow(f, 1.35);
   const insideAt = (Q: { vp: THREE.Vector2; rMax: number }, f: number, x: number, y: number) => { const r = radiusAt(Q, f); return 1 - sm(r - FEATHER, r, Math.hypot(x - Q.vp.x, y - Q.vp.y)); };
   const weight = (s: number) => (joinIn(s) <= 0 || joinOut(s) >= 1 ? 0 : joinIn(s) >= 1 && joinOut(s) <= 0 ? 1 : 0.5);
+
+  // ---------------------------------------------------------------- `&paintswim=1`: the real 3D Benny swims INTO the approved picture
+  const P05 = keys[0].coin?.P ?? null;
+  const swimOn = SWIM && !!swimOpts && !!P05;
+  const swimS0 = chainS0 + 2.5; // the picture is fully shown: he sets off from his painted spot
+  const swimS1 = keys.length > 1 ? revealC[1][0] - revealC[1][1] : chainS1; // the next picture starts opening at the tunnel end
+    // his start = the painted Benny's waterline on the painted trail (painted coin trail: centre y + radius = the water surface)
+  let swimT0 = 0;
+  if (P05) for (let t = -6; t <= 4; t += 0.01) { const [, y, dia] = pathAt(P05, t); if (y + dia / 2 <= keys[0].K.pivot[1]) { swimT0 = t; break; } }
+  const swimDia0 = P05 ? pathAt(P05, swimT0)[2] : 1;
+  // eased: he stays big in the foreground longer, then swims on into the tunnel end (coins use the same curve, so he still meets each)
+  const swimT = (s: number) => swimT0 + SWIM_END * Math.pow(THREE.MathUtils.clamp((s - swimS0) / Math.max(1, swimS1 - swimS0), 0, 1.12), SWIM_EASE);
+  const swimScene = new THREE.Scene();
+  if (swimOpts) {
+    swimScene.environment = swimOpts.environment;
+    swimScene.add(new THREE.HemisphereLight('#fff0ff', '#a33bb8', 1.15));
+    const sun = new THREE.DirectionalLight('#fff4e6', 1.6); sun.position.set(0.2, 1, 0.6); swimScene.add(sun);
+  }
+  // the game's own colour chain for him (OutputPass tone mapping + sRGB, then grade.ts saturation / contrast), composited over the picture
+  const compMat = new THREE.ShaderMaterial({
+    uniforms: { tMap: { value: null as THREE.Texture | null }, uSat: { value: 1.36 }, uCon: { value: 1.15 } },
+    vertexShader: /* glsl */ `varying vec2 vUv; void main(){ vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }`,
+    fragmentShader: /* glsl */ `uniform sampler2D tMap; uniform float uSat; uniform float uCon; varying vec2 vUv;
+      void main(){
+        vec4 c = texture2D(tMap, vUv); if (c.a < 0.003) discard;
+        gl_FragColor = vec4(c.rgb / c.a, c.a);
+        #include <tonemapping_fragment>
+        #include <colorspace_fragment>
+        vec3 col = gl_FragColor.rgb; float l = dot(col, vec3(0.2126, 0.7152, 0.0722));
+        col = mix(vec3(l), col, uSat); col = (col - 0.5) * uCon + 0.5;
+        gl_FragColor.rgb = clamp(col, 0.0, 1.0);
+      }`,
+    transparent: true, depthTest: false, depthWrite: false, toneMapped: true,
+  });
+  const compScene = new THREE.Scene(); const compQuad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), compMat); compQuad.frustumCulled = false; compScene.add(compQuad);
+  let swimRT: THREE.WebGLRenderTarget | null = null;
+  let bennyH = 0, bennyMinY = 0;
+  const swimHead = { x: 0, y: 0, sc: 1 };
+  const SWIM_Z0 = 2.5;
+  const ray = (X: number, Y: number, Z: number, out: THREE.Vector3) => out.set(((X - FW / 2) / (FW / 2)) * tanY * A0 * Z, -((Y - FH / 2) / (FH / 2)) * tanY * Z, -Z);
+  /** 3D water contact point on the painted trail at trail distance t (depth from the painted coins' perspective) */
+  const swimC3 = (t: number, out: THREE.Vector3) => { const [x, y, dia] = pathAt(P05!, t); return ray(x, y + dia / 2, SWIM_Z0 * swimDia0 / dia, out); };
+  const vpDir = ray(keys[0].K.vp_frame_px[0], keys[0].K.vp_frame_px[1], 1, new THREE.Vector3()).normalize();
+  const upRiver = new THREE.Vector3(0, 1, 0).addScaledVector(vpDir, -vpDir.y).normalize();
+  const sA = new THREE.Vector3(), sB = new THREE.Vector3(), sTan = new THREE.Vector3(), sUp = new THREE.Vector3(), sX = new THREE.Vector3(), sPos = new THREE.Vector3();
+  const sM = new THREE.Matrix4(), sQ = new THREE.Quaternion(), sLean = new THREE.Quaternion(), Z_AXIS = new THREE.Vector3(0, 0, 1), bb = new THREE.Box3(), bm = new THREE.Box3();
+
+  const speedMap: Record<string, number> = swimOn ? { ...L.speed, '05': SWIM_SPEED } : L.speed;
   const speedK = (s: number) => {
     let k = 1;
-    for (const [id, f] of Object.entries(L.speed)) { const st = course.stage(id as StageId); k *= 1 + (f - 1) * sm(st.s0 - 4, st.s0 + 1, s) * (1 - sm(st.s1 - 2, st.s1 + 3, s)); }
+    for (const [id, f] of Object.entries(speedMap)) { const st = course.stage(id as StageId); k *= 1 + (f - 1) * sm(st.s0 - 4, st.s0 + 1, s) * (1 - sm(st.s1 - 2, st.s1 + 3, s)); }
     return k;
   };
   const paintBenny = (s: number) => {
@@ -223,6 +289,60 @@ export async function buildPaint(course: Course, coins: { defs: CoinDef[]; colle
 
   const popStart = new Float32Array(coins.defs.length).fill(-1);
   const size = new THREE.Vector2(), buf = new THREE.Vector2(), v3 = new THREE.Vector3();
+
+  /** paintswim: the painted splash + the real 3D Benny at his place on the painted river (camera = the picture's own, held still) */
+  const drawSwim = (renderer: THREE.WebGLRenderer, o: { s: number; lat: number; steer: number; time: number }, mode: number, f: number, next: number) => {
+    const Q = keys[0], t = swimT(o.s);
+    const [x, y, dia] = pathAt(P05!, t), sc = dia / swimDia0;
+    const X = x + o.lat * PX_PER_LAT * sc, Y = y + dia / 2;
+    let vis = mode === 0 ? 1 : mode > 0 ? insideAt(Q, f, X, Y) : 1 - insideAt(Q, f, X, Y);
+    if (next > 0) vis *= 1 - insideAt(keys[1], next, X, Y); // the next picture opens from the tunnel end: he swims into it
+    swimHead.x = X; swimHead.y = Y - SWIM_H * 0.93 * sc; swimHead.sc = sc;
+    if (vis < 0.5) return;
+    // 1) the painted splash around his waist, travelling and shrinking with him (his painted body / hat cut away)
+    if (SWIM_SPLASH > 0) {
+      for (const R of keys) R.pivot.visible = R === Q;
+      Q.pivot.position.set(X - FW / 2, FH / 2 - Y, 0); Q.pivot.rotation.z = -o.steer * 0.1;
+      Q.pivot.scale.set(sc * (1 + 0.035 * Math.sin(o.time * 9.0)), sc * (1 + 0.05 * Math.sin(o.time * 7.0 + 1.0)), 1);
+      const U = (Q.quad.material as THREE.ShaderMaterial).uniforms; U.opacity.value = 1; U.wipe.value = 0; U.cutV.value = 0.4;
+      renderer.render(oScene, oCam);
+      U.cutV.value = -1; Q.pivot.scale.set(1, 1, 1); Q.pivot.visible = false;
+    }
+    // 2) the real 3D Benny (game runtime: swim clip, paddling, pom-pom, lean), rendered in the picture's camera
+    const R = swimOpts!.root, home = R.parent ?? swimOpts!.home;
+    const save = { p: R.position.clone(), q: R.quaternion.clone(), s: R.scale.clone(), v: R.visible };
+    R.visible = true;
+    if (bennyH === 0) {
+      R.position.set(0, 0, 0); R.quaternion.identity(); R.scale.set(1, 1, 1); R.updateMatrixWorld(true);
+      bb.makeEmpty();
+      R.traverseVisible((ob) => { const m = ob as THREE.Mesh; if (m.isMesh && m.geometry) { if (!m.geometry.boundingBox) m.geometry.computeBoundingBox(); bm.copy(m.geometry.boundingBox!).applyMatrix4(m.matrixWorld); bb.union(bm); } });
+      bennyH = Math.max(0.05, bb.max.y - bb.min.y); bennyMinY = bb.min.y;
+    }
+    const Zb = SWIM_Z0 / sc, Sw = (SWIM_H * 2 * SWIM_Z0 * tanY / FH) / bennyH;
+    swimC3(t - 0.5, sA); swimC3(t + 1.0, sB); sTan.subVectors(sB, sA).normalize();
+    sUp.copy(upRiver).addScaledVector(sTan, -upRiver.dot(sTan)).normalize();
+    // seen a little more from above, like the painting (top of the hat visible)
+    const ca = Math.cos(SWIM_PITCH), sa = Math.sin(SWIM_PITCH);
+    const up2 = sA.copy(sUp).multiplyScalar(ca).addScaledVector(sTan, -sa).normalize();
+    const tan2 = sB.copy(sTan).multiplyScalar(ca).addScaledVector(sUp, sa).normalize();
+    sX.crossVectors(up2, tan2).normalize();
+    sQ.setFromRotationMatrix(sM.makeBasis(sX, up2, tan2)).multiply(sLean.setFromAxisAngle(Z_AXIS, -o.steer * 0.25));
+    ray(X, Y, Zb, sPos).addScaledVector(up2, -bennyMinY * Sw);
+    swimScene.add(R);
+    R.position.copy(sPos); R.quaternion.copy(sQ); R.scale.setScalar(Sw); R.updateMatrixWorld(true);
+    if (!swimRT || swimRT.width !== buf.x || swimRT.height !== buf.y) {
+      swimRT?.dispose();
+      swimRT = new THREE.WebGLRenderTarget(buf.x, buf.y, { type: THREE.HalfFloatType, samples: 4 });
+    }
+    const cc = renderer.getClearColor(new THREE.Color()), ca0 = renderer.getClearAlpha();
+    renderer.setRenderTarget(swimRT); renderer.setClearColor(0x000000, 0); renderer.clear(true, true, true);
+    renderer.render(swimScene, cam);
+    renderer.setRenderTarget(null); renderer.setClearColor(cc, ca0);
+    compMat.uniforms.tMap.value = swimRT.texture;
+    renderer.render(compScene, oCam);
+    home.add(R);
+    R.position.copy(save.p); R.quaternion.copy(save.q); R.scale.copy(save.s); R.visible = save.v; R.updateMatrixWorld(true);
+  };
   const draw = (renderer: THREE.WebGLRenderer, o: { s: number; lat: number; steer: number; time: number; clock: number }) => {
     renderer.getSize(size); renderer.getDrawingBufferSize(buf);
     const a = size.x / Math.max(1, size.y);
@@ -263,21 +383,24 @@ export async function buildPaint(course: Course, coins: { defs: CoinDef[]; colle
       const Q = keys[k]; if (!Q.coin) return;
       hideAll(); let any = false;
       const P = Q.coin.P, list: [number, THREE.Mesh][] = [];
+      // paintswim (Screen 05 picture): the coins sit still on the painted river and Benny swims into them
+      const swimK0 = swimOn && k === 0, bT = swimT(o.s);
       for (const [i, m] of Q.coin.meshes) {
         const def = coins.defs[i], col = coins.collected[i] === 1;
-        const d = (def.s - o.s) * (vscaleOf.get(i) ?? 1); let op = 1; const lift = 0, grow = 1;
+        const tc = swimK0 ? swimT(def.s) : (def.s - o.s) * (vscaleOf.get(i) ?? 1);
+        const d = swimK0 ? tc - bT : tc; let op = 1; const lift = 0, grow = 1;
         if (col) continue; // collected: shown as the pop above his pom-pom (ortho, after Benny)
         {
-          if (d > P.samples[P.samples.length - 1][0] || d < P.samples[0][0]) continue;
-          if ((which === 'back') !== (d > 0.3)) continue;
-          op = clamp01((P.samples[P.samples.length - 1][0] - d) / 6);
+          if (tc > P.samples[P.samples.length - 1][0] || tc < P.samples[0][0]) continue;
+          if ((which === 'back') !== (d > (swimK0 ? -0.6 : 0.3))) continue; // paintswim: a coin he is reaching stays behind his body
+          op = clamp01((P.samples[P.samples.length - 1][0] - tc) / 6);
         }
-        const [x, y, dia0] = pathAt(P, d);
-        const ppu = PX_PER_LAT * (P.D0 / Math.max(0.35, d + P.D0));
+        const [x, y, dia0] = pathAt(P, tc);
+        const ppu = swimK0 ? PX_PER_LAT * dia0 / swimDia0 : PX_PER_LAT * (P.D0 / Math.max(0.35, d + P.D0));
         let X = x + (def.lat - P.lat) * ppu; const Y = y - lift;
         // a coin he steered away from passes visibly BESIDE him (never through his body) and fades before it grows huge
         const dia = Math.min(dia0, 1.5 * P.sprite_coin_d);
-        if (d < 1.0) {
+        if (!swimK0 && d < 1.0) {
           const bx = Q.K.pivot[0] + o.lat * PX_PER_LAT, dx = X - bx, clear = 185 + dia / 2;
           if (Math.abs(dx) < clear) X = bx + Math.sign(dx || -1) * (Math.abs(dx) + (clear - Math.abs(dx)) * clamp01((1.0 - d) / 0.8));
         }
@@ -305,6 +428,7 @@ export async function buildPaint(course: Course, coins: { defs: CoinDef[]; colle
     const bob = Math.sin(o.time * Math.PI) * 2.5;
     for (let k = k0; k <= k1; k++) {
       const Q = keys[k]; const [mode, f] = wipeOf(k);
+      if (swimOn && k === 0) { setCam(0); drawSwim(renderer, o, mode, f, k1 > 0 ? keyProg(1, o.s) : 0); continue; }
       const ins = mode === 0 ? 1 : insideAt(Q, f, BENNY_C[0], BENNY_C[1]); const al = mode < 0 ? 1 - ins : ins;
       if (al <= 0.001) continue;
       for (const R of keys) R.pivot.visible = R === Q;
@@ -324,9 +448,16 @@ export async function buildPaint(course: Course, coins: { defs: CoinDef[]; colle
       if (popStart[i] === -2) continue;
       const t = (o.clock - popStart[i]) / 0.4; if (t < 0 || t >= 1) continue;
       const Q = keys[coinKeys.get(i)!]; const P = Q.coin!.P;
+      if (swimOn && coinKeys.get(i) === 0) {
+        // paintswim: the coin pops up from his pom-pom wherever he is in the picture, at his size there
+        const dia = 58 * swimHead.sc * (1 - 0.55 * t);
+        pm.scale.set(dia * P.sprite_px[0] / P.sprite_coin_d, dia * P.sprite_px[1] / P.sprite_coin_d, 1);
+        pm.position.set(swimHead.x - FW / 2, FH / 2 - (swimHead.y - 170 * swimHead.sc * t), 0);
+      } else {
       const dia = 58 * (1 - 0.55 * t);
       pm.scale.set(dia * P.sprite_px[0] / P.sprite_coin_d, dia * P.sprite_px[1] / P.sprite_coin_d, 1);
       pm.position.set(P.pop_frame_px[0] - FW / 2 + o.lat * PX_PER_LAT, FH / 2 - (P.pop_frame_px[1] - 170 * t), 0);
+      }
       const U = (pm.material as THREE.ShaderMaterial).uniforms; U.opacity.value = 1 - t * t; U.wipe.value = 0;
       pm.visible = true; anyPop = true;
     }

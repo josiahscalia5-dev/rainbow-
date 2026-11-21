@@ -1,3 +1,13 @@
+# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 32 (2026-11-21 ~03:00 UTC, branch `claude/screen-05-3d-geometry-9yu7pu`)
+
+User (verbatim): "THE NEW REAL 3D SCREEN 05 IS NOT APPROVED … preserve BOTH versions … Stop changing my artwork … I just want the goddamn pink
+character to swim around my approved screen … I want my exact approved screen. You had it before. Stop changing it." → built
+**`?paint=1&paintswim=1&benny31=1`**: the approved Screen 05 picture EXACTLY as `?paint=1` (unchanged plate, held still), the REAL 3D Benny (game
+runtime, paddling, steering) drawn into it and swimming along the painted S-river through the gold bands into the tunnel end; coins sit on the
+painted river and he collects them. Everything: **`qa/match/05/swim05/README.md`** (+ 10 s gameplay clip in `clip/`). Both earlier versions
+preserved (`?paint=1` = the painted version; `?match05=1&projflow05=2&benny31=1&tun05=1` = the rejected moving-camera 3D, `qa/match/05/r31_3d/`).
+RULE from this round: do NOT change the approved artwork; no broad changes; no paid credits. Waiting for the user's verdict.
+
 # ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 31 (2026-11-21, lead branch `ccr-4fcad20e-a6pp8w`, from ~23:50 UTC 11-20)
 
 User (verbatim, ~00:05): "Yes, do Screen 06 first … I want these exact … all these four images … 100%, or at least 95%" + "add any plugin or anything you

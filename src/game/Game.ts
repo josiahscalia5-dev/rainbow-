@@ -119,7 +119,8 @@ export async function startGame(canvas: HTMLCanvasElement) {
   let m08Applied = false;
   // `?paint06=1`: Screen 06 = the user's own five pictures (approved 06 + the four storyboard panels), src/world/paint06.ts
   // `?paint=1`: the approved-artwork chain 05 -> 06 (src/world/paint.ts; its painted coins ARE the game's coins on those stages)
-  const paint = flag05('paint') ? await buildPaint(course, coins) : null;
+  // `&paintswim=1` on top: the real 3D Benny swims through the (unchanged) approved Screen 05 picture
+  const paint = flag05('paint') ? await buildPaint(course, coins, { root: benny.root, home: scene, environment: scene.environment }) : null;
   const p06 = !paint && flag05('paint06') ? await buildPaint06(course) : null;
   // debug: ?hide=water,benny,coins,drumA,basin,tubes,chamber
   const hidden = new Set((qs.get('hide') ?? '').split(',').filter(Boolean));
