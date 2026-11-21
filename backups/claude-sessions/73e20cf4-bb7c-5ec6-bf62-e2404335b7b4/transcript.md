@@ -2610,3 +2610,121 @@ While that runs (about 10 minutes), I'll make sure the new kit tools are saved t
 > dddd144c93e3f77b1fd6ff803cd30ff24b757d55	refs/heads/ccr-81d66c17-i0ooo8
 > dddd144c93e3f77b1fd6ff803cd30ff24b757d55
 
+### 🤖 Claude — 2026-11-21T15:16:28.828Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/kit05 && python3 - <<'EOF'\np = 'bake_kit.py'; s = open(p).read()\ni = s.index('# ---------------- flowing river tile (round 33b)')\ns = s[:i] + '''# ---------------- flowing river tile (round 33c): seamless, full-width open water only (the foam banks are on the lower walls) ----------\n# A = the user's isolated water art, B = the approved water (+ its water-art fill), both over the kit water rows where the water art covers\n# the FULL width; cycle = A, B, A reversed, B reversed, each join cross-faded -> period 4 x (t1 - t0), no stretched texels.\ncov  …[+3836 chars]`
+
+### 🧑 User — 2026-11-21T15:16:53.963Z
+
+> ↩︎ result: river tile (1536, 1024, 3) source rows t 0.9 .. 19.67 period 75.078
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T15:17:01.515Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/kit05 && python3 - <<'EOF'\np = 'bake_kit.py'; s = open(p).read()\nold = \"okr = np.nonzero((cov > 0.985) & (tv[:, 0] > 0.9))[0]; RT0 = float(tv[okr[0], 0]); RT1 = float(tv[okr[-1], 0])\"\nnew = \"\"\"okr = np.nonzero((cov > 0.985) & (tv[:, 0] > 0.9))[0]; r0 = okr[0]; r1 = r0\nwhile r1 + 1 < VH and cov[r1 + 1] > 0.985: r1 += 1                  # first unbroken full-width run only (near water, crisp)\nRT0 = float(tv[r0, 0]); RT1 = float(tv[r1, 0])\"\"\"\nassert old in s; s = s.replace(old, new); open(p, 'w').write(s)\nEOF\npython3 -I bake_kit.py /tmp/ra …[+118 chars]`
+
+### 🧑 User — 2026-11-21T15:17:18.667Z
+
+> ↩︎ result: river tile (1536, 1024, 3) source rows t 0.9 .. 2.031 period 4.522
+
+### 🤖 Claude — 2026-11-21T15:17:20.100Z
+
+The near full-width water runs from 0.9 to 2.03 units, so the four-part cycle repeats every 4.5 units (about 3.2 s of swimming including the current). Re-rendering the level:
+
+### 🤖 Claude — 2026-11-21T15:17:24.698Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/rainbow_r33/kitgame && NODE_PATH=$(npm root -g) timeout 1500 node /tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/poses.cjs /tmp/rainbow_r33/kitgame /tmp/rainbow_r33/kit/out/level '[3, 8, 15, 22]' 2>&1 | grep -i error; cd /tmp/rainbow_r33/kit/out/level && python3 -c \"\nfrom PIL import Image\nfs=['pose_s3.png','pose_s8.png','pose_s15.png','pose_s22.png']\nims=[Image.open(f).convert('RGB') for f in fs]; w,h=ims[0].size\ns=Image.new('RGB',(w*4+30,h),'white')\nfor i,im in enumerate(ims): s.paste(im,(i*(w+10),0))\ns.resize((s.width*2//3,h*2//3 …[+205 chars]`
+
+### 🧑 User — 2026-11-21T15:17:33.038Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T15:17:34.968Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/level_v4.jpg"}`
+
+### 🧑 User — 2026-11-21T15:17:34.995Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T15:17:59.398Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/kit05 && python3 - <<'EOF'\np = 'bake_kit.py'; s = open(p).read()\nold_start = s.index(\"parts = [SA, SB, SA[::-1], SB[::-1]]; tile = np.concatenate(parts, 0); NR = tile.shape[0]; X = seg_n // 5\")\nold_end = s.index(\"Image.fromarray(np.clip(tile[::-1], 0, 255).astype(np.uint8)).save(os.path.join(out, 'river_tile.png'))\")\nnew = \"\"\"parts = [SA, SB, SA[::-1], SB[::-1]]; X = seg_n // 4\nwv = ((np.arange(X) + 0.5) / X)[:, None, None]\ntile = parts[0]\nfor nxt in parts[1:]:                                                # overlapping joins: blend X ro …[+1181 chars]`
+
+### 🧑 User — 2026-11-21T15:18:17.261Z
+
+> ↩︎ result: river tile (1152, 1024, 3) source rows t 0.9 .. 2.031 period 3.392
+> row-to-row change: median 2.42  max 5.41 at row 1131 (a seam would stand out as a spike)
+
+### 🤖 Claude — 2026-11-21T15:18:31.773Z
+
+The river cycle is now seamless: the largest row-to-row change is 5.4 levels against a typical 2.4, with no spike at any join. Re-rendering:
+
+### 🤖 Claude — 2026-11-21T15:18:36.521Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/rainbow_r33/kitgame && NODE_PATH=$(npm root -g) timeout 1500 node /tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/poses.cjs /tmp/rainbow_r33/kitgame /tmp/rainbow_r33/kit/out/level '[3, 8, 15, 22]' 2>&1 | grep -i error; cd /tmp/rainbow_r33/kit/out/level && python3 -c \"\nfrom PIL import Image\nfs=['pose_s3.png','pose_s8.png','pose_s15.png','pose_s22.png']\nims=[Image.open(f).convert('RGB') for f in fs]; w,h=ims[0].size\ns=Image.new('RGB',(w*4+30,h),'white')\nfor i,im in enumerate(ims): s.paste(im,(i*(w+10),0))\ns.resize((s.width*2//3,h*2//3 …[+199 chars]`
+
+### 🧑 User — 2026-11-21T15:18:44.805Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T15:18:46.621Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/level_v5.jpg"}`
+
+### 🧑 User — 2026-11-21T15:18:46.647Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T15:19:01.046Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nfrom PIL import Image\nim=Image.open('references/05_flow_into_the_current.png').convert('RGB')\na=im.crop((0,600,260,860)).resize((520,520)); b=im.crop((640,700,864,960)).resize((448,520))\ns=Image.new('RGB',(980,520),'white'); s.paste(a,(0,0)); s.paste(b,(530,0)); s.save('/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/foam_src.jpg',quality=88)\"", "description": "Look at the painted foam banks"}`
+
+### 🧑 User — 2026-11-21T15:19:01.146Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-21T15:19:03.187Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/foam_src.jpg"}`
+
+### 🧑 User — 2026-11-21T15:19:03.210Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T15:19:24.838Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/kit05 && cat > bake_foam.py <<'EOF'\n\"\"\"Round 33c: foam bank strip cut from the APPROVED painting's own left foam bank (no AI): the bank is rotated level, its white-lavender\nfoam kept (alpha from low saturation + high brightness), mirrored to tile seamlessly along the river. python3 -I bake_foam.py <outdir>\"\"\"\nimport sys, os, numpy as np, cv2\nfrom PIL import Image\nout = sys.argv[1]; REPO = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))\nim = np.array(Image.open(os.path.join(REPO, 'references/05_flow_into …[+1588 chars]`
+
+### 🧑 User — 2026-11-21T15:19:25.215Z
+
+> ↩︎ result: foam (256, 1024, 4) mean alpha 0.459
+
+### 🤖 Claude — 2026-11-21T15:19:27.324Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/foam.jpg"}`
+
+### 🧑 User — 2026-11-21T15:19:27.350Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T15:19:49.203Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np = 'kitgame.html'; s = open(p).read()\nold = \"// water surface: lateral x log-spaced axial distance (same mapping as the bake)\"\nnew = \"\"\"// foam banks along both wall bases (round 33c): the painting's own foam, faded in only where the walls show the shared section\n// (covers the painted pink river edges that the painting has higher up its sides than the kit water), invisible at the start view\nconst foamTex = await tex('foam.png'); foamTex.wrapS = THREE.RepeatWrapping;\nconst foamMat = (() => { const m = kitMat(foamTex, { transparent: true, depthWrite: f …[+1947 chars]`
+
+### 🧑 User — 2026-11-21T15:19:58.290Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T15:20:00.664Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/level_v6.jpg"}`
+
+### 🧑 User — 2026-11-21T15:20:00.687Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T15:20:18.623Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/kit05 && python3 - <<'EOF'\np = 'kitgame.html'; s = open(p).read()\nold = \"const CT = installControls({ THREE, TR, canvas: renderer.domElement, camera, q,\"\nnew = \"const qc = new URLSearchParams(location.search); if (!qc.has('c_LEAN_K')) qc.set('c_LEAN_K', '0.11');   // gentler bank (round 33: 5 -> <3 deg per frame); controls.js unchanged\\nconst CT = installControls({ THREE, TR, canvas: renderer.domElement, camera, q: qc,\"\nassert old in s; s = s.replace(old, new); open(p, 'w').write(s)\nEOF\ncp kitgame.html /tmp/rainbow_r33/kitgame/play3.html &&  …[+597 chars]`
+

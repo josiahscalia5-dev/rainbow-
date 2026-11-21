@@ -148,17 +148,22 @@ print('own pixels: wall', {k: v[2] for k, v in wall_own['rows'].items()}, 'ring'
 # A = the user's isolated water art, B = the approved water (+ its water-art fill), both over the kit water rows where the water art covers
 # the FULL width; cycle = A, B, A reversed, B reversed, each join cross-faded -> period 4 x (t1 - t0), no stretched texels.
 cov = (isoW[..., 3] > 200).mean(1)                                   # full-width coverage per log row
-okr = np.nonzero((cov > 0.985) & (tv[:, 0] > 0.9))[0]; RT0 = float(tv[okr[0], 0]); RT1 = float(tv[okr[-1], 0])
+okr = np.nonzero((cov > 0.985) & (tv[:, 0] > 0.9))[0]; r0 = okr[0]; r1 = r0
+while r1 + 1 < VH and cov[r1 + 1] > 0.985: r1 += 1                  # first unbroken full-width run only (near water, crisp)
+RT0 = float(tv[r0, 0]); RT1 = float(tv[r1, 0])
 seg_n = 384                                                          # rows per segment (linear in t)
 def strip(srcimg):
     ts = RT0 + (np.arange(seg_n) + 0.5) / seg_n * (RT1 - RT0); rf = np.log(ts / T0) / np.log(T1 / T0) * VH - 0.5
     return np.stack([cv2.remap(srcimg[..., ch].astype(np.float32), np.tile(np.arange(VW, dtype=np.float32), (seg_n, 1)),
                                 np.repeat(rf.astype(np.float32)[:, None], VW, 1), cv2.INTER_LINEAR) for ch in range(3)], -1)
 SA, SB = strip(isoC), strip(water)
-parts = [SA, SB, SA[::-1], SB[::-1]]; tile = np.concatenate(parts, 0); NR = tile.shape[0]; X = seg_n // 5
-for j in range(4):                                                   # cross-fade every join (cyclic): last X rows of part j into part j+1
-    e = (j + 1) * seg_n % NR; nxt = parts[(j + 1) % 4][:X]; w = ((np.arange(X) + 0.5) / X)[:, None, None]
-    rows = (np.arange(e - X, e)) % NR; tile[rows] = (1 - w) * tile[rows] + w * nxt
+parts = [SA, SB, SA[::-1], SB[::-1]]; X = seg_n // 4
+wv = ((np.arange(X) + 0.5) / X)[:, None, None]
+tile = parts[0]
+for nxt in parts[1:]:                                                # overlapping joins: blend X rows, the next part continues after them
+    tile = np.concatenate([tile[:-X], (1 - wv) * tile[-X:] + wv * nxt[:X], nxt[X:]], 0)
+tile = np.concatenate([(1 - wv) * tile[-X:] + wv * tile[:X], tile[X:-X]], 0)   # cyclic: the end flows into the start
+NR = tile.shape[0]; L_TILE = (RT1 - RT0) * NR / seg_n
 Image.fromarray(np.clip(tile[::-1], 0, 255).astype(np.uint8)).save(os.path.join(out, 'river_tile.png'))   # row 0 = far end
-kit = json.load(open(os.path.join(out, 'kit.json'))); kit['river_tile'] = {'t0': RT0, 'L': 4 * (RT1 - RT0), 'painted_until': 14.0, 'painted_fade': 6.0}
-json.dump(kit, open(os.path.join(out, 'kit.json'), 'w'), indent=1); print('river tile', tile.shape, 'source rows t', round(RT0, 3), '..', round(RT1, 3), 'period', round(4 * (RT1 - RT0), 3))
+kit = json.load(open(os.path.join(out, 'kit.json'))); kit['river_tile'] = {'t0': RT0, 'L': L_TILE, 'painted_until': 14.0, 'painted_fade': 6.0}
+json.dump(kit, open(os.path.join(out, 'kit.json'), 'w'), indent=1); print('river tile', tile.shape, 'source rows t', round(RT0, 3), '..', round(RT1, 3), 'period', round(L_TILE, 3))

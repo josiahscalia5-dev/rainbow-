@@ -91,6 +91,19 @@ for (let k = KMIN; k < NSEC; k++) {
     const f = (b - 0.5) / 0.5; return [P(t0 + f * K.RING_W, th, K.RING_IN), a, 1 - b];
   }), ro ? kitMat(ringTex, {}, ro) : ringMat));
 }
+// foam banks along both wall bases (round 33c): the painting's own foam, faded in only where the walls show the shared section
+// (covers the painted pink river edges that the painting has higher up its sides than the kit water), invisible at the start view
+const foamTex = await tex('foam.png'); foamTex.wrapS = THREE.RepeatWrapping;
+const foamMat = (() => { const m = kitMat(foamTex, { transparent: true, depthWrite: false }); const base = m.onBeforeCompile; m.customProgramCacheKey = () => 'kit-foam';
+  m.onBeforeCompile = (sh) => { base(sh); sh.fragmentShader = sh.fragmentShader.replace('uniform float uBias;', 'uniform float uBias; varying float vKitT; varying float vKitD;')
+    .replace('diffuseColor *= texture(map, vMapUv, uBias);', `diffuseColor *= texture(map, vMapUv, uBias);
+      float kF = smoothstep(0.55, 0.85, vKitD / max(vKitT, 1e-3)) * (1.0 - smoothstep(8.0, 14.0, vKitT)); diffuseColor.a *= 1.0 - kF;`); };
+  return m; })();
+const THW = Math.asin(K.HW / K.RT), FOAM_H = 16 * Math.PI / 180;
+for (const side of [1, -1]) {   // right: from -THW upward; left: from PI + THW upward
+  scene.add(new THREE.Mesh(grid(500, 6, (a, b) => { const t = 0.3 + a * 90; const th = side > 0 ? -THW + b * FOAM_H : Math.PI + THW - b * FOAM_H;
+    return [P(t, th, K.RT * 0.985), t / 1.3, b]; }), foamMat));
+}
 // water surface: lateral x log-spaced axial distance (same mapping as the bake)
 const Wt = K.water, LOGR = Math.log(Wt.T1 / Wt.T0);
 scene.add(new THREE.Mesh(grid(40, 600, (a, b) => { const t = Wt.T0 * Math.exp(b * LOGR); return [A0.clone().addScaledVector(A, t).addScaledVector(RR, lerp(-Wt.HWD, Wt.HWD, a)).addScaledVector(NUP, -K.HW), a, b]; }), riverMat));
@@ -162,7 +175,8 @@ const coins = []; let coinCount = 1420; const coinEl = document.getElementById('
 const bubTex = await tl.loadAsync('bubble.png'); bubTex.colorSpace = THREE.SRGBColorSpace;
 const ctex = await tl.loadAsync('coin.png'); ctex.colorSpace = THREE.SRGBColorSpace;
 const coinD = 0.15038523388874458 * bennyDist / 1.186;      // round-32 coin size, scaled to the kit's Benny distance
-const CT = installControls({ THREE, TR, canvas: renderer.domElement, camera, q, at, frameAt, coins, scene, U, bmat, benny, splash, splashTex, bubTex, coinTex: ctex, coinD, bennyFullH: 0.99 * KH, pxW, coinEl, getS: () => st.s, getCoins: () => coinCount, render: () => renderer.render(scene, camera) });
+const qc = new URLSearchParams(location.search); if (!qc.has('c_LEAN_K')) qc.set('c_LEAN_K', '0.11');   // gentler bank (round 33: 5 -> <3 deg per frame); controls.js unchanged
+const CT = installControls({ THREE, TR, canvas: renderer.domElement, camera, q: qc, at, frameAt, coins, scene, U, bmat, benny, splash, splashTex, bubTex, coinTex: ctex, coinD, bennyFullH: 0.99 * KH, pxW, coinEl, getS: () => st.s, getCoins: () => coinCount, render: () => renderer.render(scene, camera) });
 // every sprite (coins, droplets, splash) goes through the same depth curve as the scenery: far coins sit on the far river
 const patchSprite = (m) => { if (m.userData.kit) return; m.userData.kit = 1; m.onBeforeCompile = (sh) => { Object.assign(sh.uniforms, REMAP);
   sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\n' + REMAP_GLSL).replace('vec4 mvPosition = modelViewMatrix[ 3 ];', 'vec4 mvPosition = viewMatrix * vec4(kitRemap(modelMatrix[ 3 ].xyz), 1.0);'); }; m.needsUpdate = true; };
