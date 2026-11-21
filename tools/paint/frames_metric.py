@@ -8,7 +8,7 @@ import json, sys
 import cv2, numpy as np
 from PIL import Image
 R = '/home/user/rainbow-'
-clip = json.load(open(sys.argv[1])); fdir = sys.argv[1].replace('clip_', 'frames_').replace('.json', '')
+clip = json.load(open(sys.argv[1])); fdir = clip.get('frames_dir') or sys.argv[1].replace('clip_', 'frames_').replace('.json', '')
 W_, H_ = clip['size']; sc = W_ / 864
 reg = json.load(open(f'{R}/qa/match/06/paint06/work/register.json'))
 def ref_full(p): return cv2.resize(np.asarray(Image.open(p).convert('RGB')), (W_, H_), interpolation=cv2.INTER_AREA).astype(np.float32)

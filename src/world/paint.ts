@@ -74,6 +74,10 @@ const FRAG = /* glsl */ `
     gl_FragColor = vec4(c.rgb, a);
   }`;
 
+const qn = (k: string, d: number) => { const v = typeof location === 'undefined' ? null : new URLSearchParams(location.search).get(k); return v !== null && v !== '' && isFinite(+v) ? +v : d; };
+/** `&paintpush=<f>`: scale of the gentle forward ease (1 = as authored, 0 = scenery holds still); `&paintpan=<f>`: steering parallax */
+const PUSH_K = qn('paintpush', 1), PAN_K = qn('paintpan', 1);
+
 export async function buildPaint(course: Course, coins: { defs: CoinDef[]; collected: Uint8Array }) {
   const L: Layout = await fetch(asset('paint/paint.json')).then((r) => r.json());
   const [FW, FH] = L.frame, [MX, MY] = L.margin, [PW, PH] = L.plate_frame_px;
@@ -236,7 +240,7 @@ export async function buildPaint(course: Course, coins: { defs: CoinDef[]; colle
     for (let k = keys.length - 1; k >= 0; k--) if (keyProg(k, o.s) >= 1) { k0 = k; break; }
     let k1 = k0;
     for (let k = k0 + 1; k < keys.length; k++) if (keyProg(k, o.s) > 0) k1 = k;
-    const camX = THREE.MathUtils.clamp(o.lat * CAM_PER_LAT, -0.07, 0.07);
+    const camX = PAN_K * THREE.MathUtils.clamp(o.lat * CAM_PER_LAT, -0.07, 0.07);
     const wipeOf = (k: number): [number, number] => {
       if (k === 0 && fin < 1) return [1, fin];
       if (k > k0) return [1, keyProg(k, o.s)];
@@ -244,7 +248,7 @@ export async function buildPaint(course: Course, coins: { defs: CoinDef[]; colle
       return [0, 1];
     };
     const setCam = (k: number) => {
-      const Q = keys[k], z = THREE.MathUtils.clamp((o.s - rest[k]) * Q.K.push, Q.K.push_min, Q.K.push_max);
+      const Q = keys[k], z = PUSH_K * THREE.MathUtils.clamp((o.s - rest[k]) * Q.K.push, Q.K.push_min, Q.K.push_max);
       cam.position.copy(Q.pushDir).multiplyScalar(z / Math.abs(Q.pushDir.z)); cam.position.x += camX;
       cam.lookAt(cam.position.x, cam.position.y, cam.position.z - 1); cam.updateMatrixWorld();
     };

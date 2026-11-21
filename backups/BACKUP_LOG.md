@@ -1082,3 +1082,4 @@ qa/match/04/r25/clip/frames_full_NEW_K23-S3
 hint: Use -f if you really want to add them.
 hint: Turn this message off by running
 hint: "git config advice.addIgnoredFile f |
+| 2026-11-21T01:47:50+00:00 | manual:fix-ignore | committed+pushed | `cd052927e15f` | `ccr-4fcad20e-a6pp8w` | 95 | True |  |

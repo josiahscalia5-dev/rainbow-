@@ -3583,3 +3583,91 @@ Stop hook feedback:
 
 > 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='.gitignore'; s=open(p).read()\ns=s.replace(\"\\n# temporary per-frame dumps of gameplay recordings (the .mp4 clips and *_metric.json are kept; frames are regenerable)\\nqa/**/clip/frames_*/\\n\",\"\\n\")\nopen(p,'w').write(s)\nEOF\ngit diff --stat HEAD -- .gitignore; git add .gitignore; timeout 300 python3 scripts/rainbow-autosave.py --reason manual:fix-ignore 2>&1 | grep -E '\"result\"|\"commit\"|\"error\"'; git log --oneline -1; git rev-parse HEAD; timeout 30 git ls-remote origin refs/heads/ccr-4fcad20e-a6pp8w; git status --short | grep -v claude-session …[+107 chars]`
 
+### 🧑 User — 2026-11-21T01:48:13.298Z
+
+> ↩︎ result: .gitignore | 1 +
+>  1 file changed, 1 insertion(+)
+>   "result": "committed+pushed",
+>   "commit": "cd052927e15f188e11180a7b7dfbae2863b97fe1",
+> cd05292 autosave: Rainbow 2026-11-21 01:47 UTC
+> cd052927e15f188e11180a7b7dfbae2863b97fe1
+> cd052927e15f188e11180a7b7dfbae2863b97fe1	refs/heads/ccr-4fcad20e-a6pp8w
+>  M qa/match/05/paint05/clip/NEW_05_06_07_steer.mp4
+>  M qa/match/05/paint05/clip/NEW_05_06_07_straight.mp4
+
+### 🤖 Claude — 2026-11-21T01:48:16.649Z
+
+The backup works again: commit `cd05292` is on GitHub and matches. Both recordings have finished. Measuring every frame, then moving the temporary frame images out of the project.
+
+### 🤖 Claude — 2026-11-21T01:48:21.144Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/tasks/bf3vub64x.output; for t in NEW_05_06_07_straight NEW_05_06_07_steer; do echo \"== $t\"; python3 -I tools/paint/frames_metric.py qa/match/05/paint05/clip/clip_$t.json | python3 -I -c \"import json,sys; d=json.load(sys.stdin); [print(k, v) for k,v in d.items()]\"; done; python3 -I -c \"\nimport json\nfor t in ['NEW_05_06_07_straight','NEW_05_06_07_steer','BEFORE_05_06_07_straight']:\n    L=json.load(open(f'qa/match/05/paint05/clip/clip_{t}.json'))['frames']\n    two=sum(1 for f in L if f['benny3d'] and  …[+354 chars]`
+
+### 🧑 User — 2026-11-21T01:49:31.801Z
+
+> ↩︎ result: NEW_05_06_07_straight frames 578 s 106.467 -> 262.003 coins 1330 -> 1600
+> NEW_05_06_07_steer frames 578 s 106.467 -> 262.003 coins 1330 -> 1500
+> [1]+  Done                    ( timeout 3000 node tools/paint/clip.mjs --q=paint=1 --from=106 --to=262 --tag=NEW_05_06_07_straight 2>&1 | tail -1 )
+> 
+> [exited with code 0]
+> == NEW_05_06_07_straight
+> 05 {'frames': 198, 'px20_median': 40.9, 'px20_min': 19.6, 'look20_median': 53.5, 'look20_min': 28.4}
+> 06k0 {'frames': 83, 'px20_median': 32.2, 'px20_min': 10.5, 'look20_median': 44.7, 'look20_min': 14.0}
+> 06k1 {'frames': 60, 'px20_median': 43.0, 'px20_min': 11.5, 'look20_median': 60.7, 'look20_min': 18.6}
+> 06k2 {'frames': 60, 'px20_median': 52.8, 'px20_min': 12.6, 'look20_median': 70.2, 'look20_min': 17.4}
+> 06k3 {'frames': 56, 'px20_median': 47.1, 'px20_min': 19.5, 'look20_median': 66.6, 'look20_min': 27.6}
+> 06k4 {'frames': 47, 'px20_median': 51.6, 'px20_min': 37.3, 'look20_median': 72.2, 'look20_min': 54.6}
+> == NEW_05_06_07_steer
+> 05 {'frames': 198, 'px20_median': 27.5, 'px20_min': 12.2, 'look20_median': 37.0, 'look20_min': 15.2}
+> 06k0 {'frames': 83, 'px20_median': 23.7, 'px20_min': 8.3, 'look20_median': 34.6, 'look20_min': 10.2}
+> 06k1 {'frames': 60, 'px20_m …[+768 chars]
+
+### 🤖 Claude — 2026-11-21T01:50:09.285Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='src/world/paint.ts'; s=open(p).read()\nold=\"\"\"export async function buildPaint(course: Course, coins: { defs: CoinDef[]; collected: Uint8Array }) {\"\"\"\nnew=\"\"\"const qn = (k: string, d: number) => { const v = typeof location === 'undefined' ? null : new URLSearchParams(location.search).get(k); return v !== null && v !== '' && isFinite(+v) ? +v : d; };\n/** `&paintpush=<f>`: scale of the gentle forward ease (1 = as authored, 0 = scenery holds still); `&paintpan=<f>`: steering parallax */\nconst PUSH_K = qn('paintpush', 1), PAN_K = qn('paintpan', 1); …[+2309 chars]`
+
+### 🧑 User — 2026-11-21T01:50:09.336Z
+
+> ↩︎ result: Command running in background with ID: bi48vwtgx. Output is being written to: /tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/tasks/bi48vwtgx.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-21T01:50:12.262Z
+
+While that records, I'm moving the earlier temporary frame folders out of the project. The videos and measurements stay saved.
+
+### 🤖 Claude — 2026-11-21T01:50:14.076Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/frames && mkdir -p $SP && for d in qa/match/05/paint05/clip/frames_*; do mv \"$d\" $SP/; done; ls $SP; ls qa/match/05/paint05/clip/; git status --short | grep -c '^ D'", "description": "Move the old frame folders out of the project"}`
+
+### 🧑 User — 2026-11-21T01:50:14.316Z
+
+> ↩︎ result: frames_BEFORE_05_06_07_straight
+> frames_NEW_05_06_07_steer
+> frames_NEW_05_06_07_straight
+> frames_NEW_05_straight
+> frames_NEW_STILL_05_06_07_steer
+> frames_NEW_STILL_05_06_07_straight
+> BEFORE_05_06_07_straight.mp4
+> NEW_05_06_07_steer.mp4
+> NEW_05_06_07_straight.mp4
+> NEW_05_straight.mp4
+> clip_BEFORE_05_06_07_straight.json
+> clip_BEFORE_05_06_07_straight_metric.json
+> clip_NEW_05_06_07_steer.json
+> clip_NEW_05_06_07_steer_metric.json
+> clip_NEW_05_06_07_straight.json
+> clip_NEW_05_06_07_straight_metric.json
+> clip_NEW_05_straight.json
+> 1814
+
+### 🤖 Claude — 2026-11-21T01:50:19.566Z
+
+> 🔧 **Bash** `{"command": "until grep -q \"NEW_STILL_05_06_07_steer frames\" /tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/tasks/bi48vwtgx.output 2>/dev/null && grep -q \"NEW_STILL_05_06_07_straight frames\" /tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/tasks/bi48vwtgx.output; do sleep 10; done; cat /tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/tasks/bi48vwtgx.output", "description": "Wait for the still-scenery recordings", "timeout": 3300000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-21T01:50:19.598Z
+
+> ↩︎ result: Command running in background with ID: belqph2wv. Output is being written to: /tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/tasks/belqph2wv.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-21T01:50:20.963Z
+
+The still-scenery recordings are running, about 10 minutes. I'll measure them as soon as they finish.
+

@@ -1,20 +1,20 @@
 {
   "last_run": {
-    "time": "2026-11-21T01:47:27+00:00",
-    "reason": "manual:stop-hook",
-    "result": "error",
-    "files_staged": 0,
-    "pushed_verified": false,
+    "time": "2026-11-21T01:47:50+00:00",
+    "reason": "manual:fix-ignore",
+    "result": "committed+pushed",
+    "files_staged": 95,
+    "pushed_verified": true,
     "branch": "ccr-4fcad20e-a6pp8w",
     "note": "following session branch 'ccr-4fcad20e-a6pp8w' (config branch 'claude/rainbow-r22-restore-ut3m39')",
-    "error": "git add failed (1): The following paths are ignored by one of your .gitignore files:\nqa/match/04/r25/clip/frames_full_BEFORE_K23-1\nqa/match/04/r25/clip/frames_full_NEW_K23-S3\nhint: Use -f if you really want to add them.\nhint: Turn this message off by running\nhint: \"git config advice.addIgnoredFile false\" [git add -- qa/match/04/r22/tools/swim_clip_pinned.mjs qa/match/04/r22_proj/PROGRESS.md qa/match/04/r22_proj/s0_cams/V4/c_middle.png qa/match/04/r22_proj/s0_cams/V4/]",
-    "duration_s": 14
+    "commit": "cd052927e15f188e11180a7b7dfbae2863b97fe1",
+    "duration_s": 22
   },
   "repo": "https://github.com/josiahscalia5-dev/rainbow-",
   "branch": "ccr-4fcad20e-a6pp8w",
-  "last_verified_remote_sha": "479daa9c596ad90d7e410b8433817d156d26edd7",
-  "last_successful_backup_utc": "2026-11-21T01:45:54+00:00",
-  "consecutive_failures": 2,
+  "last_verified_remote_sha": "cd052927e15f188e11180a7b7dfbae2863b97fe1",
+  "last_successful_backup_utc": "2026-11-21T01:47:50+00:00",
+  "consecutive_failures": 0,
   "schedule": "every 5 min, container-local (scheduler=daemon status=active pid=608); see backups/RECOVERY.md for limits",
   "next_scheduled_utc": "2026-11-21T01:50:00+00:00"
 }

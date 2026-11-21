@@ -6,7 +6,7 @@ import { loadPlaywright, CHROMIUM_ARGS, startVite } from '../../scripts/lib/pw.m
 const opt = Object.fromEntries(process.argv.slice(2).map((a) => { const [k, ...r] = a.replace(/^--/, '').split('='); return [k, r.length ? r.join('=') : true]; }));
 const [W, H] = (opt.size ?? '540x960').split('x').map(Number);
 const out = opt.out ?? 'qa/match/05/paint05/clip'; const tag = opt.tag ?? 'clip';
-const fdir = `${out}/frames_${tag}`; rmSync(fdir, { recursive: true, force: true }); mkdirSync(fdir, { recursive: true });
+const fdir = `${process.env.FRAMES_DIR ?? '/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/frames'}/frames_${tag}`; rmSync(fdir, { recursive: true, force: true }); mkdirSync(fdir, { recursive: true });
 const weave = (opt.weave ? String(opt.weave).split(',').map((p) => p.split(':').map(Number)) : []);
 const { chromium } = loadPlaywright();
 const vite = await startVite(5300 + Math.floor(Math.random() * 60));
@@ -30,7 +30,7 @@ try {
     i++; t += 1 / 30;
     if (st.s > +opt.to || i > 3000) break;
   }
-  writeFileSync(`${out}/clip_${tag}.json`, JSON.stringify({ size: [W, H], fps: 30, query: opt.q ?? '', from: +opt.from, to: +opt.to, weave, frames: log }, null, 1));
+  writeFileSync(`${out}/clip_${tag}.json`, JSON.stringify({ size: [W, H], fps: 30, query: opt.q ?? '', from: +opt.from, to: +opt.to, weave, frames_dir: fdir, frames: log }, null, 1));
   execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-framerate', '30', '-i', `${fdir}/%04d.jpg`, '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '23', '-preset', 'slow', `${out}/${tag}.mp4`]);
   console.log(tag, 'frames', i, 's', log[0].s, '->', log.at(-1).s, 'coins', log[0].coins, '->', log.at(-1).coins);
 } finally { await browser.close(); await vite.close(); }
