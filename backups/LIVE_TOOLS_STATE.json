@@ -1,6 +1,6 @@
 {
- "time_utc": "2026-11-21T14:01:57+00:00",
- "lead_branch": "ccr-c0679182-krbfci",
+ "time_utc": "2026-11-21T14:25:45+00:00",
+ "lead_branch": "ccr-81d66c17-i0ooo8",
  "specialists_sha256_16": {
   "android-build-performance": "b0c45161860a960c",
   "animation-and-gameplay-engineer": "c48094c3ed3d22e7",
@@ -49,35 +49,27 @@
    }
   }
  },
- "plugins_installed_locally": [
-  "worldlabs@worldlabs"
- ],
- "plugins_enabled_user_settings": [
-  "worldlabs@worldlabs"
- ],
+ "plugins_installed_locally": [],
+ "plugins_enabled_user_settings": [],
  "plugins_synced_from_claude_account": [
   "Automated code review for pull requests using multiple specialized agents with confidence-",
-  "Comprehensive feature development workflow with specialized agents for codebase exploratio",
   "Frontend design skill for UI/UX implementation",
+  "Comprehensive feature development workflow with specialized agents for codebase exploratio",
+  "Generate and edit explorable 3D Gaussian-splat worlds from a text prompt, image, 360 panor",
   "Accelerate design workflows \u2014 critique, design system management, UX writing, accessibilit",
-  "Analyze codebases and recommend tailored Claude Code automations such as hooks, skills, MC",
   "Core skills library for Claude Code: TDD, debugging, collaboration patterns, and proven te",
-  "Browser automation and end-to-end testing MCP server by Microsoft. Enables Claude to inter",
   "Upstash Context7 MCP server for up-to-date documentation lookup. Connects to Context7's ho"
  ],
  "plugins_synced_from_claude_account_names": [
-  "claude-code-setup",
   "code-review",
   "context7",
   "design",
   "feature-dev",
   "frontend-design",
-  "playwright",
+  "spaitial-ai",
   "superpowers"
  ],
- "mcp_servers_configured": [
-  "worldlabs"
- ],
+ "mcp_servers_configured": [],
  "hooks_project": [
   "PreCompact",
   "SessionEnd",
