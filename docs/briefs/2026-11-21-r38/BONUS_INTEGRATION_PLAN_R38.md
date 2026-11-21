@@ -1,0 +1,55 @@
+# Round 38 (2026-11-21 ~23:55 UTC) — PLAN ONLY: two bonus areas (Bubble Dash Chamber, Sock Rescue) — WAITING FOR THE USER'S APPROVAL
+
+User's order (verbatim excerpts): "I have two new Rainbow gameplay artwork ideas … Bubble Dash: Foam Tunnel Adventure and Laundry Tunnel: Sock
+Rescue … additional design candidates. Do not replace, redesign, or overwrite any of my original approved Screens 01–11 without my explicit
+approval … USE MY ORIGINAL PINK BENNY IN BOTH SCREENS … please first propose where these two environments could fit as optional bonus
+gameplay areas without disrupting the existing 11-screen progression. Then identify which existing Three.js assets, character models, water
+shaders, and gameplay systems can be reused … Test a short playable section before reconstructing both environments fully. Do not start
+building or spending generation credits until I approve the integration plan."
+
+Candidate artwork (NOT approved screens; the 13 protected references are untouched, `sha256sum -c scripts/reference.sha256` OK):
+* `references/candidates/bonus_sock_rescue_laundry_tunnel.webp` (941 x 1672)
+* `references/candidates/bonus_bubble_dash_chamber.webp` (941 x 1672)
+Both pictures already show the pink Benny (pink fur, striped purple / white hat, pom-pom, yellow star); no yellow character is in these two files.
+
+## Placement (proposal)
+| area | where | why it fits |
+|---|---|---|
+| Bubble Dash Chamber | between 04 and 05 | 04's approved picture already has the pink laundry machinery (shirt-icon machine) around a golden tunnel; the new picture's golden arch opens into a purple perforated tube = 05's tunnel (the picture is even captioned "05 · FLOW INTO THE CURRENT"). Benny lands from 04's arrow slide in the pink chamber, swims past the waterfalls and foam, and enters 05 through the arch. Indoor machine room only, no outdoor world. |
+| Sock Rescue | between 06 and 07 | purple perforated tube with gold rings and drum lifters = the washer tube family of 05 / 07; it reads as the first stretch of the washer tube where lost socks drift, before 07's tube and its plunge into 08. |
+How "optional": phase 2 inserts them behind a switch (`?bonus=1`), default route unchanged. A true in-play choice (a side gate at a fork that
+rejoins the main river) is phase 3 and needs a second path + fork logic; only if the user wants it.
+
+## HUD (consistency)
+Keep the existing HUD (hearts 5/5 +, coins, pause, title pill). Leave out the pictures' gem counters (28 vs 36: inconsistent, not in the game),
+the "+" on coins and the Bubble Blast / Turbo Spin buttons unless the user asks for them game-wide. Title pill: "BONUS · BUBBLE DASH CHAMBER"
+(not "05 ·"). The sock banner ("Rescue 5 lost socks" + 5 sock slots) only while Sock Rescue is active, in place of the title pill.
+
+## Reuse (existing, verified in the repo)
+* Benny: `assets/models/benny31.glb` + `assets/textures/benny31/bake.png`, paddling / kick / bob vertex shader (`tools/kit05/kitgame.html`).
+* Controls: `tools/kit05/controls.js` (lanes, leap, dive, coin hits; round 37: next-frame swipe response, lane in 0.27 s); main game
+  `src/gameplay/input.ts`, `coins.ts`.
+* Swim effects: `tools/kit05/swimfx.js` (foam collar, bubble trails, ripples), splash / bubble / glint sprites; main game `src/vfx/`.
+* Water: round-37 live river material (`w37` in `kitgame.html`): drawn in river space, sharp at every distance, follows any path, colours
+  measured from the user's water art -> the same water in both areas and in 04-10.
+* Tunnel: kit tunnel geometry (ring sections + walls) + round-37 option-C code materials (canvas walls, gold rings, 3D paddles) -> Sock
+  Rescue tube with round holes and silver lifters, the Bubble Dash arch.
+* Course: `src/world/course.ts` (one Catmull-Rom route, stage ranges, `validateContinuity()`), HUD `src/ui/hud.ts`, phone mode
+  `tools/kit05/live.js` + `build_phone.sh`, QA `swim_check.cjs`, `s1_stills.cjs`, `tools/kit05/qa/`.
+
+## New pieces (all free: code + local Blender 5.3; no generation credits)
+Bubble Dash: pink perforated chamber walls (canvas, round holes), gold / purple pipes (tube geometry), two gold pipe mouths with animated
+waterfalls + splash, foam-topped tank with a shirt label, gold light arch into the tube, extra big bubbles.
+Sock Rescue: lavender-purple perforated tube with round holes, gold rings with light panels, silver drum lifters, purple and pink towels on gold
+rails (Blender draped cloth or code), 5 floating socks (white with pink heel / toe, heart) as pickups + mission counter, chevron boost strip.
+Paid models (Thrixel / Meshy) only if the user asks, with the cost named first.
+
+## Honest limits
+Each picture is one viewpoint; as with Screen 05 the areas are built as real 3D scenery styled after the pictures (not the pictures projected):
+close in look, not pixel-identical. Real Android frame rate not measurable here (no GPU). Screen 05's A / B / C choice is still open; the bonus
+areas would use the B-style live water unless the user decides otherwise.
+
+## Test after approval
+One short playable section per area (~8-10 s, real swipes, coins / socks), on the kit test page, default game untouched: APPROVED-CANDIDATE |
+NEW stills (start + in motion), clips, private phone link. Suggested order: Sock Rescue first (most reuse), then Bubble Dash (chamber -> tunnel
+hand-over). Full build and main-course integration only after the user approves the tests.
