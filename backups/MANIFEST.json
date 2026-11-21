@@ -794,7 +794,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 26067,
-   "sha256": "42f9eb5a12ef7d17ac82d58397b53089a17a8e44b11303f704356bc4baaae787"
+   "sha256": "1a22d5cf307ca2fd41e6cdf5b1deccf5188a29e02ad08339c606a2a9c3e80bd5"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3271,
-   "sha256": "f158f6284c7709a901cb23ad585a2afd1da653aaa3ecc78c9e5d3438d6194071"
+   "sha256": "01a4cff5e6a5c1c073084f135ce506da31bbf4dc54e831d21772dba6af571237"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -7734,7 +7734,7 @@
   {
    "path": "backups/wip/screen05-agents/LAST_SYNC_UTC",
    "bytes": 33,
-   "sha256": "7975c10dd5a71bac1db993dfded5bf8210f9ca3cae18d4792b31ae33b0250740"
+   "sha256": "8a7fea1771d80dea04305e97b9ce5b9bb1f38c8defaa475383dd40673b349801"
   },
   {
    "path": "backups/wip/screen05-agents/WORKSPACE",
@@ -8947,6 +8947,11 @@
    "sha256": "b882535d1889ffa42a385c3a15ff9460272811a3d48db783e2e372fb56a4ddea"
   },
   {
+   "path": "backups/wip/screen05-agents/agentB/out_water/budget_after_full_r32c.json",
+   "bytes": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
    "path": "backups/wip/screen05-agents/agentB/out_water/budget_before.json",
    "bytes": 233,
    "sha256": "b18353b0e2cd22fe916c5d404af56ac54585744067e3e21d598ecaf984e71a6a"
@@ -9503,8 +9508,8 @@
   },
   {
    "path": "backups/wip/screen05-agents/agentB/play3.html",
-   "bytes": 24423,
-   "sha256": "ad04a7f1c8ddb735e877e1d9be0724d459a01ab2c6769978bc97a17dd2067796"
+   "bytes": 24998,
+   "sha256": "c8b95be10c425f7c373d9fc1b62bb0d3629dad15d66098401961eeb940463b7f"
   },
   {
    "path": "backups/wip/screen05-agents/agentB/play3_orig.html",
@@ -9728,8 +9733,8 @@
   },
   {
    "path": "backups/wip/screen05-agents/agentB/waterflow.js",
-   "bytes": 7254,
-   "sha256": "8c4f6087a917a6b4b2e88adbaba512cbdf832225c2de3ef86f78f1c92799eb2b"
+   "bytes": 7346,
+   "sha256": "3f745873d24ec6136ced0331431d785bf2e53a0d9fb8ddf13133620d82a4ae27"
   },
   {
    "path": "backups/wip/screen05-agents/lead/acceptance_verdict.py",

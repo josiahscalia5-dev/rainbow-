@@ -2712,3 +2712,331 @@ Please keep correcting Screen 05 until it genuinely meets my visual and gameplay
 
 My approved artwork is the design. Your job is to make that exact design come alive as a real playable 3D game.
 
+### 🤖 Claude — 2026-11-21T13:51:44.206Z
+
+Understood: your approved picture is the design, and my job is to make that exact design playable, not to reinterpret it. Before deciding how, I'm checking what each earlier Screen 05 approach actually achieved against your picture, and why round 32 switched to the 3D-reconstruction (splat) world.
+
+### 🤖 Claude — 2026-11-21T13:51:45.009Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,60p docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md | cut -c1-600", "description": "Read the newest handoff section"}`
+
+### 🧑 User — 2026-11-21T13:51:45.062Z
+
+> ↩︎ result: # ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 32c (2026-11-21 ~12:45 UTC, branch `claude/screen-05-3d-geometry-9yu7pu`)
+> Screen 05 real 3D swimming test in progress: Marble splat world of the approved picture → full-length ring-to-ring track (river mirrored in alternate
+> sections), real 3D Benny, follow camera; two specialists (swipe controls; water flow + dark-gap cleanup) were running. Everything to continue:
+> **`docs/briefs/2026-11-21-r32/RESUME_R32.md`** (state + next steps), `USER_R32.md` (binding orders: no video until every acceptance test passes;
+> no other screens / credits until Screen 05 is approved), `setup_r32.sh` (one-command workspace), `AGENT_A_CONTROLS.md`, `AGENT_B_WATER.md`;
+> specialists' saved work `backups/wip/screen05-agents/`. New-account steps: TOP of `backups/START_NEW_CLAUDE_ACCOUNT.md`.
+> 
+> # ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 32 (2026-11-21 ~03:00 UTC, branch `claude/screen-05-3d-geometry-9yu7pu`)
+> 
+> User (verbatim): "THE NEW REAL 3D SCREEN 05 IS NOT APPROVED … preserve BOTH versions … Stop changing my artwork … I just want the goddamn pink
+> character to swim around my approved screen … I want my exact approved screen. You had it before. Stop changing it …[+5350 chars]
+
+### 🤖 Claude — 2026-11-21T13:51:56.561Z
+
+> 🔧 **Bash** `{"command": "ls qa/match/05/r31_3d/ 2>/dev/null | head; sed -n 1,60p qa/match/05/r31_3d/README.md 2>/dev/null | cut -c1-500", "description": "Read the rejected moving-camera 3D notes"}`
+
+### 🧑 User — 2026-11-21T13:51:56.622Z
+
+> ↩︎ result: compare
+> look
+> proof
+
+### 🤖 Claude — 2026-11-21T13:51:58.621Z
+
+> 🔧 **Bash** `{"command": "ls qa/match/05/r31_3d/* | head -30; ls qa/match/05/ | head -40; sed -n 1,50p qa/match/05/paint05/README.md | cut -c1-400", "description": "List Screen 05 match folders and read paint05 notes"}`
+
+### 🧑 User — 2026-11-21T13:51:58.669Z
+
+> ↩︎ result: qa/match/05/r31_3d/compare:
+> BEFORE_s132.44.png
+> BEFORE_s150.png
+> BEFORE_s170.png
+> BEFORE_s186.png
+> BEFORE_stills.json
+> CMP_132.44.jpg
+> CMP_150.jpg
+> CMP_170.jpg
+> CMP_186.jpg
+> NEW3D_s132.44.png
+> NEW3D_s150.png
+> NEW3D_s170.png
+> NEW3D_s186.png
+> NEW3D_stills.json
+> PAINT_s132.44.png
+> PAINT_s150.png
+> PAINT_s170.png
+> PAINT_s186.png
+> PAINT_stills.json
+> compare.json
+> 
+> qa/match/05/r31_3d/look:
+> B31_s132.44.png
+> B31_s150.png
+> B31_stills.json
+> MATCH05_s132.44.png
+> MATCH05_s145.png
+> MATCH05_s160.png
+> MATCH05_s175.png
+> fly05
+> paint05
+> r27
+> r31_3d
+> r32
+> swim05
+> # Screen 05 (+ the 05 → 06 → 07 journey) — approved-artwork chain `?paint=1` (round 31, 2026-11-21, branch `ccr-4fcad20e-a6pp8w`)
+> 
+> **User order (2026-11-21, verbatim excerpt):** "continue using the approved-artwork method from Screen 06 for my remaining playable screens … 1. Screen 05 …
+> 95–98% visual likeness … Keep my original approved Benny … scenery must remain visually consistent while Benny swims forward, steers … Keep the game genuinely
+> playable … Fix visible seams, double images, ghosting, abrupt picture changes, and duplicate characters. Make collected coins disappear correctly … Make Screen
+> 05 → 06 → 07 look and feel like one continuous journey … Do not claim a 98% …[+4225 chars]
+
+### 🤖 Claude — 2026-11-21T13:52:20.300Z
+
+> 🔧 **Bash** `{"command": "cat qa/match/05/r31_3d/compare/compare.json | head -40; python3 -I -c \"\nfrom PIL import Image; im=Image.open('qa/match/05/r31_3d/compare/CMP_150.jpg'); print(im.size); im.resize((im.width*40//100, im.height*40//100)).save('/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/cmp150.jpg', quality=85)\"", "description": "Read the rejected 3D comparison numbers"}`
+
+### 🧑 User — 2026-11-21T13:52:20.473Z
+
+> ↩︎ result: {
+>  "start of Screen 05 (crest)": {
+>   "BEFORE": [
+>    8.7,
+>    9.5,
+>    56.0
+>   ],
+>   "NEW_3D": [
+>    37.8,
+>    39.0,
+>    79.9
+>   ],
+>   "PAINTED": [
+>    95.0,
+>    95.7,
+>    96.4
+>   ]
+>  },
+>  "swimming, ~1.6 s in": {
+>   "BEFORE": [
+>    5.7,
+>    6.3,
+>    55.3
+>   ],
+>   "NEW_3D": [
+>    11.1,
+>    11.9,
+>    74.6
+>   ],
+>   "PAINTED": [
+>    93.7,
+>    93.8,
+>    96.0
+>   ]
+>  },
+>  "swimming, ~3.5 s in": {
+>   "BEFORE": [
+>    5.6,
+>    5.6,
+>    55.6
+> (3516, 1632)
+
+### 🤖 Claude — 2026-11-21T13:52:22.365Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/cmp150.jpg"}`
+
+### 🧑 User — 2026-11-21T13:52:22.396Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T13:53:22.579Z
+
+> 🔧 **Bash** `{"command": "grep -rln \"colours\" tools/paint/ tools/*.py tools/*/*.py 2>/dev/null | head -5; grep -rn \"def .*look\\|colours\" tools/paint/*.py 2>/dev/null | head -10", "description": "Find the round-31 likeness metric script"}`
+
+### 🧑 User — 2026-11-21T13:53:22.641Z
+
+> ↩︎ result: tools/paint/plate_full.py
+> tools/benny31/bake.py
+> tools/blender/build_05_river_scene.py
+> tools/blender/camera_lock_05.py
+> tools/blender/marble05_projection.py
+> tools/paint/plate_full.py:76:              "iridescent soap bubbles. Vivid neon glossy cartoon 3D render, same lighting and colours. No people, no characters, no animals, "
+
+### 🤖 Claude — 2026-11-21T13:53:24.857Z
+
+> 🔧 **Bash** `{"command": "grep -rln \"look\\b\\|'look'\\|\\\"look\\\"\" tools/paint/ tools/match*/ scripts/*.py scripts/*.mjs 2>/dev/null | head -8; grep -rn \"colours\" qa/match/05/r31_3d/*.md qa/match/05/paint05/README.md 2>/dev/null | head -5", "description": "Locate the pixel/look/colours metric definition"}`
+
+### 🧑 User — 2026-11-21T13:53:24.906Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-21T13:53:26.559Z
+
+> 🔧 **Bash** `{"command": "grep -rl \"within 20\\|within_20\\|px20\" --include=*.py --include=*.mjs --include=*.cjs tools scripts 2>/dev/null | head -10", "description": "Search for the pixel likeness script"}`
+
+### 🧑 User — 2026-11-21T13:53:26.610Z
+
+> ↩︎ result: tools/proj05/water_metrics.py
+> tools/proj05/screen_regions.py
+> tools/proj05/match_metrics.py
+> tools/proj05/frame_metrics.py
+> tools/qa/screen_match.py
+> tools/lead_r6/motion_metrics.py
+> tools/imageblaster/plate_compare.py
+> tools/paint06/measure.py
+> tools/paint/frames_metric.py
+> tools/marble05/viewer/visual_check.py
+
+### 🤖 Claude — 2026-11-21T13:53:28.054Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,60p tools/paint/frames_metric.py | cut -c1-220", "description": "Read the round-31 frame metric definitions"}`
+
+### 🧑 User — 2026-11-21T13:53:28.109Z
+
+> ↩︎ result: """Likeness of EVERY gameplay frame to the approved picture for that moment (not just the matched moments).
+> Screen 05 frames vs the approved Screen 05 picture (below the HUD strip); Screen 06 frames vs the picture shown at that moment
+> (approved 06 until panel 1 is revealed, then each storyboard panel inside its own window). Two numbers per frame:
+>   px20   = pixels within 20 colour levels (strict, pixel-exact),
+>   look20 = the same after a 2-px blur of both (tolerates sub-pixel shifts / flowing sparkles: 'looks the same')
+> usage: python3 -I frames_metric.py <clip json> [out json]"""
+> import json, sys
+> import cv2, numpy as np
+> from PIL import Image
+> R = '/home/user/rainbow-'
+> clip = json.load(open(sys.argv[1])); fdir = clip.get('frames_dir') or sys.argv[1].replace('clip_', 'frames_').replace('.json', '')
+> W_, H_ = clip['size']; sc = W_ / 864
+> reg = json.load(open(f'{R}/qa/match/06/paint06/work/register.json'))
+> def ref_full(p): return cv2.resize(np.asarray(Image.open(p).convert('RGB')), (W_, H_), interpolation=cv2.INTER_AREA).astype(np.float32)
+> T05 = ref_full(f'{R}/references/05_flow_into_the_current.png'); T06 = ref_full(f'{R}/references/06_crest_the_rinse_arch.png')
+> hud = int(195 * sc)
+> panel …[+2202 chars]
+
+### 🤖 Claude — 2026-11-21T13:54:55.418Z
+
+> 🔧 **Bash** `{"command": "ls -la assets/textures/paint/ | head -30; ls -la references/water/; ls assets/models/ | head -30", "description": "Check available clean plate, water art and models"}`
+
+### 🧑 User — 2026-11-21T13:54:55.454Z
+
+> ↩︎ result: total 11632
+> drwxr-xr-x 2 root root    4096 Nov 21 12:40 .
+> drwxr-xr-x 9 root root    4096 Nov 21 12:40 ..
+> -rw-r--r-- 1 root root   38339 Nov 21 12:40 05_coin.png
+> -rw-r--r-- 1 root root 1192629 Nov 21 12:40 05k0_benny.png
+> -rw-r--r-- 1 root root   10380 Nov 21 12:40 05k0_depth.png
+> -rw-r--r-- 1 root root   10158 Nov 21 12:40 05k0_flow.png
+> -rw-r--r-- 1 root root 1808425 Nov 21 12:40 05k0_plate.jpg
+> -rw-r--r-- 1 root root   42948 Nov 21 12:40 06k0_coin.png
+> -rw-r--r-- 1 root root 1769414 Nov 21 12:40 06k0_plate.jpg
+> -rw-r--r-- 1 root root   71824 Nov 21 12:40 06k1_coin.png
+> -rw-r--r-- 1 root root 1794707 Nov 21 12:40 06k1_plate.jpg
+> -rw-r--r-- 1 root root   26510 Nov 21 12:40 06k2_coin.png
+> -rw-r--r-- 1 root root 1534353 Nov 21 12:40 06k2_plate.jpg
+> -rw-r--r-- 1 root root   27618 Nov 21 12:40 06k3_coin.png
+> -rw-r--r-- 1 root root 1738341 Nov 21 12:40 06k3_plate.jpg
+> -rw-r--r-- 1 root root   11908 Nov 21 12:40 06k4_coin.png
+> -rw-r--r-- 1 root root 1664222 Nov 21 12:40 06k4_plate.jpg
+> -rw-r--r-- 1 root root  130296 Nov 21 12:40 paint.json
+> total 1456
+> drwxr-xr-x 2 root root    4096 Nov 21 12:41 .
+> drwxr-xr-x 3 root root    4096 Nov 21 12:41 ..
+> -rw-r--r-- 1 root root 1472297 Nov 21 12:41 05_water_isolate …[+173 chars]
+
+### 🤖 Claude — 2026-11-21T13:54:56.217Z
+
+> 🔧 **Bash** `{"command": "cat assets/textures/paint/paint.json 2>/dev/null | head -40 | cut -c1-300; ls qa/pilot05/proj/ 2>/dev/null | head; ls tools/proj05/ | head -30", "description": "Inspect the painted-plate metadata and projection tools"}`
+
+### 🧑 User — 2026-11-21T13:54:56.267Z
+
+> ↩︎ result: {
+>  "frame": [
+>   864,
+>   1536
+>  ],
+>  "margin": [
+>   144,
+>   192
+>  ],
+>  "plate_frame_px": [
+>   1152,
+>   1920
+>  ],
+>  "plate_scale": 1.25,
+>  "keys": [
+>   {
+>    "id": "05k0",
+>    "screen": "05",
+>    "rest": {
+>     "mark": "05_crest",
+>     "off": 0.0
+>    },
+>    "files": {
+>     "plate": "paint/05k0_plate.jpg",
+>     "benny": "paint/05k0_benny.png",
+>     "depth": "paint/05k0_depth.png",
+>     "flow": "paint/05k0_flow.png"
+>    },
+>    "benny_frame_px": [
+>     101.6,
+>     764.0,
+>     740.8,
+>     1331.2
+>    ],
+>    "pivot": [
+>     421,
+>     1185
+>    ],
+>    "vp_frame_px": [
+>     482.4,
+> BRIEF_NEXT.md
+> BRIEF_SPECIALIST1.md
+> BRIEF_SPECIALIST1_VERBATIM.md
+> BRIEF_SPECIALIST2.md
+> NOTES.md
+> align
+> caps
+> clips
+> compare
+> feasibility
+> bake.py
+> flow_bake.py
+> frame_bake.py
+> frame_metrics.py
+> lid_blender.py
+> lid_mesh2d.py
+> make_target.py
+> match_metrics.py
+> near_bake.py
+> near_water_stats.py
+> residual.py
+> screen_regions.py
+> tunnel_bake.py
+> tunnel_common.py
+> tunnel_residual.py
+> tunnel_rings.py
+> water_metrics.py
+
+### 🤖 Claude — 2026-11-21T13:55:27.944Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad; cd $SP/merged && python3 -I - <<'EOF'\nimport json, numpy as np, cv2\nS=json.load(open('scene05.json')); T=json.load(open('track_w/track.json'))\nfwd=np.array(S['cam']['fwd']); up=np.array(S['cam']['up']); fov=np.radians(S['cam']['fov'])\nz=-fwd/np.linalg.norm(fwd); x=np.cross(up,z); x/=np.linalg.norm(x); y=np.cross(z,x); R=np.stack([x,y,z],1)\nW,H=864,1536\ndef proj(p):\n    c=R.T@p\n    if c[2]>-1e-3: return None\n    return ((c[0]/(-c[2]))/(np.tan(fov/2)*W/H)*0.5+0.5)*W, (0.5-(c[1]/(-c[2]))/np …[+1328 chars]`
+
+### 🧑 User — 2026-11-21T13:55:28.320Z
+
+> ↩︎ result: axis [-0.10879282  0.07487649 -0.99124045] XA [-0.08263954  0.20948239 -1.43791963] XB [-0.38457051  0.3681054  -3.44073836] |XB-XA| 2.0316511608908288
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T13:55:28.653Z
+
+You've hit your 5-hour limit · resets 5:40pm (UTC)
+
+### 🧑 User — 2026-11-21T13:55:54.222Z
+
+<task-notification>
+<task-id>a08dcc646e5a9494e</task-id>
+<tool-use-id>toolu_01Poyivpa4kZWB1b64zUL7Yr</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/tasks/a08dcc646e5a9494e.output</output-file>
+<status>failed</status>
+<summary>Agent "Screen 05 swipe controls (resume)" failed: Agent terminated early due to an API error: You've hit your 5-hour limit · resets 5:40pm (UTC) (error type rate_limit, HTTP 429, request id req_011ChGBsta1HQiwGaSV6UjTm, model sent to the API: claude-opus-5-5)</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once. This agent's work so far is saved. The limit resets at 5:40pm (UTC). Once its requests are accepted again, send the agent a message (SendMessage) to let it continue from where it stopped instead of starting a new agent.</note>
+<result>The 26-coin layout has no overlaps in the model. Now I'll write it into controls.js with the lead's end rule and the compromise size table.</result>
+</task-notification>
+
