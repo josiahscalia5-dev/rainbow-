@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3885,
-   "sha256": "07baca2e78a69b6f89249166eb0124e16d3381ec21c511a00eae5c08ac5e3c18"
+   "sha256": "355d92e3b0604e68220bb8857b5ed75f976613bdc72db70024fb144cd2f63455"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -2709,12 +2709,12 @@
   {
    "path": "backups/wip/claude__rainbow-s05-camera-c34/INFO.json",
    "bytes": 651,
-   "sha256": "97097284d52ed790520597d2cef8af53e9f7e792cc96097de2f1d4b14f8ed026"
+   "sha256": "3514f6753fc8234706a0e175b7d267dde9a94a094534c2b7dd47fcca3461ade6"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-camera-c34/tracked.patch",
-   "bytes": 1929,
-   "sha256": "1b19a1df1fc103299959852b3018070e8caa34da1a02105d81d58c50ff7b329b"
+   "bytes": 3334,
+   "sha256": "8f88270fce00c8deff1e1c0542071d1181eae48d525df93248a4f5f71fe4afb5"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-camera-c34/untracked/docs/briefs/2026-11-21-r34/COORDINATION_R34.md",
@@ -3163,8 +3163,8 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s05-qa-c34/INFO.json",
-   "bytes": 565,
-   "sha256": "1f32e85f86ee8eac5d12236e498e29032d59d2674a9e2714ffb7ed2dac2d53a1"
+   "bytes": 597,
+   "sha256": "9a9d0b9a10fa47de8cb22f450e7ae5871d4fd63e466e77fb967baad481838d22"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-qa-c34/untracked/docs/briefs/2026-11-21-r34/COORDINATION_R34.md",
@@ -3177,9 +3177,19 @@
    "sha256": "14e8b8d295f646ca28b26f995d919fc12ba602690832544031d3b23ec6052f04"
   },
   {
+   "path": "backups/wip/claude__rainbow-s05-qa-c34/untracked/tools/kit05/qa/qa_play.cjs",
+   "bytes": 22777,
+   "sha256": "80a2465b707569d1ec4d62a317d9d6332e091c40c7515aaedf8386db098847a2"
+  },
+  {
    "path": "backups/wip/claude__rainbow-s05-swim-c34/INFO.json",
-   "bytes": 607,
-   "sha256": "5338527a77339431e270502f675d083d790f750efb6b112c339aaadec8a23e61"
+   "bytes": 664,
+   "sha256": "287637df7da645c3b5777225afec87832d09fe0f34c13ba68619ea72b39566ef"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s05-swim-c34/tracked.patch",
+   "bytes": 11067,
+   "sha256": "eb47ab66700668fa8b5ff601c626783b685804b5af3a8a146c6de278d49dcd32"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-swim-c34/untracked/docs/briefs/2026-11-21-r34/COORDINATION_R34.md",
@@ -3197,9 +3207,19 @@
    "sha256": "e60c8f7c6a386ab917c6e898f269db6f48de3d1bf36b2499ef94e63708886cb8"
   },
   {
+   "path": "backups/wip/claude__rainbow-s05-swim-c34/untracked/tools/kit05/swimfx.js",
+   "bytes": 11959,
+   "sha256": "5b29ca1957bd1a4815e097a7f5c297161ffc26324bdb1891af73cdbf9c3ee41e"
+  },
+  {
    "path": "backups/wip/claude__rainbow-s05-visual-c34/INFO.json",
-   "bytes": 1068,
-   "sha256": "b1ea8a93ab4aa957d36d07fcb1141b6694ca899bb3b034803c543d185b97a945"
+   "bytes": 1128,
+   "sha256": "797853b5b555c73f1cdc7626fa6f094f2dd69986f09426281dfcac9855ede600"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s05-visual-c34/tracked.patch",
+   "bytes": 7111,
+   "sha256": "558c3823f1f69460219b891bef930f1cfa6948b01b17cafee2147b335021e541"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-visual-c34/untracked/docs/briefs/2026-11-21-r34/COORDINATION_R34.md",
@@ -6848,13 +6868,18 @@
   },
   {
    "path": "backups/wip/claude__rainbow-screen-builder-c34/INFO.json",
-   "bytes": 718,
-   "sha256": "27076d43f1e38eaba6a9386ee75c22eaa1c7ed49b408ba69dfde303154a39843"
+   "bytes": 792,
+   "sha256": "a1ff9528d98a3de7c67c3fc26d0aab45bb03d42df0026da2fa599d0ef925c2fd"
   },
   {
    "path": "backups/wip/claude__rainbow-screen-builder-c34/untracked/.claude/skills/rainbow-screen-builder/scripts/analyze_reference.py",
-   "bytes": 18234,
-   "sha256": "3de52159c2c4f84bcd76724ccd2d5353b7e478271d3e684af1f58dcf63195b60"
+   "bytes": 22045,
+   "sha256": "60452f41243d2a33662208826894fb42e5764b5274c0dc5298c0187526017da0"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-screen-builder-c34/untracked/.claude/skills/rainbow-screen-builder/scripts/compare_to_approved.py",
+   "bytes": 12312,
+   "sha256": "0f1b5c1cddf5e3c34af110f84b19d16ee7db014ae9c1d5bfb55e1773f926826b"
   },
   {
    "path": "backups/wip/claude__rainbow-screen-builder-c34/untracked/docs/briefs/2026-11-21-r34/COORDINATION_R34.md",
@@ -7889,7 +7914,7 @@
   {
    "path": "backups/wip/screen05-agents/LAST_SYNC_UTC",
    "bytes": 33,
-   "sha256": "7459d255eaa62e9535fd4b85478201c12e37a942601e16554305682b10f7eeb5"
+   "sha256": "4b96edbc3d6dd847adf41f8ca9a979310a1ffaa17d04a26ec477ed9f39fc966a"
   },
   {
    "path": "backups/wip/screen05-agents/WORKSPACE",
@@ -15790,6 +15815,61 @@
    "path": "qa/kit05/r33/textures/wall_own.png",
    "bytes": 4389382,
    "sha256": "59b971eddb4550e108cd0a86622a5dc56c72920233ae3c1c335fd8188dfbd4bb"
+  },
+  {
+   "path": "qa/kit05/r34/lead/preview_full/README.md",
+   "bytes": 1125,
+   "sha256": "a1e815ff55e64f433f1b7690f0a0923a9294c500c84da0c9d6df79ff0d25e2f8"
+  },
+  {
+   "path": "qa/kit05/r34/lead/preview_full/contact_sheet.jpg",
+   "bytes": 236563,
+   "sha256": "2e86e9f20b9be1dd20d8a581a4367d3c6b838fe4fa48fce18aeb41cc63f0389b"
+  },
+  {
+   "path": "qa/kit05/r34/lead/preview_full/f_0000.jpg",
+   "bytes": 174537,
+   "sha256": "3857b4a8367e1ca889cd0abb89c6248d63e314e4bcd35b17b2d617861f05002c"
+  },
+  {
+   "path": "qa/kit05/r34/lead/preview_full/f_0120.jpg",
+   "bytes": 160812,
+   "sha256": "33113ac6bfdbccbaccc6b834135443c5056c95818416181f6c777d1565902150"
+  },
+  {
+   "path": "qa/kit05/r34/lead/preview_full/f_0280.jpg",
+   "bytes": 176892,
+   "sha256": "eb766cf5f50a997540dccd6228e71f4ef4d16ae680c7607884082aebc96af6f0"
+  },
+  {
+   "path": "qa/kit05/r34/lead/preview_full/f_0420.jpg",
+   "bytes": 167384,
+   "sha256": "69f46eb8ad6ff35b799f77db97cf443befdba06aa8761908e81fc5019e90ee37"
+  },
+  {
+   "path": "qa/kit05/r34/lead/preview_full/f_0560.jpg",
+   "bytes": 171102,
+   "sha256": "113bc9b48c0503acad0b3f2dfc507bdd404323d9219c1e7216ab384009f01947"
+  },
+  {
+   "path": "qa/kit05/r34/lead/preview_full/f_0650.jpg",
+   "bytes": 171110,
+   "sha256": "3298dbb829ea92ed56f4c479b5243bff8c557e9894f2af1f40b57b96d52dedcc"
+  },
+  {
+   "path": "qa/kit05/r34/lead/preview_full/plan.json",
+   "bytes": 6202,
+   "sha256": "798736f20dfcee238e9c75660057569131b5d6c461b9737ad7c6a6a7e36fe9d8"
+  },
+  {
+   "path": "qa/kit05/r34/lead/preview_full/screen05_preview_whole_level.mp4",
+   "bytes": 18427905,
+   "sha256": "8a30b0722e8082f4b7d84b8c933420336e56d04883a236e1ed802c5a6ae5035f"
+  },
+  {
+   "path": "qa/kit05/r34/lead/preview_full/test_results.json",
+   "bytes": 4976,
+   "sha256": "cca0da8ca09d553d3c14a8b7a9a766afba49a8a3cf9304c0e2266f3b0d1042a5"
   },
   {
    "path": "qa/lead_r5/2026-11-17/README.md",

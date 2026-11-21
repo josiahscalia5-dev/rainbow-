@@ -1,5 +1,5 @@
 diff --git a/tools/kit05/controls.js b/tools/kit05/controls.js
-index a7405a94..5372ee75 100644
+index a7405a94..7b055759 100644
 --- a/tools/kit05/controls.js
 +++ b/tools/kit05/controls.js
 @@ -4,20 +4,38 @@
@@ -121,17 +121,116 @@ index a7405a94..5372ee75 100644
 -      S.lane = nl; S.busyUntil = S.clock + P.LANE_BUSY; return;
 +      if (nl === S.lane) { S.pomSide.v += (dir === 'left' ? 1 : -1) * 1.2; return 'edge'; } // at the river edge: only a little wobble
 +      S.lane = nl; return S.move ? 'lane (' + S.move.kind + ')' : 'lane';
-+    }
+     }
+-    S.move = { kind: dir === 'up' ? 'leap' : 'dive', t0: S.clock, fx: 0 };
 +    const m = S.move;
 +    if (!m) { if (dir === 'up') startLeap(); else startDive(S.hm, S.vm); return dir === 'up' ? 'leap' : 'dive'; }
 +    if (m.kind === 'leap' && dir === 'down') { startDive(S.hm, S.vm); return 'dive from the air'; }
 +    if (m.kind === 'dive' && dir === 'up') {   // swim up now and leap out: rising speed at the surface = the leap's take-off speed
 +      const cur = moveAt(m, S.clock - m.t0), T = cur.seg.name === 'up' ? Math.max(0.12, cur.seg.T - cur.kSeg) : P.DIVE_UP;
 +      S.move = { kind: 'dive', t0: S.clock, segs: [{ name: 'up', T, p0: S.hm, m0: S.vm, p1: 0, m1: LEAP_V0 }], thenLeap: true }; return 'leap out of the dive';
-     }
--    S.move = { kind: dir === 'up' ? 'leap' : 'dive', t0: S.clock, fx: 0 };
++    }
 +    if (moveLeft(m) <= P.V_BUFFER) { S.queued = dir; return 'buffered'; }   // same kind again near its end: starts on landing / resurfacing
 +    return 'ignored';
    }
  
    // ---------------- coin trail (round 32b): ONE single-file trail of 26 coins, HUD 1,420 -> 1,680 when all are collected ----------------
+@@ -189,7 +239,7 @@ export function installControls(ctx) {
+   const fxSplash = [];
+   for (let i = 0; i < 3; i++) { const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: splashTex, toneMapped: false, transparent: true, depthWrite: false })); sp.renderOrder = 5; sp.visible = false; scene.add(sp); fxSplash.push({ sp, t0: -1, size: 1 }); }
+   const drops = [];
+-  for (let i = 0; i < 36; i++) { const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: bubTex, toneMapped: false, transparent: true, depthWrite: false })); sp.renderOrder = 8; sp.visible = false; scene.add(sp); drops.push({ sp, life: 0, age: 0, p: new THREE.Vector3(), v: new THREE.Vector3(), size: 0.03, g: 0 }); }
++  for (let i = 0; i < 64; i++) { const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: bubTex, toneMapped: false, transparent: true, depthWrite: false })); sp.renderOrder = 8; sp.visible = false; scene.add(sp); drops.push({ sp, life: 0, age: 0, p: new THREE.Vector3(), v: new THREE.Vector3(), size: 0.03, g: 0 }); }
+   let rs = 987654; const rnd = () => ((rs = (rs * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff);
+   let dropNext = 0;
+   const spawnDrop = (p, v, size, life, gravity) => { const d = drops[dropNext]; dropNext = (dropNext + 1) % drops.length; d.p.copy(p); d.v.copy(v); d.size = size; d.life = life; d.age = 0; d.g = gravity; d.sp.visible = true; };
+@@ -251,43 +301,62 @@ export function installControls(ctx) {
+   function update(t, dt) {
+     // own game clock = sum of dt: move timers stay consistent even if a caller's t jumps (frame hitch, paused tab, clamped dt)
+     S.clock += dt > 0 ? dt : 0;
+-    // finished moves -> start the queued one
+-    if (S.move) {
+-      const k = S.clock - S.move.t0;
+-      if (S.move.kind === 'leap' && k >= P.LEAP_T) { S.move = null; S.landing = true; }
+-      else if (S.move.kind === 'dive' && k >= DIVE_T) S.move = null;
+-    }
+-    if (!S.move && S.queued && S.clock >= S.busyUntil) { const d = S.queued; S.queued = null; start(d); }
+     if (!S.done && getS() >= S_DONE) { S.done = true; S.sStop = Math.max(getS(), Math.min(getS() + P.GLIDE, TEND)); } // level end: stays true
+ 
+-    // lanes: critically damped spring toward the lane centre
+-    const vPrev = S.lat.v;
+-    cds(S.lat, S.lane * P.LANE, P.LANE_OMEGA, dt); S.lat.x = clamp(S.lat.x, -P.LAT_MAX, P.LAT_MAX);
++    // lanes: critically damped spring toward the lane centre; a new swipe only moves the target, so position AND speed stay
++    // continuous (a reversal decelerates and comes back, never snaps); speed capped so no step exceeds LAT_VMAX / 30 per frame
++    const vPrev = S.lat.v, xPrev = S.lat.x;
++    cds(S.lat, S.lane * P.LANE, P.LANE_OMEGA, dt);
++    if (dt > 0 && Math.abs(S.lat.x - xPrev) > P.LAT_VMAX * dt) { S.lat.x = xPrev + Math.sign(S.lat.x - xPrev) * P.LAT_VMAX * dt; S.lat.v = clamp(S.lat.v, -P.LAT_VMAX, P.LAT_VMAX); }
++    S.lat.x = clamp(S.lat.x, -P.LAT_MAX, P.LAT_MAX);
+     S.alat = dt > 0 ? (S.lat.v - vPrev) / dt : 0;
+ 
+-    // vertical: leap arc (ballistic parabola) / dive (smooth sink, hold, resurface)
+-    const hPrev = S.h, vhPrev = S.vh; let h = 0, tuck = 0;
+-    if (S.move && S.move.kind === 'leap') {
+-      const tau = clamp((S.clock - S.move.t0) / P.LEAP_T, 0, 1);
+-      h = LEAP_H * 4 * tau * (1 - tau); tuck = Math.sin(Math.PI * tau) ** 2;
+-    } else if (S.move && S.move.kind === 'dive') {
+-      const k = S.clock - S.move.t0;
+-      h = -DIVE_D * (smooth(0, P.DIVE_DOWN, k) - smooth(P.DIVE_DOWN + P.DIVE_HOLD, DIVE_T, k));
+-    }
++    // vertical: the current move's height segment + the buoyancy bob; finished moves hand over to the next one
++    const hPrev = S.h, vhPrev = S.vh, hmPrev = S.hm; let tuck = 0;
++    if (S.move) {
++      let cur = moveAt(S.move, S.clock - S.move.t0);
++      if (cur.over) {
++        const m = S.move, last = m.segs[m.segs.length - 1]; S.move = null;
++        if (m.kind === 'leap') { S.bob.v -= LEAP_V0 * P.LAND_BOB; }                // landing: a buoyant dip
++        else if (m.thenLeap) { startLeap(); S.move.t0 -= S.clock - m.t0 - last.T; }  // swim up -> leap out (leap clock continues)
++        else S.bob.v += last.m1;                                                     // resurfacing: pops up a little and settles
++        if (!S.move && S.queued) { const d = S.queued; S.queued = null; start(d); }
++        cur = S.move ? moveAt(S.move, S.clock - S.move.t0) : { h: 0 };
++      }
++      S.hm = cur.h;
++      if (S.move && S.move.kind === 'leap') { const tau = clamp((S.clock - S.move.t0) / P.LEAP_T, 0, 1); tuck = Math.sin(Math.PI * tau) ** 2; }
++    } else S.hm = 0;
++    if (S.queued && !S.move) S.queued = null;
++    S.vm = dt > 0 ? (S.hm - hmPrev) / dt : 0;
++    dspring(S.bob, P.BOB_OMEGA, P.BOB_ZETA, 0, dt); S.bob.x = clamp(S.bob.x, -0.09, 0.09);
++    let h = S.hm + S.bob.x;
++    if (dt > 0 && Math.abs(h - hPrev) > P.VV_MAX * 1.02 * dt) h = hPrev + Math.sign(h - hPrev) * P.VV_MAX * 1.02 * dt;   // safety cap only
+     S.h = h; S.vh = dt > 0 ? (h - hPrev) / dt : 0; S.ah = dt > 0 ? (S.vh - vhPrev) / dt : 0;
+-    S.diveK = clamp(-h / (DIVE_D * 0.5), 0, 1);
++    S.diveK = clamp(-h / (DIVE_D * 0.5), 0, 1); S.tuck = tuck;
++    // water-surface events for the splashes: take-off / landing (through +0.02) and going under / resurfacing (through -0.02)
++    if (dt > 0) {
++      let ev = null;
++      if (hPrev <= 0.02 && h > 0.02 && S.vh > 0.6) ev = 'takeoff'; else if (hPrev > 0.02 && h <= 0.02 && S.vh < -0.5) ev = 'landing';
++      else if (hPrev > -0.02 && h <= -0.02 && S.vh < -0.4) ev = 'submerge'; else if (hPrev <= -0.02 && h > -0.02 && S.vh > 0.3) ev = 'surface';
++      if (ev && S.clock - S.lastEv > 0.15) { S.events.push({ ev, v: S.vh }); S.lastEv = S.clock; }
++    }
+ 
+-    // body attitude: bank + yaw into the lateral move, nose follows the vertical speed (up on the way up, down on the way down)
+-    const vl = S.lat.v;
+-    cds(S.lean, clamp(vl * P.LEAN_K, -P.LEAN_MAX, P.LEAN_MAX), 22, dt);
++    // body attitude: bank + yaw into the lateral move (bank spring + rate limit), nose follows the vertical speed
++    const vl = S.lat.v, lPrev = S.lean.x;
++    cds(S.lean, clamp(vl * P.BANK_K, -P.BANK_MAX, P.BANK_MAX), P.BANK_OMEGA, dt);
++    if (dt > 0 && Math.abs(S.lean.x - lPrev) > P.BANK_RATE * dt) { S.lean.x = lPrev + Math.sign(S.lean.x - lPrev) * P.BANK_RATE * dt; S.lean.v = (S.lean.x - lPrev) / dt; }
+     cds(S.yaw, clamp(-vl * P.YAW_K, -0.2, 0.2), 18, dt);
+     cds(S.pitch, clamp(S.vh * P.PITCH_K, -P.PITCH_MAX, P.PITCH_MAX), 14, dt);
+ 
+-    // paddling: faster while changing lanes or diving, arms tucked at the top of a leap
+-    const latK = clamp(Math.abs(vl) / 1.0, 0, 1);
+-    S.swimClock += dt * (1 + P.PADDLE_BOOST * latK + 0.35 * S.diveK);
++    // paddling: alternating paws (shader phase = swimClock * 7.5), a little irregular so it never looks mechanical; faster while
++    // changing lanes or under water, paws tucked at the top of a leap; the kick clock runs on its own, faster rhythm
++    const latK = clamp(Math.abs(vl) / 1.0, 0, 1); S.latK = latK;
++    const irr = 1 + 0.06 * Math.sin(S.clock * 0.9) + 0.04 * Math.sin(S.clock * 2.3 + 1.0);
++    S.swimClock += dt * irr * (1 + P.PADDLE_BOOST * latK + 0.35 * S.diveK);
++    S.kickClock += dt * irr * (1 + 0.5 * latK + 0.3 * S.diveK) * (1 - 0.6 * tuck);
+     S.swim = (1 + 0.15 * latK + 0.1 * S.diveK) * (1 - 0.7 * tuck);
+-    S.roll = P.ROLL_STROKE * Math.sin(S.swimClock * 7.5) * (1 - tuck);
++    S.kickA = (1 + 0.6 * latK + 0.3 * S.diveK) * (1 - 0.6 * tuck);
++    S.roll = P.ROLL_STROKE * Math.sin(S.swimClock * 7.5) * (1 - tuck) * (1 - 0.6 * latK);
+ 
+     // pom-pom inertia: lags behind lateral and vertical accelerations, settles with a little wobble
+     dspring(S.pomSide, 9, 0.32, clamp(S.alat, -80, 80) * 0.6, dt); S.pomSide.x = clamp(S.pomSide.x, -0.5, 0.5);
