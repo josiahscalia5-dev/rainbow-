@@ -4923,3 +4923,46 @@ If we can reach roughly 94–95% visual likeness during actual gameplay with smo
 
 Please preserve my original artwork and all successful game versions.
 
+### 🤖 Claude — 2026-11-21T11:22:32.448Z
+
+I can't promise 94–95% likeness across the whole level in real forward gameplay with nothing repeated. Here's why, and the one way I think gets close.
+
+**Echo-2, judged by real forward movement:** the same limit as Marble. It's sharp for the first 2–3 seconds of swimming, then the river smears. On its own, it can't carry a whole level. That's true of every tool we've tried (Marble, Marble Plus, Echo-2), because each one builds the world from your single picture.
+
+**How Subway Surfers actually does it:** the level is built from a handful of track pieces that keep coming back in different orders. Players don't notice, because there's variety and you're moving fast. That's the only way I can see to keep your Screen 05 sharp for the entire level:
+- Cut the sharp first stretch, ring to ring, out of the worlds you already have: Echo-2 and Marble, plus mirrored versions. That gives about 4 different pieces, so no piece follows itself.
+- Benny swims through them with the follow-camera, paddling, steering and leaning, at normal speed, from the start of Screen 05 into Screen 06.
+- For a real 3D handoff, Screen 06 needs its own Echo-2 world from your approved 06 picture. That's 160 of your free SpAItial credits, no cash.
+
+**What I can't promise:**
+- **Likeness:** 94–95% isn't something I can promise. My honest expectation is that it clearly looks like your tunnel and colours, slightly softer and less glowy than your painting.
+- **Repeats:** pieces will come back every few rings, just in varied order.
+- **Joins:** where pieces from different worlds meet, a colour or shape difference may show. I'll match the colours as closely as I can.
+- **Render time:** this machine renders the 3D world slowly, so the full Screen 05 → 06 recording will take several hours to produce.
+
+Your original artwork and every saved version stay untouched either way.
+
+Should I build it, including the Screen 06 Echo-2 world (160 free credits)?
+
+### 🧑 User — 2026-11-21T11:22:32.517Z
+
+Stop hook feedback:
+[command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+
+### 🤖 Claude — 2026-11-21T11:22:36.528Z
+
+> 🔧 **Bash** `{"command": "git status --short | head -8; git add -A backups/CONVERSATION_INDEX.md backups/claude-sessions qa/spaitial qa/worldlabs tools 2>/dev/null; git commit -q -m \"autosave: session transcript and Screen 05 test notes\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01DSgRGpB51Z1jjYL78aQFZJ\" 2>&1 | tail -1; for i in 1 2 3; do timeout 300 git push -u origin claude/screen-05-3d-geometry-9yu7pu 2>&1 | tail -1 && break; sleep 5; done; git rev-parse HEAD; timeout 30 git ls-remote origin refs/heads/claude/screen-05-3d-geometry-9yu7pu; …[+103 chars]`
+
+### 🧑 User — 2026-11-21T11:22:37.756Z
+
+> ↩︎ result: nothing to commit, working tree clean
+> branch 'claude/screen-05-3d-geometry-9yu7pu' set up to track 'origin/claude/screen-05-3d-geometry-9yu7pu'.
+> c7f96ac62bcda2148d09d8d707a42680ee88e5a6
+> c7f96ac62bcda2148d09d8d707a42680ee88e5a6	refs/heads/claude/screen-05-3d-geometry-9yu7pu
+
+### 🤖 Claude — 2026-11-21T11:22:39.220Z
+
+All saved and pushed: GitHub shows the same commit as this session (`c7f96ac`), and nothing is left unsaved.
+
+I haven't started on your Screen 05 → 06 level. Building it from mixed track pieces, plus the Screen 06 Echo-2 world for 160 free SpAItial credits, still needs your yes.
+
