@@ -794,7 +794,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 26528,
-   "sha256": "249484f910b1110ec0d5fe7c39f8742a98f0882e5eea6a2119cd544241f29bc0"
+   "sha256": "cf9fe4f3ba826a0215427373f7bcdfbdecdddfd9a1f0fa9a0d7ac6561e624ed9"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3153,
-   "sha256": "fce001905de362ea05b5aaf01f71108301c02aa146bd83cbea86ebcbec2ce0ca"
+   "sha256": "cdd3b9e02c0e5a0650ee757673954ad654c5538986470cdd2c8222f2f8b9f7f1"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -7734,7 +7734,7 @@
   {
    "path": "backups/wip/screen05-agents/LAST_SYNC_UTC",
    "bytes": 33,
-   "sha256": "5c59cec618ba596f75862a0b6d307340315b08a74eb149b4da931bf47d5428d4"
+   "sha256": "5b553a113131a24b795817fd21673e442465197545d6ea093bc7472de76da396"
   },
   {
    "path": "backups/wip/screen05-agents/WORKSPACE",
@@ -11085,6 +11085,11 @@
    "path": "docs/briefs/2026-11-21-r32/setup_r32.sh",
    "bytes": 3649,
    "sha256": "be91c788a88af324fb60db731fef64664b8dd84ce0a0a09bd0fbd21900d12950"
+  },
+  {
+   "path": "docs/briefs/2026-11-21-r33/REPORT_R33.md",
+   "bytes": 4839,
+   "sha256": "ade4039b5acf2ad9e7309a03ed268bbc10b26f0a708af2524947e47e92320e1a"
   },
   {
    "path": "docs/briefs/2026-11-21-r33/RESUME_R33.md",

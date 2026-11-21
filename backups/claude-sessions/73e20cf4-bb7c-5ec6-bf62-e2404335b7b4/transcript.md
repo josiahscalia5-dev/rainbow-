@@ -2728,3 +2728,56 @@ The river cycle is now seamless: the largest row-to-row change is 5.4 levels aga
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/kit05 && python3 - <<'EOF'\np = 'kitgame.html'; s = open(p).read()\nold = \"const CT = installControls({ THREE, TR, canvas: renderer.domElement, camera, q,\"\nnew = \"const qc = new URLSearchParams(location.search); if (!qc.has('c_LEAN_K')) qc.set('c_LEAN_K', '0.11');   // gentler bank (round 33: 5 -> <3 deg per frame); controls.js unchanged\\nconst CT = installControls({ THREE, TR, canvas: renderer.domElement, camera, q: qc,\"\nassert old in s; s = s.replace(old, new); open(p, 'w').write(s)\nEOF\ncp kitgame.html /tmp/rainbow_r33/kitgame/play3.html &&  …[+597 chars]`
 
+### 🧑 User — 2026-11-21T15:20:38.299Z
+
+> ↩︎ result: started
+>   "commit": "5ce4b0dd95306b11fe2dfbab50ba66b0236f7886",
+
+### 🤖 Claude — 2026-11-21T15:20:41.083Z
+
+> 🔧 **TaskUpdate** `{"taskId": "3", "status": "completed", "description": "Done: kit beats current splat build (start scenery within-20: 12.7% -> 80%; SSIM 0.19 -> 0.76; moving colour corr 0.25-0.36 -> 0.70-0.73), gameplay unchanged (10/10 swipes). Evidence qa/kit05/r33/."}`
+
+### 🧑 User — 2026-11-21T15:20:41.102Z
+
+> ↩︎ result: Updated task #3 description, status
+
+### 🤖 Claude — 2026-11-21T15:20:42.787Z
+
+> 🔧 **TaskCreate** `{"subject": "Full Screen 05 on the kit: whole-level acceptance, fix until all pass", "description": "final_acceptance.cjs whole level (coin-trail player + extras, real touch) + visual_check.py + acceptance_verdict.py on /tmp/rainbow_r33/kitgame. Open: winding S river beyond the painted stretch, coins at painted positions, 3D paddles, Benny width (character), coin overlaps.", "activeForm": "Running whole-level acceptance on the kit"}`
+
+### 🧑 User — 2026-11-21T15:20:42.816Z
+
+> ↩︎ result: Task #6 created successfully: Full Screen 05 on the kit: whole-level acceptance, fix until all pass
+
+### 🤖 Claude — 2026-11-21T15:20:44.505Z
+
+> 🔧 **Bash** `{"command": "sleep 60; grep -E \"frame [0-9]+ \" /tmp/rainbow_r33/runs/kit_full1.log | tail -1 | cut -c1-40; grep -E \"rror|exit=\" /tmp/rainbow_r33/runs/kit_full1.log | head -3", "description": "Check full-level run has started rendering"}`
+
+### 🧑 User — 2026-11-21T15:20:44.512Z
+
+> ↩︎ result: <tool_use_error>Blocked: sleep 60 followed by: grep -E "frame [0-9]+ " /tmp/rainbow_r33/runs/kit_full1.log tail -1 cut -c1-40 grep -E "rror|exit=" /tmp/rainbow_r33/runs/kit_full1.log head -3. To wait for a condition, use Monitor with an until-loop (e.g. `until <check>; do sleep 2; done`). To wait for a command you started, use run_in_background: true. Do not chain shorter sleeps to work around this block.</tool_use_error>
+
+### 🤖 Claude — 2026-11-21T15:20:46.620Z
+
+> 🔧 **Bash** `{"command": "until grep -qE \"frame 20 |exit=|rror\" /tmp/rainbow_r33/runs/kit_full1.log 2>/dev/null; do sleep 3; done; grep -E \"frame [0-9]+ \" /tmp/rainbow_r33/runs/kit_full1.log | tail -1 | cut -c1-60; grep -E \"rror|exit=\" /tmp/rainbow_r33/runs/kit_full1.log | head -3", "description": "Wait until the full-level run is rendering", "timeout": 600000}`
+
+### 🧑 User — 2026-11-21T15:20:46.695Z
+
+> ↩︎ result: frame 20 / 704 {"s":0.933,"lat":0.0221,"coins":1420,"tile":1
+
+### 🤖 Claude — 2026-11-21T15:20:51.130Z
+
+The full-level run plays 704 frames, about 30 minutes on this machine's software renderer. While it runs I'll write the round 33 report into the repository.
+
+### 🤖 Claude — 2026-11-21T15:21:09.185Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-21-r33/REPORT_R33.md", "content": "# Round 33 report — Screen 05: tools evaluated, new tunnel-kit method tested and adopted for the full level (2026-11-21)\n\nSession branch `ccr-81d66c17-i0ooo8`. Nothing installed, no account created, no credits or money spent, approved artwork unchanged\n(`sha256sum -c scripts/reference.sha256`). Experimental work only in `/tmp/rainbow_r33` + `tools/kit05/` (new files); the round-32\nbuild, `controls.js`, Benny and every protected branch are untouched.\n\n## 1. Tools the user asked about — none adopted\n …[+4379 chars]`
+
+### 🧑 User — 2026-11-21T15:21:09.220Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-21-r33/REPORT_R33.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-21T15:21:10.792Z
+
+> 🔧 **Bash** `{"command": "until grep -qE \"frame 300 |exit=|rror\" /tmp/rainbow_r33/runs/kit_full1.log 2>/dev/null; do sleep 5; done; grep -E \"frame [0-9]+ \" /tmp/rainbow_r33/runs/kit_full1.log | tail -1 | cut -c1-80; grep -E \"rror|exit=\" /tmp/rainbow_r33/runs/kit_full1.log | head -3", "description": "Wait for the full-level run to pass frame 300", "timeout": 1200000}`
+
