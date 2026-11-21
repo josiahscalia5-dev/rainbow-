@@ -841,3 +841,39 @@ Address this before completing your current task.
 > f_resurface_splash.png
 > 13
 
+### 🤖 Claude — 2026-11-21T14:01:26.983Z
+
+Swipe controls work: on a phone-sized portrait page (412×915, Pixel 7 size), with real touch swipes, all 16 checks in the test pass. With controls on, frame 0 is pixel-identical to the old version, so the start view is still exactly the approved picture. I only worked in `agentA`; no git, no repo changes, no paid calls.
+
+**Test results** (Playwright with SwiftShader, swipes sent as real touch events through Chrome's debugging protocol on the canvas, not through `window.input.swipe`):
+- **Swipe sequence:** left, left, right, up, right, down, left, up. All 8 arrived as touch events and each did the right thing:
+  - The first left reached the left lane (−0.218). The second left stayed there, because the edge of the river is the limit.
+  - Right came back to centre, and the later right reached the right lane (0.213).
+  - Each leap peaked at 0.279 above the water, and the dive went down to 0.270.
+- **Coins:** went from 1,420 to 1,620 (8 on the water line, 6 in the side lanes, 6 in the air), and the HUD number always matched the count.
+- **Camera:** sideways offset stayed within ±0.11 (limit 0.12), with no sudden jumps between steps.
+- **Frame 0:** compared against the old version (`?controls=0`): 100 % identical pixels, max difference 0.
+- **Stills:** six were rendered: start, mid lane change (banked into the move), top of a leap, just after air coins, during a dive, and the splash on resurfacing.
+
+**Two problems the test found, both fixed:**
+- **Viewport:** `play3.html` had no viewport tag, so on a real phone the game showed shrunk into the top-left corner. I added the tag, marked `<!-- [controls] -->`.
+- **Missed coins:** with lanes, coins Benny misses used to slide past the camera looking huge. They now shrink and sink away behind him. The added side-lane and air coins grow in during the first 0.4 s, which is what keeps frame 0 identical.
+
+**Honest issues:**
+- **Live leap not confirmed:** in the `?live=1` real-time mode, the loop runs and the left-arrow key changes lane, but the follow-up leap key check timed out under software rendering. The leap code path is the same one the touch test proves.
+- **Underwater tint invisible:** the cyan tint I added for dives can't be seen, because the water already hides everything below the surface; in a dive only the pom-pom shows. It does no harm.
+- **Coin halos:** the coin sprites show square cyan halos. This was there before my changes (it's in the coin image) and shows in frame 0 too.
+- **`steer` is ignored** while controls are on, so `track_clip.cjs` needs `?controls=0` to get its old sine steering.
+- **Moves are one at a time:** a lane change during a leap or dive is queued until he lands or resurfaces.
+- **Diving doesn't avoid coins:** he still collects water-line coins while diving.
+- **No motion clip:** software rendering was too slow, so smoothness is shown by numbers, not video.
+
+Everything is in `/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA/`:
+- `controls.js`
+- `play3.html` (13 added or changed lines, all marked `[controls]`; the original is kept as `play3.orig.html`)
+- `swipe_test.cjs` and its log `swipe_log.json`
+- `CONTROLS_NOTES.md` (hook lines, tuning constants, results)
+- `compare0.py` and `compare0.json` (the frame-0 comparison)
+- `live_key_check.cjs` and `live_key_check.json` (the live-mode and keyboard check)
+- `out_controls/`: `a_start_frame0.png`, `a_start_frame0_controls_off.png`, `b_mid_lane_change_left.png`, `c_leap_top.png`, `d_after_air_coin.png`, `e_dive.png`, `f_resurface_splash.png`
+
