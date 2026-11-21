@@ -1597,3 +1597,118 @@ Now rewriting the drawing code with the reveal transitions.
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow- && rm -rf /tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/wt_before && git worktree add --detach /tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/wt_before a5f5bc9 >/dev/null 2>&1; cd /tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/wt_before && ln -s /home/user/rainbow-/node_modules node_modules && git lfs pull >/dev/null 2>&1; ls assets/models | head -3; echo ok", "description": "Set up a copy of the game from before today's change", "timeout": 300000}`
 
+### 🧑 User — 2026-11-21T00:41:34.491Z
+
+> ↩︎ result: benny.glb
+> lids05.glb
+> rainbow_girl.glb
+> ok
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T00:41:39.797Z
+
+> 🔧 **Bash** `{"command": "B=/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad; cd $B/wt_before && head -c 200 assets/models/benny.glb | head -c 40 | od -c | head -2; (timeout 900 node scripts/capture.mjs 05 06 07 --out=$B/before_default 2>&1 | grep -c \"→\"); cd /home/user/rainbow- && (timeout 900 node scripts/capture.mjs 05 06 07 --out=$B/after_default 2>&1 | grep -c \"→\") && python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\nB='$B'\nfor i in ('05','06','07'):\n    a=np.asarray(Image.open(f'{B}/before_default/{i}.png').convert('RGB')).astype(int); b=np.asarray(Im …[+320 chars]`
+
+### 🧑 User — 2026-11-21T00:43:19.246Z
+
+> ↩︎ result: 0000000   g   l   T   F 002  \0  \0  \0 354   1 021  \0 354 252  \0  \0
+> 0000020   J   S   O   N   {   "   a   s   s   e   t   "   :   {   "   v
+> 3
+> 3
+> 05 max diff 242, pixels differing 4.290%
+> 06 max diff 243, pixels differing 3.008%
+> 07 max diff 242, pixels differing 3.998%
+
+### 🤖 Claude — 2026-11-21T00:43:26.939Z
+
+> 🔧 **Bash** `{"command": "B=/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad; cd /home/user/rainbow- && (timeout 900 node scripts/capture.mjs 05 06 07 --out=$B/after_default2 2>&1 | grep -c \"→\") && python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\nB='$B'\nfor i in ('05','06','07'):\n    a=np.asarray(Image.open(f'{B}/after_default/{i}.png').convert('RGB')).astype(int); b=np.asarray(Image.open(f'{B}/after_default2/{i}.png').convert('RGB')).astype(int)\n    c=np.asarray(Image.open(f'{B}/before_default/{i}.png').convert('RGB')).astype(int)\n    d=np.abs(a-b).max(ax …[+626 chars]`
+
+### 🧑 User — 2026-11-21T00:44:10.660Z
+
+> ↩︎ result: 3
+> 05 after vs after(again): 0.000% | before vs after(again): 4.290% | before-vs-after diffs outside the after-vs-after noise: 
+>    before/after diff bbox (np.int64(68), np.int64(33), np.int64(795), np.int64(204))
+>    after/after diff bbox None
+> 06 after vs after(again): 0.000% | before vs after(again): 3.008% | before-vs-after diffs outside the after-vs-after noise: 
+>    before/after diff bbox (np.int64(86), np.int64(33), np.int64(776), np.int64(204))
+>    after/after diff bbox None
+> 07 after vs after(again): 0.000% | before vs after(again): 3.998% | before-vs-after diffs outside the after-vs-after noise: 
+>    before/after diff bbox (np.int64(84), np.int64(33), np.int64(779), np.int64(204))
+>    after/after diff bbox None
+
+### 🤖 Claude — 2026-11-21T00:44:13.430Z
+
+Same version captured twice is pixel-identical. Before vs after differs only in the HUD strip at the top (y 33–204), with zero differences anywhere in the scenery. Checking what's different there.
+
+### 🤖 Claude — 2026-11-21T00:44:16.527Z
+
+> 🔧 **Bash** `{"command": "B=/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad; python3 -I -c \"\nfrom PIL import Image\nB='$B'\na=Image.open(f'{B}/before_default/06.png').crop((0,0,864,215)); b=Image.open(f'{B}/after_default/06.png').crop((0,0,864,215))\nc=Image.new('RGB',(864,440),'white'); c.paste(a,(0,0)); c.paste(b,(0,225)); c.save(f'{B}/hud_cmp.png')\"; cd $B/wt_before && git diff --stat a5f5bc9 0db047d -- src | tail -3; cd /home/user/rainbow- && git diff --stat a5f5bc9 HEAD -- src | tail -5", "description": "Compare the HUD strip and list source changes since session s …[+6 chars]`
+
+### 🧑 User — 2026-11-21T00:44:16.787Z
+
+> ↩︎ result: src/game/Game.ts     |  16 +++-
+>  src/world/paint06.ts | 263 +++++++++++++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 276 insertions(+), 3 deletions(-)
+
+### 🤖 Claude — 2026-11-21T00:44:18.626Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/hud_cmp.png"}`
+
+### 🧑 User — 2026-11-21T00:44:18.655Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T00:44:23.539Z
+
+The scenery is identical. The HUD itself is drawn smaller in today's checkout than in the copy from the session start, even though I never touched the HUD code. Finding out why.
+
+### 🤖 Claude — 2026-11-21T00:44:26.137Z
+
+> 🔧 **Bash** `{"command": "B=/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad; cd /home/user/rainbow- && diff -rq $B/wt_before/src src | head; diff -q $B/wt_before/index.html index.html; diff -q $B/wt_before/vite.config.ts vite.config.ts; git log --oneline a5f5bc9..HEAD -- index.html src/ui public | head; git diff --stat a5f5bc9 HEAD -- . ':!backups' ':!qa' ':!assets/textures/paint06' ':!tools/paint06' | tail -8", "description": "Find what differs between the two copies besides my files"}`
+
+### 🧑 User — 2026-11-21T00:44:26.203Z
+
+> ↩︎ result: Files /tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/wt_before/src/game/Game.ts and src/game/Game.ts differ
+> Only in src/world: paint06.ts
+>  src/game/Game.ts     |  16 +++-
+>  src/world/paint06.ts | 263 +++++++++++++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 276 insertions(+), 3 deletions(-)
+
+### 🤖 Claude — 2026-11-21T00:44:39.160Z
+
+> 🔧 **Bash** `{"command": "B=/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad; cd $B/wt_before && rm node_modules && (cp -al /home/user/rainbow-/node_modules node_modules 2>/dev/null && echo hardlinked || (du -sh /home/user/rainbow-/node_modules; cp -r /home/user/rainbow-/node_modules node_modules && echo copied)) && (timeout 900 node scripts/capture.mjs 05 06 07 --out=$B/before_default 2>&1 | grep -c \"→\") && python3 -I -c \"\nfrom PIL import Image\nimport numpy as np\nB='$B'\nfor i in ('05','06','07'):\n    a=np.asarray(Image.open(f'{B}/before_default/{i}.png').convert('R …[+364 chars]`
+
+### 🧑 User — 2026-11-21T00:45:21.420Z
+
+> ↩︎ result: hardlinked
+> 3
+> 05 IDENTICAL (pixel for pixel)
+> 06 IDENTICAL (pixel for pixel)
+> 07 IDENTICAL (pixel for pixel)
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T00:45:24.766Z
+
+With the switch off, Screens 05, 06 and 07 are **pixel-for-pixel identical** to before. Your normal game is untouched. Now making the side-by-side pictures for you.
+
+### 🤖 Claude — 2026-11-21T00:45:35.420Z
+
+> 🔧 **Bash** `{"command": "git worktree remove --force /tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/wt_before && mkdir -p qa/match/06/paint06/proof && python3 -I - <<'EOF'\nfrom PIL import Image, ImageDraw, ImageFont\nimport numpy as np, json, cv2\nR='/home/user/rainbow-'; W=f'{R}/qa/match/06/paint06/work'; S=f'{R}/qa/match/06/paint06/shots'; O=f'{R}/qa/match/06/paint06/proof'\nreg=json.load(open(f'{W}/register.json')); met=json.load(open(f'{S}/metrics.json'))\ntry: font=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 30)\nexcept Exception: fon …[+2000 chars]`
+
+### 🧑 User — 2026-11-21T00:45:41.834Z
+
+> ↩︎ result: ok
+> 0_APPROVED06_vs_GAME.jpg
+> 1_PANEL1_vs_GAME.jpg
+> 2_PANEL2_vs_GAME.jpg
+> 3_PANEL3_vs_GAME.jpg
+> 4_PANEL4_vs_GAME.jpg
+> 17M	qa/match/06/paint06/proof/SCREEN06_paint06_steer_1x.mp4
+> 16M	qa/match/06/paint06/proof/SCREEN06_paint06_straight_1x.mp4
+> 111M	qa/match/06/paint06/clip/frames_steer
+> 111M	qa/match/06/paint06/clip/frames_straight
+
+### 🤖 Claude — 2026-11-21T00:45:48.085Z
+
+> 🔧 **Bash** `{"command": "rm -rf qa/match/06/paint06/clip/frames_steer qa/match/06/paint06/clip/frames_straight && ls -la qa/match/06/r30b/proof/*.mp4 | awk '{print $5, $9}'; for t in straight steer; do ffmpeg -y -loglevel error -i qa/match/06/paint06/clip/SCREEN06_paint06_${t}_1x.mp4 -c:v libx264 -crf 24 -preset slow -pix_fmt yuv420p qa/match/06/paint06/proof/SCREEN06_paint06_${t}_1x.mp4 && rm qa/match/06/paint06/clip/SCREEN06_paint06_${t}_1x.mp4; done; du -sh qa/match/06/paint06/proof/* qa/match/06/paint06/work | sort -h | tail -12; git status --short | grep -v claude-sessions | head -20", "description": …[+89 chars]`
+
