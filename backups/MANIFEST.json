@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3885,
-   "sha256": "0dce764d0e4721fddfd9357b4e292531e5a23546cf5ba452acfa5e383fa97f5c"
+   "sha256": "c94633dcdb5832285f5995a0c33a981699806fdab1e8d31a5a137fcad3720e0a"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -2709,7 +2709,7 @@
   {
    "path": "backups/wip/claude__rainbow-s05-camera-c34/INFO.json",
    "bytes": 651,
-   "sha256": "7ed99b52b9668bf2a3807787908563676fc1c8f0675bf509599e3b03df15f829"
+   "sha256": "223e3583c15035b50a15de656ea2f1538498f131e5f539ee73abbb1273d39230"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-camera-c34/tracked.patch",
@@ -3163,8 +3163,8 @@
   },
   {
    "path": "backups/wip/claude__rainbow-s05-qa-c34/INFO.json",
-   "bytes": 662,
-   "sha256": "7a6f558a54c87b249bb199aa51ff9f7378732ef4284539218b016d3a32781582"
+   "bytes": 984,
+   "sha256": "1472ccbc1e07cf72ecd3fa66494379bdaac4775996785d2c24a7fb65d90cc65e"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-qa-c34/untracked/docs/briefs/2026-11-21-r34/COORDINATION_R34.md",
@@ -3177,9 +3177,29 @@
    "sha256": "14e8b8d295f646ca28b26f995d919fc12ba602690832544031d3b23ec6052f04"
   },
   {
+   "path": "backups/wip/claude__rainbow-s05-qa-c34/untracked/docs/briefs/2026-11-21-r34/notes/s4.md",
+   "bytes": 4219,
+   "sha256": "5914a1828758033e44bfa64c80d1da94c53369d794ca626dfde0a7111a0db237"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s05-qa-c34/untracked/qa/kit05/r34/s4/S1_stretch_tiles_marked_f0448.jpg",
+   "bytes": 222720,
+   "sha256": "9c7eb47c85f9b3c07f687225d5bd411cb389ed5c5b1ba2183ed69048bb1a26e2"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s05-qa-c34/untracked/qa/kit05/r34/s4/S3_benny_left_paw_offscreen_f0115_crop.jpg",
+   "bytes": 85683,
+   "sha256": "da49d7568f019601ceecb28191fdeb3acc37259a0f1e6024f91fb88dae8ad483"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s05-qa-c34/untracked/qa/kit05/r34/s4/live_double_loop_evidence.json",
+   "bytes": 2905,
+   "sha256": "3c9b0401243d72cd646cdedd43e1a1c5e5ec57a3cd390b5204c0901bb4d37f39"
+  },
+  {
    "path": "backups/wip/claude__rainbow-s05-qa-c34/untracked/tools/kit05/qa/qa_live.cjs",
-   "bytes": 8959,
-   "sha256": "cc69b840120cf2d383078203ed4e3cb090dc02cda5ab64655c620eda8fffe062"
+   "bytes": 9544,
+   "sha256": "b52fa238fc944da5894db7c37d583e64f51ba6ef048a8941b00f100c816ee1fb"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-qa-c34/untracked/tools/kit05/qa/qa_play.cjs",
@@ -3187,19 +3207,34 @@
    "sha256": "80a2465b707569d1ec4d62a317d9d6332e091c40c7515aaedf8386db098847a2"
   },
   {
+   "path": "backups/wip/claude__rainbow-s05-qa-c34/untracked/tools/kit05/qa/qa_verdict.py",
+   "bytes": 35439,
+   "sha256": "d3620713c2997fb3245de040b7c6595c7fbf8b7cdccdbfb47059aa31e12ab347"
+  },
+  {
    "path": "backups/wip/claude__rainbow-s05-qa-c34/untracked/tools/kit05/qa/qa_visual.py",
    "bytes": 20308,
    "sha256": "48e36ca458ad096f8a79011e3a4750f8a1bacb9b5122af048abd806e0ea46538"
   },
   {
+   "path": "backups/wip/claude__rainbow-s05-qa-c34/untracked/tools/kit05/qa/run_acceptance.sh",
+   "bytes": 4885,
+   "sha256": "10c50ba7d5433ba2c47e2fb4ad96e34a94bbc2d3fb093b804e93228999b6d95f"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-s05-qa-c34/untracked/tools/kit05/qa/stretch_viz.py",
+   "bytes": 1097,
+   "sha256": "fc011044349a4490cb63e868dd03c9c569459e32b20802ef04f24694f0c6f23d"
+  },
+  {
    "path": "backups/wip/claude__rainbow-s05-swim-c34/INFO.json",
-   "bytes": 738,
-   "sha256": "02a7f3e4cd6a15034e4f87f6ed9727583bae53b776b7c4428d50cfd2992d066c"
+   "bytes": 775,
+   "sha256": "16c54bb719fdf380f7fc9d85510bd1b3e91ef4d9d95af1857b1c5a3664263a89"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-swim-c34/tracked.patch",
-   "bytes": 31036,
-   "sha256": "b56e8c7efe3b23bc70280462111c6dddd2b58c84e6dc0fc00d175228b290e75d"
+   "bytes": 31066,
+   "sha256": "eba00021ea533d059b4dcb16af4ec872e18c6cfc148d3a738b47d41ce9da067f"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-swim-c34/untracked/docs/briefs/2026-11-21-r34/COORDINATION_R34.md",
@@ -3217,6 +3252,11 @@
    "sha256": "305a403659805e16fad4204b3f1ab7ff35cc7d1bb7c76935403f4bd6efaf7a56"
   },
   {
+   "path": "backups/wip/claude__rainbow-s05-swim-c34/untracked/tools/kit05/live_loop_check.cjs",
+   "bytes": 4465,
+   "sha256": "a57035bc5f3645e7d3f8623d82f0f07e701c3e4f5bd2c193a467fb3373eb555f"
+  },
+  {
    "path": "backups/wip/claude__rainbow-s05-swim-c34/untracked/tools/kit05/swim_check.cjs",
    "bytes": 9941,
    "sha256": "2c5f9e33fa0b590c018931ce8f0714e563c6d6cfc49a1315e1381d5f6e8fb2a9"
@@ -3229,12 +3269,12 @@
   {
    "path": "backups/wip/claude__rainbow-s05-visual-c34/INFO.json",
    "bytes": 1158,
-   "sha256": "dfc632ab8aaf6ff7ad8c32891e1193517296e6dfde4cf345840b392a86ff5643"
+   "sha256": "a84601150e406d2e19b7f1a735bc84d8c833fa78b1a8afd1f9ef2586b735eb1a"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-visual-c34/tracked.patch",
-   "bytes": 22337,
-   "sha256": "dd34251e9fe2900d86c792c67e6b1d8a4a8f88855b4ef04500f7c2ca8deab210"
+   "bytes": 24133,
+   "sha256": "22597836183cbc789a9526c5cb9ca1500a68683fcbd21ed1ffb32f62c9fc4b27"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-visual-c34/untracked/docs/briefs/2026-11-21-r34/COORDINATION_R34.md",
@@ -6883,8 +6923,18 @@
   },
   {
    "path": "backups/wip/claude__rainbow-screen-builder-c34/INFO.json",
-   "bytes": 988,
-   "sha256": "c93a058157883c2842dfb553f4cb52d3397a8e63faebe8912c21ea6e5d8d0a4a"
+   "bytes": 1160,
+   "sha256": "095ede5676d65fc01ef6a1a48979d4581c967dabd366c0026b514382e496cbdc"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-screen-builder-c34/untracked/.claude/skills/rainbow-screen-builder/LESSONS.md",
+   "bytes": 7318,
+   "sha256": "a052de1848577a4e66d58b319606c2bf26f6ed57aa38104ffe4f3266da926023"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-screen-builder-c34/untracked/.claude/skills/rainbow-screen-builder/SKILL.md",
+   "bytes": 11128,
+   "sha256": "2e81b37cc96549c21f7c899e3f5c4f074fd03b7d1ef26463dae5dbe57aac8f3b"
   },
   {
    "path": "backups/wip/claude__rainbow-screen-builder-c34/untracked/.claude/skills/rainbow-screen-builder/screens.json",
@@ -6903,13 +6953,18 @@
   },
   {
    "path": "backups/wip/claude__rainbow-screen-builder-c34/untracked/.claude/skills/rainbow-screen-builder/scripts/compare_to_approved.py",
-   "bytes": 13389,
-   "sha256": "0a352722c37dd839ac196b28f7ef61b4741b7993f0387d7673009caa1d4f7df2"
+   "bytes": 13733,
+   "sha256": "b25ec8efa17a04f745e1397fe23f68a755fd6b54f2bbc5bed84ad9a69be08d47"
   },
   {
    "path": "backups/wip/claude__rainbow-screen-builder-c34/untracked/.claude/skills/rainbow-screen-builder/scripts/new_screen_workspace.sh",
    "bytes": 6299,
    "sha256": "0a5b343d05700170a8e14c239bd91f2a692500e38aefd9876ceeeb298b83a67d"
+  },
+  {
+   "path": "backups/wip/claude__rainbow-screen-builder-c34/untracked/.claude/skills/rainbow-screen-builder/scripts/validate_05.sh",
+   "bytes": 6021,
+   "sha256": "8f3ef93330bbb1bb9bc2c4011fe1189ff8666ed70a868eff7ed1c66d70373f56"
   },
   {
    "path": "backups/wip/claude__rainbow-screen-builder-c34/untracked/docs/briefs/2026-11-21-r34/COORDINATION_R34.md",
@@ -7944,7 +7999,7 @@
   {
    "path": "backups/wip/screen05-agents/LAST_SYNC_UTC",
    "bytes": 33,
-   "sha256": "25c920f3032b1cac368b77eb3becb3b155e561582c90c8178077598b36920e0e"
+   "sha256": "44ff17fa0b774610a2abb9bb5f7ff99d6d77863dcfed060a0ade4d8ff106b802"
   },
   {
    "path": "backups/wip/screen05-agents/WORKSPACE",
