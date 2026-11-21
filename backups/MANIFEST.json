@@ -794,7 +794,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 26067,
-   "sha256": "cd2e1f8baed1e98b00117134a37bf216ed8b4d9b8e7bacb4327f087e8a6d7032"
+   "sha256": "933d6a141e748dbb3a7b99b70092fc7f4f8e487f8355b469e641e0ed7ca36f88"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3271,
-   "sha256": "76b6b6139d4edd958253c0b1ef4a32a8e36c394d4c528d389328586c1bfa74d1"
+   "sha256": "b4aa37bc0b553780c92d6f25fde579d168ab8f2fcf47deafb93a87cf32d6189e"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -7734,7 +7734,7 @@
   {
    "path": "backups/wip/screen05-agents/LAST_SYNC_UTC",
    "bytes": 33,
-   "sha256": "3b6ba9ddf42d3c9e5f21e35bab4be8465520b121801e7d1f90ad5c2cda5edfa8"
+   "sha256": "6f080cf03d0575c7297f9bf5af5d6d5a438d85bf6f8494d5760b789389c9efde"
   },
   {
    "path": "backups/wip/screen05-agents/WORKSPACE",
@@ -9097,9 +9097,54 @@
    "sha256": "46176105fb0562531dbd949bdb4b7abd5bebf2f11627b77d13266c0b57943370"
   },
   {
+   "path": "backups/wip/screen05-agents/agentB/out_water/end32c/chk/f_0000_s_16.jpg",
+   "bytes": 142356,
+   "sha256": "b5a6119f723e1c201eb442101afaacf79f55819c6e9dbdebd6a06fbeb83c1321"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentB/out_water/end32c/chk/f_0001_s_20_l-0.22_r0.jpg",
+   "bytes": 143582,
+   "sha256": "04dbe393d8d2fe443bb7f14e6d76088553852cacad57d6f09d7c13a149bd0f40"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentB/out_water/end32c/chk/f_0002_s_24.jpg",
+   "bytes": 145589,
+   "sha256": "16bbb62ea031347c8ffa60ada9842e6c10b456331487017bbcbf3531c20071fd"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentB/out_water/end32c/chk/f_0003_s_27_l0.22_r0.12.jpg",
+   "bytes": 140285,
+   "sha256": "4280348faefbd8e38c0ca56efde7dc394ceddec2412a4c225a39439df39bbce7"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentB/out_water/end32c/chk/f_0004_s_29.jpg",
+   "bytes": 139818,
+   "sha256": "b40072acc8cfc5f0976976173e629b1852ca3e118836ebcb6d106b4b9d7d3c3e"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentB/out_water/end32c/chk/f_0005_s_30.5.jpg",
+   "bytes": 145238,
+   "sha256": "2aa6d61db9305b77154171b754d7a3e08d223a0bab2aa1b9788a2b310a593cab"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentB/out_water/end32c/chk/f_0006_s_31.6.jpg",
+   "bytes": 58242,
+   "sha256": "faa2f9c468bbedfe6765a019dbaf4b449c01cf8c2f4509834de39a5c26fa0632"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentB/out_water/end32c/chk/summary.txt",
+   "bytes": 839,
+   "sha256": "155be0ad50a9d676c81acddd8589b603b4ef297571395378cccaa42dd9025af8"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentB/out_water/end32c/chk/visual_check.json",
+   "bytes": 2280,
+   "sha256": "5a4b01fb95262dd264de5b415fc53cd75bbd7bfbea0669f0162a5811118eff50"
+  },
+  {
    "path": "backups/wip/screen05-agents/agentB/out_water/end32c/log.txt",
-   "bytes": 744,
-   "sha256": "4e5665d258c4972d91cdda63db3d5beeec66149a4a8e193944319deb6c83e803"
+   "bytes": 862,
+   "sha256": "b3a814a8054ace430603f02b241e9a4f94b96ccf1ec6ee76beeb54a301bc458b"
   },
   {
    "path": "backups/wip/screen05-agents/agentB/out_water/end32c/s_16.png",
@@ -9120,6 +9165,21 @@
    "path": "backups/wip/screen05-agents/agentB/out_water/end32c/s_27_l0.22_r0.12.png",
    "bytes": 716501,
    "sha256": "9f77b2a2c9a9d354bf7606af675db9a7eb4b8d2b226918b44c356be31e47b4d6"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentB/out_water/end32c/s_29.png",
+   "bytes": 710669,
+   "sha256": "ace84356d1e8559515cb227b4ea96f6c3acd58306caa416afb042fb05dd05924"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentB/out_water/end32c/s_30.5.png",
+   "bytes": 713176,
+   "sha256": "b6ffb3e1ae5c6fcb9f348277bb6899ddeeba4293cbbef7bb49cfde81fb79efdc"
+  },
+  {
+   "path": "backups/wip/screen05-agents/agentB/out_water/end32c/s_31.6.png",
+   "bytes": 495428,
+   "sha256": "5dff7cd08aa79d7a90ee9276c45e783058fa4f44edcf130dd4d8c235e2bfda13"
   },
   {
    "path": "backups/wip/screen05-agents/agentB/out_water/final_end/chk/f_0000_s_0.jpg",
