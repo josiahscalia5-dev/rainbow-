@@ -594,3 +594,171 @@ Let me snapshot the current state as BEFORE and start the BEFORE stills render i
 > s_0.png
 >  12:09:54 up  2:17,  0 user,  load average: 4.02, 3.55, 3.69
 
+### 🤖 Claude — 2026-11-21T12:09:56.581Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB/out_water/before/s_0.png"}`
+
+### 🧑 User — 2026-11-21T12:09:56.616Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T12:10:14.669Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB && mkdir -p out_water/diag && python3 -I - <<'EOF'\nimport sys, json, numpy as np\nsys.path.insert(0, 'tools'); from plyio import read_ply\nfrom PIL import Image\nSC = json.load(open('scene05.json')); F = json.load(open('../tile_frame.json')); RG = json.load(open('../rings.json'))\nn = np.array(SC['plane']['n']); ax = np.array(F['ax']); rt = np.array(F['right']); dpl = F['dpl']\nUA, UB = 1.3, 3.33; Lt = UB-UA; DH = -0.14733523072779797\nFL = np.array([1,-1,-1])\nT = np.array(SC['trail']); t …[+1367 chars]`
+
+### 🧑 User — 2026-11-21T12:10:15.132Z
+
+> ↩︎ result: LAT_C -0.01185557454609065 ringA lat,h 0.10886112315204358 0.664485923169136 ringB lat,h 0.03664311861248605 0.664485923169136 u 1.4499999999999997 3.4799999999999995
+
+### 🤖 Claude — 2026-11-21T12:10:17.214Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB/out_water/diag/xsec_ringA.png"}`
+
+### 🧑 User — 2026-11-21T12:10:17.228Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T12:10:18.658Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB/out_water/diag/xsec_ringB.png"}`
+
+### 🧑 User — 2026-11-21T12:10:18.725Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T12:11:04.583Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB/node_modules/@sparkjsdev/spark/dist && grep -n \"const defineGsplat\" -A 22 spark.module.js | head -40; grep -n \"^export {\" spark.module.js | head; grep -n \"dyno_exports\\|var dyno_exports\" spark.module.js | head -3; grep -n \"isGsplatActive\\|GSPLAT_FLAG_ACTIVE\" spark.module.js | head -5", "description": "Find Gsplat GLSL struct and module exports"}`
+
+### 🧑 User — 2026-11-21T12:11:04.697Z
+
+> ↩︎ result: 15852:export { DEFAULT_CONTROLLER_FAST_MULTIPLIER, DEFAULT_CONTROLLER_GETFAST, DEFAULT_CONTROLLER_GETMOVE, DEFAULT_CONTROLLER_GETROTATE, DEFAULT_CONTROLLER_GETSLOW, DEFAULT_CONTROLLER_MOVE_HEADING, DEFAULT_CONTROLLER_MOVE_SPEED, DEFAULT_CONTROLLER_ROLL_SPEED, DEFAULT_CONTROLLER_ROTATE_SPEED, DEFAULT_CONTROLLER_SLOW_MULTIPLIER, DISK_PORTAL_FRAGMENT_SHADER, ExtSplats, FINGER_TIPS, FpsMovement, HANDS, Hand, HandMovement, JOINT_IDS, JOINT_INDEX, JOINT_RADIUS, JOINT_SEGMENTS, JOINT_SEGMENT_STEPS, JOINT_TIPS, JointEnum, JointSplats, LN_SCALE_MAX, LN_SCALE_MIN, NUM_JOINTS, PackedSplats, PagedSplats, PointerControls, Readback, RgbaArray, Sint8ToFloat, SparkControls, SparkPortals, SparkRenderer, SparkXr, SplatAccumulator, SplatEdit, SplatEditRgbaBlendMode, SplatEditSdf, SplatEditSdfType, SplatEdits, SplatFileType, SplatGenerator, SplatLoader, SplatMesh, SplatModifier, SplatPager, SplatSkinning, SplatSkinningMode, SplatTransformer, Uint8ToFloat, XrHand, XrHands, constructAxes, constructGrid, constructSpherePoints, defines_exports as defines, dyno_exports as dyno, flipPixels, floatToSint8, floatToUint8, fromHalf, generators_exports as generators, getSplatFileType, imageSplats, isAndroid, isIo …[+1976 chars]
+
+### 🤖 Claude — 2026-11-21T12:11:06.196Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB/out_water/before/log.txt; uptime", "description": "Check BEFORE render progress"}`
+
+### 🧑 User — 2026-11-21T12:11:06.232Z
+
+> ↩︎ result: still 0
+> still 2.3
+>  12:11:06 up  2:18,  0 user,  load average: 4.01, 3.68, 3.72
+
+### 🤖 Claude — 2026-11-21T12:11:09.189Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB/node_modules/@sparkjsdev/spark/dist && sed -n 3135,3175p spark.module.js; grep -n \"class Dyno \\|var Dyno = class\" spark.module.js | head -3; grep -n \"function unindentLines\\|function unindent(\" spark.module.js | head", "description": "Read Gsplat GLSL struct definition"}`
+
+### 🧑 User — 2026-11-21T12:11:09.274Z
+
+> ↩︎ result: scale,
+> 		rotate,
+> 		translate,
+> 		recolor
+> 	});
+> };
+> var splatTexCoord = (index) => new SplatTexCoord({ index });
+> var pagedSplatTexCoord = (index) => new PagedSplatTexCoord({ index });
+> var defineGsplat = unindent(`
+>   struct Gsplat {
+>     vec3 center;
+>     uint flags;
+>     vec3 scales;
+>     int index;
+>     vec4 quaternion;
+>     vec4 rgba;
+>   };
+>   const uint GSPLAT_FLAG_ACTIVE = 1u << 0u;
+> 
+>   bool isGsplatActive(uint flags) {
+>     return (flags & GSPLAT_FLAG_ACTIVE) != 0u;
+>   }
+> `);
+> var defineCovSplat = unindent(`
+>   struct CovSplat {
+>     vec3 center;
+>     uint flags;
+>     vec4 rgba;
+>     vec3 xxyyzz;
+>     int index;
+>     vec3 xyxzyz;
+>   };
+> 
+>   bool isCovSplatActive(uint flags) {
+>     return (flags & GSPLAT_FLAG_ACTIVE) != 0u;
+>   }
+> `);
+> var definePackedSplats = unindent(`
+>   struct PackedSplats {
+>     usampler2DArray textureArray;
+>     int numSplats;
+> 887:var Dyno = class {
+> 1077:function unindentLines(s) {
+> 1095:function unindent(s) {
+
+### 🤖 Claude — 2026-11-21T12:11:56.712Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB/node_modules/@sparkjsdev/spark/dist && grep -n \"export declare const dynoFloat\\|export declare const dynoVec3\\|export declare const dynoBlock\\|export declare function dynoBlock\" -A3 types/dyno/*.d.ts | head -30; sed -n 887,960p spark.module.js", "description": "Check dyno uniform constructors and Dyno class"}`
+
+### 🧑 User — 2026-11-21T12:11:56.771Z
+
+> ↩︎ result: types/dyno/base.d.ts:107:export declare function dynoBlock<InTypes extends Record<string, DynoType>, OutTypes extends Record<string, DynoType>>(inTypes: InTypes, outTypes: OutTypes, construct: DynoBlockType<InTypes, OutTypes>, { update, globals }?: {
+> types/dyno/base.d.ts-108-    update?: () => void;
+> types/dyno/base.d.ts-109-    globals?: () => string[];
+> types/dyno/base.d.ts-110-}): DynoBlock<InTypes, OutTypes>;
+> --
+> types/dyno/uniforms.d.ts:8:export declare const dynoFloat: (value?: number, key?: string) => DynoFloat<string>;
+> types/dyno/uniforms.d.ts-9-export declare const dynoBvec2: <V extends DynoJsType<"bvec2">>(value: V, key?: string) => DynoBvec2<string, V>;
+> types/dyno/uniforms.d.ts-10-export declare const dynoUvec2: <V extends DynoJsType<"uvec2">>(value: V, key?: string) => DynoUvec2<string, V>;
+> types/dyno/uniforms.d.ts-11-export declare const dynoIvec2: <V extends DynoJsType<"ivec2">>(value: V, key?: string) => DynoIvec2<string, V>;
+> --
+> types/dyno/uniforms.d.ts:16:export declare const dynoVec3: <V extends DynoJsType<"vec3">>(value: V, key?: string) => DynoVec3<V, string>;
+> types/dyno/uniforms.d.ts-17-export declare const dynoBvec4: <V extends DynoJsType<"bvec4">>(value: V, key?: …[+2302 chars]
+
+### 🤖 Claude — 2026-11-21T12:12:03.345Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB/node_modules/@sparkjsdev/spark/dist && grep -n \"var DynoUniform = class\" -A 40 spark.module.js | head -50; grep -n \"programCache\\|shaderCache\\|new Map().*program\" spark.module.js | head", "description": "Inspect DynoUniform naming and program caching"}`
+
+### 🧑 User — 2026-11-21T12:12:03.421Z
+
+> ↩︎ result: 4191:var DynoUniform = class extends Dyno {
+> 4192-	constructor({ key, type, count, value, update, globals }) {
+> 4193-		key = key ?? "value";
+> 4194-		super({
+> 4195-			outTypes: { [key]: type },
+> 4196-			update: () => {
+> 4197-				if (update) {
+> 4198-					const value = update(this.value);
+> 4199-					if (value !== void 0) this.value = value;
+> 4200-				}
+> 4201-				this.uniform.value = this.value;
+> 4202-			},
+> 4203-			generate: ({ inputs, outputs }) => {
+> 4204-				const allGlobals = globals?.({
+> 4205-					inputs,
+> 4206-					outputs
+> 4207-				}) ?? [];
+> 4208-				const uniforms = {};
+> 4209-				const name = outputs[key];
+> 4210-				if (name) {
+> 4211-					allGlobals.push(`uniform ${dynoDeclare(name, type, count)};`);
+> 4212-					uniforms[name] = this.uniform;
+> 4213-				}
+> 4214-				return {
+> 4215-					globals: allGlobals,
+> 4216-					uniforms
+> 4217-				};
+> 4218-			}
+> 4219-		});
+> 4220-		this.type = type;
+> 4221-		this.count = count;
+> 4222-		this.value = value;
+> 4223-		this.uniform = { value };
+> 4224-		this.outKey = key;
+> 4225-	}
+> 4226-	dynoOut() {
+> 4227-		return new DynoOutput(this, this.outKey);
+> 4228-	}
+> 4229-};
+> 4230-var DynoBool = class extends DynoUniform {
+> 4231-	constructor({ key, value, update }) {
+

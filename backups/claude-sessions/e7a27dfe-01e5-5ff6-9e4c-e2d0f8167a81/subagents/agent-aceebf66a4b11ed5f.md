@@ -113,3 +113,19 @@ Write `swipe_test.cjs`: Playwright chromium with SwiftShader args (copy them fro
 > SC trail [[0.1467720783400785, -0.5150511365172206, -1.0570727675951637], [0.13935058606797301, -0.5098565202134296, -1.0941709642546233], [0.13032642621528007, -0.5035401290915243, -1.139280498109413], [0.121
 > SC trail_s [0.0, 0.038188202124117825, 0.08462312758382158, 0.130 …[+1222 chars]
 
+### 🤖 Claude — 2026-11-21T12:12:15.722Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentA && python3 -I - <<'EOF'\nimport json,struct,numpy as np\nd=open('benny31.glb','rb').read()\nL=struct.unpack('<I',d[12:16])[0]; J=json.loads(d[20:20+L]); B=d[20+L+8:]\nm=J['meshes'][0]['primitives'][0]; acc=J['accessors'][m['attributes']['POSITION']]; bv=J['bufferViews'][acc['bufferView']]\noff=bv.get('byteOffset',0)+acc.get('byteOffset',0); n=acc['count']; stride=bv.get('byteStride',12)\nP=np.array([struct.unpack_from('<3f',B,off+i*stride) for i in range(n)])\nprint(n, P.min(0), P.max(0))\n …[+353 chars]`
+
+### 🧑 User — 2026-11-21T12:12:15.913Z
+
+> ↩︎ result: 33205 [-0.46561682 -0.49578375 -0.34040257] [0.46042597 0.4919835  0.38155532]
+> -0.5 -0.3 4771 z -0.336 0.368 x -0.36 0.351
+> -0.3 -0.1 9175 z -0.34 0.382 x -0.466 0.46
+> -0.1 0.05 4092 z -0.334 0.345 x -0.367 0.359
+> 0.05 0.2 2872 z -0.318 0.299 x -0.349 0.338
+> 0.2 0.5 12295 z -0.197 0.28 x -0.21 0.206
+> [{'name': 'world', 'children': [1]}, {'name': 'tmp25pgrq5c.ply', 'mesh': 0}]
+> USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+> root      3245  338  1.4 54959952 246152 ?     S<l  12:08  13:27 /opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell.real --type=gpu-process --gpu-recent-crash-count=0 --no-sandbox --disable-breakpad --headless --ozone-platform=headless --use-angle=swiftshader-webgl --enable-unsafe-swiftshader --gpu-preferences=YAAAAAAAAAAgAAAGAAAAAAAAAAAAAGAASAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAwAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAMAAAAAQAAAAAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA== --shared-files --field-trial-handle=3,i,14077737763752684697,1406311450911904481,262144 --enable-features=CDPScreenshotNewSurface,SendGPUChannelEarly --disable-features=AutoDeElevate,AvoidUnnecessaryBeforeUnlo …[+2265 chars]
+
