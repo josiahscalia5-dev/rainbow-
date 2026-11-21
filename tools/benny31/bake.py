@@ -56,7 +56,10 @@ fx = s * ((xx + 0.5) * fs - 0.5) + dx; fy = s * ((yy + 0.5) * fs - 0.5) + dy
 appr2 = np.asarray(Image.open(f'{R}/qa/match/06/paint06/work/appr06_seedvr2.png').convert('RGB')).astype(np.float32) / 255
 # Benny's own colours carried ~14 px (1x) past his painted outline (push-pull from inside the matte), so mesh pixels that fall
 # just outside the painted outline take fur / knit colours instead of water or the generator's paler colours
-A2 = cv2.resize(A, (2 * FW, 2 * FH), interpolation=cv2.INTER_LINEAR); core = (A2 > 0.85).astype(np.float32)
+A2 = cv2.resize(A, (2 * FW, 2 * FH), interpolation=cv2.INTER_LINEAR)
+# the painted outline carries light fur tips (a soft glow); on the harder mesh edge they read as a white line -> the outline
+# band (~6 px at 1x) takes the colours from just inside instead
+core = cv2.erode((A2 > 0.5).astype(np.uint8), cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (25, 25))).astype(np.float32)
 ext = appr2 * core[..., None]; wsum_i = core.copy(); acc_i = ext.copy()
 for sg in (2, 4, 8, 16):
     n_ = cv2.GaussianBlur(ext, (0, 0), sg); d_ = cv2.GaussianBlur(core, (0, 0), sg)[..., None]
@@ -66,7 +69,7 @@ appr2 = np.where(core[..., None] > 0, appr2, acc_i)
 Am = cv2.dilate((A > 0.5).astype(np.uint8), cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (29, 29)))
 inA = (fx >= 0) & (fx < FW - 1) & (fy >= 0) & (fy < WL - 2)
 inA[inA] = Am[fy[inA].astype(int), fx[inA].astype(int)] > 0
-sel = inA & (uvp[..., 3] > 0.5) & (uvp[..., 2] > 0.06)
+sel = inA & (uvp[..., 3] > 0.5) & (uvp[..., 2] > 0.0)
 D = cv2.remap(appr2, (2 * fx + 0.5).astype(np.float32), (2 * fy + 0.5).astype(np.float32), cv2.INTER_LINEAR)[sel]
 L = inverse(D)
 u = uvp[..., 0][sel]; v = uvp[..., 1][sel]; w = uvp[..., 2][sel] ** 2
@@ -90,13 +93,30 @@ Lown = inverse(own_m).reshape(TEX, TEX, 3)
 wgt = cv2.GaussianBlur(np.minimum(1, wsum / 0.25).astype(np.float32), (0, 0), 3)
 # fill bake holes / extend a few texels past its support (multi-scale normalized convolution, up to ~8 texels)
 fillL = Lb.copy(); have = (wsum > 0).astype(np.float32); cov = have.copy()
-for sg in (1.5, 3, 6):
+for sg in (1.5, 3, 6, 12, 24):
     num = cv2.GaussianBlur((Lb * have[..., None]).astype(np.float32), (0, 0), sg); den = cv2.GaussianBlur(have, (0, 0), sg)[..., None]
     upd = (cov < 0.5) & (den[..., 0] > 0.05)
     fillL[upd] = (num / np.maximum(den, 1e-4))[upd]; cov[upd] = 1
 wgt = cv2.GaussianBlur(cov, (0, 0), 2)
 wb = np.clip(wgt * 1.3, 0, 1)[..., None]
 Lfin = fillL * wb + Lown * (1 - wb)
+# gutter fill: texels outside every UV island take the nearest island colour (no white padding bleeding in at edges / mips)
+def accessor(i):
+    a = j['accessors'][i]; v = j['bufferViews'][a['bufferView']]; off = bin0 + v.get('byteOffset', 0) + a.get('byteOffset', 0)
+    comp = {5126: np.float32, 5125: np.uint32, 5123: np.uint16}[a['componentType']]; nc = {'SCALAR': 1, 'VEC2': 2, 'VEC3': 3}[a['type']]
+    return np.frombuffer(b[off: off + a['count'] * nc * np.dtype(comp).itemsize], comp).reshape(a['count'], nc)
+prim = j['meshes'][0]['primitives'][0]
+UV = accessor(prim['attributes']['TEXCOORD_0']); IDX = accessor(prim['indices']).reshape(-1, 3)
+isl = np.zeros((TEX, TEX), np.uint8)
+pts = (UV[IDX] * TEX * 16).astype(np.int32)
+cv2.fillPoly(isl, list(pts), 1, lineType=cv2.LINE_8, shift=4)
+isl = cv2.dilate(isl, np.ones((3, 3), np.uint8))
+Lg = Lfin * isl[..., None]; cv_ = isl.astype(np.float32); Lout = Lg.copy()
+for sg in (1, 2, 4, 8, 16):
+    num = cv2.GaussianBlur(Lg.astype(np.float32), (0, 0), sg); den = cv2.GaussianBlur(isl.astype(np.float32), (0, 0), sg)[..., None]
+    upd = (cv_ < 0.5) & (den[..., 0] > 1e-3); Lout[upd] = (num / np.maximum(den, 1e-6))[upd]; cv_[upd] = 1
+Lfin = np.where(isl[..., None] > 0, Lfin, Lout)
+print('UV islands cover', round(float(isl.mean()) * 100, 1), '% of the texture')
 V = np.clip(Lfin / K, 0, 1)
 Image.fromarray((srgb(V) * 255 + 0.5).astype(np.uint8)).save(out)
 json.dump({'K': K, 'samples': int(sel.sum()), 'texels': int(hit.sum()), 'colour_match': Mfit.tolist()}, open(out + '.json', 'w'), indent=1)

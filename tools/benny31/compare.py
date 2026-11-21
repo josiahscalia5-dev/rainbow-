@@ -29,7 +29,10 @@ def ssim(a, b):
 def composite(path):
     im = np.asarray(Image.open(path).convert('RGBA')).astype(np.float32)
     al = im[..., 3] / 255; s, dx, dy = align(al)
-    rgb = warp(im[..., :3] * al[..., None], s, dx, dy); a = warp(al, s, dx, dy)
+    import os
+    pb = path.replace('.png', '_black.png')
+    pre = np.asarray(Image.open(pb).convert('RGB')).astype(np.float32) if os.path.exists(pb) else im[..., :3] * al[..., None]
+    rgb = warp(pre, s, dx, dy); a = warp(al, s, dx, dy)
     cut = np.clip((WL + 4 - np.arange(FH)) / 8.0, 0, 1)[:, None]      # water covers him below the waterline
     a = a * cut; rgb = rgb * cut[..., None]
     out = bg * (1 - a[..., None]) + rgb

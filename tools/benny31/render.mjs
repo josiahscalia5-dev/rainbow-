@@ -18,6 +18,10 @@ try {
   for (const [yaw, pitch] of poses) {
     const url = await page.evaluate(([y, p, s]) => window.__lab.render({ yaw: y, pitch: p, w: s, h: s }), [yaw, pitch, +size]);
     writeFileSync(`${out}/y${yaw}_p${pitch}.png`, Buffer.from(url.split(',')[1], 'base64'));
+    if (process.env.BLACK) {
+      const ub = await page.evaluate(([y, p, s]) => window.__lab.render({ yaw: y, pitch: p, w: s, h: s, black: true }), [yaw, pitch, +size]);
+      writeFileSync(`${out}/y${yaw}_p${pitch}_black.png`, Buffer.from(ub.split(',')[1], 'base64'));
+    }
   }
   console.log('rendered', poses.length, 'to', out);
 } finally { await browser.close(); await vite.close(); }

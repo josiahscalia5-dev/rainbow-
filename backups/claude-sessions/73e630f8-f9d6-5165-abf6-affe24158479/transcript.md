@@ -2424,3 +2424,167 @@ The best model has 40,000 triangles and a single texture, which suits a phone ga
 
 > 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad && python3 -I - <<'EOF'\np='tools/benny31/bake.py'; s=open(p).read()\nold=\"\"\"appr2 = np.asarray(Image.open(f'{R}/qa/match/06/paint06/work/appr06_seedvr2.png').convert('RGB')).astype(np.float32) / 255\nAm = cv2.erode((A > 0.5).astype(np.uint8), np.ones((3, 3), np.uint8))\"\"\"\nnew=\"\"\"appr2 = np.asarray(Image.open(f'{R}/qa/match/06/paint06/work/appr06_seedvr2.png').convert('RGB')).astype(np.float32) / 255\n# Benny's own colours carried ~14 px (1x) past his painted outline (push-pull from insi …[+2649 chars]`
 
+### 🧑 User — 2026-11-21T01:01:09.904Z
+
+> ↩︎ result: approved samples 489322 texels hit 469084
+> baked -> qa/benny/r31/gen/hunyuan2_bake.png
+> rendered 1 to qa/benny/r31/fit/hunyuan2_baked
+>  "IMPROVED 3D": {
+>   "silhouette_iou": 0.956,
+>   "box_within20_pct": 66.8,
+>   "box_ssim": 0.807
+>  }
+> }
+
+### 🤖 Claude — 2026-11-21T01:01:12.941Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image\nim=Image.open('qa/benny/r31/cmp_v2.jpg'); w,h=im.size\nim.crop((0,0,w,h)).save('/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/v2.jpg')\"", "description": "Prepare the updated comparison for viewing"}`
+
+### 🧑 User — 2026-11-21T01:01:13.050Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-21T01:01:13.938Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/v2.jpg"}`
+
+### 🧑 User — 2026-11-21T01:01:13.962Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T01:01:32.143Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad && python3 -I - <<'EOF'\np='tools/benny31/bake.py'; s=open(p).read()\nold=\"\"\"V = np.clip(Lfin / K, 0, 1)\"\"\"\nnew=\"\"\"# gutter fill: texels outside every UV island take the nearest island colour (no white padding bleeding in at edges / mips)\ndef accessor(i):\n    a = j['accessors'][i]; v = j['bufferViews'][a['bufferView']]; off = bin0 + v.get('byteOffset', 0) + a.get('byteOffset', 0)\n    comp = {5126: np.float32, 5125: np.uint32, 5123: np.uint16}[a['componentType']]; nc = {'SCALAR': 1, 'V …[+1701 chars]`
+
+### 🧑 User — 2026-11-21T01:02:36.018Z
+
+> ↩︎ result: approved samples 489322 texels hit 469084
+> UV islands cover 77.8 % of the texture
+> baked -> qa/benny/r31/gen/hunyuan2_bake.png
+> rendered 1 to qa/benny/r31/fit/hunyuan2_baked
+>  "IMPROVED 3D": {
+>   "silhouette_iou": 0.956,
+>   "box_within20_pct": 66.8,
+>   "box_ssim": 0.807
+>  }
+> }
+
+### 🤖 Claude — 2026-11-21T01:02:39.651Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image\nim=Image.open('qa/benny/r31/cmp_v3_2_full.png').crop((150,650,700,1230)); a=Image.open('qa/benny/r31/cmp_v3_0_full.png').crop((150,650,700,1230))\nc=Image.new('RGB',(1110,580),'white'); c.paste(a,(0,0)); c.paste(im,(560,0)); c.save('/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/v3.jpg')\"", "description": "Crop approved and improved Benny side by side"}`
+
+### 🧑 User — 2026-11-21T01:02:39.880Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-21T01:02:40.698Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/v3.jpg"}`
+
+### 🧑 User — 2026-11-21T01:02:40.724Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T01:03:21.961Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='src/characters/benny/benny31-lab.ts'; s=open(p).read()\ns=s.replace(\"function render(o: { yaw: number; pitch: number; w?: number; h?: number; fov?: number }) {\",\"function render(o: { yaw: number; pitch: number; w?: number; h?: number; fov?: number; black?: boolean }) {\")\ns=s.replace(\"  composer.render();\\n  return canvas.toDataURL('image/png');\",\"  // black = opaque black background through the same chain (post(0) = 0): edge pixels come out as display colour x coverage,\\n  // free of the brightening that the transparent path gives premultiplied e …[+2470 chars]`
+
+### 🧑 User — 2026-11-21T01:03:34.728Z
+
+> ↩︎ result: rendered 1 to qa/benny/r31/fit/hunyuan2_baked
+> rendered 1 to qa/benny/r31/fit/current_hi
+> {
+>  "CURRENT 3D (game today)": {
+>   "silhouette_iou": 0.902,
+>   "box_within20_pct": 44.4,
+>   "box_ssim": 0.49
+>  },
+>  "IMPROVED 3D": {
+>   "silhouette_iou": 0.956,
+>   "box_within20_pct": 66.8,
+>   "box_ssim": 0.807
+>  }
+> }
+
+### 🤖 Claude — 2026-11-21T01:03:36.643Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/v4.jpg"}`
+
+### 🧑 User — 2026-11-21T01:03:36.668Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T01:03:41.858Z
+
+> 🔧 **Bash** `{"command": "ls qa/benny/r31/fit/hunyuan2_baked/; python3 -I -c \"\nfrom PIL import Image\nim=Image.open('qa/benny/r31/fit/hunyuan2_baked/y0_p12_black.png').convert('RGB'); w,h=im.size\nim.crop((int(w*0.3),int(h*0.05),int(w*0.7),int(h*0.45))).resize((600,600)).save('/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/blk.png')\"", "description": "Check the black-background render at the pom-pom edge"}`
+
+### 🧑 User — 2026-11-21T01:03:42.004Z
+
+> ↩︎ result: y0_p12.png
+> y0_p12_black.png
+
+### 🤖 Claude — 2026-11-21T01:03:44.263Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/blk.png"}`
+
+### 🧑 User — 2026-11-21T01:03:44.283Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T01:04:03.504Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad && sed -i 's/sel = inA \\& (uvp\\[..., 3\\] > 0.5) \\& (uvp\\[..., 2\\] > 0.06)/sel = inA \\& (uvp[..., 3] > 0.5) \\& (uvp[..., 2] > 0.0)/; s/for sg in (1.5, 3, 6):/for sg in (1.5, 3, 6, 12, 24):/' tools/benny31/bake.py && grep -n \"uvp\\[..., 2\\] > \\|for sg in (1.5\" tools/benny31/bake.py && python3 -I tools/benny31/bake.py qa/benny/r31/gen/hunyuan2.glb $SP/hunyuan2_uv_y0_p12_1536.f32 1536 qa/benny/r31/fit/hunyuan2/y0_p12.png qa/benny/r31/gen/hunyuan2_bake.png 4 && BLACK=1 Q=\"bake=/qa/benny/r3 …[+827 chars]`
+
+### 🧑 User — 2026-11-21T01:05:07.362Z
+
+> ↩︎ result: 69:sel = inA & (uvp[..., 3] > 0.5) & (uvp[..., 2] > 0.0)
+> 93:for sg in (1.5, 3, 6, 12, 24):
+> approved samples 490355 texels hit 470111
+> UV islands cover 77.8 % of the texture
+> baked -> qa/benny/r31/gen/hunyuan2_bake.png
+> rendered 1 to qa/benny/r31/fit/hunyuan2_baked
+>  "IMPROVED 3D": {
+>   "silhouette_iou": 0.956,
+>   "box_within20_pct": 66.8,
+>   "box_ssim": 0.807
+>  }
+> }
+
+### 🤖 Claude — 2026-11-21T01:05:09.547Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/v5.jpg"}`
+
+### 🧑 User — 2026-11-21T01:05:09.583Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T01:05:15.516Z
+
+The white rim didn't change, so something else is going on. Tracing the white rim pixels back to the texture spots they come from.
+
+### 🤖 Claude — 2026-11-21T01:05:22.164Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad && python3 -I - <<EOF\nimport numpy as np\nfrom PIL import Image\nimport cv2\nuvp=np.frombuffer(open('$SP/hunyuan2_uv_y0_p12_1536.f32','rb').read(),np.float32).reshape(1536,1536,4)[::-1]\nblk=np.asarray(Image.open('qa/benny/r31/fit/hunyuan2_baked/y0_p12_black.png').convert('RGB')).astype(int)\nblk15=cv2.resize(blk.astype(np.uint8),(1536,1536),interpolation=cv2.INTER_NEAREST).astype(int)\nwhite=(blk15.min(axis=2)>215)&(uvp[...,3]>0.5)\nprint('white pixels', white.sum())\ntex=np.asarray(Image.open(' …[+724 chars]`
+
+### 🧑 User — 2026-11-21T01:05:22.879Z
+
+> ↩︎ result: white pixels 70217
+> facing of white pixels: median 0.714 tex colours sample [[224, 200, 204], [224, 200, 204], [224, 200, 204], [224, 200, 204], [224, 200, 204], [224, 200, 204], [139, 139, 138], [139, 139, 138]]
+> tex mean at white px [197.8 191.1 194.6]  vs tex overall mean [111.6  72.9 112.8]
+> fraction of white-px texels with min channel > 200: 0.501
+
+### 🤖 Claude — 2026-11-21T01:05:33.548Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad && python3 -I - <<EOF\nimport numpy as np, cv2, sys\nfrom PIL import Image\nsys.path.insert(0,'tools/benny31')\nuvp=np.frombuffer(open('$SP/hunyuan2_uv_y0_p12_1536.f32','rb').read(),np.float32).reshape(1536,1536,4)[::-1]\ncov=(uvp[...,3]>0.5).astype(np.uint8)\nrim=cov & (1-cv2.erode(cov,np.ones((7,7),np.uint8)))\nblk=np.asarray(Image.open('qa/benny/r31/fit/hunyuan2_baked/y0_p12_black.png').convert('RGB'))\nblk15=cv2.resize(blk,(1536,1536),interpolation=cv2.INTER_LINEAR).astype(int)\nwhite=(blk15.m …[+1253 chars]`
+
+### 🧑 User — 2026-11-21T01:05:34.189Z
+
+> ↩︎ result: white rim px 5905 of rim 12913  y range 311 1155
+> tex at white rim (mean) [191.8 188.2 189.6] facing median 0.353
+> frame y of white rim px: median 868.0  fraction below waterline 0.0
+> fraction inside dilated matte 1.0
+
+### 🤖 Claude — 2026-11-21T01:05:55.119Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad && python3 -I - <<'EOF'\np='tools/benny31/bake.py'; s=open(p).read()\nold=\"A2 = cv2.resize(A, (2 * FW, 2 * FH), interpolation=cv2.INTER_LINEAR); core = (A2 > 0.85).astype(np.float32)\"\nnew=\"\"\"A2 = cv2.resize(A, (2 * FW, 2 * FH), interpolation=cv2.INTER_LINEAR)\n# the painted outline carries light fur tips (a soft glow); on the harder mesh edge they read as a white line -> the outline\n# band (~6 px at 1x) takes the colours from just inside instead\ncore = cv2.erode((A2 > 0.5).astype(np.uint8) …[+1198 chars]`
+

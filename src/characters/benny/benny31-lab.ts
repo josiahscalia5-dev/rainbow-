@@ -66,7 +66,7 @@ async function load() {
   box.getCenter(center); radius = box.getSize(new THREE.Vector3()).length() / 2;
 }
 
-function render(o: { yaw: number; pitch: number; w?: number; h?: number; fov?: number }) {
+function render(o: { yaw: number; pitch: number; w?: number; h?: number; fov?: number; black?: boolean }) {
   const w = o.w ?? 768, h = o.h ?? 768;
   renderer.setSize(w, h, false); composer.setSize(w, h);
   cam.aspect = w / h; cam.fov = o.fov ?? 30; cam.updateProjectionMatrix();
@@ -79,6 +79,9 @@ function render(o: { yaw: number; pitch: number; w?: number; h?: number; fov?: n
   sun.position.copy(center).add(new THREE.Vector3(0.3, 1, 0.45).multiplyScalar(10));
   sun.target.position.copy(cam.position).add(new THREE.Vector3(0, -10, -10).applyAxisAngle(new THREE.Vector3(0, 1, 0), yaw + Math.PI).add(fwd.multiplyScalar(0)));
   fill.position.copy(cam.position);
+  // black = opaque black background through the same chain (post(0) = 0): edge pixels come out as display colour x coverage,
+  // free of the brightening that the transparent path gives premultiplied edge pixels
+  renderer.setClearColor(0x000000, o.black ? 1 : 0); rp.clearAlpha = o.black ? 1 : 0;
   composer.render();
   return canvas.toDataURL('image/png');
 }
