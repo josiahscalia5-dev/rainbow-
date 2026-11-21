@@ -36,3 +36,7 @@
 | 2026-11-21 00:49 | benny31_matte2x | fal-ai/birefnet/v2 | `01a1fb93-fc2e-7f60-b8bf-87d001b6c667` | 0.010 | True | 3 |
 | 2026-11-21 00:49 | benny31_tripo25 | tripo3d/tripo/v2.5/image-to-3d | `01a1fb94-5a18-7451-9cc9-f45b3e7dd415` | 0.400 | False | 4 |
 | 2026-11-21 00:50 | benny31_trellis | fal-ai/trellis | `01a1fb94-59bc-7b53-85e7-40346bcfa3a2` | 0.400 | True | 52 |
+| 2026-11-21 00:51 | benny31_rodin | fal-ai/hyper3d/rodin | `01a1fb94-5a22-7db2-b7a9-716e8c0201c2` | 0.400 | True | 123 |
+| 2026-11-21 00:53 | benny31_tripo25 | tripo3d/tripo/v2.5/image-to-3d | `01a1fb96-a62c-7f82-98c2-a9d11ac63f65` | 0.400 | True | 107 |
+| 2026-11-21 00:54 | benny31_hunyuan2 | fal-ai/hunyuan3d/v2 | `01a1fb96-a624-7f01-9cf7-de52b05b08f6` | 0.400 | True | 163 |
+| 2026-11-21 00:55 | benny31_hunyuan3 | fal-ai/hunyuan-3d/v3.1/pro/image-to-3d | `01a1fb96-a621-7ab2-9302-f1ba283d023b` | 0.400 | True | 199 |
