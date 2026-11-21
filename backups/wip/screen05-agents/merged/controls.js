@@ -228,6 +228,24 @@ export function installControls(ctx) {
       #include <fog_fragment>`);
   };
   bmat.needsUpdate = true;
+  // QA: screen box of his above-water part if he were scaled by k about his water point, sunk by `sink` and placed `ahead` further
+  // along the river (nothing is changed: transforms are restored). Used to size a fix against the approved picture.
+  window.qaBennyFit = (k = 1, sink = 0, ahead = 0) => {
+    const p0 = benny.position.clone(), s0 = benny.scale.clone(), ch = canvas.height, cw = canvas.width, sNow = getS() + ahead, Fq = frameAt(sNow);
+    const wp = at(sNow, new THREE.Vector3()).addScaledVector(Fq.r, S.lat.x); benny.position.copy(wp).addScaledVector(Fq.n, -sink); benny.scale.setScalar(k); benny.updateMatrixWorld(true);
+    camera.updateMatrixWorld(); const v = new THREE.Vector3(); let top = 1e9, wl = -1e9, xl = 1e9, xr = -1e9, bot = -1e9;
+    benny.traverse((o) => { if (!o.isMesh) return; const a = o.geometry.attributes.position; for (let i = 0; i < a.count; i += 3) { v.fromBufferAttribute(a, i).applyMatrix4(o.matrixWorld); const h = Fq.n.dot(v.clone().sub(wp));
+      const q = v.clone().project(camera), x = (q.x + 1) / 2 * cw, y = (1 - q.y) / 2 * ch; if (h >= 0) { top = Math.min(top, y); xl = Math.min(xl, x); xr = Math.max(xr, x); bot = Math.max(bot, y); } if (Math.abs(h) < 0.005) wl = Math.max(wl, y); } });
+    benny.position.copy(p0); benny.scale.copy(s0); benny.updateMatrixWorld(true);
+    return { k, sink, ahead, top: Math.round(top), nearWaterline: Math.round(wl), lowestAbove: Math.round(bot), xL: Math.round(xl), xR: Math.round(xr), width: Math.round(xr - xl) };
+  };
+  // QA: the water plane vs his mesh (min / max height of his vertices above the plane, undeformed) and the material's program key
+  window.qaWaterLine = () => { const P4 = U.uWater.value, n = new THREE.Vector3(P4.x, P4.y, P4.z); let lo = 1e9, hi = -1e9; const v = new THREE.Vector3();
+    benny.updateMatrixWorld(true); benny.traverse((o) => { if (!o.isMesh) return; const a = o.geometry.attributes.position; for (let i = 0; i < a.count; i += 7) { v.fromBufferAttribute(a, i).applyMatrix4(o.matrixWorld); const h = n.dot(v) + P4.w; lo = Math.min(lo, h); hi = Math.max(hi, h); } });
+    const ys = { line: [], below: [], above: [] }; const ch = canvas.height; camera.updateMatrixWorld();
+    benny.traverse((o) => { if (!o.isMesh) return; const a = o.geometry.attributes.position; for (let i = 0; i < a.count; i += 5) { v.fromBufferAttribute(a, i).applyMatrix4(o.matrixWorld); const h = n.dot(v) + P4.w; const y = (1 - v.clone().project(camera).y) / 2 * ch; (Math.abs(h) < 0.006 ? ys.line : h < 0 ? ys.below : ys.above).push(y); } });
+    const rng = (a) => a.length ? [Math.round(Math.min(...a)), Math.round(Math.max(...a))] : null;
+    return { screenY: { waterline: rng(ys.line), below: rng(ys.below), above: rng(ys.above) }, plane: P4.toArray().map((x) => +x.toFixed(4)), sub: U.uSub.value.toArray(), meshAbovePlane: [+lo.toFixed(4), +hi.toFixed(4)], submergedFrac: +(-lo / (hi - lo)).toFixed(3), key: String(bmat.customProgramCacheKey()).slice(0, 80), hasHook: String(bmat.onBeforeCompile).includes('b31d') }; };
 
   // ---------------- per-step update (called first in window.step) ----------------
   function update(t, dt) {

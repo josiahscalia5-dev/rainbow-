@@ -1,5 +1,5 @@
 {
- "time_utc": "2026-11-21T14:26:29+00:00",
+ "time_utc": "2026-11-21T14:29:51+00:00",
  "lead_branch": "ccr-81d66c17-i0ooo8",
  "specialists_sha256_16": {
   "android-build-performance": "b0c45161860a960c",
@@ -49,8 +49,12 @@
    }
   }
  },
- "plugins_installed_locally": [],
- "plugins_enabled_user_settings": [],
+ "plugins_installed_locally": [
+  "worldlabs@worldlabs"
+ ],
+ "plugins_enabled_user_settings": [
+  "worldlabs@worldlabs"
+ ],
  "plugins_synced_from_claude_account": [
   "Automated code review for pull requests using multiple specialized agents with confidence-",
   "Frontend design skill for UI/UX implementation",
@@ -69,7 +73,9 @@
   "spaitial-ai",
   "superpowers"
  ],
- "mcp_servers_configured": [],
+ "mcp_servers_configured": [
+  "worldlabs"
+ ],
  "hooks_project": [
   "PreCompact",
   "SessionEnd",

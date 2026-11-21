@@ -24,7 +24,7 @@ import { dyno } from '@sparkjsdev/spark';
 const f = (x) => (Number.isInteger(x) ? x.toFixed(1) : String(x));
 const v3 = (v) => `vec3(${f(v.x)}, ${f(v.y)}, ${f(v.z)})`;
 
-export function createWaterFlow({ TR, SC, meshes, far = null, amp = 1, speed = 0.9 }) {
+export function createWaterFlow({ TR, SC, meshes, far = null, kmax = null, amp = 1, speed = 0.9 }) {
   const N = new THREE.Vector3(...SC.plane.n).normalize();
   const AX = new THREE.Vector3(...TR.ax).normalize();
   const RT = new THREE.Vector3(...TR.right).normalize();
@@ -114,7 +114,7 @@ float wf_hash(int i) { return fract(sin(float(i) * 12.9898 + 4.1414) * 43758.545
       camera.getWorldPosition(uCam.value);
       // the far piece sits after copy `last`; its water is flat at the level after that copy
       const last = far ? Math.round(far.position.dot(AX) / DU) : (TR.N ?? 10);
-      uK.value = last + 1;
+      uK.value = kmax ?? last + 1; // kmax: the page's last copy + 1 when copies run on past the path end
       for (const m of meshes) if (m.visible) m.updateVersion();
     },
   };
