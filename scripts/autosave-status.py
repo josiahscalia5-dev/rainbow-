@@ -40,7 +40,7 @@ def main() -> int:
     elif branch != CFG["branch"] and not any(fnmatch.fnmatchcase(branch, p) for p in CFG.get("session_branch_patterns", [])):
         problems.append(f"current branch {branch} matches no allowed session-branch pattern")
     _, cron = sh("bash", "-c", "crontab -l 2>/dev/null | grep -c rainbow-autosave; pgrep -x cron >/dev/null && echo cron-up || echo cron-down")
-    _, daemon = sh("bash", "-c", "pgrep -f scripts/autosave-daemon.sh >/dev/null && echo up || echo down")
+    _, daemon = sh("bash", "-c", "pgrep -f 'scripts/autosave-[d]aemon.sh' >/dev/null && echo up || echo down")
     sched = "cron" if ("cron-up" in cron and not cron.startswith("0")) else ("daemon" if daemon == "up" else "NONE")
     if sched == "NONE":
         problems.append("no scheduler running (no cron entry and no daemon) — run: bash scripts/install-autosave-scheduler.sh")

@@ -1,11 +1,12 @@
 """Round 32 lead: merge the two Screen 05 specialists' folders into one playable page (reproducible, never edits their folders).
-  python3 -I tools/marble05/merge_r32.py <workspace>     (workspace = the folder setup_r32.sh built: base/, agentA/, agentB/)
+  python3 -I tools/marble05/merge_r32.py <workspace> [out=<workspace>/merged]   (workspace = the folder setup_r32.sh built: base/, agentA/, agentB/)
 Result: <workspace>/merged = agentB's visuals (waterflow.js, track_w/, backing shells, golden end) + agentA's controls (controls.js and its
 `// [controls]` hooks), page merged with a three-way merge of play3.html against the common original (base/play3.html); the known
 "both added a line at the same place" conflicts are resolved by keeping both; anything else stops the merge. Adds one lead hook:
 window.camInfo() (camera pose per frame for the acceptance test's smoothness check)."""
 import os, sys, shutil, subprocess, filecmp
 WS = sys.argv[1]; A, B, O, M = (os.path.join(WS, x) for x in ('agentA', 'agentB', 'base', 'merged'))
+if len(sys.argv) > 2: M = os.path.abspath(sys.argv[2])   # optional other output folder (e.g. a specialist's private test copy)
 SKIP_DIRS = ('out_', '_', 'node_modules')
 if os.path.exists(M): shutil.rmtree(M)
 shutil.copytree(B, M, symlinks=True, ignore=lambda d, names: [n for n in names if (n.startswith('out_') or n == 'node_modules') and os.path.isdir(os.path.join(d, n))])
@@ -42,7 +43,8 @@ while i < len(lines):
         sys.exit('UNKNOWN CONFLICT, resolve by hand:\n' + '\n'.join(['B:'] + b + ['A:'] + a))
 page = '\n'.join(out)
 hook = "window.camInfo = () => ({ p: camera.position.toArray(), q: camera.quaternion.toArray() }); // [lead] acceptance test: camera pose per frame\n"
-assert page.count('window.ready = true;') == 1; page = page.replace('window.ready = true;', hook + 'window.ready = true;')
+assert page.count('window.ready = true;') == 1
+if 'window.camInfo' not in page: page = page.replace('window.ready = true;', hook + 'window.ready = true;')
 assert '<<<<<<<' not in page and '>>>>>>>' not in page
 open(os.path.join(M, 'play3.html'), 'w').write(page); shutil.rmtree(tmp)
 open(os.path.join(M, 'MERGE_REPORT.txt'), 'w').write('\n'.join(report) + '\n')

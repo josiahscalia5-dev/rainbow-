@@ -1603,3 +1603,205 @@ The autosave now copies the specialists' work itself (8 files in this save, GitH
 
 > 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad; R=$SP/recovery; rm -rf $R; mkdir -p $R && cd $R && time (GIT_LFS_SKIP_SMUDGE=1 git clone -q --depth 1 --branch ccr-c0679182-krbfci https://github.com/josiahscalia5-dev/rainbow- clone 2>&1 | tail -3); du -sh clone; git -C clone log --oneline -1", "description": "Fresh shallow clone of the session branch from GitHub", "timeout": 900000}`
 
+### 🧑 User — 2026-11-21T13:11:46.402Z
+
+> ↩︎ result: real	4m45.161s
+> user	1m5.035s
+> sys	0m23.934s
+> 13G	clone
+> 4850e31 autosave: Rainbow 2026-11-21 13:06 UTC
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T13:12:11.596Z
+
+> 🔧 **Bash** `{"command": "df -h /tmp /home/user 2>/dev/null | head; du -sh /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/* 2>/dev/null | sort -h | tail -8; du -sh /home/user/rainbow-/.git 2>/dev/null", "description": "Check disk usage of clone and workspace"}`
+
+### 🧑 User — 2026-11-21T13:12:12.195Z
+
+> ↩︎ result: Filesystem      Size  Used Avail Use% Mounted on
+> /dev/vda        252G   47G   22G  69% /
+> /dev/vda        252G   47G   22G  69% /
+> 292K	/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/dry_merged
+> 400K	/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/dry_out
+> 102M	/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/base
+> 110M	/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/merged
+> 112M	/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA
+> 112M	/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/dry_A
+> 221M	/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB
+> 13G	/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/recovery
+> 15G	/home/user/rainbow-/.git
+
+### 🤖 Claude — 2026-11-21T13:12:17.875Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='tools/marble05/merge_r32.py'; s=open(p).read()\ns=s.replace(\"WS = sys.argv[1]; A, B, O, M = (os.path.join(WS, x) for x in ('agentA', 'agentB', 'base', 'merged'))\",\n\"WS = sys.argv[1]; A, B, O, M = (os.path.join(WS, x) for x in ('agentA', 'agentB', 'base', 'merged'))\\nif len(sys.argv) > 2: M = os.path.abspath(sys.argv[2])   # optional other output folder (e.g. a specialist's private test copy)\")\ns=s.replace(\"assert page.count('window.ready = true;') == 1; page = page.replace('window.ready = true;', hook + 'window.ready = true;')\",\n\"assert page.cou …[+628 chars]`
+
+### 🧑 User — 2026-11-21T13:12:17.940Z
+
+> ↩︎ result: 8:WS = sys.argv[1]; A, B, O, M = (os.path.join(WS, x) for x in ('agentA', 'agentB', 'base', 'merged'))
+> 9:if len(sys.argv) > 2: M = os.path.abspath(sys.argv[2])   # optional other output folder (e.g. a specialist's private test copy)
+> 47:if 'window.camInfo' not in page: page = page.replace('window.ready = true;', hook + 'window.ready = true;')
+
+### 🤖 Claude — 2026-11-21T13:12:39.087Z
+
+> 🔧 **SendMessage** `{"to": "a08dcc646e5a9494e", "summary": "New task: natural coin trail + level end", "message": "New task from the lead (user feedback): rebuild the Screen 05 coins as ONE natural trail that matches the approved picture, and add a real level end. Same folder (agentA), same rules (no git, no repo edits, no credits).\n\nUSER'S WORDS: \"the coins look crowded or overlapping in some areas. Please make sure their placement looks natural and matches my approved Screen 05.\" Also: \"the final recording must demonstrate the entire playable level, not just a short portion.\"\n\nWHAT I MEASURED (lead):\n- …[+4821 chars]`
+
+### 🧑 User — 2026-11-21T13:12:39.164Z
+
+> ↩︎ result: {"success":true,"message":"Resuming agent a08dcc6","resumedAgentId":"a08dcc646e5a9494e","pin":{"id":"a08dcc646e5a9494e","name":"a08dcc646e5a9494e","ref":"7779b0"}}
+
+### 🤖 Claude — 2026-11-21T13:12:40.531Z
+
+Specialist A is now rebuilding the coins and adding the level ending. Continuing the restart test: rebuilding the workspace from the fresh clone alone.
+
+### 🤖 Claude — 2026-11-21T13:12:43.046Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad; R=$SP/recovery; cd $R/clone && cp backups/wip/screen05-agents/WORKSPACE /tmp/ws_before 2>/dev/null; time (bash docs/briefs/2026-11-21-r32/setup_r32.sh $R/ws 2>&1 | tail -6); git -C $R/clone status --short | head -5", "description": "Rebuild the workspace from the fresh clone only", "timeout": 1200000}`
+
+### 🧑 User — 2026-11-21T13:12:50.760Z
+
+> ↩︎ result: conflict: both added lines here -> kept both (let qaRise = 0; window.qaPose = (lat, rise = 0) => { st.lat  | const CT = q.get('controls') === '0' ? null : installControl)
+> conflict: camera line = agentA controls + agentB qaRise
+> conflict: end of step = agentB water update + agentA return
+> merged -> /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/recovery/ws/merged
+> workspace ready: /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/recovery/ws (base, agentA, agentB, merged). Stills: cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/recovery/ws/base && PAGE=play3.html STILLS='[0,2.3]' NODE_PATH=$(npm root -g) node play_shots2.cjs out stills
+> Acceptance run (whole level, real touch swipes): NODE_PATH=$(npm root -g) node /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/recovery/clone/tools/marble05/viewer/final_acceptance.cjs <merged folder> <outdir>; then python3 -I /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/recovery/clone/tools/marble05/viewer/visual_check.py <outdir> /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5eb …[+211 chars]
+
+### 🤖 Claude — 2026-11-21T13:13:01.675Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad; R=$SP/recovery; cd $R/clone && ls -la qa/worldlabs/05/r32/full_500k.spz assets/models/benny31.glb | awk '{print $5, $9}'; head -c 60 qa/worldlabs/05/r32/full_500k.spz | od -c | head -2; cd $R/ws && python3 -I - <<'EOF'\nimport os, filecmp, time\nSP='/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad'\ncut=time.mktime(time.strptime('2026-11-21 13:06:00','%Y-%m-%d %H:%M:%S'))  # container clock is UTC\nfor a in ('agentA','agentB'):\n    same=diff=missing=newer=0; bad= …[+1010 chars]`
+
+### 🧑 User — 2026-11-21T13:13:02.237Z
+
+> ↩︎ result: 5492416 assets/models/benny31.glb
+> 7755663 qa/worldlabs/05/r32/full_500k.spz
+> 0000000 037 213  \b  \0  \0  \0  \0  \0 004 003 034   ] 005 220   [   W
+> 0000020 266   l   1 016   3   3 230 031 343 304 016   3   3   3   l   8
+> agentA identical 50 differs 6 missing 0 changed after the 13:06 save 2 ['differs track/far.ply', 'differs track/near.ply', 'differs track/bay.ply', 'differs track/bay_m.ply', 'differs track/bay_m_lo.ply', 'differs track/bay_lo.ply']
+> agentB identical 98 differs 14 missing 0 changed after the 13:06 save 33 ['differs track/far.ply', 'differs track/near.ply', 'differs track/bay.ply', 'differs track/bay_m.ply', 'differs track/bay_m_lo.ply', 'differs track/bay_lo.ply', 'differs track_w/far.ply', 'differs track_w/near.ply']
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T13:13:10.551Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad; for f in agentB/track_w/near.ply agentB/track_w/bay.ply agentB/track_w/far.ply agentA/track/near.ply; do echo \"$f live: $(stat -c '%s %y' $SP/$f | cut -c1-40) | rec: $(stat -c '%s %y' $SP/recovery/ws/$f | cut -c1-40) | repo-backup: $(stat -c '%s' /home/user/rainbow-/backups/wip/screen05-agents/$f 2>/dev/null)\"; done; cd /home/user/rainbow- && git check-attr filter backups/wip/screen05-agents/agentB/track_w/near.ply; git show HEAD:backups/wip/screen05-agents/agentB/track_w/near.ply | head -c 200 …[+54 chars]`
+
+### 🧑 User — 2026-11-21T13:13:10.625Z
+
+> ↩︎ result: agentB/track_w/near.ply live: 25564810 2026-11-21 12:45:38.945914437 + | rec: 133 2026-11-21 13:11:28.531416657 +0000 | repo-backup: 25564810
+> agentB/track_w/bay.ply live: 11779234 2026-11-21 12:45:39.861914491 + | rec: 133 2026-11-21 13:11:28.526006549 +0000 | repo-backup: 11779234
+> agentB/track_w/far.ply live: 1282817 2026-11-21 12:45:43.573177579 +0 | rec: 132 2026-11-21 13:11:28.531416657 +0000 | repo-backup: 1282817
+> agentA/track/near.ply live: 25525050 2026-11-21 12:45:39.161914450 + | rec: 133 2026-11-21 13:11:28.465530169 +0000 | repo-backup: 25525050
+> backups/wip/screen05-agents/agentB/track_w/near.ply: filter: lfs
+> version https://git-lfs.github.com/spec/v1
+> oid sha256:9890b2a442e4e3d60252a0c6997c7faff4836fc48135e55cc36f043223e67ba9
+> size 25564810
+
+### 🤖 Claude — 2026-11-21T13:13:22.613Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='docs/briefs/2026-11-21-r32/setup_r32.sh'; s=open(p).read()\nold='git -C \"$REPO\" lfs pull --include \"qa/worldlabs/05/r32/*.spz,assets/models/benny31.glb\" >/dev/null 2>&1 || true'\nnew='''# Git LFS: the worlds, Benny AND the specialists' saved track pieces (backups/wip/screen05-agents/**/*.ply are LFS objects:\n# without this a fresh clone copies 133-byte pointer files into the workspace and the level cannot load — found in the r32 restart test)\ngit -C \"$REPO\" lfs pull --include \"qa/worldlabs/05/r32/*.spz,assets/models/benny31.glb,assets/textures/ben …[+1037 chars]`
+
+### 🧑 User — 2026-11-21T13:13:22.671Z
+
+> ↩︎ result: 16:git -C "$REPO" lfs pull --include "qa/worldlabs/05/r32/*.spz,assets/models/benny31.glb,assets/textures/benny31/*,backups/wip/screen05-agents/**" >/dev/null 2>&1 || true
+> 31:# refuse to call a workspace "ready" while any file in it is still an LFS pointer (git lfs pull failed / offline)
+> 32:PTR=$(find -L "$WS/base" "$WS/agentA" "$WS/agentB" "$WS/merged" -path '*/node_modules' -prune -o -type f -size -200c -print0 2>/dev/null | xargs -0 grep -l "^version https://git-lfs" 2>/dev/null | head -5)
+> 33:if [ -n "$PTR" ]; then echo "SETUP FAILED: Git LFS pointer files instead of real data (run: git -C $REPO lfs pull, then this script again):"; echo "$PTR"; exit 1; fi
+
+### 🤖 Claude — 2026-11-21T13:13:29.805Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad; R=$SP/recovery; cp /home/user/rainbow-/docs/briefs/2026-11-21-r32/setup_r32.sh $R/clone/docs/briefs/2026-11-21-r32/setup_r32.sh && cp /home/user/rainbow-/tools/marble05/merge_r32.py $R/clone/tools/marble05/ && cd $R/clone && rm -rf $R/ws && time (bash docs/briefs/2026-11-21-r32/setup_r32.sh $R/ws 2>&1 | tail -3 | cut -c1-200); ls -la $R/ws/agentB/track_w/near.ply $R/ws/merged/track_w/near.ply | awk '{print $5, $9}'", "description": "Re-run the recovery with the fixed setup script", "timeout": 180 …[+5 chars]`
+
+### 🧑 User — 2026-11-21T13:13:38.195Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/recovery/ws/agentA/echo2.spz
+> /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/recovery/ws/agentB/echo2.spz
+> /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/recovery/ws/merged/echo2.spz
+> 
+> real	0m7.798s
+> user	0m5.686s
+> sys	0m2.683s
+> 25564810 /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/recovery/ws/agentB/track_w/near.ply
+> 25564810 /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/recovery/ws/merged/track_w/near.ply
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T13:13:40.959Z
+
+Track pieces now restore at full size. The new check also caught a second placeholder (an alternative test world, `echo2.spz`); adding it to the download too.
+
+### 🤖 Claude — 2026-11-21T13:13:44.715Z
+
+> 🔧 **Bash** `{"command": "ls -la qa/spaitial/05/echo2.spz | awk '{print $5}'; sed -i 's#assets/textures/benny31/\\*,backups/wip/screen05-agents/\\*\\*\"#assets/textures/benny31/*,qa/spaitial/05/echo2.spz,backups/wip/screen05-agents/**\"#' docs/briefs/2026-11-21-r32/setup_r32.sh && grep -n \"lfs pull\" docs/briefs/2026-11-21-r32/setup_r32.sh; SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad; R=$SP/recovery; cp docs/briefs/2026-11-21-r32/setup_r32.sh $R/clone/docs/briefs/2026-11-21-r32/ && cd $R/clone && rm -rf $R/ws && (bash docs/briefs/2026-11-21-r32/setup_r32.sh $R/ws 2 …[+121 chars]`
+
+### 🧑 User — 2026-11-21T13:13:52.336Z
+
+> ↩︎ result: 37222474
+> 16:git -C "$REPO" lfs pull --include "qa/worldlabs/05/r32/*.spz,assets/models/benny31.glb,assets/textures/benny31/*,qa/spaitial/05/echo2.spz,backups/wip/screen05-agents/**" >/dev/null 2>&1 || true
+> 31:# refuse to call a workspace "ready" while any file in it is still an LFS pointer (git lfs pull failed / offline)
+> 33:if [ -n "$PTR" ]; then echo "SETUP FAILED: Git LFS pointer files instead of real data (run: git -C $REPO lfs pull, then this script again):"; echo "$PTR"; exit 1; fi
+> workspace ready: /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/recovery/ws (base, agentA, agentB, merged). Stills: cd /tmp/c
+> Acceptance run (whole level, real touch swipes): NODE_PATH=$(npm root -g) node /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad
+> Shell cwd was reset to /home/user/rainbow-
+> [This command modified 1 file you've previously read: docs/briefs/2026-11-21-r32/setup_r32.sh. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-21T13:13:53.690Z
+
+Fresh-clone setup now completes cleanly. Comparing the recovered files with the live specialist folders again, then a logic-only play of the recovered merged page.
+
+### 🤖 Claude — 2026-11-21T13:14:01.344Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad; R=$SP/recovery; cd $R/ws && python3 -I - <<'EOF'\nimport os, filecmp, time\nSP='/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad'\ncut=time.mktime(time.strptime('2026-11-21 13:06:00','%Y-%m-%d %H:%M:%S'))\nfor a in ('agentA','agentB'):\n    same=diff=missing=newer=0; bad=[]\n    for root,dirs,files in os.walk(f'{SP}/{a}'):\n        dirs[:]=[d for d in dirs if d not in ('node_modules','mergedtest') and not d.startswith('out_run') and not os.path.islink(os.path.join …[+1394 chars]`
+
+### 🧑 User — 2026-11-21T13:14:58.601Z
+
+> ↩︎ result: agentA identical 56 differs 0 missing 0 (changed after the 13:06 save, not comparable: 2 ) []
+> agentB identical 112 differs 0 missing 0 (changed after the 13:06 save, not comparable: 35 ) []
+> errors [] | swipes ok 10 / 10 | lanes [0, -1, 1] | height 0.2794 -0.2704 | coins 1420 -> 1590 | camera True
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T13:15:06.767Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad; python3 -I -c \"\nfrom PIL import Image\na=Image.open('/home/user/rainbow-/references/05_flow_into_the_current.png').convert('RGB').resize((412,915)); b=Image.open('$SP/recovery/acc_logic/f_0000.jpg').convert('RGB')\ns=Image.new('RGB',(834,915),'white'); s.paste(a,(0,0)); s.paste(b,(422,0)); s.save('$SP/recovered_f0.jpg',quality=85)\"", "description": "Side-by-side approved vs recovered frame 0"}`
+
+### 🧑 User — 2026-11-21T13:15:06.927Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-21T13:15:08.675Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/recovered_f0.jpg"}`
+
+### 🧑 User — 2026-11-21T13:15:08.698Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T13:15:29.433Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,40p scripts/install-autosave-scheduler.sh | grep -v \"^\\s*$\" | head -30", "description": "Read how the autosave scheduler is re-armed"}`
+
+### 🧑 User — 2026-11-21T13:15:29.472Z
+
+> ↩︎ result: #!/usr/bin/env bash
+> # Installs (idempotently) the Rainbow five-minute autosave scheduler on this machine.
+> #   * Linux with cron  -> crontab entry  */5 * * * *  + starts the cron daemon if it is not running
+> #   * no cron available -> falls back to a detached loop daemon (scripts/autosave-daemon.sh)
+> # Session env needed by git (proxy, CA bundle, url rewrites) is captured to ~/.rainbow-autosave.env
+> # (chmod 600, outside the repo; it contains NO tokens — auth is handled by the git proxy/helper).
+> set -u
+> REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+> ENVF="$HOME/.rainbow-autosave.env"
+> LOGD="$HOME/.rainbow-autosave"
+> mkdir -p "$LOGD"
+> # 1. capture non-secret environment that git/curl need outside the interactive session
+> {
+>   echo "# generated by install-autosave-scheduler.sh — proxy/CA/git-url settings only"
+>   for v in PATH HOME HTTPS_PROXY https_proxy HTTP_PROXY http_proxy NO_PROXY no_proxy SSL_CERT_FILE \
+>            CURL_CA_BUNDLE REQUESTS_CA_BUNDLE GIT_SSL_CAINFO NODE_EXTRA_CA_CERTS GIT_TERMINAL_PROMPT \
+>            GIT_EDITOR GIT_CONFIG_COUNT CLAUDE_CODE_REMOTE_SESSION_ID; do
+>     [ -n "${!v-}" ] && printf 'export %s=%q\n' "$v" "${!v}"
+>   done
+>   n="${GIT_CONFIG_COUNT:-0}"
+>   for ((i …[+417 chars]
+
+### 🤖 Claude — 2026-11-21T13:15:32.026Z
+
+> 🔧 **Bash** `{"command": "echo \"before: $(pgrep -f autosave-daemon.sh | tr '\\n' ' ')\"; pkill -f autosave-daemon.sh; sleep 2; echo \"after kill: $(pgrep -f autosave-daemon.sh | tr '\\n' ' ')[none expected]\"; python3 -I scripts/autosave-status.py | cut -c1-160; echo '{}' | bash scripts/autosave-hook.sh Stop; sleep 5; echo \"after Stop hook: $(pgrep -af autosave-daemon.sh | head -2)\"", "description": "Kill the autosave daemon and let the Stop hook re-arm it"}`
+

@@ -758,3 +758,178 @@ Files are in `/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed0
 - out_controls/a_start_frame0.png
 - CONTROLS_NOTES.md
 
+### 🧑 User — 2026-11-21T13:12:39.151Z
+
+The coordinator sent a message while you were working:
+New task from the lead (user feedback): rebuild the Screen 05 coins as ONE natural trail that matches the approved picture, and add a real level end. Same folder (agentA), same rules (no git, no repo edits, no credits).
+
+USER'S WORDS: "the coins look crowded or overlapping in some areas. Please make sure their placement looks natural and matches my approved Screen 05." Also: "the final recording must demonstrate the entire playable level, not just a short portion."
+
+WHAT I MEASURED (lead):
+- Approved picture (references/05_flow_into_the_current.png): ONE single-file trail of coins, about 6 clearly visible and spaced apart, weaving slightly with the S-river, then tiny coins to the vanishing point. No coin touches another.
+- Our frame 0: the 40 water coins (play3.html base code, s = 0.45 + 0.32 i) sit about 1.5× too close together. The camera is low, so they overlap on screen into a solid stack.
+- Mid-run, your air arcs sit right on top of water coins and your side-lane rows sit next to them, so they read as towers and clusters (your d_after_air_coin.png).
+- The water line ends at s ≈ 12.9, but the rebuilt track (agentB `track_w/track.json`, N = 14) runs to s ≈ 32.16, where it ends in the golden light.
+- Back-projecting the approved coin centres through the start camera onto the river (coin centre 0.75·coin_d above the water) gives (s, lat): (1.03, −0.007), (1.56, +0.037), (2.00, −0.073), (2.44, −0.069), (2.97, +0.088). The far ones are less reliable.
+- The painted coins shrink faster with distance than true perspective. Approved widths at 864×1536 are 96/70/56/43/28/19 px. Our sprites (coin_d·1.15) at those positions would be 103/84/73/64/56/52 px.
+
+SPEC:
+1. EXACTLY 26 coins in the whole level: HUD 1,420 → 1,680 if all are collected. 1,680 is the approved Screen 06 HUD, so the screens join up. Remove the old 40-coin water line and your current air/side extras (hook into play3's coin block with a `// [controls]` line, e.g. CT builds the coin list).
+2. Single file: never two coins within 0.35 u of path length of each other, so there are never side-by-side or stacked coins.
+3. Run 1 (frame 0 must look like the approved picture): coins at the five measured (s, lat) above, then continue ~0.5 apart along the river to about s 4.5 (≈ 8 coins), receding to the vanishing point.
+4. Then runs of 3–5 coins, ~0.5 apart, with natural gaps between runs, all the way to the level end.
+   - Some runs ease into a side lane (lat goes to ±0.22 smoothly over ≥ 3 coins: a gentle curve, not a jump).
+   - 2–3 runs form a leap arc: the trail itself rises over 3 coins to a height his leap reaches (head/body must reach them; check with your 3D pick-up rule). Never a coin above or below another coin.
+   - Coins stay inside the river (|lat| ≤ 0.22) and above the water; nothing clips into foam banks or walls (check against agentB's track).
+5. Painting perspective for coin SIZE, so far coins never crowd: sprite size × m(camera distance), smooth per frame, interpolated over (dist, m): (≤2.0, 0.93), (2.5, 0.84), (2.9, 0.77), (3.3, 0.67), (3.8, 0.50), (4.4, 0.32), (≥6, 0.28). Coins then grow naturally as they approach, as in the painting. Drop the "grow in during the first 0.4 s" trick; frame 0 now shows the real layout.
+6. Expose `window.coinScreen()`: visible coins as [{x, y, r}] in canvas pixels (projected centre, on-screen radius). The acceptance test will check, every frame, that no two visible coins with r ≥ 6 px overlap.
+7. LEVEL END:
+   - S_END = the trail s of the LAST ring, computed at runtime from the loaded track: TR.XB + TR.offsets[TR.N−1], nearest trail point; with agentB's track ≈ 32.16, the trail's end.
+   - Choose a margin so the camera never touches agentB's golden end disc. It sits at the last ring + 0.35 along TR.ax, radius 2.6; in agentB's play3.html look for `glow`.
+   - At s ≥ S_END − margin: state() gets `done: true` and stays true. Forward movement may stop there; the test stops at done.
+   - Compute it from TR so it works with any track version.
+8. TEST ON THE REAL MERGED PAGE:
+   - `python3 -I /home/user/rainbow-/tools/marble05/merge_r32.py /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad <your folder>/mergedtest` builds a private merged copy (agentB's visuals + your current controls) inside your folder. It only READS agentB, which is another specialist's live folder: never write there.
+   - Logic-only checks over the whole level: coin count 26, min spacing, |lat|, coin heights, `coinScreen()` overlaps at frame 0 and at 10 points along the level, done reached.
+   - Then render at most 4 stills on the merged copy: frame 0, a side-lane run, a leap arc, the level end. Make an APPROVED | frame 0 side-by-side of the coin region.
+   - Keep your server on 9000–9399 with the marker check.
+9. Also tell me the coin layout as a list of (s, lat, h). I will write the full-level player plan for the acceptance test: a player who follows the coin trail and also does extra left/right/up/down swipes.
+
+Fill a "Coins + level end (round 32b)" section in CONTROLS_NOTES.md with the numbers. Aim for ~45 minutes. Report a short honest summary.
+
+Address this before completing your current task.
+
+### 🤖 Claude — 2026-11-21T13:12:42.048Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && sed -n 30,140p play3.html", "description": "Read play3.html middle section (track, coins, camera)"}`
+
+### 🧑 User — 2026-11-21T13:12:42.078Z
+
+> ↩︎ result: // ---------- track: start piece, alternating sharp sections (bay / mirrored bay), light sections far away, tunnel end ----------
+> const near = flip(new SplatMesh({ url: 'near.ply' })); scene.add(near);
+> const far = flip(new SplatMesh({ url: 'far.ply' })); scene.add(far);
+> const src = { hi: new SplatMesh({ url: 'bay.ply' }), him: new SplatMesh({ url: 'bay_m.ply' }), lo: new SplatMesh({ url: 'bay_lo.ply' }), lom: new SplatMesh({ url: 'bay_m_lo.ply' }) };
+> await Promise.all([near.initialized, far.initialized, ...Object.values(src).map((m) => m.initialized)]);
+> const DV = new THREE.Vector3(...TR.D), AX = new THREE.Vector3(...TR.ax), N = new THREE.Vector3(...TR.n), DU = DV.dot(AX);
+> const tiles = [];
+> for (let k = 1; k <= TR.N; k++) {
+>   const mir = q.get('nomirror') ? false : k % 2 === 1;
+>   const hi = flip(new SplatMesh({ packedSplats: (mir ? src.him : src.hi).packedSplats })), lo = flip(new SplatMesh({ packedSplats: (mir ? src.lom : src.lo).packedSplats }));
+>   for (const m of [hi, lo]) { m.position.set(...TR.offsets[k - 1]); m.visible = false; scene.add(m); }
+>   tiles.push({ k, hi, lo });
+> }
+> let kcNow = -99;
+> const showTrack = (uB) => {
+>   const kc = Math.floor((uB - TR.UA) / DU); if (kc === kcN …[+8132 chars]
+
+### 🤖 Claude — 2026-11-21T13:12:42.615Z
+
+> 🔧 **Bash** `{"command": "cat /home/user/rainbow-/tools/marble05/merge_r32.py", "description": "Read the lead's merge script"}`
+
+### 🧑 User — 2026-11-21T13:12:42.656Z
+
+> ↩︎ result: """Round 32 lead: merge the two Screen 05 specialists' folders into one playable page (reproducible, never edits their folders).
+>   python3 -I tools/marble05/merge_r32.py <workspace> [out=<workspace>/merged]   (workspace = the folder setup_r32.sh built: base/, agentA/, agentB/)
+> Result: <workspace>/merged = agentB's visuals (waterflow.js, track_w/, backing shells, golden end) + agentA's controls (controls.js and its
+> `// [controls]` hooks), page merged with a three-way merge of play3.html against the common original (base/play3.html); the known
+> "both added a line at the same place" conflicts are resolved by keeping both; anything else stops the merge. Adds one lead hook:
+> window.camInfo() (camera pose per frame for the acceptance test's smoothness check)."""
+> import os, sys, shutil, subprocess, filecmp
+> WS = sys.argv[1]; A, B, O, M = (os.path.join(WS, x) for x in ('agentA', 'agentB', 'base', 'merged'))
+> if len(sys.argv) > 2: M = os.path.abspath(sys.argv[2])   # optional other output folder (e.g. a specialist's private test copy)
+> SKIP_DIRS = ('out_', '_', 'node_modules')
+> if os.path.exists(M): shutil.rmtree(M)
+> shutil.copytree(B, M, symlinks=True, ignore=lambda d, names: [n for n in names if …[+3091 chars]
+
+### 🤖 Claude — 2026-11-21T13:12:53.159Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && sed -n 138,182p play3.html; ls ../; ls ../base | head -40", "description": "Read play3 step function and workspace layout"}`
+
+### 🧑 User — 2026-11-21T13:12:53.208Z
+
+> ↩︎ result: window.step = (t, dt, steer, speed) => {
+>   st.s += speed * dt;
+>   if (CT) st.lat = CT.update(t, dt).lat; else { st.vlat += (steer * 0.45 - st.vlat) * Math.min(1, dt * 8); st.lat = THREE.MathUtils.clamp(st.lat + st.vlat * dt, -0.3, 0.3); } // [controls] lanes override steer
+>   const F = frameAt(st.s); const M = basis(F);
+>   // lean into the river's bends (curvature) and into his own steering
+>   const Fa = frameAt(st.s + 0.4); const turn = F.t.clone().cross(Fa.t).dot(F.n);
+>   st.lean += ((-(CT ? 0 : steer) * 0.22 - turn * 2.2) - st.lean) * Math.min(1, dt * 5); // [controls] lane bank is added in CT.orient
+>   at(st.s, tmp).addScaledVector(F.r, st.lat);
+>   showTrack(tmp.dot(AX));
+>   benny.position.copy(tmp).addScaledVector(F.n, Math.sin(t * Math.PI * 1.6) * 0.006 + (CT ? CT.c.h : 0)); // [controls] + leap / dive height
+>   benny.quaternion.setFromRotationMatrix(M).multiply(new THREE.Quaternion().setFromAxisAngle(Z, st.lean));
+>   if (CT) CT.orient(benny.quaternion); // [controls] bank / yaw into the move, stroke roll, nose up / down
+>   U.uT.value = t; U.uSwim.value = 1; U.uPom.value.set(Math.sin(t * 5.0) * 0.06 + steer * 0.1, steer * 0.18 + st.lean * 0.4);
+>   if (CT) CT.anim(st.lean); // [controls]  …[+3702 chars]
+
+### 🤖 Claude — 2026-11-21T13:12:58.050Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad && cat approved_coins.json | head -c 3000; echo; python3 -I -c \"\nimport json\nfor f in ['agentA/track/track.json','agentB/track_w/track.json']:\n    T=json.load(open(f)); print(f, {k:(v if not isinstance(v,list) or len(v)<8 else ('list',len(v))) for k,v in T.items()})\n    print(' trail_s end', T['trail_s'][-1], 'n', len(T['trail_s']))\nS=json.load(open('agentA/scene05.json')); print({k:S[k] for k in S if k in ('coin_d','benny_h','cam')})\n\"", "description": "Read approved coin data and track m …[+9 chars]`
+
+### 🧑 User — 2026-11-21T13:12:58.148Z
+
+> ↩︎ result: [[475, 728, 96, 1.027, -0.007, 2.06, 103.2], [549, 659, 70, 1.561, 0.037, 2.54, 83.6], [482, 612, 56, 1.995, -0.073, 2.92, 72.8], [431, 575, 43, 2.441, -0.069, 3.31, 64.2], [466, 546, 28, 2.965, 0.088, 3.8, 55.9], [495, 533, 19, 3.254, 0.217, 4.1, 51.9], [518, 522, 14, 3.51, 0.359, 4.38, 48.5], [535, 511, 12, 4.054, 0.447, 4.7, 45.3]]
+> agentA/track/track.json {'offsets': ('list', 10), 'far_offsets': ('list', 11), 'D': [-0.3019309712164562, 0.15862300963126236, -2.0028187309351937], 'N': 10, 'UA': 1.3, 'UB': 3.33, 'ax': [-0.10879281978382856, 0.07487649187384926, -0.9912404518219325], 'right': [0.914978532300982, 0.3973117669760195, -0.07041054786560094], 'n': [-0.3769719166382767, 0.9039326595252047, 0.20198495268151698], 'trail': ('list', 1183), 'trail_s': ('list', 1183)}
+>  trail_s end 23.64 n 1183
+> agentB/track_w/track.json {'XA': [-0.08263954094488588, 0.2094823938270443, -1.437919630838377], 'XB': [-0.384570512161342, 0.36810540345830667, -3.4407383617735707], 'offsets': ('list', 14), 'far_offsets': ('list', 15), 'D': [-0.3019309712164562, 0.15862300963126236, -2.0028187309351937], 'N': 14, 'UA': 1.3, 'UB': 3.33, 'ax': [-0.10879281978382856, 0.07487649187384926, -0.991240451821932 …[+465 chars]
+
+### 🤖 Claude — 2026-11-21T13:15:19.330Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad && ls agentB/tools agentB/track_w | head -40; grep -n -i \"width\\|half\\|bank\\|lat\" agentB/WATER_NOTES.md | head -20; grep -n \"glow\\|FARK\" agentB/play3.html | head; head -c 600 agentB/track_w/near.ply | strings | head -30", "description": "Inspect agentB track files and notes (read-only)"}`
+
+### 🧑 User — 2026-11-21T13:15:19.396Z
+
+> ↩︎ result: agentB/tools:
+> __pycache__
+> build_backing.py
+> build_track_w.py
+> check_stills.sh
+> plyio.py
+> sheets.py
+> split_near.py
+> spz.py
+> 
+> agentB/track_w:
+> backing_bay.json
+> backing_bay_m.json
+> backing_near.json
+> bay.ply
+> bay_lo.ply
+> bay_lo2.ply
+> bay_m.ply
+> bay_m_lo.ply
+> bay_m_lo2.ply
+> far.ply
+> near.ply
+> near_a.ply
+> near_a_hull.json
+> near_b.ply
+> track.json
+> 1:# Screen 05 splat track: water flow + track cleanup (water-fx specialist, agentB)
+> 8:| `waterflow.js` | NEW. Spark 2.4 dyno **worldModifier** that makes the river's own splats flow (GPU, inside Spark's splat-generation pass) |
+> 14:| `shots_w.cjs` | capture script: stills, a "same place, flow advanced" pair, visible-splat count; it starts its own web server and checks that it really serves agentB (see "Pitfall") |
+> 23:Why a splat modifier and not overlay layers: in Spark 2.4 every SplatMesh can take a `worldModifier` (a dyno GLSL block run
+> 24:per splat in the generation pass). Spark already regenerates all splats whenever the camera moves, so during gameplay
+> 25:the flow costs only a few extra ALU operations per splat, adds no geometry, no textures and no transparency layers that
+> 28:Per splat, in world coordinates (so the pattern runs straight across the copied section …[+2684 chars]
+
+### 🤖 Claude — 2026-11-21T13:15:23.593Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad && sed -n 26,34p agentB/WATER_NOTES.md; grep -n \"lat\\|halfW\\|width\" agentB/waterflow.js | head -20; sed -n 1,30p agentB/tools/plyio.py", "description": "Look for river width in agentB waterflow (read-only)"}`
+
+### 🧑 User — 2026-11-21T13:15:23.642Z
+
+> ↩︎ result: could blur the painting. Overlay layers were not needed.
+> 
+> Per splat, in world coordinates (so the pattern runs straight across the copied sections, no seam at the rings):
+> * **water mask**: height above that section's water surface `h = P.n - d - DH * clamp((u - UA)/LT, 0, kmax)` (the same
+>   plane and per-section drop the builder uses), `1 - smoothstep(0.05, 0.15, h)`, and inside the tunnel floor
+>   (`|lat| < ~1.0`). Walls, rings, paddles and the tops of the foam banks are untouched.
+> * **flow**: three travelling wave trains with phase `(u + 0.9 t)`, i.e. crests move toward the camera along the tunnel
+>   axis (the river's direction), with a sideways wobble so they are not straight bars. They **multiply** the colour by
+>   1 +/- 8 % (brightness only: hue and saturation of the painted cyan/pink streaks stay the painting's).
+> 1:// waterflow.js - Screen 05 flowing water on the Marble splat track (Spark 2.4 dyno worldModifier, GPU only).
+> 3:// What it does, per splat, inside Spark's splat-generation pass (no extra geometry, no textures, no CPU work per splat):
+> 4://   * finds the river's own splats: height above the (sloped) water surface < ~0.1 and inside the tunnel floor
+> 8://   * adds a view-d …[+2336 chars]
+

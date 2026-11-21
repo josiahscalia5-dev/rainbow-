@@ -791,3 +791,129 @@ Now wire the split into play3.html.
 > bins losing most (hue*10deg, sat bin): [(np.int64(190), np.int64(15), np.float64(-0.747)), (np.int64(200), np.int64(15), np.float64(-0.477)), (np.int64(260), np.int64(9), np.float64(-0.143)), (np.int64(240), np.int64(8), np.float64(-0.117)), (np.int64(200), np.int64(14), np.float64(-0.11)), (np.int64(220), np.int64(10), np.float64(-0.106))]
 > bins gaining most: [(np.int64(200), np.int64(10), np.float64(0.082)), (np.int64(260), np.int64(8), np.float64(0.092)), (np.int64(200), np.int64(13), np.float64(0.157)), (np.int64(180), np.int64(13), np.float64(0.159)), (np.int64(190), np.int64(13), np.float64(0.305)), (np.int64(190), np.int64(14), np.float64(0.436))]
 
+### 🤖 Claude — 2026-11-21T13:11:31.961Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB; cp waterflow.js out_water/tmpview/waterflow_v1.js; cp play3.html out_water/tmpview/play3_v1.html; python3 - <<'EOF'\np='waterflow.js'; s=open(p).read()\nold=\"\"\"            float cm = max(c.r, max(c.g, c.b));\n            c *= min(1.0 + 0.08 * r * w, 1.0 / max(cm, 0.05));         // brightness only, never past the top: hue + saturation stay\"\"\"\nassert s.count(old)==1\nnew=\"\"\"            float cm = max(c.r, max(c.g, c.b));\n            // brightness only (hue + saturation stay). Alr …[+1972 chars]`
+
+### 🧑 User — 2026-11-21T13:11:32.609Z
+
+> ↩︎ result: 67c67,70
+> <   const gr = g.createRadialGradient(128, 128, 0, 128, 128, 128); gr.addColorStop(0, 'rgba(255,250,225,1)'); gr.addColorStop(0.12, 'rgba(255,228,140,1)'); gr.addColorStop(0.3, 'rgba(255,172,60,1)'); gr.addColorStop(0.55, 'rgba(228,92,120,1)'); gr.addColorStop(0.8, 'rgba(170,52,172,1)'); gr.addColorStop(1, 'rgba(122,32,150,1)'); // opaque to the edge: the end flange of the last shell hides the corners
+> ---
+> >   const gr = g.createRadialGradient(128, 128, 0, 128, 128, 128); // like the painting's vanishing point: a small white-gold core, then concentric gold and pink-magenta rings (?endglow=0 = the plain glow)
+> >   const stops = q.get('endglow') === '0' ? [[0, '255,250,225'], [0.12, '255,228,140'], [0.3, '255,172,60'], [0.55, '228,92,120'], [0.8, '170,52,172'], [1, '122,32,150']]
+> >     : [[0, '255,252,236'], [0.07, '255,242,180'], [0.15, '255,212,105'], [0.23, '255,120,196'], [0.3, '255,200,96'], [0.38, '238,78,200'], [0.47, '255,186,84'], [0.57, '212,60,196'], [0.68, '246,166,72'], [0.8, '180,48,180'], [1, '128,34,156']];
+> >   for (const [o, c] of stops) gr.addColorStop(o, `rgba(${c},1)`); // opaque to the edge: the end flange of the last shell hides the corners
+> 89,90c89,93
+> <  …[+886 chars]
+
+### 🤖 Claude — 2026-11-21T13:11:36.398Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB; date; grep -hv GL out_water/diag/split_proof/log_*.txt; ls -la --time-style=+%H:%M:%S out_water/diag/split_proof/; ps -eo etime,args | grep shots_w | grep -v grep | cut -c1-80", "description": "Check split proof render progress"}`
+
+### 🧑 User — 2026-11-21T13:11:36.699Z
+
+> ↩︎ result: Sat Nov 21 13:11:36 UTC 2026
+> server 9513
+> ready 2.835
+> server 9681
+> ready 13.25
+> still 2.3 41.231 visible splats 613313
+> total 704
+> drwxr-xr-x 2 root root   4096 13:11:19 .
+> drwxr-xr-x 9 root root   4096 13:09:27 ..
+> -rw-r--r-- 1 root root    593 13:11:24 log_nosplit.txt
+> -rw-r--r-- 1 root root    632 13:11:19 log_split.txt
+> -rw-r--r-- 1 root root 702908 13:11:19 split_2.3.png
+>       02:08 bash -c W=412 H=915 QS='&noflow=1' STILLS='[0]' node shots_w.cjs out
+>       00:17 node shots_w.cjs out_water/diag/split_proof
+
+### 🤖 Claude — 2026-11-21T13:11:53.695Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB; pkill -f \"bash -c W=412 H=915 QS='&noflow=1'\"; pkill -f \"shots_w.cjs out_water/diag/split_proof\"; sleep 2; ps -eo args | grep -E \"shots_w|chrom\" | grep -v grep | wc -l; rm -rf out_water/diag/split_proof; mkdir -p out_water/after412b out_water/diag/split_proof; export NODE_PATH=$(npm root -g); nohup bash -c \"W=412 H=915 STILLS='[0,2.3,4.4,[10.4,0.22,0.12]]' node shots_w.cjs out_water/after412b > out_water/after412b/log.txt 2>&1; W=412 H=915 QS='&nosplit=1' STILLS='[0,2.3]' PREFIX=nos …[+214 chars]`
+
+### 🧑 User — 2026-11-21T13:11:56.011Z
+
+> ↩︎ result: 0
+> started
+> Sat Nov 21 13:11:56 UTC 2026
+
+### 🤖 Claude — 2026-11-21T13:12:06.917Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB; for i in $(seq 1 40); do n=$(grep -c '^still' out_water/after412b/log.txt 2>/dev/null); [ \"${n:-0}\" -ge 2 ] && break; grep -q pageerror out_water/after412b/log.txt 2>/dev/null && break; sleep 8; done; grep -v GL out_water/after412b/log.txt; date", "description": "Wait for the first new stills", "timeout": 400000}`
+
+### 🧑 User — 2026-11-21T13:13:27.034Z
+
+> ↩︎ result: server 9817
+> ready 12.136
+> still 0 37.814 visible splats 655734
+> still 2.3 34.113 visible splats 613313
+> Sat Nov 21 13:13:27 UTC 2026
+
+### 🤖 Claude — 2026-11-21T13:13:33.964Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB; python3 -I - <<'EOF'\nimport cv2, numpy as np\nR=cv2.resize(cv2.imread('/home/user/rainbow-/references/05_flow_into_the_current.png'),(412,915))\ndef hs(img, r0=150, r1=915):\n    hsv=cv2.cvtColor(img,cv2.COLOR_BGR2HSV)[r0:r1]\n    h=cv2.calcHist([hsv],[0,1],None,[36,16],[0,180,0,256]); return cv2.normalize(h,h,1,0,cv2.NORM_L1)\nHR=hs(R); L=lambda im: round(float(cv2.compareHist(HR,hs(im),cv2.HISTCMP_INTERSECT)),4)\nB=cv2.imread('out_water/before412/s_0.png'); A=cv2.imread('out_water/after …[+683 chars]`
+
+### 🧑 User — 2026-11-21T13:13:34.716Z
+
+> ↩︎ result: s0 look: before 0.6661 after v1 0.6278 after v1 noflow 0.6482 after v2 0.6339
+> v2 top + noflow bottom 0.6443
+> noflow with v2 top 0.6443
+> v2 with v1 top (old disc) 0.6378
+> v2 vs noflow: rows450+ mean diff 5.51
+
+### 🤖 Claude — 2026-11-21T13:13:42.275Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB/out_water/tmpview/v2top.jpg"}`
+
+### 🧑 User — 2026-11-21T13:13:42.304Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T13:13:50.900Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB; python3 -I - <<'EOF'\nimport cv2, numpy as np\nR=cv2.resize(cv2.imread('/home/user/rainbow-/references/05_flow_into_the_current.png'),(412,915))\ndef hs(img):\n    hsv=cv2.cvtColor(img,cv2.COLOR_BGR2HSV)[150:]\n    h=cv2.calcHist([hsv],[0,1],None,[36,16],[0,180,0,256]); return cv2.normalize(h,h,1,0,cv2.NORM_L1)\nHR=hs(R); L=lambda im: round(float(cv2.compareHist(HR,hs(im),cv2.HISTCMP_INTERSECT)),4)\nA=cv2.imread('out_water/after412/s_0.png'); A2=cv2.imread('out_water/after412b/s_0.png'); N …[+609 chars]`
+
+### 🧑 User — 2026-11-21T13:13:51.345Z
+
+> ↩︎ result: v1 flow on rows 450+ only: 0.6332  (noflow 0.6482 )
+>    mean dS -1.16 mean dV 0.6
+> v2 flow on rows 450+ only: 0.6378  (noflow 0.6482 )
+>    mean dS -0.65 mean dV -0.92
+
+### 🤖 Claude — 2026-11-21T13:14:02.961Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB; python3 -I - <<'EOF'\nimport cv2, numpy as np\nA2=cv2.imread('out_water/after412b/s_0.png'); N=cv2.imread('out_water/diag/noflow412/s_0.png')\nhf=cv2.cvtColor(A2,cv2.COLOR_BGR2HSV).astype(int); hn=cv2.cvtColor(N,cv2.COLOR_BGR2HSV).astype(int)\ndS=(hf[...,1]-hn[...,1]); dV=hf[...,2]-hn[...,2]\nm=np.zeros(dS.shape,bool); m[450:]=True\nfor lo,hi in [(-255,-30),(-30,-10),(-10,-3),(-3,3),(3,10),(10,30),(30,255)]:\n    k=m&(dS>=lo)&(dS<hi); print(f'dS in [{lo},{hi}): {100*k.sum()/m.sum():.2f} %  …[+395 chars]`
+
+### 🧑 User — 2026-11-21T13:14:03.271Z
+
+> ↩︎ result: dS in [-255,-30): 1.00 % of px, contributes -0.472 to mean dS; their mean dV -0.8, mean S before 156
+> dS in [-30,-10): 4.58 % of px, contributes -0.763 to mean dS; their mean dV -1.2, mean S before 163
+> dS in [-10,-3): 13.25 % of px, contributes -0.806 to mean dS; their mean dV -0.5, mean S before 186
+> dS in [-3,3): 67.51 % of px, contributes -0.191 to mean dS; their mean dV -0.6, mean S before 170
+> dS in [3,10): 8.69 % of px, contributes +0.437 to mean dS; their mean dV -2.3, mean S before 167
+> dS in [10,30): 3.86 % of px, contributes +0.630 to mean dS; their mean dV -3.3, mean S before 131
+> dS in [30,255): 1.12 % of px, contributes +0.517 to mean dS; their mean dV -3.1, mean S before 101
+
+### 🤖 Claude — 2026-11-21T13:14:05.226Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB/out_water/tmpview/dS.jpg"}`
+
+### 🧑 User — 2026-11-21T13:14:05.259Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T13:14:30.391Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB; pkill -f \"bash -c W=412 H=915 STILLS=\"; pkill -f \"shots_w.cjs out_water/after412b\"; sleep 2; ps -eo args | grep -E \"shots_w\" | grep -v grep | wc -l; python3 - <<'EOF'\np='play3.html'; s=open(p).read()\nold=\"\"\"  const gr = g.createRadialGradient(128, 128, 0, 128, 128, 128); // like the painting's vanishing point: a small white-gold core, then concentric gold and pink-magenta rings (?endglow=0 = the plain glow)\n  const stops = q.get('endglow') === '0' ? [[0, '255,250,225'], [0.12,  …[+1672 chars]`
+
+### 🧑 User — 2026-11-21T13:14:32.696Z
+
+> ↩︎ result: 0
+> play3 = v1 (disc reverted)
+> Sat Nov 21 13:14:32 UTC 2026
+
+### 🤖 Claude — 2026-11-21T13:14:41.951Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB; for i in $(seq 1 60); do n=$(grep -c '^still' out_water/after_final/log.txt 2>/dev/null); [ \"${n:-0}\" -ge 8 ] && break; grep -q pageerror out_water/after_final/log.txt 2>/dev/null && break; sleep 10; done; grep -v GL out_water/after_final/log.txt; date", "description": "Wait for the final AFTER stills", "timeout": 600000}`
+
