@@ -2818,3 +2818,108 @@ The handoff note didn't insert (a text match failed). Fixing that.
 
 > 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md'; s=open(p).read()\nadd=\"\"\"Then (same round, user: \"DO NOT remove or redesign my original approved pink Benny … improve the existing 3D model … APPROVED / CURRENT 3D /\nIMPROVED 3D at the same rear angle and size … Do not silently switch characters\"): improved 3D Benny candidate = Hunyuan3D 2 mesh + the approved\nBenny's pixels baked through the game's colour chain — rear outline 0.902 → 0.956, structure 0.49 → 0.81; sides / front still plain. NOT wired into the\ngame; painted Benny stays in `?paint06=1`. Everything: …[+457 chars]`
 
+### 🧑 User — 2026-11-21T01:13:22.201Z
+
+> ↩︎ result: # ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 31 (2026-11-21, lead branch `ccr-4fcad20e-a6pp8w`, from ~23:50 UTC 11-20)
+> 
+> User (verbatim, ~00:05): "Yes, do Screen 06 first … I want these exact … all these four images … 100%, or at least 95%" + "add any plugin or anything you
+> need. I don't care how much it costs." → built **`?paint06=1`**: Screen 06 = the user's OWN five pictures (approved 06 + the four storyboard panels) as
+> full-screen depth plates, painted-Benny layer that steers, reveal transitions; live captures 97.7–98.3 % of pixels within 20 levels of each panel (at
+> the panel's size), 97.9 % of the approved picture below the HUD. Default build pixel-identical. Everything: **`qa/match/06/paint06/README.md`**
+> (proof pictures + clips in `proof/`, paid-job ledger `LEDGER.md`, rebuild steps `tools/paint06/`). Waiting for the user's verdict; if approved, the
+> same method for 04, 05, 07, 08, 09, 10 (user asked for "all of them").
+> 
+> Then (same round, user: "DO NOT remove or redesign my original approved pink Benny … improve the existing 3D model … APPROVED / CURRENT 3D /
+> IMPROVED 3D at the same rear angle and size … Do not silently switch characters"): improved 3D Benny candidate = Huny …[+769 chars]
+
+### 🤖 Claude — 2026-11-21T01:13:25.124Z
+
+> 🔧 **SendUserFile** `{"files": ["/home/user/rainbow-/qa/benny/r31/proof/APPROVED_CURRENT3D_IMPROVED3D.jpg", "/home/user/rainbow-/qa/benny/r31/proof/TURNAROUND_CURRENT3D_vs_IMPROVED3D.jpg"], "caption": "1) APPROVED / CURRENT 3D / IMPROVED 3D from behind, same angle and size, same Screen 06 scene. 2) Both 3D models turning around: the improved one is a real 3D model, but its sides and front are still plain.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-21T01:13:25.649Z
+
+> ↩︎ result: 2 files delivered to user.
+>   /home/user/rainbow-/qa/benny/r31/proof/APPROVED_CURRENT3D_IMPROVED3D.jpg → file_uuid: a2122935-5a0c-41d1-9aab-4b94f99769af
+>   /home/user/rainbow-/qa/benny/r31/proof/TURNAROUND_CURRENT3D_vs_IMPROVED3D.jpg → file_uuid: f1298bef-737c-4534-8241-588e88507408
+
+### 🤖 Claude — 2026-11-21T01:13:34.170Z
+
+Your painted Benny stays exactly as he is in the Screen 06 version. I changed nothing in the game, and no character has been switched.
+
+**The improved 3D Benny.** I made a new 3D model from your approved Benny and painted your picture's own colours onto it. I matched them through the game's lighting and colour processing, so he shows your colours inside the game itself. Your picture is the only reference for his look.
+
+From behind, at the same angle and size as your picture, in your Screen 06 scene:
+
+| | Outline match | Structure match | Pixels within 20 levels |
+|---|---|---|---|
+| **Your approved Benny** | 1.000 | 1.000 | 100% |
+| **Current 3D (game today)** | 0.902 | 0.49 | 44.4% |
+| **Improved 3D** | 0.956 | 0.81 | 66.3% |
+
+The pixel figure is strict: fur strands one pixel apart count as different, so the pictures are the better judge.
+
+The improved Benny has your:
+- rounded pink fuzzy body
+- thick purple ribbed cuff
+- white-and-purple knit stripes
+- big spiky purple pom-pom
+- gold star in the same spot
+
+The current game model has a wide flat hat that's wider than his body, smooth flat stripes and a soft round pom-pom.
+
+**Not good enough yet:**
+- **Sides and front:** your picture only shows his back, so there he's plain smooth pink with plain stripes. The turnaround picture shows this.
+- **No face yet:** the current model has violet eyes. I won't add a face without your OK.
+- **Edges:** his outline is smoother than your painted fuzzy fur tips.
+- **Cuff:** the right end of the cuff bulges out slightly.
+- **Arms:** he's one solid piece, so he can bob, lean and tilt when steering, but his arms can't paddle yet.
+
+The models and comparisons are saved on GitHub, and the notes are in `qa/benny/r31/README.md`. These Benny models cost about $2.41 in image-service jobs plus 8 of your Thrixel credits.
+
+**Next, if you like the direction:**
+1. Give his sides the same fur and knit look.
+2. Soften his outline with real fur.
+3. Show him swimming in the game behind a test switch, with your painted Benny still the default.
+
+Should I go ahead? And do you want his face (the violet eyes) added?
+
+### 🧑 User — 2026-11-21T01:13:34.320Z
+
+CLAUDIA — HERE IS EXACTLY WHAT I WANT YOU TO DO.
+
+I want you to continue using the approved-artwork method from Screen 06 for my remaining playable screens.
+
+Work in this exact order:
+
+1. Screen 05
+2. Screen 07
+3. Screen 04
+4. Screen 08
+5. Screen 09
+6. Screen 10
+
+My requirements are non-negotiable:
+
+- Every screen must match its OWN original approved artwork as closely as technically possible. My target is 95–98% visual likeness.
+- Preserve the exact purple-and-gold machinery, water colors, river curves, lighting, foam, coins, proportions, and scenery shown in each approved reference.
+- Keep my original approved Benny. Do not replace his appearance with the older, less accurate character.
+- The scenery must remain visually consistent while Benny swims forward, steers left and right, and travels between screens.
+- Keep the game genuinely playable and responsive. Do not substitute a slideshow or video for gameplay.
+- Fix visible seams, double images, ghosting, abrupt picture changes, and duplicate characters.
+- Make collected coins disappear correctly. The visuals must agree with the actual gameplay.
+- Make Screen 05 → 06 → 07 look and feel like one continuous journey.
+- Preserve all existing work, original references, and successful candidates.
+- Continue verified GitHub backups every five minutes while working.
+
+Do not claim a 98% match just because individual pictures match pixel-for-pixel. I want that quality demonstrated throughout actual gameplay.
+
+Show me APPROVED / BEFORE / NEW comparisons and uninterrupted gameplay recordings for each completed screen.
+
+Do not ask me to approve a screen until you have tested its entire route, steering, collectibles, and transitions.
+
+If this artwork method cannot meet these requirements, tell me exactly why instead of continuing to spend credits on the same unsuccessful approach.
+
+I am not asking for another plan, another plugin, or another explanation. I am telling you to execute these instructions and show me the results.
+
+Start with Screen 05 now.
+
