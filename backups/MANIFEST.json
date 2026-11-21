@@ -704,7 +704,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 25112,
-   "sha256": "fbe684049d08bda8be17a5287e42517412320ddbb2acdf624c65c4bdb7d48758"
+   "sha256": "b1d6e9436b1476f996709df776dd69421f167c57bc5edb53c4545ae15c7f451e"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -719,7 +719,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3271,
-   "sha256": "1fa9ecc188f7146e3d18c11c201797b9fec5d4ca70256265c1df0c8e875edcab"
+   "sha256": "45d5989ff4ecfb6363a6545e8dc742ab91bb64dc9e551c19edd5428abf343652"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -11277,6 +11277,41 @@
    "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
   },
   {
+   "path": "qa/benny/r31/gen/trellis.glb",
+   "bytes": 7997960,
+   "sha256": "5ec1f84a8d6af9e1933ed1525560a8a8d932fb07094ecb013bb2b3db1391ebd6"
+  },
+  {
+   "path": "qa/benny/r31/gen/trellis.json",
+   "bytes": 316,
+   "sha256": "d13727a52940d73bd85a8224d9c85f148a1efdae0151b8305a782c9c08a96ccb"
+  },
+  {
+   "path": "qa/benny/r31/input/benny_appr06_2x_crop.png",
+   "bytes": 1837917,
+   "sha256": "afbac297080194d2c76c5a1ffe2242997bb396809ce5566f3bc0012ce2f8da5b"
+  },
+  {
+   "path": "qa/benny/r31/input/benny_appr06_2x_rgba.png",
+   "bytes": 1117370,
+   "sha256": "331bbb2445c0e88fccf7c45c9e7897b19d818c87d13c50324f9a4a9381782024"
+  },
+  {
+   "path": "qa/benny/r31/input/benny_input_alpha.png",
+   "bytes": 993057,
+   "sha256": "1454e7d74ae367bc6a6bf9c5291db55f35cd69ec72e4806e508a7e993c44509d"
+  },
+  {
+   "path": "qa/benny/r31/input/benny_input_white.png",
+   "bytes": 968018,
+   "sha256": "28ddc843ee8c9094cf19964dba60ece675dcdf61bb96867c93b567ded2abec40"
+  },
+  {
+   "path": "qa/benny/r31/input/input.json",
+   "bytes": 239,
+   "sha256": "85032de18f6dc94beb1c473bd20fe7abe65c62a6aca05779dbcbb08256d5371d"
+  },
+  {
    "path": "qa/capture_log.json",
    "bytes": 3373,
    "sha256": "a12177c2159c2328e44345267c406b625cd9fd1c96ab966499b9fbc358712397"
@@ -15073,8 +15108,8 @@
   },
   {
    "path": "qa/match/06/paint06/LEDGER.md",
-   "bytes": 4040,
-   "sha256": "aebf975dea0bc65169a7f35b7bd3960df2d048eb46387c183978fc4ee16c00e3"
+   "bytes": 4410,
+   "sha256": "ab31a13159822c1ca32d9a4896f89671afc5f8df6501c4bc648340ed4a97056b"
   },
   {
    "path": "qa/match/06/paint06/README.md",
@@ -34197,6 +34232,16 @@
    "sha256": "b03ac60c2e4d711beed90a36c01249e5354d51ce37a09a96a992ccb916ead914"
   },
   {
+   "path": "src/characters/benny/benny31-lab.html",
+   "bytes": 287,
+   "sha256": "2ac265150638377037306215a816c895516236fda6602f0a822aa91a624076d9"
+  },
+  {
+   "path": "src/characters/benny/benny31-lab.ts",
+   "bytes": 4510,
+   "sha256": "4fd41ee09de54aa64fdfb0a2034998df67ded9b4e5705925a2e3bc2394d59a2a"
+  },
+  {
    "path": "src/characters/benny/build.ts",
    "bytes": 24248,
    "sha256": "7f0cf0e0740197cab5c1cb347d95fe37be3d3f442e27bb07fcee6e9d07c307ad"
@@ -34415,6 +34460,16 @@
    "path": "src/world/tube.ts",
    "bytes": 41087,
    "sha256": "5c15377b00d15cebec9b32f32b293f6839ee74253f1dd20b175e133dbd549e6c"
+  },
+  {
+   "path": "tools/benny31/fit.py",
+   "bytes": 2236,
+   "sha256": "9b769a80f982a32fc826e09f53875d6ab3e4814a8284f74dcd94b80fe888024d"
+  },
+  {
+   "path": "tools/benny31/render.mjs",
+   "bytes": 1600,
+   "sha256": "851002a5c592149219bf9ebb23e88c8a673ef501a9d3c72ef39842caed2c5b72"
   },
   {
    "path": "tools/blender/build_05_river_scene.py",
@@ -34830,6 +34885,11 @@
    "path": "tools/model-lab.ts",
    "bytes": 4451,
    "sha256": "4dd0d06b20730fe09663dd711e63d5c4c8a884ba91f7b84a49be540db2a7a3c8"
+  },
+  {
+   "path": "tools/paint06/benny_gen3d.py",
+   "bytes": 1551,
+   "sha256": "e532c73c1ab2f9dfcf62bcb67dff385da754a9765e44d82da4e6a3e7873f24d7"
   },
   {
    "path": "tools/paint06/clip.mjs",

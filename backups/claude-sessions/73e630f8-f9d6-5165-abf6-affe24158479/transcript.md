@@ -1892,3 +1892,259 @@ Keep the approved-looking version available until the improved 3D character is v
 
 My priority is preserving the exact beautiful character design I approved, while making him work naturally in my playable game.
 
+### 🤖 Claude — 2026-11-21T00:47:41.016Z
+
+Understood. The painted Benny in Screen 06 stays exactly as he is, and I won't switch characters without your OK. I'll start by looking at how the current 3D Benny is built.
+
+### 🤖 Claude — 2026-11-21T00:47:42.820Z
+
+> 🔧 **Bash** `{"command": "ls -la src/characters/benny/ assets/models/ | head -30; wc -l src/characters/benny/*.ts; ls assets/textures/benny05 | head; ls tools/ | grep -i -E \"lab|benny\"; python3 -I -c \"\nimport json; d=json.load(open('backups/AGENTS_STATUS.json'))\nimport itertools\ns=json.dumps(d)\ni=s.find('benny-character-artist'); print(s[i:i+1500])\"", "description": "Look at the 3D Benny code, models and the Benny specialist's notes"}`
+
+### 🧑 User — 2026-11-21T00:47:42.896Z
+
+> ↩︎ result: assets/models/:
+> total 5548
+> drwxr-xr-x 2 root root    4096 Nov 20 23:51 .
+> drwxr-xr-x 4 root root    4096 Nov 20 23:51 ..
+> -rw-r--r-- 1 root root 1126892 Nov 20 23:55 benny.glb
+> -rw-r--r-- 1 root root  992168 Nov 20 23:55 lids05.glb
+> -rw-r--r-- 1 root root 3546480 Nov 20 23:55 rainbow_girl.glb
+> 
+> src/characters/benny/:
+> total 108
+> drwxr-xr-x 2 root root  4096 Nov 20 23:51 .
+> drwxr-xr-x 4 root root  4096 Nov 20 23:51 ..
+> -rw-r--r-- 1 root root   278 Nov 20 23:51 benny-lab.html
+> -rw-r--r-- 1 root root 10203 Nov 20 23:51 benny-lab.ts
+> -rw-r--r-- 1 root root 18758 Nov 20 23:51 benny05.ts
+> -rw-r--r-- 1 root root 24248 Nov 20 23:51 build.ts
+> -rw-r--r-- 1 root root  7423 Nov 20 23:51 fur.ts
+> -rw-r--r-- 1 root root 13153 Nov 20 23:51 runtime.ts
+> -rw-r--r-- 1 root root 14186 Nov 20 23:51 textures.ts
+>   173 src/characters/benny/benny-lab.ts
+>   385 src/characters/benny/benny05.ts
+>   501 src/characters/benny/build.ts
+>   171 src/characters/benny/fur.ts
+>   281 src/characters/benny/runtime.ts
+>   388 src/characters/benny/textures.ts
+>  1899 total
+> armL.png
+> armR.png
+> body.png
+> brim.png
+> brim_n.png
+> crown.png
+> crown_n.png
+> pom.png
+> star.png
+> model-lab.html
+> model-lab.ts
+> water-lab.html
+> water-lab.ts
+> worldlabs
+> benny-character-artist \u2 …[+1474 chars]
+
+### 🤖 Claude — 2026-11-21T00:47:44.408Z
+
+> 🔧 **Bash** `{"command": "sed -n '1,80p' src/characters/benny/runtime.ts", "description": "Read how the game loads and animates 3D Benny"}`
+
+### 🧑 User — 2026-11-21T00:47:44.451Z
+
+> ↩︎ result: /**
+>  * Runtime Benny: loads the canonical assets/models/benny.glb, upgrades fur_* meshes to shell fur,
+>  * and drives expressions + procedural secondary motion on top of the GLB clips.
+>  */
+> import * as THREE from 'three';
+> import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+> import type { BennyRuntime } from '../types';
+> import { makeFur, type FurHandle, type FurParams } from './fur';
+> import { BENNY05, FUR05, applyBenny05, dampedClips, loadBenny05Maps } from './benny05';
+> 
+> const BENNY_URL = new URL('../../../assets/models/benny.glb', import.meta.url).href;
+> 
+> let cached: Promise<THREE.Group> | null = null;
+> 
+> function loadScene(): Promise<THREE.Group> {
+>   if (!cached) cached = new GLTFLoader().loadAsync(BENNY_URL).then((g) => {
+>     const s = g.scene as THREE.Group;
+>     s.userData.animations = g.animations;
+>     return s;
+>   });
+>   return cached;
+> }
+> 
+> /** fur tier: explicit option, else `?quality=low|high`, else low on Android/iOS (same rule as the water) */
+> function defaultFurQuality(): 'high' | 'low' {
+>   if (typeof location === 'undefined') return 'high';
+>   const qp = new URLSearchParams(location.search).get('quality');
+>   const mobile = typeof navigator !== 'undefined' && /And …[+3183 chars]
+
+### 🤖 Claude — 2026-11-21T00:47:46.222Z
+
+> 🔧 **Bash** `{"command": "sed -n '1,60p' src/characters/benny/benny05.ts; sed -n '1,40p' src/characters/benny/benny-lab.ts; cat src/characters/benny/benny-lab.html", "description": "Read the Screen 05 Benny work and the Benny lab page"}`
+
+### 🧑 User — 2026-11-21T00:47:46.271Z
+
+> ↩︎ result: /**
+>  * Screen 05 FULL REFERENCE MATCH — Benny (`?benny05=1`, or the master `?match05=1`; qa/pilot05/full_reference_match/benny/).
+>  *
+>  * Applied to Benny HIMSELF (every screen sees the same corrected character while the switch is on), on top of the
+>  * unchanged canonical assets/models/benny.glb, rig and clips. Off (default): nothing in this file runs, every material,
+>  * geometry and shader program is the previous one.
+>  *
+>  *  1. Beanie geometry (visual only, hat-local): cuff band thinner and the whole beanie a little lower on the head, pom-pom
+>  *     lower and slightly toward his right, star re-seated — measured against the approved picture at the locked 05 frame.
+>  *  2. Swim-clip body roll damped (the clip's ±0.05 rad side wobble tipped the beanie ~13 px sideways at the pom; the
+>  *     approved Benny rides upright). Pitch bob, paddling, feet, steering lean and every gameplay transform are unchanged.
+>  *  3. Albedo maps baked from the APPROVED pixels into each part's own UV space (tools: benny/work/bake.py): the beanie's
+>  *     knit stitches / stripes / ribbed cuff, the pom-pom yarn, the cotton-candy fur colour and its shading. The maps are
+>  *     solved through the live lighting and  …[+5089 chars]
+
+### 🤖 Claude — 2026-11-21T00:48:00.528Z
+
+> 🔧 **Bash** `{"command": "grep -E \"^diff --git\" qa/match/06/r30b/proof/r30b_candidate_from_e162aec.patch | head -40; ls qa/match/06/r30/benny06/ 2>/dev/null | head -30; ls qa/pilot05/full_reference_match/benny/ 2>/dev/null | head; find . -path ./node_modules -prune -o -name \"bake.py\" -print 2>/dev/null | grep -i benny | head", "description": "List the last round's Benny changes, proofs and bake tools"}`
+
+### 🧑 User — 2026-11-21T00:48:00.628Z
+
+> ↩︎ result: diff --git a/assets/textures/match06/coins06deep.json b/assets/textures/match06/coins06deep.json
+> diff --git a/assets/textures/match06/hole06.json b/assets/textures/match06/hole06.json
+> diff --git a/assets/textures/match06/leg06deep.json b/assets/textures/match06/leg06deep.json
+> diff --git a/assets/textures/match06/route06curl.json b/assets/textures/match06/route06curl.json
+> diff --git a/assets/textures/match06/route06deep.json b/assets/textures/match06/route06deep.json
+> diff --git a/assets/textures/match06/route06sb.json b/assets/textures/match06/route06sb.json
+> diff --git a/assets/textures/match06/tile_hole06.png b/assets/textures/match06/tile_hole06.png
+> diff --git a/assets/textures/match06/tile_hole06b.png b/assets/textures/match06/tile_hole06b.png
+> diff --git a/assets/textures/match06/tile_hole06w.png b/assets/textures/match06/tile_hole06w.png
+> diff --git a/assets/textures/match06/tile_w30veins.png b/assets/textures/match06/tile_w30veins.png
+> diff --git a/src/characters/benny/benny05.ts b/src/characters/benny/benny05.ts
+> diff --git a/src/characters/benny/benny30.ts b/src/characters/benny/benny30.ts
+> diff --git a/src/characters/benny/runtime.ts b/src/characters/benny/runtime.ts
+> diff --git  …[+2077 chars]
+
+### 🤖 Claude — 2026-11-21T00:48:02.031Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/match/06/r30/benny06/BENNY_CLOSEUP_SHEET.png"}`
+
+### 🧑 User — 2026-11-21T00:48:02.284Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T00:48:40.455Z
+
+> 🔧 **ToolSearch** `{"query": "select:mcp__Thrixel__thrixel_account_status,mcp__Thrixel__thrixel_sculpt_model,mcp__Thrixel__thrixel_start_project,mcp__Thrixel__thrixel_list_projects,mcp__Thrixel__thrixel_download,mcp__Thrixel__thrixel_job_status", "max_results": 6}`
+
+### 🧑 User — 2026-11-21T00:48:40.465Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+> [tool_reference]
+> [tool_reference]
+> [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-21T00:48:54.110Z
+
+First I'm cutting your approved Benny out of the sharpened Screen 06 picture at double resolution. That cut-out is the input for the 3D generators. I'm also checking the Thrixel account balance.
+
+### 🤖 Claude — 2026-11-21T00:49:00.811Z
+
+> 🔧 **Bash** `{"command": "mkdir -p qa/benny/r31/input && python3 -I - <<'EOF'\nimport sys, json; sys.path.insert(0,'tools/paint06')\nfrom fal import run, data_uri, download\nfrom PIL import Image\nimport numpy as np\nO='qa/benny/r31/input'\nim=Image.open('qa/match/06/paint06/work/appr06_seedvr2.png').convert('RGB').crop((330,1380,1340,2400)); im.save(f'{O}/benny_appr06_2x_crop.png')\nr=run('fal-ai/birefnet/v2', {'image_url': data_uri(f'{O}/benny_appr06_2x_crop.png'), 'model':'General Use (Heavy)', 'output_format':'png', 'refine_foreground': True}, name='benny31_matte2x', est_usd=0.01)\ndownload(r['image'][ …[+925 chars]`
+
+### 🤖 Claude — 2026-11-21T00:49:00.916Z
+
+> 🔧 **mcp__Thrixel__thrixel_account_status** `{}`
+
+### 🧑 User — 2026-11-21T00:49:06.303Z
+
+> ↩︎ result: matte url https://v3b.fal.media/files/b/0ab34aa6/KbnjDRv0jN8sBuocryJdL_zc8w6KKV.png
+> bbox 71 942 71 1001
+
+### 🧑 User — 2026-11-21T00:49:07.477Z
+
+> ↩︎ result: {"result":"Connected to https://api.thrixel.com\nKey: MCP connector (Claude) (user)\nPlan: free\nCubes: 242\n  -> covers 17 detail passes (14 each, 11 from a prompt alone), 30 sculpts (8 each, 22 from a prompt alone), 48 retextures (5 each, 20 from a prompt alone), 48 rigs (5 each).\nRuns left this month: sculptor 3/4, detailer 4/4, texture 4/4, rig 4/4 (resets 2026-12-01)\nConcurrency: 0 of 2 running\n  -> room for 2 more right now.\nGPU lane: 0 job(s) queued or running service-wide"}
+
+### 🤖 Claude — 2026-11-21T00:49:09.915Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/benny/r31/input/benny_input_white.png"}`
+
+### 🧑 User — 2026-11-21T00:49:09.959Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T00:49:17.792Z
+
+The cut-out is clean. Sending it to four 3D generators at once (Hunyuan3D, Trellis, Rodin, Tripo) through fal, and to Thrixel.
+
+### 🤖 Claude — 2026-11-21T00:49:25.287Z
+
+> 🔧 **Bash** `{"command": "mkdir -p qa/benny/r31/gen && cat > tools/paint06/benny_gen3d.py <<'EOF'\n\"\"\"round 31: approved Screen 06 Benny (rear view cut-out) -> several image-to-3D generators on fal (paid; user-authorised).\nEach output GLB lands in qa/benny/r31/gen/<name>.glb with its result JSON.\"\"\"\nimport json, sys, re\nfrom concurrent.futures import ThreadPoolExecutor\nsys.path.insert(0, '/home/user/rainbow-/tools/paint06')\nfrom fal import run, data_uri, download\nR = '/home/user/rainbow-'; O = f'{R}/qa/benny/r31/gen'\nimg = data_uri(f'{R}/qa/benny/r31/input/benny_input_white.png')\nJOBS = {\n   …[+1307 chars]`
+
+### 🧑 User — 2026-11-21T00:49:25.314Z
+
+> ↩︎ result: Command running in background with ID: biu7g3dna. Output is being written to: /tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/tasks/biu7g3dna.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-21T00:49:25.390Z
+
+> 🔧 **mcp__Thrixel__thrixel_list_projects** `{}`
+
+### 🧑 User — 2026-11-21T00:49:25.755Z
+
+> ↩︎ result: No active project.
+> 
+>     Rainbow - 1 asset, started 2026-11-19
+>       2bd60336-8ef0-4860-a158-f43aeaeeb9db
+
+### 🤖 Claude — 2026-11-21T00:49:27.408Z
+
+> 🔧 **mcp__Thrixel__thrixel_start_project** `{"project_id": "2bd60336-8ef0-4860-a158-f43aeaeeb9db"}`
+
+### 🧑 User — 2026-11-21T00:49:27.710Z
+
+> ↩︎ result: Resumed project "Rainbow". It already holds 1 asset.
+> Everything generated from now on is filed under it.
+> Pass project_id='2bd60336-8ef0-4860-a158-f43aeaeeb9db' on every generation call from now on: this connector may not remember the project between calls.
+
+### 🤖 Claude — 2026-11-21T00:49:29.005Z
+
+> 🔧 **mcp__Thrixel__thrixel_sculpt_model** `{"image": "https://v3b.fal.media/files/b/0ab34aa6/KbnjDRv0jN8sBuocryJdL_zc8w6KKV.png", "prompt": "A round plush pink fluffy creature seen from behind, wearing a chunky hand-knit purple-and-white striped beanie with a big spiky purple yarn pom-pom and a yellow felt star patch on the cuff.", "texture_size": 2048, "wait": false}`
+
+### 🧑 User — 2026-11-21T00:49:32.670Z
+
+> ↩︎ result: Submitted. submission_id: f1d9539a-2559-41b4-9973-4325ab727377
+> Poll it with thrixel_job_status('f1d9539a-2559-41b4-9973-4325ab727377').
+
+### 🤖 Claude — 2026-11-21T00:49:53.150Z
+
+> 🔧 **Bash** `{"command": "sed -n '1,60p' src/render/env.ts | grep -n \"WebGLRenderer\\|alpha\\|function\\|toneMappingExposure\\|antialias\" ; sed -n '80,281p' src/characters/benny/runtime.ts | grep -n \"update\\|radius\\|ridePitch\\|rideLift\\|root\\.\" | head -30; grep -n \"export interface BennyRuntime\" -A 20 src/characters/types.ts", "description": "Check renderer settings and the Benny runtime interface"}`
+
+### 🧑 User — 2026-11-21T00:49:53.214Z
+
+> ↩︎ result: 8:export function createCandyEnvironment(renderer: THREE.WebGLRenderer): THREE.Texture {
+> 48:export function createRenderer(canvas: HTMLCanvasElement, opts: { preserveDrawingBuffer?: boolean } = {}): THREE.WebGLRenderer {
+> 49:  const renderer = new THREE.WebGLRenderer({
+> 51:    antialias: true,
+> 52:    alpha: false,
+> 58:  renderer.toneMappingExposure = 0.86;
+> 1:  root.name = 'Benny';
+> 2:  root.add(scene);
+> 79:  const liftMax = rideLift();
+> 81:  const pitchMax = ridePitch();
+> 87:  const update: BennyRuntime['update'] = (dt, st) => {
+> 98:    mixer.update(dt);
+> 105:    const pitchScale = typeof root.userData.ridePitch === 'number' ? THREE.MathUtils.clamp(root.userData.ridePitch, 0, 1) : 1;
+> 115:    root.getWorldPosition(tmp);
+> 152:  return { root, setExpression, update, radius: 0.8 };
+> 198:  const up = new THREE.Vector3(0, 1, 0).applyQuaternion(root.getWorldQuaternion(new THREE.Quaternion()));
+> 199:  const fwd = new THREE.Vector3(0, 0, 1).applyQuaternion(root.getWorldQuaternion(new THREE.Quaternion()));
+> 201:  return { body: r3(p), up: r3(up), fwd: r3(fwd), scale: +root.scale.x.toFixed(3) };
+> 12:export interface BennyRuntime {
+> 13-  /** origin = centre of the round body; faces +Z (camera behind him look …[+1109 chars]
+
+### 🤖 Claude — 2026-11-21T00:50:32.629Z
+
+> 🔧 **Bash** `{"command": "cat > src/characters/benny/benny31-lab.html <<'EOF'\n<!doctype html>\n<html lang=\"en\">\n  <head><meta charset=\"UTF-8\" /><title>Benny 31 lab</title>\n    <style>html,body{margin:0;background:transparent}canvas{display:block}</style></head>\n  <body><canvas id=\"lab\"></canvas><script type=\"module\" src=\"./benny31-lab.ts\"></script></body>\n</html>\nEOF\ncat > src/characters/benny/benny31-lab.ts <<'EOF'\n/**\n * Round 31 Benny lab (QA only, not part of the game): renders ONE Benny model from behind with the game's lighting and\n * colour chain (candy environment, hemisphere +  …[+4658 chars]`
+
+### 🧑 User — 2026-11-21T00:50:35.559Z
+
+> ↩︎ result: (Bash completed with no output)
+

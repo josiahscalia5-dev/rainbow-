@@ -33,3 +33,6 @@
 | 2026-11-21 00:16 | k1_depth | fal-ai/image-preprocessors/depth-anything/v2 | `01a1fb76-1c79-7b93-b25a-287b4cb4ea0c` | 0.010 | True | 3 |
 | 2026-11-21 00:16 | k3_depth | fal-ai/image-preprocessors/depth-anything/v2 | `01a1fb76-1c9a-7d50-806f-ec8b5e714193` | 0.010 | True | 6 |
 | 2026-11-21 00:16 | k2_depth | fal-ai/image-preprocessors/depth-anything/v2 | `01a1fb76-1ca7-7431-a806-4a1f90d04937` | 0.010 | True | 7 |
+| 2026-11-21 00:49 | benny31_matte2x | fal-ai/birefnet/v2 | `01a1fb93-fc2e-7f60-b8bf-87d001b6c667` | 0.010 | True | 3 |
+| 2026-11-21 00:49 | benny31_tripo25 | tripo3d/tripo/v2.5/image-to-3d | `01a1fb94-5a18-7451-9cc9-f45b3e7dd415` | 0.400 | False | 4 |
+| 2026-11-21 00:50 | benny31_trellis | fal-ai/trellis | `01a1fb94-59bc-7b53-85e7-40346bcfa3a2` | 0.400 | True | 52 |
