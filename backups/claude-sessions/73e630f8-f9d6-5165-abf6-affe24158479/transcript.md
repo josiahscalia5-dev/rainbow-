@@ -2731,3 +2731,64 @@ My code edit didn't apply (a text match failed), so that bake ran the old code. 
 
 > 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/turn2.jpg"}`
 
+### 🧑 User — 2026-11-21T01:11:50.177Z
+
+> ↩︎ result: own_m = np.clip(np.c_[own.reshape(-1, 3), np.ones(TEX * TEX)] @ Mfit, 0, 1).reshape(TEX, TEX, 3)
+> Lown = inverse(own_m).reshape(TEX, TEX, 3)
+> # soft blend: approved bake where it has support (push-pull smoothed weight), the model's own colours elsewhere
+> wgt = cv2.GaussianBlur(np.minimum(1, wsum / 0.25).astype(np.float32), (0, 0), 3)
+> # UV islands of the mesh (rasterised triangles)
+> def accessor(i):
+>     a = j['accessors'][i]; v = j['bufferViews'][a['bufferView']]; off = bin0 + v.get('byteOffset', 0) + a.get('byteOffset', 0)
+>     comp = {5126: np.float32, 5125: np.uint32, 5123: np.uint16}[a['componentType']]; nc = {'SCALAR': 1, 'VEC2': 2, 'VEC3': 3}[a['type']]
+>     return np.frombuffer(b[off: off + a['count'] * nc * np.dtype(comp).itemsize], comp).reshape(a['count'], nc)
+> prim = j['meshes'][0]['primitives'][0]
+> UV = accessor(prim['attributes']['TEXCOORD_0']); IDX = accessor(prim['indices']).reshape(-1, 3)
+>     upd = (cv_ < 0.5) & (den[..., 0] > 1e-3); Lout[upd] = (num / np.maximum(den, 1e-6))[upd]; cv_[upd] = 1
+> Lfin = np.where(isl[..., None] > 0, Lfin, Lout)
+> print('UV islands cover', round(float(isl.mean()) * 100, 1), '% of the texture')
+> V = np.clip(Lfin / K, 0, 1)
+> Image.fromarray((srgb(V) *  …[+410 chars]
+
+### 🧑 User — 2026-11-21T01:11:50.190Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T01:12:10.685Z
+
+> 🔧 **Bash** `{"command": "BLACK=1 Q=\"bake=/qa/benny/r31/gen/hunyuan2_bake.png&K=4\" timeout 900 node tools/benny31/render.mjs qa/benny/r31/gen/hunyuan2.glb qa/benny/r31/fit/hunyuan2_baked '[[0,12]]' 1024 2>&1 | tail -1 && mkdir -p qa/benny/r31/proof && python3 -I tools/benny31/compare.py qa/benny/r31/proof/APPROVED_CURRENT3D_IMPROVED3D \"CURRENT 3D (game today)=qa/benny/r31/fit/current_hi/y180_p20.png\" \"IMPROVED 3D (new)=qa/benny/r31/fit/hunyuan2_baked/y0_p12.png\" | tail -12 && python3 -I - <<'EOF'\nfrom PIL import Image, ImageDraw, ImageFont\nF=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/Deja …[+1114 chars]`
+
+### 🧑 User — 2026-11-21T01:12:15.948Z
+
+> ↩︎ result: rendered 1 to qa/benny/r31/fit/hunyuan2_baked
+> {
+>  "CURRENT 3D (game today)": {
+>   "silhouette_iou": 0.902,
+>   "box_within20_pct": 44.4,
+>   "box_ssim": 0.49
+>  },
+>  "IMPROVED 3D (new)": {
+>   "silhouette_iou": 0.956,
+>   "box_within20_pct": 66.3,
+>   "box_ssim": 0.805
+>  }
+> }
+> APPROVED_CURRENT3D_IMPROVED3D.jpg
+> APPROVED_CURRENT3D_IMPROVED3D.json
+> APPROVED_CURRENT3D_IMPROVED3D_0_full.png
+> APPROVED_CURRENT3D_IMPROVED3D_1_full.png
+> APPROVED_CURRENT3D_IMPROVED3D_2_full.png
+> TURNAROUND_CURRENT3D_vs_IMPROVED3D.jpg
+
+### 🤖 Claude — 2026-11-21T01:12:17.494Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/benny/r31/proof/APPROVED_CURRENT3D_IMPROVED3D.jpg"}`
+
+### 🧑 User — 2026-11-21T01:12:17.594Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T01:12:39.787Z
+
+> 🔧 **Bash** `{"command": "npx tsc --noEmit 2>&1 | head -3; python3 -I -c \"\nrows=[l for l in open('qa/match/06/paint06/LEDGER.md') if l.startswith('| 20') and 'benny31' in l]\nprint(len(rows),'benny jobs, est USD', round(sum(float(l.split('|')[5]) for l in rows),2))\"; cat > qa/benny/r31/README.md <<'EOF'\n# Benny round 31 — improving the 3D Benny toward the APPROVED Screen 06 Benny (2026-11-21, branch `ccr-4fcad20e-a6pp8w`)\n\n**User (verbatim, 2026-11-21):** \"DO NOT remove or redesign my original approved pink Benny … Keep the approved-looking Benny in my current visual\ncandidate. Do not replace him w …[+4469 chars]`
+
