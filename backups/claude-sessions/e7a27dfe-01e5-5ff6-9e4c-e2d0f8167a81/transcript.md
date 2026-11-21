@@ -1304,3 +1304,56 @@ You're right: I had your approved screen and kept changing it. I've stopped. Thi
 
 Is this what you wanted: your exact screen with Benny really swimming through it? If yes, I'll fix the purple stripe next and change nothing else. I won't touch other screens until you say so.
 
+### 🧑 User — 2026-11-21T03:10:37.446Z
+
+I want this to be a real gaming mobile app I want the character to move. This looks like an If you don't, this looks like an image. If you don't fix it and make an actual real gaming app and actually make the pin character move like it did before I change it into a proof screen, I want to keep the proof screen, but make sure it moves like a gaming app. If you don't, I'm canceling my subscription with you guys, with Claudia, and you're losing a customer.CLAUDIA — CORRECT THE CAMERA AND FORWARD MOVEMENT.
+
+Your latest test is NOT approved yet.
+
+Benny starts at the correct size, but as he swims forward, he gets smaller and eventually almost disappears into the distance.
+
+THAT IS NOT WHAT I WANT.
+
+Keep the improved real 3D Benny and my beautiful approved-looking Screen 05 scenery.
+
+Use a proper third-person follow-camera, slightly above and behind Benny, so he remains approximately the same size and position on screen while swimming forward.
+
+The river, purple machinery, gold bands and coins must have convincing depth and move past Benny as he genuinely travels through the environment.
+
+Do not simply enlarge Benny artificially while leaving the scenery stationary.
+
+Preserve the approved water, S-curves, gold rings, foam, lighting and overall visual quality. Do not return to the old-looking 3D environment.
+
+Keep both existing versions saved. Show me an uninterrupted normal-speed gameplay clip where Benny stays clearly visible, paddles, steers, passes a gold band and continues down Screen 05.
+
+I want my approved artwork's appearance with real forward-moving mobile gameplay. Both must work together.
+
+### 🤖 Claude — 2026-11-21T03:12:19.170Z
+
+This one I'll do differently: the camera has to follow Benny, so the tunnel itself has to become real 3D that moves past him. I'm first checking which earlier tunnel pieces built from your approved picture I can reuse, so I don't rebuild from scratch.
+
+### 🤖 Claude — 2026-11-21T03:12:20.171Z
+
+> 🔧 **Bash** `{"command": "ls qa/pilot05/proj/tunnel/ 2>/dev/null | head; sed -n 1,40p qa/pilot05/proj/tunnel/NOTES.md 2>/dev/null | cut -c1-250", "description": "Look at the earlier tunnel projection notes"}`
+
+### 🧑 User — 2026-11-21T03:12:20.224Z
+
+> ↩︎ result: NOTES.md
+> frame
+> lid
+> model
+> probe
+> # Screen 05 tunnel bake — walls, rings, near frame (status 2026-11-16 ~20:50 UTC)
+> 
+> Same method as the approved-water projection `?proj05=1`: the user's APPROVED Screen 05
+> (`references/05_flow_into_the_current.png`) unwrapped into each object's OWN coordinates and baked into textures, shown
+> through the post-chain inverse (`pjInverse`, `src/vfx/waterRibbon.ts`). Default build and the protected BEFORE are
+> untouched (verified pixel-identical, below). Nothing here is promoted: the user approves visually first.
+> 
+> | Switch | Object | Texture | Bake |
+> |---|---|---|---|
+> | `?projwall05=1` | purple perforated walls, one atlas row per bay AB…GX | `assets/textures/tunnel05/wall05.png` | `tools/proj05/tunnel_rings.py` → `tunnel_bake.py` |
+> | `?projring05=1` | gold rings (approved ring B band on every 05 ring) | `assets/textures/tunnel05/ring05.png` | `tunnel_bake.py` |
+> | `?projframe05=1` | near gold frame: bottom corners + bottom lip (`tube05_near_frame`) | `assets/textures/tunnel05/frame05.png` | `tools/proj05/frame_bake.py` |
+> | `?projlid05=1` | the 6 wall paddles L1 L2 L3 / R1 R2 R3 as Blender-built trays (default pucks + far pucks off) | `assets/models/lids05.glb` …[+2328 chars]
+
