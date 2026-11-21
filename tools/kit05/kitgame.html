@@ -34,19 +34,26 @@ const camQ0 = new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().l
 const REMAP = { uCam: { value: new THREE.Vector3() }, uAx: { value: A.clone() }, uZ2: { value: K.Z2 } };
 const REMAP_GLSL = `uniform vec3 uCam; uniform vec3 uAx; uniform float uZ2;
 vec3 kitRemap(vec3 wp){ vec3 d = wp - uCam; float za = dot(d, uAx); float gz = za <= uZ2 ? za : uZ2 * exp((za - uZ2) / uZ2); return wp + (gz - za) * uAx; }`;
-const kitMat = (map, extra = {}) => {
+const kitMat = (map, extra = {}, own = null) => {   // own = { tex, vr: [v0, v1] }: this section's OWN painted pixels (atlas rows)
   const m = new THREE.MeshBasicMaterial({ map, toneMapped: false, side: THREE.DoubleSide, ...extra });
+  const OU = own ? { uOwn: { value: own.tex }, uVr: { value: new THREE.Vector2(...own.vr) }, uFade: { value: new THREE.Vector2(...K.own.fade) } } : {};
   m.onBeforeCompile = (sh) => {
-    Object.assign(sh.uniforms, REMAP);
-    sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\n' + REMAP_GLSL)
-      .replace('#include <project_vertex>', `vec4 kwp = modelMatrix * vec4(transformed, 1.0); kwp.xyz = kitRemap(kwp.xyz);
+    Object.assign(sh.uniforms, REMAP, OU);
+    sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\n' + REMAP_GLSL + '\nvarying float vKitT; varying float vKitD;')
+      .replace('#include <project_vertex>', `vec4 kwp = modelMatrix * vec4(transformed, 1.0); vKitT = dot(kwp.xyz, uAx); vKitD = dot(kwp.xyz - uCam, uAx); kwp.xyz = kitRemap(kwp.xyz);
         vec4 mvPosition = viewMatrix * kwp; gl_Position = projectionMatrix * mvPosition;`);
+    if (own) sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform sampler2D uOwn; uniform vec2 uVr; uniform vec2 uFade; varying float vKitT; varying float vKitD;')
+      .replace('#include <map_fragment>', `vec4 kTile = texture2D(map, vMapUv);
+        vec4 kOwn = texture2D(uOwn, vec2(vMapUv.x, 1.0 - (uVr.x + (1.0 - vMapUv.y) * (uVr.y - uVr.x))));
+        float kF = smoothstep(uFade.x, uFade.y, vKitD / max(vKitT, 1e-3));   // 1 at the painted distance (start), 0 once Benny is close
+        diffuseColor *= mix(kTile, kOwn, kF);`);
   };
   return m;
 };
 const tl = new THREE.TextureLoader();
 const tex = async (f, rep = false) => { const t = await tl.loadAsync(f); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; if (rep) t.wrapS = THREE.RepeatWrapping; return t; };
-const [wallTex, ringTex, riverTex] = await Promise.all([tex('wall.png'), tex('ring.png'), tex('river.png')]);
+const [wallTex, ringTex, riverTex, wallOwn, ringOwn] = await Promise.all([tex('wall.png'), tex('ring.png'), tex('river.png'), tex('wall_own.png'), tex('ring_own.png')]);
+const ownOf = (kind, atlas, k) => { const r = K.own?.[kind]?.rows?.[k]; return r && !q.get('noown') ? { tex: atlas, vr: [r[0] / K.own[kind].h, r[1] / K.own[kind].h] } : null; };
 const wallMat = kitMat(wallTex), ringMat = kitMat(ringTex), riverMat = kitMat(riverTex);
 
 const P = (t, th, rad) => A0.clone().addScaledVector(A, t).addScaledVector(RR, rad * Math.cos(th)).addScaledVector(NUP, rad * Math.sin(th));
@@ -62,13 +69,14 @@ const lerp = (a, b, x) => a + (b - a) * x;
 for (let k = KMIN; k < NSEC; k++) {
   const t0 = ringT(k);
   // wall section k: from ring k's front face to ring k+1's front face (the ring band covers its first RING_W)
-  scene.add(new THREE.Mesh(grid(160, 24, (a, b) => [P(t0 + b * K.S, lerp(K.TH0, K.TH1, a), K.RT), a, 1 - b]), wallMat));
+  const wo = ownOf('wall', wallOwn, k), ro = ownOf('ring', ringOwn, k);
+  scene.add(new THREE.Mesh(grid(160, 24, (a, b) => [P(t0 + b * K.S, lerp(K.TH0, K.TH1, a), K.RT), a, 1 - b]), wo ? kitMat(wallTex, {}, wo) : wallMat));
   // gold ring k: front face (outer -> inner) then inner face (front -> back)
   scene.add(new THREE.Mesh(grid(160, 8, (a, b) => {
     const th = lerp(K.TH0, K.TH1, a);
     if (b <= 0.5) { const f = b / 0.5; return [P(t0, th, K.RT - (K.RT - K.RING_IN) * f), a, 1 - b]; }
     const f = (b - 0.5) / 0.5; return [P(t0 + f * K.RING_W, th, K.RING_IN), a, 1 - b];
-  }), ringMat));
+  }), ro ? kitMat(ringTex, {}, ro) : ringMat));
 }
 // water surface: lateral x log-spaced axial distance (same mapping as the bake)
 const Wt = K.water, LOGR = Math.log(Wt.T1 / Wt.T0);

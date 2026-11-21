@@ -2447,3 +2447,75 @@ While that runs (about 10 minutes), I'll make sure the new kit tools are saved t
 
 > 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:r33-kit-short-test 2>&1 | grep -E '\"commit\"|skipping|error|secret'; git log -1 --format='%h'; git ls-files qa/kit05/r33 | wc -l; timeout 60 git ls-remote origin refs/heads/ccr-81d66c17-i0ooo8; git rev-parse HEAD", "description": "Save evidence and resume notes to GitHub"}`
 
+### 🧑 User — 2026-11-21T15:08:41.292Z
+
+> ↩︎ result: "commit": "579d1570dce1ddb29f55a5481e46030a80a18344",
+> 579d157
+> 25
+> 579d1570dce1ddb29f55a5481e46030a80a18344	refs/heads/ccr-81d66c17-i0ooo8
+> 579d1570dce1ddb29f55a5481e46030a80a18344
+
+### 🤖 Claude — 2026-11-21T15:09:06.807Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport numpy as np, cv2\nfrom PIL import Image\nW, H = 412, 915\nref = Image.open('references/05_flow_into_the_current.png').convert('RGB'); rw = round(ref.width * H / ref.height)\nref = np.array(ref.resize((rw, H), Image.LANCZOS))[:, (rw - W) // 2:(rw - W) // 2 + W].astype(np.float32)\nkit = np.array(Image.open('/tmp/rainbow_r33/runs/kit_v2/f_0000.jpg').convert('RGB')).astype(np.float32)\nd = np.abs(kit - ref).mean(2)\nmask = np.ones((H, W), bool); mask[:125] = False; mask[400:780, 50:362] = False\n# where is the error? bands of rows\nfor y0, y1, name in ((1 …[+1086 chars]`
+
+### 🧑 User — 2026-11-21T15:09:07.070Z
+
+> ↩︎ result: upper tunnel                 mean  32.0  within20 0.472  share of all error 0.46
+> mid tunnel + far river       mean  38.3  within20 0.481  share of all error 0.31
+> Benny band (sides only)      mean  16.8  within20 0.775  share of all error 0.13
+> near water + bottom frame    mean   8.9  within20 0.900  share of all error 0.10
+> after a 2 px blur of both: mean 16.6 within20 0.752
+
+### 🤖 Claude — 2026-11-21T15:09:09.051Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/kit_diffmap.jpg"}`
+
+### 🧑 User — 2026-11-21T15:09:09.076Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T15:09:44.818Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/kit05 && cat >> bake_kit.py <<'EOF'\n\n# ---------------- per-section OWN pixels (round 33b): exact painting at the start, cross-faded to the sharp tile as Benny approaches ----\nfrom PIL import Image as _I\ntileW = np.array(_I.open(os.path.join(out, 'wall.png'))).astype(np.float32); tileR = np.array(_I.open(os.path.join(out, 'ring.png'))).astype(np.float32)\nsrcO = cv2.GaussianBlur(ref, (0, 0), 0.6)\ndef own_atlas(kind, ks, heights, tile, param):\n    rows, meta, y0 = [], {}, 0\n    for k, hh in zip(ks, heights):\n        a = np.linspace(TH0, TH1, til …[+2227 chars]`
+
+### 🧑 User — 2026-11-21T15:09:59.888Z
+
+> ↩︎ result: wrote /tmp/rainbow_r33/kit
+> own pixels: wall {0: 0.072, 1: 0.631, 2: 0.728, 3: 0.727, 4: 0.728, 5: 0.725, 6: 0.728, 7: 0.728} ring {1: 0.605, 2: 0.995, 3: 0.995, 4: 0.983, 5: 0.986, 6: 0.995, 7: 0.995, 8: 0.995, 9: 0.995}
+
+### 🤖 Claude — 2026-11-21T15:10:26.845Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np = 'kitgame.html'; s = open(p).read()\nold_mat = s[s.index('const kitMat = (map, extra = {}) => {'):s.index('const tl = new THREE.TextureLoader();')]\nnew_mat = \"\"\"const kitMat = (map, extra = {}, own = null) => {   // own = { tex, vr: [v0, v1] }: this section's OWN painted pixels (atlas rows)\n  const m = new THREE.MeshBasicMaterial({ map, toneMapped: false, side: THREE.DoubleSide, ...extra });\n  const OU = own ? { uOwn: { value: own.tex }, uVr: { value: new THREE.Vector2(...own.vr) }, uFade: { value: new THREE.Vector2(...K.own.fade) } } : {};\n  m.onBefor …[+2824 chars]`
+
+### 🧑 User — 2026-11-21T15:10:31.547Z
+
+> ↩︎ result: 2 ownOf uses
+> wrote /tmp/rainbow_r33/kit/out/own_f0.png
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T15:10:37.198Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/rainbow_r33/runs/own_f0 && python3 -c \"\nfrom PIL import Image; Image.open('/tmp/rainbow_r33/kit/out/own_f0.png').convert('RGB').save('/tmp/rainbow_r33/runs/own_f0/f_0000.jpg', quality=95)\" && cd /home/user/rainbow- && python3 -I tools/kit05/compare_r33.py /tmp/rainbow_r33/runs/kit_v2 /tmp/rainbow_r33/runs/own_f0 /tmp/rainbow_r33/compare_own 0 | python3 -c \"import sys,json; d=json.load(sys.stdin); print('kit v2 (tile only):', d['frames']['0']['current']); print('kit + own pixels :', d['frames']['0']['kit'])\"", "description": "Measure start-frame likeness with own …[+9 chars]`
+
+### 🧑 User — 2026-11-21T15:10:37.560Z
+
+> ↩︎ result: kit v2 (tile only): {'colour_look_corr': 0.984, 'sharpness_vs_approved': 0.715, 'mean_abs_diff_levels': 24.3, 'share_within_20_levels': 0.645, 'ssim_scenery': 0.614}
+> kit + own pixels : {'colour_look_corr': 0.984, 'sharpness_vs_approved': 0.707, 'mean_abs_diff_levels': 24.1, 'share_within_20_levels': 0.647, 'ssim_scenery': 0.615}
+
+### 🤖 Claude — 2026-11-21T15:10:53.747Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport numpy as np, cv2\nfrom PIL import Image\nW, H = 412, 915\nref = Image.open('references/05_flow_into_the_current.png').convert('RGB'); rw = round(ref.width * H / ref.height)\nref = np.array(ref.resize((rw, H), Image.LANCZOS))[:, (rw - W) // 2:(rw - W) // 2 + W]\nkit = np.array(Image.open('/tmp/rainbow_r33/kit/out/own_f0.png').convert('RGB'))\n# best global shift / scale between them on the tunnel band (rows 130-400)\ng1 = cv2.cvtColor(ref, cv2.COLOR_RGB2GRAY).astype(np.float32); g2 = cv2.cvtColor(kit, cv2.COLOR_RGB2GRAY).astype(np.float32)\nwin = np.zer …[+547 chars]`
+
+### 🧑 User — 2026-11-21T15:10:53.996Z
+
+> ↩︎ result: phase-correlation shift kit vs approved: dx -0.74 dy -0.09 px (resp 0.41)
+
+### 🤖 Claude — 2026-11-21T15:10:55.877Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/own_zoom.jpg"}`
+
+### 🧑 User — 2026-11-21T15:10:55.905Z
+
+> ↩︎ result: [image]
+

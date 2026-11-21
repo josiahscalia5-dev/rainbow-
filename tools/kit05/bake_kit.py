@@ -114,3 +114,32 @@ kit = export(); kit.update({'TH0': TH0, 'TH1': TH1, 'water': {'T0': T0, 'T1': T1
             'benny_start_px': [432, 1180], 'fov': SC['cam']['fov'], 'cam_fwd': F.tolist(), 'cam_up': U.tolist()})
 json.dump(kit, open(os.path.join(out, 'kit.json'), 'w'), indent=1)
 print('wrote', out)
+
+# ---------------- per-section OWN pixels (round 33b): exact painting at the start, cross-faded to the sharp tile as Benny approaches ----
+from PIL import Image as _I
+tileW = np.array(_I.open(os.path.join(out, 'wall.png'))).astype(np.float32); tileR = np.array(_I.open(os.path.join(out, 'ring.png'))).astype(np.float32)
+srcO = cv2.GaussianBlur(ref, (0, 0), 0.6)
+def own_atlas(kind, ks, heights, tile, param):
+    rows, meta, y0 = [], {}, 0
+    for k, hh in zip(ks, heights):
+        a = np.linspace(TH0, TH1, tile.shape[1])[None, :].repeat(hh, 0); b = (np.arange(hh)[:, None] + 0.5) / hh * np.ones((1, tile.shape[1]))
+        Pk = param(k, a, b); x, y, z = project(Pk)
+        ok = (z > 0.05) & (x >= 1) & (x < W - 2) & (y >= 1) & (y < H - 2) & (height_above_water(Pk) > -0.005)
+        ok &= cover[np.clip(y, 0, H - 1).astype(int), np.clip(x, 0, W - 1).astype(int)] == 0
+        if kind == 'wall': ok &= ~hidden_by_ring(np.asarray(Pk) @ A)
+        ownpx = cv2.remap(srcO, x.astype(np.float32), y.astype(np.float32), cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
+        base = cv2.resize(tile, (tile.shape[1], hh), interpolation=cv2.INTER_AREA)
+        wgt = cv2.GaussianBlur(ok.astype(np.float32), (0, 0), 1.5) * ok          # feather the own/tile border
+        rows.append(ownpx * wgt[..., None] + base * (1 - wgt[..., None])); meta[k] = [y0, y0 + hh, round(float(ok.mean()), 3)]; y0 += hh
+    at = np.concatenate(rows, 0); pad = int(2 ** np.ceil(np.log2(at.shape[0]))) - at.shape[0]
+    at = np.concatenate([at, np.zeros((pad, at.shape[1], 3), np.float32)], 0)
+    _I.fromarray(np.clip(at, 0, 255).astype(np.uint8)).save(os.path.join(out, f'{kind}_own.png'))
+    return {'h': at.shape[0], 'rows': meta}
+wall_own = own_atlas('wall', range(0, 8), [512, 512, 256, 192, 128, 96, 64, 64], tileW, lambda k, a, b: wall_point(a, ring_t(k) + b * S))
+def ring_param(k, a, b):
+    front = b < 0.5; rad = np.where(front, RT - (RT - RING_IN) * (b / 0.5), RING_IN); tt = ring_t(k) + np.where(front, 0.0, (b - 0.5) / 0.5 * RING_W)
+    return A0 + tt[..., None] * A + rad[..., None] * (np.cos(a)[..., None] * RR + np.sin(a)[..., None] * NUP)
+ring_own = own_atlas('ring', range(1, 10), [160, 160, 96, 64, 48, 32, 32, 32, 32], tileR, ring_param)
+kit = json.load(open(os.path.join(out, 'kit.json'))); kit['own'] = {'wall': wall_own, 'ring': ring_own, 'fade': [0.55, 0.85]}
+json.dump(kit, open(os.path.join(out, 'kit.json'), 'w'), indent=1)
+print('own pixels: wall', {k: v[2] for k, v in wall_own['rows'].items()}, 'ring', {k: v[2] for k, v in ring_own['rows'].items()})
