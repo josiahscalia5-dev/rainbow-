@@ -3386,3 +3386,11 @@ Not a file-format effect: the new frames really score lower on hue balance even 
 
 > 🔧 **Bash** `{"command": "cd /tmp/rainbow_r33 && rm -rf runs/kit_full3 && (NODE_PATH=$(npm root -g) timeout 7000 node /home/user/rainbow-/tools/marble05/viewer/final_acceptance.cjs /tmp/rainbow_r33/kitgame /tmp/rainbow_r33/runs/kit_full3 25 1.4 > /tmp/rainbow_r33/runs/kit_full3.log 2>&1; echo \"exit=$?\" >> /tmp/rainbow_r33/runs/kit_full3.log) > /dev/null 2>&1 &\nsleep 1; cd /home/user/rainbow- && cp /tmp/rainbow_r33/kit/out/level/pose_s*.png qa/kit05/r33/level_v3/ && cp /tmp/rainbow_r33/kit/{river_tile.png,kit.json,track.json,foam.png} qa/kit05/r33/textures/ && python3 scripts/rainbow-autosave.py --reason …[+128 chars]`
 
+### 🧑 User — 2026-11-21T16:05:28.618Z
+
+> ↩︎ result: "commit": "ae52b0e890449d386418d158977b043592fe7d52",
+
+### 🤖 Claude — 2026-11-21T16:05:30.556Z
+
+> 🔧 **Bash** `{"command": "until grep -qE \"exit=\" /tmp/rainbow_r33/runs/kit_full3.log 2>/dev/null; do sleep 10; done; tail -1 /tmp/rainbow_r33/runs/kit_full3.log; ls /tmp/rainbow_r33/runs/kit_full3 | grep -c \"^f_\"", "description": "Wait for the final full-level run to finish", "timeout": 3600000}`
+
