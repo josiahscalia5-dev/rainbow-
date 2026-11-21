@@ -37,13 +37,15 @@ const VERT_BODY = /* glsl */ `
 vec3 p = position;
 // arms: alternating doggy-paddle stroke around each shoulder
 float side = p.x >= 0.0 ? 1.0 : -1.0;
-float wa = smoothstep(0.30, 0.37, abs(p.x)) * (1.0 - smoothstep(0.08, 0.16, abs(p.y + 0.18)));
-float ph = uT * 7.5 + (side > 0.0 ? 0.0 : 3.14159);
-vec3 piv = vec3(side * 0.31, -0.18, 0.0);
+float wa = smoothstep(0.29, 0.36, abs(p.x)) * (1.0 - smoothstep(0.10, 0.18, abs(p.y + 0.19)));
+float ph = uT * 6.5 + (side > 0.0 ? 0.0 : 3.14159);
+vec3 piv = vec3(side * 0.30, -0.19, 0.0);
 vec3 q = p - piv;
-q = b31rot(q, vec3(0.0, 0.0, 1.0), side * uSwim * wa * 0.42 * sin(ph));
-q = b31rot(q, vec3(0.0, 1.0, 0.0), side * uSwim * wa * 0.5 * cos(ph));
+// a big visible stroke: the paw sweeps up out of the water and back down (seen from behind), plus fore / aft
+q = b31rot(q, vec3(0.0, 0.0, 1.0), side * uSwim * wa * (0.25 + 0.75 * sin(ph)));
+q = b31rot(q, vec3(0.0, 1.0, 0.0), side * uSwim * wa * 0.6 * cos(ph));
 p = piv + q;
+p.y += uSwim * wa * 0.05 * max(0.0, sin(ph));
 // pom-pom on the runtime's spring
 float wp = smoothstep(0.17, 0.27, p.y);
 vec3 pp = vec3(0.0, 0.19, 0.05);

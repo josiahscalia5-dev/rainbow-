@@ -794,7 +794,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 25112,
-   "sha256": "18644cac3ed15373333cb8e4e81d350dd722cd758522606d665b5ec73ab1aaa1"
+   "sha256": "326557bea270fd28ed97a6d481f177172c1b99a618820a37654e178cf5639f7e"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3271,
-   "sha256": "ee1000a8c2f55977c3d22875e3d5ddba4e2cc6fffa4c07914f38a8ae94cb015f"
+   "sha256": "5fef79a5f8661ef1d11b5ff11bd70f5287d70c9e36de96c4380534198141fb4d"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -17163,8 +17163,8 @@
   },
   {
    "path": "qa/match/05/r31_3d/proof/NEW3D_SCREEN05_sideview.mp4",
-   "bytes": 2165461,
-   "sha256": "2ee41a6cacee44a0895d9383403a589352ffa437d1a058f241fde65efc9f3c7c"
+   "bytes": 2552722,
+   "sha256": "4bcd145491569c339ae17e824a9b93e4e8a03316d6222c5bf4a0ef4ab3d1e028"
   },
   {
    "path": "qa/match/05/r31_3d/proof/clip_NEW3D_SCREEN05_gameplay.json",
@@ -17173,8 +17173,8 @@
   },
   {
    "path": "qa/match/05/r31_3d/proof/clip_NEW3D_SCREEN05_sideview.json",
-   "bytes": 13082,
-   "sha256": "325d306c549d30e1eed5fc05aca6d9c810cc5418931a416c491c0b2e430e47d9"
+   "bytes": 13980,
+   "sha256": "e6850b6e4867486fc00027199c0b921d94a0c7453994f8e4d981b704556beb47"
   },
   {
    "path": "qa/match/06/paint06/LEDGER.md",
@@ -36423,8 +36423,8 @@
   },
   {
    "path": "src/characters/benny/benny31.ts",
-   "bytes": 5271,
-   "sha256": "6d0752d237ea47bb00626fa947f08fc3935d29c59415479fa3c7871861b9adfc"
+   "bytes": 5436,
+   "sha256": "c05b87444d1139c7b12e96225a3ba5b310cede8d50b156a121830a168f53310e"
   },
   {
    "path": "src/characters/benny/build.ts",
