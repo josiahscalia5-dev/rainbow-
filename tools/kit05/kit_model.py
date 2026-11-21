@@ -42,6 +42,8 @@ HW = CAM_H + CAM_OFF[1] * RT                                         # axis heig
 Z2 = FOC * RT / RING2_PX                                             # axial depth of painted ring 2 from the start camera
 S = Z2 * np.log(RATIO)                                               # ring spacing: g'(Z2) = 1 and g(z + S) = RATIO * g(z) beyond Z2
 def ring_t(k): return Z2 + (k - 2) * S                               # axial position of ring k (ring 2 = painted ring 2)
+_bd = cam_dir(432, 1180); B0 = _bd * (-CAM_H / (_bd @ NUP))          # Benny's painted water contact point (same as kitgame.html)
+TB0 = float(B0 @ A); LATB0 = float((B0 - A0) @ RR)                    # his axial start and lateral offset from the axis
 
 def g(z):
     """camera-relative apparent depth along the axis (z = true axial distance from the camera)"""
@@ -63,6 +65,27 @@ def wall_point(theta, t, radius=RT):
     return A0 + t[..., None] * A + radius * (np.cos(theta)[..., None] * RR + np.sin(theta)[..., None] * NUP)
 
 def height_above_water(P): return np.asarray(P) @ PN - PD
+
+# ---- round 34 (S1): the river's WORLD-ANCHORED centre line (lateral offset along RR from the tunnel axis, world units) ----
+# Painted stretch (axial t <= ~11): measured on the APPROVED picture cast onto the kit water (tools/kit05/bake_river.py prints the
+# check): the painted coin trail (t 2.96 +0.06, 4.05 +0.28, 5.50 +0.04, 7.13 -0.31, 8.86 -0.18, 9.87 +0.07) and the cyan channel's
+# centroid (t 2.3 -0.16, 4.3 +0.21, 5.8 +0.04, 7.3 -0.26, 8.8 -0.17, 10.3 +0.34) agree: S-bends ~3 u apart, ~0.26 u to each side.
+# Apexes are joined by half-cosines (C1, zero slope at each apex = natural meanders). Beyond the painting the same character
+# continues with seeded random spacing (2.6-3.8 u, i.e. 1.9-2.7 s at 1.4 u/s) and amplitude (0.15-0.28 u): no fixed period.
+RIVER_LAT_START = LATB0                                              # the river centre passes through Benny's painted start point
+RIVER_APEX_PAINTED = [(2.30, -0.05), (4.25, 0.26), (7.80, -0.29), (10.90, 0.27)]
+RIVER_AMAX = 0.29                                                    # |centre| never exceeds this (water floor half chord 0.70)
+def _river_apexes(t_end=95.0, seed=34):
+    rng = np.random.default_rng(seed); ap = list(RIVER_APEX_PAINTED)
+    while ap[-1][0] < t_end:
+        t, a = ap[-1]; ap.append((t + rng.uniform(2.6, 3.8), -np.sign(a) * rng.uniform(0.15, 0.28)))
+    return ap
+def river_center(t):
+    """lateral offset (along RR, from the tunnel axis) of the river centre at axial t; flat behind Benny's start"""
+    t = np.atleast_1d(np.asarray(t, float)); ap = [(TB0, RIVER_LAT_START)] + _river_apexes(); ts = np.array([p[0] for p in ap]); cs = np.array([p[1] for p in ap])
+    k = np.clip(np.searchsorted(ts, t) - 1, 0, len(ts) - 2); f = np.clip((t - ts[k]) / (ts[k + 1] - ts[k]), 0, 1)
+    c = cs[k] + (cs[k + 1] - cs[k]) * (1 - np.cos(np.pi * f)) / 2
+    return np.clip(np.where(t <= ts[0], cs[0], c), -RIVER_AMAX, RIVER_AMAX)
 
 def export():
     return {'A': A.tolist(), 'NUP': NUP.tolist(), 'RR': RR.tolist(), 'A0': A0.tolist(), 'RT': RT, 'RING_IN': RING_IN, 'RING_W': RING_W,

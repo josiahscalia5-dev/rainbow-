@@ -20,6 +20,7 @@ for f in "$WS"/kit/*.png "$WS/kit/kit.json"; do ln -sf "$f" "$(basename "$f")"; 
 cp -f "$SRC/tools/kit05/kitgame.html" play3.html
 cp -f "$SRC/tools/kit05/controls.js" controls.js
 [ -f "$SRC/tools/kit05/live.js" ] && cp -f "$SRC/tools/kit05/live.js" live.js
+[ -f "$SRC/tools/kit05/swimfx.js" ] && cp -f "$SRC/tools/kit05/swimfx.js" swimfx.js
 ln -sf "$AR/assets/models/benny31.glb" benny31.glb
 ln -sf "$AR/assets/textures/benny31/bake.png" bake.png
 ln -sf "$AR/assets/textures/paint/05_coin.png" coin.png

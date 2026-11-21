@@ -144,20 +144,39 @@ kit = json.load(open(os.path.join(out, 'kit.json'))); kit['own'] = {'wall': wall
 json.dump(kit, open(os.path.join(out, 'kit.json'), 'w'), indent=1)
 print('own pixels: wall', {k: v[2] for k, v in wall_own['rows'].items()}, 'ring', {k: v[2] for k, v in ring_own['rows'].items()})
 
-# ---------------- flowing river tile (round 33c): seamless, full-width open water only (the foam banks are on the lower walls) ----------
-# A = the user's isolated water art, B = the approved water (+ its water-art fill), both over the kit water rows where the water art covers
-# the FULL width; cycle = A, B, A reversed, B reversed, each join cross-faded -> period 4 x (t1 - t0), no stretched texels.
+# ---------------- flowing RIVER RIBBON tile (round 34, S1): river-local coordinates, sharp, no stretched texels ----------------
+# Round 33's tile filled the columns outside the water art's river with flow-stretched texels (blocky pink / red bars) and joined
+# t-reversed copies (X-shaped mirror pattern = the "repeating grid"). The ribbon is sampled in the game at (u = lateral - river
+# centre c(t), v = t + flow), so it bends with the world-anchored river. Source = the SHARPEST painted water (the kit rows where the
+# isolated water art covers the full floor width, t ~0.9-2.0: near Benny, ~300 px per world unit): A = the approved water (+ its
+# water-art fill), B = the user's isolated water art (colour-matched), straightened along c(t); columns beyond the floor edge
+# (|u| > 0.70 happens on the inner side of a bend) are the pink edge band REFLECTED at the floor edge (pink stays at the river's
+# edge; the foam bank is drawn over it in the game). Cycle A, B, A mirrored left-right, B mirrored, joins cross-faded: no t-reversal.
 cov = (isoW[..., 3] > 200).mean(1)                                   # full-width coverage per log row
 okr = np.nonzero((cov > 0.985) & (tv[:, 0] > 0.9))[0]; r0 = okr[0]; r1 = r0
 while r1 + 1 < VH and cov[r1 + 1] > 0.985: r1 += 1                  # first unbroken full-width run only (near water, crisp)
 RT0 = float(tv[r0, 0]); RT1 = float(tv[r1, 0])
 seg_n = 384                                                          # rows per segment (linear in t)
-def strip(srcimg):
+RU = 1.05; RIB_W = 1536                                              # ribbon lateral range u in [-RU, RU]
+latv = np.linspace(-HWD, HWD, VW)
+def strip(srcimg, valid, shift=0.0):
+    """rows linear in t over the sharp source rows; each row only from ITS valid lateral range (inside the picture / the water art):
+    lateral positions outside it are reflected back into it (triangle wave), never clamped (clamping = the round-33 stretched bars)"""
     ts = RT0 + (np.arange(seg_n) + 0.5) / seg_n * (RT1 - RT0); rf = np.log(ts / T0) / np.log(T1 / T0) * VH - 0.5
-    return np.stack([cv2.remap(srcimg[..., ch].astype(np.float32), np.tile(np.arange(VW, dtype=np.float32), (seg_n, 1)),
-                                np.repeat(rf.astype(np.float32)[:, None], VW, 1), cv2.INTER_LINEAR) for ch in range(3)], -1)
-SA, SB = strip(isoC), strip(water)
-parts = [SA, SB, SA[::-1], SB[::-1]]; X = seg_n // 4
+    ri = np.clip(np.round(rf).astype(int), 0, VH - 1)
+    l0 = np.array([latv[valid[r]].min() + 0.01 for r in ri]); l1 = np.array([latv[valid[r]].max() - 0.01 for r in ri])
+    u = np.linspace(-RU, RU, RIB_W)[None, :]; lat = river_center(ts)[:, None] + u + shift
+    L = (l1 - l0)[:, None]; x = np.mod(lat - l0[:, None], 2 * L); lat = l0[:, None] + np.where(x > L, 2 * L - x, x)
+    col = (lat + HWD) / (2 * HWD) * (VW - 1)
+    return np.stack([cv2.remap(srcimg[..., ch].astype(np.float32), col.astype(np.float32), np.repeat(rf.astype(np.float32)[:, None], RIB_W, 1),
+                               cv2.INTER_LINEAR, borderMode=cv2.BORDER_REFLECT) for ch in range(3)], -1)
+_hsv = cv2.cvtColor(np.clip(ref, 0, 255).astype(np.uint8), cv2.COLOR_RGB2HSV); _gold = ((_hsv[..., 0] >= 5) & (_hsv[..., 0] <= 35) & (_hsv[..., 1] > 90)).astype(np.uint8)
+_gold = cv2.dilate(_gold, np.ones((15, 15), np.uint8))               # the gold ring blocks at the picture's bottom corners are not water
+validA = ok & (x >= 2) & (x < W - 3) & (_gold[yc.astype(int), xc.astype(int)] == 0); validB = validA & (isoW[..., 3] > 200)
+# A = approved (its centre behind Benny is the water-art fill), B / B' = the water art shifted sideways (so the centre lane never shows
+# the same water twice in a row), A' = A mirrored left-right
+SA, SB, SB2 = strip(water, validA), strip(isoC, validB, 0.21), strip(isoC, validB, -0.17)
+parts = [SA, SB, SA[:, ::-1], SB2[:, ::-1]]; X = seg_n // 4
 wv = ((np.arange(X) + 0.5) / X)[:, None, None]
 tile = parts[0]
 for nxt in parts[1:]:                                                # overlapping joins: blend X rows, the next part continues after them
@@ -177,8 +196,29 @@ for cls in (CY, PK):
     print('colour class: hue shift %.1f (x2 deg), saturation x%.2f' % (dh, ks))
 tile = cv2.cvtColor(th_.reshape(-1, 1, 3).astype(np.uint8), cv2.COLOR_HSV2RGB).reshape(tile.shape).astype(np.float32)
 Image.fromarray(np.clip(tile[::-1], 0, 255).astype(np.uint8)).save(os.path.join(out, 'river_tile.png'))   # row 0 = far end
-kit = json.load(open(os.path.join(out, 'kit.json'))); kit['river_tile'] = {'t0': RT0, 'L': L_TILE, 'painted_until': 14.0, 'painted_fade': 6.0}
-json.dump(kit, open(os.path.join(out, 'kit.json'), 'w'), indent=1); print('river tile', tile.shape, 'source rows t', round(RT0, 3), '..', round(RT1, 3), 'period', round(L_TILE, 3))
+# round 34 (S1): the PINK edge-band version of the same ribbon: the painted cyan / blue hues mapped onto the painting's own pink band
+# (median hue / saturation / brightness of the approved picture's pink water), white streaks and the painting's pinks unchanged, so the
+# pink bands carry exactly the same painted streaks as the cyan water next to them
+pk = hsv_of(tile); apk = ap[PK(ap[:, 0]) & (ap[:, 1] > 120)]
+cyan_like = (pk[:, 0] >= 75) & (pk[:, 0] <= 135) & (pk[:, 1] > 40)
+hc = np.median(pk[cyan_like, 0]); pk[cyan_like, 0] = np.clip(pk[cyan_like, 0] - hc + np.median(apk[:, 0]), 0, 179)
+pk[cyan_like, 1] = np.clip(pk[cyan_like, 1] * np.median(apk[:, 1]) / max(1.0, np.median(pk[cyan_like, 1])), 0, 255)
+pk[cyan_like, 2] = np.clip(pk[cyan_like, 2] * np.median(apk[:, 2]) / max(1.0, np.median(pk[cyan_like, 2])), 0, 255)
+pink_tile = cv2.cvtColor(pk.reshape(-1, 1, 3).astype(np.uint8), cv2.COLOR_HSV2RGB).reshape(tile.shape)
+Image.fromarray(pink_tile[::-1]).save(os.path.join(out, 'river_pink.png'))
+print('pink ribbon: cyan hue %.0f -> painted pink hue %.0f, sat x%.2f' % (hc, np.median(apk[:, 0]), np.median(apk[:, 1]) / max(1.0, np.median(hsv_of(tile)[cyan_like, 1]))))
+kit = json.load(open(os.path.join(out, 'kit.json'))); kit['river_tile'] = {'t0': RT0, 'L': L_TILE, 'painted_until': 14.0, 'painted_fade': 6.0, 'RU': RU, 'ribbon': 1}
+# round 34 (S1): the river's world-anchored centre line for the game (scenery) and for Benny's path / lanes / coins (S3)
+#   river_center      = {"ds": 0.05, "c": [...]}: lateral offset along K.RR from Benny's straight start line (B0 + s A), every ds of
+#                       path length s from Benny's start (s = 0 .. 60; c[0] = 0: he starts on the river centre)
+#   river_center_axis = the same line as offsets from the tunnel axis at axial t = t0 + i dt (the scenery shaders use this one)
+#   river_safe_halfwidth = how far from the centre Benny's CENTRE may go (lanes are at +-0.22) so that his body (+-0.125) stays on the
+#                       water and inside the floor at every bend: floor half chord 0.70 - max|centre| - 0.125 (the foam banks are further out)
+DS = 0.05; ss = np.arange(0, 60.0 + 1e-9, DS); tt = np.arange(0, 95.0 + 1e-9, DS)
+kit['river_center'] = {'ds': DS, 'c': [round(float(x), 4) for x in river_center(TB0 + ss) - LATB0]}
+kit['river_center_axis'] = {'t0': 0.0, 'dt': DS, 'c': [round(float(x), 4) for x in river_center(tt)], 'lat_start': LATB0, 't_start': TB0}
+kit['river_safe_halfwidth'] = round(float(HWD - np.abs(river_center(tt)).max() - 0.125), 3)
+json.dump(kit, open(os.path.join(out, 'kit.json'), 'w'), indent=1); print('river ribbon', tile.shape, 'source rows t', round(RT0, 3), '..', round(RT1, 3), 'period', round(L_TILE, 3), 'safe half width', kit['river_safe_halfwidth'])
 
 # ---------------- built level for the acceptance test (track.json in the game folder) ----------------
 LEVEL = 32.16; bdir = cam_dir(432, 1180); B0 = bdir * (-CAM_H / (bdir @ NUP)); tB0 = float(B0 @ A)
