@@ -1239,3 +1239,54 @@ The offline model reproduces the page's overlaps almost exactly (same pairs, fra
 > stuck 1.0
 > final [[1.13, 0.025, 0], [1.77, 0.12, 0], [2.34, 0.15, 0], [2.94, 0.105, 0], [3.6, 0.22, 0], [4.1, 0.02, 0], [4.65, 0.21, 0], [5.2, 0.09, 0], [7.4, -0.04, 0], [8.0, 0.11, 0], [8.6, 0.22, 0], [9.2, 0.07, 0], [12.0, 0.02, 0.1], [12.55, -0.02, 0.26], [13.1, 0.02, 0.42], [16.6, 0.04, 0], [17.25, -0.07, 0], [17.8, -0.22, 0], [18.4, -0.11, 0], [21.6, 0.06, 0], [22.15, -0.06, 0], [22.7, 0.06, 0], [23.25, -0.05, 0], [26.6, -0.02, 0.12], [27.15, 0.02, 0.27], [27.7, -0.02, 0.42]]
 
+### 🤖 Claude — 2026-11-21T13:26:05.157Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && python3 -I - <<'EOF'\np='controls.js'; s=open(p).read()\na=s.index(\"  const RUNS = [\\n\"); b=s.index(\"  ];\\n\", a)+5\nnew='''  // Run 1 coins 1-4 = the approved picture's coins, fitted on the start camera of the merged page (screen error < 3 px; agentB's\n  // rebuilt trail differs from the old one, so these replace the lead's back-projected (s, lat)); coins 5-8 continue toward the\n  // vanishing point as far right as the river allows (|lat| <= 0.22). Lateral zig-zags + 0.5-0.66 spa …[+2009 chars]`
+
+### 🧑 User — 2026-11-21T13:26:24.827Z
+
+> ↩︎ result: 0
+> {"layout_checks":{"count":26,"min_path_gap":0.5,"max_abs_lat":0.22,"min_h":0,"max_h":0.42,"last_coin_s":27.7,"coins_before_done":26,"hud_if_all":1680},"levelEnd":30.56,"sEnd":32.16,"frame0_match":[{"coin":1,"dx":-0.6,"dy":-0.1,"r_ours":26.48,"r_appr":28.6},{"coin":2,"dx":-0.1,"dy":-0.2,"r_ours":17.97,"r_appr":20.8},{"coin":3,"dx":0.2,"dy":0,"r_ours":12.71,"r_appr":16.7},{"coin":4,"dx":0.1,"dy":2.8,"r_ours":8.06,"r_appr":12.8},{"coin":5,"dx":-19.6,"dy":4,"r_ours":4.53,"r_appr":8.3},{"coin":6,"dx":-65.3,"dy":1.3,"r_ours":3.98,"r_appr":5.7},{"coin":7,"dx":-39.7,"dy":2.9,"r_ours":3.47,"r_appr":4.2},{"coin":8,"dx":-64.2,"dy":1.8,"r_ours":3.03,"r_appr":3.6}],"lat_search":[{"s":3.47,"lat":0.22,"err":35.1,"x":211.5,"y":331.8},{"s":3.97,"lat":0.22,"err":55.3,"x":203.6,"y":324.3},{"s":4.47,"lat":0.22,"err":50.4,"x":218.4,"y":316.6}],"frame0_overlaps":[]}
+> {"frames":691,"seconds":23.03,"done_frame":655,"done_t":21.83,"done_s":30.567,"s_final":31.052,"s_max":31.052,"coins_end":1670,"got":{"water":10,"lane":9,"air":6},"pickups":25,"overlaps_r6":0,"overlaps_first":[],"overlap_pairs":{},"pop_overlaps":114,"max_abs_lat":0.22,"h_range":[0,0.2794],"dLat_max":0.0414,"ds_min_before_done":0.0459999999 …[+748 chars]
+
+### 🤖 Claude — 2026-11-21T13:26:44.399Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && python3 -I - <<'EOF'\nimport json, importlib.util, sys, numpy as np, math\nspec = importlib.util.spec_from_file_location('m', 'coin_overlap_model.py'); sys.argv = ['x', 'coins_level_logic.json', 'mergedtest/track_w/track.json']\nM = importlib.util.module_from_spec(spec); spec.loader.exec_module(M)\nd = json.load(open('coins_level_logic.json'))\nsb, cp, cq = d['cam_path'][0]; cp = np.array(cp)\n# frame-0 camera ~ frame-1 camera moved back 0.047 along the path direction\nt, r, n = M.frame( …[+493 chars]`
+
+### 🧑 User — 2026-11-21T13:26:44.605Z
+
+> ↩︎ result: 1 dist 2.158 r_ours 26.48 r_appr 28.6 m_cur 0.902 m_needed 0.974
+> 2 dist 2.799 r_ours 17.97 r_appr 20.8 m_cur 0.788 m_needed 0.912
+> 3 dist 3.325 r_ours 12.71 r_appr 16.7 m_cur 0.662 m_needed 0.869
+> 4 dist 3.85 r_ours 8.06 r_appr 12.8 m_cur 0.485 m_needed 0.77
+> 5 dist 4.505 r_ours 4.53 r_appr 8.3 m_cur 0.317 m_needed 0.582
+
+### 🤖 Claude — 2026-11-21T13:27:19.532Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && python3 -I - <<'EOF'\nimport json\nlay = json.load(open('/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/lay_v5.json'))\n# runs: indices 0-7 run1, 8-11, 12-14, 15-18, 19-22, 23-25\nruns = [(0, 8), (8, 12), (12, 15), (15, 19), (19, 23), (23, 26)]\nk = (29.5 - 7.4) / (26.6 - 7.4); out = []\nfor ri, (a, b) in enumerate(runs):\n    s0 = lay[a][0]; s0n = s0 if ri == 0 else 7.4 + (s0 - 7.4) * k\n    for c in lay[a:b]: out.append([round(s0n + (c[0] - s0), 2), c …[+949 chars]`
+
+### 🧑 User — 2026-11-21T13:29:33.021Z
+
+> ↩︎ result: [[1.13, 0.025, 0], [1.77, 0.12, 0], [2.34, 0.15, 0], [2.94, 0.105, 0], [3.6, 0.22, 0], [4.1, 0.02, 0], [4.65, 0.21, 0], [5.2, 0.09, 0], [7.4, -0.04, 0], [8.0, 0.11, 0], [8.6, 0.22, 0], [9.2, 0.07, 0], [12.69, 0.02, 0.1], [13.24, -0.02, 0.26], [13.79, 0.02, 0.42], [17.99, 0.04, 0], [18.64, -0.07, 0], [19.19, -0.22, 0], [19.79, -0.11, 0], [23.74, 0.06, 0], [24.29, -0.06, 0], [24.84, 0.06, 0], [25.39, -0.05, 0], [29.5, -0.02, 0.12], [30.05, 0.02, 0.27], [30.6, -0.02, 0.42]]
+> iter 8 23.0 {(3, 4): -5.8, (4, 5): 0.3, (6, 7): -0.0, (8, 9): 0.7, (10, 11): 1.8, (15, 16): -1.8, (17, 18): 2.4, (20, 21): 0.4, (21, 22): 1.6}
+> iter 9 20.0 {(3, 4): -5.8, (4, 5): 0.3, (6, 7): -0.0, (8, 9): 0.7, (10, 11): 1.8, (15, 16): -1.8, (17, 18): 2.4}
+> iter 10 17.5 {(3, 4): -5.8, (4, 5): 0.3, (8, 9): 0.7, (10, 11): 1.8, (15, 16): -1.8, (17, 18): 2.4}
+> iter 11 15.3 {(3, 4): -5.8, (8, 9): 0.7, (10, 11): 1.8, (15, 16): -1.8, (17, 18): 2.4}
+> final [[1.13, 0.025, 0], [1.77, 0.12, 0], [2.34, 0.15, 0], [2.94, 0.105, 0], [3.6, 0.22, 0], [4.1, -0.02, 0], [4.65, 0.21, 0], [5.2, 0.01, 0], [7.4, -0.04, 0], [8.1, 0.15, 0], [8.6, 0.22, 0], [9.35, 0.03, 0], [12.69, 0.02, 0.1], [13.24, -0.02, 0.26], [13.79, 0.02, 0.42], [17.99, 0 …[+201 chars]
+
+### 🤖 Claude — 2026-11-21T13:29:58.063Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && cat > coin_run1_search.py <<'EOF'\n# Brute force for run-1 coins 5-8 (coins 1-4 fitted to the approved picture stay): on-screen overlap margin on the recorded camera\n# path (first 160 frames) + distance from the approved centres at frame 0 (small weight).\n# usage: python3 -I coin_run1_search.py <coins_level_logic.json> <track.json> <layout_in.json> <layout_out.json>\nimport json, sys, math, itertools, importlib.util\nimport numpy as np\nargs = sys.argv[1:]; sys.argv = ['x', args[0], ar …[+2539 chars]`
+
+### 🧑 User — 2026-11-21T13:29:59.935Z
+
+> ↩︎ result: coin5 (31.480197941614303, [np.float64(3.9), np.float64(0.18), 0], np.float64(3.281587855235937))
+> coin 6 (np.float64(27.241376984000585), [np.float64(4.5), np.float64(0.22), 0], np.float64(3.281587855235937))
+> coin 7 (np.float64(63.51782658675959), [np.float64(5.25), np.float64(0.04), 0], np.float64(3.281587855235937))
+> coin 8 (np.float64(38.50770273887959), [np.float64(5.85), np.float64(0.22), 0], np.float64(3.281587855235937))
+> [[1.13, 0.025, 0], [1.77, 0.12, 0], [2.34, 0.15, 0], [2.94, 0.105, 0], [np.float64(3.9), np.float64(0.18), 0], [np.float64(4.5), np.float64(0.22), 0], [np.float64(5.25), np.float64(0.04), 0], [np.float64(5.85), np.float64(0.22), 0]]
+
+### 🤖 Claude — 2026-11-21T13:30:13.292Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && sed -i 's/^MT = \\[(2.0, 0.98).*$/MT = [(2.0, 0.96), (2.16, 0.95), (2.8, 0.86), (3.33, 0.76), (3.85, 0.60), (4.5, 0.42), (5.0, 0.33), (5.5, 0.30)]  # = controls.js MTAB/' coin_overlap_model.py && grep -n \"^MT\" coin_overlap_model.py && SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad && python3 -I coin_run1_search.py coins_level_logic.json mergedtest/track_w/track.json $SP/lay_v6.json $SP/lay_v9a.json 2>&1 | tail -5 && python3 -I coin_layout_search.py …[+232 chars]`
+

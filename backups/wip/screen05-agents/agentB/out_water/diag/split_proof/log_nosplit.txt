@@ -7,3 +7,4 @@ ready 16.841
 still 0 53.851 visible splats 655734
 still 0.7 53.843 visible splats 866071
 still 1.4 65.392 visible splats 866071
+still 2.3 50.718 visible splats 866071

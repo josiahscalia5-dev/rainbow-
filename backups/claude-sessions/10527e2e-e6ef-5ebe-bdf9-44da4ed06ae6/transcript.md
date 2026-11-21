@@ -2242,3 +2242,129 @@ Understood: no shortening, no speed-up, no scenery removed, and the test runs fr
 > frames simulated: 780 last s 36.353 tile 14
 > Shell cwd was reset to /home/user/rainbow-
 
+### 🤖 Claude — 2026-11-21T13:26:05.784Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport json, math\nL=json.load(open('/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/len_probe/run_log.json'))\nfr=[x for x in L if 'i' in x and x.get('cam')]\nprev=None\nfor x in fr:\n    if prev:\n        m=math.dist(x['cam']['p'],prev['cam']['p'])\n        if m<1e-5: print('camera (and Benny) STOP moving at t=%.2f s, s=%.2f: the built path ends at 32.16 and the page has no ending - the game would sit frozen at the tunnel end'%(x['t'],x['s'])); break\n    prev=x\nprint('time to reach the path end at 1.4 u/s: %.1f s = %d fra …[+119 chars]`
+
+### 🧑 User — 2026-11-21T13:26:05.867Z
+
+> ↩︎ result: camera (and Benny) STOP moving at t=23.20 s, s=32.48: the built path ends at 32.16 and the page has no ending - the game would sit frozen at the tunnel end
+> time to reach the path end at 1.4 u/s: 23.0 s = 689 frames at 30 fps
+
+### 🤖 Claude — 2026-11-21T13:26:28.557Z
+
+> 🔧 **SendMessage** `{"to": "aba3a82f8b70b6b99", "summary": "Full-length level, golden end look, ending transition", "message": "Lead → water specialist: queued additions to your task (finish your current step first; same folder and rules). The user's new binding order: the acceptance test must cover the ENTIRE level, i.e. every river curve, golden tunnel section, geometry join, collectible and the ending transition. Do NOT shorten the level, speed it up or remove scenery to pass.\n\nMEASURED (lead):\n- The built level = your `track_w` = 32.16 units of river through 14 ring-to-ring sections. At the normal swim spe …[+2924 chars]`
+
+### 🧑 User — 2026-11-21T13:26:28.592Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to aba3a82f8b70b6b99 at its next tool round. Moved 1 running tool call to the background without stopping it, so that round no longer waits for it. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"aba3a82f8b70b6b99","name":"aba3a82f8b70b6b99","ref":"789b26"}}
+
+### 🤖 Claude — 2026-11-21T13:26:34.837Z
+
+> 🔧 **SendMessage** `{"to": "a08dcc646e5a9494e", "summary": "Level end coordinates for the full level", "message": "Lead: exact level-end rule, so you and the water specialist agree. No reply needed; fold it into the coin/level-end task.\n\n- The user's binding order: the test covers the ENTIRE built level. Do not shorten it or speed it up.\n- Built level = 32.16 units of river, 14 ring-to-ring sections, 23.0 s at the normal 1.4 u/s (~690 frames). Joins at s = 2.56, 4.72, 6.82, 8.96, 11.08, 13.22, 15.32, 17.46, 19.58, 21.72, 23.82, 25.98, 28.08, 30.22, 32.16.\n- Today the page has no ending: at t = 23.2 s Benny an …[+861 chars]`
+
+### 🧑 User — 2026-11-21T13:26:34.864Z
+
+> ↩︎ result: {"success":true,"message":"Message queued for delivery to a08dcc646e5a9494e at its next tool round. Sending this moved nothing it is running to the background just now, so the message waits for that round unless something moves sooner. If it finishes first, it is resumed with the message and notifies again, so wait for that notification before resending.","pin":{"id":"a08dcc646e5a9494e","name":"a08dcc646e5a9494e","ref":"7779b0"}}
+
+### 🤖 Claude — 2026-11-21T13:26:52.599Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='tools/marble05/viewer/final_acceptance.cjs'; s=open(p).read()\nold=\"      const cam = await page.evaluate(() => (window.camInfo ? window.camInfo() : null));\\n      // coins on screen\"\nnew=\"      const cam = await page.evaluate(() => (window.camInfo ? window.camInfo() : null));\\n      o.endK = await page.evaluate(() => (window.endK ? window.endK() : null));   // ending transition strength (golden-light bloom), 0 = gameplay\\n      // coins on screen\"\nassert old in s; s=s.replace(old,new)\nold2=\"    const ov = fr.filter((x) => x.coinOverlaps !== nul …[+1748 chars]`
+
+### 🧑 User — 2026-11-21T13:26:52.682Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-21T13:27:07.330Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='tools/marble05/viewer/acceptance_verdict.py'; s=open(p).read()\n# G3: add real position stalls\nold=\"crit('G3', 'forward swimming continuous (no freeze, no jump)', f['freezes'] == 0 and f['min_step'] > 0 and f['max_step'] <= 1.5 * f['min_step'] + 0.02, f, 'freezes 0, every per-frame step > 0 and <= 1.5 x min step + 0.02')\"\nnew=\"crit('G3', 'forward swimming continuous at the normal speed (no freeze, no stall, no jump)', f['freezes'] == 0 and f['min_step'] > 0 and f['max_step'] <= 1.5 * f['min_step'] + 0.02 and T.get('position_stalls', 1) == 0, {**f, 'po …[+2928 chars]`
+
+### 🧑 User — 2026-11-21T13:27:07.424Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-21T13:27:10.599Z
+
+Testing the whole tool chain end to end (acceptance → visual check → verdict) on a tiny 6-frame run, so a script bug can't waste a multi-hour run later:
+
+### 🤖 Claude — 2026-11-21T13:27:14.133Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad; cd $SP && rm -rf chain && NODE_PATH=$(npm root -g) timeout 2400 node final_acceptance.cjs $SP/merged $SP/chain 0.2 1.4 > chain.log 2>&1; tail -c 300 chain.log; python3 -I visual_check.py chain /home/user/rainbow-/references/05_flow_into_the_current.png > /dev/null && python3 -I acceptance_verdict.py chain | cut -c1-150; ls chain | head", "description": "Run a 6-frame chain test of all acceptance scripts", "timeout": 2600000}`
+
+### 🧑 User — 2026-11-21T13:29:49.380Z
+
+> ↩︎ result: ,  40,  52,  49,  50, 120,  57,  49,
+>      53,  41,  10,  91, 118, 111, 115, 116,  35,  48,  58,  48,
+>      47, 108, 105,  98, 120,  50,  54,  52,  32,  64,  32,  48,
+>     120,  53,  53, 100,  57,  52,  98,  51, 102,  97,  54,  52,
+>      48,  93,  32,  69,
+>     ... 281 more items
+>   ]
+> }
+> 
+> Node.js v22.23.5
+> Traceback (most recent call last):
+>   File "/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/acceptance_verdict.py", line 14, in <module>
+>     T = json.load(open(os.path.join(d, 'test_results.json')))
+>                   ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> FileNotFoundError: [Errno 2] No such file or directory: 'chain/test_results.json'
+> f_0000.jpg
+> f_0001.jpg
+> f_0002.jpg
+> f_0003.jpg
+> f_0004.jpg
+> f_0005.jpg
+> plan.json
+> run_log.json
+> screen05_swipe_run.mp4
+> visual_check.json
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T13:29:52.050Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad; grep -v \"^ \\|^frame\" $SP/chain.log | head -20 | cut -c1-300", "description": "Find the error in the chain test log"}`
+
+### 🧑 User — 2026-11-21T13:29:52.112Z
+
+> ↩︎ result: [libx264 @ 0x55d94b3fa900] height not divisible by 2 (412x915)
+> [vost#0:0/libx264 @ 0x55d94b3fa640] Error while opening encoder - maybe incorrect parameters such as bit_rate, rate, width or height.
+> Error while filtering: Generic error in an external library
+> [out#0/mp4 @ 0x55d94b3f1500] Nothing was written into output file, because at least one of its streams received no packets.
+> node:internal/errors:983
+> 
+> Error: Command failed: ffmpeg -y -loglevel error -framerate 30 -i /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/chain/f_%04d.jpg -c:v libx264 -pix_fmt yuv420p -crf 19 /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/chain/screen05_
+> [libx264 @ 0x55d94b3fa900] height not divisible by 2 (412x915)
+> [vost#0:0/libx264 @ 0x55d94b3fa640] Error while opening encoder - maybe incorrect parameters such as bit_rate, rate, width or height.
+> Error while filtering: Generic error in an external library
+> [out#0/mp4 @ 0x55d94b3f1500] Nothing was written into output file, because at least one of its streams received no packets.
+> 
+> }
+> 
+> Node.js v22.23.5
+
+### 🤖 Claude — 2026-11-21T13:30:05.097Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='tools/marble05/viewer/final_acceptance.cjs'; s=open(p).read()\nold=\"    if (!process.env.NO_MP4) execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-framerate', String(fps), '-i', `${out}/f_%04d.jpg`, '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '19', `${out}/screen05_swipe_run.mp4`]);\\n\"\nassert old in s; s=s.replace(old,\"\")\nold2=\"    fs.writeFileSync(`${out}/test_results.json`, JSON.stringify(res, null, 1)); console.log(JSON.stringify(res));\"\nnew2=\"\"\"    fs.writeFileSync(`${out}/test_results.json`, JSON.stringify(res, null, 1)); consol …[+1392 chars]`
+
+### 🧑 User — 2026-11-21T13:30:27.381Z
+
+> ↩︎ result: ok
+> ve_per_frame":0.04805461144473589,"max_turn_deg_per_frame":0.2740401782253707},"coins":{"start":1420,"end":1420,"got":{"water":0,"lane":0,"air":0}},"swipes_sent":0,"swipe_responses":[],"swipes_ok":0}
+> 175652 chain/screen05_swipe_run.mp4
+> # Screen 05 acceptance verdict: FAIL
+> 
+> | id | criterion | result | value | rule |
+> |---|---|---|---|---|
+> | G1 | no page / console errors | PASS | `[]` | 0 errors |
+> | G2 | WHOLE level played to its end, every frame rendered | **FAIL** | `{"frames": 6, "images": 6, "done": false, "done_frame": -1, "s_end_
+> | G3 | forward swimming continuous at the normal speed (no freeze, no stall, no jump) | PASS | `{"min_step": 0.046, "max_step": 0.0470000000
+> | G4 | left / right smooth (no teleport) | PASS | `{"max_step_per_frame": 0, "teleports": 0}` | |d lat| per frame <= 0.06 in every frame |
+> | G5 | Benny stays inside the river | PASS | `0` | |lat| <= 0.30 (river half-width ~0.30-0.35) |
+> | G6 | every real touch swipe produced the intended move; each direction used repeatedly | **FAIL** | `{"ok": 0, "sent": 0, "directions": {}
+> | G7 | all three lanes used | **FAIL** | `[0]` | lanes -1, 0, +1 seen |
+> | G8 | up / down correct and smooth | **FAIL** | `{"max_step_per_fra …[+1524 chars]
+
+### 🤖 Claude — 2026-11-21T13:30:42.870Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad; cat > $SP/same_frame.cjs <<'EOF'\n// renders the SAME game state several times: any difference = render instability (splat sort lag / flicker), not motion\nconst { chromium } = require('playwright'); const { spawn } = require('child_process'); const fs = require('fs'); const path = require('path');\n(async () => {\n  const [dir, out] = process.argv.slice(2); fs.mkdirSync(out, { recursive: true });\n  const disk = fs.readFileSync(path.join(dir, 'play3.html'), 'utf8'); let port, srv;\n  for (let k  …[+1655 chars]`
+

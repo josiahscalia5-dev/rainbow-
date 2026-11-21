@@ -2,7 +2,9 @@
 Reads test_results.json (final_acceptance.cjs) + visual_check.json (visual_check.py) from <run dir> and judges every criterion
 against FIXED thresholds (written 2026-11-21 ~12:55 UTC before the first merged run; ~13:30 UTC, still before any full run, after the
 user's feedback: G2 = the WHOLE level to its end, G6 >= 4 swipes per direction, G9 >= 80 % of the coins, NEW G11 no overlapping coins;
-never loosened to make a run pass).
+never loosened to make a run pass). ~13:45 UTC, still before any full run, after the user's order 'cover the entire level incl. ending
+transition, do not shorten': G3 + real position stalls, NEW G12 ending transition, NEW G13 full built level / every section; V2 + V4 on
+gameplay frames (the golden-light bloom frames keep V1 dark patches + V3 flicker).
 Writes <run dir>/VERDICT.json + VERDICT.md; exit code 0 only when EVERY criterion passes.
 The user's eight strict points map to: G4/G5/G7 smooth left-right inside the river; G2/G3 continuous natural forward swimming;
 G8 correct up/down; V1-V5 no visual errors; G1/G6/G9 no gameplay errors, real swipes control the 3D position; V4 consistent approved
@@ -22,7 +24,7 @@ crit('G2', 'WHOLE level played to its end, every frame rendered', bool(lv.get('d
      {'frames': T['frames'], 'images': V['frames'], 'done': lv.get('done'), 'done_frame': lv.get('done_frame'), 's_end_target': lv.get('s_end_target'), 's_end': T['forward'].get('s_end'), 'plan': lv.get('plan')},
      'the page reports level complete (state().done) at its level end and the run stops there; one image per frame')
 f = T['forward']
-crit('G3', 'forward swimming continuous (no freeze, no jump)', f['freezes'] == 0 and f['min_step'] > 0 and f['max_step'] <= 1.5 * f['min_step'] + 0.02, f, 'freezes 0, every per-frame step > 0 and <= 1.5 x min step + 0.02')
+crit('G3', 'forward swimming continuous at the normal speed (no freeze, no stall, no jump)', f['freezes'] == 0 and f['min_step'] > 0 and f['max_step'] <= 1.5 * f['min_step'] + 0.02 and T.get('position_stalls', 1) == 0, {**f, 'position_stalls': T.get('position_stalls')}, 'path progress never freezes, per-frame step <= 1.5 x min + 0.02, and Benny/camera really move every gameplay frame (move >= 0.3 x median)')
 la = T['lateral']
 crit('G4', 'left / right smooth (no teleport)', la['teleports_over_0_06'] == 0, {'max_step_per_frame': la['max_step_per_frame'], 'teleports': la['teleports_over_0_06']}, '|d lat| per frame <= 0.06 in every frame')
 crit('G5', 'Benny stays inside the river', la.get('max_abs_lat', 9) <= 0.30, la.get('max_abs_lat'), '|lat| <= 0.30 (river half-width ~0.30-0.35)')
@@ -40,7 +42,19 @@ cc = T.get('coin_crowding')
 crit('G11', 'coins never crowd / overlap on screen', bool(cc) and cc['frames_with_overlap'] == 0, cc, 'in every frame no two visible coins (on-screen radius >= 6 px) overlap')
 cam = T.get('camera')
 crit('G10', 'camera smooth (no shake / sudden jump / snap turn)', bool(cam) and cam['max_move_per_frame'] <= 2 * cam['median_move_per_frame'] + 0.02 and cam['max_turn_deg_per_frame'] <= 2.5, cam, 'per-frame camera move <= 2 x median + 0.02, turn <= 2.5 deg per frame')
+et = T.get('ending_transition') or {}
+crit('G12', 'ending transition into the golden light, smooth, completes the level', bool(et.get('present')) and et.get('monotonic') and (et.get('k_at_end') or 0) >= 0.95 and lv.get('done'), et, 'golden-light bloom present, never goes back, reaches full (>= 0.95) on the level-complete frame')
+bl = T.get('built_level') or {}; secs = bl.get('sections_entered') or []
+crit('G13', 'the FULL built level: not shortened, every tunnel section and join swum through at normal speed', bl.get('level_end_vs_path_end') is not None and abs(bl['level_end_vs_path_end']) <= 0.3 and bool(secs) and max(secs) >= (bl.get('sections') or 99) - 1 and secs == list(range(min(secs), max(secs) + 1)) and bl.get('swim_speed') == 1.4,
+     bl, 'level end within 0.3 u of the built path end, sections entered without gaps up to the last one, swim speed 1.4 u/s')
 # ---- visual (visual_check.json)
+# ending transition (golden-light bloom, window.endK > 0.05): dark patches and flicker are still checked there; sharpness and colour look
+# are judged on the gameplay frames only (a bloom into light is the hand-over to Screen 06, not blur)
+RL = [x for x in json.load(open(os.path.join(d, 'run_log.json'))) if 'i' in x]
+trans = {x['i'] for x in RL if (x.get('endK') or 0) > 0.05}
+VR = json.load(open(os.path.join(d, 'visual_check.json')))['frames']; play = [r for r in VR if int(r['frame']) not in trans] or VR
+V['sharpness_vs_start'] = {'min': min(r['sharpness_vs_start'] for r in play), 'median': sorted(r['sharpness_vs_start'] for r in play)[len(play) // 2], 'gameplay_frames': len(play), 'transition_frames': len(trans)}
+V['colour_look_vs_approved'] = {'min': min(r['colour_look_vs_approved'] for r in play), 'median': sorted(r['colour_look_vs_approved'] for r in play)[len(play) // 2]}
 dp = V['dark_patches']
 crit('V1', 'no black patches', dp['frames_with_patches'] == 0, dp, '0 frames with a connected near-black area >= 150 px (approved artwork: largest 8 px, never counted)')
 crit('V2', 'no blurry frames', V['sharpness_vs_start']['min'] >= 0.5, V['sharpness_vs_start'], 'sharpness (Laplacian variance) >= 0.5 x the start frame in every frame')

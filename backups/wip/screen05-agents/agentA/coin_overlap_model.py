@@ -8,7 +8,7 @@ L = json.load(open(sys.argv[1])); TR = json.load(open(sys.argv[2]))
 T = np.array(TR['trail']); TS = np.array(TR['trail_s']); N = np.array(TR['n'])
 CD = 0.15038523388874458; SIZE = CD * 1.15; W, H, FOV = 412, 915, 64.0
 F = H / 2 / math.tan(math.radians(FOV) / 2)
-MT = [(2.0, 0.93), (2.5, 0.84), (2.9, 0.77), (3.3, 0.67), (3.8, 0.50), (4.4, 0.32), (6.0, 0.28)]
+MT = [(2.0, 0.96), (2.16, 0.95), (2.8, 0.86), (3.33, 0.76), (3.85, 0.60), (4.5, 0.42), (5.0, 0.33), (5.5, 0.30)]  # = controls.js MTAB
 def m_of(d):
     if d <= MT[0][0]: return MT[0][1]
     for (d0, m0), (d1, m1) in zip(MT, MT[1:]):

@@ -81,6 +81,7 @@ const { chromium } = require('playwright'); const { spawn, execFileSync } = requ
       const o = await page.evaluate(([t, dt, sp]) => { const r = window.step(t, dt, 0, sp); return Object.assign({}, r, window.state ? window.state() : {}); }, [t, i === 0 ? 0 : 1 / fps, +speed]);
       if (o.done && n2 === nMax) n2 = i + 1;   // the level is complete: this is the last frame
       const cam = await page.evaluate(() => (window.camInfo ? window.camInfo() : null));
+      o.endK = await page.evaluate(() => (window.endK ? window.endK() : null));   // ending transition strength (golden-light bloom), 0 = gameplay
       // coins on screen this frame: any two visible coins (on-screen radius >= 6 px) that overlap = crowding
       const cs2 = await page.evaluate(() => (window.coinScreen ? window.coinScreen() : null));
       let coinOverlaps = null;
@@ -95,7 +96,6 @@ const { chromium } = require('playwright'); const { spawn, execFileSync } = requ
       if (i % 10 === 0) { console.log('frame', i, '/', n2, JSON.stringify(o), new Date().toISOString().slice(11, 19)); fs.writeFileSync(`${out}/run_log.json`, JSON.stringify(log)); }
     }
     fs.writeFileSync(`${out}/run_log.json`, JSON.stringify(log, null, 1));
-    if (!process.env.NO_MP4) execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-framerate', String(fps), '-i', `${out}/f_%04d.jpg`, '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '19', `${out}/screen05_swipe_run.mp4`]);
     // automatic checks
     const fr = log.filter((x) => x.i !== undefined);
     const dS = fr.slice(1).map((x, k) => x.s - fr[k].s), dLat = fr.slice(1).map((x, k) => Math.abs((x.lat ?? 0) - (fr[k].lat ?? 0)));
@@ -121,10 +121,19 @@ const { chromium } = require('playwright'); const { spawn, execFileSync } = requ
       responses.push(r);
     }
     const ov = fr.filter((x) => x.coinOverlaps !== null && x.coinOverlaps !== undefined);
+    // the level as BUILT (the page's own track file): its end must be the level end (no shortened level)
+    const trk = ['track_w/track.json', 'track.json'].map((f) => path.join(dir, f)).find((f) => fs.existsSync(f));
+    const pathEnd = trk ? JSON.parse(fs.readFileSync(trk, 'utf8')).trail_s.slice(-1)[0] : null, nSec = trk ? JSON.parse(fs.readFileSync(trk, 'utf8')).N : null;
+    const tiles = [...new Set(fr.map((x) => x.tile))].sort((a, b) => a - b);
+    const ek = fr.map((x) => x.endK ?? 0), kFirst = ek.findIndex((k) => k > 0.05);
+    const camMoves = camFr.slice(1).map((x, k) => Math.hypot(...x.cam.p.map((v2, j) => v2 - camFr[k].cam.p[j])));
     const dirs = {}; for (const x of swipes) dirs[x.swipe] = (dirs[x.swipe] || 0) + 1;
     const res = {
       frames: fr.length, seconds: +(fr.length / fps).toFixed(2), errors, rendered: `${fa}:${fb}`,
       level: { s_end_target: sEnd, done: !!fr[fr.length - 1].done, done_frame: fr.findIndex((x) => x.done), plan: layout && sEnd && process.env.PLAN !== 'fixed' ? 'coin-trail player + extras' : 'fixed 7.6 s' },
+      built_level: { path_end: pathEnd, sections: nSec, sections_entered: tiles, level_end_vs_path_end: pathEnd && sEnd ? +(sEnd - pathEnd).toFixed(3) : null, swim_speed: +speed },
+      position_stalls: camMoves.length ? camMoves.filter((m, k) => !(fr[k + 1].endK > 0.05) && m < 0.3 * (camMoves.slice().sort((a, b) => a - b)[camMoves.length >> 1])).length : null,
+      ending_transition: { present: ek.some((k) => k > 0.05), first_frame: kFirst, k_at_end: ek[ek.length - 1], monotonic: ek.every((k, i) => i === 0 || k >= ek[i - 1] - 1e-3), frames: ek.filter((k) => k > 0.05).length },
       coin_crowding: ov.length ? { frames_checked: ov.length, frames_with_overlap: ov.filter((x) => x.coinOverlaps > 0).length, max_pairs: Math.max(...ov.map((x) => x.coinOverlaps)), first_frames: ov.filter((x) => x.coinOverlaps > 0).slice(0, 8).map((x) => x.i) } : null,
       swipe_directions: dirs,
       forward: { min_step: Math.min(...dS), max_step: Math.max(...dS), freezes: dS.filter((v) => v <= 1e-6).length, s_end: fr[fr.length - 1].s },
@@ -135,5 +144,11 @@ const { chromium } = require('playwright'); const { spawn, execFileSync } = requ
       swipes_sent: swipes.length, swipe_responses: responses, swipes_ok: responses.filter((r) => r.ok).length,
     };
     fs.writeFileSync(`${out}/test_results.json`, JSON.stringify(res, null, 1)); console.log(JSON.stringify(res));
+    // the recording (after the results, so an encoder problem can never lose a run): 915 px is odd and yuv420p needs even sizes, so the
+    // bottom pixel row is dropped (412x914) — r32 lead fix, the original call failed on every 412x915 run
+    if (!process.env.NO_MP4) {
+      try { execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-framerate', String(fps), '-i', `${out}/f_%04d.jpg`, '-vf', 'crop=trunc(iw/2)*2:trunc(ih/2)*2:0:0', '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '19', '-movflags', '+faststart', `${out}/screen05_swipe_run.mp4`]); }
+      catch (e) { console.error('mp4 encode failed (results are already written):', String(e).slice(0, 300)); }
+    }
   } finally { await browser.close(); srv.kill(); }
 })();
