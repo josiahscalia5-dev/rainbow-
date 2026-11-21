@@ -1453,3 +1453,95 @@ The line at the bottom is gone. Now recording a clip of Benny swimming through a
 
 > 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='src/game/Game.ts'; s=open(p).read()\ns=s.replace(\"\"\"    ...(p06 ? Object.fromEntries(PAINT06_REST.map((r, k) => [`06p${k}`, { mode: 'ride' as Mode, s: course.stage('06').s0 + r }])) : {}),\"\"\",\"\"\"    ...(p06 ? Object.fromEntries(PAINT06_REST.map((r, k) => [`06p${k}`, { mode: 'ride' as Mode, s: course.stage('06').s0 + r }])) : {}),\n    ...(p06 ? { '06p_in': { mode: 'ride' as Mode, s: course.stage('06').s0 - 8 } } : {}),\"\"\",1)\ns=s.replace(\"\"\"    togglePause,\n    /** QA only (read-only use\"\"\",\"\"\"    togglePause,\n    /** QA: render the  …[+3365 chars]`
 
+### 🧑 User — 2026-11-21T00:28:45.017Z
+
+> ↩︎ result: scripts/lib/pw.mjs
+> frames 541 from s 181.291 to 261.418 -> qa/match/06/paint06/clip/SCREEN06_paint06_straight_1x.mp4
+
+### 🤖 Claude — 2026-11-21T00:28:49.701Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/qa/match/06/paint06/clip && python3 -I -c \"\nfrom PIL import Image\nimport json\nL=json.load(open('clip_straight.json'))['frames']\nidx=list(range(0,541,30))\nc=Image.new('RGB',(10*180+90,2*320+10),'white')\nfor n,i in enumerate(idx[:20]):\n    im=Image.open(f'frames_straight/{i:04d}.jpg').resize((180,320)); c.paste(im,((n%10)*189,(n//10)*330))\nc.save('/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/contact.png')\nprint([(i, L[i]['s'], L[i]['stage']) for i in idx])\"", "description": "Make a one-frame-per-second contact sh …[+17 chars]`
+
+### 🧑 User — 2026-11-21T00:28:50.140Z
+
+> ↩︎ result: [(0, 181.291, '05'), (30, 189.523, '06'), (60, 193.159, '06'), (90, 196.789, '06'), (120, 200.419, '06'), (150, 204.049, '06'), (180, 207.679, '06'), (210, 211.309, '06'), (240, 214.939, '06'), (270, 218.569, '06'), (300, 222.199, '06'), (330, 225.829, '06'), (360, 229.459, '06'), (390, 233.089, '06'), (420, 236.719, '06'), (450, 240.349, '06'), (480, 243.992, '06'), (510, 249.452, '07'), (540, 261.418, '07')]
+
+### 🤖 Claude — 2026-11-21T00:28:51.901Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/contact.png"}`
+
+### 🧑 User — 2026-11-21T00:28:52.078Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T00:29:01.079Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nfrom PIL import Image\na=Image.open('frames_straight/0165.jpg'); b=Image.open('frames_straight/0256.jpg')\nc=Image.new('RGB',(1090,960),'white'); c.paste(a,(0,0)); c.paste(b,(550,0)); c.save('/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/motion2.png')\"", "description": "Put two in-motion frames side by side"}`
+
+### 🧑 User — 2026-11-21T00:29:01.442Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-21T00:29:03.189Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/motion2.png"}`
+
+### 🧑 User — 2026-11-21T00:29:03.242Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T00:29:53.695Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow- && python3 -I - <<'EOF'\np='tools/paint06/step4_export.py'; s=open(p).read()\ns=s.replace(\"\"\"    bj = json.load(open(f'{W}/k{k}_benny.json'))\"\"\",\"\"\"    # vanishing point = centre of the farthest 2 % of the frame area (depth map, frame window only)\n    fr = d[MY // 6:(MY + FH) // 6, MX // 6:(MX + FW) // 6]\n    thr = np.percentile(fr, 2.0); ys, xs = np.where(fr <= thr)\n    vp = [float((xs.mean() + 0.5) * 6), float((ys.mean() + 0.5) * 6)]\n    bj = json.load(open(f'{W}/k{k}_benny.json'))\"\"\")\ns=s.replace(\"\"\"    lay['keys'].append({'k': k, 'ben …[+523 chars]`
+
+### 🧑 User — 2026-11-21T00:29:58.744Z
+
+> ↩︎ result: {"frame": [864, 1536], "margin": [144, 192], "plate_frame_px": [1152, 1920], "plate_scale": 1.25, "keys": [{"k": 0, "benny_frame_px": [83.19999999999999, 723.2, 753.6, 1294.4], "vp_frame_px": [627.6, 556.5]}, {"k": 1, "benny_frame_px": [83.19999999999999, 723.2, 753.6, 1294.4], "vp_frame_px": [701.1, 685.7]}, {"k": 2, "benny_frame_px": [83.19999999999999, 723.2, 753.6, 1294.4], "vp_frame_px": [590
+> [[627.6, 556.5], [701.1, 685.7], [590.8, 633.9], [499.8, 499.1], [667.6, 631.2]]
+
+### 🤖 Claude — 2026-11-21T00:30:01.183Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/world/paint06.ts", "offset": 25, "limit": 30}`
+
+### 🧑 User — 2026-11-21T00:30:01.205Z
+
+> ↩︎ result: 25	const asset = (n: string) => new URL(`../../assets/textures/paint06/${n}`, import.meta.url).href;
+> 26	
+> 27	/** keyframe rest moments, units into Screen 06 (k0 = the '06' QA checkpoint, s0 + 10) */
+> 28	export const PAINT06_REST = [10, 21, 32, 43, 53];
+> 29	const FOV = 50;
+> 30	const Z_NEAR = 1.0, Z_FAR = 10.0; // depth map (1 = near) -> view distance
+> 31	const PUSH = 0.022; // view moves this far (Z units) per course unit
+> 32	const PUSH_MIN = -0.16, PUSH_MAX = 0.3;
+> 33	const FADE_AT = 0.62, FADE_HALF = 2.0; // keyframe cross-fade: centred 62 % of the way to the next rest, ±2 u
+> 34	const PX_PER_LAT = 60; // Benny layer: frame px per unit of steering offset
+> 35	const CAM_PER_LAT = 0.02; // view pans this far (Z units) per unit of steering offset (parallax)
+> 36	const SPEED_K = 0.33; // ride speed while the pictures show (06 at 11 u/s is ~5 s for five pictures -> ~16 s)
+> 37	
+> 38	const VERT = /* glsl */ `
+> 39	  varying vec2 vUv;
+> 40	  void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`;
+> 41	const FRAG = /* glsl */ `
+> 42	  uniform sampler2D map; uniform float opacity; varying vec2 vUv;
+> 43	  void main(){ vec4 c = texture2D(map, vUv, -0.45); gl_FragColor = vec4 …[+569 chars]
+
+### 🤖 Claude — 2026-11-21T00:30:02.190Z
+
+Now rewriting the drawing code with the reveal transitions.
+
+### 🤖 Claude — 2026-11-21T00:30:32.249Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='src/world/paint06.ts'; s=open(p).read()\ns=s.replace(\"\"\"  keys: { k: number; benny_frame_px: [number, number, number, number] }[];\"\"\",\"\"\"  keys: { k: number; benny_frame_px: [number, number, number, number]; vp_frame_px: [number, number] }[];\"\"\")\ns=s.replace(\"\"\"const FADE_AT = 0.62, FADE_HALF = 2.0; // keyframe cross-fade: centred 62 % of the way to the next rest, ±2 u\"\"\",\n\"\"\"const FADE_AT = 0.62, FADE_HALF = 1.7; // keyframe change: centred 62 % of the way to the next rest, ±1.7 u (~0.95 s)\nconst FEATHER = 150; // frame px: soft ed …[+8263 chars]`
+
+### 🧑 User — 2026-11-21T00:30:34.997Z
+
+> ↩︎ result: 158:    const pushDir = new THREE.Vector3(((vx - FW / 2) / (FW / 2)) * tanY * A0, -((vy - FH / 2) / (FH / 2)) * tanY, -1).normalize();
+> 162:    return { mesh, pivot, quad, vp: new THREE.Vector2(vx, vy), pushDir, rMax: rMax + FEATHER };
+> 224:      cam.position.copy(K.pushDir).multiplyScalar(-z * (1 / Math.abs(K.pushDir.z))).negate();
+> 225:      cam.position.x += camX;
+> 226:      cam.lookAt(cam.position.x, cam.position.y, cam.position.z - 1);
+
+### 🤖 Claude — 2026-11-21T00:30:44.491Z
+
+> 🔧 **Bash** `{"command": "timeout 900 node scripts/capture.mjs 06p0 06p1 06p2 06p3 06p4 --q=paint06=1 --out=qa/match/06/paint06/shots 2>&1 | grep -c \"→\" && python3 -I tools/paint06/measure.py qa/match/06/paint06/shots | python3 -I -c \"import json,sys; d=json.load(sys.stdin); [print(k, v) for k,v in d.items()]\" && timeout 1500 node tools/paint06/clip.mjs 2>&1 | tail -2 && cd qa/match/06/paint06/clip && python3 -I -c \"\nfrom PIL import Image\nimport json\nL=json.load(open('clip_straight.json'))['frames']\nidx=[15,22,29,36,  150,158,166,174, 498,506,514,522]\nc=Image.new('RGB',(12*180+110,320),'white')\n …[+371 chars]`
+

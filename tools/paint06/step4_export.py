@@ -15,8 +15,12 @@ for k in range(5):
     lo, hi = np.percentile(d, 1), np.percentile(d, 99.5); d = ((d - lo) / max(hi - lo, 1)).clip(0, 1)
     d = cv2.resize(d, (PW // 6, PH // 6), interpolation=cv2.INTER_AREA)   # 192 x 320 grid
     Image.fromarray((d * 255).round().astype(np.uint8)).save(f'{O}/k{k}_depth.png')
+    # vanishing point = centre of the farthest 2 % of the frame area (depth map, frame window only)
+    fr = d[MY // 6:(MY + FH) // 6, MX // 6:(MX + FW) // 6]
+    thr = np.percentile(fr, 2.0); ys, xs = np.where(fr <= thr)
+    vp = [float((xs.mean() + 0.5) * 6), float((ys.mean() + 0.5) * 6)]
     bj = json.load(open(f'{W}/k{k}_benny.json'))
     x0, y0, x1, y1 = bj['bbox_plate_px']
-    lay['keys'].append({'k': k, 'benny_frame_px': [x0 / S - MX, y0 / S - MY, x1 / S - MX, y1 / S - MY]})
+    lay['keys'].append({'k': k, 'benny_frame_px': [x0 / S - MX, y0 / S - MY, x1 / S - MX, y1 / S - MY], 'vp_frame_px': [round(vp[0], 1), round(vp[1], 1)]})
 json.dump(lay, open(f'{O}/paint06.json', 'w'), indent=1)
 print(json.dumps(lay)[:400])
