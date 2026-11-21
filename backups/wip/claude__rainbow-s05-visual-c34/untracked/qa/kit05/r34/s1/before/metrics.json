@@ -1,0 +1,48 @@
+{
+ "before_s0.0_l0.jpg": {
+  "colour_look_corr": 0.993,
+  "sharpness_vs_approved": 0.766,
+  "river_colour_corr": 0.994,
+  "river_sharpness": 0.725,
+  "share_within_20_levels": 0.8,
+  "mean_abs_diff_levels": 13.8,
+  "ssim_scenery": 0.759,
+  "river_share_within_20": 0.828
+ },
+ "before_s15.0_l0.jpg": {
+  "colour_look_corr": 0.931,
+  "sharpness_vs_approved": 0.825,
+  "river_colour_corr": 0.929,
+  "river_sharpness": 0.796
+ },
+ "before_s22.0_l0.jpg": {
+  "colour_look_corr": 0.929,
+  "sharpness_vs_approved": 0.842,
+  "river_colour_corr": 0.922,
+  "river_sharpness": 0.818
+ },
+ "before_s29.0_l0.jpg": {
+  "colour_look_corr": 0.936,
+  "sharpness_vs_approved": 0.851,
+  "river_colour_corr": 0.935,
+  "river_sharpness": 0.817
+ },
+ "before_s3.0_l0.jpg": {
+  "colour_look_corr": 0.924,
+  "sharpness_vs_approved": 0.547,
+  "river_colour_corr": 0.943,
+  "river_sharpness": 0.67
+ },
+ "before_s31.5_l0.jpg": {
+  "colour_look_corr": -0.07,
+  "sharpness_vs_approved": 0.267,
+  "river_colour_corr": -0.05,
+  "river_sharpness": 0.277
+ },
+ "before_s8.0_l0.jpg": {
+  "colour_look_corr": 0.939,
+  "sharpness_vs_approved": 0.792,
+  "river_colour_corr": 0.941,
+  "river_sharpness": 0.794
+ }
+}

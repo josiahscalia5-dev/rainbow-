@@ -4,6 +4,7 @@
 // coins collected vs total, on-screen coin overlaps, forward progress (freezes), ring sections passed, ending transition.
 //   NODE_PATH=$(npm root -g) bash tools/kit05/render_slot.sh node qa/kit05/r34/s3/logic_run.cjs <game dir> <out.json> [plan=trail|stress|none] [query]
 // query = extra URL parameters, e.g. "bend=0.2,7.5"
+// env SHOTS=0,30,90 SHOTDIR=<dir> [SHOTPFX=f]: also screenshot those frames (PNG); MAXF=n stop after frame n; DUMP=<file> per-frame log
 const { chromium } = require('playwright'); const { spawn } = require('child_process'); const fs = require('fs'); const path = require('path');
 (async () => {
   const [dir, outFile, planKind = 'trail', query = ''] = process.argv.slice(2);
@@ -56,13 +57,16 @@ const { chromium } = require('playwright'); const { spawn } = require('child_pro
     }
     plan.sort((a, b) => a[0] - b[0]);
     const nMax = Math.ceil((tEnd + 0.6) * fps), fr = []; let pi = 0;
+    const SHOTS = new Set((process.env.SHOTS || '').split(',').filter(Boolean).map(Number)), MAXF = +(process.env.MAXF || 1e9);
+    if (SHOTS.size) fs.mkdirSync(process.env.SHOTDIR, { recursive: true });
     for (let i = 0; i < nMax; i++) {
       const t = i / fps;
       while (pi < plan.length && plan[pi][0] <= t) { await swipe(plan[pi][1]); pi++; }
       const o = await page.evaluate(([t, dt, sp]) => { const r = window.step(t, dt, 0, sp); const st = window.state();
         const cs = window.coinScreen(); return { ...r, ...st, cam: window.camInfo(), box: window.bennyBox(), bi: window.bennyInfo(), cs, endK: window.endK() }; }, [t, i === 0 ? 0 : 1 / fps, speed]);
       o.i = i; o.t = t; fr.push(o);
-      if (o.done) break;
+      if (SHOTS.has(i)) { await page.evaluate(() => window.renderNow(1)); await page.screenshot({ path: `${process.env.SHOTDIR}/${process.env.SHOTPFX || 'f'}_${String(i).padStart(4, '0')}.png` }); }
+      if (o.done || i >= MAXF) break;
     }
     // ---- metrics ----
     const A = K.A, A0 = K.A0, NUP = K.NUP, RR = K.RR;
