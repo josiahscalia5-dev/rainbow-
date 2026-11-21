@@ -78,6 +78,9 @@ Hs = src.shape[0]
 lo = np.array([us[np.nonzero(v)[0].min()] if v.any() else -HWD for v in valid]) + 0.01      # each source row's valid lateral range
 hi = np.array([us[np.nonzero(v)[0].max()] if v.any() else HWD for v in valid]) - 0.01
 WB = 0.16                                                                   # width of the outermost painted band that is continued outward
+_hs = cv2.cvtColor(np.clip(src, 0, 255).astype(np.uint8), cv2.COLOR_RGB2HSV); _pk = valid & ((_hs[..., 0] >= 140) & (_hs[..., 0] <= 170)) & (_hs[..., 1] > 120)
+PINK = np.median(src[_pk], 0).astype(np.float32)                           # the painting's own pink band colour (median)
+print('painted pink', PINK.round(0))
 def src_rows(rows_f, u, mirror):
     """sample the straightened source at fractional rows (len n) and lateral u (len m); mirror = flip left-right. Beyond a row's painted
     lateral range the OUTERMOST painted band (WB wide) is repeated outward by translation (two taps half a band apart, cross-faded, so
@@ -95,7 +98,16 @@ def src_rows(rows_f, u, mirror):
     wa = 1 - np.abs(da / WB * 2 - 1); wb = 1 - np.abs(db / WB * 2 - 1)            # triangle weights: each tap fades out at its own seam
     inside = (U >= L0) & (U <= L1)
     wa = np.where(inside, 1.0, wa); wb = np.where(inside, 0.0, wb)
-    return (samp(Ua) * wa[..., None] + samp(Ub) * wb[..., None]) / np.maximum(wa + wb, 1e-6)[..., None]
+    rep = (samp(Ua) * wa[..., None] + samp(Ub) * wb[..., None]) / np.maximum(wa + wb, 1e-6)[..., None]
+    # outside the painted range: the outermost painted colour continued smoothly (per row, from the outer 0.06 u), with only 35 % of the
+    # repeated band's fine streaks (full-strength repetition looked combed), blended in over 0.08 u from the painted edge
+    edge = lambda Lx, sgn: samp(np.repeat(Lx, len(u), 1) + sgn * 0.03)
+    sm = lambda x: cv2.GaussianBlur(x, (0, 0), sigmaX=9, sigmaY=70)          # smooth along the flow: no row-to-row stripes
+    eL, eR = sm(edge(L0, 1)) * 0.5 + PINK * 0.5, sm(edge(L1, -1)) * 0.5 + PINK * 0.5   # leaning to the painting's own pink band colour
+    hp = rep - cv2.GaussianBlur(rep, (0, 0), 6)
+    outside = np.where(U < L0, (L0 - U), np.where(U > L1, U - L1, 0.0)); k = np.clip(outside / 0.08, 0, 1)[..., None]
+    smooth = np.where((U < L0)[..., None], eL, eR) + 0.35 * hp
+    return rep * (1 - k) + smooth * k
 vv = (np.arange(NV) + 0.5) / PX; tw = TA + vv
 c1 = np.gradient(core(tw), vv); c2 = np.gradient(c1, vv)
 HALF = P / 2; XF = 0.45

@@ -26,7 +26,7 @@ r = cv2.warpAffine(pad, M, (w + 200, h + 200), flags=cv2.INTER_CUBIC)
 ys, xs = np.nonzero(r[..., 3] > 20); r = r[ys.min():ys.max() + 1, xs.min() + 8:xs.max() - 7]   # trim the rotated crop's corners
 H, W = r.shape[:2]
 # solid foam along the bottom (the domes stand on the water): alpha ramps to 1 over the lowest 35 %, colour = the strip's own foam
-rows = np.linspace(0, 1, H)[:, None]; base = np.clip((rows - 0.62) / 0.3, 0, 1)
+rows = np.linspace(0, 1, H)[:, None]; base = np.clip((rows - 0.8) / 0.18, 0, 1) * 0.85   # thin solid foot only (a tall one read as white boxes)
 col = r[..., :3].copy(); fa = r[..., 3:4] / 255.0
 foamc = (col * fa).reshape(-1, 3).sum(0) / max(1e-3, fa.sum()); lav = np.array([214, 206, 240], np.float32)
 fillc = np.where(fa > 0.3, col, lav * 0.6 + foamc * 0.4)
@@ -35,7 +35,7 @@ r = cv2.resize(r, (W * 2, H * 2), interpolation=cv2.INTER_LANCZOS4)
 H2, W2 = r.shape[:2]; cells = []
 for k in range(3):                                                    # three overlapping pieces, soft side edges
     c0 = int(k * (W2 - W2 // 3 - 20) / 2); piece = r[:, c0:c0 + W2 // 3 + 20].copy()
-    pw = piece.shape[1]; e = np.minimum(np.arange(pw), pw - 1 - np.arange(pw)) / 24.0; piece[..., 3] *= np.clip(e, 0, 1)[None, :]
+    pw = piece.shape[1]; e = np.minimum(np.arange(pw), pw - 1 - np.arange(pw)) / 56.0; piece[..., 3] *= np.clip(e, 0, 1)[None, :]
     cell = np.zeros((128, 256, 4), np.float32); pc = cv2.resize(piece, (256, int(round(256 * piece.shape[0] / pw))), interpolation=cv2.INTER_AREA)
     ph = min(128, pc.shape[0]); cell[128 - ph:] = pc[-ph:]                # bottom-aligned (the cell's bottom edge = the water line)
     cells.append(cell)

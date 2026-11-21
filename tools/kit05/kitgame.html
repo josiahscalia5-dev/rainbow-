@@ -37,7 +37,10 @@ const camera = new THREE.PerspectiveCamera(K.fov, W / H, 0.02, 400);
 const camQ0 = new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().lookAt(new THREE.Vector3(), V3(K.cam_fwd), V3(K.cam_up)));
 
 // ---- the depth curve (same as kit_model.g / remap) ----
-const REMAP = { uCam: { value: new THREE.Vector3() }, uAx: { value: A.clone() }, uZ2: { value: K.Z2 }, uBias: { value: +(q.get('kbias') ?? -0.7) } };
+const REMAP = { uCam: { value: new THREE.Vector3() }, uAx: { value: A.clone() }, uZ2: { value: K.Z2 }, uBias: { value: +(q.get('kbias') ?? -0.7) }, uOwnOff: { value: 0 } };
+// round 36b ?ownoff=1: once Benny has swum ~1-2 u, every wall / ring section uses the shared painted section (the start view's own pixels of FAR
+// sections no longer line up with the tunnel seen from further on: they showed a doubled 'ghost' set of rings near the core)
+const OWNOFF = q.get('ownoff') === '1' || (q.get('r36') === '1' && q.get('ownoff') !== '0');
 const REMAP_GLSL = `uniform vec3 uCam; uniform vec3 uAx; uniform float uZ2;
 vec3 kitRemap(vec3 wp){ vec3 d = wp - uCam; float za = dot(d, uAx); float gz = za <= uZ2 ? za : uZ2 * exp((za - uZ2) / uZ2); return wp + (gz - za) * uAx; }`;
 const kitMat = (map, extra = {}, own = null) => {   // own = { tex, vr: [v0, v1] }: this section's OWN painted pixels (atlas rows)
@@ -49,12 +52,12 @@ const kitMat = (map, extra = {}, own = null) => {   // own = { tex, vr: [v0, v1]
     sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\n' + REMAP_GLSL + '\nvarying float vKitT; varying float vKitD;')
       .replace('#include <project_vertex>', `vec4 kwp = modelMatrix * vec4(transformed, 1.0); vKitT = dot(kwp.xyz, uAx); vKitD = dot(kwp.xyz - uCam, uAx); kwp.xyz = kitRemap(kwp.xyz);
         vec4 mvPosition = viewMatrix * kwp; gl_Position = projectionMatrix * mvPosition;`);
-    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform float uBias;' + (own ? '\nuniform sampler2D uOwn; uniform vec2 uVr; uniform vec2 uFade; varying float vKitT; varying float vKitD;' : ''));
+    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform float uBias;' + (own ? '\nuniform sampler2D uOwn; uniform vec2 uVr; uniform vec2 uFade; uniform float uOwnOff; varying float vKitT; varying float vKitD;' : ''));
     if (!own) sh.fragmentShader = sh.fragmentShader.replace('#include <map_fragment>', 'diffuseColor *= texture(map, vMapUv, uBias);');
     if (own) sh.fragmentShader = sh.fragmentShader
       .replace('#include <map_fragment>', `vec4 kTile = texture(map, vMapUv, uBias);
         vec4 kOwn = texture(uOwn, vec2(vMapUv.x, 1.0 - (uVr.x + (1.0 - vMapUv.y) * (uVr.y - uVr.x))), uBias);
-        float kF = smoothstep(uFade.x, uFade.y, vKitD / max(vKitT, 1e-3));   // 1 at the painted distance (start), 0 once Benny is close
+        float kF = smoothstep(uFade.x, uFade.y, vKitD / max(vKitT, 1e-3)) * (1.0 - uOwnOff);   // 1 at the painted distance (start), 0 once Benny is close
         diffuseColor *= mix(kTile, kOwn, kF);`);
   };
   return m;
@@ -481,7 +484,7 @@ window.step = (t, dt, steer, speed) => {
   else qYaw.identity();
   radv.copy(camera.position).sub(A0); radv.addScaledVector(A, -radv.dot(A)); { const r = radv.length(), r2 = softLim(r, CAMP.RMAX, CAMP.RMAX - CAMP.R0); if (r2 < r) camera.position.addScaledVector(radv, r2 / r - 1); }   // inside the tunnel
   camera.quaternion.copy(qYaw).multiply(camQ0).multiply(qRoll.setFromAxisAngle(FWDL, st.camRoll.x)); camera.updateMatrixWorld();
-  REMAP.uCam.value.copy(camera.position); FLOW.uFlow.value = t * +(q.get('flowspeed') ?? 0.55); FLOW.uFlowOn.value = THREE.MathUtils.smoothstep(st.s, 0.0, 0.7);
+  REMAP.uCam.value.copy(camera.position); REMAP.uOwnOff.value = OWNOFF ? THREE.MathUtils.smoothstep(st.s, 0.6, 1.8) : 0; FLOW.uFlow.value = t * +(q.get('flowspeed') ?? 0.55); FLOW.uFlowOn.value = THREE.MathUtils.smoothstep(st.s, 0.0, 0.7);
   core.position.copy(camera.position).add(A0).addScaledVector(A, 300); core.scale.set(33, 33, 1);
   updateEnd(st.s);
   for (const c of coins) {
