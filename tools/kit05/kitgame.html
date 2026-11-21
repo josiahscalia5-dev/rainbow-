@@ -61,6 +61,7 @@ const riverPink = await tex(K.river_tile?.ribbon ? 'river_pink.png' : 'river_til
 // round 35 (lead): the river = the user's OWN painted river (isolated water art, colour-matched) in its world place, repeated every 3 ring
 // sections (bake_river35.py: prefix t_pre..ta + one period P, sharp painted streak detail added where the painting is softer). ?r35=0 = round-34 ribbon
 const R35 = K.river35 && q.get('r35') !== '0' ? K.river35 : null;
+const PUFFS = !!K.river35 && q.get('puffs') !== '0';   // round 35: painted foam domes + bubbles (see below)
 const river35Tex = R35 ? await tex('river35.png') : riverTile;
 // sharp painted streaks (luminance detail, river-local), added live near the camera where the painted row is soft, streaming with the current
 const r35Det = R35?.detail ? await tl.loadAsync('river35_detail.png') : riverTile;
@@ -108,6 +109,7 @@ const riverMat = (() => { const m = kitMat(riverTex); const base = m.onBeforeCom
           if (dW > 0.001) {
             vec2 dUV = vec2((kLat - kCenter(kT) + uR35D.y + uHWD) / (2.0 * uHWD), (kT + uFlow * uR35D.z) / uR35D.x);
             float det = texture(uR35Det, dUV).r - 0.5; det *= det > 0.0 ? uR35DS.x : uR35DS.y;
+            det *= smoothstep(0.0, 0.06, dUV.x) * smoothstep(1.0, 0.94, dUV.x);   // no mirrored streak copies (W marks) at the strip's edges
             kRib.rgb = max(kRib.rgb + det * dW, 0.0);
           }
           kRib.a = 1.0;
@@ -176,8 +178,53 @@ const foamMat = (() => { const m = kitMat(foamTex, { transparent: true, depthWri
   return m; })();
 const THW = Math.asin(K.HW / K.RT), FOAM_H = 16 * Math.PI / 180;
 for (const side of [1, -1]) {   // right: from -THW upward; left: from PI + THW upward
+  if (PUFFS) break;
   scene.add(new THREE.Mesh(grid(500, 6, (a, b) => { const t = 0.3 + a * 90; const th = side > 0 ? -THW + b * FOAM_H : Math.PI + THW - b * FOAM_H;
     return [P(t, th, K.RT * 0.985), t / 1.3, b]; }), foamMat));
+}
+// ---- round 35 (lead): painted foam DOMES along both banks + floating iridescent bubbles ----
+// The domes are the user's own foam bank (bake_puffs.py) drawn as camera-facing billboards standing on the water at both wall bases, so
+// the banks stay round painted puffs from every position (the round-33 wall-base strip was a flat band seen edge-on: white spikes).
+// Thicker (two rows) on the inner side of each bend. Both fade in exactly where the walls hand over from their own painted pixels
+// (distance now / distance at the start < K.own.fade), so the start view stays the approved picture. ?puffs=0 = round-34 strip.
+const FADEP = new THREE.Vector4(...(K.own?.fade ?? [0.42, 0.62]), 0, 0);
+if (PUFFS) {
+  const puffTex = await tl.loadAsync('puffs.png'); puffTex.colorSpace = THREE.NoColorSpace; puffTex.anisotropy = 4;
+  const rp = (() => { let x = 777; return () => ((x = (x * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff); })();
+  const L = []; const HWD = K.water.HWD;
+  for (const side of [1, -1]) for (let t = 0.35; t < LEVEL + 14; t += 0.08 + rp() * 0.05) {
+    const gap = Math.abs(side * HWD - riverC(t)), nr = gap > 0.92 ? 2 : 1;
+    for (let r = 0; r < nr; r++) { const w = (0.16 + rp() * 0.1) * (r ? 0.8 : 1), lat = side * (HWD - 0.005 - r * 0.07 - rp() * 0.025);
+      const P0 = A0.clone().addScaledVector(A, t + rp() * 0.03).addScaledVector(RR, lat).addScaledVector(NUP, -K.HW - 0.01);
+      L.push([t, P0.x, P0.y, P0.z, w, w * 0.5, Math.floor(rp() * 2.999), rp() < 0.5 ? -1 : 1]); }
+  }
+  L.sort((a, b) => b[0] - a[0]);                                           // far first: correct back-to-front for the forward camera
+  const g = new THREE.InstancedBufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute([-0.5, 0, 0, 0.5, 0, 0, -0.5, 1, 0, 0.5, 1, 0], 3)); g.setIndex([0, 1, 2, 2, 1, 3]);
+  const at_ = (k, n) => new THREE.InstancedBufferAttribute(new Float32Array(L.flatMap((e) => e.slice(k, k + n))), n);
+  g.setAttribute('iT', at_(0, 1)); g.setAttribute('iPos', at_(1, 3)); g.setAttribute('iSize', at_(4, 2)); g.setAttribute('iCell', at_(6, 1)); g.setAttribute('iFlip', at_(7, 1)); g.instanceCount = L.length;
+  const m = new THREE.ShaderMaterial({ uniforms: { map: { value: puffTex }, uFadeP: { value: FADEP }, ...REMAP }, transparent: true, depthWrite: false, toneMapped: false,
+    vertexShader: REMAP_GLSL + `
+      attribute vec3 iPos; attribute vec2 iSize; attribute float iCell; attribute float iFlip; attribute float iT; uniform vec4 uFadeP; varying vec2 vUv; varying float vA;
+      void main(){ vec4 mv = viewMatrix * vec4(kitRemap(iPos), 1.0); mv.xy += position.xy * iSize; gl_Position = projectionMatrix * mv;
+        vUv = vec2(position.x * iFlip + 0.5, 1.0 - (iCell + 1.0 - position.y) / 3.0);
+        float d = dot(iPos - uCam, uAx); vA = (1.0 - smoothstep(uFadeP.x, uFadeP.y, d / max(iT, 1e-3))) * smoothstep(0.05, 0.4, d); }`,
+    fragmentShader: `uniform sampler2D map; varying vec2 vUv; varying float vA; void main(){ vec4 c = texture2D(map, vUv); if (c.a * vA < 0.01) discard; gl_FragColor = vec4(c.rgb, c.a * vA); }` });
+  const puffs = new THREE.Mesh(g, m); puffs.frustumCulled = false; puffs.renderOrder = 4; scene.add(puffs);
+  // floating bubbles (the approved picture's iridescent bubbles over the banks), world-anchored, gently bobbing
+  const bTex = await tl.loadAsync('bubble.png'); bTex.colorSpace = THREE.NoColorSpace;
+  const B = []; for (let t = 0.4; t < LEVEL + 14; t += 0.12 + rp() * 0.14) { const side = rp() < 0.5 ? -1 : 1, lat = side * (0.34 + rp() * 0.34), h = 0.02 + rp() * rp() * 0.45;
+    const P0 = A0.clone().addScaledVector(A, t).addScaledVector(RR, lat).addScaledVector(NUP, -K.HW + h); B.push([t, P0.x, P0.y, P0.z, 0.035 + rp() * rp() * 0.09, rp() * 6.28]); }
+  const bg = new THREE.BufferGeometry(); bg.setAttribute('position', new THREE.Float32BufferAttribute(B.flatMap((e) => e.slice(1, 4)), 3));
+  bg.setAttribute('aT', new THREE.Float32BufferAttribute(B.map((e) => e[0]), 1)); bg.setAttribute('aSz', new THREE.Float32BufferAttribute(B.map((e) => e[4]), 1)); bg.setAttribute('aPh', new THREE.Float32BufferAttribute(B.map((e) => e[5]), 1));
+  const bm = new THREE.ShaderMaterial({ uniforms: { map: { value: bTex }, uFadeP: { value: FADEP }, uTime: { value: 0 }, uPx: { value: H * 0.5 * camera.projectionMatrix.elements[5] }, ...REMAP }, transparent: true, depthWrite: false, toneMapped: false,
+    vertexShader: REMAP_GLSL + `
+      attribute float aT; attribute float aSz; attribute float aPh; uniform vec4 uFadeP; uniform float uTime; uniform float uPx; varying float vA;
+      void main(){ vec3 p = position + uAx * 0.0 + vec3(0.0) ; p += vec3(0.0, 1.0, 0.0) * 0.015 * sin(uTime * 1.3 + aPh);
+        vec4 mv = viewMatrix * vec4(kitRemap(p), 1.0); gl_PointSize = aSz * uPx / -mv.z; gl_Position = projectionMatrix * mv;
+        float d = dot(position - uCam, uAx); vA = (1.0 - smoothstep(uFadeP.x, uFadeP.y, d / max(aT, 1e-3))) * smoothstep(0.1, 0.5, d); }`,
+    fragmentShader: `uniform sampler2D map; varying float vA; void main(){ vec4 c = texture2D(map, gl_PointCoord); gl_FragColor = vec4(c.rgb, c.a * vA * 0.9); }` });
+  const bubbles = new THREE.Points(bg, bm); bubbles.frustumCulled = false; bubbles.renderOrder = 7; scene.add(bubbles);
+  window.__ambient = { puffs: L.length, bubbles: B.length, tick: (t) => { bm.uniforms.uTime.value = t; } };
 }
 // water surface: lateral x log-spaced axial distance (same mapping as the bake)
 const Wt = K.water, LOGR = Math.log(Wt.T1 / Wt.T0);
@@ -360,7 +407,7 @@ const clampA = (x, m) => Math.max(-m, Math.min(m, x));
 const softLim = (x, lim, knee) => { const m = Math.abs(x), k0 = lim - knee; return m <= k0 ? x : Math.sign(x) * (k0 + knee * Math.tanh((m - k0) / knee)); };
 const tY = new THREE.Vector3(), rY = new THREE.Vector3(), mB = new THREE.Matrix4(), qL = new THREE.Quaternion(), qYaw = new THREE.Quaternion(), qRoll = new THREE.Quaternion(), FWDL = new THREE.Vector3(0, 0, -1), pivot = new THREE.Vector3(), rC = new THREE.Vector3(), radv = new THREE.Vector3();
 window.step = (t, dt, steer, speed) => {
-  st.v = CT.fwd(speed); st.s += st.v * dt;
+  st.v = CT.fwd(speed); st.s += st.v * dt; window.__ambient?.tick(t);
   st.lat = CT.update(t, dt).lat;
   const F = frameAt(st.s), v2 = st.v * st.v, fade = THREE.MathUtils.smoothstep(st.s, 0, CAMP.fadeIn);
   // body: leans gently into the river's bend (lateral acceleration p'' v^2) and faces along the river (damped share of its tangent)
