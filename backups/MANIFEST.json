@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3885,
-   "sha256": "c94633dcdb5832285f5995a0c33a981699806fdab1e8d31a5a137fcad3720e0a"
+   "sha256": "bbb1ecf5b8d61f8a9bc641b0eb1cf8390fe81c40c323efe470db6cec0b9bf967"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -2709,7 +2709,7 @@
   {
    "path": "backups/wip/claude__rainbow-s05-camera-c34/INFO.json",
    "bytes": 651,
-   "sha256": "223e3583c15035b50a15de656ea2f1538498f131e5f539ee73abbb1273d39230"
+   "sha256": "1083b00d0bd8c4c8594dde6bc9ba2ea760d701ed34b054e9e264cc7477eb4e5e"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-camera-c34/tracked.patch",
@@ -3164,7 +3164,7 @@
   {
    "path": "backups/wip/claude__rainbow-s05-qa-c34/INFO.json",
    "bytes": 984,
-   "sha256": "1472ccbc1e07cf72ecd3fa66494379bdaac4775996785d2c24a7fb65d90cc65e"
+   "sha256": "3d0cdda68b1d5f4fd3af63ad8c743a4faefb3257f5e5040d0327e6c5f8a31757"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-qa-c34/untracked/docs/briefs/2026-11-21-r34/COORDINATION_R34.md",
@@ -3229,7 +3229,7 @@
   {
    "path": "backups/wip/claude__rainbow-s05-swim-c34/INFO.json",
    "bytes": 775,
-   "sha256": "16c54bb719fdf380f7fc9d85510bd1b3e91ef4d9d95af1857b1c5a3664263a89"
+   "sha256": "e9560a72c70b49281ba97c6a6a70d9bea3173dc35736b7d00baced5c9b137f79"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-swim-c34/tracked.patch",
@@ -3269,7 +3269,7 @@
   {
    "path": "backups/wip/claude__rainbow-s05-visual-c34/INFO.json",
    "bytes": 1158,
-   "sha256": "a84601150e406d2e19b7f1a735bc84d8c833fa78b1a8afd1f9ef2586b735eb1a"
+   "sha256": "b5ba656bc77bf6d3e9882da7e15a22521d3b8aa780cbb52475f1e0deb9dbe6ef"
   },
   {
    "path": "backups/wip/claude__rainbow-s05-visual-c34/tracked.patch",
@@ -6924,7 +6924,7 @@
   {
    "path": "backups/wip/claude__rainbow-screen-builder-c34/INFO.json",
    "bytes": 1160,
-   "sha256": "095ede5676d65fc01ef6a1a48979d4581c967dabd366c0026b514382e496cbdc"
+   "sha256": "c01bf27bf6e53e6c25fb08d21b67e083a05348dc7fd1d5ab2f0e17255680c703"
   },
   {
    "path": "backups/wip/claude__rainbow-screen-builder-c34/untracked/.claude/skills/rainbow-screen-builder/LESSONS.md",
@@ -7999,7 +7999,7 @@
   {
    "path": "backups/wip/screen05-agents/LAST_SYNC_UTC",
    "bytes": 33,
-   "sha256": "44ff17fa0b774610a2abb9bb5f7ff99d6d77863dcfed060a0ade4d8ff106b802"
+   "sha256": "e55570e78287b9e9de03761d98d7a7a99b0feb8204cb3ee8917df1084739788b"
   },
   {
    "path": "backups/wip/screen05-agents/WORKSPACE",
