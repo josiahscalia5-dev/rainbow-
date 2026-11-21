@@ -5090,3 +5090,45 @@ First check: whether the river lines up when a section is mirrored.
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad; V=$S/splatview; sed -i \"s/timeout: 180000/timeout: 900000/\" $V/play_shots2.cjs; sed -i \"s#await page.screenshot({ path: \\`\\${out}/s_\\${s}.png\\` });#await page.screenshot({ path: \\`\\${out}/s_\\${s}.png\\`, timeout: 600000 });#\" $V/play_shots2.cjs; grep -c \"600000\" $V/play_shots2.cjs; cd $V && PAGE=play3.html STILLS='[0,1.2,2.3,4.4,6.4,9.0]' NODE_PATH=$(npm root -g) timeout 3000 node play_shots2.cjs out_tr1 stills 2>&1 | grep -v \"^\\s*at \" | tail -8; python3 -I -c \"\nfrom PIL import I …[+501 chars]`
 
+### 🧑 User — 2026-11-21T11:35:49.198Z
+
+> ↩︎ result: 1
+> still 0
+> still 1.2
+> still 2.3
+> still 4.4
+> still 6.4
+> still 9
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T11:35:51.571Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/track_stills1.jpg"}`
+
+### 🧑 User — 2026-11-21T11:35:51.607Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T11:36:32.514Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad; cd $S/splatview && cat > camdbg.mjs <<'EOF'\nimport * as THREE from './node_modules/three/build/three.module.js';\nimport fs from 'fs';\nconst SC = JSON.parse(fs.readFileSync('scene05.json')); const TR = JSON.parse(fs.readFileSync('track.json'));\nconst N = new THREE.Vector3(...TR.n);\nconst T = TR.trail.map((p) => new THREE.Vector3(...p)), TS = TR.trail_s;\nconst at = (s, out) => { s = Math.max(0, Math.min(TS[TS.length - 1], s)); let lo = 0, hi = TS.length - 1; while (hi - lo > 1) { const m = (lo …[+1769 chars]`
+
+### 🧑 User — 2026-11-21T11:36:33.068Z
+
+> ↩︎ result: s 0 dist 1.185 angle cam-fwd to Benny 18.7 tan pitch vs N -1.8 relPos 0.026,0.704,-0.953
+> s 0.3 dist 1.185 angle cam-fwd to Benny 18.7 tan pitch vs N -4.8 relPos 0.026,0.704,-0.953
+> s 1.2 dist 1.185 angle cam-fwd to Benny 18.7 tan pitch vs N -6.3 relPos 0.026,0.704,-0.953
+> s 2.3 dist 1.185 angle cam-fwd to Benny 18.7 tan pitch vs N -26.3 relPos 0.026,0.704,-0.953
+> s 4.4 dist 1.185 angle cam-fwd to Benny 18.7 tan pitch vs N -20.3 relPos 0.026,0.704,-0.953
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T11:37:09.842Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/marble05 && timeout 300 python3 -I - <<'EOF'\nimport sys, json, numpy as np\nsys.path.insert(0,'.')\nfrom spz import read_spz\nS='/tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad'\nd=read_spz('/home/user/rainbow-/qa/worldlabs/05/r32/full_500k.spz')\nP=d['xyz']*np.array([1,-1,-1],np.float32); C=d['rgb']\nF=json.load(open(S+'/tile_frame.json')); ax,rt=np.array(F['ax']),np.array(F['right']); dpl=F['dpl']\nn=np.array(json.load(open(S+'/splatview/scene05.json'))['plane']['n'])\nu=P@ax; h=P@n-dpl; lat=P@rt\nr,g,b=C[:,0],C[:,1 …[+984 chars]`
+
+### 🧑 User — 2026-11-21T11:37:10.276Z
+
+> ↩︎ result: ring A centre lat 0.109 h 0.664 R 0.850 (n=3117)
+> ring B centre lat 0.037 h 0.517 R 0.986 (n=751)
+> D [-0.302  0.159 -2.003] |D| 2.032 D.ax 2.03 D.n -0.147 ax.n -0.092
+
