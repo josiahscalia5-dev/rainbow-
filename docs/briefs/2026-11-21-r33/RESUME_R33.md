@@ -46,6 +46,25 @@
   Next: river ribbon + foam banks architecture (river width/S from the painting, banks textured from the painted foam), or a two-phase
   flow-map water shader (no seam), far-distance mip bias >= 0; then the whole-level acceptance.
 
+## Round 33c-k progress (same session, up to ~17:15 UTC) — kit game page `tools/kit05/kitgame.html` (= play3.html in /tmp/rainbow_r33/kitgame)
+* Water: the PAINTED water at the same distance ahead as in the approved view (camera-relative: the near water keeps the painting's
+  look at every moment, incl. its gold bottom rim), streaming toward the camera with a two-phase flow map (`flowl` 0.10) + the round-32
+  flowing glints; a Lab colour match tried on the flowing tile made the cyan greener (colour look 0.70 -> 0.41) and was replaced.
+* Walls: own painted pixels cross-fade to the shared section at distance ratio 0.62 -> 0.42 (was 0.85 -> 0.55: washed-out blends).
+  Foam band strips (the painting's own foam) along both wall bases where the shared section shows.
+* Coins: run 1 = the APPROVED picture's coins (`painted_coins.py`), run 2 moved after the leap arc; controls' extra coin shrink
+  undone (the depth curve already gives painted sizes); on-screen declutter; coinScreen()/coinLayout() report what is DRAWN.
+  Start coins vs painted (x, y, r): 231,433,24.5 / 273,394,18.2 / 236,365,13.5 / 218,343,9.8 / 226,325,6.9 / 244,317,5.4 vs
+  227,434,25 / 274,390,18.4 / 234,357,14.5 / 206,342,11.4 / 227,325,7.5 / 244,317,5.4.
+* Benny: scaled to the painted outline (0.76, 0.82, 0.8) and moved to the painted place (+0.085 up, -0.04 side): 229 x 275 px at
+  x 82-311 vs painted 226 x 250 at 86-312. Camera follows lanes 75 % (c_CAM_LAT_K 0.75, MAX 0.2), bank c_LEAN_K 0.09 (controls.js unchanged).
+* BUGS FOUND + FIXED (all mine this round): a `//` comment placed mid-line swallowed code three times (return line, Benny scale,
+  scene.add(splash) — the white splash was never in the scene); a uniform nested inside another (hard river seam); three.js program
+  cache key shared between kit materials. Scan for code after `//` is clean.
+* Harness (`tools/marble05/viewer/final_acceptance.cjs`, stricter only): extra leaps / dives balanced so every direction is used >= 4x.
+* Full-level verdict before the Benny / splash fixes (kit_full7): 18 / 19 PASS (G6 test plan only). True start frame now: scenery
+  80.0 % within 20 levels, SSIM 0.76, colour 0.993; whole frame incl. Benny / splash / coins 67.1 %.
+
 ## Open items before the FULL Screen 05 (in order)
 1. Start view → ~90 %: per-section "own pixels" textures for the first ~6 sections (exact painting at frame 0), cross-faded to the
    sharper periodic tile as the camera approaches (LOD cross-fade). Same for rings.

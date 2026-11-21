@@ -183,9 +183,10 @@ const benny = new THREE.Group(); benny.add(holder); scene.add(benny);
 // round 33k: Benny scaled to the painted Benny's outline (measured 226 x 250 px vs 299 x 305 px at 412 x 915)
 const BS = (q.get('bscale') ?? '0.76,0.82,0.8').split(',').map(Number); bmesh.scale.set(BS[0], BS[1], BS[2]); bmesh.position.y = +(q.get('bdrop') ?? 0.085) / KH; bmesh.position.x = +(q.get('bshift') ?? -0.04) / KH;   // painted position: 45 px higher, 21 px left
 if (q.get('nobenny')) holder.visible = false;
+const NOSPLASH = !!q.get('nosplash');
 const pxW = bennyH / 400;
 const splashTex = await tl.loadAsync('splash.png'); splashTex.colorSpace = THREE.SRGBColorSpace;
-const splash = new THREE.Sprite(new THREE.SpriteMaterial({ map: splashTex, toneMapped: false, transparent: true, depthWrite: false, depthTest: q.get('splashdt') === '1' }));   // round 33k: the painted splash lies over the water as in the approved picture splash.renderOrder = 5; scene.add(splash);
+const splash = new THREE.Sprite(new THREE.SpriteMaterial({ map: splashTex, toneMapped: false, transparent: true, depthWrite: false, depthTest: q.get('splashdt') === '1' })); splash.renderOrder = 5; scene.add(splash);   // round 33k: the painted splash lies over the water as in the approved picture
 // Benny's frame: forward = tunnel axis, up = tunnel up, right = tunnel right
 const bennyM = new THREE.Matrix4().makeBasis(RR.clone().negate(), NUP, A);
 // camera relative to Benny = the approved picture's camera relative to his start point
@@ -252,7 +253,7 @@ window.step = (t, dt, steer, speed) => {
   CT.anim(st.lean);
   splash.position.copy(benny.position).addScaledVector(F.t, 0.05).addScaledVector(F.n, -0.01 - 23 * pxW * 0.5);
   splash.scale.set(799 * pxW * 0.8 * (1 + 0.04 * Math.sin(t * 9)), 309 * pxW * 0.8 * (1 + 0.06 * Math.sin(t * 7 + 1)), 1);
-  CT.water(F, speed, dt);
+  CT.water(F, speed, dt); if (NOSPLASH) splash.visible = false;
   for (let i = 0; i < NG; i++) {   // flowing glints: on the river surface, sliding toward the camera with the current, twinkling
     gS[i] -= 0.55 * dt; if (gS[i] < st.s - 1.4) gS[i] += 8.5; if (gS[i] > st.s + 7.1) gS[i] -= 8.5;
     at(gS[i], tmp2).addScaledVector(RR, gL[i]).addScaledVector(NUP, 0.012); gPos.set([tmp2.x, tmp2.y, tmp2.z], i * 3);
@@ -297,6 +298,8 @@ function updateEnd(s) {
   endEl.style.opacity = Math.min(1, e * 1.25).toFixed(3);
 }
 window.endK = () => endK; window.S_LAST = S_LAST;
+window.qaSplash2 = () => { splash.updateMatrixWorld(); return { parent: splash.parent === scene, inScene: scene.children.includes(splash), layers: splash.layers.mask, frustum: splash.frustumCulled, matW: splash.matrixWorld.elements.map((x) => +x.toFixed(3)), sx: splash.scale.x, rot: splash.material.rotation, blending: splash.material.blending, alphaTest: splash.material.alphaTest, color: splash.material.color.getHexString(), compiled: splash.material.version, userData: splash.material.userData, img: splash.material.map.image && [splash.material.map.image.width, splash.material.map.image.height] }; };
+window.qaSplash = () => { const p = splash.position.clone().project(camera); return { visible: splash.visible, opacity: splash.material.opacity, scale: splash.scale.toArray().map((x) => +x.toFixed(3)), screen: [+((p.x + 1) / 2 * W).toFixed(0), +((1 - p.y) / 2 * H).toFixed(0)], depthTest: splash.material.depthTest, mapOK: !!splash.material.map?.image }; };
 // coinScreen as DRAWN: the controls' QA helper projects coins with plain perspective, but the kit draws every coin through the depth
 // curve (far coins sit further down the tunnel and smaller); the acceptance test must measure what is really on screen (same format)
 const kitRemapJS = (p, c) => { const d = p.clone().sub(c), za = d.dot(A), gz = za <= K.Z2 ? za : K.Z2 * Math.exp((za - K.Z2) / K.Z2); return p.clone().addScaledVector(A, gz - za); };

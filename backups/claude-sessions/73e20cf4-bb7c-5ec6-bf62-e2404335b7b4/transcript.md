@@ -3964,3 +3964,116 @@ He moved right instead of left (the model is turned to face down the river, so t
 
 > 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/kit05 && sed -i \"s/bmesh.position.x = +(q.get('bshift') ?? 0.04) \\/ KH;/bmesh.position.x = +(q.get('bshift') ?? -0.04) \\/ KH;/\" kitgame.html && grep -c \"bshift') ?? -0.04\" kitgame.html && cp kitgame.html /tmp/rainbow_r33/kitgame/play3.html && cd /tmp && NODE_PATH=$(npm root -g) timeout 900 node /tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/poses.cjs /tmp/rainbow_r33/kitgame /tmp/rainbow_r33/kit/out/level '[0]' 2>&1 | grep -i error; NODE_PATH=$(npm root -g) timeout 900 node /tmp/claude-0/-home-user-rainbow-/73e2 …[+1318 chars]`
 
+### 🧑 User — 2026-11-21T16:51:30.139Z
+
+> ↩︎ result: 1
+> kit Benny now: x 82-311 y 451-726 (w 229 h 275)   painted: x 86-312 y 459-709 (w 226 h 250)
+
+### 🤖 Claude — 2026-11-21T16:51:31.911Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/benny_fit.jpg"}`
+
+### 🧑 User — 2026-11-21T16:51:31.931Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T16:51:47.733Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/kit05 && python3 - <<'EOF'\np = 'kitgame.html'; s = open(p).read()\nold = \"window.endK = () => endK; window.S_LAST = S_LAST;\"\nnew = old + \"\\nwindow.qaSplash = () => { const p = splash.position.clone().project(camera); return { visible: splash.visible, opacity: splash.material.opacity, scale: splash.scale.toArray().map((x) => +x.toFixed(3)), screen: [+((p.x + 1) / 2 * W).toFixed(0), +((1 - p.y) / 2 * H).toFixed(0)], depthTest: splash.material.depthTest, mapOK: !!splash.material.map?.image }; };\"\nassert old in s; s = s.replace(old, new); open(p, ' …[+1051 chars]`
+
+### 🧑 User — 2026-11-21T16:51:52.504Z
+
+> ↩︎ result: {"visible":true,"opacity":1,"scale":[0.739,0.279,1],"screen":[208,699],"depthTest":false,"mapOK":true}
+> [[1.789,0.008,0],[2.876,0.22,0],[4.321,-0.008,0],[5.951,-0.22,0],[7.684,-0.22,0],[8.691,0.02,0],[9.8,0.1,0],[10.9,0.12,0],[14.4,0.15,0]]
+> splash.png (799, 309) RGBA alpha mean 110.6
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T16:52:02.309Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nfrom PIL import Image\nsp=Image.open('/tmp/rainbow_r32/merged/splash.png').convert('RGBA'); bg=Image.new('RGBA',sp.size,(40,40,90,255)); bg.alpha_composite(sp); bg=bg.convert('RGB').resize((400,155))\na=Image.open('references/05_flow_into_the_current.png').convert('RGB'); sc=915/a.height; rw=round(a.width*sc); a=a.resize((rw,915)).crop(((rw-412)//2,0,(rw-412)//2+412,915)).crop((0,600,412,800))\nk=Image.open('/tmp/rainbow_r33/kit/out/level/pose_s0.png').convert('RGB').crop((0,600,412,800))\ns=Image.new('RGB',(412,580),'white'); s.paste(bg,(6,0)); s.paste(a,(0,165));  …[+204 chars]`
+
+### 🧑 User — 2026-11-21T16:52:02.444Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-21T16:52:04.364Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/splash_cmp.jpg"}`
+
+### 🧑 User — 2026-11-21T16:52:04.389Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T16:52:18.112Z
+
+The splash image does contain the painted white jets, but they don't show in the kit frame. To pin it down, I'll render once with the splash and once without and compare the pixels:
+
+### 🤖 Claude — 2026-11-21T16:52:25.820Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/kit05 && python3 - <<'EOF'\np = 'kitgame.html'; s = open(p).read()\nold = \"if (q.get('nobenny')) holder.visible = false;\"\nnew = \"if (q.get('nobenny')) holder.visible = false;\\nconst NOSPLASH = !!q.get('nosplash');\"\nassert old in s; s = s.replace(old, new)\nold = \"  CT.water(F, speed, dt);\\n\"\nnew = \"  CT.water(F, speed, dt); if (NOSPLASH) splash.visible = false;\\n\"\nassert old in s; s = s.replace(old, new, 1); open(p, 'w').write(s)\nEOF\ncp kitgame.html /tmp/rainbow_r33/kitgame/play3.html && cd /tmp && NODE_PATH=$(npm root -g) timeout 900  …[+1004 chars]`
+
+### 🧑 User — 2026-11-21T16:52:36.950Z
+
+> ↩︎ result: pixels changed by the splash: 0 bbox None mean change 0
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T16:52:56.716Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/kit05 && python3 - <<'EOF'\np = 'kitgame.html'; s = open(p).read()\nold = \"window.qaSplash = () => { const p = splash.position.clone().project(camera);\"\nnew = \"window.qaSplash2 = () => { splash.updateMatrixWorld(); return { parent: splash.parent === scene, inScene: scene.children.includes(splash), layers: splash.layers.mask, frustum: splash.frustumCulled, matW: splash.matrixWorld.elements.map((x) => +x.toFixed(3)), sx: splash.scale.x, rot: splash.material.rotation, blending: splash.material.blending, alphaTest: splash.material.alphaTest, color: spl …[+834 chars]`
+
+### 🧑 User — 2026-11-21T16:53:01.406Z
+
+> ↩︎ result: {"parent":false,"inScene":false,"layers":1,"frustum":true,"matW":[0.739,0,0,0,0,0.279,0,0,0,0,1,0,0.107,-0.549,-2.174,1],"sx":0.7391500846190219,"rot":0,"blending":1,"alphaTest":0,"color":"ffffff","compiled":0,"userData":{},"img":[799,309]}
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T16:53:20.326Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/kit05 && python3 - <<'EOF'\nimport re\np = 'kitgame.html'; s = open(p).read()\nold = \"depthTest: q.get('splashdt') === '1' }));   // round 33k: the painted splash lies over the water as in the approved picture splash.renderOrder = 5; scene.add(splash);\"\nnew = \"depthTest: q.get('splashdt') === '1' })); splash.renderOrder = 5; scene.add(splash);   // round 33k: the painted splash lies over the water as in the approved picture\"\nassert old in s; s = s.replace(old, new); open(p, 'w').write(s)\n# robust scan: any '//' comment (outside strings / URLs) w …[+1400 chars]`
+
+### 🧑 User — 2026-11-21T16:53:25.852Z
+
+> ↩︎ result: SUSPECT 55         vec4 kFlow = texture(uRiverTile, vec2(vMapUv.x, -(vKitT + uFlow - uRT.x) / uRT.y), mix(uBias, 0.8, smoothstep(2.5, 9.0, vKitD)));   // flows toward the camera; so
+> SUSPECT 58         // foam banks further ahead, pink bands along its edges (painted pink 240,57,226); world-anchored bends, camera-relative width
+> SUSPECT 71         // in a loop): the streaks and glints move, the colours and big shapes stay the painting's (round 33h; uFlowL = shift length)
+> SUSPECT 80         // laid over it near Benny (uWT.z = share) so the water visibly streams toward the camera; exact painting at the start (kF)
+> SUSPECT 94 const LEVEL = +(q.get('len') ?? 32.16); // the round-32 level length (the controls' 26-coin layout is designed for it; a short test plays its first seconds)
+> SUSPECT 118 for (const side of [1, -1]) {   // right: from -THW upward; left: from PI + THW upward
+> SUSPECT 159 // Benny's start water point = the painted contact pixel cast onto the kit water; his size = the painted size at that distance
+> SUSPECT 199 for (const [k, v] of [['c_CAM_LAT_K', '0.75'], ['c_CAM_LAT_MAX', '0.2']]) if (!qc.has(k)) qc.set(k, v);   // camera follows lane changes more: Benny stays fully on sc …[+749 chars]
+
+### 🤖 Claude — 2026-11-21T16:53:27.639Z
+
+The scan's hits are all ordinary sentences inside comments, with no code hidden after any of them. Here's the start view with the splash restored, next to your picture:
+
+### 🤖 Claude — 2026-11-21T16:53:28.922Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/start_now.jpg"}`
+
+### 🧑 User — 2026-11-21T16:53:28.941Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T16:53:40.110Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /tmp/rainbow_r33/runs/start_now && python3 -c \"\nfrom PIL import Image; Image.open('/tmp/rainbow_r33/kit/out/level/pose_s0.png').convert('RGB').save('/tmp/rainbow_r33/runs/start_now/f_0000.jpg', quality=95)\" && cd /home/user/rainbow- && python3 -I tools/kit05/compare_r33.py /tmp/rainbow_r32/runs/merged_short /tmp/rainbow_r33/runs/start_now /tmp/rainbow_r33/compare_now 0 | python3 -c \"import sys,json; d=json.load(sys.stdin); print('KIT start (scenery, Benny box excluded):', d['frames']['0']['kit'])\" && python3 -I - <<'EOF'\nimport numpy as np, cv2\nfrom PIL import Imag …[+1263 chars]`
+
+### 🧑 User — 2026-11-21T16:53:41.656Z
+
+> ↩︎ result: KIT start (scenery, Benny box excluded): {'colour_look_corr': 0.993, 'sharpness_vs_approved': 0.756, 'mean_abs_diff_levels': 18.0, 'share_within_20_levels': 0.733, 'ssim_scenery': 0.606}
+> WHOLE frame below the HUD incl. Benny + coins: within 20 levels 63.3 %, mean diff 26.6
+> same after a 1.5 px soften of both (ignores fine texture shimmer): within 20 levels 72.2 %
+> full run started
+
+### 🤖 Claude — 2026-11-21T16:53:58.371Z
+
+> 🔧 **Bash** `{"command": "until [ -f /tmp/rainbow_r33/runs/kit_full8/f_0000.jpg ]; do sleep 5; done; sleep 2; cd /home/user/rainbow- && python3 -I tools/kit05/compare_r33.py /tmp/rainbow_r32/runs/merged_short /tmp/rainbow_r33/runs/kit_full8 /tmp/rainbow_r33/compare_now 0 | python3 -c \"import sys,json; d=json.load(sys.stdin); print('KIT true start frame (scenery, Benny box excluded):', d['frames']['0']['kit'])\" && python3 -I - <<'EOF'\nimport numpy as np\nfrom PIL import Image\nW, H = 412, 915\nref = Image.open('references/05_flow_into_the_current.png').convert('RGB'); rw = round(ref.width * H / ref.heigh …[+523 chars]`
+
+### 🧑 User — 2026-11-21T16:54:00.865Z
+
+> ↩︎ result: KIT true start frame (scenery, Benny box excluded): {'colour_look_corr': 0.993, 'sharpness_vs_approved': 0.766, 'mean_abs_diff_levels': 13.8, 'share_within_20_levels': 0.8, 'ssim_scenery': 0.759}
+> WHOLE frame below the HUD incl. Benny, splash, coins: within 20 levels 67.1 %, mean diff 24.2
+
+### 🤖 Claude — 2026-11-21T16:54:16.270Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np = 'docs/briefs/2026-11-21-r33/RESUME_R33.md'; s = open(p).read()\ns = s.replace(\"## Open items before the FULL Screen 05 (in order)\", \"\"\"## Round 33c-k progress (same session, up to ~17:15 UTC) — kit game page `tools/kit05/kitgame.html` (= play3.html in /tmp/rainbow_r33/kitgame)\n* Water: the PAINTED water at the same distance ahead as in the approved view (camera-relative: the near water keeps the painting's\n  look at every moment, incl. its gold bottom rim), streaming toward the camera with a two-phase flow map (`flowl` 0.10) + the round-32\n  flowing  …[+2167 chars]`
+
