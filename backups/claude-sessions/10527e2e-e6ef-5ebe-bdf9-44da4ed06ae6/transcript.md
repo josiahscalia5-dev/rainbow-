@@ -2614,3 +2614,64 @@ While the controls specialist works through its three items, I'm recording the w
 
 > 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport json, datetime\np='backups/AGENTS_STATUS.json'; d=json.load(open(p))\nnow=datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%dT%H:%MZ')\nr=d['round32_screen05_live']['relaunch_account_c33']\nr['water-fx-specialist']='DONE 14:05 UTC (agentB): 0 dark patches at 16 positions s 0 -> 32.05 (before 3/frame), visible splats <= 866k (before 1.06M), golden end = small white-gold core (no orange disc), ending transition endK over s 30.91->32.01 (window.endK, window.S_LAST), colour look -0.02..0.03 vs before; open: end light ~80 px off the painted vani …[+1801 chars]`
 
+### 🧑 User — 2026-11-21T13:49:50.263Z
+
+> ↩︎ result: ok
+>   "screen05_agents_sync": "synced files: 47",
+>   "commit": "a0d15fd96bc314972539088d0c4cc2cb6476a5a8",
+> AUTOSAVE OK | branch ccr-c0679182-krbfci | scheduler daemon | last verified backup 2026-11-21T13:49:28+00:00 (0.3 min ago) | local a0d15fd remote a0d15fd (match) | uncomm
+
+### 🤖 Claude — 2026-11-21T13:49:54.363Z
+
+> 🔧 **Bash** `{"command": "date -u +%H:%M && sed -i 's/~14:20 UTC, still before any full run: NEW G14/~13:48 UTC, still before any full run: NEW G14/; s/~13:45 UTC, still before any full run, after the user/~13:35 UTC, still before any full run, after the user/' tools/marble05/viewer/acceptance_verdict.py && sed -i 's/\"DONE 14:05 UTC (agentB)/\"DONE ~13:43 UTC (agentB)/; s/lead_findings_14_20/lead_findings_13_50/' backups/AGENTS_STATUS.json && grep -c \"13:43\\|13_50\" backups/AGENTS_STATUS.json", "description": "Correct the timestamps I estimated wrongly"}`
+
+### 🧑 User — 2026-11-21T13:49:54.438Z
+
+> ↩︎ result: 13:49
+> 2
+> [This command modified 1 file you've previously read: tools/marble05/viewer/acceptance_verdict.py. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-21T13:50:12.927Z
+
+> 🔧 **SendMessage** `{"to": "aba3a82f8b70b6b99", "summary": "Fix: end light opens too early (look 0.49 at s 29)", "message": "Lead → water specialist: thanks, excellent work. One follow-up, measured against the acceptance rules (fixed before any full run).\n\nPROBLEM:\n- V4 = colour look vs approved ≥ 0.85 × the frame-0 look in EVERY gameplay frame. Frame 0 ≈ 0.64, so the floor ≈ 0.545.\n- Gameplay frames = endK ≤ 0.05; your transition starts at s 30.91.\n- You measured 0.49 at s 29, where the \"light opening\" (fading in from 12 units away) fills the view. That fails, and it also takes the look away from the appr …[+1076 chars]`
+
+### 🧑 User — 2026-11-21T13:50:12.989Z
+
+> ↩︎ result: {"success":true,"message":"Resuming agent aba3a82","resumedAgentId":"aba3a82f8b70b6b99","pin":{"id":"aba3a82f8b70b6b99","name":"aba3a82f8b70b6b99","ref":"789b26"}}
+
+### 🤖 Claude — 2026-11-21T13:50:22.850Z
+
+I've verified the real length. Neither specialist is finished yet, so there's no full test result or video.
+
+**How long the level really is:** 32.16 units of river through 14 golden-ring tunnel sections and their joins. At the normal swim speed (1.4 units/s, unchanged) that's **23.0 seconds, about 690 frames**. The old 7.6 s test covered only the first third. There was also no ending: at 23.2 s Benny and the camera simply froze at the end of the tunnel. Nothing is being shortened or sped up, and no scenery is removed.
+
+**Already fixed for the full length:**
+- **Golden ending:** Benny now swims into the golden light at the end of the tunnel in a smooth 0.8 s transition, which is the hand-over to Screen 06.
+- **Dark gaps:** 0 black patches at all 16 positions checked, from the start to the final frame (about 3 per frame before), and visible splats stay within the Android budget.
+- **Tunnel end:** the big orange disc is gone; there's now a small white-gold light at the end, closer to your picture.
+
+**Problems found because the test now covers the whole level, all being fixed:**
+- **Benny's tilt:** in the later sections he leans up to **42°** on river bends and wobbles up to 10° in a single frame. The new limit is 25° and at most 3° per frame. With the coins and the water line, that's three fixes queued for the controls specialist.
+- **Golden light opening too early:** it fills the screen before the ending starts, taking the view away from your tunnel too early. Sent back to the water specialist with a target.
+- **Test tooling:**
+  - the recording step would have crashed at the end of every long run because the phone's 915-pixel height is odd for the video encoder (fixed);
+  - the old "forward movement" check couldn't see a frozen Benny (now it tracks his real position).
+
+**What the full test now checks, every frame:**
+- the level is played to its real end;
+- all 14 sections are swum through;
+- real touch swipes in all four directions, at least 4 of each;
+- coins never overlap;
+- gentle tilt and a level camera;
+- no dark patches, blur or flicker;
+- the look stays close to your approved picture.
+
+**Correction:** earlier I said I'd found a flicker problem in the 3D renderer. That came from my own probe skipping frames; rendering every frame as the real test does, there's no flicker.
+
+**Next:** when both specialists report, I'll merge and run the complete 690-frame test with real touch swipes. Rendering is software-only, so that takes a few hours. You'll only get the video if every check passes; otherwise I'll tell you exactly what failed.
+
+### 🧑 User — 2026-11-21T13:50:24.587Z
+
+Stop hook feedback:
+[command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+

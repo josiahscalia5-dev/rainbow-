@@ -2,9 +2,9 @@
 Reads test_results.json (final_acceptance.cjs) + visual_check.json (visual_check.py) from <run dir> and judges every criterion
 against FIXED thresholds (written 2026-11-21 ~12:55 UTC before the first merged run; ~13:30 UTC, still before any full run, after the
 user's feedback: G2 = the WHOLE level to its end, G6 >= 4 swipes per direction, G9 >= 80 % of the coins, NEW G11 no overlapping coins;
-never loosened to make a run pass). ~13:45 UTC, still before any full run, after the user's order 'cover the entire level incl. ending
+never loosened to make a run pass). ~13:35 UTC, still before any full run, after the user's order 'cover the entire level incl. ending
 transition, do not shorten': G3 + real position stalls, NEW G12 ending transition, NEW G13 full built level / every section; V2 + V4 on
-gameplay frames (the golden-light bloom frames keep V1 dark patches + V3 flicker). ~14:20 UTC, still before any full run: NEW G14 Benny's
+gameplay frames (the golden-light bloom frames keep V1 dark patches + V3 flicker). ~13:48 UTC, still before any full run: NEW G14 Benny's
 on-screen tilt <= 25 deg / <= 3 deg per frame, camera roll <= 10 deg (found: up to 42 deg in the later sections).
 Writes <run dir>/VERDICT.json + VERDICT.md; exit code 0 only when EVERY criterion passes.
 The user's eight strict points map to: G4/G5/G7 smooth left-right inside the river; G2/G3 continuous natural forward swimming;

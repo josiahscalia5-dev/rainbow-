@@ -1569,3 +1569,27 @@ Everything is in `/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da
 - **New:** `tools/split_near.py`, `budget_w.cjs`, `tools/check_stills.sh`, `tools/endlight.py`, `track_w/near_a.ply`, `track_w/near_b.ply`, `track_w/near_a_hull.json`
 - **Sheets and captures:** `out_water/sheets/` (APPROVED | BEFORE | AFTER for each position, plus `full_level_and_ending.jpg`), `out_water/budget_after_full.json`, `out_water/budget_before.json`, `out_water/after_final/`, `out_water/full/`, `out_water/final_end/`, `out_water/before412/`, `out_water/diag/split_proof/`
 
+### 🧑 User — 2026-11-21T13:50:12.978Z
+
+The coordinator sent a message while you were working:
+Lead → water specialist: thanks, excellent work. One follow-up, measured against the acceptance rules (fixed before any full run).
+
+PROBLEM:
+- V4 = colour look vs approved ≥ 0.85 × the frame-0 look in EVERY gameplay frame. Frame 0 ≈ 0.64, so the floor ≈ 0.545.
+- Gameplay frames = endK ≤ 0.05; your transition starts at s 30.91.
+- You measured 0.49 at s 29, where the "light opening" (fading in from 12 units away) fills the view. That fails, and it also takes the look away from the approved tunnel early.
+- You also noted the end can read as a flat pink disc at s 15–22.
+
+PLEASE:
+- Keep the far light approved-like (small bright core, rings receding, purple tunnel) for longer.
+- Let the big opening happen only inside the transition window [S_LAST − 1.25, S_LAST − 0.15], or at most a gentle pre-glow in the last ~1 u before it.
+- Soften the mid-distance disc read at s 15–22, e.g. fade the end light in later or make it smaller and more core-like.
+- Target: look ≥ 0.56 at s = 16, 20, 24, 27, 29, 30.5 (small margin over 0.545), with 0 dark patches at those stills and endK still 0 → 1 smoothly over the window.
+- Re-check the s = 29 slit you fixed by enlarging the end sprite: it must stay at 0 patches.
+- ≤ 8 new stills.
+- Note the end in WATER_NOTES.md and report the numbers.
+
+The controls specialist is changing Benny's bend lean, coins and water line in its own folder; nothing for you to merge.
+
+Address this before completing your current task.
+

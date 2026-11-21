@@ -228,6 +228,10 @@ export function installControls(ctx) {
       #include <fog_fragment>`);
   };
   bmat.needsUpdate = true;
+  // QA: the water plane vs his mesh (min / max height of his vertices above the plane, undeformed) and the material's program key
+  window.qaWaterLine = () => { const P4 = U.uWater.value, n = new THREE.Vector3(P4.x, P4.y, P4.z); let lo = 1e9, hi = -1e9; const v = new THREE.Vector3();
+    benny.updateMatrixWorld(true); benny.traverse((o) => { if (!o.isMesh) return; const a = o.geometry.attributes.position; for (let i = 0; i < a.count; i += 7) { v.fromBufferAttribute(a, i).applyMatrix4(o.matrixWorld); const h = n.dot(v) + P4.w; lo = Math.min(lo, h); hi = Math.max(hi, h); } });
+    return { plane: P4.toArray().map((x) => +x.toFixed(4)), sub: U.uSub.value.toArray(), meshAbovePlane: [+lo.toFixed(4), +hi.toFixed(4)], submergedFrac: +(-lo / (hi - lo)).toFixed(3), key: String(bmat.customProgramCacheKey()).slice(0, 80), hasHook: String(bmat.onBeforeCompile).includes('b31d') }; };
 
   // ---------------- per-step update (called first in window.step) ----------------
   function update(t, dt) {

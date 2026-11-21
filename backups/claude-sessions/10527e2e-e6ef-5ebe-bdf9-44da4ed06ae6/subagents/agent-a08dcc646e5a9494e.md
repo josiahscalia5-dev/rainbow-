@@ -1572,3 +1572,57 @@ The 26-coin layout has no overlaps in the model. Now I'll write it into controls
 
 > 🔧 **Bash** `{"command": "until grep -q \"^EXIT\" /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA/coins_level_stills.out; do sleep 5; done; cat /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/tasks/ba2wf73ti.output | cut -c1-1500", "description": "Wait for stills to finish", "timeout": 1800000}`
 
+### 🧑 User — 2026-11-21T13:49:39.091Z
+
+> ↩︎ result: ready 22s
+> still c0_frame0 45s
+> still c1_side_lane_run 64s
+> still c2_leap_arc 85s
+> still c3_level_end 105s
+> {"layout_checks":{"count":26,"min_path_gap":0.55,"max_abs_lat":0.22,"min_h":0,"max_h":0.42,"last_coin_s":30.6,"coins_before_done":26,"hud_if_all":1680},"levelEnd":32.01,"sEnd":32.16,"frame0_match":[{"coin":1,"dx":-0.6,"dy":-0.1,"r_ours":27.91,"r_appr":28.6},{"coin":2,"dx":-0.1,"dy":-0.2,"r_ours":19.62,"r_appr":20.8},{"coin":3,"dx":0.2,"dy":0,"r_ours":14.62,"r_appr":16.7},{"coin":4,"dx":0.1,"dy":2.8,"r_ours":9.98,"r_appr":12.8},{"coin":5,"dx":-28.5,"dy":2,"r_ours":5.69,"r_appr":8.3},{"coin":6,"dx":-25.3,"dy":-0.6,"r_ours":3.84,"r_appr":5.7},{"coin":7,"dx":-52.8,"dy":-4.7,"r_ours":3.24,"r_appr":4.2},{"coin":8,"dx":-35.9,"dy":-3.1,"r_ours":2.93,"r_appr":3.6}],"lat_search":[{"s":3.47,"lat":0.22,"err":35.1,"x":211.5,"y":331.8},{"s":3.97,"lat":0.22,"err":55.3,"x":203.6,"y":324.3},{"s":4.47,"lat":0.22,"err":50.4,"x":218.4,"y":316.6}],"frame0_overlaps":[]}
+> {"frames":722,"seconds":24.07,"done_frame":686,"done_t":22.87,"done_s":32.013,"s_final":32.16,"s_max":32.16,"coins_end":1680,"got":{"water":7,"lane":13,"air":6},"pickups":26,"overlaps_r6":0,"overlaps_first":[],"overlap_pairs":{},"pop_ov …[+1255 chars]
+
+### 🤖 Claude — 2026-11-21T13:49:42.800Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && python3 -I compare_frame0.py mergedtest/out_coins/c0_frame0.png /home/user/rainbow-/references/05_flow_into_the_current.png mergedtest/out_coins && python3 -I /home/user/rainbow-/tools/marble05/viewer/visual_check.py mergedtest/out_coins/vc /home/user/rainbow-/references/05_flow_into_the_current.png | python3 -I -c \"import json,sys; d=json.load(sys.stdin); print(json.dumps({k: d[k] for k in ('frame0_vs_approved','colour_look_frame0','dark_patches')}))\"", "description": "Make side-by-si …[+46 chars]`
+
+### 🧑 User — 2026-11-21T13:49:43.751Z
+
+> ↩︎ result: written mergedtest/out_coins
+> {"frame0_vs_approved": {"within_20_levels_pct": 5.2, "within_20_below_hud_pct": 5.8, "within_40_below_hud_pct": 17.8, "mean_abs_diff_below_hud": 60.3, "eighth_size_within_20_below_hud_pct": 6.3, "eighth_size_within_40_below_hud_pct": 20.4}, "colour_look_frame0": 0.637, "dark_patches": {"frames_with_patches": 0, "largest_px": 0, "max_pct": 0.0, "rule": "connected near-black area >= 150 px at 412x915 (approved picture: largest 8 px)"}}
+
+### 🤖 Claude — 2026-11-21T13:49:45.799Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA/mergedtest/out_coins/approved_vs_frame0_full.png"}`
+
+### 🧑 User — 2026-11-21T13:49:45.839Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T13:49:47.248Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA/mergedtest/out_coins/approved_vs_frame0_benny.png"}`
+
+### 🧑 User — 2026-11-21T13:49:47.277Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T13:50:10.295Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentA && grep -n \"uSub\\|b31d\\|discard\" mergedtest/controls.js | head; grep -n \"bmat\\|onBeforeCompile\" mergedtest/play3.html | head", "description": "Check the shader hook exists in merged copy"}`
+
+### 🧑 User — 2026-11-21T13:50:10.338Z
+
+> ↩︎ result: 213:  // Visibility is a screen-space dither + discard (interleaved gradient noise), so he stays an opaque mesh: no transparency
+> 214:  // sorting against the splats, and the water / the painted splash fans behind him show through where he is discarded.
+> 216:  U.uSub = { value: new THREE.Vector3(P.SUB_ALPHA, P.DIVE_ALPHA, P.SUB_BAND) };
+> 219:    prevCompile(sh, r); Object.assign(sh.uniforms, { uDive: U.uDive, uWater: U.uWater, uSub: U.uSub });
+> 221:    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying vec3 vB31W; uniform float uDive; uniform vec4 uWater; uniform vec3 uSub;')
+> 222:      .replace('#include <fog_fragment>', `{ float b31d = -(dot(uWater.xyz, vB31W) + uWater.w);           // depth below the water plane (+ = under)
+> 223:        float b31u = smoothstep(0.0, uSub.z, b31d);                                  // 0 at the line -> 1 one band below it
+> 225:        float b31a = mix(1.0, mix(uSub.x, uSub.y, uDive), b31u);
+> 227:        if (b31a < 0.999 && b31n >= b31a) discard; }
+> 156:const bmat = new THREE.MeshBasicMaterial({ map, color: new THREE.Color(4, 4, 4) });
+> 157:bmat.onBeforeCompile = (sh) => {
+> 163:const bmesh = new THREE.Mesh(geo, bmat); …[+457 chars]
+
