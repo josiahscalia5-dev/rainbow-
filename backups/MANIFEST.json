@@ -784,7 +784,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 25112,
-   "sha256": "3146c33cc89e328a23e209d833e1ce0502d0a64c9476c033c705c1e767ea419a"
+   "sha256": "8d4c1fe31b8c07fe2f2cef95fd1ebfb6df665b50bde560738250d262a299750e"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -799,7 +799,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3271,
-   "sha256": "96958ee78f4bdf6266b6102d224e67b668dc5a993abb4fed31018715efd748f0"
+   "sha256": "a51ae39719ba34c20fa1503a1b72df4242afdb22c33e3e3b04f69d85ce07c60a"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -16217,6 +16217,16 @@
    "sha256": "ff27ca30b0e0d316651d8829aa0225e4b46e7860b36b960c41249c5f0cb723d9"
   },
   {
+   "path": "qa/match/05/paint05/clip/NEW_STILL_05_06_07_steer.mp4",
+   "bytes": 5678147,
+   "sha256": "987a5eca434f6a77d19b0d3ad62b02abec59d53b1595d041287f20a94b83f83c"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/NEW_STILL_05_06_07_straight.mp4",
+   "bytes": 5170957,
+   "sha256": "7730c9bc9d4bd45600621387e50e93cabab11802b46c3d9c39112c81e4f04286"
+  },
+  {
    "path": "qa/match/05/paint05/clip/clip_BEFORE_05_06_07_straight.json",
    "bytes": 57237,
    "sha256": "7d7e819daf21b21637b9dca07a0dd3db20e0aa371bd1263e53714c0a11d266ce"
@@ -16250,6 +16260,26 @@
    "path": "qa/match/05/paint05/clip/clip_NEW_05_straight.json",
    "bytes": 33235,
    "sha256": "196f239be8380099536a20df16bd8418c7a685d6cd2d7bd1e4dea09b5d76e863"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/clip_NEW_STILL_05_06_07_steer.json",
+   "bytes": 82336,
+   "sha256": "714c1c0e267ea059f5a7bbeefea5fda3b17466d28e3209ef3ae5ac9b5b46679f"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/clip_NEW_STILL_05_06_07_steer_metric.json",
+   "bytes": 46534,
+   "sha256": "ab1afe56ff6e483b763c785f6b1c7c52a2e7b8179b8f3d080079129beb910d99"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/clip_NEW_STILL_05_06_07_straight.json",
+   "bytes": 80143,
+   "sha256": "61df8acc431acd4f670183830e860f08b3b14ffd34be4c8eacac1cea145bde3b"
+  },
+  {
+   "path": "qa/match/05/paint05/clip/clip_NEW_STILL_05_06_07_straight_metric.json",
+   "bytes": 46534,
+   "sha256": "0a59144bcb9993f91fc24382dbf4b8206c3401fdaed62aa75a07a2eb85e09d79"
   },
   {
    "path": "qa/match/05/paint05/compare/BEFORE_s132.44.png",

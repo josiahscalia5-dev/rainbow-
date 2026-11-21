@@ -3671,3 +3671,35 @@ While that records, I'm moving the earlier temporary frame folders out of the pr
 
 The still-scenery recordings are running, about 10 minutes. I'll measure them as soon as they finish.
 
+### 🧑 User — 2026-11-21T01:54:34.040Z
+
+<task-notification>
+<task-id>bi48vwtgx</task-id>
+<tool-use-id>toolu_01HYgCowhGbjTcxErA2UYiRY</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/tasks/bi48vwtgx.output</output-file>
+<status>completed</status>
+<summary>Background command "Add the still-scenery setting and record straight and steering runs with it" completed (exit code 0)</summary>
+</task-notification>
+
+### 🤖 Claude — 2026-11-21T01:54:39.387Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/tasks/bi48vwtgx.output; for t in NEW_STILL_05_06_07_straight NEW_STILL_05_06_07_steer; do echo \"== $t\"; python3 -I tools/paint/frames_metric.py qa/match/05/paint05/clip/clip_$t.json | python3 -I -c \"import json,sys; d=json.load(sys.stdin); [print(k, v) for k,v in d.items()]\"; done; python3 -I -c \"\nimport json\nfor t in ['NEW_STILL_05_06_07_straight','NEW_STILL_05_06_07_steer']:\n    L=json.load(open(f'qa/match/05/paint05/clip/clip_{t}.json'))['frames']\n    print(t, 'coins', L[0]['coins'],'->',L[-1][' …[+231 chars]`
+
+### 🧑 User — 2026-11-21T01:55:46.703Z
+
+> ↩︎ result: NEW_STILL_05_06_07_straight frames 578 s 106.467 -> 262.003 coins 1330 -> 1600
+> NEW_STILL_05_06_07_steer frames 578 s 106.467 -> 262.003 coins 1330 -> 1500
+> [1]+  Done                    npx tsc --noEmit && ( timeout 3000 node tools/paint/clip.mjs --q="paint=1&paintpush=0&paintpan=0" --from=106 --to=262 --tag=NEW_STILL_05_06_07_straight 2>&1 | tail -1 )
+> 
+> [exited with code 0]
+> == NEW_STILL_05_06_07_straight
+> 05 {'frames': 198, 'px20_median': 82.0, 'px20_min': 70.3, 'look20_median': 92.7, 'look20_min': 80.7}
+> 06k0 {'frames': 83, 'px20_median': 85.2, 'px20_min': 46.6, 'look20_median': 95.3, 'look20_min': 51.6}
+> 06k1 {'frames': 60, 'px20_median': 74.8, 'px20_min': 24.9, 'look20_median': 92.2, 'look20_min': 33.1}
+> 06k2 {'frames': 60, 'px20_median': 78.7, 'px20_min': 23.4, 'look20_median': 94.2, 'look20_min': 29.3}
+> 06k3 {'frames': 56, 'px20_median': 78.8, 'px20_min': 41.9, 'look20_median': 93.7, 'look20_min': 51.1}
+> 06k4 {'frames': 47, 'px20_median': 80.2, 'px20_min': 58.3, 'look20_median': 94.4, 'look20_min': 70.9}
+> == NEW_STILL_05_06_07_steer
+> 05 {'frames': 198, 'px20_median': 75.7, 'px20_min': 33.5, 'look20_median': 83.7, 'look20_min': 35.7}
+> 06k0 {'frames': 83, 'px20_median': 78.6, 'px20_min':  …[+637 chars]
+
