@@ -20,11 +20,12 @@ try {
   await page.evaluate(() => document.fonts.ready);
   let i = 0, t = 0;
   for (;;) {
-    const st = await page.evaluate(([wv, t]) => {
+    const st = await page.evaluate(([wv, t, side]) => {
       const r = window.__rainbow; const s = r.state().s; let v = 0;
       for (const [a, b] of wv) if (s > a && s < b) v = Math.sin((s - a) * 0.55) * 0.9;
-      r.setSteer(v); r.freezeAt(11.0 + t); const o = r.step(2, 1 / 60); r.renderNow(); return o;
-    }, [weave, t]);
+      r.setSteer(v); r.freezeAt(11.0 + t); const o = r.step(2, 1 / 60);
+      if (side) r.sideCam(...side); else r.renderNow(); return o;
+    }, [weave, t, opt.side ? String(opt.side).split(',').map(Number) : null]);
     await page.screenshot({ path: `${fdir}/${String(i).padStart(4, '0')}.jpg`, type: 'jpeg', quality: 90 });
     log.push({ i, t: +t.toFixed(3), s: st.s, lat: st.lat, stage: st.stage, coins: st.coins, hearts: st.hearts, benny3d: st.bennyVisible });
     i++; t += 1 / 30;

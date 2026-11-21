@@ -794,7 +794,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 25112,
-   "sha256": "4a16a44a66892d82fbf2ba4794121e110bd45f0143898609a4294ba7177b6e00"
+   "sha256": "5ddea32fc1c875c6cf67cda02ae0a7832077b0ff1b981434cd3e4d1563dbef34"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -809,7 +809,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3271,
-   "sha256": "2441982c7e6a34c354a766bd7722d9cabab92cf5abc6150d8e36ade587eb28ad"
+   "sha256": "cfdd730efe90fe8a934c5af75f8f83e3d77e0278f6edb6c6bcd1bde3b4c9e32b"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -16915,6 +16915,96 @@
    "path": "qa/match/05/r31_3d/look/TUN5_stills.json",
    "bytes": 555,
    "sha256": "00e3bf196d4a5205ae0cf2726c8e6c469cf3b8b1b974f3d878434dd427737945"
+  },
+  {
+   "path": "qa/match/05/r31_3d/look/TUN6_s132.44.png",
+   "bytes": 2466450,
+   "sha256": "5f12abfa9bdd537504624d192be0e2cb683570fac19a994944ed7bbe76ba2eb8"
+  },
+  {
+   "path": "qa/match/05/r31_3d/look/TUN6_s146.png",
+   "bytes": 2378772,
+   "sha256": "540f7072c5f2e05b8ed29feaefc701957082538e4d347ddc1ddced533bcdbcbd"
+  },
+  {
+   "path": "qa/match/05/r31_3d/look/TUN6_s160.png",
+   "bytes": 2393433,
+   "sha256": "808e875950ba4f08f1a8c3f93e8abc12394a4f864cbb23c307e8ae7f6733e2ec"
+  },
+  {
+   "path": "qa/match/05/r31_3d/look/TUN6_s174.png",
+   "bytes": 2383383,
+   "sha256": "9932f52b62ffec9ae3b4b5df1c2c0276108b1bbeed8ad68dda8d9e745b14be54"
+  },
+  {
+   "path": "qa/match/05/r31_3d/look/TUN6_s186.png",
+   "bytes": 2339320,
+   "sha256": "464a1373e95a3f41031d3ffc79d0eaf567a3355c3d8619267396adc28a4d760c"
+  },
+  {
+   "path": "qa/match/05/r31_3d/look/TUN6_s200.png",
+   "bytes": 2328505,
+   "sha256": "36245236f3635ee1f3511c5b1561dc49a8b968d315c004b8a62f3cbca8cfee3e"
+  },
+  {
+   "path": "qa/match/05/r31_3d/look/TUN6_stills.json",
+   "bytes": 554,
+   "sha256": "27cbbe6f21aae2f710c65c99f19de30b4801229e33629406b99fc05b33e1d3f5"
+  },
+  {
+   "path": "qa/match/05/r31_3d/look/TUN7_s132.44.png",
+   "bytes": 2467492,
+   "sha256": "2a502f52fd69439c5168407cdd4a9880ddebf54f09826ee2b037b4e2c53e4bcd"
+  },
+  {
+   "path": "qa/match/05/r31_3d/look/TUN7_s146.png",
+   "bytes": 2381469,
+   "sha256": "a61c7465ef17b006aed735231272c36506816f8f3e75d44e5b81c7e4bf9ab1a9"
+  },
+  {
+   "path": "qa/match/05/r31_3d/look/TUN7_s160.png",
+   "bytes": 2397414,
+   "sha256": "bf14d0e57a30d9a5c8d22b155535b9eaf874e3312ff9b543fabe3d0ad73c1fa2"
+  },
+  {
+   "path": "qa/match/05/r31_3d/look/TUN7_s174.png",
+   "bytes": 2383900,
+   "sha256": "91664d47a1fd45ce8694a7757b0839e7c3dc1afed08ee2756da7e6c9c8fb4411"
+  },
+  {
+   "path": "qa/match/05/r31_3d/look/TUN7_s186.png",
+   "bytes": 2340080,
+   "sha256": "b04d8a3c148c1341925a2f0674045c7711202e9ba71b4d396ee595b9143138a8"
+  },
+  {
+   "path": "qa/match/05/r31_3d/look/TUN7_s200.png",
+   "bytes": 2339633,
+   "sha256": "57e604ce71e9de9da758b958979dc60479ef6a2471db1faeee50db9a1f9dcbbc"
+  },
+  {
+   "path": "qa/match/05/r31_3d/look/TUN7_stills.json",
+   "bytes": 556,
+   "sha256": "2731c9b4034b13c3de436467b8ca92946f83beaf7cda81f3cdbf5f36dd1e3abf"
+  },
+  {
+   "path": "qa/match/05/r31_3d/look/TUN8_s132.44.png",
+   "bytes": 2472069,
+   "sha256": "4c4f91cabb21f08b50de5c480a0f09ca6d83062263ff200d683132364ad01000"
+  },
+  {
+   "path": "qa/match/05/r31_3d/look/TUN8_s160.png",
+   "bytes": 2402520,
+   "sha256": "c588303adfb6039576044ee7cab41fd750513a90f246ba008097eeeff657ae54"
+  },
+  {
+   "path": "qa/match/05/r31_3d/look/TUN8_s186.png",
+   "bytes": 2344617,
+   "sha256": "7b1a20bf265e8ae6e716b78beb4535223ea81030e296d41cd3c537616311b89e"
+  },
+  {
+   "path": "qa/match/05/r31_3d/look/TUN8_stills.json",
+   "bytes": 281,
+   "sha256": "967322a64a521d6f966102b802bf0cc1369ef1be153a032c09893ca633b0ceb2"
   },
   {
    "path": "qa/match/05/r31_3d/look/TUN_s132.44.png",
@@ -36268,8 +36358,8 @@
   },
   {
    "path": "src/game/Game.ts",
-   "bytes": 43378,
-   "sha256": "10cbe9dc742586ee344798ad3cc5b7d0adf15fc5023f5823d931014e429d9996"
+   "bytes": 44500,
+   "sha256": "3f39d3ba446acb010986a7f4831bf33d66824e5f505fb9ace5f23de69e1ecdac"
   },
   {
    "path": "src/game/cameraRig.ts",
@@ -36353,8 +36443,8 @@
   },
   {
    "path": "src/vfx/index.ts",
-   "bytes": 16210,
-   "sha256": "365bc50cc3ac9ccbd655d7cc04b5d36fb4a9642a0d3a1cf80ba35d9e9f9f4d56"
+   "bytes": 16353,
+   "sha256": "7816be6188af189f333beb2816a55845ef031ad65bcf0de661e7b89f15f66eb8"
   },
   {
    "path": "src/vfx/proj05Apron.ts",
@@ -36393,13 +36483,13 @@
   },
   {
    "path": "src/world/course.ts",
-   "bytes": 32604,
-   "sha256": "86cb3fa38cbd7574fb98f5123b44b2869224e5e895f1494a5b3c179e2d402e34"
+   "bytes": 32625,
+   "sha256": "8e88294ea8c26d21ee6f6bf9c9d67782ebda33f6b1c63221bec0b796a50ce940"
   },
   {
    "path": "src/world/environment.ts",
-   "bytes": 60537,
-   "sha256": "491f2dbf0ade5cf688e6ebbdae002142310fc003fab02dfef783fc2717d4ebf5"
+   "bytes": 61314,
+   "sha256": "1e7ec9964b77829a4bdb2391f8ae4d863953236e9aaeaf99b779f6597c41e0d7"
   },
   {
    "path": "src/world/far05.ts",
@@ -36883,8 +36973,8 @@
   },
   {
    "path": "tools/paint/clip.mjs",
-   "bytes": 2934,
-   "sha256": "f03c5ac7afc9ff753445cd436cadcd72ebcb2dcd7170a0cdb97a36075d43b8e1"
+   "bytes": 3040,
+   "sha256": "dcdf9b506341a94f32737c7d28db92cd55a28968006404d6b804b26155c396cb"
   },
   {
    "path": "tools/paint/coins06.py",

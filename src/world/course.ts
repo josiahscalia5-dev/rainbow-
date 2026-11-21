@@ -290,8 +290,8 @@ function buildRoute(): RouteData {
     // its last part; same end point, so 07 onward is where it was
     seg(34, (t) =>
       V(
-        s6.x + 1.8 * Math.sin(2 * Math.PI * 1.2 * t) * smooth(0, 0.15, t) * (1 - smooth(0.5, 0.75, t)) + (WORLD.chamber.center.x - s6.x) * smooth(0.55, 1, t),
-        s6.y - 1.2 * t - 3.3 * smooth(0.45, 1, t),   // no crest: the current keeps its gentle descent, then drops into 07
+        s6.x + 1.8 * Math.sin(2 * Math.PI * 1.2 * t) * smooth(0, 0.15, t) * (1 - smooth(0.45, 0.75, t)) + (WORLD.chamber.center.x - s6.x) * smooth(0.15, 1, t),
+        s6.y - 1.9 * t - 2.6 * smooth(0.5, 1, t),   // no crest: the 05 slope continues, a long gentle right-hand curve (no hard bend) into 07
         s6.z - 46 * t,
       ),
     );

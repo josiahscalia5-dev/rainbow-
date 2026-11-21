@@ -294,7 +294,7 @@ export function buildEnvironment(course: Course): Environment {
   // gold rings every bay past sF05 and on into the start of 06 (no forced-perspective far block, which only works from the locked
   // checkpoint eye), the approved purple walls repeated bay after bay instead of the 06 hall. Off: unchanged.
   const TUN05 = qaNum05('tun05', 0) === 1;
-  const sEndT05 = course.stage('06').s0 + 40;
+  const sEndT05 = course.stage('07').s0 + 25;
   const rings05 = TUN05 ? [...rings05Base, ...Array.from({ length: Math.max(0, Math.floor((sEndT05 - sF05) / bay05) + 1) }, (_, n) => sF05 + n * bay05)] : rings05Base;
   // 05 walls: 7 dark capsule-slot rows per 14-unit bay, centred between the bands (rows 2 apart),
   // slots ≈0.6 × 0.24 units laid along the circumference (ref 05 near slots ≈10 × 28 px)
@@ -306,7 +306,9 @@ export function buildEnvironment(course: Course): Environment {
   // wave 7, tunnel surfaces only (walls, rings, lids; the far river keeps glow05): orange and earlier — the
   // reference throat inside the 4th ring (r < 50 px ≈ virtual depth > 200) is one continuous warm orange well
   // ((229,111,81) at r 32–48, (248,169,89) at r 16–24), no purple gaps between the rings
-  const glowT05: FarGlow = { ...glow05, color: '#ff9c5a', near: 95, far: 330, strength: 1.5 };
+  // `?tun05=1`: the tunnel is real all the way, so the outer wall of the far curve (75–110 u) must stay purple-and-gold — the warm
+  // throat only begins further out (the locked-view far block, which needed the warm well at 95 u, is not used then)
+  const glowT05: FarGlow = qaNum05('tun05', 0) === 1 ? { ...glow05, color: '#ff9c5a', near: 150, far: 420, strength: 1.2 } : { ...glow05, color: '#ff9c5a', near: 95, far: 330, strength: 1.5 };
   const wall05 = {
     // lavender F0 × the magenta tube environment → violet-magenta metal (ref #992FC2 / #CD32AA)
     // wave 7: no pressed-metal corrugation (its bent normals turned the strip reflections into the "marbled
@@ -431,6 +433,12 @@ export function buildEnvironment(course: Course): Environment {
   // `?projlid05=1` (src/vfx/proj05Tunnel.ts): the approved paddles L1 L2 R1 R2, Blender-built trays; default unchanged
   if (PROJLID05) zones.tubes.add(lids05Group());
   else zones.tubes.add(buildWallLids(perfPath, 0, 0, bay05, lidMat05('lid05', false), { positions: lids05, ...lid05 }));
+  // `?tun05=1`: a paddle pair camera-side of every further ring (the approved picture's paddles are the Blender trays above)
+  if (TUN05) {
+    const lastBlender = sCam05 + 60;
+    const more = rings05.filter((s) => s > lastBlender).map((s) => s - band05.width / 2 - lid05.size * 1.05);
+    zones.tubes.add(buildWallLids(perfPath, 0, 0, bay05, lidMat05('lid05t', false), { positions: more, ...lid05, skip: lidClear }));
+  }
   // 06/07: legacy hoods, unchanged
   const lids0607: number[] = [];
   for (let s = s06 + RING06_PHASE + ringSpacing * 0.5 - 2 * ringSpacing; s <= s08 - 6 + 1e-6; s += ringSpacing) if (s >= (TUN05 ? sEndT05 : sGlow05) + 4) lids0607.push(s);

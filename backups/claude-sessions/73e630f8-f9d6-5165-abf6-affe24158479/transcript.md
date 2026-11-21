@@ -4922,3 +4922,110 @@ I'm now extending the approved Screen 05 look (tunnel size, water, foam and came
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-21T02:33:48.507Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='src/world/course.ts'; s=open(p).read()\nold=\"\"\"        s6.x + 1.8 * Math.sin(2 * Math.PI * 1.2 * t) * smooth(0, 0.15, t) * (1 - smooth(0.5, 0.75, t)) + (WORLD.chamber.center.x - s6.x) * smooth(0.55, 1, t),\n        s6.y - 1.2 * t - 3.3 * smooth(0.45, 1, t),   // no crest: the current keeps its gentle descent, then drops into 07\"\"\"\nnew=\"\"\"        s6.x + 1.8 * Math.sin(2 * Math.PI * 1.2 * t) * smooth(0, 0.15, t) * (1 - smooth(0.55, 0.8, t)) + (WORLD.chamber.center.x - s6.x) * smooth(0.65, 1, t),\n        s6.y - 1.9 * t - 2.6 * smooth(0.68, 1, t),   …[+2549 chars]`
+
+### 🤖 Claude — 2026-11-21T02:33:49.514Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/tun6.png"}`
+
+### 🧑 User — 2026-11-21T02:34:13.253Z
+
+> ↩︎ result: TUN6 stills 6
+
+### 🧑 User — 2026-11-21T02:34:13.285Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T02:34:29.672Z
+
+The tunnel, rings, paddles and foam are now consistent all the way, but the river still looks like it rises to a ridge ahead. I'm measuring what's actually there before fixing it.
+
+### 🤖 Claude — 2026-11-21T02:34:37.172Z
+
+> 🔧 **Bash** `{"command": "cat > /tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/probe.mjs <<'EOF'\nimport { loadPlaywright, CHROMIUM_ARGS, startVite } from '/home/user/rainbow-/scripts/lib/pw.mjs';\nconst { chromium } = loadPlaywright(); const vite = await startVite(5500 + Math.floor(Math.random() * 50));\nconst browser = await chromium.launch({ args: CHROMIUM_ARGS });\ntry {\n  const page = await browser.newPage({ viewport: { width: 432, height: 768 } });\n  await page.goto(`${vite.url}/?qa=1&dpr=1&match05=1&projflow05=2&benny31=1&tun05=1`);\n  await page.waitForFunction( …[+922 chars]`
+
+### 🧑 User — 2026-11-21T02:34:47.462Z
+
+> ↩︎ result: s 132.44 cam [ 1.92, -37.94, -68.28 ]
+>   ndc y 0.5 -> 93.69 Mesh y=-35.34
+>   ndc y 0.42 -> 100.78 Mesh y=-39.65
+>   ndc y 0.36 -> 102.44 Mesh y=-43.17
+>   ndc y 0.3 -> 53.11 foam_rim05 y=-42.49
+>   ndc y 0.24 -> 47.27 water_ribbon y=-43.64
+>   ndc y 0.18 -> 31.48 water_ribbon y=-42.84
+>   ndc y 0.12 -> 24.05 water_ribbon y=-42.54
+>   ndc y 0.06 -> 12.36 Mesh y=-40.74
+>   ndc y 0 -> 12.21 Mesh y=-41.13
+> s 160 cam [ 1.3, -39.09, -95.7 ]
+>   ndc y 0.5 -> 68.65 Mesh y=-37.18
+>   ndc y 0.42 -> 74.57 Mesh y=-40.35
+>   ndc y 0.36 -> 75.73 Mesh y=-42.95
+>   ndc y 0.3 -> 75.21 Mesh y=-45.53
+>   ndc y 0.24 -> 42.55 water_ribbon y=-44.22
+>   ndc y 0.18 -> 20.47 Mesh y=-42.27
+>   ndc y 0.12 -> 23.72 water_ribbon y=-43.61
+>   ndc y 0.06 -> 19.93 water_ribbon y=-43.59
+>   ndc y 0 -> 16.33 water_ribbon y=-43.35
+
+### 🤖 Claude — 2026-11-21T02:35:05.648Z
+
+> 🔧 **Bash** `{"command": "sed -i \"s/const h = r.probe(0.05, y).filter((x) => !\\/Benny|benny\\/.test(x.obj)); o.push(\\[y, h\\[0\\] ? \\`\\${h\\[0\\].d} \\${h\\[0\\].obj.split('<')\\[0\\]} y=\\${h\\[0\\].p\\[1\\]}\\` : 'none'\\]);/const h = r.probe(0.05, y).filter((x) => !\\/Benny|benny\\/.test(x.obj)); o.push([y, h.slice(0,3).map((q) => \\`\\${q.d} [\\${q.obj}] y=\\${q.p[1]}\\`).join(' | ')]);/\" /tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/probe.mjs && sed -i 's/for (const s of \\[132.44, 160\\])/for (const s of [160])/; s/for (const y of \\[0.5, 0.42, 0.36, 0.3, 0.2 …[+364 chars]`
+
+### 🧑 User — 2026-11-21T02:35:14.459Z
+
+> ↩︎ result: s 160 cam [ 1.3, -39.09, -95.7 ]
+>   ndc y 0.33 -> 75.71 [Mesh<zone_tubes<washer_world<Scene] y=-44.26
+>   ndc y 0.3 -> 75.21 [Mesh<zone_tubes<washer_world<Scene] y=-45.53
+>   ndc y 0.27 -> 60.77 [water_ribbon<water_system<Scene] y=-45.35 | 71.27 [water_ribbon<water_system<Scene] y=-46.43 | 71.98 [foam_berm<foam_banks<water_system<Scene] y=-46.51
+
+### 🤖 Claude — 2026-11-21T02:36:02.183Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='src/world/course.ts'; s=open(p).read()\nold=\"\"\"        s6.x + 1.8 * Math.sin(2 * Math.PI * 1.2 * t) * smooth(0, 0.15, t) * (1 - smooth(0.55, 0.8, t)) + (WORLD.chamber.center.x - s6.x) * smooth(0.65, 1, t),\n        s6.y - 1.9 * t - 2.6 * smooth(0.68, 1, t),   // no crest: the 05 slope continues (the river ahead stays in view), then drops into 07\"\"\"\nnew=\"\"\"        s6.x + 1.8 * Math.sin(2 * Math.PI * 1.2 * t) * smooth(0, 0.15, t) * (1 - smooth(0.45, 0.75, t)) + (WORLD.chamber.center.x - s6.x) * smooth(0.15, 1, t),\n        s6.y - 1.9 * t - 2.6 * sm …[+3309 chars]`
+
+### 🤖 Claude — 2026-11-21T02:36:03.330Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/tun7.png"}`
+
+### 🧑 User — 2026-11-21T02:36:28.040Z
+
+> ↩︎ result: TUN7 stills 6
+
+### 🧑 User — 2026-11-21T02:36:28.071Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T02:36:46.087Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='src/game/Game.ts'; s=open(p).read()\nold=\"\"\"    const inDrum = i <= 1;\n    fog.density = inDrum ? 0.0015 : i >= 7 ? 0.0025 : 0.0035;\"\"\"\nnew=\"\"\"    const inDrum = i <= 1;\n    fog.density = inDrum ? 0.0015 : i >= 7 ? 0.0025 : 0.0035;\n    // `?tun05=1`: the 05 tunnel is real to ~120 u ahead — the pale pink haze would wash its far rings out (the locked view used a\n    // compressed far block, so it never saw that distance); a thinner warm-violet haze keeps the far tunnel purple-and-gold\n    if (TUN05 && i >= 3 && i <= 6) { fog.density = 0.0012;  …[+976 chars]`
+
+### 🤖 Claude — 2026-11-21T02:36:47.286Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad/tun8.png"}`
+
+### 🧑 User — 2026-11-21T02:37:04.543Z
+
+> ↩︎ result: 16:import { Course, StageId, WORLD, TUN05 } from '../world/course';
+> TUN8 stills 3
+
+### 🧑 User — 2026-11-21T02:37:04.572Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T02:37:14.081Z
+
+> 🔧 **Bash** `{"command": "mkdir -p qa/match/05/r31_3d/proof && Q=\"match05=1&projflow05=2&benny31=1&tun05=1\" && (timeout 3300 node tools/paint/clip.mjs --q=\"$Q\" --from=110 --to=206 --size=720x1280 --weave=140:150,162:174 --out=qa/match/05/r31_3d/proof --tag=NEW3D_SCREEN05_gameplay 2>&1 | tail -1) & (sleep 3; timeout 3300 node tools/paint/clip.mjs --q=\"$Q\" --from=136 --to=170 --size=720x1280 --weave=150:160 --side=24,6,-2,48 --out=qa/match/05/r31_3d/proof --tag=NEW3D_SCREEN05_sideview 2>&1 | tail -1); wait", "description": "Record the Screen 05 gameplay run and the side-camera run", "timeout": 3500000, …[+27 chars]`
+
+### 🧑 User — 2026-11-21T02:37:14.120Z
+
+> ↩︎ result: Command running in background with ID: b67ws2q4j. Output is being written to: /tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/tasks/b67ws2q4j.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-21T02:37:15.534Z
+
+While those record, I'm saving to GitHub and capturing the BEFORE and NEW stills for the comparison sheets.
+
+### 🤖 Claude — 2026-11-21T02:37:18.183Z
+
+> 🔧 **Bash** `{"command": "timeout 300 python3 scripts/rainbow-autosave.py --reason manual:tun05 2>&1 | grep -E '\"result\"|\"commit\"'; S=132.44,150,170,186; timeout 1500 node tools/paint/stills.mjs --q=\"match05=1&projflow05=2&benny31=1&tun05=1\" --s=$S --out=qa/match/05/r31_3d/compare --tag=NEW3D 2>&1 | tail -1; for s in 132.44 150 170 186; do cp qa/match/05/paint05/compare/BEFORE_s$s.png qa/match/05/r31_3d/compare/ 2>/dev/null; done; ls qa/match/05/r31_3d/compare/", "description": "Save to GitHub and capture NEW stills at four Screen 05 moments", "timeout": 2000000}`
+

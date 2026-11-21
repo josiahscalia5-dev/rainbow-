@@ -13,7 +13,7 @@
  * (BENNY_RIDE_OFFSET ≈ 0.55 for a 0.8-radius body: bottom third in the water, splash visible).
  */
 import * as THREE from 'three';
-import { type Course, WORLD, funnelY, look05 } from '../world/course';
+import { type Course, WORLD, funnelY, look05, TUN05 } from '../world/course';
 import { createRibbon, PROJ05, flag05, proj05Pending } from './waterRibbon';
 import { createWhirlpool, whirlpoolHeight, FUNNEL_LIFT } from './whirlpool';
 import { createDrumWater } from './drumWater';
@@ -99,7 +99,8 @@ export function createWater(course: Course, opts: { quality?: 'high' | 'low' } =
   const qaHide = typeof location !== 'undefined' ? (new URLSearchParams(location.search).get('waterhide') ?? '').split(',').filter(Boolean) : [];
   // `?proj05=1`: the approved picture's own fluffy foam is baked into the river texture, so the three Screen-05-only foam
   // parts (rim puffs, flank sheet, flank puffs) step aside; `?projfoam05=1` keeps them. No other screen's foam changes.
-  if (PROJ05 && !flag05('projfoam05')) qaHide.push('foamRim05', 'foamFlank', 'foamRafts');
+  // (`?tun05=1`: kept — the baked foam covers only the locked view, the real foam banks carry it on along the whole route)
+  if (PROJ05 && !flag05('projfoam05') && !TUN05) qaHide.push('foamRim05', 'foamFlank', 'foamRafts');
   /** `waterhide=ribbonWake`: keep the ribbon but switch off its Benny contact/wake block */
   const qaNoRibbonWake = qaHide.includes('ribbonWake');
   let focus = 0;

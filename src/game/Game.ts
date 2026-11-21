@@ -13,7 +13,7 @@ import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
 import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js';
-import { Course, StageId, WORLD } from '../world/course';
+import { Course, StageId, WORLD, TUN05 } from '../world/course';
 import { buildEnvironment } from '../world/environment';
 import { createCandyEnvironment, createRenderer } from '../render/env';
 import { createGradePass } from '../render/grade';
@@ -174,6 +174,9 @@ export async function startGame(canvas: HTMLCanvasElement) {
     if (m08) { m08On = st.stage === '08'; m08.group.visible = m08On; if (m08On) env.zones.chamber.visible = false; }
     const inDrum = i <= 1;
     fog.density = inDrum ? 0.0015 : i >= 7 ? 0.0025 : 0.0035;
+    // `?tun05=1`: the 05 tunnel is real to ~120 u ahead — the pale pink haze would wash its far rings out (the locked view used a
+    // compressed far block, so it never saw that distance); a thinner warm-violet haze keeps the far tunnel purple-and-gold
+    if (TUN05 && i >= 3 && i <= 6) { fog.density = 0.0012; fog.color.set('#c46ad0'); } else fog.color.set('#ffbde9');
   };
 
   // girl placement helpers (she lives in laundry-room local frames)
@@ -786,6 +789,17 @@ export async function startGame(canvas: HTMLCanvasElement) {
     paintCoins() { return paint ? paint.coinInfo(st.s) : []; },
     /** QA: render the current state now (clip capture after step()) */
     renderNow() { render(); dirty = false; return true; },
+    /** QA development camera: view Benny from (right, up, back) units in the river's own frame (e.g. 22, 5, -4 = from the side), then
+     *  render. The tunnel walls are one-sided (seen from inside), so from outside the near wall is invisible: a cutaway. */
+    sideCam(dx = 22, dy = 5, dz = 0, fov = 50) {
+      const f = course.sample(st.s);
+      const b = benny.root.position.clone();
+      camera.position.copy(b).addScaledVector(f.right, dx).addScaledVector(f.up, dy).addScaledVector(f.tan, -dz);
+      camera.up.copy(f.up);
+      camera.lookAt(b.clone().addScaledVector(f.tan, 6));
+      camera.fov = fov; camera.far = 2000; camera.updateProjectionMatrix();
+      render(); dirty = false; return camera.position.toArray();
+    },
     /** QA only (read-only use by scripts/proj05-probe.mjs): the live scene, render camera and renderer, for exact
      *  per-pixel river UV / footprint renders. Nothing calls it in the game; rendering is unchanged. */
     qa3d() { return { scene, camera, renderer, composer }; },
