@@ -6382,3 +6382,51 @@ This session's worker process was restarted. If your previous turn was already c
 
 > 🔧 **Bash** `{"command": "bash tools/marble05/sync_agents_wip.sh; while pgrep -f \"rainbow-autosave.py\" >/dev/null; do sleep 5; done; timeout 900 python3 scripts/rainbow-autosave.py --reason \"manual:resume\" 2>&1 | grep -E '\"commit\"' ; timeout 60 python3 -I scripts/autosave-status.py 2>&1 | grep AUTOSAVE | head -1; pgrep -fa sync_agents_wip | head -1", "description": "Sync agent work, save and check the autosave", "timeout": 1200000}`
 
+### 🧑 User — 2026-11-21T14:00:48.277Z
+
+> ↩︎ result: synced files: 0
+>   "commit": "4e1f1aa3b5ea647d5378f23728ddc9c08a3b4806",
+> AUTOSAVE OK | branch claude/screen-05-3d-geometry-9yu7pu | scheduler daemon | last verified backup 2026-11-21T14:00:28+00:00 (0.3 min ago) | local 4e1f1aa remote 4e1f1aa (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-21T14:00:51.430Z
+
+> 🔧 **Bash** `{"command": "nohup setsid bash -c 'while true; do bash /home/user/rainbow-/tools/marble05/sync_agents_wip.sh >> /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/sync_agents.log 2>&1; sleep 300; done' >/dev/null 2>&1 & sleep 1; pgrep -fc sync_agents_wip", "description": "Restart the 5-minute agent-work copy job"}`
+
+### 🧑 User — 2026-11-21T14:00:52.487Z
+
+> ↩︎ result: [1]+  Done                    nohup setsid bash -c 'while true; do bash /home/user/rainbow-/tools/marble05/sync_agents_wip.sh >> /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/sync_agents.log 2>&1; sleep 300; done' > /dev/null 2>&1
+> 1
+
+### 🤖 Claude — 2026-11-21T14:00:53.180Z
+
+> 🔧 **SendMessage** `{"to": "aceebf66a4b11ed5f", "summary": "Resume swipe controls after limit reset", "message": "Usage limit has reset — please continue exactly where you stopped (you had just confirmed frame 0 is pixel-identical with controls on, and were running the live/keyboard check and viewing the final stills). Finish the tests, write CONTROLS_NOTES.md, and report back with the file list and honest issues.", "type": "message", "recipient": "aceebf66a4b11ed5f", "recipient_kind": "agent", "content": "Usage limit has reset — please continue exactly w…"}`
+
+### 🧑 User — 2026-11-21T14:00:53.349Z
+
+> ↩︎ result: {"success":true,"message":"Resuming agent aceebf6","resumedAgentId":"aceebf66a4b11ed5f","pin":{"id":"aceebf66a4b11ed5f","name":"aceebf66a4b11ed5f","ref":"eb5cb9"}}
+
+### 🤖 Claude — 2026-11-21T14:00:54.685Z
+
+> 🔧 **SendMessage** `{"to": "a18ca6be2c4eebf7f", "summary": "Resume water cleanup after limit reset", "message": "Usage limit has reset — please continue exactly where you stopped (you were writing WATER_NOTES.md while the AFTER stills rendered). Finish the after stills, run visual_check.py on them (dark-patch rule: connected near-black ≥150 px at 412×915, target 0), complete WATER_NOTES.md with before/after numbers, and report back with the file list and honest issues.", "type": "message", "recipient": "a18ca6be2c4eebf7f", "recipient_kind": "agent", "content": "Usage limit has reset — please continue exactly w…"}`
+
+### 🧑 User — 2026-11-21T14:00:54.847Z
+
+> ↩︎ result: {"success":true,"message":"Resuming agent a18ca6b","resumedAgentId":"a18ca6be2c4eebf7f","pin":{"id":"a18ca6be2c4eebf7f","name":"a18ca6be2c4eebf7f","ref":"da7ab8"}}
+
+### 🤖 Claude — 2026-11-21T14:00:58.309Z
+
+Progress note, with no preview since Screen 05 hasn't passed yet:
+
+- **Specialists:** both specialists paused when this account hit its 5-hour usage limit. Their work was saved, nothing was lost, and the limit has reset. I've resumed both from exactly where they stopped:
+  - the controls specialist was finishing its touch-swipe tests
+  - the water specialist was rendering its after-cleanup pictures
+- **Backups:** the GitHub autosave and the 5-minute copy of their work are running again. GitHub matches commit `4e1f1aa`.
+- **Pull request #28:** a third check found nothing new, so I've stopped checking it. Any new GitHub comment or message from you will bring me back to it.
+
+Next: merge both specialists' work, run the full real-swipe acceptance test, fix and retest. You'll only see a video if everything passes.
+
+### 🧑 User — 2026-11-21T14:00:59.986Z
+
+Stop hook feedback:
+[command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+

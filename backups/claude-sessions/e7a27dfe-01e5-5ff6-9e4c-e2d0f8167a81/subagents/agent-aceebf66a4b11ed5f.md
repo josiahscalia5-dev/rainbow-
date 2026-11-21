@@ -817,3 +817,10 @@ Frame 0 with controls on is now 100 % pixel-identical to the old code path (max 
 
 You've hit your 5-hour limit · resets 1:50pm (UTC)
 
+### 🧑 User — 2026-11-21T14:00:53.332Z
+
+The coordinator sent a message while you were working:
+Usage limit has reset — please continue exactly where you stopped (you had just confirmed frame 0 is pixel-identical with controls on, and were running the live/keyboard check and viewing the final stills). Finish the tests, write CONTROLS_NOTES.md, and report back with the file list and honest issues.
+
+Address this before completing your current task.
+
