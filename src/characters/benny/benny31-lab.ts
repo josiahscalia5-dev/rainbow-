@@ -52,6 +52,14 @@ async function load() {
   } else {
     const g = await new GLTFLoader().loadAsync(m);
     holder.add(g.scene);
+    // `&bake=<png>&K=<n>`: unlit material = the baked approved colours (texture x K, linear), as the game will use it
+    const bake = q.get('bake');
+    if (bake) {
+      const t = await new THREE.TextureLoader().loadAsync(bake);
+      t.colorSpace = THREE.SRGBColorSpace; t.flipY = false; t.anisotropy = 8;
+      const K = Number(q.get('K') ?? 4);
+      g.scene.traverse((o) => { const me = o as THREE.Mesh; if (me.isMesh) me.material = new THREE.MeshBasicMaterial({ map: t, color: new THREE.Color(K, K, K), fog: false }); });
+    }
   }
   holder.updateMatrixWorld(true);
   const box = new THREE.Box3().setFromObject(holder);
@@ -74,4 +82,23 @@ function render(o: { yaw: number; pitch: number; w?: number; h?: number; fov?: n
   composer.render();
   return canvas.toDataURL('image/png');
 }
-load().then(() => { window.__lab = { render, ready: true }; }).catch((e) => { window.__error = String(e); });
+/** UV pass: per pixel (u, v, facing = view-space normal z, 1) of the front-most surface, Float32 RGBA as base64 */
+const uvMat = new THREE.ShaderMaterial({
+  vertexShader: 'varying vec2 vUv; varying vec3 vN; void main(){ vUv = uv; vN = normalize(normalMatrix * normal); gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }',
+  fragmentShader: 'varying vec2 vUv; varying vec3 vN; void main(){ gl_FragColor = vec4(vUv, abs(normalize(vN).z), 1.0); }',
+  side: THREE.DoubleSide,
+});
+function uv(o: { yaw: number; pitch: number; w: number; h: number }) {
+  render({ ...o }); // sets the camera exactly as render()
+  const rt = new THREE.WebGLRenderTarget(o.w, o.h, { type: THREE.FloatType, depthBuffer: true });
+  const saved = new Map<THREE.Mesh, THREE.Material | THREE.Material[]>();
+  holder.traverse((x) => { const me = x as THREE.Mesh; if (me.isMesh) { saved.set(me, me.material); me.material = uvMat; } });
+  const env = scene.environment; scene.environment = null;
+  renderer.setRenderTarget(rt); renderer.setClearColor(0x000000, 0); renderer.clear(); renderer.render(scene, cam); renderer.setRenderTarget(null);
+  scene.environment = env;
+  for (const [me, mt] of saved) me.material = mt;
+  const buf = new Float32Array(o.w * o.h * 4); renderer.readRenderTargetPixels(rt, 0, 0, o.w, o.h, buf); rt.dispose();
+  const u8 = new Uint8Array(buf.buffer); let bin = ''; for (let i = 0; i < u8.length; i += 0x8000) bin += String.fromCharCode(...u8.subarray(i, i + 0x8000));
+  return btoa(bin);
+}
+load().then(() => { window.__lab = { render, uv, ready: true }; }).catch((e) => { window.__error = String(e); });

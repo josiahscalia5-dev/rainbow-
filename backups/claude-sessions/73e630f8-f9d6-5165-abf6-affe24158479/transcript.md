@@ -2336,3 +2336,91 @@ All five generators have now produced a model. Fitting the remaining three and c
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-21T00:56:25.058Z
+
+> 🔧 **Bash** `{"command": "run() { m=$1; y=$2; P=$(python3 -I -c \"import json; print(json.dumps([[($y+dy)%360,p] for dy in (-10,-5,0,5,10) for p in (5,12,19,26)]))\"); timeout 1200 node tools/benny31/render.mjs qa/benny/r31/gen/$m.glb qa/benny/r31/fit/$m \"$P\" 384 2>&1 | tail -1; }; run hunyuan2 0 & run thrixel 180 & wait; run tripo25 90 & run hunyuan3 180 & wait; for m in hunyuan2 thrixel tripo25 hunyuan3; do echo \"== $m\"; python3 -I tools/benny31/fit.py qa/benny/r31/fit/$m | head -1; done", "description": "Refine the viewing angle for the four best models", "timeout": 2400000}`
+
+### 🧑 User — 2026-11-21T00:56:42.904Z
+
+> ↩︎ result: rendered 20 to qa/benny/r31/fit/hunyuan2
+> [1]-  Done                    run hunyuan2 0
+> rendered 20 to qa/benny/r31/fit/thrixel
+> [2]+  Done                    run thrixel 180
+> rendered 20 to qa/benny/r31/fit/tripo25
+> [1]-  Done                    run tripo25 90
+> rendered 20 to qa/benny/r31/fit/hunyuan3
+> [2]+  Done                    run hunyuan3 180
+> == hunyuan2
+> yaw 0 pitch 12 IoU 0.955
+> == thrixel
+> yaw 180 pitch 26 IoU 0.929
+> == tripo25
+> yaw 80 pitch 19 IoU 0.919
+> == hunyuan3
+> yaw 185 pitch 12 IoU 0.912
+
+### 🤖 Claude — 2026-11-21T00:57:22.396Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\nimport json, struct\nfor m in ['hunyuan2','thrixel','tripo25']:\n    b=open(f'qa/benny/r31/gen/{m}.glb','rb').read()\n    n=struct.unpack('<I',b[12:16])[0]; j=json.loads(b[20:20+n])\n    tris=0\n    for me in j['meshes']:\n        for p in me['primitives']:\n            acc=j['accessors'][p['indices']] if 'indices' in p else j['accessors'][p['attributes']['POSITION']]\n            tris+=acc['count']//3\n    imgs=[(i.get('mimeType'), j['bufferViews'][i['bufferView']]['byteLength']) for i in j.get('images',[])]\n    print(m, 'meshes',len(j['meshes']),'prims',su …[+246 chars]`
+
+### 🧑 User — 2026-11-21T00:57:22.480Z
+
+> ↩︎ result: hunyuan2 meshes 1 prims 1 tris 40000 materials 1 images [('image/png', 3948228)] attrs ['POSITION', 'TEXCOORD_0', 'NORMAL']
+> thrixel meshes 1 prims 1 tris 97310 materials 1 images [('image/webp', 1648880), ('image/webp', 339450)] attrs ['POSITION', 'TEXCOORD_0', 'NORMAL']
+> tripo25 meshes 1 prims 1 tris 501582 materials 1 images [('image/jpeg', 3855081), ('image/jpeg', 1893902), ('image/png', 5452404)] attrs ['POSITION', 'NORMAL', 'TEXCOORD_0']
+
+### 🤖 Claude — 2026-11-21T00:57:36.649Z
+
+The best model has 40,000 triangles and a single texture, which suits a phone game. Adding the projection step to the test page now.
+
+### 🤖 Claude — 2026-11-21T00:57:49.954Z
+
+> 🔧 **Bash** `{"command": "python3 -I - <<'EOF'\np='src/characters/benny/benny31-lab.ts'; s=open(p).read()\ns=s.replace(\"\"\"  } else {\n    const g = await new GLTFLoader().loadAsync(m);\n    holder.add(g.scene);\n  }\"\"\",\"\"\"  } else {\n    const g = await new GLTFLoader().loadAsync(m);\n    holder.add(g.scene);\n    // `&bake=<png>&K=<n>`: unlit material = the baked approved colours (texture x K, linear), as the game will use it\n    const bake = q.get('bake');\n    if (bake) {\n      const t = await new THREE.TextureLoader().loadAsync(bake);\n      t.colorSpace = THREE.SRGBColorSpace; t.flipY = fal …[+3421 chars]`
+
+### 🧑 User — 2026-11-21T00:57:57.612Z
+
+> ↩︎ result: uv pass qa/benny/r31/fit/hunyuan2_uv_y0_p12_1536.f32
+> -rw-r--r-- 1 root root 37748736 Nov 21 00:57 qa/benny/r31/fit/hunyuan2_uv_y0_p12_1536.f32
+
+### 🤖 Claude — 2026-11-21T00:58:26.615Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad && mv qa/benny/r31/fit/hunyuan2_uv_y0_p12_1536.f32 $SP/ && cat > tools/benny31/bake.py <<'EOF'\n\"\"\"Bake the APPROVED Screen 06 Benny's colours onto a generated mesh's UV texture, for an UNLIT material (texture x K):\nthe game's colour chain after the material (Neutral tone mapping at exposure 0.86 -> sRGB -> grade: saturation 1.36,\ncontrast 1.15) is inverted numerically, so at the approved rear view the screen shows the approved pixels.\nTexels the rear view cannot see keep the model's own gen …[+5697 chars]`
+
+### 🧑 User — 2026-11-21T00:59:20.953Z
+
+> ↩︎ result: approved samples 463348 texels hit 443465
+> baked -> qa/benny/r31/gen/hunyuan2_bake.png
+
+### 🤖 Claude — 2026-11-21T00:59:26.331Z
+
+> 🔧 **Bash** `{"command": "Q=\"bake=/qa/benny/r31/gen/hunyuan2_bake.png&K=4\" timeout 900 node tools/benny31/render.mjs qa/benny/r31/gen/hunyuan2.glb qa/benny/r31/fit/hunyuan2_baked '[[0,12]]' 1024 2>&1 | tail -1 && timeout 900 node tools/benny31/render.mjs current qa/benny/r31/fit/current_hi '[[180,20]]' 1024 2>&1 | tail -1 && python3 -I tools/benny31/compare.py qa/benny/r31/cmp_v1 \"CURRENT 3D (game today)=qa/benny/r31/fit/current_hi/y180_p20.png\" \"IMPROVED 3D (new model + your colours)=qa/benny/r31/fit/hunyuan2_baked/y0_p12.png\"", "description": "Render the improved model and build the first three-way …[+33 chars]`
+
+### 🧑 User — 2026-11-21T00:59:35.118Z
+
+> ↩︎ result: rendered 1 to qa/benny/r31/fit/hunyuan2_baked
+> rendered 1 to qa/benny/r31/fit/current_hi
+> {
+>  "CURRENT 3D (game today)": {
+>   "silhouette_iou": 0.902,
+>   "box_within20_pct": 44.4,
+>   "box_ssim": 0.49
+>  },
+>  "IMPROVED 3D (new model + your colours)": {
+>   "silhouette_iou": 0.956,
+>   "box_within20_pct": 63.7,
+>   "box_ssim": 0.769
+>  }
+> }
+
+### 🤖 Claude — 2026-11-21T00:59:36.326Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/benny/r31/cmp_v1.jpg"}`
+
+### 🧑 User — 2026-11-21T00:59:36.432Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-21T01:00:08.612Z
+
+> 🔧 **Bash** `{"command": "SP=/tmp/claude-0/-home-user-rainbow-/73e630f8-f9d6-5165-abf6-affe24158479/scratchpad && python3 -I - <<'EOF'\np='tools/benny31/bake.py'; s=open(p).read()\nold=\"\"\"appr2 = np.asarray(Image.open(f'{R}/qa/match/06/paint06/work/appr06_seedvr2.png').convert('RGB')).astype(np.float32) / 255\nAm = cv2.erode((A > 0.5).astype(np.uint8), np.ones((3, 3), np.uint8))\"\"\"\nnew=\"\"\"appr2 = np.asarray(Image.open(f'{R}/qa/match/06/paint06/work/appr06_seedvr2.png').convert('RGB')).astype(np.float32) / 255\n# Benny's own colours carried ~14 px (1x) past his painted outline (push-pull from insi …[+2649 chars]`
+
