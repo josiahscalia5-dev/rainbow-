@@ -1558,3 +1558,14 @@ The checker shows s=0 went from 3 patches (largest 2,009 px) to 0 (largest 3 px)
 > bright low-sat px after 68471 before 57417
 > ref 56392
 
+### 🤖 Claude — 2026-11-21T12:33:42.679Z
+
+> 🔧 **Bash** `{"command": "pkill -f \"shots_w.cjs\"; cd /tmp/claude-0/-home-user-rainbow-/e7a27dfe-01e5-5ff6-9e4c-e2d0f8167a81/scratchpad/agentB && python3 -I - <<'EOF'\np = 'waterflow.js'; s = open(p).read()\nrep = [(\"            c *= 1.0 + 0.10 * r * w;\\n            c += w * (0.26 * sp + 0.10 * sp * tw) * vec3(0.85, 0.97, 1.0);\",\n        \"            c *= 1.0 + 0.08 * r * w;                                   // brightness only: hue and saturation unchanged\\n            c += w * (0.11 * sp + 0.08 * sp * tw) * vec3(0.80, 0.96, 1.0); // sparse white-cyan glints (kept small: whitening lowers saturation) …[+1601 chars]`
+
+### 🧑 User — 2026-11-21T12:33:48.058Z
+
+> ↩︎ result: near cells 161 x 64 empty filled 0 u -4.51 3.36
+> bay cells 48 x 64 empty filled 0 u 1.19 3.4
+> bay_m cells 48 x 64 empty filled 0 u 1.19 3.4
+> server 9474
+

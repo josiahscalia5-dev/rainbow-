@@ -6181,3 +6181,59 @@ Now the start instructions for the new account, plus pointers in the project's m
 
 > 🔧 **Bash** `{"command": "bash -n docs/briefs/2026-11-21-r32/setup_r32.sh && echo \"setup script syntax ok\"; bash tools/marble05/sync_agents_wip.sh; python3 -I - <<'EOF'\nimport json\np='backups/AGENTS_STATUS.json'; d=json.load(open(p))\nr=d.get('round32_screen05_live',{})\nr['next_account']='Relaunch from docs/briefs/2026-11-21-r32/AGENT_A_CONTROLS.md and AGENT_B_WATER.md after `bash docs/briefs/2026-11-21-r32/setup_r32.sh`; saved work backups/wip/screen05-agents/ (synced every 5 min, LAST_SYNC_UTC); resume RESUME_R32.md'\nd['round32_screen05_live']=r; json.dump(d,open(p,'w'),indent=1); print('agents sta …[+472 chars]`
 
+### 🧑 User — 2026-11-21T12:33:50.794Z
+
+> ↩︎ result: setup script syntax ok
+> synced files: 19
+> agents status updated
+>   "commit": "4e94df27176c075e589a61927fecee19430cdbfc",
+> 0
+> 4e94df2
+> 4e94df2
+
+### 🤖 Claude — 2026-11-21T12:33:53.512Z
+
+> 🔧 **Bash** `{"command": "git ls-files docs/briefs/2026-11-21-r32 backups/wip/screen05-agents | wc -l; git ls-files docs/briefs/2026-11-21-r32; git log -1 --format=%H -- CLAUDE.md backups/START_NEW_CLAUDE_ACCOUNT.md | cut -c1-7; cat backups/wip/screen05-agents/LAST_SYNC_UTC", "description": "Confirm the handoff files are on GitHub"}`
+
+### 🧑 User — 2026-11-21T12:33:53.613Z
+
+> ↩︎ result: 124
+> docs/briefs/2026-11-21-r32/AGENT_A_CONTROLS.md
+> docs/briefs/2026-11-21-r32/AGENT_B_WATER.md
+> docs/briefs/2026-11-21-r32/RESUME_R32.md
+> docs/briefs/2026-11-21-r32/USER_R32.md
+> docs/briefs/2026-11-21-r32/setup_r32.sh
+> 4e94df2
+> 2026-11-21T12:33:27.436601+00:00
+
+### 🤖 Claude — 2026-11-21T12:34:01.534Z
+
+Done. Everything needed to continue on your other Claude account is saved in your GitHub repository (commit `4e94df2`, GitHub matches). The specialists weren't interrupted, and their newest work keeps being copied to GitHub every 5 minutes while this account lasts.
+
+**On your other Claude account:**
+1. Start a cloud session on the branch **`claude/screen-05-3d-geometry-9yu7pu`**. Don't use the default branch; it's an old version.
+2. Paste the ready-made prompt from the top of `backups/START_NEW_CLAUDE_ACCOUNT.md`. It tells the new Claude to:
+   - read the resume notes and your Screen 05 rules
+   - run one setup command that rebuilds the whole 3D test workspace, with both specialists' latest work already in it
+   - restart the two specialists from their saved instructions, only if their work isn't finished
+   - merge their work, then run the full real-swipe acceptance test until everything passes
+   - not show you a video until it passes, and spend no credits without your OK
+3. Re-enter your two keys only if the free checks fail: World Labs, and SpAItial for Echo-2. Use the secure form, never chat.
+
+**Saved on GitHub:**
+- **Your rules:** your exact Screen 05 rules, including "don't show me anything broken".
+- **The current state:** where things stand and the next steps in order.
+- **The specialists:** both specialists' exact instructions and their in-progress work.
+- **Tools:** the one-command setup script, the 3D track builder, the gameplay page, the acceptance test and the visual checker.
+- **History:** all chat history, including both specialists' conversations.
+- **3D worlds and ledgers:** the Marble worlds, the Echo-2 world, and the credit ledgers (Marble 2,030 left, SpAItial 640 free this month).
+- **Game and artwork:** your original approved artwork and the working game, untouched.
+
+The project's main instructions file now points straight to this round, so a new session finds it automatically.
+
+Credits and keys don't move with your Claude account. The Marble and SpAItial credits belong to your World Labs and SpAItial accounts. The keys were stored in this account's cloud settings, so they may need re-entering once.
+
+### 🧑 User — 2026-11-21T12:34:05.140Z
+
+." And also, if you gave the prompt, so everything we set up, like the tools, the agents, everything, servers, you know, everything in this session I did with my other Claudia account.i  don't have to go all through that again.
+
