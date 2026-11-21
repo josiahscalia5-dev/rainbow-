@@ -196,6 +196,13 @@ const ctex = await tl.loadAsync('coin.png'); ctex.colorSpace = THREE.SRGBColorSp
 const coinD = 0.15038523388874458 * bennyDist / 1.186;      // round-32 coin size, scaled to the kit's Benny distance
 const qc = new URLSearchParams(location.search); if (!qc.has('c_LEAN_K')) qc.set('c_LEAN_K', '0.09');   // gentler bank (round 33: 5 -> <3 deg per frame); controls.js unchanged
 const CT = installControls({ THREE, TR, canvas: renderer.domElement, camera, q: qc, at, frameAt, coins, scene, U, bmat, benny, splash, splashTex, bubTex, coinTex: ctex, coinD, bennyFullH: 0.99 * KH, pxW, coinEl, getS: () => st.s, getCoins: () => coinCount, render: () => renderer.render(scene, camera) });
+// coin run 1 = the APPROVED picture's coins (tools/kit05/painted_coins.py: painted centres cast onto the kit river; the far-left one
+// moved into the left lane), 2 more at the painted spacing; run 2 (same-lane coins that stacked on screen at 0.6 u spacing) moved into
+// the free stretch after the leap arc at ~1 u spacing. 26 coins as before; coinLayout() reports the real positions to the test player.
+const NEWPOS = [[1.789, 0.008], [2.876, 0.22], [4.321, -0.008], [5.951, -0.22], [7.684, -0.22], [8.691, 0.02], [9.8, 0.1], [10.9, 0.12],
+  [14.4, 0.15], [15.4, 0.22], [16.4, 0.22], [17.3, 0.03]];
+if (!q.get('layoutcoins')) NEWPOS.forEach(([cs, cl], i) => { const c = coins[i]; c.s = cs; c.lat = cl; at(cs, c.p0).addScaledVector(RR, cl).addScaledVector(NUP, coinD * 0.75); c.sp.position.copy(c.p0); c.kind = Math.abs(cl) >= 0.1 ? 'lane' : 'water'; });
+{ const L0 = window.coinLayout(); window.coinLayout = () => coins.map((c, i) => ({ s: c.s, lat: +c.lat.toFixed(3), h: c.h, run: L0[i]?.run, runKind: L0[i]?.runKind, p: c.p0.toArray().map((x) => +x.toFixed(4)), n: NUP.toArray().map((x) => +x.toFixed(4)) })); }
 // every sprite (coins, droplets, splash) goes through the same depth curve as the scenery: far coins sit on the far river
 const patchSprite = (m) => { if (m.userData.kit) return; m.userData.kit = 1; m.onBeforeCompile = (sh) => { Object.assign(sh.uniforms, REMAP);
   sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\n' + REMAP_GLSL).replace('vec4 mvPosition = modelViewMatrix[ 3 ];', 'vec4 mvPosition = viewMatrix * vec4(kitRemap(modelMatrix[ 3 ].xyz), 1.0);'); }; m.needsUpdate = true; };
@@ -249,7 +256,7 @@ window.step = (t, dt, steer, speed) => {
     if (c.got >= 0) { const k = (t - c.got) / 0.4; c.sp.visible = k < 1; if (k < 1) { c.sp.position.copy(benny.position).addScaledVector(F.n, bennyH * (1.05 + 0.6 * k)); c.sp.material.opacity = 1 - k * k; const d = coinD * 0.7 * (1 - 0.5 * k); c.sp.scale.set(d, d, 1); } }
   }
   // far coins fade out beyond about ring 3 ahead (the painting shows ~6 coins), so the depth curve never stacks them at the core
-  for (const c of coins) if (c.got < 0 && c.sp.visible) { const za = tmp.copy(c.sp.position).sub(camera.position).dot(A); const f = 1 - THREE.MathUtils.smoothstep(za, 5.0, 7.0); c.sp.scale.multiplyScalar(f); c.sp.visible = f > 0.01; }
+  for (const c of coins) if (c.got < 0 && c.sp.visible) { const za = tmp.copy(c.sp.position).sub(camera.position).dot(A); const f = 1 - THREE.MathUtils.smoothstep(za, 9.5, 12.0); c.sp.scale.multiplyScalar(f); c.sp.visible = f > 0.01; }
   scene.traverse((o) => { if (o.isSprite && o !== core) patchSprite(o.material); });   // droplets created during play
   return { s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: coinCount, tile: Math.floor((K.level.tB0 + st.s - K.level.ring0) / K.S) - K.level.k0, ...CT.state() };   // tile = ring section Benny is in (0 = start)
 };

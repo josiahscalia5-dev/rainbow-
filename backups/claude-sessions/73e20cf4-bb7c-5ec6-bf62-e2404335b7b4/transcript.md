@@ -3394,3 +3394,128 @@ Not a file-format effect: the new frames really score lower on hue balance even 
 
 > 🔧 **Bash** `{"command": "until grep -qE \"exit=\" /tmp/rainbow_r33/runs/kit_full3.log 2>/dev/null; do sleep 10; done; tail -1 /tmp/rainbow_r33/runs/kit_full3.log; ls /tmp/rainbow_r33/runs/kit_full3 | grep -c \"^f_\"", "description": "Wait for the final full-level run to finish", "timeout": 3600000}`
 
+### 🧑 User — 2026-11-21T16:14:00.875Z
+
+> ↩︎ result: exit=0
+> 687
+
+### 🤖 Claude — 2026-11-21T16:14:05.092Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/marble05/viewer && timeout 1800 python3 -I visual_check.py /tmp/rainbow_r33/runs/kit_full3 /home/user/rainbow-/references/05_flow_into_the_current.png > /dev/null 2>&1; timeout 300 python3 -I acceptance_verdict.py /tmp/rainbow_r33/runs/kit_full3 2>&1 | grep -E \"^# |\\| (G|V)[0-9]+ \" | sed -E 's/\\| `[^`]{160,}`/| (long value)/' | cut -c1-260", "description": "Run visual checks and verdict on the final run", "timeout": 2400000}`
+
+### 🧑 User — 2026-11-21T16:14:18.123Z
+
+> ↩︎ result: # Screen 05 acceptance verdict: FAIL
+> | G1 | no page / console errors | PASS | `[]` | 0 errors |
+> | G2 | WHOLE level played to its end, every frame rendered | PASS | `{"frames": 687, "images": 687, "done": true, "done_frame": 686, "s_end_target": 32, "s_end": 32.013, "plan": "coin-trail player + extras"}` | the page reports level complete (state().done) at
+> | G3 | forward swimming continuous at the normal speed (no freeze, no stall, no jump) | PASS | `{"min_step": 0.045999999999999375, "max_step": 0.0470000000000006, "freezes": 0, "s_end": 32.013, "position_stalls": 0}` | path progress never freezes, per-frame st
+> | G4 | left / right smooth (no teleport) | PASS | `{"max_step_per_frame": 0.0414, "teleports": 0}` | |d lat| per frame <= 0.06 in every frame |
+> | G5 | Benny stays inside the river | PASS | `0.22` | |lat| <= 0.30 (river half-width ~0.30-0.35) |
+> | G6 | every real touch swipe produced the intended move; each direction used repeatedly | PASS | `{"ok": 24, "sent": 24, "directions": {"right": 8, "left": 8, "down": 4, "up": 4}, "failed": []}` | all swipes ok (left/right reach the expected lane, edge = stay
+> | G7 | all three lanes used | PASS | `[0, 1, -1]` | lanes -1, 0, +1 seen |
+> |  …[+2728 chars]
+
+### 🤖 Claude — 2026-11-21T16:14:27.507Z
+
+> 🔧 **Bash** `{"command": "grep -n \"coinOverlaps\" final_acceptance.cjs | head -4 | cut -c1-260; grep -n \"^R = \\|R = cv2\\|imread(sys.argv\\[2\\]\\|resize\" visual_check.py | head -5 | cut -c1-220", "description": "Check how coin overlaps and the reference are computed"}`
+
+### 🧑 User — 2026-11-21T16:14:27.554Z
+
+> ↩︎ result: 92:      let coinOverlaps = null;
+> 93:      if (cs2) { coinOverlaps = 0; const big = cs2.filter((c) => c.r >= 6); for (let a = 0; a < big.length; a++) for (let b = a + 1; b < big.length; b++) if (Math.hypot(big[a].x - big[b].x, big[a].y - big[b].y) < big[a].r + big[b].r) coinOverlaps++; }
+> 94:      o.coinsOnScreen = cs2 ? cs2.length : null; o.coinOverlaps = coinOverlaps;
+> 128:    const ov = fr.filter((x) => x.coinOverlaps !== null && x.coinOverlaps !== undefined);
+> 12:_w = round(R0.shape[1] * 915 / R0.shape[0]); R = cv2.resize(R0, (_w, 915), interpolation=cv2.INTER_AREA)[:, (_w - 412) // 2:(_w - 412) // 2 + 412]
+> 40:        f8 = cv2.resize(F0.astype(np.uint8)[150:], (52, 96), interpolation=cv2.INTER_AREA).astype(np.int16)
+> 41:        a8 = cv2.resize(A0.astype(np.uint8)[150:], (52, 96), interpolation=cv2.INTER_AREA).astype(np.int16)
+
+### 🤖 Claude — 2026-11-21T16:14:29.634Z
+
+> 🔧 **Bash** `{"command": "sed -n 86,92p final_acceptance.cjs | cut -c1-300; python3 -c \"\nimport json; R=json.load(open('/tmp/rainbow_r33/runs/kit_full3/run_log.json')); print([ (r.get('coinsOnScreen'), r.get('coinOverlaps')) for r in R[:3]])\"", "description": "See where the harness gets coin screen data"}`
+
+### 🧑 User — 2026-11-21T16:14:29.705Z
+
+> ↩︎ result: if (o.done && n2 === nMax) n2 = i + 1;   // the level is complete: this is the last frame
+>       const cam = await page.evaluate(() => (window.camInfo ? window.camInfo() : null));
+>       o.endK = await page.evaluate(() => (window.endK ? window.endK() : null));
+>       o.benny = await page.evaluate(() => (window.bennyInfo ? window.bennyInfo() : null));   // Benny's on-screen tilt (deg) + position   // ending transition strength (golden-light bloom), 0 = gameplay
+>       // coins on screen this frame: any two visible coins (on-screen radius >= 6 px) that overlap = crowding
+>       const cs2 = await page.evaluate(() => (window.coinScreen ? window.coinScreen() : null));
+>       let coinOverlaps = null;
+> [(7, 3), (7, 3), (7, 3)]
+
+### 🤖 Claude — 2026-11-21T16:14:33.176Z
+
+The test does use the kit's drawn coin positions (7 coins on screen at the start), so there are genuinely 3 overlapping pairs. Let me see which coins:
+
+### 🤖 Claude — 2026-11-21T16:14:35.127Z
+
+> 🔧 **Bash** `{"command": "cd /tmp && NODE_PATH=$(npm root -g) timeout 600 node /tmp/claude-0/-home-user-rainbow-/73e20cf4-bb7c-5ec6-bf62-e2404335b7b4/scratchpad/coins.cjs 2>&1 | tail -3", "description": "Print on-screen coin positions at the start", "timeout": 700000}`
+
+### 🧑 User — 2026-11-21T16:14:39.773Z
+
+> ↩︎ result: [{"i":0,"x":231.8,"y":472.9,"r":28.58,"s":1.13,"pop":false},{"i":1,"x":258.1,"y":433.4,"r":20.29,"s":1.77,"pop":false},{"i":2,"x":262.5,"y":409.8,"r":14.34,"s":2.34,"pop":false},{"i":3,"x":252.2,"y":391.9,"r":9.22,"s":2.94,"pop":false},{"i":4,"x":262.7,"y":375.2,"r":5.26,"s":3.7,"pop":false},{"i":5,"x":265.7,"y":362.5,"r":3.03,"s":4.45,"pop":false},{"i":6,"x":249.6,"y":351.7,"r":0.79,"s":5.2,"pop":false}]
+> [[1.13,0.025,0],[1.77,0.12,0],[2.34,0.15,0],[2.94,0.105,0],[3.7,0.18,0],[4.45,0.22,0],[5.2,0.1,0],[5.85,0.22,0],[7.4,-0.04,0]]
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-21T16:14:58.496Z
+
+> 🔧 **Bash** `{"command": "grep -n \"function hits\" -A 8 /tmp/rainbow_r32/merged/controls.js | cut -c1-240 | head -10", "description": "Read how coin pickups are detected"}`
+
+### 🧑 User — 2026-11-21T16:14:58.535Z
+
+> ↩︎ result: 361:  function hits(coin) {
+> 362-    coinLook(coin);
+> 363-    if (!coin.sp.visible) return false;
+> 364-    const p = coin.sp.position;
+> 365-    v1.copy(benny.position).addScaledVector(nNow, P.BODY_LO); v2.copy(benny.position).addScaledVector(nNow, P.BODY_HI);
+> 366-    v3.subVectors(v2, v1); const k = clamp(v3.dot(v1.clone().negate().add(p)) / v3.lengthSq(), 0, 1);
+> 367-    const d = v1.addScaledVector(v3, k).distanceTo(p);
+> 368-    if (d < P.COIN_R) { S.hudPulse = 1; S.picked++; S.lastPick = { kind: coin.kind || 'water', s: +coin.s.toFixed(2), lat: coin.lat, clock: +S.clock.toFixed(3) }; return true; }
+> 369-    return false;
+
+### 🤖 Claude — 2026-11-21T16:15:00.880Z
+
+Pickup uses each coin's 3D position (`p0`) and its distance along the river (`s`), so updating both keeps collecting intact. Now I'll measure your painted coins and place them on the kit river:
+
+### 🤖 Claude — 2026-11-21T16:15:09.880Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/tools/kit05 && cat > painted_coins.py <<'EOF'\n\"\"\"Round 33: the APPROVED picture's coins (centre, radius) cast onto the kit river -> (s along Benny's path, lateral offset).\npython3 -I painted_coins.py <kit.json> -> prints JSON list [[s, lat, r_px], ...] nearest first (used by kitgame.html for coin run 1).\"\"\"\nimport sys, json, numpy as np, cv2\nfrom PIL import Image\nsys.path.insert(0, __import__('os').path.dirname(__import__('os').path.abspath(__file__)))\nfrom kit_model import *\nref = np.array(Image.open(os.path.join(REPO, 'references/05_flow_into_ …[+1551 chars]`
+
+### 🧑 User — 2026-11-21T16:15:10.107Z
+
+> ↩︎ result: [[1.789, 0.008, 41.9, 473.8, 726.1], [2.876, 0.234, 30.8, 548.7, 660.5], [4.321, -0.008, 24.3, 481.9, 612.4], [5.951, -0.353, 19.1, 431.0, 575.1], [7.684, -0.226, 12.6, 465.5, 545.8], [8.691, 0.02, 9.0, 495.0, 532.6], [12.549, 0.363, 16.7, 512.8, 501.0]]
+
+### 🤖 Claude — 2026-11-21T16:15:22.015Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json; p=json.load(open('/tmp/rainbow_r33/runs/kit_full3/plan.json')); L=p['layout']\nfrom itertools import groupby\nfor run, g in groupby(L, key=lambda c: c['run']): g=list(g); print('run', run, g[0]['runKind'], [(c['s'], c['lat'], c['h']) for c in g])\"", "description": "List the coin layout runs"}`
+
+### 🧑 User — 2026-11-21T16:15:22.064Z
+
+> ↩︎ result: run 1 painting [(1.13, 0.025, 0), (1.77, 0.12, 0), (2.34, 0.15, 0), (2.94, 0.105, 0), (3.7, 0.18, 0), (4.45, 0.22, 0), (5.2, 0.1, 0), (5.85, 0.22, 0)]
+> run 2 lane-right [(7.4, -0.04, 0), (8, 0.15, 0), (8.6, 0.22, 0), (9.2, 0.03, 0)]
+> run 3 leap-arc [(12.69, 0.02, 0.1), (13.24, -0.02, 0.26), (13.79, 0.02, 0.42)]
+> run 4 lane-left [(17.99, 0.07, 0), (18.74, -0.08, 0), (19.49, -0.22, 0)]
+> run 5 weave [(23.74, 0.06, 0), (24.29, -0.1, 0), (24.84, 0.1, 0), (25.54, -0.13, 0), (26.2, 0.08, 0)]
+> run 6 final-arc [(29.5, -0.02, 0.12), (30.05, 0.02, 0.27), (30.6, -0.02, 0.42)]
+
+### 🤖 Claude — 2026-11-21T16:15:42.453Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json; R=[r for r in json.load(open('/tmp/rainbow_r33/runs/kit_full3/run_log.json')) if r.get('coinOverlaps') is not None]\nov=[i for i,r in enumerate(R) if r['coinOverlaps']>0]; print('frames with overlap:', len(ov), 'range', ov[:3], '...', ov[-3:]); print('s at first/last overlap', R[ov[0]]['s'], R[ov[-1]]['s'])\nimport itertools\nsegs=[]; \nfor k,g in itertools.groupby(enumerate(ov), lambda x: x[1]-x[0]): g=list(g); segs.append((R[g[0][1]]['s'], R[g[-1][1]]['s'], len(g)))\nprint('overlap stretches (s from, s to, frames):', segs)\"", "description": "Locate c …[+36 chars]`
+
+### 🧑 User — 2026-11-21T16:15:42.513Z
+
+> ↩︎ result: frames with overlap: 110 range [0, 1, 2] ... [161, 162, 163]
+> s at first/last overlap 0 7.607
+> overlap stretches (s from, s to, frames): [(0, 2.847, 62), (5.413, 7.607, 48)]
+
+### 🤖 Claude — 2026-11-21T16:16:10.867Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np = 'kitgame.html'; s = open(p).read()\nold = \"// every sprite (coins, droplets, splash) goes through the same depth curve as the scenery: far coins sit on the far river\"\nnew = \"\"\"// coin run 1 = the APPROVED picture's coins (tools/kit05/painted_coins.py: painted centres cast onto the kit river; the far-left one\n// moved into the left lane), 2 more at the painted spacing; run 2 (same-lane coins that stacked on screen at 0.6 u spacing) moved into\n// the free stretch after the leap arc at ~1 u spacing. 26 coins as before; coinLayout() reports the real posi …[+2089 chars]`
+
+### 🧑 User — 2026-11-21T16:16:15.523Z
+
+> ↩︎ result: coins on screen 7 overlapping pairs 0
+> [(230.8, 432.5, 20.04), (273.1, 393.5, 9.68), (235.8, 364.8, 4.03), (218.2, 342.5, 2.93), (226.4, 325.1, 2.08), (243.5, 317.3, 1.61), (247.7, 310.3, 0.5)]
+> Shell cwd was reset to /home/user/rainbow-
+
