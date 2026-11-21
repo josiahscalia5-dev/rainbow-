@@ -1712,3 +1712,60 @@ With the switch off, Screens 05, 06 and 07 are **pixel-for-pixel identical** to 
 
 > 🔧 **Bash** `{"command": "rm -rf qa/match/06/paint06/clip/frames_steer qa/match/06/paint06/clip/frames_straight && ls -la qa/match/06/r30b/proof/*.mp4 | awk '{print $5, $9}'; for t in straight steer; do ffmpeg -y -loglevel error -i qa/match/06/paint06/clip/SCREEN06_paint06_${t}_1x.mp4 -c:v libx264 -crf 24 -preset slow -pix_fmt yuv420p qa/match/06/paint06/proof/SCREEN06_paint06_${t}_1x.mp4 && rm qa/match/06/paint06/clip/SCREEN06_paint06_${t}_1x.mp4; done; du -sh qa/match/06/paint06/proof/* qa/match/06/paint06/work | sort -h | tail -12; git status --short | grep -v claude-sessions | head -20", "description": …[+89 chars]`
 
+### 🧑 User — 2026-11-21T00:46:08.994Z
+
+> ↩︎ result: 27660657 qa/match/06/r30b/proof/SCREEN06_r30b_into_07_0.5x.mp4
+> 22411051 qa/match/06/r30b/proof/SCREEN06_r30b_into_07_1x.mp4
+> 804K	qa/match/06/paint06/proof/2_PANEL2_vs_GAME.jpg
+> 848K	qa/match/06/paint06/proof/4_PANEL4_vs_GAME.jpg
+> 864K	qa/match/06/paint06/proof/3_PANEL3_vs_GAME.jpg
+> 884K	qa/match/06/paint06/proof/1_PANEL1_vs_GAME.jpg
+> 1.1M	qa/match/06/paint06/proof/0_APPROVED06_vs_GAME.jpg
+> 5.6M	qa/match/06/paint06/proof/SCREEN06_paint06_straight_1x.mp4
+> 5.8M	qa/match/06/paint06/proof/SCREEN06_paint06_steer_1x.mp4
+> 119M	qa/match/06/paint06/work
+>  M backups/CONVERSATION_INDEX.md
+>  M qa/capture_log.json
+>  D qa/match/06/paint06/clip/SCREEN06_paint06_steer_1x.mp4
+>  D qa/match/06/paint06/clip/SCREEN06_paint06_straight_1x.mp4
+>  D qa/match/06/paint06/clip/frames_steer/0000.jpg
+>  D qa/match/06/paint06/clip/frames_steer/0001.jpg
+>  D qa/match/06/paint06/clip/frames_steer/0002.jpg
+>  D qa/match/06/paint06/clip/frames_steer/0003.jpg
+>  D qa/match/06/paint06/clip/frames_steer/0004.jpg
+>  D qa/match/06/paint06/clip/frames_steer/0005.jpg
+>  D qa/match/06/paint06/clip/frames_steer/0006.jpg
+>  D qa/match/06/paint06/clip/frames_steer/0007.jpg
+>  D qa/match/06/paint06/clip/frames_steer/0008.jpg
+>  D qa/match/06/paint06/clip/fram …[+317 chars]
+
+### 🤖 Claude — 2026-11-21T00:46:14.915Z
+
+> 🔧 **Bash** `{"command": "python3 -I -c \"\nimport re\nrows=[l for l in open('qa/match/06/paint06/LEDGER.md') if l.startswith('| 20')]\ntot=sum(float(l.split('|')[5]) for l in rows); ok=sum(1 for l in rows if l.split('|')[6].strip()=='True')\nprint(len(rows),'jobs', ok,'ok', 'est total USD', round(tot,2))\"; git log --oneline -3; sed -n '1,30p' docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md | cut -c1-200", "description": "Total the paid jobs and read the top of the handoff doc"}`
+
+### 🧑 User — 2026-11-21T00:46:14.991Z
+
+> ↩︎ result: 31 jobs 31 ok est total USD 1.76
+> 88e0df8 autosave: Rainbow 2026-11-21 00:40 UTC
+> eb5d855 autosave: Rainbow 2026-11-21 00:35 UTC
+> f508f2b autosave: Rainbow 2026-11-21 00:30 UTC
+> # ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 30b (2026-11-20, lead branch `ccr-e490fceb-u85291`, from ~22:20 UTC)
+> 
+> The r30 session closed ~22:14; this one merged its last save `b9ca06c` (user: "Continue from the latest saved version") and recreated the
+> worktrees on LOCAL `-c32` (`docs/briefs/2026-11-20-r30/setup_r30b.sh`). **User's binding brief: `docs/briefs/2026-11-20-r30/USER_R30.md` §6 — all FOUR
+> storyboard panels of Screen 06 are mandatory approved targets.** Built `&m06sb=1` + specialists' `w30` / `f30` / `b30` (map: `docs/briefs/2026-11-20-r30/COORDINATION.md`
+> "Round 30b"; launch brief `LAUNCH_R30B.md`). Candidate commit `cf1a660` (LOCAL), patch + proof on GitHub: `qa/match/06/r30b/proof/`. Not approved yet.
+> 
+> # ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 30 (2026-11-20, lead branch `ccr-2644c3c0-iikckn`, from ~20:05 UTC)
+> 
+> New session/account; started at `8abed78`, merged the r29 lead's last two saves (`f090393`, 20:02) on the user's "continue exactly where we
+> left off" (`1d1f359`). Worktrees recreated on …[+2162 chars]
+
+### 🤖 Claude — 2026-11-21T00:46:16.167Z
+
+Writing the notes so a future session can pick this up, then saving.
+
+### 🤖 Claude — 2026-11-21T00:46:42.222Z
+
+> 🔧 **Bash** `{"command": "cat > qa/match/06/paint06/README.md <<'EOF'\n# Screen 06 — `?paint06=1`: the user's OWN pictures as the scenery (round 31, 2026-11-21, session branch `ccr-4fcad20e-a6pp8w`)\n\n**User decision (2026-11-21 ~00:05 UTC, verbatim):** \"Yes, do Screen 06 first … I want these exact. See these all these four images? I want exactly\nthose. Okay, 100%, or at least 95%.\" + \"add any plugin or anything you need. I don't care how much it costs.\" (paid fal jobs authorised; ledger below).\nThis replaces the earlier rule \"never paste the approved picture over the screen\" FOR THIS TEST ONLY, o …[+5938 chars]`
+

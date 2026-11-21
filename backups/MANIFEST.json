@@ -704,7 +704,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 25112,
-   "sha256": "36308da12cc91c3b226658e836f2d160fa21359a0c5fd2d69c337081d8969208"
+   "sha256": "1d7beab92035607ff89bdfb68a747c9c9e2097766473f94cebd5d34dac0ea754"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -718,8 +718,8 @@
   },
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
-   "bytes": 3434,
-   "sha256": "9715055ae01e28ada4fb24088d7255e1e5970f5a3a3f8deb7e5242f5243fc408"
+   "bytes": 3271,
+   "sha256": "431950cd8641aa2d5f3cd8f9c36bcb2b73648015bdb0123002ff04d3195a9c84"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -7698,8 +7698,8 @@
   },
   {
    "path": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md",
-   "bytes": 70041,
-   "sha256": "03815605cb3ba69a171213160e5b755bdb3079210523ac028231d4d9f2d8965c"
+   "bytes": 71053,
+   "sha256": "00f075e84fea6c123a9d7fb4229a8ce00dd7259abba0b4e13af45bda888e9245"
   },
   {
    "path": "docs/PARALLEL_PROGRESS.md",
@@ -15077,9 +15077,9 @@
    "sha256": "aebf975dea0bc65169a7f35b7bd3960df2d048eb46387c183978fc4ee16c00e3"
   },
   {
-   "path": "qa/match/06/paint06/clip/SCREEN06_paint06_steer_1x.mp4",
-   "bytes": 16922812,
-   "sha256": "97df2327de2013f6d2625c5e098c96cc3bfdd87addabd05d4fc69f1bdc353bd3"
+   "path": "qa/match/06/paint06/README.md",
+   "bytes": 5073,
+   "sha256": "4756e95304e0c1252a448522d5bc05ec606248a758871cb6b0decdaa937719bd"
   },
   {
    "path": "qa/match/06/paint06/clip/clip_steer.json",
@@ -15118,8 +15118,8 @@
   },
   {
    "path": "qa/match/06/paint06/proof/SCREEN06_paint06_steer_1x.mp4",
-   "bytes": 2883632,
-   "sha256": "776aa00210c3f2f0db711a2ccdc85a6e9147c3fc1d61041dabcd7380c99da5db"
+   "bytes": 6010972,
+   "sha256": "b3a696269bab382ee4b393419223616b373e3ca647281247c17a5d24e848e327"
   },
   {
    "path": "qa/match/06/paint06/proof/SCREEN06_paint06_straight_1x.mp4",

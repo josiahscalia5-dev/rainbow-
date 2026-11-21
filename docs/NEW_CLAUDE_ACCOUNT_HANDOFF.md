@@ -1,3 +1,12 @@
+# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 31 (2026-11-21, lead branch `ccr-4fcad20e-a6pp8w`, from ~23:50 UTC 11-20)
+
+User (verbatim, ~00:05): "Yes, do Screen 06 first … I want these exact … all these four images … 100%, or at least 95%" + "add any plugin or anything you
+need. I don't care how much it costs." → built **`?paint06=1`**: Screen 06 = the user's OWN five pictures (approved 06 + the four storyboard panels) as
+full-screen depth plates, painted-Benny layer that steers, reveal transitions; live captures 97.7–98.3 % of pixels within 20 levels of each panel (at
+the panel's size), 97.9 % of the approved picture below the HUD. Default build pixel-identical. Everything: **`qa/match/06/paint06/README.md`**
+(proof pictures + clips in `proof/`, paid-job ledger `LEDGER.md`, rebuild steps `tools/paint06/`). Waiting for the user's verdict; if approved, the
+same method for 04, 05, 07, 08, 09, 10 (user asked for "all of them").
+
 # ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 30b (2026-11-20, lead branch `ccr-e490fceb-u85291`, from ~22:20 UTC)
 
 The r30 session closed ~22:14; this one merged its last save `b9ca06c` (user: "Continue from the latest saved version") and recreated the
