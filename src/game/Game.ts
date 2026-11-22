@@ -789,7 +789,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
       rc.setFromCamera(new THREE.Vector2(x, y), camera);
       const hits = rc.intersectObjects(scene.children, true).filter((h) => (h.object as THREE.Mesh).isMesh && h.object.visible);
       const path = (o: THREE.Object3D) => { const a: string[] = []; let c: THREE.Object3D | null = o; while (c) { a.push(c.name || c.type); c = c.parent; } return a.slice(0, 5).join('<'); };
-      return hits.slice(0, 4).map((h) => ({ d: +h.distance.toFixed(2), obj: path(h.object), p: h.point.toArray().map((v) => +v.toFixed(2)) }));
+      return hits.slice(0, 4).map((h) => { const o = h.object as THREE.Mesh, m = o.material as THREE.Material & { color?: THREE.Color }; return { d: +h.distance.toFixed(2), obj: path(h.object), p: h.point.toArray().map((v) => +v.toFixed(2)), kind: `${o.type}/${(o.geometry as THREE.BufferGeometry)?.type}/${Array.isArray(m) ? 'multi' : m?.type}${m && !Array.isArray(m) && m.color ? '#' + m.color.getHexString() : ''}`, inst: h.instanceId }; });
     },
     /** QA: which scene objects issue draw calls in one render ("parent/name" → calls), most first */
     drawList() {

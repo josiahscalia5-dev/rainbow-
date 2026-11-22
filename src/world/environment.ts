@@ -409,11 +409,17 @@ export function buildEnvironment(course: Course): Environment {
   // round 41: a gold ring must never cut through the swim passage. On the 06 crest the river climbs the tube wall, and rings placed on the
   // tube axis crossed the water route at Benny's height right in front of the camera (a gold bar across the screen). A ring whose hoop
   // passes through the passage of Benny AND the follow camera (river width + 1.2, from just under the water to 6 above it) is not placed; every other ring stays.
+  // the river point nearest to each point of the hoop is searched along the route (on the steep 06 descent the river under the hoop's
+  // lowest point belongs to a different route position than the ring's own)
+  const routeS: number[] = []; for (let x = s06 - 12; x <= s08 + 12; x += 0.5) routeS.push(x);
+  const routeP = routeS.map((x) => course.sample(x));
   const ringClear = (sr: number) => {
     const f = perfPath.frame(sr), R = perfPath.radius(sr) - 0.02, c = f.pos.clone().addScaledVector(f.up, perfPath.radius(sr) - perfPath.depth(sr));
-    const w = course.sample(sr), hw = course.widthAt(sr) / 2 + 1.2, p = new THREE.Vector3(), d = new THREE.Vector3();   // + the camera's lane follow
-    for (let k = 0; k < 64; k++) { const a = (k / 64) * Math.PI * 2; p.copy(c).addScaledVector(f.right, Math.cos(a) * R).addScaledVector(f.up, Math.sin(a) * R);
-      d.copy(p).sub(w.pos); const x = d.dot(w.right), h = d.dot(w.up); if (Math.abs(x) < hw && h > -0.2 && h < 6.0) return false; }   // up to above the follow camera
+    const p = new THREE.Vector3(), d = new THREE.Vector3();
+    for (let k = 0; k < 96; k++) { const a = (k / 96) * Math.PI * 2; p.copy(c).addScaledVector(f.right, Math.cos(a) * R).addScaledVector(f.up, Math.sin(a) * R);
+      let bi = 0, bd = Infinity; for (let i = 0; i < routeP.length; i++) { const q = routeP[i].pos.distanceToSquared(p); if (q < bd) { bd = q; bi = i; } }
+      const w = routeP[bi], hw = course.widthAt(routeS[bi]) / 2 + 1.2;   // + the camera's lane follow
+      d.copy(p).sub(w.pos); const x = d.dot(w.right), h = d.dot(w.up); if (Math.abs(x) < hw && h > -0.4 && h < 6.0) return false; }   // up to above the follow camera
     return true; };
   const rings0607clear = rings0607.filter(ringClear);
   (globalThis as unknown as { __rings0607?: unknown }).__rings0607 = { placed: rings0607clear.length, removed: rings0607.filter((x) => !rings0607clear.includes(x)).map((x) => +x.toFixed(1)) };
