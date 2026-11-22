@@ -89,7 +89,7 @@ bank = gaussian_filter1d(bank, 12)
 WIDTH = 0.82                     # ribbon width (u): Benny's lanes +-0.3 + his half width + painted margins (crest painted ~250 px at depth ~2.7)
 lay = {'screen': '06', 'title': 'CREST THE RINSE ARCH', 'ref': REF, 'fov': cam.fov, 'img': [W, H], 'focal_px': cam.F,
        'cams': [cam.json(REF, {'name': 'ref06', 's_ref': float(np.argmin(np.linalg.norm(route - Pb, axis=1)) * 0.05)})],
-       'benny': {'pos': Pb, 'height': HB},
+       'benny': {'pos': Pb, 'height': HB, 'bsize': 1.03},   # bsize: the model's box matched to the SAM 2 silhouette of the painted Benny (iterated)
        'coin_radius': COIN_R, 'coins': coins,
        'route': {'ds': 0.05, 'points': route, 'bank': bank, 'width': WIDTH},
        'drum': {'axis_x': xa, 'axis_y': ya, 'r': DRUM_R, 'z0': 3.0, 'z1': float(route[-1][2] - 4.0), 'chord': chord, 'cam_off_R': [oxR, oyR]},

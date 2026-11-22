@@ -60,7 +60,8 @@ def object_profile_group(name, pts, flip=False):
     """sweep group whose profile is an existing poly curve object (named name + '_prof'), referenced through an Object Info node"""
     if name in bpy.data.node_groups: return bpy.data.node_groups[name]
     cu = bpy.data.curves.new(name + '_prof', 'CURVE'); cu.dimensions = '3D'; spl = cu.splines.new('POLY'); spl.points.add(len(pts) - 1)
-    for i, (x, y) in enumerate(pts): spl.points[i].co = (x, y, 0, 1)
+    # pts are (across, up). Measured in Blender 5.3 (Z_UP twist): profile X -> the curve's right side, profile Y -> DOWN (so y is negated)
+    for i, (x, y) in enumerate(pts): spl.points[i].co = (x, -y, 0, 1)   # measured: profile X -> sideways (right), profile -Y -> up
     pob = bpy.data.objects.new(name + '_prof', cu)                     # not linked to the scene: only referenced by the node group
     def f(ng):
         oi = ng.nodes.new('GeometryNodeObjectInfo'); oi.inputs['Object'].default_value = pob; return oi.outputs['Geometry']
@@ -96,8 +97,8 @@ def foam_group():
 
 
 # ----------------------------------------------------------------------------------------------------------------- builders
-def curve_object(name, pts, radii=None, tilts=None, cyclic=False):
-    cu = bpy.data.curves.new(name + '_curve', 'CURVE'); cu.dimensions = '3D'; cu.twist_mode = 'Z_UP'
+def curve_object(name, pts, radii=None, tilts=None, cyclic=False, twist='Z_UP'):
+    cu = bpy.data.curves.new(name + '_curve', 'CURVE'); cu.dimensions = '3D'; cu.twist_mode = twist
     spl = cu.splines.new('POLY'); spl.points.add(len(pts) - 1); spl.use_cyclic_u = cyclic
     for i, p in enumerate(pts):
         spl.points[i].co = (*B2(p), 1.0); spl.points[i].radius = radii[i] if radii else 1.0; spl.points[i].tilt = tilts[i] if tilts else 0.0
@@ -192,8 +193,10 @@ for i, z in enumerate(sorted(z_r, reverse=True)):
     # band ring: unit profile scaled by the curve radius (= band width), centred on the wall circle slightly inside the drum
     prof_scale = bw
     pts = [[xa + (R - 0.04) * math.cos(2 * math.pi * j / 160), ya + (R - 0.04) * math.sin(2 * math.pi * j / 160), z] for j in range(161)]
-    ng = object_profile_group('RB_Sweep_Band', [(-0.5, 0.0), (-0.5, 0.18), (-0.42, 0.3), (-0.25, 0.34), (0.25, 0.34), (0.42, 0.3), (0.5, 0.18), (0.5, 0.0)])
-    apply_group(curve_object(f'ring_{i:02d}', pts, [prof_scale] * len(pts)), ng)
+    # closed rounded band, centred on the wall circle (radial -0.17..+0.17 of the band width): reads the same whichever way the ring's
+    # minimum-twist normal points, half of it stands proud of the wall
+    ng = object_profile_group('RB_Sweep_Band', [(-0.5, -0.17), (-0.5, 0.1), (-0.42, 0.16), (-0.25, 0.18), (0.25, 0.18), (0.42, 0.16), (0.5, 0.1), (0.5, -0.17), (-0.5, -0.17)])
+    apply_group(curve_object(f'ring_{i:02d}', pts, [prof_scale] * len(pts), twist='MINIMUM'), ng)
 # the pool: water plane on the drum floor between the walls (segments along the drum, own UVs)
 chord = D['chord'] - 0.02; z = D['z0']; k = 0
 while z > D['z1'] + 1e-6:

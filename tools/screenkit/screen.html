@@ -149,7 +149,7 @@ if (DRUM) { const cap = new THREE.Mesh(new THREE.CircleGeometry(DRUM.r * 1.02, 6
 // ---------------- BAKE the approved picture(s) onto the meshes (once, at load) - N fitted cameras, generalised from section.html --------
 const CAMS = LAY.cams.map((c) => { const k = new THREE.PerspectiveCamera(c.fov ?? LAY.fov, c.img[0] / c.img[1], 0.05, 300); k.rotation.order = 'YXZ'; k.position.copy(V3(c.pos)); k.rotation.set(c.pitch, c.yaw, 0);
   k.updateMatrixWorld(); k.updateProjectionMatrix(); k.userData = c; return k; });
-window.REFCAM = CAMS;
+window.REFCAM = CAMS; window.kitDebug = { THREE, scene, world, MESH, CAMS, renderer, camera };
 const BAKE_STATS = {}, BAKE_DATA = {};
 const MANI = q.get('prebaked') !== '1' ? null : await fetch('baked/manifest.json').then((r) => (r.ok ? r.json() : null)).catch(() => null);
 if (MANI) {
@@ -164,19 +164,19 @@ if (MANI) {
     renderer.setRenderTarget(rt); renderer.render(scene, cam); renderer.setRenderTarget(null); return rt; };
   const DEP = CAMS.map(depthOf);
   const vp = (c) => new THREE.Matrix4().multiplyMatrices(c.projectionMatrix, c.matrixWorldInverse);
-  const uni = { uNF: { value: new THREE.Vector2(0.05, 300) }, uDens: { value: new THREE.Vector2(...(q.get('dens') ?? '15,60').split(',').map(Number)) }, uMode: { value: 0 } };
+  const uni = { uNoDepth: { value: q.get('bakedbg') === 'nodepth' ? 1 : 0 }, uNF: { value: new THREE.Vector2(0.05, 300) }, uDens: { value: new THREE.Vector2(...(q.get('dens') ?? '15,60').split(',').map(Number)) }, uMode: { value: 0 } };
   let decl = '', body = '';
   CAMS.forEach((c, i) => { Object.assign(uni, { [`uP${i}`]: { value: tex[2 * i] }, [`uM${i}`]: { value: tex[2 * i + 1] }, [`uD${i}`]: { value: DEP[i].depthTexture }, [`uVP${i}`]: { value: vp(c) }, [`uImg${i}`]: { value: new THREE.Vector2(...c.userData.img) } });
     decl += `uniform sampler2D uP${i}, uM${i}, uD${i}; uniform mat4 uVP${i}; uniform vec2 uImg${i};\n`;
     body += `{ float qd; vec4 a = look(uVP${i}, uP${i}, uM${i}, uD${i}, uImg${i}, qd); if (qd > bq) { bq = qd; best = a; } }\n`; });
   const bakeMat = new THREE.ShaderMaterial({ side: THREE.DoubleSide, depthTest: false, depthWrite: false, uniforms: uni,
     vertexShader: 'varying vec3 vW; void main(){ vW = (modelMatrix * vec4(position, 1.0)).xyz; gl_Position = vec4(uv * 2.0 - 1.0, 0.0, 1.0); }',
-    fragmentShader: `${decl} uniform vec2 uNF, uDens; uniform float uMode; varying vec3 vW;
+    fragmentShader: `${decl} uniform vec2 uNF, uDens; uniform float uMode; uniform float uNoDepth; varying vec3 vW;
       float lin(float d){ float z = d * 2.0 - 1.0; return 2.0 * uNF.x * uNF.y / (uNF.y + uNF.x - z * (uNF.y - uNF.x)); }
       vec4 look(mat4 VP, sampler2D P, sampler2D M, sampler2D D, vec2 img, out float qd){ qd = 0.0;
         vec4 cl = VP * vec4(vW, 1.0); vec3 nd = cl.xyz / max(cl.w, 1e-5); vec2 su = nd.xy * 0.5 + 0.5, px = su * img;
         if (cl.w <= 0.05 || abs(nd.x) > 0.997 || abs(nd.y) > 0.997) return vec4(0.0);
-        if (cl.w > lin(texture2D(D, su).r) * 1.015 + 0.03) return vec4(0.0);
+        if (uNoDepth < 0.5 && cl.w > lin(texture2D(D, su).r) * 1.015 + 0.03) return vec4(0.0);
         float pxu = min(length(dFdx(px)) / max(length(dFdx(vW)), 1e-7), length(dFdy(px)) / max(length(dFdy(vW)), 1e-7));
         qd = pxu;
         float w = mix(1.0, 0.6, step(0.5, texture2D(M, su).r)) * mix(0.8, 1.0, smoothstep(uDens.x, uDens.y, pxu));
@@ -283,7 +283,7 @@ bmat.onBeforeCompile = (sh) => { Object.assign(sh.uniforms, U); sh.vertexShader 
 const bmesh = new THREE.Mesh(bgeo, bmat); bmesh.frustumCulled = false;
 const bennyH = LAY.benny.height, KH = 0.9 * bennyH / (0.99 * 0.78);
 const holder = new THREE.Group(); holder.rotation.y = Math.PI; holder.scale.setScalar(KH); holder.position.y = 0.496 * KH - 0.22 * 0.99 * KH; holder.add(bmesh);
-bmesh.scale.set(0.8, 0.84, 0.8); holder.scale.multiplyScalar(+(q.get('bsize') ?? 1.24)); holder.position.y *= +(q.get('bsize') ?? 1.24);
+bmesh.scale.set(0.8, 0.84, 0.8); const BS = +(q.get('bsize') ?? LAY.benny.bsize ?? 1.24); holder.scale.multiplyScalar(BS); holder.position.y *= BS;   // per screen: Benny at the painted size
 const benny = new THREE.Group(); benny.add(holder); scene.add(benny);
 const pxW = bennyH / 400;
 const splashTex = await tl.loadAsync('splash.png'); splashTex.colorSpace = THREE.SRGBColorSpace;
