@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3218,
-   "sha256": "57fbe1cfa42fad8acf0a15a068a2ce902de643c6cbdf1cd5723db02a81b3b0e8"
+   "sha256": "ccd20f7b7241fa09867e3eb304bf7caeca51cd620f3276cfd040c16237492355"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -43512,6 +43512,11 @@
    "sha256": "c2b6be56033ca13d0a13abf22ee9f1889e6c8d612bf3253391924906b3ceebb8"
   },
   {
+   "path": "tools/screenkit/blender_kit.py",
+   "bytes": 15984,
+   "sha256": "c5e18124aa167c72393c7f9291fd519142cadd75c54b906ea0e81e724daf1728"
+  },
+  {
    "path": "tools/screenkit/eval/eval_extract.py",
    "bytes": 15819,
    "sha256": "05624dca0bc73cb2040695fb7edecb850f19d35dbbcf1dfda5d85e19f4d32a40"
@@ -43525,6 +43530,21 @@
    "path": "tools/screenkit/fitlib.py",
    "bytes": 4499,
    "sha256": "8138e326afa23101119d6974c04df15c606fc723f8eb07db3973ca7a28cae13f"
+  },
+  {
+   "path": "tools/screenkit/get_models.sh",
+   "bytes": 1399,
+   "sha256": "120b819946cf91488739919e4e66b27b01f0163721288100c4edb8bf6649a2ef"
+  },
+  {
+   "path": "tools/screenkit/screens/06/fit06.py",
+   "bytes": 11243,
+   "sha256": "887f8d1ab2695b2ff49bc8a929d9b737a8c9a4072f379d3ca3c9ea6564bd8594"
+  },
+  {
+   "path": "tools/screenkit/segment.py",
+   "bytes": 4212,
+   "sha256": "24ccba8ad11bffa74df879470fa2563f60e5bfa9e53798e3290e847bbe951aa7"
   },
   {
    "path": "tools/water-lab.html",
