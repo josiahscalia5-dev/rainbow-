@@ -112,7 +112,7 @@ if L07:   # ---- join 06 -> 07 (user's guide: "crest flows down into the deeper 
         h00 = 2 * t ** 3 - 3 * t ** 2 + 1; h10 = t ** 3 - 2 * t ** 2 + t; h01 = -2 * t ** 3 + 3 * t ** 2; h11 = t ** 3 - t ** 2
         return h00[:, None] * p0 + h10[:, None] * m0 + h01[:, None] * p1 + h11[:, None] * m1
     tt = np.linspace(0, 1, 61); Lc = float(np.linalg.norm(C1 - C0)); k7 = tt * tt * (3 - 2 * tt)
-    ax7 = herm2(C0, C1, np.array([0, 0, -Lc]), fwd7 * Lc, tt); ax7[0, 2] += 0.2; ax7[-1] -= fwd7 * 0.2
+    ax7 = herm2(C0, C1, np.array([0, 0, -Lc]), fwd7 * Lc, tt); ax7[0, 2] += 0.2; ax7[-1] += fwd7 * 0.2   # overlap 0.2 u FORWARD into 07 (along its descent)
     rad7 = D6['r'] + (D7['r'] - D6['r']) * k7 + 0.006
     hA6, hA7 = D6['axis_y'], D7['axis_y']                                 # axis height above the water at both ends (06 drum / 07 tube)
     wy7 = ax7[:, 1] - (hA6 + (hA7 - hA6) * k7)                            # the water surface along the connector (descends with it)

@@ -1,0 +1,27 @@
+{
+ "new": {
+  "share_within_20_levels": 0.849,
+  "ssim_scenery": 0.826,
+  "mean_abs_diff_levels": 10.9,
+  "colour_look_corr": 0.994,
+  "sharpness_vs_approved": 0.699,
+  "whole_frame_within_20_levels": 0.629
+ },
+ "scenery_share_of_frame": 0.667,
+ "route_first": [
+  "pink_edge (43 % of all mismatch; 15 % of this region off) -> water-fx-specialist (pink / magenta river edges)",
+  "other (16 % of all mismatch; 27 % of this region off) -> reference-match-director (triage)",
+  "water_cyan (13 % of all mismatch; 7 % of this region off) -> water-fx-specialist (in round 34: S1 washer-environment-modeler owns the water surface bake)"
+ ],
+ "zones": {
+  "top-right": 0.259,
+  "top-centre": 0.237,
+  "top-left": 0.115,
+  "middle-right": 0.113,
+  "middle-left": 0.068,
+  "middle-centre": 0.066,
+  "bottom-right": 0.06,
+  "bottom-left": 0.046,
+  "bottom-centre": 0.035
+ }
+}

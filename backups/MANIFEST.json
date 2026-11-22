@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 27962,
-   "sha256": "e30c3a52b2a888b1677ceab27baf6e982300377661273abff5898dc39bbec9a3"
+   "sha256": "00d956a3ca9dda1b63fa66157fc1266d1d266023d9de93ffe0468d3b741c7faf"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3622,
-   "sha256": "6849779012689f987b849e1aff093528fef97574003d655d8828eb414a6f279f"
+   "sha256": "e67ccc35f0a42bb54bd11f89d4bdc76429a3bf341a86133011dde0c79b74c0af"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -42917,6 +42917,21 @@
    "sha256": "54efecd175f279d46597baab6043b791fc6a388ca312ce600bf9b0920a43a504"
   },
   {
+   "path": "qa/world/r44/07/SCREEN07_kit_first_build_sheet.jpg",
+   "bytes": 217742,
+   "sha256": "ef0afdfb6bd58af23bb4bf94d6ff4047089e20f2b2acf2ce03c2e42d3cfaefb0"
+  },
+  {
+   "path": "qa/world/r44/07/picture_camera_summary.json",
+   "bytes": 866,
+   "sha256": "e1e26c1830b50b0ebd322e3c706e43f2b2e0ea7d69abde06f471d98f7349f293"
+  },
+  {
+   "path": "qa/world/r44/07/rings_ransac.jpg",
+   "bytes": 742989,
+   "sha256": "182a97175963f67c67a3f418ea49bcd6035e8745b7ccb776551eb94d341dbb55"
+  },
+  {
    "path": "qa/world/r44/join_audit_BEFORE/JOIN_AUDIT_BEFORE_sheet.jpg",
    "bytes": 776358,
    "sha256": "e0a5925af0ecf3b82256dafded0ad55d7a2602cd0b754059fa1d3f7a5c486f8b"
@@ -43260,6 +43275,26 @@
    "path": "qa/world/r44/world_v3/world.json",
    "bytes": 152965,
    "sha256": "ec10f02c7d656c5f237813193d9cce69c2d8158cf391661edef752229d0b3f00"
+  },
+  {
+   "path": "qa/world/r44/world_v4/README.md",
+   "bytes": 1170,
+   "sha256": "694af2bb6fa95963cd319ab12f6e05e579a6bd436c6a655fb8123509e26904c2"
+  },
+  {
+   "path": "qa/world/r44/world_v4/WORLD_07_picture_view.jpg",
+   "bytes": 157651,
+   "sha256": "08bdc325ab8a7c9a03fe36fea3f5a6652966321d82243dff26e39d71f1fcc563"
+  },
+  {
+   "path": "qa/world/r44/world_v4/WORLD_v4_06_to_07_stills.jpg",
+   "bytes": 343851,
+   "sha256": "2e51f353f8f0890b3fab794685e6ca626387a6897ec00bc6631028f5ff164c99"
+  },
+  {
+   "path": "qa/world/r44/world_v4/world.json",
+   "bytes": 208413,
+   "sha256": "d2d6d9ea3cf7aec3d444add67af60e1e7ddccabbec1257932edf9d078c224c2c"
   },
   {
    "path": "qa/worldlabs/05/05_env_mask.png",
@@ -45718,8 +45753,8 @@
   },
   {
    "path": "tools/world/world_layout.py",
-   "bytes": 18058,
-   "sha256": "63cb071ed2e8509b9da14cc57abc9d8ed17065bf6cd2c92cd67f230d69a61c58"
+   "bytes": 18112,
+   "sha256": "0d41364e05e66c7b1401f5ea2194953909f38006ab57ef62571d7dcde5b1c8f8"
   },
   {
    "path": "tools/worldlabs/analyze_splats.py",
