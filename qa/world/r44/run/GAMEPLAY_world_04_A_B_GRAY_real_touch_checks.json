@@ -1,0 +1,139 @@
+{
+ "frames": 1083,
+ "errors": [],
+ "benny_offscreen_frames": 0,
+ "camera_max_step_u": 0.0959,
+ "camera_max_step_expected_u": 0.1173,
+ "camera_max_turn_deg_per_frame": 0.669,
+ "static_world_meshes": 225,
+ "scenery_meshes_moved": [],
+ "camera_min_clearance_u": 0.169,
+ "benny_water_gap_max_u": 0.02,
+ "benny_water_missing_frames": 0,
+ "benny_posture_vs_surface_max_deg": 13.98,
+ "route_normal_vs_surface_max_deg": 0,
+ "immersion_range": [
+  -0.413,
+  0.225
+ ],
+ "bank_range_deg": [
+  0,
+  0
+ ],
+ "swipes_sent": 17,
+ "swipes_detected": 17,
+ "input": "real CDP touch",
+ "input_log": [
+  {
+   "dir": "left",
+   "src": "touch",
+   "clock": 1.5,
+   "result": "lane"
+  },
+  {
+   "dir": "right",
+   "src": "touch",
+   "clock": 3.5,
+   "result": "lane"
+  },
+  {
+   "dir": "right",
+   "src": "touch",
+   "clock": 3.7,
+   "result": "lane"
+  },
+  {
+   "dir": "left",
+   "src": "touch",
+   "clock": 6,
+   "result": "lane"
+  },
+  {
+   "dir": "left",
+   "src": "touch",
+   "clock": 8.5,
+   "result": "lane"
+  },
+  {
+   "dir": "right",
+   "src": "touch",
+   "clock": 10.2,
+   "result": "lane"
+  },
+  {
+   "dir": "right",
+   "src": "touch",
+   "clock": 10.4,
+   "result": "lane"
+  },
+  {
+   "dir": "up",
+   "src": "touch",
+   "clock": 12.8,
+   "result": "leap"
+  },
+  {
+   "dir": "left",
+   "src": "touch",
+   "clock": 15,
+   "result": "lane"
+  },
+  {
+   "dir": "right",
+   "src": "touch",
+   "clock": 17.5,
+   "result": "lane"
+  },
+  {
+   "dir": "right",
+   "src": "touch",
+   "clock": 20,
+   "result": "edge"
+  },
+  {
+   "dir": "left",
+   "src": "touch",
+   "clock": 22,
+   "result": "lane"
+  },
+  {
+   "dir": "left",
+   "src": "touch",
+   "clock": 24.5,
+   "result": "lane"
+  },
+  {
+   "dir": "right",
+   "src": "touch",
+   "clock": 27,
+   "result": "lane"
+  },
+  {
+   "dir": "up",
+   "src": "touch",
+   "clock": 29.5,
+   "result": "leap"
+  },
+  {
+   "dir": "left",
+   "src": "touch",
+   "clock": 31,
+   "result": "lane"
+  },
+  {
+   "dir": "right",
+   "src": "touch",
+   "clock": 33.5,
+   "result": "lane"
+  }
+ ],
+ "coins_end": 1480,
+ "s_end": 80.54,
+ "lat_range": [
+  -0.3,
+  0.3
+ ],
+ "hole_frames_checked": 1083,
+ "hole_frames": 0,
+ "hole_pixels_max": 0
+}
