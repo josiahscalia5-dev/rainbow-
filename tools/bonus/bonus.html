@@ -82,7 +82,7 @@ vec3 kitRemap(vec3 wp){ vec3 d = wp - uCam; float za = dot(d, uAx); float gz = z
 // much closer than the painted distance (then the sharp 3D material takes over). Big removed areas (Benny, splash, buttons) are transparent in
 // the plate, so the live 3D material shows there.
 const PROJ39 = { uPlate: { value: null }, uPDepth: { value: null }, uPVP: { value: new THREE.Matrix4() }, uPOn: { value: 0 },
-  uPFade: { value: new THREE.Vector2(...(q.get('pfade39') ?? '0.42,0.68').split(',').map(Number)) } };
+  uPFade: { value: new THREE.Vector2(...(q.get('pfade39') ?? '0.75,0.97').split(',').map(Number)) } };
 const PROJ_GLSL = `uniform sampler2D uPlate; uniform sampler2D uPDepth; uniform mat4 uPVP; uniform float uPOn; uniform vec2 uPFade;
   float p39lin(float z){ float n = 0.02, f = 400.0; return 2.0 * n * f / (f + n - (2.0 * z - 1.0) * (f - n)); }
   vec4 proj39(vec3 kwp, float kD, float kT){ if (uPOn < 0.5) return vec4(0.0);
@@ -451,7 +451,7 @@ let cleanWallMat = null, cleanRingMat = null;
   };
   if (FIT39) { const [L, R] = K.fit.towels;   // the two painted towels: own materials, so each keeps its own painted look (baked below)
     for (const [T, base] of [[L, towelMats.purple], [R, towelMats.pink]]) { const tmM = litMat({ map: base.uniforms.map.value, spec: 0.05, shin: 6, amb: 0.6, rim: 0xd9c4ff, rimK: 0.25, side: THREE.DoubleSide, proj: true });
-      const tm = towelRack(T[0], T[1], tmM, T[2], T[3], T[4]); (window.__bake39 ??= []).push({ mesh: tm, mat: tmM, size: [1024, 1024] }); } }
+      const tm = towelRack(T[0], T[1], tmM, T[2], T[3], T[4]); (window.__bake39 ??= []).push({ mesh: tm, mat: tmM, size: [1024, 1024], share: base }); } }   // later towels wear the same painted look
   for (const [t0, side, m] of (FIT39 ? [] : [[2.9, -1, 'purple'], [3.35, 1, 'pink']]).concat([[7.1, -1, 'pink'], [7.6, 1, 'purple'], [11.3, -1, 'purple'], [11.8, 1, 'pink']])) towelRack(t0, side, towelMats[m]);
   }
   // ---- round 38 BONUS: Bubble Dash Chamber (?area=bubble): an open pink washer room in front of the golden arch into the tunnel ----

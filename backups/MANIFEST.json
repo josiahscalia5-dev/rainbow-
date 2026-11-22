@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3271,
-   "sha256": "44e790ac1038415d05c1f4e6473ced5af0065eaf22db1ac6183a454a2e7e83a2"
+   "sha256": "f55da65a8b44d20983079bd6a126cbad1dc453cbb403e59e03d5483aa16760fd"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -15607,6 +15607,11 @@
    "sha256": "6dddf3e357c7d22999f80ae6e187053fa8f12499d44432786758b23275a93feb"
   },
   {
+   "path": "qa/bonus/r39/SOCK_BEFORE_vs_NOW.jpg",
+   "bytes": 1145888,
+   "sha256": "e2ce8b94c964e454a1aa46ec6d95fdfc810919e25fce471eabe341f180866db9"
+  },
+  {
    "path": "qa/bonus/r39/SOCK_NEW_9s_real_swipes.mp4",
    "bytes": 6020148,
    "sha256": "6955d8b9371f38107daf65541c976d73ff1c347680a06d947628ce3f88f0327c"
@@ -15635,6 +15640,26 @@
    "path": "qa/bonus/r39/SOCK_picture_vs_game_start_diffmap.jpg",
    "bytes": 344294,
    "sha256": "a984ddb293757cadf22a982f1b23d2fb155ba18d82fae687b83d20f86942112f"
+  },
+  {
+   "path": "qa/bonus/r39/b_s0.0_l0.jpg",
+   "bytes": 162837,
+   "sha256": "d8af713a59f510f37ed42425f830ddce9d6ae4866455e248490bd35950e01803"
+  },
+  {
+   "path": "qa/bonus/r39/b_s1.4_l0.jpg",
+   "bytes": 159254,
+   "sha256": "2bab161abca33a2b9476d5d7ac72ce132adf7dbc60a6196c567f8d100b42ae73"
+  },
+  {
+   "path": "qa/bonus/r39/b_s2.8_l0.jpg",
+   "bytes": 149614,
+   "sha256": "279003d3d45be58491a49d6583569ef5e5657c34eb616d1a0cad89af3033efad"
+  },
+  {
+   "path": "qa/bonus/r39/b_s4.6_l0.jpg",
+   "bytes": 148757,
+   "sha256": "dcad7bc76be925f32cb81414af7034fee0693b83e0cd88aee77f5ccfb07b0490"
   },
   {
    "path": "qa/capture_log.json",
@@ -40758,8 +40783,8 @@
   },
   {
    "path": "tools/bonus/bonus.html",
-   "bytes": 116198,
-   "sha256": "7a6a4ed214cc417a875abaff43aaa053785240d8d142167d01f3b5dda1dfa68c"
+   "bytes": 116328,
+   "sha256": "02ec46301948694f463b460fca478631bc4bd0d1cb549babdc6284ee2c6713b5"
   },
   {
    "path": "tools/bonus/build_phone_bonus.sh",
