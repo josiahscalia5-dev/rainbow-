@@ -1748,3 +1748,139 @@ The checker works: 26 stills in 18.5 s with no holes. It flags the look going wr
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-22T18:18:50.068Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/preview.cjs'; s=open(p).read()\na=\"\"\"      if (arg('s')) pos.splice(0, pos.length, ...arg('s').split(',').map((x) => ({ s: +x, tag: 's' + x })));\"\"\"\nb=\"\"\"      if (arg('s') === 'picture') pos.splice(0, pos.length, ...pos.filter((p) => p.tag === 'picture'));   // fast likeness check\n      else if (arg('s')) pos.splice(0, pos.length, ...arg('s').split(',').map((x) => ({ s: +x, tag: 's' + x })));\"\"\"\nassert s.count(a)==1; s=s.replace(a,b); open(p,'w').write(s)\nEOF\nS=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814 …[+390 chars]`
+
+### 🧑 User — 2026-11-22T18:19:23.352Z
+
+> ↩︎ result: "share_within_20_levels": 0.194,   "ssim_scenery": 0.245,   "sharpness_vs_approved": 0.505, <- live
+>    "share_within_20_levels": 0.807,   "ssim_scenery": 0.784,   "sharpness_vs_approved": 0.665, <- prebaked
+
+### 🤖 Claude — 2026-11-22T18:19:26.684Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/pv05_live/tex_picture_l0.png"}`
+
+### 🧑 User — 2026-11-22T18:19:26.715Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T18:19:53.806Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport re\np='tools/screenkit/blender_kit.py'; s=open(p).read()\ns=s.replace(\"\"\"             'paddles', 'foam_style', 'machinery', 'foam_banks']\"\"\",\"\"\"             'paddles', 'foam_style', 'machinery', 'foam_banks', 'foam_pool_from']\"\"\")\na=\"\"\"    foam_bank(nm, [[xa + side * (chord - 0.06), 0.0, zq] for zq in [D['z0'] - 0.5 * j for j in range(int((D['z0'] - D['z1']) / 0.5) + 1)]], 0.16, 0.11, 7 + side)\"\"\"\nb=\"\"\"    zf0 = min(D['z0'], LAY.get('foam_pool_from', D['z0']))   # r45: where the picture paints its own foam the painted domes are used …[+2637 chars]`
+
+### 🧑 User — 2026-11-22T18:19:53.895Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-22T18:19:59.948Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; python3 -I tools/screenkit/build.py 05 $S/k05 --tube-len 20 --open-end 2>&1 | grep -E '^\\s+\\w+\\s+(built|cached|ran)|ready'; grep -E '\"verdict\"|share_within|colour_look_m|holes_total' $S/k05/preview/preview.log | tr -d '\\n'; echo; grep -E 'FAIL|WARN' $S/k05/preview/preview.log | head", "description": "Rebuild 05 with foam and mask changes", "timeout": 900000}`
+
+### 🧑 User — 2026-11-22T18:21:14.820Z
+
+> ↩︎ result: depth     cached     0.0 s   (ae05262e7c)
+>   fit       built      0.5 s   (7cb75422cc)
+>   layout    ran        0.0 s
+>   segment   cached     0.0 s   (7bcae38707)
+>   gnlib     cached     0.0 s   (5fa089e45c)
+>   geometry  built      1.3 s   (21f1eb52fe)
+>   assemble  ran        0.1 s
+>   bake      built     51.0 s   (7895e5861e)
+>   preview   built     21.7 s   (4545d4ce99)
+> screen 05 ready: /tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/k05/game/play3.html  (74.74 s; report /tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/k05/build_report.md)
+>  "verdict": "WARN",   "share_within_20_levels": 0.771, "colour_look_min": 0.006, "colour_look_mean": 0.559, "holes_total": 0,
+>  "verdict": "WARN",
+>   WARN textured middle lane 0 (s 20.52) colour look 0.576 vs the approved picture
+>   WARN textured end lane 0 (s 39.25) colour look 0.015 vs the approved picture
+>   WARN textured quarter lane -1 (s 10.86) colour look 0.504 vs the approved picture
+>   WARN textured three_q lane -1 (s 30.19) colour look 0.363 vs the approved picture
+>   WARN textured end lane -1 (s 39.25) colour look 0.006 vs the approved picture
+>   WARN textured middle lane 1 (s 20.52) c …[+119 chars]
+
+### 🤖 Claude — 2026-11-22T18:21:16.516Z
+
+The picture-view number dropped (80.7 → 77.1 %), so this change isn't kept as is. Checking which part caused it:
+
+### 🤖 Claude — 2026-11-22T18:21:19.562Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; python3 -c \"\nfrom PIL import Image\na=Image.open('$S/pv05.jpg').crop((0,0,412,915)); b=Image.open('$S/k05/preview/tex_picture_l0.png').convert('RGB'); c=Image.open('$S/k05/preview/compare/tex_picture_l0_DIFF_NEW_f0000.jpg').convert('RGB').resize((412,915))\no=Image.new('RGB',(1256,915)); o.paste(a,(0,0)); o.paste(b,(422,0)); o.paste(c,(844,0)); o.save('$S/pv05b.jpg',quality=88)\"", "description": "Sheet approved, new, diff for 05"}`
+
+### 🧑 User — 2026-11-22T18:21:19.730Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-22T18:21:21.642Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/pv05b.jpg"}`
+
+### 🧑 User — 2026-11-22T18:21:21.665Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T18:21:50.001Z
+
+> 🔧 **Bash** `{"command": "grep -n \"foam_from_picture': True\" tools/screenkit/screens/05/fit05.py | head -2; sed -i \"s/       'foam_from_picture': True, 'foam_pool_from': z_ring0 - 2 \\* 2.6, 'machinery': {'every': 2}}/       'foam_from_picture': False, 'foam_pool_from': z_ring0 - 2.6, 'machinery': {'every': 2}}/\" tools/screenkit/screens/05/fit05.py; grep -n \"foam_from_picture'\" tools/screenkit/screens/05/fit05.py; S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; for qq in \"swimfx=0\" \"nobub=1\"; do NODE_PATH=$(npm root -g) node tools/screenkit/preview.cjs $S/k05/ …[+507 chars]`
+
+### 🧑 User — 2026-11-22T18:22:02.568Z
+
+> ↩︎ result: 66:       'foam_from_picture': True, 'foam_pool_from': z_ring0 - 2 * 2.6, 'machinery': {'every': 2}}
+> 66:       'foam_from_picture': False, 'foam_pool_from': z_ring0 - 2.6, 'machinery': {'every': 2}}
+> 199:  world.traverse((o) => { if (!o.isMesh || o.name === 'bubbles') return; const f = o.userData.fam ?? (o.name === 'drum_end' ? 'foam' : 'tunnel'); o.material = gm(famCol[f] ?? famCol.tunnel); }); }
+> 242:  bubbles.name = 'bubbles'; bubbles.renderOrder = 7; bubbles.userData.fam = 'bubble3d'; world.add(bubbles); }
+
+### 🤖 Claude — 2026-11-22T18:22:04.588Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/ghost.jpg"}`
+
+### 🧑 User — 2026-11-22T18:22:04.613Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T18:22:28.634Z
+
+> 🔧 **Bash** `{"command": "grep -n \"plate\\|inpaint\\|def \\|imwrite\\|save(\" tools/screenkit/segment.py | head -30; grep -n \"def \\|inpaint\" tools/reflock/plate.py | head", "description": "Find plate creation in segment.py"}`
+
+### 🧑 User — 2026-11-22T18:22:28.687Z
+
+> ↩︎ result: 3:filled from its own surroundings (tools/reflock/plate.py, OpenCV Telea, no AI, no credits).
+> 10:Writes mask.png (white = the game draws it), plate.png, mask_overlay.jpg, segment.json."""
+> 46:Image.fromarray(m * 255).save(os.path.join(a.out, 'mask.png'))
+> 47:subprocess.run([sys.executable, '-I', os.path.join(REPO, 'tools', 'reflock', 'plate.py'), a.picture, os.path.join(a.out, 'mask.png'), os.path.join(a.out, 'plate.png')], check=True, stdout=subprocess.DEVNULL)
+> 48:ov = rgb.copy(); ov[m > 0] = (ov[m > 0] * 0.45 + np.array([255, 0, 255]) * 0.55).astype(np.uint8); Image.fromarray(ov).save(os.path.join(a.out, 'mask_overlay.jpg'), quality=85)
+> 2:splash, coins, socks, loose bubbles, buttons) are filled from their own surroundings (OpenCV Telea inpainting: a quarter-size pass for big
+> 11:fill = cv2.resize(cv2.inpaint(small, cv2.dilate(ms, np.ones((3, 3), np.uint8)), 6, cv2.INPAINT_TELEA), (W, H), interpolation=cv2.INTER_CUBIC)
+> 12:fine = cv2.inpaint(im, m * 255, 5, cv2.INPAINT_TELEA)
+
+### 🤖 Claude — 2026-11-22T18:22:30.261Z
+
+> 🔧 **Bash** `{"command": "cat tools/reflock/plate.py | cut -c1-250", "description": "Read plate.py"}`
+
+### 🧑 User — 2026-11-22T18:22:30.311Z
+
+> ↩︎ result: """Round 40: free 'clean plate' of an approved picture for the bake (no AI, no credits): the areas the game draws itself (mask: HUD, Benny,
+> splash, coins, socks, loose bubbles, buttons) are filled from their own surroundings (OpenCV Telea inpainting: a quarter-size pass for big
+> holes + a full-size pass for small ones, blended by distance into the hole). The plate is only a bake SOURCE: inside the mask the bake
+> gives it a reduced weight, outside the mask the bake uses the untouched picture pixels.
+>   python3 -I tools/reflock/plate.py <picture> <mask.png (white = fill)> <out.png>"""
+> import sys, numpy as np, cv2
+> from PIL import Image
+> im = np.array(Image.open(sys.argv[1]).convert('RGB')); H, W = im.shape[:2]
+> m = (np.array(Image.open(sys.argv[2]).convert('L').resize((W, H), Image.NEAREST)) > 127).astype(np.uint8)
+> small = cv2.resize(im, (W // 4, H // 4), interpolation=cv2.INTER_AREA); ms = cv2.resize(m * 255, (W // 4, H // 4), interpolation=cv2.INTER_NEAREST)
+> fill = cv2.resize(cv2.inpaint(small, cv2.dilate(ms, np.ones((3, 3), np.uint8)), 6, cv2.INPAINT_TELEA), (W, H), interpolation=cv2.INTER_CUBIC)
+> fine = cv2.inpaint(im, m * 255, 5, cv2.INPAINT_TELEA)
+> k = np.clip(cv2.distanceTransform(m,  …[+242 chars]
+
+### 🤖 Claude — 2026-11-22T18:22:49.463Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/screenkit/plate_clone.py", "content": "\"\"\"Rainbow screen kit (round 45) - CLONE FILL for the small holes of a clean plate (the painted coins and loose bubbles the game draws itself).\nThe Telea fill (tools/reflock/plate.py, unchanged) smears a hole into a soft blob of the surrounding colours; once baked, those blobs showed\nas round \"ghost\" discs on the river while Benny swims. Here every small hole is re-filled from the best-matching patch of the SAME painting\nnearby (the ring of pixels around the hole compared at 48 candidate offsets; the source …[+2446 chars]`
+
+### 🧑 User — 2026-11-22T18:22:49.541Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/screenkit/plate_clone.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-22T18:22:56.467Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/segment.py'; s=open(p).read()\na=\"\"\"ov = rgb.copy(); ov[m > 0]\"\"\"\nb=\"\"\"# r45: the small holes (painted coins, loose bubbles) are re-filled by clone + Poisson blend from the same painting (no ghost discs)\nsubprocess.run([sys.executable, '-I', os.path.join(HERE, 'plate_clone.py'), a.picture, os.path.join(a.out, 'mask.png'), os.path.join(a.out, 'plate.png'), '--top', str(sp.get('hud_rows', 190))], check=True, stdout=subprocess.DEVNULL)\nov = rgb.copy(); ov[m > 0]\"\"\"\nassert s.count(a)==1; s=s.replace(a,b); open(p,'w').write(s)\np='t …[+1045 chars]`
+

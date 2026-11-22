@@ -45,5 +45,7 @@ for poly in sp.get('polygons', []): cv2.fillPoly(m, [np.array(poly, np.int32)], 
 d = int(sp.get('dilate_px', 6)); m = cv2.dilate(m, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2 * d + 1, 2 * d + 1)))
 Image.fromarray(m * 255).save(os.path.join(a.out, 'mask.png'))
 subprocess.run([sys.executable, '-I', os.path.join(REPO, 'tools', 'reflock', 'plate.py'), a.picture, os.path.join(a.out, 'mask.png'), os.path.join(a.out, 'plate.png')], check=True, stdout=subprocess.DEVNULL)
+# r45: the small holes (painted coins, loose bubbles) are re-filled by clone + Poisson blend from the same painting (no ghost discs)
+subprocess.run([sys.executable, '-I', os.path.join(HERE, 'plate_clone.py'), a.picture, os.path.join(a.out, 'mask.png'), os.path.join(a.out, 'plate.png'), '--top', str(sp.get('hud_rows', 190))], check=True, stdout=subprocess.DEVNULL)
 ov = rgb.copy(); ov[m > 0] = (ov[m > 0] * 0.45 + np.array([255, 0, 255]) * 0.55).astype(np.uint8); Image.fromarray(ov).save(os.path.join(a.out, 'mask_overlay.jpg'), quality=85)
 info['masked_share'] = round(float(m.mean()), 4); json.dump(info, open(os.path.join(a.out, 'segment.json'), 'w'), indent=1); print(json.dumps(info))

@@ -13,7 +13,7 @@ GEOM_KEYS lists every layout key this file reads: build.py re-runs Blender only 
 import bpy, bmesh, sys, os, json, math
 from mathutils import Vector, Matrix
 GEOM_KEYS = ['drum', 'rings', 'route', 'no_route_ribbon', 'route_flume', 'mouth_ring', 'funnel', 'wall', 'pool_front', 'arrows', 'foam_route', 'foam_pool',
-             'paddles', 'foam_style', 'machinery', 'foam_banks']
+             'paddles', 'foam_style', 'machinery', 'foam_banks', 'foam_pool_from']
 argv = sys.argv[sys.argv.index('--') + 1:]; LAY = json.load(open(argv[0])); OUT = argv[1]
 GNLIB = argv[argv.index('--gnlib') + 1] if '--gnlib' in argv else None
 bpy.ops.wm.read_factory_settings(use_empty=True)
@@ -212,7 +212,8 @@ for side, nm, sd in ((-1, 'foam_routeL', 3), (1, 'foam_routeR', 5)):
     if LAY.get('foam_route', {}).get(nm): foam_bank(nm, edge(side, 0.02), 0.06, 0.07, sd)   # only where the screen's picture paints foam along the channel
 for side, nm in (((-1, 'foam_poolL'), (1, 'foam_poolR')) if LAY.get('foam_pool', True) else ()):   # r44: 04 paints no foam along the tube's water edges
     # r45: RB_FoamBank v2 clusters along the whole tube (was: the near drum only, single lumps)
-    foam_bank(nm, [[xa + side * (chord - 0.06), 0.0, zq] for zq in [D['z0'] - 0.5 * j for j in range(int((D['z0'] - D['z1']) / 0.5) + 1)]], 0.16, 0.11, 7 + side)
+    zf0 = min(D['z0'], LAY.get('foam_pool_from', D['z0']))   # r45: where the picture paints its own foam the painted domes are used (foam_from_picture)
+    foam_bank(nm, [[xa + side * (chord - 0.06), 0.0, zq] for zq in [zf0 - 0.5 * j for j in range(int((zf0 - D['z1']) / 0.5) + 1)]], 0.16, 0.11, 7 + side)
 for i, p in enumerate(LAY.get('paddles', [])): paddle(f'paddle_{i}', p['pos'], (xa, ya), p['width'])
 # r45: extra foam banks (layout 'foam_banks': [{'side': -1|1, 'off': metres from the route edge, 'spacing', 'size', 's0', 's1', 'seed'}]) along the route
 for j, fb in enumerate(LAY.get('foam_banks', [])):

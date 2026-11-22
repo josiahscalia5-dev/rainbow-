@@ -60,7 +60,10 @@ lay = {'screen': '05', 'title': 'FLOW INTO THE CURRENT', 'ref': REF, 'fov': cam.
        'rings': {'z': [z_ring0], 'spacing': 2.6, 'band': 0.32},
        # r44: the painted S-river as its own water ribbon along Benny's route (one-factor test: start view unchanged 83.5 %, pink river edge in motion)
        'paddles': paddles, 'bubbles': [], 'no_route_ribbon': False, 'route_flume': False, 'foam_pool': True,
-       'bake_res': {'pool': [1024, 2048]}, 'splash_scale': 0.6, 'lod_bias': -0.8, 'bake_dens': [1, 4], 'number': '05', 'next': '06', 'coins_start': 1420}
+       'bake_res': {'pool': [1024, 2048]}, 'splash_scale': 0.6, 'lod_bias': -0.8, 'bake_dens': [1, 4], 'number': '05', 'next': '06', 'coins_start': 1420,
+       # r45: the painted foam (domes where the picture paints foam) near the picture view; the RB_FoamBank clusters start two rings further,
+       # the painted trays repeat every 2 ring spacings along the whole tube (RB_MachineryRow)
+       'foam_from_picture': False, 'foam_pool_from': z_ring0 - 2.6, 'machinery': {'every': 2}}
 # the painted S-river (pink edges + cyan core) at the coin trail: 310 px wide at y 650 -> its real width at that depth (river ribbon option)
 Pr = cam.on_plane_y(485.0, 650.0); RIVER_W = 310.0 * float(-(cam.R.T @ (Pr - cam.C))[2]) / cam.F; lay['river_width'] = RIVER_W; lay['route']['width'] = RIVER_W
 for kv in a.set:

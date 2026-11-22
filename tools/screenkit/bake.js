@@ -28,10 +28,11 @@ const LOOK_GLSL = (decl) => `${decl} uniform vec2 uNF, uDens, uTol; uniform floa
     if (uNoDepth < 0.5 && cl.w > lin(texture2D(D, su).r) * uTol.x + uTol.y) return vec4(0.0);   // occluded (bake 1.5 % + 3 cm; template fusion: tight, so trays / rings never paint the wall)
     float pxu = min(length(dFdx(px)) / max(length(dFdx(vW)), 1e-7), length(dFdy(px)) / max(length(dFdy(vW)), 1e-7));
     qd = pxu;
-    float w = mix(1.0, 0.6, step(0.5, texture2D(M, su).r)) * mix(0.8, 1.0, smoothstep(uDens.x, uDens.y, pxu));
+    float w = mix(1.0, 0.6, step(0.5, texture2D(M, su).r)) * mix(0.8, 1.0, smoothstep(uDens.x, uDens.y, pxu));   // (0.48..0.6 = masked, the fusion tests < 0.7)
     if (uMode > 0.5) { float pw = pxu / 4000.0; return vec4(floor(pw * 255.0) / 255.0, fract(pw * 255.0), 0.0, w); }
     return vec4(texture2D(P, su).rgb, w); }`;
 
+const MASK_LOW = new Set([]);   // r45: tried for water / pool (swatch under the masks): the swatch discs showed; the clone-filled plate is used instead
 export async function bake({ THREE, renderer, scene, world, MESH, CAMS, LAY, q, loadRaw, bbox }) {
   const BAKE_STATS = {}, BAKE_DATA = {};
   const tex = await Promise.all(CAMS.flatMap((c) => [loadRaw(c.userData.plate), loadRaw(c.userData.mask)]));
@@ -69,7 +70,8 @@ ${body}        gl_FragColor = best; }` });
     const px = new Uint8Array(bw * bh * 4); renderer.readRenderTargetPixels(rt, 0, 0, bw, bh, px); rt.dispose();
     let cov = 0; for (let i = 3; i < px.length; i += 4) cov += px[i]; cov /= 255 * bw * bh;
     if (cov < 0.002) return { cov, tex: null };
-    const A = new Float32Array(bw * bh); for (let i = 0; i < bw * bh; i++) A[i] = px[i * 4 + 3] / 255;
+    const A = new Float32Array(bw * bh); const mk = MASK_LOW.has(o.userData.fam) ? 0.3 : 1;   // r45: inside the game-drawn mask the filled-in plate gives way to the painted swatch
+    for (let i = 0; i < bw * bh; i++) { const a = px[i * 4 + 3] / 255; A[i] = a > 0 && a < 0.7 ? a * mk : a; }
     const blur = (src, r) => { const o2 = new Float32Array(src.length), t2 = new Float32Array(src.length);
       for (let y = 0; y < bh; y++) { let s = 0; for (let x = -r; x <= r; x++) s += src[y * bw + Math.min(bw - 1, Math.max(0, x))]; for (let x = 0; x < bw; x++) { t2[y * bw + x] = s / (2 * r + 1); s += src[y * bw + Math.min(bw - 1, x + r + 1)] - src[y * bw + Math.max(0, x - r)]; } }
       for (let x = 0; x < bw; x++) { let s = 0; for (let y = -r; y <= r; y++) s += t2[Math.min(bh - 1, Math.max(0, y)) * bw + x]; for (let y = 0; y < bh; y++) { o2[y * bw + x] = s / (2 * r + 1); s += t2[Math.min(bh - 1, y + r + 1) * bw + x] - t2[Math.max(0, y - r) * bw + x]; } }

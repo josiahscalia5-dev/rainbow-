@@ -162,7 +162,7 @@ def build_screen(NN, ws, tube_len=None, open_end=False, benny_h=None, drum_far_e
         json.dump(L, open(lay_p, 'w')); return L
     L = B.timed('layout', f_layout)
     # segment (masks + clean plate)
-    seg_code = [os.path.join(HERE, 'segment.py'), os.path.join(REPO, 'tools/reflock/plate.py'), os.path.join(HERE, 'eval', 'eval_extract.py')]
+    seg_code = [os.path.join(HERE, 'segment.py'), os.path.join(HERE, 'plate_clone.py'), os.path.join(REPO, 'tools/reflock/plate.py'), os.path.join(HERE, 'eval', 'eval_extract.py')]
     seg_models = sorted(os.path.join(MODELS, 'sam2', f) for f in os.listdir(os.path.join(MODELS, 'sam2'))) if os.path.isdir(os.path.join(MODELS, 'sam2')) else []
     k_seg = h_bytes('seg-v1', ref_h, h_file(os.path.join(SD, f'segment{NN}.json')), h_files([p for p in seg_code if os.path.exists(p)]), *[f'{os.path.basename(m)}:{os.path.getsize(m)}' for m in seg_models])
     def f_seg(tmp):
