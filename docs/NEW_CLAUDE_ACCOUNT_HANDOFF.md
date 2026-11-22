@@ -1,3 +1,4 @@
+# ▶ ROUND 43b (2026-11-22 ~15:30 UTC): Screen 06 physics + gray geometry test + textured run, `qa/reflock/r43b/RESULT_R43b.md` (88.5 % picture view, Benny really in the water, 0 holes).
 # ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 43 (2026-11-22 ~14:00 UTC, branch `ccr-80cdb162-4sqz1a`)
 Reusable SCREEN KIT (`tools/screenkit/`, Blender Geometry Nodes components + generic bake/game page; SAM 2 adopted for masks, Depth Anything =
 cross-check) and Screen 06 rebuilt from its own approved picture: 89.5 % scenery px within 20 levels at the picture camera (old game 06: 3.6 %),

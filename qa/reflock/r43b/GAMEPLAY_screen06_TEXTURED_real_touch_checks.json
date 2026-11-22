@@ -1,0 +1,121 @@
+{
+ "frames": 585,
+ "errors": [],
+ "benny_offscreen_frames": 0,
+ "camera_max_step_u": 0.0939,
+ "camera_max_step_expected_u": 0.1173,
+ "camera_max_turn_deg_per_frame": 1.691,
+ "static_world_meshes": 127,
+ "scenery_meshes_moved": [],
+ "camera_min_clearance_u": 0.514,
+ "benny_water_gap_max_u": 0.001,
+ "benny_water_missing_frames": 0,
+ "benny_posture_vs_surface_max_deg": 14.53,
+ "route_normal_vs_surface_max_deg": 8.95,
+ "immersion_range": [
+  -0.475,
+  0.182
+ ],
+ "bank_range_deg": [
+  0,
+  71.6
+ ],
+ "swipes_sent": 14,
+ "swipes_detected": 14,
+ "input": "real CDP touch",
+ "input_log": [
+  {
+   "dir": "left",
+   "src": "touch",
+   "clock": 1,
+   "result": "lane"
+  },
+  {
+   "dir": "right",
+   "src": "touch",
+   "clock": 2.4,
+   "result": "lane"
+  },
+  {
+   "dir": "right",
+   "src": "touch",
+   "clock": 2.567,
+   "result": "lane"
+  },
+  {
+   "dir": "left",
+   "src": "touch",
+   "clock": 4,
+   "result": "lane"
+  },
+  {
+   "dir": "left",
+   "src": "touch",
+   "clock": 5.4,
+   "result": "lane"
+  },
+  {
+   "dir": "right",
+   "src": "touch",
+   "clock": 6.8,
+   "result": "lane"
+  },
+  {
+   "dir": "right",
+   "src": "touch",
+   "clock": 8.2,
+   "result": "lane"
+  },
+  {
+   "dir": "left",
+   "src": "touch",
+   "clock": 9.6,
+   "result": "lane"
+  },
+  {
+   "dir": "left",
+   "src": "touch",
+   "clock": 11,
+   "result": "lane"
+  },
+  {
+   "dir": "right",
+   "src": "touch",
+   "clock": 12.4,
+   "result": "lane"
+  },
+  {
+   "dir": "right",
+   "src": "touch",
+   "clock": 13.8,
+   "result": "lane"
+  },
+  {
+   "dir": "left",
+   "src": "touch",
+   "clock": 15.2,
+   "result": "lane"
+  },
+  {
+   "dir": "up",
+   "src": "touch",
+   "clock": 16.6,
+   "result": "leap"
+  },
+  {
+   "dir": "left",
+   "src": "touch",
+   "clock": 17.8,
+   "result": "lane"
+  }
+ ],
+ "coins_end": 1750,
+ "s_end": 43.945,
+ "lat_range": [
+  -0.3,
+  0.3
+ ],
+ "hole_frames_checked": 585,
+ "hole_frames": 0,
+ "hole_pixels_max": 0
+}

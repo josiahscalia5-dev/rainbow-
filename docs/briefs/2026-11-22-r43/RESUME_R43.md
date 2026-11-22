@@ -2,6 +2,14 @@
 
 Start a new session on **`ccr-80cdb162-4sqz1a`** (it contains all of round 42 + round 43). Never merge branches / PR #32 without the user's OK.
 
+
+## 0. ROUND 43b (newest, same day) — `qa/reflock/r43b/RESULT_R43b.md`
+User: finish 06; prove the geometry in plain gray; Benny must PHYSICALLY ride the curved water (no floating / picture tricks); same continuous
+steering test textured. Done: Benny 12 % immersed (was floating −4 %), posture on the real surface every frame (gap ≤ 0.001 u); gray test
+fixed the pool (faced down, coplanar with the channel = z-fighting) and the trays (2 cm off the wall); gray + textured whole-level real-touch runs:
+0 holes, 585/585 on screen, 14/14 swipes, camera ≥ 0.51 u from any wall, ≤ 1.69°/frame; picture view 88.5 % (89.5 % had the floating Benny);
+walls in the measured painted magenta. Next: the in-motion look (close-up water, foam, crest bank / camera roll judged by the user).
+
 ## 1. User's newest orders
 `USER_R43.md` (verbatim): generalise the screen builder into a reusable process for EACH screen's own approved picture (Blender Geometry Nodes
 components, per-screen measured geometry / colours / camera), evaluate SAM 2 and Depth Anything V2 (free, controlled comparison, adopt only if
