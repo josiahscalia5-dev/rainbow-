@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3271,
-   "sha256": "e2693347dccc792328edc26272bda50d1091f4ecb834ba07f5ba3f21f1c009ad"
+   "sha256": "f085bbceddc6aa92b82f61edbceb2a31907e855c6b200fb326778dcdecbe7103"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -11648,8 +11648,8 @@
   },
   {
    "path": "docs/briefs/2026-11-21-r38/BONUS_INTEGRATION_PLAN_R38.md",
-   "bytes": 7466,
-   "sha256": "1d74fe1cfb2383051cfd84a0e1fe884fbda185c843bfba5539d68eca02526e4d"
+   "bytes": 9309,
+   "sha256": "4cfcfa1c0117c773c5cb978729d3424a957ddfb9144be74750dd8e3e82330e02"
   },
   {
    "path": "docs/characters/benny.md",
@@ -15600,6 +15600,31 @@
    "path": "qa/bonus/r39/BUBBLE_picture_vs_game_start_diffmap.jpg",
    "bytes": 336308,
    "sha256": "96a958ed05c4ac841a847f52a791ae76ef8d7060edd801ab9ea8da4a7dabb35e"
+  },
+  {
+   "path": "qa/bonus/r39/SOCK_APPROVED_BEFORE_NEW.jpg",
+   "bytes": 778709,
+   "sha256": "6dddf3e357c7d22999f80ae6e187053fa8f12499d44432786758b23275a93feb"
+  },
+  {
+   "path": "qa/bonus/r39/SOCK_NEW_s2.0.jpg",
+   "bytes": 155001,
+   "sha256": "e6ce4b08be0dfc88f2b98e166766b0b7d239d4b781639a3deed48e326fd7783f"
+  },
+  {
+   "path": "qa/bonus/r39/SOCK_NEW_s4.6_left.jpg",
+   "bytes": 149941,
+   "sha256": "fc3ecf278c866ab9c577e46d3e1c8717ca303eeb9bba1153420902440efc4246"
+  },
+  {
+   "path": "qa/bonus/r39/SOCK_NEW_start.jpg",
+   "bytes": 163369,
+   "sha256": "b4fdcd2d382fb2849ae317bf1d5655e9dc0c0223d0e9d28285474e139fd65317"
+  },
+  {
+   "path": "qa/bonus/r39/SOCK_NEW_start_diffmap.jpg",
+   "bytes": 330779,
+   "sha256": "0c2ebce36a4c67234e7187d108586ec0106e38a17e0c31c5664ae61b724570d0"
   },
   {
    "path": "qa/bonus/r39/SOCK_picture_vs_game_start_diffmap.jpg",
@@ -40728,8 +40753,8 @@
   },
   {
    "path": "tools/bonus/bonus.html",
-   "bytes": 111695,
-   "sha256": "29364c3a8339e02dc4f516c32815694cd479c727d0c5652854477151b9e09a22"
+   "bytes": 112606,
+   "sha256": "b3f99d400655fe34fd4828b1ab84943180879f58f87b76392b1c862cce8ec772"
   },
   {
    "path": "tools/bonus/build_phone_bonus.sh",
@@ -40743,8 +40768,8 @@
   },
   {
    "path": "tools/bonus/plate_sock.py",
-   "bytes": 5214,
-   "sha256": "cb1b120b867b8de004031b471b289bc3e621d17a0205e022421820a44cccbea3"
+   "bytes": 5707,
+   "sha256": "a9b1ca2188e5fe5c558e1dc3890614cd3ad80a68cdc13123e63a29998dc0c173"
   },
   {
    "path": "tools/bonus/setup_bonus.sh",
