@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3153,
-   "sha256": "3f938fa2595da5460d516cb8dedf2f4876346785b0b5de284599bfae80b58ba9"
+   "sha256": "456fa0b624a912b16b28c00ce95aa49fe8bf74a137cdfd4ada6810255dd385c7"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -40663,8 +40663,13 @@
   },
   {
    "path": "src/game/Game.ts",
-   "bytes": 44672,
-   "sha256": "f9ac1f3d97d5dd51837ffac9b47608a255eb8d23d049112d6322e4ee6a922f29"
+   "bytes": 45414,
+   "sha256": "d06dcaa81a835a4326e838ba845db72edef4878f93504a792d9b5af20e919fbb"
+  },
+  {
+   "path": "src/game/bonusRoute.ts",
+   "bytes": 935,
+   "sha256": "b3f8b1380c761f6d5cf720ac4d32359efca99b972d074300e9c700d49a041a94"
   },
   {
    "path": "src/game/cameraRig.ts",
@@ -41817,6 +41822,11 @@
    "sha256": "c72fbe261e380954f256fef1062d347b5a4db72d32bdfe0ed34906312bc73abc"
   },
   {
+   "path": "tools/reflock/build_section_app.sh",
+   "bytes": 1979,
+   "sha256": "185f6e02da952ebb3cfd71c776b8f5602d720c7a018443ddcf2df75b9ae6acd6"
+  },
+  {
    "path": "tools/reflock/compare_section.py",
    "bytes": 2405,
    "sha256": "f4cc25330c4b739173e2fccb0f1e516cd0c5362b190b162531b3026e6ad21672"
@@ -41848,8 +41858,13 @@
   },
   {
    "path": "tools/reflock/section.html",
-   "bytes": 49444,
-   "sha256": "030a1883f6b07c7e0e174e8b3f3056fdca4d88e9fef48f9b60ba7f91a7a8f162"
+   "bytes": 51767,
+   "sha256": "38299979a4ec8d492e47557358fa906b6321addc7b155e86030d7178629c1ebe"
+  },
+  {
+   "path": "tools/reflock/section_export.cjs",
+   "bytes": 2039,
+   "sha256": "3cb7589bfa374d0f54b73bf993bb3d802e7e66924db47b3c6dc513bcd5ad9350"
   },
   {
    "path": "tools/reflock/section_run.cjs",

@@ -183,8 +183,14 @@ const REF = { bubble: SEC.cams.bubble, sock: SEC.cams.sock };
 const refCam = (c) => { const k = new THREE.PerspectiveCamera(SEC.fov, SEC.img[0] / SEC.img[1], 0.05, 200); k.rotation.order = 'YXZ'; k.position.copy(V3(c.pos)); k.rotation.set(c.pitch, c.yaw, 0); k.updateMatrixWorld(); k.updateProjectionMatrix(); return k; };
 const CAMS = { bubble: refCam(REF.bubble), sock: refCam(REF.sock) };
 window.REFCAM = CAMS;
-const BAKE_STATS = {};
-if (q.get('bake') !== '0') {
+const BAKE_STATS = {}, BAKE_DATA = {};
+const MANI = q.get('prebaked') === '0' ? null : await fetch('baked/manifest.json').then((r) => (r.ok ? r.json() : null)).catch(() => null);
+if (MANI) {   // the app build: the bake was done once offline (same code, ?savebake=1) and shipped as PNGs
+  const cache = {}; const ld = (f, den) => (cache[f] ??= tl.loadAsync('baked/' + f).then((t) => { t.colorSpace = THREE.NoColorSpace; if (den) { t.generateMipmaps = false; t.minFilter = t.magFilter = THREE.LinearFilter; } else { t.anisotropy = 8; } return t; }));
+  const all = []; world.traverse((o) => { if (o.isMesh && MANI.meshes[o.name]) all.push(o); });
+  await Promise.all(all.map(async (o) => { const e = MANI.meshes[o.name]; o.material.uniforms.uBake.value = await ld(e.bake); o.material.uniforms.uDen.value = await ld(e.den, true); o.material.uniforms.uBakeOn.value = 1; BAKE_STATS[o.name] = e.cov; }));
+  BAKE_STATS._prebaked = all.length;
+} else if (q.get('bake') !== '0') {
   const [p0, p1, m0, m1] = await Promise.all([loadRaw('plate_bubble.png'), loadRaw('plate_sock.png'), loadRaw('mask_bubble.png'), loadRaw('mask_sock.png')]);   // clean plates: picture pixels outside the masks
   const depthOf = (cam) => { const rt = new THREE.WebGLRenderTarget(SEC.img[0], SEC.img[1]); rt.depthTexture = new THREE.DepthTexture(SEC.img[0], SEC.img[1]);
     renderer.setRenderTarget(rt); renderer.render(scene, cam); renderer.setRenderTarget(null); return rt; };
@@ -192,7 +198,7 @@ if (q.get('bake') !== '0') {
   const vp = (c) => new THREE.Matrix4().multiplyMatrices(c.projectionMatrix, c.matrixWorldInverse);
   const bakeMat = new THREE.ShaderMaterial({ side: THREE.DoubleSide, depthTest: false, depthWrite: false,
     uniforms: { uP0: { value: p0 }, uP1: { value: p1 }, uM0: { value: m0 }, uM1: { value: m1 }, uD0: { value: d0.depthTexture }, uD1: { value: d1.depthTexture },
-      uVP0: { value: vp(CAMS.bubble) }, uVP1: { value: vp(CAMS.sock) }, uNF: { value: new THREE.Vector2(0.05, 200) }, uImg: { value: new THREE.Vector2(...SEC.img) }, uDens: { value: new THREE.Vector2(...(q.get('dens') ?? '50,160').split(',').map(Number)) }, uMode: { value: 0 } },
+      uVP0: { value: vp(CAMS.bubble) }, uVP1: { value: vp(CAMS.sock) }, uNF: { value: new THREE.Vector2(0.05, 200) }, uImg: { value: new THREE.Vector2(...SEC.img) }, uDens: { value: new THREE.Vector2(...(q.get('dens') ?? '15,60').split(',').map(Number)) }, uMode: { value: 0 } },
     vertexShader: 'varying vec3 vW; void main(){ vW = (modelMatrix * vec4(position, 1.0)).xyz; gl_Position = vec4(uv * 2.0 - 1.0, 0.0, 1.0); }',
     fragmentShader: `uniform sampler2D uP0, uP1, uM0, uM1, uD0, uD1; uniform mat4 uVP0, uVP1; uniform vec2 uNF, uImg, uDens; uniform float uMode; varying vec3 vW;
       float lin(float d){ float z = d * 2.0 - 1.0; return 2.0 * uNF.x * uNF.y / (uNF.y + uNF.x - z * (uNF.y - uNF.x)); }
@@ -235,6 +241,7 @@ if (q.get('bake') !== '0') {
     renderer.setRenderTarget(rd); renderer.setClearColor(0x000000, 0); renderer.clear(); renderer.render(bakeScene, oc); renderer.setRenderTarget(null); bakeScene.remove(tmp); bakeMat.uniforms.uMode.value = 0;
     const dp = new Uint8Array(dw * dh * 4); renderer.readRenderTargetPixels(rd, 0, 0, dw, dh, dp); rd.dispose();
     const den = new THREE.DataTexture(dp, dw, dh); den.minFilter = den.magFilter = THREE.LinearFilter; den.needsUpdate = true;
+    BAKE_DATA[o.name] = { w: bw, h: bh, px: out, dw, dh, dp, cov };
     return { cov, tex: t, den }; };
   const RES = (o) => { const f = o.userData.fam, n = o.name;
     if (f === 'tunnel') return [2048, 1024]; if (f === 'water') return /water_c0|water_c1/.test(n) ? [2048, 2048] : [1024, 2048]; if (f === 'pink') return [2048, 2048]; if (f === 'ring' || f === 'arch') return [2048, 256];
@@ -246,16 +253,23 @@ if (q.get('bake') !== '0') {
   for (const fam of ['ring', 'towel', 'silver', 'tunnel']) {
     const L = all.filter((o) => o.userData.fam === fam && (fam !== 'tunnel' || !/tunnel_0[0-2]/.test(o.name)));
     const best = L.reduce((b, o) => ((o.userData.bakeCov ?? 0) > (b?.userData.bakeCov ?? 0) ? o : b), null); if (!best || !best.material.uniforms.uBake.value) continue;
-    for (const o of L) if ((o.userData.bakeCov ?? 0) < 0.35 * best.userData.bakeCov) { for (const k of ['uBake', 'uDen']) o.material.uniforms[k].value = best.material.uniforms[k].value; o.material.uniforms.uBakeOn.value = 1; o.userData.template = best.name; }
+    for (const o of L) if ((o.userData.bakeCov ?? 0) < 0.35 * best.userData.bakeCov) { for (const k of ['uBake', 'uDen']) o.material.uniforms[k].value = best.material.uniforms[k].value; o.material.uniforms.uBakeOn.value = 1; o.userData.template = best.name; BAKE_DATA[o.name] = { template: best.name }; }
   }
   BAKE_STATS._ms = Math.round(performance.now() - tStart); d0.dispose(); d1.dispose();
 }
 window.bakeStats = () => BAKE_STATS;
+// ?savebake=1: export the bake (PNG data URLs, rows flipped to image order) for the app build: tools/reflock/section_export.cjs
+window.bakeExport = (name) => { const d = BAKE_DATA[name]; if (!d) return null; if (d.template) return { template: d.template };
+  const png = (w, h, px) => { const c = document.createElement('canvas'); c.width = w; c.height = h; const g = c.getContext('2d'), im = g.createImageData(w, h);
+    for (let y = 0; y < h; y++) im.data.set(px.subarray((h - 1 - y) * w * 4, (h - y) * w * 4), y * w * 4); g.putImageData(im, 0, 0); return c.toDataURL('image/png'); };
+  return { bake: png(d.w, d.h, d.px), den: png(d.dw, d.dh, d.dp), cov: +d.cov.toFixed(3) }; };
+window.bakeNames = () => Object.keys(BAKE_DATA);
 
 // ---------------- foam heaps (real 3D domes) where the pictures paint foam on the water, + banks along the tunnel walls; bubbles ----------------
 const FOAM = [];
 { const rp = (() => { let x = 777; return () => ((x = (x * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff); })();
-  for (const [name, src] of [['bubble', 'bubble.webp'], ['sock', 'sock.webp']]) {
+  if (MANI?.foam) for (const f of MANI.foam) FOAM.push(f);
+  else for (const [name, src] of [['bubble', 'bubble.webp'], ['sock', 'sock.webp']]) {
     const img = await new Promise((r) => { const i = new Image(); i.onload = () => r(i); i.src = src; }); const cv = document.createElement('canvas'); cv.width = img.width; cv.height = img.height;
     const g = cv.getContext('2d'); g.drawImage(img, 0, 0); const D = g.getImageData(0, 0, img.width, img.height).data;
     const mimg = await new Promise((r) => { const i = new Image(); i.onload = () => r(i); i.src = `mask_${name}.png`; }); const mc = document.createElement('canvas'); mc.width = mimg.width; mc.height = mimg.height; const mg = mc.getContext('2d'); mg.drawImage(mimg, 0, 0); const MD = mg.getImageData(0, 0, mimg.width, mimg.height).data;
@@ -269,7 +283,8 @@ const FOAM = [];
       const key = Math.round(P.x / 0.09) + ',' + Math.round(P.z / 0.09); cells.set(key, (cells.get(key) ?? 0) + 1); }
     for (const [key, nn] of cells) { if (nn < 6) continue; const [cx, cz] = key.split(',').map(Number); FOAM.push([cx * 0.09 + (rp() - 0.5) * 0.03, cz * 0.09 + (rp() - 0.5) * 0.03, 0.06 + rp() * 0.05]); }
   }
-  for (let z = T.funnel[1] - 0.2; z > Z_EXIT; z -= 0.07 + rp() * 0.05) for (const side of [-1, 1]) { if (Math.abs(z - PBS.z) < 3.2) continue;
+  window.foamPainted = () => FOAM.slice();
+  for (let z = T.funnel[1] - 0.2; z > Z_EXIT && !MANI?.foam; z -= 0.07 + rp() * 0.05) for (const side of [-1, 1]) { if (Math.abs(z - PBS.z) < 3.2) continue;
     const c = chord(z); FOAM.push([side * (c - 0.05 - rp() * 0.03), z, 0.05 + rp() * 0.04]); }
   const fGeo = new THREE.IcosahedronGeometry(0.5, 2), Lw = new THREE.Vector3(-0.25, 0.8, 0.55).normalize();
   const fMat = new THREE.ShaderMaterial({ uniforms: { uL: { value: Lw }, ...GLOW },
@@ -317,7 +332,7 @@ bmat.onBeforeCompile = (sh) => { Object.assign(sh.uniforms, U); sh.vertexShader 
 const bmesh = new THREE.Mesh(bgeo, bmat); bmesh.frustumCulled = false;
 const bennyH = SEC.benny.height, KH = 0.9 * bennyH / (0.99 * 0.78);
 const holder = new THREE.Group(); holder.rotation.y = Math.PI; holder.scale.setScalar(KH); holder.position.y = 0.496 * KH - 0.22 * 0.99 * KH; holder.add(bmesh);
-bmesh.scale.set(0.8, 0.84, 0.8);
+bmesh.scale.set(0.8, 0.84, 0.8); holder.scale.multiplyScalar(+(q.get('bsize') ?? 1.24)); holder.position.y *= +(q.get('bsize') ?? 1.24);   // Benny at the painted size in both pictures (measured box)
 const benny = new THREE.Group(); benny.add(holder); scene.add(benny);
 const pxW = bennyH / 400;
 const splashTex = await tl.loadAsync('splash.png'); splashTex.colorSpace = THREE.SRGBColorSpace;
@@ -326,7 +341,7 @@ const bubTex = await tl.loadAsync('bubble.png'); bubTex.colorSpace = THREE.SRGBC
 const ctex = await tl.loadAsync('coin.png'); ctex.colorSpace = THREE.SRGBColorSpace;
 const C0 = V3(SEC.coins.bubble[0]), coinD = 2 * 38 * C0.distanceTo(V3(REF.bubble.pos)) / SEC.focal_px;
 const TRAIL = [], TRAIL_S = []; for (let s = 0; s <= LEVEL + 1e-9; s += 0.05) { TRAIL.push(at(s, new THREE.Vector3()).toArray()); TRAIL_S.push(+s.toFixed(4)); }
-const coins = []; let coinCount = 1420; const coinEl = document.getElementById('coins');
+const coins = []; let coinCount = +(q.get('coins') ?? 1420); const coinEl = document.getElementById('coins'); coinEl.textContent = '\u{1FA99} ' + coinCount.toLocaleString('en-US');
 const CT = installControls({ THREE, TR: { trail: TRAIL, trail_s: TRAIL_S, N: 0 }, canvas: renderer.domElement, camera, q, at, frameAt, coins, scene, U, bmat, benny, splash, splashTex, bubTex, coinTex: ctex, coinD,
   bennyFullH: 0.99 * KH, pxW, coinEl, getS: () => st.s, getCoins: () => coinCount, render: () => renderer.render(scene, camera) });
 // coins: the painted coin trails of both pictures at their painted places, then runs through the funnel and down the Sock Rescue tunnel
@@ -378,6 +393,7 @@ window.step = (t, dt, steer, speed) => {
     m.scale.setScalar(c.got >= 0 ? c.sp.scale.x : coinD); m.quaternion.setFromAxisAngle(UPV, 0.5 * Math.sin(t * 1.9 + i * 1.3)); });
   for (const sk of SOCKS) { if (!sk.visible) continue; sk.geometry.computeBoundingSphere(); const c = sk.geometry.boundingSphere.center.clone().add(sk.position);
     if (Math.abs(c.z - benny.position.z) < 0.25 && Math.abs(c.x - benny.position.x) < 0.3) { sk.visible = false; socksGot = Math.min(5, socksGot + 1); drawSlots(); } }
+  if (q.get('return') === '1' && st.s >= LEVEL - 0.05 && !st.left) { st.left = true; setTimeout(() => { location.href = '../index.html?resume=05&bonus=1&coins=' + coinCount; }, 250); }
   const inT = camera.position.z < T.z_arch - 0.3; titleEl.style.display = inT ? 'none' : ''; badgeEl.style.display = inT ? 'none' : ''; missionEl.style.display = inT ? 'block' : 'none';
   return { s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: coinCount, socks: socksGot, z: +benny.position.z.toFixed(3), ...CT.state() };
 };

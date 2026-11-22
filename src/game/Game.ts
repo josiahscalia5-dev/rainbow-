@@ -28,6 +28,7 @@ import { buildMatch08 } from '../world/match08';
 import { buildPaint06, PAINT06_REST } from '../world/paint06';
 import { buildPaint } from '../world/paint';
 import { loadBennyRuntime, loadGirlRuntime, loadWater, moduleStatus } from './modules';
+import { BONUS_ROUTE } from './bonusRoute';
 
 type Mode = 'intro' | 'ride' | 'outro' | 'end';
 const START_COINS = 1330;
@@ -358,11 +359,14 @@ export async function startGame(canvas: HTMLCanvasElement) {
   };
 
   // ---------------------------------------------------------------- ride (03–10)
+  let bonusLeft = false;
   const rideUpdate = (dt: number) => {
     input.update(dt);
     const stg = course.stageAtS(st.s);
     const speed = course.prop('speed', st.s) * (paint ? paint.speedK(st.s) : p06 ? p06.speedK(st.s) : 1);
     st.s = Math.min(course.stage('11').s0, st.s + speed * dt);
+    // round 40 (off by default): from the end of 04 Benny swims into the Bubble Dash -> Sock Rescue section, then back at 05
+    if (BONUS_ROUTE.enabled && !BONUS_ROUTE.resume && !bonusLeft && st.s >= course.stage('05').s0) { bonusLeft = true; st.paused = true; BONUS_ROUTE.go(st.coins); }
     const halfW = course.widthAt(st.s) / 2;
     const safe = halfW - 0.75;
     st.vlat += (input.steer * 7.5 - st.vlat) * Math.min(1, dt * 8);
@@ -542,7 +546,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
     st.paused = true;
     void playCinematic(introVideo, { onEnding: () => { st.paused = false; } });
   };
-  playIntroVideo();
+  if (!(BONUS_ROUTE.enabled && BONUS_ROUTE.resume)) playIntroVideo();
   const togglePause = () => {
     if (st.mode !== 'ride') return;
     st.paused = !st.paused;
@@ -811,5 +815,8 @@ export async function startGame(canvas: HTMLCanvasElement) {
     course,
   };
   (window as unknown as { __rainbow: typeof api }).__rainbow = api;
+  if (BONUS_ROUTE.enabled && BONUS_ROUTE.resume === '05') {   // back from the section: continue at the Screen 05 checkpoint with the coins collected
+    gotoCheckpoint('05'); if (Number.isFinite(BONUS_ROUTE.resumeCoins)) { st.coins = BONUS_ROUTE.resumeCoins; hud.setCoins(st.coins); } running = true; last = performance.now();
+  }
   return api;
 }
