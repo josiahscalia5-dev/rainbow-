@@ -109,8 +109,8 @@
   "t0": 0.25,
   "t1": 9.0,
   "blend_t": [
-   3.2,
-   6.5
+   5.0,
+   8.5
   ]
  },
  "benny_start_px": [
@@ -134,9 +134,10 @@
   "static_world": true
  },
  "exit_glow": [
-  -9.0,
+  -8.0,
   0.0,
-  0.55
+  0.5
  ],
- "foam_cell": 0.05
+ "foam_cell": 0.05,
+ "exit_room_note": "bright exit chamber the tunnel opens into: its light is the painted glowing core"
 }

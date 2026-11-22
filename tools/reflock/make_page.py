@@ -32,15 +32,17 @@ patch("const OWNFADE = PROJ ? [-2, -1] : (K.own?.fade ?? [0.42, 0.62]);",
 patch("const ringT = (k) => K.Z2 + (k - 2) * K.S;", "const ringT = (k) => (k < PH.ring_ts.length ? PH.ring_ts[k] : PH.ring_ts[PH.ring_ts.length - 1] + (k - PH.ring_ts.length + 1) * PH.S);   // world-fixed physical rings (phys.json)\nconst secLen = (k) => ringT(k + 1) - ringT(k);")
 patch("uZ2: { value: K.Z2 }", "uZ2: { value: 1e6 }, uGlowC: { value: new THREE.Color(1.0, 0.93, 0.80) }, uGlowT: { value: new THREE.Vector3(PH.ring_ts[PH.exit_ring] + SC.exit_glow[0], PH.ring_ts[PH.exit_ring] + SC.exit_glow[1], SC.exit_glow[2]) }")
 patch("""'#include <common>\\nuniform float uBias;' + (own ? '\\nuniform sampler2D uOwn; uniform vec2 uVr; uniform vec2 uFade; uniform float uOwnOff; varying float vKitT; varying float vKitD;' : ''));""",
-      """'#include <common>\\nuniform float uBias; uniform vec3 uGlowC; uniform vec3 uGlowT; varying float vKitT; varying float vKitD;' + (own ? '\\nuniform sampler2D uOwn; uniform vec2 uVr; uniform vec2 uFade; uniform float uOwnOff;' : ''))
+      """'#include <common>\\nuniform float uBias; uniform vec3 uGlowC; uniform vec3 uGlowT; varying float vKitT; varying float vKitD;' + (own ? '\\nuniform sampler2D uOwn; uniform vec2 uVr; uniform vec2 uFade; uniform float uOwnOff; uniform float uSecR;' : ''))
       .replace('#include <alphamap_fragment>', '{ float kGl = uGlowT.z * pow(smoothstep(uGlowT.x, uGlowT.y, vKitT), 1.6); diffuseColor.rgb = mix(diffuseColor.rgb, uGlowC, kGl); }\\n#include <alphamap_fragment>');""")
+patch("uFade: { value: new THREE.Vector2(...OWNFADE) } } : {};", "uFade: { value: new THREE.Vector2(...OWNFADE) }, uSecR: { value: own.secR ?? 1 } } : {};")
+patch("1.0 - (uVr.x + (1.0 - vMapUv.y) * (uVr.y - uVr.x))", "1.0 - (uVr.x + (1.0 - vMapUv.y) * uSecR * (uVr.y - uVr.x))")   # own rows span the real section length
 patch("float kF = smoothstep(uFade.x, uFade.y, vKitD / max(vKitT, 1e-3)) * (1.0 - uOwnOff);",
       "float kF = 1.0 - smoothstep(uFade.x, uFade.y, vKitT);   // physical: own pixels on the near sections, world-fixed hand-over")
 patch("uniform float uFlowOn; varying float vKitT; varying float vKitD;", "uniform float uFlowOn;")
 patch("'uniform float uBias; varying float vKitT; varying float vKitD;'", "'uniform float uBias;'")
 patch("tex('wall.png'), tex('ring.png')", "tex('wall_tile.png'), tex('ring_tile.png')")
 patch("const ownOf = (kind, atlas, k) => { const r = K.own?.[kind]?.rows?.[k]; return r && !q.get('noown') ? { tex: atlas, vr: [r[0] / K.own[kind].h, r[1] / K.own[kind].h] } : null; };",
-      "const ownOf = (kind, atlas, k) => { const r = PH.own?.[kind]?.rows?.[k]; return r && !q.get('noown') && ringT(k) < OWNFADE[1] ? { tex: atlas, vr: [r[0] / PH.own[kind].h, r[1] / PH.own[kind].h] } : null; };")
+      "const ownOf = (kind, atlas, k) => { const r = PH.own?.[kind]?.rows?.[k]; return r && !q.get('noown') && ringT(k) < OWNFADE[1] ? { tex: atlas, vr: [r[0] / PH.own[kind].h, r[1] / PH.own[kind].h], secR: kind === 'wall' ? PH.S / secLen(k) : 1 } : null; };")
 # live river: no camera-distance pattern (near-camera arcs) and no camera-distance glow; the exit light is world-space (uGlow*)
 patch("float near = (1.0 - smoothstep(0.9, 2.6, kZ)) * (1.0 - simple);", "float near = 0.0;   // physical: no camera-relative arcs")
 patch("col = mix(col, w37c(200.0, 235.0, 255.0), 0.28 * smoothstep(5.0, 16.0, kZ) * exp(-u * u * 1.5));", "// physical: the far glow comes from the real exit light (uGlow*), not from the camera distance")
@@ -82,8 +84,10 @@ physGroup.add(waterGrid(T_EXIT - 0.3, T_EXIT + ROOM.depth - 1.0 + ROOM.radius * 
 { const m = new THREE.ShaderMaterial({ side: THREE.BackSide, toneMapped: false, uniforms: { uC: { value: roomC }, uA: { value: A.clone() }, uU: { value: NUP.clone() } },
     vertexShader: 'varying vec3 vD; uniform vec3 uC; void main(){ vec4 wp = modelMatrix * vec4(position, 1.0); vD = normalize(wp.xyz - uC); gl_Position = projectionMatrix * viewMatrix * wp; }',
     fragmentShader: `varying vec3 vD; uniform vec3 uA; uniform vec3 uU; void main(){ float f = dot(vD, uA), u = dot(vD, uU);
-      vec3 core = vec3(1.0, 0.99, 0.94), warm = vec3(1.0, 0.85, 0.60), pink = vec3(0.97, 0.66, 0.86);
-      vec3 c = mix(mix(pink, warm, smoothstep(-0.7, 0.2, f)), core, smoothstep(0.25, 0.95, f)); c = mix(c, core, 0.3 * smoothstep(0.1, 1.0, u));
+      // the painting's far light: a small white-hot centre straight down the tunnel, warm gold around it, peach-pink toward the sides
+      vec3 core = vec3(1.0, 0.98, 0.90), gold = vec3(1.0, 0.74, 0.36), warm = vec3(1.0, 0.84, 0.62), pink = vec3(0.96, 0.62, 0.84);
+      vec3 c = mix(pink, warm, smoothstep(-0.7, 0.4, f)); c = mix(c, gold, smoothstep(0.8, 0.97, f)); c = mix(c, core, smoothstep(0.985, 0.998, f));
+      c = mix(c, core, 0.2 * smoothstep(0.3, 1.0, u));
       gl_FragColor = vec4(c, 1.0); }` });
   const room = new THREE.Mesh(new THREE.SphereGeometry(ROOM.radius, 48, 32), m); room.position.copy(roomC); room.name = 'exit_room'; physGroup.add(room); }
 // real 3D gold paddles (the painted lifters): the painted placement on the sections the picture shows, then repeating; own painted
