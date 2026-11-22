@@ -15,18 +15,18 @@ vec3 ribbonWater(vec3 L, float t, float flow, vec3 vWv){
   float rx = texture2D(uRouteX, vec2(zt, 0.5)).r, sl = (texture2D(uRouteX, vec2(min(1.0, zt + e), 0.5)).r - texture2D(uRouteX, vec2(max(0.0, zt - e), 0.5)).r) / 0.06;
   float lat = (L.x - rx) / sqrt(1.0 + sl * sl), d = -L.z + t * flow, hw = uRouteZ.z;
   // the whole band pattern swings across the river in S-curves (the painting's pink ribbons sweep from side to side)
-  float n = lat / hw + 0.32 * sin(d * 0.78 + 0.6) + 0.12 * sin(d * 1.9 + 2.0), an = abs(n) + 0.05 * sin(d * 2.3 + n * 2.5);
+  float n = lat / hw + 0.42 * sin(d * 0.95 + 0.6) + 0.14 * sin(d * 2.2 + 2.0), an = abs(n) + 0.05 * sin(d * 2.6 + n * 2.5);   // stronger, tighter S-swing (painting)
   vec3 cyD = vec3(4.0, 139.0, 234.0) / 255.0, cyM = vec3(10.0, 168.0, 250.0) / 255.0, cyB = vec3(42.0, 220.0, 249.0) / 255.0;
   vec3 pkD = vec3(204.0, 32.0, 159.0) / 255.0, pkM = vec3(244.0, 60.0, 215.0) / 255.0, pkB = vec3(248.0, 110.0, 236.0) / 255.0;
   float ea = max(0.04, 1.5 * fwidth(an));
   // two pink ribbons per side (the painting: about as much pink as cyan): inner 0.42-0.95, outer 1.25-1.75
-  float p1 = smoothstep(0.42 - ea, 0.52 + ea, an) * (1.0 - smoothstep(0.9 - ea, 1.02 + ea, an));
-  float p2 = smoothstep(1.22 - ea, 1.34 + ea, an) * (1.0 - smoothstep(1.68 - ea, 1.82 + ea, an));
+  float p1 = smoothstep(0.46 - ea, 0.54 + ea, an) * (1.0 - smoothstep(0.8 - ea, 0.9 + ea, an));   // narrower pink ribbons
+  float p2 = smoothstep(1.2 - ea, 1.28 + ea, an) * (1.0 - smoothstep(1.52 - ea, 1.62 + ea, an));
   float pinkW = max(p1, p2);
   vec3 cyan = mix(cyM, cyB, 0.7 * (1.0 - smoothstep(0.0, 0.42, an)));
   cyan = mix(cyan, mix(cyM, cyB, 0.35), smoothstep(1.0, 1.15, an) * (1.0 - smoothstep(1.2, 1.3, an)));   // the bright cyan seam between the pinks
   cyan = mix(cyan, mix(cyD, cyM, 0.6), smoothstep(1.75, 2.1, an));
-  float pc = max(1.0 - clamp(abs(an - 0.71) / 0.24, 0.0, 1.0), 1.0 - clamp(abs(an - 1.5) / 0.24, 0.0, 1.0));
+  float pc = max(1.0 - clamp(abs(an - 0.67) / 0.18, 0.0, 1.0), 1.0 - clamp(abs(an - 1.4) / 0.18, 0.0, 1.0));
   vec3 pink = mix(pkD, pkM, smoothstep(0.0, 0.6, pc)); pink = mix(pink, pkB, 0.6 * smoothstep(0.55, 1.0, pc));
   vec3 col = mix(cyan, pink, pinkW);
   // brushed silk: soft fine streaks along the flow, short and irregular (not ruled lines)
@@ -35,7 +35,12 @@ vec3 ribbonWater(vec3 L, float t, float flow, vec3 vWv){
   float seg = smoothstep(0.5, 0.85, rbN(vec2(floor(w) * 1.37, d * 1.7))) * (0.55 + 0.45 * rbN(vec2(floor(w) * 0.71, d * 0.5)));
   float vis = 1.0 - smoothstep(0.25, 0.7, fw);
   vec3 lineCol = mix(vec3(0.92, 0.99, 1.0), vec3(1.0, 0.76, 0.96), pinkW);
-  col = mix(col, lineCol, clamp(line * seg * vis, 0.0, 1.0) * mix(0.5, 0.4, pinkW));
+  col = mix(col, lineCol, clamp(line * seg * vis, 0.0, 1.0) * mix(0.5, 0.45, pinkW));
+  // the painting's silky glow: a second, finer streak layer everywhere (dense, soft, bright) + luminous band centres
+  float w3 = lat * 80.0 + 0.8 * sin(d * 0.9 + lat * 3.0) + 1.4 * rbN(vec2(lat * 6.0, d * 0.5)), fw3 = max(fwidth(w3), 1e-4), f3 = abs(fract(w3) - 0.5) * 2.0;
+  float l3 = (1.0 - smoothstep(0.0, max(0.35, 1.8 * fw3), f3)) * (0.35 + 0.65 * rbN(vec2(floor(w3) * 0.9, d * 2.4))) * (1.0 - smoothstep(0.3, 0.8, fw3));
+  col = mix(col, mix(vec3(0.75, 0.97, 1.0), vec3(1.0, 0.7, 0.95), pinkW), 0.32 * l3);
+  col = mix(col, col * 1.12 + 0.04, 0.6 * (1.0 - smoothstep(0.0, 0.3, an)) + 0.5 * smoothstep(0.6, 1.0, pc) * pinkW);   // glow in the cyan centre and along each pink ribbon
   // the painting's bright white DASHES: short, thick-ish, along the flow, many in the cyan, some on the pink
   vec2 gd = vec2(lat * 7.0, d * 1.25); vec2 cd = floor(gd); float hd = rbH(cd + 7.7);
   if (hd < 0.42) { vec2 o = (gd - cd - vec2(0.5 + 0.3 * (rbH(cd + 2.2) - 0.5), 0.5)) / vec2(7.0, 1.25); float lenD = 0.12 + 0.2 * rbH(cd + 5.5), wid = 0.006 + 0.008 * rbH(cd + 9.1);

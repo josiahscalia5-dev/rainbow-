@@ -3980,3 +3980,29 @@ Do you like this direction? If yes, I'll keep refining it toward your picture an
 
 If anything, it's like if anything looks messy and on my screens, and you need to rebuild it so it doesn't look messy, just keep going. Keep going until my screens, at least some of my screens, start to look almost very close to my approved screens. I'm not saying it has to look exactly, but at least 90%-ish kind of range. But anything that looks messy or anything because you said it was painted or made, whatever, for my approved screens, then fix that so it looks like it doesn't look messy anymore. It's that simple.
 
+### 🤖 Claude — 2026-11-22T20:08:00.132Z
+
+Understood: I'll keep going on my own, rebuild anything that looks messy, and aim for about 90 % on at least some screens. Order of work:
+1. **Water in 05:** finish the clean ribbon water (glow, narrower winding pink bands, finer streaks) and make it the game's water for 05.
+2. **Other messy parts:** lumpy foam, oversized ghost bubbles near the camera, coins stacking in a column, smeared water near the camera.
+3. **Your picture view:** push 05 and 06 toward 90 %, starting with sharper painted surfaces.
+4. **Then:** rebuild, check every part automatically, a new recording, and a new APK.
+
+Starting with the water refinement:
+
+### 🤖 Claude — 2026-11-22T20:08:13.997Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/water_ribbon.js'; s=open(p).read()\nR=[(\"float n = lat / hw + 0.32 * sin(d * 0.78 + 0.6) + 0.12 * sin(d * 1.9 + 2.0), an = abs(n) + 0.05 * sin(d * 2.3 + n * 2.5);\",\n    \"float n = lat / hw + 0.42 * sin(d * 0.95 + 0.6) + 0.14 * sin(d * 2.2 + 2.0), an = abs(n) + 0.05 * sin(d * 2.6 + n * 2.5);   // stronger, tighter S-swing (painting)\"),\n   (\"float p1 = smoothstep(0.42 - ea, 0.52 + ea, an) * (1.0 - smoothstep(0.9 - ea, 1.02 + ea, an));\",\n    \"float p1 = smoothstep(0.46 - ea, 0.54 + ea, an) * (1.0 - smoothstep(0.8 - ea, 0.9 + ea, an));   …[+2436 chars]`
+
+### 🤖 Claude — 2026-11-22T20:08:14.705Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/r3.jpg"}`
+
+### 🧑 User — 2026-11-22T20:08:38.833Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🧑 User — 2026-11-22T20:08:38.854Z
+
+> ↩︎ result: [image]
+

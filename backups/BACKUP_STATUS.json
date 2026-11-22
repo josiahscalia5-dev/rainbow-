@@ -1,19 +1,19 @@
 {
   "last_run": {
-    "time": "2026-11-22T20:07:07+00:00",
-    "reason": "manual:r45-water-ribbon-test",
+    "time": "2026-11-22T20:07:41+00:00",
+    "reason": "hook:Stop",
     "result": "committed+pushed",
-    "files_staged": 8,
+    "files_staged": 5,
     "pushed_verified": true,
     "branch": "ccr-c1b272d2-3ru7yx",
     "note": "following session branch 'ccr-c1b272d2-3ru7yx' (config branch 'claude/rainbow-r22-restore-ut3m39')",
-    "commit": "c7cab2a0a6ed3f780a68362a09b64b066536f046",
-    "duration_s": 23
+    "commit": "453dff7bf964b06b65e93e9f3dafcca4f8109201",
+    "duration_s": 21
   },
   "repo": "https://github.com/josiahscalia5-dev/rainbow-",
   "branch": "ccr-c1b272d2-3ru7yx",
-  "last_verified_remote_sha": "c7cab2a0a6ed3f780a68362a09b64b066536f046",
-  "last_successful_backup_utc": "2026-11-22T20:07:07+00:00",
+  "last_verified_remote_sha": "453dff7bf964b06b65e93e9f3dafcca4f8109201",
+  "last_successful_backup_utc": "2026-11-22T20:07:41+00:00",
   "consecutive_failures": 0,
   "schedule": "every 5 min, container-local (scheduler=daemon status=active pid=175); see backups/RECOVERY.md for limits",
   "next_scheduled_utc": "2026-11-22T20:10:00+00:00"
