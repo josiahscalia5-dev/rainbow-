@@ -1,3 +1,15 @@
+# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUNDS 38-39 (2026-11-22 ~01:40 UTC, branch `ccr-1a97503a-p221vc`)
+Two NEW candidate bonus areas (NOT in the 11-screen route; approved screens untouched): Sock Rescue (between 06 and 07) and Bubble Dash Chamber
+(between 04 and 05), as isolated test switches on `tools/bonus/bonus.html` (`?area=sock` / `?area=bubble`; `bash tools/bonus/setup_bonus.sh <ws>`).
+Round 39 (user-approved, free tools only): Sock Rescue camera + tunnel FITTED to the picture (`tools/bonus/fit_sock.py`), the picture's own
+pixels projected + BAKED onto walls / rings / towels / paddles (`tools/bonus/plate_sock.py`), start view 9.8 % -> 68.3 % of scenery within 20
+levels (colour look 0.55 -> 0.95); then the user's reference-video MOVEMENT (camera glides to the tunnel centre behind Benny, normal perspective,
+speed 1.9, Benny crosses the river on swipes). Water tuned by measurement (`tools/bonus/water_stats.py`). Phone test (private):
+https://claude.ai/artifact/FXY6sg3BMqBdb3yiNieaUN (Sock) · https://claude.ai/artifact/4uc39tWfZ3UykRLXoBE1hu (Bubble, round 38).
+Everything + numbers + honest limits: **`docs/briefs/2026-11-21-r38/BONUS_INTEGRATION_PLAN_R38.md`**; evidence `qa/bonus/r38/`, `qa/bonus/r39/`.
+Open: Benny back-projection fix; upscaled close-up art; Bubble Dash fit (same method); Screen 05 A/B/C still the user's choice.
+Atlas connector: no active Atlas account (user must sign up at atlas.worldlabs.ai); no paid credits spent in rounds 37-39.
+
 # ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 37 (2026-11-21 ~23:40 UTC, branch `ccr-1a97503a-p221vc`)
 Screen 05 ONLY. User asked for THREE buildable options before any more rebuilding (A max artwork fidelity / B natural 3D water / C arcade),
 same Benny + swipes + camera + coins in all three, real engine renders, then THE USER CHOOSES. Built as URL switches on the kit test page

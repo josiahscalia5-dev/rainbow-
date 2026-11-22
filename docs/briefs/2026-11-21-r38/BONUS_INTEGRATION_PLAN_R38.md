@@ -86,3 +86,12 @@ hand-over). Full build and main-course integration only after the user approves 
   close-up artwork (free) for walls / water, Benny back-projection.
 * Evidence `qa/bonus/r39/` (SOCK_APPROVED_BEFORE_NEW.jpg, stills, diff map, clip). Phone test updated in place:
   https://claude.ai/artifact/FXY6sg3BMqBdb3yiNieaUN
+
+## ROUND 39b/c (2026-11-22 ~01:40 UTC)
+* 39b: the picture BAKED onto each object once (own UVs, premultiplied; wall panel 1 / ring 1 / the two painted towels / the near paddles are
+  the templates for every later one) so the painted look stays while Benny swims; faster hand-over from the live projection (0.75-0.97).
+  Measured colour look in motion vs the picture: 3.3 s 0.45 -> 0.70, 2 s 0.32 -> 0.49 (sharpness lower: the picture has few pixels close up).
+* 39c (user: "the movements like the video"): frame 0 = the picture's camera; by ~1.3 s the camera glides to the tunnel centre behind Benny
+  (full rings all round), the depth curve turns off (normal perspective: rings stream past), projection off (baked look stays), coins visible
+  to 24-30 u, swim speed 1.9 (`?camin=`, `?speed=` to tune). Frames `qa/bonus/r39/SOCK_MOVEMENT_like_reference_frames.jpg`.
+* Generated inputs kept in `qa/bonus/r39/generated/` (sockfit.json, sock_plate.png, mask) — rebuilt by setup_bonus.sh anyway.
