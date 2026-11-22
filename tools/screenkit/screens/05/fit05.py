@@ -71,7 +71,9 @@ lay = {'screen': '05', 'title': 'FLOW INTO THE CURRENT', 'ref': REF, 'fov': cam.
        'foam_style': {'spacing': 0.7, 'size': 1.45, 'height': 0.78, 'spread': 1.2},   # r45: the painted banks are thick, fluffy and continuous
        # r45 (user: "the pink and blue and purplish water"): the painted FLOOR across the whole drum (every band) from the stretch ahead of Benny,
        # world-anchored and flowing, on the river and the pool along the whole level (bake.js floor swatch)
-       'templates': {'floor': {'from': 1.6, 'len': 3.0}}}
+       'templates': {'floor': {'from': 2.2, 'len': 3.0}}}
+# r45: the repeated trays stay out of the camera's band (camera height +- 0.5 u: Benny's outer lanes brought the chase camera within 4 cm)
+lay['machinery'] = {'every': 2, 'clear_y': [float(cam.C[1]), 0.5], 'scale': 0.8}
 # the painted S-river (pink edges + cyan core) at the coin trail: 310 px wide at y 650 -> its real width at that depth (river ribbon option)
 Pr = cam.on_plane_y(485.0, 650.0); RIVER_W = 310.0 * float(-(cam.R.T @ (Pr - cam.C))[2]) / cam.F; lay['river_width'] = RIVER_W; lay['route']['width'] = RIVER_W
 for kv in a.set:

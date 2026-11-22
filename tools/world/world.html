@@ -492,7 +492,7 @@ window.step = (t, dt, steer, speed) => {
   splash.scale.set(799 * pxW * 0.85 * SPK * (1 + 0.05 * Math.sin(t * 9)), 309 * pxW * 0.9 * SPK * (1 + 0.07 * Math.sin(t * 7 + 1)), 1);
   splash.position.copy(benny.position).addScaledVector(F.t, 0.09).addScaledVector(F.n, -CT.c.h + splash.scale.y * 0.3);
   { const Ak = areaOf(st.s), SP = Ak.kind === 'kit' && Ak.splashTex ? Ak.LAY.splash_pic : null, want = SP ? Ak.splashTex : splashTex;   // r45: each area's own painted splash
-    if (splash.material.map !== want) { splash.material.map = want; splash.material.needsUpdate = true; splash.center.set(SP ? SP.anchor_px[0] / SP.w_px : 0.5, SP ? 1 - SP.anchor_px[1] / SP.h_px : 0.5); }
+    if (splash.material.map !== want) { splash.material.map = want; splash.material.depthTest = !SP; splash.material.needsUpdate = true; splash.center.set(SP ? SP.anchor_px[0] / SP.w_px : 0.5, SP ? 1 - SP.anchor_px[1] / SP.h_px : 0.5); }   // painted spray in front of his lower body
     if (SP) { const k = (WD.benny_h ?? 0.468) / SP.benny_px * (Ak.LAY.splash_pic_scale ?? 1); splash.scale.set(SP.w_px * k * (1 + 0.04 * Math.sin(t * 9)), SP.h_px * k * (1 + 0.05 * Math.sin(t * 7 + 1)), 1);
       at(st.s, splash.position).addScaledVector(F.r, st.lat).addScaledVector(F.t, -0.03).addScaledVector(F.n, 0.004); } }
   CT.water(F, v, dt);

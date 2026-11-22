@@ -277,7 +277,8 @@ const splash = new THREE.Sprite(new THREE.SpriteMaterial({ map: splashTex, toneM
 // r45: the splash cut from THIS screen's approved picture (tools/screenkit/splash_cut.py): white spray only, anchored at his water contact
 const SPLP = q.get('splashpic') === '0' ? null : LAY.splash_pic;
 if (SPLP) { const t = await tl.loadAsync('splash_pic.png').catch(() => null); if (t) { t.colorSpace = THREE.SRGBColorSpace; splash.material.map = t; splash.material.needsUpdate = true;
-  splash.center.set(SPLP.anchor_px[0] / SPLP.w_px, 1 - SPLP.anchor_px[1] / SPLP.h_px); splash.userData.pic = true; } }
+  splash.center.set(SPLP.anchor_px[0] / SPLP.w_px, 1 - SPLP.anchor_px[1] / SPLP.h_px); splash.userData.pic = true;
+  splash.material.depthTest = false; } }   // the painted spray lies in FRONT of his lower body (as in the picture); the water must not hide it
 const bubTex = await tl.loadAsync('bubble.png'); bubTex.colorSpace = THREE.SRGBColorSpace;
 const ctex = await tl.loadAsync('coin.png'); ctex.colorSpace = THREE.SRGBColorSpace;
 const coinD = 2 * (LAY.coin_radius ?? 0.11);

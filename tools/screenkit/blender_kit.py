@@ -232,7 +232,9 @@ if MC and LAY.get('paddles'):
     zk = min(zr_all) - sp; zend = MC.get('to', D['z1'] + 1.0); trays = []
     while zk > zend:
         for th, dz, w in pat:
-            if zk + dz > zend: trays.append(([xa + R * math.cos(th), ya + R * math.sin(th), zk + dz], (xa, ya), w))
+            cy_ = MC.get('clear_y')   # keep the camera's height band clear (the chase camera swings to the outer lanes)
+            if cy_ and abs(ya + R * math.sin(th) - cy_[0]) < cy_[1]: continue
+            if zk + dz > zend: trays.append(([xa + R * math.cos(th), ya + R * math.sin(th), zk + dz], (xa, ya), w * MC.get('scale', 1.0)))
         zk -= sp
     if trays: machinery_row('paddlerep_00', trays)
 # helper objects that only fed node groups are not exported
