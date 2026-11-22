@@ -99,7 +99,7 @@ bank = np.clip(gaussian_filter1d(bank, 10), -1.25, 1.25)
 WIDTH = 0.82                     # ribbon width (u): Benny's lanes +-0.3 + his half width + painted margins (crest painted ~250 px at depth ~2.7)
 lay = {'screen': '06', 'title': 'CREST THE RINSE ARCH', 'ref': REF, 'fov': cam.fov, 'img': [W, H], 'focal_px': cam.F,
        'cams': [cam.json(REF, {'name': 'ref06', 's_ref': float(np.argmin(np.linalg.norm(route - Pb, axis=1)) * 0.05)})],
-       'benny': {'pos': Pb, 'height': HB, 'bsize': 1.03},   # bsize: the model's box matched to the SAM 2 silhouette of the painted Benny (iterated)
+       'benny': {'pos': Pb, 'height': HB, 'bsize': 1.04, 'lift': 0.12},   # solved: visible silhouette (74,429)-(330,717) vs the painted SAM 2 box (67,432)-(331,711) phone px   # bsize: the model's box matched to the SAM 2 silhouette of the painted Benny (iterated)
        'coin_radius': COIN_R, 'coins': coins,
        'route': {'ds': 0.05, 'points': route, 'bank': bank, 'width': WIDTH},
        'drum': {'axis_x': xa, 'axis_y': ya, 'r': DRUM_R, 'z0': 3.0, 'z_far': float(route[-1][2] - 4.0), 'z1': -150.0, 'seg_far': 12.0, 'chord': chord, 'cam_off_R': [oxR, oyR]},   # the painted rings converge ~140 u deep

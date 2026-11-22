@@ -76,16 +76,16 @@ const BASE = {
 const PIC = {}; const tl = new THREE.TextureLoader();
 const loadRaw = async (f) => { const t = await tl.loadAsync(f); t.colorSpace = THREE.NoColorSpace; t.anisotropy = 8; return t; };
 const GLOW = { uGlow: { value: new THREE.Vector3(DRUM ? DRUM.z1 + 14 : -1e4, DRUM ? DRUM.z1 + 1 : -1e4 - 1, 0.45) }, uTime: { value: 0 } };
-const SHARP = { uSharp: { value: new THREE.Vector2(915 / (H * renderer.getPixelRatio()), +(q.get('sharp') ?? 1.3)) } };
+const SHARP = { uSharp: { value: new THREE.Vector2(915 / (H * renderer.getPixelRatio()), +(q.get('sharp') ?? 1.3)) }, uLodBias: { value: +(q.get('lodbias') ?? LAY.lod_bias ?? 0) } };   // lod bias < 0: baked pixels stay crisp when seen smaller than baked
 const sceneryMat = (base, rep, opts = {}) => new THREE.ShaderMaterial({
   side: THREE.DoubleSide, transparent: !!opts.transparent, depthWrite: !opts.transparent,
   uniforms: { uBase: { value: base }, uRep: { value: new THREE.Vector2(...rep) }, uBake: { value: null }, uBakeOn: { value: 0 }, uScroll: { value: new THREE.Vector2(0, 0) },
     uTint: { value: new THREE.Color(...(opts.tint ?? [1, 1, 1])) }, uAlpha: { value: opts.alpha ?? 1 }, uDen: { value: null }, ...GLOW, ...SHARP },
   vertexShader: 'varying vec2 vUv; varying vec3 vW; void main(){ vUv = uv; vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; }',
   fragmentShader: `uniform sampler2D uBase; uniform vec2 uRep; uniform sampler2D uBake; uniform float uBakeOn; uniform vec2 uScroll; uniform vec3 uTint; uniform float uAlpha; uniform vec3 uGlow; uniform float uTime;
-    uniform sampler2D uDen; uniform vec2 uSharp; varying vec2 vUv; varying vec3 vW;
+    uniform sampler2D uDen; uniform vec2 uSharp; uniform float uLodBias; varying vec2 vUv; varying vec3 vW;
     void main(){ vec3 c = texture2D(uBase, vUv * uRep).rgb * uTint;
-      if (uBakeOn > 0.5) { vec4 b = texture2D(uBake, vUv); vec4 dd = texture2D(uDen, vUv); float pd = (dd.r + dd.g / 255.0) * 4000.0;
+      if (uBakeOn > 0.5) { vec4 b = texture(uBake, vUv, uLodBias); vec4 dd = texture2D(uDen, vUv); float pd = (dd.r + dd.g / 255.0) * 4000.0;
         float magE = uSharp.x / max(max(length(dFdx(vW)), length(dFdy(vW))), 1e-6) / max(pd, 1.0);
         c = mix(c, b.rgb, dd.b * (1.0 - smoothstep(uSharp.y, uSharp.y * 2.3, magE))); }
       c = mix(c, vec3(1.0, 0.97, 0.92), uGlow.z * pow(smoothstep(uGlow.x, uGlow.y, vW.z), 1.6));
@@ -93,11 +93,11 @@ const sceneryMat = (base, rep, opts = {}) => new THREE.ShaderMaterial({
 
 // ---------------- water: the river channel (Benny's route) and the pool, in their own UVs (u across, v along); flows toward the camera ----
 const WATER_U = { uT: { value: 0 }, ...GLOW };
-const SHARP_W = { uSharp: { value: new THREE.Vector2(SHARP.uSharp.value.x, +(q.get('sharpw') ?? 2.2)) } };
+const SHARP_W = { uSharp: { value: new THREE.Vector2(SHARP.uSharp.value.x, +(q.get('sharpw') ?? 2.2)) }, uLodBias: SHARP.uLodBias };
 const waterMat = (halfW, len, along0, isPool) => new THREE.ShaderMaterial({ side: THREE.DoubleSide, polygonOffset: !!isPool, polygonOffsetFactor: isPool ? 2 : 0, polygonOffsetUnits: isPool ? 4 : 0,
   uniforms: { ...WATER_U, ...SHARP_W, uBake: { value: null }, uBakeOn: { value: 0 }, uDen: { value: null }, uGeo: { value: new THREE.Vector4(halfW, len, along0, isPool ? 1 : 0) } },
   vertexShader: 'varying vec2 vUv; varying vec3 vW; void main(){ vUv = uv; vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; }',
-  fragmentShader: `uniform float uT; uniform vec3 uGlow; uniform sampler2D uBake; uniform float uBakeOn; uniform sampler2D uDen; uniform vec2 uSharp; uniform vec4 uGeo; varying vec2 vUv; varying vec3 vW;
+  fragmentShader: `uniform float uT; uniform vec3 uGlow; uniform sampler2D uBake; uniform float uBakeOn; uniform sampler2D uDen; uniform vec2 uSharp; uniform float uLodBias; uniform vec4 uGeo; varying vec2 vUv; varying vec3 vW;
     float hsh(vec2 p){ vec3 p3 = fract(vec3(p.xyx) * 0.1031); p3 += dot(p3, p3.yzx + 33.33); return fract((p3.x + p3.y) * p3.z); }
     float nse(vec2 p){ vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f); return mix(mix(hsh(i), hsh(i + vec2(1, 0)), f.x), mix(hsh(i + vec2(0, 1)), hsh(i + vec2(1, 1)), f.x), f.y); }
     vec3 c3(float r, float g, float b){ return vec3(r, g, b) / 255.0; }
@@ -117,7 +117,7 @@ const waterMat = (halfW, len, along0, isPool) => new THREE.ShaderMaterial({ side
         if (r < 0.55) { float y0 = (cell.y + 0.5) * rl, len = rl * (0.25 + 0.3 * hsh(cell + 6.6)), ph = (tp - y0) / (0.5 * len);
           float x0 = (cell.x + 0.25 + 0.5 * hsh(cell + 3.3)) * cw; float wid = L == 0 ? 0.006 : 0.01, ww = max(wid, 0.9 * fwidth(uw));
           float I = 0.8 * exp(-pow((uw - x0) / ww, 2.0)) * (1.0 - smoothstep(0.3, 1.0, abs(ph))) * (wid / ww); col = mix(col, vec3(0.93, 1.0, 1.0), clamp(I, 0.0, 1.0)); } }
-      if (uBakeOn > 0.5) { float ph = fract(uT * 0.8); vec4 b1 = texture2D(uBake, vUv + vec2(0.0, ph * 0.006)), b2 = texture2D(uBake, vUv + vec2(0.0, fract(ph + 0.5) * 0.006));
+      if (uBakeOn > 0.5) { float ph = fract(uT * 0.8); vec4 b1 = texture(uBake, vUv + vec2(0.0, ph * 0.006), uLodBias), b2 = texture(uBake, vUv + vec2(0.0, fract(ph + 0.5) * 0.006), uLodBias);
         vec4 b = mix(b2, b1, abs(1.0 - 2.0 * ph)); vec4 dd = texture2D(uDen, vUv); float pd = (dd.r + dd.g / 255.0) * 4000.0;
         float magE = uSharp.x / max(max(length(dFdx(vW)), length(dFdy(vW))), 1e-6) / max(pd, 1.0); col = mix(col, b.rgb, dd.b * (1.0 - smoothstep(uSharp.y, uSharp.y * 2.3, magE))); }
       col = mix(col, vec3(0.95, 1.0, 1.0), uGlow.z * pow(smoothstep(uGlow.x, uGlow.y, vW.z), 1.6));
@@ -143,7 +143,9 @@ for (const o of MESH) {
 }
 world.add(gl.scene);
 // the far end of the drum: a warm glowing cap (the pictures' bright tunnel core), real geometry
-if (DRUM) { const cap = new THREE.Mesh(new THREE.CircleGeometry(DRUM.r * 1.02, 64), new THREE.MeshBasicMaterial({ color: new THREE.Color(1.0, 0.95, 0.86), side: THREE.DoubleSide }));
+if (DRUM) { const cap = new THREE.Mesh(new THREE.CircleGeometry(DRUM.r * 1.02, 64), new THREE.ShaderMaterial({ side: THREE.DoubleSide,
+    vertexShader: 'varying vec2 vP; void main(){ vP = position.xy; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+    fragmentShader: `varying vec2 vP; uniform float uR; void main(){ float r = length(vP) / ${(DRUM.r * 1.02).toFixed(3)}; vec3 c = mix(vec3(1.0, 0.97, 0.88), vec3(0.98, 0.62, 0.4), smoothstep(0.08, 0.35, r)); c = mix(c, vec3(0.55, 0.25, 0.7), smoothstep(0.35, 0.95, r)); gl_FragColor = vec4(c, 1.0); }` }));
   cap.position.set(DRUM.axis_x, DRUM.axis_y, DRUM.z1 + 0.05); cap.name = 'drum_end'; world.add(cap); }
 
 // ---------------- BAKE the approved picture(s) onto the meshes (once, at load) - N fitted cameras, generalised from section.html --------
@@ -218,7 +220,7 @@ ${body}        gl_FragColor = best; }` });
     return { cov, tex: t, den }; };
   // bake resolution per family: ~picture density where the picture can supply it, capped for memory
   const RES = (o) => { const f = o.userData.fam, sz = bbox(o).getSize(new THREE.Vector3());
-    if (f === 'tunnel') return /far/.test(o.name) ? [1024, 512] : [2048, 1024]; if (f === 'water') return [512, 1024]; if (f === 'pool') return sz.z > 6 ? [512, 1024] : [1024, 1024]; if (f === 'ring') return [2048, 128]; if (f === 'flume') return [256, 512];
+    if (f === 'tunnel') return /far/.test(o.name) ? [1024, 512] : [+(q.get('tunres') ?? 4096), 1024]; if (f === 'water') return [512, 1024]; if (f === 'pool') return sz.z > 6 ? [512, 1024] : [1024, 1024]; if (f === 'ring') return [2048, 128]; if (f === 'flume') return [256, 512];
     if (f === 'copper') return [256, 256]; return [128, 128]; };
   const all = []; world.traverse((o) => { if (o.isMesh && o.name !== 'drum_end' && o.userData.fam !== 'foam') all.push(o); });
   const tStart = performance.now();
@@ -284,7 +286,7 @@ bmat.onBeforeCompile = (sh) => { Object.assign(sh.uniforms, U); sh.vertexShader 
 const bmesh = new THREE.Mesh(bgeo, bmat); bmesh.frustumCulled = false;
 const bennyH = LAY.benny.height, KH = 0.9 * bennyH / (0.99 * 0.78);
 const holder = new THREE.Group(); holder.rotation.y = Math.PI; holder.scale.setScalar(KH); holder.position.y = 0.496 * KH - 0.22 * 0.99 * KH; holder.add(bmesh);
-bmesh.scale.set(0.8, 0.84, 0.8); const BS = +(q.get('bsize') ?? LAY.benny.bsize ?? 1.24); holder.scale.multiplyScalar(BS); holder.position.y *= BS;   // per screen: Benny at the painted size
+bmesh.scale.set(0.8, 0.84, 0.8); const BS = +(q.get('bsize') ?? LAY.benny.bsize ?? 1.24); let BS0 = BS; const HY0 = holder.position.y; holder.scale.multiplyScalar(BS); holder.position.y *= BS; holder.position.y += +(q.get('blift') ?? LAY.benny.lift ?? 0);   // per screen: Benny at the painted size
 const benny = new THREE.Group(); benny.add(holder); scene.add(benny);
 const pxW = bennyH / 400;
 const splashTex = await tl.loadAsync('splash.png'); splashTex.colorSpace = THREE.SRGBColorSpace;
@@ -299,12 +301,13 @@ const CT = installControls({ THREE, TR: { trail: TRAIL, trail_s: TRAIL_S, N: 0 }
 // coins: the painted coins at their painted places (projected onto the route: s, lane, height), then runs along the rest of the route
 const toSLH = (P) => { let bi = 0, bd = 1e9; for (let i = 0; i < RP.length; i += 2) { const d = RP[i].distanceToSquared(P); if (d < bd) { bd = d; bi = i; } }
   const s = bi * RDS, F = frameAt(s), d = P.clone().sub(at(s, new THREE.Vector3())); return [s, Math.max(-0.3, Math.min(0.3, d.dot(F.r))), 0]; };
-const painted = (LAY.coins ?? []).map((c) => toSLH(V3(c))).filter((c) => c[0] > S_REF + 0.6);
+const painted = (LAY.coins ?? []).map((c) => [...toSLH(V3(c)), V3(c)]).filter((c) => c[0] > S_REF + 0.6);
 const lastS = painted.length ? Math.max(...painted.map((c) => c[0])) : S_REF + 2;
 const runs = []; for (let s = lastS + 2.2, k = 0; s < LEVEL - 0.8; s += 1.15, k++) runs.push([s, [0, 0.25, 0.25, 0, -0.25, -0.25][k % 6], 0]);
 const LAYC = [...painted, ...runs].sort((a, b) => a[0] - b[0]);
 coins.forEach((c, i) => { const L = LAYC[i]; if (!L) { c.sp.visible = false; c.s = 1e9; c.got = 0; return; } const F = frameAt(L[0]); c.s = L[0]; c.lat = L[1]; c.h = 0;
-  at(L[0], c.p0).addScaledVector(F.r, L[1]).addScaledVector(F.n, coinD * 0.6); c.n0.copy(F.n); c.sp.position.copy(c.p0); });
+  if (L[3]) c.p0.copy(L[3]); else at(L[0], c.p0).addScaledVector(F.r, L[1]).addScaledVector(F.n, coinD * 0.6);   // painted coins: exactly where the picture shows them
+  c.n0.copy(F.n); c.sp.position.copy(c.p0); });
 const coin3 = (() => { const geo = new THREE.CylinderGeometry(0.5, 0.5, 0.12, 48, 1); geo.rotateX(Math.PI / 2);
   const face = new THREE.MeshBasicMaterial({ map: ctex, toneMapped: false, alphaTest: 0.4 }), rim = new THREE.MeshBasicMaterial({ color: new THREE.Color(0.86, 0.5, 0.08), toneMapped: false });
   return coins.map((c, i) => { const m = new THREE.Mesh(geo, [rim, face, face]); m.name = 'coin3d_' + i; scene.add(m); c.sp.material.colorWrite = false; return m; }); })();
@@ -341,7 +344,7 @@ window.step = (t, dt, steer, speed) => {
   at(st.s, tmp).addScaledVector(F.r, st.lat); benny.position.copy(tmp).addScaledVector(F.n, Math.sin(t * Math.PI * 1.6) * 0.006 + CT.c.h);
   tB.copy(F.t); rB.copy(F.r).negate(); benny.quaternion.setFromRotationMatrix(mB.makeBasis(rB, F.n, tB)); CT.orient(benny.quaternion);
   U.uT.value = t; U.uSwim.value = 1; U.uPom.value.set(Math.sin(t * 5.0) * 0.06, 0); CT.anim(0);
-  splash.scale.set(799 * pxW * 0.85 * (1 + 0.05 * Math.sin(t * 9)), 309 * pxW * 0.9 * (1 + 0.07 * Math.sin(t * 7 + 1)), 1);
+  const SPK = +(q.get('splash') ?? LAY.splash_scale ?? 1); splash.scale.set(799 * pxW * 0.85 * SPK * (1 + 0.05 * Math.sin(t * 9)), 309 * pxW * 0.9 * SPK * (1 + 0.07 * Math.sin(t * 7 + 1)), 1);
   splash.position.copy(benny.position).addScaledVector(F.t, 0.09).addScaledVector(F.n, -CT.c.h + splash.scale.y * 0.3);
   CT.water(F, v, dt);
   camAt(st.s, dt);
@@ -357,6 +360,14 @@ window.bennyInfo = () => { const p = benny.position.clone().project(camera); ret
 window.bennyBox = () => { benny.updateMatrixWorld(true); const a = bmesh.geometry.attributes.position, v = new THREE.Vector3(); let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
   for (let i = 0; i < a.count; i += 3) { v.fromBufferAttribute(a, i).applyMatrix4(bmesh.matrixWorld).project(camera); const x = (v.x + 1) / 2 * W, y = (1 - v.y) / 2 * H; x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); }
   return { x0: +x0.toFixed(1), x1: +x1.toFixed(1), y0: +y0.toFixed(1), y1: +y1.toFixed(1) }; };
+// QA (generic): Benny's VISIBLE silhouette box (mesh points above the water surface) and a live size / float-height setter, so a screen's
+// Benny can be matched to the painted Benny (SAM 2 box) in one page load
+window.bennyVisBox = () => { benny.updateMatrixWorld(true); const a = bmesh.geometry.attributes.position, v = new THREE.Vector3(), F = frameAt(st.s), wp = at(st.s, new THREE.Vector3()).addScaledVector(F.r, st.lat);
+  let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
+  for (let i = 0; i < a.count; i += 2) { v.fromBufferAttribute(a, i).applyMatrix4(bmesh.matrixWorld); if (F.n.dot(v.clone().sub(wp)) < 0) continue; v.project(camera);
+    const x = (v.x + 1) / 2 * W, y = (1 - v.y) / 2 * H; x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); }
+  return [x0, y0, x1, y1].map((n) => +n.toFixed(1)); };
+window.setBenny = (bs, lift) => { const k = bs / BS0; holder.scale.multiplyScalar(k); BS0 = bs; holder.position.y = HY0 * bs + lift; return window.bennyVisBox(); };
 window.sceneAudit = () => { scene.updateMatrixWorld(true); const out = []; world.traverse((o) => { if (o.isMesh) out.push({ name: o.name, m: o.matrixWorld.elements.map((x) => +x.toFixed(5)) }); }); return out; };
 // QA (generic for every screen): Benny really sits on a water surface along the whole route (ray down the route normal hits a water mesh)
 window.routeCheck = (step = 0.5) => { const rc = new THREE.Raycaster(), W2 = MESH.filter((o) => o.userData.fam === 'water' || o.userData.fam === 'pool'), out = [];
