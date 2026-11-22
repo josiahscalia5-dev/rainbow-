@@ -1,0 +1,51 @@
+{
+ "meshes": {
+  "marble": {
+   "vertices": 201958,
+   "quads": 200469,
+   "depth_range": [
+    0.40087194569326867,
+    15.220569197234779
+   ]
+  },
+  "flat": {
+   "vertices": 201697,
+   "quads": 200319,
+   "depth_range": [
+    0.30785343626872713,
+    58.477933691767426
+   ]
+  }
+ },
+ "cameras": {
+  "note": "Three.js frame of the Marble world (SplatMesh quaternion (1,0,0,0)); fov/viewOffset reproduce the full 864x1536 approved frame",
+  "width": 864,
+  "height": 1536,
+  "f_px": 700.0,
+  "cx": 432.0,
+  "cy": 482.5,
+  "pitch_deg": 6.000000000000001,
+  "yaw_deg": 0.0,
+  "locked": {
+   "position": [
+    0,
+    0,
+    0
+   ]
+  },
+  "moved": {
+   "position": [
+    0.11531849830234378,
+    0.1266158227495332,
+    -1.1803332199080612
+   ],
+   "note": "1 tunnel radius forward along the approved axis"
+  },
+  "axis": [
+   0.09668750028031349,
+   0.10615961513382628,
+   -0.9896371372397977
+  ],
+  "tunnel_radius": 1.1926929330887226
+ }
+}

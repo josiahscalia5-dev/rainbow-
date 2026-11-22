@@ -1,0 +1,154 @@
+{
+  "schema_version": 1,
+  "world": "rainbow-08-final-spin-chamber",
+  "source_images": [
+    "worlds/rainbow-08-final-spin-chamber/source/0-08-final-spin-chamber.png"
+  ],
+  "scene_name": "Rainbow 08 Final Spin Chamber",
+  "short_caption": "Purple perforated washer drum chamber with gold rings and winding cyan-pink water channel.",
+  "literal_description": "Portrait view (864x1536) looking down the axis of a cylindrical washing-machine drum interior. The drum walls are glossy magenta-purple metal covered in rows of oblong perforation slots. A very large polished gold ring arch frames the foreground, with smaller gold ring bands and rounded gold rims receding into the chamber. At the far end is a round silver metal washer door with a thick chrome rim, a hinge latch on its right side and a glass porthole showing churning white foam and blue water. In front of the door stands a round perforated metal platform with a copper-gold rim on short gold legs; a folded purple towel with a lighter lavender inner edge lies on it. Four copper-gold half-dome fixtures with perforated undersides protrude from the side walls (two smaller upper ones near the door, two larger lower ones in the mid-ground); each pours a thin clear water stream down onto the floor. A glossy winding channel of water with cyan and hot-pink streaks flows in an S-curve from the platform toward the camera, bordered by low white foam banks with splashes. The chamber floor is perforated purple metal. Overlaid game elements: a top HUD bar (heart 5/5 with plus, gold coin icon with 2,040, round pause button), a purple banner reading '08 · FINAL SPIN CHAMBER', a pink fluffy character with a purple-white knitted hat with pom-pom and gold star riding the water in the lower centre with a white splash, gold dollar coins in a line along the water, and iridescent soap bubbles.",
+  "environment": "Enclosed cylindrical metal washer-drum chamber: magenta-purple perforated metal walls and floor, large polished gold ring arch in the foreground and gold ring bands receding, round silver washer door with glass porthole at the far end, round perforated gold-rimmed platform with a folded purple towel in front of the door, four copper-gold half-dome water-spout fixtures on the side walls pouring thin water streams, winding glossy cyan-and-pink water channel with white foam banks running toward the viewer.",
+  "visual_style": "stylized 3D cartoon game render, glossy saturated materials, high contrast, polished metal and wet surfaces",
+  "lighting": "Bright warm golden highlights on the gold rings and fixtures, strong specular reflections on the purple metal walls, cool cyan glow from the water and the porthole, high-key saturated lighting with soft shadows, no visible single sun direction.",
+  "atmosphere": "Light water spray and small droplets near the splashes and pouring streams; no fog or smoke.",
+  "ambient_sound": "Rushing flowing water, splashing streams pouring from the fixtures, low hum of a spinning washing-machine drum.",
+  "objects": [
+    {
+      "id": "pink-fluffy-character",
+      "name": "pink fluffy character in knitted hat",
+      "description": "Round pink fluffy creature seen from behind wearing a purple and white striped knitted beanie with a purple pom-pom and a small gold star.",
+      "count_estimate": 1,
+      "materials": [
+        "pink fur",
+        "knitted wool"
+      ],
+      "source_images": [
+        "worlds/rainbow-08-final-spin-chamber/source/0-08-final-spin-chamber.png"
+      ],
+      "evidence": [
+        {
+          "image": "worlds/rainbow-08-final-spin-chamber/source/0-08-final-spin-chamber.png",
+          "location_in_image": "lower centre, about x 260-600, y 850-1210, riding the water"
+        }
+      ],
+      "generate_as_3d_object": false
+    },
+    {
+      "id": "gold-dollar-coin",
+      "name": "gold dollar coin",
+      "description": "Thick round gold coin with an embossed dollar sign.",
+      "count_estimate": 10,
+      "materials": [
+        "polished gold"
+      ],
+      "source_images": [
+        "worlds/rainbow-08-final-spin-chamber/source/0-08-final-spin-chamber.png"
+      ],
+      "evidence": [
+        {
+          "image": "worlds/rainbow-08-final-spin-chamber/source/0-08-final-spin-chamber.png",
+          "location_in_image": "line of coins along the water channel from about y 590 to y 900"
+        }
+      ],
+      "generate_as_3d_object": false
+    },
+    {
+      "id": "soap-bubble",
+      "name": "soap bubble",
+      "description": "Small transparent iridescent sphere.",
+      "count_estimate": 18,
+      "materials": [
+        "iridescent soap film"
+      ],
+      "source_images": [
+        "worlds/rainbow-08-final-spin-chamber/source/0-08-final-spin-chamber.png"
+      ],
+      "evidence": [
+        {
+          "image": "worlds/rainbow-08-final-spin-chamber/source/0-08-final-spin-chamber.png",
+          "location_in_image": "scattered over the water and foam banks"
+        }
+      ],
+      "generate_as_3d_object": false
+    },
+    {
+      "id": "folded-purple-towel",
+      "name": "folded purple towel",
+      "description": "Thick folded purple terry towel with a lighter lavender inner edge.",
+      "count_estimate": 1,
+      "materials": [
+        "purple terry cloth"
+      ],
+      "source_images": [
+        "worlds/rainbow-08-final-spin-chamber/source/0-08-final-spin-chamber.png"
+      ],
+      "evidence": [
+        {
+          "image": "worlds/rainbow-08-final-spin-chamber/source/0-08-final-spin-chamber.png",
+          "location_in_image": "on the round platform in front of the washer door, about x 390-580, y 480-545"
+        }
+      ],
+      "generate_as_3d_object": true
+    },
+    {
+      "id": "round-perforated-platform",
+      "name": "round perforated platform",
+      "description": "Round flat perforated metal platform with a copper-gold rim standing on short curved gold legs.",
+      "count_estimate": 1,
+      "materials": [
+        "perforated metal",
+        "polished copper-gold"
+      ],
+      "source_images": [
+        "worlds/rainbow-08-final-spin-chamber/source/0-08-final-spin-chamber.png"
+      ],
+      "evidence": [
+        {
+          "image": "worlds/rainbow-08-final-spin-chamber/source/0-08-final-spin-chamber.png",
+          "location_in_image": "centre, in front of the washer door, about x 260-700, y 525-610"
+        }
+      ],
+      "generate_as_3d_object": true
+    },
+    {
+      "id": "round-silver-washer-door",
+      "name": "round silver washer door",
+      "description": "Round chrome washer door with a thick rim, side hinge latch and a glass porthole.",
+      "count_estimate": 1,
+      "materials": [
+        "polished chrome",
+        "glass"
+      ],
+      "source_images": [
+        "worlds/rainbow-08-final-spin-chamber/source/0-08-final-spin-chamber.png"
+      ],
+      "evidence": [
+        {
+          "image": "worlds/rainbow-08-final-spin-chamber/source/0-08-final-spin-chamber.png",
+          "location_in_image": "far end of the chamber, about x 355-625, y 285-520"
+        }
+      ],
+      "generate_as_3d_object": true
+    },
+    {
+      "id": "gold-half-dome-spout",
+      "name": "gold half-dome water spout fixture",
+      "description": "Copper-gold half-dome fixture with a perforated underside that pours a thin water stream.",
+      "count_estimate": 4,
+      "materials": [
+        "polished copper-gold",
+        "perforated metal"
+      ],
+      "source_images": [
+        "worlds/rainbow-08-final-spin-chamber/source/0-08-final-spin-chamber.png"
+      ],
+      "evidence": [
+        {
+          "image": "worlds/rainbow-08-final-spin-chamber/source/0-08-final-spin-chamber.png",
+          "location_in_image": "side walls: upper left x 150-315 y 330-420, upper right x 665-760 y 370-460, lower left x 0-265 y 610-800, lower right x 615-864 y 640-870"
+        }
+      ],
+      "generate_as_3d_object": true
+    }
+  ]
+}

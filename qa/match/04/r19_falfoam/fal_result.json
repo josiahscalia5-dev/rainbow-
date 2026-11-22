@@ -1,0 +1,1 @@
+{"detail":[{"type":"literal_error","loc":["body","texture_size"],"msg":"Input should be 512, 1024 or 2048","input":"1024","ctx":{"expected":"512, 1024 or 2048"}}]}

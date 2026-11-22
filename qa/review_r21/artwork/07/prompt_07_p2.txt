@@ -1,0 +1,11 @@
+IMAGE 1 is a frame from a 3D mobile game and defines EVERYTHING about the layout. IMAGES 2-5 are small material swatches cut from the art director's approved illustration of this level — they show ONLY surface materials, not a layout:
+IMAGE 2 = the purple slotted washer-drum wall with a polished gold ring; IMAGE 3 = the glossy cyan river water; IMAGE 4 = the thick glossy hot-pink / magenta river bank; IMAGE 5 = the puffy white-lilac soap foam.
+
+Repaint IMAGE 1 surface by surface with these materials, as a finished premium illustration:
+- every wall surface of IMAGE 1 becomes the deep violet-purple metal with neat, crisp rows of rounded slots (IMAGE 2), and every ring of IMAGE 1 becomes polished bright gold with warm amber light dots;
+- every water surface of IMAGE 1 (including any falling water) becomes the glossy cyan water of IMAGE 3 with crisp white highlight streaks;
+- the pink streaks / edges along the water become thick glossy magenta banks (IMAGE 4);
+- any white foam of IMAGE 1 becomes soft rounded puffy foam clouds (IMAGE 5) — never tall white columns or flat pale sheets;
+- add a few small iridescent soap bubbles.
+
+STRICT: do NOT change any shape, position, size or perspective from IMAGE 1. Do not add, remove or move any object: no holes, drains, extra rings, new river bends or new paddles. The river, the drop, the tube opening and every ring stay exactly where they are in IMAGE 1. No character, coins, text, HUD or user interface. Output only the repainted scene.

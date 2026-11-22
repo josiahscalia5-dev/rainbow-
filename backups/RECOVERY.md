@@ -1,5 +1,9 @@
 # Rainbow — recovery guide
 
+> **Newest procedure (2026-11-16):** one command, `bash scripts/claude-bootstrap.sh` — it also runs automatically
+> at every Claude session start. See `backups/CLAUDE_ACCOUNT_TRANSFER.md` (top section). The branch names below are
+> historical; the bootstrap always merges the newest `ccr-*`/`claude/*` branch.
+
 How to restore the RAINBOW 11-screen 3D game on another computer or another Claude Code account.
 
 ## 1. Where the backup lives
@@ -7,7 +11,9 @@ How to restore the RAINBOW 11-screen 3D game on another computer or another Clau
 | Item | Value |
 |---|---|
 | Repository | https://github.com/josiahscalia5-dev/rainbow- (**private**) |
-| Backup branch | `ccr-6f431adf-7h0m8y` (the first branch ever pushed → it is also the repo's default branch) |
+| Working branch (continue here) | `claude/rainbow-3d-recovery-m4v347` — recovery branch started 2026-11-15 from commit `81e639e`; the 5-minute autosave pushes here |
+| Original branch (frozen) | `ccr-6f431adf-7h0m8y` at `81e639e` — everything from the first Claude account; still the repo's default branch. Autosave refuses to push to it (`protected_branches` in `backups/autosave.config.json`) |
+| Cloud environment | claude.ai environment **"rainbow-"**: its setup script (copy in `scripts/cloud-env-setup.sh`) restores LFS files, Android SDK 34, Blender 5.3.0 and the World Labs plugin in every fresh container |
 | Live status | `backups/BACKUP_STATUS.json` (last run, last verified remote SHA) |
 | Run history | `backups/BACKUP_LOG.md` |
 | Where the project stands | `backups/CURRENT_STATE.md` |
@@ -24,8 +30,9 @@ How to restore the RAINBOW 11-screen 3D game on another computer or another Clau
 git lfs install
 git clone https://github.com/josiahscalia5-dev/rainbow-.git rainbow
 cd rainbow
-git checkout ccr-6f431adf-7h0m8y
+git checkout claude/rainbow-3d-recovery-m4v347   # NOT the frozen original ccr-6f431adf-7h0m8y
 git lfs pull            # downloads LFS objects (GLB models, kit ZIP, builds)
+bash scripts/setup-android-sdk.sh && bash scripts/setup-blender.sh   # if the machine lacks them
 ```
 
 Verify the locked references were not altered:
@@ -84,3 +91,9 @@ python3 scripts/rainbow-autosave.py --reason manual   # one immediate backup + v
   schedule the next time a session opens this repo.
 * Nothing is ever force-pushed; if the remote diverges the script merges non-destructively or stops and
   logs the conflict, keeping the local commit.
+* When starting a new cloud session, select the branch `claude/rainbow-3d-recovery-m4v347` (GitHub's
+  default branch is still the frozen original). If the session gets a different branch name, the autosave
+  refuses to push (branch mismatch is logged) until `backups/autosave.config.json` → `branch` is updated.
+* 2026-11-15 recovery: the first account's session `515c677b…` stopped at 18:01 UTC (usage limit); the
+  18:05 autosave (`81e639e`) captured its last edit. Nothing after that existed. Details:
+  `backups/CURRENT_STATE.md`.

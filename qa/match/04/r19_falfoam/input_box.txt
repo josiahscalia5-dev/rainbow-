@@ -1,0 +1,1 @@
+approved 04 crop x 600-864 y 980-1200; foam bbox in crop 0,0,264,220 -> frame x 600-864 y 980-1200

@@ -1,0 +1,88 @@
+{
+ "s_at_ready": 0,
+ "ready_at_s": 69.2,
+ "after_left": {
+  "s": 0.35,
+  "lane": -1,
+  "lat": -0.1823,
+  "height": 0,
+  "coins": 1420,
+  "move": null,
+  "queued": null,
+  "lean": -0.148,
+  "pitch": 0,
+  "yaw": 0.089,
+  "pom": -0.03,
+  "camLat": -0.0177,
+  "camH": 0,
+  "swim": 1.069,
+  "got": {
+   "water": 0,
+   "lane": 0,
+   "air": 0
+  },
+  "lastPick": null,
+  "swipes": 1
+ },
+ "after_left_at_s": 145.1,
+ "after_w": {
+  "s": 0.63,
+  "lane": -1,
+  "lat": -0.2173,
+  "height": 0.2052,
+  "coins": 1420,
+  "move": "leap",
+  "queued": null,
+  "lean": -0.026,
+  "pitch": 0.112,
+  "yaw": 0.021,
+  "pom": 0.039,
+  "camLat": -0.0578,
+  "camH": 0.0142,
+  "swim": 0.671,
+  "got": {
+   "water": 0,
+   "lane": 0,
+   "air": 0
+  },
+  "lastPick": null,
+  "swipes": 2
+ },
+ "after_w_at_s": 188.7,
+ "mid_leap": {
+  "s": 0.84,
+  "lane": -1,
+  "lat": -0.2197,
+  "height": 0.2794,
+  "coins": 1420,
+  "move": "leap",
+  "queued": null,
+  "lean": -0.004,
+  "pitch": 0.092,
+  "yaw": 0.004,
+  "pom": 0.021,
+  "camLat": -0.0808,
+  "camH": 0.0468,
+  "swim": 0.302,
+  "got": {
+   "water": 0,
+   "lane": 0,
+   "air": 0
+  },
+  "lastPick": null,
+  "swipes": 2
+ },
+ "mid_leap_at_s": 220.3,
+ "keyLog": [
+  {
+   "dir": "left",
+   "src": "key",
+   "clock": 0.05
+  },
+  {
+   "dir": "up",
+   "src": "key",
+   "clock": 0.3
+  }
+ ]
+}

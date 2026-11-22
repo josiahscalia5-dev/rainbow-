@@ -1,0 +1,35 @@
+{
+ "label": "03def",
+ "approved": "references/03_whirlpool_twirl.png",
+ "capture": "/tmp/claude-0/-home-user-rainbow-/1d643cf4-a037-5022-a0b9-c571467e1f20/scratchpad/cap/default/03.png",
+ "size": [
+  727,
+  1536
+ ],
+ "FULL": {
+  "mean_abs": 68.0,
+  "within_10": 0.0225,
+  "within_20": 0.0883,
+  "ssim_lum": 0.2817
+ },
+ "BELOWHUD": {
+  "mean_abs": 68.08,
+  "within_10": 0.0211,
+  "within_20": 0.0851,
+  "ssim_lum": 0.2943
+ },
+ "LAYOUT": {
+  "mean_abs": 59.91,
+  "within_20": 0.0685
+ },
+ "mean_rgb_approved": [
+  179.2,
+  152.0,
+  192.0
+ ],
+ "mean_rgb_capture": [
+  219.9,
+  186.8,
+  200.5
+ ]
+}

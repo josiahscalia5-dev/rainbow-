@@ -1,0 +1,114 @@
+diff --git a/src/gameplay/coins.ts b/src/gameplay/coins.ts
+index f8a0a2ba6..79c225064 100644
+--- a/src/gameplay/coins.ts
++++ b/src/gameplay/coins.ts
+@@ -192,6 +192,25 @@ export function createCoins(course: Course): CoinSystem {
+   // coin (≈ 5.6 % of the frame height).
+   const coinV = (flag05('match08') || flag05('matchall')) && flag05('m08coinv');
+   const COINV_CAP = 0.056, BENNY_UP = 0.75, BENNY_R = 0.95;
++  // `&m08coinsz=1` (Screen 08 r23, with m08coinv + coins08px; visuals only — count, score, pickup rules and positions
++  // unchanged): the far picture coins' world sizes were fitted ~10–33 % larger than the nearest one's (each only to its
++  // painted size at the approved view), so while swimming they grew to the full cap well above Benny, where the picture
++  // shows smaller coins (~15–20 % larger than painted at the same screen height). Now the cap follows the painted coin
++  // line: at each screen height a picture coin is at most the painted coin at that height (+6 %, so the approved start
++  // view keeps its exact painted coins); below the nearest painted coin the old cap holds.
++  const coinSz = coinV && flag05('coins08px') && flag05('m08coinsz');
++  const SZ_Y: number[] = [], SZ_D: number[] = [];
++  if (coinSz) {
++    const pts = coins08px.coins.map((c) => [c.px[1] / 1536, (2 * c.px[2]) / 1536]).sort((a, b) => a[0] - b[0]);
++    let mx = 0;
++    for (const [y, d] of pts) { mx = Math.max(mx, d); SZ_Y.push(y); SZ_D.push(mx * 1.06); }
++  }
++  const capAt = (yf: number) => {
++    if (!SZ_Y.length || yf >= SZ_Y[SZ_Y.length - 1]) return COINV_CAP;
++    if (yf <= SZ_Y[0]) return SZ_D[0];
++    let k = 0; while (SZ_Y[k + 1] < yf) k++;
++    return Math.min(COINV_CAP, SZ_D[k] + ((SZ_D[k + 1] - SZ_D[k]) * (yf - SZ_Y[k])) / (SZ_Y[k + 1] - SZ_Y[k]));
++  };
+   let cam: THREE.PerspectiveCamera | null = null;
+   let bS = -1, bLat = 0;
+   const cv = new THREE.Vector3(), bv = new THREE.Vector3(), cn = new THREE.Vector3(), bn = new THREE.Vector3();
+@@ -201,7 +220,9 @@ export function createCoins(course: Course): CoinSystem {
+     const dist = cv.copy(pos).sub(cam.position).length();
+     let k = 1;
+     const frac = size / (2 * dist * tanH); // coin diameter as a fraction of the frame height
+-    if (frac > COINV_CAP) k = COINV_CAP / frac;
++    let cap = COINV_CAP;
++    if (coinSz) { cn.copy(pos).project(cam); if (cn.z < 1) cap = capAt((1 - cn.y) / 2); }
++    if (frac > cap) k = cap / frac;
+     const fb = course.sample(bS);
+     bv.copy(fb.pos).addScaledVector(fb.right, bLat).addScaledVector(fb.up, BENNY_UP);
+     const bd = bv.distanceTo(cam.position);
+diff --git a/src/world/match08.ts b/src/world/match08.ts
+index 6caff70e4..f421eebf3 100644
+--- a/src/world/match08.ts
++++ b/src/world/match08.ts
+@@ -176,7 +176,10 @@ void main() {
+   if (uClipIn.w > 0.5 && (distance(vW.xy, uClipIn.xy) < uClipIn.z || distance(vW.xy, uClipOut.xy) > uClipOut.z)) discard;
+   // m08towelm: the towel proxy is cut to the painted towel's outline (the depth bake does the same, so the door wall
+   // behind receives the window pixels that the rectangle used to carry at towel depth)
+-  if (uTMaskOn > 0.5 && vProj.w > 0.0 && texture2D(uTMask, vProj.xy / vProj.w * 0.5 + 0.5).r < 0.5) discard;
++  // m08towelv (uTMaskOn 2): the cut only once the camera has left the approved viewpoint (> 0.2 u, as m08fill), so the
++  // approved start view keeps its exact pixels (the cut edge there left a few magenta wall specks on the towel's top edge)
++  if (uTMaskOn > 0.5 && vProj.w > 0.0 && (uTMaskOn < 1.5 || distance(cameraPosition, uProjPos) > 0.2)
++      && texture2D(uTMask, vProj.xy / vProj.w * 0.5 + 0.5).r < 0.5) discard;
+   // m08fill fades in as the camera leaves the approved viewpoint (the approved view keeps its exact old pixels)
+   vec3 pc = patchColor();
+   if (uFillMode > 0.5) pc = mix(pc, fillColor(), smoothstep(0.2, 1.5, distance(cameraPosition, uProjPos)));
+@@ -473,7 +476,8 @@ export async function buildMatch08(): Promise<Match08> {
+   // patch scale: wall slots ≈ 2.4 u per patch, gold band ≈ 1.2 u, towel ≈ 1 u
+   const M = { wall: mat('#c25bd0', pWall, 1 / 2.4), drum: mat('#c25bd0', pWall, 1 / 2.4, 1), disc: mat('#c25bd0', pWall, 1 / 2.4, 2), floor: mat('#9c55c8', pWall, 1 / 2.4, 0, 1), gold: mat('#e8a24a', pGold, 1 / 1.2), plat: mat('#b78ad6', pWall, 1 / 2.4), towel: mat('#6c3bc4', pTowel, 1 / 1.0) };
+ 
+-  if (tMaskTex) M.towel.uniforms.uTMaskOn.value = 1;
++  // `&m08towelv=1` (r24, with m08towelm): the towel cut only away from the approved viewpoint (start view unchanged)
++  if (tMaskTex) M.towel.uniforms.uTMaskOn.value = flag05('m08towelv') ? 2 : 1;
+   // `&m08sr=1` (r15, floor, with m08swim): smooth river table + rounded remap corners (FRAG riv / swimRemap / m08nq)
+   if (swimOn && flag05('m08sr')) M.floor.uniforms.uSr.value = 1;
+   if (nearTex && NJ) {
+diff --git a/tools/match08/shots08.mjs b/tools/match08/shots08.mjs
+index 2e9b53e57..ab744d993 100644
+--- a/tools/match08/shots08.mjs
++++ b/tools/match08/shots08.mjs
+@@ -8,7 +8,10 @@ const { loadPlaywright, CHROMIUM_ARGS, startVite } = await import(pathToFileURL(
+ const [SCREEN, OUT, Q = ''] = process.argv.slice(2);
+ mkdirSync(OUT, { recursive: true });
+ const { chromium } = loadPlaywright();
+-const vite = await startVite(5270 + Number(SCREEN));
++// M08_FONTS=1 (r23, QA only): dev server that may also serve the symlinked node_modules (HUD fonts; tools/match08/r23_vite.mjs)
++const vite = process.env.M08_FONTS === '1'
++  ? await (await import(pathToFileURL(`${process.cwd()}/tools/match08/r23_vite.mjs`).href)).startVite(Number(process.env.M08_PORT ?? 5278))
++  : await startVite(5270 + Number(SCREEN));
+ const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+ const log = [];
+ // [name, forward distance in world units from the checkpoint (or 'tN' = fraction N of the rest of the stage), steer]
+@@ -25,7 +28,7 @@ try {
+   const page = await browser.newPage({ viewport: { width: 864, height: 1536 }, deviceScaleFactor: 1 });
+   page.on('pageerror', (e) => console.error('pageerror', e.message));
+   await page.goto(`${vite.url}/?qa=1&dpr=1${Q ? '&' + Q : ''}`);
+-  await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 300000 });
++  await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 600000 });
+   for (const [name, dist, steer] of SHOTS) {
+     const st = await page.evaluate(async ([id, dist, steer, det]) => {
+       const r = window.__rainbow; r.goto(id);
+@@ -42,7 +45,20 @@ try {
+       return { ...r.state(), frames: n, s0, s1, target };
+     }, [SCREEN, dist, steer, DET]);
+     await page.waitForTimeout(150);
+-    await page.screenshot({ path: `${OUT}/${name}.png`, timeout: 240000 });
++    await page.screenshot({ path: `${OUT}/${name}.png`, timeout: 600000 });
++    // M08_COINS=1 (r23, QA only): every on-screen coin's centre and diameter in px (instance matrices + camera, as drawn)
++    if (process.env.M08_COINS === '1') st.coinPx = await page.evaluate(() => {
++      const api = window.__rainbow, { scene, camera } = api.qa3d(), n = api.coinDefs().length, W = 864, H = 1536;
++      let mesh = null; scene.traverse((o) => { if (o.isInstancedMesh && o.count === n && !mesh) mesh = o; });
++      const a = mesh.instanceMatrix.array, out = [], tanH = Math.tan(camera.fov * Math.PI / 360);
++      for (let i = 0; i < n; i++) {
++        const sc = Math.hypot(a[i * 16], a[i * 16 + 1], a[i * 16 + 2]); if (sc < 1e-4) continue;
++        const p = camera.position.clone().set(a[i * 16 + 12], a[i * 16 + 13], a[i * 16 + 14]), d = p.distanceTo(camera.position), q = p.clone().project(camera);
++        if (q.z > 1 || Math.abs(q.x) > 1.1 || Math.abs(q.y) > 1.1) continue;
++        out.push({ i, x: Math.round((q.x + 1) / 2 * W), y: Math.round((1 - q.y) / 2 * H), diam: +(sc * H / (2 * d * tanH)).toFixed(1), dist: +d.toFixed(2) });
++      }
++      return out;
++    });
+     log.push({ name, dist, steer, ...st });
+     console.log(SCREEN, name, 's', st.s, 'lat', st.lat, 'stage', st.stage, 'frames', st.frames);
+   }

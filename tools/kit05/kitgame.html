@@ -1,0 +1,327 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Screen 05 tunnel kit game test</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<style>
+html,body{margin:0;background:#000;overflow:hidden;font-family:system-ui,sans-serif}canvas{display:block}
+#hud{position:fixed;left:0;right:0;top:10px;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none}
+.bar{display:flex;gap:28px;align-items:center;background:linear-gradient(#7b2bbf,#4a1386);border:2px solid #d9a7ff;border-radius:30px;padding:6px 22px;color:#fff;font-weight:800;font-size:22px;box-shadow:0 2px 8px #0006}
+.title{background:#5a1aa0e0;border:2px solid #f2c14e;border-radius:20px;padding:4px 18px;color:#fff;font-weight:800;font-style:italic;font-size:17px;letter-spacing:.5px}
+</style>
+<script type="importmap">{"imports":{"three":"./node_modules/three/build/three.module.js","three/addons/":"./node_modules/three/examples/jsm/"}}</script>
+</head><body>
+<div id="hud"><div class="bar"><span>&#10084;&#65039; 5/5</span><span id="coins">&#129689; 1,420</span></div><div class="title">05 &middot; FLOW INTO THE CURRENT</div></div>
+<script type="module">
+// Round 33 KIT TEST (experimental, not the game): a real 3D tunnel kit fitted to the approved Screen 05 painting
+// (tools/kit05/kit_model.py) and textured with the painting's own pixels (bake_kit.py). Every scenery vertex goes through the same
+// camera-relative depth curve as the bake (identity up to ring 2, then the painting's constant ring ratio), so the far tunnel keeps
+// the painted perspective from every camera position while Benny swims. Benny = the round-32 Benny (mesh, bake, paddling shader).
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { installControls } from './controls.js'; // round-32 swipe controls, unchanged
+const q = new URLSearchParams(location.search);
+const W = +(q.get('w') ?? 412), H = +(q.get('h') ?? 915);
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(1); renderer.setSize(W, H); document.body.appendChild(renderer.domElement);
+const K = await (await fetch('kit.json')).json();
+const V3 = (a) => new THREE.Vector3(...a);
+const A = V3(K.A), NUP = V3(K.NUP), RR = V3(K.RR), A0 = V3(K.A0);
+const ringT = (k) => K.Z2 + (k - 2) * K.S;
+const scene = new THREE.Scene(); scene.background = new THREE.Color(0x120418);
+const camera = new THREE.PerspectiveCamera(K.fov, W / H, 0.02, 400);
+const camQ0 = new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().lookAt(new THREE.Vector3(), V3(K.cam_fwd), V3(K.cam_up)));
+
+// ---- the depth curve (same as kit_model.g / remap) ----
+const REMAP = { uCam: { value: new THREE.Vector3() }, uAx: { value: A.clone() }, uZ2: { value: K.Z2 }, uBias: { value: +(q.get('kbias') ?? -0.7) } };
+const REMAP_GLSL = `uniform vec3 uCam; uniform vec3 uAx; uniform float uZ2;
+vec3 kitRemap(vec3 wp){ vec3 d = wp - uCam; float za = dot(d, uAx); float gz = za <= uZ2 ? za : uZ2 * exp((za - uZ2) / uZ2); return wp + (gz - za) * uAx; }`;
+const kitMat = (map, extra = {}, own = null) => {   // own = { tex, vr: [v0, v1] }: this section's OWN painted pixels (atlas rows)
+  const m = new THREE.MeshBasicMaterial({ map, toneMapped: false, side: THREE.DoubleSide, ...extra });
+  m.customProgramCacheKey = () => (own ? 'kit-own' : 'kit');   // three.js keys programs on the onBeforeCompile source: identical for both variants
+  const OU = own ? { uOwn: { value: own.tex }, uVr: { value: new THREE.Vector2(...own.vr) }, uFade: { value: new THREE.Vector2(...K.own.fade) } } : {};
+  m.onBeforeCompile = (sh) => {
+    Object.assign(sh.uniforms, REMAP, OU);
+    sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\n' + REMAP_GLSL + '\nvarying float vKitT; varying float vKitD;')
+      .replace('#include <project_vertex>', `vec4 kwp = modelMatrix * vec4(transformed, 1.0); vKitT = dot(kwp.xyz, uAx); vKitD = dot(kwp.xyz - uCam, uAx); kwp.xyz = kitRemap(kwp.xyz);
+        vec4 mvPosition = viewMatrix * kwp; gl_Position = projectionMatrix * mvPosition;`);
+    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform float uBias;' + (own ? '\nuniform sampler2D uOwn; uniform vec2 uVr; uniform vec2 uFade; varying float vKitT; varying float vKitD;' : ''));
+    if (!own) sh.fragmentShader = sh.fragmentShader.replace('#include <map_fragment>', 'diffuseColor *= texture(map, vMapUv, uBias);');
+    if (own) sh.fragmentShader = sh.fragmentShader
+      .replace('#include <map_fragment>', `vec4 kTile = texture(map, vMapUv, uBias);
+        vec4 kOwn = texture(uOwn, vec2(vMapUv.x, 1.0 - (uVr.x + (1.0 - vMapUv.y) * (uVr.y - uVr.x))), uBias);
+        float kF = smoothstep(uFade.x, uFade.y, vKitD / max(vKitT, 1e-3));   // 1 at the painted distance (start), 0 once Benny is close
+        diffuseColor *= mix(kTile, kOwn, kF);`);
+  };
+  return m;
+};
+const tl = new THREE.TextureLoader();
+const tex = async (f, rep = false) => { const t = await tl.loadAsync(f); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; if (rep) t.wrapS = THREE.RepeatWrapping; return t; };
+const [wallTex, ringTex, riverTex, wallOwn, ringOwn] = await Promise.all([tex('wall.png'), tex('ring.png'), tex('river.png'), tex('wall_own.png'), tex('ring_own.png')]);
+const riverTile = await tex('river_tile.png'); riverTile.wrapT = THREE.RepeatWrapping;
+const ownOf = (kind, atlas, k) => { const r = K.own?.[kind]?.rows?.[k]; return r && !q.get('noown') ? { tex: atlas, vr: [r[0] / K.own[kind].h, r[1] / K.own[kind].h] } : null; };
+const wallMat = kitMat(wallTex), ringMat = kitMat(ringTex);
+const FLOW = { uFlowOn: { value: 0 }, uFlowL: { value: +(q.get('flowl') ?? 0.10) }, uWT: { value: new THREE.Vector3(K.water.T0, Math.log(K.water.T1 / K.water.T0), +(q.get('nearflow') ?? 0.0)) }, uFoam: { value: null }, uHWD: { value: K.water.HWD }, uWind: { value: new THREE.Vector4(+(q.get('wamp') ?? 0.2), +(q.get('wlen') ?? 7.5), +(q.get('wnarrow') ?? 0.5), +(q.get('winding') ?? 0)) }, uFlow: { value: 0 }, uRT: { value: new THREE.Vector3(K.river_tile.t0, K.river_tile.L, K.river_tile.painted_until) }, uRF: { value: K.river_tile.painted_fade ?? 4 }, uRiverTile: { value: riverTile } };
+const riverMat = (() => { const m = kitMat(riverTex); const base = m.onBeforeCompile; m.customProgramCacheKey = () => 'kit-river';
+  m.onBeforeCompile = (sh) => { base(sh); Object.assign(sh.uniforms, FLOW);
+    sh.fragmentShader = sh.fragmentShader.replace('uniform float uBias;', 'uniform float uBias; uniform float uFlow; uniform vec3 uRT; uniform float uRF; uniform sampler2D uRiverTile; uniform sampler2D uFoam; uniform float uHWD; uniform vec4 uWind; uniform vec3 uWT; uniform float uFlowL; uniform float uFlowOn; varying float vKitT; varying float vKitD;')
+      .replace('diffuseColor *= texture(map, vMapUv, uBias);', `vec4 kPaint = texture(map, vMapUv, uBias);
+        vec4 kFlow = texture(uRiverTile, vec2(vMapUv.x, -(vKitT + uFlow - uRT.x) / uRT.y), mix(uBias, 0.8, smoothstep(2.5, 9.0, vKitD)));   // flows toward the camera; softer far away (no shimmer)
+        float kF = smoothstep(0.55, 0.85, vKitD / max(vKitT, 1e-3)) * (1.0 - smoothstep(uRT.z - uRF, uRT.z, vKitT));
+        // the painting's river from every position (round 33d): open full-width water near Benny, a narrower channel winding between
+        // foam banks further ahead, pink bands along its edges (painted pink 240,57,226); world-anchored bends, camera-relative width
+        float kLat = mix(-uHWD, uHWD, vMapUv.x);
+        float kFar = smoothstep(1.8, 6.5, vKitD) * uWind.w;
+        float kC = uWind.x * kFar * sin(6.2831853 * vKitT / uWind.y) + 0.06 * kFar * sin(6.2831853 * vKitT / (uWind.y * 0.43) + 1.3);
+        float kHalf = uHWD * mix(1.02, uWind.z, kFar);
+        float kE = abs(kLat - kC) - kHalf;                                     // > 0: on the foam bank
+        vec4 kFlowW = kFlow;
+        kFlowW.rgb = mix(kFlowW.rgb, vec3(0.871, 0.04, 0.76), 0.55 * kFar * smoothstep(-0.16, -0.03, kE) * (1.0 - smoothstep(-0.03, 0.0, kE)));
+        vec4 kFo = texture(uFoam, vec2(vKitT / 1.3, clamp(1.0 - kE / 0.22, 0.02, 0.98)), uBias);
+        float kFa = smoothstep(-0.02, 0.03, kE) * max(kFo.a, smoothstep(0.05, 0.16, kE));
+        kFlowW.rgb = mix(kFlowW.rgb, mix(kFo.rgb, vec3(0.93, 0.9, 1.0), 0.25), kFa * kFar);
+        // far river = the PAINTED river at the same distance ahead as in the approved view (camera-relative), near = the flowing current
+        // the painted water itself streams toward the camera (two-phase flow map: two samples shifted along the river, cross-faded
+        // in a loop): the streaks and glints move, the colours and big shapes stay the painting's (round 33h; uFlowL = shift length)
+        float kPh = fract(uFlow * 1.3), kNearF = 1.0 - smoothstep(3.0, 5.0, vKitD);
+        float kD1 = vKitD + kPh * uFlowL * uFlowOn * kNearF, kD2 = vKitD + fract(kPh + 0.5) * uFlowL * uFlowOn * kNearF;
+        vec4 kP1 = texture(map, vec2(vMapUv.x, log(max(kD1, uWT.x) / uWT.x) / uWT.y), uBias);
+        vec4 kP2 = texture(map, vec2(vMapUv.x, log(max(kD2, uWT.x) / uWT.x) / uWT.y), uBias);
+        float kW1 = 1.0 - abs(1.0 - 2.0 * kPh);
+        vec4 kPaintRel = mix(kP2, kP1, kW1);
+        // round 33f: ALL of the water is the painted water at the same distance ahead as in the approved view (Benny is carried by the
+        // current: the near water keeps the painting's look at every moment, incl. its gold bottom rim), with the flowing current
+        // laid over it near Benny (uWT.z = share) so the water visibly streams toward the camera; exact painting at the start (kF)
+        float kNearW = (1.0 - smoothstep(2.6, 4.2, vKitD)) * uWT.z;
+        diffuseColor *= mix(kPaintRel, kFlowW, kNearW);   // round 33i: no cross-fade from the world-fixed start water (ghosting)
+        `); };
+  return m; })();
+
+const P = (t, th, rad) => A0.clone().addScaledVector(A, t).addScaledVector(RR, rad * Math.cos(th)).addScaledVector(NUP, rad * Math.sin(th));
+const grid = (nu, nv, fn) => {   // fn(i/nu, j/nv) -> [Vector3, u, v]
+  const pos = [], uv = [], idx = [];
+  for (let j = 0; j <= nv; j++) for (let i = 0; i <= nu; i++) { const [p, u, v] = fn(i / nu, j / nv); pos.push(p.x, p.y, p.z); uv.push(u, v); }
+  for (let j = 0; j < nv; j++) for (let i = 0; i < nu; i++) { const a = j * (nu + 1) + i, b = a + 1, c = a + nu + 1, d = c + 1; idx.push(a, c, b, b, c, d); }
+  const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); g.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2)); g.setIndex(idx); return g;
+};
+const NSEC = +(q.get('nsec') ?? 30), KMIN = -1;
+const LEVEL = +(q.get('len') ?? 32.16); // the round-32 level length (the controls' 26-coin layout is designed for it; a short test plays its first seconds)
+const lerp = (a, b, x) => a + (b - a) * x;
+for (let k = KMIN; k < NSEC; k++) {
+  const t0 = ringT(k);
+  // wall section k: from ring k's front face to ring k+1's front face (the ring band covers its first RING_W)
+  const wo = ownOf('wall', wallOwn, k), ro = ownOf('ring', ringOwn, k);
+  scene.add(new THREE.Mesh(grid(160, 24, (a, b) => [P(t0 + b * K.S, lerp(K.TH0, K.TH1, a), K.RT), a, 1 - b]), wo ? kitMat(wallTex, {}, wo) : wallMat));
+  // gold ring k: front face (outer -> inner) then inner face (front -> back)
+  scene.add(new THREE.Mesh(grid(160, 8, (a, b) => {
+    const th = lerp(K.TH0, K.TH1, a);
+    if (b <= 0.5) { const f = b / 0.5; return [P(t0, th, K.RT - (K.RT - K.RING_IN) * f), a, 1 - b]; }
+    const f = (b - 0.5) / 0.5; return [P(t0 + f * K.RING_W, th, K.RING_IN), a, 1 - b];
+  }), ro ? kitMat(ringTex, {}, ro) : ringMat));
+}
+// foam banks along both wall bases (round 33c): the painting's own foam, faded in only where the walls show the shared section
+// (covers the painted pink river edges that the painting has higher up its sides than the kit water), invisible at the start view
+const foamTex = await tex('foam.png'); foamTex.wrapS = THREE.RepeatWrapping;
+FLOW.uFoam.value = foamTex;
+const foamMat = (() => { const m = kitMat(foamTex, { transparent: true, depthWrite: false }); const base = m.onBeforeCompile; m.customProgramCacheKey = () => 'kit-foam';
+  m.onBeforeCompile = (sh) => { base(sh); sh.fragmentShader = sh.fragmentShader.replace('uniform float uBias;', 'uniform float uBias; varying float vKitT; varying float vKitD;')
+    .replace('diffuseColor *= texture(map, vMapUv, uBias);', `diffuseColor *= texture(map, vMapUv, uBias);
+      float kF = smoothstep(0.55, 0.85, vKitD / max(vKitT, 1e-3)) * (1.0 - smoothstep(8.0, 14.0, vKitT)); diffuseColor.a *= 1.0 - kF;`); };
+  return m; })();
+const THW = Math.asin(K.HW / K.RT), FOAM_H = 16 * Math.PI / 180;
+for (const side of [1, -1]) {   // right: from -THW upward; left: from PI + THW upward
+  scene.add(new THREE.Mesh(grid(500, 6, (a, b) => { const t = 0.3 + a * 90; const th = side > 0 ? -THW + b * FOAM_H : Math.PI + THW - b * FOAM_H;
+    return [P(t, th, K.RT * 0.985), t / 1.3, b]; }), foamMat));
+}
+// water surface: lateral x log-spaced axial distance (same mapping as the bake)
+const Wt = K.water, LOGR = Math.log(Wt.T1 / Wt.T0);
+scene.add(new THREE.Mesh(grid(40, 600, (a, b) => { const t = Wt.T0 * Math.exp(b * LOGR); return [A0.clone().addScaledVector(A, t).addScaledVector(RR, lerp(-Wt.HWD, Wt.HWD, a)).addScaledVector(NUP, -K.HW), a, b]; }), riverMat));
+
+// ---- Benny (round-32 Benny: mesh, bake, paddling shader) ----
+const VERT_HEAD = `uniform float uT; uniform float uSwim; uniform vec2 uPom;
+vec3 b31rot(vec3 r, vec3 ax, float a){ float c = cos(a), s = sin(a); return r * c + cross(ax, r) * s + ax * dot(ax, r) * (1.0 - c); }`;
+const VERT_BODY = `vec3 p = position;
+float side = p.x >= 0.0 ? 1.0 : -1.0;
+float wa = smoothstep(0.30, 0.37, abs(p.x)) * (1.0 - smoothstep(0.08, 0.16, abs(p.y + 0.18)));
+float ph = uT * 7.5 + (side > 0.0 ? 0.0 : 3.14159);
+vec3 piv = vec3(side * 0.31, -0.18, 0.0);
+vec3 q = p - piv;
+q = b31rot(q, vec3(0.0, 0.0, 1.0), side * uSwim * wa * 0.42 * sin(ph));
+q = b31rot(q, vec3(0.0, 1.0, 0.0), side * uSwim * wa * 0.5 * cos(ph));
+p = piv + q;
+float wp = smoothstep(0.17, 0.27, p.y);
+vec3 pp = vec3(0.0, 0.19, 0.05);
+vec3 r = p - pp;
+r = b31rot(r, vec3(1.0, 0.0, 0.0), uPom.x * wp);
+r = b31rot(r, vec3(0.0, 0.0, 1.0), uPom.y * wp);
+p = pp + r;
+float sq = 1.0 + 0.03 * uSwim * sin(uT * 15.0);
+p.y = (p.y + 0.5) * sq - 0.5; p.xz /= sqrt(sq);
+vec3 transformed = p;`;
+const gltf = await new GLTFLoader().loadAsync('benny31.glb');
+const map = await tl.loadAsync('bake.png'); map.colorSpace = THREE.SRGBColorSpace; map.flipY = false; map.anisotropy = 8;
+let geo = null; gltf.scene.traverse((o) => { if (o.isMesh && !geo) geo = o.geometry; });
+const U = { uT: { value: 0 }, uSwim: { value: 1 }, uPom: { value: new THREE.Vector2() } };
+const bmat = new THREE.MeshBasicMaterial({ map, color: new THREE.Color(4, 4, 4) });
+bmat.onBeforeCompile = (sh) => {
+  Object.assign(sh.uniforms, U);
+  sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\n' + VERT_HEAD).replace('#include <begin_vertex>', VERT_BODY);
+  sh.fragmentShader = sh.fragmentShader.replace('#include <colorspace_fragment>', `#include <colorspace_fragment>
+    { vec3 col = gl_FragColor.rgb; float l = dot(col, vec3(0.2126, 0.7152, 0.0722)); col = mix(vec3(l), col, 1.36); col = (col - 0.5) * 1.15 + 0.5; gl_FragColor.rgb = clamp(col, 0.0, 1.0); }`);
+};
+const bmesh = new THREE.Mesh(geo, bmat); bmesh.frustumCulled = false;
+// Benny's start water point = the painted contact pixel cast onto the kit water; his size = the painted size at that distance
+const ray = (px, py) => { const d = new THREE.Vector3((px - 432) / 768 * Math.tan(K.fov * Math.PI / 360) * 768 / 768, 0, 0); return d; };
+const FOCPX = 768 / Math.tan(K.fov * Math.PI / 360);
+const camR = new THREE.Vector3(1, 0, 0).applyQuaternion(camQ0), camU = new THREE.Vector3(0, 1, 0).applyQuaternion(camQ0), camF = new THREE.Vector3(0, 0, -1).applyQuaternion(camQ0);
+const dir = camF.clone().addScaledVector(camR, (K.benny_start_px[0] - 432) / FOCPX).addScaledVector(camU, -(K.benny_start_px[1] - 768) / FOCPX).normalize();
+const lam = (K.PD - 0) / dir.dot(NUP);            // water: NUP . P = PD (camera at the origin)
+const B0 = dir.clone().multiplyScalar(lam);       // Benny's start water point
+const bennyDist = B0.length(), bennyH = 419 * bennyDist / FOCPX;   // painted Benny: ~419 px from pom-pom to water
+const KH = 0.9 * bennyH / (0.99 * 0.78);
+const holder = new THREE.Group(); holder.rotation.y = Math.PI; holder.scale.setScalar(KH); holder.position.y = 0.496 * KH - 0.22 * 0.99 * KH; holder.add(bmesh);
+const benny = new THREE.Group(); benny.add(holder); scene.add(benny);
+// round 33k QA / fit switches: ?bscale=sx,sy,sz (Benny's size per axis vs the round-32 size), ?bdrop=u (move him along the up axis), ?nobenny=1
+// round 33k: Benny scaled to the painted Benny's outline (measured 226 x 250 px vs 299 x 305 px at 412 x 915)
+const BS = (q.get('bscale') ?? '0.76,0.82,0.8').split(',').map(Number); bmesh.scale.set(BS[0], BS[1], BS[2]); bmesh.position.y = +(q.get('bdrop') ?? 0.085) / KH; bmesh.position.x = +(q.get('bshift') ?? -0.04) / KH;   // painted position: 45 px higher, 21 px left
+if (q.get('nobenny')) holder.visible = false;
+const NOSPLASH = !!q.get('nosplash');
+const pxW = bennyH / 400;
+const splashTex = await tl.loadAsync('splash.png'); splashTex.colorSpace = THREE.SRGBColorSpace;
+const splash = new THREE.Sprite(new THREE.SpriteMaterial({ map: splashTex, toneMapped: false, transparent: true, depthWrite: false, depthTest: q.get('splashdt') === '1' })); splash.renderOrder = 5; scene.add(splash);   // round 33k: the painted splash lies over the water as in the approved picture
+// Benny's frame: forward = tunnel axis, up = tunnel up, right = tunnel right
+const bennyM = new THREE.Matrix4().makeBasis(RR.clone().negate(), NUP, A);
+// camera relative to Benny = the approved picture's camera relative to his start point
+const relPos = new THREE.Vector3().sub(B0);
+// bright core far down the axis (the painting's vanishing light)
+const coreTex = (() => { const c = document.createElement('canvas'); c.width = c.height = 256; const g = c.getContext('2d'); const gr = g.createRadialGradient(128, 128, 0, 128, 128, 128);
+  for (const [o, col] of [[0, 'rgba(255,255,245,1)'], [0.12, 'rgba(255,245,200,0.95)'], [0.3, 'rgba(255,215,140,0.55)'], [0.6, 'rgba(255,170,120,0.15)'], [1, 'rgba(255,150,120,0)']]) gr.addColorStop(o, col);
+  g.fillStyle = gr; g.fillRect(0, 0, 256, 256); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t; })();
+const core = new THREE.Sprite(new THREE.SpriteMaterial({ map: coreTex, toneMapped: false, transparent: true, depthWrite: false, depthTest: false })); core.renderOrder = 20; scene.add(core);
+
+
+// ---------- Benny's path: straight down the tunnel from his painted start point (the kit tunnel is straight) ----------
+const at = (s, out) => out.copy(B0).addScaledVector(A, Math.max(0, Math.min(LEVEL, s)));
+const frameAt = () => ({ t: A.clone(), r: RR.clone(), n: NUP.clone() });
+const TRAIL = []; const TRAIL_S = []; for (let s = 0; s <= LEVEL + 1e-9; s += 0.05) { TRAIL.push(B0.clone().addScaledVector(A, s).toArray()); TRAIL_S.push(+s.toFixed(4)); }
+const TR = { trail: TRAIL, trail_s: TRAIL_S, N: 0 };
+const coins = []; let coinCount = 1420; const coinEl = document.getElementById('coins');
+const bubTex = await tl.loadAsync('bubble.png'); bubTex.colorSpace = THREE.SRGBColorSpace;
+const ctex = await tl.loadAsync('coin.png'); ctex.colorSpace = THREE.SRGBColorSpace;
+const coinD = 0.15038523388874458 * bennyDist / 1.186;      // round-32 coin size, scaled to the kit's Benny distance
+const qc = new URLSearchParams(location.search); if (!qc.has('c_LEAN_K')) qc.set('c_LEAN_K', '0.09');
+for (const [k, v] of [['c_CAM_LAT_K', '0.75'], ['c_CAM_LAT_MAX', '0.2'], ['c_CAM_LAT_OMEGA', '12']]) if (!qc.has(k)) qc.set(k, v);   // camera follows lane changes more: Benny stays fully on screen (round 33k)   // gentler bank (round 33: 5 -> <3 deg per frame); controls.js unchanged
+const CT = installControls({ THREE, TR, canvas: renderer.domElement, camera, q: qc, at, frameAt, coins, scene, U, bmat, benny, splash, splashTex, bubTex, coinTex: ctex, coinD, bennyFullH: 0.99 * KH, pxW, coinEl, getS: () => st.s, getCoins: () => coinCount, render: () => renderer.render(scene, camera) });
+// coin run 1 = the APPROVED picture's coins (tools/kit05/painted_coins.py: painted centres cast onto the kit river; the far-left one
+// moved into the left lane), 2 more at the painted spacing; run 2 (same-lane coins that stacked on screen at 0.6 u spacing) moved into
+// the free stretch after the leap arc at ~1 u spacing. 26 coins as before; coinLayout() reports the real positions to the test player.
+const NEWPOS = [[1.789, 0.008], [2.876, 0.22], [4.321, -0.008], [5.951, -0.22], [7.684, -0.22], [8.691, 0.02], [9.8, 0.1], [10.9, 0.12],
+  [14.4, 0.15], [15.4, 0.22], [16.4, 0.22], [17.3, 0.03]];
+if (!q.get('layoutcoins')) NEWPOS.forEach(([cs, cl], i) => { const c = coins[i]; c.s = cs; c.lat = cl; at(cs, c.p0).addScaledVector(RR, cl).addScaledVector(NUP, coinD * 0.75); c.sp.position.copy(c.p0); c.kind = Math.abs(cl) >= 0.1 ? 'lane' : 'water'; });
+{ const L0 = window.coinLayout(); window.coinLayout = () => coins.map((c, i) => ({ s: c.s, lat: +c.lat.toFixed(3), h: c.h, run: L0[i]?.run, runKind: L0[i]?.runKind, p: c.p0.toArray().map((x) => +x.toFixed(4)), n: NUP.toArray().map((x) => +x.toFixed(4)) })); }
+// every sprite (coins, droplets, splash) goes through the same depth curve as the scenery: far coins sit on the far river
+const patchSprite = (m) => { if (m.userData.kit) return; m.userData.kit = 1; m.onBeforeCompile = (sh) => { Object.assign(sh.uniforms, REMAP);
+  sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\n' + REMAP_GLSL).replace('vec4 mvPosition = modelViewMatrix[ 3 ];', 'vec4 mvPosition = viewMatrix * vec4(kitRemap(modelMatrix[ 3 ].xyz), 1.0);'); }; m.needsUpdate = true; };
+scene.traverse((o) => { if (o.isSprite && o !== core) patchSprite(o.material); });
+const glintTex = await tl.loadAsync('glint.png');
+const NG = 320, gS = new Float32Array(NG), gL = new Float32Array(NG), gP = new Float32Array(NG), gSz = new Float32Array(NG);
+const gPos = new Float32Array(NG * 3), gAlpha = new Float32Array(NG), gSize = new Float32Array(NG);
+const rnd = (() => { let x = 12345; return () => ((x = (x * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff); })();
+for (let i = 0; i < NG; i++) { gS[i] = rnd() * 7.5 - 1.0; gL[i] = (rnd() * 2 - 1) * 0.62; gP[i] = rnd() * 6.28; gSz[i] = 0.5 + rnd(); }
+const gGeo = new THREE.BufferGeometry(); gGeo.setAttribute('position', new THREE.BufferAttribute(gPos, 3)); gGeo.setAttribute('aAlpha', new THREE.BufferAttribute(gAlpha, 1)); gGeo.setAttribute('aSize', new THREE.BufferAttribute(gSize, 1));
+const gMat = new THREE.ShaderMaterial({ uniforms: { map: { value: glintTex }, scale: { value: H * 0.5 }, ...REMAP },
+  vertexShader: REMAP_GLSL + `
+attribute float aAlpha; attribute float aSize; varying float vA; uniform float scale;
+    void main(){ vA = aAlpha; vec4 wp = modelMatrix * vec4(position, 1.0); wp.xyz = kitRemap(wp.xyz); vec4 mv = viewMatrix * wp; gl_PointSize = aSize * scale / -mv.z; gl_Position = projectionMatrix * mv; }`,
+  fragmentShader: `uniform sampler2D map; varying float vA; void main(){ vec4 c = texture2D(map, gl_PointCoord); gl_FragColor = vec4(vec3(0.85, 0.97, 1.0) * c.r, c.r * vA); }`,
+  transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, toneMapped: false });
+const glints = new THREE.Points(gGeo, gMat); glints.frustumCulled = false; glints.renderOrder = 6; scene.add(glints);
+const tmp2 = new THREE.Vector3();
+const MTABK = [[2.0, 0.96], [2.16, 0.95], [2.8, 0.86], [3.33, 0.76], [3.85, 0.60], [4.5, 0.42], [5.0, 0.33], [5.5, 0.30]];
+const mOfK = (d) => { if (d <= MTABK[0][0]) return MTABK[0][1]; for (let i = 1; i < MTABK.length; i++) if (d <= MTABK[i][0]) { const [d0, m0] = MTABK[i - 1], [d1, m1] = MTABK[i]; return m0 + (m1 - m0) * (d - d0) / (d1 - d0); } return MTABK[MTABK.length - 1][1]; };
+const st = { s: 0, lat: 0, lean: 0, camLat: 0 };
+const Zax = new THREE.Vector3(0, 0, 1), tmp = new THREE.Vector3();
+const M = bennyM;
+window.step = (t, dt, steer, speed) => {
+  st.s += CT.fwd(speed) * dt;
+  st.lat = CT.update(t, dt).lat;
+  const F = frameAt(st.s);
+  st.lean += (0 - st.lean) * Math.min(1, dt * 5);                       // straight tunnel: no bend lean (lane bank comes from CT.orient)
+  at(st.s, tmp).addScaledVector(F.r, st.lat);
+  benny.position.copy(tmp).addScaledVector(F.n, Math.sin(t * Math.PI * 1.6) * 0.006 + CT.c.h);
+  benny.quaternion.setFromRotationMatrix(M).multiply(new THREE.Quaternion().setFromAxisAngle(Zax, st.lean));
+  CT.orient(benny.quaternion);
+  U.uT.value = t; U.uSwim.value = 1; U.uPom.value.set(Math.sin(t * 5.0) * 0.06, st.lean * 0.4);
+  CT.anim(st.lean);
+  splash.position.copy(benny.position).addScaledVector(F.t, 0.05).addScaledVector(F.n, -0.01 - 23 * pxW * 0.5);
+  splash.scale.set(799 * pxW * 0.8 * (1 + 0.04 * Math.sin(t * 9)), 309 * pxW * 0.8 * (1 + 0.06 * Math.sin(t * 7 + 1)), 1);
+  CT.water(F, speed, dt); if (NOSPLASH) splash.visible = false;
+  for (let i = 0; i < NG; i++) {   // flowing glints: on the river surface, sliding toward the camera with the current, twinkling
+    gS[i] -= 0.55 * dt; if (gS[i] < st.s - 1.4) gS[i] += 8.5; if (gS[i] > st.s + 7.1) gS[i] -= 8.5;
+    at(gS[i], tmp2).addScaledVector(RR, gL[i]).addScaledVector(NUP, 0.012); gPos.set([tmp2.x, tmp2.y, tmp2.z], i * 3);
+    const tw = Math.max(0, Math.sin(t * 6 + gP[i])); gAlpha[i] = (st.s > 0.02 ? 1 : 0) * tw * tw * 0.9 * THREE.MathUtils.smoothstep(gS[i], st.s - 1.4, st.s - 0.6);
+    gSize[i] = 0.035 * gSz[i] * (0.6 + tw);
+  }
+  gGeo.attributes.position.needsUpdate = true; gGeo.attributes.aAlpha.needsUpdate = true; gGeo.attributes.aSize.needsUpdate = true;
+  // follow camera = the approved picture's camera relative to Benny, + the round-32 lane / leap follow springs
+  camera.position.copy(B0).negate().add(at(st.s, tmp)).addScaledVector(F.r, CT.c.camLat).addScaledVector(F.n, CT.c.camH);
+  camera.quaternion.copy(camQ0); camera.updateMatrixWorld();
+  REMAP.uCam.value.copy(camera.position); FLOW.uFlow.value = t * +(q.get('flowspeed') ?? 0.55); FLOW.uFlowOn.value = THREE.MathUtils.smoothstep(st.s, 0.0, 0.7);
+  core.position.copy(camera.position).add(A0).addScaledVector(A, 300); core.scale.set(33, 33, 1);
+  updateEnd(st.s);
+  for (const c of coins) {
+    if (c.got < 0 && CT.hits(c)) { c.got = t; coinCount += 10; coinEl.textContent = '\u{1FA99} ' + coinCount.toLocaleString('en-US'); }
+    if (c.got >= 0) { const k = (t - c.got) / 0.4; c.sp.visible = k < 1; if (k < 1) { c.sp.position.copy(benny.position).addScaledVector(F.n, bennyH * (1.05 + 0.6 * k)); c.sp.material.opacity = 1 - k * k; const d = coinD * 0.7 * (1 - 0.5 * k); c.sp.scale.set(d, d, 1); } }
+  }
+  // far coins fade out beyond about ring 3 ahead (the painting shows ~6 coins), so the depth curve never stacks them at the core
+  // the controls shrink coins by camera distance (their table imitated the painting's coin sizes in the splat world); the kit's depth
+  // curve already gives the painted sizes, so that extra shrink is undone here (same table as controls.js, MTAB)
+  for (const c of coins) if (c.got < 0 && c.sp.visible) c.sp.scale.multiplyScalar(1 / mOfK(camera.position.distanceTo(c.sp.position)));
+  for (const c of coins) if (c.got < 0 && c.sp.visible) { const za = tmp.copy(c.sp.position).sub(camera.position).dot(A); const f = 1 - THREE.MathUtils.smoothstep(za, 9.5, 12.0); c.sp.scale.multiplyScalar(f); c.sp.visible = f > 0.01; }
+  if (!q.get('noclutter')) {   // round 33i: on-screen declutter (the later runs are 0.55-0.75 u apart: true sizes overlapped there)
+    const vis = window.coinScreen().filter((c) => !c.pop).sort((a, b) => b.r - a.r), keep = [];
+    for (const c of vis) { let k = 1; for (const n of keep) { const d = Math.hypot(c.x - n.x, c.y - n.y) - n.r - 1.5; if (d < c.r * k) k = Math.max(0, d / c.r); }
+      if (k < 1) { coins[c.i].sp.scale.multiplyScalar(Math.max(0.05, k)); coins[c.i].sp.visible = k > 0.05; }
+      keep.push({ x: c.x, y: c.y, r: c.r * k }); }
+  }
+  scene.traverse((o) => { if (o.isSprite && o !== core) patchSprite(o.material); });   // droplets created during play
+  return { s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: coinCount, tile: Math.floor((K.level.tB0 + st.s - K.level.ring0) / K.S) - K.level.k0, ...CT.state() };   // tile = ring section Benny is in (0 = start)
+};
+// ending (as round 32b): over the last 1.25 u before the level end the warm white-gold light grows from the core and fills the screen
+const S_LAST = LEVEL; const endEl = document.createElement('div'); endEl.style.cssText = 'position:fixed;inset:0;pointer-events:none;opacity:0';
+document.body.insertBefore(endEl, document.getElementById('hud')); let endK = 0; const endP = new THREE.Vector3();
+function updateEnd(s) {
+  const x = THREE.MathUtils.clamp((s - (S_LAST - 1.25)) / 1.1, 0, 1); endK = x * x * (3 - 2 * x);
+  core.scale.setScalar(33 * (1 + 2 * endK));
+  if (endK <= 0) { endEl.style.opacity = '0'; return; }
+  endP.copy(core.position).project(camera); const cx = THREE.MathUtils.clamp((endP.x + 1) / 2 * W, 0, W), cy = THREE.MathUtils.clamp((1 - endP.y) / 2 * H, 0, H);
+  const e = endK, D = Math.hypot(W, H), r1 = (0.02 + 0.5 * e) * D, r2 = r1 + (0.08 + 0.5 * e) * D, r3 = r2 + 0.4 * D;
+  endEl.style.background = `radial-gradient(circle at ${cx.toFixed(1)}px ${cy.toFixed(1)}px, rgba(255,253,242,1) 0px, rgba(255,240,190,1) ${r1.toFixed(1)}px, rgba(255,214,140,${(0.55 + 0.45 * e).toFixed(3)}) ${r2.toFixed(1)}px, rgba(255,200,130,${(e * e).toFixed(3)}) ${r3.toFixed(1)}px)`;
+  endEl.style.opacity = Math.min(1, e * 1.25).toFixed(3);
+}
+window.endK = () => endK; window.S_LAST = S_LAST;
+window.qaSplash2 = () => { splash.updateMatrixWorld(); return { parent: splash.parent === scene, inScene: scene.children.includes(splash), layers: splash.layers.mask, frustum: splash.frustumCulled, matW: splash.matrixWorld.elements.map((x) => +x.toFixed(3)), sx: splash.scale.x, rot: splash.material.rotation, blending: splash.material.blending, alphaTest: splash.material.alphaTest, color: splash.material.color.getHexString(), compiled: splash.material.version, userData: splash.material.userData, img: splash.material.map.image && [splash.material.map.image.width, splash.material.map.image.height] }; };
+window.qaSplash = () => { const p = splash.position.clone().project(camera); return { visible: splash.visible, opacity: splash.material.opacity, scale: splash.scale.toArray().map((x) => +x.toFixed(3)), screen: [+((p.x + 1) / 2 * W).toFixed(0), +((1 - p.y) / 2 * H).toFixed(0)], depthTest: splash.material.depthTest, mapOK: !!splash.material.map?.image }; };
+// coinScreen as DRAWN: the controls' QA helper projects coins with plain perspective, but the kit draws every coin through the depth
+// curve (far coins sit further down the tunnel and smaller); the acceptance test must measure what is really on screen (same format)
+const kitRemapJS = (p, c) => { const d = p.clone().sub(c), za = d.dot(A), gz = za <= K.Z2 ? za : K.Z2 * Math.exp((za - K.Z2) / K.Z2); return p.clone().addScaledVector(A, gz - za); };
+window.coinScreen = (opt = {}) => {
+  camera.updateMatrixWorld(); const f = H / 2 / Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2), out = [], pw = new THREE.Vector3(), pv = new THREE.Vector3();
+  coins.forEach((c, i) => {
+    if (!c.sp.visible || (c.got >= 0 && !opt.pops)) return;
+    const pa = kitRemapJS(c.sp.position, camera.position); pw.copy(pa).applyMatrix4(camera.matrixWorldInverse); if (-pw.z <= camera.near) return;
+    pv.copy(pa).project(camera); const x = (pv.x + 1) / 2 * W, y = (1 - pv.y) / 2 * H, r = c.sp.scale.x / 2 * f / -pw.z;
+    if (x + r < 0 || x - r > W || y + r < 0 || y - r > H) return;
+    out.push({ i, x: +x.toFixed(1), y: +y.toFixed(1), r: +r.toFixed(2), s: c.s, pop: c.got >= 0 });
+  });
+  return out;
+};
+window.renderNow = async (n = 2) => { for (let i = 0; i < n; i++) { renderer.render(scene, camera); await new Promise((r) => setTimeout(r, 30)); } renderer.render(scene, camera); return true; };
+window.step(0, 0, 0, 0);
+for (let i = 0; i < 3; i++) { renderer.render(scene, camera); await new Promise((r) => setTimeout(r, 100)); }
+window.camInfo = () => ({ p: camera.position.toArray(), q: camera.quaternion.toArray() });
+window.bennyInfo = () => { const qq = new THREE.Quaternion(), p = new THREE.Vector3(); benny.getWorldQuaternion(qq); benny.getWorldPosition(p); const up = new THREE.Vector3(0, 1, 0).applyQuaternion(qq).applyQuaternion(camera.quaternion.clone().invert()); const nW = NUP.clone().applyQuaternion(camera.quaternion.clone().invert()); const sp = p.clone().project(camera); return { rollDeg: Math.atan2(-up.x, up.y) * 180 / Math.PI, camRollDeg: Math.atan2(-nW.x, nW.y) * 180 / Math.PI, x: (sp.x * 0.5 + 0.5) * W, y: (0.5 - sp.y * 0.5) * H, dist: p.distanceTo(camera.position) }; };
+window.ready = true;
+// round 34: ?play=1 = real-time play on a phone / browser (requestAnimationFrame loop, tap to start, FPS + swipe-response meter);
+// without it the page stays frame-stepped for the acceptance harness exactly as before. NOT ?live=1: controls.js runs its own
+// minimal round-32 loop for that, and two loops stepped the game twice per frame (S4 found it: double speed)
+if (q.get('play') && q.get('live') !== '1') (await import('./live.js')).startLive({ THREE, renderer, scene, camera, W, H, q, CT });
+</script></body></html>

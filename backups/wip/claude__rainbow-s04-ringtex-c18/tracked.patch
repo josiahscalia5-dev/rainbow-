@@ -1,0 +1,41 @@
+diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
+index 1ffb9e37..0733a2c4 100644
+--- a/src/world/match04m4.ts
++++ b/src/world/match04m4.ts
+@@ -118,6 +118,7 @@ uniform vec4 uRDots;       // r16 m04rpdots: x = amount, y = dot cells per ring,
+ uniform float uRVar;       // r17 m04rpvar: number of painted rings stacked in the atlas (0 = the single painted ring 1)
+ uniform vec4 uRPol;        // r18 m04rpol: x amount, y luma pivot, z contrast gain above it, w below it
+ uniform vec2 uRPol2;       // r18 m04rpol: x sharp sheen (reflection of the bright end), y grazing-angle brightening
++uniform vec4 uRCr;         // r18 m04rpcr: x amount, y bright lip line half width, z dark lip-edge line half width, w band-start corner (u)
+ #ifdef RFEW
+ uniform float uRFewG;      // r18 m04rfew: height of the telescope's shrink centre (group units, from the axis; < 0 = below)
+ uniform vec2 uRFewW;       // r18 m04rfew: x = ring scale where the deep rings reach warm yellow-white, y = amount (m04rfw, m04rfk)
+@@ -359,6 +360,20 @@ void main() {
+         pr *= mix(vec3(1.0), wg, uRWarm.x);
+       }
+       pr += vec3(1.0, 0.86, 0.55) * 0.10 * gl * smoothstep(0.0, 0.2, facing);   // moving polished sheen
++      if (uRCr.x > 0.0) {
++        // r18 m04rpcr: the painted thin bright lip line and thin dark groove line drawn CRISP at their modeled places
++        // (bright line where the lip bead starts to turn inward, dark line ending at the lip apex = the inner edge every
++        // ring shows, dark corner where the next band starts). Up close the 160-row painted texture is magnified into a
++        // soft blur; these lines keep the near rings' edges sharp. Anti-aliased with the pixel footprint and dimmed when
++        // thinner than a pixel (far rings blend, no shimmer). World-anchored on the ring.
++        float fu = max(fwidth(al), 1e-4);
++        float dB = abs(uu - (uL + uRCr.y)), dD = abs(uu - (uG - uRCr.z)), dC = uu;
++        float cB = clamp((uRCr.y + 0.5 * fu - dB) / fu, 0.0, 1.0) * min(1.0, 2.0 * uRCr.y / fu);
++        float cD = clamp((uRCr.z + 0.5 * fu - dD) / fu, 0.0, 1.0) * min(1.0, 2.0 * uRCr.z / fu);
++        float cC = clamp((uRCr.w + 0.5 * fu - dC) / fu, 0.0, 1.0) * min(1.0, 2.0 * uRCr.w / fu);
++        pr = mix(pr, vec3(1.0, 0.92, 0.66), 0.75 * cB * uRCr.x);
++        pr = mix(pr, pr * vec3(0.55, 0.36, 0.30), max(cD, cC) * uRCr.x);   // dark red-brown groove, not black
++      }
+       if (uRDots.x > 0.0) {
+         // r16 m04rpdots: the painted light dots on every ring lip (yellow-white core, orange glow, irregular spacing,
+         // ~14-16 per ring, some cells dark), on the painted bright lip line; world-anchored. Far dots keep ~1 px size
+@@ -720,6 +735,7 @@ export function addM04(ctx: M04Ctx) {
+         uRDots: { value: new THREE.Vector4(M04.num('m04rpdots', 0), M04.num('m04rpdn', 16), M04.num('m04rpdf', 0.7), M04.num('m04rpds', 0.06)) }, uRVar: { value: 0 },
+         uRPol: { value: new THREE.Vector4(M04.num('m04rpol', 0), M04.num('m04rpp', 0.42), M04.num('m04rpgh', 0.5), M04.num('m04rpgl', 0.15)) },
+         uRPol2: { value: new THREE.Vector2(M04.num('m04rpsp', 0.25), M04.num('m04rpfr', 0)) },
++        uRCr: { value: new THREE.Vector4(M04.num('m04rpcr', 0), M04.num('m04rpcb', 0.011), M04.num('m04rpcd', 0.014), M04.num('m04rpcc', 0.012)) },
+         uP: { value: M04.num('m04ringp', 2.6) }, uLipBulb: { value: M04.num('m04lipbulb', 1) }, uBulbR: { value: (r + ctx.outerR) / 2 }, uLen: { value: len }, uRingTile: { value: ringTile }, uPaint: { value: M04.num('m04paint', M04.gold ? 0.8 : 1.4) }, uGoldY: { value: M04.gold ? 1 : 0 }, uCopper: { value: M04.num('m04copper', 0) }, uBulge: { value: M04.num('m04bulge', 0) }, uMouthT: { value: 0 }, uMouthTex: { value: null }, uMouthRho: { value: new THREE.Vector3(4.45, 3.25, M04.num('m04mro', -0.10)) }, uProjPos: shared.uProjPos, uTone: { value: new THREE.Vector4(M04.num('m04tb', 0.11), M04.num('m04tl', 0.38), M04.num('m04tm', 0.5), M04.num('m04ts', 0.45)) } },
+     });
+     const gw = M04.num('m04ringgw', 1);
