@@ -1,15 +1,27 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><title>Screen 05 tunnel kit game test</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<!-- ROUND 38 BONUS TEST (isolated; NOT part of the 11-screen game): ?area=sock = Laundry Tunnel: Sock Rescue (candidate artwork
+     references/candidates/bonus_sock_rescue_laundry_tunnel.webp). Forked from tools/kit05/kitgame.html (Benny, paddling, swipe controls,
+     coins, camera, round-37 live water); the scenery is drawn by code from the candidate picture. -->
 <style>
 html,body{margin:0;background:#000;overflow:hidden;font-family:system-ui,sans-serif}canvas{display:block}
+.row{display:flex;gap:10px;align-items:center}
+.pill{display:flex;gap:8px;align-items:center;background:linear-gradient(#7b2bbf,#4a1386);border:2px solid #d9a7ff;border-radius:30px;padding:5px 14px;color:#fff;font-weight:800;font-size:20px;box-shadow:0 2px 8px #0006}
+.plus{display:inline-flex;width:22px;height:22px;border-radius:50%;background:#9b5cf0;border:2px solid #e3c8ff;align-items:center;justify-content:center;font-size:17px;line-height:1}
+#pauseBtn{pointer-events:auto;width:44px;height:44px;border-radius:50%;background:linear-gradient(#8a3fe0,#5a1aa0);border:3px solid #f2c14e;color:#fff;font-weight:900;font-size:18px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px #0006;cursor:pointer}
+.mission{display:flex;gap:10px;align-items:center;background:linear-gradient(#6a24b8f0,#43127ff0);border:2px solid #f2c14e;border-radius:22px;padding:5px 12px 5px 10px;color:#fff;font-weight:800;font-size:17px;box-shadow:0 2px 8px #0006}
+.mission b{color:#ffd84a}.slots{display:flex;gap:3px;background:#2a0a4a99;border-radius:12px;padding:2px 6px}
+.slots svg{width:20px;height:22px;transition:transform .25s}.slots svg.on{transform:scale(1.25)}
+#paused{position:fixed;inset:0;display:none;align-items:center;justify-content:center;color:#fff;font:900 34px system-ui;text-shadow:0 2px 8px #000;background:#1a0630aa;pointer-events:none}
 #hud{position:fixed;left:0;right:0;top:10px;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none}
-.bar{display:flex;gap:28px;align-items:center;background:linear-gradient(#7b2bbf,#4a1386);border:2px solid #d9a7ff;border-radius:30px;padding:6px 22px;color:#fff;font-weight:800;font-size:22px;box-shadow:0 2px 8px #0006}
 .title{background:#5a1aa0e0;border:2px solid #f2c14e;border-radius:20px;padding:4px 18px;color:#fff;font-weight:800;font-style:italic;font-size:17px;letter-spacing:.5px}
 </style>
 <script type="importmap">{"imports":{"three":"./node_modules/three/build/three.module.js","three/addons/":"./node_modules/three/examples/jsm/"}}</script>
 </head><body>
-<div id="hud"><div class="bar"><span>&#10084;&#65039; 5/5</span><span id="coins">&#129689; 1,420</span></div><div class="title">05 &middot; FLOW INTO THE CURRENT</div></div>
+<div id="hud"><div class="row"><span class="pill">&#10084;&#65039; 5/5 <span class="plus">+</span></span><span class="pill"><span id="coins">&#129689; 1,420</span></span><span id="pauseBtn" data-noswipe="1" role="button" aria-label="Pause">&#10074;&#10074;</span></div>
+<div class="mission" id="mission"><svg viewBox="0 0 20 22" width="22" height="24"><path d="M6 1h8v11l4 3c2 2 1 6-3 6H8c-4 0-6-3-5-6l3-3z" fill="#fff"/><path d="M6 1h8v3H6zM6 6h8v1.6H6z" fill="#f45aa8"/><path d="M14 17h3c0 3-2 4-4 4z" fill="#f45aa8"/></svg>
+<span id="mtext">Rescue <b>5</b> lost socks</span><span class="slots" id="slots"></span></div></div><div id="paused">PAUSED</div>
 <script type="module">
 // Round 33 KIT TEST (experimental, not the game): a real 3D tunnel kit fitted to the approved Screen 05 painting
 // (tools/kit05/kit_model.py) and textured with the painting's own pixels (bake_kit.py). Every scenery vertex goes through the same
@@ -25,10 +37,11 @@ const q = new URLSearchParams(location.search);
 //                                       cyan ribbons, magenta bands, star sparkles, foam domes, measured from the painting, sharp at any distance
 //   ?opt=c  ARCADE / GAME-READY       = everything redrawn clean (clean37=1: walls, gold rings, 3D gold paddles) + the simpler river (w37=2)
 // No ?opt = the round-36 default, unchanged.
-const OPT = (q.get('opt') ?? '').toLowerCase();
-for (const [k, v] of ({ a: [['ownoff', '1'], ['move', '1']], b: [['ownoff', '1'], ['move', '1'], ['w37', '1']],
-  c: [['ownoff', '1'], ['move', '1'], ['w37', '2'], ['clean37', '1']] })[OPT] ?? []) if (!q.has(k)) q.set(k, v);
-const W37 = +(q.get('w37') ?? 0), CLEAN37 = q.get('clean37') === '1';
+// round 38: bonus test areas (never the default game). ?area=sock (default) = Laundry Tunnel: Sock Rescue. Shared with Screen 05's kit:
+// Benny + paddling shader, controls.js (lanes / leap / dive / coins), swimfx, camera + reference-video movement, the round-37 live river.
+const AREA = (q.get('area') ?? 'sock').toLowerCase();
+for (const [k, v] of [['ownoff', '1'], ['move', '1'], ['w37', '1'], ['len', '13.5'], ['w37rw', '0.7'], ['w37ck', '0.85']]) if (!q.has(k)) q.set(k, v);   // wide river: narrow foam banks along the walls, as in the picture
+const W37 = +(q.get('w37') ?? 0), CLEAN37 = true;   // the tunnel is drawn by code (no Screen-05 painted pixels)
 const W = +(q.get('w') ?? 412), H = +(q.get('h') ?? 915);
 const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
 renderer.setPixelRatio(1); renderer.setSize(W, H); document.body.appendChild(renderer.domElement);
@@ -294,67 +307,109 @@ const grid = (nu, nv, fn) => {   // fn(i/nu, j/nv) -> [Vector3, u, v]
 const NSEC = +(q.get('nsec') ?? 30), KMIN = -1;
 const LEVEL = +(q.get('len') ?? 32.16); // the round-32 level length (the controls' 26-coin layout is designed for it; a short test plays its first seconds)
 const lerp = (a, b, x) => a + (b - a) * x;
-// ---- round 37 option C (?clean37=1): the tunnel REDRAWN clean from the approved picture's design (no painted pixels): violet-magenta metal,
-// rows of dark slots running around the tunnel with pink light bands between them, gold rings with concentric ridges, 3D gold paddles.
-// Canvas textures (drawn once at load, mipmapped): sharp at every distance, cheap on a phone.
+// ---- round 38 BONUS: Laundry Tunnel: Sock Rescue, drawn by code from the candidate picture (sharp at any distance, no painted pixels) ----
 const canvasTex = (w, h, draw, rep = true) => { const c = document.createElement('canvas'); c.width = w; c.height = h; draw(c.getContext('2d'), w, h);
   const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; if (rep) t.wrapS = THREE.RepeatWrapping; return t; };
-let cleanWallMat = null, cleanRingMat = null, cleanGoldMat = null;
-if (CLEAN37) {
-  const rr = (() => { let x = 4242; return () => ((x = (x * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff); })();
+const rr = (() => { let x = 4242; return () => ((x = (x * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff); })();
+// lit material for the 3D props (towels, rails, drum lifters, socks): wrapped diffuse + highlight + soft rim, through the same depth curve
+const LDIR = A.clone().multiplyScalar(-0.45).addScaledVector(NUP, 0.85).addScaledVector(RR, 0.15).normalize();
+const litMat = ({ map = null, color = 0xffffff, spec = 0.4, shin = 30, amb = 0.5, rim = 0x9fe8ff, rimK = 0.35, vc = false, side = THREE.FrontSide }) => new THREE.ShaderMaterial({
+  uniforms: { ...REMAP, map: { value: map }, uUse: { value: map ? 1 : 0 }, uCol: { value: new THREE.Color(color) }, uSpec: { value: spec }, uShin: { value: shin }, uAmb: { value: amb },
+    uRim: { value: new THREE.Color(rim) }, uRimK: { value: rimK }, uL: { value: LDIR } },
+  vertexColors: vc, side, toneMapped: false,
+  vertexShader: REMAP_GLSL + `
+    varying vec3 vN; varying vec3 vW; varying vec2 vUv; varying vec3 vC;
+    void main(){ vec4 wp = modelMatrix * vec4(position, 1.0); vW = wp.xyz;
+      gl_Position = projectionMatrix * viewMatrix * vec4(kitRemap(wp.xyz), 1.0); vN = normalize(mat3(modelMatrix) * normal); vUv = uv;
+      #ifdef USE_COLOR
+      vC = color;
+      #else
+      vC = vec3(1.0);
+      #endif
+    }`,
+  fragmentShader: `uniform sampler2D map; uniform float uUse; uniform vec3 uCol; uniform float uSpec; uniform float uShin; uniform float uAmb; uniform vec3 uRim; uniform float uRimK; uniform vec3 uL; uniform vec3 uCam;
+    varying vec3 vN; varying vec3 vW; varying vec2 vUv; varying vec3 vC;
+    void main(){ vec3 N = normalize(vN), V = normalize(uCam - vW); if (dot(N, V) < 0.0) N = -N;
+      vec3 base = uCol * vC; if (uUse > 0.5) base *= texture2D(map, vUv).rgb;
+      float d = 0.5 + 0.5 * dot(N, uL), sp = pow(max(dot(N, normalize(uL + V)), 0.0), uShin), rim = pow(1.0 - max(dot(N, V), 0.0), 3.0);
+      gl_FragColor = vec4(base * (uAmb + (1.0 - uAmb) * d) + uSpec * sp + uRimK * rim * uRim, 1.0);
+      #include <colorspace_fragment>
+    }` });
+let cleanWallMat = null, cleanRingMat = null;
+{
+  // walls: lavender brushed metal, rows of ROUND holes (dark, lit lower lip), soft sheen bands around the tunnel
   cleanWallMat = kitMat(canvasTex(2048, 1024, (g, w, h) => {
-    // x = around the tunnel (280 deg), y = along the axis (one ring section, 2.09 u)
-    const bg = g.createLinearGradient(0, 0, 0, h); bg.addColorStop(0, '#5b1d9e'); bg.addColorStop(0.08, '#8a2fc4'); bg.addColorStop(0.5, '#a43fd0'); bg.addColorStop(0.92, '#7d28bc'); bg.addColorStop(1, '#4a147f');
+    const bg = g.createLinearGradient(0, 0, 0, h);
+    for (const [o, c] of [[0, '#3a137a'], [0.07, '#6633bd'], [0.5, '#8c5cd6'], [0.93, '#6633bd'], [1, '#36117a']]) bg.addColorStop(o, c);
     g.fillStyle = bg; g.fillRect(0, 0, w, h);
-    const ROWS = 6, PER = 30;
-    for (let r = 0; r < ROWS; r++) {
-      const y = h * (0.1 + 0.8 * (r + 0.5) / ROWS);
-      // pink light band between slot rows (brushed metal sheen around the tunnel)
-      const yb = y + h * 0.8 / ROWS * 0.5, lb = g.createLinearGradient(0, yb - 26, 0, yb + 26);
-      lb.addColorStop(0, 'rgba(230,90,230,0)'); lb.addColorStop(0.45, 'rgba(255,120,240,0.55)'); lb.addColorStop(0.5, 'rgba(255,225,255,0.85)'); lb.addColorStop(0.55, 'rgba(255,120,240,0.55)'); lb.addColorStop(1, 'rgba(230,90,230,0)');
-      if (r < ROWS - 1) { g.fillStyle = lb; g.fillRect(0, yb - 26, w, 52); }
-      for (let i = 0; i < PER; i++) {
-        const x = (i + 0.5 + (r % 2) * 0.5) / PER * w, sw = 58, sh = 24;
-        g.fillStyle = 'rgba(255,150,245,0.9)'; g.beginPath(); g.roundRect(x - sw / 2, y - sh / 2 + 3, sw, sh, sh / 2); g.fill();   // lit lower lip
-        g.fillStyle = '#2a0640'; g.beginPath(); g.roundRect(x - sw / 2, y - sh / 2, sw, sh, sh / 2); g.fill();
-      }
-    }
-    // glossy streaks along the tunnel (the painting's bright reflections running toward the core)
     g.globalCompositeOperation = 'lighter';
-    for (let i = 0; i < 26; i++) { const x = rr() * w, a = 0.10 + rr() * 0.16, lw = 3 + rr() * 10;
-      const sg = g.createLinearGradient(x - lw, 0, x + lw, 0); sg.addColorStop(0, 'rgba(255,120,255,0)'); sg.addColorStop(0.5, `rgba(255,170,255,${a})`); sg.addColorStop(1, 'rgba(255,120,255,0)');
-      g.fillStyle = sg; g.fillRect(x - lw, 0, 2 * lw, h); }
+    for (let i = 0; i < 9; i++) { const y = rr() * h, hh = 20 + rr() * 50, sb = g.createLinearGradient(0, y - hh, 0, y + hh);
+      sb.addColorStop(0, 'rgba(255,190,255,0)'); sb.addColorStop(0.5, `rgba(255,200,255,${0.10 + rr() * 0.14})`); sb.addColorStop(1, 'rgba(255,190,255,0)'); g.fillStyle = sb; g.fillRect(0, y - hh, w, 2 * hh); }
+    for (let i = 0; i < 22; i++) { const x = rr() * w, lw = 3 + rr() * 9, sg = g.createLinearGradient(x - lw, 0, x + lw, 0);
+      sg.addColorStop(0, 'rgba(255,170,255,0)'); sg.addColorStop(0.5, `rgba(255,215,255,${0.08 + rr() * 0.12})`); sg.addColorStop(1, 'rgba(255,170,255,0)'); g.fillStyle = sg; g.fillRect(x - lw, 0, 2 * lw, h); }
     g.globalCompositeOperation = 'source-over';
+    const ROWS = 7, PER = 40;
+    for (let r = 0; r < ROWS; r++) { const y = h * (0.1 + 0.8 * (r + 0.5) / ROWS);
+      for (let i = 0; i < PER; i++) { const x = (i + 0.5 + (r % 2) * 0.5) / PER * w, R = 18;
+        g.fillStyle = 'rgba(245,225,255,0.85)'; g.beginPath(); g.arc(x, y + 3, R, 0, 7); g.fill();
+        const hg = g.createRadialGradient(x, y - 3, 1, x, y, R); hg.addColorStop(0, '#16052c'); hg.addColorStop(1, '#3d176c');
+        g.fillStyle = hg; g.beginPath(); g.arc(x, y, R, 0, 7); g.fill(); } }
   }));
+  // gold rings: ridged gold with glowing yellow light panels on the front face
   cleanRingMat = kitMat(canvasTex(2048, 256, (g, w, h) => {
-    // rows 0-127: front face (outer -> inner edge), rows 128-255: inner face (front -> back)
     const f = g.createLinearGradient(0, 0, 0, 128);
-    for (const [o, c] of [[0, '#7a3a10'], [0.1, '#e8902c'], [0.22, '#ffd27a'], [0.3, '#c86a1c'], [0.45, '#ffb84a'], [0.55, '#fff0c0'], [0.66, '#e8902c'], [0.8, '#ffcc66'], [0.92, '#b85a16'], [1, '#8a4210']]) f.addColorStop(o, c);
+    for (const [o, c] of [[0, '#7a3a10'], [0.1, '#e8902c'], [0.2, '#ffd27a'], [0.3, '#c86a1c'], [0.7, '#e8902c'], [0.8, '#ffcc66'], [0.92, '#b85a16'], [1, '#8a4210']]) f.addColorStop(o, c);
     g.fillStyle = f; g.fillRect(0, 0, w, 128);
     const n = g.createLinearGradient(0, 128, 0, 256);
     for (const [o, c] of [[0, '#fff2c8'], [0.15, '#ffc65a'], [0.5, '#e08a2a'], [0.85, '#a85214'], [1, '#6a300c']]) n.addColorStop(o, c);
     g.fillStyle = n; g.fillRect(0, 128, w, 128);
-    g.globalCompositeOperation = 'lighter';
-    for (let i = 0; i < 18; i++) { const x = (i + 0.3 + rr() * 0.4) / 18 * w, rg = g.createRadialGradient(x, 70, 0, x, 70, 60);
-      rg.addColorStop(0, 'rgba(255,250,220,0.75)'); rg.addColorStop(1, 'rgba(255,200,120,0)'); g.fillStyle = rg; g.fillRect(x - 60, 10, 120, 120); }
-    g.globalCompositeOperation = 'source-over';
+    g.shadowColor = '#ffd84a'; g.shadowBlur = 22;
+    for (let i = 0; i < 20; i++) { const x = (i + 0.5) / 20 * w; g.fillStyle = '#fff3a8'; g.beginPath(); g.roundRect(x - 36, 44, 72, 40, 10); g.fill(); }
+    g.shadowBlur = 0;
   }));
-  cleanGoldMat = kitMat(canvasTex(256, 256, (g, w, h) => {
-    // a paddle: u = across, v = top face (0-0.7) then front lip (0.7-1)
-    const t = g.createLinearGradient(0, 0, w, 0); for (const [o, c] of [[0, '#9a4c12'], [0.3, '#f0a040'], [0.55, '#ffe6a0'], [0.75, '#f4a63c'], [1, '#a65414']]) t.addColorStop(o, c);
-    g.fillStyle = t; g.fillRect(0, 0, w, h * 0.7);
-    const l = g.createLinearGradient(0, h * 0.7, 0, h); for (const [o, c] of [[0, '#fff4c8'], [0.3, '#ffbe58'], [1, '#8a4210']]) l.addColorStop(o, c);
-    g.fillStyle = l; g.fillRect(0, h * 0.7, w, h * 0.3);
-  }, false));
-  // 3D gold paddles (the painted lids on the walls): one per section on each side, standing out of the wall toward the river
-  const RP = 0.84, PL = 0.5;
-  for (let k = 0; k < NSEC; k++) for (const thc of [2.72, 0.42]) {
-    const t1 = ringT(k) + K.S * 0.45, dth = 0.26;
-    scene.add(new THREE.Mesh(grid(16, 8, (a, b) => {
-      const th = thc + (a - 0.5) * 2 * dth, ext = Math.sqrt(Math.max(0, 1 - (2 * a - 1) ** 2)), rIn = K.RT - (K.RT - RP) * (0.55 + 0.45 * Math.sqrt(ext));
-      if (b < 0.7) { const f = b / 0.7; return [P(t1 + PL * (1 - f), th, rIn), a, 1 - b]; }   // top face (D-shaped across), back -> front
-      const f = (b - 0.7) / 0.3; return [P(t1, th, lerp(rIn, K.RT, f)), a, 1 - b]; }), cleanGoldMat));   // front lip down to the wall
+  // silver-lavender drum lifters (pods) hanging from the ceiling on both sides, pointing in and toward the camera
+  const pts = []; for (let i = 0; i <= 18; i++) { const z = i / 18; pts.push(new THREE.Vector2(0.001 + 0.125 * Math.pow(Math.sin(Math.PI * (0.18 + 0.82 * z)), 0.8) * (1 - 0.35 * z), z * 0.44)); }
+  const podGeo = new THREE.LatheGeometry(pts, 28); podGeo.scale(1, 1, 0.6);
+  const podMat = litMat({ color: 0xb39ae6, spec: 0.7, shin: 30, amb: 0.45, rim: 0xf0e6ff, rimK: 0.3 });
+  for (let k = 0; k < NSEC; k++) for (const th of [1.86, 1.28]) {
+    const t = ringT(k) + K.S * 0.5, base = P(t, th, K.RT * 1.02), inward = base.clone().sub(A0).addScaledVector(A, -t).normalize().negate();
+    const dir = inward.clone().multiplyScalar(0.9).addScaledVector(A, -0.42).normalize();
+    const m = new THREE.Mesh(podGeo, podMat); m.position.copy(base); m.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir); m.frustumCulled = false; scene.add(m);
   }
+  // gold towel rails + draped towels (purple with bubbles / pink with a crown, white stripes, terry texture), facing the camera
+  const towelTex = (col, dark, motif) => canvasTex(512, 1024, (g, w, h) => {
+    const Y = (v) => (1 - v) * h;                       // v = along the cloth: 0 back hem -> over the rail -> 1 front hem
+    g.fillStyle = col; g.fillRect(0, 0, w, h);
+    for (let i = 0; i < 9000; i++) { g.fillStyle = rr() < 0.5 ? 'rgba(255,255,255,0.10)' : dark; g.fillRect(rr() * w, rr() * h, 2 + rr() * 2, 2 + rr() * 2); }
+    g.fillStyle = '#fbf6ff'; for (const [v0, v1] of [[0.80, 0.845], [0.875, 0.905]]) g.fillRect(0, Y(v1), w, Y(v0) - Y(v1));
+    g.fillStyle = '#fbf6ff'; for (let x = 4; x < w; x += 11) g.fillRect(x, Y(1.0), 4, 14);
+    if (motif === 'bubbles') for (const [x, v, r] of [[0.28, 0.6, 46], [0.52, 0.66, 30], [0.42, 0.52, 22]]) {
+      const bg = g.createRadialGradient(x * w - r * 0.3, Y(v) - r * 0.3, 2, x * w, Y(v), r); bg.addColorStop(0, 'rgba(255,255,255,0.95)'); bg.addColorStop(0.6, 'rgba(200,230,255,0.45)'); bg.addColorStop(1, 'rgba(255,255,255,0.9)');
+      g.fillStyle = bg; g.beginPath(); g.arc(x * w, Y(v), r, 0, 7); g.fill(); }
+    if (motif === 'crown') { const cx = 0.5 * w, cy = Y(0.6); g.strokeStyle = '#fff'; g.lineWidth = 12; g.lineJoin = 'round'; g.beginPath();
+      g.moveTo(cx - 90, cy + 55); g.lineTo(cx - 90, cy - 40); g.lineTo(cx - 45, cy + 5); g.lineTo(cx, cy - 60); g.lineTo(cx + 45, cy + 5); g.lineTo(cx + 90, cy - 40); g.lineTo(cx + 90, cy + 55); g.closePath(); g.stroke();
+      g.beginPath(); g.moveTo(cx - 20, cy + 25); g.lineTo(cx, cy + 5); g.lineTo(cx + 20, cy + 25); g.lineTo(cx, cy + 45); g.closePath(); g.stroke(); }
+  }, false);
+  const goldMat = litMat({ color: 0xffb640, spec: 1.0, shin: 50, amb: 0.5, rim: 0xffe9a0, rimK: 0.6 });
+  const towelMats = { purple: litMat({ map: towelTex('#7b4fd6', 'rgba(60,20,120,0.25)', 'bubbles'), spec: 0.05, shin: 6, amb: 0.6, rim: 0xd9c4ff, rimK: 0.25, side: THREE.DoubleSide }),
+    pink: litMat({ map: towelTex('#f06fb0', 'rgba(150,30,90,0.22)', 'crown'), spec: 0.05, shin: 6, amb: 0.6, rim: 0xffd0ea, rimK: 0.25, side: THREE.DoubleSide }) };
+  const cs = (() => {                                     // cross-section of the cloth: (along the axis, height), from the back hem over the rail to the front hem
+    const P2 = [[0.04, -0.2], [0.032, -0.07]]; for (let i = 0; i <= 10; i++) { const a = i / 10 * Math.PI; P2.push([0.026 * Math.cos(a), 0.012 + 0.026 * Math.sin(a) * 0.9]); }
+    P2.push([-0.034, -0.07], [-0.044, -0.28], [-0.056, -0.47]); const L = [0]; for (let i = 1; i < P2.length; i++) L.push(L[i - 1] + Math.hypot(P2[i][0] - P2[i - 1][0], P2[i][1] - P2[i - 1][1]));
+    return (v) => { const x = v * L[L.length - 1]; let i = 1; while (i < L.length - 1 && L[i] < x) i++; const f = (x - L[i - 1]) / (L[i] - L[i - 1]); return [P2[i - 1][0] + (P2[i][0] - P2[i - 1][0]) * f, P2[i - 1][1] + (P2[i][1] - P2[i - 1][1]) * f]; };
+  })();
+  const towelRack = (t0, side, mat) => {
+    const yR = 0.36, xw = side * Math.sqrt(1 - yR * yR) * 0.99, base = A0.clone().addScaledVector(A, t0).addScaledVector(NUP, yR).addScaledVector(RR, xw), inw = RR.clone().multiplyScalar(-side);
+    const rail = new THREE.CatmullRomCurve3([base.clone().addScaledVector(inw, -0.02), base.clone().addScaledVector(inw, 0.15).addScaledVector(NUP, 0.015), base.clone().addScaledVector(inw, 0.47),
+      base.clone().addScaledVector(inw, 0.55).addScaledVector(NUP, -0.05), base.clone().addScaledVector(inw, 0.54).addScaledVector(NUP, -0.12)]);
+    scene.add(Object.assign(new THREE.Mesh(new THREE.TubeGeometry(rail, 48, 0.022, 12), goldMat), { frustumCulled: false }));
+    const g = grid(30, 50, (a, b) => { const acr = 0.08 + a * 0.4, [al0, y0] = cs(b), al = al0 * 1.4, y = y0 * 1.35, drop = THREE.MathUtils.clamp(-y / 0.63, 0, 1);
+      const fold = (0.011 * Math.sin(acr * 46 + side) + 0.006 * Math.sin(acr * 97 + 2.0)) * drop;
+      return [base.clone().addScaledVector(inw, acr).addScaledVector(A, al + fold).addScaledVector(NUP, y - 0.006 * Math.cos(a * Math.PI * 2) * drop), a, b]; });
+    g.computeVertexNormals(); scene.add(Object.assign(new THREE.Mesh(g, mat), { frustumCulled: false }));
+  };
+  for (const [t0, side, m] of [[2.9, -1, 'purple'], [3.35, 1, 'pink'], [7.1, -1, 'pink'], [7.6, 1, 'purple'], [11.3, -1, 'purple'], [11.8, 1, 'pink']]) towelRack(t0, side, towelMats[m]);
+  window.__sockProps = { litMat, goldMat };
 }
 for (let k = KMIN; k < NSEC; k++) {
   const t0 = ringT(k);
@@ -418,6 +473,7 @@ if (PUFFS) {
   const bTex = await tl.loadAsync('bubble.png'); bTex.colorSpace = THREE.NoColorSpace;
   const B = []; for (let t = 0.4; t < LEVEL + 14; t += 0.12 + rp() * 0.14) { const side = rp() < 0.5 ? -1 : 1, lat = side * (0.34 + rp() * 0.34), h = 0.02 + rp() * rp() * 0.45;
     const P0 = A0.clone().addScaledVector(A, t).addScaledVector(RR, lat).addScaledVector(NUP, -K.HW + h); B.push([t, P0.x, P0.y, P0.z, 0.035 + rp() * rp() * 0.09, rp() * 6.28]); }
+  for (const [t, lat, h, sz] of [[2.4, -0.56, 0.16, 0.24], [5.3, 0.58, 0.2, 0.2], [8.9, -0.55, 0.14, 0.22], [12.0, 0.56, 0.18, 0.2]]) { const P0 = A0.clone().addScaledVector(A, t).addScaledVector(RR, lat).addScaledVector(NUP, -K.HW + h); B.push([t, P0.x, P0.y, P0.z, sz, rp() * 6.28]); }   // round 38: a few big iridescent bubbles
   const bg = new THREE.BufferGeometry(); bg.setAttribute('position', new THREE.Float32BufferAttribute(B.flatMap((e) => e.slice(1, 4)), 3));
   bg.setAttribute('aT', new THREE.Float32BufferAttribute(B.map((e) => e[0]), 1)); bg.setAttribute('aSz', new THREE.Float32BufferAttribute(B.map((e) => e[4]), 1)); bg.setAttribute('aPh', new THREE.Float32BufferAttribute(B.map((e) => e[5]), 1));
   const bm = new THREE.ShaderMaterial({ uniforms: { map: { value: bTex }, uFadeP: { value: FADEP }, uTime: { value: 0 }, uPx: { value: H * 0.5 * camera.projectionMatrix.elements[5] }, ...REMAP }, transparent: true, depthWrite: false, toneMapped: false,
@@ -501,7 +557,7 @@ const bennyM = new THREE.Matrix4().makeBasis(RR.clone().negate(), NUP, A);
 const relPos = new THREE.Vector3().sub(B0);
 // bright core far down the axis (the painting's vanishing light)
 const coreTex = (() => { const c = document.createElement('canvas'); c.width = c.height = 256; const g = c.getContext('2d'); const gr = g.createRadialGradient(128, 128, 0, 128, 128, 128);
-  for (const [o, col] of [[0, 'rgba(255,255,245,1)'], [0.12, 'rgba(255,245,200,0.95)'], [0.3, 'rgba(255,215,140,0.55)'], [0.6, 'rgba(255,170,120,0.15)'], [1, 'rgba(255,150,120,0)']]) gr.addColorStop(o, col);
+  for (const [o, col] of [[0, 'rgba(255,255,255,1)'], [0.12, 'rgba(225,250,255,0.95)'], [0.3, 'rgba(160,225,255,0.55)'], [0.6, 'rgba(150,170,255,0.15)'], [1, 'rgba(150,150,255,0)']]) gr.addColorStop(o, col);   // round 38 Sock Rescue: cyan-white light at the tunnel's end
   g.fillStyle = gr; g.fillRect(0, 0, 256, 256); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t; })();
 const core = new THREE.Sprite(new THREE.SpriteMaterial({ map: coreTex, toneMapped: false, transparent: true, depthWrite: false, depthTest: false })); core.renderOrder = 20; scene.add(core);
 
@@ -673,6 +729,78 @@ window.step = (t, dt, steer, speed) => {
   scene.traverse((o) => { if (o.isSprite && o !== core) patchSprite(o.material); });   // droplets created during play
   return { s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: coinCount, tile: Math.floor((K.level.tB0 + st.s - K.level.ring0) / K.S) - K.level.k0, ...CT.state(), declutter: st.decl | 0, camLatEff: +st.camLat.toFixed(4), guard: +st.guard.toFixed(4), camYawDeg: +(Math.atan(st.camYaw.x) / DEG).toFixed(3), camRollDeg: +(st.camRoll.x / DEG).toFixed(3) };   // tile = ring section Benny is in (0 = start)
 };
+// ---- round 38 BONUS gameplay: 5 lost socks floating in the lanes (rescue = swim into one), mission bar, boost chevrons, pause ----
+const SOCK = (() => {
+  const { litMat } = window.__sockProps;
+  const W_ = [0.97, 0.95, 0.99], PK = [0.96, 0.33, 0.62];
+  const paint = (g, fn) => { const p = g.attributes.position, c = new Float32Array(p.count * 3); for (let i = 0; i < p.count; i++) c.set(fn(p.getX(i), p.getY(i), p.getZ(i)), i * 3); g.setAttribute('color', new THREE.BufferAttribute(c, 3)); return g; };
+  const leg = paint(new THREE.CapsuleGeometry(0.03, 0.075, 8, 24), (x, y) => ((y > 0.04 && y < 0.05) || (y > 0.058 && y < 0.066) ? PK : W_));
+  const foot = new THREE.CapsuleGeometry(0.028, 0.05, 8, 24); foot.rotateZ(Math.PI / 2); foot.translate(0.032, -0.052, 0);
+  paint(foot, (x, y) => (x > 0.06 || (x < 0.012 && y < -0.05) ? PK : W_));
+  const hs = new THREE.Shape(); hs.moveTo(0, -0.6); hs.bezierCurveTo(-1.1, -0.1, -0.7, 0.8, 0, 0.35); hs.bezierCurveTo(0.7, 0.8, 1.1, -0.1, 0, -0.6);
+  const heart = new THREE.ShapeGeometry(hs, 12); heart.scale(0.017, 0.017, 1); heart.translate(0, 0.005, 0.0305); paint(heart, () => PK);
+  for (const g of [leg, foot, heart]) { g.deleteAttribute('uv'); }
+  const geo = (() => { const parts = [leg, foot, heart].map((g) => g.index ? g.toNonIndexed() : g); const n = parts.reduce((a, g) => a + g.attributes.position.count, 0);
+    const pos = new Float32Array(n * 3), nor = new Float32Array(n * 3), col = new Float32Array(n * 3); let o = 0;
+    for (const g of parts) { pos.set(g.attributes.position.array, o * 3); nor.set(g.attributes.normal.array, o * 3); col.set(g.attributes.color.array, o * 3); o += g.attributes.position.count; }
+    const m = new THREE.BufferGeometry(); m.setAttribute('position', new THREE.BufferAttribute(pos, 3)); m.setAttribute('normal', new THREE.BufferAttribute(nor, 3)); m.setAttribute('color', new THREE.BufferAttribute(col, 3)); return m; })();
+  const mat = litMat({ vc: true, spec: 0.22, shin: 14, amb: 0.62, rim: 0xbfefff, rimK: 0.35 });
+  const SC = +(q.get('socksize') ?? 2.1);
+  // positions (s from Benny's start, lane offset): one per lane change of a natural run; none under a coin
+  const LIST = (q.get('socks') ?? '2.6,-0.22;4.6,0.22;6.45,0;8.25,-0.22;10.7,0.22').split(';').map((x) => x.split(',').map(Number));
+  const socks = LIST.map(([s, lat], i) => { const m = new THREE.Mesh(geo, mat); m.scale.setScalar(SC); m.frustumCulled = false; scene.add(m); return { i, s, lat, m, got: -1, ph: i * 1.7 }; });
+  const slots = document.getElementById('slots'), mtext = document.getElementById('mtext');
+  const icon = (on) => `<svg viewBox="0 0 20 22" class="${on ? 'on' : ''}"><path d="M6 1h8v11l4 3c2 2 1 6-3 6H8c-4 0-6-3-5-6l3-3z" fill="${on ? '#fff' : '#8a7aa8'}"/><path d="M6 1h8v3H6zM14 17h3c0 3-2 4-4 4z" fill="${on ? '#f45aa8' : '#6d5d8c'}"/></svg>`;
+  const draw = () => { const n = socks.filter((k) => k.got >= 0).length; slots.innerHTML = socks.map((k, i) => icon(i < n)).join(''); return n; };
+  draw();
+  const M4 = new THREE.Matrix4(), tz = new THREE.Vector3(), v1 = new THREE.Vector3(), v2 = new THREE.Vector3();
+  return { socks, update(t, s, F0) {
+    let n = 0;
+    for (const k of socks) {
+      const F = frameAt(k.s); at(k.s, k.m.position).addScaledVector(F.r, k.lat);
+      if (k.got < 0) {
+        k.m.position.addScaledVector(F.n, 0.012 + 0.012 * Math.sin(t * 2.6 + k.ph));
+        M4.makeBasis(F.r, F.n, tz.copy(F.t).negate()); k.m.quaternion.setFromRotationMatrix(M4);
+        k.m.rotateY(0.35 * Math.sin(t * 0.9 + k.ph)); k.m.rotateZ(0.12 * Math.sin(t * 1.7 + k.ph));
+        // rescue: the sock's centre within reach of Benny's body (water point .. his shoulders, incl. leap / dive height)
+        v1.copy(benny.position); v2.copy(benny.position).addScaledVector(F0.n, bennyH * 0.75);
+        const c = k.m.position.clone().addScaledVector(F.n, 0.07 * SC), d = new THREE.Line3(v1, v2).closestPointToPoint(c, true, new THREE.Vector3()).distanceTo(c);
+        if (d < 0.15 && Math.abs(k.s - s) < 0.3) { k.got = t; n = draw(); mtext.innerHTML = n >= socks.length ? 'All <b>5</b> socks rescued!' : `Rescue <b>5</b> lost socks`; }
+      } else {
+        const a = Math.min(1, (t - k.got) / 0.6); k.m.position.copy(benny.position).addScaledVector(F0.n, bennyH * (0.9 + 1.2 * a));
+        k.m.scale.setScalar(SC * (1 + 0.4 * Math.sin(Math.PI * a)) * (1 - a * a)); k.m.rotateY(0.35); k.m.visible = a < 1;
+      }
+    }
+    return socks.filter((k) => k.got >= 0).length; } };
+})();
+// white boost chevrons on the water just in front of the camera (the picture's three arrows under Benny), glowing in a wave toward him
+{
+  const tex = (() => { const c = document.createElement('canvas'); c.width = 256; c.height = 768; const g = c.getContext('2d'); g.lineCap = 'round'; g.lineJoin = 'round';
+    for (let i = 0; i < 3; i++) { const y = 160 + i * 230; g.shadowColor = '#bff4ff'; g.shadowBlur = 26; g.strokeStyle = '#ffffff'; g.lineWidth = 34;
+      g.beginPath(); g.moveTo(30, y + 70); g.lineTo(128, y - 30); g.lineTo(226, y + 70); g.stroke(); }
+    const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; return t; })();
+  const S0 = -0.4, S1 = -0.04, LW = 0.15, NA = 8, NB = 24;   // just behind Benny = the bottom of the screen; they travel with him
+  const g = grid(NA, NB, (a, b) => { const s = S0 + (S1 - S0) * b, F = frameAt(s), p = at(s, new THREE.Vector3()).addScaledVector(F.r, (a - 0.5) * 2 * LW).addScaledVector(F.n, 0.006); return [p, a, b]; });
+  const pv = new THREE.Vector3();
+  window.__chevMove = (s0, lat) => { const pa = g.attributes.position; for (let j = 0; j <= NB; j++) { const s = s0 + S0 + (S1 - S0) * j / NB, F = frameAt(s); at(s, pv).addScaledVector(F.n, 0.006);
+      for (let i = 0; i <= NA; i++) { const k = j * (NA + 1) + i; pa.setXYZ(k, pv.x + F.r.x * (lat + (i / NA - 0.5) * 2 * LW), pv.y + F.r.y * (lat + (i / NA - 0.5) * 2 * LW), pv.z + F.r.z * (lat + (i / NA - 0.5) * 2 * LW)); } }
+    pa.needsUpdate = true; };
+  const m = new THREE.ShaderMaterial({ uniforms: { map: { value: tex }, uT: { value: 0 }, ...REMAP }, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, toneMapped: false,
+    vertexShader: REMAP_GLSL + 'varying vec2 vUv; void main(){ vUv = uv; vec4 wp = modelMatrix * vec4(position, 1.0); gl_Position = projectionMatrix * viewMatrix * vec4(kitRemap(wp.xyz), 1.0); }',
+    fragmentShader: 'uniform sampler2D map; uniform float uT; varying vec2 vUv; void main(){ float c = texture2D(map, vUv).r; float w = 0.55 + 0.45 * sin(6.2832 * (vUv.y * 1.5 - uT * 1.2)); gl_FragColor = vec4(vec3(0.8, 0.97, 1.0) * c * w, 1.0); }' });
+  const chev = new THREE.Mesh(g, m); chev.frustumCulled = false; chev.renderOrder = 3; scene.add(chev); window.__chev = m;
+}
+{ // pause (HUD button): the game clock stops, the next frame continues where it left off
+  const step0 = window.step; let paused = false, pAt = null, tOff = 0; const pel = document.getElementById('paused');
+  document.getElementById('pauseBtn').addEventListener('click', (e) => { e.stopPropagation(); paused = !paused; pel.style.display = paused ? 'flex' : 'none'; });
+  window.step = (t, dt, steer, speed) => {
+    if (paused) { if (pAt === null) pAt = t; return step0(pAt - tOff, 0, steer, 0); }
+    if (pAt !== null) { tOff += t - pAt; pAt = null; }
+    const tt = t - tOff, o = step0(tt, dt, steer, speed); if (window.__chev) { window.__chev.uniforms.uT.value = tt; window.__chevMove(o.s, o.lat); }
+    return { ...o, socks: SOCK.update(tt, o.s, frameAt(o.s)) };
+  };
+  window.sockLayout = () => SOCK.socks.map((k) => ({ s: k.s, lat: k.lat, got: k.got }));
+}
 // ending (as round 32b): over the last 1.25 u before the level end the warm white-gold light grows from the core and fills the screen
 const S_LAST = LEVEL; const endEl = document.createElement('div'); endEl.style.cssText = 'position:fixed;inset:0;pointer-events:none;opacity:0';
 document.body.insertBefore(endEl, document.getElementById('hud')); let endK = 0; const endP = new THREE.Vector3();
