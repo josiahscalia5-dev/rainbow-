@@ -3213,3 +3213,19 @@ While both recordings run, I'm assembling the before/after picture sheets from t
 > frame 30 s 90.2 lat 0 coins 1330 socks 0
 > AUTOSAVE OK | branch ccr-c1b272d2-3ru7yx | scheduler daemon | last verified backup 2026-11-22T19:08:56+00:00 (4.7 min ago) | local d144b42 remote d144b42 (match) | uncommitted 8
 
+### 🤖 Claude — 2026-11-22T19:13:45.213Z
+
+Both recordings share the CPU, so the textured one has about 20–25 minutes left. Writing the evidence README meanwhile:
+
+### 🤖 Claude — 2026-11-22T19:13:59.226Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/kit45/README.md", "content": "# Round 45 — Screens 05 + 06 with the upgraded automated screen pipeline (2026-11-22)\n\nEverything here is a real-time 3D render of the game (three.js, 412 x 915 phone portrait, software WebGL), never a picture shown as a background.\nThe approved pictures are painted ONCE onto the real 3D tunnel / rings / water / foam (pre-baked), and the same painting is sampled into\nreusable materials so the scenery keeps the approved look where the picture never saw it. Free tools only; no paid credits spent.\n\n## Files\n| file | what | …[+3039 chars]`
+
+### 🧑 User — 2026-11-22T19:13:59.406Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/kit45/README.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-22T19:14:01.126Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; until grep -q \"^EXIT\" $S/rec_tex.log; do sleep 15; done; tail -n 3 $S/rec_tex.log; tail -n 1 $S/rec_gray.log", "description": "Wait for the textured recording to finish", "timeout": 5400000}`
+
