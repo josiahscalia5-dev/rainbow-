@@ -23,15 +23,29 @@ User's orders (verbatim): `docs/briefs/2026-11-22-r40/USER_R40.md`. Blueprints =
 ## Measured (412 × 915 Android portrait, SwiftShader; skill `compare_to_approved.py`, scenery = picture minus what the game draws itself)
 | view | scenery px within 20 levels | SSIM | mean diff | colour look |
 |---|---|---|---|---|
-| Bubble Dash picture position | 83.0 % | 0.76 | 11.8 | 0.98 |
-| Sock Rescue picture position | 84.8 % | 0.79 | 11.7 | 0.99 |
+| Bubble Dash picture position | 86.8 % | 0.77 | 10.4 | 0.99 |
+| Sock Rescue picture position | 84.4 % | 0.79 | 11.9 | 0.99 |
+Target 90-95 %: NOT reached yet (measured 84-87 %); what is left is listed below.
 Pictures: `BUBBLE_DASH_approved_vs_game.jpg`, `SOCK_RESCUE_approved_vs_game.jpg` (+ separate `*_APPROVED.jpg` / `*_GAME.jpg`).
 
 ## Continuous gameplay (the whole section, 30 fps, real swipe requests, final code)
-RECORDING_RESULTS
+`GAMEPLAY_full_section_24s_steering.mp4` (730 frames, 24.3 s, the whole section: chamber -> arch -> funnel rings -> Sock Rescue tunnel -> exit) and
+`GAMEPLAY_tunnel_arch_and_gold_rings.mp4` (410 frames: approaching the arch, entering, through the funnel rings and the Sock Rescue rings), both
+rendered from the final code with 26 swipe requests (`GAMEPLAY_swipe_plan.json`: hard left / hard right lane changes all the way), a pure-green
+background so any hole in the world would show. Automatic checks over EVERY frame (`GAMEPLAY_full_section_24s_steering_checks.json`):
+| check | result |
+|---|---|
+| hole pixels (missing geometry, green background visible) | 0 in all 730 frames |
+| Benny's whole posed body inside the frame | 730 / 730 frames |
+| scenery meshes that moved while Benny swam (static world audit) | 0 of 123 |
+| camera step per frame / turn per frame | <= 0.099 u (= forward travel) / <= 0.57 deg |
+| lanes reached | -0.30 ... +0.30 u (both hard sides), 12 coins, 3 socks, 0 page errors |
+Fixed during this round because the checks caught them: Benny's arm leaving the frame on hard swipes (camera follow 35 % -> 80 % + on-screen
+guard), the camera leaving the tunnel (river line bent by painting-perspective coins; wall clamp), stretched painted pixels on grazing walls
+(worst-direction resolution + per-texel best picture).
 
 ## Android
-`Rainbow_r40_bubble_sock_section_debug.apk` (debug, 87 MB, `VITE_RAINBOW_BONUS=1 npm run android:debug`, Gradle BUILD SUCCESSFUL; the APK carries
+`Rainbow_r40_bubble_sock_section_debug.apk` (debug, 88 MB, `VITE_RAINBOW_BONUS=1 npm run android:debug`, Gradle BUILD SUCCESSFUL; the APK carries
 the section: 188 files under `assets/public/section/`). In-app route checked on the SAME built files (`app_route_check.json`, `APP_ROUTE_*.jpg`):
 end of 04 → section (pre-baked textures) → back at the 05 checkpoint, coins carried, 0 errors. NOT run on a phone or emulator here (no emulator
 image / KVM in this container): please install the APK to judge the real-device frame rate and feel.
@@ -46,3 +60,4 @@ image / KVM in this container): please install the APK to judge the real-device 
 * Towels / socks / pods: simple Blender shapes (the two painted towels carry their painted pixels; later towels repeat them).
 * HUD differs (the game's own HUD, no gems / plus buttons / Bubble Blast / Turbo Spin).
 * Hand-over 04 → section → 05 is a page load (a short "Building the washer…" screen), not yet one scene graph with the main course.
+* Exit: Benny swims out into a plain bright room (white / cyan light, wide water); the pictures do not show what lies beyond the tunnel.

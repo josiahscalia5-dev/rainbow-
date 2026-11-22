@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3153,
-   "sha256": "de280c7e470296ee08196753929b939f9830fa63f12f32e720f7f375fe2405f3"
+   "sha256": "1ed77cb51fd014cae085c920de91d51a78cce783fcdf4ae12ded29a156a76c98"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -35447,9 +35447,34 @@
    "sha256": "10d31cdd4900b59bd507604666c5fdcb977758272f8220ec2c9715a7241f6c80"
   },
   {
+   "path": "qa/reflock/r40/GAMEPLAY_contact_sheet.jpg",
+   "bytes": 302257,
+   "sha256": "d8cb18e59f2c37dced65ce91876d6532859ae049cc537da323abec90178061b0"
+  },
+  {
+   "path": "qa/reflock/r40/GAMEPLAY_full_section_24s_steering.mp4",
+   "bytes": 12450533,
+   "sha256": "8d250f4e6553a47f48416e7531bcf582510aa0582f8c8103a44e7f1b587f1ee4"
+  },
+  {
+   "path": "qa/reflock/r40/GAMEPLAY_full_section_24s_steering_checks.json",
+   "bytes": 467,
+   "sha256": "fb456d99b78c39882a8446153ce9e00a1c4e28fca9fb28de296ed9d1971c0f60"
+  },
+  {
+   "path": "qa/reflock/r40/GAMEPLAY_swipe_plan.json",
+   "bytes": 377,
+   "sha256": "a2ddc883b9a80b3c4da36c6b0ebf14b269282c00d35c3030a47e860c0674df58"
+  },
+  {
+   "path": "qa/reflock/r40/GAMEPLAY_tunnel_arch_and_gold_rings.mp4",
+   "bytes": 7629021,
+   "sha256": "b519eb6c3ab127721f8aff3c42c67a6e179a3afb183e77af35e7a05dafc1d821"
+  },
+  {
    "path": "qa/reflock/r40/RESULT_R40.md",
-   "bytes": 4668,
-   "sha256": "f7a16e2e5f8df754d9b9be4690eb4cc7f45cc881e84a99e00d714335dddce9a8"
+   "bytes": 6212,
+   "sha256": "a9aae444f9ef0482af6b8d5c320384df83a062061c2152abd210bb17cca0703a"
   },
   {
    "path": "qa/reflock/r40/Rainbow_r40_bubble_sock_section_debug.apk",
