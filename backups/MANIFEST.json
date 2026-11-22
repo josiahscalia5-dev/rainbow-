@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3153,
-   "sha256": "989a5b0212686a1ff364f7cfe6a685592f3e67d17e6547beea323c47aaf0f7ac"
+   "sha256": "2465fd7be67e165e24e854bdcbd5e2a23da008d3236dd7507a09bd690af12fb5"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -42253,8 +42253,8 @@
   },
   {
    "path": "src/game/Game.ts",
-   "bytes": 49571,
-   "sha256": "ff3ed4a9fbe9e4d97779f89d7254873855c1d7494731e1ddb3f2293066275e9f"
+   "bytes": 52018,
+   "sha256": "cf9ee543fa3ae06f7643cc130fe605e1f9d58849b8e042718ef9413de212c1bf"
   },
   {
    "path": "src/game/bonusRoute.ts",

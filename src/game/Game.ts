@@ -154,6 +154,32 @@ export async function startGame(canvas: HTMLCanvasElement) {
     log: [] as { t: number; s: number; y: number; stage: StageId }[],
   };
 
+  // r42: on-screen guard for the chase camera (same rule as the Bubble Dash / Sock Rescue section): after the rig has placed the camera, his
+  // posed body (every visible mesh's own box, projected) must stay inside the frame; if a hard lane at a wide river would push him past an edge,
+  // the camera slides sideways / up just enough (a pure translation, the view direction is unchanged), then eases back to the rig's own
+  // position (~0.7 s) when he is inside again. The offset follows his box continuously, so there is no jump.
+  const guardG = { x: 0, y: 0 };
+  const gv = new THREE.Vector3(), gR = new THREE.Vector3(), gU = new THREE.Vector3(), gF = new THREE.Vector3();
+  function keepBennyInFrame(dt: number) {
+    const W = renderer.domElement.clientWidth || 412, H = renderer.domElement.clientHeight || 915;
+    camera.updateMatrixWorld(); benny.root.updateMatrixWorld(true);
+    let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
+    benny.root.traverseVisible((o) => { const m = o as THREE.Mesh; if (!m.isMesh || !m.geometry) return;
+      if (!m.geometry.boundingBox) m.geometry.computeBoundingBox(); const bb = m.geometry.boundingBox!;
+      for (let i = 0; i < 8; i++) { gv.set(i & 1 ? bb.max.x : bb.min.x, i & 2 ? bb.max.y : bb.min.y, i & 4 ? bb.max.z : bb.min.z).applyMatrix4(m.matrixWorld).project(camera);
+        const x = (gv.x + 1) / 2 * W, y = (1 - gv.y) / 2 * H; x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); } });
+    if (x0 > x1) return;
+    camera.matrixWorld.extractBasis(gR, gU, gF); gF.negate();
+    const d = Math.max(0.5, gv.copy(benny.root.position).sub(camera.position).dot(gF));
+    const th = Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2), kx = W / (2 * d * th * camera.aspect), ky = H / (2 * d * th);
+    // the box was measured with the guard's PREVIOUS offset already NOT applied (the rig just set the camera), so solve for the full offset
+    const m = 8, mT = 96, decay = Math.exp(-1.5 * dt);
+    const fit = (g: number, lo: number, hi: number) => (lo > hi ? (lo + hi) / 2 : Math.min(hi, Math.max(lo, g)));
+    guardG.x = fit(guardG.x * decay, (x1 - (W - m)) / kx, (x0 - m) / kx);
+    guardG.y = fit(guardG.y * decay, (mT - y0) / ky, (H - m - y1) / ky);
+    if (guardG.x !== 0 || guardG.y !== 0) { camera.position.addScaledVector(gR, guardG.x).addScaledVector(gU, guardG.y); camera.updateMatrixWorld(); }
+  }
+
   const stageOf = (s: number): StageId => course.stageAtS(s).id;
 
   const setStage = (id: StageId) => {
@@ -405,7 +431,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
         st.hearts = 5;
         hud.setHearts(5);
         st.s = stg.s0;
-        st.lat = 0; st.laneT = 0;
+        st.lat = 0; st.laneT = 0; guardG.x = guardG.y = 0;
         st.respawns++;
       }
     }
@@ -430,6 +456,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
     water.wake((benny.root.children[0] ?? benny.root).getWorldPosition(wakeAnchor), f.tan, f.right, speed, dt);
     // camera
     rideCam.update(dt, st.s, st.lat, camera);
+    keepBennyInFrame(dt);
     { const a1 = course.sample(Math.min(course.stage('11').s0, st.s + 8)), a2 = course.sample(Math.min(course.stage('11').s0, st.s + 16));   // r41/42: rings never hide Benny nor the river just ahead
       env.setOcclusion(camera.position, benny.root.position, 1.6, [a1.pos.clone().addScaledVector(a1.up, 0.8), a2.pos.clone().addScaledVector(a2.up, 0.8)]); }
     // towel: folded in 08/09, lifted into a tent as the stream reaches it (late 09 → 10)
