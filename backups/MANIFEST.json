@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 27962,
-   "sha256": "72810a5e243a5c0ec4468143a643b31c6efb690c99b0c57ba9c79608615a6734"
+   "sha256": "22c6eed353588cabd424262a3e1152f790f0be414b550b8efa06f4b2ef38c57f"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3622,
-   "sha256": "608e2bf669ae1a93d3314ceb134bfcc9bc2eb0be1d587f144b0eb92d0c0707b0"
+   "sha256": "71bc1305d6178c32a7f5882bf68265556a990740f0e2c17542c5fe81a0dbaafe"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -868,8 +868,8 @@
   },
   {
    "path": "backups/TOOL_MANIFEST.json",
-   "bytes": 23481,
-   "sha256": "93bfa8ac31d6b6031c71fab7b8413f1a206d8c1ef9d9e04ace2d6c9a17e15f4e"
+   "bytes": 25076,
+   "sha256": "ca55644cd59c57e07a7a0857390706b6ec5633e7a99e9519a04a9d645ac1e8c5"
   },
   {
    "path": "backups/TOOL_RESTORE_REPORT_2026-11-22.md",
@@ -43793,8 +43793,8 @@
   },
   {
    "path": "scripts/verify-assets.py",
-   "bytes": 16911,
-   "sha256": "e4ffcd537259b72785176d7a4a7dec650ea85c75a8c2cb6aae5165db5016fd63"
+   "bytes": 17116,
+   "sha256": "43770615d238d6368538f41a718128daffdd82988dd14f5bac5f0534ce972f60"
   },
   {
    "path": "scripts/water-lab.mjs",
@@ -45225,6 +45225,11 @@
    "path": "tools/water-lab.ts",
    "bytes": 6802,
    "sha256": "9eadc09abd1f3685bf74f6f5b3ae20c411acade82355b44ffddc8d6ad135c676"
+  },
+  {
+   "path": "tools/world/join_audit.cjs",
+   "bytes": 5365,
+   "sha256": "86b9f14a86fc6f831c93b6d09d253c8ecfe1bf4a4af433c34cbf76a4a4316a7c"
   },
   {
    "path": "tools/worldlabs/analyze_splats.py",

@@ -207,7 +207,8 @@ def cmd_worldlabs() -> int:
         return done("warn", f"Marble API not reachable (HTTP {code or d.get('error')}): network/API problem, NOT a key "
                             "problem - do not ask the user for a new key; retry later")
     worlds = []
-    for w in man["worlds"]:
+    # user 2026-11-22: only the CURRENT World Labs account's worlds count; the old 2026-11-16 worlds are marked do_not_use (never read)
+    for w in man.get("current_worlds") or [w for w in man["worlds"] if not w.get("do_not_use")]:
         c, _ = get(f"/worlds/{w['world_id']}")
         worlds.append(f"{w['label']} {c}")
     bad = [x for x in worlds if not x.endswith(" 200")]

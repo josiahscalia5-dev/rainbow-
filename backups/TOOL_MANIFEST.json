@@ -300,7 +300,8 @@
           "analysis/bay_unrolled.png",
           "analysis/wall_unrolled.png",
           "analysis/bay_coverage.png"
-        ]
+        ],
+        "do_not_use": "user 2026-11-22: OLD 2026-11-16 worlds of an earlier World Labs account - never use them; their downloaded files stay archived in git"
       },
       {
         "label": "full",
@@ -336,7 +337,8 @@
           "analysis/bay_unrolled.png",
           "analysis/wall_unrolled.png",
           "analysis/bay_coverage.png"
-        ]
+        ],
+        "do_not_use": "user 2026-11-22: OLD 2026-11-16 worlds of an earlier World Labs account - never use them; their downloaded files stay archived in git"
       }
     ],
     "user_website_world": {
@@ -362,6 +364,37 @@
       "qa/worldlabs/05/geometry_ref/",
       "qa/worldlabs/05/rejected/",
       "qa/worldlabs/05/*.md"
+    ],
+    "current_worlds_user_order_2026_11_22": "Use ONLY the current World Labs account (Marble key + Atlas connector project 'My project', Personal workspace) for the screens being built now. Listed by the free POST /marble/v1/worlds:list on 2026-11-22 15:40 UTC.",
+    "current_worlds": [
+      {
+        "label": "05-r32-plus",
+        "world_id": "3657fa05-d90a-4ad9-acdb-70f0145d5796",
+        "model": "marble-1.1-plus",
+        "created": "2026-11-21T10:16:52Z",
+        "notes": "qa/worldlabs/05/r32/"
+      },
+      {
+        "label": "05-r32-full",
+        "world_id": "8bb4cf11-9615-4879-8f2f-8a1cb6002ff7",
+        "model": "marble-1.1",
+        "created": "2026-11-21T04:01:29Z",
+        "notes": "qa/worldlabs/05/r32/, docs/briefs/2026-11-21-r32/RESUME_R32.md"
+      },
+      {
+        "label": "05-r32-draft",
+        "world_id": "f3226155-5633-4e41-bbd5-f58a3f584c26",
+        "model": "marble-1.0-draft",
+        "created": "2026-11-21T03:41:41Z",
+        "notes": "qa/worldlabs/05/r32/README.md"
+      },
+      {
+        "label": "08-final-spin-chamber",
+        "world_id": "32b5b2f4-32bc-4fa5-80a5-861129a528c8",
+        "model": "marble-1.1",
+        "created": "2026-11-17T12:54:13Z",
+        "notes": "backups/AGENTS_STATUS.json (Screen 08)"
+      }
     ]
   },
   "protected": {
