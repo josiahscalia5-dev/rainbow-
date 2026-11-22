@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3271,
-   "sha256": "b6bbb9e7cfcba8c4f6da232c9aaac2768206ee3ea48bd132fe5804691734ee73"
+   "sha256": "7642a82015429d8b940c9d25976da8559ddf2a814fa3271c7fca5cb530969666"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -40878,8 +40878,8 @@
   },
   {
    "path": "tools/bonus/bonus.html",
-   "bytes": 120158,
-   "sha256": "82626c33bd1b151fc02f8d620ab1b4a97790acc4368ac69cd617aad0a3b0394f"
+   "bytes": 120911,
+   "sha256": "9d34ad8b7b309ae7c1ec3f9a6039d33095c85ea00300b0644505709b870da084"
   },
   {
    "path": "tools/bonus/build_phone_bonus.sh",
