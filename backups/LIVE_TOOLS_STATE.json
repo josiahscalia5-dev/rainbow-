@@ -1,6 +1,6 @@
 {
- "time_utc": "2026-11-22T12:27:03+00:00",
- "lead_branch": "ccr-50ff6f57-q5me82",
+ "time_utc": "2026-11-22T12:40:35+00:00",
+ "lead_branch": "ccr-80cdb162-4sqz1a",
  "specialists_sha256_16": {
   "android-build-performance": "b0c45161860a960c",
   "animation-and-gameplay-engineer": "c48094c3ed3d22e7",
@@ -49,33 +49,27 @@
    }
   }
  },
- "plugins_installed_locally": [
-  "worldlabs@worldlabs"
- ],
- "plugins_enabled_user_settings": [
-  "worldlabs@worldlabs"
- ],
+ "plugins_installed_locally": [],
+ "plugins_enabled_user_settings": [],
  "plugins_synced_from_claude_account": [
-  "Automated code review for pull requests using multiple specialized agents with confidence-",
-  "Frontend design skill for UI/UX implementation",
-  "Comprehensive feature development workflow with specialized agents for codebase exploratio",
   "Accelerate design workflows \u2014 critique, design system management, UX writing, accessibilit",
-  "Upstash Context7 MCP server for up-to-date documentation lookup. Connects to Context7's ho",
-  "Core skills library for Claude Code: TDD, debugging, collaboration patterns, and proven te",
-  "Generate and edit explorable 3D Gaussian-splat worlds from a text prompt, image, 360 panor"
+  "Semantic code analysis MCP server providing intelligent code understanding, refactoring su",
+  "Create new skills, improve existing skills, and measure skill performance. Use when users ",
+  "Analyze codebases and recommend tailored Claude Code automations such as hooks, skills, MC",
+  "Three.js/GLSL debugging for Claude Code \u2014 correlates scene graph, console, GL state, and p",
+  "Browser automation and end-to-end testing MCP server by Microsoft. Enables Claude to inter",
+  "TypeScript/JavaScript language server for Claude Code that runs TypeScript 7's native LSP "
  ],
  "plugins_synced_from_claude_account_names": [
-  "code-review",
-  "context7",
+  "claude-code-setup",
   "design",
-  "feature-dev",
-  "frontend-design",
-  "spaitial-ai",
-  "superpowers"
+  "parallax-threejs",
+  "playwright",
+  "serena",
+  "skill-creator",
+  "typescript-native-lsp"
  ],
- "mcp_servers_configured": [
-  "worldlabs"
- ],
+ "mcp_servers_configured": [],
  "hooks_project": [
   "PreCompact",
   "SessionEnd",
