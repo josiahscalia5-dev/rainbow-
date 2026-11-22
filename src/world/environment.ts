@@ -10,12 +10,22 @@ import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTextur
 import { buildTubeGeometry, buildRings, buildRingsAt, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt, ForcedTunnel, bandGeometry, wallLidGeometry, wallLidBasis, nearFrameGeometry } from './tube';
 import { STAGE_CAM } from '../game/cameraRig';
 import { far05Debug, farRiverLayout, farRiverGeometry } from './far05'; // path-camera (05 far tunnel block)
-import { FLOW05, FLOWMAP05, PROJ05 } from '../vfx/waterRibbon';
+import { FLOW05, FLOWMAP05, PROJ05, flag05 } from '../vfx/waterRibbon';
 import { createProj05Apron } from '../vfx/proj05Apron'; // Screen 05 test W11 (?flow05=1), advection speed (?flowcam05=1)
 import { PROJWALL05, PROJRING05, PROJFRAME05, PROJLID05, PT_ROW, withProj05Wall, withProj05Ring, withProj05Frame, lids05Group, type WallSeg } from '../vfx/proj05Tunnel'; // Screen 05 tunnel bake tests
 import { flow05Shared, flow05Textures } from '../vfx/flow05';
 import { buildLaundryRoom, LaundryRoom } from './laundryRoom';
 import { buildTowel, TowelMesh } from './towel';
+
+/** Diagnostic-only A/B switches. Default runtime and all approved screen captures are unchanged.
+ * ?physical05=1  : use the already-built full-sized physical 05 tube instead of the eye-calibrated far compression
+ * ?noframe05=1   : remove the gold frame drawn directly in camera space
+ * ?realride05=1  : enables both of the above plus ?follow05=1 in cameraRig.ts
+ * These are comparison modes, not claims of a verified visual fix.
+ */
+const REAL_RIDE05 = flag05('realride05');
+const PHYSICAL05 = REAL_RIDE05 || flag05('physical05');
+const NOFRAME05 = REAL_RIDE05 || flag05('noframe05');
 
 export interface Environment {
   group: THREE.Group;
@@ -295,7 +305,7 @@ export function buildEnvironment(course: Course): Environment {
   // the mid-tones toward saturated orange-gold while highlights stay bright. Default 0 = shader unchanged.
   const GOLD05 = qaNum05('gold05', 0) === 1;
   const TONE05: [number, number, number] = [1.35, 1.75, 1.3];
-  const rings05 = ringSlots05.filter((s) => Math.abs(s - sF05) > 0.5).map((s) => (Math.abs(s - sCam05 - 26) < 3 ? sCam05 + RING_A05_DEPTH : s));
+  const rings05 = ringSlots05.filter((s) => PHYSICAL05 || Math.abs(s - sF05) > 0.5).map((s) => (Math.abs(s - sCam05 - 26) < 3 ? sCam05 + RING_A05_DEPTH : s));
   // 05 walls: 7 dark capsule-slot rows per 14-unit bay, centred between the bands (rows 2 apart),
   // slots ≈0.6 × 0.24 units laid along the circumference (ref 05 near slots ≈10 × 28 px)
   // wave 7: 10 rows per bay (ref near walls show dense capsule rows, ≈25 px apart at the left edge; live had ≈45)
@@ -439,7 +449,9 @@ export function buildEnvironment(course: Course): Environment {
   }
 
   // ---- 05 far tunnel (forced perspective, calibrated for the locked 05 checkpoint eye) ----
-  {
+  // The whole-sized perforated tube and river are already present behind it. In physical05 comparison mode,
+  // skip the eye-calibrated compressed overlay and let the player see only actual course-space geometry.
+  if (!PHYSICAL05) {
     // the checkpoint eye, exactly as RideCamera places it on the straight (cameraRig.ts, '05' block, lat 0)
     const sC = course.marks['05_crest'];
     const p5 = STAGE_CAM['05']!;
@@ -665,7 +677,8 @@ export function buildEnvironment(course: Course): Environment {
   // Shown only while the camera rides the straight 05 current; it slides down out of the frame over ≈6 units
   // when entering from 04 and before the 06 hall, and is collapsed (zero scale) everywhere else, so 01–04 and
   // 06–11 never see it. It covers only the frame's bottom corners/edge (below Benny), never the course ahead.
-  {
+  // Diagnostic mode excludes this camera-space object; the physical gold rings remain part of the world.
+  if (!NOFRAME05) {
     // `?projframe05=1` (src/vfx/proj05Tunnel.ts): the approved gold band on the same frame; default unchanged
     const frame = new THREE.Mesh(nearFrameGeometry(), PROJFRAME05 ? withProj05Frame(nearFrameMaterial()) : nearFrameMaterial());
     frame.name = 'tube05_near_frame';
