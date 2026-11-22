@@ -309,7 +309,7 @@ const lastS = painted.length ? Math.max(...painted.map((c) => c[0])) : S_REF + 2
 const runs = []; for (let s = lastS + 2.2, k = 0; s < LEVEL - 0.8; s += 1.15, k++) runs.push([s, [0, 0.25, 0.25, 0, -0.25, -0.25][k % 6], 0]);
 const LAYC = [...painted, ...runs].sort((a, b) => a[0] - b[0]);
 coins.forEach((c, i) => { const L = LAYC[i]; if (!L) { c.sp.visible = false; c.s = 1e9; c.got = 0; return; } const F = frameAt(L[0]); c.s = L[0]; c.lat = L[1]; c.h = 0;
-  if (L[3]) c.p0.copy(L[3]); else at(L[0], c.p0).addScaledVector(F.r, L[1]).addScaledVector(F.n, coinD * 0.6);   // painted coins: exactly where the picture shows them
+  at(L[0], c.p0).addScaledVector(F.r, L[1]).addScaledVector(F.n, coinD * 0.5);   // on the channel (the route passes through the painted coins' water points)
   c.n0.copy(F.n); c.sp.position.copy(c.p0); });
 const coin3 = (() => { const geo = new THREE.CylinderGeometry(0.5, 0.5, 0.12, 48, 1); geo.rotateX(Math.PI / 2);
   const face = new THREE.MeshBasicMaterial({ map: ctex, toneMapped: false, alphaTest: 0.4 }), rim = new THREE.MeshBasicMaterial({ color: new THREE.Color(0.86, 0.5, 0.08), toneMapped: false });
@@ -318,8 +318,10 @@ const coin3 = (() => { const geo = new THREE.CylinderGeometry(0.5, 0.5, 0.12, 48
 // ---------------- chase camera: the fitted picture camera, kept in the route frame relative to Benny (exact at the picture position) -----
 const ROLL = +(q.get('roll') ?? LAY.cam_roll ?? 0.5);                       // how much of the route's bank / climb the camera follows
 // the frame the camera rides in: the route frame with its roll / climb only partly followed (ROLL), so the view stays calm
-const camFrame = (s, out) => { const F = frameAt(s), sm = (a, b) => a.clone().lerp(b, ROLL).normalize();
-  const t = sm(new THREE.Vector3(F.t.x, 0, F.t.z).normalize(), F.t), n = sm(UPV, F.n), r = new THREE.Vector3().crossVectors(t, n).normalize(); n.crossVectors(r, t).normalize();
+// the camera follows a SMOOTHED route frame (tangent over +-0.8 u, normal averaged over +-0.8 u): no frame-to-frame jumps where the route bends
+const camFrame = (s, out) => { const sm = (a, b) => a.clone().lerp(b, ROLL).normalize(), A = at(Math.min(RLEN, s + 0.8), new THREE.Vector3()), B = at(Math.max(0, s - 0.8), new THREE.Vector3());
+  const Ft = A.sub(B).normalize(), Fn = new THREE.Vector3(); for (let k = -2; k <= 2; k++) Fn.add(frameAt(Math.min(RLEN, Math.max(0, s + 0.4 * k))).n); Fn.normalize();
+  const t = sm(new THREE.Vector3(Ft.x, 0, Ft.z).normalize(), Ft), n = sm(UPV, Fn), r = new THREE.Vector3().crossVectors(t, n).normalize(); n.crossVectors(r, t).normalize();
   return out.makeBasis(r, n, t.clone().negate()); };
 const C0 = CAMS[0], P0 = at(S_REF, new THREE.Vector3()), M0 = camFrame(S_REF, new THREE.Matrix4()), M0i = M0.clone().invert();
 const OFF = V3(LAY.cams[0].pos).sub(P0).applyMatrix4(M0i);                   // camera position in Benny's route frame at the picture
@@ -329,8 +331,11 @@ const cds = (o, target, omega, dt) => { const y = o.x - target, j = o.v + omega 
 const CAMK = +(q.get('camk') ?? 0.8), tmp = new THREE.Vector3(), qTmp = new THREE.Quaternion(), Mt = new THREE.Matrix4();
 const camAt = (s, dt) => {
   const F = frameAt(s); camFrame(s, Mt); const r = new THREE.Vector3().setFromMatrixColumn(Mt, 0), n = new THREE.Vector3().setFromMatrixColumn(Mt, 1);
-  at(s, camera.position).add(OFF.clone().applyMatrix4(Mt)).addScaledVector(F.r, cds(st.camLat, CAMK * st.lat, 9, dt));
-  camera.quaternion.setFromRotationMatrix(Mt).multiply(QREL); camera.updateMatrixWorld();
+  const oT = OFF.clone().applyMatrix4(Mt), qT = new THREE.Quaternion().setFromRotationMatrix(Mt).multiply(QREL);
+  // gentle time smoothing of the rig's OFFSET and rotation (~0.07 s; no lag along the route); a still / the first frame (dt = 0) snaps exactly
+  const kS = dt > 0 && st.camInit ? 1 - Math.exp(-14 * dt) : 1; st.camInit = true;
+  st.rigO = (st.rigO ?? oT.clone()).lerp(oT, kS); st.rigQ = (st.rigQ ?? qT.clone()).slerp(qT, kS);
+  at(s, camera.position).add(st.rigO).addScaledVector(F.r, cds(st.camLat, CAMK * st.lat, 9, dt)); camera.quaternion.copy(st.rigQ); camera.updateMatrixWorld();
   const fpx = H / 2 / Math.tan(camera.fov * DEG / 2), M = 8;
   for (let k = 0; k < 2; k++) { const bb = window.bennyBox(); const dpx = bb.x0 < M ? bb.x0 - M : bb.x1 > W - M ? bb.x1 - (W - M) : 0; const dpy = bb.y1 > H - M ? bb.y1 - (H - M) : bb.y0 < M + 60 ? bb.y0 - (M + 60) : 0; if (!dpx && !dpy) break;
     camera.position.addScaledVector(r, dpx * camera.position.distanceTo(benny.position) / fpx).addScaledVector(n, -dpy * camera.position.distanceTo(benny.position) / fpx); camera.updateMatrixWorld(); st.guard = (st.guard ?? 0) + 1; }

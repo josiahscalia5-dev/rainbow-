@@ -42,7 +42,11 @@ def coin_at(px, py, r, k):
     d = cam.depth_dir(px, py); return cam.C + d * (k / r)
 COIN_D_PER_BENNY = 0.477        # coin diameter / Benny height in the proven Bubble Dash fit (section.json): same coins, same Benny
 COIN_R = 0.5 * COIN_D_PER_BENNY * HB; k = COIN_R * cam.F     # camera-space depth of a coin = k / painted radius
-coins = [coin_at(x, y, r, k) for x, y, r in M['coins']]
+# depth from the painted size; tiny far coins (radius < 12 px: +-1 px = +-10 %) must keep receding along the trail (>= 1.2 u apart)
+deps = [k / r for _, _, r in M['coins']]
+for i in range(1, len(deps)):
+    if M['coins'][i][2] < 12: deps[i] = max(deps[i], deps[i - 1] + 1.2)
+coins = [cam.C + cam.depth_dir(x, y) * dz for (x, y, _), dz in zip(M['coins'], deps)]
 water_pts = [P - np.array([0, COIN_R, 0]) for P in coins]                                  # the river surface under each coin
 # ---- optional Depth Anything V2 cross-check (guide only): calibrate on floor water pixels, print its depth at the coins
 da2_check = None
@@ -77,10 +81,10 @@ for i in range(1, 7):   # after the last coin: glide down onto the pool and run 
 tail += [np.array([xa + 0.25, 0.0, far[2] - 10.8 - 2.0 * j]) for j in range(1, 7)]
 ahead = Pb + np.array([-0.08, 0.0, -0.75])        # the painted water runs straight ahead of Benny before it curls up to the left
 ctrl = np.array([behind, P0, ahead] + water_pts + tail)
-route, s = fl.resample(fl.smooth_polyline(ctrl, 2), 0.05)
+route, s = fl.catmull_rom(ctrl, 0.05)          # THROUGH Benny's water point and every painted coin's water point (coins stay collectable)
 route[:, 1] = np.maximum(route[:, 1], 0.0)            # never below the pool surface (the landing glides onto the water)
 from scipy.ndimage import gaussian_filter1d as _g1
-route[:, 1] = np.maximum(_g1(route[:, 1], 6), 0.0)
+route = np.stack([_g1(route[:, 0], 3), np.maximum(_g1(route[:, 1], 8), 0.0), route[:, 2]], 1)   # soften the landing onto the pool (no kink)
 # the route must pass EXACTLY through Benny's painted water point (smoothing pulls it toward the first coin): blend the correction in
 i_b = int(np.argmin(np.linalg.norm(route - Pb, axis=1))); corr = Pb - route[i_b]; w_b = np.exp(-((np.arange(len(route)) - i_b) * 0.05 / 0.9) ** 2)
 route += w_b[:, None] * corr[None]

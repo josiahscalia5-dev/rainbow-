@@ -87,3 +87,16 @@ def dump(path, obj):
         if isinstance(o, (np.integer,)): return int(o)
         raise TypeError(type(o))
     json.dump(obj, open(path, 'w'), indent=1, default=conv)
+
+
+def catmull_rom(P, step, alpha=0.5):
+    """centripetal Catmull-Rom spline THROUGH every control point (the painted points stay exactly on the route), resampled every `step`"""
+    P = np.asarray(P, float); P = np.vstack([2 * P[0] - P[1], P, 2 * P[-1] - P[-2]]); out = []
+    for i in range(1, len(P) - 2):
+        p0, p1, p2, p3 = P[i - 1], P[i], P[i + 1], P[i + 2]
+        t0 = 0.0; t1 = t0 + np.linalg.norm(p1 - p0) ** alpha + 1e-9; t2 = t1 + np.linalg.norm(p2 - p1) ** alpha + 1e-9; t3 = t2 + np.linalg.norm(p3 - p2) ** alpha + 1e-9
+        for t in np.linspace(t1, t2, 24, endpoint=False):
+            a1 = (t1 - t) / (t1 - t0) * p0 + (t - t0) / (t1 - t0) * p1; a2 = (t2 - t) / (t2 - t1) * p1 + (t - t1) / (t2 - t1) * p2; a3 = (t3 - t) / (t3 - t2) * p2 + (t - t2) / (t3 - t2) * p3
+            b1 = (t2 - t) / (t2 - t0) * a1 + (t - t0) / (t2 - t0) * a2; b2 = (t3 - t) / (t3 - t1) * a2 + (t - t1) / (t3 - t1) * a3
+            out.append((t2 - t) / (t2 - t1) * b1 + (t - t1) / (t2 - t1) * b2)
+    out.append(P[-2]); return resample(np.array(out), step)

@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3218,
-   "sha256": "598681734ee4982d40f5b98e3749707a9507a8aaf7b46f1759e80ddc56177783"
+   "sha256": "6cd87aa96cb2e90318b804cd40151bf9346700c476db636a4f11ae1b879dc16a"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -36072,6 +36072,16 @@
    "sha256": "cbbf5639c41c780d4a68c4cc484281c5f151e77ce6b6dbf54aa637b8c783d250"
   },
   {
+   "path": "qa/reflock/r43/EXTRACTION_EVAL.md",
+   "bytes": 3502,
+   "sha256": "b010922a8f35760738b6adac94b2e536aaf0efa7eee963311fefa8a4ad5b731b"
+  },
+  {
+   "path": "qa/reflock/r43/REUSE_MATRIX_04_10.md",
+   "bytes": 4937,
+   "sha256": "b16dc7d0cf9fdb7c6007d9d83f5d0530aa61fa886d0019287e6fb87ca4734999"
+  },
+  {
    "path": "qa/reflock/r43/analysis_04_10/04_analysis.json",
    "bytes": 4873,
    "sha256": "11721c60431d37c0a9fb779f09c4c9e64d3e71bd657ac5b1e4b3db041051c254"
@@ -36140,6 +36150,41 @@
    "path": "qa/reflock/r43/analysis_04_10/10_overlay.jpg",
    "bytes": 123919,
    "sha256": "7981b6daf134d6fc83adb7901a31372fd0571c75c3993800262fd48d2ba0d68f"
+  },
+  {
+   "path": "qa/reflock/r43/extraction_eval/05_benny_sam2_samebox_vs_gt.jpg",
+   "bytes": 124493,
+   "sha256": "e7a95386631274b512582c7ab6a75de0d2bfec604f7b7ac395be4042604a0a52"
+  },
+  {
+   "path": "qa/reflock/r43/extraction_eval/06_da2_depth.jpg",
+   "bytes": 24850,
+   "sha256": "c92d206e45c797b3eeaa630602e70bb35c5d4c7b00ebf63a4fa4928b0317aa05"
+  },
+  {
+   "path": "qa/reflock/r43/extraction_eval/09_benny_sam2_samebox_vs_gt.jpg",
+   "bytes": 102908,
+   "sha256": "9c00501dc22ef3a78e6c66ead2ed22e3638552579d62f51f3fbfdea9b2fc3734"
+  },
+  {
+   "path": "qa/reflock/r43/extraction_eval/APPROVED_06_benny_sam2.jpg",
+   "bytes": 120162,
+   "sha256": "829babc79293b845ccb7dd859ffa40ab3a6abd765d7eb38e93e1a6945f981473"
+  },
+  {
+   "path": "qa/reflock/r43/extraction_eval/APPROVED_06_da2_depth.jpg",
+   "bytes": 20333,
+   "sha256": "2ff99faea69defbde1fb3da505063687928a9724af96e1ca09df1cd175cb0a38"
+  },
+  {
+   "path": "qa/reflock/r43/extraction_eval/APPROVED_06_kit_mask_overlay.jpg",
+   "bytes": 376451,
+   "sha256": "02504cbea2e0c36f696c9f1c8e87aeb12b5d5fb0aba5525c8a247e899bfe7e7b"
+  },
+  {
+   "path": "qa/reflock/r43/extraction_eval/eval_extract.json",
+   "bytes": 8276,
+   "sha256": "639cc1591e8abbd27705ecb24137b771b4d9d7426e1099164d006c7d66278e8e"
   },
   {
    "path": "qa/report_metrics.json",
@@ -43608,8 +43653,8 @@
   },
   {
    "path": "tools/screenkit/fitlib.py",
-   "bytes": 4499,
-   "sha256": "8138e326afa23101119d6974c04df15c606fc723f8eb07db3973ca7a28cae13f"
+   "bytes": 5556,
+   "sha256": "de77d423e978744641fd6070ca33f906c84163460412f42cc61eb0a71e36bdc0"
   },
   {
    "path": "tools/screenkit/get_models.sh",
@@ -43618,13 +43663,13 @@
   },
   {
    "path": "tools/screenkit/screen.html",
-   "bytes": 47560,
-   "sha256": "81a752c63dc6cb6f93eb3adbd29e0baf72e0a47054e091909f8ff2f10f27b2f5"
+   "bytes": 48337,
+   "sha256": "114274a88b151f09f100c8f7454c9fa5e3cf46fa96990649b0483fc93dd482be"
   },
   {
    "path": "tools/screenkit/screens/06/fit06.py",
-   "bytes": 13238,
-   "sha256": "605f2fe55845e808cea5150b54e7881a1d5f8100271043f09fcb1939237450c4"
+   "bytes": 13714,
+   "sha256": "1c6efe3e0ba82d3d5e99eeda17a720bb83a22d8de539154ef37e62c8228c8cd6"
   },
   {
    "path": "tools/screenkit/screens/06/segment06.json",

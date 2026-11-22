@@ -1,0 +1,433 @@
+{
+ "per_frame": {
+  "10": {
+   "gt_benny_px": 45060,
+   "gt_coin_px": 11718,
+   "benny": {
+    "opencv_blob": {
+     "iou": 0.162,
+     "precision": 1.0,
+     "recall": 0.162
+    },
+    "opencv_exclusion_box": {
+     "iou": 0.311,
+     "precision": 0.869,
+     "recall": 0.327
+    },
+    "sam2_from_opencv_box": {
+     "iou": 0.266,
+     "precision": 0.993,
+     "recall": 0.266
+    },
+    "sam2_pred_iou": 0.941
+   },
+   "benny_seg_same_box": {
+    "rect_padded": {
+     "iou": 0.373,
+     "precision": 0.373,
+     "recall": 1.0
+    },
+    "ellipse": {
+     "iou": 0.626,
+     "precision": 0.626,
+     "recall": 1.0
+    },
+    "sam2_box": {
+     "iou": 0.965,
+     "precision": 0.969,
+     "recall": 0.995
+    },
+    "sam2_pred_iou": 0.952
+   },
+   "coins": {
+    "n": 1,
+    "opencv_gold_hull": {
+     "iou": 0.558,
+     "precision": 0.558,
+     "recall": 1.0
+    },
+    "sam2_from_opencv_box": {
+     "iou": 0.961,
+     "precision": 0.97,
+     "recall": 0.991
+    }
+   },
+   "depth": {
+    "cells": 1104,
+    "da2_spearman_invdepth": 0.919,
+    "baseline_row_spearman": 0.941,
+    "near_cells": 1104,
+    "da2_median_relerr_near": 0.187,
+    "baseline_median_relerr_near": 0.123
+   }
+  },
+  "04": {
+   "gt_benny_px": 9632,
+   "gt_coin_px": 2491,
+   "coins": {
+    "n": 4,
+    "opencv_gold_hull": {
+     "iou": 0.493,
+     "precision": 0.493,
+     "recall": 1.0
+    },
+    "sam2_from_opencv_box": {
+     "iou": 0.696,
+     "precision": 0.706,
+     "recall": 0.98
+    }
+   },
+   "depth": {
+    "cells": 908,
+    "da2_spearman_invdepth": 0.779,
+    "baseline_row_spearman": 0.643,
+    "near_cells": 890,
+    "da2_median_relerr_near": 0.128,
+    "baseline_median_relerr_near": 0.086
+   }
+  },
+  "05": {
+   "gt_benny_px": 32578,
+   "gt_coin_px": 5066,
+   "benny": {
+    "opencv_blob": {
+     "iou": 0.273,
+     "precision": 1.0,
+     "recall": 0.273
+    },
+    "opencv_exclusion_box": {
+     "iou": 0.443,
+     "precision": 0.78,
+     "recall": 0.506
+    },
+    "sam2_from_opencv_box": {
+     "iou": 0.343,
+     "precision": 0.989,
+     "recall": 0.344
+    },
+    "sam2_pred_iou": 0.946
+   },
+   "benny_seg_same_box": {
+    "rect_padded": {
+     "iou": 0.362,
+     "precision": 0.362,
+     "recall": 1.0
+    },
+    "ellipse": {
+     "iou": 0.607,
+     "precision": 0.607,
+     "recall": 1.0
+    },
+    "sam2_box": {
+     "iou": 0.976,
+     "precision": 0.987,
+     "recall": 0.99
+    },
+    "sam2_pred_iou": 0.96
+   },
+   "coins": {
+    "n": 5,
+    "opencv_gold_hull": {
+     "iou": 0.94,
+     "precision": 0.959,
+     "recall": 0.979
+    },
+    "sam2_from_opencv_box": {
+     "iou": 0.953,
+     "precision": 0.987,
+     "recall": 0.965
+    }
+   },
+   "depth": {
+    "cells": 1104,
+    "da2_spearman_invdepth": 0.992,
+    "baseline_row_spearman": 0.929,
+    "near_cells": 1104,
+    "da2_median_relerr_near": 0.074,
+    "baseline_median_relerr_near": 0.178
+   }
+  },
+  "06": {
+   "gt_benny_px": 39321,
+   "gt_coin_px": 7295,
+   "benny": {
+    "opencv_blob": {
+     "iou": 0.007,
+     "precision": 0.01,
+     "recall": 0.02
+    },
+    "opencv_exclusion_box": {
+     "iou": 0.041,
+     "precision": 0.051,
+     "recall": 0.184
+    },
+    "sam2_from_opencv_box": {
+     "iou": 0.0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "sam2_pred_iou": 0.803
+   },
+   "benny_seg_same_box": {
+    "rect_padded": {
+     "iou": 0.371,
+     "precision": 0.371,
+     "recall": 1.0
+    },
+    "ellipse": {
+     "iou": 0.611,
+     "precision": 0.611,
+     "recall": 1.0
+    },
+    "sam2_box": {
+     "iou": 0.968,
+     "precision": 0.97,
+     "recall": 0.997
+    },
+    "sam2_pred_iou": 0.944
+   },
+   "coins": {
+    "n": 1,
+    "opencv_gold_hull": {
+     "iou": 0.712,
+     "precision": 0.712,
+     "recall": 1.0
+    },
+    "sam2_from_opencv_box": {
+     "iou": 0.936,
+     "precision": 0.941,
+     "recall": 0.995
+    }
+   },
+   "depth": {
+    "cells": 1104,
+    "da2_spearman_invdepth": 0.9,
+    "baseline_row_spearman": 0.807,
+    "near_cells": 1104,
+    "da2_median_relerr_near": 0.207,
+    "baseline_median_relerr_near": 0.242
+   }
+  },
+  "07": {
+   "gt_benny_px": 37192,
+   "gt_coin_px": 5332,
+   "benny": {
+    "opencv_blob": {
+     "iou": 0.0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "opencv_exclusion_box": {
+     "iou": 0.003,
+     "precision": 0.004,
+     "recall": 0.017
+    },
+    "sam2_from_opencv_box": {
+     "iou": 0.0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "sam2_pred_iou": 0.864
+   },
+   "benny_seg_same_box": {
+    "rect_padded": {
+     "iou": 0.454,
+     "precision": 0.454,
+     "recall": 1.0
+    },
+    "ellipse": {
+     "iou": 0.632,
+     "precision": 0.632,
+     "recall": 1.0
+    },
+    "sam2_box": {
+     "iou": 0.962,
+     "precision": 0.967,
+     "recall": 0.994
+    },
+    "sam2_pred_iou": 0.943
+   },
+   "coins": {
+    "n": 4,
+    "opencv_gold_hull": {
+     "iou": 0.877,
+     "precision": 0.882,
+     "recall": 0.993
+    },
+    "sam2_from_opencv_box": {
+     "iou": 0.939,
+     "precision": 0.954,
+     "recall": 0.984
+    }
+   },
+   "depth": {
+    "cells": 1104,
+    "da2_spearman_invdepth": 0.967,
+    "baseline_row_spearman": 0.8,
+    "near_cells": 1082,
+    "da2_median_relerr_near": 0.115,
+    "baseline_median_relerr_near": 0.282
+   }
+  },
+  "08": {
+   "gt_benny_px": 38275,
+   "gt_coin_px": 14465,
+   "benny": {
+    "opencv_blob": {
+     "iou": 0.0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "opencv_exclusion_box": {
+     "iou": 0.0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "sam2_from_opencv_box": {
+     "iou": 0.0,
+     "precision": 0.0,
+     "recall": 0.0
+    },
+    "sam2_pred_iou": 0.828
+   },
+   "benny_seg_same_box": {
+    "rect_padded": {
+     "iou": 0.407,
+     "precision": 0.407,
+     "recall": 1.0
+    },
+    "ellipse": {
+     "iou": 0.641,
+     "precision": 0.641,
+     "recall": 1.0
+    },
+    "sam2_box": {
+     "iou": 0.97,
+     "precision": 0.976,
+     "recall": 0.993
+    },
+    "sam2_pred_iou": 0.963
+   },
+   "coins": {
+    "n": 5,
+    "opencv_gold_hull": {
+     "iou": 0.732,
+     "precision": 0.732,
+     "recall": 1.0
+    },
+    "sam2_from_opencv_box": {
+     "iou": 0.804,
+     "precision": 0.837,
+     "recall": 0.953
+    }
+   },
+   "depth": {
+    "cells": 1104,
+    "da2_spearman_invdepth": 0.974,
+    "baseline_row_spearman": 0.941,
+    "near_cells": 1104,
+    "da2_median_relerr_near": 0.126,
+    "baseline_median_relerr_near": 0.18
+   }
+  },
+  "09": {
+   "gt_benny_px": 37122,
+   "gt_coin_px": 23802,
+   "benny": {
+    "opencv_blob": {
+     "iou": 0.173,
+     "precision": 0.777,
+     "recall": 0.182
+    },
+    "opencv_exclusion_box": {
+     "iou": 0.31,
+     "precision": 0.494,
+     "recall": 0.454
+    },
+    "sam2_from_opencv_box": {
+     "iou": 0.374,
+     "precision": 0.979,
+     "recall": 0.377
+    },
+    "sam2_pred_iou": 0.947
+   },
+   "benny_seg_same_box": {
+    "rect_padded": {
+     "iou": 0.366,
+     "precision": 0.366,
+     "recall": 1.0
+    },
+    "ellipse": {
+     "iou": 0.62,
+     "precision": 0.62,
+     "recall": 1.0
+    },
+    "sam2_box": {
+     "iou": 0.966,
+     "precision": 0.976,
+     "recall": 0.989
+    },
+    "sam2_pred_iou": 0.944
+   },
+   "coins": {
+    "n": 4,
+    "opencv_gold_hull": {
+     "iou": 0.656,
+     "precision": 0.656,
+     "recall": 1.0
+    },
+    "sam2_from_opencv_box": {
+     "iou": 0.957,
+     "precision": 0.974,
+     "recall": 0.981
+    }
+   },
+   "depth": {
+    "cells": 1104,
+    "da2_spearman_invdepth": 0.947,
+    "baseline_row_spearman": 0.959,
+    "near_cells": 1104,
+    "da2_median_relerr_near": 0.134,
+    "baseline_median_relerr_near": 0.189
+   }
+  }
+ },
+ "summary": {
+  "benny_iou": {
+   "opencv_blob": 0.102,
+   "opencv_exclusion_box": 0.185,
+   "sam2_from_opencv_box": 0.164
+  },
+  "benny_recall": {
+   "opencv_blob": 0.106,
+   "opencv_exclusion_box": 0.248,
+   "sam2_from_opencv_box": 0.165
+  },
+  "coin_iou": {
+   "opencv_gold_hull": 0.71,
+   "sam2_from_opencv_box": 0.892
+  },
+  "depth_spearman": {
+   "da2": 0.925,
+   "row_prior": 0.86
+  },
+  "benny_seg_same_box_iou": {
+   "rect_padded": 0.389,
+   "ellipse": 0.623,
+   "sam2_box": 0.968
+  },
+  "benny_seg_same_box_recall": {
+   "rect_padded": 1.0,
+   "ellipse": 1.0,
+   "sam2_box": 0.993
+  },
+  "depth_median_relerr_near": {
+   "da2": 0.139,
+   "row_prior": 0.183
+  },
+  "cpu_seconds_per_frame": {
+   "sam2_encoder": 1.47,
+   "da2": 1.37
+  }
+ }
+}
