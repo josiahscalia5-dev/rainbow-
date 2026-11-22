@@ -103,6 +103,7 @@ const BASE = {
   sock: cvs(128, 256, (g, w, h) => { g.fillStyle = '#fbf8ff'; g.fillRect(0, 0, w, h); g.fillStyle = '#ee4f9c'; g.fillRect(0, 12, w, 11); g.fillRect(0, 30, w, 7); g.fillRect(0, h * 0.56, w, h * 0.14); g.fillRect(0, h - 40, w, 40); }),
 };
 const TIME = { value: 0 }, WT = { value: 0 };
+const FAR0 = { value: new THREE.Vector4(1, 2, 0, 0) }, FARC0 = { value: new THREE.Color(1, 1, 1) };   // r45: per-area far glow (layout far_glow), off by default
 const SHARPX = 915 / (H * renderer.getPixelRatio());
 // one scenery shader for every area: code material + baked approved pixels (sharpness guard) + the area's own glow (world z)
 const sceneryMat = (base, rep, A, opts = {}) => new THREE.ShaderMaterial({
@@ -110,13 +111,15 @@ const sceneryMat = (base, rep, A, opts = {}) => new THREE.ShaderMaterial({
   uniforms: { uBase: { value: base }, uRep: { value: new THREE.Vector2(...rep) }, uBake: { value: null }, uBakeOn: { value: 0 }, uScroll: { value: new THREE.Vector2(...(opts.scroll ?? [0, 0])) },
     uTint: { value: new THREE.Color(...(opts.tint ?? [1, 1, 1])) }, uAlpha: { value: opts.alpha ?? 1 }, uDen: { value: null }, uGlow: A.glow, uTime: TIME,
     uSharp: { value: new THREE.Vector2(SHARPX, A.sharp) }, uLodBias: { value: A.lodBias },
-    uTpl: { value: null }, uTplOn: { value: 0 }, uTplMap: { value: 0 }, uTube: { value: new THREE.Vector4(0, 1, 0, 0) } },   // r45: artwork template (bake.js)
+    uTpl: { value: null }, uTplOn: { value: 0 }, uTplMap: { value: 0 }, uTube: { value: new THREE.Vector4(0, 1, 0, 0) }, uFar: A.far ?? FAR0, uFarCol: A.farCol ?? FARC0 },   // r45: artwork template (bake.js) + far glow
   vertexShader: 'varying vec2 vUv; varying vec3 vW; varying vec3 vL; void main(){ vUv = uv; vL = position; vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; }',
   fragmentShader: `uniform sampler2D uBase; uniform vec2 uRep; uniform sampler2D uBake; uniform float uBakeOn; uniform vec2 uScroll; uniform vec3 uTint; uniform float uAlpha; uniform vec3 uGlow; uniform float uTime;
     uniform sampler2D uDen; uniform vec2 uSharp; uniform float uLodBias; uniform sampler2D uTpl; uniform float uTplOn; uniform float uTplMap; uniform vec4 uTube; varying vec2 vUv; varying vec3 vW; varying vec3 vL;
+    uniform vec4 uFar; uniform vec3 uFarCol;
     void main(){ vec2 su = vUv + uScroll * uTime; vec3 c = texture2D(uBase, su * uRep).rgb * uTint;
       // the painting's own wall / ring / tray: 0 = mesh UVs, 1 = drum period (u around, local z phase-locked to the rings), 2 = connector tube (v x length)
       if (uTplOn > 0.5) c = texture(uTpl, uTplMap > 1.5 ? vec2(vUv.x, vUv.y * uTube.z / uTube.y) : uTplMap > 0.5 ? vec2(vUv.x, (uTube.x - vL.z) / uTube.y) : vUv).rgb;
+      c = mix(c, uFarCol, uFar.w * uFar.z * pow(smoothstep(uFar.x, uFar.y, distance(cameraPosition, vW)), 1.4));   // r45: bright warm core far ahead (under the painted pixels)
       if (uBakeOn > 0.5) { vec4 b = texture(uBake, su, uLodBias); vec4 dd = texture2D(uDen, vUv); float pd = (dd.r + dd.g / 255.0) * 4000.0;
         float magE = uSharp.x / max(max(length(dFdx(vW)), length(dFdy(vW))), 1e-6) / max(pd, 1.0);
         c = mix(c, b.rgb, dd.b * (1.0 - smoothstep(uSharp.y, uSharp.y * 2.3, magE))); }
@@ -155,10 +158,10 @@ const WVERT = 'varying vec2 vUv; varying vec3 vW; varying vec3 vL; void main(){ 
 const waterMatKit = (halfW, len, along0, isPool, A, own = true) => new THREE.ShaderMaterial({ side: THREE.DoubleSide, polygonOffset: !!isPool, polygonOffsetFactor: isPool ? 2 : 0, polygonOffsetUnits: isPool ? 4 : 0,
   uniforms: { uRouteX: { value: null }, uRouteZ: { value: new THREE.Vector4(0, 1, 1, 0) }, ...(own && A.ribbonU ? A.ribbonU : {}), uRibbon: { value: own && A.ribbonU ? 1 : 0 },
     uT: WT, uGlow: A.glow, uSharp: { value: new THREE.Vector2(SHARPX, own && A.ribbonU ? 1.0 : 2.2) }, /* ribbon: the bake gives way as soon as it is magnified */ uLodBias: { value: A.lodBias }, uBake: { value: null }, uBakeOn: { value: 0 }, uDen: { value: null }, uGeo: { value: new THREE.Vector4(halfW, len, along0, isPool ? 1 : 0) },
-    uSw: { value: null }, uSwOn: { value: 0 }, uSwGeo: { value: new THREE.Vector4(0, 1, 0, 0) }, uFlow: { value: A.LAY?.water_flow ?? 1.2 } },   // r45: painted flow swatch (bake.js)
+    uSw: { value: null }, uSwOn: { value: 0 }, uSwGeo: { value: new THREE.Vector4(0, 1, 0, 0) }, uFlow: { value: A.LAY?.water_flow ?? 1.2 }, uFar: A.far ?? FAR0, uFarCol: A.farCol ?? FARC0 },   // r45: painted flow swatch (bake.js)
   vertexShader: WVERT,
   fragmentShader: `uniform float uT; uniform vec3 uGlow; uniform sampler2D uBake; uniform float uBakeOn; uniform sampler2D uDen; uniform vec2 uSharp; uniform float uLodBias; uniform vec4 uGeo; varying vec2 vUv; varying vec3 vW;
-    uniform sampler2D uSw; uniform float uSwOn; uniform vec4 uSwGeo; uniform float uFlow; varying vec3 vL;
+    uniform sampler2D uSw; uniform float uSwOn; uniform vec4 uSwGeo; uniform float uFlow; varying vec3 vL; uniform vec4 uFar; uniform vec3 uFarCol;
     ${WATER_CORE}
     ${RIBBON_GLSL}
     void main(){ float RW = uGeo.x, u = vUv.x * 2.0 - 1.0, uw = u * RW, d = uGeo.z + (1.0 - vUv.y) * uGeo.y, tp = d + uT * 1.6;
@@ -167,6 +170,7 @@ const waterMatKit = (halfW, len, along0, isPool, A, own = true) => new THREE.Sha
                              : waterCol(u, uw, tp, 0.62, 0.96, 1.0 - uGeo.w * 0.6, 0.0, 0.0);   // = tools/screenkit/screen.html (pools: pink edges damped)
       if (uRibbon > 0.5) col = ribbonWater(vL, uT, uFlow, vW);   // r45 test: the clean painted ribbons
       else if (uSwOn > 1.5) { vec3 pc = waterCol(u, uw, tp, 0.62, 0.96, 0.0, 0.0, 0.0); float dash = clamp((pc.g - 0.75) * 4.0, 0.0, 1.0) * step(0.9, pc.r); col = mix(col, vec3(0.93, 1.0, 1.0), 0.85 * dash); }   // crisp sparkle dashes close up
+      col = mix(col, uFarCol, uFar.w * uFar.z * pow(smoothstep(uFar.x, uFar.y, distance(cameraPosition, vW)), 1.4));   // under the painted pixels
       col = bakeMix(col, vUv, vW, uBake, uDen, uBakeOn, uSharp, uLodBias, uT);
       col = mix(col, vec3(0.95, 1.0, 1.0), uGlow.z * pow(smoothstep(uGlow.x, uGlow.y, vW.z), 1.6)); gl_FragColor = vec4(col, 1.0); }` });
 // section areas: water in world coordinates around the painted river line (route texture), offset to the area's placement
@@ -215,6 +219,7 @@ const kitFoamMat = (A) => new THREE.ShaderMaterial({ uniforms: { uL: { value: ne
 const loadKit = async (A) => {
   const LAY = await (await fetch(A.dir + 'layout.json')).json(); A.LAY = LAY; const off = V3(A.offset), DR = LAY.drum;
   A.glow = { value: new THREE.Vector3(DR.open_end ? -1e4 : DR.z1 + 14 + off.z, DR.open_end ? -1e4 - 1 : DR.z1 + 1 + off.z, 0.45) }; A.sharp = 1.3; A.lodBias = LAY.lod_bias ?? 0;
+  if (LAY.far_glow) { const fg = LAY.far_glow; A.far = { value: new THREE.Vector4(fg.start, fg.end, fg.strength, 1) }; A.farCol = { value: new THREE.Color(...fg.color) }; }
   const g = (await gltf.loadAsync(A.dir + 'scene.glb')).scene; g.position.copy(off); g.rotation.x = A.rot_x ?? 0; g.name = 'area_' + A.id; world.add(g); g.updateMatrixWorld(true);
   const M = g.matrixWorld.clone(), Mi = M.clone().invert(); A.M = M;   // v4: an area may be tilted (07 descends); everything local goes through M
   const famOf = kitFamOf;   // r45: bake.js (paddlerep_* = the repeated trays -> copper)
@@ -258,6 +263,8 @@ const loadKit = async (A) => {
     const S_REFa = LAY.cams[0].s_ref ?? 0, LEVa = Math.min(LL - 1.0, LAY.level_end ?? LL - 1.0);
     const B = (LAY.bubbles ?? []).map((b) => b.slice());
     for (let s = S_REFa + 6; s < LEVa; s += 1.2 + rp() * 1.4) { const F = lfr(s), p = lat_(s, new THREE.Vector3()).addScaledVector(F.r, (rp() - 0.5) * 2.2).addScaledVector(F.n, 0.15 + rp() * 0.8); B.push([p.x, p.y, p.z, 0.03 + rp() * rp() * 0.06]); }
+    if (LAY.bubbles_banks) { const bb = LAY.bubbles_banks; for (let s = S_REFa + (bb.from ?? 3); s < LEVa; s += bb.every ?? 0.7) for (const side of [-1, 1]) {   // r45: bubbles along both banks
+      const F = lfr(s), p = lat_(s, new THREE.Vector3()).addScaledVector(F.r, side * (bb.lat[0] + (bb.lat[1] - bb.lat[0]) * rp())).addScaledVector(F.n, 0.05 + rp() * (bb.h ?? 0.45)); B.push([p.x, p.y, p.z, bb.r[0] + (bb.r[1] - bb.r[0]) * rp() * rp()]); } }
     for (const b of B) { const P = new THREE.Vector3(b[0], b[1], b[2]).applyMatrix4(M); BUBBLES.push([P.x, P.y, P.z, b[3], rp() * 6.28]); } }
   A.paintedCoins = (LAY.coins ?? []).map(V3).map((p) => p.applyMatrix4(M));
 };
