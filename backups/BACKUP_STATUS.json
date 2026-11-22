@@ -1,19 +1,19 @@
 {
   "last_run": {
-    "time": "2026-11-22T19:48:44+00:00",
-    "reason": "manual:r45-recordings-apk-water-plan",
+    "time": "2026-11-22T19:49:11+00:00",
+    "reason": "hook:Stop",
     "result": "committed+pushed",
     "files_staged": 5,
     "pushed_verified": true,
     "branch": "ccr-c1b272d2-3ru7yx",
     "note": "following session branch 'ccr-c1b272d2-3ru7yx' (config branch 'claude/rainbow-r22-restore-ut3m39')",
-    "commit": "61e4529bb58cf8a57bc555f9c38fd26166fde036",
+    "commit": "7c634050a4c5e004c3ba841171ab228b0bf52ee7",
     "duration_s": 21
   },
   "repo": "https://github.com/josiahscalia5-dev/rainbow-",
   "branch": "ccr-c1b272d2-3ru7yx",
-  "last_verified_remote_sha": "61e4529bb58cf8a57bc555f9c38fd26166fde036",
-  "last_successful_backup_utc": "2026-11-22T19:48:44+00:00",
+  "last_verified_remote_sha": "7c634050a4c5e004c3ba841171ab228b0bf52ee7",
+  "last_successful_backup_utc": "2026-11-22T19:49:11+00:00",
   "consecutive_failures": 0,
   "schedule": "every 5 min, container-local (scheduler=daemon status=active pid=175); see backups/RECOVERY.md for limits",
   "next_scheduled_utc": "2026-11-22T19:50:00+00:00"
