@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3271,
-   "sha256": "0a216ec240452d7e6d2aec360e3e95ba6eb8120052bc15673369f5fcfd12420d"
+   "sha256": "31de150de0e8513cf592a415ed1c66cf68f1b0546746003ab8335f84a9aa8b4f"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -15635,6 +15635,11 @@
    "path": "qa/bonus/r39/SOCK_NEW_start_diffmap.jpg",
    "bytes": 330779,
    "sha256": "0c2ebce36a4c67234e7187d108586ec0106e38a17e0c31c5664ae61b724570d0"
+  },
+  {
+   "path": "qa/bonus/r39/SOCK_NOW_9s_real_swipes_5of5.mp4",
+   "bytes": 5775990,
+   "sha256": "c45653d91a01df09f08f7643f3d72ea3c6e96befa87ce597667c4955cded1c0f"
   },
   {
    "path": "qa/bonus/r39/SOCK_picture_vs_game_start_diffmap.jpg",
