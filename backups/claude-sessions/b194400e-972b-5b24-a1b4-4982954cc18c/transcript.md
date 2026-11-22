@@ -4389,3 +4389,39 @@ While waiting, a quick look at textured frames already recorded with the final p
 
 > 🔧 **Bash** `{"command": "until grep -q EXIT /home/user/ws46/final/gray.log; do sleep 20; done; python3 -c \"\nimport json; d=json.load(open('/home/user/ws46/final/gray/checks.json')); print({k:d.get(k) for k in ('frames','errors','benny_offscreen_frames','camera_max_step_u','camera_max_step_expected_u','camera_max_turn_deg_per_frame','static_world_meshes','scenery_meshes_moved','edge_guard','swipes_sent','coins_end','s_end','lat_range')}); print(len(d['input_log']), sorted(set((e['src'],e['result']) for e in d['input_log'])))\"; date -u +%H:%M", "description": "Print final gray run checks", "timeout": 180 …[+5 chars]`
 
+### 🧑 User — 2026-11-22T23:29:40.694Z
+
+> ↩︎ result: {'frames': 1440, 'errors': [], 'benny_offscreen_frames': 0, 'camera_max_step_u': 0.1, 'camera_max_step_expected_u': 0.1173, 'camera_max_turn_deg_per_frame': 0.995, 'static_world_meshes': 436, 'scenery_meshes_moved': [], 'edge_guard': {'max_optical_shift_px': 35.2, 'last_optical_corrections': 311}, 'swipes_sent': 28, 'coins_end': 1490, 's_end': 193.527, 'lat_range': [-0.3, 0.3]}
+> 28 [('touch', 'lane'), ('touch', 'leap')]
+> 23:29
+
+### 🤖 Claude — 2026-11-22T23:29:50.202Z
+
+> 🔧 **Bash** `{"command": "export NODE_PATH=$(npm root -g); (for a in 05 06; do rm -rf /home/user/ws46/world/preview_$a; node tools/screenkit/preview.cjs /home/user/ws46/world/game /home/user/ws46/world/preview_$a --screen $a --area $a > /home/user/ws46/preview_new_$a.log 2>&1; done; echo EXIT > /home/user/ws46/preview_final.log) > /dev/null 2>&1 &\nmkdir -p qa/kit46/run && nice -n 10 python3 -I tools/reflock/encode_run.py /home/user/ws46/final/gray qa/kit46/run GAMEPLAY_05_06_07_GRAY_geometry_real_touch 2>&1 | tail -c 400; ls -la qa/kit46/run", "description": "Start final previews and encode the gray recor …[+26 chars]`
+
+### 🧑 User — 2026-11-22T23:31:29.431Z
+
+> ↩︎ result: lt": "lane"}, {"dir": "up", "src": "touch", "clock": 39, "result": "leap"}, {"dir": "right", "src": "touch", "clock": 41, "result": "lane"}, {"dir": "left", "src": "touch", "clock": 43, "result": "lane"}], "coins_end": 1490, "socks_end": 0, "s_end": 193.527, "lat_range": [-0.3, 0.3], "hole_frames_checked": 1440}
+> wrote qa/kit46/run/GAMEPLAY_05_06_07_GRAY_geometry_real_touch.mp4 25.5 MB 1440 frames
+> total 24916
+> drwxr-xr-x 2 root root     4096 Nov 22 23:30 .
+> drwxr-xr-x 3 root root     4096 Nov 22 23:29 ..
+> -rw-r--r-- 1 root root 25499942 Nov 22 23:31 GAMEPLAY_05_06_07_GRAY_geometry_real_touch.mp4
+> -rw-r--r-- 1 root root     2957 Nov 22 23:30 GAMEPLAY_05_06_07_GRAY_geometry_real_touch_checks.json
+
+### 🤖 Claude — 2026-11-22T23:31:31.838Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json; d=json.load(open('qa/kit46/run/GAMEPLAY_05_06_07_GRAY_geometry_real_touch_checks.json')); print('holes: frames', d['hole_frames'], 'max px', d['hole_pixels_max'], 'checked', d['hole_frames_checked'])\"", "description": "Read gray run hole check"}`
+
+### 🧑 User — 2026-11-22T23:31:31.943Z
+
+> ↩︎ result: holes: frames 0 max px 0 checked 1440
+
+### 🤖 Claude — 2026-11-22T23:31:35.154Z
+
+Gray geometry hole check: 0 of 1,440 frames with any missing-geometry pixels (Round 45b's gray run had 6 frames, up to 339 px). Waiting for the previews and the textured run.
+
+### 🤖 Claude — 2026-11-22T23:31:36.303Z
+
+> 🔧 **Bash** `{"command": "until [ -f /home/user/ws46/preview_final.log ]; do sleep 15; done; python3 /home/user/ws46/show.py 05,06; ls /home/user/ws46/final/tex | wc -l; date -u +%H:%M", "description": "Wait for final previews and show numbers", "timeout": 1800000}`
+

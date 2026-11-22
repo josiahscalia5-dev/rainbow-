@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 28920,
-   "sha256": "d86169fdef3db21e98334857c0b2b836b2ec1fed5f866b3b48597b0eb4ca0b1d"
+   "sha256": "93ad8eedb63816703097d222f571e8580c59197102dce4552b853580613d6113"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 2958,
-   "sha256": "31f570ac3a001407d8e4213be29bfce0f797a0ae88688a2e5a38e99251649a28"
+   "sha256": "771bfcf77392d88210d8c29cea031b9df4df058813c0feb31f5fea5f4bd55e67"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -23515,6 +23515,16 @@
    "path": "qa/kit46/Rainbow_r46_world_05_06_debug.apk",
    "bytes": 244477578,
    "sha256": "7afcc5f08e01694522d722ec1cbf9b85be266c736165d548b34c0af063cbf6b7"
+  },
+  {
+   "path": "qa/kit46/run/GAMEPLAY_05_06_07_GRAY_geometry_real_touch.mp4",
+   "bytes": 25499942,
+   "sha256": "6a2bebf1bd13fadd71348df34d2db7057bf50951fe8381d1eb97b14fad5c1468"
+  },
+  {
+   "path": "qa/kit46/run/GAMEPLAY_05_06_07_GRAY_geometry_real_touch_checks.json",
+   "bytes": 2957,
+   "sha256": "a5acfd36ed1a6443e7b2086e68af37d71c78dc6171ad6526644203dfc2d5adaf"
   },
   {
    "path": "qa/lead_r5/2026-11-17/README.md",
