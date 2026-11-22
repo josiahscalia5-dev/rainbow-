@@ -28,7 +28,7 @@ const { chromium } = require('playwright'); const { spawn } = require('child_pro
       for (const g of gestures.filter((g) => g[0] === i)) await touch(g[1], g[2], g[3]);
       const st = await page.evaluate(() => { window.__rainbow.step(2, 1 / 60); return { s: window.__rainbow.state(), b: window.__rainbow.bennyBoxPx?.() ?? window.__rainbow.bennyScreen(), log: (window.__rainbow.inputLog?.() ?? []).length }; });
       frames.push({ i, t: +(i / fps).toFixed(3), s: st.s.s, stage: st.s.stage, lat: st.s.lat, bx: st.b.x, box: st.b.box, log: st.log });
-      if (i % 30 === 0 || gestures.some((g) => g[0] + 9 === i)) { await page.evaluate(() => window.__rainbow.renderNow()); await page.screenshot({ path: path.join(out, `f_${String(i).padStart(4, '0')}.jpg`), type: 'jpeg', quality: 85 }); }
+      if (process.env.RECORD === '1' || i % 30 === 0 || gestures.some((g) => g[0] + 9 === i)) { await page.evaluate(() => window.__rainbow.renderNow()); await page.screenshot({ path: path.join(out, `f_${String(i).padStart(4, '0')}.jpg`), type: 'jpeg', quality: 85 }); }
     }
     const log = await page.evaluate(() => window.__rainbow.inputLog?.() ?? []);
     const at = (t) => frames[Math.min(frames.length - 1, Math.max(0, Math.round(t * fps)))];

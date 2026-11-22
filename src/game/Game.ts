@@ -365,9 +365,12 @@ export async function startGame(canvas: HTMLCanvasElement) {
     input.update(dt);
     const stg = course.stageAtS(st.s);
     const speed = course.prop('speed', st.s) * (paint ? paint.speedK(st.s) : p06 ? p06.speedK(st.s) : 1);
+    const sPrev = st.s;
     st.s = Math.min(course.stage('11').s0, st.s + speed * dt);
-    // round 40 (off by default): from the end of 04 Benny swims into the Bubble Dash -> Sock Rescue section, then back at 05
-    if (BONUS_ROUTE.enabled && !BONUS_ROUTE.resume && !bonusLeft && st.s >= course.stage('05').s0) { bonusLeft = true; st.paused = true; BONUS_ROUTE.go(st.coins); }
+    // round 40 (off by default): from the end of 04 Benny swims into the Bubble Dash -> Sock Rescue section, then back at 05.
+    // r41: only on the frame he really CROSSES from 04 into 05 (a checkpoint / respawn further on never triggers it)
+    const s05h = course.stage('05').s0;
+    if (BONUS_ROUTE.enabled && !BONUS_ROUTE.resume && !bonusLeft && sPrev < s05h && st.s >= s05h) { bonusLeft = true; st.paused = true; BONUS_ROUTE.go(st.coins); }
     const halfW = course.widthAt(st.s) / 2;
     const safe = halfW - 0.75;
     if (input.override !== null) {
