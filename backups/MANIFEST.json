@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3271,
-   "sha256": "8415e7961c249ee397f29f15554ba6ab942aa1eab46466fa8846bf3f2bbd9aac"
+   "sha256": "477bd029536834f97cde4eb7f65a16dbedf06c6375c43e2c28c42e16eecb9886"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -15610,6 +15610,16 @@
    "path": "qa/bonus/r39/SOCK_BEFORE_vs_NOW.jpg",
    "bytes": 1145888,
    "sha256": "e2ce8b94c964e454a1aa46ec6d95fdfc810919e25fce471eabe341f180866db9"
+  },
+  {
+   "path": "qa/bonus/r39/SOCK_CHASE_CAMERA_12s_real_swipes.mp4",
+   "bytes": 7426927,
+   "sha256": "eec2f0890eace76c910c372c0f1b582a04d3cd1bf7b14b47fc03422c6028ce70"
+  },
+  {
+   "path": "qa/bonus/r39/SOCK_CHASE_CAMERA_12s_run_log.json",
+   "bytes": 309419,
+   "sha256": "e0ea250fff58ae2dabb315eecbc9f6c5dcab2a497faeb9182fa36cfbffaa2731"
   },
   {
    "path": "qa/bonus/r39/SOCK_MOVEMENT_like_reference_frames.jpg",
