@@ -59,6 +59,7 @@ const { PNG } = (() => { try { return require('pngjs'); } catch (e) { return {};
         const o = await page.evaluate(([t, dt, sp]) => window.step(t, dt, 0, sp), [t, i === 0 ? 0 : 1 / fps, speed]);
         const fr = { i, t: +t.toFixed(3), s: o.s, lat: o.lat, coins: o.coins, socks: o.socks, sent, box: await page.evaluate(() => window.bennyBox()), cam: await page.evaluate(() => window.camInfo()) };
         if (process.env.FRAMEQA === '1') fr.qa = await page.evaluate(() => (window.kitFrameQA ? window.kitFrameQA() : null));   // r45: camera clearance, water gap, tilt, immersion per frame
+        if (process.env.EDGEQA === '1') fr.edge = await page.evaluate(() => (window.qaEdgeGuard ? window.qaEdgeGuard() : null));   // r46 Screen 05: QA guard, measured after all clamps
         if (i % every === 0) { await page.evaluate(() => window.renderNow(1)); const f = path.join(out, `f_${String(i).padStart(5, '0')}.png`); await page.screenshot({ path: f }); fr.file = path.basename(f);
           if (PNG && /sentinel=1/.test(query)) { const im = PNG.sync.read(fs.readFileSync(f)); let g = 0; for (let k = 0; k < im.data.length; k += 4) if (im.data[k + 1] > 235 && im.data[k] < 40 && im.data[k + 2] < 40) g++; fr.holes = g; } }
         log.push(fr); if (i % 30 === 0) console.log('frame', i, 's', o.s, 'lat', o.lat, 'coins', o.coins, 'socks', o.socks);
@@ -77,6 +78,10 @@ const { PNG } = (() => { try { return require('pngjs'); } catch (e) { return {};
           return { frame_qa: { camera_clearance_min_u: Math.min(...v('camClear')), water_gap_abs_max_u: Math.max(...v('waterGap').map(Math.abs)), frames_without_water_under_benny: Q.filter((x) => x.waterGap === null).length,
             immersion_min: Math.min(...v('submerged')), immersion_max: Math.max(...v('submerged')), benny_tilt_vs_surface_max_deg: Math.max(...v('bennyTiltVsSurfaceDeg')), bank_max_deg: Math.max(...v('bank').map(Math.abs)),
             benny_height_px_min: Math.min(...hgt), benny_height_px_max: Math.max(...hgt) } }; })() : {}),
+        ...(process.env.EDGEQA === '1' ? { edge_guard: {
+          max_optical_shift_px: Math.max(0, ...log.map((f) => f.edge?.maxOpticalShiftPx ?? 0)),
+          last_optical_corrections: log[log.length - 1].edge?.opticalCorrections ?? 0
+        } } : {}),
         swipes_sent: plan.filter((p) => p[0] < n / fps).length, input_mode: TOUCH ? 'real CDP touch gestures' : 'window.input.swipe (API)', input_log: inLog, coins_end: log[log.length - 1].coins, socks_end: log[log.length - 1].socks, s_end: log[log.length - 1].s,
         lat_range: [Math.min(...log.map((f) => f.lat)), Math.max(...log.map((f) => f.lat))] };
       fs.writeFileSync(path.join(out, 'run_log.json'), JSON.stringify(log)); fs.writeFileSync(path.join(out, 'checks.json'), JSON.stringify(checks, null, 1)); console.log(JSON.stringify(checks));
