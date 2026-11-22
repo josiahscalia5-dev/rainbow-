@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 27011,
-   "sha256": "1df875f099135b7644a9e642722509a942d72c974b7e9e35f85aab592754fe1d"
+   "sha256": "28a1f5733fb67041fe911bd1bbf3a7f8a91be9d80c759684904c8231fe341825"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3153,
-   "sha256": "53dafb73dabf1245f856db49d3a052c263486102ee958a17f6a9ec5c26b160d7"
+   "sha256": "26efbf1fc90151bd5e00421cf45a216a104adf1682b547cd687856a230f3c8d4"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -863,8 +863,8 @@
   },
   {
    "path": "backups/START_NEW_CLAUDE_ACCOUNT.md",
-   "bytes": 36467,
-   "sha256": "1ea0b6ad64911327947c8151a1ccb8b5647491749fa0fc0a66d2b19235023f62"
+   "bytes": 36590,
+   "sha256": "35bdadfa07f6d3a084a009dd57815e916160057b552eda2dfb2c9d6fa4caf743"
   },
   {
    "path": "backups/TOOL_MANIFEST.json",
@@ -11655,6 +11655,11 @@
    "path": "docs/briefs/2026-11-22-r40/USER_R40.md",
    "bytes": 2783,
    "sha256": "808d540a826cd5698ffcdd468f6ba1c524ccc1f2e1bb11718df1c2683c3b5f16"
+  },
+  {
+   "path": "docs/briefs/2026-11-22-r42/PROMPT_NEXT_ACCOUNT.md",
+   "bytes": 4164,
+   "sha256": "3da82f388f01d27ed0a168d627412f9b053102f03d59bac83a1c5dd4f23c392c"
   },
   {
    "path": "docs/briefs/2026-11-22-r42/REFERENCE_INVENTORY.md",

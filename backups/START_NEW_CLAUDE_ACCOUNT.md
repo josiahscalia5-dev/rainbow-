@@ -3,7 +3,7 @@
 ## ▶▶▶▶▶▶▶▶▶ NEWEST (2026-11-22 ~12:25 UTC, round 42 → next account) — Screen 06 fixes + Bubble Dash / Sock Rescue section
 1. Start the cloud session on branch **`ccr-50ff6f57-q5me82`** (NOT the default branch). If the hook's `git fetch` fails, run
    `git ls-remote origin refs/heads/ccr-50ff6f57-q5me82`, fetch it by name and merge before anything else.
-2. Paste this prompt:
+2. Paste the FULL prompt in **`docs/briefs/2026-11-22-r42/PROMPT_NEXT_ACCOUNT.md`** (preferred, given to the user 12:30 UTC), or this short one:
 
 > Continue Rainbow round 42 exactly where the last account stopped. Read CLAUDE.md, then `docs/briefs/2026-11-22-r42/RESUME_R42.md` (state, my
 > newest orders, what is not verified yet) and `docs/briefs/2026-11-22-r42/REFERENCE_INVENTORY.md` (my 13 images and their gameplay order:
