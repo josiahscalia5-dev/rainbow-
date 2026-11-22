@@ -42,7 +42,11 @@ water_pts = [P - np.array([0, COIN_R, 0]) for P in coins]
 for w in water_pts: w[1] = 0.0
 far = water_pts[-1][2] - a.tube_len
 ctrl = [Pb + np.array([0, 0, 1.2]), Pb] + water_pts + [np.array([water_pts[-1][0] * (1 - k) + xa * k, 0.0, water_pts[-1][2] - 3.0 * (j + 1)]) for j, k in enumerate([0.3, 0.6, 0.85, 1.0])]
-ctrl += [np.array([xa, 0.0, z]) for z in np.arange(ctrl[-1][2] - 3.0, far, -3.0)]
+# r45: the painted S-river keeps winding along the whole tube (the approved picture's S: about +-0.3 drum radii, one swing every ~3 rings),
+# easing in from the coin trail and straightening for the last 6 u (the world joins 05 -> 06 on the axis)
+WA, WL = 0.3 * R, 3.0 * 2.6; z_w0 = ctrl[-1][2]
+for z in np.arange(z_w0 - 1.5, far, -1.5):
+    k_in = min(1.0, (z_w0 - z) / 4.0); k_out = min(1.0, max(0.0, (z - far) / 6.0)); ctrl.append(np.array([xa + WA * k_in * k_out * math.sin(2 * math.pi * (z_w0 - z) / WL), 0.0, z]))
 route, s = fl.catmull_rom(np.array(ctrl), 0.05)
 route[:, 1] = 0.0
 paddles = []
@@ -63,7 +67,8 @@ lay = {'screen': '05', 'title': 'FLOW INTO THE CURRENT', 'ref': REF, 'fov': cam.
        'bake_res': {'pool': [1024, 2048]}, 'splash_scale': 0.6, 'lod_bias': -0.8, 'bake_dens': [1, 4], 'number': '05', 'next': '06', 'coins_start': 1420,
        # r45: the painted foam (domes where the picture paints foam) near the picture view; the RB_FoamBank clusters start two rings further,
        # the painted trays repeat every 2 ring spacings along the whole tube (RB_MachineryRow)
-       'foam_from_picture': False, 'foam_pool_from': z_ring0 - 2.6, 'machinery': {'every': 2}}
+       'foam_from_picture': False, 'foam_pool_from': z_ring0 - 2.6, 'machinery': {'every': 2},
+       'foam_style': {'spacing': 0.7, 'size': 1.45, 'height': 0.78, 'spread': 1.2}}   # r45: the painted banks are thick, fluffy and continuous
 # the painted S-river (pink edges + cyan core) at the coin trail: 310 px wide at y 650 -> its real width at that depth (river ribbon option)
 Pr = cam.on_plane_y(485.0, 650.0); RIVER_W = 310.0 * float(-(cam.R.T @ (Pr - cam.C))[2]) / cam.F; lay['river_width'] = RIVER_W; lay['route']['width'] = RIVER_W
 for kv in a.set:

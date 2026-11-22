@@ -38,7 +38,7 @@ const arg = (k, d) => { const i = process.argv.indexOf('--' + k); return i > 0 ?
         { s: lin(0.5), tag: 'middle' }, { s: lin(0.75), tag: 'three_q' }, ...curves.map(([s, d]) => ({ s: +s.toFixed(2), tag: `curve_${Math.round(d)}deg` })), { s: +(b - 0.6).toFixed(2), tag: 'end' }];
       if (arg('s') === 'picture') pos.splice(0, pos.length, ...pos.filter((p) => p.tag === 'picture'));   // fast likeness check
       else if (arg('s')) pos.splice(0, pos.length, ...arg('s').split(',').map((x) => ({ s: +x, tag: 's' + x })));
-      pos.sort((x, y) => x.s - y.s); plan = { range: [a, b], positions: pos, curves };
+      pos.sort((x, y) => (y.exact ? 1 : 0) - (x.exact ? 1 : 0) || x.s - y.s); plan = { range: [a, b], positions: pos, curves };   // picture views FIRST (fresh page: no wake left from earlier stills)
     }
     console.log('loaded', loadS.toFixed(1), 's; range', plan.range, 'positions', plan.positions.map((p) => p.tag + '@' + p.s).join(' '));
     const shoot = async (pg, name, meta) => { await pg.evaluate(() => window.renderNow(1)); const f = path.join(out, name + '.png'); await pg.screenshot({ path: f });

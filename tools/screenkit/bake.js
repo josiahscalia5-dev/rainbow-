@@ -139,7 +139,13 @@ ${bodyQ}          if (bq <= 0.0) discard;
       TPL[fam] = { w: bw, h: bh, px: out, cov: +cov.toFixed(3), ...extra }; return TPL[fam]; };
     const fams = (f) => { const L = []; world.traverse((o) => { if (o.isMesh && o.userData.fam === f) L.push(o); }); return L; };
     // ring + copper: fused in their shared UV layout
-    const rings = fams('ring').filter((o) => o.name !== 'ring_mouth'); if (rings.length) finish('ring', 2048, 128, fuse(rings, 2048, 128, () => [{ map: 0 }]), { map: 'uv' });
+    const colFill = (px, TW, TH) => {   // columns (u around) the picture never shows are copied, mirrored, from the painted columns (a ring / wall repeats around)
+      const colCov = new Float32Array(TW); for (let x = 0; x < TW; x++) { let c = 0; for (let y = 0; y < TH; y++) c += px[(y * TW + x) * 4 + 3] > 127 ? 1 : 0; colCov[x] = c / TH; }
+      let ba = -1, bl = 0; for (let x = 0, a0 = -1; x <= TW; x++) { const ok = x < TW && colCov[x] >= 0.55; if (ok && a0 < 0) a0 = x; if (!ok && a0 >= 0) { if (x - a0 > bl) { bl = x - a0; ba = a0; } a0 = -1; } }
+      if (bl > TW * 0.08) for (let x = 0; x < TW; x++) { if (colCov[x] >= 0.55) continue; const d = ((x - ba) % (2 * bl) + 2 * bl) % (2 * bl), sx = ba + (d < bl ? d : 2 * bl - 1 - d);
+        for (let y = 0; y < TH; y++) { const i = (y * TW + x) * 4, j = (y * TW + sx) * 4; if (px[i + 3] > 127) continue; px[i] = px[j]; px[i + 1] = px[j + 1]; px[i + 2] = px[j + 2]; px[i + 3] = px[j + 3]; } }
+      return [ba / TW, bl / TW]; };
+    const rings = fams('ring').filter((o) => o.name !== 'ring_mouth'); if (rings.length) { const px = fuse(rings, 2048, 128, () => [{ map: 0 }]); const sp = colFill(px, 2048, 128); finish('ring', 2048, 128, px, { map: 'uv', painted_span: sp }); }
     const trays = fams('copper').filter((o) => !tplOnly(o.name)); if (trays.length) finish('copper', 256, 256, fuse(trays, 256, 256, () => [{ map: 0 }]), { map: 'uv' });
     // tunnel: one ring period, phase-locked to the uniformly spaced rings (the last painted ring); u = the mesh's own u around the drum
     const D = LAY.drum, RG = LAY.rings;
@@ -181,6 +187,8 @@ ${bodyQ}          if (bq <= 0.0) discard;
     if (D) { const pl = LAY.templates?.pool ?? {}; const pz0 = -(LAY.cams[0].pos[2]) + (pl.from ?? 1.0), plen = pl.len ?? 3.0;   // pool: d = -z
       strip('pool', (o) => { if (!/^pool_\d/.test(o.name)) return null; const bb = bbox(o); return [-bb.max.z, bb.max.z - bb.min.z]; }, pz0, plen, 1024, 1024); }
   }
+  // the pool beside the river: where the picture shows too little of it (< 50 % painted), the painted river swatch is its surface too
+  if (TPL.water && (!TPL.pool || TPL.pool.cov < 0.5)) TPL.pool = { ...TPL.water, from_water: true };
   BAKE_STATS._tpl_ms = Math.round(performance.now() - t1);
   DEP.forEach((d) => d.dispose());
   for (const [k, T] of Object.entries(TPL)) { BAKE_STATS['tpl_' + k] = T.cov; T.tex = dataTex(THREE, T.px, T.w, T.h); }

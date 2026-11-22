@@ -2566,3 +2566,143 @@ The world build is going: 04 got its first bake with the new materials (59 s); 0
 > 
 > EXIT 1
 
+### 🤖 Claude — 2026-11-22T18:48:59.182Z
+
+Small bug in the new sheet script (repeated views have no Benny). Fixing it and re-scoring the stills already captured, no re-render:
+
+### 🤖 Claude — 2026-11-22T18:49:02.439Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/preview_sheet.py'; s=open(p).read()\na=\"\"\"for f in raw['frames']:\n    if pic_h: f['benny_size_vs_picture'] = round(f['benny_h_px'] / pic_h, 3)\"\"\"\nb=\"\"\"for f in raw['frames']:\n    if pic_h and 'benny_h_px' in f: f['benny_size_vs_picture'] = round(f['benny_h_px'] / pic_h, 3)\"\"\"\nassert s.count(a)==1; s=s.replace(a,b); open(p,'w').write(s)\nEOF\nS=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; python3 -I tools/screenkit/preview_sheet.py $S/wr/preview_05 05 05 $S/wr/game 2>&1 | tail -60", "descrip …[+76 chars]`
+
+### 🧑 User — 2026-11-22T18:49:15.753Z
+
+> ↩︎ result: /home/user/rainbow-/tools/screenkit/compare_screen.py:19: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+>   res['scenery_share_of_frame'] = round(sum(1 for p in m.getdata() if p > 127) / (412 * 915), 3)
+> /home/user/rainbow-/tools/screenkit/compare_screen.py:19: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+>   res['scenery_share_of_frame'] = round(sum(1 for p in m.getdata() if p > 127) / (412 * 915), 3)
+> /home/user/rainbow-/tools/screenkit/compare_screen.py:19: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+>   res['scenery_share_of_frame'] = round(sum(1 for p in m.getdata() if p > 127) / (412 * 915), 3)
+> {
+>  "verdict": "WARN",
+>  "likeness_picture_view": [
+>   {
+>    "file": "tex_picture_l0.png",
+>    "share_within_20_levels": 0.699,
+>    "ssim_scenery": 0.612,
+>    "mean_abs_diff_levels": 19.4,
+>    "colour_look_corr": 0.99,
+>    "sharpness_vs_approved": 0.662,
+>    "whole_frame_within_20_levels": 0.53
+>   }
+>  ],
+>  "repeat_within_20_mean": 0.226,
+>  "repeat_ …[+1088 chars]
+
+### 🤖 Claude — 2026-11-22T18:49:23.954Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; python3 -c \"\nfrom PIL import Image\na=Image.open('$S/wr/preview_05/tex_picture_l0.png').convert('RGB'); b=Image.open('$S/k05/preview/tex_picture_l0.png').convert('RGB')\no=Image.new('RGB',(830,915)); o.paste(b,(0,0)); o.paste(a,(418,0)); o.save('$S/w05pv.jpg',quality=85)\nr=Image.open('$S/wr/preview_05/repeat_strip.jpg'); print(r.size); r.save('$S/rep05.jpg',quality=80)\"", "description": "Compare own-page vs world picture view; repeat strip"}`
+
+### 🧑 User — 2026-11-22T18:49:24.116Z
+
+> ↩︎ result: (2974, 498)
+
+### 🤖 Claude — 2026-11-22T18:49:25.898Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/w05pv.jpg"}`
+
+### 🧑 User — 2026-11-22T18:49:25.921Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T18:49:26.460Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/rep05.jpg"}`
+
+### 🧑 User — 2026-11-22T18:49:26.509Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-22T18:49:26.505Z
+
+[Image: original 2974x498, displayed at 2000x335. Multiply coordinates by 1.49 to map to original image.]
+
+### 🤖 Claude — 2026-11-22T18:50:04.235Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; python3 - <<EOF\nimport numpy as np, json\nfrom PIL import Image\na=np.asarray(Image.open('$S/k05/preview/tex_picture_l0.png').convert('RGB')).astype(int); b=np.asarray(Image.open('$S/wr/preview_05/tex_picture_l0.png').convert('RGB')).astype(int)\nd=np.abs(a-b).max(-1); print('px differing >20 levels:', round(float((d>20).mean()),3))\nfor name,(y0,y1) in {'top 110-400':(110,400),'mid 400-650':(400,650),'low 650-915':(650,915)}.items(): print(name, round(float((d[y0:y1]>20).mean()),3))\n# shift tes …[+576 chars]`
+
+### 🧑 User — 2026-11-22T18:50:05.489Z
+
+> ↩︎ result: px differing >20 levels: 0.295
+> top 110-400 0.044
+> mid 400-650 0.377
+> low 650-915 0.566
+> best shift (np.float64(0.3099179400113186), 0, 0)
+
+### 🤖 Claude — 2026-11-22T18:50:50.707Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\n# 1) preview: picture views first, on the fresh page\np='tools/screenkit/preview.cjs'; s=open(p).read()\na=\"\"\"      pos.sort((x, y) => x.s - y.s); plan = { range: [a, b], positions: pos, curves };\"\"\"\nb=\"\"\"      pos.sort((x, y) => (y.exact ? 1 : 0) - (x.exact ? 1 : 0) || x.s - y.s); plan = { range: [a, b], positions: pos, curves };   // picture views FIRST (fresh page: no wake left from earlier stills)\"\"\"\nassert s.count(a)==1; s=s.replace(a,b); open(p,'w').write(s)\n# 2) bake.js: ring template column fill; pool falls back to the river swatch when th …[+3527 chars]`
+
+### 🧑 User — 2026-11-22T18:50:51.401Z
+
+> ↩︎ result: cam yaw 3.08 pitch -13.45; tube R 1.364 axis (-0.205, 0.455) off/R (0.150, 0.205); ring z -3.99; Benny water (-0.065, -1.164) h 0.453; chord 1.286; route 42.4 u; paddles 4
+
+### 🤖 Claude — 2026-11-22T18:50:56.200Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; python3 -I tools/world/build_world.py $S/wr --preview 05,06 > $S/wr_build2.log 2>&1; echo EXIT $? >> $S/wr_build2.log", "description": "Rebuild the world with fixes and previews", "timeout": 3600000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-22T18:50:56.262Z
+
+> ↩︎ result: Command running in background with ID: be61xxfej. Output is being written to: /tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/tasks/be61xxfej.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-22T18:51:02.925Z
+
+While that rebuild runs (about 8 minutes), I'm preparing the uninterrupted 05 → 06 recording: real touch swipes, including hard double swipes. Checking the recorder's options:
+
+### 🤖 Claude — 2026-11-22T18:51:04.174Z
+
+> 🔧 **Bash** `{"command": "cat qa/world/r44/run/swipe_plan_B05.json | head -5; sed -n 40,75p tools/reflock/section_run.cjs | cut -c1-260; sed -n 1,12p tools/reflock/encode_run.py | cut -c1-200", "description": "Read the recorder's run mode and swipe plan format"}`
+
+### 🧑 User — 2026-11-22T18:51:04.231Z
+
+> ↩︎ result: [[1.0,"left"],[3.0,"right"],[3.2,"right"],[5.5,"left"],[7.5,"up"],[9.5,"left"],[11.5,"right"],[13.5,"right"],[15.5,"left"],[17.5,"left"]]
+>       }
+>       fs.writeFileSync(path.join(out, 'stills.json'), JSON.stringify({ errors: errs, info, stills: res }, null, 1));
+>     } else {
+>       const end = await page.evaluate(() => window.sectionInfo().LEVEL); const n = arg === 'end' ? Math.ceil(end / speed * fps) + 15 : Math.round(+arg * fps);
+>       const plan = a2 ? JSON.parse(a2) : [[1.0, 'left'], [2.2, 'right'], [3.4, 'right'], [4.8, 'left'], [6.2, 'left'], [7.4, 'right'], [8.6, 'right'], [9.9, 'left'], [11.2, 'left'],
+>         [12.4, 'right'], [13.8, 'right'], [15.0, 'left'], [16.4, 'left'], [17.6, 'right'], [18.8, 'right'], [20.0, 'left'], [21.2, 'up'], [22.4, 'left']];
+>       const every = +(process.env.RENDER_EVERY || 1), log = []; let pi = 0;
+>       // TOUCH=1: real finger gestures (CDP touchStart -> 4 touchMove -> touchEnd over 5 frames, 30 % of the screen width), not the API
+>       const TOUCH = process.env.TOUCH === '1', cdp = TOUCH ? await ctx.newCDPSession(page) : null, gestures = [];
+>       if (TOUCH) for (const [t0, dir] of plan) { const f0 = Math.round(t0 * fps), y = 0.62 * H;
+>        …[+4483 chars]
+
+### 🤖 Claude — 2026-11-22T18:51:09.822Z
+
+Adding per-frame clipping, floating, immersion and Benny-size checks to the existing recorder, so the full recording gets checked on every frame too:
+
+### 🤖 Claude — 2026-11-22T18:51:17.129Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/reflock/section_run.cjs'; s=open(p).read()\na=\"\"\"        const fr = { i, t: +t.toFixed(3), s: o.s, lat: o.lat, coins: o.coins, socks: o.socks, sent, box: await page.evaluate(() => window.bennyBox()), cam: await page.evaluate(() => window.camInfo()) };\"\"\"\nb=\"\"\"        const fr = { i, t: +t.toFixed(3), s: o.s, lat: o.lat, coins: o.coins, socks: o.socks, sent, box: await page.evaluate(() => window.bennyBox()), cam: await page.evaluate(() => window.camInfo()) };\n        if (process.env.FRAMEQA === '1') fr.qa = await page.evaluate(() => (window.ki …[+1375 chars]`
+
+### 🧑 User — 2026-11-22T18:51:17.222Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-22T18:51:27.962Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; for w in w05 s06; do G=$S/base/$w/game; mkdir -p $G/baked && cp -n $S/base/$w/app/baked/* $G/baked/ 2>/dev/null; cp tools/screenkit/qa.js $G/; python3 - $G/play3.html <<'EOF'\nimport sys\np=sys.argv[1]; s=open(p).read()\nif 'installQA' not in s:\n    a=\"import { installControls } from './controls.js';\"; assert a in s; s=s.replace(a, a+\"\\nimport { installQA } from './qa.js';\")\n    a=\"window.sceneAudit = () =>\"; assert a in s\n    s=s.replace(a, \"\"\"installQA({ THREE, scene, world, camera, …[+465 chars]`
+
+### 🧑 User — 2026-11-22T18:51:28.686Z
+
+> ↩︎ result: patched /tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/base/w05/game/play3.html
+> patched /tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/base/s06/game/play3.html
+> manifest.json
+> paddle_0_bake.jpg
+> paddle_0_den.png
+>   area 04   built bake                                 31.0 s
+
+### 🤖 Claude — 2026-11-22T18:51:34.796Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; until grep -q \"EXIT\" $S/wr_build2.log; do sleep 5; done; tail -14 $S/wr_build2.log; for a in 05 06; do echo \"== $a\"; python3 -c \"\nimport json; d=json.load(open('$S/wr/preview_$a/preview.json'))['summary']\nprint('picture', [round(x['share_within_20_levels']*100,1) for x in d['likeness_picture_view']], 'repeat mean/min', d['repeat_within_20_mean'], d['repeat_within_20_min'], 'holes', d['holes_total'])\nprint({k:v['style_pct_mean'] for k,v in d['surfaces_while_swimming'].items()})\nfor i in d[ …[+127 chars]`
+
