@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3153,
-   "sha256": "57416d5088f9ef1e0beb4dfc2649a723dec3e4b9b27cb0abd81250af8ab9a300"
+   "sha256": "7509ea46c09d23322d25876b0a4442aa3fd9f40640a339cf0e2489d793073639"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -42388,8 +42388,8 @@
   },
   {
    "path": "src/world/environment.ts",
-   "bytes": 66360,
-   "sha256": "de1eaaf596b046e07fd4c41cfcb29236f4facc8ff16738d5d0528665f7b2b704"
+   "bytes": 69219,
+   "sha256": "f9a7fedd59b942ce3fed228b78da61c9c598b5ae09570c8086b9c9c7ddc21998"
   },
   {
    "path": "src/world/far05.ts",

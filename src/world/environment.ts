@@ -8,7 +8,7 @@ import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeom
 import { Course, WORLD, funnelY } from './course';
 import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTexture, washerTubeEnv, withFarGlow, withTubeStrips, withBandShading, withLidShading, nearFrameMaterial, tunnelEndGlowMaterial, farRiverMaterial, marblePano05, marblePanoRotation05, marblePanoMatrix05, type FarGlow, type TubeStrips } from './materials';
 import { buildTubeGeometry, buildRings, buildRingsAt, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt, ForcedTunnel, bandGeometry, wallLidGeometry, wallLidBasis, nearFrameGeometry } from './tube';
-import { STAGE_CAM } from '../game/cameraRig';
+import { STAGE_CAM, RideCamera } from '../game/cameraRig';
 import { far05Debug, farRiverLayout, farRiverGeometry } from './far05'; // path-camera (05 far tunnel block)
 import { FLOW05, FLOWMAP05, PROJ05 } from '../vfx/waterRibbon';
 import { createProj05Apron } from '../vfx/proj05Apron'; // Screen 05 test W11 (?flow05=1), advection speed (?flowcam05=1)
@@ -419,9 +419,32 @@ export function buildEnvironment(course: Course): Environment {
     for (let k = 0; k < 96; k++) { const a = (k / 96) * Math.PI * 2; p.copy(c).addScaledVector(f.right, Math.cos(a) * R).addScaledVector(f.up, Math.sin(a) * R);
       let bi = 0, bd = Infinity; for (let i = 0; i < routeP.length; i++) { const q = routeP[i].pos.distanceToSquared(p); if (q < bd) { bd = q; bi = i; } }
       const w = routeP[bi], hw = course.widthAt(routeS[bi]) / 2 + 1.2;   // + the camera's lane follow
-      d.copy(p).sub(w.pos); const x = d.dot(w.right), h = d.dot(w.up); if (Math.abs(x) < hw + 2.0 && h > -2.5 && h < 9.0) return false; }   // r42: wider — the whole view corridor over the river (no flat gold bars on the descent)
+      d.copy(p).sub(w.pos); const x = d.dot(w.right), h = d.dot(w.up); if (Math.abs(x) < hw && h > -0.4 && h < 6.0) return false; }   // up to above the follow camera
     return true; };
-  const rings0607clear = rings0607.filter(ringClear);
+  // r42: and from the game's own chase camera (RideCamera, phone portrait, left / centre / right lane, every 1.5 u for 30 u before the ring)
+  // no part of a hoop above the water may lie in front of the river Benny is about to swim (river points 2-26 u ahead, across its width,
+  // within 0.03 of the screen): on the steep 06 descent such hoops read as flat gold bars across the river. Hoops that frame the view
+  // (arcs at the top, concentric far rings behind the river) stay.
+  const probe = new RideCamera(course), pc = new THREE.PerspectiveCamera(60, 412 / 915, 0.1, 500), cpos = new THREE.Vector3(), ctgt = new THREE.Vector3(), cup = new THREE.Vector3();
+  const poses = new Map<string, { m: THREE.Matrix4; pm: THREE.Matrix4; river: { x: number; y: number; d: number }[] }>();
+  const poseAt = (sc: number, lat: number) => { const key = sc.toFixed(1) + '|' + lat; let q = poses.get(key); if (q) return q;
+    const pr = probe.desired(sc, lat, cpos, ctgt, cup); pc.fov = pr.fov; pc.updateProjectionMatrix(); pc.position.copy(cpos); pc.up.copy(cup); pc.lookAt(ctgt); pc.updateMatrixWorld();
+    const m = pc.matrixWorldInverse.clone(), pm = pc.projectionMatrix.clone(), river: { x: number; y: number; d: number }[] = [], v = new THREE.Vector3();
+    for (let a = 2; a <= 26; a += 1) { const fr = course.sample(sc + a), hw2 = course.widthAt(sc + a) / 2 * 0.9;
+      for (let j = -2; j <= 2; j++) { v.copy(fr.pos).addScaledVector(fr.right, (hw2 * j) / 2).applyMatrix4(m); if (v.z > -0.5) continue; const d = -v.z; v.applyMatrix4(pm); if (Math.abs(v.x) < 1.1 && Math.abs(v.y) < 1.1) river.push({ x: v.x, y: v.y, d }); } }
+    q = { m, pm, river }; poses.set(key, q); return q; };
+  const viewClear = (sr: number) => {
+    const f = perfPath.frame(sr), R = perfPath.radius(sr) - 0.02, c = f.pos.clone().addScaledVector(f.up, perfPath.radius(sr) - perfPath.depth(sr)), hoop: THREE.Vector3[] = [], d = new THREE.Vector3();
+    for (let k = 0; k < 96; k++) { const a = (k / 96) * Math.PI * 2, p = c.clone().addScaledVector(f.right, Math.cos(a) * R).addScaledVector(f.up, Math.sin(a) * R);
+      let bi = 0, bd = Infinity; for (let i = 0; i < routeP.length; i++) { const q = routeP[i].pos.distanceToSquared(p); if (q < bd) { bd = q; bi = i; } }
+      if (d.copy(p).sub(routeP[bi].pos).dot(routeP[bi].up) > -0.3) hoop.push(p); }   // parts under the water are hidden by it
+    const v = new THREE.Vector3();
+    for (let sc = sr - 30; sc <= sr - 1; sc += 1.5) for (const lat of [-1.6, 0, 1.6]) { const q = poseAt(sc, lat); let hits = 0;
+      for (const p of hoop) { v.copy(p).applyMatrix4(q.m); if (v.z > -3) continue; const dz = -v.z; v.applyMatrix4(q.pm); if (Math.abs(v.x) > 1 || Math.abs(v.y) > 1) continue;
+        if (q.river.some((r) => r.d > dz + 1 && Math.abs(r.x - v.x) < 0.03 && Math.abs(r.y - v.y) < 0.03)) hits++; }
+      if (hits >= 3) return false; }
+    return true; };
+  const rings0607clear = rings0607.filter((x) => ringClear(x) && viewClear(x));
   (globalThis as unknown as { __rings0607?: unknown }).__rings0607 = { placed: rings0607clear.length, placedAt: rings0607clear.map((x) => +x.toFixed(1)), removed: rings0607.filter((x) => !rings0607clear.includes(x)).map((x) => +x.toFixed(1)) };
   zones.tubes.add(buildRingsAt(perfPath, rings0607clear, ringMat, { inset: 0.02, collar }));
   // copper nozzle lids: one symmetric pair per bay on the side walls a little above eye level,
