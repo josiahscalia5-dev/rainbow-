@@ -126,7 +126,7 @@ const waterMat = (halfW, len, along0, isPool) => new THREE.ShaderMaterial({ side
 // ---------------- the scenery: Blender GLB (screen kit) ----------------
 const gl = await new GLTFLoader().loadAsync('scene.glb');
 const MESH = []; gl.scene.traverse((o) => { if (o.isMesh) MESH.push(o); });
-const famOf = (n) => /^tunnel_/.test(n) ? 'tunnel' : /^ring_/.test(n) ? 'ring' : /^water_/.test(n) ? 'water' : /^pool_/.test(n) ? 'pool' : /^flume_/.test(n) ? 'flume'
+const famOf = (n) => /^tunnel(far)?_/.test(n) ? 'tunnel' : /^ring_/.test(n) ? 'ring' : /^water_/.test(n) ? 'water' : /^pool_/.test(n) ? 'pool' : /^flume_/.test(n) ? 'flume'
   : /^foam_/.test(n) ? 'foam' : /^paddle_/.test(n) ? 'copper' : 'tunnel';
 const bbox = (o) => { o.geometry.computeBoundingBox(); return o.geometry.boundingBox; };
 const NSEG = MESH.filter((o) => /^water_/.test(o.name)).length, SEG_LEN = RLEN / Math.max(1, NSEG);
@@ -164,7 +164,7 @@ if (MANI) {
     renderer.setRenderTarget(rt); renderer.render(scene, cam); renderer.setRenderTarget(null); return rt; };
   const DEP = CAMS.map(depthOf);
   const vp = (c) => new THREE.Matrix4().multiplyMatrices(c.projectionMatrix, c.matrixWorldInverse);
-  const uni = { uNoDepth: { value: q.get('bakedbg') === 'nodepth' ? 1 : 0 }, uNF: { value: new THREE.Vector2(0.05, 300) }, uDens: { value: new THREE.Vector2(...(q.get('dens') ?? '15,60').split(',').map(Number)) }, uMode: { value: 0 } };
+  const uni = { uNoDepth: { value: q.get('bakedbg') === 'nodepth' ? 1 : q.get('bakedbg') === 'raw' ? 2 : 0 }, uNF: { value: new THREE.Vector2(0.05, 300) }, uDens: { value: new THREE.Vector2(...(q.get('dens') ?? '15,60').split(',').map(Number)) }, uMode: { value: 0 } };
   let decl = '', body = '';
   CAMS.forEach((c, i) => { Object.assign(uni, { [`uP${i}`]: { value: tex[2 * i] }, [`uM${i}`]: { value: tex[2 * i + 1] }, [`uD${i}`]: { value: DEP[i].depthTexture }, [`uVP${i}`]: { value: vp(c) }, [`uImg${i}`]: { value: new THREE.Vector2(...c.userData.img) } });
     decl += `uniform sampler2D uP${i}, uM${i}, uD${i}; uniform mat4 uVP${i}; uniform vec2 uImg${i};\n`;
@@ -183,6 +183,7 @@ if (MANI) {
         if (uMode > 0.5) { float pw = pxu / 4000.0; return vec4(floor(pw * 255.0) / 255.0, fract(pw * 255.0), 0.0, w); }
         return vec4(texture2D(P, su).rgb, w); }
       void main(){ float bq = -1.0; vec4 best = vec4(0.0);
+        if (uNoDepth > 1.5) { vec4 cl = uVP0 * vec4(vW, 1.0); vec3 nd = cl.xyz / max(cl.w, 1e-5); gl_FragColor = vec4(clamp(cl.w / 40.0, 0.0, 1.0), nd.x * 0.25 + 0.5, nd.y * 0.25 + 0.5, 1.0); return; }
 ${body}        gl_FragColor = best; }` });
   const bakeScene = new THREE.Scene(), oc = new THREE.OrthographicCamera();
   const bakeOne = (o, bw, bh) => {
@@ -217,7 +218,7 @@ ${body}        gl_FragColor = best; }` });
     return { cov, tex: t, den }; };
   // bake resolution per family: ~picture density where the picture can supply it, capped for memory
   const RES = (o) => { const f = o.userData.fam, sz = bbox(o).getSize(new THREE.Vector3());
-    if (f === 'tunnel') return [2048, 1024]; if (f === 'water') return [512, 1024]; if (f === 'pool') return [1024, 1024]; if (f === 'ring') return [2048, 128]; if (f === 'flume') return [256, 512];
+    if (f === 'tunnel') return /far/.test(o.name) ? [1024, 512] : [2048, 1024]; if (f === 'water') return [512, 1024]; if (f === 'pool') return sz.z > 6 ? [512, 1024] : [1024, 1024]; if (f === 'ring') return [2048, 128]; if (f === 'flume') return [256, 512];
     if (f === 'copper') return [256, 256]; return [128, 128]; };
   const all = []; world.traverse((o) => { if (o.isMesh && o.name !== 'drum_end' && o.userData.fam !== 'foam') all.push(o); });
   const tStart = performance.now();
@@ -225,7 +226,7 @@ ${body}        gl_FragColor = best; }` });
     if (r.tex) { o.material.uniforms.uBake.value = r.tex; o.material.uniforms.uDen.value = r.den; o.material.uniforms.uBakeOn.value = 1; o.userData.bakeCov = r.cov; } }
   // repeated furniture: the best-seen instance of each family is the painted template for the instances no picture showed well
   for (const fam of ['ring', 'tunnel']) {
-    const L = all.filter((o) => o.userData.fam === fam); const best = L.reduce((b, o) => ((o.userData.bakeCov ?? 0) > (b?.userData.bakeCov ?? 0) ? o : b), null);
+    const L = all.filter((o) => o.userData.fam === fam && !/far/.test(o.name)); const best = L.reduce((b, o) => ((o.userData.bakeCov ?? 0) > (b?.userData.bakeCov ?? 0) ? o : b), null);
     if (!best || !best.material.uniforms.uBake.value) continue;
     for (const o of L) if ((o.userData.bakeCov ?? 0) < 0.05) { for (const k of ['uBake', 'uDen']) o.material.uniforms[k].value = best.material.uniforms[k].value; o.material.uniforms.uBakeOn.value = 1; o.userData.template = best.name; BAKE_DATA[o.name] = { template: best.name }; }
   }

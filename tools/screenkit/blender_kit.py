@@ -32,15 +32,15 @@ def sweep_group(name, profile, flip=False):
     N = ng.nodes; gin = N.new('NodeGroupInput'); gout = N.new('NodeGroupOutput')
     sp = N.new('GeometryNodeSplineParameter')
     capC = N.new('GeometryNodeCaptureAttribute'); capC.capture_items.new('FLOAT', 'v'); capC.domain = 'POINT'
-    _link(ng, gin.outputs[0], capC.inputs[0]); _link(ng, sp.outputs['Factor'], capC.inputs[1])
+    _link(ng, gin.outputs[0], capC.inputs['Geometry']); _link(ng, sp.outputs['Factor'], capC.inputs['v'])   # by name: Blender 5 has a Selection socket at index 1
     prof = profile(ng)
     sp2 = N.new('GeometryNodeSplineParameter')
     capP = N.new('GeometryNodeCaptureAttribute'); capP.capture_items.new('FLOAT', 'u'); capP.domain = 'POINT'
-    _link(ng, prof, capP.inputs[0]); _link(ng, sp2.outputs['Factor'], capP.inputs[1])
+    _link(ng, prof, capP.inputs['Geometry']); _link(ng, sp2.outputs['Factor'], capP.inputs['u'])
     rad = N.new('GeometryNodeInputRadius')
-    c2m = N.new('GeometryNodeCurveToMesh'); _link(ng, capC.outputs[0], c2m.inputs['Curve']); _link(ng, capP.outputs[0], c2m.inputs['Profile Curve'])
+    c2m = N.new('GeometryNodeCurveToMesh'); _link(ng, capC.outputs['Geometry'], c2m.inputs['Curve']); _link(ng, capP.outputs['Geometry'], c2m.inputs['Profile Curve'])
     _link(ng, rad.outputs[0], c2m.inputs['Scale'])
-    comb = N.new('ShaderNodeCombineXYZ'); _link(ng, capP.outputs[1], comb.inputs[0]); _link(ng, capC.outputs[1], comb.inputs[1])
+    comb = N.new('ShaderNodeCombineXYZ'); _link(ng, capP.outputs['u'], comb.inputs[0]); _link(ng, capC.outputs['v'], comb.inputs[1])
     st = N.new('GeometryNodeStoreNamedAttribute'); st.data_type = 'FLOAT2'; st.domain = 'CORNER'; st.inputs['Name'].default_value = 'UVMap'
     _link(ng, c2m.outputs[0], st.inputs['Geometry']); _link(ng, comb.outputs[0], st.inputs['Value'])
     last = st.outputs[0]
@@ -52,7 +52,10 @@ def sweep_group(name, profile, flip=False):
 
 def prof_circle(res):
     def f(ng):
-        c = ng.nodes.new('GeometryNodeCurvePrimitiveCircle'); c.inputs['Resolution'].default_value = res; c.inputs['Radius'].default_value = 1.0; return c.outputs['Curve']
+        # an OPEN full arc (first and last point coincide): the UV seam gets u = 0 and u = 1 at the same place instead of one face
+        # wrapping backwards across the whole texture (a cyclic circle's closing face would)
+        c = ng.nodes.new('GeometryNodeCurveArc'); c.inputs['Resolution'].default_value = res; c.inputs['Radius'].default_value = 1.0
+        c.inputs['Start Angle'].default_value = 0.0; c.inputs['Sweep Angle'].default_value = 2 * math.pi; return c.outputs['Curve']
     return f
 
 
@@ -183,8 +186,9 @@ def paddle(name, pos, axis_pt, width):
 
 # ----------------------------------------------------------------------------------------------------------------- the screen
 D = LAY['drum']; xa, ya, R = D['axis_x'], D['axis_y'], D['r']
-axis = [[xa, ya, D['z0']], [xa, ya, D['z1']]]
-tube_segments('tunnel', axis, lambda p: R, D.get('seg', 2.5))
+zf = D.get('z_far', D['z1'])
+tube_segments('tunnel', [[xa, ya, D['z0']], [xa, ya, zf]], lambda p: R, D.get('seg', 2.5))
+if zf > D['z1'] + 1e-6: tube_segments('tunnelfar', [[xa, ya, zf], [xa, ya, D['z1']]], lambda p: R, D.get('seg_far', 12.0), res=72)   # the far drum: longer segments
 z_r = [z for z in LAY['rings']['z'] if D['z1'] < z < D['z0']]
 zz = (min(z_r) if z_r else D['z0'] - 6) - LAY['rings']['spacing']
 while zz > D['z1'] + 1: z_r.append(zz); zz -= LAY['rings']['spacing']
@@ -200,7 +204,7 @@ for i, z in enumerate(sorted(z_r, reverse=True)):
 # the pool: water plane on the drum floor between the walls (segments along the drum, own UVs)
 chord = D['chord'] - 0.02; z = D['z0']; k = 0
 while z > D['z1'] + 1e-6:
-    z1 = max(D['z1'], z - 4.0); grid(f'pool_{k:02d}', 24, max(4, int((z - z1) / 0.25)), lambda a, b, z=z, z1=z1: ((xa - chord + 2 * chord * a, 0.0, z - (z - z1) * b), (a, b)), flip=True)
+    z1 = max(D['z1'], z - (4.0 if z > zf else 12.0)); grid(f'pool_{k:02d}', 24, max(4, int((z - z1) / 0.25)), lambda a, b, z=z, z1=z1: ((xa - chord + 2 * chord * a, 0.0, z - (z - z1) * b), (a, b)), flip=True)
     z = z1; k += 1
 # the crest channel (Benny's route) + its flume body
 RT = LAY['route']; route = RT['points']; bank = RT['bank']
@@ -212,9 +216,10 @@ def edge(side, off):
         p, q = Vector(route[i]), Vector(route[min(len(route) - 1, i + 1)]); t = (q - p).normalized(); r = t.cross(Vector((0, 1, 0))).normalized()
         out.append(list(p + r * side * (RT['width'] / 2 + off)))
     return out
-foam_bank('foam_routeL', edge(-1, 0.02), 0.06, 0.07, 3); foam_bank('foam_routeR', edge(1, 0.02), 0.07, 0.06, 5)
+for side, nm, sd in ((-1, 'foam_routeL', 3), (1, 'foam_routeR', 5)):
+    if LAY.get('foam_route', {}).get(nm): foam_bank(nm, edge(side, 0.02), 0.06, 0.07, sd)   # only where the screen's picture paints foam along the channel
 for side, nm in ((-1, 'foam_poolL'), (1, 'foam_poolR')):
-    foam_bank(nm, [[xa + side * (chord - 0.06), 0.0, zq] for zq in [D['z0'] - 0.5 * j for j in range(int((D['z0'] - D['z1']) / 0.5))]], 0.09, 0.11, 7 + side)
+    foam_bank(nm, [[xa + side * (chord - 0.06), 0.0, zq] for zq in [D['z0'] - 0.5 * j for j in range(int((D['z0'] - zf) / 0.5))]], 0.09, 0.11, 7 + side)
 for i, p in enumerate(LAY.get('paddles', [])): paddle(f'paddle_{i}', p['pos'], (xa, ya), p['width'])
 # helper objects that only fed node groups are not exported
 for ob in list(bpy.data.objects):

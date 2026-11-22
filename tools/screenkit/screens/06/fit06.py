@@ -75,24 +75,34 @@ far = water_pts[-1]; tail = []
 for i in range(1, 7):   # after the last coin: glide down onto the pool and run along the drum toward the far end
     kk = i / 6.0; tail.append(np.array([far[0] + (xa + 0.25 - far[0]) * kk, far[1] * (1 - kk) ** 2, far[2] - 1.8 * i]))
 tail += [np.array([xa + 0.25, 0.0, far[2] - 10.8 - 2.0 * j]) for j in range(1, 7)]
-ctrl = np.array([behind, P0] + water_pts + tail)
+ahead = Pb + np.array([-0.08, 0.0, -0.75])        # the painted water runs straight ahead of Benny before it curls up to the left
+ctrl = np.array([behind, P0, ahead] + water_pts + tail)
 route, s = fl.resample(fl.smooth_polyline(ctrl, 2), 0.05)
 route[:, 1] = np.maximum(route[:, 1], 0.0)            # never below the pool surface (the landing glides onto the water)
 from scipy.ndimage import gaussian_filter1d as _g1
 route[:, 1] = np.maximum(_g1(route[:, 1], 6), 0.0)
-# bank: lean into the turn (lateral acceleration), max 40 deg, plus the arch's own slope sideways
+# the route must pass EXACTLY through Benny's painted water point (smoothing pulls it toward the first coin): blend the correction in
+i_b = int(np.argmin(np.linalg.norm(route - Pb, axis=1))); corr = Pb - route[i_b]; w_b = np.exp(-((np.arange(len(route)) - i_b) * 0.05 / 0.9) ** 2)
+route += w_b[:, None] * corr[None]
+# bank: where the crest is lifted above the pool, the channel is banked so its water surface faces the drum's axis (a water-slide turn):
+# the painting shows the crest's TOP surface with the coins on it although it lies above eye height, which only a banked surface allows.
+# Game convention (screen.html frameAt): bank > 0 raises the channel's right edge.
 tg = np.gradient(route, axis=0); tg /= np.linalg.norm(tg, axis=1, keepdims=True)
-cur = np.gradient(tg, axis=0) / 0.05; lat = cur - tg * (cur * tg).sum(1, keepdims=True)
-bank = np.clip(np.array([np.cross(tg[i], [0, 1.0, 0]) @ lat[i] for i in range(len(tg))]) * 0.18, -0.7, 0.7)
+bank = np.zeros(len(route))
+for i, P in enumerate(route):
+    t = tg[i]; up = np.array([0, 1.0, 0]); r0 = np.cross(t, up); r0 /= np.linalg.norm(r0); n0 = np.cross(r0, t)
+    toward = np.array([xa, ya, P[2]]) - P; toward -= t * (toward @ t); toward /= max(1e-9, np.linalg.norm(toward))
+    k = min(1.0, max(0.0, (P[1] - 0.12) / 0.55)); k = k * k * (3 - 2 * k); nt = n0 * (1 - k) + toward * k; nt /= np.linalg.norm(nt)
+    bank[i] = math.atan2(-(nt @ r0), nt @ n0)                       # n = n0 cos b - r0 sin b
 from scipy.ndimage import gaussian_filter1d
-bank = gaussian_filter1d(bank, 12)
+bank = np.clip(gaussian_filter1d(bank, 10), -1.25, 1.25)
 WIDTH = 0.82                     # ribbon width (u): Benny's lanes +-0.3 + his half width + painted margins (crest painted ~250 px at depth ~2.7)
 lay = {'screen': '06', 'title': 'CREST THE RINSE ARCH', 'ref': REF, 'fov': cam.fov, 'img': [W, H], 'focal_px': cam.F,
        'cams': [cam.json(REF, {'name': 'ref06', 's_ref': float(np.argmin(np.linalg.norm(route - Pb, axis=1)) * 0.05)})],
        'benny': {'pos': Pb, 'height': HB, 'bsize': 1.03},   # bsize: the model's box matched to the SAM 2 silhouette of the painted Benny (iterated)
        'coin_radius': COIN_R, 'coins': coins,
        'route': {'ds': 0.05, 'points': route, 'bank': bank, 'width': WIDTH},
-       'drum': {'axis_x': xa, 'axis_y': ya, 'r': DRUM_R, 'z0': 3.0, 'z1': float(route[-1][2] - 4.0), 'chord': chord, 'cam_off_R': [oxR, oyR]},
+       'drum': {'axis_x': xa, 'axis_y': ya, 'r': DRUM_R, 'z0': 3.0, 'z_far': float(route[-1][2] - 4.0), 'z1': -150.0, 'seg_far': 12.0, 'chord': chord, 'cam_off_R': [oxR, oyR]},   # the painted rings converge ~140 u deep
        'rings': {'z': z_ring, 'spacing': 3.2, 'band': 0.32},
        'paddles': [], 'bubbles': [], 'da2_check': da2_check}
 # paddles: ray through the painted tray centre meets the drum wall
