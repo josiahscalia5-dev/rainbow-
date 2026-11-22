@@ -479,7 +479,8 @@ let cleanWallMat = null, cleanRingMat = null;
         g.fillStyle = bg; g.fillRect(0, 0, w, h); const cx = w * 0.25, cy = h * 0.52; g.fillStyle = '#7d3fd6'; g.beginPath();
         g.moveTo(cx - 60, cy - 70); g.lineTo(cx - 25, cy - 85); g.quadraticCurveTo(cx, cy - 65, cx + 25, cy - 85); g.lineTo(cx + 60, cy - 70); g.lineTo(cx + 90, cy - 20); g.lineTo(cx + 55, cy - 5);
         g.lineTo(cx + 55, cy + 85); g.lineTo(cx - 55, cy + 85); g.lineTo(cx - 55, cy - 5); g.lineTo(cx - 90, cy - 20); g.closePath(); g.fill(); }, false);
-      const c = PW(TA - 0.55, 0, 1.72), up = NUP.clone();   // in front of the back wall, sitting on the arch const cyl = add(new THREE.CylinderGeometry(0.42, 0.42, 0.55, 48, 1, true), litMat({ map: tank, spec: 0.6, shin: 40, amb: 0.65, rim: 0xffffff, rimK: 0.5, side: THREE.DoubleSide }));
+      const c = PW(TA - 0.55, 0, 1.72), up = NUP.clone();   // in front of the back wall, sitting on the arch
+      const cyl = add(new THREE.CylinderGeometry(0.42, 0.42, 0.55, 48, 1, true), litMat({ map: tank, spec: 0.6, shin: 40, amb: 0.65, rim: 0xffffff, rimK: 0.5, side: THREE.DoubleSide }));
       cyl.position.copy(c); cyl.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), up); cyl.rotateY(-Math.PI * 0.5 - 0.6);
       for (const dy of [-0.29, 0.29]) { const b = add(new THREE.TorusGeometry(0.43, 0.045, 12, 48), goldMat); b.position.copy(c).addScaledVector(up, dy); b.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), up); }
       const foamM = litMat({ color: 0xf8f4ff, spec: 0.3, shin: 12, amb: 0.6, rim: 0xc9d8ff, rimK: 0.5 });

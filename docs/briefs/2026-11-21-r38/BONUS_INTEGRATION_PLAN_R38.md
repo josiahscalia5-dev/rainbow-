@@ -53,3 +53,19 @@ areas would use the B-style live water unless the user decides otherwise.
 One short playable section per area (~8-10 s, real swipes, coins / socks), on the kit test page, default game untouched: APPROVED-CANDIDATE |
 NEW stills (start + in motion), clips, private phone link. Suggested order: Sock Rescue first (most reuse), then Bubble Dash (chamber -> tunnel
 hand-over). Full build and main-course integration only after the user approves the tests.
+
+## BUILT (2026-11-22 ~00:40 UTC, after the user's approval) — isolated test page, the game and the approved screens untouched
+* `tools/bonus/bonus.html` (forked from the kit page) + `tools/bonus/setup_bonus.sh <ws>` -> `<ws>/bonus/play3.html`. `?area=sock` (default) /
+  `?area=bubble`. Shared: Benny + paddling / kick shader, controls.js (lanes, leap, dive, coins), swimfx, camera + reference-video movement,
+  round-37 live river water. Everything else drawn by code (free): lavender tunnel with round holes, gold rings with glowing panels, silver
+  drum lifters, gold towel rails + terry towels (purple bubbles / pink crown), 5 floating socks (rescue = swim into one; mission bar fills;
+  "All 5 socks rescued!"), boost chevrons travelling with Benny, pause button (stops the game clock). Bubble Dash: pink perforated chamber,
+  purple pipes with gold collars, two gold pipe mouths with animated waterfalls, foam-topped shirt tank, golden arch into the tunnel, heaped
+  3D foam, big bubbles; HUD title "BONUS · BUBBLE DASH CHAMBER" (no gems, no new currency; Bubble Blast / Turbo Spin do not exist in the game).
+* Water tuned by measurement (`tools/bonus/water_stats.py`, same change in the round-37 kit water): blue (67,163,243) vs approved (48,163,239);
+  Bubble Dash water (57-68,152-154,242) vs its picture (71,140,245), saturation 0.74-0.78 vs 0.78; fine streaks still ~2/3 of the pictures'.
+* Evidence `qa/bonus/r38/`: COMPARE_sock_rescue.jpg, COMPARE_bubble_dash.jpg, stills, SOCK_9s_real_swipes.mp4 (5/5 socks, 6 coins, every swipe
+  answered next frame, 0 errors), BUBBLE clip when rendered. Phone tests (private): Sock https://claude.ai/artifact/FXY6sg3BMqBdb3yiNieaUN ·
+  Bubble https://claude.ai/artifact/4uc39tWfZ3UykRLXoBE1hu
+* Honest gaps vs the pictures: towels flatter (hang like banners), lifters simpler, water = clean silky streaks rather than the painted glitter,
+  chamber has fewer pipes / less machinery; real phone frame rate not measured. Marble (paid) not used; possible later for the chamber backdrop only.
