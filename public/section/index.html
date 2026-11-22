@@ -1,0 +1,486 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Rainbow Bubble Dash section</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<style>
+html,body{margin:0;background:#1a0630;overflow:hidden;font-family:system-ui,-apple-system,sans-serif}canvas{display:block}
+#hud{position:fixed;left:0;right:0;top:8px;display:flex;flex-direction:column;align-items:center;gap:7px;pointer-events:none}
+.bar{display:flex;gap:26px;align-items:center;background:linear-gradient(#7b2bbf,#4a1386);border:2px solid #d9a7ff;border-radius:30px;padding:5px 20px;color:#fff;font-weight:800;font-size:21px;box-shadow:0 2px 8px #0006}
+.title{background:#5a1aa0e0;border:2px solid #f2c14e;border-radius:20px;padding:4px 16px;color:#fff;font-weight:800;font-style:italic;font-size:16px;letter-spacing:.4px}
+#badge{position:fixed;left:16px;top:118px;background:#4a1386e8;border:2px solid #f2c14e;border-radius:26px;padding:6px 16px;color:#fff;font-weight:800;font-style:italic;font-size:15px;line-height:1.05;text-align:center}
+#mission{display:none;background:#4a1386e8;border:2px solid #f2c14e;border-radius:18px;padding:5px 14px;color:#fff;font-weight:800;font-size:16px}
+#mission b{color:#ffd43b}
+.pill{display:inline-flex;align-items:center;gap:6px}.plus{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#7c3aed;border:2px solid #e9d5ff;font-size:16px;line-height:1}
+#pause{position:fixed;top:8px;right:10px;width:46px;height:46px;border-radius:50%;border:3px solid #f2c14e;background:linear-gradient(#8b3fd9,#4a1386);color:#fff;font-weight:900;font-size:18px;pointer-events:auto}
+.ab{position:fixed;bottom:18px;width:84px;height:84px;border-radius:50%;border:3px solid #f2c14e;background:radial-gradient(circle at 40% 35%,#b06cff,#5a1aa0 70%);color:#fff;font-weight:900;font-size:12px;line-height:1.05;text-align:center;pointer-events:auto;box-shadow:0 3px 10px #0007;padding:0}
+.ab .ic{font-size:30px;display:block;margin-bottom:2px}.ab .cd{position:absolute;inset:0;border-radius:50%;background:conic-gradient(#0008 var(--p,0%),#0000 0)}
+#blast{left:14px}#turbo{right:14px}#pausedLay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:#1a063088;color:#fff;font-size:30px;font-weight:900}#load{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:20px;background:#2a0b4a}
+</style>
+<script type="importmap">{"imports":{"three":"./vendor/three/build/three.module.js","three/addons/":"./vendor/three/examples/jsm/"}}</script>
+</head><body>
+<div id="hud"><div class="bar"><span class="pill">&#10084;&#65039; 5/5 <span class="plus">+</span></span><span class="pill"><span id="coins">&#129689; 1,420</span> <span class="plus">+</span></span><span class="pill">&#128142; <span id="gems">36</span> <span class="plus">+</span></span></div>
+<div class="title" id="title">05 &middot; FLOW INTO THE CURRENT</div><div id="mission">&#129510; Rescue <b>5</b> lost socks &nbsp;<span id="slots"></span></div></div>
+<div id="badge">Bubble Dash<br>Chamber</div><button id="pause" data-noswipe aria-label="pause">&#10074;&#10074;</button>
+<button id="blast" class="ab" data-noswipe><span class="ic">&#129767;</span>Bubble<br>Blast<span class="cd"></span></button><button id="turbo" class="ab" data-noswipe><span class="ic">&#127744;</span>Turbo<br>Spin<span class="cd"></span></button><div id="pausedLay">Paused</div><div id="load">Building the washer&hellip;</div>
+<script type="module">
+// ======================================================================================================================================
+// Rainbow round 40 - REFERENCE-LOCKED PHYSICAL SECTION: Bubble Dash Chamber -> golden arch -> Sock Rescue tunnel -> exit.
+// Every piece of scenery is a connected 3D mesh built in Blender from the fitted layout (tools/reflock/blender_section.py -> section.glb).
+// At load, the two approved pictures are BAKED once onto those meshes from the cameras fitted to them (depth-tested: a surface only takes
+// a picture's pixel where that camera really saw it; the HUD / Benny / coins / socks / loose bubbles are masked out). The baked texture is
+// world-anchored like any painted texture; where neither picture saw a surface (or saw it too small), a code material in the same style
+// shows. Plain perspective camera (no depth curve, no projection, no camera-facing scenery planes, no screen overlays).
+// Benny, swipes, coins = the shared game code (benny31.glb + paddling shader, tools/kit05/controls.js, swimfx.js).
+// ======================================================================================================================================
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { installControls } from './controls.js';
+const q = new URLSearchParams(location.search);
+if (!q.has('w') && !q.has('play')) q.set('play', '1');   // app: real-time play
+if (!q.has('prebaked')) q.set('prebaked', '1');   // app: textures baked offline
+for (const [k, v] of [['c_LANE', '0.3'], ['c_LAT_MAX', '0.36'], ['speed', '2.2']]) if (!q.has(k)) q.set(k, v);
+const W = +(q.get('w') ?? innerWidth), H = +(q.get('h') ?? innerHeight);
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(q.get('w') ? 1 : Math.min(2, devicePixelRatio)); renderer.setSize(W, H); document.body.appendChild(renderer.domElement);
+const SEC = await (await fetch('section.json')).json(), T = SEC.tunnel, CH = SEC.chamber;
+const V3 = (a) => new THREE.Vector3(a[0], a[1], a[2]);
+const scene = new THREE.Scene(); scene.background = new THREE.Color(q.get('sentinel') ? 0x00ff00 : 0x1a0630);   // ?sentinel=1: holes show pure green
+const camera = new THREE.PerspectiveCamera(SEC.fov, W / H, 0.03, 300); camera.rotation.order = 'YXZ';
+const world = new THREE.Group(); world.name = 'world'; scene.add(world);
+const lerp = (a, b, x) => a + (b - a) * x, sstep = (a, b, x) => { const k = Math.min(1, Math.max(0, (x - a) / (b - a))); return k * k * (3 - 2 * k); };
+const DEG = Math.PI / 180;
+
+// ---------------- route = the painted river's centre line (fit_section.py), Benny's path ----------------
+const RT = SEC.route; const RX = (z) => { const x = Math.min(Math.max((-z - RT.z0) / RT.ds, 0), RT.x.length - 1.001), i = Math.floor(x), f = x - i; return RT.x[i] + (RT.x[i + 1] - RT.x[i]) * f; };
+const PB = V3(SEC.benny.bubble), PBS = V3(SEC.benny.sock), ZB0 = PB.z, S_SOCK = PB.z - PBS.z;
+const zOf = (s) => ZB0 - s;
+const at = (s, out) => { const z = zOf(s); return out.set(RX(z), 0, z); };
+const frameAt = (s) => { const z = zOf(s), k = (RX(z - 0.05) - RX(z + 0.05)) / 0.1; const t = new THREE.Vector3(k, 0, -1).normalize(); return { t, r: new THREE.Vector3(-t.z, 0, t.x), n: new THREE.Vector3(0, 1, 0) }; };
+const Z_EXIT = T.z_exit, LEVEL = ZB0 - (T.z_level_end ?? (Z_EXIT - 4.5));   // r41: the level ends INSIDE the continuing tube (the game takes over there)
+const radius = (z) => z >= T.funnel[0] ? T.r_arch_in : z >= T.funnel[1] ? lerp(T.r_arch_in, T.r_sock, sstep(T.funnel[0], T.funnel[1], z)) : T.r_sock;
+const axy = (z) => z >= T.funnel[0] ? T.axis_y_arch : z >= T.funnel[1] ? lerp(T.axis_y_arch, T.axis_y_sock, sstep(T.funnel[0], T.funnel[1], z)) : T.axis_y_sock;
+
+// ---------------- code materials (where no picture saw a surface): same style as the pictures, drawn at load ----------------
+const cvs = (w, h, draw) => { const c = document.createElement('canvas'); c.width = w; c.height = h; draw(c.getContext('2d'), w, h); const t = new THREE.CanvasTexture(c);
+  t.wrapS = t.wrapT = THREE.RepeatWrapping; t.anisotropy = 8; t.colorSpace = THREE.NoColorSpace; return t; };
+const rnd = (() => { let x = 4040; return () => ((x = (x * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff); })();
+const grad = (g, x0, y0, x1, y1, stops) => { const gr = g.createLinearGradient(x0, y0, x1, y1); for (const [o, c] of stops) gr.addColorStop(o, c); return gr; };
+const BASE = {
+  pink: cvs(512, 512, (g, w, h) => { g.fillStyle = grad(g, 0, 0, 0, h, [[0, '#e0539f'], [0.5, '#f582c4'], [1, '#e0539f']]); g.fillRect(0, 0, w, h);
+    for (let r = 0; r < 4; r++) for (let i = 0; i < 4; i++) { const x = (i + 0.5 + (r % 2) * 0.5) * w / 4, y = (r + 0.5) * h / 4, R = 30;
+      g.fillStyle = 'rgba(255,210,236,0.9)'; g.beginPath(); g.ellipse(x, y + 5, R * 0.8, R, 0, 0, 7); g.fill();
+      const hg = g.createRadialGradient(x, y - 6, 2, x, y, R); hg.addColorStop(0, '#5e0f45'); hg.addColorStop(1, '#a3296f'); g.fillStyle = hg; g.beginPath(); g.ellipse(x, y, R * 0.8, R, 0, 0, 7); g.fill(); } }),
+  dark: cvs(64, 256, (g, w, h) => { g.fillStyle = grad(g, 0, 0, 0, h, [[0, '#3c0f66'], [1, '#7d32b8']]); g.fillRect(0, 0, w, h); }),
+  tunnel: cvs(512, 256, (g, w, h) => { g.fillStyle = grad(g, 0, 0, 0, h, [[0, '#8f5fd6'], [0.5, '#c39af0'], [1, '#8f5fd6']]); g.fillRect(0, 0, w, h);
+    g.globalCompositeOperation = 'lighter'; for (let i = 0; i < 10; i++) { const x = rnd() * w; g.fillStyle = `rgba(255,190,255,${0.05 + rnd() * 0.08})`; g.fillRect(x, 0, 2 + rnd() * 8, h); } g.globalCompositeOperation = 'source-over';
+    for (let r = 0; r < 4; r++) for (let i = 0; i < 8; i++) { const x = (i + 0.5 + (r % 2) * 0.5) * w / 8, y = (r + 0.5) * h / 4, R = 9;
+      g.fillStyle = 'rgba(235,215,255,0.9)'; g.beginPath(); g.arc(x, y + 2, R, 0, 7); g.fill(); g.fillStyle = '#3a1060'; g.beginPath(); g.arc(x, y, R, 0, 7); g.fill(); } }),
+  gold: cvs(256, 256, (g, w, h) => { g.fillStyle = grad(g, 0, 0, 0, h, [[0, '#a8560f'], [0.25, '#f5a83a'], [0.45, '#ffe9a6'], [0.6, '#f4a63c'], [1, '#9a4c10']]); g.fillRect(0, 0, w, h); }),
+  goldring: cvs(1024, 128, (g, w, h) => { g.fillStyle = grad(g, 0, 0, 0, h, [[0, '#a8560f'], [0.2, '#f6b04a'], [0.35, '#ffe39a'], [0.5, '#e8902c'], [0.75, '#ffcc66'], [1, '#8a4210']]); g.fillRect(0, 0, w, h);
+    for (let i = 0; i < 8; i++) { const x = (i + 0.5) * w / 8; g.fillStyle = 'rgba(255,250,215,0.95)'; g.fillRect(x - 26, 16, 52, 30); g.fillStyle = 'rgba(255,230,150,0.35)'; g.fillRect(x - 36, 8, 72, 46); } }),
+  goldbar: cvs(64, 64, (g, w, h) => { g.fillStyle = grad(g, 0, 0, w, 0, [[0, '#b8661a'], [0.3, '#f7b54a'], [0.45, '#fff0b8'], [0.6, '#f4a63c'], [1, '#a8560f']]); g.fillRect(0, 0, w, h); }),
+  pipe: cvs(64, 256, (g, w, h) => { g.fillStyle = grad(g, 0, 0, w, 0, [[0, '#4d1a8f'], [0.3, '#9b5ae6'], [0.42, '#f2d4ff'], [0.55, '#a865ee'], [1, '#4d1a8f']]); g.fillRect(0, 0, w, h); }),
+  tank: cvs(256, 256, (g, w, h) => { g.fillStyle = grad(g, 0, 0, w, 0, [[0, '#d99ad8'], [0.5, '#fbe0f6'], [1, '#d99ad8']]); g.fillRect(0, 0, w, h); }),
+  foam: cvs(64, 64, (g, w, h) => { g.fillStyle = grad(g, 0, 0, 0, h, [[0, '#ffffff'], [1, '#c9c3f2']]); g.fillRect(0, 0, w, h); }),
+  silver: cvs(64, 256, (g, w, h) => { g.fillStyle = grad(g, 0, 0, w, 0, [[0, '#9a86c8'], [0.4, '#f1e8ff'], [0.6, '#d7c8f5'], [1, '#8d77bd']]); g.fillRect(0, 0, w, h); }),
+  towelP: cvs(256, 256, (g, w, h) => { g.fillStyle = '#8b5ad8'; g.fillRect(0, 0, w, h); g.fillStyle = '#efe6ff'; g.fillRect(0, h * 0.78, w, 10); g.fillRect(0, h * 0.86, w, 6); g.fillRect(0, h * 0.14, w, 10); }),
+  towelK: cvs(256, 256, (g, w, h) => { g.fillStyle = '#f07ab9'; g.fillRect(0, 0, w, h); g.fillStyle = '#ffe9f4'; g.fillRect(0, h * 0.78, w, 10); g.fillRect(0, h * 0.86, w, 6); g.fillRect(0, h * 0.14, w, 10); }),
+  sock: cvs(128, 256, (g, w, h) => { g.fillStyle = '#fbf8ff'; g.fillRect(0, 0, w, h); g.fillStyle = '#f0f0fa'; for (let y = 0; y < h; y += 4) g.fillRect(0, y, w, 1);
+    g.fillStyle = '#ee4f9c'; g.fillRect(0, 12, w, 11); g.fillRect(0, 30, w, 7); g.fillRect(0, h * 0.56, w, h * 0.14); g.fillRect(0, h - 40, w, 40);
+    g.beginPath(); const hx = w * 0.25, hy = h * 0.33, r = 9; g.moveTo(hx, hy + r); g.bezierCurveTo(hx - 2 * r, hy - r * 0.2, hx - r, hy - 1.6 * r, hx, hy - 0.6 * r); g.bezierCurveTo(hx + r, hy - 1.6 * r, hx + 2 * r, hy - 0.2 * r, hx, hy + r); g.fill(); }),
+};
+const PIC = {}; const tl = new THREE.TextureLoader();
+const loadRaw = async (f) => { const t = await tl.loadAsync(f); t.colorSpace = THREE.NoColorSpace; t.anisotropy = 8; return t; };
+// one shader family for all scenery: code material (repeating) + baked picture pixels (weight = baked alpha) + the exit light (world z)
+const GLOW = { uGlow: { value: new THREE.Vector3(Z_EXIT + 5, Z_EXIT, 0.45) }, uTime: { value: 0 } };
+// sharpness guard: x = phone-frame px per canvas px, y = magnification (phone px per picture px) where the painted pixels start to hand over
+const SHARP = { uSharp: { value: new THREE.Vector2(915 / (H * renderer.getPixelRatio()), +(q.get('sharp') ?? 1.3)) } };
+const sceneryMat = (base, rep, opts = {}) => new THREE.ShaderMaterial({
+  side: THREE.DoubleSide, transparent: !!opts.transparent, depthWrite: !opts.transparent,
+  uniforms: { uBase: { value: base }, uRep: { value: new THREE.Vector2(...rep) }, uBake: { value: null }, uBakeOn: { value: 0 }, uScroll: { value: new THREE.Vector2(...(opts.scroll ?? [0, 0])) },
+    uTint: { value: new THREE.Color(...(opts.tint ?? [1, 1, 1])) }, uAlpha: { value: opts.alpha ?? 1 }, uDen: { value: null }, ...GLOW, ...SHARP },
+  vertexShader: 'varying vec2 vUv; varying vec3 vW; void main(){ vUv = uv; vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; }',
+  fragmentShader: `uniform sampler2D uBase; uniform vec2 uRep; uniform sampler2D uBake; uniform float uBakeOn; uniform vec2 uScroll; uniform vec3 uTint; uniform float uAlpha; uniform vec3 uGlow; uniform float uTime;
+    uniform sampler2D uDen; uniform vec2 uSharp; varying vec2 vUv; varying vec3 vW;
+    void main(){ vec2 su = vUv + uScroll * uTime; vec3 c = texture2D(uBase, su * uRep).rgb * uTint;
+      if (uBakeOn > 0.5) { vec4 b = texture2D(uBake, su); vec4 dd = texture2D(uDen, vUv); float pd = (dd.r + dd.g / 255.0) * 4000.0;   // picture px per world unit
+        float magE = uSharp.x / max(max(length(dFdx(vW)), length(dFdy(vW))), 1e-6) / max(pd, 1.0);                         // phone px per picture px here
+        c = mix(c, b.rgb, dd.b * (1.0 - smoothstep(uSharp.y, uSharp.y * 2.3, magE))); }
+      c = mix(c, vec3(1.0, 0.97, 0.92), uGlow.z * pow(smoothstep(uGlow.x, uGlow.y, vW.z), 1.6));
+      gl_FragColor = vec4(c, uAlpha); }` });
+
+// ---------------- the scenery: Blender GLB ----------------
+const gl = await new GLTFLoader().loadAsync('section.glb');
+const MESH = []; gl.scene.traverse((o) => { if (o.isMesh) MESH.push(o); });
+const famOf = (n) => n.startsWith('tunnel_') ? 'tunnel' : n.startsWith('ring_') ? 'ring' : n === 'arch' ? 'arch' : /^(bulkhead|wall_|ledge)/.test(n) ? 'pink' : /^(backwall|ceiling)/.test(n) ? 'dark'
+  : n.endsWith('_throat') ? 'throat' : n.startsWith('outlet_') ? 'gold' : n.startsWith('fall_') ? 'fall' : n.startsWith('pipe_') ? 'pipe' : /^(collar_|tower_rim|rail_)/.test(n) ? 'gold'
+  : n === 'tower' ? 'tank' : n.startsWith('towerfoam') ? 'foam' : n.startsWith('pod_') ? 'silver' : n.startsWith('towel_') ? 'towel' : n.startsWith('sock_') ? 'sock' : 'pink';
+const size = (o) => { o.geometry.computeBoundingBox(); const b = o.geometry.boundingBox; return b.getSize(new THREE.Vector3()); };
+for (const o of MESH) {
+  const n = o.name, fam = famOf(n), sz = size(o); let m;
+  if (fam === 'tunnel') m = sceneryMat(BASE.tunnel, [Math.round(2 * Math.PI * radius(sz.z ? (o.geometry.boundingBox.max.z + o.geometry.boundingBox.min.z) / 2 : -20) / 0.75), Math.max(1, sz.z / 0.75)]);
+  else if (fam === 'ring' || fam === 'arch') m = sceneryMat(BASE.goldring, [fam === 'arch' ? 3 : 2, 1]);
+  else if (fam === 'pink') m = sceneryMat(BASE.pink, [Math.max(1, Math.max(sz.x, sz.z) / 1.0), Math.max(1, sz.y / 1.0)]);
+  else if (fam === 'dark') m = sceneryMat(BASE.dark, [1, 1]);
+  else if (fam === 'throat') m = sceneryMat(BASE.dark, [1, 1], { tint: [0.45, 0.35, 0.6] });
+  else if (fam === 'gold') m = sceneryMat(/^(rail_|collar_|tower_rim)/.test(n) ? BASE.goldbar : BASE.gold, [1, 1]);
+  else if (fam === 'fall') m = sceneryMat(BASE.foam, [1, 3], { transparent: true, alpha: 0.92, tint: [0.55, 0.85, 1.0], scroll: [0, -0.45] });
+  else if (fam === 'pipe') m = sceneryMat(BASE.pipe, [1, 4]);
+  else if (fam === 'tank') m = sceneryMat(BASE.tank, [1, 1]);
+  else if (fam === 'foam') m = sceneryMat(BASE.foam, [1, 1]);
+  else if (fam === 'silver') m = sceneryMat(BASE.silver, [1, 1]);
+  else if (fam === 'towel') m = sceneryMat(/_p1|_r1|_r3/.test(n) ? BASE.towelK : BASE.towelP, [1, 1]);
+  else m = sceneryMat(BASE.sock, [1, 1]);
+  o.material = m; o.userData.fam = fam; o.frustumCulled = true;
+}
+world.add(gl.scene);
+
+// ---------------- water: wide chamber floor + tunnel water, segmented (own UVs for the bake), flowing river toward the camera ----------------
+const ROUTE_TEX = (() => { const n = 1024, a = new Float32Array(n), z0 = 3, z1 = Z_EXIT - 12; for (let i = 0; i < n; i++) a[i] = RX(lerp(z0, z1, i / (n - 1)));
+  const t = new THREE.DataTexture(a, n, 1, THREE.RedFormat, THREE.FloatType); t.minFilter = t.magFilter = THREE.LinearFilter; t.needsUpdate = true; return { t, z0, z1 }; })();
+const WATER_U = { uRoute: { value: ROUTE_TEX.t }, uRZ: { value: new THREE.Vector2(ROUTE_TEX.z0, ROUTE_TEX.z1) }, uT: { value: 0 }, uRW: { value: new THREE.Vector4(2.1, 0.62, T.z_arch, T.funnel[1]) }, ...GLOW };
+const SHARP_W = { uSharp: { value: new THREE.Vector2(SHARP.uSharp.value.x, +(q.get('sharpw') ?? 2.2)) } };
+const waterMat = () => new THREE.ShaderMaterial({ side: THREE.DoubleSide, uniforms: { ...WATER_U, ...SHARP_W, uBake: { value: null }, uBakeOn: { value: 0 }, uDen: { value: null } },
+  vertexShader: 'varying vec2 vUv; varying vec3 vW; void main(){ vUv = uv; vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; }',
+  fragmentShader: `uniform sampler2D uRoute; uniform vec2 uRZ; uniform float uT; uniform vec4 uRW; uniform vec3 uGlow; uniform sampler2D uBake; uniform float uBakeOn; uniform sampler2D uDen; uniform vec2 uSharp; varying vec2 vUv; varying vec3 vW;
+    float hsh(vec2 p){ vec3 p3 = fract(vec3(p.xyx) * 0.1031); p3 += dot(p3, p3.yzx + 33.33); return fract((p3.x + p3.y) * p3.z); }
+    float nse(vec2 p){ vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f); return mix(mix(hsh(i), hsh(i + vec2(1, 0)), f.x), mix(hsh(i + vec2(0, 1)), hsh(i + vec2(1, 1)), f.x), f.y); }
+    float rc(float z){ return texture2D(uRoute, vec2(clamp((z - uRZ.x) / (uRZ.y - uRZ.x), 0.0, 1.0), 0.5)).r; }
+    vec3 c3(float r, float g, float b){ return vec3(r, g, b) / 255.0; }
+    void main(){
+      float z = vW.z, d = -z, kR = clamp((uRW.z - z) / (uRW.z - uRW.w), 0.0, 1.0), RW = mix(uRW.x, uRW.y, kR * kR * (3.0 - 2.0 * kR));
+      float cs = (rc(z - 0.05) - rc(z + 0.05)) * 10.0; float uw = (vW.x - rc(z)) / sqrt(1.0 + cs * cs); float u = uw / RW, au = abs(u);
+      float tp = d + uT * 1.6;                                              // the design streams toward the camera
+      float mea = 0.55 * sin(tp * 0.83 + u * 2.3) + 0.35 * sin(tp * 1.71 - u * 3.1 + 1.3) + 0.7 * (nse(vec2(u * 1.6, tp * 0.45)) - 0.5);
+      float w = u * 4.5 + mea, f = fract(w), fw = max(fwidth(w), 1e-4), lod = 1.0 - smoothstep(0.15, 0.5, fw);
+      float sh = 0.2 + 0.5 * pow(smoothstep(0.0, 0.92, f), 2.2) - 0.36 * smoothstep(1.0 - max(0.06, 1.5 * fw), 1.0, f); sh = mix(0.38, clamp(sh, 0.0, 1.0), lod);
+      { float X = uw * 95.0 + 2.0 * nse(vec2(uw * 9.0, tp * 1.1)); sh = clamp(sh + 0.12 * (1.0 - smoothstep(0.25, 0.6, fwidth(X))) * sin(X), 0.0, 1.0); }
+      vec3 bD = c3(4.0, 100.0, 228.0), bM = c3(20.0, 160.0, 250.0), bB = c3(120.0, 232.0, 255.0), pD = c3(164.0, 43.0, 212.0), pM = c3(240.0, 50.0, 220.0), pB = c3(255.0, 150.0, 250.0);
+      vec3 blue = sh < 0.55 ? mix(bD, bM, sh / 0.55) : mix(bM, bB, (sh - 0.55) / 0.45), pink = sh < 0.55 ? mix(pD, pM, sh / 0.55) : mix(pM, pB, (sh - 0.55) / 0.45);
+      float pin = 0.5 + 0.08 * sin(tp * 0.71 + sign(u) * 1.7) + 0.05 * (nse(vec2(tp * 0.9, sign(u) * 5.0)) - 0.5), pkE = max(0.03, 1.5 * fwidth(u));
+      float pk = smoothstep(pin - pkE, pin + pkE, au) * (1.0 - smoothstep(0.92 - pkE, 0.92 + pkE, au));
+      vec3 col = mix(blue, pink, pk);
+      // highlight ripples: short, gently curved dashes riding the current (round 41: shorter / softer, no long white streaks)
+      for (int L = 0; L < 2; L++) { float cw = L == 0 ? 0.06 : 0.12, rl = L == 0 ? 0.22 : 0.4; vec2 g = vec2(uw / cw, (tp + float(L) * 0.37) / rl); vec2 cell = floor(g); float r = hsh(cell + float(L) * 13.0);
+        if (r < 0.55) { float y0 = (cell.y + 0.5) * rl, len = rl * (0.25 + 0.3 * hsh(cell + 6.6)), ph = (tp - y0) / (0.5 * len);
+          float x0 = (cell.x + 0.25 + 0.5 * hsh(cell + 3.3)) * cw + 0.25 * cw * ph * ph * (hsh(cell + 9.1) - 0.5) * 2.0; float wid = L == 0 ? 0.006 : 0.01, ww = max(wid, 0.9 * fwidth(uw));
+          float I = 0.8 * exp(-pow((uw - x0) / ww, 2.0)) * (1.0 - smoothstep(0.3, 1.0, abs(ph))) * (wid / ww); col = mix(col, vec3(0.93, 1.0, 1.0), clamp(I, 0.0, 1.0)); } }
+      { vec2 g = vec2(u * 5.0, tp * 2.2); vec2 cell = floor(g); float hh = hsh(cell + 0.37);
+        if (hh < 0.6) { vec2 pc = cell + vec2(0.2 + 0.6 * hsh(cell + 1.7), 0.2 + 0.6 * hsh(cell + 4.1)); float dx = (g.x - pc.x) / 5.0 * RW, dy = (g.y - pc.y) / 2.2;
+          float tw = 0.5 + 0.5 * sin(uT * 3.0 + hh * 40.0); tw *= tw; float st = exp(-(dx * dx + dy * dy) / 0.0001) + exp(-abs(dx) / 0.035) * exp(-dy * dy / 0.00002) + 0.6 * exp(-abs(dy) / 0.045) * exp(-dx * dx / 0.00001);
+          vec2 fc = fract(g); st *= smoothstep(0.0, 0.2, min(fc.x, 1.0 - fc.x)) * smoothstep(0.0, 0.12, min(fc.y, 1.0 - fc.y)); col = mix(col, vec3(1.0), clamp(st * tw * (1.0 - smoothstep(0.006, 0.03, max(fwidth(uw), fwidth(tp)))), 0.0, 1.0)); } }
+      float fo = smoothstep(RW * 0.98, RW * 1.02, abs(uw));                // soap foam beyond the river (lavender-white)
+      if (fo > 0.0) { float nn = nse(vec2(vW.x * 9.0, d * 9.0)); col = mix(col, mix(c3(185.0, 178.0, 240.0), c3(250.0, 248.0, 255.0), smoothstep(0.3, 0.8, nn)), fo); }
+      if (uBakeOn > 0.5) { float ph = fract(uT * 0.8); vec4 b1 = texture2D(uBake, vUv + vec2(0.0, ph * 0.006)), b2 = texture2D(uBake, vUv + vec2(0.0, fract(ph + 0.5) * 0.006));
+        vec4 b = mix(b2, b1, abs(1.0 - 2.0 * ph)); vec4 dd = texture2D(uDen, vUv); float pd = (dd.r + dd.g / 255.0) * 4000.0;
+        float magE = uSharp.x / max(max(length(dFdx(vW)), length(dFdy(vW))), 1e-6) / max(pd, 1.0); col = mix(col, b.rgb, dd.b * (1.0 - smoothstep(uSharp.y, uSharp.y * 2.3, magE))); }
+      col = mix(col, vec3(0.95, 1.0, 1.0), uGlow.z * pow(smoothstep(uGlow.x, uGlow.y, z), 1.6));
+      gl_FragColor = vec4(col, 1.0); }` });
+const WSEG = [];
+const waterSeg = (name, z0, z1, xl, xr, y = 0) => { const L = z0 - z1, nv = Math.max(4, Math.ceil(L / 0.25));
+  const g = new THREE.PlaneGeometry(1, 1, 24, nv); const p = g.attributes.position, uv = g.attributes.uv;
+  for (let i = 0; i < p.count; i++) { const a = uv.getX(i), b = 1 - uv.getY(i), z = z0 - b * L; const lo = typeof xl === 'function' ? xl(z) : xl, hi = typeof xr === 'function' ? xr(z) : xr;
+    p.setXYZ(i, lerp(lo, hi, a), y, z); uv.setXY(i, a, 1 - b); }
+  g.computeVertexNormals(); const m = new THREE.Mesh(g, waterMat()); m.name = name; m.userData.fam = 'water'; m.userData.seg = { z0, z1, lo: xl, hi: xr, L }; world.add(m); WSEG.push(m); return m; };
+const chord = (z) => Math.sqrt(Math.max(0.01, radius(z) ** 2 - axy(z) ** 2)) + 0.02;
+{ let wi = 0; for (const [z0, z1, cols] of [[3.0, 0.6, [[CH.xl, CH.xr]]], [0.6, -2.6, [[CH.xl, -0.6], [-0.6, 2.2], [2.2, CH.xr]]], [-2.6, -6.5, [[CH.xl, -1.2], [-1.2, 2.6], [2.6, CH.xr]]],
+    [-6.5, -10.5, [[CH.xl, CH.xr]]], [-10.5, T.z_arch - 0.4, [[CH.xl, CH.xr]]]]) for (const [a, b] of cols) waterSeg(`water_c${wi++}`, z0, z1, a, b, z1 < -10.6 ? -0.003 : 0); }
+{ let z = T.z_arch, i = 0; while (z > Z_EXIT - 0.2) { const z1 = Math.max(Z_EXIT - 0.2, z - 4); waterSeg(`water_t${i++}`, z, z1, (zz) => -chord(zz), (zz) => chord(zz)); z = z1; } }
+// exit room: the bright chamber the tunnel opens into (the pictures' glowing core), real geometry + its water
+{ const c = new THREE.Vector3(0, axy(Z_EXIT), Z_EXIT - 6.0); const m = new THREE.ShaderMaterial({ side: THREE.BackSide, uniforms: { uC: { value: c } },
+    vertexShader: 'varying vec3 vD; uniform vec3 uC; void main(){ vec4 w = modelMatrix * vec4(position, 1.0); vD = normalize(w.xyz - uC); gl_Position = projectionMatrix * viewMatrix * w; }',
+    fragmentShader: `varying vec3 vD; void main(){ float f = -vD.z; vec3 core = vec3(0.93, 1.0, 1.0), cyan = vec3(0.45, 0.88, 1.0), lav = vec3(0.78, 0.7, 1.0);
+      vec3 c = mix(lav, cyan, smoothstep(-0.5, 0.4, f)); c = mix(c, core, smoothstep(0.985, 0.999, f));
+      float th = atan(vD.y, vD.x) / 6.2832, ph = acos(clamp(f, -1.0, 1.0)) / 3.1416;
+      float lat = max(1.0 - smoothstep(0.0, 0.06, abs(fract(th * 48.0) - 0.5) * 2.0 - 0.9), 1.0 - smoothstep(0.0, 0.08, abs(fract(ph * 40.0) - 0.5) * 2.0 - 0.88));
+      c = mix(c, vec3(0.15, 0.5, 0.95), 0.5 * lat * smoothstep(0.998, 0.9, f)); gl_FragColor = vec4(c, 1.0); }` });
+  const room = new THREE.Mesh(new THREE.SphereGeometry(7, 48, 32), m); room.position.copy(c); room.name = 'exit_room'; world.add(room);
+  waterSeg('water_room', Z_EXIT - 0.1, Z_EXIT - 12.8, -6.6, 6.6, -0.003); }
+
+// ---------------- BAKE the two approved pictures onto the meshes (once, at load) ----------------
+const REF = { bubble: SEC.cams.bubble, sock: SEC.cams.sock };
+const refCam = (c) => { const k = new THREE.PerspectiveCamera(SEC.fov, SEC.img[0] / SEC.img[1], 0.05, 200); k.rotation.order = 'YXZ'; k.position.copy(V3(c.pos)); k.rotation.set(c.pitch, c.yaw, 0); k.updateMatrixWorld(); k.updateProjectionMatrix(); return k; };
+const CAMS = { bubble: refCam(REF.bubble), sock: refCam(REF.sock) };
+window.REFCAM = CAMS;
+const BAKE_STATS = {}, BAKE_DATA = {};
+const MANI = q.get('prebaked') !== '1' ? null : await fetch('baked/manifest.json').then((r) => (r.ok ? r.json() : null)).catch(() => null);
+if (MANI) {   // the app build: the bake was done once offline (same code, ?savebake=1) and shipped as PNGs
+  const cache = {}; const ld = (f, den) => (cache[f] ??= tl.loadAsync('baked/' + f).then((t) => { t.colorSpace = THREE.NoColorSpace; if (den) { t.generateMipmaps = false; t.minFilter = t.magFilter = THREE.LinearFilter; } else { t.anisotropy = 8; } return t; }));
+  const all = []; world.traverse((o) => { if (o.isMesh && MANI.meshes[o.name]) all.push(o); });
+  await Promise.all(all.map(async (o) => { const e = MANI.meshes[o.name]; o.material.uniforms.uBake.value = await ld(e.bake); o.material.uniforms.uDen.value = await ld(e.den, true); o.material.uniforms.uBakeOn.value = 1; BAKE_STATS[o.name] = e.cov; }));
+  BAKE_STATS._prebaked = all.length;
+} else if (q.get('bake') !== '0') {
+  const [p0, p1, m0, m1] = await Promise.all([loadRaw('plate_bubble.png'), loadRaw('plate_sock.png'), loadRaw('mask_bubble.png'), loadRaw('mask_sock.png')]);   // clean plates: picture pixels outside the masks
+  const depthOf = (cam) => { const rt = new THREE.WebGLRenderTarget(SEC.img[0], SEC.img[1]); rt.depthTexture = new THREE.DepthTexture(SEC.img[0], SEC.img[1]);
+    renderer.setRenderTarget(rt); renderer.render(scene, cam); renderer.setRenderTarget(null); return rt; };
+  const d0 = depthOf(CAMS.bubble), d1 = depthOf(CAMS.sock);
+  const vp = (c) => new THREE.Matrix4().multiplyMatrices(c.projectionMatrix, c.matrixWorldInverse);
+  const bakeMat = new THREE.ShaderMaterial({ side: THREE.DoubleSide, depthTest: false, depthWrite: false,
+    uniforms: { uP0: { value: p0 }, uP1: { value: p1 }, uM0: { value: m0 }, uM1: { value: m1 }, uD0: { value: d0.depthTexture }, uD1: { value: d1.depthTexture },
+      uVP0: { value: vp(CAMS.bubble) }, uVP1: { value: vp(CAMS.sock) }, uNF: { value: new THREE.Vector2(0.05, 200) }, uImg: { value: new THREE.Vector2(...SEC.img) }, uDens: { value: new THREE.Vector2(...(q.get('dens') ?? '15,60').split(',').map(Number)) }, uMode: { value: 0 } },
+    vertexShader: 'varying vec3 vW; void main(){ vW = (modelMatrix * vec4(position, 1.0)).xyz; gl_Position = vec4(uv * 2.0 - 1.0, 0.0, 1.0); }',
+    fragmentShader: `uniform sampler2D uP0, uP1, uM0, uM1, uD0, uD1; uniform mat4 uVP0, uVP1; uniform vec2 uNF, uImg, uDens; uniform float uMode; varying vec3 vW;
+      float lin(float d){ float z = d * 2.0 - 1.0; return 2.0 * uNF.x * uNF.y / (uNF.y + uNF.x - z * (uNF.y - uNF.x)); }
+      vec4 look(mat4 VP, sampler2D P, sampler2D M, sampler2D D, out float qd){ qd = 0.0;
+        vec4 cl = VP * vec4(vW, 1.0); vec3 nd = cl.xyz / max(cl.w, 1e-5); vec2 su = nd.xy * 0.5 + 0.5, px = su * uImg;
+        float dens = max(length(dFdx(px)), length(dFdy(px)));                              // picture pixels per texel of this surface
+        if (cl.w <= 0.05 || abs(nd.x) > 0.997 || abs(nd.y) > 0.997) return vec4(0.0);
+        if (cl.w > lin(texture2D(D, su).r) * 1.015 + 0.03) return vec4(0.0);               // hidden behind something in that picture
+        float pxu = min(length(dFdx(px)) / max(length(dFdx(vW)), 1e-7), length(dFdy(px)) / max(length(dFdy(vW)), 1e-7));   // picture px per world unit along the WORST direction (grazing views = stretched)
+        qd = pxu;   // the picture that saw this spot in the most detail wins
+        float w = mix(1.0, 0.6, step(0.5, texture2D(M, su).r)) * mix(0.8, 1.0, smoothstep(uDens.x, uDens.y, pxu));   // the sharpness guard (worst-direction density) removes texels when seen stretched
+        if (uMode > 0.5) { float pw = pxu / 4000.0; return vec4(floor(pw * 255.0) / 255.0, fract(pw * 255.0), 0.0, w); }
+        return vec4(texture2D(P, su).rgb, w); }
+      void main(){ float qa, qb; vec4 a = look(uVP0, uP0, uM0, uD0, qa), b = look(uVP1, uP1, uM1, uD1, qb); gl_FragColor = qa >= qb ? a : b; }` });
+  const bakeScene = new THREE.Scene(), oc = new THREE.OrthographicCamera();
+  const bakeOne = (o, bw, bh) => {
+    const rt = new THREE.WebGLRenderTarget(bw, bh); const tmp = new THREE.Mesh(o.geometry, bakeMat); tmp.matrixAutoUpdate = false; o.updateWorldMatrix(true, false); tmp.matrix.copy(o.matrixWorld); tmp.frustumCulled = false;
+    bakeScene.add(tmp); renderer.setRenderTarget(rt); renderer.setClearColor(0x000000, 0); renderer.clear(); renderer.render(bakeScene, oc); renderer.setRenderTarget(null); bakeScene.remove(tmp);
+    const px = new Uint8Array(bw * bh * 4); renderer.readRenderTargetPixels(rt, 0, 0, bw, bh, px); rt.dispose();
+    let cov = 0; for (let i = 3; i < px.length; i += 4) cov += px[i]; cov /= 255 * bw * bh;
+    if (cov < 0.002) return { cov, tex: null };
+    // soften the weight (no hard edge where a picture's view ends) and fill unseen texels with the nearest painted colours (pull-push)
+    const A = new Float32Array(bw * bh); for (let i = 0; i < bw * bh; i++) A[i] = px[i * 4 + 3] / 255;
+    const blur = (src, r) => { const o = new Float32Array(src.length), t2 = new Float32Array(src.length);
+      for (let y = 0; y < bh; y++) { let s = 0; for (let x = -r; x <= r; x++) s += src[y * bw + Math.min(bw - 1, Math.max(0, x))]; for (let x = 0; x < bw; x++) { t2[y * bw + x] = s / (2 * r + 1); s += src[y * bw + Math.min(bw - 1, x + r + 1)] - src[y * bw + Math.max(0, x - r)]; } }
+      for (let x = 0; x < bw; x++) { let s = 0; for (let y = -r; y <= r; y++) s += t2[Math.min(bh - 1, Math.max(0, y)) * bw + x]; for (let y = 0; y < bh; y++) { o[y * bw + x] = s / (2 * r + 1); s += t2[Math.min(bh - 1, y + r + 1) * bw + x] - t2[Math.max(0, y - r) * bw + x]; } }
+      return o; };
+    const rb = Math.max(3, Math.round(Math.max(bw, bh) / 160)); const Ab = blur(blur(A, rb), rb);   // soft hand-over (~1 % of the texture)
+    const lv = [{ w: bw, h: bh, c: new Float32Array(bw * bh * 4) }]; for (let i = 0; i < bw * bh; i++) { const a = A[i] > 0.05 ? 1 : 0; for (let c = 0; c < 3; c++) lv[0].c[i * 4 + c] = px[i * 4 + c] * a; lv[0].c[i * 4 + 3] = a; }
+    while (lv[lv.length - 1].w > 1 || lv[lv.length - 1].h > 1) { const L = lv[lv.length - 1], w2 = Math.max(1, L.w >> 1), h2 = Math.max(1, L.h >> 1), c2 = new Float32Array(w2 * h2 * 4);
+      for (let y = 0; y < h2; y++) for (let x = 0; x < w2; x++) for (let dy = 0; dy < 2; dy++) for (let dx = 0; dx < 2; dx++) { const sx = Math.min(L.w - 1, x * 2 + dx), sy = Math.min(L.h - 1, y * 2 + dy), si = (sy * L.w + sx) * 4, di = (y * w2 + x) * 4; for (let c = 0; c < 4; c++) c2[di + c] += L.c[si + c] * 0.25; }
+      lv.push({ w: w2, h: h2, c: c2 }); }
+    for (let l = lv.length - 2; l >= 0; l--) { const L = lv[l], U2 = lv[l + 1];
+      for (let y = 0; y < L.h; y++) for (let x = 0; x < L.w; x++) { const i = (y * L.w + x) * 4, a = L.c[i + 3]; if (a >= 0.999) continue;
+        const ui = (Math.min(U2.h - 1, y >> 1) * U2.w + Math.min(U2.w - 1, x >> 1)) * 4, ua = Math.max(U2.c[ui + 3], 1e-6);
+        for (let c = 0; c < 3; c++) L.c[i + c] += (1 - a) * U2.c[ui + c] / ua; L.c[i + 3] = 1; } }
+    const out = new Uint8Array(bw * bh * 4); for (let i = 0; i < bw * bh; i++) { for (let c = 0; c < 3; c++) out[i * 4 + c] = Math.round(Math.min(255, lv[0].c[i * 4 + c])); out[i * 4 + 3] = Math.round(255 * Math.min(1, Ab[i] * 1.15)); }
+    const t = new THREE.DataTexture(out, bw, bh); t.colorSpace = THREE.NoColorSpace; t.generateMipmaps = true; t.minFilter = THREE.LinearMipmapLinearFilter; t.magFilter = THREE.LinearFilter; t.anisotropy = 8; t.needsUpdate = true;
+    // density pass (quarter size): picture pixels per world unit where each texel took its colour (for the sharpness guard)
+    const dw = Math.max(4, bw >> 2), dh = Math.max(4, bh >> 2), rd = new THREE.WebGLRenderTarget(dw, dh); bakeMat.uniforms.uMode.value = 1; bakeScene.add(tmp);
+    renderer.setRenderTarget(rd); renderer.setClearColor(0x000000, 0); renderer.clear(); renderer.render(bakeScene, oc); renderer.setRenderTarget(null); bakeScene.remove(tmp); bakeMat.uniforms.uMode.value = 0;
+    const dp = new Uint8Array(dw * dh * 4); renderer.readRenderTargetPixels(rd, 0, 0, dw, dh, dp); rd.dispose();
+    for (let y = 0; y < dh; y++) for (let x = 0; x < dw; x++) { let a = 0, n = 0; for (let yy = Math.floor(y * bh / dh); yy < Math.floor((y + 1) * bh / dh); yy++) for (let xx = Math.floor(x * bw / dw); xx < Math.floor((x + 1) * bw / dw); xx++) { a += Ab[yy * bw + xx]; n++; }
+      const i = (y * dw + x) * 4; dp[i + 2] = Math.round(255 * Math.min(1, 1.15 * a / Math.max(1, n))); dp[i + 3] = 255; }   // blue = the soft bake weight
+    const den = new THREE.DataTexture(dp, dw, dh); den.minFilter = den.magFilter = THREE.LinearFilter; den.needsUpdate = true;
+    BAKE_DATA[o.name] = { w: bw, h: bh, px: out, dw, dh, dp, cov };
+    return { cov, tex: t, den }; };
+  const RES = (o) => { const f = o.userData.fam, n = o.name;
+    if (f === 'tunnel') return [2048, 1024]; if (f === 'water') { const sg = o.userData.seg, wd = (typeof sg.hi === 'function' ? 2 * chord((sg.z0 + sg.z1) / 2) : sg.hi - sg.lo); return [Math.min(2048, Math.max(256, Math.round(wd * 560))), Math.min(2048, Math.max(256, Math.round(sg.L * 560)))]; } if (f === 'pink') return [2048, 2048]; if (f === 'ring' || f === 'arch') return [2048, 256];
+    if (f === 'fall') return [256, 1024]; if (f === 'pipe') return [256, 1024]; if (f === 'towel') return [512, 512]; if (f === 'dark') return [1024, 1024]; if (f === 'tank') return [1024, 512]; return [256, 256]; };
+  const all = []; world.traverse((o) => { if (o.isMesh && o.name !== 'exit_room') all.push(o); });
+  const tStart = performance.now();
+  for (const o of all) { if (/^(rail_|sock_)/.test(o.name)) continue; const [bw, bh] = RES(o); const r = bakeOne(o, bw, bh); BAKE_STATS[o.name] = +r.cov.toFixed(3); if (r.tex) { o.material.uniforms.uBake.value = r.tex; o.material.uniforms.uDen.value = r.den; o.material.uniforms.uBakeOn.value = 1; o.userData.bakeCov = r.cov; } }
+  // repeated furniture: the best-seen instance of each family is the painted template for the instances no picture showed well
+  for (const fam of ['ring', 'towel', 'silver', 'tunnel']) {
+    const L = all.filter((o) => o.userData.fam === fam && (fam !== 'tunnel' || !/tunnel_0[0-2]/.test(o.name)));
+    const best = L.reduce((b, o) => ((o.userData.bakeCov ?? 0) > (b?.userData.bakeCov ?? 0) ? o : b), null); if (!best || !best.material.uniforms.uBake.value) continue;
+    for (const o of L) if ((o.userData.bakeCov ?? 0) < (fam === 'tunnel' || fam === 'ring' ? 0.05 : 0.35 * best.userData.bakeCov)) { for (const k of ['uBake', 'uDen']) o.material.uniforms[k].value = best.material.uniforms[k].value; o.material.uniforms.uBakeOn.value = 1; o.userData.template = best.name; BAKE_DATA[o.name] = { template: best.name }; }
+  }
+  BAKE_STATS._ms = Math.round(performance.now() - tStart); d0.dispose(); d1.dispose();
+}
+window.bakeStats = () => BAKE_STATS;
+// ?savebake=1: export the bake (PNG data URLs, rows flipped to image order) for the app build: tools/reflock/section_export.cjs
+window.bakeExport = (name) => { const d = BAKE_DATA[name]; if (!d) return null; if (d.template) return { template: d.template };
+  const png = (w, h, px, type = 'image/png') => { const c = document.createElement('canvas'); c.width = w; c.height = h; const g = c.getContext('2d'), im = g.createImageData(w, h);
+    for (let y = 0; y < h; y++) im.data.set(px.subarray((h - 1 - y) * w * 4, (h - y) * w * 4), y * w * 4); g.putImageData(im, 0, 0); return c.toDataURL(type, 0.9); };
+  return { bake: png(d.w, d.h, d.px, 'image/jpeg'), den: png(d.dw, d.dh, d.dp), cov: +d.cov.toFixed(3) }; };
+window.bakeNames = () => Object.keys(BAKE_DATA);
+
+// ---------------- foam heaps (real 3D domes) where the pictures paint foam on the water, + banks along the tunnel walls; bubbles ----------------
+const FOAM = [];
+{ const rp = (() => { let x = 777; return () => ((x = (x * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff); })();
+  if (MANI?.foam) for (const f of MANI.foam) FOAM.push(f);
+  else for (const [name, src] of [['bubble', 'bubble.webp'], ['sock', 'sock.webp']]) {
+    const img = await new Promise((r) => { const i = new Image(); i.onload = () => r(i); i.src = src; }); const cv = document.createElement('canvas'); cv.width = img.width; cv.height = img.height;
+    const g = cv.getContext('2d'); g.drawImage(img, 0, 0); const D = g.getImageData(0, 0, img.width, img.height).data;
+    const mimg = await new Promise((r) => { const i = new Image(); i.onload = () => r(i); i.src = `mask_${name}.png`; }); const mc = document.createElement('canvas'); mc.width = mimg.width; mc.height = mimg.height; const mg = mc.getContext('2d'); mg.drawImage(mimg, 0, 0); const MD = mg.getImageData(0, 0, mimg.width, mimg.height).data;
+    const cam = CAMS[name], ray = new THREE.Vector3(), cells = new Map();
+    for (let y = 600; y < img.height; y += 4) for (let x = 0; x < img.width; x += 4) { const i = (y * img.width + x) * 4, r = D[i], gg = D[i + 1], b = D[i + 2], mx = Math.max(r, gg, b), mn = Math.min(r, gg, b);
+      if (MD[i] > 127 || mx < 226 || (mx - mn) > 48) continue;
+      ray.set((x / img.width) * 2 - 1, -(y / img.height) * 2 + 1, 0.5).unproject(cam).sub(cam.position).normalize(); if (ray.y > -0.02) continue;
+      const lam = -cam.position.y / ray.y, P = cam.position.clone().addScaledVector(ray, lam); if (lam > (name === 'bubble' ? 16 : 9) || lam < (name === 'bubble' ? 2.6 : 1.6)) continue;
+      const zr = P.z, kr = Math.min(1, Math.max(0, (T.z_arch - zr) / (T.z_arch - T.funnel[1]))), RWz = lerp(2.1, 0.62, kr * kr * (3 - 2 * kr)); if (Math.abs(P.x - RX(zr)) < 0.62 * RWz || (zr < T.z_arch - 0.2 && Math.abs(P.x) < chord(zr) - 0.38) || (zr >= T.z_arch - 0.2 && Math.abs(P.x - RX(zr)) < 1.25)) continue;
+      if (P.z < T.z_arch - 0.2 && Math.abs(P.x) > chord(P.z) - 0.02) continue;
+      const key = Math.round(P.x / 0.09) + ',' + Math.round(P.z / 0.09); cells.set(key, (cells.get(key) ?? 0) + 1); }
+    for (const [key, nn] of cells) { if (nn < 6) continue; const [cx, cz] = key.split(',').map(Number); FOAM.push([cx * 0.09 + (rp() - 0.5) * 0.03, cz * 0.09 + (rp() - 0.5) * 0.03, 0.06 + rp() * 0.05]); }
+  }
+  if (!MANI?.foam) for (const f of FOAM) {   // painted colour under each dome (world-anchored water bake), else the default foam shading
+    const seg = WSEG.find((m) => f[1] <= m.userData.seg.z0 && f[1] >= m.userData.seg.z1 && f[0] >= (typeof m.userData.seg.lo === 'function' ? m.userData.seg.lo(f[1]) : m.userData.seg.lo) && f[0] <= (typeof m.userData.seg.hi === 'function' ? m.userData.seg.hi(f[1]) : m.userData.seg.hi));
+    const d = seg && BAKE_DATA[seg.name]; if (!d || !d.px) continue; const sg = seg.userData.seg, lo = typeof sg.lo === 'function' ? sg.lo(f[1]) : sg.lo, hi = typeof sg.hi === 'function' ? sg.hi(f[1]) : sg.hi;
+    const u = (f[0] - lo) / (hi - lo), v = 1 - (sg.z0 - f[1]) / sg.L; let r = 0, g = 0, b = 0, a = 0, n = 0;
+    for (let dy = -2; dy <= 2; dy++) for (let dx = -2; dx <= 2; dx++) { const cx = Math.min(d.w - 1, Math.max(0, Math.round(u * (d.w - 1)) + dx)), cy = Math.min(d.h - 1, Math.max(0, Math.round(v * (d.h - 1)) + dy)), i = (cy * d.w + cx) * 4;
+      r += d.px[i]; g += d.px[i + 1]; b += d.px[i + 2]; a += d.px[i + 3]; n++; }
+    if (a / n > 140 && (r + g + b) / (3 * n) > 165) f.push(+(r / n / 255).toFixed(3), +(g / n / 255).toFixed(3), +(b / n / 255).toFixed(3)); }
+  window.foamPainted = () => FOAM.slice();
+  for (const side of [-1, 1]) for (let z = T.funnel[1] - 0.2 - rp() * 0.4; z > Z_EXIT && !MANI?.foam; z -= 0.35 + rp() * 0.45) { if (Math.abs(z - PBS.z) < 3.2) continue;
+    const c = chord(z), n = 3 + Math.floor(rp() * 4);
+    for (let j = 0; j < n; j++) FOAM.push([side * (c - 0.04 - rp() * 0.09), z - (rp() - 0.5) * 0.3, 0.04 + rp() * rp() * 0.09]); }
+  const fGeo = new THREE.IcosahedronGeometry(0.5, 2), Lw = new THREE.Vector3(-0.25, 0.8, 0.55).normalize();
+  fGeo.setAttribute('aCol', new THREE.InstancedBufferAttribute(new Float32Array(FOAM.flatMap((f) => (f.length >= 6 ? [f[3], f[4], f[5], 1] : [0, 0, 0, 0]))), 4));
+  const fMat = new THREE.ShaderMaterial({ uniforms: { uL: { value: Lw }, ...GLOW },
+    vertexShader: `attribute vec4 aCol; varying vec4 vCol; varying vec3 vN; varying vec3 vW;
+      float fh(vec3 p){ return fract(sin(dot(p, vec3(12.9898, 78.233, 37.719))) * 43758.5453); }
+      float fn(vec3 p){ vec3 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f); return mix(mix(mix(fh(i), fh(i + vec3(1, 0, 0)), f.x), mix(fh(i + vec3(0, 1, 0)), fh(i + vec3(1, 1, 0)), f.x), f.y), mix(mix(fh(i + vec3(0, 0, 1)), fh(i + vec3(1, 0, 1)), f.x), mix(fh(i + vec3(0, 1, 1)), fh(i + vec3(1, 1, 1)), f.x), f.y), f.z); }
+      void main(){ vCol = aCol; vec3 o = instanceMatrix[3].xyz * 7.0; float b = fn(position * 5.0 + o) * 0.55 + fn(position * 11.0 + o.zxy) * 0.3;
+        vec3 p = position * (0.82 + 0.42 * b); vec4 w = modelMatrix * instanceMatrix * vec4(p, 1.0); vW = w.xyz;
+        vN = normalize(mat3(modelMatrix) * mat3(instanceMatrix) * normalize(normal + 0.9 * (b - 0.45) * normal + 0.5 * vec3(fn(position * 9.0 + o) - 0.5, 0.0, fn(position * 9.0 + o.yzx) - 0.5))); gl_Position = projectionMatrix * viewMatrix * w; }`,
+    fragmentShader: `varying vec4 vCol; varying vec3 vN; varying vec3 vW; uniform vec3 uL; uniform vec3 uGlow; vec3 c3(float r, float g, float b){ return vec3(r, g, b) / 255.0; }
+      void main(){ float lit = clamp(0.6 + 0.45 * dot(normalize(vN), uL), 0.0, 1.0);
+        vec3 col = lit < 0.5 ? mix(c3(150.0, 135.0, 222.0), c3(205.0, 200.0, 245.0), lit / 0.5) : mix(c3(205.0, 200.0, 245.0), c3(255.0, 254.0, 255.0), (lit - 0.5) / 0.5);
+        if (vCol.a > 0.5) col = min(vec3(1.0), vCol.rgb * (0.8 + 0.35 * dot(normalize(vN), uL)));   // the painted foam colour, shaded by the dome
+        col = mix(col, vec3(1.0, 0.98, 0.95), uGlow.z * pow(smoothstep(uGlow.x, uGlow.y, vW.z), 1.6)); gl_FragColor = vec4(col, 1.0); }` });
+  const foam = new THREE.InstancedMesh(fGeo, fMat, FOAM.length), mI = new THREE.Matrix4(), qI = new THREE.Quaternion(), pI = new THREE.Vector3(), sI = new THREE.Vector3();
+  FOAM.forEach(([x, z, w], i) => { pI.set(x, w * 0.05, z); sI.set(w, w * 0.62, w); foam.setMatrixAt(i, mI.compose(pI, qI, sI)); }); foam.name = 'foam_domes'; foam.userData.fam = 'foam3d'; world.add(foam);
+  const B = SEC.bubbles.map((b) => b.slice()); for (let z = T.z_arch - 1; z > Z_EXIT; z -= 0.6 + rp() * 0.8) { const c = chord(z) - 0.12, sd = rp() < 0.5 ? -1 : 1; B.push([sd * (0.38 + rp() * Math.max(0.05, c - 0.38)), 0.12 + rp() * 0.5, z, 0.025 + rp() * rp() * 0.045]); }
+  const bGeo = new THREE.SphereGeometry(1, 24, 16); bGeo.setAttribute('aPh', new THREE.InstancedBufferAttribute(new Float32Array(B.map(() => rp() * 6.28)), 1));
+  const bm = new THREE.ShaderMaterial({ transparent: true, depthWrite: false, uniforms: { uTime: GLOW.uTime, uL: { value: Lw } },
+    vertexShader: 'attribute float aPh; uniform float uTime; varying vec3 vN; varying vec3 vW; void main(){ vec4 w = modelMatrix * instanceMatrix * vec4(position, 1.0); w.y += 0.012 * sin(uTime * 1.3 + aPh); vW = w.xyz; vN = normalize(mat3(modelMatrix) * mat3(instanceMatrix) * normal); gl_Position = projectionMatrix * viewMatrix * w; }',
+    fragmentShader: `varying vec3 vN; varying vec3 vW; uniform vec3 uL; void main(){ vec3 N = normalize(vN), V = normalize(cameraPosition - vW); float c = abs(dot(N, V)), f = pow(1.0 - c, 1.6);
+      vec3 film = 0.6 + 0.4 * cos(6.2832 * (f * 1.8 + N.y * 0.35 + vec3(0.0, 0.33, 0.67)));
+      float sp = pow(max(dot(reflect(-V, N), uL), 0.0), 60.0) + 0.6 * pow(max(dot(reflect(-V, N), normalize(vec3(0.4, 0.2, 0.9))), 0.0), 90.0);
+      vec3 col = mix(vec3(1.0), film, 0.9) + sp; gl_FragColor = vec4(min(col, vec3(1.0)), clamp(0.16 + 0.75 * f * f + 0.35 * f + 1.3 * sp, 0.0, 0.97)); }` });
+  const bubbles = new THREE.InstancedMesh(bGeo, bm, B.length); B.forEach(([x, y, z, r], i) => { pI.set(x, y, z); sI.setScalar(r); bubbles.setMatrixAt(i, mI.compose(pI, qI, sI)); });
+  bubbles.name = 'bubbles'; bubbles.renderOrder = 7; bubbles.userData.fam = 'bubble3d'; world.add(bubbles);
+}
+
+// ---------------- Benny (round-32 Benny: mesh, bake, paddling shader) - same code as the kit game ----------------
+const VERT_HEAD = `uniform float uT; uniform float uSwim; uniform vec2 uPom; uniform float uArmA; uniform float uKick; uniform float uKickA; uniform float uBobA;
+vec3 b31rot(vec3 r, vec3 ax, float a){ float c = cos(a), s = sin(a); return r * c + cross(ax, r) * s + ax * dot(ax, r) * (1.0 - c); }`;
+const VERT_BODY = `vec3 p = position; float side = p.x >= 0.0 ? 1.0 : -1.0;
+float wa = smoothstep(0.30, 0.37, abs(p.x)) * (1.0 - smoothstep(0.08, 0.16, abs(p.y + 0.18)));
+float ph0 = uT * 7.5 + (side > 0.0 ? 0.0 : 3.14159); float ph = ph0 - 0.28 * sin(ph0);
+vec3 piv = vec3(side * 0.31, -0.18, 0.0); vec3 q = p - piv;
+q = b31rot(q, vec3(0.0, 0.0, 1.0), -side * uSwim * wa * uArmA * sin(ph)); q = b31rot(q, vec3(0.0, 1.0, 0.0), side * uSwim * wa * 0.5 * cos(ph)); p = piv + q;
+float kz = smoothstep(0.06, 0.24, p.z) * (1.0 - smoothstep(-0.36, -0.2, p.y)) * smoothstep(0.02, 0.1, abs(p.x)) * (1.0 - smoothstep(0.26, 0.34, abs(p.x)));
+p += vec3(0.0, 0.35, 1.0) * (uKickA * 0.045 * kz * sin(uKick * 11.0 + (side > 0.0 ? 0.0 : 3.14159)));
+float sp = sin(uT * 7.5); p.y += uBobA * sp * sp;
+float wp = smoothstep(0.17, 0.27, p.y); vec3 pp = vec3(0.0, 0.19, 0.05); vec3 r = p - pp;
+r = b31rot(r, vec3(1.0, 0.0, 0.0), uPom.x * wp); r = b31rot(r, vec3(0.0, 0.0, 1.0), uPom.y * wp); p = pp + r;
+float sq = 1.0 + 0.03 * uSwim * sin(uT * 15.0); p.y = (p.y + 0.5) * sq - 0.5; p.xz /= sqrt(sq);
+vec3 transformed = p;`;
+const bgl = await new GLTFLoader().loadAsync('benny31.glb');
+const bmap = await tl.loadAsync('bake.png'); bmap.colorSpace = THREE.SRGBColorSpace; bmap.flipY = false; bmap.anisotropy = 8;
+let bgeo = null; bgl.scene.traverse((o) => { if (o.isMesh && !bgeo) bgeo = o.geometry; });
+const U = { uT: { value: 0 }, uSwim: { value: 1 }, uPom: { value: new THREE.Vector2() }, uArmA: { value: 0.42 }, uKick: { value: 0 }, uKickA: { value: 1 }, uBobA: { value: 0 } };
+const bmat = new THREE.MeshBasicMaterial({ map: bmap, color: new THREE.Color(4, 4, 4) });
+bmat.onBeforeCompile = (sh) => { Object.assign(sh.uniforms, U); sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\n' + VERT_HEAD).replace('#include <begin_vertex>', VERT_BODY);
+  sh.fragmentShader = sh.fragmentShader.replace('#include <colorspace_fragment>', `#include <colorspace_fragment>
+    { vec3 col = gl_FragColor.rgb; float l = dot(col, vec3(0.2126, 0.7152, 0.0722)); col = mix(vec3(l), col, 1.36); col = (col - 0.5) * 1.15 + 0.5; gl_FragColor.rgb = clamp(col, 0.0, 1.0); }`); };
+const bmesh = new THREE.Mesh(bgeo, bmat); bmesh.frustumCulled = false;
+const bennyH = SEC.benny.height, KH = 0.9 * bennyH / (0.99 * 0.78);
+const holder = new THREE.Group(); holder.rotation.y = Math.PI; holder.scale.setScalar(KH); holder.position.y = 0.496 * KH - 0.22 * 0.99 * KH; holder.add(bmesh);
+bmesh.scale.set(0.8, 0.84, 0.8); holder.scale.multiplyScalar(+(q.get('bsize') ?? 1.24)); holder.position.y *= +(q.get('bsize') ?? 1.24);   // Benny at the painted size in both pictures (measured box)
+const benny = new THREE.Group(); benny.add(holder); scene.add(benny);
+const pxW = bennyH / 400;
+const splashTex = await tl.loadAsync('splash.png'); splashTex.colorSpace = THREE.SRGBColorSpace;
+// round 41: the splash is depth-tested (Benny's body stays in front of it; the diagnostic renders showed the untested sprite covering his body)
+const splash = new THREE.Sprite(new THREE.SpriteMaterial({ map: splashTex, toneMapped: false, transparent: true, depthWrite: false, depthTest: true })); splash.renderOrder = 5; scene.add(splash);
+const bubTex = await tl.loadAsync('bubble.png'); bubTex.colorSpace = THREE.SRGBColorSpace;
+const ctex = await tl.loadAsync('coin.png'); ctex.colorSpace = THREE.SRGBColorSpace;
+const C0 = V3(SEC.coins.bubble[0]), coinD = 2 * 38 * C0.distanceTo(V3(REF.bubble.pos)) / SEC.focal_px;
+const TRAIL = [], TRAIL_S = []; for (let s = 0; s <= LEVEL + 1e-9; s += 0.05) { TRAIL.push(at(s, new THREE.Vector3()).toArray()); TRAIL_S.push(+s.toFixed(4)); }
+const coins = []; let coinCount = +(q.get('coins') ?? 1420); const coinEl = document.getElementById('coins'); coinEl.textContent = '\u{1FA99} ' + coinCount.toLocaleString('en-US');
+const CT = installControls({ THREE, TR: { trail: TRAIL, trail_s: TRAIL_S, N: 0 }, canvas: renderer.domElement, camera, q, at, frameAt, coins, scene, U, bmat, benny, splash, splashTex, bubTex, coinTex: ctex, coinD,
+  bennyFullH: 0.99 * KH, pxW, coinEl, getS: () => st.s, getCoins: () => coinCount, render: () => renderer.render(scene, camera) });
+// coins: the painted coin trails of both pictures at their painted places, then runs through the funnel and down the Sock Rescue tunnel
+const toSL = (p) => { const s = ZB0 - p.z; return [s, p.x - RX(p.z)]; };
+const LAY = [...SEC.coins.bubble.filter((p) => p[2] > T.z_arch + 1.0).map((p) => toSL(V3(p))), [10.0, 0.0], [11.3, 0.25], [13.2, 0.0], [14.6, 0.25], [16.0, 0.25], [17.4, 0.0], [18.6, -0.25],
+  ...SEC.coins.sock.map((p) => toSL(V3(p))), [29.5, -0.3], [30.7, -0.3], [32.0, 0.0], [34.5, 0.3], [35.7, 0.3], [37.0, 0.0], [40.0, -0.28], [41.3, 0.0], [43.5, 0.28], [45.0, 0.0]].sort((a, b) => a[0] - b[0]);
+coins.forEach((c, i) => { const L = LAY[i]; if (!L) { c.sp.visible = false; c.s = 1e9; c.got = 0; return; } const F = frameAt(L[0]); c.s = L[0]; c.lat = L[1]; c.h = 0;
+  at(L[0], c.p0).addScaledVector(F.r, L[1]).addScaledVector(F.n, coinD * 0.6); c.n0.copy(F.n); c.sp.position.copy(c.p0); });
+const coin3 = (() => { const geo = new THREE.CylinderGeometry(0.5, 0.5, 0.12, 48, 1); geo.rotateX(Math.PI / 2);
+  const face = new THREE.MeshBasicMaterial({ map: ctex, toneMapped: false, alphaTest: 0.4 }), rim = new THREE.MeshBasicMaterial({ color: new THREE.Color(0.86, 0.5, 0.08), toneMapped: false });
+  return coins.map((c, i) => { const m = new THREE.Mesh(geo, [rim, face, face]); m.name = 'coin3d_' + i; scene.add(m); c.sp.material.colorWrite = false; return m; }); })();
+// socks (Sock Rescue mission): the two painted socks (Blender meshes at their painted places) + three more down the tunnel
+const SOCKS = []; { const base = MESH.filter((o) => o.userData.fam === 'sock');
+  for (const o of base) SOCKS.push(o);
+  for (const [dz, dx] of [[-9.5, -0.3], [-15.0, 0.28], [-21.0, -0.25]]) { const c = base[0].clone(); c.position.z += dz; c.position.x += dx - (base[0].geometry.boundingBox.min.x + base[0].geometry.boundingBox.max.x) / 2 * 0; world.add(c); SOCKS.push(c); } }
+let socksGot = 0; const slotsEl = document.getElementById('slots'); const drawSlots = () => { slotsEl.textContent = '\u{1F9E6}'.repeat(socksGot) + '○'.repeat(5 - socksGot); }; drawSlots();
+
+// ---------------- chase camera: the fitted picture cameras relative to Benny, blended smoothly between them ----------------
+const QB = new THREE.Quaternion().setFromEuler(new THREE.Euler(REF.bubble.pitch, REF.bubble.yaw, 0, 'YXZ')), QS = new THREE.Quaternion().setFromEuler(new THREE.Euler(REF.sock.pitch, REF.sock.yaw, 0, 'YXZ'));
+const OB = V3(REF.bubble.pos).sub(at(0, new THREE.Vector3())), OS = V3(REF.sock.pos).sub(at(S_SOCK, new THREE.Vector3()));   // exactly the fitted cameras at both picture points
+const st = { s: +(q.get('s0') ?? 0), lat: 0, camLat: { x: 0, v: 0 }, t: 0 };
+const cds = (o, target, omega, dt) => { const y = o.x - target, j = o.v + omega * y, e = Math.exp(-omega * dt); o.x = target + (y + j * dt) * e; o.v = (o.v - omega * j * dt) * e; return o.x; };
+const CAMK = +(q.get('camk') ?? 0.8), tmp = new THREE.Vector3(), qTmp = new THREE.Quaternion(), Zax = new THREE.Vector3(0, 0, 1);
+const hdg = (s) => { const F = frameAt(s); return Math.atan2(-F.t.x, -F.t.z); }, HD0 = hdg(0), HDS = hdg(S_SOCK);
+const camAt = (s, dt) => {
+  const w = sstep(1.0, S_SOCK - 0.4, s), F = frameAt(s);
+  at(s, camera.position).add(tmp.copy(OB).lerp(OS, w)).addScaledVector(F.r, cds(st.camLat, CAMK * st.lat, 9, dt));
+  const z = camera.position.z; if (z < T.z_arch + 0.2) { const ay = axy(z), dx = camera.position.x, dy = camera.position.y - ay, rr = Math.hypot(dx, dy), lim = radius(z) - 0.25;
+    if (rr > lim) { camera.position.x = dx * lim / rr; camera.position.y = ay + dy * lim / rr; } }
+  camera.quaternion.copy(QB).slerp(QS, w);
+  const yawK = 0.5 * (Math.atan2(-F.t.x, -F.t.z) - lerp(HD0, HDS, w)); camera.quaternion.premultiply(qTmp.setFromAxisAngle(new THREE.Vector3(0, 1, 0), yawK));
+  camera.updateMatrixWorld();
+  // screen guard: Benny's whole body (measured from his posed mesh) always stays inside the frame with a small margin
+  const fpx = H / 2 / Math.tan(camera.fov * DEG / 2), M = 8;
+  for (let k = 0; k < 2; k++) { const bb = window.bennyBox(); const dpx = bb.x0 < M ? bb.x0 - M : bb.x1 > W - M ? bb.x1 - (W - M) : 0; if (!dpx) break;
+    camera.position.addScaledVector(F.r, dpx * camera.position.distanceTo(benny.position) / fpx); camera.updateMatrixWorld(); st.guard = (st.guard ?? 0) + 1; }
+  // the camera never leaves the tunnel (applied last: the wall wins over the screen guard)
+  { const z2 = camera.position.z; if (z2 < T.z_arch + 0.2) { const ay = axy(z2), dx = camera.position.x, dy = camera.position.y - ay, rr = Math.hypot(dx, dy), lim = radius(z2) - 0.25;
+    if (rr > lim) { camera.position.x = dx * lim / rr; camera.position.y = ay + dy * lim / rr; camera.updateMatrixWorld(); st.wallClamp = (st.wallClamp ?? 0) + 1; } } }
+};
+const tB = new THREE.Vector3(), rB = new THREE.Vector3(), mB = new THREE.Matrix4(), UPV = new THREE.Vector3(0, 1, 0);
+const titleEl = document.getElementById('title'), badgeEl = document.getElementById('badge'), missionEl = document.getElementById('mission');
+// ---------------- abilities (round 41): Bubble Blast = magnet for the coins in Benny's lane + 3 u ahead (3.5 s, cooldown 9 s);
+// Turbo Spin = 1.6x speed with a spin (2.5 s, cooldown 11 s). Buttons are real buttons: controls.js never takes their touches as swipes.
+const AB = { blast: { until: -1, ready: 0, dur: 3.5, cd: 9 }, turbo: { until: -1, ready: 0, dur: 2.5, cd: 11 } }; let gems = 36; const gemEl = document.getElementById('gems');
+const useAbility = (k) => { const a = AB[k], t = st.t; if (t < a.ready) return false; a.until = t + a.dur; a.ready = t + a.dur + a.cd; (st.abLog ??= []).push({ k, t: +t.toFixed(2) }); return true; };
+window.ability = useAbility; window.paused = false;
+document.getElementById('blast').addEventListener('click', (e) => { e.stopPropagation(); useAbility('blast'); });
+document.getElementById('turbo').addEventListener('click', (e) => { e.stopPropagation(); useAbility('turbo'); });
+document.getElementById('pause').addEventListener('click', (e) => { e.stopPropagation(); window.paused = !window.paused; document.getElementById('pausedLay').style.display = window.paused ? 'flex' : 'none'; });
+window.step = (t, dt, steer, speed) => {
+  if (t >= AB.turbo.until - AB.turbo.dur && t < AB.turbo.until) speed = (speed ?? +q.get('speed')) * 1.6;
+  const v = CT.fwd(speed ?? +q.get('speed')); st.s += v * dt; st.t = t;
+  const turboK = t < AB.turbo.until ? (AB.turbo.until - t) / AB.turbo.dur : 0; GLOW.uTime.value = t; WATER_U.uT.value = t;
+  st.lat = CT.update(t, dt).lat; const F = frameAt(st.s);
+  at(st.s, tmp).addScaledVector(F.r, st.lat); benny.position.copy(tmp).addScaledVector(F.n, Math.sin(t * Math.PI * 1.6) * 0.006 + CT.c.h);
+  tB.copy(F.t); rB.copy(F.r).negate(); benny.quaternion.setFromRotationMatrix(mB.makeBasis(rB, UPV, tB)); CT.orient(benny.quaternion);
+  if (turboK > 0.76) benny.quaternion.multiply(qTmp.setFromAxisAngle(UPV, (1 - (turboK - 0.76) / 0.24) * Math.PI * 4));   // Turbo Spin: two turns, then he swims on
+  U.uT.value = t; U.uSwim.value = 1; U.uPom.value.set(Math.sin(t * 5.0) * 0.06, 0); CT.anim(0);
+  // spray fanning out on both sides of him at the waterline, just behind his body (wider and stronger, like the pictures)
+  splash.scale.set(799 * pxW * 0.85 * (1 + 0.05 * Math.sin(t * 9)), 309 * pxW * 0.9 * (1 + 0.07 * Math.sin(t * 7 + 1)), 1);
+  splash.position.copy(benny.position).addScaledVector(F.t, 0.09).addScaledVector(F.n, -CT.c.h + splash.scale.y * 0.3);
+  CT.water(F, v, dt);
+  camAt(st.s, dt);
+  if (t < AB.blast.until) for (const c of coins) if (c.got < 0 && c.s < 1e8 && c.s > st.s - 0.2 && c.s < st.s + 3.0 && Math.abs(c.lat - st.lat) < 0.5) { c.got = t; coinCount += 10; coinEl.textContent = '\u{1FA99} ' + coinCount.toLocaleString('en-US'); }
+  for (const [k, id] of [['blast', 'blast'], ['turbo', 'turbo']]) { const a = AB[k], p = t < a.ready ? Math.min(1, (a.ready - t) / (a.dur + a.cd)) : 0; document.querySelector('#' + id + ' .cd').style.setProperty('--p', (p * 100).toFixed(1) + '%'); }
+  for (const c of coins) { if (c.got < 0 && CT.hits(c)) { c.got = t; coinCount += 10; coinEl.textContent = '\u{1FA99} ' + coinCount.toLocaleString('en-US'); }
+    if (c.got >= 0 && c.s < 1e8) { const k = (t - c.got) / 0.4; c.sp.visible = k < 1; if (k < 1) { c.sp.position.copy(benny.position).addScaledVector(F.n, bennyH * (1.05 + 0.6 * k)); c.sp.scale.setScalar(coinD * 0.7 * (1 - 0.5 * k)); } } }
+  coins.forEach((c, i) => { const m = coin3[i]; m.visible = c.sp.visible && c.s < 1e8; if (!m.visible) return; m.position.copy(c.sp.position);
+    m.scale.setScalar(c.got >= 0 ? c.sp.scale.x : coinD); m.quaternion.setFromAxisAngle(UPV, 0.5 * Math.sin(t * 1.9 + i * 1.3)); });
+  for (const sk of SOCKS) { if (!sk.visible) continue; sk.geometry.computeBoundingSphere(); const c = sk.geometry.boundingSphere.center.clone().add(sk.position);
+    if (Math.abs(c.z - benny.position.z) < 0.25 && Math.abs(c.x - benny.position.x) < 0.3) { sk.visible = false; socksGot = Math.min(5, socksGot + 1); drawSlots(); gems += 5; gemEl.textContent = gems; } }
+  if (q.get('return') === '1' && st.s >= LEVEL - 0.05 && !st.left) { st.left = true; setTimeout(() => { location.href = '../index.html?resume=05&bonus=1&coins=' + coinCount; }, 250); }
+  const inT = camera.position.z < T.z_arch - 0.3; titleEl.style.display = inT ? 'none' : ''; badgeEl.style.display = inT ? 'none' : ''; missionEl.style.display = inT ? 'block' : 'none';
+  for (const id of ['blast', 'turbo']) document.getElementById(id).style.display = inT ? '' : 'none';   // each part shows its own picture's HUD
+  return { s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: coinCount, socks: socksGot, gems, turbo: +turboK.toFixed(2), blast: t < AB.blast.until, z: +benny.position.z.toFixed(3), ...CT.state() };
+};
+// QA diagnostics (round 41): ?dbg=nowater hides every water surface, ?dbg=nosplash hides the splash sprite and all swim effects around Benny
+{ const dbg = q.get('dbg') ?? '';
+  if (dbg.includes('nowater')) for (const m of WSEG) m.visible = false;
+  if (dbg.includes('nosplash')) { const keep = new Set(coins.map((c) => c.sp)); scene.traverse((o) => { if ((o.isSprite || (o.renderOrder >= 5 && o.renderOrder <= 7 && o !== benny && !o.name.startsWith('coin3d') && o.name !== 'bubbles')) && !keep.has(o)) o.userData.dbgHide = true; });
+    const hideFx = () => scene.traverse((o) => { if (o.userData.dbgHide) o.visible = false; }); hideFx(); const s0 = window.step; window.step = (...a) => { const r = s0(...a); hideFx(); return r; }; } }
+window.renderNow = async (n = 1) => { for (let i = 0; i < n; i++) renderer.render(scene, camera); return true; };
+window.camInfo = () => ({ p: camera.position.toArray().map((x) => +x.toFixed(4)), q: camera.quaternion.toArray().map((x) => +x.toFixed(5)), fov: camera.fov });
+window.bennyInfo = () => { const p = benny.position.clone().project(camera); return { x: +((p.x + 1) / 2 * W).toFixed(1), y: +((1 - p.y) / 2 * H).toFixed(1) }; };
+window.bennyBox = () => { benny.updateMatrixWorld(true); const a = bmesh.geometry.attributes.position, v = new THREE.Vector3(); let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
+  for (let i = 0; i < a.count; i += 3) { v.fromBufferAttribute(a, i).applyMatrix4(bmesh.matrixWorld).project(camera); const x = (v.x + 1) / 2 * W, y = (1 - v.y) / 2 * H; x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); }
+  return { x0: +x0.toFixed(1), x1: +x1.toFixed(1), y0: +y0.toFixed(1), y1: +y1.toFixed(1) }; };
+window.sceneAudit = () => { scene.updateMatrixWorld(true); const out = []; world.traverse((o) => { if (o.isMesh) out.push({ name: o.name, m: o.matrixWorld.elements.map((x) => +x.toFixed(5)) }); }); return out; };
+window.sectionInfo = () => ({ LEVEL: +LEVEL.toFixed(3), S_SOCK: +S_SOCK.toFixed(3), z_arch: T.z_arch, z_exit: Z_EXIT, meshes: MESH.length, foam: FOAM.length, coins: LAY.length, bake: BAKE_STATS });
+window.state = window.state ?? (() => ({ s: st.s }));
+window.step(0, 0, 0, 0);
+document.getElementById('load').style.display = 'none';
+renderer.render(scene, camera);
+window.ready = true;
+if (q.get('play')) {   // real-time play (phone): tap to swim, swipes steer
+  let t0 = null, last = 0; const tapEl = document.createElement('div'); tapEl.textContent = 'Tap to swim'; tapEl.style.cssText = 'position:fixed;left:0;right:0;bottom:22%;text-align:center;color:#fff;font-weight:800;font-size:26px;text-shadow:0 2px 6px #000a';
+  document.body.appendChild(tapEl); let go = false; addEventListener('pointerdown', () => { go = true; tapEl.remove(); }, { once: true });
+  const loop = (now) => { requestAnimationFrame(loop); if (!go) { renderer.render(scene, camera); return; } if (t0 === null) { t0 = now; last = now; } const dt = Math.min(0.05, (now - last) / 1000); last = now;
+    if (window.paused) { t0 += now - last; last = now; renderer.render(scene, camera); return; }
+    if (st.s < LEVEL) window.step((now - t0) / 1000, dt, 0, +q.get('speed')); renderer.render(scene, camera); };
+  requestAnimationFrame(loop);
+}
+</script></body></html>

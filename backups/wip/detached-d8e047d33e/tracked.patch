@@ -1,0 +1,854 @@
+diff --git a/tools/kit05/bake_kit.py b/tools/kit05/bake_kit.py
+index da67539..1ad555e 100644
+--- a/tools/kit05/bake_kit.py
++++ b/tools/kit05/bake_kit.py
+@@ -144,20 +144,39 @@ kit = json.load(open(os.path.join(out, 'kit.json'))); kit['own'] = {'wall': wall
+ json.dump(kit, open(os.path.join(out, 'kit.json'), 'w'), indent=1)
+ print('own pixels: wall', {k: v[2] for k, v in wall_own['rows'].items()}, 'ring', {k: v[2] for k, v in ring_own['rows'].items()})
+ 
+-# ---------------- flowing river tile (round 33c): seamless, full-width open water only (the foam banks are on the lower walls) ----------
+-# A = the user's isolated water art, B = the approved water (+ its water-art fill), both over the kit water rows where the water art covers
+-# the FULL width; cycle = A, B, A reversed, B reversed, each join cross-faded -> period 4 x (t1 - t0), no stretched texels.
++# ---------------- flowing RIVER RIBBON tile (round 34, S1): river-local coordinates, sharp, no stretched texels ----------------
++# Round 33's tile filled the columns outside the water art's river with flow-stretched texels (blocky pink / red bars) and joined
++# t-reversed copies (X-shaped mirror pattern = the "repeating grid"). The ribbon is sampled in the game at (u = lateral - river
++# centre c(t), v = t + flow), so it bends with the world-anchored river. Source = the SHARPEST painted water (the kit rows where the
++# isolated water art covers the full floor width, t ~0.9-2.0: near Benny, ~300 px per world unit): A = the approved water (+ its
++# water-art fill), B = the user's isolated water art (colour-matched), straightened along c(t); columns beyond the floor edge
++# (|u| > 0.70 happens on the inner side of a bend) are the pink edge band REFLECTED at the floor edge (pink stays at the river's
++# edge; the foam bank is drawn over it in the game). Cycle A, B, A mirrored left-right, B mirrored, joins cross-faded: no t-reversal.
+ cov = (isoW[..., 3] > 200).mean(1)                                   # full-width coverage per log row
+ okr = np.nonzero((cov > 0.985) & (tv[:, 0] > 0.9))[0]; r0 = okr[0]; r1 = r0
+ while r1 + 1 < VH and cov[r1 + 1] > 0.985: r1 += 1                  # first unbroken full-width run only (near water, crisp)
+ RT0 = float(tv[r0, 0]); RT1 = float(tv[r1, 0])
+ seg_n = 384                                                          # rows per segment (linear in t)
+-def strip(srcimg):
++RU = 1.05; RIB_W = 1536                                              # ribbon lateral range u in [-RU, RU]
++latv = np.linspace(-HWD, HWD, VW)
++def strip(srcimg, valid, shift=0.0):
++    """rows linear in t over the sharp source rows; each row only from ITS valid lateral range (inside the picture / the water art):
++    lateral positions outside it are reflected back into it (triangle wave), never clamped (clamping = the round-33 stretched bars)"""
+     ts = RT0 + (np.arange(seg_n) + 0.5) / seg_n * (RT1 - RT0); rf = np.log(ts / T0) / np.log(T1 / T0) * VH - 0.5
+-    return np.stack([cv2.remap(srcimg[..., ch].astype(np.float32), np.tile(np.arange(VW, dtype=np.float32), (seg_n, 1)),
+-                                np.repeat(rf.astype(np.float32)[:, None], VW, 1), cv2.INTER_LINEAR) for ch in range(3)], -1)
+-SA, SB = strip(isoC), strip(water)
+-parts = [SA, SB, SA[::-1], SB[::-1]]; X = seg_n // 4
++    ri = np.clip(np.round(rf).astype(int), 0, VH - 1)
++    l0 = np.array([latv[valid[r]].min() + 0.01 for r in ri]); l1 = np.array([latv[valid[r]].max() - 0.01 for r in ri])
++    u = np.linspace(-RU, RU, RIB_W)[None, :]; lat = river_center(ts)[:, None] + u + shift
++    L = (l1 - l0)[:, None]; x = np.mod(lat - l0[:, None], 2 * L); lat = l0[:, None] + np.where(x > L, 2 * L - x, x)
++    col = (lat + HWD) / (2 * HWD) * (VW - 1)
++    return np.stack([cv2.remap(srcimg[..., ch].astype(np.float32), col.astype(np.float32), np.repeat(rf.astype(np.float32)[:, None], RIB_W, 1),
++                               cv2.INTER_LINEAR, borderMode=cv2.BORDER_REFLECT) for ch in range(3)], -1)
++_hsv = cv2.cvtColor(np.clip(ref, 0, 255).astype(np.uint8), cv2.COLOR_RGB2HSV); _gold = ((_hsv[..., 0] >= 5) & (_hsv[..., 0] <= 35) & (_hsv[..., 1] > 90)).astype(np.uint8)
++_gold = cv2.dilate(_gold, np.ones((15, 15), np.uint8))               # the gold ring blocks at the picture's bottom corners are not water
++validA = ok & (x >= 2) & (x < W - 3) & (_gold[yc.astype(int), xc.astype(int)] == 0); validB = validA & (isoW[..., 3] > 200)
++# A = approved (its centre behind Benny is the water-art fill), B / B' = the water art shifted sideways (so the centre lane never shows
++# the same water twice in a row), A' = A mirrored left-right
++SA, SB, SB2 = strip(water, validA), strip(isoC, validB, 0.21), strip(isoC, validB, -0.17)
++parts = [SA, SB, SA[:, ::-1], SB2[:, ::-1]]; X = seg_n // 4
+ wv = ((np.arange(X) + 0.5) / X)[:, None, None]
+ tile = parts[0]
+ for nxt in parts[1:]:                                                # overlapping joins: blend X rows, the next part continues after them
+@@ -177,8 +196,29 @@ for cls in (CY, PK):
+     print('colour class: hue shift %.1f (x2 deg), saturation x%.2f' % (dh, ks))
+ tile = cv2.cvtColor(th_.reshape(-1, 1, 3).astype(np.uint8), cv2.COLOR_HSV2RGB).reshape(tile.shape).astype(np.float32)
+ Image.fromarray(np.clip(tile[::-1], 0, 255).astype(np.uint8)).save(os.path.join(out, 'river_tile.png'))   # row 0 = far end
+-kit = json.load(open(os.path.join(out, 'kit.json'))); kit['river_tile'] = {'t0': RT0, 'L': L_TILE, 'painted_until': 14.0, 'painted_fade': 6.0}
+-json.dump(kit, open(os.path.join(out, 'kit.json'), 'w'), indent=1); print('river tile', tile.shape, 'source rows t', round(RT0, 3), '..', round(RT1, 3), 'period', round(L_TILE, 3))
++# round 34 (S1): the PINK edge-band version of the same ribbon: the painted cyan / blue hues mapped onto the painting's own pink band
++# (median hue / saturation / brightness of the approved picture's pink water), white streaks and the painting's pinks unchanged, so the
++# pink bands carry exactly the same painted streaks as the cyan water next to them
++pk = hsv_of(tile); apk = ap[PK(ap[:, 0]) & (ap[:, 1] > 120)]
++cyan_like = (pk[:, 0] >= 75) & (pk[:, 0] <= 135) & (pk[:, 1] > 40)
++hc = np.median(pk[cyan_like, 0]); pk[cyan_like, 0] = np.clip(pk[cyan_like, 0] - hc + np.median(apk[:, 0]), 0, 179)
++pk[cyan_like, 1] = np.clip(pk[cyan_like, 1] * np.median(apk[:, 1]) / max(1.0, np.median(pk[cyan_like, 1])), 0, 255)
++pk[cyan_like, 2] = np.clip(pk[cyan_like, 2] * np.median(apk[:, 2]) / max(1.0, np.median(pk[cyan_like, 2])), 0, 255)
++pink_tile = cv2.cvtColor(pk.reshape(-1, 1, 3).astype(np.uint8), cv2.COLOR_HSV2RGB).reshape(tile.shape)
++Image.fromarray(pink_tile[::-1]).save(os.path.join(out, 'river_pink.png'))
++print('pink ribbon: cyan hue %.0f -> painted pink hue %.0f, sat x%.2f' % (hc, np.median(apk[:, 0]), np.median(apk[:, 1]) / max(1.0, np.median(hsv_of(tile)[cyan_like, 1]))))
++kit = json.load(open(os.path.join(out, 'kit.json'))); kit['river_tile'] = {'t0': RT0, 'L': L_TILE, 'painted_until': 14.0, 'painted_fade': 6.0, 'RU': RU, 'ribbon': 1}
++# round 34 (S1): the river's world-anchored centre line for the game (scenery) and for Benny's path / lanes / coins (S3)
++#   river_center      = {"ds": 0.05, "c": [...]}: lateral offset along K.RR from Benny's straight start line (B0 + s A), every ds of
++#                       path length s from Benny's start (s = 0 .. 60; c[0] = 0: he starts on the river centre)
++#   river_center_axis = the same line as offsets from the tunnel axis at axial t = t0 + i dt (the scenery shaders use this one)
++#   river_safe_halfwidth = how far from the centre Benny's CENTRE may go (lanes are at +-0.22) so that his body (+-0.125) stays on the
++#                       water and inside the floor at every bend: floor half chord 0.70 - max|centre| - 0.125 (the foam banks are further out)
++DS = 0.05; ss = np.arange(0, 60.0 + 1e-9, DS); tt = np.arange(0, 95.0 + 1e-9, DS)
++kit['river_center'] = {'ds': DS, 'c': [round(float(x), 4) for x in river_center(TB0 + ss) - LATB0]}
++kit['river_center_axis'] = {'t0': 0.0, 'dt': DS, 'c': [round(float(x), 4) for x in river_center(tt)], 'lat_start': LATB0, 't_start': TB0}
++kit['river_safe_halfwidth'] = round(float(HWD - np.abs(river_center(tt)).max() - 0.125), 3)
++json.dump(kit, open(os.path.join(out, 'kit.json'), 'w'), indent=1); print('river ribbon', tile.shape, 'source rows t', round(RT0, 3), '..', round(RT1, 3), 'period', round(L_TILE, 3), 'safe half width', kit['river_safe_halfwidth'])
+ 
+ # ---------------- built level for the acceptance test (track.json in the game folder) ----------------
+ LEVEL = 32.16; bdir = cam_dir(432, 1180); B0 = bdir * (-CAM_H / (bdir @ NUP)); tB0 = float(B0 @ A)
+diff --git a/tools/kit05/controls.js b/tools/kit05/controls.js
+index a7405a9..4611d6b 100644
+--- a/tools/kit05/controls.js
++++ b/tools/kit05/controls.js
+@@ -4,20 +4,39 @@
+ // splash + droplets + bubbles on leaving / entering the water, and the follow-camera offsets.
+ // Everything is driven by the game clock passed to window.step(t, dt, ...) so tests stay deterministic.
+ // Benny faces +t (away from the camera, the approved picture shows his back); his model +x is the river's right (+r).
++// Round 34 (S2): lane swipes act at once, also in the middle of a lane change (a reversal redirects him smoothly) and in the air /
++// under water; leap and dive are Hermite / ballistic height segments that can hand over to each other (swipe down in the air = dive
++// straight in, swipe up under water = leap out), a buoyancy spring settles him after every landing / resurfacing; the bank is
++// rate-limited; paws paddle alternately (power stroke down and back), his lower back flutter-kicks, and swimfx.js adds the wake,
++// paddle ripples, kick foam and the streaming painted splash. Lateral offsets are along the path frame's r (frameAt(s)).
++// swimfx.js is loaded fail-safe: if a build forgets to copy it, the game still runs (without the wake / ripples) and says why
++const SWIMFX = await import('./swimfx.js').catch((e) => { console.warn('swimfx.js not loaded: no wake / ripples / kick foam', String(e)); return null; });
+ 
+ export const TUNING = {
+   LANE: 0.22,          // lateral offset of the side lanes (world units; river half-width ~0.30-0.35)
+   LAT_MAX: 0.26,       // hard clamp of his lateral offset (keeps him in the water)
+-  LANE_OMEGA: 16,      // critically damped lane spring: ~95 % of a lane change in 0.28 s, no overshoot
+-  LANE_BUSY: 0.16,     // a lane change blocks the next move for this long (then the queued move starts)
+-  LEAN_K: 0.2,         // bank angle (rad) per unit lateral speed (peak lateral speed ~1.3 u/s -> ~0.26 rad)
+-  LEAN_MAX: 0.3,
++  LANE_OMEGA: 18,      // critically damped lane spring: ~95 % of a lane change in 0.26 s, no overshoot (round 32: 16 -> 0.30 s)
++  LAT_VMAX: 1.65,      // lateral speed cap (u/s) = 0.055 u per 1/30 s frame: double swipes / reversals never jump
++  LANE_BUSY: 0,        // (round 34: lane swipes are never blocked or queued; kept for URL compatibility)
++  LEAN_K: 0.2, LEAN_MAX: 0.3, // (round-32 bank, superseded by BANK_*; kitgame's ?c_LEAN_K default no longer has an effect)
++  BANK_K: 0.22,        // bank angle (rad) per unit lateral speed (target capped at BANK_MAX; a single lane change peaks ~8 deg)
++  BANK_MAX: 0.26,      // never more than 15 deg
++  BANK_OMEGA: 14,      // bank follows its target through a critically damped spring ...
++  BANK_RATE: 1.25,     // ... and never changes faster than 1.25 rad/s (2.4 deg per 1/30 s frame)
+   YAW_K: 0.12,         // body turns toward the move (rad per u/s)
+-  ROLL_STROKE: 0.045,  // body roll with each paddle stroke (rad)
++  ROLL_STROKE: 0.03,   // body roll with each paddle stroke (rad), smaller while banking
+   PADDLE_BOOST: 0.9,   // paddle-rate increase at full lateral speed (x1.9)
+-  LEAP_T: 0.62,        // leap duration (s)
++  ARM_AMP: 0.55,       // paw up / down swing (rad) of the paddle stroke (round 32: 0.42)
++  BOB_AMP: 0.02,       // body lift on each power stroke (model units)
++  KICK_RATE: 11,       // flutter-kick angular rate (rad/s of the kick clock)
++  LEAP_T: 0.74,        // leap duration (s): a 0.6-height leap at 0.74 s keeps every step < 0.06 u per frame (round 32: 0.62 -> 0.067)
+   LEAP_FRAC: 0.6,      // leap peak as a fraction of his full height
+-  DIVE_DOWN: 0.24, DIVE_HOLD: 0.38, DIVE_UP: 0.26, // dive phases (s); 0.24 s sink keeps every height step < 0.06 u per 1/30 s frame
++  DIVE_DOWN: 0.3, DIVE_HOLD: 0.34, DIVE_UP: 0.3, // dive phases (s); with Hermite segments every height step stays < 0.06 u per frame
++  DIVE_POP: 0.55,      // upward speed (u/s) with which he pops back through the surface (buoyancy bob takes it over)
++  VV_MAX: 1.75,        // vertical speed cap (u/s) for planned segments (slam into a dive from the air)
++  LAND_BOB: 0.3,       // share of the landing speed that becomes a buoyant dip after a leap
++  BOB_OMEGA: 11, BOB_ZETA: 0.4, // buoyancy spring (bob after landing / resurfacing)
++  V_BUFFER: 0.22,      // a leap swipe during a leap (dive during a dive) is remembered only this close to its end
+   DIVE_FRAC: 0.8,      // fraction of his height under the surface at the bottom of the dive (rest: 0.22)
+   PITCH_K: 0.13,       // nose-up / nose-down per unit vertical speed (rad per u/s)
+   PITCH_MAX: 0.28,
+@@ -50,19 +69,19 @@ export function installControls(ctx) {
+   const P = { ...TUNING };
+   for (const k of Object.keys(P)) { const v = q.get('c_' + k); if (v != null && v !== '' && !isNaN(+v)) P[k] = +v; } // URL tuning, e.g. ?c_LANE=0.2
+   const LEAP_H = P.LEAP_FRAC * bennyFullH, DIVE_D = (P.DIVE_FRAC - 0.22) * bennyFullH;
+-  const DIVE_T = P.DIVE_DOWN + P.DIVE_HOLD + P.DIVE_UP;
++  const LEAP_V0 = 4 * LEAP_H / P.LEAP_T, LEAP_G = 8 * LEAP_H / (P.LEAP_T * P.LEAP_T);   // ballistic take-off speed and gravity
+   const X = new THREE.Vector3(1, 0, 0), Y = new THREE.Vector3(0, 1, 0), Zv = new THREE.Vector3(0, 0, 1);
+   const qa = new THREE.Quaternion(), v1 = new THREE.Vector3(), v2 = new THREE.Vector3(), v3 = new THREE.Vector3();
+ 
+   // ---------------- state ----------------
+   const S = {
+-    clock: 0, swimClock: 0, lane: 0,
++    clock: 0, swimClock: 0, kickClock: 0, lane: 0,
+     lat: { x: 0, v: 0 }, alat: 0,
+-    h: 0, vh: 0, ah: 0,
++    h: 0, vh: 0, ah: 0, hm: 0, vm: 0, bob: { x: 0, v: 0 },
+     pitch: { x: 0, v: 0 }, lean: { x: 0, v: 0 }, yaw: { x: 0, v: 0 },
+     pomSide: { x: 0, v: 0 }, pomFwd: { x: 0, v: 0 },
+     camLat: { x: 0, v: 0 }, camH: { x: 0, v: 0 },
+-    move: null, queued: null, busyUntil: 0, swim: 1, roll: 0, diveK: 0,
++    move: null, queued: null, qUntil: 0, swim: 1, roll: 0, diveK: 0, tuck: 0, latK: 0, kickA: 1, events: [], lastEv: -1,
+     hudPulse: 0, picked: 0, lastPick: null, done: false, sStop: Infinity,
+   };
+   const c = { lat: 0, h: 0, camLat: 0, camH: 0 }; // read by play3.html each step
+@@ -71,11 +90,18 @@ export function installControls(ctx) {
+   // ---------------- input: real touch swipes, mouse / pen drags, keyboard, test hook ----------------
+   const log = []; const input = { log, swipe: (dir) => request(dir, 'api') };
+   window.input = input;
++  // Round 34 rules (what feels best in a runner, and why):
++  //  * left / right ALWAYS act at once, also during a lane change (a reversal redirects him smoothly from where he is, with his
++  //    current speed: no waiting, no snap), in the air and under water (the player steers a leap or a dive into the next lane —
++  //    the most responsive choice, as in Subway Surfers; queueing them made a lane change arrive up to 0.6 s late).
++  //  * down during a leap = he dives straight in from the air (smooth hand-over from his current height and speed);
++  //    up under water = he swims up and leaps out of the surface without stopping (the rising speed hands over to the leap).
++  //  * up during a leap / down during a dive is remembered only in its last V_BUFFER s (then it starts on landing / resurfacing);
++  //    earlier it is ignored, so a nervous double swipe never triggers a surprise move long after.
+   function request(dir, src) {
+     if (!['left', 'right', 'up', 'down'].includes(dir)) return false;
+-    log.push({ dir, src, clock: +S.clock.toFixed(3) });
+-    if (S.move || S.clock < S.busyUntil) { S.queued = dir; return true; } // one move at a time, queue at most one (latest wins)
+-    start(dir); return true;
++    const e = { dir, src, clock: +S.clock.toFixed(3) }; log.push(e);
++    e.result = start(dir); return true;
+   }
+   // Gestures are read on the WINDOW, not only on the canvas: any full-screen overlay added later (HUD, vignette, title,
+   // water layers) can never swallow a swipe. Touches that start on a real control (button, link, input, [data-noswipe])
+@@ -112,13 +138,38 @@ export function installControls(ctx) {
+   const KEYS = { ArrowLeft: 'left', KeyA: 'left', ArrowRight: 'right', KeyD: 'right', ArrowUp: 'up', KeyW: 'up', ArrowDown: 'down', KeyS: 'down' };
+   window.addEventListener('keydown', (e) => { const d = KEYS[e.code]; if (!d || e.repeat) return; e.preventDefault(); request(d, 'key'); });
+ 
++  // vertical moves = a list of height segments on the module clock: Hermite (p0, m0 -> p1, m1 over T) or ballistic (v0, g)
++  const herm = (g, k) => { const u = clamp(k / g.T, 0, 1), u2 = u * u, u3 = u2 * u;
++    return (2 * u3 - 3 * u2 + 1) * g.p0 + (u3 - 2 * u2 + u) * g.T * g.m0 + (-2 * u3 + 3 * u2) * g.p1 + (u3 - u2) * g.T * g.m1; };
++  const segH = (g, k) => (g.ball ? g.v0 * k - 0.5 * g.g * k * k : herm(g, k));
++  function moveAt(m, k) {   // -> { h, seg, kSeg, over }
++    let k0 = 0;
++    for (const g of m.segs) { if (k < k0 + g.T) return { h: segH(g, k - k0), seg: g, kSeg: k - k0, over: false }; k0 += g.T; }
++    const g = m.segs[m.segs.length - 1]; return { h: g.ball ? 0 : g.p1, seg: g, kSeg: g.T, over: true };
++  }
++  const moveLeft = (m) => m.segs.reduce((a, g) => a + g.T, 0) - (S.clock - m.t0);
++  const startLeap = () => { S.move = { kind: 'leap', t0: S.clock, segs: [{ name: 'air', ball: true, T: P.LEAP_T, v0: LEAP_V0, g: LEAP_G }] }; };
++  // a dive from where he is now (h0 = his move height, v0 = its speed): down -> hold -> pop back up through the surface
++  const startDive = (h0, v0) => {
++    const Td = Math.max(P.DIVE_DOWN, 1.5 * Math.abs(h0 + DIVE_D) / P.VV_MAX);
++    S.move = { kind: 'dive', t0: S.clock, segs: [{ name: 'down', T: Td, p0: h0, m0: v0, p1: -DIVE_D, m1: 0 }, { name: 'hold', T: P.DIVE_HOLD, p0: -DIVE_D, m0: 0, p1: -DIVE_D, m1: 0 },
++      { name: 'up', T: P.DIVE_UP, p0: -DIVE_D, m0: 0, p1: 0, m1: P.DIVE_POP }] };
++  };
+   function start(dir) {
+     if (dir === 'left' || dir === 'right') {
+       const nl = clamp(S.lane + (dir === 'left' ? -1 : 1), -1, 1);
+-      if (nl === S.lane) { S.pomSide.v += (dir === 'left' ? 1 : -1) * 1.2; return; } // at the river edge: only a little wobble
+-      S.lane = nl; S.busyUntil = S.clock + P.LANE_BUSY; return;
++      if (nl === S.lane) { S.pomSide.v += (dir === 'left' ? 1 : -1) * 1.2; return 'edge'; } // at the river edge: only a little wobble
++      S.lane = nl; return S.move ? 'lane (' + S.move.kind + ')' : 'lane';
++    }
++    const m = S.move;
++    if (!m) { if (dir === 'up') startLeap(); else startDive(S.hm, S.vm); return dir === 'up' ? 'leap' : 'dive'; }
++    if (m.kind === 'leap' && dir === 'down') { startDive(S.hm, S.vm); return 'dive from the air'; }
++    if (m.kind === 'dive' && dir === 'up') {   // swim up now and leap out: rising speed at the surface = the leap's take-off speed
++      const cur = moveAt(m, S.clock - m.t0), T = cur.seg.name === 'up' ? Math.max(0.12, cur.seg.T - cur.kSeg) : P.DIVE_UP;
++      S.move = { kind: 'dive', t0: S.clock, segs: [{ name: 'up', T, p0: S.hm, m0: S.vm, p1: 0, m1: LEAP_V0 }], thenLeap: true }; return 'leap out of the dive';
+     }
+-    S.move = { kind: dir === 'up' ? 'leap' : 'dive', t0: S.clock, fx: 0 };
++    if (moveLeft(m) <= P.V_BUFFER) { S.queued = dir; return 'buffered'; }   // same kind again near its end: starts on landing / resurfacing
++    return 'ignored';
+   }
+ 
+   // ---------------- coin trail (round 32b): ONE single-file trail of 26 coins, HUD 1,420 -> 1,680 when all are collected ----------------
+@@ -189,7 +240,7 @@ export function installControls(ctx) {
+   const fxSplash = [];
+   for (let i = 0; i < 3; i++) { const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: splashTex, toneMapped: false, transparent: true, depthWrite: false })); sp.renderOrder = 5; sp.visible = false; scene.add(sp); fxSplash.push({ sp, t0: -1, size: 1 }); }
+   const drops = [];
+-  for (let i = 0; i < 36; i++) { const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: bubTex, toneMapped: false, transparent: true, depthWrite: false })); sp.renderOrder = 8; sp.visible = false; scene.add(sp); drops.push({ sp, life: 0, age: 0, p: new THREE.Vector3(), v: new THREE.Vector3(), size: 0.03, g: 0 }); }
++  for (let i = 0; i < 64; i++) { const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: bubTex, toneMapped: false, transparent: true, depthWrite: false })); sp.renderOrder = 8; sp.visible = false; scene.add(sp); drops.push({ sp, life: 0, age: 0, p: new THREE.Vector3(), v: new THREE.Vector3(), size: 0.03, g: 0 }); }
+   let rs = 987654; const rnd = () => ((rs = (rs * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff);
+   let dropNext = 0;
+   const spawnDrop = (p, v, size, life, gravity) => { const d = drops[dropNext]; dropNext = (dropNext + 1) % drops.length; d.p.copy(p); d.v.copy(v); d.size = size; d.life = life; d.age = 0; d.g = gravity; d.sp.visible = true; };
+@@ -251,43 +302,62 @@ export function installControls(ctx) {
+   function update(t, dt) {
+     // own game clock = sum of dt: move timers stay consistent even if a caller's t jumps (frame hitch, paused tab, clamped dt)
+     S.clock += dt > 0 ? dt : 0;
+-    // finished moves -> start the queued one
+-    if (S.move) {
+-      const k = S.clock - S.move.t0;
+-      if (S.move.kind === 'leap' && k >= P.LEAP_T) { S.move = null; S.landing = true; }
+-      else if (S.move.kind === 'dive' && k >= DIVE_T) S.move = null;
+-    }
+-    if (!S.move && S.queued && S.clock >= S.busyUntil) { const d = S.queued; S.queued = null; start(d); }
+     if (!S.done && getS() >= S_DONE) { S.done = true; S.sStop = Math.max(getS(), Math.min(getS() + P.GLIDE, TEND)); } // level end: stays true
+ 
+-    // lanes: critically damped spring toward the lane centre
+-    const vPrev = S.lat.v;
+-    cds(S.lat, S.lane * P.LANE, P.LANE_OMEGA, dt); S.lat.x = clamp(S.lat.x, -P.LAT_MAX, P.LAT_MAX);
++    // lanes: critically damped spring toward the lane centre; a new swipe only moves the target, so position AND speed stay
++    // continuous (a reversal decelerates and comes back, never snaps); speed capped so no step exceeds LAT_VMAX / 30 per frame
++    const vPrev = S.lat.v, xPrev = S.lat.x;
++    cds(S.lat, S.lane * P.LANE, P.LANE_OMEGA, dt);
++    if (dt > 0 && Math.abs(S.lat.x - xPrev) > P.LAT_VMAX * dt) { S.lat.x = xPrev + Math.sign(S.lat.x - xPrev) * P.LAT_VMAX * dt; S.lat.v = clamp(S.lat.v, -P.LAT_VMAX, P.LAT_VMAX); }
++    S.lat.x = clamp(S.lat.x, -P.LAT_MAX, P.LAT_MAX);
+     S.alat = dt > 0 ? (S.lat.v - vPrev) / dt : 0;
+ 
+-    // vertical: leap arc (ballistic parabola) / dive (smooth sink, hold, resurface)
+-    const hPrev = S.h, vhPrev = S.vh; let h = 0, tuck = 0;
+-    if (S.move && S.move.kind === 'leap') {
+-      const tau = clamp((S.clock - S.move.t0) / P.LEAP_T, 0, 1);
+-      h = LEAP_H * 4 * tau * (1 - tau); tuck = Math.sin(Math.PI * tau) ** 2;
+-    } else if (S.move && S.move.kind === 'dive') {
+-      const k = S.clock - S.move.t0;
+-      h = -DIVE_D * (smooth(0, P.DIVE_DOWN, k) - smooth(P.DIVE_DOWN + P.DIVE_HOLD, DIVE_T, k));
+-    }
++    // vertical: the current move's height segment + the buoyancy bob; finished moves hand over to the next one
++    const hPrev = S.h, vhPrev = S.vh, hmPrev = S.hm; let tuck = 0;
++    if (S.move) {
++      let cur = moveAt(S.move, S.clock - S.move.t0);
++      if (cur.over) {
++        const m = S.move, last = m.segs[m.segs.length - 1]; S.move = null;
++        if (m.kind === 'leap') { S.bob.v -= LEAP_V0 * P.LAND_BOB; }                // landing: a buoyant dip
++        else if (m.thenLeap) { startLeap(); S.move.t0 -= S.clock - m.t0 - last.T; }  // swim up -> leap out (leap clock continues)
++        else S.bob.v += last.m1;                                                     // resurfacing: pops up a little and settles
++        if (!S.move && S.queued) { const d = S.queued; S.queued = null; start(d); }
++        cur = S.move ? moveAt(S.move, S.clock - S.move.t0) : { h: 0 };
++      }
++      S.hm = cur.h;
++      if (S.move && S.move.kind === 'leap') { const tau = clamp((S.clock - S.move.t0) / P.LEAP_T, 0, 1); tuck = Math.sin(Math.PI * tau) ** 2; }
++    } else S.hm = 0;
++    if (S.queued && !S.move) S.queued = null;
++    S.vm = dt > 0 ? (S.hm - hmPrev) / dt : 0;
++    dspring(S.bob, P.BOB_OMEGA, P.BOB_ZETA, 0, dt); S.bob.x = clamp(S.bob.x, -0.09, 0.09);
++    let h = S.hm + S.bob.x;
++    if (dt > 0 && Math.abs(h - hPrev) > P.VV_MAX * 1.02 * dt) h = hPrev + Math.sign(h - hPrev) * P.VV_MAX * 1.02 * dt;   // safety cap only
+     S.h = h; S.vh = dt > 0 ? (h - hPrev) / dt : 0; S.ah = dt > 0 ? (S.vh - vhPrev) / dt : 0;
+-    S.diveK = clamp(-h / (DIVE_D * 0.5), 0, 1);
++    S.diveK = clamp(-h / (DIVE_D * 0.5), 0, 1); S.tuck = tuck;
++    // water-surface events for the splashes: take-off / landing (through +0.02) and going under / resurfacing (through -0.02)
++    if (dt > 0) {
++      let ev = null;
++      if (hPrev <= 0.02 && h > 0.02 && S.vh > 0.6) ev = 'takeoff'; else if (hPrev > 0.02 && h <= 0.02 && S.vh < -0.5) ev = 'landing';
++      else if (hPrev > -0.02 && h <= -0.02 && S.vh < -0.4) ev = 'submerge'; else if (hPrev <= -0.02 && h > -0.02 && S.vh > 0.3) ev = 'surface';
++      if (ev && S.clock - S.lastEv > 0.15) { S.events.push({ ev, v: S.vh }); S.lastEv = S.clock; }
++    }
+ 
+-    // body attitude: bank + yaw into the lateral move, nose follows the vertical speed (up on the way up, down on the way down)
+-    const vl = S.lat.v;
+-    cds(S.lean, clamp(vl * P.LEAN_K, -P.LEAN_MAX, P.LEAN_MAX), 22, dt);
++    // body attitude: bank + yaw into the lateral move (bank spring + rate limit), nose follows the vertical speed
++    const vl = S.lat.v, lPrev = S.lean.x;
++    cds(S.lean, clamp(vl * P.BANK_K, -P.BANK_MAX, P.BANK_MAX), P.BANK_OMEGA, dt);
++    if (dt > 0 && Math.abs(S.lean.x - lPrev) > P.BANK_RATE * dt) { S.lean.x = lPrev + Math.sign(S.lean.x - lPrev) * P.BANK_RATE * dt; S.lean.v = (S.lean.x - lPrev) / dt; }
+     cds(S.yaw, clamp(-vl * P.YAW_K, -0.2, 0.2), 18, dt);
+     cds(S.pitch, clamp(S.vh * P.PITCH_K, -P.PITCH_MAX, P.PITCH_MAX), 14, dt);
+ 
+-    // paddling: faster while changing lanes or diving, arms tucked at the top of a leap
+-    const latK = clamp(Math.abs(vl) / 1.0, 0, 1);
+-    S.swimClock += dt * (1 + P.PADDLE_BOOST * latK + 0.35 * S.diveK);
++    // paddling: alternating paws (shader phase = swimClock * 7.5), a little irregular so it never looks mechanical; faster while
++    // changing lanes or under water, paws tucked at the top of a leap; the kick clock runs on its own, faster rhythm
++    const latK = clamp(Math.abs(vl) / 1.0, 0, 1); S.latK = latK;
++    const irr = 1 + 0.06 * Math.sin(S.clock * 0.9) + 0.04 * Math.sin(S.clock * 2.3 + 1.0);
++    S.swimClock += dt * irr * (1 + P.PADDLE_BOOST * latK + 0.35 * S.diveK);
++    S.kickClock += dt * irr * (1 + 0.5 * latK + 0.3 * S.diveK) * (1 - 0.6 * tuck);
+     S.swim = (1 + 0.15 * latK + 0.1 * S.diveK) * (1 - 0.7 * tuck);
+-    S.roll = P.ROLL_STROKE * Math.sin(S.swimClock * 7.5) * (1 - tuck);
++    S.kickA = (1 + 0.6 * latK + 0.3 * S.diveK) * (1 - 0.6 * tuck);
++    S.roll = P.ROLL_STROKE * Math.sin(S.swimClock * 7.5) * (1 - tuck) * (1 - 0.6 * latK);
+ 
+     // pom-pom inertia: lags behind lateral and vertical accelerations, settles with a little wobble
+     dspring(S.pomSide, 9, 0.32, clamp(S.alat, -80, 80) * 0.6, dt); S.pomSide.x = clamp(S.pomSide.x, -0.5, 0.5);
+@@ -306,17 +376,24 @@ export function installControls(ctx) {
+   // extra body rotations after play3 has set his path frame + river-bend lean (local axes: x = -r, y = n, z = t)
+   function orient(quat) {
+     quat.multiply(qa.setFromAxisAngle(Zv, S.lean.x + S.roll)); // + = top toward +r (bank into a move to the right)
+-    quat.multiply(qa.setFromAxisAngle(Y, S.yaw.x));            // facing (+t) turns toward the move
++    quat.multiply(qa.setFromAxisAngle(Y, S.yaw.x + 0.02 * Math.sin(S.swimClock * 7.5) * (1 - S.tuck)));   // toward the move + a little sway with the strokes
+     quat.multiply(qa.setFromAxisAngle(X, -S.pitch.x));         // nose-up = top tilts back toward the camera
+   }
+ 
+-  // shader uniforms (after play3's own line, which it overrides)
++  // shader uniforms (after play3's own line, which it overrides): paw stroke clock + strength, paw swing, kick clock + strength,
++  // stroke lift (all 0 / rest values at the start frame, so frame 0 is unchanged)
+   function anim(bendLean) {
++    S.bendLean = bendLean;
+     U.uT.value = S.swimClock; U.uSwim.value = S.swim;
++    if (U.uArmA) U.uArmA.value = P.ARM_AMP;
++    if (U.uKick) { U.uKick.value = S.kickClock * P.KICK_RATE / 11; U.uKickA.value = S.kickA; U.uBobA.value = P.BOB_AMP * (1 - S.tuck) * (1 - 0.5 * S.diveK); }
+     U.uPom.value.set(Math.sin(S.clock * 5.0) * 0.06 + S.pomFwd.x - S.pitch.x * 0.5, (bendLean + S.lean.x) * 0.4 + S.pomSide.x);
+   }
+ 
+-  // splash stays on the water surface; leap / dive splashes, droplets and bubbles; dive tint plane
++  // splash stays on the water surface; leap / dive splashes, droplets and bubbles; dive tint plane; swimfx (wake, ripples, kicks)
++  const FX = SWIMFX ? SWIMFX.installSwimFx({ THREE, scene, splash, q }) : { update() {} };
++  if (SWIMFX) { const sprayTex = SWIMFX.sprayOnly(THREE, splashTex); for (const fs of fxSplash) fs.sp.material.map = sprayTex; }   // bursts without the painted fur
++  const ARM_X = 0.36 * bennyFullH / 0.99;   // his paw tip, sideways from his centre (model 0.46 x his scale x 0.76)
+   function water(Fr, speed, dt) {
+     F = Fr; nNow.copy(F.n);
+     at(getS(), waterPt).addScaledVector(F.r, S.lat.x); // his water point (no bob, no leap / dive height): the water line on his body
+@@ -324,23 +401,37 @@ export function installControls(ctx) {
+     const air = smooth(0.03, 0.12, S.h);
+     splash.material.opacity = 1 - air;
+     splash.scale.multiplyScalar(1 + 0.25 * S.diveK);
+-    splash.material.rotation -= S.lean.x * 0.6; // play3 sets -bendLean * 0.6; add the lane bank the same way
++    // stroke-synced breathing of the painted splash: wider on each power stroke, a little more spray while changing lanes
++    if (S.clock > 0) splash.scale.x *= 1 + 0.035 * Math.sin(S.swimClock * 7.5) ** 2 + 0.06 * S.latK;
++    splash.material.rotation = -((S.bendLean || 0) + S.lean.x) * 0.6; // the river-bend lean + the lane bank (was "-=": accumulated)
+     U.uDive.value = S.diveK; U.uWater.value.set(F.n.x, F.n.y, F.n.z, -F.n.dot(waterPt));
+-    const m = S.move;
+-    if (m && m.fx === 0) { m.fx = 1; if (m.kind === 'leap') burst(0.85, 12, speed); else burst(0.7, 8, speed); }
+-    if (S.landing) { S.landing = false; burst(1.0, 14, speed); }
+-    if (m && m.kind === 'dive') {
+-      const k = S.clock - m.t0;
+-      if (m.fx === 1 && k > P.DIVE_DOWN + P.DIVE_HOLD + P.DIVE_UP * 0.55) { m.fx = 2; burst(0.9, 12, speed); } // resurfacing splash
++    // surface events -> splashes + droplets (size from his vertical speed)
++    for (const e of S.events) {
++      const sp = clamp(Math.abs(e.v) / LEAP_V0, 0.4, 1.2);
++      if (e.ev === 'takeoff') burst(0.8 * sp, 12, speed); else if (e.ev === 'landing') burst(1.0 * sp, 16, speed);
++      else if (e.ev === 'submerge') burst(0.65 + 0.35 * sp, 8 + Math.round(8 * sp), speed); else burst(0.8, 10, speed);
++    }
++    S.events.length = 0;
++    if (S.h < -0.03) {
+       // bubbles rising around him while he is under
+-      m.bub = (m.bub ?? 0) + dt * 40 * S.diveK;
+-      while (m.bub >= 1) {
+-        m.bub -= 1;
++      S.bub = (S.bub ?? 0) + dt * 40 * S.diveK;
++      while (S.bub >= 1) {
++        S.bub -= 1;
+         v2.copy(waterPt).addScaledVector(F.r, (rnd() - 0.5) * 0.3).addScaledVector(F.t, (rnd() - 0.3) * 0.12).addScaledVector(F.n, -0.03 + rnd() * 0.05);
+         v1.copy(F.n).multiplyScalar(0.18 + rnd() * 0.2).addScaledVector(F.t, speed * 0.85).addScaledVector(F.r, (rnd() - 0.5) * 0.1);
+         spawnDrop(v2, v1, 0.02 + rnd() * 0.03, 0.5 + rnd() * 0.3, -0.2);
+       }
+     }
++    // lane change: a short sideways spray from the paw on the far side (he pushes the water away from the move)
++    if (dt > 0 && S.latK > 0.35 && Math.abs(S.h) < 0.05) {
++      S.spray = (S.spray ?? 0) + dt * 30 * S.latK;
++      while (S.spray >= 1) { S.spray -= 1; const sd = -Math.sign(S.lat.v);
++        v2.copy(waterPt).addScaledVector(F.r, sd * ARM_X).addScaledVector(F.n, 0.02);
++        v1.copy(F.n).multiplyScalar(0.45 + rnd() * 0.4).addScaledVector(F.r, sd * (0.35 + rnd() * 0.3)).addScaledVector(F.t, -0.2 - rnd() * 0.3);
++        spawnDrop(v2, v1, 0.012 + rnd() * 0.014, 0.35 + rnd() * 0.15, 3.6); }
++    }
++    FX.update({ dt, clock: S.clock, s: getS(), waterPt, F, lat: S.lat.x, h: S.h, armPh: S.swimClock * 7.5, kickPh: S.kickClock * P.KICK_RATE, armX: ARM_X,
++      kickK: S.kickA, inWater: S.h > -0.06 && S.h < 0.04, wakeK: clamp(1 - Math.abs(S.h) / 0.05, 0, 1) * (0.8 + 0.4 * S.latK), drop: (p, v, size, life, g) => spawnDrop(p, v, size, life, g) });
+     for (const fs of fxSplash) {
+       if (fs.t0 < 0) continue; const k = (S.clock - fs.t0) / 0.45;
+       if (k >= 1 || k < 0) { fs.sp.visible = false; fs.t0 = -1; continue; }
+@@ -373,7 +464,7 @@ export function installControls(ctx) {
+     const nGot = (k) => coins.filter((x) => x.got >= 0 && (x.kind || 'water') === k).length;
+     return {
+       s: +getS().toFixed(3), lane: S.lane, lat: +S.lat.x.toFixed(4), height: +S.h.toFixed(4), coins: getCoins(),
+-      move: S.move ? S.move.kind : (S.clock < S.busyUntil ? 'lane' : null), queued: S.queued,
++      move: S.move ? S.move.kind : (Math.abs(S.lat.x - S.lane * P.LANE) > 0.011 ? 'lane' : null), queued: S.queued, seg: S.move ? moveAt(S.move, S.clock - S.move.t0).seg.name : null, bob: +S.bob.x.toFixed(4),
+       lean: +S.lean.x.toFixed(3), pitch: +S.pitch.x.toFixed(3), yaw: +S.yaw.x.toFixed(3), pom: +S.pomSide.x.toFixed(3),
+       camLat: +S.camLat.x.toFixed(4), camH: +S.camH.x.toFixed(4), swim: +S.swim.toFixed(3),
+       got: { water: nGot('water'), lane: nGot('lane'), air: nGot('air') }, lastPick: S.lastPick, swipes: log.length,
+@@ -381,6 +472,8 @@ export function installControls(ctx) {
+     };
+   }
+   window.state = state;
++  // QA: what the paddling shader gets this frame (the harness checks that the stroke clock never stops)
++  window.swimInfo = () => ({ uT: +U.uT.value.toFixed(4), uSwim: +U.uSwim.value.toFixed(3), kick: U.uKick ? +U.uKick.value.toFixed(4) : null, kickA: +S.kickA.toFixed(3), roll: +S.roll.toFixed(4), lastSwipe: log.length ? log[log.length - 1] : null, ...(window.swimFxInfo ? window.swimFxInfo() : {}) });
+ 
+   // visible (not yet collected) coins on screen, canvas pixels: projected centre and on-screen radius (the coin fills its sprite).
+   // coinScreen({ pops: true }) also lists coins in their collection pop (flying up over his head, 0.4 s).
+@@ -419,11 +512,17 @@ export function installControls(ctx) {
+   }
+ 
+   // optional real-time loop for phones / desktop browsers: play3.html?live=1 (tests drive window.step themselves)
++  // Round 34: the kit page brings its own real-time loop (live.js: tap to start, meters). Two loops stepping the same game would run it
++  // at double speed (both called window.step every frame), so this fallback loop only runs on a page WITHOUT live.js: it waits until
++  // the page is ready + 0.6 s, and stops for good as soon as window.liveStats (live.js) exists.
+   if (q.get('live') === '1') {
+-    const speed = +(q.get('speed') ?? 1.4); let t0 = null, last = 0, gameT = 0;
++    const speed = +(q.get('speed') ?? 1.4); let t0 = null, last = 0, gameT = 0, readyAt = null;
+     const loop = (ts) => {
++      if (window.liveStats) return;
+       requestAnimationFrame(loop);
+       if (!window.ready) return;
++      if (readyAt === null) readyAt = ts;
++      if (ts - readyAt < 600) return;
+       if (t0 === null) { t0 = ts; last = ts; }
+       const dt = Math.min(0.05, (ts - last) / 1000); last = ts;
+       gameT += dt; window.step(gameT, dt, 0, speed); render(); // game time = sum of the clamped dt (a slow frame slows the game, never skips a move)
+diff --git a/tools/kit05/kit_model.py b/tools/kit05/kit_model.py
+index a80cc91..69801bc 100644
+--- a/tools/kit05/kit_model.py
++++ b/tools/kit05/kit_model.py
+@@ -42,6 +42,8 @@ HW = CAM_H + CAM_OFF[1] * RT                                         # axis heig
+ Z2 = FOC * RT / RING2_PX                                             # axial depth of painted ring 2 from the start camera
+ S = Z2 * np.log(RATIO)                                               # ring spacing: g'(Z2) = 1 and g(z + S) = RATIO * g(z) beyond Z2
+ def ring_t(k): return Z2 + (k - 2) * S                               # axial position of ring k (ring 2 = painted ring 2)
++_bd = cam_dir(432, 1180); B0 = _bd * (-CAM_H / (_bd @ NUP))          # Benny's painted water contact point (same as kitgame.html)
++TB0 = float(B0 @ A); LATB0 = float((B0 - A0) @ RR)                    # his axial start and lateral offset from the axis
+ 
+ def g(z):
+     """camera-relative apparent depth along the axis (z = true axial distance from the camera)"""
+@@ -64,6 +66,27 @@ def wall_point(theta, t, radius=RT):
+ 
+ def height_above_water(P): return np.asarray(P) @ PN - PD
+ 
++# ---- round 34 (S1): the river's WORLD-ANCHORED centre line (lateral offset along RR from the tunnel axis, world units) ----
++# Painted stretch (axial t <= ~11): measured on the APPROVED picture cast onto the kit water (tools/kit05/bake_river.py prints the
++# check): the painted coin trail (t 2.96 +0.06, 4.05 +0.28, 5.50 +0.04, 7.13 -0.31, 8.86 -0.18, 9.87 +0.07) and the cyan channel's
++# centroid (t 2.3 -0.16, 4.3 +0.21, 5.8 +0.04, 7.3 -0.26, 8.8 -0.17, 10.3 +0.34) agree: S-bends ~3 u apart, ~0.26 u to each side.
++# Apexes are joined by half-cosines (C1, zero slope at each apex = natural meanders). Beyond the painting the same character
++# continues with seeded random spacing (2.6-3.8 u, i.e. 1.9-2.7 s at 1.4 u/s) and amplitude (0.15-0.28 u): no fixed period.
++RIVER_LAT_START = LATB0                                              # the river centre passes through Benny's painted start point
++RIVER_APEX_PAINTED = [(2.30, -0.05), (4.25, 0.26), (7.80, -0.29), (10.90, 0.27)]
++RIVER_AMAX = 0.29                                                    # |centre| never exceeds this (water floor half chord 0.70)
++def _river_apexes(t_end=95.0, seed=34):
++    rng = np.random.default_rng(seed); ap = list(RIVER_APEX_PAINTED)
++    while ap[-1][0] < t_end:
++        t, a = ap[-1]; ap.append((t + rng.uniform(2.6, 3.8), -np.sign(a) * rng.uniform(0.15, 0.28)))
++    return ap
++def river_center(t):
++    """lateral offset (along RR, from the tunnel axis) of the river centre at axial t; flat behind Benny's start"""
++    t = np.atleast_1d(np.asarray(t, float)); ap = [(TB0, RIVER_LAT_START)] + _river_apexes(); ts = np.array([p[0] for p in ap]); cs = np.array([p[1] for p in ap])
++    k = np.clip(np.searchsorted(ts, t) - 1, 0, len(ts) - 2); f = np.clip((t - ts[k]) / (ts[k + 1] - ts[k]), 0, 1)
++    c = cs[k] + (cs[k + 1] - cs[k]) * (1 - np.cos(np.pi * f)) / 2
++    return np.clip(np.where(t <= ts[0], cs[0], c), -RIVER_AMAX, RIVER_AMAX)
++
+ def export():
+     return {'A': A.tolist(), 'NUP': NUP.tolist(), 'RR': RR.tolist(), 'A0': A0.tolist(), 'RT': RT, 'RING_IN': RING_IN, 'RING_W': RING_W,
+             'Z2': float(Z2), 'S': float(S), 'HW': float(HW), 'PN': PN.tolist(), 'PD': float(PD), 'VP': VP, 'RATIO': RATIO, 'CAM_OFF': CAM_OFF}
+diff --git a/tools/kit05/kitgame.html b/tools/kit05/kitgame.html
+index c46152f..3729e49 100644
+--- a/tools/kit05/kitgame.html
++++ b/tools/kit05/kitgame.html
+@@ -57,41 +57,59 @@ const tl = new THREE.TextureLoader();
+ const tex = async (f, rep = false) => { const t = await tl.loadAsync(f); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; if (rep) t.wrapS = THREE.RepeatWrapping; return t; };
+ const [wallTex, ringTex, riverTex, wallOwn, ringOwn] = await Promise.all([tex('wall.png'), tex('ring.png'), tex('river.png'), tex('wall_own.png'), tex('ring_own.png')]);
+ const riverTile = await tex('river_tile.png'); riverTile.wrapT = THREE.RepeatWrapping;
++const riverPink = await tex(K.river_tile?.ribbon ? 'river_pink.png' : 'river_tile.png'); riverPink.wrapT = THREE.RepeatWrapping;   // round 34: pink edge-band version of the ribbon
+ const ownOf = (kind, atlas, k) => { const r = K.own?.[kind]?.rows?.[k]; return r && !q.get('noown') ? { tex: atlas, vr: [r[0] / K.own[kind].h, r[1] / K.own[kind].h] } : null; };
+ const wallMat = kitMat(wallTex), ringMat = kitMat(ringTex);
+-const FLOW = { uFlowOn: { value: 0 }, uFlowL: { value: +(q.get('flowl') ?? 0.10) }, uWT: { value: new THREE.Vector3(K.water.T0, Math.log(K.water.T1 / K.water.T0), +(q.get('nearflow') ?? 0.0)) }, uFoam: { value: null }, uHWD: { value: K.water.HWD }, uWind: { value: new THREE.Vector4(+(q.get('wamp') ?? 0.2), +(q.get('wlen') ?? 7.5), +(q.get('wnarrow') ?? 0.5), +(q.get('winding') ?? 0)) }, uFlow: { value: 0 }, uRT: { value: new THREE.Vector3(K.river_tile.t0, K.river_tile.L, K.river_tile.painted_until) }, uRF: { value: K.river_tile.painted_fade ?? 4 }, uRiverTile: { value: riverTile } };
+-const riverMat = (() => { const m = kitMat(riverTex); const base = m.onBeforeCompile; m.customProgramCacheKey = () => 'kit-river';
++// ---- round 34 (S1): WORLD-ANCHORED winding river. The river centre c(t) (kit.json river_center_axis, measured on the painting's coin
++// trail + cyan channel, continued with varied S-bends) bends the flowing ribbon tile (river-local u = lateral - c(t)); Benny's path
++// follows the same line (kit.json river_center, S3). At the start the water is the PAINTED water at its own world place (exact approved
++// picture at frame 0); each painted texel cross-fades to the ribbon as the camera approaches it (sooner for far, low-resolution texels).
++const RC = K.river_center_axis ?? { t0: 0, dt: 1, c: [0, 0] };
++const centerTex = new THREE.DataTexture(new Float32Array(RC.c), RC.c.length, 1, THREE.RedFormat, THREE.FloatType); centerTex.needsUpdate = true;
++const riverC = (t) => { const x = Math.min(Math.max((t - RC.t0) / RC.dt, 0), RC.c.length - 1.001), i = Math.floor(x), f = x - i; return RC.c[i] + (RC.c[i + 1] - RC.c[i]) * f; };   // axis lateral of the centre at axial t
++window.riverC = riverC;
++const FLOW = { uFlowOn: { value: 0 }, uFlowL: { value: +(q.get('flowl') ?? 0.10) }, uWT: { value: new THREE.Vector3(K.water.T0, Math.log(K.water.T1 / K.water.T0), 0) }, uFoam: { value: null }, uHWD: { value: K.water.HWD },
++  uFlow: { value: 0 }, uRT: { value: new THREE.Vector3(K.river_tile.t0, K.river_tile.L, K.river_tile.RU ?? 1.05) }, uRiverTile: { value: riverTile }, uRiverPink: { value: riverPink },
++  uCenter: { value: centerTex }, uCN: { value: new THREE.Vector3(RC.t0, RC.dt, RC.c.length) },
++  uPF: { value: new THREE.Vector4(...(q.get('pfade') ?? '0.45,0.65,0.85,0.97').split(',').map(Number)) },   // painted -> ribbon fade (ratio now/start distance): near texels, far texels
++  uEdge: { value: new THREE.Vector4(...(q.get('redge') ?? '0.80,0.60,5.0,13.0').split(',').map(Number)) } };   // ribbon foam edge |u| near, far factor, far range
++const riverMat = (() => { const m = kitMat(riverTex); const base = m.onBeforeCompile; m.customProgramCacheKey = () => 'kit-river34';
+   m.onBeforeCompile = (sh) => { base(sh); Object.assign(sh.uniforms, FLOW);
+-    sh.fragmentShader = sh.fragmentShader.replace('uniform float uBias;', 'uniform float uBias; uniform float uFlow; uniform vec3 uRT; uniform float uRF; uniform sampler2D uRiverTile; uniform sampler2D uFoam; uniform float uHWD; uniform vec4 uWind; uniform vec3 uWT; uniform float uFlowL; uniform float uFlowOn; varying float vKitT; varying float vKitD;')
+-      .replace('diffuseColor *= texture(map, vMapUv, uBias);', `vec4 kPaint = texture(map, vMapUv, uBias);
+-        vec4 kFlow = texture(uRiverTile, vec2(vMapUv.x, -(vKitT + uFlow - uRT.x) / uRT.y), mix(uBias, 0.8, smoothstep(2.5, 9.0, vKitD)));   // flows toward the camera; softer far away (no shimmer)
+-        float kF = smoothstep(0.55, 0.85, vKitD / max(vKitT, 1e-3)) * (1.0 - smoothstep(uRT.z - uRF, uRT.z, vKitT));
+-        // the painting's river from every position (round 33d): open full-width water near Benny, a narrower channel winding between
+-        // foam banks further ahead, pink bands along its edges (painted pink 240,57,226); world-anchored bends, camera-relative width
+-        float kLat = mix(-uHWD, uHWD, vMapUv.x);
+-        float kFar = smoothstep(1.8, 6.5, vKitD) * uWind.w;
+-        float kC = uWind.x * kFar * sin(6.2831853 * vKitT / uWind.y) + 0.06 * kFar * sin(6.2831853 * vKitT / (uWind.y * 0.43) + 1.3);
+-        float kHalf = uHWD * mix(1.02, uWind.z, kFar);
+-        float kE = abs(kLat - kC) - kHalf;                                     // > 0: on the foam bank
+-        vec4 kFlowW = kFlow;
+-        kFlowW.rgb = mix(kFlowW.rgb, vec3(0.871, 0.04, 0.76), 0.55 * kFar * smoothstep(-0.16, -0.03, kE) * (1.0 - smoothstep(-0.03, 0.0, kE)));
+-        vec4 kFo = texture(uFoam, vec2(vKitT / 1.3, clamp(1.0 - kE / 0.22, 0.02, 0.98)), uBias);
+-        float kFa = smoothstep(-0.02, 0.03, kE) * max(kFo.a, smoothstep(0.05, 0.16, kE));
+-        kFlowW.rgb = mix(kFlowW.rgb, mix(kFo.rgb, vec3(0.93, 0.9, 1.0), 0.25), kFa * kFar);
+-        // far river = the PAINTED river at the same distance ahead as in the approved view (camera-relative), near = the flowing current
+-        // the painted water itself streams toward the camera (two-phase flow map: two samples shifted along the river, cross-faded
+-        // in a loop): the streaks and glints move, the colours and big shapes stay the painting's (round 33h; uFlowL = shift length)
+-        float kPh = fract(uFlow * 1.3), kNearF = 1.0 - smoothstep(3.0, 5.0, vKitD);
+-        float kD1 = vKitD + kPh * uFlowL * uFlowOn * kNearF, kD2 = vKitD + fract(kPh + 0.5) * uFlowL * uFlowOn * kNearF;
+-        vec4 kP1 = texture(map, vec2(vMapUv.x, log(max(kD1, uWT.x) / uWT.x) / uWT.y), uBias);
+-        vec4 kP2 = texture(map, vec2(vMapUv.x, log(max(kD2, uWT.x) / uWT.x) / uWT.y), uBias);
+-        float kW1 = 1.0 - abs(1.0 - 2.0 * kPh);
+-        vec4 kPaintRel = mix(kP2, kP1, kW1);
+-        // round 33f: ALL of the water is the painted water at the same distance ahead as in the approved view (Benny is carried by the
+-        // current: the near water keeps the painting's look at every moment, incl. its gold bottom rim), with the flowing current
+-        // laid over it near Benny (uWT.z = share) so the water visibly streams toward the camera; exact painting at the start (kF)
+-        float kNearW = (1.0 - smoothstep(2.6, 4.2, vKitD)) * uWT.z;
+-        diffuseColor *= mix(kPaintRel, kFlowW, kNearW);   // round 33i: no cross-fade from the world-fixed start water (ghosting)
++    sh.fragmentShader = sh.fragmentShader.replace('uniform float uBias;', `uniform float uBias; uniform float uFlow; uniform vec3 uRT; uniform sampler2D uRiverTile; uniform sampler2D uFoam; uniform float uHWD; uniform vec3 uWT; uniform float uFlowL; uniform float uFlowOn; varying float vKitT; varying float vKitD;
++      uniform sampler2D uRiverPink; uniform sampler2D uCenter; uniform vec3 uCN; uniform vec4 uPF; uniform vec4 uEdge;
++      float kCenter(float t){ float x = clamp((t - uCN.x) / uCN.y, 0.0, uCN.z - 1.001); int i = int(floor(x)); return mix(texelFetch(uCenter, ivec2(i, 0), 0).r, texelFetch(uCenter, ivec2(i + 1, 0), 0).r, fract(x)); }`)
++      .replace('diffuseColor *= texture(map, vMapUv, uBias);', `
++        float kLat = mix(-uHWD, uHWD, vMapUv.x);                    // lateral from the tunnel axis
++        float kT = vKitT, kZ = max(vKitD, 1e-3);                     // world axial position, axial distance ahead of the camera
++        float kU = kLat - kCenter(kT);                               // river-local lateral (0 = river centre)
++        // far channel like the painting: the river looks narrower (foam banks on both sides) the further ahead it is (camera-relative)
++        float kW = mix(1.0, uEdge.y, smoothstep(uEdge.z, uEdge.w, kZ));
++        float kUU = kU / kW;
++        vec2 kRibUV = vec2(clamp(kUU / (2.0 * uRT.z) + 0.5, 0.0, 1.0), -(kT + uFlow - uRT.x) / uRT.y); float kRibBias = mix(uBias, 0.6, smoothstep(2.5, 9.0, kZ));
++        vec4 kRib = texture(uRiverTile, kRibUV, kRibBias);
++        // pink edge bands (painted magenta 240,57,226 with white-pink streaks): the ribbon's own painted streaks recoloured into the
++        // painting's pink, between the cyan core and the foam; both band edges wander a little along the river (no ruler-straight lines)
++        float kEdge = uEdge.x + 0.035 * sin(kT * 1.31 + 0.7) + 0.025 * sin(kT * 2.93 + 2.1);
++        // (the painting sweeps its pink in closer to the centre just in front of the camera: inner edge ~0.33 there, ~0.5 further on)
++        float kIn = kEdge - mix(0.47, 0.30, smoothstep(0.9, 2.4, kZ)) - 0.05 * sin(kT * 1.77 + (kU > 0.0 ? 2.4 : 0.3)) - 0.03 * sin(kT * 4.1 + 1.0);
++        float kPk = smoothstep(kIn - 0.035, kIn + 0.035, abs(kUU));
++        vec3 kPink = texture(uRiverPink, kRibUV, kRibBias).rgb;      // the same painted streaks in the painting's pink (bake_kit.py)
++        kRib.rgb = mix(kRib.rgb, kPink, kPk);
++        float kE = abs(kUU) - kEdge;
++        vec4 kFo = texture(uFoam, vec2(kT / 1.3 + (kU > 0.0 ? 0.37 : 0.0), clamp(1.0 - kE / 0.22, 0.02, 0.98)), uBias);
++        float kFa = smoothstep(-0.03, 0.02, kE) * max(kFo.a, smoothstep(0.04, 0.14, kE));
++        kRib.rgb = mix(kRib.rgb, mix(kFo.rgb, vec3(0.93, 0.9, 1.0), 0.25), kFa);
++        // the PAINTED water at its own world place (exact approved picture at frame 0), streaming a little (two-phase flow) once Benny swims
++        float kPh = fract(uFlow * 1.3), kNearF = 1.0 - smoothstep(3.0, 5.0, kZ);
++        float kT1 = kT + kPh * uFlowL * uFlowOn * kNearF, kT2 = kT + fract(kPh + 0.5) * uFlowL * uFlowOn * kNearF;
++        vec4 kP1 = texture(map, vec2(vMapUv.x, log(max(kT1, uWT.x) / uWT.x) / uWT.y), uBias);
++        vec4 kP2 = texture(map, vec2(vMapUv.x, log(max(kT2, uWT.x) / uWT.x) / uWT.y), uBias);
++        vec4 kPaint = mix(kP2, kP1, 1.0 - abs(1.0 - 2.0 * kPh));
++        // painted -> ribbon as the camera approaches (ratio distance now / distance at the start: 1 at frame 0); far painted texels are
++        // low-resolution, so they hand over sooner than the sharp near ones
++        float kNF = smoothstep(3.0, 8.0, kT);
++        float kWP = smoothstep(mix(uPF.x, uPF.z, kNF), mix(uPF.y, uPF.w, kNF), kZ / max(kT, 1e-3));
++        diffuseColor *= mix(kRib, kPaint, kWP);
+         `); };
+   return m; })();
+ 
+@@ -136,17 +154,26 @@ const Wt = K.water, LOGR = Math.log(Wt.T1 / Wt.T0);
+ scene.add(new THREE.Mesh(grid(40, 600, (a, b) => { const t = Wt.T0 * Math.exp(b * LOGR); return [A0.clone().addScaledVector(A, t).addScaledVector(RR, lerp(-Wt.HWD, Wt.HWD, a)).addScaledVector(NUP, -K.HW), a, b]; }), riverMat));
+ 
+ // ---- Benny (round-32 Benny: mesh, bake, paddling shader) ----
+-const VERT_HEAD = `uniform float uT; uniform float uSwim; uniform vec2 uPom;
++const VERT_HEAD = `uniform float uT; uniform float uSwim; uniform vec2 uPom; uniform float uArmA; uniform float uKick; uniform float uKickA; uniform float uBobA;
+ vec3 b31rot(vec3 r, vec3 ax, float a){ float c = cos(a), s = sin(a); return r * c + cross(ax, r) * s + ax * dot(ax, r) * (1.0 - c); }`;
+ const VERT_BODY = `vec3 p = position;
+ float side = p.x >= 0.0 ? 1.0 : -1.0;
+ float wa = smoothstep(0.30, 0.37, abs(p.x)) * (1.0 - smoothstep(0.08, 0.16, abs(p.y + 0.18)));
+-float ph = uT * 7.5 + (side > 0.0 ? 0.0 : 3.14159);
++// round 34: alternating doggy-paddle. Each paw reaches forward, presses DOWN and pulls back under the water (power stroke, a little
++// slower), then lifts and swings forward again (recovery); the two paws are half a stroke apart (round 32 swung them the other way
++// round: up while pulling back). Model +z faces the camera; at uT = 0 the pose is exactly the round-32 start pose.
++float ph0 = uT * 7.5 + (side > 0.0 ? 0.0 : 3.14159);
++float ph = ph0 - 0.28 * sin(ph0);
+ vec3 piv = vec3(side * 0.31, -0.18, 0.0);
+ vec3 q = p - piv;
+-q = b31rot(q, vec3(0.0, 0.0, 1.0), side * uSwim * wa * 0.42 * sin(ph));
++q = b31rot(q, vec3(0.0, 0.0, 1.0), -side * uSwim * wa * uArmA * sin(ph));
+ q = b31rot(q, vec3(0.0, 1.0, 0.0), side * uSwim * wa * 0.5 * cos(ph));
+ p = piv + q;
++// feet: Benny has no separate feet, so the lower back facing the camera flutter-kicks in two lobes, left and right alternately
++float kz = smoothstep(0.06, 0.24, p.z) * (1.0 - smoothstep(-0.36, -0.2, p.y)) * smoothstep(0.02, 0.1, abs(p.x)) * (1.0 - smoothstep(0.26, 0.34, abs(p.x)));
++p += vec3(0.0, 0.35, 1.0) * (uKickA * 0.045 * kz * sin(uKick * 11.0 + (side > 0.0 ? 0.0 : 3.14159)));
++// the whole body lifts a little on each power stroke (twice per stroke cycle)
++float sp = sin(uT * 7.5); p.y += uBobA * sp * sp;
+ float wp = smoothstep(0.17, 0.27, p.y);
+ vec3 pp = vec3(0.0, 0.19, 0.05);
+ vec3 r = p - pp;
+@@ -159,7 +186,7 @@ vec3 transformed = p;`;
+ const gltf = await new GLTFLoader().loadAsync('benny31.glb');
+ const map = await tl.loadAsync('bake.png'); map.colorSpace = THREE.SRGBColorSpace; map.flipY = false; map.anisotropy = 8;
+ let geo = null; gltf.scene.traverse((o) => { if (o.isMesh && !geo) geo = o.geometry; });
+-const U = { uT: { value: 0 }, uSwim: { value: 1 }, uPom: { value: new THREE.Vector2() } };
++const U = { uT: { value: 0 }, uSwim: { value: 1 }, uPom: { value: new THREE.Vector2() }, uArmA: { value: 0.42 }, uKick: { value: 0 }, uKickA: { value: 1 }, uBobA: { value: 0 } };
+ const bmat = new THREE.MeshBasicMaterial({ map, color: new THREE.Color(4, 4, 4) });
+ bmat.onBeforeCompile = (sh) => {
+   Object.assign(sh.uniforms, U);
+@@ -198,25 +225,73 @@ const coreTex = (() => { const c = document.createElement('canvas'); c.width = c
+ const core = new THREE.Sprite(new THREE.SpriteMaterial({ map: coreTex, toneMapped: false, transparent: true, depthWrite: false, depthTest: false })); core.renderOrder = 20; scene.add(core);
+ 
+ 
+-// ---------- Benny's path: straight down the tunnel from his painted start point (the kit tunnel is straight) ----------
+-const at = (s, out) => out.copy(B0).addScaledVector(A, Math.max(0, Math.min(LEVEL, s)));
+-const frameAt = () => ({ t: A.clone(), r: RR.clone(), n: NUP.clone() });
+-const TRAIL = []; const TRAIL_S = []; for (let s = 0; s <= LEVEL + 1e-9; s += 0.05) { TRAIL.push(B0.clone().addScaledVector(A, s).toArray()); TRAIL_S.push(+s.toFixed(4)); }
++// ---------- Benny's path (round 34 S3): down the tunnel along the RIVER'S CENTRE LINE from his painted start point ----------
++// at(s) = B0 + A s + RR pB(s): s = axial distance from Benny's painted start point (= vKitT - tB0 in the shaders, tB0 = B0 . A),
++// pB(s) = lateral offset (world units along RR) of the river centre from his straight start line.
++// Source: kit.json river_center = { ds, c: [...], ref?: 'benny' | 'axis' } (S1: c[i] at s = i * ds; ref 'axis' = offsets measured from
++// the tunnel axis instead of Benny's start line), or the synthetic test ?bend=amp,wavelength[,phase] (world-anchored sine about the
++// tunnel axis, the same phase as the river shader's ?winding=1&wamp=amp&wlen=wavelength). Neither -> straight (round 33, frame 0 unchanged).
++// The offsets are smoothed (Benny sigma 0.12 u, camera 0.45 u), blended in over the first 1.6 u (frame 0 = the painted start: offset 0,
++// slope 0) and kept inside the tunnel (his outer lane + arms stay on the water). frameAt(s): t = tangent, r = lane direction
++// (perpendicular to t on the water), n = water up; lanes, coins, glints and the splash follow the bends through at() / frameAt().
++const tB0 = B0.dot(A), latB0 = B0.clone().sub(A0).dot(RR);   // Benny's start: axial position, lateral offset from the tunnel axis
++const PATH = (() => {
++  const ds = 0.05, s0 = -3, s1 = LEVEL + 16, n = Math.round((s1 - s0) / ds) + 1, i0 = Math.round(-s0 / ds), LB = 1.6;
++  const raw = new Float64Array(n); let src = 'straight';
++  const bq = q.get('bend'), RC = K.river_center;
++  if (bq) { const [amp, wl, ph = 0] = bq.split(',').map(Number); src = `synthetic ?bend=${bq}`;
++    for (let i = 0; i < n; i++) raw[i] = amp * Math.sin(2 * Math.PI * (s0 + i * ds + tB0) / wl + ph) - latB0; }
++  else if (RC && Array.isArray(RC.c) && RC.c.length > 1) { src = 'kit.json river_center'; const off = RC.ref === 'axis' ? -latB0 : 0;
++    for (let i = 0; i < n; i++) { const x = Math.max(0, s0 + i * ds) / RC.ds, k = Math.min(RC.c.length - 2, Math.floor(x)), f = Math.min(1, x - k); raw[i] = RC.c[k] * (1 - f) + RC.c[k + 1] * f + off; } }
++  const gauss = (a, sig) => { const r = Math.ceil(3 * sig), w = []; let ws = 0; for (let k = -r; k <= r; k++) { w.push(Math.exp(-0.5 * (k / sig) ** 2)); ws += w[w.length - 1]; }
++    const o = new Float64Array(n); for (let i = 0; i < n; i++) { let v = 0; for (let k = -r; k <= r; k++) v += a[Math.min(n - 1, Math.max(0, i + k))] * w[k + r]; o[i] = v / ws; } return o; };
++  const startBlend = (a) => { const v0 = a[i0], d0 = (a[i0 + 1] - a[i0 - 1]) / (2 * ds);
++    for (let i = 0; i < n; i++) { const s = s0 + i * ds; if (s < 0) a[i] = 0; else if (s < LB) { const x = s / LB; a[i] -= (v0 + d0 * s) * (1 - x * x * (3 - 2 * x)); } } return a; };
++  // keep Benny's widest reach on the water: |latB0 + pB| <= WALL_LIM (water half-width 0.70 - his lane 0.26 - arms 0.22), soft knee
++  const WALL_LIM = 0.22, KNEE = 0.15, keepIn = (a) => { for (let i = 0; i < n; i++) { const qv = latB0 + a[i], m = Math.abs(qv);
++    if (m > KNEE) a[i] = Math.sign(qv) * (KNEE + (WALL_LIM - KNEE) * Math.tanh((m - KNEE) / (WALL_LIM - KNEE))) - latB0; } return a; };
++  const b = startBlend(keepIn(gauss(raw, 0.12 / ds))), c = startBlend(gauss(b, 0.45 / ds));
++  const d1 = (a) => { const o = new Float64Array(n); for (let i = 1; i < n - 1; i++) o[i] = (a[i + 1] - a[i - 1]) / (2 * ds); o[0] = o[1]; o[n - 1] = o[n - 2]; return o; };
++  const b1 = d1(b), b2 = d1(b1), c1 = d1(c), c2 = d1(c1);
++  const samp = (a, s) => { const x = (Math.min(s1, Math.max(s0, s)) - s0) / ds, k = Math.min(n - 2, Math.floor(x)), f = x - k; return a[k] * (1 - f) + a[k + 1] * f; };
++  let amax = 0; for (let i = i0; i < n; i++) amax = Math.max(amax, Math.abs(b[i]));
++  return { src, samp, b, b1, b2, c, c1, c2, info: { src, maxOffset: +amax.toFixed(3), latB0: +latB0.toFixed(4), tB0: +tB0.toFixed(4) } };
++})();
++const pB = (s) => PATH.samp(PATH.b, s), pB1 = (s) => PATH.samp(PATH.b1, s), pB2 = (s) => PATH.samp(PATH.b2, s);
++const pC = (s) => PATH.samp(PATH.c, s), pC1 = (s) => PATH.samp(PATH.c1, s), pC2 = (s) => PATH.samp(PATH.c2, s);
++const at = (s, out) => out.copy(B0).addScaledVector(A, s).addScaledVector(RR, pB(s));
++const frameAt = (s) => { const k = pB1(s); return { t: A.clone().addScaledVector(RR, k).normalize(), r: RR.clone().addScaledVector(A, -k).normalize(), n: NUP.clone() }; };
++window.qaPath = (s) => (s == null ? PATH.info : { s, pB: +pB(s).toFixed(4), slopeDeg: +(Math.atan(pB1(s)) * 180 / Math.PI).toFixed(2), curv: +pB2(s).toFixed(4), pC: +pC(s).toFixed(4) });
++const TRAIL = []; const TRAIL_S = []; for (let s = 0; s <= LEVEL + 1e-9; s += 0.05) { TRAIL.push(at(s, new THREE.Vector3()).toArray()); TRAIL_S.push(+s.toFixed(4)); }
+ const TR = { trail: TRAIL, trail_s: TRAIL_S, N: 0 };
+ const coins = []; let coinCount = 1420; const coinEl = document.getElementById('coins');
+ const bubTex = await tl.loadAsync('bubble.png'); bubTex.colorSpace = THREE.SRGBColorSpace;
+ const ctex = await tl.loadAsync('coin.png'); ctex.colorSpace = THREE.SRGBColorSpace;
+ const coinD = 0.15038523388874458 * bennyDist / 1.186;      // round-32 coin size, scaled to the kit's Benny distance
+ const qc = new URLSearchParams(location.search); if (!qc.has('c_LEAN_K')) qc.set('c_LEAN_K', '0.09');
+-for (const [k, v] of [['c_CAM_LAT_K', '0.75'], ['c_CAM_LAT_MAX', '0.2'], ['c_CAM_LAT_OMEGA', '12']]) if (!qc.has(k)) qc.set(k, v);   // camera follows lane changes more: Benny stays fully on screen (round 33k)   // gentler bank (round 33: 5 -> <3 deg per frame); controls.js unchanged
++for (const [k, v] of [['c_CAM_LAT_K', '0.75'], ['c_CAM_LAT_MAX', '0.2'], ['c_CAM_LAT_OMEGA', '12']]) if (!qc.has(k)) qc.set(k, v);   // round 33k (gentler bank c_LEAN_K; controls.js unchanged). Round 34 S3: the camera's lane follow is now computed in step() (CAMP.cam*); CT.c.camLat is only reported
+ const CT = installControls({ THREE, TR, canvas: renderer.domElement, camera, q: qc, at, frameAt, coins, scene, U, bmat, benny, splash, splashTex, bubTex, coinTex: ctex, coinD, bennyFullH: 0.99 * KH, pxW, coinEl, getS: () => st.s, getCoins: () => coinCount, render: () => renderer.render(scene, camera) });
+ // coin run 1 = the APPROVED picture's coins (tools/kit05/painted_coins.py: painted centres cast onto the kit river; the far-left one
+ // moved into the left lane), 2 more at the painted spacing; run 2 (same-lane coins that stacked on screen at 0.6 u spacing) moved into
+ // the free stretch after the leap arc at ~1 u spacing. 26 coins as before; coinLayout() reports the real positions to the test player.
+-const NEWPOS = [[1.789, 0.008], [2.876, 0.22], [4.321, -0.008], [5.951, -0.22], [7.684, -0.22], [8.691, 0.02], [9.8, 0.1], [10.9, 0.12],
+-  [14.4, 0.15], [15.4, 0.22], [16.4, 0.22], [17.3, 0.03]];
+-if (!q.get('layoutcoins')) NEWPOS.forEach(([cs, cl], i) => { const c = coins[i]; c.s = cs; c.lat = cl; at(cs, c.p0).addScaledVector(RR, cl).addScaledVector(NUP, coinD * 0.75); c.sp.position.copy(c.p0); c.kind = Math.abs(cl) >= 0.1 ? 'lane' : 'water'; });
+-{ const L0 = window.coinLayout(); window.coinLayout = () => coins.map((c, i) => ({ s: c.s, lat: +c.lat.toFixed(3), h: c.h, run: L0[i]?.run, runKind: L0[i]?.runKind, p: c.p0.toArray().map((x) => +x.toFixed(4)), n: NUP.toArray().map((x) => +x.toFixed(4)) })); }
++// round 34 (S3): the coins sit on the BENDING river. Run 1 keeps the painted WORLD positions (frame 0 = the painted coins; the list is in
++// straight-start-line coordinates) re-expressed as (s, lat) on the river's centre line, so the pick-up, coinLayout() and the trail player
++// use the river's own lanes; run 2 and the later runs are path-relative (they bend with the river). Weave coin 4 lat -0.13 -> -0.10: all
++// five weave coins are now in the middle lane (round 33: the trail player left for -0.13 0.7 u early and missed the coin before it).
++const PAINTED = [[1.789, 0.008], [2.876, 0.22], [4.321, -0.008], [5.951, -0.22], [7.684, -0.22], [8.691, 0.02], [9.8, 0.1], [10.9, 0.12]];
++const RUN2 = [[14.4, 0.15], [15.4, 0.22], [16.4, 0.22], [17.3, 0.03]];
++const toPath = (s, lat) => { const P = B0.clone().addScaledVector(A, s).addScaledVector(RR, lat), w = new THREE.Vector3(); let sp = s, lp = lat;
++  for (let k = 0; k < 8; k++) { const F = frameAt(sp), d = P.clone().sub(at(sp, w)); lp = d.dot(F.r); sp += d.dot(F.t); } return [sp, lp]; };
++const placeCoin = (c, cs, cl) => { const F = frameAt(cs); c.s = +cs.toFixed(4); c.lat = cl; at(cs, c.p0).addScaledVector(F.r, cl).addScaledVector(F.n, coinD * 0.75 + (c.h || 0)); c.n0.copy(F.n); c.sp.position.copy(c.p0);
++  if (!(c.h > 0)) c.kind = Math.abs(cl) >= 0.1 ? 'lane' : 'water'; };
++const coinWarn = [];
++if (!q.get('layoutcoins')) {
++  PAINTED.forEach(([cs, cl], i) => { const [sp, lp] = toPath(cs, cl); placeCoin(coins[i], sp, lp); if (Math.abs(lp) > 0.33) coinWarn.push({ i, s: sp, lat: lp }); });
++  RUN2.forEach(([cs, cl], i) => placeCoin(coins[8 + i], cs, cl));
++  if (coins[21] && Math.abs(coins[21].lat + 0.13) < 1e-6) placeCoin(coins[21], coins[21].s, -0.10);
++}
++PATH.info.coinsOutOfLanes = coinWarn;
++{ const L0 = window.coinLayout(); window.coinLayout = () => coins.map((c, i) => ({ s: c.s, lat: +c.lat.toFixed(3), h: c.h, run: L0[i]?.run, runKind: L0[i]?.runKind, p: c.p0.toArray().map((x) => +x.toFixed(4)), n: c.n0.toArray().map((x) => +x.toFixed(4)) })); }
+ // every sprite (coins, droplets, splash) goes through the same depth curve as the scenery: far coins sit on the far river
+ const patchSprite = (m) => { if (m.userData.kit) return; m.userData.kit = 1; m.onBeforeCompile = (sh) => { Object.assign(sh.uniforms, REMAP);
+   sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\n' + REMAP_GLSL).replace('vec4 mvPosition = modelViewMatrix[ 3 ];', 'vec4 mvPosition = viewMatrix * vec4(kitRemap(modelMatrix[ 3 ].xyz), 1.0);'); }; m.needsUpdate = true; };
+@@ -237,17 +312,34 @@ const glints = new THREE.Points(gGeo, gMat); glints.frustumCulled = false; glint
+ const tmp2 = new THREE.Vector3();
+ const MTABK = [[2.0, 0.96], [2.16, 0.95], [2.8, 0.86], [3.33, 0.76], [3.85, 0.60], [4.5, 0.42], [5.0, 0.33], [5.5, 0.30]];
+ const mOfK = (d) => { if (d <= MTABK[0][0]) return MTABK[0][1]; for (let i = 1; i < MTABK.length; i++) if (d <= MTABK[i][0]) { const [d0, m0] = MTABK[i - 1], [d1, m1] = MTABK[i]; return m0 + (m1 - m0) * (d - d0) / (d1 - d0); } return MTABK[MTABK.length - 1][1]; };
+-const st = { s: 0, lat: 0, lean: 0, camLat: 0 };
++const st = { s: 0, lat: 0, latPrev: 0, lean: 0, camLat: 0, camF: { x: 0, v: 0 }, v: 0, yawB: { x: 0, v: 0 }, leanB: { x: 0, v: 0 }, camYaw: { x: 0, v: 0 }, camRoll: { x: 0, v: 0 }, guard: 0 };
+ const Zax = new THREE.Vector3(0, 0, 1), tmp = new THREE.Vector3();
+ const M = bennyM;
++// round 34 (S3) camera / body tuning (URL p_* overrides for tests). The camera rides the river's centre line (camera-smoothed, so Benny keeps
++// his painted place on screen while the river bends), follows his lanes (controls' spring CT.c.camLat + a soft guard that keeps his whole
++// body on screen), swings a few degrees into the bend about his river point (he stays put on screen; the depth curve remaps along the fixed
++// tunnel axis from the camera POSITION, so a turned camera still sees the painted ring ratio) and rolls ~1-2 deg with the curve.
++const PQ = (k, d) => +(q.get(k) ?? d), DEG = Math.PI / 180;
++const CAMP = { look: PQ('p_look', 0.7), yawK: PQ('p_yawk', 0.35), yawMax: Math.tan(PQ('p_yawmax', 3.5) * DEG), yawW: PQ('p_yaww', 3.0),
++  rollK: PQ('p_rollk', 0.1), rollMax: PQ('p_rollmax', 2.0) * DEG, rollW: PQ('p_rollw', 3.0), fadeIn: PQ('p_fadein', 1.2),
++  leanK: PQ('p_leank', 0.3), leanMax: PQ('p_leanmax', 0.1), leanW: PQ('p_leanw', 6), byawK: PQ('p_byawk', 0.85), byawW: PQ('p_byaww', 6),
++  camK: PQ('p_camk', 0.8), camW: PQ('p_camw', 12), camFF: PQ('p_camff', 0.12), camMax: PQ('p_cammax', 0.22),
++  gNeg: PQ('p_gneg', 0.07), gPos: PQ('p_gpos', 0.1), gKnee: PQ('p_gknee', 0.02), R0: PQ('p_r0', 0.42), RMAX: PQ('p_rmax', 0.58) };
++const cds = (o, target, omega, dt) => { const y = o.x - target, j = o.v + omega * y, e = Math.exp(-omega * dt); o.x = target + (y + j * dt) * e; o.v = (o.v - omega * j * dt) * e; return o.x; };
++const clampA = (x, m) => Math.max(-m, Math.min(m, x));
++const softLim = (x, lim, knee) => { const m = Math.abs(x), k0 = lim - knee; return m <= k0 ? x : Math.sign(x) * (k0 + knee * Math.tanh((m - k0) / knee)); };
++const tY = new THREE.Vector3(), rY = new THREE.Vector3(), mB = new THREE.Matrix4(), qL = new THREE.Quaternion(), qYaw = new THREE.Quaternion(), qRoll = new THREE.Quaternion(), FWDL = new THREE.Vector3(0, 0, -1), pivot = new THREE.Vector3(), rC = new THREE.Vector3(), radv = new THREE.Vector3();
+ window.step = (t, dt, steer, speed) => {
+-  st.s += CT.fwd(speed) * dt;
++  st.v = CT.fwd(speed); st.s += st.v * dt;
+   st.lat = CT.update(t, dt).lat;
+-  const F = frameAt(st.s);
+-  st.lean += (0 - st.lean) * Math.min(1, dt * 5);                       // straight tunnel: no bend lean (lane bank comes from CT.orient)
++  const F = frameAt(st.s), v2 = st.v * st.v, fade = THREE.MathUtils.smoothstep(st.s, 0, CAMP.fadeIn);
++  // body: leans gently into the river's bend (lateral acceleration p'' v^2) and faces along the river (damped share of its tangent)
++  st.lean = cds(st.leanB, fade * clampA(CAMP.leanK * pB2(st.s + 0.3) * v2, CAMP.leanMax), CAMP.leanW, dt);
++  cds(st.yawB, fade * CAMP.byawK * pB1(st.s), CAMP.byawW, dt);
+   at(st.s, tmp).addScaledVector(F.r, st.lat);
+   benny.position.copy(tmp).addScaledVector(F.n, Math.sin(t * Math.PI * 1.6) * 0.006 + CT.c.h);
+-  benny.quaternion.setFromRotationMatrix(M).multiply(new THREE.Quaternion().setFromAxisAngle(Zax, st.lean));
++  tY.copy(A).addScaledVector(RR, st.yawB.x).normalize(); rY.copy(RR).addScaledVector(A, -st.yawB.x).normalize().negate();
++  benny.quaternion.setFromRotationMatrix(st.yawB.x === 0 ? M : mB.makeBasis(rY, NUP, tY)).multiply(qL.setFromAxisAngle(Zax, st.lean));
+   CT.orient(benny.quaternion);
+   U.uT.value = t; U.uSwim.value = 1; U.uPom.value.set(Math.sin(t * 5.0) * 0.06, st.lean * 0.4);
+   CT.anim(st.lean);
+@@ -256,14 +348,29 @@ window.step = (t, dt, steer, speed) => {
+   CT.water(F, speed, dt); if (NOSPLASH) splash.visible = false;
+   for (let i = 0; i < NG; i++) {   // flowing glints: on the river surface, sliding toward the camera with the current, twinkling
+     gS[i] -= 0.55 * dt; if (gS[i] < st.s - 1.4) gS[i] += 8.5; if (gS[i] > st.s + 7.1) gS[i] -= 8.5;
+-    at(gS[i], tmp2).addScaledVector(RR, gL[i]).addScaledVector(NUP, 0.012); gPos.set([tmp2.x, tmp2.y, tmp2.z], i * 3);
++    at(gS[i], tmp2); const gT = tmp2.dot(A), gLat = tmp2.clone().sub(A0).dot(RR);   // round 34: glints ride the river (centre c(t)), never on the walls
++    tmp2.addScaledVector(RR, THREE.MathUtils.clamp(riverC(gT) + gL[i] * 0.85, -0.64, 0.64) - gLat).addScaledVector(NUP, 0.012); gPos.set([tmp2.x, tmp2.y, tmp2.z], i * 3);
+     const tw = Math.max(0, Math.sin(t * 6 + gP[i])); gAlpha[i] = (st.s > 0.02 ? 1 : 0) * tw * tw * 0.9 * THREE.MathUtils.smoothstep(gS[i], st.s - 1.4, st.s - 0.6);
+     gSize[i] = 0.035 * gSz[i] * (0.6 + tw);
+   }
+   gGeo.attributes.position.needsUpdate = true; gGeo.attributes.aAlpha.needsUpdate = true; gGeo.attributes.aSize.needsUpdate = true;
+-  // follow camera = the approved picture's camera relative to Benny, + the round-32 lane / leap follow springs
+-  camera.position.copy(B0).negate().add(at(st.s, tmp)).addScaledVector(F.r, CT.c.camLat).addScaledVector(F.n, CT.c.camH);
+-  camera.quaternion.copy(camQ0); camera.updateMatrixWorld();
++  // follow camera = the approved picture's camera relative to Benny (frame 0 = exactly the approved camera), carried along the river's
++  // camera-smoothed centre line, + lane follow (controls' spring + soft on-screen guard) + leap follow, + bend swing / roll (round 34 S3)
++  // lane follow: 80 % of his lane offset through a critically damped spring with a little velocity lead (starts with his move, no lag
++  // swing-out: his lane offset relative to the camera stays within about +-0.06 u even for rapid left-right swipes) + a soft guard
++  const latV = dt > 0 ? (st.lat - st.latPrev) / dt : 0; st.latPrev = st.lat;
++  cds(st.camF, clampA(CAMP.camK * (st.lat + CAMP.camFF * latV), CAMP.camMax), CAMP.camW, dt);
++  const sc = st.s, eLane = st.lat - st.camF.x;                                       // his lane offset relative to the camera's
++  const eKeep = eLane < 0 ? -softLim(-eLane, CAMP.gNeg, CAMP.gKnee) : softLim(eLane, CAMP.gPos, CAMP.gKnee);
++  st.guard = eLane - eKeep; st.camLat = st.camF.x + st.guard;
++  rC.copy(RR).addScaledVector(A, -pC1(sc)).normalize();
++  camera.position.copy(A).multiplyScalar(sc).addScaledVector(RR, pC(sc)).addScaledVector(rC, st.camLat).addScaledVector(NUP, CT.c.camH);
++  cds(st.camYaw, fade * clampA(CAMP.yawK * pC1(sc + CAMP.look), CAMP.yawMax), CAMP.yawW, dt);
++  cds(st.camRoll, fade * clampA(CAMP.rollK * pC2(sc + CAMP.look) * v2, CAMP.rollMax), CAMP.rollW, dt);
++  if (st.camYaw.x !== 0) { qYaw.setFromUnitVectors(A, tY.copy(A).addScaledVector(RR, st.camYaw.x).normalize()); at(sc, pivot); camera.position.sub(pivot).applyQuaternion(qYaw).add(pivot); }
++  else qYaw.identity();
++  radv.copy(camera.position).sub(A0); radv.addScaledVector(A, -radv.dot(A)); { const r = radv.length(), r2 = softLim(r, CAMP.RMAX, CAMP.RMAX - CAMP.R0); if (r2 < r) camera.position.addScaledVector(radv, r2 / r - 1); }   // inside the tunnel
++  camera.quaternion.copy(qYaw).multiply(camQ0).multiply(qRoll.setFromAxisAngle(FWDL, st.camRoll.x)); camera.updateMatrixWorld();
+   REMAP.uCam.value.copy(camera.position); FLOW.uFlow.value = t * +(q.get('flowspeed') ?? 0.55); FLOW.uFlowOn.value = THREE.MathUtils.smoothstep(st.s, 0.0, 0.7);
+   core.position.copy(camera.position).add(A0).addScaledVector(A, 300); core.scale.set(33, 33, 1);
+   updateEnd(st.s);
+@@ -277,13 +384,13 @@ window.step = (t, dt, steer, speed) => {
+   for (const c of coins) if (c.got < 0 && c.sp.visible) c.sp.scale.multiplyScalar(1 / mOfK(camera.position.distanceTo(c.sp.position)));
+   for (const c of coins) if (c.got < 0 && c.sp.visible) { const za = tmp.copy(c.sp.position).sub(camera.position).dot(A); const f = 1 - THREE.MathUtils.smoothstep(za, 9.5, 12.0); c.sp.scale.multiplyScalar(f); c.sp.visible = f > 0.01; }
+   if (!q.get('noclutter')) {   // round 33i: on-screen declutter (the later runs are 0.55-0.75 u apart: true sizes overlapped there)
+-    const vis = window.coinScreen().filter((c) => !c.pop).sort((a, b) => b.r - a.r), keep = [];
++    const vis = window.coinScreen().filter((c) => !c.pop).sort((a, b) => b.r - a.r), keep = []; st.decl = 0;
+     for (const c of vis) { let k = 1; for (const n of keep) { const d = Math.hypot(c.x - n.x, c.y - n.y) - n.r - 1.5; if (d < c.r * k) k = Math.max(0, d / c.r); }
+-      if (k < 1) { coins[c.i].sp.scale.multiplyScalar(Math.max(0.05, k)); coins[c.i].sp.visible = k > 0.05; }
++      if (k < 1) { coins[c.i].sp.scale.multiplyScalar(Math.max(0.05, k)); coins[c.i].sp.visible = k > 0.05; if (c.r >= 3) st.decl++; }
+       keep.push({ x: c.x, y: c.y, r: c.r * k }); }
+   }
+   scene.traverse((o) => { if (o.isSprite && o !== core) patchSprite(o.material); });   // droplets created during play
+-  return { s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: coinCount, tile: Math.floor((K.level.tB0 + st.s - K.level.ring0) / K.S) - K.level.k0, ...CT.state() };   // tile = ring section Benny is in (0 = start)
++  return { s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: coinCount, tile: Math.floor((K.level.tB0 + st.s - K.level.ring0) / K.S) - K.level.k0, ...CT.state(), declutter: st.decl | 0, camLatEff: +st.camLat.toFixed(4), guard: +st.guard.toFixed(4), camYawDeg: +(Math.atan(st.camYaw.x) / DEG).toFixed(3), camRollDeg: +(st.camRoll.x / DEG).toFixed(3) };   // tile = ring section Benny is in (0 = start)
+ };
+ // ending (as round 32b): over the last 1.25 u before the level end the warm white-gold light grows from the core and fills the screen
+ const S_LAST = LEVEL; const endEl = document.createElement('div'); endEl.style.cssText = 'position:fixed;inset:0;pointer-events:none;opacity:0';
+@@ -319,8 +426,23 @@ window.step(0, 0, 0, 0);
+ for (let i = 0; i < 3; i++) { renderer.render(scene, camera); await new Promise((r) => setTimeout(r, 100)); }
+ window.camInfo = () => ({ p: camera.position.toArray(), q: camera.quaternion.toArray() });
+ window.bennyInfo = () => { const qq = new THREE.Quaternion(), p = new THREE.Vector3(); benny.getWorldQuaternion(qq); benny.getWorldPosition(p); const up = new THREE.Vector3(0, 1, 0).applyQuaternion(qq).applyQuaternion(camera.quaternion.clone().invert()); const nW = NUP.clone().applyQuaternion(camera.quaternion.clone().invert()); const sp = p.clone().project(camera); return { rollDeg: Math.atan2(-up.x, up.y) * 180 / Math.PI, camRollDeg: Math.atan2(-nW.x, nW.y) * 180 / Math.PI, x: (sp.x * 0.5 + 0.5) * W, y: (0.5 - sp.y * 0.5) * H, dist: p.distanceTo(camera.position) }; };
++// round 34 (S3) QA: Benny's on-screen box (canvas px) from his deformed-free mesh vertices with the current pose + camera
++// (the vertex shader's paddling arms, pom-pom and squash are reproduced here: the arms define his left / right extent)
++const sm = (e0, e1, x) => { const k = Math.min(1, Math.max(0, (x - e0) / (e1 - e0))); return k * k * (3 - 2 * k); };
++const rotAx = (r, ax, an) => { const c = Math.cos(an), s = Math.sin(an), cr = new THREE.Vector3().crossVectors(ax, r); return r.clone().multiplyScalar(c).addScaledVector(cr, s).addScaledVector(ax, ax.dot(r) * (1 - c)); };
++const AXX = new THREE.Vector3(1, 0, 0), AXY = new THREE.Vector3(0, 1, 0), AXZ = new THREE.Vector3(0, 0, 1);
++window.bennyBox = (stride = 3) => { benny.updateMatrixWorld(true); camera.updateMatrixWorld(); const a = bmesh.geometry.attributes.position, v = new THREE.Vector3(); let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
++  const uT = U.uT.value, uSw = U.uSwim.value, uPom = U.uPom.value, sq = 1 + 0.03 * uSw * Math.sin(uT * 15);
++  for (let i = 0; i < a.count; i += stride) { let p = new THREE.Vector3().fromBufferAttribute(a, i);
++    const side = p.x >= 0 ? 1 : -1, wa = sm(0.30, 0.37, Math.abs(p.x)) * (1 - sm(0.08, 0.16, Math.abs(p.y + 0.18))), ph = uT * 7.5 + (side > 0 ? 0 : Math.PI);
++    if (wa > 0) { const piv = new THREE.Vector3(side * 0.31, -0.18, 0); let qv = p.clone().sub(piv); qv = rotAx(qv, AXZ, side * uSw * wa * 0.42 * Math.sin(ph)); qv = rotAx(qv, AXY, side * uSw * wa * 0.5 * Math.cos(ph)); p = piv.add(qv); }
++    const wp = sm(0.17, 0.27, p.y); if (wp > 0) { const pp = new THREE.Vector3(0, 0.19, 0.05); let r = p.clone().sub(pp); r = rotAx(r, AXX, uPom.x * wp); r = rotAx(r, AXZ, uPom.y * wp); p = pp.add(r); }
++    p.y = (p.y + 0.5) * sq - 0.5; p.x /= Math.sqrt(sq); p.z /= Math.sqrt(sq);
++    v.copy(p).applyMatrix4(bmesh.matrixWorld).project(camera); const x = (v.x + 1) / 2 * W, y = (1 - v.y) / 2 * H; x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); }
++  return { x0: +x0.toFixed(1), x1: +x1.toFixed(1), y0: +y0.toFixed(1), y1: +y1.toFixed(1) }; };
+ window.ready = true;
+-// round 34: ?live=1 = real-time play on a phone / browser (requestAnimationFrame loop, tap to start, FPS + swipe-response meter);
+-// without it the page stays frame-stepped for the acceptance harness exactly as before
+-if (q.get('live')) (await import('./live.js')).startLive({ THREE, renderer, scene, camera, W, H, q, CT });
++// round 34: ?play=1 = real-time play on a phone / browser (requestAnimationFrame loop, tap to start, FPS + swipe-response meter);
++// without it the page stays frame-stepped for the acceptance harness exactly as before. NOT ?live=1: controls.js runs its own
++// minimal round-32 loop for that, and two loops stepped the game twice per frame (S4 found it: double speed)
++if (q.get('play') && q.get('live') !== '1') (await import('./live.js')).startLive({ THREE, renderer, scene, camera, W, H, q, CT });
+ </script></body></html>
+diff --git a/tools/kit05/live.js b/tools/kit05/live.js
+index 4bfe737..2432119 100644
+--- a/tools/kit05/live.js
++++ b/tools/kit05/live.js
+@@ -1,4 +1,5 @@
+-// live.js — Round 34 (2026-11-21): REAL-TIME play of the Screen 05 kit game (play3.html?live=1), for a phone / browser.
++// live.js — Round 34 (2026-11-21): REAL-TIME play of the Screen 05 kit game (play3.html?play=1), for a phone / browser.
++// (?play=1, not ?live=1: controls.js has its own minimal ?live=1 loop; running both stepped the game twice per frame.)
+ // The acceptance harness steps the game frame by frame (window.step + window.renderNow); this module instead runs it on the
+ // display's own clock (requestAnimationFrame), so the player swipes with a real finger and the game answers in real time.
+ // It also MEASURES what the player feels: frames per second, slow frames, and the time from the end of a swipe to the first frame
+diff --git a/tools/kit05/live_check.cjs b/tools/kit05/live_check.cjs
+index ebd26fe..375e338 100644
+--- a/tools/kit05/live_check.cjs
++++ b/tools/kit05/live_check.cjs
+@@ -1,4 +1,4 @@
+-// Round 34: REAL-TIME check of play3.html?live=1 (the phone mode): Android-portrait emulation (412x915, isMobile, hasTouch), real CDP
++// Round 34: REAL-TIME check of play3.html?play=1 (the phone mode): Android-portrait emulation (412x915, isMobile, hasTouch), real CDP
+ // touch swipes sent on the wall clock while the game runs on requestAnimationFrame, then window.liveStats() (fps, slow frames,
+ // input -> first-frame-with-the-move latency). In this container WebGL is software-rendered (SwiftShader), so the fps here is NOT a
+ // phone's fps — this proves the live loop, the tap-to-start and the touch path work; the phone's own numbers come from its meter.
+@@ -16,7 +16,7 @@ const { chromium } = require('playwright'); const { spawn } = require('child_pro
+     const ctx = await browser.newContext({ viewport: { width: 412, height: 915 }, deviceScaleFactor: 1, isMobile: true, hasTouch: true });
+     const page = await ctx.newPage();
+     page.on('pageerror', (e) => errors.push(String(e).slice(0, 300))); page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text().slice(0, 300)); });
+-    await page.goto(`http://127.0.0.1:${port}/play3.html?live=1&pr=1${extra ? '&' + extra : ''}`);
++    await page.goto(`http://127.0.0.1:${port}/play3.html?play=1&pr=1${extra ? '&' + extra : ''}`);
+     await page.waitForFunction(() => window.ready === true && typeof window.liveStart === 'function', null, { timeout: 600000 });
+     const cdp = await ctx.newCDPSession(page);
+     const tap = async (x, y) => { await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x, y, id: 1 }] }); await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] }); };
+diff --git a/tools/kit05/setup_kit.sh b/tools/kit05/setup_kit.sh
+index 11fbc4d..7666eec 100755
+--- a/tools/kit05/setup_kit.sh
++++ b/tools/kit05/setup_kit.sh
+@@ -20,6 +20,7 @@ for f in "$WS"/kit/*.png "$WS/kit/kit.json"; do ln -sf "$f" "$(basename "$f")";
+ cp -f "$SRC/tools/kit05/kitgame.html" play3.html
+ cp -f "$SRC/tools/kit05/controls.js" controls.js
+ [ -f "$SRC/tools/kit05/live.js" ] && cp -f "$SRC/tools/kit05/live.js" live.js
++[ -f "$SRC/tools/kit05/swimfx.js" ] && cp -f "$SRC/tools/kit05/swimfx.js" swimfx.js
+ ln -sf "$AR/assets/models/benny31.glb" benny31.glb
+ ln -sf "$AR/assets/textures/benny31/bake.png" bake.png
+ ln -sf "$AR/assets/textures/paint/05_coin.png" coin.png

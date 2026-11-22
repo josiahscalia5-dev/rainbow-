@@ -6,13 +6,21 @@
 import * as THREE from 'three';
 import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
 import { Course, WORLD, funnelY } from './course';
-import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTexture } from './materials';
-import { buildTubeGeometry, buildRings, buildNozzles, courseTubePath, straightTubePath, tubeCenterAt } from './tube';
+import { perforatedMetal, gold, goldRibbed, chrome, glass, painted, canvasTexture, washerTubeEnv, withFarGlow, withTubeStrips, withBandShading, withLidShading, nearFrameMaterial, tunnelEndGlowMaterial, farRiverMaterial, marblePano05, marblePanoRotation05, marblePanoMatrix05, type FarGlow, type TubeStrips } from './materials';
+import { buildTubeGeometry, buildRings, buildRingsAt, buildWallLids, courseTubePath, straightTubePath, tubeCenterAt, ForcedTunnel, bandGeometry, wallLidGeometry, wallLidBasis, nearFrameGeometry } from './tube';
+import { STAGE_CAM, RideCamera } from '../game/cameraRig';
+import { far05Debug, farRiverLayout, farRiverGeometry } from './far05'; // path-camera (05 far tunnel block)
+import { FLOW05, FLOWMAP05, PROJ05 } from '../vfx/waterRibbon';
+import { createProj05Apron } from '../vfx/proj05Apron'; // Screen 05 test W11 (?flow05=1), advection speed (?flowcam05=1)
+import { PROJWALL05, PROJRING05, PROJFRAME05, PROJLID05, PT_ROW, withProj05Wall, withProj05Ring, withProj05Frame, lids05Group, type WallSeg } from '../vfx/proj05Tunnel'; // Screen 05 tunnel bake tests
+import { flow05Shared, flow05Textures } from '../vfx/flow05';
 import { buildLaundryRoom, LaundryRoom } from './laundryRoom';
 import { buildTowel, TowelMesh } from './towel';
 
 export interface Environment {
   group: THREE.Group;
+  /** round 41: camera occlusion (third-person rule): gold rings between the camera and Benny fade out (dithered) so he is never hidden */
+  setOcclusion(cam: THREE.Vector3, benny: THREE.Vector3, radius?: number, ahead?: THREE.Vector3[]): void;
   update(time: number, dt: number): void;
   doorA: THREE.Object3D; // hinge pivot (rotation.y opens)
   doorC: THREE.Object3D;
@@ -192,23 +200,407 @@ export function buildEnvironment(course: Course): Environment {
   // =====================================================================================
   const s08 = course.stage('08').s0;
   const pinkFlow = pinkFlowMaterial();
-  const perfTubeMat = perforatedMetal({ color: '#b02ccc', emissive: '#7a14a8', emissiveIntensity: 0.32, slot: 1, repeatU: 70, repeatV: 1.05, holeSize: 0.5, streaks: 0.55, metalness: 0.8, roughness: 0.22 });
+  // refs 05–07: rich saturated magenta→violet glossy pressed metal, dense glowing slot rows, warm light
+  // far down the tunnel. Own reflection environment (no cyan studio panel) + correct inward normals.
+  // hot magenta near → violet mid-tunnel → warm yellow-white core at the vanishing point
+  const tubeGlow: FarGlow = { color: '#ffd08a', near: 48, far: 105, strength: 1.5 };
+  const wallGlow: FarGlow = { ...tubeGlow, mid: { color: '#8a3cf0', near: 10, far: 42, amount: 0.55 } };
+  const tubeEnv = washerTubeEnv('wall');
+  const goldEnv = washerTubeEnv('gold');
+  // 06/07 ring bays (unchanged): gold bands every 9 units, 4 circumferential slot rows per bay
+  const ringSpacing = 9.0;
+  const slotRowsPerBay = 4;
+  // analytic strip lights along the tunnel (28 around: ref 05 shows ≈12–16 marquee spots per half-ring)
+  const strips: TubeStrips = { count: 28, width: 0.022, intensity: 2.6, color: '#ffd9f6', alt: 0.65 };
+  // glossy (low roughness → the strips stay crisp lengthwise streaks instead of a flat clipped sheen)
+  const wallBase = {
+    // pale pink F0: the saturation comes from the magenta/violet tube environment, so white strip lights
+    // reflect as white-pink streaks (a saturated F0 turned them into clipped flat magenta)
+    color: '#ffa8e8', emissive: '#3a0656', emissiveIntensity: 0.3, holeColor: '#0c0014',
+    slot: 1, repeatU: 48, stagger: false,
+    streaks: 0, metalness: 0.92, roughness: 0.1,
+    relief: { corrugation: 0.05, bevel: 0.05, bevelWidth: 0.12 }, rimColor: '#ff5fe0', rimStrength: 0.9,
+    envMap: tubeEnv, envMapIntensity: 1.0, farGlow: wallGlow,
+  } as const;
+  // STAGE ANCHORS (wave 6): the 06/07 ring bays, hood lids and slot rows are laid out from the 06 STAGE
+  // START, not from the 05 start, so reshaping the 05 river (which changes its arc length) never slides the
+  // 06/07 rings, lids or slot rows along the tube. The phases reproduce the pre-wave-6 layout exactly
+  // (measured on that course: first 06/07 ring 5.5644 u after the 06 start; slot-row phase 0.96618 there).
+  const s06 = course.stage('06').s0;
+  const RING06_PHASE = 5.5643876;
+  const ROW06_PHASE = 0.9661842;
+  const rowRepeat0607 = slotRowsPerBay / ringSpacing;
+  const rowOffset0607 = (((ROW06_PHASE - s06 * rowRepeat0607) % 1) + 1) % 1;
+  const perfTubeMat = perforatedMetal({ ...wallBase, repeatV: rowRepeat0607, offsetV: rowOffset0607, slotHalf: [0.36, 0.12] });
+  withTubeStrips(perfTubeMat, strips, 'attribute', 'wall');
   // straight-axis tunnel (05 → 07 incl. arch + plunge); the stream winds inside it
-  const perfPath = straightTubePath(course, s05, s08, { window: 30, taper: 14, baseRadius: tubeR });
-  const chunk = 40;
-  for (let a = s05; a < s08; a += chunk) {
-    const b = Math.min(s08 + 0.0, a + chunk + 0.6);
-    zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 72, step: 0.6 }), perfTubeMat));
-    // glossy magenta flow sheet lining the tube floor under the stream (refs 05/07 pink banks)
-    zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 24, step: 0.8, arc: 1.9, inset: -0.12, vScale: 6 }), pinkFlow.material));
+  // wave 9b controlled test T2 (user-directed 2026-11-16: BEFORE is the baseline, ONE geometric factor per test):
+  // the HEIGHT of the NEAR 05 tunnel around the front ring A. Measured (tools/qa/ring_fit05.py, tools/qa/axis05.ts,
+  // qa/pilot05/wave9b/T2/): the approved ring A centre is 59 px BELOW the vanishing point, BEFORE's 44 px ABOVE,
+  // while rings B, C, D already sit like the approved (slightly above). Lowering the WHOLE tunnel moved B–D
+  // away from the approved (rejected). T2 lowers only the tunnel up to ring A (26 u ahead of the eye) by
+  // ?nearfloor05=<d> units and blends back to BEFORE before ring B (40 u): radius 7.6, ring depths and spacing,
+  // ring B onward, the far block, camera, river and gameplay are untouched.
+  // PROMOTED 2026-11-16 ~11:45 UTC together with T1 (user: "only promote T2 if it is genuinely closer"): default 2.0 u
+  // with ring A at 20 u = ring A centre (502,478) r 433 vs approved (474,529) r 492 (BEFORE (505,426) r 374), its arc
+  // meets the right edge at y 241 (approved 229, BEFORE 321); B, C, D, 06, 07 pixel-identical (qa/pilot05/wave9b/T2b/).
+  // BEFORE = ?ringa=26&nearfloor05=0 (pixel-identical to qa/pilot05/wave9/baseline/05.png).
+  const qaNear05 = typeof location !== 'undefined' ? Number(new URLSearchParams(location.search).get('nearfloor05') ?? 2) : 2;
+  const NEAR_FLOOR05 = Number.isFinite(qaNear05) ? qaNear05 : 0;
+  const sEye05 = course.marks['05_crest'] - (STAGE_CAM['05']?.back ?? 6.4);
+  const floorExtra05 = NEAR_FLOOR05 === 0 ? undefined
+    : (s: number) => NEAR_FLOOR05 * (1 - THREE.MathUtils.smootherstep(s, sEye05 + 28, sEye05 + 38)) * THREE.MathUtils.smoothstep(s, s05 + 2, s05 + 10);
+  const perfPath = straightTubePath(course, s05, s08, { window: 30, taper: 14, baseRadius: tubeR, floorExtra: floorExtra05 });
+
+  // ---- 05 current (ref 05): long ring bays + forced-perspective far tunnel, anchored to the 05 camera ----
+  // Ref 05 ring radii about the VP: 288,192,122,85,66,54,45 px → from the locked checkpoint eye the rings sit
+  // at depth ≈36/55 (near bays ≈17–19 units) and then recede in ever longer bays to a small warm light.
+  // The straight only runs ≈56 units ahead of that eye before it flares into the 06 hall, so the real bays
+  // end with a ring at depth ≈54 (sF05) and a ForcedTunnel (tube.ts) continues the same tunnel — walls,
+  // slot rows, rings, lid pairs, water — to a virtual depth ≈430, compressed along the eye rays into the
+  // last ≈6 real units. If path-camera moves the checkpoint, the bays and the far section follow.
+  const sCam05 = course.marks['05_crest'] - (STAGE_CAM['05']?.back ?? 6.4);
+  const bay05 = 14;
+  const sGlow05 = course.stage('06').s0 - 5.9; // the straight flares into the 06 hall after this
+  const sF05 = Math.min(sCam05 + 54, sGlow05 - 2.5);
+  // ring slots every bay, ending at sF05; wave 8 (path-camera request, REQUESTS.md): the real ring AT sF05 is
+  // dropped (depth 53 → r≈189 px, ref ring #2 is r≈170) — the far block's ring at virtual depth ≈59 replaces it.
+  // The slot list still places the lid pair camera-side of that slot and the slot-row phase.
+  const ringSlots05: number[] = [];
+  for (let s = sF05; s >= s05 + 2; s -= bay05) ringSlots05.unshift(s);
+  // wave 9b — controlled geometry test T1 (user-directed 2026-11-16: BEFORE is the baseline, one factor at a time).
+  // Measured with tools/qa/ring_fit05.py (qa/pilot05/wave9b/rings): the approved rings are ROUND — A r 492 px,
+  // B 240, C 150, D 88 — and BEFORE draws B 228, C 153, D 96 (within −5…+9 %) but the front ring A only 374 (−24 %):
+  // its bay slot sits 26 u ahead of the checkpoint eye (r ≈ 9724 / depth). T1 moves ONLY that ring to RING_A05_DEPTH
+  // (20 u → r ≈ 490); tunnel radius, cross-section, camera, every other ring, the lids and the far block are untouched.
+  // Default 20 since the T2 promotion (2026-11-16); ?ringa=26 = BEFORE. (The wave-9 oval / "big tunnel" tests are NOT in this code:
+  // qa/pilot05/wave9b/not_merged/.)
+  const qaNum05 = (key: string, d: number) => {
+    const v = typeof location !== 'undefined' ? new URLSearchParams(location.search).get(key) : null;
+    return v !== null && v !== '' && Number.isFinite(Number(v)) ? Number(v) : d;
+  };
+  const RING_A05_DEPTH = qaNum05('ringa', 20);
+  // wave 9b controlled test W1 (user priority 1, 2026-11-16: glossy purple-metallic tunnel): tools/qa/diff05.py measured
+  // the BEFORE walls too PINK (tunnel band pink 50 % vs approved 37 %) and too dull (white light streaks 0.9 % vs
+  // 3.8 %). ?wall05=1 = ONE material factor: cooler violet wall F0 + emissive, brighter/wider/whiter lengthwise light
+  // streaks. Geometry, rings, lids, Marble reflection map, river, camera untouched. Default 0 = BEFORE.
+  const WALL05 = qaNum05('wall05', 0) === 1;
+  // wave 9b controlled test G1 (user goal: polished gold rings): tools measured the ring gold (gold-mask pixels,
+  // tunnel area) APPROVED mean (231,125,85), G/R 0.48, sat 0.66, shadow V p10 0.75 vs the game (239,154,112), 0.64,
+  // 0.55, 0.82 = pale peach. ?gold05=1 = ONE material factor: a tone curve on the 05 ring band colour that deepens
+  // the mid-tones toward saturated orange-gold while highlights stay bright. Default 0 = shader unchanged.
+  const GOLD05 = qaNum05('gold05', 0) === 1;
+  const TONE05: [number, number, number] = [1.35, 1.75, 1.3];
+  const rings05Base = ringSlots05.filter((s) => Math.abs(s - sF05) > 0.5).map((s) => (Math.abs(s - sCam05 - 26) < 3 ? sCam05 + RING_A05_DEPTH : s));
+  // `?tun05=1` (round 31, user: "Benny must swim forward through the approved-looking tunnel"): the 05 tunnel is REAL all the way —
+  // gold rings every bay past sF05 and on into the start of 06 (no forced-perspective far block, which only works from the locked
+  // checkpoint eye), the approved purple walls repeated bay after bay instead of the 06 hall. Off: unchanged.
+  const TUN05 = qaNum05('tun05', 0) === 1;
+  const sEndT05 = course.stage('07').s0 + 25;
+  const rings05 = TUN05 ? [...rings05Base, ...Array.from({ length: Math.max(0, Math.floor((sEndT05 - sF05) / bay05) + 1) }, (_, n) => sF05 + n * bay05)] : rings05Base;
+  // 05 walls: 7 dark capsule-slot rows per 14-unit bay, centred between the bands (rows 2 apart),
+  // slots ≈0.6 × 0.24 units laid along the circumference (ref 05 near slots ≈10 × 28 px)
+  // wave 7: 10 rows per bay (ref near walls show dense capsule rows, ≈25 px apart at the left edge; live had ≈45)
+  const slotPitch05 = bay05 / 10;
+  // ref 05 walls: deep metallic magenta/violet (#CD32AA / #992FC2), black slots, white-pink lengthwise
+  // streaks; the warm light only at the very end (virtual depth ≳160 → halo ≲60 px about the VP)
+  const glow05: FarGlow = { color: '#ffd796', near: 160, far: 470, strength: 1.6, mid: { color: '#8a30d2', near: 4, far: 48, amount: 0.45 } };
+  // wave 7, tunnel surfaces only (walls, rings, lids; the far river keeps glow05): orange and earlier — the
+  // reference throat inside the 4th ring (r < 50 px ≈ virtual depth > 200) is one continuous warm orange well
+  // ((229,111,81) at r 32–48, (248,169,89) at r 16–24), no purple gaps between the rings
+  // `?tun05=1`: the tunnel is real all the way, so the outer wall of the far curve (75–110 u) must stay purple-and-gold — the warm
+  // throat only begins further out (the locked-view far block, which needed the warm well at 95 u, is not used then)
+  const glowT05: FarGlow = qaNum05('tun05', 0) === 1 ? { ...glow05, color: '#ff9c5a', near: 150, far: 420, strength: 1.2 } : { ...glow05, color: '#ff9c5a', near: 95, far: 330, strength: 1.5 };
+  const wall05 = {
+    // lavender F0 × the magenta tube environment → violet-magenta metal (ref #992FC2 / #CD32AA)
+    // wave 7: no pressed-metal corrugation (its bent normals turned the strip reflections into the "marbled
+    // swirl"), only a faint bevel; shaded slot lips instead of the bright pink dotted outline; shorter, plumper
+    // capsules (ref median slot 25 px², elongation 4.3; live was 40 px², 8.8); bluer violet F0 (ref wall
+    // medians (171,44,177) / (188,51,205) / (154,46,166))
+    // wave 8: luminous magenta-pink instead of violet (ref left wall mean (192,76,167), violet share of
+    // violet+magenta 40–51 %; it06 (159,47,178), 91–93 %): warmer F0 between '#d49cf4' and '#f29ad6', softer
+    // and later violet mid tint, no slot bevel (its aliased highlight drew a jagged pink outline round every slot),
+    // and the Marble 05 panorama as the reflection source (marblePano05: pink walls, warm ring lights, VP glow)
+    // (it02: Marble env pre-blurred 6 px — its sharp ring arcs smeared into red-orange blotches on the near walls
+    // in it01 — and violet back with depth: bluer F0, mid tint '#8a30d2' 0.45 @8–50; it01 overshot to 14–22 %)
+    ...wallBase, color: WALL05 ? '#a878ff' : '#dc9ef0', emissive: WALL05 ? '#300a66' : '#3c0848', emissiveIntensity: 0.16, envMapIntensity: 0.9, roughness: 0.07,
+    relief: { corrugation: 0, bevel: 0, bevelWidth: 0.08 },
+    rimColor: '#b02a9a', rimStrength: 0.0, farGlow: { ...glowT05, mid: { color: '#8a30d2', near: 8, far: 50, amount: 0.45 } },
+    envMap: marblePano05(), envMapRotation: marblePanoRotation05(perfPath.frame(sCam05).tan),
+    repeatU: 64, repeatV: 1 / slotPitch05, slotHalf: [0.3, 0.16] as [number, number],
+    offsetV: 0.5 - ((((ringSlots05[0] + slotPitch05 / 2) / slotPitch05) % 1) + 1) % 1,
+  };
+  if (FLOWMAP05) {
+    // W11: the river mirrors the same Marble panorama as the tunnel metal (waterRibbon.ts, direct equirect lookup)
+    flow05Shared.uPano.value = marblePano05();
+    flow05Shared.uPanoRot.value.copy(marblePanoMatrix05(perfPath.frame(sCam05).tan));
   }
-  // gold junction ring 04→05
-  zones.tubes.add(buildRings(perfPath, s05 + 0.3, s05 + 0.31, 1, goldMat, { tube: 0.08, inset: 0.2 }));
-  // thick double gold ribs
-  zones.tubes.add(buildRings(perfPath, s05 + 3, s08 - 1, 7, goldMat, { tube: 0.042, double: true }));
-  // wall lids / nozzles
-  const lidMat = gold({ color: '#f0a040', roughness: 0.25, emissive: 0.35 });
-  zones.tubes.add(buildNozzles(perfPath, s05 + 6, s08 - 6, 8.5, lidMat, goldMat, { angleDeg: 34, size: 1.9 }));
+  // straight white-pink lengthwise streaks (ref specular-white share 5.6 % of the wall, live 0.5–2 %)
+  const strips05: TubeStrips = WALL05
+    ? { ...strips, intensity: 5.6, width: 0.02, alt: 0.8 }
+    : { ...strips, intensity: 4.4, width: 0.017, alt: 0.8 };
+  const perf05Mat = withTubeStrips(perforatedMetal(wall05), strips05, 'attribute', 'wall05');
+  const chunk = 40;
+  const addWall = (a0: number, a1: number, mat: THREE.Material) => {
+    for (let a = a0; a < a1 - 0.01; a += chunk) {
+      const b = Math.min(a1, a + chunk + 0.6);
+      zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 72, step: 0.6, frontNormals: true, axisAttr: true }), mat));
+      // glossy magenta flow sheet lining the tube floor under the stream (refs 05/07 pink banks)
+      zones.tubes.add(new THREE.Mesh(buildTubeGeometry(perfPath, a, b, { radial: 24, step: 0.8, arc: 1.9, inset: -0.12, vScale: 6, frontNormals: true }), pinkFlow.material));
+    }
+  };
+  addWall(s05, TUN05 ? sEndT05 : sGlow05, perf05Mat);
+  addWall(TUN05 ? sEndT05 : sGlow05, s08, perfTubeMat);
+  // 06/07 rings and the 04→05 junction collar (unchanged look)
+  const ringMat = withCameraOcclusion(withTubeStrips(withFarGlow(gold({ color: '#ffc890', roughness: 0.12, emissive: 0.16 }), tubeGlow, 'ring'), { ...strips, color: '#fff0c8', intensity: 3.2 }, 'instance', 'ring'));
+  ringMat.envMap = goldEnv;
+  ringMat.envMapIntensity = 1.3;
+  // ref 05 rings: polished YELLOW gold — pale-yellow highlights (#FCE082), gold mids (#F4B70F…#F9A640),
+  // copper only on the shadowed side — from a yellow F0, little flat emissive (it flattened the band to
+  // one orange) and the rounded double-lip band (bandGeometry) whose crown, groove and lip catch the
+  // strip lights as marquee spots
+  const goldEnv05 = washerTubeEnv('gold05');
+  const band05 = { height: 0.095, width: 0.78, lipHeight: 0.045, lipWidth: 0.26, groove: 0.07 };
+  // wave 7: the band colour is the stylised cross-section of withBandShading (materials.ts); the PBR/env
+  // result underneath only feeds the depth buffer now
+  // wave 8: the real (near) ring is thicker — ref ring #1 top spans y 188–230 (lip 8 px · groove 3 · body 17 ·
+  // turned-away flank 7 · contour) where it06 drew 31 px; the far rings (path-camera block) keep band05, the
+  // reference's deeper rings are thin (ring #2 top ≈12 px)
+  const band05near = { height: 0.13, width: 0.8, lipHeight: 0.065, lipWidth: 0.32, groove: 0.1 };
+  const gold05 = (key: string, virtual: boolean, band: typeof band05 = band05) => {
+    const m = withBandShading(withFarGlow(gold({ color: '#ffd45c', roughness: 0.13, emissive: 0.1 }), glowT05, key, virtual), GOLD05 ? { ...band, tone: TONE05 } : band, key);
+    m.emissive.set('#e08a10');
+    m.envMap = goldEnv05;
+    m.envMapIntensity = 1.15;
+    return m;
+  };
+  // `?projring05=1` (qa/pilot05/proj/tunnel/NOTES.md): the approved gold band baked onto the 05 rings; off = unchanged
+  const ringMat05 = PROJRING05 ? withProj05Ring(gold05('ring05', false, band05near), true, band05near.height, 'real') : gold05('ring05', false, band05near);
+  // `?projwall05=1`: the approved purple wall, one baked texture row per bay between two rings (src/vfx/proj05Tunnel.ts).
+  // Depths are measured from the locked checkpoint eye; the BC bay runs from the real ring B across the seam to the far
+  // block's first ring (virtual depth ringDv[0]), so both walls share its row (split at tSeam05, linear in depth).
+  const ptHw05 = (band05near.width + band05near.groove + band05near.lipWidth) / 2;
+  const ptA05 = sCam05 + RING_A05_DEPTH;
+  const ptB05 = rings05.find((s) => s > ptA05 + 1) ?? ptA05 + 20;
+  const ptSeam05 = (dC: number, d0: number) => (d0 - (d0 - (sF05 - ptB05) + ptHw05)) / (dC - (band05.width + band05.groove + band05.lipWidth) / 2 - (d0 - (sF05 - ptB05) + ptHw05));
+  if (PROJWALL05) {
+    const segs: WallSeg[] = [];
+    const before = rings05.filter((s) => s < ptA05 - 1);
+    const list = [(before[0] ?? ptA05) - bay05, ...before, ptA05];
+    for (let i = 0; i + 1 < list.length; i++) segs.push({ v0: list[i] + ptHw05, v1: list[i + 1] - ptHw05, row: PT_ROW.AB, t0: 0, t1: 1 });
+    segs.push({ v0: ptA05 + ptHw05, v1: ptB05 - ptHw05, row: PT_ROW.AB, t0: 0, t1: 1 });
+    // D0 of the far block is known further down; the eye sits (STAGE_CAM back) behind the crest, so depth(sF05) ≈ sF05 − sCam05 − 0.75
+    if (TUN05) {
+      // every bay from ring B on wears the sharpest approved bay (AB), repeated each bay (the shader's tile) — moving forward
+      // never reaches the small, blurry far rows of the picture
+      segs.push({ v0: ptB05 + ptHw05, v1: sF05 - ptHw05, row: PT_ROW.AB, t0: 0, t1: 1 });
+      withProj05Wall(perf05Mat, segs.slice(-8), { anchor: sF05 + ptHw05, period: bay05 }, 'real');
+    } else {
+      segs.push({ v0: ptB05 + ptHw05, v1: sF05, row: PT_ROW.BC, t0: 0, t1: ptSeam05(59, sF05 - sCam05 - 0.75) });
+      withProj05Wall(perf05Mat, segs.slice(-8), { anchor: sF05, period: bay05 }, 'real');
+    }
+  }
+  const collar = { depth: 0.022, lip: 0.012, width: 1.1 };
+  // gold junction collar 04→05 (slightly heavier)
+  zones.tubes.add(buildRings(perfPath, s05 + 0.3, s05 + 0.31, 1, ringMat, { inset: 0.02, collar: { depth: 0.03, lip: 0.014, width: 1.3 } }));
+  zones.tubes.add(buildRingsAt(perfPath, rings05, ringMat05, { inset: 0.02, band: band05near }));
+  const rings0607: number[] = [];
+  for (let s = s06 + RING06_PHASE - 2 * ringSpacing; s <= s08 - 1 + 1e-6; s += ringSpacing) if (s >= (TUN05 ? sEndT05 : sGlow05) + 4) rings0607.push(s);
+  // round 41: a gold ring must never cut through the swim passage. On the 06 crest the river climbs the tube wall, and rings placed on the
+  // tube axis crossed the water route at Benny's height right in front of the camera (a gold bar across the screen). A ring whose hoop
+  // passes through the passage of Benny AND the follow camera (river width + 1.2, from just under the water to 6 above it) is not placed; every other ring stays.
+  // the river point nearest to each point of the hoop is searched along the route (on the steep 06 descent the river under the hoop's
+  // lowest point belongs to a different route position than the ring's own)
+  const routeS: number[] = []; for (let x = s06 - 12; x <= s08 + 12; x += 0.5) routeS.push(x);
+  const routeP = routeS.map((x) => course.sample(x));
+  const ringClear = (sr: number) => {
+    const f = perfPath.frame(sr), R = perfPath.radius(sr) - 0.02, c = f.pos.clone().addScaledVector(f.up, perfPath.radius(sr) - perfPath.depth(sr));
+    const p = new THREE.Vector3(), d = new THREE.Vector3();
+    for (let k = 0; k < 96; k++) { const a = (k / 96) * Math.PI * 2; p.copy(c).addScaledVector(f.right, Math.cos(a) * R).addScaledVector(f.up, Math.sin(a) * R);
+      let bi = 0, bd = Infinity; for (let i = 0; i < routeP.length; i++) { const q = routeP[i].pos.distanceToSquared(p); if (q < bd) { bd = q; bi = i; } }
+      const w = routeP[bi], hw = course.widthAt(routeS[bi]) / 2 + 1.2;   // + the camera's lane follow
+      d.copy(p).sub(w.pos); const x = d.dot(w.right), h = d.dot(w.up); if (Math.abs(x) < hw && h > -0.4 && h < 6.0) return false; }   // up to above the follow camera
+    return true; };
+  // r42: and from the game's own chase camera (RideCamera, phone portrait, left / centre / right lane, every 1.5 u from 30 u before the ring to 16 u after it)
+  // no part of a hoop above the water may lie in front of the river Benny is about to swim (river points 2-26 u ahead, across its width,
+  // within 0.03 of the screen): on the steep 06 descent such hoops read as flat gold bars across the river. Hoops that frame the view
+  // (arcs at the top, concentric far rings behind the river) stay.
+  const probe = new RideCamera(course), pc = new THREE.PerspectiveCamera(60, 412 / 915, 0.1, 500), cpos = new THREE.Vector3(), ctgt = new THREE.Vector3(), cup = new THREE.Vector3();
+  const poses = new Map<string, { m: THREE.Matrix4; pm: THREE.Matrix4; river: { x: number; y: number; d: number }[] }>();
+  const poseAt = (sc: number, lat: number) => { const key = sc.toFixed(1) + '|' + lat; let q = poses.get(key); if (q) return q;
+    const pr = probe.desired(sc, lat, cpos, ctgt, cup); pc.fov = pr.fov; pc.updateProjectionMatrix(); pc.position.copy(cpos); pc.up.copy(cup); pc.lookAt(ctgt); pc.updateMatrixWorld();
+    const m = pc.matrixWorldInverse.clone(), pm = pc.projectionMatrix.clone(), river: { x: number; y: number; d: number }[] = [], v = new THREE.Vector3();
+    for (let a = 2; a <= 26; a += 1) { const fr = course.sample(sc + a), hw2 = course.widthAt(sc + a) / 2 * 0.9;
+      for (let j = -2; j <= 2; j++) { v.copy(fr.pos).addScaledVector(fr.right, (hw2 * j) / 2).applyMatrix4(m); if (v.z > -0.5) continue; const d = -v.z; v.applyMatrix4(pm); if (Math.abs(v.x) < 1.1 && Math.abs(v.y) < 1.1) river.push({ x: v.x, y: v.y, d }); } }
+    q = { m, pm, river }; poses.set(key, q); return q; };
+  const viewClear = (sr: number) => {
+    const f = perfPath.frame(sr), R = perfPath.radius(sr) - 0.02, c = f.pos.clone().addScaledVector(f.up, perfPath.radius(sr) - perfPath.depth(sr)), hoop: THREE.Vector3[] = [], d = new THREE.Vector3();
+    for (let k = 0; k < 96; k++) { const a = (k / 96) * Math.PI * 2, p = c.clone().addScaledVector(f.right, Math.cos(a) * R).addScaledVector(f.up, Math.sin(a) * R);
+      let bi = 0, bd = Infinity; for (let i = 0; i < routeP.length; i++) { const q = routeP[i].pos.distanceToSquared(p); if (q < bd) { bd = q; bi = i; } }
+      if (d.copy(p).sub(routeP[bi].pos).dot(routeP[bi].up) > -0.3) hoop.push(p); }   // parts under the water are hidden by it
+    const v = new THREE.Vector3();
+    for (let sc = sr - 30; sc <= sr + 16; sc += 1.5) for (const lat of [-1.6, 0, 1.6]) { const q = poseAt(sc, lat); let hits = 0;
+      for (const p of hoop) { v.copy(p).applyMatrix4(q.m); if (v.z > -3) continue; const dz = -v.z; v.applyMatrix4(q.pm); if (Math.abs(v.x) > 1 || Math.abs(v.y) > 1) continue;
+        if (q.river.some((r) => r.d > dz + 1 && Math.abs(r.x - v.x) < 0.03 && Math.abs(r.y - v.y) < 0.03)) hits++; }
+      if (hits >= 3) return false; }
+    return true; };
+  const rings0607clear = rings0607.filter((x) => ringClear(x) && viewClear(x));
+  (globalThis as unknown as { __rings0607?: unknown }).__rings0607 = { placed: rings0607clear.length, placedAt: rings0607clear.map((x) => +x.toFixed(1)), removed: rings0607.filter((x) => !rings0607clear.includes(x)).map((x) => +x.toFixed(1)) };
+  zones.tubes.add(buildRingsAt(perfPath, rings0607clear, ringMat, { inset: 0.02, collar, trueFrame: true }));   // r42: upright hoops around the tube (see RingOpts.trueFrame)
+  // copper nozzle lids: one symmetric pair per bay on the side walls a little above eye level,
+  // skipped where the stream climbs the wall (06 arch) so a lid never blocks the ride
+  const lidMat = withTubeStrips(withFarGlow(gold({ color: '#ffb27a', roughness: 0.16, emissive: 0.2 }), tubeGlow, 'lid'), { ...strips, color: '#fff0c8', intensity: 2.4 }, 'instance', 'lid');
+  lidMat.envMap = goldEnv;
+  lidMat.envMapIntensity = 1.25;
+  const lidClear = (s: number, centre: THREE.Vector3, size: number) => {
+    for (let ds = -6; ds <= 6; ds += 1.5) {
+      const ss = THREE.MathUtils.clamp(s + ds, 0, course.length);
+      if (course.sample(ss).pos.distanceTo(centre) < size * 1.2 + course.widthAt(ss) / 2 + 1.0) return true;
+    }
+    return false;
+  };
+  // 05 (ref §5.5): flat round copper-gold lids ('slab' half-disc pucks standing out of the wall, seen from
+  // below at an angle), one symmetric pair per bay at mid-bay, ≈12° above the axis on both walls
+  // wave 7: rose-copper pucks (withLidShading), thicker rim band, just camera-side of each ring (ref L1/L2/R1/R2
+  // end right where a ring band starts)
+  const lid05 = { shape: 'slab' as const, angleDeg: 8, droopDeg: -34, size: 2.2, thickness: 0.36, stretch: 1.0, sink: 0.1 };
+  const lidMat05 = (key: string, virtual: boolean) => {
+    const m = withLidShading(withFarGlow(gold({ color: '#ffb866', roughness: 0.22, emissive: 0.08 }), glowT05, key, virtual), key);
+    m.emissive.set('#c86a18');
+    m.envMap = goldEnv05;
+    m.envMapIntensity = 1.35;
+    return m;
+  };
+  const lids05 = ringSlots05.map((s) => s - band05.width / 2 - lid05.size * 1.05).filter((s) => s > s05 + 4);
+  // `?projlid05=1` (src/vfx/proj05Tunnel.ts): the approved paddles L1 L2 R1 R2, Blender-built trays; default unchanged
+  if (PROJLID05) zones.tubes.add(lids05Group());
+  else zones.tubes.add(buildWallLids(perfPath, 0, 0, bay05, lidMat05('lid05', false), { positions: lids05, ...lid05 }));
+  // `?tun05=1`: a paddle pair camera-side of every further ring (the approved picture's paddles are the Blender trays above)
+  if (TUN05) {
+    const lastBlender = sCam05 + 60;
+    const more = rings05.filter((s) => s > lastBlender).map((s) => s - band05.width / 2 - lid05.size * 1.05);
+    zones.tubes.add(buildWallLids(perfPath, 0, 0, bay05, lidMat05('lid05t', false), { positions: more, ...lid05, skip: lidClear }));
+  }
+  // 06/07: legacy hoods, unchanged
+  const lids0607: number[] = [];
+  for (let s = s06 + RING06_PHASE + ringSpacing * 0.5 - 2 * ringSpacing; s <= s08 - 6 + 1e-6; s += ringSpacing) if (s >= (TUN05 ? sEndT05 : sGlow05) + 4) lids0607.push(s);
+  zones.tubes.add(buildWallLids(perfPath, 0, 0, ringSpacing, lidMat, { positions: lids0607, angleDeg: 18, droopDeg: 20, size: 1.7, thickness: 0.42, stretch: 1.3, sink: 0.12, skip: lidClear }));
+
+  // ---- 05 far tunnel (forced perspective, calibrated for the locked 05 checkpoint eye) ----
+  {
+    // the checkpoint eye, exactly as RideCamera places it on the straight (cameraRig.ts, '05' block, lat 0)
+    const sC = course.marks['05_crest'];
+    const p5 = STAGE_CAM['05']!;
+    const af = perfPath.frame(sC);
+    const T = af.tan.clone();
+    const U = new THREE.Vector3(0, 1, 0).addScaledVector(T, -T.y).normalize();
+    const Rt = new THREE.Vector3().crossVectors(T, U).normalize();
+    const water = course.sample(sC).pos.clone();
+    const off = water.clone().sub(af.pos).dot(Rt);
+    const dz = p5.deadZone ?? 1;
+    const follow = p5.latFollow * (1 - Math.exp(-(off * off) / (dz * dz)));
+    const eye = water.addScaledVector(T, -p5.back).addScaledVector(U, p5.up).addScaledVector(Rt, -off * (1 - follow));
+    // wave 8: far rings at the reference radii 170 / 104 / 62 / 45 / 31 px about the VP (rays at 90/120/150°;
+    // live calibration r ≈ 10000/D) → virtual depth ≈ 59 / 97 / 161 / 222 / 322, then the warm throat. Ring n sits
+    // at tunnel coordinate u = bay05·(n + ½) (half a bay after the seam, then one bay each, so every far bay keeps
+    // its slot rows and lid pair). The D≈59 ring replaces the real ring at sF05 (r≈189, "ring #2 too big"): it only
+    // shows once the environment owner has removed that ring from rings05, so there is never a double ring.
+    const D0 = tubeCenterAt(perfPath, sF05).sub(eye).dot(T);
+    const realSeamRing = rings05.some((s) => Math.abs(s - sF05) < 0.5);
+    const ringDv = [59, 97, 161, 222, 322];
+    const knots: [number, number][] = [[0, 0]];
+    ringDv.forEach((d, i) => knots.push([bay05 * (i + 0.5), Math.max(d - D0, knots[i][1] + 1)]));
+    const zEnd = 430 - D0;
+    const ft = new ForcedTunnel(perfPath, sF05, eye, 6, zEnd, knots, T);
+    // walls: same pressed metal, slot rows continue (uv.y = sF + u), distance glow by virtual depth
+    const farWallMat = withTubeStrips(perforatedMetal({ ...wall05, virtualDepth: true }), strips05, 'attribute', 'wall05v');
+    if (PROJWALL05) {
+      // far bays in the wall's own coordinate v = sF05 + u (knots: u → virtual depth Z, piecewise linear)
+      const hwF = (band05.width + band05.groove + band05.lipWidth) / 2;
+      const slope = (i: number) => (knots[Math.min(i + 1, knots.length - 1)][1] - knots[Math.min(i + 1, knots.length - 1) - 1][1]) / (knots[Math.min(i + 1, knots.length - 1)][0] - knots[Math.min(i + 1, knots.length - 1) - 1][0]);
+      const nearEdge = (n: number) => sF05 + knots[n + 1][0] - hwF / slope(n);          // camera side of far ring n
+      const farEdge = (n: number) => sF05 + knots[n + 1][0] + hwF / slope(n + 1);       // far side of far ring n
+      const rows = [PT_ROW.CD, PT_ROW.DE, PT_ROW.EF, PT_ROW.FG];
+      const segs: WallSeg[] = [{ v0: sF05 - 1, v1: nearEdge(0), row: PT_ROW.BC, t0: ptSeam05(ringDv[0], D0), t1: 1 }];
+      rows.forEach((row, n) => segs.push({ v0: farEdge(n), v1: nearEdge(n + 1), row, t0: 0, t1: 1 }));
+      const uEnd = sF05 + knots[knots.length - 1][0] + (zEnd - knots[knots.length - 1][1]) / slope(knots.length - 1);
+      segs.push({ v0: farEdge(rows.length), v1: uEnd, row: PT_ROW.GX, t0: 0, t1: 0.07 });
+      segs.push({ v0: uEnd, v1: 1e9, row: PT_ROW.GX, t0: 0.07, t1: 0.07 });
+      withProj05Wall(farWallMat, segs, { anchor: sF05, period: bay05 }, 'far');
+    }
+    const farWall = new THREE.Mesh(ft.geometry(64, 80), farWallMat);
+    // the far stream (wave 8, far05.ts): the real ribbon's band layout continued past the seam, winding into the VP
+    const level = -(perfPath.radius(sF05) - perfPath.depth(sF05)) + 0.04;
+    const farLay = farRiverLayout(course, ft, level);
+    const farRiver = new THREE.Mesh(farRiverGeometry(ft, farLay, level, 16, 120), farRiverMaterial(glow05, ft.D0, FLOWMAP05 ? { ripple: flow05Textures(course).ripple, time: flow05Shared.uTime, speed: course.stage('05').speed * FLOW05 } : undefined));
+    Object.assign(far05Debug, { ft, eye, sF05, bay05, ringDv, knots, realSeamRing, perfPath, level, farLay, sCam05, s05, sGlow05, rings05, band05, band05near });
+    // rings (one per knot) and a lid pair just in front of each ring (as the real 05 lids), low-poly: small on screen
+    const ringItems: Parameters<ForcedTunnel['placeInstances']>[1] = [];
+    const lidItems: Parameters<ForcedTunnel['placeInstances']>[1] = [];
+    const fr0 = { pos: ft.c0, tan: ft.T, up: ft.U, right: ft.Rt };
+    const ringBasis = new THREE.Matrix4().makeBasis(ft.Rt, ft.U, ft.T);
+    const rRing = perfPath.radius(sF05) - 0.02;
+    const openAt = (u: number) => {
+      const sReal = sF05 + ft.zOf(ft.zOfU(u));
+      return { c: tubeCenterAt(perfPath, sReal), r: perfPath.radius(sReal) * 1.1 + 0.4, f: perfPath.frame(sReal) };
+    };
+    const lidSz = lid05.size * Math.min(1.4, perfPath.radius(sF05) / 7.6);
+    const lidUs: number[] = [];
+    for (let n = 0; n < ringDv.length; n++) {
+      if (n === 0 && realSeamRing) continue;
+      const u = knots[n + 1][0];
+      const op = openAt(u);
+      ringItems.push({ u, o: new THREE.Vector3(), basis: ringBasis, s: new THREE.Vector3(rRing, rRing, 1), openPos: op.c, openScale: op.r / rRing });
+      lidUs.push(ft.uOfZ(Math.max(0.5, knots[n + 1][1] - band05.width / 2 - lidSz * 1.05)));
+    }
+    for (const u of lidUs) {
+      for (const side of [1, -1]) {
+        const b = wallLidBasis(fr0, side, lid05.angleDeg, lid05.droopDeg);
+        const op = openAt(u);
+        const o = b.dir.clone().multiplyScalar(perfPath.radius(sF05) - lidSz * lid05.sink);
+        const dirOpen = op.f.right.clone().multiplyScalar(Math.cos(THREE.MathUtils.degToRad(lid05.angleDeg)) * side).addScaledVector(op.f.up, Math.sin(THREE.MathUtils.degToRad(lid05.angleDeg)));
+        lidItems.push({ u, o, basis: new THREE.Matrix4().makeBasis(b.X, b.Y, b.Z), s: new THREE.Vector3(lidSz, lidSz, lidSz * lid05.stretch), openPos: op.c.clone().addScaledVector(dirOpen, op.r + lidSz * 1.5), openScale: 1 });
+      }
+    }
+    const farRings = new THREE.InstancedMesh(bandGeometry({ ...band05, segments: 48 }), PROJRING05 ? withProj05Ring(gold05('ring05v', true), false, band05.height, 'far') : gold05('ring05v', true), ringItems.length);
+    const farLids = new THREE.InstancedMesh(wallLidGeometry('slab', lid05.thickness, 16), lidMat05('lid05v', true), lidItems.length);
+    // `?projlid05=1`: the approved small far paddles L3 / R3 are Blender trays (lids05.glb); the far slab pucks stay out
+    if (PROJLID05) farLids.visible = false;
+    // warm light at the very end (ref 05 VP: core ≲40 px, halo ≲120 px)
+    const glowMat = tunnelEndGlowMaterial(new THREE.Vector4(0, 0.001, 400, 420));
+    const glow = new THREE.Mesh(new THREE.CircleGeometry(1, 48), glowMat);
+    glow.name = 'tube05_end_glow';
+    glow.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeBasis(fr0.right, fr0.up, fr0.tan.clone().negate()));
+    glow.position.copy(ft.point(zEnd, new THREE.Vector3()));
+    glow.scale.setScalar(perfPath.radius(sF05) * ft.kOf(zEnd) * 1.35);
+    const parts = [farWall, farRiver, farRings, farLids, glow];
+    for (const p of parts) { p.frustumCulled = false; p.name ||= 'tube05_far'; }
+    farWall.name = 'tube05_far_wall'; farRiver.name = 'tube05_far_river';
+    // `?proj05=1` only: visual-only strip on the lower wall carrying the approved foam banks beyond the river edge at the
+    // far bends (src/vfx/proj05Apron.ts); `?projbank05=0` leaves it out. No collisions; nothing else changes.
+    if (PROJ05 && (typeof location === 'undefined' || new URLSearchParams(location.search).get('projbank05') !== '0')) {
+      root.add(createProj05Apron(course, perfPath, sCam05 + 4, sF05));
+    }
+    // open/close with the rider camera (closed at the 05 checkpoint, folded away from ≈18 units before sF)
+    let openNow = -1;
+    const camPos = new THREE.Vector3();
+    const sync = (cam: THREE.Camera) => {
+      const o = ft.openFor(camPos.setFromMatrixPosition(cam.matrixWorld));
+      if (Math.abs(o - openNow) < 1e-4) return;
+      openNow = o;
+      ft.placeInstances(farRings, ringItems, o);
+      ft.placeInstances(farLids, lidItems, o);
+    };
+    sync(new THREE.PerspectiveCamera().translateOnAxis(T, -1e4)); // initial: closed
+    farWall.onBeforeRender = (_r, _s, cam) => { sync(cam); farWall.morphTargetInfluences![0] = openNow; };
+    farRiver.onBeforeRender = (_r, _s, cam) => { sync(cam); farRiver.morphTargetInfluences![0] = openNow; };
+    farRings.onBeforeRender = (_r, _s, cam) => sync(cam);
+    farLids.onBeforeRender = (_r, _s, cam) => sync(cam);
+    glow.onBeforeRender = (_r, _s, cam) => { sync(cam); glowMat.uniforms.uOpacity.value = 1 - openNow; };
+    zones.tubes.add(...parts);
+    // `?tun05=1`: the real tunnel continues, so the checkpoint-only far block stays out
+    if (TUN05) for (const p of parts) { p.visible = false; p.onBeforeRender = () => {}; p.layers.disableAll(); }
+  }
   animated.push(pinkFlow.update);
 
   // =====================================================================================
@@ -316,7 +708,47 @@ export function buildEnvironment(course: Course): Environment {
     animated.push(stream.update);
   }
 
+  // 05 near gold frame (wave 7, ref bottom corners + bottom lip), built LAST: three's UUIDs draw on Math.random,
+  // so creating it earlier shifted the random canvas textures of the 08 laundry room / pour streams.
+  // Real 3D bands held in front of the rider
+  // camera (nearFrameGeometry, reference-pixel units → camera space at depth 0.8, scaled by the camera FOV).
+  // Shown only while the camera rides the straight 05 current; it slides down out of the frame over ≈6 units
+  // when entering from 04 and before the 06 hall, and is collapsed (zero scale) everywhere else, so 01–04 and
+  // 06–11 never see it. It covers only the frame's bottom corners/edge (below Benny), never the course ahead.
+  {
+    // `?projframe05=1` (src/vfx/proj05Tunnel.ts): the approved gold band on the same frame; default unchanged
+    const frame = new THREE.Mesh(nearFrameGeometry(), PROJFRAME05 ? withProj05Frame(nearFrameMaterial()) : nearFrameMaterial());
+    frame.name = 'tube05_near_frame';
+    frame.frustumCulled = false;
+    frame.matrixAutoUpdate = false;
+    frame.matrixWorldAutoUpdate = false;
+    frame.renderOrder = 2;
+    const P05 = tubeCenterAt(perfPath, sCam05);
+    const T05 = perfPath.frame(sCam05).tan.clone();
+    const axialOf = (s: number) => tubeCenterAt(perfPath, s).sub(P05).dot(T05);
+    const aIn0 = axialOf(s05), aIn1 = axialOf(s05 + 6), aOut0 = axialOf(sGlow05 - 30), aOut1 = axialOf(sGlow05 - 23);
+    const rLat = perfPath.radius(sCam05) * 1.2;
+    const camP = new THREE.Vector3(), rel = new THREE.Vector3(), slide = new THREE.Matrix4(), place = new THREE.Matrix4();
+    const zero = new THREE.Matrix4().makeScale(0, 0, 0), scl = new THREE.Matrix4();
+    frame.onBeforeRender = (_r, _s, cam) => {
+      camP.setFromMatrixPosition(cam.matrixWorld);
+      rel.copy(camP).sub(P05);
+      const a = rel.dot(T05);
+      const lat = rel.addScaledVector(T05, -a).length();
+      const k = THREE.MathUtils.smoothstep(a, aIn0, aIn1) * (1 - THREE.MathUtils.smoothstep(a, aOut0, aOut1)) * (lat < rLat ? 1 : 0);
+      const pc = cam as THREE.PerspectiveCamera;
+      if (k <= 1e-3 || !pc.isPerspectiveCamera) { frame.matrixWorld.copy(zero); return; }
+      const d = 0.8;
+      const px = (d * Math.tan(THREE.MathUtils.degToRad(pc.fov) / 2)) / 768;
+      slide.makeTranslation(0, -(1 - k) * 420, 0);
+      place.makeTranslation(0, 0, -d).multiply(scl.makeScale(px, px, px)).multiply(slide);
+      frame.matrixWorld.multiplyMatrices(cam.matrixWorld, place);
+    };
+    zones.tubes.add(frame);
+  }
   return {
+    setOcclusion(cam: THREE.Vector3, benny: THREE.Vector3, radius = 1.6, ahead: THREE.Vector3[] = []) { OCC.uOccA.value.copy(cam); OCC.uOccB.value.copy(benny); OCC.uOccR.value = radius;
+      OCC.uOccC1.value.copy(ahead[0] ?? benny); OCC.uOccC2.value.copy(ahead[1] ?? benny); },
     group: root,
     update: (t, dt) => animated.forEach((f) => f(t, dt)),
     doorA,
@@ -547,4 +979,30 @@ function pinkFlowMaterial() {
   tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
   const material = new THREE.MeshStandardMaterial({ map: tex, emissiveMap: tex, emissive: '#ff3fb8', emissiveIntensity: 0.35, metalness: 0.2, roughness: 0.12, envMapIntensity: 1.4, side: THREE.DoubleSide });
   return { material, update: (t: number) => { tex.offset.y = -t * 0.9; } };
+}
+
+// ---- round 41: camera occlusion for the gold rings (standard third-person camera rule, world geometry unchanged) ----
+// Fragments of a ring that lie between the camera and Benny, within OCC.uOccR of that line of sight, are dithered away (soft edge), so a
+// ring the follow camera passes close to never covers Benny or the river right in front of him. Off by default (radius 0).
+const OCC = { uOccA: { value: new THREE.Vector3() }, uOccB: { value: new THREE.Vector3(0, 0, -1) }, uOccR: { value: 0 }, uOccC1: { value: new THREE.Vector3(0, 0, -1) }, uOccC2: { value: new THREE.Vector3(0, 0, -1) } };
+function withCameraOcclusion<M extends THREE.Material>(mat: M): M {
+  const prev = mat.onBeforeCompile, prevKey = mat.customProgramCacheKey?.bind(mat);
+  mat.onBeforeCompile = (sh, r) => {
+    prev?.call(mat, sh, r);
+    Object.assign(sh.uniforms, OCC);
+    sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vOccW;')
+      .replace('#include <project_vertex>', '#include <project_vertex>\n{ vec4 ow = vec4(transformed, 1.0);\n#ifdef USE_INSTANCING\n ow = instanceMatrix * ow;\n#endif\n vOccW = (modelMatrix * ow).xyz; }');
+    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', `#include <common>
+varying vec3 vOccW; uniform vec3 uOccA; uniform vec3 uOccB; uniform float uOccR; uniform vec3 uOccC1; uniform vec3 uOccC2;
+float occSeg(vec3 p, vec3 a, vec3 b, float r){ vec3 ab = b - a; float t = clamp(dot(p - a, ab) / max(dot(ab, ab), 1e-6), 0.0, 1.0); if (t < 0.04 || t > 0.97) return 1.0; return smoothstep(r * 0.55, r, length(p - (a + t * ab))); }
+float occBayer(vec2 p){ int x = int(mod(p.x, 4.0)), y = int(mod(p.y, 4.0)); int i = x + y * 4;
+  float m[16] = float[16](0.0, 8.0, 2.0, 10.0, 12.0, 4.0, 14.0, 6.0, 3.0, 11.0, 1.0, 9.0, 15.0, 7.0, 13.0, 5.0); return (m[i] + 0.5) / 16.0; }`)
+      .replace('#include <clipping_planes_fragment>', `#include <clipping_planes_fragment>
+if (uOccR > 0.0) { float keep = smoothstep(2.0, 4.2, length(vOccW - uOccA));   // parts right at the camera slide away
+  keep = min(keep, occSeg(vOccW, uOccA, uOccB, uOccR));                                       // nothing covers Benny
+  keep = min(keep, min(occSeg(vOccW, uOccA, uOccC1, uOccR * 1.3), occSeg(vOccW, uOccA, uOccC2, uOccR * 1.6)));   // nor the river just ahead of him
+  if (keep < occBayer(gl_FragCoord.xy)) discard; }`);
+  };
+  mat.customProgramCacheKey = () => (prevKey ? prevKey() : '') + '|occ';
+  return mat;
 }

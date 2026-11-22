@@ -1,0 +1,35 @@
+{
+ "name": "f_hard_left",
+ "endpoint": "fal-ai/nano-banana-2/edit",
+ "request_id": "01a1f9b2-4bc5-7f30-9145-59681eec20e7",
+ "status": "COMPLETED",
+ "resolution": "2K",
+ "aspect_ratio": "9:16",
+ "num_images": 1,
+ "estimated_cost_usd": 0.12,
+ "inputs": [
+  {
+   "path": "qa/review_r27/artwork/05/game_frames/f_hard_left.png",
+   "sha256": "d90061f5c35545e85ed125daece15ed247580bdeaf762aa2d69b01e865a2282e"
+  },
+  {
+   "path": "qa/review_r21/artwork/05/swatches/wall_paddle_left.png",
+   "sha256": "92fe315f5b81233ac4104793830ee7e8e17ecbb146f4220e54d3740887948e1a"
+  },
+  {
+   "path": "qa/review_r21/artwork/05/swatches/wall_ring_right.png",
+   "sha256": "40d631fc1f1ea47d15835ff464fab0afc5b031e1d46a2ec92173d02a64e634e1"
+  },
+  {
+   "path": "references/water/05_water_isolated_original.png",
+   "sha256": "f93daf1febffc9a691f99d9b3272ebc23dfadfba6fb3f6a5c7b4e3a119406251"
+  }
+ ],
+ "prompt": "IMAGE 1 is a frame from a 3D mobile game and defines EVERYTHING about the layout. IMAGES 2-4 are material swatches cut from the art director's approved illustration of this level \u2014 they show ONLY surface materials, not a layout:\nIMAGE 2 and IMAGE 3 = the glossy violet-magenta washer-drum wall with neat rows of rounded slots, polished bright gold rings with warm light, and curved gold paddles; IMAGE 4 = the approved river water: glossy cyan with thick flowing hot-pink / magenta streaks, crisp white highlight lines and sparkles, and bubbly white-lilac foam edges.\n\nRepaint IMAGE 1 surface by surface with these materials, as a finished premium illustration:\n- every wall surface of IMAGE 1 becomes the glossy violet-magenta slotted metal of IMAGES 2-3, crisp and evenly slotted (no smearing or stretched streaks), and every ring becomes polished bright gold with warm amber light dots;\n- every gold paddle of IMAGE 1 stays where it is and becomes polished gold like IMAGE 3;\n- the river of IMAGE 1 becomes the water of IMAGE 4: glossy cyan with long smooth hot-pink / magenta streaks flowing along the river, crisp white highlight lines and small sparkles;\n- the foam along the river edges becomes low, bubbly white-lilac soap foam like the edges of IMAGE 4;\n- add a few small iridescent soap bubbles.\n\nSTRICT: do NOT change any shape, position, size or perspective from IMAGE 1. Do not add, remove or move any object: no holes, drains, extra rings, new river bends or new paddles. The river, the tunnel opening and every ring stay exactly where they are in IMAGE 1. No character, coins, text, HUD or user interface. Output only the repainted scene.",
+ "outputs": [
+  "qa/review_r27/artwork/05/proposals/f_hard_left_v1.png"
+ ],
+ "seconds": 17.3,
+ "error": null,
+ "note": "PROPOSAL \u2014 generated view, NOT an approved reference until the user approves it"
+}

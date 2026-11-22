@@ -1,0 +1,9 @@
+{
+ "world_dir": "qa/worldlabs/05/pilot/draft",
+ "f_px": 700.0,
+ "hfov_deg": 63.36102742591729,
+ "yaw_deg": 0.0,
+ "pitch_deg": 6.000000000000001,
+ "ncc_blurred_quarter_res": 0.6885429571035492,
+ "convention": "camera at the PLY origin; camera->world rotation = Ry(yaw) @ Rx(pitch), +pitch looks up, PLY y down, z forward"
+}

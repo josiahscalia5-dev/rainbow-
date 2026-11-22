@@ -1,0 +1,172 @@
+<title>Screen 05 Options</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
+<style>
+/* Layout: one dark washer-tunnel world; each section is a strip of same-size game frames, A / B / C always in the same column */
+:root {
+  --bg: #170827; --panel: #241038; --line: #3d2160; --fg: #f3ecff; --muted: #b9a6d6;
+  --gold: #f4b546; --cyan: #3fd3ff; --pink: #f43fd7; --good: #7be3a4;
+  --display: "Fredoka", "Baloo 2", ui-rounded, system-ui, sans-serif;
+  --body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: dark;
+}
+body { background: var(--bg); color: var(--fg); font: 15px/1.55 var(--body); }
+.wrap { max-width: 1180px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 28px 56px; display: flex; flex-direction: column; gap: 40px; }
+h1, h2, h3 { font-family: var(--display); font-weight: 700; text-wrap: balance; margin: 0; letter-spacing: .2px; }
+h1 { font-size: clamp(28px, 4.2vw, 42px); line-height: 1.1; }
+h2 { font-size: 23px; }
+h3 { font-size: 19px; }
+p { margin: 0; max-width: 68ch; }
+.lede { color: var(--muted); font-size: 16px; }
+.head { display: flex; flex-direction: column; gap: 12px; }
+.facts { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font-size: 12.5px; letter-spacing: .3px; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); }
+section { display: flex; flex-direction: column; gap: 14px; }
+.cap { color: var(--muted); font-size: 14px; }
+.strip { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.strip.three { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+figure { margin: 0; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+figure img, figure video { width: 100%; max-width: 100%; aspect-ratio: 412 / 915; object-fit: cover; border-radius: 10px; border: 1px solid var(--line); background: #000; display: block; }
+figcaption { font-family: var(--display); font-weight: 600; font-size: 15px; display: flex; align-items: center; gap: 6px; }
+.tag { font-size: 11px; font-family: var(--body); font-weight: 600; letter-spacing: .6px; text-transform: uppercase; padding: 2px 7px; border-radius: 6px; }
+.t-ap { background: var(--gold); color: #2a1300; }
+.t-a { background: #8f6bd6; color: #fff; }
+.t-b { background: var(--cyan); color: #04263a; }
+.t-c { background: var(--pink); color: #fff; }
+.blank { border: 1px dashed var(--line); border-radius: 10px; aspect-ratio: 412 / 915; display: flex; align-items: center; justify-content: center; text-align: center; padding: 12px; color: var(--muted); font-size: 13px; }
+.cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 18px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.card.rec { border-color: var(--cyan); box-shadow: 0 0 0 1px var(--cyan) inset; }
+.card dl { margin: 0; display: flex; flex-direction: column; gap: 9px; }
+.card dt { font-size: 11.5px; letter-spacing: .7px; text-transform: uppercase; color: var(--gold); font-weight: 600; }
+.card dd { margin: 0; font-size: 14px; }
+.play { display: inline-flex; align-self: flex-start; gap: 8px; align-items: center; padding: 9px 14px; border-radius: 10px; background: var(--gold); color: #2a1300; font-weight: 700; font-family: var(--display); text-decoration: none; }
+.play:focus-visible, a:focus-visible { outline: 3px solid var(--cyan); outline-offset: 2px; }
+.verdict { background: linear-gradient(135deg, #1f2f5a 0%, #2a1145 100%); border: 1px solid var(--cyan); border-radius: 16px; padding: 22px; display: flex; flex-direction: column; gap: 12px; }
+.verdict strong { color: var(--cyan); }
+ul.plain { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; max-width: 72ch; }
+.note { font-size: 13px; color: var(--muted); }
+a { color: var(--cyan); }
+@media (max-width: 860px) { .strip, .strip.three { grid-template-columns: repeat(2, minmax(0, 1fr)); } .cards { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { video { animation: none; } }
+</style>
+
+<div class="wrap">
+  <header class="head">
+    <h1>Screen 05 · Flow Into the Current — three buildable directions</h1>
+    <p class="lede">Every picture below is a real game-engine frame from the same playable test level, with the same camera, the same Benny, the same coins and the same swipe controls. Only the scenery materials change between A, B and C. Nothing here is a concept painting.</p>
+    <div class="facts">
+      <span class="chip">412 × 915 phone frame</span>
+      <span class="chip">swim speed 1.4 units/s</span>
+      <span class="chip">bends at 4.5 and 8.5 units (about 3 s and 6 s in)</span>
+      <span class="chip">same 7.6 s swipe plan for every clip</span>
+    </div>
+  </header>
+
+  <section>
+    <h2>Start view</h2>
+    <p class="cap">The moment the level begins, before Benny has moved.</p>
+    <div class="strip">
+      <figure><img src="approved.jpg" alt="The approved Screen 05 picture at phone size"><figcaption><span class="tag t-ap">Approved</span> your picture</figcaption></figure>
+      <figure><img src="a_s0.0_l0.jpg" alt="Option A start view"><figcaption><span class="tag t-a">A</span> Maximum fidelity</figcaption></figure>
+      <figure><img src="b_s0.0_l0.jpg" alt="Option B start view"><figcaption><span class="tag t-b">B</span> Natural 3D water</figcaption></figure>
+      <figure><img src="c_s0.0_l0.jpg" alt="Option C start view"><figcaption><span class="tag t-c">C</span> Arcade, game-ready</figcaption></figure>
+    </div>
+  </section>
+
+  <section>
+    <h2>Swimming through the first bend</h2>
+    <p class="cap">Benny has swum 4.5 units (about 3 seconds) and is inside a right-hand bend. This is where the old methods fall apart.</p>
+    <div class="strip">
+      <figure><img src="approved.jpg" alt="The approved Screen 05 picture, for reference"><figcaption><span class="tag t-ap">Approved</span> for reference</figcaption></figure>
+      <figure><img src="a_s4.5_l0.jpg" alt="Option A after the first bend"><figcaption><span class="tag t-a">A</span> at 4.5 units</figcaption></figure>
+      <figure><img src="b_s4.5_l0.jpg" alt="Option B after the first bend"><figcaption><span class="tag t-b">B</span> at 4.5 units</figcaption></figure>
+      <figure><img src="c_s4.5_l0.jpg" alt="Option C after the first bend"><figcaption><span class="tag t-c">C</span> at 4.5 units</figcaption></figure>
+    </div>
+  </section>
+
+  <section>
+    <h2>Second bend, and a lane change</h2>
+    <p class="cap">Top row: 8.5 units in (about 6 seconds), a left-hand bend. Bottom row: Benny after one swipe left, crossing the screen the way he does in your reference video.</p>
+    <div class="strip">
+      <div class="blank">Second bend, 8.5 units</div>
+      <figure><img src="a_s8.5_l0.jpg" alt="Option A in the second bend"><figcaption><span class="tag t-a">A</span> at 8.5 units</figcaption></figure>
+      <figure><img src="b_s8.5_l0.jpg" alt="Option B in the second bend"><figcaption><span class="tag t-b">B</span> at 8.5 units</figcaption></figure>
+      <figure><img src="c_s8.5_l0.jpg" alt="Option C in the second bend"><figcaption><span class="tag t-c">C</span> at 8.5 units</figcaption></figure>
+    </div>
+    <div class="strip">
+      <div class="blank">Left lane, 4.5 units</div>
+      <figure><img src="a_s4.5_l-1.jpg" alt="Option A with Benny in the left lane"><figcaption><span class="tag t-a">A</span> left lane</figcaption></figure>
+      <figure><img src="b_s4.5_l-1.jpg" alt="Option B with Benny in the left lane"><figcaption><span class="tag t-b">B</span> left lane</figcaption></figure>
+      <figure><img src="c_s4.5_l-1.jpg" alt="Option C with Benny in the left lane"><figcaption><span class="tag t-c">C</span> left lane</figcaption></figure>
+    </div>
+  </section>
+
+  <section id="clips">
+    <h2>Swimming clips</h2>
+    <p class="cap">7.6 seconds each, recorded frame by frame in the engine with real touch swipes: left, left, right, leap, right, right, dive, left, leap, left. Identical for all three. In all three, every swipe was answered on the very next frame and Benny reached his new lane in 0.27 s.</p>
+    <div class="strip">
+      <div class="blank">Same swipes, same timing</div>
+      <figure><video src="clip_a.mp4" controls muted loop playsinline preload="metadata" poster="a_s0.0_l0.jpg"></video><figcaption><span class="tag t-a">A</span> clip</figcaption></figure>
+      <figure><video src="clip_b.mp4" controls muted loop playsinline preload="metadata" poster="b_s0.0_l0.jpg"></video><figcaption><span class="tag t-b">B</span> clip</figcaption></figure>
+      <figure><video src="clip_c.mp4" controls muted loop playsinline preload="metadata" poster="c_s0.0_l0.jpg"></video><figcaption><span class="tag t-c">C</span> clip</figcaption></figure>
+    </div>
+  </section>
+
+  <section>
+    <h2>What each option really gives you</h2>
+    <div class="cards">
+      <article class="card">
+        <h3><span class="tag t-a">A</span> Maximum artwork fidelity</h3>
+        <p class="note">Your picture's own pixels on the 3D tunnel and on the river. This is the round-35/36 build with the reference-video movement switched on.</p>
+        <dl>
+          <dt>Likeness to your picture</dt><dd>The start view is your picture (measured in round 35: 80 % of scenery pixels within 20 levels). Once Benny swims, the water near him is your picture's far-away water blown up: by 4.5 units, 83 % of the water on screen is stretched more than four times (round-36 measurement). That is the smeared, streaky water you saw. It cannot be fixed with settings.</dd>
+          <dt>Water in motion</dt><dd>Moves, but as stretched painted streaks that tear and repeat at bends.</dd>
+          <dt>Swimming and steering</dt><dd>Yes, same controls, lanes, leap, dive, coins.</dd>
+          <dt>Reused</dt><dd>Everything. Nothing new.</dd>
+          <dt>Finishing the full screen</dt><dd>Quick, but it will not look better than today. This is the ceiling we have hit for five rounds.</dd>
+          <dt>Other screens</dt><dd>Same problem on every screen: right at the start, wrong once moving.</dd>
+        </dl>
+        <a class="play" href="https://claude.ai/artifact/WpTr9WD5EWMv8pxThWjQjb" target="_blank" rel="noopener">Play A on your phone</a>
+      </article>
+      <article class="card rec">
+        <h3><span class="tag t-b">B</span> Natural 3D water · recommended</h3>
+        <p class="note">The tunnel, gold rings and paddles keep your picture's own pixels. Only the river is new: drawn live by the graphics card from your water design, so it is sharp at every distance.</p>
+        <dl>
+          <dt>Likeness to your picture</dt><dd>Same tunnel as A. The river uses the colours measured from your isolated water art (deep blue, azure, bright cyan; magenta and light pink), silky ribbons along the flow, magenta bands on both sides, white highlight dashes, four-point star sparkles and lavender-white foam domes along winding banks. Unavoidable differences: the water is your design redrawn, not your exact painted strokes; the pink bands sit where the rules put them, not exactly where you painted them; the gold frame at the bottom edge of your picture is not there; the foam is flatter than your painted puffs.</dd>
+          <dt>Water in motion</dt><dd>Streams toward the camera all the time, follows every bend, stays crisp right under Benny. No stretching, because nothing is being blown up.</dd>
+          <dt>Swimming and steering</dt><dd>Yes, identical to A and C.</dd>
+          <dt>Reused</dt><dd>The tunnel kit and its painted walls and rings, Benny and his paddling, swipe controls, coins, splashes, bubbles, camera, HUD, phone build. New: one water material (about 90 lines of shader code) and foam placed along the river's banks.</dd>
+          <dt>Finishing the full screen</dt><dd>Moderate. Tune the band layout and foam against your picture with you, run the whole 23-second level, check frame rate on a real Android phone.</dd>
+          <dt>Other screens</dt><dd>Yes. The same water material can take each screen's own colours (04, 06, 07, 08); each tunnel still needs its own work.</dd>
+        </dl>
+        <a class="play" href="https://claude.ai/artifact/Jwb1UmbXW74kmDYyXnY7KH" target="_blank" rel="noopener">Play B on your phone</a>
+      </article>
+      <article class="card">
+        <h3><span class="tag t-c">C</span> Polished arcade version</h3>
+        <p class="note">Everything redrawn clean by code: violet slotted walls, gold rings with ridges and lights, chunky 3D gold paddles, and a simpler version of B's river.</p>
+        <dl>
+          <dt>Likeness to your picture</dt><dd>Clearly the same world (purple slotted tunnel, gold rings, cyan and pink river, foam, coins, Benny), but plainer: no painted reflections on the walls, simpler paddles, fewer sparkles. The furthest of the three from your picture.</dd>
+          <dt>Water in motion</dt><dd>Clean and smooth, the calmest of the three.</dd>
+          <dt>Swimming and steering</dt><dd>Yes, identical.</dd>
+          <dt>Reused</dt><dd>Benny, controls, coins, camera, tunnel shape. Walls and rings are drawn when the game loads, so the big painted texture files could be dropped (smaller download).</dd>
+          <dt>Finishing the full screen</dt><dd>Easiest, and the lightest for phones.</dd>
+          <dt>Other screens</dt><dd>Easiest to repeat, but each screen moves further from its approved picture.</dd>
+        </dl>
+        <a class="play" href="https://claude.ai/artifact/9DofNKfK9BApxZLBLXB67n" target="_blank" rel="noopener">Play C on your phone</a>
+      </article>
+    </div>
+  </section>
+
+  <section class="verdict">
+    <h2>My recommendation: Option B</h2>
+    <p>B is the only option where the water stays sharp, colourful and natural while Benny swims, steers and goes through bends, and the tunnel still shows your own artwork. A cannot get past the stretching; it is a limit of having one picture taken from one spot. C gives up too much of your look for a speed gain we have not yet shown we need.</p>
+    <ul class="plain">
+      <li><strong>Not done yet:</strong> nothing has been built beyond this short test. The full level waits for your choice.</li>
+      <li><strong>Not measured:</strong> frame rate on a real Android phone. This test machine has no graphics card. Each playable link shows an fps meter in the corner, so you can check it on your phone.</li>
+      <li><strong>Unchanged:</strong> your original artwork, the default game, and the round-35/36 versions.</li>
+    </ul>
+    <p class="note">Tell me A, B or C. You can also say what to change first in the one you pick.</p>
+  </section>
+</div>

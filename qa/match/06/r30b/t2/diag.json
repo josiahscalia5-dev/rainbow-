@@ -1,0 +1,4195 @@
+{
+ "query": "match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1&m06st=1&m06fcl=1&m06view=1&m06vs=0&m06rip=1&m06hole=2&m06fade=1&m06spl=1&m06fcn=3&m06fcg=1&m06deep=1&m06leg=1&m06vw=20,38&m06tswap=2&m06curl=1&m06haze=80,170,0.55&m06camk=0.65&m06camu=1.05&m06sb=1",
+ "shots": [
+  {
+   "s": 214.86,
+   "state": {
+    "mode": "ride",
+    "stage": "06",
+    "s": 214.86,
+    "lat": 0,
+    "coins": 1700,
+    "hearts": 5,
+    "paused": false,
+    "bennyY": -35.602,
+    "bennyVisible": true,
+    "cam": [
+     -1.25,
+     -33.38,
+     -146.07
+    ]
+   },
+   "cam": [
+    -1.2475710655476038,
+    -33.38168044995527,
+    -146.07466549226436
+   ],
+   "target": [
+    -3.1967888633158794,
+    -35.28125607370574,
+    -156.05021555743696
+   ],
+   "bs": {
+    "x": 0.03,
+    "y": -0.19,
+    "z": 0.987,
+    "visible": true,
+    "cam": [
+     -1.25,
+     -33.38,
+     -146.07
+    ],
+    "benny": [
+     -2.56,
+     -35.6,
+     -153.23
+    ]
+   },
+   "grid": [
+    {
+     "x": -0.6,
+     "y": 0.9,
+     "obj": "m06_rings<match06_projection<Scene",
+     "d": 14.4
+    },
+    {
+     "x": -0.3,
+     "y": 0.9,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 17.47
+    },
+    {
+     "x": 0,
+     "y": 0.9,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 19.63
+    },
+    {
+     "x": 0.3,
+     "y": 0.9,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 22
+    },
+    {
+     "x": 0.6,
+     "y": 0.9,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 24.29
+    },
+    {
+     "x": -0.6,
+     "y": 0.8,
+     "obj": "m06_rings<match06_projection<Scene",
+     "d": 15.21
+    },
+    {
+     "x": -0.3,
+     "y": 0.8,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 18.75
+    },
+    {
+     "x": 0,
+     "y": 0.8,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 21.48
+    },
+    {
+     "x": 0.3,
+     "y": 0.8,
+     "obj": "m06_rings<match06_projection<Scene",
+     "d": 24.04
+    },
+    {
+     "x": 0.6,
+     "y": 0.8,
+     "obj": "m06_rings<match06_projection<Scene",
+     "d": 25.56
+    },
+    {
+     "x": -0.6,
+     "y": 0.7,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 17.52
+    },
+    {
+     "x": -0.3,
+     "y": 0.7,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 20.27
+    },
+    {
+     "x": 0,
+     "y": 0.7,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 23.83
+    },
+    {
+     "x": 0.3,
+     "y": 0.7,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 28.08
+    },
+    {
+     "x": 0.6,
+     "y": 0.7,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 31.86
+    },
+    {
+     "x": -0.6,
+     "y": 0.6,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 18.65
+    },
+    {
+     "x": -0.3,
+     "y": 0.6,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 22.1
+    },
+    {
+     "x": 0,
+     "y": 0.6,
+     "obj": "m06_rings<match06_projection<Scene",
+     "d": 24.96
+    },
+    {
+     "x": 0.3,
+     "y": 0.6,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 32.37
+    },
+    {
+     "x": 0.6,
+     "y": 0.6,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 35.71
+    },
+    {
+     "x": -0.6,
+     "y": 0.5,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 19.9
+    },
+    {
+     "x": -0.3,
+     "y": 0.5,
+     "obj": "m06_rings<match06_projection<Scene",
+     "d": 23.84
+    },
+    {
+     "x": 0,
+     "y": 0.5,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 30.78
+    },
+    {
+     "x": 0.3,
+     "y": 0.5,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 36.01
+    },
+    {
+     "x": 0.6,
+     "y": 0.5,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 39.56
+    },
+    {
+     "x": -0.6,
+     "y": 0.4,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 21.25
+    },
+    {
+     "x": -0.3,
+     "y": 0.4,
+     "obj": "m06_rings<match06_projection<Scene",
+     "d": 24.97
+    },
+    {
+     "x": 0,
+     "y": 0.4,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 34.05
+    },
+    {
+     "x": 0.3,
+     "y": 0.4,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 39.49
+    },
+    {
+     "x": 0.6,
+     "y": 0.4,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 40.42
+    },
+    {
+     "x": -0.6,
+     "y": 0.3,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 22.62
+    },
+    {
+     "x": -0.3,
+     "y": 0.3,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 29.41
+    },
+    {
+     "x": 0,
+     "y": 0.3,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 36.72
+    },
+    {
+     "x": 0.3,
+     "y": 0.3,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 39.82
+    },
+    {
+     "x": 0.6,
+     "y": 0.3,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 49.05
+    },
+    {
+     "x": -0.6,
+     "y": 0.2,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 23.92
+    },
+    {
+     "x": -0.3,
+     "y": 0.2,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 31.68
+    },
+    {
+     "x": 0,
+     "y": 0.2,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 38.89
+    },
+    {
+     "x": 0.3,
+     "y": 0.2,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 44.06
+    },
+    {
+     "x": 0.6,
+     "y": 0.2,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 54.96
+    },
+    {
+     "x": -0.6,
+     "y": 0.1,
+     "obj": "m06_rings<match06_projection<Scene",
+     "d": 24.22
+    },
+    {
+     "x": -0.3,
+     "y": 0.1,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 33.11
+    },
+    {
+     "x": 0,
+     "y": 0.1,
+     "obj": "fur_pom<pom<hat<body<benny_root",
+     "d": 7.25
+    },
+    {
+     "x": 0.3,
+     "y": 0.1,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 48.23
+    },
+    {
+     "x": 0.6,
+     "y": 0.1,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 58.88
+    },
+    {
+     "x": -0.6,
+     "y": 0,
+     "obj": "Mesh<foam_banks<water_system<Scene",
+     "d": 12.99
+    },
+    {
+     "x": -0.3,
+     "y": 0,
+     "obj": "foam_berm<foam_banks<water_system<Scene",
+     "d": 16.49
+    },
+    {
+     "x": 0,
+     "y": 0,
+     "obj": "hat_crown<hat<body<benny_root<AuxScene",
+     "d": 6.99
+    },
+    {
+     "x": 0.3,
+     "y": 0,
+     "obj": "Mesh<coins<Scene",
+     "d": 19.55
+    },
+    {
+     "x": 0.6,
+     "y": 0,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 60.24
+    },
+    {
+     "x": -0.6,
+     "y": -0.1,
+     "obj": "foam_berm<foam_banks<water_system<Scene",
+     "d": 11.81
+    },
+    {
+     "x": -0.3,
+     "y": -0.1,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 12.63
+    },
+    {
+     "x": 0,
+     "y": -0.1,
+     "obj": "hat_brim<hat<body<benny_root<AuxScene",
+     "d": 6.78
+    },
+    {
+     "x": 0.3,
+     "y": -0.1,
+     "obj": "hat_brim<hat<body<benny_root<AuxScene",
+     "d": 7.17
+    },
+    {
+     "x": 0.6,
+     "y": -0.1,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 11.96
+    },
+    {
+     "x": -0.6,
+     "y": -0.2,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 9.56
+    },
+    {
+     "x": -0.3,
+     "y": -0.2,
+     "obj": "fur_armL<armL<body<benny_root<AuxScene",
+     "d": 7.66
+    },
+    {
+     "x": 0,
+     "y": -0.2,
+     "obj": "fur_body<body<benny_root<AuxScene<Benny",
+     "d": 6.82
+    },
+    {
+     "x": 0.3,
+     "y": -0.2,
+     "obj": "fur_body<body<benny_root<AuxScene<Benny",
+     "d": 7.21
+    },
+    {
+     "x": 0.6,
+     "y": -0.2,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 9.1
+    }
+   ],
+   "hidden": []
+  },
+  {
+   "s": 232,
+   "state": {
+    "mode": "ride",
+    "stage": "06",
+    "s": 232.093,
+    "lat": 0,
+    "coins": 1720,
+    "hearts": 5,
+    "paused": false,
+    "bennyY": -38.258,
+    "bennyVisible": true,
+    "cam": [
+     -3.19,
+     -34.54,
+     -165.32
+    ]
+   },
+   "cam": [
+    -3.1853366993313315,
+    -34.53956957629611,
+    -165.31960875120203
+   ],
+   "target": [
+    -1.0385749517207161,
+    -38.930345506309905,
+    -174.17816404826712
+   ],
+   "bs": {
+    "x": -0.07,
+    "y": -0.31,
+    "z": 0.984,
+    "visible": true,
+    "cam": [
+     -3.19,
+     -34.54,
+     -165.32
+    ],
+    "benny": [
+     -2.13,
+     -38.26,
+     -170.29
+    ]
+   },
+   "grid": [
+    {
+     "x": -0.6,
+     "y": 0.9,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 28.45
+    },
+    {
+     "x": -0.3,
+     "y": 0.9,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 32.03
+    },
+    {
+     "x": 0,
+     "y": 0.9,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 35.48
+    },
+    {
+     "x": 0.3,
+     "y": 0.9,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 36.56
+    },
+    {
+     "x": 0.6,
+     "y": 0.9,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 33.74
+    },
+    {
+     "x": -0.6,
+     "y": 0.8,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 30.97
+    },
+    {
+     "x": -0.3,
+     "y": 0.8,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 36.54
+    },
+    {
+     "x": 0,
+     "y": 0.8,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 39.52
+    },
+    {
+     "x": 0.3,
+     "y": 0.8,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 39.65
+    },
+    {
+     "x": 0.6,
+     "y": 0.8,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 38.1
+    },
+    {
+     "x": -0.6,
+     "y": 0.7,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 33.93
+    },
+    {
+     "x": -0.3,
+     "y": 0.7,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 40.43
+    },
+    {
+     "x": 0,
+     "y": 0.7,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 44.16
+    },
+    {
+     "x": 0.3,
+     "y": 0.7,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 55.58
+    },
+    {
+     "x": 0.6,
+     "y": 0.7,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 56.07
+    },
+    {
+     "x": -0.6,
+     "y": 0.6,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 36.47
+    },
+    {
+     "x": -0.3,
+     "y": 0.6,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 41.37
+    },
+    {
+     "x": 0,
+     "y": 0.6,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 54.62
+    },
+    {
+     "x": 0.3,
+     "y": 0.6,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 69.6
+    },
+    {
+     "x": 0.6,
+     "y": 0.6,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 74.95
+    },
+    {
+     "x": -0.6,
+     "y": 0.5,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 38.24
+    },
+    {
+     "x": -0.3,
+     "y": 0.5,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 44
+    },
+    {
+     "x": 0,
+     "y": 0.5,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 57.65
+    },
+    {
+     "x": 0.3,
+     "y": 0.5,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 108.4
+    },
+    {
+     "x": 0.6,
+     "y": 0.5,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 94.93
+    },
+    {
+     "x": -0.6,
+     "y": 0.4,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 39.07
+    },
+    {
+     "x": -0.3,
+     "y": 0.4,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 45.86
+    },
+    {
+     "x": 0,
+     "y": 0.4,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 59.57
+    },
+    {
+     "x": 0.3,
+     "y": 0.4,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 111.9
+    },
+    {
+     "x": 0.6,
+     "y": 0.4,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 97.96
+    },
+    {
+     "x": -0.6,
+     "y": 0.3,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 38.91
+    },
+    {
+     "x": -0.3,
+     "y": 0.3,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 45.48
+    },
+    {
+     "x": 0,
+     "y": 0.3,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 59.12
+    },
+    {
+     "x": 0.3,
+     "y": 0.3,
+     "obj": "foam_berm<foam_banks<water_system<Scene",
+     "d": 100.5
+    },
+    {
+     "x": 0.6,
+     "y": 0.3,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 96.27
+    },
+    {
+     "x": -0.6,
+     "y": 0.2,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 37.76
+    },
+    {
+     "x": -0.3,
+     "y": 0.2,
+     "obj": "Mesh<foam_banks<water_system<Scene",
+     "d": 31.22
+    },
+    {
+     "x": 0,
+     "y": 0.2,
+     "obj": "Mesh<foam_banks<water_system<Scene",
+     "d": 40.94
+    },
+    {
+     "x": 0.3,
+     "y": 0.2,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 53.64
+    },
+    {
+     "x": 0.6,
+     "y": 0.2,
+     "obj": "Mesh<foam_banks<water_system<Scene",
+     "d": 47
+    },
+    {
+     "x": -0.6,
+     "y": 0.1,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 19.71
+    },
+    {
+     "x": -0.3,
+     "y": 0.1,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 20.19
+    },
+    {
+     "x": 0,
+     "y": 0.1,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 18.89
+    },
+    {
+     "x": 0.3,
+     "y": 0.1,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 16.42
+    },
+    {
+     "x": 0.6,
+     "y": 0.1,
+     "obj": "foam_berm<foam_banks<water_system<Scene",
+     "d": 13.03
+    },
+    {
+     "x": -0.6,
+     "y": 0,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 13.78
+    },
+    {
+     "x": -0.3,
+     "y": 0,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 13.17
+    },
+    {
+     "x": 0,
+     "y": 0,
+     "obj": "fur_pom<pom<hat<body<benny_root",
+     "d": 5.81
+    },
+    {
+     "x": 0.3,
+     "y": 0,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 12.49
+    },
+    {
+     "x": 0.6,
+     "y": 0,
+     "obj": "foam_berm<foam_banks<water_system<Scene",
+     "d": 11.56
+    },
+    {
+     "x": -0.6,
+     "y": -0.1,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 10.62
+    },
+    {
+     "x": -0.3,
+     "y": -0.1,
+     "obj": "hat_crown<hat<body<benny_root<AuxScene",
+     "d": 5.75
+    },
+    {
+     "x": 0,
+     "y": -0.1,
+     "obj": "hat_crown<hat<body<benny_root<AuxScene",
+     "d": 5.58
+    },
+    {
+     "x": 0.3,
+     "y": -0.1,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 9.94
+    },
+    {
+     "x": 0.6,
+     "y": -0.1,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 9.64
+    },
+    {
+     "x": -0.6,
+     "y": -0.2,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 8.87
+    },
+    {
+     "x": -0.3,
+     "y": -0.2,
+     "obj": "hat_brim<hat<body<benny_root<AuxScene",
+     "d": 5.5
+    },
+    {
+     "x": 0,
+     "y": -0.2,
+     "obj": "hat_brim<hat<body<benny_root<AuxScene",
+     "d": 5.39
+    },
+    {
+     "x": 0.3,
+     "y": -0.2,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 8.31
+    },
+    {
+     "x": 0.6,
+     "y": -0.2,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 8.29
+    }
+   ],
+   "hidden": []
+  },
+  {
+   "s": 250,
+   "state": {
+    "mode": "ride",
+    "stage": "06",
+    "s": 250.06,
+    "lat": 0,
+    "coins": 1740,
+    "hearts": 5,
+    "paused": false,
+    "bennyY": -42.753,
+    "bennyVisible": true,
+    "cam": [
+     -0.87,
+     -39.26,
+     -182.85
+    ]
+   },
+   "cam": [
+    -0.8722823134821182,
+    -39.25851557107253,
+    -182.8457021606003
+   ],
+   "target": [
+    3.3466478153544057,
+    -43.56871207921816,
+    -190.81885195537353
+   ],
+   "bs": {
+    "x": -0.06,
+    "y": -0.27,
+    "z": 0.984,
+    "visible": true,
+    "cam": [
+     -0.87,
+     -39.26,
+     -182.85
+    ],
+    "benny": [
+     1.37,
+     -42.75,
+     -187.34
+    ]
+   },
+   "grid": [
+    {
+     "x": -0.6,
+     "y": 0.9,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 32.76
+    },
+    {
+     "x": -0.3,
+     "y": 0.9,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 37.27
+    },
+    {
+     "x": 0,
+     "y": 0.9,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 39.53
+    },
+    {
+     "x": 0.3,
+     "y": 0.9,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 39.39
+    },
+    {
+     "x": 0.6,
+     "y": 0.9,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 35.05
+    },
+    {
+     "x": -0.6,
+     "y": 0.8,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 36.12
+    },
+    {
+     "x": -0.3,
+     "y": 0.8,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 39.48
+    },
+    {
+     "x": 0,
+     "y": 0.8,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 43.4
+    },
+    {
+     "x": 0.3,
+     "y": 0.8,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 41.94
+    },
+    {
+     "x": 0.6,
+     "y": 0.8,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 39.29
+    },
+    {
+     "x": -0.6,
+     "y": 0.7,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 39.8
+    },
+    {
+     "x": -0.3,
+     "y": 0.7,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 51.12
+    },
+    {
+     "x": 0,
+     "y": 0.7,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 56.68
+    },
+    {
+     "x": 0.3,
+     "y": 0.7,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 57.73
+    },
+    {
+     "x": 0.6,
+     "y": 0.7,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 41.33
+    },
+    {
+     "x": -0.6,
+     "y": 0.6,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 39.62
+    },
+    {
+     "x": -0.3,
+     "y": 0.6,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 55.81
+    },
+    {
+     "x": 0,
+     "y": 0.6,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 77.09
+    },
+    {
+     "x": 0.3,
+     "y": 0.6,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 68.25
+    },
+    {
+     "x": 0.6,
+     "y": 0.6,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 54.64
+    },
+    {
+     "x": -0.6,
+     "y": 0.5,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 41.47
+    },
+    {
+     "x": -0.3,
+     "y": 0.5,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 91.11
+    },
+    {
+     "x": 0,
+     "y": 0.5,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 80.6
+    },
+    {
+     "x": 0.3,
+     "y": 0.5,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 72.82
+    },
+    {
+     "x": 0.6,
+     "y": 0.5,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 58.85
+    },
+    {
+     "x": -0.6,
+     "y": 0.4,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 42.15
+    },
+    {
+     "x": -0.3,
+     "y": 0.4,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 93.42
+    },
+    {
+     "x": 0,
+     "y": 0.4,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 82.61
+    },
+    {
+     "x": 0.3,
+     "y": 0.4,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 74.19
+    },
+    {
+     "x": 0.6,
+     "y": 0.4,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 58.82
+    },
+    {
+     "x": -0.6,
+     "y": 0.3,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 40.95
+    },
+    {
+     "x": -0.3,
+     "y": 0.3,
+     "obj": "foam_berm<foam_banks<water_system<Scene",
+     "d": 83.2
+    },
+    {
+     "x": 0,
+     "y": 0.3,
+     "obj": "Mesh<foam_banks<water_system<Scene",
+     "d": 73.42
+    },
+    {
+     "x": 0.3,
+     "y": 0.3,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 72.61
+    },
+    {
+     "x": 0.6,
+     "y": 0.3,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 58.41
+    },
+    {
+     "x": -0.6,
+     "y": 0.2,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 39.69
+    },
+    {
+     "x": -0.3,
+     "y": 0.2,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 55.64
+    },
+    {
+     "x": 0,
+     "y": 0.2,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 45.41
+    },
+    {
+     "x": 0.3,
+     "y": 0.2,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 44.7
+    },
+    {
+     "x": 0.6,
+     "y": 0.2,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 52.46
+    },
+    {
+     "x": -0.6,
+     "y": 0.1,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 37.74
+    },
+    {
+     "x": -0.3,
+     "y": 0.1,
+     "obj": "foam_berm<foam_banks<water_system<Scene",
+     "d": 26.2
+    },
+    {
+     "x": 0,
+     "y": 0.1,
+     "obj": "fur_pom<pom<hat<body<benny_root",
+     "d": 5.84
+    },
+    {
+     "x": 0.3,
+     "y": 0.1,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 30.67
+    },
+    {
+     "x": 0.6,
+     "y": 0.1,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 39.15
+    },
+    {
+     "x": -0.6,
+     "y": 0,
+     "obj": "Mesh<foam_banks<water_system<Scene",
+     "d": 17.43
+    },
+    {
+     "x": -0.3,
+     "y": 0,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 19.86
+    },
+    {
+     "x": 0,
+     "y": 0,
+     "obj": "hat_crown<hat<body<benny_root<AuxScene",
+     "d": 5.67
+    },
+    {
+     "x": 0.3,
+     "y": 0,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 19.98
+    },
+    {
+     "x": 0.6,
+     "y": 0,
+     "obj": "Mesh<foam_banks<water_system<Scene",
+     "d": 12.84
+    },
+    {
+     "x": -0.6,
+     "y": -0.1,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 13.85
+    },
+    {
+     "x": -0.3,
+     "y": -0.1,
+     "obj": "hat_crown<hat<body<benny_root<AuxScene",
+     "d": 5.49
+    },
+    {
+     "x": 0,
+     "y": -0.1,
+     "obj": "hat_crown<hat<body<benny_root<AuxScene",
+     "d": 5.36
+    },
+    {
+     "x": 0.3,
+     "y": -0.1,
+     "obj": "hat_brim<hat<body<benny_root<AuxScene",
+     "d": 5.92
+    },
+    {
+     "x": 0.6,
+     "y": -0.1,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 10.85
+    },
+    {
+     "x": -0.6,
+     "y": -0.2,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 10.35
+    },
+    {
+     "x": -0.3,
+     "y": -0.2,
+     "obj": "hat_brim<hat<body<benny_root<AuxScene",
+     "d": 5.4
+    },
+    {
+     "x": 0,
+     "y": -0.2,
+     "obj": "fur_body<body<benny_root<AuxScene<Benny",
+     "d": 5.38
+    },
+    {
+     "x": 0.3,
+     "y": -0.2,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 9.06
+    },
+    {
+     "x": 0.6,
+     "y": -0.2,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 8.83
+    }
+   ],
+   "hidden": []
+  },
+  {
+   "s": 270,
+   "state": {
+    "mode": "ride",
+    "stage": "06",
+    "s": 270.043,
+    "lat": 0,
+    "coins": 1750,
+    "hearts": 5,
+    "paused": false,
+    "bennyY": -49.135,
+    "bennyVisible": true,
+    "cam": [
+     8.45,
+     -45.91,
+     -198.98
+    ]
+   },
+   "cam": [
+    8.44875542279673,
+    -45.90946671273072,
+    -198.98123098822575
+   ],
+   "target": [
+    12.610162191492945,
+    -49.59073734849258,
+    -207.29463728572696
+   ],
+   "bs": {
+    "x": -0.01,
+    "y": -0.29,
+    "z": 0.984,
+    "visible": true,
+    "cam": [
+     8.45,
+     -45.91,
+     -198.98
+    ],
+    "benny": [
+     10.77,
+     -49.14,
+     -203.68
+    ]
+   },
+   "grid": [
+    {
+     "x": -0.6,
+     "y": 0.9,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 31.99
+    },
+    {
+     "x": -0.3,
+     "y": 0.9,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 36.62
+    },
+    {
+     "x": 0,
+     "y": 0.9,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 38.29
+    },
+    {
+     "x": 0.3,
+     "y": 0.9,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 38.95
+    },
+    {
+     "x": 0.6,
+     "y": 0.9,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 37.2
+    },
+    {
+     "x": -0.6,
+     "y": 0.8,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 34.55
+    },
+    {
+     "x": -0.3,
+     "y": 0.8,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 37.48
+    },
+    {
+     "x": 0,
+     "y": 0.8,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 42.59
+    },
+    {
+     "x": 0.3,
+     "y": 0.8,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 41.57
+    },
+    {
+     "x": 0.6,
+     "y": 0.8,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 39.39
+    },
+    {
+     "x": -0.6,
+     "y": 0.7,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 36.9
+    },
+    {
+     "x": -0.3,
+     "y": 0.7,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 54.32
+    },
+    {
+     "x": 0,
+     "y": 0.7,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 54.65
+    },
+    {
+     "x": 0.3,
+     "y": 0.7,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 50.25
+    },
+    {
+     "x": 0.6,
+     "y": 0.7,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 41.59
+    },
+    {
+     "x": -0.6,
+     "y": 0.6,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 36.57
+    },
+    {
+     "x": -0.3,
+     "y": 0.6,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 65.41
+    },
+    {
+     "x": 0,
+     "y": 0.6,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 57.9
+    },
+    {
+     "x": 0.3,
+     "y": 0.6,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 54.3
+    },
+    {
+     "x": 0.6,
+     "y": 0.6,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 47.61
+    },
+    {
+     "x": -0.6,
+     "y": 0.5,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 41.81
+    },
+    {
+     "x": -0.3,
+     "y": 0.5,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 70.12
+    },
+    {
+     "x": 0,
+     "y": 0.5,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 61.7
+    },
+    {
+     "x": 0.3,
+     "y": 0.5,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 56.94
+    },
+    {
+     "x": 0.6,
+     "y": 0.5,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 49.56
+    },
+    {
+     "x": -0.6,
+     "y": 0.4,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 81.48
+    },
+    {
+     "x": -0.3,
+     "y": 0.4,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 72.59
+    },
+    {
+     "x": 0,
+     "y": 0.4,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 63.68
+    },
+    {
+     "x": 0.3,
+     "y": 0.4,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 58.14
+    },
+    {
+     "x": 0.6,
+     "y": 0.4,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 50.31
+    },
+    {
+     "x": -0.6,
+     "y": 0.3,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 39.58
+    },
+    {
+     "x": -0.3,
+     "y": 0.3,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 72.91
+    },
+    {
+     "x": 0,
+     "y": 0.3,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 63.62
+    },
+    {
+     "x": 0.3,
+     "y": 0.3,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 57.84
+    },
+    {
+     "x": 0.6,
+     "y": 0.3,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 49.73
+    },
+    {
+     "x": -0.6,
+     "y": 0.2,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 36.03
+    },
+    {
+     "x": -0.3,
+     "y": 0.2,
+     "obj": "foam_berm<foam_banks<water_system<Scene",
+     "d": 47.19
+    },
+    {
+     "x": 0,
+     "y": 0.2,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 52.92
+    },
+    {
+     "x": 0.3,
+     "y": 0.2,
+     "obj": "foam_berm<foam_banks<water_system<Scene",
+     "d": 44.24
+    },
+    {
+     "x": 0.6,
+     "y": 0.2,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 47.6
+    },
+    {
+     "x": -0.6,
+     "y": 0.1,
+     "obj": "Mesh<foam_banks<water_system<Scene",
+     "d": 14.46
+    },
+    {
+     "x": -0.3,
+     "y": 0.1,
+     "obj": "Mesh<foam_banks<water_system<Scene",
+     "d": 19.9
+    },
+    {
+     "x": 0,
+     "y": 0.1,
+     "obj": "fur_pom<pom<hat<body<benny_root",
+     "d": 5.86
+    },
+    {
+     "x": 0.3,
+     "y": 0.1,
+     "obj": "Mesh<coins<Scene",
+     "d": 20.55
+    },
+    {
+     "x": 0.6,
+     "y": 0.1,
+     "obj": "Mesh<foam_banks<water_system<Scene",
+     "d": 22.43
+    },
+    {
+     "x": -0.6,
+     "y": 0,
+     "obj": "Mesh<foam_banks<water_system<Scene",
+     "d": 13.02
+    },
+    {
+     "x": -0.3,
+     "y": 0,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 15.56
+    },
+    {
+     "x": 0,
+     "y": 0,
+     "obj": "hat_crown<hat<body<benny_root<AuxScene",
+     "d": 5.82
+    },
+    {
+     "x": 0.3,
+     "y": 0,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 16.21
+    },
+    {
+     "x": 0.6,
+     "y": 0,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 16.22
+    },
+    {
+     "x": -0.6,
+     "y": -0.1,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 11.03
+    },
+    {
+     "x": -0.3,
+     "y": -0.1,
+     "obj": "hat_brim<hat<body<benny_root<AuxScene",
+     "d": 5.72
+    },
+    {
+     "x": 0,
+     "y": -0.1,
+     "obj": "hat_crown<hat<body<benny_root<AuxScene",
+     "d": 5.41
+    },
+    {
+     "x": 0.3,
+     "y": -0.1,
+     "obj": "hat_star<hat<body<benny_root<AuxScene",
+     "d": 5.47
+    },
+    {
+     "x": 0.6,
+     "y": -0.1,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 12.24
+    },
+    {
+     "x": -0.6,
+     "y": -0.2,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 9.16
+    },
+    {
+     "x": -0.3,
+     "y": -0.2,
+     "obj": "fur_body<body<benny_root<AuxScene<Benny",
+     "d": 5.71
+    },
+    {
+     "x": 0,
+     "y": -0.2,
+     "obj": "hat_brim<hat<body<benny_root<AuxScene",
+     "d": 5.32
+    },
+    {
+     "x": 0.3,
+     "y": -0.2,
+     "obj": "hat_brim<hat<body<benny_root<AuxScene",
+     "d": 5.54
+    },
+    {
+     "x": 0.6,
+     "y": -0.2,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 9.85
+    }
+   ],
+   "hidden": []
+  },
+  {
+   "s": 290,
+   "state": {
+    "mode": "ride",
+    "stage": "06",
+    "s": 290.027,
+    "lat": 0,
+    "coins": 1760,
+    "hearts": 5,
+    "paused": false,
+    "bennyY": -53.513,
+    "bennyVisible": true,
+    "cam": [
+     20.11,
+     -50.23,
+     -215.13
+    ]
+   },
+   "cam": [
+    20.1063719588106,
+    -50.22535466946154,
+    -215.1301647568387
+   ],
+   "target": [
+    21.698357743568945,
+    -53.849152303322796,
+    -224.30843146451923
+   ],
+   "bs": {
+    "x": -0.03,
+    "y": -0.32,
+    "z": 0.984,
+    "visible": true,
+    "cam": [
+     20.11,
+     -50.23,
+     -215.13
+    ],
+    "benny": [
+     20.95,
+     -53.51,
+     -220.27
+    ]
+   },
+   "grid": [
+    {
+     "x": -0.6,
+     "y": 0.9,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 22.68
+    },
+    {
+     "x": -0.3,
+     "y": 0.9,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 33.48
+    },
+    {
+     "x": 0,
+     "y": 0.9,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 35.73
+    },
+    {
+     "x": 0.3,
+     "y": 0.9,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 37.11
+    },
+    {
+     "x": 0.6,
+     "y": 0.9,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 37.91
+    },
+    {
+     "x": -0.6,
+     "y": 0.8,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 23.79
+    },
+    {
+     "x": -0.3,
+     "y": 0.8,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 37.3
+    },
+    {
+     "x": 0,
+     "y": 0.8,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 46.79
+    },
+    {
+     "x": 0.3,
+     "y": 0.8,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 41.82
+    },
+    {
+     "x": 0.6,
+     "y": 0.8,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 38.86
+    },
+    {
+     "x": -0.6,
+     "y": 0.7,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 31.85
+    },
+    {
+     "x": -0.3,
+     "y": 0.7,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 52.94
+    },
+    {
+     "x": 0,
+     "y": 0.7,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 52.25
+    },
+    {
+     "x": 0.3,
+     "y": 0.7,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 47.78
+    },
+    {
+     "x": 0.6,
+     "y": 0.7,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 41.38
+    },
+    {
+     "x": -0.6,
+     "y": 0.6,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 31.53
+    },
+    {
+     "x": -0.3,
+     "y": 0.6,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 64.58
+    },
+    {
+     "x": 0,
+     "y": 0.6,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 54.27
+    },
+    {
+     "x": 0.3,
+     "y": 0.6,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 50.57
+    },
+    {
+     "x": 0.6,
+     "y": 0.6,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 43.57
+    },
+    {
+     "x": -0.6,
+     "y": 0.5,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 31.29
+    },
+    {
+     "x": -0.3,
+     "y": 0.5,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 70.14
+    },
+    {
+     "x": 0,
+     "y": 0.5,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 57.66
+    },
+    {
+     "x": 0.3,
+     "y": 0.5,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 52.44
+    },
+    {
+     "x": 0.6,
+     "y": 0.5,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 46.66
+    },
+    {
+     "x": -0.6,
+     "y": 0.4,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 31.14
+    },
+    {
+     "x": -0.3,
+     "y": 0.4,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 71.38
+    },
+    {
+     "x": 0,
+     "y": 0.4,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 59.6
+    },
+    {
+     "x": 0.3,
+     "y": 0.4,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 53.23
+    },
+    {
+     "x": 0.6,
+     "y": 0.4,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 47.04
+    },
+    {
+     "x": -0.6,
+     "y": 0.3,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 31.07
+    },
+    {
+     "x": -0.3,
+     "y": 0.3,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 71.3
+    },
+    {
+     "x": 0,
+     "y": 0.3,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 59.15
+    },
+    {
+     "x": 0.3,
+     "y": 0.3,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 52.75
+    },
+    {
+     "x": 0.6,
+     "y": 0.3,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 46.49
+    },
+    {
+     "x": -0.6,
+     "y": 0.2,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 22.81
+    },
+    {
+     "x": -0.3,
+     "y": 0.2,
+     "obj": "Mesh<foam_banks<water_system<Scene",
+     "d": 40.14
+    },
+    {
+     "x": 0,
+     "y": 0.2,
+     "obj": "Mesh<foam_banks<water_system<Scene",
+     "d": 29.35
+    },
+    {
+     "x": 0.3,
+     "y": 0.2,
+     "obj": "Mesh<foam_banks<water_system<Scene",
+     "d": 40.18
+    },
+    {
+     "x": 0.6,
+     "y": 0.2,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 43.03
+    },
+    {
+     "x": -0.6,
+     "y": 0.1,
+     "obj": "Mesh<foam_banks<water_system<Scene",
+     "d": 10.54
+    },
+    {
+     "x": -0.3,
+     "y": 0.1,
+     "obj": "Mesh<foam_banks<water_system<Scene",
+     "d": 12.28
+    },
+    {
+     "x": 0,
+     "y": 0.1,
+     "obj": "Mesh<foam_banks<water_system<Scene",
+     "d": 15.43
+    },
+    {
+     "x": 0.3,
+     "y": 0.1,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 23.77
+    },
+    {
+     "x": 0.6,
+     "y": 0.1,
+     "obj": "Mesh<coins<Scene",
+     "d": 21.74
+    },
+    {
+     "x": -0.6,
+     "y": 0,
+     "obj": "foam_berm<foam_banks<water_system<Scene",
+     "d": 10.13
+    },
+    {
+     "x": -0.3,
+     "y": 0,
+     "obj": "foam_berm<foam_banks<water_system<Scene",
+     "d": 11.75
+    },
+    {
+     "x": 0,
+     "y": 0,
+     "obj": "fur_pom<pom<hat<body<benny_root",
+     "d": 5.66
+    },
+    {
+     "x": 0.3,
+     "y": 0,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 15.2
+    },
+    {
+     "x": 0.6,
+     "y": 0,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 16.66
+    },
+    {
+     "x": -0.6,
+     "y": -0.1,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 9.62
+    },
+    {
+     "x": -0.3,
+     "y": -0.1,
+     "obj": "hat_crown<hat<body<benny_root<AuxScene",
+     "d": 5.96
+    },
+    {
+     "x": 0,
+     "y": -0.1,
+     "obj": "hat_crown<hat<body<benny_root<AuxScene",
+     "d": 5.47
+    },
+    {
+     "x": 0.3,
+     "y": -0.1,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 11.45
+    },
+    {
+     "x": 0.6,
+     "y": -0.1,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 12.23
+    },
+    {
+     "x": -0.6,
+     "y": -0.2,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 8.47
+    },
+    {
+     "x": -0.3,
+     "y": -0.2,
+     "obj": "hat_brim<hat<body<benny_root<AuxScene",
+     "d": 5.5
+    },
+    {
+     "x": 0,
+     "y": -0.2,
+     "obj": "hat_brim<hat<body<benny_root<AuxScene",
+     "d": 5.27
+    },
+    {
+     "x": 0.3,
+     "y": -0.2,
+     "obj": "hat_brim<hat<body<benny_root<AuxScene",
+     "d": 5.53
+    },
+    {
+     "x": 0.6,
+     "y": -0.2,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 9.69
+    }
+   ],
+   "hidden": []
+  },
+  {
+   "s": 310,
+   "state": {
+    "mode": "ride",
+    "stage": "06",
+    "s": 310.01,
+    "lat": 0,
+    "coins": 1770,
+    "hearts": 5,
+    "paused": false,
+    "bennyY": -57.597,
+    "bennyVisible": true,
+    "cam": [
+     29.84,
+     -54.48,
+     -233.08
+    ]
+   },
+   "cam": [
+    29.844792329626088,
+    -54.48352302342707,
+    -233.07821107123127
+   ],
+   "target": [
+    27.368144773215402,
+    -57.83660838781076,
+    -242.15797969294763
+   ],
+   "bs": {
+    "x": 0.01,
+    "y": -0.32,
+    "z": 0.983,
+    "visible": true,
+    "cam": [
+     29.84,
+     -54.48,
+     -233.08
+    ],
+    "benny": [
+     28.47,
+     -57.6,
+     -238.18
+    ]
+   },
+   "grid": [
+    {
+     "x": -0.6,
+     "y": 0.9,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 29.8
+    },
+    {
+     "x": -0.3,
+     "y": 0.9,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 33.67
+    },
+    {
+     "x": 0,
+     "y": 0.9,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 35.99
+    },
+    {
+     "x": 0.3,
+     "y": 0.9,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 36.48
+    },
+    {
+     "x": 0.6,
+     "y": 0.9,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 35.11
+    },
+    {
+     "x": -0.6,
+     "y": 0.8,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 33.26
+    },
+    {
+     "x": -0.3,
+     "y": 0.8,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 37.23
+    },
+    {
+     "x": 0,
+     "y": 0.8,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 47.12
+    },
+    {
+     "x": 0.3,
+     "y": 0.8,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 45.56
+    },
+    {
+     "x": 0.6,
+     "y": 0.8,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 37.9
+    },
+    {
+     "x": -0.6,
+     "y": 0.7,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 32.88
+    },
+    {
+     "x": -0.3,
+     "y": 0.7,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 51.47
+    },
+    {
+     "x": 0,
+     "y": 0.7,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 52.53
+    },
+    {
+     "x": 0.3,
+     "y": 0.7,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 51.92
+    },
+    {
+     "x": 0.6,
+     "y": 0.7,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 45.12
+    },
+    {
+     "x": -0.6,
+     "y": 0.6,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 35.49
+    },
+    {
+     "x": -0.3,
+     "y": 0.6,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 63.06
+    },
+    {
+     "x": 0,
+     "y": 0.6,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 72.5
+    },
+    {
+     "x": 0.3,
+     "y": 0.6,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 102.46
+    },
+    {
+     "x": 0.6,
+     "y": 0.6,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 49.15
+    },
+    {
+     "x": -0.6,
+     "y": 0.5,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 50.02
+    },
+    {
+     "x": -0.3,
+     "y": 0.5,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 70.16
+    },
+    {
+     "x": 0,
+     "y": 0.5,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 94.52
+    },
+    {
+     "x": 0.3,
+     "y": 0.5,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 105.83
+    },
+    {
+     "x": 0.6,
+     "y": 0.5,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 51.98
+    },
+    {
+     "x": -0.6,
+     "y": 0.4,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 50.86
+    },
+    {
+     "x": -0.3,
+     "y": 0.4,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 72.61
+    },
+    {
+     "x": 0,
+     "y": 0.4,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 91.64
+    },
+    {
+     "x": 0.3,
+     "y": 0.4,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 110.55
+    },
+    {
+     "x": 0.6,
+     "y": 0.4,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 51.78
+    },
+    {
+     "x": -0.6,
+     "y": 0.3,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 50.81
+    },
+    {
+     "x": -0.3,
+     "y": 0.3,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 72.56
+    },
+    {
+     "x": 0,
+     "y": 0.3,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 85.73
+    },
+    {
+     "x": 0.3,
+     "y": 0.3,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 100.38
+    },
+    {
+     "x": 0.6,
+     "y": 0.3,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 51.73
+    },
+    {
+     "x": -0.6,
+     "y": 0.2,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 32.23
+    },
+    {
+     "x": -0.3,
+     "y": 0.2,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 68.07
+    },
+    {
+     "x": 0,
+     "y": 0.2,
+     "obj": "Mesh<coins<Scene",
+     "d": 43.99
+    },
+    {
+     "x": 0.3,
+     "y": 0.2,
+     "obj": "foam_berm<foam_banks<water_system<Scene",
+     "d": 41.56
+    },
+    {
+     "x": 0.6,
+     "y": 0.2,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 49.48
+    },
+    {
+     "x": -0.6,
+     "y": 0.1,
+     "obj": "Mesh<foam_banks<water_system<Scene",
+     "d": 11.59
+    },
+    {
+     "x": -0.3,
+     "y": 0.1,
+     "obj": "Mesh<foam_banks<water_system<Scene",
+     "d": 14.14
+    },
+    {
+     "x": 0,
+     "y": 0.1,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 23.63
+    },
+    {
+     "x": 0.3,
+     "y": 0.1,
+     "obj": "Mesh<coins<Scene",
+     "d": 22.98
+    },
+    {
+     "x": 0.6,
+     "y": 0.1,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 25.68
+    },
+    {
+     "x": -0.6,
+     "y": 0,
+     "obj": "Mesh<foam_banks<water_system<Scene",
+     "d": 9.68
+    },
+    {
+     "x": -0.3,
+     "y": 0,
+     "obj": "foam_berm<foam_banks<water_system<Scene",
+     "d": 11.94
+    },
+    {
+     "x": 0,
+     "y": 0,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 14.56
+    },
+    {
+     "x": 0.3,
+     "y": 0,
+     "obj": "fur_pom<pom<hat<body<benny_root",
+     "d": 5.74
+    },
+    {
+     "x": 0.6,
+     "y": 0,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 17.59
+    },
+    {
+     "x": -0.6,
+     "y": -0.1,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 8.97
+    },
+    {
+     "x": -0.3,
+     "y": -0.1,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 10.06
+    },
+    {
+     "x": 0,
+     "y": -0.1,
+     "obj": "hat_crown<hat<body<benny_root<AuxScene",
+     "d": 5.43
+    },
+    {
+     "x": 0.3,
+     "y": -0.1,
+     "obj": "hat_crown<hat<body<benny_root<AuxScene",
+     "d": 5.69
+    },
+    {
+     "x": 0.6,
+     "y": -0.1,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 12.72
+    },
+    {
+     "x": -0.6,
+     "y": -0.2,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 7.99
+    },
+    {
+     "x": -0.3,
+     "y": -0.2,
+     "obj": "fur_body<body<benny_root<AuxScene<Benny",
+     "d": 5.9
+    },
+    {
+     "x": 0,
+     "y": -0.2,
+     "obj": "hat_brim<hat<body<benny_root<AuxScene",
+     "d": 5.23
+    },
+    {
+     "x": 0.3,
+     "y": -0.2,
+     "obj": "hat_star<hat<body<benny_root<AuxScene",
+     "d": 5.26
+    },
+    {
+     "x": 0.6,
+     "y": -0.2,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 10.03
+    }
+   ],
+   "hidden": []
+  },
+  {
+   "s": 330,
+   "state": {
+    "mode": "ride",
+    "stage": "06",
+    "s": 330.177,
+    "lat": 0,
+    "coins": 1780,
+    "hearts": 5,
+    "paused": false,
+    "bennyY": -61.262,
+    "bennyVisible": true,
+    "cam": [
+     27.69,
+     -58.23,
+     -252.62
+    ]
+   },
+   "cam": [
+    27.69429041525528,
+    -58.23455594928836,
+    -252.6169752696543
+   ],
+   "target": [
+    24.207764140648393,
+    -61.42978374348042,
+    -261.4270733481847
+   ],
+   "bs": {
+    "x": -0.01,
+    "y": -0.32,
+    "z": 0.984,
+    "visible": true,
+    "cam": [
+     27.69,
+     -58.23,
+     -252.62
+    ],
+    "benny": [
+     25.7,
+     -61.26,
+     -257.59
+    ]
+   },
+   "grid": [
+    {
+     "x": -0.6,
+     "y": 0.9,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 33.35
+    },
+    {
+     "x": -0.3,
+     "y": 0.9,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 34.34
+    },
+    {
+     "x": 0,
+     "y": 0.9,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 36.29
+    },
+    {
+     "x": 0.3,
+     "y": 0.9,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 35.47
+    },
+    {
+     "x": 0.6,
+     "y": 0.9,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 32.6
+    },
+    {
+     "x": -0.6,
+     "y": 0.8,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 33.33
+    },
+    {
+     "x": -0.3,
+     "y": 0.8,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 41.79
+    },
+    {
+     "x": 0,
+     "y": 0.8,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 45.77
+    },
+    {
+     "x": 0.3,
+     "y": 0.8,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 47.02
+    },
+    {
+     "x": 0.6,
+     "y": 0.8,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 35.85
+    },
+    {
+     "x": -0.6,
+     "y": 0.7,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 36.05
+    },
+    {
+     "x": -0.3,
+     "y": 0.7,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 46
+    },
+    {
+     "x": 0,
+     "y": 0.7,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 51.72
+    },
+    {
+     "x": 0.3,
+     "y": 0.7,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 72.88
+    },
+    {
+     "x": 0.6,
+     "y": 0.7,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 82.06
+    },
+    {
+     "x": -0.6,
+     "y": 0.6,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 41.85
+    },
+    {
+     "x": -0.3,
+     "y": 0.6,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 49.45
+    },
+    {
+     "x": 0,
+     "y": 0.6,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 55.44
+    },
+    {
+     "x": 0.3,
+     "y": 0.6,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 79.07
+    },
+    {
+     "x": 0.6,
+     "y": 0.6,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 83.87
+    },
+    {
+     "x": -0.6,
+     "y": 0.5,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 43.44
+    },
+    {
+     "x": -0.3,
+     "y": 0.5,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 51.72
+    },
+    {
+     "x": 0,
+     "y": 0.5,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 63.98
+    },
+    {
+     "x": 0.3,
+     "y": 0.5,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 79.03
+    },
+    {
+     "x": 0.6,
+     "y": 0.5,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 86.64
+    },
+    {
+     "x": -0.6,
+     "y": 0.4,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 43.98
+    },
+    {
+     "x": -0.3,
+     "y": 0.4,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 52.7
+    },
+    {
+     "x": 0,
+     "y": 0.4,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 63.46
+    },
+    {
+     "x": 0.3,
+     "y": 0.4,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 75.46
+    },
+    {
+     "x": 0.6,
+     "y": 0.4,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 89.81
+    },
+    {
+     "x": -0.6,
+     "y": 0.3,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 43.26
+    },
+    {
+     "x": -0.3,
+     "y": 0.3,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 52.19
+    },
+    {
+     "x": 0,
+     "y": 0.3,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 61.27
+    },
+    {
+     "x": 0.3,
+     "y": 0.3,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 70.11
+    },
+    {
+     "x": 0.6,
+     "y": 0.3,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 82.24
+    },
+    {
+     "x": -0.6,
+     "y": 0.2,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 37.71
+    },
+    {
+     "x": -0.3,
+     "y": 0.2,
+     "obj": "Mesh<foam_banks<water_system<Scene",
+     "d": 34.83
+    },
+    {
+     "x": 0,
+     "y": 0.2,
+     "obj": "foam_berm<foam_banks<water_system<Scene",
+     "d": 47.49
+    },
+    {
+     "x": 0.3,
+     "y": 0.2,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 51.94
+    },
+    {
+     "x": 0.6,
+     "y": 0.2,
+     "obj": "foam_berm<foam_banks<water_system<Scene",
+     "d": 51.59
+    },
+    {
+     "x": -0.6,
+     "y": 0.1,
+     "obj": "Mesh<foam_banks<water_system<Scene",
+     "d": 15.6
+    },
+    {
+     "x": -0.3,
+     "y": 0.1,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 24.16
+    },
+    {
+     "x": 0,
+     "y": 0.1,
+     "obj": "fur_pom<pom<hat<body<benny_root",
+     "d": 5.91
+    },
+    {
+     "x": 0.3,
+     "y": 0.1,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 24.54
+    },
+    {
+     "x": 0.6,
+     "y": 0.1,
+     "obj": "foam_berm<foam_banks<water_system<Scene",
+     "d": 17.54
+    },
+    {
+     "x": -0.6,
+     "y": 0,
+     "obj": "foam_berm<foam_banks<water_system<Scene",
+     "d": 14.88
+    },
+    {
+     "x": -0.3,
+     "y": 0,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 15.81
+    },
+    {
+     "x": 0,
+     "y": 0,
+     "obj": "fur_pom<pom<hat<body<benny_root",
+     "d": 5.73
+    },
+    {
+     "x": 0.3,
+     "y": 0,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 15.82
+    },
+    {
+     "x": 0.6,
+     "y": 0,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 14.91
+    },
+    {
+     "x": -0.6,
+     "y": -0.1,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 11.56
+    },
+    {
+     "x": -0.3,
+     "y": -0.1,
+     "obj": "hat_crown<hat<body<benny_root<AuxScene",
+     "d": 5.89
+    },
+    {
+     "x": 0,
+     "y": -0.1,
+     "obj": "hat_crown<hat<body<benny_root<AuxScene",
+     "d": 5.46
+    },
+    {
+     "x": 0.3,
+     "y": -0.1,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 11.54
+    },
+    {
+     "x": 0.6,
+     "y": -0.1,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 11.61
+    },
+    {
+     "x": -0.6,
+     "y": -0.2,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 9.17
+    },
+    {
+     "x": -0.3,
+     "y": -0.2,
+     "obj": "hat_brim<hat<body<benny_root<AuxScene",
+     "d": 5.52
+    },
+    {
+     "x": 0,
+     "y": -0.2,
+     "obj": "hat_brim<hat<body<benny_root<AuxScene",
+     "d": 5.28
+    },
+    {
+     "x": 0.3,
+     "y": -0.2,
+     "obj": "hat_brim<hat<body<benny_root<AuxScene",
+     "d": 5.55
+    },
+    {
+     "x": 0.6,
+     "y": -0.2,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 9.33
+    }
+   ],
+   "hidden": []
+  },
+  {
+   "s": 350,
+   "state": {
+    "mode": "ride",
+    "stage": "06",
+    "s": 350.16,
+    "lat": 0,
+    "coins": 1790,
+    "hearts": 5,
+    "paused": false,
+    "bennyY": -64.595,
+    "bennyVisible": true,
+    "cam": [
+     19.29,
+     -61.66,
+     -270.56
+    ]
+   },
+   "cam": [
+    19.285512609357067,
+    -61.66241396700529,
+    -270.5649120372742
+   ],
+   "target": [
+    18.04118840653877,
+    -64.63291349855464,
+    -280.02863012769046
+   ],
+   "bs": {
+    "x": -0.02,
+    "y": -0.33,
+    "z": 0.984,
+    "visible": true,
+    "cam": [
+     19.29,
+     -61.66,
+     -270.56
+    ],
+    "benny": [
+     18.53,
+     -64.59,
+     -275.95
+    ]
+   },
+   "grid": [
+    {
+     "x": -0.6,
+     "y": 0.9,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 34.38
+    },
+    {
+     "x": -0.3,
+     "y": 0.9,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 57.01
+    },
+    {
+     "x": 0,
+     "y": 0.9,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 62.17
+    },
+    {
+     "x": 0.3,
+     "y": 0.9,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 63.97
+    },
+    {
+     "x": 0.6,
+     "y": 0.9,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 31.5
+    },
+    {
+     "x": -0.6,
+     "y": 0.8,
+     "obj": "m06_sbbands<match06_projection<Scene",
+     "d": 36.67
+    },
+    {
+     "x": -0.3,
+     "y": 0.8,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 57.76
+    },
+    {
+     "x": 0,
+     "y": 0.8,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 63.06
+    },
+    {
+     "x": 0.3,
+     "y": 0.8,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 65.58
+    },
+    {
+     "x": 0.6,
+     "y": 0.8,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 65.92
+    },
+    {
+     "x": -0.6,
+     "y": 0.7,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 47.95
+    },
+    {
+     "x": -0.3,
+     "y": 0.7,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 60.09
+    },
+    {
+     "x": 0,
+     "y": 0.7,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 61.44
+    },
+    {
+     "x": 0.3,
+     "y": 0.7,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 68.15
+    },
+    {
+     "x": 0.6,
+     "y": 0.7,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 69.26
+    },
+    {
+     "x": -0.6,
+     "y": 0.6,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 48.14
+    },
+    {
+     "x": -0.3,
+     "y": 0.6,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 60
+    },
+    {
+     "x": 0,
+     "y": 0.6,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 64.71
+    },
+    {
+     "x": 0.3,
+     "y": 0.6,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 72.3
+    },
+    {
+     "x": 0.6,
+     "y": 0.6,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 72.07
+    },
+    {
+     "x": -0.6,
+     "y": 0.5,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 47.08
+    },
+    {
+     "x": -0.3,
+     "y": 0.5,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 57.64
+    },
+    {
+     "x": 0,
+     "y": 0.5,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 65.26
+    },
+    {
+     "x": 0.3,
+     "y": 0.5,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 93.97
+    },
+    {
+     "x": 0.6,
+     "y": 0.5,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 76.11
+    },
+    {
+     "x": -0.6,
+     "y": 0.4,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 45.22
+    },
+    {
+     "x": -0.3,
+     "y": 0.4,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 53.48
+    },
+    {
+     "x": 0,
+     "y": 0.4,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 64.22
+    },
+    {
+     "x": 0.3,
+     "y": 0.4,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 125.9
+    },
+    {
+     "x": 0.6,
+     "y": 0.4,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 80.65
+    },
+    {
+     "x": -0.6,
+     "y": 0.3,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 42.92
+    },
+    {
+     "x": -0.3,
+     "y": 0.3,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 49.93
+    },
+    {
+     "x": 0,
+     "y": 0.3,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 60.82
+    },
+    {
+     "x": 0.3,
+     "y": 0.3,
+     "obj": "Mesh<coins<Scene",
+     "d": 83.35
+    },
+    {
+     "x": 0.6,
+     "y": 0.3,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 76.29
+    },
+    {
+     "x": -0.6,
+     "y": 0.2,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 40.37
+    },
+    {
+     "x": -0.3,
+     "y": 0.2,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 45.39
+    },
+    {
+     "x": 0,
+     "y": 0.2,
+     "obj": "foam_berm<foam_banks<water_system<Scene",
+     "d": 42.75
+    },
+    {
+     "x": 0.3,
+     "y": 0.2,
+     "obj": "Mesh<coins<Scene",
+     "d": 45.88
+    },
+    {
+     "x": 0.6,
+     "y": 0.2,
+     "obj": "foam_berm<foam_banks<water_system<Scene",
+     "d": 48.02
+    },
+    {
+     "x": -0.6,
+     "y": 0.1,
+     "obj": "foam_berm<foam_banks<water_system<Scene",
+     "d": 26.82
+    },
+    {
+     "x": -0.3,
+     "y": 0.1,
+     "obj": "Mesh<coins<Scene",
+     "d": 25.8
+    },
+    {
+     "x": 0,
+     "y": 0.1,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 25.66
+    },
+    {
+     "x": 0.3,
+     "y": 0.1,
+     "obj": "Mesh<foam_banks<water_system<Scene",
+     "d": 15.73
+    },
+    {
+     "x": 0.6,
+     "y": 0.1,
+     "obj": "m06_tube<match06_projection<Scene",
+     "d": 41.47
+    },
+    {
+     "x": -0.6,
+     "y": 0,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 18.61
+    },
+    {
+     "x": -0.3,
+     "y": 0,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 17.06
+    },
+    {
+     "x": 0,
+     "y": 0,
+     "obj": "fur_pom<pom<hat<body<benny_root",
+     "d": 5.77
+    },
+    {
+     "x": 0.3,
+     "y": 0,
+     "obj": "Mesh<foam_banks<water_system<Scene",
+     "d": 13.16
+    },
+    {
+     "x": 0.6,
+     "y": 0,
+     "obj": "foam_berm<foam_banks<water_system<Scene",
+     "d": 11.13
+    },
+    {
+     "x": -0.6,
+     "y": -0.1,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 12.92
+    },
+    {
+     "x": -0.3,
+     "y": -0.1,
+     "obj": "hat_crown<hat<body<benny_root<AuxScene",
+     "d": 5.81
+    },
+    {
+     "x": 0,
+     "y": -0.1,
+     "obj": "hat_crown<hat<body<benny_root<AuxScene",
+     "d": 5.49
+    },
+    {
+     "x": 0.3,
+     "y": -0.1,
+     "obj": "hat_star<hat<body<benny_root<AuxScene",
+     "d": 5.65
+    },
+    {
+     "x": 0.6,
+     "y": -0.1,
+     "obj": "foam_berm<foam_banks<water_system<Scene",
+     "d": 10.34
+    },
+    {
+     "x": -0.6,
+     "y": -0.2,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 9.84
+    },
+    {
+     "x": -0.3,
+     "y": -0.2,
+     "obj": "hat_brim<hat<body<benny_root<AuxScene",
+     "d": 5.47
+    },
+    {
+     "x": 0,
+     "y": -0.2,
+     "obj": "hat_brim<hat<body<benny_root<AuxScene",
+     "d": 5.29
+    },
+    {
+     "x": 0.3,
+     "y": -0.2,
+     "obj": "hat_brim<hat<body<benny_root<AuxScene",
+     "d": 5.69
+    },
+    {
+     "x": 0.6,
+     "y": -0.2,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 8.89
+    }
+   ],
+   "hidden": []
+  },
+  {
+   "s": 370,
+   "state": {
+    "mode": "ride",
+    "stage": "06",
+    "s": 370.143,
+    "lat": 0,
+    "coins": 1800,
+    "hearts": 5,
+    "paused": false,
+    "bennyY": -67.522,
+    "bennyVisible": true,
+    "cam": [
+     13.06,
+     -64.95,
+     -289.46
+    ]
+   },
+   "cam": [
+    13.05967126411093,
+    -64.9523274899487,
+    -289.46402470350006
+   ],
+   "target": [
+    14.520991472676531,
+    -67.47450614231715,
+    -299.02624166889564
+   ],
+   "bs": {
+    "x": -0.06,
+    "y": -0.3,
+    "z": 0.984,
+    "visible": true,
+    "cam": [
+     13.06,
+     -64.95,
+     -289.46
+    ],
+    "benny": [
+     13.78,
+     -67.52,
+     -294.99
+    ]
+   },
+   "grid": [
+    {
+     "x": -0.6,
+     "y": 0.9,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 45.48
+    },
+    {
+     "x": -0.3,
+     "y": 0.9,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 46.81
+    },
+    {
+     "x": 0,
+     "y": 0.9,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 49.97
+    },
+    {
+     "x": 0.3,
+     "y": 0.9,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 50.49
+    },
+    {
+     "x": 0.6,
+     "y": 0.9,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 50.03
+    },
+    {
+     "x": -0.6,
+     "y": 0.8,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 45.85
+    },
+    {
+     "x": -0.3,
+     "y": 0.8,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 49.67
+    },
+    {
+     "x": 0,
+     "y": 0.8,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 51.61
+    },
+    {
+     "x": 0.3,
+     "y": 0.8,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 51.72
+    },
+    {
+     "x": 0.6,
+     "y": 0.8,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 50.92
+    },
+    {
+     "x": -0.6,
+     "y": 0.7,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 46.34
+    },
+    {
+     "x": -0.3,
+     "y": 0.7,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 52.01
+    },
+    {
+     "x": 0,
+     "y": 0.7,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 53.61
+    },
+    {
+     "x": 0.3,
+     "y": 0.7,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 52.98
+    },
+    {
+     "x": 0.6,
+     "y": 0.7,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 51.69
+    },
+    {
+     "x": -0.6,
+     "y": 0.6,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 45.65
+    },
+    {
+     "x": -0.3,
+     "y": 0.6,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 56.36
+    },
+    {
+     "x": 0,
+     "y": 0.6,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 56.57
+    },
+    {
+     "x": 0.3,
+     "y": 0.6,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 54.25
+    },
+    {
+     "x": 0.6,
+     "y": 0.6,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 52.25
+    },
+    {
+     "x": -0.6,
+     "y": 0.5,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 45.51
+    },
+    {
+     "x": -0.3,
+     "y": 0.5,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 76.8
+    },
+    {
+     "x": 0,
+     "y": 0.5,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 62.23
+    },
+    {
+     "x": 0.3,
+     "y": 0.5,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 55.41
+    },
+    {
+     "x": 0.6,
+     "y": 0.5,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 52.49
+    },
+    {
+     "x": -0.6,
+     "y": 0.4,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 45.23
+    },
+    {
+     "x": -0.3,
+     "y": 0.4,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 105.95
+    },
+    {
+     "x": 0,
+     "y": 0.4,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 89.66
+    },
+    {
+     "x": 0.3,
+     "y": 0.4,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 55.63
+    },
+    {
+     "x": 0.6,
+     "y": 0.4,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 52.2
+    },
+    {
+     "x": -0.6,
+     "y": 0.3,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 42.29
+    },
+    {
+     "x": -0.3,
+     "y": 0.3,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 112.8
+    },
+    {
+     "x": 0,
+     "y": 0.3,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 87.62
+    },
+    {
+     "x": 0.3,
+     "y": 0.3,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 55.23
+    },
+    {
+     "x": 0.6,
+     "y": 0.3,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 51.09
+    },
+    {
+     "x": -0.6,
+     "y": 0.2,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 37.21
+    },
+    {
+     "x": -0.3,
+     "y": 0.2,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 45.89
+    },
+    {
+     "x": 0,
+     "y": 0.2,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 44.93
+    },
+    {
+     "x": 0.3,
+     "y": 0.2,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 52.33
+    },
+    {
+     "x": 0.6,
+     "y": 0.2,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 47.67
+    },
+    {
+     "x": -0.6,
+     "y": 0.1,
+     "obj": "foam_berm<foam_banks<water_system<Scene",
+     "d": 18.79
+    },
+    {
+     "x": -0.3,
+     "y": 0.1,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 24.36
+    },
+    {
+     "x": 0,
+     "y": 0.1,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 26.2
+    },
+    {
+     "x": 0.3,
+     "y": 0.1,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 26.61
+    },
+    {
+     "x": 0.6,
+     "y": 0.1,
+     "obj": "Mesh<foam_banks<water_system<Scene",
+     "d": 15.65
+    },
+    {
+     "x": -0.6,
+     "y": 0,
+     "obj": "foam_berm<foam_banks<water_system<Scene",
+     "d": 16.58
+    },
+    {
+     "x": -0.3,
+     "y": 0,
+     "obj": "fur_pom<pom<hat<body<benny_root",
+     "d": 5.99
+    },
+    {
+     "x": 0,
+     "y": 0,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 16.57
+    },
+    {
+     "x": 0.3,
+     "y": 0,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 16.26
+    },
+    {
+     "x": 0.6,
+     "y": 0,
+     "obj": "foam_berm<foam_banks<water_system<Scene",
+     "d": 13.08
+    },
+    {
+     "x": -0.6,
+     "y": -0.1,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 13.03
+    },
+    {
+     "x": -0.3,
+     "y": -0.1,
+     "obj": "hat_crown<hat<body<benny_root<AuxScene",
+     "d": 5.56
+    },
+    {
+     "x": 0,
+     "y": -0.1,
+     "obj": "hat_crown<hat<body<benny_root<AuxScene",
+     "d": 5.42
+    },
+    {
+     "x": 0.3,
+     "y": -0.1,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 11.42
+    },
+    {
+     "x": 0.6,
+     "y": -0.1,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 10.43
+    },
+    {
+     "x": -0.6,
+     "y": -0.2,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 10.14
+    },
+    {
+     "x": -0.3,
+     "y": -0.2,
+     "obj": "hat_brim<hat<body<benny_root<AuxScene",
+     "d": 5.38
+    },
+    {
+     "x": 0,
+     "y": -0.2,
+     "obj": "hat_brim<hat<body<benny_root<AuxScene",
+     "d": 5.32
+    },
+    {
+     "x": 0.3,
+     "y": -0.2,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 8.89
+    },
+    {
+     "x": 0.6,
+     "y": -0.2,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 8.66
+    }
+   ],
+   "hidden": []
+  },
+  {
+   "s": 385,
+   "state": {
+    "mode": "ride",
+    "stage": "06",
+    "s": 385.177,
+    "lat": 0,
+    "coins": 1800,
+    "hearts": 5,
+    "paused": false,
+    "bennyY": -69.152,
+    "bennyVisible": true,
+    "cam": [
+     15.97,
+     -66.54,
+     -304.2
+    ]
+   },
+   "cam": [
+    15.967515672802202,
+    -66.53973778722968,
+    -304.1987862014086
+   ],
+   "target": [
+    16.67317194941181,
+    -69.00399494479086,
+    -313.8680660466879
+   ],
+   "bs": {
+    "x": -0.03,
+    "y": -0.33,
+    "z": 0.983,
+    "visible": true,
+    "cam": [
+     15.97,
+     -66.54,
+     -304.2
+    ],
+    "benny": [
+     16.31,
+     -69.15,
+     -309.66
+    ]
+   },
+   "grid": [
+    {
+     "x": -0.6,
+     "y": 0.9,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 32.78
+    },
+    {
+     "x": -0.3,
+     "y": 0.9,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 37.05
+    },
+    {
+     "x": 0,
+     "y": 0.9,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 38.65
+    },
+    {
+     "x": 0.3,
+     "y": 0.9,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 38.94
+    },
+    {
+     "x": 0.6,
+     "y": 0.9,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 38.55
+    },
+    {
+     "x": -0.6,
+     "y": 0.8,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 34.45
+    },
+    {
+     "x": -0.3,
+     "y": 0.8,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 38.68
+    },
+    {
+     "x": 0,
+     "y": 0.8,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 40.41
+    },
+    {
+     "x": 0.3,
+     "y": 0.8,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 40.15
+    },
+    {
+     "x": 0.6,
+     "y": 0.8,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 39.25
+    },
+    {
+     "x": -0.6,
+     "y": 0.7,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 35.32
+    },
+    {
+     "x": -0.3,
+     "y": 0.7,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 41.77
+    },
+    {
+     "x": 0,
+     "y": 0.7,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 43.71
+    },
+    {
+     "x": 0.3,
+     "y": 0.7,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 41.81
+    },
+    {
+     "x": 0.6,
+     "y": 0.7,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 39.96
+    },
+    {
+     "x": -0.6,
+     "y": 0.6,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 36.44
+    },
+    {
+     "x": -0.3,
+     "y": 0.6,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 49.01
+    },
+    {
+     "x": 0,
+     "y": 0.6,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 57.78
+    },
+    {
+     "x": 0.3,
+     "y": 0.6,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 44.09
+    },
+    {
+     "x": 0.6,
+     "y": 0.6,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 40.63
+    },
+    {
+     "x": -0.6,
+     "y": 0.5,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 37.24
+    },
+    {
+     "x": -0.3,
+     "y": 0.5,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 59.58
+    },
+    {
+     "x": 0,
+     "y": 0.5,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 83.02
+    },
+    {
+     "x": 0.3,
+     "y": 0.5,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 46.83
+    },
+    {
+     "x": 0.6,
+     "y": 0.5,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 40.6
+    },
+    {
+     "x": -0.6,
+     "y": 0.4,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 30.94
+    },
+    {
+     "x": -0.3,
+     "y": 0.4,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 65.33
+    },
+    {
+     "x": 0,
+     "y": 0.4,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 91.65
+    },
+    {
+     "x": 0.3,
+     "y": 0.4,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 69.49
+    },
+    {
+     "x": 0.6,
+     "y": 0.4,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 40.6
+    },
+    {
+     "x": -0.6,
+     "y": 0.3,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 29.61
+    },
+    {
+     "x": -0.3,
+     "y": 0.3,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 60.95
+    },
+    {
+     "x": 0,
+     "y": 0.3,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 97.19
+    },
+    {
+     "x": 0.3,
+     "y": 0.3,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 47.27
+    },
+    {
+     "x": 0.6,
+     "y": 0.3,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 40.19
+    },
+    {
+     "x": -0.6,
+     "y": 0.2,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 27.16
+    },
+    {
+     "x": -0.3,
+     "y": 0.2,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 31.33
+    },
+    {
+     "x": 0,
+     "y": 0.2,
+     "obj": "Mesh<foam_banks<water_system<Scene",
+     "d": 24.53
+    },
+    {
+     "x": 0.3,
+     "y": 0.2,
+     "obj": "Mesh<coins<Scene",
+     "d": 34.04
+    },
+    {
+     "x": 0.6,
+     "y": 0.2,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 38.21
+    },
+    {
+     "x": -0.6,
+     "y": 0.1,
+     "obj": "Mesh<tube07<zone_tubes<washer_world<Scene",
+     "d": 23.16
+    },
+    {
+     "x": -0.3,
+     "y": 0.1,
+     "obj": "Mesh<foam_banks<water_system<Scene",
+     "d": 15.64
+    },
+    {
+     "x": 0,
+     "y": 0.1,
+     "obj": "Mesh<foam_banks<water_system<Scene",
+     "d": 19.63
+    },
+    {
+     "x": 0.3,
+     "y": 0.1,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 24.09
+    },
+    {
+     "x": 0.6,
+     "y": 0.1,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 27.48
+    },
+    {
+     "x": -0.6,
+     "y": 0,
+     "obj": "foam_berm<foam_banks<water_system<Scene",
+     "d": 11.78
+    },
+    {
+     "x": -0.3,
+     "y": 0,
+     "obj": "foam_berm<foam_banks<water_system<Scene",
+     "d": 14.38
+    },
+    {
+     "x": 0,
+     "y": 0,
+     "obj": "fur_pom<pom<hat<body<benny_root",
+     "d": 5.61
+    },
+    {
+     "x": 0.3,
+     "y": 0,
+     "obj": "Mesh<coins<Scene",
+     "d": 12.06
+    },
+    {
+     "x": 0.6,
+     "y": 0,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 16.93
+    },
+    {
+     "x": -0.6,
+     "y": -0.1,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 10.77
+    },
+    {
+     "x": -0.3,
+     "y": -0.1,
+     "obj": "hat_crown<hat<body<benny_root<AuxScene",
+     "d": 5.77
+    },
+    {
+     "x": 0,
+     "y": -0.1,
+     "obj": "hat_crown<hat<body<benny_root<AuxScene",
+     "d": 5.39
+    },
+    {
+     "x": 0.3,
+     "y": -0.1,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 11.71
+    },
+    {
+     "x": 0.6,
+     "y": -0.1,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 11.99
+    },
+    {
+     "x": -0.6,
+     "y": -0.2,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 9.16
+    },
+    {
+     "x": -0.3,
+     "y": -0.2,
+     "obj": "hat_brim<hat<body<benny_root<AuxScene",
+     "d": 5.39
+    },
+    {
+     "x": 0,
+     "y": -0.2,
+     "obj": "hat_brim<hat<body<benny_root<AuxScene",
+     "d": 5.18
+    },
+    {
+     "x": 0.3,
+     "y": -0.2,
+     "obj": "hat_brim<hat<body<benny_root<AuxScene",
+     "d": 5.45
+    },
+    {
+     "x": 0.6,
+     "y": -0.2,
+     "obj": "m06_floor<match06_projection<Scene",
+     "d": 9.44
+    }
+   ],
+   "hidden": []
+  }
+ ],
+ "stages": {
+  "05": {
+   "s0": 114.6883020282324,
+   "s1": 188.90987977543347
+  },
+  "06": {
+   "s0": 188.90987977543347,
+   "s1": 396.5534884455474
+  },
+  "07": {
+   "s0": 396.5534884455474,
+   "s1": 538.7310498238152
+  },
+  "08": {
+   "s0": 538.7310498238152,
+   "s1": 554.3104815185048
+  }
+ },
+ "names": [
+  "washer_world",
+  "washer_world/zone_drumA",
+  "zone_drumA/doorA_pivot",
+  "laundry_room",
+  "zone_drumA/blue_sock",
+  "zone_drumA/pink_star_shirt",
+  "zone_drumA/purple_towel",
+  "washer_world/zone_basin",
+  "washer_world/zone_tubes",
+  "zone_tubes/tube07",
+  "zone_tubes/tube05_far_wall",
+  "zone_tubes/tube05_far_river",
+  "zone_tubes/tube05_far",
+  "zone_tubes/tube05_end_glow",
+  "zone_tubes/tube05_near_frame",
+  "washer_world/zone_chamber",
+  "zone_chamber/doorC_pivot",
+  "zone_chamber/purple_towel",
+  "water_system",
+  "water_system/water_ribbon",
+  "water_system/water_whirlpool",
+  "water_system/water_drumA",
+  "water_drumA/water_drumA_surface",
+  "water_drumA/water_drumA_swirl",
+  "water_system/water_final_wave",
+  "water_system/water_puddles",
+  "water_system/foam_banks",
+  "foam_banks/foam_berm",
+  "foam_banks/foam_whirlpool",
+  "foam_banks/foam_flank",
+  "foam_banks/foam_rafts",
+  "foam_banks/foam_rim05",
+  "water_system/bubbles",
+  "bubbles/bubbles_big",
+  "bubbles/bubbles_small",
+  "water_system/spray",
+  "water_system/rider_splash",
+  "water_system/rider_splash05",
+  "Benny",
+  "Benny/AuxScene",
+  "AuxScene/benny_root",
+  "benny_root/body",
+  "body/eyes",
+  "eyes/eyeL",
+  "eyeL/eyeL_happy",
+  "eyeL/eyeL_dizzy",
+  "eyeL/lash_L_05",
+  "eyeL/lash_L_085",
+  "eyes/eyeR",
+  "eyeR/eyeR_happy",
+  "eyeR/eyeR_dizzy",
+  "eyeR/lash_R_05",
+  "eyeR/lash_R_085",
+  "body/blushL",
+  "body/blushR",
+  "body/nose",
+  "body/mouth",
+  "mouth/mouth_happy",
+  "mouth/mouth_dizzy",
+  "mouth/mouth_peek",
+  "body/armL",
+  "armL/palmL",
+  "armL/fur_armL",
+  "body/armR",
+  "armR/palmR",
+  "armR/fur_armR",
+  "body/footL",
+  "footL/soleL",
+  "footL/fur_footL",
+  "body/footR",
+  "footR/soleR",
+  "footR/fur_footR",
+  "body/hat",
+  "hat/hat_brim",
+  "hat/hat_crown",
+  "hat/hat_star",
+  "hat/pom",
+  "pom/fur_pom",
+  "body/fur_body",
+  "coins",
+  "match06_projection",
+  "match06_projection/m06_stub0",
+  "match06_projection/m06_tube",
+  "match06_projection/m06_rings",
+  "match06_projection/m06_sbbands",
+  "match06_projection/m06_floor",
+  "match06_projection/m06_leg",
+  "match06_projection/m06_foamclu",
+  "match06_projection/m06_foamclu_rim",
+  "match06_projection/m06_end"
+ ]
+}

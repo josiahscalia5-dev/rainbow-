@@ -1,0 +1,168 @@
+{
+ "stage": "06",
+ "checkpoint": {
+  "stage": "06",
+  "s": 198.92412082521383,
+  "y": -37.45172218622444
+ },
+ "errors": [],
+ "input_log": [],
+ "swipes": [
+  {
+   "t": 0.6,
+   "requested": "left",
+   "detected_by_game": "n/a",
+   "lat_before": 0,
+   "lat_after_0_3s": -0.359,
+   "lat_after_0_6s": -0.411,
+   "lat_before_next_swipe": -0.416,
+   "moved_lateral": -0.416,
+   "moved_right_way": true,
+   "screen_x_before": 139.9,
+   "screen_x_after": 153,
+   "box_after": [
+    41.3,
+    422,
+    278.5,
+    718.2
+   ]
+  },
+  {
+   "t": 1.6,
+   "requested": "left",
+   "detected_by_game": "n/a",
+   "lat_before": -0.416,
+   "lat_after_0_3s": -0.775,
+   "lat_after_0_6s": -0.828,
+   "lat_before_next_swipe": -0.832,
+   "moved_lateral": -0.416,
+   "moved_right_way": true,
+   "screen_x_before": 153,
+   "screen_x_after": 229.1,
+   "box_after": [
+    78.4,
+    470.1,
+    405.5,
+    847.7
+   ]
+  },
+  {
+   "t": 2.6,
+   "requested": "right",
+   "detected_by_game": "n/a",
+   "lat_before": -0.832,
+   "lat_after_0_3s": -0.519,
+   "lat_after_0_6s": -0.125,
+   "lat_before_next_swipe": -0.536,
+   "moved_lateral": 0.296,
+   "moved_right_way": true,
+   "screen_x_before": 229.1,
+   "screen_x_after": 233,
+   "box_after": [
+    69.9,
+    487.7,
+    419,
+    892.8
+   ]
+  },
+  {
+   "t": 3,
+   "requested": "right",
+   "detected_by_game": "n/a",
+   "lat_before": -0.536,
+   "lat_after_0_3s": -0.061,
+   "lat_after_0_6s": -0.006,
+   "lat_before_next_swipe": -0.001,
+   "moved_lateral": 0.535,
+   "moved_right_way": true,
+   "screen_x_before": 233,
+   "screen_x_after": 297.7,
+   "box_after": [
+    129.4,
+    555.2,
+    503.5,
+    1029.3
+   ]
+  },
+  {
+   "t": 4,
+   "requested": "right",
+   "detected_by_game": "n/a",
+   "lat_before": -0.001,
+   "lat_after_0_3s": 0.403,
+   "lat_after_0_6s": 0.114,
+   "lat_before_next_swipe": 0.297,
+   "moved_lateral": 0.298,
+   "moved_right_way": true,
+   "screen_x_before": 297.7,
+   "screen_x_after": 308.2,
+   "box_after": [
+    165.6,
+    542,
+    470.7,
+    936.7
+   ]
+  },
+  {
+   "t": 4.4,
+   "requested": "left",
+   "detected_by_game": "n/a",
+   "lat_before": 0.297,
+   "lat_after_0_3s": 0.056,
+   "lat_after_0_6s": 0.005,
+   "lat_before_next_swipe": 0.001,
+   "moved_lateral": -0.296,
+   "moved_right_way": true,
+   "screen_x_before": 308.2,
+   "screen_x_after": 231.2,
+   "box_after": [
+    116.8,
+    538.3,
+    357.1,
+    870
+   ]
+  },
+  {
+   "t": 5.4,
+   "requested": "left",
+   "detected_by_game": "n/a",
+   "lat_before": 0.001,
+   "lat_after_0_3s": -0.359,
+   "lat_after_0_6s": -0.411,
+   "lat_before_next_swipe": -0.416,
+   "moved_lateral": -0.417,
+   "moved_right_way": true,
+   "screen_x_before": 231.2,
+   "screen_x_after": 92.7,
+   "box_after": [
+    -51.2,
+    556.5,
+    199.7,
+    884.2
+   ]
+  },
+  {
+   "t": 6.4,
+   "requested": "right",
+   "detected_by_game": "n/a",
+   "lat_before": -0.416,
+   "lat_after_0_3s": -0.058,
+   "lat_after_0_6s": -0.005,
+   "lat_before_next_swipe": -0.001,
+   "moved_lateral": 0.415,
+   "moved_right_way": true,
+   "screen_x_before": 92.7,
+   "screen_x_after": 224.3,
+   "box_after": [
+    98.3,
+    532.7,
+    366,
+    877
+   ]
+  }
+ ],
+ "ok": 8,
+ "of": 8,
+ "max_lat_step_per_frame": 0.06,
+ "box_off_screen_frames": 150
+}

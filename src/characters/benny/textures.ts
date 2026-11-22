@@ -56,127 +56,167 @@ function normalFromHeight(src: HTMLCanvasElement, strength: number, wrap = false
 }
 
 export const BENNY_COLORS = {
-  purple: '#6b2fe0',
-  purpleDark: '#4a1aa8',
-  purpleLight: '#9a63ff',
-  white: '#fffcff',
-  whiteShade: '#e2d9ec',
-  brim: '#6327d6',
-  brimDark: '#3f1597',
-  pinkRoot: '#ec58a8',
-  pinkTip: '#ff9ed2',
-  pinkSkin: '#f06bb0',
-  pomRoot: '#5a1fc4',
-  pomTip: '#b07cff',
-  gold: '#ffd23a',
+  // knit purple of refs 04–10 (cuff #7513ED, pom #7F14EC measured in ref 05)
+  purple: '#7a18f0',
+  purpleDark: '#36098e',
+  purpleLight: '#9d55ff',
+  white: '#fffaff',
+  whiteShade: '#bcadd0',
+  brim: '#7513ed',
+  brimDark: '#330887',
+  // hot plush pink of refs 02–10 (ref 05 fur median #F64EB1; the live median read bluer at #FF4CC4)
+  pinkRoot: '#e6468c',
+  pinkTip: '#fd80b4',
+  pinkSkin: '#e85498',
+  pomRoot: '#4a08b4',
+  pomTip: '#7c28e8', // wave 5: was #8f3cff (live 05 pom median #9425FF L147, ref #8215ED L129)
+  // star: warm yellow #F7BB19 (ref 05), not orange
+  gold: '#ffc61c',
 };
 
 /**
- * Knit crown texture (u = around, v = height 0 bottom → 1 top).
- * Stripes bottom→top: white, purple, white, purple (as in the references).
+ * The crown texture tiles this many times around the beanie (lathe u is scaled by it in build.ts), so the
+ * stitches stay small: 36 columns × 4 ≈ 144 stitch columns around, as in ref 05 (≈ 6 px stitches on a
+ * 293 px wide cuff), within the 1024 px texture limit of the GLB export.
  */
+export const CROWN_REPEAT = 4;
+
+/** stockinette stitch: two slanted loops forming a "V", colour + height */
+function knitStitch(ctx: Ctx, hctx: Ctx, cx: number, cy: number, cw: number, rh: number, base: string, mid: string, shade: string) {
+  for (const side of [-1, 1]) {
+    const ex = cx + side * cw * 0.21;
+    const g = ctx.createRadialGradient(ex - side * cw * 0.04, cy - rh * 0.18, 1, ex, cy, cw * 0.36);
+    g.addColorStop(0, base);
+    g.addColorStop(0.55, mid);
+    g.addColorStop(1, shade);
+    ctx.save();
+    ctx.translate(ex, cy);
+    ctx.rotate(side * -0.5);
+    ctx.beginPath();
+    ctx.ellipse(0, 0, cw * 0.2, rh * 0.6, 0, 0, Math.PI * 2);
+    ctx.fillStyle = g;
+    ctx.fill();
+    ctx.restore();
+    const hg = hctx.createRadialGradient(ex, cy, 0, ex, cy, cw * 0.3);
+    hg.addColorStop(0, '#fff');
+    hg.addColorStop(0.6, '#9a9a9a');
+    hg.addColorStop(1, '#151515');
+    hctx.save();
+    hctx.translate(ex, cy);
+    hctx.rotate(side * -0.5);
+    hctx.beginPath();
+    hctx.ellipse(0, 0, cw * 0.2, rh * 0.6, 0, 0, Math.PI * 2);
+    hctx.fillStyle = hg;
+    hctx.fill();
+    hctx.restore();
+  }
+}
+
+/**
+ * Knit crown texture (u = around, one of CROWN_REPEAT tiles; v = height 0 bottom → 1 top).
+ * Stripes bottom→top: white, purple, white, purple, white; with the purple cuff that is 3 purple bands
+ * (refs 04–10 rear: cuff · W · P · W, the top purple ring shows around the pom-pom, the white top is under it).
+ */
+const KNIT_WHITE_HI = '#fffaf8';
+const KNIT_WHITE = '#fff6f4';
+const KNIT_WHITE_SHADE = '#c8b2c4';
+const KNIT_PURPLE_HI = '#8a2cff';
+const KNIT_PURPLE = BENNY_COLORS.purple;
+const KNIT_PURPLE_SHADE = BENNY_COLORS.purpleDark;
+
 export function knitCrownTextures(): { map: THREE.CanvasTexture; normalMap: THREE.CanvasTexture } {
   const W = 1024, Hh = 512;
   const [c, ctx] = canvas(W, Hh);
   const [hc, hctx] = canvas(W, Hh);
-  const stripes: [number, number, string, string][] = [
-    // [v0, v1, base, shade]   (v measured from bottom)
-    [0.0, 0.25, BENNY_COLORS.white, BENNY_COLORS.whiteShade],
-    [0.25, 0.47, BENNY_COLORS.purple, BENNY_COLORS.purpleDark],
-    [0.47, 0.67, BENNY_COLORS.white, BENNY_COLORS.whiteShade],
-    [0.67, 1.0, BENNY_COLORS.purple, BENNY_COLORS.purpleDark],
+  const stripes: [number, number, string, string, string][] = [
+    // [v0, v1, highlight, base, groove]   (v measured from bottom)
+    // wave 5 (ref 05 rear, centre column: white 24 / purple 33 / white 19 px, then a purple band around the pom base):
+    // wider middle purple, thinner upper white, upper purple band starts lower so it shows beside the pom.
+    // Yarn colours: warmer cream white (live 05 white read lavender #FFD8FF vs ref #F3CFE4) and a stitch highlight
+    // with less green (live purple stripe #8658FF vs ref #740FF2). A darker yarn (#420cb6, it05) only greyed the stripe
+    // (#6238B6): its green floor comes from the scene light, so the saturated #7a18f0 yarn stays
+    [0.0, 0.3, KNIT_WHITE_HI, KNIT_WHITE, KNIT_WHITE_SHADE],
+    [0.3, 0.58, KNIT_PURPLE_HI, KNIT_PURPLE, KNIT_PURPLE_SHADE],
+    [0.58, 0.73, KNIT_WHITE_HI, KNIT_WHITE, KNIT_WHITE_SHADE],
+    [0.73, 0.92, KNIT_PURPLE_HI, KNIT_PURPLE, KNIT_PURPLE_SHADE],
+    [0.92, 1.0, KNIT_WHITE_HI, KNIT_WHITE, KNIT_WHITE_SHADE],
   ];
   hctx.fillStyle = '#000';
   hctx.fillRect(0, 0, W, Hh);
-  const cols = 44;
+  const cols = 36;
   const cw = W / cols;
-  for (const [v0, v1, base, shade] of stripes) {
+  const rowH = 30; // ≈ 0.025 units per stitch row on the 0.42-unit crown (stitches ≈ as tall as wide)
+  for (const [v0, v1, hi, base, shade] of stripes) {
     const y0 = Hh * (1 - v1), y1 = Hh * (1 - v0);
     ctx.fillStyle = shade;
     ctx.fillRect(0, y0, W, y1 - y0);
-    const rows = Math.max(3, Math.round((y1 - y0) / (cw * 0.62)));
+    const rows = Math.max(1, Math.round((y1 - y0) / rowH));
     const rh = (y1 - y0) / rows;
     for (let r = 0; r < rows; r++) {
-      for (let k = 0; k < cols; k++) {
-        const cx = k * cw + cw / 2;
-        const cy = y0 + r * rh + rh / 2;
-        // a knit stitch = two slanted loops forming a "V"
-        for (const side of [-1, 1]) {
-          const ex = cx + side * cw * 0.2;
-          const g = ctx.createRadialGradient(ex, cy - rh * 0.1, 1, ex, cy, cw * 0.4);
-          g.addColorStop(0, base);
-          g.addColorStop(0.7, base);
-          g.addColorStop(1, shade);
-          ctx.save();
-          ctx.translate(ex, cy);
-          ctx.rotate(side * -0.55);
-          ctx.beginPath();
-          ctx.ellipse(0, 0, cw * 0.22, rh * 0.62, 0, 0, Math.PI * 2);
-          ctx.fillStyle = g;
-          ctx.fill();
-          ctx.restore();
-          // height
-          const hg = hctx.createRadialGradient(ex, cy, 0, ex, cy, cw * 0.32);
-          hg.addColorStop(0, '#fff');
-          hg.addColorStop(1, '#202020');
-          hctx.save();
-          hctx.translate(ex, cy);
-          hctx.rotate(side * -0.55);
-          hctx.beginPath();
-          hctx.ellipse(0, 0, cw * 0.22, rh * 0.62, 0, 0, Math.PI * 2);
-          hctx.fillStyle = hg;
-          hctx.fill();
-          hctx.restore();
-        }
-      }
+      for (let k = 0; k < cols; k++) knitStitch(ctx, hctx, k * cw + cw / 2, y0 + r * rh + rh / 2, cw, rh, hi, base, shade);
     }
-    // soft fuzzy speckle
-    for (let i = 0; i < 2500; i++) {
-      ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.08})`;
+    // fuzzy yarn speckle
+    for (let i = 0; i < 3000; i++) {
+      ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.1})`;
       ctx.fillRect(Math.random() * W, y0 + Math.random() * (y1 - y0), 1.5, 1.5);
     }
   }
-  return { map: colorTex(c, true), normalMap: normalFromHeight(hc, 3.2, true) };
+  return { map: colorTex(c, true), normalMap: normalFromHeight(hc, 4.5, true) };
 }
 
-/** Ribbed (k2p2) folded brim / cuff texture, u around, v across the band */
+/** Chunky ribbed (k2p2) folded cuff texture, u around, v across the band: deep grooves + stacked stitches */
 export function ribbedBrimTextures(): { map: THREE.CanvasTexture; normalMap: THREE.CanvasTexture } {
   const W = 1024, Hh = 256;
   const [c, ctx] = canvas(W, Hh);
   const [hc, hctx] = canvas(W, Hh);
-  const ribs = 72;
+  const C = BENNY_COLORS;
+  const ribs = 64; // ≈ 30 ribs across the visible half, as in ref 05
   const rw = W / ribs;
   for (let k = 0; k < ribs; k++) {
     const x = k * rw;
     const g = ctx.createLinearGradient(x, 0, x + rw, 0);
-    g.addColorStop(0, BENNY_COLORS.brimDark);
-    g.addColorStop(0.3, BENNY_COLORS.brim);
-    g.addColorStop(0.5, '#7c45ef');
-    g.addColorStop(0.7, BENNY_COLORS.brim);
-    g.addColorStop(1, BENNY_COLORS.brimDark);
+    g.addColorStop(0, C.brimDark);
+    g.addColorStop(0.22, C.brim);
+    g.addColorStop(0.5, C.purpleLight);
+    g.addColorStop(0.78, C.brim);
+    g.addColorStop(1, C.brimDark);
     ctx.fillStyle = g;
     ctx.fillRect(x, 0, rw, Hh);
     const hg = hctx.createLinearGradient(x, 0, x + rw, 0);
-    hg.addColorStop(0, '#111');
+    hg.addColorStop(0, '#000');
     hg.addColorStop(0.5, '#fff');
-    hg.addColorStop(1, '#111');
+    hg.addColorStop(1, '#000');
     hctx.fillStyle = hg;
     hctx.fillRect(x, 0, rw, Hh);
-    // stitch bumps along the rib
-    const rows = 14;
+    // stacked knit "V" stitches along the rib
+    const rows = 10;
+    const rh = Hh / rows;
     for (let r = 0; r < rows; r++) {
-      const cy = (r + 0.5) * (Hh / rows);
-      ctx.fillStyle = 'rgba(160,110,255,0.25)';
-      ctx.beginPath();
-      ctx.ellipse(x + rw / 2, cy, rw * 0.28, Hh / rows * 0.42, 0, 0, Math.PI * 2);
-      ctx.fill();
-      hctx.fillStyle = 'rgba(255,255,255,0.35)';
-      hctx.beginPath();
-      hctx.ellipse(x + rw / 2, cy, rw * 0.28, Hh / rows * 0.42, 0, 0, Math.PI * 2);
-      hctx.fill();
+      const cy = (r + 0.5) * rh;
+      for (const side of [-1, 1]) {
+        ctx.save();
+        ctx.translate(x + rw / 2 + side * rw * 0.16, cy);
+        ctx.rotate(side * -0.45);
+        ctx.fillStyle = 'rgba(175,125,255,0.35)';
+        ctx.beginPath();
+        ctx.ellipse(0, 0, rw * 0.17, rh * 0.42, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+        hctx.save();
+        hctx.translate(x + rw / 2 + side * rw * 0.16, cy);
+        hctx.rotate(side * -0.45);
+        hctx.fillStyle = 'rgba(255,255,255,0.4)';
+        hctx.beginPath();
+        hctx.ellipse(0, 0, rw * 0.17, rh * 0.42, 0, 0, Math.PI * 2);
+        hctx.fill();
+        hctx.restore();
+      }
+      // dark gap between stacked stitches
+      ctx.fillStyle = 'rgba(30,0,80,0.35)';
+      ctx.fillRect(x + rw * 0.2, cy + rh * 0.42, rw * 0.6, rh * 0.12);
     }
   }
-  return { map: colorTex(c, true), normalMap: normalFromHeight(hc, 3.0, true) };
+  return { map: colorTex(c, true), normalMap: normalFromHeight(hc, 3.6, true) };
 }
 
 /** Planar eye texture (centre of the canvas = centre of the eye dome). */

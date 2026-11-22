@@ -1,0 +1,54 @@
+server 9817
+console.warning: [.WebGL-0x9d40017dc00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+console.warning: [.WebGL-0x9d40017dc00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+console.warning: [.WebGL-0x9d40017dc00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+console.warning: [.WebGL-0x9d40017dc00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)
+ready 12.136
+still 0 37.814 visible splats 655734
+still 2.3 34.113 visible splats 613313
+still 4.4 40.728 visible splats 823650
+node:internal/process/promises:394
+    triggerUncaughtException(err, true /* fromPromise */);
+    ^
+
+page.evaluate: Target page, context or browser has been closed
+Browser logs:
+
+<launching> /opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --use-gl=angle --use-angle=swiftshader --enable-unsafe-swiftshader --ignore-gpu-blocklist --user-data-dir=/tmp/playwright_chromiumdev_profile-vQM7lt --remote-debugging-pipe --no-startup-window
+<launched> pid=15076
+[pid=15076][err] [1121/131157.861537:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[pid=15076][err] [1121/131157.861631:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[pid=15076][err] [1121/131157.862645:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[pid=15076][err] [1121/131157.863066:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[pid=15076][err] [1121/131157.863098:WARNING:dbus/object_proxy.cc:439] Failed to connect to NameOwnerChanged signal for object: /org/freedesktop/portal/desktop
+[pid=15076][err] [1121/131157.863111:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[pid=15076][err] [1121/131157.863117:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[pid=15076][err] [1121/131157.863144:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[pid=15076][err] [1121/131157.874505:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: 
+[pid=15076][err] [1121/131157.874557:WARNING:device/bluetooth/dbus/bluez_dbus_manager.cc:209] Floss manager service not available, cannot set Floss enable/disable.
+[pid=15076][err] [1121/131157.874771:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[pid=15076][err] [1121/131157.878147:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: 
+[pid=15076][err] [1121/131157.908338:WARNING:media/gpu/vaapi/vaapi_wrapper.cc:1652] drmGetDevices2() has not found any devices
+[pid=15076][err] [1121/131157.910969:WARNING:sandbox/policy/linux/sandbox_linux.cc:405] InitializeSandbox() called with multiple threads in process gpu-process.
+[pid=15076][err] [1121/131158.075592:ERROR:gpu/command_buffer/service/gl_utils.cc:431] [.WebGL-0x9d40017dc00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[pid=15076][err] [1121/131158.085044:INFO:CONSOLE:0] "[.WebGL-0x9d40017dc00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels", source: http://127.0.0.1:9817/play3.html?w=412&h=915 (0)
+[pid=15076][err] [1121/131158.973560:WARNING:ui/gl/angle_platform_impl.cc:39] Shader.cpp:767 (resolveCompile): Compiler log: WARNING: 0:35: '/' : Divide by zero during constant folding
+[pid=15076][err] WARNING: 0:831: '/' : Divide by zero during constant folding
+[pid=15076][err] WARNING: 0:854: '/' : Divide by zero during constant folding
+[pid=15076][err] 
+[pid=15076][err] [1121/131159.029114:WARNING:ui/gl/angle_platform_impl.cc:39] Shader.cpp:767 (resolveCompile): Compiler log: WARNING: 0:92: '/' : Divide by zero during constant folding
+[pid=15076][err] 
+[pid=15076][err] [1121/131159.030839:WARNING:ui/gl/angle_platform_impl.cc:39] Shader.cpp:767 (resolveCompile): Compiler log: WARNING: 0:180: '/' : Divide by zero during constant folding
+[pid=15076][err] 
+[pid=15076][err] [1121/131159.066380:ERROR:gpu/command_buffer/service/gl_utils.cc:431] [.WebGL-0x9d40017dc00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[pid=15076][err] [1121/131159.742036:INFO:CONSOLE:0] "[.WebGL-0x9d40017dc00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels", source: http://127.0.0.1:9817/play3.html?w=412&h=915 (0)
+[pid=15076][err] [1121/131159.759076:ERROR:gpu/command_buffer/service/gl_utils.cc:431] [.WebGL-0x9d40017dc00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[pid=15076][err] [1121/131159.936475:INFO:CONSOLE:0] "[.WebGL-0x9d40017dc00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels", source: http://127.0.0.1:9817/play3.html?w=412&h=915 (0)
+[pid=15076][err] [1121/131159.943391:ERROR:gpu/command_buffer/service/gl_utils.cc:431] [.WebGL-0x9d40017dc00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)
+[pid=15076][err] [1121/131200.134717:INFO:CONSOLE:0] "[.WebGL-0x9d40017dc00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)", source: http://127.0.0.1:9817/play3.html?w=412&h=915 (0)
+[pid=15076] <gracefully close start>
+    at /tmp/claude-0/-home-user-rainbow-/10527e2e-e6ef-5ebe-bdf9-44da4ed06ae6/scratchpad/agentB/shots_w.cjs:32:18 {
+  log: []
+}
+
+Node.js v22.23.5

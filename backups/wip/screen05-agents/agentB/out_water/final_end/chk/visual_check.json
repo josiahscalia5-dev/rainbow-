@@ -1,0 +1,78 @@
+{
+ "summary": {
+  "frames": 4,
+  "dark_patches": {
+   "frames_with_patches": 0,
+   "largest_px": 0,
+   "max_pct": 0.0,
+   "rule": "connected near-black area >= 150 px at 412x915 (approved picture: largest 8 px)"
+  },
+  "sharpness_vs_start": {
+   "min": 0.451,
+   "median": 0.877
+  },
+  "colour_look_vs_approved": {
+   "min": 0.246,
+   "median": 0.5375
+  },
+  "flicker": {
+   "median_change": 55.3,
+   "max_change": 56.12,
+   "spikes_over_3x_median": 0,
+   "spike_frames": [],
+   "pop_median": 40.15046691894531,
+   "pop_max": 40.69691467285156,
+   "pop_spikes": 0,
+   "pop_spike_frames": []
+  },
+  "colour_look_frame0": 0.642,
+  "frame0_vs_approved": {
+   "within_20_levels_pct": 5.3,
+   "within_20_below_hud_pct": 5.9,
+   "within_40_below_hud_pct": 17.2,
+   "mean_abs_diff_below_hud": 62.3,
+   "eighth_size_within_20_below_hud_pct": 6.4,
+   "eighth_size_within_40_below_hud_pct": 19.7
+  }
+ },
+ "frames": [
+  {
+   "frame": "0.jp",
+   "black_pct": 0.0,
+   "dark_patches": 0,
+   "largest_dark_px": 0,
+   "sharpness_vs_start": 1.0,
+   "colour_look_vs_approved": 0.642,
+   "change": 0.0
+  },
+  {
+   "frame": "20.6",
+   "black_pct": 0.0,
+   "dark_patches": 0,
+   "largest_dark_px": 0,
+   "sharpness_vs_start": 0.909,
+   "colour_look_vs_approved": 0.587,
+   "change": 56.12,
+   "pop": 40.7
+  },
+  {
+   "frame": "29.j",
+   "black_pct": 0.0,
+   "dark_patches": 0,
+   "largest_dark_px": 0,
+   "sharpness_vs_start": 0.845,
+   "colour_look_vs_approved": 0.488,
+   "change": 40.84,
+   "pop": 39.6
+  },
+  {
+   "frame": "31.3",
+   "black_pct": 0.0,
+   "dark_patches": 0,
+   "largest_dark_px": 0,
+   "sharpness_vs_start": 0.451,
+   "colour_look_vs_approved": 0.246,
+   "change": 55.3
+  }
+ ]
+}

@@ -1,0 +1,205 @@
+diff --git a/src/characters/benny/benny20.ts b/src/characters/benny/benny20.ts
+index fe08094..0cbb689 100644
+--- a/src/characters/benny/benny20.ts
++++ b/src/characters/benny/benny20.ts
+@@ -36,7 +36,7 @@ function lin(key: string, def: [number, number, number]): [number, number, numbe
+ 
+ /** shell-fur overrides (merged over the GLB's userData.fur and benny05's FUR05) */
+ export const FUR20: Record<string, Partial<FurParams>> = {
+-  fur_body: { shells: n('bsh', 28), length: n('blen', 0.13), gravity: n('bgr', 0.1) },
++  fur_body: { shells: n('bsh', 24), length: n('blen', 0.075), gravity: n('bgr', 0.05) },
+   fur_armL: { shells: n('ash', 16), length: n('alen', 0.07), gravity: n('agr', 0.1) },
+   fur_armR: { shells: n('ash', 16), length: n('alen', 0.07), gravity: n('agr', 0.1) },
+   fur_pom: { shells: n('psh', 20), length: n('plen', 0.12), gravity: n('pgr', 0.04) },
+@@ -46,29 +46,33 @@ type V4 = [number, number, number, number];
+ /** lock shader parameters per part (fur.ts uLock / uShade / uComb) and flat albedo (LINEAR rgb). Albedos solved from a
+  *  grey calibration sweep through the live 04 lighting + post chain (tools/benny20/calfit.py, qa/benny/r20/probe/c) for
+  *  the approved means: fur (207, 74, 151), pompom (133, 30, 229) */
+-const LOCK20: Record<string, { lock: V4; shade: V4; comb: V4; color: [number, number, number] }> = {
++const LOCK20: Record<string, { lock: V4; shade: V4; comb: V4; pile: V4; color: [number, number, number] }> = {
+   fur_body: {
+-    lock: [n('blx', 24), n('bly', 1.0), n('blz', 1.0), n('blw', 180)],
++    lock: [n('blx', 40), n('bly', 1.1), n('blz', 0.9), n('blw', 260)],
+     shade: [n('bsx', 0.22), n('bsy', 0.3), n('bsz', 0.5), n('bsw', 0.3)],
+-    comb: [n('bcx', 0.8), n('bcy', 0.85), n('bcz', 0.1), n('bcw', 0.4)],
++    comb: [n('bcx', 0.6), n('bcy', 1.0), n('bcz', 0.1), n('bcw', 0.35)],
++    pile: [n('bpx', 0.35), n('bpy', 0.45), n('bpz', 0.5), 0],
+     color: lin('bcol', [0.29, 0.092, 0.172]),
+   },
+   fur_armL: {
+     lock: [n('alx', 50), 0.95, n('alz', 0.9), 320],
+     shade: [0.45, 0.25, 0.3, 0.3],
+     comb: [n('acx', 0.4), 0.9, 0.08, 0.15],
++    pile: [0.35, 0.5, 0.5, 0],
+     color: lin('acol', [0.29, 0.092, 0.172]),
+   },
+   fur_armR: {
+     lock: [n('alx', 50), 0.95, n('alz', 0.9), 320],
+     shade: [0.45, 0.25, 0.3, 0.3],
+     comb: [n('acx', 0.4), 0.9, 0.08, 0.15],
++    pile: [0.35, 0.5, 0.5, 0],
+     color: lin('acol', [0.29, 0.092, 0.172]),
+   },
+   fur_pom: {
+     lock: [n('plx', 40), n('ply', 0.8), n('plz', 1.0), n('plw', 220)],
+     shade: [n('psx', 0.45), n('psy', 0.3), n('psz', 0.35), n('psw', 0.3)],
+     comb: [0, 1, n('pcz', 0.12), n('pcw', 0.3)],
++    pile: [n('ppx', 0.4), n('ppy', 0.35), n('ppz', 0.6), 0],
+     color: lin('pcol', [0.1016, 0.0067, 0.4425]),
+   },
+ };
+@@ -163,6 +167,7 @@ export function applyBenny20(scene: THREE.Object3D, furs: FurHandle[], maps: Rec
+     f.uniforms.uLock.value.set(...spec.lock);
+     f.uniforms.uShade.value.set(...spec.shade);
+     f.uniforms.uComb.value.set(...spec.comb);
++    f.uniforms.uPile.value.set(...spec.pile);
+     mat.needsUpdate = true;
+   }
+ 
+diff --git a/src/characters/benny/fur.ts b/src/characters/benny/fur.ts
+index 7fe1091..4436db2 100644
+--- a/src/characters/benny/fur.ts
++++ b/src/characters/benny/fur.ts
+@@ -34,6 +34,7 @@ export interface FurHandle {
+     uShade: { value: THREE.Vector4 };
+     uTint: { value: THREE.Color };
+     uComb: { value: THREE.Vector4 };
++    uPile: { value: THREE.Vector4 };
+   };
+ }
+ 
+@@ -66,6 +67,10 @@ export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
+     /** `?benny20=1`: x = comb ALONG the surface toward his feet (fraction of the fur length), y = lift off the surface
+      *  (normal push factor, < 1: strands lie flatter), z = strand-to-strand brightness variation, w = tuft roundness shading (bright axis, darker rim) */
+     uComb: { value: new THREE.Vector4(0, 1, 0.14, 0) },
++    /** `?benny20=1`: plush pile — x = strand tip radius (taper, cell units), y = strand length variation (0: all reach
++     *  the lock top; higher: the pile thins out toward its surface → soft fuzzy edge, no hard tips), z = lock-core radius
++     *  (fraction of the lock) where the strands are dense, w = unused */
++    uPile: { value: new THREE.Vector4(0.35, 0.45, 0.5, 0) },
+   };
+   const material = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 0.9, metalness: 0 });
+   material.onBeforeCompile = (shader) => {
+@@ -124,7 +129,7 @@ export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
+         uniform float uClump;
+         #endif
+         #ifdef BENNY20
+-        uniform vec4 uLock; uniform vec4 uShade; uniform vec3 uTint; uniform vec4 uComb;
++        uniform vec4 uLock; uniform vec4 uShade; uniform vec3 uTint; uniform vec4 uComb; uniform vec4 uPile;
+         #endif
+         float fhash(vec3 p) { p = fract(p * 0.3183099 + 0.1); p *= 17.0; return fract(p.x * p.y * p.z * (p.x + p.y + p.z)); }
+         vec3 fhash3(vec3 p) { return vec3(fhash(p), fhash(p + 17.31), fhash(p + 41.7)); }`,
+@@ -153,16 +158,22 @@ export function makeFur(src: THREE.Mesh, p: FurParams): FurHandle {
+           // fine strands, clumped toward the lock axis as they rise (q' = c + (q - c) / (1 - h k))
+           vec3 qs = vBase * uLock.w;
+           vec3 cs = vec3(tc.x / uLock.x, tc.y / (uLock.x * uLock.z), tc.z / uLock.x) * uLock.w;
+-          qs = cs + (qs - cs) / max(0.15, 1.0 - 0.8 * lt);
++          qs = cs + (qs - cs) / max(0.3, 1.0 - 0.6 * lt);
+           vec3 sc = floor(qs);
+           vec3 sp = sc + 0.5 + (fhash3(sc) - 0.5) * 0.7;
+           float sd = length(qs - sp);
+           float sh = fhash(sc * 1.37 + 5.1);
++          float sh2 = fhash(sc * 2.71 + 1.3);
+           if (layer > 0.001) {
+             if (vLenMask < 0.05) discard;
+             if (layer > lh || rr > 1.0) discard;
+-            // dense lock core; wispy, separated strands only toward the lock's rim and tip
+-            if (lt > 0.3 && rr > 0.5 && sd > mix(0.95, 0.45, smoothstep(0.5, 1.0, rr) * smoothstep(0.3, 1.0, lt))) discard;
++            // plush pile: every strand has its own length (the pile thins out toward its surface → soft fuzzy edge,
++            // no hard tips) and tapers; strands stay dense in the lock core, separate toward its rim
++            float sH = 1.0 - uPile.y * sh2;
++            if (lt > sH) discard;
++            float srad = mix(0.95, uPile.x, smoothstep(0.05, 1.0, lt / sH));
++            srad = mix(srad, 0.95, (1.0 - smoothstep(0.0, uPile.z, rr)) * (1.0 - smoothstep(0.3, 0.9, lt)));
++            if (lt > 0.08 && sd > srad) discard;
+           }
+           // rounded tuft: brighter along the lock's axis, darker toward its rim (uComb.w = amount)
+           float rnd = mix(1.0 - uComb.w, 1.0 + 0.4 * uComb.w, 1.0 - smoothstep(0.0, 1.0, rr));
+diff --git a/tools/benny20/furstat.py b/tools/benny20/furstat.py
+index f240c1e..12916ab 100644
+--- a/tools/benny20/furstat.py
++++ b/tools/benny20/furstat.py
+@@ -1,16 +1,31 @@
+-"""fur colour stats (pink pixels) inside a rectangle: mean RGB, HSV saturation / brightness p10/50/90.
+-usage: python3 -I tools/benny20/furstat.py <frame.png> x0 y0 x1 y1"""
++"""fur colour stats: mean RGB, HSV saturation / brightness p10/50/90.
++  rect mode:  python3 -I tools/benny20/furstat.py <frame.png> x0 y0 x1 y1        (pink pixels in the rectangle)
++  mask mode:  python3 -I tools/benny20/furstat.py <frame.png> --mask <mask.png>  (fur-red mask pixels below the cuff)"""
+ import sys, json
+ import numpy as np
+ from PIL import Image
+ a = np.asarray(Image.open(sys.argv[1]).convert('RGB')).astype(float)
+-x0, y0, x1, y1 = (int(v) for v in sys.argv[2:6])
+-c = a[y0:y1, x0:x1].reshape(-1, 3)
+-R, G, B = c[:, 0], c[:, 1], c[:, 2]
+-m = (R > 90) & (R > B + 5) & (G < 0.62 * R)
+-px = c[m] / 255
++if sys.argv[2] == '--mask':
++    mk = np.asarray(Image.open(sys.argv[3]).convert('RGB')).astype(int)
++    r, g, b = mk[..., 0], mk[..., 1], mk[..., 2]
++    fur = (r > 150) & (g < 100) & (b < 100)
++    cuff = (b > 150) & (r < 100) & (g < 100)
++    fur[:, :100] = False; fur[:, -100:] = False; fur[:700] = False; cuff[:700] = False
++    ys, xs = np.nonzero(cuff)
++    xc = int(np.median(xs)) if len(xs) else a.shape[1] // 2
++    col = np.nonzero(cuff[:, xc - 3:xc + 4].any(1))[0]
++    if len(col): fur[:col.max() + 4] = False
++    c = a[fur]
++    R, G, B = c[:, 0], c[:, 1], c[:, 2]
++    c = c[(R > 60) & (R > B + 5) & (G < 0.62 * R)]
++else:
++    x0, y0, x1, y1 = (int(v) for v in sys.argv[2:6])
++    c = a[y0:y1, x0:x1].reshape(-1, 3)
++    R, G, B = c[:, 0], c[:, 1], c[:, 2]
++    c = c[(R > 90) & (R > B + 5) & (G < 0.62 * R)]
++px = c / 255
+ mx, mn = px.max(1), px.min(1)
+ sat = (mx - mn) / np.maximum(mx, 1e-6)
+-print(json.dumps({'n': int(m.sum()), 'mean': [int(v) for v in px.mean(0) * 255],
++print(json.dumps({'n': int(len(px)), 'mean': [int(v) for v in px.mean(0) * 255],
+                   'sat': [round(float(np.percentile(sat, p)), 2) for p in (10, 50, 90)],
+                   'val': [round(float(np.percentile(mx, p)), 2) for p in (10, 50, 90)]}))
+diff --git a/tools/benny20/knit.py b/tools/benny20/knit.py
+index 9254093..fccfeae 100644
+--- a/tools/benny20/knit.py
++++ b/tools/benny20/knit.py
+@@ -78,10 +78,19 @@ def knit_field(W, H, cols, rows, seed, rib=False, groove=0.38):
+         rowid = np.where(better, k, rowid)
+         var = np.where(better, rv[np.clip(k + 1, 0, rows + 2), (col % cols)], var)
+     if rib:
+-        # ribbing: every column is a raised knit rib; the purl grooves between them sink deep
++        # ribbing (r20, like the approved 04 cuff): each column = one raised knit rib (its V stitch squeezed into the
++        # central `rib` share of the column) + a deep purl groove between ribs with small horizontal purl bumps
++        rw = float(rib) if not isinstance(rib, bool) else 0.7
+         edge = np.abs(s)
+-        ribprof = np.clip(1 - ((edge - 0.18) / 0.32).clip(0) ** 2, 0, 1)
+-        hmax = hmax * (0.55 + 0.45 * ribprof) + 0.35 * ribprof
++        hv = np.zeros_like(hmax)
++        for dr in (-1, 0, 1):
++            k = np.floor(Y).astype(int) + dr
++            t = 1 - (Y - k)
++            hv = np.maximum(hv, np.maximum(leg_height(s / rw, t, -1), leg_height(s / rw, t, 1)))
++        ribprof = np.clip(1 - (edge / (0.5 * rw)) ** 4, 0, 1)
++        tt = (Y - np.floor(Y)) * 2 - 1
++        purl = 0.22 * np.clip(1 - tt ** 2 * 3, 0, 1)
++        hmax = np.where(edge < 0.5 * rw, 0.25 + 0.75 * hv * (0.6 + 0.4 * ribprof), purl)
+         hmax = hmax / hmax.max()
+     return hmax, rowid, var
+ 
+@@ -114,7 +123,7 @@ def l2s8(c):
+ def crown(p, out):
+     W, H, cols, rows = p['crown_w'], p['crown_h'], p['crown_cols'], p['crown_rows']
+     # r20: optional ribbed crown (approved 04 crown = raised knit columns with grooves, like the cuff but milder)
+-    h, rowid, var = knit_field(W, H, cols, rows, p['seed'], rib=bool(p.get('crown_rib', False)))
++    h, rowid, var = knit_field(W, H, cols, rows, p['seed'], rib=p.get('crown_rib', False))
+     fz = fbm((H, W), p['seed'] + 1)
+     # stripe per stitch ROW (stripes change on row boundaries -> jagged knit edge like a real beanie)
+     vrow = 1 - (rowid + 0.5) / rows          # v of the row centre (0 bottom .. 1 top)
+@@ -132,7 +141,7 @@ def crown(p, out):
+ 
+ def brim(p, out):
+     W, H, cols, rows = p['brim_w'], p['brim_h'], p['brim_cols'], p['brim_rows']
+-    h, rowid, var = knit_field(W, H, cols, rows, p['seed'] + 3, rib=True)
++    h, rowid, var = knit_field(W, H, cols, rows, p['seed'] + 3, rib=p.get('brim_rib', True))
+     fz = fbm((H, W), p['seed'] + 4)
+     base = np.broadcast_to(s2l(p['cuff']), (H, W, 3))
+     alb = shade(h, base, var, p['groove'] * 0.85, fz)

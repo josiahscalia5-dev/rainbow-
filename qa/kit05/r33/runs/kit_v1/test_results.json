@@ -1,0 +1,151 @@
+{
+ "frames": 127,
+ "seconds": 4.23,
+ "errors": [],
+ "rendered": "0:228",
+ "level": {
+  "s_end_target": 5.85,
+  "done": true,
+  "done_frame": 126,
+  "plan": "coin-trail player + extras"
+ },
+ "built_level": {
+  "path_end": null,
+  "sections": null,
+  "sections_entered": [
+   0,
+   1,
+   2,
+   3
+  ],
+  "level_end_vs_path_end": null,
+  "swim_speed": 1.4
+ },
+ "position_stalls": 0,
+ "benny_pose": {
+  "max_abs_roll_deg": 13.492988372168508,
+  "max_roll_change_deg_per_frame": 5.059945725389501,
+  "worst_frame": 98,
+  "worst_s": 4.573,
+  "max_abs_camera_roll_deg": 0.7559312633799805,
+  "screen_x": [
+   170.61588588871064,
+   303.70143362356697
+  ],
+  "screen_y": [
+   699.7228244748994,
+   707.7349028176455
+  ],
+  "frames_roll_over_25": 0
+ },
+ "ending_transition": {
+  "present": false,
+  "first_frame": -1,
+  "k_at_end": 0,
+  "monotonic": true,
+  "frames": 0
+ },
+ "coin_crowding": {
+  "frames_checked": 127,
+  "frames_with_overlap": 127,
+  "max_pairs": 84,
+  "first_frames": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ]
+ },
+ "swipe_directions": {
+  "right": 3,
+  "left": 2
+ },
+ "forward": {
+  "min_step": 0.045999999999999375,
+  "max_step": 0.0470000000000006,
+  "freezes": 0,
+  "s_end": 5.88
+ },
+ "lateral": {
+  "max_step_per_frame": 0.0414,
+  "teleports_over_0_06": 0,
+  "lanes_seen": [
+   0,
+   1
+  ],
+  "max_abs_lat": 0.22
+ },
+ "vertical": {
+  "max_step_per_frame": 0,
+  "max_height": 0,
+  "min_height": 0
+ },
+ "camera": {
+  "frames": 127,
+  "max_move_per_frame": 0.04718250536725913,
+  "median_move_per_frame": 0.046793541506780625,
+  "max_turn_deg_per_frame": 0
+ },
+ "coins": {
+  "start": 1420,
+  "end": 1510,
+  "got": {
+   "water": 1,
+   "lane": 8,
+   "air": 0
+  }
+ },
+ "swipes_sent": 5,
+ "swipe_responses": [
+  {
+   "swipe": "right",
+   "t": 0.667,
+   "expected_lane": 1,
+   "lane_before": 0,
+   "lane_after": 1,
+   "at_edge": false,
+   "ok": true
+  },
+  {
+   "swipe": "left",
+   "t": 1.5,
+   "expected_lane": 0,
+   "lane_before": 1,
+   "lane_after": 0,
+   "at_edge": false,
+   "ok": true
+  },
+  {
+   "swipe": "right",
+   "t": 2.067,
+   "expected_lane": 1,
+   "lane_before": 0,
+   "lane_after": 1,
+   "at_edge": false,
+   "ok": true
+  },
+  {
+   "swipe": "left",
+   "t": 3.133,
+   "expected_lane": 0,
+   "lane_before": 1,
+   "lane_after": 0,
+   "at_edge": false,
+   "ok": true
+  },
+  {
+   "swipe": "right",
+   "t": 3.6,
+   "expected_lane": 1,
+   "lane_before": 0,
+   "lane_after": 1,
+   "at_edge": false,
+   "ok": true
+  }
+ ],
+ "swipes_ok": 5
+}

@@ -1,0 +1,10 @@
+{
+ "what": "deterministic scripts/capture.mjs (port-5277 copy tools/match07/capture_5277.mjs), K7e vs K7e&m07cloud=1, rows 180-1536, threshold 0.1",
+ "07": 0,
+ "08": 0,
+ "07a_plunge_top": 24745,
+ "07b_plunge_mid": 89184,
+ "07c_plunge_bottom": 1011,
+ "07d_entering_08": 0,
+ "audit_a_start": 0
+}

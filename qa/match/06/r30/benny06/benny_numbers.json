@@ -1,0 +1,122 @@
+{
+ "start_BEFORE": [
+  49.4,
+  37.7
+ ],
+ "start_NEW": [
+  56.8,
+  22.4
+ ],
+ "panel1_BEFORE": {
+  "share": 5.1,
+  "mean": 65.6,
+  "game": {
+   "top": 696,
+   "bot": 1255,
+   "cx": 358
+  },
+  "painted": {
+   "top": 298,
+   "bot": 570,
+   "cx": 250
+  }
+ },
+ "panel1_NEW": {
+  "share": 5.5,
+  "mean": 61.9,
+  "game": {
+   "top": 771,
+   "bot": 1236,
+   "cx": 376
+  },
+  "painted": {
+   "top": 298,
+   "bot": 570,
+   "cx": 250
+  }
+ },
+ "panel2_BEFORE": {
+  "share": 4.9,
+  "mean": 62.4,
+  "game": {
+   "top": 735,
+   "bot": 1283,
+   "cx": 426
+  },
+  "painted": {
+   "top": 298,
+   "bot": 570,
+   "cx": 252
+  }
+ },
+ "panel2_NEW": {
+  "share": 5.5,
+  "mean": 59.0,
+  "game": {
+   "top": 810,
+   "bot": 1263,
+   "cx": 444
+  },
+  "painted": {
+   "top": 298,
+   "bot": 570,
+   "cx": 252
+  }
+ },
+ "panel3_BEFORE": {
+  "share": 6.1,
+  "mean": 57.4,
+  "game": {
+   "top": 738,
+   "bot": 1301,
+   "cx": 530
+  },
+  "painted": {
+   "top": 272,
+   "bot": 552,
+   "cx": 245
+  }
+ },
+ "panel3_NEW": {
+  "share": 6.8,
+  "mean": 58.4,
+  "game": {
+   "top": 817,
+   "bot": 1290,
+   "cx": 551
+  },
+  "painted": {
+   "top": 272,
+   "bot": 552,
+   "cx": 245
+  }
+ },
+ "panel4_BEFORE": {
+  "share": 6.0,
+  "mean": 54.5,
+  "game": {
+   "top": 683,
+   "bot": 1154,
+   "cx": 449
+  },
+  "painted": {
+   "top": 272,
+   "bot": 555,
+   "cx": 250
+  }
+ },
+ "panel4_NEW": {
+  "share": 6.7,
+  "mean": 57.6,
+  "game": {
+   "top": 749,
+   "bot": 1143,
+   "cx": 466
+  },
+  "painted": {
+   "top": 272,
+   "bot": 555,
+   "cx": 250
+  }
+ }
+}

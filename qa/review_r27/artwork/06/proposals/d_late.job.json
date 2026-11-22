@@ -1,0 +1,39 @@
+{
+ "name": "d_late",
+ "endpoint": "fal-ai/nano-banana-2/edit",
+ "request_id": "01a1f9b0-7737-7350-b47c-42180f379034",
+ "status": "COMPLETED",
+ "resolution": "2K",
+ "aspect_ratio": "9:16",
+ "num_images": 1,
+ "estimated_cost_usd": 0.12,
+ "inputs": [
+  {
+   "path": "qa/review_r27/artwork/06/game_frames/d_late.png",
+   "sha256": "63041fa34392756a1b01cd325f81a4b05ca27a7eaeab48e8825be49d6c183e73"
+  },
+  {
+   "path": "/home/user/wt/view06/assets/textures/match06/tile_ring6.png",
+   "sha256": "fbbfe38b857c4f4f6cdb4799802107b25ec4f3166c3c61339d411e9d0f86ea35"
+  },
+  {
+   "path": "/home/user/wt/view06/assets/textures/match06/tile_tube.png",
+   "sha256": "6cb5ecf23b1a0b3bb9724fa8fd4e31d7344f0c05e9f08220f52f0af48df0d2e6"
+  },
+  {
+   "path": "/home/user/wt/view06/assets/textures/match06/tile_river6.png",
+   "sha256": "89599101fd6cc6c9c02afd6e8cd382d13dbf01dcb77475dc021fd3533178ab9d"
+  },
+  {
+   "path": "/home/user/wt/view06/assets/textures/match06/tile_foam6.png",
+   "sha256": "bb60e44fd1426f5e8bfffbfed1d2c5b58070ee65c9e681b07da51524515180ee"
+  }
+ ],
+ "prompt": "IMAGE 1 is a clean frame from a 3D mobile game (the character was removed) and defines EVERYTHING about the layout. IMAGES 2-5 are small material swatches cut from the art director's approved illustration of this level \u2014 they show ONLY surface materials, not a layout:\nIMAGE 2 = the polished gold telescoping rings with warm amber light dots; IMAGE 3 = the purple slotted washer-drum tube wall; IMAGE 4 = the glossy river water: bright cyan with pink, violet and soft rainbow sheen and crisp white highlight lines; IMAGE 5 = the soft white-lilac soap foam.\n\nRepaint IMAGE 1 surface by surface with these materials, as a finished premium illustration:\n- every ring of IMAGE 1 becomes polished bright yellow-gold (IMAGE 2), soft rounded rims, warm amber light dots on the rims, no dark or copper bands;\n- every wall surface becomes the violet-purple metal with crisp, evenly spaced rounded slots (IMAGE 3);\n- every water surface becomes the glossy water of IMAGE 4 \u2014 bright cyan in the middle, hot-pink and magenta along the edges, with smooth flowing highlight streaks that follow the river's curve; where the water rises into a crest, keep it as a glossy curling wave with a crisp white highlight along its lip;\n- foam stays LOW along the river edges as soft rounded clusters of varied sizes (IMAGE 5), never big white clouds covering the water;\n- add a few small iridescent soap bubbles in the air.\n\nSTRICT: do NOT change any shape, position, size or perspective from IMAGE 1. Do not add, remove or move any object: no holes, drains, extra rings or new river bends. The river, the crest, the tunnel opening and every ring stay exactly where they are in IMAGE 1. No character, coins, text, HUD or user interface. Output only the repainted scene.",
+ "outputs": [
+  "qa/review_r27/artwork/06/proposals/d_late_v1.png"
+ ],
+ "seconds": 22.1,
+ "error": null,
+ "note": "PROPOSAL \u2014 generated view, NOT an approved reference until the user approves it"
+}

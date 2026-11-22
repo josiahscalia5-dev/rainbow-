@@ -1,0 +1,64 @@
+{
+ "steps": [
+  {
+   "step": "game at the end of 04",
+   "state": {
+    "mode": "ride",
+    "stage": "04",
+    "s": 111.688,
+    "lat": 0,
+    "coins": 1330,
+    "hearts": 5,
+    "paused": false,
+    "bennyY": -39.37,
+    "bennyVisible": true,
+    "cam": [
+     2,
+     -31.28,
+     -48.13
+    ]
+   }
+  },
+  {
+   "step": "handed over to the section",
+   "url": "http://127.0.0.1:9940/section/index.html?return=1&bonus=1&coins=1330"
+  },
+  {
+   "step": "section loaded",
+   "info": {
+    "LEVEL": 52.379,
+    "S_SOCK": 20.204,
+    "z_arch": -13.606804637723817,
+    "z_exit": -89.49274643397257,
+    "meshes": 148,
+    "foam": 1035,
+    "coins": 26,
+    "bake": 140
+   }
+  },
+  {
+   "step": "handed back to the game",
+   "url": "http://127.0.0.1:9940/index.html?resume=05&bonus=1&coins=1450"
+  },
+  {
+   "step": "game resumed",
+   "state": {
+    "mode": "ride",
+    "stage": "05",
+    "s": 132.463,
+    "lat": 0,
+    "coins": 1450,
+    "hearts": 5,
+    "paused": false,
+    "bennyY": -41.332,
+    "bennyVisible": true,
+    "cam": [
+     1.92,
+     -37.94,
+     -68.28
+    ]
+   }
+  }
+ ],
+ "errors": []
+}

@@ -1,0 +1,36 @@
+{
+ "frames": 6,
+ "dark_patches": {
+  "frames_with_patches": 1,
+  "largest_px": 787,
+  "max_pct": 0.25,
+  "rule": "connected near-black area >= 150 px at 412x915 (approved picture: largest 8 px)"
+ },
+ "sharpness_vs_start": {
+  "min": 0.898,
+  "median": 0.9225000000000001
+ },
+ "colour_look_vs_approved": {
+  "min": 0.531,
+  "median": 0.5885
+ },
+ "flicker": {
+  "median_change": 55.64,
+  "max_change": 58.78,
+  "spikes_over_3x_median": 0,
+  "spike_frames": [],
+  "pop_median": 49.69393348693848,
+  "pop_max": 53.761253356933594,
+  "pop_spikes": 0,
+  "pop_spike_frames": []
+ },
+ "colour_look_frame0": 0.643,
+ "frame0_vs_approved": {
+  "within_20_levels_pct": 5.3,
+  "within_20_below_hud_pct": 5.9,
+  "within_40_below_hud_pct": 17.3,
+  "mean_abs_diff_below_hud": 62.2,
+  "eighth_size_within_20_below_hud_pct": 6.5,
+  "eighth_size_within_40_below_hud_pct": 19.9
+ }
+}

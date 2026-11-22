@@ -1,0 +1,16 @@
+{
+ "pano": "qa/worldlabs/05/pilot/full/pano.png",
+ "pano_size": [
+  4608,
+  2304
+ ],
+ "image_size": [
+  864,
+  571
+ ],
+ "f_px": 701.0,
+ "hfov_deg": 63.28794047375449,
+ "yaw_deg": 0.0,
+ "pitch_deg": 6.000000000000001,
+ "ncc_blurred_quarter_res": 0.6038027520025907
+}

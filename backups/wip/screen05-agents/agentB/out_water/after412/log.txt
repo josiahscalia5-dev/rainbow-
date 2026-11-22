@@ -1,0 +1,16 @@
+server 9426
+console.warning: [.WebGL-0x2914001c1000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+console.warning: [.WebGL-0x2914001c1000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+console.warning: [.WebGL-0x2914001c1000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+console.warning: [.WebGL-0x2914001c1000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)
+ready 23.529
+still 0 50.254 visible splats 655734
+still 0.7 61.972 visible splats 866071
+still 1.4 69.338 visible splats 866071
+still 2.3 59.013 visible splats 866071
+still 6.4 65.385 visible splats 830237
+still 8.5 60.318 visible splats 830237
+still 10.4 56.046 visible splats 830237
+still 4.4 83.951 visible splats 1076408
+flow frame 1
+flow frame 2
