@@ -47,9 +47,15 @@ def axy(z):
     if z >= Z0F: return T['axis_y_arch']
     if z >= Z1F: return lerp(T['axis_y_arch'], T['axis_y_sock'], smooth((Z0F - z) / (Z0F - Z1F)))
     return T['axis_y_sock']
-LT = ZA - ZX
-grid('tunnel', 128, int(LT / 0.2), lambda a, b: (((radius(ZA - b * LT)) * math.cos(2 * math.pi * a), axy(ZA - b * LT) + radius(ZA - b * LT) * math.sin(2 * math.pi * a), ZA - b * LT),
-                                                  (a, b)), flip=True)
+# the tube is split into segments (each with its own 0..1 UVs): the funnel, then 2.5 u Sock Rescue segments, so every segment can carry
+# its own baked picture pixels at a useful texel density and the best painted segment can serve as the template for the unseen ones
+SEGS = [(ZA - 0.6, Z0F), (Z0F, Z0F - 2.0), (Z0F - 2.0, Z1F)]
+z = Z1F
+while z > ZX + 1e-6: SEGS.append((z, max(ZX, z - 2.5))); z -= 2.5
+for i, (z0, z1) in enumerate(SEGS):
+    L = z0 - z1
+    grid(f'tunnel_{i:02d}', 128, max(4, int(L / 0.1)), lambda a, b, z0=z0, L=L: ((radius(z0 - b * L) * math.cos(2 * math.pi * a), axy(z0 - b * L) + radius(z0 - b * L) * math.sin(2 * math.pi * a), z0 - b * L),
+                                                                                  (a, b)), flip=True)
 # gold rings: rounded band (front face -> inner face -> back face), radius following the tunnel; the five painted Sock rings + funnel ribs
 def ring(name, z, depth=0.22, inset=0.1):
     R = radius(z); Y = axy(z); ri = R * (1 - inset)
