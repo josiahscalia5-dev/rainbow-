@@ -7,7 +7,7 @@ const { chromium } = require('playwright'); const { spawn } = require('child_pro
   const browser = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
   try {
     const page = await (await browser.newContext({ viewport: { width: 412, height: 915 } })).newPage(); page.on('pageerror', (e) => console.log('ERR', e.message));
-    await page.goto(`http://127.0.0.1:${port}/play3.html?w=412&h=915&live=1`);   // r45: the page opens pre-baked by default; the export bakes live await page.waitForFunction(() => window.ready === true, null, { timeout: 1200000 });
+    await page.goto(`http://127.0.0.1:${port}/play3.html?w=412&h=915&live=1`); /* r45: the page opens pre-baked by default; the export bakes live */ await page.waitForFunction(() => window.ready === true, null, { timeout: 1200000 });
     const names = await page.evaluate(() => window.bakeNames()); const man = { meshes: {}, foam: await page.evaluate(() => (window.foamPainted ? window.foamPainted() : [])) }; const tpl = {};
     for (const n of names) { const e = await page.evaluate((n) => window.bakeExport(n), n); if (!e) continue; if (e.template) { tpl[n] = e.template; continue; }
       fs.writeFileSync(path.join(B, `${n}_bake.jpg`), Buffer.from(e.bake.split(',')[1], 'base64')); fs.writeFileSync(path.join(B, `${n}_den.png`), Buffer.from(e.den.split(',')[1], 'base64'));

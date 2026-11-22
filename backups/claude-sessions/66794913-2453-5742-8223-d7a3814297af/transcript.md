@@ -1491,3 +1491,260 @@ Now the automated preview checker. First a quick look at the existing comparison
 
 > ↩︎ result: File created successfully at: /home/user/rainbow-/tools/screenkit/preview.cjs (file state is current in your context — no need to Read it back)
 
+### 🤖 Claude — 2026-11-22T18:13:36.884Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/screenkit/preview_sheet.py", "content": "\"\"\"Rainbow screen kit - preview verdict + contact sheet (round 45), run by preview.cjs after it has captured the stills.\nPer still: hole pixels (pure green sentinel background showing through the world), Benny inside the frame, Benny's size on screen vs the picture\nview, camera clearance (clipping), water gap under Benny (floating), colour look vs the approved picture (hue / saturation histogram\ncorrelation below the HUD), plus the measured likeness at the picture view(s) (compare_screen.py, unchanged 20-le …[+6280 chars]`
+
+### 🧑 User — 2026-11-22T18:13:36.982Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/screenkit/preview_sheet.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-22T18:13:38.190Z
+
+Now the first real run of the new builder on Screen 05 (cold cache, so every step runs once):
+
+### 🤖 Claude — 2026-11-22T18:13:40.041Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; time python3 -I tools/screenkit/build.py 05 $S/k05 --tube-len 20 --open-end --no-preview 2>&1 | tail -20", "description": "Run the cached builder on Screen 05 (cold)", "timeout": 600000}`
+
+### 🧑 User — 2026-11-22T18:13:51.571Z
+
+> ↩︎ result: layout    ran        0.0 s
+>   segment   built      4.8 s   (7bcae38707)
+>   gnlib     built      0.8 s   (5fa089e45c)
+>   geometry  built      1.3 s   (31df3f5657)
+>   assemble  ran        0.0 s
+> FAILED (1): node /home/user/rainbow-/tools/screenkit/screen_export.cjs /tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/k05/game /root/.cache/rainbow-build/bake/1e41a558535cab67a5a3cbd8.tmp12968
+> node:internal/process/promises:394
+>     triggerUncaughtException(err, true /* fromPromise */);
+>     ^
+> 
+> page.evaluate: TypeError: window.bakeNames is not a function
+>     at eval (eval at evaluate (:311:30), <anonymous>:1:14)
+>     at UtilityScript.evaluate (<anonymous>:313:16)
+>     at UtilityScript.<anonymous> (<anonymous>:1:44)
+>     at /home/user/rainbow-/tools/screenkit/screen_export.cjs:11:30 {
+>   log: []
+> }
+> 
+> Node.js v22.23.5
+> 
+> 
+> real	0m11.481s
+> user	0m19.082s
+> sys	0m3.150s
+
+### 🤖 Claude — 2026-11-22T18:13:59.240Z
+
+> 🔧 **Bash** `{"command": "grep -n \"bakeNames\\|tplExport\\|bakeExport\\|window.ready = true\\|pageerror\" tools/screenkit/screen.html | cut -c1-160; S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; cat > $S/err.cjs <<'EOF'\nconst { chromium } = require('playwright'); const { spawn } = require('child_process');\n(async () => { const dir = process.argv[2], q = process.argv[3] || ''; const port = 9911; const srv = spawn('python3', ['-m', 'http.server', '--bind', '127.0.0.1', String(port)], { cwd: dir, stdio: 'ignore' }); await new Promise((r) => setTimeout(r, 900));\n  con …[+922 chars]`
+
+### 🧑 User — 2026-11-22T18:14:19.899Z
+
+> ↩︎ result: 201:window.bakeExport = (name) => exportBake(BAKE_DATA, name, q);
+> 202:window.tplExport = () => exportTemplates(TPL, q);
+> 203:window.bakeNames = () => Object.keys(BAKE_DATA);
+> 391:window.ready = true;
+> CONSOLE [.WebGL-0x7ec00be7000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+> CONSOLE [.WebGL-0x7ec00be7000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+> CONSOLE [.WebGL-0x7ec00be7000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+> CONSOLE [.WebGL-0x7ec00be7000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)
+> INFO {"LEVEL":39.85,"S_REF":1.2000000000000002,"meshes":58,"coins":21,"bake":{"paddle_0":0.619,"paddle_1":0.612,"paddle_2":0.584,"paddle_3":0.581,"pool_00":0.018,"pool_01":0.347,"pool_02":0.318,"pool_03":0.293,"pool_04":0.28,"pool_05":0.351,"pool_06":0.364,"pool_07":0.297,"ring_00":0.301,"ring_01":0.393,"ring_02":0.405,"ring_03":0.447,"ring_04":0.465,"ring_05":0.482,"ring_06":0.554,"ring_07":0.533,"ring_08":0.483,"ring_09":0.421,"ring_10":0.377,"ring_11":0.351,"ring_12 …[+734 chars]
+
+### 🤖 Claude — 2026-11-22T18:14:41.808Z
+
+Found it: three.js clears the target on every render call, so only the last fused piece survived. That's why the wall and water templates came out empty. Fixing:
+
+### 🤖 Claude — 2026-11-22T18:14:47.103Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/bake.js'; s=open(p).read()\na=\"\"\"      const rt = new THREE.WebGLRenderTarget(bw, bh, { depthBuffer: true }); renderer.setRenderTarget(rt); renderer.setClearColor(0x000000, 0); renderer.clear(true, true, true);\"\"\"\nb=\"\"\"      const rt = new THREE.WebGLRenderTarget(bw, bh, { depthBuffer: true }); renderer.setRenderTarget(rt); renderer.setClearColor(0x000000, 0); renderer.clear(true, true, true);\n      const ac = renderer.autoClear; renderer.autoClear = false;   // every draw ADDS to the template (the depth test keeps the best sample)\ …[+803 chars]`
+
+### 🧑 User — 2026-11-22T18:14:49.238Z
+
+> ↩︎ result: ^
+> 
+> page.evaluate: TypeError: window.bakeNames is not a function
+>     at eval (eval at evaluate (:311:30), <anonymous>:1:14)
+>     at UtilityScript.evaluate (<anonymous>:313:16)
+>     at UtilityScript.<anonymous> (<anonymous>:1:44)
+>     at /home/user/rainbow-/tools/screenkit/screen_export.cjs:11:30 {
+>   log: []
+> }
+> 
+> Node.js v22.23.5
+> 
+> 
+> real	0m2.057s
+> user	0m0.572s
+> sys	0m0.304s
+> cat: /tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/k05/fit/export.log: No such file or directory
+
+### 🤖 Claude — 2026-11-22T18:14:55.206Z
+
+> 🔧 **Bash** `{"command": "sed -n 6,12p tools/screenkit/screen_export.cjs | cut -c1-250; ss -ltnp 2>/dev/null | grep -E ':9[4-7][0-9]{2}' | head", "description": "Inspect export script and listening ports"}`
+
+### 🧑 User — 2026-11-22T18:14:55.262Z
+
+> ↩︎ result: const port = 9400 + Math.floor(Math.random() * 400); const srv = spawn('python3', ['-m', 'http.server', '--bind', '127.0.0.1', String(port)], { cwd: dir, stdio: 'ignore' }); await new Promise((r) => setTimeout(r, 1200));
+>   const browser = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
+>   try {
+>     const page = await (await browser.newContext({ viewport: { width: 412, height: 915 } })).newPage(); page.on('pageerror', (e) => console.log('ERR', e.message));
+>     await page.goto(`http://127.0.0.1:${port}/play3.html?w=412&h=915&live=1`);   // r45: the page opens pre-baked by default; the export bakes live await page.waitForFunction(() => window.ready === true, null, { timeout: 1200000 });
+>     const names = await page.evaluate(() => window.bakeNames()); const man = { meshes: {}, foam: await page.evaluate(() => (window.foamPainted ? window.foamPainted() : [])) }; const tpl = {};
+>     for (const n of names) { const e = await page.evaluate((n) => window.bakeExport(n), n); if (!e) continue; if (e.template) { tpl[n] = e.template; continue; }
+
+### 🤖 Claude — 2026-11-22T18:14:56.276Z
+
+My comment swallowed the wait on the same line. Fixing that:
+
+### 🤖 Claude — 2026-11-22T18:14:59.778Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/screen_export.cjs'; s=open(p).read()\na=\"await page.goto(`http://127.0.0.1:${port}/play3.html?w=412&h=915&live=1`);   // r45: the page opens pre-baked by default; the export bakes live await page.waitForFunction\"\nb=\"await page.goto(`http://127.0.0.1:${port}/play3.html?w=412&h=915&live=1`); /* r45: the page opens pre-baked by default; the export bakes live */ await page.waitForFunction\"\nassert s.count(a)==1; s=s.replace(a,b); open(p,'w').write(s)\nEOF\nS=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; ti …[+203 chars]`
+
+### 🧑 User — 2026-11-22T18:15:46.758Z
+
+> ↩︎ result: screen 05 -> /tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/k05
+>   depth     cached     0.0 s   (ae05262e7c)
+>   fit       cached     0.0 s   (06b0a2f8b8)
+>   layout    ran        0.0 s
+>   segment   cached     0.0 s   (7bcae38707)
+>   gnlib     cached     0.0 s   (5fa089e45c)
+>   geometry  cached     0.0 s   (31df3f5657)
+>   assemble  ran        0.0 s
+>   bake      built     46.7 s   (176ef0c06f)
+> screen 05 ready: /tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/k05/game/play3.html  (46.85 s; report /tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/k05/build_report.md)
+> 
+> real	0m46.918s
+> user	0m1.087s
+> sys	0m0.347s
+> exported 54 meshes 5 templates {"ring":0.606,"copper":0.798,"tunnel":0.523,"water":0.998,"pool":0.385}
+
+### 🤖 Claude — 2026-11-22T18:15:50.262Z
+
+Cache works: on the rebuild every step except the bake was reused. All five artwork templates came out (wall, ring, tray, river, pool). Let me look at them:
+
+### 🤖 Claude — 2026-11-22T18:15:54.613Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; python3 - <<EOF\nfrom PIL import Image\nB='$S/k05/game/baked/'\nims=[Image.open(B+f).convert('RGB') for f in ['tpl_tunnel.jpg','tpl_ring.jpg','tpl_copper.jpg','tpl_water.jpg','tpl_pool.jpg']]\nfor i,f in zip(ims,['tunnel','ring','copper','water','pool']): print(f, i.size)\nW=1100; y=0; rows=[]\nt=ims[0].resize((1000, int(ims[0].height*1000/ims[0].width))); r=ims[1].resize((1000,64))\no=Image.new('RGB',(1060, t.height+64+420+20),(30,30,30)); o.paste(t,(0,0)); o.paste(r,(0,t.height+5))\nx=0\nfor im  …[+210 chars]`
+
+### 🧑 User — 2026-11-22T18:15:54.809Z
+
+> ↩︎ result: tunnel (2048, 621)
+> ring (2048, 128)
+> copper (256, 256)
+> water (512, 819)
+> pool (1024, 1024)
+
+### 🤖 Claude — 2026-11-22T18:15:56.617Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/tpl05.jpg"}`
+
+### 🧑 User — 2026-11-22T18:15:56.640Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T18:16:23.488Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/bake.js'; s=open(p).read()\na=\"\"\"const LOOK_GLSL = (decl) => `${decl} uniform vec2 uNF, uDens; uniform float uMode; uniform float uNoDepth; varying vec3 vW;\"\"\"\nb=\"\"\"const LOOK_GLSL = (decl) => `${decl} uniform vec2 uNF, uDens, uTol; uniform float uMode; uniform float uNoDepth; varying vec3 vW;\"\"\"\nassert s.count(a)==1; s=s.replace(a,b)\na=\"\"\"    if (uNoDepth < 0.5 && cl.w > lin(texture2D(D, su).r) * 1.015 + 0.03) return vec4(0.0);\"\"\"\nb=\"\"\"    if (uNoDepth < 0.5 && cl.w > lin(texture2D(D, su).r) * uTol.x + uTol.y) return  …[+1069 chars]`
+
+### 🧑 User — 2026-11-22T18:17:30.262Z
+
+> ↩︎ result: screen 05 -> /tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/k05
+>   depth     cached     0.0 s   (ae05262e7c)
+>   fit       cached     0.0 s   (06b0a2f8b8)
+>   layout    ran        0.0 s
+>   segment   cached     0.0 s   (7bcae38707)
+>   gnlib     cached     0.0 s   (5fa089e45c)
+>   geometry  cached     0.0 s   (31df3f5657)
+>   assemble  ran        0.0 s
+>   bake      built     47.9 s   (6dfc352e55)
+>   preview   built     18.5 s   (f832d36939)
+> screen 05 ready: /tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/k05/game/play3.html  (66.63 s; report /tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/k05/build_report.md)
+
+### 🤖 Claude — 2026-11-22T18:17:32.603Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; cat $S/k05/preview/preview.log | tail -40; ls $S/k05/preview | head -50", "description": "Show preview log and files"}`
+
+### 🧑 User — 2026-11-22T18:17:32.678Z
+
+> ↩︎ result: loaded 2.0 s; range [ 1.2000000000000002, 39.85 ] positions picture@1.35 begin@2.4 curve_28deg@4.45 quarter@10.86 middle@20.52 three_q@30.19 end@39.25
+> {
+>  "verdict": "WARN",
+>  "likeness_picture_view": [
+>   {
+>    "file": "tex_picture_l0.png",
+>    "share_within_20_levels": 0.807,
+>    "ssim_scenery": 0.784,
+>    "mean_abs_diff_levels": 14.0,
+>    "colour_look_corr": 0.992,
+>    "sharpness_vs_approved": 0.665,
+>    "whole_frame_within_20_levels": 0.595
+>   }
+>  ],
+>  "colour_look_min": 0.006,
+>  "colour_look_mean": 0.55,
+>  "holes_total": 0,
+>  "frames": 26,
+>  "seconds": 16.757
+> }
+>   WARN textured middle lane 0 (s 20.52) colour look 0.575 vs the approved picture
+>   WARN textured end lane 0 (s 39.25) colour look 0.015 vs the approved picture
+>   WARN textured curve_28deg lane -1 (s 4.45) colour look 0.566 vs the approved picture
+>   WARN textured quarter lane -1 (s 10.86) colour look 0.497 vs the approved picture
+>   WARN textured three_q lane -1 (s 30.19) colour look 0.362 vs the approved picture
+>   WARN textured end lane -1 (s 39.25) colour look 0.006 vs the approved picture
+>   WARN textured middle lane 1 (s 20.52) colour look 0.49 vs the approved picture
+>   WARN textured end lane 1 (s 39.25) colour look 0.013 vs the appro …[+574 chars]
+
+### 🤖 Claude — 2026-11-22T18:17:35.638Z
+
+The checker works: 26 stills in 18.5 s with no holes. It flags the look going wrong in the second half of the level. Let me see the contact sheet:
+
+### 🤖 Claude — 2026-11-22T18:17:36.781Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/k05/preview/preview_sheet.jpg"}`
+
+### 🧑 User — 2026-11-22T18:17:36.843Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-22T18:17:36.838Z
+
+[Image: original 854x3456, displayed at 494x2000. Multiply coordinates by 1.73 to map to original image.]
+
+### 🤖 Claude — 2026-11-22T18:17:54.783Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; ls $S/k05/preview/compare/; python3 - <<EOF\nfrom PIL import Image\nref=Image.open('references/05_flow_into_the_current.png').convert('RGB'); s=915/ref.height; ref=ref.resize((round(ref.width*s),915)); x=(ref.width-412)//2; ref=ref.crop((x,0,x+412,915))\nnew=Image.open('$S/k05/preview/tex_picture_l0.png').convert('RGB'); old=Image.open('qa/world/r44/world_v2/WORLD_05_picture_view.jpg').convert('RGB').resize((412,915))\no=Image.new('RGB',(412*3+20,915),(0,0,0)); o.paste(ref,(0,0)); o.paste(old,(422 …[+131 chars]`
+
+### 🧑 User — 2026-11-22T18:17:54.987Z
+
+> ↩︎ result: scenery_mask_05.png
+> tex_picture_l0_APPROVED.jpg
+> tex_picture_l0_DIFF_NEW_f0000.jpg
+> tex_picture_l0_NEW_f0000.jpg
+> tex_picture_l0_compare.json
+> tex_picture_l0_summary.json
+
+### 🤖 Claude — 2026-11-22T18:17:56.970Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/pv05.jpg"}`
+
+### 🧑 User — 2026-11-22T18:17:56.998Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T18:18:15.627Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; python3 -c \"\nimport json; d=json.load(open('$S/k05/preview/compare/tex_picture_l0_compare.json')); f=d['frames']['0']['new']; print({k:f[k] for k in f if k in ('zones_share_of_all_mismatch','route_first','share_within_20_levels')})\" | cut -c1-1500", "description": "Show mismatch zones at the picture view"}`
+
+### 🧑 User — 2026-11-22T18:18:15.695Z
+
+> ↩︎ result: {'share_within_20_levels': 0.807, 'zones_share_of_all_mismatch': {'top-right': 0.254, 'top-left': 0.199, 'top-centre': 0.185, 'middle-right': 0.082, 'bottom-right': 0.073, 'bottom-left': 0.066, 'middle-left': 0.052, 'bottom-centre': 0.048, 'middle-centre': 0.041}, 'route_first': ['pink_edge (43 % of all mismatch; 23 % of this region off) -> water-fx-specialist (pink / magenta river edges)', 'water_cyan (17 % of all mismatch; 10 % of this region off) -> water-fx-specialist (in round 34: S1 washer-environment-modeler owns the water surface bake)', 'other (16 % of all mismatch; 33 % of this region off) -> reference-match-director (triage)']}
+
+### 🤖 Claude — 2026-11-22T18:18:17.025Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/k05/preview/compare/tex_picture_l0_DIFF_NEW_f0000.jpg"}`
+
+### 🧑 User — 2026-11-22T18:18:17.047Z
+
+> ↩︎ result: [image]
+

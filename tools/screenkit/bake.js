@@ -20,12 +20,12 @@ export const famOf = (n) => /^tunnel(far)?_/.test(n) ? 'tunnel' : /^ring_/.test(
 // meshes whose own UVs are shared by several copies (realised instances): template only, never their own bake
 export const tplOnly = (n) => /^paddlerep_/.test(n);
 
-const LOOK_GLSL = (decl) => `${decl} uniform vec2 uNF, uDens; uniform float uMode; uniform float uNoDepth; varying vec3 vW;
+const LOOK_GLSL = (decl) => `${decl} uniform vec2 uNF, uDens, uTol; uniform float uMode; uniform float uNoDepth; varying vec3 vW;
   float lin(float d){ float z = d * 2.0 - 1.0; return 2.0 * uNF.x * uNF.y / (uNF.y + uNF.x - z * (uNF.y - uNF.x)); }
   vec4 look(mat4 VP, sampler2D P, sampler2D M, sampler2D D, vec2 img, out float qd){ qd = 0.0;
     vec4 cl = VP * vec4(vW, 1.0); vec3 nd = cl.xyz / max(cl.w, 1e-5); vec2 su = nd.xy * 0.5 + 0.5, px = su * img;
     if (cl.w <= 0.05 || abs(nd.x) > 0.997 || abs(nd.y) > 0.997) return vec4(0.0);
-    if (uNoDepth < 0.5 && cl.w > lin(texture2D(D, su).r) * 1.015 + 0.03) return vec4(0.0);
+    if (uNoDepth < 0.5 && cl.w > lin(texture2D(D, su).r) * uTol.x + uTol.y) return vec4(0.0);   // occluded (bake 1.5 % + 3 cm; template fusion: tight, so trays / rings never paint the wall)
     float pxu = min(length(dFdx(px)) / max(length(dFdx(vW)), 1e-7), length(dFdy(px)) / max(length(dFdy(vW)), 1e-7));
     qd = pxu;
     float w = mix(1.0, 0.6, step(0.5, texture2D(M, su).r)) * mix(0.8, 1.0, smoothstep(uDens.x, uDens.y, pxu));
@@ -39,7 +39,7 @@ export async function bake({ THREE, renderer, scene, world, MESH, CAMS, LAY, q, 
     renderer.setRenderTarget(rt); renderer.render(scene, cam); renderer.setRenderTarget(null); return rt; };
   const DEP = CAMS.map(depthOf);
   const vp = (c) => new THREE.Matrix4().multiplyMatrices(c.projectionMatrix, c.matrixWorldInverse);
-  const uni = { uNoDepth: { value: q.get('bakedbg') === 'nodepth' ? 1 : q.get('bakedbg') === 'raw' ? 2 : 0 }, uNF: { value: new THREE.Vector2(0.05, 300) }, uDens: { value: new THREE.Vector2(...(q.get('dens') ?? (LAY.bake_dens ?? [15, 60]).join(',')).split(',').map(Number)) }, uMode: { value: 0 } };
+  const uni = { uNoDepth: { value: q.get('bakedbg') === 'nodepth' ? 1 : q.get('bakedbg') === 'raw' ? 2 : 0 }, uNF: { value: new THREE.Vector2(0.05, 300) }, uDens: { value: new THREE.Vector2(...(q.get('dens') ?? (LAY.bake_dens ?? [15, 60]).join(',')).split(',').map(Number)) }, uMode: { value: 0 }, uTol: { value: new THREE.Vector2(1.015, 0.03) } };
   let decl = '', body = '', bodyQ = '';
   CAMS.forEach((c, i) => { Object.assign(uni, { [`uP${i}`]: { value: tex[2 * i] }, [`uM${i}`]: { value: tex[2 * i + 1] }, [`uD${i}`]: { value: DEP[i].depthTexture }, [`uVP${i}`]: { value: vp(c) }, [`uImg${i}`]: { value: new THREE.Vector2(...c.userData.img) } });
     decl += `uniform sampler2D uP${i}, uM${i}, uD${i}; uniform mat4 uVP${i}; uniform vec2 uImg${i};\n`;
@@ -108,7 +108,7 @@ ${body}        gl_FragColor = best; }` });
   const t1 = performance.now();
   if (q.get('tpl') !== '0') {
     // fusion material: same picture lookup; the best picture sample per template texel wins through the depth test (depth = 1 - quality)
-    const fuseUni = { ...uni, uMap: { value: 0 }, uTube: { value: new THREE.Vector4(0, 1, 0, 0) }, uStrip: { value: new THREE.Vector4(0, 1, 0, 1) }, uK: { value: 0 } };
+    const fuseUni = { ...uni, uTol: { value: new THREE.Vector2(1.002, 0.006) }, uMap: { value: 0 }, uTube: { value: new THREE.Vector4(0, 1, 0, 0) }, uStrip: { value: new THREE.Vector4(0, 1, 0, 1) }, uK: { value: 0 } };
     const fuseMat = new THREE.ShaderMaterial({ side: THREE.DoubleSide, depthTest: true, depthWrite: true, depthFunc: THREE.LessDepth, uniforms: fuseUni,
       // uMap 0: the mesh's own UVs; 1: tube period (u = mesh u, v = (zr0 - local z) / period - k); 2: flow strip (u = mesh u, v = (d - d0) / len)
       vertexShader: `uniform float uMap; uniform vec4 uTube; uniform vec4 uStrip; uniform float uK; varying vec3 vW;
@@ -122,10 +122,11 @@ ${bodyQ}          if (bq <= 0.0) discard;
           gl_FragColor = vec4(best.rgb, 1.0); gl_FragDepth = 1.0 - bq / (bq + 60.0); }` });
     const fuse = (meshes, bw, bh, draws) => {   // draws(o) -> [{map, tube, strip, k}] per mesh
       const rt = new THREE.WebGLRenderTarget(bw, bh, { depthBuffer: true }); renderer.setRenderTarget(rt); renderer.setClearColor(0x000000, 0); renderer.clear(true, true, true);
+      const ac = renderer.autoClear; renderer.autoClear = false;   // every draw ADDS to the template (the depth test keeps the best sample)
       for (const o of meshes) { const tmp = new THREE.Mesh(o.geometry, fuseMat); tmp.matrixAutoUpdate = false; o.updateWorldMatrix(true, false); tmp.matrix.copy(o.matrixWorld); tmp.frustumCulled = false; bakeScene.add(tmp);
         for (const d of draws(o)) { fuseUni.uMap.value = d.map; if (d.tube) fuseUni.uTube.value.set(...d.tube); if (d.strip) fuseUni.uStrip.value.set(...d.strip); fuseUni.uK.value = d.k ?? 0; renderer.render(bakeScene, oc); }
         bakeScene.remove(tmp); }
-      renderer.setRenderTarget(null); const px = new Uint8Array(bw * bh * 4); renderer.readRenderTargetPixels(rt, 0, 0, bw, bh, px); rt.dispose(); return px; };
+      renderer.autoClear = ac; renderer.setRenderTarget(null); const px = new Uint8Array(bw * bh * 4); renderer.readRenderTargetPixels(rt, 0, 0, bw, bh, px); rt.dispose(); return px; };
     const finish = (fam, bw, bh, px, extra) => {
       let cov = 0; for (let i = 3; i < px.length; i += 4) cov += px[i] > 127 ? 1 : 0; cov /= bw * bh; if (cov < 0.01) return null;
       const c0 = new Float32Array(bw * bh * 4); for (let i = 0; i < bw * bh; i++) { const a = px[i * 4 + 3] > 127 ? 1 : 0; for (let c = 0; c < 3; c++) c0[i * 4 + c] = px[i * 4 + c] * a; c0[i * 4 + 3] = a; }
