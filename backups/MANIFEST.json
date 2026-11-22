@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3271,
-   "sha256": "926756b0651c527eba2b256f2e65437b5a7b4f00356f615151d736c8282a9bf8"
+   "sha256": "fdbe066b5eba7bf1e71734421c5ac0e72376763994817f59fc007a3df8323e2c"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -15605,6 +15605,11 @@
    "path": "qa/bonus/r39/SOCK_APPROVED_BEFORE_NEW.jpg",
    "bytes": 778709,
    "sha256": "6dddf3e357c7d22999f80ae6e187053fa8f12499d44432786758b23275a93feb"
+  },
+  {
+   "path": "qa/bonus/r39/SOCK_NEW_9s_real_swipes.mp4",
+   "bytes": 6020148,
+   "sha256": "6955d8b9371f38107daf65541c976d73ff1c347680a06d947628ce3f88f0327c"
   },
   {
    "path": "qa/bonus/r39/SOCK_NEW_s2.0.jpg",
