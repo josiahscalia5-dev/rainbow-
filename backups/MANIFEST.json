@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 28435,
-   "sha256": "29c62b38570d2de9065f523e450dc832ec59a286d181ff68f5efb369d5847a63"
+   "sha256": "54af22498ac493df8a505af31495d2a62cc9907e7860c8cda2be2ae8703282e0"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3233,
-   "sha256": "c47c4762e7d310868d55818ae6aaefb71828938038a81f05f6c58df790a9a5b7"
+   "sha256": "363431024d22a642cee2c9504fc4ae5f36f0e53ceef33993a471e1beb6ac4121"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -23380,6 +23380,16 @@
    "path": "qa/kit45/STATUS_05_06_approved_vs_game.jpg",
    "bytes": 878977,
    "sha256": "24bc6cfd14f439715164ba7122ecec03cc1bf2d03dd2ad6e80506426f5903658"
+  },
+  {
+   "path": "qa/kit45/run/GAMEPLAY_05_to_06_TEXTURED_real_touch.mp4",
+   "bytes": 15204400,
+   "sha256": "dbeb6aed22b53733cb6b454249933d4e8b7c53a5c0d2bef385875e53cd5714b7"
+  },
+  {
+   "path": "qa/kit45/run/GAMEPLAY_05_to_06_TEXTURED_real_touch_checks.json",
+   "bytes": 3186,
+   "sha256": "57046e7f9aadc1a91728c4adaa6b949c1578e245619d0e185c956fd11eb95eea"
   },
   {
    "path": "qa/kit45/run/swipe_plan_05_06.json",
