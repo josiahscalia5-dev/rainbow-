@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 27962,
-   "sha256": "45c41d08e9d96e9e6fd042c5450d5f787048c8fe793b2a502f381ec6fdc85d2f"
+   "sha256": "cae6c40fc0833916487644c6263c044d8eb43a0244429a9fcc6f2accd6c42f43"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3622,
-   "sha256": "ff8ec453d03bc78cee4625238c319dd6467fb06c81a621098ddd9b1ae2a3bdaa"
+   "sha256": "6407c1013d80c5d0013f0ce3ebc9d119fc66a5d66a2b3d3227f5bdac318323ab"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -43240,6 +43240,26 @@
    "path": "qa/world/r44/world_v2/world.json",
    "bytes": 117817,
    "sha256": "4688d8b5f810d654da826b8665af857e93a8f339644471492e29ca6e16e4125a"
+  },
+  {
+   "path": "qa/world/r44/world_v3/README.md",
+   "bytes": 1169,
+   "sha256": "67e0176ed4da0784a4326b744193c1597dd097ab2f983b98d684c38a61e28d54"
+  },
+  {
+   "path": "qa/world/r44/world_v3/WORLD_06_picture_view.jpg",
+   "bytes": 160498,
+   "sha256": "26864fec31180a05c135ce58c4b123965ac076aa3dca5db6cef13a3c2a9df899"
+  },
+  {
+   "path": "qa/world/r44/world_v3/WORLD_v3_05_to_06_stills.jpg",
+   "bytes": 412106,
+   "sha256": "85bf85ae77f81f5510d013cd5e10aac6bdfbb8321d0e0718cf2bd64c68665f81"
+  },
+  {
+   "path": "qa/world/r44/world_v3/world.json",
+   "bytes": 152965,
+   "sha256": "ec10f02c7d656c5f237813193d9cce69c2d8158cf391661edef752229d0b3f00"
   },
   {
    "path": "qa/worldlabs/05/05_env_mask.png",
