@@ -1,3 +1,6 @@
+# ▶▶▶▶ NEWEST — ROUND 46 (2026-11-22 ~23:00 UTC, branch `claude/rainbow-screens-05-06-10w5xd`): Screens 05 + 06 fixes — Benny clipping (real cause:
+rest-pose box + route swing 0.84 u + guard before the wall clamp), foam bank in the lane, ribbon connector water, 06 rich rainbow water, wall-template
+colour gate, 07 far-end cap; measured BEFORE (true r45b rebuilt) vs NEW with the same checker. Resume: **`docs/briefs/2026-11-22-r46/RESUME_R46.md`**, results `qa/kit46/`.
 # ▶▶▶ NEWEST — ROUND 45 (2026-11-22 ~19:30 UTC, branch `ccr-c1b272d2-3ru7yx`): cached automated screen pipeline (`tools/screenkit/build.py`, GN asset library
 `gn_assets.py`, artwork-sampled materials in `bake.js`, automated previews incl. swimming measurements `preview.cjs`), world builder `tools/world/build_world.py`,
 05 + 06 in the world with the new materials, world in the app (`VITE_RAINBOW_WORLD=1`). Resume: **`docs/briefs/2026-11-22-r45/RESUME_R45.md`**.

@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 28920,
-   "sha256": "56fd4d6369e8ba2d172ffa4976c3521216f63ffe2e156b129a8ecc1377745c1d"
+   "sha256": "29f757aa8bbcbaf816cbfd27688a80f44ac5e3b41068d2ed2dcde7c41dc127ab"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 2958,
-   "sha256": "18441801a9659d50e702c1011c6473c6f54c9d1aa7bc63ffabdcfeb6bc00b9bb"
+   "sha256": "1161d7613b915e0958b12c84f17024073657654410ca372a6c529ba126ebed18"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -10813,8 +10813,8 @@
   },
   {
    "path": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md",
-   "bytes": 83957,
-   "sha256": "be2d879d4dafb2c3c8eec5243dda153c9f38112c88da11e26ee7ab33598911b8"
+   "bytes": 84440,
+   "sha256": "3a34ef80df8880ae6a07e93952e162a89bd6755aeb38c3a4a7cf8439c21d833b"
   },
   {
    "path": "docs/PARALLEL_PROGRESS.md",
@@ -11745,6 +11745,11 @@
    "path": "docs/briefs/2026-11-22-r45/RESUME_R45.md",
    "bytes": 7194,
    "sha256": "a3c51fbba6c5543dac57c904ae0cd09e3921167b1828a2dc81fb73a3fe30945d"
+  },
+  {
+   "path": "docs/briefs/2026-11-22-r46/RESUME_R46.md",
+   "bytes": 4061,
+   "sha256": "7f56a376973b85c2c296a0fcfbd3c979699a580dba032eb5fe4c1c3d0bcfedbe"
   },
   {
    "path": "docs/characters/benny.md",
