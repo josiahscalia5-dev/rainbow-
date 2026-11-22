@@ -279,7 +279,9 @@ const loadKit = async (A) => {
     else if (fam === 'foam') m = kitFoamMat(A);   // the kit page's lit lavender-white foam banks (not baked)
     else m = sceneryMat(BASE.foam, [1, 1], A);
     o.material = m; o.userData.fam = fam; o.userData.area = A.id; MESH.push(o); }
-  if (!DR.open_end) {   // the area's tube ends here (no next area joined yet): the warm glowing far end of its own page (real geometry, no hole)
+  // r46 (r45b recording frames 1362-1379: a green hole growing to 400 px at the end of the 07 tube, seen from the 06 -> 07 connector): the LAST area
+  // of the world is open toward the game's 08 hand-over, so nothing closed its tube - it now gets the same glowing far-end cap (2.8 u beyond the route end)
+  if (!DR.open_end || A.id === WD.areas[WD.areas.length - 1].id) {   // the area's tube ends here (no next area joined yet): the warm glowing far end of its own page (real geometry, no hole)
     const cap = new THREE.Mesh(new THREE.CircleGeometry(DR.r * 1.02, 64), new THREE.ShaderMaterial({ side: THREE.DoubleSide,
       vertexShader: 'varying vec2 vP; void main(){ vP = position.xy; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
       fragmentShader: `varying vec2 vP; void main(){ float r = length(vP) / ${(DR.r * 1.02).toFixed(3)}; vec3 c = mix(vec3(1.0, 0.97, 0.88), vec3(0.98, 0.62, 0.4), smoothstep(0.08, 0.35, r)); c = mix(c, vec3(0.55, 0.25, 0.7), smoothstep(0.35, 0.95, r)); gl_FragColor = vec4(c, 1.0); }` }));
