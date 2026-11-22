@@ -1,19 +1,19 @@
 {
   "last_run": {
-    "time": "2026-11-22T21:37:50+00:00",
-    "reason": "daemon",
+    "time": "2026-11-22T21:38:23+00:00",
+    "reason": "manual:session-start",
     "result": "committed+pushed",
     "files_staged": 5,
     "pushed_verified": true,
     "branch": "claude/rainbow-screens-05-06-10w5xd",
     "note": "following session branch 'claude/rainbow-screens-05-06-10w5xd' (config branch 'claude/rainbow-r22-restore-ut3m39')",
-    "commit": "6b5846f08da32dce3e125a64ef32f60bf38ce211",
-    "duration_s": 23
+    "commit": "6f3647f19edf381389dae65cf4d4b99508e66f89",
+    "duration_s": 26
   },
   "repo": "https://github.com/josiahscalia5-dev/rainbow-",
   "branch": "claude/rainbow-screens-05-06-10w5xd",
-  "last_verified_remote_sha": "6b5846f08da32dce3e125a64ef32f60bf38ce211",
-  "last_successful_backup_utc": "2026-11-22T21:37:50+00:00",
+  "last_verified_remote_sha": "6f3647f19edf381389dae65cf4d4b99508e66f89",
+  "last_successful_backup_utc": "2026-11-22T21:38:23+00:00",
   "consecutive_failures": 0,
   "schedule": "every 5 min, container-local (scheduler=daemon status=started pid=604); see backups/RECOVERY.md for limits",
   "next_scheduled_utc": "2026-11-22T21:40:00+00:00"

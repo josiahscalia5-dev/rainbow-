@@ -581,3 +581,130 @@ Restoring the newest Round 45 work first (one backup-only autosave commit is new
 
 > 🔧 **Bash** `{"command": "timeout 300 python3 scripts/rainbow-autosave.py --reason manual:session-start 2>&1 | tail -5; python3 -I scripts/autosave-status.py 2>&1 | tail -3", "description": "Run autosave manually and check status"}`
 
+### 🧑 User — 2026-11-22T21:38:50.429Z
+
+> ↩︎ result: "branch": "claude/rainbow-screens-05-06-10w5xd",
+>   "note": "following session branch 'claude/rainbow-screens-05-06-10w5xd' (config branch 'claude/rainbow-r22-restore-ut3m39')",
+>   "commit": "6f3647f19edf381389dae65cf4d4b99508e66f89",
+>   "duration_s": 26
+> }
+> AUTOSAVE OK | branch claude/rainbow-screens-05-06-10w5xd | scheduler daemon | last verified backup 2026-11-22T21:38:23+00:00 (0.5 min ago) | local 6f3647f remote 6f3647f (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-22T21:38:53.878Z
+
+> 🔧 **Bash** `{"command": "cat docs/briefs/2026-11-22-r45/RESUME_R45.md && cat qa/kit45/README.md | head -150", "description": "Read round 45 resume and kit45 readme"}`
+
+### 🧑 User — 2026-11-22T21:38:53.936Z
+
+> ↩︎ result: # Round 45 — resume here (2026-11-22, session branch `ccr-c1b272d2-3ru7yx`, continues round 44 `ccr-0bbd5b9d-js1cpg`)
+> 
+> ## User orders this round (binding, verbatim essentials)
+> 1. "Finish Screen 05 and Screen 06 properly before continuing major reconstruction work on the others" — S-river with thick cyan/pink currents,
+>    purple walls, gold rings, bubbles, foam; beautiful while Benny swims/turns, also outside the original picture; a real 3D tunnel.
+>    06: Benny genuinely on the curved water (incline + banking), partly immersed, fully visible, splash/wake on his real position, camera without
+>    clipping / leaning / size jumps; 05 → 06 without stopping, teleporting, page load or scale change; gray test then artwork; recordings; APK.
+> 2. (second message, binding) "upgrade our existing Blender Screen Builder into a faster, reusable, automated reconstruction pipeline … incremental
+>    … cache unchanged assets and texture bakes … automate visual checks before full recordings … previews of beginning, middle, curves and end incl.
+>    left and right steering … show before-and-after results, the actual time spent on each reconstruction step, and continuous playable gameplay".
+> 3. (third) "add the …[+11868 chars]
+
+### 🤖 Claude — 2026-11-22T21:38:56.117Z
+
+> 🔧 **Bash** `{"command": "ls -la qa/kit45/run/ && ls qa/kit45/run/* | head -60 && ls -la qa/kit45/RAINBOW_for_ChatGPT.zip", "description": "List recordings and package"}`
+
+### 🧑 User — 2026-11-22T21:38:56.166Z
+
+> ↩︎ result: total 62656
+> drwxr-xr-x 2 root root     4096 Nov 22 21:32 .
+> drwxr-xr-x 4 root root     4096 Nov 22 21:32 ..
+> -rw-r--r-- 1 root root  8985532 Nov 22 21:37 GAMEPLAY_05_to_06_GRAY_geometry_real_touch.mp4
+> -rw-r--r-- 1 root root     2874 Nov 22 21:32 GAMEPLAY_05_to_06_GRAY_geometry_real_touch_checks.json
+> -rw-r--r-- 1 root root 24131971 Nov 22 21:37 GAMEPLAY_05_to_06_TEXTURED_real_touch.mp4
+> -rw-r--r-- 1 root root     3186 Nov 22 21:32 GAMEPLAY_05_to_06_TEXTURED_real_touch_checks.json
+> -rw-r--r-- 1 root root 28775224 Nov 22 21:37 GAMEPLAY_05_to_06_TEXTURED_real_touch_r45b.mp4
+> -rw-r--r-- 1 root root     3282 Nov 22 21:32 GAMEPLAY_05_to_06_TEXTURED_real_touch_r45b_checks.json
+> -rw-r--r-- 1 root root  1068352 Nov 22 21:37 JOIN_05_06_clip.mp4
+> -rw-r--r-- 1 root root  1165352 Nov 22 21:37 JOIN_05_06_clip_r45b.mp4
+> -rw-r--r-- 1 root root      405 Nov 22 21:32 swipe_plan_05_06.json
+> qa/kit45/run/GAMEPLAY_05_to_06_GRAY_geometry_real_touch.mp4
+> qa/kit45/run/GAMEPLAY_05_to_06_GRAY_geometry_real_touch_checks.json
+> qa/kit45/run/GAMEPLAY_05_to_06_TEXTURED_real_touch.mp4
+> qa/kit45/run/GAMEPLAY_05_to_06_TEXTURED_real_touch_checks.json
+> qa/kit45/run/GAMEPLAY_05_to_06_TEXTURED_real_touch_r45b.mp4
+> qa/kit45/run/GAMEPL …[+232 chars]
+
+### 🤖 Claude — 2026-11-22T21:38:57.876Z
+
+> 🔧 **Bash** `{"command": "cat qa/kit45/run/GAMEPLAY_05_to_06_TEXTURED_real_touch_r45b_checks.json && cat qa/kit45/run/swipe_plan_05_06.json && cat qa/kit45/run/GAMEPLAY_05_to_06_GRAY_geometry_real_touch_checks.json", "description": "Read recording checks and swipe plan"}`
+
+### 🧑 User — 2026-11-22T21:38:57.931Z
+
+> ↩︎ result: {
+>  "frames": 1380,
+>  "errors": [],
+>  "benny_offscreen_frames": 12,
+>  "benny_offscreen_list": [
+>   409,
+>   410,
+>   411,
+>   412,
+>   413,
+>   414,
+>   415,
+>   416,
+>   417,
+>   418,
+>   419,
+>   420
+>  ],
+>  "camera_max_step_u": 0.0997,
+>  "camera_max_step_expected_u": 0.1173,
+>  "camera_max_turn_deg_per_frame": 0.999,
+>  "static_world_meshes": 435,
+>  "scenery_meshes_moved": [],
+>  "hole_pixels_max": 381,
+>  "hole_frames": 19,
+>  "holes_checked_frames": 0,
+>  "frame_qa": {
+>   "camera_clearance_min_u": 0.069,
+>   "water_gap_abs_max_u": 0.0494,
+>   "frames_without_water_under_benny": 0,
+>   "immersion_min": -0.529,
+>   "immersion_max": 0.37,
+>   "benny_tilt_vs_surface_max_deg": 61.15,
+>   "bank_max_deg": 71.6,
+>   "benny_height_px_min": 278,
+>   "benny_height_px_max": 311.50000000000006
+>  },
+>  "swipes_sent": 28,
+>  "input_mode": "real CDP touch gestures",
+>  "input_log": [
+>   {
+>    "dir": "left",
+>    "src": "touch",
+>    "clock": 1.2,
+>    "result": "lane"
+>   },
+>   {
+>    "dir": "right",
+>    "src": "touch",
+>    "clock": 3,
+>    "result": "lane"
+>   },
+>   {
+>    "dir": "right",
+>    "src": "touch",
+>    "clock": 3.267,
+>    "result": "lane"
+>   },
+>   {
+>    "dir": "left",
+>    "src": "touch",
+>    "clock": 5.5,
+>    "result": "lane"
+>   },
+>   {
+>    "dir": "left",
+>    "src": "touch",
+>    "clo …[+5361 chars]
+
