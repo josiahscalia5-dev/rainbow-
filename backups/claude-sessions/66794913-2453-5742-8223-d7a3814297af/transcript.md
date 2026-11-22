@@ -3950,3 +3950,33 @@ The older pages give 80.5 % with the same bakes. So my ribbon edit to the world 
 
 > 🔧 **Bash** `{"command": "for i in $(seq 1 60); do out=$(python3 scripts/rainbow-autosave.py --reason manual:r45-water-ribbon-test 2>&1 | tail -3); echo \"$out\" | grep -q 'another autosave is running' || break; sleep 5; done; python3 -I scripts/autosave-status.py | head -1", "description": "Save the water test to GitHub", "timeout": 600000}`
 
+### 🧑 User — 2026-11-22T20:07:30.586Z
+
+> ↩︎ result: AUTOSAVE OK | branch ccr-c1b272d2-3ru7yx | scheduler daemon | last verified backup 2026-11-22T20:07:07+00:00 (0.4 min ago) | local c7cab2a remote c7cab2a (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-22T20:07:39.112Z
+
+I sent you the Screen 05 water test: your approved picture, then two swimming moments, each shown with the current water (NOW) and the new clean water (RIBBON). It's saved on GitHub, commit `c7cab2a`. Nothing in the game changes until you approve; the new water only appears when switched on for testing.
+
+**What changed with the ribbon water:**
+- No more smeared blotches. The water is now smooth bands of cyan and pink with clean, soft edges.
+- The pink ribbons swing across in S-curves, with short bright white dashes and star glints along the flow, like in your picture.
+- The amount of pink now matches your picture: 24 % of the water, against 24 % in yours. The current water had only 6 %.
+- It's much less noisy: the water style score while swimming goes from 48 % to 54 %. The first ribbon version scored 62 %, but it was mostly cyan with ruled lines, which is why I changed it.
+- Your camera view is unchanged at 80.4 % (the current water gives 80.5 %), because there the game still shows your own painted pixels.
+
+**What's still not like your water:**
+- It's flatter. Your water glows: bright shiny highlights, deeper colour inside each band, and more sparkle.
+- The pink bands are too wide and plain up close (bottom of the last image). Yours are narrower, wind more, and have fine streaks inside.
+- The streaks are still too regular. Your water's streak pattern measures 0.57 and this one 0.70, where higher means more ruler-straight.
+
+**Also found and fixed:** a mistake of mine in the connected world page had switched off the painted water near the camera (your gold rim at the bottom of the view disappeared, and the picture view fell to 40 %). It's fixed and back to 80.5 %. This bug came after the APK, so the APK isn't affected.
+
+**My view:** the ribbon water is the right direction, because it's clean and stays clean as Benny swims. It needs one or two more rounds on the glow, the narrower winding pink bands and the finer streaks before it truly looks like yours.
+
+Do you like this direction? If yes, I'll keep refining it toward your picture and then put it into the game.
+
+### 🧑 User — 2026-11-22T20:07:41.388Z
+
+If anything, it's like if anything looks messy and on my screens, and you need to rebuild it so it doesn't look messy, just keep going. Keep going until my screens, at least some of my screens, start to look almost very close to my approved screens. I'm not saying it has to look exactly, but at least 90%-ish kind of range. But anything that looks messy or anything because you said it was painted or made, whatever, for my approved screens, then fix that so it looks like it doesn't look messy anymore. It's that simple.
+
