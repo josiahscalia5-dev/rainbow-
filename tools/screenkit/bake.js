@@ -124,9 +124,9 @@ ${body}        gl_FragColor = best; }` });
         // uGate 1 (drum wall): gold / copper picture pixels (rings, trays drawn where the fitted geometry is a little off) never sample the wall
         float gate(vec3 c){ if (uGate < 0.5) return 1.0; float gold = step(c.b * 1.6, c.r) * step(c.r * 0.42, c.g) * step(c.g, c.r * 0.97) * step(0.35, c.r);
           // r46 uGate 2 (layout tpl_wall_gate 'strict'): the painted drum wall is purple / magenta (green well below red, red never far above blue);
-          // cyan water, white foam, iridescent bubbles (g >= 0.92 r) and copper / orange / brown trays (r >= 1.45 b) never become wall texels -
+          // cyan water, pale-blue bubbles / shards (g >= 1.02 r) and copper / brown trays (r >= 1.8 b) never become wall texels -
           // they left pale 'shards' and orange smears in the repeated wall period (06, 05)
-          if (uGate > 1.5 && (c.g >= 0.92 * c.r || c.r >= 1.45 * c.b)) return 0.0;
+          if (uGate > 1.5 && (c.g >= 1.02 * c.r || c.r >= 1.8 * c.b)) return 0.0;   /* r46b: white highlights (g ~ 0.98 r) and warm pink reflections (r ~ 1.5 b) stay - they are part of the painted wall */
           return 1.0 - 0.98 * gold; }
         void main(){ float bq = 0.0; vec4 best = vec4(0.0);
 ${bodyQ}          if (bq <= 0.0) discard;

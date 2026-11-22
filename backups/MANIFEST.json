@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 28920,
-   "sha256": "bdbe3ca22f560676353c5cdb57ecbc4c9f36e6ee47ca36218f10c373b1c83017"
+   "sha256": "45a974215e1940be48531df8eeafbebfd64eafbfe1241a1eecbd0da56a173c59"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 2958,
-   "sha256": "e8791f9ec0088155a1b6530e93c40d71248d1ed972269495c8a32b4de9330f59"
+   "sha256": "b8f6d4dc4a1e82efdce030526526da800835ceeef50bf47a6cda627ea71fa56b"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -49543,8 +49543,8 @@
   },
   {
    "path": "tools/screenkit/bake.js",
-   "bytes": 31648,
-   "sha256": "31db34ab816b903906dfbdc90050f8a193b732d548f10690c219906e00200786"
+   "bytes": 31756,
+   "sha256": "45e7fbf1cc5775dc5df55909107ed37e2715e7b9854c65c68709dec414b6148d"
   },
   {
    "path": "tools/screenkit/blender_kit.py",

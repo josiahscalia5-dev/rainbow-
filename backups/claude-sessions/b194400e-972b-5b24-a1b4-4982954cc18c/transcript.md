@@ -3413,3 +3413,43 @@ Screen 06 improved clearly: water style 41.8 → 54.2, repeated-camera views 14.
 
 > 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/water_ribbon.js'; s=open(p).read()\ndef rep(old,new):\n    global s; assert s.count(old)==1, old[:70]; s=s.replace(old,new)\nrep(\"    col = mix(col, mix(cyD * 0.72, cyM, 0.25), 0.55 * smoothstep(0.5, 0.85, tr) * (1.0 - pinkW));\",\n    \"    col = mix(col, mix(cyD * 0.86, cyM, 0.4), 0.25 * smoothstep(0.5, 0.85, tr) * (1.0 - pinkW));   /* r46b measured: strong dark troughs moved the colours away from the painting */\")\nrep(\"    col = mix(col, vec3(0.03, 0.30, 0.78), 0.55 * (1.0 - smoothstep(0.0, ew, eg)));\",\n    \"    col = mix(col, vec3(0 …[+664 chars]`
 
+### 🧑 User — 2026-11-22T22:23:24.494Z
+
+> ↩︎ result: area 04   built bake                                 30.2 s
+>   area 05   built fit,bake                             66.1 s
+>   area 06   built fit,bake                             49.4 s
+>   area 07   built bake                                 55.7 s
+> world ready: /home/user/ws46/world/game/play3.html  (202.03 s; report /home/user/ws46/world/build_report.md)
+> EXIT 0
+
+### 🤖 Claude — 2026-11-22T22:23:27.158Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/ws46/world/game && python3 -c \"\nfrom PIL import Image\nfor a in ('a05','a06'):\n    im=Image.open(a+'/baked/tpl_tunnel.jpg'); im.resize((1024, int(im.size[1]*1024/im.size[0]))).save('/home/user/ws46/tpl_tunnel_'+a+'_new.png')\n\"; cd /home/user/ws46 && convert tpl_tunnel_a06_new.png tpl_tunnel_a05_new.png -append tpl_new.png", "description": "Export new wall templates"}`
+
+### 🧑 User — 2026-11-22T22:23:27.715Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-22T22:23:28.838Z
+
+> 🔧 **Read** `{"file_path": "/home/user/ws46/tpl_new.png"}`
+
+### 🧑 User — 2026-11-22T22:23:28.886Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T22:23:33.188Z
+
+> 🔧 **Bash** `{"command": "export NODE_PATH=$(npm root -g); for a in 05 06; do rm -rf /home/user/ws46/world/preview_$a; node tools/screenkit/preview.cjs /home/user/ws46/world/game /home/user/ws46/world/preview_$a --screen $a --area $a > /home/user/ws46/preview_new_$a.log 2>&1; done; python3 /home/user/ws46/show.py 05,06", "description": "Run 05 and 06 previews on the new build", "timeout": 1200000}`
+
+### 🧑 User — 2026-11-22T22:26:56.341Z
+
+> ↩︎ result: BEFORE 05    pic 83.4% ssim 0.802 sharp 0.73 | repeat 19.7 | {'wall': 86.1, 'ring': 63.8, 'water': 55.4, 'foam': 35.9, 'trays': 75.3} | look 0.443 | holes 4
+> NEW 05       pic 83.6% ssim 0.802 sharp 0.73 | repeat 17.8 | {'wall': 81.0, 'ring': 63.9, 'water': 56.2, 'foam': 32.5, 'trays': 74.4} | look 0.442 | holes 0
+> BEFORE 06    pic 85.0% ssim 0.836 sharp 0.76 | repeat 14.0 | {'wall': 87.4, 'ring': 57.6, 'water': 41.8, 'foam': 29.8, 'trays': 90.7} | look 0.39 | holes 0
+> NEW 06       pic 84.8% ssim 0.834 sharp 0.76 | repeat 19.4 | {'wall': 85.5, 'ring': 57.5, 'water': 61.1, 'foam': 28.5, 'trays': 91.8} | look 0.455 | holes 0
+
+### 🤖 Claude — 2026-11-22T22:27:17.275Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/bake.js'; s=open(p).read()\nold=\"          if (uGate > 1.5 && (c.g >= 0.92 * c.r || c.r >= 1.45 * c.b)) return 0.0;\"\nnew=\"          if (uGate > 1.5 && (c.g >= 1.02 * c.r || c.r >= 1.8 * c.b)) return 0.0;   /* r46b: white highlights (g ~ 0.98 r) and warm pink reflections (r ~ 1.5 b) stay - they are part of the painted wall */\"\nassert s.count(old)==1; s=s.replace(old,new)\ns=s.replace(\"// cyan water, white foam, iridescent bubbles (g >= 0.92 r) and copper / orange / brown trays (r >= 1.45 b) never become wall texels -\",\n            \"// …[+722 chars]`
+
