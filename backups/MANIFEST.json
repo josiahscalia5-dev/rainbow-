@@ -833,8 +833,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 28919,
-   "sha256": "ee8ba44586e17ffbe17285181a1d254673db08f17ef05cc5a9a4841bdaa5fdd1"
+   "bytes": 28920,
+   "sha256": "30e23538636af04f305a2a14825189e7b562c65b547e1b7f6a023e534ed11779"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 2958,
-   "sha256": "1adaf6daf766b0807e739ea44b3364faa7bf9ff20c2710e04aca89fc7331643e"
+   "sha256": "82c79365e933a3fa371f54e61f736d9395386d429e2c41656cd3763a1169d56d"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -49703,8 +49703,8 @@
   },
   {
    "path": "tools/screenkit/water_ribbon.js",
-   "bytes": 14623,
-   "sha256": "e9439e944695a365b1db88eb5705ad91bb05b8373007e0ed614a8158832f4af3"
+   "bytes": 16045,
+   "sha256": "e98531f11e548cb65aedff3fbe932cbfc9bf78556f15e44478fb348cefd756d8"
   },
   {
    "path": "tools/spector/spector_capture_test.mjs",
@@ -49758,8 +49758,8 @@
   },
   {
    "path": "tools/world/world.html",
-   "bytes": 91978,
-   "sha256": "2f911a777891dc962a798a50290703b4191bf21817c47cba5bcf92fa0f993668"
+   "bytes": 92290,
+   "sha256": "ca675cb3c2f588f9b528b05f6784dc184721db64ab7e2723dd03477f6d49ba8a"
   },
   {
    "path": "tools/world/world_layout.py",

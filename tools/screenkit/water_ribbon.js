@@ -49,11 +49,15 @@ vec3 ribbonWater(vec3 L, float t, float flow, vec3 vWv){
   // r46 (user: "the water becomes too plain and streaky"; layout water_rich): the painting's DEPTH inside the bands - deep-blue troughs in the cyan,
   // thin deep-blue seams along every pink ribbon edge, a glossy white-pink silk highlight inside each pink ribbon, a pale crest along the cyan centre
   if (uRich > 0.5) { float tr = rbN(vec2(lat * 2.2 + 0.6 * sin(d * 0.8), d * 0.55));
-    col = mix(col, mix(cyD * 0.8, cyM, 0.3), 0.4 * smoothstep(0.55, 0.85, tr) * (1.0 - pinkW));
+    col = mix(col, mix(cyD * 0.72, cyM, 0.25), 0.55 * smoothstep(0.5, 0.85, tr) * (1.0 - pinkW));
     float eg = min(min(abs(an - 0.5), abs(an - 0.85)), min(abs(an - 1.24), abs(an - 1.57))), ew = max(0.022, 1.2 * fwidth(an));
     col = mix(col, vec3(0.03, 0.30, 0.78), 0.55 * (1.0 - smoothstep(0.0, ew, eg)));
     float hl = min(abs(an - 0.73), abs(an - 1.46)), hb = smoothstep(0.3, 0.7, rbN(vec2(an * 9.0, d * 0.9)));
     col = mix(col, vec3(1.0, 0.86, 0.98), 0.72 * hb * (1.0 - smoothstep(0.0, max(0.02, 1.2 * fwidth(an)), hl)) * pinkW);
+    float gp = max(exp(-pow((an - 0.68) / 0.09, 2.0)), exp(-pow((an - 1.41) / 0.09, 2.0)));   /* the painting's glowing pink ribbon cores */
+    col = mix(col, vec3(1.0, 0.55, 0.93), 0.55 * gp * pinkW); col = mix(col, vec3(1.0, 0.84, 0.98), 0.3 * pow(gp, 4.0) * pinkW);
+    float halo = max(exp(-pow((an - 0.42) / 0.07, 2.0)) + exp(-pow((an - 0.93) / 0.07, 2.0)), exp(-pow((an - 1.16) / 0.07, 2.0)) + exp(-pow((an - 1.66) / 0.07, 2.0)));
+    col = mix(col, vec3(0.62, 0.55, 1.0), 0.25 * halo * (1.0 - pinkW));   /* soft violet glow where pink meets cyan */
     float cc = abs(an - 0.12 - 0.06 * sin(d * 1.4)), cb2 = smoothstep(0.35, 0.8, rbN(vec2(3.0, d * 0.8)));
     col = mix(col, vec3(0.85, 1.0, 1.0), 0.5 * cb2 * (1.0 - smoothstep(0.0, max(0.03, 1.2 * fwidth(an)), cc)) * (1.0 - pinkW)); }
   // the painting's OWN detail inside each band (water_detail.py: seamless cyan / pink tiles cut from the flattened picture, fixed size in the
@@ -64,12 +68,12 @@ vec3 ribbonWater(vec3 L, float t, float flow, vec3 vWv){
   float w = lat * 34.0 + 0.6 * sin(d * 0.7 + lat * 2.4) + 1.1 * rbN(vec2(lat * 3.0, d * 0.3)), fw = max(fwidth(w), 1e-4);
   float f = abs(fract(w) - 0.5) * 2.0, line = 1.0 - smoothstep(0.0, max(0.3, 1.8 * fw), f);
   float seg = smoothstep(0.5, 0.85, rbN(vec2(floor(w) * 1.37, d * 1.7))) * (0.55 + 0.45 * rbN(vec2(floor(w) * 0.71, d * 0.5)));
-  float vis = 1.0 - smoothstep(0.25, 0.7, fw);
+  float vis = (1.0 - smoothstep(0.25, 0.7, fw)) * (uRich > 0.5 ? mix(0.3, 1.0, smoothstep(0.03, 0.14, fw)) : 1.0);   /* r46: soft, not ruled, close to the camera */
   vec3 lineCol = mix(vec3(0.92, 0.99, 1.0), vec3(1.0, 0.76, 0.96), pinkW);
   col = mix(col, lineCol, clamp(line * seg * vis, 0.0, 1.0) * mix(0.5, 0.45, pinkW));
   // the painting's silky glow: a second, finer streak layer everywhere (dense, soft, bright) + luminous band centres
   float w3 = lat * 80.0 + 0.8 * sin(d * 0.9 + lat * 3.0) + 1.4 * rbN(vec2(lat * 6.0, d * 0.5)), fw3 = max(fwidth(w3), 1e-4), f3 = abs(fract(w3) - 0.5) * 2.0;
-  float l3 = (1.0 - smoothstep(0.0, max(0.35, 1.8 * fw3), f3)) * (0.35 + 0.65 * rbN(vec2(floor(w3) * 0.9, d * 2.4))) * (1.0 - smoothstep(0.3, 0.8, fw3));
+  float l3 = (1.0 - smoothstep(0.0, max(0.35, 1.8 * fw3), f3)) * (0.35 + 0.65 * rbN(vec2(floor(w3) * 0.9, d * 2.4))) * (1.0 - smoothstep(0.3, 0.8, fw3)) * (uRich > 0.5 ? mix(0.35, 1.0, smoothstep(0.06, 0.25, fw3)) : 1.0);
   col = mix(col, mix(vec3(0.75, 0.97, 1.0), vec3(1.0, 0.7, 0.95), pinkW), 0.32 * l3);
   col = mix(col, col * 1.12 + 0.04, 0.6 * (1.0 - smoothstep(0.0, 0.3, an)) + 0.5 * smoothstep(0.6, 1.0, pc) * pinkW);   // glow in the cyan centre and along each pink ribbon
   // the painting's bright white DASHES: short, thick-ish, along the flow, many in the cyan, some on the pink
@@ -81,19 +85,23 @@ vec3 ribbonWater(vec3 L, float t, float flow, vec3 vWv){
   col += 0.08 * smoothstep(0.35, 0.95, rbN(vec2(lat * 0.9, d * 0.35 - t * 0.1))) * (1.0 - 0.5 * pinkW);
   // r46: glossy ripple ARCS close to the camera (the painting's curved light bands across the flow) + a second, finer sparkle layer with long
   // horizontal flares (the painting is covered in small white sparkles) - both fade out where they would be smaller than a pixel
-  if (uRich > 0.5) { float ra = d * 5.5 - an * an * 2.2 + 1.3 * rbN(vec2(lat * 1.5, d * 0.7)), rf = fwidth(ra);
-    float arc = pow(0.5 + 0.5 * sin(ra), 18.0) * (1.0 - smoothstep(0.25, 0.9, rf)) * smoothstep(0.35, 0.8, rbN(vec2(floor(ra / 6.2832) * 2.1, lat * 2.0)));
-    col = mix(col, mix(vec3(0.82, 1.0, 1.0), vec3(1.0, 0.85, 0.98), pinkW), 0.55 * arc);
+  if (uRich > 0.5) { float ra = d * 8.5 - an * an * 3.4 + 1.6 * rbN(vec2(lat * 1.5, d * 0.7)), rf = fwidth(ra);
+    float arc = pow(0.5 + 0.5 * sin(ra), 9.0) * (1.0 - smoothstep(0.3, 1.1, rf)) * smoothstep(0.3, 0.7, rbN(vec2(floor(ra / 6.2832) * 2.1, lat * 2.0)));
+    float core = pow(0.5 + 0.5 * sin(ra), 40.0) * (1.0 - smoothstep(0.2, 0.7, rf));
+    col = mix(col, mix(vec3(0.6, 0.97, 1.0), vec3(1.0, 0.75, 0.97), pinkW), 0.45 * arc); col = mix(col, vec3(0.97, 1.0, 1.0), 0.6 * core * smoothstep(0.3, 0.7, rbN(vec2(floor(ra / 6.2832) * 2.1, lat * 2.0))));
     vec2 g2 = vec2(lat * 7.0, d * 3.2); vec2 c2 = floor(g2); float h2 = rbH(c2 + 4.37);
     if (h2 < 0.22) { vec2 p2c = c2 + vec2(0.2 + 0.6 * rbH(c2 + 1.1), 0.2 + 0.6 * rbH(c2 + 2.9)); vec2 q2 = (g2 - p2c) / vec2(7.0, 3.2);
-      float tw2 = 0.5 + 0.5 * sin(t * 4.0 + h2 * 90.0), s2 = max(fwidth(g2.x), fwidth(g2.y));
-      float st2 = exp(-dot(q2, q2) / 0.00004) + exp(-abs(q2.x) / 0.03) * exp(-q2.y * q2.y / 0.000008) + 0.5 * exp(-abs(q2.y) / 0.012) * exp(-q2.x * q2.x / 0.000008);
-      col = mix(col, vec3(1.0), clamp(st2 * (0.4 + 0.6 * tw2) * (1.0 - smoothstep(0.08, 0.35, s2)), 0.0, 1.0)); } }
+      float tw2 = 0.5 + 0.5 * sin(t * 4.0 + h2 * 90.0), s2 = max(fwidth(g2.x), fwidth(g2.y)), pfx = max(fwidth(lat), 1e-5), pfy = max(fwidth(d), 1e-5);
+      /* each sparkle keeps at least ~2 px core and ~6 px horizontal ray on screen (the painting's sparkles stay visible far down the river) */
+      vec2 cs = vec2(max(0.006, 1.4 * pfx), max(0.006, 1.4 * pfy));
+      float st2 = exp(-dot(q2 / cs, q2 / cs)) + exp(-abs(q2.x) / max(0.03, 6.0 * pfx)) * exp(-pow(q2.y / max(0.0028, 0.7 * pfy), 2.0)) + 0.5 * exp(-abs(q2.y) / max(0.012, 3.0 * pfy)) * exp(-pow(q2.x / max(0.0028, 0.7 * pfx), 2.0));
+      col = mix(col, vec3(1.0), clamp(st2 * (0.4 + 0.6 * tw2) * (1.0 - smoothstep(0.18, 0.45, s2)), 0.0, 1.0)); } }
   // star glints
   vec2 g = vec2(lat * 3.2, d * 1.6); vec2 cell = floor(g); float hh = rbH(cell + 0.37);
-  if (hh < 0.3) { vec2 pc2 = cell + vec2(0.25 + 0.5 * rbH(cell + 1.7), 0.25 + 0.5 * rbH(cell + 4.1)); vec2 q = (g - pc2) / vec2(3.2, 1.6);
+  if (hh < (uRich > 0.5 ? 0.42 : 0.3)) { vec2 pc2 = cell + vec2(0.25 + 0.5 * rbH(cell + 1.7), 0.25 + 0.5 * rbH(cell + 4.1)); vec2 q = (g - pc2) / vec2(3.2, 1.6);
     float tw = 0.5 + 0.5 * sin(t * 3.0 + hh * 60.0); tw = 0.35 + 0.65 * tw * tw; float sz = 1.0 + 0.8 * rbH(cell + 3.3), s = max(fwidth(g.x), fwidth(g.y));
-    float star = exp(-dot(q, q) / (0.00016 * sz)) + exp(-abs(q.x) / (0.035 * sz)) * exp(-q.y * q.y / 0.00003) + 0.7 * exp(-abs(q.y) / (0.035 * sz)) * exp(-q.x * q.x / 0.00003);
+    float rk = uRich > 0.5 ? 1.9 : 1.0;   /* r46: the painting's flares are long and horizontal */
+    float star = exp(-dot(q, q) / (0.00016 * sz * rk)) + exp(-abs(q.x) / (0.035 * sz * rk)) * exp(-q.y * q.y / (0.00003 * rk)) + 0.7 * exp(-abs(q.y) / (0.035 * sz)) * exp(-q.x * q.x / 0.00003);
     col = mix(col, vec3(1.0), clamp(star * tw * (1.0 - smoothstep(0.05, 0.3, s)), 0.0, 1.0)); }
   return clamp(col, 0.0, 1.0); }`;
 

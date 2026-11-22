@@ -2285,3 +2285,262 @@ Route now stays within 0.54 units of the axis. Running the clip test and the pro
 > 34	  float n = lat / hw + 0.42 * sin(d * 0.95 + 0.6) + 0.14 * sin(d * 2.2 + 2.0), an = abs(n) + 0.05 * sin(d * 2.6 + n * 2.5);   // stronger, tighter S-swing (painting)
 > 35	  vec3 cyD = vec3(4.0, 139.0, 234.0) / 255.0, cyM = vec3(10.0, 168.0, 250.0) / 255.0, cyB = vec3(42.0, 220.0, 249.0 …[+4504 chars]
 
+### 🤖 Claude — 2026-11-22T21:57:41.577Z
+
+Clip test and probe finished. Here are the water edits first, then I'll check the results.
+
+### 🤖 Claude — 2026-11-22T21:57:58.821Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/water_ribbon.js'; s=open(p).read()\ndef rep(old,new):\n    global s; assert s.count(old)==1, old[:60]; s=s.replace(old,new)\nrep(\"uniform sampler2D uDetC, uDetP; uniform vec4 uDetCM, uDetPM; uniform float uDetS, uDetOn;\",\n    \"uniform sampler2D uDetC, uDetP; uniform vec4 uDetCM, uDetPM; uniform float uDetS, uDetOn; uniform float uRich;\")\nrep(\"  float n = lat / hw + 0.42 * sin(d * 0.95 + 0.6) + 0.14 * sin(d * 2.2 + 2.0), an = abs(n) + 0.05 * sin(d * 2.6 + n * 2.5);   // stronger, tighter S-swing (painting)\",\n    \"  float n = lat / hw  …[+3576 chars]`
+
+### 🧑 User — 2026-11-22T21:57:58.933Z
+
+> ↩︎ result: 185:    ...ribbonUniformsAs({ uRouteX: { value: null }, uRouteZ: { value: new THREE.Vector4(0, 1, 1, 0) }, uRStyle: { value: 0 }, uRUv: { value: new THREE.Vector4() }, uRibbon: { value: 0 }, uDetC: { value: null }, uDetP: { value: null }, uDetCM: { value: new THREE.Vector4(1, 1, 1, 1) }, uDetPM: { value: new THREE.Vector4(1, 1, 1, 1) }, uDetS: { value: 1 }, uDetOn: { value: 0 } }, sx) });
+
+### 🤖 Claude — 2026-11-22T21:58:08.839Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/world/world.html'; s=open(p).read()\nold=\"A.ribbonU = routeUniforms(THREE, LAY);   // r45: clean ribbon water (?water=paint = the old painted swatch)\"\nassert s.count(old)==1\ns=s.replace(old, old+\"\\n  if (A.ribbonU && q.get('rich') === '0') A.ribbonU.uRich.value = 0;   // r46 A/B switch: ?rich=0 = the round-45b ribbon water\")\nopen(p,'w').write(s)\np='tools/screenkit/screens/05/fit05.py'; s=open(p).read()\nold=\"lay['cam_axis'] = {'follow': 0.6}; lay['water_style'] = 'ribbon'\"\nassert s.count(old)==1\ns=s.replace(old, old+\"\\nlay['water_rich'] = …[+958 chars]`
+
+### 🧑 User — 2026-11-22T21:58:08.946Z
+
+> ↩︎ result: Exit code 1
+> Traceback (most recent call last):
+>   File "<string>", line 2, in <module>
+>     import json; d=json.load(open('/home/user/ws46/clip_new3/checks.json')); print('offscreen', d['benny_offscreen_frames'], d['benny_offscreen_list'], 'edge', d.get('edge_guard'), 'camstep', d['camera_max_step_u'], 'turn', d['camera_max_turn_deg_per_frame'], 'clear', d['frame_qa']['camera_clearance_min_u'], 'coins', d['coins_end'], 'moved', d['scenery_meshes_moved'])
+>                              ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> FileNotFoundError: [Errno 2] No such file or directory: '/home/user/ws46/clip_new3/checks.json'
+
+### 🤖 Claude — 2026-11-22T21:58:10.458Z
+
+> 🔧 **Bash** `{"command": "tail -n 3 /home/user/ws46/clip_new3.log /home/user/ws46/probe3.log 2>&1 | head; ls /home/user/ws46/clip_new3 | head -3", "description": "Check clip test run status"}`
+
+### 🧑 User — 2026-11-22T21:58:10.530Z
+
+> ↩︎ result: ==> /home/user/ws46/clip_new3.log <==
+> frame 90 s 94.6 lat -0.3 coins 1330 socks 0
+> frame 120 s 96.8 lat 0.3 coins 1330 socks 0
+> frame 150 s 99 lat 0.3 coins 1330 socks 0
+> 
+> ==> /home/user/ws46/probe3.log <==
+> probed 409 s 117.993 lat 0.3 box {"x0":104,"x1":352.7,"y0":444,"y1":724.8}
+> probed 415 s 118.433 lat 0.3 box {"x0":84.6,"x1":335.4,"y0":425.6,"y1":716.5}
+> EXIT 0
+> f_00000.png
+> f_00015.png
+> f_00030.png
+
+### 🤖 Claude — 2026-11-22T21:58:13.397Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/ws46/probe3 && montage f_00000.png f_00060.png f_00150.png f_00330.png f_00409.png f_00415.png -tile 6x1 -geometry 412x915+2+2 sheet.jpg; python3 -c \"\nimport json; d=json.load(open('probe.json'))\nfor fr in d['frames']: print(fr['frame'], 'cam', fr['cam']['p'], 'q', fr['cam']['q'], 'edge', fr['edge']['shiftPx'], 'clear', round(fr['qa']['camClear'],3), 'box', fr['box'])\"", "description": "Contact sheet and camera data for probe3"}`
+
+### 🧑 User — 2026-11-22T21:58:13.643Z
+
+> ↩︎ result: 0 cam [-0.3744, 0.7337, -86.7376] q [-0.11379, -0.04266, -0.00501, 0.99258] edge 0 clear 0.766 box {'x0': 70.7, 'x1': 323.5, 'y0': 442.7, 'y1': 731.7}
+> 60 cam [0.5102, 0.734, -91.0879] q [-0.11709, 0.07919, -0.00305, 0.98995] edge 0 clear 0.767 box {'x0': 82.2, 'x1': 319.3, 'y0': 428.4, 'y1': 712.4}
+> 150 cam [1.3026, 0.734, -97.5877] q [-0.11695, -0.002, 0.00653, 0.99311] edge 0 clear 0.755 box {'x0': 92.4, 'x1': 354.6, 'y0': 434.2, 'y1': 717.8}
+> 330 cam [1.3024, 0.734, -110.6676] q [-0.11708, 0.02549, 0.00329, 0.99279] edge 0 clear 0.755 box {'x0': 86.3, 'x1': 340.8, 'y0': 433.7, 'y1': 723.4}
+> 409 cam [1.6225, 0.734, -116.455] q [-0.11664, -0.03741, 0.0107, 0.99241] edge 0 clear 0.615 box {'x0': 104, 'x1': 352.7, 'y0': 444, 'y1': 724.8}
+> 415 cam [1.6231, 0.734, -116.8953] q [-0.11657, -0.04359, 0.01142, 0.99216] edge 0 clear 0.614 box {'x0': 84.6, 'x1': 335.4, 'y0': 425.6, 'y1': 716.5}
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-22T21:58:14.623Z
+
+> 🔧 **Read** `{"file_path": "/home/user/ws46/probe3/sheet.jpg"}`
+
+### 🧑 User — 2026-11-22T21:58:14.706Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-22T21:58:14.702Z
+
+[Image: original 2496x919, displayed at 2000x736. Multiply coordinates by 1.25 to map to original image.]
+
+### 🤖 Claude — 2026-11-22T21:58:24.050Z
+
+> 🔧 **Read** `{"file_path": "/home/user/ws46/probe3/f_00060.png"}`
+
+### 🧑 User — 2026-11-22T21:58:24.082Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T21:58:32.424Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\nd=json.load(open('/home/user/ws46/probe3/probe.json'))\nfr=[f for f in d['frames'] if f['frame']==60][0]\nrows={}\nfor p in fr['picks']:\n    h=p['hits'][0] if p['hits'] else None\n    rows.setdefault(p['y'],[]).append((h['name'][:13] if h else '-'))\nfor y in sorted(rows): print(y, ' '.join(f\"{n:13s}\" for n in rows[y]))\nEOF", "description": "Show surfaces under the frame-60 grid"}`
+
+### 🧑 User — 2026-11-22T21:58:32.497Z
+
+> ↩︎ result: 140 tunnel_20     tunnel_21     tunnel_21     tunnel_21     tunnel_01     tunnel_01     tunnel_01    
+> 220 tunnel_20     tunnel_20     tunnel_21     tunnel_21     tunnel_22     ring_01       tunnel_05    
+> 300 tunnel_20     tunnel_20     tunnel_21     tunnel_21     tunnel_21     foam_bank0    ring_06      
+> 380 tunnel_20     tunnel_20     tunnel_21     tunnel_21     tunnel_21     water_route_0 water_route_0
+> 460 tunnel_20     tunnel_20     tunnel_21     tunnel_21     pool_00       pool_00       pool_00      
+> 540 tunnel_20     tunnel_20     tunnel_21     cwater_B05    cwater_B05    cwater_B05    cwater_B05   
+> 620 tunnel_20     tunnel_20     cwater_B05    cwater_B05    cwater_B05    cwater_B05    cwater_B05   
+> 700 tunnel_20     cwater_B05    cwater_B05    cwater_B05    cwater_B05    cwater_B05    cwater_B05   
+> 780 tunnel_20     cwater_B05    cwater_B05    cwater_B05    cwater_B05    cwater_B05    cwater_B05   
+> 860 cwater_B05    cwater_B05    cwater_B05    cwater_B05    cwater_B05    cwater_B05    cwater_B05
+
+### 🤖 Claude — 2026-11-22T21:59:02.012Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/world/world.html'; s=open(p).read()\ndef rep(old,new):\n    global s; assert s.count(old)==1, old[:70]; s=s.replace(old,new)\nrep(\"uSw: { value: null }, uSwOn: { value: 0 }, uSwGeo: { value: new THREE.Vector4(0, 1, 0, 0) }, uFlow: { value: A.LAY?.water_flow ?? 1.2 }, uFar: A.far ?? FAR0, uFarCol: A.farCol ?? FARC0 },   // r45: painted flow swatch (bake.js)\",\n    \"uSw: { value: null }, uSwOn: { value: 0 }, uSwGeo: { value: new THREE.Vector4(0, 1, 0, 0) }, uFlow: { value: A.LAY?.water_flow ?? 1.2 }, uFar: A.far ?? FAR0, uFarCol: A.farCol ?? FARC0,   / …[+1511 chars]`
+
+### 🧑 User — 2026-11-22T21:59:02.087Z
+
+> ↩︎ result: 175:      col = mix(col, bakeMix(col, vUv, vW, uBake, uDen, uBakeOn, uSharp, uLodBias, uT), 1.0 - smoothstep(uBakeZ.x, uBakeZ.y, vL.z));
+
+### 🤖 Claude — 2026-11-22T21:59:08.525Z
+
+> 🔧 **Bash** `{"command": "(python3 -I tools/world/build_world.py /home/user/ws46/world > /home/user/ws46/build4.log 2>&1; echo EXIT $? >> /home/user/ws46/build4.log); tail -n 11 /home/user/ws46/build4.log | head -4; tail -n 2 /home/user/ws46/build4.log; tail -n 1 /home/user/ws46/clip_new3.log | cut -c1-600", "description": "Rebuild world with rich water", "timeout": 600000}`
+
+### 🧑 User — 2026-11-22T21:59:10.057Z
+
+> ↩︎ result: area 04   cached                                      0.1 s
+>   area 05   built fit                                   0.6 s
+>   area 06   cached                                      0.1 s
+>   area 07   cached                                      0.1 s
+> world ready: /home/user/ws46/world/game/play3.html  (1.42 s; report /home/user/ws46/world/build_report.md)
+> EXIT 0
+> EXIT 0
+
+### 🤖 Claude — 2026-11-22T21:59:13.877Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json; d=json.load(open('/home/user/ws46/clip_new3/checks.json')); print('offscreen', d['benny_offscreen_frames'], d['benny_offscreen_list'], 'edge', d.get('edge_guard'), 'camstep', d['camera_max_step_u'], 'exp', d['camera_max_step_expected_u'], 'turn', d['camera_max_turn_deg_per_frame'], 'clear', d['frame_qa']['camera_clearance_min_u'], 'coins', d['coins_end'], 'moved', d['scenery_meshes_moved'], 'swipes', d['swipes_sent'], [e['result'] for e in d['input_log']])\nL=json.load(open('/home/user/ws46/clip_new3/run_log.json'))\nprint('min x0', min(f['box']['x0'] f …[+171 chars]`
+
+### 🧑 User — 2026-11-22T21:59:13.957Z
+
+> ↩︎ result: offscreen 0 [] edge {'max_optical_shift_px': 24.1, 'last_optical_corrections': 38} camstep 0.0957 exp 0.1173 turn 0.682 clear 0.516 coins 1370 moved [] swipes 10 ['lane', 'lane', 'lane', 'lane', 'lane', 'lane', 'leap', 'lane', 'lane', 'lane']
+> min x0 29.2 max x1 382.7 max |shift| 24.1
+
+### 🤖 Claude — 2026-11-22T21:59:26.050Z
+
+> 🔧 **Bash** `{"command": "export NODE_PATH=$(npm root -g); rm -rf /home/user/ws46/wA /home/user/ws46/wB;\n(node tools/reflock/section_run.cjs /home/user/ws46/world/game /home/user/ws46/wA stills 99,105,111,117,124,131 0 's0=97&rich=0' > /home/user/ws46/wA.log 2>&1; echo EXIT >> /home/user/ws46/wA.log) &\n(node tools/reflock/section_run.cjs /home/user/ws46/world/game /home/user/ws46/wB stills 99,105,111,117,124,131 0 's0=97' > /home/user/ws46/wB.log 2>&1; echo EXIT >> /home/user/ws46/wB.log) &\nwait; ls /home/user/ws46/wA /home/user/ws46/wB; cd /home/user/ws46 && montage wA/s99.00_l0.png wB/s99.00_l0.png wA …[+199 chars]`
+
+### 🧑 User — 2026-11-22T22:00:07.524Z
+
+> ↩︎ result: [1]-  Done                    ( node tools/reflock/section_run.cjs /home/user/ws46/world/game /home/user/ws46/wA stills 99,105,111,117,124,131 0 's0=97&rich=0' > /home/user/ws46/wA.log 2>&1; echo EXIT >> /home/user/ws46/wA.log )
+> [2]+  Done                    ( node tools/reflock/section_run.cjs /home/user/ws46/world/game /home/user/ws46/wB stills 99,105,111,117,124,131 0 's0=97' > /home/user/ws46/wB.log 2>&1; echo EXIT >> /home/user/ws46/wB.log )
+> /home/user/ws46/wA:
+> s105.00_l0.png
+> s111.00_l0.png
+> s117.00_l0.png
+> s124.00_l0.png
+> s131.00_l0.png
+> s99.00_l0.png
+> stills.json
+> 
+> /home/user/ws46/wB:
+> s105.00_l0.png
+> s111.00_l0.png
+> s117.00_l0.png
+> s124.00_l0.png
+> s131.00_l0.png
+> s99.00_l0.png
+> stills.json
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-22T22:00:08.518Z
+
+> 🔧 **Read** `{"file_path": "/home/user/ws46/water_ab.jpg"}`
+
+### 🧑 User — 2026-11-22T22:00:08.632Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-22T22:00:08.625Z
+
+[Image: original 2496x919, displayed at 2000x736. Multiply coordinates by 1.25 to map to original image.]
+
+### 🤖 Claude — 2026-11-22T22:00:29.655Z
+
+> 🔧 **Bash** `{"command": "mkdir -p /home/user/ws46/r45b_repo && cd /home/user/ws46/r45b_repo && git -C /home/user/rainbow- archive 94d5fc7 tools | tar -x && for e in /home/user/rainbow-/* /home/user/rainbow-/.claude; do b=$(basename $e); [ \"$b\" = tools ] || ln -sfn $e $b; done; ls | head -40; cd /home/user/ws46/r45b_repo && (python3 -I tools/world/build_world.py /home/user/ws46/world_r45b --preview 05,06 > /home/user/ws46/build_r45b.log 2>&1; echo EXIT $? >> /home/user/ws46/build_r45b.log) &\nsleep 2; echo started", "description": "Build the exact r45b world for BEFORE measurements", "run_in_background": …[+6 chars]`
+
+### 🧑 User — 2026-11-22T22:00:29.694Z
+
+> ↩︎ result: Command running in background with ID: b2pyz6y7u. Output is being written to: /tmp/claude-0/-home-user-rainbow-/b194400e-972b-5b24-a1b4-4982954cc18c/tasks/b2pyz6y7u.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-22T22:00:33.940Z
+
+> 🔧 **TaskUpdate** `{"taskId": "2", "status": "completed", "description": "Fixed: deformed-silhouette bennyBox, post-clamp lens-shift safety (user patch, soft knee, all areas), cam_axis lateral soft limit + damped yaw, follow_route/follow_lane split, 05 route swing capped (0.84 -> 0.54 u). 16 s test: 0 offscreen (was 12). Full-run verification in task 7."}`
+
+### 🧑 User — 2026-11-22T22:00:33.955Z
+
+> ↩︎ result: Updated task #2 description, status
+
+### 🤖 Claude — 2026-11-22T22:00:34.392Z
+
+> 🔧 **TaskUpdate** `{"taskId": "3", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-22T22:00:34.403Z
+
+> ↩︎ result: Updated task #3 status
+
+### 🤖 Claude — 2026-11-22T22:00:35.044Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,40p tools/screenkit/preview.cjs | cut -c1-400", "description": "Read the preview check script header"}`
+
+### 🧑 User — 2026-11-22T22:00:35.089Z
+
+> ↩︎ result: // Rainbow screen kit - AUTOMATED PREVIEW CHECK (round 45). Before any full gameplay recording: short stills of a level (or of one area of the
+> // connected world) at the approved picture view(s), the beginning, quarter, middle, three-quarter, the sharpest curves and the end, each in the
+> // LEFT / CENTRE / RIGHT swim lanes (steered with the game's own swipe input), textured with the approved artwork, plus the same places in the
+> // GEOMETRY TEST (?gray=1: plain gray 3D materials). The background is pure green (?sentinel=1), so any hole in the world shows as green pixels.
+> // Per still: Benny's whole model box inside the frame, his size on screen, camera clearance from all scenery (clipping), the gap between Benny's
+> // water point and the real water mesh (floating), his tilt vs the water surface, immersion, the bank angle. Then preview_sheet.py: hole pixels,
+> // colour look vs the approved picture, the likeness at the picture view(s) (compare_screen.py), a contact sheet and a PASS / WARN / FAIL verdict.
+> //   NODE_PATH=$(npm root -g) node tools/screenkit/preview.cjs <game folder> <out dir> [--screen NN] [--area ID] [--query k=v&..] [--s a,b,c] [--nogray]
+> // Works on a kit screen page (to …[+4191 chars]
+
+### 🤖 Claude — 2026-11-22T22:00:55.129Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/water_ribbon.js'; s=open(p).read()\ndef rep(old,new):\n    global s; assert s.count(old)==1, old[:70]; s=s.replace(old,new)\n# 1. near streak lines toned down when rich (they read as speed lines close to the camera)\nrep(\"  float vis = 1.0 - smoothstep(0.25, 0.7, fw);\\n\",\n    \"  float vis = (1.0 - smoothstep(0.25, 0.7, fw)) * (uRich > 0.5 ? mix(0.3, 1.0, smoothstep(0.03, 0.14, fw)) : 1.0);   /* r46: soft, not ruled, close to the camera */\\n\")\nrep(\"  float l3 = (1.0 - smoothstep(0.0, max(0.35, 1.8 * fw3), f3)) * (0.35 + 0.65 * rbN(vec2 …[+3087 chars]`
+
+### 🧑 User — 2026-11-22T22:01:29.123Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-22T22:01:30.200Z
+
+> 🔧 **Read** `{"file_path": "/home/user/ws46/water_ac.jpg"}`
+
+### 🧑 User — 2026-11-22T22:01:30.325Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-22T22:01:30.313Z
+
+[Image: original 2496x919, displayed at 2000x736. Multiply coordinates by 1.25 to map to original image.]
+
+### 🤖 Claude — 2026-11-22T22:01:50.168Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/water_ribbon.js'; s=open(p).read()\nold=\"\"\"      float tw2 = 0.5 + 0.5 * sin(t * 4.0 + h2 * 90.0), s2 = max(fwidth(g2.x), fwidth(g2.y));\n      float st2 = exp(-dot(q2, q2) / 0.00004) + exp(-abs(q2.x) / 0.03) * exp(-q2.y * q2.y / 0.000008) + 0.5 * exp(-abs(q2.y) / 0.012) * exp(-q2.x * q2.x / 0.000008);\n      col = mix(col, vec3(1.0), clamp(st2 * (0.4 + 0.6 * tw2) * (1.0 - smoothstep(0.08, 0.35, s2)), 0.0, 1.0)); } }\"\"\"\nnew=\"\"\"      float tw2 = 0.5 + 0.5 * sin(t * 4.0 + h2 * 90.0), s2 = max(fwidth(g2.x), fwidth(g2.y)), pfx = max(fwid …[+1223 chars]`
+
+### 🧑 User — 2026-11-22T22:02:23.897Z
+
+> ↩︎ result: area 04   cached                                      0.0 s
+>   area 05   cached                                      0.1 s
+>   area 06   cached                                      0.1 s
+>   area 07   cached                                      0.1 s
+>   assemble  ran        0.1 s
+>   detail    ran        0.2 s
+>   layout    ran        0.1 s
+>   connectors cached     0.0 s   (4f33dbf609)
+>   files     ran        0.0 s
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-22T22:02:25.702Z
+
+> 🔧 **Read** `{"file_path": "/home/user/ws46/water_d.jpg"}`
+
+### 🧑 User — 2026-11-22T22:02:25.820Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-22T22:02:25.811Z
+
+[Image: original 2032x919, displayed at 2000x905. Multiply coordinates by 1.02 to map to original image.]
+
+### 🤖 Claude — 2026-11-22T22:02:41.938Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/water_ribbon.js'; s=open(p).read()\nold=\"    float cc = abs(an - 0.12 - 0.06 * sin(d * 1.4)), cb2 = smoothstep(0.35, 0.8, rbN(vec2(3.0, d * 0.8)));\"\nnew=\"\"\"    float gp = max(exp(-pow((an - 0.68) / 0.09, 2.0)), exp(-pow((an - 1.41) / 0.09, 2.0)));   /* the painting's glowing pink ribbon cores */\n    col = mix(col, vec3(1.0, 0.55, 0.93), 0.55 * gp * pinkW); col = mix(col, vec3(1.0, 0.84, 0.98), 0.3 * pow(gp, 4.0) * pinkW);\n    float halo = max(exp(-pow((an - 0.42) / 0.07, 2.0)) + exp(-pow((an - 0.93) / 0.07, 2.0)), exp(-pow((an - 1.16)  …[+897 chars]`
+
