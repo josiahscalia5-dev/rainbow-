@@ -38,6 +38,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { installControls } from './controls.js';
 import { installQA } from './qa.js';   // r45: QA views for the automated preview check
+import { RIBBON_GLSL, routeUniforms } from './water_ribbon.js';   // r45 test ?water=ribbon: clean ribbon water drawn from the painting's structure
 import { famOf as kitFamOf, loadTemplates, applyTemplates } from './bake.js';   // r45: the screen kit's artwork-sampled materials (wall / ring / tray templates, water swatches)
 const q = new URLSearchParams(location.search);
 for (const [k, v] of [['c_LANE', '0.3'], ['c_LAT_MAX', '0.36'], ['speed', '2.2']]) if (!q.has(k)) q.set(k, v);
@@ -151,18 +152,21 @@ const WATER_CORE = `float hsh(vec2 p){ vec3 p3 = fract(vec3(p.xyx) * 0.1031); p3
     float magE = uSharp.x / max(max(length(dFdx(vW)), length(dFdy(vW))), 1e-6) / max(pd, 1.0); return mix(col, b.rgb, dd.b * (1.0 - smoothstep(uSharp.y, uSharp.y * 2.3, magE))); }`;
 const WVERT = 'varying vec2 vUv; varying vec3 vW; varying vec3 vL; void main(){ vUv = uv; vL = position; vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; }';
 // kit areas: water in its own UVs (u across, v along the flow)
-const waterMatKit = (halfW, len, along0, isPool, A) => new THREE.ShaderMaterial({ side: THREE.DoubleSide, polygonOffset: !!isPool, polygonOffsetFactor: isPool ? 2 : 0, polygonOffsetUnits: isPool ? 4 : 0,
-  uniforms: { uT: WT, uGlow: A.glow, uSharp: { value: new THREE.Vector2(SHARPX, 2.2) }, uLodBias: { value: A.lodBias }, uBake: { value: null }, uBakeOn: { value: 0 }, uDen: { value: null }, uGeo: { value: new THREE.Vector4(halfW, len, along0, isPool ? 1 : 0) },
+const waterMatKit = (halfW, len, along0, isPool, A, own = true) => new THREE.ShaderMaterial({ side: THREE.DoubleSide, polygonOffset: !!isPool, polygonOffsetFactor: isPool ? 2 : 0, polygonOffsetUnits: isPool ? 4 : 0,
+  uniforms: { uRouteX: { value: null }, uRouteZ: { value: new THREE.Vector4(0, 1, 1, 0) }, ...(own && A.ribbonU ? A.ribbonU : {}), uRibbon: { value: own && A.ribbonU ? 1 : 0 },
+    uT: WT, uGlow: A.glow, uSharp: { value: new THREE.Vector2(SHARPX, own && A.ribbonU ? 1.0 : 2.2) },   // ribbon: the bake gives way as soon as it is magnified uLodBias: { value: A.lodBias }, uBake: { value: null }, uBakeOn: { value: 0 }, uDen: { value: null }, uGeo: { value: new THREE.Vector4(halfW, len, along0, isPool ? 1 : 0) },
     uSw: { value: null }, uSwOn: { value: 0 }, uSwGeo: { value: new THREE.Vector4(0, 1, 0, 0) }, uFlow: { value: A.LAY?.water_flow ?? 1.2 } },   // r45: painted flow swatch (bake.js)
   vertexShader: WVERT,
   fragmentShader: `uniform float uT; uniform vec3 uGlow; uniform sampler2D uBake; uniform float uBakeOn; uniform sampler2D uDen; uniform vec2 uSharp; uniform float uLodBias; uniform vec4 uGeo; varying vec2 vUv; varying vec3 vW;
     uniform sampler2D uSw; uniform float uSwOn; uniform vec4 uSwGeo; uniform float uFlow; varying vec3 vL;
     ${WATER_CORE}
+    ${RIBBON_GLSL}
     void main(){ float RW = uGeo.x, u = vUv.x * 2.0 - 1.0, uw = u * RW, d = uGeo.z + (1.0 - vUv.y) * uGeo.y, tp = d + uT * 1.6;
       vec3 col = uSwOn > 1.5 ? texture(uSw, vec2((vL.x - uSwGeo.z) / uSwGeo.w, (-vL.z + uT * uFlow - uSwGeo.x) / uSwGeo.y)).rgb   // r45: the painted floor, every band, world-anchored
                : uSwOn > 0.5 ? texture(uSw, vec2(vUv.x, (d + uT * uFlow - uSwGeo.x) / uSwGeo.y)).rgb   // the painted river itself, flowing toward the camera
                              : waterCol(u, uw, tp, 0.62, 0.96, 1.0 - uGeo.w * 0.6, 0.0, 0.0);   // = tools/screenkit/screen.html (pools: pink edges damped)
-      if (uSwOn > 1.5) { vec3 pc = waterCol(u, uw, tp, 0.62, 0.96, 0.0, 0.0, 0.0); float dash = clamp((pc.g - 0.75) * 4.0, 0.0, 1.0) * step(0.9, pc.r); col = mix(col, vec3(0.93, 1.0, 1.0), 0.85 * dash); }   // crisp sparkle dashes close up
+      if (uRibbon > 0.5) col = ribbonWater(vL, uT, uFlow, vW);   // r45 test: the clean painted ribbons
+      else if (uSwOn > 1.5) { vec3 pc = waterCol(u, uw, tp, 0.62, 0.96, 0.0, 0.0, 0.0); float dash = clamp((pc.g - 0.75) * 4.0, 0.0, 1.0) * step(0.9, pc.r); col = mix(col, vec3(0.93, 1.0, 1.0), 0.85 * dash); }   // crisp sparkle dashes close up
       col = bakeMix(col, vUv, vW, uBake, uDen, uBakeOn, uSharp, uLodBias, uT);
       col = mix(col, vec3(0.95, 1.0, 1.0), uGlow.z * pow(smoothstep(uGlow.x, uGlow.y, vW.z), 1.6)); gl_FragColor = vec4(col, 1.0); }` });
 // section areas: water in world coordinates around the painted river line (route texture), offset to the area's placement
@@ -204,6 +208,7 @@ const loadKit = async (A) => {
   const g = (await gltf.loadAsync(A.dir + 'scene.glb')).scene; g.position.copy(off); g.rotation.x = A.rot_x ?? 0; g.name = 'area_' + A.id; world.add(g); g.updateMatrixWorld(true);
   const M = g.matrixWorld.clone(), Mi = M.clone().invert(); A.M = M;   // v4: an area may be tilted (07 descends); everything local goes through M
   const famOf = kitFamOf;   // r45: bake.js (paddlerep_* = the repeated trays -> copper)
+  if (q.get('water') === 'ribbon' && (q.get('ribbonareas') ?? '05').split(',').includes(A.id)) A.ribbonU = routeUniforms(THREE, LAY);   // r45 test
   const ms = []; g.traverse((o) => { if (o.isMesh) ms.push(o); });
   const RLENa = (LAY.route.points.length - 1) * LAY.route.ds, NSEG = ms.filter((o) => /^water_/.test(o.name)).length, SEG_LEN = RLENa / Math.max(1, NSEG);
   for (const o of ms) { const n = o.name, fam = famOf(n); o.geometry.computeBoundingBox(); const sz = o.geometry.boundingBox.getSize(new THREE.Vector3()); let m;
@@ -326,7 +331,7 @@ const AREA = Object.fromEntries(WD.areas.map((A) => [A.id, A]));
     let rep = [Math.max(1, sz.x / 1.0), Math.max(1, sz.y / 1.0)];
     if (c.kind === 'tube') { let L = 0; for (let i = 1; i < c.axis.length; i++) L += V3(c.axis[i]).distanceTo(V3(c.axis[i - 1])); const rA = c.r.reduce((a, b) => a + b, 0) / c.r.length;
       rep = c.fam === 'tunnelS' ? [Math.round(2 * Math.PI * rA / 0.75), Math.max(1, L / 0.75)] : [Math.round(2 * Math.PI * rA / 2.6), Math.max(1, L / 1.2)]; }
-    o.material = c.fam === 'ring' ? sceneryMat(BASE.goldring, [4, 1], A) : c.fam === 'pool' ? waterMatKit(Math.max(sz.x, 1.2) / 2, Math.max(sz.z, 1), 0, true, A) : sceneryMat(BASE[c.fam] ?? BASE.pink, rep, A);
+    o.material = c.fam === 'ring' ? sceneryMat(BASE.goldring, [4, 1], A) : c.fam === 'pool' ? waterMatKit(Math.max(sz.x, 1.2) / 2, Math.max(sz.z, 1), 0, true, A, false) : sceneryMat(BASE[c.fam] ?? BASE.pink, rep, A);
     o.userData.fam = c.fam === 'pool' ? 'pool' : c.fam; o.userData.area = 'connector'; MESH.push(o); if (c.fam === 'pool') WATER.push(o);
     // r45: a connector wears the artwork templates of the area it belongs to (wall period along its length, ring band, river swatch)
     const T = A?.TPL, u = o.material.uniforms;

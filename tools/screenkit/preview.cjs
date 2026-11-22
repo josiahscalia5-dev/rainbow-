@@ -37,6 +37,7 @@ const arg = (k, d) => { const i = process.argv.indexOf('--' + k); return i > 0 ?
       const pos = [...pics.map((s) => ({ s: +s.toFixed(3), tag: 'picture', exact: true })), { s: +(a + Math.min(1.2, (b - a) * 0.05)).toFixed(2), tag: 'begin' }, { s: lin(0.25), tag: 'quarter' },
         { s: lin(0.5), tag: 'middle' }, { s: lin(0.75), tag: 'three_q' }, ...curves.map(([s, d]) => ({ s: +s.toFixed(2), tag: `curve_${Math.round(d)}deg` })), { s: +(b - 0.6).toFixed(2), tag: 'end' }];
       if (arg('s') === 'picture') pos.splice(0, pos.length, ...pos.filter((p) => p.tag === 'picture'));   // fast likeness check
+      else if (arg('s') && arg('s').includes('picture')) pos.splice(0, pos.length, ...pos.filter((p) => p.tag === 'picture'), ...arg('s').split(',').filter((x) => x !== 'picture').map((x) => ({ s: +x, tag: 's' + x })));
       else if (arg('s')) pos.splice(0, pos.length, ...arg('s').split(',').map((x) => ({ s: +x, tag: 's' + x })));
       pos.sort((x, y) => (y.exact ? 1 : 0) - (x.exact ? 1 : 0) || x.s - y.s); plan = { range: [a, b], positions: pos, curves };   // picture views FIRST (fresh page: no wake left from earlier stills)
     }

@@ -3660,3 +3660,203 @@ Starting the water test. First a close look at your approved 05 water at full re
 
 > ↩︎ result: File created successfully at: /home/user/rainbow-/tools/screenkit/water_ribbon.js (file state is current in your context — no need to Read it back)
 
+### 🤖 Claude — 2026-11-22T19:59:09.012Z
+
+Hooking the ribbon water into the connected world (05 only, only with `?water=ribbon`):
+
+### 🤖 Claude — 2026-11-22T19:59:24.473Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/world/world.html'; s=open(p).read()\na=\"import { installQA } from './qa.js';   // r45: QA views for the automated preview check\\n\"\nb=a+\"import { RIBBON_GLSL, routeUniforms } from './water_ribbon.js';   // r45 test ?water=ribbon: clean ribbon water drawn from the painting's structure\\n\"\nassert s.count(a)==1; s=s.replace(a,b)\na=\"\"\"const waterMatKit = (halfW, len, along0, isPool, A) => new THREE.ShaderMaterial({ side: THREE.DoubleSide, polygonOffset: !!isPool, polygonOffsetFactor: isPool ? 2 : 0, polygonOffsetUnits: isPool ? 4 : 0,\n  uniforms: …[+3736 chars]`
+
+### 🧑 User — 2026-11-22T19:59:24.678Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-22T19:59:27.274Z
+
+Rebuilding the world with everything pending (splash in front, trays clear of the camera, ribbon module), without the full checks for now:
+
+### 🤖 Claude — 2026-11-22T19:59:29.323Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; python3 -I tools/world/build_world.py $S/wr > $S/wr_build5.log 2>&1; echo EXIT $? >> $S/wr_build5.log; tail -11 $S/wr_build5.log", "description": "Rebuild the world with pending fixes", "timeout": 1800000}`
+
+### 🧑 User — 2026-11-22T19:59:30.690Z
+
+> ↩︎ result: area 04   cached                                      0.2 s
+>   area 05   cached                                      0.2 s
+>   area 06   cached                                      0.3 s
+>   area 07   cached                                      0.3 s
+>   assemble  ran        0.2 s
+>   layout    ran        0.1 s
+>   connectors cached     0.0 s   (4f33dbf609)
+>   files     ran        0.0 s
+> world ready: /tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/wr/game/play3.html  (1.27 s; report /tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/wr/build_report.md)
+> EXIT 0
+
+### 🤖 Claude — 2026-11-22T19:59:38.989Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; python3 -c \"\nimport json; L=json.load(open('$S/wr/game/a05/layout.json')); print(L['templates'], L['machinery'], 'splash' , 'splash_pic' in L)\"; export NODE_PATH=$(npm root -g); for m in current ribbon; do q=\"\"; [ $m = ribbon ] && q=\"water=ribbon\"; node tools/screenkit/preview.cjs $S/wr/game $S/wt_$m --screen 05 --area 05 --s picture,103,114,128 --nogray --norepeat --lanes 0,1 --query \"$q\" > $S/wt_$m.log 2>&1; echo \"$m: $(grep -o '\"share_within_20_levels\": [0-9.]*' $S/wt_$m.log | head  …[+168 chars]`
+
+### 🧑 User — 2026-11-22T20:00:26.669Z
+
+> ↩︎ result: {'floor': {'from': 2.2, 'len': 3.0}} {'every': 2, 'clear_y': [0.734, 0.5], 'scale': 0.8} splash True
+> current: "share_within_20_levels": 0.404 "style_pct_mean":49.9,
+> ribbon: "share_within_20_levels": 0.348 "style_pct_mean":62.3,
+
+### 🤖 Claude — 2026-11-22T20:00:30.472Z
+
+The picture-view number came out at 40 %, far below the 80 % measured before. Something in this run is off, so I'm checking the frames before trusting any of these numbers:
+
+### 🤖 Claude — 2026-11-22T20:00:33.219Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; ls $S/wt_current | head -20; python3 -c \"\nfrom PIL import Image\no=Image.new('RGB',(3*416,915))\nfor i,f in enumerate(['$S/wt_current/tex_picture_l0.png','$S/wt_ribbon/tex_picture_l0.png','$S/wr/preview_05/tex_picture_l0.png']): o.paste(Image.open(f).convert('RGB'),(i*416,0))\no.resize((3*300,660)).save('$S/wt_pic.jpg',quality=85)\"", "description": "Compare the picture-view frames"}`
+
+### 🧑 User — 2026-11-22T20:00:33.367Z
+
+> ↩︎ result: Exit code 1
+> compare
+> id_tex_picture_l0.png
+> id_tex_s103_l0.png
+> id_tex_s103_l1.png
+> id_tex_s114_l0.png
+> id_tex_s114_l1.png
+> id_tex_s128_l0.png
+> id_tex_s128_l1.png
+> preview.json
+> preview_raw.json
+> preview_sheet.jpg
+> tex_picture_l0.png
+> tex_s103_l0.png
+> tex_s103_l1.png
+> tex_s114_l0.png
+> tex_s114_l1.png
+> tex_s128_l0.png
+> tex_s128_l1.png
+> Traceback (most recent call last):
+>   File "<string>", line 4, in <module>
+>     for i,f in enumerate(['/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/wt_current/tex_picture_l0.png','/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/wt_ribbon/tex_picture_l0.png','/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/wr/preview_05/tex_picture_l0.png']): o.paste(Image.open(f).convert('RGB'),(i*416,0))
+>                                                                                                                                                                                                                                                                                                                                                                                              ~~~~~ …[+302 chars]
+
+### 🤖 Claude — 2026-11-22T20:00:34.219Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/wt_pic.jpg"}`
+
+### 🧑 User — 2026-11-22T20:00:34.244Z
+
+> ↩︎ result: File does not exist. Note: your current working directory is /home/user/rainbow-.
+
+### 🤖 Claude — 2026-11-22T20:00:38.045Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; python3 -c \"\nfrom PIL import Image\no=Image.new('RGB',(2*416,915))\nfor i,f in enumerate(['$S/wt_current/tex_picture_l0.png','$S/wt_ribbon/tex_picture_l0.png']): o.paste(Image.open(f).convert('RGB'),(i*416,0))\no.resize((2*330,726)).save('$S/wt_pic.jpg',quality=85)\"", "description": "Side-by-side picture-view frames"}`
+
+### 🧑 User — 2026-11-22T20:00:38.201Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-22T20:00:38.904Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/wt_pic.jpg"}`
+
+### 🧑 User — 2026-11-22T20:00:38.936Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T20:00:52.266Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; python3 -c \"\nimport json\nw=json.load(open('$S/wr/game/world.json')); k=[x for x in w['cam_keys'] if x['area']=='05'][0]; print('key', k['s'], [round(v,3) for v in k['pos']], round(k['yaw'],4), round(k['pitch'],4))\nr=json.load(open('$S/wt_current/preview_raw.json')); f=[x for x in r['frames'] if x['tag']=='picture'][0]; print('frame s', f['s'], f['st'], f['cam'])\nprint('plan', r['plan']['positions'][:3])\"", "description": "Compare the picture camera key with the frame camera"}`
+
+### 🧑 User — 2026-11-22T20:00:52.344Z
+
+> ↩︎ result: key 97.80000000000001 [1.109, 0.734, -96.399] 0.0538 -0.2348
+> frame s 97.8 {'s': 97.8, 'lane': 0, 'lat': 0, 'height': 0, 'coins': 1330, 'move': None, 'queued': None, 'seg': None, 'bob': 0, 'lean': 0, 'pitch': 0, 'yaw': 0, 'pom': 0, 'camLat': 0, 'camH': 0, 'swim': 1, 'got': {'water': 0, 'lane': 0, 'air': 0}, 'lastPick': None, 'swipes': 0, 'done': False, 'sDone': 245.65, 'sEnd': 245.8} {'p': [1.1093, 0.734, -96.3989], 'q': [-0.11709, 0.02669, 0.00315, 0.99276], 'fov': 64}
+> plan [{'s': 97.8, 'tag': 'picture', 'exact': True}, {'s': 103, 'tag': 's103'}, {'s': 114, 'tag': 's114'}]
+
+### 🤖 Claude — 2026-11-22T20:01:09.799Z
+
+The camera is exactly on your picture's camera, so the drop is real and something in the scenery changed. Checking the plain gray version of that view to see what's missing:
+
+### 🤖 Claude — 2026-11-22T20:01:13.649Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; NODE_PATH=$(npm root -g) node tools/screenkit/preview.cjs $S/wr/game $S/wt_gray --screen 05 --area 05 --s picture --norepeat --noid --lanes 0 > /dev/null 2>&1; python3 -c \"\nfrom PIL import Image\no=Image.new('RGB',(3*416,915))\no.paste(Image.open('$S/wt_gray/gray_picture_l0.png').convert('RGB'),(0,0)); o.paste(Image.open('$S/wt_gray/tex_picture_l0.png').convert('RGB'),(416,0)); o.paste(Image.open('$S/k05/preview/tex_picture_l0.png').convert('RGB'),(832,0))\no.resize((3*300,660)).save('$S/wt_gray …[+191 chars]`
+
+### 🤖 Claude — 2026-11-22T20:01:14.600Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/wt_gray.jpg"}`
+
+### 🧑 User — 2026-11-22T20:01:29.722Z
+
+> ↩︎ result: "share_within_20_levels": 0.404
+
+### 🧑 User — 2026-11-22T20:01:29.738Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T20:01:44.011Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; python3 - <<EOF\nimport numpy as np, json\nfrom PIL import Image\nu=Image.open('/root/.claude/uploads/66794913-2453-5742-8223-d7a3814297af/83902a53-image.jpg').convert('RGB'); r=Image.open('references/05_flow_into_the_current.png').convert('RGB')\nprint('upload', u.size, 'reference', r.size)\na=np.asarray(u.resize(r.size, Image.LANCZOS)).astype(int); b=np.asarray(r).astype(int)\nprint('mean abs diff (levels):', round(float(np.abs(a-b).mean()),2), 'within 20 levels:', round(float((np.abs(a-b).max(- …[+609 chars]`
+
+### 🧑 User — 2026-11-22T20:01:44.340Z
+
+> ↩︎ result: upload (1080, 1920) reference (864, 1536)
+> mean abs diff (levels): 1.22 within 20 levels: 1.0
+> 05 cam local [0.0, 0.734, 0.0] offset [1.109266533532227, 0.0, -96.39894016021255] rot None key [1.109, 0.734, -96.399]
+> 05 drum z0/z1 3.0 -42.68 rings [-3.99] s_ref 1.2000000000000002
+
+### 🤖 Claude — 2026-11-22T20:02:12.451Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; export NODE_PATH=$(npm root -g); for v in \"tpl=0\" \"splashpic=0\" \"tpl=0&splashpic=0\"; do d=$S/wv_$(echo $v | tr '&=' '__'); node tools/screenkit/preview.cjs $S/wr/game $d --screen 05 --area 05 --s picture --nogray --norepeat --noid --lanes 0 --query \"$v\" > /dev/null 2>&1; echo \"$v: $(grep -o '\"share_within_20_levels\": [0-9.]*' $d/preview.json | head -1)\"; done", "description": "Test template and splash switches at the picture view", "timeout": 900000}`
+
+### 🧑 User — 2026-11-22T20:02:48.938Z
+
+> ↩︎ result: tpl=0: "share_within_20_levels": 0.362
+> splashpic=0: "share_within_20_levels": 0.404
+> tpl=0&splashpic=0: "share_within_20_levels": 0.365
+
+### 🤖 Claude — 2026-11-22T20:02:55.212Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; python3 -c \"\nimport json\nfor d in ('$S/wr/game/a05','$S/k05/game'):\n    m=json.load(open(d+'/baked/manifest.json')); M=m['meshes']; print(d.split('/')[-2:], len(M), {k:M[k]['cov'] for k in sorted(M) if k.startswith(('water_route_0','pool_0','tunnel_0','ring_00','paddle_'))})\n\"; ls -la $S/wr/game/a05/ | head; python3 -c \"\nimport json; L=json.load(open('$S/wr/game/a05/layout.json')); print(L['cams'][0]['plate'], L['cams'][0]['mask'], L['cams'][0]['img'])\"", "description": "Compare 05 bake c …[+30 chars]`
+
+### 🧑 User — 2026-11-22T20:02:55.319Z
+
+> ↩︎ result: ['game', 'a05'] 55 {'paddle_0': 0.619, 'paddle_1': 0.612, 'paddle_2': 0.584, 'paddle_3': 0.581, 'pool_00': 0.018, 'pool_01': 0.402, 'pool_02': 0.303, 'pool_03': 0.202, 'pool_04': 0.211, 'pool_05': 0.312, 'pool_06': 0.306, 'pool_07': 0.209, 'ring_00': 0.319, 'tunnel_02': 0.028, 'tunnel_03': 0.339, 'tunnel_04': 0.393, 'tunnel_05': 0.466, 'tunnel_06': 0.435, 'tunnel_07': 0.278, 'tunnel_08': 0.233, 'tunnel_09': 0.333, 'water_route_00': 0.51, 'water_route_01': 0.932, 'water_route_02': 1, 'water_route_03': 1, 'water_route_04': 1, 'water_route_05': 1, 'water_route_06': 0.895, 'water_route_07': 0.694, 'water_route_08': 0.541, 'water_route_09': 0.54}
+> ['k05', 'game'] 54 {'paddle_0': 0.619, 'paddle_1': 0.612, 'paddle_2': 0.584, 'paddle_3': 0.581, 'pool_00': 0.018, 'pool_01': 0.401, 'pool_02': 0.361, 'pool_03': 0.307, 'pool_04': 0.301, 'pool_05': 0.379, 'pool_06': 0.362, 'pool_07': 0.322, 'ring_00': 0.319, 'tunnel_02': 0.028, 'tunnel_03': 0.339, 'tunnel_04': 0.396, 'tunnel_05': 0.481, 'tunnel_06': 0.435, 'tunnel_07': 0.283, 'tunnel_08': 0.232, 'tunnel_09': 0.319, 'water_route_00': 0.517, 'water_route_01': 0.935, 'water_route_02': 1, 'water_route_03': 1, 'water_route_04': 1, 'water_route_05': 1 …[+513 chars]
+
+### 🤖 Claude — 2026-11-22T20:03:05.429Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; python3 -c \"\nfrom PIL import Image\no=Image.new('RGB',(2*416,915))\no.paste(Image.open('$S/k05/preview/gray_picture_l0.png').convert('RGB'),(0,0)); o.paste(Image.open('$S/wt_gray/gray_picture_l0.png').convert('RGB'),(416,0))\no.crop((0,560,832,915)).save('$S/graybot.jpg',quality=85)\"", "description": "Compare the bottom of the gray views"}`
+
+### 🧑 User — 2026-11-22T20:03:05.750Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-22T20:03:05.982Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/graybot.jpg"}`
+
+### 🧑 User — 2026-11-22T20:03:06.006Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T20:03:25.039Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; G=$S/wr/game; cp $G/play3.html $S/play3_now.html; git log --format='%h %ad' --date=format:%H:%M -12 -- tools/world/world.html | head -12", "description": "List recent saved versions of the world page"}`
+
+### 🧑 User — 2026-11-22T20:03:25.112Z
+
+> ↩︎ result: e0cdc0b 19:48
+> 8b3fea1 19:39
+> b8ece9a 18:47
+> e16f6c3 18:33
+> 9d07a86 17:14
+> 8742a9b 17:09
+> 8780c46 17:04
+> 7cd87f0 16:44
+> 3115a6a 16:33
+> 66b14cd 16:29
+> 867aa70 16:19
+> dda23aa 16:14
+
+### 🤖 Claude — 2026-11-22T20:03:29.497Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; G=$S/wr/game; export NODE_PATH=$(npm root -g); for c in e0cdc0b 8b3fea1 b8ece9a; do git show $c:tools/world/world.html > $G/play3.html; d=$S/wv_$c; node tools/screenkit/preview.cjs $G $d --screen 05 --area 05 --s picture --nogray --norepeat --noid --lanes 0 > /dev/null 2>&1; echo \"$c: $(grep -o '\"share_within_20_levels\": [0-9.]*' $d/preview.json 2>/dev/null | head -1) $(grep -c qaRepeat $G/play3.html)\"; done; cp $S/play3_now.html $G/play3.html", "description": "Measure picture view with older  …[+38 chars]`
+

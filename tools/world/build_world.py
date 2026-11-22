@@ -48,7 +48,7 @@ def main():
     B.step('connectors', key, {'connectors.glb': os.path.join(G, 'connectors.glb')}, f_conn)
     def f_files():
         s04 = os.path.join(ws, 's04', 'game')
-        for src, dst in [(os.path.join(HERE, 'world.html'), 'play3.html'), (os.path.join(REPO, 'tools/screenkit/bake.js'), 'bake.js'), (os.path.join(REPO, 'tools/screenkit/qa.js'), 'qa.js'), (os.path.join(REPO, 'tools/kit05/controls.js'), 'controls.js'),
+        for src, dst in [(os.path.join(HERE, 'world.html'), 'play3.html'), (os.path.join(REPO, 'tools/screenkit/bake.js'), 'bake.js'), (os.path.join(REPO, 'tools/screenkit/qa.js'), 'qa.js'), (os.path.join(REPO, 'tools/screenkit/water_ribbon.js'), 'water_ribbon.js'), (os.path.join(REPO, 'tools/kit05/controls.js'), 'controls.js'),
                          (os.path.join(REPO, 'tools/kit05/swimfx.js'), 'swimfx.js')] + [(os.path.join(s04, f), f) for f in ('benny31.glb', 'bake.png', 'coin.png', 'splash.png', 'bubble.png', 'glint.png')]:
             shutil.copyfile(os.path.realpath(src), os.path.join(G, dst))
         nm = os.path.join(G, 'node_modules')

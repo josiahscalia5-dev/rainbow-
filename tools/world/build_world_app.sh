@@ -11,7 +11,7 @@ rm -rf "$P"; mkdir -p "$P/vendor/three/build" "$P/vendor/three/examples/jsm/load
 T=/tmp/rainbow_r34/node_modules/three
 cp "$T/build/three.module.js" "$T/build/three.core.js" "$P/vendor/three/build/"; cp "$T/examples/jsm/loaders/GLTFLoader.js" "$P/vendor/three/examples/jsm/loaders/"
 cp "$T/examples/jsm/utils/BufferGeometryUtils.js" "$P/vendor/three/examples/jsm/utils/"
-for f in world.json connectors.glb bake.js qa.js controls.js swimfx.js benny31.glb bake.png coin.png splash.png bubble.png glint.png; do cp -L "$G/$f" "$P/$f"; done
+for f in world.json connectors.glb bake.js qa.js water_ribbon.js controls.js swimfx.js benny31.glb bake.png coin.png splash.png bubble.png glint.png; do cp -L "$G/$f" "$P/$f"; done
 for d in "$G"/a*/; do n=$(basename "$d"); mkdir -p "$P/$n"; for f in "$d"*; do b=$(basename "$f"); [ "$b" = mask_0.png ] && continue; cp -rL "$f" "$P/$n/"; done; done
 python3 - "$G/play3.html" "$P/index.html" <<'PY'
 import sys
