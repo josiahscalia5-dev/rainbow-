@@ -54,3 +54,8 @@ moves forward, both new scenes fit naturally, a cohesive, attractive game world.
 * Priorities named by the user: 04 → A → B → 05, and 07 → 08.
 * Forbidden: repeated tunnel entrances, disconnected water, sudden camera jumps, teleporting / page loads between areas.
 * Keep: Benny's swimming + water contact, swipe controls, coins / collectibles, the water; Bubble Dash 90.7 %, Screen 06 88.5 % at its picture camera.
+
+## User decision (2026-11-22 ~16:00 UTC, answer to the lead's question with the join audit sheet)
+**"Rebuild in one world (Recommended)"**: one scene built with the screen kit — Bubble Dash / Sock Rescue and the rebuilt 06 as they are;
+04, 05, 07, 08, 09, 10 rebuilt from the approved pictures (baked pixels on real geometry); connectors from the preview. Order: 04 + 05 first
+(for 04 → A → B → 05), then 07 + 08. The current game stays unchanged until the world is ready. Plan: `PLAN_R44_CONNECTED_WORLD.md`.

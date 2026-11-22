@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 27962,
-   "sha256": "ed8db4b3e79ecbada3bbd032216a5c55de8ed0a2345753ab28c16451a09f655a"
+   "sha256": "b4ec4a046a7eefc7fc33f6c94e185ee3aac9ff7bd095d5a0ce686d29f3618e8f"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3622,
-   "sha256": "93d454c7e86d08fbc0b4e31e276c4dfdf33ab9b0009c445bfc774b65d42d2cc1"
+   "sha256": "81d0898d2592dd57eb277a23d7b6f21c3cd4e29664e3104231d97fab78fec8ff"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -11708,8 +11708,8 @@
   },
   {
    "path": "docs/briefs/2026-11-22-r44/USER_R44.md",
-   "bytes": 3424,
-   "sha256": "9c312f4c21abeed950430f4514ddf4f68ba75c8908ce24ec69baba96e649728a"
+   "bytes": 3943,
+   "sha256": "eddc1f11f1c07b76241f95cb55262ee598149342eb9a31479b15a51325df62eb"
   },
   {
    "path": "docs/characters/benny.md",

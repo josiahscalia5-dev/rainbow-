@@ -3629,3 +3629,277 @@ Please use my original approved artwork for visual accuracy and these new previe
 
 > 🔧 **AskUserQuestion** `{"questions": [{"question": "Four of your joins (04→Bubble Dash, Sock Rescue→05, and both sides of the rebuilt 06) are page loads with large colour jumps. How should I build your one connected world?", "header": "World plan", "multiSelect": false, "options": [{"label": "Rebuild in one world (Recommended)", "description": "One scene built with the screen kit: Bubble Dash/Sock Rescue and the rebuilt 06 as they are; 04, 05, 07, 08, 09, 10 rebuilt from your approved pictures (baked pixels on real geometry); connectors from your preview. Order: 04 + 05 first (for 04→A→B→05), then 07 + 08. Longest,  …[+523 chars]`
 
+### 🧑 User — 2026-11-22T15:50:55.014Z
+
+> ↩︎ result: Your questions have been answered: "Four of your joins (04→Bubble Dash, Sock Rescue→05, and both sides of the rebuilt 06) are page loads with large colour jumps. How should I build your one connected world?"="Rebuild in one world (Recommended)". You can now continue with these answers in mind.
+
+### 🤖 Claude — 2026-11-22T15:51:20.620Z
+
+> 🔧 **Bash** `{"command": "cat >> docs/briefs/2026-11-22-r44/USER_R44.md <<'EOF'\n\n## User decision (2026-11-22 ~16:00 UTC, answer to the lead's question with the join audit sheet)\n**\"Rebuild in one world (Recommended)\"**: one scene built with the screen kit — Bubble Dash / Sock Rescue and the rebuilt 06 as they are;\n04, 05, 07, 08, 09, 10 rebuilt from the approved pictures (baked pixels on real geometry); connectors from the preview. Order: 04 + 05 first\n(for 04 → A → B → 05), then 07 + 08. The current game stays unchanged until the world is ready. Plan: `PLAN_R44_CONNECTED_WORLD.md`.\nEOF\ntail -3 d …[+127 chars]`
+
+### 🧑 User — 2026-11-22T15:51:20.661Z
+
+> ↩︎ result: **"Rebuild in one world (Recommended)"**: one scene built with the screen kit — Bubble Dash / Sock Rescue and the rebuilt 06 as they are;
+> 04, 05, 07, 08, 09, 10 rebuilt from the approved pictures (baked pixels on real geometry); connectors from the preview. Order: 04 + 05 first
+
+### 🤖 Claude — 2026-11-22T15:51:22.870Z
+
+> 🔧 **TaskUpdate** `{"taskId": "8", "status": "in_progress", "description": "Decision: one world with the screen kit. Steps: (1) Screen 04 with the kit (fit, SAM masks, Blender, measure ≥ 90 %), (2) world container: areas placed exit→entrance, one route/Benny/camera/controls, A+B in it with likeness preserved, (3) 04→A connector, (4) 05 with the kit + B→05 connector, (5) 07 + 08 + connector, (6) 09, 10."}`
+
+### 🧑 User — 2026-11-22T15:51:22.881Z
+
+> ↩︎ result: Updated task #8 description, status
+
+### 🤖 Claude — 2026-11-22T15:51:23.927Z
+
+> 🔧 **Bash** `{"command": "cat tools/screenkit/setup_screen.sh; ls tools/screenkit/screens/06; cat tools/screenkit/screens/06/segment06.json | head -40", "description": "Read the kit's per-screen setup and SAM prompt format"}`
+
+### 🧑 User — 2026-11-22T15:51:23.982Z
+
+> ↩︎ result: #!/usr/bin/env bash
+> # Rainbow screen kit: one command from a screen's approved picture to a runnable, measured 3D level folder (round 43).
+> #   bash tools/screenkit/setup_screen.sh <NN> <workspace> [asset_repo=/home/user/rainbow-]
+> # 1. fit      : tools/screenkit/screens/NN/fitNN.py -> layout.json + overlays (optional Depth Anything cross-check if its depth file exists)
+> # 2. masks    : tools/screenkit/segment.py (SAM 2.1 traced Benny / coins, clean plate) from screens/NN/segmentNN.json
+> # 3. geometry : Blender 5.3 headless, tools/screenkit/blender_kit.py (Geometry Nodes components) -> scene.glb
+> # 4. game     : tools/screenkit/screen.html + the shared game code (controls.js, swimfx.js, Benny 31, three.js 0.180)
+> # Free: no generation service, no credits. The approved picture is only READ (copied into the game folder for the bake).
+> set -e
+> NN=${1:?screen number}; SRC=$(cd "$(dirname "$0")/../.." && pwd); WS=${2:?workspace}; AR=${3:-/home/user/rainbow-}
+> mkdir -p "$WS/fit" "$WS/seg" "$WS/game"; WS=$(cd "$WS" && pwd); G="$WS/game"; SD="$SRC/tools/screenkit/screens/$NN"
+> REF=$(python3 -c "import json,sys;print(json.load(open('$SRC/.claude/skills/rainbow-screen-builder/screens.json'))['screens' …[+3294 chars]
+
+### 🤖 Claude — 2026-11-22T15:51:26.227Z
+
+> 🔧 **Bash** `{"command": "ls qa/reflock/r43/analysis_04_10/ 2>/dev/null | head; python3 -c \"\nimport json;d=json.load(open('.claude/skills/rainbow-screen-builder/screens.json'));print(json.dumps(d['screens']['04'])[:1200])\"", "description": "Find the 04 analysis files and its screen-builder entry"}`
+
+### 🧑 User — 2026-11-22T15:51:26.330Z
+
+> ↩︎ result: 04_analysis.json
+> 04_overlay.jpg
+> 05_analysis.json
+> 05_overlay.jpg
+> 06_analysis.json
+> 06_overlay.jpg
+> 07_analysis.json
+> 07_overlay.jpg
+> 08_analysis.json
+> 08_overlay.jpg
+> {"title": "THROUGH THE FIVE ARROWS", "reference": "references/04_through_the_five_arrows.png", "kind": "playable", "gate": "closed (prepare: analysis + spec only, round 43)", "batch": ["04", "06"], "identity": "bright cyan-blue water passing into a WARM GOLD tunnel (gold rings, amber shading, pink + purple surroundings); exactly five arrows in sequence; pink edges lower, cleaner, contained; rings approach and pass naturally", "briefs": ["docs/briefs/2026-11-20-r28/USER_CLARIFICATIONS_R28.md#screen-04", "docs/briefs/2026-11-20-r26/USER_VISUAL_BRIEF_R26.md#screen-04"], "extra_approved_views": "three additional Screen 04 artwork views the user already approved (see USER_VISUAL_BRIEF_R26 \u00a76)"}
+
+### 🤖 Claude — 2026-11-22T15:51:27.621Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/references/04_through_the_five_arrows.png"}`
+
+### 🧑 User — 2026-11-22T15:51:27.650Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T15:51:37.772Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,60p tools/screenkit/screens/06/fit06.py", "description": "Read the first half of the Screen 06 fit script"}`
+
+### 🧑 User — 2026-11-22T15:51:37.799Z
+
+> ↩︎ result: """Screen 06 'Crest the Rinse Arch' - FIT step of the screen kit (round 43). Measures the user's approved picture
+> references/06_crest_the_rinse_arch.png (read-only) and writes ONE physical world for it: <out>/layout.json (components for
+> tools/screenkit/blender_kit.py, the fitted picture camera, Benny, coins, route) + fit overlays.
+>   python3 -I tools/screenkit/screens/06/fit06.py <out dir> [--da2 <inverse depth .npy of the picture (optional guide)>]
+> 
+> Measured on the picture (864 x 1536 px; every number re-checkable on the gridded crops in qa/reflock/r43/06/measure/):
+>   * drum axis vanishing point (700, 605): where the RANSAC-fitted gold ring circles converge (centres (600,520) r 260, (652,586) r 167,
+>     (674,593) r 76); their centres drift toward the VP with shrinking radius -> camera offset from the drum axis (fitlib.ring_offsets).
+>   * Benny: water contact under his body (425, 1175), pompom top (418, 735); the camera is CAM_H above the water there.
+>   * the coin trail on the crest (analyze_reference.py coins, radii 46 -> 8.6 px): coins are equal in size, so each coin's painted
+>     radius gives its depth (depth = k / radius); k from the first coin, which floats on the water just ahe …[+4058 chars]
+
+### 🤖 Claude — 2026-11-22T15:51:38.977Z
+
+> 🔧 **Bash** `{"command": "grep -n \"^def \\|^class \\|^    def \" tools/screenkit/fitlib.py | head -40; python3 -c \"\nimport json;d=json.load(open('qa/reflock/r43/analysis_04_10/04_analysis.json'));print(json.dumps(d)[:1500])\"", "description": "List the fit library helpers and the automatic 04 analysis"}`
+
+### 🧑 User — 2026-11-22T15:51:39.035Z
+
+> ↩︎ result: 14:class Cam:
+> 15:    def __init__(self, W, H, fov=FOV):
+> 20:    def set(self, yaw, pitch, C):
+> 23:    def proj(self, P):
+> 26:    def ray(self, px, py):
+> 29:    def depth_dir(self, px, py):
+> 33:    def on_plane_y(self, px, py, y=0.0):
+> 36:    def json(self, ref, extra=None):
+> 41:def rot(yaw, pitch):
+> 46:def yaw_pitch_from_vp(cam, vp, axis=(0, 0, -1.0)):
+> 49:    def res(p):
+> 54:def ring_offsets(cam, vp, circles):
+> 64:def ray_cylinder(C, d, P0, A, R):
+> 72:def smooth_polyline(P, iters=3):
+> 78:def resample(P, step):
+> 83:def dump(path, obj):
+> 84:    def conv(o):
+> 92:def catmull_rom(P, step, alpha=0.5):
+> {"reference": "/home/user/rainbow-/references/04_through_the_five_arrows.png", "size": [864, 1536], "phone_frame": {"w": 412, "h": 915, "scale": 0.595703125, "scaled_width": 515, "crop_x": 51.5}, "hud": {"found": true, "bottom_px": 197, "last_long_edge_row": 182, "rows_with_long_edges": [118, 119, 120, 121, 178, 179, 180, 182]}, "palette_below_hud": [{"hex": "#b9512d", "share": 0.167}, {"hex": "#ecd6ef", "share": 0.165}, {"hex": "#16a3e7", "share": 0.136}, {"hex": "#e96cd6", "share": 0.128}, {"hex": "#cf4297", "share": 0.124}, {"hex": "#f6a442", "share": 0.112}, {"hex": "#98a7eb", "share": 0.102}, {"hex": …[+888 chars]
+
+### 🤖 Claude — 2026-11-22T15:51:47.500Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && mkdir -p $S/m04 && python3 - <<EOF\nfrom PIL import Image, ImageDraw\nim=Image.open('references/04_through_the_five_arrows.png').convert('RGB')\ndef grid(img, x0,y0,x1,y1, step, scale, out):\n    c=img.crop((x0,y0,x1,y1)).resize(((x1-x0)*scale,(y1-y0)*scale)); d=ImageDraw.Draw(c)\n    for x in range((x0//step+1)*step, x1, step):\n        X=(x-x0)*scale; d.line([(X,0),(X,c.size[1])],fill=(0,255,0) if x%100==0 else (0,120,0),width=1); d.text((X+2,2),str(x),fill=(255,255,0))\n    for y in range((y0 …[+390 chars]`
+
+### 🧑 User — 2026-11-22T15:51:47.680Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-22T15:51:50.217Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/m04/full_grid.jpg"}`
+
+### 🧑 User — 2026-11-22T15:51:50.239Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T15:51:50.884Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/m04/core_grid.jpg"}`
+
+### 🧑 User — 2026-11-22T15:51:50.917Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T15:51:56.543Z
+
+> 🔧 **Bash** `{"command": "grep -rln -i \"ransac\" tools/ qa/reflock/r43 2>/dev/null | head; ls qa/reflock/r43/06/measure 2>/dev/null | head", "description": "Look for the ring-circle fitting tool used for 06"}`
+
+### 🧑 User — 2026-11-22T15:51:56.691Z
+
+> ↩︎ result: tools/screenkit/screens/06/fit06.py
+> tools/imageblaster/plate_compare.py
+> tools/paint06/register_panels.py
+> tools/marble05/align.py
+> tools/kit05/kit_model.py
+> qa/reflock/r43/REUSE_MATRIX_04_10.md
+
+### 🤖 Claude — 2026-11-22T15:52:11.348Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/m04 && python3 - <<EOF\nimport cv2, numpy as np\nim=cv2.imread('references/04_through_the_five_arrows.png'); H,W=im.shape[:2]\nhsv=cv2.cvtColor(im,cv2.COLOR_BGR2HSV)\ngold=((hsv[...,0]>=8)&(hsv[...,0]<=28)&(hsv[...,1]>90)&(hsv[...,2]>120)).astype(np.uint8)*255\ngray=cv2.cvtColor(im,cv2.COLOR_BGR2GRAY)\nedges=cv2.Canny(cv2.GaussianBlur(gray,(5,5),1.5),40,110)\ngd=cv2.dilate(gold,np.ones((5,5),np.uint8))\ne=cv2.bitwise_and(edges,gd); e[:330]=0\ncv2.imwrite('$S/gold_edges.png',e)\n# RANSAC circles on  …[+1429 chars]`
+
+### 🧑 User — 2026-11-22T15:52:17.588Z
+
+> ↩︎ result: inliers  1086 centre ( 437.1, 832.9) r  418.4  arc-cover 17 x10deg
+> inliers   555 centre ( 401.4, 779.4) r  364.9  arc-cover 17 x10deg
+> inliers  1636 centre ( 460.5, 777.5) r  363.9  arc-cover 25 x10deg
+> inliers   979 centre ( 439.2, 789.6) r  343.0  arc-cover 24 x10deg
+> inliers   625 centre ( 485.9, 792.7) r  329.9  arc-cover 14 x10deg
+> inliers  1256 centre ( 434.6, 780.3) r  329.3  arc-cover 25 x10deg
+> inliers   832 centre ( 439.2, 776.6) r  319.3  arc-cover 18 x10deg
+> inliers   788 centre ( 389.3, 785.3) r  312.0  arc-cover 20 x10deg
+> inliers   613 centre ( 444.8, 827.4) r  295.2  arc-cover 24 x10deg
+> inliers   911 centre ( 437.9, 794.5) r  268.1  arc-cover 22 x10deg
+> inliers   692 centre ( 438.7, 782.9) r  209.9  arc-cover 23 x10deg
+> inliers   583 centre ( 448.4, 776.3) r  176.7  arc-cover 18 x10deg
+
+### 🤖 Claude — 2026-11-22T15:52:19.338Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/m04/rings_fit.jpg"}`
+
+### 🧑 User — 2026-11-22T15:52:19.427Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T15:52:34.336Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/m04 && python3 - <<EOF\nimport cv2, numpy as np\nim=cv2.imread('references/04_through_the_five_arrows.png')\ngray=cv2.cvtColor(im,cv2.COLOR_BGR2GRAY)\nedges=cv2.Canny(cv2.GaussianBlur(gray,(3,3),1.0),30,90)\ne=edges.copy(); e[:470]=0; e[:, :250]=0; e[:, 720:]=0; e[760:]=0\n# remove arrows/water/coin area below the core: keep upper half-annulus around the core only (rings visible above the water)\nyy,xx=np.mgrid[:e.shape[0],:e.shape[1]]\ne[(yy>700)]=0\npts=np.column_stack(np.nonzero(e))[:,::-1].asty …[+1288 chars]`
+
+### 🧑 User — 2026-11-22T15:52:37.961Z
+
+> ↩︎ result: inliers  346 centre ( 494.3, 727.8) r  198.8 cover 14
+> inliers  309 centre ( 437.8, 767.9) r  196.9 cover 11
+> inliers  364 centre ( 494.9, 739.1) r  194.4 cover 12
+> inliers  439 centre ( 445.2, 710.4) r  192.1 cover 18
+> inliers  335 centre ( 468.7, 762.6) r  188.6 cover 13
+> inliers  263 centre ( 547.5, 693.9) r  186.8 cover 12
+> inliers  285 centre ( 517.6, 660.8) r  182.6 cover 12
+> inliers  386 centre ( 467.7, 763.1) r  179.6 cover 10
+> inliers  272 centre ( 475.1, 758.2) r  177.6 cover 11
+> inliers  362 centre ( 536.0, 646.8) r  174.6 cover 16
+> inliers  214 centre ( 400.8, 698.8) r  169.4 cover 14
+> inliers  407 centre ( 455.2, 764.5) r  164.8 cover 13
+> inliers  376 centre ( 458.8, 773.8) r  148.7 cover 12
+> inliers  240 centre ( 467.6, 738.8) r  100.2 cover 13
+
+### 🤖 Claude — 2026-11-22T15:52:55.828Z
+
+> 🔧 **Bash** `{"command": "grep -n \"^def \\|L\\.get('\\|L\\['\\|lay\\.get('\\|LAY\\.\\|layout\\[\" tools/screenkit/blender_kit.py | head -60; wc -l tools/screenkit/blender_kit.py", "description": "List the kit's Blender components and the layout keys they read"}`
+
+### 🧑 User — 2026-11-22T15:52:55.867Z
+
+> ↩︎ result: 22:def _link(ng, a, b): ng.links.new(a, b)
+> 25:def sweep_group(name, profile, flip=False):
+> 53:def prof_circle(res):
+> 62:def object_profile_group(name, pts, flip=False):
+> 74:def foam_group():
+> 103:def curve_object(name, pts, radii=None, tilts=None, cyclic=False, twist='Z_UP'):
+> 111:def apply_group(ob, ng, inputs=None):
+> 120:def grid(name, nu, nv, fn, flip=False):
+> 139:def tube_segments(prefix, axis_pts, radius, seg_len, res=96):
+> 154:def ribbon(prefix, route, bank, width, seg_len, flume=True):
+> 169:def foam_bank(name, pts, spacing, size, seed):
+> 173:def paddle(name, pos, axis_pt, width):
+> 215:def edge(side, off):
+> 222:    if LAY.get('foam_route', {}).get(nm): foam_bank(nm, edge(side, 0.02), 0.06, 0.07, sd)   # only where the screen's picture paints foam along the channel
+> 225:for i, p in enumerate(LAY.get('paddles', [])): paddle(f'paddle_{i}', p['pos'], (xa, ya), p['width'])
+> 230 tools/screenkit/blender_kit.py
+
+### 🤖 Claude — 2026-11-22T15:52:57.308Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/tools/screenkit/blender_kit.py", "offset": 120, "limit": 111}`
+
+### 🧑 User — 2026-11-22T15:52:57.330Z
+
+> ↩︎ result: 120	def grid(name, nu, nv, fn, flip=False):
+> 121	    """plain parametric grid (as tools/reflock/blender_section.py): fn(a, b) -> (game xyz, (u, v))"""
+> 122	    me = bpy.data.meshes.new(name); bm = bmesh.new(); uvl = bm.loops.layers.uv.new('UVMap'); V, UV = [], []
+> 123	    for j in range(nv + 1):
+> 124	        row, ru = [], []
+> 125	        for i in range(nu + 1):
+> 126	            p, uv = fn(i / nu, j / nv); row.append(bm.verts.new(B2(p))); ru.append(uv)
+> 127	        V.append(row); UV.append(ru)
+> 128	    for j in range(nv):
+> 129	        for i in range(nu):
+> 130	            q = [V[j][i], V[j][i + 1], V[j + 1][i + 1], V[j + 1][i]]; uq = [UV[j][i], UV[j][i + 1], UV[j + 1][i + 1], UV[j + 1][i]]
+> 131	            if flip: q, uq = q[::-1], uq[::-1]
+> 132	            f = bm.faces.new(q)
+> 133	            for l, uv in zip(f.loops, uq): l[uvl].uv = uv
+> 134	    bm.to_mesh(me); bm.free(); ob = bpy.data.objects.new(name, me); bpy.context.collection.objects.link(ob)
+> 135	    for p in me.polygons: p.use_smooth = True
+> 136	    return ob
+> 137	
+> 138	
+> 139	def tube_segments(prefix, axis_pts, radius, seg_len, res=96):
+> 140	    """washer drum / tube: the axis polyline split into segments of seg_len (each its own 0..1 UVs for t …[+7172 chars]
+
+### 🤖 Claude — 2026-11-22T15:53:13.509Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,110p tools/screenkit/fitlib.py", "description": "Read the kit's fit library"}`
+
+### 🧑 User — 2026-11-22T15:53:13.594Z
+
+> ↩︎ result: """Rainbow screen kit - shared fitting maths (round 43). Every screen's fit script measures ITS OWN approved picture and uses these
+> helpers to turn the measurements into one physical world (y up, the water under Benny at y = 0, route roughly along -z), with the
+> same conventions as the proven Bubble Dash / Sock Rescue fit (tools/reflock/fit_section.py): vertical FOV 64 deg, camera 0.734 above
+> the water at the picture position, Benny scaled to his painted height.
+> Camera rotation = three.js Euler YXZ (yaw about +y = turn left, pitch about +x = look up); columns of R = camera axes in world."""
+> import math, json
+> import numpy as np
+> from scipy.optimize import least_squares
+> 
+> FOV = 64.0
+> CAM_H = 0.734           # camera height above the water at the picture position (kit convention)
+> 
+> 
+> class Cam:
+>     def __init__(self, W, H, fov=FOV):
+>         self.W, self.H, self.fov = W, H, fov
+>         self.F = (H / 2) / math.tan(math.radians(fov / 2)); self.CX, self.CY = W / 2, H / 2
+>         self.R = np.eye(3); self.C = np.zeros(3); self.yaw = 0.0; self.pitch = 0.0
+> 
+>     def set(self, yaw, pitch, C):
+>         self.yaw, self.pitch = float(yaw), float(pitch); self.R = rot(yaw, pitch); self.C = np.asarray(C, flo …[+4355 chars]
+
