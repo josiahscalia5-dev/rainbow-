@@ -30,6 +30,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { installControls } from './controls.js';
 import { bake as bakeAll, famOf, tplOnly, exportBake, exportTemplates, loadTemplates, applyTemplates, foamFromPicture } from './bake.js';   // r45: bake + artwork-sampled materials
+import { installQA } from './qa.js';   // r45: QA views for the automated preview check (repeated picture camera, surface ID pass)
 const q = new URLSearchParams(location.search);
 const LAY = await (await fetch('layout.json')).json();
 for (const [k, v] of [['c_LANE', String(LAY.lane ?? 0.3)], ['c_LAT_MAX', String((LAY.lane ?? 0.3) * 1.2)], ['speed', String(LAY.speed ?? 2.2)]]) if (!q.has(k)) q.set(k, v);
@@ -377,6 +378,8 @@ window.kitFrameQA = () => { camera.updateMatrixWorld(); let camClear = 1e9; cons
     submerged: window.qaWaterLine ? window.qaWaterLine().submergedFrac : null, bank: +(Math.atan2(-F.r.y, Math.hypot(F.r.x, F.r.z)) * 180 / Math.PI).toFixed(1) }; };
 // QA: place Benny at route position s in lane `lat` (the rig follows; for stills / geometry checks, not used by the game)
 window.qaGoto = (s) => { st.s = s; st.camInit = false; window.step(st.t, 0, 0, 0); return st.s; };
+installQA({ THREE, scene, world, camera, renderer, repeatPose: (k) => { const sp = LAY.rings?.spacing; if (!sp) return null;   // the picture camera k ring spacings further down the drum
+  const pos = CAMS[0].position.clone().add(new THREE.Vector3(0, 0, -k * sp)); if (DRUM && pos.z < DRUM.z1 + 6) return null; return { pos, quat: CAMS[0].quaternion.clone() }; } });
 window.sceneAudit = () => { scene.updateMatrixWorld(true); const out = []; world.traverse((o) => { if (o.isMesh) out.push({ name: o.name, m: o.matrixWorld.elements.map((x) => +x.toFixed(5)) }); }); return out; };
 // QA (generic for every screen): Benny really sits on a water surface along the whole route (ray down the route normal hits a water mesh)
 window.routeCheck = (step = 0.5) => { const rc = new THREE.Raycaster(), W2 = MESH.filter((o) => o.userData.fam === 'water' || o.userData.fam === 'pool'), out = [];

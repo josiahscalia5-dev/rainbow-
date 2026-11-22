@@ -213,7 +213,7 @@ def assemble(G, ws, REF, L):
     os.makedirs(G, exist_ok=True)
     json.dump(L, open(os.path.join(G, 'layout.json'), 'w'))
     for src, dst in [(os.path.join(ws, 'seg', 'plate.png'), 'plate_0.png'), (os.path.join(ws, 'seg', 'mask.png'), 'mask_0.png'), (REF, 'ref_0.png'),
-                     (os.path.join(HERE, 'screen.html'), 'play3.html'), (os.path.join(HERE, 'bake.js'), 'bake.js'), (os.path.join(HERE, 'materials.js'), 'materials.js'),
+                     (os.path.join(HERE, 'screen.html'), 'play3.html'), (os.path.join(HERE, 'bake.js'), 'bake.js'), (os.path.join(HERE, 'qa.js'), 'qa.js'), (os.path.join(HERE, 'materials.js'), 'materials.js'),
                      (os.path.join(REPO, 'tools/kit05/controls.js'), 'controls.js'), (os.path.join(REPO, 'tools/kit05/swimfx.js'), 'swimfx.js'),
                      (os.path.join(REPO, 'assets/models/benny31.glb'), 'benny31.glb'), (os.path.join(REPO, 'assets/textures/benny31/bake.png'), 'bake.png'),
                      (os.path.join(REPO, 'assets/textures/paint/05_coin.png'), 'coin.png')] + \
@@ -231,7 +231,7 @@ def assemble(G, ws, REF, L):
 
 def run_preview(B, G, ws, NN, extra_args=()):
     files = [os.path.join(G, f) for f in sorted(os.listdir(G)) if f not in ('node_modules', 'preview') and os.path.isfile(os.path.join(G, f))]
-    key = h_bytes('preview-v1', h_files(files), h_dir(os.path.join(G, 'baked')) if os.path.isdir(os.path.join(G, 'baked')) else '', h_file(os.path.join(HERE, 'preview.cjs')), json.dumps(list(extra_args)))
+    key = h_bytes('preview-v1', h_files(files), h_dir(os.path.join(G, 'baked')) if os.path.isdir(os.path.join(G, 'baked')) else '', h_file(os.path.join(HERE, 'preview.cjs')), h_file(os.path.join(HERE, 'preview_sheet.py')), json.dumps(list(extra_args)))
     def f(tmp):
         run(['node', os.path.join(HERE, 'preview.cjs'), G, tmp, '--screen', NN] + list(extra_args), env={'NODE_PATH': npm_root()}, log=os.path.join(tmp, 'preview.log'))
     B.step('preview', key, {'preview': os.path.join(ws, 'preview')}, lambda tmp: (os.makedirs(os.path.join(tmp, 'preview')), f(os.path.join(tmp, 'preview'))))

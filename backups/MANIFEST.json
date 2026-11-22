@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3233,
-   "sha256": "32ae56c076634549f704fecc53c429a72b082c54d2234f3bd688c4463900d1c8"
+   "sha256": "0c9342f3673bd8d5d1a702b1a214bec1702f4221b6ed2d03444546df3ef1c657"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -44343,13 +44343,13 @@
   },
   {
    "path": "src/game/Game.ts",
-   "bytes": 52449,
-   "sha256": "360af6c6b459901ce415d29af6d1321bacf1a2a6fdaf2e94e2a2f15bc968280f"
+   "bytes": 52816,
+   "sha256": "6d1f023de05a283870d0c1dce26c3bcfc46652dc348bed067c434a352120f7da"
   },
   {
    "path": "src/game/bonusRoute.ts",
-   "bytes": 1616,
-   "sha256": "4bcfc69c34073ad3a51b3889347158402478b3d921d67319e6539f36670da2f6"
+   "bytes": 2267,
+   "sha256": "44bfb8eb652c4c2c4a760b4db60554fc1c0162a5a961b89e1b474150f45c7cbc"
   },
   {
    "path": "src/game/cameraRig.ts",
@@ -45613,8 +45613,8 @@
   },
   {
    "path": "tools/screenkit/build.py",
-   "bytes": 18105,
-   "sha256": "b0ac50f57a8ce5e0a361f1308be20b98df0385ffa8df45ee5ba38d8e6c4e97dd"
+   "bytes": 18193,
+   "sha256": "751735182cb059b55c244b58cd7ee9b21d3f2d7f09dab4130ae7cd42fc190815"
   },
   {
    "path": "tools/screenkit/build_screen_app.sh",
@@ -45668,13 +45668,13 @@
   },
   {
    "path": "tools/screenkit/preview.cjs",
-   "bytes": 7949,
-   "sha256": "67671b7e00cdea5b80b007e1bcd1a7cc913a4d08cf817e7351e68c5c7ce9f091"
+   "bytes": 8998,
+   "sha256": "63512aba1609ed6a3792a53e6601f4218a96731d86821d27490ce3b6b87d7fa5"
   },
   {
    "path": "tools/screenkit/preview_sheet.py",
-   "bytes": 6694,
-   "sha256": "5d609b811f46183c436e40a2eecc27cff828e95acd537d3cff7d978393c0fcc2"
+   "bytes": 11759,
+   "sha256": "c5331eb72d07cee84ac4bc924b17e4af825a275ef2917c65c9fead1c02910998"
   },
   {
    "path": "tools/screenkit/scale_layout.py",
@@ -45683,8 +45683,8 @@
   },
   {
    "path": "tools/screenkit/screen.html",
-   "bytes": 50223,
-   "sha256": "7015e7561e5d2985e585a4c09d1a18bbbab308e648586ce8c9764d50b5a80fa5"
+   "bytes": 50721,
+   "sha256": "84c2c641dbc073d929c5c1f5b30e11bd93233c4b22ef5c2cc29d540196a97fe1"
   },
   {
    "path": "tools/screenkit/screen_export.cjs",
@@ -45768,8 +45768,8 @@
   },
   {
    "path": "tools/world/build_world.py",
-   "bytes": 5949,
-   "sha256": "c23a59b4c306c3a062b43c09d4b3e288580989ea78e2daaf9a286c6d3229cf10"
+   "bytes": 6005,
+   "sha256": "1fcc7bba9358987a77e3e9fe0edf2b0f0fbcf70f992c1c27bfc64a8b59bdb9ee"
   },
   {
    "path": "tools/world/join_audit.cjs",
@@ -45788,8 +45788,8 @@
   },
   {
    "path": "tools/world/world.html",
-   "bytes": 70312,
-   "sha256": "25c3da501b426e9ace81a433f6ab0a405ed8fc1abb4adea929d5fba0f8160eb7"
+   "bytes": 72390,
+   "sha256": "e7f0124decaea611e9447c696ad72eaa8a3558c44d5d9b13526f8159237cb415"
   },
   {
    "path": "tools/world/world_layout.py",

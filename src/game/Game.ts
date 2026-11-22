@@ -28,7 +28,7 @@ import { buildMatch08 } from '../world/match08';
 import { buildPaint06, PAINT06_REST } from '../world/paint06';
 import { buildPaint } from '../world/paint';
 import { loadBennyRuntime, loadGirlRuntime, loadWater, moduleStatus } from './modules';
-import { BONUS_ROUTE, KIT_ROUTE } from './bonusRoute';
+import { BONUS_ROUTE, KIT_ROUTE, WORLD_ROUTE } from './bonusRoute';
 
 type Mode = 'intro' | 'ride' | 'outro' | 'end';
 const START_COINS = 1330;
@@ -395,6 +395,8 @@ export async function startGame(canvas: HTMLCanvasElement) {
     st.s = Math.min(course.stage('11').s0, st.s + speed * dt);
     // round 40 (off by default): from the end of 04 Benny swims into the Bubble Dash -> Sock Rescue section, then back at 05.
     // r41: only on the frame he really CROSSES from 04 into 05 (a checkpoint / respawn further on never triggers it)
+    // r45 (off by default): the connected world starts at 04 - on the first gameplay frame after the opening videos the game hands over to it
+    if (WORLD_ROUTE.enabled && !BONUS_ROUTE.resume && !bonusLeft) { bonusLeft = true; st.paused = true; WORLD_ROUTE.go(st.coins); }
     const s05h = course.stage('05').s0;
     if (BONUS_ROUTE.enabled && !BONUS_ROUTE.resume && !bonusLeft && sPrev < s05h && st.s >= s05h) { bonusLeft = true; st.paused = true; BONUS_ROUTE.go(st.coins); }
     // r43 test route (off by default): crossing from 05 into 06 hands over to the screen-kit Screen 06 (returns at the 07 checkpoint)
@@ -597,7 +599,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
     st.paused = true;
     void playCinematic(introVideo, { onEnding: () => { st.paused = false; } });
   };
-  if (!((BONUS_ROUTE.enabled || KIT_ROUTE.s06) && BONUS_ROUTE.resume)) playIntroVideo();
+  if (!((BONUS_ROUTE.enabled || KIT_ROUTE.s06 || WORLD_ROUTE.enabled) && BONUS_ROUTE.resume)) playIntroVideo();
   const togglePause = () => {
     if (st.mode !== 'ride') return;
     st.paused = !st.paused;
@@ -885,7 +887,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
     course,
   };
   (window as unknown as { __rainbow: typeof api }).__rainbow = api;
-  if ((BONUS_ROUTE.enabled && BONUS_ROUTE.resume === '05') || (KIT_ROUTE.s06 && BONUS_ROUTE.resume === '07')) {   // back from a section: continue at its next checkpoint with the coins collected
+  if ((BONUS_ROUTE.enabled && BONUS_ROUTE.resume === '05') || (KIT_ROUTE.s06 && BONUS_ROUTE.resume === '07') || (WORLD_ROUTE.enabled && BONUS_ROUTE.resume === '08')) {   // back from a section: continue at its next checkpoint with the coins collected
     gotoCheckpoint(BONUS_ROUTE.resume!); if (Number.isFinite(BONUS_ROUTE.resumeCoins)) { st.coins = BONUS_ROUTE.resumeCoins; hud.setCoins(st.coins); } running = true; last = performance.now();
   }
   return api;

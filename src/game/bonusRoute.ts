@@ -18,3 +18,11 @@ export const KIT_ROUTE = {
   s06: env.VITE_RAINBOW_KIT06 === '1' || q.get('kit06') === '1',
   go06(coins: number) { location.href = `screen06/index.html?return=1&kit06=1${BONUS_ROUTE.enabled ? '&bonus=1' : ''}&coins=${Math.round(coins)}`; },
 };
+
+// Round 45: the ONE connected 3D world (public/world/, tools/world/build_world.py + build_world_app.sh): 04 -> Bubble Dash -> Sock Rescue -> 05 -> 06 -> 07
+// in one scene. OFF by default (the default game is unchanged); ON in a build made with VITE_RAINBOW_WORLD=1 or with ?world=1: after the opening
+// videos the game hands over to the world, and at the end of 07 the world hands back to the game at the Screen 08 checkpoint with the coins.
+export const WORLD_ROUTE = {
+  enabled: env.VITE_RAINBOW_WORLD === '1' || q.get('world') === '1',
+  go(coins: number) { location.href = `world/index.html?play=1&return=1&coins=${Math.round(coins)}`; },
+};

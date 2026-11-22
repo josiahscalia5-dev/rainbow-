@@ -37,6 +37,7 @@ html,body{margin:0;background:#1a0630;overflow:hidden;font-family:system-ui,-app
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { installControls } from './controls.js';
+import { installQA } from './qa.js';   // r45: QA views for the automated preview check
 import { famOf as kitFamOf, loadTemplates, applyTemplates } from './bake.js';   // r45: the screen kit's artwork-sampled materials (wall / ring / tray templates, water swatches)
 const q = new URLSearchParams(location.search);
 for (const [k, v] of [['c_LANE', '0.3'], ['c_LAT_MAX', '0.36'], ['speed', '2.2']]) if (!q.has(k)) q.set(k, v);
@@ -521,6 +522,11 @@ window.routeCheck = (step = 0.5) => { const rc = new THREE.Raycaster(), out = []
     out.push({ s: +s.toFixed(2), hit: h ? h.object.name : null, gap: h ? +(h.distance - 0.3).toFixed(4) : null }); }
   return { checked: out.length, missing: out.filter((o) => !o.hit).map((o) => o.s), max_gap: Math.max(...out.filter((o) => o.hit).map((o) => Math.abs(o.gap))) }; };
 window.qaGoto = (s) => { st.s = s; st.camInit = false; window.step(st.t, 0, 0, 0); return st.s; };
+installQA({ THREE, scene, world, camera, renderer, repeatPose: (k, area) => {   // an area's picture camera k ring spacings further down its drum
+  const key = WD.cam_keys.find((kk) => kk.area === area), A = AREA[area]; if (!key || !A?.LAY?.rings || !A.M) return null;
+  const quat = new THREE.Quaternion().setFromEuler(new THREE.Euler(key.pitch, key.yaw, 0, 'YXZ')), dir = new THREE.Vector3(0, 0, -1).applyQuaternion(new THREE.Quaternion().setFromRotationMatrix(A.M));
+  const pos = V3(key.pos).addScaledVector(dir, k * A.LAY.rings.spacing), end = new THREE.Vector3(A.LAY.drum.axis_x, A.LAY.drum.axis_y, A.LAY.drum.z1).applyMatrix4(A.M);
+  if (pos.clone().sub(end).dot(dir) > -6) return null; return { pos, quat }; } });
 window.sceneAudit = () => { scene.updateMatrixWorld(true); const out = []; world.traverse((o) => { if (o.isMesh) out.push({ name: (o.userData.area ?? '') + '/' + o.name, m: o.matrixWorld.elements.map((x) => +x.toFixed(5)) }); }); return out; };
 window.sectionInfo = () => ({ LEVEL: +LEVEL.toFixed(3), S_REF: WD.start_s, meshes: MESH.length, coins: LAYC.length, areas: WD.areas.map((A) => ({ id: A.id, s0: +A.s0.toFixed(2), s1: +A.s1.toFixed(2) })), keys: WD.cam_keys.map((k) => ({ area: k.area, s: +k.s.toFixed(3), ref: k.ref })), screen: 'world' });
 window.state = window.state ?? (() => ({ s: st.s }));
@@ -531,10 +537,18 @@ renderer.render(scene, camera);
 window.ready = true;
 if (q.get('play')) {   // real-time play (phone): tap to swim, swipes steer
   let t0 = null, last = 0; const tapEl = document.createElement('div'); tapEl.textContent = 'Tap to swim'; tapEl.style.cssText = 'position:fixed;left:0;right:0;bottom:22%;text-align:center;color:#fff;font-weight:800;font-size:26px;text-shadow:0 2px 6px #000a';
-  document.body.appendChild(tapEl); let go = false; addEventListener('pointerdown', () => { go = true; tapEl.remove(); }, { once: true });
+  document.body.appendChild(tapEl); let go = false, left = false; addEventListener('pointerdown', () => { go = true; tapEl.remove(); bar.remove(); }, { once: true });
+  // r45 (phone test): start at the beginning (04) or jump straight to an area's approved picture view (05, 06) - the world stays ONE scene
+  const bar = document.createElement('div'); bar.style.cssText = 'position:fixed;left:0;right:0;bottom:11%;display:flex;gap:12px;justify-content:center';
+  for (const area of ['04', '05', '06']) { const key = WD.cam_keys.find((k) => k.area === area); if (!key) continue; const b = document.createElement('button'); b.textContent = 'Start ' + area; b.dataset.noswipe = '';
+    b.style.cssText = 'pointer-events:auto;border:2px solid #f2c14e;border-radius:18px;background:linear-gradient(#8b3fd9,#4a1386);color:#fff;font-weight:800;font-size:17px;padding:8px 14px';
+    b.addEventListener('pointerdown', (e) => { e.stopPropagation(); if (area !== '04') window.qaGoto(key.s); go = true; tapEl.remove(); bar.remove(); }); bar.appendChild(b); }
+  document.body.appendChild(bar);
   const loop = (now) => { requestAnimationFrame(loop); if (!go) { renderer.render(scene, camera); return; } if (t0 === null) { t0 = now; last = now; } const dt = Math.min(0.05, (now - last) / 1000); last = now;
     if (window.paused) { t0 += now - last; last = now; renderer.render(scene, camera); return; }
-    if (st.s < LEVEL) window.step((now - t0) / 1000, dt, 0, +q.get('speed')); renderer.render(scene, camera); };
+    if (st.s < LEVEL) window.step((now - t0) / 1000, dt, 0, +q.get('speed')); renderer.render(scene, camera);
+    // r45 app route (?return=1): at the end of the world (07) Benny swims on into the main game at the Screen 08 checkpoint, coins carried over
+    if (q.get('return') === '1' && !left && st.s >= LEVEL - 0.05) { left = true; setTimeout(() => { location.href = `../index.html?resume=08&world=1&coins=${coinCount}`; }, 250); } };
   requestAnimationFrame(loop);
 }
 </script></body></html>

@@ -43,6 +43,8 @@ const arg = (k, d) => { const i = process.argv.indexOf('--' + k); return i > 0 ?
     console.log('loaded', loadS.toFixed(1), 's; range', plan.range, 'positions', plan.positions.map((p) => p.tag + '@' + p.s).join(' '));
     const shoot = async (pg, name, meta) => { await pg.evaluate(() => window.renderNow(1)); const f = path.join(out, name + '.png'); await pg.screenshot({ path: f });
       const m = await pg.evaluate(() => ({ box: window.bennyBox(), qa: window.kitFrameQA ? window.kitFrameQA() : null, cam: window.camInfo(), st: window.state ? window.state() : null, bake: null }));
+      if (meta.mode === 'textured' && !flag('noid')) {   // which pixel is which surface (wall / ring / water / foam / trays), same camera
+        await pg.evaluate(() => window.qaIdPass && window.qaIdPass(true)); await pg.screenshot({ path: path.join(out, 'id_' + name + '.png') }); await pg.evaluate(() => window.qaIdPass && window.qaIdPass(false)); m.id = 'id_' + name + '.png'; }
       frames.push({ file: path.basename(f), ...meta, ...m }); };
     const goTo = async (pg, target, exact) => {
       if (exact) { await pg.evaluate((s) => window.qaGoto(s), target); return; }
@@ -53,6 +55,11 @@ const arg = (k, d) => { const i = process.argv.indexOf('--' + k); return i > 0 ?
       while (lane !== L) { const dirn = L < lane ? 'left' : 'right'; await page.evaluate((d) => window.input.swipe(d), dirn); lane += L < lane ? -1 : 1; for (let i = 0; i < 12; i++) await page.evaluate(([t]) => window.step(t, 1 / 30, 0, 0.001), [200 + i / 30]); }
       for (const p of plan.positions) { if (p.exact && L !== 0) continue; await goTo(page, p.s, p.exact && L === 0); await shoot(page, `tex_${p.tag}_l${L}`, { mode: 'textured', tag: p.tag, s: p.s, lane: L }); }
     }
+    // ------------------------------------------------------------------ the approved camera repeated down the level (k ring spacings further)
+    if (!flag('norepeat')) for (let k = 0; k <= +(arg('repeats', '12')); k++) {
+      const r = await page.evaluate(([k, a]) => (window.qaRepeatView ? window.qaRepeatView(k, a) : null), [k, area || null]); if (!r) break;
+      const f = path.join(out, `rep_k${String(k).padStart(2, '0')}.png`); await page.screenshot({ path: f }); frames.push({ file: path.basename(f), mode: 'repeat', tag: 'repeat', k, s: k, lane: 0, box: { x0: 0, x1: 0, y0: 0, y1: 0 }, rep: r });
+      await page.evaluate(() => window.qaRestore()); }
     await ctx.close();
     // ------------------------------------------------------------------ geometry pass (plain gray 3D materials)
     if (!flag('nogray')) {
