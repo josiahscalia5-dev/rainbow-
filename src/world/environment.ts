@@ -20,7 +20,7 @@ import { buildTowel, TowelMesh } from './towel';
 export interface Environment {
   group: THREE.Group;
   /** round 41: camera occlusion (third-person rule): gold rings between the camera and Benny fade out (dithered) so he is never hidden */
-  setOcclusion(cam: THREE.Vector3, benny: THREE.Vector3, radius?: number): void;
+  setOcclusion(cam: THREE.Vector3, benny: THREE.Vector3, radius?: number, ahead?: THREE.Vector3[]): void;
   update(time: number, dt: number): void;
   doorA: THREE.Object3D; // hinge pivot (rotation.y opens)
   doorC: THREE.Object3D;
@@ -724,7 +724,8 @@ export function buildEnvironment(course: Course): Environment {
     zones.tubes.add(frame);
   }
   return {
-    setOcclusion(cam: THREE.Vector3, benny: THREE.Vector3, radius = 1.6) { OCC.uOccA.value.copy(cam); OCC.uOccB.value.copy(benny); OCC.uOccR.value = radius; },
+    setOcclusion(cam: THREE.Vector3, benny: THREE.Vector3, radius = 1.6, ahead: THREE.Vector3[] = []) { OCC.uOccA.value.copy(cam); OCC.uOccB.value.copy(benny); OCC.uOccR.value = radius;
+      OCC.uOccC1.value.copy(ahead[0] ?? benny); OCC.uOccC2.value.copy(ahead[1] ?? benny); },
     group: root,
     update: (t, dt) => animated.forEach((f) => f(t, dt)),
     doorA,
@@ -960,7 +961,7 @@ function pinkFlowMaterial() {
 // ---- round 41: camera occlusion for the gold rings (standard third-person camera rule, world geometry unchanged) ----
 // Fragments of a ring that lie between the camera and Benny, within OCC.uOccR of that line of sight, are dithered away (soft edge), so a
 // ring the follow camera passes close to never covers Benny or the river right in front of him. Off by default (radius 0).
-const OCC = { uOccA: { value: new THREE.Vector3() }, uOccB: { value: new THREE.Vector3(0, 0, -1) }, uOccR: { value: 0 } };
+const OCC = { uOccA: { value: new THREE.Vector3() }, uOccB: { value: new THREE.Vector3(0, 0, -1) }, uOccR: { value: 0 }, uOccC1: { value: new THREE.Vector3(0, 0, -1) }, uOccC2: { value: new THREE.Vector3(0, 0, -1) } };
 function withCameraOcclusion<M extends THREE.Material>(mat: M): M {
   const prev = mat.onBeforeCompile, prevKey = mat.customProgramCacheKey?.bind(mat);
   mat.onBeforeCompile = (sh, r) => {
@@ -969,13 +970,14 @@ function withCameraOcclusion<M extends THREE.Material>(mat: M): M {
     sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vOccW;')
       .replace('#include <project_vertex>', '#include <project_vertex>\n{ vec4 ow = vec4(transformed, 1.0);\n#ifdef USE_INSTANCING\n ow = instanceMatrix * ow;\n#endif\n vOccW = (modelMatrix * ow).xyz; }');
     sh.fragmentShader = sh.fragmentShader.replace('#include <common>', `#include <common>
-varying vec3 vOccW; uniform vec3 uOccA; uniform vec3 uOccB; uniform float uOccR;
+varying vec3 vOccW; uniform vec3 uOccA; uniform vec3 uOccB; uniform float uOccR; uniform vec3 uOccC1; uniform vec3 uOccC2;
+float occSeg(vec3 p, vec3 a, vec3 b, float r){ vec3 ab = b - a; float t = clamp(dot(p - a, ab) / max(dot(ab, ab), 1e-6), 0.0, 1.0); if (t < 0.04 || t > 0.97) return 1.0; return smoothstep(r * 0.55, r, length(p - (a + t * ab))); }
 float occBayer(vec2 p){ int x = int(mod(p.x, 4.0)), y = int(mod(p.y, 4.0)); int i = x + y * 4;
   float m[16] = float[16](0.0, 8.0, 2.0, 10.0, 12.0, 4.0, 14.0, 6.0, 3.0, 11.0, 1.0, 9.0, 15.0, 7.0, 13.0, 5.0); return (m[i] + 0.5) / 16.0; }`)
       .replace('#include <clipping_planes_fragment>', `#include <clipping_planes_fragment>
-if (uOccR > 0.0) { vec3 ab = uOccB - uOccA; float tt = clamp(dot(vOccW - uOccA, ab) / max(dot(ab, ab), 1e-6), 0.0, 1.0);
-  float dd = length(vOccW - (uOccA + tt * ab)); float keep = smoothstep(2.0, 4.2, length(vOccW - uOccA));   // parts right at the camera slide away
-  if (tt > 0.04 && tt < 0.97) keep = min(keep, smoothstep(uOccR * 0.55, uOccR, dd));                              // and nothing covers Benny
+if (uOccR > 0.0) { float keep = smoothstep(2.0, 4.2, length(vOccW - uOccA));   // parts right at the camera slide away
+  keep = min(keep, occSeg(vOccW, uOccA, uOccB, uOccR));                                       // nothing covers Benny
+  keep = min(keep, min(occSeg(vOccW, uOccA, uOccC1, uOccR * 1.3), occSeg(vOccW, uOccA, uOccC2, uOccR * 1.6)));   // nor the river just ahead of him
   if (keep < occBayer(gl_FragCoord.xy)) discard; }`);
   };
   mat.customProgramCacheKey = () => (prevKey ? prevKey() : '') + '|occ';

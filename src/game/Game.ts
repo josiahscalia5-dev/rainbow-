@@ -430,7 +430,8 @@ export async function startGame(canvas: HTMLCanvasElement) {
     water.wake((benny.root.children[0] ?? benny.root).getWorldPosition(wakeAnchor), f.tan, f.right, speed, dt);
     // camera
     rideCam.update(dt, st.s, st.lat, camera);
-    env.setOcclusion(camera.position, benny.root.position);   // r41: rings between the camera and Benny never hide him
+    { const a1 = course.sample(Math.min(course.stage('11').s0, st.s + 8)), a2 = course.sample(Math.min(course.stage('11').s0, st.s + 16));   // r41/42: rings never hide Benny nor the river just ahead
+      env.setOcclusion(camera.position, benny.root.position, 1.6, [a1.pos.clone().addScaledVector(a1.up, 0.8), a2.pos.clone().addScaledVector(a2.up, 0.8)]); }
     // towel: folded in 08/09, lifted into a tent as the stream reaches it (late 09 → 10)
     env.towel.setTent(sm(course.stage('09').s1 - 6, course.stage('10').s0 + 2, st.s));
     // girl at the counter behind the door glass in 10 (back turned — never sees Benny)
