@@ -39,3 +39,22 @@ than the whole painted river -> next: choose the swatch window by colour likenes
 | bake / template code changed | 29.9 s (05), 44.4 s (06) | bake only: 05 52.8 s, 06 55.0 s (Blender, masks, fit reused) |
 | whole world 04 + 05 + 06 + 07 + checks, after a bake-code change | ~3-4 min (old setup_world.sh, no checks) | 347 s incl. two full preview checks (05: 39 stills + 13 repeats, 06: 37 + 12) |
 | geometry (Blender 5.3 + GN asset library) | | 1.1-1.4 s per screen |
+
+## Round 45b — "keep going until it looks like my approved screen" (user, 2026-11-22 ~20:10 UTC)
+What looked messy / unlike the approved picture, and what was rebuilt (all inside the ONE connected world, measured with the same checker):
+| issue (compared with the approved picture) | fix |
+|---|---|
+| water: stretched copy of the painting = smeared blotches | **ribbon water** (`tools/screenkit/water_ribbon.js`): clean S-shaped cyan / hot-pink bands measured from the painting, fine streaks, star glints, + the painting's own detail inside each band (`water_detail.py`: seamless cyan / pink tiles cut from the flattened picture) |
+| while swimming the camera turned with every bend: tunnel slid sideways, walls filled the screen | **cam_axis**: the camera keeps the approved view straight down the drum and slides with Benny (rings concentric, river winding below) |
+| no bright core at the end of the tunnel | camera-relative warm **far glow** under the painted pixels |
+| foam: flat white lumps, far from the river | bubble-pattern foam shading; foam banks framing the S-river beyond the painted stretch |
+| ghost circles: oversized bubbles at the lens, ripple rings | bubbles fade out near the lens; small ripples |
+| Benny tipped over on the banked 06 crest, view tilted | 06: Benny follows a third of the bank (upright, still in the water); level camera |
+| 3D extras covering painted scenery at the picture view | repeated trays, foam, extra bubbles only beyond the painted stretch |
+| picture sharpness | maximum-quality bake export; the user's 1080 x 1920 copy of the same picture as paint source (`references/hires/`); crisper LOD |
+| bugs found on the way | three code comments that swallowed the rest of their line (export wait, world water uniforms, world canvas) - fixed and scanned for |
+
+Numbers now (world): **05 picture view 83.1 %** (80.4 % before this round), **06 picture view 84.8 %**. While swimming (style match vs the same surface in
+the approved picture): 05 walls 86.2 / rings 63.8 / water 60.9 / foam 35.9; 06 walls 87.6 / rings 57.6 / water 55.9 / foam 29.8. Water test sheet:
+`WATER_TEST_05_approved_current_ribbon.jpg`. Not yet 90 %: remaining gap = fine wall / ring detail at the top of the frame, the far tunnel, 06's
+rainbow crest edges beyond the painted stretch (plain cyan there), water still simpler than the painting close up.

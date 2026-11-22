@@ -48,3 +48,10 @@ Evidence: `qa/kit45/` (README when written).
    foam (style 19 %), ring template detail (55-63 %); 06 crest banking / camera lean review in the recording.
 3. Then 08, 09, 10 with the kit (fit scripts from their approved pictures), 07 -> 08 descent.
 Rebuild everything: `python3 -I tools/world/build_world.py <ws> --preview 05,06` (first run ~6 min, later runs reuse the cache).
+
+## Round 45b (user: "keep going until my screens look almost very close to my approved screens, ~90 %; fix anything messy") — see qa/kit45/README.md
+Done: ribbon water (05 default: layout water_style 'ribbon'; ?water=paint = old swatch), painted detail tiles, cam_axis camera (05), far glow, bubbly
+foam, bank foam / bubbles beyond the painted stretch, 06 benny_bank 0.35 + cam_roll 0.15, hi-res paint source, max-quality bake export.
+05 83.1 % / 06 84.8 % at the picture camera. NEXT: 06 rainbow crest edges along the whole level (ribbon variant with the 06 rainbow band order),
+water richness close up, top-of-frame detail (bake resolution for the near tunnel segments), then 07 / 08 / 09 / 10 with the same pipeline.
+RULE learned: never put a `//` comment in the middle of a one-line JS statement list (three bugs this round) - use /* */.

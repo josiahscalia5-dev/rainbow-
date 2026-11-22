@@ -111,12 +111,13 @@ ${body}        gl_FragColor = best; }` });
   const t1 = performance.now();
   if (q.get('tpl') !== '0') {
     // fusion material: same picture lookup; the best picture sample per template texel wins through the depth test (depth = 1 - quality)
-    const fuseUni = { ...uni, uTol: { value: new THREE.Vector2(1.002, 0.006) }, uGate: { value: 0 }, uMap: { value: 0 }, uTube: { value: new THREE.Vector4(0, 1, 0, 0) }, uStrip: { value: new THREE.Vector4(0, 1, 0, 1) }, uK: { value: 0 } };
+    const fuseUni = { ...uni, uTol: { value: new THREE.Vector2(1.002, 0.006) }, uGate: { value: 0 }, uFloor: { value: new THREE.Vector4(0, 1, 0, 1) }, uMap: { value: 0 }, uTube: { value: new THREE.Vector4(0, 1, 0, 0) }, uStrip: { value: new THREE.Vector4(0, 1, 0, 1) }, uK: { value: 0 } };
     const fuseMat = new THREE.ShaderMaterial({ side: THREE.DoubleSide, depthTest: true, depthWrite: true, depthFunc: THREE.LessDepth, uniforms: fuseUni,
       // uMap 0: the mesh's own UVs; 1: tube period (u = mesh u, v = (zr0 - local z) / period - k); 2: flow strip (u = mesh u, v = (d - d0) / len)
-      vertexShader: `uniform float uMap; uniform vec4 uTube; uniform vec4 uStrip; uniform float uK; varying vec3 vW;
+      vertexShader: `uniform float uMap; uniform vec4 uTube; uniform vec4 uStrip; uniform vec4 uFloor; uniform float uK; varying vec3 vW;
         void main(){ vW = (modelMatrix * vec4(position, 1.0)).xyz; vec2 t = uv;
-          if (uMap > 1.5) { float d = uStrip.z + (1.0 - uv.y) * uStrip.w; t = vec2(uv.x, (d - uStrip.x) / uStrip.y); }
+          if (uMap > 2.5) { t = vec2((position.x - uFloor.x) / uFloor.y, (-position.z - uFloor.z) / uFloor.w); }   // 3: the drum floor in the area's own x / z
+          else if (uMap > 1.5) { float d = uStrip.z + (1.0 - uv.y) * uStrip.w; t = vec2(uv.x, (d - uStrip.x) / uStrip.y); }
           else if (uMap > 0.5) { t = vec2(uv.x, (uTube.x - position.z) / uTube.y - uK); }
           gl_Position = vec4(t * 2.0 - 1.0, 0.5, 1.0); }`,
       fragmentShader: `${LOOK_GLSL(decl)} uniform float uGate;
@@ -184,6 +185,13 @@ ${bodyQ}          if (bq <= 0.0) discard;
     strip('water', (o) => { const k = +o.name.split('_').pop(); return isFinite(k) ? [k * segW, segW] : null; }, wd0, wlen, 512, Math.round(512 * wlen / Math.max(0.3, RT_.width)));
     const fl = LAY.templates?.flume ?? {}; const nF = fams('flume').length || 1, segF = RLEN / nF;
     strip('flume', (o) => { const k = +o.name.split('_').pop(); return isFinite(k) ? [k * segF, segF] : null; }, sRef + ahead + (fl.from ?? 0.2), fl.len ?? wlen, 256, 512);
+    if (LAY.templates?.floor && D) { const Fz = LAY.templates.floor, fx0 = D.axis_x - D.chord, fw = 2 * D.chord, fd0 = -(LAY.cams[0].pos[2]) + (Fz.from ?? 1.6), flen = Fz.len ?? 3.0;
+      const L = [...fams('water'), ...fams('pool').filter((o) => /^pool_\d/.test(o.name))], ov = 0.25, bw = 1024, bh = Math.round(1024 * flen / fw), H2 = Math.round(bh * (1 + ov));
+      fuseUni.uFloor.value.set(fx0, fw, fd0, flen * (1 + ov)); const T = finish('floor_tmp', bw, H2, fuse(L, bw, H2, () => [{ map: 3 }]), {}); delete TPL.floor_tmp;
+      if (T) { const out = new Uint8Array(bw * bh * 4), Ho = H2 - bh;
+        for (let y = 0; y < bh; y++) { const k = y < Ho ? y / Ho : 1; for (let x = 0; x < bw; x++) { const i = (y * bw + x) * 4, j = ((y + bh) * bw + x) * 4;
+          for (let c = 0; c < 3; c++) out[i + c] = y < Ho ? Math.round(T.px[i + c] * k + T.px[j + c] * (1 - k)) : T.px[i + c]; out[i + 3] = 255; } }
+        TPL.floor = { w: bw, h: bh, px: out, cov: T.cov, map: 'floor', d0: fd0, len: flen, x0: fx0, xw: fw }; } }
     if (D) { const pl = LAY.templates?.pool ?? {}; const pz0 = -(LAY.cams[0].pos[2]) + (pl.from ?? 1.0), plen = pl.len ?? 3.0;   // pool: d = -z
       strip('pool', (o) => { if (!/^pool_\d/.test(o.name)) return null; const bb = bbox(o); return [-bb.max.z, bb.max.z - bb.min.z]; }, pz0, plen, 1024, 1024); }
   }
@@ -222,7 +230,9 @@ export function applyTemplates(THREE, meshes, TPL) {
   for (const o of meshes) { const u = o.material?.uniforms; if (!u) continue; const f = o.userData.fam; const T = TPL[f]; if (!T) continue;
     if (u.uTpl && (f === 'ring' || f === 'copper' || f === 'tunnel')) { if (f === 'tunnel' && /^tunnelfar_/.test(o.name) && !T.zr0) continue;
       u.uTpl.value = T.tex; u.uTplOn.value = 1; u.uTplMap.value = T.map === 'tube' ? 1 : 0; if (T.map === 'tube') u.uTube.value.set(T.zr0, T.period, 0, 0); n++; }
-    else if (u.uSw && (f === 'water' || f === 'pool' || f === 'flume')) { u.uSw.value = T.tex; u.uSwOn.value = 1; u.uSwGeo.value.set(T.d0, T.len, 0, 0); n++; } }
+    else if (u.uSw && (f === 'water' || f === 'pool' || f === 'flume')) {
+      if (TPL.floor && (f === 'water' || f === 'pool')) { const Fl = TPL.floor; u.uSw.value = Fl.tex; u.uSwOn.value = 2; u.uSwGeo.value.set(Fl.d0, Fl.len, Fl.x0, Fl.xw); n++; continue; }   // 2 = floor mode
+      u.uSw.value = T.tex; u.uSwOn.value = 1; u.uSwGeo.value.set(T.d0, T.len, 0, 0); n++; } }
   return n;
 }
 
