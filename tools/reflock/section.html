@@ -123,7 +123,7 @@ world.add(gl.scene);
 const ROUTE_TEX = (() => { const n = 1024, a = new Float32Array(n), z0 = 3, z1 = Z_EXIT - 12; for (let i = 0; i < n; i++) a[i] = RX(lerp(z0, z1, i / (n - 1)));
   const t = new THREE.DataTexture(a, n, 1, THREE.RedFormat, THREE.FloatType); t.minFilter = t.magFilter = THREE.LinearFilter; t.needsUpdate = true; return { t, z0, z1 }; })();
 const WATER_U = { uRoute: { value: ROUTE_TEX.t }, uRZ: { value: new THREE.Vector2(ROUTE_TEX.z0, ROUTE_TEX.z1) }, uT: { value: 0 }, uRW: { value: new THREE.Vector4(2.1, 0.62, T.z_arch, T.funnel[1]) }, ...GLOW };
-const waterMat = () => new THREE.ShaderMaterial({ uniforms: { ...WATER_U, uBake: { value: null }, uBakeOn: { value: 0 } },
+const waterMat = () => new THREE.ShaderMaterial({ side: THREE.DoubleSide, uniforms: { ...WATER_U, uBake: { value: null }, uBakeOn: { value: 0 } },
   vertexShader: 'varying vec2 vUv; varying vec3 vW; void main(){ vUv = uv; vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; }',
   fragmentShader: `uniform sampler2D uRoute; uniform vec2 uRZ; uniform float uT; uniform vec4 uRW; uniform vec3 uGlow; uniform sampler2D uBake; uniform float uBakeOn; varying vec2 vUv; varying vec3 vW;
     float hsh(vec2 p){ vec3 p3 = fract(vec3(p.xyx) * 0.1031); p3 += dot(p3, p3.yzx + 33.33); return fract((p3.x + p3.y) * p3.z); }
@@ -249,15 +249,16 @@ const FOAM = [];
     const mimg = await new Promise((r) => { const i = new Image(); i.onload = () => r(i); i.src = `mask_${name}.png`; }); const mc = document.createElement('canvas'); mc.width = mimg.width; mc.height = mimg.height; const mg = mc.getContext('2d'); mg.drawImage(mimg, 0, 0); const MD = mg.getImageData(0, 0, mimg.width, mimg.height).data;
     const cam = CAMS[name], ray = new THREE.Vector3(), cells = new Map();
     for (let y = 600; y < img.height; y += 4) for (let x = 0; x < img.width; x += 4) { const i = (y * img.width + x) * 4, r = D[i], gg = D[i + 1], b = D[i + 2], mx = Math.max(r, gg, b), mn = Math.min(r, gg, b);
-      if (MD[i] > 127 || mx < 215 || (mx - mn) > 70) continue;
+      if (MD[i] > 127 || mx < 226 || (mx - mn) > 48) continue;
       ray.set((x / img.width) * 2 - 1, -(y / img.height) * 2 + 1, 0.5).unproject(cam).sub(cam.position).normalize(); if (ray.y > -0.02) continue;
-      const lam = -cam.position.y / ray.y, P = cam.position.clone().addScaledVector(ray, lam); if (lam > (name === 'bubble' ? 16 : 9)) continue;
+      const lam = -cam.position.y / ray.y, P = cam.position.clone().addScaledVector(ray, lam); if (lam > (name === 'bubble' ? 16 : 9) || lam < (name === 'bubble' ? 2.6 : 1.6)) continue;
+      const zr = P.z, kr = Math.min(1, Math.max(0, (T.z_arch - zr) / (T.z_arch - T.funnel[1]))), RWz = lerp(2.1, 0.62, kr * kr * (3 - 2 * kr)); if (Math.abs(P.x - RX(zr)) < 0.62 * RWz) continue;
       if (P.z < T.z_arch - 0.2 && Math.abs(P.x) > chord(P.z) - 0.02) continue;
       const key = Math.round(P.x / 0.09) + ',' + Math.round(P.z / 0.09); cells.set(key, (cells.get(key) ?? 0) + 1); }
-    for (const [key, nn] of cells) { if (nn < 3) continue; const [cx, cz] = key.split(',').map(Number); FOAM.push([cx * 0.09 + (rp() - 0.5) * 0.03, cz * 0.09 + (rp() - 0.5) * 0.03, 0.07 + rp() * 0.06]); }
+    for (const [key, nn] of cells) { if (nn < 6) continue; const [cx, cz] = key.split(',').map(Number); FOAM.push([cx * 0.09 + (rp() - 0.5) * 0.03, cz * 0.09 + (rp() - 0.5) * 0.03, 0.06 + rp() * 0.05]); }
   }
   for (let z = T.funnel[1] - 0.2; z > Z_EXIT; z -= 0.07 + rp() * 0.05) for (const side of [-1, 1]) { if (Math.abs(z - PBS.z) < 3.2) continue;
-    const c = chord(z); for (let r = 0; r < 2; r++) FOAM.push([side * (c - 0.06 - r * 0.08 - rp() * 0.03), z, 0.07 + rp() * 0.05]); }
+    const c = chord(z); FOAM.push([side * (c - 0.05 - rp() * 0.03), z, 0.05 + rp() * 0.04]); }
   const fGeo = new THREE.IcosahedronGeometry(0.5, 2), Lw = new THREE.Vector3(-0.25, 0.8, 0.55).normalize();
   const fMat = new THREE.ShaderMaterial({ uniforms: { uL: { value: Lw }, ...GLOW },
     vertexShader: 'varying vec3 vN; varying vec3 vW; void main(){ vec4 w = modelMatrix * instanceMatrix * vec4(position, 1.0); vW = w.xyz; vN = normalize(mat3(modelMatrix) * mat3(instanceMatrix) * normal); gl_Position = projectionMatrix * viewMatrix * w; }',
@@ -266,7 +267,7 @@ const FOAM = [];
         vec3 col = lit < 0.5 ? mix(c3(150.0, 135.0, 222.0), c3(205.0, 200.0, 245.0), lit / 0.5) : mix(c3(205.0, 200.0, 245.0), c3(255.0, 254.0, 255.0), (lit - 0.5) / 0.5);
         col = mix(col, vec3(1.0, 0.98, 0.95), uGlow.z * pow(smoothstep(uGlow.x, uGlow.y, vW.z), 1.6)); gl_FragColor = vec4(col, 1.0); }` });
   const foam = new THREE.InstancedMesh(fGeo, fMat, FOAM.length), mI = new THREE.Matrix4(), qI = new THREE.Quaternion(), pI = new THREE.Vector3(), sI = new THREE.Vector3();
-  FOAM.forEach(([x, z, w], i) => { pI.set(x, w * 0.1, z); sI.set(w, w * 0.7, w); foam.setMatrixAt(i, mI.compose(pI, qI, sI)); }); foam.name = 'foam_domes'; foam.userData.fam = 'foam3d'; world.add(foam);
+  FOAM.forEach(([x, z, w], i) => { pI.set(x, w * 0.05, z); sI.set(w, w * 0.62, w); foam.setMatrixAt(i, mI.compose(pI, qI, sI)); }); foam.name = 'foam_domes'; foam.userData.fam = 'foam3d'; world.add(foam);
   const B = SEC.bubbles.map((b) => b.slice()); for (let z = T.z_arch - 1; z > Z_EXIT; z -= 0.6 + rp() * 0.8) { const c = chord(z) - 0.15; B.push([(rp() * 2 - 1) * c, 0.05 + rp() * 0.6, z, 0.03 + rp() * rp() * 0.07]); }
   const bGeo = new THREE.SphereGeometry(1, 24, 16); bGeo.setAttribute('aPh', new THREE.InstancedBufferAttribute(new Float32Array(B.map(() => rp() * 6.28)), 1));
   const bm = new THREE.ShaderMaterial({ transparent: true, depthWrite: false, uniforms: { uTime: GLOW.uTime, uL: { value: Lw } },
