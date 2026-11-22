@@ -169,11 +169,21 @@ def build_screen(NN, ws, tube_len=None, open_end=False, benny_h=None, drum_far_e
         json.dump(L, open(lay_p, 'w')); return L
     L = B.timed('layout', f_layout)
     # segment (masks + clean plate)
+    # r45: a higher-resolution copy of the SAME approved picture (the user's own file, references/hires/NN_*; the original reference is untouched)
+    # is the paint source when present: masks from the reference, scaled up; plate + clone fill redone at the higher resolution
+    HR = next((os.path.join(REPO, 'references', 'hires', f) for f in sorted(os.listdir(os.path.join(REPO, 'references', 'hires'))) if f.startswith(NN + '_')), None) if os.path.isdir(os.path.join(REPO, 'references', 'hires')) else None
     seg_code = [os.path.join(HERE, 'segment.py'), os.path.join(HERE, 'plate_clone.py'), os.path.join(REPO, 'tools/reflock/plate.py'), os.path.join(HERE, 'eval', 'eval_extract.py')]
     seg_models = sorted(os.path.join(MODELS, 'sam2', f) for f in os.listdir(os.path.join(MODELS, 'sam2'))) if os.path.isdir(os.path.join(MODELS, 'sam2')) else []
-    k_seg = h_bytes('seg-v1', ref_h, h_file(os.path.join(SD, f'segment{NN}.json')), h_files([p for p in seg_code if os.path.exists(p)]), *[f'{os.path.basename(m)}:{os.path.getsize(m)}' for m in seg_models])
+    k_seg = h_bytes('seg-v2', ref_h, h_file(HR) if HR else '', h_file(os.path.join(SD, f'segment{NN}.json')), h_files([p for p in seg_code if os.path.exists(p)]), *[f'{os.path.basename(m)}:{os.path.getsize(m)}' for m in seg_models])
     def f_seg(tmp):
         run([sys.executable, '-I', os.path.join(HERE, 'segment.py'), REF, os.path.join(SD, f'segment{NN}.json'), tmp], log=os.path.join(tmp, 'segment.log'))
+        if HR:
+            from PIL import Image as _I
+            hr = _I.open(HR); _I.open(os.path.join(tmp, 'mask.png')).convert('L').resize(hr.size, _I.NEAREST).save(os.path.join(tmp, 'mask.png'))
+            hr.convert('RGB').save(os.path.join(tmp, 'hires.png'))
+            run([sys.executable, '-I', os.path.join(REPO, 'tools', 'reflock', 'plate.py'), os.path.join(tmp, 'hires.png'), os.path.join(tmp, 'mask.png'), os.path.join(tmp, 'plate.png')])
+            run([sys.executable, '-I', os.path.join(HERE, 'plate_clone.py'), os.path.join(tmp, 'hires.png'), os.path.join(tmp, 'mask.png'), os.path.join(tmp, 'plate.png'), '--top', str(int(190 * hr.size[1] / 1536))])
+            os.remove(os.path.join(tmp, 'hires.png'))
     B.step('segment', k_seg, {'plate.png': os.path.join(ws, 'seg', 'plate.png'), 'mask.png': os.path.join(ws, 'seg', 'mask.png'), 'segment.log': os.path.join(ws, 'seg', 'segment.log')}, f_seg)
     # Benny's splash cut from the approved picture (white spray only; anchor = his painted water contact)
     def f_spl(tmp): run([sys.executable, '-I', os.path.join(HERE, 'splash_cut.py'), REF, os.path.join(SD, f'segment{NN}.json'), tmp], log=os.path.join(tmp, 'splash.log'))
@@ -194,11 +204,11 @@ def build_screen(NN, ws, tube_len=None, open_end=False, benny_h=None, drum_far_e
     B.timed('assemble', f_asm)
     # bake (the approved pixels on the meshes + artwork-sampled materials), once, offline
     bk = {k: L[k] for k in BAKE_KEYS if k in L}
-    k_bake = h_bytes('bake-v1', h_file(os.path.join(G, 'scene.glb')), h_obj(bk), h_file(os.path.join(ws, 'seg', 'plate.png')), h_file(os.path.join(ws, 'seg', 'mask.png')), ref_h,
+    k_bake = h_bytes('bake-v1', os.environ.get('RAINBOW_JPEGQ', '1.0'), h_file(os.path.join(G, 'scene.glb')), h_obj(bk), h_file(os.path.join(ws, 'seg', 'plate.png')), h_file(os.path.join(ws, 'seg', 'mask.png')), ref_h,
                      h_files([os.path.join(HERE, 'bake.js'), os.path.join(HERE, 'screen_export.cjs'), os.path.join(HERE, 'screen.html')]) if os.environ.get('RAINBOW_BAKE_KEY_PAGE') else
                      h_files([os.path.join(HERE, 'bake.js'), os.path.join(HERE, 'screen_export.cjs')]))
     def f_bake(tmp):
-        out = run(['node', os.path.join(HERE, 'screen_export.cjs'), G, tmp], env={'NODE_PATH': npm_root()}, log=os.path.join(tmp, 'export.log'))
+        out = run(['node', os.path.join(HERE, 'screen_export.cjs'), G, tmp], env={'NODE_PATH': npm_root(), 'RAINBOW_JPEGQ': os.environ.get('RAINBOW_JPEGQ', '1.0')}, log=os.path.join(tmp, 'export.log'))
         if 'exported' not in out: raise SystemExit('bake export failed:\n' + out[-2000:])
     B.step('bake', k_bake, {'baked': os.path.join(G, 'baked'), 'export.log': os.path.join(ws, 'fit', 'export.log')}, f_bake)
     rep = {'screen': NN}

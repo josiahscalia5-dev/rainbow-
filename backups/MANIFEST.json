@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 28435,
-   "sha256": "b99aef738eb3126bb4b4fa815ef3a2b8dde72b8a8bb9cfcb9be3741b236118b7"
+   "sha256": "a90a6308e88d812972ab7a525458ff78433a1f97b7dafcba6ec38a9d1e0e6692"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3233,
-   "sha256": "ff5dbd41028e73f0256213404485660dd7942c7044cba3aa2a60f16dc014f381"
+   "sha256": "4d82e168cf64e5c994fe8918fbf70acf7419c936709f80e4143b9eeeb675052d"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -47767,6 +47767,11 @@
    "sha256": "793f8824e6b2455bb62761217163ea9e9ae576420d5d9288317729a19dfc8316"
   },
   {
+   "path": "references/hires/05_flow_into_the_current_1080.jpg",
+   "bytes": 1322875,
+   "sha256": "07f2f78250cc41984b419ef51f888efad0658e2d176206ab84e90dc88eb529f5"
+  },
+  {
    "path": "references/water/05_water_isolated_original.png",
    "bytes": 1472297,
    "sha256": "f93daf1febffc9a691f99d9b3272ebc23dfadfba6fb3f6a5c7b4e3a119406251"
@@ -49478,8 +49483,8 @@
   },
   {
    "path": "tools/screenkit/build.py",
-   "bytes": 19565,
-   "sha256": "c8209bda157a34b7705b5d97ae0983ac076c5fd7dfe4d284ba39509dee2423ff"
+   "bytes": 20924,
+   "sha256": "3dd106245552d8ffc9431dcd87e6a0d3c725ce767ad469aa505700c1713ccf48"
   },
   {
    "path": "tools/screenkit/build_screen_app.sh",
@@ -49558,8 +49563,8 @@
   },
   {
    "path": "tools/screenkit/screen_export.cjs",
-   "bytes": 2866,
-   "sha256": "a79aecf0d8f2751bfb380ceba05ab8d307359b06400f24de31df44bb978e445e"
+   "bytes": 2939,
+   "sha256": "086477eb8063c318d4408cf6ebb2f440ab349393557131ac3c3a37e6d22f84bc"
   },
   {
    "path": "tools/screenkit/screens/04/fit04.py",
