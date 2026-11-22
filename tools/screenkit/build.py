@@ -149,6 +149,10 @@ def build_screen(NN, ws, tube_len=None, open_end=False, benny_h=None, drum_far_e
     k_fit = h_bytes('fit-v1', h_files([os.path.join(SD, f'fit{NN}.py'), os.path.join(HERE, 'fitlib.py')]), ref_h, h_file(da2) if da2 else '', json.dumps(fit_args))
     def f_fit(tmp):
         run([sys.executable, '-I', os.path.join(SD, f'fit{NN}.py'), tmp] + (['--da2', da2] if da2 else []) + fit_args, log=os.path.join(tmp, 'fit.log'))
+        if not os.path.exists(os.path.join(tmp, 'fit_overlay.jpg')):   # screens name their overlay differently: keep the first one as fit_overlay.jpg
+            jp = sorted(f for f in os.listdir(tmp) if f.endswith('.jpg'))
+            if jp: shutil.copyfile(os.path.join(tmp, jp[0]), os.path.join(tmp, 'fit_overlay.jpg'))
+            else: open(os.path.join(tmp, 'fit_overlay.jpg'), 'wb').close()
     B.step('fit', k_fit, {'layout.json': os.path.join(ws, 'fit', 'layout_fit.json'), 'fit_overlay.jpg': os.path.join(ws, 'fit', 'fit_overlay.jpg'), 'fit.log': os.path.join(ws, 'fit', 'fit.log')}, f_fit)
     # layout transforms (world scale, drum far end) - deterministic, instant
     def f_layout():

@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 28434,
-   "sha256": "9b1cf25295a7d662d0ca7bb7fc65e0f4d3bd5318cbe83eda9cc0679fe30b1739"
+   "sha256": "290115e53e52903343fa64ecdd38f42ed9f78c1df7c37f1056bc7c2b46355332"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3233,
-   "sha256": "e7bf7aee133d76c7cb0656aa3a17f73e3ee35fe33b90c02aa38dfa3bee30537e"
+   "sha256": "9c1eb8b153a8b24b5fd5c19d5ea1e6ac970d094cfe058bb1ce9e61c29ceb9d50"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -19565,6 +19565,11 @@
    "path": "qa/kit05/r39/APPROVED_vs_GAME_START_diffmap.jpg",
    "bytes": 353459,
    "sha256": "e29fc147a1304b2cbbb6293373c032cdbd467106845df583049604c0cc13eff7"
+  },
+  {
+   "path": "qa/kit45/STATUS_05_06_approved_vs_game.jpg",
+   "bytes": 878977,
+   "sha256": "24bc6cfd14f439715164ba7122ecec03cc1bf2d03dd2ad6e80506426f5903658"
   },
   {
    "path": "qa/lead_r5/2026-11-17/README.md",
@@ -45608,8 +45613,8 @@
   },
   {
    "path": "tools/screenkit/build.py",
-   "bytes": 17706,
-   "sha256": "0c323167a4ce2a2b2406b5f06e244157992b9bfc8fddc13454c1e3b7fb506d24"
+   "bytes": 18105,
+   "sha256": "b0ac50f57a8ce5e0a361f1308be20b98df0385ffa8df45ee5ba38d8e6c4e97dd"
   },
   {
    "path": "tools/screenkit/build_screen_app.sh",
@@ -45762,6 +45767,11 @@
    "sha256": "20569f99228812f5fd701ebc248aae5720c71aca35581f633360f3a7dcd68803"
   },
   {
+   "path": "tools/world/build_world.py",
+   "bytes": 5949,
+   "sha256": "c23a59b4c306c3a062b43c09d4b3e288580989ea78e2daaf9a286c6d3229cf10"
+  },
+  {
    "path": "tools/world/join_audit.cjs",
    "bytes": 5365,
    "sha256": "86b9f14a86fc6f831c93b6d09d253c8ecfe1bf4a4af433c34cbf76a4a4316a7c"
@@ -45778,8 +45788,8 @@
   },
   {
    "path": "tools/world/world.html",
-   "bytes": 68391,
-   "sha256": "b9d2fe512145cc7c299fc7d56a3657528a316e79f51ba23cd203f2d8526a21cc"
+   "bytes": 70312,
+   "sha256": "25c3da501b426e9ace81a433f6ab0a405ed8fc1abb4adea929d5fba0f8160eb7"
   },
   {
    "path": "tools/world/world_layout.py",

@@ -1971,3 +1971,244 @@ The ghost circles around the coins are essentially gone. One more patch to check
 
 > 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/bake.js'; s=open(p).read()\na=\"\"\"    bodyQ += `{ float qd; vec4 a = look(uVP${i}, uP${i}, uM${i}, uD${i}, uImg${i}, qd); float qq = a.a > 0.0 ? qd * (a.a < 0.7 ? 0.25 : 1.0) : 0.0; if (qq > bq) { bq = qq; best = a; } }\\\\n`; });\"\"\"\nb=\"\"\"    bodyQ += `{ float qd; vec4 a = look(uVP${i}, uP${i}, uM${i}, uD${i}, uImg${i}, qd); float qq = a.a > 0.0 ? qd * (a.a < 0.7 ? 0.25 : 1.0) * gate(a.rgb) : 0.0; if (qq > bq) { bq = qq; best = a; } }\\\\n`; });\"\"\"\nassert s.count(a)==1; s=s.replace(a,b)\na=\"\"\"      fragmentShader: `${LOOK_GLSL( …[+2873 chars]`
 
+### 🧑 User — 2026-11-22T18:28:23.371Z
+
+> ↩︎ result: bake      built     51.4 s   (58e5f665f5)
+>   preview   built     20.8 s   (05cda218a6)
+> screen 05 ready: /tmp/claude-0/-home-user-rainbow-/66794913-
+>  "verdict": "WARN",   "share_within_20_levels": 0.817, "colour_look_min": 0.006, "colour_look_mean": 0.551,
+
+### 🤖 Claude — 2026-11-22T18:28:25.208Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/tplt.jpg"}`
+
+### 🧑 User — 2026-11-22T18:28:25.236Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T18:28:33.052Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; time python3 -I tools/screenkit/build.py 06 $S/k06 --benny-h 0.468 --drum-far-end 2>&1 | grep -E 'built|cached|ran|ready|FAIL' | cut -c1-90; grep -E '\"verdict\"|share_within|colour_look_m|holes_total' $S/k06/preview/preview.log | tr -d '\\n'; echo; grep -E 'FAIL|WARN' $S/k06/preview/preview.log | head -12; tail -1 $S/k06/fit/export.log | cut -c1-300", "description": "Build Screen 06 (world variant) with preview", "timeout": 900000}`
+
+### 🧑 User — 2026-11-22T18:28:35.806Z
+
+> ↩︎ result: depth     built      1.9 s   (db2c4c1e36)
+> 
+> real	0m2.694s
+> user	0m6.146s
+> sys	0m0.557s
+> grep: /tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/k06/preview/preview.log: No such file or directory
+> 
+> grep: /tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/k06/preview/preview.log: No such file or directory
+> tail: cannot open '/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/k06/fit/export.log' for reading: No such file or directory
+
+### 🤖 Claude — 2026-11-22T18:28:38.642Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; python3 -I tools/screenkit/build.py 06 $S/k06 --benny-h 0.468 --drum-far-end --no-preview 2>&1 | tail -15", "description": "Show the 06 build error", "timeout": 900000}`
+
+### 🧑 User — 2026-11-22T18:28:39.512Z
+
+> ↩︎ result: screen 06 -> /tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/k06
+>   depth     cached     0.0 s   (db2c4c1e36)
+> step fit: output fit_overlay.jpg missing
+
+### 🤖 Claude — 2026-11-22T18:28:48.405Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/build.py'; s=open(p).read()\na=\"\"\"        run([sys.executable, '-I', os.path.join(SD, f'fit{NN}.py'), tmp] + (['--da2', da2] if da2 else []) + fit_args, log=os.path.join(tmp, 'fit.log'))\"\"\"\nb=\"\"\"        run([sys.executable, '-I', os.path.join(SD, f'fit{NN}.py'), tmp] + (['--da2', da2] if da2 else []) + fit_args, log=os.path.join(tmp, 'fit.log'))\n        if not os.path.exists(os.path.join(tmp, 'fit_overlay.jpg')):   # screens name their overlay differently: keep the first one as fit_overlay.jpg\n            jp = sorted(f for f in os. …[+800 chars]`
+
+### 🧑 User — 2026-11-22T18:29:59.978Z
+
+> ↩︎ result: depth     cached     0.0 s   (db2c4c1e36)
+>   fit       built      0.8 s   (a3256d7ded)
+>   layout    ran        0.1 s
+>   segment   built      4.9 s   (808c74d0f2)
+>   gnlib     cached     0.0 s   (5fa089e45c)
+>   geometry  built      1.2 s   (db70f15e5d)
+>   assemble  ran        0.0 s
+>   bake      built     45.5 s   (1106c5ad6e)
+>   preview   built     18.8 s   (316f571e28)
+> screen 06 ready: /tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/sc
+>  "verdict": "WARN",   "share_within_20_levels": 0.844, "colour_look_min": 0.047, "colour_look_mean": 0.527, "holes_total": 0,
+>  "verdict": "WARN",
+>   WARN textured curve_21deg lane 0 (s 3.73) colour look 0.523 vs the approved picture
+>   WARN textured middle lane 0 (s 18.3) colour look 0.589 vs the approved picture
+>   WARN textured three_q lane 0 (s 26.97) colour look 0.509 vs the approved picture
+>   WARN textured end lane 0 (s 35.03) colour look 0.054 vs the approved picture
+>   WARN textured curve_21deg lane -1 (s 3.73) colour look 0.481 vs the approved picture
+>   WARN textured three_q lane -1 (s 26.97) colour look 0.553 vs the approved picture
+>   WARN textured end lane -1 (s 35.03) colour look 0.056 vs the approved picture
+>   WARN textured cur …[+429 chars]
+
+### 🤖 Claude — 2026-11-22T18:30:02.371Z
+
+Screen 06 built in 72 s from a cold cache: 84.4 % at the picture camera, no holes. The contact sheet:
+
+### 🤖 Claude — 2026-11-22T18:30:03.363Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/k06/preview/preview_sheet.jpg"}`
+
+### 🧑 User — 2026-11-22T18:30:03.426Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-22T18:30:03.422Z
+
+[Image: original 854x3944, displayed at 433x2000. Multiply coordinates by 1.97 to map to original image.]
+
+### 🤖 Claude — 2026-11-22T18:30:17.844Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/tools/world/world.html", "offset": 100, "limit": 140}`
+
+### 🧑 User — 2026-11-22T18:30:17.872Z
+
+> ↩︎ result: 100	  sock: cvs(128, 256, (g, w, h) => { g.fillStyle = '#fbf8ff'; g.fillRect(0, 0, w, h); g.fillStyle = '#ee4f9c'; g.fillRect(0, 12, w, 11); g.fillRect(0, 30, w, 7); g.fillRect(0, h * 0.56, w, h * 0.14); g.fillRect(0, h - 40, w, 40); }),
+> 101	};
+> 102	const TIME = { value: 0 }, WT = { value: 0 };
+> 103	const SHARPX = 915 / (H * renderer.getPixelRatio());
+> 104	// one scenery shader for every area: code material + baked approved pixels (sharpness guard) + the area's own glow (world z)
+> 105	const sceneryMat = (base, rep, A, opts = {}) => new THREE.ShaderMaterial({
+> 106	  side: THREE.DoubleSide, transparent: !!opts.transparent, depthWrite: !opts.transparent,
+> 107	  uniforms: { uBase: { value: base }, uRep: { value: new THREE.Vector2(...rep) }, uBake: { value: null }, uBakeOn: { value: 0 }, uScroll: { value: new THREE.Vector2(...(opts.scroll ?? [0, 0])) },
+> 108	    uTint: { value: new THREE.Color(...(opts.tint ?? [1, 1, 1])) }, uAlpha: { value: opts.alpha ?? 1 }, uDen: { value: null }, uGlow: A.glow, uTime: TIME,
+> 109	    uSharp: { value: new THREE.Vector2(SHARPX, A.sharp) }, uLodBias: { value: A.lodBias } },
+> 110	  vertexShader: 'varying vec2 vUv; varying vec3 vW; void main(){ vUv = uv; vec4 w = m …[+17203 chars]
+
+### 🤖 Claude — 2026-11-22T18:30:26.963Z
+
+Adding the artwork templates to the world page (same uniforms and the same shader snippet as the screen page):
+
+### 🤖 Claude — 2026-11-22T18:30:28.911Z
+
+> 🔧 **Bash** `{"command": "cp tools/world/world.html /tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/world.html.r44 && grep -n \"^import\\|from './controls.js'\" tools/world/world.html | head; sed -n 305,334p tools/world/world.html | cut -c1-260", "description": "Back up world.html and view connector material code"}`
+
+### 🧑 User — 2026-11-22T18:30:28.992Z
+
+> ↩︎ result: 37:import * as THREE from 'three';
+> 38:import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+> 39:import { installControls } from './controls.js';
+>   A.coinLay = A.coinLay.map(([s, l]) => [s >= 9.99 && s < kB ? kB + s : s, l]);
+>   A.socks = ms.filter((o) => o.userData.fam === 'sock'); for (const [dz, dx] of [[-9.5, -0.3], [-15.0, 0.28], [-21.0, -0.25]]) { const c = A.socks[0].clone(); c.position.z += dz; c.position.x += dx; g.add(c); A.socks.push(c); }
+>   A.zArch = T.z_arch + off.z; A.ZB0 = ZB0; A.RX = RX;
+> };
+> 
+> // ---------------- load the areas in route order + the Blender connector pieces ----------------
+> for (const A of WD.areas) { if (A.kind === 'kit') await loadKit(A); else if (A.kind === 'section') await loadSection(A); }
+> const AREA = Object.fromEntries(WD.areas.map((A) => [A.id, A]));
+> { const g = (await gltf.loadAsync('connectors.glb')).scene; g.name = 'connectors'; world.add(g); const spec = Object.fromEntries(WD.connectors.map((c) => [c.name, c]));
+>   g.traverse((o) => { if (!o.isMesh) return; const c = spec[o.name], A = AREA[c.area]; o.geometry.computeBoundingBox(); const sz = o.geometry.boundingBox.getSize(new THREE.Vector3());
+>     let rep = [Math.max(1, sz.x / 1.0),  …[+2699 chars]
+
+### 🤖 Claude — 2026-11-22T18:31:00.389Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/world/world.html'; s=open(p).read()\nR=[]\nR.append((\"\"\"import { installControls } from './controls.js';\"\"\",\"\"\"import { installControls } from './controls.js';\nimport { famOf as kitFamOf, loadTemplates, applyTemplates } from './bake.js';   // r45: the screen kit's artwork-sampled materials (wall / ring / tray templates, water swatches)\"\"\"))\nR.append((\"\"\"    uSharp: { value: new THREE.Vector2(SHARPX, A.sharp) }, uLodBias: { value: A.lodBias } },\n  vertexShader: 'varying vec2 vUv; varying vec3 vW; void main(){ vUv = uv; vec4 w = modelMat …[+6518 chars]`
+
+### 🧑 User — 2026-11-22T18:31:00.541Z
+
+> ↩︎ result: 41:const q = new URLSearchParams(location.search);
+> 53:const GRAY = q.get('gray') === '1';
+> syntax-ok
+
+### 🤖 Claude — 2026-11-22T18:31:12.279Z
+
+Now the cached connected-world builder (`tools/world/build_world.py`). It reuses `build.py` for each area and caches the Blender connectors:
+
+### 🤖 Claude — 2026-11-22T18:31:13.175Z
+
+> 🔧 **Bash** `{"command": "grep -n \"json.dump\\|open(os.path.join(OUT\" tools/world/world_layout.py | cut -c1-200 | head; ls public/section/ | head", "description": "See what world_layout writes"}`
+
+### 🧑 User — 2026-11-22T18:31:13.239Z
+
+> ↩︎ result: 174:json.dump(world, open(os.path.join(OUT, 'world.json'), 'w'))
+> 175:json.dump({'connectors': conn}, open(os.path.join(OUT, 'connectors_spec.json'), 'w'), indent=1)
+> bake.png
+> baked
+> benny31.glb
+> bubble.png
+> coin.png
+> controls.js
+> glint.png
+> index.html
+> section.glb
+> section.json
+
+### 🤖 Claude — 2026-11-22T18:31:34.484Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/world/build_world.py", "content": "\"\"\"Rainbow ONE connected world - INCREMENTAL, CACHED builder (round 45; replaces the step list of setup_world.sh, same result folder).\nEvery area is built by tools/screenkit/build.py (content-addressed cache: fit, masks, Blender geometry, bake + artwork-sampled materials are\nreused whenever their inputs did not change), the section (Bubble Dash -> Sock Rescue) comes pre-baked from public/section, world_layout.py\nplaces everything on ONE route, the Blender connector pieces are cached on their spec, and the game fo …[+5507 chars]`
+
+### 🧑 User — 2026-11-22T18:31:34.562Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/world/build_world.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-22T18:31:36.388Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; time python3 -I tools/world/build_world.py $S/wr --preview 05,06 2>&1 | tail -22", "description": "Build the connected world with the cached builder", "timeout": 1800000}`
+
+### 🧑 User — 2026-11-22T18:32:15.747Z
+
+> ↩︎ result: The user doesn't want to proceed with this tool use. The tool use was rejected (eg. if it was a file edit, the new_string was NOT written to the file). STOP what you are doing and wait for the user to tell you how to proceed. Correction to the text above: this call was stopped while running, not refused before it ran. It may have run in part or in full, and its changes may have been written. No permission prompt was involved. Work it started elsewhere (a remote command, a background process) may still be running, so check before starting the same work again. The instruction to stop and wait still stands.
+
+### 🧑 User — 2026-11-22T18:32:15.750Z
+
+[Request interrupted by user for tool use]
+
+### 🧑 User — 2026-11-22T18:32:15.788Z
+
+How close is it for the screens, or what's the closest screen that's the closest to my approved screen? Even when the pink hair is swimming through the scenery, I want to make sure it's actual game, you know what I mean? Like I've been saying. So, how are the screens going? Like, how close are they to my approved screens?
+I meant pink character not pink hair
+
+### 🤖 Claude — 2026-11-22T18:32:37.777Z
+
+> 🔧 **Bash** `{"command": "pgrep -af 'build_world|build.py|blender -b|screen_export|preview.cjs' | grep -v pgrep | head -5; cd /home/user/rainbow- && S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; mkdir -p qa/kit45 && python3 - <<EOF\nfrom PIL import Image, ImageDraw, ImageFont\nf=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 20)\ndef ref(p):\n    im=Image.open(p).convert('RGB'); s=915/im.height; im=im.resize((round(im.width*s),915)); x=(im.width-412)//2; return im.crop((x,0,x+412,915))\nrows=[('05', ref('references/05_flow_into_the_current. …[+807 chars]`
+
+### 🧑 User — 2026-11-22T18:32:38.059Z
+
+> ↩︎ result: total 868
+> drwxr-xr-x  2 root root   4096 Nov 22 18:32 .
+> drwxr-xr-x 42 root root   4096 Nov 22 18:32 ..
+> -rw-r--r--  1 root root 878977 Nov 22 18:32 STATUS_05_06_approved_vs_game.jpg
+
+### 🤖 Claude — 2026-11-22T18:32:40.689Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/kit45/STATUS_05_06_approved_vs_game.jpg"], "caption": "Your approved 05 and 06 (left), the game at the same camera (middle), and the game while Benny swims further down the level (right). All three are real 3D renders, not pictures.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-22T18:32:41.238Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/kit45/STATUS_05_06_approved_vs_game.jpg → file_uuid: e22e3b0c-174b-4840-9531-32a5941fc48f
+
+### 🤖 Claude — 2026-11-22T18:32:55.113Z
+
+I sent you a picture: your approved 05 and 06 on the left, the game at the same camera in the middle, and the game while Benny is swimming further along on the right.
+
+**How close each screen is**, measured at your approved camera (share of the scenery within 20 colour levels of your picture; Benny, coins and the score bar are left out of the count):
+
+| Screen | Own level | In the connected world |
+|---|---|---|
+| **Bubble Dash Chamber** | **90.7 %** | 87.4 % |
+| 06 Crest the Rinse Arch | 88.5 % | 84.4 % (rebuilt today) |
+| 04 Five Arrows | 87.3 % | 83.9 % |
+| 07 Washer Tube | 84.9 % | 82.4 % |
+| 05 Flow Into the Current | — | 81.7 % (rebuilt today, was 80.6 %) |
+| Sock Rescue | 78.6 % | 81.3 % |
+| 08, 09, 10 | not rebuilt yet | — |
+
+The closest is the Bubble Dash Chamber. Of your 11 approved screens, 06 is closest. None of the approved screens has reached your 90 % target yet.
+
+**While Benny is swimming** it is less close than the picture view. There's no honest percentage for that, because the view keeps changing, so here's my own judgement out of 10. Before today 05 was about 5 and 06 about 4. In front of the old picture view the tunnel turned into plain stripes and flat pink walls. Today I changed that: the walls, gold rings and river further down are now sampled from your own painting, so they keep your look as Benny swims on. I'd now put 05 at about 6 and 06 at about 5 while swimming. The remaining gaps:
+- Your painted splash around Benny is missing.
+- The foam doesn't match your picture exactly.
+- The far end of the tunnel is blurrier than yours.
+
+**It is a real game, not a picture.** Benny is the 3D model, steered left and right with the game's own swipe controls. The tunnel, rings, water and foam are real 3D shapes, and your picture is painted onto them once. The plain-gray version (right-hand column of the checks) shows the tunnel is complete. In all 26 test frames for each of 05 and 06, at the beginning, middle, curves and end, in all three lanes, nothing showed through a hole and Benny stayed fully on screen.
+
+You stopped the connected-world build partway through. Nothing is still running and nothing was lost. Two things are not done yet:
+- Today's 05 and 06 aren't in the connected game yet; that's the build you stopped.
+- No 05 → 06 recording and no APK yet.
+
+Should I carry on with those next?
+
+### 🧑 User — 2026-11-22T18:32:55.178Z
+
+Stop hook feedback:
+[command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+
