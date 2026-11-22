@@ -1,19 +1,19 @@
 {
   "last_run": {
-    "time": "2026-11-22T20:50:47+00:00",
-    "reason": "manual:r45b-everything-chatgpt-package",
+    "time": "2026-11-22T20:53:56+00:00",
+    "reason": "daemon",
     "result": "committed+pushed",
-    "files_staged": 7,
+    "files_staged": 2,
     "pushed_verified": true,
     "branch": "ccr-c1b272d2-3ru7yx",
     "note": "following session branch 'ccr-c1b272d2-3ru7yx' (config branch 'claude/rainbow-r22-restore-ut3m39')",
-    "commit": "fe9bde2cb90d8f4e7098d7bdf0746102d13ac167",
-    "duration_s": 26
+    "commit": "ebcc69146ce5ab279b84a1e2f77ea32eda6d9c65",
+    "duration_s": 27
   },
   "repo": "https://github.com/josiahscalia5-dev/rainbow-",
   "branch": "ccr-c1b272d2-3ru7yx",
-  "last_verified_remote_sha": "fe9bde2cb90d8f4e7098d7bdf0746102d13ac167",
-  "last_successful_backup_utc": "2026-11-22T20:50:47+00:00",
+  "last_verified_remote_sha": "ebcc69146ce5ab279b84a1e2f77ea32eda6d9c65",
+  "last_successful_backup_utc": "2026-11-22T20:53:56+00:00",
   "consecutive_failures": 0,
   "schedule": "every 5 min, container-local (scheduler=daemon status=active pid=175); see backups/RECOVERY.md for limits",
   "next_scheduled_utc": "2026-11-22T20:55:00+00:00"

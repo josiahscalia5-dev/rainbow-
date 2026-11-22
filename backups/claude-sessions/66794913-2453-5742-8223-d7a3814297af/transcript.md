@@ -4672,3 +4672,53 @@ The zip is built: 192 files, 52 MB. Saving everything to GitHub and verifying:
 
 > 🔧 **Bash** `{"command": "unzip -l qa/kit45/RAINBOW_for_ChatGPT.zip | awk '{print $4}' | cut -d/ -f2-3 | sort | uniq -c | sort -rn | head -12; for i in $(seq 1 60); do out=$(python3 scripts/rainbow-autosave.py --reason manual:r45b-everything-chatgpt-package 2>&1 | tail -3); echo \"$out\" | grep -q 'another autosave is running' || break; sleep 5; done; python3 -I scripts/autosave-status.py | head -1; git status --short | head -5; echo \"remote $(git ls-remote origin refs/heads/ccr-c1b272d2-3ru7yx | cut -c1-12) local $(git rev-parse HEAD | cut -c1-12)\"; git lfs ls-files | grep -c \"RAINBOW_for_ChatGPT.zip\\ …[+100 chars]`
 
+### 🧑 User — 2026-11-22T20:54:22.413Z
+
+> ↩︎ result: 97 code/tools
+>      52 code/src
+>      15 images/approved
+>      14 images/latest
+>       4 docs/timing
+>       3 
+>       1 video/swipe_plan_05_06.json
+>       1 video/JOIN_05_06_clip.mp4
+>       1 video/GAMEPLAY_05_to_06_TEXTURED_real_touch_checks.json
+>       1 video/GAMEPLAY_05_to_06_TEXTURED_real_touch.mp4
+>       1 video/GAMEPLAY_05_to_06_GRAY_geometry_real_touch_checks.json
+>       1 video/GAMEPLAY_05_to_06_GRAY_geometry_real_touch.mp4
+> AUTOSAVE OK | branch ccr-c1b272d2-3ru7yx | scheduler daemon | last verified backup 2026-11-22T20:50:47+00:00 (0.4 min ago) | local fe9bde2 remote fe9bde2 (match) | uncommitted 0
+> remote fe9bde2cb90d local fe9bde2cb90d
+> 2
+
+### 🤖 Claude — 2026-11-22T20:54:25.852Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/kit45/RAINBOW_for_ChatGPT.zip"], "caption": "RAINBOW package for ChatGPT (52 MB): a written summary (00_SUMMARY.md), your approved pictures, the newest comparison images, the 05 → 06 recordings, and all the code.", "status": "normal", "display": "attach"}`
+
+### 🧑 User — 2026-11-22T20:54:29.481Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/kit45/RAINBOW_for_ChatGPT.zip → file_uuid: 5528dbd1-5a61-49f7-bf4d-9f0344a0dc12
+
+### 🤖 Claude — 2026-11-22T20:54:39.860Z
+
+Everything is saved on GitHub: commit `fe9bde2` on branch `ccr-c1b272d2-3ru7yx`. GitHub shows the same commit as this session and nothing is left unsaved. Large files (the APK and the zip) are stored with Git LFS.
+
+**The zip for ChatGPT** is attached above: `RAINBOW_for_ChatGPT.zip`, 52 MB, 192 files. It's also in your repository at `qa/kit45/RAINBOW_for_ChatGPT.zip`. Inside:
+- `00_SUMMARY.md`: a plain summary of the game, how it's built, the latest numbers and the honest list of what's still wrong. Point ChatGPT at this file first.
+- `images/approved/`: your approved screens 01–11, the two bonus-area designs, and the original files for 05 and 06.
+- `images/latest/`: the newest side-by-sides (approved, game at your camera, game while swimming), before/now sheets, the water test and the automatic check sheets.
+- `video/`: the 05 → 06 colour and plain-gray recordings, the 5-second join clip, and their check results.
+- `code/`: the game's source code plus all the building and testing tools.
+- `docs/`: this round's notes and the build timings.
+
+The APK is not in the zip because it's too big (247 MB). It's in your repository at `qa/kit45/Rainbow_r45b_world_05_06_debug.apk`.
+
+**Brief summary of what's built:**
+- **The game:** your 11-screen Benny washing-machine game. Screens 01–03 and 11 are your videos. 04, the Bubble Dash and Sock Rescue bonus areas, 05, 06 and 07 are real 3D gameplay in one connected world, with no loading between them. 08–10 aren't rebuilt in the new world yet.
+- **Building tools:** a builder that reuses everything unchanged (a small visual change rebuilds in about 1 second instead of 30–45), and automatic checks of every screen before any recording.
+- **How close it is to your pictures:** 05 is at 83.1 % and 06 at 84.8 % at your approved camera. The closest area is the Bubble Dash bonus area at 90.7 % on its own (87.4 % inside the connected world).
+- **While swimming:** the walls look about 86–88 % like yours, the rings about 60 % and the water about 60 %. Swimming is still the main gap to your pictures.
+- **Your APK:** has the latest 05 and 06 work. Benny goes from opening videos through 04 → 05 → 06 → 07 into the main game, with Start 04 / 05 / 06 buttons. It hasn't been tested on a real phone yet.
+
+The newest 05 → 06 recording is still running in the background. It isn't in the zip yet; the zip has the earlier recording. It will save automatically to `qa/kit45/run/` when it finishes.
+
