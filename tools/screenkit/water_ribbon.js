@@ -7,10 +7,25 @@
 // (204,32,159) (244,60,215) (248,110,236), white streaks (247,243,252); band layout from the painted river (pink edge to pink edge = river width).
 // Coordinates: the area's own x / z (vL), lateral = distance from the river centre line (Benny's route, a 1-D texture of route x by z), along = -z.
 export const RIBBON_GLSL = `
-uniform sampler2D uRouteX; uniform vec4 uRouteZ; uniform float uRibbon; uniform sampler2D uDetC, uDetP; uniform vec4 uDetCM, uDetPM; uniform float uDetS, uDetOn;
+uniform sampler2D uRouteX; uniform vec4 uRouteZ; uniform float uRibbon; uniform float uRStyle; uniform vec4 uRUv; vec4 gRUv = vec4(0.0);   // gRUv: set by the material before ribbonWater (06: exact lateral + route distance) uniform sampler2D uDetC, uDetP; uniform vec4 uDetCM, uDetPM; uniform float uDetS, uDetOn;
 float rbH(vec2 p){ vec3 p3 = fract(vec3(p.xyx) * 0.1031); p3 += dot(p3, p3.yzx + 33.33); return fract((p3.x + p3.y) * p3.z); }
 float rbN(vec2 p){ vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f); return mix(mix(rbH(i), rbH(i + vec2(1, 0)), f.x), mix(rbH(i + vec2(0, 1)), rbH(i + vec2(1, 1)), f.x), f.y); }
+// 06 style (uRStyle 1): the rising crest = a bright cyan sheet with white streaks and RAINBOW edges (green, yellow, orange, pink, purple),
+// measured order from the approved 06 picture; on the banked crest the lateral coordinate comes from the ribbon's own UV (uRUv.x = 1: exact
+// across the banked surface, uRUv.y = half width, uRUv.z = route distance) instead of the flat x / z
+vec3 rainbowEdge(float an){ vec3 c0 = vec3(0.05, 0.72, 1.0), c1 = vec3(0.35, 0.95, 0.55), c2 = vec3(1.0, 0.93, 0.35), c3 = vec3(1.0, 0.62, 0.3), c4 = vec3(1.0, 0.36, 0.78), c5 = vec3(0.62, 0.32, 0.95);
+  float k = clamp((an - 0.58) / 0.4, 0.0, 1.0) * 5.0; vec3 c = mix(c0, c1, clamp(k, 0.0, 1.0)); c = mix(c, c2, clamp(k - 1.0, 0.0, 1.0)); c = mix(c, c3, clamp(k - 2.0, 0.0, 1.0)); c = mix(c, c4, clamp(k - 3.0, 0.0, 1.0)); return mix(c, c5, clamp(k - 4.0, 0.0, 1.0)); }
 vec3 ribbonWater(vec3 L, float t, float flow, vec3 vWv){
+  if (uRStyle > 0.5) { float lat = gRUv.x > 0.5 ? gRUv.y : (L.x - texture2D(uRouteX, vec2(clamp((L.z - uRouteZ.x) / (uRouteZ.y - uRouteZ.x), 0.0, 1.0), 0.5)).r) / uRouteZ.z, d = (gRUv.x > 0.5 ? gRUv.z : -L.z) + t * flow, an = abs(lat) + 0.03 * sin(d * 1.3);
+    vec3 cyM = vec3(10.0, 168.0, 250.0) / 255.0, cyB = vec3(90.0, 226.0, 255.0) / 255.0;
+    vec3 col = mix(cyB, cyM, smoothstep(0.0, 0.55, an)); float eb = smoothstep(0.55, 0.62, an); col = mix(col, rainbowEdge(an), eb);
+    float w = an * 40.0 + 0.6 * sin(d * 0.8 + an * 3.0) + 1.0 * rbN(vec2(an * 4.0, d * 0.4)), fw = max(fwidth(w), 1e-4), f = abs(fract(w) - 0.5) * 2.0;
+    float line = (1.0 - smoothstep(0.0, max(0.3, 1.8 * fw), f)) * smoothstep(0.45, 0.85, rbN(vec2(floor(w) * 1.3, d * 1.5))) * (1.0 - smoothstep(0.25, 0.7, fw));
+    col = mix(col, vec3(0.96, 1.0, 1.0), 0.55 * line * (1.0 - 0.6 * eb));
+    vec2 g = vec2(an * 6.0, d * 1.6); vec2 cell = floor(g); float hh = rbH(cell + 0.37);
+    if (hh < 0.25) { vec2 q = (g - cell - 0.5) / vec2(6.0, 1.6); float tw = 0.4 + 0.6 * pow(0.5 + 0.5 * sin(t * 3.0 + hh * 60.0), 2.0);
+      float star = exp(-dot(q, q) / 0.00012) + exp(-abs(q.x) / 0.03) * exp(-q.y * q.y / 0.00003) + 0.7 * exp(-abs(q.y) / 0.03) * exp(-q.x * q.x / 0.00003); col = mix(col, vec3(1.0), clamp(star * tw, 0.0, 1.0)); }
+    return clamp(col, 0.0, 1.0); }
   float zt = clamp((L.z - uRouteZ.x) / (uRouteZ.y - uRouteZ.x), 0.0, 1.0), e = 0.03 / max(1e-3, uRouteZ.y - uRouteZ.x);
   float rx = texture2D(uRouteX, vec2(zt, 0.5)).r, sl = (texture2D(uRouteX, vec2(min(1.0, zt + e), 0.5)).r - texture2D(uRouteX, vec2(max(0.0, zt - e), 0.5)).r) / 0.06;
   float lat = (L.x - rx) / sqrt(1.0 + sl * sl), d = -L.z + t * flow, hw = uRouteZ.z;
@@ -69,6 +84,7 @@ export function routeUniforms(THREE, LAY) {
   void j;
   const tex = new THREE.DataTexture(data, N, 1, THREE.RedFormat, THREE.FloatType); tex.minFilter = tex.magFilter = THREE.NearestFilter; tex.needsUpdate = true;
   return { uRouteX: { value: tex }, uRouteZ: { value: new THREE.Vector4(z0, z1, (LAY.river_width ?? LAY.route.width) / 2, 1) },
+    uRStyle: { value: LAY.water_style === 'ribbon06' ? 1 : 0 },
     uDetC: { value: null }, uDetP: { value: null }, uDetCM: { value: new THREE.Vector4(1, 1, 1, 1) }, uDetPM: { value: new THREE.Vector4(1, 1, 1, 1) }, uDetS: { value: 0.64 }, uDetOn: { value: 0 } };
 }
 // the painted detail tiles of an area (baked/detail_*.jpg + manifest.water_detail) -> the ribbon uniforms (shared by all its water materials)

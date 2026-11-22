@@ -4408,3 +4408,77 @@ The new APK built successfully. Saving it in place of the earlier one (that vers
 
 > 🔧 **Bash** `{"command": "cp android/app/build/outputs/apk/debug/app-debug.apk qa/kit45/Rainbow_r45b_world_05_06_debug.apk && git rm -q --cached qa/kit45/Rainbow_r45_world_05_06_debug.apk 2>/dev/null; rm -f qa/kit45/Rainbow_r45_world_05_06_debug.apk; ls -la qa/kit45/*.apk | awk '{print $5, $9}'; unzip -l qa/kit45/Rainbow_r45b_world_05_06_debug.apk | grep -cE \"public/world/(a05/baked/detail_cyan.jpg|water_ribbon.js|index.html)\"; for i in $(seq 1 60); do out=$(python3 scripts/rainbow-autosave.py --reason manual:r45b-apk-05-06 2>&1 | tail -3); echo \"$out\" | grep -q 'another autosave is running' || break;  …[+138 chars]`
 
+### 🧑 User — 2026-11-22T20:41:41.380Z
+
+> ↩︎ result: 247252399 qa/kit45/Rainbow_r45b_world_05_06_debug.apk
+> 3
+> AUTOSAVE OK | branch ccr-c1b272d2-3ru7yx | scheduler daemon | last verified backup 2026-11-22T20:40:53+00:00 (0.8 min ago) | local 3137515 remote 3137515 (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-22T20:41:49.572Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; until grep -q \"^EXIT\" $S/rec2.log || ! pgrep -f \"section_run.cjs\" > /dev/null; do sleep 15; done; tail -n 1 $S/rec2.log | cut -c1-80; cd /home/user/rainbow- && python3 -I tools/reflock/encode_run.py $S/rec2 qa/kit45/run GAMEPLAY_05_to_06_TEXTURED_real_touch_r45b 139.5 144.5 JOIN_05_06_clip_r45b 2>&1 | grep -E \"^wrote\" ; python3 -c \"\nimport json; c=json.load(open('qa/kit45/run/GAMEPLAY_05_to_06_TEXTURED_real_touch_r45b_checks.json'))\nprint({k:c[k] for k in ('frames','benny_offscreen_frames …[+288 chars]`
+
+### 🧑 User — 2026-11-22T20:41:49.635Z
+
+> ↩︎ result: Command running in background with ID: bj50pkese. Output is being written to: /tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/tasks/bj50pkese.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-22T20:42:20.817Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/water_ribbon.js'; s=open(p).read()\na=\"uniform sampler2D uRouteX; uniform vec4 uRouteZ; uniform float uRibbon;\"\nb=\"uniform sampler2D uRouteX; uniform vec4 uRouteZ; uniform float uRibbon; uniform float uRStyle; uniform vec4 uRUv;\"\nassert s.count(a)==1; s=s.replace(a,b)\na=\"\"\"vec3 ribbonWater(vec3 L, float t, float flow, vec3 vWv){\"\"\"\nb=\"\"\"// 06 style (uRStyle 1): the rising crest = a bright cyan sheet with white streaks and RAINBOW edges (green, yellow, orange, pink, purple),\n// measured order from the approved 06 picture; on t …[+3339 chars]`
+
+### 🧑 User — 2026-11-22T20:42:20.896Z
+
+> ↩︎ result: drafted
+
+### 🤖 Claude — 2026-11-22T20:42:26.354Z
+
+The draft assigns to a uniform, which shaders don't allow. Correcting it to pass the crest's own across/along coordinates through a shader variable:
+
+### 🤖 Claude — 2026-11-22T20:42:31.869Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/water_ribbon.js'; s=open(p).read()\ns=s.replace(\"uniform float uRStyle; uniform vec4 uRUv;\",\"uniform float uRStyle; uniform vec4 uRUv; vec4 gRUv = vec4(0.0);   // gRUv: set by the material before ribbonWater (06: exact lateral + route distance)\")\ns=s.replace(\"if (uRStyle > 0.5) { float lat = uRUv.x > 0.5 ? uRUv.y : 0.0, d = uRUv.z + t * flow,\",\"if (uRStyle > 0.5) { float lat = gRUv.x > 0.5 ? gRUv.y : (L.x - texture2D(uRouteX, vec2(clamp((L.z - uRouteZ.x) / (uRouteZ.y - uRouteZ.x), 0.0, 1.0), 0.5)).r) / uRouteZ.z, d = (gRUv.x > 0.5 ? gR …[+783 chars]`
+
+### 🧑 User — 2026-11-22T20:42:31.930Z
+
+> ↩︎ result: 226:  if (q.get('water') !== 'paint' && (LAY.water_style === 'ribbon' || (q.get('water') === 'ribbon' && (q.get('ribbona
+
+### 🤖 Claude — 2026-11-22T20:42:37.275Z
+
+> 🔧 **Bash** `{"command": "sed -i \"s/  if (q.get('water') !== 'paint' \\&\\& (LAY.water_style === 'ribbon' || /  if (q.get('water') !== 'paint' \\&\\& (LAY.water_style === 'ribbon' || LAY.water_style === 'ribbon06' || /\" tools/world/world.html && grep -c \"ribbon06\" tools/world/world.html && node --check tools/screenkit/water_ribbon.js && node -e \"\nconst s=require('fs').readFileSync('tools/world/world.html','utf8'); const m=s.match(/<script type=\\\"module\\\">([\\s\\S]*)<\\/script>/); require('fs').writeFileSync('/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/chk.mjs …[+301 chars]`
+
+### 🧑 User — 2026-11-22T20:42:37.473Z
+
+> ↩︎ result: 1
+> ok
+> frame 60 s 92.4 lat -0.3 coins 1330 socks 0
+> [This command modified 1 file you've previously read: tools/world/world.html. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-22T20:42:42.763Z
+
+The recording is far too slow: 60 frames in about 10 minutes. Checking what's eating the CPU:
+
+### 🤖 Claude — 2026-11-22T20:42:43.366Z
+
+> 🔧 **Bash** `{"command": "ps aux --sort=-%cpu | head -8 | cut -c1-160; uptime", "description": "Show top CPU consumers"}`
+
+### 🧑 User — 2026-11-22T20:42:43.411Z
+
+> ↩︎ result: USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+> root     17660  299  8.8 54935392 1453868 ?    S<l  20:40   7:00 /opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-she
+> root     17694  9.4  2.1 1518464364 355448 ?   Sl   20:40   0:13 /opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-she
+> root      9826  3.7 10.0 5444292 1649992 ?     Ssl  18:58   3:50 /usr/lib/jvm/java-21-openjdk-amd64/bin/java --add-opens=java.base/java.util=ALL-UNNAMED --add-o
+> root     17634  2.3  0.6 55013192 100176 ?     S<sl 20:40   0:03 /opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-she
+> root     17514  1.8  0.7 11589976 118420 ?     Sl   20:40   0:02 node tools/reflock/section_run.cjs /tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7
+> root       101  1.2  3.1 5726592 523428 ?      Sl   18:40   1:34 /opt/claude-code/bin/claude --preload /home/claude/.claude/remote/spare.sock
+> root     17666  0.7  0.7 54850504 124532 ?     Sl   20:40   0:01 /opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-she
+>  20:42:43 up  2:02, …[+41 chars]
+
+### 🤖 Claude — 2026-11-22T20:42:58.547Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/rainbow-/android && ./gradlew --stop > /dev/null 2>&1; cd /home/user/rainbow- && S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; python3 -I tools/world/build_world.py $S/wr2 --preview 06 > $S/wr2.log 2>&1; echo EXIT $? >> $S/wr2.log; grep -E \"area|preview|EXIT|FAIL|total\" $S/wr2.log | cut -c1-80; python3 -c \"\nimport json; d=json.load(open('$S/wr2/preview_06/preview.json'))['summary']\nprint('06 picture', [round(x['share_within_20_levels']*100,1) for x in d['likeness_picture_view']], 'repeat', d['repeat_within_20_mean'], {k:v[' …[+690 chars]`
+
+### 🤖 Claude — 2026-11-22T20:42:59.501Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/ax06c.jpg"}`
+

@@ -122,6 +122,7 @@ for x, y, r in M['bubbles']:
 # r45 (user: no unnatural leaning): on the steep banked crest Benny follows a third of the bank (upright like the painted Benny, still in the
 # water), and the camera stays nearly level (the painting's horizon is level)
 lay['benny_bank'] = 0.35; lay['cam_roll'] = 0.15
+lay['water_style'] = 'ribbon06'   # r45: the clean rainbow-crest water along the whole level (tools/screenkit/water_ribbon.js style 1)
 fl.dump(os.path.join(a.out, 'layout.json'), lay)
 print('cam yaw %.2f pitch %.2f deg; Benny water (%.3f, %.3f), height %.3f; coin radius %.3f; drum R %.2f axis (%.3f, %.3f) chord %.2f; ring z %s'
       % (math.degrees(yaw), math.degrees(pitch), Pb[0], Pb[2], HB, COIN_R, DRUM_R, xa, ya, chord, [round(z, 2) for z in z_ring]))

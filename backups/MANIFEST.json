@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 28435,
-   "sha256": "9a589a8e37b58223789e17b8e4ae46bf8ac23aa91525b5b2caab470c84b1b4e5"
+   "sha256": "1ab2f01d2338a9edcecd3aa22281ee60ca49d9061224b9bc079cf210e616dcf7"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3233,
-   "sha256": "e6ec148b81a37bbe9beada9d8460ff639380c90b58ff9c03eb1b0c50efa75e38"
+   "sha256": "4b5207d2391857d8492eabd68a1147b9cb4a4482cb40d5d02964a4ff85ff3c0f"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -49628,8 +49628,8 @@
   },
   {
    "path": "tools/screenkit/screens/06/fit06.py",
-   "bytes": 14088,
-   "sha256": "e23af1d88a39ac91763d7205b11ff9b76c6482f244e8f5eb4de3563855f8421a"
+   "bytes": 14223,
+   "sha256": "94b2430c513a5cb03815344210a871914189386b8f5f6e5874a30710281fe23c"
   },
   {
    "path": "tools/screenkit/screens/06/segment06.json",
@@ -49673,8 +49673,8 @@
   },
   {
    "path": "tools/screenkit/water_ribbon.js",
-   "bytes": 8821,
-   "sha256": "7dcf8c3d9f331e225d3728ab28bf900ff62e49160e9d1726f2b425e4bda92e7a"
+   "bytes": 11232,
+   "sha256": "26b3f17a67fbc0f474f86b3ae7f8c5e9c7a666359ab3ddba745a018b8237d63f"
   },
   {
    "path": "tools/spector/spector_capture_test.mjs",
@@ -49723,8 +49723,8 @@
   },
   {
    "path": "tools/world/world.html",
-   "bytes": 80162,
-   "sha256": "b22f24172ec238f20285e8c233b25944e4824be096824eeb770122f5ad314a6a"
+   "bytes": 80311,
+   "sha256": "8d6cd439fa44b6d9258f3788e9cc6736b8646dc84970d3ee09c3e8b78bce44b0"
   },
   {
    "path": "tools/world/world_layout.py",
