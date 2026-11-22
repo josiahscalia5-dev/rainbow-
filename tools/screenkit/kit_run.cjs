@@ -11,8 +11,10 @@ const { chromium } = require('playwright'); const { spawn } = require('child_pro
   try {
     const ctx = await browser.newContext({ viewport: { width: W, height: H }, deviceScaleFactor: 1, isMobile: true, hasTouch: true }); const page = await ctx.newPage();
     page.on('pageerror', (e) => errs.push(String(e).slice(0, 400))); page.on('console', (m) => { if (m.type() === 'error') errs.push(m.text().slice(0, 400)); });
-    await page.goto(`http://127.0.0.1:${port}/play3.html?w=${W}&h=${H}${query ? '&' + query : ''}`); await page.waitForFunction(() => window.ready === true, null, { timeout: 1200000 });
-    const info = await page.evaluate(() => window.sectionInfo()); const n = Math.ceil((info.LEVEL - info.S_REF) / speed * fps) + 10;
+    // r44: START_S / END_S (env) record one stretch of a long route (e.g. the world: one join, uninterrupted, from before it to after it)
+    const S0 = process.env.START_S ? +process.env.START_S : null, S1 = process.env.END_S ? +process.env.END_S : null;
+    await page.goto(`http://127.0.0.1:${port}/play3.html?w=${W}&h=${H}${query ? '&' + query : ''}${S0 !== null ? '&s0=' + S0 : ''}`); await page.waitForFunction(() => window.ready === true, null, { timeout: 1200000 });
+    const info = await page.evaluate(() => window.sectionInfo()); const END = S1 ?? info.LEVEL; const n = Math.ceil((END - (S0 ?? info.S_REF)) / speed * fps) + 10;
     const cdp = process.env.TOUCH === '1' ? await ctx.newCDPSession(page) : null, gestures = [];
     for (const [t0, d] of plan) { const f0 = Math.round(t0 * fps), y = 0.62 * H;
       if (d === 'left' || d === 'right') { const sx = d === 'left' ? 0.65 * W : 0.35 * W, ex = d === 'left' ? 0.35 * W : 0.65 * W; gestures.push([f0, 'touchStart', sx, y]); for (let k = 1; k <= 4; k++) gestures.push([f0 + k, 'touchMove', sx + (ex - sx) * k / 4, y + 3 * k]); gestures.push([f0 + 5, 'touchEnd', ex, y + 15]); }
@@ -25,7 +27,7 @@ const { chromium } = require('playwright'); const { spawn } = require('child_pro
       const fr = { i, t: +t.toFixed(3), s: o.s, lat: o.lat, coins: o.coins, box: await page.evaluate(() => window.bennyBox()), cam: await page.evaluate(() => window.camInfo()), qa: await page.evaluate(() => window.kitFrameQA()) };
       await page.evaluate(() => window.renderNow(1)); const f = path.join(out, `f_${String(i).padStart(5, '0')}.png`); await page.screenshot({ path: f }); fr.file = path.basename(f);
       log.push(fr); if (i % 60 === 0) console.log('frame', i, 's', o.s, 'lat', o.lat, JSON.stringify(fr.qa));
-      if (o.s >= info.LEVEL - 0.01) break; }
+      if (o.s >= END - 0.01) break; }
     const audit1 = await page.evaluate(() => window.sceneAudit()); const inLog = await page.evaluate(() => (window.input?.log ?? []).map((e) => ({ ...e })));
     const moved = audit0.filter((a, k) => JSON.stringify(a.m) !== JSON.stringify(audit1[k]?.m)).map((a) => a.name);
     const off = log.filter((f) => f.box.x0 < 0 || f.box.x1 > W || f.box.y0 < 0 || f.box.y1 > H).map((f) => f.i);

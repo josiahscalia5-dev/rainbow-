@@ -5319,3 +5319,72 @@ While the recordings run, I'm saving the world tools and results to GitHub and w
 
 > 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/world/world.html'; s=open(p).read()\nreps=[\n# section cut: hide meshes fully beyond the cut, water segments and the exit room\n(\"\"\"  const MANI = await loadBake(A, [...ms, ...segs]);\n  CLAMPS.push((p) => { const z = p.z - off.z; if (z > T.z_arch + 0.2 || z < Z_EXIT) return false;\"\"\",\n\"\"\"  if (A.cut_z != null) {   // v2: the section ends at a tube segment boundary; what lies beyond (the rest of the tube, its exit room) is not part of the world\n    for (const o of [...ms, ...segs]) { o.geometry.computeBoundingBox(); if (o.geometry.boundingBox …[+3559 chars]`
 
+### 🧑 User — 2026-11-22T16:30:13.778Z
+
+> ↩︎ result: world.html ok
+> setup ok
+> 05 offset [1.109, 0.0, -96.399]; Sock Rescue ends s 84.30; 05 route from s 96.45; 05 picture key s 97.80
+> 04 tube end z -25.29; section offset [-0.695, 0.0, -27.289]; route 158.30 u (04 0-25.15, AB 25.15-158.30); picture keys s: 04 1.35, Bubble Dash 28.75, Sock Rescue 49.00
+> world ready: /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/wv2/game/play3.html
+> 
+> real	1m59.317s
+> user	0m49.644s
+> sys	0m4.053s
+> exported /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/wv2/game/connectors.glb ['cring_04A', 'cring_B05_0', 'cring_B05_1', 'ctube_B05_0', 'ctube_B05_1', 'ctube_B05_2', 'cwall_04A', 'cwater_04A', 'cwater_B05']
+
+### 🤖 Claude — 2026-11-22T16:30:18.959Z
+
+World v2 is built: 04 → Bubble Dash → Sock Rescue → S-curve connector → 05, one route of 158 units in one scene. Rendering the new Sock Rescue → 05 join along the route.
+
+### 🤖 Claude — 2026-11-22T16:30:23.947Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && NODE_PATH=$(npm root -g) timeout 1500 node tools/reflock/section_run.cjs $S/wv2/game $S/wst2 stills 78,82,85,87,89,91,93,95,97.8,110,130,150 0 'sentinel=1' 2>&1 | grep -E \"loaded|rror\" ; python3 -c \"\nimport json;d=json.load(open('$S/wst2/stills.json'));print('errors',d['errors'][:3]);print(d['info']['areas'])\"; python3 - <<EOF\nfrom PIL import Image, ImageDraw\nimport json\nd=json.load(open('$S/wst2/stills.json')); fs=[x['file'] for x in d['stills']]\nW,H=206,457; cols=6; rows=(len(fs)+cols …[+439 chars]`
+
+### 🧑 User — 2026-11-22T16:31:00.603Z
+
+> ↩︎ result: loaded in 12.3 s {"LEVEL":157.7,"meshes":259}
+> errors []
+> [{'id': '04', 's0': 0, 's1': 25.15}, {'id': 'AB', 's0': 25.15, 's1': 87.3}, {'id': '05', 's0': 87.3, 's1': 158.3}]
+
+### 🤖 Claude — 2026-11-22T16:31:03.404Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/world_v2_B05.jpg"}`
+
+### 🧑 User — 2026-11-22T16:31:03.438Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T16:31:29.581Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && tail -1 $S/run_gray.log | cut -c1-120; tail -1 $S/run_tex.log | cut -c1-120; ls $S/run_gray | wc -l; ls $S/run_tex | wc -l; date -u +%H:%M", "description": "Check recording progress and time"}`
+
+### 🧑 User — 2026-11-22T16:31:29.871Z
+
+> ↩︎ result: frame 840 s 62.95 lat -0 {"camClear":0.74,"waterGap":0,"waterMesh":"AB/water_t5","area":"AB","slopeErrDeg":0,"bennyTiltV
+> frame 480 s 36.55 lat 0 {"camClear":0.735,"waterGap":0,"waterMesh":"AB/water_c7","area":"AB","slopeErrDeg":0,"bennyTiltV
+> 843
+> 503
+> 16:31
+
+### 🤖 Claude — 2026-11-22T16:31:37.865Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/tools/world/world.html", "old_string": "  const MANI = await loadBake(A, ms);\n  // the area's camera clamp (tube around its axis), world coordinates", "new_string": "  if (!DR.open_end) {   // the area's tube ends here (no next area joined yet): the warm glowing far end of its own page (real geometry, no hole)\n    const cap = new THREE.Mesh(new THREE.CircleGeometry(DR.r * 1.02, 64), new THREE.ShaderMaterial({ side: THREE.DoubleSide,\n      vertexShader: 'varying vec2 vP; void main(){ vP = position.xy; gl_Position = projectionMatrix * m …[+596 chars]`
+
+### 🧑 User — 2026-11-22T16:31:38.063Z
+
+> ↩︎ result: The file /home/user/rainbow-/tools/world/world.html has been updated successfully.
+
+### 🤖 Claude — 2026-11-22T16:31:44.319Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && cp tools/world/world.html $S/wv2/game/play3.html && NODE_PATH=$(npm root -g) timeout 900 node tools/reflock/section_run.cjs $S/wv2/game $S/w2pic stills 0.1 0 'sentinel=1&s0=97.8' > /dev/null 2>&1; NODE_PATH=$(npm root -g) timeout 900 node tools/reflock/section_run.cjs $S/wv2/game $S/w2end stills 150 0 'sentinel=1' > /dev/null 2>&1; rm -rf $S/wv2/s05/game/baked && cp -r $S/wv2/s05/app/baked $S/wv2/s05/game/baked && NODE_PATH=$(npm root -g) timeout 900 node tools/reflock/section_run.cjs $S/wv2/s05 …[+805 chars]`
+
+### 🧑 User — 2026-11-22T16:32:26.556Z
+
+> ↩︎ result: w2pic/s0.10_l0 80.6 % SSIM 0.783 colour 0.989
+> p05pre/s1.20_l0 81.2 % SSIM 0.790 colour 0.992
+> hole px at s=150: 0
+
+### 🤖 Claude — 2026-11-22T16:32:41.066Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/kit_run.cjs'; s=open(p).read()\nold=\"\"\"    await page.goto(`http://127.0.0.1:${port}/play3.html?w=${W}&h=${H}${query ? '&' + query : ''}`); await page.waitForFunction(() => window.ready === true, null, { timeout: 1200000 });\n    const info = await page.evaluate(() => window.sectionInfo()); const n = Math.ceil((info.LEVEL - info.S_REF) / speed * fps) + 10;\"\"\"\nnew=\"\"\"    // r44: START_S / END_S (env) record one stretch of a long route (e.g. the world: one join, uninterrupted, from before it to after it)\n    const S0 = process.env.STA …[+1585 chars]`
+

@@ -196,6 +196,11 @@ const loadKit = async (A) => {
     else if (fam === 'arrow') m = new THREE.MeshBasicMaterial({ color: new THREE.Color(0.86, 0.98, 1.0), toneMapped: false });
     else m = sceneryMat(BASE.foam, [1, 1], A);
     o.material = m; o.userData.fam = fam; o.userData.area = A.id; MESH.push(o); }
+  if (!DR.open_end) {   // the area's tube ends here (no next area joined yet): the warm glowing far end of its own page (real geometry, no hole)
+    const cap = new THREE.Mesh(new THREE.CircleGeometry(DR.r * 1.02, 64), new THREE.ShaderMaterial({ side: THREE.DoubleSide,
+      vertexShader: 'varying vec2 vP; void main(){ vP = position.xy; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+      fragmentShader: `varying vec2 vP; void main(){ float r = length(vP) / ${(DR.r * 1.02).toFixed(3)}; vec3 c = mix(vec3(1.0, 0.97, 0.88), vec3(0.98, 0.62, 0.4), smoothstep(0.08, 0.35, r)); c = mix(c, vec3(0.55, 0.25, 0.7), smoothstep(0.35, 0.95, r)); gl_FragColor = vec4(c, 1.0); }` }));
+    cap.position.set(DR.axis_x + off.x, DR.axis_y + off.y, DR.z1 + off.z + 0.05); cap.name = 'drum_end'; cap.userData.area = A.id; world.add(cap); }
   const MANI = await loadBake(A, ms);
   // the area's camera clamp (tube around its axis), world coordinates
   CLAMPS.push((p) => { const z = p.z - off.z; if (z > DR.z0 + 0.5 || z < DR.z1) return false; const ax = DR.axis_x + off.x, ay = DR.axis_y + off.y, dx = p.x - ax, dy = p.y - ay, rr = Math.hypot(dx, dy), lim = DR.r - 0.3;
