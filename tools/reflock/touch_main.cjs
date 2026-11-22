@@ -34,7 +34,7 @@ const { chromium } = require('playwright'); const { spawn } = require('child_pro
     const at = (t) => frames[Math.min(frames.length - 1, Math.max(0, Math.round(t * fps)))];
     const swipes = plan.map(([t, dir], k) => { const b = at(t - 1 / fps), a3 = at(t + 0.3 + 5 / fps), a6 = at(t + 0.6 + 5 / fps), nx = at((plan[k + 1]?.[0] ?? t + 1) - 1 / fps);
       const moved = +(nx.lat - b.lat).toFixed(3), want = dir === 'left' ? -1 : 1;
-      return { t, requested: dir, detected_by_game: log.filter((e) => e.t != null ? Math.abs(e.tFrame - Math.round(t * fps)) < 8 : true).length > 0 ? 'see input log' : 'n/a',
+      return { t, requested: dir, detected_by_game: log[k] ? (log[k].dir === (dir === 'left' ? -1 : 1) ? `swipe ${log[k].dir < 0 ? 'left' : 'right'} (finger ${log[k].dx} px)` : 'WRONG direction') : 'NOT detected',
         lat_before: b.lat, lat_after_0_3s: a3.lat, lat_after_0_6s: a6.lat, lat_before_next_swipe: nx.lat, moved_lateral: moved, moved_right_way: Math.sign(moved) === want && Math.abs(moved) > 0.05,
         screen_x_before: b.bx, screen_x_after: nx.bx, box_after: nx.box }; });
     const res = { stage, checkpoint: cp, errors: errs, input_log: log, swipes, ok: swipes.filter((s) => s.moved_right_way).length, of: swipes.length,
@@ -42,6 +42,6 @@ const { chromium } = require('playwright'); const { spawn } = require('child_pro
       box_off_screen_frames: frames.filter((f) => f.box && (f.box[0] < 0 || f.box[2] > W || f.box[3] > H || f.box[1] < 0)).length };
     fs.writeFileSync(path.join(out, 'swipes.json'), JSON.stringify(res, null, 1)); fs.writeFileSync(path.join(out, 'frames.json'), JSON.stringify(frames));
     console.log(JSON.stringify({ stage, ok: res.ok, of: res.of, max_lat_step_per_frame: res.max_lat_step_per_frame, box_off_screen_frames: res.box_off_screen_frames, errors: errs.slice(0, 3) }));
-    for (const s of swipes) console.log(JSON.stringify({ t: s.t, req: s.requested, before: s.lat_before, at03: s.lat_after_0_3s, next: s.lat_before_next_swipe, ok: s.moved_right_way, x: [s.screen_x_before, s.screen_x_after] }));
+    for (const s of swipes) console.log(JSON.stringify({ t: s.t, req: s.requested, det: s.detected_by_game, before: s.lat_before, at03: s.lat_after_0_3s, next: s.lat_before_next_swipe, ok: s.moved_right_way, x: [s.screen_x_before, s.screen_x_after] }));
   } finally { await browser.close(); srv.kill(); }
 })();

@@ -142,6 +142,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
     s: 0,
     lat: 0,
     vlat: 0,
+    laneT: 0, // round 41: swipe lane requested (-1 left, 0 centre, +1 right)
     coins: START_COINS,
     hearts: 5,
     paused: false,
@@ -369,8 +370,23 @@ export async function startGame(canvas: HTMLCanvasElement) {
     if (BONUS_ROUTE.enabled && !BONUS_ROUTE.resume && !bonusLeft && st.s >= course.stage('05').s0) { bonusLeft = true; st.paused = true; BONUS_ROUTE.go(st.coins); }
     const halfW = course.widthAt(st.s) / 2;
     const safe = halfW - 0.75;
-    st.vlat += (input.steer * 7.5 - st.vlat) * Math.min(1, dt * 8);
-    st.lat = THREE.MathUtils.clamp(st.lat + st.vlat * dt, -halfW + 0.55, halfW - 0.55);
+    if (input.override !== null) {
+      // QA capture scripts (setSteer / checkpoints): the pre-round-41 continuous steering, unchanged
+      input.steer += (input.override - input.steer) * Math.min(1, dt * 10);
+      st.vlat += (input.steer * 7.5 - st.vlat) * Math.min(1, dt * 8);
+      st.lat = THREE.MathUtils.clamp(st.lat + st.vlat * dt, -halfW + 0.55, halfW - 0.55);
+    } else {
+      // round 41: SWIPE LANES (the same control model as the Bubble Dash / Sock Rescue section): each swipe = one lane, releasing the
+      // screen keeps it, a swipe the other way reverses at once. Benny glides there on a critically damped spring (~95 % of a lane in
+      // 0.3 s, no overshoot), sideways speed capped (no snap / teleport); lanes stay inside the river's safe zone.
+      const lane = Math.min(1.6, Math.max(0.5, halfW - 0.9));
+      st.laneT = THREE.MathUtils.clamp(st.laneT + input.consumeSwipes(), -1, 1);
+      const tgt = st.laneT * lane, om = 15, y = st.lat - tgt, j = st.vlat + om * y, e = Math.exp(-om * dt);
+      let nl = tgt + (y + j * dt) * e, nv = (st.vlat - om * j * dt) * e;
+      if (Math.abs(nv) > 12) { nv = Math.sign(nv) * 12; nl = st.lat + nv * dt; }
+      st.lat = THREE.MathUtils.clamp(nl, -halfW + 0.55, halfW - 0.55); st.vlat = nv;
+      input.steer = THREE.MathUtils.clamp(st.vlat / 9, -1, 1);   // lean / paddle with his real sideways speed
+    }
     // foam-wall bump → lose a heart (with cooldown), bounce back toward the centre
     st.bumpCooldown = Math.max(0, st.bumpCooldown - dt);
     if (Math.abs(st.lat) > safe) st.edgeTime += dt; else st.edgeTime = 0;
@@ -386,7 +402,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
         st.hearts = 5;
         hud.setHearts(5);
         st.s = stg.s0;
-        st.lat = 0;
+        st.lat = 0; st.laneT = 0;
         st.respawns++;
       }
     }

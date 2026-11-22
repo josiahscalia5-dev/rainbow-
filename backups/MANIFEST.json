@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3153,
-   "sha256": "bfb3c855305ded78ef3592dd8b1e9aaad4a0d8372de68523edbd4a844d8adfcc"
+   "sha256": "271a69efea680f866af43611232c09530f06c91f95a6f5635f958e3e3ca1aa1e"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -41733,8 +41733,8 @@
   },
   {
    "path": "src/game/Game.ts",
-   "bytes": 46518,
-   "sha256": "ebea83ff41045af344b0f360d9f13a3c6da97e809005861a3a34f92a0ba6ebf1"
+   "bytes": 47833,
+   "sha256": "f8a9d646eabb61dcddf2e3381854e7621dff6de201fe1ffd7f2a2bb253f97501"
   },
   {
    "path": "src/game/bonusRoute.ts",
@@ -41743,8 +41743,8 @@
   },
   {
    "path": "src/game/cameraRig.ts",
-   "bytes": 11420,
-   "sha256": "3e86bd1ba92be075856cb592f0084e892ea7568b1362c538e4e925c5f143ce75"
+   "bytes": 11783,
+   "sha256": "6ea083bee4818a9c0f6ff52ed5e8c3633bb4d157537fb5778b51314f938134b1"
   },
   {
    "path": "src/game/match.ts",
@@ -41763,8 +41763,8 @@
   },
   {
    "path": "src/gameplay/input.ts",
-   "bytes": 1805,
-   "sha256": "a932c2ec6ce2979efc6b539cdfe56cca1045d2d012c5a489f85ff2cb19e46eee"
+   "bytes": 3775,
+   "sha256": "14919a763fb8488d717c4e1c3d5b164703dbfe161c7ac53938b158a4484be489"
   },
   {
    "path": "src/main.ts",
@@ -42968,8 +42968,8 @@
   },
   {
    "path": "tools/reflock/touch_main.cjs",
-   "bytes": 5703,
-   "sha256": "d435cd6199b9585a9db9498b9cf987ac3070686e8b9ee032e673dc18476dd994"
+   "bytes": 5767,
+   "sha256": "34e8286eca3683dafb5f8dedb5b1f98b19fc4d568c4ea5421c68043c58b55ce5"
   },
   {
    "path": "tools/water-lab.html",
