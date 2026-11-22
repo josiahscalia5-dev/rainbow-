@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 28435,
-   "sha256": "52300cd0680fc327c402a509e27a33fd6873e64ac47e922f7292c73290187499"
+   "sha256": "14dfb3e1c60930e9ffe253e4c11b4f18ad9e9b56a0124436918c39cbdcb7600d"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3233,
-   "sha256": "0d5908c0ecfe33a7da9a5e58b07aa1caf41850e68de2635d48bfd11f59cc4934"
+   "sha256": "831dee5326f01fde7c8b91dd0fe8146620d8684328352855738acce7d558da67"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -10823,8 +10823,8 @@
   },
   {
    "path": "docs/RAINBOW_SUMMARY_FOR_CHATGPT.md",
-   "bytes": 7021,
-   "sha256": "8bb324d0149825c69d85d3b85dd0e96b7649d4fd83ac89c2e63293581df88622"
+   "bytes": 7369,
+   "sha256": "6d18225fbee5d59dbfd4e1358b976a71a7323c67dcdc1aa0d0bd2a83e2019807"
   },
   {
    "path": "docs/briefs/2026-11-17-r2/COMMON_RULES.md",
@@ -23393,8 +23393,8 @@
   },
   {
    "path": "qa/kit45/RAINBOW_for_ChatGPT.zip",
-   "bytes": 51954441,
-   "sha256": "71de30a93a82462fe6616f90861592caae0623966f281508669f9fdfed416136"
+   "bytes": 81892023,
+   "sha256": "2ff4b23a1fe449c65a12efa1bb28d8cd5b63c7c4c9e35b4c7b69f62fe680d8e9"
   },
   {
    "path": "qa/kit45/README.md",
@@ -23462,9 +23462,24 @@
    "sha256": "57046e7f9aadc1a91728c4adaa6b949c1578e245619d0e185c956fd11eb95eea"
   },
   {
+   "path": "qa/kit45/run/GAMEPLAY_05_to_06_TEXTURED_real_touch_r45b.mp4",
+   "bytes": 28775224,
+   "sha256": "a369e33ecb4e923a6a5aea234a65963857f4c13f893bcc0c2d151919087dd82e"
+  },
+  {
+   "path": "qa/kit45/run/GAMEPLAY_05_to_06_TEXTURED_real_touch_r45b_checks.json",
+   "bytes": 3282,
+   "sha256": "c93b9dcbda80d4d1318d87d8ab209f96aac840ac81befb0fe473caba65de3b07"
+  },
+  {
    "path": "qa/kit45/run/JOIN_05_06_clip.mp4",
    "bytes": 1068352,
    "sha256": "066abcbb6c30ce09ed226ff34d1c771fab5a2a35c245f1fcaac099cd7a51cae4"
+  },
+  {
+   "path": "qa/kit45/run/JOIN_05_06_clip_r45b.mp4",
+   "bytes": 1165352,
+   "sha256": "168fe5ee22e980f5e762b756003e59a9b2bbfaa04236e81730a67b077a7b9925"
   },
   {
    "path": "qa/kit45/run/swipe_plan_05_06.json",

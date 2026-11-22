@@ -68,6 +68,9 @@ Owner's verdict so far: still not close enough while swimming; anything messy mu
 * 05: water cleaner but still plainer than the painting close up; in the right lane a foam bank near the camera reads as big white blocks and
   an unexplained pink patch appears beside it; top-of-frame wall / ring detail softer than the painting (most of the remaining gap at the camera).
 * 06: beyond the painted stretch the rainbow crest edges become plain cyan water (a first rainbow-ribbon attempt looked worse and is off).
+* Newest recording (video/GAMEPLAY_05_to_06_TEXTURED_real_touch_r45b.mp4, all round-45 changes): 1380 frames, 28/28 swipes, camera max
+  1.0 deg per frame, Benny in the water every frame; but for 12 frames in the middle of 05 (right lane) his model edge goes up to 8 px past
+  the right screen edge; small holes only after 06 (06 -> 07 connector).
 * 06 -> 07 connector has small holes; 08, 09, 10 not yet rebuilt with the kit; the APK has not been tested on a device.
 
 ## 6. What is in this zip
