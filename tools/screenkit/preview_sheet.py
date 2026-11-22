@@ -27,7 +27,7 @@ for f in raw['frames']:
     if f['mode'] == 'textured' and ref_h is not None: f['colour_look'] = round(float(cv2.compareHist(ref_h, hs_hist(a.astype(np.uint8)), cv2.HISTCMP_CORREL)), 3)
     if f['tag'] == 'picture' and f['mode'] == 'textured' and pic_h is None: pic_h = f['benny_h_px']
 for f in raw['frames']:
-    if pic_h: f['benny_size_vs_picture'] = round(f['benny_h_px'] / pic_h, 3)
+    if pic_h and 'benny_h_px' in f: f['benny_size_vs_picture'] = round(f['benny_h_px'] / pic_h, 3)
 # likeness at the picture view(s)
 mask = next((p for p in [os.path.join(game, 'mask_0.png'), os.path.join(game, f'a{area}', 'mask_0.png')] if os.path.exists(p)), None)
 likeness = []

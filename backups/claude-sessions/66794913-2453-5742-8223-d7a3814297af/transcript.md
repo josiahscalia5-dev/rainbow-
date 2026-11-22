@@ -2278,3 +2278,291 @@ These numbers tell us where it falls short. The final judge is still you watchin
 
 Should I add these swimming measurements now and then finish the 05 → 06 recording and the APK?
 
+### 🧑 User — 2026-11-22T18:41:13.046Z
+
+yes add the measurements and do the recording and APK
+
+### 🤖 Claude — 2026-11-22T18:41:17.710Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; ls $S 2>&1 | head; ls ~/.cache/rainbow-build 2>&1 | head; ls ~/.cache/rainbow-models 2>&1; ls /tmp/rainbow_r34/node_modules 2>&1 | head -2; git log --oneline -3; git status --short | head", "description": "Check whether workspaces and caches survived"}`
+
+### 🧑 User — 2026-11-22T18:41:19.133Z
+
+> ↩︎ result: base
+> cmp05_before.jpg
+> cmp06_before.jpg
+> err.cjs
+> geo
+> ghost.jpg
+> ghost2.jpg
+> ghost3.jpg
+> gnlib_test.blend
+> gnlib_test.blend1
+> bake
+> depth
+> fit
+> geometry
+> gnlib
+> preview
+> segment
+> depth
+> sam2
+> three
+> b9a24bc autosave: Rainbow 2026-11-22 18:38 UTC
+> 861f7bb autosave: Rainbow 2026-11-22 18:35 UTC
+> 0cef661 autosave: Rainbow 2026-11-22 18:34 UTC
+>  M backups/claude-sessions/66794913-2453-5742-8223-d7a3814297af/transcript.sanitized.jsonl
+
+### 🤖 Claude — 2026-11-22T18:41:29.345Z
+
+> 🔧 **Bash** `{"command": "grep -c \"uGate\" tools/screenkit/bake.js; grep -c \"fit_overlay.jpg'))\" tools/screenkit/build.py; grep -c \"'Free'\" tools/screenkit/gn_assets.py; grep -c \"kitFamOf\" tools/world/world.html; ls tools/world/build_world.py tools/screenkit/plate_clone.py tools/screenkit/preview.cjs tools/screenkit/preview_sheet.py; nproc; pgrep -af 'blender -b|preview.cjs|screen_export|build_world' | grep -v pgrep | head -3", "description": "Verify my edits survived the resume"}`
+
+### 🧑 User — 2026-11-22T18:41:30.076Z
+
+> ↩︎ result: 6
+> 2
+> 1
+> 2
+> tools/screenkit/plate_clone.py
+> tools/screenkit/preview.cjs
+> tools/screenkit/preview_sheet.py
+> tools/world/build_world.py
+> 4
+
+### 🤖 Claude — 2026-11-22T18:42:08.956Z
+
+> 🔧 **Bash** `{"command": "sed -n 432,440p tools/world/world.html | cut -c1-330; grep -n \"const benny = \\|scene.add(benny)\\|const splash\\|coin3 = \\|window.kitDebug\" tools/world/world.html tools/screenkit/screen.html | cut -c1-160", "description": "Inspect world camera keys and object names"}`
+
+### 🧑 User — 2026-11-22T18:42:09.101Z
+
+> ↩︎ result: const coin3 = (() => { const geo = new THREE.CylinderGeometry(0.5, 0.5, 0.12, 48, 1); geo.rotateX(Math.PI / 2);
+>   const face = new THREE.MeshBasicMaterial({ map: ctex, toneMapped: false, alphaTest: 0.4 }), rim = new THREE.MeshBasicMaterial({ color: new THREE.Color(0.86, 0.5, 0.08), toneMapped: false });
+>   return coins.map((c, i) => { const m = new THREE.Mesh(geo, [rim, face, face]); m.name = 'coin3d_' + i; scene.add(m); c.sp.material.colorWrite = false; return m; }); })();
+> const SOCKS = WD.areas.flatMap((A) => A.socks ?? []); let socksGot = 0, gems = 36; const slotsEl = document.getElementById('slots'), gemEl = document.getElementById('gems');
+> const drawSlots = () => { slotsEl.textContent = '\u{1F9E6}'.repeat(socksGot) + '○'.repeat(5 - socksGot); }; drawSlots();
+> 
+> // ---------------- chase camera: camera keys = each approved picture's fitted camera, relative to Benny's route frame; blended between ----------------
+> const ROLL = +(q.get('roll') ?? 0.5), CAMW = +(q.get('camw') ?? 1.6);   // r44: heading averaged over +-1.6 u (was 0.8): calmer turns through tight S-curves
+> const camFrame = (s, out) => { const sm = (a, b) => a.clone().lerp(b, ROLL).normalize(), A2 = at(Math.min(RLEN, s +  …[+1278 chars]
+
+### 🤖 Claude — 2026-11-22T18:42:23.084Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/screenkit/qa.js", "content": "// Rainbow screen kit - QA views for the automated preview check (round 45), shared by the screen page and the world page.\n//   window.qaRepeatView(k, area) : the approved picture's camera moved k ring spacings further down the drum (same height, same direction,\n//                                  same framing), Benny / coins / splash / effects hidden -> the frame is scored against the approved picture:\n//                                  \"does the scenery further down the level still look like the approved screen?\" (k …[+2645 chars]`
+
+### 🧑 User — 2026-11-22T18:42:24.760Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/screenkit/qa.js (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-22T18:42:57.231Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\n# screen page\np='tools/screenkit/screen.html'; s=open(p).read()\na=\"import { bake as bakeAll, famOf, tplOnly, exportBake, exportTemplates, loadTemplates, applyTemplates, foamFromPicture } from './bake.js';   // r45: bake + artwork-sampled materials\"\nb=a+\"\\nimport { installQA } from './qa.js';   // r45: QA views for the automated preview check (repeated picture camera, surface ID pass)\"\nassert s.count(a)==1; s=s.replace(a,b)\na=\"window.sceneAudit = () =>\"\nb=\"\"\"installQA({ THREE, scene, world, camera, renderer, repeatPose: (k) => { const sp = LAY.rin …[+4112 chars]`
+
+### 🧑 User — 2026-11-22T18:42:57.527Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-22T18:43:33.664Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/preview_sheet.py'; s=open(p).read()\na=\"\"\"for f in raw['frames']:\n    a = np.asarray(Image.open(os.path.join(out, f['file'])).convert('RGB')).astype(int)\n    f['holes_px'] = int(((a[..., 1] > 200) & (a[..., 0] < 70) & (a[..., 2] < 70)).sum())\n    b = f['box'];\"\"\"\nb=\"\"\"for f in raw['frames']:\n    a = np.asarray(Image.open(os.path.join(out, f['file'])).convert('RGB')).astype(int)\n    f['holes_px'] = int(((a[..., 1] > 200) & (a[..., 0] < 70) & (a[..., 2] < 70)).sum())\n    if f['mode'] == 'repeat': continue\n    b = f['box'];\"\"\" …[+7203 chars]`
+
+### 🧑 User — 2026-11-22T18:43:34.261Z
+
+> ↩︎ result: 1
+
+### 🤖 Claude — 2026-11-22T18:43:37.922Z
+
+Now the full connected-world build (04, 05, 06, 07 through the new pipeline) with the swimming checks on 05 and 06, running in the background:
+
+### 🤖 Claude — 2026-11-22T18:43:40.109Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; python3 -I tools/world/build_world.py $S/wr --preview 05,06 > $S/wr_build.log 2>&1; echo EXIT $? >> $S/wr_build.log", "description": "Build the connected world with previews", "timeout": 3600000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-22T18:43:40.491Z
+
+> ↩︎ result: Command running in background with ID: b3rbciqx4. Output is being written to: /tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/tasks/b3rbciqx4.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-22T18:43:42.841Z
+
+While the world builds, I'm preparing the APK route. Here's how the app currently hands over to the pre-baked pages:
+
+### 🤖 Claude — 2026-11-22T18:43:43.866Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,60p src/game/bonusRoute.ts | cut -c1-220; grep -n \"android:debug\\|\\\"build\\\"\" package.json; grep -rn \"VITE_RAINBOW_KIT06\\|VITE_RAINBOW_BONUS\" src --include=*.ts | head -8", "description": "Read the app hand-over route code"}`
+
+### 🧑 User — 2026-11-22T18:43:44.599Z
+
+> ↩︎ result: // Round 40: the reference-locked Bubble Dash -> Sock Rescue section (public/section/, built by tools/reflock/build_section_app.sh)
+> // as part of the Rainbow route between Screen 04 and Screen 05. OFF by default (the current game is unchanged); ON in a build made with
+> // VITE_RAINBOW_BONUS=1 (the Android test build) or with ?bonus=1. Benny swims from 04 into the section (coins carried over) and from the
+> // section's exit back into the game at the Screen 05 checkpoint (?resume=05).
+> const q = new URLSearchParams(typeof location !== 'undefined' ? location.search : '');
+> const env = (import.meta as unknown as { env?: Record<string, string | undefined> }).env ?? {};
+> export const BONUS_ROUTE = {
+>   enabled: env.VITE_RAINBOW_BONUS === '1' || q.get('bonus') === '1',
+>   resume: q.get('resume'),
+>   resumeCoins: Number(q.get('coins')),
+>   go(coins: number) { location.href = `section/index.html?return=1&bonus=1&coins=${Math.round(coins)}`; },
+> };
+> 
+> // Round 43: the screen-kit rebuild of Screen 06 (public/screen06/, tools/screenkit) as a TEST route: at the end of 05 Benny swims into the
+> // rebuilt 06 and comes back into the game at the Screen 07 checkpoint with his coins. OFF by default (the default g …[+1067 chars]
+
+### 🤖 Claude — 2026-11-22T18:43:53.810Z
+
+> 🔧 **Bash** `{"command": "grep -rn \"KIT_ROUTE\\|BONUS_ROUTE\" src --include=*.ts | grep -v \"^src/game/bonusRoute.ts\" | head -5; grep -n \"q.get('play')\\|s0'\\|Tap to swim\" tools/world/world.html | cut -c1-200 | head; cat tools/screenkit/build_screen_app.sh | head -30 | cut -c1-200; grep -n \"android:sync\\|\\\"vite\\\"\" package.json", "description": "Find app entry hooks and world play mode"}`
+
+### 🧑 User — 2026-11-22T18:43:53.888Z
+
+> ↩︎ result: src/game/Game.ts:31:import { BONUS_ROUTE, KIT_ROUTE } from './bonusRoute';
+> src/game/Game.ts:399:    if (BONUS_ROUTE.enabled && !BONUS_ROUTE.resume && !bonusLeft && sPrev < s05h && st.s >= s05h) { bonusLeft = true; st.paused = true; BONUS_ROUTE.go(st.coins); }
+> src/game/Game.ts:402:    if (KIT_ROUTE.s06 && BONUS_ROUTE.resume !== '07' && !bonusLeft && sPrev < s06h && st.s >= s06h) { bonusLeft = true; st.paused = true; KIT_ROUTE.go06(st.coins); }
+> src/game/Game.ts:600:  if (!((BONUS_ROUTE.enabled || KIT_ROUTE.s06) && BONUS_ROUTE.resume)) playIntroVideo();
+> src/game/Game.ts:888:  if ((BONUS_ROUTE.enabled && BONUS_ROUTE.resume === '05') || (KIT_ROUTE.s06 && BONUS_ROUTE.resume === '07')) {   // back from a section: continue at its next checkpoint with the coins collected
+> 450:const st = { s: +(q.get('s0') ?? WD.start_s), lat: 0, camLat: { x: 0, v: 0 }, t: 0 };
+> 538:if (q.get('play')) {   // real-time play (phone): tap to swim, swipes steer
+> 539:  let t0 = null, last = 0; const tapEl = document.createElement('div'); tapEl.textContent = 'Tap to swim'; tapEl.style.cssText = 'position:fixed;left:0;right:0;bottom:22%;text-align:center;color:#
+> #!/usr/bin/env bash
+> # Rainbow screen kit: put a kit-buil …[+2132 chars]
+
+### 🤖 Claude — 2026-11-22T18:44:01.324Z
+
+> 🔧 **Bash** `{"command": "sed -n 392,404p src/game/Game.ts | cut -c1-260; sed -n 596,602p src/game/Game.ts | cut -c1-200; sed -n 885,900p src/game/Game.ts | cut -c1-260; grep -n \"return') === '1'\\|location.href\" tools/world/world.html | cut -c1-220", "description": "Read Game.ts hand-over and resume logic"}`
+
+### 🧑 User — 2026-11-22T18:44:01.388Z
+
+> ↩︎ result: const stg = course.stageAtS(st.s);
+>     const speed = course.prop('speed', st.s) * (paint ? paint.speedK(st.s) : p06 ? p06.speedK(st.s) : 1);
+>     const sPrev = st.s;
+>     st.s = Math.min(course.stage('11').s0, st.s + speed * dt);
+>     // round 40 (off by default): from the end of 04 Benny swims into the Bubble Dash -> Sock Rescue section, then back at 05.
+>     // r41: only on the frame he really CROSSES from 04 into 05 (a checkpoint / respawn further on never triggers it)
+>     const s05h = course.stage('05').s0;
+>     if (BONUS_ROUTE.enabled && !BONUS_ROUTE.resume && !bonusLeft && sPrev < s05h && st.s >= s05h) { bonusLeft = true; st.paused = true; BONUS_ROUTE.go(st.coins); }
+>     // r43 test route (off by default): crossing from 05 into 06 hands over to the screen-kit Screen 06 (returns at the 07 checkpoint)
+>     const s06h = course.stage('06').s0;
+>     if (KIT_ROUTE.s06 && BONUS_ROUTE.resume !== '07' && !bonusLeft && sPrev < s06h && st.s >= s06h) { bonusLeft = true; st.paused = true; KIT_ROUTE.go06(st.coins); }
+>     const halfW = course.widthAt(st.s) / 2;
+>     const safe = halfW - 0.75;
+>     introUpdate(0);
+>     st.paused = true;
+>     void playCinematic(introVideo, { onEnding: () => { st.paused  …[+667 chars]
+
+### 🤖 Claude — 2026-11-22T18:44:10.102Z
+
+> 🔧 **Bash** `{"command": "sed -n 536,560p tools/world/world.html | cut -c1-330; grep -n \"coinCount\" tools/world/world.html | head -3", "description": "Read world page play mode"}`
+
+### 🧑 User — 2026-11-22T18:44:10.143Z
+
+> ↩︎ result: renderer.render(scene, camera);
+> window.ready = true;
+> if (q.get('play')) {   // real-time play (phone): tap to swim, swipes steer
+>   let t0 = null, last = 0; const tapEl = document.createElement('div'); tapEl.textContent = 'Tap to swim'; tapEl.style.cssText = 'position:fixed;left:0;right:0;bottom:22%;text-align:center;color:#fff;font-weight:800;font-size:26px;text-shadow:0 2px 6px #000a';
+>   document.body.appendChild(tapEl); let go = false; addEventListener('pointerdown', () => { go = true; tapEl.remove(); }, { once: true });
+>   const loop = (now) => { requestAnimationFrame(loop); if (!go) { renderer.render(scene, camera); return; } if (t0 === null) { t0 = now; last = now; } const dt = Math.min(0.05, (now - last) / 1000); last = now;
+>     if (window.paused) { t0 += now - last; last = now; renderer.render(scene, camera); return; }
+>     if (st.s < LEVEL) window.step((now - t0) / 1000, dt, 0, +q.get('speed')); renderer.render(scene, camera); };
+>   requestAnimationFrame(loop);
+> }
+> </script></body></html>
+> 416:const coins = []; let coinCount = +(q.get('coins') ?? WD.areas[0].coins_start ?? 1330); const coinEl = document.getElementById('coins'); coinEl.textContent = '\u{1FA99} ' + coinCount.toLoca …[+413 chars]
+
+### 🤖 Claude — 2026-11-22T18:44:32.220Z
+
+> 🔧 **Bash** `{"command": "grep -n \"q.set(k, v)\\|\\['speed'\" tools/world/world.html | head -3; python3 - <<'EOF'\np='tools/world/world.html'; s=open(p).read()\na=\"\"\"  document.body.appendChild(tapEl); let go = false; addEventListener('pointerdown', () => { go = true; tapEl.remove(); }, { once: true });\"\"\"\nb=\"\"\"  document.body.appendChild(tapEl); let go = false, left = false; addEventListener('pointerdown', () => { go = true; tapEl.remove(); bar.remove(); }, { once: true });\n  // r45 (phone test): start at the beginning (04) or jump straight to an area's approved picture view (05, 06) - the wor …[+3634 chars]`
+
+### 🧑 User — 2026-11-22T18:44:48.681Z
+
+> ↩︎ result: 43:for (const [k, v] of [['c_LANE', '0.3'], ['c_LAT_MAX', '0.36'], ['speed', '2.2']]) if (!q.has(k)) q.set(k, v);
+> tsc-exit 0
+
+### 🤖 Claude — 2026-11-22T18:44:52.319Z
+
+> 🔧 **Bash** `{"command": "grep -n \"const gotoCheckpoint\\|function gotoCheckpoint\" -A6 src/game/Game.ts | cut -c1-200 | head -10; tail -5 /tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/wr_build.log", "description": "Check checkpoint support and build progress"}`
+
+### 🧑 User — 2026-11-22T18:44:52.367Z
+
+> ↩︎ result: 728:  const gotoCheckpoint = (id: string, time = 12.0) => {
+> 729-    const cp = CHECKPOINTS[id];
+> 730-    if (!cp) throw new Error('unknown checkpoint ' + id);
+> 731-    resetToIntro();
+> 732-    st.frozen = time;
+> 733-    st.clock = time;
+> 734-    input.override = 0;
+>   area 04   built bake                                 58.6 s
+
+### 🤖 Claude — 2026-11-22T18:44:54.860Z
+
+> 🔧 **Bash** `{"command": "grep -n \"CHECKPOINTS\\b.*=\\|CHECKPOINTS: \" src/game/*.ts | head -3; grep -n \"'08'\" src/game/Game.ts | head -3", "description": "Check that an 08 checkpoint exists"}`
+
+### 🧑 User — 2026-11-22T18:44:54.904Z
+
+> ↩︎ result: src/game/Game.ts:704:  const CHECKPOINTS: Record<string, { mode: Mode; t?: number; s?: number; lat?: number }> = {
+> src/game/Game.ts:773:    gotoS(sv: number, lat = 0) { CHECKPOINTS.__s = { mode: 'ride', s: sv, lat }; return gotoCheckpoint('__s'); },
+> 35:const STAGE_ORDER: StageId[] = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11'];
+> 111:  const m08 = MATCH['08'] ? await buildMatch08() : null;
+> 203:    if (m08) { m08On = st.stage === '08'; m08.group.visible = m08On; if (m08On) env.zones.chamber.visible = false; }
+
+### 🤖 Claude — 2026-11-22T18:44:56.945Z
+
+> 🔧 **Bash** `{"command": "sed -n 704,716p src/game/Game.ts | cut -c1-200", "description": "Read the checkpoint list"}`
+
+### 🧑 User — 2026-11-22T18:44:56.988Z
+
+> ↩︎ result: const CHECKPOINTS: Record<string, { mode: Mode; t?: number; s?: number; lat?: number }> = {
+>     '01': { mode: 'intro', t: T.cp01 },
+>     '02': { mode: 'intro', t: T.cp02 },
+>     '03': { mode: 'ride', s: course.stage('03').s0 + 7.5, lat: 0.3 },
+>     '04': { mode: 'ride', s: course.stage('04').s0 + 7.0 },
+>     '05': { mode: 'ride', s: course.marks['05_crest'] }, // first meander crest (course.ts S05): Benny on the stream's left crest, facing the VP down the straight tube
+>     '06': { mode: 'ride', s: course.stage('06').s0 + 10 },
+>     '07': { mode: 'ride', s: course.stage('07').s0 + 26 },
+>     '08': { mode: 'ride', s: course.stage('08').s0 + 2.0 },
+>     '09': { mode: 'ride', s: course.stage('09').s0 + 2.5 },
+>     '10': { mode: 'ride', s: course.stage('10').s0 + 3.0 },
+>     '11': { mode: 'outro', t: O.cp11 },
+>     '07a_plunge_top': { mode: 'ride', s: course.marks['07_plunge_top'] - 1 },
+
+### 🤖 Claude — 2026-11-22T18:45:10.519Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/world/build_world_app.sh", "content": "#!/usr/bin/env bash\n# Rainbow ONE connected world -> the Rainbow app build (public/world/ -> dist -> the Android APK). Round 45.\n#   bash tools/world/build_world_app.sh <workspace made by tools/world/build_world.py>\n# Self-contained static scene (three.js 0.180 vendored, no CDN), every area pre-baked (no approved picture and no mask is shipped). The game\n# hands over to it only in a test build: VITE_RAINBOW_WORLD=1 (or ?world=1): opening videos -> world 04 -> A -> B -> 05 -> 06 -> 07 -> back in\n# the game at t …[+1835 chars]`
+
+### 🧑 User — 2026-11-22T18:45:10.672Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/world/build_world_app.sh (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-22T18:45:12.416Z
+
+> 🔧 **Bash** `{"command": "chmod +x tools/world/build_world_app.sh; cat .gitignore | grep -n \"public\\|dist\" | head; tail -6 /tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/wr_build.log", "description": "Check gitignore and world build progress"}`
+
+### 🧑 User — 2026-11-22T18:45:12.464Z
+
+> ↩︎ result: 3:dist/
+>   area 04   built bake                                 58.6 s
+>   area 05   built fit                                  15.7 s
+>   area 06   cached                                      1.7 s
+
+### 🤖 Claude — 2026-11-22T18:45:18.858Z
+
+The world build is going: 04 got its first bake with the new materials (59 s); 05 and 06 came straight from the cache (16 s and 2 s). Waiting for 07 and the swimming checks:
+
+### 🤖 Claude — 2026-11-22T18:45:20.498Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; until grep -q \"EXIT\" $S/wr_build.log; do sleep 5; done; cat $S/wr_build.log | tail -14", "description": "Wait for the world build to finish", "timeout": 1800000}`
+
+### 🧑 User — 2026-11-22T18:48:56.028Z
+
+> ↩︎ result: area 07   built depth,fit,segment,geometry,bake     158.9 s
+>   assemble  ran        0.0 s
+>   layout    ran        0.4 s
+>   connectors built      2.0 s   (39d805c856)
+>   files     ran        0.0 s
+> FAILED (1): node /home/user/rainbow-/tools/screenkit/preview.cjs /tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/wr/game /tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/wr/preview_05 --screen 05 --area 05
+> loaded 16.0 s; range [ 87.3, 140.3 ] positions begin@88.5 picture@97.8 quarter@100.55 curve_29deg@100.8 middle@113.8 three_q@127.05 end@139.7
+> Traceback (most recent call last):
+>   File "/home/user/rainbow-/tools/screenkit/preview_sheet.py", line 30, in <module>
+>     if pic_h: f['benny_size_vs_picture'] = round(f['benny_h_px'] / pic_h, 3)
+>                                                  ~^^^^^^^^^^^^^^
+> KeyError: 'benny_h_px'
+> 
+> EXIT 1
+
