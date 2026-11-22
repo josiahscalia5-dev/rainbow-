@@ -44,3 +44,22 @@
 * The visual checker must not mistake the artwork's intentional dark areas for errors.
 * Screens 01, 02, 03, 11 = the user's Google Flow videos; 04-10 = playable 3D. One screen (05) until approved, then batches of two in
   isolated worktrees, the next batch only after the user's approval. No paid credits / plugins / purchases without the user's OK.
+* r46 Benny "clipped 8 px" was really ~21 px: `bennyBox()` used the REST pose (every 3rd vertex) while the paddling arms / pompom are moved on the GPU
+  -> the box now runs the same maths as VERT_BODY (world.html `bDef`); any framing guard must use it. Check: section_run `benny_offscreen_frames` = 0.
+* r46 a camera guard placed BEFORE the wall clamp (CLAMPS) / water-height clamp is undone by them -> the last safety goes after every clamp, and is
+  optical (lens shift `filmOffset`), not positional. Reset `filmOffset` wherever the camera pose is set directly (qa.js `qaRepeatView`: a stale
+  shift dropped the repeat score 72 % -> 37 % at k = 0).
+* r46 a yaw / framing guard tuned on the deformed box wobbles with every stroke and fired at the picture view (picture 83 % -> 33 %): guards use the
+  rest-pose box with a margin; ALWAYS re-check the picture-view number after any camera change.
+* r46 the route fitted through far painted coins (radius <= 10 px, depth spread +1.2 u) swung 0.84 u off the drum axis: Benny swam at the floor edge,
+  into the foam bank, camera 0.3 u from the wall -> soft-cap the route's distance from the axis (fit05 `RC_L`), keep foam banks outside the river
+  (`foam_pool_clear`). Probe exact frames with tools/world/probe_frames.cjs (qaPickScenery names the real mesh under a pixel).
+* r46 GLSL `pow(x, 2.0)` with x < 0 is UNDEFINED (NaN on many GPUs -> black / missing pixels; likely the r45 'ribbon06' "pool stopped drawing") ->
+  write x * x (water_ribbon.js `rbSq`).
+* r46 more shader "richness" is not automatically closer: the deep-blue troughs / violet halo measured WORSE (water 61 -> 53) with the same camera
+  (`?rich=0` A/B). Always A/B a look change with the same camera before keeping it.
+* r46 the artwork-sampled wall period fused water / bubble / tray pixels (pale shards in 06, orange smears in 05): layout `tpl_wall_gate: 'strict'`
+  rejects g >= 1.02 r (cyan / pale blue) and r >= 1.8 b (copper / brown). Cost: wall colour-histogram score 86.1 -> 83.3 on 05 (the smears added
+  orange the painting has near the rings) - reported, not hidden.
+* r46 the last area of the world (07) is open toward the game's 08 hand-over: its tube end showed the background (green hole, r45b frames 1362-1379)
+  -> the last area gets the glowing far-end cap.

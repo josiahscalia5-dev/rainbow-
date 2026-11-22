@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 28920,
-   "sha256": "45a974215e1940be48531df8eeafbebfd64eafbfe1241a1eecbd0da56a173c59"
+   "sha256": "38d77bcc7e8b82d3ae82b7f2698f3b701ed35c471e917bdd697309f235177e0e"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 2958,
-   "sha256": "e39214a7d13764eddbe343b6c2d75bbe68707dbbc0a2a7e0f1cd412a15435d7c"
+   "sha256": "bffc52c3df21b07117d9c651afc217192d0bceebdf996f355dc944a983b6a09d"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -49508,8 +49508,8 @@
   },
   {
    "path": "tools/reflock/section_run.cjs",
-   "bytes": 10939,
-   "sha256": "664cecc469b390100239e5098281903b87e1520527340bcfcce1520abbbb6fd1"
+   "bytes": 11458,
+   "sha256": "2ab03e070273d0ecfd50825164138af6e3a6647c5d64224a65f11a91023c0b22"
   },
   {
    "path": "tools/reflock/setup_reflock.sh",
@@ -49658,8 +49658,8 @@
   },
   {
    "path": "tools/screenkit/screens/06/fit06.py",
-   "bytes": 15187,
-   "sha256": "691e86e1ae57792864af1b0fa43bb6d9e72b8169de2d85f0ec478579c6863ca3"
+   "bytes": 15365,
+   "sha256": "d28281203dadec07e42de9ce6e4179feb372292522931020e540eb08f0d345b0"
   },
   {
    "path": "tools/screenkit/screens/06/segment06.json",
@@ -49758,8 +49758,8 @@
   },
   {
    "path": "tools/world/world.html",
-   "bytes": 92820,
-   "sha256": "c0adc9311f66b263510522f8de598e9b001e64b341377f918a19f32c744b8729"
+   "bytes": 93336,
+   "sha256": "0dd619764c592da2ced3564b90359dc0fe24bfb35f863af1f6c17a0370011b42"
   },
   {
    "path": "tools/world/world_layout.py",

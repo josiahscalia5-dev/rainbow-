@@ -77,7 +77,9 @@ const { PNG } = (() => { try { return require('pngjs'); } catch (e) { return {};
         ...(process.env.FRAMEQA === '1' ? (() => { const Q = log.map((f) => f.qa).filter(Boolean), v = (k) => Q.map((x) => x[k]).filter((x) => x !== null && x !== undefined), hgt = log.map((f) => f.box.y1 - f.box.y0);
           return { frame_qa: { camera_clearance_min_u: Math.min(...v('camClear')), water_gap_abs_max_u: Math.max(...v('waterGap').map(Math.abs)), frames_without_water_under_benny: Q.filter((x) => x.waterGap === null).length,
             immersion_min: Math.min(...v('submerged')), immersion_max: Math.max(...v('submerged')), benny_tilt_vs_surface_max_deg: Math.max(...v('bennyTiltVsSurfaceDeg')), bank_max_deg: Math.max(...v('bank').map(Math.abs)),
-            benny_height_px_min: Math.min(...hgt), benny_height_px_max: Math.max(...hgt) } }; })() : {}),
+            benny_height_px_min: Math.min(...hgt), benny_height_px_max: Math.max(...hgt),
+            ...(() => { const dl = (k) => { const a = Q.map((x) => x[k]); let m = 0; for (let i = 1; i < a.length; i++) if (a[i] != null && a[i - 1] != null) m = Math.max(m, Math.abs(a[i] - a[i - 1])); return +m.toFixed(2); };   // r46: smoothness
+              return { benny_lean_max_deg: Math.max(...v('bennyLeanDeg').map(Math.abs)), benny_lean_max_step_deg_per_frame: dl('bennyLeanDeg'), camera_roll_max_deg: Math.max(...v('camRollDeg').map(Math.abs)), camera_roll_max_step_deg_per_frame: dl('camRollDeg') }; })() } }; })() : {}),
         ...(process.env.EDGEQA === '1' ? { edge_guard: {
           max_optical_shift_px: Math.max(0, ...log.map((f) => f.edge?.maxOpticalShiftPx ?? 0)),
           last_optical_corrections: log[log.length - 1].edge?.opticalCorrections ?? 0

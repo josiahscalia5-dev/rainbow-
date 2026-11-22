@@ -3453,3 +3453,216 @@ Screen 06 improved clearly: water style 41.8 → 54.2, repeated-camera views 14.
 
 > 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/bake.js'; s=open(p).read()\nold=\"          if (uGate > 1.5 && (c.g >= 0.92 * c.r || c.r >= 1.45 * c.b)) return 0.0;\"\nnew=\"          if (uGate > 1.5 && (c.g >= 1.02 * c.r || c.r >= 1.8 * c.b)) return 0.0;   /* r46b: white highlights (g ~ 0.98 r) and warm pink reflections (r ~ 1.5 b) stay - they are part of the painted wall */\"\nassert s.count(old)==1; s=s.replace(old,new)\ns=s.replace(\"// cyan water, white foam, iridescent bubbles (g >= 0.92 r) and copper / orange / brown trays (r >= 1.45 b) never become wall texels -\",\n            \"// …[+722 chars]`
 
+### 🧑 User — 2026-11-22T22:33:37.743Z
+
+> ↩︎ result: area 04   built bake                                 29.8 s
+>   area 05   built bake                                 59.3 s
+>   area 06   built bake                                 45.6 s
+>   area 07   built bake                                 49.7 s
+> EXIT 0
+> BEFORE 05    pic 83.4% ssim 0.802 sharp 0.73 | repeat 19.7 | {'wall': 86.1, 'ring': 63.8, 'water': 55.4, 'foam': 35.9, 'trays': 75.3} | look 0.443 | holes 4
+> NEW 05       pic 83.6% ssim 0.802 sharp 0.73 | repeat 18.7 | {'wall': 83.3, 'ring': 64.0, 'water': 56.2, 'foam': 32.4, 'trays': 74.3} | look 0.44 | holes 0
+> BEFORE 06    pic 85.0% ssim 0.836 sharp 0.76 | repeat 14.0 | {'wall': 87.4, 'ring': 57.6, 'water': 41.8, 'foam': 29.8, 'trays': 90.7} | look 0.39 | holes 0
+> NEW 06       pic 84.9% ssim 0.835 sharp 0.76 | repeat 20.3 | {'wall': 86.9, 'ring': 57.7, 'water': 61.1, 'foam': 28.4, 'trays': 91.8} | look 0.454 | holes 0
+
+### 🤖 Claude — 2026-11-22T22:33:47.196Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/ws46 && python3 -c \"\nfrom PIL import Image\na=Image.open('world/preview_05/tex_quarter_l-1.png').crop((0,230,412,560)).resize((618,495))\nb=Image.open('world_r45b/preview_05/tex_quarter_l-1.png').crop((0,230,412,560)).resize((618,495))\nr=Image.open('/home/user/rainbow-/references/hires/05_flow_into_the_current_1080.jpg').crop((0,650,540,1080)).resize((618,495))\nW=Image.new('RGB',(618*3+8,495),'white'); W.paste(b,(0,0)); W.paste(a,(622,0)); W.paste(r,(1244,0)); W.save('foam_cmp.jpg')\n\"", "description": "Crop foam close-ups BEFORE / NEW / approved"}`
+
+### 🧑 User — 2026-11-22T22:33:47.380Z
+
+> ↩︎ result: Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-22T22:33:48.914Z
+
+> 🔧 **Read** `{"file_path": "/home/user/ws46/foam_cmp.jpg"}`
+
+### 🧑 User — 2026-11-22T22:33:48.943Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T22:34:01.293Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/world/world.html'; s=open(p).read()\ndef rep(old,new):\n    global s; assert s.count(old)==1, old[:70]; s=s.replace(old,new)\nrep(\"      float lit = clamp(0.58 + 0.42 * dot(Nb, uL), 0.0, 1.0);\\n      float crev = k1 * smoothstep(0.85, 1.15, b1.x) * (1.0 - 0.6 * in2 * k2);   // the shadowed gaps between bubbles\\n      lit = clamp(lit - 0.22 * crev, 0.0, 1.0);\",\n    \"      float lit = clamp(0.68 + 0.36 * dot(Nb, uL), 0.0, 1.0);   /* r46b: the painted foam is mostly bright white, lavender only in its shadows */\\n      float crev = k1 * smoothstep(0. …[+300 chars]`
+
+### 🧑 User — 2026-11-22T22:34:01.368Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-22T22:34:07.733Z
+
+> 🔧 **Bash** `{"command": "sed -n \"$(grep -n 'window.kitFrameQA = ' tools/world/world.html | cut -d: -f1),+14p\" tools/world/world.html | cut -c1-400", "description": "Read kitFrameQA return values"}`
+
+### 🧑 User — 2026-11-22T22:34:07.780Z
+
+> ↩︎ result: window.kitFrameQA = () => { camera.updateMatrixWorld(); let camClear = 1e9; const e = camera.matrixWorld.elements, cx = new THREE.Vector3(e[0], e[1], e[2]), cy = new THREE.Vector3(e[4], e[5], e[6]), cz = new THREE.Vector3(e[8], e[9], e[10]);
+>   for (const [a, b, c] of [[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1],[1,1,0],[-1,1,0],[1,-1,0],[-1,-1,0],[1,0,1],[-1,0,1],[0,1,1],[0,-1,1],[1,0,-1],[-1,0,-1],[0,1,-1],[0,-1,-1]]) {
+>     const d = cx.clone().multiplyScalar(a).addScaledVector(cy, b).addScaledVector(cz, c).normalize(); QA_RC.set(camera.position, d); QA_RC.far = 5; const h = QA_RC.intersectObjects(QA_SCN, false)[0]; if (h) camClear = Math.min(camClear, h.distance); }
+>   const F = frameAt(st.s), wp = at(st.s, new THREE.Vector3()).addScaledVector(F.r, st.lat); QA_RC.far = 2; let h = null;
+>   for (const dt of [0, 0.004, -0.004, 0.012]) { QA_RC.set(wp.clone().addScaledVector(F.n, 0.4).addScaledVector(F.t, dt), F.n.clone().negate()); h = QA_RC.intersectObjects(WATER, false)[0]; if (h && h.distance < 0.6) break; }
+>   let slope = null, tilt = null; const up = new THREE.Vector3(0, 1, 0).applyQuaternion(benny.quaternion);
+>   if (h && h.face) { const nW = h.face.normal.clone().transformD …[+1357 chars]
+
+### 🤖 Claude — 2026-11-22T22:34:16.463Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/world/world.html'; s=open(p).read()\nold=\"    submerged: window.qaWaterLine ? window.qaWaterLine().submergedFrac : null, bank: +(Math.atan2(-F.r.y, Math.hypot(F.r.x, F.r.z)) * 180 / Math.PI).toFixed(1) }; };\"\nnew=\"\"\"    submerged: window.qaWaterLine ? window.qaWaterLine().submergedFrac : null, bank: +(Math.atan2(-F.r.y, Math.hypot(F.r.x, F.r.z)) * 180 / Math.PI).toFixed(1),\n    /* r46: Benny's lean from vertical (signed, around his swim direction) and the camera roll - their frame-to-frame change = smoothness on the 06 bank */\n    bennyLeanDeg:  …[+1453 chars]`
+
+### 🧑 User — 2026-11-22T22:34:16.600Z
+
+> ↩︎ result: syntax-checked
+
+### 🤖 Claude — 2026-11-22T22:34:23.637Z
+
+> 🔧 **Bash** `{"command": "export NODE_PATH=$(npm root -g); rm -rf /home/user/ws46/probe_bank; node tools/world/probe_frames.cjs /home/user/ws46/world/game /home/user/ws46/probe_bank 0,20,40,60,80,100 '[]' 's0=146&sentinel=1' '[[200,450]]' > /home/user/ws46/probe_bank.log 2>&1; tail -n 2 /home/user/ws46/probe_bank.log; python3 -c \"\nimport json; d=json.load(open('/home/user/ws46/probe_bank/probe.json')); print('errors', d['errors'][:3])\nfor f in d['frames']: q=f['qa']; print(f['frame'], f['s'], 'bank', q['bank'], 'lean', q.get('bennyLeanDeg'), 'roll', q.get('camRollDeg'), 'tiltVsSurf', q['bennyTiltVsSurfa …[+289 chars]`
+
+### 🧑 User — 2026-11-22T22:34:40.182Z
+
+> ↩︎ result: probed 80 s 151.867 lat 0 box {"x0":79.2,"x1":349,"y0":445.7,"y1":736.9}
+> probed 100 s 153.333 lat 0 box {"x0":109.8,"x1":361.9,"y0":434,"y1":739.2}
+> errors []
+> 0 146 bank 0 lean 0 roll 0.09 tiltVsSurf 0 sub 0.121 box {'x0': 103.6, 'x1': 362.1, 'y0': 429.2, 'y1': 726.7}
+> 20 147.467 bank 0 lean -1.46 roll 0.09 tiltVsSurf 1.46 sub 0.124 box {'x0': 88.7, 'x1': 360.5, 'y0': 433.5, 'y1': 724.4}
+> 40 148.933 bank 0 lean -1.48 roll 0.06 tiltVsSurf 1.48 sub 0.117 box {'x0': 73.4, 'x1': 333.1, 'y0': 415.5, 'y1': 719.9}
+> 60 150.4 bank 0.9 lean -0.41 roll -0.57 tiltVsSurf 0.27 sub 0.128 box {'x0': 69.7, 'x1': 332.8, 'y0': 442.6, 'y1': 743.3}
+> 80 151.867 bank 36 lean -22.04 roll -4.58 tiltVsSurf 22.77 sub 0.168 box {'x0': 79.2, 'x1': 349, 'y0': 445.7, 'y1': 736.9}
+> 100 153.333 bank 65 lean -36.87 roll -8.3 tiltVsSurf 42.8 sub 0.276 box {'x0': 109.8, 'x1': 361.9, 'y0': 434, 'y1': 739.2}
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-22T22:34:41.628Z
+
+> 🔧 **Read** `{"file_path": "/home/user/ws46/probe_bank/sheet.jpg"}`
+
+### 🧑 User — 2026-11-22T22:34:41.710Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-22T22:34:41.706Z
+
+[Image: original 2496x919, displayed at 2000x736. Multiply coordinates by 1.25 to map to original image.]
+
+### 🤖 Claude — 2026-11-22T22:35:06.841Z
+
+> 🔧 **Bash** `{"command": "export NODE_PATH=$(npm root -g); rm -rf /home/user/ws46/probe_edge; node tools/world/probe_frames.cjs /home/user/ws46/world/game /home/user/ws46/probe_edge 0,40 '[]' 's0=146&sentinel=1' '[[200,600],[200,640],[200,680],[200,720],[200,800],[60,500],[60,560],[30,620],[40,700],[100,860],[380,860]]' > /home/user/ws46/probe_edge.log 2>&1; python3 -c \"\nimport json; d=json.load(open('/home/user/ws46/probe_edge/probe.json'))\nfor f in d['frames']:\n    print('frame', f['frame'], f['s'])\n    for p in f['picks']: print('  ', p['x'], p['y'], [(h['name'], h['area'], h['distance']) for h in  …[+248 chars]`
+
+### 🧑 User — 2026-11-22T22:35:18.802Z
+
+> ↩︎ result: frame 0 146
+>    200 600 [('pool_00', '06', 1.923), ('tunnel_01', '06', 5.009)]
+>    200 640 [('pool_00', '06', 1.675), ('tunnel_01', '06', 4.363)]
+>    200 680 [('pool_00', '06', 1.491), ('tunnel_01', '06', 3.884)]
+>    200 720 [('pool_00', '06', 1.351), ('tunnel_00', '06', 3.518)]
+>    200 800 [('pool_00', '06', 1.153), ('tunnel_00', '06', 3.003)]
+>    60 500 [('pool_00', '06', 3.231), ('tunnel_02', '06', 7.713)]
+>    60 560 [('pool_00', '06', 2.315), ('tunnel_02', '06', 5.961)]
+>    30 620 [('pool_00', '06', 1.836), ('tunnel_01', '06', 4.766)]
+>    40 700 [('pool_00', '06', 1.448), ('tunnel_01', '06', 3.869)]
+>    100 860 [('cwater_056', 'connector', 1.045), ('pool_00', '06', 1.059)]
+>    380 860 [('cwater_056', 'connector', 1.06), ('pool_00', '06', 1.074)]
+> frame 40 148.933
+>    200 600 [('water_route_00', '06', 1.858), ('pool_01', '06', 1.933)]
+>    200 640 [('water_route_00', '06', 1.623), ('pool_00', '06', 1.678)]
+>    200 680 [('water_route_00', '06', 1.443), ('pool_00', '06', 1.491)]
+>    200 720 [('water_route_00', '06', 1.305), ('pool_00', '06', 1.348)]
+>    200 800 [('water_route_00', '06', 1.111), ('pool_00', '06', 1.147)]
+>    60 500 [('water_route_00', '06', 2.592), ('flume_water_route_01', '06', 2.81 …[+433 chars]
+
+### 🤖 Claude — 2026-11-22T22:35:43.044Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/world/world.html'; s=open(p).read()\nold=\"uSharp: { value: new THREE.Vector2(SHARPX, own && A.ribbonU ? 1.0 : 2.2) }, /* ribbon: the bake gives way as soon as it is magnified */\"\nnew=\"uSharp: { value: new THREE.Vector2(SHARPX, own && A.ribbonU ? (A.LAY?.bake_keep_mag ?? 1.0) : 2.2) }, /* ribbon: the bake gives way as soon as it is magnified (r46: layout bake_keep_mag, 06 = 2.2) */\"\nassert s.count(old)==1; s=s.replace(old,new); open(p,'w').write(s)\np='tools/screenkit/screens/06/fit06.py'; s=open(p).read()\nold=\"lay['tpl_wall_gate'] = 'strict'\"\n …[+992 chars]`
+
+### 🧑 User — 2026-11-22T22:35:56.894Z
+
+> ↩︎ result: area 06   built fit                                   0.8 s
+> EXIT 0
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-22T22:35:58.111Z
+
+> 🔧 **Read** `{"file_path": "/home/user/ws46/edge06.jpg"}`
+
+### 🧑 User — 2026-11-22T22:35:58.293Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-22T22:35:58.287Z
+
+[Image: original 2080x919, displayed at 2000x884. Multiply coordinates by 1.04 to map to original image.]
+
+### 🤖 Claude — 2026-11-22T22:36:06.553Z
+
+> 🔧 **Bash** `{"command": "grep -n \"den\\b\\|_den\\|uDen\\|trust\" tools/screenkit/bake.js | head -20", "description": "Find how the bake trust/density texture is written"}`
+
+### 🧑 User — 2026-11-22T22:36:06.585Z
+
+> ↩︎ result: 23:const LOOK_GLSL = (decl) => `${decl} uniform vec2 uNF, uDens, uTol; uniform float uMode; uniform float uNoDepth; varying vec3 vW;
+> 31:    // mask 255 = the plate is a guess (Benny, HUD): weight 0.6; mask 128 = clone-filled painting (plate_clone.py): trusted (r45)
+> 32:    float w = mix(1.0, 0.6, step(0.75, texture2D(M, su).r)) * mix(0.8, 1.0, smoothstep(uDens.x, uDens.y, pxu));   // (0.48..0.6 = masked, the fusion tests < 0.7)
+> 44:  const uni = { uNoDepth: { value: q.get('bakedbg') === 'nodepth' ? 1 : q.get('bakedbg') === 'raw' ? 2 : 0 }, uNF: { value: new THREE.Vector2(0.05, 300) }, uDens: { value: new THREE.Vector2(...(q.get('dens') ?? (LAY.bake_dens ?? [15, 60]).join(',')).split(',').map(Number)) }, uMode: { value: 0 }, uTol: { value: new THREE.Vector2(1.015, 0.03) } };
+> 90:    const den = new THREE.DataTexture(dp, dw, dh); den.minFilter = den.magFilter = THREE.LinearFilter; den.needsUpdate = true;
+> 92:    return { cov, tex: t, den }; };
+> 100:    if (r.tex) { o.material.uniforms.uBake.value = r.tex; o.material.uniforms.uDen.value = r.den; o.material.uniforms.uBakeOn.value = 1; o.userData.bakeCov = r.cov; } }
+> 105:    for (const o of L) if ((o.userData.bakeCov ?? 0) < 0.05) { for (con …[+547 chars]
+
+### 🤖 Claude — 2026-11-22T22:36:08.473Z
+
+> 🔧 **Bash** `{"command": "sed -n 76,92p tools/screenkit/bake.js", "description": "Read the bake den texture construction"}`
+
+### 🧑 User — 2026-11-22T22:36:08.514Z
+
+> ↩︎ result: const blur = (src, r) => { const o2 = new Float32Array(src.length), t2 = new Float32Array(src.length);
+>       for (let y = 0; y < bh; y++) { let s = 0; for (let x = -r; x <= r; x++) s += src[y * bw + Math.min(bw - 1, Math.max(0, x))]; for (let x = 0; x < bw; x++) { t2[y * bw + x] = s / (2 * r + 1); s += src[y * bw + Math.min(bw - 1, x + r + 1)] - src[y * bw + Math.max(0, x - r)]; } }
+>       for (let x = 0; x < bw; x++) { let s = 0; for (let y = -r; y <= r; y++) s += t2[Math.min(bh - 1, Math.max(0, y)) * bw + x]; for (let y = 0; y < bh; y++) { o2[y * bw + x] = s / (2 * r + 1); s += t2[Math.min(bh - 1, y + r + 1) * bw + x] - t2[Math.max(0, y - r) * bw + x]; } }
+>       return o2; };
+>     const rb = Math.max(3, Math.round(Math.max(bw, bh) / 160)); const Ab = blur(blur(A, rb), rb);
+>     const c0 = new Float32Array(bw * bh * 4); for (let i = 0; i < bw * bh; i++) { const a = A[i] > 0.05 ? 1 : 0; for (let c = 0; c < 3; c++) c0[i * 4 + c] = px[i * 4 + c] * a; c0[i * 4 + 3] = a; }
+>     pullPush(bw, bh, c0);
+>     const out = new Uint8Array(bw * bh * 4); for (let i = 0; i < bw * bh; i++) { for (let c = 0; c < 3; c++) out[i * 4 + c] = Math.round(Math.min(255, c0[i * 4 + c])); out[i * 4 + 3] = Math.rou …[+1382 chars]
+
+### 🤖 Claude — 2026-11-22T22:36:30.736Z
+
+> 🔧 **Bash** `{"command": "grep -n \"const GRAY\" tools/world/world.html | head -2; git rev-parse --short HEAD; PLAN=$(cat qa/kit45/run/swipe_plan_05_06.json); export NODE_PATH=$(npm root -g); mkdir -p /home/user/ws46/final; rm -rf /home/user/ws46/final/tex /home/user/ws46/final/gray;\n(TOUCH=1 FRAMEQA=1 EDGEQA=1 node tools/reflock/section_run.cjs /home/user/ws46/world/game /home/user/ws46/final/tex run 48 \"$PLAN\" 's0=88&sentinel=1' > /home/user/ws46/final/tex.log 2>&1; echo EXIT $? >> /home/user/ws46/final/tex.log) > /dev/null 2>&1 &\n(TOUCH=1 EDGEQA=1 node tools/reflock/section_run.cjs /home/user/ws46/w …[+371 chars]`
+
+### 🧑 User — 2026-11-22T22:37:30.889Z
+
+> ↩︎ result: 55:const GRAY = q.get('gray') === '1';
+> 3e13774
+> ==> /home/user/ws46/final/tex.log <==
+> loaded in 11.8 s {"LEVEL":245.75,"meshes":383}
+> frame 0 s 88 lat 0 coins 1330 socks 0
+> 
+> ==> /home/user/ws46/final/gray.log <==
+> frame 0 s 88 lat 0 coins 1330 socks 0
+> frame 30 s 90.2 lat 0 coins 1330 socks 0
+
+### 🤖 Claude — 2026-11-22T22:37:39.495Z
+
+> 🔧 **Bash** `{"command": "export NODE_PATH=$(npm root -g); (for a in 05 06; do rm -rf /home/user/ws46/world/preview_$a; node tools/screenkit/preview.cjs /home/user/ws46/world/game /home/user/ws46/world/preview_$a --screen $a --area $a > /home/user/ws46/preview_new_$a.log 2>&1; done; echo EXIT >> /home/user/ws46/preview_final.log) > /dev/null 2>&1 &\necho started", "description": "Run final previews for 05 and 06 in background"}`
+
+### 🧑 User — 2026-11-22T22:37:39.688Z
+
+> ↩︎ result: started
+
+### 🤖 Claude — 2026-11-22T22:37:43.050Z
+
+While those run, I'm writing the Round 46 notes:
+- the lessons learned, in the screen builder's lessons file;
+- a resume file for the next session;
+- a short handoff entry.
+
+### 🤖 Claude — 2026-11-22T22:37:44.208Z
+
+> 🔧 **Bash** `{"command": "tail -n 6 .claude/skills/rainbow-screen-builder/LESSONS.md | cut -c1-300; head -c 1500 docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md", "description": "Read lessons format and handoff top section"}`
+
+### 🧑 User — 2026-11-22T22:37:44.283Z
+
+> ↩︎ result: * "DO NOT SHOW ME A BROKEN RESULT AS FINISHED": the video / preview only after every check passes; if a requirement cannot be met, say
+>   exactly what blocks it. Then a phone-playable build so the user can feel the controls.
+> * Rings and structures may repeat; an obviously repeating river pattern every second may not.
+> * The visual checker must not mistake the artwork's intentional dark areas for errors.
+> * Screens 01, 02, 03, 11 = the user's Google Flow videos; 04-10 = playable 3D. One screen (05) until approved, then batches of two in
+>   isolated worktrees, the next batch only after the user's approval. No paid credits / plugins / purchases without the user's OK.
+> # ▶▶▶ NEWEST — ROUND 45 (2026-11-22 ~19:30 UTC, branch `ccr-c1b272d2-3ru7yx`): cached automated screen pipeline (`tools/screenkit/build.py`, GN asset library
+> `gn_assets.py`, artwork-sampled materials in `bake.js`, automated previews incl. swimming measurements `preview.cjs`), world builder `tools/world/build_world.py`,
+> 05 + 06 in the world with the new materials, world in the app (`VITE_RAINBOW_WORLD=1`). Resume: **`docs/briefs/2026-11-22-r45/RESUME_R45.md`**.
+> # ▶ ROUND 43b (2026-11-22 ~15:30 UTC): Screen 06 physics + gray ge …[+825 chars]
+
