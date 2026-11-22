@@ -122,7 +122,11 @@ sec = {'fov': FOV, 'img': [W, H], 'focal_px': F,
        'cams': {'bubble': {'pos': Cb.tolist(), 'yaw': yaw_b, 'pitch': pitch_b, 'ref': BUB}, 'sock': {'pos': Cs.tolist(), 'yaw': ys, 'pitch': ps, 'ref': SOCK}},
        'benny': {'bubble': Pb.tolist(), 'sock': Pbs_w.tolist(), 'height': HB},
        'tunnel': {'axis_y_arch': ya, 'axis_y_sock': YAX_S, 'z_arch': -za, 'r_arch_in': R_IN, 'r_arch_out': R_OUT, 'funnel': [-za - 0.6, -za - FUNNEL],
-                  'r_sock': RS, 'ring_open_sock': RS_RING, 'rings_sock': rings_s, 'z_exit': rings_s[-1] - 2.0, 'z_end': rings_s[-1] - 2.0 - 9.0},
+                  'r_sock': RS, 'ring_open_sock': RS_RING, 'rings_sock': rings_s,
+                  # round 41: the washer tube CONTINUES past the painted rings (same rings / pods / towels / walls), so Benny never swims into an
+                  # empty room: the level ends inside the tube (the game takes over there) and the bright light is far down the tube
+                  'rings_extra': [rings_s[-1] - 6.5 * (i + 1) for i in range(6)], 'z_level_end': rings_s[-1] - 6.5,
+                  'z_exit': rings_s[-1] - 6.5 * 6 - 3.0, 'z_end': rings_s[-1] - 6.5 * 6 - 3.0 - 9.0},
        'chamber': {'xl': -XL, 'xr': XR, 'yc': YC, 'z_near': 2.0, 'outlet_L': oL.tolist() + [B['outlet_L'][2] * dL / F], 'outlet_R': oR.tolist() + [B['outlet_R'][2] * dR / F],
                    'fall_L': fL.tolist(), 'fall_R': fR.tolist(), 'tower': [tx, tz, tw, tbot, ttop]},
        'route': {'z0': float(dgrid[0]), 'ds': DS, 'x': [round(float(v), 4) for v in center]},

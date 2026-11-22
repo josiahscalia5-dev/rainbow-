@@ -66,9 +66,9 @@ def ring(name, z, depth=0.22, inset=0.1):
         else: k = (b - 2 / 3) * 3; r = lerp(ri, R, smooth(k)); zz = z - depth - 0.03 * math.sin(math.pi * k)
         return ((r * math.cos(th), Y + r * math.sin(th), zz), (a, b))
     return grid(name, 160, 12, f, flip=True)
-ribs = [Z0F - 0.8, Z0F - 1.6, Z0F - 2.4, Z0F - 3.2, Z0F - 4.0, Z0F - 4.8, Z1F - 0.3] + [T['rings_sock'][-1] - 0.8, T['rings_sock'][-1] - 1.5]
+ribs = [Z0F - 0.8, Z0F - 1.6, Z0F - 2.4, Z0F - 3.2, Z0F - 4.0, Z0F - 4.8, Z1F - 0.3] + [ZX + 1.2, ZX + 0.5]
 for i, z in enumerate(ribs): ring(f'ring_f{i}', z, 0.16, 0.07)
-for i, z in enumerate(T['rings_sock']): ring(f'ring_s{i}', z, 0.24, 1 - SEC['tunnel']['ring_open_sock'] / T['r_sock'] + 0.0)
+for i, z in enumerate(T['rings_sock'] + T.get('rings_extra', [])): ring(f'ring_s{i}', z, 0.24, 1 - SEC['tunnel']['ring_open_sock'] / T['r_sock'] + 0.0)
 # the golden arch: thick front face (outer -> inner), rounded outer rim, deep inner sleeve
 def arch_f(a, b):
     th = 2 * math.pi * a; Ri, Ro, Y = T['r_arch_in'], T['r_arch_out'], T['axis_y_arch']
@@ -185,7 +185,7 @@ def pod(name, z, th, L=0.55, rad=0.13):
     grid(name, 24, 16, f, flip=True)
 n = 0
 for t, th in SF['pods']: pod(f'pod_{n}', zc - t * k, th); n += 1
-for zr in T['rings_sock'][1:-1]:
+for zr in T['rings_sock'][1:] + T.get('rings_extra', [])[:-1]:
     for th in (2.04, 1.17): pod(f'pod_{n}', zr - 0.9, th); n += 1
 def towel(name, z, side, rh, w=0.62, drop=0.62):
     """gold rail standing off the wall + a terry towel folded over it (front + back layer, soft folds)"""
@@ -199,7 +199,7 @@ def towel(name, z, side, rh, w=0.62, drop=0.62):
         return ((x, y, zz), (a, b))
     grid(f'towel_{name}', 24, 24, f)
 for i, (t, side, rh, f0, f1) in enumerate(SF['towels']): towel(f'p{i}', zc - t * k, side, (rh - 0.27) * k)   # rail at the painted towel's top fold (measured: 45 px too high at -0.1)
-for i, zr in enumerate(T['rings_sock'][1:-1]): towel(f'r{i}', zr - 1.3, -1 if i % 2 == 0 else 1, 0.55 * k)
+for i, zr in enumerate(T['rings_sock'][1:] + T.get('rings_extra', [])[:-1]): towel(f'r{i}', zr - 1.3, -1 if i % 2 == 0 else 1, 0.55 * k)
 # floating socks (picked up in the game): a bent tube (leg -> heel -> foot)
 def sock(name, p):
     P = Vector(p); pts = [P + Vector((-0.02, 0.2, -0.04)), P + Vector((0, 0.05, 0)), P + Vector((0.07, 0.01, 0.03)), P + Vector((0.18, 0.02, 0.06))]   # leg up, foot lying sideways in the water
