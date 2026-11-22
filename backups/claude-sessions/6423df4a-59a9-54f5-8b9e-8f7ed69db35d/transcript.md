@@ -5579,3 +5579,67 @@ Saved: commit `7cd87f07`, the same commit on GitHub. Updating the resume notes w
 > wrote qa/world/r44/run/GAMEPLAY_world_SockRescue_to_05_GRAY_real_touch_v2.mp4 9.5 MB 574 frames
 > GRAY {'frames': 574, 'swipes_detected': 10, 'benny_offscreen_frames': 0, 'hole_frames': 0, 'hole_pixels_max': 0, 'camera_max_step_u': 0.1042, 'camera_max_turn_deg_per_frame': 0.715, 'scenery_meshes_moved': [], 'benny_water_gap_max_u': 0.02, 'benny_water_missing_frames': 0, 'camera_min_clearance_u': 0.231}
 
+### 🤖 Claude — 2026-11-22T16:51:40.909Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && python3 - <<EOF\nfrom PIL import Image, ImageDraw\nimport json\nlog=json.load(open('$S/run_b05b/run_log.json'))\nidx=[0,60,120,170,200,230,260,290,330,360,400,450,500,560]\nW,H=164,364; cols=7; rows=2\nsh=Image.new('RGB',(W*cols,(H+18)*rows),(20,10,30)); d=ImageDraw.Draw(sh)\nfor k,i in enumerate(idx):\n    f=log[i]; im=Image.open('$S/run_b05b/'+f['file']).convert('RGB').resize((W,H)); x=(k%cols)*W; y=(k//cols)*(H+18); sh.paste(im,(x,y+18)); d.text((x+3,y+3),'t %.1fs s %.1f'%(f['t'],f['s']),fill …[+1050 chars]`
+
+### 🤖 Claude — 2026-11-22T16:51:43.164Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/world/r44/run/GAMEPLAY_world_SockRescue_to_05_TEXTURED_real_touch_v2.mp4", "qa/world/r44/run/GAMEPLAY_world_SockRescue_to_05_GRAY_real_touch_v2.mp4", "qa/world/r44/run/GAMEPLAY_world_SockRescue_to_05_TEXTURED_v2_contact_sheet.jpg"], "caption": "Sock Rescue → S-curve connector (Blender, widening tube with gold rings) → Screen 05, one continuous run with real swipes: 0 hole pixels in 574 frames, 10/10 swipes, camera turns at most 0.72° per frame.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-22T16:52:00.863Z
+
+> ↩︎ result: "commit": "636a02eff004465203e6ce81fd84f818cd067c16",
+> 636a02eff004465203e6ce81fd84f818cd067c16
+> 636a02eff004465203e6ce81fd84f818cd067c16	refs/heads/ccr-0bbd5b9d-js1cpg
+
+### 🧑 User — 2026-11-22T16:52:01.872Z
+
+> ↩︎ result: 3 files delivered to user.
+>   /home/user/rainbow-/qa/world/r44/run/GAMEPLAY_world_SockRescue_to_05_TEXTURED_real_touch_v2.mp4 → file_uuid: b38d48a3-ecb0-467e-9eb0-2019ce9f97ae
+>   /home/user/rainbow-/qa/world/r44/run/GAMEPLAY_world_SockRescue_to_05_GRAY_real_touch_v2.mp4 → file_uuid: 5e43c1e3-166d-4f86-af1c-ec198a585963
+>   /home/user/rainbow-/qa/world/r44/run/GAMEPLAY_world_SockRescue_to_05_TEXTURED_v2_contact_sheet.jpg → file_uuid: 3aa2eae2-a00e-40e4-b5df-bdc0bcf4b42e
+
+### 🤖 Claude — 2026-11-22T16:52:14.623Z
+
+Your first priority stretch is now one connected world: **04 → Bubble Dash → Sock Rescue → 05**, in one scene with no page loads. It's recorded uninterrupted with real finger swipes, and nothing is finished yet.
+
+**How the joins are built (Blender for the scenery, Three.js for play):**
+- **04 → Bubble Dash:** I rebuilt Screen 04 with the screen kit. Its gold tunnel now ends in a real round doorway into the Bubble Dash chamber, with a gold collar. The water stays at one level and Benny keeps the same size.
+- **Bubble Dash → Sock Rescue:** already one piece; the chamber's river runs through the gold arch into the tunnel.
+- **Sock Rescue → 05:** I rebuilt Screen 05 with the kit. The narrow Sock Rescue tunnel curves sideways and widens into 05's current through a 9-unit connector tube with gold rings and continuous water.
+
+**What the recordings show:**
+
+| | 04 → Bubble Dash → Sock Rescue | Sock Rescue → 05 |
+|---|---|---|
+| Frames | 1,083 (gray and textured) | 574 (gray and textured) |
+| Swipes recognised | 17 / 17 | 10 / 10 |
+| Benny on screen | every frame | every frame |
+| Hole pixels | 0 | 0 |
+| Fastest camera turn | 0.67° per frame | 0.72° per frame |
+
+In both, the scenery never moves and Benny stays on the real water.
+
+The first Sock Rescue → 05 take had a hairline crack at the tube seam and a fast camera turn in 05's S-river. I fixed both and re-recorded; the table shows the second take.
+
+**Your approved views survive the joins.** At each picture's own camera, the world measures the same as each level's own page: 04 83.8 %, Bubble Dash 87.4 %, Sock Rescue 81.3 %, 05 80.6 %. Separately, the app's saved textures cost 3–4 points compared with baking them live, which I still need to fix.
+
+**Ratings, from my earlier message:**
+- At each picture's own camera: 8–9 out of 10.
+- While Benny swims: 4–7 out of 10. Away from what your painting's camera saw, the game shows simpler stand-in walls and water. That's the main gap to your 9/10 target.
+- 07–10 aren't rebuilt yet: about 3 out of 10 while swimming.
+
+**Not done yet:**
+- 06 isn't in the world yet. It needs scaling to Benny's size here (its units are about 18 % larger) and the rising join into its banked crest.
+- 07–10 aren't rebuilt; that includes the real descent from 07 into 08.
+- The world isn't in the Android app yet; I'll rebuild the APK when you accept it.
+- In the gray test Bubble Dash / Sock Rescue show orange because their surfaces face the other way. It's cosmetic and I'll flip them.
+
+**Next:**
+1. Bring 06 into the world.
+2. Rebuild 07 and 08 with the real descent between them.
+3. Raise the "while swimming" look by giving the stand-in walls, rings and water your paintings' own colours and detail.
+
+Please watch the two textured recordings and tell me if the doorway and the curving tunnel feel right. Everything is saved to GitHub: commit `636a02ef`, the same commit on GitHub.
+
