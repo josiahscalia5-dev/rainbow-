@@ -4564,3 +4564,46 @@ Saved (commit `4c44646`). The recording is at frame 270 of 1,380 and encodes aut
 
 > 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/kit45/STATUS_05_06_r45b.jpg"}`
 
+### 🧑 User — 2026-11-22T20:49:17.808Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T20:49:32.777Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/kit45/STATUS_05_06_r45b.jpg"], "caption": "Where 05 and 06 stand now: your approved picture, the game at the same camera, and the game while Benny swims (centre lane and right lane).", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-22T20:49:33.401Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/kit45/STATUS_05_06_r45b.jpg → file_uuid: 779dedbd-efb0-482d-a698-74cc062ceb63
+
+### 🤖 Claude — 2026-11-22T20:49:44.236Z
+
+I sent a picture of where 05 and 06 stand now: your approved screen, the game at your camera, and the game while Benny swims. Neither screen is at 90 % yet. **05 is at 83.1 % at your camera (up from 80.4 %) and 06 is at 84.8 %.**
+
+**Fixed in 05:**
+- **Camera:** while swimming it keeps your picture's view straight down the tunnel, with the gold rings in circles and the S-river winding below. Before, it turned with every bend and the walls filled the screen.
+- **Water:** the smeared copy of your painting is gone. It's now clean S-shaped cyan and pink bands, filled with real painted texture cut from your picture, so it stays sharp up close.
+- **Bright core:** the warm light at the end of the tunnel is back, as in your picture.
+- **Clean-ups:** bubbly foam instead of white lumps; no more ghost circles from oversized bubbles; small ripples; your painted splash around Benny.
+- **Sharper at your camera:** maximum-quality painting, and your 1080 × 1920 copy used as the paint source. Foam, trays and bubbles now only appear after the stretch your picture paints, so they no longer cover it.
+
+**Fixed in 06:** on the steep crest Benny no longer tips over sideways. He stays upright in the water and the view stays level, as in your picture.
+
+**Still not like your screens:**
+- **05:** the water is cleaner but plainer than yours up close. In the right lane, a foam bank near the camera still looks like big white blocks, and there's an unexplained pink patch beside it.
+- **06:** past the painted part, the rainbow crest turns into plain cyan water. My first rainbow version looked worse, so it's off.
+- **Fine detail:** the wall and ring detail at the top of the screen is still softer than yours. That's most of the remaining gap at your camera.
+
+**Ready for you:**
+- **New APK:** `qa/kit45/Rainbow_r45b_world_05_06_debug.apk` (247 MB, larger because of the higher-quality painting). It includes everything above and starts with Start 04 / 05 / 06 buttons. It's untested on a real phone.
+- **Picture sheets:** `qa/kit45/STATUS_05_06_r45b.jpg` and the water test sheet.
+
+The uninterrupted 05 → 06 colour recording of this version is about a quarter done (frame 270 of 1,380, roughly 45 more minutes). It encodes and saves automatically when it finishes. I also made the same code mistake four times this session: a comment that switched off the rest of its line. All four are fixed, and I scanned every file for more.
+
+Everything is saved on GitHub (commit `4c44646`). Next, I'll keep going in this order: the 05 right-lane foam and pink patch, 06's rainbow crest along the whole level, richer 05 water up close, then crisper wall and ring detail to push both toward 90 %.
+
+### 🧑 User — 2026-11-22T20:49:44.440Z
+
+Is there any way you could give me a brief summary? Well, first off, save everything to my GitHub repository. I mean, everything. And plus, can you give me a folder, like a zip folder, somehow where I could download and send it to ChatGPT to tell ChatGPT, like, give ChatGPT all the images of what you built, the most recent, all the code files, and, you know, just like the summary of my gaming app of what you built so far, so I could send it to ChatGPT too.
+
