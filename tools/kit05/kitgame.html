@@ -191,7 +191,8 @@ const riverMat = (() => { const m = kitMat(riverTex); const base = m.onBeforeCom
             vec2 pc = cell + vec2(0.2 + 0.6 * w37h(cell + 1.7), 0.2 + 0.6 * w37h(cell + 4.1));
             float dx = (g.x - pc.x) / mix(5.0, 3.0, simple) * RW, dy = (g.y - pc.y) / mix(2.2, 1.4, simple);
             float sz = 0.8 + 1.4 * w37h(cell + 9.3) * w37h(cell + 2.9), tw = 0.5 + 0.5 * sin(uW37T * 3.0 + hh * 40.0); tw *= tw;
-            float st = exp(-(dx * dx + dy * dy) / (0.0001 * sz * sz)) + exp(-abs(dx) / (0.045 * sz)) * exp(-dy * dy / (0.00002 * sz)) + 0.6 * exp(-abs(dy) / (0.045 * sz)) * exp(-dx * dx / (0.00001 * sz));
+            float st = exp(-(dx * dx + dy * dy) / (0.0001 * sz * sz)) + exp(-abs(dx) / (0.035 * sz)) * exp(-dy * dy / (0.00002 * sz)) + 0.6 * exp(-abs(dy) / (0.045 * sz)) * exp(-dx * dx / (0.00001 * sz));
+            vec2 fcs = fract(g); st *= smoothstep(0.0, 0.2, min(fcs.x, 1.0 - fcs.x)) * smoothstep(0.0, 0.12, min(fcs.y, 1.0 - fcs.y));   // rays fade before the cell edge (no cut-off rectangles)
             float lodS = 1.0 - smoothstep(0.006, 0.03, max(fwidth(kU), fwidth(tp)) );
             col = mix(col, vec3(1.0), clamp(st * tw * lodS, 0.0, 1.0)); } }
         // ---- foam banks beyond the river edge: round lavender-white domes (world-anchored), thin bright line at the water edge
