@@ -4766,3 +4766,9 @@ Encoded. One new problem to report: Benny went partly off the edge of the screen
 
 > 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='docs/RAINBOW_SUMMARY_FOR_CHATGPT.md'; s=open(p).read()\ns=s.replace(\"\"\"* 06 -> 07 connector has small holes;\"\"\",\"\"\"* Newest recording (video/GAMEPLAY_05_to_06_TEXTURED_real_touch_r45b.mp4, all round-45 changes): 1380 frames, 28/28 swipes, camera max\n  1.0 deg per frame, Benny in the water every frame; but for 12 frames in the middle of 05 (right lane) his model edge goes up to 8 px past\n  the right screen edge; small holes only after 06 (06 -> 07 connector).\n* 06 -> 07 connector has small holes;\"\"\")\nopen(p,'w').write(s)\nEOF\nS=/tmp/claude-0/- …[+1271 chars]`
 
+### 🧑 User — 2026-11-22T21:08:56.901Z
+
+> ↩︎ result: zip MB 81.9 195 files
+> AUTOSAVE OK | branch ccr-c1b272d2-3ru7yx | scheduler daemon | last verified backup 2026-11-22T21:08:29+00:00 (0.5 min ago) | local 406d521 remote 406d521 (match) | uncommitted 0
+> remote 406d521192c3 local 406d521192c3
+
