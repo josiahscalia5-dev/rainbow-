@@ -21,7 +21,7 @@
   },
   {
    "step": "handed over to the section",
-   "url": "http://127.0.0.1:9872/section/index.html?return=1&bonus=1&coins=1330"
+   "url": "http://127.0.0.1:9940/section/index.html?return=1&bonus=1&coins=1330"
   },
   {
    "step": "section loaded",
@@ -29,28 +29,28 @@
     "LEVEL": 52.379,
     "S_SOCK": 20.204,
     "z_arch": -13.606804637723817,
-    "z_exit": -49.49274643397257,
-    "meshes": 102,
-    "foam": 406,
+    "z_exit": -89.49274643397257,
+    "meshes": 148,
+    "foam": 1035,
     "coins": 26,
-    "bake": 90
+    "bake": 140
    }
   },
   {
    "step": "handed back to the game",
-   "url": "http://127.0.0.1:9872/index.html?resume=05&bonus=1&coins=1450"
+   "url": "http://127.0.0.1:9940/index.html?resume=05&bonus=1&coins=1450"
   },
   {
    "step": "game resumed",
    "state": {
     "mode": "ride",
     "stage": "05",
-    "s": 132.449,
+    "s": 132.463,
     "lat": 0,
     "coins": 1450,
     "hearts": 5,
     "paused": false,
-    "bennyY": -41.331,
+    "bennyY": -41.332,
     "bennyVisible": true,
     "cam": [
      1.92,

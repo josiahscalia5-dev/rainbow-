@@ -1,3 +1,10 @@
+# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 41 (2026-11-22 ~11:50 UTC, branch `ccr-50ff6f57-q5me82`)
+User's prioritised list (controls -> Benny -> continuous scenery -> likeness -> integration). Done + evidence in `qa/reflock/r40/RESULT_R40.md`
+("Round 41"): ONE swipe-lane control in the main game (`src/gameplay/input.ts`, `Game.ts`) and the section, real-touch tested
+(`tools/reflock/touch_main.cjs` main game, `TOUCH=1 tools/reflock/section_run.cjs` section); Screen 06 camera + ring passage / occlusion fixes;
+Benny's splash no longer covers his body; the Sock Rescue tube continues (no plain room); per-picture HUD + Bubble Blast / Turbo Spin. Open:
+Screen 06 tunnel rebuild, seamless (single-scene) hand-over, duplicated "05" title decision, real-device test.
+
 # ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 40 (2026-11-22 ~03:45 UTC, branch `ccr-50ff6f57-q5me82`)
 User's orders verbatim: **`docs/briefs/2026-11-22-r40/USER_R40.md`** (real connected 3D scenery, no pictures / projections / forced perspective;
 the user's two pictures `references/candidates/bonus_bubble_dash_chamber.webp` + `bonus_sock_rescue_laundry_tunnel.webp` as blueprints; Blender;

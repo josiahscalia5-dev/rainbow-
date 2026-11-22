@@ -64,3 +64,37 @@ image / KVM in this container): please install the APK to judge the real-device 
 * HUD differs (the game's own HUD, no gems / plus buttons / Bubble Blast / Turbo Spin).
 * Hand-over 04 → section → 05 is a page load (a short "Building the washer…" screen), not yet one scene graph with the main course.
 * Exit: Benny swims out into a plain bright room (white / cyan light, wide water); the pictures do not show what lies beyond the tunnel.
+
+# Round 41 (2026-11-22) — controls, Benny, continuous scenery, HUD (user's prioritised list)
+**Priority 1 — one swipe-lane control in the whole game (real touch tested).** The main game (`src/gameplay/input.ts`, `Game.ts`) used
+hold-to-steer: the target reset to 0 when the finger lifted, so a quick swipe moved Benny ~0.4 u while the finger was down (measured with real
+touch on Screen 06: `SCREEN06_touch_BEFORE_hold_steering.json`). Now the main game uses persistent swipe lanes like the section
+(`tools/kit05/controls.js`): a swipe = one lane (1.6 u in the main course), releasing keeps it, a swipe the other way reverses at once,
+critically damped glide (~0.3 s, no snap), lean / paddle from his real sideways speed; the QA override (`setSteer`) keeps the old behaviour for
+the capture scripts. Real CDP touch gestures (touchStart -> 4 moves -> touchEnd, interleaved with game frames, 412x915):
+* original Screen 06: 10/10 swipes detected by the game's input in the right direction, Benny moved the right way 10/10 incl. immediate
+  reversals (`GAMEPLAY_screen06_real_touch_swipes.json`, video `GAMEPLAY_screen06_real_touch_9s.mp4`).
+* the section: 22/22 gestures detected by its controls (`src: touch`), incl. reversals and a leap (`GAMEPLAY_full_section_real_touch_24s_checks.json`).
+**Screen 06 view** (`src/game/cameraRig.ts`, `src/world/environment.ts`): the camera sat low and looked UP into the arch (Benny huge, cut off,
+river ahead hidden) -> higher, looking down over the crest; lane follow 0.6/0.7 -> 0.82/0.85 (04 / 06 / 07; approved checkpoint views
+unchanged). Gold rings whose hoop crossed the swim passage of Benny + the camera (river under the hoop found along the route) are no longer
+placed (11 removed between 06 and 08), and rings near the camera / between camera and Benny fade out with a dither (camera-occlusion rule).
+Integration bug fixed: the 04 -> section hand-over fired whenever Benny was past the start of 05 (e.g. a checkpoint at 06); now only on the
+frame he crosses into 05.
+**Priority 2 — Benny's body.** Diagnostic renders (`BENNY_DIAG_BEFORE_fix_nowater_nosplash_full.jpg`): with the splash hidden his whole round
+body and arms show; with the splash on, the splash sprite (drawn with depth-test OFF) covered his lower body -> the cause. Now the splash is
+depth-tested behind him at the waterline (`BENNY_DIAG_AFTER_fix_nowater_nosplash_full.jpg`: full body in all three).
+**Priority 3 — scenery.** The plain exit room is gone: the Sock Rescue tube continues with the same rings / pods / towels / walls / foam
+(6 more ring sections), the level hands over INSIDE the tube, the light is far down the tube. Foam domes are lumpy (noise-displaced), bubbles
+brighter, socks rebuilt (leg, heel, sideways foot, closed toe; pink cuff / heel / toe / heart), shorter curved water highlights.
+**HUD / abilities.** Each part shows its own picture's HUD: hearts / coins / gems with + badges, pause (working); chamber: title + badge;
+tunnel: sock mission + Bubble Blast (magnet for the coins in his lane, 3.5 s, cooldown 9 s) and Turbo Spin (1.6x speed + spin, 2.5 s,
+cooldown 11 s). Real finger taps on both buttons: blast +30 coins while active, turbo 7.1 u vs 5.9 u normal; taps never count as swipes.
+**Measured now** (reference views): Bubble Dash 90.7 %, Sock Rescue 81.4 %. Sock Rescue was 84.2 % while the splash sprite covered Benny's
+body; with his body visible (Priority 2) that view measures 81.4 %.
+**Continuous run** (final code, real touch, whole section): 730 frames, 0 hole pixels, Benny on screen 730/730, 0 of 184 scenery meshes
+moved, camera turn <= 0.57 deg/frame, 22/22 swipes detected.
+**Not done / still different:** Screen 06's tunnel itself (radius 15, the camera rides near its floor: distant rings still read as bars on the
+descent) needs the same fitted rebuild as the section; the section -> game hand-over is still a page load (not one scene); the arrangement shows
+the "05 · FLOW INTO THE CURRENT" title twice (the Bubble Dash picture carries the 05 caption, then the game's Screen 05): the user decides
+whether the section replaces 05's place or keeps a BONUS title; real-device frame rate unverified (no emulator / device here).
