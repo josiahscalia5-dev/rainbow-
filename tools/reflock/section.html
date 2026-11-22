@@ -69,6 +69,7 @@ const BASE = {
   gold: cvs(256, 256, (g, w, h) => { g.fillStyle = grad(g, 0, 0, 0, h, [[0, '#a8560f'], [0.25, '#f5a83a'], [0.45, '#ffe9a6'], [0.6, '#f4a63c'], [1, '#9a4c10']]); g.fillRect(0, 0, w, h); }),
   goldring: cvs(1024, 128, (g, w, h) => { g.fillStyle = grad(g, 0, 0, 0, h, [[0, '#a8560f'], [0.2, '#f6b04a'], [0.35, '#ffe39a'], [0.5, '#e8902c'], [0.75, '#ffcc66'], [1, '#8a4210']]); g.fillRect(0, 0, w, h);
     for (let i = 0; i < 8; i++) { const x = (i + 0.5) * w / 8; g.fillStyle = 'rgba(255,250,215,0.95)'; g.fillRect(x - 26, 16, 52, 30); g.fillStyle = 'rgba(255,230,150,0.35)'; g.fillRect(x - 36, 8, 72, 46); } }),
+  goldbar: cvs(64, 64, (g, w, h) => { g.fillStyle = grad(g, 0, 0, w, 0, [[0, '#b8661a'], [0.3, '#f7b54a'], [0.45, '#fff0b8'], [0.6, '#f4a63c'], [1, '#a8560f']]); g.fillRect(0, 0, w, h); }),
   pipe: cvs(64, 256, (g, w, h) => { g.fillStyle = grad(g, 0, 0, w, 0, [[0, '#4d1a8f'], [0.3, '#9b5ae6'], [0.42, '#f2d4ff'], [0.55, '#a865ee'], [1, '#4d1a8f']]); g.fillRect(0, 0, w, h); }),
   tank: cvs(256, 256, (g, w, h) => { g.fillStyle = grad(g, 0, 0, w, 0, [[0, '#d99ad8'], [0.5, '#fbe0f6'], [1, '#d99ad8']]); g.fillRect(0, 0, w, h); }),
   foam: cvs(64, 64, (g, w, h) => { g.fillStyle = grad(g, 0, 0, 0, h, [[0, '#ffffff'], [1, '#c9c3f2']]); g.fillRect(0, 0, w, h); }),
@@ -111,7 +112,7 @@ for (const o of MESH) {
   else if (fam === 'pink') m = sceneryMat(BASE.pink, [Math.max(1, Math.max(sz.x, sz.z) / 1.0), Math.max(1, sz.y / 1.0)]);
   else if (fam === 'dark') m = sceneryMat(BASE.dark, [1, 1]);
   else if (fam === 'throat') m = sceneryMat(BASE.dark, [1, 1], { tint: [0.45, 0.35, 0.6] });
-  else if (fam === 'gold') m = sceneryMat(BASE.gold, [1, 1]);
+  else if (fam === 'gold') m = sceneryMat(/^(rail_|collar_|tower_rim)/.test(n) ? BASE.goldbar : BASE.gold, [1, 1]);
   else if (fam === 'fall') m = sceneryMat(BASE.foam, [1, 3], { transparent: true, alpha: 0.92, tint: [0.55, 0.85, 1.0], scroll: [0, -0.45] });
   else if (fam === 'pipe') m = sceneryMat(BASE.pipe, [1, 4]);
   else if (fam === 'tank') m = sceneryMat(BASE.tank, [1, 1]);
@@ -127,7 +128,8 @@ world.add(gl.scene);
 const ROUTE_TEX = (() => { const n = 1024, a = new Float32Array(n), z0 = 3, z1 = Z_EXIT - 12; for (let i = 0; i < n; i++) a[i] = RX(lerp(z0, z1, i / (n - 1)));
   const t = new THREE.DataTexture(a, n, 1, THREE.RedFormat, THREE.FloatType); t.minFilter = t.magFilter = THREE.LinearFilter; t.needsUpdate = true; return { t, z0, z1 }; })();
 const WATER_U = { uRoute: { value: ROUTE_TEX.t }, uRZ: { value: new THREE.Vector2(ROUTE_TEX.z0, ROUTE_TEX.z1) }, uT: { value: 0 }, uRW: { value: new THREE.Vector4(2.1, 0.62, T.z_arch, T.funnel[1]) }, ...GLOW };
-const waterMat = () => new THREE.ShaderMaterial({ side: THREE.DoubleSide, uniforms: { ...WATER_U, ...SHARP, uBake: { value: null }, uBakeOn: { value: 0 }, uDen: { value: null } },
+const SHARP_W = { uSharp: { value: new THREE.Vector2(SHARP.uSharp.value.x, +(q.get('sharpw') ?? 2.2)) } };
+const waterMat = () => new THREE.ShaderMaterial({ side: THREE.DoubleSide, uniforms: { ...WATER_U, ...SHARP_W, uBake: { value: null }, uBakeOn: { value: 0 }, uDen: { value: null } },
   vertexShader: 'varying vec2 vUv; varying vec3 vW; void main(){ vUv = uv; vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; }',
   fragmentShader: `uniform sampler2D uRoute; uniform vec2 uRZ; uniform float uT; uniform vec4 uRW; uniform vec3 uGlow; uniform sampler2D uBake; uniform float uBakeOn; uniform sampler2D uDen; uniform vec2 uSharp; varying vec2 vUv; varying vec3 vW;
     float hsh(vec2 p){ vec3 p3 = fract(vec3(p.xyx) * 0.1031); p3 += dot(p3, p3.yzx + 33.33); return fract((p3.x + p3.y) * p3.z); }
@@ -184,7 +186,7 @@ const refCam = (c) => { const k = new THREE.PerspectiveCamera(SEC.fov, SEC.img[0
 const CAMS = { bubble: refCam(REF.bubble), sock: refCam(REF.sock) };
 window.REFCAM = CAMS;
 const BAKE_STATS = {}, BAKE_DATA = {};
-const MANI = q.get('prebaked') === '0' ? null : await fetch('baked/manifest.json').then((r) => (r.ok ? r.json() : null)).catch(() => null);
+const MANI = q.get('prebaked') !== '1' ? null : await fetch('baked/manifest.json').then((r) => (r.ok ? r.json() : null)).catch(() => null);
 if (MANI) {   // the app build: the bake was done once offline (same code, ?savebake=1) and shipped as PNGs
   const cache = {}; const ld = (f, den) => (cache[f] ??= tl.loadAsync('baked/' + f).then((t) => { t.colorSpace = THREE.NoColorSpace; if (den) { t.generateMipmaps = false; t.minFilter = t.magFilter = THREE.LinearFilter; } else { t.anisotropy = 8; } return t; }));
   const all = []; world.traverse((o) => { if (o.isMesh && MANI.meshes[o.name]) all.push(o); });
@@ -278,7 +280,7 @@ const FOAM = [];
       if (MD[i] > 127 || mx < 226 || (mx - mn) > 48) continue;
       ray.set((x / img.width) * 2 - 1, -(y / img.height) * 2 + 1, 0.5).unproject(cam).sub(cam.position).normalize(); if (ray.y > -0.02) continue;
       const lam = -cam.position.y / ray.y, P = cam.position.clone().addScaledVector(ray, lam); if (lam > (name === 'bubble' ? 16 : 9) || lam < (name === 'bubble' ? 2.6 : 1.6)) continue;
-      const zr = P.z, kr = Math.min(1, Math.max(0, (T.z_arch - zr) / (T.z_arch - T.funnel[1]))), RWz = lerp(2.1, 0.62, kr * kr * (3 - 2 * kr)); if (Math.abs(P.x - RX(zr)) < 0.62 * RWz) continue;
+      const zr = P.z, kr = Math.min(1, Math.max(0, (T.z_arch - zr) / (T.z_arch - T.funnel[1]))), RWz = lerp(2.1, 0.62, kr * kr * (3 - 2 * kr)); if (Math.abs(P.x - RX(zr)) < 0.62 * RWz || (zr < T.z_arch - 0.2 && Math.abs(P.x) < chord(zr) - 0.38) || (zr >= T.z_arch - 0.2 && Math.abs(P.x - RX(zr)) < 1.25)) continue;
       if (P.z < T.z_arch - 0.2 && Math.abs(P.x) > chord(P.z) - 0.02) continue;
       const key = Math.round(P.x / 0.09) + ',' + Math.round(P.z / 0.09); cells.set(key, (cells.get(key) ?? 0) + 1); }
     for (const [key, nn] of cells) { if (nn < 6) continue; const [cx, cz] = key.split(',').map(Number); FOAM.push([cx * 0.09 + (rp() - 0.5) * 0.03, cz * 0.09 + (rp() - 0.5) * 0.03, 0.06 + rp() * 0.05]); }
@@ -290,18 +292,19 @@ const FOAM = [];
   const fMat = new THREE.ShaderMaterial({ uniforms: { uL: { value: Lw }, ...GLOW },
     vertexShader: 'varying vec3 vN; varying vec3 vW; void main(){ vec4 w = modelMatrix * instanceMatrix * vec4(position, 1.0); vW = w.xyz; vN = normalize(mat3(modelMatrix) * mat3(instanceMatrix) * normal); gl_Position = projectionMatrix * viewMatrix * w; }',
     fragmentShader: `varying vec3 vN; varying vec3 vW; uniform vec3 uL; uniform vec3 uGlow; vec3 c3(float r, float g, float b){ return vec3(r, g, b) / 255.0; }
-      void main(){ float lit = clamp(0.52 + 0.55 * dot(normalize(vN), uL), 0.0, 1.0);
+      void main(){ float lit = clamp(0.6 + 0.45 * dot(normalize(vN), uL), 0.0, 1.0);
         vec3 col = lit < 0.5 ? mix(c3(150.0, 135.0, 222.0), c3(205.0, 200.0, 245.0), lit / 0.5) : mix(c3(205.0, 200.0, 245.0), c3(255.0, 254.0, 255.0), (lit - 0.5) / 0.5);
         col = mix(col, vec3(1.0, 0.98, 0.95), uGlow.z * pow(smoothstep(uGlow.x, uGlow.y, vW.z), 1.6)); gl_FragColor = vec4(col, 1.0); }` });
   const foam = new THREE.InstancedMesh(fGeo, fMat, FOAM.length), mI = new THREE.Matrix4(), qI = new THREE.Quaternion(), pI = new THREE.Vector3(), sI = new THREE.Vector3();
   FOAM.forEach(([x, z, w], i) => { pI.set(x, w * 0.05, z); sI.set(w, w * 0.62, w); foam.setMatrixAt(i, mI.compose(pI, qI, sI)); }); foam.name = 'foam_domes'; foam.userData.fam = 'foam3d'; world.add(foam);
-  const B = SEC.bubbles.map((b) => b.slice()); for (let z = T.z_arch - 1; z > Z_EXIT; z -= 0.6 + rp() * 0.8) { const c = chord(z) - 0.15; B.push([(rp() * 2 - 1) * c, 0.05 + rp() * 0.6, z, 0.03 + rp() * rp() * 0.07]); }
+  const B = SEC.bubbles.map((b) => b.slice()); for (let z = T.z_arch - 1; z > Z_EXIT; z -= 0.6 + rp() * 0.8) { const c = chord(z) - 0.12, sd = rp() < 0.5 ? -1 : 1; B.push([sd * (0.38 + rp() * Math.max(0.05, c - 0.38)), 0.12 + rp() * 0.5, z, 0.025 + rp() * rp() * 0.045]); }
   const bGeo = new THREE.SphereGeometry(1, 24, 16); bGeo.setAttribute('aPh', new THREE.InstancedBufferAttribute(new Float32Array(B.map(() => rp() * 6.28)), 1));
   const bm = new THREE.ShaderMaterial({ transparent: true, depthWrite: false, uniforms: { uTime: GLOW.uTime, uL: { value: Lw } },
     vertexShader: 'attribute float aPh; uniform float uTime; varying vec3 vN; varying vec3 vW; void main(){ vec4 w = modelMatrix * instanceMatrix * vec4(position, 1.0); w.y += 0.012 * sin(uTime * 1.3 + aPh); vW = w.xyz; vN = normalize(mat3(modelMatrix) * mat3(instanceMatrix) * normal); gl_Position = projectionMatrix * viewMatrix * w; }',
-    fragmentShader: `varying vec3 vN; varying vec3 vW; uniform vec3 uL; void main(){ vec3 N = normalize(vN), V = normalize(cameraPosition - vW); float f = pow(1.0 - abs(dot(N, V)), 2.0);
-      vec3 film = 0.55 + 0.45 * cos(6.2832 * (f * 1.5 + vec3(0.0, 0.33, 0.67))); float sp = pow(max(dot(reflect(-V, N), uL), 0.0), 40.0);
-      gl_FragColor = vec4(min(mix(vec3(0.95, 0.97, 1.0), film, 0.75) + sp, vec3(1.0)), clamp(0.14 + 0.85 * f + sp, 0.0, 0.95)); }` });
+    fragmentShader: `varying vec3 vN; varying vec3 vW; uniform vec3 uL; void main(){ vec3 N = normalize(vN), V = normalize(cameraPosition - vW); float c = abs(dot(N, V)), f = pow(1.0 - c, 1.6);
+      vec3 film = 0.6 + 0.4 * cos(6.2832 * (f * 1.8 + N.y * 0.35 + vec3(0.0, 0.33, 0.67)));
+      float sp = pow(max(dot(reflect(-V, N), uL), 0.0), 60.0) + 0.6 * pow(max(dot(reflect(-V, N), normalize(vec3(0.4, 0.2, 0.9))), 0.0), 90.0);
+      vec3 col = mix(vec3(1.0), film, 0.85) + sp; gl_FragColor = vec4(min(col, vec3(1.0)), clamp(0.05 + 0.9 * f * f + 0.25 * f + sp, 0.0, 0.97)); }` });
   const bubbles = new THREE.InstancedMesh(bGeo, bm, B.length); B.forEach(([x, y, z, r], i) => { pI.set(x, y, z); sI.setScalar(r); bubbles.setMatrixAt(i, mI.compose(pI, qI, sI)); });
   bubbles.name = 'bubbles'; bubbles.renderOrder = 7; bubbles.userData.fam = 'bubble3d'; world.add(bubbles);
 }
@@ -336,7 +339,7 @@ bmesh.scale.set(0.8, 0.84, 0.8); holder.scale.multiplyScalar(+(q.get('bsize') ??
 const benny = new THREE.Group(); benny.add(holder); scene.add(benny);
 const pxW = bennyH / 400;
 const splashTex = await tl.loadAsync('splash.png'); splashTex.colorSpace = THREE.SRGBColorSpace;
-const splash = new THREE.Sprite(new THREE.SpriteMaterial({ map: splashTex, toneMapped: false, transparent: true, depthWrite: false })); splash.renderOrder = 5; scene.add(splash);
+const splash = new THREE.Sprite(new THREE.SpriteMaterial({ map: splashTex, toneMapped: false, transparent: true, depthWrite: false, depthTest: false })); splash.renderOrder = 5; scene.add(splash);
 const bubTex = await tl.loadAsync('bubble.png'); bubTex.colorSpace = THREE.SRGBColorSpace;
 const ctex = await tl.loadAsync('coin.png'); ctex.colorSpace = THREE.SRGBColorSpace;
 const C0 = V3(SEC.coins.bubble[0]), coinD = 2 * 38 * C0.distanceTo(V3(REF.bubble.pos)) / SEC.focal_px;
@@ -364,7 +367,7 @@ const QB = new THREE.Quaternion().setFromEuler(new THREE.Euler(REF.bubble.pitch,
 const OB = V3(REF.bubble.pos).sub(PB), OS = V3(REF.sock.pos).sub(PBS);
 const st = { s: +(q.get('s0') ?? 0), lat: 0, camLat: { x: 0, v: 0 }, t: 0 };
 const cds = (o, target, omega, dt) => { const y = o.x - target, j = o.v + omega * y, e = Math.exp(-omega * dt); o.x = target + (y + j * dt) * e; o.v = (o.v - omega * j * dt) * e; return o.x; };
-const CAMK = +(q.get('camk') ?? 0.35), tmp = new THREE.Vector3(), qTmp = new THREE.Quaternion(), Zax = new THREE.Vector3(0, 0, 1);
+const CAMK = +(q.get('camk') ?? 0.8), tmp = new THREE.Vector3(), qTmp = new THREE.Quaternion(), Zax = new THREE.Vector3(0, 0, 1);
 const hdg = (s) => { const F = frameAt(s); return Math.atan2(-F.t.x, -F.t.z); }, HD0 = hdg(0), HDS = hdg(S_SOCK);
 const camAt = (s, dt) => {
   const w = sstep(1.0, S_SOCK - 0.4, s), F = frameAt(s);
@@ -374,6 +377,10 @@ const camAt = (s, dt) => {
   camera.quaternion.copy(QB).slerp(QS, w);
   const yawK = 0.5 * (Math.atan2(-F.t.x, -F.t.z) - lerp(HD0, HDS, w)); camera.quaternion.premultiply(qTmp.setFromAxisAngle(new THREE.Vector3(0, 1, 0), yawK));
   camera.updateMatrixWorld();
+  // screen guard: Benny's whole body (measured from his posed mesh) always stays inside the frame with a small margin
+  const fpx = H / 2 / Math.tan(camera.fov * DEG / 2), M = 8;
+  for (let k = 0; k < 2; k++) { const bb = window.bennyBox(); const dpx = bb.x0 < M ? bb.x0 - M : bb.x1 > W - M ? bb.x1 - (W - M) : 0; if (!dpx) break;
+    camera.position.addScaledVector(F.r, dpx * camera.position.distanceTo(benny.position) / fpx); camera.updateMatrixWorld(); st.guard = (st.guard ?? 0) + 1; }
 };
 const tB = new THREE.Vector3(), rB = new THREE.Vector3(), mB = new THREE.Matrix4(), UPV = new THREE.Vector3(0, 1, 0);
 const titleEl = document.getElementById('title'), badgeEl = document.getElementById('badge'), missionEl = document.getElementById('mission');

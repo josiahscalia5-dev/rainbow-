@@ -7,7 +7,7 @@ const { chromium } = require('playwright'); const { spawn } = require('child_pro
   const browser = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
   try {
     const page = await (await browser.newContext({ viewport: { width: 412, height: 915 } })).newPage(); page.on('pageerror', (e) => console.log('ERR', e.message));
-    await page.goto(`http://127.0.0.1:${port}/play3.html?w=412&h=915&prebaked=0`); await page.waitForFunction(() => window.ready === true, null, { timeout: 1200000 });
+    await page.goto(`http://127.0.0.1:${port}/play3.html?w=412&h=915`); await page.waitForFunction(() => window.ready === true, null, { timeout: 1200000 });
     const names = await page.evaluate(() => window.bakeNames()); const man = { meshes: {}, foam: await page.evaluate(() => window.foamPainted()) }; const tpl = {};
     for (const n of names) { const e = await page.evaluate((n) => window.bakeExport(n), n); if (!e) continue; if (e.template) { tpl[n] = e.template; continue; }
       for (const k of ['bake', 'den']) fs.writeFileSync(path.join(B, `${n}_${k}.png`), Buffer.from(e[k].split(',')[1], 'base64'));

@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3153,
-   "sha256": "2ae9fa12974ead8f5cf5483ac2129b422225e490ac957b1d35d001820b2853af"
+   "sha256": "4c902329cf8a7e43ba7dee810550be6b30f7764fa83a6af8eda1e6c43bf03287"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -34467,6 +34467,41 @@
    "sha256": "73d091620f3e562a9f7aa320754778f910d9d7c63a33395287b59b2aa61387b4"
   },
   {
+   "path": "qa/reflock/r40/BUBBLE_DASH_APPROVED.jpg",
+   "bytes": 230662,
+   "sha256": "9360686a1a03cbaa9b62310b1399335736becfaf4de0d4dc96925ef8add608ce"
+  },
+  {
+   "path": "qa/reflock/r40/BUBBLE_DASH_GAME.jpg",
+   "bytes": 175382,
+   "sha256": "e0122f1208de22c0757b55d530487ae86e39529e98cae0dc17fc562dd878ce47"
+  },
+  {
+   "path": "qa/reflock/r40/BUBBLE_DASH_approved_vs_game.jpg",
+   "bytes": 362380,
+   "sha256": "3c6dbcd0111219db5a724e1d58aae9f5eb43a8f1d1271b8773efccf577e49bdc"
+  },
+  {
+   "path": "qa/reflock/r40/SOCK_RESCUE_APPROVED.jpg",
+   "bytes": 229371,
+   "sha256": "92939e7b85d72613e74450d0793bc7e67275eecb38c87e3f6a891dfc07e6b0aa"
+  },
+  {
+   "path": "qa/reflock/r40/SOCK_RESCUE_GAME.jpg",
+   "bytes": 185767,
+   "sha256": "fa0b8609b79703a53e94e9c82893629c0686b091e517181b41abc47b3644aedb"
+  },
+  {
+   "path": "qa/reflock/r40/SOCK_RESCUE_approved_vs_game.jpg",
+   "bytes": 369811,
+   "sha256": "81a839581032cdcea998ac7b4c47d6ad0511239587f45ee0c5845c45b46f5cb9"
+  },
+  {
+   "path": "qa/reflock/r40/reference_view_compare.json",
+   "bytes": 1784,
+   "sha256": "b3511259d7b995b89a6d1ccf5059c8d4f821c262773c22b734370a0f2527926b"
+  },
+  {
    "path": "qa/report_metrics.json",
    "bytes": 1112,
    "sha256": "19e17f9a21cff527b57089a43122a4e1396d5222f2b16ccc18093685071c4134"
@@ -41828,18 +41863,23 @@
   },
   {
    "path": "tools/reflock/blender_section.py",
-   "bytes": 16911,
-   "sha256": "c72fbe261e380954f256fef1062d347b5a4db72d32bdfe0ed34906312bc73abc"
+   "bytes": 17009,
+   "sha256": "b582ef146d87fa1f35b0a87fc68268e7a4d02fedfaa6ee5c440f286953bedcae"
   },
   {
    "path": "tools/reflock/build_section_app.sh",
-   "bytes": 1979,
-   "sha256": "185f6e02da952ebb3cfd71c776b8f5602d720c7a018443ddcf2df75b9ae6acd6"
+   "bytes": 2061,
+   "sha256": "d12089a3c03be391bc776fc593436ec6840457040722f2269adaa8d9c4ccc5c8"
   },
   {
    "path": "tools/reflock/compare_section.py",
    "bytes": 2405,
    "sha256": "f4cc25330c4b739173e2fccb0f1e516cd0c5362b190b162531b3026e6ad21672"
+  },
+  {
+   "path": "tools/reflock/encode_run.py",
+   "bytes": 1930,
+   "sha256": "ffdc8a4ecc6b3445dd7172ecc6b3d3188d83799d4335133a15d64e7ae9c7e37b"
   },
   {
    "path": "tools/reflock/fit_section.py",
@@ -41868,13 +41908,13 @@
   },
   {
    "path": "tools/reflock/section.html",
-   "bytes": 51775,
-   "sha256": "95d49d1b9011a1d90101f9c9506904265a3e02723bdaacdde7afe97eaa226f06"
+   "bytes": 52934,
+   "sha256": "a1ca20788419147db1ce5869c083738f756d8664a72fa1060f7d53bebb4748c0"
   },
   {
    "path": "tools/reflock/section_export.cjs",
-   "bytes": 2039,
-   "sha256": "3cb7589bfa374d0f54b73bf993bb3d802e7e66924db47b3c6dc513bcd5ad9350"
+   "bytes": 2028,
+   "sha256": "3977aecff1ab85f20701188e7b824af1639cb1b4a20eac9f81dc440e14ca7563"
   },
   {
    "path": "tools/reflock/section_run.cjs",

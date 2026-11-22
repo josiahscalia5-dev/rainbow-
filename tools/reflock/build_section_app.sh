@@ -18,7 +18,7 @@ s = open(sys.argv[1]).read()
 a = '"three":"./node_modules/three/build/three.module.js","three/addons/":"./node_modules/three/examples/jsm/"'
 assert a in s; s = s.replace(a, '"three":"./vendor/three/build/three.module.js","three/addons/":"./vendor/three/examples/jsm/"')
 a = "const q = new URLSearchParams(location.search);"; assert a in s
-s = s.replace(a, a + "\nif (!q.has('w') && !q.has('play')) q.set('play', '1');   // app: real-time play")
+s = s.replace(a, a + "\nif (!q.has('w') && !q.has('play')) q.set('play', '1');   // app: real-time play\nif (!q.has('prebaked')) q.set('prebaked', '1');   // app: textures baked offline")
 open(sys.argv[2], 'w').write(s)
 PY
 du -sh "$P" | cut -f1 | xargs echo "section in the app build:" "$P"

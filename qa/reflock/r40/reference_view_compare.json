@@ -1,0 +1,54 @@
+{
+ "bubble": {
+  "new": {
+   "share_within_20_levels": 0.823,
+   "ssim_scenery": 0.759,
+   "mean_abs_diff_levels": 12.2,
+   "colour_look_corr": 0.98,
+   "sharpness_vs_approved": 0.707,
+   "whole_frame_within_20_levels": 0.571
+  },
+  "route_first": [
+   "water_cyan (32 % of all mismatch; 20 % of this region off) -> water-fx-specialist (in round 34: S1 washer-environment-modeler owns the water surface bake)",
+   "foam_white (21 % of all mismatch; 36 % of this region off) -> foam-bubbles-particles (foam banks, bubbles, splashes)",
+   "pink_edge (17 % of all mismatch; 10 % of this region off) -> water-fx-specialist (pink / magenta river edges)"
+  ],
+  "zones": {
+   "middle-right": 0.169,
+   "top-centre": 0.139,
+   "middle-left": 0.134,
+   "top-right": 0.111,
+   "top-left": 0.103,
+   "middle-centre": 0.09,
+   "bottom-centre": 0.087,
+   "bottom-right": 0.086,
+   "bottom-left": 0.079
+  }
+ },
+ "sock": {
+  "new": {
+   "share_within_20_levels": 0.777,
+   "ssim_scenery": 0.676,
+   "mean_abs_diff_levels": 15.7,
+   "colour_look_corr": 0.99,
+   "sharpness_vs_approved": 0.723,
+   "whole_frame_within_20_levels": 0.46
+  },
+  "route_first": [
+   "water_cyan (24 % of all mismatch; 21 % of this region off) -> water-fx-specialist (in round 34: S1 washer-environment-modeler owns the water surface bake)",
+   "pink_edge (21 % of all mismatch; 20 % of this region off) -> water-fx-specialist (pink / magenta river edges)",
+   "purple (15 % of all mismatch; 19 % of this region off) -> washer-environment-modeler (perforated purple walls)"
+  ],
+  "zones": {
+   "top-right": 0.271,
+   "top-left": 0.218,
+   "top-centre": 0.156,
+   "middle-right": 0.109,
+   "bottom-left": 0.081,
+   "middle-left": 0.078,
+   "bottom-right": 0.056,
+   "middle-centre": 0.031,
+   "bottom-centre": 0.0
+  }
+ }
+}
