@@ -21,7 +21,7 @@ html,body{margin:0;background:#000;overflow:hidden;font-family:system-ui,sans-se
 </head><body>
 <div id="hud"><div class="row"><span class="pill">&#10084;&#65039; 5/5 <span class="plus">+</span></span><span class="pill"><span id="coins">&#129689; 1,420</span></span><span id="pauseBtn" data-noswipe="1" role="button" aria-label="Pause">&#10074;&#10074;</span></div>
 <div class="mission" id="mission"><svg viewBox="0 0 20 22" width="22" height="24"><path d="M6 1h8v11l4 3c2 2 1 6-3 6H8c-4 0-6-3-5-6l3-3z" fill="#fff"/><path d="M6 1h8v3H6zM6 6h8v1.6H6z" fill="#f45aa8"/><path d="M14 17h3c0 3-2 4-4 4z" fill="#f45aa8"/></svg>
-<span id="mtext">Rescue <b>5</b> lost socks</span><span class="slots" id="slots"></span></div></div><div class="title" id="btitle" style="display:none">BONUS &middot; BUBBLE DASH CHAMBER</div><div id="paused">PAUSED</div>
+<span id="mtext">Rescue <b>5</b> lost socks</span><span class="slots" id="slots"></span></div><div class="title" id="btitle" style="display:none">BONUS &middot; BUBBLE DASH CHAMBER</div></div><div id="paused">PAUSED</div>
 <script type="module">
 // Round 33 KIT TEST (experimental, not the game): a real 3D tunnel kit fitted to the approved Screen 05 painting
 // (tools/kit05/kit_model.py) and textured with the painting's own pixels (bake_kit.py). Every scenery vertex goes through the same
@@ -465,11 +465,11 @@ let cleanWallMat = null, cleanRingMat = null;
           #include <colorspace_fragment>
         }` });
     window.__fall = fallMat;
-    for (const [side, tm] of [[-1, 4.3], [1, 4.9]]) {
-      const ym = 0.5, xm = side * (WL - 0.06), inw = -side;
-      const ring = add(new THREE.TorusGeometry(0.27, 0.075, 16, 48), goldMat); ring.position.copy(PW(tm, xm + inw * 0.06, ym)); ring.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), RR);
-      const disc = add(new THREE.CircleGeometry(0.27, 40), litMat({ color: 0x3a0e5a, amb: 1, spec: 0, rimK: 0 })); disc.position.copy(PW(tm, xm + inw * 0.03, ym)); disc.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), RR.clone().multiplyScalar(inw));
-      add(grid(10, 30, (a, b) => { const along = (a - 0.5) * 0.36 * (1 + 0.35 * b), d = 0.08 + 0.55 * b, y = ym - 0.05 - (ym - 0.05 - YF) * Math.pow(b, 1.7);
+    for (const [side, tm] of [[-1, TA - 1.15], [1, TA - 0.85]]) {   // flanking the arch, as in the picture
+      const ym = 0.42, xm = side * (WL - 0.06), inw = -side;
+      const ring = add(new THREE.TorusGeometry(0.33, 0.09, 16, 48), goldMat); ring.position.copy(PW(tm, xm + inw * 0.06, ym)); ring.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), RR);
+      const disc = add(new THREE.CircleGeometry(0.33, 40), litMat({ color: 0x3a0e5a, amb: 1, spec: 0, rimK: 0 })); disc.position.copy(PW(tm, xm + inw * 0.03, ym)); disc.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), RR.clone().multiplyScalar(inw));
+      add(grid(10, 30, (a, b) => { const along = (a - 0.5) * 0.46 * (1 + 0.35 * b), d = 0.08 + 0.55 * b, y = ym - 0.05 - (ym - 0.05 - YF) * Math.pow(b, 1.7);
         return [PW(tm + along, xm + inw * d, y), a, b]; }), fallMat);
       // foam where the waterfall lands
       window.__fallFoam = (window.__fallFoam || []).concat([[tm, xm + inw * 0.63]]);
@@ -479,7 +479,7 @@ let cleanWallMat = null, cleanRingMat = null;
         g.fillStyle = bg; g.fillRect(0, 0, w, h); const cx = w * 0.25, cy = h * 0.52; g.fillStyle = '#7d3fd6'; g.beginPath();
         g.moveTo(cx - 60, cy - 70); g.lineTo(cx - 25, cy - 85); g.quadraticCurveTo(cx, cy - 65, cx + 25, cy - 85); g.lineTo(cx + 60, cy - 70); g.lineTo(cx + 90, cy - 20); g.lineTo(cx + 55, cy - 5);
         g.lineTo(cx + 55, cy + 85); g.lineTo(cx - 55, cy + 85); g.lineTo(cx - 55, cy - 5); g.lineTo(cx - 90, cy - 20); g.closePath(); g.fill(); }, false);
-      const c = PW(TA + 0.45, 0, 1.68), up = NUP.clone(); const cyl = add(new THREE.CylinderGeometry(0.42, 0.42, 0.55, 48, 1, true), litMat({ map: tank, spec: 0.6, shin: 40, amb: 0.65, rim: 0xffffff, rimK: 0.5, side: THREE.DoubleSide }));
+      const c = PW(TA - 0.55, 0, 1.72), up = NUP.clone();   // in front of the back wall, sitting on the arch const cyl = add(new THREE.CylinderGeometry(0.42, 0.42, 0.55, 48, 1, true), litMat({ map: tank, spec: 0.6, shin: 40, amb: 0.65, rim: 0xffffff, rimK: 0.5, side: THREE.DoubleSide }));
       cyl.position.copy(c); cyl.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), up); cyl.rotateY(-Math.PI * 0.5 - 0.6);
       for (const dy of [-0.29, 0.29]) { const b = add(new THREE.TorusGeometry(0.43, 0.045, 12, 48), goldMat); b.position.copy(c).addScaledVector(up, dy); b.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), up); }
       const foamM = litMat({ color: 0xf8f4ff, spec: 0.3, shin: 12, amb: 0.6, rim: 0xc9d8ff, rimK: 0.5 });
@@ -558,7 +558,7 @@ if (PUFFS) {
   const bTex = await tl.loadAsync('bubble.png'); bTex.colorSpace = THREE.NoColorSpace;
   const B = []; for (let t = 0.4; t < LEVEL + 14; t += 0.12 + rp() * 0.14) { const side = rp() < 0.5 ? -1 : 1, lat = side * (0.34 + rp() * 0.34), h = 0.02 + rp() * rp() * 0.45;
     const P0 = A0.clone().addScaledVector(A, t).addScaledVector(RR, lat).addScaledVector(NUP, -K.HW + h); B.push([t, P0.x, P0.y, P0.z, 0.035 + rp() * rp() * 0.09, rp() * 6.28]); }
-  for (const [t, lat, h, sz] of [[2.4, -0.56, 0.16, 0.24], [5.3, 0.58, 0.2, 0.2], [8.9, -0.55, 0.14, 0.22], [12.0, 0.56, 0.18, 0.2]]) { const P0 = A0.clone().addScaledVector(A, t).addScaledVector(RR, lat).addScaledVector(NUP, -K.HW + h); B.push([t, P0.x, P0.y, P0.z, sz, rp() * 6.28]); }   // round 38: a few big iridescent bubbles
+  for (const [t, lat, h, sz] of [[2.4, -0.56, 0.16, 0.24], [5.3, 0.58, 0.2, 0.2], [8.9, -0.55, 0.14, 0.22], [12.0, 0.56, 0.18, 0.2]].concat(AREA === 'bubble' ? [[1.6, -0.95, 0.35, 0.22], [2.2, 1.0, 0.6, 0.18], [3.1, -1.2, 0.9, 0.2], [3.6, 0.9, 1.3, 0.16], [4.2, -0.4, 1.6, 0.14], [5.0, 1.25, 0.25, 0.26], [5.8, -0.9, 1.1, 0.18], [6.3, 0.5, 1.75, 0.15], [1.2, 0.75, 0.1, 0.2]] : [])) { const P0 = A0.clone().addScaledVector(A, t).addScaledVector(RR, lat).addScaledVector(NUP, -K.HW + h); B.push([t, P0.x, P0.y, P0.z, sz, rp() * 6.28]); }   // round 38: a few big iridescent bubbles
   const bg = new THREE.BufferGeometry(); bg.setAttribute('position', new THREE.Float32BufferAttribute(B.flatMap((e) => e.slice(1, 4)), 3));
   bg.setAttribute('aT', new THREE.Float32BufferAttribute(B.map((e) => e[0]), 1)); bg.setAttribute('aSz', new THREE.Float32BufferAttribute(B.map((e) => e[4]), 1)); bg.setAttribute('aPh', new THREE.Float32BufferAttribute(B.map((e) => e[5]), 1));
   const bm = new THREE.ShaderMaterial({ uniforms: { map: { value: bTex }, uFadeP: { value: FADEP }, uTime: { value: 0 }, uPx: { value: H * 0.5 * camera.projectionMatrix.elements[5] }, ...REMAP }, transparent: true, depthWrite: false, toneMapped: false,
@@ -815,6 +815,7 @@ window.step = (t, dt, steer, speed) => {
   return { s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: coinCount, tile: Math.floor((K.level.tB0 + st.s - K.level.ring0) / K.S) - K.level.k0, ...CT.state(), declutter: st.decl | 0, camLatEff: +st.camLat.toFixed(4), guard: +st.guard.toFixed(4), camYawDeg: +(Math.atan(st.camYaw.x) / DEG).toFixed(3), camRollDeg: +(st.camRoll.x / DEG).toFixed(3) };   // tile = ring section Benny is in (0 = start)
 };
 // ---- round 38 BONUS gameplay: 5 lost socks floating in the lanes (rescue = swim into one), mission bar, boost chevrons, pause ----
+if (AREA !== 'sock') { document.getElementById('mission').style.display = 'none'; document.getElementById('btitle').style.display = 'block'; }   // the sock mission bar only where that mission is active
 const SOCK = AREA !== 'sock' ? { socks: [], update: () => 0 } : (() => {
   const { litMat } = window.__sockProps;
   const W_ = [0.97, 0.95, 0.99], PK = [0.96, 0.33, 0.62];

@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3271,
-   "sha256": "3f856ce76425d10d79a3d374043aaae10180c2d77f5a9e9e23d814cb97dd8676"
+   "sha256": "b47b4496d724481218b74d931bdf512519f6ea072e5d723eaf03d3a96a7501e2"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -40643,8 +40643,8 @@
   },
   {
    "path": "tools/bonus/bonus.html",
-   "bytes": 94064,
-   "sha256": "a27b4a4d9fe97b6a1319da9ec6a82c83cdad6c81fe98740942e55047f63270f1"
+   "bytes": 105135,
+   "sha256": "5002dddfc1516c3a034e2c2b5d37fe42eb08ddb4cb4e7f2055b5432393aa4612"
   },
   {
    "path": "tools/bonus/setup_bonus.sh",
