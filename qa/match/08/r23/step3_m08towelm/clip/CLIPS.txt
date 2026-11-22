@@ -1,0 +1,11 @@
+Screen 08 step 3 (&m08towelm=1&m08towelv=1) swim clips - uninterrupted real-gameplay run through all of 08 into 09
+(tools/match08/screen_clip08.mjs = lead tools/lead23/screen_clip.mjs with the HUD-font dev server; labels by tools/lead23/label_clip.py)
+
+08_NEW_m08towelm_1x.mp4 / _0.5x.mp4   NEW    = K23-2 & m08towelm=1 & m08towelv=1 (../QUERY_NEW.txt = candidate K23-3)
+08_BEFORE_K23-2_1x.mp4 / _0.5x.mp4    BEFORE = K23-2 (../QUERY_BEFORE_K23-2.txt); the same file as
+                                       ../../step2_m08coinsz/clip/08_NEW_m08coinsz_*.mp4 (title reads "08 NEW (K23-1 + m08coinsz ...)" = K23-2).
+
+Speed: _1x = REAL GAME SPEED (24 frames per game second, played at 24 fps); _0.5x = HALF SPEED (same frames at 12 fps).
+40 frames = 1.67 s: frames 0-25 (1.08 s) are Screen 08 (entrance straight -> steering LEFT -> steering RIGHT -> end straight),
+frames 26-39 (0.6 s) are the first part of Screen 09. Speed and phase are printed on every frame.
+Where to look: the towel on the platform (upper middle), clearest during steering RIGHT and the end (frames 14-25).

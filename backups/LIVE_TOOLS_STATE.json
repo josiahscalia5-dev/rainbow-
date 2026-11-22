@@ -1,0 +1,88 @@
+{
+ "time_utc": "2026-11-22T01:58:50+00:00",
+ "lead_branch": "ccr-1a97503a-p221vc",
+ "specialists_sha256_16": {
+  "android-build-performance": "b0c45161860a960c",
+  "animation-and-gameplay-engineer": "c48094c3ed3d22e7",
+  "benny-character-artist": "cde203afa8b927cb",
+  "cartoon-girl-character-artist": "52058503a3558580",
+  "foam-bubbles-particles": "f6341dcde1ea07e5",
+  "path-camera-transition-engineer": "4244cc8249008d7f",
+  "playwright-visual-qa": "0f14c32fb4af423f",
+  "reference-match-director": "b977e3f7592f4276",
+  "washer-environment-modeler": "7abdea786d530d79",
+  "water-fx-specialist": "b160f12ff93db70e"
+ },
+ "workers_git_worktrees": [],
+ "workers_status_latest_round": {
+  "round_30b": {
+   "benny06": {
+    "agent": "benny-character-artist",
+    "worktree": "/home/user/wt/benny06",
+    "branch_local": "claude/rainbow-s06-benny06-c32",
+    "switch": "b30",
+    "status": "finished, combined by lead",
+    "notes": "qa/match/06/r30/benny06/NOTES.md"
+   },
+   "water06": {
+    "agent": "water-fx-specialist",
+    "worktree": "/home/user/wt/water06",
+    "branch_local": "claude/rainbow-s06-water06-c32",
+    "switch": "w30",
+    "status": "finished, combined by lead",
+    "notes": "qa/match/06/r30/water06/NOTES.md"
+   },
+   "foam06": {
+    "agent": "foam-bubbles-particles",
+    "worktree": "/home/user/wt/foam06",
+    "branch_local": "claude/rainbow-s06-foam06-c32",
+    "switch": "f30",
+    "status": "finished, combined by lead (heaps tuned f30bs=0.7 f30bg=0.3 f30bc=0.16)",
+    "notes": "qa/match/06/r30/foam06/NOTES.md"
+   },
+   "scen06": {
+    "agent": "washer-environment-modeler",
+    "worktree": "/home/user/wt/scen06",
+    "branch_local": "claude/rainbow-s06-scen06-c32",
+    "switch": "e30",
+    "status": "not relaunched: scenery done by the lead (m06sb); its unwired e30scen06.ts kept for reference"
+   }
+  }
+ },
+ "plugins_installed_locally": [
+  "worldlabs@worldlabs"
+ ],
+ "plugins_enabled_user_settings": [
+  "worldlabs@worldlabs"
+ ],
+ "plugins_synced_from_claude_account": [
+  "Accelerate design workflows \u2014 critique, design system management, UX writing, accessibilit",
+  "Comprehensive feature development workflow with specialized agents for codebase exploratio",
+  "Frontend design skill for UI/UX implementation",
+  "Core skills library for Claude Code: TDD, debugging, collaboration patterns, and proven te",
+  "Automated code review for pull requests using multiple specialized agents with confidence-",
+  "Browser automation and end-to-end testing MCP server by Microsoft. Enables Claude to inter",
+  "Upstash Context7 MCP server for up-to-date documentation lookup. Connects to Context7's ho",
+  "Analyze codebases and recommend tailored Claude Code automations such as hooks, skills, MC"
+ ],
+ "plugins_synced_from_claude_account_names": [
+  "claude-code-setup",
+  "code-review",
+  "context7",
+  "design",
+  "feature-dev",
+  "frontend-design",
+  "playwright",
+  "superpowers"
+ ],
+ "mcp_servers_configured": [
+  "worldlabs"
+ ],
+ "hooks_project": [
+  "PreCompact",
+  "SessionEnd",
+  "SessionStart",
+  "Stop"
+ ],
+ "note": "claude.ai connectors (World Labs Atlas, GitHub) and API keys are per Claude account / environment and cannot be stored in git; the lead verifies them at session start (docs/briefs/*/COORDINATION.md)."
+}

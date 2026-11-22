@@ -1,0 +1,39 @@
+{
+ "name": "b_early",
+ "endpoint": "fal-ai/nano-banana-2/edit",
+ "request_id": "01a1f9af-8340-7733-9bcf-64b81c5a2bf1",
+ "status": "COMPLETED",
+ "resolution": "2K",
+ "aspect_ratio": "9:16",
+ "num_images": 1,
+ "estimated_cost_usd": 0.12,
+ "inputs": [
+  {
+   "path": "qa/review_r27/artwork/07/game_frames/b_early.png",
+   "sha256": "0ebb9201c507f7852c30ae7c96f065087a1280ebef9b6c922bbb3689a5aaf75a"
+  },
+  {
+   "path": "/home/user/wt/view07/assets/textures/match07/tile_wall_ring.png",
+   "sha256": "0e6f9ac0be877962dec66fd929f56371441d78716a6f7fc0d01c86f49054ede5"
+  },
+  {
+   "path": "/home/user/wt/view07/assets/textures/match07/tile_river_clean.png",
+   "sha256": "420eb75ced1051e9aee68fd2d8a972808bddbca8d3cc94d89de091057b846d5e"
+  },
+  {
+   "path": "/home/user/wt/view07/assets/textures/match07/near_bank.png",
+   "sha256": "7ec035c66dc4ff983370dee698b1fa886b8ddb3a07294fe8b25a61e185575767"
+  },
+  {
+   "path": "/home/user/wt/view07/assets/textures/match07/near_foam.png",
+   "sha256": "6193f97944db67d77f854da065679a2c1b68e9d1a4125dc6608e3b3b731d6260"
+  }
+ ],
+ "prompt": "IMAGE 1 is a clean frame from a 3D mobile game (the character was removed) and defines EVERYTHING about the layout. IMAGES 2-5 are small material swatches cut from the art director's approved illustration of this level \u2014 they show ONLY surface materials, not a layout:\nIMAGE 2 = the purple slotted washer-drum wall with a polished gold ring; IMAGE 3 = the glossy cyan river water; IMAGE 4 = the thick glossy hot-pink / magenta river bank; IMAGE 5 = the soft white-lilac soap foam.\n\nRepaint IMAGE 1 surface by surface with these materials, as a finished premium illustration:\n- every wall surface of IMAGE 1 becomes the deep violet-purple metal with neat, crisp rows of rounded slots (IMAGE 2), never flat bright magenta; every ring of IMAGE 1 becomes polished bright gold with warm amber light dots;\n- every water surface of IMAGE 1 (including any falling water) becomes the glossy cyan water of IMAGE 3 with flowing white highlight streaks that follow the curve of the river;\n- the pink streaks / edges along the water become thick, smooth, glossy magenta banks (IMAGE 4) that curve with the river;\n- foam along the OUTER banks stays, as soft, varied, rounded clusters of different sizes with small gaps between them (IMAGE 5) \u2014 never tall white columns, never one bulky uniformly packed wall, never a regular line of identical white beads between the cyan water and the pink banks;\n- add a few small iridescent soap bubbles in the air.\n\nSTRICT: do NOT change any shape, position, size or perspective from IMAGE 1. Do not add, remove or move any object: no holes, drains, extra rings or new paddles. The river and its bends, the drop, the tube opening and every ring stay exactly where they are in IMAGE 1. No character, coins, text, HUD or user interface. Output only the repainted scene.",
+ "outputs": [
+  "qa/review_r27/artwork/07/proposals/b_early_v1.png"
+ ],
+ "seconds": 29.8,
+ "error": null,
+ "note": "PROPOSAL \u2014 generated view, NOT an approved reference until the user approves it"
+}

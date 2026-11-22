@@ -1,0 +1,192 @@
+diff --git a/tools/kit05/kitgame.html b/tools/kit05/kitgame.html
+index c46152f6..26fe40f2 100644
+--- a/tools/kit05/kitgame.html
++++ b/tools/kit05/kitgame.html
+@@ -198,25 +198,73 @@ const coreTex = (() => { const c = document.createElement('canvas'); c.width = c
+ const core = new THREE.Sprite(new THREE.SpriteMaterial({ map: coreTex, toneMapped: false, transparent: true, depthWrite: false, depthTest: false })); core.renderOrder = 20; scene.add(core);
+ 
+ 
+-// ---------- Benny's path: straight down the tunnel from his painted start point (the kit tunnel is straight) ----------
+-const at = (s, out) => out.copy(B0).addScaledVector(A, Math.max(0, Math.min(LEVEL, s)));
+-const frameAt = () => ({ t: A.clone(), r: RR.clone(), n: NUP.clone() });
+-const TRAIL = []; const TRAIL_S = []; for (let s = 0; s <= LEVEL + 1e-9; s += 0.05) { TRAIL.push(B0.clone().addScaledVector(A, s).toArray()); TRAIL_S.push(+s.toFixed(4)); }
++// ---------- Benny's path (round 34 S3): down the tunnel along the RIVER'S CENTRE LINE from his painted start point ----------
++// at(s) = B0 + A s + RR pB(s): s = axial distance from Benny's painted start point (= vKitT - tB0 in the shaders, tB0 = B0 . A),
++// pB(s) = lateral offset (world units along RR) of the river centre from his straight start line.
++// Source: kit.json river_center = { ds, c: [...], ref?: 'benny' | 'axis' } (S1: c[i] at s = i * ds; ref 'axis' = offsets measured from
++// the tunnel axis instead of Benny's start line), or the synthetic test ?bend=amp,wavelength[,phase] (world-anchored sine about the
++// tunnel axis, the same phase as the river shader's ?winding=1&wamp=amp&wlen=wavelength). Neither -> straight (round 33, frame 0 unchanged).
++// The offsets are smoothed (Benny sigma 0.12 u, camera 0.45 u), blended in over the first 1.6 u (frame 0 = the painted start: offset 0,
++// slope 0) and kept inside the tunnel (his outer lane + arms stay on the water). frameAt(s): t = tangent, r = lane direction
++// (perpendicular to t on the water), n = water up; lanes, coins, glints and the splash follow the bends through at() / frameAt().
++const tB0 = B0.dot(A), latB0 = B0.clone().sub(A0).dot(RR);   // Benny's start: axial position, lateral offset from the tunnel axis
++const PATH = (() => {
++  const ds = 0.05, s0 = -3, s1 = LEVEL + 16, n = Math.round((s1 - s0) / ds) + 1, i0 = Math.round(-s0 / ds), LB = 1.6;
++  const raw = new Float64Array(n); let src = 'straight';
++  const bq = q.get('bend'), RC = K.river_center;
++  if (bq) { const [amp, wl, ph = 0] = bq.split(',').map(Number); src = `synthetic ?bend=${bq}`;
++    for (let i = 0; i < n; i++) raw[i] = amp * Math.sin(2 * Math.PI * (s0 + i * ds + tB0) / wl + ph) - latB0; }
++  else if (RC && Array.isArray(RC.c) && RC.c.length > 1) { src = 'kit.json river_center'; const off = RC.ref === 'axis' ? -latB0 : 0;
++    for (let i = 0; i < n; i++) { const x = Math.max(0, s0 + i * ds) / RC.ds, k = Math.min(RC.c.length - 2, Math.floor(x)), f = Math.min(1, x - k); raw[i] = RC.c[k] * (1 - f) + RC.c[k + 1] * f + off; } }
++  const gauss = (a, sig) => { const r = Math.ceil(3 * sig), w = []; let ws = 0; for (let k = -r; k <= r; k++) { w.push(Math.exp(-0.5 * (k / sig) ** 2)); ws += w[w.length - 1]; }
++    const o = new Float64Array(n); for (let i = 0; i < n; i++) { let v = 0; for (let k = -r; k <= r; k++) v += a[Math.min(n - 1, Math.max(0, i + k))] * w[k + r]; o[i] = v / ws; } return o; };
++  const startBlend = (a) => { const v0 = a[i0], d0 = (a[i0 + 1] - a[i0 - 1]) / (2 * ds);
++    for (let i = 0; i < n; i++) { const s = s0 + i * ds; if (s < 0) a[i] = 0; else if (s < LB) { const x = s / LB; a[i] -= (v0 + d0 * s) * (1 - x * x * (3 - 2 * x)); } } return a; };
++  // keep Benny's widest reach on the water: |latB0 + pB| <= WALL_LIM (water half-width 0.70 - his lane 0.26 - arms 0.22), soft knee
++  const WALL_LIM = 0.22, KNEE = 0.15, keepIn = (a) => { for (let i = 0; i < n; i++) { const qv = latB0 + a[i], m = Math.abs(qv);
++    if (m > KNEE) a[i] = Math.sign(qv) * (KNEE + (WALL_LIM - KNEE) * Math.tanh((m - KNEE) / (WALL_LIM - KNEE))) - latB0; } return a; };
++  const b = startBlend(keepIn(gauss(raw, 0.12 / ds))), c = startBlend(gauss(b, 0.45 / ds));
++  const d1 = (a) => { const o = new Float64Array(n); for (let i = 1; i < n - 1; i++) o[i] = (a[i + 1] - a[i - 1]) / (2 * ds); o[0] = o[1]; o[n - 1] = o[n - 2]; return o; };
++  const b1 = d1(b), b2 = d1(b1), c1 = d1(c), c2 = d1(c1);
++  const samp = (a, s) => { const x = (Math.min(s1, Math.max(s0, s)) - s0) / ds, k = Math.min(n - 2, Math.floor(x)), f = x - k; return a[k] * (1 - f) + a[k + 1] * f; };
++  let amax = 0; for (let i = i0; i < n; i++) amax = Math.max(amax, Math.abs(b[i]));
++  return { src, samp, b, b1, b2, c, c1, c2, info: { src, maxOffset: +amax.toFixed(3), latB0: +latB0.toFixed(4), tB0: +tB0.toFixed(4) } };
++})();
++const pB = (s) => PATH.samp(PATH.b, s), pB1 = (s) => PATH.samp(PATH.b1, s), pB2 = (s) => PATH.samp(PATH.b2, s);
++const pC = (s) => PATH.samp(PATH.c, s), pC1 = (s) => PATH.samp(PATH.c1, s), pC2 = (s) => PATH.samp(PATH.c2, s);
++const at = (s, out) => out.copy(B0).addScaledVector(A, s).addScaledVector(RR, pB(s));
++const frameAt = (s) => { const k = pB1(s); return { t: A.clone().addScaledVector(RR, k).normalize(), r: RR.clone().addScaledVector(A, -k).normalize(), n: NUP.clone() }; };
++window.qaPath = (s) => (s == null ? PATH.info : { s, pB: +pB(s).toFixed(4), slopeDeg: +(Math.atan(pB1(s)) * 180 / Math.PI).toFixed(2), curv: +pB2(s).toFixed(4), pC: +pC(s).toFixed(4) });
++const TRAIL = []; const TRAIL_S = []; for (let s = 0; s <= LEVEL + 1e-9; s += 0.05) { TRAIL.push(at(s, new THREE.Vector3()).toArray()); TRAIL_S.push(+s.toFixed(4)); }
+ const TR = { trail: TRAIL, trail_s: TRAIL_S, N: 0 };
+ const coins = []; let coinCount = 1420; const coinEl = document.getElementById('coins');
+ const bubTex = await tl.loadAsync('bubble.png'); bubTex.colorSpace = THREE.SRGBColorSpace;
+ const ctex = await tl.loadAsync('coin.png'); ctex.colorSpace = THREE.SRGBColorSpace;
+ const coinD = 0.15038523388874458 * bennyDist / 1.186;      // round-32 coin size, scaled to the kit's Benny distance
+ const qc = new URLSearchParams(location.search); if (!qc.has('c_LEAN_K')) qc.set('c_LEAN_K', '0.09');
+-for (const [k, v] of [['c_CAM_LAT_K', '0.75'], ['c_CAM_LAT_MAX', '0.2'], ['c_CAM_LAT_OMEGA', '12']]) if (!qc.has(k)) qc.set(k, v);   // camera follows lane changes more: Benny stays fully on screen (round 33k)   // gentler bank (round 33: 5 -> <3 deg per frame); controls.js unchanged
++for (const [k, v] of [['c_CAM_LAT_K', '0.75'], ['c_CAM_LAT_MAX', '0.2'], ['c_CAM_LAT_OMEGA', '12']]) if (!qc.has(k)) qc.set(k, v);   // round 33k (gentler bank c_LEAN_K; controls.js unchanged). Round 34 S3: the camera's lane follow is now computed in step() (CAMP.cam*); CT.c.camLat is only reported
+ const CT = installControls({ THREE, TR, canvas: renderer.domElement, camera, q: qc, at, frameAt, coins, scene, U, bmat, benny, splash, splashTex, bubTex, coinTex: ctex, coinD, bennyFullH: 0.99 * KH, pxW, coinEl, getS: () => st.s, getCoins: () => coinCount, render: () => renderer.render(scene, camera) });
+ // coin run 1 = the APPROVED picture's coins (tools/kit05/painted_coins.py: painted centres cast onto the kit river; the far-left one
+ // moved into the left lane), 2 more at the painted spacing; run 2 (same-lane coins that stacked on screen at 0.6 u spacing) moved into
+ // the free stretch after the leap arc at ~1 u spacing. 26 coins as before; coinLayout() reports the real positions to the test player.
+-const NEWPOS = [[1.789, 0.008], [2.876, 0.22], [4.321, -0.008], [5.951, -0.22], [7.684, -0.22], [8.691, 0.02], [9.8, 0.1], [10.9, 0.12],
+-  [14.4, 0.15], [15.4, 0.22], [16.4, 0.22], [17.3, 0.03]];
+-if (!q.get('layoutcoins')) NEWPOS.forEach(([cs, cl], i) => { const c = coins[i]; c.s = cs; c.lat = cl; at(cs, c.p0).addScaledVector(RR, cl).addScaledVector(NUP, coinD * 0.75); c.sp.position.copy(c.p0); c.kind = Math.abs(cl) >= 0.1 ? 'lane' : 'water'; });
+-{ const L0 = window.coinLayout(); window.coinLayout = () => coins.map((c, i) => ({ s: c.s, lat: +c.lat.toFixed(3), h: c.h, run: L0[i]?.run, runKind: L0[i]?.runKind, p: c.p0.toArray().map((x) => +x.toFixed(4)), n: NUP.toArray().map((x) => +x.toFixed(4)) })); }
++// round 34 (S3): the coins sit on the BENDING river. Run 1 keeps the painted WORLD positions (frame 0 = the painted coins; the list is in
++// straight-start-line coordinates) re-expressed as (s, lat) on the river's centre line, so the pick-up, coinLayout() and the trail player
++// use the river's own lanes; run 2 and the later runs are path-relative (they bend with the river). Weave coin 4 lat -0.13 -> -0.10: all
++// five weave coins are now in the middle lane (round 33: the trail player left for -0.13 0.7 u early and missed the coin before it).
++const PAINTED = [[1.789, 0.008], [2.876, 0.22], [4.321, -0.008], [5.951, -0.22], [7.684, -0.22], [8.691, 0.02], [9.8, 0.1], [10.9, 0.12]];
++const RUN2 = [[14.4, 0.15], [15.4, 0.22], [16.4, 0.22], [17.3, 0.03]];
++const toPath = (s, lat) => { const P = B0.clone().addScaledVector(A, s).addScaledVector(RR, lat), w = new THREE.Vector3(); let sp = s, lp = lat;
++  for (let k = 0; k < 8; k++) { const F = frameAt(sp), d = P.clone().sub(at(sp, w)); lp = d.dot(F.r); sp += d.dot(F.t); } return [sp, lp]; };
++const placeCoin = (c, cs, cl) => { const F = frameAt(cs); c.s = +cs.toFixed(4); c.lat = cl; at(cs, c.p0).addScaledVector(F.r, cl).addScaledVector(F.n, coinD * 0.75 + (c.h || 0)); c.n0.copy(F.n); c.sp.position.copy(c.p0);
++  if (!(c.h > 0)) c.kind = Math.abs(cl) >= 0.1 ? 'lane' : 'water'; };
++const coinWarn = [];
++if (!q.get('layoutcoins')) {
++  PAINTED.forEach(([cs, cl], i) => { const [sp, lp] = toPath(cs, cl); placeCoin(coins[i], sp, lp); if (Math.abs(lp) > 0.33) coinWarn.push({ i, s: sp, lat: lp }); });
++  RUN2.forEach(([cs, cl], i) => placeCoin(coins[8 + i], cs, cl));
++  if (coins[21] && Math.abs(coins[21].lat + 0.13) < 1e-6) placeCoin(coins[21], coins[21].s, -0.10);
++}
++PATH.info.coinsOutOfLanes = coinWarn;
++{ const L0 = window.coinLayout(); window.coinLayout = () => coins.map((c, i) => ({ s: c.s, lat: +c.lat.toFixed(3), h: c.h, run: L0[i]?.run, runKind: L0[i]?.runKind, p: c.p0.toArray().map((x) => +x.toFixed(4)), n: c.n0.toArray().map((x) => +x.toFixed(4)) })); }
+ // every sprite (coins, droplets, splash) goes through the same depth curve as the scenery: far coins sit on the far river
+ const patchSprite = (m) => { if (m.userData.kit) return; m.userData.kit = 1; m.onBeforeCompile = (sh) => { Object.assign(sh.uniforms, REMAP);
+   sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\n' + REMAP_GLSL).replace('vec4 mvPosition = modelViewMatrix[ 3 ];', 'vec4 mvPosition = viewMatrix * vec4(kitRemap(modelMatrix[ 3 ].xyz), 1.0);'); }; m.needsUpdate = true; };
+@@ -237,17 +285,34 @@ const glints = new THREE.Points(gGeo, gMat); glints.frustumCulled = false; glint
+ const tmp2 = new THREE.Vector3();
+ const MTABK = [[2.0, 0.96], [2.16, 0.95], [2.8, 0.86], [3.33, 0.76], [3.85, 0.60], [4.5, 0.42], [5.0, 0.33], [5.5, 0.30]];
+ const mOfK = (d) => { if (d <= MTABK[0][0]) return MTABK[0][1]; for (let i = 1; i < MTABK.length; i++) if (d <= MTABK[i][0]) { const [d0, m0] = MTABK[i - 1], [d1, m1] = MTABK[i]; return m0 + (m1 - m0) * (d - d0) / (d1 - d0); } return MTABK[MTABK.length - 1][1]; };
+-const st = { s: 0, lat: 0, lean: 0, camLat: 0 };
++const st = { s: 0, lat: 0, latPrev: 0, lean: 0, camLat: 0, camF: { x: 0, v: 0 }, v: 0, yawB: { x: 0, v: 0 }, leanB: { x: 0, v: 0 }, camYaw: { x: 0, v: 0 }, camRoll: { x: 0, v: 0 }, guard: 0 };
+ const Zax = new THREE.Vector3(0, 0, 1), tmp = new THREE.Vector3();
+ const M = bennyM;
++// round 34 (S3) camera / body tuning (URL p_* overrides for tests). The camera rides the river's centre line (camera-smoothed, so Benny keeps
++// his painted place on screen while the river bends), follows his lanes (controls' spring CT.c.camLat + a soft guard that keeps his whole
++// body on screen), swings a few degrees into the bend about his river point (he stays put on screen; the depth curve remaps along the fixed
++// tunnel axis from the camera POSITION, so a turned camera still sees the painted ring ratio) and rolls ~1-2 deg with the curve.
++const PQ = (k, d) => +(q.get(k) ?? d), DEG = Math.PI / 180;
++const CAMP = { look: PQ('p_look', 0.7), yawK: PQ('p_yawk', 0.35), yawMax: Math.tan(PQ('p_yawmax', 3.5) * DEG), yawW: PQ('p_yaww', 3.0),
++  rollK: PQ('p_rollk', 0.1), rollMax: PQ('p_rollmax', 2.0) * DEG, rollW: PQ('p_rollw', 3.0), fadeIn: PQ('p_fadein', 1.2),
++  leanK: PQ('p_leank', 0.3), leanMax: PQ('p_leanmax', 0.1), leanW: PQ('p_leanw', 6), byawK: PQ('p_byawk', 0.85), byawW: PQ('p_byaww', 6),
++  camK: PQ('p_camk', 0.8), camW: PQ('p_camw', 12), camFF: PQ('p_camff', 0.12), camMax: PQ('p_cammax', 0.22),
++  gNeg: PQ('p_gneg', 0.07), gPos: PQ('p_gpos', 0.1), gKnee: PQ('p_gknee', 0.02), R0: PQ('p_r0', 0.42), RMAX: PQ('p_rmax', 0.58) };
++const cds = (o, target, omega, dt) => { const y = o.x - target, j = o.v + omega * y, e = Math.exp(-omega * dt); o.x = target + (y + j * dt) * e; o.v = (o.v - omega * j * dt) * e; return o.x; };
++const clampA = (x, m) => Math.max(-m, Math.min(m, x));
++const softLim = (x, lim, knee) => { const m = Math.abs(x), k0 = lim - knee; return m <= k0 ? x : Math.sign(x) * (k0 + knee * Math.tanh((m - k0) / knee)); };
++const tY = new THREE.Vector3(), rY = new THREE.Vector3(), mB = new THREE.Matrix4(), qL = new THREE.Quaternion(), qYaw = new THREE.Quaternion(), qRoll = new THREE.Quaternion(), FWDL = new THREE.Vector3(0, 0, -1), pivot = new THREE.Vector3(), rC = new THREE.Vector3(), radv = new THREE.Vector3();
+ window.step = (t, dt, steer, speed) => {
+-  st.s += CT.fwd(speed) * dt;
++  st.v = CT.fwd(speed); st.s += st.v * dt;
+   st.lat = CT.update(t, dt).lat;
+-  const F = frameAt(st.s);
+-  st.lean += (0 - st.lean) * Math.min(1, dt * 5);                       // straight tunnel: no bend lean (lane bank comes from CT.orient)
++  const F = frameAt(st.s), v2 = st.v * st.v, fade = THREE.MathUtils.smoothstep(st.s, 0, CAMP.fadeIn);
++  // body: leans gently into the river's bend (lateral acceleration p'' v^2) and faces along the river (damped share of its tangent)
++  st.lean = cds(st.leanB, fade * clampA(CAMP.leanK * pB2(st.s + 0.3) * v2, CAMP.leanMax), CAMP.leanW, dt);
++  cds(st.yawB, fade * CAMP.byawK * pB1(st.s), CAMP.byawW, dt);
+   at(st.s, tmp).addScaledVector(F.r, st.lat);
+   benny.position.copy(tmp).addScaledVector(F.n, Math.sin(t * Math.PI * 1.6) * 0.006 + CT.c.h);
+-  benny.quaternion.setFromRotationMatrix(M).multiply(new THREE.Quaternion().setFromAxisAngle(Zax, st.lean));
++  tY.copy(A).addScaledVector(RR, st.yawB.x).normalize(); rY.copy(RR).addScaledVector(A, -st.yawB.x).normalize().negate();
++  benny.quaternion.setFromRotationMatrix(st.yawB.x === 0 ? M : mB.makeBasis(rY, NUP, tY)).multiply(qL.setFromAxisAngle(Zax, st.lean));
+   CT.orient(benny.quaternion);
+   U.uT.value = t; U.uSwim.value = 1; U.uPom.value.set(Math.sin(t * 5.0) * 0.06, st.lean * 0.4);
+   CT.anim(st.lean);
+@@ -261,9 +326,23 @@ window.step = (t, dt, steer, speed) => {
+     gSize[i] = 0.035 * gSz[i] * (0.6 + tw);
+   }
+   gGeo.attributes.position.needsUpdate = true; gGeo.attributes.aAlpha.needsUpdate = true; gGeo.attributes.aSize.needsUpdate = true;
+-  // follow camera = the approved picture's camera relative to Benny, + the round-32 lane / leap follow springs
+-  camera.position.copy(B0).negate().add(at(st.s, tmp)).addScaledVector(F.r, CT.c.camLat).addScaledVector(F.n, CT.c.camH);
+-  camera.quaternion.copy(camQ0); camera.updateMatrixWorld();
++  // follow camera = the approved picture's camera relative to Benny (frame 0 = exactly the approved camera), carried along the river's
++  // camera-smoothed centre line, + lane follow (controls' spring + soft on-screen guard) + leap follow, + bend swing / roll (round 34 S3)
++  // lane follow: 80 % of his lane offset through a critically damped spring with a little velocity lead (starts with his move, no lag
++  // swing-out: his lane offset relative to the camera stays within about +-0.06 u even for rapid left-right swipes) + a soft guard
++  const latV = dt > 0 ? (st.lat - st.latPrev) / dt : 0; st.latPrev = st.lat;
++  cds(st.camF, clampA(CAMP.camK * (st.lat + CAMP.camFF * latV), CAMP.camMax), CAMP.camW, dt);
++  const sc = st.s, eLane = st.lat - st.camF.x;                                       // his lane offset relative to the camera's
++  const eKeep = eLane < 0 ? -softLim(-eLane, CAMP.gNeg, CAMP.gKnee) : softLim(eLane, CAMP.gPos, CAMP.gKnee);
++  st.guard = eLane - eKeep; st.camLat = st.camF.x + st.guard;
++  rC.copy(RR).addScaledVector(A, -pC1(sc)).normalize();
++  camera.position.copy(A).multiplyScalar(sc).addScaledVector(RR, pC(sc)).addScaledVector(rC, st.camLat).addScaledVector(NUP, CT.c.camH);
++  cds(st.camYaw, fade * clampA(CAMP.yawK * pC1(sc + CAMP.look), CAMP.yawMax), CAMP.yawW, dt);
++  cds(st.camRoll, fade * clampA(CAMP.rollK * pC2(sc + CAMP.look) * v2, CAMP.rollMax), CAMP.rollW, dt);
++  if (st.camYaw.x !== 0) { qYaw.setFromUnitVectors(A, tY.copy(A).addScaledVector(RR, st.camYaw.x).normalize()); at(sc, pivot); camera.position.sub(pivot).applyQuaternion(qYaw).add(pivot); }
++  else qYaw.identity();
++  radv.copy(camera.position).sub(A0); radv.addScaledVector(A, -radv.dot(A)); { const r = radv.length(), r2 = softLim(r, CAMP.RMAX, CAMP.RMAX - CAMP.R0); if (r2 < r) camera.position.addScaledVector(radv, r2 / r - 1); }   // inside the tunnel
++  camera.quaternion.copy(qYaw).multiply(camQ0).multiply(qRoll.setFromAxisAngle(FWDL, st.camRoll.x)); camera.updateMatrixWorld();
+   REMAP.uCam.value.copy(camera.position); FLOW.uFlow.value = t * +(q.get('flowspeed') ?? 0.55); FLOW.uFlowOn.value = THREE.MathUtils.smoothstep(st.s, 0.0, 0.7);
+   core.position.copy(camera.position).add(A0).addScaledVector(A, 300); core.scale.set(33, 33, 1);
+   updateEnd(st.s);
+@@ -277,13 +356,13 @@ window.step = (t, dt, steer, speed) => {
+   for (const c of coins) if (c.got < 0 && c.sp.visible) c.sp.scale.multiplyScalar(1 / mOfK(camera.position.distanceTo(c.sp.position)));
+   for (const c of coins) if (c.got < 0 && c.sp.visible) { const za = tmp.copy(c.sp.position).sub(camera.position).dot(A); const f = 1 - THREE.MathUtils.smoothstep(za, 9.5, 12.0); c.sp.scale.multiplyScalar(f); c.sp.visible = f > 0.01; }
+   if (!q.get('noclutter')) {   // round 33i: on-screen declutter (the later runs are 0.55-0.75 u apart: true sizes overlapped there)
+-    const vis = window.coinScreen().filter((c) => !c.pop).sort((a, b) => b.r - a.r), keep = [];
++    const vis = window.coinScreen().filter((c) => !c.pop).sort((a, b) => b.r - a.r), keep = []; st.decl = 0;
+     for (const c of vis) { let k = 1; for (const n of keep) { const d = Math.hypot(c.x - n.x, c.y - n.y) - n.r - 1.5; if (d < c.r * k) k = Math.max(0, d / c.r); }
+-      if (k < 1) { coins[c.i].sp.scale.multiplyScalar(Math.max(0.05, k)); coins[c.i].sp.visible = k > 0.05; }
++      if (k < 1) { coins[c.i].sp.scale.multiplyScalar(Math.max(0.05, k)); coins[c.i].sp.visible = k > 0.05; if (c.r >= 3) st.decl++; }
+       keep.push({ x: c.x, y: c.y, r: c.r * k }); }
+   }
+   scene.traverse((o) => { if (o.isSprite && o !== core) patchSprite(o.material); });   // droplets created during play
+-  return { s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: coinCount, tile: Math.floor((K.level.tB0 + st.s - K.level.ring0) / K.S) - K.level.k0, ...CT.state() };   // tile = ring section Benny is in (0 = start)
++  return { s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: coinCount, tile: Math.floor((K.level.tB0 + st.s - K.level.ring0) / K.S) - K.level.k0, ...CT.state(), declutter: st.decl | 0, camLatEff: +st.camLat.toFixed(4), guard: +st.guard.toFixed(4), camYawDeg: +(Math.atan(st.camYaw.x) / DEG).toFixed(3), camRollDeg: +(st.camRoll.x / DEG).toFixed(3) };   // tile = ring section Benny is in (0 = start)
+ };
+ // ending (as round 32b): over the last 1.25 u before the level end the warm white-gold light grows from the core and fills the screen
+ const S_LAST = LEVEL; const endEl = document.createElement('div'); endEl.style.cssText = 'position:fixed;inset:0;pointer-events:none;opacity:0';
+@@ -319,6 +398,20 @@ window.step(0, 0, 0, 0);
+ for (let i = 0; i < 3; i++) { renderer.render(scene, camera); await new Promise((r) => setTimeout(r, 100)); }
+ window.camInfo = () => ({ p: camera.position.toArray(), q: camera.quaternion.toArray() });
+ window.bennyInfo = () => { const qq = new THREE.Quaternion(), p = new THREE.Vector3(); benny.getWorldQuaternion(qq); benny.getWorldPosition(p); const up = new THREE.Vector3(0, 1, 0).applyQuaternion(qq).applyQuaternion(camera.quaternion.clone().invert()); const nW = NUP.clone().applyQuaternion(camera.quaternion.clone().invert()); const sp = p.clone().project(camera); return { rollDeg: Math.atan2(-up.x, up.y) * 180 / Math.PI, camRollDeg: Math.atan2(-nW.x, nW.y) * 180 / Math.PI, x: (sp.x * 0.5 + 0.5) * W, y: (0.5 - sp.y * 0.5) * H, dist: p.distanceTo(camera.position) }; };
++// round 34 (S3) QA: Benny's on-screen box (canvas px) from his deformed-free mesh vertices with the current pose + camera
++// (the vertex shader's paddling arms, pom-pom and squash are reproduced here: the arms define his left / right extent)
++const sm = (e0, e1, x) => { const k = Math.min(1, Math.max(0, (x - e0) / (e1 - e0))); return k * k * (3 - 2 * k); };
++const rotAx = (r, ax, an) => { const c = Math.cos(an), s = Math.sin(an), cr = new THREE.Vector3().crossVectors(ax, r); return r.clone().multiplyScalar(c).addScaledVector(cr, s).addScaledVector(ax, ax.dot(r) * (1 - c)); };
++const AXX = new THREE.Vector3(1, 0, 0), AXY = new THREE.Vector3(0, 1, 0), AXZ = new THREE.Vector3(0, 0, 1);
++window.bennyBox = (stride = 3) => { benny.updateMatrixWorld(true); camera.updateMatrixWorld(); const a = bmesh.geometry.attributes.position, v = new THREE.Vector3(); let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
++  const uT = U.uT.value, uSw = U.uSwim.value, uPom = U.uPom.value, sq = 1 + 0.03 * uSw * Math.sin(uT * 15);
++  for (let i = 0; i < a.count; i += stride) { let p = new THREE.Vector3().fromBufferAttribute(a, i);
++    const side = p.x >= 0 ? 1 : -1, wa = sm(0.30, 0.37, Math.abs(p.x)) * (1 - sm(0.08, 0.16, Math.abs(p.y + 0.18))), ph = uT * 7.5 + (side > 0 ? 0 : Math.PI);
++    if (wa > 0) { const piv = new THREE.Vector3(side * 0.31, -0.18, 0); let qv = p.clone().sub(piv); qv = rotAx(qv, AXZ, side * uSw * wa * 0.42 * Math.sin(ph)); qv = rotAx(qv, AXY, side * uSw * wa * 0.5 * Math.cos(ph)); p = piv.add(qv); }
++    const wp = sm(0.17, 0.27, p.y); if (wp > 0) { const pp = new THREE.Vector3(0, 0.19, 0.05); let r = p.clone().sub(pp); r = rotAx(r, AXX, uPom.x * wp); r = rotAx(r, AXZ, uPom.y * wp); p = pp.add(r); }
++    p.y = (p.y + 0.5) * sq - 0.5; p.x /= Math.sqrt(sq); p.z /= Math.sqrt(sq);
++    v.copy(p).applyMatrix4(bmesh.matrixWorld).project(camera); const x = (v.x + 1) / 2 * W, y = (1 - v.y) / 2 * H; x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); }
++  return { x0: +x0.toFixed(1), x1: +x1.toFixed(1), y0: +y0.toFixed(1), y1: +y1.toFixed(1) }; };
+ window.ready = true;
+ // round 34: ?live=1 = real-time play on a phone / browser (requestAnimationFrame loop, tap to start, FPS + swipe-response meter);
+ // without it the page stays frame-stepped for the acceptance harness exactly as before

@@ -1,0 +1,42 @@
+
+> rainbow-washer-game@0.1.0 test:continuity
+> vite-node scripts/continuity-test.ts
+
+{
+ "ok": true,
+ "length": 437.6,
+ "plunge": {
+  "entryAltitude07": -48.53,
+  "plungeTop": {
+   "s": 312.41,
+   "y": -52.48
+  },
+  "plungeMid": {
+   "s": 351.99,
+   "y": -84
+  },
+  "plungeBottom": {
+   "s": 391.57,
+   "y": -113.49
+  },
+  "inlet08": {
+   "s": 391.66,
+   "y": -113.5
+  },
+  "verticalDrop": 61.02,
+  "minPitchDeg": -70
+ },
+ "maxStepTangentDeg": 7.964,
+ "boundaries": [
+  "01->02 gap=0 dT=0.249 y=-2.4",
+  "02->03 gap=-0.0001 dT=0.657 y=-11.87",
+  "03->04 gap=0 dT=0.92 y=-19.41",
+  "04->05 gap=-0.0002 dT=0.263 y=-40.63",
+  "05->06 gap=0 dT=0.274 y=-43.35",
+  "06->07 gap=0 dT=0.122 y=-48.53",
+  "07->08 gap=0 dT=0.355 y=-113.5",
+  "08->09 gap=0 dT=0.127 y=-113.59",
+  "09->10 gap=0 dT=0.097 y=-113.47",
+  "10->11 gap=0 dT=0.003 y=-110.16"
+ ]
+}

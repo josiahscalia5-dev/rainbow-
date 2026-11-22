@@ -1,0 +1,62 @@
+{
+ "a00_approved_view": {
+  "changed_px": 0,
+  "changed_px_rows180_1536": 0,
+  "pct_frame": 0.0
+ },
+ "f03_forward3u": {
+  "changed_px": 5518,
+  "changed_px_rows180_1536": 5518,
+  "pct_frame": 0.416
+ },
+ "f06_forward6u": {
+  "changed_px": 6415,
+  "changed_px_rows180_1536": 6415,
+  "pct_frame": 0.483
+ },
+ "f10_forward10u": {
+  "changed_px": 8068,
+  "changed_px_rows180_1536": 8068,
+  "pct_frame": 0.608
+ },
+ "f20_forward20u": {
+  "changed_px": 0,
+  "changed_px_rows180_1536": 0,
+  "pct_frame": 0.0
+ },
+ "s_left_hard": {
+  "changed_px": 9498,
+  "changed_px_rows180_1536": 9498,
+  "pct_frame": 0.716
+ },
+ "s_left_steer": {
+  "changed_px": 6604,
+  "changed_px_rows180_1536": 6604,
+  "pct_frame": 0.498
+ },
+ "s_right_hard": {
+  "changed_px": 8872,
+  "changed_px_rows180_1536": 8872,
+  "pct_frame": 0.669
+ },
+ "s_right_steer": {
+  "changed_px": 6757,
+  "changed_px_rows180_1536": 6757,
+  "pct_frame": 0.509
+ },
+ "t33_through_screen": {
+  "changed_px": 5892,
+  "changed_px_rows180_1536": 5892,
+  "pct_frame": 0.444
+ },
+ "t66_through_screen": {
+  "changed_px": 7399,
+  "changed_px_rows180_1536": 7399,
+  "pct_frame": 0.558
+ },
+ "t95_through_screen": {
+  "changed_px": 9194,
+  "changed_px_rows180_1536": 9194,
+  "pct_frame": 0.693
+ }
+}

@@ -1,0 +1,90 @@
+{
+  "errors": [],
+  "info": {
+    "total": 91,
+    "perStage": {
+      "10": 5,
+      "03": 9,
+      "04": 8,
+      "05": 10,
+      "06": 18,
+      "07": 24,
+      "08": 7,
+      "09": 10
+    },
+    "before08goto": 69,
+    "refCoins08": 2040
+  },
+  "duringIntro": {
+    "mode": "ride",
+    "stage": "04",
+    "s": 77.413,
+    "lat": 0,
+    "coins": 1420,
+    "hearts": 5,
+    "paused": true,
+    "bennyY": -21.872,
+    "bennyVisible": true,
+    "cam": [
+      0.72,
+      -14.48,
+      -15.82
+    ]
+  },
+  "afterIntro": {
+    "mode": "ride",
+    "stage": "04",
+    "s": 78.652,
+    "lat": 0,
+    "coins": 1420,
+    "hearts": 5,
+    "paused": false,
+    "bennyY": -22.325,
+    "bennyVisible": true,
+    "cam": [
+      1.04,
+      -14.36,
+      -16.84
+    ]
+  },
+  "drive": {
+    "steps": 1685,
+    "state": {
+      "mode": "outro",
+      "stage": "11",
+      "s": 404.879,
+      "lat": -1.597,
+      "coins": 2240,
+      "hearts": 5,
+      "paused": true,
+      "bennyY": -112.683,
+      "bennyVisible": true,
+      "cam": [
+        10.2,
+        -109.88,
+        -287.32
+      ]
+    },
+    "untakenBefore09": []
+  },
+  "endingShown": true,
+  "reachedEnd": true,
+  "final": {
+    "mode": "end",
+    "stage": "11",
+    "s": 404.879,
+    "lat": -1.597,
+    "coins": 2240,
+    "hearts": 5,
+    "paused": false,
+    "bennyY": -109.503,
+    "bennyVisible": false,
+    "cam": [
+      11.2,
+      -99.1,
+      -304
+    ]
+  },
+  "takenFinal": 91,
+  "pass": true
+}

@@ -1,0 +1,29 @@
+{
+ "manifest_files_ok": 2161,
+ "mismatch": 0,
+ "missing": 0,
+ "lfs_pointers_left": 0,
+ "required_missing": [],
+ "largest_files": [
+  "29.6 MB 6_marble_worldlabs_assets/05/pilot/full/splats_full_res.spz",
+  "28.0 MB 6_marble_worldlabs_assets/05/pilot/full/splats_500k.ply",
+  "27.9 MB 6_marble_worldlabs_assets/05/pilot/draft/splats_500k.ply",
+  "26.9 MB 5_android_apk/rainbow-debug-06-2026-11-17-r3.apk",
+  "26.3 MB 6_marble_worldlabs_assets/05/pilot/draft/splats_full_res.spz",
+  "23.0 MB 5_android_apk/rainbow-debug-match08-2026-11-17c-benny.apk",
+  "21.7 MB 5_android_apk/older_apks/rainbow-debug-match08-2026-11-17b.apk",
+  "21.3 MB 5_android_apk/older_apks/rainbow-debug-match08-2026-11-17.apk"
+ ],
+ "secret_pattern_hits": [],
+ "forbidden_dirs": [],
+ "problems": [],
+ "zips": {
+  "Rainbow_App_Review.zip": 392.4,
+  "Rainbow_App_Review_assets_6_newest_apks.zip": 49.9,
+  "Rainbow_App_Review_assets_5_of_5_marble_older_apks.zip": 277.2,
+  "Rainbow_App_Review_assets_1_of_5_stills_04_05_audit.zip": 354.8,
+  "Rainbow_App_Review_assets_3_of_5_stills_07_08.zip": 351.0,
+  "Rainbow_App_Review_assets_2_of_5_stills_06_default.zip": 285.9,
+  "Rainbow_App_Review_assets_4_of_5_stills_benny.zip": 215.1
+ }
+}

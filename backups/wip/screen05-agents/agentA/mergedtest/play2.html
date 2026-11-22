@@ -1,0 +1,123 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Screen 05 Marble test</title>
+<style>
+html,body{margin:0;background:#000;overflow:hidden;font-family:system-ui,sans-serif}canvas{display:block}
+#hud{position:fixed;left:0;right:0;top:10px;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none}
+.bar{display:flex;gap:28px;align-items:center;background:linear-gradient(#7b2bbf,#4a1386);border:2px solid #d9a7ff;border-radius:30px;padding:6px 22px;color:#fff;font-weight:800;font-size:22px;box-shadow:0 2px 8px #0006}
+.title{background:#5a1aa0e0;border:2px solid #f2c14e;border-radius:20px;padding:4px 18px;color:#fff;font-weight:800;font-style:italic;font-size:17px;letter-spacing:.5px}
+</style>
+<script type="importmap">{"imports":{"three":"./node_modules/three/build/three.module.js","three/addons/":"./node_modules/three/examples/jsm/","@sparkjsdev/spark":"./node_modules/@sparkjsdev/spark/dist/spark.module.js"}}</script>
+</head><body>
+<div id="hud"><div class="bar"><span>&#10084;&#65039; 5/5</span><span id="coins">&#129689; 1,420</span></div><div class="title">05 &middot; FLOW INTO THE CURRENT</div></div>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { SplatMesh, SparkRenderer } from '@sparkjsdev/spark';
+const q = new URLSearchParams(location.search);
+const W = +(q.get('w') ?? 540), H = +(q.get('h') ?? 960);
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(1); renderer.setSize(W, H); document.body.appendChild(renderer.domElement);
+renderer.toneMapping = THREE.NeutralToneMapping; renderer.toneMappingExposure = 0.86; // the game's own chain (splats are not tone-mapped by Spark)
+const SC = await (await fetch('scene05.json')).json();
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(SC.cam.fov, W / H, 0.01, 200);
+const spark = new SparkRenderer({ renderer }); scene.add(spark);
+const TL = await (await fetch('tiles.json')).json();
+const world = new SplatMesh({ url: 'near.ply' }); world.quaternion.set(1, 0, 0, 0); scene.add(world);
+const bay = new SplatMesh({ url: 'bay.ply' }); await bay.initialized; await world.initialized;
+const DV = new THREE.Vector3(...TL.D), AX = new THREE.Vector3(...TL.ax);
+const tiles = [];
+for (let k = 1; k <= TL.N; k++) { const m = new SplatMesh({ packedSplats: bay.packedSplats }); m.quaternion.set(1, 0, 0, 0); m.position.copy(DV).multiplyScalar(k); scene.add(m); tiles.push(m); }
+const showTiles = (uB) => { const kc = Math.floor((uB - TL.UA) / DV.length()); world.visible = kc <= 1; tiles.forEach((m, i) => { const k = i + 1; m.visible = k >= kc - 1 && k <= kc + 7; }); };
+
+// ---------- trail (the painted S-path projected onto the world's water) ----------
+const T = TL.trail.map((p) => new THREE.Vector3(...p)), TS = TL.trail_s, N = new THREE.Vector3(...SC.plane.n);
+const at = (s, out) => { s = Math.max(0, Math.min(TS[TS.length - 1], s)); let i = 1; while (i < TS.length - 1 && TS[i] < s) i++; const k = (s - TS[i - 1]) / Math.max(1e-6, TS[i] - TS[i - 1]); return out.lerpVectors(T[i - 1], T[i], k); };
+const a = new THREE.Vector3(), b = new THREE.Vector3();
+const frameAt = (s, win = 0.35) => { at(s - win * 0.3, a); at(s + win, b); const t = b.sub(a).normalize().clone(); const n = N.clone().addScaledVector(t, -t.dot(N)).normalize(); const r = new THREE.Vector3().crossVectors(t, n).normalize(); return { t, r, n }; };
+
+// ---------- Benny (improved 3D Benny: same mesh, bake and paddling shader as the game's benny31) ----------
+const VERT_HEAD = `uniform float uT; uniform float uSwim; uniform vec2 uPom;
+vec3 b31rot(vec3 r, vec3 ax, float a){ float c = cos(a), s = sin(a); return r * c + cross(ax, r) * s + ax * dot(ax, r) * (1.0 - c); }`;
+const VERT_BODY = `vec3 p = position;
+float side = p.x >= 0.0 ? 1.0 : -1.0;
+float wa = smoothstep(0.30, 0.37, abs(p.x)) * (1.0 - smoothstep(0.08, 0.16, abs(p.y + 0.18)));
+float ph = uT * 7.5 + (side > 0.0 ? 0.0 : 3.14159);
+vec3 piv = vec3(side * 0.31, -0.18, 0.0);
+vec3 q = p - piv;
+q = b31rot(q, vec3(0.0, 0.0, 1.0), side * uSwim * wa * 0.42 * sin(ph));
+q = b31rot(q, vec3(0.0, 1.0, 0.0), side * uSwim * wa * 0.5 * cos(ph));
+p = piv + q;
+float wp = smoothstep(0.17, 0.27, p.y);
+vec3 pp = vec3(0.0, 0.19, 0.05);
+vec3 r = p - pp;
+r = b31rot(r, vec3(1.0, 0.0, 0.0), uPom.x * wp);
+r = b31rot(r, vec3(0.0, 0.0, 1.0), uPom.y * wp);
+p = pp + r;
+float sq = 1.0 + 0.03 * uSwim * sin(uT * 15.0);
+p.y = (p.y + 0.5) * sq - 0.5; p.xz /= sqrt(sq);
+vec3 transformed = p;`;
+const gltf = await new GLTFLoader().loadAsync('benny31.glb');
+const map = await new THREE.TextureLoader().loadAsync('bake.png'); map.colorSpace = THREE.SRGBColorSpace; map.flipY = false; map.anisotropy = 8;
+let geo = null; gltf.scene.traverse((o) => { if (o.isMesh && !geo) geo = o.geometry; });
+const U = { uT: { value: 0 }, uSwim: { value: 1 }, uPom: { value: new THREE.Vector2() } };
+const bmat = new THREE.MeshBasicMaterial({ map, color: new THREE.Color(4, 4, 4) });
+bmat.onBeforeCompile = (sh) => {
+  Object.assign(sh.uniforms, U);
+  sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\n' + VERT_HEAD).replace('#include <begin_vertex>', VERT_BODY);
+  // grade.ts (saturation 1.36, contrast 1.15) after the output transform, as the game's post chain does
+  sh.fragmentShader = sh.fragmentShader.replace('#include <colorspace_fragment>', `#include <colorspace_fragment>
+    { vec3 col = gl_FragColor.rgb; float l = dot(col, vec3(0.2126, 0.7152, 0.0722)); col = mix(vec3(l), col, 1.36); col = (col - 0.5) * 1.15 + 0.5; gl_FragColor.rgb = clamp(col, 0.0, 1.0); }`);
+};
+const bmesh = new THREE.Mesh(geo, bmat); bmesh.frustumCulled = false;
+const KH = SC.benny_h / (0.99 * 0.86); // height to the pom-pom top = the painted Benny's; ~14 % of him in the water
+const holder = new THREE.Group(); holder.rotation.y = Math.PI; holder.scale.setScalar(KH); holder.position.y = 0.496 * KH - 0.14 * 0.99 * KH;
+holder.add(bmesh);
+const benny = new THREE.Group(); benny.add(holder); scene.add(benny);
+
+// ---------- coins (the painted coin sprite; collected = pop from his pom-pom) ----------
+const ctex = await new THREE.TextureLoader().loadAsync('coin.png'); ctex.colorSpace = THREE.SRGBColorSpace;
+const coins = [];
+for (const s of Array.from({ length: 48 }, (_, i) => 0.45 + i * 0.3)) {
+  const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: ctex, toneMapped: false, transparent: true, alphaTest: 0.35, depthWrite: false }));
+  const d = SC.coin_d; sp.scale.set(d * 1.15, d * 1.15, 1);
+  const p = at(s, new THREE.Vector3()).addScaledVector(frameAt(s).n, d * 0.75); sp.position.copy(p);
+  sp.renderOrder = 10; scene.add(sp); coins.push({ s, lat: 0, sp, got: -1 });
+}
+let coinCount = 1420; const coinEl = document.getElementById('coins');
+
+// ---------- camera: at the start EXACTLY the picture's camera; then it follows him, keeping that relation ----------
+const camFwd = new THREE.Vector3(...SC.cam.fwd), camUp = new THREE.Vector3(...SC.cam.up);
+const camQ0 = new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().lookAt(new THREE.Vector3(), camFwd, camUp));
+const F0 = frameAt(0); const M0 = new THREE.Matrix4().makeBasis(F0.r.clone().negate(), F0.n, F0.t);
+const relPos = new THREE.Vector3().sub(T[0]).applyMatrix4(new THREE.Matrix4().copy(M0).transpose()); // camera offset in the start frame
+const relQ = new THREE.Quaternion().setFromRotationMatrix(M0).invert().multiply(camQ0);
+const st = { s: 0, lat: 0, vlat: 0, camLat: 0 };
+const tmp = new THREE.Vector3();
+window.step = (t, dt, steer, speed) => {
+  st.s += speed * dt; showTiles(at(st.s, new THREE.Vector3()).dot(AX));
+  st.vlat += (steer * 0.45 - st.vlat) * Math.min(1, dt * 8); st.lat = THREE.MathUtils.clamp(st.lat + st.vlat * dt, -0.32, 0.32);
+  const F = frameAt(st.s); const M = new THREE.Matrix4().makeBasis(F.r.clone().negate(), F.n, F.t);
+  at(st.s, tmp).addScaledVector(F.r, st.lat);
+  benny.position.copy(tmp).addScaledVector(F.n, Math.sin(t * Math.PI) * 0.006);
+  benny.quaternion.setFromRotationMatrix(M).multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 0, 1), -steer * 0.25));
+  U.uT.value = t; U.uSwim.value = 1; U.uPom.value.set(Math.sin(t * 5.0) * 0.06 + steer * 0.1, steer * 0.18);
+  // follow camera: same relation as the picture's camera to the painted Benny, steering followed by half
+  st.camLat += (st.lat * 0.5 - st.camLat) * Math.min(1, dt * 4);
+  const Fc = frameAt(st.s, 0.9); const Mc = new THREE.Matrix4().makeBasis(Fc.r.clone().negate(), Fc.n, Fc.t);
+  camera.position.copy(relPos).applyMatrix4(Mc).add(at(st.s, tmp)).addScaledVector(Fc.r, st.camLat);
+  camera.quaternion.setFromRotationMatrix(Mc).multiply(relQ); camera.updateMatrixWorld();
+  for (const c of coins) {
+    if (c.got < 0 && st.s >= c.s && Math.abs(st.lat - c.lat) < 0.14) { c.got = t; coinCount += 10; coinEl.textContent = '\u{1FA99} ' + coinCount.toLocaleString('en-US'); }
+    if (c.got >= 0) { const k = (t - c.got) / 0.4; c.sp.visible = k < 1; if (k < 1) { c.sp.position.copy(benny.position).addScaledVector(F.n, SC.benny_h * (1.05 + 0.6 * k)); c.sp.material.opacity = 1 - k * k; const d = SC.coin_d * 0.7 * (1 - 0.5 * k); c.sp.scale.set(d, d, 1); } }
+  }
+  return { s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: coinCount };
+};
+window.renderNow = async (n = 2) => { for (let i = 0; i < n; i++) { renderer.render(scene, camera); await new Promise((r) => setTimeout(r, 60)); } renderer.render(scene, camera); return true; };
+// 3D inspection view: an orbit camera outside the swimmer's path
+window.inspect = async (pos, look) => { const c = camera.clone(); c.fov = 70; c.position.set(...pos); c.up.set(...SC.plane.n); c.lookAt(new THREE.Vector3(...look)); c.updateProjectionMatrix(); for (let i = 0; i < 3; i++) { renderer.render(scene, c); await new Promise((r) => setTimeout(r, 80)); } renderer.render(scene, c); return true; };
+camera.aspect = W / H; camera.updateProjectionMatrix();
+window.step(0, 0, 0, 0);
+for (let i = 0; i < 8; i++) { renderer.render(scene, camera); await new Promise((r) => setTimeout(r, 150)); }
+window.ready = true;
+</script></body></html>

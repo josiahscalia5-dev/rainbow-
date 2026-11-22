@@ -1,0 +1,12 @@
+IMAGE 1 is a frame from a 3D mobile game. Its camera is further inside the gold tunnel of the scene shown in IMAGE 2. IMAGE 2 is the art director's approved original illustration (the final design of this level).
+
+Repaint IMAGE 1 as a finished illustration in exactly the art style, materials, colours and lighting of IMAGE 2, so it looks like the same painting seen from deeper inside the tunnel:
+- polished yellow-gold telescoping rings, bright gold all the way round (no dark bands), only ONE row of warm amber light dots per ring rim spaced as in IMAGE 2 (no dense star-like dot patterns), soft rounded rims, narrow shaded grooves, warm amber light dots sitting ON the bright gold rims, soft pink / violet reflections on the gold;
+- a thick, glossy cyan river with crisp white highlight streaks and small sparkles;
+- hot-pink and magenta satin swirl bands curving up the sides of the river, glossy, with bright white highlight lines and crisp edges;
+- low glossy white-lilac soap-bubble foam along both water edges;
+- a few iridescent soap bubbles in the air;
+- a glowing warm white light at the far end of the tunnel;
+- the five glowing white-cyan chevron arrows on the centre of the river, crisp.
+
+STRICT: keep the exact camera, perspective, composition and geometry of IMAGE 1 — every ring, the tunnel opening, the river path, the chevrons and the far light stay at the same positions and sizes. Same painterly quality and detail level as IMAGE 2 (crisp, glossy, saturated, premium). Do not add any character, mascot, coins, text, HUD or user interface. Output only the repainted scene.

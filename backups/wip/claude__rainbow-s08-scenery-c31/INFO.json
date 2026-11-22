@@ -1,0 +1,17 @@
+{
+ "worktree": "/home/user/wt/s08",
+ "branch": "claude/rainbow-s08-scenery-c31",
+ "head": "3c0fa97090afb2c0fca41898774db7247e23e522",
+ "time": "2026-11-20T22:14:34+00:00",
+ "dirty_tracked": [
+  "src/gameplay/coins.ts",
+  "src/world/match08.ts",
+  "tools/match08/shots08.mjs"
+ ],
+ "untracked_copied": [
+  "tools/match08/r23_vite.mjs",
+  "tools/match08/screen_clip08.mjs"
+ ],
+ "untracked_skipped": [],
+ "restore": "git switch claude/rainbow-s08-scenery-c31 (newest pushed tip) && git apply --binary backups/wip/claude__rainbow-s08-scenery-c31/tracked.patch && copy backups/wip/claude__rainbow-s08-scenery-c31/untracked/* into the worktree"
+}

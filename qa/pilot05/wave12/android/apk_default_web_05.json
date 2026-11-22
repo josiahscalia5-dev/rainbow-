@@ -1,0 +1,17 @@
+{
+ "apk": "builds/rainbow-debug-T2-default.apk",
+ "checkpoint": "05",
+ "state": {
+  "stage": "05",
+  "s": 132.4383020282329,
+  "y": -41.348424102617486
+ },
+ "calls": 164,
+ "triangles": 568351,
+ "modules": {
+  "water": "vfx/index.ts",
+  "benny": "assets/models/benny.glb",
+  "girl": "assets/models/rainbow_girl.glb"
+ },
+ "errors": []
+}

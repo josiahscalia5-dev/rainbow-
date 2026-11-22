@@ -1,0 +1,231 @@
+diff --git a/tools/kit05/bake_kit.py b/tools/kit05/bake_kit.py
+index da675394..1ad555e8 100644
+--- a/tools/kit05/bake_kit.py
++++ b/tools/kit05/bake_kit.py
+@@ -144,20 +144,39 @@ kit = json.load(open(os.path.join(out, 'kit.json'))); kit['own'] = {'wall': wall
+ json.dump(kit, open(os.path.join(out, 'kit.json'), 'w'), indent=1)
+ print('own pixels: wall', {k: v[2] for k, v in wall_own['rows'].items()}, 'ring', {k: v[2] for k, v in ring_own['rows'].items()})
+ 
+-# ---------------- flowing river tile (round 33c): seamless, full-width open water only (the foam banks are on the lower walls) ----------
+-# A = the user's isolated water art, B = the approved water (+ its water-art fill), both over the kit water rows where the water art covers
+-# the FULL width; cycle = A, B, A reversed, B reversed, each join cross-faded -> period 4 x (t1 - t0), no stretched texels.
++# ---------------- flowing RIVER RIBBON tile (round 34, S1): river-local coordinates, sharp, no stretched texels ----------------
++# Round 33's tile filled the columns outside the water art's river with flow-stretched texels (blocky pink / red bars) and joined
++# t-reversed copies (X-shaped mirror pattern = the "repeating grid"). The ribbon is sampled in the game at (u = lateral - river
++# centre c(t), v = t + flow), so it bends with the world-anchored river. Source = the SHARPEST painted water (the kit rows where the
++# isolated water art covers the full floor width, t ~0.9-2.0: near Benny, ~300 px per world unit): A = the approved water (+ its
++# water-art fill), B = the user's isolated water art (colour-matched), straightened along c(t); columns beyond the floor edge
++# (|u| > 0.70 happens on the inner side of a bend) are the pink edge band REFLECTED at the floor edge (pink stays at the river's
++# edge; the foam bank is drawn over it in the game). Cycle A, B, A mirrored left-right, B mirrored, joins cross-faded: no t-reversal.
+ cov = (isoW[..., 3] > 200).mean(1)                                   # full-width coverage per log row
+ okr = np.nonzero((cov > 0.985) & (tv[:, 0] > 0.9))[0]; r0 = okr[0]; r1 = r0
+ while r1 + 1 < VH and cov[r1 + 1] > 0.985: r1 += 1                  # first unbroken full-width run only (near water, crisp)
+ RT0 = float(tv[r0, 0]); RT1 = float(tv[r1, 0])
+ seg_n = 384                                                          # rows per segment (linear in t)
+-def strip(srcimg):
++RU = 1.05; RIB_W = 1536                                              # ribbon lateral range u in [-RU, RU]
++latv = np.linspace(-HWD, HWD, VW)
++def strip(srcimg, valid, shift=0.0):
++    """rows linear in t over the sharp source rows; each row only from ITS valid lateral range (inside the picture / the water art):
++    lateral positions outside it are reflected back into it (triangle wave), never clamped (clamping = the round-33 stretched bars)"""
+     ts = RT0 + (np.arange(seg_n) + 0.5) / seg_n * (RT1 - RT0); rf = np.log(ts / T0) / np.log(T1 / T0) * VH - 0.5
+-    return np.stack([cv2.remap(srcimg[..., ch].astype(np.float32), np.tile(np.arange(VW, dtype=np.float32), (seg_n, 1)),
+-                                np.repeat(rf.astype(np.float32)[:, None], VW, 1), cv2.INTER_LINEAR) for ch in range(3)], -1)
+-SA, SB = strip(isoC), strip(water)
+-parts = [SA, SB, SA[::-1], SB[::-1]]; X = seg_n // 4
++    ri = np.clip(np.round(rf).astype(int), 0, VH - 1)
++    l0 = np.array([latv[valid[r]].min() + 0.01 for r in ri]); l1 = np.array([latv[valid[r]].max() - 0.01 for r in ri])
++    u = np.linspace(-RU, RU, RIB_W)[None, :]; lat = river_center(ts)[:, None] + u + shift
++    L = (l1 - l0)[:, None]; x = np.mod(lat - l0[:, None], 2 * L); lat = l0[:, None] + np.where(x > L, 2 * L - x, x)
++    col = (lat + HWD) / (2 * HWD) * (VW - 1)
++    return np.stack([cv2.remap(srcimg[..., ch].astype(np.float32), col.astype(np.float32), np.repeat(rf.astype(np.float32)[:, None], RIB_W, 1),
++                               cv2.INTER_LINEAR, borderMode=cv2.BORDER_REFLECT) for ch in range(3)], -1)
++_hsv = cv2.cvtColor(np.clip(ref, 0, 255).astype(np.uint8), cv2.COLOR_RGB2HSV); _gold = ((_hsv[..., 0] >= 5) & (_hsv[..., 0] <= 35) & (_hsv[..., 1] > 90)).astype(np.uint8)
++_gold = cv2.dilate(_gold, np.ones((15, 15), np.uint8))               # the gold ring blocks at the picture's bottom corners are not water
++validA = ok & (x >= 2) & (x < W - 3) & (_gold[yc.astype(int), xc.astype(int)] == 0); validB = validA & (isoW[..., 3] > 200)
++# A = approved (its centre behind Benny is the water-art fill), B / B' = the water art shifted sideways (so the centre lane never shows
++# the same water twice in a row), A' = A mirrored left-right
++SA, SB, SB2 = strip(water, validA), strip(isoC, validB, 0.21), strip(isoC, validB, -0.17)
++parts = [SA, SB, SA[:, ::-1], SB2[:, ::-1]]; X = seg_n // 4
+ wv = ((np.arange(X) + 0.5) / X)[:, None, None]
+ tile = parts[0]
+ for nxt in parts[1:]:                                                # overlapping joins: blend X rows, the next part continues after them
+@@ -177,8 +196,29 @@ for cls in (CY, PK):
+     print('colour class: hue shift %.1f (x2 deg), saturation x%.2f' % (dh, ks))
+ tile = cv2.cvtColor(th_.reshape(-1, 1, 3).astype(np.uint8), cv2.COLOR_HSV2RGB).reshape(tile.shape).astype(np.float32)
+ Image.fromarray(np.clip(tile[::-1], 0, 255).astype(np.uint8)).save(os.path.join(out, 'river_tile.png'))   # row 0 = far end
+-kit = json.load(open(os.path.join(out, 'kit.json'))); kit['river_tile'] = {'t0': RT0, 'L': L_TILE, 'painted_until': 14.0, 'painted_fade': 6.0}
+-json.dump(kit, open(os.path.join(out, 'kit.json'), 'w'), indent=1); print('river tile', tile.shape, 'source rows t', round(RT0, 3), '..', round(RT1, 3), 'period', round(L_TILE, 3))
++# round 34 (S1): the PINK edge-band version of the same ribbon: the painted cyan / blue hues mapped onto the painting's own pink band
++# (median hue / saturation / brightness of the approved picture's pink water), white streaks and the painting's pinks unchanged, so the
++# pink bands carry exactly the same painted streaks as the cyan water next to them
++pk = hsv_of(tile); apk = ap[PK(ap[:, 0]) & (ap[:, 1] > 120)]
++cyan_like = (pk[:, 0] >= 75) & (pk[:, 0] <= 135) & (pk[:, 1] > 40)
++hc = np.median(pk[cyan_like, 0]); pk[cyan_like, 0] = np.clip(pk[cyan_like, 0] - hc + np.median(apk[:, 0]), 0, 179)
++pk[cyan_like, 1] = np.clip(pk[cyan_like, 1] * np.median(apk[:, 1]) / max(1.0, np.median(pk[cyan_like, 1])), 0, 255)
++pk[cyan_like, 2] = np.clip(pk[cyan_like, 2] * np.median(apk[:, 2]) / max(1.0, np.median(pk[cyan_like, 2])), 0, 255)
++pink_tile = cv2.cvtColor(pk.reshape(-1, 1, 3).astype(np.uint8), cv2.COLOR_HSV2RGB).reshape(tile.shape)
++Image.fromarray(pink_tile[::-1]).save(os.path.join(out, 'river_pink.png'))
++print('pink ribbon: cyan hue %.0f -> painted pink hue %.0f, sat x%.2f' % (hc, np.median(apk[:, 0]), np.median(apk[:, 1]) / max(1.0, np.median(hsv_of(tile)[cyan_like, 1]))))
++kit = json.load(open(os.path.join(out, 'kit.json'))); kit['river_tile'] = {'t0': RT0, 'L': L_TILE, 'painted_until': 14.0, 'painted_fade': 6.0, 'RU': RU, 'ribbon': 1}
++# round 34 (S1): the river's world-anchored centre line for the game (scenery) and for Benny's path / lanes / coins (S3)
++#   river_center      = {"ds": 0.05, "c": [...]}: lateral offset along K.RR from Benny's straight start line (B0 + s A), every ds of
++#                       path length s from Benny's start (s = 0 .. 60; c[0] = 0: he starts on the river centre)
++#   river_center_axis = the same line as offsets from the tunnel axis at axial t = t0 + i dt (the scenery shaders use this one)
++#   river_safe_halfwidth = how far from the centre Benny's CENTRE may go (lanes are at +-0.22) so that his body (+-0.125) stays on the
++#                       water and inside the floor at every bend: floor half chord 0.70 - max|centre| - 0.125 (the foam banks are further out)
++DS = 0.05; ss = np.arange(0, 60.0 + 1e-9, DS); tt = np.arange(0, 95.0 + 1e-9, DS)
++kit['river_center'] = {'ds': DS, 'c': [round(float(x), 4) for x in river_center(TB0 + ss) - LATB0]}
++kit['river_center_axis'] = {'t0': 0.0, 'dt': DS, 'c': [round(float(x), 4) for x in river_center(tt)], 'lat_start': LATB0, 't_start': TB0}
++kit['river_safe_halfwidth'] = round(float(HWD - np.abs(river_center(tt)).max() - 0.125), 3)
++json.dump(kit, open(os.path.join(out, 'kit.json'), 'w'), indent=1); print('river ribbon', tile.shape, 'source rows t', round(RT0, 3), '..', round(RT1, 3), 'period', round(L_TILE, 3), 'safe half width', kit['river_safe_halfwidth'])
+ 
+ # ---------------- built level for the acceptance test (track.json in the game folder) ----------------
+ LEVEL = 32.16; bdir = cam_dir(432, 1180); B0 = bdir * (-CAM_H / (bdir @ NUP)); tB0 = float(B0 @ A)
+diff --git a/tools/kit05/kit_model.py b/tools/kit05/kit_model.py
+index a80cc912..69801bc9 100644
+--- a/tools/kit05/kit_model.py
++++ b/tools/kit05/kit_model.py
+@@ -42,6 +42,8 @@ HW = CAM_H + CAM_OFF[1] * RT                                         # axis heig
+ Z2 = FOC * RT / RING2_PX                                             # axial depth of painted ring 2 from the start camera
+ S = Z2 * np.log(RATIO)                                               # ring spacing: g'(Z2) = 1 and g(z + S) = RATIO * g(z) beyond Z2
+ def ring_t(k): return Z2 + (k - 2) * S                               # axial position of ring k (ring 2 = painted ring 2)
++_bd = cam_dir(432, 1180); B0 = _bd * (-CAM_H / (_bd @ NUP))          # Benny's painted water contact point (same as kitgame.html)
++TB0 = float(B0 @ A); LATB0 = float((B0 - A0) @ RR)                    # his axial start and lateral offset from the axis
+ 
+ def g(z):
+     """camera-relative apparent depth along the axis (z = true axial distance from the camera)"""
+@@ -64,6 +66,27 @@ def wall_point(theta, t, radius=RT):
+ 
+ def height_above_water(P): return np.asarray(P) @ PN - PD
+ 
++# ---- round 34 (S1): the river's WORLD-ANCHORED centre line (lateral offset along RR from the tunnel axis, world units) ----
++# Painted stretch (axial t <= ~11): measured on the APPROVED picture cast onto the kit water (tools/kit05/bake_river.py prints the
++# check): the painted coin trail (t 2.96 +0.06, 4.05 +0.28, 5.50 +0.04, 7.13 -0.31, 8.86 -0.18, 9.87 +0.07) and the cyan channel's
++# centroid (t 2.3 -0.16, 4.3 +0.21, 5.8 +0.04, 7.3 -0.26, 8.8 -0.17, 10.3 +0.34) agree: S-bends ~3 u apart, ~0.26 u to each side.
++# Apexes are joined by half-cosines (C1, zero slope at each apex = natural meanders). Beyond the painting the same character
++# continues with seeded random spacing (2.6-3.8 u, i.e. 1.9-2.7 s at 1.4 u/s) and amplitude (0.15-0.28 u): no fixed period.
++RIVER_LAT_START = LATB0                                              # the river centre passes through Benny's painted start point
++RIVER_APEX_PAINTED = [(2.30, -0.05), (4.25, 0.26), (7.80, -0.29), (10.90, 0.27)]
++RIVER_AMAX = 0.29                                                    # |centre| never exceeds this (water floor half chord 0.70)
++def _river_apexes(t_end=95.0, seed=34):
++    rng = np.random.default_rng(seed); ap = list(RIVER_APEX_PAINTED)
++    while ap[-1][0] < t_end:
++        t, a = ap[-1]; ap.append((t + rng.uniform(2.6, 3.8), -np.sign(a) * rng.uniform(0.15, 0.28)))
++    return ap
++def river_center(t):
++    """lateral offset (along RR, from the tunnel axis) of the river centre at axial t; flat behind Benny's start"""
++    t = np.atleast_1d(np.asarray(t, float)); ap = [(TB0, RIVER_LAT_START)] + _river_apexes(); ts = np.array([p[0] for p in ap]); cs = np.array([p[1] for p in ap])
++    k = np.clip(np.searchsorted(ts, t) - 1, 0, len(ts) - 2); f = np.clip((t - ts[k]) / (ts[k + 1] - ts[k]), 0, 1)
++    c = cs[k] + (cs[k + 1] - cs[k]) * (1 - np.cos(np.pi * f)) / 2
++    return np.clip(np.where(t <= ts[0], cs[0], c), -RIVER_AMAX, RIVER_AMAX)
++
+ def export():
+     return {'A': A.tolist(), 'NUP': NUP.tolist(), 'RR': RR.tolist(), 'A0': A0.tolist(), 'RT': RT, 'RING_IN': RING_IN, 'RING_W': RING_W,
+             'Z2': float(Z2), 'S': float(S), 'HW': float(HW), 'PN': PN.tolist(), 'PD': float(PD), 'VP': VP, 'RATIO': RATIO, 'CAM_OFF': CAM_OFF}
+diff --git a/tools/kit05/kitgame.html b/tools/kit05/kitgame.html
+index c46152f6..540d0aca 100644
+--- a/tools/kit05/kitgame.html
++++ b/tools/kit05/kitgame.html
+@@ -57,41 +57,59 @@ const tl = new THREE.TextureLoader();
+ const tex = async (f, rep = false) => { const t = await tl.loadAsync(f); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; if (rep) t.wrapS = THREE.RepeatWrapping; return t; };
+ const [wallTex, ringTex, riverTex, wallOwn, ringOwn] = await Promise.all([tex('wall.png'), tex('ring.png'), tex('river.png'), tex('wall_own.png'), tex('ring_own.png')]);
+ const riverTile = await tex('river_tile.png'); riverTile.wrapT = THREE.RepeatWrapping;
++const riverPink = await tex(K.river_tile?.ribbon ? 'river_pink.png' : 'river_tile.png'); riverPink.wrapT = THREE.RepeatWrapping;   // round 34: pink edge-band version of the ribbon
+ const ownOf = (kind, atlas, k) => { const r = K.own?.[kind]?.rows?.[k]; return r && !q.get('noown') ? { tex: atlas, vr: [r[0] / K.own[kind].h, r[1] / K.own[kind].h] } : null; };
+ const wallMat = kitMat(wallTex), ringMat = kitMat(ringTex);
+-const FLOW = { uFlowOn: { value: 0 }, uFlowL: { value: +(q.get('flowl') ?? 0.10) }, uWT: { value: new THREE.Vector3(K.water.T0, Math.log(K.water.T1 / K.water.T0), +(q.get('nearflow') ?? 0.0)) }, uFoam: { value: null }, uHWD: { value: K.water.HWD }, uWind: { value: new THREE.Vector4(+(q.get('wamp') ?? 0.2), +(q.get('wlen') ?? 7.5), +(q.get('wnarrow') ?? 0.5), +(q.get('winding') ?? 0)) }, uFlow: { value: 0 }, uRT: { value: new THREE.Vector3(K.river_tile.t0, K.river_tile.L, K.river_tile.painted_until) }, uRF: { value: K.river_tile.painted_fade ?? 4 }, uRiverTile: { value: riverTile } };
+-const riverMat = (() => { const m = kitMat(riverTex); const base = m.onBeforeCompile; m.customProgramCacheKey = () => 'kit-river';
++// ---- round 34 (S1): WORLD-ANCHORED winding river. The river centre c(t) (kit.json river_center_axis, measured on the painting's coin
++// trail + cyan channel, continued with varied S-bends) bends the flowing ribbon tile (river-local u = lateral - c(t)); Benny's path
++// follows the same line (kit.json river_center, S3). At the start the water is the PAINTED water at its own world place (exact approved
++// picture at frame 0); each painted texel cross-fades to the ribbon as the camera approaches it (sooner for far, low-resolution texels).
++const RC = K.river_center_axis ?? { t0: 0, dt: 1, c: [0, 0] };
++const centerTex = new THREE.DataTexture(new Float32Array(RC.c), RC.c.length, 1, THREE.RedFormat, THREE.FloatType); centerTex.needsUpdate = true;
++const riverC = (t) => { const x = Math.min(Math.max((t - RC.t0) / RC.dt, 0), RC.c.length - 1.001), i = Math.floor(x), f = x - i; return RC.c[i] + (RC.c[i + 1] - RC.c[i]) * f; };   // axis lateral of the centre at axial t
++window.riverC = riverC;
++const FLOW = { uFlowOn: { value: 0 }, uFlowL: { value: +(q.get('flowl') ?? 0.10) }, uWT: { value: new THREE.Vector3(K.water.T0, Math.log(K.water.T1 / K.water.T0), 0) }, uFoam: { value: null }, uHWD: { value: K.water.HWD },
++  uFlow: { value: 0 }, uRT: { value: new THREE.Vector3(K.river_tile.t0, K.river_tile.L, K.river_tile.RU ?? 1.05) }, uRiverTile: { value: riverTile }, uRiverPink: { value: riverPink },
++  uCenter: { value: centerTex }, uCN: { value: new THREE.Vector3(RC.t0, RC.dt, RC.c.length) },
++  uPF: { value: new THREE.Vector4(...(q.get('pfade') ?? '0.45,0.65,0.85,0.97').split(',').map(Number)) },   // painted -> ribbon fade (ratio now/start distance): near texels, far texels
++  uEdge: { value: new THREE.Vector4(...(q.get('redge') ?? '0.80,0.60,5.0,13.0').split(',').map(Number)) } };   // ribbon foam edge |u| near, far factor, far range
++const riverMat = (() => { const m = kitMat(riverTex); const base = m.onBeforeCompile; m.customProgramCacheKey = () => 'kit-river34';
+   m.onBeforeCompile = (sh) => { base(sh); Object.assign(sh.uniforms, FLOW);
+-    sh.fragmentShader = sh.fragmentShader.replace('uniform float uBias;', 'uniform float uBias; uniform float uFlow; uniform vec3 uRT; uniform float uRF; uniform sampler2D uRiverTile; uniform sampler2D uFoam; uniform float uHWD; uniform vec4 uWind; uniform vec3 uWT; uniform float uFlowL; uniform float uFlowOn; varying float vKitT; varying float vKitD;')
+-      .replace('diffuseColor *= texture(map, vMapUv, uBias);', `vec4 kPaint = texture(map, vMapUv, uBias);
+-        vec4 kFlow = texture(uRiverTile, vec2(vMapUv.x, -(vKitT + uFlow - uRT.x) / uRT.y), mix(uBias, 0.8, smoothstep(2.5, 9.0, vKitD)));   // flows toward the camera; softer far away (no shimmer)
+-        float kF = smoothstep(0.55, 0.85, vKitD / max(vKitT, 1e-3)) * (1.0 - smoothstep(uRT.z - uRF, uRT.z, vKitT));
+-        // the painting's river from every position (round 33d): open full-width water near Benny, a narrower channel winding between
+-        // foam banks further ahead, pink bands along its edges (painted pink 240,57,226); world-anchored bends, camera-relative width
+-        float kLat = mix(-uHWD, uHWD, vMapUv.x);
+-        float kFar = smoothstep(1.8, 6.5, vKitD) * uWind.w;
+-        float kC = uWind.x * kFar * sin(6.2831853 * vKitT / uWind.y) + 0.06 * kFar * sin(6.2831853 * vKitT / (uWind.y * 0.43) + 1.3);
+-        float kHalf = uHWD * mix(1.02, uWind.z, kFar);
+-        float kE = abs(kLat - kC) - kHalf;                                     // > 0: on the foam bank
+-        vec4 kFlowW = kFlow;
+-        kFlowW.rgb = mix(kFlowW.rgb, vec3(0.871, 0.04, 0.76), 0.55 * kFar * smoothstep(-0.16, -0.03, kE) * (1.0 - smoothstep(-0.03, 0.0, kE)));
+-        vec4 kFo = texture(uFoam, vec2(vKitT / 1.3, clamp(1.0 - kE / 0.22, 0.02, 0.98)), uBias);
+-        float kFa = smoothstep(-0.02, 0.03, kE) * max(kFo.a, smoothstep(0.05, 0.16, kE));
+-        kFlowW.rgb = mix(kFlowW.rgb, mix(kFo.rgb, vec3(0.93, 0.9, 1.0), 0.25), kFa * kFar);
+-        // far river = the PAINTED river at the same distance ahead as in the approved view (camera-relative), near = the flowing current
+-        // the painted water itself streams toward the camera (two-phase flow map: two samples shifted along the river, cross-faded
+-        // in a loop): the streaks and glints move, the colours and big shapes stay the painting's (round 33h; uFlowL = shift length)
+-        float kPh = fract(uFlow * 1.3), kNearF = 1.0 - smoothstep(3.0, 5.0, vKitD);
+-        float kD1 = vKitD + kPh * uFlowL * uFlowOn * kNearF, kD2 = vKitD + fract(kPh + 0.5) * uFlowL * uFlowOn * kNearF;
+-        vec4 kP1 = texture(map, vec2(vMapUv.x, log(max(kD1, uWT.x) / uWT.x) / uWT.y), uBias);
+-        vec4 kP2 = texture(map, vec2(vMapUv.x, log(max(kD2, uWT.x) / uWT.x) / uWT.y), uBias);
+-        float kW1 = 1.0 - abs(1.0 - 2.0 * kPh);
+-        vec4 kPaintRel = mix(kP2, kP1, kW1);
+-        // round 33f: ALL of the water is the painted water at the same distance ahead as in the approved view (Benny is carried by the
+-        // current: the near water keeps the painting's look at every moment, incl. its gold bottom rim), with the flowing current
+-        // laid over it near Benny (uWT.z = share) so the water visibly streams toward the camera; exact painting at the start (kF)
+-        float kNearW = (1.0 - smoothstep(2.6, 4.2, vKitD)) * uWT.z;
+-        diffuseColor *= mix(kPaintRel, kFlowW, kNearW);   // round 33i: no cross-fade from the world-fixed start water (ghosting)
++    sh.fragmentShader = sh.fragmentShader.replace('uniform float uBias;', `uniform float uBias; uniform float uFlow; uniform vec3 uRT; uniform sampler2D uRiverTile; uniform sampler2D uFoam; uniform float uHWD; uniform vec3 uWT; uniform float uFlowL; uniform float uFlowOn; varying float vKitT; varying float vKitD;
++      uniform sampler2D uRiverPink; uniform sampler2D uCenter; uniform vec3 uCN; uniform vec4 uPF; uniform vec4 uEdge;
++      float kCenter(float t){ float x = clamp((t - uCN.x) / uCN.y, 0.0, uCN.z - 1.001); int i = int(floor(x)); return mix(texelFetch(uCenter, ivec2(i, 0), 0).r, texelFetch(uCenter, ivec2(i + 1, 0), 0).r, fract(x)); }`)
++      .replace('diffuseColor *= texture(map, vMapUv, uBias);', `
++        float kLat = mix(-uHWD, uHWD, vMapUv.x);                    // lateral from the tunnel axis
++        float kT = vKitT, kZ = max(vKitD, 1e-3);                     // world axial position, axial distance ahead of the camera
++        float kU = kLat - kCenter(kT);                               // river-local lateral (0 = river centre)
++        // far channel like the painting: the river looks narrower (foam banks on both sides) the further ahead it is (camera-relative)
++        float kW = mix(1.0, uEdge.y, smoothstep(uEdge.z, uEdge.w, kZ));
++        float kUU = kU / kW;
++        vec2 kRibUV = vec2(clamp(kUU / (2.0 * uRT.z) + 0.5, 0.0, 1.0), -(kT + uFlow - uRT.x) / uRT.y); float kRibBias = mix(uBias, 0.6, smoothstep(2.5, 9.0, kZ));
++        vec4 kRib = texture(uRiverTile, kRibUV, kRibBias);
++        // pink edge bands (painted magenta 240,57,226 with white-pink streaks): the ribbon's own painted streaks recoloured into the
++        // painting's pink, between the cyan core and the foam; both band edges wander a little along the river (no ruler-straight lines)
++        float kEdge = uEdge.x + 0.035 * sin(kT * 1.31 + 0.7) + 0.025 * sin(kT * 2.93 + 2.1);
++        // (the painting sweeps its pink in closer to the centre just in front of the camera: inner edge ~0.33 there, ~0.5 further on)
++        float kIn = kEdge - mix(0.47, 0.30, smoothstep(0.9, 2.4, kZ)) - 0.05 * sin(kT * 1.77 + (kU > 0.0 ? 2.4 : 0.3)) - 0.03 * sin(kT * 4.1 + 1.0);
++        float kPk = smoothstep(kIn - 0.035, kIn + 0.035, abs(kUU));
++        vec3 kPink = texture(uRiverPink, kRibUV, kRibBias).rgb;      // the same painted streaks in the painting's pink (bake_kit.py)
++        kRib.rgb = mix(kRib.rgb, kPink, kPk);
++        float kE = abs(kUU) - kEdge;
++        vec4 kFo = texture(uFoam, vec2(kT / 1.3 + (kU > 0.0 ? 0.37 : 0.0), clamp(1.0 - kE / 0.22, 0.02, 0.98)), uBias);
++        float kFa = smoothstep(-0.03, 0.02, kE) * max(kFo.a, smoothstep(0.04, 0.14, kE));
++        kRib.rgb = mix(kRib.rgb, mix(kFo.rgb, vec3(0.93, 0.9, 1.0), 0.25), kFa);
++        // the PAINTED water at its own world place (exact approved picture at frame 0), streaming a little (two-phase flow) once Benny swims
++        float kPh = fract(uFlow * 1.3), kNearF = 1.0 - smoothstep(3.0, 5.0, kZ);
++        float kT1 = kT + kPh * uFlowL * uFlowOn * kNearF, kT2 = kT + fract(kPh + 0.5) * uFlowL * uFlowOn * kNearF;
++        vec4 kP1 = texture(map, vec2(vMapUv.x, log(max(kT1, uWT.x) / uWT.x) / uWT.y), uBias);
++        vec4 kP2 = texture(map, vec2(vMapUv.x, log(max(kT2, uWT.x) / uWT.x) / uWT.y), uBias);
++        vec4 kPaint = mix(kP2, kP1, 1.0 - abs(1.0 - 2.0 * kPh));
++        // painted -> ribbon as the camera approaches (ratio distance now / distance at the start: 1 at frame 0); far painted texels are
++        // low-resolution, so they hand over sooner than the sharp near ones
++        float kNF = smoothstep(3.0, 8.0, kT);
++        float kWP = smoothstep(mix(uPF.x, uPF.z, kNF), mix(uPF.y, uPF.w, kNF), kZ / max(kT, 1e-3));
++        diffuseColor *= mix(kRib, kPaint, kWP);
+         `); };
+   return m; })();
+ 
+@@ -256,7 +274,8 @@ window.step = (t, dt, steer, speed) => {
+   CT.water(F, speed, dt); if (NOSPLASH) splash.visible = false;
+   for (let i = 0; i < NG; i++) {   // flowing glints: on the river surface, sliding toward the camera with the current, twinkling
+     gS[i] -= 0.55 * dt; if (gS[i] < st.s - 1.4) gS[i] += 8.5; if (gS[i] > st.s + 7.1) gS[i] -= 8.5;
+-    at(gS[i], tmp2).addScaledVector(RR, gL[i]).addScaledVector(NUP, 0.012); gPos.set([tmp2.x, tmp2.y, tmp2.z], i * 3);
++    at(gS[i], tmp2); const gT = tmp2.dot(A), gLat = tmp2.clone().sub(A0).dot(RR);   // round 34: glints ride the river (centre c(t)), never on the walls
++    tmp2.addScaledVector(RR, THREE.MathUtils.clamp(riverC(gT) + gL[i] * 0.85, -0.64, 0.64) - gLat).addScaledVector(NUP, 0.012); gPos.set([tmp2.x, tmp2.y, tmp2.z], i * 3);
+     const tw = Math.max(0, Math.sin(t * 6 + gP[i])); gAlpha[i] = (st.s > 0.02 ? 1 : 0) * tw * tw * 0.9 * THREE.MathUtils.smoothstep(gS[i], st.s - 1.4, st.s - 0.6);
+     gSize[i] = 0.035 * gSz[i] * (0.6 + tw);
+   }

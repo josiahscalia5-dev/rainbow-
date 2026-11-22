@@ -1,0 +1,10 @@
+{
+  "worldlabs": {
+    "source": {
+      "source": "github",
+      "repo": "worldlabsai/skills"
+    },
+    "installLocation": "/root/.claude/plugins/marketplaces/worldlabs",
+    "lastUpdated": "2026-11-18T12:28:25.129Z"
+  }
+}

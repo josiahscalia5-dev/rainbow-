@@ -1,0 +1,27 @@
+from agentA: CONTROLS_NOTES.md
+from agentA: acceptance_logic.cjs
+from agentA: acceptance_logic.json
+from agentA: acceptance_logic.out
+from agentA: coin_layout_search.py
+from agentA: coin_overlap_model.py
+from agentA: coin_run1_search.py
+from agentA: coins_level_check.cjs
+from agentA: coins_level_logic.json
+from agentA: coins_level_logic.out
+from agentA: compare0.json
+from agentA: compare0.py
+from agentA: controls.js
+from agentA: live_key_check.cjs
+from agentA: live_key_check.json
+from agentA: live_key_check.out
+from agentA: play3.orig.html
+from agentA: serve.cjs
+from agentA: swipe_log.json
+from agentA: swipe_log_logic_only.json
+from agentA: swipe_test.cjs
+from agentA: swipe_test.out
+from agentA: swipe_test_logic.out
+conflict: both added lines here -> kept both (import { createWaterFlow } from './waterflow.js'; // [waterf | import { installControls } from './controls.js'; // [control)
+conflict: both added lines here -> kept both (let qaRise = 0; window.qaPose = (lat, rise = 0) => { st.lat  | const CT = q.get('controls') === '0' ? null : installControl)
+conflict: camera line = agentA controls + agentB qaRise
+conflict: end of step = agentB water update + agentA return

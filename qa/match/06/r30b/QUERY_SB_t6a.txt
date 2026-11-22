@@ -1,0 +1,1 @@
+match06=1&m06geo=1&m06flow=1&m06cam=1&m06la=25&m06tun=1&m06ring=1&m06bub=1&m06foam=1&m06gold=1&m06fclu=1&m06st=1&m06fcl=1&m06view=1&m06vs=0&m06rip=1&m06hole=2&m06fade=1&m06spl=1&m06fcn=3&m06fcg=1&m06deep=1&m06leg=1&m06vw=20,38&m06tswap=2&m06curl=1&m06haze=80,170,0.55&m06camk=0.65&m06camu=1.05&m06sb=1&w30=1&f30=1&f30bs=0.7&f30bg=0.3&f30bc=0.16&b30=1&m06sbk=1

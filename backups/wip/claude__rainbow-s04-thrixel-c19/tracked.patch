@@ -1,0 +1,107 @@
+diff --git a/src/world/match04m4.ts b/src/world/match04m4.ts
+index 6516f33..a3b3fce 100644
+--- a/src/world/match04m4.ts
++++ b/src/world/match04m4.ts
+@@ -1332,39 +1332,63 @@ export function addM04(ctx: M04Ctx) {
+   // (same-camera check only). Lit by the game's existing lights + environment map. Tunables: m04tfs length along the bank (u),
+   // m04tft tilt back from upright (deg; 90 = lying flat, bubble face up), m04tfw yaw (deg), m04tfl lift (u), m04tfo shift
+   // toward the wall (u), m04tfz shift along the river (u, + = toward the camera).
+-  if (M04.num('m04tfoam', 0) > 0) {
++  // shared placement for the r19 single bank-foam model tests (`p` = tunable prefix, e.g. 'm04tf' / 'm04bf')
++  const bankModel = (p: string, name: string, url: string, dflt: { x: number; y: number; s: number; t: number; w: number; l: number; base?: boolean },
++    makeMat?: (old: THREE.Material) => THREE.MeshStandardMaterial) => {
+     const inv = Mw.clone().invert();
+     proj.updateMatrixWorld();
+-    const ndc = new THREE.Vector3(M04.num('m04tfx', 735) / 864 * 2 - 1, 1 - M04.num('m04tfy', 1150) / 1536 * 2, 0.5);
++    const ndc = new THREE.Vector3(M04.num(p + 'x', dflt.x) / 864 * 2 - 1, 1 - M04.num(p + 'y', dflt.y) / 1536 * 2, 0.5);
+     const o = proj.position.clone().applyMatrix4(inv);
+     const d = ndc.unproject(proj).applyMatrix4(inv).sub(o).normalize();
+     const hit = o.clone().addScaledVector(d, -o.y / d.y);
+-    const holder = new THREE.Group(); holder.name = 'm04_thrixel_foam'; holder.visible = false;
+-    holder.position.set(hit.x + M04.num('m04tfo', 0), M04.num('m04tfl', 0.2), hit.z + M04.num('m04tfz', 0));
++    const holder = new THREE.Group(); holder.name = name; holder.visible = false;
++    holder.position.set(hit.x + M04.num(p + 'o', 0), M04.num(p + 'l', dflt.l), hit.z + M04.num(p + 'z', 0));
+     group.add(holder);
+     const mats: THREE.MeshStandardMaterial[] = [];
+-    const show = M04.num('m04tfshow', 0) > 0;
+-    new GLTFLoader().loadAsync(new URL('../../assets/models/thrixel/foam_cluster_s04.glb', import.meta.url).href).then((g) => {
++    const show = M04.num(p + 'show', 0) > 0;
++    new GLTFLoader().loadAsync(url).then((g) => {
+       const m = g.scene;
+       const box = new THREE.Box3().setFromObject(m), size = box.getSize(new THREE.Vector3());
+       m.position.sub(box.getCenter(new THREE.Vector3()));
++      if (dflt.base) m.position.y += size.y / 2;                    // rest the model's base on the anchor (Blender heap)
+       const pivot = new THREE.Group(); pivot.add(m);
+-      pivot.scale.setScalar(M04.num('m04tfs', 2.4) / Math.max(size.x, size.y, size.z));
+-      // the model stands its long axis up (+Y) with the bubble relief facing +Z: tilt it back so the long axis runs down the
+-      // bank (-z) and the bubbles face up / toward the camera
+-      pivot.rotation.set(THREE.MathUtils.degToRad(-M04.num('m04tft', 70)), THREE.MathUtils.degToRad(M04.num('m04tfw', 0)), 0, 'YXZ');
++      pivot.scale.setScalar(M04.num(p + 's', dflt.s) / Math.max(size.x, size.y, size.z));
++      pivot.rotation.set(THREE.MathUtils.degToRad(-M04.num(p + 't', dflt.t)), THREE.MathUtils.degToRad(M04.num(p + 'w', dflt.w)), 0, 'YXZ');
+       holder.add(pivot);
+       m.traverse((n) => {
+         const me = n as THREE.Mesh;
+         if (!me.isMesh) return;
+-        const mt = me.material as THREE.MeshStandardMaterial; mt.transparent = true; mt.depthWrite = true; mats.push(mt); me.renderOrder = 3;
++        const mt = makeMat ? makeMat(me.material as THREE.Material) : me.material as THREE.MeshStandardMaterial;
++        me.material = mt; mt.transparent = true; mt.depthWrite = true; mats.push(mt); me.renderOrder = 3;
+       });
+-      console.info('[match04] m04tfoam', { hit: hit.toArray().map((v) => +v.toFixed(2)), size: size.toArray().map((v) => +v.toFixed(3)) });
+-    }).catch((e) => console.error('[match04] m04tfoam load failed', String(e)));
++      console.info('[match04] ' + p, { hit: hit.toArray().map((v) => +v.toFixed(2)), size: size.toArray().map((v) => +v.toFixed(3)) });
++    }).catch((e) => console.error('[match04] ' + p + ' load failed', String(e)));
+     updaters.push((a) => {
+       const k = show ? 1 : a;
+       holder.visible = k > 0.01; for (const mt of mats) mt.opacity = k;
+     });
++  };
++  // the Thrixel model stands its long axis up (+Y) with the bubble relief facing +Z: tilt it back (m04tft) so the long axis
++  // runs down the bank (-z) and the bubbles face up / toward the camera
++  if (M04.num('m04tfoam', 0) > 0) {
++    bankModel('m04tf', 'm04_thrixel_foam', new URL('../../assets/models/thrixel/foam_cluster_s04.glb', import.meta.url).href,
++      { x: 735, y: 1150, s: 2.4, t: 70, w: 0, l: 0.2 });
++  }
++  // r19 `&m04bfoam=1` — BLENDER TEST (qa/match/04/r19_blendfoam/NOTES.md, user: "maybe use Blender" after the Thrixel model
++  // was not an improvement): the bank foam heap built in Blender as the painting shows it — a LOW, WIDE pile of 46 BIG glossy
++  // separate round bubbles (tools/blender/foam_cluster04.py -> assets/models/match04/foam_heap_blender04.glb, built lying flat,
++  // length along +X) — yawed 90° so its length runs down the right bank. Same anchor / visibility rule / tunables as m04tfoam
++  // with prefix m04bf (m04bfs length, m04bft tilt, m04bfw yaw, m04bfl lift, m04bfo / m04bfz shifts, m04bfshow). Pearly
++  // lilac-white glossy finish (vertex colours from Blender x a physical material: clearcoat, soft iridescence, lilac sheen,
++  // a little self-light so the shadow side stays the painted pale blue-lilac, not grey); `m04bfe` self-light strength.
++  if (M04.num('m04bfoam', 0) > 0) {
++    bankModel('m04bf', 'm04_blender_foam', new URL('../../assets/models/match04/foam_heap_blender04.glb', import.meta.url).href,
++      { x: 735, y: 1150, s: 3.0, t: 0, w: 90, l: 0, base: true },
++      () => new THREE.MeshPhysicalMaterial({
++        vertexColors: true, color: new THREE.Color(['#ffffff', '#e4e2ff', '#d6e2ff', '#cfdcff'][Math.round(M04.num('m04bfc', 0))] ?? '#ffffff'), roughness: M04.num('m04bfr', 0.2), metalness: 0, clearcoat: 1, clearcoatRoughness: 0.08,
++        iridescence: M04.num('m04bfi', 0.45), iridescenceIOR: 1.3, sheen: M04.num('m04bfsh', 0.6), sheenColor: new THREE.Color('#e6d6ff'), sheenRoughness: 0.4,
++        emissive: new THREE.Color(M04.num('m04bfec', 0) > 0 ? '#eef3ff' : '#d8ccff'), emissiveIntensity: M04.num('m04bfe', 0.22),
++      }));
+   }
+ 
+   out.update = (cam: THREE.Vector3, benny?: THREE.Vector3) => {
+diff --git a/tools/match04/tfoam_clip04.mjs b/tools/match04/tfoam_clip04.mjs
+index d78ff7c..c362340 100644
+--- a/tools/match04/tfoam_clip04.mjs
++++ b/tools/match04/tfoam_clip04.mjs
+@@ -19,7 +19,7 @@ try {
+   page.on('pageerror', (e) => console.error('pageerror', e.message));
+   await page.goto(`${vite.url}/?qa=1&dpr=1${Q ? '&' + Q : ''}`);
+   await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 300000 });
+-  if (/m04tfoam=1/.test(Q)) await page.waitForFunction(() => { let ok = false; window.__rainbow.qa3d().scene.traverse((o) => { if (o.name === 'm04_thrixel_foam' && o.children.length) ok = true; }); return ok; }, null, { timeout: 180000 });
++  if (/m04[tb]foam=1/.test(Q)) await page.waitForFunction(() => { let ok = false; window.__rainbow.qa3d().scene.traverse((o) => { if ((o.name === 'm04_thrixel_foam' || o.name === 'm04_blender_foam') && o.children.length) ok = true; }); return ok; }, null, { timeout: 180000 });
+   await page.evaluate((id) => window.__rainbow.goto(id), SCREEN);
+   const n = Math.round(Number(SECS) * fps);
+   for (let i = 0; i < n; i++) {
+diff --git a/tools/match04/tfoam_shots04.mjs b/tools/match04/tfoam_shots04.mjs
+index 0c3a5b2..39f4204 100644
+--- a/tools/match04/tfoam_shots04.mjs
++++ b/tools/match04/tfoam_shots04.mjs
+@@ -14,7 +14,7 @@ try {
+   page.on('pageerror', (e) => console.error('pageerror', e.message));
+   await page.goto(`${vite.url}/?qa=1&dpr=1&${Q}`);
+   await page.waitForFunction(() => window.__rainbow?.ready === true || window.__error, null, { timeout: 240000 });
+-  if (/m04tfoam=1/.test(Q)) await page.waitForFunction(() => { let ok = false; window.__rainbow.qa3d().scene.traverse((o) => { if (o.name === 'm04_thrixel_foam' && o.children.length) ok = true; }); return ok; }, null, { timeout: 180000 });
++  if (/m04[tb]foam=1/.test(Q)) await page.waitForFunction(() => { let ok = false; window.__rainbow.qa3d().scene.traverse((o) => { if ((o.name === 'm04_thrixel_foam' || o.name === 'm04_blender_foam') && o.children.length) ok = true; }); return ok; }, null, { timeout: 180000 });
+   // [name, forward distance (u), steer]
+   const shots = process.env.M04_SHOTS ? JSON.parse(process.env.M04_SHOTS) : [['f00_checkpoint', 0, null], ['f03_forward3u', 3, null], ['f06_forward6u', 6, null], ['f10_forward10u', 10, null], ['f15_forward15u', 15, null],
+                  ['f20_forward20u', 20, null], ['s_left_steer', 6, -1], ['s_right_steer', 6, 1]];

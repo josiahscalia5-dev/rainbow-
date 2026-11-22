@@ -1,0 +1,8590 @@
+{
+ "screen": "04",
+ "fps": 20,
+ "dt": 0.05,
+ "s0": 77.413,
+ "s1": 114.68830202823243,
+ "query": "match04=1&m04ring=1&m04river=1&m04bub=1&m04mouth=1&m04room=1&m04ry=0.8&m04rk=0.82&m04arr3d=1&m04a3k=66&m04a3w2=1&m04a3g=1.6&m04a3o=0.38&m04a3b=1&m04a3b0=3.0&m04a3b1=4.4&m04a3f0=25&m04a3f1=31&m04a3p=4.0&m04a3w=1.15&m04a3t=0.32&m04a3d=0.55&m04a3f=4&m04a3y=0.1&m04ringp=4.6&m04ringgw=1.2&m04tb=0.2&m04ts=0.22&m04paint=0.9&m04pink=1&m04pkl=2.15&m04pkw=0.9&m04a3hb=1&m04xf=2.6&m04lane=1&m04lanew=2.3&m04lanes=0.85&m04a3co=1.0&m04lane2=0.25&m04lgl=1.3&m04lsp=0.9&m04copper=1.3&m04edge=1&m04rf0=1.25&m04rf1=0.8&m04lbr=0.14&m04a3tex=1&m04bulge=0.18&m04lcd=1.0&m04lcw=1.7&m04a3fa=1.0&m04a3gb=0.16&m04a3tm=0.45&m04a3lum=1.1&m04a3rw=0.03&m04foam=1&m04foamr=2.5&m04foamn0=4.5&m04foamn1=6.5&m04fclu=1&m04sband=1&m04end=1&m04nband=0&m04nwhirl=0&m04nwc=1.3&m04flo=1&m04nwq=2&m04nwr=3.2&m04rpaint=1&m04rpsoft=1&m04rpj=0.35&m04rplu=3.95&m04rpgu=4.28&m04rpdots=1&m04rpvar=1&m04rfew=1&m04rfg=1.2&m04rpol=1&m04rpcr=1&m04rflat=1&m04rnear=1&m04rnh=0.7&m04rny=0.15&m04rng=0.5&m04rnhf=0.1&m04rnr=0.6&m04rnf=0.8&m04rmat=1&m04wup=0&m04bbank=1&m04rsoft=1&msaa=4&m04wgl=1&m04bbd=1&m04bbd0=0.85&m04bbd1=0.85&m04bbdk=0.15&m04bbdx=0&m04bbdg=0.6&m04bbdf=9&m04bbdf1=12&m04bbdn=2&m04bbdn1=3.5&m04bbx=1",
+ "frames": [
+  {
+   "i": 0,
+   "t": 0,
+   "stage": "04",
+   "s": 78.114,
+   "lat": 0,
+   "frac": 0,
+   "coins": 1330,
+   "phase": "ENTRANCE (straight)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": 10.17,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": 14.17,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": 18.17,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -22.84,
+     "ahead": 22.17,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -26.84,
+     "ahead": 26.17,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -30.84,
+     "ahead": 30.17,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -34.84,
+     "ahead": 34.17,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -38.84,
+     "ahead": 38.17,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -42.84,
+     "ahead": 42.17,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -46.84,
+     "ahead": 46.17,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -50.84,
+     "ahead": 50.17,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -54.84,
+     "ahead": 54.17,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 58.17,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 62.17,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 66.17,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 70.17,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 74.17,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 78.17,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 82.17,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 86.17,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 1,
+   "t": 0.05,
+   "stage": "04",
+   "s": 78.816,
+   "lat": 0,
+   "frac": 0.019,
+   "coins": 1330,
+   "phase": "ENTRANCE (straight)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": 9.47,
+     "vis": false,
+     "op": 0.006
+    },
+    {
+     "z": -14.84,
+     "ahead": 13.47,
+     "vis": false,
+     "op": 0.006
+    },
+    {
+     "z": -18.84,
+     "ahead": 17.47,
+     "vis": false,
+     "op": 0.006
+    },
+    {
+     "z": -22.84,
+     "ahead": 21.47,
+     "vis": false,
+     "op": 0.002
+    },
+    {
+     "z": -26.84,
+     "ahead": 25.47,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -30.84,
+     "ahead": 29.47,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -34.84,
+     "ahead": 33.47,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -38.84,
+     "ahead": 37.47,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -42.84,
+     "ahead": 41.47,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -46.84,
+     "ahead": 45.47,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -50.84,
+     "ahead": 49.47,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -54.84,
+     "ahead": 53.47,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 57.47,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 61.47,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 65.47,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 69.47,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 73.47,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 77.47,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 81.47,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 85.47,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 2,
+   "t": 0.1,
+   "stage": "04",
+   "s": 79.517,
+   "lat": 0,
+   "frac": 0.038,
+   "coins": 1330,
+   "phase": "ENTRANCE (straight)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": 8.77,
+     "vis": true,
+     "op": 0.349
+    },
+    {
+     "z": -14.84,
+     "ahead": 12.77,
+     "vis": true,
+     "op": 0.349
+    },
+    {
+     "z": -18.84,
+     "ahead": 16.77,
+     "vis": true,
+     "op": 0.349
+    },
+    {
+     "z": -22.84,
+     "ahead": 20.77,
+     "vis": true,
+     "op": 0.154
+    },
+    {
+     "z": -26.84,
+     "ahead": 24.77,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -30.84,
+     "ahead": 28.77,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -34.84,
+     "ahead": 32.77,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -38.84,
+     "ahead": 36.77,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -42.84,
+     "ahead": 40.77,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -46.84,
+     "ahead": 44.77,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -50.84,
+     "ahead": 48.77,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -54.84,
+     "ahead": 52.77,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 56.77,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 60.77,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 64.77,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 68.77,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 72.77,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 76.77,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 80.77,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 84.77,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 3,
+   "t": 0.15,
+   "stage": "04",
+   "s": 80.219,
+   "lat": 0,
+   "frac": 0.056,
+   "coins": 1330,
+   "phase": "ENTRANCE (straight)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": 8.07,
+     "vis": true,
+     "op": 0.915
+    },
+    {
+     "z": -14.84,
+     "ahead": 12.07,
+     "vis": true,
+     "op": 0.915
+    },
+    {
+     "z": -18.84,
+     "ahead": 16.07,
+     "vis": true,
+     "op": 0.915
+    },
+    {
+     "z": -22.84,
+     "ahead": 20.07,
+     "vis": true,
+     "op": 0.519
+    },
+    {
+     "z": -26.84,
+     "ahead": 24.07,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -30.84,
+     "ahead": 28.07,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -34.84,
+     "ahead": 32.07,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -38.84,
+     "ahead": 36.07,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -42.84,
+     "ahead": 40.07,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -46.84,
+     "ahead": 44.07,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -50.84,
+     "ahead": 48.07,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -54.84,
+     "ahead": 52.07,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 56.07,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 60.07,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 64.07,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 68.07,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 72.07,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 76.07,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 80.07,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 84.07,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 4,
+   "t": 0.2,
+   "stage": "04",
+   "s": 80.92,
+   "lat": 0,
+   "frac": 0.075,
+   "coins": 1330,
+   "phase": "ENTRANCE (straight)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": 7.36,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -14.84,
+     "ahead": 11.36,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -18.84,
+     "ahead": 15.36,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -22.84,
+     "ahead": 19.36,
+     "vis": true,
+     "op": 0.703
+    },
+    {
+     "z": -26.84,
+     "ahead": 23.36,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -30.84,
+     "ahead": 27.36,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -34.84,
+     "ahead": 31.36,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -38.84,
+     "ahead": 35.36,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -42.84,
+     "ahead": 39.36,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -46.84,
+     "ahead": 43.36,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -50.84,
+     "ahead": 47.36,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -54.84,
+     "ahead": 51.36,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 55.36,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 59.36,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 63.36,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 67.36,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 71.36,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 75.36,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 79.36,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 83.36,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 5,
+   "t": 0.25,
+   "stage": "04",
+   "s": 81.621,
+   "lat": 0,
+   "frac": 0.094,
+   "coins": 1330,
+   "phase": "ENTRANCE (straight)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": 6.65,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -14.84,
+     "ahead": 10.65,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -18.84,
+     "ahead": 14.65,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -22.84,
+     "ahead": 18.65,
+     "vis": true,
+     "op": 0.832
+    },
+    {
+     "z": -26.84,
+     "ahead": 22.65,
+     "vis": true,
+     "op": 0.015
+    },
+    {
+     "z": -30.84,
+     "ahead": 26.65,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -34.84,
+     "ahead": 30.65,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -38.84,
+     "ahead": 34.65,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -42.84,
+     "ahead": 38.65,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -46.84,
+     "ahead": 42.65,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -50.84,
+     "ahead": 46.65,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -54.84,
+     "ahead": 50.65,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 54.65,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 58.65,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 62.65,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 66.65,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 70.65,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 74.65,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 78.65,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 82.65,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 6,
+   "t": 0.3,
+   "stage": "04",
+   "s": 82.323,
+   "lat": 0,
+   "frac": 0.113,
+   "coins": 1330,
+   "phase": "ENTRANCE (straight)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": 5.94,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -14.84,
+     "ahead": 9.94,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -18.84,
+     "ahead": 13.94,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -22.84,
+     "ahead": 17.94,
+     "vis": true,
+     "op": 0.935
+    },
+    {
+     "z": -26.84,
+     "ahead": 21.94,
+     "vis": true,
+     "op": 0.084
+    },
+    {
+     "z": -30.84,
+     "ahead": 25.94,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -34.84,
+     "ahead": 29.94,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -38.84,
+     "ahead": 33.94,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -42.84,
+     "ahead": 37.94,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -46.84,
+     "ahead": 41.94,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -50.84,
+     "ahead": 45.94,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -54.84,
+     "ahead": 49.94,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 53.94,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 57.94,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 61.94,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 65.94,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 69.94,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 73.94,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 77.94,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 81.94,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 7,
+   "t": 0.35,
+   "stage": "04",
+   "s": 83.024,
+   "lat": 0,
+   "frac": 0.132,
+   "coins": 1330,
+   "phase": "ENTRANCE (straight)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": 5.24,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -14.84,
+     "ahead": 9.24,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -18.84,
+     "ahead": 13.24,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -22.84,
+     "ahead": 17.24,
+     "vis": true,
+     "op": 0.994
+    },
+    {
+     "z": -26.84,
+     "ahead": 21.24,
+     "vis": true,
+     "op": 0.2
+    },
+    {
+     "z": -30.84,
+     "ahead": 25.24,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -34.84,
+     "ahead": 29.24,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -38.84,
+     "ahead": 33.24,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -42.84,
+     "ahead": 37.24,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -46.84,
+     "ahead": 41.24,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -50.84,
+     "ahead": 45.24,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -54.84,
+     "ahead": 49.24,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 53.24,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 57.24,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 61.24,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 65.24,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 69.24,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 73.24,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 77.24,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 81.24,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 8,
+   "t": 0.4,
+   "stage": "04",
+   "s": 83.726,
+   "lat": 0,
+   "frac": 0.151,
+   "coins": 1330,
+   "phase": "ENTRANCE (straight)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": 4.54,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -14.84,
+     "ahead": 8.54,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -18.84,
+     "ahead": 12.54,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -22.84,
+     "ahead": 16.54,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -26.84,
+     "ahead": 20.54,
+     "vis": true,
+     "op": 0.35
+    },
+    {
+     "z": -30.84,
+     "ahead": 24.54,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -34.84,
+     "ahead": 28.54,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -38.84,
+     "ahead": 32.54,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -42.84,
+     "ahead": 36.54,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -46.84,
+     "ahead": 40.54,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -50.84,
+     "ahead": 44.54,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -54.84,
+     "ahead": 48.54,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 52.54,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 56.54,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 60.54,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 64.54,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 68.54,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 72.54,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 76.54,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 80.54,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 9,
+   "t": 0.45,
+   "stage": "04",
+   "s": 84.427,
+   "lat": 0,
+   "frac": 0.169,
+   "coins": 1330,
+   "phase": "ENTRANCE (straight)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": 3.83,
+     "vis": true,
+     "op": 0.642
+    },
+    {
+     "z": -14.84,
+     "ahead": 7.83,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -18.84,
+     "ahead": 11.83,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -22.84,
+     "ahead": 15.83,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -26.84,
+     "ahead": 19.83,
+     "vis": true,
+     "op": 0.517
+    },
+    {
+     "z": -30.84,
+     "ahead": 23.83,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -34.84,
+     "ahead": 27.83,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -38.84,
+     "ahead": 31.83,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -42.84,
+     "ahead": 35.83,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -46.84,
+     "ahead": 39.83,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -50.84,
+     "ahead": 43.83,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -54.84,
+     "ahead": 47.83,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 51.83,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 55.83,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 59.83,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 63.83,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 67.83,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 71.83,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 75.83,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 79.83,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 10,
+   "t": 0.5,
+   "stage": "04",
+   "s": 85.128,
+   "lat": 0,
+   "frac": 0.188,
+   "coins": 1330,
+   "phase": "ENTRANCE (straight)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": 3.13,
+     "vis": true,
+     "op": 0.025
+    },
+    {
+     "z": -14.84,
+     "ahead": 7.13,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -18.84,
+     "ahead": 11.13,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -22.84,
+     "ahead": 15.13,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -26.84,
+     "ahead": 19.13,
+     "vis": true,
+     "op": 0.684
+    },
+    {
+     "z": -30.84,
+     "ahead": 23.13,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -34.84,
+     "ahead": 27.13,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -38.84,
+     "ahead": 31.13,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -42.84,
+     "ahead": 35.13,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -46.84,
+     "ahead": 39.13,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -50.84,
+     "ahead": 43.13,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -54.84,
+     "ahead": 47.13,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 51.13,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 55.13,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 59.13,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 63.13,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 67.13,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 71.13,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 75.13,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 79.13,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 11,
+   "t": 0.55,
+   "stage": "04",
+   "s": 85.83,
+   "lat": 0,
+   "frac": 0.207,
+   "coins": 1330,
+   "phase": "ENTRANCE (straight)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": 2.43,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": 6.43,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -18.84,
+     "ahead": 10.43,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -22.84,
+     "ahead": 14.43,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -26.84,
+     "ahead": 18.43,
+     "vis": true,
+     "op": 0.833
+    },
+    {
+     "z": -30.84,
+     "ahead": 22.43,
+     "vis": true,
+     "op": 0.015
+    },
+    {
+     "z": -34.84,
+     "ahead": 26.43,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -38.84,
+     "ahead": 30.43,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -42.84,
+     "ahead": 34.43,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -46.84,
+     "ahead": 38.43,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -50.84,
+     "ahead": 42.43,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -54.84,
+     "ahead": 46.43,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 50.43,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 54.43,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 58.43,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 62.43,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 66.43,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 70.43,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 74.43,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 78.43,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 12,
+   "t": 0.6,
+   "stage": "04",
+   "s": 86.531,
+   "lat": 0,
+   "frac": 0.226,
+   "coins": 1330,
+   "phase": "ENTRANCE (straight)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": 1.73,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": 5.73,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -18.84,
+     "ahead": 9.73,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -22.84,
+     "ahead": 13.73,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -26.84,
+     "ahead": 17.73,
+     "vis": true,
+     "op": 0.944
+    },
+    {
+     "z": -30.84,
+     "ahead": 21.73,
+     "vis": true,
+     "op": 0.094
+    },
+    {
+     "z": -34.84,
+     "ahead": 25.73,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -38.84,
+     "ahead": 29.73,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -42.84,
+     "ahead": 33.73,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -46.84,
+     "ahead": 37.73,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -50.84,
+     "ahead": 41.73,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -54.84,
+     "ahead": 45.73,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 49.73,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 53.73,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 57.73,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 61.73,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 65.73,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 69.73,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 73.73,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 77.73,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 13,
+   "t": 0.65,
+   "stage": "04",
+   "s": 87.233,
+   "lat": 0,
+   "frac": 0.245,
+   "coins": 1330,
+   "phase": "ENTRANCE (straight)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": 1.03,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": 5.03,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -18.84,
+     "ahead": 9.03,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -22.84,
+     "ahead": 13.03,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -26.84,
+     "ahead": 17.03,
+     "vis": true,
+     "op": 0.998
+    },
+    {
+     "z": -30.84,
+     "ahead": 21.03,
+     "vis": true,
+     "op": 0.222
+    },
+    {
+     "z": -34.84,
+     "ahead": 25.03,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -38.84,
+     "ahead": 29.03,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -42.84,
+     "ahead": 33.03,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -46.84,
+     "ahead": 37.03,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -50.84,
+     "ahead": 41.03,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -54.84,
+     "ahead": 45.03,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 49.03,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 53.03,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 57.03,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 61.03,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 65.03,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 69.03,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 73.03,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 77.03,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 14,
+   "t": 0.7,
+   "stage": "04",
+   "s": 87.934,
+   "lat": 0,
+   "frac": 0.263,
+   "coins": 1330,
+   "phase": "ENTRANCE (straight)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": 0.33,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": 4.33,
+     "vis": true,
+     "op": 0.992
+    },
+    {
+     "z": -18.84,
+     "ahead": 8.33,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -22.84,
+     "ahead": 12.33,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -26.84,
+     "ahead": 16.33,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -30.84,
+     "ahead": 20.33,
+     "vis": true,
+     "op": 0.383
+    },
+    {
+     "z": -34.84,
+     "ahead": 24.33,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -38.84,
+     "ahead": 28.33,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -42.84,
+     "ahead": 32.33,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -46.84,
+     "ahead": 36.33,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -50.84,
+     "ahead": 40.33,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -54.84,
+     "ahead": 44.33,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 48.33,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 52.33,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 56.33,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 60.33,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 64.33,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 68.33,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 72.33,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 76.33,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 15,
+   "t": 0.75,
+   "stage": "04",
+   "s": 88.635,
+   "lat": 0,
+   "frac": 0.282,
+   "coins": 1330,
+   "phase": "ENTRANCE (straight)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -0.37,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": 3.63,
+     "vis": true,
+     "op": 0.42
+    },
+    {
+     "z": -18.84,
+     "ahead": 7.63,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -22.84,
+     "ahead": 11.63,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -26.84,
+     "ahead": 15.63,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -30.84,
+     "ahead": 19.63,
+     "vis": true,
+     "op": 0.556
+    },
+    {
+     "z": -34.84,
+     "ahead": 23.63,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -38.84,
+     "ahead": 27.63,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -42.84,
+     "ahead": 31.63,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -46.84,
+     "ahead": 35.63,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -50.84,
+     "ahead": 39.63,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -54.84,
+     "ahead": 43.63,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 47.63,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 51.63,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 55.63,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 59.63,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 63.63,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 67.63,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 71.63,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 75.63,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 16,
+   "t": 0.8,
+   "stage": "04",
+   "s": 89.337,
+   "lat": -0.024,
+   "frac": 0.301,
+   "coins": 1330,
+   "phase": "MIDDLE (steering LEFT)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -1.08,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": 2.92,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": 6.92,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -22.84,
+     "ahead": 10.92,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -26.84,
+     "ahead": 14.92,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -30.84,
+     "ahead": 18.92,
+     "vis": true,
+     "op": 0.724
+    },
+    {
+     "z": -34.84,
+     "ahead": 22.92,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -38.84,
+     "ahead": 26.92,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -42.84,
+     "ahead": 30.92,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -46.84,
+     "ahead": 34.92,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -50.84,
+     "ahead": 38.92,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -54.84,
+     "ahead": 42.92,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 46.92,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 50.92,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 54.92,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 58.92,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 62.92,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 66.92,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 70.92,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 74.92,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 17,
+   "t": 0.85,
+   "stage": "04",
+   "s": 90.038,
+   "lat": -0.107,
+   "frac": 0.32,
+   "coins": 1330,
+   "phase": "MIDDLE (steering LEFT)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -1.78,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": 2.22,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": 6.22,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -22.84,
+     "ahead": 10.22,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -26.84,
+     "ahead": 14.22,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -30.84,
+     "ahead": 18.22,
+     "vis": true,
+     "op": 0.867
+    },
+    {
+     "z": -34.84,
+     "ahead": 22.22,
+     "vis": true,
+     "op": 0.03
+    },
+    {
+     "z": -38.84,
+     "ahead": 26.22,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -42.84,
+     "ahead": 30.22,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -46.84,
+     "ahead": 34.22,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -50.84,
+     "ahead": 38.22,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -54.84,
+     "ahead": 42.22,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 46.22,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 50.22,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 54.22,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 58.22,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 62.22,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 66.22,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 70.22,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 74.22,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 18,
+   "t": 0.9,
+   "stage": "04",
+   "s": 90.74,
+   "lat": -0.256,
+   "frac": 0.339,
+   "coins": 1330,
+   "phase": "MIDDLE (steering LEFT)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -2.48,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": 1.52,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": 5.52,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -22.84,
+     "ahead": 9.52,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -26.84,
+     "ahead": 13.52,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -30.84,
+     "ahead": 17.52,
+     "vis": true,
+     "op": 0.965
+    },
+    {
+     "z": -34.84,
+     "ahead": 21.52,
+     "vis": true,
+     "op": 0.125
+    },
+    {
+     "z": -38.84,
+     "ahead": 25.52,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -42.84,
+     "ahead": 29.52,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -46.84,
+     "ahead": 33.52,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -50.84,
+     "ahead": 37.52,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -54.84,
+     "ahead": 41.52,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 45.52,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 49.52,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 53.52,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 57.52,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 61.52,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 65.52,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 69.52,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 73.52,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 19,
+   "t": 0.95,
+   "stage": "04",
+   "s": 91.441,
+   "lat": -0.463,
+   "frac": 0.358,
+   "coins": 1330,
+   "phase": "MIDDLE (steering LEFT)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -3.18,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": 0.82,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": 4.82,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -22.84,
+     "ahead": 8.82,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -26.84,
+     "ahead": 12.82,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -30.84,
+     "ahead": 16.82,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -34.84,
+     "ahead": 20.82,
+     "vis": true,
+     "op": 0.265
+    },
+    {
+     "z": -38.84,
+     "ahead": 24.82,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -42.84,
+     "ahead": 28.82,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -46.84,
+     "ahead": 32.82,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -50.84,
+     "ahead": 36.82,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -54.84,
+     "ahead": 40.82,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 44.82,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 48.82,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 52.82,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 56.82,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 60.82,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 64.82,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 68.82,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 72.82,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 20,
+   "t": 1,
+   "stage": "04",
+   "s": 92.142,
+   "lat": -0.716,
+   "frac": 0.376,
+   "coins": 1330,
+   "phase": "MIDDLE (steering LEFT)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -3.88,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": 0.12,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": 4.12,
+     "vis": true,
+     "op": 0.895
+    },
+    {
+     "z": -22.84,
+     "ahead": 8.12,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -26.84,
+     "ahead": 12.12,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -30.84,
+     "ahead": 16.12,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -34.84,
+     "ahead": 20.12,
+     "vis": true,
+     "op": 0.432
+    },
+    {
+     "z": -38.84,
+     "ahead": 24.12,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -42.84,
+     "ahead": 28.12,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -46.84,
+     "ahead": 32.12,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -50.84,
+     "ahead": 36.12,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -54.84,
+     "ahead": 40.12,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 44.12,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 48.12,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 52.12,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 56.12,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 60.12,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 64.12,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 68.12,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 72.12,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 21,
+   "t": 1.05,
+   "stage": "04",
+   "s": 92.844,
+   "lat": -1.006,
+   "frac": 0.395,
+   "coins": 1330,
+   "phase": "MIDDLE (steering LEFT)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -4.58,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": -0.58,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": 3.42,
+     "vis": true,
+     "op": 0.213
+    },
+    {
+     "z": -22.84,
+     "ahead": 7.42,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -26.84,
+     "ahead": 11.42,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -30.84,
+     "ahead": 15.42,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -34.84,
+     "ahead": 19.42,
+     "vis": true,
+     "op": 0.606
+    },
+    {
+     "z": -38.84,
+     "ahead": 23.42,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -42.84,
+     "ahead": 27.42,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -46.84,
+     "ahead": 31.42,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -50.84,
+     "ahead": 35.42,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -54.84,
+     "ahead": 39.42,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 43.42,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 47.42,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 51.42,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 55.42,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 59.42,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 63.42,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 67.42,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 71.42,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 22,
+   "t": 1.1,
+   "stage": "04",
+   "s": 93.545,
+   "lat": -1.321,
+   "frac": 0.414,
+   "coins": 1340,
+   "phase": "MIDDLE (steering LEFT)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -5.28,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": -1.28,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": 2.72,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -22.84,
+     "ahead": 6.72,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -26.84,
+     "ahead": 10.72,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -30.84,
+     "ahead": 14.72,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -34.84,
+     "ahead": 18.72,
+     "vis": true,
+     "op": 0.769
+    },
+    {
+     "z": -38.84,
+     "ahead": 22.72,
+     "vis": false,
+     "op": 0.001
+    },
+    {
+     "z": -42.84,
+     "ahead": 26.72,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -46.84,
+     "ahead": 30.72,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -50.84,
+     "ahead": 34.72,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -54.84,
+     "ahead": 38.72,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 42.72,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 46.72,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 50.72,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 54.72,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 58.72,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 62.72,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 66.72,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 70.72,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 23,
+   "t": 1.15,
+   "stage": "04",
+   "s": 94.247,
+   "lat": -1.65,
+   "frac": 0.433,
+   "coins": 1340,
+   "phase": "MIDDLE (steering LEFT)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -5.99,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": -1.99,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": 2.01,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -22.84,
+     "ahead": 6.01,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -26.84,
+     "ahead": 10.01,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -30.84,
+     "ahead": 14.01,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -34.84,
+     "ahead": 18.01,
+     "vis": true,
+     "op": 0.901
+    },
+    {
+     "z": -38.84,
+     "ahead": 22.01,
+     "vis": true,
+     "op": 0.052
+    },
+    {
+     "z": -42.84,
+     "ahead": 26.01,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -46.84,
+     "ahead": 30.01,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -50.84,
+     "ahead": 34.01,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -54.84,
+     "ahead": 38.01,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 42.01,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 46.01,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 50.01,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 54.01,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 58.01,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 62.01,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 66.01,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 70.01,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 24,
+   "t": 1.2,
+   "stage": "04",
+   "s": 94.948,
+   "lat": -1.65,
+   "frac": 0.452,
+   "coins": 1340,
+   "phase": "MIDDLE (steering LEFT)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -6.69,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": -2.69,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": 1.31,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -22.84,
+     "ahead": 5.31,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -26.84,
+     "ahead": 9.31,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -30.84,
+     "ahead": 13.31,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -34.84,
+     "ahead": 17.31,
+     "vis": true,
+     "op": 0.983
+    },
+    {
+     "z": -38.84,
+     "ahead": 21.31,
+     "vis": true,
+     "op": 0.162
+    },
+    {
+     "z": -42.84,
+     "ahead": 25.31,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -46.84,
+     "ahead": 29.31,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -50.84,
+     "ahead": 33.31,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -54.84,
+     "ahead": 37.31,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 41.31,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 45.31,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 49.31,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 53.31,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 57.31,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 61.31,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 65.31,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 69.31,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 25,
+   "t": 1.25,
+   "stage": "04",
+   "s": 95.649,
+   "lat": -1.65,
+   "frac": 0.47,
+   "coins": 1340,
+   "phase": "MIDDLE (steering LEFT)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -7.39,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": -3.39,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": 0.61,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -22.84,
+     "ahead": 4.61,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -26.84,
+     "ahead": 8.61,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -30.84,
+     "ahead": 12.61,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -34.84,
+     "ahead": 16.61,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -38.84,
+     "ahead": 20.61,
+     "vis": true,
+     "op": 0.312
+    },
+    {
+     "z": -42.84,
+     "ahead": 24.61,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -46.84,
+     "ahead": 28.61,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -50.84,
+     "ahead": 32.61,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -54.84,
+     "ahead": 36.61,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 40.61,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 44.61,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 48.61,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 52.61,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 56.61,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 60.61,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 64.61,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 68.61,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 26,
+   "t": 1.3,
+   "stage": "04",
+   "s": 96.351,
+   "lat": -1.65,
+   "frac": 0.489,
+   "coins": 1340,
+   "phase": "MIDDLE (steering LEFT)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -8.09,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": -4.09,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": -0.09,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -22.84,
+     "ahead": 3.91,
+     "vis": true,
+     "op": 0.718
+    },
+    {
+     "z": -26.84,
+     "ahead": 7.91,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -30.84,
+     "ahead": 11.91,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -34.84,
+     "ahead": 15.91,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -38.84,
+     "ahead": 19.91,
+     "vis": true,
+     "op": 0.484
+    },
+    {
+     "z": -42.84,
+     "ahead": 23.91,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -46.84,
+     "ahead": 27.91,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -50.84,
+     "ahead": 31.91,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -54.84,
+     "ahead": 35.91,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 39.91,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 43.91,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 47.91,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 51.91,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 55.91,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 59.91,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 63.91,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 67.91,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 27,
+   "t": 1.35,
+   "stage": "04",
+   "s": 97.052,
+   "lat": -1.65,
+   "frac": 0.508,
+   "coins": 1340,
+   "phase": "MIDDLE (steering RIGHT)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -8.79,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": -4.79,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": -0.79,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -22.84,
+     "ahead": 3.21,
+     "vis": true,
+     "op": 0.06
+    },
+    {
+     "z": -26.84,
+     "ahead": 7.21,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -30.84,
+     "ahead": 11.21,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -34.84,
+     "ahead": 15.21,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -38.84,
+     "ahead": 19.21,
+     "vis": true,
+     "op": 0.657
+    },
+    {
+     "z": -42.84,
+     "ahead": 23.21,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -46.84,
+     "ahead": 27.21,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -50.84,
+     "ahead": 31.21,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -54.84,
+     "ahead": 35.21,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 39.21,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 43.21,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 47.21,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 51.21,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 55.21,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 59.21,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 63.21,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 67.21,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 28,
+   "t": 1.4,
+   "stage": "04",
+   "s": 97.754,
+   "lat": -1.65,
+   "frac": 0.527,
+   "coins": 1340,
+   "phase": "MIDDLE (steering RIGHT)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -9.49,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": -5.49,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": -1.49,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -22.84,
+     "ahead": 2.51,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -26.84,
+     "ahead": 6.51,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -30.84,
+     "ahead": 10.51,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -34.84,
+     "ahead": 14.51,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -38.84,
+     "ahead": 18.51,
+     "vis": true,
+     "op": 0.812
+    },
+    {
+     "z": -42.84,
+     "ahead": 22.51,
+     "vis": false,
+     "op": 0.009
+    },
+    {
+     "z": -46.84,
+     "ahead": 26.51,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -50.84,
+     "ahead": 30.51,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -54.84,
+     "ahead": 34.51,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 38.51,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 42.51,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 46.51,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 50.51,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 54.51,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 58.51,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 62.51,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 66.51,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 29,
+   "t": 1.45,
+   "stage": "04",
+   "s": 98.455,
+   "lat": -1.65,
+   "frac": 0.546,
+   "coins": 1340,
+   "phase": "MIDDLE (steering RIGHT)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -10.19,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": -6.19,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": -2.19,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -22.84,
+     "ahead": 1.81,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -26.84,
+     "ahead": 5.81,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -30.84,
+     "ahead": 9.81,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -34.84,
+     "ahead": 13.81,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -38.84,
+     "ahead": 17.81,
+     "vis": true,
+     "op": 0.931
+    },
+    {
+     "z": -42.84,
+     "ahead": 21.81,
+     "vis": true,
+     "op": 0.08
+    },
+    {
+     "z": -46.84,
+     "ahead": 25.81,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -50.84,
+     "ahead": 29.81,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -54.84,
+     "ahead": 33.81,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 37.81,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 41.81,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 45.81,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 49.81,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 53.81,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 57.81,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 61.81,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 65.81,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 30,
+   "t": 1.5,
+   "stage": "04",
+   "s": 99.156,
+   "lat": -1.609,
+   "frac": 0.565,
+   "coins": 1340,
+   "phase": "MIDDLE (steering RIGHT)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -10.9,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": -6.9,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": -2.9,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -22.84,
+     "ahead": 1.1,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -26.84,
+     "ahead": 5.1,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -30.84,
+     "ahead": 9.1,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -34.84,
+     "ahead": 13.1,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -38.84,
+     "ahead": 17.1,
+     "vis": true,
+     "op": 0.995
+    },
+    {
+     "z": -42.84,
+     "ahead": 21.1,
+     "vis": true,
+     "op": 0.204
+    },
+    {
+     "z": -46.84,
+     "ahead": 25.1,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -50.84,
+     "ahead": 29.1,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -54.84,
+     "ahead": 33.1,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 37.1,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 41.1,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 45.1,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 49.1,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 53.1,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 57.1,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 61.1,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 65.1,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 31,
+   "t": 1.55,
+   "stage": "04",
+   "s": 99.858,
+   "lat": -1.476,
+   "frac": 0.583,
+   "coins": 1340,
+   "phase": "MIDDLE (steering RIGHT)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -11.6,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": -7.6,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": -3.6,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -22.84,
+     "ahead": 0.4,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -26.84,
+     "ahead": 4.4,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -30.84,
+     "ahead": 8.4,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -34.84,
+     "ahead": 12.4,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -38.84,
+     "ahead": 16.4,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -42.84,
+     "ahead": 20.4,
+     "vis": true,
+     "op": 0.362
+    },
+    {
+     "z": -46.84,
+     "ahead": 24.4,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -50.84,
+     "ahead": 28.4,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -54.84,
+     "ahead": 32.4,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 36.4,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 40.4,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 44.4,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 48.4,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 52.4,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 56.4,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 60.4,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 64.4,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 32,
+   "t": 1.6,
+   "stage": "04",
+   "s": 100.559,
+   "lat": -1.273,
+   "frac": 0.602,
+   "coins": 1340,
+   "phase": "MIDDLE (steering RIGHT)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -12.3,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": -8.3,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": -4.3,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -22.84,
+     "ahead": -0.3,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -26.84,
+     "ahead": 3.7,
+     "vis": true,
+     "op": 0.502
+    },
+    {
+     "z": -30.84,
+     "ahead": 7.7,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -34.84,
+     "ahead": 11.7,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -38.84,
+     "ahead": 15.7,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -42.84,
+     "ahead": 19.7,
+     "vis": true,
+     "op": 0.536
+    },
+    {
+     "z": -46.84,
+     "ahead": 23.7,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -50.84,
+     "ahead": 27.7,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -54.84,
+     "ahead": 31.7,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 35.7,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 39.7,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 43.7,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 47.7,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 51.7,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 55.7,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 59.7,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 63.7,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 33,
+   "t": 1.65,
+   "stage": "04",
+   "s": 101.261,
+   "lat": -1.017,
+   "frac": 0.621,
+   "coins": 1340,
+   "phase": "MIDDLE (steering RIGHT)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -13,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": -9,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": -5,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -22.84,
+     "ahead": -1,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -26.84,
+     "ahead": 3,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -30.84,
+     "ahead": 7,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -34.84,
+     "ahead": 11,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -38.84,
+     "ahead": 15,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -42.84,
+     "ahead": 19,
+     "vis": true,
+     "op": 0.705
+    },
+    {
+     "z": -46.84,
+     "ahead": 23,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -50.84,
+     "ahead": 27,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -54.84,
+     "ahead": 31,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 35,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 39,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 43,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 47,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 51,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 55,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 59,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 63,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 34,
+   "t": 1.7,
+   "stage": "04",
+   "s": 101.962,
+   "lat": -0.724,
+   "frac": 0.64,
+   "coins": 1340,
+   "phase": "MIDDLE (steering RIGHT)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -13.7,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": -9.7,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": -5.7,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -22.84,
+     "ahead": -1.7,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -26.84,
+     "ahead": 2.3,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -30.84,
+     "ahead": 6.3,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -34.84,
+     "ahead": 10.3,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -38.84,
+     "ahead": 14.3,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -42.84,
+     "ahead": 18.3,
+     "vis": true,
+     "op": 0.852
+    },
+    {
+     "z": -46.84,
+     "ahead": 22.3,
+     "vis": true,
+     "op": 0.023
+    },
+    {
+     "z": -50.84,
+     "ahead": 26.3,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -54.84,
+     "ahead": 30.3,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 34.3,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 38.3,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 42.3,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 46.3,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 50.3,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 54.3,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 58.3,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 62.3,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 35,
+   "t": 1.75,
+   "stage": "04",
+   "s": 102.663,
+   "lat": -0.405,
+   "frac": 0.659,
+   "coins": 1340,
+   "phase": "MIDDLE (steering RIGHT)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -14.4,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": -10.4,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": -6.4,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -22.84,
+     "ahead": -2.4,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -26.84,
+     "ahead": 1.6,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -30.84,
+     "ahead": 5.6,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -34.84,
+     "ahead": 9.6,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -38.84,
+     "ahead": 13.6,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -42.84,
+     "ahead": 17.6,
+     "vis": true,
+     "op": 0.957
+    },
+    {
+     "z": -46.84,
+     "ahead": 21.6,
+     "vis": true,
+     "op": 0.112
+    },
+    {
+     "z": -50.84,
+     "ahead": 25.6,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -54.84,
+     "ahead": 29.6,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 33.6,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 37.6,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 41.6,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 45.6,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 49.6,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 53.6,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 57.6,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 61.6,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 36,
+   "t": 1.8,
+   "stage": "04",
+   "s": 103.365,
+   "lat": -0.068,
+   "frac": 0.677,
+   "coins": 1340,
+   "phase": "MIDDLE (steering RIGHT)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -15.1,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": -11.1,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": -7.1,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -22.84,
+     "ahead": -3.1,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -26.84,
+     "ahead": 0.9,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -30.84,
+     "ahead": 4.9,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -34.84,
+     "ahead": 8.9,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -38.84,
+     "ahead": 12.9,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -42.84,
+     "ahead": 16.9,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -46.84,
+     "ahead": 20.9,
+     "vis": true,
+     "op": 0.248
+    },
+    {
+     "z": -50.84,
+     "ahead": 24.9,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -54.84,
+     "ahead": 28.9,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 32.9,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 36.9,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 40.9,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 44.9,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 48.9,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 52.9,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 56.9,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 60.9,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 37,
+   "t": 1.85,
+   "stage": "04",
+   "s": 104.066,
+   "lat": 0.282,
+   "frac": 0.696,
+   "coins": 1340,
+   "phase": "MIDDLE (steering RIGHT)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -15.8,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": -11.8,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": -7.8,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -22.84,
+     "ahead": -3.8,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -26.84,
+     "ahead": 0.2,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -30.84,
+     "ahead": 4.2,
+     "vis": true,
+     "op": 0.943
+    },
+    {
+     "z": -34.84,
+     "ahead": 8.2,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -38.84,
+     "ahead": 12.2,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -42.84,
+     "ahead": 16.2,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -46.84,
+     "ahead": 20.2,
+     "vis": true,
+     "op": 0.413
+    },
+    {
+     "z": -50.84,
+     "ahead": 24.2,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -54.84,
+     "ahead": 28.2,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 32.2,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 36.2,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 40.2,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 44.2,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 48.2,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 52.2,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 56.2,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 60.2,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 38,
+   "t": 1.9,
+   "stage": "04",
+   "s": 104.768,
+   "lat": 0.617,
+   "frac": 0.715,
+   "coins": 1340,
+   "phase": "END (straight)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -16.5,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": -12.5,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": -8.5,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -22.84,
+     "ahead": -4.5,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -26.84,
+     "ahead": -0.5,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -30.84,
+     "ahead": 3.5,
+     "vis": true,
+     "op": 0.29
+    },
+    {
+     "z": -34.84,
+     "ahead": 7.5,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -38.84,
+     "ahead": 11.5,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -42.84,
+     "ahead": 15.5,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -46.84,
+     "ahead": 19.5,
+     "vis": true,
+     "op": 0.587
+    },
+    {
+     "z": -50.84,
+     "ahead": 23.5,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -54.84,
+     "ahead": 27.5,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 31.5,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 35.5,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 39.5,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 43.5,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 47.5,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 51.5,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 55.5,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 59.5,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 39,
+   "t": 1.95,
+   "stage": "04",
+   "s": 105.469,
+   "lat": 0.898,
+   "frac": 0.734,
+   "coins": 1340,
+   "phase": "END (straight)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -17.2,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": -13.2,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": -9.2,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -22.84,
+     "ahead": -5.2,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -26.84,
+     "ahead": -1.2,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -30.84,
+     "ahead": 2.8,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -34.84,
+     "ahead": 6.8,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -38.84,
+     "ahead": 10.8,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -42.84,
+     "ahead": 14.8,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -46.84,
+     "ahead": 18.8,
+     "vis": true,
+     "op": 0.749
+    },
+    {
+     "z": -50.84,
+     "ahead": 22.8,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -54.84,
+     "ahead": 26.8,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 30.8,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 34.8,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 38.8,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 42.8,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 46.8,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 50.8,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 54.8,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 58.8,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 40,
+   "t": 2,
+   "stage": "04",
+   "s": 106.17,
+   "lat": 1.117,
+   "frac": 0.753,
+   "coins": 1340,
+   "phase": "END (straight)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -17.89,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": -13.89,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": -9.89,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -22.84,
+     "ahead": -5.89,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -26.84,
+     "ahead": -1.89,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -30.84,
+     "ahead": 2.11,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -34.84,
+     "ahead": 6.11,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -38.84,
+     "ahead": 10.11,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -42.84,
+     "ahead": 14.11,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -46.84,
+     "ahead": 18.11,
+     "vis": true,
+     "op": 0.877
+    },
+    {
+     "z": -50.84,
+     "ahead": 22.11,
+     "vis": true,
+     "op": 0.036
+    },
+    {
+     "z": -54.84,
+     "ahead": 26.11,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 30.11,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 34.11,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 38.11,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 42.11,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 46.11,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 50.11,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 54.11,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 58.11,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 41,
+   "t": 2.05,
+   "stage": "04",
+   "s": 106.872,
+   "lat": 1.281,
+   "frac": 0.771,
+   "coins": 1340,
+   "phase": "END (straight)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -18.58,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": -14.58,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": -10.58,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -22.84,
+     "ahead": -6.58,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -26.84,
+     "ahead": -2.58,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -30.84,
+     "ahead": 1.42,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -34.84,
+     "ahead": 5.42,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -38.84,
+     "ahead": 9.42,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -42.84,
+     "ahead": 13.42,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -46.84,
+     "ahead": 17.42,
+     "vis": true,
+     "op": 0.959
+    },
+    {
+     "z": -50.84,
+     "ahead": 21.42,
+     "vis": true,
+     "op": 0.116
+    },
+    {
+     "z": -54.84,
+     "ahead": 25.42,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 29.42,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 33.42,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 37.42,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 41.42,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 45.42,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 49.42,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 53.42,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 57.42,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 42,
+   "t": 2.1,
+   "stage": "04",
+   "s": 107.573,
+   "lat": 1.399,
+   "frac": 0.79,
+   "coins": 1340,
+   "phase": "END (straight)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -19.28,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": -15.28,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": -11.28,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -22.84,
+     "ahead": -7.28,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -26.84,
+     "ahead": -3.28,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -30.84,
+     "ahead": 0.72,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -34.84,
+     "ahead": 4.72,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -38.84,
+     "ahead": 8.72,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -42.84,
+     "ahead": 12.72,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -46.84,
+     "ahead": 16.72,
+     "vis": true,
+     "op": 0.997
+    },
+    {
+     "z": -50.84,
+     "ahead": 20.72,
+     "vis": true,
+     "op": 0.215
+    },
+    {
+     "z": -54.84,
+     "ahead": 24.72,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 28.72,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 32.72,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 36.72,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 40.72,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 44.72,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 48.72,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 52.72,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 56.72,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 43,
+   "t": 2.15,
+   "stage": "04",
+   "s": 108.275,
+   "lat": 1.484,
+   "frac": 0.809,
+   "coins": 1340,
+   "phase": "END (straight)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -19.98,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": -15.98,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": -11.98,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -22.84,
+     "ahead": -7.98,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -26.84,
+     "ahead": -3.98,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -30.84,
+     "ahead": 0.02,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -34.84,
+     "ahead": 4.02,
+     "vis": true,
+     "op": 0.822
+    },
+    {
+     "z": -38.84,
+     "ahead": 8.02,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -42.84,
+     "ahead": 12.02,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -46.84,
+     "ahead": 16.02,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -50.84,
+     "ahead": 20.02,
+     "vis": true,
+     "op": 0.319
+    },
+    {
+     "z": -54.84,
+     "ahead": 24.02,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 28.02,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 32.02,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 36.02,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 40.02,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 44.02,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 48.02,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 52.02,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 56.02,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 44,
+   "t": 2.2,
+   "stage": "04",
+   "s": 108.976,
+   "lat": 1.543,
+   "frac": 0.828,
+   "coins": 1340,
+   "phase": "END (straight)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -20.67,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": -16.67,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": -12.67,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -22.84,
+     "ahead": -8.67,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -26.84,
+     "ahead": -4.67,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -30.84,
+     "ahead": -0.67,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -34.84,
+     "ahead": 3.33,
+     "vis": true,
+     "op": 0.138
+    },
+    {
+     "z": -38.84,
+     "ahead": 7.33,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -42.84,
+     "ahead": 11.33,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -46.84,
+     "ahead": 15.33,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -50.84,
+     "ahead": 19.33,
+     "vis": true,
+     "op": 0.421
+    },
+    {
+     "z": -54.84,
+     "ahead": 23.33,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 27.33,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 31.33,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 35.33,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 39.33,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 43.33,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 47.33,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 51.33,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 55.33,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 45,
+   "t": 2.25,
+   "stage": "04",
+   "s": 109.677,
+   "lat": 1.583,
+   "frac": 0.847,
+   "coins": 1340,
+   "phase": "END (straight)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -21.37,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": -17.37,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": -13.37,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -22.84,
+     "ahead": -9.37,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -26.84,
+     "ahead": -5.37,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -30.84,
+     "ahead": -1.37,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -34.84,
+     "ahead": 2.63,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -38.84,
+     "ahead": 6.63,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -42.84,
+     "ahead": 10.63,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -46.84,
+     "ahead": 14.63,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -50.84,
+     "ahead": 18.63,
+     "vis": true,
+     "op": 0.518
+    },
+    {
+     "z": -54.84,
+     "ahead": 22.63,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 26.63,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 30.63,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 34.63,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 38.63,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 42.63,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 46.63,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 50.63,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 54.63,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 46,
+   "t": 2.3,
+   "stage": "04",
+   "s": 110.374,
+   "lat": 1.611,
+   "frac": 0.866,
+   "coins": 1340,
+   "phase": "END (straight)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -22.06,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": -18.06,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": -14.06,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -22.84,
+     "ahead": -10.06,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -26.84,
+     "ahead": -6.06,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -30.84,
+     "ahead": -2.06,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -34.84,
+     "ahead": 1.94,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -38.84,
+     "ahead": 5.94,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -42.84,
+     "ahead": 9.94,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -46.84,
+     "ahead": 13.94,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -50.84,
+     "ahead": 17.94,
+     "vis": true,
+     "op": 0.612
+    },
+    {
+     "z": -54.84,
+     "ahead": 21.94,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 25.94,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 29.94,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 33.94,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 37.94,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 41.94,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 45.94,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 49.94,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 53.94,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 47,
+   "t": 2.35,
+   "stage": "04",
+   "s": 111.065,
+   "lat": 1.63,
+   "frac": 0.884,
+   "coins": 1340,
+   "phase": "END (straight)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -22.75,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": -18.75,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": -14.75,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -22.84,
+     "ahead": -10.75,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -26.84,
+     "ahead": -6.75,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -30.84,
+     "ahead": -2.75,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -34.84,
+     "ahead": 1.25,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -38.84,
+     "ahead": 5.25,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -42.84,
+     "ahead": 9.25,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -46.84,
+     "ahead": 13.25,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -50.84,
+     "ahead": 17.25,
+     "vis": true,
+     "op": 0.704
+    },
+    {
+     "z": -54.84,
+     "ahead": 21.25,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -58.84,
+     "ahead": 25.25,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 29.25,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 33.25,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 37.25,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 41.25,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 45.25,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 49.25,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 53.25,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 48,
+   "t": 2.4,
+   "stage": "04",
+   "s": 111.748,
+   "lat": 1.643,
+   "frac": 0.903,
+   "coins": 1340,
+   "phase": "END (straight)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -23.41,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": -19.41,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": -15.41,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -22.84,
+     "ahead": -11.41,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -26.84,
+     "ahead": -7.41,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -30.84,
+     "ahead": -3.41,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -34.84,
+     "ahead": 0.59,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -38.84,
+     "ahead": 4.59,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -42.84,
+     "ahead": 8.59,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -46.84,
+     "ahead": 12.59,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -50.84,
+     "ahead": 16.59,
+     "vis": true,
+     "op": 0.796
+    },
+    {
+     "z": -54.84,
+     "ahead": 20.59,
+     "vis": false,
+     "op": 0.005
+    },
+    {
+     "z": -58.84,
+     "ahead": 24.59,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 28.59,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 32.59,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 36.59,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 40.59,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 44.59,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 48.59,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 52.59,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 49,
+   "t": 2.45,
+   "stage": "04",
+   "s": 112.421,
+   "lat": 1.651,
+   "frac": 0.921,
+   "coins": 1340,
+   "phase": "END (straight)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -24.06,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": -20.06,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": -16.06,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -22.84,
+     "ahead": -12.06,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -26.84,
+     "ahead": -8.06,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -30.84,
+     "ahead": -4.06,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -34.84,
+     "ahead": -0.06,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -38.84,
+     "ahead": 3.94,
+     "vis": true,
+     "op": 0.745
+    },
+    {
+     "z": -42.84,
+     "ahead": 7.94,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -46.84,
+     "ahead": 11.94,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -50.84,
+     "ahead": 15.94,
+     "vis": true,
+     "op": 0.886
+    },
+    {
+     "z": -54.84,
+     "ahead": 19.94,
+     "vis": true,
+     "op": 0.042
+    },
+    {
+     "z": -58.84,
+     "ahead": 23.94,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 27.94,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 31.94,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 35.94,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 39.94,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 43.94,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 47.94,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 51.94,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 50,
+   "t": 2.5,
+   "stage": "04",
+   "s": 113.085,
+   "lat": 1.657,
+   "frac": 0.939,
+   "coins": 1340,
+   "phase": "END (straight)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -24.7,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": -20.7,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": -16.7,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -22.84,
+     "ahead": -12.7,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -26.84,
+     "ahead": -8.7,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -30.84,
+     "ahead": -4.7,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -34.84,
+     "ahead": -0.7,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -38.84,
+     "ahead": 3.3,
+     "vis": true,
+     "op": 0.12
+    },
+    {
+     "z": -42.84,
+     "ahead": 7.3,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -46.84,
+     "ahead": 11.3,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -50.84,
+     "ahead": 15.3,
+     "vis": true,
+     "op": 0.96
+    },
+    {
+     "z": -54.84,
+     "ahead": 19.3,
+     "vis": true,
+     "op": 0.117
+    },
+    {
+     "z": -58.84,
+     "ahead": 23.3,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 27.3,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 31.3,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 35.3,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 39.3,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 43.3,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 47.3,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 51.3,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 51,
+   "t": 2.55,
+   "stage": "04",
+   "s": 113.736,
+   "lat": 1.661,
+   "frac": 0.957,
+   "coins": 1340,
+   "phase": "END (straight)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -25.29,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": -21.29,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": -17.29,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -22.84,
+     "ahead": -13.29,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -26.84,
+     "ahead": -9.29,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -30.84,
+     "ahead": -5.29,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -34.84,
+     "ahead": -1.29,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -38.84,
+     "ahead": 2.71,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -42.84,
+     "ahead": 6.71,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -46.84,
+     "ahead": 10.71,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -50.84,
+     "ahead": 14.71,
+     "vis": true,
+     "op": 0.998
+    },
+    {
+     "z": -54.84,
+     "ahead": 18.71,
+     "vis": true,
+     "op": 0.23
+    },
+    {
+     "z": -58.84,
+     "ahead": 22.71,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 26.71,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 30.71,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 34.71,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 38.71,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 42.71,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 46.71,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 50.71,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 52,
+   "t": 2.6,
+   "stage": "04",
+   "s": 114.376,
+   "lat": 1.663,
+   "frac": 0.974,
+   "coins": 1340,
+   "phase": "END (straight)",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -25.87,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": -21.87,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": -17.87,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -22.84,
+     "ahead": -13.87,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -26.84,
+     "ahead": -9.87,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -30.84,
+     "ahead": -5.87,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -34.84,
+     "ahead": -1.87,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -38.84,
+     "ahead": 2.13,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -42.84,
+     "ahead": 6.13,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -46.84,
+     "ahead": 10.13,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -50.84,
+     "ahead": 14.13,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -54.84,
+     "ahead": 18.13,
+     "vis": true,
+     "op": 0.375
+    },
+    {
+     "z": -58.84,
+     "ahead": 22.13,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 26.13,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 30.13,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 34.13,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 38.13,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 42.13,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 46.13,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 50.13,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 53,
+   "t": 2.65,
+   "stage": "05",
+   "s": 115.005,
+   "lat": 1.665,
+   "frac": 0.992,
+   "coins": 1340,
+   "phase": "next screen 05",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -26.44,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": -22.44,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": -18.44,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -22.84,
+     "ahead": -14.44,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -26.84,
+     "ahead": -10.44,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -30.84,
+     "ahead": -6.44,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -34.84,
+     "ahead": -2.44,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -38.84,
+     "ahead": 1.56,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -42.84,
+     "ahead": 5.56,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -46.84,
+     "ahead": 9.56,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -50.84,
+     "ahead": 13.56,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -54.84,
+     "ahead": 17.56,
+     "vis": true,
+     "op": 0.542
+    },
+    {
+     "z": -58.84,
+     "ahead": 21.56,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 25.56,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 29.56,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 33.56,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 37.56,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 41.56,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 45.56,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 49.56,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 54,
+   "t": 2.7,
+   "stage": "05",
+   "s": 115.621,
+   "lat": 1.666,
+   "frac": 1.008,
+   "coins": 1340,
+   "phase": "next screen 05",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -26.99,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": -22.99,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": -18.99,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -22.84,
+     "ahead": -14.99,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -26.84,
+     "ahead": -10.99,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -30.84,
+     "ahead": -6.99,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -34.84,
+     "ahead": -2.99,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -38.84,
+     "ahead": 1.01,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -42.84,
+     "ahead": 5.01,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -46.84,
+     "ahead": 9.01,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -50.84,
+     "ahead": 13.01,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -54.84,
+     "ahead": 17.01,
+     "vis": true,
+     "op": 0.709
+    },
+    {
+     "z": -58.84,
+     "ahead": 21.01,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -62.84,
+     "ahead": 25.01,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 29.01,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 33.01,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 37.01,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 41.01,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 45.01,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 49.01,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 55,
+   "t": 2.75,
+   "stage": "05",
+   "s": 116.226,
+   "lat": 1.667,
+   "frac": 1.025,
+   "coins": 1340,
+   "phase": "next screen 05",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -27.51,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": -23.51,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": -19.51,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -22.84,
+     "ahead": -15.51,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -26.84,
+     "ahead": -11.51,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -30.84,
+     "ahead": -7.51,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -34.84,
+     "ahead": -3.51,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -38.84,
+     "ahead": 0.49,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -42.84,
+     "ahead": 4.49,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -46.84,
+     "ahead": 8.49,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -50.84,
+     "ahead": 12.49,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -54.84,
+     "ahead": 16.49,
+     "vis": true,
+     "op": 0.857
+    },
+    {
+     "z": -58.84,
+     "ahead": 20.49,
+     "vis": true,
+     "op": 0.025
+    },
+    {
+     "z": -62.84,
+     "ahead": 24.49,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 28.49,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 32.49,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 36.49,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 40.49,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 44.49,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 48.49,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 56,
+   "t": 2.8,
+   "stage": "05",
+   "s": 116.821,
+   "lat": 1.667,
+   "frac": 1.041,
+   "coins": 1340,
+   "phase": "next screen 05",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -28.03,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": -24.03,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": -20.03,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -22.84,
+     "ahead": -16.03,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -26.84,
+     "ahead": -12.03,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -30.84,
+     "ahead": -8.03,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -34.84,
+     "ahead": -4.03,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -38.84,
+     "ahead": -0.03,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -42.84,
+     "ahead": 3.97,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -46.84,
+     "ahead": 7.97,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -50.84,
+     "ahead": 11.97,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -54.84,
+     "ahead": 15.97,
+     "vis": true,
+     "op": 0.961
+    },
+    {
+     "z": -58.84,
+     "ahead": 19.97,
+     "vis": true,
+     "op": 0.119
+    },
+    {
+     "z": -62.84,
+     "ahead": 23.97,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 27.97,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 31.97,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 35.97,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 39.97,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 43.97,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 47.97,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 57,
+   "t": 2.85,
+   "stage": "05",
+   "s": 117.405,
+   "lat": 1.668,
+   "frac": 1.057,
+   "coins": 1340,
+   "phase": "next screen 05",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -28.54,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": -24.54,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": -20.54,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -22.84,
+     "ahead": -16.54,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -26.84,
+     "ahead": -12.54,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -30.84,
+     "ahead": -8.54,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -34.84,
+     "ahead": -4.54,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -38.84,
+     "ahead": -0.54,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -42.84,
+     "ahead": 3.46,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -46.84,
+     "ahead": 7.46,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -50.84,
+     "ahead": 11.46,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -54.84,
+     "ahead": 15.46,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -58.84,
+     "ahead": 19.46,
+     "vis": true,
+     "op": 0.262
+    },
+    {
+     "z": -62.84,
+     "ahead": 23.46,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 27.46,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 31.46,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 35.46,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 39.46,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 43.46,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 47.46,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 58,
+   "t": 2.9,
+   "stage": "05",
+   "s": 117.981,
+   "lat": 1.668,
+   "frac": 1.073,
+   "coins": 1340,
+   "phase": "next screen 05",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -29.05,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": -25.05,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": -21.05,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -22.84,
+     "ahead": -17.05,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -26.84,
+     "ahead": -13.05,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -30.84,
+     "ahead": -9.05,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -34.84,
+     "ahead": -5.05,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -38.84,
+     "ahead": -1.05,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -42.84,
+     "ahead": 2.95,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -46.84,
+     "ahead": 6.95,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -50.84,
+     "ahead": 10.95,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -54.84,
+     "ahead": 14.95,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -58.84,
+     "ahead": 18.95,
+     "vis": true,
+     "op": 0.432
+    },
+    {
+     "z": -62.84,
+     "ahead": 22.95,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 26.95,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 30.95,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 34.95,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 38.95,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 42.95,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 46.95,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 59,
+   "t": 2.95,
+   "stage": "05",
+   "s": 118.55,
+   "lat": 1.668,
+   "frac": 1.088,
+   "coins": 1340,
+   "phase": "next screen 05",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -29.56,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": -25.56,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": -21.56,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -22.84,
+     "ahead": -17.56,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -26.84,
+     "ahead": -13.56,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -30.84,
+     "ahead": -9.56,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -34.84,
+     "ahead": -5.56,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -38.84,
+     "ahead": -1.56,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -42.84,
+     "ahead": 2.44,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -46.84,
+     "ahead": 6.44,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -50.84,
+     "ahead": 10.44,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -54.84,
+     "ahead": 14.44,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -58.84,
+     "ahead": 18.44,
+     "vis": true,
+     "op": 0.603
+    },
+    {
+     "z": -62.84,
+     "ahead": 22.44,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 26.44,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 30.44,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 34.44,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 38.44,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 42.44,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 46.44,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 60,
+   "t": 3,
+   "stage": "05",
+   "s": 119.111,
+   "lat": 1.668,
+   "frac": 1.104,
+   "coins": 1340,
+   "phase": "next screen 05",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -30.07,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": -26.07,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": -22.07,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -22.84,
+     "ahead": -18.07,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -26.84,
+     "ahead": -14.07,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -30.84,
+     "ahead": -10.07,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -34.84,
+     "ahead": -6.07,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -38.84,
+     "ahead": -2.07,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -42.84,
+     "ahead": 1.93,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -46.84,
+     "ahead": 5.93,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -50.84,
+     "ahead": 9.93,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -54.84,
+     "ahead": 13.93,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -58.84,
+     "ahead": 17.93,
+     "vis": true,
+     "op": 0.756
+    },
+    {
+     "z": -62.84,
+     "ahead": 21.93,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -66.84,
+     "ahead": 25.93,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 29.93,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 33.93,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 37.93,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 41.93,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 45.93,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 61,
+   "t": 3.05,
+   "stage": "05",
+   "s": 119.668,
+   "lat": 1.668,
+   "frac": 1.119,
+   "coins": 1340,
+   "phase": "next screen 05",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -30.57,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": -26.57,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": -22.57,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -22.84,
+     "ahead": -18.57,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -26.84,
+     "ahead": -14.57,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -30.84,
+     "ahead": -10.57,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -34.84,
+     "ahead": -6.57,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -38.84,
+     "ahead": -2.57,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -42.84,
+     "ahead": 1.43,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -46.84,
+     "ahead": 5.43,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -50.84,
+     "ahead": 9.43,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -54.84,
+     "ahead": 13.43,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -58.84,
+     "ahead": 17.43,
+     "vis": true,
+     "op": 0.879
+    },
+    {
+     "z": -62.84,
+     "ahead": 21.43,
+     "vis": true,
+     "op": 0.037
+    },
+    {
+     "z": -66.84,
+     "ahead": 25.43,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 29.43,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 33.43,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 37.43,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 41.43,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 45.43,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 62,
+   "t": 3.1,
+   "stage": "05",
+   "s": 120.221,
+   "lat": 1.668,
+   "frac": 1.134,
+   "coins": 1340,
+   "phase": "next screen 05",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -31.08,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": -27.08,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": -23.08,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -22.84,
+     "ahead": -19.08,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -26.84,
+     "ahead": -15.08,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -30.84,
+     "ahead": -11.08,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -34.84,
+     "ahead": -7.08,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -38.84,
+     "ahead": -3.08,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -42.84,
+     "ahead": 0.92,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -46.84,
+     "ahead": 4.92,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -50.84,
+     "ahead": 8.92,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -54.84,
+     "ahead": 12.92,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -58.84,
+     "ahead": 16.92,
+     "vis": true,
+     "op": 0.961
+    },
+    {
+     "z": -62.84,
+     "ahead": 20.92,
+     "vis": true,
+     "op": 0.119
+    },
+    {
+     "z": -66.84,
+     "ahead": 24.92,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 28.92,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 32.92,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 36.92,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 40.92,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 44.92,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 63,
+   "t": 3.15,
+   "stage": "05",
+   "s": 120.773,
+   "lat": 1.668,
+   "frac": 1.148,
+   "coins": 1340,
+   "phase": "next screen 05",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -31.59,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": -27.59,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": -23.59,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -22.84,
+     "ahead": -19.59,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -26.84,
+     "ahead": -15.59,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -30.84,
+     "ahead": -11.59,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -34.84,
+     "ahead": -7.59,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -38.84,
+     "ahead": -3.59,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -42.84,
+     "ahead": 0.41,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -46.84,
+     "ahead": 4.41,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -50.84,
+     "ahead": 8.41,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -54.84,
+     "ahead": 12.41,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -58.84,
+     "ahead": 16.41,
+     "vis": true,
+     "op": 0.998
+    },
+    {
+     "z": -62.84,
+     "ahead": 20.41,
+     "vis": true,
+     "op": 0.229
+    },
+    {
+     "z": -66.84,
+     "ahead": 24.41,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 28.41,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 32.41,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 36.41,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 40.41,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 44.41,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  },
+  {
+   "i": 64,
+   "t": 3.2,
+   "stage": "05",
+   "s": 121.324,
+   "lat": 1.668,
+   "frac": 1.163,
+   "coins": 1340,
+   "phase": "next screen 05",
+   "arrows": [
+    {
+     "z": -10.84,
+     "ahead": -32.12,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -14.84,
+     "ahead": -28.12,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -18.84,
+     "ahead": -24.12,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -22.84,
+     "ahead": -20.12,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -26.84,
+     "ahead": -16.12,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -30.84,
+     "ahead": -12.12,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -34.84,
+     "ahead": -8.12,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -38.84,
+     "ahead": -4.12,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -42.84,
+     "ahead": -0.12,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -46.84,
+     "ahead": 3.88,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -50.84,
+     "ahead": 7.88,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -54.84,
+     "ahead": 11.88,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -58.84,
+     "ahead": 15.88,
+     "vis": true,
+     "op": 1
+    },
+    {
+     "z": -62.84,
+     "ahead": 19.88,
+     "vis": true,
+     "op": 0.359
+    },
+    {
+     "z": -66.84,
+     "ahead": 23.88,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -70.84,
+     "ahead": 27.88,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -74.84,
+     "ahead": 31.88,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -78.84,
+     "ahead": 35.88,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -82.84,
+     "ahead": 39.88,
+     "vis": false,
+     "op": 0
+    },
+    {
+     "z": -86.84,
+     "ahead": 43.88,
+     "vis": false,
+     "op": 0
+    }
+   ]
+  }
+ ]
+}

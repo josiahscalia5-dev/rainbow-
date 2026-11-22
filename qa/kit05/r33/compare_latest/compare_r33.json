@@ -1,0 +1,31 @@
+{
+ "rule": "scenery = below the HUD, Benny box excluded; frame 0 compared pixel by pixel with the approved picture",
+ "frames": {
+  "0": {
+   "current": {
+    "colour_look_corr": 0.548,
+    "sharpness_vs_approved": 0.301,
+    "mean_abs_diff_levels": 60.5,
+    "share_within_20_levels": 0.127,
+    "ssim_scenery": 0.193
+   },
+   "kit": {
+    "colour_look_corr": 0.992,
+    "sharpness_vs_approved": 0.761,
+    "mean_abs_diff_levels": 14.8,
+    "share_within_20_levels": 0.797,
+    "ssim_scenery": 0.757
+   }
+  },
+  "30": {
+   "current": {
+    "colour_look_corr": 0.25,
+    "sharpness_vs_approved": 0.364
+   },
+   "kit": {
+    "colour_look_corr": 0.725,
+    "sharpness_vs_approved": 0.537
+   }
+  }
+ }
+}
