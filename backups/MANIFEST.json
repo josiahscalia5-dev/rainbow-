@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 28435,
-   "sha256": "de91a0a780e1519988098d41a681ab33b77db49f096364ec9a167dbf2922ff79"
+   "sha256": "29c62b38570d2de9065f523e450dc832ec59a286d181ff68f5efb369d5847a63"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3233,
-   "sha256": "cf164a563ae7636903872404c3fc6caea66242af0010e8b4f9e1344a99ee1f2d"
+   "sha256": "c47c4762e7d310868d55818ae6aaefb71828938038a81f05f6c58df790a9a5b7"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -49438,8 +49438,8 @@
   },
   {
    "path": "tools/screenkit/bake.js",
-   "bytes": 29662,
-   "sha256": "fe283cfe239fb1de636d6e85c97633f6412840fa38c0f053231281b3d0c9b739"
+   "bytes": 31131,
+   "sha256": "0134abdca871a83e6ba3bb906568313b78a4a7eddd34efbd34b53e82d2b01872"
   },
   {
    "path": "tools/screenkit/blender_kit.py",
@@ -49448,8 +49448,8 @@
   },
   {
    "path": "tools/screenkit/build.py",
-   "bytes": 18802,
-   "sha256": "1af4f26b50c0f719a658c2136a4cae5c94bd2b4535086a7f16c4516188c47780"
+   "bytes": 19565,
+   "sha256": "c8209bda157a34b7705b5d97ae0983ac076c5fd7dfe4d284ba39509dee2423ff"
   },
   {
    "path": "tools/screenkit/build_screen_app.sh",
@@ -49523,8 +49523,8 @@
   },
   {
    "path": "tools/screenkit/screen.html",
-   "bytes": 50721,
-   "sha256": "84c2c641dbc073d929c5c1f5b30e11bd93233c4b22ef5c2cc29d540196a97fe1"
+   "bytes": 51893,
+   "sha256": "86b4e37e33565cbddbfcc1046f70df4a9e376d100ec7b0ebb5cbc79bac76de81"
   },
   {
    "path": "tools/screenkit/screen_export.cjs",
@@ -49543,8 +49543,8 @@
   },
   {
    "path": "tools/screenkit/screens/05/fit05.py",
-   "bytes": 7839,
-   "sha256": "902427c05e8ce075f03ac2a136f09e76ac585350f5b2a3134a6dbf09fd5411bc"
+   "bytes": 8152,
+   "sha256": "6385f3d41790b1ddd603eb08f303d3a0fea656c4af6eaa85e1d3f0bff6980882"
   },
   {
    "path": "tools/screenkit/screens/05/segment05.json",
@@ -49582,6 +49582,11 @@
    "sha256": "eabde6c085c91d1cea3d42cfb5e6a2c91adcfa17fe4f2303a57885a30bb9e5e4"
   },
   {
+   "path": "tools/screenkit/splash_cut.py",
+   "bytes": 2421,
+   "sha256": "45e0b35e9e02ed47e9c9bc98e421ac77ddd97701e0d236660e3c7fc8cf0e4ffc"
+  },
+  {
    "path": "tools/screenkit/variant.sh",
    "bytes": 1161,
    "sha256": "4be9e3bd45432dd9eb786c9e9b933645eb075a4d3ee6e5d0fb89602e4e7508d7"
@@ -49608,8 +49613,8 @@
   },
   {
    "path": "tools/world/build_world.py",
-   "bytes": 6005,
-   "sha256": "1fcc7bba9358987a77e3e9fe0edf2b0f0fbcf70f992c1c27bfc64a8b59bdb9ee"
+   "bytes": 6080,
+   "sha256": "da97bb505ddc0039eb2f9883b271e829d6c23c6a0e0c15139c44a906fe20a184"
   },
   {
    "path": "tools/world/build_world_app.sh",
@@ -49633,8 +49638,8 @@
   },
   {
    "path": "tools/world/world.html",
-   "bytes": 72390,
-   "sha256": "e7f0124decaea611e9447c696ad72eaa8a3558c44d5d9b13526f8159237cb415"
+   "bytes": 73779,
+   "sha256": "3cba4729f0ef3e9d07d36070b7e9ec0027265c03e03a4b736e90aa6cb49bbc45"
   },
   {
    "path": "tools/world/world_layout.py",

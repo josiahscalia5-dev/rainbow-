@@ -3245,3 +3245,153 @@ Both recordings share the CPU, so the textured one has about 20–25 minutes lef
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; until grep -q \"^EXIT\" $S/rec_tex.log; do sleep 10; done; cd /home/user/rainbow-; python3 -I tools/reflock/encode_run.py $S/rec_tex qa/kit45/run GAMEPLAY_05_to_06_TEXTURED_real_touch 139.5 144.5 JOIN_05_06_clip 2>&1 | tail -4; python3 -I tools/reflock/encode_run.py $S/rec_gray qa/kit45/run GAMEPLAY_05_to_06_GRAY_geometry_real_touch 2>&1 | tail -4; ls -la qa/kit45/run/", "description": "Encode both recordings with hole counts", "timeout": 1800000}`
 
+### 🧑 User — 2026-11-22T19:34:30.658Z
+
+> ↩︎ result: Command did not complete within its 600s timeout and was moved to the background (ID: by3vqnfdv). Output is being written to: /tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/tasks/by3vqnfdv.output. You will be notified when it completes. If it is still running after 30m in the background, it will be stopped and you will be notified. It is running now: do not start a second copy while it runs. If it is no longer needed, stop it with TaskStop. No output had been read from it when it was moved. A program that buffers its output, or a pipe into one such as tail, can keep the output file empty until the command finishes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-22T19:34:53.196Z
+
+While the videos encode, I'm starting on your Screen 05 points. First, Benny's splash: the game has your painted splash, but it doesn't show. Checking the splash image and where it's placed:
+
+### 🤖 Claude — 2026-11-22T19:34:55.839Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nfrom PIL import Image; im=Image.open('tools/marble05/viewer/splash.png'); print(im.size, im.mode); im2=Image.new('RGBA',im.size,(40,20,80,255)); im2.alpha_composite(im.convert('RGBA')); im2.convert('RGB').save('/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/splash_view.jpg')\"; grep -n \"function water\" -A14 tools/kit05/controls.js | cut -c1-230 | head -20", "description": "Inspect the splash image and its update code"}`
+
+### 🧑 User — 2026-11-22T19:34:55.985Z
+
+> ↩︎ result: (799, 309) RGBA
+> 398:  function water(Fr, speed, dt) {
+> 399-    F = Fr; nNow.copy(F.n);
+> 400-    at(getS(), waterPt).addScaledVector(F.r, S.lat.x); // his water point (no bob, no leap / dive height): the water line on his body
+> 401-    splash.position.addScaledVector(F.n, -S.h);
+> 402-    const air = smooth(0.03, 0.12, S.h);
+> 403-    splash.material.opacity = 1 - air;
+> 404-    splash.scale.multiplyScalar(1 + 0.25 * S.diveK);
+> 405-    // stroke-synced breathing of the painted splash: wider on each power stroke, a little more spray while changing lanes
+> 406-    if (S.clock > 0) splash.scale.x *= 1 + 0.035 * Math.sin(S.swimClock * 7.5) ** 2 + 0.06 * S.latK;
+> 407-    splash.material.rotation = -((S.bendLean || 0) + S.lean.x) * 0.6; // the river-bend lean + the lane bank (was "-=": accumulated)
+> 408-    U.uDive.value = S.diveK; U.uWater.value.set(F.n.x, F.n.y, F.n.z, -F.n.dot(waterPt));
+> 409-    // surface events -> splashes + droplets (size from his vertical speed)
+> 410-    for (const e of S.events) {
+> 411-      const sp = clamp(Math.abs(e.v) / LEAP_V0, 0.4, 1.2);
+> 412-      if (e.ev === 'takeoff') burst(0.8 * sp, 12, speed); else if (e.ev === 'landing') burst(1.0 * sp, 16, speed);
+
+### 🤖 Claude — 2026-11-22T19:34:56.740Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/splash_view.jpg"}`
+
+### 🧑 User — 2026-11-22T19:34:56.767Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T19:35:17.135Z
+
+> 🔧 **Bash** `{"command": "grep -n \"splash\" tools/world/world.html | cut -c1-230 | head -20", "description": "Find the world page's splash handling"}`
+
+### 🧑 User — 2026-11-22T19:35:17.178Z
+
+> ↩︎ result: 34:// Shared: ONE Benny (benny31 + paddling shader), tools/kit05/controls.js swipes, swimfx, coins, splash. Nothing follows the camera; no
+> 408:const splashTex = await tl.loadAsync('splash.png'); splashTex.colorSpace = THREE.SRGBColorSpace;
+> 409:const splash = new THREE.Sprite(new THREE.SpriteMaterial({ map: splashTex, toneMapped: false, transparent: true, depthWrite: false, depthTest: true })); splash.renderOrder = 5; scene.add(splash);
+> 417:const CT = installControls({ THREE, TR: { trail: TRAIL, trail_s: TRAIL_S, N: 0 }, canvas: renderer.domElement, camera, q, at, frameAt, coins, scene, U, bmat, benny, splash, splashTex, bubTex, coinTex: ctex, coinD,
+> 488:  const SPK = areaOf(st.s).kind === 'kit' ? (areaOf(st.s).LAY.splash_scale ?? 1) : 1;
+> 489:  splash.scale.set(799 * pxW * 0.85 * SPK * (1 + 0.05 * Math.sin(t * 9)), 309 * pxW * 0.9 * SPK * (1 + 0.07 * Math.sin(t * 7 + 1)), 1);
+> 490:  splash.position.copy(benny.position).addScaledVector(F.t, 0.09).addScaledVector(F.n, -CT.c.h + splash.scale.y * 0.3);
+
+### 🤖 Claude — 2026-11-22T19:35:37.190Z
+
+> 🔧 **Bash** `{"command": "grep -n \"splash\" tools/kit05/swimfx.js | cut -c1-200 | head -12", "description": "See how swimfx changes the splash sprite"}`
+
+### 🧑 User — 2026-11-22T19:35:37.239Z
+
+> ↩︎ result: 7://  * The painted splash (the approved picture's white fan around his waist) STREAMS: a two-phase flow distortion moves its white
+> 11:// the painted splash WITHOUT the painted fur at its top centre (for the leap / dive bursts, which appear where he is not)
+> 22:export function installSwimFx({ THREE, scene, splash, q }) {
+> 130:  // ---------------- the painted splash streams (fragment flow distortion, strength uSplFlow: 0 at the start frame) ----------------
+> 134:    const m = splash.material; calls++;
+> 150:          // round 35: the painted splash carries a patch of the painting's WATER around its spray; over the moving river its straight
+> 160:    m.customProgramCacheKey = () => 'b31-splash-flow|' + key();
+
+### 🤖 Claude — 2026-11-22T19:35:39.261Z
+
+> 🔧 **Bash** `{"command": "sed -n 128,170p tools/kit05/swimfx.js | cut -c1-250", "description": "Read the splash flow shader patch"}`
+
+### 🧑 User — 2026-11-22T19:35:39.314Z
+
+> ↩︎ result: }
+> 
+>   // ---------------- the painted splash streams (fragment flow distortion, strength uSplFlow: 0 at the start frame) ----------------
+>   const SPL = { uSplFlow: { value: 0 }, uSplT: { value: 0 } };
+>   let calls = 0;
+>   function patchSplash() {
+>     const m = splash.material; calls++;
+>     if (m.userData.b31flow || OFF || !(m.userData.kit || calls > 2)) return; m.userData.b31flow = 1;   // after the page's own sprite patch
+>     const base = m.onBeforeCompile;   // the page's depth-curve patch (patchSprite) stays first
+>     m.onBeforeCompile = (sh, r) => { if (base) base.call(m, sh, r); Object.assign(sh.uniforms, SPL);
+>       sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform float uSplFlow; uniform float uSplT;')
+>         .replace('#include <map_fragment>', `#ifdef USE_MAP
+>         if (uSplFlow > 0.0) {
+>           vec2 suv = vMapUv;
+>           // the painted fur at the top centre stays put; the spray around it streams outward from his waist and back with the current
+>           float e = length((suv - vec2(0.5, 1.0)) / vec2(0.25, 0.5));
+>           float m = smoothstep(1.0, 1.3, e) * uSplFlow;
+>           vec2 dir = normalize(vec2((suv.x - 0.5) * 1.6, -0 …[+1837 chars]
+
+### 🤖 Claude — 2026-11-22T19:35:53.350Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/screenkit/splash_cut.py", "content": "\"\"\"Rainbow screen kit (round 45) - Benny's splash cut from the screen's OWN approved picture. The shared splash.png carried a patch of dark\npainted water under the spray (it showed as a dark smudge under Benny) and, at the size the screens use, its white spray barely showed.\nThis cuts the WHITE SPRAY around Benny's waterline out of the approved picture (bright, low-saturation pixels; Benny's pink fur and the\nwater are transparent), feathers it, and records where his water contact sits in it and how many pictur …[+1932 chars]`
+
+### 🧑 User — 2026-11-22T19:35:53.472Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/screenkit/splash_cut.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-22T19:35:58.153Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; for n in 05 06; do ref=$(python3 -c \"import json;print(json.load(open('.claude/skills/rainbow-screen-builder/screens.json'))['screens']['$n']['reference'])\"); python3 -I tools/screenkit/splash_cut.py $ref tools/screenkit/screens/$n/segment$n.json $S/spl$n; done; python3 -c \"\nfrom PIL import Image\no=Image.new('RGB',(1400,420),(40,20,80))\nx=0\nfor n in ('05','06'):\n    im=Image.open('$S/spl'+n+'/splash_pic.png'); k=400/im.height; im=im.resize((int(im.width*k),400)); bg=Image.new('RGBA',im.siz …[+322 chars]`
+
+### 🧑 User — 2026-11-22T19:35:59.088Z
+
+> ↩︎ result: splash {'w_px': 660, 'h_px': 308, 'anchor_px': [330.0, 173.0], 'benny_px': 430.0, 'alpha_share': 0.104}
+> splash {'w_px': 754, 'h_px': 344, 'anchor_px': [377.0, 201.0], 'benny_px': 469.0, 'alpha_share': 0.096}
+> bxtsmjva1.output
+> by3vqnfdv.output
+> bzb6n2cmf.output
+
+### 🤖 Claude — 2026-11-22T19:36:01.247Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/splcut.jpg"}`
+
+### 🧑 User — 2026-11-22T19:36:01.276Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T19:36:24.316Z
+
+The cut from your 05 picture is clean: white spray fans, foam and bubbles, with no dark water and no fur. 06's swirl ring came out the same way. Wiring it in, plus the full-width floor water for 05:
+
+### 🤖 Claude — 2026-11-22T19:36:47.660Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\n# ---------------- build.py: splash step + meta into the layout\np='tools/screenkit/build.py'; s=open(p).read()\na=\"\"\"    # the Geometry Nodes asset library (shared by every screen)\"\"\"\nb=\"\"\"    # Benny's splash cut from the approved picture (white spray only; anchor = his painted water contact)\n    def f_spl(tmp): run([sys.executable, '-I', os.path.join(HERE, 'splash_cut.py'), REF, os.path.join(SD, f'segment{NN}.json'), tmp], log=os.path.join(tmp, 'splash.log'))\n    B.step('splash', h_bytes('splash-v1', ref_h, h_file(os.path.join(SD, f'segment{NN}.js …[+6239 chars]`
+
+### 🧑 User — 2026-11-22T19:36:47.773Z
+
+> ↩︎ result: bake-ok
+
+### 🤖 Claude — 2026-11-22T19:36:50.830Z
+
+Now the two pages: floor-water mode in the water shaders, and the per-screen splash:
+
+### 🤖 Claude — 2026-11-22T19:37:17.683Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\n# ---------------- screen.html\np='tools/screenkit/screen.html'; s=open(p).read()\na=\"\"\"const waterMat = (halfW, len, along0, isPool) => new THREE.ShaderMaterial({ side: THREE.DoubleSide, polygonOffset: !!isPool, polygonOffsetFactor: isPool ? 2 : 0, polygonOffsetUnits: isPool ? 4 : 0,\"\"\"\nassert s.count(a)==1\ni = s.index(a); j = s.index(\"vertexShader:\", i); k = s.index(\"\\n\", j)\nold_v = s[j:k]\nassert \"varying vec2 vUv; varying vec3 vW;\" in old_v\nnew_v = old_v.replace(\"varying vec2 vUv; varying vec3 vW; void main(){ vUv = uv;\", \"varying vec2 vU …[+6846 chars]`
+
+### 🧑 User — 2026-11-22T19:37:17.924Z
+
+> ↩︎ result: tools/screenkit/screen.html ok
+> tools/world/world.html ok
+
+### 🤖 Claude — 2026-11-22T19:37:30.518Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/screens/05/fit05.py'; s=open(p).read()\na=\"\"\"       'foam_style': {'spacing': 0.7, 'size': 1.45, 'height': 0.78, 'spread': 1.2}}   # r45: the painted banks are thick, fluffy and continuous\"\"\"\nb=\"\"\"       'foam_style': {'spacing': 0.7, 'size': 1.45, 'height': 0.78, 'spread': 1.2},   # r45: the painted banks are thick, fluffy and continuous\n       # r45 (user: \"the pink and blue and purplish water\"): the painted FLOOR across the whole drum (every band) from the stretch ahead of Benny,\n       # world-anchored and flowing, on the riv …[+576 chars]`
+

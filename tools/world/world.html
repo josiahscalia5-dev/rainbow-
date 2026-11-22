@@ -149,18 +149,20 @@ const WATER_CORE = `float hsh(vec2 p){ vec3 p3 = fract(vec3(p.xyx) * 0.1031); p3
     if (uBakeOn < 0.5) return col; float ph = fract(uT * 0.8); vec4 b1 = texture(uBake, vUv + vec2(0.0, ph * 0.006), uLodBias), b2 = texture(uBake, vUv + vec2(0.0, fract(ph + 0.5) * 0.006), uLodBias);
     vec4 b = mix(b2, b1, abs(1.0 - 2.0 * ph)); vec4 dd = texture2D(uDen, vUv); float pd = (dd.r + dd.g / 255.0) * 4000.0;
     float magE = uSharp.x / max(max(length(dFdx(vW)), length(dFdy(vW))), 1e-6) / max(pd, 1.0); return mix(col, b.rgb, dd.b * (1.0 - smoothstep(uSharp.y, uSharp.y * 2.3, magE))); }`;
-const WVERT = 'varying vec2 vUv; varying vec3 vW; void main(){ vUv = uv; vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; }';
+const WVERT = 'varying vec2 vUv; varying vec3 vW; varying vec3 vL; void main(){ vUv = uv; vL = position; vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; }';
 // kit areas: water in its own UVs (u across, v along the flow)
 const waterMatKit = (halfW, len, along0, isPool, A) => new THREE.ShaderMaterial({ side: THREE.DoubleSide, polygonOffset: !!isPool, polygonOffsetFactor: isPool ? 2 : 0, polygonOffsetUnits: isPool ? 4 : 0,
   uniforms: { uT: WT, uGlow: A.glow, uSharp: { value: new THREE.Vector2(SHARPX, 2.2) }, uLodBias: { value: A.lodBias }, uBake: { value: null }, uBakeOn: { value: 0 }, uDen: { value: null }, uGeo: { value: new THREE.Vector4(halfW, len, along0, isPool ? 1 : 0) },
     uSw: { value: null }, uSwOn: { value: 0 }, uSwGeo: { value: new THREE.Vector4(0, 1, 0, 0) }, uFlow: { value: A.LAY?.water_flow ?? 1.2 } },   // r45: painted flow swatch (bake.js)
   vertexShader: WVERT,
   fragmentShader: `uniform float uT; uniform vec3 uGlow; uniform sampler2D uBake; uniform float uBakeOn; uniform sampler2D uDen; uniform vec2 uSharp; uniform float uLodBias; uniform vec4 uGeo; varying vec2 vUv; varying vec3 vW;
-    uniform sampler2D uSw; uniform float uSwOn; uniform vec4 uSwGeo; uniform float uFlow;
+    uniform sampler2D uSw; uniform float uSwOn; uniform vec4 uSwGeo; uniform float uFlow; varying vec3 vL;
     ${WATER_CORE}
     void main(){ float RW = uGeo.x, u = vUv.x * 2.0 - 1.0, uw = u * RW, d = uGeo.z + (1.0 - vUv.y) * uGeo.y, tp = d + uT * 1.6;
-      vec3 col = uSwOn > 0.5 ? texture(uSw, vec2(vUv.x, (d + uT * uFlow - uSwGeo.x) / uSwGeo.y)).rgb   // the painted river itself, flowing toward the camera
+      vec3 col = uSwOn > 1.5 ? texture(uSw, vec2((vL.x - uSwGeo.z) / uSwGeo.w, (-vL.z + uT * uFlow - uSwGeo.x) / uSwGeo.y)).rgb   // r45: the painted floor, every band, world-anchored
+               : uSwOn > 0.5 ? texture(uSw, vec2(vUv.x, (d + uT * uFlow - uSwGeo.x) / uSwGeo.y)).rgb   // the painted river itself, flowing toward the camera
                              : waterCol(u, uw, tp, 0.62, 0.96, 1.0 - uGeo.w * 0.6, 0.0, 0.0);   // = tools/screenkit/screen.html (pools: pink edges damped)
+      if (uSwOn > 1.5) { vec3 pc = waterCol(u, uw, tp, 0.62, 0.96, 0.0, 0.0, 0.0); float dash = clamp((pc.g - 0.75) * 4.0, 0.0, 1.0) * step(0.9, pc.r); col = mix(col, vec3(0.93, 1.0, 1.0), 0.85 * dash); }   // crisp sparkle dashes close up
       col = bakeMix(col, vUv, vW, uBake, uDen, uBakeOn, uSharp, uLodBias, uT);
       col = mix(col, vec3(0.95, 1.0, 1.0), uGlow.z * pow(smoothstep(uGlow.x, uGlow.y, vW.z), 1.6)); gl_FragColor = vec4(col, 1.0); }` });
 // section areas: water in world coordinates around the painted river line (route texture), offset to the area's placement
@@ -223,6 +225,7 @@ const loadKit = async (A) => {
       vertexShader: 'varying vec2 vP; void main(){ vP = position.xy; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
       fragmentShader: `varying vec2 vP; void main(){ float r = length(vP) / ${(DR.r * 1.02).toFixed(3)}; vec3 c = mix(vec3(1.0, 0.97, 0.88), vec3(0.98, 0.62, 0.4), smoothstep(0.08, 0.35, r)); c = mix(c, vec3(0.55, 0.25, 0.7), smoothstep(0.35, 0.95, r)); gl_FragColor = vec4(c, 1.0); }` }));
     cap.position.set(DR.axis_x, DR.axis_y, DR.z1 + 0.05); cap.name = 'drum_end'; cap.userData.area = A.id; g.add(cap); }
+  if (LAY.splash_pic && q.get('splashpic') !== '0') { A.splashTex = await tl.loadAsync(A.dir + 'splash_pic.png').catch(() => null); if (A.splashTex) A.splashTex.colorSpace = THREE.SRGBColorSpace; }   // r45
   const MANI = await loadBake(A, ms);
   if (MANI && !GRAY && q.get('tpl') !== '0') { A.TPL = await loadTemplates(THREE, tl, MANI, A.dir + 'baked/'); A.tplApplied = applyTemplates(THREE, ms, A.TPL); }
   // the area's camera clamp (tube around its axis), world coordinates
@@ -488,6 +491,10 @@ window.step = (t, dt, steer, speed) => {
   const SPK = areaOf(st.s).kind === 'kit' ? (areaOf(st.s).LAY.splash_scale ?? 1) : 1;
   splash.scale.set(799 * pxW * 0.85 * SPK * (1 + 0.05 * Math.sin(t * 9)), 309 * pxW * 0.9 * SPK * (1 + 0.07 * Math.sin(t * 7 + 1)), 1);
   splash.position.copy(benny.position).addScaledVector(F.t, 0.09).addScaledVector(F.n, -CT.c.h + splash.scale.y * 0.3);
+  { const Ak = areaOf(st.s), SP = Ak.kind === 'kit' && Ak.splashTex ? Ak.LAY.splash_pic : null, want = SP ? Ak.splashTex : splashTex;   // r45: each area's own painted splash
+    if (splash.material.map !== want) { splash.material.map = want; splash.material.needsUpdate = true; splash.center.set(SP ? SP.anchor_px[0] / SP.w_px : 0.5, SP ? 1 - SP.anchor_px[1] / SP.h_px : 0.5); }
+    if (SP) { const k = (WD.benny_h ?? 0.468) / SP.benny_px * (Ak.LAY.splash_pic_scale ?? 1); splash.scale.set(SP.w_px * k * (1 + 0.04 * Math.sin(t * 9)), SP.h_px * k * (1 + 0.05 * Math.sin(t * 7 + 1)), 1);
+      at(st.s, splash.position).addScaledVector(F.r, st.lat).addScaledVector(F.t, -0.03).addScaledVector(F.n, 0.004); } }
   CT.water(F, v, dt);
   camAt(st.s, dt); hud(st.s);
   if (t < AB.blast.until) for (const c of coins) if (c.got < 0 && c.s < 1e8 && c.s > st.s - 0.2 && c.s < st.s + 3.0 && Math.abs(c.lat - st.lat) < 0.5) { c.got = t; coinCount += 10; coinEl.textContent = '\u{1FA99} ' + coinCount.toLocaleString('en-US'); }

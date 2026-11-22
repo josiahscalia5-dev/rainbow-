@@ -68,7 +68,10 @@ lay = {'screen': '05', 'title': 'FLOW INTO THE CURRENT', 'ref': REF, 'fov': cam.
        # r45: the painted foam (domes where the picture paints foam) near the picture view; the RB_FoamBank clusters start two rings further,
        # the painted trays repeat every 2 ring spacings along the whole tube (RB_MachineryRow)
        'foam_from_picture': False, 'foam_pool_from': z_ring0 - 2.6, 'machinery': {'every': 2},
-       'foam_style': {'spacing': 0.7, 'size': 1.45, 'height': 0.78, 'spread': 1.2}}   # r45: the painted banks are thick, fluffy and continuous
+       'foam_style': {'spacing': 0.7, 'size': 1.45, 'height': 0.78, 'spread': 1.2},   # r45: the painted banks are thick, fluffy and continuous
+       # r45 (user: "the pink and blue and purplish water"): the painted FLOOR across the whole drum (every band) from the stretch ahead of Benny,
+       # world-anchored and flowing, on the river and the pool along the whole level (bake.js floor swatch)
+       'templates': {'floor': {'from': 1.6, 'len': 3.0}}}
 # the painted S-river (pink edges + cyan core) at the coin trail: 310 px wide at y 650 -> its real width at that depth (river ribbon option)
 Pr = cam.on_plane_y(485.0, 650.0); RIVER_W = 310.0 * float(-(cam.R.T @ (Pr - cam.C))[2]) / cam.F; lay['river_width'] = RIVER_W; lay['route']['width'] = RIVER_W
 for kv in a.set:

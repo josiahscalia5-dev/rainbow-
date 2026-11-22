@@ -32,7 +32,8 @@ def main():
         os.makedirs(G)
         for nn, _ in AREAS:
             src = os.path.join(ws, 's' + nn, 'game'); d = os.path.join(G, 'a' + nn); os.makedirs(d)
-            for f in ('layout.json', 'scene.glb', 'mask_0.png'): kit.place(os.path.join(src, f), os.path.join(d, f))
+            for f in ('layout.json', 'scene.glb', 'mask_0.png', 'splash_pic.png'):
+                if os.path.exists(os.path.join(src, f)): kit.place(os.path.join(src, f), os.path.join(d, f))
             kit.place(os.path.join(src, 'baked'), os.path.join(d, 'baked'))
         os.makedirs(os.path.join(G, 'aAB'))
         for f in ('section.json', 'section.glb'): kit.place(os.path.join(REPO, 'public', 'section', f), os.path.join(G, 'aAB', f))

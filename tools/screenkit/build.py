@@ -175,6 +175,10 @@ def build_screen(NN, ws, tube_len=None, open_end=False, benny_h=None, drum_far_e
     def f_seg(tmp):
         run([sys.executable, '-I', os.path.join(HERE, 'segment.py'), REF, os.path.join(SD, f'segment{NN}.json'), tmp], log=os.path.join(tmp, 'segment.log'))
     B.step('segment', k_seg, {'plate.png': os.path.join(ws, 'seg', 'plate.png'), 'mask.png': os.path.join(ws, 'seg', 'mask.png'), 'segment.log': os.path.join(ws, 'seg', 'segment.log')}, f_seg)
+    # Benny's splash cut from the approved picture (white spray only; anchor = his painted water contact)
+    def f_spl(tmp): run([sys.executable, '-I', os.path.join(HERE, 'splash_cut.py'), REF, os.path.join(SD, f'segment{NN}.json'), tmp], log=os.path.join(tmp, 'splash.log'))
+    B.step('splash', h_bytes('splash-v1', ref_h, h_file(os.path.join(SD, f'segment{NN}.json')), h_file(os.path.join(HERE, 'splash_cut.py'))),
+           {'splash_pic.png': os.path.join(G, 'splash_pic.png'), 'splash_pic.json': os.path.join(ws, 'seg', 'splash_pic.json')}, f_spl)
     # the Geometry Nodes asset library (shared by every screen)
     gnlib = build_gnlib(B)
     # geometry (Blender)
@@ -215,6 +219,8 @@ def build_gnlib(B):
 def assemble(G, ws, REF, L):
     os.makedirs(G, exist_ok=True)
     for f in ('layout.json',): (os.remove(os.path.join(G, f)) if os.path.lexists(os.path.join(G, f)) else None)   # never write through a shared link
+    spj = os.path.join(ws, 'seg', 'splash_pic.json')
+    if os.path.exists(spj) and 'splash_pic' not in L: L = dict(L, splash_pic=json.load(open(spj)))   # r45: the page draws the splash cut from the picture
     json.dump(L, open(os.path.join(G, 'layout.json'), 'w'))
     for src, dst in [(os.path.join(ws, 'seg', 'plate.png'), 'plate_0.png'), (os.path.join(ws, 'seg', 'mask.png'), 'mask_0.png'), (REF, 'ref_0.png'),
                      (os.path.join(HERE, 'screen.html'), 'play3.html'), (os.path.join(HERE, 'bake.js'), 'bake.js'), (os.path.join(HERE, 'qa.js'), 'qa.js'), (os.path.join(HERE, 'materials.js'), 'materials.js'),
