@@ -7,7 +7,7 @@
 // (204,32,159) (244,60,215) (248,110,236), white streaks (247,243,252); band layout from the painted river (pink edge to pink edge = river width).
 // Coordinates: the area's own x / z (vL), lateral = distance from the river centre line (Benny's route, a 1-D texture of route x by z), along = -z.
 export const RIBBON_GLSL = `
-uniform sampler2D uRouteX; uniform vec4 uRouteZ; uniform float uRibbon; uniform float uRStyle; uniform vec4 uRUv; vec4 gRUv = vec4(0.0);   /* gRUv: set by the material before ribbonWater (06: exact lateral + route distance) */ uniform sampler2D uDetC, uDetP; uniform vec4 uDetCM, uDetPM; uniform float uDetS, uDetOn;
+uniform sampler2D uRouteX; uniform vec4 uRouteZ; uniform float uRibbon; uniform float uRStyle; uniform vec4 uRUv; vec4 gRUv = vec4(0.0);   /* gRUv: set by the material before ribbonWater (x 1 = 06: normalised lateral + route distance; x 2 = r46 connector strip: lateral in m + along distance) */ uniform sampler2D uDetC, uDetP; uniform vec4 uDetCM, uDetPM; uniform float uDetS, uDetOn;
 float rbH(vec2 p){ vec3 p3 = fract(vec3(p.xyx) * 0.1031); p3 += dot(p3, p3.yzx + 33.33); return fract((p3.x + p3.y) * p3.z); }
 float rbN(vec2 p){ vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f); return mix(mix(rbH(i), rbH(i + vec2(1, 0)), f.x), mix(rbH(i + vec2(0, 1)), rbH(i + vec2(1, 1)), f.x), f.y); }
 // 06 style (uRStyle 1): the rising crest = a bright cyan sheet with white streaks and RAINBOW edges (green, yellow, orange, pink, purple),
@@ -16,7 +16,7 @@ float rbN(vec2 p){ vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f);
 vec3 rainbowEdge(float an){ vec3 c0 = vec3(0.05, 0.72, 1.0), c1 = vec3(0.35, 0.95, 0.55), c2 = vec3(1.0, 0.93, 0.35), c3 = vec3(1.0, 0.62, 0.3), c4 = vec3(1.0, 0.36, 0.78), c5 = vec3(0.62, 0.32, 0.95);
   float k = clamp((an - 0.58) / 0.4, 0.0, 1.0) * 5.0; vec3 c = mix(c0, c1, clamp(k, 0.0, 1.0)); c = mix(c, c2, clamp(k - 1.0, 0.0, 1.0)); c = mix(c, c3, clamp(k - 2.0, 0.0, 1.0)); c = mix(c, c4, clamp(k - 3.0, 0.0, 1.0)); return mix(c, c5, clamp(k - 4.0, 0.0, 1.0)); }
 vec3 ribbonWater(vec3 L, float t, float flow, vec3 vWv){
-  if (uRStyle > 0.5) { float lat = gRUv.x > 0.5 ? gRUv.y : (L.x - texture2D(uRouteX, vec2(clamp((L.z - uRouteZ.x) / (uRouteZ.y - uRouteZ.x), 0.0, 1.0), 0.5)).r) / uRouteZ.z, d = (gRUv.x > 0.5 ? gRUv.z : -L.z) + t * flow, an = abs(lat) + 0.03 * sin(d * 1.3);
+  if (uRStyle > 0.5) { float lat = gRUv.x > 1.5 ? gRUv.y / uRouteZ.z : gRUv.x > 0.5 ? gRUv.y : (L.x - texture2D(uRouteX, vec2(clamp((L.z - uRouteZ.x) / (uRouteZ.y - uRouteZ.x), 0.0, 1.0), 0.5)).r) / uRouteZ.z, d = (gRUv.x > 0.5 ? gRUv.z : -L.z) + t * flow, an = abs(lat) + 0.03 * sin(d * 1.3);
     vec3 cyM = vec3(10.0, 168.0, 250.0) / 255.0, cyB = vec3(90.0, 226.0, 255.0) / 255.0;
     vec3 col = mix(cyB, cyM, smoothstep(0.0, 0.55, an)); float eb = smoothstep(0.55, 0.62, an); col = mix(col, rainbowEdge(an), eb);
     float w = an * 40.0 + 0.6 * sin(d * 0.8 + an * 3.0) + 1.0 * rbN(vec2(an * 4.0, d * 0.4)), fw = max(fwidth(w), 1e-4), f = abs(fract(w) - 0.5) * 2.0;
@@ -29,6 +29,7 @@ vec3 ribbonWater(vec3 L, float t, float flow, vec3 vWv){
   float zt = clamp((L.z - uRouteZ.x) / (uRouteZ.y - uRouteZ.x), 0.0, 1.0), e = 0.03 / max(1e-3, uRouteZ.y - uRouteZ.x);
   float rx = texture2D(uRouteX, vec2(zt, 0.5)).r, sl = (texture2D(uRouteX, vec2(min(1.0, zt + e), 0.5)).r - texture2D(uRouteX, vec2(max(0.0, zt - e), 0.5)).r) / 0.06;
   float lat = (L.x - rx) / sqrt(1.0 + sl * sl), d = -L.z + t * flow, hw = uRouteZ.z;
+  if (gRUv.x > 1.5) { lat = gRUv.y; d = gRUv.z + t * flow; }   /* r46: a world connector strip gives the exact lateral (m) + the area's along distance */
   // the whole band pattern swings across the river in S-curves (the painting's pink ribbons sweep from side to side)
   float n = lat / hw + 0.42 * sin(d * 0.95 + 0.6) + 0.14 * sin(d * 2.2 + 2.0), an = abs(n) + 0.05 * sin(d * 2.6 + n * 2.5);   // stronger, tighter S-swing (painting)
   vec3 cyD = vec3(4.0, 139.0, 234.0) / 255.0, cyM = vec3(10.0, 168.0, 250.0) / 255.0, cyB = vec3(42.0, 220.0, 249.0) / 255.0;
@@ -76,6 +77,9 @@ vec3 ribbonWater(vec3 L, float t, float flow, vec3 vWv){
   return clamp(col, 0.0, 1.0); }`;
 
 // route centre line x by z (area-local) as a float texture (nearest, 4096 samples) + the uniforms the materials need
+// r46: a second (third ...) copy of the ribbon code with renamed uniforms / functions, so one material can draw two areas' ribbons (connectors)
+export const ribbonCopy = (sfx) => RIBBON_GLSL.replace(/\b(uRouteX|uRouteZ|uRibbon|uRStyle|uRUv|gRUv|uDetC|uDetP|uDetCM|uDetPM|uDetS|uDetOn|rbH|rbN|rainbowEdge|ribbonWater)\b/g, '$1' + sfx);
+export const ribbonUniformsAs = (U, sfx) => Object.fromEntries(Object.entries(U).map(([k, v]) => [k + sfx, v]));
 export function routeUniforms(THREE, LAY) {
   const P = LAY.route.points; let z0 = Infinity, z1 = -Infinity; for (const p of P) { z0 = Math.min(z0, p[2]); z1 = Math.max(z1, p[2]); }
   const N = 4096, data = new Float32Array(N); let j = P.length - 1;   // route z decreases along s: walk from the far end

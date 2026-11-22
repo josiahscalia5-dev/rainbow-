@@ -1875,3 +1875,171 @@ Before changing the foam, let me look at what the probe found at frame 409.
 
 [Image: original 2080x919, displayed at 2000x884. Multiply coordinates by 1.04 to map to original image.]
 
+### 🤖 Claude — 2026-11-22T21:47:57.703Z
+
+> 🔧 **Bash** `{"command": "grep -n \"cwater\\|connector\" tools/world/world.html | head -30", "description": "Find connector water material code"}`
+
+### 🧑 User — 2026-11-22T21:47:57.740Z
+
+> ↩︎ result: 31://   fitted camera at Benny's picture position (exact there, blended smoothly between), the connector pieces (tools/world/blender_connectors.py).
+> 120:      // the painting's own wall / ring / tray: 0 = mesh UVs, 1 = drum period (u around, local z phase-locked to the rings), 2 = connector tube (v x length)
+> 344:// ---------------- load the areas in route order + the Blender connector pieces ----------------
+> 347:{ const g = (await gltf.loadAsync('connectors.glb')).scene; g.name = 'connectors'; world.add(g); const spec = Object.fromEntries(WD.connectors.map((c) => [c.name, c]));
+> 353:    o.userData.fam = c.fam === 'pool' ? 'pool' : c.fam; o.userData.area = 'connector'; MESH.push(o); if (c.fam === 'pool') WATER.push(o);
+> 354:    // r45: a connector wears the artwork templates of the area it belongs to (wall period along its length, ring band, river swatch)
+
+### 🤖 Claude — 2026-11-22T21:48:00.155Z
+
+> 🔧 **Bash** `{"command": "sed -n 344,372p tools/world/world.html; python3 -c \"\nimport json; W=json.load(open('/home/user/ws46/world/game/world.json')); print([ (c['name'],c['fam'],{k:v for k,v in c.items() if k not in ('name','fam','pts','path','points')}) for c in W['connectors']][:20])\" 2>&1 | head -20; ls /home/user/ws46/world/game", "description": "Read connector loading code and specs"}`
+
+### 🧑 User — 2026-11-22T21:48:00.229Z
+
+> ↩︎ result: // ---------------- load the areas in route order + the Blender connector pieces ----------------
+> for (const A of WD.areas) { if (A.kind === 'kit') await loadKit(A); else if (A.kind === 'section') await loadSection(A); }
+> const AREA = Object.fromEntries(WD.areas.map((A) => [A.id, A]));
+> { const g = (await gltf.loadAsync('connectors.glb')).scene; g.name = 'connectors'; world.add(g); const spec = Object.fromEntries(WD.connectors.map((c) => [c.name, c]));
+>   g.traverse((o) => { if (!o.isMesh) return; const c = spec[o.name], A = AREA[c.area]; o.geometry.computeBoundingBox(); const sz = o.geometry.boundingBox.getSize(new THREE.Vector3());
+>     let rep = [Math.max(1, sz.x / 1.0), Math.max(1, sz.y / 1.0)];
+>     if (c.kind === 'tube') { let L = 0; for (let i = 1; i < c.axis.length; i++) L += V3(c.axis[i]).distanceTo(V3(c.axis[i - 1])); const rA = c.r.reduce((a, b) => a + b, 0) / c.r.length;
+>       rep = c.fam === 'tunnelS' ? [Math.round(2 * Math.PI * rA / 0.75), Math.max(1, L / 0.75)] : [Math.round(2 * Math.PI * rA / 2.6), Math.max(1, L / 1.2)]; }
+>     o.material = c.fam === 'ring' ? sceneryMat(BASE.goldring, [4, 1], A) : c.fam === 'pool' ? waterMatKit(Math.max(sz.x, 1.2) / 2, Math.max(sz.z, 1),  …[+23270 chars]
+
+### 🤖 Claude — 2026-11-22T21:48:35.272Z
+
+> 🔧 **Bash** `{"command": "grep -n \"strip_path\" -A 14 tools/world/blender_connectors.py | head -30; python3 -c \"\nimport json\nfor a in ['a04','a05','a06','a07']:\n    L=json.load(open('/home/user/ws46/world/game/'+a+'/layout.json')); print(a, L.get('water_style'), L.get('river_width'), L['route']['width'], L.get('cam_axis'), L.get('foam_style'), L.get('benny_bank'), L.get('cam_roll'))\nW=json.load(open('/home/user/ws46/world/game/world.json'))\nfor A in W['areas']: print(A['id'], A['kind'], A.get('s0'), A.get('s1'), A.get('offset'), A.get('rot_x'))\nprint(W.keys())\n\"", "description": "Read connector s …[+28 chars]`
+
+### 🧑 User — 2026-11-22T21:48:35.348Z
+
+> ↩︎ result: 70:    elif c['kind'] == 'strip_path':    # water along an axis polyline: across = the chord at the water level (half-width per point)
+> 71-        A = [Vector(p) for p in c['axis']]; Hh = c['half']; n = len(A)
+> 72-        def f(u, v, A=A, Hh=Hh, n=n, c=c):
+> 73-            k = v * (n - 1); i = min(int(k), n - 2); w = k - i; P = A[i].lerp(A[i + 1], w); h = Hh[i] + (Hh[i + 1] - Hh[i]) * w
+> 74-            t = (A[i + 1] - A[i]).normalized(); rgt = Vector((-t.z, 0.0, t.x)).normalized(); p = P + rgt * (h * (2 * u - 1))
+> 75-            yy = c['ys'][i] + (c['ys'][i + 1] - c['ys'][i]) * w if c.get('ys') else c['y']   # r44: a water strip that descends with its connector
+> 76-            return ((p.x, yy, p.z), (u, v))
+> 77-        grid(c['name'], 24, 4 * (n - 1), f)
+> 78-bpy.ops.export_scene.gltf(filepath=OUT, export_format='GLB', export_yup=True, export_texcoords=True, export_normals=True, export_materials='NONE', export_apply=True)
+> 79-print('exported', OUT, [o.name for o in bpy.data.objects])
+> a04 None None 1.9940584707472355 None None None None
+> a05 ribbon 1.3293148222734608 1.3293148222734608 {'follow': 0.6} {'spacing': 0.7, 'size': 1.45, 'height': 0.78, 'spread': 1.2} None None
+> a06 None None 0.66818 …[+637 chars]
+
+### 🤖 Claude — 2026-11-22T21:48:42.808Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/tools/world/world.html", "offset": 489, "limit": 15}`
+
+### 🧑 User — 2026-11-22T21:48:42.834Z
+
+> ↩︎ result: 489	  const fpx = H / 2 / Math.tan(camera.fov * DEG / 2), M = 8;
+> 490	  for (let k = 0; k < 2; k++) { const bb = window.bennyBox(); const dpx = bb.x0 < M ? bb.x0 - M : bb.x1 > W - M ? bb.x1 - (W - M) : 0; const dpy = bb.y1 > H - M ? bb.y1 - (H - M) : bb.y0 < M + 60 ? bb.y0 - (M + 60) : 0; if (!dpx && !dpy) break;
+> 491	    camera.position.addScaledVector(r, dpx * camera.position.distanceTo(benny.position) / fpx).addScaledVector(n, -dpy * camera.position.distanceTo(benny.position) / fpx); camera.updateMatrixWorld(); st.guard = (st.guard ?? 0) + 1; }
+> 492	  // r45 (user: "it looks nothing like my approved screen"): in an area with layout cam_axis the camera keeps the APPROVED picture's view straight
+> 493	  // down the drum (rings concentric, the bright core in the middle) and slides along the drum with Benny (all of his progress, `follow` of his
+> 494	  // sideways offset) - the river winds below it exactly as in the picture; blended in / out over 3 u at the area's ends
+> 495	  { const A = areaOf(s), CA = A.kind === 'kit' ? A.LAY?.cam_axis : null, key = CA ? WD.cam_keys.find((k) => k.area === A.id) : null;
+> 496	    if (key && A.M) { const w = sstep(A.s0, A.s0 + 3, s) * (1 - sstep(A.s1 - 3, A.s …[+1224 chars]
+
+### 🤖 Claude — 2026-11-22T21:49:10.379Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/tools/world/world.html", "old_string": "        const P = V3(key.pos).addScaledVector(ax, d.dot(ax)).addScaledVector(side, d.dot(side) * (CA.follow ?? 0.6)), Qk = new THREE.Quaternion().setFromEuler(new THREE.Euler(key.pitch, key.yaw, 0, 'YXZ'));\n        camera.position.lerp(P, w); camera.quaternion.slerp(Qk, w); camera.updateMatrixWorld(); st.camAxis = w;\n        const rr = new THREE.Vector3(1, 0, 0).applyQuaternion(camera.quaternion), nn = new THREE.Vector3(0, 1, 0).applyQuaternion(camera.quaternion);\n        for (let k = 0; k < 2;  …[+2606 chars]`
+
+### 🧑 User — 2026-11-22T21:49:10.448Z
+
+> ↩︎ result: The file /home/user/rainbow-/tools/world/world.html has been updated successfully.
+
+### 🤖 Claude — 2026-11-22T21:49:13.574Z
+
+> 🔧 **TaskUpdate** `{"taskId": "2", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-22T21:49:13.584Z
+
+> ↩︎ result: Updated task #2 status
+
+### 🤖 Claude — 2026-11-22T21:49:21.283Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/tools/screenkit/blender_kit.py", "old_string": "    zf0 = min(D['z0'], LAY.get('foam_pool_from', D['z0']))   # r45: where the picture paints its own foam the painted domes are used (foam_from_picture)\n    foam_bank(nm, [[xa + side * (chord - 0.06), 0.0, zq] for zq in [zf0 - 0.5 * j for j in range(int((zf0 - D['z1']) / 0.5) + 1)]], 0.16, 0.11, 7 + side)", "new_string": "    zf0 = min(D['z0'], LAY.get('foam_pool_from', D['z0']))   # r45: where the picture paints its own foam the painted domes are used (foam_from_picture)\n    zs = [zf0 -  …[+1387 chars]`
+
+### 🧑 User — 2026-11-22T21:49:21.323Z
+
+> ↩︎ result: The file /home/user/rainbow-/tools/screenkit/blender_kit.py has been updated successfully.
+
+### 🤖 Claude — 2026-11-22T21:49:23.088Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/blender_kit.py'; s=open(p).read()\nold=\"'paddles', 'foam_style', 'machinery', 'foam_banks', 'foam_pool_from']\"\nnew=\"'paddles', 'foam_style', 'machinery', 'foam_banks', 'foam_pool_from', 'foam_pool_clear']\"\nassert s.count(old)==1; s=s.replace(old,new); open(p,'w').write(s)\nEOF\ngrep -n \"foam_style\\|GEOM_KEYS\" tools/screenkit/build.py | head", "description": "Register foam_pool_clear as a geometry key"}`
+
+### 🧑 User — 2026-11-22T21:49:23.166Z
+
+> ↩︎ result: 6:  * a change to a look value in layout.json (palette, splash, coins ...) -> Blender is NOT re-run (geometry key = GEOM_KEYS of blender_kit.py)
+> 14:  geometry  Blender 5.3 builds scene.glb from the layout (tools/screenkit/blender_kit.py)   key: GEOM_KEYS of the layout + blender_kit.py + gnlib
+> 121:    """the layout keys blender_kit.py reads (declared there as GEOM_KEYS): only these decide whether Blender must run again"""
+> 124:        if isinstance(n, ast.Assign) and any(getattr(t, 'id', '') == 'GEOM_KEYS' for t in n.targets): return ast.literal_eval(n.value)
+> 125:    raise SystemExit('blender_kit.py: GEOM_KEYS missing')
+
+### 🤖 Claude — 2026-11-22T21:49:32.862Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/screens/05/fit05.py'; s=open(p).read()\nold=\"       'foam_style': {'spacing': 0.7, 'size': 1.45, 'height': 0.78, 'spread': 1.2},   # r45: the painted banks are thick, fluffy and continuous\"\nnew=\"       'foam_style': {'spacing': 0.7, 'size': 1.45, 'height': 0.78, 'spread': 1.2, 'detail': 2},   # r45: the painted banks are thick, fluffy and continuous; r46: rounder heaps (icosphere level 2)\"\nassert s.count(old)==1; s=s.replace(old,new)\nold2=\"lay['foam_banks'] = [\"\nnew2=\"lay['foam_pool_clear'] = {'margin': 0.45, 'spread': 0.6}   # r46: …[+348 chars]`
+
+### 🧑 User — 2026-11-22T21:49:32.922Z
+
+> ↩︎ result: 71:       'foam_style': {'spacing': 0.7, 'size': 1.45, 'height': 0.78, 'spread': 1.2, 'detail': 2},   # r45: the painted banks are thick, fluffy and continuous; r46: rounder heaps (icosphere level 2)
+> 83:lay['foam_pool_clear'] = {'margin': 0.45, 'spread': 0.6}   # r46: the drum-edge banks stay outside the swinging river (Benny swam into them, frames 409-420)
+
+### 🤖 Claude — 2026-11-22T21:50:01.629Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/tools/world/world.html", "old_string": "  vertexShader: 'varying vec3 vN; varying vec3 vW; void main(){ vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz; vN = normalize(mat3(modelMatrix) * normal); gl_Position = projectionMatrix * viewMatrix * w; }',\n  fragmentShader: `varying vec3 vN; varying vec3 vW; uniform vec3 uL; uniform vec3 uGlow; vec3 c3(float r, float g, float b){ return vec3(r, g, b) / 255.0; }\n    // r45: the painted foam is made of SMALL BUBBLES (lavender shadows, white rims, tiny highlights), not smooth lumps: a cel …[+5646 chars]`
+
+### 🧑 User — 2026-11-22T21:50:01.689Z
+
+> ↩︎ result: The file /home/user/rainbow-/tools/world/world.html has been updated successfully.
+
+### 🤖 Claude — 2026-11-22T21:51:02.979Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/water_ribbon.js'; s=open(p).read()\nold=\"  if (uRStyle > 0.5) { float lat = gRUv.x > 0.5 ? gRUv.y : (L.x - texture2D(uRouteX, vec2(clamp((L.z - uRouteZ.x) / (uRouteZ.y - uRouteZ.x), 0.0, 1.0), 0.5)).r) / uRouteZ.z, d = (gRUv.x > 0.5 ? gRUv.z : -L.z) + t * flow, an = abs(lat) + 0.03 * sin(d * 1.3);\"\nnew=\"  if (uRStyle > 0.5) { float lat = gRUv.x > 1.5 ? gRUv.y / uRouteZ.z : gRUv.x > 0.5 ? gRUv.y : (L.x - texture2D(uRouteX, vec2(clamp((L.z - uRouteZ.x) / (uRouteZ.y - uRouteZ.x), 0.0, 1.0), 0.5)).r) / uRouteZ.z, d = (gRUv.x > 0.5 ? gRUv.z : - …[+1968 chars]`
+
+### 🧑 User — 2026-11-22T21:51:03.101Z
+
+> ↩︎ result: 8482 2 0
+
+### 🤖 Claude — 2026-11-22T21:51:05.253Z
+
+> 🔧 **Bash** `{"command": "grep -n \"water_ribbon.js\\|const FAR0\\|FARC0 =\\|const WATER_CORE\\|^const WT\\|WT =\" tools/world/world.html | head", "description": "Find imports and water uniforms in world page"}`
+
+### 🧑 User — 2026-11-22T21:51:05.288Z
+
+> ↩︎ result: 41:import { RIBBON_GLSL, routeUniforms, loadDetail } from './water_ribbon.js';   // r45 test ?water=ribbon: clean ribbon water drawn from the painting's structure
+> 105:const TIME = { value: 0 }, WT = { value: 0 };
+> 106:const FAR0 = { value: new THREE.Vector4(1, 2, 0, 0) }, FARC0 = { value: new THREE.Color(1, 1, 1) };   // r45: per-area far glow (layout far_glow), off by default
+> 129:const WATER_CORE = `float hsh(vec2 p){ vec3 p3 = fract(vec3(p.xyx) * 0.1031); p3 += dot(p3, p3.yzx + 33.33); return fract((p3.x + p3.y) * p3.z); }
+
+### 🤖 Claude — 2026-11-22T21:51:06.337Z
+
+Now writing the connector material and wiring it into the connector loader.
+
+### 🤖 Claude — 2026-11-22T21:51:25.954Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/world/world.html'; s=open(p).read()\nold=\"import { RIBBON_GLSL, routeUniforms, loadDetail } from './water_ribbon.js';\"\nnew=\"import { RIBBON_GLSL, routeUniforms, loadDetail, ribbonCopy, ribbonUniformsAs } from './water_ribbon.js';\"\nassert s.count(old)==1; s=s.replace(old,new)\nanchor=\"// section areas: water in world coordinates around the painted river line (route texture), offset to the area's placement\"\nadd='''// r46 (Screen 05 frames 0-90 and 690-720: a hard seam, then plain cyan): the connector water strips between two areas wore a plain sw …[+4389 chars]`
+
+### 🧑 User — 2026-11-22T21:51:26.025Z
+
+> ↩︎ result: 173:      col = mix(col, uFarCol, uFar.w * uFar.z * pow(smoothstep(uFar.x, uFar.y, distance(cameraPosition, vW)), 1.4));   // under the painted pixels
+> 190:    void main(){`).replace('col = mix(col, uFarCol,', `{ float zt = clamp((vW.z - uAxZ.x) / (uAxZ.y - uAxZ.x), 0.0, 1.0), e = 0.03 / max(1e-3, uAxZ.y - uAxZ.x);
+> 196:      col = mix(col, uFarCol,`);
+
+### 🤖 Claude — 2026-11-22T21:51:36.164Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/world/world.html'; s=open(p).read()\nold=\"m.fragmentShader = m.fragmentShader.replace('${RIBBON_GLSL_MARK}', '').replace('void main(){',\"\nassert s.count(old)==1; s=s.replace(old,\"m.fragmentShader = m.fragmentShader.replace('void main(){',\"); open(p,'w').write(s)\nEOF\n(python3 -I tools/world/build_world.py /home/user/ws46/world > /home/user/ws46/build2.log 2>&1; echo EXIT $? >> /home/user/ws46/build2.log); tail -n 14 /home/user/ws46/build2.log", "description": "Rebuild the world with foam and camera changes", "timeout": 600000}`
+
+### 🧑 User — 2026-11-22T21:52:46.860Z
+
+> ↩︎ result: area 04   built geometry                              1.1 s
+>   area 05   built fit,geometry,bake                    66.1 s
+>   area 06   built geometry                              1.3 s
+>   area 07   built geometry                              1.4 s
+>   assemble  ran        0.3 s
+>   detail    ran        0.2 s
+>   layout    ran        0.2 s
+>   connectors cached     0.0 s   (4f33dbf609)
+>   files     ran        0.0 s
+> world ready: /home/user/ws46/world/game/play3.html  (70.59 s; report /home/user/ws46/world/build_report.md)
+> EXIT 0
+

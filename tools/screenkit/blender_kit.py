@@ -13,7 +13,7 @@ GEOM_KEYS lists every layout key this file reads: build.py re-runs Blender only 
 import bpy, bmesh, sys, os, json, math
 from mathutils import Vector, Matrix
 GEOM_KEYS = ['drum', 'rings', 'route', 'no_route_ribbon', 'route_flume', 'mouth_ring', 'funnel', 'wall', 'pool_front', 'arrows', 'foam_route', 'foam_pool',
-             'paddles', 'foam_style', 'machinery', 'foam_banks', 'foam_pool_from']
+             'paddles', 'foam_style', 'machinery', 'foam_banks', 'foam_pool_from', 'foam_pool_clear']
 argv = sys.argv[sys.argv.index('--') + 1:]; LAY = json.load(open(argv[0])); OUT = argv[1]
 GNLIB = argv[argv.index('--gnlib') + 1] if '--gnlib' in argv else None
 bpy.ops.wm.read_factory_settings(use_empty=True)
@@ -213,7 +213,25 @@ for side, nm, sd in ((-1, 'foam_routeL', 3), (1, 'foam_routeR', 5)):
 for side, nm in (((-1, 'foam_poolL'), (1, 'foam_poolR')) if LAY.get('foam_pool', True) else ()):   # r44: 04 paints no foam along the tube's water edges
     # r45: RB_FoamBank v2 clusters along the whole tube (was: the near drum only, single lumps)
     zf0 = min(D['z0'], LAY.get('foam_pool_from', D['z0']))   # r45: where the picture paints its own foam the painted domes are used (foam_from_picture)
-    foam_bank(nm, [[xa + side * (chord - 0.06), 0.0, zq] for zq in [zf0 - 0.5 * j for j in range(int((zf0 - D['z1']) / 0.5) + 1)]], 0.16, 0.11, 7 + side)
+    zs = [zf0 - 0.5 * j for j in range(int((zf0 - D['z1']) / 0.5) + 1)]
+    FC = LAY.get('foam_pool_clear')
+    if FC:   # r46 (Screen 05 frames 409-420): the straight bank at the drum edge reached 0.4-0.6 u inward while the S-river swings +-0.3 R, so on a
+        # swing Benny's outer lane ran INTO the foam (a big low-poly heap filled the lower right). The bank now keeps `margin` outside the river
+        # edge (it sinks into the drum wall where the river swings close to it) and its heaps hug the bank line (spread `spread`).
+        rz = sorted(((p[2], p[0]) for p in route), key=lambda t: t[0]); hw = RT['width'] / 2 + FC.get('margin', 0.45)
+        def rx(z):
+            if z <= rz[0][0]: return rz[0][1]
+            if z >= rz[-1][0]: return rz[-1][1]
+            lo, hi = 0, len(rz) - 1
+            while hi - lo > 1:
+                mid = (lo + hi) // 2
+                if rz[mid][0] <= z: lo = mid
+                else: hi = mid
+            (z0_, x0_), (z1_, x1_) = rz[lo], rz[hi]; return x0_ + (x1_ - x0_) * ((z - z0_) / max(1e-9, z1_ - z0_))
+        edge_x = lambda zq: max(xa + chord - 0.06, rx(zq) + hw) if side > 0 else min(xa - chord + 0.06, rx(zq) - hw)
+        foam_bank(nm, [[edge_x(zq), 0.0, zq] for zq in zs], 0.16, 0.11, 7 + side, FC.get('spread'))
+    else:
+        foam_bank(nm, [[xa + side * (chord - 0.06), 0.0, zq] for zq in zs], 0.16, 0.11, 7 + side)
 for i, p in enumerate(LAY.get('paddles', [])): paddle(f'paddle_{i}', p['pos'], (xa, ya), p['width'])
 # r45: extra foam banks (layout 'foam_banks': [{'side': -1|1, 'off': metres from the route edge, 'spacing', 'size', 's0', 's1', 'seed'}]) along the route
 for j, fb in enumerate(LAY.get('foam_banks', [])):

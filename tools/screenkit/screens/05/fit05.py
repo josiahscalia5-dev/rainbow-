@@ -68,7 +68,7 @@ lay = {'screen': '05', 'title': 'FLOW INTO THE CURRENT', 'ref': REF, 'fov': cam.
        # r45: the painted foam (domes where the picture paints foam) near the picture view; the RB_FoamBank clusters start two rings further,
        # the painted trays repeat every 2 ring spacings along the whole tube (RB_MachineryRow)
        'foam_from_picture': False, 'foam_pool_from': z_ring0 - 5 * 2.6, 'machinery': {'every': 2},   # r45: 3D foam only beyond the painted stretch (it covered the painted pink edges)
-       'foam_style': {'spacing': 0.7, 'size': 1.45, 'height': 0.78, 'spread': 1.2},   # r45: the painted banks are thick, fluffy and continuous
+       'foam_style': {'spacing': 0.7, 'size': 1.45, 'height': 0.78, 'spread': 1.2, 'detail': 2},   # r45: the painted banks are thick, fluffy and continuous; r46: rounder heaps (icosphere level 2)
        # r45 (user: "the pink and blue and purplish water"): the painted FLOOR across the whole drum (every band) from the stretch ahead of Benny,
        # world-anchored and flowing, on the river and the pool along the whole level (bake.js floor swatch)
        'templates': {'floor': {'from': 2.2, 'len': 3.0}}}
@@ -80,6 +80,7 @@ lay['cam_axis'] = {'follow': 0.6}; lay['water_style'] = 'ribbon'
 # r45 (look while swimming, measured against the picture): the bright warm core at the end of the tunnel (camera-relative glow), foam banks that
 # frame the S-river like the painted ones (just outside its pink edges), and the painted bubbles along both banks
 lay['far_glow'] = {'start': 7.0, 'end': 26.0, 'strength': 0.8, 'color': [1.0, 0.92, 0.72]}
+lay['foam_pool_clear'] = {'margin': 0.45, 'spread': 0.6}   # r46: the drum-edge banks stay outside the swinging river (Benny swam into them, frames 409-420)
 lay['foam_banks'] = [{'side': s_, 'off': 0.5, 'spacing': 0.15, 'size': 0.075, 's0': lay['cams'][0]['s_ref'] + 14.0, 'seed': 21 + s_} for s_ in (-1, 1)]   # beyond the painted stretch, clear of the lanes
 lay['lod_bias'] = -1.4   # r45: the painted detail stays crisp at grazing angles (the top-of-frame walls / rings carried 2/3 of the mismatch)
 lay['bubbles_banks'] = {'from': 14.0, 'every': 0.55, 'lat': [0.55, 1.15], 'r': [0.025, 0.075], 'h': 0.4}; lay['bubbles_from'] = 14.0   # beyond the painted stretch
