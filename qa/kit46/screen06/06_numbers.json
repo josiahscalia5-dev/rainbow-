@@ -1,0 +1,29 @@
+{
+ "screen": "06",
+ "before_r45b": {
+  "picture_view_within_20_levels_pct": 85.0,
+  "picture_view_ssim": 0.836,
+  "picture_view_sharpness": 0.764,
+  "repeat_views_within_20_mean_pct": 14.0,
+  "colour_look_mean": 0.39,
+  "hole_pixels": 0,
+  "swimming_style_wall": 87.4,
+  "swimming_style_ring": 57.6,
+  "swimming_style_water": 41.8,
+  "swimming_style_foam": 29.8,
+  "swimming_style_trays": 90.7
+ },
+ "new_r46": {
+  "picture_view_within_20_levels_pct": 84.9,
+  "picture_view_ssim": 0.836,
+  "picture_view_sharpness": 0.763,
+  "repeat_views_within_20_mean_pct": 20.2,
+  "colour_look_mean": 0.434,
+  "hole_pixels": 0,
+  "swimming_style_wall": 86.9,
+  "swimming_style_ring": 57.7,
+  "swimming_style_water": 60.3,
+  "swimming_style_foam": 25.5,
+  "swimming_style_trays": 91.8
+ }
+}

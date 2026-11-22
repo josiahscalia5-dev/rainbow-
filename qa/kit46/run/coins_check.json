@@ -1,0 +1,526 @@
+{
+ "frames": 1440,
+ "s_range": [
+  88,
+  193.527
+ ],
+ "coins_passed": 50,
+ "coins_in_bennys_path": 16,
+ "collected_in_path": 15,
+ "missed_in_path": [
+  {
+   "s": 175.1,
+   "lat": 0,
+   "got": -1,
+   "kind": "water",
+   "bennyLat": 0,
+   "bennyHeight": 0.2008,
+   "inPath": true,
+   "collected": false
+  }
+ ],
+ "collected_total": 16,
+ "coin_counter_end": 1490,
+ "coins": [
+  {
+   "s": 99.3,
+   "lat": 0,
+   "got": -1,
+   "kind": "water",
+   "bennyLat": 0.3,
+   "bennyHeight": 0,
+   "inPath": false,
+   "collected": false
+  },
+  {
+   "s": 100.9,
+   "lat": 0.018,
+   "got": 5.833333333333333,
+   "kind": "water",
+   "bennyLat": -0.136,
+   "bennyHeight": 0,
+   "inPath": false,
+   "collected": true
+  },
+  {
+   "s": 101.5,
+   "lat": 0,
+   "got": -1,
+   "kind": "water",
+   "bennyLat": -0.2958,
+   "bennyHeight": 0,
+   "inPath": false,
+   "collected": false
+  },
+  {
+   "s": 103.3,
+   "lat": 0,
+   "got": -1,
+   "kind": "water",
+   "bennyLat": -0.3,
+   "bennyHeight": 0,
+   "inPath": false,
+   "collected": false
+  },
+  {
+   "s": 107,
+   "lat": 0,
+   "got": 8.6,
+   "kind": "water",
+   "bennyLat": -0.0001,
+   "bennyHeight": 0,
+   "inPath": true,
+   "collected": true
+  },
+  {
+   "s": 110.1,
+   "lat": 0,
+   "got": 10,
+   "kind": "water",
+   "bennyLat": 0,
+   "bennyHeight": 0.0563,
+   "inPath": true,
+   "collected": true
+  },
+  {
+   "s": 113.6,
+   "lat": 0.072,
+   "got": 11.6,
+   "kind": "water",
+   "bennyLat": 0,
+   "bennyHeight": -0.0002,
+   "inPath": true,
+   "collected": true
+  },
+  {
+   "s": 119.3,
+   "lat": 0.3,
+   "got": -1,
+   "kind": "lane",
+   "bennyLat": 0.028,
+   "bennyHeight": 0,
+   "inPath": false,
+   "collected": false
+  },
+  {
+   "s": 121.5,
+   "lat": 0,
+   "got": -1,
+   "kind": "water",
+   "bennyLat": -0.3,
+   "bennyHeight": 0,
+   "inPath": false,
+   "collected": false
+  },
+  {
+   "s": 122.65,
+   "lat": 0.25,
+   "got": -1,
+   "kind": "lane",
+   "bennyLat": -0.3,
+   "bennyHeight": 0,
+   "inPath": false,
+   "collected": false
+  },
+  {
+   "s": 123.8,
+   "lat": 0.25,
+   "got": -1,
+   "kind": "lane",
+   "bennyLat": -0.3,
+   "bennyHeight": 0,
+   "inPath": false,
+   "collected": false
+  },
+  {
+   "s": 124.95,
+   "lat": 0,
+   "got": 16.766666666666666,
+   "kind": "water",
+   "bennyLat": 0.026,
+   "bennyHeight": 0,
+   "inPath": true,
+   "collected": true
+  },
+  {
+   "s": 126.1,
+   "lat": -0.25,
+   "got": -1,
+   "kind": "lane",
+   "bennyLat": 0.2998,
+   "bennyHeight": 0,
+   "inPath": false,
+   "collected": false
+  },
+  {
+   "s": 127.25,
+   "lat": -0.25,
+   "got": -1,
+   "kind": "lane",
+   "bennyLat": 0.3,
+   "bennyHeight": 0,
+   "inPath": false,
+   "collected": false
+  },
+  {
+   "s": 128.4,
+   "lat": 0,
+   "got": -1,
+   "kind": "water",
+   "bennyLat": 0.3,
+   "bennyHeight": 0,
+   "inPath": false,
+   "collected": false
+  },
+  {
+   "s": 129.55,
+   "lat": 0.25,
+   "got": 18.833333333333332,
+   "kind": "lane",
+   "bennyLat": 0.3,
+   "bennyHeight": 0,
+   "inPath": true,
+   "collected": true
+  },
+  {
+   "s": 130.7,
+   "lat": 0.25,
+   "got": -1,
+   "kind": "lane",
+   "bennyLat": 0.0023,
+   "bennyHeight": 0,
+   "inPath": false,
+   "collected": false
+  },
+  {
+   "s": 131.85,
+   "lat": 0,
+   "got": 19.9,
+   "kind": "water",
+   "bennyLat": 0,
+   "bennyHeight": 0,
+   "inPath": true,
+   "collected": true
+  },
+  {
+   "s": 133,
+   "lat": -0.25,
+   "got": -1,
+   "kind": "lane",
+   "bennyLat": 0,
+   "bennyHeight": 0,
+   "inPath": false,
+   "collected": false
+  },
+  {
+   "s": 134.15,
+   "lat": -0.25,
+   "got": -1,
+   "kind": "lane",
+   "bennyLat": 0,
+   "bennyHeight": 0,
+   "inPath": false,
+   "collected": false
+  },
+  {
+   "s": 135.3,
+   "lat": 0,
+   "got": -1,
+   "kind": "water",
+   "bennyLat": 0.2995,
+   "bennyHeight": 0,
+   "inPath": false,
+   "collected": false
+  },
+  {
+   "s": 136.45,
+   "lat": 0.25,
+   "got": 21.966666666666665,
+   "kind": "lane",
+   "bennyLat": 0.3,
+   "bennyHeight": 0,
+   "inPath": true,
+   "collected": true
+  },
+  {
+   "s": 137.6,
+   "lat": 0.25,
+   "got": 22.5,
+   "kind": "lane",
+   "bennyLat": 0.3,
+   "bennyHeight": 0,
+   "inPath": true,
+   "collected": true
+  },
+  {
+   "s": 138.75,
+   "lat": 0,
+   "got": -1,
+   "kind": "water",
+   "bennyLat": 0.2084,
+   "bennyHeight": 0,
+   "inPath": false,
+   "collected": false
+  },
+  {
+   "s": 139.9,
+   "lat": -0.25,
+   "got": 23.566666666666666,
+   "kind": "lane",
+   "bennyLat": -0.293,
+   "bennyHeight": 0,
+   "inPath": true,
+   "collected": true
+  },
+  {
+   "s": 150.9,
+   "lat": -0.01,
+   "got": 28.533333333333335,
+   "kind": "water",
+   "bennyLat": 0.0001,
+   "bennyHeight": 0,
+   "inPath": true,
+   "collected": true
+  },
+  {
+   "s": 151.7,
+   "lat": -0.061,
+   "got": 28.933333333333334,
+   "kind": "water",
+   "bennyLat": 0,
+   "bennyHeight": 0,
+   "inPath": true,
+   "collected": true
+  },
+  {
+   "s": 153.3,
+   "lat": -0.103,
+   "got": 29.666666666666668,
+   "kind": "lane",
+   "bennyLat": 0,
+   "bennyHeight": 0,
+   "inPath": true,
+   "collected": true
+  },
+  {
+   "s": 155.5,
+   "lat": -0.108,
+   "got": -1,
+   "kind": "lane",
+   "bennyLat": 0.3,
+   "bennyHeight": 0,
+   "inPath": false,
+   "collected": false
+  },
+  {
+   "s": 158,
+   "lat": -0.108,
+   "got": -1,
+   "kind": "lane",
+   "bennyLat": 0.3,
+   "bennyHeight": 0,
+   "inPath": false,
+   "collected": false
+  },
+  {
+   "s": 162.1,
+   "lat": -0.108,
+   "got": -1,
+   "kind": "lane",
+   "bennyLat": -0.3,
+   "bennyHeight": 0,
+   "inPath": false,
+   "collected": false
+  },
+  {
+   "s": 163.8,
+   "lat": -0.036,
+   "got": -1,
+   "kind": "water",
+   "bennyLat": -0.3,
+   "bennyHeight": 0,
+   "inPath": false,
+   "collected": false
+  },
+  {
+   "s": 165,
+   "lat": 0.001,
+   "got": -1,
+   "kind": "water",
+   "bennyLat": 0.2694,
+   "bennyHeight": 0,
+   "inPath": false,
+   "collected": false
+  },
+  {
+   "s": 166,
+   "lat": 0.002,
+   "got": -1,
+   "kind": "water",
+   "bennyLat": 0.3,
+   "bennyHeight": 0,
+   "inPath": false,
+   "collected": false
+  },
+  {
+   "s": 168.2,
+   "lat": 0,
+   "got": -1,
+   "kind": "water",
+   "bennyLat": 0.3,
+   "bennyHeight": 0,
+   "inPath": false,
+   "collected": false
+  },
+  {
+   "s": 169.35,
+   "lat": 0.25,
+   "got": 36.93333333333333,
+   "kind": "lane",
+   "bennyLat": 0.3,
+   "bennyHeight": 0,
+   "inPath": true,
+   "collected": true
+  },
+  {
+   "s": 170.5,
+   "lat": 0.25,
+   "got": -1,
+   "kind": "lane",
+   "bennyLat": 0.0005,
+   "bennyHeight": 0,
+   "inPath": false,
+   "collected": false
+  },
+  {
+   "s": 171.65,
+   "lat": 0,
+   "got": 37.96666666666667,
+   "kind": "water",
+   "bennyLat": 0,
+   "bennyHeight": 0,
+   "inPath": true,
+   "collected": true
+  },
+  {
+   "s": 172.8,
+   "lat": -0.25,
+   "got": -1,
+   "kind": "lane",
+   "bennyLat": 0,
+   "bennyHeight": 0,
+   "inPath": false,
+   "collected": false
+  },
+  {
+   "s": 173.95,
+   "lat": -0.25,
+   "got": -1,
+   "kind": "lane",
+   "bennyLat": 0,
+   "bennyHeight": 0.1073,
+   "inPath": false,
+   "collected": false
+  },
+  {
+   "s": 175.1,
+   "lat": 0,
+   "got": -1,
+   "kind": "water",
+   "bennyLat": 0,
+   "bennyHeight": 0.2008,
+   "inPath": true,
+   "collected": false
+  },
+  {
+   "s": 176.25,
+   "lat": 0.25,
+   "got": -1,
+   "kind": "lane",
+   "bennyLat": 0,
+   "bennyHeight": 0.0054,
+   "inPath": false,
+   "collected": false
+  },
+  {
+   "s": 177.4,
+   "lat": 0.25,
+   "got": -1,
+   "kind": "lane",
+   "bennyLat": 0,
+   "bennyHeight": -0.0002,
+   "inPath": false,
+   "collected": false
+  },
+  {
+   "s": 178.55,
+   "lat": 0,
+   "got": -1,
+   "kind": "water",
+   "bennyLat": 0.2304,
+   "bennyHeight": -0.0001,
+   "inPath": false,
+   "collected": false
+  },
+  {
+   "s": 179.7,
+   "lat": -0.25,
+   "got": -1,
+   "kind": "lane",
+   "bennyLat": 0.3,
+   "bennyHeight": 0,
+   "inPath": false,
+   "collected": false
+  },
+  {
+   "s": 180.85,
+   "lat": -0.25,
+   "got": -1,
+   "kind": "lane",
+   "bennyLat": 0.3,
+   "bennyHeight": 0,
+   "inPath": false,
+   "collected": false
+  },
+  {
+   "s": 182,
+   "lat": 0,
+   "got": -1,
+   "kind": "water",
+   "bennyLat": 0.3,
+   "bennyHeight": 0,
+   "inPath": false,
+   "collected": false
+  },
+  {
+   "s": 183.15,
+   "lat": 0.25,
+   "got": -1,
+   "kind": "lane",
+   "bennyLat": 0.028,
+   "bennyHeight": 0,
+   "inPath": false,
+   "collected": false
+  },
+  {
+   "s": 184.3,
+   "lat": 0.25,
+   "got": -1,
+   "kind": "lane",
+   "bennyLat": 0,
+   "bennyHeight": 0,
+   "inPath": false,
+   "collected": false
+  },
+  {
+   "s": 185.45,
+   "lat": 0,
+   "got": 44.266666666666666,
+   "kind": "water",
+   "bennyLat": 0,
+   "bennyHeight": 0,
+   "inPath": true,
+   "collected": true
+  }
+ ]
+}

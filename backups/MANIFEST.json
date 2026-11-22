@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 28920,
-   "sha256": "93ad8eedb63816703097d222f571e8580c59197102dce4552b853580613d6113"
+   "sha256": "b1779c61f1e0dc346abd4e79a1006ec8cfa9286f157b326c73c9172e4bec83a1"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 2958,
-   "sha256": "771bfcf77392d88210d8c29cea031b9df4df058813c0feb31f5fea5f4bd55e67"
+   "sha256": "36eba63240d0ea4613348d4040cadbaf21bbfa68c76ec123603768819c5965fe"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -23512,9 +23512,29 @@
    "sha256": "0cf4dad0aa7b5e28082c5393f6f6538979657d4073170e528a2a60bb16de46d7"
   },
   {
+   "path": "qa/kit46/README.md",
+   "bytes": 4638,
+   "sha256": "263f708536ab6b6af9b1e43e79f981fea974a5a9f5cc5d86cdc305f83b7bb0f8"
+  },
+  {
    "path": "qa/kit46/Rainbow_r46_world_05_06_debug.apk",
    "bytes": 244477578,
    "sha256": "7afcc5f08e01694522d722ec1cbf9b85be266c736165d548b34c0af063cbf6b7"
+  },
+  {
+   "path": "qa/kit46/evidence/frame0060_BEFORE_vs_NEW.jpg",
+   "bytes": 316441,
+   "sha256": "539c0e954c719c07a5dbb941fb377ff88780283d314f60b01187494efe8d3563"
+  },
+  {
+   "path": "qa/kit46/evidence/frame0409_BEFORE_vs_NEW.jpg",
+   "bytes": 338951,
+   "sha256": "da95326625348a804bcb6cdd92926ad46956b92235549428001fcf00328770fe"
+  },
+  {
+   "path": "qa/kit46/evidence/frame0415_BEFORE_vs_NEW.jpg",
+   "bytes": 329501,
+   "sha256": "4d9326a8192719e8ab30da2600fab7dc91c111bac0c85dd1a417e6dfbb65f751"
   },
   {
    "path": "qa/kit46/run/GAMEPLAY_05_06_07_GRAY_geometry_real_touch.mp4",
@@ -23525,6 +23545,251 @@
    "path": "qa/kit46/run/GAMEPLAY_05_06_07_GRAY_geometry_real_touch_checks.json",
    "bytes": 2957,
    "sha256": "a5acfd36ed1a6443e7b2086e68af37d71c78dc6171ad6526644203dfc2d5adaf"
+  },
+  {
+   "path": "qa/kit46/run/coins_check.json",
+   "bytes": 8382,
+   "sha256": "3b3107c3e880b2227b48d55c1ac52f32d1de925686a98da836bfaa38016c8779"
+  },
+  {
+   "path": "qa/kit46/screen05/05_03_BEFORE_vs_NEW_begin_left_lane.jpg",
+   "bytes": 310019,
+   "sha256": "b887f1c8c2b94f570a1a8008af754eac5c9ab11615b89dd776af6b524237b704"
+  },
+  {
+   "path": "qa/kit46/screen05/05_04_BEFORE_vs_NEW_begin_centre_lane.jpg",
+   "bytes": 331157,
+   "sha256": "98d20fa61ac77ea891a051631298966941f150e14603de015a20240f40cde69d"
+  },
+  {
+   "path": "qa/kit46/screen05/05_05_BEFORE_vs_NEW_begin_right_lane.jpg",
+   "bytes": 342026,
+   "sha256": "e0ed0eadabfb85ca1f824af8fff02198aad589da5aa0d603678c45de0946d996"
+  },
+  {
+   "path": "qa/kit46/screen05/05_06_BEFORE_vs_NEW_curve_27deg_left_lane.jpg",
+   "bytes": 338874,
+   "sha256": "cbbc74c1055fff46cbef83a88ebd27f3d596b5132812fc0b9452d59f873cf054"
+  },
+  {
+   "path": "qa/kit46/screen05/05_07_BEFORE_vs_NEW_curve_27deg_centre_lane.jpg",
+   "bytes": 341094,
+   "sha256": "55e01a658e25242730dd2f7f5a99917222410d8ada57e8792873e0f6aad55404"
+  },
+  {
+   "path": "qa/kit46/screen05/05_08_BEFORE_vs_NEW_curve_27deg_right_lane.jpg",
+   "bytes": 338121,
+   "sha256": "937fdcfe3ad371e4e24d67ffa98dfb89ea55be40c1c532c9595b172ad930a146"
+  },
+  {
+   "path": "qa/kit46/screen05/05_09_BEFORE_vs_NEW_quarter_left_lane.jpg",
+   "bytes": 338256,
+   "sha256": "fea93e59cc3a874ba416e574e65a5a11fb3b7874b3ace4fc45f1ee73299e835d"
+  },
+  {
+   "path": "qa/kit46/screen05/05_10_BEFORE_vs_NEW_quarter_centre_lane.jpg",
+   "bytes": 340403,
+   "sha256": "e65b1f1bd0f6c9841172b67c0d751783161b5d585e50719f121caf974e6336ae"
+  },
+  {
+   "path": "qa/kit46/screen05/05_11_BEFORE_vs_NEW_quarter_right_lane.jpg",
+   "bytes": 338479,
+   "sha256": "c6559038d68fc8c044e5ecf105dc344c2270c0943709028773e161faf249c2d4"
+  },
+  {
+   "path": "qa/kit46/screen05/05_12_BEFORE_vs_NEW_middle_left_lane.jpg",
+   "bytes": 355341,
+   "sha256": "0f0df42c1877d36b2c7cf727cbb155121430ef2cedb20158eabec8dfa1d0baac"
+  },
+  {
+   "path": "qa/kit46/screen05/05_13_BEFORE_vs_NEW_middle_centre_lane.jpg",
+   "bytes": 360049,
+   "sha256": "1267dd4d2cd81e527f1d23b2ce6d1cf85ca9b96f271c2ed7e37eca79d97fb869"
+  },
+  {
+   "path": "qa/kit46/screen05/05_14_BEFORE_vs_NEW_middle_right_lane.jpg",
+   "bytes": 356113,
+   "sha256": "d03c7b0efd0414e1c40f3706106ad092e84ca2f554c1a0f101e9728599871764"
+  },
+  {
+   "path": "qa/kit46/screen05/05_15_BEFORE_vs_NEW_three_q_left_lane.jpg",
+   "bytes": 358395,
+   "sha256": "d89aeef0be6f9df133ebe99966b0b3b87db3e40ce5e6b4acdf2cd55a042bc8ce"
+  },
+  {
+   "path": "qa/kit46/screen05/05_16_BEFORE_vs_NEW_three_q_centre_lane.jpg",
+   "bytes": 360902,
+   "sha256": "b60d0aa31dfa556f8de45b224079e2a5050b6f5b88610843ce98f222e7962e11"
+  },
+  {
+   "path": "qa/kit46/screen05/05_17_BEFORE_vs_NEW_three_q_right_lane.jpg",
+   "bytes": 364301,
+   "sha256": "98ee170479df3539f3d064f64cdbe93e17c636b216640070935952cb197fc9d5"
+  },
+  {
+   "path": "qa/kit46/screen05/05_18_BEFORE_vs_NEW_curve_11deg_left_lane.jpg",
+   "bytes": 361369,
+   "sha256": "5594eecfe2fd43c5156031dd09c06776a04e37556026443fa0e39963fe1303b5"
+  },
+  {
+   "path": "qa/kit46/screen05/05_19_BEFORE_vs_NEW_curve_11deg_centre_lane.jpg",
+   "bytes": 363373,
+   "sha256": "ed09536c7ca00f6d1478fc6ff17e8823ae0280db5b430744f0fc392c038c9a48"
+  },
+  {
+   "path": "qa/kit46/screen05/05_1_APPROVED_vs_NEW_picture_view.jpg",
+   "bytes": 436871,
+   "sha256": "a78ee7d124e53af9c1e0a587212e728622dbec6bf9ee2a73a038552dbf33f2de"
+  },
+  {
+   "path": "qa/kit46/screen05/05_20_BEFORE_vs_NEW_curve_11deg_right_lane.jpg",
+   "bytes": 363139,
+   "sha256": "00a13db8ca4adb27add6b03f9608261590e13fe9f4f7b1ffd7d4c42b4cd1e933"
+  },
+  {
+   "path": "qa/kit46/screen05/05_21_BEFORE_vs_NEW_end_left_lane.jpg",
+   "bytes": 325140,
+   "sha256": "77c1d0c94ee6c07994dff3c16b51882631c244d2e9be5a8ebfee218990aac4df"
+  },
+  {
+   "path": "qa/kit46/screen05/05_22_BEFORE_vs_NEW_end_centre_lane.jpg",
+   "bytes": 327261,
+   "sha256": "484cba9841d995ee311f9e9a2b68f16809e5089e079fd7a404606f7358acb659"
+  },
+  {
+   "path": "qa/kit46/screen05/05_23_BEFORE_vs_NEW_end_right_lane.jpg",
+   "bytes": 327319,
+   "sha256": "ea37b93e01699fb6207eeb8cd374dc52b850835f42915e778f354580fb810725"
+  },
+  {
+   "path": "qa/kit46/screen05/05_2_BEFORE_vs_NEW_picture_view.jpg",
+   "bytes": 362158,
+   "sha256": "194129d69d7ca5d1cad4bea5eaceb752a5b6cc4ec2457e0f6f04bc9288c0861f"
+  },
+  {
+   "path": "qa/kit46/screen05/05_numbers.json",
+   "bytes": 774,
+   "sha256": "dd68726610b0e0d856be73e294203d3054d35b64a987e0715b97768bb09c33b5"
+  },
+  {
+   "path": "qa/kit46/screen06/06_03_BEFORE_vs_NEW_begin_left_lane.jpg",
+   "bytes": 329283,
+   "sha256": "df63e27a2592af26d7c8e338f1209300c248425b3362050d55536e0ffb37eb68"
+  },
+  {
+   "path": "qa/kit46/screen06/06_04_BEFORE_vs_NEW_begin_centre_lane.jpg",
+   "bytes": 323480,
+   "sha256": "2b81b2a5029b21a0551b14e6caf9a4e2415be4fed2e9f0f199675a46884cb4f0"
+  },
+  {
+   "path": "qa/kit46/screen06/06_05_BEFORE_vs_NEW_begin_right_lane.jpg",
+   "bytes": 325803,
+   "sha256": "32e1fbd098612e4344921172bbc7476043fbe90952d3bccb90f3c5072c5fc110"
+  },
+  {
+   "path": "qa/kit46/screen06/06_06_BEFORE_vs_NEW_curve_29deg_left_lane.jpg",
+   "bytes": 325532,
+   "sha256": "87aa4f0ceaa0064e42ff215a9f93d283a39303169697c2e2da3cc3828517ead0"
+  },
+  {
+   "path": "qa/kit46/screen06/06_07_BEFORE_vs_NEW_curve_29deg_centre_lane.jpg",
+   "bytes": 326423,
+   "sha256": "48d7dfac8a957a8a01eaf4791e45ab13bdc4f323eee78f7842cfee73819cc462"
+  },
+  {
+   "path": "qa/kit46/screen06/06_08_BEFORE_vs_NEW_curve_29deg_right_lane.jpg",
+   "bytes": 330964,
+   "sha256": "8a6e2b3642532f7fb4b4885452b7010468accdb0af1ce1e0ced84ee63105f422"
+  },
+  {
+   "path": "qa/kit46/screen06/06_09_BEFORE_vs_NEW_quarter_left_lane.jpg",
+   "bytes": 334655,
+   "sha256": "f2f255c36f5823c1db167950e58182b44b2a8d32f50b2515342cec6089b570a3"
+  },
+  {
+   "path": "qa/kit46/screen06/06_10_BEFORE_vs_NEW_quarter_centre_lane.jpg",
+   "bytes": 320377,
+   "sha256": "c52d0a9387cbdeeb6a252c0012eb993b97f11e544d5e9c0318c7de8e223c3ef8"
+  },
+  {
+   "path": "qa/kit46/screen06/06_11_BEFORE_vs_NEW_quarter_right_lane.jpg",
+   "bytes": 308976,
+   "sha256": "454a487e0c5f595a22fb3ace304fa0a5b2b00b6616030af78cf1a2192a220f4b"
+  },
+  {
+   "path": "qa/kit46/screen06/06_12_BEFORE_vs_NEW_middle_left_lane.jpg",
+   "bytes": 332417,
+   "sha256": "9d74d161c195b37a541e4d28f83c93c9b98b7d9b9fa94ba9e1f7f6d159c5ac09"
+  },
+  {
+   "path": "qa/kit46/screen06/06_13_BEFORE_vs_NEW_middle_centre_lane.jpg",
+   "bytes": 335958,
+   "sha256": "7b8946fb734e94e43650787c8a74f104b69249ba443bbefbcdf217b87eb88f3e"
+  },
+  {
+   "path": "qa/kit46/screen06/06_14_BEFORE_vs_NEW_middle_right_lane.jpg",
+   "bytes": 338226,
+   "sha256": "f95c0b8c7c3f0ffe1e4df635b950d154ab544748dbf872b3b1bbbcba9103306d"
+  },
+  {
+   "path": "qa/kit46/screen06/06_15_BEFORE_vs_NEW_curve_10deg_left_lane.jpg",
+   "bytes": 343143,
+   "sha256": "c1649a3beb142c7ae2d03414234a3aabe8e16d0c23b14ba7d6e1a78abe089bf5"
+  },
+  {
+   "path": "qa/kit46/screen06/06_16_BEFORE_vs_NEW_curve_10deg_centre_lane.jpg",
+   "bytes": 336069,
+   "sha256": "f842343dd9c69ad87850feb045edbf62c366fa09c94d23e4cb188db692fdeae1"
+  },
+  {
+   "path": "qa/kit46/screen06/06_17_BEFORE_vs_NEW_curve_10deg_right_lane.jpg",
+   "bytes": 341601,
+   "sha256": "67325c87dd1c652d1b90273db984f8db87c1f6ecca6be3fd7ee662f2cb034b9e"
+  },
+  {
+   "path": "qa/kit46/screen06/06_18_BEFORE_vs_NEW_three_q_left_lane.jpg",
+   "bytes": 343039,
+   "sha256": "2e088d95f4fb30ae9be4b50cb464108559cc9af58a5930f9644db9d9a869cad0"
+  },
+  {
+   "path": "qa/kit46/screen06/06_19_BEFORE_vs_NEW_three_q_centre_lane.jpg",
+   "bytes": 348317,
+   "sha256": "81f3e17ea76f0dad6640f6243f18b7b0e9411e23c153ee045aba65938fdc1451"
+  },
+  {
+   "path": "qa/kit46/screen06/06_1_APPROVED_vs_NEW_picture_view.jpg",
+   "bytes": 450638,
+   "sha256": "b83d28990a55e9a691322f1e25d5376cdf91181bf6af42ad9a763e6cb5c52482"
+  },
+  {
+   "path": "qa/kit46/screen06/06_20_BEFORE_vs_NEW_three_q_right_lane.jpg",
+   "bytes": 341913,
+   "sha256": "63d562c060a99c207eade5bd94718ea2c72a27e9fdc3673ab4da64ae01809834"
+  },
+  {
+   "path": "qa/kit46/screen06/06_21_BEFORE_vs_NEW_end_left_lane.jpg",
+   "bytes": 326273,
+   "sha256": "d3af5ac6022b8c828e42fe9196a71f29bda7350aedc520e3334c88415f115981"
+  },
+  {
+   "path": "qa/kit46/screen06/06_22_BEFORE_vs_NEW_end_centre_lane.jpg",
+   "bytes": 332749,
+   "sha256": "e508a7e38e94c21345f692eb2684f8feca2f578895cfc097092405f759eafd97"
+  },
+  {
+   "path": "qa/kit46/screen06/06_23_BEFORE_vs_NEW_end_right_lane.jpg",
+   "bytes": 340026,
+   "sha256": "0286663dce7644924b2b15286e5ab9dad07467f538715c79d902350f4ac27a53"
+  },
+  {
+   "path": "qa/kit46/screen06/06_2_BEFORE_vs_NEW_picture_view.jpg",
+   "bytes": 369097,
+   "sha256": "1dd199beafe3fbe87cc676c90ceb438f34100966598d71cd5198c73aceb6bc21"
+  },
+  {
+   "path": "qa/kit46/screen06/06_numbers.json",
+   "bytes": 774,
+   "sha256": "93bc5c5e3072975fb766d51685272978113906d59a073812dd0800d4f991aafd"
   },
   {
    "path": "qa/lead_r5/2026-11-17/README.md",

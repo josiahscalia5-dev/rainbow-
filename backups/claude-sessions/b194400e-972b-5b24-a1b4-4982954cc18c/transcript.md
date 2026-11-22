@@ -4425,3 +4425,122 @@ Gray geometry hole check: 0 of 1,440 frames with any missing-geometry pixels (Ro
 
 > 🔧 **Bash** `{"command": "until [ -f /home/user/ws46/preview_final.log ]; do sleep 15; done; python3 /home/user/ws46/show.py 05,06; ls /home/user/ws46/final/tex | wc -l; date -u +%H:%M", "description": "Wait for final previews and show numbers", "timeout": 1800000}`
 
+### 🧑 User — 2026-11-22T23:34:36.504Z
+
+> ↩︎ result: BEFORE 05    pic 83.4% ssim 0.802 sharp 0.73 | repeat 19.7 | {'wall': 86.1, 'ring': 63.8, 'water': 55.4, 'foam': 35.9, 'trays': 75.3} | look 0.443 | holes 4
+> NEW 05       pic 83.6% ssim 0.802 sharp 0.73 | repeat 18.6 | {'wall': 83.3, 'ring': 64.1, 'water': 57.5, 'foam': 30.0, 'trays': 74.2} | look 0.443 | holes 0
+> BEFORE 06    pic 85.0% ssim 0.836 sharp 0.76 | repeat 14.0 | {'wall': 87.4, 'ring': 57.6, 'water': 41.8, 'foam': 29.8, 'trays': 90.7} | look 0.39 | holes 0
+> NEW 06       pic 84.9% ssim 0.836 sharp 0.76 | repeat 20.2 | {'wall': 86.9, 'ring': 57.7, 'water': 60.3, 'foam': 25.5, 'trays': 91.8} | look 0.434 | holes 0
+> 601
+> 23:34
+
+### 🤖 Claude — 2026-11-22T23:34:47.982Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json, statistics as st\nfor a in ('05','06'):\n    for tag,p in (('BEFORE','/home/user/ws46/world_r45b'),('NEW','/home/user/ws46/world')):\n        d=json.load(open(f'{p}/preview_{a}/preview.json'))\n        F=[f['surfaces']['foam'] for f in d['frames'] if f.get('surfaces',{}).get('foam')]\n        print(a, tag, 'frames', len(F), 'colour_match %.3f' % st.mean(x['colour_match'] for x in F), 'detail_ratio %.3f' % st.mean((x['detail_ratio'] or 0) for x in F), 'share %.3f' % st.mean(x['share_of_frame'] for x in F))\nEOF", "description": "Split foam score into …[+26 chars]`
+
+### 🧑 User — 2026-11-22T23:34:48.089Z
+
+> ↩︎ result: 05 BEFORE frames 21 colour_match 0.128 detail_ratio 0.896 share 0.024
+> 05 NEW frames 21 colour_match 0.106 detail_ratio 0.755 share 0.021
+> 06 BEFORE frames 17 colour_match -0.042 detail_ratio 0.992 share 0.007
+> 06 NEW frames 17 colour_match -0.035 detail_ratio 0.850 share 0.007
+
+### 🤖 Claude — 2026-11-22T23:34:59.948Z
+
+> 🔧 **Bash** `{"command": "for a in 05 06; do nice -n 10 python3 -I tools/world/r46_pairs.py /home/user/ws46/world_r45b/preview_$a /home/user/ws46/world/preview_$a $a qa/kit46/screen$a > /dev/null; done; ls qa/kit46/screen05 | head -40; ls qa/kit46/screen06 | wc -l; du -sh qa/kit46/screen05 qa/kit46/screen06", "description": "Generate APPROVED/BEFORE/NEW pair sheets"}`
+
+### 🧑 User — 2026-11-22T23:35:01.558Z
+
+> ↩︎ result: 05_03_BEFORE_vs_NEW_begin_left_lane.jpg
+> 05_04_BEFORE_vs_NEW_begin_centre_lane.jpg
+> 05_05_BEFORE_vs_NEW_begin_right_lane.jpg
+> 05_06_BEFORE_vs_NEW_curve_27deg_left_lane.jpg
+> 05_07_BEFORE_vs_NEW_curve_27deg_centre_lane.jpg
+> 05_08_BEFORE_vs_NEW_curve_27deg_right_lane.jpg
+> 05_09_BEFORE_vs_NEW_quarter_left_lane.jpg
+> 05_10_BEFORE_vs_NEW_quarter_centre_lane.jpg
+> 05_11_BEFORE_vs_NEW_quarter_right_lane.jpg
+> 05_12_BEFORE_vs_NEW_middle_left_lane.jpg
+> 05_13_BEFORE_vs_NEW_middle_centre_lane.jpg
+> 05_14_BEFORE_vs_NEW_middle_right_lane.jpg
+> 05_15_BEFORE_vs_NEW_three_q_left_lane.jpg
+> 05_16_BEFORE_vs_NEW_three_q_centre_lane.jpg
+> 05_17_BEFORE_vs_NEW_three_q_right_lane.jpg
+> 05_18_BEFORE_vs_NEW_curve_11deg_left_lane.jpg
+> 05_19_BEFORE_vs_NEW_curve_11deg_centre_lane.jpg
+> 05_1_APPROVED_vs_NEW_picture_view.jpg
+> 05_20_BEFORE_vs_NEW_curve_11deg_right_lane.jpg
+> 05_21_BEFORE_vs_NEW_end_left_lane.jpg
+> 05_22_BEFORE_vs_NEW_end_centre_lane.jpg
+> 05_23_BEFORE_vs_NEW_end_right_lane.jpg
+> 05_2_BEFORE_vs_NEW_picture_view.jpg
+> 05_numbers.json
+> 24
+> 7.8M	qa/kit46/screen05
+> 7.6M	qa/kit46/screen06
+
+### 🤖 Claude — 2026-11-22T23:35:03.142Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/kit46/screen05/05_14_BEFORE_vs_NEW_middle_right_lane.jpg"}`
+
+### 🧑 User — 2026-11-22T23:35:03.167Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T23:35:03.677Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/kit46/screen06/06_1_APPROVED_vs_NEW_picture_view.jpg"}`
+
+### 🧑 User — 2026-11-22T23:35:03.699Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T23:35:10.700Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/kit46/screen06/06_2_BEFORE_vs_NEW_picture_view.jpg"}`
+
+### 🧑 User — 2026-11-22T23:35:10.721Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T23:35:18.554Z
+
+> 🔧 **Bash** `{"command": "ls /home/user/ws46/final/tex | wc -l; date -u +%H:%M; cat /home/user/rainbow-/qa/kit46/screen05/05_numbers.json | python3 -c \"import json,sys; d=json.load(sys.stdin); print(d)\"", "description": "Check textured run progress and stored numbers"}`
+
+### 🧑 User — 2026-11-22T23:35:18.631Z
+
+> ↩︎ result: 631
+> 23:35
+> {'screen': '05', 'before_r45b': {'picture_view_within_20_levels_pct': 83.4, 'picture_view_ssim': 0.802, 'picture_view_sharpness': 0.73, 'repeat_views_within_20_mean_pct': 19.7, 'colour_look_mean': 0.443, 'hole_pixels': 4, 'swimming_style_wall': 86.1, 'swimming_style_ring': 63.8, 'swimming_style_water': 55.4, 'swimming_style_foam': 35.9, 'swimming_style_trays': 75.3}, 'new_r46': {'picture_view_within_20_levels_pct': 83.6, 'picture_view_ssim': 0.802, 'picture_view_sharpness': 0.728, 'repeat_views_within_20_mean_pct': 18.6, 'colour_look_mean': 0.443, 'hole_pixels': 0, 'swimming_style_wall': 83.3, 'swimming_style_ring': 64.1, 'swimming_style_water': 57.5, 'swimming_style_foam': 30.0, 'swimming_style_trays': 74.2}}
+
+### 🤖 Claude — 2026-11-22T23:35:39.773Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/qa/kit46/README.md", "content": "# Round 46 — Screens 05 + 06 finished fixes (2026-11-22)\n\nEverything here is a real-time 3D render of the game (three.js, 412 x 915 phone portrait, software WebGL in the cloud), the same connected world\n04 -> Bubble Dash -> Sock Rescue -> 05 -> 06 -> 07 as round 45. No picture is shown as a background; the approved pictures are only baked onto the\nreal 3D surfaces where the picture camera sees them. Free tools only; no paid credits.\n\nBEFORE = the exact round-45b world, rebuilt from commit `94d5fc7` with the same builder; …[+4156 chars]`
+
+### 🧑 User — 2026-11-22T23:35:39.848Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/qa/kit46/README.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-22T23:35:47.162Z
+
+> 🔧 **Bash** `{"command": "cp /home/user/ws46/final/coins_check.json qa/kit46/run/coins_check.json && mkdir -p qa/kit46/evidence && python3 - <<'EOF'\nimport sys\nsys.path.insert(0,'/home/user/rainbow-/tools/world')\nfrom PIL import Image\nimport importlib.util\nspec=importlib.util.spec_from_file_location('p','/home/user/rainbow-/tools/world/r46_pairs.py'); m=importlib.util.module_from_spec(spec); spec.loader.exec_module(m)\nfor fr, txt in ((409,'frame 409 (Benny was cut off; foam block in his lane)'), (415,'frame 415'), (60,'frame 60 (seam / plain water at the 05 entry)')):\n    b=Image.open(f'/home/user/w …[+375 chars]`
+
+### 🧑 User — 2026-11-22T23:35:47.442Z
+
+> ↩︎ result: ok
+> frame0060_BEFORE_vs_NEW.jpg
+> frame0409_BEFORE_vs_NEW.jpg
+> frame0415_BEFORE_vs_NEW.jpg
+
+### 🤖 Claude — 2026-11-22T23:35:48.987Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/kit46/evidence/frame0409_BEFORE_vs_NEW.jpg"}`
+
+### 🧑 User — 2026-11-22T23:35:49.011Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T23:35:55.305Z
+
+> 🔧 **Bash** `{"command": "until grep -q EXIT /home/user/ws46/final/tex.log; do sleep 20; done; date -u +%H:%M; python3 -c \"\nimport json; d=json.load(open('/home/user/ws46/final/tex/checks.json')); print(json.dumps({k:d.get(k) for k in ('frames','errors','benny_offscreen_frames','camera_max_step_u','camera_max_step_expected_u','camera_max_turn_deg_per_frame','static_world_meshes','scenery_meshes_moved','edge_guard','frame_qa','swipes_sent','coins_end','s_end','lat_range')}, indent=0)); print(len(d['input_log']), sorted(set((e['src'],e['result']) for e in d['input_log'])))\"", "description": "Wait for text …[+47 chars]`
+
