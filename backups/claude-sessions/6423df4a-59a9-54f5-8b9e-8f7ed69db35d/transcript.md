@@ -2499,3 +2499,114 @@ When the check finishes I'll confirm it here. Then, when you're ready: should I 
 > spectorjs: node /root/.local/share/rainbow-tools/Spector.js/mcp/dist/index.js - √ Connected
 > Shell cwd was reset to /home/user/rainbow-
 
+### 🤖 Claude — 2026-11-22T15:21:49.438Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/scripts/claude-bootstrap.sh", "offset": 267, "limit": 20}`
+
+### 🧑 User — 2026-11-22T15:21:49.477Z
+
+> ↩︎ result: 267	step_spector() {  # standalone official Spector.js MCP server (BabylonJS/Spector.js mcp/, free, MIT); user order 2026-11-22. The
+> 268	  # parallax-threejs plugin's own Spector copy is never built in synced plugins, so this one is registered as "spectorjs" (user scope).
+> 269	  local t d=$HOME/.local/share/rainbow-tools/Spector.js sha=755e6a7671e58424fcfda1270823a71e91de3553; t=$(now)
+> 270	  if [ ! -f "$d/mcp/dist/index.js" ] && [ "$MODE" != check ]; then
+> 271	    { rm -rf "$d" && mkdir -p "$d" && cd "$d" && git init -q && git remote add origin https://github.com/BabylonJS/Spector.js.git \
+> 272	      && timeout 300 git fetch -q --depth 1 origin "$sha" && git checkout -q FETCH_HEAD && cd mcp \
+> 273	      && timeout 600 npm ci --ignore-scripts --no-audit --no-fund && npm run build && npm prune --omit=dev --no-audit --no-fund \
+> 274	      && timeout 300 npm install --no-save --omit=dev --ignore-scripts --no-audit --no-fund "playwright@$(node -p "require('playwright/package.json').version" 2>/dev/null || echo 1.63.0)"; \
+> 275	    } > "$LIVE/spector-mcp.log" 2>&1; cd "$ROOT"
+> 276	  fi
+> 277	  if [ ! -f "$d/mcp/dist/index.js" ]; then rec spector "Spector.js MCP" warn "not built (backups/.live/spe …[+821 chars]
+
+### 🤖 Claude — 2026-11-22T15:22:00.362Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/scripts/claude-bootstrap.sh", "old_string": "  local t d=$HOME/.local/share/rainbow-tools/Spector.js sha=755e6a7671e58424fcfda1270823a71e91de3553; t=$(now)\n  if [ ! -f \"$d/mcp/dist/index.js\" ] && [ \"$MODE\" != check ]; then\n    { rm -rf \"$d\" && mkdir -p \"$d\" && cd \"$d\" && git init -q && git remote add origin https://github.com/BabylonJS/Spector.js.git \\\n      && timeout 300 git fetch -q --depth 1 origin \"$sha\" && git checkout -q FETCH_HEAD && cd mcp \\\n      && timeout 600 npm ci --ignore-scripts --no-audit --no-fund && n …[+2226 chars]`
+
+### 🧑 User — 2026-11-22T15:22:00.450Z
+
+> ↩︎ result: The file /home/user/rainbow-/scripts/claude-bootstrap.sh has been updated successfully.
+
+### 🤖 Claude — 2026-11-22T15:22:03.957Z
+
+> 🔧 **Bash** `{"command": "bash -n scripts/claude-bootstrap.sh && echo SYNTAX-OK && sed -i 's|spectorjs registered (BabylonJS/Spector.js @ ${sha:0:7}, playwright pinned to the preinstalled browser)|spectorjs registered (BabylonJS/Spector.js @ ${sha:0:7}, Playwright $have = the preinstalled browser)|' scripts/claude-bootstrap.sh && grep -c 'Playwright $have = the preinstalled' scripts/claude-bootstrap.sh && bash -c '\nset -u; ROOT=/home/user/rainbow-; LIVE=$ROOT/backups/.live; MODE=full; now(){ date +%s; }; rec(){ echo \"REC [$3] $2: $4\"; }\neval \"$(sed -n \"/^step_spector() {/,/^}/p\" scripts/claude-boots …[+242 chars]`
+
+### 🧑 User — 2026-11-22T15:22:07.923Z
+
+> ↩︎ result: SYNTAX-OK
+> 1
+> REC [ok] Spector.js MCP: spectorjs registered (BabylonJS/Spector.js @ 755e6a7, Playwright 1.63.0 = the preinstalled browser); tools load at session start
+> 1.63.0
+> [This command modified 1 file you've previously read: scripts/claude-bootstrap.sh. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-22T15:22:09.986Z
+
+The fix worked: the install the setup built is now on Playwright 1.63.0. Next I'm re-running the real Screen 06 capture against this automatically built install and checking the full setup report.
+
+### 🤖 Claude — 2026-11-22T15:22:11.728Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/ws06/game && exec python3 -m http.server 3000 --bind 127.0.0.1 > ../http3000.log 2>&1", "description": "Serve the Screen 06 game folder on port 3000 again", "run_in_background": true}`
+
+### 🧑 User — 2026-11-22T15:22:11.758Z
+
+> ↩︎ result: Command running in background with ID: bkgeprxj6. Output is being written to: /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/tasks/bkgeprxj6.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-22T15:22:13.627Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/tasks/b46rz0xsa.output | tail -12; grep -E \"\\| (FAIL|WARN) \" backups/BOOTSTRAP_REPORT.md | cut -c1-200", "description": "Show the full bootstrap result and any warnings"}`
+
+### 🧑 User — 2026-11-22T15:22:13.662Z
+
+> ↩︎ result: simulated fresh container: no Spector install, not registered
+> 
+> real	9m6.952s
+> user	0m39.655s
+> sys	1m0.680s
+> exit 1
+> | Resume newest work | FAIL | git fetch from GitHub failed (network / GitHub connection?) | 480 |
+> | Language servers | OK | typescript-language-server 4.4.0; pyright-langserver yes | 0 |
+> | Spector.js MCP | OK | spectorjs registered (BabylonJS/Spector.js @ 755e6a7, playwright pinned to the preinstalled browser); tools load at session start | 9 |
+> 
+> [exited with code 0]
+> | Resume newest work | FAIL | git fetch from GitHub failed (network / GitHub connection?) | 480 |
+> | Backup gap since last session | WARN | GAP: no backup ran from 2026-11-22 14:10 to 2026-11-22 14:30 UTC (0.3 h) - no Claude cloud environment with the autosave was active. Nothing can be saved while
+> | World Labs integration | WARN | Marble API key authenticated (free read: 2030 credits); worlds draft 404, full 404; no paid job started; plugin worldlabs@worldlabs installed; Atlas connector = claud
+
+### 🤖 Claude — 2026-11-22T15:22:18.582Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && cd $S && curl -s -o /dev/null -w \"page HTTP %{http_code}\\n\" http://127.0.0.1:3000/play3.html && rm -rf $S/spector06b && timeout 400 node /home/user/rainbow-/tools/spector/spector_capture_test.mjs $S/spector06b \"http://127.0.0.1:3000/play3.html?sentinel=1&play=1\" 2>&1 | grep -vE \"^\\s+\\\"|^\\{|^\\}|^\\`\\`\\`\" | head -30; pkill -f \"http.server 3000\"; true", "description": "Re-run the real Screen 06 capture with the auto-built Spector", "timeout": 480000}`
+
+### 🧑 User — 2026-11-22T15:24:18.125Z
+
+> ↩︎ result: page HTTP 200
+> TOOLS 13 load_url, load_playground, take_screenshot, list_canvases, select_canvas, capture_frame, get_draw_calls, get_command_details, get_shaders, get_textures, get_webgl_state, get_context_info, get_console_logs
+> --- load_url
+> **Page loaded:** Rainbow 06
+> **URL:** http://127.0.0.1:3000/play3.html?sentinel=1&play=1
+> **Canvases found:** 1
+> 
+> Canvas #0 is selected by default. Use list_canvases to see all canvases and select_canvas to switch.
+> Ready for capture_frame.
+> --- get_context_info
+> **WebGL Context Info**
+>   },
+> --- capture_frame
+> **Frame Capture Summary**
+> - Total commands: 1056
+> - Draw calls: 233
+> - Clear calls: 1
+> - Shader programs: 11
+> - WebGL version: 2
+> - Canvas: 1920×1080
+> - Duration: 11259100ms
+> - No GL errors detected
+> 
+> --- get_draw_calls (first lines)
+> **Draw Calls (234)**
+> [0] clear([17664]) status=0
+> [11] drawElements([4,3600,5123,0]) status=0
+> [17] drawElements([4,3600,5123,0]) status=0
+> [23] drawElements([4,3600,5123,0]) status=0
+> [29] drawElements([4,3600,5123,0]) status=0
+> [35] drawElements([4,3600,5123,0]) status=0
+> Shell cwd was reset to /home/user/rainbow-
+

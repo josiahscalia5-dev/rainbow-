@@ -266,19 +266,26 @@ step_lsp() {  # language servers for the typescript-native-lsp / pyright-lsp plu
 
 step_spector() {  # standalone official Spector.js MCP server (BabylonJS/Spector.js mcp/, free, MIT); user order 2026-11-22. The
   # parallax-threejs plugin's own Spector copy is never built in synced plugins, so this one is registered as "spectorjs" (user scope).
-  local t d=$HOME/.local/share/rainbow-tools/Spector.js sha=755e6a7671e58424fcfda1270823a71e91de3553; t=$(now)
+  local t d=$HOME/.local/share/rainbow-tools/Spector.js sha=755e6a7671e58424fcfda1270823a71e91de3553 pw have; t=$(now)
+  # the PREINSTALLED Playwright (matches the browser in /opt/pw-browsers); resolved from / so the MCP's own node_modules is not picked up
+  pw=$(cd / && node -p "require('playwright/package.json').version" 2>/dev/null); pw=${pw:-1.63.0}
   if [ ! -f "$d/mcp/dist/index.js" ] && [ "$MODE" != check ]; then
     { rm -rf "$d" && mkdir -p "$d" && cd "$d" && git init -q && git remote add origin https://github.com/BabylonJS/Spector.js.git \
       && timeout 300 git fetch -q --depth 1 origin "$sha" && git checkout -q FETCH_HEAD && cd mcp \
-      && timeout 600 npm ci --ignore-scripts --no-audit --no-fund && npm run build && npm prune --omit=dev --no-audit --no-fund \
-      && timeout 300 npm install --no-save --omit=dev --ignore-scripts --no-audit --no-fund "playwright@$(node -p "require('playwright/package.json').version" 2>/dev/null || echo 1.63.0)"; \
+      && timeout 600 npm ci --ignore-scripts --no-audit --no-fund && npm run build && npm prune --omit=dev --no-audit --no-fund; \
     } > "$LIVE/spector-mcp.log" 2>&1; cd "$ROOT"
   fi
   if [ ! -f "$d/mcp/dist/index.js" ]; then rec spector "Spector.js MCP" warn "not built (backups/.live/spector-mcp.log)" "$t"; return; fi
+  have=$(cd "$d/mcp" && node -p "require('./node_modules/playwright/package.json').version" 2>/dev/null)
+  if [ "$have" != "$pw" ] && [ "$MODE" != check ]; then   # Spector pins a newer Playwright whose browser is NOT installed here (never run `playwright install`)
+    (cd "$d/mcp" && timeout 300 npm install --no-save --omit=dev --ignore-scripts --no-audit --no-fund "playwright@$pw") >> "$LIVE/spector-mcp.log" 2>&1
+    have=$(cd "$d/mcp" && node -p "require('./node_modules/playwright/package.json').version" 2>/dev/null)
+  fi
+  if [ "$have" != "$pw" ]; then rec spector "Spector.js MCP" warn "built, but its Playwright $have does not match the installed browser's $pw" "$t"; return; fi
   if command -v claude >/dev/null 2>&1 && ! claude mcp get spectorjs >/dev/null 2>&1 && [ "$MODE" != check ]; then
     claude mcp add spectorjs -s user -e PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers -- node "$d/mcp/dist/index.js" >> "$LIVE/spector-mcp.log" 2>&1
   fi
-  if claude mcp get spectorjs >/dev/null 2>&1; then rec spector "Spector.js MCP" ok "spectorjs registered (BabylonJS/Spector.js @ ${sha:0:7}, playwright pinned to the preinstalled browser); tools load at session start" "$t"
+  if claude mcp get spectorjs >/dev/null 2>&1; then rec spector "Spector.js MCP" ok "spectorjs registered (BabylonJS/Spector.js @ ${sha:0:7}, Playwright $have = the preinstalled browser); tools load at session start" "$t"
   else rec spector "Spector.js MCP" warn "built but not registered (claude mcp add spectorjs ...)" "$t"; fi
 }
 

@@ -32,7 +32,7 @@ Legend: ✔ yes · ✘ no · — not applicable. "Tested" = a real action this s
 | Playwright MCP (×2: playwright plugin + parallax) | ✔ | ✔ | — | ✔ opened Screen 06 in Chromium |
 | Three.js DevTools MCP | installed, bridge not used | ✔ | — | ✔ **bridge connected** to the running Screen 06 page (proxy 9222 → 3000): 233 draw calls, 309,594 triangles, 250 textures, 15 programs |
 | Chrome DevTools MCP | ✔ | ✔ | — | ✔ list_pages |
-| Spector.js MCP | failed | ✘ **blocked** | — | the synced plugin copy ships without `vendor/spector/mcp` (packaging gap in parallax-threejs 0.4.12) — not fixable from here; not needed |
+| Spector.js MCP | failed | plugin copy: ✘ (never built in synced plugins — ignore); **standalone official `spectorjs`: ✔ connected** (added 15:20 UTC at the user's request) | — | ✔ real Screen 06 frame captured twice (also from a from-scratch reinstall by the bootstrap): 1,056 commands, 233 draw calls, 11 programs, 0 GL errors — `qa/tools/spector_2026-11-22/`; tools appear from the next session start |
 | World Labs Atlas connector | ✔ | ✔ | ✔ (credits available) | ✔ list_projects (free) — no paid task |
 | Marble World API key (network secret) | ✔ | ✔ | ✔ 2,030 credits (free read) | old world IDs return 404 for this key; their files are saved in Git LFS |
 | fal.ai (proxy-injected) | ✔ | ✔ | no auth error (free status probe → 404 for a dummy id) | no job started |
@@ -60,7 +60,7 @@ playwright-visual-qa, android-build-performance, cartoon-girl-character-artist. 
 (it still listed the round-34 team). Relaunch one only for a concrete task, from its notes.
 
 ## Did not transfer / needs the user
-* Spector.js MCP — plugin packaging gap (above); nothing for the user to approve.
+* Spector.js MCP — solved with the official standalone server (`spectorjs`, reinstalled automatically by `scripts/claude-bootstrap.sh` → `step_spector`).
 * Context7 plugin copy + design-plugin servers (Slack, Figma, …) — would need OAuth sign-in in a local Claude Code; not needed (the Context7 claude.ai connector works).
 * Meshy, Runpod, spaitial-ai, Hyper3D Rodin — paid / own keys: only with the user's explicit OK.
 * Blender MCP — only useful on a desktop with the Blender UI.

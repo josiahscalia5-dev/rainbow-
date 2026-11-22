@@ -813,8 +813,8 @@
   },
   {
    "path": "backups/BOOTSTRAP_REPORT.md",
-   "bytes": 3891,
-   "sha256": "ea679a5d69f697b3aadaf3914bee68aeeec2ab7c39e554e1eb8bdbf1ed7f0645"
+   "bytes": 4143,
+   "sha256": "a0c7aafc19fbe03a64ca9fc738d2425d307b42bb8bd309d079d358aeb1ff957f"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 27953,
-   "sha256": "aafc65908f9e216f15e886374a817681752ad7bdc4ef99af6273a81a9680b3b9"
+   "sha256": "a9ae62d3d86850dbd4f5329bbdebbc22df07a6c4400c615d2cd0491e6c11238a"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -848,8 +848,8 @@
   },
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
-   "bytes": 3607,
-   "sha256": "a558f2413d5dac87c01740db5979454a3fd0eac58d2c21799dd1c66ce5a23092"
+   "bytes": 3622,
+   "sha256": "946bc0132e642f0840fa994c02093b51db7aafb6e21c3ba2fa10ca35f53325e8"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -43618,8 +43618,8 @@
   },
   {
    "path": "scripts/claude-bootstrap.sh",
-   "bytes": 33045,
-   "sha256": "ae5208a5ced68b85789b34e304bc0f077eb03380466e36ae71c0478f8752ca5e"
+   "bytes": 33789,
+   "sha256": "7bf7f80a6182dfea4c265ed3eebde6d1fe43bf8c7371c5f8d2842dfc558392ca"
   },
   {
    "path": "scripts/cloud-env-setup.sh",
