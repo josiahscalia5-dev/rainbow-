@@ -843,13 +843,17 @@ window.step = (t, dt, steer, speed) => {
   // lane changes (he crosses the river on screen) and part of his leaps (he never jumps out of frame), smoothed so it never jerks; the tunnel
   // turns to normal perspective so rings, walls and water pass him with real depth. The picture stays painted on the objects (baked).
   if (FIT39) { const w = THREE.MathUtils.smoothstep(st.s, 0.2, +(q.get('camin') ?? 2.0));
-    const sB = st.s, hB = CT.c.h ?? 0, Fb = frameAt(sB - 1.45), Fa = frameAt(sB + 3.2), k = dt > 0 ? 1 - Math.exp(-dt * 7) : 1;
-    const cp = at(sB - 1.45, new THREE.Vector3()).addScaledVector(Fb.r, 0.35 * st.lat).addScaledVector(NUP, 0.78 + 0.4 * Math.max(0, hB));
-    const lk = at(sB + 3.2, new THREE.Vector3()).addScaledVector(Fa.r, 0.12 * st.lat).addScaledVector(NUP, 0.2 + 0.3 * Math.max(0, hB));
+    const sB = st.s, hB = CT.c.h ?? 0, Fh = frameAt(sB), Fa = frameAt(sB + 2.2), k = dt > 0 ? 1 - Math.exp(-dt * 7) : 1;
+    // right behind Benny along the river's direction at his position; follows 65 % of his lane offset (he still visibly crosses the river)
+    const cp = at(sB, new THREE.Vector3()).addScaledVector(Fh.r, (1 - +(q.get('camlane') ?? 0.35)) * st.lat).addScaledVector(Fh.t, -1.45).addScaledVector(NUP, 0.78 + 0.4 * Math.max(0, hB));
+    const lk = at(sB + 2.2, new THREE.Vector3()).addScaledVector(Fa.r, 0.45 * st.lat).lerp(at(sB, new THREE.Vector3()).addScaledVector(Fh.r, st.lat).addScaledVector(Fh.t, 2.2), 0.4).addScaledVector(NUP, 0.2 + 0.3 * Math.max(0, hB));
     { const r = cp.clone().sub(A0); r.addScaledVector(A, -r.dot(A)); const m = r.length(); if (m > 0.62) cp.addScaledVector(r, 0.62 / m - 1); }   // stay well inside the tunnel
     if (!CHASE.init || dt === 0) { CHASE.p.copy(cp); CHASE.l.copy(lk); CHASE.init = true; } else { CHASE.p.lerp(cp, k); CHASE.l.lerp(lk, 1 - Math.exp(-dt * 5)); }
     if (w > 0) { CAM39.position.copy(CHASE.p); CAM39.up.copy(NUP); CAM39.lookAt(CHASE.l);
-      camera.position.lerp(CHASE.p, w); camera.quaternion.slerp(CAM39.quaternion, w); camera.updateMatrixWorld(); }
+      camera.position.lerp(CHASE.p, w); camera.quaternion.slerp(CAM39.quaternion, w); camera.updateMatrixWorld();
+      // framing guard: Benny's centre never leaves the middle 76 % of the screen width (the camera turns just enough)
+      const bpn = benny.position.clone().addScaledVector(NUP, bennyH * 0.45).project(camera), ex = bpn.x - THREE.MathUtils.clamp(bpn.x, -0.38, 0.38);
+      if (ex !== 0) { camera.quaternion.premultiply(new THREE.Quaternion().setFromAxisAngle(NUP, -w * Math.atan(ex * Math.tan(camera.fov * Math.PI / 360) * camera.aspect))); camera.updateMatrixWorld(); } }
     REMAP.uZ2.value = THREE.MathUtils.lerp(K.Z2, 300, w); PROJ39.uPAll.value = 1 - w; }
   REMAP.uCam.value.copy(camera.position); REMAP.uOwnOff.value = OWNOFF ? THREE.MathUtils.smoothstep(st.s, 0.6, 1.8) : 0; FLOW.uFlow.value = t * +(q.get('flowspeed') ?? 0.55); FLOW.uW37T.value = t; FLOW.uFlowOn.value = THREE.MathUtils.smoothstep(st.s, 0.0, 0.7);
   core.position.copy(camera.position).add(A0).addScaledVector(A, 300); core.scale.set(33, 33, 1);
