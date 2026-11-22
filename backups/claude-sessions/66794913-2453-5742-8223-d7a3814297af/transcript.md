@@ -931,3 +931,177 @@ Looking at your approved 05 and 06 next to what the world renders today, so I ca
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-22T17:58:46.247Z
+
+> 🔧 **Bash** `{"command": "grep -n 'window\\.\\w\\+ = ' tools/world/world.html | cut -c1-170; sed -n 1,40p tools/reflock/section_run.cjs | cut -c1-250", "description": "List world page QA API and run tool header"}`
+
+### 🧑 User — 2026-11-22T17:58:46.302Z
+
+> ↩︎ result: 458:window.ability = useAbility; window.paused = false;
+> 461:document.getElementById('pause').addEventListener('click', (e) => { e.stopPropagation(); window.paused = !window.paused; document.getElementById('pausedLay').style.di
+> 466:window.step = (t, dt, steer, speed) => {
+> 490:window.renderNow = async (n = 1) => { for (let i = 0; i < n; i++) renderer.render(scene, camera); return true; };
+> 491:window.camInfo = () => ({ p: camera.position.toArray().map((x) => +x.toFixed(4)), q: camera.quaternion.toArray().map((x) => +x.toFixed(5)), fov: camera.fov });
+> 492:window.bennyInfo = () => { const p = benny.position.clone().project(camera); return { x: +((p.x + 1) / 2 * W).toFixed(1), y: +((1 - p.y) / 2 * H).toFixed(1) }; };
+> 493:window.bennyBox = () => { benny.updateMatrixWorld(true); const a = bmesh.geometry.attributes.position, v = new THREE.Vector3(); let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 
+> 497:window.kitFrameQA = () => { camera.updateMatrixWorld(); let camClear = 1e9; const e = camera.matrixWorld.elements, cx = new THREE.Vector3(e[0], e[1], e[2]), cy = new 
+> 507:window.routeCheck = (step = 0.5) => { const rc = new THREE.Raycaster(), out = [];
+> 511:window.qaGoto = (s) => { st.s = s; st.camInit = …[+4819 chars]
+
+### 🤖 Claude — 2026-11-22T17:58:50.021Z
+
+> 🔧 **TaskUpdate** `{"taskId": "1", "status": "completed"}`
+
+### 🧑 User — 2026-11-22T17:58:50.034Z
+
+> ↩︎ result: Updated task #1 status
+
+### 🤖 Claude — 2026-11-22T17:58:51.424Z
+
+> 🔧 **TaskUpdate** `{"taskId": "2", "subject": "Incremental cached builder (build.py) with per-step timing", "description": "tools/screenkit/build.py: steps fit/segment/geometry/swatch/bake/assemble/preview with content-hash cache, skip unchanged, timing report; world builder uses it", "activeForm": "Building the cached pipeline"}`
+
+### 🧑 User — 2026-11-22T17:58:51.436Z
+
+> ↩︎ result: Updated task #2 subject, description, activeForm
+
+### 🤖 Claude — 2026-11-22T17:58:53.223Z
+
+> 🔧 **TaskUpdate** `{"taskId": "3", "subject": "GN asset library + artwork-sampled materials", "description": "Reusable Geometry Nodes assets (gold ring, perforated drum, water channel, foam bank, machinery) in an asset .blend used by blender_kit.py; swatch.py samples tileable wall/ring/water/copper/foam materials from the approved picture; screen.html + world.html use them", "activeForm": "Making reusable assets and materials"}`
+
+### 🧑 User — 2026-11-22T17:58:53.233Z
+
+> ↩︎ result: Updated task #3 subject, description, activeForm
+
+### 🤖 Claude — 2026-11-22T17:58:54.722Z
+
+> 🔧 **TaskUpdate** `{"taskId": "4", "subject": "Automated preview checks (begin/mid/curves/end x left/centre/right)", "description": "preview.cjs + gates: holes, Benny visible, camera clearance, water contact, likeness at picture view; contact sheet before full recordings", "activeForm": "Writing automated preview checks"}`
+
+### 🧑 User — 2026-11-22T17:58:54.732Z
+
+> ↩︎ result: Updated task #4 subject, description, activeForm
+
+### 🤖 Claude — 2026-11-22T17:58:56.472Z
+
+> 🔧 **TaskUpdate** `{"taskId": "5", "subject": "Finish Screen 05 + Screen 06 + 05→06 join with the pipeline", "description": "Fix visible problems found by previews (foam banks, ghost effects, plain far scenery, camera), Benny on real water, join without stop/scale change", "activeForm": "Finishing Screens 05 and 06"}`
+
+### 🧑 User — 2026-11-22T17:58:56.485Z
+
+> ↩︎ result: Updated task #5 subject, description, activeForm
+
+### 🤖 Claude — 2026-11-22T17:58:57.879Z
+
+> 🔧 **TaskUpdate** `{"taskId": "6", "subject": "Recordings, before/after, step timings, APK, save", "description": "Gray + textured continuous real-touch 05→06 recordings, approved vs rebuilt, before/after, timing table, APK, remaining differences, resume doc, GitHub save", "activeForm": "Recording and packaging results"}`
+
+### 🧑 User — 2026-11-22T17:58:57.899Z
+
+> ↩︎ result: Updated task #6 subject, description, activeForm
+
+### 🤖 Claude — 2026-11-22T17:59:01.564Z
+
+I'm starting by timing the current (old) build of 05 and 06 in the background, so the speed-up can be measured against a real baseline. Meanwhile I'll write the new pipeline.
+
+### 🤖 Claude — 2026-11-22T17:59:07.075Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; mkdir -p $S/base; cat > $S/base/run_baseline.sh <<'EOF'\n#!/usr/bin/env bash\n# baseline timing of the OLD kit steps for 05 and 06 (as tools/world/setup_world.sh runs them)\nSRC=/home/user/rainbow-; B=$1; cd $SRC\nt(){ local n=$1; shift; local a=$(date +%s.%N); \"$@\" > $B/$n.log 2>&1; local rc=$?; local b=$(date +%s.%N); printf '%s %.1f rc=%d\\n' \"$n\" \"$(echo \"$b - $a\" | bc)\" $rc >> $B/times.txt; }\nrm -f $B/times.txt\nt setup05 bash tools/screenkit/setup_screen.sh 05 $B/s05\nt variant05 ba …[+546 chars]`
+
+### 🧑 User — 2026-11-22T17:59:07.145Z
+
+> ↩︎ result: started
+
+### 🤖 Claude — 2026-11-22T17:59:09.073Z
+
+> 🔧 **Bash** `{"command": "cat tools/screenkit/screens/05/fit05.py | cut -c1-260", "description": "Read Screen 05 fit script"}`
+
+### 🧑 User — 2026-11-22T17:59:09.121Z
+
+> ↩︎ result: """Screen 05 'Flow Into the Current' - FIT step of the screen kit (round 44, for the one connected world). Measures the user's approved picture
+> references/05_flow_into_the_current.png (read-only) and writes ONE physical world for it (<out>/layout.json + fit overlay).
+>   python3 -I tools/screenkit/screens/05/fit05.py <out dir> [--set key=json] [--tube-len L] [--open-end]
+> Measured on the picture (864 x 1536 px, gridded crops qa/world/r44/05/measure):
+>   * the bright tunnel core (vanishing point) at (500, 474); the big gold ring (top (440, 205), sides at the frame edges): circle (437, 560) r 420
+>     -> camera offset from the tube axis = ((500-437)/420, (560-474)/420) radii (right, up); the inner rings agree within the painting's slack.
+>   * the water line at that ring: the foam banks meet the wall at y ~ 700 on both sides -> the axis is (700-560)/420 radii above the water;
+>     with the camera 0.734 above the water this fixes the tube radius.
+>   * Benny: water contact (430, 1185), pompom top (430, 770). Coins (centre, radius): the painted S-trail. Copper trays (centre, width).
+>   * the river fills the tube floor (pink edges + cyan core, S-curves through the coins): the floor water is the tu …[+5725 chars]
+
+### 🤖 Claude — 2026-11-22T17:59:54.097Z
+
+> 🔧 **Bash** `{"command": "wc -l tools/kit05/swimfx.js tools/kit05/controls.js; grep -n 'water\\s*[:(=]\\|wake\\|ripple\\|Sprite\\|opacity' tools/kit05/controls.js | head -30; head -30 tools/kit05/swimfx.js | cut -c1-200", "description": "Inspect swim effects code"}`
+
+### 🧑 User — 2026-11-22T17:59:54.187Z
+
+> ↩︎ result: 194 tools/kit05/swimfx.js
+>   538 tools/kit05/controls.js
+>   732 total
+> 9:// straight in, swipe up under water = leap out), a buoyancy spring settles him after every landing / resurfacing; the bank is
+> 10:// rate-limited; paws paddle alternately (power stroke down and back), his lower back flutter-kicks, and swimfx.js adds the wake,
+> 11:// paddle ripples, kick foam and the streaming painted splash. Lateral offsets are along the path frame's r (frameAt(s)).
+> 12:// swimfx.js is loaded fail-safe: if a build forgets to copy it, the game still runs (without the wake / ripples) and says why
+> 13:const SWIMFX = await import('./swimfx.js').catch((e) => { console.warn('swimfx.js not loaded: no wake / ripples / kick foam', String(e)); return null; });
+> 95:  //    current speed: no waiting, no snap), in the air and under water (the player steers a leap or a dive into the next lane —
+> 98:  //    up under water = he swims up and leaps out of the surface without stopping (the rising speed hands over to the leap).
+> 212:    const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: coinTex, toneMapped: false, transparent: true, alphaTest: 0.35, depthWrite: false }));
+> 227:  // (scale, not opacity: the coin ma …[+4717 chars]
+
+### 🤖 Claude — 2026-11-22T18:00:50.992Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; cat $S/base/times.txt 2>/dev/null; cd /home/user/rainbow-; sed -n 1,40p tools/screenkit/scale_layout.py | cut -c1-200; cat tools/screenkit/screens/06/fit06.py | grep -n \"lay\\[\\|'drum'\\|'rings'\\|paddles\\|bubbles\\|foam\" | cut -c1-220 | head -30", "description": "Check baseline progress and 06 layout keys"}`
+
+### 🧑 User — 2026-11-22T18:00:51.062Z
+
+> ↩︎ result: setup05 7.3 rc=0
+> variant05 1.8 rc=0
+> export05 20.8 rc=0
+> setup06 8.5 rc=0
+> export06 35.9 rc=0
+> DONE
+> """Rainbow screen kit (round 44): scale a fitted screen layout uniformly so its Benny has the world's ONE physical size (the kit fixes the camera
+> 0.734 above the water at each picture, so each fit's Benny height differs: 06 0.574 u vs ~0.47 u elsewhere). Every length is multiplied by k;
+> angles, ratios and picture data are kept; the bake densities (picture px per world unit) are divided by k. The picture view is unchanged
+> (the fitted camera scales with everything: similar triangles).
+>   python3 -I tools/screenkit/scale_layout.py <layout.json in> <layout.json out> --benny-h 0.468      (or --k 0.815)
+> """
+> import sys, json, argparse
+> ap = argparse.ArgumentParser(); ap.add_argument('src'); ap.add_argument('dst'); ap.add_argument('--k', type=float); ap.add_argument('--benny-h', type=float)
+> a = ap.parse_args(); L = json.load(open(a.src)); k = a.k if a.k else a.benny_h / L['benny']['height']
+> S = lambda v: [x * k for x in v] if isinstance(v, list) else v * k
+> for c in L['cams']:
+>     c['pos'] = S(c['pos'])
+>     if 's_ref' in c: c['s_ref'] *= k
+> for f in ('pos', 'height', 'lift', 'ahead'):
+>     if f in L[ …[+2625 chars]
+
+### 🤖 Claude — 2026-11-22T18:01:51.737Z
+
+Baseline timings (old method): 05 = 29.9 s, 06 = 44.4 s per rebuild, and every change reruns everything. I'm writing the cached builder now.
+
+### 🤖 Claude — 2026-11-22T18:01:52.998Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,30p tools/world/world_layout.py | cut -c1-220; sed -n 1,15p tools/world/blender_connectors.py | cut -c1-200; cat tools/screenkit/screens/05/segment05.json; sed -n 1,20p tools/screenkit/segment.py | cut -c1-200", "description": "Read world layout, connectors, segment headers"}`
+
+### 🧑 User — 2026-11-22T18:01:53.063Z
+
+> ↩︎ result: """Rainbow ONE connected world (round 44) - layout step. Places the areas in ONE coordinate system so each area's exit physically meets the next
+> area's entrance, assembles ONE route (Benny's path) through all of them, the camera keys (each area's fitted picture cameras, exact there),
+> the coins, and the Blender connector pieces (tools/world/blender_connectors.py).
+>   python3 -I tools/world/world_layout.py <04 kit layout.json> <section.json> <out dir>
+> Area order of play (user, 2026-11-22): 04 -> A Bubble Dash -> B Sock Rescue (A + B = the section) -> 05 -> 06 -> 07 -> 08 -> 09 -> 10.
+> v1 = 04 -> A -> B. Units: the kit / section units (water under Benny y = 0, camera 0.734 above it at each picture). Benny measures 0.473 u in 04
+> and 0.468 u in the section (1 % apart: one physical Benny, no rescaling needed for these two). The old game's units are ~3x larger; areas
+> that come from it are rebuilt with the kit in these units (user decision r44) - nothing is scaled at run time.
+> Join 04 -> A: 04's gold tube ends in a round doorway in the Bubble Dash chamber's near wall (the chamber is open behind its picture camera:
+> side walls / ceiling / floor run to z = +2 in section coordinates, nothing clo …[+5533 chars]
+
+### 🤖 Claude — 2026-11-22T18:01:54.389Z
+
+Now writing the cached, timed builder (`tools/screenkit/build.py`).
+
+### 🤖 Claude — 2026-11-22T18:02:54.945Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/screenkit/build.py", "content": "\"\"\"Rainbow screen kit - INCREMENTAL, CACHED builder (round 45). One command from a screen's approved picture to a playable, pre-baked game\nfolder, re-running ONLY the steps whose inputs changed. Every step's output is stored once in a content-addressed cache\n($RAINBOW_BUILD_CACHE, default ~/.cache/rainbow-build) under the SHA-256 of exactly the inputs that step reads, so:\n  * a change to a material / water shader in screen.html or world.html  -> nothing is rebuilt (only the game folder is re-assembled, < 1 s)\n  *  …[+17442 chars]`
+
+### 🧑 User — 2026-11-22T18:02:55.063Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/screenkit/build.py (file state is current in your context — no need to Read it back)
+
