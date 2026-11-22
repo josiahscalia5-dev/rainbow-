@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 28920,
-   "sha256": "ac17b62e92c94fa8a139f94a8dbb31cd8d66f19f37284635291622f7a0162a44"
+   "sha256": "375432ca308e623f230019767e1ff35aee54e0568a16f028359df426705b0bd1"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 2958,
-   "sha256": "ae2605fc05a5c3e4b0e44d6c70de3264a159616016b0dd2de6e101ab29f186a9"
+   "sha256": "357c8992a3a4e529165acefcaabfc96dddcd8d39ce38d61e2ba5227a5464606a"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -23510,6 +23510,11 @@
    "path": "qa/kit45/timing/world_after_bake_code_change.md",
    "bytes": 385,
    "sha256": "0cf4dad0aa7b5e28082c5393f6f6538979657d4073170e528a2a60bb16de46d7"
+  },
+  {
+   "path": "qa/kit46/Rainbow_r46_world_05_06_debug.apk",
+   "bytes": 244477578,
+   "sha256": "7afcc5f08e01694522d722ec1cbf9b85be266c736165d548b34c0af063cbf6b7"
   },
   {
    "path": "qa/lead_r5/2026-11-17/README.md",
