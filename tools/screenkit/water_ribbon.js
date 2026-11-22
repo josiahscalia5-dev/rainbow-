@@ -7,7 +7,8 @@
 // (204,32,159) (244,60,215) (248,110,236), white streaks (247,243,252); band layout from the painted river (pink edge to pink edge = river width).
 // Coordinates: the area's own x / z (vL), lateral = distance from the river centre line (Benny's route, a 1-D texture of route x by z), along = -z.
 export const RIBBON_GLSL = `
-uniform sampler2D uRouteX; uniform vec4 uRouteZ; uniform float uRibbon; uniform float uRStyle; uniform vec4 uRUv; vec4 gRUv = vec4(0.0);   /* gRUv: set by the material before ribbonWater (x 1 = 06: normalised lateral + route distance; x 2 = r46 connector strip: lateral in m + along distance) */ uniform sampler2D uDetC, uDetP; uniform vec4 uDetCM, uDetPM; uniform float uDetS, uDetOn; uniform float uRich;
+uniform sampler2D uRouteX; uniform vec4 uRouteZ; uniform float uRibbon; uniform float uRStyle; uniform vec4 uRUv; vec4 gRUv = vec4(0.0);   /* gRUv: set by the material before ribbonWater (x 1 = 06: normalised lateral + route distance; x 2 = r46 connector strip: lateral in m + along distance) */ uniform sampler2D uDetC, uDetP; uniform vec4 uDetCM, uDetPM; uniform float uDetS, uDetOn; uniform float uRich; uniform float uRainbow;
+float rbSq(float x){ return x * x; }   /* r46: rbSq(x) is undefined for x < 0 in GLSL (NaN on some GPUs) */
 float rbH(vec2 p){ vec3 p3 = fract(vec3(p.xyx) * 0.1031); p3 += dot(p3, p3.yzx + 33.33); return fract((p3.x + p3.y) * p3.z); }
 float rbN(vec2 p){ vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f); return mix(mix(rbH(i), rbH(i + vec2(1, 0)), f.x), mix(rbH(i + vec2(0, 1)), rbH(i + vec2(1, 1)), f.x), f.y); }
 // 06 style (uRStyle 1): the rising crest = a bright cyan sheet with white streaks and RAINBOW edges (green, yellow, orange, pink, purple),
@@ -23,7 +24,7 @@ vec3 ribbonWater(vec3 L, float t, float flow, vec3 vWv){
     float line = (1.0 - smoothstep(0.0, max(0.3, 1.8 * fw), f)) * smoothstep(0.45, 0.85, rbN(vec2(floor(w) * 1.3, d * 1.5))) * (1.0 - smoothstep(0.25, 0.7, fw));
     col = mix(col, vec3(0.96, 1.0, 1.0), 0.55 * line * (1.0 - 0.6 * eb));
     vec2 g = vec2(an * 6.0, d * 1.6); vec2 cell = floor(g); float hh = rbH(cell + 0.37);
-    if (hh < 0.25) { vec2 q = (g - cell - 0.5) / vec2(6.0, 1.6); float tw = 0.4 + 0.6 * pow(0.5 + 0.5 * sin(t * 3.0 + hh * 60.0), 2.0);
+    if (hh < 0.25) { vec2 q = (g - cell - 0.5) / vec2(6.0, 1.6); float tw = 0.4 + 0.6 * rbSq(0.5 + 0.5 * sin(t * 3.0 + hh * 60.0));
       float star = exp(-dot(q, q) / 0.00012) + exp(-abs(q.x) / 0.03) * exp(-q.y * q.y / 0.00003) + 0.7 * exp(-abs(q.y) / 0.03) * exp(-q.x * q.x / 0.00003); col = mix(col, vec3(1.0), clamp(star * tw, 0.0, 1.0)); }
     return clamp(col, 0.0, 1.0); }
   float zt = clamp((L.z - uRouteZ.x) / (uRouteZ.y - uRouteZ.x), 0.0, 1.0), e = 0.03 / max(1e-3, uRouteZ.y - uRouteZ.x);
@@ -46,6 +47,12 @@ vec3 ribbonWater(vec3 L, float t, float flow, vec3 vWv){
   float pc = max(1.0 - clamp(abs(an - 0.67) / 0.18, 0.0, 1.0), 1.0 - clamp(abs(an - 1.4) / 0.18, 0.0, 1.0));
   vec3 pink = mix(pkD, pkM, smoothstep(0.0, 0.6, pc)); pink = mix(pink, pkB, 0.6 * smoothstep(0.55, 1.0, pc));
   vec3 col = mix(cyan, pink, pinkW);
+  // r46 Screen 06 (layout water_rainbow): the outer ribbon becomes the painting's RAINBOW band - colours measured across the approved 06 crest edge
+  // (row 900: cyan 0,227,250 -> mint 119,227,175 -> yellow 249,227,141 -> salmon 250,162,152 -> magenta 255,139,255 -> hot pink 238,78,226)
+  if (uRainbow > 0.5) { float k = clamp((an - 1.18) / 0.46, 0.0, 1.0) * 5.0; vec3 r0 = vec3(0.0, 227.0, 250.0) / 255.0, r1 = vec3(119.0, 227.0, 175.0) / 255.0, r2 = vec3(249.0, 227.0, 141.0) / 255.0,
+      r3 = vec3(250.0, 162.0, 152.0) / 255.0, r4 = vec3(255.0, 139.0, 255.0) / 255.0, r5 = vec3(238.0, 78.0, 226.0) / 255.0;
+    vec3 rb = mix(r0, r1, clamp(k, 0.0, 1.0)); rb = mix(rb, r2, clamp(k - 1.0, 0.0, 1.0)); rb = mix(rb, r3, clamp(k - 2.0, 0.0, 1.0)); rb = mix(rb, r4, clamp(k - 3.0, 0.0, 1.0)); rb = mix(rb, r5, clamp(k - 4.0, 0.0, 1.0));
+    float rbw = smoothstep(1.13 - ea, 1.19 + ea, an) * (1.0 - smoothstep(1.62 - ea, 1.68 + ea, an)); col = mix(col, rb, 0.92 * rbw); }
   // r46 (user: "the water becomes too plain and streaky"; layout water_rich): the painting's DEPTH inside the bands - deep-blue troughs in the cyan,
   // thin deep-blue seams along every pink ribbon edge, a glossy white-pink silk highlight inside each pink ribbon, a pale crest along the cyan centre
   if (uRich > 0.5) { float tr = rbN(vec2(lat * 2.2 + 0.6 * sin(d * 0.8), d * 0.55));
@@ -54,9 +61,9 @@ vec3 ribbonWater(vec3 L, float t, float flow, vec3 vWv){
     col = mix(col, vec3(0.03, 0.30, 0.78), 0.55 * (1.0 - smoothstep(0.0, ew, eg)));
     float hl = min(abs(an - 0.73), abs(an - 1.46)), hb = smoothstep(0.3, 0.7, rbN(vec2(an * 9.0, d * 0.9)));
     col = mix(col, vec3(1.0, 0.86, 0.98), 0.72 * hb * (1.0 - smoothstep(0.0, max(0.02, 1.2 * fwidth(an)), hl)) * pinkW);
-    float gp = max(exp(-pow((an - 0.68) / 0.09, 2.0)), exp(-pow((an - 1.41) / 0.09, 2.0)));   /* the painting's glowing pink ribbon cores */
+    float gp = max(exp(-rbSq((an - 0.68) / 0.09)), exp(-rbSq((an - 1.41) / 0.09)));   /* the painting's glowing pink ribbon cores */
     col = mix(col, vec3(1.0, 0.55, 0.93), 0.55 * gp * pinkW); col = mix(col, vec3(1.0, 0.84, 0.98), 0.3 * pow(gp, 4.0) * pinkW);
-    float halo = max(exp(-pow((an - 0.42) / 0.07, 2.0)) + exp(-pow((an - 0.93) / 0.07, 2.0)), exp(-pow((an - 1.16) / 0.07, 2.0)) + exp(-pow((an - 1.66) / 0.07, 2.0)));
+    float halo = max(exp(-rbSq((an - 0.42) / 0.07)) + exp(-rbSq((an - 0.93) / 0.07)), exp(-rbSq((an - 1.16) / 0.07)) + exp(-rbSq((an - 1.66) / 0.07)));
     col = mix(col, vec3(0.62, 0.55, 1.0), 0.25 * halo * (1.0 - pinkW));   /* soft violet glow where pink meets cyan */
     float cc = abs(an - 0.12 - 0.06 * sin(d * 1.4)), cb2 = smoothstep(0.35, 0.8, rbN(vec2(3.0, d * 0.8)));
     col = mix(col, vec3(0.85, 1.0, 1.0), 0.5 * cb2 * (1.0 - smoothstep(0.0, max(0.03, 1.2 * fwidth(an)), cc)) * (1.0 - pinkW)); }
@@ -79,7 +86,7 @@ vec3 ribbonWater(vec3 L, float t, float flow, vec3 vWv){
   // the painting's bright white DASHES: short, thick-ish, along the flow, many in the cyan, some on the pink
   vec2 gd = vec2(lat * 7.0, d * 1.25); vec2 cd = floor(gd); float hd = rbH(cd + 7.7);
   if (hd < 0.16) { vec2 o = (gd - cd - vec2(0.5 + 0.3 * (rbH(cd + 2.2) - 0.5), 0.5)) / vec2(7.0, 1.25); float lenD = 0.07 + 0.12 * rbH(cd + 5.5), wid = 0.003 + 0.004 * rbH(cd + 9.1);
-    float dsh = exp(-pow(o.x / max(wid, 0.8 * fwidth(lat)), 2.0)) * (1.0 - smoothstep(lenD * 0.4, lenD * 0.5, abs(o.y))) * (1.0 - smoothstep(0.3, 1.0, fwidth(gd.y)));
+    float dsh = exp(-rbSq(o.x / max(wid, 0.8 * fwidth(lat)))) * (1.0 - smoothstep(lenD * 0.4, lenD * 0.5, abs(o.y))) * (1.0 - smoothstep(0.3, 1.0, fwidth(gd.y)));
     col = mix(col, vec3(0.97, 1.0, 1.0), clamp(dsh, 0.0, 1.0) * mix(0.55, 0.35, pinkW)); }
   // glossy sheen
   col += 0.08 * smoothstep(0.35, 0.95, rbN(vec2(lat * 0.9, d * 0.35 - t * 0.1))) * (1.0 - 0.5 * pinkW);
@@ -94,7 +101,7 @@ vec3 ribbonWater(vec3 L, float t, float flow, vec3 vWv){
       float tw2 = 0.5 + 0.5 * sin(t * 4.0 + h2 * 90.0), s2 = max(fwidth(g2.x), fwidth(g2.y)), pfx = max(fwidth(lat), 1e-5), pfy = max(fwidth(d), 1e-5);
       /* each sparkle keeps at least ~2 px core and ~6 px horizontal ray on screen (the painting's sparkles stay visible far down the river) */
       vec2 cs = vec2(max(0.006, 1.4 * pfx), max(0.006, 1.4 * pfy));
-      float st2 = exp(-dot(q2 / cs, q2 / cs)) + exp(-abs(q2.x) / max(0.03, 6.0 * pfx)) * exp(-pow(q2.y / max(0.0028, 0.7 * pfy), 2.0)) + 0.5 * exp(-abs(q2.y) / max(0.012, 3.0 * pfy)) * exp(-pow(q2.x / max(0.0028, 0.7 * pfx), 2.0));
+      float st2 = exp(-dot(q2 / cs, q2 / cs)) + exp(-abs(q2.x) / max(0.03, 6.0 * pfx)) * exp(-rbSq(q2.y / max(0.0028, 0.7 * pfy))) + 0.5 * exp(-abs(q2.y) / max(0.012, 3.0 * pfy)) * exp(-rbSq(q2.x / max(0.0028, 0.7 * pfx)));
       col = mix(col, vec3(1.0), clamp(st2 * (0.4 + 0.6 * tw2) * (1.0 - smoothstep(0.18, 0.45, s2)), 0.0, 1.0)); } }
   // star glints
   vec2 g = vec2(lat * 3.2, d * 1.6); vec2 cell = floor(g); float hh = rbH(cell + 0.37);
@@ -107,7 +114,7 @@ vec3 ribbonWater(vec3 L, float t, float flow, vec3 vWv){
 
 // route centre line x by z (area-local) as a float texture (nearest, 4096 samples) + the uniforms the materials need
 // r46: a second (third ...) copy of the ribbon code with renamed uniforms / functions, so one material can draw two areas' ribbons (connectors)
-export const ribbonCopy = (sfx) => RIBBON_GLSL.replace(/\b(uRouteX|uRouteZ|uRibbon|uRStyle|uRUv|gRUv|uDetC|uDetP|uDetCM|uDetPM|uDetS|uDetOn|uRich|rbH|rbN|rainbowEdge|ribbonWater)\b/g, '$1' + sfx);
+export const ribbonCopy = (sfx) => RIBBON_GLSL.replace(/\b(uRouteX|uRouteZ|uRibbon|uRStyle|uRUv|gRUv|uDetC|uDetP|uDetCM|uDetPM|uDetS|uDetOn|uRich|uRainbow|rbSq|rbH|rbN|rainbowEdge|ribbonWater)\b/g, '$1' + sfx);
 export const ribbonUniformsAs = (U, sfx) => Object.fromEntries(Object.entries(U).map(([k, v]) => [k + sfx, v]));
 export function routeUniforms(THREE, LAY) {
   const P = LAY.route.points; let z0 = Infinity, z1 = -Infinity; for (const p of P) { z0 = Math.min(z0, p[2]); z1 = Math.max(z1, p[2]); }
@@ -117,7 +124,7 @@ export function routeUniforms(THREE, LAY) {
   void j;
   const tex = new THREE.DataTexture(data, N, 1, THREE.RedFormat, THREE.FloatType); tex.minFilter = tex.magFilter = THREE.NearestFilter; tex.needsUpdate = true;
   return { uRouteX: { value: tex }, uRouteZ: { value: new THREE.Vector4(z0, z1, (LAY.river_width ?? LAY.route.width) / 2, 1) },
-    uRStyle: { value: LAY.water_style === 'ribbon06' ? 1 : 0 }, uRich: { value: LAY.water_rich ?? 0 },   /* r46: richer painted water (layout water_rich) */
+    uRStyle: { value: LAY.water_style === 'ribbon06' ? 1 : 0 }, uRich: { value: LAY.water_rich ?? 0 }, uRainbow: { value: LAY.water_rainbow ?? 0 },   /* r46: richer painted water (layout water_rich) */
     uDetC: { value: null }, uDetP: { value: null }, uDetCM: { value: new THREE.Vector4(1, 1, 1, 1) }, uDetPM: { value: new THREE.Vector4(1, 1, 1, 1) }, uDetS: { value: 0.64 }, uDetOn: { value: 0 } };
 }
 // the painted detail tiles of an area (baked/detail_*.jpg + manifest.water_detail) -> the ribbon uniforms (shared by all its water materials)

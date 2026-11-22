@@ -49,8 +49,8 @@ for z in np.arange(z_w0 - 1.5, far, -1.5):
     k_in = min(1.0, (z_w0 - z) / 4.0); k_out = min(1.0, max(0.0, (z - far) / 6.0)); ctrl.append(np.array([xa + WA * k_in * k_out * math.sin(2 * math.pi * (z_w0 - z) / WL), 0.0, z]))
 # r46 (Screen 05 frames 405-420): the far painted coins (radius <= 10 px, depths spread +1.2 u apart) pulled the route 0.84 u right of the drum
 # axis around z -22: with the right lane Benny swam at the very edge of the drum floor (camera 0.3 u from the wall, the river into the foam).
-# Soft cap on the route's distance from the axis: unchanged up to 0.40 u (the whole painted stretch at the picture view), then eased to <= 0.55 u.
-RC_L, RC_K = 0.55, 0.15
+# Soft cap on the route's distance from the axis: unchanged up to 0.32 u, then eased to <= 0.42 u (the near coin trail moves <= 3 mm).
+RC_L, RC_K = 0.42, 0.10   # r46b: <= 0.42 u so the painted foam banks fit on BOTH sides of the river at every bend (river edge <= 1.09 u, floor 1.29 u)
 def _cap(x):
     o = x - xa; a_ = abs(o)
     return x if a_ <= RC_L - RC_K else xa + math.copysign(RC_L - RC_K + RC_K * (1.0 - math.exp(-(a_ - (RC_L - RC_K)) / RC_K)), o)
@@ -92,7 +92,7 @@ lay['cam_axis'].update({'follow_route': 0.9, 'follow_lane': 0.65, 'max_off': 0.8
 # r45 (look while swimming, measured against the picture): the bright warm core at the end of the tunnel (camera-relative glow), foam banks that
 # frame the S-river like the painted ones (just outside its pink edges), and the painted bubbles along both banks
 lay['far_glow'] = {'start': 7.0, 'end': 26.0, 'strength': 0.8, 'color': [1.0, 0.92, 0.72]}
-lay['foam_pool_clear'] = {'margin': 0.45, 'spread': 0.6}   # r46: the drum-edge banks stay outside the swinging river (Benny swam into them, frames 409-420)
+lay['foam_pool_clear'] = {'margin': 0.3, 'spread': 0.6}   # r46: the drum-edge banks stay outside the swinging river (Benny swam into them, frames 409-420)
 lay['foam_banks'] = [{'side': s_, 'off': 0.5, 'spacing': 0.15, 'size': 0.075, 's0': lay['cams'][0]['s_ref'] + 14.0, 'seed': 21 + s_} for s_ in (-1, 1)]   # beyond the painted stretch, clear of the lanes
 lay['lod_bias'] = -1.4   # r45: the painted detail stays crisp at grazing angles (the top-of-frame walls / rings carried 2/3 of the mismatch)
 lay['bubbles_banks'] = {'from': 14.0, 'every': 0.55, 'lat': [0.55, 1.15], 'r': [0.025, 0.075], 'h': 0.4}; lay['bubbles_from'] = 14.0   # beyond the painted stretch

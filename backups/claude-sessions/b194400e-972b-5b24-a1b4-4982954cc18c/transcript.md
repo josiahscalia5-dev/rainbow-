@@ -2544,3 +2544,381 @@ Clip test and probe finished. Here are the water edits first, then I'll check th
 
 > 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/water_ribbon.js'; s=open(p).read()\nold=\"    float cc = abs(an - 0.12 - 0.06 * sin(d * 1.4)), cb2 = smoothstep(0.35, 0.8, rbN(vec2(3.0, d * 0.8)));\"\nnew=\"\"\"    float gp = max(exp(-pow((an - 0.68) / 0.09, 2.0)), exp(-pow((an - 1.41) / 0.09, 2.0)));   /* the painting's glowing pink ribbon cores */\n    col = mix(col, vec3(1.0, 0.55, 0.93), 0.55 * gp * pinkW); col = mix(col, vec3(1.0, 0.84, 0.98), 0.3 * pow(gp, 4.0) * pinkW);\n    float halo = max(exp(-pow((an - 0.42) / 0.07, 2.0)) + exp(-pow((an - 0.93) / 0.07, 2.0)), exp(-pow((an - 1.16)  …[+897 chars]`
 
+### 🧑 User — 2026-11-22T22:03:14.319Z
+
+> ↩︎ result: layout    ran        0.1 s
+>   connectors cached     0.0 s   (4f33dbf609)
+>   files     ran        0.0 s
+>   preview 05 WARN      115.9 s
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-22T22:03:15.514Z
+
+> 🔧 **Read** `{"file_path": "/home/user/ws46/water_e.jpg"}`
+
+### 🧑 User — 2026-11-22T22:03:15.616Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-22T22:03:15.599Z
+
+[Image: original 2032x919, displayed at 2000x905. Multiply coordinates by 1.02 to map to original image.]
+
+### 🤖 Claude — 2026-11-22T22:03:20.092Z
+
+The pink ribbons now have glowing lighter cores, closer to your painting. Next I'll measure rather than judge by eye: Round 45b's automated preview has finished Screen 05 and is running Screen 06.
+
+### 🤖 Claude — 2026-11-22T22:03:21.941Z
+
+> 🔧 **Bash** `{"command": "timeout 600 bash -c 'until grep -q EXIT /home/user/ws46/build_r45b.log; do sleep 5; done'; tail -n 3 /home/user/ws46/build_r45b.log; python3 - <<'EOF'\nimport json\nfor a in ('05','06'):\n    d=json.load(open(f'/home/user/ws46/world_r45b/preview_{a}/preview.json'))\n    print(a, d['verdict']); s=d['summary']; print(json.dumps(s, indent=0)[:1800])\nEOF", "description": "Read r45b preview summaries (BEFORE numbers)", "timeout": 660000}`
+
+### 🧑 User — 2026-11-22T22:03:52.075Z
+
+> ↩︎ result: preview 06 WARN       84.6 s
+> world ready: /home/user/ws46/world_r45b/game/play3.html  (201.21 s; report /home/user/ws46/world_r45b/build_report.md)
+> EXIT 0
+> 05 WARN
+> {
+> "verdict": "WARN",
+> "issues": [
+> [
+> "WARN",
+> "textured begin lane 0 (s 88.5)",
+> "colour look 0.514 vs the approved picture"
+> ],
+> [
+> "WARN",
+> "textured curve_29deg lane 0 (s 100.8)",
+> "colour look 0.486 vs the approved picture"
+> ],
+> [
+> "WARN",
+> "textured quarter lane 0 (s 100.94)",
+> "colour look 0.564 vs the approved picture"
+> ],
+> [
+> "WARN",
+> "textured middle lane 0 (s 114.57)",
+> "colour look 0.194 vs the approved picture"
+> ],
+> [
+> "WARN",
+> "textured three_q lane 0 (s 128.21)",
+> "colour look 0.436 vs the approved picture"
+> ],
+> [
+> "WARN",
+> "textured curve_11deg lane 0 (s 134.3)",
+> "colour look 0.586 vs the approved picture"
+> ],
+> [
+> "WARN",
+> "textured end lane 0 (s 141.25)",
+> "colour look 0.199 vs the approved picture"
+> ],
+> [
+> "WARN",
+> "textured begin lane -1 (s 88.5)",
+> "colour look 0.228 vs the approved picture"
+> ],
+> [
+> "WARN",
+> "textured middle lane -1 (s 114.57)",
+> "colour look 0.195 vs the approved picture"
+> ],
+> [
+> "WARN",
+> "textured three_q lane -1 (s 128.21)",
+> "colour look 0.403 vs the approved picture"
+> ],
+> [
+> "WARN",
+> "textured end lane -1 (s 141.25)",
+> "colour look 0 …[+2572 chars]
+
+### 🤖 Claude — 2026-11-22T22:03:54.348Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\nfor a in ('05','06'):\n    d=json.load(open(f'/home/user/ws46/world_r45b/preview_{a}/preview.json'))\n    s=d['summary']; print(a, [k for k in s.keys()])\n    for k,v in s.items():\n        if k=='issues': continue\n        print('  ',k, json.dumps(v)[:700])\nEOF", "description": "List r45b preview summary metrics"}`
+
+### 🧑 User — 2026-11-22T22:03:54.405Z
+
+> ↩︎ result: 05 ['verdict', 'issues', 'likeness_picture_view', 'repeat_views', 'repeat_within_20_mean', 'repeat_within_20_min', 'surfaces_while_swimming', 'colour_look_min', 'colour_look_mean', 'holes_total', 'frames', 'seconds', 'errors']
+>    verdict "WARN"
+>    likeness_picture_view [{"file": "tex_picture_l0.png", "share_within_20_levels": 0.834, "ssim_scenery": 0.802, "mean_abs_diff_levels": 11.6, "colour_look_corr": 0.995, "sharpness_vs_approved": 0.73, "whole_frame_within_20_levels": 0.574}]
+>    repeat_views [{"k": 0, "file": "rep_k00.png", "within_20": 0.721, "colour_look": 0.994}, {"k": 1, "file": "rep_k01.png", "within_20": 0.101, "colour_look": 0.519}, {"k": 2, "file": "rep_k02.png", "within_20": 0.194, "colour_look": 0.629}, {"k": 3, "file": "rep_k03.png", "within_20": 0.233, "colour_look": 0.672}, {"k": 4, "file": "rep_k04.png", "within_20": 0.211, "colour_look": 0.28}, {"k": 5, "file": "rep_k05.png", "within_20": 0.204, "colour_look": 0.196}, {"k": 6, "file": "rep_k06.png", "within_20": 0.187, "colour_look": 0.344}, {"k": 7, "file": "rep_k07.png", "within_20": 0.182, "colour_look": 0.172}, {"k": 8, "file": "rep_k08.png", "within_20": 0.193, "colour_look": 0.328}, {"k": 9, "file": "rep_k …[+2316 chars]
+
+### 🤖 Claude — 2026-11-22T22:04:02.403Z
+
+> 🔧 **Bash** `{"command": "export NODE_PATH=$(npm root -g); for a in 05 06; do rm -rf /home/user/ws46/world/preview_$a; done; (for a in 05 06; do node tools/screenkit/preview.cjs /home/user/ws46/world/game /home/user/ws46/world/preview_$a --screen $a --area $a > /home/user/ws46/preview_new_$a.log 2>&1; done; echo EXIT >> /home/user/ws46/preview_new_06.log) &\nsleep 1; echo started; grep -n \"ribbon06\\|water_style\\|benny_bank\\|cam_roll\\|foam_pool\\|templates\" tools/screenkit/screens/06/fit06.py | head -20", "description": "Run new previews for 05 and 06; inspect fit06 settings", "run_in_background": tru …[+2 chars]`
+
+### 🧑 User — 2026-11-22T22:04:02.446Z
+
+> ↩︎ result: Command running in background with ID: bou1vz8ma. Output is being written to: /tmp/claude-0/-home-user-rainbow-/b194400e-972b-5b24-a1b4-4982954cc18c/tasks/bou1vz8ma.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-22T22:04:04.327Z
+
+> 🔧 **Bash** `{"command": "grep -n \"ribbon06\\|water_style\\|benny_bank\\|cam_roll\\|foam_pool\\|templates\\|lay\\[\" tools/screenkit/screens/06/fit06.py | head -30; wc -l tools/screenkit/screens/06/fit06.py", "description": "Inspect fit06 layout settings"}`
+
+### 🧑 User — 2026-11-22T22:04:04.376Z
+
+> ↩︎ result: 119:        dep = float(-(cam.R.T @ (P - cam.C))[2]); lay['paddles'].append({'pos': P, 'width': wpx * dep / cam.F})
+> 121:    rw = 0.03 + 0.12 * min(1, r / 40.0); dist = rw * cam.F / r; P = cam.C + cam.ray(x, y) * dist; lay['bubbles'].append(list(P) + [rw])
+> 124:lay['benny_bank'] = 0.35; lay['cam_roll'] = 0.15
+> 125:# r45 test 'ribbon06' (rainbow-crest ribbon water) was WORSE (too pastel, the pool beside the crest stopped drawing: 1749 hole px) -> off; to redo
+> 147:for pd in lay['paddles']:
+> 161 tools/screenkit/screens/06/fit06.py
+
+### 🤖 Claude — 2026-11-22T22:04:05.741Z
+
+> 🔧 **Bash** `{"command": "sed -n 60,161p tools/screenkit/screens/06/fit06.py", "description": "Read the rest of fit06"}`
+
+### 🧑 User — 2026-11-22T22:04:05.781Z
+
+> ↩︎ result: for i, (x, y, r) in enumerate(M['coins'])]
+> # ---- drum: axis along -z (vanishing at the VP); camera offset from the axis from the drifting ring centres
+> oxR, oyR = fl.ring_offsets(cam, M['vp'], [r[:3] for r in M['rings']])
+> # camera-frame offsets -> world: the camera's right / up axes (the axis direction is -z in the world)
+> Rc = cam.R; right_w, up_w = Rc[:, 0], Rc[:, 1]
+> def axis_for(R):
+>     p = cam.C - (oxR * right_w + oyR * up_w) * R; return float(p[0]), float(p[1])
+> # drum radius: the smallest drum (axis from the painted ring drift) that holds the whole crest ribbon + Benny with a wall margin
+> WALL_MARGIN = 0.55
+> def need(R):
+>     xa_, ya_ = axis_for(R); return max(math.hypot(P[0] - xa_, P[1] - ya_) for P in water_pts + [Pb]) + 0.41 + WALL_MARGIN - R
+> DRUM_R = float(fl.least_squares(lambda r: [need(r[0])], [3.0], bounds=(1.0, 12.0)).x[0])
+> axis_pt = np.array([*axis_for(DRUM_R), 0.0])
+> ya, xa = float(axis_pt[1]), float(axis_pt[0])
+> chord = math.sqrt(max(0.01, DRUM_R ** 2 - ya ** 2))          # half width of the water pool on the drum floor (water plane y = 0)
+> z_ring = [-(cam.F * DRUM_R / r) for (_, _, r) in M['rings']]  # depth of each painted ring (camera on the axis approximation)
+> # ----  …[+7818 chars]
+
+### 🤖 Claude — 2026-11-22T22:04:32.265Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport re\np='tools/screenkit/water_ribbon.js'; s=open(p).read()\nn0=s.count(', 2.0)')\ns=s.replace(\"float rbH(vec2 p){\", \"float rbSq(float x){ return x * x; }   /* r46: pow(x, 2.0) is undefined for x < 0 in GLSL (NaN on some GPUs) */\\nfloat rbH(vec2 p){\",1)\n# replace pow(EXPR, 2.0) where EXPR has balanced parens\nout=[];i=0\nwhile True:\n    j=s.find('pow(',i)\n    if j<0: out.append(s[i:]); break\n    # parse args\n    k=j+4; depth=1; comma=None\n    while depth:\n        c=s[k]\n        if c=='(': depth+=1\n        elif c==')': depth-=1\n        elif c= …[+593 chars]`
+
+### 🧑 User — 2026-11-22T22:04:32.357Z
+
+> ↩︎ result: replaced 10 remaining pow(...,2.0): 0
+> 6
+> 7:111:export const ribbonCopy = (sfx) => RIBBON_GLSL.replace(/\b(uRouteX|uRouteZ|uRibbon|uRStyle|uRUv|gRUv|uDetC|uDetP|uDetCM|uDetPM|uDetS|uDetOn|uRich|rbH|rbN|rainbowEdge|ribbonWater)\b/g, '$1' + sfx);
+> 111:export const ribbonCopy = (sfx) => RIBBON_GLSL.replace(/\b(uRouteX|uRouteZ|uRibbon|uRStyle|uRUv|gRUv|uDetC|uDetP|uDetCM|uDetPM|uDetS|uDetOn|uRich|rbH|rbN|rainbowEdge|ribbonWater)\b/g, '$1' + sfx);
+
+### 🤖 Claude — 2026-11-22T22:04:38.616Z
+
+> 🔧 **Bash** `{"command": "sed -i 's/|uRich|rbH|rbN|rainbowEdge|ribbonWater)/|uRich|rbSq|rbH|rbN|rainbowEdge|ribbonWater)/' tools/screenkit/water_ribbon.js && grep -c \"rbSq|rbH\" tools/screenkit/water_ribbon.js; grep -o \"pow([^;]*, 2\\.0)\" tools/world/world.html tools/screenkit/screen.html | head; node --input-type=module -e \"\nimport {RIBBON_GLSL, ribbonCopy} from '/home/user/rainbow-/tools/screenkit/water_ribbon.js';\nconst all = RIBBON_GLSL + ribbonCopy('_a') + ribbonCopy('_b');\nconst defs = [...all.matchAll(/(?:float|vec3|vec4|vec2)\\s+(\\w+)\\s*\\(/g)].map(m=>m[1]); const dup = defs.filter((d,i)=> …[+167 chars]`
+
+### 🧑 User — 2026-11-22T22:04:38.715Z
+
+> ↩︎ result: 1
+> tools/world/world.html:pow((uw - x0) / ww, 2.0)
+> tools/screenkit/screen.html:pow((uw - x0) / ww, 2.0)
+> function defs 15 duplicates []
+> [This command modified 1 file you've previously read: tools/screenkit/water_ribbon.js. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-22T22:04:45.855Z
+
+> 🔧 **Bash** `{"command": "for f in tools/world/world.html tools/screenkit/screen.html; do python3 - \"$f\" <<'EOF'\nimport sys\np=sys.argv[1]; s=open(p).read(); old=\"pow((uw - x0) / ww, 2.0)\"; n=s.count(old)\ns=s.replace(old,\"((uw - x0) / ww) * ((uw - x0) / ww)\"); open(p,'w').write(s); print(p, n)\nEOF\ndone; tail -n 2 /home/user/ws46/preview_new_05.log", "description": "Fix pow of negative base in legacy water code"}`
+
+### 🧑 User — 2026-11-22T22:04:45.936Z
+
+> ↩︎ result: tools/world/world.html 1
+> tools/screenkit/screen.html 1
+> loaded 9.7 s; range [ 87.3, 141.85 ] positions picture@97.8 begin@88.5 curve_29deg@100.8 quarter@100.94 middle@114.57 three_q@128.21 curve_11deg@134.3 end@141.25
+
+### 🤖 Claude — 2026-11-22T22:04:57.742Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nfrom PIL import Image\nim=Image.open('references/06_crest_the_rinse_arch.png').convert('RGB')\nim.crop((0,500,864,1300)).save('/home/user/ws46/ref/water06_crest.png')\n# sample a line across the crest band, lower-right descending part\nfor y in (900, 1000, 1100):\n    row=[im.getpixel((x,y)) for x in range(480,864,12)]\n    print(y, row)\n\"", "description": "Crop and sample the approved 06 crest colours"}`
+
+### 🧑 User — 2026-11-22T22:04:58.094Z
+
+> ↩︎ result: 900 [(226, 176, 237), (99, 3, 215), (156, 43, 151), (110, 13, 234), (95, 6, 234), (255, 251, 255), (0, 227, 250), (187, 255, 255), (91, 246, 242), (1, 226, 246), (64, 229, 223), (119, 227, 175), (181, 233, 169), (249, 227, 141), (247, 195, 147), (250, 162, 152), (252, 145, 173), (232, 138, 232), (255, 139, 255), (255, 98, 255), (238, 78, 226), (234, 78, 237), (255, 131, 255), (196, 172, 246), (203, 187, 250), (153, 37, 196), (240, 210, 255), (192, 115, 217), (176, 59, 192), (146, 14, 115), (106, 0, 106), (255, 115, 250)]
+> 1000 [(95, 3, 202), (164, 55, 244), (167, 53, 255), (138, 55, 249), (39, 0, 164), (58, 0, 171), (165, 48, 163), (255, 211, 255), (0, 187, 250), (0, 180, 254), (2, 168, 254), (0, 211, 255), (0, 204, 253), (51, 204, 255), (0, 158, 249), (2, 151, 251), (3, 169, 253), (5, 175, 224), (68, 181, 215), (88, 152, 216), (142, 124, 236), (179, 88, 241), (227, 59, 242), (245, 36, 213), (238, 28, 195), (237, 95, 229), (247, 109, 248), (243, 51, 216), (215, 43, 223), (206, 73, 226), (173, 181, 255), (255, 220, 255)]
+> 1100 [(183, 23, 111), (234, 86, 180), (255, 138, 225), (221, 64, 167), (189, 32, 137), (183, 52, 156), (206, 77, 193), (243, 152, 255), (12, 195, 253), (16, 185, 254 …[+347 chars]
+
+### 🤖 Claude — 2026-11-22T22:05:30.641Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/water_ribbon.js'; s=open(p).read()\ndef rep(old,new):\n    global s; assert s.count(old)==1, old[:70]; s=s.replace(old,new)\nrep(\"uniform float uDetS, uDetOn; uniform float uRich;\", \"uniform float uDetS, uDetOn; uniform float uRich; uniform float uRainbow;\")\nrep(\"\"\"  // r46 (user: \"the water becomes too plain and streaky\"; layout water_rich)\"\"\",\n\"\"\"  // r46 Screen 06 (layout water_rainbow): the outer ribbon becomes the painting's RAINBOW band - colours measured across the approved 06 crest edge\n  // (row 900: cyan 0,227,250 - …[+2441 chars]`
+
+### 🧑 User — 2026-11-22T22:05:30.812Z
+
+> ↩︎ result: tools/screenkit/screens/06/fit06.py:131:lay['water_style'] = 'ribbon'; lay['water_rich'] = 1; lay['water_rainbow'] = 1
+> tools/screenkit/water_ribbon.js:50:  // r46 Screen 06 (layout water_rainbow): the outer ribbon becomes the painting's RAINBOW band - colours measured across the approved 06 crest edge
+> tools/screenkit/water_ribbon.js:127:    uRStyle: { value: LAY.water_style === 'ribbon06' ? 1 : 0 }, uRich: { value: LAY.water_rich ?? 0 }, uRainbow: { value: LAY.water_rainbow ?? 0 },   /* r46: richer painted water (layout water_rich) */
+> loaded 9.7 s; range [ 87.3, 141.85 ] positions picture@97.8 begin@88.5 curve_29deg@100.8 quarter@100.94 middle@114.57 three_q@128.21 curve_11deg@134.3 end@141.25
+
+### 🤖 Claude — 2026-11-22T22:05:42.071Z
+
+> 🔧 **Bash** `{"command": "timeout 600 bash -c 'until [ -f /home/user/ws46/world/preview_05/preview.json ]; do sleep 5; done'; pkill -f \"preview.cjs /home/user/ws46/world/game /home/user/ws46/world/preview_06\"; sleep 1; python3 - <<'EOF'\nimport json\nfor tag,path in (('BEFORE r45b','/home/user/ws46/world_r45b/preview_05/preview.json'),('NEW','/home/user/ws46/world/preview_05/preview.json')):\n    d=json.load(open(path)); s=d['summary']\n    lp=s['likeness_picture_view'][0]\n    print(tag, 'pic %.1f%% ssim %.3f sharp %.2f' % (lp['share_within_20_levels']*100, lp['ssim_scenery'], lp['sharpness_vs_approved' …[+322 chars]`
+
+### 🧑 User — 2026-11-22T22:06:18.220Z
+
+> ↩︎ result: BEFORE r45b pic 83.4% ssim 0.802 sharp 0.73 repeat mean 19.7 {'wall': 86.1, 'ring': 63.8, 'water': 55.4, 'foam': 35.9, 'trays': 75.3} colour_look_mean 0.443 holes 4 verdict WARN
+> NEW pic 33.2% ssim 0.220 sharp 0.72 repeat mean 11.9 {'wall': 84.4, 'ring': 63.6, 'water': 50.3, 'foam': 25.8, 'trays': 56.7} colour_look_mean 0.323 holes 0 verdict WARN
+
+### 🤖 Claude — 2026-11-22T22:06:20.612Z
+
+The new Screen 05 picture-view number fell from 83.4 % to 33.2 %. Something is wrong at the approved camera position, so I'm looking at that frame now.
+
+### 🤖 Claude — 2026-11-22T22:06:21.866Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/ws46 && montage world_r45b/preview_05/tex_picture_l0.png world/preview_05/tex_picture_l0.png /home/user/rainbow-/references/05_flow_into_the_current.png -tile 3x1 -geometry 412x915+2+2 pic_cmp.jpg; ls world/preview_05 | head -30", "description": "Compare picture-view frames BEFORE vs NEW"}`
+
+### 🧑 User — 2026-11-22T22:06:22.036Z
+
+> ↩︎ result: compare
+> gray_begin_l0.png
+> gray_curve_11deg_l0.png
+> gray_curve_29deg_l0.png
+> gray_end_l0.png
+> gray_middle_l0.png
+> gray_picture_l0.png
+> gray_quarter_l0.png
+> gray_three_q_l0.png
+> id_tex_begin_l-1.png
+> id_tex_begin_l0.png
+> id_tex_begin_l1.png
+> id_tex_curve_11deg_l-1.png
+> id_tex_curve_11deg_l0.png
+> id_tex_curve_11deg_l1.png
+> id_tex_curve_29deg_l-1.png
+> id_tex_curve_29deg_l0.png
+> id_tex_curve_29deg_l1.png
+> id_tex_end_l-1.png
+> id_tex_end_l0.png
+> id_tex_end_l1.png
+> id_tex_middle_l-1.png
+> id_tex_middle_l0.png
+> id_tex_middle_l1.png
+> id_tex_picture_l0.png
+> id_tex_quarter_l-1.png
+> id_tex_quarter_l0.png
+> id_tex_quarter_l1.png
+> id_tex_three_q_l-1.png
+> id_tex_three_q_l0.png
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-22T22:06:23.148Z
+
+> 🔧 **Read** `{"file_path": "/home/user/ws46/pic_cmp.jpg"}`
+
+### 🧑 User — 2026-11-22T22:06:23.280Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T22:06:30.210Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\nimport numpy as np\nfrom PIL import Image\nfor tag,path in (('BEFORE','/home/user/ws46/world_r45b/preview_05/preview.json'),('NEW','/home/user/ws46/world/preview_05/preview.json')):\n    d=json.load(open(path)); fr=[f for f in d['frames'] if f.get('tag')=='picture'][:2]\n    for f in fr: print(tag, {k:f[k] for k in f if k in ('s','lane','cam','box','pass','file')})\na=np.asarray(Image.open('/home/user/ws46/world_r45b/preview_05/tex_picture_l0.png').convert('RGB')).astype(int)\nb=np.asarray(Image.open('/home/user/ws46/world/preview_05/tex_picture_l0. …[+384 chars]`
+
+### 🧑 User — 2026-11-22T22:06:30.595Z
+
+> ↩︎ result: BEFORE {'file': 'tex_picture_l0.png', 's': 97.8, 'lane': 0, 'box': {'x0': 80.2, 'x1': 333.1, 'y0': 436.4, 'y1': 721.5}, 'cam': {'p': [1.1093, 0.734, -96.3989], 'q': [-0.11709, 0.02669, 0.00315, 0.99276], 'fov': 64}}
+> BEFORE {'file': 'gray_picture_l0.png', 's': 97.8, 'lane': 0, 'box': {'x0': 80.2, 'x1': 333.1, 'y0': 436.4, 'y1': 721.5}, 'cam': {'p': [1.1093, 0.734, -96.3989], 'q': [-0.11709, 0.02669, 0.00315, 0.99276], 'fov': 64}}
+> NEW {'file': 'tex_picture_l0.png', 's': 97.8, 'lane': 0, 'box': {'x0': 90.2, 'x1': 339.6, 'y0': 436.4, 'y1': 721.5}, 'cam': {'p': [1.1093, 0.734, -96.3989], 'q': [-0.11706, 0.01998, 0.00394, 0.99292], 'fov': 64}}
+> NEW {'file': 'gray_picture_l0.png', 's': 97.8, 'lane': 0, 'box': {'x0': 90.2, 'x1': 339.6, 'y0': 436.4, 'y1': 721.5}, 'cam': {'p': [1.1093, 0.734, -96.3989], 'q': [-0.11706, 0.01998, 0.00394, 0.99292], 'fov': 64}}
+> mean abs diff 31.52298795692079
+> best shift (np.float64(6.631766486329735), 10)
+
+### 🤖 Claude — 2026-11-22T22:06:47.763Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/world/world.html'; s=open(p).read()\ndef rep(old,new):\n    global s; assert s.count(old)==1, old[:70]; s=s.replace(old,new)\nrep(\"window.bennyBox = (stride = 3) => { benny.updateMatrixWorld(true); const a = bmesh.geometry.attributes.position, v = new THREE.Vector3(); let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;\\n  for (let i = 0; i < a.count; i += stride) { bDef(a.getX(i), a.getY(i), a.getZ(i), v)\",\n    \"window.bennyBox = (stride = 3, rest = false) => { benny.updateMatrixWorld(true); const a = bmesh.geometry.attributes.position, v = new THREE.Vec …[+632 chars]`
+
+### 🧑 User — 2026-11-22T22:06:47.828Z
+
+> ↩︎ result: 549:        { const bb = window.bennyBox(9, true), KY = CA.frame_px ?? 64, KYN = 24,   /* rest pose: no wobble with the strokes; off at the picture view (his box starts 80 px in) */ ramp = (e) => (e <= 0 ? 0 : e < KYN ? e * e / (2 * KYN) : e - KYN / 2);
+
+### 🤖 Claude — 2026-11-22T22:06:54.090Z
+
+> 🔧 **Bash** `{"command": "grep -n \"style\\|def surf\\|hist\\|detail\" tools/screenkit/preview_sheet.py | head -40", "description": "Find the surface style metric in the preview sheet"}`
+
+### 🧑 User — 2026-11-22T22:06:54.128Z
+
+> ↩︎ result: 3:view, camera clearance (clipping), water gap under Benny (floating), colour look vs the approved picture (hue / saturation histogram
+> 18:def hs_hist(a):
+> 20:ref_h = hs_hist(ref) if ref is not None else None
+> 27:    if f['mode'] == 'textured' and ref_h is not None: f['colour_look'] = round(float(cv2.compareHist(ref_h, hs_hist(a.astype(np.uint8)), cv2.HISTCMP_CORREL)), 3)
+> 53:def style(pix):
+> 56:def detail(img, sel):
+> 66:        sel = (LR == gi) & mm; h = style(ref[sel]); d_ = detail(ref, sel)
+> 75:            sel = (LF == gi) & keep; h = style(img[sel])
+> 77:            corr = float(cv2.compareHist(refp[g][0], h, cv2.HISTCMP_CORREL)); dt = detail(img, sel); dr = min(1.0, dt / refp[g][1]) if dt and refp[g][1] else None
+> 78:            f['surfaces'][g] = {'colour_match': round(corr, 3), 'detail_ratio': None if dr is None else round(dr, 3), 'share_of_frame': round(float(sel.mean()), 3),
+> 79:                                'style_pct': round(100 * (0.7 * max(0.0, corr) + 0.3 * (dr if dr is not None else 0.5)), 1)}
+> 81:        v = [f['surfaces'][g]['style_pct'] for f in raw['frames'] if f.get('surfaces', {}).get(g)]
+> 82:        if v: surf[g] = {'style_pct_mean': round(float(np.mean(v)), 1), 'style_p …[+54 chars]
+
+### 🤖 Claude — 2026-11-22T22:06:55.696Z
+
+> 🔧 **Bash** `{"command": "sed -n 45,80p tools/screenkit/preview_sheet.py", "description": "Read the per-surface style match code"}`
+
+### 🧑 User — 2026-11-22T22:06:55.732Z
+
+> ↩︎ result: ID_COL = {'wall': [200, 0, 0], 'ring': [0, 0, 220], 'water': [0, 190, 190], 'foam': [230, 230, 0], 'trays': [220, 0, 220], 'other': [110, 110, 110]}
+> l2s = lambda v: 255 * (12.92 * v / 255 if v / 255 <= 0.0031308 else 1.055 * (v / 255) ** (1 / 2.4) - 0.055)
+> def labels(p):
+>     a = np.asarray(Image.open(p).convert('RGB')).astype(np.float32); best = np.full(a.shape[:2], 1e9, np.float32); lab = np.full(a.shape[:2], -1, np.int8)
+>     for gi, (g, c) in enumerate(ID_COL.items()):
+>         for cc in (c, [l2s(v) for v in c]):
+>             d = np.abs(a - np.array(cc, np.float32)).sum(-1); sel = d < best; best[sel] = d[sel]; lab[sel] = gi
+>     lab[best > 90] = -1; return lab
+> def style(pix):
+>     if len(pix) < 400: return None
+>     hsv = cv2.cvtColor(pix.reshape(-1, 1, 3).astype(np.uint8), cv2.COLOR_RGB2HSV); h = cv2.calcHist([hsv], [0, 1], None, [18, 8], [0, 180, 0, 256]); return cv2.normalize(h, h).flatten()
+> def detail(img, sel):
+>     g = cv2.cvtColor(img.astype(np.uint8), cv2.COLOR_RGB2GRAY).astype(np.float32); L = np.abs(cv2.Laplacian(g, cv2.CV_32F)); return float(L[sel].mean()) if sel.sum() > 400 else None
+> surf = {}
+> pic = next((f for f in raw['frames'] if f['tag'] == 'picture' and f['mode'] == 't …[+1690 chars]
+
+### 🤖 Claude — 2026-11-22T22:07:03.078Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/ws46 && montage world_r45b/preview_05/id_tex_picture_l0.png world/preview_05/id_tex_picture_l0.png world_r45b/preview_05/tex_middle_l1.png world/preview_05/tex_middle_l1.png world_r45b/preview_05/id_tex_middle_l1.png world/preview_05/id_tex_middle_l1.png -tile 6x1 -geometry 412x915+2+2 id_cmp.jpg 2>&1 | tail -2; ls world/preview_05 | grep -v \"^id_\\|^gray\" | head -30", "description": "Compare ID passes at picture and middle views"}`
+
+### 🧑 User — 2026-11-22T22:07:03.259Z
+
+> ↩︎ result: compare
+> preview.json
+> preview_raw.json
+> preview_sheet.jpg
+> rep_k00.png
+> rep_k01.png
+> rep_k02.png
+> rep_k03.png
+> rep_k04.png
+> rep_k05.png
+> rep_k06.png
+> rep_k07.png
+> rep_k08.png
+> rep_k09.png
+> rep_k10.png
+> rep_k11.png
+> rep_k12.png
+> repeat_strip.jpg
+> tex_begin_l-1.png
+> tex_begin_l0.png
+> tex_begin_l1.png
+> tex_curve_11deg_l-1.png
+> tex_curve_11deg_l0.png
+> tex_curve_11deg_l1.png
+> tex_curve_29deg_l-1.png
+> tex_curve_29deg_l0.png
+> tex_curve_29deg_l1.png
+> tex_end_l-1.png
+> tex_end_l0.png
+> tex_end_l1.png
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-22T22:07:04.490Z
+
+> 🔧 **Read** `{"file_path": "/home/user/ws46/id_cmp.jpg"}`
+
+### 🧑 User — 2026-11-22T22:07:04.573Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-22T22:07:04.567Z
+
+[Image: original 2496x919, displayed at 2000x736. Multiply coordinates by 1.25 to map to original image.]
+
+### 🤖 Claude — 2026-11-22T22:07:32.602Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/screens/05/fit05.py'; s=open(p).read()\nold=\"RC_L, RC_K = 0.55, 0.15\"\nnew=\"RC_L, RC_K = 0.42, 0.10   # r46b: <= 0.42 u so the painted foam banks fit on BOTH sides of the river at every bend (river edge <= 1.09 u, floor 1.29 u)\"\nassert s.count(old)==1; s=s.replace(old,new)\ns=s.replace(\"# Soft cap on the route's distance from the axis: unchanged up to 0.40 u (the whole painted stretch at the picture view), then eased to <= 0.55 u.\",\n            \"# Soft cap on the route's distance from the axis: unchanged up to 0.32 u, then eased to <= …[+930 chars]`
+

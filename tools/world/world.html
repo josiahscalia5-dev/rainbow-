@@ -143,7 +143,7 @@ const WATER_CORE = `float hsh(vec2 p){ vec3 p3 = fract(vec3(p.xyx) * 0.1031); p3
     for (int L = 0; L < 2; L++) { float cw = L == 0 ? 0.06 : 0.12, rl = L == 0 ? 0.22 : 0.4; vec2 g = vec2(uw / cw, (tp + float(L) * 0.37) / rl); vec2 cell = floor(g); float r = hsh(cell + float(L) * 13.0);
       if (r < 0.55) { float y0 = (cell.y + 0.5) * rl, len = rl * (0.25 + 0.3 * hsh(cell + 6.6)), ph = (tp - y0) / (0.5 * len);
         float x0 = (cell.x + 0.25 + 0.5 * hsh(cell + 3.3)) * cw + sec * 0.25 * cw * ph * ph * (hsh(cell + 9.1) - 0.5) * 2.0; float wid = L == 0 ? 0.006 : 0.01, ww = max(wid, 0.9 * fwidth(uw));
-        float I = 0.8 * exp(-pow((uw - x0) / ww, 2.0)) * (1.0 - smoothstep(0.3, 1.0, abs(ph))) * (wid / ww); col = mix(col, vec3(0.93, 1.0, 1.0), clamp(I, 0.0, 1.0)); } }
+        float I = 0.8 * exp(-((uw - x0) / ww) * ((uw - x0) / ww)) * (1.0 - smoothstep(0.3, 1.0, abs(ph))) * (wid / ww); col = mix(col, vec3(0.93, 1.0, 1.0), clamp(I, 0.0, 1.0)); } }
     if (sec > 0.5) { vec2 g = vec2(u * 5.0, tp * 2.2); vec2 cell = floor(g); float hh = hsh(cell + 0.37);
       if (hh < 0.6) { vec2 pc = cell + vec2(0.2 + 0.6 * hsh(cell + 1.7), 0.2 + 0.6 * hsh(cell + 4.1)); float dx = (g.x - pc.x) / 5.0 * RWs, dy = (g.y - pc.y) / 2.2;
         float tw = 0.5 + 0.5 * sin(uT * 3.0 + hh * 40.0); tw *= tw; float st = exp(-(dx * dx + dy * dy) / 0.0001) + exp(-abs(dx) / 0.035) * exp(-dy * dy / 0.00002) + 0.6 * exp(-abs(dy) / 0.045) * exp(-dx * dx / 0.00001);
@@ -546,7 +546,7 @@ const camAt = (s, dt) => {
         { A.Mi ??= A.M.clone().invert(); const DRa = A.LAY.drum, Pl = P.clone().applyMatrix4(A.Mi), lim = CA.max_off ?? 0.55, kn = CA.knee ?? 0.2, ox = Pl.x - DRa.axis_x, ao = Math.abs(ox);
           if (ao > lim - kn) { Pl.x = DRa.axis_x + Math.sign(ox) * (lim - kn + kn * (1 - Math.exp(-(ao - (lim - kn)) / kn))); P.copy(Pl.applyMatrix4(A.M)); } }
         camera.position.lerp(P, w); camera.quaternion.slerp(Qk, w); camera.updateMatrixWorld(); st.camAxis = w;
-        { const bb = window.bennyBox(9), KY = CA.frame_px ?? 84, KYN = 24, ramp = (e) => (e <= 0 ? 0 : e < KYN ? e * e / (2 * KYN) : e - KYN / 2);
+        { const bb = window.bennyBox(9, true), KY = CA.frame_px ?? 64, KYN = 24,   /* rest pose: no wobble with the strokes; off at the picture view (his box starts 80 px in) */ ramp = (e) => (e <= 0 ? 0 : e < KYN ? e * e / (2 * KYN) : e - KYN / 2);
           const yT = Math.atan((ramp(bb.x1 - (W - KY)) - ramp(KY - bb.x0)) / fpx); st.camYaw ??= { x: yT, v: 0 };
           const y = cds(st.camYaw, yT, CA.yaw_omega ?? 7, dt); if (y) { camera.quaternion.multiply(new THREE.Quaternion().setFromAxisAngle(UPV, -y * w)); camera.updateMatrixWorld(); } st.camYawNow = y; }
         const nn = new THREE.Vector3(0, 1, 0).applyQuaternion(camera.quaternion);
@@ -626,8 +626,8 @@ const bDef = (() => { const ss = (a, b, x) => { const t = Math.min(1, Math.max(0
     py += 0.35 * kk; pz += kk; const sp = Math.sin(uT * 7.5); py += U.uBobA.value * sp * sp;
     const wp = ss(0.17, 0.27, py); q[0] = px; q[1] = py - 0.19; q[2] = pz - 0.05; rot(q, 1, 0, 0, U.uPom.value.x * wp); rot(q, 0, 0, 1, U.uPom.value.y * wp); px = q[0]; py = q[1] + 0.19; pz = q[2] + 0.05;
     const sq = 1 + 0.03 * uSwim * Math.sin(uT * 15); py = (py + 0.5) * sq - 0.5; px /= Math.sqrt(sq); pz /= Math.sqrt(sq); return out.set(px, py, pz); }; })();
-window.bennyBox = (stride = 3) => { benny.updateMatrixWorld(true); const a = bmesh.geometry.attributes.position, v = new THREE.Vector3(); let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
-  for (let i = 0; i < a.count; i += stride) { bDef(a.getX(i), a.getY(i), a.getZ(i), v).applyMatrix4(bmesh.matrixWorld).project(camera); const x = (v.x + 1) / 2 * W, y = (1 - v.y) / 2 * H; x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); }
+window.bennyBox = (stride = 3, rest = false) => { benny.updateMatrixWorld(true); const a = bmesh.geometry.attributes.position, v = new THREE.Vector3(); let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
+  for (let i = 0; i < a.count; i += stride) { (rest ? v.set(a.getX(i), a.getY(i), a.getZ(i)) : bDef(a.getX(i), a.getY(i), a.getZ(i), v)).applyMatrix4(bmesh.matrixWorld).project(camera); const x = (v.x + 1) / 2 * W, y = (1 - v.y) / 2 * H; x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); }
   return { x0: +x0.toFixed(1), x1: +x1.toFixed(1), y0: +y0.toFixed(1), y1: +y1.toFixed(1) }; };
 // QA-only: identify the EXACT scenery object in a bad frame (e.g. the white foam bank
 // beside Benny on Screen 05). Pass screenshot coordinates, not a guessed material name.

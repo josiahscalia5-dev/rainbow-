@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 28920,
-   "sha256": "30e23538636af04f305a2a14825189e7b562c65b547e1b7f6a023e534ed11779"
+   "sha256": "b57e58c9e75c0589c14a80ba83e87463e56cc9abccbb70a18790785b9b9a50b5"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 2958,
-   "sha256": "82c79365e933a3fa371f54e61f736d9395386d429e2c41656cd3763a1169d56d"
+   "sha256": "62466ca56add1e26962280efa3800fcd8fe73dee75b05485688d75b559dd16dd"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -49628,8 +49628,8 @@
   },
   {
    "path": "tools/screenkit/screen.html",
-   "bytes": 52033,
-   "sha256": "bfb794811e0f3c279592cefae37eab84e1a70cfdbd207b494cd8c11ba6e3d9ca"
+   "bytes": 52044,
+   "sha256": "d1f7366e2ee9e57bf5311b8e314323a648174ebea9697f111082b3f6387b6e59"
   },
   {
    "path": "tools/screenkit/screen_export.cjs",
@@ -49648,8 +49648,8 @@
   },
   {
    "path": "tools/screenkit/screens/05/fit05.py",
-   "bytes": 11128,
-   "sha256": "0bde3312a7f1981620a2c892e0a925994f0d169cf1538975057e7ed03bea217e"
+   "bytes": 11243,
+   "sha256": "cbc559a94ce1733778cf66d278918d9dbccb99b9c3b6c087fab7a4ca113bff3e"
   },
   {
    "path": "tools/screenkit/screens/05/segment05.json",
@@ -49658,8 +49658,8 @@
   },
   {
    "path": "tools/screenkit/screens/06/fit06.py",
-   "bytes": 14235,
-   "sha256": "07cd640e1fc2a0b81c3fabc7c0f0164cb141b420ec39a30980b8601680d469e6"
+   "bytes": 15023,
+   "sha256": "d07ce20b05328fc1967d58ab59e7914895e1f728b571c05d39fe32ce145a29d8"
   },
   {
    "path": "tools/screenkit/screens/06/segment06.json",
@@ -49703,8 +49703,8 @@
   },
   {
    "path": "tools/screenkit/water_ribbon.js",
-   "bytes": 16045,
-   "sha256": "e98531f11e548cb65aedff3fbe932cbfc9bf78556f15e44478fb348cefd756d8"
+   "bytes": 17169,
+   "sha256": "d92aaa80999958d99d7032ee0a6a0623113d7d52b5a218025f1be5c0b4ef1402"
   },
   {
    "path": "tools/spector/spector_capture_test.mjs",
@@ -49758,8 +49758,8 @@
   },
   {
    "path": "tools/world/world.html",
-   "bytes": 92290,
-   "sha256": "ca675cb3c2f588f9b528b05f6784dc184721db64ab7e2723dd03477f6d49ba8a"
+   "bytes": 92468,
+   "sha256": "46f71d4cf88ab11ccd3f4adc6b32fac3776e6bef4b5c0d792f7a1d9d87a334ee"
   },
   {
    "path": "tools/world/world_layout.py",

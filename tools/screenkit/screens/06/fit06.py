@@ -123,6 +123,12 @@ for x, y, r in M['bubbles']:
 # water), and the camera stays nearly level (the painting's horizon is level)
 lay['benny_bank'] = 0.35; lay['cam_roll'] = 0.15
 # r45 test 'ribbon06' (rainbow-crest ribbon water) was WORSE (too pastel, the pool beside the crest stopped drawing: 1749 hole px) -> off; to redo
+# r46 (user: "the current appearance loses the colourful rainbow detail farther into the scene, leaving broad plain cyan areas"): NOT the r45
+# 'ribbon06' sheet again. Why it failed: a pale cyan sheet with pastel edges replaced the painting's saturated cyan / magenta, and the pool stopped
+# drawing (GLSL pow() of a negative number -> NaN on the GPU; fixed in water_ribbon.js r46). Now: the Screen 05 rich ribbon water (deep cyan, hot-pink
+# ribbons, silk highlights, sparkles, ripple arcs) under the painted pixels on every water surface of 06, its outer ribbon = the RAINBOW band with
+# the colours measured across the approved crest edge; the painted bake stays on top wherever the picture saw the water.
+lay['water_style'] = 'ribbon'; lay['water_rich'] = 1; lay['water_rainbow'] = 1
 fl.dump(os.path.join(a.out, 'layout.json'), lay)
 print('cam yaw %.2f pitch %.2f deg; Benny water (%.3f, %.3f), height %.3f; coin radius %.3f; drum R %.2f axis (%.3f, %.3f) chord %.2f; ring z %s'
       % (math.degrees(yaw), math.degrees(pitch), Pb[0], Pb[2], HB, COIN_R, DRUM_R, xa, ya, chord, [round(z, 2) for z in z_ring]))

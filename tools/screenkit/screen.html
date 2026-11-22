@@ -135,7 +135,7 @@ const waterMat = (halfW, len, along0, isPool) => new THREE.ShaderMaterial({ side
       for (int L = 0; L < 2; L++) { float cw = L == 0 ? 0.06 : 0.12, rl = L == 0 ? 0.22 : 0.4; vec2 g = vec2(uw / cw, (tp + float(L) * 0.37) / rl); vec2 cell = floor(g); float r = hsh(cell + float(L) * 13.0);
         if (r < 0.55) { float y0 = (cell.y + 0.5) * rl, len = rl * (0.25 + 0.3 * hsh(cell + 6.6)), ph = (tp - y0) / (0.5 * len);
           float x0 = (cell.x + 0.25 + 0.5 * hsh(cell + 3.3)) * cw; float wid = L == 0 ? 0.006 : 0.01, ww = max(wid, 0.9 * fwidth(uw));
-          float I = spk * 0.8 * exp(-pow((uw - x0) / ww, 2.0)) * (1.0 - smoothstep(0.3, 1.0, abs(ph))) * (wid / ww); col = mix(col, vec3(0.93, 1.0, 1.0), clamp(I, 0.0, 1.0)); } }
+          float I = spk * 0.8 * exp(-((uw - x0) / ww) * ((uw - x0) / ww)) * (1.0 - smoothstep(0.3, 1.0, abs(ph))) * (wid / ww); col = mix(col, vec3(0.93, 1.0, 1.0), clamp(I, 0.0, 1.0)); } }
       if (uBakeOn > 0.5) { float ph = fract(uT * 0.8); vec4 b1 = texture(uBake, vUv + vec2(0.0, ph * 0.006), uLodBias), b2 = texture(uBake, vUv + vec2(0.0, fract(ph + 0.5) * 0.006), uLodBias);
         vec4 b = mix(b2, b1, abs(1.0 - 2.0 * ph)); vec4 dd = texture2D(uDen, vUv); float pd = (dd.r + dd.g / 255.0) * 4000.0;
         float magE = uSharp.x / max(max(length(dFdx(vW)), length(dFdy(vW))), 1e-6) / max(pd, 1.0); col = mix(col, b.rgb, dd.b * (1.0 - smoothstep(uSharp.y, uSharp.y * 2.3, magE))); }
