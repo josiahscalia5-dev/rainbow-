@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 28435,
-   "sha256": "6e9f5bc26e22b430222ac9766f5342e63c130397cacae41b7727b552f7fb4e33"
+   "sha256": "eb7b4ef7860e80af45ae98befd7ea6cf1a5271d0eda5671d97cc98862591166a"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3233,
-   "sha256": "8422e10f9a425a19c57eb52bedfab7e7ff7518f4776d18cecbde8825c5a8d8fd"
+   "sha256": "983c23a60287dee88deaa8954196bb65b7a185d2d75b7d780250014ae07134ff"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -10820,6 +10820,11 @@
    "path": "docs/PARALLEL_PROGRESS.md",
    "bytes": 33425,
    "sha256": "722293da74c586abaa7e256a48d9636e06567b17c2713c90c8d5397f92e4f68a"
+  },
+  {
+   "path": "docs/RAINBOW_SUMMARY_FOR_CHATGPT.md",
+   "bytes": 7021,
+   "sha256": "8bb324d0149825c69d85d3b85dd0e96b7649d4fd83ac89c2e63293581df88622"
   },
   {
    "path": "docs/briefs/2026-11-17-r2/COMMON_RULES.md",
@@ -23385,6 +23390,11 @@
    "path": "qa/kit45/BEFORE_NOW_06.jpg",
    "bytes": 637207,
    "sha256": "0bc7adf492830cafa794b464058c062e4ae39715552713a64d82dd08be078a74"
+  },
+  {
+   "path": "qa/kit45/RAINBOW_for_ChatGPT.zip",
+   "bytes": 51954441,
+   "sha256": "71de30a93a82462fe6616f90861592caae0623966f281508669f9fdfed416136"
   },
   {
    "path": "qa/kit45/README.md",
