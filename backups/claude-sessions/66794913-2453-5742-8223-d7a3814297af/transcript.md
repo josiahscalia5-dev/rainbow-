@@ -1884,3 +1884,90 @@ The picture-view number dropped (80.7 → 77.1 %), so this change isn't kept as 
 
 > 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/segment.py'; s=open(p).read()\na=\"\"\"ov = rgb.copy(); ov[m > 0]\"\"\"\nb=\"\"\"# r45: the small holes (painted coins, loose bubbles) are re-filled by clone + Poisson blend from the same painting (no ghost discs)\nsubprocess.run([sys.executable, '-I', os.path.join(HERE, 'plate_clone.py'), a.picture, os.path.join(a.out, 'mask.png'), os.path.join(a.out, 'plate.png'), '--top', str(sp.get('hud_rows', 190))], check=True, stdout=subprocess.DEVNULL)\nov = rgb.copy(); ov[m > 0]\"\"\"\nassert s.count(a)==1; s=s.replace(a,b); open(p,'w').write(s)\np='t …[+1045 chars]`
 
+### 🧑 User — 2026-11-22T18:24:18.204Z
+
+> ↩︎ result: fit       built      0.5 s   (eea0146408)
+>   layout    ran        0.0 s
+>   segment   built      4.8 s   (a0c16033e2)
+>   geometry  built      1.1 s   (af1ef85056)
+>   assemble  ran        0.1 s
+>   bake      built     54.2 s   (6b89993511)
+>   preview   built     20.8 s   (c8640d3229)
+> screen 05 ready: /tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/k05/game/play3.html  (81.61 s; report /tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/k05/build_report.md)
+>  "verdict": "WARN",   "share_within_20_levels": 0.816, "colour_look_min": 0.006, "colour_look_mean": 0.551, "holes_total": 0,
+> {"method": {"benny": "SAM 2.1 (pred IoU 0.951)", "coins": "SAM 2.1 per coin (circle below 6 px radius)"}, "masked_share": 0.2965}
+
+### 🤖 Claude — 2026-11-22T18:24:21.013Z
+
+81.6 % at the picture view now (from 80.7 %). Checking the ghost circles are gone:
+
+### 🤖 Claude — 2026-11-22T18:24:24.314Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; python3 -c \"\nfrom PIL import Image\no=Image.new('RGB',(1250,520))\no.paste(Image.open('$S/k05/preview/tex_picture_l0.png').convert('RGB').crop((0,250,412,770)),(0,0))\no.paste(Image.open('$S/k05/preview/tex_begin_l0.png').convert('RGB').crop((0,250,412,770)),(418,0))\no.paste(Image.open('$S/k05/preview/tex_quarter_l1.png').convert('RGB').crop((0,250,412,770)),(836,0))\no.save('$S/ghost2.jpg')\"; python3 -I scripts/autosave-status.py | head -1", "description": "Crop frames to inspect ghost discs" …[+1 chars]`
+
+### 🧑 User — 2026-11-22T18:24:25.256Z
+
+> ↩︎ result: AUTOSAVE OK | branch ccr-c1b272d2-3ru7yx | scheduler daemon | last verified backup 2026-11-22T18:23:18+00:00 (1.1 min ago) | local 25b8ba8 remote 25b8ba8 (match) | uncommitted 0
+
+### 🤖 Claude — 2026-11-22T18:24:27.480Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/ghost2.jpg"}`
+
+### 🧑 User — 2026-11-22T18:24:27.506Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T18:25:03.685Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/plate_clone.py'; s=open(p).read()\na=\"\"\"    try: plate = cv2.seamlessClone(src, plate, cm, (cx, cy), cv2.NORMAL_CLONE); done += 1\n    except cv2.error: pass\nImage.fromarray(plate).save(a.plate); print('clone-filled', done, 'small holes of', n - 1)\"\"\"\nb=\"\"\"    try: plate = cv2.seamlessClone(src, plate, cm, (cx, cy), cv2.NORMAL_CLONE); done += 1; cloned.append(i)\n    except cv2.error: pass\nImage.fromarray(plate).save(a.plate)\n# the mask keeps 255 where the plate is a Telea guess (Benny, HUD) and gets 128 where it is clone-filled p …[+3187 chars]`
+
+### 🧑 User — 2026-11-22T18:26:20.253Z
+
+> ↩︎ result: layout    ran        0.0 s
+>   segment   built      5.3 s   (01c7212b52)
+>   assemble  ran        0.0 s
+>   bake      built     50.4 s   (3eb932cca0)
+>   preview   built     20.5 s   (2620652e99)
+> screen 05 ready: /tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/k05/game/play3.html  (76.42 s; report /tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/k05/build_report.md)
+>  "verdict": "WARN",   "share_within_20_levels": 0.817, "colour_look_min": 0.006, "colour_look_mean": 0.552, "holes_total": 0,
+
+### 🤖 Claude — 2026-11-22T18:26:24.797Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; python3 -c \"\nimport numpy as np; from PIL import Image\nm=np.array(Image.open('$S/k05/seg/mask.png').convert('L')); print('mask values', np.unique(m, return_counts=True))\"; python3 -c \"\nfrom PIL import Image\no=Image.new('RGB',(1250,520))\no.paste(Image.open('$S/k05/preview/tex_picture_l0.png').convert('RGB').crop((0,250,412,770)),(0,0))\no.paste(Image.open('$S/k05/preview/tex_begin_l0.png').convert('RGB').crop((0,250,412,770)),(418,0))\no.paste(Image.open('$S/k05/preview/tex_quarter_l1.png') …[+131 chars]`
+
+### 🧑 User — 2026-11-22T18:26:25.138Z
+
+> ↩︎ result: mask values (array([  0, 128, 255], dtype=uint8), array([933618,  59583, 333903]))
+
+### 🤖 Claude — 2026-11-22T18:26:27.474Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/ghost3.jpg"}`
+
+### 🧑 User — 2026-11-22T18:26:27.497Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T18:26:32.061Z
+
+The ghost circles around the coins are essentially gone. One more patch to check: the blocky pink panel on the right wall in the right-lane frame. Looking at the wall template:
+
+### 🤖 Claude — 2026-11-22T18:26:34.663Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; python3 -c \"\nimport json; m=json.load(open('$S/k05/game/baked/manifest.json')); print({k:{kk:vv for kk,vv in v.items() if kk!='file'} for k,v in m['templates'].items()})\"; python3 -c \"\nfrom PIL import Image; Image.open('$S/k05/game/baked/tpl_tunnel.jpg').resize((1024,310)).save('$S/tplt.jpg')\"", "description": "Show template metadata and wall template"}`
+
+### 🧑 User — 2026-11-22T18:26:34.808Z
+
+> ↩︎ result: {'ring': {'w': 2048, 'h': 128, 'cov': 0.302, 'map': 'uv'}, 'copper': {'w': 256, 'h': 256, 'cov': 0.627, 'map': 'uv'}, 'tunnel': {'w': 2048, 'h': 621, 'cov': 0.774, 'map': 'tube', 'zr0': -3.991715832012339, 'period': 2.6, 'painted_span': [0.4423828125, 0.5576171875]}, 'water': {'w': 512, 'h': 819, 'cov': 0.998, 'map': 'strip', 'd0': 1.7000000000000002, 'len': 2.126903715637537}, 'pool': {'w': 1024, 'h': 1024, 'cov': 0.243, 'map': 'strip', 'd0': 1, 'len': 3}}
+
+### 🤖 Claude — 2026-11-22T18:26:36.908Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/tplt.jpg"}`
+
+### 🧑 User — 2026-11-22T18:26:36.930Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T18:27:10.831Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/bake.js'; s=open(p).read()\na=\"\"\"    bodyQ += `{ float qd; vec4 a = look(uVP${i}, uP${i}, uM${i}, uD${i}, uImg${i}, qd); float qq = a.a > 0.0 ? qd * (a.a < 0.7 ? 0.25 : 1.0) : 0.0; if (qq > bq) { bq = qq; best = a; } }\\\\n`; });\"\"\"\nb=\"\"\"    bodyQ += `{ float qd; vec4 a = look(uVP${i}, uP${i}, uM${i}, uD${i}, uImg${i}, qd); float qq = a.a > 0.0 ? qd * (a.a < 0.7 ? 0.25 : 1.0) * gate(a.rgb) : 0.0; if (qq > bq) { bq = qq; best = a; } }\\\\n`; });\"\"\"\nassert s.count(a)==1; s=s.replace(a,b)\na=\"\"\"      fragmentShader: `${LOOK_GLSL( …[+2873 chars]`
+

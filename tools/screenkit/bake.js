@@ -28,7 +28,8 @@ const LOOK_GLSL = (decl) => `${decl} uniform vec2 uNF, uDens, uTol; uniform floa
     if (uNoDepth < 0.5 && cl.w > lin(texture2D(D, su).r) * uTol.x + uTol.y) return vec4(0.0);   // occluded (bake 1.5 % + 3 cm; template fusion: tight, so trays / rings never paint the wall)
     float pxu = min(length(dFdx(px)) / max(length(dFdx(vW)), 1e-7), length(dFdy(px)) / max(length(dFdy(vW)), 1e-7));
     qd = pxu;
-    float w = mix(1.0, 0.6, step(0.5, texture2D(M, su).r)) * mix(0.8, 1.0, smoothstep(uDens.x, uDens.y, pxu));   // (0.48..0.6 = masked, the fusion tests < 0.7)
+    // mask 255 = the plate is a guess (Benny, HUD): weight 0.6; mask 128 = clone-filled painting (plate_clone.py): trusted (r45)
+    float w = mix(1.0, 0.6, step(0.75, texture2D(M, su).r)) * mix(0.8, 1.0, smoothstep(uDens.x, uDens.y, pxu));   // (0.48..0.6 = masked, the fusion tests < 0.7)
     if (uMode > 0.5) { float pw = pxu / 4000.0; return vec4(floor(pw * 255.0) / 255.0, fract(pw * 255.0), 0.0, w); }
     return vec4(texture2D(P, su).rgb, w); }`;
 
@@ -46,7 +47,7 @@ export async function bake({ THREE, renderer, scene, world, MESH, CAMS, LAY, q, 
     decl += `uniform sampler2D uP${i}, uM${i}, uD${i}; uniform mat4 uVP${i}; uniform vec2 uImg${i};\n`;
     body += `{ float qd; vec4 a = look(uVP${i}, uP${i}, uM${i}, uD${i}, uImg${i}, qd); if (qd > bq) { bq = qd; best = a; } }\n`;
     // fusion quality: picture px per world unit, x 0.25 inside the game-drawn mask (Benny / coins: the clean plate there is filled in)
-    bodyQ += `{ float qd; vec4 a = look(uVP${i}, uP${i}, uM${i}, uD${i}, uImg${i}, qd); float qq = a.a > 0.0 ? qd * (a.a < 0.7 ? 0.25 : 1.0) : 0.0; if (qq > bq) { bq = qq; best = a; } }\n`; });
+    bodyQ += `{ float qd; vec4 a = look(uVP${i}, uP${i}, uM${i}, uD${i}, uImg${i}, qd); float qq = a.a > 0.0 ? qd * (a.a < 0.7 ? 0.25 : 1.0) * gate(a.rgb) : 0.0; if (qq > bq) { bq = qq; best = a; } }\n`; });
   const bakeMat = new THREE.ShaderMaterial({ side: THREE.DoubleSide, depthTest: false, depthWrite: false, uniforms: uni,
     vertexShader: 'varying vec3 vW; void main(){ vW = (modelMatrix * vec4(position, 1.0)).xyz; gl_Position = vec4(uv * 2.0 - 1.0, 0.0, 1.0); }',
     fragmentShader: `${LOOK_GLSL(decl)}
@@ -110,7 +111,7 @@ ${body}        gl_FragColor = best; }` });
   const t1 = performance.now();
   if (q.get('tpl') !== '0') {
     // fusion material: same picture lookup; the best picture sample per template texel wins through the depth test (depth = 1 - quality)
-    const fuseUni = { ...uni, uTol: { value: new THREE.Vector2(1.002, 0.006) }, uMap: { value: 0 }, uTube: { value: new THREE.Vector4(0, 1, 0, 0) }, uStrip: { value: new THREE.Vector4(0, 1, 0, 1) }, uK: { value: 0 } };
+    const fuseUni = { ...uni, uTol: { value: new THREE.Vector2(1.002, 0.006) }, uGate: { value: 0 }, uMap: { value: 0 }, uTube: { value: new THREE.Vector4(0, 1, 0, 0) }, uStrip: { value: new THREE.Vector4(0, 1, 0, 1) }, uK: { value: 0 } };
     const fuseMat = new THREE.ShaderMaterial({ side: THREE.DoubleSide, depthTest: true, depthWrite: true, depthFunc: THREE.LessDepth, uniforms: fuseUni,
       // uMap 0: the mesh's own UVs; 1: tube period (u = mesh u, v = (zr0 - local z) / period - k); 2: flow strip (u = mesh u, v = (d - d0) / len)
       vertexShader: `uniform float uMap; uniform vec4 uTube; uniform vec4 uStrip; uniform float uK; varying vec3 vW;
@@ -118,7 +119,9 @@ ${body}        gl_FragColor = best; }` });
           if (uMap > 1.5) { float d = uStrip.z + (1.0 - uv.y) * uStrip.w; t = vec2(uv.x, (d - uStrip.x) / uStrip.y); }
           else if (uMap > 0.5) { t = vec2(uv.x, (uTube.x - position.z) / uTube.y - uK); }
           gl_Position = vec4(t * 2.0 - 1.0, 0.5, 1.0); }`,
-      fragmentShader: `${LOOK_GLSL(decl)}
+      fragmentShader: `${LOOK_GLSL(decl)} uniform float uGate;
+        // uGate 1 (drum wall): gold / copper picture pixels (rings, trays drawn where the fitted geometry is a little off) never sample the wall
+        float gate(vec3 c){ if (uGate < 0.5) return 1.0; float gold = step(c.b * 1.6, c.r) * step(c.r * 0.42, c.g) * step(c.g, c.r * 0.97) * step(0.35, c.r); return 1.0 - 0.98 * gold; }
         void main(){ float bq = 0.0; vec4 best = vec4(0.0);
 ${bodyQ}          if (bq <= 0.0) discard;
           gl_FragColor = vec4(best.rgb, 1.0); gl_FragDepth = 1.0 - bq / (bq + 60.0); }` });
@@ -143,8 +146,20 @@ ${bodyQ}          if (bq <= 0.0) discard;
     if (D && RG && LAY.tunnel_style !== 'gold') {
       const per = RG.spacing, zr = [...RG.z].filter((z) => z < D.z0 && z > D.z1); const zr0 = zr.length ? Math.min(...zr) : D.z0;
       const tubes = fams('tunnel').filter((o) => /^tunnel_/.test(o.name)); const TW = +(q.get('tplw') ?? 2048), TH = Math.max(256, Math.min(1024, Math.round(TW * per / (2 * Math.PI * D.r))));
-      const px = fuse(tubes, TW, TH, (o) => { const bb = bbox(o); const kA = Math.floor((zr0 - bb.max.z) / per) - 1, kB = Math.ceil((zr0 - bb.min.z) / per) + 1; const L = []; for (let k = kA; k <= kB; k++) L.push({ map: 1, tube: [zr0, per, 0, 0], k }); return L; });
-      finish('tunnel', TW, TH, px, { map: 'tube', zr0, period: per });
+      fuseUni.uGate.value = 1; const px = fuse(tubes, TW, TH, (o) => { const bb = bbox(o); const kA = Math.floor((zr0 - bb.max.z) / per) - 1, kB = Math.ceil((zr0 - bb.min.z) / per) + 1; const L = []; for (let k = kA; k <= kB; k++) L.push({ map: 1, tube: [zr0, per, 0, 0], k }); return L; });
+      // angles the picture never shows (under the water / behind the foam): copied from the painted angles (the slot rows repeat around the
+      // drum), mirrored back and forth so no hard seam appears; a column counts as painted when >= 55 % of its texels are
+      const colCov = new Float32Array(TW); for (let x = 0; x < TW; x++) { let c = 0; for (let y = 0; y < TH; y++) c += px[(y * TW + x) * 4 + 3] > 127 ? 1 : 0; colCov[x] = c / TH; }
+      let ba = -1, bl = 0; for (let x = 0, a0 = -1; x <= TW; x++) { const ok = x < TW && colCov[x] >= 0.55; if (ok && a0 < 0) a0 = x; if (!ok && a0 >= 0) { if (x - a0 > bl) { bl = x - a0; ba = a0; } a0 = -1; } }
+      if (bl > TW * 0.08) for (let x = 0; x < TW; x++) { if (colCov[x] >= 0.55) continue; const d = ((x - ba) % (2 * bl) + 2 * bl) % (2 * bl), sx = ba + (d < bl ? d : 2 * bl - 1 - d);
+        for (let y = 0; y < TH; y++) { const i = (y * TW + x) * 4, j = (y * TW + sx) * 4; if (px[i + 3] > 127) continue; px[i] = px[j]; px[i + 1] = px[j + 1]; px[i + 2] = px[j + 2]; px[i + 3] = px[j + 3]; } }
+      fuseUni.uGate.value = 0;
+      // the same along the drum: rows hidden behind the rings (seen in motion) are copied, mirrored, from the painted rows of the period
+      const rowCov = new Float32Array(TH); for (let y = 0; y < TH; y++) { let c = 0; for (let x = 0; x < TW; x++) c += px[(y * TW + x) * 4 + 3] > 127 ? 1 : 0; rowCov[y] = c / TW; }
+      let ra = -1, rl = 0; for (let y = 0, a0 = -1; y <= TH; y++) { const ok = y < TH && rowCov[y] >= 0.55; if (ok && a0 < 0) a0 = y; if (!ok && a0 >= 0) { if (y - a0 > rl) { rl = y - a0; ra = a0; } a0 = -1; } }
+      if (rl > TH * 0.15) for (let y = 0; y < TH; y++) { if (rowCov[y] >= 0.55) continue; const d = ((y - ra) % (2 * rl) + 2 * rl) % (2 * rl), sy = ra + (d < rl ? d : 2 * rl - 1 - d);
+        for (let x = 0; x < TW; x++) { const i = (y * TW + x) * 4, j = (sy * TW + x) * 4; if (px[i + 3] > 127) continue; px[i] = px[j]; px[i + 1] = px[j + 1]; px[i + 2] = px[j + 2]; px[i + 3] = px[j + 3]; } }
+      finish('tunnel', TW, TH, px, { map: 'tube', zr0, period: per, painted_span: [ba / TW, bl / TW], painted_rows: [ra / TH, rl / TH] });
     }
     // flow swatches: the sharpest window of each water family along the flow, made seamless (cross-faded overlap of 25 %)
     const strip = (fam, segInfo, d0, len, bw, bh) => {

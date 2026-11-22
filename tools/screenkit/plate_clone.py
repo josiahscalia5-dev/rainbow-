@@ -11,7 +11,7 @@ a = ap.parse_args()
 im = np.array(Image.open(a.picture).convert('RGB')); H, W = im.shape[:2]
 m = (np.array(Image.open(a.mask).convert('L').resize((W, H), Image.NEAREST)) > 127).astype(np.uint8)
 plate = np.array(Image.open(a.plate).convert('RGB'))
-n, lab, st, cen = cv2.connectedComponentsWithStats(m, 8); done = 0
+n, lab, st, cen = cv2.connectedComponentsWithStats(m, 8); done = 0; cloned = []
 for i in range(1, n):
     x, y, w, h, area = st[i]
     if area > a.max_area or y < a.top: continue
@@ -30,6 +30,11 @@ for i in range(1, n):
     _, dx, dy = best; src = plate.copy(); src[y0:y1, x0:x1] = im[y0 + dy:y1 + dy, x0 + dx:x1 + dx]
     cm = (cv2.dilate(comp, np.ones((5, 5), np.uint8)) * 255)
     ys, xs = np.nonzero(cm); cx, cy = int((xs.min() + xs.max()) // 2), int((ys.min() + ys.max()) // 2)
-    try: plate = cv2.seamlessClone(src, plate, cm, (cx, cy), cv2.NORMAL_CLONE); done += 1
+    try: plate = cv2.seamlessClone(src, plate, cm, (cx, cy), cv2.NORMAL_CLONE); done += 1; cloned.append(i)
     except cv2.error: pass
-Image.fromarray(plate).save(a.plate); print('clone-filled', done, 'small holes of', n - 1)
+Image.fromarray(plate).save(a.plate)
+# the mask keeps 255 where the plate is a Telea guess (Benny, HUD) and gets 128 where it is clone-filled painting (still 'game-drawn' for
+# every > 127 test, but the bake trusts those plate pixels fully: no half-blended discs)
+mm = np.array(Image.open(a.mask).convert('L')); mh, mw = mm.shape; lab_r = cv2.resize(lab.astype(np.int32).astype(np.float32), (mw, mh), interpolation=cv2.INTER_NEAREST).astype(np.int32)
+mm[np.isin(lab_r, cloned) & (mm > 127)] = 128; Image.fromarray(mm).save(a.mask)
+print('clone-filled', done, 'small holes of', n - 1)

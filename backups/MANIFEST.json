@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 28434,
-   "sha256": "2fc4b838e6a1f5b75ed9992b4ec4a19abee5e477bef9b11ecf54e279b84133df"
+   "sha256": "9b1cf25295a7d662d0ca7bb7fc65e0f4d3bd5318cbe83eda9cc0679fe30b1739"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3233,
-   "sha256": "0497cbe7bb65e6353c6eb2ffe1e646717b7d1d0545ed35ac5cae83761cc16b31"
+   "sha256": "e7bf7aee133d76c7cb0656aa3a17f73e3ee35fe33b90c02aa38dfa3bee30537e"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -45598,8 +45598,8 @@
   },
   {
    "path": "tools/screenkit/bake.js",
-   "bytes": 25751,
-   "sha256": "08b71423a18ef08c6ef1a1dc1e38710804a20e5d51762934eef8ec52e7c94bd0"
+   "bytes": 28368,
+   "sha256": "70d58c349110f520b539c687ebf7007a9e0ed9978eec83353118396424e693e8"
   },
   {
    "path": "tools/screenkit/blender_kit.py",
@@ -45658,8 +45658,8 @@
   },
   {
    "path": "tools/screenkit/plate_clone.py",
-   "bytes": 2921,
-   "sha256": "eaa71f37fd72410770f68cd1a6d84f7813e73b5fae4ce866a65ddb4d6bdc2d80"
+   "bytes": 3445,
+   "sha256": "1dc946e43384c66b33a47b3b264639e046dc88345190563e1d142f60f17e2a38"
   },
   {
    "path": "tools/screenkit/preview.cjs",
