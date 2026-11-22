@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 27962,
-   "sha256": "98ddb114901ae4cb11b89a5d941ada57570e9ff11fe0a9020120eb4e2f77861b"
+   "sha256": "4dd6b0a316e3c709189d493971d51bf91674e8eedd9975451a64b427c3c5b79e"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3622,
-   "sha256": "9a95877e683d9beeb585c233cb8e2d95448a00b56d05a5eae9639ae052ce75e4"
+   "sha256": "5e289fdf354a51fa840d1af76d2d3b1a03b36f4f55e67419b1b726a2f72a7d53"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -43097,9 +43097,29 @@
    "sha256": "63b1cb7798df1eba35052ecf047d0589d52af5b7f24f3ca9f11758829f2da88e"
   },
   {
+   "path": "qa/world/r44/run/GAMEPLAY_world_04_A_B_GRAY_contact_sheet.jpg",
+   "bytes": 246741,
+   "sha256": "7881aeaec86578b67f072d3a73f5a5ccf534b33cd2b740ee653878ea0b2436a3"
+  },
+  {
+   "path": "qa/world/r44/run/GAMEPLAY_world_04_A_B_GRAY_real_touch.mp4",
+   "bytes": 16574694,
+   "sha256": "b101e62981c28201aa9e75e118f09df1003a9217c3b8f897e51f6111bc93e334"
+  },
+  {
+   "path": "qa/world/r44/run/GAMEPLAY_world_04_A_B_GRAY_real_touch_checks.json",
+   "bytes": 2142,
+   "sha256": "0aaf2eda228c6c295973e2193ff5292f06ecd55efc43ad666a02953c189798e3"
+  },
+  {
    "path": "qa/world/r44/run/swipe_plan.json",
    "bytes": 239,
    "sha256": "b13c70efb41d9fff5b3a311a760c724757b19deef05d1db8076498d46e35b1c7"
+  },
+  {
+   "path": "qa/world/r44/run/swipe_plan_B05.json",
+   "bytes": 138,
+   "sha256": "be2076cf620dc762f17f242125b953628cfa0d5bcd5df3e5ee43e1cc34d294a4"
   },
   {
    "path": "qa/world/r44/world_v1/README.md",

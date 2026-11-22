@@ -5407,3 +5407,33 @@ World v2 is built: 04 → Bubble Dash → Sock Rescue → S-curve connector → 
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && sed -n 1,12p tools/reflock/encode_run.py | grep -E \"^\\\"\\\"\\\"|argv|usage\" | head -4; python3 -I tools/reflock/encode_run.py $S/run_gray qa/world/r44/run GAMEPLAY_world_04_A_B_GRAY_real_touch 2>&1 | tail -4; ls -la qa/world/r44/run | head; P='[[1.0,\"left\"],[3.0,\"right\"],[3.2,\"right\"],[5.5,\"left\"],[7.5,\"up\"],[9.5,\"left\"],[11.5,\"right\"],[13.5,\"right\"],[15.5,\"left\"],[17.5,\"left\"]]'; echo \"$P\" > qa/world/r44/run/swipe_plan_B05.json; (START_S=70 END_S=112 TOUCH=1 NODE_PATH= …[+239 chars]`
 
+### 🧑 User — 2026-11-22T16:34:54.893Z
+
+> ↩︎ result: """Round 40: after section_run.cjs `run`: count hole pixels (pure-green sentinel background) in EVERY saved frame, write the summary,
+> run, out, name = sys.argv[1:4]; os.makedirs(out, exist_ok=True)
+> {"frames": 1083, "errors": [], "benny_offscreen_frames": 0, "camera_max_step_u": 0.0959, "camera_max_step_expected_u": 0.1173, "camera_max_turn_deg_per_frame": 0.669, "static_world_meshes": 225, "scenery_meshes_moved": [], "camera_min_clearance_u": 0.169, "benny_water_gap_max_u": 0.02, "benny_water_missing_frames": 0, "benny_posture_vs_surface_max_deg": 13.98, "route_normal_vs_surface_max_deg": 0, "immersion_range": [-0.413, 0.225], "bank_range_deg": [0, 0], "swipes_sent": 17, "swipes_detected": 17, "input": "real CDP touch", "input_log": [{"dir": "left", "src": "touch", "clock": 1.5, "result": "lane"}, {"dir": "right", "src": "touch", "clock": 3.5, "result": "lane"}, {"dir": "right", "src": "touch", "clock": 3.7, "result": "lane"}, {"dir": "left", "src": "touch", "clock": 6, "result": "lane"}, {"dir": "left", "src": "touch", "clock": 8.5, "result": "lane"}, {"dir": "right", "src": "touch", "clock": 10.2, "result": "lane"}, {"dir": "right", "src": "touch", "clock": 10.4, "result": "lane" …[+1230 chars]
+
+### 🤖 Claude — 2026-11-22T16:34:57.778Z
+
+The gray recording has **0 hole pixels in all 1,083 frames**, so the connected geometry is complete with no gaps. A contact sheet of the 04 → Bubble Dash doorway in gray:
+
+### 🤖 Claude — 2026-11-22T16:35:02.178Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && python3 - <<EOF\nfrom PIL import Image, ImageDraw\nimport json\nlog=json.load(open('$S/run_gray/run_log.json'))\nidx=[0,150,260,300,320,335,350,365,385,420,500,620,760,900,1060]\nW,H=164,364; cols=8; rows=2\nsh=Image.new('RGB',(W*cols,(H+18)*rows),(20,10,30)); d=ImageDraw.Draw(sh)\nfor k,i in enumerate(idx[:16]):\n    f=log[i]; im=Image.open('$S/run_gray/'+f['file']).convert('RGB').resize((W,H)); x=(k%cols)*W; y=(k//cols)*(H+18); sh.paste(im,(x,y+18)); d.text((x+3,y+3),'t %.1fs s %.1f'%(f['t'],f …[+227 chars]`
+
+### 🧑 User — 2026-11-22T16:35:02.488Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-22T16:35:04.415Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/world/r44/run/GAMEPLAY_world_04_A_B_GRAY_contact_sheet.jpg"}`
+
+### 🧑 User — 2026-11-22T16:35:04.467Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T16:35:15.603Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && until [ -s $S/run_tex/checks.json ]; do sleep 15; done; python3 -c \"\nimport json;c=json.load(open('$S/run_tex/checks.json')); c.pop('input_log',None); print(json.dumps(c))\"; tail -1 $S/run_b05.log | cut -c1-150", "description": "Wait for the textured recording to finish", "timeout": 3600000}`
+
