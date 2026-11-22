@@ -3592,3 +3592,71 @@ Everything is saved on GitHub: commit `61e4529` on branch `ccr-c1b272d2-3ru7yx`,
 
 Still waiting on your go-ahead: should I start rebuilding the 05 water as clean painted ribbons, as a side-by-side test against your approved screen for you to judge first?
 
+### 🧑 User — 2026-11-22T19:54:01.238Z
+
+<task-notification>
+<task-id>bzb6n2cmf</task-id>
+<tool-use-id>toolu_017eUmsej1CRBS5QM8Di4YFS</tool-use-id>
+<output-file>/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/tasks/bzb6n2cmf.output</output-file>
+<status>killed</status>
+<summary>Background command "Wait for the textured recording to finish" was stopped after reaching its background time limit</summary>
+<note>If the work in progress still needs it, start it again with `run_in_background` and a longer `timeout`. If it already had the longest `timeout` allowed, do not restart it. Either way, report that it was stopped.</note>
+</task-notification>
+
+### 🤖 Claude — 2026-11-22T19:54:05.508Z
+
+A leftover background wait from earlier was just stopped by its time limit. It was only waiting for the colour recording's end marker, which never got written. Nothing was lost: that recording finished at 19:24, I encoded it by hand, and the video is saved on GitHub (`qa/kit45/run/GAMEPLAY_05_to_06_TEXTURED_real_touch.mp4`). Nothing is running now.
+
+Still waiting on your go-ahead for the clean painted-ribbon water test for Screen 05.
+
+### 🧑 User — 2026-11-22T19:56:57.732Z
+
+yes go ahead with the water test
+
+### 🤖 Claude — 2026-11-22T19:57:16.855Z
+
+Starting the water test. First a close look at your approved 05 water at full resolution, to measure its structure: band order, widths, edges and streaks.
+
+### 🤖 Claude — 2026-11-22T19:57:19.156Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; python3 -c \"\nfrom PIL import Image\nim=Image.open('references/05_flow_into_the_current.png').convert('RGB')\nim.crop((0,560,864,1100)).save('$S/w_mid.png')\nim.crop((0,1150,864,1536)).resize((864,386)).save('$S/w_near.png')\"", "description": "Crop the approved 05 water regions"}`
+
+### 🧑 User — 2026-11-22T19:57:19.536Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-22T19:57:20.106Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/w_mid.png"}`
+
+### 🧑 User — 2026-11-22T19:57:20.142Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T19:57:20.667Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/w_near.png"}`
+
+### 🧑 User — 2026-11-22T19:57:20.702Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T19:57:59.889Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport numpy as np, cv2\nfrom PIL import Image\nim = np.asarray(Image.open('references/05_flow_into_the_current.png').convert('RGB')).astype(np.float32)\nm = np.asarray(Image.open('/root/.cache/rainbow-build/segment/' + __import__('os').listdir('/root/.cache/rainbow-build/segment')[0] + '/mask.png').convert('L')) if False else None\nreg = im[560:1150]; hsv = cv2.cvtColor(reg.astype(np.uint8), cv2.COLOR_RGB2HSV).astype(np.float32)\nH, Sa, V = hsv[...,0]*2, hsv[...,1]/255, hsv[...,2]/255\ncyan = (H > 180) & (H < 215) & (Sa > 0.35); pink = ((H > 290) & (H < 335)) & …[+985 chars]`
+
+### 🧑 User — 2026-11-22T19:58:00.286Z
+
+> ↩︎ result: cyan share 0.292 dark/mid/bright [[4, 139, 234], [10, 168, 250], [42, 220, 249]]
+> pink share 0.242 dark/mid/bright [[204, 32, 159], [244, 60, 215], [248, 110, 236]]
+> white share 0.082 dark/mid/bright [[237, 217, 248], [247, 243, 252], [251, 250, 252]]
+> approved water coherence (energy-weighted): 0.629
+
+### 🤖 Claude — 2026-11-22T19:58:54.934Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/screenkit/water_ribbon.js", "content": "// Rainbow screen kit - RIBBON WATER (round 45, URL test switch ?water=ribbon; default unchanged). The user: \"my water looks messy. Just because it\n// matches the same color doesn't mean it matches my water.\" The painted 05 water is CLEAN: long smooth S-shaped ribbons - a wide cyan channel with\n// fine white streaks along the flow, a broad hot-pink ribbon on each side with fine lighter streaks like brushed silk, soft edges between the bands,\n// outer cyan toward the foam, a glossy sheen and a few star glints. …[+5718 chars]`
+
+### 🧑 User — 2026-11-22T19:58:55.062Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/screenkit/water_ribbon.js (file state is current in your context — no need to Read it back)
+
