@@ -241,8 +241,9 @@ const kitFoamMat = (A) => new THREE.ShaderMaterial({ uniforms: { uL: { value: ne
         vec3 r = f - (g + 0.15 + 0.7 * h); float rad = 0.36 + 0.3 * fract(h.x * 7.13 + h.z * 3.7), d = length(r) / rad; if (d < best) { best = d; br = rad; rv = r / rad; } }
       return vec4(best, br, 0.0, 0.0); }
     void main(){ vec3 N = normalize(vN), V = normalize(cameraPosition - vW); if (dot(N, V) < 0.0) N = -N;
-      vec3 r1, r2; float S1 = 26.0; vec4 b1 = bub(vW * S1, r1), b2 = bub(vW * S1 * 2.6 + 11.0, r2);
-      float px1 = length(fwidth(vW * S1)), px2 = px1 * 2.6, k1 = 1.0 - smoothstep(0.35, 0.9, px1), k2 = 1.0 - smoothstep(0.35, 0.9, px2);   // bubbles visible only when >~1 px
+      vec3 r1 = vec3(0.0), r2 = vec3(0.0); float S1 = 26.0, px1 = length(fwidth(vW * S1)), px2 = px1 * 2.6, k1 = 1.0 - smoothstep(0.35, 0.9, px1), k2 = 1.0 - smoothstep(0.35, 0.9, px2);   // bubbles visible only when >~1 px
+      vec4 b1 = vec4(0.5, 0.4, 0.0, 0.0), b2 = vec4(0.5, 0.4, 0.0, 0.0);   /* r46b: the 27-cell search only where the bubbles are visible (half the software render time was far foam) */
+      if (k1 > 0.0) b1 = bub(vW * S1, r1); if (k2 > 0.0) b2 = bub(vW * S1 * 2.6 + 11.0, r2);
       float in1 = 1.0 - smoothstep(0.82, 1.0, b1.x), in2 = 1.0 - smoothstep(0.82, 1.0, b2.x);
       vec3 n1 = normalize(mix(N, normalize(r1 + N * 0.35), 0.75 * in1 * k1)); vec3 n2 = normalize(mix(N, normalize(r2 + N * 0.35), 0.6 * in2 * k2));
       vec3 Nb = normalize(mix(n1, n2, 0.45 * (1.0 - in1) * in2 * k2));   // small bubbles fill the crevices between the big ones

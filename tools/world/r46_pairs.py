@@ -32,20 +32,22 @@ def main():
     bpic = Image.open(os.path.join(bdir, 'tex_picture_l0.png')).convert('RGB')
     pair(bpic, f'BEFORE (r45b) {nn} - picture camera', new_pic, f'NEW (r46) {nn} - picture camera', os.path.join(out, f'{nn}_2_BEFORE_vs_NEW_picture_view.jpg'))
     nj = json.load(open(os.path.join(ndir, 'preview.json'))); bj = json.load(open(os.path.join(bdir, 'preview.json')))
-    tags = [f['tag'] for f in nj['frames'] if f.get('mode') == 'textured' and f['tag'] != 'picture']
-    seen = []
-    for t in tags:
-        if t in seen: continue
-        seen.append(t)
-    k = 3
-    for t in seen:
+    def order(j):   # tags in run order; curves keyed 'curve1', 'curve2' (their exact angle differs a little between builds)
+        L, c = [], 0
+        for f in j['frames']:
+            if f.get('mode') != 'textured' or f['tag'] == 'picture' or f['tag'] in [x[1] for x in L]: continue
+            key = f['tag']
+            if key.startswith('curve_'): c += 1; key = f'curve{c}'
+            L.append((key, f['tag']))
+        return dict(L), [k for k, _ in L]
+    nmap, nkeys = order(nj); bmap, _ = order(bj); k = 3
+    for key in nkeys:
+        if key not in bmap: continue
         for lane in (-1, 0, 1):
-            fn = os.path.join(ndir, f'tex_{t}_l{lane}.png')
-            tb = t if os.path.exists(os.path.join(bdir, f'tex_{t}_l{lane}.png')) else next((x for x in os.listdir(bdir) if x.startswith('tex_' + t.split('_')[0]) and x.endswith(f'_l{lane}.png')), None)
-            fb = os.path.join(bdir, f'tex_{tb}_l{lane}.png') if tb and not tb.startswith('tex_') else (os.path.join(bdir, tb) if tb else None)
-            if not (os.path.exists(fn) and fb and os.path.exists(fb)): continue
+            fn, fb = os.path.join(ndir, f'tex_{nmap[key]}_l{lane}.png'), os.path.join(bdir, f'tex_{bmap[key]}_l{lane}.png')
+            if not (os.path.exists(fn) and os.path.exists(fb)): continue
             ln = {-1: 'left lane', 0: 'centre lane', 1: 'right lane'}[lane]
-            pair(Image.open(fb).convert('RGB'), f'BEFORE (r45b) {nn} {t} {ln}', Image.open(fn).convert('RGB'), f'NEW (r46) {nn} {t} {ln}', os.path.join(out, f'{nn}_{k}_BEFORE_vs_NEW_{t}_{ln.replace(" ", "_")}.jpg'))
+            pair(Image.open(fb).convert('RGB'), f'BEFORE (r45b) {nn} {nmap[key]} {ln}', Image.open(fn).convert('RGB'), f'NEW (r46) {nn} {nmap[key]} {ln}', os.path.join(out, f'{nn}_{k:02d}_BEFORE_vs_NEW_{nmap[key]}_{ln.replace(" ", "_")}.jpg'))
             k += 1
     def summ(j):
         s = j['summary']; lp = s['likeness_picture_view'][0]

@@ -3666,3 +3666,104 @@ While those run, I'm writing the Round 46 notes:
 > 05 + 06 in the world with the new materials, world in the app (`VITE_RAINBOW_WORLD=1`). Resume: **`docs/briefs/2026-11-22-r45/RESUME_R45.md`**.
 > # ▶ ROUND 43b (2026-11-22 ~15:30 UTC): Screen 06 physics + gray ge …[+825 chars]
 
+### 🤖 Claude — 2026-11-22T22:37:55.702Z
+
+> 🔧 **Bash** `{"command": "cat >> .claude/skills/rainbow-screen-builder/LESSONS.md <<'EOF'\n* r46 Benny \"clipped 8 px\" was really ~21 px: `bennyBox()` used the REST pose (every 3rd vertex) while the paddling arms / pompom are moved on the GPU\n  -> the box now runs the same maths as VERT_BODY (world.html `bDef`); any framing guard must use it. Check: section_run `benny_offscreen_frames` = 0.\n* r46 a camera guard placed BEFORE the wall clamp (CLAMPS) / water-height clamp is undone by them -> the last safety goes after every clamp, and is\n  optical (lens shift `filmOffset`), not positional. Reset `filmOff …[+1875 chars]`
+
+### 🧑 User — 2026-11-22T22:37:55.981Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-22T22:38:18.220Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/world/r46_pairs.py", "content": "\"\"\"Rainbow round 46 - labelled side-by-side pairs for the user (APPROVED | NEW at the picture view, BEFORE (r45b) | NEW at the same swimming\npositions, both from tools/screenkit/preview.cjs runs of the SAME checker), plus the numbers table.\n  python3 -I tools/world/r46_pairs.py <before preview dir> <new preview dir> <screen NN> <out dir>\nEvery frame is the real 412 x 915 game render (no crop, no retouch); the approved picture is scaled to the same height.\"\"\"\nimport json, os, sys\nfrom PIL import Image, ImageDra …[+3607 chars]`
+
+### 🧑 User — 2026-11-22T22:38:18.295Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/world/r46_pairs.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-22T22:38:27.380Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/world/r46_pairs.py'; s=open(p).read()\nstart=s.index(\"    tags = [f['tag'] for f in nj['frames']\")\nend=s.index(\"    def summ(j):\")\nnew='''    def order(j):   # tags in run order; curves keyed 'curve1', 'curve2' (their exact angle differs a little between builds)\n        L, c = [], 0\n        for f in j['frames']:\n            if f.get('mode') != 'textured' or f['tag'] == 'picture' or f['tag'] in [x[1] for x in L]: continue\n            key = f['tag']\n            if key.startswith('curve_'): c += 1; key = f'curve{c}'\n            L.append((key, f …[+1059 chars]`
+
+### 🧑 User — 2026-11-22T22:38:27.793Z
+
+> ↩︎ result: ok
+> frame 0 s 88 lat 0 coins 1330 socks 0
+> frame 60 s 92.4 lat -0.3 coins 1330 socks 0
+
+### 🤖 Claude — 2026-11-22T22:38:33.005Z
+
+> 🔧 **Bash** `{"command": "sleep 1; date -u +%H:%M:%S; grep -c \"^frame\" /home/user/ws46/final/tex.log /home/user/ws46/final/gray.log; ls /home/user/ws46/final/tex | wc -l; ls /home/user/ws46/final/gray | wc -l; uptime; ls /home/user/ws46/world/preview_05 2>/dev/null | wc -l", "description": "Measure recording progress rate"}`
+
+### 🧑 User — 2026-11-22T22:38:34.293Z
+
+> ↩︎ result: 22:38:34
+> /home/user/ws46/final/tex.log:1
+> /home/user/ws46/final/gray.log:3
+> 26
+> 75
+>  22:38:34 up  1:11,  0 user,  load average: 10.46, 5.08, 3.96
+> 8
+
+### 🤖 Claude — 2026-11-22T22:38:43.553Z
+
+> 🔧 **Bash** `{"command": "ls -l --time-style=+%H:%M:%S /home/user/ws46/final/tex | tail -n 5; ls -l --time-style=+%H:%M:%S /home/user/ws46/final/gray | tail -n 3; ps aux --sort=-%cpu | head -8 | cut -c1-200", "description": "Check frame timestamps and CPU hogs"}`
+
+### 🧑 User — 2026-11-22T22:38:43.740Z
+
+> ↩︎ result: -rw-r--r-- 1 root root 727417 22:38:20 f_00023.png
+> -rw-r--r-- 1 root root 727703 22:38:25 f_00024.png
+> -rw-r--r-- 1 root root 727060 22:38:30 f_00025.png
+> -rw-r--r-- 1 root root 725900 22:38:35 f_00026.png
+> -rw-r--r-- 1 root root 724539 22:38:40 f_00027.png
+> -rw-r--r-- 1 root root 373931 22:38:38 f_00077.png
+> -rw-r--r-- 1 root root 374989 22:38:39 f_00078.png
+> -rw-r--r-- 1 root root 377486 22:38:41 f_00079.png
+> USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+> root     23639  152  1.1 54934676 181556 ?     S<l  22:36   3:21 /opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell.real --type=gpu-process --gpu-recent-
+> root     23595  150  8.8 54936152 1458636 ?    S<l  22:36   3:17 /opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell.real --type=gpu-process --gpu-recent-
+> root     24563 87.1 14.3 54936600 2361324 ?    S<l  22:37   0:54 /opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell.real --type=gpu-process --gpu-recent-
+> root     24582 13.3  2.2 1518472504 366800 ?   Sl   22:37   0:08 /opt/pw-browsers/chromium_headless_shell-1243/chrom …[+623 chars]
+
+### 🤖 Claude — 2026-11-22T22:39:06.175Z
+
+> 🔧 **Bash** `{"command": "pkill -f \"section_run.cjs /home/user/ws46/world/game\" ; pkill -f \"preview.cjs /home/user/ws46/world/game\"; sleep 2; cat > /home/user/ws46/prof.cjs <<'EOF'\nconst { chromium } = require('playwright'); const { spawn } = require('child_process');\n(async () => {\n  const dir = process.argv[2], port = 9911; const srv = spawn('python3', ['-m', 'http.server', '--bind', '127.0.0.1', String(port)], { cwd: dir, stdio: 'ignore' }); await new Promise((r) => setTimeout(r, 1200));\n  const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swif …[+2013 chars]`
+
+### 🧑 User — 2026-11-22T22:39:08.290Z
+
+> ↩︎ result: 674:window.worldDebug = { THREE, scene, world, AREA, RP, at, KEYS };
+
+### 🤖 Claude — 2026-11-22T22:39:10.617Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/ws46 && NODE_PATH=$(npm root -g) timeout 600 node prof.cjs /home/user/ws46/world/game 2>&1 | tail -4", "description": "Profile render cost of foam and water", "timeout": 660000}`
+
+### 🧑 User — 2026-11-22T22:40:21.661Z
+
+> ↩︎ result: default ms/frame all 4 foam hidden 3.4749999998603016 water hidden 5.524999999906868
+> rich=0 ms/frame all 2.75 foam hidden 1.625 water hidden 1.6999999999534339
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-22T22:40:25.434Z
+
+Those timings only measure command submission, not the actual GPU work. Re-measuring with a screenshot, which forces the frame to finish, exactly as the recorder does.
+
+### 🤖 Claude — 2026-11-22T22:40:32.018Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/ws46 && python3 - <<'EOF'\ns=open('prof.cjs').read()\ns=s.replace(\"const t = async () => { const t0 = Date.now(); await p.evaluate(() => window.renderNow(4)); await p.evaluate(() => new Promise((r) => requestAnimationFrame(() => r()))); return (Date.now() - t0) / 4; };\",\n \"const t = async () => { const t0 = Date.now(); for (let k = 0; k < 3; k++) { await p.evaluate(() => window.renderNow(1)); await p.screenshot({ path: '/tmp/claude-0/x.png' }); } return (Date.now() - t0) / 3; };\")\ns=s.replace(\"\"\"    const foamOff = await p.evaluate(async () => { const S = [] …[+1539 chars]`
+
+### 🧑 User — 2026-11-22T22:41:37.173Z
+
+> ↩︎ result: default ms/frame all 2181.3333333333335 foam hidden 1073.3333333333333 water hidden 1798.3333333333333
+> rich=0 ms/frame all 2195.6666666666665 foam hidden 1065.3333333333333 water hidden 1860.6666666666667
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-22T22:41:49.941Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/world/world.html'; s=open(p).read()\nold=\"\"\"      vec3 r1, r2; float S1 = 26.0; vec4 b1 = bub(vW * S1, r1), b2 = bub(vW * S1 * 2.6 + 11.0, r2);\n      float px1 = length(fwidth(vW * S1)), px2 = px1 * 2.6, k1 = 1.0 - smoothstep(0.35, 0.9, px1), k2 = 1.0 - smoothstep(0.35, 0.9, px2);   // bubbles visible only when >~1 px\"\"\"\nnew=\"\"\"      vec3 r1 = vec3(0.0), r2 = vec3(0.0); float S1 = 26.0, px1 = length(fwidth(vW * S1)), px2 = px1 * 2.6, k1 = 1.0 - smoothstep(0.35, 0.9, px1), k2 = 1.0 - smoothstep(0.35, 0.9, px2);   // bubbles visible only when > …[+648 chars]`
+
+### 🧑 User — 2026-11-22T22:42:41.983Z
+
+> ↩︎ result: default ms/frame all 1562 foam hidden 1043.3333333333333 water hidden 1164.3333333333333
+> Shell cwd was reset to /home/user/rainbow-
+

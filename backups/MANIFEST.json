@@ -58,8 +58,8 @@
   },
   {
    "path": ".claude/skills/rainbow-screen-builder/LESSONS.md",
-   "bytes": 7318,
-   "sha256": "a052de1848577a4e66d58b319606c2bf26f6ed57aa38104ffe4f3266da926023"
+   "bytes": 9612,
+   "sha256": "a4011b7264c2a320d6528b1bdf0ae32831d3ff2d170a7507ed2eae0d7f8d05d8"
   },
   {
    "path": ".claude/skills/rainbow-screen-builder/SKILL.md",
@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 28920,
-   "sha256": "38d77bcc7e8b82d3ae82b7f2698f3b701ed35c471e917bdd697309f235177e0e"
+   "sha256": "56fd4d6369e8ba2d172ffa4976c3521216f63ffe2e156b129a8ecc1377745c1d"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 2958,
-   "sha256": "bffc52c3df21b07117d9c651afc217192d0bceebdf996f355dc944a983b6a09d"
+   "sha256": "18441801a9659d50e702c1011c6473c6f54c9d1aa7bc63ffabdcfeb6bc00b9bb"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -49752,14 +49752,19 @@
    "sha256": "aa5b366292852d2c2338433dd0126e0952eaa810bb6b4fa3db04d67811fc8e37"
   },
   {
+   "path": "tools/world/r46_pairs.py",
+   "bytes": 4160,
+   "sha256": "6054b4a688fab21882e3a82d940cf1da4282c7b5bb98c1aee0ed92b56cf057bb"
+  },
+  {
    "path": "tools/world/setup_world.sh",
    "bytes": 5736,
    "sha256": "b8ce9e3a43a0f500e475eb8036d8eb6eb7b80c07f2f33be52d849ec575ec42c8"
   },
   {
    "path": "tools/world/world.html",
-   "bytes": 93336,
-   "sha256": "0dd619764c592da2ced3564b90359dc0fe24bfb35f863af1f6c17a0370011b42"
+   "bytes": 93563,
+   "sha256": "86bb82080899c39e099f510dcd4cf11549c94e1016fd27ef6eb998c08d696bbc"
   },
   {
    "path": "tools/world/world_layout.py",
