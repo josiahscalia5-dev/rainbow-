@@ -2712,3 +2712,31 @@ Stop hook feedback:
 
 > 🔧 **Bash** `{"command": "git show HEAD:scripts/claude-bootstrap.sh | grep -c 'Playwright \\$have = the preinstalled'; for i in $(seq 1 40); do out=$(python3 scripts/rainbow-autosave.py --reason manual:end-of-turn 2>&1); echo \"$out\" | grep -q \"another autosave is running\" || break; sleep 5; done; echo \"$out\" | tail -3; git status --short | wc -l; git rev-parse HEAD; git ls-remote origin refs/heads/ccr-0bbd5b9d-js1cpg", "description": "Save the remaining chat-history changes and verify GitHub matches", "timeout": 300000}`
 
+### 🧑 User — 2026-11-22T15:25:17.140Z
+
+> ↩︎ result: 1
+>   "commit": "25123dbb7ecaa083b68eca6bd2489a95741aa5a5",
+>   "duration_s": 16
+> }
+> 0
+> 25123dbb7ecaa083b68eca6bd2489a95741aa5a5
+> 25123dbb7ecaa083b68eca6bd2489a95741aa5a5	refs/heads/ccr-0bbd5b9d-js1cpg
+
+### 🤖 Claude — 2026-11-22T15:25:23.172Z
+
+Spector.js is installed, connected and tested on a real Screen 06 frame. Everything is saved: GitHub has commit `25123dbb7ecaa083b68eca6bd2489a95741aa5a5`, the same as here, with nothing left unsaved.
+
+**Last check, a fresh reinstall.** I deleted the working install and let the normal session setup rebuild it, to see what a new session will do.
+- It rebuilt Spector and reconnected it, but picked the wrong browser driver version. That would have broken captures in a fresh session.
+- I fixed the setup step: it now always matches the browser already installed here, and repairs an existing install too.
+- Captured Screen 06 again with the rebuilt copy and got the same result as the first capture: 233 draw calls, 11 shader programs, no GL errors.
+- The temporary backup copy is deleted.
+
+**What you need to do:** nothing. There was nothing to approve and no credits were used. Spector's tools (capture frame, draw calls, shaders, GL state) appear from your **next** Claude session, under the name `spectorjs`. The old Spector entry inside the Three.js plugin will keep showing "failed"; ignore it.
+
+**One problem in the session setup:** the step that downloads all your branches from GitHub timed out after 3 minutes on this check, and it also failed at this session's start. It doesn't touch your work: your newest branch was fetched separately and is complete. A longer time limit would probably fix it; I haven't changed that.
+
+Your branch, approved artwork and gameplay were not changed.
+
+When you're ready, tell me whether to resume Screen 06, starting with Benny's lean through the crest. And do you want the secure form to enter your old World Labs key so I can reach your 2026-11-16 Marble worlds?
+
