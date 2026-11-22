@@ -4674,3 +4674,103 @@ Please continue building and testing the connected game using this approach.
 > 207	  const LAYOUT = [];
 > 208	  RUNS.forEach((r, ri) => { const s0 = r.pts[0][0], s0n = ri === 0 ? s0 : RUNS[1].pts[0][0] + (s0 …[+2291 chars]
 
+### 🤖 Claude — 2026-11-22T16:12:56.575Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/world/world.html", "content": "<!doctype html>\n<html><head><meta charset=\"utf-8\"><title>Rainbow world</title>\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no\">\n<style>\nhtml,body{margin:0;background:#1a0630;overflow:hidden;font-family:system-ui,-apple-system,sans-serif}canvas{display:block}\n#hud{position:fixed;left:0;right:0;top:8px;display:flex;flex-direction:column;align-items:center;gap:7px;pointer-events:none}\n.bar{display:flex;gap:26px;align-items:center;background:linear-gradient(#7b …[+60485 chars]`
+
+### 🧑 User — 2026-11-22T16:12:56.660Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/world/world.html (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-22T16:13:13.773Z
+
+> 🔧 **Bash** `{"command": "D=docs/briefs/2026-11-22-r44 && U=/root/.claude/uploads/6423df4a-59a9-54f5-8b9e-8f7ed69db35d && cp $U/ab9aef2c-image.png $D/GUIDE_AUTHORITATIVE_04_A_B_05.png && cp $U/7fe4261f-image.png $D/GUIDE_AUTHORITATIVE_05_to_10.png && cp $U/d5d49b0f-image.png $D/GUIDE_CONCEPT_level_flow_infographic.png && cp $U/6c07855a-image.png $D/GUIDE_CONCEPT_04_A_B_05_connection_preview.png && cat >> $D/USER_R44.md <<'EOF'\n\n## User message 2026-11-22 ~17:10 UTC — visual connection guides (verbatim essentials)\nAttached: `GUIDE_AUTHORITATIVE_04_A_B_05.png` and `GUIDE_AUTHORITATIVE_05_to_10.png` (made  …[+2603 chars]`
+
+### 🧑 User — 2026-11-22T16:13:13.837Z
+
+> ↩︎ result: GUIDE_AUTHORITATIVE_04_A_B_05.png
+> GUIDE_AUTHORITATIVE_05_to_10.png
+> GUIDE_CONCEPT_04_A_B_05_connection_preview.png
+> GUIDE_CONCEPT_level_flow_infographic.png
+> PLAN_R44_CONNECTED_WORLD.md
+> USER_LEVEL_FLOW_PREVIEW_R44.png
+> USER_R44.md
+
+### 🤖 Claude — 2026-11-22T16:13:25.343Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/world/setup_world.sh", "content": "#!/usr/bin/env bash\n# Rainbow ONE connected world (round 44): build the playable world folder 04 -> A Bubble Dash -> B Sock Rescue (more areas join as they are\n# rebuilt with the screen kit). Free tools only (Blender 5.3, three.js, the kit); no credits.\n#   bash tools/world/setup_world.sh <workspace>      -> <workspace>/game/play3.html (= tools/world/world.html), QA as any kit page\n# Steps: 04 with the kit (tunnel ending in the doorway: --tube-len 22 --open-end) -> its bake once offline (screen_export.cjs) ->\n# th …[+1642 chars]`
+
+### 🧑 User — 2026-11-22T16:13:25.406Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/world/setup_world.sh (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-22T16:13:28.141Z
+
+> 🔧 **Bash** `{"command": "chmod +x tools/world/setup_world.sh && S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && time bash tools/world/setup_world.sh $S/wv1 2>&1 | tail -4; ls $S/wv1/game $S/wv1/game/a04/baked | head -30; cat $S/wv1/w04_export.log | tail -3", "description": "Assemble the first connected world folder (04 → Bubble Dash → Sock Rescue)", "timeout": 1200000}`
+
+### 🧑 User — 2026-11-22T16:13:51.426Z
+
+> ↩︎ result: 04 tube end z -25.29; section offset [-0.695, 0.0, -27.289]; route 81.15 u (04 0-25.15, AB 25.15-81.15); picture keys s: 04 1.35, Bubble Dash 28.75, Sock Rescue 49.00
+> world ready: /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/wv1/game/play3.html
+> 
+> real	0m23.234s
+> user	0m17.752s
+> sys	0m2.809s
+> /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/wv1/game:
+> a04
+> aAB
+> bake.png
+> benny31.glb
+> bubble.png
+> coin.png
+> connectors.glb
+> connectors_spec.json
+> controls.js
+> glint.png
+> node_modules
+> play3.html
+> splash.png
+> swimfx.js
+> world.json
+> 
+> /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/wv1/game/a04/baked:
+> funnel_00_bake.jpg
+> funnel_00_den.png
+> manifest.json
+> pool_00_bake.jpg
+> pool_00_den.png
+> pool_01_bake.jpg
+> pool_01_den.png
+> pool_02_bake.jpg
+> pool_02_den.png
+> pool_03_bake.jpg
+> pool_03_den.png
+> pool_front_00_bake.jpg
+> exported 32 meshes
+
+### 🤖 Claude — 2026-11-22T16:13:57.477Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && NODE_PATH=$(npm root -g) timeout 900 node tools/reflock/section_run.cjs $S/wv1/game $S/wst stills 1.35,10,20,23,24.5,25.5,26.5,27.5,28.75,38,49,62,78 0 'sentinel=1' 2>&1 | grep -vE \"^/tmp\" | tail -5; python3 -c \"\nimport json;d=json.load(open('$S/wst/stills.json'));print('errors',d['errors'][:5]);print('info',json.dumps(d['info'])[:400])\"", "description": "Render the connected world at 13 positions from 04 through Sock Rescue", "timeout": 1200000}`
+
+### 🧑 User — 2026-11-22T16:14:14.623Z
+
+> ↩︎ result: loaded in 5.1 s {"LEVEL":80.55,"meshes":219}
+> errors []
+> info {"LEVEL": 80.55, "S_REF": 1.35, "meshes": 219, "coins": 41, "areas": [{"id": "04", "s0": 0, "s1": 25.15}, {"id": "AB", "s0": 25.15, "s1": 81.15}], "keys": [{"area": "04", "s": 1.35, "ref": "references/04_through_the_five_arrows.png"}, {"area": "AB", "s": 28.75, "ref": "references/candidates/bonus_bubble_dash_chamber.webp"}, {"area": "AB", "s": 49, "ref": "references/candidates/bonus_sock_rescue_la
+
+### 🤖 Claude — 2026-11-22T16:14:19.301Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && python3 - <<EOF\nfrom PIL import Image, ImageDraw\nimport json\nd=json.load(open('$S/wst/stills.json'))\nfs=[x['file'] for x in d['stills']]\nW,H=206,457; cols=7; rows=(len(fs)+cols-1)//cols\nsheet=Image.new('RGB',(W*cols,(H+18)*rows),(20,10,30)); dr=ImageDraw.Draw(sheet)\nfor i,f in enumerate(fs):\n    im=Image.open('$S/wst/'+f).convert('RGB').resize((W,H)); x=(i%cols)*W; y=(i//cols)*(H+18); sheet.paste(im,(x,y+18)); dr.text((x+4,y+3),f.replace('_l0.png',''),fill=(255,255,255))\nsheet.save('$S/ …[+101 chars]`
+
+### 🧑 User — 2026-11-22T16:14:19.534Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-22T16:14:21.819Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/world_v1.jpg"}`
+
+### 🧑 User — 2026-11-22T16:14:21.850Z
+
+> ↩︎ result: [image]
+

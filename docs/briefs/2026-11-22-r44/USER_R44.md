@@ -80,3 +80,32 @@ moves forward, both new scenes fit naturally, a cohesive, attractive game world.
 6. **Preserve everything working**: no restart, no needless rebuild of completed sections; keep the Screen 06 immersion / movement / camera /
    scenery improvements; preserve approved images, Flow videos, controls, GitHub backups (five-minute autosave). Original approved screens = the
    visual targets; the preview images guide the transitions only unless the user approves a redesigned screen.
+
+## User message 2026-11-22 ~17:10 UTC — visual connection guides (verbatim essentials)
+Attached: `GUIDE_AUTHORITATIVE_04_A_B_05.png` and `GUIDE_AUTHORITATIVE_05_to_10.png` (made from the user's ORIGINAL artwork = **authoritative**),
+`GUIDE_CONCEPT_level_flow_infographic.png` and `GUIDE_CONCEPT_04_A_B_05_connection_preview.png` (illustrated concepts = optional inspiration
+for the connecting sections only).
+> I want to improve my level-to-level flow, visual consistency and overall quality toward 9/10 or better. Please preserve my original approved
+> screens and the existing 3D reconstruction progress. Use Blender 5.3 and Geometry Nodes to build the physical connections between each level,
+> and Three.js for real gameplay. Make sure: Benny swims continuously through each environment with the same model, scale and natural water
+> immersion. Every tunnel exit connects physically to the next area. Water direction, river width, metallic surfaces, gold rings, foam and
+> lighting transition naturally. The camera follows Benny without jumps, clipping, sudden size changes or loading flashes. Screen 07 has a
+> genuine descending route into Screen 08. The scenery remains fully modeled and playable in 3D, not flat image backgrounds. The original
+> approved camera compositions remain recognizable. Screens 01–03 and 11 remain Google Flow videos. Please create and test actual transition
+> geometry. Show me uninterrupted gameplay recordings across the connections, not just beautiful still pictures. Do not replace my approved
+> artwork, restart completed work or spend paid credits without my approval. Continue saving successful changes to GitHub.
+
+Authoritative join captions (on the guides made from the original artwork):
+| join | caption |
+|---|---|
+| 04 → A | 04 exit: glowing chute widens into A; keep forward motion and scale. |
+| A → B | A exit: large chamber narrows into B, with the same water channel. |
+| B → 05 | B exit: laundry tunnel curves into Screen 05 S-shaped current. |
+| 05 → 06 | S-curve climbs seamlessly into the raised banked crest. |
+| 06 → 07 | crest flows down into the deeper descending washer tube. |
+| 07 → 08 | tube physically opens into the larger final spin room. |
+| 08 → 09 | chamber current grows into the strong final wave. |
+| 09 → 10 | wave carries Benny toward the same purple towel. |
+Each panel: "Keep approved composition. Build real 3D joins outside view." Guide header: "Exact user-supplied reference art. Only ADD 3D join
+geometry between these frames; do not replace the approved artwork." / "Same Benny model, scale, waterline, gold-ring language and camera. Video
+ending begins after Screen 10."

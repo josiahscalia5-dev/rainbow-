@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 27962,
-   "sha256": "a0dc1ea33ab921c1d41d406ef50a6c407595bb489fb1a91be4c7fc541e472405"
+   "sha256": "4b2382d76b4c12475993b820f22adcfefe596a32a260a9ea210993d8cff06c16"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3622,
-   "sha256": "e14cfb8864204d6502041c34f9b2f0873305205ec61127be0682263a91ed6ab3"
+   "sha256": "4f488ce381b91141b8b2a3875ee8addd7a3074e0d005104e0d3130e12d9b7de8"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -11697,6 +11697,26 @@
    "sha256": "5a5a1109d6d9c7e710aadca58a634959c88f95ebbfd85e62201b8f3b55479366"
   },
   {
+   "path": "docs/briefs/2026-11-22-r44/GUIDE_AUTHORITATIVE_04_A_B_05.png",
+   "bytes": 1909292,
+   "sha256": "a4d893d45eedf768e51201e844717ae7551fbe6b282be68207594db0029661c0"
+  },
+  {
+   "path": "docs/briefs/2026-11-22-r44/GUIDE_AUTHORITATIVE_05_to_10.png",
+   "bytes": 2496414,
+   "sha256": "1c7c2a1128cfb02bb9b1e7a559e2487bf22cf87b6703d45b50b3cbfb2c1defce"
+  },
+  {
+   "path": "docs/briefs/2026-11-22-r44/GUIDE_CONCEPT_04_A_B_05_connection_preview.png",
+   "bytes": 2883603,
+   "sha256": "c219f00948f1814f73d0103756a2a72f1df61756f5f82decfcca672ed3cf66dd"
+  },
+  {
+   "path": "docs/briefs/2026-11-22-r44/GUIDE_CONCEPT_level_flow_infographic.png",
+   "bytes": 2928314,
+   "sha256": "e9adf921c5b79233a13e78ea6e0688fa05c2be8ee6e38e86b518c3a679b07459"
+  },
+  {
    "path": "docs/briefs/2026-11-22-r44/PLAN_R44_CONNECTED_WORLD.md",
    "bytes": 3800,
    "sha256": "a82556434ca8fb2672460f1980f5fdef2746756ccb2adebf0589e0228867ccba"
@@ -11708,8 +11728,8 @@
   },
   {
    "path": "docs/briefs/2026-11-22-r44/USER_R44.md",
-   "bytes": 6510,
-   "sha256": "0aed38959b6a0e5f9a1e45f23e509ad30926149b20f1be80ef6df18f2e42ffd0"
+   "bytes": 9186,
+   "sha256": "032cab9f32d63d90f2ad43cf889c490b935fcaa97a051c5432106f8fdb796e2d"
   },
   {
    "path": "docs/characters/benny.md",
@@ -45490,6 +45510,16 @@
    "path": "tools/world/join_sheet.py",
    "bytes": 4132,
    "sha256": "4bb3a295b1d7f7a9d29c30c73782df94c9df6c07bd7f6d7618eef9d963c02f3e"
+  },
+  {
+   "path": "tools/world/setup_world.sh",
+   "bytes": 2049,
+   "sha256": "ad3f3aebe266d8423db1b121301513ecd6f0bf96e2f238f933d7f57d370dc5da"
+  },
+  {
+   "path": "tools/world/world.html",
+   "bytes": 60453,
+   "sha256": "4b2d912f7a62015c78998ca011a12cf927e8ae58520755e26549b376db7810eb"
   },
   {
    "path": "tools/world/world_layout.py",
