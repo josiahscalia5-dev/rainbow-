@@ -5934,3 +5934,101 @@ World v3 is built: the route now runs 184.6 units, from 04 through 06's banked c
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && Q=qa/world/r44/world_v3 && mkdir -p $Q && cp $S/world_v3_0506.jpg $Q/WORLD_v3_05_to_06_stills.jpg && cp $S/wv3/game/world.json $Q/ && python3 -c \"\nfrom PIL import Image; Image.open('$S/w3s_149.12/s0.10_l0.png').convert('RGB').save('$Q/WORLD_06_picture_view.jpg',quality=90)\" && cat > $Q/README.md <<'EOF'\n# Round 44 — world v3: 04 → A → B → 05 → 06 in ONE scene\n\nScreen 06 (kit, round 43b) joined after 05, scaled by 0.815 (`tools/screenkit/scale_layout.py`) so Benny is ONE physical size (0.46 …[+1352 chars]`
 
+### 🧑 User — 2026-11-22T17:05:05.400Z
+
+> ↩︎ result: "commit": "8675e86a7c5242daabde484eec15ae19d910e4f5",
+> 8675e86a7c5242daabde484eec15ae19d910e4f5
+> 8675e86a7c5242daabde484eec15ae19d910e4f5	refs/heads/ccr-0bbd5b9d-js1cpg
+
+### 🤖 Claude — 2026-11-22T17:05:09.061Z
+
+Saved: commit `8675e86a`, the same commit on GitHub. Now Screen 07: reading your approved picture.
+
+### 🤖 Claude — 2026-11-22T17:05:09.460Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/references/07_dive_the_washer_tube.png"}`
+
+### 🧑 User — 2026-11-22T17:05:09.488Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T17:05:51.004Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && mkdir -p $S/m07 && python3 - <<EOF\nimport cv2, numpy as np\nim=cv2.imread('references/07_dive_the_washer_tube.png'); H,W=im.shape[:2]\nhsv=cv2.cvtColor(im,cv2.COLOR_BGR2HSV)\ngold=((hsv[...,0]>=8)&(hsv[...,0]<=28)&(hsv[...,1]>80)&(hsv[...,2]>110)).astype(np.uint8)*255\ngray=cv2.cvtColor(im,cv2.COLOR_BGR2GRAY)\nedges=cv2.Canny(cv2.GaussianBlur(gray,(5,5),1.5),40,110)\ne=cv2.bitwise_and(edges,cv2.dilate(gold,np.ones((5,5),np.uint8))); e[:190]=0; e[1000:]=0\npts=np.column_stack(np.nonzero(e))[:,:: …[+1314 chars]`
+
+### 🧑 User — 2026-11-22T17:05:58.688Z
+
+> ↩︎ result: inliers   610 centre ( 427.5, 536.6) r  436.6 cover 16
+> inliers   934 centre ( 449.6, 542.6) r  421.7 cover 17
+> inliers   443 centre ( 339.1, 462.1) r  338.0 cover 15
+> inliers   481 centre ( 350.7, 454.7) r  320.0 cover 15
+> inliers   975 centre ( 568.0, 524.1) r  319.2 cover 21
+> inliers   385 centre ( 361.4, 644.3) r  318.2 cover 19
+> inliers   402 centre ( 390.0, 450.2) r  317.6 cover 15
+> inliers  1269 centre ( 566.9, 525.2) r  305.8 cover 26
+> inliers   531 centre ( 576.6, 532.1) r  303.8 cover 21
+> inliers   662 centre ( 544.7, 531.0) r  300.5 cover 23
+> inliers   410 centre ( 571.6, 552.2) r  295.1 cover 19
+> inliers  1375 centre ( 558.4, 526.2) r  290.6 cover 29
+> inliers   892 centre ( 579.1, 541.4) r  290.0 cover 22
+> inliers   452 centre ( 602.3, 560.8) r  213.3 cover 16
+> inliers   785 centre ( 588.8, 548.4) r  185.8 cover 28
+> inliers   503 centre ( 597.3, 540.6) r  179.9 cover 22
+
+### 🤖 Claude — 2026-11-22T17:06:01.294Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/m07/rings07.jpg"}`
+
+### 🧑 User — 2026-11-22T17:06:01.385Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T17:06:41.261Z
+
+> 🔧 **Bash** `{"command": "mkdir -p tools/screenkit/screens/07 && python3 - <<'EOF'\nsrc=open('tools/screenkit/screens/05/fit05.py').read()\ns=src.replace('''\"\"\"Screen 05 'Flow Into the Current' - FIT step''','''\"\"\"Screen 07 'Dive the Washer Tube' - FIT step''')\ns=s.replace(\"references/05_flow_into_the_current.png (read-only)\",\"references/07_dive_the_washer_tube.png (read-only)\")\ns=s.replace(\"\"\"  python3 -I tools/screenkit/screens/05/fit05.py <out dir> [--set key=json] [--tube-len L] [--open-end]\nMeasured on the picture (864 x 1536 px, gridded crops qa/world/r44/05/measure):\n  * the bright  …[+5226 chars]`
+
+### 🧑 User — 2026-11-22T17:07:13.016Z
+
+> ↩︎ result: fit07 written
+> references/07_dive_the_washer_tube.png references/08_final_spin_chamber.png
+> cam yaw 8.77 pitch -8.88; tube R 1.626 axis (-0.285, 0.999) off/R (0.176, -0.163); ring z -6.26; Benny water (-0.223, -1.348) h 0.501; chord 1.283; route 64.2 u; paddles 5
+> {"method": {"benny": "SAM 2.1 (pred IoU 0.946)", "coins": "SAM 2.1 per coin (circle below 6 px radius)"}, "masked_share": 0.2989}
+> Blender quit
+> screen 07 ready: /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/ws07/game/play3.html
+> ws07 scenery within 20: 84.9 %  SSIM 0.826  colour 0.994  sharpness 0.70
+> done
+
+### 🤖 Claude — 2026-11-22T17:07:16.164Z
+
+The first Screen 07 build measures **84.9 %** at your picture camera (SSIM 0.826, colour look 0.994). Checking how it looks and holds together while swimming.
+
+### 🤖 Claude — 2026-11-22T17:07:21.525Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && python3 - <<EOF\nfrom PIL import Image, ImageDraw\nimport numpy as np\nA=Image.open('/home/user/rainbow-/references/07_dive_the_washer_tube.png').convert('RGB'); s=915/1536; Aw=A.resize((round(864*s),915)); x0=(Aw.size[0]-412)//2; Ap=Aw.crop((x0,0,x0+412,915))\nitems=[(Ap,'APPROVED 07'),('$S/m07_def/s0.10_l0.png','NEW kit 07 (84.9 %)'),('$S/m07_gray/s0.10_l0.png','GRAY'),('$S/m07_def/s5.00_l0.png','swim s=5'),('$S/m07_def/s10.00_l0.png','swim s=10'),('$S/m07_def/s20.00_l0.png','swim s=20')]\nW,H …[+545 chars]`
+
+### 🧑 User — 2026-11-22T17:07:21.757Z
+
+> ↩︎ result: gray holes 0
+
+### 🤖 Claude — 2026-11-22T17:07:24.363Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/sheet07.jpg"}`
+
+### 🧑 User — 2026-11-22T17:07:24.421Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T17:08:27.642Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/world/world_layout.py'; s=open(p).read()\nreps=[\n(\"\"\"L06 = json.load(open(sys.argv[5])) if len(sys.argv) > 5 else None      # v3: Screen 06 (kit, scaled to the world's Benny: tools/screenkit/scale_layout.py)\"\"\",\n\"\"\"L06 = json.load(open(sys.argv[5])) if len(sys.argv) > 5 else None      # v3: Screen 06 (kit, scaled to the world's Benny: tools/screenkit/scale_layout.py)\nL07 = json.load(open(sys.argv[6])) if len(sys.argv) > 6 else None      # v4: Screen 07 (kit, scaled), tilted nose-down: a genuine descent toward 08\nBETA7 = math.radians(10.0)\n …[+6334 chars]`
+
+### 🧑 User — 2026-11-22T17:08:27.724Z
+
+> ↩︎ result: layout ok
+> blender ok
+> 12:import sys, os, json, math
+
+### 🤖 Claude — 2026-11-22T17:08:53.044Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/world/world.html'; s=open(p).read()\nreps=[\n(\"\"\"  const g = (await gltf.loadAsync(A.dir + 'scene.glb')).scene; g.position.copy(off); g.name = 'area_' + A.id; world.add(g); g.updateMatrixWorld(true);\"\"\",\n\"\"\"  const g = (await gltf.loadAsync(A.dir + 'scene.glb')).scene; g.position.copy(off); g.rotation.x = A.rot_x ?? 0; g.name = 'area_' + A.id; world.add(g); g.updateMatrixWorld(true);\n  const M = g.matrixWorld.clone(), Mi = M.clone().invert(); A.M = M;   // v4: an area may be tilted (07 descends); everything local goes through M\"\"\"),\n(\"\" …[+5139 chars]`
+

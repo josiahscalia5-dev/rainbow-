@@ -191,7 +191,8 @@ const kitFoamMat = (A) => new THREE.ShaderMaterial({ uniforms: { uL: { value: ne
 const loadKit = async (A) => {
   const LAY = await (await fetch(A.dir + 'layout.json')).json(); A.LAY = LAY; const off = V3(A.offset), DR = LAY.drum;
   A.glow = { value: new THREE.Vector3(DR.open_end ? -1e4 : DR.z1 + 14 + off.z, DR.open_end ? -1e4 - 1 : DR.z1 + 1 + off.z, 0.45) }; A.sharp = 1.3; A.lodBias = LAY.lod_bias ?? 0;
-  const g = (await gltf.loadAsync(A.dir + 'scene.glb')).scene; g.position.copy(off); g.name = 'area_' + A.id; world.add(g); g.updateMatrixWorld(true);
+  const g = (await gltf.loadAsync(A.dir + 'scene.glb')).scene; g.position.copy(off); g.rotation.x = A.rot_x ?? 0; g.name = 'area_' + A.id; world.add(g); g.updateMatrixWorld(true);
+  const M = g.matrixWorld.clone(), Mi = M.clone().invert(); A.M = M;   // v4: an area may be tilted (07 descends); everything local goes through M
   const famOf = (n) => /^tunnel(far)?_/.test(n) ? 'tunnel' : /^ring_/.test(n) ? 'ring' : /^water_/.test(n) ? 'water' : /^pool_/.test(n) ? 'pool' : /^flume_/.test(n) ? 'flume'
     : /^foam_/.test(n) ? 'foam' : /^paddle_/.test(n) ? 'copper' : /^funnel_/.test(n) ? 'funnel' : /^wall_/.test(n) ? 'wall' : /^arrow_/.test(n) ? 'arrow' : 'tunnel';
   const ms = []; g.traverse((o) => { if (o.isMesh) ms.push(o); });
@@ -214,12 +215,12 @@ const loadKit = async (A) => {
     const cap = new THREE.Mesh(new THREE.CircleGeometry(DR.r * 1.02, 64), new THREE.ShaderMaterial({ side: THREE.DoubleSide,
       vertexShader: 'varying vec2 vP; void main(){ vP = position.xy; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
       fragmentShader: `varying vec2 vP; void main(){ float r = length(vP) / ${(DR.r * 1.02).toFixed(3)}; vec3 c = mix(vec3(1.0, 0.97, 0.88), vec3(0.98, 0.62, 0.4), smoothstep(0.08, 0.35, r)); c = mix(c, vec3(0.55, 0.25, 0.7), smoothstep(0.35, 0.95, r)); gl_FragColor = vec4(c, 1.0); }` }));
-    cap.position.set(DR.axis_x + off.x, DR.axis_y + off.y, DR.z1 + off.z + 0.05); cap.name = 'drum_end'; cap.userData.area = A.id; world.add(cap); }
+    cap.position.set(DR.axis_x, DR.axis_y, DR.z1 + 0.05); cap.name = 'drum_end'; cap.userData.area = A.id; g.add(cap); }
   const MANI = await loadBake(A, ms);
   // the area's camera clamp (tube around its axis), world coordinates
-  CLAMPS.push((p) => { const z = p.z - off.z; if (z > DR.z0 + 0.5 || z < DR.z1) return false; const ax = DR.axis_x + off.x, ay = DR.axis_y + off.y, dx = p.x - ax, dy = p.y - ay, rr = Math.hypot(dx, dy), lim = DR.r - 0.3;
-    if (rr > lim) { p.x = ax + dx * lim / rr; p.y = ay + dy * lim / rr; return true; } return false; });
-  if (MANI?.foam) FOAMS.push(...MANI.foam.map((f) => [f[0] + off.x, f[1] + off.y, f[2] + off.z, ...f.slice(3)]));
+  CLAMPS.push((p) => { const L = p.clone().applyMatrix4(Mi); if (L.z > DR.z0 + 0.5 || L.z < DR.z1) return false; const dx = L.x - DR.axis_x, dy = L.y - DR.axis_y, rr = Math.hypot(dx, dy), lim = DR.r - 0.3;
+    if (rr > lim) { L.x = DR.axis_x + dx * lim / rr; L.y = DR.axis_y + dy * lim / rr; p.copy(L.applyMatrix4(M)); return true; } return false; });
+  if (MANI?.foam) FOAMS.push(...MANI.foam.map((f) => { const P = new THREE.Vector3(f[0], f[1], f[2]).applyMatrix4(M); return [P.x, P.y, P.z, ...f.slice(3)]; }));
   // bubbles exactly as the area's own page places them (its painted bubbles + the same seeded extras along ITS route, same bobbing phases)
   { const rp = (() => { let x = 777; return () => ((x = (x * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff); })();
     const LP = LAY.route.points.map(V3), LDS = LAY.route.ds, LB = LAY.route.bank ?? LP.map(() => 0), LL = (LP.length - 1) * LDS;
@@ -230,8 +231,8 @@ const loadKit = async (A) => {
     const S_REFa = LAY.cams[0].s_ref ?? 0, LEVa = Math.min(LL - 1.0, LAY.level_end ?? LL - 1.0);
     const B = (LAY.bubbles ?? []).map((b) => b.slice());
     for (let s = S_REFa + 6; s < LEVa; s += 1.2 + rp() * 1.4) { const F = lfr(s), p = lat_(s, new THREE.Vector3()).addScaledVector(F.r, (rp() - 0.5) * 2.2).addScaledVector(F.n, 0.15 + rp() * 0.8); B.push([p.x, p.y, p.z, 0.03 + rp() * rp() * 0.06]); }
-    for (const b of B) BUBBLES.push([b[0] + off.x, b[1] + off.y, b[2] + off.z, b[3], rp() * 6.28]); }
-  A.paintedCoins = (LAY.coins ?? []).map(V3).map((p) => p.add(off));
+    for (const b of B) { const P = new THREE.Vector3(b[0], b[1], b[2]).applyMatrix4(M); BUBBLES.push([P.x, P.y, P.z, b[3], rp() * 6.28]); } }
+  A.paintedCoins = (LAY.coins ?? []).map(V3).map((p) => p.applyMatrix4(M));
 };
 
 // ---------------- area: the Bubble Dash -> Sock Rescue section (section.json + section.glb), water / room built as section.html does ----------------
@@ -429,7 +430,7 @@ const camFrame = (s, out) => { const sm = (a, b) => a.clone().lerp(b, ROLL).norm
   const t = sm(new THREE.Vector3(Ft.x, 0, Ft.z).normalize(), Ft), n = sm(UPV, Fn), r = new THREE.Vector3().crossVectors(t, n).normalize(); n.crossVectors(r, t).normalize();
   return out.makeBasis(r, n, t.clone().negate()); };
 const KEYS = WD.cam_keys.map((k) => { const Mk = camFrame(k.s, new THREE.Matrix4()), Mi = Mk.clone().invert(), Pk = at(k.s, new THREE.Vector3());
-  const Qc = new THREE.Quaternion().setFromEuler(new THREE.Euler(k.pitch, k.yaw, 0, 'YXZ'));
+  const Qc = k.quat ? new THREE.Quaternion(...k.quat) : new THREE.Quaternion().setFromEuler(new THREE.Euler(k.pitch, k.yaw, 0, 'YXZ'));   // v4: a tilted area's camera
   return { s: k.s, area: k.area, off: V3(k.pos).sub(Pk).applyMatrix4(Mi), qrel: new THREE.Quaternion().setFromRotationMatrix(Mi).multiply(Qc) }; });
 const rigAt = (s) => { let i = KEYS.findIndex((k) => k.s > s); if (i === 0) return KEYS[0]; if (i < 0) return KEYS[KEYS.length - 1]; const a = KEYS[i - 1], b = KEYS[i], w = sstep(a.s, b.s, s);
   return { off: a.off.clone().lerp(b.off, w), qrel: a.qrel.clone().slerp(b.qrel, w) }; };

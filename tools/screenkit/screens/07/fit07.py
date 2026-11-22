@@ -1,0 +1,81 @@
+"""Screen 07 'Dive the Washer Tube' - FIT step of the screen kit (round 44, for the one connected world). Measures the user's approved picture
+references/07_dive_the_washer_tube.png (read-only) and writes ONE physical world for it (<out>/layout.json + fit overlay).
+  python3 -I tools/screenkit/screens/07/fit07.py <out dir> [--set key=json] [--tube-len L] [--open-end]
+Measured on the picture (864 x 1536 px, ring RANSAC qa/world/r44/07/measure):
+  * the ring family (568, 524) r 319 / (558, 526) r 291 / (589, 548) r 186 converges at (624, 576) = the bright core (vanishing point); the
+    centres drift up-left with growing radius -> the camera sits 0.18 radii right of and 0.16 radii BELOW the tube axis.
+  * the water line on that ring: the foam banks meet it at y ~ 720 on both sides (316, 720) / (820, 720) -> the axis is (720-524)/319 radii above
+    the water; with the camera 0.734 above the water this fixes the tube radius (~1.6 u).
+  * Benny: water contact (420, 1200), pompom top (430, 785). Coins (centre, radius): the painted S-trail. Copper trays on the left wall.
+  * the river fills the tube floor (pink edges + cyan core, S-curves through the coins): the floor water is the tube's own pool; Benny's
+    route = a smooth curve THROUGH his water point and every coin's water point (coins stay collectable), then straight on down the tube.
+"""
+import sys, os, json, math, argparse
+import numpy as np
+from PIL import Image, ImageDraw
+HERE = os.path.dirname(os.path.abspath(__file__)); KIT = os.path.abspath(os.path.join(HERE, '..', '..')); REPO = os.path.abspath(os.path.join(KIT, '..', '..'))
+sys.path.insert(0, KIT)
+import fitlib as fl   # noqa: E402
+
+ap = argparse.ArgumentParser(); ap.add_argument('out'); ap.add_argument('--da2'); ap.add_argument('--set', action='append', default=[])
+ap.add_argument('--tube-len', type=float, default=40.0); ap.add_argument('--open-end', action='store_true')
+a = ap.parse_args(); os.makedirs(a.out, exist_ok=True)
+REF = 'references/07_dive_the_washer_tube.png'; W, H = 864, 1536
+M = dict(vp=(624.0, 576.0), ring=(568.0, 524.0, 319.0), waterline_y=720.0,
+         benny_water=(420.0, 1200.0), benny_top=(430.0, 785.0),
+         coins=[(610.0, 825.0, 48.0), (505.0, 745.0, 30.0), (480.0, 678.0, 23.0), (530.0, 650.0, 18.0), (595.0, 633.0, 13.0), (627.0, 625.0, 10.0),
+                (650.0, 622.0, 8.0), (668.0, 612.0, 6.0)],
+         paddles=[(262.0, 270.0, 155.0), (160.0, 455.0, 165.0), (388.0, 420.0, 85.0), (470.0, 490.0, 55.0), (530.0, 535.0, 30.0)])
+cam = fl.Cam(W, H)
+yaw, pitch = fl.yaw_pitch_from_vp(cam, M['vp']); cam.set(yaw, pitch, [0.0, fl.CAM_H, 0.0])
+cx, cy, r = M['ring']; ox = (M['vp'][0] - cx) / r; oy = (cy - M['vp'][1]) / r          # camera right of / above the axis, in radii
+k_w = (M['waterline_y'] - cy) / r; R = fl.CAM_H / (k_w + oy)
+xa, ya = float(cam.C[0] - ox * R), float(cam.C[1] - oy * R); chord = math.sqrt(max(0.01, R * R - ya * ya))
+z_ring0 = -(cam.F * R / r)
+Pb = cam.on_plane_y(*M['benny_water']); dtop = cam.ray(*M['benny_top']); lam = (Pb[2] - cam.C[2]) / dtop[2]; HB = float((cam.C + lam * dtop)[1])
+COIN_R = 0.5 * 0.477 * HB; kc = COIN_R * cam.F
+deps = [kc / rr for _, _, rr in M['coins']]
+for i in range(1, len(deps)):
+    if M['coins'][i][2] < 12: deps[i] = max(deps[i], deps[i - 1] + 1.2)
+coins = [cam.C + cam.depth_dir(x, y) * dz for (x, y, _), dz in zip(M['coins'], deps)]
+water_pts = [P - np.array([0, COIN_R, 0]) for P in coins]
+for w in water_pts: w[1] = 0.0
+far = water_pts[-1][2] - a.tube_len
+ctrl = [Pb + np.array([0, 0, 1.2]), Pb] + water_pts + [np.array([water_pts[-1][0] * (1 - k) + xa * k, 0.0, water_pts[-1][2] - 3.0 * (j + 1)]) for j, k in enumerate([0.3, 0.6, 0.85, 1.0])]
+ctrl += [np.array([xa, 0.0, z]) for z in np.arange(ctrl[-1][2] - 3.0, far, -3.0)]
+route, s = fl.catmull_rom(np.array(ctrl), 0.05)
+route[:, 1] = 0.0
+paddles = []
+for x, y, wpx in M['paddles']:
+    P = fl.ray_cylinder(cam.C, cam.ray(x, y), np.array([xa, ya, 0.0]), np.array([0, 0, -1.0]), R)
+    if P is not None:
+        dep = float(-(cam.R.T @ (P - cam.C))[2]); paddles.append({'pos': P, 'width': wpx * dep / cam.F})
+lay = {'screen': '07', 'title': 'DIVE THE WASHER TUBE', 'ref': REF, 'fov': cam.fov, 'img': [W, H], 'focal_px': cam.F,
+       'cams': [cam.json(REF, {'name': 'ref07', 's_ref': float(np.argmin(np.linalg.norm(route - Pb, axis=1)) * 0.05)})],
+       'benny': {'pos': Pb, 'height': HB, 'bsize': 1.19, 'lift': 0.03, 'ahead': 0.15},
+       'coin_radius': COIN_R, 'coins': coins,
+       'route': {'ds': 0.05, 'points': route, 'bank': np.zeros(len(route)), 'width': 2 * chord * 0.9},
+       'drum': {'axis_x': xa, 'axis_y': ya, 'r': R, 'z0': 3.0, 'z_far': z_ring0 - 14.0, 'z1': far if a.open_end else far - 2.0, 'open_end': bool(a.open_end),
+                'seg': 2.0, 'seg_far': 8.0, 'chord': chord, 'cam_off_R': [ox, oy], 'pool_y': -0.02},
+       'rings': {'z': [z_ring0], 'spacing': 2.6, 'band': 0.32},
+       # r44: the painted S-river as its own water ribbon along Benny's route (one-factor test: start view unchanged 83.5 %, pink river edge in motion)
+       'paddles': paddles, 'bubbles': [], 'no_route_ribbon': False, 'route_flume': False, 'foam_pool': True,
+       'bake_res': {'pool': [1024, 2048]}, 'splash_scale': 0.6, 'lod_bias': -0.8, 'bake_dens': [1, 4], 'number': '07', 'next': '08', 'coins_start': 1940}
+# the painted S-river (pink edges + cyan core) at the coin trail: 300 px wide at y 745 -> its real width at that depth (river ribbon)
+Pr = cam.on_plane_y(520.0, 745.0); RIVER_W = 300.0 * float(-(cam.R.T @ (Pr - cam.C))[2]) / cam.F; lay['river_width'] = RIVER_W; lay['route']['width'] = RIVER_W
+for kv in a.set:
+    k, v = kv.split('=', 1); v = json.loads(v)
+    if k == 'river_ribbon' and v:                                # one-factor test: the S-river as its own water ribbon along Benny's route
+        lay['no_route_ribbon'] = False; lay['route_flume'] = False; lay['route']['width'] = RIVER_W
+    else: lay[k] = v
+fl.dump(os.path.join(a.out, 'layout.json'), lay)
+im = Image.open(os.path.join(REPO, REF)).convert('RGB'); d = ImageDraw.Draw(im)
+P2 = lambda P: tuple(cam.proj(P)[0])
+for z in [z_ring0, z_ring0 - 2.6, z_ring0 - 5.2, z_ring0 - 10.4]:
+    d.line([P2([xa + R * math.cos(t), ya + R * math.sin(t), z]) for t in np.linspace(0, 2 * math.pi, 73)], fill=(0, 255, 0), width=2)
+d.line([P2(p) for p in route[::8]], fill=(255, 255, 0), width=3)
+for c in coins: x, y = P2(c); d.ellipse([x - 6, y - 6, x + 6, y + 6], outline=(255, 128, 0), width=3)
+for p in paddles: x, y = P2(p['pos']); d.ellipse([x - 8, y - 8, x + 8, y + 8], outline=(0, 255, 255), width=3)
+im.save(os.path.join(a.out, 'fit_overlay.jpg'), quality=88)
+print(f"cam yaw {math.degrees(yaw):.2f} pitch {math.degrees(pitch):.2f}; tube R {R:.3f} axis ({xa:.3f}, {ya:.3f}) off/R ({ox:.3f}, {oy:.3f}); ring z {z_ring0:.2f}; "
+      f"Benny water ({Pb[0]:.3f}, {Pb[2]:.3f}) h {HB:.3f}; chord {chord:.3f}; route {float(s[-1]):.1f} u; paddles {len(paddles)}")

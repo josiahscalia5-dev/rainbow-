@@ -30,7 +30,34 @@ json.dump(L, open(sys.argv[2], 'w'))
 PY
 NODE_PATH=$(npm root -g) node "$SRC/tools/screenkit/screen_export.cjs" "$WS/w06/game" "$WS/w06/app" > "$WS/w06_export.log" 2>&1
 mkdir -p "$G/a06/baked"; cp "$WS/w06/game/layout.json" "$WS/w06/game/scene.glb" "$G/a06/"; cp "$WS/w06/app/baked/"* "$G/a06/baked/"
-python3 -I "$SRC/tools/world/world_layout.py" "$G/a04/layout.json" "$G/aAB/section.json" "$G" "$G/a05/layout.json" "$G/a06/layout.json" | tee "$WS/world_layout.log"
+# v4: 06 ends after its route (its far drum is replaced by the join into 07): z1 = z_far, open end, re-built + re-baked at that length
+python3 - "$WS/w06/fit/layout.json" <<'PY'
+import json, sys
+L = json.load(open(sys.argv[1])); L['drum']['z1'] = L['drum']['z_far']; L['drum']['open_end'] = True; json.dump(L, open(sys.argv[1], 'w'))
+PY
+blender -b --python "$SRC/tools/screenkit/blender_kit.py" -- "$WS/w06/fit/layout.json" "$WS/w06/game/scene.glb" > "$WS/w06/fit/blender.log" 2>&1
+python3 - "$WS/w06/fit/layout.json" "$WS/w06/game/layout.json" <<'PY'
+import json, sys
+L = json.load(open(sys.argv[1]))
+for i, c in enumerate(L['cams']): c['plate'] = f'plate_{i}.png'; c['mask'] = f'mask_{i}.png'
+json.dump(L, open(sys.argv[2], 'w'))
+PY
+rm -rf "$WS/w06/app"; NODE_PATH=$(npm root -g) node "$SRC/tools/screenkit/screen_export.cjs" "$WS/w06/game" "$WS/w06/app" > "$WS/w06_export.log" 2>&1
+rm -rf "$G/a06"; mkdir -p "$G/a06/baked"; cp "$WS/w06/game/layout.json" "$WS/w06/game/scene.glb" "$G/a06/"; cp "$WS/w06/app/baked/"* "$G/a06/baked/"
+# v4: Screen 07 (kit) scaled to the world's Benny, its tube 30 u long and open toward 08
+bash "$SRC/tools/screenkit/setup_screen.sh" 07 "$WS/s07" > "$WS/s07.log" 2>&1
+bash "$SRC/tools/screenkit/variant.sh" 07 "$WS/s07" "$WS/w07" --tube-len 30 --open-end > /dev/null
+python3 -I "$SRC/tools/screenkit/scale_layout.py" "$WS/w07/fit/layout.json" "$WS/w07/fit/layout.json" --benny-h 0.468
+blender -b --python "$SRC/tools/screenkit/blender_kit.py" -- "$WS/w07/fit/layout.json" "$WS/w07/game/scene.glb" > "$WS/w07/fit/blender.log" 2>&1
+python3 - "$WS/w07/fit/layout.json" "$WS/w07/game/layout.json" <<'PY'
+import json, sys
+L = json.load(open(sys.argv[1]))
+for i, c in enumerate(L['cams']): c['plate'] = f'plate_{i}.png'; c['mask'] = f'mask_{i}.png'
+json.dump(L, open(sys.argv[2], 'w'))
+PY
+NODE_PATH=$(npm root -g) node "$SRC/tools/screenkit/screen_export.cjs" "$WS/w07/game" "$WS/w07/app" > "$WS/w07_export.log" 2>&1
+mkdir -p "$G/a07/baked"; cp "$WS/w07/game/layout.json" "$WS/w07/game/scene.glb" "$G/a07/"; cp "$WS/w07/app/baked/"* "$G/a07/baked/"
+python3 -I "$SRC/tools/world/world_layout.py" "$G/a04/layout.json" "$G/aAB/section.json" "$G" "$G/a05/layout.json" "$G/a06/layout.json" "$G/a07/layout.json" | tee "$WS/world_layout.log"
 blender -b --python "$SRC/tools/world/blender_connectors.py" -- "$G/connectors_spec.json" "$G/connectors.glb" > "$WS/connectors.log" 2>&1 || { tail -20 "$WS/connectors.log"; exit 1; }
 cp "$SRC/tools/world/world.html" "$G/play3.html"; cp "$SRC/tools/kit05/controls.js" "$SRC/tools/kit05/swimfx.js" "$G/"
 for f in benny31.glb bake.png coin.png splash.png bubble.png glint.png; do cp -L "$WS/w04/game/$f" "$G/$f"; done

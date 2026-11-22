@@ -71,7 +71,9 @@ for c in SPEC['connectors']:
         A = [Vector(p) for p in c['axis']]; Hh = c['half']; n = len(A)
         def f(u, v, A=A, Hh=Hh, n=n, c=c):
             k = v * (n - 1); i = min(int(k), n - 2); w = k - i; P = A[i].lerp(A[i + 1], w); h = Hh[i] + (Hh[i + 1] - Hh[i]) * w
-            t = (A[i + 1] - A[i]).normalized(); rgt = Vector((-t.z, 0.0, t.x)).normalized(); p = P + rgt * (h * (2 * u - 1)); return ((p.x, c['y'], p.z), (u, v))
+            t = (A[i + 1] - A[i]).normalized(); rgt = Vector((-t.z, 0.0, t.x)).normalized(); p = P + rgt * (h * (2 * u - 1))
+            yy = c['ys'][i] + (c['ys'][i + 1] - c['ys'][i]) * w if c.get('ys') else c['y']   # r44: a water strip that descends with its connector
+            return ((p.x, yy, p.z), (u, v))
         grid(c['name'], 24, 4 * (n - 1), f)
 bpy.ops.export_scene.gltf(filepath=OUT, export_format='GLB', export_yup=True, export_texcoords=True, export_normals=True, export_materials='NONE', export_apply=True)
 print('exported', OUT, [o.name for o in bpy.data.objects])

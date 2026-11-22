@@ -15,6 +15,18 @@ import numpy as np
 L04 = json.load(open(sys.argv[1])); SEC = json.load(open(sys.argv[2])); OUT = sys.argv[3]; os.makedirs(OUT, exist_ok=True)
 L05 = json.load(open(sys.argv[4])) if len(sys.argv) > 4 else None      # v2: Screen 05 (kit) joined after Sock Rescue
 L06 = json.load(open(sys.argv[5])) if len(sys.argv) > 5 else None      # v3: Screen 06 (kit, scaled to the world's Benny: tools/screenkit/scale_layout.py)
+L07 = json.load(open(sys.argv[6])) if len(sys.argv) > 6 else None      # v4: Screen 07 (kit, scaled), tilted nose-down: a genuine descent toward 08
+BETA7 = math.radians(10.0)
+def rotx(a):   # rotation about +x by a (a < 0 tips the local forward direction -z downward)
+    c, s_ = math.cos(a), math.sin(a); return np.array([[1, 0, 0], [0, c, -s_], [0, s_, c]])
+def quat_of(R):   # rotation matrix -> quaternion (x, y, z, w)
+    t = np.trace(R)
+    if t > 0: S_ = math.sqrt(t + 1.0) * 2; return [(R[2, 1] - R[1, 2]) / S_, (R[0, 2] - R[2, 0]) / S_, (R[1, 0] - R[0, 1]) / S_, 0.25 * S_]
+    i = int(np.argmax(np.diag(R))); j, k_ = (i + 1) % 3, (i + 2) % 3; S_ = math.sqrt(1.0 + R[i, i] - R[j, j] - R[k_, k_]) * 2; q = [0.0, 0.0, 0.0, 0.0]
+    q[i] = 0.25 * S_; q[j] = (R[j, i] + R[i, j]) / S_; q[k_] = (R[k_, i] + R[i, k_]) / S_; q[3] = (R[k_, j] - R[j, k_]) / S_; return q
+def cam_R(yaw, pitch):
+    cy, sy, cp, sp = math.cos(yaw), math.sin(yaw), math.cos(pitch), math.sin(pitch)
+    return np.array([[cy, 0, sy], [0, 1, 0], [-sy, 0, cy]]) @ np.array([[1, 0, 0], [0, cp, -sp], [0, sp, cp]])
 DS = 0.05
 
 
@@ -86,6 +98,34 @@ if L06:   # ---- join 05 -> 06 (user's guide: "S-curve climbs seamlessly into th
                     'band': 0.3, 'area': '06', 'fam': 'ring'},
                    {'name': 'cwater_056', 'kind': 'strip_path', 'axis': ax6.round(5).tolist(), 'half': (half6 * 0.98).round(5).tolist(), 'y': -0.012, 'area': '06', 'fam': 'pool'}]
     conn_tubes.append({'axis': ax6.round(4).tolist(), 'r': rad6.round(4).tolist()})
+if L07:   # ---- join 06 -> 07 (user's guide: "crest flows down into the deeper descending washer tube"): 06's drum ends after its route, a
+    # Blender connector narrows it into 07's tube and bends DOWN into 07's descent (07 is tilted BETA7 nose-down; its picture view is unchanged)
+    D7 = L07['drum']; r7 = np.array(L07['route']['points']); R7m = rotx(-BETA7); LC7 = 7.0
+    z6_end = D6['z1'] + T6[2]; C0 = np.array([D6['axis_x'] + T6[0], D6['axis_y'], z6_end])
+    p6e = r6[-1] + T6; fwd7 = R7m @ np.array([0, 0, -1.0])
+    C1 = C0 + np.array([0.0, -LC7 * math.tan(BETA7) * 0.5, -LC7])
+    T7 = C1 - R7m @ np.array([D7['axis_x'], D7['axis_y'], D7['z0']])
+    W7 = lambda P: (R7m @ np.asarray(P, float).T).T + T7                  # 07 local -> world
+    T7[0] += (p6e[0] - W7(r7[0])[0])                                      # route x continuous
+    C1 = W7([D7['axis_x'], D7['axis_y'], D7['z0']])
+    def herm2(p0, p1, m0, m1, t):
+        h00 = 2 * t ** 3 - 3 * t ** 2 + 1; h10 = t ** 3 - 2 * t ** 2 + t; h01 = -2 * t ** 3 + 3 * t ** 2; h11 = t ** 3 - t ** 2
+        return h00[:, None] * p0 + h10[:, None] * m0 + h01[:, None] * p1 + h11[:, None] * m1
+    tt = np.linspace(0, 1, 61); Lc = float(np.linalg.norm(C1 - C0)); k7 = tt * tt * (3 - 2 * tt)
+    ax7 = herm2(C0, C1, np.array([0, 0, -Lc]), fwd7 * Lc, tt); ax7[0, 2] += 0.2; ax7[-1] -= fwd7 * 0.2
+    rad7 = D6['r'] + (D7['r'] - D6['r']) * k7 + 0.006
+    hA6, hA7 = D6['axis_y'], D7['axis_y']                                 # axis height above the water at both ends (06 drum / 07 tube)
+    wy7 = ax7[:, 1] - (hA6 + (hA7 - hA6) * k7)                            # the water surface along the connector (descends with it)
+    half7 = np.sqrt(np.maximum(0.01, rad7 ** 2 - (hA6 + (hA7 - hA6) * k7) ** 2))
+    p7s = W7(r7[0]); Lr = float(np.linalg.norm(p7s - p6e)); t4 = np.linspace(0, 1, max(8, int(Lr / DS)) + 1)[1:-1]
+    rc4 = herm2(p6e, p7s, np.array([0, 0, -Lr]), fwd7 * Lr, t4)
+    parts += [rc4, W7(r7)]; banks += [np.zeros(len(rc4)), np.zeros(len(r7))]
+    conn_extra += [{'name': f'ctube_067_{i}', 'kind': 'tube', 'axis': ax7[i * 30:(i + 1) * 30 + 1].round(5).tolist(), 'r': rad7[i * 30:(i + 1) * 30 + 1].round(5).tolist(),
+                    'area': '06' if i == 0 else '07', 'fam': 'tunnel'} for i in range(2)]
+    conn_extra += [{'name': 'cring_067', 'kind': 'collar_path', 'axis_pt': ax7[30].round(5).tolist(), 'dir': (ax7[31] - ax7[29]).round(5).tolist(), 'r': float(rad7[30] - 0.03),
+                    'band': 0.3, 'area': '07', 'fam': 'ring'},
+                   {'name': 'cwater_067', 'kind': 'strip_path', 'axis': ax7.round(5).tolist(), 'half': (half7 * 0.98).round(5).tolist(), 'ys': (wy7 - 0.012).round(5).tolist(), 'y': 0.0, 'area': '07', 'fam': 'pool'}]
+    conn_tubes.append({'axis': ax7.round(4).tolist(), 'r': rad7.round(4).tolist()})
 # ONE route through every part; the bank (06's crest) is carried along by arc length
 Pall = np.vstack(parts); Ball = np.concatenate(banks); Lc = np.concatenate([[0], np.cumsum(np.linalg.norm(np.diff(Pall, axis=0), axis=1))])
 sg = np.arange(0, Lc[-1] + 1e-9, DS); route = np.stack([np.interp(sg, Lc, Pall[:, i]) for i in range(3)], 1); bank = np.interp(sg, Lc, Ball)
@@ -94,6 +134,7 @@ s04_end = s_of(r4[-1]); sAB0 = s_of(rs[0]); s_bub = s_of(np.array(SEC['benny']['
 LEVEL = float((len(route) - 1) * DS)
 s_B_end = s_of(rs[-1]); s05_0 = s_of(r5[0] + T5) if L05 else None
 s05_end = s_of(r5[-1] + T5) if L05 else None
+s06_end = s_of(r6[-1] + T6) if L06 else None
 # ---- camera keys: Benny's route position at each approved picture + that picture's fitted camera (world). Exact there; blended between.
 c4 = L04['cams'][0]; ahead4 = L04['benny'].get('ahead', 0.0)
 keys = [{'area': '04', 's': float(c4['s_ref'] + ahead4), 'pos': c4['pos'], 'yaw': c4['yaw'], 'pitch': c4['pitch'], 'ref': c4['ref']}]
@@ -113,7 +154,12 @@ if L05:
 if L06:
     c6 = L06['cams'][0]; keys.append({'area': '06', 's': s_of(np.array(L06['benny']['pos']) + T6) + L06['benny'].get('ahead', 0.0), 'pos': (np.array(c6['pos']) + T6).tolist(),
                                         'yaw': c6['yaw'], 'pitch': c6['pitch'], 'ref': c6['ref']})
-    areas.append({'id': '06', 'kind': 'kit', 'dir': 'a06/', 'offset': T6.tolist(), 's0': s05_end + 3.0, 's1': LEVEL, 'title': '06 · CREST THE RINSE ARCH'})
+    areas.append({'id': '06', 'kind': 'kit', 'dir': 'a06/', 'offset': T6.tolist(), 's0': s05_end + 3.0, 's1': (s06_end + 3.0) if L07 else LEVEL, 'title': '06 · CREST THE RINSE ARCH'})
+if L07:
+    c7 = L07['cams'][0]; Rc = R7m @ cam_R(c7['yaw'], c7['pitch'])
+    keys.append({'area': '07', 's': s_of(W7(L07['benny']['pos'])) + L07['benny'].get('ahead', 0.0), 'pos': W7(c7['pos']).tolist(), 'quat': quat_of(Rc),
+                 'yaw': c7['yaw'], 'pitch': c7['pitch'], 'ref': c7['ref']})
+    areas.append({'id': '07', 'kind': 'kit', 'dir': 'a07/', 'offset': T7.tolist(), 'rot_x': -BETA7, 's0': s06_end + 3.0, 's1': LEVEL, 'title': '07 · DIVE THE WASHER TUBE'})
 # ---- connector pieces (Blender): the chamber's near wall with the doorway of 04's tube + a gold collar ring around it
 CH = SEC['chamber']
 conn = [{'name': 'cwall_04A', 'kind': 'wall_hole', 'z': z_end4, 'x0': CH['xl'] + T[0], 'x1': CH['xr'] + T[0], 'y0': -0.4, 'y1': CH['yc'],
@@ -127,6 +173,7 @@ world = {'version': 1, 'note': 'round 44: 04 -> A Bubble Dash -> B Sock Rescue i
          'start_s': keys[0]['s'], 'benny_h': L04['benny']['height']}
 json.dump(world, open(os.path.join(OUT, 'world.json'), 'w'))
 json.dump({'connectors': conn}, open(os.path.join(OUT, 'connectors_spec.json'), 'w'), indent=1)
+if L07: print(f"07 offset {T7.round(3).tolist()} tilted {math.degrees(BETA7):.0f} deg down; 06 route ends s {s06_end:.2f}; 07 picture key s {keys[-1]['s']:.2f}; drop over 07 {float(W7(r7[0])[1] - W7(r7[-1])[1]):.1f} u")
 if L06: print(f"06 offset {T6.round(3).tolist()}; 05 route ends s {s05_end:.2f}; 06 picture key s {keys[-1]['s']:.2f}; crest bank max {np.degrees(np.abs(bank).max()):.1f} deg")
 if L05: print(f"05 offset {T5.round(3).tolist()}; Sock Rescue ends s {s_B_end:.2f}; 05 route from s {s05_0:.2f}")
 print(f"04 tube end z {z_end4:.2f}; section offset {T.round(3).tolist()}; route {LEVEL:.2f} u (04 0-{s04_end:.2f}, AB {s04_end:.2f}-{LEVEL:.2f}); "

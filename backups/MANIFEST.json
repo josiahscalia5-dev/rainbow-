@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 27962,
-   "sha256": "cae6c40fc0833916487644c6263c044d8eb43a0244429a9fcc6f2accd6c42f43"
+   "sha256": "98b5252bde16c3359493d587b2806c0a686e589fc9e11e0cb183b332056ee0ba"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3622,
-   "sha256": "6407c1013d80c5d0013f0ce3ebc9d119fc66a5d66a2b3d3227f5bdac318323ab"
+   "sha256": "38d1a3943bd99db5b05c7481488d4dda38bcbf99b4fdd81c97e89d9e224e5de5"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -45652,6 +45652,16 @@
    "sha256": "d6707966f53c5973568c724100154fc96530c33788a3f2bf7b4a1695ddf5c8b5"
   },
   {
+   "path": "tools/screenkit/screens/07/fit07.py",
+   "bytes": 6935,
+   "sha256": "745c1e2bfa88abbbd9d90f262c10e633398b8c70e9dad8bf9e065ee2225f039d"
+  },
+  {
+   "path": "tools/screenkit/screens/07/segment07.json",
+   "bytes": 861,
+   "sha256": "b41652f5241867e2251de987c4db860e3f698e36f38a4bb71b1df002c5bfdc58"
+  },
+  {
    "path": "tools/screenkit/segment.py",
    "bytes": 4351,
    "sha256": "01d27130aa8ca2b9b6cc814efc7ebf172042ef3f0de23e130606e38e89c218bf"
@@ -45683,8 +45693,8 @@
   },
   {
    "path": "tools/world/blender_connectors.py",
-   "bytes": 6018,
-   "sha256": "02a70010fb045d416b6eba891eba5d294d34babe5bd2a8e2aab1fc397975d325"
+   "bytes": 6172,
+   "sha256": "20569f99228812f5fd701ebc248aae5720c71aca35581f633360f3a7dcd68803"
   },
   {
    "path": "tools/world/join_audit.cjs",
@@ -45698,18 +45708,18 @@
   },
   {
    "path": "tools/world/setup_world.sh",
-   "bytes": 3639,
-   "sha256": "0dc096e30fa3b46d62b1e36cef4807e268a33209fd252748ee41758c1749c69a"
+   "bytes": 5736,
+   "sha256": "b8ce9e3a43a0f500e475eb8036d8eb6eb7b80c07f2f33be52d849ec575ec42c8"
   },
   {
    "path": "tools/world/world.html",
-   "bytes": 67823,
-   "sha256": "b724b6e533daea226e9873ca0c6d7f3d69f203da7da038a87e99b14580885547"
+   "bytes": 68167,
+   "sha256": "69849f418b93f4206822565ead4e28949a5a2f5f464a6bdab77407c104813e15"
   },
   {
    "path": "tools/world/world_layout.py",
-   "bytes": 13381,
-   "sha256": "36a89f5861bdbddc7d359a7308954b073ea10caf9ac80dff96b409ef1d7b1f25"
+   "bytes": 18058,
+   "sha256": "63cb071ed2e8509b9da14cc57abc9d8ed17065bf6cd2c92cd67f230d69a61c58"
   },
   {
    "path": "tools/worldlabs/analyze_splats.py",
