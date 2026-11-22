@@ -241,9 +241,9 @@ ${body}        gl_FragColor = best; }` });
 }
 window.bakeStats = () => BAKE_STATS;
 window.bakeExport = (name) => { const d = BAKE_DATA[name]; if (!d) return null; if (d.template) return { template: d.template };
-  const png = (w, h, px, type = 'image/png') => { const c = document.createElement('canvas'); c.width = w; c.height = h; const g = c.getContext('2d'), im = g.createImageData(w, h);
-    for (let y = 0; y < h; y++) im.data.set(px.subarray((h - 1 - y) * w * 4, (h - y) * w * 4), y * w * 4); g.putImageData(im, 0, 0); return c.toDataURL(type, 0.9); };
-  return { bake: png(d.w, d.h, d.px, 'image/jpeg'), den: png(d.dw, d.dh, d.dp), cov: +d.cov.toFixed(3) }; };
+  const png = (w, h, px, type = 'image/png', qual = 0.9) => { const c = document.createElement('canvas'); c.width = w; c.height = h; const g = c.getContext('2d'), im = g.createImageData(w, h);
+    for (let y = 0; y < h; y++) im.data.set(px.subarray((h - 1 - y) * w * 4, (h - y) * w * 4), y * w * 4); g.putImageData(im, 0, 0); return c.toDataURL(type, qual); };
+  return { bake: png(d.w, d.h, d.px, 'image/jpeg', +(q.get('jpegq') ?? 0.96)), den: png(d.dw, d.dh, d.dp), cov: +d.cov.toFixed(3) }; };   // app bake quality (0.9 cost 2.4 points)
 window.bakeNames = () => Object.keys(BAKE_DATA);
 // foam domes: the GN foam banks keep a soft lavender-white shade (no picture bake needed: small, many)
 for (const o of MESH) if (o.userData.fam === 'foam') o.material = new THREE.ShaderMaterial({ uniforms: { uL: { value: new THREE.Vector3(-0.25, 0.8, 0.55).normalize() }, ...GLOW },

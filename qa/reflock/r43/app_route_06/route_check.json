@@ -1,0 +1,62 @@
+{
+ "steps": [
+  {
+   "step": "game at the end of 05",
+   "state": {
+    "mode": "ride",
+    "stage": "05",
+    "s": 185.924,
+    "lat": 0,
+    "coins": 1420,
+    "hearts": 5,
+    "paused": false,
+    "bennyY": -43.325,
+    "bennyVisible": true,
+    "cam": [
+     3.14,
+     -40.2,
+     -120.65
+    ]
+   }
+  },
+  {
+   "step": "handed over to the kit Screen 06",
+   "url": "http://127.0.0.1:9812/screen06/index.html?return=1&kit06=1&bonus=1&coins=1420"
+  },
+  {
+   "step": "kit 06 loaded",
+   "info": {
+    "LEVEL": 43.95,
+    "S_REF": 1.2000000000000002,
+    "meshes": 125,
+    "coins": 26,
+    "bake": 123,
+    "screen": "06"
+   }
+  },
+  {
+   "step": "handed back to the game",
+   "url": "http://127.0.0.1:9812/index.html?resume=07&kit06=1&bonus=1&coins=1540"
+  },
+  {
+   "step": "game resumed",
+   "state": {
+    "mode": "ride",
+    "stage": "07",
+    "s": 273.066,
+    "lat": 0,
+    "coins": 1540,
+    "hearts": 5,
+    "paused": false,
+    "bennyY": -49.637,
+    "bennyVisible": true,
+    "cam": [
+     10.87,
+     -45.94,
+     -195.29
+    ]
+   }
+  }
+ ],
+ "errors": []
+}

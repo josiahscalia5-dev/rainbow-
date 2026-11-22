@@ -1,3 +1,9 @@
+# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 43 (2026-11-22 ~14:00 UTC, branch `ccr-80cdb162-4sqz1a`)
+Reusable SCREEN KIT (`tools/screenkit/`, Blender Geometry Nodes components + generic bake/game page; SAM 2 adopted for masks, Depth Anything =
+cross-check) and Screen 06 rebuilt from its own approved picture: 89.5 % scenery px within 20 levels at the picture camera (old game 06: 3.6 %),
+whole-level real-touch run clean; in motion the look still drifts (colour look 0.27-0.36) = next task. Resume: `docs/briefs/2026-11-22-r43/RESUME_R43.md`,
+results `qa/reflock/r43/RESULT_R43.md`, orders `docs/briefs/2026-11-22-r43/USER_R43.md`.
+
 # ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 42 (2026-11-22 ~12:25 UTC, branch `ccr-50ff6f57-q5me82`)
 Resume file: **`docs/briefs/2026-11-22-r42/RESUME_R42.md`** (user's newest orders, the 13-image list + gameplay order, what was done, what is NOT
 verified yet, next steps). Screen 06: swipe lanes 11/11 real touch, on-screen guard (Benny off-screen 39 → 0 frames), root cause of the gold bars
