@@ -120,19 +120,25 @@ const sceneryMat = (base, rep, A, opts = {}) => new THREE.ShaderMaterial({
 const WATER_CORE = `float hsh(vec2 p){ vec3 p3 = fract(vec3(p.xyx) * 0.1031); p3 += dot(p3, p3.yzx + 33.33); return fract((p3.x + p3.y) * p3.z); }
   float nse(vec2 p){ vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f); return mix(mix(hsh(i), hsh(i + vec2(1, 0)), f.x), mix(hsh(i + vec2(0, 1)), hsh(i + vec2(1, 1)), f.x), f.y); }
   vec3 c3(float r, float g, float b){ return vec3(r, g, b) / 255.0; }
-  vec3 waterCol(float u, float uw, float tp, float pin0, float pinW){ float au = abs(u);
+  // pkS = pink strength (kit pools 0.4); sec = 1.0 adds tools/reflock/section.html's extra terms (pin noise, fine ripples, sparkle stars)
+  vec3 waterCol(float u, float uw, float tp, float pin0, float pinW, float pkS, float sec, float RWs){ float au = abs(u);
     float mea = 0.55 * sin(tp * 0.83 + u * 2.3) + 0.35 * sin(tp * 1.71 - u * 3.1 + 1.3) + 0.7 * (nse(vec2(u * 1.6, tp * 0.45)) - 0.5);
     float w = u * 4.5 + mea, f = fract(w), fw = max(fwidth(w), 1e-4), lod = 1.0 - smoothstep(0.15, 0.5, fw);
     float sh = 0.2 + 0.5 * pow(smoothstep(0.0, 0.92, f), 2.2) - 0.36 * smoothstep(1.0 - max(0.06, 1.5 * fw), 1.0, f); sh = mix(0.38, clamp(sh, 0.0, 1.0), lod);
+    if (sec > 0.5) { float X = uw * 95.0 + 2.0 * nse(vec2(uw * 9.0, tp * 1.1)); sh = clamp(sh + 0.12 * (1.0 - smoothstep(0.25, 0.6, fwidth(X))) * sin(X), 0.0, 1.0); }
     vec3 bD = c3(4.0, 100.0, 228.0), bM = c3(20.0, 160.0, 250.0), bB = c3(120.0, 232.0, 255.0), pD = c3(164.0, 43.0, 212.0), pM = c3(240.0, 50.0, 220.0), pB = c3(255.0, 150.0, 250.0);
     vec3 blue = sh < 0.55 ? mix(bD, bM, sh / 0.55) : mix(bM, bB, (sh - 0.55) / 0.45), pink = sh < 0.55 ? mix(pD, pM, sh / 0.55) : mix(pM, pB, (sh - 0.55) / 0.45);
-    float pin = pin0 + 0.08 * sin(tp * 0.71 + sign(u) * 1.7), pkE = max(0.03, 1.5 * fwidth(u));
-    float pk = smoothstep(pin - pkE, pin + pkE, au) * (1.0 - smoothstep(pinW - pkE, pinW + pkE, au));
+    float pin = pin0 + 0.08 * sin(tp * 0.71 + sign(u) * 1.7) + sec * 0.05 * (nse(vec2(tp * 0.9, sign(u) * 5.0)) - 0.5), pkE = max(0.03, 1.5 * fwidth(u));
+    float pk = smoothstep(pin - pkE, pin + pkE, au) * (1.0 - smoothstep(pinW - pkE, pinW + pkE, au)) * pkS;
     vec3 col = mix(blue, pink, pk);
     for (int L = 0; L < 2; L++) { float cw = L == 0 ? 0.06 : 0.12, rl = L == 0 ? 0.22 : 0.4; vec2 g = vec2(uw / cw, (tp + float(L) * 0.37) / rl); vec2 cell = floor(g); float r = hsh(cell + float(L) * 13.0);
       if (r < 0.55) { float y0 = (cell.y + 0.5) * rl, len = rl * (0.25 + 0.3 * hsh(cell + 6.6)), ph = (tp - y0) / (0.5 * len);
-        float x0 = (cell.x + 0.25 + 0.5 * hsh(cell + 3.3)) * cw; float wid = L == 0 ? 0.006 : 0.01, ww = max(wid, 0.9 * fwidth(uw));
+        float x0 = (cell.x + 0.25 + 0.5 * hsh(cell + 3.3)) * cw + sec * 0.25 * cw * ph * ph * (hsh(cell + 9.1) - 0.5) * 2.0; float wid = L == 0 ? 0.006 : 0.01, ww = max(wid, 0.9 * fwidth(uw));
         float I = 0.8 * exp(-pow((uw - x0) / ww, 2.0)) * (1.0 - smoothstep(0.3, 1.0, abs(ph))) * (wid / ww); col = mix(col, vec3(0.93, 1.0, 1.0), clamp(I, 0.0, 1.0)); } }
+    if (sec > 0.5) { vec2 g = vec2(u * 5.0, tp * 2.2); vec2 cell = floor(g); float hh = hsh(cell + 0.37);
+      if (hh < 0.6) { vec2 pc = cell + vec2(0.2 + 0.6 * hsh(cell + 1.7), 0.2 + 0.6 * hsh(cell + 4.1)); float dx = (g.x - pc.x) / 5.0 * RWs, dy = (g.y - pc.y) / 2.2;
+        float tw = 0.5 + 0.5 * sin(uT * 3.0 + hh * 40.0); tw *= tw; float st = exp(-(dx * dx + dy * dy) / 0.0001) + exp(-abs(dx) / 0.035) * exp(-dy * dy / 0.00002) + 0.6 * exp(-abs(dy) / 0.045) * exp(-dx * dx / 0.00001);
+        vec2 fc = fract(g); st *= smoothstep(0.0, 0.2, min(fc.x, 1.0 - fc.x)) * smoothstep(0.0, 0.12, min(fc.y, 1.0 - fc.y)); col = mix(col, vec3(1.0), clamp(st * tw * (1.0 - smoothstep(0.006, 0.03, max(fwidth(uw), fwidth(tp)))), 0.0, 1.0)); } }
     return col; }
   vec3 bakeMix(vec3 col, vec2 vUv, vec3 vW, sampler2D uBake, sampler2D uDen, float uBakeOn, vec2 uSharp, float uLodBias, float uT){
     if (uBakeOn < 0.5) return col; float ph = fract(uT * 0.8); vec4 b1 = texture(uBake, vUv + vec2(0.0, ph * 0.006), uLodBias), b2 = texture(uBake, vUv + vec2(0.0, fract(ph + 0.5) * 0.006), uLodBias);
@@ -146,7 +152,7 @@ const waterMatKit = (halfW, len, along0, isPool, A) => new THREE.ShaderMaterial(
   fragmentShader: `uniform float uT; uniform vec3 uGlow; uniform sampler2D uBake; uniform float uBakeOn; uniform sampler2D uDen; uniform vec2 uSharp; uniform float uLodBias; uniform vec4 uGeo; varying vec2 vUv; varying vec3 vW;
     ${WATER_CORE}
     void main(){ float RW = uGeo.x, u = vUv.x * 2.0 - 1.0, uw = u * RW, d = uGeo.z + (1.0 - vUv.y) * uGeo.y, tp = d + uT * 1.6;
-      vec3 col = waterCol(u, uw, tp, 0.62, 0.96); col = mix(col, waterCol(u, uw, tp, 0.62, 0.96), 0.0) ;
+      vec3 col = waterCol(u, uw, tp, 0.62, 0.96, 1.0 - uGeo.w * 0.6, 0.0, 0.0);   // = tools/screenkit/screen.html (pools: pink edges damped)
       col = bakeMix(col, vUv, vW, uBake, uDen, uBakeOn, uSharp, uLodBias, uT);
       col = mix(col, vec3(0.95, 1.0, 1.0), uGlow.z * pow(smoothstep(uGlow.x, uGlow.y, vW.z), 1.6)); gl_FragColor = vec4(col, 1.0); }` });
 // section areas: water in world coordinates around the painted river line (route texture), offset to the area's placement
@@ -160,7 +166,7 @@ const waterMatSec = (A) => new THREE.ShaderMaterial({ side: THREE.DoubleSide,
     float rc(float z){ return texture2D(uRoute, vec2(clamp((z - uRZ.x) / (uRZ.y - uRZ.x), 0.0, 1.0), 0.5)).r; }
     void main(){ vec3 L = vW - uOff; float z = L.z, d = -z, kR = clamp((uRW.z - z) / (uRW.z - uRW.w), 0.0, 1.0), RW = mix(uRW.x, uRW.y, kR * kR * (3.0 - 2.0 * kR));
       float cs = (rc(z - 0.05) - rc(z + 0.05)) * 10.0; float uw = (L.x - rc(z)) / sqrt(1.0 + cs * cs); float u = uw / RW, tp = d + uT * 1.6;
-      vec3 col = waterCol(u, uw, tp, 0.5, 0.92);
+      vec3 col = waterCol(u, uw, tp, 0.5, 0.92, 1.0, 1.0, RW);   // = tools/reflock/section.html
       float fo = smoothstep(RW * 0.98, RW * 1.02, abs(uw)); if (fo > 0.0) { float nn = nse(vec2(L.x * 9.0, d * 9.0)); col = mix(col, mix(c3(185.0, 178.0, 240.0), c3(250.0, 248.0, 255.0), smoothstep(0.3, 0.8, nn)), fo); }
       col = bakeMix(col, vUv, vW, uBake, uDen, uBakeOn, uSharp, uLodBias, uT);
       col = mix(col, vec3(0.95, 1.0, 1.0), uGlow.z * pow(smoothstep(uGlow.x, uGlow.y, vW.z), 1.6)); gl_FragColor = vec4(col, 1.0); }` });
@@ -174,6 +180,13 @@ const loadBake = async (A, meshes) => {
   return MANI; };
 const MESH = [], WATER = [], CLAMPS = [], FOAMS = [], BUBBLES = [];
 
+// the kit page's foam banks (screen.html): lit lavender-white shading, the area's glow
+const kitFoamMat = (A) => new THREE.ShaderMaterial({ uniforms: { uL: { value: new THREE.Vector3(-0.25, 0.8, 0.55).normalize() }, uGlow: A.glow },
+  vertexShader: 'varying vec3 vN; varying vec3 vW; void main(){ vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz; vN = normalize(mat3(modelMatrix) * normal); gl_Position = projectionMatrix * viewMatrix * w; }',
+  fragmentShader: `varying vec3 vN; varying vec3 vW; uniform vec3 uL; uniform vec3 uGlow; vec3 c3(float r, float g, float b){ return vec3(r, g, b) / 255.0; }
+    void main(){ float lit = clamp(0.6 + 0.45 * dot(normalize(vN), uL), 0.0, 1.0);
+      vec3 col = lit < 0.5 ? mix(c3(150.0, 135.0, 222.0), c3(205.0, 200.0, 245.0), lit / 0.5) : mix(c3(205.0, 200.0, 245.0), c3(255.0, 254.0, 255.0), (lit - 0.5) / 0.5);
+      col = mix(col, vec3(1.0, 0.98, 0.95), uGlow.z * pow(smoothstep(uGlow.x, uGlow.y, vW.z), 1.6)); gl_FragColor = vec4(col, 1.0); }` });
 // ---------------- area: a screen-kit screen (layout.json + scene.glb) ----------------
 const loadKit = async (A) => {
   const LAY = await (await fetch(A.dir + 'layout.json')).json(); A.LAY = LAY; const off = V3(A.offset), DR = LAY.drum;
@@ -194,6 +207,7 @@ const loadKit = async (A) => {
     else if (fam === 'copper') m = sceneryMat(BASE.copper, [1, 1], A);
     else if (fam === 'wall') m = sceneryMat(BASE.wall, [Math.max(1, sz.x / 1.6), Math.max(1, sz.y / 1.6)], A);
     else if (fam === 'arrow') m = new THREE.MeshBasicMaterial({ color: new THREE.Color(0.86, 0.98, 1.0), toneMapped: false });
+    else if (fam === 'foam') m = kitFoamMat(A);   // the kit page's lit lavender-white foam banks (not baked)
     else m = sceneryMat(BASE.foam, [1, 1], A);
     o.material = m; o.userData.fam = fam; o.userData.area = A.id; MESH.push(o); }
   if (!DR.open_end) {   // the area's tube ends here (no next area joined yet): the warm glowing far end of its own page (real geometry, no hole)
@@ -206,8 +220,17 @@ const loadKit = async (A) => {
   CLAMPS.push((p) => { const z = p.z - off.z; if (z > DR.z0 + 0.5 || z < DR.z1) return false; const ax = DR.axis_x + off.x, ay = DR.axis_y + off.y, dx = p.x - ax, dy = p.y - ay, rr = Math.hypot(dx, dy), lim = DR.r - 0.3;
     if (rr > lim) { p.x = ax + dx * lim / rr; p.y = ay + dy * lim / rr; return true; } return false; });
   if (MANI?.foam) FOAMS.push(...MANI.foam.map((f) => [f[0] + off.x, f[1] + off.y, f[2] + off.z, ...f.slice(3)]));
-  const rp = (() => { let x = 777; return () => ((x = (x * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff); })();
-  for (let s = A.s0 + 4; s < A.s1 - 1; s += 1.2 + rp() * 1.4) { const F = frameAt(s), p = at(s, new THREE.Vector3()).addScaledVector(F.r, (rp() - 0.5) * 1.6).addScaledVector(F.n, 0.15 + rp() * 0.6); BUBBLES.push([p.x, p.y, p.z, 0.03 + rp() * rp() * 0.05]); }
+  // bubbles exactly as the area's own page places them (its painted bubbles + the same seeded extras along ITS route, same bobbing phases)
+  { const rp = (() => { let x = 777; return () => ((x = (x * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff); })();
+    const LP = LAY.route.points.map(V3), LDS = LAY.route.ds, LB = LAY.route.bank ?? LP.map(() => 0), LL = (LP.length - 1) * LDS;
+    const lat_ = (s, o) => { const x = Math.min(Math.max(s / LDS, 0), LP.length - 1.0001), i = Math.floor(x); return o.copy(LP[i]).lerp(LP[i + 1], x - i); };
+    const lfr = (s) => { const a = lat_(Math.min(LL, s + 0.06), new THREE.Vector3()), b = lat_(Math.max(0, s - 0.06), new THREE.Vector3()), t = a.sub(b).normalize();
+      const r0 = new THREE.Vector3().crossVectors(t, UPV).normalize(), n0 = new THREE.Vector3().crossVectors(r0, t).normalize(); const x = Math.min(Math.max(s / LDS, 0), LP.length - 1.0001), i = Math.floor(x), bk = lerp(LB[i], LB[i + 1], x - i);
+      return { r: r0.clone().multiplyScalar(Math.cos(bk)).addScaledVector(n0, Math.sin(bk)), n: n0.clone().multiplyScalar(Math.cos(bk)).addScaledVector(r0, -Math.sin(bk)) }; };
+    const S_REFa = LAY.cams[0].s_ref ?? 0, LEVa = Math.min(LL - 1.0, LAY.level_end ?? LL - 1.0);
+    const B = (LAY.bubbles ?? []).map((b) => b.slice());
+    for (let s = S_REFa + 6; s < LEVa; s += 1.2 + rp() * 1.4) { const F = lfr(s), p = lat_(s, new THREE.Vector3()).addScaledVector(F.r, (rp() - 0.5) * 2.2).addScaledVector(F.n, 0.15 + rp() * 0.8); B.push([p.x, p.y, p.z, 0.03 + rp() * rp() * 0.06]); }
+    for (const b of B) BUBBLES.push([b[0] + off.x, b[1] + off.y, b[2] + off.z, b[3], rp() * 6.28]); }
   A.paintedCoins = (LAY.coins ?? []).map(V3).map((p) => p.add(off));
 };
 
@@ -270,8 +293,9 @@ const loadSection = async (A) => {
     if (rr > lim) { p.x = off.x + dx * lim / rr; p.y = ay + dy * lim / rr; return true; } return false; });
   if (MANI?.foam) FOAMS.push(...MANI.foam.map(([x, z, w, ...c]) => [x + off.x, off.y, z + off.z, w, ...c]));
   const rp = (() => { let x = 777; return () => ((x = (x * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff); })();
-  for (const b of SEC.bubbles) BUBBLES.push([b[0] + off.x, b[1] + off.y, b[2] + off.z, b[3]]);
-  for (let z = T.z_arch - 1; z > Z_EXIT; z -= 0.6 + rp() * 0.8) { const c = chord(z) - 0.12, sd = rp() < 0.5 ? -1 : 1; BUBBLES.push([sd * (0.38 + rp() * Math.max(0.05, c - 0.38)) + off.x, 0.12 + rp() * 0.5 + off.y, z + off.z, 0.025 + rp() * rp() * 0.045]); }
+  { const B = SEC.bubbles.map((b) => b.slice());   // exactly as section.html (same seeded extras, same bobbing phases)
+    for (let z = T.z_arch - 1; z > Z_EXIT; z -= 0.6 + rp() * 0.8) { const c = chord(z) - 0.12, sd = rp() < 0.5 ? -1 : 1; B.push([sd * (0.38 + rp() * Math.max(0.05, c - 0.38)), 0.12 + rp() * 0.5, z, 0.025 + rp() * rp() * 0.045]); }
+    for (const b of B) { const ph = rp() * 6.28; if (A.cut_z == null || b[2] > A.cut_z) BUBBLES.push([b[0] + off.x, b[1] + off.y, b[2] + off.z, b[3], ph]); } }
   // coins (section.html's layout, in section s = ZB0 - z, world s = the Bubble Dash picture key + section s); socks
   const ZB0 = SEC.benny.bubble[2], kB = WD.cam_keys.find((k) => k.area === A.id).s;
   const toS = (p) => [kB + (ZB0 - p[2]), p[0] - RX(p[2])];
@@ -324,7 +348,7 @@ if (GRAY) { const famCol = { tunnel: [0.62, 0.62, 0.66], ring: [0.78, 0.72, 0.55
     const foam = new THREE.InstancedMesh(fGeo, GRAY ? new THREE.MeshBasicMaterial({ color: 0xe8e8ee }) : fMat, FOAMS.length);
     FOAMS.forEach(([x, y, z, w], i) => { pI.set(x, y + w * 0.05, z); sI.set(w, w * 0.62, w); foam.setMatrixAt(i, mI.compose(pI, qI, sI)); }); foam.name = 'foam_domes'; foam.userData.fam = 'foam3d'; world.add(foam); }
   const rp = (() => { let x = 919; return () => ((x = (x * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff); })();
-  const bGeo = new THREE.SphereGeometry(1, 24, 16); bGeo.setAttribute('aPh', new THREE.InstancedBufferAttribute(new Float32Array(BUBBLES.map(() => rp() * 6.28)), 1));
+  const bGeo = new THREE.SphereGeometry(1, 24, 16); bGeo.setAttribute('aPh', new THREE.InstancedBufferAttribute(new Float32Array(BUBBLES.map((b) => b[4] ?? rp() * 6.28)), 1));
   const bm = new THREE.ShaderMaterial({ transparent: true, depthWrite: false, uniforms: { uTime: TIME, uL: { value: Lw } },
     vertexShader: 'attribute float aPh; uniform float uTime; varying vec3 vN; varying vec3 vW; void main(){ vec4 w = modelMatrix * instanceMatrix * vec4(position, 1.0); w.y += 0.012 * sin(uTime * 1.3 + aPh); vW = w.xyz; vN = normalize(mat3(modelMatrix) * mat3(instanceMatrix) * normal); gl_Position = projectionMatrix * viewMatrix * w; }',
     fragmentShader: `varying vec3 vN; varying vec3 vW; uniform vec3 uL; void main(){ vec3 N = normalize(vN), V = normalize(cameraPosition - vW); float c = abs(dot(N, V)), f = pow(1.0 - c, 1.6);
@@ -381,15 +405,17 @@ const CT = installControls({ THREE, TR: { trail: TRAIL, trail_s: TRAIL_S, N: 0 }
 const toSLH = (P) => { let bi = 0, bd = 1e9; for (let i = 0; i < RP.length; i += 2) { const d = RP[i].distanceToSquared(P); if (d < bd) { bd = d; bi = i; } } const s = bi * RDS, F = frameAt(s); return [s, Math.max(-0.3, Math.min(0.3, P.clone().sub(at(s, new THREE.Vector3())).dot(F.r)))]; };
 const LAYC = [];
 for (const A of WD.areas) {
-  if (A.kind === 'kit') { const pc = A.paintedCoins.map(toSLH).filter((c) => c[0] > WD.start_s + 0.6); pc.forEach((c) => LAYC.push(c)); const last = pc.length ? Math.max(...pc.map((c) => c[0])) : A.s0 + 2;
-    for (let s = last + 2.2, k = 0; s < A.s1 - 1.0; s += 1.15, k++) LAYC.push([s, [0, 0.25, 0.25, 0, -0.25, -0.25][k % 6]]); }
-  else for (const c of A.coinLay) LAYC.push(c);
+  // each area's own coin rule (as its own page): painted coins ahead of Benny's painted contact point, then runs; the area's own coin size
+  const key = WD.cam_keys.find((k) => k.area === A.id), cd = A.kind === 'kit' ? 2 * (A.LAY.coin_radius ?? 0.11) : coinD;
+  if (A.kind === 'kit') { const sRef = key.s - (A.LAY.benny.ahead ?? 0); const pc = A.paintedCoins.map(toSLH).filter((c) => c[0] > sRef + 0.6); pc.forEach((c) => LAYC.push([c[0], c[1], cd])); const last = pc.length ? Math.max(...pc.map((c) => c[0])) : A.s0 + 2;
+    for (let s = last + 2.2, k = 0; s < A.s1 - 1.0; s += 1.15, k++) LAYC.push([s, [0, 0.25, 0.25, 0, -0.25, -0.25][k % 6], cd]); }
+  else for (const c of A.coinLay) LAYC.push([c[0], c[1], cd]);
 }
 LAYC.sort((a, b) => a[0] - b[0]);
 while (coins.length < LAYC.length) { const c0 = coins[0]; const sp = new THREE.Sprite(c0.sp.material.clone()); sp.scale.copy(c0.sp.scale); sp.renderOrder = 10; scene.add(sp);
   coins.push({ s: 0, lat: 0, h: 0, sp, got: -1, p0: sp.position.clone(), n0: new THREE.Vector3(0, 1, 0), run: 0, kind: 'water' }); }
-coins.forEach((c, i) => { const L = LAYC[i]; if (!L) { c.sp.visible = false; c.s = 1e9; c.got = 0; return; } const F = frameAt(L[0]); c.s = L[0]; c.lat = L[1]; c.h = 0; c.kind = Math.abs(L[1]) >= 0.1 ? 'lane' : 'water';
-  at(L[0], c.p0).addScaledVector(F.r, L[1]).addScaledVector(F.n, coinD * 0.55); c.n0.copy(F.n); c.sp.position.copy(c.p0); });
+coins.forEach((c, i) => { const L = LAYC[i]; if (!L) { c.sp.visible = false; c.s = 1e9; c.got = 0; return; } const F = frameAt(L[0]); c.s = L[0]; c.lat = L[1]; c.h = 0; c.d = L[2] ?? coinD; c.kind = Math.abs(L[1]) >= 0.1 ? 'lane' : 'water';
+  at(L[0], c.p0).addScaledVector(F.r, L[1]).addScaledVector(F.n, c.d * 0.5); c.n0.copy(F.n); c.sp.position.copy(c.p0); });
 const coin3 = (() => { const geo = new THREE.CylinderGeometry(0.5, 0.5, 0.12, 48, 1); geo.rotateX(Math.PI / 2);
   const face = new THREE.MeshBasicMaterial({ map: ctex, toneMapped: false, alphaTest: 0.4 }), rim = new THREE.MeshBasicMaterial({ color: new THREE.Color(0.86, 0.5, 0.08), toneMapped: false });
   return coins.map((c, i) => { const m = new THREE.Mesh(geo, [rim, face, face]); m.name = 'coin3d_' + i; scene.add(m); c.sp.material.colorWrite = false; return m; }); })();
@@ -453,7 +479,7 @@ window.step = (t, dt, steer, speed) => {
   for (const [k, id] of [['blast', 'blast'], ['turbo', 'turbo']]) { const a = AB[k], p = t < a.ready ? Math.min(1, (a.ready - t) / (a.dur + a.cd)) : 0; document.querySelector('#' + id + ' .cd').style.setProperty('--p', (p * 100).toFixed(1) + '%'); }
   for (const c of coins) { if (c.got < 0 && CT.hits(c)) { c.got = t; coinCount += 10; coinEl.textContent = '\u{1FA99} ' + coinCount.toLocaleString('en-US'); }
     if (c.got >= 0 && c.s < 1e8) { const k = (t - c.got) / 0.4; c.sp.visible = k < 1; if (k < 1) { c.sp.position.copy(benny.position).addScaledVector(F.n, bennyH * (1.05 + 0.6 * k)); c.sp.scale.setScalar(coinD * 0.7 * (1 - 0.5 * k)); } } }
-  coins.forEach((c, i) => { const m = coin3[i]; m.visible = c.sp.visible && c.s < 1e8; if (!m.visible) return; m.position.copy(c.sp.position); m.scale.setScalar(c.got >= 0 ? c.sp.scale.x : coinD); m.quaternion.setFromAxisAngle(F.n, 0.5 * Math.sin(t * 1.9 + i * 1.3)); });
+  coins.forEach((c, i) => { const m = coin3[i]; m.visible = c.sp.visible && c.s < 1e8; if (!m.visible) return; m.position.copy(c.sp.position); m.scale.setScalar(c.got >= 0 ? c.sp.scale.x : (c.d ?? coinD)); m.quaternion.setFromAxisAngle(F.n, 0.5 * Math.sin(t * 1.9 + i * 1.3)); });
   for (const sk of SOCKS) { if (!sk.visible) continue; sk.geometry.computeBoundingSphere(); const c = sk.geometry.boundingSphere.center.clone().applyMatrix4(sk.matrixWorld);
     if (Math.abs(c.z - benny.position.z) < 0.25 && Math.abs(c.x - benny.position.x) < 0.3) { sk.visible = false; socksGot = Math.min(5, socksGot + 1); drawSlots(); gems += 5; gemEl.textContent = gems; } }
   return { s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: coinCount, socks: socksGot, area: areaOf(st.s).id, z: +benny.position.z.toFixed(3), ...CT.state() };

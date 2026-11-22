@@ -5799,3 +5799,134 @@ World v3 is built: the route now runs 184.6 units, from 04 through 06's banked c
 
 > ↩︎ result: 06 own page PRE-BAKED (scaled): 85.8 % SSIM 0.837
 
+### 🤖 Claude — 2026-11-22T16:59:24.664Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && python3 - <<EOF\nfrom PIL import Image\nimport numpy as np, json\na=np.asarray(Image.open('$S/p06pre/s0.10_l0.png').convert('RGB')).astype(int); b=np.asarray(Image.open('$S/w3pic/s0.10_l0.png').convert('RGB')).astype(int)\nd=np.abs(a-b).max(2); print('differing >20:', (d>20).mean().round(3))\nfor name,(y0,y1,x0,x1) in {'top':(0,300,0,412),'mid':(300,600,0,412),'bot':(600,915,0,412)}.items(): print(name,(d[y0:y1,x0:x1]>20).mean().round(3))\nprint(json.load(open('$S/p06pre/stills.json'))['stills'] …[+482 chars]`
+
+### 🧑 User — 2026-11-22T16:59:24.939Z
+
+> ↩︎ result: differing >20: 0.089
+> top 0.077
+> mid 0.113
+> bot 0.08
+> {'p': [0, 0.5981, 0], 'q': [-0.06551, 0.10601, 0.007, 0.99218], 'fov': 64}
+> {'p': [1.1715, 0.5982, -147.519], 'q': [-0.06555, 0.10578, 0.007, 0.9922], 'fov': 64}
+
+### 🤖 Claude — 2026-11-22T16:59:28.682Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/diff06.jpg"}`
+
+### 🧑 User — 2026-11-22T16:59:28.704Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T17:00:08.566Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/world/world.html'; s=open(p).read()\nold=\"\"\"  const rp = (() => { let x = 777; return () => ((x = (x * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff); })();\n  for (let s = A.s0 + 4; s < A.s1 - 1; s += 1.2 + rp() * 1.4) { const F = frameAt(s), p = at(s, new THREE.Vector3()).addScaledVector(F.r, (rp() - 0.5) * 1.6).addScaledVector(F.n, 0.15 + rp() * 0.6); BUBBLES.push([p.x, p.y, p.z, 0.03 + rp() * rp() * 0.05]); }\"\"\"\nnew=\"\"\"  // bubbles exactly as the area's own page places them (its painted bubbles + the same seeded extras along ITS route, sa …[+4232 chars]`
+
+### 🧑 User — 2026-11-22T17:00:38.721Z
+
+> ↩︎ result: ok
+> 06 in world: 82.0 %
+> 05 in world: 80.7 %
+>    "share_within_20_levels": 0.874,
+>    "whole_frame_within_20_levels": 0.58
+>    "share_within_20_levels": 0.812,
+
+### 🤖 Claude — 2026-11-22T17:00:56.090Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/world/world.html'; s=open(p).read()\nold=\"\"\"    else m = sceneryMat(BASE.foam, [1, 1], A);\n    o.material = m; o.userData.fam = fam; o.userData.area = A.id; MESH.push(o); }\n  if (!DR.open_end) {\"\"\"\nnew=\"\"\"    else if (fam === 'foam') m = kitFoamMat(A);   // the kit page's lit lavender-white foam banks (not baked)\n    else m = sceneryMat(BASE.foam, [1, 1], A);\n    o.material = m; o.userData.fam = fam; o.userData.area = A.id; MESH.push(o); }\n  if (!DR.open_end) {\"\"\"\nassert old in s; s=s.replace(old,new)\nold=\"\"\"// ---------------- ar …[+2338 chars]`
+
+### 🧑 User — 2026-11-22T17:01:02.445Z
+
+> ↩︎ result: ok
+> 06 in world: 82.0 %
+> differing >20: 0.0752
+
+### 🤖 Claude — 2026-11-22T17:01:05.502Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/diff06b.png"}`
+
+### 🧑 User — 2026-11-22T17:01:05.527Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T17:01:30.213Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/world/world.html'; s=open(p).read()\nold=\"\"\"  if (A.kind === 'kit') { const pc = A.paintedCoins.map(toSLH).filter((c) => c[0] > WD.start_s + 0.6); pc.forEach((c) => LAYC.push(c)); const last = pc.length ? Math.max(...pc.map((c) => c[0])) : A.s0 + 2;\n    for (let s = last + 2.2, k = 0; s < A.s1 - 1.0; s += 1.15, k++) LAYC.push([s, [0, 0.25, 0.25, 0, -0.25, -0.25][k % 6]]); }\n  else for (const c of A.coinLay) LAYC.push(c);\"\"\"\nnew=\"\"\"  // each area's own coin rule (as its own page): painted coins ahead of Benny's painted contact point, then run …[+2472 chars]`
+
+### 🧑 User — 2026-11-22T17:01:53.061Z
+
+> ↩︎ result: ok
+> 06 in world: 82.0 %
+> 05 in world: 80.6 %
+> 04 in world: 83.9 %
+
+### 🤖 Claude — 2026-11-22T17:01:58.712Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && python3 - <<EOF\nfrom PIL import Image\na=Image.open('$S/p06pre/s0.10_l0.png').convert('RGB'); b=Image.open('$S/w3r_149.12/s0.10_l0.png').convert('RGB')\nsh=Image.new('RGB',(824,915)); sh.paste(a,(0,0)); sh.paste(b,(412,0)); sh.crop((0,150,824,600)).save('$S/coins06.jpg',quality=90)\nEOF", "description": "Compare the coin area of 06's own page and the world"}`
+
+### 🧑 User — 2026-11-22T17:01:58.829Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-22T17:02:01.748Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/coins06.jpg"}`
+
+### 🧑 User — 2026-11-22T17:02:01.777Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T17:02:11.890Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && python3 - <<EOF\nfrom PIL import Image\nimport numpy as np\na=np.asarray(Image.open('$S/p06pre/s0.10_l0.png').convert('RGB')).astype(int); b=np.asarray(Image.open('$S/w3r_149.12/s0.10_l0.png').convert('RGB')).astype(int)\nd=np.abs(a-b).max(2); print('differing >20:', (d>20).mean().round(4))\nrows=[(d[y:y+92]>20).mean().round(3) for y in range(0,915,92)]; print('per band', rows)\nv=np.zeros_like(a); v[...,0]=np.clip(d*4,0,255); v[...,1]=a.mean(2)*0.35; Image.fromarray(v.astype(np.uint8)).crop((0, …[+122 chars]`
+
+### 🧑 User — 2026-11-22T17:02:12.152Z
+
+> ↩︎ result: differing >20: 0.0743
+> per band [np.float64(0.161), np.float64(0.011), np.float64(0.039), np.float64(0.13), np.float64(0.112), np.float64(0.008), np.float64(0.016), np.float64(0.031), np.float64(0.083), np.float64(0.157)]
+
+### 🤖 Claude — 2026-11-22T17:02:14.709Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/diff06c.png"}`
+
+### 🧑 User — 2026-11-22T17:02:14.728Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T17:02:32.276Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && grep -c \"Math.random\" tools/kit05/controls.js tools/kit05/swimfx.js; for r in 1 2; do NODE_PATH=$(npm root -g) timeout 900 node tools/reflock/section_run.cjs $S/wv3/w06/game $S/p06r$r stills 0.1 0 'sentinel=1&prebaked=1' > /dev/null 2>&1; python3 -I tools/screenkit/compare_screen.py 06 $S/p06r$r/s0.10_l0.png $S/wv3/s06/seg/mask.png $S/c06r$r > /dev/null 2>&1; python3 -c \"\nimport json;d=json.load(open('$S/c06r$r/new_summary.json'))['new'];print('06 own page pre-baked, repeat $r: %.1f %%'%(100 …[+143 chars]`
+
+### 🧑 User — 2026-11-22T17:02:42.781Z
+
+> ↩︎ result: tools/kit05/controls.js:0
+> tools/kit05/swimfx.js:0
+> 06 own page pre-baked, repeat 1: 85.8 %
+> 06 own page pre-baked, repeat 2: 85.8 %
+
+### 🤖 Claude — 2026-11-22T17:03:18.430Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/world/world.html'; s=open(p).read()\n# 1) kit water: exact copy of screen.html's body (pool pink damping)\nold=\"\"\"    void main(){ float RW = uGeo.x, u = vUv.x * 2.0 - 1.0, uw = u * RW, d = uGeo.z + (1.0 - vUv.y) * uGeo.y, tp = d + uT * 1.6;\n      vec3 col = waterCol(u, uw, tp, 0.62, 0.96); col = mix(col, waterCol(u, uw, tp, 0.62, 0.96), 0.0) ;\"\"\"\nnew=\"\"\"    void main(){ float RW = uGeo.x, u = vUv.x * 2.0 - 1.0, uw = u * RW, d = uGeo.z + (1.0 - vUv.y) * uGeo.y, tp = d + uT * 1.6;\n      vec3 col = waterCol(u, uw, tp, 0.62, 0.96, 1.0 - uGeo.w  …[+3883 chars]`
+
+### 🧑 User — 2026-11-22T17:03:18.490Z
+
+> ↩︎ result: ok
+> 111:  fragmentShader: `uniform sampler2D uBase; uniform vec2 uRep; uniform sampler2D uBake; uniform float uBakeOn; uniform vec2 uScroll; uniform vec3 uTint; uniform float uAlpha; uniform vec3 uGlow; uniform float uTime;
+> 152:  fragmentShader: `uniform float uT; uniform vec3 uGlow; uniform sampler2D uBake; uniform float uBakeOn; uniform sampler2D uDen; uniform vec2 uSharp; uniform float uLodBias; uniform vec4 uGeo; varying vec2 vUv; varying vec3 vW;
+> 163:  fragmentShader: `uniform float uT; uniform vec3 uGlow; uniform sampler2D uBake; uniform float uBakeOn; uniform sampler2D uDen; uniform vec2 uSharp; uniform float uLodBias;
+
+### 🤖 Claude — 2026-11-22T17:03:27.947Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && cp tools/world/world.html $S/wv3/game/play3.html && for sv in 149.12 97.8 1.35 28.75 49; do NODE_PATH=$(npm root -g) timeout 900 node tools/reflock/section_run.cjs $S/wv3/game $S/w3s_$sv stills 0.1 0 \"sentinel=1&s0=$sv\" 2>&1 | grep -iE \"error\" | head -2; done; for n in 06:149.12:s06 05:97.8:s05 04:1.35:s04; do IFS=: read nn sv ws <<< \"$n\"; python3 -I tools/screenkit/compare_screen.py $nn $S/w3s_$sv/s0.10_l0.png $S/wv3/$ws/seg/mask.png $S/cs_$nn > /dev/null 2>&1; python3 -c \"\nimport json; …[+473 chars]`
+
+### 🧑 User — 2026-11-22T17:04:09.237Z
+
+> ↩︎ result: 06 in world: 82.0 %
+> 05 in world: 80.6 %
+> 04 in world: 83.9 %
+>    "share_within_20_levels": 0.874,
+>    "whole_frame_within_20_levels": 0.58
+>    "share_within_20_levels": 0.812,
+
