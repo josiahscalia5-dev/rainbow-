@@ -2381,3 +2381,86 @@ Spector is recorded in the setup notes. I'm waiting for the fresh-install test, 
 
 > ↩︎ result: Updated task #7 status
 
+### 🤖 Claude — 2026-11-22T15:19:23.918Z
+
+> 🔧 **Monitor** `{"description": "fresh-install test: Spector rebuild + registration by the bootstrap", "timeout_ms": 1500000, "command": "f=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/tasks/bwz5aplri.output; g=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/tasks/b46rz0xsa.output; until [ -s \"$f\" ] || grep -q \"^exit\" \"$g\" 2>/dev/null; do sleep 5; done; cat \"$f\"; grep -E \"^exit|FAIL\" \"$g\" || true"}`
+
+### 🧑 User — 2026-11-22T15:19:23.952Z
+
+> ↩︎ result: Monitor started (task bdksggcv1, expires in 25m unless the source ends first; you get one notice at expiry — re-arm if you still need the watch). You will be notified on each event. Keep working — do not poll or sleep. Events may arrive while you are waiting for the user — an event is not their reply.
+
+### 🤖 Claude — 2026-11-22T15:19:26.359Z
+
+> 🔧 **Bash** `{"command": "pkill -f \"http.server 3000\" && echo \"test web server stopped\"", "description": "Stop the temporary Screen 06 test web server"}`
+
+### 🧑 User — 2026-11-22T15:19:26.473Z
+
+> ↩︎ result: test web server stopped
+
+### 🤖 Claude — 2026-11-22T15:19:29.474Z
+
+> 🔧 **Bash** `{"command": "tail -4 /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/bootstrap_run.log; ps aux | grep -E \"git (fetch|lfs)|npm|claude-bootstrap\" | grep -v grep | cut -c1-200 | head", "description": "See which bootstrap step is running"}`
+
+### 🧑 User — 2026-11-22T15:19:29.536Z
+
+> ↩︎ result: RAINBOW BOOTSTRAP (full) 2026-11-22 15:12 UTC - /home/user/rainbow-
+> 
+> == 1 Repository, newest work, backup gap
+>   OK   Repository + branch            josiahscalia5-dev/rainbow- on ccr-0bbd5b9d-js1cpg @ af15aba (session started from ccr-80cdb162-4sqz1a)
+> root      1359  0.0  0.6 1376216 107732 ?      Sl   14:34   0:01 npm exec @playwright/mcp@latest
+> root      1360  0.0  0.4 1342160 73500 ?       Sl   14:34   0:00 npm exec chrome-devtools-mcp@1.6.0 --headless
+> root      1361  0.2  0.8 1405172 142988 ?      Sl   14:34   0:06 npm exec threejs-devtools-mcp@0.2.1
+> root      1514  0.0  0.6 11794760 102380 ?     Ssl  14:34   0:00 /opt/node22/bin/node /root/.npm/_npx/bdd39d12a2040511/node_modules/chrome-devtools-mcp/build/src/telemetry/watchdog/main.js --parent-pi
+> root      1527  0.0  0.4 11540764 75592 ?      Sl   14:34   0:00 node /root/.npm/_npx/9833c18b2d85bc59/node_modules/.bin/playwright-mcp
+> root      1539  0.0  0.4 1349100 79704 ?       Sl   14:34   0:01 npm exec @playwright/mcp@0.0.78 --headless
+> root      1684  0.0  0.5 11584224 90788 ?      Sl   14:34   0:00 node /root/.npm/_npx/a5b920f00216d246/node_modules/.bin/playwright-mcp --headless
+> root      2401  0.0  0.5 11829672 82724 ?      S …[+377 chars]
+
+### 🤖 Claude — 2026-11-22T15:19:32.797Z
+
+> 🔧 **Bash** `{"command": "ps -eo pid,etime,cmd | grep -E \"bootstrap|flock|git |timeout\" | grep -v grep | cut -c1-180 | head", "description": "Find the running bootstrap and what it waits on"}`
+
+### 🧑 User — 2026-11-22T15:19:32.867Z
+
+> ↩︎ result: 10802       24:53 /usr/lib/jvm/java-21-openjdk-amd64/bin/java --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lan
+> 20004       06:39 timeout 1500 bash scripts/claude-bootstrap.sh --skip-resume
+> 20005       06:39 bash scripts/claude-bootstrap.sh --skip-resume
+> 21174       01:39 timeout 180 git fetch -q origin +refs/heads/*:refs/remotes/origin/*
+> 21175       01:39 git fetch -q origin +refs/heads/*:refs/remotes/origin/*
+> 21176       01:39 /usr/lib/git-core/git remote-https origin https://github.com/josiahscalia5-dev/rainbow-
+> 21183       01:08 /usr/lib/git-core/git index-pack --stdin --fix-thin --keep=fetch-pack 21175 on vm --pack_header=2,83870
+> 21340       00:10 timeout 900 python3 /home/user/rainbow-/scripts/rainbow-autosave.py --reason daemon --quiet
+
+### 🤖 Claude — 2026-11-22T15:19:44.074Z
+
+Spector.js is installed, connected, and has captured a real WebGL frame from Screen 06. Before I hand it over, I'm still checking that it reinstalls itself in future sessions.
+
+**What I did**
+- Downloaded the official server from github.com/BabylonJS/Spector.js. It sits in a tools folder outside your game repository and is pinned to one exact version of the code, so future installs match it.
+- Spector ships a ready-made capture file, so only the small server needed building. Its development-only packages were removed afterwards.
+- It needs a browser driver. I pinned it to the Chromium already installed here instead of downloading a second browser.
+- Registered it in Claude Code as `spectorjs`. `claude mcp list` shows it as **✓ Connected**.
+
+**Real test on Screen 06**, captured through Spector's own protocol, the same way Claude uses it:
+
+| Check | Result |
+|---|---|
+| Page loaded | "Rainbow 06", 1 WebGL2 canvas |
+| One frame | 1,056 WebGL commands, 233 draw calls, 11 shader programs |
+| GL errors | none |
+| Screenshot | Screen 06 rendered correctly |
+
+While Spector was attached, the browser console showed two Three.js messages ("context could not be created") and many "deleted object" warnings. They didn't appear when I opened the same page earlier without Spector, so they look like a side effect of Spector being attached. The frame rendered normally.
+
+**Still to confirm:** to test the automatic reinstall, I removed my working install (a backup copy is kept) and started the normal session setup. It's still downloading branch information from GitHub; the Spector rebuild comes right after. If it fails, I'll restore the working copy.
+
+**Two things to know**
+- Spector's tools only appear in your next Claude session. This session started before it was installed, which is why I tested it through its own protocol.
+- The old Spector entry inside the Three.js plugin will keep showing "failed to connect". It's left unbuilt and replaced by `spectorjs`, so you can ignore it.
+
+Your branch, approved artwork and gameplay are unchanged, and no credits were used. There was nothing for you to approve.
+
+The test script, capture results and screenshot are saved in `tools/spector/` and `qa/tools/spector_2026-11-22/`. They go to GitHub with the next autosave, along with the setup notes.
+
+When the check finishes I'll confirm it here. Then, when you're ready: should I continue Screen 06 (the crest lean), and do you want the secure key form for your old World Labs key?
+
