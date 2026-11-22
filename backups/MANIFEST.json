@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3271,
-   "sha256": "73d033f9aa30a47185ef7bc247187be25ac82d1cb072ccc26cfbf778707e74e2"
+   "sha256": "721c4fb1671fbe6188ae00cf30ca293c7fe1804ee051586a019a5fc23574e992"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -11648,8 +11648,8 @@
   },
   {
    "path": "docs/briefs/2026-11-21-r38/BONUS_INTEGRATION_PLAN_R38.md",
-   "bytes": 5423,
-   "sha256": "1c8cd45a07877d114848ecf028f22b612a54f2f2a0360b0d4c085005dd00b5b8"
+   "bytes": 7466,
+   "sha256": "1d74fe1cfb2383051cfd84a0e1fe884fbda185c843bfba5539d68eca02526e4d"
   },
   {
    "path": "docs/characters/benny.md",
@@ -15525,6 +15525,71 @@
    "path": "qa/benny/r31/turn_improved/y70_p12_black.png",
    "bytes": 207387,
    "sha256": "ad734e7138991372d1d8e826f2b60e28dfa26452fa9749f1f810a04ca53a01aa"
+  },
+  {
+   "path": "qa/bonus/r38/BUBBLE_s0.0_l0.jpg",
+   "bytes": 161798,
+   "sha256": "8ee7168043512fe02cd011f0653f32ac966ed235f76f90bd174d41a37af6ca30"
+  },
+  {
+   "path": "qa/bonus/r38/BUBBLE_s3.0_l-1.jpg",
+   "bytes": 170723,
+   "sha256": "7b73fc3394422892ba80de309e23a3fbbfdd3d62776e4673ad7808e9b9dca75d"
+  },
+  {
+   "path": "qa/bonus/r38/BUBBLE_s3.0_l0.jpg",
+   "bytes": 169433,
+   "sha256": "adcddd8e94c5c514aa74e2f12002ee5c39fff538669b8eb6bc7fa56f3e363cc9"
+  },
+  {
+   "path": "qa/bonus/r38/BUBBLE_s6.5_l-1.jpg",
+   "bytes": 167870,
+   "sha256": "fe81c45305864966a1ddf8b0b132799ae6fd315e5b3e0745c6a8274b4d2bbe38"
+  },
+  {
+   "path": "qa/bonus/r38/BUBBLE_s6.5_l0.jpg",
+   "bytes": 170915,
+   "sha256": "a8afd560782d53e925ea8aa127901725f26666f452ca3b91d15264e9b3d2a6ee"
+  },
+  {
+   "path": "qa/bonus/r38/COMPARE_bubble_dash.jpg",
+   "bytes": 762002,
+   "sha256": "c132c3c25448c7b75814f9b894e5c54488fa6591b3b5cdef54224201c962bf56"
+  },
+  {
+   "path": "qa/bonus/r38/COMPARE_sock_rescue.jpg",
+   "bytes": 756361,
+   "sha256": "4e2d88eac460268135741a0b44971c35d8dbd721e6576d2e436f0e283d3c9622"
+  },
+  {
+   "path": "qa/bonus/r38/SOCK_9s_real_swipes.mp4",
+   "bytes": 6532244,
+   "sha256": "d6acd7568acf85f46fee19c618e0761c7572d352057f7e7715ab12e461f156f0"
+  },
+  {
+   "path": "qa/bonus/r38/SOCK_s0.0_l0.jpg",
+   "bytes": 166059,
+   "sha256": "41fbc8037e5bcb29a6558be76c3cf6b49afa7c788984f65adaf76a7379d8a2e3"
+  },
+  {
+   "path": "qa/bonus/r38/SOCK_s4.6_l-1.jpg",
+   "bytes": 164198,
+   "sha256": "0cf3698b47ef7fdd321588f39f6a99b393fe061dc2fda830043b2c0e567f2754"
+  },
+  {
+   "path": "qa/bonus/r38/SOCK_s4.6_l0.jpg",
+   "bytes": 165548,
+   "sha256": "82340f070dfb52d2bc28b7528502a89884a009fe3d2449eba5cd7efcc15b3b70"
+  },
+  {
+   "path": "qa/bonus/r38/SOCK_s8.3_l-1.jpg",
+   "bytes": 168409,
+   "sha256": "1d7e5d9800feaf6cdfbb001518ec778f08d2f4f92af11d20be37b44b619f4177"
+  },
+  {
+   "path": "qa/bonus/r38/SOCK_s8.3_l0.jpg",
+   "bytes": 170561,
+   "sha256": "aefc96e19c3c7eb71021e04f177af2418c636f0256b781e9d901a201757e3293"
   },
   {
    "path": "qa/capture_log.json",
@@ -40643,8 +40708,8 @@
   },
   {
    "path": "tools/bonus/bonus.html",
-   "bytes": 105522,
-   "sha256": "eb6d0c3066fd8d154798bfac951092c89b0133c015bf5a491c568cc5e8fa2387"
+   "bytes": 105528,
+   "sha256": "4ffd5e1ea12986aff3e54397ae66ee69eb3621a5b9f4eba46c35717c932557d1"
   },
   {
    "path": "tools/bonus/setup_bonus.sh",
