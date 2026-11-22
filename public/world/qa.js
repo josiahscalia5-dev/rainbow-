@@ -13,7 +13,8 @@ export function installQA({ THREE, scene, world, camera, renderer, repeatPose })
   const gameDrawn = (o) => { let p = o; while (p) { if (p === world) return false; p = p.parent; } return true; };   // Benny, coins, splash, swim effects live outside the world group
   const hide = () => scene.traverse((o) => { if ((o.isMesh || o.isSprite || o.isPoints) && gameDrawn(o)) { if (!saved.has(o)) saved.set(o, { v: o.visible, m: o.material }); o.visible = false; } });
   window.qaRestore = () => { for (const [o, s] of saved) { o.visible = s.v; o.material = s.m; } saved.clear(); idOn = false; scene.background = window.__qaBg ?? scene.background; return true; };
-  window.qaRepeatView = (k, area) => { const p = repeatPose(k, area); if (!p) return null; hide(); camera.position.copy(p.pos); camera.quaternion.copy(p.quat); camera.updateMatrixWorld(); renderer.render(scene, camera);
+  window.qaRepeatView = (k, area) => { const p = repeatPose(k, area); if (!p) return null; hide(); if (camera.filmOffset) { camera.filmOffset = 0; camera.updateProjectionMatrix(); }   /* r46: no stale lens shift from the game's edge guard */
+    camera.position.copy(p.pos); camera.quaternion.copy(p.quat); camera.updateMatrixWorld(); renderer.render(scene, camera);
     return { k, pos: p.pos.toArray().map((x) => +x.toFixed(3)), note: p.note ?? '' }; };
   window.qaIdPass = (on) => {
     if (!on) return window.qaRestore();

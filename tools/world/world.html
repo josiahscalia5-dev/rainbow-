@@ -534,7 +534,7 @@ const camAt = (s, dt) => {
   st.rigO = (st.rigO ?? oT.clone()).lerp(oT, kS); st.rigQ = (st.rigQ ?? qT.clone()).slerp(qT, kS);
   at(s, camera.position).add(st.rigO).addScaledVector(F.r, cds(st.camLat, CAMK * st.lat, 9, dt)); camera.quaternion.copy(st.rigQ); camera.updateMatrixWorld();
   const fpx = H / 2 / Math.tan(camera.fov * DEG / 2), M = 8;
-  for (let k = 0; k < 2; k++) { const bb = window.bennyBox(); const dpx = bb.x0 < M ? bb.x0 - M : bb.x1 > W - M ? bb.x1 - (W - M) : 0; const dpy = bb.y1 > H - M ? bb.y1 - (H - M) : bb.y0 < M + 60 ? bb.y0 - (M + 60) : 0; if (!dpx && !dpy) break;
+  for (let k = 0; k < 2; k++) { const bb = window.bennyBox(3, true); /* r46b: the positional guard keeps the r45b rest-pose box (the paddling arms made it step); the lens shift below uses the full silhouette */ const dpx = bb.x0 < M ? bb.x0 - M : bb.x1 > W - M ? bb.x1 - (W - M) : 0; const dpy = bb.y1 > H - M ? bb.y1 - (H - M) : bb.y0 < M + 60 ? bb.y0 - (M + 60) : 0; if (!dpx && !dpy) break;
     camera.position.addScaledVector(r, dpx * camera.position.distanceTo(benny.position) / fpx).addScaledVector(n, -dpy * camera.position.distanceTo(benny.position) / fpx); camera.updateMatrixWorld(); st.guard = (st.guard ?? 0) + 1; }
   // r45 (user: "it looks nothing like my approved screen"): in an area with layout cam_axis the camera keeps the APPROVED picture's view straight
   // down the drum (rings concentric, the bright core in the middle) and slides along the drum with Benny (all of his progress, `follow` of his
@@ -556,7 +556,7 @@ const camAt = (s, dt) => {
           const yT = Math.atan((ramp(bb.x1 - (W - KY)) - ramp(KY - bb.x0)) / fpx); st.camYaw ??= { x: yT, v: 0 };
           const y = cds(st.camYaw, yT, CA.yaw_omega ?? 7, dt); if (y) { camera.quaternion.multiply(new THREE.Quaternion().setFromAxisAngle(UPV, -y * w)); camera.updateMatrixWorld(); } st.camYawNow = y; }
         const nn = new THREE.Vector3(0, 1, 0).applyQuaternion(camera.quaternion);
-        for (let k = 0; k < 2; k++) { const bb = window.bennyBox(9); const dpy = bb.y1 > H - M ? bb.y1 - (H - M) : bb.y0 < M + 60 ? bb.y0 - (M + 60) : 0; if (!dpy) break;   // vertical only
+        for (let k = 0; k < 2; k++) { const bb = window.bennyBox(9, true); const dpy = bb.y1 > H - M ? bb.y1 - (H - M) : bb.y0 < M + 60 ? bb.y0 - (M + 60) : 0; if (!dpy) break;   // vertical only
           camera.position.addScaledVector(nn, -dpy * camera.position.distanceTo(benny.position) / fpx); camera.updateMatrixWorld(); } } } }
   for (const cl of CLAMPS) if (cl(camera.position)) { camera.updateMatrixWorld(); st.wallClamp = (st.wallClamp ?? 0) + 1; }
   { const wy = Math.min(at(s, _a).y, at(Math.max(0, s - 1.4), _b).y);   // v4: never below the water under the camera (the route descends in 07)
@@ -647,6 +647,7 @@ window.qaPickScenery = (x, y, limit = 6) => {
     point: hit.point.toArray().map((v) => +v.toFixed(3))
   }));
 };
+window.coinLayout = () => coins.map((c) => ({ s: +c.s.toFixed(3), lat: +c.lat.toFixed(3), got: c.got, kind: c.kind })).filter((c) => c.s < 1e8);   // r46 QA: every coin + when it was collected
 window.qaEdgeGuard = () => ({ opticalCorrections: st.opticalGuard ?? 0,
   maxOpticalShiftPx: +(st.maxOpticalShiftPx ?? 0).toFixed(2), shiftPx: +(st.opticalShiftPx ?? 0).toFixed(2), lensOffsetMm: +camera.filmOffset.toFixed(4), box: window.bennyBox() });
 const QA_SCN = MESH.filter((o) => o.userData.fam !== 'foam'), QA_RC = new THREE.Raycaster();

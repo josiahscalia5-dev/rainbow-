@@ -38,7 +38,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { installControls } from './controls.js';
 import { installQA } from './qa.js';   // r45: QA views for the automated preview check
-import { RIBBON_GLSL, routeUniforms, loadDetail } from './water_ribbon.js';   // r45 test ?water=ribbon: clean ribbon water drawn from the painting's structure
+import { RIBBON_GLSL, routeUniforms, loadDetail, ribbonCopy, ribbonUniformsAs } from './water_ribbon.js';   // r45 test ?water=ribbon: clean ribbon water drawn from the painting's structure
 import { famOf as kitFamOf, loadTemplates, applyTemplates } from './bake.js';   // r45: the screen kit's artwork-sampled materials (wall / ring / tray templates, water swatches)
 const q = new URLSearchParams(location.search);
 if (!q.has('w') && !q.has('play')) q.set('play', '1');   // app: real-time play
@@ -144,7 +144,7 @@ const WATER_CORE = `float hsh(vec2 p){ vec3 p3 = fract(vec3(p.xyx) * 0.1031); p3
     for (int L = 0; L < 2; L++) { float cw = L == 0 ? 0.06 : 0.12, rl = L == 0 ? 0.22 : 0.4; vec2 g = vec2(uw / cw, (tp + float(L) * 0.37) / rl); vec2 cell = floor(g); float r = hsh(cell + float(L) * 13.0);
       if (r < 0.55) { float y0 = (cell.y + 0.5) * rl, len = rl * (0.25 + 0.3 * hsh(cell + 6.6)), ph = (tp - y0) / (0.5 * len);
         float x0 = (cell.x + 0.25 + 0.5 * hsh(cell + 3.3)) * cw + sec * 0.25 * cw * ph * ph * (hsh(cell + 9.1) - 0.5) * 2.0; float wid = L == 0 ? 0.006 : 0.01, ww = max(wid, 0.9 * fwidth(uw));
-        float I = 0.8 * exp(-pow((uw - x0) / ww, 2.0)) * (1.0 - smoothstep(0.3, 1.0, abs(ph))) * (wid / ww); col = mix(col, vec3(0.93, 1.0, 1.0), clamp(I, 0.0, 1.0)); } }
+        float I = 0.8 * exp(-((uw - x0) / ww) * ((uw - x0) / ww)) * (1.0 - smoothstep(0.3, 1.0, abs(ph))) * (wid / ww); col = mix(col, vec3(0.93, 1.0, 1.0), clamp(I, 0.0, 1.0)); } }
     if (sec > 0.5) { vec2 g = vec2(u * 5.0, tp * 2.2); vec2 cell = floor(g); float hh = hsh(cell + 0.37);
       if (hh < 0.6) { vec2 pc = cell + vec2(0.2 + 0.6 * hsh(cell + 1.7), 0.2 + 0.6 * hsh(cell + 4.1)); float dx = (g.x - pc.x) / 5.0 * RWs, dy = (g.y - pc.y) / 2.2;
         float tw = 0.5 + 0.5 * sin(uT * 3.0 + hh * 40.0); tw *= tw; float st = exp(-(dx * dx + dy * dy) / 0.0001) + exp(-abs(dx) / 0.035) * exp(-dy * dy / 0.00002) + 0.6 * exp(-abs(dy) / 0.045) * exp(-dx * dx / 0.00001);
@@ -157,23 +157,49 @@ const WATER_CORE = `float hsh(vec2 p){ vec3 p3 = fract(vec3(p.xyx) * 0.1031); p3
 const WVERT = 'varying vec2 vUv; varying vec3 vW; varying vec3 vL; void main(){ vUv = uv; vL = position; vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; }';
 // kit areas: water in its own UVs (u across, v along the flow)
 const waterMatKit = (halfW, len, along0, isPool, A, own = true) => new THREE.ShaderMaterial({ side: THREE.DoubleSide, polygonOffset: !!isPool, polygonOffsetFactor: isPool ? 2 : 0, polygonOffsetUnits: isPool ? 4 : 0,
-  uniforms: { uRouteX: { value: null }, uRouteZ: { value: new THREE.Vector4(0, 1, 1, 0) }, ...(own && A.ribbonU ? A.ribbonU : {}), uRibbon: { value: own && A.ribbonU ? 1 : 0 },
-    uT: WT, uGlow: A.glow, uSharp: { value: new THREE.Vector2(SHARPX, own && A.ribbonU ? 1.0 : 2.2) }, /* ribbon: the bake gives way as soon as it is magnified */ uLodBias: { value: A.lodBias }, uBake: { value: null }, uBakeOn: { value: 0 }, uDen: { value: null }, uGeo: { value: new THREE.Vector4(halfW, len, along0, isPool ? 1 : 0) },
-    uSw: { value: null }, uSwOn: { value: 0 }, uSwGeo: { value: new THREE.Vector4(0, 1, 0, 0) }, uFlow: { value: A.LAY?.water_flow ?? 1.2 }, uFar: A.far ?? FAR0, uFarCol: A.farCol ?? FARC0 },   // r45: painted flow swatch (bake.js)
+  uniforms: { uRouteX: { value: null }, uRouteZ: { value: new THREE.Vector4(0, 1, 1, 0) }, uRStyle: { value: 0 }, ...(own && A.ribbonU ? A.ribbonU : {}), uRibbon: { value: own && A.ribbonU ? 1 : 0 }, uRUv: { value: new THREE.Vector4(isPool ? 0 : 1, 0, 0, 0) },
+    uT: WT, uGlow: A.glow, uSharp: { value: new THREE.Vector2(SHARPX, own && A.ribbonU ? (A.LAY?.bake_keep_mag ?? 1.0) : 2.2) }, /* ribbon: the bake gives way as soon as it is magnified (r46: layout bake_keep_mag, 06 = 2.2) */ uLodBias: { value: A.lodBias }, uBake: { value: null }, uBakeOn: { value: 0 }, uDen: { value: null }, uGeo: { value: new THREE.Vector4(halfW, len, along0, isPool ? 1 : 0) },
+    uSw: { value: null }, uSwOn: { value: 0 }, uSwGeo: { value: new THREE.Vector4(0, 1, 0, 0) }, uFlow: { value: A.LAY?.water_flow ?? 1.2 }, uFar: A.far ?? FAR0, uFarCol: A.farCol ?? FARC0,   // r45: painted flow swatch (bake.js)
+    uBakeZ: { value: new THREE.Vector2(own && A.ribbonU ? (A.LAY?.drum?.z0 ?? 3) - 1.5 : 1e9, own && A.ribbonU ? (A.LAY?.drum?.z0 ?? 3) : 2e9) } },   // r46: the picture bake fades in over the area's first 1.5 u (no seam at the connector)
   vertexShader: WVERT,
   fragmentShader: `uniform float uT; uniform vec3 uGlow; uniform sampler2D uBake; uniform float uBakeOn; uniform sampler2D uDen; uniform vec2 uSharp; uniform float uLodBias; uniform vec4 uGeo; varying vec2 vUv; varying vec3 vW;
-    uniform sampler2D uSw; uniform float uSwOn; uniform vec4 uSwGeo; uniform float uFlow; varying vec3 vL; uniform vec4 uFar; uniform vec3 uFarCol;
+    uniform sampler2D uSw; uniform float uSwOn; uniform vec4 uSwGeo; uniform float uFlow; varying vec3 vL; uniform vec4 uFar; uniform vec3 uFarCol; uniform vec2 uBakeZ;
     ${WATER_CORE}
     ${RIBBON_GLSL}
     void main(){ float RW = uGeo.x, u = vUv.x * 2.0 - 1.0, uw = u * RW, d = uGeo.z + (1.0 - vUv.y) * uGeo.y, tp = d + uT * 1.6;
       vec3 col = uSwOn > 1.5 ? texture(uSw, vec2((vL.x - uSwGeo.z) / uSwGeo.w, (-vL.z + uT * uFlow - uSwGeo.x) / uSwGeo.y)).rgb   // r45: the painted floor, every band, world-anchored
                : uSwOn > 0.5 ? texture(uSw, vec2(vUv.x, (d + uT * uFlow - uSwGeo.x) / uSwGeo.y)).rgb   // the painted river itself, flowing toward the camera
                              : waterCol(u, uw, tp, 0.62, 0.96, 1.0 - uGeo.w * 0.6, 0.0, 0.0);   // = tools/screenkit/screen.html (pools: pink edges damped)
-      if (uRibbon > 0.5) col = ribbonWater(vL, uT, uFlow, vW);   // r45 test: the clean painted ribbons
+      if (uRibbon > 0.5) { gRUv = vec4(uRUv.x, u, d, 0.0); col = ribbonWater(vL, uT, uFlow, vW); }   // r45: the clean painted ribbons
       else if (uSwOn > 1.5) { vec3 pc = waterCol(u, uw, tp, 0.62, 0.96, 0.0, 0.0, 0.0); float dash = clamp((pc.g - 0.75) * 4.0, 0.0, 1.0) * step(0.9, pc.r); col = mix(col, vec3(0.93, 1.0, 1.0), 0.85 * dash); }   // crisp sparkle dashes close up
       col = mix(col, uFarCol, uFar.w * uFar.z * pow(smoothstep(uFar.x, uFar.y, distance(cameraPosition, vW)), 1.4));   // under the painted pixels
-      col = bakeMix(col, vUv, vW, uBake, uDen, uBakeOn, uSharp, uLodBias, uT);
+      col = mix(col, bakeMix(col, vUv, vW, uBake, uDen, uBakeOn, uSharp, uLodBias, uT), 1.0 - smoothstep(uBakeZ.x, uBakeZ.y, vL.z));
       col = mix(col, vec3(0.95, 1.0, 1.0), uGlow.z * pow(smoothstep(uGlow.x, uGlow.y, vW.z), 1.6)); gl_FragColor = vec4(col, 1.0); }` });
+// r46 (Screen 05 frames 0-90 and 690-720: a hard seam, then plain cyan): the connector water strips between two areas wore a plain swatch.
+// Now a connector continues the ribbon water of the area on EACH side (05: cyan + hot-pink S-ribbons, sparkles), cross-fading along its length:
+// lateral = exact distance from the connector's own axis (= Benny's route), along = each area's own coordinate, so each end meets its area's
+// river without a seam. An area without ribbon water keeps the previous connector look at its end.
+const axisTex = (axis) => { const P = [...axis].sort((a, b) => a[2] - b[2]), z0 = P[0][2], z1 = P[P.length - 1][2], N = 512, data = new Float32Array(N); let k = 0;
+  for (let i = 0; i < N; i++) { const z = z0 + (z1 - z0) * i / (N - 1); while (k < P.length - 2 && P[k + 1][2] < z) k++; const a = P[k], b = P[k + 1] ?? a, f = b[2] > a[2] ? (z - a[2]) / (b[2] - a[2]) : 0; data[i] = a[0] + (b[0] - a[0]) * Math.min(1, Math.max(0, f)); }
+  const t = new THREE.DataTexture(data, N, 1, THREE.RedFormat, THREE.FloatType); t.minFilter = t.magFilter = THREE.LinearFilter; t.needsUpdate = true; return { t, z0, z1 }; };
+const waterMatConn = (c, base, Aa, Ab) => { const ax = axisTex(c.axis), zs = c.axis[0][2], ze = c.axis[c.axis.length - 1][2], side = (A, sx) => (A?.ribbonU ? { ...ribbonUniformsAs(A.ribbonU, sx), ['uRUv' + sx]: { value: new THREE.Vector4(2, 0, 0, 0) }, ['uRibbon' + sx]: { value: 1 },
+    ['uMi' + sx]: { value: (A.Mi ??= A.M.clone().invert()) }, ['uOn' + sx]: { value: 1 }, ['uFl' + sx]: { value: A.LAY?.water_flow ?? 1.2 } } : { ['uOn' + sx]: { value: 0 }, ['uMi' + sx]: { value: new THREE.Matrix4() }, ['uFl' + sx]: { value: 1.2 },
+    ...ribbonUniformsAs({ uRouteX: { value: null }, uRouteZ: { value: new THREE.Vector4(0, 1, 1, 0) }, uRStyle: { value: 0 }, uRUv: { value: new THREE.Vector4() }, uRibbon: { value: 0 }, uDetC: { value: null }, uDetP: { value: null }, uDetCM: { value: new THREE.Vector4(1, 1, 1, 1) }, uDetPM: { value: new THREE.Vector4(1, 1, 1, 1) }, uDetS: { value: 1 }, uDetOn: { value: 0 } }, sx) });
+  const m = base; Object.assign(m.uniforms, side(Aa, '_a'), side(Ab, '_b'), { uAx: { value: ax.t }, uAxZ: { value: new THREE.Vector4(ax.z0, ax.z1, zs, ze) } });
+  m.fragmentShader = m.fragmentShader.replace('void main(){', `uniform sampler2D uAx; uniform vec4 uAxZ; uniform mat4 uMi_a, uMi_b; uniform float uOn_a, uOn_b, uFl_a, uFl_b;
+    ${ribbonCopy('_a')}
+    ${ribbonCopy('_b')}
+    void main(){`).replace('col = mix(col, uFarCol,', `{ float zt = clamp((vW.z - uAxZ.x) / (uAxZ.y - uAxZ.x), 0.0, 1.0), e = 0.03 / max(1e-3, uAxZ.y - uAxZ.x);
+        float axx = texture2D(uAx, vec2(zt, 0.5)).r, sl = (texture2D(uAx, vec2(min(1.0, zt + e), 0.5)).r - texture2D(uAx, vec2(max(0.0, zt - e), 0.5)).r) / 0.06, latm = (vW.x - axx) / sqrt(1.0 + sl * sl);
+        float k = smoothstep(0.12, 0.88, (uAxZ.z - vW.z) / max(1e-3, uAxZ.z - uAxZ.w)); vec3 ca = col, cb = col;
+        /* r46b: each side uses its OWN area's lateral (its route texture, clamped beyond its ends) exactly like that area's water - the connector
+           axis ends 0.14 u beside 05's route start, which shifted the ribbons at the join (frames 40-90) */
+        if (uOn_a > 0.5) { vec3 La = (uMi_a * vec4(vW, 1.0)).xyz; gRUv_a = vec4(0.0); ca = ribbonWater_a(La, uT, uFl_a, vW); }
+        if (uOn_b > 0.5) { vec3 Lb = (uMi_b * vec4(vW, 1.0)).xyz; gRUv_b = vec4(0.0); cb = ribbonWater_b(Lb, uT, uFl_b, vW); }
+        latm += 0.0;
+        col = mix(ca, cb, k); }
+      col = mix(col, uFarCol,`);
+  m.needsUpdate = true; return m; };
 // section areas: water in world coordinates around the painted river line (route texture), offset to the area's placement
 const waterMatSec = (A) => new THREE.ShaderMaterial({ side: THREE.DoubleSide,
   uniforms: { uT: WT, uGlow: A.glow, uSharp: { value: new THREE.Vector2(SHARPX, 2.2) }, uLodBias: { value: 0 }, uBake: { value: null }, uBakeOn: { value: 0 }, uDen: { value: null },
@@ -201,20 +227,36 @@ const MESH = [], WATER = [], CLAMPS = [], FOAMS = [], BUBBLES = [];
 
 // the kit page's foam banks (screen.html): lit lavender-white shading, the area's glow
 const kitFoamMat = (A) => new THREE.ShaderMaterial({ uniforms: { uL: { value: new THREE.Vector3(-0.25, 0.8, 0.55).normalize() }, uGlow: A.glow },
-  vertexShader: 'varying vec3 vN; varying vec3 vW; void main(){ vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz; vN = normalize(mat3(modelMatrix) * normal); gl_Position = projectionMatrix * viewMatrix * w; }',
+  // r46 (user: "the white foam bank looks like large polygonal blocks, especially close to the camera"): the r45 pattern was a 2-D Voronoi in
+  // world x / z whose straight cell borders drew crystal facets on every heap. Now the foam is made of ROUND BUBBLES in 3-D: each cell holds a
+  // sphere-like bubble of its own size (power distance -> circles, never straight seams), its normal bends like a little dome (soft lavender
+  // shadow below, white top, one highlight), small bubbles fill the gaps (second octave), the bubbles fade to soft shading where they get
+  // smaller than a pixel. The heaps' outline is softened by a small 3-D displacement (rounder silhouettes, icosphere level 2 in the asset).
+  vertexShader: `varying vec3 vN; varying vec3 vW;
+    float fh3(vec3 p){ return fract(sin(dot(p, vec3(12.9898, 78.233, 37.719))) * 43758.5453); }
+    float fn3(vec3 p){ vec3 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f); return mix(mix(mix(fh3(i), fh3(i + vec3(1, 0, 0)), f.x), mix(fh3(i + vec3(0, 1, 0)), fh3(i + vec3(1, 1, 0)), f.x), f.y), mix(mix(fh3(i + vec3(0, 0, 1)), fh3(i + vec3(1, 0, 1)), f.x), mix(fh3(i + vec3(0, 1, 1)), fh3(i + vec3(1, 1, 1)), f.x), f.y), f.z); }
+    void main(){ vec4 w = modelMatrix * vec4(position, 1.0); vec3 n = normalize(mat3(modelMatrix) * normal);
+      w.xyz += n * (0.018 * (fn3(w.xyz * 14.0) - 0.5) + 0.008 * (fn3(w.xyz * 31.0 + 5.0) - 0.5)); vW = w.xyz; vN = n; gl_Position = projectionMatrix * viewMatrix * w; }`,
   fragmentShader: `varying vec3 vN; varying vec3 vW; uniform vec3 uL; uniform vec3 uGlow; vec3 c3(float r, float g, float b){ return vec3(r, g, b) / 255.0; }
-    // r45: the painted foam is made of SMALL BUBBLES (lavender shadows, white rims, tiny highlights), not smooth lumps: a cellular bubble pattern in
-    // world space bends the shading per bubble, so the low-poly clusters read as bubbly foam and their facets disappear
-    vec2 bh2(vec2 p){ return fract(sin(vec2(dot(p, vec2(127.1, 311.7)), dot(p, vec2(269.5, 183.3)))) * 43758.5453); }
-    vec3 cell(vec2 p){ vec2 i = floor(p), f = fract(p); float d1 = 8.0, d2 = 8.0; vec2 best = vec2(0.0);
-      for (int y = -1; y <= 1; y++) for (int x = -1; x <= 1; x++) { vec2 g = vec2(float(x), float(y)), o = bh2(i + g), r = g + o - f; float d = dot(r, r); if (d < d1) { d2 = d1; d1 = d; best = r; } else if (d < d2) d2 = d; }
-      return vec3(sqrt(d1), sqrt(d2), 0.0); }
-    void main(){ vec3 N = normalize(vN); vec2 bp = vec2(vW.x + vW.y * 0.7, vW.z + vW.y * 0.4) * 34.0; vec3 c = cell(bp), c2 = cell(bp * 2.3 + 7.0);
-      float rim = smoothstep(0.08, 0.0, c.y - c.x), dome = 1.0 - smoothstep(0.0, 0.55, c.x), rim2 = smoothstep(0.08, 0.0, c2.y - c2.x);
-      float lit = clamp(0.55 + 0.45 * dot(N, uL) + 0.25 * dome - 0.12 * rim, 0.0, 1.0);
+    vec3 bh3(vec3 p){ p = vec3(dot(p, vec3(127.1, 311.7, 74.7)), dot(p, vec3(269.5, 183.3, 246.1)), dot(p, vec3(113.5, 271.9, 124.6))); return fract(sin(p) * 43758.5453); }
+    // nearest bubble by d / radius: returns (d / radius, radius, vector from the bubble centre in cell units)
+    vec4 bub(vec3 p, out vec3 rv){ vec3 i = floor(p), f = fract(p); float best = 9.0, br = 0.4; rv = vec3(0.0);
+      for (int z = -1; z <= 1; z++) for (int y = -1; y <= 1; y++) for (int x = -1; x <= 1; x++) { vec3 g = vec3(float(x), float(y), float(z)), h = bh3(i + g);
+        vec3 r = f - (g + 0.15 + 0.7 * h); float rad = 0.36 + 0.3 * fract(h.x * 7.13 + h.z * 3.7), d = length(r) / rad; if (d < best) { best = d; br = rad; rv = r / rad; } }
+      return vec4(best, br, 0.0, 0.0); }
+    void main(){ vec3 N = normalize(vN), V = normalize(cameraPosition - vW); if (dot(N, V) < 0.0) N = -N;
+      vec3 r1 = vec3(0.0), r2 = vec3(0.0); float S1 = 26.0, px1 = length(fwidth(vW * S1)), px2 = px1 * 2.6, k1 = 1.0 - smoothstep(0.35, 0.9, px1), k2 = 1.0 - smoothstep(0.35, 0.9, px2);   // bubbles visible only when >~1 px
+      vec4 b1 = vec4(0.5, 0.4, 0.0, 0.0), b2 = vec4(0.5, 0.4, 0.0, 0.0);   /* r46b: the 27-cell search only where the bubbles are visible (half the software render time was far foam) */
+      if (k1 > 0.0) b1 = bub(vW * S1, r1); if (k2 > 0.0) b2 = bub(vW * S1 * 2.6 + 11.0, r2);
+      float in1 = 1.0 - smoothstep(0.82, 1.0, b1.x), in2 = 1.0 - smoothstep(0.82, 1.0, b2.x);
+      vec3 n1 = normalize(mix(N, normalize(r1 + N * 0.35), 0.75 * in1 * k1)); vec3 n2 = normalize(mix(N, normalize(r2 + N * 0.35), 0.6 * in2 * k2));
+      vec3 Nb = normalize(mix(n1, n2, 0.45 * (1.0 - in1) * in2 * k2));   // small bubbles fill the crevices between the big ones
+      float lit = clamp(0.68 + 0.36 * dot(Nb, uL), 0.0, 1.0);   /* r46b: the painted foam is mostly bright white, lavender only in its shadows */
+      float crev = k1 * smoothstep(0.85, 1.15, b1.x) * (1.0 - 0.6 * in2 * k2);   // the shadowed gaps between bubbles
+      lit = clamp(lit - 0.15 * crev, 0.0, 1.0);
       vec3 col = lit < 0.5 ? mix(c3(150.0, 135.0, 222.0), c3(205.0, 200.0, 245.0), lit / 0.5) : mix(c3(205.0, 200.0, 245.0), c3(255.0, 254.0, 255.0), (lit - 0.5) / 0.5);
-      col = mix(col, c3(170.0, 160.0, 235.0), 0.35 * rim + 0.15 * rim2);                                     // bubble seams: soft lavender
-      col += 0.18 * pow(dome, 6.0) * max(0.0, dot(N, uL));                                                    // a tiny highlight per bubble
+      float sp = pow(max(dot(reflect(-uL, Nb), V), 0.0), 28.0) * (in1 * k1 + 0.6 * in2 * k2);
+      col += vec3(0.25) * sp; col += 0.05 * vec3(0.4, 0.9, 1.0) * pow(1.0 - max(dot(Nb, V), 0.0), 3.0) * in1 * k1;   // a faint wet cyan rim like the painted foam
       col = mix(col, vec3(1.0, 0.98, 0.95), uGlow.z * pow(smoothstep(uGlow.x, uGlow.y, vW.z), 1.6)); gl_FragColor = vec4(min(col, vec3(1.0)), 1.0); }` });
 // ---------------- area: a screen-kit screen (layout.json + scene.glb) ----------------
 const loadKit = async (A) => {
@@ -224,7 +266,8 @@ const loadKit = async (A) => {
   const g = (await gltf.loadAsync(A.dir + 'scene.glb')).scene; g.position.copy(off); g.rotation.x = A.rot_x ?? 0; g.name = 'area_' + A.id; world.add(g); g.updateMatrixWorld(true);
   const M = g.matrixWorld.clone(), Mi = M.clone().invert(); A.M = M;   // v4: an area may be tilted (07 descends); everything local goes through M
   const famOf = kitFamOf;   // r45: bake.js (paddlerep_* = the repeated trays -> copper)
-  if (q.get('water') !== 'paint' && (LAY.water_style === 'ribbon' || (q.get('water') === 'ribbon' && (q.get('ribbonareas') ?? '05').split(',').includes(A.id)))) A.ribbonU = routeUniforms(THREE, LAY);   // r45: clean ribbon water (?water=paint = the old painted swatch)
+  if (q.get('water') !== 'paint' && (LAY.water_style === 'ribbon' || LAY.water_style === 'ribbon06' || (q.get('water') === 'ribbon' && (q.get('ribbonareas') ?? '05').split(',').includes(A.id)))) A.ribbonU = routeUniforms(THREE, LAY);   // r45: clean ribbon water (?water=paint = the old painted swatch)
+  if (A.ribbonU && q.get('rich') === '0') A.ribbonU.uRich.value = 0;   // r46 A/B switch: ?rich=0 = the round-45b ribbon water
   const ms = []; g.traverse((o) => { if (o.isMesh) ms.push(o); });
   const RLENa = (LAY.route.points.length - 1) * LAY.route.ds, NSEG = ms.filter((o) => /^water_/.test(o.name)).length, SEG_LEN = RLENa / Math.max(1, NSEG);
   for (const o of ms) { const n = o.name, fam = famOf(n); o.geometry.computeBoundingBox(); const sz = o.geometry.boundingBox.getSize(new THREE.Vector3()); let m;
@@ -241,7 +284,9 @@ const loadKit = async (A) => {
     else if (fam === 'foam') m = kitFoamMat(A);   // the kit page's lit lavender-white foam banks (not baked)
     else m = sceneryMat(BASE.foam, [1, 1], A);
     o.material = m; o.userData.fam = fam; o.userData.area = A.id; MESH.push(o); }
-  if (!DR.open_end) {   // the area's tube ends here (no next area joined yet): the warm glowing far end of its own page (real geometry, no hole)
+  // r46 (r45b recording frames 1362-1379: a green hole growing to 400 px at the end of the 07 tube, seen from the 06 -> 07 connector): the LAST area
+  // of the world is open toward the game's 08 hand-over, so nothing closed its tube - it now gets the same glowing far-end cap (2.8 u beyond the route end)
+  if (!DR.open_end || A.id === WD.areas[WD.areas.length - 1].id) {   // the area's tube ends here (no next area joined yet): the warm glowing far end of its own page (real geometry, no hole)
     const cap = new THREE.Mesh(new THREE.CircleGeometry(DR.r * 1.02, 64), new THREE.ShaderMaterial({ side: THREE.DoubleSide,
       vertexShader: 'varying vec2 vP; void main(){ vP = position.xy; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
       fragmentShader: `varying vec2 vP; void main(){ float r = length(vP) / ${(DR.r * 1.02).toFixed(3)}; vec3 c = mix(vec3(1.0, 0.97, 0.88), vec3(0.98, 0.62, 0.4), smoothstep(0.08, 0.35, r)); c = mix(c, vec3(0.55, 0.25, 0.7), smoothstep(0.35, 0.95, r)); gl_FragColor = vec4(c, 1.0); }` }));
@@ -351,6 +396,8 @@ const AREA = Object.fromEntries(WD.areas.map((A) => [A.id, A]));
     if (c.kind === 'tube') { let L = 0; for (let i = 1; i < c.axis.length; i++) L += V3(c.axis[i]).distanceTo(V3(c.axis[i - 1])); const rA = c.r.reduce((a, b) => a + b, 0) / c.r.length;
       rep = c.fam === 'tunnelS' ? [Math.round(2 * Math.PI * rA / 0.75), Math.max(1, L / 0.75)] : [Math.round(2 * Math.PI * rA / 2.6), Math.max(1, L / 1.2)]; }
     o.material = c.fam === 'ring' ? sceneryMat(BASE.goldring, [4, 1], A) : c.fam === 'pool' ? waterMatKit(Math.max(sz.x, 1.2) / 2, Math.max(sz.z, 1), 0, true, A, false) : sceneryMat(BASE[c.fam] ?? BASE.pink, rep, A);
+    if (c.fam === 'pool' && c.kind === 'strip_path' && q.get('connwater') !== '0') { const pr = { 'B05': ['AB', '05'], '056': ['05', '06'], '067': ['06', '07'], '04A': ['04', 'AB'] }[o.name.split('_')[1]];   // r46: ribbon water across the join
+      if (pr && (AREA[pr[0]]?.ribbonU || AREA[pr[1]]?.ribbonU)) o.material = waterMatConn(c, o.material, AREA[pr[0]], AREA[pr[1]]); }
     o.userData.fam = c.fam === 'pool' ? 'pool' : c.fam; o.userData.area = 'connector'; MESH.push(o); if (c.fam === 'pool') WATER.push(o);
     // r45: a connector wears the artwork templates of the area it belongs to (wall period along its length, ring band, river swatch)
     const T = A?.TPL, u = o.material.uniforms;
@@ -479,13 +526,16 @@ const st = { s: +(q.get('s0') ?? WD.start_s), lat: 0, camLat: { x: 0, v: 0 }, t:
 const cds = (o, target, omega, dt) => { const y = o.x - target, j = o.v + omega * y, e = Math.exp(-omega * dt); o.x = target + (y + j * dt) * e; o.v = (o.v - omega * j * dt) * e; return o.x; };
 const CAMK = +(q.get('camk') ?? 0.8), tmp = new THREE.Vector3(), Mt = new THREE.Matrix4();
 const camAt = (s, dt) => {
+  // Recalculate the physical chase-camera frame from an unshifted lens. The Screen 05 optical
+  // edge guard below is applied LAST, after all camera/wall constraints, not accumulated each frame.
+  if (camera.filmOffset !== 0) { camera.filmOffset = 0; camera.updateProjectionMatrix(); }
   const F = frameAt(s), R = rigAt(s); camFrame(s, Mt); const r = new THREE.Vector3().setFromMatrixColumn(Mt, 0), n = new THREE.Vector3().setFromMatrixColumn(Mt, 1);
   const oT = R.off.clone().applyMatrix4(Mt), qT = new THREE.Quaternion().setFromRotationMatrix(Mt).multiply(R.qrel);
   const kS = dt > 0 && st.camInit ? 1 - Math.exp(-14 * dt) : 1; st.camInit = true;
   st.rigO = (st.rigO ?? oT.clone()).lerp(oT, kS); st.rigQ = (st.rigQ ?? qT.clone()).slerp(qT, kS);
   at(s, camera.position).add(st.rigO).addScaledVector(F.r, cds(st.camLat, CAMK * st.lat, 9, dt)); camera.quaternion.copy(st.rigQ); camera.updateMatrixWorld();
   const fpx = H / 2 / Math.tan(camera.fov * DEG / 2), M = 8;
-  for (let k = 0; k < 2; k++) { const bb = window.bennyBox(); const dpx = bb.x0 < M ? bb.x0 - M : bb.x1 > W - M ? bb.x1 - (W - M) : 0; const dpy = bb.y1 > H - M ? bb.y1 - (H - M) : bb.y0 < M + 60 ? bb.y0 - (M + 60) : 0; if (!dpx && !dpy) break;
+  for (let k = 0; k < 2; k++) { const bb = window.bennyBox(3, true); /* r46b: the positional guard keeps the r45b rest-pose box (the paddling arms made it step); the lens shift below uses the full silhouette */ const dpx = bb.x0 < M ? bb.x0 - M : bb.x1 > W - M ? bb.x1 - (W - M) : 0; const dpy = bb.y1 > H - M ? bb.y1 - (H - M) : bb.y0 < M + 60 ? bb.y0 - (M + 60) : 0; if (!dpx && !dpy) break;
     camera.position.addScaledVector(r, dpx * camera.position.distanceTo(benny.position) / fpx).addScaledVector(n, -dpy * camera.position.distanceTo(benny.position) / fpx); camera.updateMatrixWorld(); st.guard = (st.guard ?? 0) + 1; }
   // r45 (user: "it looks nothing like my approved screen"): in an area with layout cam_axis the camera keeps the APPROVED picture's view straight
   // down the drum (rings concentric, the bright core in the middle) and slides along the drum with Benny (all of his progress, `follow` of his
@@ -493,15 +543,35 @@ const camAt = (s, dt) => {
   { const A = areaOf(s), CA = A.kind === 'kit' ? A.LAY?.cam_axis : null, key = CA ? WD.cam_keys.find((k) => k.area === A.id) : null;
     if (key && A.M) { const w = sstep(A.s0, A.s0 + 3, s) * (1 - sstep(A.s1 - 3, A.s1, s));
       if (w > 0) { const ax = new THREE.Vector3(0, 0, -1).transformDirection(A.M), side = new THREE.Vector3(1, 0, 0).transformDirection(A.M);
-        const d = at(s, new THREE.Vector3()).addScaledVector(F.r, st.lat).sub(at(key.s, new THREE.Vector3()));
-        const P = V3(key.pos).addScaledVector(ax, d.dot(ax)).addScaledVector(side, d.dot(side) * (CA.follow ?? 0.6)), Qk = new THREE.Quaternion().setFromEuler(new THREE.Euler(key.pitch, key.yaw, 0, 'YXZ'));
+        const d = at(s, new THREE.Vector3()).addScaledVector(F.r, st.lat).sub(at(key.s, new THREE.Vector3())), dL = F.r.clone().multiplyScalar(st.lat), dR = d.clone().sub(dL);
+        // r46: the river's swing (dR) and Benny's lane offset (dL) followed separately (layout follow_route / follow_lane; both = follow before)
+        const P = V3(key.pos).addScaledVector(ax, d.dot(ax)).addScaledVector(side, dR.dot(side) * (CA.follow_route ?? CA.follow ?? 0.6) + dL.dot(side) * (CA.follow_lane ?? CA.follow ?? 0.6)), Qk = new THREE.Quaternion().setFromEuler(new THREE.Euler(key.pitch, key.yaw, 0, 'YXZ'));
+        // r46 (Screen 05 frames 409-420: Benny past the right edge, a foam heap filling the lower right, the low-res far wall 0.3 u from the lens):
+        // following the S-river's swing slid the camera to within 0.3 u of the drum wall, and the sideways guard then pushed it further into the
+        // wall clamp. Now the camera stays in the drum's middle band (soft limit, untouched within lim - knee of the axis, so the approved picture
+        // view is exactly as before) and TURNS a little toward Benny when he nears an edge (critically damped, no jumps). Lens shift = last resort.
+        { A.Mi ??= A.M.clone().invert(); const DRa = A.LAY.drum, Pl = P.clone().applyMatrix4(A.Mi), lim = CA.max_off ?? 0.55, kn = CA.knee ?? 0.2, ox = Pl.x - DRa.axis_x, ao = Math.abs(ox);
+          if (ao > lim - kn) { Pl.x = DRa.axis_x + Math.sign(ox) * (lim - kn + kn * (1 - Math.exp(-(ao - (lim - kn)) / kn))); P.copy(Pl.applyMatrix4(A.M)); } }
         camera.position.lerp(P, w); camera.quaternion.slerp(Qk, w); camera.updateMatrixWorld(); st.camAxis = w;
-        const rr = new THREE.Vector3(1, 0, 0).applyQuaternion(camera.quaternion), nn = new THREE.Vector3(0, 1, 0).applyQuaternion(camera.quaternion);
-        for (let k = 0; k < 2; k++) { const bb = window.bennyBox(); const dpx = bb.x0 < M ? bb.x0 - M : bb.x1 > W - M ? bb.x1 - (W - M) : 0; const dpy = bb.y1 > H - M ? bb.y1 - (H - M) : bb.y0 < M + 60 ? bb.y0 - (M + 60) : 0; if (!dpx && !dpy) break;
-          camera.position.addScaledVector(rr, dpx * camera.position.distanceTo(benny.position) / fpx).addScaledVector(nn, -dpy * camera.position.distanceTo(benny.position) / fpx); camera.updateMatrixWorld(); } } } }
+        { const bb = window.bennyBox(9, true), KY = CA.frame_px ?? 64, KYN = 24,   /* rest pose: no wobble with the strokes; off at the picture view (his box starts 80 px in) */ ramp = (e) => (e <= 0 ? 0 : e < KYN ? e * e / (2 * KYN) : e - KYN / 2);
+          const yT = Math.atan((ramp(bb.x1 - (W - KY)) - ramp(KY - bb.x0)) / fpx); st.camYaw ??= { x: yT, v: 0 };
+          const y = cds(st.camYaw, yT, CA.yaw_omega ?? 7, dt); if (y) { camera.quaternion.multiply(new THREE.Quaternion().setFromAxisAngle(UPV, -y * w)); camera.updateMatrixWorld(); } st.camYawNow = y; }
+        const nn = new THREE.Vector3(0, 1, 0).applyQuaternion(camera.quaternion);
+        for (let k = 0; k < 2; k++) { const bb = window.bennyBox(9, true); const dpy = bb.y1 > H - M ? bb.y1 - (H - M) : bb.y0 < M + 60 ? bb.y0 - (M + 60) : 0; if (!dpy) break;   // vertical only
+          camera.position.addScaledVector(nn, -dpy * camera.position.distanceTo(benny.position) / fpx); camera.updateMatrixWorld(); } } } }
   for (const cl of CLAMPS) if (cl(camera.position)) { camera.updateMatrixWorld(); st.wallClamp = (st.wallClamp ?? 0) + 1; }
   { const wy = Math.min(at(s, _a).y, at(Math.max(0, s - 1.4), _b).y);   // v4: never below the water under the camera (the route descends in 07)
     if (camera.position.y < wy + 0.12) { camera.position.y = wy + 0.12; camera.updateMatrixWorld(); } }
+  // r46 (user's code review, Screen 05 frames 409-420): the two positional guards above run BEFORE the tunnel-wall clamp (CLAMPS) and the
+  // water-height clamp, which can pull the camera back and push Benny past the screen edge. Final step, after every clamp: keep the legal
+  // camera position and shift only the LENS (filmOffset) when Benny comes near a side edge. bennyBox() now includes the GPU paddling /
+  // pompom / kick deformation. Soft knee: no shift until 36 px from the edge, then a smooth (C1) ramp that keeps his whole silhouette
+  // >= 24 px inside the frame - no jumps. Not area-limited: it does nothing unless Benny nears an edge (the approved centre view is unchanged).
+  { const bb = window.bennyBox(), K0 = 36, KN = 24, ramp = (e) => (e <= 0 ? 0 : e < KN ? e * e / (2 * KN) : e - KN / 2);
+    const dx = ramp(bb.x1 - (W - K0)) - ramp(K0 - bb.x0);
+    if (dx) { camera.filmOffset = dx * camera.getFilmWidth() / W; camera.updateProjectionMatrix();   // filmOffset > 0 moves the picture LEFT
+      st.opticalGuard = (st.opticalGuard ?? 0) + 1; st.maxOpticalShiftPx = Math.max(st.maxOpticalShiftPx ?? 0, Math.abs(dx)); }
+    st.opticalShiftPx = dx; }
 };
 
 // ---------------- HUD per area (each picture's own HUD), abilities (Sock Rescue), the game step ----------------
@@ -549,9 +619,37 @@ window.step = (t, dt, steer, speed) => {
 window.renderNow = async (n = 1) => { for (let i = 0; i < n; i++) renderer.render(scene, camera); return true; };
 window.camInfo = () => ({ p: camera.position.toArray().map((x) => +x.toFixed(4)), q: camera.quaternion.toArray().map((x) => +x.toFixed(5)), fov: camera.fov });
 window.bennyInfo = () => { const p = benny.position.clone().project(camera); return { x: +((p.x + 1) / 2 * W).toFixed(1), y: +((1 - p.y) / 2 * H).toFixed(1) }; };
-window.bennyBox = () => { benny.updateMatrixWorld(true); const a = bmesh.geometry.attributes.position, v = new THREE.Vector3(); let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
-  for (let i = 0; i < a.count; i += 3) { v.fromBufferAttribute(a, i).applyMatrix4(bmesh.matrixWorld).project(camera); const x = (v.x + 1) / 2 * W, y = (1 - v.y) / 2 * H; x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); }
+// r46: Benny's screen box INCLUDING the paddling shader (VERT_BODY: arm strokes, kicks, bob, pompom swing, squash) - the old box used the
+// rest pose, so a stroking arm could leave the screen while the box said he was inside. Same maths as the GPU, every 3rd vertex.
+const bDef = (() => { const ss = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
+  const rot = (r, ax, ay, az, ang) => { const c = Math.cos(ang), s = Math.sin(ang), d = ax * r[0] + ay * r[1] + az * r[2];
+    const cx = ay * r[2] - az * r[1], cy = az * r[0] - ax * r[2], cz = ax * r[1] - ay * r[0]; r[0] = r[0] * c + cx * s + ax * d * (1 - c); r[1] = r[1] * c + cy * s + ay * d * (1 - c); r[2] = r[2] * c + cz * s + az * d * (1 - c); };
+  const q = [0, 0, 0];
+  return (x, y, z, out) => { const uT = U.uT.value, uSwim = U.uSwim.value, uArmA = U.uArmA.value, side = x >= 0 ? 1 : -1;
+    const wa = ss(0.30, 0.37, Math.abs(x)) * (1 - ss(0.08, 0.16, Math.abs(y + 0.18))); const ph0 = uT * 7.5 + (side > 0 ? 0 : 3.14159), ph = ph0 - 0.28 * Math.sin(ph0);
+    q[0] = x - side * 0.31; q[1] = y + 0.18; q[2] = z; rot(q, 0, 0, 1, -side * uSwim * wa * uArmA * Math.sin(ph)); rot(q, 0, 1, 0, side * uSwim * wa * 0.5 * Math.cos(ph));
+    let px = q[0] + side * 0.31, py = q[1] - 0.18, pz = q[2];
+    const kz = ss(0.06, 0.24, pz) * (1 - ss(-0.36, -0.2, py)) * ss(0.02, 0.1, Math.abs(px)) * (1 - ss(0.26, 0.34, Math.abs(px))), kk = U.uKickA.value * 0.045 * kz * Math.sin(U.uKick.value * 11 + (side > 0 ? 0 : 3.14159));
+    py += 0.35 * kk; pz += kk; const sp = Math.sin(uT * 7.5); py += U.uBobA.value * sp * sp;
+    const wp = ss(0.17, 0.27, py); q[0] = px; q[1] = py - 0.19; q[2] = pz - 0.05; rot(q, 1, 0, 0, U.uPom.value.x * wp); rot(q, 0, 0, 1, U.uPom.value.y * wp); px = q[0]; py = q[1] + 0.19; pz = q[2] + 0.05;
+    const sq = 1 + 0.03 * uSwim * Math.sin(uT * 15); py = (py + 0.5) * sq - 0.5; px /= Math.sqrt(sq); pz /= Math.sqrt(sq); return out.set(px, py, pz); }; })();
+window.bennyBox = (stride = 3, rest = false) => { benny.updateMatrixWorld(true); const a = bmesh.geometry.attributes.position, v = new THREE.Vector3(); let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
+  for (let i = 0; i < a.count; i += stride) { (rest ? v.set(a.getX(i), a.getY(i), a.getZ(i)) : bDef(a.getX(i), a.getY(i), a.getZ(i), v)).applyMatrix4(bmesh.matrixWorld).project(camera); const x = (v.x + 1) / 2 * W, y = (1 - v.y) / 2 * H; x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); }
   return { x0: +x0.toFixed(1), x1: +x1.toFixed(1), y0: +y0.toFixed(1), y1: +y1.toFixed(1) }; };
+// QA-only: identify the EXACT scenery object in a bad frame (e.g. the white foam bank
+// beside Benny on Screen 05). Pass screenshot coordinates, not a guessed material name.
+window.qaPickScenery = (x, y, limit = 6) => {
+  camera.updateMatrixWorld(true); world.updateMatrixWorld(true);
+  const ray = new THREE.Raycaster();
+  ray.setFromCamera(new THREE.Vector2(2 * x / W - 1, 1 - 2 * y / H), camera);
+  return ray.intersectObject(world, true).slice(0, Math.max(1, Math.min(12, limit))).map((hit) => ({
+    name: hit.object.name, family: hit.object.userData.fam ?? null, area: hit.object.userData.area ?? null,
+    instance: hit.instanceId ?? null, distance: +hit.distance.toFixed(3),
+    point: hit.point.toArray().map((v) => +v.toFixed(3))
+  }));
+};
+window.qaEdgeGuard = () => ({ opticalCorrections: st.opticalGuard ?? 0,
+  maxOpticalShiftPx: +(st.maxOpticalShiftPx ?? 0).toFixed(2), shiftPx: +(st.opticalShiftPx ?? 0).toFixed(2), lensOffsetMm: +camera.filmOffset.toFixed(4), box: window.bennyBox() });
 const QA_SCN = MESH.filter((o) => o.userData.fam !== 'foam'), QA_RC = new THREE.Raycaster();
 window.kitFrameQA = () => { camera.updateMatrixWorld(); let camClear = 1e9; const e = camera.matrixWorld.elements, cx = new THREE.Vector3(e[0], e[1], e[2]), cy = new THREE.Vector3(e[4], e[5], e[6]), cz = new THREE.Vector3(e[8], e[9], e[10]);
   for (const [a, b, c] of [[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1],[1,1,0],[-1,1,0],[1,-1,0],[-1,-1,0],[1,0,1],[-1,0,1],[0,1,1],[0,-1,1],[1,0,-1],[-1,0,-1],[0,1,-1],[0,-1,-1]]) {
@@ -562,7 +660,9 @@ window.kitFrameQA = () => { camera.updateMatrixWorld(); let camClear = 1e9; cons
   if (h && h.face) { const nW = h.face.normal.clone().transformDirection(h.object.matrixWorld); if (nW.dot(F.n) < 0) nW.negate(); slope = Math.acos(Math.min(1, Math.abs(nW.dot(F.n)))) * 180 / Math.PI; tilt = Math.acos(Math.min(1, up.dot(nW))) * 180 / Math.PI; }
   return { camClear: +camClear.toFixed(3), waterGap: h ? +(h.distance - 0.4).toFixed(4) : null, waterMesh: h ? (h.object.userData.area ?? '') + '/' + h.object.name : null, area: areaOf(st.s).id,
     slopeErrDeg: slope === null ? null : +slope.toFixed(2), bennyTiltVsSurfaceDeg: tilt === null ? null : +tilt.toFixed(2),
-    submerged: window.qaWaterLine ? window.qaWaterLine().submergedFrac : null, bank: +(Math.atan2(-F.r.y, Math.hypot(F.r.x, F.r.z)) * 180 / Math.PI).toFixed(1) }; };
+    submerged: window.qaWaterLine ? window.qaWaterLine().submergedFrac : null, bank: +(Math.atan2(-F.r.y, Math.hypot(F.r.x, F.r.z)) * 180 / Math.PI).toFixed(1),
+    /* r46: Benny's lean from vertical (signed, around his swim direction) and the camera roll - their frame-to-frame change = smoothness on the 06 bank */
+    bennyLeanDeg: +(Math.atan2(up.clone().dot(F.r), up.y) * 180 / Math.PI).toFixed(2), camRollDeg: +(Math.atan2(cx.y, new THREE.Vector3(0, 1, 0).applyQuaternion(camera.quaternion).y) * 180 / Math.PI).toFixed(2) }; };
 window.routeCheck = (step = 0.5) => { const rc = new THREE.Raycaster(), out = [];
   for (let s = 0; s <= LEVEL; s += step) { const F = frameAt(s), p = at(s, new THREE.Vector3()); rc.set(p.clone().addScaledVector(F.n, 0.3), F.n.clone().negate()); const h = rc.intersectObjects(WATER, false)[0];
     out.push({ s: +s.toFixed(2), hit: h ? h.object.name : null, gap: h ? +(h.distance - 0.3).toFixed(4) : null }); }
