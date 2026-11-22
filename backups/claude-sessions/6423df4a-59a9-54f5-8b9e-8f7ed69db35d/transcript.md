@@ -3903,3 +3903,253 @@ Please use my original approved artwork for visual accuracy and these new previe
 >     def set(self, yaw, pitch, C):
 >         self.yaw, self.pitch = float(yaw), float(pitch); self.R = rot(yaw, pitch); self.C = np.asarray(C, flo …[+4355 chars]
 
+### 🤖 Claude — 2026-11-22T15:54:37.070Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/tools/screenkit/screen.html", "offset": 74, "limit": 226}`
+
+### 🧑 User — 2026-11-22T15:54:37.201Z
+
+> ↩︎ result: 74	    for (let i = 0; i < 8; i++) { const x = (i + 0.5) * w / 8; g.fillStyle = 'rgba(255,250,215,0.95)'; g.fillRect(x - 26, 16, 52, 30); g.fillStyle = 'rgba(255,230,150,0.35)'; g.fillRect(x - 36, 8, 72, 46); } }),
+> 75	  copper: cvs(128, 128, (g, w, h) => { g.fillStyle = grad(g, 0, 0, 0, h, [[0, '#fbb27a'], [0.3, '#ffd59a'], [0.5, '#f7a25a'], [0.75, '#e0702e'], [1, '#9c3d2a']]); g.fillRect(0, 0, w, h); }),
+> 76	  flume: cvs(64, 256, (g, w, h) => { g.fillStyle = grad(g, 0, 0, w, 0, [[0, '#ff6ad5'], [0.2, '#ffe36e'], [0.4, '#7dffb0'], [0.6, '#59d8ff'], [0.8, '#a970ff'], [1, '#ff6ad5']]); g.fillRect(0, 0, w, h); }),
+> 77	  foam: cvs(64, 64, (g, w, h) => { g.fillStyle = grad(g, 0, 0, 0, h, [[0, '#ffffff'], [1, '#c9c3f2']]); g.fillRect(0, 0, w, h); }),
+> 78	};
+> 79	const PIC = {}; const tl = new THREE.TextureLoader();
+> 80	const loadRaw = async (f) => { const t = await tl.loadAsync(f); t.colorSpace = THREE.NoColorSpace; t.anisotropy = 8; return t; };
+> 81	const GLOW = { uGlow: { value: new THREE.Vector3(DRUM ? DRUM.z1 + 14 : -1e4, DRUM ? DRUM.z1 + 1 : -1e4 - 1, 0.45) }, uTime: { value: 0 } };
+> 82	const SHARP = { uSharp: { value: new THREE.Vector2(915 / (H * renderer.getPixelRatio()), +(q.get('sharp') …[+28102 chars]
+
+### 🤖 Claude — 2026-11-22T15:56:25.229Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/screenkit/screens/04/fit04.py", "content": "\"\"\"Screen 04 'Through the Five Arrows' - FIT step of the screen kit (round 44). Measures the user's approved picture\nreferences/04_through_the_five_arrows.png (read-only) and writes ONE physical world for it: <out>/layout.json (components for\ntools/screenkit/blender_kit.py, the fitted picture camera, Benny, coins, the five arrows, route) + a fit overlay.\n  python3 -I tools/screenkit/screens/04/fit04.py <out dir> [--da2 <inverse depth .npy (optional guide, unused)>]\n\nMeasured on the picture (864 x 1536  …[+9177 chars]`
+
+### 🧑 User — 2026-11-22T15:56:25.286Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/screenkit/screens/04/fit04.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-22T15:56:27.183Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && mkdir -p $S/ws04/fit && python3 -I tools/screenkit/screens/04/fit04.py $S/ws04/fit", "description": "Run the first Screen 04 fit"}`
+
+### 🧑 User — 2026-11-22T15:56:28.511Z
+
+> ↩︎ result: VP (465.9, 726.7); cam yaw 1.58 pitch -1.93 deg; tunnel R 1.182 axis (-0.101, 0.472) cam off/R (0.085, 0.222); mouth z -3.47; Benny water (-0.078, -1.339) height 0.473; chord 1.084
+> arrows (x, z, width): [(np.float64(-0.05), np.float64(-4.11), 0.706), (np.float64(-0.05), np.float64(-6.51), 0.876), (np.float64(-0.02), np.float64(-11.51), 1.078), (np.float64(0.1), np.float64(-24.18), 1.534), (np.float64(-14.52), np.float64(1361.86), -49.8)]
+> coins (x, y, z): [[np.float64(-0.6), np.float64(0.23), np.float64(-2.49)], [np.float64(-0.57), np.float64(0.32), np.float64(-3.44)], [np.float64(-0.55), np.float64(0.47), np.float64(-4.93)], [np.float64(-0.49), np.float64(0.65), np.float64(-6.92)], [np.float64(-0.36), np.float64(0.86), np.float64(-10.66)]]
+> funnel rim a, b: 3.2 1.32 route length 2804.05
+
+### 🤖 Claude — 2026-11-22T15:57:24.190Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/tools/screenkit/screens/04/fit04.py", "old_string": "# ---- the five arrows: chevrons lying on the water (centre on the water plane, width from the painted width at that depth)\narrows = []\nfor x, y, wpx in M['arrows']:\n    P = cam.on_plane_y(x, y); dep = float(-(cam.R.T @ (P - cam.C))[2]); arrows.append({'pos': P, 'width': wpx * dep / cam.F})", "new_string": "# ---- the five arrows: game-drawn 3D chevrons lying ON the water (masked out of the bake, like the coins). The painted perspective is\n# compressed (the farthest arrow sits on t …[+595 chars]`
+
+### 🧑 User — 2026-11-22T15:57:24.261Z
+
+> ↩︎ result: The file /home/user/rainbow-/tools/screenkit/screens/04/fit04.py has been updated successfully. (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-22T15:57:25.998Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && python3 -I tools/screenkit/screens/04/fit04.py $S/ws04/fit", "description": "Re-run the Screen 04 fit with equal-size arrows on the water"}`
+
+### 🧑 User — 2026-11-22T15:57:26.422Z
+
+> ↩︎ result: VP (465.9, 726.7); cam yaw 1.58 pitch -1.93 deg; tunnel R 1.182 axis (-0.101, 0.472) cam off/R (0.085, 0.222); mouth z -3.47; Benny water (-0.078, -1.339) height 0.473; chord 1.084
+> arrows (x, z, width): [(np.float64(-0.05), np.float64(-4.11), 0.706), (np.float64(-0.04), np.float64(-5.25), 0.706), (np.float64(-0.01), np.float64(-7.54), 0.706), (np.float64(0.05), np.float64(-11.13), 0.706), (np.float64(0.21), np.float64(-19.32), 0.706)]
+> coins (x, y, z): [[np.float64(-0.6), np.float64(0.23), np.float64(-2.49)], [np.float64(-0.57), np.float64(0.32), np.float64(-3.44)], [np.float64(-0.55), np.float64(0.47), np.float64(-4.93)], [np.float64(-0.49), np.float64(0.65), np.float64(-6.92)], [np.float64(-0.36), np.float64(0.86), np.float64(-10.66)]]
+> funnel rim a, b: 3.2 1.32 route length 33.15
+
+### 🧑 User — 2026-11-22T15:57:31.027Z
+
+[Request interrupted by user]
+
+### 🧑 User — 2026-11-22T15:57:31.064Z
+
+Claudia, I want to clarify exactly how I want you to build my Rainbow game's connected 3D scenery.
+
+Please use Blender 5.3 and Geometry Nodes as the primary tools for building the actual playable environments.
+
+I want my approved screens reconstructed as real, complete, connected 3D worlds—not flat images or backgrounds that only look correct from one camera position.
+
+1. Use Blender for the real scenery
+
+Build the actual geometry for:
+
+- Washer tunnels and metallic drum walls
+- Golden rings and washing-machine machinery
+- Curved rainbow water channels and slides
+- Foam banks, obstacles and physical boundaries
+- Entrances, exits and transitions between levels
+- Collision surfaces that correspond to what players see
+
+Use my approved images as the visual blueprints. Preserve the original scenery designs and colors.
+
+2. World Labs Atlas is optional, not the main builder
+
+You may evaluate World Labs Atlas for specific 3D assets or scenery details when it would meaningfully improve accuracy or construction speed.
+
+However, do not replace our existing Blender-built playable environments with generated splat scenes.
+
+If you propose using Atlas, first explain the specific task, expected benefit, output format and credit cost. Get my approval before any paid generation.
+
+If using a generated asset, verify its geometry, textures and collisions and integrate it into the existing Blender/Three.js world.
+
+Don't use my old, rejected Marble world reconstructions.
+
+3. Use Three.js for real gameplay
+
+Benny must swim through the actual 3D environment.
+
+His body should follow the water slope and banking, remain partly immersed and stay fully visible.
+
+Water splashes, steering, collisions, camera motion and coin pickups must respond to his real position.
+
+No flat moving backgrounds, camera-following scenery pictures, missing geometry or distorted image textures.
+
+4. Build one continuous connected world
+
+The playable sequence is:
+
+04 → Bubble Dash → Sock Rescue → 05 → 06 → 07 → 08 → 09 → 10.
+
+Make the exit of each area physically meet the entrance of the next.
+
+I noticed you found that the main game's world units are approximately three times larger than parts of the newer scenes. Please reconcile the scale of Benny, tunnels, river widths, camera and collision geometry.
+
+Avoid sudden page loads, teleports, camera jumps and visual discontinuities.
+
+5. Use the debugging tools we restored
+
+Use Three.js DevTools and Spector.js to diagnose actual rendering problems.
+
+Use Playwright to test real left/right swipes, forward swimming, jumping, coins and transitions.
+
+Test the scenery with plain materials first to reveal missing geometry. Then restore my approved artwork textures.
+
+Compare the beginning, middle and end of each playable section—not only the approved starting camera.
+
+6. Preserve everything already working
+
+Do not restart the game or rebuild completed sections unnecessarily.
+
+Keep the successful Screen 06 water immersion, movement, camera and scenery improvements.
+
+Preserve all approved images, Google Flow video scenes, working controls and GitHub backups.
+
+Use my original approved screens as the visual targets. The newer preview images are guides for the transitions only, unless I explicitly approve a redesigned screen.
+
+Keep saving successful progress to GitHub every five minutes.
+
+My main goal is a beautiful, coherent, real 3D mobile game where Benny naturally swims through my original approved Rainbow scenery. Blender builds the world, Three.js makes it playable, and World Labs Atlas is only an optional helper when appropriate.
+
+Please continue building and testing the connected game using this approach.
+
+### 🤖 Claude — 2026-11-22T15:57:49.214Z
+
+> 🔧 **Bash** `{"command": "cat >> docs/briefs/2026-11-22-r44/USER_R44.md <<'EOF'\n\n## User clarification (2026-11-22 ~16:30 UTC, verbatim summary of the binding points — full text in the session transcript)\n1. **Blender 5.3 + Geometry Nodes are the primary builders** of the real playable environments: washer tunnels and metallic drum walls, golden\n   rings and machinery, curved rainbow water channels and slides, foam banks / obstacles / physical boundaries, entrances, exits and transitions,\n   collision surfaces matching what players see. Approved images = visual blueprints; preserve the original design …[+2216 chars]`
+
+### 🧑 User — 2026-11-22T15:57:49.262Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-22T15:57:53.550Z
+
+> 🔧 **Bash** `{"command": "grep -n \"\\[\\x27[a-z_]*\\x27\\]\\|get('\" tools/screenkit/segment.py | head -30; wc -l tools/screenkit/segment.py", "description": "List which prompt keys the mask script reads"}`
+
+### 🧑 User — 2026-11-22T15:57:53.608Z
+
+> ↩︎ result: 18:ap.add_argument('--models', default=os.environ.get('RAINBOW_MODELS', os.path.expanduser('~/.cache/rainbow-models'))); a = ap.parse_args()
+> 21:m[:sp.get('hud_rows', 0)] = 1
+> 22:if sp.get('title_box'): x0, y0, x1, y1 = sp['title_box']; m[y0:y1, x0:x1] = 1
+> 27:if sp.get('benny_box'):
+> 30:        bm, iou = sam.mask(bx, [tuple(p) for p in sp.get('benny_points', [])] or None); info['method']['benny'] = f'SAM 2.1 (pred IoU {iou:.3f})'; m |= bm.astype(np.uint8)
+> 34:if sp.get('splash_ellipse'):
+> 36:for x, y, r in sp.get('coins', []):
+> 43:for x, y, r in sp.get('bubbles', []): cv2.circle(m, (int(x), int(y)), int(r) + 4, 1, -1)
+> 44:d = int(sp.get('dilate_px', 6)); m = cv2.dilate(m, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2 * d + 1, 2 * d + 1)))
+> 48 tools/screenkit/segment.py
+
+### 🤖 Claude — 2026-11-22T15:57:55.943Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/tools/screenkit/segment.py", "offset": 30, "limit": 19}`
+
+### 🧑 User — 2026-11-22T15:57:55.964Z
+
+> ↩︎ result: 30	        bm, iou = sam.mask(bx, [tuple(p) for p in sp.get('benny_points', [])] or None); info['method']['benny'] = f'SAM 2.1 (pred IoU {iou:.3f})'; m |= bm.astype(np.uint8)
+> 31	    else:
+> 32	        e = np.zeros_like(m); cv2.ellipse(e, ((bx[0] + bx[2]) // 2, (bx[1] + bx[3]) // 2), (int(0.55 * (bx[2] - bx[0])), int(0.56 * (bx[3] - bx[1]))), 0, 0, 360, 1, -1); m |= e
+> 33	        info['method']['benny'] = 'ellipse (SAM 2 model files missing: bash tools/screenkit/get_models.sh)'
+> 34	if sp.get('splash_ellipse'):
+> 35	    cx, cy, rx, ry = sp['splash_ellipse']; e = np.zeros_like(m); cv2.ellipse(e, (int(cx), int(cy)), (int(rx), int(ry)), 0, 0, 360, 1, -1); m |= e
+> 36	for x, y, r in sp.get('coins', []):
+> 37	    box = [int(x - r * 1.1), int(y - r * 1.15), int(x + r * 1.1), int(y + r * 1.2)]
+> 38	    if sam and r >= 6:
+> 39	        cm, _ = sam.mask(box); win = np.zeros_like(m); win[max(0, box[1] - int(r)):box[3] + int(r), max(0, box[0] - int(r)):box[2] + int(r)] = 1; m |= (cm.astype(np.uint8) & win)
+> 40	    else:
+> 41	        cv2.circle(m, (int(x), int(y)), int(r * 1.15) + 2, 1, -1)
+> 42	info['method']['coins'] = 'SAM 2.1 per coin (circle below 6 px radius)' if sam else 'circles'
+> 43	for x, y, r in sp.get('b …[+797 chars]
+
+### 🤖 Claude — 2026-11-22T15:57:58.886Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/tools/screenkit/segment.py", "old_string": "for x, y, r in sp.get('bubbles', []): cv2.circle(m, (int(x), int(y)), int(r) + 4, 1, -1)\nd = int(sp.get('dilate_px', 6));", "new_string": "for x, y, r in sp.get('bubbles', []): cv2.circle(m, (int(x), int(y)), int(r) + 4, 1, -1)\nfor poly in sp.get('polygons', []): cv2.fillPoly(m, [np.array(poly, np.int32)], 1)   # r44: other game-drawn objects (04: the five arrows)\nd = int(sp.get('dilate_px', 6));"}`
+
+### 🧑 User — 2026-11-22T15:57:58.952Z
+
+> ↩︎ result: The file /home/user/rainbow-/tools/screenkit/segment.py has been updated successfully.
+
+### 🤖 Claude — 2026-11-22T15:58:03.133Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/m04 && python3 - <<EOF\nfrom PIL import Image, ImageDraw\nim=Image.open('references/04_through_the_five_arrows.png').convert('RGB')\ndef grid(x0,y0,x1,y1,step,scale,out):\n    c=im.crop((x0,y0,x1,y1)).resize(((x1-x0)*scale,(y1-y0)*scale)); d=ImageDraw.Draw(c)\n    for x in range((x0//step+1)*step,x1,step): X=(x-x0)*scale; d.line([(X,0),(X,c.size[1])],fill=(0,255,0),width=1); d.text((X+2,2),str(x),fill=(255,255,0))\n    for y in range((y0//step+1)*step,y1,step): Y=(y-y0)*scale; d.line([(0,Y),(c.size …[+244 chars]`
+
+### 🧑 User — 2026-11-22T15:58:03.256Z
+
+> ↩︎ result: ok
+
+### 🤖 Claude — 2026-11-22T15:58:05.243Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/m04/arrows_grid.jpg"}`
+
+### 🧑 User — 2026-11-22T15:58:05.263Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T15:58:20.848Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/screenkit/screens/04/segment04.json", "content": "{\"_doc\": \"Screen 04 mask prompts (864x1536 picture px, measured on gridded crops qa/world/r44/04/measure): HUD bar + title band, Benny (SAM 2 box + points on fur / hat / pompom / arms), his painted swirl ring under him (the game draws its own splash), the 5 painted coins, the 5 painted arrows (the game draws them as 3D chevrons on the water: polygons), the loose bubbles.\",\n \"hud_rows\": 197, \"title_box\": [100, 112, 765, 190],\n \"benny_box\": [188, 958, 598, 1408], \"benny_points\": [[395, 1330], …[+981 chars]`
+
+### 🧑 User — 2026-11-22T15:58:20.910Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/screenkit/screens/04/segment04.json (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-22T15:58:24.439Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/tools/screenkit/blender_kit.py", "offset": 1, "limit": 120}`
+
+### 🧑 User — 2026-11-22T15:58:24.458Z
+
+> ↩︎ result: 1	"""Rainbow screen kit - Blender component library (round 43, Blender 5.3 headless). Builds a screen's connected 3D scenery from its
+> 2	fitted layout (tools/screenkit/screens/NN/fitNN.py -> layout.json) and exports ONE GLB with clean per-mesh UVs (0..1) for the
+> 3	picture bake and the code materials. Reusable Geometry Nodes groups (created once per file, applied to curves the layout defines):
+> 4	  RB_Sweep_Tube    circle profile swept along a curve, normals facing INSIDE (washer drums / tubes); radius per point = curve radius
+> 5	  RB_Sweep_Ribbon  flat ribbon (water channel surface) swept along a curve, banked by the curve tilt, width = curve radius * 2
+> 6	  RB_Sweep_Flume   the channel body under a ribbon: two rounded side lips + underside (the painted rainbow edges of a water slide)
+> 7	  RB_Sweep_Band    rounded rectangular band profile swept around a circle (gold rings / collars hugging a drum wall)
+> 8	  RB_FoamBank      points along a curve, jittered, instanced lumpy flattened ico spheres (foam heaps along banks)
+> 9	Every sweep stores the UV map 'UVMap' (u = across the profile 0..1, v = along the curve 0..1) as a FLOAT2 face-corner attribute,
+> 10	which glTF exports as TEXCOORD_0. Objec …[+8759 chars]
+
+### 🤖 Claude — 2026-11-22T15:59:13.527Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/tools/screenkit/blender_kit.py", "old_string": "# the crest channel (Benny's route) + its flume body\nRT = LAY['route']; route = RT['points']; bank = RT['bank']\nribbon('water_route', route, bank, RT['width'], 2.5)", "new_string": "# the crest channel (Benny's route) + its flume body (a screen whose water fills the tube floor, e.g. 04, has no separate channel)\nRT = LAY['route']; route = RT['points']; bank = RT['bank']\nif not LAY.get('no_route_ribbon'): ribbon('water_route', route, bank, RT['width'], 2.5)\n\n\n# ------------------------ …[+3751 chars]`
+
+### 🧑 User — 2026-11-22T15:59:13.612Z
+
+> ↩︎ result: The file /home/user/rainbow-/tools/screenkit/blender_kit.py has been updated successfully.
+
+### 🤖 Claude — 2026-11-22T15:59:14.386Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,14p tools/screenkit/blender_kit.py | grep -n \"flume_\\*\" ", "description": "Check the docstring family list line"}`
+
+### 🧑 User — 2026-11-22T15:59:14.421Z
+
+> ↩︎ result: 11:flume_*, foam_*, paddle_*). Screen-specific numbers live ONLY in layout.json; this file has none.
+

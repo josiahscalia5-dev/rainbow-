@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 27962,
-   "sha256": "b4ec4a046a7eefc7fc33f6c94e185ee3aac9ff7bd095d5a0ce686d29f3618e8f"
+   "sha256": "527674d7b7a327f85f5c049b9d6dc27e34395b8dd8ed79b4c02873b086e7686e"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3622,
-   "sha256": "81d0898d2592dd57eb277a23d7b6f21c3cd4e29664e3104231d97fab78fec8ff"
+   "sha256": "cacf26334ed7a5cd2fe43d90f4c84036991885b11adb09c9d333f1139d657c96"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -11708,8 +11708,8 @@
   },
   {
    "path": "docs/briefs/2026-11-22-r44/USER_R44.md",
-   "bytes": 3943,
-   "sha256": "eddc1f11f1c07b76241f95cb55262ee598149342eb9a31479b15a51325df62eb"
+   "bytes": 6510,
+   "sha256": "0aed38959b6a0e5f9a1e45f23e509ad30926149b20f1be80ef6df18f2e42ffd0"
   },
   {
    "path": "docs/characters/benny.md",
@@ -45328,8 +45328,8 @@
   },
   {
    "path": "tools/screenkit/blender_kit.py",
-   "bytes": 17477,
-   "sha256": "dfdd6c38bc6f25e725805864abdaa68cfc2177bd5204bcd434d6d6c0c7023c1e"
+   "bytes": 21389,
+   "sha256": "33a6dbd71c67fa860caffd1b764d15df27dec17325bc4203f66d5e50c21b3b09"
   },
   {
    "path": "tools/screenkit/build_screen_app.sh",
@@ -45368,13 +45368,23 @@
   },
   {
    "path": "tools/screenkit/screen.html",
-   "bytes": 58449,
-   "sha256": "d64738f57fd9cb848b89c69a1e743bfaf9fd0be9c77ec75b17fff9ce04b65918"
+   "bytes": 59742,
+   "sha256": "5c2b06385d484ad4642853d0be1b880db1b86d64133cf597178696b649cf311f"
   },
   {
    "path": "tools/screenkit/screen_export.cjs",
    "bytes": 2151,
    "sha256": "57a2e62d4576183ce3f8eea9405056e79d8cf38f705112f8298d8f4c8ff747fb"
+  },
+  {
+   "path": "tools/screenkit/screens/04/fit04.py",
+   "bytes": 10047,
+   "sha256": "3ed9e36c21f7d0a0b688cd5823e72d0cb0dd726ad5870323298c630263736ae0"
+  },
+  {
+   "path": "tools/screenkit/screens/04/segment04.json",
+   "bytes": 1453,
+   "sha256": "f05de61b7e799689a74e61038ce05e12a8d8b2b6c9af2948ef0b15c25217c7fc"
   },
   {
    "path": "tools/screenkit/screens/06/fit06.py",
@@ -45388,8 +45398,8 @@
   },
   {
    "path": "tools/screenkit/segment.py",
-   "bytes": 4212,
-   "sha256": "24ccba8ad11bffa74df879470fa2563f60e5bfa9e53798e3290e847bbe951aa7"
+   "bytes": 4351,
+   "sha256": "01d27130aa8ca2b9b6cc814efc7ebf172042ef3f0de23e130606e38e89c218bf"
   },
   {
    "path": "tools/screenkit/setup_screen.sh",

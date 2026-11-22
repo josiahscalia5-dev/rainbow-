@@ -41,6 +41,7 @@ for x, y, r in sp.get('coins', []):
         cv2.circle(m, (int(x), int(y)), int(r * 1.15) + 2, 1, -1)
 info['method']['coins'] = 'SAM 2.1 per coin (circle below 6 px radius)' if sam else 'circles'
 for x, y, r in sp.get('bubbles', []): cv2.circle(m, (int(x), int(y)), int(r) + 4, 1, -1)
+for poly in sp.get('polygons', []): cv2.fillPoly(m, [np.array(poly, np.int32)], 1)   # r44: other game-drawn objects (04: the five arrows)
 d = int(sp.get('dilate_px', 6)); m = cv2.dilate(m, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2 * d + 1, 2 * d + 1)))
 Image.fromarray(m * 255).save(os.path.join(a.out, 'mask.png'))
 subprocess.run([sys.executable, '-I', os.path.join(REPO, 'tools', 'reflock', 'plate.py'), a.picture, os.path.join(a.out, 'mask.png'), os.path.join(a.out, 'plate.png')], check=True, stdout=subprocess.DEVNULL)

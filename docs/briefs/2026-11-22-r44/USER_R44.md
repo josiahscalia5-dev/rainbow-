@@ -59,3 +59,24 @@ moves forward, both new scenes fit naturally, a cohesive, attractive game world.
 **"Rebuild in one world (Recommended)"**: one scene built with the screen kit — Bubble Dash / Sock Rescue and the rebuilt 06 as they are;
 04, 05, 07, 08, 09, 10 rebuilt from the approved pictures (baked pixels on real geometry); connectors from the preview. Order: 04 + 05 first
 (for 04 → A → B → 05), then 07 + 08. The current game stays unchanged until the world is ready. Plan: `PLAN_R44_CONNECTED_WORLD.md`.
+
+## User clarification (2026-11-22 ~16:30 UTC, verbatim summary of the binding points — full text in the session transcript)
+1. **Blender 5.3 + Geometry Nodes are the primary builders** of the real playable environments: washer tunnels and metallic drum walls, golden
+   rings and machinery, curved rainbow water channels and slides, foam banks / obstacles / physical boundaries, entrances, exits and transitions,
+   collision surfaces matching what players see. Approved images = visual blueprints; preserve the original designs and colours. Real, complete,
+   connected 3D worlds — "not flat images or backgrounds that only look correct from one camera position".
+2. **World Labs Atlas is optional**, never the main builder; never replace the Blender-built playable environments with generated splat scenes.
+   Before any Atlas use: explain the specific task, expected benefit, output format and credit cost, get approval before paid generation; verify
+   a generated asset's geometry / textures / collisions and integrate it into the Blender / Three.js world. Never the old, rejected Marble worlds.
+3. **Three.js for real gameplay**: Benny swims through the actual 3D environment; body follows slope + banking, partly immersed, fully visible;
+   splashes, steering, collisions, camera, coin pickups respond to his real position. No flat moving backgrounds, camera-following scenery
+   pictures, missing geometry or distorted image textures.
+4. **One continuous connected world** 04 → Bubble Dash → Sock Rescue → 05 → 06 → 07 → 08 → 09 → 10; each exit physically meets the next
+   entrance; **reconcile the scale** (old game units ≈ 3× the newer scenes): Benny, tunnels, river widths, camera, collision geometry. No page
+   loads, teleports, camera jumps or visual discontinuities.
+5. **Use the restored debugging tools**: Three.js DevTools + Spector.js for rendering problems; Playwright for real left / right swipes, forward
+   swimming, jumping, coins and transitions; plain materials first (missing geometry), then the approved textures; compare beginning, middle and
+   end of each playable section, not only the approved starting camera.
+6. **Preserve everything working**: no restart, no needless rebuild of completed sections; keep the Screen 06 immersion / movement / camera /
+   scenery improvements; preserve approved images, Flow videos, controls, GitHub backups (five-minute autosave). Original approved screens = the
+   visual targets; the preview images guide the transitions only unless the user approves a redesigned screen.

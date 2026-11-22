@@ -8,7 +8,8 @@ picture bake and the code materials. Reusable Geometry Nodes groups (created onc
   RB_FoamBank      points along a curve, jittered, instanced lumpy flattened ico spheres (foam heaps along banks)
 Every sweep stores the UV map 'UVMap' (u = across the profile 0..1, v = along the curve 0..1) as a FLOAT2 face-corner attribute,
 which glTF exports as TEXCOORD_0. Object names carry the material family the game assigns (tunnel_*, ring_*, water_*, pool_*,
-flume_*, foam_*, paddle_*). Screen-specific numbers live ONLY in layout.json; this file has none.
+flume_*, foam_*, paddle_*; r44 optional: funnel_*, wall_*, pool_front_*, arrow_*, ring_mouth). Screen-specific numbers live ONLY in
+layout.json; this file has none.
   blender -b --python tools/screenkit/blender_kit.py -- <layout.json> <out.glb>
 """
 import bpy, bmesh, sys, json, math
@@ -208,9 +209,52 @@ while z > D['z1'] + 1e-6:
     # the channel rests IN the pool instead of sharing its surface
     z1 = max(D['z1'], z - (4.0 if z > zf else 12.0)); grid(f'pool_{k:02d}', 24, max(4, int((z - z1) / 0.25)), lambda a, b, z=z, z1=z1: ((xa - chord + 2 * chord * a, D.get('pool_y', -0.02), z - (z - z1) * b), (a, b)), flip=False)
     z = z1; k += 1
-# the crest channel (Benny's route) + its flume body
+# the crest channel (Benny's route) + its flume body (a screen whose water fills the tube floor, e.g. 04, has no separate channel)
 RT = LAY['route']; route = RT['points']; bank = RT['bank']
-ribbon('water_route', route, bank, RT['width'], 2.5)
+if not LAY.get('no_route_ribbon'): ribbon('water_route', route, bank, RT['width'], 2.5)
+
+
+# ---------------------------------------------------------------- r44 optional components (absent keys -> nothing built: 06 is unchanged)
+def chevron(name, pos, width, fwd):
+    """a white arrow lying on the water (04): two bars meeting at an apex pointing along fwd; a thin slab (top + side walls), planar UVs"""
+    W_ = width; h = 0.33 * W_; t = 0.11 * W_; y0, y1 = 0.004, 0.03
+    f = Vector((fwd[0], 0.0, fwd[2])).normalized(); s = Vector((-f.z, 0.0, f.x))          # s = rider's right (game x when heading -z)
+    c = Vector(pos); P = lambda a, b: c + s * a + f * (b - 0.5 * h)                         # local (across, forward) -> game point on the water
+    quads = [[P(0, h), P(-W_ / 2, 0), P(-W_ / 2, -t), P(0, h - 1.4 * t)], [P(0, h), P(0, h - 1.4 * t), P(W_ / 2, -t), P(W_ / 2, 0)]]
+    me = bpy.data.meshes.new(name); bm = bmesh.new(); uvl = bm.loops.layers.uv.new('UVMap')
+    for q in quads:
+        top = [bm.verts.new(B2((p.x, y1, p.z))) for p in q]; bot = [bm.verts.new(B2((p.x, y0, p.z))) for p in q]
+        faces = [top[::-1]] + [[top[i], top[(i + 1) % 4], bot[(i + 1) % 4], bot[i]] for i in range(4)]
+        for fv in faces:
+            fa = bm.faces.new(fv)
+            for l in fa.loops:
+                g = Vector((l.vert.co.x, l.vert.co.z, -l.vert.co.y)); lp = g - c; l[uvl].uv = (0.5 + lp.dot(s) / W_, 0.5 + lp.dot(f) / W_)
+    bm.normal_update(); bm.to_mesh(me); bm.free(); ob = bpy.data.objects.new(name, me); bpy.context.collection.objects.link(ob); return ob
+
+
+if LAY.get('mouth_ring'):            # the thick gold flange around a tunnel mouth seen from outside (04)
+    mr = LAY['mouth_ring']; pts = [[xa + mr['r'] * math.cos(2 * math.pi * j / 192), ya + mr['r'] * math.sin(2 * math.pi * j / 192), mr['z']] for j in range(193)]
+    ng = object_profile_group('RB_Sweep_Band', [(-0.5, -0.17), (-0.5, 0.1), (-0.42, 0.16), (-0.25, 0.18), (0.25, 0.18), (0.42, 0.16), (0.5, 0.1), (0.5, -0.17), (-0.5, -0.17)])
+    apply_group(curve_object('ring_mouth', pts, [mr['band']] * len(pts), twist='MINIMUM'), ng)
+if LAY.get('funnel'):                # swirling water bell mouth around the tunnel mouth: circle r_in at z_in -> ellipse (a_out, b_out) at z_out
+    fu = LAY['funnel']
+    def ffun(u, v, fu=fu):
+        th = 2 * math.pi * u; e = v ** 1.5; ra = fu['r_in'] + (fu['a_out'] - fu['r_in']) * e; rb = fu['r_in'] + (fu['b_out'] - fu['r_in']) * e
+        return ((fu['axis_x'] + ra * math.cos(th), fu['axis_y'] + rb * math.sin(th), fu['z_in'] + (fu['z_out'] - fu['z_in']) * v), (u, v))
+    grid('funnel_00', 192, 24, ffun, flip=True)
+if LAY.get('wall'):                  # the wall at the funnel rim (04: laundry-room porthole, control panel, towel shelf painted there)
+    wa = LAY['wall']; hx, hy, ha, hb = wa['hole']
+    def wfun(u, v, wa=wa):
+        th = 2 * math.pi * u; dx, dy = math.cos(th), math.sin(th)
+        tx = ((wa['x1'] if dx > 0 else wa['x0']) - hx) / dx if abs(dx) > 1e-9 else 1e9; ty = ((wa['y1'] if dy > 0 else wa['y0']) - hy) / dy if abs(dy) > 1e-9 else 1e9
+        rim = Vector((hx + ha * dx, hy + hb * dy)); edge = Vector((hx + min(tx, ty) * dx, hy + min(tx, ty) * dy)); p = rim + (edge - rim) * v
+        return ((p.x, p.y, wa['z']), (u, v))
+    grid('wall_00', 192, 24, wfun, flip=True)
+if LAY.get('pool_front'):            # the water in front of the mouth, where Benny starts (04: the painted swirl around him)
+    pf = LAY['pool_front']; nz = max(4, int((pf['z0'] - pf['z1']) / 0.25))
+    grid('pool_front_00', 48, nz, lambda a, b, pf=pf: ((pf['x0'] + (pf['x1'] - pf['x0']) * a, pf['y'], pf['z0'] - (pf['z0'] - pf['z1']) * b), (a, b)), flip=False)
+for i, ar in enumerate(LAY.get('arrows', [])):
+    chevron(f'arrow_{i}', ar['pos'], ar['width'], ar.get('fwd', (0.0, 0.0, -1.0)))
 # foam banks along both edges of the channel where it is lifted above the pool, and along both pool edges
 def edge(side, off):
     out = []
