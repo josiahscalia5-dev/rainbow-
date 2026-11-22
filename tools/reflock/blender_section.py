@@ -198,7 +198,7 @@ def towel(name, z, side, rh, w=0.62, drop=0.62):
         else: k2 = (b - 0.5) / 0.5; y = yb - drop * k2; x = x_bar - side * (0.035 + 0.05 * k2 + fold)
         return ((x, y, zz), (a, b))
     grid(f'towel_{name}', 24, 24, f)
-for i, (t, side, rh, f0, f1) in enumerate(SF['towels']): towel(f'p{i}', zc - t * k, side, (rh - 0.1) * k)
+for i, (t, side, rh, f0, f1) in enumerate(SF['towels']): towel(f'p{i}', zc - t * k, side, (rh - 0.27) * k)   # rail at the painted towel's top fold (measured: 45 px too high at -0.1)
 for i, zr in enumerate(T['rings_sock'][1:-1]): towel(f'r{i}', zr - 1.3, -1 if i % 2 == 0 else 1, 0.55 * k)
 # floating socks (picked up in the game): a bent tube (leg -> heel -> foot)
 def sock(name, p):
