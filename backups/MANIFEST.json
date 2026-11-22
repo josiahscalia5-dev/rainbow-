@@ -113,8 +113,8 @@
   },
   {
    "path": "CLAUDE.md",
-   "bytes": 23481,
-   "sha256": "38fb7c2c48536e7a710987a016eac4e8b58324065d569c91050daae61da0b6d5"
+   "bytes": 23675,
+   "sha256": "644b61d0db406158c8c8c4940ec3460286565646d9ef896d554b6adcd319260c"
   },
   {
    "path": "README_FIRST.md",
@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 28435,
-   "sha256": "3b374f2f4e91fb79d4e43a16c9f5da915558af50e912a1168553b306681cf83e"
+   "sha256": "e3a9c6cc6e0c83cd051353da7e02537d8203bea65599a6b4b7e31084b5709dc9"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3233,
-   "sha256": "e83bf2331a40949fe2d526dd39356644917117a410ae0e3d4ce17ec07d192438"
+   "sha256": "944da42e4442a7ea717be666b6e1e606a223ae3905e0f05f4120cd56ca6cd4b6"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -10813,8 +10813,8 @@
   },
   {
    "path": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md",
-   "bytes": 83484,
-   "sha256": "cb50fa23d5b574aab79dc37da88c03b115efc88e9a3c664414577e4fcb5e6194"
+   "bytes": 83957,
+   "sha256": "be2d879d4dafb2c3c8eec5243dda153c9f38112c88da11e26ee7ab33598911b8"
   },
   {
    "path": "docs/PARALLEL_PROGRESS.md",
@@ -11735,6 +11735,11 @@
    "path": "docs/briefs/2026-11-22-r44/USER_R44.md",
    "bytes": 9186,
    "sha256": "032cab9f32d63d90f2ad43cf889c490b935fcaa97a051c5432106f8fdb796e2d"
+  },
+  {
+   "path": "docs/briefs/2026-11-22-r45/RESUME_R45.md",
+   "bytes": 6349,
+   "sha256": "6b60c5bcc39c0afc19237547b8e0b02e854bf9da0b838e5a5b13d3447851619d"
   },
   {
    "path": "docs/characters/benny.md",
