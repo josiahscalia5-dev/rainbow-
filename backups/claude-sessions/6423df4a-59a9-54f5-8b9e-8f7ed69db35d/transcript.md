@@ -6032,3 +6032,85 @@ The first Screen 07 build measures **84.9 %** at your picture camera (SSIM 0.826
 
 > 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/world/world.html'; s=open(p).read()\nreps=[\n(\"\"\"  const g = (await gltf.loadAsync(A.dir + 'scene.glb')).scene; g.position.copy(off); g.name = 'area_' + A.id; world.add(g); g.updateMatrixWorld(true);\"\"\",\n\"\"\"  const g = (await gltf.loadAsync(A.dir + 'scene.glb')).scene; g.position.copy(off); g.rotation.x = A.rot_x ?? 0; g.name = 'area_' + A.id; world.add(g); g.updateMatrixWorld(true);\n  const M = g.matrixWorld.clone(), Mi = M.clone().invert(); A.M = M;   // v4: an area may be tilted (07 descends); everything local goes through M\"\"\"),\n(\"\" …[+5139 chars]`
 
+### 🧑 User — 2026-11-22T17:11:10.876Z
+
+> ↩︎ result: world ok
+> setup ok
+> scaled by k = 0.8149: Benny 0.468 u, drum r 2.275, route 36.63 u
+> scaled by k = 0.9333: Benny 0.468 u, drum r 1.517, route 48.72 u
+> 07 offset [0.777, -0.84, -196.356] tilted 10 deg down; 06 route ends s 184.60; 07 picture key s 198.89; drop over 07 8.4 u
+> 06 offset [1.172, 0.0, -147.521]; 05 route ends s 137.30; 06 picture key s 198.89; crest bank max 71.6 deg
+> 05 offset [1.109, 0.0, -96.399]; Sock Rescue ends s 84.30; 05 route from s 96.45
+> 04 tube end z -25.29; section offset [-0.695, 0.0, -27.289]; route 246.35 u (04 0-25.15, AB 25.15-246.35); picture keys s: 04 1.35, Bubble Dash 28.75, Sock Rescue 49.00
+> world ready: /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/wv4/game/play3.html
+> 
+> real	2m17.751s
+> user	1m14.969s
+> sys	0m13.802s
+> exported /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/wv4/game/connectors.glb ['cri
+
+### 🤖 Claude — 2026-11-22T17:11:23.950Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && NODE_PATH=$(npm root -g) timeout 1800 node tools/reflock/section_run.cjs $S/wv4/game $S/wst4 stills 176,181,185,188,191,194,197,205,215,228,238,244 0 'sentinel=1' 2>&1 | grep -E \"loaded|rror\"; NODE_PATH=$(npm root -g) timeout 900 node tools/reflock/section_run.cjs $S/wv4/game $S/w4pic stills 0.1 0 'sentinel=1&s0=198.89' > /dev/null 2>&1; python3 -I tools/screenkit/compare_screen.py 07 $S/w4pic/s0.10_l0.png $S/wv4/s07/seg/mask.png $S/cmp_w4_07 > /dev/null 2>&1; python3 -c \"\nimport json;d=json …[+1518 chars]`
+
+### 🧑 User — 2026-11-22T17:11:53.962Z
+
+> ↩︎ result: loaded in 8.3 s {"LEVEL":245.75,"meshes":380}
+> 07 in world: 9.2 % SSIM 0.136 colour 0.838
+> 07 own page pre-baked (scaled): 82.4 %
+> holes per still [0, 0, 0, 0, 0, 0, 1083, 1574, 184026, 277412, 300697, 348393]
+
+### 🤖 Claude — 2026-11-22T17:12:09.996Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/world/world.html'; s=open(p).read()\nold=\"\"\"window.state = window.state ?? (() => ({ s: st.s }));\"\"\"\nnew=\"\"\"window.state = window.state ?? (() => ({ s: st.s }));\nwindow.worldDebug = { THREE, scene, world, AREA, RP, at, KEYS };\"\"\"\nassert old in s; s=s.replace(old,new); open(p,'w').write(s); print('ok')\nEOF\nS=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && cp tools/world/world.html $S/wv4/game/play3.html && cat > $S/dbg07.cjs <<'EOF'\nconst { chromium } = require('playwright'); const { spawn } = requir …[+1568 chars]`
+
+### 🧑 User — 2026-11-22T17:12:19.625Z
+
+> ↩︎ result: ok
+> {"area07":{"min":[-1.03,-10.35,-247.44],"max":[2.22,2.06,-193.5],"pos":[0.78,-0.84,-196.36],"rotx":-0.17453292519943295},"route198":[0.58,-1.08,-197.71],"route210":[0.69,-2.99,-208.54],"route240":[0.51,-8.18,-237.98],"key07":[{"s":198.8899886073807,"off":[0.26,0.8,1.3]}],"M07":[1,0,0,0,0,0.985,-0.174,0,0,0.174,0.985,0,0.777,-0.84,-196.356,1]}
+
+### 🤖 Claude — 2026-11-22T17:12:35.505Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && python3 -c \"\nimport json\nd=json.load(open('$S/w4pic/stills.json'));print('cam at s0', d['stills'][0]['cam'], d['stills'][0]['s'])\nw=json.load(open('$S/wv4/game/world.json'));k=[k for k in w['cam_keys'] if k['area']=='07'][0];print('key', k['s'], [round(x,3) for x in k['pos']], [round(x,4) for x in k['quat']])\nprint('areas', [(a['id'], round(a['s0'],2), round(a['s1'],2)) for a in w['areas']])\"", "description": "Compare the camera at 07's picture position with its key"}`
+
+### 🧑 User — 2026-11-22T17:12:35.591Z
+
+> ↩︎ result: cam at s0 {'p': [0.7768, 0.12, -196.4746], 'q': [-0.16352, 0.07649, -0.00075, 0.98357], 'fov': 64} 198.89
+> key 198.8899886073807 [0.777, -0.166, -196.475] [-0.1635, 0.0765, -0.0007, 0.9836]
+> areas [('04', 0.0, 25.15), ('AB', 25.15, 87.3), ('05', 87.3, 140.3), ('06', 140.3, 187.6), ('07', 187.6, 246.35)]
+
+### 🤖 Claude — 2026-11-22T17:12:52.155Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/world/world.html'; s=open(p).read()\nold=\"\"\"  if (camera.position.y < 0.12) { camera.position.y = 0.12; camera.updateMatrixWorld(); }\n};\"\"\"\nnew=\"\"\"  { const wy = Math.min(at(s, _a).y, at(Math.max(0, s - 1.4), _b).y);   // v4: never below the water under the camera (the route descends in 07)\n    if (camera.position.y < wy + 0.12) { camera.position.y = wy + 0.12; camera.updateMatrixWorld(); } }\n};\"\"\"\nassert old in s; s=s.replace(old,new); open(p,'w').write(s); print('ok')\nEOF\nS=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8 …[+1496 chars]`
+
+### 🧑 User — 2026-11-22T17:13:18.210Z
+
+> ↩︎ result: ok
+> 07 in world: 82.4 % SSIM 0.808
+> holes per still [0, 0, 0, 0, 0, 0, 1083, 1543, 2594, 3171, 20751, 63158]
+
+### 🤖 Claude — 2026-11-22T17:13:24.830Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/world_v4_0607.jpg"}`
+
+### 🧑 User — 2026-11-22T17:13:24.866Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T17:13:42.654Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && NODE_PATH=$(npm root -g) timeout 1200 node tools/reflock/section_run.cjs $S/wv4/game $S/wst4g stills 183,186,189,192,195 0 'sentinel=1&gray=1' > /dev/null 2>&1; python3 - <<EOF\nfrom PIL import Image, ImageDraw\nimport json\nd=json.load(open('$S/wst4g/stills.json')); fs=[x['file'] for x in d['stills']]\nW,H=247,549; sh=Image.new('RGB',(W*len(fs),H+18),(20,10,30)); dr=ImageDraw.Draw(sh)\nfor i,f in enumerate(fs):\n    sh.paste(Image.open('$S/wst4g/'+f).convert('RGB').resize((W,H)),(i*W,18)); dr.t …[+521 chars]`
+
+### 🧑 User — 2026-11-22T17:13:51.964Z
+
+> ↩︎ result: conn axis start [0.3654, 1.18123, -186.56026] r 2.28085
+> conn axis end [0.51041, 0.59882, -193.5633] r 1.52349
+
+### 🤖 Claude — 2026-11-22T17:13:55.481Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/gray0607.jpg"}`
+
+### 🧑 User — 2026-11-22T17:13:55.508Z
+
+> ↩︎ result: [image]
+

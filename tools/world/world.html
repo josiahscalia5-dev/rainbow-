@@ -447,7 +447,8 @@ const camAt = (s, dt) => {
   for (let k = 0; k < 2; k++) { const bb = window.bennyBox(); const dpx = bb.x0 < M ? bb.x0 - M : bb.x1 > W - M ? bb.x1 - (W - M) : 0; const dpy = bb.y1 > H - M ? bb.y1 - (H - M) : bb.y0 < M + 60 ? bb.y0 - (M + 60) : 0; if (!dpx && !dpy) break;
     camera.position.addScaledVector(r, dpx * camera.position.distanceTo(benny.position) / fpx).addScaledVector(n, -dpy * camera.position.distanceTo(benny.position) / fpx); camera.updateMatrixWorld(); st.guard = (st.guard ?? 0) + 1; }
   for (const cl of CLAMPS) if (cl(camera.position)) { camera.updateMatrixWorld(); st.wallClamp = (st.wallClamp ?? 0) + 1; }
-  if (camera.position.y < 0.12) { camera.position.y = 0.12; camera.updateMatrixWorld(); }
+  { const wy = Math.min(at(s, _a).y, at(Math.max(0, s - 1.4), _b).y);   // v4: never below the water under the camera (the route descends in 07)
+    if (camera.position.y < wy + 0.12) { camera.position.y = wy + 0.12; camera.updateMatrixWorld(); } }
 };
 
 // ---------------- HUD per area (each picture's own HUD), abilities (Sock Rescue), the game step ----------------
@@ -511,6 +512,7 @@ window.qaGoto = (s) => { st.s = s; st.camInit = false; window.step(st.t, 0, 0, 0
 window.sceneAudit = () => { scene.updateMatrixWorld(true); const out = []; world.traverse((o) => { if (o.isMesh) out.push({ name: (o.userData.area ?? '') + '/' + o.name, m: o.matrixWorld.elements.map((x) => +x.toFixed(5)) }); }); return out; };
 window.sectionInfo = () => ({ LEVEL: +LEVEL.toFixed(3), S_REF: WD.start_s, meshes: MESH.length, coins: LAYC.length, areas: WD.areas.map((A) => ({ id: A.id, s0: +A.s0.toFixed(2), s1: +A.s1.toFixed(2) })), keys: WD.cam_keys.map((k) => ({ area: k.area, s: +k.s.toFixed(3), ref: k.ref })), screen: 'world' });
 window.state = window.state ?? (() => ({ s: st.s }));
+window.worldDebug = { THREE, scene, world, AREA, RP, at, KEYS };
 window.step(0, 0, 0, 0);
 document.getElementById('load').style.display = 'none';
 renderer.render(scene, camera);

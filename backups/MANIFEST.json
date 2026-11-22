@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 27962,
-   "sha256": "98b5252bde16c3359493d587b2806c0a686e589fc9e11e0cb183b332056ee0ba"
+   "sha256": "e30c3a52b2a888b1677ceab27baf6e982300377661273abff5898dc39bbec9a3"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3622,
-   "sha256": "38d1a3943bd99db5b05c7481488d4dda38bcbf99b4fdd81c97e89d9e224e5de5"
+   "sha256": "6849779012689f987b849e1aff093528fef97574003d655d8828eb414a6f279f"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -45713,8 +45713,8 @@
   },
   {
    "path": "tools/world/world.html",
-   "bytes": 68167,
-   "sha256": "69849f418b93f4206822565ead4e28949a5a2f5f464a6bdab77407c104813e15"
+   "bytes": 68391,
+   "sha256": "b9d2fe512145cc7c299fc7d56a3657528a316e79f51ba23cd203f2d8526a21cc"
   },
   {
    "path": "tools/world/world_layout.py",
