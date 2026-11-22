@@ -813,8 +813,8 @@
   },
   {
    "path": "backups/BOOTSTRAP_REPORT.md",
-   "bytes": 4137,
-   "sha256": "edc0f2db80651922fee0386da6bac0fdebd36fe3a73464eeeea8b716be43d655"
+   "bytes": 3896,
+   "sha256": "7a9bdffe92b98ab69a187fc94ea9256ececf2be8acba0a43ff956f7c6e90a720"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3218,
-   "sha256": "18db2f6dc4a1ae189fbcc00148baeba5c1136b7aef3a5125edfb2099e9ff22df"
+   "sha256": "a296fe3b08045b6c72394b394b35dbe0e90a874a0d4254c1ed36540865bd2af1"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -43435,6 +43435,11 @@
    "path": "tools/reflock/build_section_app.sh",
    "bytes": 2079,
    "sha256": "36e350baa1eb3495e0b22ef3c809cd018f260189f70bc283f885d92c488fd879"
+  },
+  {
+   "path": "tools/reflock/checkpoint_view.cjs",
+   "bytes": 2354,
+   "sha256": "e48e0caab4470f8eb41978fd8ea22e04b6661a79af1079e54b2077f26121f77d"
   },
   {
    "path": "tools/reflock/compare_section.py",
