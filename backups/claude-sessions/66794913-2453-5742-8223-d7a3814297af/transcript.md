@@ -3860,3 +3860,93 @@ The camera is exactly on your picture's camera, so the drop is real and somethin
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; G=$S/wr/game; export NODE_PATH=$(npm root -g); for c in e0cdc0b 8b3fea1 b8ece9a; do git show $c:tools/world/world.html > $G/play3.html; d=$S/wv_$c; node tools/screenkit/preview.cjs $G $d --screen 05 --area 05 --s picture --nogray --norepeat --noid --lanes 0 > /dev/null 2>&1; echo \"$c: $(grep -o '\"share_within_20_levels\": [0-9.]*' $d/preview.json 2>/dev/null | head -1) $(grep -c qaRepeat $G/play3.html)\"; done; cp $S/play3_now.html $G/play3.html", "description": "Measure picture view with older  …[+38 chars]`
 
+### 🧑 User — 2026-11-22T20:04:12.563Z
+
+> ↩︎ result: e0cdc0b: "share_within_20_levels": 0.805 0
+> 8b3fea1: "share_within_20_levels": 0.808 0
+> b8ece9a: "share_within_20_levels": 0.811 0
+
+### 🤖 Claude — 2026-11-22T20:04:22.150Z
+
+The older pages give 80.5 % with the same bakes. So my ribbon edit to the world page itself broke the normal water: bad news for the edit, but the cause is pinned down. Diffing:
+
+### 🤖 Claude — 2026-11-22T20:04:22.906Z
+
+> 🔧 **Bash** `{"command": "git diff e0cdc0b -- tools/world/world.html | grep \"^[-+]\" | cut -c1-260 | head -40", "description": "Diff the world page against the good version"}`
+
+### 🧑 User — 2026-11-22T20:04:22.979Z
+
+> ↩︎ result: --- a/tools/world/world.html
+> +++ b/tools/world/world.html
+> +import { RIBBON_GLSL, routeUniforms } from './water_ribbon.js';   // r45 test ?water=ribbon: clean ribbon water drawn from the painting's structure
+> -const waterMatKit = (halfW, len, along0, isPool, A) => new THREE.ShaderMaterial({ side: THREE.DoubleSide, polygonOffset: !!isPool, polygonOffsetFactor: isPool ? 2 : 0, polygonOffsetUnits: isPool ? 4 : 0,
+> -  uniforms: { uT: WT, uGlow: A.glow, uSharp: { value: new THREE.Vector2(SHARPX, 2.2) }, uLodBias: { value: A.lodBias }, uBake: { value: null }, uBakeOn: { value: 0 }, uDen: { value: null }, uGeo: { value: new THREE.Vector4(halfW, len, along0, isPool ? 1 : 0) 
+> +const waterMatKit = (halfW, len, along0, isPool, A, own = true) => new THREE.ShaderMaterial({ side: THREE.DoubleSide, polygonOffset: !!isPool, polygonOffsetFactor: isPool ? 2 : 0, polygonOffsetUnits: isPool ? 4 : 0,
+> +  uniforms: { uRouteX: { value: null }, uRouteZ: { value: new THREE.Vector4(0, 1, 1, 0) }, ...(own && A.ribbonU ? A.ribbonU : {}), uRibbon: { value: own && A.ribbonU ? 1 : 0 },
+> +    uT: WT, uGlow: A.glow, uSharp: { value: new THREE.Vector2(SHARPX, own && A.ribbonU ? 1.0 : 2.2) },   // ribbon: the bake gives  …[+1318 chars]
+
+### 🤖 Claude — 2026-11-22T20:04:32.062Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/world/world.html'; s=open(p).read()\na=\"uT: WT, uGlow: A.glow, uSharp: { value: new THREE.Vector2(SHARPX, own && A.ribbonU ? 1.0 : 2.2) },   // ribbon: the bake gives way as soon as it is magnified uLodBias:\"\nb=\"uT: WT, uGlow: A.glow, uSharp: { value: new THREE.Vector2(SHARPX, own && A.ribbonU ? 1.0 : 2.2) }, /* ribbon: the bake gives way as soon as it is magnified */ uLodBias:\"\nassert s.count(a)==1; s=s.replace(a,b); open(p,'w').write(s)\nEOF\ngrep -n \"// \" tools/world/world.html | grep -E \"//[^\\n]*\\b(uLodBias|uniforms|value:)\" | grep -v \" …[+789 chars]`
+
+### 🧑 User — 2026-11-22T20:05:25.011Z
+
+> ↩︎ result: current: "share_within_20_levels": 0.805 water {'style_pct_mean': 47.9, 'style_pct_min': 32.0, 'frames': 6}
+> ribbon: "share_within_20_levels": 0.803 water {'style_pct_mean': 62.1, 'style_pct_min': 53.6, 'frames': 6}
+
+### 🤖 Claude — 2026-11-22T20:05:38.704Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; python3 - <<EOF\nimport json, numpy as np, cv2\nfrom PIL import Image, ImageDraw, ImageFont\nID={'water':[0,190,190]}; l2s=lambda v:255*(12.92*v/255 if v/255<=0.0031308 else 1.055*(v/255)**(1/2.4)-0.055)\ndef wmask(p):\n    a=np.asarray(Image.open(p).convert('RGB')).astype(np.float32); m=np.zeros(a.shape[:2],bool)\n    for cc in ([0,190,190],[l2s(v) for v in [0,190,190]]): m|=np.abs(a-np.array(cc,np.float32)).sum(-1)<60\n    return m\ndef coh(img, sel):\n    g=cv2.cvtColor(img,cv2.COLOR_RGB2GRAY). …[+1787 chars]`
+
+### 🤖 Claude — 2026-11-22T20:05:39.160Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/kit45/WATER_TEST_05_approved_current_ribbon.jpg"}`
+
+### 🧑 User — 2026-11-22T20:05:39.586Z
+
+> ↩︎ result: water streak coherence while swimming (approved picture 0.629): {'current': 0.679, 'ribbon': 0.797}
+
+### 🧑 User — 2026-11-22T20:05:39.605Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T20:06:16.092Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/water_ribbon.js'; s=open(p).read()\ni0 = s.index(\"  float n = lat / hw, an = abs(n)\"); i1 = s.index(\"  return clamp(col, 0.0, 1.0); }`;\")\nnew = \"\"\"  // the whole band pattern swings across the river in S-curves (the painting's pink ribbons sweep from side to side)\n  float n = lat / hw + 0.32 * sin(d * 0.78 + 0.6) + 0.12 * sin(d * 1.9 + 2.0), an = abs(n) + 0.05 * sin(d * 2.3 + n * 2.5);\n  vec3 cyD = vec3(4.0, 139.0, 234.0) / 255.0, cyM = vec3(10.0, 168.0, 250.0) / 255.0, cyB = vec3(42.0, 220.0, 249.0) / 255.0;\n  vec3 pkD = vec3(204.0 …[+3944 chars]`
+
+### 🧑 User — 2026-11-22T20:06:42.076Z
+
+> ↩︎ result: ribbon2: "share_within_20_levels": 0.804 {'style_pct_mean': 54.4, 'style_pct_min': 42.1, 'frames': 6}
+
+### 🤖 Claude — 2026-11-22T20:06:54.883Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; python3 - <<EOF\nimport json, numpy as np, cv2\nfrom PIL import Image, ImageDraw, ImageFont\nl2s=lambda v:255*(12.92*v/255 if v/255<=0.0031308 else 1.055*(v/255)**(1/2.4)-0.055)\ndef wmask(p):\n    a=np.asarray(Image.open(p).convert('RGB')).astype(np.float32); m=np.zeros(a.shape[:2],bool)\n    for cc in ([0,190,190],[l2s(v) for v in [0,190,190]]): m|=np.abs(a-np.array(cc,np.float32)).sum(-1)<60\n    return m\ndef stats(img, sel):\n    g=cv2.cvtColor(img,cv2.COLOR_RGB2GRAY).astype(np.float32); gx=c …[+2132 chars]`
+
+### 🤖 Claude — 2026-11-22T20:06:55.384Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/kit45/WATER_TEST_05_approved_current_ribbon.jpg"}`
+
+### 🧑 User — 2026-11-22T20:06:56.198Z
+
+> ↩︎ result: current coherence 0.679 pink share 0.064 cyan share 0.642
+> ribbon coherence 0.797 pink share 0.150 cyan share 0.729
+> ribbon2 coherence 0.695 pink share 0.239 cyan share 0.606
+> approved (rows 560-1150, all): coherence 0.573 pink 0.242 cyan 0.292
+
+### 🧑 User — 2026-11-22T20:06:56.215Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T20:07:04.407Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/kit45/WATER_TEST_05_approved_current_ribbon.jpg"], "caption": "Screen 05 water test: your approved picture, then two swimming spots, each shown as NOW (current game water) and RIBBON (new clean water).", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-22T20:07:04.842Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/kit45/WATER_TEST_05_approved_current_ribbon.jpg → file_uuid: 0a73d058-79e3-4716-92ca-0add20973ee5
+
+### 🤖 Claude — 2026-11-22T20:07:07.487Z
+
+> 🔧 **Bash** `{"command": "for i in $(seq 1 60); do out=$(python3 scripts/rainbow-autosave.py --reason manual:r45-water-ribbon-test 2>&1 | tail -3); echo \"$out\" | grep -q 'another autosave is running' || break; sleep 5; done; python3 -I scripts/autosave-status.py | head -1", "description": "Save the water test to GitHub", "timeout": 600000}`
+

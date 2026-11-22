@@ -154,7 +154,7 @@ const WVERT = 'varying vec2 vUv; varying vec3 vW; varying vec3 vL; void main(){ 
 // kit areas: water in its own UVs (u across, v along the flow)
 const waterMatKit = (halfW, len, along0, isPool, A, own = true) => new THREE.ShaderMaterial({ side: THREE.DoubleSide, polygonOffset: !!isPool, polygonOffsetFactor: isPool ? 2 : 0, polygonOffsetUnits: isPool ? 4 : 0,
   uniforms: { uRouteX: { value: null }, uRouteZ: { value: new THREE.Vector4(0, 1, 1, 0) }, ...(own && A.ribbonU ? A.ribbonU : {}), uRibbon: { value: own && A.ribbonU ? 1 : 0 },
-    uT: WT, uGlow: A.glow, uSharp: { value: new THREE.Vector2(SHARPX, own && A.ribbonU ? 1.0 : 2.2) },   // ribbon: the bake gives way as soon as it is magnified uLodBias: { value: A.lodBias }, uBake: { value: null }, uBakeOn: { value: 0 }, uDen: { value: null }, uGeo: { value: new THREE.Vector4(halfW, len, along0, isPool ? 1 : 0) },
+    uT: WT, uGlow: A.glow, uSharp: { value: new THREE.Vector2(SHARPX, own && A.ribbonU ? 1.0 : 2.2) }, /* ribbon: the bake gives way as soon as it is magnified */ uLodBias: { value: A.lodBias }, uBake: { value: null }, uBakeOn: { value: 0 }, uDen: { value: null }, uGeo: { value: new THREE.Vector4(halfW, len, along0, isPool ? 1 : 0) },
     uSw: { value: null }, uSwOn: { value: 0 }, uSwGeo: { value: new THREE.Vector4(0, 1, 0, 0) }, uFlow: { value: A.LAY?.water_flow ?? 1.2 } },   // r45: painted flow swatch (bake.js)
   vertexShader: WVERT,
   fragmentShader: `uniform float uT; uniform vec3 uGlow; uniform sampler2D uBake; uniform float uBakeOn; uniform sampler2D uDen; uniform vec2 uSharp; uniform float uLodBias; uniform vec4 uGeo; varying vec2 vUv; varying vec3 vW;

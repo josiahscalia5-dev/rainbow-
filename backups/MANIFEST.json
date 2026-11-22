@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 28435,
-   "sha256": "81321bb6834eb7af8237fc103d17a90ea1eabb34f5b3930f9d4ab4cda926f0af"
+   "sha256": "f46e46b184692fa411bfdd5a3c114064b29b57d509ca07bd84150d5b277caecd"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3233,
-   "sha256": "5c4f5caf9978e281f8147a5ea62b16f2faf35cb3ff07b36b5e4cfbff57f6319d"
+   "sha256": "ce921d279a324d91d24f44f4db2a314120e6226242f7b7a937a50a350cd8f023"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -23380,6 +23380,11 @@
    "path": "qa/kit45/STATUS_05_06_approved_vs_game.jpg",
    "bytes": 878977,
    "sha256": "24bc6cfd14f439715164ba7122ecec03cc1bf2d03dd2ad6e80506426f5903658"
+  },
+  {
+   "path": "qa/kit45/WATER_TEST_05_approved_current_ribbon.jpg",
+   "bytes": 374003,
+   "sha256": "22a380dce35dd01a926aa99477ed867e8910486df34cc5d2db6266b22d798d3b"
   },
   {
    "path": "qa/kit45/run/GAMEPLAY_05_to_06_GRAY_geometry_real_touch.mp4",
@@ -49618,8 +49623,8 @@
   },
   {
    "path": "tools/screenkit/water_ribbon.js",
-   "bytes": 6175,
-   "sha256": "5c76bef07bf66161eb46d32bfc2a65256a56c3f322166879cbb4e6e27a319b78"
+   "bytes": 6561,
+   "sha256": "0517dfdf3f528e2a34701cd9f286b5a88aea60330a0c1435c523d996367160d2"
   },
   {
    "path": "tools/spector/spector_capture_test.mjs",
@@ -49668,8 +49673,8 @@
   },
   {
    "path": "tools/world/world.html",
-   "bytes": 74552,
-   "sha256": "98c5b4ed56bb7603ce46b5ced38e61a2c4f998c42345e362e38ce9a8a91d02f7"
+   "bytes": 74553,
+   "sha256": "01251ce7f4a688ae77cbd2d072c1e709d1b4a25d795755b5ad0fddaba57358fa"
   },
   {
    "path": "tools/world/world_layout.py",

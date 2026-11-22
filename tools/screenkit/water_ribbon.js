@@ -14,35 +14,40 @@ vec3 ribbonWater(vec3 L, float t, float flow, vec3 vWv){
   float zt = clamp((L.z - uRouteZ.x) / (uRouteZ.y - uRouteZ.x), 0.0, 1.0), e = 0.03 / max(1e-3, uRouteZ.y - uRouteZ.x);
   float rx = texture2D(uRouteX, vec2(zt, 0.5)).r, sl = (texture2D(uRouteX, vec2(min(1.0, zt + e), 0.5)).r - texture2D(uRouteX, vec2(max(0.0, zt - e), 0.5)).r) / 0.06;
   float lat = (L.x - rx) / sqrt(1.0 + sl * sl), d = -L.z + t * flow, hw = uRouteZ.z;
-  float n = lat / hw, an = abs(n) + 0.06 * sin(d * 0.85 + sign(n) * 1.7) + 0.035 * sin(d * 2.1 + n * 2.5);   // the bands breathe a little along the flow
+  // the whole band pattern swings across the river in S-curves (the painting's pink ribbons sweep from side to side)
+  float n = lat / hw + 0.32 * sin(d * 0.78 + 0.6) + 0.12 * sin(d * 1.9 + 2.0), an = abs(n) + 0.05 * sin(d * 2.3 + n * 2.5);
   vec3 cyD = vec3(4.0, 139.0, 234.0) / 255.0, cyM = vec3(10.0, 168.0, 250.0) / 255.0, cyB = vec3(42.0, 220.0, 249.0) / 255.0;
   vec3 pkD = vec3(204.0, 32.0, 159.0) / 255.0, pkM = vec3(244.0, 60.0, 215.0) / 255.0, pkB = vec3(248.0, 110.0, 236.0) / 255.0;
-  float ea = max(0.035, 1.5 * fwidth(an));                                     // soft but clean band edges, never aliased
-  float pinkW = smoothstep(0.52 - ea, 0.62 + ea, an) * (1.0 - smoothstep(0.98 - ea, 1.1 + ea, an));
-  // cyan channel: bright in the middle, deeper toward the pink; outer cyan (beyond the pink) a little deeper still
-  vec3 cyan = mix(cyM, cyB, 0.75 * (1.0 - smoothstep(0.0, 0.5, an)));
-  cyan = mix(cyan, mix(cyD, cyM, 0.55), smoothstep(1.1, 1.6, an));
-  // pink ribbon: hot pink centre, magenta edges, a brighter sheen line along its middle
-  float pc = 1.0 - clamp(abs(an - 0.8) / 0.2, 0.0, 1.0);
-  vec3 pink = mix(pkD, pkM, smoothstep(0.0, 0.7, pc)); pink = mix(pink, pkB, 0.55 * smoothstep(0.55, 1.0, pc));
+  float ea = max(0.04, 1.5 * fwidth(an));
+  // two pink ribbons per side (the painting: about as much pink as cyan): inner 0.42-0.95, outer 1.25-1.75
+  float p1 = smoothstep(0.42 - ea, 0.52 + ea, an) * (1.0 - smoothstep(0.9 - ea, 1.02 + ea, an));
+  float p2 = smoothstep(1.22 - ea, 1.34 + ea, an) * (1.0 - smoothstep(1.68 - ea, 1.82 + ea, an));
+  float pinkW = max(p1, p2);
+  vec3 cyan = mix(cyM, cyB, 0.7 * (1.0 - smoothstep(0.0, 0.42, an)));
+  cyan = mix(cyan, mix(cyM, cyB, 0.35), smoothstep(1.0, 1.15, an) * (1.0 - smoothstep(1.2, 1.3, an)));   // the bright cyan seam between the pinks
+  cyan = mix(cyan, mix(cyD, cyM, 0.6), smoothstep(1.75, 2.1, an));
+  float pc = max(1.0 - clamp(abs(an - 0.71) / 0.24, 0.0, 1.0), 1.0 - clamp(abs(an - 1.5) / 0.24, 0.0, 1.0));
+  vec3 pink = mix(pkD, pkM, smoothstep(0.0, 0.6, pc)); pink = mix(pink, pkB, 0.6 * smoothstep(0.55, 1.0, pc));
   vec3 col = mix(cyan, pink, pinkW);
-  // fine silk streaks ALONG the flow (parallel lines that follow the S, broken into long segments that drift with the current)
-  float w = lat * 30.0 + 0.5 * sin(d * 0.6 + lat * 2.2) + 0.9 * rbN(vec2(lat * 2.5, d * 0.22)), fw = max(fwidth(w), 1e-4);
-  float f = abs(fract(w) - 0.5) * 2.0, line = 1.0 - smoothstep(0.0, max(0.18, 1.8 * fw), f);
-  float seg = smoothstep(0.42, 0.8, rbN(vec2(floor(w) * 1.37, d * 0.75))), vis = 1.0 - smoothstep(0.25, 0.7, fw);
-  vec3 lineCol = mix(vec3(0.94, 0.99, 1.0), vec3(1.0, 0.78, 0.97), pinkW);
-  col = mix(col, lineCol, clamp(line * seg * vis, 0.0, 1.0) * mix(0.55, 0.42, pinkW));
-  // a few longer, brighter white streaks in the cyan (the painting's bright flow lines)
-  float w2 = lat * 7.0 + 0.4 * sin(d * 0.5 + lat), f2 = abs(fract(w2) - 0.5) * 2.0, fw2 = max(fwidth(w2), 1e-4);
-  float l2 = (1.0 - smoothstep(0.0, max(0.07, 1.8 * fw2), f2)) * smoothstep(0.6, 0.9, rbN(vec2(floor(w2) * 2.1, d * 0.45))) * (1.0 - pinkW) * (1.0 - smoothstep(0.2, 0.6, fw2));
-  col = mix(col, vec3(0.97, 1.0, 1.0), 0.8 * l2);
-  // glossy sheen: a broad soft brightening that drifts slowly (the polished look of the painted water)
-  col += 0.07 * smoothstep(0.35, 0.95, rbN(vec2(lat * 0.9, d * 0.35 - t * 0.1))) * (1.0 - 0.5 * pinkW);
-  // star glints: sparse 4-point sparkles that twinkle and ride the current
+  // brushed silk: soft fine streaks along the flow, short and irregular (not ruled lines)
+  float w = lat * 34.0 + 0.6 * sin(d * 0.7 + lat * 2.4) + 1.1 * rbN(vec2(lat * 3.0, d * 0.3)), fw = max(fwidth(w), 1e-4);
+  float f = abs(fract(w) - 0.5) * 2.0, line = 1.0 - smoothstep(0.0, max(0.3, 1.8 * fw), f);
+  float seg = smoothstep(0.5, 0.85, rbN(vec2(floor(w) * 1.37, d * 1.7))) * (0.55 + 0.45 * rbN(vec2(floor(w) * 0.71, d * 0.5)));
+  float vis = 1.0 - smoothstep(0.25, 0.7, fw);
+  vec3 lineCol = mix(vec3(0.92, 0.99, 1.0), vec3(1.0, 0.76, 0.96), pinkW);
+  col = mix(col, lineCol, clamp(line * seg * vis, 0.0, 1.0) * mix(0.5, 0.4, pinkW));
+  // the painting's bright white DASHES: short, thick-ish, along the flow, many in the cyan, some on the pink
+  vec2 gd = vec2(lat * 7.0, d * 1.25); vec2 cd = floor(gd); float hd = rbH(cd + 7.7);
+  if (hd < 0.42) { vec2 o = (gd - cd - vec2(0.5 + 0.3 * (rbH(cd + 2.2) - 0.5), 0.5)) / vec2(7.0, 1.25); float lenD = 0.12 + 0.2 * rbH(cd + 5.5), wid = 0.006 + 0.008 * rbH(cd + 9.1);
+    float dsh = exp(-pow(o.x / max(wid, 0.8 * fwidth(lat)), 2.0)) * (1.0 - smoothstep(lenD * 0.4, lenD * 0.5, abs(o.y))) * (1.0 - smoothstep(0.3, 1.0, fwidth(gd.y)));
+    col = mix(col, vec3(0.97, 1.0, 1.0), clamp(dsh, 0.0, 1.0) * mix(0.9, 0.6, pinkW)); }
+  // glossy sheen
+  col += 0.08 * smoothstep(0.35, 0.95, rbN(vec2(lat * 0.9, d * 0.35 - t * 0.1))) * (1.0 - 0.5 * pinkW);
+  // star glints
   vec2 g = vec2(lat * 3.2, d * 1.6); vec2 cell = floor(g); float hh = rbH(cell + 0.37);
-  if (hh < 0.18) { vec2 pc2 = cell + vec2(0.25 + 0.5 * rbH(cell + 1.7), 0.25 + 0.5 * rbH(cell + 4.1)); vec2 q = (g - pc2) / vec2(3.2, 1.6);
-    float tw = 0.5 + 0.5 * sin(t * 3.0 + hh * 60.0); tw *= tw; float s = max(fwidth(g.x), fwidth(g.y));
-    float star = exp(-dot(q, q) / 0.00012) + exp(-abs(q.x) / 0.03) * exp(-q.y * q.y / 0.00003) + 0.7 * exp(-abs(q.y) / 0.03) * exp(-q.x * q.x / 0.00003);
+  if (hh < 0.3) { vec2 pc2 = cell + vec2(0.25 + 0.5 * rbH(cell + 1.7), 0.25 + 0.5 * rbH(cell + 4.1)); vec2 q = (g - pc2) / vec2(3.2, 1.6);
+    float tw = 0.5 + 0.5 * sin(t * 3.0 + hh * 60.0); tw = 0.35 + 0.65 * tw * tw; float sz = 1.0 + 0.8 * rbH(cell + 3.3), s = max(fwidth(g.x), fwidth(g.y));
+    float star = exp(-dot(q, q) / (0.00016 * sz)) + exp(-abs(q.x) / (0.035 * sz)) * exp(-q.y * q.y / 0.00003) + 0.7 * exp(-abs(q.y) / (0.035 * sz)) * exp(-q.x * q.x / 0.00003);
     col = mix(col, vec3(1.0), clamp(star * tw * (1.0 - smoothstep(0.05, 0.3, s)), 0.0, 1.0)); }
   return clamp(col, 0.0, 1.0); }`;
 
