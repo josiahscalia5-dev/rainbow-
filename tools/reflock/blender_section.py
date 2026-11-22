@@ -202,15 +202,21 @@ for i, (t, side, rh, f0, f1) in enumerate(SF['towels']): towel(f'p{i}', zc - t *
 for i, zr in enumerate(T['rings_sock'][1:] + T.get('rings_extra', [])[:-1]): towel(f'r{i}', zr - 1.3, -1 if i % 2 == 0 else 1, 0.55 * k)
 # floating socks (picked up in the game): a bent tube (leg -> heel -> foot)
 def sock(name, p):
-    P = Vector(p); pts = [P + Vector((-0.02, 0.2, -0.04)), P + Vector((0, 0.05, 0)), P + Vector((0.07, 0.01, 0.03)), P + Vector((0.18, 0.02, 0.06))]   # leg up, foot lying sideways in the water
-    nv = 18; cur = []
+    """a sock lying in the water: leg standing up (open cuff), a rounded heel, the foot lying sideways, a closed rounded toe"""
+    P = Vector(p); ctrl = [P + Vector((-0.03, 0.24, -0.03)), P + Vector((-0.02, 0.1, -0.01)), P + Vector((0.01, 0.03, 0.01)), P + Vector((0.08, 0.02, 0.03)), P + Vector((0.2, 0.025, 0.06))]
+    nv = 28; cur = []
     for i in range(nv + 1):
-        t = i / nv; seg = min(2, int(t * 3)); u = t * 3 - seg; cur.append(pts[seg].lerp(pts[seg + 1], u))
+        t = i / nv; seg = min(3, int(t * 4)); u = t * 4 - seg; a0, a1 = ctrl[seg], ctrl[seg + 1]
+        pm = ctrl[max(0, seg - 1)]; pn = ctrl[min(4, seg + 2)]; t2, t3 = u * u, u * u * u
+        cur.append(0.5 * ((2 * a0) + (-pm + a1) * u + (2 * pm - 5 * a0 + 4 * a1 - pn) * t2 + (-pm + 3 * a0 - 3 * a1 + pn) * t3))
     def f(a, b):
-        i = round(b * nv); tg = (cur[min(i + 1, nv)] - cur[max(i - 1, 0)]).normalized(); n1 = Vector((1, 0, 0)).cross(tg).normalized() if abs(tg.x) < 0.9 else Vector((0, 1, 0)); n2 = tg.cross(n1)
-        r = 0.07 * (1.0 + 0.15 * math.sin(math.pi * b)); th = 2 * math.pi * a; q = cur[i] + (n1 * math.cos(th) + n2 * math.sin(th)) * r
+        i = round(b * nv); tg = (cur[min(i + 1, nv)] - cur[max(i - 1, 0)]).normalized(); ref = Vector((0, 0, 1)) if abs(tg.z) < 0.9 else Vector((1, 0, 0))
+        n1 = ref.cross(tg).normalized(); n2 = tg.cross(n1)
+        r = 0.068 * (1.0 + 0.18 * math.exp(-((b - 0.5) / 0.12) ** 2))        # heel bulge
+        if b > 0.86: r *= math.sqrt(max(0.0, 1 - ((b - 0.86) / 0.14) ** 2))    # closed, rounded toe
+        th = 2 * math.pi * a; q = cur[i] + (n1 * math.cos(th) + n2 * math.sin(th) * 0.85) * r
         return ((q.x, q.y, q.z), (a, b))
-    grid(name, 16, nv, f, flip=True)
+    grid(name, 24, nv, f, flip=True)
 for i, p in enumerate(SEC['socks']): sock(f'sock_{i}', p)
 # export (Y-up glTF), no materials (the game assigns them by object name)
 bpy.ops.export_scene.gltf(filepath=OUT, export_format='GLB', export_yup=True, export_texcoords=True, export_normals=True, export_materials='NONE', export_apply=True)

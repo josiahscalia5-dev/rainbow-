@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3153,
-   "sha256": "7a5a411ff03551afdaed3fb9422315b4245096cd4dc2e2f6e1ddfc06b94a3a69"
+   "sha256": "b9465abf1caf3036bdb7065d936fa7216779e9d5701e91f789393e6079e698d3"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -42898,8 +42898,8 @@
   },
   {
    "path": "tools/reflock/blender_section.py",
-   "bytes": 17139,
-   "sha256": "4c05fd98b6b8ca9c3ef8170b8b860ff6f76ae14c12d5c0d6e4cab519628da918"
+   "bytes": 17640,
+   "sha256": "ad1187aec85eaa592c8a425bf7dae23f81ff10acc22d9a3ff983ea9abfb2164d"
   },
   {
    "path": "tools/reflock/build_section_app.sh",
@@ -42943,8 +42943,8 @@
   },
   {
    "path": "tools/reflock/section.html",
-   "bytes": 62073,
-   "sha256": "11f8b10439a296e8420758b11ea16056cbe84c05ecc2590ad43b46a1bd7e9868"
+   "bytes": 63144,
+   "sha256": "894a4c04994b7a8bbfb5383f8073c4da75b14b909ee52f2d3cea83ddf85cff17"
   },
   {
    "path": "tools/reflock/section_export.cjs",

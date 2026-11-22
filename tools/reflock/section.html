@@ -82,7 +82,9 @@ const BASE = {
   silver: cvs(64, 256, (g, w, h) => { g.fillStyle = grad(g, 0, 0, w, 0, [[0, '#9a86c8'], [0.4, '#f1e8ff'], [0.6, '#d7c8f5'], [1, '#8d77bd']]); g.fillRect(0, 0, w, h); }),
   towelP: cvs(256, 256, (g, w, h) => { g.fillStyle = '#8b5ad8'; g.fillRect(0, 0, w, h); g.fillStyle = '#efe6ff'; g.fillRect(0, h * 0.78, w, 10); g.fillRect(0, h * 0.86, w, 6); g.fillRect(0, h * 0.14, w, 10); }),
   towelK: cvs(256, 256, (g, w, h) => { g.fillStyle = '#f07ab9'; g.fillRect(0, 0, w, h); g.fillStyle = '#ffe9f4'; g.fillRect(0, h * 0.78, w, 10); g.fillRect(0, h * 0.86, w, 6); g.fillRect(0, h * 0.14, w, 10); }),
-  sock: cvs(64, 256, (g, w, h) => { g.fillStyle = '#fbf8ff'; g.fillRect(0, 0, w, h); g.fillStyle = '#ee4f9c'; g.fillRect(0, 14, w, 12); g.fillRect(0, 34, w, 8); g.fillRect(0, h * 0.62, w, 30); g.fillRect(0, h - 34, w, 34); }),
+  sock: cvs(128, 256, (g, w, h) => { g.fillStyle = '#fbf8ff'; g.fillRect(0, 0, w, h); g.fillStyle = '#f0f0fa'; for (let y = 0; y < h; y += 4) g.fillRect(0, y, w, 1);
+    g.fillStyle = '#ee4f9c'; g.fillRect(0, 12, w, 11); g.fillRect(0, 30, w, 7); g.fillRect(0, h * 0.56, w, h * 0.14); g.fillRect(0, h - 40, w, 40);
+    g.beginPath(); const hx = w * 0.25, hy = h * 0.33, r = 9; g.moveTo(hx, hy + r); g.bezierCurveTo(hx - 2 * r, hy - r * 0.2, hx - r, hy - 1.6 * r, hx, hy - 0.6 * r); g.bezierCurveTo(hx + r, hy - 1.6 * r, hx + 2 * r, hy - 0.2 * r, hx, hy + r); g.fill(); }),
 };
 const PIC = {}; const tl = new THREE.TextureLoader();
 const loadRaw = async (f) => { const t = await tl.loadAsync(f); t.colorSpace = THREE.NoColorSpace; t.anisotropy = 8; return t; };
@@ -314,7 +316,12 @@ const FOAM = [];
   const fGeo = new THREE.IcosahedronGeometry(0.5, 2), Lw = new THREE.Vector3(-0.25, 0.8, 0.55).normalize();
   fGeo.setAttribute('aCol', new THREE.InstancedBufferAttribute(new Float32Array(FOAM.flatMap((f) => (f.length >= 6 ? [f[3], f[4], f[5], 1] : [0, 0, 0, 0]))), 4));
   const fMat = new THREE.ShaderMaterial({ uniforms: { uL: { value: Lw }, ...GLOW },
-    vertexShader: 'attribute vec4 aCol; varying vec4 vCol; varying vec3 vN; varying vec3 vW; void main(){ vCol = aCol; vec4 w = modelMatrix * instanceMatrix * vec4(position, 1.0); vW = w.xyz; vN = normalize(mat3(modelMatrix) * mat3(instanceMatrix) * normal); gl_Position = projectionMatrix * viewMatrix * w; }',
+    vertexShader: `attribute vec4 aCol; varying vec4 vCol; varying vec3 vN; varying vec3 vW;
+      float fh(vec3 p){ return fract(sin(dot(p, vec3(12.9898, 78.233, 37.719))) * 43758.5453); }
+      float fn(vec3 p){ vec3 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f); return mix(mix(mix(fh(i), fh(i + vec3(1, 0, 0)), f.x), mix(fh(i + vec3(0, 1, 0)), fh(i + vec3(1, 1, 0)), f.x), f.y), mix(mix(fh(i + vec3(0, 0, 1)), fh(i + vec3(1, 0, 1)), f.x), mix(fh(i + vec3(0, 1, 1)), fh(i + vec3(1, 1, 1)), f.x), f.y), f.z); }
+      void main(){ vCol = aCol; vec3 o = instanceMatrix[3].xyz * 7.0; float b = fn(position * 5.0 + o) * 0.55 + fn(position * 11.0 + o.zxy) * 0.3;
+        vec3 p = position * (0.82 + 0.42 * b); vec4 w = modelMatrix * instanceMatrix * vec4(p, 1.0); vW = w.xyz;
+        vN = normalize(mat3(modelMatrix) * mat3(instanceMatrix) * normalize(normal + 0.9 * (b - 0.45) * normal + 0.5 * vec3(fn(position * 9.0 + o) - 0.5, 0.0, fn(position * 9.0 + o.yzx) - 0.5))); gl_Position = projectionMatrix * viewMatrix * w; }`,
     fragmentShader: `varying vec4 vCol; varying vec3 vN; varying vec3 vW; uniform vec3 uL; uniform vec3 uGlow; vec3 c3(float r, float g, float b){ return vec3(r, g, b) / 255.0; }
       void main(){ float lit = clamp(0.6 + 0.45 * dot(normalize(vN), uL), 0.0, 1.0);
         vec3 col = lit < 0.5 ? mix(c3(150.0, 135.0, 222.0), c3(205.0, 200.0, 245.0), lit / 0.5) : mix(c3(205.0, 200.0, 245.0), c3(255.0, 254.0, 255.0), (lit - 0.5) / 0.5);
@@ -329,7 +336,7 @@ const FOAM = [];
     fragmentShader: `varying vec3 vN; varying vec3 vW; uniform vec3 uL; void main(){ vec3 N = normalize(vN), V = normalize(cameraPosition - vW); float c = abs(dot(N, V)), f = pow(1.0 - c, 1.6);
       vec3 film = 0.6 + 0.4 * cos(6.2832 * (f * 1.8 + N.y * 0.35 + vec3(0.0, 0.33, 0.67)));
       float sp = pow(max(dot(reflect(-V, N), uL), 0.0), 60.0) + 0.6 * pow(max(dot(reflect(-V, N), normalize(vec3(0.4, 0.2, 0.9))), 0.0), 90.0);
-      vec3 col = mix(vec3(1.0), film, 0.85) + sp; gl_FragColor = vec4(min(col, vec3(1.0)), clamp(0.05 + 0.9 * f * f + 0.25 * f + sp, 0.0, 0.97)); }` });
+      vec3 col = mix(vec3(1.0), film, 0.9) + sp; gl_FragColor = vec4(min(col, vec3(1.0)), clamp(0.16 + 0.75 * f * f + 0.35 * f + 1.3 * sp, 0.0, 0.97)); }` });
   const bubbles = new THREE.InstancedMesh(bGeo, bm, B.length); B.forEach(([x, y, z, r], i) => { pI.set(x, y, z); sI.setScalar(r); bubbles.setMatrixAt(i, mI.compose(pI, qI, sI)); });
   bubbles.name = 'bubbles'; bubbles.renderOrder = 7; bubbles.userData.fam = 'bubble3d'; world.add(bubbles);
 }
