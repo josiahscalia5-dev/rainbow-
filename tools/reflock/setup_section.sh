@@ -11,6 +11,8 @@ mkdir -p "$WS/fit" "$WS/section"; WS=$(cd "$WS" && pwd); G="$WS/section"
 (cd "$SRC" && python3 -I tools/bonus/fit_sock.py "$WS/fit" >/dev/null && python3 -I tools/reflock/fit_section.py "$WS/fit" > "$WS/fit/fit.log")
 blender -b --python "$SRC/tools/reflock/blender_section.py" -- "$WS/fit/section.json" "$G/section.glb" > "$WS/fit/blender.log" 2>&1 || { tail -20 "$WS/fit/blender.log"; exit 1; }
 cp -f "$WS/fit/section.json" "$G/"; cp -f "$WS/fit/mask_bubble.png" "$G/mask_bubble.png"; cp -f "$SRC/qa/bonus/r39/generated/sock_plate_mask.png" "$G/mask_sock.png"
+python3 -I "$SRC/tools/reflock/plate.py" "$SRC/references/candidates/bonus_bubble_dash_chamber.webp" "$G/mask_bubble.png" "$G/plate_bubble.png" >/dev/null
+python3 -I "$SRC/tools/reflock/plate.py" "$SRC/references/candidates/bonus_sock_rescue_laundry_tunnel.webp" "$G/mask_sock.png" "$G/plate_sock.png" >/dev/null
 cp -f "$SRC/references/candidates/bonus_bubble_dash_chamber.webp" "$G/bubble.webp"; cp -f "$SRC/references/candidates/bonus_sock_rescue_laundry_tunnel.webp" "$G/sock.webp"
 cp -f "$SRC/tools/reflock/section.html" "$G/play3.html"; cp -f "$SRC/tools/kit05/controls.js" "$SRC/tools/kit05/swimfx.js" "$G/"
 cp -fL "$AR/assets/models/benny31.glb" "$G/benny31.glb"; cp -fL "$AR/assets/textures/benny31/bake.png" "$G/bake.png"; cp -fL "$AR/assets/textures/paint/05_coin.png" "$G/coin.png"

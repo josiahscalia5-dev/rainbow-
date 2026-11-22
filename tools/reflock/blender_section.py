@@ -202,13 +202,13 @@ for i, (t, side, rh, f0, f1) in enumerate(SF['towels']): towel(f'p{i}', zc - t *
 for i, zr in enumerate(T['rings_sock'][1:-1]): towel(f'r{i}', zr - 1.3, -1 if i % 2 == 0 else 1, 0.55 * k)
 # floating socks (picked up in the game): a bent tube (leg -> heel -> foot)
 def sock(name, p):
-    P = Vector(p); pts = [P + Vector((0, 0.22, 0.02)), P + Vector((0, 0.06, 0)), P + Vector((0.01, 0.0, -0.06)), P + Vector((0.02, 0.0, -0.16))]
+    P = Vector(p); pts = [P + Vector((-0.02, 0.2, -0.04)), P + Vector((0, 0.05, 0)), P + Vector((0.07, 0.01, 0.03)), P + Vector((0.18, 0.02, 0.06))]   # leg up, foot lying sideways in the water
     nv = 18; cur = []
     for i in range(nv + 1):
         t = i / nv; seg = min(2, int(t * 3)); u = t * 3 - seg; cur.append(pts[seg].lerp(pts[seg + 1], u))
     def f(a, b):
         i = round(b * nv); tg = (cur[min(i + 1, nv)] - cur[max(i - 1, 0)]).normalized(); n1 = Vector((1, 0, 0)).cross(tg).normalized() if abs(tg.x) < 0.9 else Vector((0, 1, 0)); n2 = tg.cross(n1)
-        r = 0.055 * (1.0 + 0.15 * math.sin(math.pi * b)); th = 2 * math.pi * a; q = cur[i] + (n1 * math.cos(th) + n2 * math.sin(th)) * r
+        r = 0.07 * (1.0 + 0.15 * math.sin(math.pi * b)); th = 2 * math.pi * a; q = cur[i] + (n1 * math.cos(th) + n2 * math.sin(th)) * r
         return ((q.x, q.y, q.z), (a, b))
     grid(name, 16, nv, f, flip=True)
 for i, p in enumerate(SEC['socks']): sock(f'sock_{i}', p)
