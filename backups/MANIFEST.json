@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 28919,
-   "sha256": "6b0bf7faae4faf5337c0f8ac7a4bdf99b7c459766f042fbd8204ccc21ecd83a4"
+   "sha256": "f90ce42c18820d4e5d76f19896485a24dadcb270aee6b6b45b930abbfadd065a"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 2958,
-   "sha256": "cfe7ef05cae9172a642fa13101eaafa6de700ce9b5b9e9a201b64952612cdd82"
+   "sha256": "2ecef6491107ebc43049a91d2d59afe1c5c26a42a795aa6fd1009e4232bc5522"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -49747,14 +49747,19 @@
    "sha256": "4bb3a295b1d7f7a9d29c30c73782df94c9df6c07bd7f6d7618eef9d963c02f3e"
   },
   {
+   "path": "tools/world/probe_frames.cjs",
+   "bytes": 4945,
+   "sha256": "aa5b366292852d2c2338433dd0126e0952eaa810bb6b4fa3db04d67811fc8e37"
+  },
+  {
    "path": "tools/world/setup_world.sh",
    "bytes": 5736,
    "sha256": "b8ce9e3a43a0f500e475eb8036d8eb6eb7b80c07f2f33be52d849ec575ec42c8"
   },
   {
    "path": "tools/world/world.html",
-   "bytes": 82730,
-   "sha256": "06fdd0fb72ed3e613a93f33b888032e57dbb96e98fc6ae931f653ce47c4a1e26"
+   "bytes": 84791,
+   "sha256": "47f7f7793c2f3f7e27717a365ccfcd56e4f4b1c83fde1b7a9e118b412727c291"
   },
   {
    "path": "tools/world/world_layout.py",
