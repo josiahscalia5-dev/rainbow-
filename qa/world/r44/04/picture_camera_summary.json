@@ -1,0 +1,27 @@
+{
+ "new": {
+  "share_within_20_levels": 0.873,
+  "ssim_scenery": 0.807,
+  "mean_abs_diff_levels": 11.5,
+  "colour_look_corr": 0.979,
+  "sharpness_vs_approved": 0.782,
+  "whole_frame_within_20_levels": 0.609
+ },
+ "scenery_share_of_frame": 0.635,
+ "route_first": [
+  "gold (22 % of all mismatch; 13 % of this region off) -> washer-environment-modeler (gold rings, machinery); coins -> path-camera-transition-engineer (coin layout)",
+  "water_cyan (21 % of all mismatch; 15 % of this region off) -> water-fx-specialist (in round 34: S1 washer-environment-modeler owns the water surface bake)",
+  "pink_edge (17 % of all mismatch; 8 % of this region off) -> water-fx-specialist (pink / magenta river edges)"
+ ],
+ "zones": {
+  "middle-left": 0.213,
+  "middle-centre": 0.207,
+  "middle-right": 0.159,
+  "bottom-right": 0.097,
+  "top-left": 0.083,
+  "top-right": 0.079,
+  "top-centre": 0.068,
+  "bottom-left": 0.05,
+  "bottom-centre": 0.043
+ }
+}

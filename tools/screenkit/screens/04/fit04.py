@@ -95,7 +95,7 @@ lay = {'screen': '04', 'title': 'THROUGH THE FIVE ARROWS', 'ref': REF, 'fov': ca
        # r44 controlled tests at the picture camera (qa/world/r44/04/): no foam along the tube's water edges 84.5 -> 86.2 %, finer bakes -> 87.3 %
        'foam_pool': False, 'bake_res': {'pool_front': [2048, 2048], 'funnel': [4096, 1024], 'wall': [4096, 1024]}, 'tunnel_style': 'gold',
        'palette': {'wallA': '#a3501f', 'wallB': '#ffc46a', 'wallM': '#e48a35', 'slot': '#6a2a12'},   # warm-gold tunnel (measured: gold 17 % of the picture)
-       'splash_scale': 0.6, 'lod_bias': -0.8, 'bake_dens': [1, 4], 'number': '04', 'next': 'A'}
+       'splash_scale': 0.6, 'lod_bias': -0.8, 'bake_dens': [1, 4], 'number': '04', 'next': 'A', 'coins_start': 1330}
 for kv in a.set:                                               # one factor at a time: the default stays the measured layout above
     k, v = kv.split('=', 1); v = json.loads(v)
     if k == 'arrow_tilt':

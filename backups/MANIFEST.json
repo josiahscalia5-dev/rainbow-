@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 27962,
-   "sha256": "2a4cc7bf309112e75b88f506d2f9a61a5045cfb47627b3d8b4280de57b50f22e"
+   "sha256": "86eab92d3b17cdb3d72e015a8cd89f9a021319a52e637ef85840d1fe75ccc6f4"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3622,
-   "sha256": "dca1b58508972d1bafa39c31589e5f65689c1c5a494afc4870cb782348b9bd25"
+   "sha256": "4e62b560e22aa3041e7f3a5a6fabf24f4e0e61b77e97f1f2bc4f6461da57e3d0"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -42847,6 +42847,51 @@
    "sha256": "247475c954cace1d67317ec6d3c1752ee1a618052e8948e082082c60bbc44821"
   },
   {
+   "path": "qa/world/r44/04/DIFF_NEW_vs_APPROVED.jpg",
+   "bytes": 165686,
+   "sha256": "197e2c555154120fc119956ba8c2afe57a3425998202217e67a92cfae42b8029"
+  },
+  {
+   "path": "qa/world/r44/04/GRAY_picture_camera.jpg",
+   "bytes": 141600,
+   "sha256": "f8b39a99aef57309fb0edde2588a18de6f86a69f2f72f00fcb8dd3a6f5a1e0c2"
+  },
+  {
+   "path": "qa/world/r44/04/NEW_picture_camera.jpg",
+   "bytes": 132134,
+   "sha256": "9e4c9ecf9ad0a5650e8332f1bd56212ec2e576479fedd1c7ce6b9feacaacc187"
+  },
+  {
+   "path": "qa/world/r44/04/README.md",
+   "bytes": 1541,
+   "sha256": "e3a1166344ce56d656c3c82927dd13c3171d5d29d84ab9365c21f354583309ce"
+  },
+  {
+   "path": "qa/world/r44/04/SCREEN04_kit_first_build_sheet.jpg",
+   "bytes": 267456,
+   "sha256": "8d4ea425ecdbffa49b237e15ff4af45161348bf9f5aae3dc4edd64697a6d1ae4"
+  },
+  {
+   "path": "qa/world/r44/04/measure/fit_overlay.jpg",
+   "bytes": 417427,
+   "sha256": "4499d026a33fd6687bd27e2ce9103a96312558d2f58aa19595a27b0e0d95a732"
+  },
+  {
+   "path": "qa/world/r44/04/measure/mask_overlay.jpg",
+   "bytes": 302703,
+   "sha256": "a1a55dd7f2a8766f15aa636d08d32280971f47c3a4798fdf06c3fc9f43c8fc41"
+  },
+  {
+   "path": "qa/world/r44/04/measure/rings_ransac.jpg",
+   "bytes": 615704,
+   "sha256": "051d2e9949ceb1a3283978789a4949850fe7dfb46b100dfb5dfd5b793e6ee95e"
+  },
+  {
+   "path": "qa/world/r44/04/picture_camera_summary.json",
+   "bytes": 938,
+   "sha256": "54efecd175f279d46597baab6043b791fc6a388ca312ce600bf9b0920a43a504"
+  },
+  {
    "path": "qa/world/r44/join_audit_BEFORE/JOIN_AUDIT_BEFORE_sheet.jpg",
    "bytes": 776358,
    "sha256": "e0a5925af0ecf3b82256dafded0ad55d7a2602cd0b754059fa1d3f7a5c486f8b"
@@ -45383,8 +45428,8 @@
   },
   {
    "path": "tools/screenkit/screens/04/fit04.py",
-   "bytes": 10872,
-   "sha256": "f288743e9de3a402b300fd49abb8624411ffef0354c670cc188c6acb9cc99edf"
+   "bytes": 10893,
+   "sha256": "462104b8440d6213231675f3f5a53a5dad506d7ae391a60563f8c92e2eddcb5d"
   },
   {
    "path": "tools/screenkit/screens/04/segment04.json",
