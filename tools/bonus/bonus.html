@@ -50,7 +50,7 @@ if (AREA === 'bubble') K.water.HWD = 1.8;
 // round 39 Sock Rescue fix 1: camera + tunnel FITTED to the user's Sock Rescue picture (tools/bonus/fit_sock.py -> sockfit.json); ?fit=0 = round 38
 const FIT39 = AREA === 'sock' && q.get('fit') !== '0';
 if (FIT39) { const F = await (await fetch('sockfit.json')).json();
-  for (const k of ['A', 'NUP', 'RR', 'A0', 'PN', 'PD', 'HW', 'cam_fwd', 'cam_up', 'fov', 'Z2', 'S', 'benny_start_px', 'ring1_t']) K[k] = F[k];
+  for (const k of ['A', 'NUP', 'RR', 'A0', 'PN', 'PD', 'HW', 'cam_fwd', 'cam_up', 'fov', 'Z2', 'S', 'benny_start_px', 'ring1_t', 'river_center_axis', 'river_center']) if (F[k] != null) K[k] = F[k];
   K.water.HWD = Math.sqrt(K.RT * K.RT - K.HW * K.HW); K.fit = F; }   // round 38: the chamber floor is wider than the tunnel (the extra water sits behind the tunnel walls further on)
 // round 36 TEST ?proj=1 = PURE camera-matched projection: every scenery texel stays the APPROVED picture's own pixel projected onto the fitted
 // 3D tunnel / water at its world place (no hand-over to the sharper repeating sections, no foam domes / bubbles), and the camera never rotates
@@ -736,7 +736,8 @@ const px05 = (x, y) => { const [W0, H0] = K.fit.img, k = 1536 / H0; return [432 
 const pxToStart = (x, y, h = 0) => { const [px, py] = px05(x, y); const d = camF.clone().addScaledVector(camR, (px - 432) / FOCPX).addScaledVector(camU, -(py - 768) / FOCPX).normalize();
   const P = d.multiplyScalar((K.PD + h) / d.dot(NUP)), r = P.sub(B0); return [r.dot(A), r.dot(RR)]; };
 // round 39: in the fitted Sock Rescue the coins start exactly where the picture paints them
-const PAINTED = FIT39 ? K.fit.coins_px.map(([x, y]) => pxToStart(x, y, coinD * 0.75)) : [[1.789, 0.008], [2.876, 0.22], [4.321, -0.008], [5.951, -0.22], [7.684, -0.22], [8.691, 0.02], [9.8, 0.1], [10.9, 0.12]];
+const clampLat = ([s_, l_]) => [s_, Math.max(-0.45, Math.min(0.45, l_ + latB0)) - latB0];   // keep the painted coins / socks within Benny's reach
+const PAINTED = FIT39 ? K.fit.coins_px.map(([x, y]) => clampLat(pxToStart(x, y, coinD * 0.75))) : [[1.789, 0.008], [2.876, 0.22], [4.321, -0.008], [5.951, -0.22], [7.684, -0.22], [8.691, 0.02], [9.8, 0.1], [10.9, 0.12]];
 const RUN2 = [[14.4, 0.15], [15.4, 0.22], [16.4, 0.22], [17.3, 0.03]];
 const toPath = (s, lat) => { const P = B0.clone().addScaledVector(A, s).addScaledVector(RR, lat), w = new THREE.Vector3(); let sp = s, lp = lat;
   for (let k = 0; k < 8; k++) { const F = frameAt(sp), d = P.clone().sub(at(sp, w)); lp = d.dot(F.r); sp += d.dot(F.t); } return [sp, lp]; };
@@ -870,8 +871,9 @@ const SOCK = AREA !== 'sock' ? { socks: [], update: () => 0 } : (() => {
   const SC = +(q.get('socksize') ?? 2.1);
   // positions (s from Benny's start, lane offset): one per lane change of a natural run; none under a coin
   let LIST = (q.get('socks') ?? '2.6,-0.22;4.6,0.22;6.45,0;8.25,-0.22;10.7,0.22').split(';').map((x) => x.split(',').map(Number));
-  if (FIT39 && !q.has('socks')) LIST = K.fit.socks_px.map(([x, y]) => toPath(...pxToStart(x, y, 0))).concat([[6.45, 0], [8.25, -0.22], [10.7, 0.22]]);   // the two painted socks where the picture has them
-  const socks = LIST.map(([s, lat], i) => { const m = new THREE.Mesh(geo, mat); m.scale.setScalar(SC); m.frustumCulled = false; m.userData.noDepth39 = 1; scene.add(m); return { i, s, lat, m, got: -1, ph: i * 1.7 }; });
+  if (FIT39 && !q.has('socks')) LIST = K.fit.socks_px.map(([x, y]) => toPath(...clampLat(pxToStart(x, y, 0)))).concat([[6.45, 0], [8.25, -0.22], [10.7, 0.22]]);   // the two painted socks where the picture has them
+  const SCI = (i) => (FIT39 && i < 2 && !q.has('socks') ? [2.9, 3.3][i] : SC);   // round 39: the two painted socks at their painted size
+  const socks = LIST.map(([s, lat], i) => { const m = new THREE.Mesh(geo, mat); m.scale.setScalar(SCI(i)); m.frustumCulled = false; m.userData.noDepth39 = 1; scene.add(m); return { i, s, lat, m, got: -1, ph: i * 1.7, sc: SCI(i) }; });
   const slots = document.getElementById('slots'), mtext = document.getElementById('mtext');
   const icon = (on) => `<svg viewBox="0 0 20 22" class="${on ? 'on' : ''}"><path d="M6 1h8v11l4 3c2 2 1 6-3 6H8c-4 0-6-3-5-6l3-3z" fill="${on ? '#fff' : '#8a7aa8'}"/><path d="M6 1h8v3H6zM14 17h3c0 3-2 4-4 4z" fill="${on ? '#f45aa8' : '#6d5d8c'}"/></svg>`;
   const draw = () => { const n = socks.filter((k) => k.got >= 0).length; slots.innerHTML = socks.map((k, i) => icon(i < n)).join(''); return n; };
@@ -882,17 +884,17 @@ const SOCK = AREA !== 'sock' ? { socks: [], update: () => 0 } : (() => {
     for (const k of socks) {
       const F = frameAt(k.s); at(k.s, k.m.position).addScaledVector(F.r, k.lat);
       if (k.got < 0) {
-        k.m.position.addScaledVector(F.n, 0.012 + 0.012 * Math.sin(t * 2.6 + k.ph));
+        k.m.position.addScaledVector(F.n, 0.012 + 0.012 * Math.sin(t * 2.6 + k.ph) + (k.sc - SC) * 0.035);
         M4.makeBasis(F.r, F.n, tz.copy(F.t).negate()); k.m.quaternion.setFromRotationMatrix(M4);
         k.m.rotateY(0.35 * Math.sin(t * 0.9 + k.ph)); k.m.rotateZ(0.12 * Math.sin(t * 1.7 + k.ph));
         // rescue: the sock's centre within reach of Benny's body (water point .. his shoulders, incl. leap / dive height)
         v1.copy(benny.position); v2.copy(benny.position).addScaledVector(F0.n, bennyH * 0.75);
-        const c = k.m.position.clone().addScaledVector(F.n, 0.07 * SC), d = new THREE.Line3(v1, v2).closestPointToPoint(c, true, new THREE.Vector3()).distanceTo(c);
+        const c = k.m.position.clone().addScaledVector(F.n, 0.07 * k.sc), d = new THREE.Line3(v1, v2).closestPointToPoint(c, true, new THREE.Vector3()).distanceTo(c);
         if (d < 0.15 && Math.abs(k.s - s) < 0.3) { k.got = t; n = draw(); mtext.innerHTML = n >= socks.length ? 'All <b>5</b> socks rescued!' : `Rescue <b>5</b> lost socks`; }
       } else {
         // rescued: a quick hop up out of the water, then it shrinks away forward and up (toward the mission bar), never covering Benny
         const a = Math.min(1, (t - k.got) / 0.45), F1 = frameAt(k.s); at(k.s, k.m.position).addScaledVector(F1.r, k.lat * (1 - a)).addScaledVector(F1.n, 0.05 + 0.55 * a).addScaledVector(F1.t, 0.9 * a);
-        k.m.scale.setScalar(SC * 0.8 * (1 - a) * (1 - a)); k.m.rotateY(0.5); k.m.visible = a < 1;
+        k.m.scale.setScalar(k.sc * 0.8 * (1 - a) * (1 - a)); k.m.rotateY(0.5); k.m.visible = a < 1;
       }
     }
     return socks.filter((k) => k.got >= 0).length; } };

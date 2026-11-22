@@ -11,5 +11,5 @@ for f in "$WS"/game/*; do b=$(basename "$f"); [ "$b" = play3.html ] && continue;
 ln -sfn "$(readlink -f "$WS/game/node_modules")" node_modules
 cp -f "$SRC/tools/bonus/bonus.html" play3.html
 # round 39: Sock Rescue fitted to its picture (camera + tunnel) and the picture's clean plate (free fill)
-(cd "$SRC" && python3 -I tools/bonus/fit_sock.py "$WS/bonus" >/dev/null && python3 -I tools/bonus/plate_sock.py "$WS/bonus" >/dev/null)
+(cd "$SRC" && python3 -I tools/bonus/fit_sock.py "$WS/bonus" "$WS/kit/kit.json" >/dev/null && python3 -I tools/bonus/plate_sock.py "$WS/bonus" >/dev/null)
 echo "bonus test ready: $WS/bonus  (?area=sock)"

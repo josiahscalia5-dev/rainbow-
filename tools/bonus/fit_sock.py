@@ -42,6 +42,26 @@ fit = {'A': a.tolist(), 'NUP': nup.tolist(), 'RR': rr.tolist(), 'A0': A0.tolist(
        'socks_px': [[432, 766], [645, 874]],                                                                          # painted socks (water line)
        'towels': [[2.7, -1, 0.62, 0.02, 0.32], [3.0, 1, 0.52, 0.02, 0.36]],   # t, side, rail height, inward from / to (estimated from the picture)
        'pods': [[4.2, 2.04], [3.7, 1.17]]}                                    # t, angle round the tunnel (estimated from the picture)
+# river centre line (axis-relative lateral per axial t) through Benny's painted start and the painted coin trail, then the Screen-05 S-bends
+K05 = json.load(open(sys.argv[2])) if len(sys.argv) > 2 else None
+def ray(px, py, h):
+    fx = H / 2 / math.tan(math.radians(32)) * (1536 / H) * 0 + 768 / math.tan(math.radians(32))   # kit convention: 05-painting pixels
+    d = np.array([(px - 432) / fx, -(py - 768) / fx, -1.0]); d /= np.linalg.norm(d); return d * ((PD + h) / d.dot(nup))
+to05 = lambda x, y: (432 + (x - CX) * (1536 / H), 768 + (y - CY) * (1536 / H))
+B0 = ray(*bpx, 0.0); tB0 = float(B0.dot(a)); latB0 = float((B0 - A0).dot(rr)); coinD = 0.15038523388874458 * np.linalg.norm(B0) / 1.186
+pts = [(0.0, latB0), (tB0, latB0)]
+for x, y in fit['coins_px'][:4]:
+    P = ray(*to05(x, y), coinD * 0.75); pts.append((float(P.dot(a)), float(np.clip((P - A0).dot(rr), -0.45, 0.45))))
+if K05:
+    c05 = np.array(K05['river_center_axis']['c']); T1 = pts[-1][0] + 3.0
+    ts = np.arange(0, 95, 0.05); xs = [p_[0] for p_ in pts] + [T1, T1 + 0.5]; ys = [p_[1] for p_ in pts] + [float(c05[0]), float(c05[10])]
+    from scipy.interpolate import PchipInterpolator
+    near = PchipInterpolator(xs, ys)(np.minimum(ts, T1)); far = np.interp(ts - T1, np.arange(len(c05)) * 0.05, c05)
+    c = np.where(ts <= T1, near, far)
+    fit['river_center_axis'] = {'t0': 0.0, 'dt': 0.05, 'c': [round(float(v), 4) for v in c]}
+    cs_ = np.interp(tB0 + np.arange(0, 95 - tB0, 0.05), ts, c)
+    fit['river_center'] = {'ds': 0.05, 'c': [round(float(v), 4) for v in cs_], 'ref': 'axis'}
+    print('Benny start t %.3f lat %.3f; coin trail (t, lat):' % (tB0, latB0), [(round(t_, 2), round(l_, 2)) for t_, l_ in pts[2:]])
 json.dump(fit, open(out + '/sockfit.json', 'w'), indent=1)
 # overlay: fitted ring circles (red) + water line on the wall (cyan) over the picture
 im = Image.open(REF).convert('RGB'); d = ImageDraw.Draw(im)
