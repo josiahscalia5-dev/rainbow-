@@ -40,7 +40,8 @@ const q = new URLSearchParams(location.search);
 // round 38: bonus test areas (never the default game). ?area=sock (default) = Laundry Tunnel: Sock Rescue. Shared with Screen 05's kit:
 // Benny + paddling shader, controls.js (lanes / leap / dive / coins), swimfx, camera + reference-video movement, the round-37 live river.
 const AREA = (q.get('area') ?? 'sock').toLowerCase();
-for (const [k, v] of [['ownoff', '1'], ['move', '1'], ['w37', '1'], ['len', '13.5'], ['w37rw', '0.7'], ['w37ck', '0.85']]) if (!q.has(k)) q.set(k, v);   // wide river: narrow foam banks along the walls, as in the picture
+const CAM39 = new THREE.PerspectiveCamera();
+for (const [k, v] of [['speed', '1.9'], ['ownoff', '1'], ['move', '1'], ['w37', '1'], ['len', '16'], ['w37rw', '0.7'], ['w37ck', '0.85']]) if (!q.has(k)) q.set(k, v);   // wide river: narrow foam banks along the walls, as in the picture
 const W37 = +(q.get('w37') ?? 0), CLEAN37 = true;   // the tunnel is drawn by code (no Screen-05 painted pixels)
 const W = +(q.get('w') ?? 412), H = +(q.get('h') ?? 915);
 const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
@@ -81,9 +82,9 @@ vec3 kitRemap(vec3 wp){ vec3 d = wp - uCam; float za = dot(d, uAx); float gz = z
 // the picture's pixel only where that camera saw it (depth test against a depth map rendered from the start camera) and until the camera has come
 // much closer than the painted distance (then the sharp 3D material takes over). Big removed areas (Benny, splash, buttons) are transparent in
 // the plate, so the live 3D material shows there.
-const PROJ39 = { uPlate: { value: null }, uPDepth: { value: null }, uPVP: { value: new THREE.Matrix4() }, uPOn: { value: 0 },
+const PROJ39 = { uPAll: { value: 1 }, uPlate: { value: null }, uPDepth: { value: null }, uPVP: { value: new THREE.Matrix4() }, uPOn: { value: 0 },
   uPFade: { value: new THREE.Vector2(...(q.get('pfade39') ?? '0.75,0.97').split(',').map(Number)) } };
-const PROJ_GLSL = `uniform sampler2D uPlate; uniform sampler2D uPDepth; uniform mat4 uPVP; uniform float uPOn; uniform vec2 uPFade;
+const PROJ_GLSL = `uniform float uPAll; uniform sampler2D uPlate; uniform sampler2D uPDepth; uniform mat4 uPVP; uniform float uPOn; uniform vec2 uPFade;
   float p39lin(float z){ float n = 0.02, f = 400.0; return 2.0 * n * f / (f + n - (2.0 * z - 1.0) * (f - n)); }
   vec4 proj39(vec3 kwp, float kD, float kT){ if (uPOn < 0.5) return vec4(0.0);
     vec4 c = uPVP * vec4(kwp, 1.0); if (c.w <= 0.0) return vec4(0.0); vec3 nd = c.xyz / c.w; vec2 uv = nd.xy * 0.5 + 0.5;
@@ -91,7 +92,7 @@ const PROJ_GLSL = `uniform sampler2D uPlate; uniform sampler2D uPDepth; uniform 
     float zf = p39lin(nd.z * 0.5 + 0.5), zt = p39lin(texture(uPDepth, uv).r);
     float vis = 1.0 - smoothstep(zt * 1.02 + 0.01, zt * 1.06 + 0.03, zf);
     vec4 pl = texture(uPlate, uv); float f = smoothstep(uPFade.x, uPFade.y, kD / max(kT, 1e-3));
-    return vec4(pl.rgb, pl.a * vis * f); }`;
+    return vec4(pl.rgb, pl.a * vis * f * uPAll); }`;
 const BAKE0 = (() => { const t = new THREE.DataTexture(new Uint8Array([0, 0, 0, 0]), 1, 1); t.needsUpdate = true; return t; })();
 const projify = (m) => { if (!FIT39) return m; const base = m.onBeforeCompile, key = m.customProgramCacheKey(); m.userData.bakeU = { uBake: { value: BAKE0 }, uBakeOn: { value: 0 } };
   m.customProgramCacheKey = () => key + '-p39';
@@ -837,6 +838,15 @@ window.step = (t, dt, steer, speed) => {
   else qYaw.identity();
   radv.copy(camera.position).sub(A0); radv.addScaledVector(A, -radv.dot(A)); { const r = radv.length(), r2 = softLim(r, CAMP.RMAX, CAMP.RMAX - CAMP.R0); if (r2 < r) camera.position.addScaledVector(radv, r2 / r - 1); }   // inside the tunnel
   camera.quaternion.copy(qYaw).multiply(camQ0).multiply(qRoll.setFromAxisAngle(FWDL, st.camRoll.x)); camera.updateMatrixWorld();
+  // round 39c (the user's reference-video movement): frame 0 = the picture's camera; within the first ~1.3 s the camera glides to the CENTRE
+  // of the tunnel right behind Benny (full rings all round, the far end straight ahead), follows only part of his lane changes (he crosses the
+  // river on screen), and the tunnel turns to normal perspective so the rings stream past him. The picture stays painted on the objects.
+  if (FIT39) { const w = THREE.MathUtils.smoothstep(st.s, 0.2, +(q.get('camin') ?? 2.0));
+    if (w > 0) { const bp = benny.position, tB = bp.dot(A), lB = bp.clone().sub(A0).dot(RR);
+      const cp = A0.clone().addScaledVector(A, tB - 1.45).addScaledVector(NUP, 0.16).addScaledVector(RR, 0.3 * lB);
+      CAM39.position.copy(cp); CAM39.up.copy(NUP); CAM39.lookAt(A0.clone().addScaledVector(A, tB + 7).addScaledVector(NUP, -0.12).addScaledVector(RR, 0.1 * lB));
+      camera.position.lerp(cp, w); camera.quaternion.slerp(CAM39.quaternion, w); camera.updateMatrixWorld(); }
+    REMAP.uZ2.value = THREE.MathUtils.lerp(K.Z2, 300, w); PROJ39.uPAll.value = 1 - w; }
   REMAP.uCam.value.copy(camera.position); REMAP.uOwnOff.value = OWNOFF ? THREE.MathUtils.smoothstep(st.s, 0.6, 1.8) : 0; FLOW.uFlow.value = t * +(q.get('flowspeed') ?? 0.55); FLOW.uW37T.value = t; FLOW.uFlowOn.value = THREE.MathUtils.smoothstep(st.s, 0.0, 0.7);
   core.position.copy(camera.position).add(A0).addScaledVector(A, 300); core.scale.set(33, 33, 1);
   updateEnd(st.s);
@@ -848,7 +858,7 @@ window.step = (t, dt, steer, speed) => {
   // the controls shrink coins by camera distance (their table imitated the painting's coin sizes in the splat world); the kit's depth
   // curve already gives the painted sizes, so that extra shrink is undone here (same table as controls.js, MTAB)
   for (const c of coins) if (c.got < 0 && c.sp.visible) c.sp.scale.multiplyScalar(1 / mOfK(camera.position.distanceTo(c.sp.position)));
-  for (const c of coins) if (c.got < 0 && c.sp.visible) { const za = tmp.copy(c.sp.position).sub(camera.position).dot(A); const f = 1 - THREE.MathUtils.smoothstep(za, 9.5, 12.0); c.sp.scale.multiplyScalar(f); c.sp.visible = f > 0.01; }
+  for (const c of coins) if (c.got < 0 && c.sp.visible) { const za = tmp.copy(c.sp.position).sub(camera.position).dot(A); const f = 1 - THREE.MathUtils.smoothstep(za, FIT39 ? 24 : 9.5, FIT39 ? 30 : 12.0); c.sp.scale.multiplyScalar(f); c.sp.visible = f > 0.01; }
   if (!q.get('noclutter')) {   // round 33i: on-screen declutter (the later runs are 0.55-0.75 u apart: true sizes overlapped there)
     const vis = window.coinScreen().filter((c) => !c.pop).sort((a, b) => b.r - a.r), keep = []; st.decl = 0;
     for (const c of vis) { let k = 1; for (const n of keep) { const d = Math.hypot(c.x - n.x, c.y - n.y) - n.r - 1.5; if (d < c.r * k) k = Math.max(0, d / c.r); }
