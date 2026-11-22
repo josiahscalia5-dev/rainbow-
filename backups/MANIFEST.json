@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3153,
-   "sha256": "e39daa230a51a47079ca34e90bf43b89779d040da18e9758a75bcc37c211d532"
+   "sha256": "4582b76fb4424959879d552edc81e4dd31ae9e1d43b5b690ebdb8a33c0a0b5f7"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -41805,6 +41805,16 @@
    "path": "tools/reflock/bake_phys.py",
    "bytes": 14496,
    "sha256": "66c943c69db2af09f72f576bd610de8096a15ffbf3b7e7fa32b6504b4e68bf80"
+  },
+  {
+   "path": "tools/reflock/blender_section.py",
+   "bytes": 16363,
+   "sha256": "7a0c4c54f67fb5eba47b76623559190b4c078f201eaf38dec8246932d4be30e4"
+  },
+  {
+   "path": "tools/reflock/fit_section.py",
+   "bytes": 12742,
+   "sha256": "4316cc0becad15cf758192854541b139843ef9ff1ce9953014d989a6792f8bf0"
   },
   {
    "path": "tools/reflock/make_page.py",
