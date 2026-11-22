@@ -404,7 +404,18 @@ export function buildEnvironment(course: Course): Environment {
   zones.tubes.add(buildRingsAt(perfPath, rings05, ringMat05, { inset: 0.02, band: band05near }));
   const rings0607: number[] = [];
   for (let s = s06 + RING06_PHASE - 2 * ringSpacing; s <= s08 - 1 + 1e-6; s += ringSpacing) if (s >= (TUN05 ? sEndT05 : sGlow05) + 4) rings0607.push(s);
-  zones.tubes.add(buildRingsAt(perfPath, rings0607, ringMat, { inset: 0.02, collar }));
+  // round 41: a gold ring must never cut through the swim passage. On the 06 crest the river climbs the tube wall, and rings placed on the
+  // tube axis crossed the water route at Benny's height right in front of the camera (a gold bar across the screen). A ring whose hoop
+  // passes through the passage (river width + 0.3, from just under the water to 4.5 above it) is not placed; every other ring stays.
+  const ringClear = (sr: number) => {
+    const f = perfPath.frame(sr), R = perfPath.radius(sr) - 0.02, c = f.pos.clone().addScaledVector(f.up, perfPath.radius(sr) - perfPath.depth(sr));
+    const w = course.sample(sr), hw = course.widthAt(sr) / 2 + 0.3, p = new THREE.Vector3(), d = new THREE.Vector3();
+    for (let k = 0; k < 64; k++) { const a = (k / 64) * Math.PI * 2; p.copy(c).addScaledVector(f.right, Math.cos(a) * R).addScaledVector(f.up, Math.sin(a) * R);
+      d.copy(p).sub(w.pos); const x = d.dot(w.right), h = d.dot(w.up); if (Math.abs(x) < hw && h > -0.2 && h < 4.5) return false; }
+    return true; };
+  const rings0607clear = rings0607.filter(ringClear);
+  (globalThis as unknown as { __rings0607?: unknown }).__rings0607 = { placed: rings0607clear.length, removed: rings0607.filter((x) => !rings0607clear.includes(x)).map((x) => +x.toFixed(1)) };
+  zones.tubes.add(buildRingsAt(perfPath, rings0607clear, ringMat, { inset: 0.02, collar }));
   // copper nozzle lids: one symmetric pair per bay on the side walls a little above eye level,
   // skipped where the stream climbs the wall (06 arch) so a lid never blocks the ride
   const lidMat = withTubeStrips(withFarGlow(gold({ color: '#ffb27a', roughness: 0.16, emissive: 0.2 }), tubeGlow, 'lid'), { ...strips, color: '#fff0c8', intensity: 2.4 }, 'instance', 'lid');

@@ -808,6 +808,17 @@ export async function startGame(canvas: HTMLCanvasElement) {
     /** QA only (read-only use by scripts/proj05-probe.mjs): the live scene, render camera and renderer, for exact
      *  per-pixel river UV / footprint renders. Nothing calls it in the game; rendering is unchanged. */
     qa3d() { return { scene, camera, renderer, composer }; },
+    /** QA (read-only): Benny's on-screen box (canvas px) from his visible meshes, his root's screen point, and the steering input log */
+    bennyBoxPx() {
+      camera.updateMatrixWorld(); benny.root.updateMatrixWorld(true);
+      const W = renderer.domElement.clientWidth, H = renderer.domElement.clientHeight, box = new THREE.Box3().setFromObject(benny.root), v = new THREE.Vector3();
+      let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
+      for (let i = 0; i < 8; i++) { v.set(i & 1 ? box.max.x : box.min.x, i & 2 ? box.max.y : box.min.y, i & 4 ? box.max.z : box.min.z).project(camera);
+        const x = (v.x + 1) / 2 * W, y = (1 - v.y) / 2 * H; x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); }
+      const c = benny.root.getWorldPosition(new THREE.Vector3()).project(camera);
+      return { x: +((c.x + 1) / 2 * W).toFixed(1), y: +((1 - c.y) / 2 * H).toFixed(1), box: [x0, y0, x1, y1].map((n) => +n.toFixed(1)), lat: +st.lat.toFixed(3), visible: benny.root.visible };
+    },
+    inputLog() { return (input as unknown as { log?: unknown[] }).log ?? []; },
     stats() {
       const i = renderer.info;
       return { fps: +fps.toFixed(1), calls: i.render.calls, triangles: i.render.triangles, geometries: i.memory.geometries, textures: i.memory.textures, modules: { ...moduleStatus }, courseLength: course.length };
