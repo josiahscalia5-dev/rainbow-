@@ -264,6 +264,24 @@ step_lsp() {  # language servers for the typescript-native-lsp / pyright-lsp plu
   else rec lsp "Language servers" warn "typescript-language-server missing (npm i -g typescript-language-server@4.4.0)" "$t"; fi
 }
 
+step_spector() {  # standalone official Spector.js MCP server (BabylonJS/Spector.js mcp/, free, MIT); user order 2026-11-22. The
+  # parallax-threejs plugin's own Spector copy is never built in synced plugins, so this one is registered as "spectorjs" (user scope).
+  local t d=$HOME/.local/share/rainbow-tools/Spector.js sha=755e6a7671e58424fcfda1270823a71e91de3553; t=$(now)
+  if [ ! -f "$d/mcp/dist/index.js" ] && [ "$MODE" != check ]; then
+    { rm -rf "$d" && mkdir -p "$d" && cd "$d" && git init -q && git remote add origin https://github.com/BabylonJS/Spector.js.git \
+      && timeout 300 git fetch -q --depth 1 origin "$sha" && git checkout -q FETCH_HEAD && cd mcp \
+      && timeout 600 npm ci --ignore-scripts --no-audit --no-fund && npm run build && npm prune --omit=dev --no-audit --no-fund \
+      && timeout 300 npm install --no-save --omit=dev --ignore-scripts --no-audit --no-fund "playwright@$(node -p "require('playwright/package.json').version" 2>/dev/null || echo 1.63.0)"; \
+    } > "$LIVE/spector-mcp.log" 2>&1; cd "$ROOT"
+  fi
+  if [ ! -f "$d/mcp/dist/index.js" ]; then rec spector "Spector.js MCP" warn "not built (backups/.live/spector-mcp.log)" "$t"; return; fi
+  if command -v claude >/dev/null 2>&1 && ! claude mcp get spectorjs >/dev/null 2>&1 && [ "$MODE" != check ]; then
+    claude mcp add spectorjs -s user -e PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers -- node "$d/mcp/dist/index.js" >> "$LIVE/spector-mcp.log" 2>&1
+  fi
+  if claude mcp get spectorjs >/dev/null 2>&1; then rec spector "Spector.js MCP" ok "spectorjs registered (BabylonJS/Spector.js @ ${sha:0:7}, playwright pinned to the preinstalled browser); tools load at session start" "$t"
+  else rec spector "Spector.js MCP" warn "built but not registered (claude mcp add spectorjs ...)" "$t"; fi
+}
+
 py_missing() { python3 -I -c 'import importlib.util as u,sys; print(" ".join(m for m in sys.argv[1:] if u.find_spec(m) is None))' "$@"; }
 step_pylibs() {
   local t req opt mreq mopt pkgs="" m st=ok msg; t=$(now)
@@ -453,7 +471,7 @@ env-setup)   # cloud environment setup script: tools only, before Claude starts;
   : > "$RES"
   say "Rainbow env-setup: tools ($ROOT)"
   start_tool_installs
-  step_node; step_npm; step_lsp; step_pylibs; step_playwright; step_media_tools; step_blender; step_android
+  step_node; step_npm; step_lsp; step_spector; step_pylibs; step_playwright; step_media_tools; step_blender; step_android
   command -v claude >/dev/null && step_worldlabs
   exit 0 ;;
 esac
@@ -487,7 +505,7 @@ pycheck agents "Specialist agents" agents
 pycheck marble "Marble World Labs assets" marble
 step_worldlabs
 say "3 Tools (installed only when missing)"
-step_node; step_npm; step_lsp; step_pylibs; step_playwright; step_media_tools; step_blender; step_android
+step_node; step_npm; step_lsp; step_spector; step_pylibs; step_playwright; step_media_tools; step_blender; step_android
 step_claude_config
 say "4 Tests"
 step_tests

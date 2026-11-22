@@ -2084,3 +2084,155 @@ Do not spend any paid credits. If installation requires me to approve a permissi
 
 > 🔧 **Bash** `{"command": "sleep 2; curl -s -o /dev/null -w \"screen06 page: HTTP %{http_code}\\n\" \"http://127.0.0.1:3000/play3.html\"; S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && cd $S && timeout 400 node $S/spector_test.mjs $S/spector06 \"http://127.0.0.1:3000/play3.html?sentinel=1&play=1\" 2>&1 | tail -80", "description": "Capture a real WebGL frame of Screen 06 through the Spector MCP server", "timeout": 480000}`
 
+### 🧑 User — 2026-11-22T15:10:04.123Z
+
+> ↩︎ result: screen06 page: HTTP 200
+> TOOLS 13 load_url, load_playground, take_screenshot, list_canvases, select_canvas, capture_frame, get_draw_calls, get_command_details, get_shaders, get_textures, get_webgl_state, get_context_info, get_console_logs
+> --- load_url
+> Error loading URL: browserType.launch: Executable doesn't exist at /root/.cache/ms-playwright/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell
+> ╔════════════════════════════════════════════════════════════╗
+> ║ Looks like Playwright was just installed or updated.       ║
+> ║ Please run the following command to download new browsers: ║
+> ║                                                            ║
+> ║     npx playwright install                                 ║
+> ║                                                            ║
+> ║ <3 Playwright Team                           
+> --- get_context_info
+> No page loaded. Call load_url or load_playground first.
+> --- capture_frame
+> No page loaded. Call load_url or load_playground first.
+> --- get_draw_calls (first lines)
+> No page loaded. Call load_url or load_playground first.
+> --- get_shaders (first lines)
+> No page loaded. Call load_url or load_playground first.
+> --- get_textures (firs …[+271 chars]
+
+### 🤖 Claude — 2026-11-22T15:10:11.330Z
+
+> 🔧 **Bash** `{"command": "claude mcp remove spectorjs -s user 2>&1 | tail -1 && claude mcp add spectorjs -s user -e PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers -- node /root/.local/share/rainbow-tools/Spector.js/mcp/dist/index.js 2>&1 | tail -1; python3 -c \"import json;d=json.load(open('/root/.claude.json'));print(json.dumps(d['mcpServers']['spectorjs']))\"; S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad; sed -i \"s|args: \\['/root/.local/share/rainbow-tools/Spector.js/mcp/dist/index.js'\\] })|args: ['/root/.local/share/rainbow-tools/Spector.js/mcp/dist/index.js'], env:  …[+264 chars]`
+
+### 🧑 User — 2026-11-22T15:10:13.015Z
+
+> ↩︎ result: File modified: /root/.claude.json
+> File modified: /root/.claude.json
+> {"type": "stdio", "command": "node", "args": ["/root/.local/share/rainbow-tools/Spector.js/mcp/dist/index.js"], "env": {"PLAYWRIGHT_BROWSERS_PATH": "/opt/pw-browsers"}}
+> 1
+> [This command modified 1 file you've previously read: ../../../tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/spector_test.mjs. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-22T15:10:15.811Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && cd $S && rm -rf $S/spector06 && timeout 400 node $S/spector_test.mjs $S/spector06 \"http://127.0.0.1:3000/play3.html?sentinel=1&play=1\" 2>&1 | tail -80; ls -la $S/spector06", "description": "Rerun the Spector capture of Screen 06", "timeout": 480000}`
+
+### 🧑 User — 2026-11-22T15:12:11.948Z
+
+> ↩︎ result: TOOLS 13 load_url, load_playground, take_screenshot, list_canvases, select_canvas, capture_frame, get_draw_calls, get_command_details, get_shaders, get_textures, get_webgl_state, get_context_info, get_console_logs
+> --- load_url
+> **Page loaded:** Rainbow 06
+> **URL:** http://127.0.0.1:3000/play3.html?sentinel=1&play=1
+> **Canvases found:** 1
+> 
+> Canvas #0 is selected by default. Use list_canvases to see all canvases and select_canvas to switch.
+> Ready for capture_frame.
+> --- get_context_info
+> **WebGL Context Info**
+> ```json
+> {
+>   "version": 2,
+>   "renderer": "WebKit WebGL",
+>   "vendor": "WebKit",
+>   "shadingLanguageVersion": "WebGL GLSL ES 3.00 (OpenGL ES GLSL ES 3.0 Chromium)",
+>   "maxTextureSize": 8192,
+>   "maxViewportDims": {
+>     "0": 8192,
+>     "1": 8192
+>   },
+>   "extensions": [
+>     "EXT_clip_control",
+>     "EXT_color_buffer_float",
+>     "EXT_color_buffer_half_float",
+>     "EXT_conservative_depth",
+>     "EXT_depth_clamp",
+>     "EXT_float_blend",
+>     "EXT_polygon_offset_clamp",
+>     "EXT_texture_compression_bptc",
+>     "EXT_texture_compression_rgtc",
+>     "EXT_texture_filter_anisotropic",
+>     "EXT_texture_mirror_clamp_to_edge",
+>     "NV_shader_noperspective_interpolation",
+>     "OES_draw_buffers_i
+> --- capture_fr …[+3032 chars]
+
+### 🤖 Claude — 2026-11-22T15:12:19.931Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad; grep -c \"could not be created\" $S/spector06/get_console_logs.txt; grep -v \"GPU stall\" $S/spector06/get_console_logs.txt | cut -c1-220 | sort | uniq -c | sort -rn | head -12; python3 -c \"\nfrom PIL import Image; im=Image.open('$S/spector06/take_screenshot_0.png'); print(im.size)\"; grep -n \"WebGLRenderer(\" /home/user/rainbow-/tools/screenkit/screen.html | head", "description": "Inspect the console errors and the captured screenshot size"}`
+
+### 🧑 User — 2026-11-22T15:12:20.060Z
+
+> ↩︎ result: 2
+>     252 [WARNING] WebGL: INVALID_OPERATION: getTranslatedShaderSource: attempt to use a deleted object
+>       2 ```
+>       2 [ERROR] THREE.WebGLRenderer: A WebGL context could not be created. Reason:  Canvas has an existing context of a different type (http://127.0.0.1:3000/node_modules/three/build/three.module.js)
+>       1 [WARNING] WebGL: too many errors, no more errors will be reported to the console for this context.
+>       1 **Console Logs (259)**
+> (1920, 1080)
+> 36:const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+
+### 🤖 Claude — 2026-11-22T15:12:21.809Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/spector06/take_screenshot_0.png"}`
+
+### 🧑 User — 2026-11-22T15:12:22.043Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T15:12:38.973Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/scripts/claude-bootstrap.sh", "old_string": "py_missing() { python3 -I -c", "new_string": "step_spector() {  # standalone official Spector.js MCP server (BabylonJS/Spector.js mcp/, free, MIT); user order 2026-11-22. The\n  # parallax-threejs plugin's own Spector copy is never built in synced plugins, so this one is registered as \"spectorjs\" (user scope).\n  local t d=$HOME/.local/share/rainbow-tools/Spector.js sha=755e6a7671e58424fcfda1270823a71e91de3553; t=$(now)\n  if [ ! -f \"$d/mcp/dist/index.js\" ] && [ \"$MODE\" != check ]; then\ …[+1436 chars]`
+
+### 🧑 User — 2026-11-22T15:12:39.064Z
+
+> ↩︎ result: The file /home/user/rainbow-/scripts/claude-bootstrap.sh has been updated successfully.
+
+### 🤖 Claude — 2026-11-22T15:12:40.827Z
+
+> 🔧 **Bash** `{"command": "sed -i 's/step_npm; step_lsp; step_pylibs;/step_npm; step_lsp; step_spector; step_pylibs;/' scripts/claude-bootstrap.sh && grep -n \"step_spector\" scripts/claude-bootstrap.sh && bash -n scripts/claude-bootstrap.sh && echo SYNTAX-OK && grep -n '^  local\\|LIVE=\\|^ROOT=\\|ROOT=' scripts/claude-bootstrap.sh | head -5", "description": "Wire the Spector step into the bootstrap and check syntax"}`
+
+### 🧑 User — 2026-11-22T15:12:40.950Z
+
+> ↩︎ result: 267:step_spector() {  # standalone official Spector.js MCP server (BabylonJS/Spector.js mcp/, free, MIT); user order 2026-11-22. The
+> 474:  step_node; step_npm; step_lsp; step_spector; step_pylibs; step_playwright; step_media_tools; step_blender; step_android
+> 508:step_node; step_npm; step_lsp; step_spector; step_pylibs; step_playwright; step_media_tools; step_blender; step_android
+> SYNTAX-OK
+> 47:  local d
+> 55:ROOT="$(find_root)" || { echo "claude-bootstrap: no checkout of $REPO_SLUG found (cd into it or set RAINBOW_ROOT)"; \
+> 58:LIVE="$ROOT/backups/.live"; mkdir -p "$LIVE"
+> 70:  local secs=$(( $(now) - ${5:-$(now)} ))
+> 78:  local id="$1" title="$2" t out last st sm; shift 2; t=$(now)
+> [This command modified 1 file you've previously read: scripts/claude-bootstrap.sh. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-22T15:12:46.501Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,45p scripts/claude-bootstrap.sh | grep -E \"^#\" | head -30", "description": "Read the bootstrap's usage notes"}`
+
+### 🧑 User — 2026-11-22T15:12:46.543Z
+
+> ↩︎ result: #!/usr/bin/env bash
+> # RAINBOW — one-command recovery + environment bootstrap for a new Claude account or cloud session.
+> # Safe to run any number of times: every step checks first and only installs / merges what is missing.
+> #
+> #   bash scripts/claude-bootstrap.sh            full: resume newest work, LFS, refs, agents, Marble, tools, tests,
+> #                                               five-minute autosave, report (backups/BOOTSTRAP_REPORT.md)
+> #   bash scripts/claude-bootstrap.sh --check    report only: no installs, no merges (fetch is still done)
+> #   bash scripts/claude-bootstrap.sh --full     full + browser gameplay test + Screen 05 BEFORE pixel check
+> #                                               + fresh download of every LFS object from GitHub (SHA-256)
+> #   bash scripts/claude-bootstrap.sh --status   last report + autosave verdict (instant)
+> #   options: --no-tools (skip Blender/Android/pip/plugin installs)  --skip-resume (no merge; the DEFAULT since
+> #            2026-11-17)  --resume (merge newer ccr-*/claude/* branches — only with the user's explicit OK)
+> #   internal: --hook (SessionStart hook)  --background (rest of the hook run)  --env-setup (cloud setup script)
+> #
+> # New acco …[+613 chars]
+
+### 🤖 Claude — 2026-11-22T15:12:52.254Z
+
+> 🔧 **Bash** `{"command": "mv /root/.local/share/rainbow-tools/Spector.js /root/.local/share/rainbow-tools/Spector.js.bak && claude mcp remove spectorjs -s user >/dev/null 2>&1; claude mcp get spectorjs >/dev/null 2>&1 && echo still-registered || echo \"simulated fresh container: no Spector install, not registered\"; time timeout 1500 bash scripts/claude-bootstrap.sh --skip-resume > /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/bootstrap_run.log 2>&1; echo \"exit $?\"; grep -E \"Spector|Language servers|FAIL\" backups/BOOTSTRAP_REPORT.md | head -8", "description": "Test t …[+78 chars]`
+
