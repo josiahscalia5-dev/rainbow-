@@ -2740,3 +2740,419 @@ Your branch, approved artwork and gameplay were not changed.
 
 When you're ready, tell me whether to resume Screen 06, starting with Benny's lean through the crest. And do you want the secure form to enter your old World Labs key so I can reach your 2026-11-16 Marble worlds?
 
+### 🧑 User — 2026-11-22T15:29:28.195Z
+
+Claudia, I've attached new visual previews showing how I want my Rainbow game levels to connect.
+
+These are transition concepts only. My 11 original approved screens remain the official visual blueprints. Do not replace or redesign them.
+
+Use the previews to improve the physical connections between the approved areas.
+
+My gameplay route is:
+
+04 → Bubble Dash Chamber → Sock Rescue Tunnel → 05 → 06 → 07 → 08 → 09 → 10.
+
+Benny must naturally swim forward through one connected 3D washing-machine world.
+
+Make sure each area's exit physically connects with the next area's entrance. The water must flow continuously, with consistent tunnel dimensions, lighting, colors, scenery and Benny proportions.
+
+Pay particular attention to the 04 → Bubble Dash → Sock Rescue → 05 sequence and the 07 → 08 transition.
+
+Do not create repeated tunnel entrances, disconnected water, sudden camera jumps or teleporting between scenes.
+
+Preserve Benny's natural swimming, touch controls, collectibles and water interaction.
+
+Screens 01–03 and 11 remain Google Flow videos.
+
+Please use my original approved artwork for visual accuracy and these new previews only to guide the connections. I want everything to look like one beautiful, continuous, real 3D mobile game. AES for the World App keys, the secure form.
+
+### 🤖 Claude — 2026-11-22T15:29:44.252Z
+
+> 🔧 **Bash** `{"command": "mkdir -p docs/briefs/2026-11-22-r44 && cp /root/.claude/uploads/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/a8218a13-image.png docs/briefs/2026-11-22-r44/USER_LEVEL_FLOW_PREVIEW_R44.png && python3 -c \"from PIL import Image; im=Image.open('docs/briefs/2026-11-22-r44/USER_LEVEL_FLOW_PREVIEW_R44.png'); print(im.size)\"; sha256sum docs/briefs/2026-11-22-r44/USER_LEVEL_FLOW_PREVIEW_R44.png | cut -c1-16; ls docs/briefs/ | tail -5", "description": "Save the user's level flow preview into a new round-44 brief folder"}`
+
+### 🧑 User — 2026-11-22T15:30:55.716Z
+
+> ↩︎ result: (1672, 941)
+> 9b26f91726fc293b
+> 2026-11-21-r38
+> 2026-11-22-r40
+> 2026-11-22-r42
+> 2026-11-22-r43
+> 2026-11-22-r44
+
+### 🤖 Claude — 2026-11-22T15:31:07.147Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-22-r44/USER_R44.md", "content": "# Round 44 — the user's orders (verbatim, 2026-11-22 ~15:30 UTC)\n\nAttached: `USER_LEVEL_FLOW_PREVIEW_R44.png` (\"RAINBOW Level Flow Preview – Continuous Journey\", 1672 × 941) — **transition concepts only**.\n\n> Claudia, I've attached new visual previews showing how I want my Rainbow game levels to connect.\n>\n> These are transition concepts only. My 11 original approved screens remain the official visual blueprints. Do not replace or redesign them.\n>\n> Use the previews to improve the physical connect …[+2903 chars]`
+
+### 🧑 User — 2026-11-22T15:31:07.230Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-22-r44/USER_R44.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-22T15:31:13.150Z
+
+> 🔧 **mcp__claude-code-remote__request_credential** `{"host": "api.worldlabs.ai", "header_name": "WLT-Api-Key", "display_name": "World Labs Marble API key (old account, 2026-11-16 worlds)", "suggested_type": "bearer", "reason": "The two Marble worlds made on 2026-11-16 return 404 with the current key; the old account's key is needed for free reads of those worlds. No paid jobs."}`
+
+### 🧑 User — 2026-11-22T15:32:32.091Z
+
+> ↩︎ result: {"status":"saved","host":"api.worldlabs.ai","applies_to":"environment","note":"A credential for this host is saved on this session's environment. Every session in that environment uses it, including other people's sessions when the environment is shared. The session's network proxy injects it into HTTPS requests to this host — you never see or send the value yourself. Saving it also allows HTTPS requests to this host from those sessions, so do not add the host to the environment's allowed hosts. No environment variable holds the credential, so code that reads a key from a variable finds none and may skip its work. To run such code, set that variable to a placeholder for that command, never a real value: `proxy-injected`, or a dummy in the format the code expects if it checks one. This works where the code sends the key in a header, which the proxy overwrites; a cookie the code sends instead replaces the saved cookie of that name. Tell the user this when their own scripts expect such a variable. Retry the failing request now, as-is (do not add the credential's header yourself): the proxy usually picks the credential up within a couple of seconds. Only a refusal, with the same 401/40 …[+446 chars]
+
+### 🤖 Claude — 2026-11-22T15:32:34.002Z
+
+> 🔧 **Bash** `{"command": "python3 -I scripts/verify-assets.py worldlabs 2>&1 | tail -6", "description": "Re-check the Marble key and the old worlds with free reads", "timeout": 120000}`
+
+### 🧑 User — 2026-11-22T15:32:35.079Z
+
+> ↩︎ result: @@ warn Marble API key authenticated (free read: 2030 credits); worlds draft 404, full 404; no paid job started
+
+### 🤖 Claude — 2026-11-22T15:32:40.139Z
+
+> 🔧 **Bash** `{"command": "sleep 75; cd /home/user/rainbow- && python3 -I scripts/verify-assets.py worldlabs 2>&1 | tail -3", "description": "Re-check the Marble key after the proxy pickup delay", "timeout": 240000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-22T15:32:40.176Z
+
+> ↩︎ result: Command running in background with ID: bi6fzhijw. Output is being written to: /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/tasks/bi6fzhijw.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-22T15:32:41.040Z
+
+> 🔧 **Bash** `{"command": "ls src src/* | head -60; wc -l src/*.ts src/**/*.ts 2>/dev/null | sort -n | tail -25", "description": "Survey the main game's source layout"}`
+
+### 🧑 User — 2026-11-22T15:32:41.089Z
+
+> ↩︎ result: src/main.ts
+> 
+> src:
+> characters
+> game
+> gameplay
+> main.ts
+> render
+> ui
+> vfx
+> world
+> 
+> src/characters:
+> benny
+> girl
+> types.ts
+> 
+> src/game:
+> Game.ts
+> bonusRoute.ts
+> cameraRig.ts
+> match.ts
+> modules.ts
+> 
+> src/gameplay:
+> coins.ts
+> input.ts
+> 
+> src/render:
+> env.ts
+> grade.ts
+> 
+> src/ui:
+> cinematicVideo.ts
+> hud.ts
+> 
+> src/vfx:
+> bubbles.ts
+> drumWater.ts
+> finalWave.ts
+> flow05.ts
+> foam.ts
+> glsl.ts
+> index.ts
+> proj05Apron.ts
+> proj05Tunnel.ts
+> puddles.ts
+> riderSplash.ts
+> spray.ts
+> waterRibbon.ts
+> whirlpool.ts
+> 
+> src/world:
+> course.ts
+> environment.ts
+> far05.ts
+> laundryRoom.ts
+> match08.ts
+> materials.ts
+> paint.ts
+>    161 src/ui/cinematicVideo.ts
+>    168 src/vfx/glsl.ts
+>    183 src/vfx/finalWave.ts
+>    190 src/world/laundryRoom.ts
+>    198 src/game/cameraRig.ts
+>    199 src/vfx/whirlpool.ts
+>    230 src/world/match08.ts
+>    232 src/vfx/flow05.ts
+>    239 src/vfx/drumWater.ts
+>    243 src/gameplay/coins.ts
+>    263 src/world/paint06.ts
+>    285 src/vfx/index.ts
+>    315 src/vfx/proj05Tunnel.ts
+>    321 src/world/far05.ts
+>    463 src/vfx/riderSplash.ts
+>    472 src/vfx/bubbles.ts
+>    508 src/world/paint.ts
+>    674 src/world/course.ts
+>    806 src/world/tube.ts
+>    892 src/game/Game.ts
+>   1019 src/world/environment.ts
+>   1120 src/vfx/foam.ts
+>   1199 src/world/materials.ts
+>   1780 src/vfx/waterRibbon …[+16 chars]
+
+### 🤖 Claude — 2026-11-22T15:32:44.930Z
+
+> 🔧 **TaskCreate** `{"subject": "Round 44: one connected world (04 → A → B → 05 → 06 → 07 → 08 → 09 → 10)", "description": "Audit every join (exit vs entrance: water, tunnel size, light/colour, Benny scale, camera), then remove page loads/teleports, priority 04→A→B→05 and 07→08. Preview = connection guide only.", "activeForm": "Connecting the areas into one world"}`
+
+### 🧑 User — 2026-11-22T15:32:44.944Z
+
+> ↩︎ result: Task #8 created successfully: Round 44: one connected world (04 → A → B → 05 → 06 → 07 → 08 → 09 → 10)
+
+### 🤖 Claude — 2026-11-22T15:32:45.327Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/src/game/bonusRoute.ts"}`
+
+### 🧑 User — 2026-11-22T15:32:45.344Z
+
+> ↩︎ result: 1	// Round 40: the reference-locked Bubble Dash -> Sock Rescue section (public/section/, built by tools/reflock/build_section_app.sh)
+> 2	// as part of the Rainbow route between Screen 04 and Screen 05. OFF by default (the current game is unchanged); ON in a build made with
+> 3	// VITE_RAINBOW_BONUS=1 (the Android test build) or with ?bonus=1. Benny swims from 04 into the section (coins carried over) and from the
+> 4	// section's exit back into the game at the Screen 05 checkpoint (?resume=05).
+> 5	const q = new URLSearchParams(typeof location !== 'undefined' ? location.search : '');
+> 6	const env = (import.meta as unknown as { env?: Record<string, string | undefined> }).env ?? {};
+> 7	export const BONUS_ROUTE = {
+> 8	  enabled: env.VITE_RAINBOW_BONUS === '1' || q.get('bonus') === '1',
+> 9	  resume: q.get('resume'),
+> 10	  resumeCoins: Number(q.get('coins')),
+> 11	  go(coins: number) { location.href = `section/index.html?return=1&bonus=1&coins=${Math.round(coins)}`; },
+> 12	};
+> 13	
+> 14	// Round 43: the screen-kit rebuild of Screen 06 (public/screen06/, tools/screenkit) as a TEST route: at the end of 05 Benny swims into the
+> 15	// rebuilt 06 and comes back into the game at the Screen 07 checkpoint with his  …[+469 chars]
+
+### 🤖 Claude — 2026-11-22T15:32:46.385Z
+
+> 🔧 **Bash** `{"command": "grep -n -iE \"kit06|bonus|resume|location\\.href|section/|screen06\" src/game/Game.ts src/main.ts src/world/course.ts | head -40", "description": "Find how the app hands over to the separate section pages"}`
+
+### 🧑 User — 2026-11-22T15:32:46.429Z
+
+> ↩︎ result: src/game/Game.ts:6: *                   5 hearts (bumping the foam walls costs one), pause/resume.
+> src/game/Game.ts:31:import { BONUS_ROUTE, KIT_ROUTE } from './bonusRoute';
+> src/game/Game.ts:389:  let bonusLeft = false;
+> src/game/Game.ts:399:    if (BONUS_ROUTE.enabled && !BONUS_ROUTE.resume && !bonusLeft && sPrev < s05h && st.s >= s05h) { bonusLeft = true; st.paused = true; BONUS_ROUTE.go(st.coins); }
+> src/game/Game.ts:402:    if (KIT_ROUTE.s06 && BONUS_ROUTE.resume !== '07' && !bonusLeft && sPrev < s06h && st.s >= s06h) { bonusLeft = true; st.paused = true; KIT_ROUTE.go06(st.coins); }
+> src/game/Game.ts:600:  if (!((BONUS_ROUTE.enabled || KIT_ROUTE.s06) && BONUS_ROUTE.resume)) playIntroVideo();
+> src/game/Game.ts:888:  if ((BONUS_ROUTE.enabled && BONUS_ROUTE.resume === '05') || (KIT_ROUTE.s06 && BONUS_ROUTE.resume === '07')) {   // back from a section: continue at its next checkpoint with the coins collected
+> src/game/Game.ts:889:    gotoCheckpoint(BONUS_ROUTE.resume!); if (Number.isFinite(BONUS_ROUTE.resumeCoins)) { st.coins = BONUS_ROUTE.resumeCoins; hud.setCoins(st.coins); } running = true; last = performance.now();
+
+### 🤖 Claude — 2026-11-22T15:33:01.293Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,80p src/world/course.ts", "description": "Read how the main game's course and stages are laid out"}`
+
+### 🧑 User — 2026-11-22T15:33:01.323Z
+
+> ↩︎ result: /**
+>  * RAINBOW master course — ONE continuous route through the washer world.
+>  *
+>  * Units: 1 unit ≈ 5 cm at Benny's scale (Benny body radius ≈ 0.8). +Y is up (absolute altitude).
+>  * The route starts inside Drum A (scene 01/02), drains through a chute into the whirlpool basin (03),
+>  * drops down the five-arrow slide (04), winds through the perforated current tube (05), crests the
+>  * rinse arch (06), winds through the washer tube and then PLUNGES ~62 units straight down (07) before
+>  * the bottom of that same tube flares into the Final Spin Chamber inlet (08). 08–10 stay in that same
+>  * chamber; the route ends under the purple towel on the platform, where the 11 cinematic plays.
+>  *
+>  * Every stage is a range of arc-length `s` on a single centripetal Catmull-Rom spline, so position
+>  * and tangent are continuous by construction; `validateContinuity()` measures it anyway.
+>  */
+> import * as THREE from 'three';
+> import { flag05 } from '../vfx/waterRibbon';
+> import river08 from '../../assets/textures/match08/river08.json';
+> /** `?tun05=1` (round 31): see the 06 arch below. Guarded read (no location in vite-node / workers -> false). */
+> const TUN05_COURSE: boolean = (() => { try { return typeof loc …[+2424 chars]
+
+### 🤖 Claude — 2026-11-22T15:33:02.198Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,60p docs/briefs/2026-11-22-r42/REFERENCE_INVENTORY.md; ls tools/reflock/ | head -40", "description": "Read the 13-image inventory and the section toolkit files"}`
+
+### 🧑 User — 2026-11-22T15:33:02.243Z
+
+> ↩︎ result: # Rainbow reference inventory (round 42, 2026-11-22) - the 11 approved screens + the 2 new scene designs
+> 
+> Authority: the user's approved artwork. The 11 approved screens in `references/` are byte-identical to the original kit ZIP of 2026-11-15
+> (`backups/source-package/Rainbow_11_Screen_Claude_Code_Kit.zip`) and pass `sha256sum -c scripts/reference.sha256`. They are JPEG data with
+> `.png` names (never re-saved / renamed). The 2 new designs are byte-identical to the pictures the user attached in this session.
+> NOT RECEIVED: the user's new ZIP (`Approved/Rainbow_APPROVED_Screen_NN_*.jpg`, `New_candidates/A_Bubble_Dash_Chamber.webp`, `B_Sock_Rescue_Tunnel.webp`) did not
+> reach this session; its files must still be compared byte-by-byte / pixel-by-pixel with the list below before anything is replaced (nothing replaced).
+> 
+> | order | screen | role | file in the repo (authoritative) | user's ZIP name | size | sha256 (16) |
+> |---|---|---|---|---|---|---|
+> | 1 | 01 Inside Washer, Girl and Towel | Flow video | `references/01_inside_washer_girl_and_towel.png` | `Rainbow_APPROVED_Screen_01_inside_washer_girl_and_towel.jpg` | 864x1536 | `99509fb6f6528a7e` |
+> | 2 | 02 Mascot Tumbles in Whirlpool | Flow  …[+2811 chars]
+
+### 🤖 Claude — 2026-11-22T15:33:03.534Z
+
+> 🔧 **Bash** `{"command": "sed -n 80,260p src/world/course.ts", "description": "Read the course control points and stage ranges"}`
+
+### 🧑 User — 2026-11-22T15:33:03.569Z
+
+> ↩︎ result: return b.drainY + (b.rimY - b.drainY) * Math.pow(t, 0.72);
+> }
+> 
+> const V = (x: number, y: number, z: number) => new THREE.Vector3(x, y, z);
+> const smooth = (a: number, b: number, x: number) => {
+>   const t = THREE.MathUtils.clamp((x - a) / (b - a), 0, 1);
+>   return t * t * (3 - 2 * t);
+> };
+> 
+> /**
+>  * A stretch whose tunnel axis is an exact straight line a→b (the stream winds inside it). The
+>  * course lies on the line at both ends of the stretch; tube.ts aligns the tunnel axis to it.
+>  */
+> export interface StraightAxis {
+>   /** arc-length range of the stretch on the course */
+>   s0: number;
+>   s1: number;
+>   a: THREE.Vector3;
+>   b: THREE.Vector3;
+>   /** stream-to-tunnel-bottom depth on the line (water sits this high in the tube) */
+>   floorDepth: number;
+> }
+> 
+> interface RouteData {
+>   points: THREE.Vector3[];
+>   marks: Record<string, number>;
+>   straight: { from: string; to: string; a: THREE.Vector3; b: THREE.Vector3; floorDepth: number }[];
+> }
+> 
+> /**
+>  * 05 current (ref 05): the tunnel is a straight line; the STREAM winds inside it. The meander is the
+>  * lateral (world +X) offset of the course centreline from that line, as a function of the distance
+>  * `u` along the line (0 … L05). It is applied to the route A …[+8138 chars]
+
+### 🤖 Claude — 2026-11-22T15:33:17.621Z
+
+> 🔧 **Bash** `{"command": "cat qa/reflock/r43/REUSE_MATRIX_04_10.md | head -80", "description": "Read the screen-by-screen reuse analysis for 04–10"}`
+
+### 🧑 User — 2026-11-22T15:33:17.647Z
+
+> ↩︎ result: # Screens 04–10: what the screen kit reuses and what each screen needs of its own (round 43, 2026-11-22)
+> 
+> Source: the user's approved pictures in `references/` (read-only), `analyze_reference.py` on each (`analysis_04_10/NN_analysis.json`,
+> `NN_overlay.jpg`), contact sheet in the round-43 report. Order of play (user, round 42): 04 → Bubble Dash → Sock Rescue → 05 → 06 → 07 → 08 → 09 → 10.
+> 01, 02, 03 and 11 are the user's Google Flow videos and are never rebuilt.
+> 
+> ## Kit components (tools/screenkit/blender_kit.py, Geometry Nodes) and where each picture uses them
+> | component | 04 | 05 | 06 | 07 | 08 | 09 | 10 |
+> |---|---|---|---|---|---|---|---|
+> | washer drum / tube (RB_Sweep_Tube, radius profile, segments) | warm-gold ring pipe | straight perforated tube | **built** (off-centre drum, 2.79 u) | tube with broad S-bends (bent axis) | chamber (wide, short) + far tube | room wall + porthole surround | room wall + porthole |
+> | gold rings (RB_Sweep_Band) | many warm-gold rings with bulbs | rings | **built** (broad bands) | rings with bulbs | one huge arch ring | porthole ring | porthole ring |
+> | river channel (RB_Sweep_Ribbon + Flume, banked) | slide into the pipe + **five arrows** | S-river …[+3652 chars]
+
+### 🤖 Claude — 2026-11-22T15:33:18.329Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,80p tools/reflock/README.md", "description": "Read how the Bubble Dash / Sock Rescue section is built"}`
+
+### 🧑 User — 2026-11-22T15:33:18.359Z
+
+> ↩︎ result: # Reference-Locked 3D Scene Builder (round 40)
+> 
+> Real, connected 3D scenery built to match the user's approved pictures, played with the shared Benny + swipe controls, measured against the
+> pictures and tested IN MOTION. No forced perspective, no camera-relative depth curve, no live projection, no camera-facing scenery planes,
+> no screen overlays. Free tools only (Blender 5.3, three.js 0.180, OpenCV); no generation credits.
+> 
+> ## Section 1: Bubble Dash Chamber -> golden arch -> Sock Rescue tunnel -> exit (`section.html`)
+> Pictures (read-only): `references/candidates/bonus_bubble_dash_chamber.webp`, `references/candidates/bonus_sock_rescue_laundry_tunnel.webp`.
+> 
+> | step | file | what it does |
+> |---|---|---|
+> | fit | `tools/bonus/fit_sock.py` + `fit_section.py` | camera of EACH picture fitted into ONE world (vanishing point, arch circle, water line, Benny; round-39 ring fit), scaled so the painted Benny has the same height in both; route = the painted river / coin trails; masks of what the game draws itself |
+> | geometry | `blender_section.py` (Blender headless) | 97 connected meshes with clean UVs -> `section.glb`: tunnel (arch sleeve, funnel, 2.5 u segments), gold rings, arch, bulkhead, sid …[+2942 chars]
+
+### 🤖 Claude — 2026-11-22T15:33:57.577Z
+
+> 🔧 **Bash** `{"command": "wc -l tools/reflock/section.html tools/screenkit/screen.html tools/kit05/controls.js tools/kit05/swimfx.js 2>/dev/null; ls public/section | head -30; du -sh public/section public/screen06; grep -o '\"three\": *\"[^\"]*\"' package.json; ls public/section/node_modules 2>/dev/null | head; grep -n \"importmap\" -A4 tools/reflock/section.html | head -8", "description": "Size up the section and kit pages and their assets"}`
+
+### 🧑 User — 2026-11-22T15:33:57.646Z
+
+> ↩︎ result: 484 tools/reflock/section.html
+>    467 tools/screenkit/screen.html
+>    538 tools/kit05/controls.js
+>    194 tools/kit05/swimfx.js
+>   1683 total
+> bake.png
+> baked
+> benny31.glb
+> bubble.png
+> coin.png
+> controls.js
+> glint.png
+> index.html
+> section.glb
+> section.json
+> splash.png
+> swimfx.js
+> vendor
+> 32M	public/section
+> 30M	public/screen06
+> "three": "^0.170.0"
+> 18:<script type="importmap">{"imports":{"three":"./node_modules/three/build/three.module.js","three/addons/":"./node_modules/three/examples/jsm/"}}</script>
+> 19-</head><body>
+> 20-<div id="hud"><div class="bar"><span class="pill">&#10084;&#65039; 5/5 <span class="plus">+</span></span><span class="pill"><span id="coins">&#129689; 1,420</span> <span class="plus">+</span></span><span class="pill">&#128142; <span id="gems">36</span> <span class="plus">+</span></span></div>
+> 21-<div class="title" id="title">BUBBLE DASH CHAMBER</div><div id="mission">&#129510; Rescue <b>5</b> lost socks &nbsp;<span id="slots"></span></div></div>
+> 22-<div id="badge" style="display:none">Bubble Dash<br>Chamber</div><button id="pause" data-noswipe aria-label="pause">&#10074;&#10074;</button>
+
+### 🤖 Claude — 2026-11-22T15:34:03.662Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/tasks/bi6fzhijw.output", "description": "Read the second Marble key check result"}`
+
+### 🧑 User — 2026-11-22T15:34:03.695Z
+
+> ↩︎ result: @@ warn Marble API key authenticated (free read: 2030 credits); worlds draft 404, full 404; no paid job started
+> 
+> [exited with code 0]
+
+### 🤖 Claude — 2026-11-22T15:34:12.036Z
+
+> 🔧 **Bash** `{"command": "grep -n -E \"https://|/v1|def get|endpoint|worlds\" scripts/verify-assets.py | head -15; grep -n -E \"https://|/v1/|/worlds\" tools/worldlabs/marble_pilot.py 2>/dev/null | head -10", "description": "Find the Marble API endpoints the project already uses"}`
+
+### 🧑 User — 2026-11-22T15:34:12.069Z
+
+> ↩︎ result: 6:    python3 -I scripts/verify-assets.py marble                     both Marble worlds' files present, real, checksummed
+> 42:    if len(data) > 1024 or not data.startswith(b"version https://git-lfs.github.com/spec/v1"):
+> 59:def lfs_endpoint() -> str:
+> 64:    return f"https://github.com/{m.group(1)}/{m.group(2)}.git/info/lfs/objects/batch"
+> 76:        req = urllib.request.Request(lfs_endpoint(), data=body, method="POST", headers={
+> 126:    for w in man["worlds"]:
+> 156:    return done("ok", f"both worlds complete: {checked} files checked, {lfs_real} real LFS binaries (splats/PLY/colliders/.blend), "
+> 187:    """Free, read-only Marble World API checks (no credits): balance + both pilot worlds. The key is injected by
+> 190:    api = "https://api.worldlabs.ai/marble/v1"
+> 193:    def get(path: str):
+> 209:    worlds = []
+> 210:    for w in man["worlds"]:
+> 211:        c, _ = get(f"/worlds/{w['world_id']}")
+> 212:        worlds.append(f"{w['label']} {c}")
+> 213:    bad = [x for x in worlds if not x.endswith(" 200")]
+> 12:API = "https://api.worldlabs.ai/marble/v1"
+> 72:        s, d = call("POST", "/worlds:generate", body)
+> 89:        s, d = call("GET", f"/worlds/{sys.argv[2]}")
+> 94:        s, d = call("POST", f"/w …[+20 chars]
+
+### 🤖 Claude — 2026-11-22T15:34:20.544Z
+
+> 🔧 **Bash** `{"command": "for m in \"GET /worlds?page_size=20\" ; do curl -s -o /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/wl_list1.json -w \"GET /worlds -> HTTP %{http_code}\\n\" \"https://api.worldlabs.ai/marble/v1/worlds?page_size=20\"; done; curl -s -o /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/wl_list2.json -w \"POST /worlds:list -> HTTP %{http_code}\\n\" -X POST -H \"Content-Type: application/json\" --data '{\"page_size\":20}' \"https://api.worldlabs.ai/marble/v1/worlds:list\"; for f in wl_list1 wl_list2; do python3 -I - \" …[+734 chars]`
+
+### 🧑 User — 2026-11-22T15:34:21.518Z
+
+> ↩︎ result: GET /worlds -> HTTP 404
+> POST /worlds:list -> HTTP 200
+> wl_list1.json keys ['detail'] worlds 0
+> wl_list2.json keys ['worlds', 'next_page_token'] worlds 4
+>   3657fa05-d90a-4ad9-acdb-70f0145d5796 | rainbow-05-r32-plus | 2026-11-21T10:16:52Z | marble-1.1-plus
+>   8bb4cf11-9615-4879-8f2f-8a1cb6002ff7 | rainbow-05-r32-full | 2026-11-21T04:01:29Z | marble-1.1
+>   f3226155-5633-4e41-bbd5-f58a3f584c26 | rainbow-05-r32-draft | 2026-11-21T03:41:41Z | marble-1.0-draft
+>   32b5b2f4-32bc-4fa5-80a5-861129a528c8 | rainbow-08-final-spin-chamber | 2026-11-17T12:54:13Z | marble-1.1
+
