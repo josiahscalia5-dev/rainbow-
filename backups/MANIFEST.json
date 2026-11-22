@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3153,
-   "sha256": "3b26ea6156b0e3b4a41aeeb0a6dd56a26d6f525df3366a221a3666681a1fc5fe"
+   "sha256": "54cba0947419b7d44b2f03ab5ef3be20fc553453275c6fd2ef9f973e0cebabc7"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -41800,6 +41800,16 @@
    "path": "tools/qa/water05_grain.py",
    "bytes": 3836,
    "sha256": "bcc428708b8f8f556e2c25844bc995d0732ad8ac3c5f8d269a021449b44dd6e4"
+  },
+  {
+   "path": "tools/reflock/bake_phys.py",
+   "bytes": 12907,
+   "sha256": "d57aac4d54bbfbee303cd892588bec9b207694add7432e82d70064275a71aa85"
+  },
+  {
+   "path": "tools/reflock/screens/05.json",
+   "bytes": 2249,
+   "sha256": "f8462712b321ae41d961b2016286637a787956de29e5322b6d478d11b336e732"
   },
   {
    "path": "tools/water-lab.html",

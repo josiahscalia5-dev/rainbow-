@@ -1,0 +1,135 @@
+{
+ "screen": "05",
+ "title": "05 \u00b7 FLOW INTO THE CURRENT",
+ "reference": "references/05_flow_into_the_current.png",
+ "clean_plate": "qa/worldlabs/05/r32/input_05_clean.png",
+ "clean_plate_note": "round-32 clean plate (Benny / coins / HUD removed, pixel-aligned; already paid for in round 32, no new credits)",
+ "hud_cover_rows": 205,
+ "camera_model": {
+  "module_dir": "tools/kit05",
+  "note": "kit_model.py: approved camera (fov 64, scene05.json), VP (500,474), painted ring 2 radius 246 px, axis 0.12 R left / 0.02 R below, camera 0.734 above the water"
+ },
+ "kind": "ring_tunnel",
+ "tunnel": {
+  "ring_in": 0.9,
+  "ring_w": 0.1,
+  "spacing": 2.091946478953816,
+  "ring0_t": 0.8122733766595509,
+  "n_rings": 14,
+  "theta_deg": [
+   -50,
+   230
+  ],
+  "entry_ring": 0,
+  "exit_ring": 13,
+  "approach": {
+   "t0": -9.0,
+   "radius": 2.2
+  },
+  "exit_room": {
+   "radius": 7.0,
+   "depth": 7.5
+  }
+ },
+ "tile_sections": [
+  0,
+  1,
+  2
+ ],
+ "ring_tile_rings": [
+  1,
+  2,
+  3
+ ],
+ "own": {
+  "wall_sections": [
+   0,
+   1,
+   2,
+   3
+  ],
+  "wall_rows": [
+   512,
+   512,
+   256,
+   192
+  ],
+  "rings": [
+   0,
+   1,
+   2,
+   3
+  ],
+  "ring_rows": [
+   160,
+   160,
+   96,
+   64
+  ],
+  "blend_t": [
+   6.8,
+   9.0
+  ],
+  "note": "world-fixed: own pixels up to t 6.8, shared section tile from t 9.0 (never camera-dependent)"
+ },
+ "paddles": {
+  "k0": 1,
+  "t_off": 0.44,
+  "length": 0.5,
+  "theta_rad": [
+   2.96,
+   0.27
+  ],
+  "half_width_rad": 0.24,
+  "r_inner": 0.84,
+  "own_sections": [
+   1,
+   2
+  ],
+  "by_section": {
+   "1": {
+    "t_off": 0.185,
+    "theta_rad": [
+     2.79,
+     0.05
+    ]
+   },
+   "2": {
+    "t_off": 0.44,
+    "theta_rad": [
+     2.96,
+     0.27
+    ]
+   }
+  },
+  "fit_note": "painted lifter centres cast onto the physical tunnel wall (r 0.93): big pair t 3.54 (theta 160 / 3 deg), medium pair t 6.16 (169 / 16 deg); later sections repeat the medium placement"
+ },
+ "river_own": {
+  "t0": 0.25,
+  "t1": 9.0,
+  "blend_t": [
+   3.2,
+   6.5
+  ]
+ },
+ "benny_start_px": [
+  432,
+  1180
+ ],
+ "compare": {
+  "mask": "screen:05",
+  "phone": [
+   412,
+   915
+  ]
+ },
+ "acceptance": {
+  "start_share_within_20_target": [
+   0.9,
+   0.95
+  ],
+  "holes_px_max": 0,
+  "benny_offscreen_frames_max": 0,
+  "static_world": true
+ }
+}
