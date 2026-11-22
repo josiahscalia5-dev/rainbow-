@@ -419,10 +419,10 @@ export function buildEnvironment(course: Course): Environment {
     for (let k = 0; k < 96; k++) { const a = (k / 96) * Math.PI * 2; p.copy(c).addScaledVector(f.right, Math.cos(a) * R).addScaledVector(f.up, Math.sin(a) * R);
       let bi = 0, bd = Infinity; for (let i = 0; i < routeP.length; i++) { const q = routeP[i].pos.distanceToSquared(p); if (q < bd) { bd = q; bi = i; } }
       const w = routeP[bi], hw = course.widthAt(routeS[bi]) / 2 + 1.2;   // + the camera's lane follow
-      d.copy(p).sub(w.pos); const x = d.dot(w.right), h = d.dot(w.up); if (Math.abs(x) < hw && h > -0.4 && h < 6.0) return false; }   // up to above the follow camera
+      d.copy(p).sub(w.pos); const x = d.dot(w.right), h = d.dot(w.up); if (Math.abs(x) < hw + 2.0 && h > -2.5 && h < 9.0) return false; }   // r42: wider — the whole view corridor over the river (no flat gold bars on the descent)
     return true; };
   const rings0607clear = rings0607.filter(ringClear);
-  (globalThis as unknown as { __rings0607?: unknown }).__rings0607 = { placed: rings0607clear.length, removed: rings0607.filter((x) => !rings0607clear.includes(x)).map((x) => +x.toFixed(1)) };
+  (globalThis as unknown as { __rings0607?: unknown }).__rings0607 = { placed: rings0607clear.length, placedAt: rings0607clear.map((x) => +x.toFixed(1)), removed: rings0607.filter((x) => !rings0607clear.includes(x)).map((x) => +x.toFixed(1)) };
   zones.tubes.add(buildRingsAt(perfPath, rings0607clear, ringMat, { inset: 0.02, collar }));
   // copper nozzle lids: one symmetric pair per bay on the side walls a little above eye level,
   // skipped where the stream climbs the wall (06 arch) so a lid never blocks the ride
