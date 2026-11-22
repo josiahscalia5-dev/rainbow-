@@ -424,6 +424,11 @@ window.step = (t, dt, steer, speed) => {
   const inT = camera.position.z < T.z_arch - 0.3; titleEl.style.display = inT ? 'none' : ''; badgeEl.style.display = inT ? 'none' : ''; missionEl.style.display = inT ? 'block' : 'none';
   return { s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: coinCount, socks: socksGot, z: +benny.position.z.toFixed(3), ...CT.state() };
 };
+// QA diagnostics (round 41): ?dbg=nowater hides every water surface, ?dbg=nosplash hides the splash sprite and all swim effects around Benny
+{ const dbg = q.get('dbg') ?? '';
+  if (dbg.includes('nowater')) for (const m of WSEG) m.visible = false;
+  if (dbg.includes('nosplash')) { const keep = new Set(coins.map((c) => c.sp)); scene.traverse((o) => { if ((o.isSprite || (o.renderOrder >= 5 && o.renderOrder <= 7 && o !== benny && !o.name.startsWith('coin3d') && o.name !== 'bubbles')) && !keep.has(o)) o.userData.dbgHide = true; });
+    const hideFx = () => scene.traverse((o) => { if (o.userData.dbgHide) o.visible = false; }); hideFx(); const s0 = window.step; window.step = (...a) => { const r = s0(...a); hideFx(); return r; }; } }
 window.renderNow = async (n = 1) => { for (let i = 0; i < n; i++) renderer.render(scene, camera); return true; };
 window.camInfo = () => ({ p: camera.position.toArray().map((x) => +x.toFixed(4)), q: camera.quaternion.toArray().map((x) => +x.toFixed(5)), fov: camera.fov });
 window.bennyInfo = () => { const p = benny.position.clone().project(camera); return { x: +((p.x + 1) / 2 * W).toFixed(1), y: +((1 - p.y) / 2 * H).toFixed(1) }; };

@@ -44,9 +44,18 @@ const { PNG } = (() => { try { return require('pngjs'); } catch (e) { return {};
       const plan = a2 ? JSON.parse(a2) : [[1.0, 'left'], [2.2, 'right'], [3.4, 'right'], [4.8, 'left'], [6.2, 'left'], [7.4, 'right'], [8.6, 'right'], [9.9, 'left'], [11.2, 'left'],
         [12.4, 'right'], [13.8, 'right'], [15.0, 'left'], [16.4, 'left'], [17.6, 'right'], [18.8, 'right'], [20.0, 'left'], [21.2, 'up'], [22.4, 'left']];
       const every = +(process.env.RENDER_EVERY || 1), log = []; let pi = 0;
+      // TOUCH=1: real finger gestures (CDP touchStart -> 4 touchMove -> touchEnd over 5 frames, 30 % of the screen width), not the API
+      const TOUCH = process.env.TOUCH === '1', cdp = TOUCH ? await ctx.newCDPSession(page) : null, gestures = [];
+      if (TOUCH) for (const [t0, dir] of plan) { const f0 = Math.round(t0 * fps), y = 0.62 * H;
+        if (dir === 'left' || dir === 'right') { const sx = dir === 'left' ? 0.65 * W : 0.35 * W, ex = dir === 'left' ? 0.35 * W : 0.65 * W;
+          gestures.push([f0, 'touchStart', sx, y]); for (let k = 1; k <= 4; k++) gestures.push([f0 + k, 'touchMove', sx + (ex - sx) * k / 4, y + 3 * k]); gestures.push([f0 + 5, 'touchEnd', ex, y + 15]); }
+        else { const sy = dir === 'up' ? 0.7 * H : 0.5 * H, ey = dir === 'up' ? 0.5 * H : 0.7 * H;
+          gestures.push([f0, 'touchStart', W / 2, sy]); for (let k = 1; k <= 4; k++) gestures.push([f0 + k, 'touchMove', W / 2 + 2 * k, sy + (ey - sy) * k / 4]); gestures.push([f0 + 5, 'touchEnd', W / 2, ey]); } }
       const audit0 = await page.evaluate(() => window.sceneAudit());
       for (let i = 0; i < n; i++) {
-        const t = i / fps; const sent = []; while (pi < plan.length && plan[pi][0] <= t + 1e-9) { sent.push(plan[pi][1]); await page.evaluate((d) => window.input.swipe(d), plan[pi][1]); pi++; }
+        const t = i / fps; const sent = [];
+        if (TOUCH) { for (const g of gestures.filter((g) => g[0] === i)) await cdp.send('Input.dispatchTouchEvent', { type: g[1], touchPoints: g[1] === 'touchEnd' ? [] : [{ x: g[2], y: g[3], id: 1, radiusX: 8, radiusY: 8, force: 1 }] }); while (pi < plan.length && plan[pi][0] <= t + 1e-9) sent.push(plan[pi++][1]); }
+        else while (pi < plan.length && plan[pi][0] <= t + 1e-9) { sent.push(plan[pi][1]); await page.evaluate((d) => window.input.swipe(d), plan[pi][1]); pi++; }
         const o = await page.evaluate(([t, dt, sp]) => window.step(t, dt, 0, sp), [t, i === 0 ? 0 : 1 / fps, speed]);
         const fr = { i, t: +t.toFixed(3), s: o.s, lat: o.lat, coins: o.coins, socks: o.socks, sent, box: await page.evaluate(() => window.bennyBox()), cam: await page.evaluate(() => window.camInfo()) };
         if (i % every === 0) { await page.evaluate(() => window.renderNow(1)); const f = path.join(out, `f_${String(i).padStart(5, '0')}.png`); await page.screenshot({ path: f }); fr.file = path.basename(f);
@@ -54,6 +63,7 @@ const { PNG } = (() => { try { return require('pngjs'); } catch (e) { return {};
         log.push(fr); if (i % 30 === 0) console.log('frame', i, 's', o.s, 'lat', o.lat, 'coins', o.coins, 'socks', o.socks);
       }
       const audit1 = await page.evaluate(() => window.sceneAudit());
+      const inLog = await page.evaluate(() => (window.input?.log ?? []).map((e) => ({ ...e })));
       const moved = audit0.filter((a, k) => JSON.stringify(a.m) !== JSON.stringify(audit1[k]?.m)).map((a) => a.name);
       const off = log.filter((f) => f.box.x0 < 0 || f.box.x1 > W || f.box.y0 < 0 || f.box.y1 > H).map((f) => f.i);
       const camStep = log.slice(1).map((f, k) => Math.hypot(...f.cam.p.map((x, j) => x - log[k].cam.p[j])));
@@ -62,7 +72,7 @@ const { PNG } = (() => { try { return require('pngjs'); } catch (e) { return {};
       const checks = { frames: n, errors: errs, benny_offscreen_frames: off.length, benny_offscreen_list: off.slice(0, 20),
         camera_max_step_u: +Math.max(...camStep).toFixed(4), camera_max_step_expected_u: +(speed / fps * 1.6).toFixed(4), camera_max_turn_deg_per_frame: +Math.max(...angStep).toFixed(3),
         static_world_meshes: audit0.length, scenery_meshes_moved: moved, hole_pixels_max: holes.length ? Math.max(...holes.map((f) => f.holes)) : null, hole_frames: holes.filter((f) => f.holes > 0).length, holes_checked_frames: holes.length,
-        swipes_sent: plan.filter((p) => p[0] < n / fps).length, coins_end: log[log.length - 1].coins, socks_end: log[log.length - 1].socks, s_end: log[log.length - 1].s,
+        swipes_sent: plan.filter((p) => p[0] < n / fps).length, input_mode: TOUCH ? 'real CDP touch gestures' : 'window.input.swipe (API)', input_log: inLog, coins_end: log[log.length - 1].coins, socks_end: log[log.length - 1].socks, s_end: log[log.length - 1].s,
         lat_range: [Math.min(...log.map((f) => f.lat)), Math.max(...log.map((f) => f.lat))] };
       fs.writeFileSync(path.join(out, 'run_log.json'), JSON.stringify(log)); fs.writeFileSync(path.join(out, 'checks.json'), JSON.stringify(checks, null, 1)); console.log(JSON.stringify(checks));
     }

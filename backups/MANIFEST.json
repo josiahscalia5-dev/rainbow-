@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3153,
-   "sha256": "8fc7e7cbd4bb19798687c23afc20a34b595fa3e2ac820986f209fcdb94518810"
+   "sha256": "e66fbf0960818e349dfd0deddd24160c800c65e8b2c074c514ce369f0c0d9981"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -42943,8 +42943,8 @@
   },
   {
    "path": "tools/reflock/section.html",
-   "bytes": 56782,
-   "sha256": "ba3cb81bd9a487e48e3ee24892ca975d344e1df6ad35198936ac267493c3c171"
+   "bytes": 57519,
+   "sha256": "2ea3d74928464fe87ec966bb4727b98b9617173708e17e15c9c96f13a5d86f77"
   },
   {
    "path": "tools/reflock/section_export.cjs",
@@ -42953,8 +42953,8 @@
   },
   {
    "path": "tools/reflock/section_run.cjs",
-   "bytes": 8005,
-   "sha256": "8d791f4468e4ab280fbf2a33428e4018161d3be033b15bb1ce6f2b24a6278e95"
+   "bytes": 9532,
+   "sha256": "904ce89adfa52370202d7b152bf05191416e5f7c8e6090060b70c3666d61dadd"
   },
   {
    "path": "tools/reflock/setup_reflock.sh",
