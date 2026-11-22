@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 27953,
-   "sha256": "a9ae62d3d86850dbd4f5329bbdebbc22df07a6c4400c615d2cd0491e6c11238a"
+   "sha256": "40d21ff646a8330664b4b5f1fb9a8e24896bc1837262b21109e1923cce02973f"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3622,
-   "sha256": "946bc0132e642f0840fa994c02093b51db7aafb6e21c3ba2fa10ca35f53325e8"
+   "sha256": "332b6c7b98001aeb89793a5b2bf58c0c2924b9ddef7f1f063812b969eab5d037"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -873,8 +873,8 @@
   },
   {
    "path": "backups/TOOL_RESTORE_REPORT_2026-11-22.md",
-   "bytes": 6788,
-   "sha256": "9302f900ef1cd8fa4a72819863c6531972e4d2b5269577de3abca9f87ff519bc"
+   "bytes": 7088,
+   "sha256": "6b055b96ec44a7e365905654e6bcfd236b17f3d3185758754596bf1a8a9ee147"
   },
   {
    "path": "backups/autosave.config.json",
