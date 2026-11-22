@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3271,
-   "sha256": "b2198f49574f0d089a981559289e7757db6959cafd81c504289baf05b9d98fc5"
+   "sha256": "aeb1a1cc4f4fa32d33ee8aa14b2dd1797d1ba1119cb0844ce9e49071b867b84f"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -10808,8 +10808,8 @@
   },
   {
    "path": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md",
-   "bytes": 77915,
-   "sha256": "2134e907e25ecdc8cc6d623ed49d1091e04f68c85a99be30b026a22671e6df8c"
+   "bytes": 79467,
+   "sha256": "c432daf9da0efc51c24602de9dd1ba8dc9557e1520ff923c12cb0f7dea7d5250"
   },
   {
    "path": "docs/PARALLEL_PROGRESS.md",
@@ -11648,8 +11648,8 @@
   },
   {
    "path": "docs/briefs/2026-11-21-r38/BONUS_INTEGRATION_PLAN_R38.md",
-   "bytes": 9309,
-   "sha256": "4cfcfa1c0117c773c5cb978729d3424a957ddfb9144be74750dd8e3e82330e02"
+   "bytes": 10304,
+   "sha256": "a0099241ce0140992eb7d27fe2356c92b67ef65e88b39a9fc3cf84fa20102531"
   },
   {
    "path": "docs/characters/benny.md",
@@ -15672,6 +15672,21 @@
    "sha256": "dcad7bc76be925f32cb81414af7034fee0693b83e0cd88aee77f5ccfb07b0490"
   },
   {
+   "path": "qa/bonus/r39/generated/sock_plate.png",
+   "bytes": 2197159,
+   "sha256": "3ddc73a8a1f5d78faed94afe838db7669cde8641c39510f6d5781f14664d08ef"
+  },
+  {
+   "path": "qa/bonus/r39/generated/sock_plate_mask.png",
+   "bytes": 8538,
+   "sha256": "32979bae1b542a4393dceb3260f5d7d58f6b3f964dc62db9b25d3a7e2d5559bb"
+  },
+  {
+   "path": "qa/bonus/r39/generated/sockfit.json",
+   "bytes": 44310,
+   "sha256": "ac1639e09515c3d4e0a432f4d6eeaa8ded516c95e42d2bbf0824e5073d268517"
+  },
+  {
    "path": "qa/capture_log.json",
    "bytes": 6131,
    "sha256": "25cc943da700887237e3b5641535e8747817b757a9db4b849d50c28c54d97c4d"
@@ -16640,6 +16655,76 @@
    "path": "qa/kit05/r37/OPTION_C_s8.5_l0.jpg",
    "bytes": 159001,
    "sha256": "581e9207a9ef00c50c32c517b5a3816ecab74025713ce70d7a968919fc06f0e5"
+  },
+  {
+   "path": "qa/kit05/r37/compare_page/a_s0.0_l0.jpg",
+   "bytes": 174563,
+   "sha256": "244691fc10dcc5079776b570c367b7ea53bc34a4f18bcccdc564525b481c5a6b"
+  },
+  {
+   "path": "qa/kit05/r37/compare_page/a_s4.5_l-1.jpg",
+   "bytes": 163923,
+   "sha256": "be543e93a0056826e2c25c38df249776ddeccb5d7bbdba1763fc8298b51ba48e"
+  },
+  {
+   "path": "qa/kit05/r37/compare_page/a_s4.5_l0.jpg",
+   "bytes": 167645,
+   "sha256": "3d84cccbdc071972d059b7a686a2acf61952dd0a03d8b61f595f826ac7456b5d"
+  },
+  {
+   "path": "qa/kit05/r37/compare_page/a_s8.5_l0.jpg",
+   "bytes": 165325,
+   "sha256": "618241fd40de1f4e3c9406fe9cc0fba221bcd996e061aca950291adc2f8254fa"
+  },
+  {
+   "path": "qa/kit05/r37/compare_page/approved.jpg",
+   "bytes": 202532,
+   "sha256": "2f00accc2ca77c2eeb966d1ae87cf3cabcb79c6979d93ada7cc6d10c5dc11cc7"
+  },
+  {
+   "path": "qa/kit05/r37/compare_page/b_s0.0_l0.jpg",
+   "bytes": 163183,
+   "sha256": "d7b47287d7a51f4531066a70645ab65772464ed4db9e5d174a76f409191793eb"
+  },
+  {
+   "path": "qa/kit05/r37/compare_page/b_s4.5_l-1.jpg",
+   "bytes": 161965,
+   "sha256": "15455631e82bfb99516d3e8bf096a8a7b6b33a155293e25c59b23fc54f70fd1b"
+  },
+  {
+   "path": "qa/kit05/r37/compare_page/b_s4.5_l0.jpg",
+   "bytes": 164048,
+   "sha256": "36f5aa98ce76316a2b118a31785a80d7b834ab4b0225a612b228ebf23d365c93"
+  },
+  {
+   "path": "qa/kit05/r37/compare_page/b_s8.5_l0.jpg",
+   "bytes": 164759,
+   "sha256": "ced7d16c86671a7e0b7c374790de582949988783f82b1a5424f6054848f1e586"
+  },
+  {
+   "path": "qa/kit05/r37/compare_page/c_s0.0_l0.jpg",
+   "bytes": 155556,
+   "sha256": "c9f18d71fcb875405f60315908529d0ba2ed5e86f36a07f748c9c793f18d0354"
+  },
+  {
+   "path": "qa/kit05/r37/compare_page/c_s4.5_l-1.jpg",
+   "bytes": 155795,
+   "sha256": "47b976af2a3921d4d48f3ba8ce79701acf3ea23c9bbfb5b61d0c4747ef994cf2"
+  },
+  {
+   "path": "qa/kit05/r37/compare_page/c_s4.5_l0.jpg",
+   "bytes": 158164,
+   "sha256": "ce460d6c6354fd980f86ed25b9cdb1fe166e2784833ac89701657d0e179dbf07"
+  },
+  {
+   "path": "qa/kit05/r37/compare_page/c_s8.5_l0.jpg",
+   "bytes": 159001,
+   "sha256": "581e9207a9ef00c50c32c517b5a3816ecab74025713ce70d7a968919fc06f0e5"
+  },
+  {
+   "path": "qa/kit05/r37/compare_page/index.html",
+   "bytes": 14999,
+   "sha256": "da474aac7deb6eecf503eb69f8f6409baed050dc1ae0d4344bc11f9341b425e6"
   },
   {
    "path": "qa/kit05/r39/APPROVED_vs_GAME_START_diffmap.jpg",
