@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3218,
-   "sha256": "ccd20f7b7241fa09867e3eb304bf7caeca51cd620f3276cfd040c16237492355"
+   "sha256": "f10cc4442354cf02272b902daab0719283cd76bf3f4a20ee6b7172366c5ca78b"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -43537,14 +43537,29 @@
    "sha256": "120b819946cf91488739919e4e66b27b01f0163721288100c4edb8bf6649a2ef"
   },
   {
+   "path": "tools/screenkit/screen.html",
+   "bytes": 44425,
+   "sha256": "3b03aafa6cb1f0fe72d0f6e2edfee6ff0775a77f17811ecd556334bff465aa0e"
+  },
+  {
    "path": "tools/screenkit/screens/06/fit06.py",
-   "bytes": 11243,
-   "sha256": "887f8d1ab2695b2ff49bc8a929d9b737a8c9a4072f379d3ca3c9ea6564bd8594"
+   "bytes": 11465,
+   "sha256": "1f94ec63c53a1d284cc06f2d805fdab0bbd7ce2b394d3f8c589033af8434a4f0"
+  },
+  {
+   "path": "tools/screenkit/screens/06/segment06.json",
+   "bytes": 1045,
+   "sha256": "d6707966f53c5973568c724100154fc96530c33788a3f2bf7b4a1695ddf5c8b5"
   },
   {
    "path": "tools/screenkit/segment.py",
    "bytes": 4212,
    "sha256": "24ccba8ad11bffa74df879470fa2563f60e5bfa9e53798e3290e847bbe951aa7"
+  },
+  {
+   "path": "tools/screenkit/setup_screen.sh",
+   "bytes": 3426,
+   "sha256": "eabde6c085c91d1cea3d42cfb5e6a2c91adcfa17fe4f2303a57885a30bb9e5e4"
   },
   {
    "path": "tools/water-lab.html",

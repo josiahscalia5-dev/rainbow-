@@ -74,9 +74,12 @@ P0 = Pb.copy(); behind = Pb + np.array([0, 0, 1.2])
 far = water_pts[-1]; tail = []
 for i in range(1, 7):   # after the last coin: glide down onto the pool and run along the drum toward the far end
     kk = i / 6.0; tail.append(np.array([far[0] + (xa + 0.25 - far[0]) * kk, far[1] * (1 - kk) ** 2, far[2] - 1.8 * i]))
-tail += [np.array([xa + 0.25, 0.0, far[2] - 10.8 - 2.0 * j]) for j in range(1, 13)]
+tail += [np.array([xa + 0.25, 0.0, far[2] - 10.8 - 2.0 * j]) for j in range(1, 7)]
 ctrl = np.array([behind, P0] + water_pts + tail)
 route, s = fl.resample(fl.smooth_polyline(ctrl, 2), 0.05)
+route[:, 1] = np.maximum(route[:, 1], 0.0)            # never below the pool surface (the landing glides onto the water)
+from scipy.ndimage import gaussian_filter1d as _g1
+route[:, 1] = np.maximum(_g1(route[:, 1], 6), 0.0)
 # bank: lean into the turn (lateral acceleration), max 40 deg, plus the arch's own slope sideways
 tg = np.gradient(route, axis=0); tg /= np.linalg.norm(tg, axis=1, keepdims=True)
 cur = np.gradient(tg, axis=0) / 0.05; lat = cur - tg * (cur * tg).sum(1, keepdims=True)
