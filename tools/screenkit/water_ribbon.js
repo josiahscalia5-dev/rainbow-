@@ -7,7 +7,7 @@
 // (204,32,159) (244,60,215) (248,110,236), white streaks (247,243,252); band layout from the painted river (pink edge to pink edge = river width).
 // Coordinates: the area's own x / z (vL), lateral = distance from the river centre line (Benny's route, a 1-D texture of route x by z), along = -z.
 export const RIBBON_GLSL = `
-uniform sampler2D uRouteX; uniform vec4 uRouteZ; uniform float uRibbon; uniform float uRStyle; uniform vec4 uRUv; vec4 gRUv = vec4(0.0);   /* gRUv: set by the material before ribbonWater (x 1 = 06: normalised lateral + route distance; x 2 = r46 connector strip: lateral in m + along distance) */ uniform sampler2D uDetC, uDetP; uniform vec4 uDetCM, uDetPM; uniform float uDetS, uDetOn;
+uniform sampler2D uRouteX; uniform vec4 uRouteZ; uniform float uRibbon; uniform float uRStyle; uniform vec4 uRUv; vec4 gRUv = vec4(0.0);   /* gRUv: set by the material before ribbonWater (x 1 = 06: normalised lateral + route distance; x 2 = r46 connector strip: lateral in m + along distance) */ uniform sampler2D uDetC, uDetP; uniform vec4 uDetCM, uDetPM; uniform float uDetS, uDetOn; uniform float uRich;
 float rbH(vec2 p){ vec3 p3 = fract(vec3(p.xyx) * 0.1031); p3 += dot(p3, p3.yzx + 33.33); return fract((p3.x + p3.y) * p3.z); }
 float rbN(vec2 p){ vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f); return mix(mix(rbH(i), rbH(i + vec2(1, 0)), f.x), mix(rbH(i + vec2(0, 1)), rbH(i + vec2(1, 1)), f.x), f.y); }
 // 06 style (uRStyle 1): the rising crest = a bright cyan sheet with white streaks and RAINBOW edges (green, yellow, orange, pink, purple),
@@ -32,6 +32,7 @@ vec3 ribbonWater(vec3 L, float t, float flow, vec3 vWv){
   if (gRUv.x > 1.5) { lat = gRUv.y; d = gRUv.z + t * flow; }   /* r46: a world connector strip gives the exact lateral (m) + the area's along distance */
   // the whole band pattern swings across the river in S-curves (the painting's pink ribbons sweep from side to side)
   float n = lat / hw + 0.42 * sin(d * 0.95 + 0.6) + 0.14 * sin(d * 2.2 + 2.0), an = abs(n) + 0.05 * sin(d * 2.6 + n * 2.5);   // stronger, tighter S-swing (painting)
+  if (uRich > 0.5) { n += 0.07 * sin(d * 1.9 + lat * 5.0 - t * 0.7); an = abs(n) + 0.05 * sin(d * 2.6 + n * 2.5); }   /* r46: the ribbons swirl a little as they flow */
   vec3 cyD = vec3(4.0, 139.0, 234.0) / 255.0, cyM = vec3(10.0, 168.0, 250.0) / 255.0, cyB = vec3(42.0, 220.0, 249.0) / 255.0;
   vec3 pkD = vec3(204.0, 32.0, 159.0) / 255.0, pkM = vec3(244.0, 60.0, 215.0) / 255.0, pkB = vec3(248.0, 110.0, 236.0) / 255.0;
   float ea = max(0.04, 1.5 * fwidth(an));
@@ -45,6 +46,16 @@ vec3 ribbonWater(vec3 L, float t, float flow, vec3 vWv){
   float pc = max(1.0 - clamp(abs(an - 0.67) / 0.18, 0.0, 1.0), 1.0 - clamp(abs(an - 1.4) / 0.18, 0.0, 1.0));
   vec3 pink = mix(pkD, pkM, smoothstep(0.0, 0.6, pc)); pink = mix(pink, pkB, 0.6 * smoothstep(0.55, 1.0, pc));
   vec3 col = mix(cyan, pink, pinkW);
+  // r46 (user: "the water becomes too plain and streaky"; layout water_rich): the painting's DEPTH inside the bands - deep-blue troughs in the cyan,
+  // thin deep-blue seams along every pink ribbon edge, a glossy white-pink silk highlight inside each pink ribbon, a pale crest along the cyan centre
+  if (uRich > 0.5) { float tr = rbN(vec2(lat * 2.2 + 0.6 * sin(d * 0.8), d * 0.55));
+    col = mix(col, mix(cyD * 0.8, cyM, 0.3), 0.4 * smoothstep(0.55, 0.85, tr) * (1.0 - pinkW));
+    float eg = min(min(abs(an - 0.5), abs(an - 0.85)), min(abs(an - 1.24), abs(an - 1.57))), ew = max(0.022, 1.2 * fwidth(an));
+    col = mix(col, vec3(0.03, 0.30, 0.78), 0.55 * (1.0 - smoothstep(0.0, ew, eg)));
+    float hl = min(abs(an - 0.73), abs(an - 1.46)), hb = smoothstep(0.3, 0.7, rbN(vec2(an * 9.0, d * 0.9)));
+    col = mix(col, vec3(1.0, 0.86, 0.98), 0.72 * hb * (1.0 - smoothstep(0.0, max(0.02, 1.2 * fwidth(an)), hl)) * pinkW);
+    float cc = abs(an - 0.12 - 0.06 * sin(d * 1.4)), cb2 = smoothstep(0.35, 0.8, rbN(vec2(3.0, d * 0.8)));
+    col = mix(col, vec3(0.85, 1.0, 1.0), 0.5 * cb2 * (1.0 - smoothstep(0.0, max(0.03, 1.2 * fwidth(an)), cc)) * (1.0 - pinkW)); }
   // the painting's OWN detail inside each band (water_detail.py: seamless cyan / pink tiles cut from the flattened picture, fixed size in the
   // world -> never smeared): luminance + colour variation relative to the tile's mean, on top of the clean band colour
   if (uDetOn > 0.5) { vec2 tu = vec2(lat, d) / uDetS; vec3 dc = texture2D(uDetC, tu).rgb / max(uDetCM.rgb, vec3(0.06)), dp = texture2D(uDetP, tu * vec2(1.0, 0.85) + 0.37).rgb / max(uDetPM.rgb, vec3(0.06));
@@ -68,6 +79,16 @@ vec3 ribbonWater(vec3 L, float t, float flow, vec3 vWv){
     col = mix(col, vec3(0.97, 1.0, 1.0), clamp(dsh, 0.0, 1.0) * mix(0.55, 0.35, pinkW)); }
   // glossy sheen
   col += 0.08 * smoothstep(0.35, 0.95, rbN(vec2(lat * 0.9, d * 0.35 - t * 0.1))) * (1.0 - 0.5 * pinkW);
+  // r46: glossy ripple ARCS close to the camera (the painting's curved light bands across the flow) + a second, finer sparkle layer with long
+  // horizontal flares (the painting is covered in small white sparkles) - both fade out where they would be smaller than a pixel
+  if (uRich > 0.5) { float ra = d * 5.5 - an * an * 2.2 + 1.3 * rbN(vec2(lat * 1.5, d * 0.7)), rf = fwidth(ra);
+    float arc = pow(0.5 + 0.5 * sin(ra), 18.0) * (1.0 - smoothstep(0.25, 0.9, rf)) * smoothstep(0.35, 0.8, rbN(vec2(floor(ra / 6.2832) * 2.1, lat * 2.0)));
+    col = mix(col, mix(vec3(0.82, 1.0, 1.0), vec3(1.0, 0.85, 0.98), pinkW), 0.55 * arc);
+    vec2 g2 = vec2(lat * 7.0, d * 3.2); vec2 c2 = floor(g2); float h2 = rbH(c2 + 4.37);
+    if (h2 < 0.22) { vec2 p2c = c2 + vec2(0.2 + 0.6 * rbH(c2 + 1.1), 0.2 + 0.6 * rbH(c2 + 2.9)); vec2 q2 = (g2 - p2c) / vec2(7.0, 3.2);
+      float tw2 = 0.5 + 0.5 * sin(t * 4.0 + h2 * 90.0), s2 = max(fwidth(g2.x), fwidth(g2.y));
+      float st2 = exp(-dot(q2, q2) / 0.00004) + exp(-abs(q2.x) / 0.03) * exp(-q2.y * q2.y / 0.000008) + 0.5 * exp(-abs(q2.y) / 0.012) * exp(-q2.x * q2.x / 0.000008);
+      col = mix(col, vec3(1.0), clamp(st2 * (0.4 + 0.6 * tw2) * (1.0 - smoothstep(0.08, 0.35, s2)), 0.0, 1.0)); } }
   // star glints
   vec2 g = vec2(lat * 3.2, d * 1.6); vec2 cell = floor(g); float hh = rbH(cell + 0.37);
   if (hh < 0.3) { vec2 pc2 = cell + vec2(0.25 + 0.5 * rbH(cell + 1.7), 0.25 + 0.5 * rbH(cell + 4.1)); vec2 q = (g - pc2) / vec2(3.2, 1.6);
@@ -78,7 +99,7 @@ vec3 ribbonWater(vec3 L, float t, float flow, vec3 vWv){
 
 // route centre line x by z (area-local) as a float texture (nearest, 4096 samples) + the uniforms the materials need
 // r46: a second (third ...) copy of the ribbon code with renamed uniforms / functions, so one material can draw two areas' ribbons (connectors)
-export const ribbonCopy = (sfx) => RIBBON_GLSL.replace(/\b(uRouteX|uRouteZ|uRibbon|uRStyle|uRUv|gRUv|uDetC|uDetP|uDetCM|uDetPM|uDetS|uDetOn|rbH|rbN|rainbowEdge|ribbonWater)\b/g, '$1' + sfx);
+export const ribbonCopy = (sfx) => RIBBON_GLSL.replace(/\b(uRouteX|uRouteZ|uRibbon|uRStyle|uRUv|gRUv|uDetC|uDetP|uDetCM|uDetPM|uDetS|uDetOn|uRich|rbH|rbN|rainbowEdge|ribbonWater)\b/g, '$1' + sfx);
 export const ribbonUniformsAs = (U, sfx) => Object.fromEntries(Object.entries(U).map(([k, v]) => [k + sfx, v]));
 export function routeUniforms(THREE, LAY) {
   const P = LAY.route.points; let z0 = Infinity, z1 = -Infinity; for (const p of P) { z0 = Math.min(z0, p[2]); z1 = Math.max(z1, p[2]); }
@@ -88,7 +109,7 @@ export function routeUniforms(THREE, LAY) {
   void j;
   const tex = new THREE.DataTexture(data, N, 1, THREE.RedFormat, THREE.FloatType); tex.minFilter = tex.magFilter = THREE.NearestFilter; tex.needsUpdate = true;
   return { uRouteX: { value: tex }, uRouteZ: { value: new THREE.Vector4(z0, z1, (LAY.river_width ?? LAY.route.width) / 2, 1) },
-    uRStyle: { value: LAY.water_style === 'ribbon06' ? 1 : 0 },
+    uRStyle: { value: LAY.water_style === 'ribbon06' ? 1 : 0 }, uRich: { value: LAY.water_rich ?? 0 },   /* r46: richer painted water (layout water_rich) */
     uDetC: { value: null }, uDetP: { value: null }, uDetCM: { value: new THREE.Vector4(1, 1, 1, 1) }, uDetPM: { value: new THREE.Vector4(1, 1, 1, 1) }, uDetS: { value: 0.64 }, uDetOn: { value: 0 } };
 }
 // the painted detail tiles of an area (baked/detail_*.jpg + manifest.water_detail) -> the ribbon uniforms (shared by all its water materials)

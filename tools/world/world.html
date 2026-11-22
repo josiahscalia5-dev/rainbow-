@@ -261,6 +261,7 @@ const loadKit = async (A) => {
   const M = g.matrixWorld.clone(), Mi = M.clone().invert(); A.M = M;   // v4: an area may be tilted (07 descends); everything local goes through M
   const famOf = kitFamOf;   // r45: bake.js (paddlerep_* = the repeated trays -> copper)
   if (q.get('water') !== 'paint' && (LAY.water_style === 'ribbon' || LAY.water_style === 'ribbon06' || (q.get('water') === 'ribbon' && (q.get('ribbonareas') ?? '05').split(',').includes(A.id)))) A.ribbonU = routeUniforms(THREE, LAY);   // r45: clean ribbon water (?water=paint = the old painted swatch)
+  if (A.ribbonU && q.get('rich') === '0') A.ribbonU.uRich.value = 0;   // r46 A/B switch: ?rich=0 = the round-45b ribbon water
   const ms = []; g.traverse((o) => { if (o.isMesh) ms.push(o); });
   const RLENa = (LAY.route.points.length - 1) * LAY.route.ds, NSEG = ms.filter((o) => /^water_/.test(o.name)).length, SEG_LEN = RLENa / Math.max(1, NSEG);
   for (const o of ms) { const n = o.name, fam = famOf(n); o.geometry.computeBoundingBox(); const sz = o.geometry.boundingBox.getSize(new THREE.Vector3()); let m;
@@ -534,8 +535,9 @@ const camAt = (s, dt) => {
   { const A = areaOf(s), CA = A.kind === 'kit' ? A.LAY?.cam_axis : null, key = CA ? WD.cam_keys.find((k) => k.area === A.id) : null;
     if (key && A.M) { const w = sstep(A.s0, A.s0 + 3, s) * (1 - sstep(A.s1 - 3, A.s1, s));
       if (w > 0) { const ax = new THREE.Vector3(0, 0, -1).transformDirection(A.M), side = new THREE.Vector3(1, 0, 0).transformDirection(A.M);
-        const d = at(s, new THREE.Vector3()).addScaledVector(F.r, st.lat).sub(at(key.s, new THREE.Vector3()));
-        const P = V3(key.pos).addScaledVector(ax, d.dot(ax)).addScaledVector(side, d.dot(side) * (CA.follow ?? 0.6)), Qk = new THREE.Quaternion().setFromEuler(new THREE.Euler(key.pitch, key.yaw, 0, 'YXZ'));
+        const d = at(s, new THREE.Vector3()).addScaledVector(F.r, st.lat).sub(at(key.s, new THREE.Vector3())), dL = F.r.clone().multiplyScalar(st.lat), dR = d.clone().sub(dL);
+        // r46: the river's swing (dR) and Benny's lane offset (dL) followed separately (layout follow_route / follow_lane; both = follow before)
+        const P = V3(key.pos).addScaledVector(ax, d.dot(ax)).addScaledVector(side, dR.dot(side) * (CA.follow_route ?? CA.follow ?? 0.6) + dL.dot(side) * (CA.follow_lane ?? CA.follow ?? 0.6)), Qk = new THREE.Quaternion().setFromEuler(new THREE.Euler(key.pitch, key.yaw, 0, 'YXZ'));
         // r46 (Screen 05 frames 409-420: Benny past the right edge, a foam heap filling the lower right, the low-res far wall 0.3 u from the lens):
         // following the S-river's swing slid the camera to within 0.3 u of the drum wall, and the sideways guard then pushed it further into the
         // wall clamp. Now the camera stays in the drum's middle band (soft limit, untouched within lim - knee of the axis, so the approved picture

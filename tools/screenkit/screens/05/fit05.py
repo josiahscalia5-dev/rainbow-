@@ -47,6 +47,14 @@ ctrl = [Pb + np.array([0, 0, 1.2]), Pb] + water_pts + [np.array([water_pts[-1][0
 WA, WL = 0.3 * R, 3.0 * 2.6; z_w0 = ctrl[-1][2]
 for z in np.arange(z_w0 - 1.5, far, -1.5):
     k_in = min(1.0, (z_w0 - z) / 4.0); k_out = min(1.0, max(0.0, (z - far) / 6.0)); ctrl.append(np.array([xa + WA * k_in * k_out * math.sin(2 * math.pi * (z_w0 - z) / WL), 0.0, z]))
+# r46 (Screen 05 frames 405-420): the far painted coins (radius <= 10 px, depths spread +1.2 u apart) pulled the route 0.84 u right of the drum
+# axis around z -22: with the right lane Benny swam at the very edge of the drum floor (camera 0.3 u from the wall, the river into the foam).
+# Soft cap on the route's distance from the axis: unchanged up to 0.40 u (the whole painted stretch at the picture view), then eased to <= 0.55 u.
+RC_L, RC_K = 0.55, 0.15
+def _cap(x):
+    o = x - xa; a_ = abs(o)
+    return x if a_ <= RC_L - RC_K else xa + math.copysign(RC_L - RC_K + RC_K * (1.0 - math.exp(-(a_ - (RC_L - RC_K)) / RC_K)), o)
+ctrl = [np.array([_cap(float(p[0])), float(p[1]), float(p[2])]) for p in ctrl]
 route, s = fl.catmull_rom(np.array(ctrl), 0.05)
 route[:, 1] = 0.0
 paddles = []
@@ -77,6 +85,10 @@ lay['machinery'] = {'every': 2, 'clear_y': [float(cam.C[1]), 0.5], 'scale': 0.8,
 # r45: the approved composition while swimming: the camera keeps the picture's view down the drum and slides with Benny (world cam_axis);
 # the water is the clean ribbon water drawn from the painting's structure (tools/screenkit/water_ribbon.js)
 lay['cam_axis'] = {'follow': 0.6}; lay['water_style'] = 'ribbon'
+lay['water_rich'] = 1   # r46: deep-blue troughs + seams, silk highlights in the pink, ripple arcs close up, a second sparkle layer, a little swirl
+# r46: the camera follows the river's swing almost fully (the river stays under the view as in the picture) and lane changes by 0.65 (Benny visibly
+# moves when steering); soft limit 0.85 u from the drum axis; small damped turn toward Benny near an edge (world.html)
+lay['cam_axis'].update({'follow_route': 0.9, 'follow_lane': 0.65, 'max_off': 0.85, 'knee': 0.25})
 # r45 (look while swimming, measured against the picture): the bright warm core at the end of the tunnel (camera-relative glow), foam banks that
 # frame the S-river like the painted ones (just outside its pink edges), and the painted bubbles along both banks
 lay['far_glow'] = {'start': 7.0, 'end': 26.0, 'strength': 0.8, 'color': [1.0, 0.92, 0.72]}

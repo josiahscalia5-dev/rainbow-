@@ -2043,3 +2043,245 @@ Now writing the connector material and wiring it into the connector loader.
 > world ready: /home/user/ws46/world/game/play3.html  (70.59 s; report /home/user/ws46/world/build_report.md)
 > EXIT 0
 
+### 🤖 Claude — 2026-11-22T21:52:49.424Z
+
+Rebuilt in 71 s, and only Screen 05's bake re-ran. Now re-probing the same frames and re-running the 16-second clip test on the new build.
+
+### 🤖 Claude — 2026-11-22T21:52:53.026Z
+
+> 🔧 **Bash** `{"command": "PLAN=$(cat qa/kit45/run/swipe_plan_05_06.json); export NODE_PATH=$(npm root -g); rm -rf /home/user/ws46/probe2 /home/user/ws46/clip_new2;\n(node tools/world/probe_frames.cjs /home/user/ws46/world/game /home/user/ws46/probe2 0,60,150,330,409,415,700 \"$PLAN\" 's0=88&sentinel=1' > /home/user/ws46/probe2.log 2>&1; echo EXIT $? >> /home/user/ws46/probe2.log) &\n(TOUCH=1 FRAMEQA=1 EDGEQA=1 RENDER_EVERY=15 node tools/reflock/section_run.cjs /home/user/ws46/world/game /home/user/ws46/clip_new2 run 16 \"$PLAN\" 's0=88&sentinel=1' > /home/user/ws46/clip_new2.log 2>&1; echo EXIT $? >> /home …[+218 chars]`
+
+### 🧑 User — 2026-11-22T21:52:53.074Z
+
+> ↩︎ result: Command running in background with ID: bwcgico16. Output is being written to: /tmp/claude-0/-home-user-rainbow-/b194400e-972b-5b24-a1b4-4982954cc18c/tasks/bwcgico16.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-22T21:52:55.483Z
+
+> 🔧 **Bash** `{"command": "tail -n 2 /home/user/ws46/clip_base.log; python3 -c \"\nimport json; d=json.load(open('/home/user/ws46/clip_base/checks.json')); print('TRUE r45b base: offscreen(rest-pose box)', d['benny_offscreen_frames'], d['benny_offscreen_list'], 'clear', d['frame_qa']['camera_clearance_min_u'])\n\" 2>&1 | tail -2", "description": "Check true baseline clip result"}`
+
+### 🧑 User — 2026-11-22T21:52:55.570Z
+
+> ↩︎ result: {"frames":480,"errors":[],"benny_offscreen_frames":12,"benny_offscreen_list":[409,410,411,412,413,414,415,416,417,418,419,420],"camera_max_step_u":0.0982,"camera_max_step_expected_u":0.1173,"camera_max_turn_deg_per_frame":0.565,"static_world_meshes":435,"scenery_meshes_moved":[],"hole_pixels_max":null,"hole_frames":0,"holes_checked_frames":0,"frame_qa":{"camera_clearance_min_u":0.208,"water_gap_abs_max_u":0.02,"frames_without_water_under_benny":0,"immersion_min":-0.529,"immersion_max":0.176,"benny_tilt_vs_surface_max_deg":12.2,"bank_max_deg":0,"benny_height_px_min":278,"benny_height_px_max":307.2},"edge_guard":{"max_optical_shift_px":0,"last_optical_corrections":0},"swipes_sent":10,"input_mode":"real CDP touch gestures","input_log":[{"dir":"left","src":"touch","clock":1.2,"result":"lane"},{"dir":"right","src":"touch","clock":3,"result":"lane"},{"dir":"right","src":"touch","clock":3.267,"result":"lane"},{"dir":"left","src":"touch","clock":5.5,"result":"lane"},{"dir":"left","src":"touch","clock":5.767,"result":"lane"},{"dir":"right","src":"touch","clock":8,"result":"lane"},{"dir":"up","src":"touch","clock":10,"result":"leap"},{"dir":"right","src":"touch","clock":12,"result":"lane"},{ …[+310 chars]
+
+### 🤖 Claude — 2026-11-22T21:52:58.390Z
+
+The unpatched Round 45b page reproduces the reported bug exactly: 12 off-screen frames, 409–420. That's a reliable baseline to compare against.
+
+### 🤖 Claude — 2026-11-22T21:52:58.832Z
+
+> 🔧 **TaskUpdate** `{"taskId": "1", "status": "completed"}`
+
+### 🧑 User — 2026-11-22T21:52:58.846Z
+
+> ↩︎ result: Updated task #1 status
+
+### 🤖 Claude — 2026-11-22T21:53:00.388Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nfrom PIL import Image\nim=Image.open('references/hires/05_flow_into_the_current_1080.jpg'); print(im.size)\nim.crop((0,1250,1080,1920)).save('/home/user/ws46/ref/water05_near.png')\nim.crop((150,650,930,1250)).save('/home/user/ws46/ref/water05_mid.png')\n\"", "description": "Crop the approved 05 water regions for study"}`
+
+### 🧑 User — 2026-11-22T21:53:00.938Z
+
+> ↩︎ result: (1080, 1920)
+
+### 🤖 Claude — 2026-11-22T21:53:02.099Z
+
+> 🔧 **Read** `{"file_path": "/home/user/ws46/ref/water05_near.png"}`
+
+### 🧑 User — 2026-11-22T21:53:02.153Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T21:53:05.143Z
+
+> 🔧 **Read** `{"file_path": "/home/user/ws46/ref/water05_mid.png"}`
+
+### 🧑 User — 2026-11-22T21:53:05.231Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T21:53:19.535Z
+
+> 🔧 **Bash** `{"command": "timeout 900 bash -c 'until grep -q EXIT /home/user/ws46/probe2.log; do sleep 5; done'; tail -n 9 /home/user/ws46/probe2.log; cd /home/user/ws46/probe2 && montage f_00000.png f_00060.png f_00150.png f_00330.png f_00409.png f_00415.png f_00700.png -tile 7x1 -geometry 412x915+2+2 sheet.jpg", "description": "Wait for probe and build contact sheet", "timeout": 960000}`
+
+### 🧑 User — 2026-11-22T21:53:55.044Z
+
+> ↩︎ result: probed 0 s 88 lat 0 box {"x0":50.2,"x1":303.3,"y0":443.1,"y1":732.9}
+> probed 60 s 92.4 lat -0.3 box {"x0":105.2,"x1":327.1,"y0":428.1,"y1":705}
+> probed 150 s 99 lat 0.3 box {"x0":92.7,"x1":354.9,"y0":434.3,"y1":717.9}
+> probed 330 s 112.2 lat -0 box {"x0":103.7,"x1":360.2,"y0":434.1,"y1":724.1}
+> probed 409 s 117.993 lat 0.3 box {"x0":109.9,"x1":333.2,"y0":448,"y1":708}
+> probed 415 s 118.433 lat 0.3 box {"x0":101.2,"x1":316.2,"y0":431.5,"y1":696.9}
+> probed 700 s 139.333 lat -0.081 box {"x0":32.7,"x1":287.9,"y0":447.1,"y1":721.6}
+> EXIT 0
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-22T21:53:56.233Z
+
+> 🔧 **Read** `{"file_path": "/home/user/ws46/probe2/sheet.jpg"}`
+
+### 🧑 User — 2026-11-22T21:53:56.318Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-22T21:53:56.314Z
+
+[Image: original 2912x919, displayed at 2000x631. Multiply coordinates by 1.46 to map to original image.]
+
+### 🤖 Claude — 2026-11-22T21:54:08.372Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\nfor tag in ['probe1','probe2']:\n    d=json.load(open(f'/home/user/ws46/{tag}/probe.json'))\n    for fr in d['frames']:\n        if fr['frame'] in (330,409,415):\n            print(tag, fr['frame'], 'cam', fr['cam']['p'], 'q', fr['cam']['q'], 'edge', fr['edge'] and fr['edge']['shiftPx'], 'clear', fr['qa'] and round(fr['qa']['camClear'],3), 'box', fr['box'])\nEOF\npython3 -c \"\nimport json; W=json.load(open('/home/user/ws46/world/game/world.json')); k=[c for c in W['cam_keys'] if c['area']=='05'][0]; print(k)\"", "description": "Compare camera pose  …[+29 chars]`
+
+### 🧑 User — 2026-11-22T21:54:08.477Z
+
+> ↩︎ result: probe1 330 cam [1.2348, 0.734, -110.6681] q [-0.11709, 0.02669, 0.00315, 0.99276] edge 0.07 clear 0.755 box {'x0': 120.7, 'x1': 377.7, 'y0': 434, 'y1': 724.6}
+> probe1 409 cam [1.9376, 0.71, -116.4466] q [-0.11709, 0.02669, 0.00315, 0.99276] edge 44.1 clear 0.307 box {'x0': 93.1, 'x1': 353.7, 'y0': 432.6, 'y1': 719.7}
+> probe1 415 cam [1.9376, 0.71, -116.8894] q [-0.11709, 0.02669, 0.00315, 0.99276] edge 45.4 clear 0.307 box {'x0': 91.6, 'x1': 353.2, 'y0': 413.6, 'y1': 714}
+> probe2 330 cam [1.2348, 0.734, -110.6681] q [-0.11704, 0.01527, 0.00449, 0.993] edge 0 clear 0.755 box {'x0': 103.7, 'x1': 360.2, 'y0': 434.1, 'y1': 724.1}
+> probe2 409 cam [1.4321, 0.734, -116.4281] q [-0.11361, -0.18962, 0.02851, 0.97485] edge 0 clear 0.755 box {'x0': 109.9, 'x1': 333.2, 'y0': 448, 'y1': 708}
+> probe2 415 cam [1.4333, 0.734, -116.8715] q [-0.11327, -0.20096, 0.02983, 0.97257] edge 0 clear 0.755 box {'x0': 101.2, 'x1': 316.2, 'y0': 431.5, 'y1': 696.9}
+> {'area': '05', 's': 97.80000000000001, 'pos': [1.109266533532227, 0.734, -96.39894016021255], 'yaw': 0.0537570624503019, 'pitch': -0.23479579055800356, 'ref': 'references/05_flow_into_the_current.png'}
+
+### 🤖 Claude — 2026-11-22T21:54:26.977Z
+
+The turn reached about 22°, which means Benny is much further right than the camera's allowed band. I'm measuring the route geometry directly.
+
+### 🤖 Claude — 2026-11-22T21:54:29.574Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json, math\nW=json.load(open('/home/user/ws46/world/game/world.json'))\nR=W['route']; print(type(R), (list(R.keys()) if isinstance(R,dict) else len(R)))\npts=R['points'] if isinstance(R,dict) else R; ds=W['ds']\ndef at(s):\n    x=s/ds; i=min(int(x),len(pts)-2); f=x-i; return [pts[i][j]+(pts[i+1][j]-pts[i][j])*f for j in range(3)]\nfor s in (88, 97.8, 105, 110, 112.2, 115, 118, 121, 125, 130, 135, 139.3):\n    p=at(s); print(s, [round(v,3) for v in p], 'from axis', round(p[0]-0.905,3))\nEOF", "description": "Sample the world route x around Screen 05"}`
+
+### 🧑 User — 2026-11-22T21:54:29.654Z
+
+> ↩︎ result: <class 'dict'> ['points', 'bank']
+> 88 [-0.307, 0.0, -88.033] from axis -1.212
+> 97.8 [1.044, 0.0, -97.708] from axis 0.139
+> 105 [0.738, 0.0, -104.797] from axis -0.167
+> 110 [1.052, 0.0, -109.786] from axis 0.147
+> 112.2 [1.254, 0.0, -111.977] from axis 0.349
+> 115 [1.492, 0.0, -114.767] from axis 0.587
+> 118 [1.714, 0.0, -117.758] from axis 0.809
+> 121 [1.635, 0.0, -120.753] from axis 0.73
+> 125 [1.268, 0.0, -124.736] from axis 0.363
+> 130 [0.934, 0.0, -129.725] from axis 0.029
+> 135 [0.965, 0.0, -134.705] from axis 0.06
+> 139.3 [0.893, 0.0, -138.981] from axis -0.012
+
+### 🤖 Claude — 2026-11-22T21:54:38.098Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json, math\nL=json.load(open('/home/user/ws46/world/game/a05/layout.json'))\nP=L['route']['points']; D=L['drum']\nprint('axis', D['axis_x'], 'z0', D['z0'], 'z1', D['z1'], 'zfar', D['z_far'], 'npts', len(P), 'len', (len(P)-1)*L['route']['ds'])\nfor p in P[::40]: print([round(v,3) for v in p], 'from axis', round(p[0]-D['axis_x'],3))\nprint('cams', L['cams'][0].get('s_ref'), 'benny', L['benny']['pos'])\nEOF", "description": "Inspect Screen 05 route swing in its layout"}`
+
+### 🧑 User — 2026-11-22T21:54:38.181Z
+
+> ↩︎ result: axis -0.20461061946902656 z0 3.0 z1 -42.67778967556847 zfar -17.99171583201234 npts 849 len 42.400000000000006
+> [-0.065, 0.0, 0.036] from axis 0.14
+> [-0.073, 0.0, -1.964] from axis 0.132
+> [0.157, 0.0, -3.944] from axis 0.362
+> [-0.27, 0.0, -5.859] from axis -0.066
+> [-0.386, 0.0, -7.853] from axis -0.182
+> [-0.301, 0.0, -9.851] from axis -0.097
+> [-0.181, 0.0, -11.847] from axis 0.023
+> [-0.019, 0.0, -13.841] from axis 0.185
+> [0.168, 0.0, -15.832] from axis 0.373
+> [0.336, 0.0, -17.825] from axis 0.541
+> [0.504, 0.0, -19.818] from axis 0.708
+> [0.624, 0.0, -21.814] from axis 0.829
+> [0.58, 0.0, -23.812] from axis 0.785
+> [0.374, 0.0, -25.801] from axis 0.579
+> [0.204, 0.0, -27.794] from axis 0.408
+> [0.048, 0.0, -29.788] from axis 0.252
+> [-0.084, 0.0, -31.784] from axis 0.12
+> [-0.195, 0.0, -33.78] from axis 0.01
+> [-0.098, 0.0, -35.775] from axis 0.107
+> [-0.045, 0.0, -37.771] from axis 0.16
+> [-0.35, 0.0, -39.743] from axis -0.145
+> [-0.255, 0.0, -41.739] from axis -0.05
+> cams 1.2000000000000002 benny [-0.06476178001643236, 0.0, -1.1640408098973545]
+
+### 🤖 Claude — 2026-11-22T21:54:47.113Z
+
+> 🔧 **Bash** `{"command": "grep -n \"route\" tools/world/world_layout.py | head -30; grep -n \"WA\\|WL\\|z_w0\" tools/screenkit/screens/05/fit05.py | head", "description": "Check whether world layout rewrites the 05 route"}`
+
+### 🧑 User — 2026-11-22T21:54:47.169Z
+
+> ↩︎ result: 2:area's entrance, assembles ONE route (Benny's path) through all of them, the camera keys (each area's fitted picture cameras, exact there),
+> 10:side walls / ceiling / floor run to z = +2 in section coordinates, nothing closes them). Both waters at y = 0; the route runs straight on.
+> 39:D4 = L04['drum']; R4 = D4['r']; r4 = np.array(L04['route']['points']); z_end4 = float(r4[-1][2])
+> 41:# ---- area AB (section): its near wall plane (z = +2 in section coordinates) = 04's tube end; its route start continues 04's route
+> 42:RT = SEC['route']; z0s = -RT['z0']; xs = np.array(RT['x'])
+> 45:T = np.array([float(r4[-1][0]) - RX(z0s), 0.0, z_end4 - Z_NEAR_SEC])   # route x continuous at the section's route start; near wall at 04's end
+> 46:# section route points (world), from its first point to the level end inside the Sock Rescue tunnel
+> 51:# ---- connector route 04 end -> section start (the doorway): C1 Hermite, both ends heading -z
+> 60:    D5 = L05['drum']; R5 = D5['r']; r5 = np.array(L05['route']['points'])
+> 83:    # large off-centre drum (Blender connector, 6 u); the S-river runs on, and 06's own route climbs the banked crest
+> 84:    D6 = L06['drum']; r6 = np.array(L06['route']['points']); LC6 = 6.0 …[+2189 chars]
+
+### 🤖 Claude — 2026-11-22T21:54:51.551Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json, math\nL=json.load(open('/home/user/ws46/world/game/a05/layout.json'))\nP=L['route']['points']; xa=L['drum']['axis_x']\nprint(' '.join(f\"{p[2]:.1f}:{p[0]-xa:+.2f}\" for p in P[200:640:10]))\nEOF\nsed -n 20,40p /home/user/rainbow-/tools/screenkit/screens/05/fit05.py", "description": "Sample 05 route finely and read fit05 route code"}`
+
+### 🧑 User — 2026-11-22T21:54:51.622Z
+
+> ↩︎ result: -9.9:-0.10 -10.4:-0.07 -10.8:-0.04 -11.3:-0.01 -11.8:+0.02 -12.3:+0.06 -12.8:+0.10 -13.3:+0.14 -13.8:+0.19 -14.3:+0.23 -14.8:+0.28 -15.3:+0.33 -15.8:+0.37 -16.3:+0.42 -16.8:+0.46 -17.3:+0.50 -17.8:+0.54 -18.3:+0.58 -18.8:+0.63 -19.3:+0.67 -19.8:+0.71 -20.3:+0.75 -20.8:+0.78 -21.3:+0.81 -21.8:+0.83 -22.3:+0.84 -22.8:+0.84 -23.3:+0.82 -23.8:+0.79 -24.3:+0.74 -24.8:+0.68 -25.3:+0.62 -25.8:+0.58 -26.3:+0.54 -26.8:+0.49 -27.3:+0.45 -27.8:+0.41 -28.3:+0.37 -28.8:+0.33 -29.3:+0.29 -29.8:+0.25 -30.3:+0.22 -30.8:+0.18 -31.3:+0.15
+> ap = argparse.ArgumentParser(); ap.add_argument('out'); ap.add_argument('--da2'); ap.add_argument('--set', action='append', default=[])
+> ap.add_argument('--tube-len', type=float, default=40.0); ap.add_argument('--open-end', action='store_true')
+> a = ap.parse_args(); os.makedirs(a.out, exist_ok=True)
+> REF = 'references/05_flow_into_the_current.png'; W, H = 864, 1536
+> M = dict(vp=(500.0, 474.0), ring=(437.0, 560.0, 420.0), waterline_y=700.0,
+>          benny_water=(430.0, 1185.0), benny_top=(430.0, 770.0),
+>          coins=[(474.0, 728.0, 47.0), (548.0, 660.0, 30.0), (482.0, 612.0, 27.0), (431.0, 575.0, 20.0), (466.0, 546.0, 13.0), (495.0, 533.0, 10.0),
+>                 (519. …[+1007 chars]
+
+### 🤖 Claude — 2026-11-22T21:55:51.315Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/screens/05/fit05.py'; s=open(p).read()\nold=\"route, s = fl.catmull_rom(np.array(ctrl), 0.05)\"\nnew=\"\"\"# r46 (Screen 05 frames 405-420): the far painted coins (radius <= 10 px, depths spread +1.2 u apart) pulled the route 0.84 u right of the drum\n# axis around z -22: with the right lane Benny swam at the very edge of the drum floor (camera 0.3 u from the wall, the river into the foam).\n# Soft cap on the route's distance from the axis: unchanged up to 0.40 u (the whole painted stretch at the picture view), then eased to <= 0.55 u.\nRC_L,  …[+2013 chars]`
+
+### 🧑 User — 2026-11-22T21:55:51.384Z
+
+> ↩︎ result: 90:lay['cam_axis'].update({'follow_route': 0.9, 'follow_lane': 0.65, 'max_off': 0.85, 'knee': 0.25})
+
+### 🤖 Claude — 2026-11-22T21:55:56.155Z
+
+> 🔧 **Bash** `{"command": "(python3 -I tools/world/build_world.py /home/user/ws46/world > /home/user/ws46/build3.log 2>&1; echo EXIT $? >> /home/user/ws46/build3.log) ; tail -n 12 /home/user/ws46/build3.log; python3 - <<'EOF'\nimport json\nL=json.load(open('/home/user/ws46/world/game/a05/layout.json')); xa=L['drum']['axis_x']; P=L['route']['points']\nprint('max |route - axis|', round(max(abs(p[0]-xa) for p in P),3), 'npts', len(P))\nEOF", "description": "Rebuild world with capped route", "timeout": 600000}`
+
+### 🧑 User — 2026-11-22T21:57:00.282Z
+
+> ↩︎ result: area 04   cached                                      0.1 s
+>   area 05   built fit,geometry,bake                    61.5 s
+>   area 06   cached                                      0.1 s
+>   area 07   cached                                      0.1 s
+>   assemble  ran        0.2 s
+>   detail    ran        0.2 s
+>   layout    ran        0.1 s
+>   connectors built      1.6 s   (b6a4de7072)
+>   files     ran        0.0 s
+> world ready: /home/user/ws46/world/game/play3.html  (64.0 s; report /home/user/ws46/world/build_report.md)
+> EXIT 0
+> max |route - axis| 0.543 npts 849
+
+### 🤖 Claude — 2026-11-22T21:57:03.931Z
+
+Route now stays within 0.54 units of the axis. Running the clip test and the probe again in the background while I work on the water material.
+
+### 🤖 Claude — 2026-11-22T21:57:06.985Z
+
+> 🔧 **Bash** `{"command": "PLAN=$(cat qa/kit45/run/swipe_plan_05_06.json); export NODE_PATH=$(npm root -g); rm -rf /home/user/ws46/probe3 /home/user/ws46/clip_new3;\n(node tools/world/probe_frames.cjs /home/user/ws46/world/game /home/user/ws46/probe3 0,60,150,330,409,415 \"$PLAN\" 's0=88&sentinel=1' > /home/user/ws46/probe3.log 2>&1; echo EXIT $? >> /home/user/ws46/probe3.log) &\n(TOUCH=1 FRAMEQA=1 EDGEQA=1 RENDER_EVERY=15 node tools/reflock/section_run.cjs /home/user/ws46/world/game /home/user/ws46/clip_new3 run 16 \"$PLAN\" 's0=88&sentinel=1' > /home/user/ws46/clip_new3.log 2>&1; echo EXIT $? >> /home/use …[+131 chars]`
+
+### 🧑 User — 2026-11-22T21:57:07.040Z
+
+> ↩︎ result: Command running in background with ID: b1wvlyq53. Output is being written to: /tmp/claude-0/-home-user-rainbow-/b194400e-972b-5b24-a1b4-4982954cc18c/tasks/b1wvlyq53.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-22T21:57:23.065Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/tools/screenkit/water_ribbon.js", "offset": 27, "limit": 50}`
+
+### 🧑 User — 2026-11-22T21:57:23.115Z
+
+> ↩︎ result: 27	      float star = exp(-dot(q, q) / 0.00012) + exp(-abs(q.x) / 0.03) * exp(-q.y * q.y / 0.00003) + 0.7 * exp(-abs(q.y) / 0.03) * exp(-q.x * q.x / 0.00003); col = mix(col, vec3(1.0), clamp(star * tw, 0.0, 1.0)); }
+> 28	    return clamp(col, 0.0, 1.0); }
+> 29	  float zt = clamp((L.z - uRouteZ.x) / (uRouteZ.y - uRouteZ.x), 0.0, 1.0), e = 0.03 / max(1e-3, uRouteZ.y - uRouteZ.x);
+> 30	  float rx = texture2D(uRouteX, vec2(zt, 0.5)).r, sl = (texture2D(uRouteX, vec2(min(1.0, zt + e), 0.5)).r - texture2D(uRouteX, vec2(max(0.0, zt - e), 0.5)).r) / 0.06;
+> 31	  float lat = (L.x - rx) / sqrt(1.0 + sl * sl), d = -L.z + t * flow, hw = uRouteZ.z;
+> 32	  if (gRUv.x > 1.5) { lat = gRUv.y; d = gRUv.z + t * flow; }   /* r46: a world connector strip gives the exact lateral (m) + the area's along distance */
+> 33	  // the whole band pattern swings across the river in S-curves (the painting's pink ribbons sweep from side to side)
+> 34	  float n = lat / hw + 0.42 * sin(d * 0.95 + 0.6) + 0.14 * sin(d * 2.2 + 2.0), an = abs(n) + 0.05 * sin(d * 2.6 + n * 2.5);   // stronger, tighter S-swing (painting)
+> 35	  vec3 cyD = vec3(4.0, 139.0, 234.0) / 255.0, cyM = vec3(10.0, 168.0, 250.0) / 255.0, cyB = vec3(42.0, 220.0, 249.0 …[+4504 chars]
+
