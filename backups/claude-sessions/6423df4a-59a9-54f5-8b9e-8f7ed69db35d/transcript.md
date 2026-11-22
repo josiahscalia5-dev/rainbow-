@@ -1478,3 +1478,27 @@ My goal is to have the same useful development capabilities that were helping my
 > ## mcp_servers {"plugin:playwright:playwright": {"source": "playwright plugin (npx @playwright/mcp@latest)", "needed": true, "check": "claude mcp list"}, "World Labs Atlas": {"source": "claude.ai connector (https://api.atlas.worldlabs.ai/mcp), per Claude account", "needed": "only for new World Labs tasks", "reconnect": "claude.ai -> Settings -> Connectors -> World Labs Atlas -> sign in", "credits": "task tools spend World Labs credits: ask the user first"}, "github": {"source": "Claude GitHub integration (git proxy + GitHub MCP)", "needed": true, "reconnect": "connect GitHub to the Claude account + install the Claude GitHub App on josiahscalia5-dev/rainbow-"}, "blender_mcp": {"source": "uvx mcp-for-blender", "needed": false, "note": "needs a desktop Blender UI; headless Blender scripts are used instead"}, "template": ".mcp.json.template (no secrets; .mcp.json is git-ignored)"}
 > ## plug …[+887 chars]
 
+### 🤖 Claude — 2026-11-22T14:59:24.507Z
+
+Writing the comparison report now. One last quick check first: whether the optional Runpod and spaitial-ai plugins exist in the directory.
+
+### 🤖 Claude — 2026-11-22T14:59:24.953Z
+
+> 🔧 **SearchPlugins** `{"keywords": ["runpod", "spaitial", "meshy", "rodin hyper3d"]}`
+
+### 🧑 User — 2026-11-22T14:59:25.394Z
+
+> ↩︎ result: {"results":[{"id":"plugin_01LLaHeMvnzBdyHYEGGSUNZi","name":"7ede45e8-e105-4985-bc52-b89ffc29c775","display_name":"Meshy","description":"Generate 3D models, textures, and images, rig and animate characters, and prepare models for 3D printing with the Meshy AI API.","enabled":false,"presents_as":null,"installation_preference":"available","created_at":"2026-09-24T20:15:28.311890Z","updated_at":"2026-09-29T17:03:03.856704Z","partition_by":"marketplace","marketplace_id":"marketplace_01VNB7JgJyYTuJiDfXSABKm3","marketplace_name":"anthropic-plugin-directory","marketplace_display_name":"Anthropic Directory","marketplace_kind":"other_catalog","author":{"name":"Meshy","email":null,"url":null},"publisher":{"tier":"partner","name":"meshy-dev","basis":"directory_review"},"content_scan":null,"components":[{"type":"skill","name":"7ede45e8-e105-4985-bc52-b89ffc29c775:meshy-3d-generation","description":null,"origin":null},{"type":"skill","name":"7ede45e8-e105-4985-bc52-b89ffc29c775:meshy-3d-printing","description":null,"origin":null},{"type":"skill","name":"7ede45e8-e105-4985-bc52-b89ffc29c775:meshy-openclaw","description":null,"origin":null}],"reach":"contained","setup_started_at":null,"setup_dismi …[+28634 chars]
+
+### 🤖 Claude — 2026-11-22T14:59:54.251Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/backups/TOOL_RESTORE_REPORT_2026-11-22.md", "content": "# Tool restore report — previous Claude account → new Claude account (2026-11-22 ~15:05 UTC)\n\nNew-account lead branch `ccr-0bbd5b9d-js1cpg` (continues `ccr-80cdb162-4sqz1a` = 6b5e632, which contains 791654a). Nothing merged, reset or deleted.\nPrevious-account snapshot = `backups/LIVE_TOOLS_STATE.json` at 6b5e632 (14:10 UTC); `TOOL_MANIFEST.json`, `MCP_SETUP.md`, `.mcp.json.template` identical on both branches.\n\nLegend: ✔ yes · ✘ no · — not applicable. \"Tested\" = a real action this session, not a l …[+6113 chars]`
+
+### 🧑 User — 2026-11-22T14:59:54.319Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/backups/TOOL_RESTORE_REPORT_2026-11-22.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-22T14:59:56.270Z
+
+> 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:tool-restore 2>&1 | tail -4; git rev-parse HEAD; git ls-remote origin refs/heads/ccr-0bbd5b9d-js1cpg; git log -1 --stat --format=%s | head -12", "description": "Save the tool-restore changes to GitHub and verify", "timeout": 300000}`
+
