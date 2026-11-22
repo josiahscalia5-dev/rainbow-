@@ -40,8 +40,8 @@ const q = new URLSearchParams(location.search);
 // round 38: bonus test areas (never the default game). ?area=sock (default) = Laundry Tunnel: Sock Rescue. Shared with Screen 05's kit:
 // Benny + paddling shader, controls.js (lanes / leap / dive / coins), swimfx, camera + reference-video movement, the round-37 live river.
 const AREA = (q.get('area') ?? 'sock').toLowerCase();
-const CAM39 = new THREE.PerspectiveCamera();
-for (const [k, v] of [['speed', '1.9'], ['ownoff', '1'], ['move', '1'], ['w37', '1'], ['len', '16'], ['w37rw', '0.7'], ['w37ck', '0.85']]) if (!q.has(k)) q.set(k, v);   // wide river: narrow foam banks along the walls, as in the picture
+const CAM39 = new THREE.PerspectiveCamera(), CHASE = { p: new THREE.Vector3(), l: new THREE.Vector3(), init: false };
+for (const [k, v] of [['c_DIVE_FRAC', '0.55'], ['speed', '1.9'], ['ownoff', '1'], ['move', '1'], ['w37', '1'], ['len', '16'], ['w37rw', '0.7'], ['w37ck', '0.85']]) if (!q.has(k)) q.set(k, v);   // wide river: narrow foam banks along the walls, as in the picture
 const W37 = +(q.get('w37') ?? 0), CLEAN37 = true;   // the tunnel is drawn by code (no Screen-05 painted pixels)
 const W = +(q.get('w') ?? 412), H = +(q.get('h') ?? 915);
 const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
@@ -838,14 +838,18 @@ window.step = (t, dt, steer, speed) => {
   else qYaw.identity();
   radv.copy(camera.position).sub(A0); radv.addScaledVector(A, -radv.dot(A)); { const r = radv.length(), r2 = softLim(r, CAMP.RMAX, CAMP.RMAX - CAMP.R0); if (r2 < r) camera.position.addScaledVector(radv, r2 / r - 1); }   // inside the tunnel
   camera.quaternion.copy(qYaw).multiply(camQ0).multiply(qRoll.setFromAxisAngle(FWDL, st.camRoll.x)); camera.updateMatrixWorld();
-  // round 39c (the user's reference-video movement): frame 0 = the picture's camera; within the first ~1.3 s the camera glides to the CENTRE
-  // of the tunnel right behind Benny (full rings all round, the far end straight ahead), follows only part of his lane changes (he crosses the
-  // river on screen), and the tunnel turns to normal perspective so the rings stream past him. The picture stays painted on the objects.
+  // round 39d (the user's reference video = the MOVEMENT): frame 0 = the picture's camera; within ~1.3 s it becomes a CHASE camera that rides
+  // the river behind Benny (on his path, 1.45 u back), looks ahead along the river so it turns into upcoming bends, follows part of his
+  // lane changes (he crosses the river on screen) and part of his leaps (he never jumps out of frame), smoothed so it never jerks; the tunnel
+  // turns to normal perspective so rings, walls and water pass him with real depth. The picture stays painted on the objects (baked).
   if (FIT39) { const w = THREE.MathUtils.smoothstep(st.s, 0.2, +(q.get('camin') ?? 2.0));
-    if (w > 0) { const bp = benny.position, tB = bp.dot(A), lB = bp.clone().sub(A0).dot(RR);
-      const cp = A0.clone().addScaledVector(A, tB - 1.45).addScaledVector(NUP, 0.16).addScaledVector(RR, 0.3 * lB);
-      CAM39.position.copy(cp); CAM39.up.copy(NUP); CAM39.lookAt(A0.clone().addScaledVector(A, tB + 7).addScaledVector(NUP, -0.12).addScaledVector(RR, 0.1 * lB));
-      camera.position.lerp(cp, w); camera.quaternion.slerp(CAM39.quaternion, w); camera.updateMatrixWorld(); }
+    const sB = st.s, hB = CT.c.h ?? 0, Fb = frameAt(sB - 1.45), Fa = frameAt(sB + 3.2), k = dt > 0 ? 1 - Math.exp(-dt * 7) : 1;
+    const cp = at(sB - 1.45, new THREE.Vector3()).addScaledVector(Fb.r, 0.35 * st.lat).addScaledVector(NUP, 0.78 + 0.4 * Math.max(0, hB));
+    const lk = at(sB + 3.2, new THREE.Vector3()).addScaledVector(Fa.r, 0.12 * st.lat).addScaledVector(NUP, 0.2 + 0.3 * Math.max(0, hB));
+    { const r = cp.clone().sub(A0); r.addScaledVector(A, -r.dot(A)); const m = r.length(); if (m > 0.62) cp.addScaledVector(r, 0.62 / m - 1); }   // stay well inside the tunnel
+    if (!CHASE.init || dt === 0) { CHASE.p.copy(cp); CHASE.l.copy(lk); CHASE.init = true; } else { CHASE.p.lerp(cp, k); CHASE.l.lerp(lk, 1 - Math.exp(-dt * 5)); }
+    if (w > 0) { CAM39.position.copy(CHASE.p); CAM39.up.copy(NUP); CAM39.lookAt(CHASE.l);
+      camera.position.lerp(CHASE.p, w); camera.quaternion.slerp(CAM39.quaternion, w); camera.updateMatrixWorld(); }
     REMAP.uZ2.value = THREE.MathUtils.lerp(K.Z2, 300, w); PROJ39.uPAll.value = 1 - w; }
   REMAP.uCam.value.copy(camera.position); REMAP.uOwnOff.value = OWNOFF ? THREE.MathUtils.smoothstep(st.s, 0.6, 1.8) : 0; FLOW.uFlow.value = t * +(q.get('flowspeed') ?? 0.55); FLOW.uW37T.value = t; FLOW.uFlowOn.value = THREE.MathUtils.smoothstep(st.s, 0.0, 0.7);
   core.position.copy(camera.position).add(A0).addScaledVector(A, 300); core.scale.set(33, 33, 1);
@@ -940,7 +944,7 @@ if (AREA === 'sock') {
     if (paused) { if (pAt === null) pAt = t; return step0(pAt - tOff, 0, steer, 0); }
     if (pAt !== null) { tOff += t - pAt; pAt = null; }
     const tt = t - tOff, o = step0(tt, dt, steer, speed); if (window.__bigBubble) window.__bigBubble.position.y += 0.0006 * Math.sin(tt * 1.3); if (window.__fall) window.__fall.uniforms.uT.value = tt; if (window.__chev) { window.__chev.uniforms.uT.value = tt; window.__chevMove(o.s, o.lat); }
-    return { ...o, socks: SOCK.update(tt, o.s, frameAt(o.s)) };
+    const sk = SOCK.update(tt, o.s, frameAt(o.s)); return { ...o, socks: sk, box: q.get('qabox') === '1' && window.bennyBox ? window.bennyBox(6) : undefined };
   };
   window.sockLayout = () => SOCK.socks.map((k) => ({ s: k.s, lat: k.lat, got: k.got }));
 }
@@ -994,14 +998,26 @@ if (FIT39) {   // round 39: the picture's camera = the start camera; its depth m
   // swims (after the live projection fades) instead of switching to the code-drawn version. Wall panel 1 / ring 1 serve every panel / ring.
   scene.updateMatrixWorld(true);
   const bakeTo = (mesh, [bw, bh]) => {
-    const t = new THREE.WebGLRenderTarget(bw, bh, { type: THREE.HalfFloatType, generateMipmaps: true, minFilter: THREE.LinearMipmapLinearFilter, magFilter: THREE.LinearFilter, wrapS: THREE.RepeatWrapping });
+    const t = new THREE.WebGLRenderTarget(bw, bh);
     const bm = new THREE.ShaderMaterial({ uniforms: { ...REMAP, ...PROJ39 }, side: THREE.DoubleSide, depthTest: false, depthWrite: false,
       vertexShader: REMAP_GLSL + 'varying vec3 vKWP; varying float vKT; void main(){ vec4 wp = modelMatrix * vec4(position, 1.0); vKWP = kitRemap(wp.xyz); vKT = max(dot(wp.xyz, uAx), 1e-3); gl_Position = vec4(uv * 2.0 - 1.0, 0.0, 1.0); }',
-      fragmentShader: PROJ_GLSL + 'varying vec3 vKWP; varying float vKT; void main(){ vec4 pj = proj39(vKWP, vKT, vKT); gl_FragColor = vec4(pj.rgb * pj.a, pj.a); }' });
+      fragmentShader: PROJ_GLSL + 'varying vec3 vKWP; varying float vKT; void main(){ vec4 pj = proj39(vKWP, vKT, vKT); gl_FragColor = vec4(pow(max(pj.rgb, 0.0), vec3(1.0 / 2.2)), step(0.5, pj.a)); }' });
     const tmp = new THREE.Mesh(mesh.geometry, bm); tmp.matrixAutoUpdate = false; tmp.matrix.copy(mesh.matrixWorld); tmp.frustumCulled = false;
     const sc2 = new THREE.Scene(); sc2.add(tmp); const cc = renderer.getClearColor(new THREE.Color()), ca = renderer.getClearAlpha();
     renderer.setRenderTarget(t); renderer.setClearColor(0x000000, 0); renderer.clear(); renderer.render(sc2, camera); renderer.setRenderTarget(null); renderer.setClearColor(cc, ca);
-    bm.dispose(); return t.texture; };
+    bm.dispose(); const px = new Uint8Array(bw * bh * 4); renderer.readRenderTargetPixels(t, 0, 0, bw, bh, px); t.dispose();
+    // pull-push fill: every texel the picture did not show takes the average colour of the nearest painted texels (coarse-to-fine)
+    const lv = [{ w: bw, h: bh, c: new Float32Array(bw * bh * 4) }]; for (let i = 0; i < bw * bh; i++) { const a = px[i * 4 + 3] / 255; for (let c = 0; c < 3; c++) lv[0].c[i * 4 + c] = px[i * 4 + c] * a; lv[0].c[i * 4 + 3] = a; }
+    while (lv[lv.length - 1].w > 1 || lv[lv.length - 1].h > 1) { const L = lv[lv.length - 1], w2 = Math.max(1, L.w >> 1), h2 = Math.max(1, L.h >> 1), c2 = new Float32Array(w2 * h2 * 4);
+      for (let y = 0; y < h2; y++) for (let x = 0; x < w2; x++) for (let dy = 0; dy < 2; dy++) for (let dx = 0; dx < 2; dx++) { const sx = Math.min(L.w - 1, x * 2 + dx), sy = Math.min(L.h - 1, y * 2 + dy), si = (sy * L.w + sx) * 4, di = (y * w2 + x) * 4; for (let c = 0; c < 4; c++) c2[di + c] += L.c[si + c] * 0.25; }
+      lv.push({ w: w2, h: h2, c: c2 }); }
+    for (let l = lv.length - 2; l >= 0; l--) { const L = lv[l], U2 = lv[l + 1];
+      for (let y = 0; y < L.h; y++) for (let x = 0; x < L.w; x++) { const i = (y * L.w + x) * 4, a = L.c[i + 3]; if (a >= 0.999) continue;
+        const ui = (Math.min(U2.h - 1, y >> 1) * U2.w + Math.min(U2.w - 1, x >> 1)) * 4, ua = Math.max(U2.c[ui + 3], 1e-6);
+        for (let c = 0; c < 3; c++) L.c[i + c] += (1 - a) * U2.c[ui + c] / ua; L.c[i + 3] = 1; } }
+    const out = new Uint8Array(bw * bh * 4); for (let i = 0; i < bw * bh; i++) { for (let c = 0; c < 3; c++) out[i * 4 + c] = Math.round(Math.min(255, lv[0].c[i * 4 + c])); out[i * 4 + 3] = 255; }
+    const dtx = new THREE.DataTexture(out, bw, bh); dtx.colorSpace = THREE.SRGBColorSpace; dtx.generateMipmaps = true; dtx.minFilter = THREE.LinearMipmapLinearFilter; dtx.magFilter = THREE.LinearFilter;
+    dtx.wrapS = THREE.RepeatWrapping; dtx.anisotropy = 8; dtx.needsUpdate = true; return dtx; };
   for (const b of window.__bake39 ?? []) { const tex = bakeTo(b.mesh, b.size);
     for (const m of [b.mat, b.share].filter(Boolean)) { const u = m.userData.bakeU ?? m.uniforms; u.uBake.value = tex; u.uBakeOn.value = q.get('bake39') === '0' ? 0 : 1; } }
   window.__baked39 = (window.__bake39 ?? []).length;
