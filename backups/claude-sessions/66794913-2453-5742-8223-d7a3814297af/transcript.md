@@ -2257,3 +2257,24 @@ Everything is saved to GitHub: commit `64a4864` on branch `ccr-c1b272d2-3ru7yx`.
 
 Still waiting on your answer: should I put today's 05 and 06 into the connected game, record Benny swimming from 05 into 06, and build the APK?
 
+### 🧑 User — 2026-11-22T18:34:50.380Z
+
+So for the it's a real game, but I have a picture. You said, wait, while Benny is swimming, you see, you couldn't give me a percentage, but is there eventually getting to a point where you're gonna know if it's exactly like my approved screen, like the scenery and stuff? I just want to make sure that that goes with it. Like, I want to make sure that my screens are going matching the scenery, like my approved screen, but it feels like the paint's character swimming or moving through it, like, you know, inside the game.
+
+### 🤖 Claude — 2026-11-22T18:35:10.064Z
+
+Yes. There is a way to measure it while Benny swims, and I can add it to the automatic checks. Here's how it works.
+
+**Why the picture is in the game.** Your approved picture is used like paint. It is painted once onto the real 3D tunnel walls, rings, water and foam. The game is not showing your picture behind Benny. When he swims forward, he is moving through 3D shapes covered with your artwork, which is why it looks like your screen from new angles too.
+
+**Why "exactly" isn't possible everywhere.** Your picture shows one moment from one spot. Once Benny swims on, the camera sees parts your picture never showed, like the walls beside him or the tunnel past a turn. Nobody can compare pixel-for-pixel there, because your picture has no pixels for those places. What can be measured is whether the scenery keeps the same design everywhere: same walls, gold rings, water, foam and colours.
+
+**Three numbers on every check from now on:**
+1. **At your approved camera:** the percentage I've been reporting (05 is at 81.7 %, 06 at 84.4 %).
+2. **Repeated along the level:** your tunnel repeats ring after ring. At each ring further down the level, I put the camera in the same position relative to the scenery as in your picture. Then I score that view against your approved picture with the same percentage. If the scenery really continues your design, those views should score close to number 1. If one place scores low, that's a spot where the scenery stops looking like yours, and I fix it.
+3. **Each surface while swimming:** in the swimming frames, the game knows which pixels are wall, ring, water and foam. Each is compared with the same surface in your picture for colour, brightness and detail. That gives scores like "walls 90 % like your walls, water 85 %".
+
+These numbers tell us where it falls short. The final judge is still you watching an uninterrupted recording of Benny swimming through 05 into 06. The goal for both is the same as before: about 90 % at your camera, and every place along the level close to that.
+
+Should I add these swimming measurements now and then finish the 05 → 06 recording and the APK?
+
