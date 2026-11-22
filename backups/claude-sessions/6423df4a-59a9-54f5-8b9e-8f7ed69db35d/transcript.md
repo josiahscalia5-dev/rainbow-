@@ -1502,3 +1502,267 @@ Writing the comparison report now. One last quick check first: whether the optio
 
 > 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:tool-restore 2>&1 | tail -4; git rev-parse HEAD; git ls-remote origin refs/heads/ccr-0bbd5b9d-js1cpg; git log -1 --stat --format=%s | head -12", "description": "Save the tool-restore changes to GitHub and verify", "timeout": 300000}`
 
+### 🧑 User — 2026-11-22T15:00:12.285Z
+
+> ↩︎ result: "note": "following session branch 'ccr-0bbd5b9d-js1cpg' (config branch 'claude/rainbow-r22-restore-ut3m39')",
+>   "commit": "5d524695fdf663f6103617b2f8f59158f50aa931",
+>   "duration_s": 16
+> }
+> 5d524695fdf663f6103617b2f8f59158f50aa931
+> 5d524695fdf663f6103617b2f8f59158f50aa931	refs/heads/ccr-0bbd5b9d-js1cpg
+> autosave: Rainbow 2026-11-22 14:59 UTC
+> 
+>  backups/BACKUP_LOG.md                              |  1 +
+>  backups/BACKUP_STATUS.json                         | 14 ++---
+>  backups/CONVERSATION_INDEX.md                      |  2 +-
+>  backups/LIVE_TOOLS_STATE.json                      |  2 +-
+>  backups/MANIFEST.json                              | 11 +++-
+>  backups/TOOL_RESTORE_REPORT_2026-11-22.md          | 67 ++++++++++++++++++++++
+>  .../transcript.md                                  | 24 ++++++++
+>  .../transcript.sanitized.jsonl                     | 16 ++++++
+>  8 files changed, 125 insertions(+), 12 deletions(-)
+
+### 🤖 Claude — 2026-11-22T15:00:16.357Z
+
+> 🔧 **TaskUpdate** `{"taskId": "3", "status": "completed"}`
+
+### 🧑 User — 2026-11-22T15:00:16.371Z
+
+> ↩︎ result: Updated task #3 status
+
+### 🤖 Claude — 2026-11-22T15:00:16.812Z
+
+> 🔧 **TaskUpdate** `{"taskId": "4", "status": "completed"}`
+
+### 🧑 User — 2026-11-22T15:00:16.825Z
+
+> ↩︎ result: Updated task #4 status
+
+### 🤖 Claude — 2026-11-22T15:00:17.261Z
+
+> 🔧 **TaskUpdate** `{"taskId": "5", "status": "completed"}`
+
+### 🧑 User — 2026-11-22T15:00:17.274Z
+
+> ↩︎ result: Updated task #5 status
+
+### 🤖 Claude — 2026-11-22T15:00:17.610Z
+
+> 🔧 **TaskUpdate** `{"taskId": "6", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-22T15:00:17.625Z
+
+> ↩︎ result: Updated task #6 status
+
+### 🤖 Claude — 2026-11-22T15:00:30.815Z
+
+Your development setup is restored and every tool was tested with a real action. The report is saved to GitHub as `backups/TOOL_RESTORE_REPORT_2026-11-22.md`.
+
+**RAINBOW 3D BACKUP VERIFIED**: branch `ccr-0bbd5b9d-js1cpg`, commit `5d524695fdf663f6103617b2f8f59158f50aa931`, and GitHub has the same commit. All 615 large Git LFS files are real files, your 13 protected pictures pass their checksum, and the five-minute autosave is running.
+
+### Plugins: previous account → new account
+| Plugin | Previous | New account now |
+|---|---|---|
+| claude-code-setup, serena, typescript-native-lsp | on | **Turned back on** with your install card and working. serena is connected. I installed the TypeScript language server it needs, and every future session now installs it automatically. |
+| skill-creator | on | Not re-added: this session already has the same tool built in. |
+| playwright, parallax-threejs, design, worldlabs | on | On and working. |
+| context7, frontend-design | off | On (new). |
+| feature-dev, Superpowers, pyright-lsp | off | **Added** from your card. |
+| code-review | off | Not added: already built in. |
+| Meshy, Runpod, spaitial-ai | off | Left off. They are paid services with their own keys and need your OK. Hyper3D Rodin isn't in the plugin directory. |
+
+### Tested with a real action
+| Tool | Result |
+|---|---|
+| GitHub | Read files on this branch and pushed (GitHub matches). Draft PR #32 is untouched. |
+| Blender 5.3 + Geometry Nodes | Rebuilt all of Screen 06's 3D scenery and exported it in 16 seconds. |
+| SAM 2.1 + texture baking | Free models downloaded. SAM 2 cut Benny out of your picture with a 0.951 fit score. |
+| Playwright + Chromium | Screen 06 at your picture's camera position: **88.5 %** of scenery pixels match your painting, exactly the saved result (old game: 3.8 %). |
+| Three.js DevTools | Connected to the running Screen 06 page and read its live stats (233 draw calls, 310,000 triangles). |
+| Chrome DevTools, Context7, World Labs Atlas | Working. Only free checks: the World Labs key has 2,030 credits and nothing was spent. |
+| Android | The test APK built in 1 min 31 s (118 MB, Screen 06 included). **It has not been tested on a phone**: there is no device or emulator here. |
+| glTF Transform | Read the Screen 06 model. It runs when needed and isn't permanently installed. |
+
+### Specialists
+All 10 specialist definitions are present, exactly as you saved them, and can be started here. **None is running right now**; running specialists never carry over to a new account. I'll start one only for a specific job. I also updated the old status file, which still listed a team from an earlier round as running.
+
+### What didn't transfer
+- **Spector.js** fails because its own files are missing from the Three.js plugin package. There is no setting you can change, and Screen 06 doesn't need it.
+- **Blender MCP** needs Blender's desktop window. The headless Blender here does all the work.
+- **Logins:** the Context7 and design plugin copies (Slack, Figma and similar) want a login that can't be done from this cloud session. Context7 already works through your claude.ai connector, so nothing is lost.
+- **Old Marble worlds:** this key can't see the two Marble worlds made on the old account. Their downloaded files are all saved in your repository.
+
+Now continuing Screen 06 with your bank feedback: first the lean and camera tilt through the crest, comparing the current bank with a smoother one at identical camera positions.
+
+### 🤖 Claude — 2026-11-22T15:00:31.717Z
+
+> 🔧 **Bash** `{"command": "grep -n -iE \"roll|bank|lean|tilt\" tools/screenkit/screen.html | head -80; wc -l tools/screenkit/screen.html", "description": "Find bank, roll and lean code in the screen page"}`
+
+### 🧑 User — 2026-11-22T15:00:31.753Z
+
+> ↩︎ result: 24:// coins / HUD / bubbles itself, clean plate inside the masks), exactly the proven Bubble Dash method (tools/reflock/section.html, which
+> 47:// ---------------- route (the painted river's centre line, Benny's path): points every ds, bank angle per point ----------------
+> 48:const RP = LAY.route.points.map(V3), RDS = LAY.route.ds, RBANK = LAY.route.bank ?? RP.map(() => 0), RLEN = (RP.length - 1) * RDS;
+> 53:  const x = Math.min(Math.max(s / RDS, 0), RP.length - 1.0001), i = Math.floor(x), b = lerp(RBANK[i], RBANK[i + 1], x - i);
+> 85:  uniforms: { uBase: { value: base }, uRep: { value: new THREE.Vector2(...rep) }, uBake: { value: null }, uBakeOn: { value: 0 }, uScroll: { value: new THREE.Vector2(0, 0) },
+> 88:  fragmentShader: `uniform sampler2D uBase; uniform vec2 uRep; uniform sampler2D uBake; uniform float uBakeOn; uniform vec2 uScroll; uniform vec3 uTint; uniform float uAlpha; uniform vec3 uGlow; uniform float uTime;
+> 258:// foam domes: the GN foam banks keep a soft lavender-white shade (no picture bake needed: small, many)
+> 364:const ROLL = +(q.get('roll') ?? LAY.cam_roll ?? 0.5);                       // how much of the route's bank / climb the camera follows
+> 365:// the frame the cam …[+922 chars]
+
+### 🤖 Claude — 2026-11-22T15:00:33.005Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/tools/screenkit/screen.html", "offset": 44, "limit": 30}`
+
+### 🧑 User — 2026-11-22T15:00:33.025Z
+
+> ↩︎ result: 44	document.getElementById('title').textContent = (LAY.number ?? LAY.screen) + ' · ' + LAY.title;
+> 45	document.title = 'Rainbow ' + LAY.screen;
+> 46	
+> 47	// ---------------- route (the painted river's centre line, Benny's path): points every ds, bank angle per point ----------------
+> 48	const RP = LAY.route.points.map(V3), RDS = LAY.route.ds, RBANK = LAY.route.bank ?? RP.map(() => 0), RLEN = (RP.length - 1) * RDS;
+> 49	const at = (s, out) => { const x = Math.min(Math.max(s / RDS, 0), RP.length - 1.0001), i = Math.floor(x), f = x - i; return out.copy(RP[i]).lerp(RP[i + 1], f); };
+> 50	const _a = new THREE.Vector3(), _b = new THREE.Vector3();
+> 51	const frameAt = (s) => { at(Math.min(RLEN, s + 0.06), _a); at(Math.max(0, s - 0.06), _b); const t = _a.clone().sub(_b).normalize();
+> 52	  const r0 = new THREE.Vector3().crossVectors(t, UPV).normalize(), n0 = new THREE.Vector3().crossVectors(r0, t).normalize();
+> 53	  const x = Math.min(Math.max(s / RDS, 0), RP.length - 1.0001), i = Math.floor(x), b = lerp(RBANK[i], RBANK[i + 1], x - i);
+> 54	  const r = r0.clone().multiplyScalar(Math.cos(b)).addScaledVector(n0, Math.sin(b)), n = n0.clone().multiplyScalar(Math.cos(b)).addScaledVector(r0, -Math.sin(b));
+> 55	  …[+2599 chars]
+
+### 🤖 Claude — 2026-11-22T15:00:33.658Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/tools/screenkit/screen.html", "offset": 300, "limit": 167}`
+
+### 🧑 User — 2026-11-22T15:00:33.687Z
+
+> ↩︎ result: 300	  const B = (LAY.bubbles ?? []).map((b) => b.slice()); for (let s = S_REF + 6; s < LEVEL; s += 1.2 + rp() * 1.4) { const F = frameAt(s), p = at(s, new THREE.Vector3()).addScaledVector(F.r, (rp() - 0.5) * 2.2).addScaledVector(F.n, 0.15 + rp() * 0.8); B.push([p.x, p.y, p.z, 0.03 + rp() * rp() * 0.06]); }
+> 301	  const bGeo = new THREE.SphereGeometry(1, 24, 16); bGeo.setAttribute('aPh', new THREE.InstancedBufferAttribute(new Float32Array(B.map(() => rp() * 6.28)), 1));
+> 302	  const bm = new THREE.ShaderMaterial({ transparent: true, depthWrite: false, uniforms: { uTime: GLOW.uTime, uL: { value: new THREE.Vector3(-0.25, 0.8, 0.55).normalize() } },
+> 303	    vertexShader: 'attribute float aPh; uniform float uTime; varying vec3 vN; varying vec3 vW; void main(){ vec4 w = modelMatrix * instanceMatrix * vec4(position, 1.0); w.y += 0.012 * sin(uTime * 1.3 + aPh); vW = w.xyz; vN = normalize(mat3(modelMatrix) * mat3(instanceMatrix) * normal); gl_Position = projectionMatrix * viewMatrix * w; }',
+> 304	    fragmentShader: `varying vec3 vN; varying vec3 vW; uniform vec3 uL; void main(){ vec3 N = normalize(vN), V = normalize(cameraPosition - vW); float c = abs(dot(N, V)), f = pow(1.0 - c, 1.6);
+> 305	   …[+21152 chars]
+
+### 🤖 Claude — 2026-11-22T15:00:53.363Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && python3 - <<EOF\nimport json,math\nL=json.load(open('$S/ws06/game/layout.json'))\nr=L['route']; b=r.get('bank'); ds=r['ds']; P=r['points']\nprint('ds',ds,'n',len(P),'len',(len(P)-1)*ds,'S_REF',L['cams'][0].get('s_ref'),'level_end',L.get('level_end'),'cam_roll',L.get('cam_roll'),'benny',L.get('benny'))\nfor i in range(0,len(P),max(1,int(0.5/ds))):\n    print(f\"s={i*ds:6.2f} p=({P[i][0]:6.2f},{P[i][1]:6.2f},{P[i][2]:7.2f}) bank={math.degrees(b[i]):6.1f}\")\nEOF\ngrep -n -iE \"bank\" tools/screenk …[+105 chars]`
+
+### 🧑 User — 2026-11-22T15:00:53.419Z
+
+> ↩︎ result: ds 0.05 n 900 len 44.95 S_REF 1.2000000000000002 level_end None cam_roll None benny {'pos': [-0.3285922607887036, 0.0, -1.477092408844259], 'height': 0.5743283187112417, 'bsize': 1.19, 'lift': 0.03, 'ahead': 0.15}
+> s=  0.00 p=( -0.33, -0.00,  -0.28) bank=   0.0
+> s=  0.50 p=( -0.32, -0.00,  -0.78) bank=   0.0
+> s=  1.00 p=( -0.32, -0.00,  -1.28) bank=   0.0
+> s=  1.50 p=( -0.34,  0.00,  -1.78) bank=  -0.0
+> s=  2.00 p=( -0.43,  0.02,  -2.27) bank=  -0.0
+> s=  2.50 p=( -0.67,  0.08,  -2.69) bank=  -0.2
+> s=  3.00 p=( -0.96,  0.17,  -3.09) bank=  -1.2
+> s=  3.50 p=( -1.26,  0.28,  -3.48) bank=  -5.2
+> s=  4.00 p=( -1.58,  0.39,  -3.84) bank= -14.9
+> s=  4.50 p=( -1.86,  0.51,  -4.23) bank= -29.7
+> s=  5.00 p=( -2.04,  0.62,  -4.69) bank= -44.3
+> s=  5.50 p=( -2.17,  0.72,  -5.16) bank= -54.7
+> s=  6.00 p=( -2.27,  0.81,  -5.64) bank= -61.3
+> s=  6.50 p=( -2.37,  0.89,  -6.12) bank= -66.2
+> s=  7.00 p=( -2.46,  0.97,  -6.61) bank= -70.2
+> s=  7.50 p=( -2.53,  1.03,  -7.10) bank= -71.6
+> s=  8.00 p=( -2.60,  1.09,  -7.59) bank= -71.6
+> s=  8.50 p=( -2.66,  1.15,  -8.08) bank= -71.6
+> s=  9.00 p=( -2.71,  1.19,  -8.58) bank= -71.6
+> s=  9.50 p=( -2.75,  1.23,  -9.08) bank= -71.6
+> s= 10.00 p=( -2.78,  1.26,  -9.58) bank= -71.6 …[+3880 chars]
+
+### 🤖 Claude — 2026-11-22T15:00:54.917Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/tools/screenkit/screens/06/fit06.py", "offset": 60, "limit": 60}`
+
+### 🧑 User — 2026-11-22T15:00:54.939Z
+
+> ↩︎ result: 60	                 for i, (x, y, r) in enumerate(M['coins'])]
+> 61	# ---- drum: axis along -z (vanishing at the VP); camera offset from the axis from the drifting ring centres
+> 62	oxR, oyR = fl.ring_offsets(cam, M['vp'], [r[:3] for r in M['rings']])
+> 63	# camera-frame offsets -> world: the camera's right / up axes (the axis direction is -z in the world)
+> 64	Rc = cam.R; right_w, up_w = Rc[:, 0], Rc[:, 1]
+> 65	def axis_for(R):
+> 66	    p = cam.C - (oxR * right_w + oyR * up_w) * R; return float(p[0]), float(p[1])
+> 67	# drum radius: the smallest drum (axis from the painted ring drift) that holds the whole crest ribbon + Benny with a wall margin
+> 68	WALL_MARGIN = 0.55
+> 69	def need(R):
+> 70	    xa_, ya_ = axis_for(R); return max(math.hypot(P[0] - xa_, P[1] - ya_) for P in water_pts + [Pb]) + 0.41 + WALL_MARGIN - R
+> 71	DRUM_R = float(fl.least_squares(lambda r: [need(r[0])], [3.0], bounds=(1.0, 12.0)).x[0])
+> 72	axis_pt = np.array([*axis_for(DRUM_R), 0.0])
+> 73	ya, xa = float(axis_pt[1]), float(axis_pt[0])
+> 74	chord = math.sqrt(max(0.01, DRUM_R ** 2 - ya ** 2))          # half width of the water pool on the drum floor (water plane y = 0)
+> 75	z_ring = [-(cam.F * DRUM_R / r) for (_, _, r) in M['rings']]  # dept …[+4728 chars]
+
+### 🧑 User — 2026-11-22T15:01:19.558Z
+
+[Request interrupted by user]
+
+### 🧑 User — 2026-11-22T15:01:37.720Z
+
+Hold on a second. I need you to pause for a second, because I'm trying to connect the Spectre and Blender and the logins in old Marble Worlds. You said
+
+### 🤖 Claude — 2026-11-22T15:01:53.645Z
+
+> 🔧 **Bash** `{"command": "P=/root/.claude/plugins/synced/57e00846-b250-49a2-84b8-7e6b26dbd789_9543b0a1-8328-4f5e-9ab5-a23a0d8efe00/b89c3ace-b56c-48b2-ac2c-3b9ee1b1100f; ls $P/vendor; grep -rn -i \"spector\" $P/README.md $P/package.json $P/scripts 2>/dev/null | head -12; cd /home/user/rainbow- && grep -n -iE \"world_id|worlds/|draft|full\" scripts/verify-assets.py | head -12", "description": "Check how Spector is packaged and which Marble worlds return 404"}`
+
+### 🧑 User — 2026-11-22T15:01:53.705Z
+
+> ↩︎ result: /root/.claude/plugins/synced/57e00846-b250-49a2-84b8-7e6b26dbd789_9543b0a1-8328-4f5e-9ab5-a23a0d8efe00/b89c3ace-b56c-48b2-ac2c-3b9ee1b1100f/README.md:144:Both of those, plus Spector setup, are also one guided command away instead of wiring them up by hand:
+> /root/.claude/plugins/synced/57e00846-b250-49a2-84b8-7e6b26dbd789_9543b0a1-8328-4f5e-9ab5-a23a0d8efe00/b89c3ace-b56c-48b2-ac2c-3b9ee1b1100f/README.md:149:◆  Set up Spector for GL-state-level debugging?
+> /root/.claude/plugins/synced/57e00846-b250-49a2-84b8-7e6b26dbd789_9543b0a1-8328-4f5e-9ab5-a23a0d8efe00/b89c3ace-b56c-48b2-ac2c-3b9ee1b1100f/README.md:173:Installing the plugin wires up four browser/GPU inspection tools automatically (chrome-devtools-mcp, threejs-devtools-mcp, playwright-mcp, and Spector for raw GL state), so you don't configure any of this by hand. The one exception is Spector, which needs a one-time build step (`scripts/setup-spector.sh`) if you want raw GL-state debugging specifically, since it's cloned and compiled rather than installed like the others. Skip it until you actually need it.
+> /root/.claude/plugins/synced/57e00846-b250-49a2-84b8-7e6b26dbd789_9543b0a1-8328-4f5e-9ab5-a23a0d8efe00/b89c3ace-b56c-48b2-ac2 …[+2159 chars]
+
+### 🤖 Claude — 2026-11-22T15:01:59.189Z
+
+> 🔧 **Bash** `{"command": "cat /root/.claude/plugins/synced/57e00846-b250-49a2-84b8-7e6b26dbd789_9543b0a1-8328-4f5e-9ab5-a23a0d8efe00/b89c3ace-b56c-48b2-ac2c-3b9ee1b1100f/scripts/setup-spector.sh | head -60; cd /home/user/rainbow- && python3 -c \"\nimport json;d=json.load(open('backups/TOOL_MANIFEST.json'))['marble_worldlabs'];print(json.dumps(d)[:700])\"", "description": "Read the Spector setup script and the saved Marble world list"}`
+
+### 🧑 User — 2026-11-22T15:01:59.241Z
+
+> ↩︎ result: #!/usr/bin/env sh
+> # macOS/Linux. Windows: use setup-spector.ps1 instead — POSIX shell
+> # doesn't run natively there. Both do the same thing; setup.ts picks the
+> # right one automatically based on platform.
+> #
+> # Clones and builds Spector.js's MCP server into a fixed, deterministic
+> # location so .mcp.json can reference it without a manual path edit.
+> set -e
+> 
+> PLUGIN_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+> VENDOR_DIR="$PLUGIN_ROOT/vendor/spector"
+> 
+> if [ -d "$VENDOR_DIR" ]; then
+>   echo "Spector already vendored at $VENDOR_DIR — skipping clone."
+> else
+>   git clone --depth 1 https://github.com/BabylonJS/Spector.js.git "$VENDOR_DIR"
+> fi
+> 
+> cd "$VENDOR_DIR/mcp"
+> npm install
+> npm run build
+> 
+> echo "Spector MCP built at $VENDOR_DIR/mcp/dist/index.js"
+> {"atlas_connector_2026_11_16": "NOT installed on the current Claude account (ListConnectors found none). Add World Labs Atlas in claude.ai Settings -> Connectors only for an Atlas task; the game does not depend on it.", "ledger": "qa/worldlabs/05/pilot/LEDGER.md", "budget": {"user_cap_credits": 6250, "user_cap_usd": 5, "spent_credits": 1810, "balance_last_read": 5190, "balance_read_utc": "2026-11-16T10:55:00+00:00", "auto_recharge": false}, "prompt": "qa/worl …[+237 chars]
+
+### 🤖 Claude — 2026-11-22T15:02:09.807Z
+
+I've stopped the Screen 06 work. I had only been reading code there, so nothing in your game has changed. Your message cut off after "You said", so here is where each of the three stands. I also need to correct one thing I told you.
+
+**1. Spector.js — I was wrong, it can be fixed.** It isn't a broken package. The Three.js plugin says Spector needs a one-time setup step, and that step was never run on this account. The step downloads Spector.js's free, open-source code from GitHub and builds it here. You don't need to approve anything or sign in anywhere. I can run it now if you want. It takes effect from the next session, because tool servers only start when a session opens.
+
+**2. Blender MCP — this one needs your own computer.** Blender MCP controls the normal Blender window through an add-on. This cloud machine runs Blender without a window, which is how all the Screen 06 geometry gets built, so the add-on has nothing to attach to. To use it you would need to:
+- Install Blender 5.3 and the Blender MCP add-on on your computer.
+- Turn on Remote Control in the Claude desktop app: Settings → Claude Code → Remote Control, and share a folder.
+- Then I can ask to connect to that folder.
+
+Your Screen 06 work doesn't need it.
+
+**3. Old Marble worlds.** The two worlds made on 2026-11-16 return "not found" because the World Labs key on this account belongs to a different World Labs account. Back then the balance read 5,190 credits; this key shows 2,030. To reach them again I need the **old** World Labs API key:
+- If you have it, I'll open the secure key form. You type the key only there, never in chat.
+- Saving it replaces the key that's there now.
+- Every downloaded file of both worlds (splats, PLY, colliders, .blend) is already saved in your repository. Getting them back is only needed to open them in the Marble website again.
+
+**Other logins:** the Context7 plugin copy and the design plugin's Slack, Figma, Notion and similar logins can't be signed in from a cloud session. Context7 already works through your claude.ai connector, and Rainbow doesn't use the others.
+
+What were you about to say? And shall I run the Spector setup and open the old-key form?
+
