@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 27962,
-   "sha256": "a1adc341d41cdd3a7a7334e0995d1bb97c5b6a7141db1a0f5c760cb206585b77"
+   "sha256": "458c842c0992e989d4a221f7f2c6249a53471e1788721e8075a51f325e1325b7"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3622,
-   "sha256": "016de1afe15fa0a1556eebed3e84cf261f305a25ac7bbc64aeaf3b9b18fc478c"
+   "sha256": "50e55d366da06910ec343cb9da5a51a5bfeae2553f0104e7edc9e0d3012565ea"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -11720,6 +11720,11 @@
    "path": "docs/briefs/2026-11-22-r44/PLAN_R44_CONNECTED_WORLD.md",
    "bytes": 3800,
    "sha256": "a82556434ca8fb2672460f1980f5fdef2746756ccb2adebf0589e0228867ccba"
+  },
+  {
+   "path": "docs/briefs/2026-11-22-r44/RESUME_R44.md",
+   "bytes": 2862,
+   "sha256": "5b3a6fa3b51da001025804b36eca464e922c3584fcc8b3aa4e2e9e2ddd231ad6"
   },
   {
    "path": "docs/briefs/2026-11-22-r44/USER_LEVEL_FLOW_PREVIEW_R44.png",
@@ -45443,8 +45448,8 @@
   },
   {
    "path": "tools/screenkit/blender_kit.py",
-   "bytes": 21767,
-   "sha256": "181b1d906869e9955fc0be6d780ba63ca3c83fd4c0d3a996d718e1744d6df1f2"
+   "bytes": 21843,
+   "sha256": "deb07b061a59f0464d5013a5835da2c941bbb422895d45cc195c844122013d8e"
   },
   {
    "path": "tools/screenkit/build_screen_app.sh",
@@ -45505,6 +45510,16 @@
    "path": "tools/screenkit/screens/04/segment04.json",
    "bytes": 1453,
    "sha256": "f05de61b7e799689a74e61038ce05e12a8d8b2b6c9af2948ef0b15c25217c7fc"
+  },
+  {
+   "path": "tools/screenkit/screens/05/fit05.py",
+   "bytes": 6462,
+   "sha256": "9f83c69f61f8e9a322abcadd2beaf3a131e1236dfbb45b15f07665c8c72030ba"
+  },
+  {
+   "path": "tools/screenkit/screens/05/segment05.json",
+   "bytes": 1002,
+   "sha256": "29756fe1de717995cd854f9b5b1866d0ad8ed5d42304e88846a894d3f68111ac"
   },
   {
    "path": "tools/screenkit/screens/06/fit06.py",

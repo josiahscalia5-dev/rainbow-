@@ -211,7 +211,7 @@ while z > D['z1'] + 1e-6:
     z = z1; k += 1
 # the crest channel (Benny's route) + its flume body (a screen whose water fills the tube floor, e.g. 04, has no separate channel)
 RT = LAY['route']; route = RT['points']; bank = RT['bank']
-if not LAY.get('no_route_ribbon'): ribbon('water_route', route, bank, RT['width'], 2.5)
+if not LAY.get('no_route_ribbon'): ribbon('water_route', route, bank, RT['width'], 2.5, flume=LAY.get('route_flume', True))   # r44: 05's S-river has no flume lips
 
 
 # ---------------------------------------------------------------- r44 optional components (absent keys -> nothing built: 06 is unchanged)
