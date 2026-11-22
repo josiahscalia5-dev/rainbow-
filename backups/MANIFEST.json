@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3153,
-   "sha256": "5466793598746617fbac7b9ecf46fe4ebc1fbe31e62b1501c1e4aaca8413ba6e"
+   "sha256": "beaa1a12a52db79bf297501c02452bb9ca4680180019597bd2c6641d5e21b6be"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -35490,6 +35490,21 @@
    "path": "qa/reflock/r40/GAMEPLAY_full_section_24s_steering_checks.json",
    "bytes": 467,
    "sha256": "14c23ae754a3126ba863bda3f09d7cb139cc3ce7289fbaa6745a41c90319f435"
+  },
+  {
+   "path": "qa/reflock/r40/GAMEPLAY_screen06_contact_sheet.jpg",
+   "bytes": 308802,
+   "sha256": "12a88c7ffcb52720d16d9a943fe59e04a9dfc32f9c953bd78dd8973f197d7469"
+  },
+  {
+   "path": "qa/reflock/r40/GAMEPLAY_screen06_real_touch_9s.mp4",
+   "bytes": 11354553,
+   "sha256": "0a152f447e2977fa5113ce0d40fa8c44ee3eee4037646c9a1eb27fdfc99a052b"
+  },
+  {
+   "path": "qa/reflock/r40/GAMEPLAY_screen06_real_touch_swipes.json",
+   "bytes": 4856,
+   "sha256": "47830f4f41a1b2c1c9bd05fbf2e823a902f3711c1a6190aa06ae5cca7d69f85b"
   },
   {
    "path": "qa/reflock/r40/GAMEPLAY_swipe_plan.json",

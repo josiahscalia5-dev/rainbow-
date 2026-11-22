@@ -1,0 +1,267 @@
+{
+ "stage": "06",
+ "checkpoint": {
+  "stage": "06",
+  "s": 198.92412082521383,
+  "y": -37.45172218622444
+ },
+ "errors": [],
+ "input_log": [
+  {
+   "t": 38253.9,
+   "dir": -1,
+   "dx": -31,
+   "source": "touch"
+  },
+  {
+   "t": 90551.7,
+   "dir": 1,
+   "dx": 31,
+   "source": "touch"
+  },
+  {
+   "t": 98251.5,
+   "dir": 1,
+   "dx": 31,
+   "source": "touch"
+  },
+  {
+   "t": 149632.8,
+   "dir": -1,
+   "dx": -31,
+   "source": "touch"
+  },
+  {
+   "t": 155999.4,
+   "dir": -1,
+   "dx": -31,
+   "source": "touch"
+  },
+  {
+   "t": 213113.4,
+   "dir": 1,
+   "dx": 31,
+   "source": "touch"
+  },
+  {
+   "t": 275794.3,
+   "dir": -1,
+   "dx": -31,
+   "source": "touch"
+  },
+  {
+   "t": 284627.7,
+   "dir": 1,
+   "dx": 31,
+   "source": "touch"
+  },
+  {
+   "t": 347258.1,
+   "dir": 1,
+   "dx": 31,
+   "source": "touch"
+  },
+  {
+   "t": 398439.4,
+   "dir": -1,
+   "dx": -31,
+   "source": "touch"
+  }
+ ],
+ "swipes": [
+  {
+   "t": 0.6,
+   "requested": "left",
+   "detected_by_game": "swipe left (finger -31 px)",
+   "lat_before": 0,
+   "lat_after_0_3s": -1.588,
+   "lat_after_0_6s": -1.6,
+   "lat_before_next_swipe": -1.6,
+   "moved_lateral": -1.6,
+   "moved_right_way": true,
+   "screen_x_before": 133.4,
+   "screen_x_after": 164.5,
+   "box_after": [
+    82.9,
+    306.7,
+    263.7,
+    551.4
+   ]
+  },
+  {
+   "t": 1.8,
+   "requested": "right",
+   "detected_by_game": "swipe right (finger 31 px)",
+   "lat_before": -1.6,
+   "lat_after_0_3s": 1.491,
+   "lat_after_0_6s": 1.598,
+   "lat_before_next_swipe": -0.893,
+   "moved_lateral": 0.707,
+   "moved_right_way": true,
+   "screen_x_before": 164.5,
+   "screen_x_after": 220.4,
+   "box_after": [
+    122.7,
+    302,
+    331.1,
+    565.2
+   ]
+  },
+  {
+   "t": 1.95,
+   "requested": "right",
+   "detected_by_game": "swipe right (finger 31 px)",
+   "lat_before": -0.893,
+   "lat_after_0_3s": 1.587,
+   "lat_after_0_6s": 1.6,
+   "lat_before_next_swipe": 1.6,
+   "moved_lateral": 2.493,
+   "moved_right_way": true,
+   "screen_x_before": 220.4,
+   "screen_x_after": 257.2,
+   "box_after": [
+    123.4,
+    432.1,
+    411.3,
+    749.2
+   ]
+  },
+  {
+   "t": 3.2,
+   "requested": "left",
+   "detected_by_game": "swipe left (finger -31 px)",
+   "lat_before": 1.6,
+   "lat_after_0_3s": -1.491,
+   "lat_after_0_6s": -1.598,
+   "lat_before_next_swipe": 0.65,
+   "moved_lateral": -0.95,
+   "moved_right_way": true,
+   "screen_x_before": 257.2,
+   "screen_x_after": 216.9,
+   "box_after": [
+    82.8,
+    427.3,
+    372.4,
+    756.5
+   ]
+  },
+  {
+   "t": 3.35,
+   "requested": "left",
+   "detected_by_game": "swipe left (finger -31 px)",
+   "lat_before": 0.65,
+   "lat_after_0_3s": -1.587,
+   "lat_after_0_6s": -1.6,
+   "lat_before_next_swipe": -1.6,
+   "moved_lateral": -2.25,
+   "moved_right_way": true,
+   "screen_x_before": 216.9,
+   "screen_x_after": 242.3,
+   "box_after": [
+    114.8,
+    528.7,
+    381.1,
+    881.7
+   ]
+  },
+  {
+   "t": 4.6,
+   "requested": "right",
+   "detected_by_game": "swipe right (finger 31 px)",
+   "lat_before": -1.6,
+   "lat_after_0_3s": -0.012,
+   "lat_after_0_6s": 0,
+   "lat_before_next_swipe": 0,
+   "moved_lateral": 1.6,
+   "moved_right_way": true,
+   "screen_x_before": 242.3,
+   "screen_x_after": 198.8,
+   "box_after": [
+    64.3,
+    538.5,
+    331,
+    882.5
+   ]
+  },
+  {
+   "t": 5.8,
+   "requested": "left",
+   "detected_by_game": "swipe left (finger -31 px)",
+   "lat_before": 0,
+   "lat_after_0_3s": -0.086,
+   "lat_after_0_6s": -0.002,
+   "lat_before_next_swipe": -0.95,
+   "moved_lateral": -0.95,
+   "moved_right_way": true,
+   "screen_x_before": 198.8,
+   "screen_x_after": 112.1,
+   "box_after": [
+    -53.2,
+    544.1,
+    248.2,
+    899.4
+   ]
+  },
+  {
+   "t": 5.95,
+   "requested": "right",
+   "detected_by_game": "swipe right (finger 31 px)",
+   "lat_before": -0.95,
+   "lat_after_0_3s": -0.01,
+   "lat_after_0_6s": 0,
+   "lat_before_next_swipe": 0,
+   "moved_lateral": 0.95,
+   "moved_right_way": true,
+   "screen_x_before": 112.1,
+   "screen_x_after": 177.1,
+   "box_after": [
+    38.5,
+    536.2,
+    310.3,
+    881
+   ]
+  },
+  {
+   "t": 7.2,
+   "requested": "right",
+   "detected_by_game": "swipe right (finger 31 px)",
+   "lat_before": 0,
+   "lat_after_0_3s": 1.588,
+   "lat_after_0_6s": 1.6,
+   "lat_before_next_swipe": 1.6,
+   "moved_lateral": 1.6,
+   "moved_right_way": true,
+   "screen_x_before": 177.1,
+   "screen_x_after": 324.8,
+   "box_after": [
+    205.6,
+    544.5,
+    468.1,
+    878.2
+   ]
+  },
+  {
+   "t": 8.2,
+   "requested": "left",
+   "detected_by_game": "swipe left (finger -31 px)",
+   "lat_before": 1.6,
+   "lat_after_0_3s": 0.012,
+   "lat_after_0_6s": 0,
+   "lat_before_next_swipe": 0,
+   "moved_lateral": -1.6,
+   "moved_right_way": true,
+   "screen_x_before": 324.8,
+   "screen_x_after": 170.1,
+   "box_after": [
+    45.5,
+    546.5,
+    278.7,
+    860.5
+   ]
+  }
+ ],
+ "ok": 10,
+ "of": 10,
+ "max_lat_step_per_frame": 0.379,
+ "box_off_screen_frames": 133
+}
