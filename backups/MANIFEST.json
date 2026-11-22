@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3271,
-   "sha256": "31de150de0e8513cf592a415ed1c66cf68f1b0546746003ab8335f84a9aa8b4f"
+   "sha256": "b2198f49574f0d089a981559289e7757db6959cafd81c504289baf05b9d98fc5"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -15610,6 +15610,11 @@
    "path": "qa/bonus/r39/SOCK_BEFORE_vs_NOW.jpg",
    "bytes": 1145888,
    "sha256": "e2ce8b94c964e454a1aa46ec6d95fdfc810919e25fce471eabe341f180866db9"
+  },
+  {
+   "path": "qa/bonus/r39/SOCK_MOVEMENT_like_reference_frames.jpg",
+   "bytes": 201257,
+   "sha256": "ee800994bcc41eff4173b68a9eab0be0f054b64c7896b6b4684d029f44065fa2"
   },
   {
    "path": "qa/bonus/r39/SOCK_NEW_9s_real_swipes.mp4",
@@ -40788,8 +40793,8 @@
   },
   {
    "path": "tools/bonus/bonus.html",
-   "bytes": 116328,
-   "sha256": "02ec46301948694f463b460fca478631bc4bd0d1cb549babdc6284ee2c6713b5"
+   "bytes": 117549,
+   "sha256": "868637fa92fb69ddb5f398ba5849345e91a459ca449fd1d609ed644a42a9d25a"
   },
   {
    "path": "tools/bonus/build_phone_bonus.sh",
