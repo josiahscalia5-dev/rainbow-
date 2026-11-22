@@ -1,53 +1,53 @@
 {
  "bubble": {
   "new": {
-   "share_within_20_levels": 0.868,
-   "ssim_scenery": 0.766,
-   "mean_abs_diff_levels": 10.4,
-   "colour_look_corr": 0.99,
-   "sharpness_vs_approved": 0.724,
-   "whole_frame_within_20_levels": 0.602
+   "share_within_20_levels": 0.919,
+   "ssim_scenery": 0.875,
+   "mean_abs_diff_levels": 7.4,
+   "colour_look_corr": 0.993,
+   "sharpness_vs_approved": 0.752,
+   "whole_frame_within_20_levels": 0.633
   },
   "route_first": [
-   "water_cyan (37 % of all mismatch; 17 % of this region off) -> water-fx-specialist (in round 34: S1 washer-environment-modeler owns the water surface bake)",
-   "foam_white (19 % of all mismatch; 24 % of this region off) -> foam-bubbles-particles (foam banks, bubbles, splashes)",
-   "pink_edge (18 % of all mismatch; 8 % of this region off) -> water-fx-specialist (pink / magenta river edges)"
+   "water_cyan (24 % of all mismatch; 7 % of this region off) -> water-fx-specialist (in round 34: S1 washer-environment-modeler owns the water surface bake)",
+   "pink_edge (21 % of all mismatch; 6 % of this region off) -> water-fx-specialist (pink / magenta river edges)",
+   "foam_white (20 % of all mismatch; 16 % of this region off) -> foam-bubbles-particles (foam banks, bubbles, splashes)"
   ],
   "zones": {
-   "middle-right": 0.214,
-   "middle-left": 0.141,
-   "middle-centre": 0.14,
-   "bottom-right": 0.11,
-   "bottom-centre": 0.106,
-   "bottom-left": 0.097,
-   "top-left": 0.092,
-   "top-right": 0.067,
-   "top-centre": 0.033
+   "middle-right": 0.242,
+   "middle-left": 0.195,
+   "middle-centre": 0.186,
+   "top-left": 0.148,
+   "top-right": 0.108,
+   "top-centre": 0.053,
+   "bottom-right": 0.027,
+   "bottom-left": 0.023,
+   "bottom-centre": 0.019
   }
  },
  "sock": {
   "new": {
-   "share_within_20_levels": 0.844,
-   "ssim_scenery": 0.789,
+   "share_within_20_levels": 0.842,
+   "ssim_scenery": 0.776,
    "mean_abs_diff_levels": 11.9,
-   "colour_look_corr": 0.992,
-   "sharpness_vs_approved": 0.711,
-   "whole_frame_within_20_levels": 0.497
+   "colour_look_corr": 0.994,
+   "sharpness_vs_approved": 0.708,
+   "whole_frame_within_20_levels": 0.496
   },
   "route_first": [
-   "water_cyan (36 % of all mismatch; 22 % of this region off) -> water-fx-specialist (in round 34: S1 washer-environment-modeler owns the water surface bake)",
-   "pink_edge (19 % of all mismatch; 13 % of this region off) -> water-fx-specialist (pink / magenta river edges)",
-   "purple (13 % of all mismatch; 11 % of this region off) -> washer-environment-modeler (perforated purple walls)"
+   "water_cyan (38 % of all mismatch; 23 % of this region off) -> water-fx-specialist (in round 34: S1 washer-environment-modeler owns the water surface bake)",
+   "pink_edge (18 % of all mismatch; 12 % of this region off) -> water-fx-specialist (pink / magenta river edges)",
+   "purple (14 % of all mismatch; 12 % of this region off) -> washer-environment-modeler (perforated purple walls)"
   ],
   "zones": {
-   "top-right": 0.246,
-   "middle-right": 0.153,
-   "top-left": 0.143,
-   "bottom-left": 0.139,
-   "bottom-right": 0.134,
-   "top-centre": 0.117,
-   "middle-left": 0.034,
-   "middle-centre": 0.033,
+   "top-right": 0.225,
+   "bottom-left": 0.156,
+   "bottom-right": 0.151,
+   "middle-right": 0.143,
+   "top-left": 0.141,
+   "top-centre": 0.116,
+   "middle-left": 0.038,
+   "middle-centre": 0.03,
    "bottom-centre": 0.0
   }
  }

@@ -23,9 +23,12 @@ User's orders (verbatim): `docs/briefs/2026-11-22-r40/USER_R40.md`. Blueprints =
 ## Measured (412 × 915 Android portrait, SwiftShader; skill `compare_to_approved.py`, scenery = picture minus what the game draws itself)
 | view | scenery px within 20 levels | SSIM | mean diff | colour look |
 |---|---|---|---|---|
-| Bubble Dash picture position | 86.8 % | 0.77 | 10.4 | 0.99 |
-| Sock Rescue picture position | 84.4 % | 0.79 | 11.9 | 0.99 |
-Target 90-95 %: NOT reached yet (measured 84-87 %); what is left is listed below.
+| Bubble Dash picture position | 91.9 % | 0.88 | 7.4 | 0.99 |
+| Sock Rescue picture position | 84.2 % | 0.78 | 11.9 | 0.99 |
+Target 90-95 %: reached at the Bubble Dash view (91.9 %), not yet at the Sock Rescue view (84.2 %); what is left is listed below.
+Round 40b (after the user's "Continue"): finer bake of the water strip in front of Benny, the painted water streams from the exact picture
+position (two-phase flow phase fix), 3D foam domes coloured by the painted foam under them, far tunnel sections keep their own painted pixels
+(the sharpness guard still removes them when seen stretched), cyan lattice exit light, foam banks in clumps, towel rails at the painted towel tops.
 Pictures: `BUBBLE_DASH_approved_vs_game.jpg`, `SOCK_RESCUE_approved_vs_game.jpg` (+ separate `*_APPROVED.jpg` / `*_GAME.jpg`).
 
 ## Continuous gameplay (the whole section, 30 fps, real swipe requests, final code)

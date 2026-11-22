@@ -21,7 +21,7 @@
   },
   {
    "step": "handed over to the section",
-   "url": "http://127.0.0.1:9877/section/index.html?return=1&bonus=1&coins=1330"
+   "url": "http://127.0.0.1:9872/section/index.html?return=1&bonus=1&coins=1330"
   },
   {
    "step": "section loaded",
@@ -31,21 +31,21 @@
     "z_arch": -13.606804637723817,
     "z_exit": -49.49274643397257,
     "meshes": 102,
-    "foam": 547,
+    "foam": 406,
     "coins": 26,
-    "bake": 89
+    "bake": 90
    }
   },
   {
    "step": "handed back to the game",
-   "url": "http://127.0.0.1:9877/index.html?resume=05&bonus=1&coins=1450"
+   "url": "http://127.0.0.1:9872/index.html?resume=05&bonus=1&coins=1450"
   },
   {
    "step": "game resumed",
    "state": {
     "mode": "ride",
     "stage": "05",
-    "s": 132.452,
+    "s": 132.449,
     "lat": 0,
     "coins": 1450,
     "hearts": 5,

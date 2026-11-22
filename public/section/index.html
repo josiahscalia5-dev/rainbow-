@@ -161,7 +161,7 @@ const waterMat = () => new THREE.ShaderMaterial({ side: THREE.DoubleSide, unifor
       float fo = smoothstep(RW * 0.98, RW * 1.02, abs(uw));                // soap foam beyond the river (lavender-white)
       if (fo > 0.0) { float nn = nse(vec2(vW.x * 9.0, d * 9.0)); col = mix(col, mix(c3(185.0, 178.0, 240.0), c3(250.0, 248.0, 255.0), smoothstep(0.3, 0.8, nn)), fo); }
       if (uBakeOn > 0.5) { float ph = fract(uT * 0.8); vec4 b1 = texture2D(uBake, vUv + vec2(0.0, ph * 0.006)), b2 = texture2D(uBake, vUv + vec2(0.0, fract(ph + 0.5) * 0.006));
-        vec4 b = mix(b2, b1, 1.0 - abs(1.0 - 2.0 * ph)); vec4 dd = texture2D(uDen, vUv); float pd = (dd.r + dd.g / 255.0) * 4000.0;
+        vec4 b = mix(b2, b1, abs(1.0 - 2.0 * ph)); vec4 dd = texture2D(uDen, vUv); float pd = (dd.r + dd.g / 255.0) * 4000.0;
         float magE = uSharp.x / max(max(length(dFdx(vW)), length(dFdy(vW))), 1e-6) / max(pd, 1.0); col = mix(col, b.rgb, dd.b * (1.0 - smoothstep(uSharp.y, uSharp.y * 2.3, magE))); }
       col = mix(col, vec3(0.95, 1.0, 1.0), uGlow.z * pow(smoothstep(uGlow.x, uGlow.y, z), 1.6));
       gl_FragColor = vec4(col, 1.0); }` });
@@ -170,15 +170,19 @@ const waterSeg = (name, z0, z1, xl, xr, y = 0) => { const L = z0 - z1, nv = Math
   const g = new THREE.PlaneGeometry(1, 1, 24, nv); const p = g.attributes.position, uv = g.attributes.uv;
   for (let i = 0; i < p.count; i++) { const a = uv.getX(i), b = 1 - uv.getY(i), z = z0 - b * L; const lo = typeof xl === 'function' ? xl(z) : xl, hi = typeof xr === 'function' ? xr(z) : xr;
     p.setXYZ(i, lerp(lo, hi, a), y, z); uv.setXY(i, a, 1 - b); }
-  g.computeVertexNormals(); const m = new THREE.Mesh(g, waterMat()); m.name = name; m.userData.fam = 'water'; world.add(m); WSEG.push(m); return m; };
+  g.computeVertexNormals(); const m = new THREE.Mesh(g, waterMat()); m.name = name; m.userData.fam = 'water'; m.userData.seg = { z0, z1, lo: xl, hi: xr, L }; world.add(m); WSEG.push(m); return m; };
 const chord = (z) => Math.sqrt(Math.max(0.01, radius(z) ** 2 - axy(z) ** 2)) + 0.02;
-for (const [i, z0, z1] of [[0, 3.0, -2.2], [1, -2.2, -6.5], [2, -6.5, -10.5], [3, -10.5, T.z_arch - 0.4]]) waterSeg(`water_c${i}`, z0, z1, CH.xl, CH.xr, -0.003 * (i === 3 ? 1 : 0));
+{ let wi = 0; for (const [z0, z1, cols] of [[3.0, 0.6, [[CH.xl, CH.xr]]], [0.6, -2.6, [[CH.xl, -0.6], [-0.6, 2.2], [2.2, CH.xr]]], [-2.6, -6.5, [[CH.xl, -1.2], [-1.2, 2.6], [2.6, CH.xr]]],
+    [-6.5, -10.5, [[CH.xl, CH.xr]]], [-10.5, T.z_arch - 0.4, [[CH.xl, CH.xr]]]]) for (const [a, b] of cols) waterSeg(`water_c${wi++}`, z0, z1, a, b, z1 < -10.6 ? -0.003 : 0); }
 { let z = T.z_arch, i = 0; while (z > Z_EXIT - 0.2) { const z1 = Math.max(Z_EXIT - 0.2, z - 4); waterSeg(`water_t${i++}`, z, z1, (zz) => -chord(zz), (zz) => chord(zz)); z = z1; } }
 // exit room: the bright chamber the tunnel opens into (the pictures' glowing core), real geometry + its water
 { const c = new THREE.Vector3(0, axy(Z_EXIT), Z_EXIT - 6.0); const m = new THREE.ShaderMaterial({ side: THREE.BackSide, uniforms: { uC: { value: c } },
     vertexShader: 'varying vec3 vD; uniform vec3 uC; void main(){ vec4 w = modelMatrix * vec4(position, 1.0); vD = normalize(w.xyz - uC); gl_Position = projectionMatrix * viewMatrix * w; }',
-    fragmentShader: `varying vec3 vD; void main(){ float f = -vD.z; vec3 core = vec3(1.0, 1.0, 0.97), cyan = vec3(0.72, 0.95, 1.0), lav = vec3(0.86, 0.78, 1.0);
-      vec3 c = mix(lav, cyan, smoothstep(-0.5, 0.5, f)); c = mix(c, core, smoothstep(0.93, 0.995, f)); gl_FragColor = vec4(c, 1.0); }` });
+    fragmentShader: `varying vec3 vD; void main(){ float f = -vD.z; vec3 core = vec3(0.93, 1.0, 1.0), cyan = vec3(0.45, 0.88, 1.0), lav = vec3(0.78, 0.7, 1.0);
+      vec3 c = mix(lav, cyan, smoothstep(-0.5, 0.4, f)); c = mix(c, core, smoothstep(0.985, 0.999, f));
+      float th = atan(vD.y, vD.x) / 6.2832, ph = acos(clamp(f, -1.0, 1.0)) / 3.1416;
+      float lat = max(1.0 - smoothstep(0.0, 0.06, abs(fract(th * 48.0) - 0.5) * 2.0 - 0.9), 1.0 - smoothstep(0.0, 0.08, abs(fract(ph * 40.0) - 0.5) * 2.0 - 0.88));
+      c = mix(c, vec3(0.15, 0.5, 0.95), 0.5 * lat * smoothstep(0.998, 0.9, f)); gl_FragColor = vec4(c, 1.0); }` });
   const room = new THREE.Mesh(new THREE.SphereGeometry(7, 48, 32), m); room.position.copy(c); room.name = 'exit_room'; world.add(room);
   waterSeg('water_room', Z_EXIT - 0.1, Z_EXIT - 12.8, -6.6, 6.6, -0.003); }
 
@@ -251,7 +255,7 @@ if (MANI) {   // the app build: the bake was done once offline (same code, ?save
     BAKE_DATA[o.name] = { w: bw, h: bh, px: out, dw, dh, dp, cov };
     return { cov, tex: t, den }; };
   const RES = (o) => { const f = o.userData.fam, n = o.name;
-    if (f === 'tunnel') return [2048, 1024]; if (f === 'water') return /water_c0|water_c1/.test(n) ? [2048, 2048] : [1024, 2048]; if (f === 'pink') return [2048, 2048]; if (f === 'ring' || f === 'arch') return [2048, 256];
+    if (f === 'tunnel') return [2048, 1024]; if (f === 'water') { const sg = o.userData.seg, wd = (typeof sg.hi === 'function' ? 2 * chord((sg.z0 + sg.z1) / 2) : sg.hi - sg.lo); return [Math.min(2048, Math.max(256, Math.round(wd * 560))), Math.min(2048, Math.max(256, Math.round(sg.L * 560)))]; } if (f === 'pink') return [2048, 2048]; if (f === 'ring' || f === 'arch') return [2048, 256];
     if (f === 'fall') return [256, 1024]; if (f === 'pipe') return [256, 1024]; if (f === 'towel') return [512, 512]; if (f === 'dark') return [1024, 1024]; if (f === 'tank') return [1024, 512]; return [256, 256]; };
   const all = []; world.traverse((o) => { if (o.isMesh && o.name !== 'exit_room') all.push(o); });
   const tStart = performance.now();
@@ -260,7 +264,7 @@ if (MANI) {   // the app build: the bake was done once offline (same code, ?save
   for (const fam of ['ring', 'towel', 'silver', 'tunnel']) {
     const L = all.filter((o) => o.userData.fam === fam && (fam !== 'tunnel' || !/tunnel_0[0-2]/.test(o.name)));
     const best = L.reduce((b, o) => ((o.userData.bakeCov ?? 0) > (b?.userData.bakeCov ?? 0) ? o : b), null); if (!best || !best.material.uniforms.uBake.value) continue;
-    for (const o of L) if ((o.userData.bakeCov ?? 0) < 0.35 * best.userData.bakeCov) { for (const k of ['uBake', 'uDen']) o.material.uniforms[k].value = best.material.uniforms[k].value; o.material.uniforms.uBakeOn.value = 1; o.userData.template = best.name; BAKE_DATA[o.name] = { template: best.name }; }
+    for (const o of L) if ((o.userData.bakeCov ?? 0) < (fam === 'tunnel' || fam === 'ring' ? 0.05 : 0.35 * best.userData.bakeCov)) { for (const k of ['uBake', 'uDen']) o.material.uniforms[k].value = best.material.uniforms[k].value; o.material.uniforms.uBakeOn.value = 1; o.userData.template = best.name; BAKE_DATA[o.name] = { template: best.name }; }
   }
   BAKE_STATS._ms = Math.round(performance.now() - tStart); d0.dispose(); d1.dispose();
 }
@@ -290,15 +294,25 @@ const FOAM = [];
       const key = Math.round(P.x / 0.09) + ',' + Math.round(P.z / 0.09); cells.set(key, (cells.get(key) ?? 0) + 1); }
     for (const [key, nn] of cells) { if (nn < 6) continue; const [cx, cz] = key.split(',').map(Number); FOAM.push([cx * 0.09 + (rp() - 0.5) * 0.03, cz * 0.09 + (rp() - 0.5) * 0.03, 0.06 + rp() * 0.05]); }
   }
+  if (!MANI?.foam) for (const f of FOAM) {   // painted colour under each dome (world-anchored water bake), else the default foam shading
+    const seg = WSEG.find((m) => f[1] <= m.userData.seg.z0 && f[1] >= m.userData.seg.z1 && f[0] >= (typeof m.userData.seg.lo === 'function' ? m.userData.seg.lo(f[1]) : m.userData.seg.lo) && f[0] <= (typeof m.userData.seg.hi === 'function' ? m.userData.seg.hi(f[1]) : m.userData.seg.hi));
+    const d = seg && BAKE_DATA[seg.name]; if (!d || !d.px) continue; const sg = seg.userData.seg, lo = typeof sg.lo === 'function' ? sg.lo(f[1]) : sg.lo, hi = typeof sg.hi === 'function' ? sg.hi(f[1]) : sg.hi;
+    const u = (f[0] - lo) / (hi - lo), v = 1 - (sg.z0 - f[1]) / sg.L; let r = 0, g = 0, b = 0, a = 0, n = 0;
+    for (let dy = -2; dy <= 2; dy++) for (let dx = -2; dx <= 2; dx++) { const cx = Math.min(d.w - 1, Math.max(0, Math.round(u * (d.w - 1)) + dx)), cy = Math.min(d.h - 1, Math.max(0, Math.round(v * (d.h - 1)) + dy)), i = (cy * d.w + cx) * 4;
+      r += d.px[i]; g += d.px[i + 1]; b += d.px[i + 2]; a += d.px[i + 3]; n++; }
+    if (a / n > 140 && (r + g + b) / (3 * n) > 165) f.push(+(r / n / 255).toFixed(3), +(g / n / 255).toFixed(3), +(b / n / 255).toFixed(3)); }
   window.foamPainted = () => FOAM.slice();
-  for (let z = T.funnel[1] - 0.2; z > Z_EXIT && !MANI?.foam; z -= 0.07 + rp() * 0.05) for (const side of [-1, 1]) { if (Math.abs(z - PBS.z) < 3.2) continue;
-    const c = chord(z); FOAM.push([side * (c - 0.05 - rp() * 0.03), z, 0.05 + rp() * 0.04]); }
+  for (const side of [-1, 1]) for (let z = T.funnel[1] - 0.2 - rp() * 0.4; z > Z_EXIT && !MANI?.foam; z -= 0.35 + rp() * 0.45) { if (Math.abs(z - PBS.z) < 3.2) continue;
+    const c = chord(z), n = 3 + Math.floor(rp() * 4);
+    for (let j = 0; j < n; j++) FOAM.push([side * (c - 0.04 - rp() * 0.09), z - (rp() - 0.5) * 0.3, 0.04 + rp() * rp() * 0.09]); }
   const fGeo = new THREE.IcosahedronGeometry(0.5, 2), Lw = new THREE.Vector3(-0.25, 0.8, 0.55).normalize();
+  fGeo.setAttribute('aCol', new THREE.InstancedBufferAttribute(new Float32Array(FOAM.flatMap((f) => (f.length >= 6 ? [f[3], f[4], f[5], 1] : [0, 0, 0, 0]))), 4));
   const fMat = new THREE.ShaderMaterial({ uniforms: { uL: { value: Lw }, ...GLOW },
-    vertexShader: 'varying vec3 vN; varying vec3 vW; void main(){ vec4 w = modelMatrix * instanceMatrix * vec4(position, 1.0); vW = w.xyz; vN = normalize(mat3(modelMatrix) * mat3(instanceMatrix) * normal); gl_Position = projectionMatrix * viewMatrix * w; }',
-    fragmentShader: `varying vec3 vN; varying vec3 vW; uniform vec3 uL; uniform vec3 uGlow; vec3 c3(float r, float g, float b){ return vec3(r, g, b) / 255.0; }
+    vertexShader: 'attribute vec4 aCol; varying vec4 vCol; varying vec3 vN; varying vec3 vW; void main(){ vCol = aCol; vec4 w = modelMatrix * instanceMatrix * vec4(position, 1.0); vW = w.xyz; vN = normalize(mat3(modelMatrix) * mat3(instanceMatrix) * normal); gl_Position = projectionMatrix * viewMatrix * w; }',
+    fragmentShader: `varying vec4 vCol; varying vec3 vN; varying vec3 vW; uniform vec3 uL; uniform vec3 uGlow; vec3 c3(float r, float g, float b){ return vec3(r, g, b) / 255.0; }
       void main(){ float lit = clamp(0.6 + 0.45 * dot(normalize(vN), uL), 0.0, 1.0);
         vec3 col = lit < 0.5 ? mix(c3(150.0, 135.0, 222.0), c3(205.0, 200.0, 245.0), lit / 0.5) : mix(c3(205.0, 200.0, 245.0), c3(255.0, 254.0, 255.0), (lit - 0.5) / 0.5);
+        if (vCol.a > 0.5) col = min(vec3(1.0), vCol.rgb * (0.8 + 0.35 * dot(normalize(vN), uL)));   // the painted foam colour, shaded by the dome
         col = mix(col, vec3(1.0, 0.98, 0.95), uGlow.z * pow(smoothstep(uGlow.x, uGlow.y, vW.z), 1.6)); gl_FragColor = vec4(col, 1.0); }` });
   const foam = new THREE.InstancedMesh(fGeo, fMat, FOAM.length), mI = new THREE.Matrix4(), qI = new THREE.Quaternion(), pI = new THREE.Vector3(), sI = new THREE.Vector3();
   FOAM.forEach(([x, z, w], i) => { pI.set(x, w * 0.05, z); sI.set(w, w * 0.62, w); foam.setMatrixAt(i, mI.compose(pI, qI, sI)); }); foam.name = 'foam_domes'; foam.userData.fam = 'foam3d'; world.add(foam);
