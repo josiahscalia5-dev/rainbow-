@@ -61,11 +61,11 @@ const cvs = (w, h, draw) => { const c = document.createElement('canvas'); c.widt
   t.wrapS = t.wrapT = THREE.RepeatWrapping; t.anisotropy = 8; t.colorSpace = THREE.NoColorSpace; return t; };
 const rnd = (() => { let x = 4343; return () => ((x = (x * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff); })();
 const grad = (g, x0, y0, x1, y1, stops) => { const gr = g.createLinearGradient(x0, y0, x1, y1); for (const [o, c] of stops) gr.addColorStop(o, c); return gr; };
-const PAL = { wallA: '#7a33c4', wallB: '#e29df0', slot: '#3a1060', ...(LAY.palette ?? {}) };
+const PAL = { wallA: '#902a75', wallB: '#f069e4', wallM: '#ba3bb0', slot: '#2a0533', ...(LAY.palette ?? {}) };   // r43b: measured on the approved 06 walls (p20 / p80 / median)
 const BASE = {
   // drum wall where no painted pixel is sharp enough (seen close): the painted wall's look - violet-to-pink polished metal (colours sampled
   // from the approved walls), light streaks along the drum, rows of dark capsule slots with a light lower rim. Tile = 8 slots x 4 rows.
-  tunnel: cvs(1024, 512, (g, w, h) => { g.fillStyle = grad(g, 0, 0, w, 0, [[0, PAL.wallA], [0.25, PAL.wallB], [0.5, '#b56be0'], [0.75, PAL.wallB], [1, PAL.wallA]]); g.fillRect(0, 0, w, h);
+  tunnel: cvs(1024, 512, (g, w, h) => { g.fillStyle = grad(g, 0, 0, w, 0, [[0, PAL.wallA], [0.25, PAL.wallB], [0.5, PAL.wallM], [0.75, PAL.wallB], [1, PAL.wallA]]); g.fillRect(0, 0, w, h);
     g.globalCompositeOperation = 'lighter'; for (let i = 0; i < 14; i++) { const x = rnd() * w; g.fillStyle = `rgba(255,${200 + rnd() * 40},255,${0.08 + rnd() * 0.12})`; g.fillRect(x, 0, 3 + rnd() * 14, h); } g.globalCompositeOperation = 'source-over';
     for (let r = 0; r < 4; r++) for (let i = 0; i < 8; i++) { const x = (i + 0.5 + (r % 2) * 0.5) * w / 8, y = (r + 0.5) * h / 4, rx = w / 8 * 0.33, ry = h / 4 * 0.16;
       g.fillStyle = 'rgba(255,225,255,0.85)'; g.beginPath(); g.ellipse(x, y + ry * 0.55, rx * 1.04, ry * 1.1, 0, 0, 7); g.fill();
@@ -154,7 +154,7 @@ if (DRUM) { const cap = new THREE.Mesh(new THREE.CircleGeometry(DRUM.r * 1.02, 6
 // ---------------- BAKE the approved picture(s) onto the meshes (once, at load) - N fitted cameras, generalised from section.html --------
 const CAMS = LAY.cams.map((c) => { const k = new THREE.PerspectiveCamera(c.fov ?? LAY.fov, c.img[0] / c.img[1], 0.05, 300); k.rotation.order = 'YXZ'; k.position.copy(V3(c.pos)); k.rotation.set(c.pitch, c.yaw, 0);
   k.updateMatrixWorld(); k.updateProjectionMatrix(); k.userData = c; return k; });
-window.REFCAM = CAMS; window.kitDebug = { THREE, scene, world, MESH, CAMS, renderer, camera };
+window.REFCAM = CAMS; window.kitDebug = { THREE, scene, world, MESH, CAMS, renderer, camera, frameAt, at };
 const BAKE_STATS = {}, BAKE_DATA = {};
 const MANI = q.get('prebaked') !== '1' ? null : await fetch('baked/manifest.json').then((r) => (r.ok ? r.json() : null)).catch(() => null);
 if (MANI) {
@@ -262,6 +262,39 @@ for (const o of MESH) if (o.userData.fam === 'foam') o.material = new THREE.Shad
     void main(){ float lit = clamp(0.6 + 0.45 * dot(normalize(vN), uL), 0.0, 1.0);
       vec3 col = lit < 0.5 ? mix(c3(150.0, 135.0, 222.0), c3(205.0, 200.0, 245.0), lit / 0.5) : mix(c3(205.0, 200.0, 245.0), c3(255.0, 254.0, 255.0), (lit - 0.5) / 0.5);
       col = mix(col, vec3(1.0, 0.98, 0.95), uGlow.z * pow(smoothstep(uGlow.x, uGlow.y, vW.z), 1.6)); gl_FragColor = vec4(col, 1.0); }` });
+// foam heaps exactly where the approved picture paints foam (as the Bubble Dash section): painted foam pixels (bright, low saturation,
+// outside the game-drawn mask) -> a ray from the fitted camera -> the first REAL surface it hits (channel / pool / flume) -> a lumpy 3D dome
+// in the painted colour. App builds read the list from the prebaked manifest (the picture itself is not shipped).
+const FOAM = [];
+if (MANI?.foam) for (const f of MANI.foam) FOAM.push(f);
+else if (q.get('foampic') !== '0' && LAY.cams[0].ref_file !== null) {
+  const loadImg = (src) => new Promise((r) => { const i = new Image(); i.onload = () => r(i); i.onerror = () => r(null); i.src = src; });
+  const [img, mimg] = await Promise.all([loadImg('ref_0.png'), loadImg(LAY.cams[0].mask)]);
+  if (img && mimg) { const cv = document.createElement('canvas'); cv.width = img.width; cv.height = img.height; const g = cv.getContext('2d'); g.drawImage(img, 0, 0); const D = g.getImageData(0, 0, img.width, img.height).data;
+    const mc = document.createElement('canvas'); mc.width = img.width; mc.height = img.height; const mg = mc.getContext('2d'); mg.drawImage(mimg, 0, 0, img.width, img.height); const MD = mg.getImageData(0, 0, img.width, img.height).data;
+    const cam = CAMS[0], rc = new THREE.Raycaster(), surf = MESH.filter((o) => ['water', 'pool', 'flume'].includes(o.userData.fam)), all = MESH.filter((o) => o.userData.fam !== 'foam'), C = 10;
+    for (let y = (LAY.hud_rows ?? 210); y < img.height - C; y += C) for (let x = 0; x < img.width - C; x += C) { let n = 0, r = 0, gg = 0, b = 0;
+      for (let yy = y; yy < y + C; yy += 2) for (let xx = x; xx < x + C; xx += 2) { const i = (yy * img.width + xx) * 4, mx = Math.max(D[i], D[i + 1], D[i + 2]), mn = Math.min(D[i], D[i + 1], D[i + 2]);
+        if (MD[i] < 128 && mx > 224 && mx - mn < 52) { n++; r += D[i]; gg += D[i + 1]; b += D[i + 2]; } }
+      if (n < 18) continue;   // >= 72 % of the cell is painted foam
+      rc.setFromCamera(new THREE.Vector2(((x + C / 2) / img.width) * 2 - 1, -((y + C / 2) / img.height) * 2 + 1), cam); const h = rc.intersectObjects(all, false)[0];
+      if (!h || !surf.includes(h.object) || h.distance > 14) continue;
+      const wsz = C * h.distance / (cam.userData.focal_px ?? LAY.focal_px);   // world size of the cell
+      FOAM.push([h.point.x, h.point.y, h.point.z, Math.max(0.035, wsz * 0.9), +(r / n / 255).toFixed(3), +(gg / n / 255).toFixed(3), +(b / n / 255).toFixed(3)]); } } }
+window.foamPainted = () => FOAM.slice();
+if (FOAM.length) { const fGeo = new THREE.IcosahedronGeometry(0.5, 2), Lw = new THREE.Vector3(-0.25, 0.8, 0.55).normalize(), mI = new THREE.Matrix4(), qI = new THREE.Quaternion(), pI = new THREE.Vector3(), sI = new THREE.Vector3();
+  fGeo.setAttribute('aCol', new THREE.InstancedBufferAttribute(new Float32Array(FOAM.flatMap((f) => [f[4], f[5], f[6], 1])), 4));
+  const fMat = new THREE.ShaderMaterial({ uniforms: { uL: { value: Lw }, ...GLOW },
+    vertexShader: `attribute vec4 aCol; varying vec4 vCol; varying vec3 vN; varying vec3 vW;
+      float fh(vec3 p){ return fract(sin(dot(p, vec3(12.9898, 78.233, 37.719))) * 43758.5453); }
+      float fn(vec3 p){ vec3 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f); return mix(mix(mix(fh(i), fh(i + vec3(1, 0, 0)), f.x), mix(fh(i + vec3(0, 1, 0)), fh(i + vec3(1, 1, 0)), f.x), f.y), mix(mix(fh(i + vec3(0, 0, 1)), fh(i + vec3(1, 0, 1)), f.x), mix(fh(i + vec3(0, 1, 1)), fh(i + vec3(1, 1, 1)), f.x), f.y), f.z); }
+      void main(){ vCol = aCol; vec3 o = instanceMatrix[3].xyz * 7.0; float b = fn(position * 5.0 + o) * 0.55 + fn(position * 11.0 + o.zxy) * 0.3;
+        vec3 p = position * (0.82 + 0.42 * b); vec4 w = modelMatrix * instanceMatrix * vec4(p, 1.0); vW = w.xyz;
+        vN = normalize(mat3(modelMatrix) * mat3(instanceMatrix) * normalize(normal + 0.9 * (b - 0.45) * normal)); gl_Position = projectionMatrix * viewMatrix * w; }`,
+    fragmentShader: `varying vec4 vCol; varying vec3 vN; varying vec3 vW; uniform vec3 uL; uniform vec3 uGlow;
+      void main(){ vec3 col = min(vec3(1.0), vCol.rgb * (0.82 + 0.3 * dot(normalize(vN), uL))); col = mix(col, vec3(1.0, 0.98, 0.95), uGlow.z * pow(smoothstep(uGlow.x, uGlow.y, vW.z), 1.6)); gl_FragColor = vec4(col, 1.0); }` });
+  const foam = new THREE.InstancedMesh(fGeo, GRAY ? new THREE.MeshBasicMaterial({ color: 0xe8e8ee }) : fMat, FOAM.length);
+  FOAM.forEach(([x, y, z, w], i) => { pI.set(x, y + w * 0.08, z); sI.set(w, w * 0.6, w); foam.setMatrixAt(i, mI.compose(pI, qI, sI)); }); foam.name = 'foam_painted'; foam.userData.fam = 'foam3d'; world.add(foam); }
 // loose bubbles (iridescent 3D spheres) at the painted places + a few more along the route
 { const rp = (() => { let x = 777; return () => ((x = (x * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff); })(), pI = new THREE.Vector3(), sI = new THREE.Vector3(), qI = new THREE.Quaternion(), mI = new THREE.Matrix4();
   const B = (LAY.bubbles ?? []).map((b) => b.slice()); for (let s = S_REF + 6; s < LEVEL; s += 1.2 + rp() * 1.4) { const F = frameAt(s), p = at(s, new THREE.Vector3()).addScaledVector(F.r, (rp() - 0.5) * 2.2).addScaledVector(F.n, 0.15 + rp() * 0.8); B.push([p.x, p.y, p.z, 0.03 + rp() * rp() * 0.06]); }
@@ -402,7 +435,8 @@ const QA_SCN = MESH.filter((o) => o.userData.fam !== 'foam'), QA_WAT = MESH.filt
 window.kitFrameQA = () => { camera.updateMatrixWorld(); let camClear = 1e9; const e = camera.matrixWorld.elements, cx = new THREE.Vector3(e[0], e[1], e[2]), cy = new THREE.Vector3(e[4], e[5], e[6]), cz = new THREE.Vector3(e[8], e[9], e[10]);
   for (const [a, b, c] of [[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1],[1,1,0],[-1,1,0],[1,-1,0],[-1,-1,0],[1,0,1],[-1,0,1],[0,1,1],[0,-1,1],[1,0,-1],[-1,0,-1],[0,1,-1],[0,-1,-1]]) {
     const d = cx.clone().multiplyScalar(a).addScaledVector(cy, b).addScaledVector(cz, c).normalize(); QA_RC.set(camera.position, d); QA_RC.far = 5; const h = QA_RC.intersectObjects(QA_SCN, false)[0]; if (h) camClear = Math.min(camClear, h.distance); }
-  const F = frameAt(st.s), wp = at(st.s, new THREE.Vector3()).addScaledVector(F.r, st.lat); QA_RC.set(wp.clone().addScaledVector(F.n, 0.4), F.n.clone().negate()); QA_RC.far = 2; const h = QA_RC.intersectObjects(QA_WAT, false)[0];
+  const F = frameAt(st.s), wp = at(st.s, new THREE.Vector3()).addScaledVector(F.r, st.lat); QA_RC.far = 2; let h = null;
+  for (const dt of [0, 0.004, -0.004, 0.012]) { QA_RC.set(wp.clone().addScaledVector(F.n, 0.4).addScaledVector(F.t, dt), F.n.clone().negate()); h = QA_RC.intersectObjects(QA_WAT, false)[0]; if (h && h.distance < 0.6) break; }   // retry beside a segment seam
   let slope = null; if (h && h.face) { const nW = h.face.normal.clone().transformDirection(h.object.matrixWorld); slope = Math.acos(Math.min(1, Math.abs(nW.dot(F.n)))) * 180 / Math.PI; }
   const up = new THREE.Vector3(0, 1, 0).applyQuaternion(benny.quaternion);
   return { camClear: +camClear.toFixed(3), waterGap: h ? +(h.distance - 0.4).toFixed(4) : null, waterMesh: h ? h.object.name : null, slopeErrDeg: slope === null ? null : +slope.toFixed(2),

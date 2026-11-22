@@ -8,7 +8,7 @@ const { chromium } = require('playwright'); const { spawn } = require('child_pro
   try {
     const page = await (await browser.newContext({ viewport: { width: 412, height: 915 } })).newPage(); page.on('pageerror', (e) => console.log('ERR', e.message));
     await page.goto(`http://127.0.0.1:${port}/play3.html?w=412&h=915`); await page.waitForFunction(() => window.ready === true, null, { timeout: 1200000 });
-    const names = await page.evaluate(() => window.bakeNames()); const man = { meshes: {} }; const tpl = {};
+    const names = await page.evaluate(() => window.bakeNames()); const man = { meshes: {}, foam: await page.evaluate(() => (window.foamPainted ? window.foamPainted() : [])) }; const tpl = {};
     for (const n of names) { const e = await page.evaluate((n) => window.bakeExport(n), n); if (!e) continue; if (e.template) { tpl[n] = e.template; continue; }
       fs.writeFileSync(path.join(B, `${n}_bake.jpg`), Buffer.from(e.bake.split(',')[1], 'base64')); fs.writeFileSync(path.join(B, `${n}_den.png`), Buffer.from(e.den.split(',')[1], 'base64'));
       man.meshes[n] = { bake: `${n}_bake.jpg`, den: `${n}_den.png`, cov: e.cov }; }

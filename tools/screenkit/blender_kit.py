@@ -179,7 +179,7 @@ def paddle(name, pos, axis_pt, width):
         if v < 0.25: k = v / 0.25; rr = R * k; h = T / 2           # top face
         elif v < 0.75: k = (v - 0.25) / 0.5; rr = R; h = T / 2 - T * k   # rim band
         else: k = (v - 0.75) / 0.25; rr = R * (1 - k); h = -T / 2        # underside
-        p = c + along * (rr * math.cos(th)) + inward * (rr * math.sin(th) + 0.02) + side * h
+        p = c + along * (rr * math.cos(th)) + inward * (rr * math.sin(th) - 0.03) + side * h   # r43b gray test: straight edge 3 cm INTO the wall (was 2 cm off it = floating)
         return ((p.x, p.y, p.z), (u, v))
     return grid(name, 48, 24, f)
 
@@ -204,7 +204,9 @@ for i, z in enumerate(sorted(z_r, reverse=True)):
 # the pool: water plane on the drum floor between the walls (segments along the drum, own UVs)
 chord = D['chord'] - 0.02; z = D['z0']; k = 0
 while z > D['z1'] + 1e-6:
-    z1 = max(D['z1'], z - (4.0 if z > zf else 12.0)); grid(f'pool_{k:02d}', 24, max(4, int((z - z1) / 0.25)), lambda a, b, z=z, z1=z1: ((xa - chord + 2 * chord * a, 0.0, z - (z - z1) * b), (a, b)), flip=True)
+    # r43b gray test: the pool faced DOWN (flip) and lay in the channel's plane where the channel lands (z-fighting) -> faces up, 2 cm lower:
+    # the channel rests IN the pool instead of sharing its surface
+    z1 = max(D['z1'], z - (4.0 if z > zf else 12.0)); grid(f'pool_{k:02d}', 24, max(4, int((z - z1) / 0.25)), lambda a, b, z=z, z1=z1: ((xa - chord + 2 * chord * a, D.get('pool_y', -0.02), z - (z - z1) * b), (a, b)), flip=False)
     z = z1; k += 1
 # the crest channel (Benny's route) + its flume body
 RT = LAY['route']; route = RT['points']; bank = RT['bank']

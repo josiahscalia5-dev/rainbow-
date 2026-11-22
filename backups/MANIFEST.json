@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3218,
-   "sha256": "94f6f87892091d1eac85c3e548dd8731ed71c0f0a40465119ec4a28faab34411"
+   "sha256": "b8cf2883a8fe26d5a48dd768bef412e60efd5f775f4f166359ca5c512be659a0"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -45013,8 +45013,8 @@
   },
   {
    "path": "tools/screenkit/blender_kit.py",
-   "bytes": 17166,
-   "sha256": "a0ed88eba05e6e13098ffb9df0761947d3340c84c86e17fc2a6b1d306e7221ea"
+   "bytes": 17477,
+   "sha256": "dfdd6c38bc6f25e725805864abdaa68cfc2177bd5204bcd434d6d6c0c7023c1e"
   },
   {
    "path": "tools/screenkit/build_screen_app.sh",
@@ -45053,13 +45053,13 @@
   },
   {
    "path": "tools/screenkit/screen.html",
-   "bytes": 53456,
-   "sha256": "d5493b2b1fd8bd1c57412ca105a0ce051076191a31e35985a8aa2b243bc138c0"
+   "bytes": 58277,
+   "sha256": "50e0af33fedd7c530ff2815da48529c77414aad2bce1d44d332cbbb6b8834b9d"
   },
   {
    "path": "tools/screenkit/screen_export.cjs",
-   "bytes": 2068,
-   "sha256": "dc1c6789e92b1eaeb0883b862ae07ac00950230970bb5223013446d73f3f30da"
+   "bytes": 2151,
+   "sha256": "57a2e62d4576183ce3f8eea9405056e79d8cf38f705112f8298d8f4c8ff747fb"
   },
   {
    "path": "tools/screenkit/screens/06/fit06.py",
