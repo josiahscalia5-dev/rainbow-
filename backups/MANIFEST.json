@@ -813,8 +813,8 @@
   },
   {
    "path": "backups/BOOTSTRAP_REPORT.md",
-   "bytes": 3875,
-   "sha256": "dbfbe5a94448b3506f53f9d21590b30e5deb9a2bcfe9563b942963488106fd60"
+   "bytes": 4137,
+   "sha256": "edc0f2db80651922fee0386da6bac0fdebd36fe3a73464eeeea8b716be43d655"
   },
   {
    "path": "backups/CLAUDE_ACCOUNT_TRANSFER.md",
@@ -848,8 +848,8 @@
   },
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
-   "bytes": 3271,
-   "sha256": "54f3a8e2a0779a351a0a30f3488de15d4703c4008b4e9476f57f1d31d9e69e55"
+   "bytes": 3153,
+   "sha256": "63b98c8034710fe26ecf5873ffeb45e0efeb1a26ab7637435ca2ebf8b470880a"
   },
   {
    "path": "backups/MCP_SETUP.md",
