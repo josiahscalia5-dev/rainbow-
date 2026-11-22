@@ -1,0 +1,262 @@
+{
+ "approved": "/home/user/rainbow-/references/06_crest_the_rinse_arch.png",
+ "phone_frame": [
+  412,
+  915
+ ],
+ "mask": {
+  "spec": "/tmp/claude-0/-home-user-rainbow-/e7ead6f9-80f4-50b9-a0f2-74e81333401a/scratchpad/cmpfinal/scenery_mask_06.png",
+  "file": "/tmp/claude-0/-home-user-rainbow-/e7ead6f9-80f4-50b9-a0f2-74e81333401a/scratchpad/cmpfinal/scenery_mask_06.png"
+ },
+ "painted_coins_phone_xy_r": [
+  [
+   55.4,
+   370.8,
+   22.4
+  ],
+  [
+   375.9,
+   356.8,
+   3.5
+  ],
+  [
+   250.4,
+   348.5,
+   5.9
+  ],
+  [
+   387.2,
+   327.0,
+   3.2
+  ],
+  [
+   88.4,
+   325.8,
+   16.1
+  ],
+  [
+   191.7,
+   317.6,
+   8.4
+  ]
+ ],
+ "rule": "scenery = below the HUD minus the exclusion boxes; aligned frames compared pixel by pixel with the approved picture (mean |RGB diff| < 20 levels = \"within 20 levels\"); formulas identical to tools/kit05/compare_r33.py",
+ "frames": {
+  "0": {
+   "new": {
+    "file": "/tmp/claude-0/-home-user-rainbow-/e7ead6f9-80f4-50b9-a0f2-74e81333401a/scratchpad/st06i/s1.20_l0.png",
+    "colour_look_corr": 0.997,
+    "sharpness_vs_approved": 0.742,
+    "class_balance_vs_approved": {
+     "water_cyan": [
+      0.331,
+      0.331
+     ],
+     "pink_edge": [
+      0.296,
+      0.302
+     ],
+     "gold": [
+      0.037,
+      0.032
+     ],
+     "purple": [
+      0.115,
+      0.116
+     ],
+     "foam_white": [
+      0.08,
+      0.088
+     ]
+    },
+    "mean_abs_diff_levels": 8.3,
+    "share_within_20_levels": 0.895,
+    "ssim_scenery": 0.865,
+    "whole_frame_within_20_levels": 0.647,
+    "regions": [
+     {
+      "region": "pink_edge",
+      "share_of_scenery": 0.299,
+      "mismatch_inside": 0.117,
+      "share_of_all_mismatch": 0.332,
+      "owner": "water-fx-specialist (pink / magenta river edges)"
+     },
+     {
+      "region": "other",
+      "share_of_scenery": 0.13,
+      "mismatch_inside": 0.181,
+      "share_of_all_mismatch": 0.224,
+      "owner": "reference-match-director (triage)"
+     },
+     {
+      "region": "water_cyan",
+      "share_of_scenery": 0.326,
+      "mismatch_inside": 0.049,
+      "share_of_all_mismatch": 0.153,
+      "owner": "water-fx-specialist (in round 34: S1 washer-environment-modeler owns the water surface bake)"
+     },
+     {
+      "region": "foam_white",
+      "share_of_scenery": 0.087,
+      "mismatch_inside": 0.138,
+      "share_of_all_mismatch": 0.114,
+      "owner": "foam-bubbles-particles (foam banks, bubbles, splashes)"
+     },
+     {
+      "region": "purple",
+      "share_of_scenery": 0.116,
+      "mismatch_inside": 0.079,
+      "share_of_all_mismatch": 0.087,
+      "owner": "washer-environment-modeler (perforated purple walls)"
+     },
+     {
+      "region": "gold",
+      "share_of_scenery": 0.031,
+      "mismatch_inside": 0.188,
+      "share_of_all_mismatch": 0.056,
+      "owner": "washer-environment-modeler (gold rings, machinery); coins -> path-camera-transition-engineer (coin layout)"
+     },
+     {
+      "region": "coins",
+      "share_of_scenery": 0.012,
+      "mismatch_inside": 0.303,
+      "share_of_all_mismatch": 0.034,
+      "owner": "path-camera-transition-engineer (coin layout / sizes on the painted trail)"
+     },
+     {
+      "region": "near_black",
+      "share_of_scenery": 0.0,
+      "mismatch_inside": 0.2,
+      "share_of_all_mismatch": 0.001,
+      "owner": "washer-environment-modeler (dark gaps / unseen surfaces) + playwright-visual-qa (dark-patch check)"
+     }
+    ],
+    "zones_share_of_all_mismatch": {
+     "top-right": 0.327,
+     "top-centre": 0.235,
+     "top-left": 0.113,
+     "middle-right": 0.11,
+     "bottom-right": 0.056,
+     "middle-centre": 0.053,
+     "bottom-left": 0.048,
+     "middle-left": 0.033,
+     "bottom-centre": 0.026
+    },
+    "route_first": [
+     "pink_edge (33 % of all mismatch; 12 % of this region off) -> water-fx-specialist (pink / magenta river edges)",
+     "other (22 % of all mismatch; 18 % of this region off) -> reference-match-director (triage)",
+     "water_cyan (15 % of all mismatch; 5 % of this region off) -> water-fx-specialist (in round 34: S1 washer-environment-modeler owns the water surface bake)"
+    ]
+   },
+   "before": {
+    "file": "/tmp/claude-0/-home-user-rainbow-/e7ead6f9-80f4-50b9-a0f2-74e81333401a/scratchpad/cmp06/GAME_06.jpg",
+    "colour_look_corr": 0.099,
+    "sharpness_vs_approved": 0.673,
+    "class_balance_vs_approved": {
+     "water_cyan": [
+      0.29,
+      0.331
+     ],
+     "pink_edge": [
+      0.316,
+      0.302
+     ],
+     "gold": [
+      0.046,
+      0.032
+     ],
+     "purple": [
+      0.193,
+      0.116
+     ],
+     "foam_white": [
+      0.056,
+      0.088
+     ]
+    },
+    "mean_abs_diff_levels": 74.3,
+    "share_within_20_levels": 0.036,
+    "ssim_scenery": 0.161,
+    "whole_frame_within_20_levels": 0.048,
+    "regions": [
+     {
+      "region": "pink_edge",
+      "share_of_scenery": 0.295,
+      "mismatch_inside": 0.979,
+      "share_of_all_mismatch": 0.3,
+      "owner": "water-fx-specialist (pink / magenta river edges)"
+     },
+     {
+      "region": "water_cyan",
+      "share_of_scenery": 0.299,
+      "mismatch_inside": 0.931,
+      "share_of_all_mismatch": 0.289,
+      "owner": "water-fx-specialist (in round 34: S1 washer-environment-modeler owns the water surface bake)"
+     },
+     {
+      "region": "other",
+      "share_of_scenery": 0.13,
+      "mismatch_inside": 0.97,
+      "share_of_all_mismatch": 0.13,
+      "owner": "reference-match-director (triage)"
+     },
+     {
+      "region": "purple",
+      "share_of_scenery": 0.116,
+      "mismatch_inside": 0.984,
+      "share_of_all_mismatch": 0.118,
+      "owner": "washer-environment-modeler (perforated purple walls)"
+     },
+     {
+      "region": "foam_white",
+      "share_of_scenery": 0.087,
+      "mismatch_inside": 0.961,
+      "share_of_all_mismatch": 0.086,
+      "owner": "foam-bubbles-particles (foam banks, bubbles, splashes)"
+     },
+     {
+      "region": "coins",
+      "share_of_scenery": 0.043,
+      "mismatch_inside": 0.998,
+      "share_of_all_mismatch": 0.044,
+      "owner": "path-camera-transition-engineer (coin layout / sizes on the painted trail)"
+     },
+     {
+      "region": "gold",
+      "share_of_scenery": 0.031,
+      "mismatch_inside": 0.999,
+      "share_of_all_mismatch": 0.032,
+      "owner": "washer-environment-modeler (gold rings, machinery); coins -> path-camera-transition-engineer (coin layout)"
+     },
+     {
+      "region": "near_black",
+      "share_of_scenery": 0.0,
+      "mismatch_inside": 0.8,
+      "share_of_all_mismatch": 0.0,
+      "owner": "washer-environment-modeler (dark gaps / unseen surfaces) + playwright-visual-qa (dark-patch check)"
+     }
+    ],
+    "zones_share_of_all_mismatch": {
+     "top-right": 0.151,
+     "top-centre": 0.139,
+     "middle-right": 0.129,
+     "top-left": 0.127,
+     "bottom-left": 0.115,
+     "bottom-right": 0.108,
+     "middle-left": 0.105,
+     "bottom-centre": 0.086,
+     "middle-centre": 0.041
+    },
+    "route_first": [
+     "pink_edge (30 % of all mismatch; 98 % of this region off) -> water-fx-specialist (pink / magenta river edges)",
+     "water_cyan (29 % of all mismatch; 93 % of this region off) -> water-fx-specialist (in round 34: S1 washer-environment-modeler owns the water surface bake)",
+     "other (13 % of all mismatch; 97 % of this region off) -> reference-match-director (triage)",
+     "purple (12 % of all mismatch; 98 % of this region off) -> washer-environment-modeler (perforated purple walls)",
+     "foam_white (9 % of all mismatch; 96 % of this region off) -> foam-bubbles-particles (foam banks, bubbles, splashes)",
+     "coins (4 % of all mismatch; 100 % of this region off) -> path-camera-transition-engineer (coin layout / sizes on the painted trail)",
+     "gold (3 % of all mismatch; 100 % of this region off) -> washer-environment-modeler (gold rings, machinery); coins -> path-camera-transition-engineer (coin layout)"
+    ]
+   }
+  }
+ }
+}

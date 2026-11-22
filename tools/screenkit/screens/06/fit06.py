@@ -111,7 +111,7 @@ lay = {'screen': '06', 'title': 'CREST THE RINSE ARCH', 'ref': REF, 'fov': cam.f
        'paddles': [], 'bubbles': [], 'da2_check': da2_check,
        # measured at the picture camera (round 43, one factor at a time, qa/reflock/r43/06/): splash 1.0 -> 0.6 (painted swirl size) 83.5 -> 87.0 %,
        # lod bias -0.8 (baked pixels seen 0.6x smaller stay crisp) -> 88.0 %, full painted weight on low-density texels (bake_dens 1,4) -> 88.6 %
-       'splash_scale': 0.6, 'lod_bias': -0.8, 'bake_dens': [1, 4], 'number': '06'}
+       'splash_scale': 0.6, 'lod_bias': -0.8, 'bake_dens': [1, 4], 'number': '06', 'next': '07'}
 # paddles: ray through the painted tray centre meets the drum wall
 for x, y, wpx in M['paddles']:
     P = fl.ray_cylinder(cam.C, cam.ray(x, y), np.array([xa, ya, 0.0]), np.array([0, 0, -1.0]), DRUM_R)

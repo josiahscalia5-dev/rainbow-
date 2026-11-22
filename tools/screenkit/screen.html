@@ -239,9 +239,9 @@ ${body}        gl_FragColor = best; }` });
 }
 window.bakeStats = () => BAKE_STATS;
 window.bakeExport = (name) => { const d = BAKE_DATA[name]; if (!d) return null; if (d.template) return { template: d.template };
-  const png = (w, h, px, type = 'image/png') => { const c = document.createElement('canvas'); c.width = w; c.height = h; const g = c.getContext('2d'), im = g.createImageData(w, h);
-    for (let y = 0; y < h; y++) im.data.set(px.subarray((h - 1 - y) * w * 4, (h - y) * w * 4), y * w * 4); g.putImageData(im, 0, 0); return c.toDataURL(type, 0.9); };
-  return { bake: png(d.w, d.h, d.px, 'image/jpeg'), den: png(d.dw, d.dh, d.dp), cov: +d.cov.toFixed(3) }; };
+  const png = (w, h, px, type = 'image/png', qual = 0.9) => { const c = document.createElement('canvas'); c.width = w; c.height = h; const g = c.getContext('2d'), im = g.createImageData(w, h);
+    for (let y = 0; y < h; y++) im.data.set(px.subarray((h - 1 - y) * w * 4, (h - y) * w * 4), y * w * 4); g.putImageData(im, 0, 0); return c.toDataURL(type, qual); };
+  return { bake: png(d.w, d.h, d.px, 'image/jpeg', +(q.get('jpegq') ?? 0.96)), den: png(d.dw, d.dh, d.dp), cov: +d.cov.toFixed(3) }; };   // app bake quality (0.9 cost 2.4 points)
 window.bakeNames = () => Object.keys(BAKE_DATA);
 // foam domes: the GN foam banks keep a soft lavender-white shade (no picture bake needed: small, many)
 for (const o of MESH) if (o.userData.fam === 'foam') o.material = new THREE.ShaderMaterial({ uniforms: { uL: { value: new THREE.Vector3(-0.25, 0.8, 0.55).normalize() }, ...GLOW },
@@ -360,6 +360,9 @@ window.step = (t, dt, steer, speed) => {
     if (c.got >= 0 && c.s < 1e8) { const k = (t - c.got) / 0.4; c.sp.visible = k < 1; if (k < 1) { c.sp.position.copy(benny.position).addScaledVector(F.n, bennyH * (1.05 + 0.6 * k)); c.sp.scale.setScalar(coinD * 0.7 * (1 - 0.5 * k)); } } }
   coins.forEach((c, i) => { const m = coin3[i]; m.visible = c.sp.visible && c.s < 1e8; if (!m.visible) return; m.position.copy(c.sp.position);
     m.scale.setScalar(c.got >= 0 ? c.sp.scale.x : coinD); m.quaternion.setFromAxisAngle(F.n, 0.5 * Math.sin(t * 1.9 + i * 1.3)); });
+  // app route (?return=1): at the level end Benny swims on into the main game at the next screen's checkpoint, coins carried over
+  if (q.get('return') === '1' && LAY.next && st.s >= LEVEL - 0.05 && !st.left) { st.left = true;
+    setTimeout(() => { location.href = `../index.html?resume=${LAY.next}&kit06=1${q.get('bonus') === '1' ? '&bonus=1' : ''}&coins=${coinCount}`; }, 250); }
   return { s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: coinCount, socks: 0, z: +benny.position.z.toFixed(3), ...CT.state() };
 };
 window.renderNow = async (n = 1) => { for (let i = 0; i < n; i++) renderer.render(scene, camera); return true; };

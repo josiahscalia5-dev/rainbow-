@@ -18,8 +18,8 @@ html,body{margin:0;background:#1a0630;overflow:hidden;font-family:system-ui,-app
 <script type="importmap">{"imports":{"three":"./node_modules/three/build/three.module.js","three/addons/":"./node_modules/three/examples/jsm/"}}</script>
 </head><body>
 <div id="hud"><div class="bar"><span class="pill">&#10084;&#65039; 5/5 <span class="plus">+</span></span><span class="pill"><span id="coins">&#129689; 1,420</span> <span class="plus">+</span></span><span class="pill">&#128142; <span id="gems">36</span> <span class="plus">+</span></span></div>
-<div class="title" id="title">05 &middot; FLOW INTO THE CURRENT</div><div id="mission">&#129510; Rescue <b>5</b> lost socks &nbsp;<span id="slots"></span></div></div>
-<div id="badge">Bubble Dash<br>Chamber</div><button id="pause" data-noswipe aria-label="pause">&#10074;&#10074;</button>
+<div class="title" id="title">BUBBLE DASH CHAMBER</div><div id="mission">&#129510; Rescue <b>5</b> lost socks &nbsp;<span id="slots"></span></div></div>
+<div id="badge" style="display:none">Bubble Dash<br>Chamber</div><button id="pause" data-noswipe aria-label="pause">&#10074;&#10074;</button>
 <button id="blast" class="ab" data-noswipe><span class="ic">&#129767;</span>Bubble<br>Blast<span class="cd"></span></button><button id="turbo" class="ab" data-noswipe><span class="ic">&#127744;</span>Turbo<br>Spin<span class="cd"></span></button><div id="pausedLay">Paused</div><div id="load">Building the washer&hellip;</div>
 <script type="module">
 // ======================================================================================================================================
@@ -451,7 +451,7 @@ window.step = (t, dt, steer, speed) => {
   for (const sk of SOCKS) { if (!sk.visible) continue; sk.geometry.computeBoundingSphere(); const c = sk.geometry.boundingSphere.center.clone().add(sk.position);
     if (Math.abs(c.z - benny.position.z) < 0.25 && Math.abs(c.x - benny.position.x) < 0.3) { sk.visible = false; socksGot = Math.min(5, socksGot + 1); drawSlots(); gems += 5; gemEl.textContent = gems; } }
   if (q.get('return') === '1' && st.s >= LEVEL - 0.05 && !st.left) { st.left = true; setTimeout(() => { location.href = '../index.html?resume=05&bonus=1&coins=' + coinCount; }, 250); }
-  const inT = camera.position.z < T.z_arch - 0.3; titleEl.style.display = inT ? 'none' : ''; badgeEl.style.display = inT ? 'none' : ''; missionEl.style.display = inT ? 'block' : 'none';
+  const inT = camera.position.z < T.z_arch - 0.3; titleEl.style.display = inT ? 'none' : ''; badgeEl.style.display = 'none'; missionEl.style.display = inT ? 'block' : 'none';
   for (const id of ['blast', 'turbo']) document.getElementById(id).style.display = inT ? '' : 'none';   // each part shows its own picture's HUD
   return { s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: coinCount, socks: socksGot, gems, turbo: +turboK.toFixed(2), blast: t < AB.blast.until, z: +benny.position.z.toFixed(3), ...CT.state() };
 };

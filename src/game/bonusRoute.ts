@@ -10,3 +10,11 @@ export const BONUS_ROUTE = {
   resumeCoins: Number(q.get('coins')),
   go(coins: number) { location.href = `section/index.html?return=1&bonus=1&coins=${Math.round(coins)}`; },
 };
+
+// Round 43: the screen-kit rebuild of Screen 06 (public/screen06/, tools/screenkit) as a TEST route: at the end of 05 Benny swims into the
+// rebuilt 06 and comes back into the game at the Screen 07 checkpoint with his coins. OFF by default (the default game is unchanged); ON in a
+// build made with VITE_RAINBOW_KIT06=1 or with ?kit06=1. Like the Bubble Dash section, the hand-over is still a page load (not yet one scene).
+export const KIT_ROUTE = {
+  s06: env.VITE_RAINBOW_KIT06 === '1' || q.get('kit06') === '1',
+  go06(coins: number) { location.href = `screen06/index.html?return=1&kit06=1${BONUS_ROUTE.enabled ? '&bonus=1' : ''}&coins=${Math.round(coins)}`; },
+};
