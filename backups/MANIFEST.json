@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3153,
-   "sha256": "897ad45b907604811d155f3bfc894b3fb66f1202a13d66723a039ab8ffdde761"
+   "sha256": "aedac792e14668fee72924c554c2e88d59dd680e2b778d146c2486b0dca71cfe"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -11878,13 +11878,13 @@
   },
   {
    "path": "public/section/baked/arch_bake.jpg",
-   "bytes": 49344,
-   "sha256": "1e18c1984831c1af73ba9237176d38ba5332f7924118c69023b4b6c73ccbb8d5"
+   "bytes": 48933,
+   "sha256": "80141787044001ef24c10d891272b33d62391b0da523162c793a04b230b17236"
   },
   {
    "path": "public/section/baked/arch_den.png",
-   "bytes": 9803,
-   "sha256": "f303958ffb946b7254081c592ff954fc72d38a451f7f5609c2c339f8ad1ac8ea"
+   "bytes": 10075,
+   "sha256": "bdaa4b9b6cb6cc403ad1032117ba313980d423dd20a223c71149c2d4dca34696"
   },
   {
    "path": "public/section/baked/backwall_bake.jpg",
@@ -11903,138 +11903,138 @@
   },
   {
    "path": "public/section/baked/bulkhead_den.png",
-   "bytes": 49454,
-   "sha256": "e995fab0be0d75e9549c7628a8de98cad8824ad0e635b3978d26de78d6afeeb2"
+   "bytes": 52233,
+   "sha256": "22d77277c32759abcf5bed44501bdf2cf74ce149f19ba3e3ea334b2061324180"
   },
   {
    "path": "public/section/baked/ceiling_bake.jpg",
-   "bytes": 50542,
-   "sha256": "e2813dfd00ff21f1946f1d056b7c1aacbae19dd9289f5c929ae0f1d602c0afb3"
+   "bytes": 57104,
+   "sha256": "5182cc47910b02bfac9c6475cfa775d0f03641ad26ab6e05a5932cff33dbaa93"
   },
   {
    "path": "public/section/baked/ceiling_den.png",
-   "bytes": 26587,
-   "sha256": "735ead5732cd840f6c038879a187118ad0e367dfada88523f115532e51e27fe6"
+   "bytes": 26326,
+   "sha256": "6be3e18e18d26028db26faa7048fb8a45d7259a9710a7bfcab0e6ab16bc91d96"
   },
   {
    "path": "public/section/baked/collar_pipe_A_0_bake.jpg",
-   "bytes": 5695,
-   "sha256": "43114315bf51820e075cec5c53812d2f928f7120315e59e612467d74b71c5303"
+   "bytes": 5575,
+   "sha256": "e27de1dd2354a01433fd137720112727e1776dbc7491675970a90ae97d1b1f79"
   },
   {
    "path": "public/section/baked/collar_pipe_A_0_den.png",
-   "bytes": 2685,
-   "sha256": "df4870dad8f17e3c510cfcc35e1413e1e3dc3f54b7e80f701a0d9ffe1255cd5d"
+   "bytes": 2874,
+   "sha256": "298350eb423c7b0c6907ad220be12f3cde1405a3adc2f4ac9a5b2d5881c87368"
   },
   {
    "path": "public/section/baked/collar_pipe_A_1_bake.jpg",
-   "bytes": 7667,
-   "sha256": "c99213475dd53040e86ded0435d662c99b17c808371ce50e865e5cebc2ea159e"
+   "bytes": 7691,
+   "sha256": "029af48725d8e5a1f7d860281adf73acc53f287ccaa299c5100288f2e29a4bc2"
   },
   {
    "path": "public/section/baked/collar_pipe_A_1_den.png",
-   "bytes": 2477,
-   "sha256": "c0b2e5ba7de029a851b6062fd8f3125115764466534aff49174a8e69302b2a19"
+   "bytes": 2699,
+   "sha256": "799ef2542547fed2f94b59397fffb7d1d161f0e4e1754ffb3d210c97041cc9cd"
   },
   {
    "path": "public/section/baked/collar_pipe_A_2_bake.jpg",
-   "bytes": 5590,
-   "sha256": "96991a1135b750d8e9acd02f46f07d668bf42ff31552a08126d72118357fbd3f"
+   "bytes": 5747,
+   "sha256": "182a541998176bbd51ee3562c7458dfa94a0fa7cf55cfac081b5c84fbd6a3386"
   },
   {
    "path": "public/section/baked/collar_pipe_A_2_den.png",
-   "bytes": 1263,
-   "sha256": "2372d7fe84fbbef51a224e50f708f97d333840793526f31abc5a409066be3591"
+   "bytes": 1681,
+   "sha256": "29f4b5fed792a2d931d1c8363f9ff5269d3df3dce256d778699d0bbc58b28e72"
   },
   {
    "path": "public/section/baked/collar_pipe_B_0_bake.jpg",
-   "bytes": 5154,
-   "sha256": "cc6dc4be1d5842ed44c284927a05d37f8014ef5c20a898d0bc740d22342107da"
+   "bytes": 5174,
+   "sha256": "4e6b5c16cd4a6e83792c7724bcd275a19c3ac7f3ba6114aa7acc2c890bcc2bbb"
   },
   {
    "path": "public/section/baked/collar_pipe_B_0_den.png",
-   "bytes": 1709,
-   "sha256": "7bd9b88325d57fd24a28ca78a8e1c9cb83c9ecedc9188aeee6e770785133d330"
+   "bytes": 2307,
+   "sha256": "0db9c39e6eea09066ecc4f4e0daecbb8ba12500a00876bb51bb4414c2f2a863a"
   },
   {
    "path": "public/section/baked/collar_pipe_B_1_bake.jpg",
-   "bytes": 4320,
-   "sha256": "f3aab7c395f66ab24dbbf82fc6d3d813548022756769e8f8c03cac5daa2b41dd"
+   "bytes": 4501,
+   "sha256": "3e9c1e661368c60f256a1aef38292e500f717da2466461a5187b3094505756a4"
   },
   {
    "path": "public/section/baked/collar_pipe_B_1_den.png",
-   "bytes": 2128,
-   "sha256": "ab5c0252c33c0ffe79a92e6c9a55f6c3c2d389b6c7c83c4db788230fa4d6bcaf"
+   "bytes": 3016,
+   "sha256": "d6092a301c4c8346a2b9c6322228dc76530e572910492a02edb0b392cc64d40a"
   },
   {
    "path": "public/section/baked/collar_pipe_B_2_bake.jpg",
-   "bytes": 6943,
-   "sha256": "039b2ebcecc0c012587581dc82d915533618dcab69c906b4be791c61c2f0b8d2"
+   "bytes": 7053,
+   "sha256": "c6db332f0f917cff261fffe0a9a96bf1ea101dd877ae278478a7b1a23f16b5a0"
   },
   {
    "path": "public/section/baked/collar_pipe_B_2_den.png",
-   "bytes": 2124,
-   "sha256": "16c6355bae9eec0d411e65fcc449d3949a3cbe9a1ad1092097a02625d3bba0e4"
+   "bytes": 3638,
+   "sha256": "2b92f3b2707921eb1d0013bd336af36fe198e505694a149c623bd6ea89ef411e"
   },
   {
    "path": "public/section/baked/collar_pipe_C_0_bake.jpg",
-   "bytes": 6110,
-   "sha256": "a5387f07ad44444c9c6dd21e026102943cdfe22b8eaba0c6638fb4fbb1b0cc4a"
+   "bytes": 6128,
+   "sha256": "0fcdb625710467491df67e841e4585c1567a4c76398ae9de8cac62d2340ee2f3"
   },
   {
    "path": "public/section/baked/collar_pipe_C_0_den.png",
-   "bytes": 2767,
-   "sha256": "6dcd36d8339e80ed8fc83082b6f0daebb5c34a38b60b3de4a94c4218194dad8f"
+   "bytes": 2979,
+   "sha256": "d24cebcc589ee3f09cd5544d4929490fed545367a27b9b7528abad9c261b2a48"
   },
   {
    "path": "public/section/baked/collar_pipe_C_1_bake.jpg",
-   "bytes": 9033,
-   "sha256": "6066d43e664d7f39eacb5ea939cca757d8c9355b9f76c9da6516214729186f79"
+   "bytes": 9106,
+   "sha256": "6e362d9da085ff095ecf0f6cf5140164bc3a85a5064b9973a278e4a9220d2785"
   },
   {
    "path": "public/section/baked/collar_pipe_C_1_den.png",
-   "bytes": 2907,
-   "sha256": "554656ee38aafef45fee2e8fa767ec41e921b5b1576fbd34f9d31072affd3f00"
+   "bytes": 3089,
+   "sha256": "00910a4cf24203dc72972d9fe963b5579954d269ed04dfc8177be6d81e8083a5"
   },
   {
    "path": "public/section/baked/collar_pipe_C_2_bake.jpg",
-   "bytes": 13622,
-   "sha256": "ae68e56852d5fa4139e922d4c0c114dc924bf8176d7e4fe72224e9a3083501f1"
+   "bytes": 13679,
+   "sha256": "34e6940cd7d12fedba718523d9adc995f78db68eb8a9a99d63cdc64f1f3b54ff"
   },
   {
    "path": "public/section/baked/collar_pipe_C_2_den.png",
-   "bytes": 3387,
-   "sha256": "213e93df0371e9829778bfa326dd53281aaba16dc7d5a9dc53cbe7ca227b581e"
+   "bytes": 4431,
+   "sha256": "20d16106a99f1393c368ff3e6f5740ad8f301f6027986f75ef27f821e3150e0b"
   },
   {
    "path": "public/section/baked/collar_pipe_D_0_bake.jpg",
-   "bytes": 4044,
-   "sha256": "e373a18fa88126ea4d8e4a27c8bb95cbf45eea6c33d5f37afc7d6d75a62573c1"
+   "bytes": 4051,
+   "sha256": "e07f075b3105d47a07aa322d9a38d582e271a2d635ffefbfd5ab4f646db1f8a2"
   },
   {
    "path": "public/section/baked/collar_pipe_D_0_den.png",
-   "bytes": 1348,
-   "sha256": "99d7018da067f646d01a0ce54483d8907edb7fa13dfd9d1f2c7eb5dd2917106f"
+   "bytes": 1708,
+   "sha256": "c09144949a8fa209a528ed974e20d0717f1f37cd58c205ad088f2f701d50db27"
   },
   {
    "path": "public/section/baked/collar_pipe_D_1_bake.jpg",
-   "bytes": 6217,
-   "sha256": "d5f9d439effc93d02fa41dbd250b4481cd49fbdade22daf5610d7e5c8abdff08"
+   "bytes": 6231,
+   "sha256": "407a3a9ec8ea7f823367b41d7ef4fc5447769f35bd88f6ab1fefa6b4c60e68b9"
   },
   {
    "path": "public/section/baked/collar_pipe_D_1_den.png",
-   "bytes": 1919,
-   "sha256": "1bf1fc7626e3e1433f5bdba7413200ac8ff5381ef9852d475f116401a21ab4e2"
+   "bytes": 2246,
+   "sha256": "aae831f08baa51c2bcac30ce2cf12a034ecc67b6c00ee918f6f8cded7346805f"
   },
   {
    "path": "public/section/baked/collar_pipe_E_0_bake.jpg",
-   "bytes": 6773,
-   "sha256": "c502d91ac6f14f75c12346021bd505f7c5b518cfef12daa15df9193a50a317d9"
+   "bytes": 6771,
+   "sha256": "02e236f2d4f298cf1614019ba1e394abe3cb431c5f2f592b4a8c2132488e80e1"
   },
   {
    "path": "public/section/baked/collar_pipe_E_0_den.png",
-   "bytes": 2479,
-   "sha256": "91ffaaab44544b5eaedaeac73b7d8c9feb25dbb9d5900db25a3b19ef1e649fba"
+   "bytes": 2655,
+   "sha256": "8eee94e6062210f9c2a45488257bfcf31b8e2d0aaab16642924b41fe0e6ac2e6"
   },
   {
    "path": "public/section/baked/fall_L_bake.jpg",
@@ -12043,553 +12043,563 @@
   },
   {
    "path": "public/section/baked/fall_L_den.png",
-   "bytes": 7566,
-   "sha256": "76e504c11702bf46280d22054dc9b0acafbd4d123323710188a520a36951bf26"
+   "bytes": 7978,
+   "sha256": "40e2e25bcd9c8a80783484b49601c3a9cf828ec6b2db0ae93940c056c167dbf9"
   },
   {
    "path": "public/section/baked/fall_R_bake.jpg",
-   "bytes": 41033,
-   "sha256": "efeda50dd0179bbdd2556246599a8cd5db814a3854993190d01aff3b083f0a3f"
+   "bytes": 42544,
+   "sha256": "5f9f786f1bf78dc354d7ac9f9329551705a2b736fe16d0cb4e8a88572244cc21"
   },
   {
    "path": "public/section/baked/fall_R_den.png",
-   "bytes": 11767,
-   "sha256": "b7101b9faedf519d710236a25fc73b2f43fe6c525f90ead4736c653237436d8a"
+   "bytes": 8367,
+   "sha256": "0212c779c5792283fbf44ae5ac18b3def2e40a1b936edf078327a8ce0b6baff3"
   },
   {
    "path": "public/section/baked/ledge_bake.jpg",
-   "bytes": 46983,
-   "sha256": "d7c9aff9a74f1fd05d1c0d3e081490f3f2ea3aa0e22687a82c88cb73d75123be"
+   "bytes": 46581,
+   "sha256": "946e596ccbdf626330327fce3173516a40ce3e1cce161c9d244081586928ebed"
   },
   {
    "path": "public/section/baked/ledge_den.png",
-   "bytes": 13353,
-   "sha256": "c33062d8a37b53cfec015e5ef7c881f4b1ea86628428c979a145d4c3a3c97cab"
+   "bytes": 16231,
+   "sha256": "042bd6c294f38bbb4570fe0c96a8ee05157c59e2bdaaaebc6cc8d1158d5b5b9b"
   },
   {
    "path": "public/section/baked/manifest.json",
-   "bytes": 40281,
-   "sha256": "76f9489ad0721e9161d2da150ba1d39f0dc7fa1eaa10d12e2879fd04b4f74e36"
+   "bytes": 40259,
+   "sha256": "3826464b27a26929cc6e1edbb4ce36fe26cce287f08263e87e655107454400d0"
   },
   {
    "path": "public/section/baked/outlet_L_bake.jpg",
-   "bytes": 11864,
-   "sha256": "4f6fab528031176f2ea4f2bca96359600624e424b4131487c07c2fe172ec87a3"
+   "bytes": 11878,
+   "sha256": "cdc4d7233fa8a49e703da4cf973da4ec5ece7000c712290e7907a2b742ecff51"
   },
   {
    "path": "public/section/baked/outlet_L_den.png",
-   "bytes": 2769,
-   "sha256": "e3f54787377fbd7d20ed78682e6d86785e344d9909fa7e98923b83e00d16acd6"
+   "bytes": 3293,
+   "sha256": "7a1f469bda4940858b055c53d269324641480f842eafa9277125e5deacd12852"
   },
   {
    "path": "public/section/baked/outlet_L_throat_bake.jpg",
-   "bytes": 6682,
-   "sha256": "6f76564381a405d2d278e6945f97f107d3c37bc237e4eb8b9aa205d4ef7c2bb6"
+   "bytes": 6606,
+   "sha256": "4dde86e63106690fceeded6d7bb8ed48232d9dffebd0e6d51ea917695acf1272"
   },
   {
    "path": "public/section/baked/outlet_L_throat_den.png",
-   "bytes": 2024,
-   "sha256": "2eb7199e5fb1643e827d03d71097a36ac17e5c8a5f5b3f7afa74ee0268e116f2"
+   "bytes": 2011,
+   "sha256": "89e320cd3b01b92e59ac898f825ab69e71fbec4f1b74674ffae9a9946e2514c3"
   },
   {
    "path": "public/section/baked/outlet_R_bake.jpg",
-   "bytes": 12439,
-   "sha256": "99b94aa501e4ff531af17088dfa5cb34ca503a47dca60fc5f845e997e636c70e"
+   "bytes": 12430,
+   "sha256": "a49db0479e7749d515f118d1a54e6e51a00dec20bbd669a8438c705cbf92247f"
   },
   {
    "path": "public/section/baked/outlet_R_den.png",
-   "bytes": 2884,
-   "sha256": "7109d4100d56eac9e84f0e1baf9b3ffcac8b30d018324d98ffb57c86c3b9e7bb"
+   "bytes": 3185,
+   "sha256": "c71af461a804799ccf575aae2cce9cb96d3721424a3a6242de16a7b414ca58dd"
   },
   {
    "path": "public/section/baked/outlet_R_throat_bake.jpg",
-   "bytes": 5631,
-   "sha256": "c095ea39a433ce3edcdc150ba230e1dd4bd5503b8323552cf53333ff77656104"
+   "bytes": 5576,
+   "sha256": "298f577ffab19e5d16045726344f8624e825a054c6869c266925219a44302486"
   },
   {
    "path": "public/section/baked/outlet_R_throat_den.png",
-   "bytes": 1506,
-   "sha256": "674f523024ce154ef03175bdbe5d6682a9eba7428a04e266feead05729ceb374"
+   "bytes": 1525,
+   "sha256": "1133393ea39d66c1fe196ca54b71944bd49c6de5c6402d93c4503b844e910ef9"
   },
   {
    "path": "public/section/baked/pipe_A_bake.jpg",
-   "bytes": 24070,
-   "sha256": "28ac143c22d2a7450a2e2c7376c68ffb4b3ab69ae5cb5c66343695e509f7a384"
+   "bytes": 24826,
+   "sha256": "318ae452af3ca96e505e3b0b6b97cec65192bf9918527f805ad2b7988bda57e9"
   },
   {
    "path": "public/section/baked/pipe_A_den.png",
-   "bytes": 6309,
-   "sha256": "f512ac8d72f2242ed5b891e0347eb83621dbb686331e45110f6df7c4aedd0181"
+   "bytes": 6030,
+   "sha256": "7fbae97a1bc7092089fc00ab5de7909436774f53d22f4533176a8647397693d6"
   },
   {
    "path": "public/section/baked/pipe_B_bake.jpg",
-   "bytes": 20283,
-   "sha256": "6ed3b8a645e626852e7c0e63e54878b479a417a418f10de4b57aebfcd2bdf1ba"
+   "bytes": 20250,
+   "sha256": "27836d8e4c8ad997c6a98dd1a2ff4b40001961596a597e4dc7eb83f536229d93"
   },
   {
    "path": "public/section/baked/pipe_B_den.png",
-   "bytes": 12326,
-   "sha256": "547840e42fe76e294c1298dc94c6a3dc796c58b26c5cc3c32a98fe5eb588d41d"
+   "bytes": 11662,
+   "sha256": "2b302bb7951ba4b4d3e3d0ea18f1b7c3ed5dd89728d831ff46671ee0ccde491a"
   },
   {
    "path": "public/section/baked/pipe_C_bake.jpg",
-   "bytes": 34089,
-   "sha256": "2339e8779cdb0f123c79e08417ef63e8b7acd3fa683d756caabb732cae2441b2"
+   "bytes": 33988,
+   "sha256": "97e4460312288a28c73dcad188bf2fbf3c71e90c843ed744ab383cf8c3817731"
   },
   {
    "path": "public/section/baked/pipe_C_den.png",
-   "bytes": 15212,
-   "sha256": "dffbcd746d740856f0e9c585bd8d2efd3a1761e5080692861a3d9d373a1d3e9c"
+   "bytes": 15414,
+   "sha256": "34c69612e8662345b7ba1f2ce723dfdf9cbb6ac40b5361f138bde006d5b1dd8a"
   },
   {
    "path": "public/section/baked/pipe_D_bake.jpg",
-   "bytes": 12328,
-   "sha256": "725ffc1d7135e49df58fd0dd167a6a3187c5a3294a78440e9db43a456cbdf7af"
+   "bytes": 12544,
+   "sha256": "799d8f50f37532a386ffe08f402025bd2d0401b5c4a38b3dd081f523811a184e"
   },
   {
    "path": "public/section/baked/pipe_D_den.png",
-   "bytes": 5121,
-   "sha256": "2098ad26148d7c4a261f617557828864fa89fd5f55ccb0a88af8d9cd351c1b22"
+   "bytes": 5035,
+   "sha256": "6b5add2dd7ce7eb54112a2372a6be600893ed0d43d396e966b5d7e093573b27a"
   },
   {
    "path": "public/section/baked/pipe_E_bake.jpg",
-   "bytes": 8988,
-   "sha256": "e3934818ed3e3417d4e5317110ad07c442eee827b04280690e3b68e99478e409"
+   "bytes": 9111,
+   "sha256": "c7d1bffcb1054daf617a4d3f6dc3c4872a47ffc6b40e3eb28fe65de35300ed34"
   },
   {
    "path": "public/section/baked/pipe_E_den.png",
-   "bytes": 4715,
-   "sha256": "963406499cbdcd9d5a43229e39d329fad819608932abe9de491bebcf3fc37b4a"
+   "bytes": 4562,
+   "sha256": "d4d7c3b1a90ffd56e5edbf43da86f4cf93955bed8503bada36d22d866a486fe2"
   },
   {
    "path": "public/section/baked/pod_0_bake.jpg",
-   "bytes": 13447,
-   "sha256": "bb64fdec172c81820f2a9fca6752b7779c521500146f3540cc2c51e9304381c6"
+   "bytes": 15264,
+   "sha256": "cce12e378b310b10f1a82de3940ca5108c0b43fb1e38836b95bda3fe12de4265"
   },
   {
    "path": "public/section/baked/pod_0_den.png",
-   "bytes": 5784,
-   "sha256": "e1c62b91ca1dfb85706f9f61ba661cc31b07e0e221a4656e127e0db95965bb71"
+   "bytes": 4729,
+   "sha256": "fe623fa752ee46159ca818b388bb5abd82a8f5a290bbd5cd6db22ee0f201a6c9"
   },
   {
    "path": "public/section/baked/pod_1_bake.jpg",
-   "bytes": 14955,
-   "sha256": "39e20eaf92f84893493a229d8895d0209460d6ff6bce2a7dfa29d1fd65bd8a17"
+   "bytes": 17356,
+   "sha256": "f7c0298b20541feb4d371b01bf717239032b988f9411f267fe580003877dc51c"
   },
   {
    "path": "public/section/baked/pod_1_den.png",
-   "bytes": 5999,
-   "sha256": "679c44c9ecfb7788a54a643e04896e0a3e5fa8990328cb66d6c72ac38e78d61f"
+   "bytes": 4969,
+   "sha256": "2b73227ceb20f420750c87227236c6ffbec3d7d85c69a4d3c619c3fa08eceade"
   },
   {
    "path": "public/section/baked/pod_2_bake.jpg",
-   "bytes": 11846,
-   "sha256": "301243b4b5a1d3eb5ebd0b9a78ca1f5ce6b6e6088603a2bf19b9b852f4fc5365"
+   "bytes": 13683,
+   "sha256": "3449c09389d5a583a65edbf80f60a5766e633d7d74d04a001be9781ced30bec1"
   },
   {
    "path": "public/section/baked/pod_2_den.png",
-   "bytes": 5606,
-   "sha256": "cab602d52071549692bbbd44c21b85f4bcd5408d6f792984638524038542cba3"
+   "bytes": 4608,
+   "sha256": "e0358ae792f342fce6e5a3fdad5685745844e48aa2ac133dc9380253f5d2272a"
   },
   {
    "path": "public/section/baked/pod_3_bake.jpg",
-   "bytes": 13782,
-   "sha256": "3e92575be2b97637b2f41fd01361838aa505e298bd3924ad78487e60a1f9f660"
+   "bytes": 16857,
+   "sha256": "515270fbe307951182930e007f56d26a8d560fc472433e3971cf8e6427776cf8"
   },
   {
    "path": "public/section/baked/pod_3_den.png",
-   "bytes": 5673,
-   "sha256": "95ff62b219a226d9f91facc8ef20df09b5f07c9af94ce7fb0a7d1c3c4f5b08e7"
+   "bytes": 4682,
+   "sha256": "3e689650fb60200502b7bc9e9a9fe460c209243dc17d41d19588b09d3c9575f6"
   },
   {
    "path": "public/section/baked/pod_4_bake.jpg",
-   "bytes": 10647,
-   "sha256": "e8b0f761f9e7a6215b445e45e6fdc8c76c9dc68db93946f95d774d098e5b4a58"
+   "bytes": 11790,
+   "sha256": "b3d436a58895876ca470ef41c639e3ea22d39c332ddc4c0232d4c121162c03ca"
   },
   {
    "path": "public/section/baked/pod_4_den.png",
-   "bytes": 4978,
-   "sha256": "e433578b5d764369158dccf1e0c64fb4058aa7c81771a4fe3dfd3d9d0500c733"
+   "bytes": 4025,
+   "sha256": "ff94620f4c124cf26e6f756c9ba8bd56fd24f9c28350a2bc09a0116cad4fe838"
   },
   {
    "path": "public/section/baked/pod_5_bake.jpg",
-   "bytes": 11645,
-   "sha256": "7677826904704a5430035850cda5b6c8e0223e79123a36b69f756680df74cb1d"
+   "bytes": 13967,
+   "sha256": "fd54daa03339e93a145780c88976f8a654088a29d88e2de8d5a50d107f50f5dd"
   },
   {
    "path": "public/section/baked/pod_5_den.png",
-   "bytes": 5278,
-   "sha256": "150b037eb408402dcded4e5d1e1ab7b861b1c5bfe0a5596ff00f9724ec1f411e"
+   "bytes": 4157,
+   "sha256": "b3e4899dc8b713e8f02d40f93051baeea5ec75eb46a6e9520687bb6ffb06fcb3"
   },
   {
    "path": "public/section/baked/pod_6_bake.jpg",
-   "bytes": 8203,
-   "sha256": "96065e02d6e57d44a1849eb10adc141eeb19c23de664649aa436e0e37e4cf84b"
+   "bytes": 8630,
+   "sha256": "be9a1662d941a682c179d45c8c1dbb9a22f9c4510bbf5c9b83f30db03e673c2b"
   },
   {
    "path": "public/section/baked/pod_6_den.png",
-   "bytes": 5103,
-   "sha256": "ecb6ac6321eb9ac48a18e4ebaa5b49781dff3980caf7579ba271f692636a21b7"
+   "bytes": 3846,
+   "sha256": "9918755549b1a6aa3d7f23e9d11ca9ba1b3882233310eeca61e8960772efd54c"
   },
   {
    "path": "public/section/baked/pod_7_bake.jpg",
-   "bytes": 7202,
-   "sha256": "6e94052d855ae4d48d3277b83458f800f44506446ce914eeb18012f403356758"
+   "bytes": 7666,
+   "sha256": "97f6603481dee3d1a3b2ed11b432971f611d65898ecbd841be06a2fe2d4c3667"
   },
   {
    "path": "public/section/baked/pod_7_den.png",
-   "bytes": 4924,
-   "sha256": "6aef7d234d72582fc2976d3cc44a36eb1b194445c23be8cae789ed4d0db2ca32"
+   "bytes": 3517,
+   "sha256": "e1f421930d8597386c8fe9a85541ea0e6d1c1aea8370d416a5b377ff59bca8dd"
   },
   {
    "path": "public/section/baked/ring_f0_bake.jpg",
-   "bytes": 39917,
-   "sha256": "e10f8222b8070b46c3767e364be426266a24157b6417596f90a681a1e6a2ded8"
+   "bytes": 40156,
+   "sha256": "9cec85f043bfe799c97032262f26b26736295a35230eeeb63fecf2693ca63bf7"
   },
   {
    "path": "public/section/baked/ring_f0_den.png",
-   "bytes": 7359,
-   "sha256": "f74a1b2ea3591ac74e710755572d19590009a1980adc6a839cd87a31393bc311"
+   "bytes": 13269,
+   "sha256": "fcdf5bfd78d87d0f7c4291f5016c7e276dc6deaf8ae159fab1f69529059f7abf"
   },
   {
    "path": "public/section/baked/ring_f1_bake.jpg",
-   "bytes": 37615,
-   "sha256": "7e57d6076270c99bf7706f044f592e6409eca4e8575720884084500cff96c651"
+   "bytes": 37778,
+   "sha256": "8bde6dce4a276d21a9273e0b0047a8645155822ec578ec0c5698f9e39cf70414"
   },
   {
    "path": "public/section/baked/ring_f1_den.png",
-   "bytes": 7393,
-   "sha256": "816d783984a3063ece441af6564d9ba62eb3aeda27418ed219474047648756d5"
+   "bytes": 13536,
+   "sha256": "04f1c85d9b17c9b352a0f09d2140ec7958f002c61ba363dec6ff0af06ebe841c"
   },
   {
    "path": "public/section/baked/ring_f2_bake.jpg",
-   "bytes": 37705,
-   "sha256": "b6466a02051382be2d3a0b86d5cae76c13390140cd0a8dab1819b9c39d5e4129"
+   "bytes": 37977,
+   "sha256": "ef6accec645d74b651569ca3e6496a20a1173f2e32424d0605b1e0aa2d1e9996"
   },
   {
    "path": "public/section/baked/ring_f2_den.png",
-   "bytes": 7177,
-   "sha256": "c54804b4defc90b10e4c47bbe7e2eaa6689e03681151bc68c1f79d5788be8b4c"
+   "bytes": 13520,
+   "sha256": "651787a6f7561c9b10e63d71f34a913f85e59a87f05a3a15a2d43ff734d1a60a"
   },
   {
    "path": "public/section/baked/ring_f3_bake.jpg",
-   "bytes": 39014,
-   "sha256": "016031d81f2bdf8475e04fbe2bc6989ee54b18954d92d99a0293fbfba4a2d591"
+   "bytes": 39258,
+   "sha256": "b829472b0f32b4434a589831f47dd59d0e52e4e960463524aae4570680b0bbb8"
   },
   {
    "path": "public/section/baked/ring_f3_den.png",
-   "bytes": 8431,
-   "sha256": "4eaf36e38c7906d3d5dff895aee2833bcba49dd4f084390dbbb169957a33ac0c"
+   "bytes": 15829,
+   "sha256": "79d58b71a1e8c9c3333f0dbe37a118a1fd9637e88e1bc32f3497dae7d1897519"
   },
   {
    "path": "public/section/baked/ring_f4_bake.jpg",
-   "bytes": 40712,
-   "sha256": "a222cddc089077f3c9319bd0bb7f92618b53855a86deb16511b9af705b312379"
+   "bytes": 41102,
+   "sha256": "61f527795d60b3ce2305ce413dea79c3b408706dd3f73ac749709ef808222407"
   },
   {
    "path": "public/section/baked/ring_f4_den.png",
-   "bytes": 7706,
-   "sha256": "59ef69af49b700055e9b9f4b28bd4a0a436044b131c00f7296bc64c7340a03cb"
+   "bytes": 15614,
+   "sha256": "8e89321c1636190786e744007dba9dd6070ac1551e6cb6b02aa610490299bdde"
   },
   {
    "path": "public/section/baked/ring_f5_bake.jpg",
-   "bytes": 40595,
-   "sha256": "25f58f71a6b8f8ff5a7b050ec012e8703c4631ff49a6500b15918a561ddce03b"
+   "bytes": 40978,
+   "sha256": "a0e3a76643c4f13e599d7322b096bc7afefb6d453e0ccb4f2b7b54cd746199bd"
   },
   {
    "path": "public/section/baked/ring_f5_den.png",
-   "bytes": 8186,
-   "sha256": "6002d2f1e6d8592705559ac6b3cde6d7a0628602071fdb71e4aa830649066d54"
+   "bytes": 16148,
+   "sha256": "a03ecd459dc646f5f32dd5396691db4b961f3a46dba69c33fbc97542f8eebb0a"
   },
   {
    "path": "public/section/baked/ring_f6_bake.jpg",
-   "bytes": 39250,
-   "sha256": "7caadd30a898df95ebd7d57b59b905ef7845ef1105a48301eb9b99b0ffac8f8a"
+   "bytes": 39091,
+   "sha256": "7a65e16a5e48ffd641226dfbc3be7144e551d29f44e2cc7a3929f5fb68a58b47"
   },
   {
    "path": "public/section/baked/ring_f6_den.png",
-   "bytes": 12370,
-   "sha256": "8eec648444b2644a7166383c6a7a9593f98b8dadfce4c01e3819f42c010db8ef"
+   "bytes": 19534,
+   "sha256": "8db5819f8dacc4ce616222b720b8babb058662ba9ebc8205bd9dd877a4e2ef67"
   },
   {
    "path": "public/section/baked/ring_f7_bake.jpg",
-   "bytes": 40639,
-   "sha256": "0307b1e98be50906444de86be0c8dc292fec565ea9975a8d56b876e0868bea64"
+   "bytes": 41404,
+   "sha256": "100cf26606ab0eee7b1065cc8173470de28b1dff35aa23228a2ddf80a82971eb"
   },
   {
    "path": "public/section/baked/ring_f7_den.png",
-   "bytes": 22142,
-   "sha256": "f73a2acd1a81cceae6734d6844e487e3e461707a31f89fb8f45707c019ccd37f"
+   "bytes": 25305,
+   "sha256": "db5514cf04ea2f3e70f83eeac6dd3aeff4641c02410f70e990f9b42c2585c51f"
+  },
+  {
+   "path": "public/section/baked/ring_f8_bake.jpg",
+   "bytes": 38458,
+   "sha256": "4248b7855dd38b02c0b31cd4a25e12763afeb845495f276da476b14f8982a5d9"
+  },
+  {
+   "path": "public/section/baked/ring_f8_den.png",
+   "bytes": 23963,
+   "sha256": "185294d523a967a3f3b6c284bbd2b2cf1d45ee5318ee924ad389ad6a186fcf3e"
   },
   {
    "path": "public/section/baked/ring_s0_bake.jpg",
-   "bytes": 63032,
-   "sha256": "0b148fa724d39e0cdf7174e79e5b8e5114b8e235f218259aa815c61f4af4df99"
+   "bytes": 63820,
+   "sha256": "0785a25ba338d118b8c1d53f12190ff12245228891df19d187eb663bbc6917f8"
   },
   {
    "path": "public/section/baked/ring_s0_den.png",
-   "bytes": 14492,
-   "sha256": "f2cd8530abf3d7a370f45219d903e3042a8acc244e53ba9300ae7df34cc19ee0"
+   "bytes": 25636,
+   "sha256": "70b7e77657fb8e147c2f67ddea9d411dd47841b5285d8a35a2aa49e6185106c3"
   },
   {
    "path": "public/section/baked/ring_s1_bake.jpg",
-   "bytes": 54796,
-   "sha256": "f614fbebc08a9b9743fd84fe51047cf36f9751b0ccc40da08fa71de4984fbf56"
+   "bytes": 54054,
+   "sha256": "8e2642f8204d8f794c025caf6861f0062d73b35f1734659afeda721ca7b28149"
   },
   {
    "path": "public/section/baked/ring_s1_den.png",
-   "bytes": 21846,
-   "sha256": "d017d148b3183b19e64dcb07df472df37b217682afa263bab7127d81c12c45c1"
+   "bytes": 30108,
+   "sha256": "2b26dfd5dd49f358da425407526741eb1ae83f30a802d9e1a4a7ea790db4d484"
   },
   {
    "path": "public/section/baked/ring_s2_bake.jpg",
-   "bytes": 51004,
-   "sha256": "9383c8420e792f56eb998f580dc05867d9755540f9614fce26f269fd096f3cb9"
+   "bytes": 49702,
+   "sha256": "353990fc07be84d0f6d6a2404531b9ff8b8a12f85904354df36dc94c639f7110"
   },
   {
    "path": "public/section/baked/ring_s2_den.png",
-   "bytes": 17819,
-   "sha256": "ee6bcb685a35fef863d7aad47eef001475f591c95d4be1115d733507df872d4c"
+   "bytes": 23568,
+   "sha256": "a41445da4b99ae103387f83e3c3974e637db4bb1ee269c6a03050c7e68f40bae"
   },
   {
    "path": "public/section/baked/ring_s3_bake.jpg",
-   "bytes": 46696,
-   "sha256": "8d6dccf341b3fd0cb9af443002ff2ca0efec19622429b27199b18dac34d68c08"
+   "bytes": 48371,
+   "sha256": "ae98ba0e1304cf71935ff33c3a1c8bc04141fed7cb243883c4b0a7cc7ddedd92"
   },
   {
    "path": "public/section/baked/ring_s3_den.png",
-   "bytes": 15095,
-   "sha256": "1986061f535dd9406e749fba9151e8764d1be2ed925dfd42da464a93061d37a8"
+   "bytes": 19190,
+   "sha256": "8ca159d5db0cbaaa4a25561c3395a837522a19c7e57cf8f1f994c0c666bc30a0"
   },
   {
    "path": "public/section/baked/ring_s4_bake.jpg",
-   "bytes": 40212,
-   "sha256": "bc499e25a8d92b4787fcd8486da42b7f99099fc93615401bba0827272163f837"
+   "bytes": 41153,
+   "sha256": "0ca6fd6a6b169045d6484a8226816ae2fdc09cf90bf1d4f08b2aeb8cd397cde1"
   },
   {
    "path": "public/section/baked/ring_s4_den.png",
-   "bytes": 20332,
-   "sha256": "5c01dc33a230d8615b26882e463ffdd59636c3771efe2717619e71541855fda6"
+   "bytes": 24059,
+   "sha256": "930b4782c43fc12f6d396576e37c303fb25ee9381dde6aebca2871bbffd34b71"
   },
   {
    "path": "public/section/baked/towel_p0_bake.jpg",
-   "bytes": 50468,
-   "sha256": "97aeb8259b1f33dd25fda660e2efae8eee263fc580ed86b76c471926d2669f7b"
+   "bytes": 50981,
+   "sha256": "1ae249aaa4bf1fbef6f88de2cb1476096cd3af727af7fd1cb8d247e27119ed67"
   },
   {
    "path": "public/section/baked/towel_p0_den.png",
-   "bytes": 8775,
-   "sha256": "34046aa33f90fff43f64f177bfdc7d72905c1381dfe1079a4bb7419606105914"
+   "bytes": 11864,
+   "sha256": "a0cd215381278969b965b72a7accbb0de6bcd602f15b824d70d46e7dcb27d77d"
   },
   {
    "path": "public/section/baked/towel_p1_bake.jpg",
-   "bytes": 55342,
-   "sha256": "307840953d09ad1b4bea34d53be1243fde49271acdbbd5a22d55e2c77accadc2"
+   "bytes": 55372,
+   "sha256": "0b14c5648ed532ee3c37f216f4c07db017c45a0f6b0afbe63cdb946452606d57"
   },
   {
    "path": "public/section/baked/towel_p1_den.png",
-   "bytes": 11501,
-   "sha256": "101f9613322b950e0752a746b6621096c7cbdb7e130bb82bc9f3fa62129d83c7"
+   "bytes": 13850,
+   "sha256": "28dfce1d74082fd48121b53707e500b2587d7de879951d9900c0253f1612a242"
   },
   {
    "path": "public/section/baked/towel_r0_bake.jpg",
-   "bytes": 42265,
-   "sha256": "da66bbb626d8b3626537ebee20a0923ace44cd1a2f538ad75156f114f062f8b9"
+   "bytes": 43202,
+   "sha256": "5f4e2e9b9479149faa903d5bf98d840f5a8c0f5ec956dadd4e0d8f4f76422b72"
   },
   {
    "path": "public/section/baked/towel_r0_den.png",
-   "bytes": 8937,
-   "sha256": "e9cd37d4d3f964ac3e4d99fed5a2f5bd1e95538b397e16b23ae150b5caf6b17d"
+   "bytes": 10960,
+   "sha256": "2a410c7566b18eac95e2a6ca9e877dfec79d63995883a62bcdd380cd1e7c7562"
   },
   {
    "path": "public/section/baked/towel_r1_bake.jpg",
-   "bytes": 37058,
-   "sha256": "a182390346f9a43057658679351492f5d4c8a0b97db0656a42346632ca5949d9"
+   "bytes": 36925,
+   "sha256": "487a140a017590402209d100b38b26605323cff4b4c29fe04770e11ba4a04d07"
   },
   {
    "path": "public/section/baked/towel_r1_den.png",
-   "bytes": 13389,
-   "sha256": "70293f5e43b0a58cbe3a005d655b521b29ff693ce2feef71a122ce1be6beb7e0"
+   "bytes": 14654,
+   "sha256": "46db5acb0058007b2e7d2d143312521f69a43ad01399521d53c37415fcdd791b"
   },
   {
    "path": "public/section/baked/towel_r2_bake.jpg",
-   "bytes": 24642,
-   "sha256": "77c33da995e9f9ec3cdfea70030bc2bba10c84fcbbdcbbac8342e55945d17149"
+   "bytes": 24816,
+   "sha256": "eeaecbff4d3c7527a9a4e9429881d2542206f1440376f36b702e753efe70f3fd"
   },
   {
    "path": "public/section/baked/towel_r2_den.png",
-   "bytes": 8313,
-   "sha256": "1fd5493865a671e88e64ec4968b4fbc9e5a99c53e057d6074614bb3031399728"
+   "bytes": 6786,
+   "sha256": "ebd42ecfba8b068c10cca2aa43f8ac4d2bcfdb71f8165736db6e99ff7200eb9b"
   },
   {
    "path": "public/section/baked/tower_bake.jpg",
-   "bytes": 22885,
-   "sha256": "011718ddba1a695ffe1a34e5f0f9536374f0af3d0f5c554a65ddb640b1ea6f70"
+   "bytes": 23089,
+   "sha256": "fe292dda29a1894efcc4963c0d4ea1474951c2fb2e9821cd33f891834ac6a891"
   },
   {
    "path": "public/section/baked/tower_den.png",
-   "bytes": 7400,
-   "sha256": "449373ebd8f427d7c006e329963de675aad07ca1253fb9b9ab97065c88451cd5"
+   "bytes": 7459,
+   "sha256": "d6c4e88e3416eda306bb13ee0820fd0c3351774fc6506e503145f7cf064d8657"
   },
   {
    "path": "public/section/baked/tower_rim0_bake.jpg",
-   "bytes": 8840,
-   "sha256": "7112014b9c27d4d1220b1a24f5cad56d0c7afa70d9ad9f03d4e390f75d705219"
+   "bytes": 9015,
+   "sha256": "18a46a63dadd48cc6593483f4e6e3945501054c44bce7ad8c303790c8b9011d5"
   },
   {
    "path": "public/section/baked/tower_rim0_den.png",
-   "bytes": 2717,
-   "sha256": "a97d073e2434fc1ae24c055f2b56567006804929d0ebb14982fc3ace69a58179"
+   "bytes": 3047,
+   "sha256": "30f0b5f73260ab0a6ed33c7b12bbdb393829b532529a51814fbe275aa115bec9"
   },
   {
    "path": "public/section/baked/tunnel_00_bake.jpg",
-   "bytes": 104456,
-   "sha256": "c5c8448d49a60862bfb789cfc8beaa4d6530a77d14e4d14142b8e872d15209f4"
+   "bytes": 101595,
+   "sha256": "ca9c32269e2d0145cac11d2cd36bff63f46a97fa503d70078b7705e591933ee7"
   },
   {
    "path": "public/section/baked/tunnel_00_den.png",
-   "bytes": 3956,
-   "sha256": "b3b448c8603b5aded640242bf3ecb413cef5cc971c24dbddf51f1e0f82e602f0"
+   "bytes": 3740,
+   "sha256": "d6f64b1ed86930f5b9aac8e6ee7b8e92a06591ffc50f835a86e6752bbefaa5f5"
   },
   {
    "path": "public/section/baked/tunnel_01_bake.jpg",
-   "bytes": 121564,
-   "sha256": "a69f52ddf9c99f4bb035a66aa497d8770c88d33863dfe114f4d33b102c569732"
+   "bytes": 118480,
+   "sha256": "125cd3491835d81bb6946f0cacb26ea385ee09539d746c9aa6dbba81c5a18b5a"
   },
   {
    "path": "public/section/baked/tunnel_01_den.png",
-   "bytes": 29265,
-   "sha256": "98b207bb233489add85de89382e3bf07f5486e6c2b6670fa790b03ad7ef7dec8"
+   "bytes": 39406,
+   "sha256": "eb413b0a6e8b3c1c45292a664f0e5013ef381ca1698875d3ae6c0137e4b5f718"
   },
   {
    "path": "public/section/baked/tunnel_02_bake.jpg",
-   "bytes": 159120,
-   "sha256": "cce4f5649dea6522b78cc5f583cb0be9152bef55ce1e9883c0a8c14c74bbefbf"
+   "bytes": 153629,
+   "sha256": "2ff919fe6479642f54699abe7a96cc0e2e11c9e4729e231517fd382988c52610"
   },
   {
    "path": "public/section/baked/tunnel_02_den.png",
-   "bytes": 44813,
-   "sha256": "ec969ee929bfdf16b148740c01fb44f439d38f9e80de095ff606406f0419782b"
+   "bytes": 63542,
+   "sha256": "a10b3c465084899ba4b550cb4cbf14c0dac1ad99002cbd58aefeb772bde31a89"
   },
   {
    "path": "public/section/baked/tunnel_04_bake.jpg",
-   "bytes": 197826,
-   "sha256": "fcf70792a7e822004efe2a62a977950a35f3edfbe5a550e2f3dcf5269e12dda9"
+   "bytes": 192572,
+   "sha256": "b247116386611f42a3551230aa2921b31c05b68ad1d6628e7838af021f3d39a5"
   },
   {
    "path": "public/section/baked/tunnel_04_den.png",
-   "bytes": 46925,
-   "sha256": "ba5f8bf8313362c4e37c8774303766adeb72a7ffa56ecc240477f46f35fc8ad3"
+   "bytes": 56138,
+   "sha256": "a39ed53b754e4170eebed4becbdcb9802e23796aedf13c91b00cc33e88ca893c"
   },
   {
    "path": "public/section/baked/tunnel_05_bake.jpg",
-   "bytes": 221345,
-   "sha256": "ec70f2c04e69c2568175fb1a1e74746bfca3673a9fa4704031f6ab4aa3eb15c4"
+   "bytes": 216346,
+   "sha256": "7da6d9f553758fdd3b30962d0a7777d170f101dc93aadf3eb0e414cdac31e19c"
   },
   {
    "path": "public/section/baked/tunnel_05_den.png",
-   "bytes": 54243,
-   "sha256": "5d8eb1f509990921abaaaad9255972cd47d582ad462574090a5ed96974ab9edf"
+   "bytes": 58636,
+   "sha256": "a012a5f97214f17be40fd452752567b9b3ccf95109098fc5870031428cab53a7"
   },
   {
    "path": "public/section/baked/tunnel_06_bake.jpg",
-   "bytes": 170251,
-   "sha256": "1d509de83c287ab291b0f3a268e651985b73a4b5de099b642c3478f2a2da1e5d"
+   "bytes": 161467,
+   "sha256": "f6cff25c68af44fb118c9c509d4a8484a1b8cf08ccb0b284033beb7aab2e8dc5"
   },
   {
    "path": "public/section/baked/tunnel_06_den.png",
-   "bytes": 52852,
-   "sha256": "0e13d5c61336fc771ea3cbb38d7f52db5451ceffa11997148a54b1414a7b7b85"
+   "bytes": 59517,
+   "sha256": "ad9984b26badb97ee1f71497486a158bc27cb9d3b1f68894127cc2a75db0b6ed"
   },
   {
    "path": "public/section/baked/tunnel_07_bake.jpg",
-   "bytes": 175086,
-   "sha256": "60ef9eb380dc66a37c961c96c0f3f7fbf48bad7053c75dbfa88ae0a2431d6899"
+   "bytes": 166725,
+   "sha256": "61e9594a8129ac51a895a11933aec26b6494a3b14bcb850c68f44ee2ff2ec717"
   },
   {
    "path": "public/section/baked/tunnel_07_den.png",
-   "bytes": 46782,
-   "sha256": "f0f8cfff8ef806725873f83bbca4dc66f3f967cc674db166f9d40f2cf2e8eb50"
+   "bytes": 45661,
+   "sha256": "b1076b3d4058ee5b1f0c3d8b55417ce828006c5d103705b93873adc01c708478"
   },
   {
    "path": "public/section/baked/tunnel_08_bake.jpg",
-   "bytes": 138818,
-   "sha256": "6173f5df9b59743069a5241fd6f2f3eb08fea5c26225a1608cb5a99937be243e"
+   "bytes": 131469,
+   "sha256": "747af2134fca499eeda60399901b272760fc9d2b332d7286bc7c1df11b18e6e4"
   },
   {
    "path": "public/section/baked/tunnel_08_den.png",
-   "bytes": 42981,
-   "sha256": "e6593f22431572bd20a1a7ff605016b737ff82dc29d8eccab0dc5bc3ef6fd48d"
+   "bytes": 42577,
+   "sha256": "3db87eb5089fabd2fa07821de212c6672ffa94702e7cce401c64ac9aa75b4986"
   },
   {
    "path": "public/section/baked/tunnel_09_bake.jpg",
-   "bytes": 160164,
-   "sha256": "be625c192e72b1c256756650536704dcc74d24fd29fa34748de2f138879f5008"
+   "bytes": 152738,
+   "sha256": "3a75af1f7162313c7808533a29a03fb43a7eec6feb6bd2f0a0044671d9c66b6f"
   },
   {
    "path": "public/section/baked/tunnel_09_den.png",
-   "bytes": 37425,
-   "sha256": "7009bdc66b6e247327b6f339a24d6832d4d30ebcf6477bc8803e3a54b898f8f5"
+   "bytes": 36158,
+   "sha256": "9f2cba8285a4bc9a04109044ca0daedb6f35c6b9cd261c71ca87699dd641f689"
   },
   {
    "path": "public/section/baked/tunnel_10_bake.jpg",
-   "bytes": 150583,
-   "sha256": "0a2d8becddc830709751f6dc5fe3febdf99fc9366f4f34fd575f0fa510341ad6"
+   "bytes": 144008,
+   "sha256": "296c4b5db711b14125fe1b4151dc5cf5c0eb329beae19818ab44176505327999"
   },
   {
    "path": "public/section/baked/tunnel_10_den.png",
-   "bytes": 41641,
-   "sha256": "33713f418f464293cd194cbba0c3a3e2492b4dca505028c06c5a1debeb667ae8"
+   "bytes": 35178,
+   "sha256": "000b0c39e0c5fe203e2bbda673de071f4f8beddd02466e9d12e6878a7ed10f6d"
   },
   {
    "path": "public/section/baked/tunnel_11_bake.jpg",
-   "bytes": 102323,
-   "sha256": "1c4bdbed5b41f3f4c9c959d807377518a150fa1d44414158725ae87b9a835e6e"
+   "bytes": 100233,
+   "sha256": "3d871a5aa557dbb4bd452098ea8c2bb11e4d16eb685f1f27a876b0b274f35fc8"
   },
   {
    "path": "public/section/baked/tunnel_11_den.png",
-   "bytes": 36052,
-   "sha256": "0818feed8a475de6f53a1673fc2298a63bddab08587a4bb81b6a4f0fc4f67509"
+   "bytes": 33755,
+   "sha256": "083dcc1e449ab53b947971f6872d6e8c12d694cd93a458bb2e25887f4079d991"
   },
   {
    "path": "public/section/baked/tunnel_12_bake.jpg",
-   "bytes": 135400,
-   "sha256": "cec8e7ab6b3b7bd26d69f1858c386dac9e16fef6d36cec48bce822e323e8bf23"
+   "bytes": 129541,
+   "sha256": "4fe69ba6086ac506d4065546a0818bef086e985382513ebe3e9f0e400001fe05"
   },
   {
    "path": "public/section/baked/tunnel_12_den.png",
-   "bytes": 47784,
-   "sha256": "9dda2dd0a19f085b90bb6081305d4d9ee6aebab8df656d46ca1b680516075004"
+   "bytes": 41824,
+   "sha256": "f609dc32f4561670ad28e03e8a0a6a38cb584a04b0abca79ef153d2432735c5f"
   },
   {
    "path": "public/section/baked/tunnel_13_bake.jpg",
-   "bytes": 141152,
-   "sha256": "23a838982192e307bf75e147006c55656a78c43aa6eb76fb0fa6fd4d2899c908"
+   "bytes": 137892,
+   "sha256": "b8839bf739f2bf791e9662045d4af1b3281f0484b2fa4a4de4e707785fcfb46c"
   },
   {
    "path": "public/section/baked/tunnel_13_den.png",
-   "bytes": 49534,
-   "sha256": "1c72d16c5589dd959159db72fd2fa4f3d856f32e13e0ed7c7a7c788c39e1a2f3"
+   "bytes": 46367,
+   "sha256": "0cb3d51c94d97a9b89cf5f695a2f220a01add2f07b8ff78cb54ff391de5dad27"
   },
   {
    "path": "public/section/baked/wall_L_bake.jpg",
-   "bytes": 130660,
-   "sha256": "d79ebae462382f0fbe17e7a95319bf705a9c807d8c02bc2dd8df5571c0538b13"
+   "bytes": 139144,
+   "sha256": "ae5e76311e1c4bee1419de208e528d89b3623086b47608eb5c613a641fa01613"
   },
   {
    "path": "public/section/baked/wall_L_den.png",
-   "bytes": 51626,
-   "sha256": "f9be93fdd7129e60df12b8480aac531a57927b1228f7e907c6ed1dbb61849c98"
+   "bytes": 45328,
+   "sha256": "e8ffd8e600b73478fed4c03349f3bec46942c9157ed36ee17a57b1ca797a5da7"
   },
   {
    "path": "public/section/baked/wall_R_bake.jpg",
-   "bytes": 86827,
-   "sha256": "22fd7c29f10b245539f53fa9278ff2a8a3da787d04de7b8045893deee45eae8b"
+   "bytes": 98498,
+   "sha256": "a549f74b86f548694907280b73353b2f8e615ff2a5dc7203342051f7a9cd2854"
   },
   {
    "path": "public/section/baked/wall_R_den.png",
-   "bytes": 40803,
-   "sha256": "d0d74ce991b0210d8e8eac37300e9b81d40c9fe6ec988a0f3405c246e898ea9f"
+   "bytes": 41737,
+   "sha256": "9eb371d1b67564d711a6a492b2407907cfcb1e44fd26be71b2fb63e9e1334f41"
   },
   {
    "path": "public/section/baked/water_c0_bake.jpg",
@@ -12598,148 +12608,148 @@
   },
   {
    "path": "public/section/baked/water_c0_den.png",
-   "bytes": 22660,
-   "sha256": "16f2c9b31d3681d4d457c1237fa58e238f919c267cff2e4616fc7dec26a922c3"
+   "bytes": 23118,
+   "sha256": "f819cdee55857627fe919c50eff5449e882d06408ada0ec3cdc09a0498f5c3ad"
   },
   {
    "path": "public/section/baked/water_c1_bake.jpg",
-   "bytes": 307468,
-   "sha256": "17a74d5be87e775a6e02e92c6c57b1fa343671d0cab242d2b346e62197f0cd79"
+   "bytes": 307126,
+   "sha256": "283a40604f290d3cf4398de7a293db7518592f9e1b23d4aa108975a5e9330de9"
   },
   {
    "path": "public/section/baked/water_c1_den.png",
-   "bytes": 69635,
-   "sha256": "001fa2373d44a471ec03a24bc69949820bdb8c316c51181ee769c0d3ed7817d9"
+   "bytes": 76999,
+   "sha256": "2d4887cd3b89a8f8aea69f34c3d3de1515c13c24e60caf1132c505882ec12df6"
   },
   {
    "path": "public/section/baked/water_c2_bake.jpg",
-   "bytes": 301200,
-   "sha256": "0438053236dd399634701cec657c339053640202042c812311c3e176a259207a"
+   "bytes": 296347,
+   "sha256": "00c2edce03b6ac12117343c55788045152c05716969ffb70b21aa08ecdf82f32"
   },
   {
    "path": "public/section/baked/water_c2_den.png",
-   "bytes": 43874,
-   "sha256": "41a15e83a4105792e7917f1686cc8aa75e0cd8823bb667e53b8206a300e75519"
+   "bytes": 56300,
+   "sha256": "a0e234604ef83ecaf7a0caffa456b2d9040f2c6fe4c33c78ef3b1594c656b07d"
   },
   {
    "path": "public/section/baked/water_c3_bake.jpg",
-   "bytes": 292817,
-   "sha256": "f0c738b13c80996b4ba2c84602416f26887ea567d300e7a4268d0fe9146e13cd"
+   "bytes": 285296,
+   "sha256": "bb63fceb790fc21a625437e4ff4c9be61ea6b8831f0cd25d80062ccb77d02d4e"
   },
   {
    "path": "public/section/baked/water_c3_den.png",
-   "bytes": 28460,
-   "sha256": "d113ea601819bc98fe4403da26f42ee3d8d2a666ebbc80d9719482b112222f08"
+   "bytes": 41624,
+   "sha256": "52737ace1a341469402d05232a29416e53b9578d5c8dd2733d76f31fc0d6574a"
   },
   {
    "path": "public/section/baked/water_room_bake.jpg",
-   "bytes": 55157,
-   "sha256": "43c9c947941b16ef7c8c81e5d488da1607f1a2748406564f8cb44eae90d54445"
+   "bytes": 57174,
+   "sha256": "0f9cd5324f8a0d9abf4ccaecb3fc0321b496d112e97316dcc7cb8c158ba6adac"
   },
   {
    "path": "public/section/baked/water_room_den.png",
-   "bytes": 25437,
-   "sha256": "6590958b7b7acac26ca6cb264b6c3f5306346c603c2927dd502196c3383b3702"
+   "bytes": 19646,
+   "sha256": "14b1a7150a56f2b3dfaac310c09814431ba8e4169ce01e9be2b21450c7960223"
   },
   {
    "path": "public/section/baked/water_t0_bake.jpg",
-   "bytes": 186068,
-   "sha256": "63c1333c07033829783fa886d98d89d04f5837e8dda9c4768eb67c8e5023a8f3"
+   "bytes": 179754,
+   "sha256": "0697007cfe01498308e21a4f1e51586873e4ea5991c99ee97085a59e88553e2b"
   },
   {
    "path": "public/section/baked/water_t0_den.png",
-   "bytes": 38358,
-   "sha256": "091de80d8b589bc3bd7936f593f5720e45eb8861529aed315d982a0f40868a68"
+   "bytes": 65103,
+   "sha256": "6ccddeec5da115b07bd9239c50b42fc08cdf7928ca4115ca512490b104ff6c40"
   },
   {
    "path": "public/section/baked/water_t1_bake.jpg",
-   "bytes": 119347,
-   "sha256": "07aae2982c5894bebbc51addc90bb3c7a7f09009230ecfdc061586eb5a2e8b8f"
+   "bytes": 114279,
+   "sha256": "be451ee616b318e29c43ac74c7941148543e2cc97d4f92ed7e152df155a892da"
   },
   {
    "path": "public/section/baked/water_t1_den.png",
-   "bytes": 51804,
-   "sha256": "68980eba39240a1b9fdbd05f1c6537490aafb150d2857c39f8673f83a045f6c1"
+   "bytes": 51355,
+   "sha256": "bf477bb5e7ab6167338efd83373013fa59fcfa977e1f43dd48ce6d40658b7b44"
   },
   {
    "path": "public/section/baked/water_t2_bake.jpg",
-   "bytes": 220035,
-   "sha256": "9cdc0efe2a1efb5d25380436b225599d957a5c06b51882427b1a8ec27835fc4a"
+   "bytes": 215272,
+   "sha256": "ad3f4826210cb568309d17924099a363e23abe42a5760c8eb0d694f1f35f91a5"
   },
   {
    "path": "public/section/baked/water_t2_den.png",
-   "bytes": 71039,
-   "sha256": "b615910e8421ab4fea2c5737c04539962b2e1ee007516890aa5934962c74e8db"
+   "bytes": 72567,
+   "sha256": "37969a68441521a2ca2013bb807175ae1dd76f046d191ac3d7284264dbca4f0c"
   },
   {
    "path": "public/section/baked/water_t3_bake.jpg",
-   "bytes": 135888,
-   "sha256": "648f1a2e0fc8185fdc411314f07d25247dd5cb7d1254a2b14bd5148ec521c08d"
+   "bytes": 110331,
+   "sha256": "061909c4a4fef4e08f4945d806805b505b9b254f73f5d91696a4d1b1ec0decd7"
   },
   {
    "path": "public/section/baked/water_t3_den.png",
-   "bytes": 58165,
-   "sha256": "9821fe0c5e432061454ca9d21027953668a03c9b939f4c236c0a3155d8107aa4"
+   "bytes": 63877,
+   "sha256": "325215f801316b484ff951a6821c7d185a94b1dbc833a862c18f1bb1179a2b6c"
   },
   {
    "path": "public/section/baked/water_t4_bake.jpg",
-   "bytes": 146153,
-   "sha256": "f933b8aa52d7566f04ff790ba5bc8cc6f0584d3f96f5cd34dd5b3b12db3cf77d"
+   "bytes": 133854,
+   "sha256": "6c6cad139abad94153407ebd993feeacff086c842fc07517cad648bf2e8befa8"
   },
   {
    "path": "public/section/baked/water_t4_den.png",
-   "bytes": 42783,
-   "sha256": "d6edca643ce58e62c7fc52928d31bad3e1614db9da034a8db975a5426280c501"
+   "bytes": 44453,
+   "sha256": "b13d51739964c3dc70b53dea2ad12ed3a7fd1bd962b862507dd8f630515d6cb2"
   },
   {
    "path": "public/section/baked/water_t5_bake.jpg",
-   "bytes": 121114,
-   "sha256": "66afb35f433bdde63178f3b2371fa2996ddd876e8682888017454a4832c5e45e"
+   "bytes": 116715,
+   "sha256": "1ef941ec6eeb903cc0b18020435d59ee760d1fb822322a72ca6c27bfa7fefb22"
   },
   {
    "path": "public/section/baked/water_t5_den.png",
-   "bytes": 34001,
-   "sha256": "fdeb5920f035a15d353d5a57a37b1564c6ea026cabeeaaca3c32b5da9c3f067e"
+   "bytes": 31192,
+   "sha256": "829fa6f352bb51227169146b269a8c917c337a6ac5149c5ecd5cd9bf81be20a7"
   },
   {
    "path": "public/section/baked/water_t6_bake.jpg",
-   "bytes": 104682,
-   "sha256": "f6ebaecae3fcfe86299081016e788bc7275d1d8f441efc139017175f480c9d03"
+   "bytes": 100850,
+   "sha256": "0f34e5e26f6986d0acebb45520fdc6dd560913eb0e7f666d7c6418e95e9ad5c0"
   },
   {
    "path": "public/section/baked/water_t6_den.png",
-   "bytes": 38159,
-   "sha256": "8ca53dd319eed19768239cd2809747de787b8d89ca86062f8c6eec5299316ebd"
+   "bytes": 31338,
+   "sha256": "5e167947fc78118564e3c121967962f9a138d582ff69f257d3f0e51be2174d04"
   },
   {
    "path": "public/section/baked/water_t7_bake.jpg",
-   "bytes": 98602,
-   "sha256": "5c626d6ce20be2cfcc99f146051a52c190a8c544c26c8328e3cea9e80f544cea"
+   "bytes": 94532,
+   "sha256": "7c32f4fe3122ac0e2ba98dacfb0d7808e09422cb035aa6451176cc06ca6e9ef3"
   },
   {
    "path": "public/section/baked/water_t7_den.png",
-   "bytes": 45269,
-   "sha256": "2660073f6d054762aa5029c3c41149f45ffaa014eac85029f45c21bc0f4f95ff"
+   "bytes": 27634,
+   "sha256": "03cfb2ed0f9235b3171686edb9f2e235c44fa3033c78de4b21b4bde0815667f5"
   },
   {
    "path": "public/section/baked/water_t8_bake.jpg",
-   "bytes": 90254,
-   "sha256": "78429475bbc80a3079b9a3f3d90b5b11f4c06f0a24a02936a847ef91824f45b8"
+   "bytes": 91795,
+   "sha256": "e7f67fff8fd44570729042a631e35f151527927d0f28a9a800158f05ae3149ba"
   },
   {
    "path": "public/section/baked/water_t8_den.png",
-   "bytes": 43759,
-   "sha256": "7fcc0c1e7acba2a7c46011d30fc55dafba6bcf87ff0a802e44d0b77ac93b7ddb"
+   "bytes": 28735,
+   "sha256": "e4f1a2b8d96e7794420760758850768b740e53cd8037f1a3ab765734ca5ba5c5"
   },
   {
    "path": "public/section/baked/water_t9_bake.jpg",
-   "bytes": 90451,
-   "sha256": "e7d945ea9f4abed4d08570f707dc128bd318c6a4fba8bcfaabfed4cbe406a4da"
+   "bytes": 718946,
+   "sha256": "969dc740fbc5435d03ceeb42934073efc2357a753bce87407c2df0d679b7cf97"
   },
   {
    "path": "public/section/baked/water_t9_den.png",
-   "bytes": 17367,
-   "sha256": "b7e660f914975d515c9685eb792d35e5c86618c2bc63780cb9908696aeb05ade"
+   "bytes": 101173,
+   "sha256": "c082c1b4a1647e492a198130fee21a26ab9efdbdae39adeed251fe1aed89921b"
   },
   {
    "path": "public/section/benny31.glb",
@@ -12768,8 +12778,8 @@
   },
   {
    "path": "public/section/index.html",
-   "bytes": 54165,
-   "sha256": "b03e7735aad0e8bf9eb37800e8eae283620ecde40a01209024b83f7283796b86"
+   "bytes": 54468,
+   "sha256": "14927fdef13f38dc41299300cd3aa57964b299a9c4bd2d8e7bb5b4a824e56da7"
   },
   {
    "path": "public/section/section.glb",
@@ -35468,8 +35478,8 @@
   },
   {
    "path": "qa/reflock/r40/Rainbow_r40_bubble_sock_section_debug.apk",
-   "bytes": 87303429,
-   "sha256": "407c0ac99a15986cbaef685ce5d0b71f02ae9b723cec2050c01274adbcb6fefe"
+   "bytes": 88123876,
+   "sha256": "15a03fbc4e77f1a12a92b10a7ecbc8ca85fd4fd16c35b0cf7c9c19c8819b5f13"
   },
   {
    "path": "qa/reflock/r40/SOCK_RESCUE_APPROVED.jpg",
@@ -42903,8 +42913,8 @@
   },
   {
    "path": "tools/reflock/section.html",
-   "bytes": 54016,
-   "sha256": "4a9e89028c8acee0a16c57a6e21c6923a218094b592d0bee760f0fa8573c4bec"
+   "bytes": 54319,
+   "sha256": "a72113fc73045322b37bc8aba19d87f532cf9c7a10a45b1189a265a3513bf21b"
   },
   {
    "path": "tools/reflock/section_export.cjs",
