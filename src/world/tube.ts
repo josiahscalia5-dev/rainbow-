@@ -299,6 +299,9 @@ export type RingOpts = {
   tube?: number; double?: boolean; inset?: number; extra?: number; collar?: { depth?: number; lip?: number; width?: number; segments?: number }; band?: BandOpts;
   /** wave 8: lateral stretch (see TubeGeoOptions.oval) — the ring's local x (= ∓right) is scaled by oval(s) */
   oval?: (s: number) => number;
+  /** r42: collar / torus rings in their intended frame (hoop plane perpendicular to the tube, like band rings); without it they keep the
+   *  legacy left-handed basis (04 keeps its approved look) — on the steep 06/07 tube that legacy basis tilted the hoops across the river */
+  trueFrame?: boolean;
 };
 
 export function bandGeometry(b: BandOpts): THREE.BufferGeometry {
@@ -340,7 +343,7 @@ export function buildRingsAt(path: TubePath, list: number[], material: THREE.Mat
       // (right, up, tan) is left-handed (right = tan × up), so the quaternion below is not the intended
       // frame: band rings (05 only) use the right-handed (−right, up, tan) so their lip really sits on the
       // camera side (−z); collar/torus rings (04/06/07) keep the legacy orientation unchanged
-      if (opts.band) basis.makeBasis(f.right.clone().negate(), f.up, f.tan);
+      if (opts.band || opts.trueFrame) basis.makeBasis(f.right.clone().negate(), f.up, f.tan);
       else basis.makeBasis(f.right, f.up, f.tan);
       q.setFromRotationMatrix(basis);
       const sc = dbl ? r * 0.985 : r;

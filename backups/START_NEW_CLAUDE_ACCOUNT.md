@@ -1,5 +1,22 @@
 # Paste this into Claude Code on the next Claude account
 
+## ▶▶▶▶▶▶▶▶▶ NEWEST (2026-11-22 ~12:25 UTC, round 42 → next account) — Screen 06 fixes + Bubble Dash / Sock Rescue section
+1. Start the cloud session on branch **`ccr-50ff6f57-q5me82`** (NOT the default branch). If the hook's `git fetch` fails, run
+   `git ls-remote origin refs/heads/ccr-50ff6f57-q5me82`, fetch it by name and merge before anything else.
+2. Paste this prompt:
+
+> Continue Rainbow round 42 exactly where the last account stopped. Read CLAUDE.md, then `docs/briefs/2026-11-22-r42/RESUME_R42.md` (state, my
+> newest orders, what is not verified yet) and `docs/briefs/2026-11-22-r42/REFERENCE_INVENTORY.md` (my 13 images and their gameplay order:
+> 04 → Bubble Dash Chamber → Sock Rescue Tunnel → 05 → 06 → 07 → 08 → 09 → 10; 01, 02, 03, 11 are my Flow videos). The recent chat history is in
+> `backups/claude-sessions/66fa0664-24cd-5101-b8d0-4255365ce070/transcript.md`. First re-run the Screen 06 real-touch test after the ring
+> orientation fix, then finish Screen 06 (comparison with my approved 06 + an uninterrupted gameplay recording) before any other section. Protect
+> the Bubble Dash reconstruction. My approved artwork is the authority. No paid AI credits without my OK. Keep the five-minute GitHub autosave
+> running and verified.
+
+3. Keys: re-enter only if the free checks fail (World Labs `api.worldlabs.ai` header `WLT-Api-Key`) — via the secure credential form, never in chat.
+
+---
+
 ## ▶▶▶▶▶▶▶▶ NEWEST (2026-11-21, round 32 → next account) — Screen 05 real 3D swimming test
 1. Start the cloud session on branch **`claude/screen-05-3d-geometry-9yu7pu`** (NOT the default branch). If the hook's `git fetch` fails, run
    `git ls-remote origin refs/heads/claude/screen-05-3d-geometry-9yu7pu`, fetch it by name and merge before anything else.

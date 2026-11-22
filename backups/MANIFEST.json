@@ -113,8 +113,8 @@
   },
   {
    "path": "CLAUDE.md",
-   "bytes": 23008,
-   "sha256": "ab5412c29cd68c00a8a77147be21d1a78b53a32e78f968878e54e483d2393cad"
+   "bytes": 23273,
+   "sha256": "dd2eb61f6ad8cf34fd1240b2550ca230a56807b17f9cf8debb54c2065f215db3"
   },
   {
    "path": "README_FIRST.md",
@@ -833,8 +833,8 @@
   },
   {
    "path": "backups/CONVERSATION_INDEX.md",
-   "bytes": 26528,
-   "sha256": "4f2c8e4e2d76397c0b26ae428b17383cb977a90a3c2f3544bdfac8e078edb544"
+   "bytes": 27011,
+   "sha256": "1df875f099135b7644a9e642722509a942d72c974b7e9e35f85aab592754fe1d"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3153,
-   "sha256": "109f9d5fd373a00dbcfbcda9353ab742c5aa68aa4877ee4cd863043662597f48"
+   "sha256": "7ce244077a31c594efb59b90de5bb62a3af6a3f41d473fffbacdcb996217ddcf"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -863,8 +863,8 @@
   },
   {
    "path": "backups/START_NEW_CLAUDE_ACCOUNT.md",
-   "bytes": 35014,
-   "sha256": "510637b3e69ed3c89f9b62f8854c0aed9a8cd56bddf1816f61e9e5b657a50b50"
+   "bytes": 36467,
+   "sha256": "1ea0b6ad64911327947c8151a1ccb8b5647491749fa0fc0a66d2b19235023f62"
   },
   {
    "path": "backups/TOOL_MANIFEST.json",
@@ -10808,8 +10808,8 @@
   },
   {
    "path": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md",
-   "bytes": 81878,
-   "sha256": "0090e75f18401b78ec01e00263907ad90f7fcdb28747e116537a6cefaa9b70d8"
+   "bytes": 82590,
+   "sha256": "d69c3f3f231d9022debabeee53a5de9246ea8323274af084c03077525cbe45d4"
   },
   {
    "path": "docs/PARALLEL_PROGRESS.md",
@@ -11660,6 +11660,11 @@
    "path": "docs/briefs/2026-11-22-r42/REFERENCE_INVENTORY.md",
    "bytes": 3705,
    "sha256": "af8ddaaacc9922c0788d0d400a6446ef8c9d95b8f87dfd2845bf4ee1c4fda8e3"
+  },
+  {
+   "path": "docs/briefs/2026-11-22-r42/RESUME_R42.md",
+   "bytes": 6671,
+   "sha256": "61c14fd297abfae6a7ef9b55018f4a1c58824060e4f729acf00e64bed52f11e3"
   },
   {
    "path": "docs/briefs/2026-11-22-r42/STORYBOARD_13_in_gameplay_order.jpg",
@@ -42388,8 +42393,8 @@
   },
   {
    "path": "src/world/environment.ts",
-   "bytes": 70033,
-   "sha256": "39f60934bd3643ed815dc4c3fa11162580b8f6b7a674350ad0d447c9cdf1bf4b"
+   "bytes": 69320,
+   "sha256": "f7b1c461a502c1bbe75d7913cc83eaf0a5ebf5d3d62a586f6600d5221d415f97"
   },
   {
    "path": "src/world/far05.ts",
@@ -42428,8 +42433,8 @@
   },
   {
    "path": "src/world/tube.ts",
-   "bytes": 41087,
-   "sha256": "5c15377b00d15cebec9b32f32b293f6839ee74253f1dd20b175e133dbd549e6c"
+   "bytes": 41409,
+   "sha256": "135aa55a3d85cb8c6abb15df353f6627ef92a3b2aeb85da12b1d50d445d6ce3b"
   },
   {
    "path": "tools/benny31/bake.py",

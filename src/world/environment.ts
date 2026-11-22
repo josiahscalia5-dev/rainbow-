@@ -445,12 +445,8 @@ export function buildEnvironment(course: Course): Environment {
       if (hits >= 3) return false; }
     return true; };
   const rings0607clear = rings0607.filter((x) => ringClear(x) && viewClear(x));
-  (globalThis as unknown as { __ringViewDbg?: unknown }).__ringViewDbg = (sr: number, sc: number, lat: number) => {
-    const f = perfPath.frame(sr), R = perfPath.radius(sr) - 0.02, c = f.pos.clone().addScaledVector(f.up, perfPath.radius(sr) - perfPath.depth(sr)); const q = poseAt(sc, lat); const v = new THREE.Vector3(); const out: unknown[] = [];
-    for (let k = 0; k < 96; k += 4) { const a = (k / 96) * Math.PI * 2, p = c.clone().addScaledVector(f.right, Math.cos(a) * R).addScaledVector(f.up, Math.sin(a) * R); v.copy(p).applyMatrix4(q.m); const dz = -v.z; v.applyMatrix4(q.pm); out.push([k, +v.x.toFixed(2), +v.y.toFixed(2), +dz.toFixed(1)]); }
-    return { hoop: out, river: q.river.slice(0, 200).map((r) => [+r.x.toFixed(2), +r.y.toFixed(2), +r.d.toFixed(1)]), c: c.toArray(), R }; };
   (globalThis as unknown as { __rings0607?: unknown }).__rings0607 = { placed: rings0607clear.length, placedAt: rings0607clear.map((x) => +x.toFixed(1)), removed: rings0607.filter((x) => !rings0607clear.includes(x)).map((x) => +x.toFixed(1)) };
-  zones.tubes.add(buildRingsAt(perfPath, rings0607clear, ringMat, { inset: 0.02, collar }));
+  zones.tubes.add(buildRingsAt(perfPath, rings0607clear, ringMat, { inset: 0.02, collar, trueFrame: true }));   // r42: upright hoops around the tube (see RingOpts.trueFrame)
   // copper nozzle lids: one symmetric pair per bay on the side walls a little above eye level,
   // skipped where the stream climbs the wall (06 arch) so a lid never blocks the ride
   const lidMat = withTubeStrips(withFarGlow(gold({ color: '#ffb27a', roughness: 0.16, emissive: 0.2 }), tubeGlow, 'lid'), { ...strips, color: '#fff0c8', intensity: 2.4 }, 'instance', 'lid');

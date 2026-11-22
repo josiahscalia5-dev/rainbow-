@@ -1,3 +1,9 @@
+# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 42 (2026-11-22 ~12:25 UTC, branch `ccr-50ff6f57-q5me82`)
+Resume file: **`docs/briefs/2026-11-22-r42/RESUME_R42.md`** (user's newest orders, the 13-image list + gameplay order, what was done, what is NOT
+verified yet, next steps). Screen 06: swipe lanes 11/11 real touch, on-screen guard (Benny off-screen 39 → 0 frames), root cause of the gold bars
+across the 06 descent fixed (06/07 rings were built with a mirrored basis → `RingOpts.trueFrame`); the full 06 recording after that fix still has
+to be re-run. Chat history: `backups/claude-sessions/66fa0664-24cd-5101-b8d0-4255365ce070/`.
+
 # ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 41 (2026-11-22 ~11:50 UTC, branch `ccr-50ff6f57-q5me82`)
 User's prioritised list (controls -> Benny -> continuous scenery -> likeness -> integration). Done + evidence in `qa/reflock/r40/RESULT_R40.md`
 ("Round 41"): ONE swipe-lane control in the main game (`src/gameplay/input.ts`, `Game.ts`) and the section, real-touch tested
