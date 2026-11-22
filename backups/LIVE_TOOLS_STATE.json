@@ -1,5 +1,5 @@
 {
- "time_utc": "2026-11-22T14:54:40+00:00",
+ "time_utc": "2026-11-22T14:59:37+00:00",
  "lead_branch": "ccr-0bbd5b9d-js1cpg",
  "specialists_sha256_16": {
   "android-build-performance": "b0c45161860a960c",
@@ -56,18 +56,30 @@
   "worldlabs@worldlabs"
  ],
  "plugins_synced_from_claude_account": [
+  "Python language server (Pyright) for type checking and code intelligence",
+  "Three.js/GLSL debugging for Claude Code \u2014 correlates scene graph, console, GL state, and p",
+  "TypeScript/JavaScript language server for Claude Code that runs TypeScript 7's native LSP ",
+  "Core skills library for Claude Code: TDD, debugging, collaboration patterns, and proven te",
   "Accelerate design workflows \u2014 critique, design system management, UX writing, accessibilit",
-  "Upstash Context7 MCP server for up-to-date documentation lookup. Connects to Context7's ho",
+  "Semantic code analysis MCP server providing intelligent code understanding, refactoring su",
+  "Analyze codebases and recommend tailored Claude Code automations such as hooks, skills, MC",
+  "Comprehensive feature development workflow with specialized agents for codebase exploratio",
   "Frontend design skill for UI/UX implementation",
   "Browser automation and end-to-end testing MCP server by Microsoft. Enables Claude to inter",
-  "Three.js/GLSL debugging for Claude Code \u2014 correlates scene graph, console, GL state, and p"
+  "Upstash Context7 MCP server for up-to-date documentation lookup. Connects to Context7's ho"
  ],
  "plugins_synced_from_claude_account_names": [
+  "claude-code-setup",
   "context7",
   "design",
+  "feature-dev",
   "frontend-design",
   "parallax-threejs",
-  "playwright"
+  "playwright",
+  "pyright-lsp",
+  "serena",
+  "superpowers",
+  "typescript-native-lsp"
  ],
  "mcp_servers_configured": [
   "worldlabs"

@@ -749,3 +749,732 @@ My goal is to have the same useful development capabilities that were helping my
 > for f in vision_encoder.onnx vision_encoder.onnx_data prompt_encoder_mask_decoder.onnx prompt_encoder_mask_decoder.onnx_data; do dl "$H/onnx-community/sam2.1-hiera-tiny-ONNX/resolve/main/onnx/$f" "$M/sam2/$f"; done
 > dl "$H/onnx-community/depth-anything-v2-small/resolve/main/ …[+198 chars]
 
+### 🤖 Claude — 2026-11-22T14:54:24.191Z
+
+> 🔧 **Bash** `{"command": "time bash tools/screenkit/get_models.sh 2>&1 | tail -5; du -sh ~/.cache/rainbow-models/* 2>/dev/null; python3 -c \"import onnxruntime;print('onnxruntime',onnxruntime.__version__)\"", "description": "Download free SAM 2.1 tiny and Depth Anything V2 small models", "timeout": 600000}`
+
+### 🧑 User — 2026-11-22T14:54:31.655Z
+
+> ↩︎ result: models ready in /root/.cache/rainbow-models
+> 
+> real	0m7.221s
+> user	0m0.759s
+> sys	0m0.313s
+> 95M	/root/.cache/rainbow-models/depth
+> 149M	/root/.cache/rainbow-models/sam2
+> onnxruntime 1.29.0
+
+### 🤖 Claude — 2026-11-22T14:54:36.021Z
+
+> 🔧 **Bash** `{"command": "W=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/ws06 && rm -rf $W && time bash tools/screenkit/setup_screen.sh 06 $W 2>&1 | tail -25; ls $W $W/game | head -40", "description": "Rebuild Screen 06 workspace with SAM masks and Blender Geometry Nodes", "timeout": 600000}`
+
+### 🤖 Claude — 2026-11-22T14:54:37.023Z
+
+> 🔧 **Bash** `{"command": "sed -n 1,140p docs/briefs/2026-11-22-r43/RESUME_R43.md", "description": "Read the newest resume notes for round 43b"}`
+
+### 🧑 User — 2026-11-22T14:54:52.129Z
+
+> ↩︎ result: cam yaw 12.20 pitch -7.55 deg; Benny water (-0.329, -1.477), height 0.574; coin radius 0.137; drum R 2.79 axis (-0.990, 1.450) chord 2.39; ring z [-13.2, -20.55, -45.15]
+> coins (x, y, z): [[-1.25, 0.4, -3.46], [-1.88, 0.67, -4.27], [-2.36, 1.03, -6.09], [-2.72, 1.34, -8.74], [-2.81, 1.43, -11.9], [-2.6, 1.0, -16.85], [-2.12, 0.48, -18.81], [-1.65, 0.12, -20.1], [-1.33, -0.1, -21.38]]
+> {"method": {"benny": "SAM 2.1 (pred IoU 0.951)", "coins": "SAM 2.1 per coin (circle below 6 px radius)"}, "masked_share": 0.3213}
+> Blender quit
+> screen 06 ready: /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/ws06/game/play3.html
+> 
+> real	0m16.045s
+> user	0m23.397s
+> sys	0m3.216s
+> /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/ws06:
+> fit
+> game
+> seg
+> 
+> /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/ws06/game:
+> bake.png
+> benny31.glb
+> bubble.png
+> coin.png
+> controls.js
+> glint.png
+> layout.json
+> mask_0.png
+> node_modules
+> plate_0.png
+> play3.html
+> ref_0.png
+> scene.glb
+> splash.png
+> swimfx.js
+
+### 🧑 User — 2026-11-22T14:54:52.168Z
+
+> ↩︎ result: # Round 43 — resume here (2026-11-22 ~14:00 UTC, session branch `ccr-80cdb162-4sqz1a`, built on round 42 `ccr-50ff6f57-q5me82`)
+> 
+> Start a new session on **`ccr-80cdb162-4sqz1a`** (it contains all of round 42 + round 43). Never merge branches / PR #32 without the user's OK.
+> 
+> 
+> ## 0. ROUND 43b (newest, same day) — `qa/reflock/r43b/RESULT_R43b.md`
+> User: finish 06; prove the geometry in plain gray; Benny must PHYSICALLY ride the curved water (no floating / picture tricks); same continuous
+> steering test textured. Done: Benny 12 % immersed (was floating −4 %), posture on the real surface every frame (gap ≤ 0.001 u); gray test
+> fixed the pool (faced down, coplanar with the channel = z-fighting) and the trays (2 cm off the wall); gray + textured whole-level real-touch runs:
+> 0 holes, 585/585 on screen, 14/14 swipes, camera ≥ 0.51 u from any wall, ≤ 1.69°/frame; picture view 88.5 % (89.5 % had the floating Benny);
+> walls in the measured painted magenta. Next: the in-motion look (close-up water, foam, crest bank / camera roll judged by the user).
+> 
+> ## 1. User's newest orders
+> `USER_R43.md` (verbatim): generalise the screen builder into a reusable process for EACH screen's own approved picture (Blen …[+3478 chars]
+
+### 🤖 Claude — 2026-11-22T14:54:57.498Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && time NODE_PATH=$(npm root -g) node tools/reflock/section_run.cjs $S/ws06/game $S/st06 stills 1.2 0 'sentinel=1' 2>&1 | tail -8 && python3 -I tools/screenkit/compare_screen.py 06 $S/st06/s1.20_l0.png $S/ws06/seg/mask.png $S/cmp06 --before qa/reflock/r43/06/SCREEN06_2_PREVIOUS_old_game.jpg 2>&1 | tail -15", "description": "Render Screen 06 in Chromium at the picture camera and measure likeness", "timeout": 600000}`
+
+### 🤖 Claude — 2026-11-22T14:54:58.104Z
+
+> 🔧 **Bash** `{"command": "cat qa/reflock/r43b/RESULT_R43b.md | head -120", "description": "Read round 43b result notes"}`
+
+### 🧑 User — 2026-11-22T14:55:40.489Z
+
+> ↩︎ result: loaded in 39.4 s {"LEVEL":43.95,"meshes":125,"bake_ms":35930}
+> /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/st06/s1.20_l0.png
+> 
+> real	0m42.235s
+> user	0m0.567s
+> sys	0m0.358s
+>   "water_cyan (22 % of all mismatch; 8 % of this region off) -> water-fx-specialist (in round 34: S1 washer-environment-modeler owns the water surface bake)",
+>   "other (21 % of all mismatch; 19 % of this region off) -> reference-match-director (triage)"
+>  ],
+>  "zones": {
+>   "top-right": 0.296,
+>   "top-centre": 0.211,
+>   "middle-right": 0.156,
+>   "top-left": 0.105,
+>   "bottom-right": 0.072,
+>   "middle-centre": 0.063,
+>   "bottom-left": 0.043,
+>   "middle-left": 0.029,
+>   "bottom-centre": 0.024
+>  }
+> }
+
+### 🧑 User — 2026-11-22T14:55:40.526Z
+
+> ↩︎ result: # Round 43b (2026-11-22) — Screen 06: Benny physically in the water, plain-gray geometry test, textured acceptance run
+> 
+> User's orders (this round): finish Screen 06 first; build + test the tunnel, crest, rings and scenery as complete 3D geometry; test it in plain
+> gray to reveal missing surfaces / intersections / camera problems; restore the approved textures and compare; Benny must physically ride the
+> curved water (posture follows slope + bank, lower body partly immersed, whole fluffy body visible, splash / swim effects follow him) — "do not fix
+> his appearance merely by moving a picture or floating his model above the water"; preserve water, controls, Bubble Dash. No new tools unless they
+> solve a specific problem; no SAM / depth re-runs.
+> 
+> ## 1. Benny rides the real water (fixed)
+> * Round 43 had matched his painted silhouette with a 0.12 u lift: measured **−4 % immersion = floating above the water**. Removed.
+> * Now solved WITH physics: 12 % of his body under the actual water surface, size 1.19, and he swims 0.15 u ahead of the painted contact point
+>   (that point is his FRONT waterline, not his centre); the camera stays exactly the fitted picture camera. Visible silhouette (77,430)–(3 …[+3953 chars]
+
+### 🤖 Claude — 2026-11-22T14:55:47.084Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && ls $S/cmp06; python3 - <<EOF\nimport json,glob\nfor f in glob.glob('$S/cmp06/*.json'):\n    d=json.load(open(f)); \n    def walk(d,p=''):\n        for k,v in d.items():\n            if isinstance(v,dict): walk(v,p+k+'.')\n            elif isinstance(v,(int,float,str)) and any(t in (p+k).lower() for t in ['within','ssim','colour','color','scenery','pct','share']): print(p+k,'=',v)\n    walk(d)\nEOF\ntimeout 30 claude plugin list 2>&1 | grep -E \"^\\s+>|Status\" | paste - - ", "description": "Show …[+46 chars]`
+
+### 🧑 User — 2026-11-22T14:55:47.859Z
+
+> ↩︎ result: new_APPROVED.jpg
+> new_BEFORE_f0000.jpg
+> new_DIFF_NEW_f0000.jpg
+> new_NEW_f0000.jpg
+> new_compare.json
+> new_summary.json
+> scenery_mask_06.png
+> new.share_within_20_levels = 0.885
+> new.ssim_scenery = 0.856
+> new.colour_look_corr = 0.996
+> new.whole_frame_within_20_levels = 0.628
+> before.share_within_20_levels = 0.038
+> before.ssim_scenery = 0.157
+> before.colour_look_corr = 0.091
+> before.whole_frame_within_20_levels = 0.041
+> scenery_share_of_frame = 0.645
+> frames.0.new.colour_look_corr = 0.996
+> frames.0.new.share_within_20_levels = 0.885
+> frames.0.new.ssim_scenery = 0.856
+> frames.0.new.whole_frame_within_20_levels = 0.628
+> frames.0.new.zones_share_of_all_mismatch.top-right = 0.296
+> frames.0.new.zones_share_of_all_mismatch.top-centre = 0.211
+> frames.0.new.zones_share_of_all_mismatch.middle-right = 0.156
+> frames.0.new.zones_share_of_all_mismatch.top-left = 0.105
+> frames.0.new.zones_share_of_all_mismatch.bottom-right = 0.072
+> frames.0.new.zones_share_of_all_mismatch.middle-centre = 0.063
+> frames.0.new.zones_share_of_all_mismatch.bottom-left = 0.043
+> frames.0.new.zones_share_of_all_mismatch.middle-left = 0.029
+> frames.0.new.zones_share_of_all_mismatch.bottom-centre = 0.024
+> frames.0.before.colour_look_corr = 0.091
+> frames.0 …[+1245 chars]
+
+### 🤖 Claude — 2026-11-22T14:55:56.730Z
+
+> 🔧 **Bash** `{"command": "echo \"== LSP binaries\"; for b in typescript-language-server tsc tsgo pyright pyright-langserver uvx uv gltf-transform; do printf \"%-28s %s\\n\" $b \"$(command -v $b || echo MISSING)\"; done; npx --no-install tsc --version 2>&1|head -1; ls node_modules/.bin | grep -iE \"gltf|tsc|typescript\" ; echo \"== MCP after plugin enable\"; timeout 90 claude mcp list 2>&1 | grep -vE \"design:\" ", "description": "Check language-server binaries and MCP health after enabling plugins", "timeout": 120000}`
+
+### 🤖 Claude — 2026-11-22T14:56:00.937Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport subprocess,os\nout=subprocess.check_output(['git','lfs','ls-files','-l','-s'],text=True)\n# format: <oid> <*|-> <path> (<size>)\ntot=0;bad=[];ext={}\nfor line in out.splitlines():\n    oid,mark,rest=line.split(' ',2)\n    path,size=rest.rsplit(' (',1)\n    tot+=1\n    e=os.path.splitext(path)[1].lower(); ext[e]=ext.get(e,0)+1\n    if not os.path.exists(path): bad.append(('missing',path)); continue\n    with open(path,'rb') as f: head=f.read(60)\n    if head.startswith(b'version https://git-lfs'): bad.append(('pointer',path))\nprint('LFS files:',tot,'| not …[+401 chars]`
+
+### 🧑 User — 2026-11-22T14:56:04.675Z
+
+> ↩︎ result: == LSP binaries
+> typescript-language-server   MISSING
+> tsc                          /opt/node22/bin/tsc
+> tsgo                         MISSING
+> pyright                      /root/.local/bin/pyright
+> pyright-langserver           /root/.local/bin/pyright-langserver
+> uvx                          /root/.local/bin/uvx
+> uv                           /root/.local/bin/uv
+> gltf-transform               MISSING
+> Version 5.9.3
+> tsc
+> == MCP after plugin enable
+> Checking MCP server health…
+> 
+> plugin:worldlabs:worldlabs: https://api.atlas.worldlabs.ai/mcp (HTTP) - ! Needs authentication
+> plugin:parallax-threejs:chrome-devtools-mcp: npx -y chrome-devtools-mcp@1.6.0 --headless - √ Connected
+> plugin:parallax-threejs:threejs-devtools-mcp: npx -y threejs-devtools-mcp@0.2.1 - √ Connected
+> plugin:parallax-threejs:playwright-mcp: npx -y @playwright/mcp@0.0.78 --headless - √ Connected
+> plugin:parallax-threejs:spector: node /root/.claude/plugins/synced/57e00846-b250-49a2-84b8-7e6b26dbd789_9543b0a1-8328-4f5e-9ab5-a23a0d8efe00/b89c3ace-b56c-48b2-ac2c-3b9ee1b1100f/vendor/spector/mcp/dist/index.js - × Failed to connect — CONNECTION_CLOSED: Connection closed
+> plugin:serena:serena: uvx --from git+https://github.com/oraios/serena ser …[+218 chars]
+
+### 🧑 User — 2026-11-22T14:56:05.564Z
+
+> ↩︎ result: LFS files: 615 | not real: 0
+> [('.mp4', 220), ('.jpg', 138), ('.png', 138), ('.ply', 56), ('.glb', 26), ('.spz', 20), ('.apk', 9), ('.blend', 7), ('.zip', 1)]
+> []
+> -rw-r--r-- 1 root root 1126892 Nov 22 14:28 assets/models/benny.glb
+> -rw-r--r-- 1 root root 5492416 Nov 22 14:28 assets/models/benny31.glb
+> -rw-r--r-- 1 root root 5492416 Nov 22 14:28 public/screen06/benny31.glb
+> -rw-r--r-- 1 root root 5492416 Nov 22 14:28 public/section/benny31.glb
+> -rw-r--r-- 1 root root 5492416 Nov 22 14:28 qa/benny/r31/gen/hunyuan2.glb
+> 7
+> Objects not staged for commit:
+
+### 🤖 Claude — 2026-11-22T14:56:07.794Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && tail -6 $S/android_build.log; ls -la android/app/build/outputs/apk/debug/ 2>&1; git status --short | head", "description": "Check Android build result and produced APK"}`
+
+### 🧑 User — 2026-11-22T14:56:07.879Z
+
+> ↩︎ result: > Task :capacitor-cordova-android-plugins:bundleDebugAar
+> > Task :capacitor-cordova-android-plugins:assembleDebug
+> 
+> BUILD SUCCESSFUL in 1m 31s
+> 82 actionable tasks: 82 executed
+> EXIT 0
+> total 115136
+> drwxr-xr-x 2 root root      4096 Nov 22 14:55 .
+> drwxr-xr-x 3 root root      4096 Nov 22 14:55 ..
+> -rw-r--r-- 1 root root 117885746 Nov 22 14:55 app-debug.apk
+> -rw-r--r-- 1 root root       372 Nov 22 14:55 output-metadata.json
+
+### 🤖 Claude — 2026-11-22T14:56:08.151Z
+
+> 🔧 **TaskUpdate** `{"taskId": "2", "status": "completed"}`
+
+### 🧑 User — 2026-11-22T14:56:08.169Z
+
+> ↩︎ result: Updated task #2 status
+
+### 🤖 Claude — 2026-11-22T14:56:15.447Z
+
+> 🔧 **Bash** `{"command": "unzip -l android/app/build/outputs/apk/debug/app-debug.apk | grep -E \"screen06/(play3|index|scene|bake)\" | head; echo; npm i -g typescript-language-server@4.4.0 2>&1 | tail -2; typescript-language-server --version; echo; S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad; timeout 120 npx -y @gltf-transform/cli@4.2.1 inspect $S/ws06/game/scene.glb 2>&1 | grep -vE \"^\\s*$\" | head -30", "description": "Verify APK contents, install TS language server, test glTF Transform", "timeout": 300000}`
+
+### 🤖 Claude — 2026-11-22T14:56:18.196Z
+
+> 🔧 **Bash** `{"command": "P=/root/.claude/plugins/synced/57e00846-b250-49a2-84b8-7e6b26dbd789_9543b0a1-8328-4f5e-9ab5-a23a0d8efe00/b89c3ace-b56c-48b2-ac2c-3b9ee1b1100f/vendor/spector/mcp; ls $P $P/dist 2>&1 | head; (cd $P && timeout 8 node dist/index.js < /dev/null 2>&1 | head -15)", "description": "Diagnose why the Spector.js MCP server fails to start"}`
+
+### 🧑 User — 2026-11-22T14:56:22.834Z
+
+> ↩︎ result: 5049903  1981-01-01 01:01   assets/public/screen06/bake.png
+>     10954  1981-01-01 01:01   assets/public/screen06/baked/flume_water_route_00_bake.jpg
+>      2461  1981-01-01 01:01   assets/public/screen06/baked/flume_water_route_00_den.png
+>     11668  1981-01-01 01:01   assets/public/screen06/baked/flume_water_route_01_bake.jpg
+>      3732  1981-01-01 01:01   assets/public/screen06/baked/flume_water_route_01_den.png
+>     11438  1981-01-01 01:01   assets/public/screen06/baked/flume_water_route_02_bake.jpg
+>      3354  1981-01-01 01:01   assets/public/screen06/baked/flume_water_route_02_den.png
+>     10152  1981-01-01 01:01   assets/public/screen06/baked/flume_water_route_03_bake.jpg
+>      2965  1981-01-01 01:01   assets/public/screen06/baked/flume_water_route_03_den.png
+>     10975  1981-01-01 01:01   assets/public/screen06/baked/flume_water_route_04_bake.jpg
+> 
+> 
+> added 1 package in 337ms
+> 4.4.0
+> 
+> npm warn deprecated node-domexception@1.0.0: Use your platform's native DOMException instead
+> npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions m …[+2866 chars]
+
+### 🧑 User — 2026-11-22T14:56:22.871Z
+
+> ↩︎ result: Exit code 1
+> ls: cannot access '/root/.claude/plugins/synced/57e00846-b250-49a2-84b8-7e6b26dbd789_9543b0a1-8328-4f5e-9ab5-a23a0d8efe00/b89c3ace-b56c-48b2-ac2c-3b9ee1b1100f/vendor/spector/mcp': No such file or directory
+> ls: cannot access '/root/.claude/plugins/synced/57e00846-b250-49a2-84b8-7e6b26dbd789_9543b0a1-8328-4f5e-9ab5-a23a0d8efe00/b89c3ace-b56c-48b2-ac2c-3b9ee1b1100f/vendor/spector/mcp/dist': No such file or directory
+> /bin/bash: line 2: cd: /root/.claude/plugins/synced/57e00846-b250-49a2-84b8-7e6b26dbd789_9543b0a1-8328-4f5e-9ab5-a23a0d8efe00/b89c3ace-b56c-48b2-ac2c-3b9ee1b1100f/vendor/spector/mcp: No such file or directory
+
+### 🤖 Claude — 2026-11-22T14:56:26.367Z
+
+> 🔧 **ToolSearch** `{"query": "select:mcp__github__get_me,mcp__github__get_file_contents,mcp__github__list_pull_requests,mcp__plugin_parallax-threejs_threejs-devtools-mcp__bridge_status,mcp__plugin_parallax-threejs_threejs-devtools-mcp__set_dev_port,mcp__plugin_parallax-threejs_threejs-devtools-mcp__scene_tree", "max_results": 6}`
+
+### 🧑 User — 2026-11-22T14:56:26.390Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+> [tool_reference]
+> [tool_reference]
+> [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-22T14:56:29.351Z
+
+> 🔧 **Bash** `{"command": "ls /root/.claude/plugins/synced/57e00846-b250-49a2-84b8-7e6b26dbd789_9543b0a1-8328-4f5e-9ab5-a23a0d8efe00/b89c3ace-b56c-48b2-ac2c-3b9ee1b1100f/ /root/.claude/plugins/synced/57e00846-b250-49a2-84b8-7e6b26dbd789_9543b0a1-8328-4f5e-9ab5-a23a0d8efe00/b89c3ace-b56c-48b2-ac2c-3b9ee1b1100f/vendor 2>&1 | head -20", "description": "List the Three.js plugin's bundled files"}`
+
+### 🧑 User — 2026-11-22T14:56:29.415Z
+
+> ↩︎ result: /root/.claude/plugins/synced/57e00846-b250-49a2-84b8-7e6b26dbd789_9543b0a1-8328-4f5e-9ab5-a23a0d8efe00/b89c3ace-b56c-48b2-ac2c-3b9ee1b1100f/:
+> AGENTS.md
+> CHANGELOG.md
+> CONTRIBUTING.md
+> LICENSE
+> PRIVACY.md
+> README.md
+> SECURITY.md
+> agents
+> commands
+> deno.json
+> deno.lock
+> docs
+> examples
+> hooks
+> package.json
+> scaffold
+> scripts
+> skills
+> vendor
+
+### 🤖 Claude — 2026-11-22T14:56:31.830Z
+
+> 🔧 **mcp__github__get_file_contents** `{"owner": "josiahscalia5-dev", "repo": "rainbow-", "path": "tools/screenkit", "ref": "refs/heads/ccr-0bbd5b9d-js1cpg", "fields": ["name", "type"]}`
+
+### 🤖 Claude — 2026-11-22T14:56:32.031Z
+
+> 🔧 **mcp__plugin_parallax-threejs_threejs-devtools-mcp__bridge_status** `{}`
+
+### 🤖 Claude — 2026-11-22T14:56:32.986Z
+
+> 🔧 **mcp__github__list_pull_requests** `{"owner": "josiahscalia5-dev", "repo": "rainbow-", "state": "open", "fields": ["number", "title", "draft", "head"], "perPage": 10}`
+
+### 🧑 User — 2026-11-22T14:56:33.006Z
+
+> ↩︎ result: [{"name":"README.md","type":"file"},{"name":"app_route_check06.cjs","type":"file"},{"name":"blender_kit.py","type":"file"},{"name":"build_screen_app.sh","type":"file"},{"name":"compare_screen.py","type":"file"},{"name":"eval","type":"dir"},{"name":"fitlib.py","type":"file"},{"name":"get_models.sh","type":"file"},{"name":"kit_run.cjs","type":"file"},{"name":"screen.html","type":"file"},{"name":"screen_export.cjs","type":"file"},{"name":"screens","type":"dir"},{"name":"segment.py","type":"file"},{"name":"setup_screen.sh","type":"file"}]
+
+### 🧑 User — 2026-11-22T14:56:47.942Z
+
+> ↩︎ result: Bridge: NOT connected
+> Proxy: http://localhost:9222 → http://localhost:3000
+> 
+> Not connected. Open http://localhost:9222 in your browser.
+> If the dev server runs on a different port, use set_dev_port.
+
+### 🧑 User — 2026-11-22T14:56:48.751Z
+
+> ↩︎ result: [{"draft":true,"head":{"ref":"ccr-50ff6f57-q5me82","repo":{"full_name":"josiahscalia5-dev/rainbow-"},"sha":"93d0421cab26583b8c63d16cd06488a68a78c4b7"},"number":32,"title":"Round 40: real 3D Bubble Dash → Sock Rescue section (Blender + baked approved pictures), in the app behind a build switch — DO NOT MERGE"},{"draft":true,"head":{"ref":"ccr-1a97503a-p221vc","repo":{"full_name":"josiahscalia5-dev/rainbow-"},"sha":"27838b9ef7c0343e748c1905cf9bf891fa836db2"},"number":31,"title":"Screen 05 round 37: three buildable options (A / B / C) for the user to choose"},{"draft":true,"head":{"ref":"claude/character-swimming-mechanics-jo0h6s","repo":{"full_name":"josiahscalia5-dev/rainbow-"},"sha":"abbd45a5bac0b0f9f13838808b39dc264d8d3dd0"},"number":30,"title":"Screen 05 round 35: painted river in motion, foam domes, swimming fixes, phone build (DO NOT MERGE)"},{"draft":true,"head":{"ref":"ccr-3830a7b8-af3hrd","repo":{"full_name":"josiahscalia5-dev/rainbow-"},"sha":"065d19d131068e0f259b484856e6c4e3b8ee0911"},"number":29,"title":"Screen 05 round 34: real 3D swimming + swipe controls (parallel specialists) — DRAFT, do not merge"},{"draft":true,"head":{"ref":"claude/screen-05-3d-geometry-9yu7pu","re …[+1514 chars]
+
+### 🤖 Claude — 2026-11-22T14:56:54.776Z
+
+> 🔧 **Bash** `{"command": "cd /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/ws06/game && python3 -m http.server 3000 --bind 127.0.0.1 > ../http3000.log 2>&1", "description": "Serve the Screen 06 game folder on port 3000", "run_in_background": true}`
+
+### 🧑 User — 2026-11-22T14:56:54.807Z
+
+> ↩︎ result: Command running in background with ID: bd9betj1s. Output is being written to: /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/tasks/bd9betj1s.output. You will be notified when it completes. To check interim output, use Read on that file path.
+> Session cwd remains /home/user/rainbow-; directory changes made by the backgrounded command do not apply to subsequent commands.
+
+### 🤖 Claude — 2026-11-22T14:56:55.986Z
+
+> 🔧 **ToolSearch** `{"query": "select:mcp__plugin_parallax-threejs_playwright-mcp__browser_navigate,mcp__plugin_parallax-threejs_playwright-mcp__browser_wait_for,mcp__plugin_parallax-threejs_playwright-mcp__browser_close,mcp__plugin_parallax-threejs_threejs-devtools-mcp__renderer_info", "max_results": 4}`
+
+### 🧑 User — 2026-11-22T14:56:55.995Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+> [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-22T14:56:56.954Z
+
+> 🔧 **mcp__plugin_parallax-threejs_playwright-mcp__browser_navigate** `{"url": "http://localhost:9222/play3.html?sentinel=1"}`
+
+### 🧑 User — 2026-11-22T14:57:10.387Z
+
+> ↩︎ result: ### Ran Playwright code
+> ```js
+> await page.goto('http://localhost:9222/play3.html?sentinel=1');
+> ```
+> ### Page
+> - Page URL: http://localhost:9222/play3.html?sentinel=1
+> - Page Title: Rainbow 06
+> - Console: 1 errors, 1 warnings
+> ### Snapshot
+> - [Snapshot](.playwright-mcp/page-2026-11-22T14-57-10-378Z.yml)
+> ### Events
+> - New console entries: .playwright-mcp/console-2026-11-22T14-57-10-127Z.log#L1-L3
+
+### 🤖 Claude — 2026-11-22T14:57:11.545Z
+
+> 🔧 **mcp__plugin_parallax-threejs_playwright-mcp__browser_wait_for** `{"time": 40}`
+
+### 🧑 User — 2026-11-22T14:57:43.908Z
+
+> ↩︎ result: ### Result
+> Waited for 40
+> ### Ran Playwright code
+> ```js
+> await new Promise(f => setTimeout(f, 40 * 1000));
+> ```
+> ### Page
+> - Page URL: http://localhost:9222/play3.html?sentinel=1
+> - Page Title: Rainbow 06
+> - Console: 1 errors, 5 warnings
+> ### Snapshot
+> - [Snapshot](.playwright-mcp/page-2026-11-22T14-57-43-893Z.yml)
+> ### Events
+> - New console entries: .playwright-mcp/console-2026-11-22T14-57-10-127Z.log#L4-L7
+
+### 🤖 Claude — 2026-11-22T14:57:44.963Z
+
+> 🔧 **mcp__plugin_parallax-threejs_threejs-devtools-mcp__bridge_status** `{}`
+
+### 🧑 User — 2026-11-22T14:57:44.977Z
+
+> ↩︎ result: Bridge: connected
+> Proxy: http://localhost:9222 → http://localhost:3000
+> 
+> Three.js app is accessible.
+
+### 🤖 Claude — 2026-11-22T14:57:46.206Z
+
+> 🔧 **Bash** `{"command": "cat .playwright-mcp/console-2026-11-22T14-57-10-127Z.log 2>/dev/null | cut -c1-300 | head -10; git check-ignore -v .playwright-mcp || echo \".playwright-mcp NOT ignored\"", "description": "Read the browser console log from the DevTools test"}`
+
+### 🧑 User — 2026-11-22T14:57:46.251Z
+
+> ↩︎ result: [     110ms] [LOG] [threejs-devtools-mcp] Connected to MCP server @ http://localhost:9222/play3.html?sentinel=1:6
+> [     113ms] [WARNING] [threejs-devtools-mcp] Three.js scene not found yet, will retry on each request @ http://localhost:9222/play3.html?sentinel=1:6
+> [     113ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:9222/favicon.ico:0
+> [     251ms] [WARNING] [.WebGL-0x4bc01758c00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels @ http://localhost:9222/play3.html?sentinel=1:0
+> [   25417ms] [WARNING] [.WebGL-0x4bc01758c00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels @ http://localhost:9222/play3.html?sentinel=1:0
+> [   25417ms] [WARNING] [.WebGL-0x4bc01758c00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels @ http://localhost:9222/play3.html?sentinel=1:0
+> [   25417ms] [WARNING] [.WebGL-0x4bc01758c00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat) @ http://localhost:9222/play3.html?sentinel=1:0
+> .gitignore:45:.p …[+30 chars]
+
+### 🤖 Claude — 2026-11-22T14:57:47.320Z
+
+> 🔧 **mcp__plugin_parallax-threejs_threejs-devtools-mcp__renderer_info** `{}`
+
+### 🤖 Claude — 2026-11-22T14:57:47.669Z
+
+> 🔧 **mcp__plugin_parallax-threejs_threejs-devtools-mcp__scene_tree** `{"depth": 2, "maxChildren": 8}`
+
+### 🧑 User — 2026-11-22T14:57:52.247Z
+
+> ↩︎ result: {
+>   "render": {
+>     "calls": 233,
+>     "triangles": 309594,
+>     "points": 0,
+>     "lines": 0,
+>     "frame": 245
+>   },
+>   "memory": {
+>     "geometries": 130,
+>     "textures": 250
+>   },
+>   "programs": 15,
+>   "canvas": {
+>     "width": 1280,
+>     "height": 720
+>   },
+>   "pixelRatio": 1,
+>   "capabilities": {
+>     "maxTextures": 32,
+>     "maxVertexTextures": 32,
+>     "maxTextureSize": 8192,
+>     "maxCubemapSize": 16384,
+>     "precision": "highp"
+>   },
+>   "outputColorSpace": "srgb",
+>   "toneMapping": 0,
+>   "shadowMap": {
+>     "enabled": false,
+>     "type": 1
+>   }
+> }
+
+### 🧑 User — 2026-11-22T14:58:07.196Z
+
+> ↩︎ result: "(unnamed) [Scene]\n"
+
+### 🤖 Claude — 2026-11-22T14:58:09.645Z
+
+> 🔧 **mcp__plugin_parallax-threejs_playwright-mcp__browser_close** `{}`
+
+### 🤖 Claude — 2026-11-22T14:58:12.656Z
+
+> 🔧 **Bash** `{"command": "pkill -f \"http.server 3000\" ; python3 - <<'EOF'\nimport json,hashlib,glob,os\nst=json.load(open('backups/LIVE_TOOLS_STATE.json'))['specialists_sha256_16']\nok=0\nfor f in sorted(glob.glob('.claude/agents/*.md')):\n    n=os.path.basename(f)[:-3]; h=hashlib.sha256(open(f,'rb').read()).hexdigest()[:16]\n    m = h==st.get(n); ok+=m\n    print(f\"{n:34s} {h} {'MATCH' if m else 'DIFF vs '+str(st.get(n))}\")\nprint(ok,'/',len(st),'match the saved definitions')\na=json.load(open('backups/AGENTS_STATUS.json'))\nprint('AGENTS_STATUS keys:',list(a.keys())[:12])\nEOF\ngit worktree list; ls  …[+103 chars]`
+
+### 🧑 User — 2026-11-22T14:58:17.170Z
+
+> ↩︎ result: ### Result
+> No open tabs. Navigate to a URL to create one.
+> ### Ran Playwright code
+> ```js
+> await page.close()
+> ```
+
+### 🧑 User — 2026-11-22T14:58:17.266Z
+
+> ↩︎ result: android-build-performance          b0c45161860a960c MATCH
+> animation-and-gameplay-engineer    c48094c3ed3d22e7 MATCH
+> benny-character-artist             cde203afa8b927cb MATCH
+> cartoon-girl-character-artist      52058503a3558580 MATCH
+> foam-bubbles-particles             f6341dcde1ea07e5 MATCH
+> path-camera-transition-engineer    4244cc8249008d7f MATCH
+> playwright-visual-qa               0f14c32fb4af423f MATCH
+> reference-match-director           b977e3f7592f4276 MATCH
+> washer-environment-modeler         7abdea786d530d79 MATCH
+> water-fx-specialist                b160f12ff93db70e MATCH
+> 10 / 10 match the saved definitions
+> AGENTS_STATUS keys: ['_comment', 'schema', 'updated_utc', 'updated_by_session', 'running_now', 'assignments_now', 'current_focus', 'agents', 'marble_feasibility_05', 'proj05', 'previous_round_stopped', 'round2_stopped']
+> /home/user/rainbow-  6ae69bf [ccr-0bbd5b9d-js1cpg]
+> ls: cannot access '/home/user/wt': No such file or directory
+
+### 🤖 Claude — 2026-11-22T14:58:27.201Z
+
+> 🔧 **ToolSearch** `{"query": "select:mcp__World_Labs_Atlas__list_projects", "max_results": 1}`
+
+### 🧑 User — 2026-11-22T14:58:27.209Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-22T14:58:29.327Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json;a=json.load(open('backups/AGENTS_STATUS.json'));print('running_now:',json.dumps(a.get('running_now'))[:600]);print('updated',a.get('updated_utc'),a.get('updated_by_session'))\"; echo; curl -s -o /dev/null -w \"fal queue status probe: HTTP %{http_code}\\n\" https://queue.fal.run/fal-ai/flux/requests/00000000-0000-0000-0000-000000000000/status; python3 -I scripts/verify-assets.py worldlabs 2>&1 | tail -4", "description": "Check specialist run state, fal.ai auth and Marble key (free reads)", "timeout": 120000}`
+
+### 🧑 User — 2026-11-22T14:58:30.448Z
+
+> ↩︎ result: running_now: {"_note": "round 34 (Screen 05 only), lead ccr-3830a7b8-af3hrd; details round34", "s1_visual": "washer-environment-modeler", "s2_swim": "animation-and-gameplay-engineer", "s3_camera": "path-camera-transition-engineer", "s4_qa": "playwright-visual-qa", "s5_builder": "general-purpose (Rainbow Screen Builder skill)"}
+> updated 2026-11-21T18:10Z ccr-3830a7b8-af3hrd (round 34 lead)
+> 
+> fal queue status probe: HTTP 404
+> @@ warn Marble API key authenticated (free read: 2030 credits); worlds draft 404, full 404; no paid job started
+
+### 🤖 Claude — 2026-11-22T14:58:31.493Z
+
+> 🔧 **mcp__World_Labs_Atlas__list_projects** `{}`
+
+### 🧑 User — 2026-11-22T14:58:32.079Z
+
+> ↩︎ result: {"projects":[{"project_id":"proj_ad4fdb076f4a4c80934406cfefc4d30b","name":"My project","account_name":"Personal workspace","available_tools":["atlasChisel","atlasGenerate","atlasTextToImage","images2PosedRGBD","posedImages2Splats","splats2Mesh"],"credits_available":true}]}
+
+### 🤖 Claude — 2026-11-22T14:58:40.833Z
+
+> 🔧 **Bash** `{"command": "grep -n \"pyright\\|typescript-language\\|gltf-transform\\|uvx\" scripts/claude-bootstrap.sh | head -20; wc -l scripts/claude-bootstrap.sh", "description": "Check how the bootstrap installs language-server tools"}`
+
+### 🧑 User — 2026-11-22T14:58:40.863Z
+
+> ↩︎ result: 491 scripts/claude-bootstrap.sh
+
+### 🤖 Claude — 2026-11-22T14:58:44.129Z
+
+> 🔧 **Bash** `{"command": "grep -n \"^[a-z_]*()\\|npm ci\\|row \\\"\" scripts/claude-bootstrap.sh | head -60", "description": "Outline the bootstrap script's steps"}`
+
+### 🧑 User — 2026-11-22T14:58:44.169Z
+
+> ↩︎ result: 46:find_root() {
+> 64:now() { date +%s; }
+> 65:manifest() { python3 -I -c 'import json,sys
+> 69:rec() {  # id title status(ok|warn|fail|skip) summary start_epoch
+> 77:pycheck() {  # id title verify-assets.py-args...
+> 86:say() { printf '\n== %s\n' "$*"; }
+> 87:session_start() {
+> 91:autosave_lock() { exec 9>"$ROOT/backups/.autosave.lock"; flock -w "${1:-120}" 9; }
+> 92:autosave_unlock() { flock -u 9 2>/dev/null; exec 9>&- 2>/dev/null; return 0; }
+> 95:step_identity() {
+> 111:merge_one() {  # ref -> 0 merged | 1 conflict (aborted) | 2 refused
+> 135:step_resume() {
+> 187:lfs_pull() {  # bounded; holds the autosave lock so a backup never races the index update
+> 196:step_lfs() {
+> 209:step_refs() {
+> 216:step_screens() {
+> 224:step_worldlabs() {
+> 238:step_node() {
+> 244:step_npm() {
+> 247:    rec npm "npm dependencies" ok "node_modules up to date with package-lock.json (npm ci skipped)" "$t"; return
+> 251:  if timeout 900 npm ci --no-audit --no-fund --prefer-offline > "$LIVE/npm-ci.log" 2>&1; then
+> 253:    rec npm "npm dependencies" ok "npm ci done ($(ls node_modules | wc -l) packages; cache ~/.npm reused)" "$t"
+> 254:  else rec npm "npm dependencies" fail "npm ci failed (backups/.live/npm-ci.log)" "$t"; fi
+> 257:py_missing() { …[+770 chars]
+
+### 🤖 Claude — 2026-11-22T14:58:45.621Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/scripts/claude-bootstrap.sh", "offset": 238, "limit": 20}`
+
+### 🧑 User — 2026-11-22T14:58:45.648Z
+
+> ↩︎ result: 238	step_node() {
+> 239	  local t v; t=$(now); v="$(node -v 2>/dev/null)"
+> 240	  if [[ "$v" =~ ^v([0-9]+) ]] && [ "${BASH_REMATCH[1]}" -ge 20 ]; then rec node "Node.js" ok "$v, npm $(npm -v 2>/dev/null)" "$t"
+> 241	  else rec node "Node.js" fail "need Node >= 20, found ${v:-none}" "$t"; fi
+> 242	}
+> 243	
+> 244	step_npm() {
+> 245	  local t h=node_modules/.rainbow-bootstrap.sha256; t=$(now)
+> 246	  if sha256sum --check --status "$h" 2>/dev/null && [ -d node_modules/three ] && [ -d node_modules/vite ]; then
+> 247	    rec npm "npm dependencies" ok "node_modules up to date with package-lock.json (npm ci skipped)" "$t"; return
+> 248	  fi
+> 249	  if [ "$MODE" = check ]; then rec npm "npm dependencies" warn "node_modules missing or stale (run without --check)" "$t"; return; fi
+> 250	  rm -f "$h"
+> 251	  if timeout 900 npm ci --no-audit --no-fund --prefer-offline > "$LIVE/npm-ci.log" 2>&1; then
+> 252	    sha256sum package.json package-lock.json > "$h"
+> 253	    rec npm "npm dependencies" ok "npm ci done ($(ls node_modules | wc -l) packages; cache ~/.npm reused)" "$t"
+> 254	  else rec npm "npm dependencies" fail "npm ci failed (backups/.live/npm-ci.log)" "$t"; fi
+> 255	}
+> 256	
+> 257	py_missing() { python3 -I -c 'import importl …[+93 chars]
+
+### 🤖 Claude — 2026-11-22T14:58:47.871Z
+
+> 🔧 **Bash** `{"command": "grep -n \"step_npm\\|step_pylibs$\\|step_pylibs \" scripts/claude-bootstrap.sh", "description": "Find where the npm step is called"}`
+
+### 🧑 User — 2026-11-22T14:58:47.905Z
+
+> ↩︎ result: 244:step_npm() {
+> 446:  step_node; step_npm; step_pylibs; step_playwright; step_media_tools; step_blender; step_android
+> 480:step_node; step_npm; step_pylibs; step_playwright; step_media_tools; step_blender; step_android
+
+### 🤖 Claude — 2026-11-22T14:58:52.423Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/scripts/claude-bootstrap.sh", "old_string": "py_missing() { python3 -I -c", "new_string": "step_lsp() {  # language servers for the typescript-native-lsp / pyright-lsp plugins (free npm package; restored 2026-11-22)\n  local t; t=$(now)\n  if ! command -v typescript-language-server >/dev/null 2>&1 && [ \"$MODE\" != check ]; then\n    timeout 300 npm i -g typescript-language-server@4.4.0 > \"$LIVE/npm-lsp.log\" 2>&1 || true\n  fi\n  local ts py; ts=$(typescript-language-server --version 2>/dev/null); py=$(command -v pyright-langserver >/d …[+329 chars]`
+
+### 🧑 User — 2026-11-22T14:58:52.494Z
+
+> ↩︎ result: The file /home/user/rainbow-/scripts/claude-bootstrap.sh has been updated successfully.
+
+### 🤖 Claude — 2026-11-22T14:58:53.970Z
+
+> 🔧 **Bash** `{"command": "sed -i 's/^\\(\\s*\\)step_node; step_npm; step_pylibs;/\\1step_node; step_npm; step_lsp; step_pylibs;/' scripts/claude-bootstrap.sh && grep -n \"step_lsp\" scripts/claude-bootstrap.sh && bash -n scripts/claude-bootstrap.sh && echo SYNTAX-OK", "description": "Call the new language-server step and check script syntax"}`
+
+### 🧑 User — 2026-11-22T14:58:54.020Z
+
+> ↩︎ result: 257:step_lsp() {  # language servers for the typescript-native-lsp / pyright-lsp plugins (free npm package; restored 2026-11-22)
+> 456:  step_node; step_npm; step_lsp; step_pylibs; step_playwright; step_media_tools; step_blender; step_android
+> 490:step_node; step_npm; step_lsp; step_pylibs; step_playwright; step_media_tools; step_blender; step_android
+> SYNTAX-OK
+> [This command modified 1 file you've previously read: scripts/claude-bootstrap.sh. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-22T14:58:59.426Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json,collections\np='backups/AGENTS_STATUS.json'\na=json.load(open(p),object_pairs_hook=collections.OrderedDict)\na['previous_running_now_round34']=a.get('running_now')\na['running_now']={\"_note\":\"2026-11-22 ~15:05 UTC, new Claude account, lead ccr-0bbd5b9d-js1cpg (continues ccr-80cdb162-4sqz1a round 43b): NO specialist is running. All 10 definitions in .claude/agents/ verified (sha256 match backups/LIVE_TOOLS_STATE.json) and invocable through the Agent tool; relaunch one only for a concrete task (Screen 06 in-motion look / bank) from its notes. No git …[+360 chars]`
+
+### 🧑 User — 2026-11-22T14:58:59.484Z
+
+> ↩︎ result: ok
+>  backups/AGENTS_STATUS.json  | 51 ++++++++++++++++++++++++---------------------
+>  scripts/claude-bootstrap.sh | 14 +++++++++++--
+>  2 files changed, 39 insertions(+), 26 deletions(-)
+
+### 🤖 Claude — 2026-11-22T14:59:01.708Z
+
+> 🔧 **Bash** `{"command": "git diff backups/AGENTS_STATUS.json | head -40", "description": "Inspect the AGENTS_STATUS change"}`
+
+### 🧑 User — 2026-11-22T14:59:01.747Z
+
+> ↩︎ result: diff --git a/backups/AGENTS_STATUS.json b/backups/AGENTS_STATUS.json
+> index b5920f1..948c047 100644
+> --- a/backups/AGENTS_STATUS.json
+> +++ b/backups/AGENTS_STATUS.json
+> @@ -1,15 +1,10 @@
+>  {
+>   "_comment": "Machine-readable roster of the ten Rainbow specialists. Human-readable history: backups/AGENTS_STATUS.md. scripts/claude-bootstrap.sh checks every definition below (present + SHA-256). Agents load automatically from .claude/agents/ (Agent tool, subagent_type = name). Never recreate or rename them. A running specialist does NOT survive a new session or account: relaunch it from its notes + unfinished patch.",
+>   "schema": 1,
+> - "updated_utc": "2026-11-21T18:10Z",
+> - "updated_by_session": "ccr-3830a7b8-af3hrd (round 34 lead)",
+> + "updated_utc": "2026-11-22T15:05Z",
+> + "updated_by_session": "ccr-0bbd5b9d-js1cpg (new account lead, tool restore)",
+>   "running_now": {
+> -  "_note": "round 34 (Screen 05 only), lead ccr-3830a7b8-af3hrd; details round34",
+> -  "s1_visual": "washer-environment-modeler",
+> -  "s2_swim": "animation-and-gameplay-engineer",
+> -  "s3_camera": "path-camera-transition-engineer",
+> -  "s4_qa": "playwright-visual-qa",
+> -  "s5_builder": "general-purpose (Rainbow Screen Builder skill)"
+> +  …[+2133 chars]
+
+### 🤖 Claude — 2026-11-22T14:59:08.964Z
+
+> 🔧 **ToolSearch** `{"query": "select:mcp__Context7__resolve-library-id,mcp__plugin_parallax-threejs_chrome-devtools-mcp__list_pages", "max_results": 2}`
+
+### 🧑 User — 2026-11-22T14:59:08.977Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-22T14:59:12.421Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json,collections\np='backups/AGENTS_STATUS.json'\na=json.load(open(p),object_pairs_hook=collections.OrderedDict)\na['previous_current_focus']=a.get('current_focus')\na['current_focus']=\"Screen 06 (round 43b on ccr-80cdb162-4sqz1a, continued on ccr-0bbd5b9d-js1cpg): built with tools/screenkit (88.5 % scenery px within 20 levels at the picture camera, Benny 12 % immersed, gray + textured real-touch runs 0 holes). Next: user's 06 feedback — calm Benny's lean / camera roll through the crest (A/B), then the approved look in motion (water, foam, purple drum, g …[+318 chars]`
+
+### 🧑 User — 2026-11-22T14:59:12.498Z
+
+> ↩︎ result: json ok
+
+### 🤖 Claude — 2026-11-22T14:59:13.958Z
+
+> 🔧 **mcp__Context7__resolve-library-id** `{"libraryName": "Three.js", "query": "WebGLRenderer texture anisotropy and mipmap LOD bias"}`
+
+### 🤖 Claude — 2026-11-22T14:59:14.058Z
+
+> 🔧 **mcp__plugin_parallax-threejs_chrome-devtools-mcp__list_pages** `{}`
+
+### 🧑 User — 2026-11-22T14:59:16.012Z
+
+> ↩︎ result: Available Libraries:
+> 
+> - Title: Three.js
+> - Context7-compatible library ID: /mrdoob/three.js
+> - Description: Three.js is a JavaScript library for building 3D graphics in the browser, with WebGL and WebGPU renderers, the TSL node-based shader system, and addons for controls, loaders and CSS3D rendering.
+> - Code Snippets: 33055
+> - Source Reputation: High
+> - Benchmark Score: 72.97
+> - Versions: r110, r186, r160, r184, r180, r170, r175
+> ----------
+> - Title: Three.js
+> - Context7-compatible library ID: /llmstxt/threejs_llms-full_txt
+> - Description: Three.js is a cross-browser JavaScript library for creating 3D graphics using WebGL and WebGPU with support for modern shading through TSL (Three.js Shading Language).
+> - Code Snippets: 9181
+> - Source Reputation: High
+> - Benchmark Score: 69.54
+> ----------
+> - Title: three.js
+> - Context7-compatible library ID: /websites/threejs
+> - Description: three.js is a JavaScript 3D library that makes it easy to create and display animated 3D computer graphics in a web browser. It provides a powerful and flexible way to build interactive 3D experiences.
+> - Code Snippets: 9556
+> - Source Reputation: High
+> - Benchmark Score: 60.22
+> ----------
+> - Title: Three.js (DeepWiki)
+> - Context7- …[+701 chars]
+
+### 🧑 User — 2026-11-22T14:59:16.720Z
+
+> ↩︎ result: ## Pages
+> 1: about:blank [selected]
+
+### 🤖 Claude — 2026-11-22T14:59:22.159Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json;d=json.load(open('backups/TOOL_MANIFEST.json'));print(list(d.keys()))\nfor k in ['mcp_servers','plugins','connectors']:\n  v=d.get(k); print('##',k, json.dumps(v)[:1200] if v else None)\n\"; grep -niE \"runpod|spaitial|meshy|rodin|blender mcp|mcp-for-blender|gltf\" backups/MCP_SETUP.md | head -15", "description": "Read tool manifest sections for MCP servers and plugins"}`
+
+### 🧑 User — 2026-11-22T14:59:22.214Z
+
+> ↩︎ result: ['_comment', 'schema', 'project', 'repo', 'updated_utc', 'entry_points', 'startup_integration', 'tools', 'claude_plugins', 'mcp_servers', 'credentials', 'network_hosts', 'marble_worldlabs', 'protected', 'cannot_transfer_through_github', 'account14_2026_11_18', 'account15_2026_11_18', 'screen_kit_r43']
+> ## mcp_servers {"plugin:playwright:playwright": {"source": "playwright plugin (npx @playwright/mcp@latest)", "needed": true, "check": "claude mcp list"}, "World Labs Atlas": {"source": "claude.ai connector (https://api.atlas.worldlabs.ai/mcp), per Claude account", "needed": "only for new World Labs tasks", "reconnect": "claude.ai -> Settings -> Connectors -> World Labs Atlas -> sign in", "credits": "task tools spend World Labs credits: ask the user first"}, "github": {"source": "Claude GitHub integration (git proxy + GitHub MCP)", "needed": true, "reconnect": "connect GitHub to the Claude account + install the Claude GitHub App on josiahscalia5-dev/rainbow-"}, "blender_mcp": {"source": "uvx mcp-for-blender", "needed": false, "note": "needs a desktop Blender UI; headless Blender scripts are used instead"}, "template": ".mcp.json.template (no secrets; .mcp.json is git-ignored)"}
+> ## plug …[+887 chars]
+

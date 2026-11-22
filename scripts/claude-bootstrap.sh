@@ -254,6 +254,16 @@ step_npm() {
   else rec npm "npm dependencies" fail "npm ci failed (backups/.live/npm-ci.log)" "$t"; fi
 }
 
+step_lsp() {  # language servers for the typescript-native-lsp / pyright-lsp plugins (free npm package; restored 2026-11-22)
+  local t; t=$(now)
+  if ! command -v typescript-language-server >/dev/null 2>&1 && [ "$MODE" != check ]; then
+    timeout 300 npm i -g typescript-language-server@4.4.0 > "$LIVE/npm-lsp.log" 2>&1 || true
+  fi
+  local ts py; ts=$(typescript-language-server --version 2>/dev/null); py=$(command -v pyright-langserver >/dev/null && echo yes)
+  if [ -n "$ts" ]; then rec lsp "Language servers" ok "typescript-language-server $ts; pyright-langserver ${py:-missing}" "$t"
+  else rec lsp "Language servers" warn "typescript-language-server missing (npm i -g typescript-language-server@4.4.0)" "$t"; fi
+}
+
 py_missing() { python3 -I -c 'import importlib.util as u,sys; print(" ".join(m for m in sys.argv[1:] if u.find_spec(m) is None))' "$@"; }
 step_pylibs() {
   local t req opt mreq mopt pkgs="" m st=ok msg; t=$(now)
@@ -443,7 +453,7 @@ env-setup)   # cloud environment setup script: tools only, before Claude starts;
   : > "$RES"
   say "Rainbow env-setup: tools ($ROOT)"
   start_tool_installs
-  step_node; step_npm; step_pylibs; step_playwright; step_media_tools; step_blender; step_android
+  step_node; step_npm; step_lsp; step_pylibs; step_playwright; step_media_tools; step_blender; step_android
   command -v claude >/dev/null && step_worldlabs
   exit 0 ;;
 esac
@@ -477,7 +487,7 @@ pycheck agents "Specialist agents" agents
 pycheck marble "Marble World Labs assets" marble
 step_worldlabs
 say "3 Tools (installed only when missing)"
-step_node; step_npm; step_pylibs; step_playwright; step_media_tools; step_blender; step_android
+step_node; step_npm; step_lsp; step_pylibs; step_playwright; step_media_tools; step_blender; step_android
 step_claude_config
 say "4 Tests"
 step_tests
