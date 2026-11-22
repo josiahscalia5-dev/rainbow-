@@ -18,11 +18,20 @@ real 3D joins OUTSIDE the views). Show uninterrupted real-swipe gameplay recordi
    in ONE scene; picture views unchanged by the join (04 83.8 / A 87.4 / B 81.3 % in the world vs 83.7 / 87.8 / 78.6 % on their own pre-baked
    pages) — `qa/world/r44/world_v1/`. Real-touch gray + textured runs: `qa/world/r44/run/` (see its README when present).
 
+4. World v2 (`setup_world.sh` now also builds 05): Sock Rescue is cut at a tube boundary (z -57.11) and an S-curve widening connector tube
+   (Blender: 9 u, +1.6 u sideways, r 0.99 → 1.36, gold rings, water strip) leads into Screen 05 (kit, 83.5 % live / 80.6 % in the world vs
+   81.2 % on its own pre-baked page). Route 158.3 u: 04 0–25.15, A+B 25.15–87.3, 05 87.3–158.3. Recordings `qa/world/r44/run/` (README there):
+   04→A→B gray + textured 1083 frames, 17/17 swipes, 0 hole pixels; B→05 first take: 10/10 swipes, a tube-seam crack (20 frames ≤ 31 px) and a
+   fast camera turn in 05's S-river (1.77°/frame) → fixed (connector overlap 0.2 u, camera heading window ±1.6 u), re-recorded as `_v2`.
+5. User's rating question answered (judgment from the measured numbers, out of 10, at the picture view / while swimming): 04 8 / 5, A 9 / 7,
+   B 8 / 5, 05 8 / 5, 06 8.5 / 4, 07–10 not rebuilt ~3 while swimming. The in-motion look is the main gap to the 9/10 target.
+
 ## Next, in order
-1. Screen 05 with the kit (`screens/05/fit05.py`; reuse the 04 fit pattern: ring RANSAC → VP + camera offset, water line, S-river through the
-   painted coins) → join B → 05 ("laundry tunnel curves into Screen 05 S-shaped current": Blender connector tube from the sock tube r 0.99 to 05's
-   radius, curving).
-2. Add 06 (kit, round 43b) to the world: scale 0.468 / 0.574 = 0.815 so Benny is one size; join 05 → 06 ("S-curve climbs into the raised banked crest").
-3. 07 + 08 with the kit: genuine descending route 07 → 08 ("tube physically opens into the larger final spin room"), then 09, 10.
-4. Fix the pre-baked export loss (3–4 points vs the live bake), 04 → ≥ 90 %, kit pool water code look closer to the painted water in motion.
-5. App: the world replaces the per-section page loads behind a build switch (default game unchanged until the user approves).
+1. Add 06 (kit, round 43b) to the world: scale 0.468 / 0.574 = 0.815 so Benny is one size (or rebuild 06's fit at the world's Benny height);
+   join 05 → 06 ("S-curve climbs seamlessly into the raised banked crest": a rising connector channel into 06's crest start).
+2. 07 + 08 with the kit: genuine descending route 07 → 08 ("tube physically opens into the larger final spin room"), then 09, 10 (09 → 10 wave to
+   the towel); 10 hands over to the 11 Flow video.
+3. The in-motion look (the main gap): code materials sampled from the painted walls / rings / water of each picture instead of drawn ones; keep
+   more painted detail close up; fix the pre-baked export loss (3–4 points vs the live bake); 04 → ≥ 90 %.
+4. Flip the section's surfaces that face away (they show orange in the gray test; double-sided, so the game looks the same).
+5. App: the world replaces the per-section page loads behind a build switch (default game unchanged until the user approves); APK at acceptance.

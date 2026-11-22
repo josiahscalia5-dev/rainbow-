@@ -5540,3 +5540,21 @@ While Sock Rescue → 05 is re-recorded in gray and textured, here are the first
 
 > 🔧 **Bash** `{"command": "cat > qa/world/r44/run/README.md <<'EOF'\n# Round 44 — uninterrupted real-touch gameplay recordings of the ONE connected world (412 × 915, 30 fps, real CDP finger swipes)\n\n| recording | route | frames | swipes detected | Benny on screen | hole pixels | camera max step / turn per frame | scenery moved | water gap max |\n|---|---|---|---|---|---|---|---|---|\n| `GAMEPLAY_world_04_A_B_GRAY_real_touch.mp4` (plain materials) | 04 start → doorway → Bubble Dash → arch → Sock Rescue tunnel (s 1.35 → 80.5) | 1083 | 17 / 17 (2 leaps) | 1083 / 1083 | 0 in all frames | 0.096 u / 0.67° | 0 o …[+1302 chars]`
 
+### 🧑 User — 2026-11-22T16:44:12.894Z
+
+> ↩︎ result: "commit": "7cd87f074bf459c3a62b11f1081c8736ee0489a0",
+> 7cd87f074bf459c3a62b11f1081c8736ee0489a0
+> 7cd87f074bf459c3a62b11f1081c8736ee0489a0	refs/heads/ccr-0bbd5b9d-js1cpg
+
+### 🤖 Claude — 2026-11-22T16:44:16.460Z
+
+Saved: commit `7cd87f07`, the same commit on GitHub. Updating the resume notes while the re-recordings run.
+
+### 🤖 Claude — 2026-11-22T16:44:22.046Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='docs/briefs/2026-11-22-r44/RESUME_R44.md'; s=open(p).read()\nold=\"\"\"## Next, in order\"\"\"\nnew=\"\"\"4. World v2 (`setup_world.sh` now also builds 05): Sock Rescue is cut at a tube boundary (z -57.11) and an S-curve widening connector tube\n   (Blender: 9 u, +1.6 u sideways, r 0.99 → 1.36, gold rings, water strip) leads into Screen 05 (kit, 83.5 % live / 80.6 % in the world vs\n   81.2 % on its own pre-baked page). Route 158.3 u: 04 0–25.15, A+B 25.15–87.3, 05 87.3–158.3. Recordings `qa/world/r44/run/` (README there):\n   04→A→B gray + textured 1083 fram …[+704 chars]`
+
+### 🧑 User — 2026-11-22T16:44:22.118Z
+
+> ↩︎ result: ok
+
