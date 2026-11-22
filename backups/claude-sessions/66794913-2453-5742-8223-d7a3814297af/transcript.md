@@ -4772,3 +4772,36 @@ Encoded. One new problem to report: Benny went partly off the edge of the screen
 > AUTOSAVE OK | branch ccr-c1b272d2-3ru7yx | scheduler daemon | last verified backup 2026-11-22T21:08:29+00:00 (0.5 min ago) | local 406d521 remote 406d521 (match) | uncommitted 0
 > remote 406d521192c3 local 406d521192c3
 
+### 🤖 Claude — 2026-11-22T21:08:59.883Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/kit45/RAINBOW_for_ChatGPT.zip"], "caption": "Final RAINBOW package for ChatGPT (82 MB): summary, approved pictures, latest images, all code, and the newest 05 → 06 recording.", "status": "normal", "display": "attach"}`
+
+### 🧑 User — 2026-11-22T21:09:04.157Z
+
+> ↩︎ result: 1 file delivered to user.
+>   /home/user/rainbow-/qa/kit45/RAINBOW_for_ChatGPT.zip → file_uuid: 3ca45b22-4395-457e-86f0-7efb870df228
+
+### 🤖 Claude — 2026-11-22T21:09:09.687Z
+
+The recording has finished, and the final zip is attached above, ready to send to ChatGPT: `RAINBOW_for_ChatGPT.zip`, 82 MB, 195 files. It's also saved on GitHub at `qa/kit45/RAINBOW_for_ChatGPT.zip` (commit `406d521`, matching your GitHub copy, nothing left unsaved).
+
+What's new in it compared with the first version:
+- **The newest 05 → 06 recording:** `video/GAMEPLAY_05_to_06_TEXTURED_real_touch_r45b.mp4`, with all of this session's improvements, plus a 5-second clip of the 05 → 06 join (`JOIN_05_06_clip_r45b.mp4`).
+- **An updated `00_SUMMARY.md`** that includes this recording's results.
+
+Results of that recording:
+- 1,380 continuous frames from the start of 05 through the end of 06.
+- All 28 real touch swipes were recognised.
+- The camera never turned more than 1° per frame.
+- Benny stayed in the water every frame, at a steady size on screen.
+- One small issue: for 12 frames (under half a second) in the middle of 05, in the right lane, the edge of Benny reaches up to 8 pixels past the right side of the screen. It's in the summary's problem list.
+
+### 🧑 User — 2026-11-22T21:09:12.084Z
+
+Stop hook feedback:
+[command hook 2]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+
+### 🤖 Claude — 2026-11-22T21:09:15.391Z
+
+> 🔧 **Bash** `{"command": "git status --short | head; for i in $(seq 1 60); do out=$(python3 scripts/rainbow-autosave.py --reason manual:end-of-turn 2>&1 | tail -3); echo \"$out\" | grep -q 'another autosave is running' || break; sleep 5; done; python3 -I scripts/autosave-status.py | head -1; git status --short | head -3", "description": "Commit and push remaining changes", "timeout": 600000}`
+
