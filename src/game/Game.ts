@@ -20,7 +20,7 @@ import { createGradePass } from '../render/grade';
 import { createHud } from '../ui/hud';
 import { findCinematic, playCinematic } from '../ui/cinematicVideo';
 import { createCoins, COIN_VALUE } from '../gameplay/coins';
-import { createInput } from '../gameplay/input';
+import { createInput, RUNNER_LANES } from '../gameplay/input';
 import { RideCamera } from './cameraRig';
 import { flag05 } from '../vfx/waterRibbon';
 import { MATCH } from './match';
@@ -142,6 +142,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
     s: 0,
     lat: 0,
     vlat: 0,
+    laneIndex: 0, // opt-in swipe test only; normal steering stays unchanged
     coins: START_COINS,
     hearts: 5,
     paused: false,
@@ -153,6 +154,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
     log: [] as { t: number; s: number; y: number; stage: StageId }[],
   };
 
+  let visualSteer = 0; // lean/paint must reflect actual sideways motion in swipe mode
   const stageOf = (s: number): StageId => course.stageAtS(s).id;
 
   const setStage = (id: StageId) => {
@@ -349,6 +351,8 @@ export async function startGame(canvas: HTMLCanvasElement) {
     st.t = 0;
     st.s = course.stage('03').s0;
     st.lat = 0;
+    st.laneIndex = 0;
+    input.consumeSwipes();
     hud.setVisible(true);
     setStage('03');
     rideCam.pos.copy(camera.position);
@@ -369,8 +373,26 @@ export async function startGame(canvas: HTMLCanvasElement) {
     if (BONUS_ROUTE.enabled && !BONUS_ROUTE.resume && !bonusLeft && st.s >= course.stage('05').s0) { bonusLeft = true; st.paused = true; BONUS_ROUTE.go(st.coins); }
     const halfW = course.widthAt(st.s) / 2;
     const safe = halfW - 0.75;
-    st.vlat += (input.steer * 7.5 - st.vlat) * Math.min(1, dt * 8);
-    st.lat = THREE.MathUtils.clamp(st.lat + st.vlat * dt, -halfW + 0.55, halfW - 0.55);
+    if (RUNNER_LANES) {
+      // An actual pointer swipe requests one lane change that persists after finger release.
+      // The available lane width adapts to each portion of the existing river and its foam banks.
+      for (const dir of input.consumeSwipes()) {
+        st.laneIndex = THREE.MathUtils.clamp(st.laneIndex + (dir === 'left' ? -1 : 1), -1, 1);
+      }
+      const laneSpan = Math.max(0, Math.min(1.7, halfW - 1.05));
+      const goal = st.laneIndex * laneSpan;
+      const prevLat = st.lat;
+      const delta = THREE.MathUtils.clamp(
+        (goal - st.lat) * (1 - Math.exp(-Math.max(0, dt) * 12)), -9 * dt, 9 * dt,
+      );
+      st.lat = THREE.MathUtils.clamp(st.lat + delta, -halfW + 0.75, halfW - 0.75);
+      st.vlat = dt > 0 ? (st.lat - prevLat) / dt : 0;
+    } else {
+      // Original drag/hold controls, identical to the existing default implementation.
+      st.vlat += (input.steer * 7.5 - st.vlat) * Math.min(1, dt * 8);
+      st.lat = THREE.MathUtils.clamp(st.lat + st.vlat * dt, -halfW + 0.55, halfW - 0.55);
+    }
+    visualSteer = RUNNER_LANES ? THREE.MathUtils.clamp(st.vlat / 5, -1, 1) : input.steer;
     // foam-wall bump → lose a heart (with cooldown), bounce back toward the centre
     st.bumpCooldown = Math.max(0, st.bumpCooldown - dt);
     if (Math.abs(st.lat) > safe) st.edgeTime += dt; else st.edgeTime = 0;
@@ -397,7 +419,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
     // Benny
     const f = bennyPose(st.s, st.lat, st.clock, pose);
     benny.root.position.copy(pose.pos);
-    const lean = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 0, 1), -input.steer * 0.25);
+    const lean = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 0, 1), -visualSteer * 0.25);
     // 03 whirlpool twirl: Benny spins around his up axis while riding the vortex
     st.twirl = st.stage === '03' ? st.twirl + dt * 2.2 : st.twirl * Math.max(0, 1 - dt * 3);
     const tw = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), st.stage === '03' ? Math.PI + Math.sin(st.twirl) * 0.9 : 0);
@@ -405,7 +427,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
     // `?paint06=1` / `?paint=1`: the painted Benny replaces him while the approved pictures show (never two Bennys)
     benny.root.visible = !(p06 && p06.paintBenny(st.s) >= 0.5) && !(paint && paint.paintBenny(st.s) >= 0.5);
     benny.setExpression('happy');
-    benny.update(dt, { swim: 1, steer: input.steer, speed, time: st.clock });
+    benny.update(dt, { swim: 1, steer: visualSteer, speed, time: st.clock });
     // VFX anchor = the body centre AFTER the runtime's ride lift (the model is raised inside the root),
     // so the wake/splash footprint matches the real waterline instead of the unlifted root
     water.wake((benny.root.children[0] ?? benny.root).getWorldPosition(wakeAnchor), f.tan, f.right, speed, dt);
@@ -553,7 +575,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
     hud.showPaused(st.paused);
   };
   const resetToIntro = () => {
-    st.mode = 'intro'; st.t = 0; st.s = 0; st.lat = 0; st.coins = START_COINS; st.hearts = 5; st.paused = false;
+    st.mode = 'intro'; st.t = 0; st.s = 0; st.lat = 0; st.vlat = 0; st.laneIndex = 0; input.consumeSwipes(); st.coins = START_COINS; st.hearts = 5; st.paused = false;
     coins.resetUntil(-1);
     hud.setCoins(st.coins); hud.setHearts(5); hud.setVisible(false); hud.showVictory(false); hud.showPaused(false);
     st.stage = '01'; updateZones();
@@ -632,8 +654,8 @@ export async function startGame(canvas: HTMLCanvasElement) {
     renderer.info.reset();
     const pw = st.mode !== 'ride' ? 0 : paint ? paint.weight(st.s) : p06 ? p06.weight(st.s) : 0;
     if (pw < 0.999) composer.render();
-    if (p06 && pw > 0.001) p06.draw(renderer, { s: st.s, lat: st.lat, steer: input.steer, time: st.frozen ?? st.clock, w: pw });
-    if (paint && pw > 0.001) paint.draw(renderer, { s: st.s, lat: st.lat, steer: input.steer, time: st.frozen ?? st.clock, clock: st.clock });
+    if (p06 && pw > 0.001) p06.draw(renderer, { s: st.s, lat: st.lat, steer: visualSteer, time: st.frozen ?? st.clock, w: pw });
+    if (paint && pw > 0.001) paint.draw(renderer, { s: st.s, lat: st.lat, steer: visualSteer, time: st.frozen ?? st.clock, clock: st.clock });
   };
   const frame = () => {
     const now = performance.now();
@@ -690,6 +712,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
       const sTarget = cp.s ?? course.stage('11').s0;
       st.s = sTarget;
       st.lat = cp.lat ?? 0;
+      st.laneIndex = st.lat > 0.35 ? 1 : st.lat < -0.35 ? -1 : 0;
       coins.resetUntil(sTarget + 0.5);
       setStage(stageOf(sTarget));
       if (cp.mode === 'outro') {
@@ -732,6 +755,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
     state() {
       return { mode: st.mode, stage: st.stage, s: +st.s.toFixed(3), lat: +st.lat.toFixed(3), coins: st.coins, hearts: st.hearts, paused: st.paused, bennyY: +benny.root.position.y.toFixed(3), bennyVisible: benny.root.visible, cam: camera.position.toArray().map((x) => +x.toFixed(2)) };
     },
+    swipeLog() { return input.swipeLog(); }, // diagnostics: browser pointer events vs injected QA motion
     log() { return st.log; },
     coinDefs() { return coins.defs.map((d, i) => ({ s: d.s, lat: d.lat, taken: coins.collected[i] === 1 })); },
     /** QA: on-screen centre (px) and diameter (px) of every untaken coin in front of the camera */
