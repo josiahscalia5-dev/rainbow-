@@ -94,7 +94,7 @@ const sceneryMat = (base, rep, opts = {}) => new THREE.ShaderMaterial({
     void main(){ vec2 su = vUv + uScroll * uTime; vec3 c = texture2D(uBase, su * uRep).rgb * uTint;
       if (uBakeOn > 0.5) { vec4 b = texture2D(uBake, su); vec4 dd = texture2D(uDen, vUv); float pd = (dd.r + dd.g / 255.0) * 4000.0;   // picture px per world unit
         float magE = uSharp.x / max(max(length(dFdx(vW)), length(dFdy(vW))), 1e-6) / max(pd, 1.0);                         // phone px per picture px here
-        c = mix(c, b.rgb, b.a * (1.0 - smoothstep(uSharp.y, uSharp.y * 2.3, magE))); }
+        c = mix(c, b.rgb, dd.b * (1.0 - smoothstep(uSharp.y, uSharp.y * 2.3, magE))); }
       c = mix(c, vec3(1.0, 0.97, 0.92), uGlow.z * pow(smoothstep(uGlow.x, uGlow.y, vW.z), 1.6));
       gl_FragColor = vec4(c, uAlpha); }` });
 
@@ -160,7 +160,7 @@ const waterMat = () => new THREE.ShaderMaterial({ side: THREE.DoubleSide, unifor
       if (fo > 0.0) { float nn = nse(vec2(vW.x * 9.0, d * 9.0)); col = mix(col, mix(c3(185.0, 178.0, 240.0), c3(250.0, 248.0, 255.0), smoothstep(0.3, 0.8, nn)), fo); }
       if (uBakeOn > 0.5) { float ph = fract(uT * 0.8); vec4 b1 = texture2D(uBake, vUv + vec2(0.0, ph * 0.006)), b2 = texture2D(uBake, vUv + vec2(0.0, fract(ph + 0.5) * 0.006));
         vec4 b = mix(b2, b1, 1.0 - abs(1.0 - 2.0 * ph)); vec4 dd = texture2D(uDen, vUv); float pd = (dd.r + dd.g / 255.0) * 4000.0;
-        float magE = uSharp.x / max(max(length(dFdx(vW)), length(dFdy(vW))), 1e-6) / max(pd, 1.0); col = mix(col, b.rgb, b.a * (1.0 - smoothstep(uSharp.y, uSharp.y * 2.3, magE))); }
+        float magE = uSharp.x / max(max(length(dFdx(vW)), length(dFdy(vW))), 1e-6) / max(pd, 1.0); col = mix(col, b.rgb, dd.b * (1.0 - smoothstep(uSharp.y, uSharp.y * 2.3, magE))); }
       col = mix(col, vec3(0.95, 1.0, 1.0), uGlow.z * pow(smoothstep(uGlow.x, uGlow.y, z), 1.6));
       gl_FragColor = vec4(col, 1.0); }` });
 const WSEG = [];
@@ -242,6 +242,8 @@ if (MANI) {   // the app build: the bake was done once offline (same code, ?save
     const dw = Math.max(4, bw >> 2), dh = Math.max(4, bh >> 2), rd = new THREE.WebGLRenderTarget(dw, dh); bakeMat.uniforms.uMode.value = 1; bakeScene.add(tmp);
     renderer.setRenderTarget(rd); renderer.setClearColor(0x000000, 0); renderer.clear(); renderer.render(bakeScene, oc); renderer.setRenderTarget(null); bakeScene.remove(tmp); bakeMat.uniforms.uMode.value = 0;
     const dp = new Uint8Array(dw * dh * 4); renderer.readRenderTargetPixels(rd, 0, 0, dw, dh, dp); rd.dispose();
+    for (let y = 0; y < dh; y++) for (let x = 0; x < dw; x++) { let a = 0, n = 0; for (let yy = Math.floor(y * bh / dh); yy < Math.floor((y + 1) * bh / dh); yy++) for (let xx = Math.floor(x * bw / dw); xx < Math.floor((x + 1) * bw / dw); xx++) { a += Ab[yy * bw + xx]; n++; }
+      const i = (y * dw + x) * 4; dp[i + 2] = Math.round(255 * Math.min(1, 1.15 * a / Math.max(1, n))); dp[i + 3] = 255; }   // blue = the soft bake weight
     const den = new THREE.DataTexture(dp, dw, dh); den.minFilter = den.magFilter = THREE.LinearFilter; den.needsUpdate = true;
     BAKE_DATA[o.name] = { w: bw, h: bh, px: out, dw, dh, dp, cov };
     return { cov, tex: t, den }; };
@@ -262,9 +264,9 @@ if (MANI) {   // the app build: the bake was done once offline (same code, ?save
 window.bakeStats = () => BAKE_STATS;
 // ?savebake=1: export the bake (PNG data URLs, rows flipped to image order) for the app build: tools/reflock/section_export.cjs
 window.bakeExport = (name) => { const d = BAKE_DATA[name]; if (!d) return null; if (d.template) return { template: d.template };
-  const png = (w, h, px) => { const c = document.createElement('canvas'); c.width = w; c.height = h; const g = c.getContext('2d'), im = g.createImageData(w, h);
-    for (let y = 0; y < h; y++) im.data.set(px.subarray((h - 1 - y) * w * 4, (h - y) * w * 4), y * w * 4); g.putImageData(im, 0, 0); return c.toDataURL('image/png'); };
-  return { bake: png(d.w, d.h, d.px), den: png(d.dw, d.dh, d.dp), cov: +d.cov.toFixed(3) }; };
+  const png = (w, h, px, type = 'image/png') => { const c = document.createElement('canvas'); c.width = w; c.height = h; const g = c.getContext('2d'), im = g.createImageData(w, h);
+    for (let y = 0; y < h; y++) im.data.set(px.subarray((h - 1 - y) * w * 4, (h - y) * w * 4), y * w * 4); g.putImageData(im, 0, 0); return c.toDataURL(type, 0.9); };
+  return { bake: png(d.w, d.h, d.px, 'image/jpeg'), den: png(d.dw, d.dh, d.dp), cov: +d.cov.toFixed(3) }; };
 window.bakeNames = () => Object.keys(BAKE_DATA);
 
 // ---------------- foam heaps (real 3D domes) where the pictures paint foam on the water, + banks along the tunnel walls; bubbles ----------------

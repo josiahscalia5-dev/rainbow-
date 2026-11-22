@@ -10,8 +10,8 @@ const { chromium } = require('playwright'); const { spawn } = require('child_pro
     await page.goto(`http://127.0.0.1:${port}/play3.html?w=412&h=915`); await page.waitForFunction(() => window.ready === true, null, { timeout: 1200000 });
     const names = await page.evaluate(() => window.bakeNames()); const man = { meshes: {}, foam: await page.evaluate(() => window.foamPainted()) }; const tpl = {};
     for (const n of names) { const e = await page.evaluate((n) => window.bakeExport(n), n); if (!e) continue; if (e.template) { tpl[n] = e.template; continue; }
-      for (const k of ['bake', 'den']) fs.writeFileSync(path.join(B, `${n}_${k}.png`), Buffer.from(e[k].split(',')[1], 'base64'));
-      man.meshes[n] = { bake: `${n}_bake.png`, den: `${n}_den.png`, cov: e.cov }; }
+      fs.writeFileSync(path.join(B, `${n}_bake.jpg`), Buffer.from(e.bake.split(',')[1], 'base64')); fs.writeFileSync(path.join(B, `${n}_den.png`), Buffer.from(e.den.split(',')[1], 'base64'));
+      man.meshes[n] = { bake: `${n}_bake.jpg`, den: `${n}_den.png`, cov: e.cov }; }
     for (const [n, t] of Object.entries(tpl)) if (man.meshes[t]) man.meshes[n] = { ...man.meshes[t], template: t };
     fs.writeFileSync(path.join(B, 'manifest.json'), JSON.stringify(man)); console.log('exported', Object.keys(man.meshes).length, 'meshes,', man.foam.length, 'foam domes');
   } finally { await browser.close(); srv.kill(); }

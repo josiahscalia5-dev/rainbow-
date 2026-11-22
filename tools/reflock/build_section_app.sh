@@ -6,7 +6,7 @@
 # the default game is unchanged.
 set -e
 SRC=$(cd "$(dirname "$0")/../.." && pwd); WS=$(cd "${1:?workspace}" && pwd); G="$WS/section"; P="$SRC/public/section"
-NODE_PATH=$(npm root -g) node "$SRC/tools/reflock/section_export.cjs" "$G" "$WS/app"
+rm -rf "$WS/app"; NODE_PATH=$(npm root -g) node "$SRC/tools/reflock/section_export.cjs" "$G" "$WS/app"
 rm -rf "$P"; mkdir -p "$P/vendor/three/build" "$P/vendor/three/examples/jsm/loaders" "$P/vendor/three/examples/jsm/utils" "$P/baked"
 T=/tmp/rainbow_r34/node_modules/three
 cp "$T/build/three.module.js" "$T/build/three.core.js" "$P/vendor/three/build/"; cp "$T/examples/jsm/loaders/GLTFLoader.js" "$P/vendor/three/examples/jsm/loaders/"; cp "$T/examples/jsm/utils/BufferGeometryUtils.js" "$P/vendor/three/examples/jsm/utils/"
