@@ -130,6 +130,13 @@ if L07:   # ---- join 06 -> 07 (user's guide: "crest flows down into the deeper 
 Pall = np.vstack(parts); Ball = np.concatenate(banks); Lc = np.concatenate([[0], np.cumsum(np.linalg.norm(np.diff(Pall, axis=0), axis=1))])
 sg = np.arange(0, Lc[-1] + 1e-9, DS); route = np.stack([np.interp(sg, Lc, Pall[:, i]) for i in range(3)], 1); bank = np.interp(sg, Lc, Ball)
 def s_of(P): return float(np.argmin(np.linalg.norm(route - np.asarray(P), axis=1)) * DS)
+# r46 (r46 recording frames 1379-1439: Benny sank to his hat in the 06 -> 07 connector): the descending connector water used its own height curve
+# (wy7), which drops later than Benny's route - the water lay up to 0.14 u above his water line. A connector strip now follows the ROUTE height
+# under its axis (1.2 cm below, like every other water surface Benny swims on).
+_rz = route[::-1] if route[0, 2] > route[-1, 2] else route   # ascending z for np.interp
+for c in conn_extra:
+    if c.get('kind') == 'strip_path' and c.get('ys'):
+        c['ys'] = [round(float(np.interp(a[2], _rz[:, 2], _rz[:, 1])) - 0.012, 5) for a in c['axis']]
 s04_end = s_of(r4[-1]); sAB0 = s_of(rs[0]); s_bub = s_of(np.array(SEC['benny']['bubble']) + T); s_sock = s_of(np.array(SEC['benny']['sock']) + T)
 LEVEL = float((len(route) - 1) * DS)
 s_B_end = s_of(rs[-1]); s05_0 = s_of(r5[0] + T5) if L05 else None

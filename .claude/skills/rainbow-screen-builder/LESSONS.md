@@ -63,3 +63,8 @@
   orange the painting has near the rings) - reported, not hidden.
 * r46 the last area of the world (07) is open toward the game's 08 hand-over: its tube end showed the background (green hole, r45b frames 1362-1379)
   -> the last area gets the glowing far-end cap.
+* r46 a DESCENDING connector water strip with its own height curve (world_layout `wy7`) lay up to 0.14 u above Benny's route: he sank to his hat
+  entering 07 (frames 1379-1439) -> every connector strip follows the route height under its axis (-0.012 u). Check: FRAMEQA water_gap_abs_max.
+* r46 changing `bennyBox()` changes EVERY guard that calls it: the old positional guard started stepping the camera with the paddling arms
+  (0.119 u > 0.117 limit) -> positional guards use the rest pose; only the final lens shift uses the full silhouette.
+* r46 the coin check needs the jump state: a coin under a jump is correctly missed (tools/world/coins_check.cjs logs Benny's height).

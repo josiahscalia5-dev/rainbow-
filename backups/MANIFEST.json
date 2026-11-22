@@ -58,8 +58,8 @@
   },
   {
    "path": ".claude/skills/rainbow-screen-builder/LESSONS.md",
-   "bytes": 9612,
-   "sha256": "a4011b7264c2a320d6528b1bdf0ae32831d3ff2d170a7507ed2eae0d7f8d05d8"
+   "bytes": 10292,
+   "sha256": "2b38460f7fe825e8a819259a7f3a6e127816816b8036d8999ab53960e95e914c"
   },
   {
    "path": ".claude/skills/rainbow-screen-builder/SKILL.md",
@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 28920,
-   "sha256": "d51cfcec80901f654aed151725f2bb1b25d7cbbe9113075ce29edb501961086a"
+   "sha256": "2a2a831ec57a98ad719f64cf58ab3bba732b6efa50b96dce23ccea917d5f9920"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 2958,
-   "sha256": "00207ac20bf1590526f858c3f49e24fea82e32b0a5136e827ccf5fc584ba7d67"
+   "sha256": "c46572c0748df556cc11bede997d2e41ebe5cb7eb94d4d52258d763ff5d18ce6"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -18449,7 +18449,7 @@
   {
    "path": "public/world/connectors.glb",
    "bytes": 4776956,
-   "sha256": "39e8daf17cc3f99761790ff32426be298176bee3dac43380d4ab0717e68530ff"
+   "sha256": "e2e4d3c8121182307e9517b3ab6a9b062d04241b6a1e092535573fcf04b3ca75"
   },
   {
    "path": "public/world/controls.js",
@@ -18463,8 +18463,8 @@
   },
   {
    "path": "public/world/index.html",
-   "bytes": 94027,
-   "sha256": "69f52d01e458a4d23e959cd9dc5f3521de8dce04fbdcad033de685aaf8d3c776"
+   "bytes": 94220,
+   "sha256": "8604390cd5bc470756d48977466563944fe689c8f70e52b87b8354ed764b2049"
   },
   {
    "path": "public/world/qa.js",
@@ -18508,8 +18508,8 @@
   },
   {
    "path": "public/world/world.json",
-   "bytes": 208471,
-   "sha256": "6a81312abd67630b4f686b294ad26845023ead4b96530ca66a4c7b40c3be05b7"
+   "bytes": 208465,
+   "sha256": "b6bea621362a66864203a1fb7002574a95d1aa0110ff9bf68ed3105e17873a35"
   },
   {
    "path": "qa/01_diff.png",
@@ -23513,13 +23513,13 @@
   },
   {
    "path": "qa/kit46/README.md",
-   "bytes": 4638,
-   "sha256": "263f708536ab6b6af9b1e43e79f981fea974a5a9f5cc5d86cdc305f83b7bb0f8"
+   "bytes": 5741,
+   "sha256": "707bcf987309b338c2f4941b57ed8d8e3776fdcae8494f41e8ca9390d3f7ac19"
   },
   {
    "path": "qa/kit46/Rainbow_r46_world_05_06_debug.apk",
-   "bytes": 244477578,
-   "sha256": "7afcc5f08e01694522d722ec1cbf9b85be266c736165d548b34c0af063cbf6b7"
+   "bytes": 247348487,
+   "sha256": "73b657bf847c0a09f0f8a1f857bd7e8b84395424af7cabf5b88b4bda2bd24077"
   },
   {
    "path": "qa/kit46/evidence/frame0060_BEFORE_vs_NEW.jpg",
@@ -23545,6 +23545,16 @@
    "path": "qa/kit46/run/GAMEPLAY_05_06_07_GRAY_geometry_real_touch_checks.json",
    "bytes": 2957,
    "sha256": "a5acfd36ed1a6443e7b2086e68af37d71c78dc6171ad6526644203dfc2d5adaf"
+  },
+  {
+   "path": "qa/kit46/run/GAMEPLAY_05_06_07_TEXTURED_real_touch.mp4",
+   "bytes": 30651751,
+   "sha256": "8001246939323b8fa273549224c4611521330df62a3101adc667bc96164726db"
+  },
+  {
+   "path": "qa/kit46/run/GAMEPLAY_05_06_07_TEXTURED_real_touch_checks.json",
+   "bytes": 3432,
+   "sha256": "1223ae1a2703d03eaa2dab4d8a75705c0e452d2558b91396180e722829e1ea25"
   },
   {
    "path": "qa/kit46/run/coins_check.json",
@@ -50058,8 +50068,8 @@
   },
   {
    "path": "tools/world/world_layout.py",
-   "bytes": 18112,
-   "sha256": "0d41364e05e66c7b1401f5ea2194953909f38006ab57ef62571d7dcde5b1c8f8"
+   "bytes": 18748,
+   "sha256": "d08ca0af910c8fd1443f4fbd4b23f05a5af08929e5e718326bdc0987d4fea307"
   },
   {
    "path": "tools/worldlabs/analyze_splats.py",

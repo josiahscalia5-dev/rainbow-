@@ -45,7 +45,19 @@ What the numbers say honestly:
   stretch seen from just before the picture camera, and the hazy area hidden behind the painted Benny (see "still different").
 
 ## Whole-run checks (same 28-touch plan as round 45b, `qa/kit45/run/swipe_plan_05_06.json`, start s 88, 48 s = 1,440 frames > r45b 1,380)
-See `run/*_checks.json` (filled from the textured and gray runs).
+WHOLE_RUN_TABLE
+
+## Still different from the approved pictures (not hidden)
+* The picture camera match stays ~84-85 % (goal 90-95 %): fine wall / ring detail at the top of the frame and the far tunnel differ most.
+* Swimming toward the picture position (05 ~s 95, 06 ~s 148) the painted stretch ahead is visible as a patch with an edge: the painted pixels are only
+  exact from the picture camera; beside / behind them the generated ribbon water starts.
+* 06 picture camera: the area hidden behind the painted Benny in your picture has no painted pixels (the bake fills it with a guess) - a hazy patch
+  around Benny, the same in round 45b.
+* The repeated wall pattern still has some flat pink patches (where tray pixels were removed) and 06's far wall segments near the 06 -> 07 connector
+  carry a few pale painted fragments (baked from far away, magnified when close).
+* Two thin straight pink lines run along 06's river after the crest (the channel body edges), as in round 45b.
+* Screen 07 (not reworked this round, as asked): its own wall template still has orange smears; just past the connector (s ~194.8) its pool lies
+  7 cm above Benny's route for a moment.
 
 ## APK
 `Rainbow_r46_world_05_06_debug.apk` (VITE_RAINBOW_WORLD=1): built here with Gradle 8.2.1 / SDK 34, signature verified (Android debug key),

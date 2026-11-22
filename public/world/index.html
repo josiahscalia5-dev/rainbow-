@@ -648,6 +648,7 @@ window.qaPickScenery = (x, y, limit = 6) => {
     point: hit.point.toArray().map((v) => +v.toFixed(3))
   }));
 };
+window.coinLayout = () => coins.map((c) => ({ s: +c.s.toFixed(3), lat: +c.lat.toFixed(3), got: c.got, kind: c.kind })).filter((c) => c.s < 1e8);   // r46 QA: every coin + when it was collected
 window.qaEdgeGuard = () => ({ opticalCorrections: st.opticalGuard ?? 0,
   maxOpticalShiftPx: +(st.maxOpticalShiftPx ?? 0).toFixed(2), shiftPx: +(st.opticalShiftPx ?? 0).toFixed(2), lensOffsetMm: +camera.filmOffset.toFixed(4), box: window.bennyBox() });
 const QA_SCN = MESH.filter((o) => o.userData.fam !== 'foam'), QA_RC = new THREE.Raycaster();
