@@ -21,7 +21,7 @@
   },
   {
    "step": "handed over to the section",
-   "url": "http://127.0.0.1:9806/section/index.html?return=1&bonus=1&coins=1330"
+   "url": "http://127.0.0.1:9877/section/index.html?return=1&bonus=1&coins=1330"
   },
   {
    "step": "section loaded",
@@ -38,14 +38,14 @@
   },
   {
    "step": "handed back to the game",
-   "url": "http://127.0.0.1:9806/index.html?resume=05&bonus=1&coins=1450"
+   "url": "http://127.0.0.1:9877/index.html?resume=05&bonus=1&coins=1450"
   },
   {
    "step": "game resumed",
    "state": {
     "mode": "ride",
     "stage": "05",
-    "s": 132.448,
+    "s": 132.452,
     "lat": 0,
     "coins": 1450,
     "hearts": 5,
