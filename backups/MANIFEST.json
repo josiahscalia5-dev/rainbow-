@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3233,
-   "sha256": "8faa2847ffa48566897de12ac1c878eb44781b4f296f683c1add00bb4de3733c"
+   "sha256": "32ae56c076634549f704fecc53c429a72b082c54d2234f3bd688c4463900d1c8"
   },
   {
    "path": "backups/MCP_SETUP.md",
