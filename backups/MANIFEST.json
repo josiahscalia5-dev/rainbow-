@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3271,
-   "sha256": "0594c86b5acba1a29ff44fb3b1b7911e48ee43fa41b9300f424a13f6b329c765"
+   "sha256": "066f8be4af7ec6122cc357c88bcb0532d597b209c3a7fda1fa641edc7b2a6d7d"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -40730,6 +40730,11 @@
    "path": "tools/bonus/bonus.html",
    "bytes": 105528,
    "sha256": "4ffd5e1ea12986aff3e54397ae66ee69eb3621a5b9f4eba46c35717c932557d1"
+  },
+  {
+   "path": "tools/bonus/fit_sock.py",
+   "bytes": 3766,
+   "sha256": "12378e96db2b5eff1815223f3818dfc2b49bbc76990b7738d25185e3177adca8"
   },
   {
    "path": "tools/bonus/setup_bonus.sh",
