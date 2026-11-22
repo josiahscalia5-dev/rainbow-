@@ -17,10 +17,10 @@ const { chromium } = require('playwright'); const { spawn } = require('child_pro
       else { const sy = d === 'up' ? 0.7 * H : 0.5 * H, ey = d === 'up' ? 0.5 * H : 0.7 * H; gestures.push([f0, 'touchStart', W / 2, sy]); for (let k = 1; k <= 4; k++) gestures.push([f0 + k, 'touchMove', W / 2 + 2 * k, sy + (ey - sy) * k / 4]); gestures.push([f0 + 5, 'touchEnd', W / 2, ey]); } }
     const n = Math.round(+secs * fps), track = [];
     for (let i = 0; i < n; i++) { for (const g of gestures.filter((g) => g[0] === i)) await cdp.send('Input.dispatchTouchEvent', { type: g[1], touchPoints: g[1] === 'touchEnd' ? [] : [{ x: g[2], y: g[3], id: 1, radiusX: 8, radiusY: 8, force: 1 }] });
-      const o = await page.evaluate(([t, dt, sp]) => window.step(t, dt, 0, sp), [i / fps, i === 0 ? 0 : 1 / fps, speed]); track.push([o.s, o.lat, o.coins]); }
+      const o = await page.evaluate(([t, dt, sp]) => window.step(t, dt, 0, sp), [i / fps, i === 0 ? 0 : 1 / fps, speed]); track.push([o.s, o.lat, o.coins, o.height]); }
     const coins = await page.evaluate(() => window.coinLayout()); const s0 = track[0][0], s1 = track[track.length - 1][0];
-    const latAt = (s) => { let best = track[0]; for (const t of track) if (Math.abs(t[0] - s) < Math.abs(best[0] - s)) best = t; return best[1]; };
-    const passed = coins.filter((c) => c.s > s0 + 0.3 && c.s < s1 - 0.3).map((c) => ({ ...c, bennyLat: latAt(c.s), inPath: Math.abs(c.lat - latAt(c.s)) < 0.15, collected: c.got >= 0 }));
+    const near = (s) => { let best = track[0]; for (const t of track) if (Math.abs(t[0] - s) < Math.abs(best[0] - s)) best = t; return best; }, latAt = (s) => near(s)[1];
+    const passed = coins.filter((c) => c.s > s0 + 0.3 && c.s < s1 - 0.3).map((c) => ({ ...c, bennyLat: latAt(c.s), bennyHeight: near(c.s)[3], inPath: Math.abs(c.lat - latAt(c.s)) < 0.15, collected: c.got >= 0 }));
     const inPath = passed.filter((c) => c.inPath), missedInPath = inPath.filter((c) => !c.collected);
     const res = { frames: n, s_range: [s0, s1], coins_passed: passed.length, coins_in_bennys_path: inPath.length, collected_in_path: inPath.length - missedInPath.length, missed_in_path: missedInPath,
       collected_total: passed.filter((c) => c.collected).length, coin_counter_end: track[track.length - 1][2] };

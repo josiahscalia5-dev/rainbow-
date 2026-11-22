@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 28920,
-   "sha256": "f6287185dee062e6587171bb177515a51eda777c2c9043e772cef3ec69579dc7"
+   "sha256": "ac17b62e92c94fa8a139f94a8dbb31cd8d66f19f37284635291622f7a0162a44"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 2958,
-   "sha256": "0271ff43adbc4776543cad37d661c5e0453bcbc1bd058fbd19f7e85a5d1deb9b"
+   "sha256": "c60b423e3574aa194e3a11e735180187353e2ca42b87bef5a7f15589cf53b3a9"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -49743,8 +49743,8 @@
   },
   {
    "path": "tools/world/coins_check.cjs",
-   "bytes": 3949,
-   "sha256": "42d356c0e0548cdf498346dedadddd39488cbf705f4366b362e000cb7b672bcc"
+   "bytes": 4009,
+   "sha256": "667c4a90a5a75ff556ec598c704e038b42c30d07b91241b82656a098b88ef30b"
   },
   {
    "path": "tools/world/join_audit.cjs",
