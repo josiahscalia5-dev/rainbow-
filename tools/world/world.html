@@ -191,8 +191,11 @@ const waterMatConn = (c, base, Aa, Ab) => { const ax = axisTex(c.axis), zs = c.a
     void main(){`).replace('col = mix(col, uFarCol,', `{ float zt = clamp((vW.z - uAxZ.x) / (uAxZ.y - uAxZ.x), 0.0, 1.0), e = 0.03 / max(1e-3, uAxZ.y - uAxZ.x);
         float axx = texture2D(uAx, vec2(zt, 0.5)).r, sl = (texture2D(uAx, vec2(min(1.0, zt + e), 0.5)).r - texture2D(uAx, vec2(max(0.0, zt - e), 0.5)).r) / 0.06, latm = (vW.x - axx) / sqrt(1.0 + sl * sl);
         float k = smoothstep(0.12, 0.88, (uAxZ.z - vW.z) / max(1e-3, uAxZ.z - uAxZ.w)); vec3 ca = col, cb = col;
-        if (uOn_a > 0.5) { vec3 La = (uMi_a * vec4(vW, 1.0)).xyz; gRUv_a = vec4(2.0, latm, -La.z, 0.0); ca = ribbonWater_a(La, uT, uFl_a, vW); }
-        if (uOn_b > 0.5) { vec3 Lb = (uMi_b * vec4(vW, 1.0)).xyz; gRUv_b = vec4(2.0, latm, -Lb.z, 0.0); cb = ribbonWater_b(Lb, uT, uFl_b, vW); }
+        /* r46b: each side uses its OWN area's lateral (its route texture, clamped beyond its ends) exactly like that area's water - the connector
+           axis ends 0.14 u beside 05's route start, which shifted the ribbons at the join (frames 40-90) */
+        if (uOn_a > 0.5) { vec3 La = (uMi_a * vec4(vW, 1.0)).xyz; gRUv_a = vec4(0.0); ca = ribbonWater_a(La, uT, uFl_a, vW); }
+        if (uOn_b > 0.5) { vec3 Lb = (uMi_b * vec4(vW, 1.0)).xyz; gRUv_b = vec4(0.0); cb = ribbonWater_b(Lb, uT, uFl_b, vW); }
+        latm += 0.0;
         col = mix(ca, cb, k); }
       col = mix(col, uFarCol,`);
   m.needsUpdate = true; return m; };
