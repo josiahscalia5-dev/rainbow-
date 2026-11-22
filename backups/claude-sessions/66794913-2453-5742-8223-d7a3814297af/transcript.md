@@ -3042,3 +3042,174 @@ Running the same checks on the old (round 44) 05 and 06 so the before/after comp
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; until grep -q DONE $S/before_06.log 2>/dev/null; do sleep 10; done; for a in 05 06; do echo \"== BEFORE $a\"; python3 -c \"\nimport json; d=json.load(open('$S/before_$a/preview.json'))['summary']\nprint('picture', [round(x['share_within_20_levels']*100,1) for x in d['likeness_picture_view']], 'repeat mean/min', d['repeat_within_20_mean'], d['repeat_within_20_min'], 'holes', d['holes_total'], 'look mean', d['colour_look_mean'])\nprint({k:v['style_pct_mean'] for k,v in d['surfaces_while_swimming'].i …[+169 chars]`
 
+### 🧑 User — 2026-11-22T19:09:10.730Z
+
+> ↩︎ result: Exit code 1
+> == BEFORE 05
+> picture [81.0] repeat mean/min 0.127 0.111 holes 0 look mean 0.4
+> {'wall': 53.2, 'ring': 38.9, 'water': 58.4, 'foam': 13.2, 'trays': 82.4}
+> == BEFORE 06
+> picture [86.1] repeat mean/min 0.134 0.114 holes 0 look mean 0.461
+> {'wall': 66.8, 'ring': 55.5, 'water': 59.9, 'trays': 93.3}
+> frame 480 s 123.2 lat -0.3 coins 1380 socks 0
+
+### 🤖 Claude — 2026-11-22T19:09:22.070Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; cat $S/apk_retry.log 2>/dev/null; ls -t $S/apk_retry*.log 2>/dev/null | head -2; f=$(ls -t $S/apk_retry?.log 2>/dev/null | head -1); [ -n \"$f\" ] && tail -n 4 $f", "description": "Check the Gradle retry progress"}`
+
+### 🧑 User — 2026-11-22T19:09:22.182Z
+
+> ↩︎ result: /tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/apk_retry1.log
+> > Task :capacitor-cordova-android-plugins:processDebugJavaRes NO-SOURCE
+> > Task :app:mergeDebugJavaResource
+> > Task :app:checkDebugDuplicateClasses
+> > Task :app:mergeExtDexDebug
+
+### 🤖 Claude — 2026-11-22T19:09:24.393Z
+
+Gradle got its libraries this time and is compiling. Meanwhile, finding out why the water score dropped:
+
+### 🤖 Claude — 2026-11-22T19:09:27.296Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; for d in before_05 wr/preview_05 before_06 wr/preview_06; do python3 -c \"\nimport json, numpy as np; d=json.load(open('$S/$d/preview.json'))\nw=[f['surfaces']['water'] for f in d['frames'] if f.get('surfaces',{}).get('water')]\nprint('$d', 'water colour', round(np.mean([x['colour_match'] for x in w]),3), 'detail', round(np.mean([x['detail_ratio'] for x in w if x['detail_ratio'] is not None]),3), 'share', round(np.mean([x['share_of_frame'] for x in w]),3))\"; done", "description": "Split the water …[+31 chars]`
+
+### 🧑 User — 2026-11-22T19:09:28.351Z
+
+> ↩︎ result: before_05 water colour 0.712 detail 0.283 share 0.385
+> wr/preview_05 water colour 0.626 detail 0.318 share 0.36
+> before_06 water colour 0.736 detail 0.279 share 0.329
+> wr/preview_06 water colour 0.666 detail 0.29 share 0.371
+
+### 🤖 Claude — 2026-11-22T19:09:35.845Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; until grep -q DONE $S/apk_retry.log 2>/dev/null; do sleep 10; done; cat $S/apk_retry.log; ls -la /home/user/rainbow-/android/app/build/outputs/apk/debug/; tail -n 1 $S/rec_tex.log", "description": "Wait for the APK build", "timeout": 3600000}`
+
+### 🧑 User — 2026-11-22T19:09:45.913Z
+
+> ↩︎ result: OK attempt 1
+> DONE
+> total 177600
+> drwxr-xr-x 2 root root      4096 Nov 22 19:09 .
+> drwxr-xr-x 3 root root      4096 Nov 22 19:09 ..
+> -rw-r--r-- 1 root root 181842152 Nov 22 19:09 app-debug.apk
+> -rw-r--r-- 1 root root       372 Nov 22 19:09 output-metadata.json
+> frame 510 s 125.4 lat 0.2694 coins 1390 socks 0
+
+### 🤖 Claude — 2026-11-22T19:09:51.041Z
+
+The APK is built: 182 MB. Checking that the connected world is inside it and that its page actually loads from the app's own files:
+
+### 🤖 Claude — 2026-11-22T19:09:57.905Z
+
+> 🔧 **Bash** `{"command": "A=android/app/build/outputs/apk/debug/app-debug.apk; unzip -l $A | grep -E \"public/world/(index.html|world.json|a05/scene.glb|a06/baked/manifest.json|vendor/three/build/three.module.js)\" | awk '{print $1, $4}'; unzip -l $A | grep -c \"public/world/\"; grep -l \"world/index.html?play=1\" dist/assets/*.js | head -2; S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; cat > $S/apptest.cjs <<'EOF'\nconst { chromium } = require('playwright'); const { spawn } = require('child_process');\n(async () => { const port = 9955; const srv = spawn('python3', [' …[+1292 chars]`
+
+### 🧑 User — 2026-11-22T19:11:04.439Z
+
+> ↩︎ result: 4113216 assets/public/world/a05/scene.glb
+> 7704 assets/public/world/a06/baked/manifest.json
+> 72458 assets/public/world/index.html
+> 603113 assets/public/world/vendor/three/build/three.module.js
+> 208415 assets/public/world/world.json
+> 752
+> dist/assets/main-pk9RFgop.js
+> 
+> Node.js v22.23.5
+
+### 🤖 Claude — 2026-11-22T19:11:07.750Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; NODE_PATH=$(npm root -g) node $S/apptest.cjs $PWD/dist qa/kit45/APP_world_start_screen.png 2>&1 | grep -v \"^\\s*at \" | tail -8", "description": "Show the app page test error", "timeout": 600000}`
+
+### 🧑 User — 2026-11-22T19:12:12.626Z
+
+> ↩︎ result: '    - scrolling into view if needed',
+>     '    - done scrolling',
+>     '    - performing tap action'
+>   ],
+>   name: 'TimeoutError'
+> }
+> 
+> Node.js v22.23.5
+
+### 🤖 Claude — 2026-11-22T19:12:16.120Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/kit45/APP_world_start_screen.png"}`
+
+### 🧑 User — 2026-11-22T19:12:16.170Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T19:12:18.319Z
+
+The app's world page loads from inside the build with the Start 04 / 05 / 06 buttons. Checking that "Start 05" works (the earlier tap timed out in the test harness):
+
+### 🤖 Claude — 2026-11-22T19:12:21.063Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; sed -i \"s/  await p.tap('text=Start 05');/  await p.evaluate(() => { const b = [...document.querySelectorAll('button')].find((x) => x.textContent === 'Start 05'); b.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true })); });/\" $S/apptest.cjs; NODE_PATH=$(npm root -g) node $S/apptest.cjs $PWD/dist $S/app_start.png 2>&1 | tail -2", "description": "Test Start 05 by dispatching the pointer event", "timeout": 600000}`
+
+### 🧑 User — 2026-11-22T19:13:05.484Z
+
+> ↩︎ result: {"load_s":42.752,"buttons":["❚❚","🫧BubbleBlast","🌀TurboSpin","Start 04","Start 05","Start 06"],"s_after_start05":97.91,"errors":[]}
+
+### 🤖 Claude — 2026-11-22T19:13:12.049Z
+
+> 🔧 **Bash** `{"command": "grep -n \"apk\" .gitattributes | head -3; cp android/app/build/outputs/apk/debug/app-debug.apk qa/kit45/Rainbow_r45_world_05_06_debug.apk; sha256sum qa/kit45/Rainbow_r45_world_05_06_debug.apk | cut -c1-16; S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; tail -n 1 $S/rec_tex.log", "description": "Copy the APK into the evidence folder"}`
+
+### 🧑 User — 2026-11-22T19:13:12.347Z
+
+> ↩︎ result: 15:*.apk   filter=lfs diff=lfs merge=lfs -text
+> 53c72b1a2176eef8
+> frame 630 s 134.2 lat 0 coins 1410 socks 0
+
+### 🤖 Claude — 2026-11-22T19:13:16.362Z
+
+The recording has reached frame 630 of about 1,380; the 05 → 06 join is near frame 810. Restarting the gray geometry recording alongside it: same route and same swipes, saving every 3rd frame:
+
+### 🤖 Claude — 2026-11-22T19:13:19.312Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; rm -rf $S/rec_gray; PLAN=$(cat qa/kit45/run/swipe_plan_05_06.json); NODE_PATH=$(npm root -g) TOUCH=1 RENDER_EVERY=3 node tools/reflock/section_run.cjs $S/wr/game $S/rec_gray run 46 \"$PLAN\" 's0=88&sentinel=1&gray=1' > $S/rec_gray.log 2>&1; echo EXIT $? >> $S/rec_gray.log", "description": "Run the gray geometry recording", "timeout": 7200000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-22T19:13:19.383Z
+
+> ↩︎ result: Command running in background with ID: bxtsmjva1. Output is being written to: /tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/tasks/bxtsmjva1.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-22T19:13:22.695Z
+
+While both recordings run, I'm assembling the before/after picture sheets from the identical checks:
+
+### 🤖 Claude — 2026-11-22T19:13:32.519Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; python3 - <<EOF\nimport json, os\nfrom PIL import Image, ImageDraw, ImageFont\nf=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 17)\ndef ref(p):\n    im=Image.open(p).convert('RGB'); s=915/im.height; im=im.resize((round(im.width*s),915)); x=(im.width-412)//2; return im.crop((x,0,x+412,915))\ndef frame(d, tag, lane=0):\n    raw=json.load(open(os.path.join(d,'preview.json')))\n    fr=[x for x in raw['frames'] if x['mode']=='textured' and x['tag'].startswith(tag) and x['la …[+1711 chars]`
+
+### 🧑 User — 2026-11-22T19:13:33.014Z
+
+> ↩︎ result: ok
+> APP_world_start_screen.png
+> BEFORE_NOW_05.jpg
+> BEFORE_NOW_06.jpg
+> REPEAT_05_BEFORE.jpg
+> REPEAT_05_NOW.jpg
+> REPEAT_06_BEFORE.jpg
+> REPEAT_06_NOW.jpg
+> Rainbow_r45_world_05_06_debug.apk
+> STATUS_05_06_approved_vs_game.jpg
+> run
+> timing
+
+### 🤖 Claude — 2026-11-22T19:13:34.745Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/kit45/BEFORE_NOW_05.jpg"}`
+
+### 🧑 User — 2026-11-22T19:13:34.869Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T19:13:40.450Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; tail -n 1 $S/rec_tex.log; tail -n 1 $S/rec_gray.log; python3 -I /home/user/rainbow-/scripts/autosave-status.py | head -1", "description": "Check recordings and autosave"}`
+
+### 🧑 User — 2026-11-22T19:13:41.228Z
+
+> ↩︎ result: frame 660 s 136.4 lat 0.3 coins 1420 socks 0
+> frame 30 s 90.2 lat 0 coins 1330 socks 0
+> AUTOSAVE OK | branch ccr-c1b272d2-3ru7yx | scheduler daemon | last verified backup 2026-11-22T19:08:56+00:00 (4.7 min ago) | local d144b42 remote d144b42 (match) | uncommitted 8
+

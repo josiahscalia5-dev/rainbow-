@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 28435,
-   "sha256": "3c9a1ef856b66faf8bbf709f7299b51ebdd983a10cbce7ca746e78dc11e76c1d"
+   "sha256": "2e25786fe42f3b6b75cb71476b36dda21b8cdf067d670afc9c63b14acf124506"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3233,
-   "sha256": "b4f3a59c44c1805ed88f1fc9de5f549ccf62c96e2a69fe45b92bbb5af01860ef"
+   "sha256": "75864b15691300c2d807a99d8335c1c4fb87242eb5f4e6ac141511e50ea64d04"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -23330,6 +23330,51 @@
    "path": "qa/kit05/r39/APPROVED_vs_GAME_START_diffmap.jpg",
    "bytes": 353459,
    "sha256": "e29fc147a1304b2cbbb6293373c032cdbd467106845df583049604c0cc13eff7"
+  },
+  {
+   "path": "qa/kit45/APP_world_start_screen.png",
+   "bytes": 695034,
+   "sha256": "a40b4bb8c42531c0be109993cda4b375bc1b1363f7c32a0a7d1de7a2d725625a"
+  },
+  {
+   "path": "qa/kit45/BEFORE_NOW_05.jpg",
+   "bytes": 609346,
+   "sha256": "d86734571beb7a10eaf207c2687b45b6df68200b4f871a9115ccd65d182a02fc"
+  },
+  {
+   "path": "qa/kit45/BEFORE_NOW_06.jpg",
+   "bytes": 637207,
+   "sha256": "0bc7adf492830cafa794b464058c062e4ae39715552713a64d82dd08be078a74"
+  },
+  {
+   "path": "qa/kit45/README.md",
+   "bytes": 3548,
+   "sha256": "a1a05489d2c6cd269b1d24637de4fb988ba2fd7d462d298de8568fa65659b707"
+  },
+  {
+   "path": "qa/kit45/REPEAT_05_BEFORE.jpg",
+   "bytes": 457844,
+   "sha256": "4db344acf25ca3ebc0551b9d6adbdb105fa7656b7a4fa4164c31c09084ccd21a"
+  },
+  {
+   "path": "qa/kit45/REPEAT_05_NOW.jpg",
+   "bytes": 457372,
+   "sha256": "b22d063a813e4c537fb4f6c9160cfbb34ee47c58ea4b8c7490c0d0c535125af7"
+  },
+  {
+   "path": "qa/kit45/REPEAT_06_BEFORE.jpg",
+   "bytes": 489627,
+   "sha256": "a82403626050f533375092c69949cf1907fbaae4d5535b306f723c4b9b8abdf8"
+  },
+  {
+   "path": "qa/kit45/REPEAT_06_NOW.jpg",
+   "bytes": 461470,
+   "sha256": "a3451d18c523e8620a23d11854a6c69bf32e9e9b3ee38f0f72ed177f538c311c"
+  },
+  {
+   "path": "qa/kit45/Rainbow_r45_world_05_06_debug.apk",
+   "bytes": 181842152,
+   "sha256": "53c72b1a2176eef8244f187b32ee8cdb7eae727dac8567b7e8ef184cccd2eb66"
   },
   {
    "path": "qa/kit45/STATUS_05_06_approved_vs_game.jpg",
