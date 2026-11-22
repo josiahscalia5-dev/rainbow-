@@ -5643,3 +5643,50 @@ The first Sock Rescue → 05 take had a hairline crack at the tube seam and a fa
 
 Please watch the two textured recordings and tell me if the doorway and the curving tunnel feel right. Everything is saved to GitHub: commit `636a02ef`, the same commit on GitHub.
 
+### 🧑 User — 2026-11-22T16:53:49.654Z
+
+Continue with 06 into the world, then 07 and 08
+
+### 🤖 Claude — 2026-11-22T16:54:13.510Z
+
+Starting with 06. First I'm checking every value in 06's layout, so the whole level can be scaled consistently to Benny's size in the world. Its units are about 18 % larger.
+
+### 🤖 Claude — 2026-11-22T16:54:17.165Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && python3 - <<EOF\nimport json\nL=json.load(open('$S/ws06/fit/layout.json'))\ndef show(d,p=''):\n    for k,v in d.items():\n        if isinstance(v,dict): show(v,p+k+'.')\n        elif isinstance(v,list): print(p+k, 'list', len(v), str(v[:2])[:80])\n        else: print(p+k, '=', str(v)[:60])\nshow(L)\nEOF\ngrep -n \"LAY\\.\\([a-z_]*\\)\" -o tools/screenkit/screen.html | sort -u -t: -k3 | cut -d: -f3 | sort -u | tr '\\n' ' '", "description": "List every field of the Screen 06 layout and what the pa …[+10 chars]`
+
+### 🧑 User — 2026-11-22T16:54:17.243Z
+
+> ↩︎ result: screen = 06
+> title = CREST THE RINSE ARCH
+> ref = references/06_crest_the_rinse_arch.png
+> fov = 64.0
+> img list 2 [864, 1536]
+> focal_px = 1229.0569183035268
+> cams list 1 [{'pos': [0.0, 0.734, 0.0], 'yaw': 0.21288528565732892, 'pitch': -0.131852569676
+> benny.pos list 3 [-0.3285922607887036, 0.0]
+> benny.height = 0.5743283187112417
+> benny.bsize = 1.19
+> benny.lift = 0.03
+> benny.ahead = 0.15
+> coin_radius = 0.13697730401263114
+> coins list 9 [[-1.2495717437851257, 0.4042704729843001, -3.4623115069001518], [-1.87861864437
+> route.ds = 0.05
+> route.points list 900 [[-0.3281090371047594, -9.03090185621124e-05, -0.2771236583920496], [-0.32800066
+> route.bank list 900 [3.991725971014484e-22, 3.9576850919344885e-22]
+> route.width = 0.82
+> drum.axis_x = -0.9898841396308388
+> drum.axis_y = 1.4496054055598846
+> drum.r = 2.791685670043419
+> drum.z0 = 3.0
+> drum.z_far = -48.153913251428214
+> drum.z1 = -150.0
+> drum.seg_far = 12.0
+> drum.chord = 2.3858233481331634
+> drum.cam_off_R list 2 [0.35542388781908835, -0.25857897595417956]
+> rings.z list 3 [-13.196694563444927, -20.5457520149442]
+> rings.spacing = 3.2
+> rings.band = 0.6
+> paddles list 2 [{'pos': [-3.021904201172664, 3.363868540506941, -8.922998620012471], 'width': 1
+> bubbles list 14 [[-2.278 …[+251 chars]
+
