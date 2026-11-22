@@ -67,21 +67,22 @@ lay = {'screen': '05', 'title': 'FLOW INTO THE CURRENT', 'ref': REF, 'fov': cam.
        'bake_res': {'pool': [1024, 2048]}, 'splash_scale': 0.6, 'lod_bias': -0.8, 'bake_dens': [1, 4], 'number': '05', 'next': '06', 'coins_start': 1420,
        # r45: the painted foam (domes where the picture paints foam) near the picture view; the RB_FoamBank clusters start two rings further,
        # the painted trays repeat every 2 ring spacings along the whole tube (RB_MachineryRow)
-       'foam_from_picture': False, 'foam_pool_from': z_ring0 - 2.6, 'machinery': {'every': 2},
+       'foam_from_picture': False, 'foam_pool_from': z_ring0 - 5 * 2.6, 'machinery': {'every': 2},   # r45: 3D foam only beyond the painted stretch (it covered the painted pink edges)
        'foam_style': {'spacing': 0.7, 'size': 1.45, 'height': 0.78, 'spread': 1.2},   # r45: the painted banks are thick, fluffy and continuous
        # r45 (user: "the pink and blue and purplish water"): the painted FLOOR across the whole drum (every band) from the stretch ahead of Benny,
        # world-anchored and flowing, on the river and the pool along the whole level (bake.js floor swatch)
        'templates': {'floor': {'from': 2.2, 'len': 3.0}}}
 # r45: the repeated trays stay out of the camera's band (camera height +- 0.5 u: Benny's outer lanes brought the chase camera within 4 cm)
-lay['machinery'] = {'every': 2, 'clear_y': [float(cam.C[1]), 0.5], 'scale': 0.8}
+lay['machinery'] = {'every': 2, 'clear_y': [float(cam.C[1]), 0.5], 'scale': 0.8, 'z_from': float(z_ring0 - 5 * 2.6)}   # beyond the painted stretch
 # r45: the approved composition while swimming: the camera keeps the picture's view down the drum and slides with Benny (world cam_axis);
 # the water is the clean ribbon water drawn from the painting's structure (tools/screenkit/water_ribbon.js)
 lay['cam_axis'] = {'follow': 0.6}; lay['water_style'] = 'ribbon'
 # r45 (look while swimming, measured against the picture): the bright warm core at the end of the tunnel (camera-relative glow), foam banks that
 # frame the S-river like the painted ones (just outside its pink edges), and the painted bubbles along both banks
 lay['far_glow'] = {'start': 7.0, 'end': 26.0, 'strength': 0.8, 'color': [1.0, 0.92, 0.72]}
-lay['foam_banks'] = [{'side': s_, 'off': 0.5, 'spacing': 0.15, 'size': 0.075, 's0': lay['cams'][0]['s_ref'] + 8.0, 'seed': 21 + s_} for s_ in (-1, 1)]   # beyond the painted stretch, clear of the lanes
-lay['bubbles_banks'] = {'from': 2.0, 'every': 0.55, 'lat': [0.55, 1.15], 'r': [0.025, 0.075], 'h': 0.4}
+lay['foam_banks'] = [{'side': s_, 'off': 0.5, 'spacing': 0.15, 'size': 0.075, 's0': lay['cams'][0]['s_ref'] + 14.0, 'seed': 21 + s_} for s_ in (-1, 1)]   # beyond the painted stretch, clear of the lanes
+lay['lod_bias'] = -1.4   # r45: the painted detail stays crisp at grazing angles (the top-of-frame walls / rings carried 2/3 of the mismatch)
+lay['bubbles_banks'] = {'from': 14.0, 'every': 0.55, 'lat': [0.55, 1.15], 'r': [0.025, 0.075], 'h': 0.4}; lay['bubbles_from'] = 14.0   # beyond the painted stretch
 # the painted S-river (pink edges + cyan core) at the coin trail: 310 px wide at y 650 -> its real width at that depth (river ribbon option)
 Pr = cam.on_plane_y(485.0, 650.0); RIVER_W = 310.0 * float(-(cam.R.T @ (Pr - cam.C))[2]) / cam.F; lay['river_width'] = RIVER_W; lay['route']['width'] = RIVER_W
 for kv in a.set:

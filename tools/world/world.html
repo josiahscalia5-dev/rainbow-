@@ -45,7 +45,7 @@ for (const [k, v] of [['c_LANE', '0.3'], ['c_LAT_MAX', '0.36'], ['speed', '2.2']
 const WD = await (await fetch('world.json')).json();
 const W = +(q.get('w') ?? innerWidth), H = +(q.get('h') ?? innerHeight);
 const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
-renderer.setPixelRatio(q.get('w') ? 1 : Math.min(2, devicePixelRatio)); renderer.setSize(W, H); document.body.appendChild(renderer.domElement);
+renderer.setPixelRatio(q.get('pr') ? +q.get('pr') : (q.get('w') ? 1 : Math.min(2, devicePixelRatio)));   // r45: ?pr=2 renders at phone pixel density (QA) renderer.setSize(W, H); document.body.appendChild(renderer.domElement);
 const V3 = (a) => new THREE.Vector3(a[0], a[1], a[2]);
 const scene = new THREE.Scene(); scene.background = new THREE.Color(q.get('sentinel') ? 0x00ff00 : 0x1a0630);
 const camera = new THREE.PerspectiveCamera(64, W / H, 0.03, 300); camera.rotation.order = 'YXZ';
@@ -262,7 +262,7 @@ const loadKit = async (A) => {
       return { r: r0.clone().multiplyScalar(Math.cos(bk)).addScaledVector(n0, Math.sin(bk)), n: n0.clone().multiplyScalar(Math.cos(bk)).addScaledVector(r0, -Math.sin(bk)) }; };
     const S_REFa = LAY.cams[0].s_ref ?? 0, LEVa = Math.min(LL - 1.0, LAY.level_end ?? LL - 1.0);
     const B = (LAY.bubbles ?? []).map((b) => b.slice());
-    for (let s = S_REFa + 6; s < LEVa; s += 1.2 + rp() * 1.4) { const F = lfr(s), p = lat_(s, new THREE.Vector3()).addScaledVector(F.r, (rp() - 0.5) * 2.2).addScaledVector(F.n, 0.15 + rp() * 0.8); B.push([p.x, p.y, p.z, 0.03 + rp() * rp() * 0.06]); }
+    for (let s = S_REFa + (LAY.bubbles_from ?? 6); s < LEVa; s += 1.2 + rp() * 1.4) { const F = lfr(s), p = lat_(s, new THREE.Vector3()).addScaledVector(F.r, (rp() - 0.5) * 2.2).addScaledVector(F.n, 0.15 + rp() * 0.8); B.push([p.x, p.y, p.z, 0.03 + rp() * rp() * 0.06]); }
     if (LAY.bubbles_banks) { const bb = LAY.bubbles_banks; for (let s = S_REFa + (bb.from ?? 3); s < LEVa; s += bb.every ?? 0.7) for (const side of [-1, 1]) {   // r45: bubbles along both banks
       const F = lfr(s), p = lat_(s, new THREE.Vector3()).addScaledVector(F.r, side * (bb.lat[0] + (bb.lat[1] - bb.lat[0]) * rp())).addScaledVector(F.n, 0.05 + rp() * (bb.h ?? 0.45)); B.push([p.x, p.y, p.z, bb.r[0] + (bb.r[1] - bb.r[0]) * rp() * rp()]); } }
     for (const b of B) { const P = new THREE.Vector3(b[0], b[1], b[2]).applyMatrix4(M); BUBBLES.push([P.x, P.y, P.z, b[3], rp() * 6.28]); } }

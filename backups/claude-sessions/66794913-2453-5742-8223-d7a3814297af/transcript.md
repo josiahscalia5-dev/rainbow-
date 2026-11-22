@@ -4228,3 +4228,46 @@ The screen 5, it looks nothing like my approved screen. I mean, can't you see th
 > EXIT 0
 > picture [(81.0, 0.741)] repeat mean 0.188 {'wall': 86.2, 'ring': 63.1, 'water': 60.8, 'foam': 33.8, 'trays': 75.1} holes 4
 
+### 🤖 Claude — 2026-11-22T20:28:57.436Z
+
+Higher-quality paint brings 05 to 81.0 % at your camera, with sharpness up to 0.74. Small gains, so something else dominates. Reading where the mismatch sits now:
+
+### 🤖 Claude — 2026-11-22T20:29:00.135Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; python3 -c \"\nimport json,glob; f=glob.glob('$S/wr/preview_05/compare/tex_picture_l0_compare.json')[0]; d=json.load(open(f))['frames']['0']['new']; print(d['zones_share_of_all_mismatch']); print(d['route_first'][:4])\"; cp $S/wr/preview_05/compare/tex_picture_l0_DIFF_NEW_f0000.jpg $S/diff_now.jpg", "description": "Show mismatch zones at the 05 picture view"}`
+
+### 🧑 User — 2026-11-22T20:29:00.213Z
+
+> ↩︎ result: {'top-right': 0.261, 'top-centre': 0.211, 'top-left': 0.194, 'bottom-right': 0.078, 'bottom-left': 0.071, 'middle-right': 0.069, 'middle-centre': 0.043, 'middle-left': 0.038, 'bottom-centre': 0.036}
+> ['pink_edge (41 % of all mismatch; 22 % of this region off) -> water-fx-specialist (pink / magenta river edges)', 'water_cyan (20 % of all mismatch; 11 % of this region off) -> water-fx-specialist (in round 34: S1 washer-environment-modeler owns the water surface bake)', 'other (15 % of all mismatch; 32 % of this region off) -> reference-match-director (triage)']
+
+### 🤖 Claude — 2026-11-22T20:29:01.333Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/diff_now.jpg"}`
+
+### 🧑 User — 2026-11-22T20:29:01.354Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T20:29:20.036Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/screens/05/fit05.py'; s=open(p).read()\na=\"\"\"       'foam_from_picture': False, 'foam_pool_from': z_ring0 - 2.6, 'machinery': {'every': 2},\"\"\"\nb=\"\"\"       'foam_from_picture': False, 'foam_pool_from': z_ring0 - 5 * 2.6, 'machinery': {'every': 2},   # r45: 3D foam only beyond the painted stretch (it covered the painted pink edges)\"\"\"\nassert s.count(a)==1; s=s.replace(a,b)\na=\"\"\"lay['foam_banks'] = [{'side': s_, 'off': 0.5, 'spacing': 0.15, 'size': 0.075, 's0': lay['cams'][0]['s_ref'] + 8.0, 'seed': 21 + s_} for s_ in (-1, 1)]   …[+1213 chars]`
+
+### 🧑 User — 2026-11-22T20:31:44.012Z
+
+> ↩︎ result: area 05   built fit,geometry,bake                    52.8 s
+>   preview 05 WARN       89.8 s
+> EXIT 0
+> picture [(82.8, 0.751)] repeat mean 0.19 {'wall': 86.2, 'ring': 64.1, 'water': 61.0, 'foam': 36.1, 'trays': 75.3} holes 4
+
+### 🤖 Claude — 2026-11-22T20:32:10.793Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/blender_kit.py'; s=open(p).read()\na=\"\"\"            if zk + dz > zend: trays.append(\"\"\"\nb=\"\"\"            if zk + dz > zend and zk + dz < MC.get('z_from', 1e9): trays.append(\"\"\"\nassert s.count(a)==1; s=s.replace(a,b); open(p,'w').write(s)\np='tools/screenkit/screens/05/fit05.py'; s=open(p).read()\na=\"\"\"lay['machinery'] = {'every': 2, 'clear_y': [float(cam.C[1]), 0.5], 'scale': 0.8}\"\"\"\nb=\"\"\"lay['machinery'] = {'every': 2, 'clear_y': [float(cam.C[1]), 0.5], 'scale': 0.8, 'z_from': float(z_ring0 - 5 * 2.6)}   # beyond the p …[+1468 chars]`
+
+### 🧑 User — 2026-11-22T20:33:46.813Z
+
+> ↩︎ result: area 05   built fit,geometry                          2.2 s
+>   preview 05 WARN       88.7 s
+> EXIT 0
+> picture [(83.1, 0.747, 0.798)] repeat mean 0.191 {'wall': 86.2, 'ring': 64.0, 'water': 61.0, 'foam': 35.9, 'trays': 75.3} holes 4
+
