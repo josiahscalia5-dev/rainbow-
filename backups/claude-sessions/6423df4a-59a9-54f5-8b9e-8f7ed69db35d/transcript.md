@@ -341,3 +341,411 @@ Hello! I'm here, and your work is safe.
 
 Shall I start?
 
+### 🧑 User — 2026-11-22T14:53:15.513Z
+
+CLAUDIA — VERIFY AND RESTORE MY COMPLETE RAINBOW DEVELOPMENT TOOL SETUP
+
+Claudia, I'm using my new Claude account with credits, and I want to make sure every useful tool, plugin, MCP server, specialist agent and development capability from my previous Claude account is available here.
+
+Current branch: "ccr-0bbd5b9d-js1cpg"
+
+Previous account branch: "ccr-80cdb162-4sqz1a"
+
+Do not change branches, reset code, merge work or restart my game.
+
+1. Compare the actual configurations
+
+Read "backups/LIVE_TOOLS_STATE.json", "backups/TOOL_MANIFEST.json", "backups/MCP_SETUP.md" and ".mcp.json.template" from both branches.
+
+Also inspect the current account's live Claude plugin and MCP configuration.
+
+Run the appropriate commands, including:
+
+"claude plugin list"
+
+"claude mcp list"
+
+Compare installed, enabled, connected and authenticated status—not just plugin names.
+
+2. Check the plugins missing from my new account's saved list
+
+The last previous-account snapshot includes these plugins, which do not appear in the new account snapshot:
+
+- "claude-code-setup"
+- "serena"
+- "skill-creator"
+- "typescript-native-lsp"
+
+Check whether they're already available but disabled.
+
+Restore and enable compatible missing plugins where possible, using their legitimate Claude plugin sources. Do not invent plugin identifiers or install substitutes without checking.
+
+Also verify Playwright, Three.js DevTools, Chrome DevTools, World Labs, Frontend Design, Design and Context7.
+
+Check whether any previously used code-review, feature-development or other specialist plugins add useful capabilities to Rainbow.
+
+Do not install duplicates.
+
+3. Verify real tool connections
+
+I want you to test the relevant tools, not merely list them.
+
+Verify that:
+
+- GitHub can read and push to my current Rainbow branch.
+- Playwright can launch Chromium and test the real 3D game.
+- Blender 5.3 and Geometry Nodes can construct and export actual geometry.
+- Three.js DevTools can connect to the running game, if its browser bridge is compatible with this environment.
+- Android SDK and Gradle can build the APK.
+- SAM 2.1 and existing texture-baking scripts are available.
+- Git LFS contains the complete models, textures and Blender files.
+- The five-minute autosave is functioning and GitHub matches the local commit.
+
+For optional tools such as Spector.js, Blender MCP and Context7, identify any authentication or compatibility blockers rather than spending excessive time on them.
+
+4. Restore my Rainbow specialists
+
+Verify all 10 specialist agent definitions under ".claude/agents/".
+
+Confirm that these specialists are available to invoke for their corresponding tasks, particularly:
+
+- Reference matching
+- Blender environment modeling
+- Water effects
+- Benny character modeling
+- Swimming animation
+- Camera and transitions
+- Foam and bubbles
+- Playwright visual testing
+- Android build and performance
+
+Agent definitions being present is not proof they're currently running. Report which are available, which are actively running, and which need relaunching.
+
+5. Protect my latest visual progress
+
+Do not interrupt or replace the current Screen 06 work merely to restore optional plugins.
+
+Preserve my successful Blender geometry, SAM masks, original artwork textures, water immersion, swimming controls, gray geometry tests and colorful gameplay results.
+
+My approved screens must remain unchanged.
+
+Only make configuration or installation changes necessary to restore missing capabilities.
+
+Do not use paid AI services or spend credits without my approval. Never expose credentials in GitHub or chat.
+
+6. Give me a verified status report
+
+When finished, give me a comparison of:
+
+Previous Claude account → New Claude account
+
+For every relevant tool, show:
+
+- Installed
+- Enabled
+- Connected
+- Authenticated
+- Successfully tested
+- Missing or blocked
+
+Clearly identify any important capabilities that have not transferred.
+
+If something cannot be restored automatically because it requires account authorization, tell me the exact setting or connection I need to approve.
+
+Then continue the existing Screen 06 visual and gameplay improvements from my newest saved work.
+
+My goal is to have the same useful development capabilities that were helping my previous Claude account produce accurate, beautiful, real 3D Rainbow gameplay—without starting over or going backwards.
+
+### 🤖 Claude — 2026-11-22T14:53:20.139Z
+
+> 🔧 **Bash** `{"command": "which claude; claude --version 2>&1 | head -2; echo ---PLUGINS; timeout 60 claude plugin list 2>&1 | head -80", "description": "Show Claude CLI version and installed plugins", "timeout": 90000}`
+
+### 🧑 User — 2026-11-22T14:53:21.042Z
+
+> ↩︎ result: /opt/node22/bin/claude
+> 2.1.330 (Claude Code)
+> ---PLUGINS
+> Installed plugins:
+> 
+>   > worldlabs@worldlabs
+>     Version: 0.2.2
+>     Scope: user
+>     Status: √ enabled
+> 
+> Synced from claude.ai:
+> 
+>   > design@synced
+>     Version: 1.2.0
+>     Path: /root/.claude/plugins/synced/57e00846-b250-49a2-84b8-7e6b26dbd789_9543b0a1-8328-4f5e-9ab5-a23a0d8efe00/afe29730-8d0c-470c-801a-a52a510c0510
+>     Status: √ loaded
+> 
+>   > context7@synced
+>     Version: unknown
+>     Path: /root/.claude/plugins/synced/57e00846-b250-49a2-84b8-7e6b26dbd789_9543b0a1-8328-4f5e-9ab5-a23a0d8efe00/d5615f22-570b-4276-a463-7263edeba13e
+>     Status: √ loaded
+> 
+>   > frontend-design@synced
+>     Version: 1.1.1
+>     Path: /root/.claude/plugins/synced/57e00846-b250-49a2-84b8-7e6b26dbd789_9543b0a1-8328-4f5e-9ab5-a23a0d8efe00/2ca4e30e-2482-4c94-8644-6c26adf27391
+>     Status: √ loaded
+> 
+>   > playwright@synced
+>     Version: unknown
+>     Path: /root/.claude/plugins/synced/57e00846-b250-49a2-84b8-7e6b26dbd789_9543b0a1-8328-4f5e-9ab5-a23a0d8efe00/22bf1341-d051-4d92-9363-8d0dc8349035
+>     Status: √ loaded
+> 
+>   > parallax-threejs@synced
+>     Version: 0.4.12
+>     Path: /root/.claude/plugins/synced/57e00846-b250-49a2-84b8-7e6b26dbd789_9543b0a1-8328-4f5e-9ab5-a23a0d8efe00/b8 …[+55 chars]
+
+### 🤖 Claude — 2026-11-22T14:53:21.046Z
+
+> 🔧 **Bash** `{"command": "timeout 90 claude mcp list 2>&1 | head -60", "description": "List configured MCP servers and their health", "timeout": 120000}`
+
+### 🤖 Claude — 2026-11-22T14:53:22.142Z
+
+> 🔧 **Bash** `{"command": "ls -la .claude/ .claude/agents/ .claude/skills/ 2>&1; cat .mcp.json.template; ls .mcp.json 2>&1; cat .claude/settings.json | head -80", "description": "Inspect project Claude config, agents and MCP template"}`
+
+### 🧑 User — 2026-11-22T14:53:27.495Z
+
+> ↩︎ result: Checking MCP server health…
+> 
+> plugin:worldlabs:worldlabs: https://api.atlas.worldlabs.ai/mcp (HTTP) - ! Needs authentication
+> plugin:design:slack: https://mcp.slack.com/mcp (HTTP) - ! Needs authentication
+> plugin:design:figma: https://mcp.figma.com/mcp (HTTP) - ! Needs authentication
+> plugin:design:linear: https://mcp.linear.app/mcp (HTTP) - ! Needs authentication
+> plugin:design:asana: https://mcp.asana.com/v2/mcp (HTTP) - × Failed to connect — Incompatible auth server: does not support dynamic client registration
+> plugin:design:atlassian: https://mcp.atlassian.com/v1/mcp (HTTP) - ! Needs authentication
+> plugin:design:notion: https://mcp.notion.com/mcp (HTTP) - ! Needs authentication
+> plugin:design:intercom: https://mcp.intercom.com/mcp (HTTP) - ! Needs authentication
+> plugin:design:google calendar:  (HTTP) - - Not configured
+> plugin:design:gmail:  (HTTP) - - Not configured
+> plugin:context7:context7: https://mcp.context7.com/mcp?client=claude-code-plugin (HTTP) - ! Needs authentication
+> plugin:playwright:playwright: npx @playwright/mcp@latest - √ Connected
+> plugin:parallax-threejs:chrome-devtools-mcp: npx -y chrome-devtools-mcp@1.6.0 --headless - √ Connected
+> plugin:parallax-threejs:threejs-devt …[+424 chars]
+
+### 🧑 User — 2026-11-22T14:53:27.542Z
+
+> ↩︎ result: .claude/:
+> total 20
+> drwxr-xr-x  4 root root 4096 Nov 22 14:28 .
+> drwxr-xr-x 18 root root 4096 Nov 22 14:35 ..
+> drwxr-xr-x  2 root root 4096 Nov 22 14:28 agents
+> -rw-r--r--  1 root root  807 Nov 22 14:28 settings.json
+> drwxr-xr-x  3 root root 4096 Nov 22 14:28 skills
+> 
+> .claude/agents/:
+> total 48
+> drwxr-xr-x 2 root root 4096 Nov 22 14:28 .
+> drwxr-xr-x 4 root root 4096 Nov 22 14:28 ..
+> -rw-r--r-- 1 root root 1151 Nov 22 14:28 android-build-performance.md
+> -rw-r--r-- 1 root root 1151 Nov 22 14:28 animation-and-gameplay-engineer.md
+> -rw-r--r-- 1 root root 1099 Nov 22 14:28 benny-character-artist.md
+> -rw-r--r-- 1 root root 1241 Nov 22 14:28 cartoon-girl-character-artist.md
+> -rw-r--r-- 1 root root 1074 Nov 22 14:28 foam-bubbles-particles.md
+> -rw-r--r-- 1 root root 1191 Nov 22 14:28 path-camera-transition-engineer.md
+> -rw-r--r-- 1 root root 1221 Nov 22 14:28 playwright-visual-qa.md
+> -rw-r--r-- 1 root root 1174 Nov 22 14:28 reference-match-director.md
+> -rw-r--r-- 1 root root 1150 Nov 22 14:28 washer-environment-modeler.md
+> -rw-r--r-- 1 root root 1236 Nov 22 14:28 water-fx-specialist.md
+> 
+> .claude/skills/:
+> total 12
+> drwxr-xr-x 3 root root 4096 Nov 22 14:28 .
+> drwxr-xr-x 4 root root 4096 Nov 22 14:28 ..
+> drwxr-xr-x  …[+1784 chars]
+
+### 🤖 Claude — 2026-11-22T14:53:32.814Z
+
+> 🔧 **Bash** `{"command": "git fetch -q origin ccr-80cdb162-4sqz1a && P=FETCH_HEAD && for f in backups/LIVE_TOOLS_STATE.json backups/TOOL_MANIFEST.json backups/MCP_SETUP.md .mcp.json.template; do echo \"== $f: $(git diff --stat $P HEAD -- $f | tail -1)\"; done; python3 - <<'EOF'\nimport json,subprocess\ndef load(ref):\n    return json.loads(subprocess.check_output(['git','show',f'{ref}:backups/LIVE_TOOLS_STATE.json']))\na=load('FETCH_HEAD'); b=load('HEAD')\nprint('keys prev:',list(a.keys()))\nfor k in a:\n    if a.get(k)!=b.get(k):\n        print('\\n### DIFF',k)\n        print(' prev:',json.dumps(a[k])[:15 …[+147 chars]`
+
+### 🧑 User — 2026-11-22T14:53:33.191Z
+
+> ↩︎ result: == backups/LIVE_TOOLS_STATE.json:  1 file changed, 8 insertions(+), 12 deletions(-)
+> == backups/TOOL_MANIFEST.json: 
+> == backups/MCP_SETUP.md: 
+> == .mcp.json.template: 
+> keys prev: ['time_utc', 'lead_branch', 'specialists_sha256_16', 'workers_git_worktrees', 'workers_status_latest_round', 'plugins_installed_locally', 'plugins_enabled_user_settings', 'plugins_synced_from_claude_account', 'plugins_synced_from_claude_account_names', 'mcp_servers_configured', 'hooks_project', 'note']
+> 
+> ### DIFF time_utc
+>  prev: "2026-11-22T14:10:39+00:00"
+>  new : "2026-11-22T14:49:38+00:00"
+> 
+> ### DIFF lead_branch
+>  prev: "ccr-80cdb162-4sqz1a"
+>  new : "ccr-0bbd5b9d-js1cpg"
+> 
+> ### DIFF plugins_synced_from_claude_account
+>  prev: ["Accelerate design workflows \u2014 critique, design system management, UX writing, accessibilit", "Semantic code analysis MCP server providing intelligent code understanding, refactoring su", "Create new skills, improve existing skills, and measure skill performance. Use when users ", "Analyze codebases and recommend tailored Claude Code automations such as hooks, skills, MC", "Three.js/GLSL debugging for Claude Code \u2014 correlates scene graph, console, GL state, and p", "Browser automati …[+873 chars]
+
+### 🤖 Claude — 2026-11-22T14:53:38.447Z
+
+> 🔧 **ToolSearch** `{"query": "select:SearchPlugins,ListPlugins,SuggestPluginInstall,TaskCreate,TaskUpdate", "max_results": 5}`
+
+### 🧑 User — 2026-11-22T14:53:38.459Z
+
+> ↩︎ result: [tool_reference]
+> [tool_reference]
+> [tool_reference]
+> [tool_reference]
+> [tool_reference]
+
+### 🤖 Claude — 2026-11-22T14:53:41.003Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json,subprocess\nfor ref in ['FETCH_HEAD','HEAD']:\n    a=json.loads(subprocess.check_output(['git','show',f'{ref}:backups/LIVE_TOOLS_STATE.json']))\n    print('=====',ref)\n    for k in ['plugins_installed_locally','plugins_enabled_user_settings','mcp_servers_configured','workers_git_worktrees','workers_status_latest_round','note','specialists_sha256_16']:\n        print(k,':',json.dumps(a.get(k))[:900])\nEOF\necho; timeout 30 claude plugin marketplace list 2>&1 | head -30; cat ~/.claude/settings.json 2>/dev/null | head -40", "description": "Show plugin/ …[+59 chars]`
+
+### 🧑 User — 2026-11-22T14:53:41.471Z
+
+> ↩︎ result: ===== FETCH_HEAD
+> plugins_installed_locally : ["worldlabs@worldlabs"]
+> plugins_enabled_user_settings : ["worldlabs@worldlabs"]
+> mcp_servers_configured : ["worldlabs"]
+> workers_git_worktrees : []
+> workers_status_latest_round : {"round_30b": {"benny06": {"agent": "benny-character-artist", "worktree": "/home/user/wt/benny06", "branch_local": "claude/rainbow-s06-benny06-c32", "switch": "b30", "status": "finished, combined by lead", "notes": "qa/match/06/r30/benny06/NOTES.md"}, "water06": {"agent": "water-fx-specialist", "worktree": "/home/user/wt/water06", "branch_local": "claude/rainbow-s06-water06-c32", "switch": "w30", "status": "finished, combined by lead", "notes": "qa/match/06/r30/water06/NOTES.md"}, "foam06": {"agent": "foam-bubbles-particles", "worktree": "/home/user/wt/foam06", "branch_local": "claude/rainbow-s06-foam06-c32", "switch": "f30", "status": "finished, combined by lead (heaps tuned f30bs=0.7 f30bg=0.3 f30bc=0.16)", "notes": "qa/match/06/r30/foam06/NOTES.md"}, "scen06": {"agent": "washer-environment-modeler", "worktree": "/home/user/wt/scen06", "branch_local": "claude/rainbow-s06-scen06-c32", "
+> note : "claude.ai connectors (World Labs Atlas, GitHub) and API keys are per C …[+2853 chars]
+
+### 🤖 Claude — 2026-11-22T14:53:43.685Z
+
+> 🔧 **TaskCreate** `{"subject": "Compare tool configs between previous and new account", "description": "LIVE_TOOLS_STATE, TOOL_MANIFEST, MCP_SETUP, .mcp.json.template on both branches; claude plugin list / mcp list.", "activeForm": "Comparing tool configurations"}`
+
+### 🧑 User — 2026-11-22T14:53:43.696Z
+
+> ↩︎ result: Task #1 created successfully: Compare tool configs between previous and new account
+
+### 🤖 Claude — 2026-11-22T14:53:44.685Z
+
+> 🔧 **TaskCreate** `{"subject": "Restore missing plugins (claude-code-setup, serena, skill-creator, typescript-native-lsp)", "description": "Find legitimate sources, install/enable compatible ones, no duplicates.", "activeForm": "Restoring missing plugins"}`
+
+### 🧑 User — 2026-11-22T14:53:44.696Z
+
+> ↩︎ result: Task #2 created successfully: Restore missing plugins (claude-code-setup, serena, skill-creator, typescript-native-lsp)
+
+### 🤖 Claude — 2026-11-22T14:53:45.885Z
+
+> 🔧 **TaskCreate** `{"subject": "Test real tool connections", "description": "GitHub read+push, Playwright real game, Blender GN build+export, Three.js DevTools bridge, Android APK build, SAM 2.1 + bake scripts, LFS completeness, autosave.", "activeForm": "Testing tool connections"}`
+
+### 🧑 User — 2026-11-22T14:53:45.895Z
+
+> ↩︎ result: Task #3 created successfully: Test real tool connections
+
+### 🤖 Claude — 2026-11-22T14:53:46.835Z
+
+> 🔧 **TaskCreate** `{"subject": "Verify the 10 specialist agents", "description": "Definitions present + hashes match; which running; which need relaunch.", "activeForm": "Verifying specialists"}`
+
+### 🧑 User — 2026-11-22T14:53:46.845Z
+
+> ↩︎ result: Task #4 created successfully: Verify the 10 specialist agents
+
+### 🤖 Claude — 2026-11-22T14:53:47.836Z
+
+> 🔧 **TaskCreate** `{"subject": "Write verified status report (previous → new account)", "description": "Table per tool: installed/enabled/connected/authenticated/tested/missing; save in backups/ and push.", "activeForm": "Writing status report"}`
+
+### 🧑 User — 2026-11-22T14:53:47.846Z
+
+> ↩︎ result: Task #5 created successfully: Write verified status report (previous → new account)
+
+### 🤖 Claude — 2026-11-22T14:53:49.384Z
+
+> 🔧 **TaskCreate** `{"subject": "Continue Screen 06: bank/lean refinement then in-motion look", "description": "Per user's last 06 feedback: calm Benny's lean + camera roll (controlled A/B), keep crest/immersion/controls; then texture look in motion.", "activeForm": "Continuing Screen 06"}`
+
+### 🧑 User — 2026-11-22T14:53:49.397Z
+
+> ↩︎ result: Task #6 created successfully: Continue Screen 06: bank/lean refinement then in-motion look
+
+### 🤖 Claude — 2026-11-22T14:53:49.985Z
+
+> 🔧 **SearchPlugins** `{"keywords": ["serena", "skill-creator", "claude-code-setup", "typescript lsp", "code review", "feature dev"]}`
+
+### 🤖 Claude — 2026-11-22T14:53:50.037Z
+
+> 🔧 **ListPlugins** `{}`
+
+### 🧑 User — 2026-11-22T14:53:50.052Z
+
+> ↩︎ result: {"results":[]}
+
+### 🧑 User — 2026-11-22T14:53:50.939Z
+
+> ↩︎ result: {"results":[{"id":"plugin_01JXdt1UvkD5tKxRhB76aRid","name":"00380f92-59fe-466a-a552-f13ae7c78ed6","display_name":"claude-code-review-council","description":"Six-specialist code review orchestrator (correctness, security, policy/trust-boundary, test-evidence, architecture, interface) for a working tree or pull request diff","enabled":false,"presents_as":null,"installation_preference":"available","created_at":"2026-09-24T20:21:41.851297Z","updated_at":"2026-09-29T17:09:29.954656Z","partition_by":"marketplace","marketplace_id":"marketplace_01VNB7JgJyYTuJiDfXSABKm3","marketplace_name":"anthropic-plugin-directory","marketplace_display_name":"Anthropic Directory","marketplace_kind":"other_catalog","author":{"name":"Vandal337","email":null,"url":null},"publisher":{"tier":"community","name":null,"basis":"directory_review"},"content_scan":null,"components":[{"type":"skill","name":"00380f92-59fe-466a-a552-f13ae7c78ed6:review-council","description":null,"origin":null},{"type":"agent","name":"architecture-reviewer","description":null,"origin":null},{"type":"agent","name":"correctness-reviewer","description":null,"origin":null},{"type":"agent","name":"interface-reviewer","description":null,"ori …[+18703 chars]
+
+### 🤖 Claude — 2026-11-22T14:53:57.971Z
+
+> 🔧 **SearchPlugins** `{"keywords": ["typescript-native-lsp", "TypeScript 7 native LSP", "pyright", "gltf", "blender", "superpowers"]}`
+
+### 🧑 User — 2026-11-22T14:53:58.532Z
+
+> ↩︎ result: {"results":[{"id":"plugin_015DymX3E3pzQvE1S3D38hc7","name":"ccb23f88-0227-4664-bd1a-c91362671be1","display_name":"typescript-native-lsp","description":"TypeScript/JavaScript language server for Claude Code that runs TypeScript 7's native LSP (tsc --lsp) and falls back to typescript-language-server for TypeScript 6 and older","enabled":false,"presents_as":null,"installation_preference":"available","created_at":"2026-09-29T01:23:06.736494Z","updated_at":"2026-09-29T01:23:06.736494Z","partition_by":"marketplace","marketplace_id":"marketplace_01VNB7JgJyYTuJiDfXSABKm3","marketplace_name":"anthropic-plugin-directory","marketplace_display_name":"Anthropic Directory","marketplace_kind":"other_catalog","author":{"name":"rubberduck studio","email":null,"url":null},"publisher":{"tier":"community","name":null,"basis":"directory_review"},"content_scan":null,"components":[],"reach":"privileged","setup_started_at":null,"setup_dismissed_at":null,"is_shared":null,"shared_via":null,"shared_by":null,"submitted_by_account_uuid":null,"mcp_servers":null,"mcp_servers_display_degraded":null,"commands":null,"skills":null,"skills_display_degraded":null,"hooks":null,"hooks_description":null,"hook_modules":nu …[+34539 chars]
+
+### 🤖 Claude — 2026-11-22T14:54:10.643Z
+
+> 🔧 **SuggestPluginInstall** `{"contextLabel": "Plugins from your previous Rainbow account (and ones you asked about) that aren't enabled yet", "plugins": [{"pluginId": "plugin_0154NinFTXJGDNktRCWhP8nd", "pluginName": "claude-code-setup", "description": "Analyze codebases and recommend tailored Claude Code automations such as hooks, skills, MCP servers, and subagents. (Was enabled on your previous account.)", "skills": [{"name": "claude-automation-recommender"}]}, {"pluginId": "plugin_01RuRUyCzLomVSVphZvXWnCi", "pluginName": "serena", "description": "Semantic code analysis MCP server: code understanding, refactoring and co …[+1130 chars]`
+
+### 🧑 User — 2026-11-22T14:54:10.653Z
+
+> ↩︎ result: {"contextLabel":"Plugins from your previous Rainbow account (and ones you asked about) that aren't enabled yet","plugins":[{"pluginId":"plugin_0154NinFTXJGDNktRCWhP8nd","pluginName":"claude-code-setup","description":"Analyze codebases and recommend tailored Claude Code automations such as hooks, skills, MCP servers, and subagents."},{"pluginId":"plugin_01RuRUyCzLomVSVphZvXWnCi","pluginName":"serena","description":"Semantic code analysis MCP server providing intelligent code understanding, refactoring suggestions, and codebase navigation through language server protocol integration."},{"pluginId":"plugin_015DymX3E3pzQvE1S3D38hc7","pluginName":"typescript-native-lsp","description":"TypeScript/JavaScript language server for Claude Code that runs TypeScript 7's native LSP (tsc --lsp) and falls back to typescript-language-server for TypeScript 6 and older"},{"pluginId":"plugin_01QVM1JUp8XqCuzk1YxhqSZA","pluginName":"feature-dev","description":"Comprehensive feature development workflow with specialized agents for codebase exploration, architecture design, and quality review"},{"pluginId":"plugin_01JETPTMWTgidsotmEhVkQTG","pluginName":"Superpowers","description":"Core skills library for  …[+408 chars]
+
+### 🤖 Claude — 2026-11-22T14:54:14.243Z
+
+> 🔧 **TaskUpdate** `{"taskId": "1", "status": "completed"}`
+
+### 🧑 User — 2026-11-22T14:54:14.253Z
+
+> ↩︎ result: Updated task #1 status
+
+### 🤖 Claude — 2026-11-22T14:54:14.645Z
+
+> 🔧 **TaskUpdate** `{"taskId": "3", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-22T14:54:14.657Z
+
+> ↩︎ result: Updated task #3 status
+
+### 🤖 Claude — 2026-11-22T14:54:15.802Z
+
+> 🔧 **Bash** `{"command": "cat tools/screenkit/README.md | head -120; echo ----; python3 -c \"import json;d=json.load(open('package.json'));print(json.dumps(d.get('scripts'),indent=1))\"; ls tools/screenkit/", "description": "Read screen kit README and npm scripts"}`
+
+### 🧑 User — 2026-11-22T14:54:15.863Z
+
+> ↩︎ result: # Rainbow screen kit (round 43) — one reusable process from a screen's OWN approved picture to a playable, measured 3D level
+> 
+> Generalises the proven Bubble Dash / Sock Rescue method (`tools/reflock`, 90.7 %, left untouched) so every playable screen (04–10) is built
+> the same way from its own approved artwork: real connected 3D geometry fitted to the picture, the picture's pixels baked onto that
+> geometry once (never projected live, no picture planes, no painted characters), the shared Benny + swipe controls + camera follow.
+> Free tools only (Blender 5.3 Geometry Nodes, three.js 0.180, OpenCV, onnxruntime); no credits.
+> 
+> ## One command
+> ```
+> bash tools/screenkit/get_models.sh                      # once per machine: free SAM 2.1 tiny + Depth Anything V2 small (Apache-2.0, ~255 MB)
+> bash tools/screenkit/setup_screen.sh 06 /tmp/ws06       # fit -> SAM 2 masks + clean plate -> Blender -> game folder (~10 s)
+> NODE_PATH=$(npm root -g) node tools/reflock/section_run.cjs /tmp/ws06/game /tmp/st06 stills 1.2 0 'sentinel=1'      # still at the picture camera
+> python3 -I tools/screenkit/compare_screen.py 06 /tmp/st06/s1.20_l0.png /tmp/ws06/seg/mask.png /tmp/cmp06 [--before F]   # measured likeness
+> TOUC …[+4276 chars]
+
+### 🤖 Claude — 2026-11-22T14:54:21.147Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && mkdir -p $S && (VITE_RAINBOW_BONUS=1 VITE_RAINBOW_KIT06=1 npm run android:debug > $S/android_build.log 2>&1; echo \"EXIT $?\" >> $S/android_build.log)", "description": "Build the Android test APK with Screen 06 kit enabled", "timeout": 1800000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-22T14:54:21.180Z
+
+> ↩︎ result: Command running in background with ID: b37j2ec3x. Output is being written to: /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/tasks/b37j2ec3x.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-22T14:54:22.051Z
+
+> 🔧 **Bash** `{"command": "cat tools/screenkit/get_models.sh | head -40; ls -la tools/screenkit/models ~/.cache/rainbow* 2>/dev/null | head", "description": "Inspect the free model download script"}`
+
+### 🧑 User — 2026-11-22T14:54:22.099Z
+
+> ↩︎ result: #!/usr/bin/env bash
+> # Rainbow screen kit: fetch the two FREE open models used by tools/screenkit (round 43 evaluation, qa/reflock/r43/EXTRACTION_EVAL.md):
+> #   SAM 2.1 hiera-tiny (Apache-2.0, ONNX export onnx-community/sam2.1-hiera-tiny-ONNX)   -> masks of Benny / coins in the approved pictures
+> #   Depth Anything V2 Small (Apache-2.0, onnx-community/depth-anything-v2-small)        -> optional depth cross-check (guide only)
+> # Runs with the already installed onnxruntime (no torch, no service, no credits). ~255 MB into $RAINBOW_MODELS (default ~/.cache/rainbow-models).
+> # Never committed to the repository (public repo, size).
+> set -e
+> M=${RAINBOW_MODELS:-$HOME/.cache/rainbow-models}; mkdir -p "$M/sam2" "$M/depth"
+> dl(){ [ -s "$2" ] && return 0; for i in 1 2 3 4; do curl -sSL --fail -o "$2.part" "$1" && mv "$2.part" "$2" && return 0; sleep $((i * 3)); done; echo "download failed: $1"; return 1; }
+> H=https://huggingface.co
+> for f in vision_encoder.onnx vision_encoder.onnx_data prompt_encoder_mask_decoder.onnx prompt_encoder_mask_decoder.onnx_data; do dl "$H/onnx-community/sam2.1-hiera-tiny-ONNX/resolve/main/onnx/$f" "$M/sam2/$f"; done
+> dl "$H/onnx-community/depth-anything-v2-small/resolve/main/ …[+198 chars]
+
