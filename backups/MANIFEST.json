@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 28920,
-   "sha256": "50600df160c99c59e8c56634dc683724c124ae414f50d275e347531d50de2683"
+   "sha256": "0c1838097a40f4ba4cc2d8323f970fbd40e6e5e09bcd166f7cfccabbbbb777ae"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 2958,
-   "sha256": "2e787e8048e083b53fead31b8ae585a3412623afaca7ccc311d831a43f17bd32"
+   "sha256": "35d5517b5093d1b14c7283a0c365ed576addd2b850b7db7cad08eff21063c664"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -49618,8 +49618,8 @@
   },
   {
    "path": "tools/screenkit/qa.js",
-   "bytes": 3145,
-   "sha256": "b55b307d508bc94e02d32733cf246cc0416619e946249e40958b3dafe46a52f9"
+   "bytes": 3292,
+   "sha256": "65db864a26034c44b74d1d0f828fccf1fd7c43d5172615b1d8444c1da9b2820e"
   },
   {
    "path": "tools/screenkit/scale_layout.py",

@@ -3017,3 +3017,198 @@ The new Screen 05 picture-view number fell from 83.4 % to 33.2 %. Something is w
 
 > 🔧 **Bash** `{"command": "export NODE_PATH=$(npm root -g); cp tools/world/world.html /home/user/ws46/world/game/play3.html; rm -rf /home/user/ws46/world/preview_05; timeout 900 node tools/screenkit/preview.cjs /home/user/ws46/world/game /home/user/ws46/world/preview_05 --screen 05 --area 05 > /home/user/ws46/preview_new_05.log 2>&1; echo \"exit $?\"; tail -n 8 /home/user/ws46/preview_new_05.log | cut -c1-500", "description": "Run the 05 preview in foreground to see errors", "timeout": 960000}`
 
+### 🧑 User — 2026-11-22T22:13:21.335Z
+
+> ↩︎ result: exit 0
+>   WARN textured end lane -1 (s 141.2) colour look 0.412 vs the approved picture
+>   WARN textured begin lane 1 (s 88.5) colour look 0.227 vs the approved picture
+>   WARN textured curve_27deg lane 1 (s 100.8) colour look 0.306 vs the approved picture
+>   WARN textured quarter lane 1 (s 100.92) colour look 0.297 vs the approved picture
+>   WARN textured middle lane 1 (s 114.55) colour look 0.201 vs the approved picture
+>   WARN textured three_q lane 1 (s 128.18) colour look 0.289 vs the approved picture
+>   WARN textured curve_11deg lane 1 (s 134.3) colour look 0.411 vs the approved picture
+>   WARN textured end lane 1 (s 141.2) colour look 0.388 vs the approved picture
+
+### 🤖 Claude — 2026-11-22T22:13:26.762Z
+
+> 🔧 **Bash** `{"command": "export NODE_PATH=$(npm root -g); rm -rf /home/user/ws46/world/preview_06; (node tools/screenkit/preview.cjs /home/user/ws46/world/game /home/user/ws46/world/preview_06 --screen 06 --area 06 > /home/user/ws46/preview_new_06.log 2>&1; echo EXIT >> /home/user/ws46/preview_new_06.log) > /dev/null 2>&1 &\ncat > /home/user/ws46/show.py <<'EOF'\nimport json, sys\ndef show(tag,path):\n    d=json.load(open(path)); s=d['summary']; lp=s['likeness_picture_view'][0]\n    print(f\"{tag:12s} pic {lp['share_within_20_levels']*100:.1f}% ssim {lp['ssim_scenery']:.3f} sharp {lp['sharpness_vs_approve …[+478 chars]`
+
+### 🧑 User — 2026-11-22T22:13:26.997Z
+
+> ↩︎ result: BEFORE 05    pic 83.4% ssim 0.802 sharp 0.73 | repeat 19.7 | {'wall': 86.1, 'ring': 63.8, 'water': 55.4, 'foam': 35.9, 'trays': 75.3} | look 0.443 | holes 4
+> NEW 05       pic 83.6% ssim 0.802 sharp 0.73 | repeat 11.7 | {'wall': 85.1, 'ring': 64.0, 'water': 52.6, 'foam': 32.4, 'trays': 74.6} | look 0.35 | holes 0
+
+### 🤖 Claude — 2026-11-22T22:13:35.955Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/ws46 && montage world_r45b/preview_05/rep_k02.png world/preview_05/rep_k02.png world_r45b/preview_05/rep_k06.png world/preview_05/rep_k06.png /home/user/rainbow-/references/05_flow_into_the_current.png -tile 5x1 -geometry 412x915+2+2 rep_cmp.jpg; python3 -c \"\nimport json\nfor t,p in (('B','world_r45b'),('N','world')):\n    d=json.load(open(f'/home/user/ws46/{p}/preview_05/preview.json'))['summary']['repeat_views']; print(t, [(r['k'], r['within_20'], r['colour_look']) for r in d])\"", "description": "Compare repeat views BEFORE vs NEW"}`
+
+### 🧑 User — 2026-11-22T22:13:36.278Z
+
+> ↩︎ result: B [(0, 0.721, 0.994), (1, 0.101, 0.519), (2, 0.194, 0.629), (3, 0.233, 0.672), (4, 0.211, 0.28), (5, 0.204, 0.196), (6, 0.187, 0.344), (7, 0.182, 0.172), (8, 0.193, 0.328), (9, 0.224, 0.567), (10, 0.22, 0.243), (11, 0.194, 0.35), (12, 0.22, 0.35)]
+> N [(0, 0.368, 0.992), (1, 0.087, 0.396), (2, 0.123, 0.434), (3, 0.145, 0.504), (4, 0.122, 0.226), (5, 0.113, 0.158), (6, 0.114, 0.224), (7, 0.105, 0.169), (8, 0.109, 0.245), (9, 0.142, 0.41), (10, 0.125, 0.176), (11, 0.1, 0.238), (12, 0.114, 0.251)]
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-22T22:13:43.621Z
+
+> 🔧 **Read** `{"file_path": "/home/user/ws46/rep_cmp.jpg"}`
+
+### 🧑 User — 2026-11-22T22:13:43.720Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-22T22:13:43.714Z
+
+[Image: original 2080x919, displayed at 2000x884. Multiply coordinates by 1.04 to map to original image.]
+
+### 🤖 Claude — 2026-11-22T22:13:54.881Z
+
+> 🔧 **Bash** `{"command": "pkill -f \"preview.cjs /home/user/ws46/world/game\" ; python3 - <<'EOF'\np='tools/screenkit/qa.js'; s=open(p).read()\nold=\"  window.qaRepeatView = (k, area) => { const p = repeatPose(k, area); if (!p) return null; hide(); camera.position.copy(p.pos);\"\nnew=\"  window.qaRepeatView = (k, area) => { const p = repeatPose(k, area); if (!p) return null; hide(); if (camera.filmOffset) { camera.filmOffset = 0; camera.updateProjectionMatrix(); }   /* r46: no stale lens shift from the game's edge guard */\\n    camera.position.copy(p.pos);\"\nassert s.count(old)==1; s=s.replace(old,new);  …[+523 chars]`
+
+### 🧑 User — 2026-11-22T22:13:55.166Z
+
+> ↩︎ result: started
+
+### 🤖 Claude — 2026-11-22T22:13:57.204Z
+
+While the previews run, I'm saving the source changes so far to GitHub with a proper commit message.
+
+### 🤖 Claude — 2026-11-22T22:13:58.055Z
+
+> 🔧 **Bash** `{"command": "git status --short | grep -v \"^?? backups\\| backups/\" | head -20; git log --oneline -3", "description": "Check uncommitted source changes"}`
+
+### 🧑 User — 2026-11-22T22:13:58.140Z
+
+> ↩︎ result: M tools/screenkit/qa.js
+> 602424b autosave: Rainbow 2026-11-22 22:12 UTC
+> 965f9da autosave: Rainbow 2026-11-22 22:07 UTC
+> 083192b autosave: Rainbow 2026-11-22 22:02 UTC
+
+### 🤖 Claude — 2026-11-22T22:14:06.951Z
+
+> 🔧 **Bash** `{"command": "flock backups/.autosave.lock bash -c 'git add tools/screenkit/qa.js tools/world/probe_frames.cjs 2>/dev/null; git commit -q -m \"r46 Screen 05/06 fixes: edge guard, foam, connector water, rich water, 07 end cap\n\n- Benny clipping (r45b frames 409-420): bennyBox includes the GPU paddling\n  deformation; post-clamp lens-shift safety (user code review patch) with a\n  soft C1 knee; cam_axis camera kept in the drum middle band + damped turn\n  toward Benny (rest pose, off at the picture view); follow_route/follow_lane.\n- 05 route: soft cap of the far coin-trail swing (0.84 -> 0.43 u …[+984 chars]`
+
+### 🧑 User — 2026-11-22T22:14:10.361Z
+
+> ↩︎ result: 52987c4 r46 Screen 05/06 fixes: edge guard, foam, connector water, rich water, 07 end cap
+> 52987c4073d681c456af78d104dd4233980de33e	refs/heads/claude/rainbow-screens-05-06-10w5xd
+> 52987c4073d681c456af78d104dd4233980de33e
+
+### 🤖 Claude — 2026-11-22T22:14:18.036Z
+
+Pushed: GitHub `claude/rainbow-screens-05-06-10w5xd` = `52987c4`, verified with `git ls-remote`. While the previews run, I'm checking how the Android APK is built from the world.
+
+### 🤖 Claude — 2026-11-22T22:14:18.887Z
+
+> 🔧 **Bash** `{"command": "cat tools/world/build_world_app.sh; ls android/app/build/outputs/apk/debug 2>/dev/null; grep -n \"android:sync\\|android:debug\" package.json", "description": "Read the world app/APK build script"}`
+
+### 🧑 User — 2026-11-22T22:14:18.930Z
+
+> ↩︎ result: #!/usr/bin/env bash
+> # Rainbow ONE connected world -> the Rainbow app build (public/world/ -> dist -> the Android APK). Round 45.
+> #   bash tools/world/build_world_app.sh <workspace made by tools/world/build_world.py>
+> # Self-contained static scene (three.js 0.180 vendored, no CDN), every area pre-baked (no approved picture and no mask is shipped). The game
+> # hands over to it only in a test build: VITE_RAINBOW_WORLD=1 (or ?world=1): opening videos -> world 04 -> A -> B -> 05 -> 06 -> 07 -> back in
+> # the game at the Screen 08 checkpoint. The world page opens with three buttons: Start 04 / Start 05 / Start 06 (all in the same one scene).
+> set -e
+> SRC=$(cd "$(dirname "$0")/../.." && pwd); WS=$(cd "${1:?workspace}" && pwd); G="$WS/game"; P="$SRC/public/world"
+> [ -f "$G/play3.html" ] || { echo "no world game folder in $WS (run tools/world/build_world.py first)"; exit 1; }
+> rm -rf "$P"; mkdir -p "$P/vendor/three/build" "$P/vendor/three/examples/jsm/loaders" "$P/vendor/three/examples/jsm/utils"
+> T=/tmp/rainbow_r34/node_modules/three
+> cp "$T/build/three.module.js" "$T/build/three.core.js" "$P/vendor/three/build/"; cp "$T/examples/jsm/loaders/GLTFLoader.js" "$P/vendor/three/examples/jsm/loaders/"
+> cp …[+1209 chars]
+
+### 🤖 Claude — 2026-11-22T22:14:21.702Z
+
+> 🔧 **Bash** `{"command": "ls -la /tmp/rainbow_r34/node_modules/three/package.json 2>&1 | head -2; readlink -f /home/user/ws46/world/game/node_modules; grep '\"version\"' $(readlink -f /home/user/ws46/world/game/node_modules)/three/package.json", "description": "Check vendored three.js source path"}`
+
+### 🧑 User — 2026-11-22T22:14:21.748Z
+
+> ↩︎ result: -rw-r--r-- 1 root root 4635 Nov 22 21:39 /tmp/rainbow_r34/node_modules/three/package.json
+> /tmp/rainbow_r34/node_modules
+>   "version": "0.180.0",
+
+### 🤖 Claude — 2026-11-22T22:14:24.462Z
+
+> 🔧 **Bash** `{"command": "timeout 900 bash -c 'until [ -f /home/user/ws46/world/preview_05/preview.json ]; do sleep 5; done'; python3 /home/user/ws46/show.py 05; python3 -c \"\nimport json\nd=json.load(open('/home/user/ws46/world/preview_05/preview.json'))['summary']['repeat_views']; print('N', [(r['k'], r['within_20']) for r in d])\"", "description": "Show 05 numbers after repeat-view fix", "timeout": 960000}`
+
+### 🧑 User — 2026-11-22T22:16:09.649Z
+
+> ↩︎ result: BEFORE 05    pic 83.4% ssim 0.802 sharp 0.73 | repeat 19.7 | {'wall': 86.1, 'ring': 63.8, 'water': 55.4, 'foam': 35.9, 'trays': 75.3} | look 0.443 | holes 4
+> NEW 05       pic 83.6% ssim 0.802 sharp 0.73 | repeat 19.3 | {'wall': 85.1, 'ring': 64.0, 'water': 52.6, 'foam': 32.4, 'trays': 74.6} | look 0.35 | holes 0
+> N [(0, 0.721), (1, 0.097), (2, 0.181), (3, 0.231), (4, 0.21), (5, 0.194), (6, 0.195), (7, 0.187), (8, 0.195), (9, 0.227), (10, 0.21), (11, 0.187), (12, 0.202)]
+
+### 🤖 Claude — 2026-11-22T22:16:19.041Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\nB=json.load(open('/home/user/ws46/world_r45b/preview_05/preview_raw.json')) if False else None\ndef frames(p):\n    d=json.load(open(p)); return {(f['tag'],f.get('lane')):f for f in d['frames'] if f.get('mode')=='textured'}\nb=frames('/home/user/ws46/world_r45b/preview_05/preview.json'); n=frames('/home/user/ws46/world/preview_05/preview.json')\nfor k in sorted(b):\n    fb,fn=b[k],n.get(k)\n    if not fn: continue\n    sb=fb.get('surfaces',{}); sn=fn.get('surfaces',{})\n    print(k, 'look %.2f -> %.2f' % (fb.get('colour_look',0), fn.get('colour_look …[+468 chars]`
+
+### 🧑 User — 2026-11-22T22:16:19.111Z
+
+> ↩︎ result: ('begin', -1) look 0.23 -> 0.18  water 24.0 -> 25.0  foam 24.9 -> 33.9  wcol 0.25/0.16 det 0.218/0.459
+> ('begin', 0) look 0.51 -> 0.19  water 41.5 -> 35.7  foam 15.9 -> 13.6  wcol 0.487/0.284 det 0.246/0.527
+> ('begin', 1) look 0.67 -> 0.23  water 54.9 -> 38.4  foam 15.3 -> 15.1  wcol 0.647/0.318 det 0.321/0.538
+> ('curve_11deg', -1) look 0.63 -> 0.46  water 72.9 -> 67.9  foam 39.4 -> 33.9  wcol 0.749/0.678 det 0.681/0.682
+> ('curve_11deg', 0) look 0.59 -> 0.48  water 69.1 -> 69.1  foam 39.2 -> 32.7  wcol 0.705/0.695 det 0.657/0.68
+> ('curve_11deg', 1) look 0.57 -> 0.41  water 63.8 -> 63.2  foam 39.0 -> 28.5  wcol 0.611/0.601 det 0.701/0.704
+> ('end', -1) look 0.17 -> 0.41  water 30.3 -> 73.0  foam 39.0 -> 37.6  wcol 0.342/0.805 det 0.214/0.553
+> ('end', 0) look 0.20 -> 0.37  water 26.2 -> 60.6  foam 39.2 -> 37.5  wcol 0.28/0.627 det 0.219/0.558
+> ('end', 1) look 0.14 -> 0.39  water 17.6 -> 50.5  foam 38.6 -> 35.7  wcol 0.156/0.477 det 0.224/0.571
+> ('middle', -1) look 0.20 -> 0.20  water 67.8 -> 52.9  foam 39.6 -> 32.9  wcol 0.644/0.47 det 0.756/0.666
+> ('middle', 0) look 0.19 -> 0.16  water 57.1 -> 52.9  foam 39.8 -> 33.3  wcol 0.515/0.47 det 0.701/0.665
+> ('middle', 1) look 0.18 -> 0.20  water 47.9  …[+795 chars]
+
+### 🤖 Claude — 2026-11-22T22:16:32.663Z
+
+> 🔧 **Bash** `{"command": "timeout 900 bash -c 'until grep -q EXIT /home/user/ws46/preview_new_06.log; do sleep 5; done'; python3 /home/user/ws46/show.py 06; cd /home/user/rainbow- && export NODE_PATH=$(npm root -g); rm -rf /home/user/ws46/world/preview_05_rich0; (node tools/screenkit/preview.cjs /home/user/ws46/world/game /home/user/ws46/world/preview_05_rich0 --screen 05 --area 05 --query rich=0 --nogray > /home/user/ws46/preview_rich0.log 2>&1; echo EXIT >> /home/user/ws46/preview_rich0.log) > /dev/null 2>&1 & echo started", "description": "Show 06 numbers; start rich=0 A/B preview for 05", "timeout": 96 …[+5 chars]`
+
+### 🧑 User — 2026-11-22T22:17:32.887Z
+
+> ↩︎ result: BEFORE 06    pic 85.0% ssim 0.836 sharp 0.76 | repeat 14.0 | {'wall': 87.4, 'ring': 57.6, 'water': 41.8, 'foam': 29.8, 'trays': 90.7} | look 0.39 | holes 0
+> NEW 06       pic 84.9% ssim 0.835 sharp 0.76 | repeat 20.1 | {'wall': 87.4, 'ring': 57.7, 'water': 54.2, 'foam': 28.2, 'trays': 91.8} | look 0.405 | holes 0
+> started
+
+### 🤖 Claude — 2026-11-22T22:17:35.308Z
+
+Screen 06 improved clearly: water style 41.8 → 54.2, repeated-camera views 14.0 % → 20.1 %, and the picture view is unchanged at 84.9 %. Here's how it looks in motion.
+
+### 🤖 Claude — 2026-11-22T22:17:37.054Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/ws46 && ls world/preview_06/ | grep \"^tex_\" | head -30; montage world_r45b/preview_06/tex_quarter_l0.png world/preview_06/tex_quarter_l0.png world_r45b/preview_06/tex_middle_l1.png world/preview_06/tex_middle_l1.png world_r45b/preview_06/tex_three_q_l-1.png world/preview_06/tex_three_q_l-1.png -tile 6x1 -geometry 412x915+2+2 cmp06.jpg", "description": "Montage 06 BEFORE/NEW moving stills"}`
+
+### 🧑 User — 2026-11-22T22:17:37.276Z
+
+> ↩︎ result: tex_begin_l-1.png
+> tex_begin_l0.png
+> tex_begin_l1.png
+> tex_curve_10deg_l-1.png
+> tex_curve_10deg_l0.png
+> tex_curve_10deg_l1.png
+> tex_curve_29deg_l-1.png
+> tex_curve_29deg_l0.png
+> tex_curve_29deg_l1.png
+> tex_end_l-1.png
+> tex_end_l0.png
+> tex_end_l1.png
+> tex_middle_l-1.png
+> tex_middle_l0.png
+> tex_middle_l1.png
+> tex_picture_l0.png
+> tex_quarter_l-1.png
+> tex_quarter_l0.png
+> tex_quarter_l1.png
+> tex_three_q_l-1.png
+> tex_three_q_l0.png
+> tex_three_q_l1.png
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-22T22:17:38.589Z
+
+> 🔧 **Read** `{"file_path": "/home/user/ws46/cmp06.jpg"}`
+
+### 🧑 User — 2026-11-22T22:17:38.686Z
+
+> ↩︎ result: [image]
+
+### 🧑 User — 2026-11-22T22:17:38.678Z
+
+[Image: original 2496x919, displayed at 2000x736. Multiply coordinates by 1.25 to map to original image.]
+
