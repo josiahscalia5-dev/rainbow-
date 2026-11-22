@@ -92,12 +92,13 @@ const PROJ_GLSL = `uniform sampler2D uPlate; uniform sampler2D uPDepth; uniform 
     float vis = 1.0 - smoothstep(zt * 1.02 + 0.01, zt * 1.06 + 0.03, zf);
     vec4 pl = texture(uPlate, uv); float f = smoothstep(uPFade.x, uPFade.y, kD / max(kT, 1e-3));
     return vec4(pl.rgb, pl.a * vis * f); }`;
-const projify = (m) => { if (!FIT39) return m; const base = m.onBeforeCompile, key = m.customProgramCacheKey();
+const BAKE0 = (() => { const t = new THREE.DataTexture(new Uint8Array([0, 0, 0, 0]), 1, 1); t.needsUpdate = true; return t; })();
+const projify = (m) => { if (!FIT39) return m; const base = m.onBeforeCompile, key = m.customProgramCacheKey(); m.userData.bakeU = { uBake: { value: BAKE0 }, uBakeOn: { value: 0 } };
   m.customProgramCacheKey = () => key + '-p39';
-  m.onBeforeCompile = (sh) => { base(sh); Object.assign(sh.uniforms, PROJ39);
+  m.onBeforeCompile = (sh) => { base(sh); Object.assign(sh.uniforms, PROJ39, m.userData.bakeU);
     sh.vertexShader = sh.vertexShader.replace('varying float vKitT; varying float vKitD;', 'varying float vKitT; varying float vKitD; varying vec3 vKWP;').replace('kwp.xyz = kitRemap(kwp.xyz);', 'kwp.xyz = kitRemap(kwp.xyz); vKWP = kwp.xyz;');
-    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\n' + PROJ_GLSL + '\nvarying vec3 vKWP;' + (sh.fragmentShader.includes('varying float vKitT') ? '' : '\nvarying float vKitT; varying float vKitD;'))
-      .replace('#include <opaque_fragment>', '{ vec4 pj = proj39(vKWP, vKitD, vKitT); outgoingLight = mix(outgoingLight, pj.rgb, pj.a); }\n#include <opaque_fragment>'); };
+    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\n' + PROJ_GLSL + '\nvarying vec3 vKWP; uniform sampler2D uBake; uniform float uBakeOn;' + (sh.fragmentShader.includes('varying float vKitT') ? '' : '\nvarying float vKitT; varying float vKitD;'))
+      .replace('#include <opaque_fragment>', '{ ' + (m.map ? 'vec4 bk = texture(uBake, vMapUv) * uBakeOn; outgoingLight = outgoingLight * (1.0 - bk.a) + bk.rgb; ' : '') + 'vec4 pj = proj39(vKWP, vKitD, vKitT); outgoingLight = mix(outgoingLight, pj.rgb, pj.a); }\n#include <opaque_fragment>'); };
   return m; };
 const kitMat = (map, extra = {}, own = null) => {   // own = { tex, vr: [v0, v1] }: this section's OWN painted pixels (atlas rows)
   const m = new THREE.MeshBasicMaterial({ map, toneMapped: false, side: THREE.DoubleSide, ...extra });
@@ -344,7 +345,7 @@ const rr = (() => { let x = 4242; return () => ((x = (x * 1103515245 + 12345) & 
 // lit material for the 3D props (towels, rails, drum lifters, socks): wrapped diffuse + highlight + soft rim, through the same depth curve
 const LDIR = A.clone().multiplyScalar(-0.45).addScaledVector(NUP, 0.85).addScaledVector(RR, 0.15).normalize();
 const litMat = ({ map = null, color = 0xffffff, spec = 0.4, shin = 30, amb = 0.5, rim = 0x9fe8ff, rimK = 0.35, vc = false, side = THREE.FrontSide, proj = false }) => new THREE.ShaderMaterial({
-  uniforms: { ...REMAP, ...PROJ39, uPUse: { value: proj && FIT39 ? 1 : 0 }, map: { value: map }, uUse: { value: map ? 1 : 0 }, uCol: { value: new THREE.Color(color) }, uSpec: { value: spec }, uShin: { value: shin }, uAmb: { value: amb },
+  uniforms: { ...REMAP, ...PROJ39, uPUse: { value: proj && FIT39 ? 1 : 0 }, uBake: { value: BAKE0 }, uBakeOn: { value: 0 }, map: { value: map }, uUse: { value: map ? 1 : 0 }, uCol: { value: new THREE.Color(color) }, uSpec: { value: spec }, uShin: { value: shin }, uAmb: { value: amb },
     uRim: { value: new THREE.Color(rim) }, uRimK: { value: rimK }, uL: { value: LDIR } },
   vertexColors: vc, side, toneMapped: false,
   vertexShader: REMAP_GLSL + `
@@ -362,13 +363,14 @@ const litMat = ({ map = null, color = 0xffffff, spec = 0.4, shin = 30, amb = 0.5
       vC = vec3(1.0);
       #endif
     }`,
-  fragmentShader: `uniform sampler2D map; uniform float uUse; uniform vec3 uCol; uniform float uSpec; uniform float uShin; uniform float uAmb; uniform vec3 uRim; uniform float uRimK; uniform vec3 uL; uniform vec3 uCam; uniform float uPUse;
+  fragmentShader: `uniform sampler2D map; uniform float uUse; uniform vec3 uCol; uniform float uSpec; uniform float uShin; uniform float uAmb; uniform vec3 uRim; uniform float uRimK; uniform vec3 uL; uniform vec3 uCam; uniform float uPUse; uniform sampler2D uBake; uniform float uBakeOn;
     ` + PROJ_GLSL + `
     varying vec3 vN; varying vec3 vW; varying vec2 vUv; varying vec3 vC; varying vec3 vKWP; varying float vKitT; varying float vKitD;
     void main(){ vec3 N = normalize(vN), V = normalize(uCam - vW); if (dot(N, V) < 0.0) N = -N;
       vec3 base = uCol * vC; if (uUse > 0.5) base *= texture2D(map, vUv).rgb;
       float d = 0.5 + 0.5 * dot(N, uL), sp = pow(max(dot(N, normalize(uL + V)), 0.0), uShin), rim = pow(1.0 - max(dot(N, V), 0.0), 3.0);
       gl_FragColor = vec4(base * (uAmb + (1.0 - uAmb) * d) + uSpec * sp + uRimK * rim * uRim, 1.0);
+      { vec4 bk = texture2D(uBake, vUv) * uBakeOn; gl_FragColor.rgb = gl_FragColor.rgb * (1.0 - bk.a) + bk.rgb; }
       if (uPUse > 0.5) { vec4 pj = proj39(vKWP, vKitD, vKitT); gl_FragColor.rgb = mix(gl_FragColor.rgb, pj.rgb, pj.a); }
       #include <colorspace_fragment>
     }` });
@@ -413,7 +415,8 @@ let cleanWallMat = null, cleanRingMat = null;
   for (const [t, th] of (FIT39 ? K.fit.pods : []).concat([...Array(NSEC).keys()].filter((k) => !FIT39 || k >= 2).flatMap((k) => [[ringT(k) + K.S * 0.5, 1.86], [ringT(k) + K.S * 0.5, 1.28]]))) {
     const base = P(t, th, K.RT * 1.02), inward = base.clone().sub(A0).addScaledVector(A, -t).normalize().negate();
     const dir = inward.clone().multiplyScalar(0.9).addScaledVector(A, -0.42).normalize();
-    const m = new THREE.Mesh(podGeo, podMat); m.position.copy(base); m.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir); m.frustumCulled = false; scene.add(m);
+    const near = FIT39 && K.fit.pods.some((pp) => pp[0] === t && pp[1] === th), mm = near ? litMat({ color: 0xb39ae6, spec: 0.7, shin: 30, amb: 0.45, rim: 0xf0e6ff, rimK: 0.3, proj: true }) : podMat;
+    const m = new THREE.Mesh(podGeo, mm); if (near) (window.__bake39 ??= []).push({ mesh: m, mat: mm, size: [512, 512], share: th > 1.5 ? podMat : null }); m.position.copy(base); m.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir); m.frustumCulled = false; scene.add(m);
   }
   // gold towel rails + draped towels (purple with bubbles / pink with a crown, white stripes, terry texture), facing the camera
   const towelTex = (col, dark, motif) => canvasTex(512, 1024, (g, w, h) => {
@@ -444,9 +447,11 @@ let cleanWallMat = null, cleanRingMat = null;
     const g = grid(30, 50, (a, b) => { const acr = a0 + a * (a1 - a0), [al0, y0] = cs(b), al = al0 * 1.4, y = y0 * 1.35, drop = THREE.MathUtils.clamp(-y / 0.63, 0, 1);
       const fold = (0.011 * Math.sin(acr * 46 + side) + 0.006 * Math.sin(acr * 97 + 2.0)) * drop;
       return [base.clone().addScaledVector(inw, acr).addScaledVector(A, al + fold).addScaledVector(NUP, y - 0.006 * Math.cos(a * Math.PI * 2) * drop), a, b]; });
-    g.computeVertexNormals(); scene.add(Object.assign(new THREE.Mesh(g, mat), { frustumCulled: false }));
+    g.computeVertexNormals(); const tm = Object.assign(new THREE.Mesh(g, mat), { frustumCulled: false }); scene.add(tm); return tm;
   };
-  if (FIT39) { const [L, R] = K.fit.towels; towelRack(L[0], L[1], towelMats.purple, L[2], L[3], L[4]); towelRack(R[0], R[1], towelMats.pink, R[2], R[3], R[4]); }
+  if (FIT39) { const [L, R] = K.fit.towels;   // the two painted towels: own materials, so each keeps its own painted look (baked below)
+    for (const [T, base] of [[L, towelMats.purple], [R, towelMats.pink]]) { const tmM = litMat({ map: base.uniforms.map.value, spec: 0.05, shin: 6, amb: 0.6, rim: 0xd9c4ff, rimK: 0.25, side: THREE.DoubleSide, proj: true });
+      const tm = towelRack(T[0], T[1], tmM, T[2], T[3], T[4]); (window.__bake39 ??= []).push({ mesh: tm, mat: tmM, size: [1024, 1024] }); } }
   for (const [t0, side, m] of (FIT39 ? [] : [[2.9, -1, 'purple'], [3.35, 1, 'pink']]).concat([[7.1, -1, 'pink'], [7.6, 1, 'purple'], [11.3, -1, 'purple'], [11.8, 1, 'pink']])) towelRack(t0, side, towelMats[m]);
   }
   // ---- round 38 BONUS: Bubble Dash Chamber (?area=bubble): an open pink washer room in front of the golden arch into the tunnel ----
@@ -532,13 +537,15 @@ for (let k = KMIN; k < NSEC; k++) {
   const t0 = ringT(k); if (t0 < T_ARCH - 1e-6) continue;   // round 38 Bubble Dash: no tunnel before the arch (open chamber)
   // wall section k: from ring k's front face to ring k+1's front face (the ring band covers its first RING_W)
   const wo = CLEAN37 ? null : ownOf('wall', wallOwn, k), ro = CLEAN37 ? null : ownOf('ring', ringOwn, k);
-  const tS = ringT(k + 1) - t0; scene.add(new THREE.Mesh(grid(160, 24, (a, b) => [P(t0 + b * tS, lerp(K.TH0, K.TH1, a), K.RT), a, 1 - b]), CLEAN37 ? cleanWallMat : (wo ? kitMat(wallTex, {}, wo) : wallMat)));
+  const tS = ringT(k + 1) - t0; const wm = new THREE.Mesh(grid(160, 24, (a, b) => [P(t0 + b * tS, lerp(K.TH0, K.TH1, a), K.RT), a, 1 - b]), CLEAN37 ? cleanWallMat : (wo ? kitMat(wallTex, {}, wo) : wallMat)); scene.add(wm);
+  if (FIT39 && k === 1) (window.__bake39 ??= []).push({ mesh: wm, mat: cleanWallMat, size: [2048, 1024] });   // round 39b: the best painted wall panel (fully in the picture) = the template for every panel
   // gold ring k: front face (outer -> inner) then inner face (front -> back)
-  scene.add(new THREE.Mesh(grid(160, 8, (a, b) => {
+  const rm = new THREE.Mesh(grid(160, 8, (a, b) => {
     const th = lerp(K.TH0, K.TH1, a);
     if (b <= 0.5) { const f = b / 0.5; return [P(t0, th, K.RT - (K.RT - K.RING_IN) * f), a, 1 - b]; }
     const f = (b - 0.5) / 0.5; return [P(t0 + f * K.RING_W, th, K.RING_IN), a, 1 - b];
-  }), CLEAN37 ? cleanRingMat : (ro ? kitMat(ringTex, {}, ro) : ringMat)));
+  }), CLEAN37 ? cleanRingMat : (ro ? kitMat(ringTex, {}, ro) : ringMat)); scene.add(rm);
+  if (FIT39 && k === 1) (window.__bake39 ??= []).push({ mesh: rm, mat: cleanRingMat, size: [2048, 256] });   // the painted gold ring = the template for every ring
 }
 // foam banks along both wall bases (round 33c): the painting's own foam, faded in only where the walls show the shared section
 // (covers the painted pink river edges that the painting has higher up its sides than the kit water), invisible at the start view
@@ -871,7 +878,7 @@ const SOCK = AREA !== 'sock' ? { socks: [], update: () => 0 } : (() => {
   const SC = +(q.get('socksize') ?? 2.1);
   // positions (s from Benny's start, lane offset): one per lane change of a natural run; none under a coin
   let LIST = (q.get('socks') ?? '2.6,-0.22;4.6,0.22;6.45,0;8.25,-0.22;10.7,0.22').split(';').map((x) => x.split(',').map(Number));
-  if (FIT39 && !q.has('socks')) LIST = K.fit.socks_px.map(([x, y]) => toPath(...clampLat(pxToStart(x, y, 0)))).concat([[6.45, 0], [8.25, -0.22], [10.7, 0.22]]);   // the two painted socks where the picture has them
+  if (FIT39 && !q.has('socks')) LIST = K.fit.socks_px.map(([x, y]) => { const [ps, pl] = toPath(...clampLat(pxToStart(x, y, 0))); return [ps, Math.max(-0.33, Math.min(0.33, pl))]; }).concat([[6.45, 0], [8.25, -0.22], [10.7, 0.22]]);   // the two painted socks where the picture has them
   const SCI = (i) => (FIT39 && i < 2 && !q.has('socks') ? [2.9, 3.3][i] : SC);   // round 39: the two painted socks at their painted size
   const socks = LIST.map(([s, lat], i) => { const m = new THREE.Mesh(geo, mat); m.scale.setScalar(SCI(i)); m.frustumCulled = false; m.userData.noDepth39 = 1; scene.add(m); return { i, s, lat, m, got: -1, ph: i * 1.7, sc: SCI(i) }; });
   const slots = document.getElementById('slots'), mtext = document.getElementById('mtext');
@@ -973,6 +980,21 @@ if (FIT39) {   // round 39: the picture's camera = the start camera; its depth m
   const hid = []; scene.traverse((o) => { if (o.visible && (o === benny || o.isSprite || o.isPoints || o.userData.noDepth39)) { hid.push(o); o.visible = false; } });
   PROJ39.uPOn.value = 0; renderer.setRenderTarget(rt); renderer.render(scene, pc); renderer.setRenderTarget(null);
   for (const o of hid) o.visible = true; PROJ39.uPDepth.value = rt.depthTexture; PROJ39.uPOn.value = 1;
+  // round 39b: BAKE the picture onto each object once (its own UV layout), premultiplied; the object then keeps the painted look while Benny
+  // swims (after the live projection fades) instead of switching to the code-drawn version. Wall panel 1 / ring 1 serve every panel / ring.
+  scene.updateMatrixWorld(true);
+  const bakeTo = (mesh, [bw, bh]) => {
+    const t = new THREE.WebGLRenderTarget(bw, bh, { type: THREE.HalfFloatType, generateMipmaps: true, minFilter: THREE.LinearMipmapLinearFilter, magFilter: THREE.LinearFilter, wrapS: THREE.RepeatWrapping });
+    const bm = new THREE.ShaderMaterial({ uniforms: { ...REMAP, ...PROJ39 }, side: THREE.DoubleSide, depthTest: false, depthWrite: false,
+      vertexShader: REMAP_GLSL + 'varying vec3 vKWP; varying float vKT; void main(){ vec4 wp = modelMatrix * vec4(position, 1.0); vKWP = kitRemap(wp.xyz); vKT = max(dot(wp.xyz, uAx), 1e-3); gl_Position = vec4(uv * 2.0 - 1.0, 0.0, 1.0); }',
+      fragmentShader: PROJ_GLSL + 'varying vec3 vKWP; varying float vKT; void main(){ vec4 pj = proj39(vKWP, vKT, vKT); gl_FragColor = vec4(pj.rgb * pj.a, pj.a); }' });
+    const tmp = new THREE.Mesh(mesh.geometry, bm); tmp.matrixAutoUpdate = false; tmp.matrix.copy(mesh.matrixWorld); tmp.frustumCulled = false;
+    const sc2 = new THREE.Scene(); sc2.add(tmp); const cc = renderer.getClearColor(new THREE.Color()), ca = renderer.getClearAlpha();
+    renderer.setRenderTarget(t); renderer.setClearColor(0x000000, 0); renderer.clear(); renderer.render(sc2, camera); renderer.setRenderTarget(null); renderer.setClearColor(cc, ca);
+    bm.dispose(); return t.texture; };
+  for (const b of window.__bake39 ?? []) { const tex = bakeTo(b.mesh, b.size);
+    for (const m of [b.mat, b.share].filter(Boolean)) { const u = m.userData.bakeU ?? m.uniforms; u.uBake.value = tex; u.uBakeOn.value = q.get('bake39') === '0' ? 0 : 1; } }
+  window.__baked39 = (window.__bake39 ?? []).length;
 }
 for (let i = 0; i < 3; i++) { renderer.render(scene, camera); await new Promise((r) => setTimeout(r, 100)); }
 window.camInfo = () => ({ p: camera.position.toArray(), q: camera.quaternion.toArray() });
