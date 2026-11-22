@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3153,
-   "sha256": "b64cf2b072148d0d6817b5139c7c5b9d86731548f37a822ae5230973292f4459"
+   "sha256": "bd048bada8f54f2defd736365e16d06d27b3038a2d492d323bc983132d312389"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -12068,8 +12068,8 @@
   },
   {
    "path": "public/section/baked/manifest.json",
-   "bytes": 38648,
-   "sha256": "18070474f5d2834c2ef08d7dd546f726b5a91aa6262e787e8240029fb696a0de"
+   "bytes": 40281,
+   "sha256": "76f9489ad0721e9161d2da150ba1d39f0dc7fa1eaa10d12e2879fd04b4f74e36"
   },
   {
    "path": "public/section/baked/outlet_L_bake.jpg",
@@ -12768,8 +12768,8 @@
   },
   {
    "path": "public/section/index.html",
-   "bytes": 53549,
-   "sha256": "ac659eeb0c6137fbf55edc957a8bf17dc758f2b32fadd3c2d047f39ce63e48ad"
+   "bytes": 54165,
+   "sha256": "b03e7735aad0e8bf9eb37800e8eae283620ecde40a01209024b83f7283796b86"
   },
   {
    "path": "public/section/section.glb",
@@ -12778,8 +12778,8 @@
   },
   {
    "path": "public/section/section.json",
-   "bytes": 12104,
-   "sha256": "9b18348a3e4e71bad67d8a68eb6dca634d106c2c94174ea8d49bd04e43dd2638"
+   "bytes": 12192,
+   "sha256": "617055194160a92cc373756e0b1f33f3a4c15b0ccf4b3211154fafee9b3415d8"
   },
   {
    "path": "public/section/splash.png",
@@ -35447,14 +35447,19 @@
    "sha256": "126818de1a1d95d3495ebf4f9e45c5c5be0b25caaf4d341d7c73f868e3f5c1bc"
   },
   {
+   "path": "qa/reflock/r40/GAMEPLAY_swipe_plan.json",
+   "bytes": 377,
+   "sha256": "a2ddc883b9a80b3c4da36c6b0ebf14b269282c00d35c3030a47e860c0674df58"
+  },
+  {
    "path": "qa/reflock/r40/GAMEPLAY_tunnel_arch_and_gold_rings.mp4",
    "bytes": 6606240,
    "sha256": "c97b07eff818ce60419dacfb4b884e248c1919d13d59f37530a1f7aba338e9b7"
   },
   {
    "path": "qa/reflock/r40/Rainbow_r40_bubble_sock_section_debug.apk",
-   "bytes": 87246880,
-   "sha256": "9abeef90fa7f863db2f2989a78c035a8a37bc6b954917f508b7b5254853ba753"
+   "bytes": 87303429,
+   "sha256": "407c0ac99a15986cbaef685ce5d0b71f02ae9b723cec2050c01274adbcb6fefe"
   },
   {
    "path": "qa/reflock/r40/SOCK_RESCUE_APPROVED.jpg",
@@ -42863,8 +42868,8 @@
   },
   {
    "path": "tools/reflock/fit_section.py",
-   "bytes": 12742,
-   "sha256": "4316cc0becad15cf758192854541b139843ef9ff1ce9953014d989a6792f8bf0"
+   "bytes": 13531,
+   "sha256": "eeaabfcfb47cff3f027ddc94162c27e74c2f2cda71c2339f004d7244f44a2951"
   },
   {
    "path": "tools/reflock/make_page.py",
@@ -42888,8 +42893,8 @@
   },
   {
    "path": "tools/reflock/section.html",
-   "bytes": 53400,
-   "sha256": "ed0ed0a00a50d172b907e12688390f3ff07f3234764bb1a90158bc980d5f43b3"
+   "bytes": 54016,
+   "sha256": "4a9e89028c8acee0a16c57a6e21c6923a218094b592d0bee760f0fa8573c4bec"
   },
   {
    "path": "tools/reflock/section_export.cjs",

@@ -90,12 +90,22 @@ for x, y in SF['socks_px']:
 coins_b = []
 for x, y, r in B['coins']:
     coins_b.append(on_plane_y(Rb, Cb, x, y + 0.75 * r).tolist())                   # the coin's bottom lies on the water
-pts = [(Pb[2] + 1.6, Pb[0]), (Pb[2], Pb[0])] + [(c[2], c[0]) for c in coins_b[:6]] + [(-za + 0.5, 0.15), (-za - 3.0, 0.1), (Pbs_w[2], Pbs_w[0])] \
+coins_room = [c for c in coins_b if c[2] > -za + 1.0]   # painted far coins (painting perspective) would land inside the tunnel: chamber coins only
+pts = [(Pb[2] + 1.6, Pb[0]), (Pb[2], Pb[0])] + [(c[2], c[0]) for c in coins_room] + [(-za + 0.5, 0.15), (-za - 3.0, 0.1), (Pbs_w[2], Pbs_w[0])] \
       + [(c[2], c[0]) for c in coins_s[1:5]] + [(rings_s[-1] - 1.0, 0.0), (rings_s[-1] - 20.0, 0.0)]
 pts = sorted(set((round(z, 3), x) for z, x in pts), key=lambda p: -p[0])           # increasing distance along -z
 zs = np.array([-p[0] for p in pts]); xs = np.array([p[1] for p in pts])
 keep = np.concatenate([[True], np.diff(zs) > 0.3]); zs, xs = zs[keep], xs[keep]
 cl = PchipInterpolator(zs, xs); DS = 0.1; dgrid = np.arange(zs[0], zs[-1], DS); center = cl(dgrid)
+# inside the tunnel the river line keeps Benny's whole lane range (+-0.3 u + his half width) clear of the walls
+def chord_at(d):
+    z = -d; f0, f1 = -za - 0.6, -za - FUNNEL
+    if z >= f0: R, Y = R_IN, ya
+    elif z >= f1: k_ = (f0 - z) / (f0 - f1); k_ = k_ * k_ * (3 - 2 * k_); R, Y = R_IN + (RS - R_IN) * k_, ya + (YAX_S - ya) * k_
+    else: R, Y = RS, YAX_S
+    return math.sqrt(max(0.01, R * R - Y * Y))
+lim = np.array([chord_at(d) - 0.45 if d > za - 0.5 else 9.0 for d in dgrid]); center = np.clip(center, -lim, lim)
+from scipy.ndimage import gaussian_filter1d; center = np.where(dgrid > za - 0.5, gaussian_filter1d(center, 6), center)
 # ======================= chamber layout from the picture =======================
 XL = R_OUT + 0.9; XR = R_OUT + 0.9; YC = 5.2                                       # side walls, ceiling height
 def wall_hit(px, py, xwall):

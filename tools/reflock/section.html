@@ -351,7 +351,7 @@ const CT = installControls({ THREE, TR: { trail: TRAIL, trail_s: TRAIL_S, N: 0 }
   bennyFullH: 0.99 * KH, pxW, coinEl, getS: () => st.s, getCoins: () => coinCount, render: () => renderer.render(scene, camera) });
 // coins: the painted coin trails of both pictures at their painted places, then runs through the funnel and down the Sock Rescue tunnel
 const toSL = (p) => { const s = ZB0 - p.z; return [s, p.x - RX(p.z)]; };
-const LAY = [...SEC.coins.bubble.map((p) => toSL(V3(p))), [13.2, 0.0], [14.6, 0.25], [16.0, 0.25], [17.4, 0.0], [18.6, -0.25],
+const LAY = [...SEC.coins.bubble.filter((p) => p[2] > T.z_arch + 1.0).map((p) => toSL(V3(p))), [10.0, 0.0], [11.3, 0.25], [13.2, 0.0], [14.6, 0.25], [16.0, 0.25], [17.4, 0.0], [18.6, -0.25],
   ...SEC.coins.sock.map((p) => toSL(V3(p))), [29.5, -0.3], [30.7, -0.3], [32.0, 0.0], [34.5, 0.3], [35.7, 0.3], [37.0, 0.0], [40.0, -0.28], [41.3, 0.0], [43.5, 0.28], [45.0, 0.0]].sort((a, b) => a[0] - b[0]);
 coins.forEach((c, i) => { const L = LAY[i]; if (!L) { c.sp.visible = false; c.s = 1e9; c.got = 0; return; } const F = frameAt(L[0]); c.s = L[0]; c.lat = L[1]; c.h = 0;
   at(L[0], c.p0).addScaledVector(F.r, L[1]).addScaledVector(F.n, coinD * 0.6); c.n0.copy(F.n); c.sp.position.copy(c.p0); });
@@ -366,7 +366,7 @@ let socksGot = 0; const slotsEl = document.getElementById('slots'); const drawSl
 
 // ---------------- chase camera: the fitted picture cameras relative to Benny, blended smoothly between them ----------------
 const QB = new THREE.Quaternion().setFromEuler(new THREE.Euler(REF.bubble.pitch, REF.bubble.yaw, 0, 'YXZ')), QS = new THREE.Quaternion().setFromEuler(new THREE.Euler(REF.sock.pitch, REF.sock.yaw, 0, 'YXZ'));
-const OB = V3(REF.bubble.pos).sub(PB), OS = V3(REF.sock.pos).sub(PBS);
+const OB = V3(REF.bubble.pos).sub(at(0, new THREE.Vector3())), OS = V3(REF.sock.pos).sub(at(S_SOCK, new THREE.Vector3()));   // exactly the fitted cameras at both picture points
 const st = { s: +(q.get('s0') ?? 0), lat: 0, camLat: { x: 0, v: 0 }, t: 0 };
 const cds = (o, target, omega, dt) => { const y = o.x - target, j = o.v + omega * y, e = Math.exp(-omega * dt); o.x = target + (y + j * dt) * e; o.v = (o.v - omega * j * dt) * e; return o.x; };
 const CAMK = +(q.get('camk') ?? 0.8), tmp = new THREE.Vector3(), qTmp = new THREE.Quaternion(), Zax = new THREE.Vector3(0, 0, 1);
@@ -383,6 +383,9 @@ const camAt = (s, dt) => {
   const fpx = H / 2 / Math.tan(camera.fov * DEG / 2), M = 8;
   for (let k = 0; k < 2; k++) { const bb = window.bennyBox(); const dpx = bb.x0 < M ? bb.x0 - M : bb.x1 > W - M ? bb.x1 - (W - M) : 0; if (!dpx) break;
     camera.position.addScaledVector(F.r, dpx * camera.position.distanceTo(benny.position) / fpx); camera.updateMatrixWorld(); st.guard = (st.guard ?? 0) + 1; }
+  // the camera never leaves the tunnel (applied last: the wall wins over the screen guard)
+  { const z2 = camera.position.z; if (z2 < T.z_arch + 0.2) { const ay = axy(z2), dx = camera.position.x, dy = camera.position.y - ay, rr = Math.hypot(dx, dy), lim = radius(z2) - 0.25;
+    if (rr > lim) { camera.position.x = dx * lim / rr; camera.position.y = ay + dy * lim / rr; camera.updateMatrixWorld(); st.wallClamp = (st.wallClamp ?? 0) + 1; } } }
 };
 const tB = new THREE.Vector3(), rB = new THREE.Vector3(), mB = new THREE.Matrix4(), UPV = new THREE.Vector3(0, 1, 0);
 const titleEl = document.getElementById('title'), badgeEl = document.getElementById('badge'), missionEl = document.getElementById('mission');
