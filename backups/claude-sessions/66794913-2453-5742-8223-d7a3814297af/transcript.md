@@ -3575,3 +3575,20 @@ Stop hook feedback:
 
 > 🔧 **Bash** `{"command": "for i in $(seq 1 60); do out=$(python3 scripts/rainbow-autosave.py --reason manual:r45-recordings-apk-water-plan 2>&1 | tail -3); echo \"$out\" | grep -q 'another autosave is running' || break; sleep 5; done; echo \"$out\" | tail -2; python3 -I scripts/autosave-status.py | head -1; git status --short | head -5; echo \"remote $(git ls-remote origin refs/heads/ccr-c1b272d2-3ru7yx | cut -c1-12) local $(git rev-parse HEAD | cut -c1-12)\"", "description": "Commit and push everything, verify remote", "timeout": 600000}`
 
+### 🧑 User — 2026-11-22T19:49:06.461Z
+
+> ↩︎ result: "duration_s": 21
+> }
+> AUTOSAVE OK | branch ccr-c1b272d2-3ru7yx | scheduler daemon | last verified backup 2026-11-22T19:48:44+00:00 (0.3 min ago) | local 61e4529 remote 61e4529 (match) | uncommitted 0
+> remote 61e4529bb58c local 61e4529bb58c
+
+### 🤖 Claude — 2026-11-22T19:49:10.952Z
+
+Everything is saved on GitHub: commit `61e4529` on branch `ccr-c1b272d2-3ru7yx`, and GitHub shows the same commit as this session, with nothing left unsaved. That includes:
+- The 05 → 06 recordings, colour and plain gray, in `qa/kit45/run/`. The colour run is `GAMEPLAY_05_to_06_TEXTURED_real_touch.mp4`, and `JOIN_05_06_clip.mp4` is a 5-second clip of the moment 05 becomes 06.
+- The Android APK, `qa/kit45/Rainbow_r45_world_05_06_debug.apk`. It opens with Start 04 / Start 05 / Start 06 buttons and the screens are all one connected world. I haven't tested it on a real phone.
+- The before/after sheets and the build timings.
+- The fixes for the splash, the water sample and the wall trays. These are written but not built yet, so the APK and recordings don't include them.
+
+Still waiting on your go-ahead: should I start rebuilding the 05 water as clean painted ribbons, as a side-by-side test against your approved screen for you to judge first?
+
