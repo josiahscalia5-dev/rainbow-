@@ -38,10 +38,10 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { installControls } from './controls.js';
 import { installQA } from './qa.js';   // r45: QA views for the automated preview check
-import { RIBBON_GLSL, routeUniforms } from './water_ribbon.js';   // r45 test ?water=ribbon: clean ribbon water drawn from the painting's structure
+import { RIBBON_GLSL, routeUniforms, loadDetail } from './water_ribbon.js';   // r45 test ?water=ribbon: clean ribbon water drawn from the painting's structure
 import { famOf as kitFamOf, loadTemplates, applyTemplates } from './bake.js';   // r45: the screen kit's artwork-sampled materials (wall / ring / tray templates, water swatches)
 const q = new URLSearchParams(location.search);
-for (const [k, v] of [['c_LANE', '0.3'], ['c_LAT_MAX', '0.36'], ['speed', '2.2']]) if (!q.has(k)) q.set(k, v);
+for (const [k, v] of [['c_LANE', '0.3'], ['c_LAT_MAX', '0.36'], ['speed', '2.2'], ['fx_RIP_SIZE', '0.03']]) if (!q.has(k)) q.set(k, v);   // r45: smaller ripple rings
 const WD = await (await fetch('world.json')).json();
 const W = +(q.get('w') ?? innerWidth), H = +(q.get('h') ?? innerHeight);
 const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
@@ -198,9 +198,19 @@ const MESH = [], WATER = [], CLAMPS = [], FOAMS = [], BUBBLES = [];
 const kitFoamMat = (A) => new THREE.ShaderMaterial({ uniforms: { uL: { value: new THREE.Vector3(-0.25, 0.8, 0.55).normalize() }, uGlow: A.glow },
   vertexShader: 'varying vec3 vN; varying vec3 vW; void main(){ vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz; vN = normalize(mat3(modelMatrix) * normal); gl_Position = projectionMatrix * viewMatrix * w; }',
   fragmentShader: `varying vec3 vN; varying vec3 vW; uniform vec3 uL; uniform vec3 uGlow; vec3 c3(float r, float g, float b){ return vec3(r, g, b) / 255.0; }
-    void main(){ float lit = clamp(0.6 + 0.45 * dot(normalize(vN), uL), 0.0, 1.0);
+    // r45: the painted foam is made of SMALL BUBBLES (lavender shadows, white rims, tiny highlights), not smooth lumps: a cellular bubble pattern in
+    // world space bends the shading per bubble, so the low-poly clusters read as bubbly foam and their facets disappear
+    vec2 bh2(vec2 p){ return fract(sin(vec2(dot(p, vec2(127.1, 311.7)), dot(p, vec2(269.5, 183.3)))) * 43758.5453); }
+    vec3 cell(vec2 p){ vec2 i = floor(p), f = fract(p); float d1 = 8.0, d2 = 8.0; vec2 best = vec2(0.0);
+      for (int y = -1; y <= 1; y++) for (int x = -1; x <= 1; x++) { vec2 g = vec2(float(x), float(y)), o = bh2(i + g), r = g + o - f; float d = dot(r, r); if (d < d1) { d2 = d1; d1 = d; best = r; } else if (d < d2) d2 = d; }
+      return vec3(sqrt(d1), sqrt(d2), 0.0); }
+    void main(){ vec3 N = normalize(vN); vec2 bp = vec2(vW.x + vW.y * 0.7, vW.z + vW.y * 0.4) * 34.0; vec3 c = cell(bp), c2 = cell(bp * 2.3 + 7.0);
+      float rim = smoothstep(0.08, 0.0, c.y - c.x), dome = 1.0 - smoothstep(0.0, 0.55, c.x), rim2 = smoothstep(0.08, 0.0, c2.y - c2.x);
+      float lit = clamp(0.55 + 0.45 * dot(N, uL) + 0.25 * dome - 0.12 * rim, 0.0, 1.0);
       vec3 col = lit < 0.5 ? mix(c3(150.0, 135.0, 222.0), c3(205.0, 200.0, 245.0), lit / 0.5) : mix(c3(205.0, 200.0, 245.0), c3(255.0, 254.0, 255.0), (lit - 0.5) / 0.5);
-      col = mix(col, vec3(1.0, 0.98, 0.95), uGlow.z * pow(smoothstep(uGlow.x, uGlow.y, vW.z), 1.6)); gl_FragColor = vec4(col, 1.0); }` });
+      col = mix(col, c3(170.0, 160.0, 235.0), 0.35 * rim + 0.15 * rim2);                                     // bubble seams: soft lavender
+      col += 0.18 * pow(dome, 6.0) * max(0.0, dot(N, uL));                                                    // a tiny highlight per bubble
+      col = mix(col, vec3(1.0, 0.98, 0.95), uGlow.z * pow(smoothstep(uGlow.x, uGlow.y, vW.z), 1.6)); gl_FragColor = vec4(min(col, vec3(1.0)), 1.0); }` });
 // ---------------- area: a screen-kit screen (layout.json + scene.glb) ----------------
 const loadKit = async (A) => {
   const LAY = await (await fetch(A.dir + 'layout.json')).json(); A.LAY = LAY; const off = V3(A.offset), DR = LAY.drum;
@@ -208,7 +218,7 @@ const loadKit = async (A) => {
   const g = (await gltf.loadAsync(A.dir + 'scene.glb')).scene; g.position.copy(off); g.rotation.x = A.rot_x ?? 0; g.name = 'area_' + A.id; world.add(g); g.updateMatrixWorld(true);
   const M = g.matrixWorld.clone(), Mi = M.clone().invert(); A.M = M;   // v4: an area may be tilted (07 descends); everything local goes through M
   const famOf = kitFamOf;   // r45: bake.js (paddlerep_* = the repeated trays -> copper)
-  if (q.get('water') === 'ribbon' && (q.get('ribbonareas') ?? '05').split(',').includes(A.id)) A.ribbonU = routeUniforms(THREE, LAY);   // r45 test
+  if (q.get('water') !== 'paint' && (LAY.water_style === 'ribbon' || (q.get('water') === 'ribbon' && (q.get('ribbonareas') ?? '05').split(',').includes(A.id)))) A.ribbonU = routeUniforms(THREE, LAY);   // r45: clean ribbon water (?water=paint = the old painted swatch)
   const ms = []; g.traverse((o) => { if (o.isMesh) ms.push(o); });
   const RLENa = (LAY.route.points.length - 1) * LAY.route.ds, NSEG = ms.filter((o) => /^water_/.test(o.name)).length, SEG_LEN = RLENa / Math.max(1, NSEG);
   for (const o of ms) { const n = o.name, fam = famOf(n); o.geometry.computeBoundingBox(); const sz = o.geometry.boundingBox.getSize(new THREE.Vector3()); let m;
@@ -233,6 +243,7 @@ const loadKit = async (A) => {
   if (LAY.splash_pic && q.get('splashpic') !== '0') { A.splashTex = await tl.loadAsync(A.dir + 'splash_pic.png').catch(() => null); if (A.splashTex) A.splashTex.colorSpace = THREE.SRGBColorSpace; }   // r45
   const MANI = await loadBake(A, ms);
   if (MANI && !GRAY && q.get('tpl') !== '0') { A.TPL = await loadTemplates(THREE, tl, MANI, A.dir + 'baked/'); A.tplApplied = applyTemplates(THREE, ms, A.TPL); }
+  if (A.ribbonU && !GRAY && q.get('detail') !== '0') await loadDetail(THREE, tl, A.dir + 'baked/', MANI, A.ribbonU);   // r45: the painting's own detail inside the ribbons
   // the area's camera clamp (tube around its axis), world coordinates
   CLAMPS.push((p) => { const L = p.clone().applyMatrix4(Mi); if (L.z > DR.z0 + 0.5 || L.z < DR.z1) return false; const dx = L.x - DR.axis_x, dy = L.y - DR.axis_y, rr = Math.hypot(dx, dy), lim = DR.r - 0.3;
     if (rr > lim) { L.x = DR.axis_x + dx * lim / rr; L.y = DR.axis_y + dy * lim / rr; p.copy(L.applyMatrix4(M)); return true; } return false; });
@@ -376,7 +387,8 @@ if (GRAY) { const famCol = { tunnel: [0.62, 0.62, 0.66], ring: [0.78, 0.72, 0.55
     fragmentShader: `varying vec3 vN; varying vec3 vW; uniform vec3 uL; void main(){ vec3 N = normalize(vN), V = normalize(cameraPosition - vW); float c = abs(dot(N, V)), f = pow(1.0 - c, 1.6);
       vec3 film = 0.6 + 0.4 * cos(6.2832 * (f * 1.8 + N.y * 0.35 + vec3(0.0, 0.33, 0.67)));
       float sp = pow(max(dot(reflect(-V, N), uL), 0.0), 60.0) + 0.6 * pow(max(dot(reflect(-V, N), normalize(vec3(0.4, 0.2, 0.9))), 0.0), 90.0);
-      vec3 col = mix(vec3(1.0), film, 0.9) + sp; gl_FragColor = vec4(min(col, vec3(1.0)), clamp(0.16 + 0.75 * f * f + 0.35 * f + 1.3 * sp, 0.0, 0.97)); }` });
+      float near = smoothstep(0.35, 1.1, distance(cameraPosition, vW));   // r45: a bubble right in front of the lens fades out (no ghost circles)
+      vec3 col = mix(vec3(1.0), film, 0.9) + sp; gl_FragColor = vec4(min(col, vec3(1.0)), near * clamp(0.16 + 0.75 * f * f + 0.35 * f + 1.3 * sp, 0.0, 0.97)); }` });
   const bubbles = new THREE.InstancedMesh(bGeo, bm, BUBBLES.length); BUBBLES.forEach(([x, y, z, r], i) => { pI.set(x, y, z); sI.setScalar(r); bubbles.setMatrixAt(i, mI.compose(pI, qI, sI)); });
   bubbles.name = 'bubbles'; bubbles.renderOrder = 7; bubbles.userData.fam = 'bubble3d'; world.add(bubbles); }
 
@@ -467,6 +479,18 @@ const camAt = (s, dt) => {
   const fpx = H / 2 / Math.tan(camera.fov * DEG / 2), M = 8;
   for (let k = 0; k < 2; k++) { const bb = window.bennyBox(); const dpx = bb.x0 < M ? bb.x0 - M : bb.x1 > W - M ? bb.x1 - (W - M) : 0; const dpy = bb.y1 > H - M ? bb.y1 - (H - M) : bb.y0 < M + 60 ? bb.y0 - (M + 60) : 0; if (!dpx && !dpy) break;
     camera.position.addScaledVector(r, dpx * camera.position.distanceTo(benny.position) / fpx).addScaledVector(n, -dpy * camera.position.distanceTo(benny.position) / fpx); camera.updateMatrixWorld(); st.guard = (st.guard ?? 0) + 1; }
+  // r45 (user: "it looks nothing like my approved screen"): in an area with layout cam_axis the camera keeps the APPROVED picture's view straight
+  // down the drum (rings concentric, the bright core in the middle) and slides along the drum with Benny (all of his progress, `follow` of his
+  // sideways offset) - the river winds below it exactly as in the picture; blended in / out over 3 u at the area's ends
+  { const A = areaOf(s), CA = A.kind === 'kit' ? A.LAY?.cam_axis : null, key = CA ? WD.cam_keys.find((k) => k.area === A.id) : null;
+    if (key && A.M) { const w = sstep(A.s0, A.s0 + 3, s) * (1 - sstep(A.s1 - 3, A.s1, s));
+      if (w > 0) { const ax = new THREE.Vector3(0, 0, -1).transformDirection(A.M), side = new THREE.Vector3(1, 0, 0).transformDirection(A.M);
+        const d = at(s, new THREE.Vector3()).addScaledVector(F.r, st.lat).sub(at(key.s, new THREE.Vector3()));
+        const P = V3(key.pos).addScaledVector(ax, d.dot(ax)).addScaledVector(side, d.dot(side) * (CA.follow ?? 0.6)), Qk = new THREE.Quaternion().setFromEuler(new THREE.Euler(key.pitch, key.yaw, 0, 'YXZ'));
+        camera.position.lerp(P, w); camera.quaternion.slerp(Qk, w); camera.updateMatrixWorld(); st.camAxis = w;
+        const rr = new THREE.Vector3(1, 0, 0).applyQuaternion(camera.quaternion), nn = new THREE.Vector3(0, 1, 0).applyQuaternion(camera.quaternion);
+        for (let k = 0; k < 2; k++) { const bb = window.bennyBox(); const dpx = bb.x0 < M ? bb.x0 - M : bb.x1 > W - M ? bb.x1 - (W - M) : 0; const dpy = bb.y1 > H - M ? bb.y1 - (H - M) : bb.y0 < M + 60 ? bb.y0 - (M + 60) : 0; if (!dpx && !dpy) break;
+          camera.position.addScaledVector(rr, dpx * camera.position.distanceTo(benny.position) / fpx).addScaledVector(nn, -dpy * camera.position.distanceTo(benny.position) / fpx); camera.updateMatrixWorld(); } } } }
   for (const cl of CLAMPS) if (cl(camera.position)) { camera.updateMatrixWorld(); st.wallClamp = (st.wallClamp ?? 0) + 1; }
   { const wy = Math.min(at(s, _a).y, at(Math.max(0, s - 1.4), _b).y);   // v4: never below the water under the camera (the route descends in 07)
     if (camera.position.y < wy + 0.12) { camera.position.y = wy + 0.12; camera.updateMatrixWorld(); } }

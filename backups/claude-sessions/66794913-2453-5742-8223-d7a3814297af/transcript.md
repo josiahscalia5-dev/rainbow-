@@ -4006,3 +4006,141 @@ Starting with the water refinement:
 
 > ↩︎ result: [image]
 
+### 🤖 Claude — 2026-11-22T20:09:02.938Z
+
+> 🔧 **Bash** `{"command": "grep -n \"bubbles\\b.*ShaderMaterial\\|const bm = \\|BUBBLES.length\\|kitFoamMat\\|fx_\\|q.set(k, v)\" tools/world/world.html | cut -c1-180 | head; grep -n \"RIP_SIZE\\|RIPPLE_T\" tools/kit05/swimfx.js | cut -c1-160 | head -6", "description": "Find foam, bubble and ripple code"}`
+
+### 🧑 User — 2026-11-22T20:09:02.995Z
+
+> ↩︎ result: 44:for (const [k, v] of [['c_LANE', '0.3'], ['c_LAT_MAX', '0.36'], ['speed', '2.2']]) if (!q.has(k)) q.set(k, v);
+> 198:const kitFoamMat = (A) => new THREE.ShaderMaterial({ uniforms: { uL: { value: new THREE.Vector3(-0.25, 0.8, 0.55).normalize() }, uGlow: A.glow },
+> 225:    else if (fam === 'foam') m = kitFoamMat(A);   // the kit page's lit lavender-white foam banks (not baked)
+> 374:  const bm = new THREE.ShaderMaterial({ transparent: true, depthWrite: false, uniforms: { uTime: TIME, uL: { value: Lw } },
+> 380:  const bubbles = new THREE.InstancedMesh(bGeo, bm, BUBBLES.length); BUBBLES.forEach(([x, y, z, r], i) => { pI.set(x, y, z); sI.setScalar(r); bubbles.setMatrixAt(i, mI.compose(
+> 25:  const P = { WAKE_AGE: 1.1, WAKE_W0: 0.085, WAKE_SPREAD: 0.3, DRIFT: 0.55, WAKE_A: MOVE ? 0.85 : 0.55, RIPPLE_T: MOVE ? 1.0 : 0.75, PUFF_T: 0.6, SPL_FLOW: 0
+> 26:    RIP_SIZE: MOVE ? 0.12 : 0.07, RING_EVERY: 0.55, TRAIL_RATE: 110, TRAIL_LIFE: 0.95, COLLAR_A: 0.95 };
+> 86:  const ripple = (p, F, size) => { if (OFF) return; place(0, ripples, ri, p, F, size, P.RIPPLE_T, 2.6, 0.55); ri = (ri + 1) % ripples.length; };
+> 177:        v1.copy(waterPt).addScaledVector(F.r, side * o.armX).addScaledVector(F.t, 0.03); rip …[+23 chars]
+
+### 🤖 Claude — 2026-11-22T20:09:05.355Z
+
+> 🔧 **Bash** `{"command": "sed -n 198,205p tools/world/world.html | cut -c1-330; sed -n 374,379p tools/world/world.html | cut -c1-400", "description": "Read foam and bubble shaders in the world page"}`
+
+### 🧑 User — 2026-11-22T20:09:05.401Z
+
+> ↩︎ result: const kitFoamMat = (A) => new THREE.ShaderMaterial({ uniforms: { uL: { value: new THREE.Vector3(-0.25, 0.8, 0.55).normalize() }, uGlow: A.glow },
+>   vertexShader: 'varying vec3 vN; varying vec3 vW; void main(){ vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz; vN = normalize(mat3(modelMatrix) * normal); gl_Position = projectionMatrix * viewMatrix * w; }',
+>   fragmentShader: `varying vec3 vN; varying vec3 vW; uniform vec3 uL; uniform vec3 uGlow; vec3 c3(float r, float g, float b){ return vec3(r, g, b) / 255.0; }
+>     void main(){ float lit = clamp(0.6 + 0.45 * dot(normalize(vN), uL), 0.0, 1.0);
+>       vec3 col = lit < 0.5 ? mix(c3(150.0, 135.0, 222.0), c3(205.0, 200.0, 245.0), lit / 0.5) : mix(c3(205.0, 200.0, 245.0), c3(255.0, 254.0, 255.0), (lit - 0.5) / 0.5);
+>       col = mix(col, vec3(1.0, 0.98, 0.95), uGlow.z * pow(smoothstep(uGlow.x, uGlow.y, vW.z), 1.6)); gl_FragColor = vec4(col, 1.0); }` });
+> // ---------------- area: a screen-kit screen (layout.json + scene.glb) ----------------
+> const loadKit = async (A) => {
+>   const bm = new THREE.ShaderMaterial({ transparent: true, depthWrite: false, uniforms: { uTime: TIME, uL: { value: Lw } },
+>     vertexShader: 'attribute float aPh; uni …[+885 chars]
+
+### 🧑 User — 2026-11-22T20:09:14.309Z
+
+[Request interrupted by user]
+
+### 🧑 User — 2026-11-22T20:09:14.373Z
+
+The screen 5, it looks nothing like my approved screen. I mean, can't you see that? Or I don't understand. Like, it's, are you using all the tools I told you to use? The Stitch or whatever, and the other ones, remember, that I already had in my account. I mean, can you compare my approved screen to mine, what I have now? Say, hey, that's not looking like my approved screen. Fix it. I mean, why you keep asking me silly stuff when you know what I want? And if you know if it doesn't look like my approved screen, then continue doing it until it does. I mean, it's not really that hard to do.
+
+### 🤖 Claude — 2026-11-22T20:09:40.919Z
+
+> 🔧 **Bash** `{"command": "grep -n \"const camFrame\\|const KEYS\\|const rigAt\\|const camAt\\|camAt(st.s\\|areaOf = \\|CAMK\\b\" tools/world/world.html | cut -c1-120 | head; sed -n \"$(grep -n 'const camFrame' tools/world/world.html | cut -d: -f1),+28p\" tools/world/world.html | cut -c1-300", "description": "Read the world chase camera code"}`
+
+### 🧑 User — 2026-11-22T20:09:40.980Z
+
+> ↩︎ result: 67:const areaOf = (s) => WD.areas.find((a) => s >= a.s0 && s < a.s1) ?? WD.areas[WD.areas.length - 1];
+> 449:const camFrame = (s, out) => { const sm = (a, b) => a.clone().lerp(b, ROLL).normalize(), A2 = at(Math.min(RLEN, s + 
+> 453:const KEYS = WD.cam_keys.map((k) => { const Mk = camFrame(k.s, new THREE.Matrix4()), Mi = Mk.clone().invert(), Pk = 
+> 456:const rigAt = (s) => { let i = KEYS.findIndex((k) => k.s > s); if (i === 0) return KEYS[0]; if (i < 0) return KEYS[K
+> 460:const CAMK = +(q.get('camk') ?? 0.8), tmp = new THREE.Vector3(), Mt = new THREE.Matrix4();
+> 461:const camAt = (s, dt) => {
+> 466:  at(s, camera.position).add(st.rigO).addScaledVector(F.r, cds(st.camLat, CAMK * st.lat, 9, dt)); camera.quaternion.
+> 504:  camAt(st.s, dt); hud(st.s);
+> const camFrame = (s, out) => { const sm = (a, b) => a.clone().lerp(b, ROLL).normalize(), A2 = at(Math.min(RLEN, s + CAMW), new THREE.Vector3()), B2 = at(Math.max(0, s - CAMW), new THREE.Vector3());
+>   const Ft = A2.sub(B2).normalize(), Fn = new THREE.Vector3(); for (let k = -2; k <= 2; k++) Fn.add(frameAt(Math.min(RLEN, Math.max(0, s + 0.4 * k))).n); Fn.normalize();
+>   const t = sm(new THREE.Vector3(Ft.x, 0, Ft.z).normalize(), Ft), n = sm(UPV, Fn), r  …[+3199 chars]
+
+### 🤖 Claude — 2026-11-22T20:10:28.915Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/world/world.html'; s=open(p).read()\nR=[]\n# 1) camera: an area's picture camera kept looking straight down its drum (layout cam_axis), sliding with Benny\nR.append((\"\"\"  for (const cl of CLAMPS) if (cl(camera.position)) { camera.updateMatrixWorld(); st.wallClamp = (st.wallClamp ?? 0) + 1; }\"\"\",\n\"\"\"  // r45 (user: \"it looks nothing like my approved screen\"): in an area with layout cam_axis the camera keeps the APPROVED picture's view straight\n  // down the drum (rings concentric, the bright core in the middle) and slides along the drum with …[+6993 chars]`
+
+### 🧑 User — 2026-11-22T20:10:29.065Z
+
+> ↩︎ result: ok
+> 478:  const fpx = H / 2 / Math.tan(camera.fov * DEG / 2), M = 8;
+
+### 🤖 Claude — 2026-11-22T20:10:35.997Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; python3 -I tools/world/build_world.py $S/wr --preview 05 > $S/wr_build6.log 2>&1; echo EXIT $? >> $S/wr_build6.log; grep -E \"area|preview|ready|EXIT\" $S/wr_build6.log | cut -c1-90; python3 -c \"\nimport json; d=json.load(open('$S/wr/preview_05/preview.json'))['summary']\nprint('picture', [round(x['share_within_20_levels']*100,1) for x in d['likeness_picture_view']], 'repeat mean/min', d['repeat_within_20_mean'], d['repeat_within_20_min'], 'holes', d['holes_total'])\nprint({k:v['style_pct_mean']  …[+186 chars]`
+
+### 🧑 User — 2026-11-22T20:12:01.811Z
+
+> ↩︎ result: area 04   cached                                      0.2 s
+>   area 05   built fit                                   0.8 s
+>   area 06   cached                                      0.2 s
+>   area 07   cached                                      0.2 s
+>   preview 05 WARN       83.9 s
+> world ready: /tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratc
+> EXIT 0
+> picture [80.4] repeat mean/min 0.19 0.112 holes 4
+> {'wall': 85.8, 'ring': 61.5, 'water': 57.9, 'foam': 32.9, 'trays': 74.4}
+>   ['WARN', 'textured curve_29deg lane 0 (s 100.8)', 'colour look 0.45 vs the approved picture']
+>   ['WARN', 'textured quarter lane 0 (s 100.94)', 'colour look 0.469 vs the approved picture']
+>   ['WARN', 'textured middle lane 0 (s 114.57)', 'colour look 0.175 vs the approved picture']
+>   ['WARN', 'textured three_q lane 0 (s 128.21)', 'colour look 0.313 vs the approved picture']
+>   ['WARN', 'textured curve_11deg lane 0 (s 134.3)', 'colour look 0.499 vs the approved picture']
+>   ['WARN', 'textured end lane 0 (s 141.25)', 'colour look 0.375 vs the approved picture']
+
+### 🤖 Claude — 2026-11-22T20:12:06.711Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; python3 - <<EOF\nfrom PIL import Image\nS='$S'; o=Image.new('RGB',(5*300,650))\nr=Image.open('references/05_flow_into_the_current.png').convert('RGB'); s=915/r.height; r=r.resize((round(r.width*s),915)); x=(r.width-412)//2; r=r.crop((x,0,x+412,915))\nfs=[r]+[Image.open(f'{S}/wr/preview_05/{t}.png').convert('RGB') for t in ('tex_quarter_l0','tex_middle_l0','tex_three_q_l-1','rep_k03')]\nfor i,im in enumerate(fs): o.paste(im.resize((292,649)),(i*300,0))\no.save(f'{S}/ax05.jpg',quality=86)\nEOF", "de …[+50 chars]`
+
+### 🧑 User — 2026-11-22T20:12:06.938Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-22T20:12:07.757Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/ax05.jpg"}`
+
+### 🧑 User — 2026-11-22T20:12:07.790Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T20:12:52.910Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/screenkit/water_detail.py", "content": "\"\"\"Rainbow screen kit (round 45) - PAINTED DETAIL TILES for the ribbon water. The clean ribbon water (water_ribbon.js) gives the band layout; inside\neach band the look must be the painting's own (luminous streaks, glints, silky texture). From the floor swatch (the approved picture flattened\nonto the drum floor by bake.js: tpl_floor.jpg, x across / d along the flow, ~400 px per metre) this cuts the purest CYAN window and the purest\nPINK window, and makes each seamless (offset-and-cross-fade), so the shader ca …[+2212 chars]`
+
+### 🧑 User — 2026-11-22T20:12:52.992Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/screenkit/water_detail.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-22T20:12:55.513Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; python3 -I tools/screenkit/water_detail.py $S/wr/game/a05/baked && python3 -c \"\nfrom PIL import Image\no=Image.new('RGB',(530,256)); o.paste(Image.open('$S/wr/game/a05/baked/detail_cyan.jpg'),(0,0)); o.paste(Image.open('$S/wr/game/a05/baked/detail_pink.jpg'),(274,0)); o.save('$S/detail.jpg')\"", "description": "Cut the cyan and pink painted detail tiles"}`
+
+### 🧑 User — 2026-11-22T20:12:55.873Z
+
+> ↩︎ result: water detail {'cyan_mean': [0.1152, 0.7723, 0.9802], 'cyan_share': 0.988, 'cyan_at': [630, 633], 'pink_mean': [0.8047, 0.3511, 0.9124], 'pink_share': 0.519, 'pink_at': [263, 1065], 'tile_m': 0.643}
+
+### 🤖 Claude — 2026-11-22T20:12:56.515Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/detail.jpg"}`
+
+### 🧑 User — 2026-11-22T20:12:56.544Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T20:13:40.095Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/water_detail.py'; s=open(p).read()\na=\"\"\"    q = np.roll(np.roll(p, N // 2, 0), N // 2, 1); t = np.linspace(0, 1, N); w1 = np.minimum(t, 1 - t) * 2; wb = np.minimum.outer(w1, w1)[..., None] ** 0.7\n    tile = (p * wb + q * (1 - wb)).clip(0, 255).astype(np.uint8)\"\"\"\nb=\"\"\"    # two separable passes: across, then along. Each pass blends the patch with itself rolled by half a tile, weighted to the ORIGINAL in the middle\n    # (where the rolled copy has its seam) and to the rolled copy at the borders (which then match across the wrap): n …[+6082 chars]`
+
+### 🤖 Claude — 2026-11-22T20:13:41.105Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/ax05b.jpg"}`
+

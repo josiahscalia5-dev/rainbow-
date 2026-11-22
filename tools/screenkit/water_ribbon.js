@@ -7,7 +7,7 @@
 // (204,32,159) (244,60,215) (248,110,236), white streaks (247,243,252); band layout from the painted river (pink edge to pink edge = river width).
 // Coordinates: the area's own x / z (vL), lateral = distance from the river centre line (Benny's route, a 1-D texture of route x by z), along = -z.
 export const RIBBON_GLSL = `
-uniform sampler2D uRouteX; uniform vec4 uRouteZ; uniform float uRibbon;
+uniform sampler2D uRouteX; uniform vec4 uRouteZ; uniform float uRibbon; uniform sampler2D uDetC, uDetP; uniform vec4 uDetCM, uDetPM; uniform float uDetS, uDetOn;
 float rbH(vec2 p){ vec3 p3 = fract(vec3(p.xyx) * 0.1031); p3 += dot(p3, p3.yzx + 33.33); return fract((p3.x + p3.y) * p3.z); }
 float rbN(vec2 p){ vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f); return mix(mix(rbH(i), rbH(i + vec2(1, 0)), f.x), mix(rbH(i + vec2(0, 1)), rbH(i + vec2(1, 1)), f.x), f.y); }
 vec3 ribbonWater(vec3 L, float t, float flow, vec3 vWv){
@@ -29,6 +29,10 @@ vec3 ribbonWater(vec3 L, float t, float flow, vec3 vWv){
   float pc = max(1.0 - clamp(abs(an - 0.67) / 0.18, 0.0, 1.0), 1.0 - clamp(abs(an - 1.4) / 0.18, 0.0, 1.0));
   vec3 pink = mix(pkD, pkM, smoothstep(0.0, 0.6, pc)); pink = mix(pink, pkB, 0.6 * smoothstep(0.55, 1.0, pc));
   vec3 col = mix(cyan, pink, pinkW);
+  // the painting's OWN detail inside each band (water_detail.py: seamless cyan / pink tiles cut from the flattened picture, fixed size in the
+  // world -> never smeared): luminance + colour variation relative to the tile's mean, on top of the clean band colour
+  if (uDetOn > 0.5) { vec2 tu = vec2(lat, d) / uDetS; vec3 dc = texture2D(uDetC, tu).rgb / max(uDetCM.rgb, vec3(0.06)), dp = texture2D(uDetP, tu * vec2(1.0, 0.85) + 0.37).rgb / max(uDetPM.rgb, vec3(0.06));
+    col = mix(col, clamp(col * mix(dc, dp, pinkW), 0.0, 1.0), 0.85); }
   // brushed silk: soft fine streaks along the flow, short and irregular (not ruled lines)
   float w = lat * 34.0 + 0.6 * sin(d * 0.7 + lat * 2.4) + 1.1 * rbN(vec2(lat * 3.0, d * 0.3)), fw = max(fwidth(w), 1e-4);
   float f = abs(fract(w) - 0.5) * 2.0, line = 1.0 - smoothstep(0.0, max(0.3, 1.8 * fw), f);
@@ -43,9 +47,9 @@ vec3 ribbonWater(vec3 L, float t, float flow, vec3 vWv){
   col = mix(col, col * 1.12 + 0.04, 0.6 * (1.0 - smoothstep(0.0, 0.3, an)) + 0.5 * smoothstep(0.6, 1.0, pc) * pinkW);   // glow in the cyan centre and along each pink ribbon
   // the painting's bright white DASHES: short, thick-ish, along the flow, many in the cyan, some on the pink
   vec2 gd = vec2(lat * 7.0, d * 1.25); vec2 cd = floor(gd); float hd = rbH(cd + 7.7);
-  if (hd < 0.42) { vec2 o = (gd - cd - vec2(0.5 + 0.3 * (rbH(cd + 2.2) - 0.5), 0.5)) / vec2(7.0, 1.25); float lenD = 0.12 + 0.2 * rbH(cd + 5.5), wid = 0.006 + 0.008 * rbH(cd + 9.1);
+  if (hd < 0.16) { vec2 o = (gd - cd - vec2(0.5 + 0.3 * (rbH(cd + 2.2) - 0.5), 0.5)) / vec2(7.0, 1.25); float lenD = 0.07 + 0.12 * rbH(cd + 5.5), wid = 0.003 + 0.004 * rbH(cd + 9.1);
     float dsh = exp(-pow(o.x / max(wid, 0.8 * fwidth(lat)), 2.0)) * (1.0 - smoothstep(lenD * 0.4, lenD * 0.5, abs(o.y))) * (1.0 - smoothstep(0.3, 1.0, fwidth(gd.y)));
-    col = mix(col, vec3(0.97, 1.0, 1.0), clamp(dsh, 0.0, 1.0) * mix(0.9, 0.6, pinkW)); }
+    col = mix(col, vec3(0.97, 1.0, 1.0), clamp(dsh, 0.0, 1.0) * mix(0.55, 0.35, pinkW)); }
   // glossy sheen
   col += 0.08 * smoothstep(0.35, 0.95, rbN(vec2(lat * 0.9, d * 0.35 - t * 0.1))) * (1.0 - 0.5 * pinkW);
   // star glints
@@ -64,5 +68,12 @@ export function routeUniforms(THREE, LAY) {
   for (let i = 0, k = 0; i < N; i++) { const z = z0 + (z1 - z0) * i / (N - 1); while (k < byZ.length - 2 && byZ[k + 1][2] < z) k++; const a = byZ[k], b = byZ[k + 1] ?? a, f = b[2] > a[2] ? (z - a[2]) / (b[2] - a[2]) : 0; data[i] = a[0] + (b[0] - a[0]) * Math.min(1, Math.max(0, f)); }
   void j;
   const tex = new THREE.DataTexture(data, N, 1, THREE.RedFormat, THREE.FloatType); tex.minFilter = tex.magFilter = THREE.NearestFilter; tex.needsUpdate = true;
-  return { uRouteX: { value: tex }, uRouteZ: { value: new THREE.Vector4(z0, z1, (LAY.river_width ?? LAY.route.width) / 2, 1) } };
+  return { uRouteX: { value: tex }, uRouteZ: { value: new THREE.Vector4(z0, z1, (LAY.river_width ?? LAY.route.width) / 2, 1) },
+    uDetC: { value: null }, uDetP: { value: null }, uDetCM: { value: new THREE.Vector4(1, 1, 1, 1) }, uDetPM: { value: new THREE.Vector4(1, 1, 1, 1) }, uDetS: { value: 0.64 }, uDetOn: { value: 0 } };
+}
+// the painted detail tiles of an area (baked/detail_*.jpg + manifest.water_detail) -> the ribbon uniforms (shared by all its water materials)
+export async function loadDetail(THREE, tl, base, MANI, U) {
+  const D = MANI?.water_detail; if (!D || !U) return false;
+  const ld = async (f) => { const t = await tl.loadAsync(base + f); t.colorSpace = THREE.NoColorSpace; t.wrapS = t.wrapT = THREE.RepeatWrapping; t.anisotropy = 8; return t; };
+  U.uDetC.value = await ld('detail_cyan.jpg'); U.uDetP.value = await ld('detail_pink.jpg'); U.uDetCM.value.set(...D.cyan_mean, 1); U.uDetPM.value.set(...D.pink_mean, 1); U.uDetS.value = D.tile_m; U.uDetOn.value = 1; return true;
 }

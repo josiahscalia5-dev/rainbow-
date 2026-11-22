@@ -39,6 +39,12 @@ def main():
         for f in ('section.json', 'section.glb'): kit.place(os.path.join(REPO, 'public', 'section', f), os.path.join(G, 'aAB', f))
         kit.place(os.path.join(REPO, 'public', 'section', 'baked'), os.path.join(G, 'aAB', 'baked'))
     B.timed('assemble', f_asm)
+    def f_det():   # r45: painted detail tiles for the areas drawn with ribbon water (from their flattened floor swatch)
+        for nn, _ in AREAS:
+            L = json.load(open(os.path.join(G, 'a' + nn, 'layout.json'))); man = json.load(open(os.path.join(G, 'a' + nn, 'baked', 'manifest.json')))
+            if L.get('water_style') == 'ribbon' and 'floor' in man.get('templates', {}):
+                kit.run([sys.executable, '-I', os.path.join(REPO, 'tools/screenkit/water_detail.py'), os.path.join(G, 'a' + nn, 'baked')])
+    B.timed('detail', f_det)
     out = B.timed('layout', lambda: kit.run([sys.executable, '-I', os.path.join(HERE, 'world_layout.py'), os.path.join(G, 'a04', 'layout.json'), os.path.join(G, 'aAB', 'section.json'), G,
                                              os.path.join(G, 'a05', 'layout.json'), os.path.join(G, 'a06', 'layout.json'), os.path.join(G, 'a07', 'layout.json')], log=os.path.join(ws, 'world_layout.log')))
     spec = os.path.join(G, 'connectors_spec.json')
