@@ -70,6 +70,9 @@ def place(src, dst):
 
 
 def _link_or_copy(s, d):
+    # big binaries (GLB, bakes) are hard-linked from the cache (no copy, no disk); small text / json files are COPIED so that a later write
+    # to one workspace never changes the cache or another workspace (r45: a look-only rebuild of 05 rewrote the world's a05/layout.json)
+    if os.path.getsize(s) < (1 << 20) or s.endswith(('.json', '.html', '.js', '.md', '.log')): shutil.copy2(s, d); return
     try: os.link(s, d)
     except OSError: shutil.copy2(s, d)
 
@@ -211,6 +214,7 @@ def build_gnlib(B):
 
 def assemble(G, ws, REF, L):
     os.makedirs(G, exist_ok=True)
+    for f in ('layout.json',): (os.remove(os.path.join(G, f)) if os.path.lexists(os.path.join(G, f)) else None)   # never write through a shared link
     json.dump(L, open(os.path.join(G, 'layout.json'), 'w'))
     for src, dst in [(os.path.join(ws, 'seg', 'plate.png'), 'plate_0.png'), (os.path.join(ws, 'seg', 'mask.png'), 'mask_0.png'), (REF, 'ref_0.png'),
                      (os.path.join(HERE, 'screen.html'), 'play3.html'), (os.path.join(HERE, 'bake.js'), 'bake.js'), (os.path.join(HERE, 'qa.js'), 'qa.js'), (os.path.join(HERE, 'materials.js'), 'materials.js'),
@@ -219,7 +223,9 @@ def assemble(G, ws, REF, L):
                      (os.path.join(REPO, 'assets/textures/paint/05_coin.png'), 'coin.png')] + \
                     [(os.path.join(REPO, 'tools/marble05/viewer', f), f) for f in ('splash.png', 'bubble.png', 'glint.png')]:
         d = os.path.join(G, dst)
-        if os.path.exists(src): shutil.copyfile(os.path.realpath(src), d)
+        if os.path.exists(src):
+            if os.path.lexists(d): os.remove(d)
+            shutil.copyfile(os.path.realpath(src), d)
     with open(os.path.join(G, 'benny31.glb'), 'rb') as f:
         if b'git-lfs' in f.read(200): raise SystemExit('benny31.glb is an LFS pointer: run git lfs pull')
     if not os.path.isdir(os.path.join(NODE_MODULES, 'three')):

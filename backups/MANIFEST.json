@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 28435,
-   "sha256": "e3a9c6cc6e0c83cd051353da7e02537d8203bea65599a6b4b7e31084b5709dc9"
+   "sha256": "3c9a1ef856b66faf8bbf709f7299b51ebdd983a10cbce7ca746e78dc11e76c1d"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3233,
-   "sha256": "944da42e4442a7ea717be666b6e1e606a223ae3905e0f05f4120cd56ca6cd4b6"
+   "sha256": "b4f3a59c44c1805ed88f1fc9de5f549ccf62c96e2a69fe45b92bbb5af01860ef"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -23340,6 +23340,26 @@
    "path": "qa/kit45/run/swipe_plan_05_06.json",
    "bytes": 405,
    "sha256": "29f2fbbe94b4e92f15dc55f61624007ec82e77ddc1ec2b2ef6450be4da6d1bb3"
+  },
+  {
+   "path": "qa/kit45/timing/05_lookonly.md",
+   "bytes": 271,
+   "sha256": "95295abb6224a3c154d821762a9f7ad5e04a82065450a634d1e26a8b99d578de"
+  },
+  {
+   "path": "qa/kit45/timing/05_nochange.md",
+   "bytes": 270,
+   "sha256": "f03c0d80ae6cc22802c81645cf38baa62f19cf9d845e96fb97f8621f53800169"
+  },
+  {
+   "path": "qa/kit45/timing/OLD_method_times.txt",
+   "bytes": 96,
+   "sha256": "2963f97c397e1359167e72eb12a73892b80df076c442b2796082daa60b723049"
+  },
+  {
+   "path": "qa/kit45/timing/world_after_bake_code_change.md",
+   "bytes": 385,
+   "sha256": "0cf4dad0aa7b5e28082c5393f6f6538979657d4073170e528a2a60bb16de46d7"
   },
   {
    "path": "qa/lead_r5/2026-11-17/README.md",
@@ -49383,8 +49403,8 @@
   },
   {
    "path": "tools/screenkit/build.py",
-   "bytes": 18193,
-   "sha256": "751735182cb059b55c244b58cd7ee9b21d3f2d7f09dab4130ae7cd42fc190815"
+   "bytes": 18802,
+   "sha256": "1af4f26b50c0f719a658c2136a4cae5c94bd2b4535086a7f16c4516188c47780"
   },
   {
    "path": "tools/screenkit/build_screen_app.sh",
