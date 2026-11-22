@@ -12,6 +12,9 @@ import { flag05 } from '../vfx/waterRibbon';
 
 /** r7 `?match06=1&m06cam=1` only: Screen 06 camera frame = chord toward the river this far ahead (`&m06la=`, default 40) */
 const M06_CAM = flag05('m06cam');
+/** A/B-only: let the camera follow the real curved ride path through Screen 05 instead of
+ * holding the straight 05 tunnel vanishing point. No effect on normal gameplay. */
+const FOLLOW05 = flag05('realride05') || flag05('follow05');
 const M06_LA = (() => {
   const v = typeof location !== 'undefined' ? Number(new URLSearchParams(location.search).get('m06la')) : NaN;
   return Number.isFinite(v) && v > 5 ? v : 40;
@@ -115,13 +118,21 @@ export class RideCamera {
     const fb = this.course.sample(Math.max(0, s - p.back * 0.5)); // smoothing of heading
     const dir = f.tan.clone().lerp(fb.tan, 0.35).normalize();
     let up = f.up.clone();
+    // Blend out still-image camera alignment over Screen 05 for diagnostic A/B tests.
+    // Keep the original camera everywhere else, particularly at the 04→05 and 05→06 joins.
+    const st05 = this.course.stage('05');
+    const st06 = this.course.stage('06');
+    const physical05 = FOLLOW05
+      ? THREE.MathUtils.smoothstep(s, st05.s0 + 1, st05.s0 + 8) *
+        (1 - THREE.MathUtils.smoothstep(s, st06.s0 - 10, st06.s0 - 1))
+      : 0;
     if (this.axis) {
       const a = this.axis;
       const w = THREE.MathUtils.smoothstep(s, a.s0, a.s0 + 10) * (1 - THREE.MathUtils.smoothstep(s, a.s1 - 10, a.s1));
-      if (w > 0) {
+      if (w * (1 - physical05) > 0) {
         const af = a.path.frame(s);
-        dir.lerp(af.tan, w).normalize();
-        up.lerp(af.up, w).normalize();
+        dir.lerp(af.tan, w * (1 - physical05)).normalize();
+        up.lerp(af.up, w * (1 - physical05)).normalize();
       }
     }
     up.addScaledVector(dir, -up.dot(dir)).normalize();
@@ -307,7 +318,7 @@ export class RideCamera {
     // stay concentric on the ref composition and Benny never leaves the frame when steering.
     const st5 = this.course.stage('05');
     const p5 = STAGE_CAM['05'] as CamParams;
-    const w5 = this.axis ? THREE.MathUtils.smoothstep(s, st5.s0 + 1, st5.s0 + 8) * (1 - THREE.MathUtils.smoothstep(s, st5.s1 - 9, st5.s1 - 1)) : 0;
+    const w5 = this.axis ? THREE.MathUtils.smoothstep(s, st5.s0 + 1, st5.s0 + 8) * (1 - THREE.MathUtils.smoothstep(s, st5.s1 - 9, st5.s1 - 1)) * (1 - physical05) : 0;
     if (w5 > 0 && this.axis) {
       const af = this.axis.path.frame(s);
       const T = af.tan.clone();
