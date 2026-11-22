@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3153,
-   "sha256": "231958dbb67ceaea3f586b39c3c9dc57471777165f8540fc0eb86661682f2a63"
+   "sha256": "7a5a411ff03551afdaed3fb9422315b4245096cd4dc2e2f6e1ddfc06b94a3a69"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -42943,8 +42943,8 @@
   },
   {
    "path": "tools/reflock/section.html",
-   "bytes": 61928,
-   "sha256": "1bc01f7d5362ea53dd86b410b1676982a89e927cfc15dfa39cf05c2f3a8adce1"
+   "bytes": 62073,
+   "sha256": "11f8b10439a296e8420758b11ea16056cbe84c05ecc2590ad43b46a1bd7e9868"
   },
   {
    "path": "tools/reflock/section_export.cjs",
