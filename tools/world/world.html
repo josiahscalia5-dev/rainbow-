@@ -454,8 +454,11 @@ window.kitFrameQA = () => { camera.updateMatrixWorld(); let camClear = 1e9; cons
     const d = cx.clone().multiplyScalar(a).addScaledVector(cy, b).addScaledVector(cz, c).normalize(); QA_RC.set(camera.position, d); QA_RC.far = 5; const h = QA_RC.intersectObjects(QA_SCN, false)[0]; if (h) camClear = Math.min(camClear, h.distance); }
   const F = frameAt(st.s), wp = at(st.s, new THREE.Vector3()).addScaledVector(F.r, st.lat); QA_RC.far = 2; let h = null;
   for (const dt of [0, 0.004, -0.004, 0.012]) { QA_RC.set(wp.clone().addScaledVector(F.n, 0.4).addScaledVector(F.t, dt), F.n.clone().negate()); h = QA_RC.intersectObjects(WATER, false)[0]; if (h && h.distance < 0.6) break; }
-  return { camClear: +camClear.toFixed(3), waterGap: h ? +(h.distance - 0.4).toFixed(4) : null, waterMesh: h ? h.object.name : null, area: areaOf(st.s).id,
-    submerged: window.qaWaterLine ? window.qaWaterLine().submergedFrac : null }; };
+  let slope = null, tilt = null; const up = new THREE.Vector3(0, 1, 0).applyQuaternion(benny.quaternion);
+  if (h && h.face) { const nW = h.face.normal.clone().transformDirection(h.object.matrixWorld); if (nW.dot(F.n) < 0) nW.negate(); slope = Math.acos(Math.min(1, Math.abs(nW.dot(F.n)))) * 180 / Math.PI; tilt = Math.acos(Math.min(1, up.dot(nW))) * 180 / Math.PI; }
+  return { camClear: +camClear.toFixed(3), waterGap: h ? +(h.distance - 0.4).toFixed(4) : null, waterMesh: h ? (h.object.userData.area ?? '') + '/' + h.object.name : null, area: areaOf(st.s).id,
+    slopeErrDeg: slope === null ? null : +slope.toFixed(2), bennyTiltVsSurfaceDeg: tilt === null ? null : +tilt.toFixed(2),
+    submerged: window.qaWaterLine ? window.qaWaterLine().submergedFrac : null, bank: +(Math.atan2(-F.r.y, Math.hypot(F.r.x, F.r.z)) * 180 / Math.PI).toFixed(1) }; };
 window.routeCheck = (step = 0.5) => { const rc = new THREE.Raycaster(), out = [];
   for (let s = 0; s <= LEVEL; s += step) { const F = frameAt(s), p = at(s, new THREE.Vector3()); rc.set(p.clone().addScaledVector(F.n, 0.3), F.n.clone().negate()); const h = rc.intersectObjects(WATER, false)[0];
     out.push({ s: +s.toFixed(2), hit: h ? h.object.name : null, gap: h ? +(h.distance - 0.3).toFixed(4) : null }); }

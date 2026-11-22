@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 27962,
-   "sha256": "4b2382d76b4c12475993b820f22adcfefe596a32a260a9ea210993d8cff06c16"
+   "sha256": "2f478e5448a97d35c9a67cc8c19d4c0016a3d1198c6a04251bebf5fe53a3729d"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3622,
-   "sha256": "4f488ce381b91141b8b2a3875ee8addd7a3074e0d005104e0d3130e12d9b7de8"
+   "sha256": "aedb6158d0e29be0f09f6be6113c6bb8d13cc37c5d8832e28316ae9e1b1eec41"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -43092,6 +43092,56 @@
    "sha256": "63b1cb7798df1eba35052ecf047d0589d52af5b7f24f3ca9f11758829f2da88e"
   },
   {
+   "path": "qa/world/r44/run/swipe_plan.json",
+   "bytes": 239,
+   "sha256": "b13c70efb41d9fff5b3a311a760c724757b19deef05d1db8076498d46e35b1c7"
+  },
+  {
+   "path": "qa/world/r44/world_v1/README.md",
+   "bytes": 1759,
+   "sha256": "99d2e4bce490ee9561c18dedea67253ee8a8c946cf35c622772c991d6a0a40ec"
+  },
+  {
+   "path": "qa/world/r44/world_v1/WORLD_04_picture_view.jpg",
+   "bytes": 133719,
+   "sha256": "5ece7e11bd48922c1dbb6eeec98a8085be633bffc5bf0a957906bf882216b4fb"
+  },
+  {
+   "path": "qa/world/r44/world_v1/WORLD_04_tunnel_end_doorway_s24.5.jpg",
+   "bytes": 126619,
+   "sha256": "0090391d25daf1dfa6b8d3b159d502e6885e1e07c9b364c45d29d43b357362ec"
+  },
+  {
+   "path": "qa/world/r44/world_v1/WORLD_BubbleDash_picture_view.jpg",
+   "bytes": 143493,
+   "sha256": "b3a4e958c21b3a70b1c0100056ef2b1ad3000e0a36a394c733d692a0bd338e8a"
+  },
+  {
+   "path": "qa/world/r44/world_v1/WORLD_SockRescue_picture_view.jpg",
+   "bytes": 153271,
+   "sha256": "2b96a975a5a286d452b02f9350c82f3512b8a7855b6600b39b4cab5a69db5d3f"
+  },
+  {
+   "path": "qa/world/r44/world_v1/WORLD_through_doorway_s25.5.jpg",
+   "bytes": 124734,
+   "sha256": "1460821bb6624156209fbdf8fc00ca134fec62612f81ed56fe67e9fe2fba0e29"
+  },
+  {
+   "path": "qa/world/r44/world_v1/WORLD_v1_route_stills_04_to_SockRescue.jpg",
+   "bytes": 442738,
+   "sha256": "0999e02fe1a6a64cde4d8b17c0aa9030bacf0b3cadb56c81af7be40c2bac2588"
+  },
+  {
+   "path": "qa/world/r44/world_v1/connectors_spec.json",
+   "bytes": 767,
+   "sha256": "56ca22e0f0945c4495e54818f3f68abe8c1af283458fd40c5f031aba74b1cb10"
+  },
+  {
+   "path": "qa/world/r44/world_v1/world.json",
+   "bytes": 55330,
+   "sha256": "affba7301d36cc132a747b528504b447e94403e0f2ec3cf9429276637be0c679"
+  },
+  {
    "path": "qa/worldlabs/05/05_env_mask.png",
    "bytes": 6175,
    "sha256": "11b77364bdeac15614ee648901b4e4b3b2a9cf2bdf8700024cc681dbf56be4a9"
@@ -45518,8 +45568,8 @@
   },
   {
    "path": "tools/world/world.html",
-   "bytes": 60453,
-   "sha256": "4b2d912f7a62015c78998ca011a12cf927e8ae58520755e26549b376db7810eb"
+   "bytes": 61066,
+   "sha256": "0413961b35e88d39385ab68ff4dae3a7b0aa610f9b6f4715475a64865e76300f"
   },
   {
    "path": "tools/world/world_layout.py",
