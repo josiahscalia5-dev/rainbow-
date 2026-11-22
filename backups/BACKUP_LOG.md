@@ -1583,3 +1583,4 @@ hint: "git config advice.addIgnoredFile f |
 | 2026-11-22T21:03:56+00:00 | daemon | committed+pushed | `e0fbbc40c10c` | `ccr-c1b272d2-3ru7yx` | 2 | True |  |
 | 2026-11-22T21:08:29+00:00 | manual:r45b-final-recording-zip | committed+pushed | `406d521192c3` | `ccr-c1b272d2-3ru7yx` | 10 | True |  |
 | 2026-11-22T21:08:57+00:00 | daemon | committed+pushed | `34002f0065d5` | `ccr-c1b272d2-3ru7yx` | 5 | True |  |
+| 2026-11-22T21:09:20+00:00 | manual:end-of-turn | committed+pushed | `617cb0d58986` | `ccr-c1b272d2-3ru7yx` | 5 | True |  |
