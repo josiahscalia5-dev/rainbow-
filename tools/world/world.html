@@ -255,8 +255,13 @@ const loadSection = async (A) => {
         vec3 c = mix(lav, cyan, smoothstep(-0.5, 0.4, f)); c = mix(c, core, smoothstep(0.985, 0.999, f)); gl_FragColor = vec4(c, 1.0); }` });
     const room = new THREE.Mesh(new THREE.SphereGeometry(7, 48, 32), m); room.position.copy(c); room.name = 'exit_room'; room.userData.area = A.id; world.add(room);
     waterSeg('water_room', Z_EXIT - 0.1, Z_EXIT - 12.8, -6.6, 6.6, -0.003); }
+  if (A.cut_z != null) {   // v2: the section ends at a tube segment boundary; what lies beyond (the rest of the tube, its exit room) is not part of the world
+    for (const o of [...ms, ...segs]) { o.geometry.computeBoundingBox(); if (o.geometry.boundingBox.max.z < A.cut_z + 0.01) { o.visible = false; o.userData.cut = true; } }
+    world.traverse((o) => { if (o.name === 'exit_room' && o.userData.area === A.id) o.visible = false; });
+    for (let i = WATER.length - 1; i >= 0; i--) if (WATER[i].userData.cut) WATER.splice(i, 1);
+    for (let i = MESH.length - 1; i >= 0; i--) if (MESH[i].userData.cut) MESH.splice(i, 1); }
   const MANI = await loadBake(A, [...ms, ...segs]);
-  CLAMPS.push((p) => { const z = p.z - off.z; if (z > T.z_arch + 0.2 || z < Z_EXIT) return false; const ay = axy(z) + off.y, dx = p.x - off.x, dy = p.y - ay, rr = Math.hypot(dx, dy), lim = radius(z) - 0.25;
+  CLAMPS.push((p) => { const z = p.z - off.z; if (z > T.z_arch + 0.2 || z < Math.max(Z_EXIT, A.cut_z ?? -1e9)) return false; const ay = axy(z) + off.y, dx = p.x - off.x, dy = p.y - ay, rr = Math.hypot(dx, dy), lim = radius(z) - 0.25;
     if (rr > lim) { p.x = off.x + dx * lim / rr; p.y = ay + dy * lim / rr; return true; } return false; });
   if (MANI?.foam) FOAMS.push(...MANI.foam.map(([x, z, w, ...c]) => [x + off.x, off.y, z + off.z, w, ...c]));
   const rp = (() => { let x = 777; return () => ((x = (x * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff); })();
@@ -277,9 +282,16 @@ for (const A of WD.areas) { if (A.kind === 'kit') await loadKit(A); else if (A.k
 const AREA = Object.fromEntries(WD.areas.map((A) => [A.id, A]));
 { const g = (await gltf.loadAsync('connectors.glb')).scene; g.name = 'connectors'; world.add(g); const spec = Object.fromEntries(WD.connectors.map((c) => [c.name, c]));
   g.traverse((o) => { if (!o.isMesh) return; const c = spec[o.name], A = AREA[c.area]; o.geometry.computeBoundingBox(); const sz = o.geometry.boundingBox.getSize(new THREE.Vector3());
-    o.material = c.fam === 'ring' ? sceneryMat(BASE.goldring, [4, 1], A) : c.fam === 'pool' ? waterMatKit(sz.x / 2, sz.z, 0, true, A) : sceneryMat(BASE[c.fam] ?? BASE.pink, [Math.max(1, sz.x / 1.0), Math.max(1, sz.y / 1.0)], A);
+    let rep = [Math.max(1, sz.x / 1.0), Math.max(1, sz.y / 1.0)];
+    if (c.kind === 'tube') { let L = 0; for (let i = 1; i < c.axis.length; i++) L += V3(c.axis[i]).distanceTo(V3(c.axis[i - 1])); const rA = c.r.reduce((a, b) => a + b, 0) / c.r.length;
+      rep = c.fam === 'tunnelS' ? [Math.round(2 * Math.PI * rA / 0.75), Math.max(1, L / 0.75)] : [Math.round(2 * Math.PI * rA / 2.6), Math.max(1, L / 1.2)]; }
+    o.material = c.fam === 'ring' ? sceneryMat(BASE.goldring, [4, 1], A) : c.fam === 'pool' ? waterMatKit(Math.max(sz.x, 1.2) / 2, Math.max(sz.z, 1), 0, true, A) : sceneryMat(BASE[c.fam] ?? BASE.pink, rep, A);
     o.userData.fam = c.fam === 'pool' ? 'pool' : c.fam; o.userData.area = 'connector'; MESH.push(o); if (c.fam === 'pool') WATER.push(o); }); }
 
+for (const ct of WD.conn_tubes ?? []) { const AX = ct.axis.map(V3), RR = ct.r;
+  CLAMPS.push((p) => { if (p.z > AX[0].z || p.z < AX[AX.length - 1].z) return false; let i = 0; while (i < AX.length - 2 && AX[i + 1].z > p.z) i++;
+    const w = (AX[i].z - p.z) / Math.max(1e-6, AX[i].z - AX[i + 1].z), c = AX[i].clone().lerp(AX[i + 1], w), lim = lerp(RR[i], RR[i + 1], w) - 0.25, dx = p.x - c.x, dy = p.y - c.y, rr = Math.hypot(dx, dy);
+    if (rr > lim) { p.x = c.x + dx * lim / rr; p.y = c.y + dy * lim / rr; return true; } return false; }); }
 // ?gray=1: GEOMETRY TEST - every scenery surface plain gray (lit by its own normal) with a 0.5 u world grid, back faces orange, holes green
 if (GRAY) { const famCol = { tunnel: [0.62, 0.62, 0.66], ring: [0.78, 0.72, 0.55], arch: [0.78, 0.72, 0.55], water: [0.55, 0.68, 0.78], pool: [0.5, 0.6, 0.7], funnel: [0.52, 0.64, 0.74], wall: [0.66, 0.6, 0.66], pink: [0.66, 0.6, 0.66], arrow: [0.95, 0.95, 0.95] };
   const gm = (c) => new THREE.ShaderMaterial({ side: THREE.DoubleSide, uniforms: { uC: { value: new THREE.Color(...c) } },

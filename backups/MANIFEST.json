@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 27962,
-   "sha256": "458c842c0992e989d4a221f7f2c6249a53471e1788721e8075a51f325e1325b7"
+   "sha256": "f652262fd312bac86240cce5ffa7eaa655c37f7bf73369536fca88c6793804a9"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3622,
-   "sha256": "50e55d366da06910ec343cb9da5a51a5bfeae2553f0104e7edc9e0d3012565ea"
+   "sha256": "42b87878fbd984ec5aad3883d2f9abaadf89e01819a04a626c7a62e40452be46"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -45513,8 +45513,8 @@
   },
   {
    "path": "tools/screenkit/screens/05/fit05.py",
-   "bytes": 6462,
-   "sha256": "9f83c69f61f8e9a322abcadd2beaf3a131e1236dfbb45b15f07665c8c72030ba"
+   "bytes": 6926,
+   "sha256": "63d30f5f52668a8ea5dbb7c45566bcb88b9a3b1c01adc36148a3df3b70082b03"
   },
   {
    "path": "tools/screenkit/screens/05/segment05.json",
@@ -45563,8 +45563,8 @@
   },
   {
    "path": "tools/world/blender_connectors.py",
-   "bytes": 3771,
-   "sha256": "28b71eb68021a0b83261b1eab6c1ae398c1b52002096c4e734de47990652b9be"
+   "bytes": 6018,
+   "sha256": "02a70010fb045d416b6eba891eba5d294d34babe5bd2a8e2aab1fc397975d325"
   },
   {
    "path": "tools/world/join_audit.cjs",
@@ -45578,18 +45578,18 @@
   },
   {
    "path": "tools/world/setup_world.sh",
-   "bytes": 2049,
-   "sha256": "ad3f3aebe266d8423db1b121301513ecd6f0bf96e2f238f933d7f57d370dc5da"
+   "bytes": 2448,
+   "sha256": "31e3b2c363df99442dd13f0dcdd5fecf7761fb3ff8b3cf4aa2bddf052afd4306"
   },
   {
    "path": "tools/world/world.html",
-   "bytes": 61066,
-   "sha256": "0413961b35e88d39385ab68ff4dae3a7b0aa610f9b6f4715475a64865e76300f"
+   "bytes": 62654,
+   "sha256": "165bdc996beecf78d54446b67a40dd16a2e8363e161d7e4bdde22353da1ee3b8"
   },
   {
    "path": "tools/world/world_layout.py",
-   "bytes": 6484,
-   "sha256": "db561a9cda546916793ad136696e9bb611a4aa9340685de3e92212eb7e65da33"
+   "bytes": 10010,
+   "sha256": "263c7da169a322c2f43be5bfdbb2c66ba12c530da75285b3000fd60cbf0d15a7"
   },
   {
    "path": "tools/worldlabs/analyze_splats.py",

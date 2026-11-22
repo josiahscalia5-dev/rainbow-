@@ -58,12 +58,16 @@ lay = {'screen': '05', 'title': 'FLOW INTO THE CURRENT', 'ref': REF, 'fov': cam.
        'drum': {'axis_x': xa, 'axis_y': ya, 'r': R, 'z0': 3.0, 'z_far': z_ring0 - 14.0, 'z1': far if a.open_end else far - 2.0, 'open_end': bool(a.open_end),
                 'seg': 2.0, 'seg_far': 8.0, 'chord': chord, 'cam_off_R': [ox, oy], 'pool_y': -0.02},
        'rings': {'z': [z_ring0], 'spacing': 2.6, 'band': 0.32},
-       'paddles': paddles, 'bubbles': [], 'no_route_ribbon': True, 'foam_pool': True,
+       # r44: the painted S-river as its own water ribbon along Benny's route (one-factor test: start view unchanged 83.5 %, pink river edge in motion)
+       'paddles': paddles, 'bubbles': [], 'no_route_ribbon': False, 'route_flume': False, 'foam_pool': True,
        'bake_res': {'pool': [1024, 2048]}, 'splash_scale': 0.6, 'lod_bias': -0.8, 'bake_dens': [1, 4], 'number': '05', 'next': '06', 'coins_start': 1420}
 # the painted S-river (pink edges + cyan core) at the coin trail: 310 px wide at y 650 -> its real width at that depth (river ribbon option)
-Pr = cam.on_plane_y(485.0, 650.0); RIVER_W = 310.0 * float(-(cam.R.T @ (Pr - cam.C))[2]) / cam.F; lay['river_width'] = RIVER_W
+Pr = cam.on_plane_y(485.0, 650.0); RIVER_W = 310.0 * float(-(cam.R.T @ (Pr - cam.C))[2]) / cam.F; lay['river_width'] = RIVER_W; lay['route']['width'] = RIVER_W
 for kv in a.set:
-    k, v = kv.split('=', 1); lay[k] = json.loads(v)
+    k, v = kv.split('=', 1); v = json.loads(v)
+    if k == 'river_ribbon' and v:                                # one-factor test: the S-river as its own water ribbon along Benny's route
+        lay['no_route_ribbon'] = False; lay['route_flume'] = False; lay['route']['width'] = RIVER_W
+    else: lay[k] = v
 fl.dump(os.path.join(a.out, 'layout.json'), lay)
 im = Image.open(os.path.join(REPO, REF)).convert('RGB'); d = ImageDraw.Draw(im)
 P2 = lambda P: tuple(cam.proj(P)[0])
