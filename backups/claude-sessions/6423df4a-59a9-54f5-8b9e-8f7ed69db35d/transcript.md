@@ -5572,3 +5572,10 @@ Saved: commit `7cd87f07`, the same commit on GitHub. Updating the resume notes w
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && until [ -s $S/run_b05b/checks.json ] && [ -s $S/run_b05g/checks.json ]; do sleep 20; done; cd /home/user/rainbow- && for r in b05b:TEXTURED b05g:GRAY; do d=${r%%:*}; n=${r##*:}; python3 -I tools/reflock/encode_run.py $S/run_$d qa/world/r44/run GAMEPLAY_world_SockRescue_to_05_${n}_real_touch_v2 2>&1 | tail -1; python3 -c \"\nimport json;c=json.load(open('qa/world/r44/run/GAMEPLAY_world_SockRescue_to_05_${n}_real_touch_v2_checks.json')); print('$n', {k:c[k] for k in ['frames','swipes_detected','be …[+317 chars]`
 
+### 🧑 User — 2026-11-22T16:51:27.802Z
+
+> ↩︎ result: wrote qa/world/r44/run/GAMEPLAY_world_SockRescue_to_05_TEXTURED_real_touch_v2.mp4 9.9 MB 574 frames
+> TEXTURED {'frames': 574, 'swipes_detected': 10, 'benny_offscreen_frames': 0, 'hole_frames': 0, 'hole_pixels_max': 0, 'camera_max_step_u': 0.1042, 'camera_max_turn_deg_per_frame': 0.715, 'scenery_meshes_moved': [], 'benny_water_gap_max_u': 0.02, 'benny_water_missing_frames': 0, 'camera_min_clearance_u': 0.231}
+> wrote qa/world/r44/run/GAMEPLAY_world_SockRescue_to_05_GRAY_real_touch_v2.mp4 9.5 MB 574 frames
+> GRAY {'frames': 574, 'swipes_detected': 10, 'benny_offscreen_frames': 0, 'hole_frames': 0, 'hole_pixels_max': 0, 'camera_max_step_u': 0.1042, 'camera_max_turn_deg_per_frame': 0.715, 'scenery_meshes_moved': [], 'benny_water_gap_max_u': 0.02, 'benny_water_missing_frames': 0, 'camera_min_clearance_u': 0.231}
+

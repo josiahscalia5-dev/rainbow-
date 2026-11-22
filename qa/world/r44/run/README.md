@@ -8,3 +8,5 @@
 The first B → 05 take showed a hairline crack at the tube seam and a fast camera turn in 05's S-curve: fixed (connector overlaps 0.2 u into both
 tubes; camera heading averaged over ±1.6 u) and re-recorded — see the `..._v2` files when present. Immersion: 11–22 % in the water, negative only
 during the leaps (out of the water by design). Swipe plans: `swipe_plan.json`, `swipe_plan_B05.json`.
+| `GAMEPLAY_world_SockRescue_to_05_TEXTURED_real_touch_v2.mp4` (after the fixes) | Sock Rescue s 70 → connector → 05 s 112 | 574 | 10 / 10 | 574 / 574 | **0** in all frames | 0.104 u / **0.72°** | 0 of 312 | 0.02 u |
+| `GAMEPLAY_world_SockRescue_to_05_GRAY_real_touch_v2.mp4` (plain materials) | same | 574 | 10 / 10 | 574 / 574 | **0** in all frames | 0.104 u / 0.72° | 0 of 312 | 0.02 u |
