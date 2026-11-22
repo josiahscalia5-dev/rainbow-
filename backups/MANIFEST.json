@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3271,
-   "sha256": "0c27aac723d30bc5a24b3020a9c4c1036b8492d1a86cfcc0a9fe9d4ae93bf53f"
+   "sha256": "0594c86b5acba1a29ff44fb3b1b7911e48ee43fa41b9300f424a13f6b329c765"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -15595,6 +15595,16 @@
    "path": "qa/bonus/r38/SOCK_s8.3_l0.jpg",
    "bytes": 170561,
    "sha256": "aefc96e19c3c7eb71021e04f177af2418c636f0256b781e9d901a201757e3293"
+  },
+  {
+   "path": "qa/bonus/r39/BUBBLE_picture_vs_game_start_diffmap.jpg",
+   "bytes": 336308,
+   "sha256": "96a958ed05c4ac841a847f52a791ae76ef8d7060edd801ab9ea8da4a7dabb35e"
+  },
+  {
+   "path": "qa/bonus/r39/SOCK_picture_vs_game_start_diffmap.jpg",
+   "bytes": 344294,
+   "sha256": "a984ddb293757cadf22a982f1b23d2fb155ba18d82fae687b83d20f86942112f"
   },
   {
    "path": "qa/capture_log.json",
