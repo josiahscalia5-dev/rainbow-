@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 27962,
-   "sha256": "527674d7b7a327f85f5c049b9d6dc27e34395b8dd8ed79b4c02873b086e7686e"
+   "sha256": "2a4cc7bf309112e75b88f506d2f9a61a5045cfb47627b3d8b4280de57b50f22e"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3622,
-   "sha256": "cacf26334ed7a5cd2fe43d90f4c84036991885b11adb09c9d333f1139d657c96"
+   "sha256": "dca1b58508972d1bafa39c31589e5f65689c1c5a494afc4870cb782348b9bd25"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -45328,8 +45328,8 @@
   },
   {
    "path": "tools/screenkit/blender_kit.py",
-   "bytes": 21389,
-   "sha256": "33a6dbd71c67fa860caffd1b764d15df27dec17325bc4203f66d5e50c21b3b09"
+   "bytes": 21767,
+   "sha256": "181b1d906869e9955fc0be6d780ba63ca3c83fd4c0d3a996d718e1744d6df1f2"
   },
   {
    "path": "tools/screenkit/build_screen_app.sh",
@@ -45367,9 +45367,14 @@
    "sha256": "81a26c94712ffd16ba5b73a76daba4735be9ee3061739a9e865d354363c450b1"
   },
   {
+   "path": "tools/screenkit/measure_variant.sh",
+   "bytes": 902,
+   "sha256": "e4494129106675de7c29661a114bd0a350c2b8616e130094dfb7a1e7aa20c9e4"
+  },
+  {
    "path": "tools/screenkit/screen.html",
-   "bytes": 59742,
-   "sha256": "5c2b06385d484ad4642853d0be1b880db1b86d64133cf597178696b649cf311f"
+   "bytes": 60945,
+   "sha256": "073e4d663ec4115b5e7119f7b2fca0fccbf969b2d10a3d372eaa69eb7a13dcaa"
   },
   {
    "path": "tools/screenkit/screen_export.cjs",
@@ -45378,8 +45383,8 @@
   },
   {
    "path": "tools/screenkit/screens/04/fit04.py",
-   "bytes": 10047,
-   "sha256": "3ed9e36c21f7d0a0b688cd5823e72d0cb0dd726ad5870323298c630263736ae0"
+   "bytes": 10872,
+   "sha256": "f288743e9de3a402b300fd49abb8624411ffef0354c670cc188c6acb9cc99edf"
   },
   {
    "path": "tools/screenkit/screens/04/segment04.json",
@@ -45405,6 +45410,11 @@
    "path": "tools/screenkit/setup_screen.sh",
    "bytes": 3426,
    "sha256": "eabde6c085c91d1cea3d42cfb5e6a2c91adcfa17fe4f2303a57885a30bb9e5e4"
+  },
+  {
+   "path": "tools/screenkit/variant.sh",
+   "bytes": 1161,
+   "sha256": "4be9e3bd45432dd9eb786c9e9b933645eb075a4d3ee6e5d0fb89602e4e7508d7"
   },
   {
    "path": "tools/spector/spector_capture_test.mjs",

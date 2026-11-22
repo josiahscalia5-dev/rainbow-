@@ -4153,3 +4153,280 @@ Please continue building and testing the connected game using this approach.
 
 > ↩︎ result: 11:flume_*, foam_*, paddle_*). Screen-specific numbers live ONLY in layout.json; this file has none.
 
+### 🤖 Claude — 2026-11-22T15:59:32.157Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/blender_kit.py'; s=open(p).read()\ns=s.replace(\"flume_*, foam_*, paddle_*). Screen-specific numbers live ONLY in layout.json; this file has none.\",\n \"flume_*, foam_*, paddle_*; r44 optional: funnel_*, wall_*, pool_front_*, arrow_*, ring_mouth). Screen-specific numbers live ONLY in\\nlayout.json; this file has none.\")\nopen(p,'w').write(s)\np='tools/screenkit/screen.html'; s=open(p).read()\nold=\"\"\"const famOf = (n) => /^tunnel(far)?_/.test(n) ? 'tunnel' : /^ring_/.test(n) ? 'ring' : /^water_/.test(n) ? 'water' : /^pool_/.test(n) ? 'pool …[+3278 chars]`
+
+### 🧑 User — 2026-11-22T15:59:32.221Z
+
+> ↩︎ result: patched
+> 440:const QA_SCN = MESH.filter((o) => o.userData.fam !== 'foam'), QA_WAT = MESH.filter((o) => o.userData.fam === 'water' || o.userData.fam === 'pool'), QA_RC = new THREE.Raycaster();
+> 455:window.routeCheck = (step = 0.5) => { const rc = new THREE.Raycaster(), W2 = MESH.filter((o) => o.userData.fam === 'water' || o.userData.fam === 'pool'), out = [];
+
+### 🤖 Claude — 2026-11-22T15:59:40.347Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && rm -rf $S/ws04 && bash tools/screenkit/setup_screen.sh 04 $S/ws04 2>&1 | tail -8; echo ---; grep -E \"exported|Error|Traceback\" $S/ws04/fit/blender.log | head -5; echo --- 06 regression; rm -rf $S/ws06b && bash tools/screenkit/setup_screen.sh 06 $S/ws06b 2>&1 | tail -2; cmp $S/ws06/game/scene.glb $S/ws06b/game/scene.glb && echo \"06 scene.glb byte-identical\"", "description": "Build Screen 04 with the kit and check Screen 06 is unchanged", "timeout": 600000}`
+
+### 🧑 User — 2026-11-22T15:59:55.554Z
+
+> ↩︎ result: VP (465.9, 726.7); cam yaw 1.58 pitch -1.93 deg; tunnel R 1.182 axis (-0.101, 0.472) cam off/R (0.085, 0.222); mouth z -3.47; Benny water (-0.078, -1.339) height 0.473; chord 1.084
+> arrows (x, z, width): [(np.float64(-0.05), np.float64(-4.11), 0.706), (np.float64(-0.04), np.float64(-5.25), 0.706), (np.float64(-0.01), np.float64(-7.54), 0.706), (np.float64(0.05), np.float64(-11.13), 0.706), (np.float64(0.21), np.float64(-19.32), 0.706)]
+> {"method": {"benny": "SAM 2.1 (pred IoU 0.935)", "coins": "SAM 2.1 per coin (circle below 6 px radius)"}, "masked_share": 0.3501}
+> Blender quit
+> screen 04 ready: /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/ws04/game/play3.html
+> ---
+> exported /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/ws04/game/scene.glb 53 objects: ['arrow', 'foam', 'funnel', 'pool', 'ring', 'tunnel', 'tunnelfar', 'wall']
+> --- 06 regression
+> Blender quit
+> screen 06 ready: /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/ws06b/game/play3.html
+> 06 scene.glb byte-identical
+
+### 🤖 Claude — 2026-11-22T16:00:03.627Z
+
+> 🔧 **Bash** `{"command": "grep -n \"stills\" tools/reflock/section_run.cjs | head -12; python3 -c \"\nimport json;L=json.load(open('/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/ws04/game/layout.json'));print('s_ref',L['cams'][0]['s_ref'])\"", "description": "Check how stills are positioned and 04's picture position"}`
+
+### 🧑 User — 2026-11-22T16:00:03.702Z
+
+> ↩︎ result: 2://   node section_run.cjs <game folder> <out> stills <s list> [lane=0] [query]      -> s<ss>_l<lane>.png + stills.json
+> 25:    const query = mode === 'stills' ? a3 : a3;
+> 31:    if (mode === 'stills') {
+> 41:      fs.writeFileSync(path.join(out, 'stills.json'), JSON.stringify({ errors: errs, info, stills: res }, null, 1));
+> s_ref 1.2000000000000002
+
+### 🤖 Claude — 2026-11-22T16:00:05.456Z
+
+> 🔧 **Bash** `{"command": "sed -n 20,42p tools/reflock/section_run.cjs", "description": "Read the stills branch of the run harness"}`
+
+### 🧑 User — 2026-11-22T16:00:05.491Z
+
+> ↩︎ result: const browser = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
+>   const errs = [];
+>   try {
+>     const ctx = await browser.newContext({ viewport: { width: W, height: H }, deviceScaleFactor: 1, isMobile: true, hasTouch: true });
+>     const page = await ctx.newPage(); page.on('pageerror', (e) => errs.push(String(e).slice(0, 400))); page.on('console', (m) => { if (m.type() === 'error') errs.push(m.text().slice(0, 400)); });
+>     const query = mode === 'stills' ? a3 : a3;
+>     const t0 = Date.now();
+>     await page.goto(`http://127.0.0.1:${port}/play3.html?w=${W}&h=${H}${query ? '&' + query : ''}`);
+>     await page.waitForFunction(() => window.ready === true || window.__err, null, { timeout: 1200000 }).catch((e) => errs.push('ready timeout ' + e));
+>     const info = await page.evaluate(() => window.sectionInfo && window.sectionInfo());
+>     console.log('loaded in', ((Date.now() - t0) / 1000).toFixed(1), 's', JSON.stringify(info && { LEVEL: info.LEVEL, S_SOCK: info.S_SOCK, meshes: info.meshes, foam: info.foam, bake_ms: info.bake?._ms }));
+>     if (mode === 'stills') {
+>       const S = arg.split(',').map(Number …[+1100 chars]
+
+### 🤖 Claude — 2026-11-22T16:00:12.895Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && (NODE_PATH=$(npm root -g) timeout 900 node tools/reflock/section_run.cjs $S/ws04/game $S/st04 stills 1.2,3,5,8,12,20,28 0 'sentinel=1' 2>&1 | grep -E \"loaded|Error|error\" ; python3 -I tools/screenkit/compare_screen.py 04 $S/st04/s1.20_l0.png $S/ws04/seg/mask.png $S/cmp04 --before qa/world/r44/join_audit_BEFORE/frames/J1_04_exit_a.jpg 2>&1 | grep -E \"share_within|ssim|colour\" | head -8) & (NODE_PATH=$(npm root -g) timeout 900 node tools/reflock/section_run.cjs $S/ws04/game $S/st04g stills 1.2 …[+182 chars]`
+
+### 🧑 User — 2026-11-22T16:00:30.201Z
+
+> ↩︎ result: Error: ENOENT: no such file or directory, open '/ws04/game/play3.html'
+> loaded in 11.8 s {"LEVEL":32.15,"meshes":53,"bake_ms":10005}
+>   "share_within_20_levels": 0.845,
+>   "ssim_scenery": 0.768,
+>   "colour_look_corr": 0.974,
+>   "share_within_20_levels": 0.032,
+>   "ssim_scenery": 0.217,
+>   "colour_look_corr": 0.228,
+> [1]+  Done                    S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && ( NODE_PATH=$(npm root -g) timeout 900 node tools/reflock/section_run.cjs $S/ws04/game $S/st04 stills 1.2,3,5,8,12,20,28 0 'sentinel=1' 2>&1 | grep -E "loaded|Error|error"; python3 -I tools/screenkit/compare_screen.py 04 $S/st04/s1.20_l0.png $S/ws04/seg/mask.png $S/cmp04 --before qa/world/r44/join_audit_BEFORE/frames/J1_04_exit_a.jpg 2>&1 | grep -E "share_within|ssim|colour" | head -8 )
+
+### 🤖 Claude — 2026-11-22T16:00:39.656Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && NODE_PATH=$(npm root -g) timeout 900 node tools/reflock/section_run.cjs $S/ws04/game $S/st04g stills 1.2,5,12,28 0 'sentinel=1&gray=1' 2>&1 | grep -E \"loaded|rror\"; ls $S/cmp04; python3 - <<EOF\nfrom PIL import Image, ImageDraw\nS='$S'\nnames=[('$S/cmp04/new_APPROVED.jpg','APPROVED 04'),('$S/st04/s1.20_l0.png','NEW kit 04 (picture camera)'),('$S/st04g/s1.20_l0.png','NEW gray geometry'),('$S/st04/s5.00_l0.png','swimming s=5'),('$S/st04/s12.00_l0.png','swimming s=12'),('$S/st04/s28.00_l0.png','s …[+432 chars]`
+
+### 🧑 User — 2026-11-22T16:00:43.900Z
+
+> ↩︎ result: loaded in 1.2 s {"LEVEL":32.15,"meshes":53}
+> new_APPROVED.jpg
+> new_BEFORE_f0000.jpg
+> new_DIFF_NEW_f0000.jpg
+> new_NEW_f0000.jpg
+> new_compare.json
+> new_summary.json
+> scenery_mask_04.png
+
+### 🤖 Claude — 2026-11-22T16:00:46.070Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/peek04.jpg"}`
+
+### 🧑 User — 2026-11-22T16:00:46.103Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T16:01:12.900Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && python3 -c \"\nimport json;d=json.load(open('$S/cmp04/new_compare.json'));f=d['frames'][0]['new'] if 'frames' in d else d\nprint(json.dumps(d.get('triage') or d['frames'][0].get('triage') or {}, indent=0)[:1500])\"; python3 -c \"\nimport json;d=json.load(open('$S/cmp04/new_summary.json'));print(json.dumps(d,indent=0)[:1800])\"", "description": "Read where Screen 04's mismatches are concentrated"}`
+
+### 🧑 User — 2026-11-22T16:01:13.004Z
+
+> ↩︎ result: Traceback (most recent call last):
+>   File "<string>", line 2, in <module>
+>     import json;d=json.load(open('/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/cmp04/new_compare.json'));f=d['frames'][0]['new'] if 'frames' in d else d
+>                                                                                                                                                 ~~~~~~~~~~~^^^
+> KeyError: 0
+> {
+> "new": {
+> "share_within_20_levels": 0.845,
+> "ssim_scenery": 0.768,
+> "mean_abs_diff_levels": 13.9,
+> "colour_look_corr": 0.974,
+> "sharpness_vs_approved": 0.699,
+> "whole_frame_within_20_levels": 0.591
+> },
+> "before": {
+> "share_within_20_levels": 0.032,
+> "ssim_scenery": 0.217,
+> "mean_abs_diff_levels": 86.6,
+> "colour_look_corr": 0.228,
+> "sharpness_vs_approved": 1.01,
+> "whole_frame_within_20_levels": 0.04
+> },
+> "scenery_share_of_frame": 0.635,
+> "route_first": [
+> "gold (21 % of all mismatch; 16 % of this region off) -> washer-environment-modeler (gold rings, machinery); coins -> path-camera-transition-engineer (coin layout)",
+> "pink_edge (19 % of all mismatch; 10 % of this region off) -> water-fx-specialist (pink / magenta river edges)",
+> "water_cyan (19 % of all mismatch; 16 % of  …[+327 chars]
+
+### 🤖 Claude — 2026-11-22T16:01:25.409Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/cmp04/new_DIFF_NEW_f0000.jpg"}`
+
+### 🧑 User — 2026-11-22T16:01:25.431Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T16:01:44.560Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/blender_kit.py'; s=open(p).read()\nold=\"\"\"for side, nm in ((-1, 'foam_poolL'), (1, 'foam_poolR')):\n    foam_bank(\"\"\"\nnew=\"\"\"for side, nm in (((-1, 'foam_poolL'), (1, 'foam_poolR')) if LAY.get('foam_pool', True) else ()):   # r44: 04 paints no foam along the tube's water edges\n    foam_bank(\"\"\"\nassert old in s; s=s.replace(old,new)\nold=\"\"\"def chevron(name, pos, width, fwd):\"\"\"\nnew=\"\"\"def chevron(name, pos, width, fwd, tilt_deg=0.0):\"\"\"\nassert old in s; s=s.replace(old,new)\nold=\"\"\"    c = Vector(pos); P = lambd …[+3183 chars]`
+
+### 🧑 User — 2026-11-22T16:01:44.630Z
+
+> ↩︎ result: ok
+> 80:  tunnelGold: cvs(512, 256, (g, w, h) => { g.fillStyle = grad(g, 0, 0, 0, h, [[0, '#7a3412'], [0.12, '#c8621f'], [0.3, '#f6a442'], [0.42, '#ffe3a0'], [0.5, '#f8b452'], [0.7, '#d9792c'], [0.88, '#a8501c'], [1, '#7a3412']]); g.fillRect(0, 0, w, h);
+> 146:  if (fam === 'tunnel' && LAY.tunnel_style === 'gold') m = sceneryMat(BASE.tunnelGold, [Math.round(2 * Math.PI * (DRUM?.r ?? 1) / 1.6), Math.max(1, sz.z / (LAY.rings?.spacing ?? 0.95))]);   // r44: 04 polished gold ring tube
+> 237:  const RES = (o) => { const f = o.userData.fam, sz = bbox(o).getSize(new THREE.Vector3()); const ov = LAY.bake_res?.[o.name.replace(/_\d+$/, '')] ?? LAY.bake_res?.[f]; if (ov) return ov;   // r44: per-screen overrides
+
+### 🤖 Claude — 2026-11-22T16:01:59.807Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/screens/04/fit04.py'; s=open(p).read()\nold=\"ap = argparse.ArgumentParser(); ap.add_argument('out'); ap.add_argument('--da2'); a = ap.parse_args(); os.makedirs(a.out, exist_ok=True)\"\nnew=\"\"\"ap = argparse.ArgumentParser(); ap.add_argument('out'); ap.add_argument('--da2')\nap.add_argument('--set', action='append', default=[], help='controlled test: key=json layout override (arrow_tilt=50 tilts the arrows)')\na = ap.parse_args(); os.makedirs(a.out, exist_ok=True)\"\"\"\nassert old in s; s=s.replace(old,new)\nold=\"fl.dump(os.path.join(a.out …[+1837 chars]`
+
+### 🧑 User — 2026-11-22T16:01:59.869Z
+
+> ↩︎ result: ok
+> made
+
+### 🤖 Claude — 2026-11-22T16:02:12.878Z
+
+> 🔧 **Bash** `{"command": "cat > tools/screenkit/measure_variant.sh <<'EOF'\n#!/usr/bin/env bash\n# Rainbow screen kit (r44): stills of a game folder (picture camera + positions while swimming) + the measured likeness at the picture camera.\n#   bash tools/screenkit/measure_variant.sh <NN> <workspace> <out> [s list, default 1.2] [extra query]\nset -e\nNN=$1; WS=$2; OUT=$3; SL=${4:-1.2}; Q=${5:-sentinel=1}; SRC=$(cd \"$(dirname \"$0\")/../..\" && pwd)\nNODE_PATH=$(npm root -g) node \"$SRC/tools/reflock/section_run.cjs\" \"$WS/game\" \"$OUT\" stills \"$SL\" 0 \"$Q\" > \"$OUT.log\" 2>&1\npython3 -I \"$SRC/tool …[+1397 chars]`
+
+### 🧑 User — 2026-11-22T16:02:12.917Z
+
+> ↩︎ result: Command running in background with ID: bb423pwuf. Output is being written to: /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/tasks/bb423pwuf.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-22T16:02:35.046Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json, struct\ndef meshes(path):\n    b=open(path,'rb').read(); n=struct.unpack('<I',b[12:16])[0]; J=json.loads(b[20:20+n])\n    out=[]\n    for nd in J['nodes']:\n        if 'mesh' not in nd: continue\n        m=J['meshes'][nd['mesh']]; mn=[1e9]*3; mx=[-1e9]*3\n        for p in m['primitives']:\n            a=J['accessors'][p['attributes']['POSITION']]; mn=[min(x,y) for x,y in zip(mn,a['min'])]; mx=[max(x,y) for x,y in zip(mx,a['max'])]\n        t=nd.get('translation',[0,0,0]); out.append((nd.get('name'),[round(x+tt,2) for x,tt in zip(mn,t)],[round(x+tt,2 …[+295 chars]`
+
+### 🧑 User — 2026-11-22T16:02:35.113Z
+
+> ↩︎ result: 148 meshes
+> ('ceiling', [-3.57, 5.2, -18.61], [3.57, 5.2, 2])
+> ('wall_L', [-3.57, -0.4, -18.61], [-3.57, 5.2, 2])
+> ('wall_near_floor', [-3.57, -0.4, -14.06], [3.57, -0.4, 2])
+> ('wall_R', [3.57, -0.4, -18.61], [3.57, 5.2, 2])
+
+### 🤖 Claude — 2026-11-22T16:02:47.301Z
+
+> 🔧 **Bash** `{"command": "until grep -qE \"v04_3 scenery|rror\" /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/tasks/bb423pwuf.output 2>/dev/null; do sleep 5; done; cat /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/tasks/bb423pwuf.output", "description": "Wait for the three Screen 04 test results", "timeout": 1800000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-22T16:02:47.343Z
+
+> ↩︎ result: Command running in background with ID: blzncpu2l. Output is being written to: /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/tasks/blzncpu2l.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-22T16:02:50.542Z
+
+> 🔧 **Bash** `{"command": "grep -n \"famOf\\|const fam\\|=== '[a-z]*') m = \\|new THREE.ShaderMaterial\\|window\\.\\(step\\|qaGoto\\|camInfo\\)\\|const camAt\\|function camAt\\|installControls\" tools/reflock/section.html | head -40", "description": "Outline the section page's materials, camera and controls"}`
+
+### 🧑 User — 2026-11-22T16:02:50.579Z
+
+> ↩︎ result: 36:import { installControls } from './controls.js';
+> 95:const sceneryMat = (base, rep, opts = {}) => new THREE.ShaderMaterial({
+> 112:const famOf = (n) => n.startsWith('tunnel_') ? 'tunnel' : n.startsWith('ring_') ? 'ring' : n === 'arch' ? 'arch' : /^(bulkhead|wall_|ledge)/.test(n) ? 'pink' : /^(backwall|ceiling)/.test(n) ? 'dark'
+> 117:  const n = o.name, fam = famOf(n), sz = size(o); let m;
+> 118:  if (fam === 'tunnel') m = sceneryMat(BASE.tunnel, [Math.round(2 * Math.PI * radius(sz.z ? (o.geometry.boundingBox.max.z + o.geometry.boundingBox.min.z) / 2 : -20) / 0.75), Math.max(1, sz.z / 0.75)]);
+> 119:  else if (fam === 'ring' || fam === 'arch') m = sceneryMat(BASE.goldring, [fam === 'arch' ? 3 : 2, 1]);
+> 120:  else if (fam === 'pink') m = sceneryMat(BASE.pink, [Math.max(1, Math.max(sz.x, sz.z) / 1.0), Math.max(1, sz.y / 1.0)]);
+> 121:  else if (fam === 'dark') m = sceneryMat(BASE.dark, [1, 1]);
+> 122:  else if (fam === 'throat') m = sceneryMat(BASE.dark, [1, 1], { tint: [0.45, 0.35, 0.6] });
+> 123:  else if (fam === 'gold') m = sceneryMat(/^(rail_|collar_|tower_rim)/.test(n) ? BASE.goldbar : BASE.gold, [1, 1]);
+> 124:  else if (fam === 'fall') m = sceneryMat(BASE.foam, [1, 3], { transparent: true, …[+1986 chars]
+
+### 🤖 Claude — 2026-11-22T16:02:57.855Z
+
+> 🔧 **Bash** `{"command": "until [ -s /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/tasks/blzncpu2l.output ]; do sleep 5; done; cat /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/tasks/blzncpu2l.output", "description": "Wait for and show the three Screen 04 test results", "timeout": 1800000}`
+
+### 🧑 User — 2026-11-22T16:03:07.900Z
+
+> ↩︎ result: variant ready: /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/v04_1/game (--set foam_pool=false)
+> v04_1 scenery within 20: 86.2 %  SSIM 0.782  colour 0.976  sharpness 0.69
+> variant ready: /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/v04_2/game (--set foam_pool=false --set bake_res={"pool_front":[2048,2048],"funnel":[4096,1024],"wall":[4096,1024]})
+> v04_2 scenery within 20: 87.3 %  SSIM 0.807  colour 0.980  sharpness 0.78
+> variant ready: /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/v04_3/game (--set foam_pool=false --set bake_res={"pool_front":[2048,2048],"funnel":[4096,1024],"wall":[4096,1024]} --set arrow_tilt=50)
+> v04_3 scenery within 20: 87.3 %  SSIM 0.807  colour 0.979  sharpness 0.78
+> 
+> [exited with code 0]
+> 
+> [exited with code 0]
+
+### 🤖 Claude — 2026-11-22T16:03:17.748Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && python3 - <<EOF\nfrom PIL import Image, ImageDraw\nA=Image.open('/home/user/rainbow-/references/04_through_the_five_arrows.png').convert('RGB')\n# phone frame crop of the approved picture: 412x915 is a centre crop of the scaled picture (scale 0.5957, crop_x 51.5)\ns=915/1536; Aw=A.resize((round(864*s),915)); x0=(Aw.size[0]-412)//2; Ap=Aw.crop((x0,0,x0+412,915))\nB=Image.open('$S/m04_2/s1.20_l0.png').convert('RGB'); C=Image.open('$S/m04_3/s1.20_l0.png').convert('RGB')\nsheet=Image.new('RGB',(412* …[+386 chars]`
+
+### 🧑 User — 2026-11-22T16:03:17.913Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-22T16:03:20.244Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/arrows_cmp.jpg"}`
+
+### 🧑 User — 2026-11-22T16:03:20.272Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T16:03:39.137Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/blender_kit.py'; s=open(p).read()\nold=\"    W_ = width; h = 0.33 * W_; t = 0.11 * W_; y0, y1 = 0.004, 0.03\"\nnew=\"    W_ = width; h = 0.36 * W_; t = 0.2 * W_; y0, y1 = 0.004, 0.03   # r44: bars as broad as the painted 04 arrows\"\nassert old in s; s=s.replace(old,new); open(p,'w').write(s)\np='tools/screenkit/screens/04/fit04.py'; s=open(p).read()\nold=\"\"\"    arrows.append({'pos': P, 'width': ARROW_W})\"\"\"\nnew=\"\"\"    arrows.append({'pos': P, 'width': ARROW_W, 'tilt': 55.0})   # tilted up 55 deg (apex raised, near edge on the water) …[+1222 chars]`
+
+### 🧑 User — 2026-11-22T16:04:10.096Z
+
+> ↩︎ result: ok
+> ws04 scenery within 20: 87.3 %  SSIM 0.807  colour 0.979  sharpness 0.78
+> cmp
+> s1.20_l0.png
+> s10.00_l0.png
+> s16.00_l0.png
+> s24.00_l0.png
+> s3.00_l0.png
+> s30.00_l0.png
+> s6.00_l0.png
+> stills.json
+
+### 🤖 Claude — 2026-11-22T16:04:18.363Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && python3 - <<EOF\nfrom PIL import Image, ImageDraw\nimport numpy as np\nA=Image.open('/home/user/rainbow-/references/04_through_the_five_arrows.png').convert('RGB'); s=915/1536; Aw=A.resize((round(864*s),915)); x0=(Aw.size[0]-412)//2; Ap=Aw.crop((x0,0,x0+412,915))\nitems=[(Ap,'APPROVED 04'),('$S/m04_def/s1.20_l0.png','NEW start (87.3 %)'),('$S/m04_gray/s1.20_l0.png','GRAY start'),('$S/m04_def/s6.00_l0.png','swim s=6'),('$S/m04_def/s16.00_l0.png','swim s=16'),('$S/m04_def/s30.00_l0.png','swim s=30 …[+791 chars]`
+
+### 🧑 User — 2026-11-22T16:04:18.711Z
+
+> ↩︎ result: s1.20_l0 hole px 0
+> s6.00_l0 hole px 0
+> s16.00_l0 hole px 0
+> s30.00_l0 hole px 0
+
+### 🤖 Claude — 2026-11-22T16:04:21.032Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/sheet04.jpg"}`
+
+### 🧑 User — 2026-11-22T16:04:21.060Z
+
+> ↩︎ result: [image]
+

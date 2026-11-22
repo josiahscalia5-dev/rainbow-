@@ -215,15 +215,17 @@ if not LAY.get('no_route_ribbon'): ribbon('water_route', route, bank, RT['width'
 
 
 # ---------------------------------------------------------------- r44 optional components (absent keys -> nothing built: 06 is unchanged)
-def chevron(name, pos, width, fwd):
+def chevron(name, pos, width, fwd, tilt_deg=0.0):
     """a white arrow lying on the water (04): two bars meeting at an apex pointing along fwd; a thin slab (top + side walls), planar UVs"""
-    W_ = width; h = 0.33 * W_; t = 0.11 * W_; y0, y1 = 0.004, 0.03
+    W_ = width; h = 0.36 * W_; t = 0.2 * W_; y0, y1 = 0.004, 0.03   # r44: bars as broad as the painted 04 arrows
     f = Vector((fwd[0], 0.0, fwd[2])).normalized(); s = Vector((-f.z, 0.0, f.x))          # s = rider's right (game x when heading -z)
-    c = Vector(pos); P = lambda a, b: c + s * a + f * (b - 0.5 * h)                         # local (across, forward) -> game point on the water
+    # local (across, forward) -> game point; tilt_deg > 0 raises the apex (forward edge) like a ramp: the panel's near edge stays on the water
+    ct, st_ = math.cos(math.radians(tilt_deg)), math.sin(math.radians(tilt_deg)); c = Vector(pos)
+    P = lambda a, b: c + s * a + f * ((b + t) * ct - t) + Vector((0.0, (b + t) * st_, 0.0))
     quads = [[P(0, h), P(-W_ / 2, 0), P(-W_ / 2, -t), P(0, h - 1.4 * t)], [P(0, h), P(0, h - 1.4 * t), P(W_ / 2, -t), P(W_ / 2, 0)]]
     me = bpy.data.meshes.new(name); bm = bmesh.new(); uvl = bm.loops.layers.uv.new('UVMap')
     for q in quads:
-        top = [bm.verts.new(B2((p.x, y1, p.z))) for p in q]; bot = [bm.verts.new(B2((p.x, y0, p.z))) for p in q]
+        top = [bm.verts.new(B2((p.x, p.y + y1, p.z))) for p in q]; bot = [bm.verts.new(B2((p.x, p.y + y0, p.z))) for p in q]
         faces = [top[::-1]] + [[top[i], top[(i + 1) % 4], bot[(i + 1) % 4], bot[i]] for i in range(4)]
         for fv in faces:
             fa = bm.faces.new(fv)
@@ -254,7 +256,7 @@ if LAY.get('pool_front'):            # the water in front of the mouth, where Be
     pf = LAY['pool_front']; nz = max(4, int((pf['z0'] - pf['z1']) / 0.25))
     grid('pool_front_00', 48, nz, lambda a, b, pf=pf: ((pf['x0'] + (pf['x1'] - pf['x0']) * a, pf['y'], pf['z0'] - (pf['z0'] - pf['z1']) * b), (a, b)), flip=False)
 for i, ar in enumerate(LAY.get('arrows', [])):
-    chevron(f'arrow_{i}', ar['pos'], ar['width'], ar.get('fwd', (0.0, 0.0, -1.0)))
+    chevron(f'arrow_{i}', ar['pos'], ar['width'], ar.get('fwd', (0.0, 0.0, -1.0)), ar.get('tilt', 0.0))
 # foam banks along both edges of the channel where it is lifted above the pool, and along both pool edges
 def edge(side, off):
     out = []
@@ -264,7 +266,7 @@ def edge(side, off):
     return out
 for side, nm, sd in ((-1, 'foam_routeL', 3), (1, 'foam_routeR', 5)):
     if LAY.get('foam_route', {}).get(nm): foam_bank(nm, edge(side, 0.02), 0.06, 0.07, sd)   # only where the screen's picture paints foam along the channel
-for side, nm in ((-1, 'foam_poolL'), (1, 'foam_poolR')):
+for side, nm in (((-1, 'foam_poolL'), (1, 'foam_poolR')) if LAY.get('foam_pool', True) else ()):   # r44: 04 paints no foam along the tube's water edges
     foam_bank(nm, [[xa + side * (chord - 0.06), 0.0, zq] for zq in [D['z0'] - 0.5 * j for j in range(int((D['z0'] - zf) / 0.5))]], 0.09, 0.11, 7 + side)
 for i, p in enumerate(LAY.get('paddles', [])): paddle(f'paddle_{i}', p['pos'], (xa, ya), p['width'])
 # helper objects that only fed node groups are not exported

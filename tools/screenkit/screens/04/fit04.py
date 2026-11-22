@@ -20,7 +20,9 @@ HERE = os.path.dirname(os.path.abspath(__file__)); KIT = os.path.abspath(os.path
 sys.path.insert(0, KIT)
 import fitlib as fl   # noqa: E402
 
-ap = argparse.ArgumentParser(); ap.add_argument('out'); ap.add_argument('--da2'); a = ap.parse_args(); os.makedirs(a.out, exist_ok=True)
+ap = argparse.ArgumentParser(); ap.add_argument('out'); ap.add_argument('--da2')
+ap.add_argument('--set', action='append', default=[], help='controlled test: key=json layout override (arrow_tilt=50 tilts the arrows)')
+a = ap.parse_args(); os.makedirs(a.out, exist_ok=True)
 REF = 'references/04_through_the_five_arrows.png'; W, H = 864, 1536
 M = dict(rings=[(437.1, 832.9, 418.4), (439.2, 789.6, 343.0), (434.6, 780.3, 329.3), (437.9, 794.5, 268.1), (438.7, 782.9, 209.9), (448.4, 776.3, 176.7),
                 (468.0, 739.0, 100.0)],
@@ -59,7 +61,7 @@ P1 = cam.on_plane_y(*M['arrows'][0][:2]); d1 = float(-(cam.R.T @ (P1 - cam.C))[2
 arrows = []
 for x, y, wpx in M['arrows']:
     dep = cam.F * ARROW_W / wpx; P = cam.C + cam.depth_dir(x, y) * dep; P[1] = 0.0          # on the water, at the painted depth
-    arrows.append({'pos': P, 'width': ARROW_W})
+    arrows.append({'pos': P, 'width': ARROW_W, 'tilt': 55.0})   # tilted up 55 deg (apex raised, near edge on the water): reads like the painted chevrons from Benny's low camera
 # ---- coins: equal real size -> depth from the painted radius (as fit06); they float on the water left of the arrows
 COIN_D_PER_BENNY = 0.477; COIN_R = 0.5 * COIN_D_PER_BENNY * HB; kc = COIN_R * cam.F
 coins = [cam.C + cam.depth_dir(x, y) * (kc / r) for x, y, r in M['coins']]
@@ -90,8 +92,15 @@ lay = {'screen': '04', 'title': 'THROUGH THE FIVE ARROWS', 'ref': REF, 'fov': ca
        'rings': {'z': z_rings, 'spacing': 0.95, 'band': 0.22},
        'funnel': funnel, 'wall': wall, 'pool_front': pool_front, 'arrows': arrows, 'mouth_ring': {'z': z_mouth + 0.02, 'r': R * 1.07, 'band': 0.34},
        'paddles': [], 'bubbles': [], 'no_route_ribbon': True, 'slot_tile': [1.6, 0.95],
+       # r44 controlled tests at the picture camera (qa/world/r44/04/): no foam along the tube's water edges 84.5 -> 86.2 %, finer bakes -> 87.3 %
+       'foam_pool': False, 'bake_res': {'pool_front': [2048, 2048], 'funnel': [4096, 1024], 'wall': [4096, 1024]}, 'tunnel_style': 'gold',
        'palette': {'wallA': '#a3501f', 'wallB': '#ffc46a', 'wallM': '#e48a35', 'slot': '#6a2a12'},   # warm-gold tunnel (measured: gold 17 % of the picture)
        'splash_scale': 0.6, 'lod_bias': -0.8, 'bake_dens': [1, 4], 'number': '04', 'next': 'A'}
+for kv in a.set:                                               # one factor at a time: the default stays the measured layout above
+    k, v = kv.split('=', 1); v = json.loads(v)
+    if k == 'arrow_tilt':
+        for ar in lay['arrows']: ar['tilt'] = v
+    else: lay[k] = v
 fl.dump(os.path.join(a.out, 'layout.json'), lay)
 # ---- overlay: everything projected back into the picture
 im = Image.open(os.path.join(REPO, REF)).convert('RGB'); d = ImageDraw.Draw(im)

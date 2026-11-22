@@ -75,6 +75,11 @@ const BASE = {
   copper: cvs(128, 128, (g, w, h) => { g.fillStyle = grad(g, 0, 0, 0, h, [[0, '#fbb27a'], [0.3, '#ffd59a'], [0.5, '#f7a25a'], [0.75, '#e0702e'], [1, '#9c3d2a']]); g.fillRect(0, 0, w, h); }),
   flume: cvs(64, 256, (g, w, h) => { g.fillStyle = grad(g, 0, 0, w, 0, [[0, '#ff6ad5'], [0.2, '#ffe36e'], [0.4, '#7dffb0'], [0.6, '#59d8ff'], [0.8, '#a970ff'], [1, '#ff6ad5']]); g.fillRect(0, 0, w, h); }),
   foam: cvs(64, 64, (g, w, h) => { g.fillStyle = grad(g, 0, 0, 0, h, [[0, '#ffffff'], [1, '#c9c3f2']]); g.fillRect(0, 0, w, h); }),
+  // r44: 04's tube where no painted pixel is sharp enough: polished warm-gold ring bands (one band per tile along the tube), amber shading,
+  // bright specular streaks around the ring - no slots (the approved 04 tunnel has none). Tile = one ring spacing along v.
+  tunnelGold: cvs(512, 256, (g, w, h) => { g.fillStyle = grad(g, 0, 0, 0, h, [[0, '#7a3412'], [0.12, '#c8621f'], [0.3, '#f6a442'], [0.42, '#ffe3a0'], [0.5, '#f8b452'], [0.7, '#d9792c'], [0.88, '#a8501c'], [1, '#7a3412']]); g.fillRect(0, 0, w, h);
+    g.globalCompositeOperation = 'lighter'; for (let i = 0; i < 10; i++) { const x = rnd() * w; g.fillStyle = `rgba(255,236,190,${0.10 + rnd() * 0.18})`; g.fillRect(x, 0, 2 + rnd() * 10, h); } g.globalCompositeOperation = 'source-over';
+    g.fillStyle = 'rgba(90,30,10,0.55)'; g.fillRect(0, 0, w, 6); g.fillRect(0, h - 6, w, 6); }),
   // r44: the washer wall around a tunnel mouth (04: pink-purple polished panel) where no painted pixel is sharp enough
   wall: cvs(256, 256, (g, w, h) => { g.fillStyle = grad(g, 0, 0, w, h, [[0, '#d65ac4'], [0.5, '#f287e3'], [1, '#b53aa8']]); g.fillRect(0, 0, w, h);
     g.globalCompositeOperation = 'lighter'; for (let i = 0; i < 6; i++) { g.fillStyle = `rgba(255,220,255,${0.05 + rnd() * 0.08})`; g.fillRect(rnd() * w, 0, 4 + rnd() * 18, h); } g.globalCompositeOperation = 'source-over'; }),
@@ -138,7 +143,8 @@ const bbox = (o) => { o.geometry.computeBoundingBox(); return o.geometry.boundin
 const NSEG = MESH.filter((o) => /^water_/.test(o.name)).length, SEG_LEN = RLEN / Math.max(1, NSEG);
 for (const o of MESH) {
   const n = o.name, fam = famOf(n), bb = bbox(o), sz = bb.getSize(new THREE.Vector3()); let m;
-  if (fam === 'tunnel') m = sceneryMat(BASE.tunnel, [Math.round(2 * Math.PI * (DRUM?.r ?? 1) / (LAY.slot_tile ?? [2.6, 1.2])[0]), Math.max(1, sz.z / (LAY.slot_tile ?? [2.6, 1.2])[1])]);   // tile size in world units
+  if (fam === 'tunnel' && LAY.tunnel_style === 'gold') m = sceneryMat(BASE.tunnelGold, [Math.round(2 * Math.PI * (DRUM?.r ?? 1) / 1.6), Math.max(1, sz.z / (LAY.rings?.spacing ?? 0.95))]);   // r44: 04 polished gold ring tube
+  else if (fam === 'tunnel') m = sceneryMat(BASE.tunnel, [Math.round(2 * Math.PI * (DRUM?.r ?? 1) / (LAY.slot_tile ?? [2.6, 1.2])[0]), Math.max(1, sz.z / (LAY.slot_tile ?? [2.6, 1.2])[1])]);   // tile size in world units
   else if (fam === 'ring') m = sceneryMat(BASE.goldring, [4, 1]);
   else if (fam === 'water') { const k = +n.split('_').pop(); m = waterMat(LAY.route.width / 2, SEG_LEN, k * SEG_LEN, false); }
   else if (fam === 'pool') m = waterMat(DRUM ? DRUM.chord : 2, sz.z, -bb.max.z, true);
@@ -228,7 +234,7 @@ ${body}        gl_FragColor = best; }` });
     BAKE_DATA[o.name] = { w: bw, h: bh, px: out, dw, dh, dp, cov };
     return { cov, tex: t, den }; };
   // bake resolution per family: ~picture density where the picture can supply it, capped for memory
-  const RES = (o) => { const f = o.userData.fam, sz = bbox(o).getSize(new THREE.Vector3());
+  const RES = (o) => { const f = o.userData.fam, sz = bbox(o).getSize(new THREE.Vector3()); const ov = LAY.bake_res?.[o.name.replace(/_\d+$/, '')] ?? LAY.bake_res?.[f]; if (ov) return ov;   // r44: per-screen overrides
     if (f === 'tunnel') return /far/.test(o.name) ? [1024, 512] : [+(q.get('tunres') ?? 4096), 1024]; if (f === 'water') return [512, 1024]; if (f === 'pool') return sz.z > 6 ? [512, 1024] : [1024, 1024]; if (f === 'ring') return [2048, 128]; if (f === 'flume') return [256, 512];
     if (f === 'copper') return [256, 256]; if (f === 'funnel') return [2048, 512]; if (f === 'wall') return [2048, 512]; return [128, 128]; };
   const all = []; world.traverse((o) => { if (o.isMesh && o.name !== 'drum_end' && o.userData.fam !== 'foam' && o.userData.fam !== 'arrow') all.push(o); });
