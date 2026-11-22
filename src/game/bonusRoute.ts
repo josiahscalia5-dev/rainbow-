@@ -8,5 +8,5 @@ export const BONUS_ROUTE = {
   enabled: env.VITE_RAINBOW_BONUS === '1' || q.get('bonus') === '1',
   resume: q.get('resume'),
   resumeCoins: Number(q.get('coins')),
-  go(coins: number) { location.href = `section/index.html?return=1&coins=${Math.round(coins)}`; },
+  go(coins: number) { location.href = `section/index.html?return=1&bonus=1&coins=${Math.round(coins)}`; },
 };

@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3153,
-   "sha256": "456fa0b624a912b16b28c00ce95aa49fe8bf74a137cdfd4ada6810255dd385c7"
+   "sha256": "2ae9fa12974ead8f5cf5483ac2129b422225e490ac957b1d35d001820b2853af"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -40668,8 +40668,8 @@
   },
   {
    "path": "src/game/bonusRoute.ts",
-   "bytes": 935,
-   "sha256": "b3f8b1380c761f6d5cf720ac4d32359efca99b972d074300e9c700d49a041a94"
+   "bytes": 943,
+   "sha256": "4d7cc2e4c60802b1e33fcac6534d787d2d252fde51078a417762442837d13390"
   },
   {
    "path": "src/game/cameraRig.ts",
@@ -41812,6 +41812,16 @@
    "sha256": "bcc428708b8f8f556e2c25844bc995d0732ad8ac3c5f8d269a021449b44dd6e4"
   },
   {
+   "path": "tools/reflock/README.md",
+   "bytes": 4143,
+   "sha256": "eb87a4eeb8371b3c2b3264a2e7555e0640ef37e7980a9aadeb21fa9185eadc20"
+  },
+  {
+   "path": "tools/reflock/app_route_check.cjs",
+   "bytes": 3502,
+   "sha256": "5bff01d4a80db6d228db278d9843d6ecc03665b3ff14ae1f994644a8ac240b2a"
+  },
+  {
    "path": "tools/reflock/bake_phys.py",
    "bytes": 14496,
    "sha256": "66c943c69db2af09f72f576bd610de8096a15ffbf3b7e7fa32b6504b4e68bf80"
@@ -41858,8 +41868,8 @@
   },
   {
    "path": "tools/reflock/section.html",
-   "bytes": 51767,
-   "sha256": "38299979a4ec8d492e47557358fa906b6321addc7b155e86030d7178629c1ebe"
+   "bytes": 51775,
+   "sha256": "95d49d1b9011a1d90101f9c9506904265a3e02723bdaacdde7afe97eaa226f06"
   },
   {
    "path": "tools/reflock/section_export.cjs",
