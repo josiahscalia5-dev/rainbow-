@@ -427,6 +427,7 @@ export async function startGame(canvas: HTMLCanvasElement) {
     water.wake((benny.root.children[0] ?? benny.root).getWorldPosition(wakeAnchor), f.tan, f.right, speed, dt);
     // camera
     rideCam.update(dt, st.s, st.lat, camera);
+    env.setOcclusion(camera.position, benny.root.position);   // r41: rings between the camera and Benny never hide him
     // towel: folded in 08/09, lifted into a tent as the stream reaches it (late 09 → 10)
     env.towel.setTent(sm(course.stage('09').s1 - 6, course.stage('10').s0 + 2, st.s));
     // girl at the counter behind the door glass in 10 (back turned — never sees Benny)

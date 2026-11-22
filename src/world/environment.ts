@@ -19,6 +19,8 @@ import { buildTowel, TowelMesh } from './towel';
 
 export interface Environment {
   group: THREE.Group;
+  /** round 41: camera occlusion (third-person rule): gold rings between the camera and Benny fade out (dithered) so he is never hidden */
+  setOcclusion(cam: THREE.Vector3, benny: THREE.Vector3, radius?: number): void;
   update(time: number, dt: number): void;
   doorA: THREE.Object3D; // hinge pivot (rotation.y opens)
   doorC: THREE.Object3D;
@@ -350,7 +352,7 @@ export function buildEnvironment(course: Course): Environment {
   addWall(s05, TUN05 ? sEndT05 : sGlow05, perf05Mat);
   addWall(TUN05 ? sEndT05 : sGlow05, s08, perfTubeMat);
   // 06/07 rings and the 04→05 junction collar (unchanged look)
-  const ringMat = withTubeStrips(withFarGlow(gold({ color: '#ffc890', roughness: 0.12, emissive: 0.16 }), tubeGlow, 'ring'), { ...strips, color: '#fff0c8', intensity: 3.2 }, 'instance', 'ring');
+  const ringMat = withCameraOcclusion(withTubeStrips(withFarGlow(gold({ color: '#ffc890', roughness: 0.12, emissive: 0.16 }), tubeGlow, 'ring'), { ...strips, color: '#fff0c8', intensity: 3.2 }, 'instance', 'ring'));
   ringMat.envMap = goldEnv;
   ringMat.envMapIntensity = 1.3;
   // ref 05 rings: polished YELLOW gold — pale-yellow highlights (#FCE082), gold mids (#F4B70F…#F9A640),
@@ -406,12 +408,12 @@ export function buildEnvironment(course: Course): Environment {
   for (let s = s06 + RING06_PHASE - 2 * ringSpacing; s <= s08 - 1 + 1e-6; s += ringSpacing) if (s >= (TUN05 ? sEndT05 : sGlow05) + 4) rings0607.push(s);
   // round 41: a gold ring must never cut through the swim passage. On the 06 crest the river climbs the tube wall, and rings placed on the
   // tube axis crossed the water route at Benny's height right in front of the camera (a gold bar across the screen). A ring whose hoop
-  // passes through the passage (river width + 0.3, from just under the water to 4.5 above it) is not placed; every other ring stays.
+  // passes through the passage of Benny AND the follow camera (river width + 1.2, from just under the water to 6 above it) is not placed; every other ring stays.
   const ringClear = (sr: number) => {
     const f = perfPath.frame(sr), R = perfPath.radius(sr) - 0.02, c = f.pos.clone().addScaledVector(f.up, perfPath.radius(sr) - perfPath.depth(sr));
-    const w = course.sample(sr), hw = course.widthAt(sr) / 2 + 0.3, p = new THREE.Vector3(), d = new THREE.Vector3();
+    const w = course.sample(sr), hw = course.widthAt(sr) / 2 + 1.2, p = new THREE.Vector3(), d = new THREE.Vector3();   // + the camera's lane follow
     for (let k = 0; k < 64; k++) { const a = (k / 64) * Math.PI * 2; p.copy(c).addScaledVector(f.right, Math.cos(a) * R).addScaledVector(f.up, Math.sin(a) * R);
-      d.copy(p).sub(w.pos); const x = d.dot(w.right), h = d.dot(w.up); if (Math.abs(x) < hw && h > -0.2 && h < 4.5) return false; }
+      d.copy(p).sub(w.pos); const x = d.dot(w.right), h = d.dot(w.up); if (Math.abs(x) < hw && h > -0.2 && h < 6.0) return false; }   // up to above the follow camera
     return true; };
   const rings0607clear = rings0607.filter(ringClear);
   (globalThis as unknown as { __rings0607?: unknown }).__rings0607 = { placed: rings0607clear.length, removed: rings0607.filter((x) => !rings0607clear.includes(x)).map((x) => +x.toFixed(1)) };
@@ -716,6 +718,7 @@ export function buildEnvironment(course: Course): Environment {
     zones.tubes.add(frame);
   }
   return {
+    setOcclusion(cam: THREE.Vector3, benny: THREE.Vector3, radius = 1.6) { OCC.uOccA.value.copy(cam); OCC.uOccB.value.copy(benny); OCC.uOccR.value = radius; },
     group: root,
     update: (t, dt) => animated.forEach((f) => f(t, dt)),
     doorA,
@@ -946,4 +949,29 @@ function pinkFlowMaterial() {
   tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
   const material = new THREE.MeshStandardMaterial({ map: tex, emissiveMap: tex, emissive: '#ff3fb8', emissiveIntensity: 0.35, metalness: 0.2, roughness: 0.12, envMapIntensity: 1.4, side: THREE.DoubleSide });
   return { material, update: (t: number) => { tex.offset.y = -t * 0.9; } };
+}
+
+// ---- round 41: camera occlusion for the gold rings (standard third-person camera rule, world geometry unchanged) ----
+// Fragments of a ring that lie between the camera and Benny, within OCC.uOccR of that line of sight, are dithered away (soft edge), so a
+// ring the follow camera passes close to never covers Benny or the river right in front of him. Off by default (radius 0).
+const OCC = { uOccA: { value: new THREE.Vector3() }, uOccB: { value: new THREE.Vector3(0, 0, -1) }, uOccR: { value: 0 } };
+function withCameraOcclusion<M extends THREE.Material>(mat: M): M {
+  const prev = mat.onBeforeCompile, prevKey = mat.customProgramCacheKey?.bind(mat);
+  mat.onBeforeCompile = (sh, r) => {
+    prev?.call(mat, sh, r);
+    Object.assign(sh.uniforms, OCC);
+    sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vOccW;')
+      .replace('#include <project_vertex>', '#include <project_vertex>\n{ vec4 ow = vec4(transformed, 1.0);\n#ifdef USE_INSTANCING\n ow = instanceMatrix * ow;\n#endif\n vOccW = (modelMatrix * ow).xyz; }');
+    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', `#include <common>
+varying vec3 vOccW; uniform vec3 uOccA; uniform vec3 uOccB; uniform float uOccR;
+float occBayer(vec2 p){ int x = int(mod(p.x, 4.0)), y = int(mod(p.y, 4.0)); int i = x + y * 4;
+  float m[16] = float[16](0.0, 8.0, 2.0, 10.0, 12.0, 4.0, 14.0, 6.0, 3.0, 11.0, 1.0, 9.0, 15.0, 7.0, 13.0, 5.0); return (m[i] + 0.5) / 16.0; }`)
+      .replace('#include <clipping_planes_fragment>', `#include <clipping_planes_fragment>
+if (uOccR > 0.0) { vec3 ab = uOccB - uOccA; float tt = clamp(dot(vOccW - uOccA, ab) / max(dot(ab, ab), 1e-6), 0.0, 1.0);
+  float dd = length(vOccW - (uOccA + tt * ab)); float keep = smoothstep(2.0, 4.2, length(vOccW - uOccA));   // parts right at the camera slide away
+  if (tt > 0.04 && tt < 0.97) keep = min(keep, smoothstep(uOccR * 0.55, uOccR, dd));                              // and nothing covers Benny
+  if (keep < occBayer(gl_FragCoord.xy)) discard; }`);
+  };
+  mat.customProgramCacheKey = () => (prevKey ? prevKey() : '') + '|occ';
+  return mat;
 }

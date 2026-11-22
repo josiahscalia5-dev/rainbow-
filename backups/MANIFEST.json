@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3153,
-   "sha256": "271a69efea680f866af43611232c09530f06c91f95a6f5635f958e3e3ca1aa1e"
+   "sha256": "00752a9a62e19f167041e4dc6d0675ec1f124e06a5630722f1c55f06218157cd"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -41733,8 +41733,8 @@
   },
   {
    "path": "src/game/Game.ts",
-   "bytes": 47833,
-   "sha256": "f8a9d646eabb61dcddf2e3381854e7621dff6de201fe1ffd7f2a2bb253f97501"
+   "bytes": 47953,
+   "sha256": "8b4e75f7d2fa1df8b173ddf383d777fc5ba4b426a567adc151f204a063598293"
   },
   {
    "path": "src/game/bonusRoute.ts",
@@ -41744,7 +41744,7 @@
   {
    "path": "src/game/cameraRig.ts",
    "bytes": 11783,
-   "sha256": "6ea083bee4818a9c0f6ff52ed5e8c3633bb4d157537fb5778b51314f938134b1"
+   "sha256": "7049055789f2bf6bdda5cf25fad3fac5a2f5f6d464d6833a571597f8a64c7993"
   },
   {
    "path": "src/game/match.ts",
@@ -41868,8 +41868,8 @@
   },
   {
    "path": "src/world/environment.ts",
-   "bytes": 62594,
-   "sha256": "4c7a04f00294ed77a2c8849f3c544c14b59046972171e775e08a4e3c5bf03184"
+   "bytes": 65228,
+   "sha256": "8ec53ea7d30da4f049b176266259c63600523117c72f72e1e27b302e36847cf5"
   },
   {
    "path": "src/world/far05.ts",

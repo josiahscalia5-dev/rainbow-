@@ -40,7 +40,7 @@ export const STAGE_CAM: Partial<Record<StageId, CamParams>> = {
   '05': { back: 6.4, up: 3.6, ahead: 18, lookUp: -1.92, fov: 62, latFollow: 0.85, roll: 0, yaw: 2.96, deadZone: 1.0 },
   // r41: was { back: 5.6, up: 2.6, ahead: 12, lookUp: 3.4, fov: 66, latFollow: 0.7 } = low and looking UP into the arch: the river beyond the crest
   // was hidden, Benny huge and cut off; now higher and looking down over the crest (river, coins and Benny visible; touch-tested)
-  '06': { back: 9.0, up: 6.2, ahead: 18, lookUp: -2.6, fov: 64, latFollow: 0.85, roll: 0.4 },
+  '06': { back: 7.0, up: 4.0, ahead: 16, lookUp: -0.8, fov: 64, latFollow: 0.85, roll: 0.4 },
   '07': { back: 6.4, up: 4.1, ahead: 18, lookUp: 1.8, fov: 62, latFollow: 0.82, roll: 0.6 },   // r41: 0.6 -> 0.82
   '08': { back: 6.2, up: 3.7, ahead: 16, lookUp: 0.2, fov: 62, latFollow: 0.8, roll: 0.3 },
   '09': { back: 6.2, up: 3.7, ahead: 15, lookUp: 0.6, fov: 62, latFollow: 0.8, roll: 0.3 },
