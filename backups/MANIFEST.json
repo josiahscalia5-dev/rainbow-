@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 28920,
-   "sha256": "0c1838097a40f4ba4cc2d8323f970fbd40e6e5e09bcd166f7cfccabbbbb777ae"
+   "sha256": "bdbe3ca22f560676353c5cdb57ecbc4c9f36e6ee47ca36218f10c373b1c83017"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 2958,
-   "sha256": "35d5517b5093d1b14c7283a0c365ed576addd2b850b7db7cad08eff21063c664"
+   "sha256": "e8791f9ec0088155a1b6530e93c40d71248d1ed972269495c8a32b4de9330f59"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -49543,8 +49543,8 @@
   },
   {
    "path": "tools/screenkit/bake.js",
-   "bytes": 31131,
-   "sha256": "0134abdca871a83e6ba3bb906568313b78a4a7eddd34efbd34b53e82d2b01872"
+   "bytes": 31648,
+   "sha256": "31db34ab816b903906dfbdc90050f8a193b732d548f10690c219906e00200786"
   },
   {
    "path": "tools/screenkit/blender_kit.py",
@@ -49553,8 +49553,8 @@
   },
   {
    "path": "tools/screenkit/build.py",
-   "bytes": 20924,
-   "sha256": "3dd106245552d8ffc9431dcd87e6a0d3c725ce767ad469aa505700c1713ccf48"
+   "bytes": 20941,
+   "sha256": "f718f9098b77681514ac7dfb851b96766bafb9a40a0226dfea6e498f79f9aab5"
   },
   {
    "path": "tools/screenkit/build_screen_app.sh",
@@ -49648,8 +49648,8 @@
   },
   {
    "path": "tools/screenkit/screens/05/fit05.py",
-   "bytes": 11243,
-   "sha256": "cbc559a94ce1733778cf66d278918d9dbccb99b9c3b6c087fab7a4ca113bff3e"
+   "bytes": 11407,
+   "sha256": "0b7f786d3410a96ba28425f81ab23ffcfa7293750d304f127e3457793bf50928"
   },
   {
    "path": "tools/screenkit/screens/05/segment05.json",
@@ -49658,8 +49658,8 @@
   },
   {
    "path": "tools/screenkit/screens/06/fit06.py",
-   "bytes": 15023,
-   "sha256": "d07ce20b05328fc1967d58ab59e7914895e1f728b571c05d39fe32ce145a29d8"
+   "bytes": 15187,
+   "sha256": "691e86e1ae57792864af1b0fa43bb6d9e72b8169de2d85f0ec478579c6863ca3"
   },
   {
    "path": "tools/screenkit/screens/06/segment06.json",
@@ -49703,8 +49703,8 @@
   },
   {
    "path": "tools/screenkit/water_ribbon.js",
-   "bytes": 17169,
-   "sha256": "d92aaa80999958d99d7032ee0a6a0623113d7d52b5a218025f1be5c0b4ef1402"
+   "bytes": 17277,
+   "sha256": "cab895bbec0eddb2aee37f9ac6a22062c0001ef31650cb7129ae1b6c93bce8a0"
   },
   {
    "path": "tools/spector/spector_capture_test.mjs",

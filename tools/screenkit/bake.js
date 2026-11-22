@@ -122,7 +122,12 @@ ${body}        gl_FragColor = best; }` });
           gl_Position = vec4(t * 2.0 - 1.0, 0.5, 1.0); }`,
       fragmentShader: `${LOOK_GLSL(decl)} uniform float uGate;
         // uGate 1 (drum wall): gold / copper picture pixels (rings, trays drawn where the fitted geometry is a little off) never sample the wall
-        float gate(vec3 c){ if (uGate < 0.5) return 1.0; float gold = step(c.b * 1.6, c.r) * step(c.r * 0.42, c.g) * step(c.g, c.r * 0.97) * step(0.35, c.r); return 1.0 - 0.98 * gold; }
+        float gate(vec3 c){ if (uGate < 0.5) return 1.0; float gold = step(c.b * 1.6, c.r) * step(c.r * 0.42, c.g) * step(c.g, c.r * 0.97) * step(0.35, c.r);
+          // r46 uGate 2 (layout tpl_wall_gate 'strict'): the painted drum wall is purple / magenta (green well below red, red never far above blue);
+          // cyan water, white foam, iridescent bubbles (g >= 0.92 r) and copper / orange / brown trays (r >= 1.45 b) never become wall texels -
+          // they left pale 'shards' and orange smears in the repeated wall period (06, 05)
+          if (uGate > 1.5 && (c.g >= 0.92 * c.r || c.r >= 1.45 * c.b)) return 0.0;
+          return 1.0 - 0.98 * gold; }
         void main(){ float bq = 0.0; vec4 best = vec4(0.0);
 ${bodyQ}          if (bq <= 0.0) discard;
           gl_FragColor = vec4(best.rgb, 1.0); gl_FragDepth = 1.0 - bq / (bq + 60.0); }` });
@@ -153,7 +158,7 @@ ${bodyQ}          if (bq <= 0.0) discard;
     if (D && RG && LAY.tunnel_style !== 'gold') {
       const per = RG.spacing, zr = [...RG.z].filter((z) => z < D.z0 && z > D.z1); const zr0 = zr.length ? Math.min(...zr) : D.z0;
       const tubes = fams('tunnel').filter((o) => /^tunnel_/.test(o.name)); const TW = +(q.get('tplw') ?? 2048), TH = Math.max(256, Math.min(1024, Math.round(TW * per / (2 * Math.PI * D.r))));
-      fuseUni.uGate.value = 1; const px = fuse(tubes, TW, TH, (o) => { const bb = bbox(o); const kA = Math.floor((zr0 - bb.max.z) / per) - 1, kB = Math.ceil((zr0 - bb.min.z) / per) + 1; const L = []; for (let k = kA; k <= kB; k++) L.push({ map: 1, tube: [zr0, per, 0, 0], k }); return L; });
+      fuseUni.uGate.value = LAY.tpl_wall_gate === 'strict' ? 2 : 1; const px = fuse(tubes, TW, TH, (o) => { const bb = bbox(o); const kA = Math.floor((zr0 - bb.max.z) / per) - 1, kB = Math.ceil((zr0 - bb.min.z) / per) + 1; const L = []; for (let k = kA; k <= kB; k++) L.push({ map: 1, tube: [zr0, per, 0, 0], k }); return L; });
       // angles the picture never shows (under the water / behind the foam): copied from the painted angles (the slot rows repeat around the
       // drum), mirrored back and forth so no hard seam appears; a column counts as painted when >= 55 % of its texels are
       const colCov = new Float32Array(TW); for (let x = 0; x < TW; x++) { let c = 0; for (let y = 0; y < TH; y++) c += px[(y * TW + x) * 4 + 3] > 127 ? 1 : 0; colCov[x] = c / TH; }

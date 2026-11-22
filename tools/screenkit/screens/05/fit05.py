@@ -86,6 +86,7 @@ lay['machinery'] = {'every': 2, 'clear_y': [float(cam.C[1]), 0.5], 'scale': 0.8,
 # the water is the clean ribbon water drawn from the painting's structure (tools/screenkit/water_ribbon.js)
 lay['cam_axis'] = {'follow': 0.6}; lay['water_style'] = 'ribbon'
 lay['water_rich'] = 1   # r46: deep-blue troughs + seams, silk highlights in the pink, ripple arcs close up, a second sparkle layer, a little swirl
+lay['tpl_wall_gate'] = 'strict'   # r46: only purple / magenta painted pixels build the repeated drum-wall period (no water / foam / bubble shards, no tray smears)
 # r46: the camera follows the river's swing almost fully (the river stays under the view as in the picture) and lane changes by 0.65 (Benny visibly
 # moves when steering); soft limit 0.85 u from the drum axis; small damped turn toward Benny near an edge (world.html)
 lay['cam_axis'].update({'follow_route': 0.9, 'follow_lane': 0.65, 'max_off': 0.85, 'knee': 0.25})

@@ -3212,3 +3212,204 @@ Screen 06 improved clearly: water style 41.8 → 54.2, repeated-camera views 14.
 
 [Image: original 2496x919, displayed at 2000x736. Multiply coordinates by 1.25 to map to original image.]
 
+### 🤖 Claude — 2026-11-22T22:17:51.216Z
+
+> 🔧 **Bash** `{"command": "export NODE_PATH=$(npm root -g); rm -rf /home/user/ws46/probe06; node tools/world/probe_frames.cjs /home/user/ws46/world/game /home/user/ws46/probe06 30,75 '[[0.1,\"left\"]]' 's0=172&sentinel=1' '[[60,250],[90,280],[120,300],[40,330],[150,240],[100,220],[300,240],[350,270],[200,600],[120,700],[300,700],[60,800],[350,820],[180,850],[250,850]]' > /home/user/ws46/probe06.log 2>&1; tail -n 3 /home/user/ws46/probe06.log; python3 - <<'EOF'\nimport json\nd=json.load(open('/home/user/ws46/probe06/probe.json'))\nfor fr in d['frames']:\n    print('frame', fr['frame'], 's', fr['s'], 'lat', f …[+235 chars]`
+
+### 🧑 User — 2026-11-22T22:18:10.746Z
+
+> ↩︎ result: probed 30 s 174.2 lat -0.3 box {"x0":37.3,"x1":287.5,"y0":447.7,"y1":742}
+> probed 75 s 177.5 lat -0.3 box {"x0":38.3,"x1":299.9,"y0":453.5,"y1":738.1}
+> frame 30 s 174.2 lat -0.3
+>    60 250 [('tunnel_14', 'tunnel', '06', 9.213)]
+>    90 280 [('tunnel_15', 'tunnel', '06', 10.871)]
+>    120 300 [('ring_02', 'ring', '06', 12.514), ('ring_02', 'ring', '06', 12.972)]
+>    40 330 [('tunnel_14', 'tunnel', '06', 7.966)]
+>    150 240 [('ctube_067_0', 'tunnel', 'connector', 15.574)]
+>    100 220 [('tunnel_15', 'tunnel', '06', 10.945)]
+>    300 240 [('cring_067', 'ring', 'connector', 18.571), ('ctube_067_1', 'tunnel', 'connector', 18.845)]
+>    350 270 [('ctube_067_0', 'tunnel', 'connector', 16.566)]
+>    200 600 [('water_route_10', 'water', '06', 1.887), ('pool_07', 'pool', '06', 1.94)]
+>    120 700 [('pool_06', 'pool', '06', 1.494), ('tunnel_12', 'tunnel', '06', 3.545)]
+>    300 700 [('water_route_10', 'water', '06', 1.455), ('pool_07', 'pool', '06', 1.497)]
+>    60 800 [('pool_06', 'pool', '06', 1.256), ('tunnel_11', 'tunnel', '06', 2.938)]
+>    350 820 [('water_route_10', 'water', '06', 1.185), ('pool_06', 'pool', '06', 1.218)]
+>    180 850 [('water_route_10', 'water', '06', 1.12), ('pool_06', 'pool', '06', 1.152)]
+>    …[+1213 chars]
+
+### 🤖 Claude — 2026-11-22T22:18:12.047Z
+
+> 🔧 **Read** `{"file_path": "/home/user/ws46/probe06/f_00030.png"}`
+
+### 🧑 User — 2026-11-22T22:18:12.118Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T22:18:21.822Z
+
+> 🔧 **Bash** `{"command": "ls -la /home/user/ws46/world/game/a06/baked/ | head -40; python3 -c \"\nimport json; m=json.load(open('/home/user/ws46/world/game/a06/baked/manifest.json')); print(json.dumps(m.get('templates'), indent=0)[:1500])\"", "description": "List 06 baked files and template manifest"}`
+
+### 🧑 User — 2026-11-22T22:18:21.911Z
+
+> ↩︎ result: total 27472
+> drwxr-xr-x 2 root root    4096 Nov 22 21:41 .
+> drwxr-xr-x 3 root root    4096 Nov 22 22:08 ..
+> -rw-r--r-- 1 root root   26512 Nov 22 21:41 flume_water_route_00_bake.jpg
+> -rw-r--r-- 1 root root    2875 Nov 22 21:41 flume_water_route_00_den.png
+> -rw-r--r-- 1 root root   31262 Nov 22 21:41 flume_water_route_01_bake.jpg
+> -rw-r--r-- 1 root root    3559 Nov 22 21:41 flume_water_route_01_den.png
+> -rw-r--r-- 1 root root   31074 Nov 22 21:41 flume_water_route_02_bake.jpg
+> -rw-r--r-- 1 root root    3097 Nov 22 21:41 flume_water_route_02_den.png
+> -rw-r--r-- 1 root root   30836 Nov 22 21:41 flume_water_route_03_bake.jpg
+> -rw-r--r-- 1 root root    2880 Nov 22 21:41 flume_water_route_03_den.png
+> -rw-r--r-- 1 root root   30210 Nov 22 21:41 flume_water_route_04_bake.jpg
+> -rw-r--r-- 1 root root    3050 Nov 22 21:41 flume_water_route_04_den.png
+> -rw-r--r-- 1 root root   33489 Nov 22 21:41 flume_water_route_05_bake.jpg
+> -rw-r--r-- 1 root root    3732 Nov 22 21:41 flume_water_route_05_den.png
+> -rw-r--r-- 1 root root   61316 Nov 22 21:41 flume_water_route_06_bake.jpg
+> -rw-r--r-- 1 root root    5963 Nov 22 21:41 flume_water_route_06_den.png
+> -rw-r--r-- 1 root root   17344 Nov 22 21:41 flume_water_route_07_b …[+2363 chars]
+
+### 🤖 Claude — 2026-11-22T22:18:24.602Z
+
+> 🔧 **Bash** `{"command": "cd /home/user/ws46/world/game/a06/baked && python3 -c \"\nfrom PIL import Image\nim=Image.open('tpl_tunnel.jpg'); print(im.size); im.resize((1024,187)).save('/home/user/ws46/tpl_tunnel06.png')\nim=Image.open('../../a05/baked/tpl_tunnel.jpg'); print(im.size); im.resize((1024, int(im.size[1]*1024/im.size[0]))).save('/home/user/ws46/tpl_tunnel05.png')\n\"", "description": "Export the 05/06 tunnel templates for inspection"}`
+
+### 🧑 User — 2026-11-22T22:18:24.913Z
+
+> ↩︎ result: (2048, 374)
+> (2048, 621)
+> Shell cwd was reset to /home/user/rainbow-
+
+### 🤖 Claude — 2026-11-22T22:18:26.106Z
+
+> 🔧 **Read** `{"file_path": "/home/user/ws46/tpl_tunnel06.png"}`
+
+### 🧑 User — 2026-11-22T22:18:26.129Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T22:18:28.228Z
+
+> 🔧 **Read** `{"file_path": "/home/user/ws46/tpl_tunnel05.png"}`
+
+### 🧑 User — 2026-11-22T22:18:28.263Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T22:18:40.601Z
+
+> 🔧 **Bash** `{"command": "grep -n \"tunnel\" tools/screenkit/bake.js | head -40", "description": "Find tunnel template code in bake.js"}`
+
+### 🧑 User — 2026-11-22T22:18:40.644Z
+
+> ↩︎ result: 11://      tunnel  the drum wall is periodic (one ring spacing): every visible period of the painted wall is fused into ONE period template
+> 18:export const famOf = (n) => /^tunnel(far)?_/.test(n) ? 'tunnel' : /^ring_/.test(n) ? 'ring' : /^water_/.test(n) ? 'water' : /^pool_front/.test(n) ? 'pool' : /^pool_/.test(n) ? 'pool'
+> 19:  : /^flume_/.test(n) ? 'flume' : /^foam_/.test(n) ? 'foam' : /^paddle(rep)?_/.test(n) ? 'copper' : /^funnel_/.test(n) ? 'funnel' : /^wall_/.test(n) ? 'wall' : /^arrow_/.test(n) ? 'arrow' : 'tunnel';
+> 95:    if (f === 'tunnel') return /far/.test(o.name) ? [1024, 512] : [+(q.get('tunres') ?? 4096), 1024]; if (f === 'water') return [512, 1024]; if (f === 'pool') return sz.z > 6 ? [512, 1024] : [1024, 1024]; if (f === 'ring') return [2048, 128]; if (f === 'flume') return [256, 512];
+> 102:  if (q.get('tpl') === '0') for (const fam of ['ring', 'tunnel']) {
+> 151:    // tunnel: one ring period, phase-locked to the uniformly spaced rings (the last painted ring); u = the mesh's own u around the drum
+> 153:    if (D && RG && LAY.tunnel_style !== 'gold') {
+> 155:      const tubes = fams('tunnel').filter((o) => /^tunnel_/.test(o.name)); const TW = +(q.get('tplw') ?? 2048), TH = …[+364 chars]
+
+### 🤖 Claude — 2026-11-22T22:18:42.448Z
+
+> 🔧 **Bash** `{"command": "sed -n 104,170p tools/screenkit/bake.js", "description": "Read the template fusion code"}`
+
+### 🧑 User — 2026-11-22T22:18:42.492Z
+
+> ↩︎ result: if (!best || !best.material.uniforms.uBake.value) continue;
+>     for (const o of L) if ((o.userData.bakeCov ?? 0) < 0.05) { for (const k of ['uBake', 'uDen']) o.material.uniforms[k].value = best.material.uniforms[k].value; o.material.uniforms.uBakeOn.value = 1; o.userData.template = best.name; BAKE_DATA[o.name] = { template: best.name }; }
+>   }
+>   BAKE_STATS._ms = Math.round(performance.now() - tStart);
+> 
+>   // ------------------------------------------------------------------------------------------------ 2. artwork-sampled templates
+>   const TPL = {};
+>   const t1 = performance.now();
+>   if (q.get('tpl') !== '0') {
+>     // fusion material: same picture lookup; the best picture sample per template texel wins through the depth test (depth = 1 - quality)
+>     const fuseUni = { ...uni, uTol: { value: new THREE.Vector2(1.002, 0.006) }, uGate: { value: 0 }, uFloor: { value: new THREE.Vector4(0, 1, 0, 1) }, uMap: { value: 0 }, uTube: { value: new THREE.Vector4(0, 1, 0, 0) }, uStrip: { value: new THREE.Vector4(0, 1, 0, 1) }, uK: { value: 0 } };
+>     const fuseMat = new THREE.ShaderMaterial({ side: THREE.DoubleSide, depthTest: true, depthWrite: true, depthFunc: THREE.LessDepth, uniforms: fuseUni,
+>     …[+7744 chars]
+
+### 🤖 Claude — 2026-11-22T22:19:10.342Z
+
+> 🔧 **Bash** `{"command": "grep -n \"gate(\" tools/screenkit/bake.js | head; grep -n \"tunnel_style\\|LAY\\.\\w*gate\" tools/screenkit/bake.js | head -5", "description": "Find where the template gate is applied"}`
+
+### 🧑 User — 2026-11-22T22:19:10.386Z
+
+> ↩︎ result: 50:    bodyQ += `{ float qd; vec4 a = look(uVP${i}, uP${i}, uM${i}, uD${i}, uImg${i}, qd); float qq = a.a > 0.0 ? qd * (a.a < 0.7 ? 0.25 : 1.0) * gate(a.rgb) : 0.0; if (qq > bq) { bq = qq; best = a; } }\n`; });
+> 125:        float gate(vec3 c){ if (uGate < 0.5) return 1.0; float gold = step(c.b * 1.6, c.r) * step(c.r * 0.42, c.g) * step(c.g, c.r * 0.97) * step(0.35, c.r); return 1.0 - 0.98 * gold; }
+> 153:    if (D && RG && LAY.tunnel_style !== 'gold') {
+
+### 🤖 Claude — 2026-11-22T22:19:21.170Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/bake.js'; s=open(p).read()\ndef rep(old,new):\n    global s; assert s.count(old)==1, old[:70]; s=s.replace(old,new)\nrep(\"        float gate(vec3 c){ if (uGate < 0.5) return 1.0; float gold = step(c.b * 1.6, c.r) * step(c.r * 0.42, c.g) * step(c.g, c.r * 0.97) * step(0.35, c.r); return 1.0 - 0.98 * gold; }\",\n    \"\"\"        float gate(vec3 c){ if (uGate < 0.5) return 1.0; float gold = step(c.b * 1.6, c.r) * step(c.r * 0.42, c.g) * step(c.g, c.r * 0.97) * step(0.35, c.r);\n          // r46 uGate 2 (layout tpl_wall_gate 'strict'): the paint …[+1382 chars]`
+
+### 🧑 User — 2026-11-22T22:19:21.278Z
+
+> ↩︎ result: tools/screenkit/screens/05/fit05.py:89:lay['tpl_wall_gate'] = 'strict'   # r46: only purple / magenta painted pixels build the repeated drum-wall period (no water / foam / bubble shards, no tray smears)   # r46: deep-blue troughs + seams, silk highlights in the pink, ripple arcs close up, a second sparkle layer, a little swirl
+> tools/screenkit/screens/06/fit06.py:132:lay['tpl_wall_gate'] = 'strict'   # r46: only purple / magenta painted pixels build the repeated drum-wall period (no water / foam / bubble shards, no tray smears)
+> tools/screenkit/bake.js:126:          // r46 uGate 2 (layout tpl_wall_gate 'strict'): the painted drum wall is purple / magenta (green well below red, red never far above blue);
+> tools/screenkit/bake.js:161:      fuseUni.uGate.value = LAY.tpl_wall_gate === 'strict' ? 2 : 1; const px = fuse(tubes, TW, TH, (o) => { const bb = bbox(o); const kA = Math.floor((zr0 - bb.max.z) / per) - 1, kB = Math.ceil((zr0 - bb.min.z) / per) + 1; const L = []; for (let k = kA; k <= kB; k++) L.push({ map: 1, tube: [zr0, per, 0, 0], k }); return L; });
+> 22:The game folder <workspace>/game opens pre-baked (play3.html?prebaked=1 is the default there); ?live=1 re-bakes in the browser.
+> 2 …[+152 chars]
+
+### 🤖 Claude — 2026-11-22T22:19:27.162Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/screens/05/fit05.py'; s=open(p).read()\nold=\"lay['water_rich'] = 1\\nlay['tpl_wall_gate'] = 'strict'   # r46: only purple / magenta painted pixels build the repeated drum-wall period (no water / foam / bubble shards, no tray smears)   # r46: deep-blue troughs + seams, silk highlights in the pink, ripple arcs close up, a second sparkle layer, a little swirl\"\nnew=\"lay['water_rich'] = 1   # r46: deep-blue troughs + seams, silk highlights in the pink, ripple arcs close up, a second sparkle layer, a little swirl\\nlay['tpl_wall_gate'] = 'strict …[+314 chars]`
+
+### 🧑 User — 2026-11-22T22:19:27.224Z
+
+> ↩︎ result: if 'exported' not in out: raise SystemExit('blender_kit.py did not export:\n' + out[-2000:])
+>     B.step('geometry', k_geo, {'scene.glb': os.path.join(G, 'scene.glb'), 'blender.log': os.path.join(ws, 'fit', 'blender.log')}, f_geo)
+>     # assemble the page folder (needed by the bake: the export runs the page)
+>     def f_asm(): assemble(G, ws, REF, L)
+>     B.timed('assemble', f_asm)
+>     # bake (the approved pixels on the meshes + artwork-sampled materials), once, offline
+>     bk = {k: L[k] for k in BAKE_KEYS if k in L}
+>     k_bake = h_bytes('bake-v1', os.environ.get('RAINBOW_JPEGQ', '1.0'), h_file(os.path.join(G, 'scene.glb')), h_obj(bk), h_file(os.path.join(ws, 'seg', 'plate.png')), h_file(os.path.join(ws, 'seg', 'mask.png')), ref_h,
+>                      h_files([os.path.join(HERE, 'bake.js'), os.path.join(HERE, 'screen_export.cjs'), os.path.join(HERE, 'screen.html')]) if os.environ.get('RAINBOW_BAKE_KEY_PAGE') else
+>                      h_files([os.path.join(HERE, 'bake.js'), os.path.join(HERE, 'screen_export.cjs')]))
+>     def f_bake(tmp):
+>         out = run(['node', os.path.join(HERE, 'screen_export.cjs'), G, tmp], env={'NODE_PATH': npm_root(), 'RAINBOW_JPEGQ': os.environ.get('RAINBOW_JPEG …[+264 chars]
+
+### 🤖 Claude — 2026-11-22T22:19:28.847Z
+
+> 🔧 **Bash** `{"command": "grep -n \"^BAKE_KEYS\" tools/screenkit/build.py", "description": "Check BAKE_KEYS list"}`
+
+### 🧑 User — 2026-11-22T22:19:28.883Z
+
+> ↩︎ result: 128:BAKE_KEYS = ('cams', 'fov', 'img', 'focal_px', 'bake_res', 'bake_dens', 'foam_from_picture', 'hud_rows', 'drum', 'rings', 'route', 'templates', 'paddles')
+
+### 🤖 Claude — 2026-11-22T22:19:35.523Z
+
+> 🔧 **Bash** `{"command": "sed -i \"s/^BAKE_KEYS = ('cams', 'fov', 'img', 'focal_px', 'bake_res', 'bake_dens', 'foam_from_picture', 'hud_rows', 'drum', 'rings', 'route', 'templates', 'paddles')/BAKE_KEYS = ('cams', 'fov', 'img', 'focal_px', 'bake_res', 'bake_dens', 'foam_from_picture', 'hud_rows', 'drum', 'rings', 'route', 'templates', 'paddles', 'tpl_wall_gate')/\" tools/screenkit/build.py && grep -n \"^BAKE_KEYS\" tools/screenkit/build.py; timeout 600 bash -c 'until grep -q EXIT /home/user/ws46/preview_rich0.log; do sleep 5; done'; python3 - <<'EOF'\nimport json\ndef summ(p):\n    s=json.load(open(p))['su …[+363 chars]`
+
+### 🧑 User — 2026-11-22T22:19:40.622Z
+
+> ↩︎ result: 128:BAKE_KEYS = ('cams', 'fov', 'img', 'focal_px', 'bake_res', 'bake_dens', 'foam_from_picture', 'hud_rows', 'drum', 'rings', 'route', 'templates', 'paddles', 'tpl_wall_gate')
+> NEW rich=1 ({'wall': 85.1, 'ring': 64.0, 'water': 52.6, 'foam': 32.4, 'trays': 74.6}, 0.35)
+> NEW rich=0 ({'wall': 85.1, 'ring': 64.0, 'water': 61.1, 'foam': 32.5, 'trays': 74.6}, 0.477)
+> [This command modified 1 file you've previously read: tools/screenkit/build.py. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-22T22:19:56.252Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/tools/screenkit/water_ribbon.js", "offset": 56, "limit": 14}`
+
+### 🧑 User — 2026-11-22T22:19:56.278Z
+
+> ↩︎ result: 56	  // r46 (user: "the water becomes too plain and streaky"; layout water_rich): the painting's DEPTH inside the bands - deep-blue troughs in the cyan,
+> 57	  // thin deep-blue seams along every pink ribbon edge, a glossy white-pink silk highlight inside each pink ribbon, a pale crest along the cyan centre
+> 58	  if (uRich > 0.5) { float tr = rbN(vec2(lat * 2.2 + 0.6 * sin(d * 0.8), d * 0.55));
+> 59	    col = mix(col, mix(cyD * 0.72, cyM, 0.25), 0.55 * smoothstep(0.5, 0.85, tr) * (1.0 - pinkW));
+> 60	    float eg = min(min(abs(an - 0.5), abs(an - 0.85)), min(abs(an - 1.24), abs(an - 1.57))), ew = max(0.022, 1.2 * fwidth(an));
+> 61	    col = mix(col, vec3(0.03, 0.30, 0.78), 0.55 * (1.0 - smoothstep(0.0, ew, eg)));
+> 62	    float hl = min(abs(an - 0.73), abs(an - 1.46)), hb = smoothstep(0.3, 0.7, rbN(vec2(an * 9.0, d * 0.9)));
+> 63	    col = mix(col, vec3(1.0, 0.86, 0.98), 0.72 * hb * (1.0 - smoothstep(0.0, max(0.02, 1.2 * fwidth(an)), hl)) * pinkW);
+> 64	    float gp = max(exp(-rbSq((an - 0.68) / 0.09)), exp(-rbSq((an - 1.41) / 0.09)));   /* the painting's glowing pink ribbon cores */
+> 65	    col = mix(col, vec3(1.0, 0.55, 0.93), 0.55 * gp * pinkW); col = mix(col, vec3(1.0, 0.84, 0.98), 0.3 * pow(g …[+537 chars]
+
+### 🤖 Claude — 2026-11-22T22:20:02.342Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/water_ribbon.js'; s=open(p).read()\ndef rep(old,new):\n    global s; assert s.count(old)==1, old[:70]; s=s.replace(old,new)\nrep(\"    col = mix(col, mix(cyD * 0.72, cyM, 0.25), 0.55 * smoothstep(0.5, 0.85, tr) * (1.0 - pinkW));\",\n    \"    col = mix(col, mix(cyD * 0.86, cyM, 0.4), 0.25 * smoothstep(0.5, 0.85, tr) * (1.0 - pinkW));   /* r46b measured: strong dark troughs moved the colours away from the painting */\")\nrep(\"    col = mix(col, vec3(0.03, 0.30, 0.78), 0.55 * (1.0 - smoothstep(0.0, ew, eg)));\",\n    \"    col = mix(col, vec3(0 …[+664 chars]`
+

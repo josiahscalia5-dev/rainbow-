@@ -125,7 +125,7 @@ def geom_keys():
     raise SystemExit('blender_kit.py: GEOM_KEYS missing')
 
 
-BAKE_KEYS = ('cams', 'fov', 'img', 'focal_px', 'bake_res', 'bake_dens', 'foam_from_picture', 'hud_rows', 'drum', 'rings', 'route', 'templates', 'paddles')
+BAKE_KEYS = ('cams', 'fov', 'img', 'focal_px', 'bake_res', 'bake_dens', 'foam_from_picture', 'hud_rows', 'drum', 'rings', 'route', 'templates', 'paddles', 'tpl_wall_gate')
 
 
 def npm_root():

@@ -129,6 +129,7 @@ lay['benny_bank'] = 0.35; lay['cam_roll'] = 0.15
 # ribbons, silk highlights, sparkles, ripple arcs) under the painted pixels on every water surface of 06, its outer ribbon = the RAINBOW band with
 # the colours measured across the approved crest edge; the painted bake stays on top wherever the picture saw the water.
 lay['water_style'] = 'ribbon'; lay['water_rich'] = 1; lay['water_rainbow'] = 1
+lay['tpl_wall_gate'] = 'strict'   # r46: only purple / magenta painted pixels build the repeated drum-wall period (no water / foam / bubble shards, no tray smears)
 fl.dump(os.path.join(a.out, 'layout.json'), lay)
 print('cam yaw %.2f pitch %.2f deg; Benny water (%.3f, %.3f), height %.3f; coin radius %.3f; drum R %.2f axis (%.3f, %.3f) chord %.2f; ring z %s'
       % (math.degrees(yaw), math.degrees(pitch), Pb[0], Pb[2], HB, COIN_R, DRUM_R, xa, ya, chord, [round(z, 2) for z in z_ring]))

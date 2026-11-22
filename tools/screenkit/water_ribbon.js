@@ -56,15 +56,15 @@ vec3 ribbonWater(vec3 L, float t, float flow, vec3 vWv){
   // r46 (user: "the water becomes too plain and streaky"; layout water_rich): the painting's DEPTH inside the bands - deep-blue troughs in the cyan,
   // thin deep-blue seams along every pink ribbon edge, a glossy white-pink silk highlight inside each pink ribbon, a pale crest along the cyan centre
   if (uRich > 0.5) { float tr = rbN(vec2(lat * 2.2 + 0.6 * sin(d * 0.8), d * 0.55));
-    col = mix(col, mix(cyD * 0.72, cyM, 0.25), 0.55 * smoothstep(0.5, 0.85, tr) * (1.0 - pinkW));
+    col = mix(col, mix(cyD * 0.86, cyM, 0.4), 0.25 * smoothstep(0.5, 0.85, tr) * (1.0 - pinkW));   /* r46b measured: strong dark troughs moved the colours away from the painting */
     float eg = min(min(abs(an - 0.5), abs(an - 0.85)), min(abs(an - 1.24), abs(an - 1.57))), ew = max(0.022, 1.2 * fwidth(an));
-    col = mix(col, vec3(0.03, 0.30, 0.78), 0.55 * (1.0 - smoothstep(0.0, ew, eg)));
+    col = mix(col, vec3(0.0, 0.5, 0.93), 0.3 * (1.0 - smoothstep(0.0, ew, eg)));
     float hl = min(abs(an - 0.73), abs(an - 1.46)), hb = smoothstep(0.3, 0.7, rbN(vec2(an * 9.0, d * 0.9)));
     col = mix(col, vec3(1.0, 0.86, 0.98), 0.72 * hb * (1.0 - smoothstep(0.0, max(0.02, 1.2 * fwidth(an)), hl)) * pinkW);
     float gp = max(exp(-rbSq((an - 0.68) / 0.09)), exp(-rbSq((an - 1.41) / 0.09)));   /* the painting's glowing pink ribbon cores */
     col = mix(col, vec3(1.0, 0.55, 0.93), 0.55 * gp * pinkW); col = mix(col, vec3(1.0, 0.84, 0.98), 0.3 * pow(gp, 4.0) * pinkW);
     float halo = max(exp(-rbSq((an - 0.42) / 0.07)) + exp(-rbSq((an - 0.93) / 0.07)), exp(-rbSq((an - 1.16) / 0.07)) + exp(-rbSq((an - 1.66) / 0.07)));
-    col = mix(col, vec3(0.62, 0.55, 1.0), 0.25 * halo * (1.0 - pinkW));   /* soft violet glow where pink meets cyan */
+    col = mix(col, mix(cyB, pkB, 0.35), 0.0 * halo * (1.0 - pinkW));   /* r46b: the violet glow is not in the painting's water (measured) - off */
     float cc = abs(an - 0.12 - 0.06 * sin(d * 1.4)), cb2 = smoothstep(0.35, 0.8, rbN(vec2(3.0, d * 0.8)));
     col = mix(col, vec3(0.85, 1.0, 1.0), 0.5 * cb2 * (1.0 - smoothstep(0.0, max(0.03, 1.2 * fwidth(an)), cc)) * (1.0 - pinkW)); }
   // the painting's OWN detail inside each band (water_detail.py: seamless cyan / pink tiles cut from the flattened picture, fixed size in the
