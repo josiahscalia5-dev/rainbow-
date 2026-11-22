@@ -4271,3 +4271,83 @@ Higher-quality paint brings 05 to 81.0 % at your camera, with sharpness up to 0.
 > EXIT 0
 > picture [(83.1, 0.747, 0.798)] repeat mean 0.191 {'wall': 86.2, 'ring': 64.0, 'water': 61.0, 'foam': 35.9, 'trays': 75.3} holes 4
 
+### 🤖 Claude — 2026-11-22T20:34:01.437Z
+
+83.1 % now. Next test: phones draw at 2–3× pixel density, while my checks render at 1×. I'm measuring your picture view rendered at 2× and scaled down, like a phone screen shows it:
+
+### 🤖 Claude — 2026-11-22T20:34:06.186Z
+
+> 🔧 **Bash** `{"command": "grep -n \"setPixelRatio\" tools/world/world.html | cut -c1-160; python3 - <<'EOF'\np='tools/world/world.html'; s=open(p).read()\nimport re\nm = re.search(r\"renderer\\.setPixelRatio\\(([^;]*)\\);\", s); old = m.group(0)\nnew = \"renderer.setPixelRatio(q.get('pr') ? +q.get('pr') : (\" + m.group(1) + \"));   // r45: ?pr=2 renders at phone pixel density (QA)\"\ns = s.replace(old, new, 1); open(p,'w').write(s); print(new[:120])\nEOF\nS=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; cp tools/world/world.html $S/wr/game/play3.html; NODE_PATH=$(npm roo …[+424 chars]`
+
+### 🧑 User — 2026-11-22T20:34:18.178Z
+
+> ↩︎ result: 48:renderer.setPixelRatio(q.get('w') ? 1 : Math.min(2, devicePixelRatio)); renderer.setSize(W, H); document.body.appendChild(renderer.domElement);
+> renderer.setPixelRatio(q.get('pr') ? +q.get('pr') : (q.get('w') ? 1 : Math.min(2, devicePixelRatio)));   // r45: ?pr=2 r
+> pr=2: "share_within_20_levels": 0.005 "sharpness_vs_approved": 0.0
+
+### 🤖 Claude — 2026-11-22T20:34:31.586Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; rm -rf $S/wr/preview_06; NODE_PATH=$(npm root -g) node tools/screenkit/preview.cjs $S/wr/game $S/wr/preview_06 --screen 06 --area 06 > $S/p06.log 2>&1; python3 -c \"\nimport json; d=json.load(open('$S/wr/preview_06/preview.json'))['summary']\nprint('picture', [(round(x['share_within_20_levels']*100,1), x['sharpness_vs_approved']) for x in d['likeness_picture_view']], 'repeat mean', d['repeat_within_20_mean'], {k:v['style_pct_mean'] for k,v in d['surfaces_while_swimming'].items()}, 'holes', d['hole …[+647 chars]`
+
+### 🤖 Claude — 2026-11-22T20:34:32.694Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/ax06.jpg"}`
+
+### 🧑 User — 2026-11-22T20:35:17.272Z
+
+> ↩︎ result: picture [(0.8, 0.0)] repeat mean 0.008 {} holes 0
+>   ['WARN', 'textured picture lane 0 (s 149.172)', 'colour look 0.009 vs the approved picture']
+>   ['WARN', 'textured begin lane 0 (s 143.05)', 'colour look 0.009 vs the approved picture']
+>   ['WARN', 'textured curve_29deg lane 0 (s 149.6)', 'colour look 0.009 vs the approved picture']
+>   ['WARN', 'textured quarter lane 0 (s 153.3)', 'colour look 0.009 vs the approved picture']
+>   ['WARN', 'textured middle lane 0 (s 164.75)', 'colour look 0.009 vs the approved picture']
+
+### 🧑 User — 2026-11-22T20:35:17.293Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T20:35:30.071Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/world/world.html'; s=open(p).read()\na=\"renderer.setPixelRatio(q.get('pr') ? +q.get('pr') : (q.get('w') ? 1 : Math.min(2, devicePixelRatio)));   // r45: ?pr=2 renders at phone pixel density (QA) renderer.setSize(W, H); document.body.appendChild(renderer.domElement);\"\nb=\"renderer.setPixelRatio(q.get('pr') ? +q.get('pr') : (q.get('w') ? 1 : Math.min(2, devicePixelRatio))); /* r45: ?pr=2 = phone pixel density (QA) */ renderer.setSize(W, H); document.body.appendChild(renderer.domElement);\"\nassert s.count(a)==1, 'nf'; s=s.replace(a,b); open(p,'w').writ …[+745 chars]`
+
+### 🧑 User — 2026-11-22T20:35:30.145Z
+
+> ↩︎ result: (Bash completed with no output)
+
+### 🤖 Claude — 2026-11-22T20:35:37.442Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; cp tools/world/world.html $S/wr/game/play3.html; rm -rf $S/wr/preview_06; NODE_PATH=$(npm root -g) node tools/screenkit/preview.cjs $S/wr/game $S/wr/preview_06 --screen 06 --area 06 > $S/p06.log 2>&1; python3 -c \"\nimport json; d=json.load(open('$S/wr/preview_06/preview.json'))['summary']\nprint('picture', [(round(x['share_within_20_levels']*100,1), x['sharpness_vs_approved']) for x in d['likeness_picture_view']], 'repeat mean', d['repeat_within_20_mean'], {k:v['style_pct_mean'] for k,v in d['sur …[+684 chars]`
+
+### 🤖 Claude — 2026-11-22T20:35:38.493Z
+
+> 🔧 **Read** `{"file_path": "/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/ax06.jpg"}`
+
+### 🧑 User — 2026-11-22T20:36:43.455Z
+
+> ↩︎ result: picture [(84.8, 0.772)] repeat mean 0.165 {'wall': 87.6, 'ring': 57.8, 'water': 55.7, 'foam': 29.5, 'trays': 94.5} holes 0
+>   ['WARN', 'textured begin lane 0 (s 143.05)', 'colour look 0.497 vs the approved picture']
+>   ['WARN', 'textured curve_29deg lane 0 (s 149.6)', 'colour look 0.551 vs the approved picture']
+>   ['WARN', 'textured begin lane -1 (s 143.05)', 'colour look 0.515 vs the approved picture']
+>   ['WARN', 'textured curve_29deg lane -1 (s 149.6)', 'colour look 0.431 vs the approved picture']
+
+### 🧑 User — 2026-11-22T20:36:43.472Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T20:37:17.283Z
+
+> 🔧 **Bash** `{"command": "grep -n \"benny.quaternion.setFromRotationMatrix(mB.makeBasis(rB, F.n, tB))\" tools/world/world.html | cut -c1-80; python3 - <<'EOF'\np='tools/world/world.html'; s=open(p).read()\na=\"tB.copy(F.t); rB.copy(F.r).negate(); benny.quaternion.setFromRotationMatrix(mB.makeBasis(rB, F.n, tB));\"\nassert s.count(a)==1, s.count(a)\nb=\"\"\"{ const kb = areaOf(st.s).LAY?.benny_bank ?? 1;   // r45: on a steep banked crest Benny follows only part of the bank (upright like the painting), still in the water\n  if (kb < 1) { const nB = UPV.clone().lerp(F.n, kb).normalize(); tB.copy(F.t); rB.cros …[+960 chars]`
+
+### 🧑 User — 2026-11-22T20:37:17.377Z
+
+> ↩︎ result: 524:  tB.copy(F.t); rB.copy(F.r).negate(); benny.quaternion.setFromRotationMatri
+> fl.dump at 11093
+> 119:        dep = float(-(cam.R.T @ (P - cam.C))[2]); lay['paddles'].append({'pos': P, 'width': wpx * dep / cam.F})
+> 121:    rw = 0.03 + 0.12 * min(1, r / 40.0); dist = rw * cam.F / r; P = cam.C + cam.ray(x, y) * dist; lay['bubbles'].append(list(P) + [rw])
+> 122:fl.dump(os.path.join(a.out, 'layout.json'), lay)
+> 143:for pd in lay['paddles']:
+
+### 🤖 Claude — 2026-11-22T20:37:26.410Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/screens/06/fit06.py'; s=open(p).read()\na=\"fl.dump(os.path.join(a.out, 'layout.json'), lay)\"\nb=\"\"\"# r45 (user: no unnatural leaning): on the steep banked crest Benny follows a third of the bank (upright like the painted Benny, still in the\n# water), and the camera stays nearly level (the painting's horizon is level)\nlay['benny_bank'] = 0.35; lay['cam_roll'] = 0.15\nfl.dump(os.path.join(a.out, 'layout.json'), lay)\"\"\"\nassert s.count(a)==1; s=s.replace(a,b); open(p,'w').write(s)\nEOF\nnode -e \"\nconst s=require('fs').readFileSync('to …[+1159 chars]`
+

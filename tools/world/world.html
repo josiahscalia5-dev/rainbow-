@@ -45,7 +45,7 @@ for (const [k, v] of [['c_LANE', '0.3'], ['c_LAT_MAX', '0.36'], ['speed', '2.2']
 const WD = await (await fetch('world.json')).json();
 const W = +(q.get('w') ?? innerWidth), H = +(q.get('h') ?? innerHeight);
 const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
-renderer.setPixelRatio(q.get('pr') ? +q.get('pr') : (q.get('w') ? 1 : Math.min(2, devicePixelRatio)));   // r45: ?pr=2 renders at phone pixel density (QA) renderer.setSize(W, H); document.body.appendChild(renderer.domElement);
+renderer.setPixelRatio(q.get('pr') ? +q.get('pr') : (q.get('w') ? 1 : Math.min(2, devicePixelRatio))); /* r45: ?pr=2 = phone pixel density (QA) */ renderer.setSize(W, H); document.body.appendChild(renderer.domElement);
 const V3 = (a) => new THREE.Vector3(a[0], a[1], a[2]);
 const scene = new THREE.Scene(); scene.background = new THREE.Color(q.get('sentinel') ? 0x00ff00 : 0x1a0630);
 const camera = new THREE.PerspectiveCamera(64, W / H, 0.03, 300); camera.rotation.order = 'YXZ';
@@ -465,7 +465,7 @@ const drawSlots = () => { slotsEl.textContent = '\u{1F9E6}'.repeat(socksGot) + '
 
 // ---------------- chase camera: camera keys = each approved picture's fitted camera, relative to Benny's route frame; blended between ----------------
 const ROLL = +(q.get('roll') ?? 0.5), CAMW = +(q.get('camw') ?? 1.6);   // r44: heading averaged over +-1.6 u (was 0.8): calmer turns through tight S-curves
-const camFrame = (s, out) => { const sm = (a, b) => a.clone().lerp(b, ROLL).normalize(), A2 = at(Math.min(RLEN, s + CAMW), new THREE.Vector3()), B2 = at(Math.max(0, s - CAMW), new THREE.Vector3());
+const camFrame = (s, out) => { const RL = areaOf(s).LAY?.cam_roll ?? ROLL, sm = (a, b) => a.clone().lerp(b, RL).normalize(),   /* r45: per-area camera roll (06: level view) */ A2 = at(Math.min(RLEN, s + CAMW), new THREE.Vector3()), B2 = at(Math.max(0, s - CAMW), new THREE.Vector3());
   const Ft = A2.sub(B2).normalize(), Fn = new THREE.Vector3(); for (let k = -2; k <= 2; k++) Fn.add(frameAt(Math.min(RLEN, Math.max(0, s + 0.4 * k))).n); Fn.normalize();
   const t = sm(new THREE.Vector3(Ft.x, 0, Ft.z).normalize(), Ft), n = sm(UPV, Fn), r = new THREE.Vector3().crossVectors(t, n).normalize(); n.crossVectors(r, t).normalize();
   return out.makeBasis(r, n, t.clone().negate()); };
@@ -521,7 +521,9 @@ window.step = (t, dt, steer, speed) => {
   const turboK = t < AB.turbo.until ? (AB.turbo.until - t) / AB.turbo.dur : 0;
   st.lat = CT.update(t, dt).lat; const F = frameAt(st.s); setBennyRule(st.s);
   at(st.s, tmp).addScaledVector(F.r, st.lat); benny.position.copy(tmp).addScaledVector(F.n, Math.sin(t * Math.PI * 1.6) * 0.006 + CT.c.h);
-  tB.copy(F.t); rB.copy(F.r).negate(); benny.quaternion.setFromRotationMatrix(mB.makeBasis(rB, F.n, tB)); CT.orient(benny.quaternion);
+  { const kb = areaOf(st.s).LAY?.benny_bank ?? 1;   // r45: on a steep banked crest Benny follows only part of the bank (upright like the painting), still in the water
+  if (kb < 1) { const nB = UPV.clone().lerp(F.n, kb).normalize(); tB.copy(F.t); rB.crossVectors(nB, tB).normalize(); const nO = new THREE.Vector3().crossVectors(tB, rB).normalize(); benny.quaternion.setFromRotationMatrix(mB.makeBasis(rB, nO, tB)); }
+  else { tB.copy(F.t); rB.copy(F.r).negate(); benny.quaternion.setFromRotationMatrix(mB.makeBasis(rB, F.n, tB)); } } CT.orient(benny.quaternion);
   if (turboK > 0.76) benny.quaternion.multiply(qTmp.setFromAxisAngle(UPV, (1 - (turboK - 0.76) / 0.24) * Math.PI * 4));
   U.uT.value = t; U.uSwim.value = 1; U.uPom.value.set(Math.sin(t * 5.0) * 0.06, 0); CT.anim(0);
   const SPK = areaOf(st.s).kind === 'kit' ? (areaOf(st.s).LAY.splash_scale ?? 1) : 1;

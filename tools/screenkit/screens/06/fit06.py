@@ -119,6 +119,9 @@ for x, y, wpx in M['paddles']:
         dep = float(-(cam.R.T @ (P - cam.C))[2]); lay['paddles'].append({'pos': P, 'width': wpx * dep / cam.F})
 for x, y, r in M['bubbles']:
     rw = 0.03 + 0.12 * min(1, r / 40.0); dist = rw * cam.F / r; P = cam.C + cam.ray(x, y) * dist; lay['bubbles'].append(list(P) + [rw])
+# r45 (user: no unnatural leaning): on the steep banked crest Benny follows a third of the bank (upright like the painted Benny, still in the
+# water), and the camera stays nearly level (the painting's horizon is level)
+lay['benny_bank'] = 0.35; lay['cam_roll'] = 0.15
 fl.dump(os.path.join(a.out, 'layout.json'), lay)
 print('cam yaw %.2f pitch %.2f deg; Benny water (%.3f, %.3f), height %.3f; coin radius %.3f; drum R %.2f axis (%.3f, %.3f) chord %.2f; ring z %s'
       % (math.degrees(yaw), math.degrees(pitch), Pb[0], Pb[2], HB, COIN_R, DRUM_R, xa, ya, chord, [round(z, 2) for z in z_ring]))
