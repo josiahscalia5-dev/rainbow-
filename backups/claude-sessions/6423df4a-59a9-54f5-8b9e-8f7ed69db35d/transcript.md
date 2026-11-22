@@ -2236,3 +2236,148 @@ Do not spend any paid credits. If installation requires me to approve a permissi
 
 > 🔧 **Bash** `{"command": "mv /root/.local/share/rainbow-tools/Spector.js /root/.local/share/rainbow-tools/Spector.js.bak && claude mcp remove spectorjs -s user >/dev/null 2>&1; claude mcp get spectorjs >/dev/null 2>&1 && echo still-registered || echo \"simulated fresh container: no Spector install, not registered\"; time timeout 1500 bash scripts/claude-bootstrap.sh --skip-resume > /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/bootstrap_run.log 2>&1; echo \"exit $?\"; grep -E \"Spector|Language servers|FAIL\" backups/BOOTSTRAP_REPORT.md | head -8", "description": "Test t …[+78 chars]`
 
+### 🧑 User — 2026-11-22T15:18:36.460Z
+
+> ↩︎ result: Command was moved to the background (ID: b46rz0xsa) so that a message that arrived while it was running can reach you; it was not interrupted. Output is being written to: /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/tasks/b46rz0xsa.output. You will be notified when it completes. If it is still running after 30m in the background (plus the timeout it was started with, up to the background maximum), it will be stopped and you will be notified. It is running now: do not start a second copy while it runs. If it is no longer needed, stop it with TaskStop. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-22T15:18:40.661Z
+
+> 🔧 **Bash** `{"command": "sleep 45; tail -5 /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/bootstrap_run.log; ls /root/.local/share/rainbow-tools/; ls /root/.local/share/rainbow-tools/Spector.js/mcp/dist/index.js 2>&1", "description": "Check progress of the fresh-install test", "timeout": 120000}`
+
+### 🧑 User — 2026-11-22T15:18:40.671Z
+
+> ↩︎ result: <tool_use_error>Blocked: sleep 45 followed by: tail -5 /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/bootstrap_run.log ls /root/.local/share/rainbow-tools/ ls /root/.local/share/rainbow-tools/Spector.js/mcp/dist/index.js. To wait for a condition, use Monitor with an until-loop (e.g. `until <check>; do sleep 2; done`). To wait for a command you started, use run_in_background: true. Do not chain shorter sleeps to work around this block.</tool_use_error>
+
+### 🤖 Claude — 2026-11-22T15:18:47.880Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && mkdir -p tools/spector qa/tools/spector_2026-11-22 && cp $S/spector_test.mjs tools/spector/spector_capture_test.mjs && sed -i 's|^// Usage: node spector_test.mjs <out_dir> <url>|// Usage: node tools/spector/spector_capture_test.mjs <out_dir> <url>   (serve a game folder first, e.g. python3 -m http.server 3000 in /tmp/ws06/game,\\n//        then url = \"http://127.0.0.1:3000/play3.html?sentinel=1\\&play=1\": play=1 keeps the render loop running so a frame can be captured)|' tools/spector/spector_ …[+746 chars]`
+
+### 🧑 User — 2026-11-22T15:18:48.142Z
+
+> ↩︎ result: // Real end-to-end test of the standalone Spector.js MCP server over stdio (the same protocol Claude Code uses).
+> // Usage: node tools/spector/spector_capture_test.mjs <out_dir> <url>   (serve a game folder first, e.g. python3 -m http.server 3000 in /tmp/ws06/game,
+> //        then url = "http://127.0.0.1:3000/play3.html?sentinel=1&play=1": play=1 keeps the render loop running so a frame can be captured)
+> import { Client } from '/root/.local/share/rainbow-tools/Spector.js/mcp/node_modules/@modelcontextprotocol/sdk/dist/esm/client/index.js';
+> total 528
+> drwxr-xr-x 2 root root   4096 Nov 22 15:18 .
+> drwxr-xr-x 3 root root   4096 Nov 22 15:18 ..
+> -rw-r--r-- 1 root root 510570 Nov 22 15:18 SCREEN06_spector_capture_screenshot.jpg
+> -rw-r--r-- 1 root root    193 Nov 22 15:18 capture_frame.txt
+> -rw-r--r-- 1 root root    453 Nov 22 15:18 console_summary.txt
+> -rw-r--r-- 1 root root   1231 Nov 22 15:18 get_context_info.txt
+> -rw-r--r-- 1 root root   2603 Nov 22 15:18 get_draw_calls_first60.txt
+> -rw-r--r-- 1 root root    236 Nov 22 15:18 load_url.txt
+
+### 🤖 Claude — 2026-11-22T15:18:51.520Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json;c=json.load(open('backups/autosave.config.json'));print({k:(v if not isinstance(v,list) else v[:40]) for k,v in c.items() if 'include' in k or 'allow' in k or 'path' in k})\" | head -20; sed -n 40,60p backups/MCP_SETUP.md", "description": "Check the autosave allow-list and the MCP setup table"}`
+
+### 🧑 User — 2026-11-22T15:18:51.613Z
+
+> ↩︎ result: {'allowlist': ['*.md', '.gitignore', '.gitattributes', '.claude/agents', '.claude/skills', '.claude/commands', '.claude/rules', '.claude/settings.json', '.mcp.json.template', 'package.json', 'package-lock.json', 'tsconfig.json', 'tsconfig.node.json', 'vite.config.ts', 'capacitor.config.ts', 'index.html', 'src', 'public', 'assets', 'references', 'character_references', 'screenshots', 'qa', 'docs', 'scripts', 'tools', 'tests', 'backups', 'android', 'builds'], 'status_only_paths': ['backups/BACKUP_STATUS.json', 'backups/BACKUP_LOG.md']}
+> | context7 plugin | needs OAuth sign-in; not used by Rainbow | ignore unless needed |
+> 
+> Status as verified in the cloud development session on 2026-11-15. "Tested" means a real call succeeded
+> in this environment; nothing here is assumed.
+> 
+> | Tool | Status here | Evidence / blocker | Reconnect |
+> |---|---|---|---|
+> | Playwright MCP | **connected** (`claude mcp list` → ✓ Connected) | Plugin server `@playwright/mcp@latest`; Chromium + Playwright library preinstalled and used by `scripts/` capture tooling | `claude mcp add playwright npx @playwright/mcp@latest` |
+> | Chrome DevTools MCP | connected (bonus) | `chrome-devtools-mcp@1.1.1 --headless` ✓ | plugin-prov …[+1894 chars]
+
+### 🤖 Claude — 2026-11-22T15:18:56.331Z
+
+> 🔧 **Edit** `{"replace_all": false, "file_path": "/home/user/rainbow-/backups/MCP_SETUP.md", "old_string": "| Blender MCP (`mcp-for-blender`) | **not connected** |", "new_string": "| Spector.js MCP (standalone, `spectorjs`) | **connected** 2026-11-22 (`claude mcp list` → ✓) | Official BabylonJS/Spector.js `mcp/` @ 755e6a7, built in `~/.local/share/rainbow-tools/Spector.js`, Playwright pinned to the preinstalled Chromium (no `playwright install`). Real test: Screen 06 frame captured — 1,056 commands, 233 draw calls, 11 programs, 0 GL errors (`qa/tools/spector_2026-11-22/`, `tools/spector/spector_capture_tes …[+393 chars]`
+
+### 🧑 User — 2026-11-22T15:18:56.691Z
+
+> ↩︎ result: The file /home/user/rainbow-/backups/MCP_SETUP.md has been updated successfully.
+
+### 🤖 Claude — 2026-11-22T15:19:00.481Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json,collections\np='backups/TOOL_MANIFEST.json'\nd=json.load(open(p),object_pairs_hook=collections.OrderedDict)\nd['mcp_servers']['spectorjs']={\"source\":\"official BabylonJS/Spector.js mcp/ @ 755e6a7671e58424fcfda1270823a71e91de3553 (MIT, free), built in ~/.local/share/rainbow-tools/Spector.js; user-scope registration with env PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers\",\"needed\":\"optional (raw WebGL state / draw calls / shaders)\",\"install\":\"automatic: scripts/claude-bootstrap.sh step_spector\",\"test\":\"tools/spector/spector_capture_test.mjs -> …[+460 chars]`
+
+### 🧑 User — 2026-11-22T15:19:00.566Z
+
+> ↩︎ result: manifest ok
+>  1 file changed, 416 insertions(+), 409 deletions(-)
+
+### 🤖 Claude — 2026-11-22T15:19:03.165Z
+
+> 🔧 **Bash** `{"command": "git show HEAD:backups/TOOL_MANIFEST.json | head -3 | cat -A | cut -c1-60; git diff backups/TOOL_MANIFEST.json | grep \"^[-+]\" | head -8", "description": "Check original manifest formatting"}`
+
+### 🧑 User — 2026-11-22T15:19:03.387Z
+
+> ↩︎ result: {$
+>   "_comment": "Machine-readable Rainbow tool manifest. Read 
+>   "schema": 1,$
+> --- a/backups/TOOL_MANIFEST.json
+> +++ b/backups/TOOL_MANIFEST.json
+> -  "_comment": "Machine-readable Rainbow tool manifest. Read by scripts/claude-bootstrap.sh (versions, packages, Marble worlds). Contains NO secrets: credentials are listed by name/host only. Update 'tested' when a session re-verifies a tool.",
+> -  "schema": 1,
+> -  "project": "RAINBOW - 11-screen 3D mobile game (Three.js + Vite + Capacitor Android)",
+> -  "repo": "josiahscalia5-dev/rainbow-",
+> -  "updated_utc": "2026-11-16T15:58:00+00:00",
+> -  "entry_points": {
+
+### 🤖 Claude — 2026-11-22T15:19:05.956Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json,collections\np='backups/TOOL_MANIFEST.json'\nd=json.load(open(p),object_pairs_hook=collections.OrderedDict)\njson.dump(d,open(p,'w'),indent=2,ensure_ascii=False); open(p,'a').write('\\n')\nEOF\ngit diff --stat backups/TOOL_MANIFEST.json | tail -1; git diff backups/TOOL_MANIFEST.json | grep \"^[-+]\" | grep -v spectorjs | head -12", "description": "Rewrite the manifest with its original two-space indentation"}`
+
+### 🧑 User — 2026-11-22T15:19:06.039Z
+
+> ↩︎ result: 1 file changed, 9 insertions(+), 2 deletions(-)
+> --- a/backups/TOOL_MANIFEST.json
+> +++ b/backups/TOOL_MANIFEST.json
+> -    "template": ".mcp.json.template (no secrets; .mcp.json is git-ignored)"
+> +    "template": ".mcp.json.template (no secrets; .mcp.json is git-ignored)",
+> +      "source": "official BabylonJS/Spector.js mcp/ @ 755e6a7671e58424fcfda1270823a71e91de3553 (MIT, free), built in ~/.local/share/rainbow-tools/Spector.js; user-scope registration with env PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers",
+> +      "needed": "optional (raw WebGL state / draw calls / shaders)",
+> +      "install": "automatic: scripts/claude-bootstrap.sh step_spector",
+> +      "test": "tools/spector/spector_capture_test.mjs -> qa/tools/spector_2026-11-22/ (Screen 06: 1056 commands, 233 draw calls, 11 programs, 0 GL errors)",
+> +      "note": "the parallax-threejs plugin's own 'spector' server is never built in synced plugins: ignore its CONNECTION_CLOSED"
+> +    }
+> -}
+> +}
+
+### 🤖 Claude — 2026-11-22T15:19:08.042Z
+
+Spector is recorded in the setup notes. I'm waiting for the fresh-install test, which is rebuilding Spector from scratch, to finish.
+
+### 🤖 Claude — 2026-11-22T15:19:08.444Z
+
+> 🔧 **ToolSearch** `{"query": "select:Monitor", "max_results": 1}`
+
+### 🧑 User — 2026-11-22T15:19:08.456Z
+
+> ↩︎ result: [tool_reference]
+
+### 🤖 Claude — 2026-11-22T15:19:12.019Z
+
+> 🔧 **Bash** `{"command": "cat /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/tasks/b46rz0xsa.output; tail -3 /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/bootstrap_run.log; ls /root/.local/share/rainbow-tools/; tail -3 /home/user/rainbow-/backups/.live/spector-mcp.log 2>/dev/null", "description": "Check the fresh-install test progress once"}`
+
+### 🧑 User — 2026-11-22T15:19:12.074Z
+
+> ↩︎ result: Exit code 1
+> simulated fresh container: no Spector install, not registered
+> 
+> == 1 Repository, newest work, backup gap
+>   OK   Repository + branch            josiahscalia5-dev/rainbow- on ccr-0bbd5b9d-js1cpg @ af15aba (session started from ccr-80cdb162-4sqz1a)
+> Spector.js.bak
+
+### 🤖 Claude — 2026-11-22T15:19:17.086Z
+
+> 🔧 **Bash** `{"command": "until [ -f /root/.local/share/rainbow-tools/Spector.js/mcp/dist/index.js ] && claude mcp get spectorjs >/dev/null 2>&1 || grep -qE \"Spector.js MCP\" /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/bootstrap_run.log; do sleep 5; done; grep -E \"Spector|Language\" /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad/bootstrap_run.log; claude mcp get spectorjs 2>&1 | head -8", "description": "Wait until the bootstrap has rebuilt and registered Spector", "timeout": 1500000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-22T15:19:17.144Z
+
+> ↩︎ result: Command running in background with ID: bwz5aplri. Output is being written to: /tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/tasks/bwz5aplri.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-22T15:19:20.600Z
+
+> 🔧 **TaskUpdate** `{"taskId": "7", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-22T15:19:20.620Z
+
+> ↩︎ result: Updated task #7 status
+

@@ -220,7 +220,14 @@
       "needed": false,
       "note": "needs a desktop Blender UI; headless Blender scripts are used instead"
     },
-    "template": ".mcp.json.template (no secrets; .mcp.json is git-ignored)"
+    "template": ".mcp.json.template (no secrets; .mcp.json is git-ignored)",
+    "spectorjs": {
+      "source": "official BabylonJS/Spector.js mcp/ @ 755e6a7671e58424fcfda1270823a71e91de3553 (MIT, free), built in ~/.local/share/rainbow-tools/Spector.js; user-scope registration with env PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers",
+      "needed": "optional (raw WebGL state / draw calls / shaders)",
+      "install": "automatic: scripts/claude-bootstrap.sh step_spector",
+      "test": "tools/spector/spector_capture_test.mjs -> qa/tools/spector_2026-11-22/ (Screen 06: 1056 commands, 233 draw calls, 11 programs, 0 GL errors)",
+      "note": "the parallax-threejs plugin's own 'spector' server is never built in synced plugins: ignore its CONNECTION_CLOSED"
+    }
   },
   "credentials": {
     "_policy": "NEVER in git, chat, logs or scripts. Stored only by the Claude platform. Transfers between Claude accounts: NO.",

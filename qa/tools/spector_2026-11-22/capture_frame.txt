@@ -1,0 +1,9 @@
+**Frame Capture Summary**
+- Total commands: 1056
+- Draw calls: 233
+- Clear calls: 1
+- Shader programs: 11
+- WebGL version: 2
+- Canvas: 1920×1080
+- Duration: 11431200ms
+- No GL errors detected

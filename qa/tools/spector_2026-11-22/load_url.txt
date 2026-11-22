@@ -1,0 +1,6 @@
+**Page loaded:** Rainbow 06
+**URL:** http://127.0.0.1:3000/play3.html?sentinel=1&play=1
+**Canvases found:** 1
+
+Canvas #0 is selected by default. Use list_canvases to see all canvases and select_canvas to switch.
+Ready for capture_frame.

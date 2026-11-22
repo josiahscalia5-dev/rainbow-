@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 27953,
-   "sha256": "14df7349b001f653b795567233a2dfbd4443efa719ab89a3aacc751c6421501a"
+   "sha256": "21c5886899091566876545cd82480db2d0d7fc47bd6d29f26ad6a9da9a7b5792"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -848,13 +848,13 @@
   },
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
-   "bytes": 3622,
-   "sha256": "70528ee5f990f0d8bc102f9f19c3df7f724d192930eae7b414d680271735203b"
+   "bytes": 3607,
+   "sha256": "d0bdfce45260632a16a8827b171d7440205867003a71bd92adf2d8e04921d2aa"
   },
   {
    "path": "backups/MCP_SETUP.md",
-   "bytes": 7240,
-   "sha256": "decc1b02c62920e62191fca97ff674cdcd7a51498c5988b579f3e62b18758e5c"
+   "bytes": 8015,
+   "sha256": "e99addca640cb622c689849fa24ac78b347e8210243e678718c7b404c1591fd7"
   },
   {
    "path": "backups/RECOVERY.md",
@@ -868,8 +868,8 @@
   },
   {
    "path": "backups/TOOL_MANIFEST.json",
-   "bytes": 22791,
-   "sha256": "5c1862b66d05f8de9b3e97187f1e1ca9702a03d9471b7d184181d18bdfabfb46"
+   "bytes": 23481,
+   "sha256": "93bfa8ac31d6b6031c71fab7b8413f1a206d8c1ef9d9e04ace2d6c9a17e15f4e"
   },
   {
    "path": "backups/TOOL_RESTORE_REPORT_2026-11-22.md",
@@ -42802,6 +42802,36 @@
    "sha256": "6c496dbc36dec516c32127fee3a043f64c7c158b87c4d7cb0f7c965da54eca93"
   },
   {
+   "path": "qa/tools/spector_2026-11-22/SCREEN06_spector_capture_screenshot.jpg",
+   "bytes": 510570,
+   "sha256": "63fa60c90b164e3ff00367e7cdbcff9086e0be136a4c5dddab1bdbadbf04cd15"
+  },
+  {
+   "path": "qa/tools/spector_2026-11-22/capture_frame.txt",
+   "bytes": 193,
+   "sha256": "43d3aea3104c2302fbe703092beda4c86e561020796c598ab23328acbd89f255"
+  },
+  {
+   "path": "qa/tools/spector_2026-11-22/console_summary.txt",
+   "bytes": 453,
+   "sha256": "0d88aef0a9f8ea76d9dfab88844fff7f815802bc2a83fd95e7b72bb15d41ce4a"
+  },
+  {
+   "path": "qa/tools/spector_2026-11-22/get_context_info.txt",
+   "bytes": 1231,
+   "sha256": "019d997a5db8f38dfd1b33c52e28e37116a2546a82d43cbc060b7b9a997c5f72"
+  },
+  {
+   "path": "qa/tools/spector_2026-11-22/get_draw_calls_first60.txt",
+   "bytes": 2603,
+   "sha256": "bbaac2f96ba25f8965fee38eeffb9184a35f379151f64bddc130ab6ea291d633"
+  },
+  {
+   "path": "qa/tools/spector_2026-11-22/load_url.txt",
+   "bytes": 236,
+   "sha256": "247475c954cace1d67317ec6d3c1752ee1a618052e8948e082082c60bbc44821"
+  },
+  {
    "path": "qa/worldlabs/05/05_env_mask.png",
    "bytes": 6175,
    "sha256": "11b77364bdeac15614ee648901b4e4b3b2a9cf2bdf8700024cc681dbf56be4a9"
@@ -45170,6 +45200,11 @@
    "path": "tools/screenkit/setup_screen.sh",
    "bytes": 3426,
    "sha256": "eabde6c085c91d1cea3d42cfb5e6a2c91adcfa17fe4f2303a57885a30bb9e5e4"
+  },
+  {
+   "path": "tools/spector/spector_capture_test.mjs",
+   "bytes": 2865,
+   "sha256": "d22cbeb53fab44a543b7af8b906f53e3fd03ea7e90ef58a0a77a6be20415a942"
   },
   {
    "path": "tools/water-lab.html",

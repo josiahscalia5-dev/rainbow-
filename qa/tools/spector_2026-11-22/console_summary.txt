@@ -1,0 +1,5 @@
+    252 [WARNING] WebGL: INVALID_OPERATION: getTranslatedShaderSource: attempt to use a deleted object
+      2 ```
+      2 [ERROR] THREE.WebGLRenderer: A WebGL context could not be created. Reason:  Canvas has an existing context of a different type (http://127.0.0.1:3000/node_modules/three/build/three.module.js)
+      1 [WARNING] WebGL: too many errors, no more errors will be reported to the console for this context.
+      1 **Console Logs (259)**
