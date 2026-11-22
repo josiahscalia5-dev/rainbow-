@@ -162,7 +162,7 @@ if (MANI) {
   const all = []; world.traverse((o) => { if (o.isMesh && MANI.meshes[o.name]) all.push(o); });
   await Promise.all(all.map(async (o) => { const e = MANI.meshes[o.name]; o.material.uniforms.uBake.value = await ld(e.bake); o.material.uniforms.uDen.value = await ld(e.den, true); o.material.uniforms.uBakeOn.value = 1; BAKE_STATS[o.name] = e.cov; }));
   BAKE_STATS._prebaked = all.length;
-} else if (q.get('bake') !== '0') {
+} else if (q.get('bake') !== '0' && q.get('gray') !== '1') {
   const NC = CAMS.length;
   const tex = await Promise.all(CAMS.flatMap((c) => [loadRaw(c.userData.plate), loadRaw(c.userData.mask)]));
   const depthOf = (cam) => { const rt = new THREE.WebGLRenderTarget(cam.userData.img[0], cam.userData.img[1]); rt.depthTexture = new THREE.DepthTexture(cam.userData.img[0], cam.userData.img[1]);
@@ -237,6 +237,18 @@ ${body}        gl_FragColor = best; }` });
   }
   BAKE_STATS._ms = Math.round(performance.now() - tStart); DEP.forEach((d) => d.dispose());
 }
+// ?gray=1: GEOMETRY TEST - every scenery surface plain gray (lit by its own normal) with a 0.5 u world grid, back faces orange, holes green
+// (with &sentinel=1): proves the drum, channel, rings and pool are real connected 3D geometry; no picture pixel is used (bake skipped)
+const GRAY = q.get('gray') === '1';
+if (GRAY) { const famCol = { tunnel: [0.62, 0.62, 0.66], ring: [0.78, 0.72, 0.55], water: [0.55, 0.68, 0.78], pool: [0.5, 0.6, 0.7], flume: [0.5, 0.5, 0.52], copper: [0.7, 0.6, 0.55], foam: [0.9, 0.9, 0.92] };
+  const gm = (c) => new THREE.ShaderMaterial({ side: THREE.DoubleSide, uniforms: { uC: { value: new THREE.Color(...c) } },
+    vertexShader: 'varying vec3 vN; varying vec3 vW; void main(){ vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz; vN = normalize(mat3(modelMatrix) * normal); gl_Position = projectionMatrix * viewMatrix * w; }',
+    fragmentShader: `uniform vec3 uC; varying vec3 vN; varying vec3 vW;
+      void main(){ vec3 n = normalize(vN) * (gl_FrontFacing ? 1.0 : -1.0); float lit = 0.38 + 0.47 * max(0.0, dot(n, normalize(vec3(0.3, 0.8, 0.5)))) + 0.15 * max(0.0, dot(n, normalize(cameraPosition - vW)));
+        vec3 c = uC * lit; vec3 g = abs(fract(vW * 2.0 - 0.5) - 0.5) / fwidth(vW * 2.0); float line = 1.0 - min(min(g.x, g.y), g.z); c = mix(c, c * 0.55, clamp(line, 0.0, 1.0) * 0.6);
+        if (!gl_FrontFacing) c = mix(c, vec3(1.0, 0.55, 0.1), 0.55);
+        gl_FragColor = vec4(c, 1.0); }` });
+  world.traverse((o) => { if (!o.isMesh || o.name === 'bubbles') return; const f = o.userData.fam ?? (o.name === 'drum_end' ? 'foam' : 'tunnel'); o.material = gm(famCol[f] ?? famCol.tunnel); }); }
 window.bakeStats = () => BAKE_STATS;
 window.bakeExport = (name) => { const d = BAKE_DATA[name]; if (!d) return null; if (d.template) return { template: d.template };
   const png = (w, h, px, type = 'image/png', qual = 0.9) => { const c = document.createElement('canvas'); c.width = w; c.height = h; const g = c.getContext('2d'), im = g.createImageData(w, h);
@@ -326,16 +338,19 @@ const camFrame = (s, out) => { const sm = (a, b) => a.clone().lerp(b, ROLL).norm
 const C0 = CAMS[0], P0 = at(S_REF, new THREE.Vector3()), M0 = camFrame(S_REF, new THREE.Matrix4()), M0i = M0.clone().invert();
 const OFF = V3(LAY.cams[0].pos).sub(P0).applyMatrix4(M0i);                   // camera position in Benny's route frame at the picture
 const QREL = new THREE.Quaternion().setFromRotationMatrix(M0i).multiply(C0.quaternion.clone());   // camera rotation in that frame (exact there)
-const st = { s: +(q.get('s0') ?? S_REF), lat: 0, camLat: { x: 0, v: 0 }, t: 0 };
+// Benny swims AHEAD of the picture point by `ahead` (the painted water-contact point is the FRONT of his body at the waterline, not his
+// centre); the camera stays the fitted picture camera relative to that point, so the picture view is exact with Benny at his painted place
+let AHEAD = +(q.get('bahead') ?? LAY.benny.ahead ?? 0);
+const st = { s: +(q.get('s0') ?? (S_REF + AHEAD)), lat: 0, camLat: { x: 0, v: 0 }, t: 0 };
 const cds = (o, target, omega, dt) => { const y = o.x - target, j = o.v + omega * y, e = Math.exp(-omega * dt); o.x = target + (y + j * dt) * e; o.v = (o.v - omega * j * dt) * e; return o.x; };
 const CAMK = +(q.get('camk') ?? 0.8), tmp = new THREE.Vector3(), qTmp = new THREE.Quaternion(), Mt = new THREE.Matrix4();
 const camAt = (s, dt) => {
-  const F = frameAt(s); camFrame(s, Mt); const r = new THREE.Vector3().setFromMatrixColumn(Mt, 0), n = new THREE.Vector3().setFromMatrixColumn(Mt, 1);
+  const F = frameAt(s), sc = Math.max(0, s - AHEAD); camFrame(sc, Mt); const r = new THREE.Vector3().setFromMatrixColumn(Mt, 0), n = new THREE.Vector3().setFromMatrixColumn(Mt, 1);
   const oT = OFF.clone().applyMatrix4(Mt), qT = new THREE.Quaternion().setFromRotationMatrix(Mt).multiply(QREL);
   // gentle time smoothing of the rig's OFFSET and rotation (~0.07 s; no lag along the route); a still / the first frame (dt = 0) snaps exactly
   const kS = dt > 0 && st.camInit ? 1 - Math.exp(-14 * dt) : 1; st.camInit = true;
   st.rigO = (st.rigO ?? oT.clone()).lerp(oT, kS); st.rigQ = (st.rigQ ?? qT.clone()).slerp(qT, kS);
-  at(s, camera.position).add(st.rigO).addScaledVector(F.r, cds(st.camLat, CAMK * st.lat, 9, dt)); camera.quaternion.copy(st.rigQ); camera.updateMatrixWorld();
+  at(sc, camera.position).add(st.rigO).addScaledVector(F.r, cds(st.camLat, CAMK * st.lat, 9, dt)); camera.quaternion.copy(st.rigQ); camera.updateMatrixWorld();
   const fpx = H / 2 / Math.tan(camera.fov * DEG / 2), M = 8;
   for (let k = 0; k < 2; k++) { const bb = window.bennyBox(); const dpx = bb.x0 < M ? bb.x0 - M : bb.x1 > W - M ? bb.x1 - (W - M) : 0; const dpy = bb.y1 > H - M ? bb.y1 - (H - M) : bb.y0 < M + 60 ? bb.y0 - (M + 60) : 0; if (!dpx && !dpy) break;
     camera.position.addScaledVector(r, dpx * camera.position.distanceTo(benny.position) / fpx).addScaledVector(n, -dpy * camera.position.distanceTo(benny.position) / fpx); camera.updateMatrixWorld(); st.guard = (st.guard ?? 0) + 1; }
@@ -378,7 +393,23 @@ window.bennyVisBox = () => { benny.updateMatrixWorld(true); const a = bmesh.geom
   for (let i = 0; i < a.count; i += 2) { v.fromBufferAttribute(a, i).applyMatrix4(bmesh.matrixWorld); if (F.n.dot(v.clone().sub(wp)) < 0) continue; v.project(camera);
     const x = (v.x + 1) / 2 * W, y = (1 - v.y) / 2 * H; x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); }
   return [x0, y0, x1, y1].map((n) => +n.toFixed(1)); };
-window.setBenny = (bs, lift) => { const k = bs / BS0; holder.scale.multiplyScalar(k); BS0 = bs; holder.position.y = HY0 * bs + lift; return window.bennyVisBox(); };
+window.setBenny = (bs, lift, ahead) => { const k = bs / BS0; holder.scale.multiplyScalar(k); BS0 = bs; holder.position.y = HY0 * bs + lift;
+  if (ahead !== undefined) { AHEAD = ahead; st.s = S_REF + ahead; st.camInit = false; window.step(st.t, 0, 0, 0); }
+  return window.bennyVisBox(); };
+// QA per frame (generic): camera clearance from all scenery (18 rays), the gap between Benny's route water point and the REAL water mesh under
+// him (ray along -n), the angle between his up axis and that surface's normal (his posture follows the slope / bank), his immersion
+const QA_SCN = MESH.filter((o) => o.userData.fam !== 'foam'), QA_WAT = MESH.filter((o) => o.userData.fam === 'water' || o.userData.fam === 'pool'), QA_RC = new THREE.Raycaster();
+window.kitFrameQA = () => { camera.updateMatrixWorld(); let camClear = 1e9; const e = camera.matrixWorld.elements, cx = new THREE.Vector3(e[0], e[1], e[2]), cy = new THREE.Vector3(e[4], e[5], e[6]), cz = new THREE.Vector3(e[8], e[9], e[10]);
+  for (const [a, b, c] of [[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1],[1,1,0],[-1,1,0],[1,-1,0],[-1,-1,0],[1,0,1],[-1,0,1],[0,1,1],[0,-1,1],[1,0,-1],[-1,0,-1],[0,1,-1],[0,-1,-1]]) {
+    const d = cx.clone().multiplyScalar(a).addScaledVector(cy, b).addScaledVector(cz, c).normalize(); QA_RC.set(camera.position, d); QA_RC.far = 5; const h = QA_RC.intersectObjects(QA_SCN, false)[0]; if (h) camClear = Math.min(camClear, h.distance); }
+  const F = frameAt(st.s), wp = at(st.s, new THREE.Vector3()).addScaledVector(F.r, st.lat); QA_RC.set(wp.clone().addScaledVector(F.n, 0.4), F.n.clone().negate()); QA_RC.far = 2; const h = QA_RC.intersectObjects(QA_WAT, false)[0];
+  let slope = null; if (h && h.face) { const nW = h.face.normal.clone().transformDirection(h.object.matrixWorld); slope = Math.acos(Math.min(1, Math.abs(nW.dot(F.n)))) * 180 / Math.PI; }
+  const up = new THREE.Vector3(0, 1, 0).applyQuaternion(benny.quaternion);
+  return { camClear: +camClear.toFixed(3), waterGap: h ? +(h.distance - 0.4).toFixed(4) : null, waterMesh: h ? h.object.name : null, slopeErrDeg: slope === null ? null : +slope.toFixed(2),
+    bennyTiltVsSurfaceDeg: h && h.face ? +(Math.acos(Math.min(1, up.dot(h.face.normal.clone().transformDirection(h.object.matrixWorld).multiplyScalar(Math.sign(h.face.normal.clone().transformDirection(h.object.matrixWorld).dot(F.n)) || 1)))) * 180 / Math.PI).toFixed(2) : null,
+    submerged: window.qaWaterLine ? window.qaWaterLine().submergedFrac : null, bank: +(Math.atan2(-F.r.y, Math.hypot(F.r.x, F.r.z)) * 180 / Math.PI).toFixed(1) }; };
+// QA: place Benny at route position s in lane `lat` (the rig follows; for stills / geometry checks, not used by the game)
+window.qaGoto = (s) => { st.s = s; st.camInit = false; window.step(st.t, 0, 0, 0); return st.s; };
 window.sceneAudit = () => { scene.updateMatrixWorld(true); const out = []; world.traverse((o) => { if (o.isMesh) out.push({ name: o.name, m: o.matrixWorld.elements.map((x) => +x.toFixed(5)) }); }); return out; };
 // QA (generic for every screen): Benny really sits on a water surface along the whole route (ray down the route normal hits a water mesh)
 window.routeCheck = (step = 0.5) => { const rc = new THREE.Raycaster(), W2 = MESH.filter((o) => o.userData.fam === 'water' || o.userData.fam === 'pool'), out = [];
