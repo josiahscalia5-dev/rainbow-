@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3271,
-   "sha256": "b47b4496d724481218b74d931bdf512519f6ea072e5d723eaf03d3a96a7501e2"
+   "sha256": "30939cbf2760d17af5a35cf415f19e4224884466fcf4a7da7257218eafb52ad8"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -40643,13 +40643,18 @@
   },
   {
    "path": "tools/bonus/bonus.html",
-   "bytes": 105135,
-   "sha256": "5002dddfc1516c3a034e2c2b5d37fe42eb08ddb4cb4e7f2055b5432393aa4612"
+   "bytes": 105342,
+   "sha256": "bad988e453e1118e9b8985d8436e1e118c59f5d22bb7eed84737e7d113078e86"
   },
   {
    "path": "tools/bonus/setup_bonus.sh",
    "bytes": 922,
    "sha256": "7206adb086f249582b22fa6b22edfdbc7c8e4cb82795226442a79f131fd953de"
+  },
+  {
+   "path": "tools/bonus/water_stats.py",
+   "bytes": 2332,
+   "sha256": "6b96a40635f5352fc1af71b8cdb05818c5b96a2410f68e236dffec0e422bad54"
   },
   {
    "path": "tools/da3/compare.py",
@@ -40768,8 +40773,8 @@
   },
   {
    "path": "tools/kit05/kitgame.html",
-   "bytes": 78425,
-   "sha256": "58cfbd765cf6c692bef1417e63db73d54ee78657729c799fb9dba0465cebee73"
+   "bytes": 78632,
+   "sha256": "01654fd57fad57246f66573447a22ba0060259c0ca9fe231213ff1fe52a7eafa"
   },
   {
    "path": "tools/kit05/live.js",
