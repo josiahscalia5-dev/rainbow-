@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 28435,
-   "sha256": "6cb5cf9bfcb5a145db0e21f4aa9a425c9468ff754605996478cab2dc4a4e07ed"
+   "sha256": "3b374f2f4e91fb79d4e43a16c9f5da915558af50e912a1168553b306681cf83e"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3233,
-   "sha256": "fed08a543a6dc0a4dde74286eec679d5257b1e0cc8f389c9eac16d282b9a059e"
+   "sha256": "e83bf2331a40949fe2d526dd39356644917117a410ae0e3d4ce17ec07d192438"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -14697,6 +14697,3766 @@
    "sha256": "f7c352f40d08b5d6461a55126324034d200bae01ea69493989f919c9a65c625b"
   },
   {
+   "path": "public/world/a04/baked/funnel_00_bake.jpg",
+   "bytes": 239974,
+   "sha256": "4f967667d6787c657b21bf73fa46aa2b37012bda469406b7fa58fe8c2307b188"
+  },
+  {
+   "path": "public/world/a04/baked/funnel_00_den.png",
+   "bytes": 61260,
+   "sha256": "e5d5806baa2cf70dca457a8e43da150e0aa82942631d37b5e4a8f66d92bd8a3d"
+  },
+  {
+   "path": "public/world/a04/baked/manifest.json",
+   "bytes": 3337,
+   "sha256": "d5f59e7c8425512986906bacb8af79b7d7dd89109aa5ab8b9d194b170a5f96e1"
+  },
+  {
+   "path": "public/world/a04/baked/pool_00_bake.jpg",
+   "bytes": 207440,
+   "sha256": "448b501d4152614742a3d04dc98f4d250c1d618261048a790f2bfdeade971c99"
+  },
+  {
+   "path": "public/world/a04/baked/pool_00_den.png",
+   "bytes": 33706,
+   "sha256": "9209903e83ea8243ee5eea38b5f0a04955908ca0de66c43b12f315844bedbdcb"
+  },
+  {
+   "path": "public/world/a04/baked/pool_01_bake.jpg",
+   "bytes": 152959,
+   "sha256": "3eaa59ca981fb6d236b8f0bf573d04bdcf9cc430e067362919614dd55560e3e3"
+  },
+  {
+   "path": "public/world/a04/baked/pool_01_den.png",
+   "bytes": 30761,
+   "sha256": "7f01c3530aeaa11bf355d1a8b46d1e4ee96c6a3fea4e6e071d78660f55d49df0"
+  },
+  {
+   "path": "public/world/a04/baked/pool_02_bake.jpg",
+   "bytes": 124399,
+   "sha256": "693a1abaa3c7f1011fea793efbeb3ce4bb810e88ec3f4f6eab5797af5e2c4018"
+  },
+  {
+   "path": "public/world/a04/baked/pool_02_den.png",
+   "bytes": 26361,
+   "sha256": "5d192475d233c0f74996deccc9207af621e4d07868d6f2353bad6a80a01821c0"
+  },
+  {
+   "path": "public/world/a04/baked/pool_03_bake.jpg",
+   "bytes": 74774,
+   "sha256": "75b9d57f66b24ee3d7aa6db5bcd76e16fa0c49e601df5f3b9f111bf367ee90b5"
+  },
+  {
+   "path": "public/world/a04/baked/pool_03_den.png",
+   "bytes": 19610,
+   "sha256": "93f055b26a0742859cb18b3cb79524ee6a906b5dff03b670d3d1611f928ac9f8"
+  },
+  {
+   "path": "public/world/a04/baked/pool_front_00_bake.jpg",
+   "bytes": 186733,
+   "sha256": "8e955b7403fe8dc87115babc9cf0ae58b8a2c790cad0bd4d33a35210db839482"
+  },
+  {
+   "path": "public/world/a04/baked/pool_front_00_den.png",
+   "bytes": 37974,
+   "sha256": "6f7ac8e47dc724fab7385eeefcbcf03cc630ed36f341449fbf863f2e7715e92d"
+  },
+  {
+   "path": "public/world/a04/baked/ring_00_bake.jpg",
+   "bytes": 40853,
+   "sha256": "00592c08651046bb36704a34c10ed822326531eaead00627217cc2fa763ef190"
+  },
+  {
+   "path": "public/world/a04/baked/ring_00_den.png",
+   "bytes": 8097,
+   "sha256": "d151d6b4e3ab62e1096fa5008602093074a782b512bea3bb06184980b4c6198c"
+  },
+  {
+   "path": "public/world/a04/baked/ring_01_bake.jpg",
+   "bytes": 25868,
+   "sha256": "04c26e80003c739d128bab37e7ecf29d87e06bc7c4f44c383898fb992ec3c921"
+  },
+  {
+   "path": "public/world/a04/baked/ring_01_den.png",
+   "bytes": 6444,
+   "sha256": "2fa5727317a2a8f900be18b6e931f96c3978cc12df3cb1906046d1f9335d9c2f"
+  },
+  {
+   "path": "public/world/a04/baked/ring_02_bake.jpg",
+   "bytes": 39581,
+   "sha256": "0ca934cf67d8265474b475f6c48d34b4a69a3e24ecb5d4aabc62eac469267e08"
+  },
+  {
+   "path": "public/world/a04/baked/ring_02_den.png",
+   "bytes": 7558,
+   "sha256": "76caeefd578e7775d9ebfbfe7b0b8c5398b79e5265340f9f1053741226bfd9c9"
+  },
+  {
+   "path": "public/world/a04/baked/ring_03_bake.jpg",
+   "bytes": 39946,
+   "sha256": "dbd7823d6df1bcd2f4d8142eeb093719ad390e4d5b5af0d20987fe9cd866d1f2"
+  },
+  {
+   "path": "public/world/a04/baked/ring_03_den.png",
+   "bytes": 7430,
+   "sha256": "fc5a29a051d118243fed1552ebdeae7e5c4c46e427e70d13b3a26381d643fec5"
+  },
+  {
+   "path": "public/world/a04/baked/ring_04_bake.jpg",
+   "bytes": 40195,
+   "sha256": "92f73386a625a01ecd397167fd46a75d06151e214a7fc9597a502df81e3bc857"
+  },
+  {
+   "path": "public/world/a04/baked/ring_04_den.png",
+   "bytes": 7480,
+   "sha256": "1fb4340cbc2f9cf473e5c2cfb9a8569d4ae2d5a835dfc0131c0a24fa6a8eaa8e"
+  },
+  {
+   "path": "public/world/a04/baked/ring_05_bake.jpg",
+   "bytes": 43779,
+   "sha256": "c866f3cb958948625b990c7d0300b52db81a270b83e5241ef3cf346bebcdc442"
+  },
+  {
+   "path": "public/world/a04/baked/ring_05_den.png",
+   "bytes": 6487,
+   "sha256": "dc1382462ffd9923a7a01b445fc1cf97e7beae5ffe534fd94c0d4b4bedcac300"
+  },
+  {
+   "path": "public/world/a04/baked/ring_06_bake.jpg",
+   "bytes": 32419,
+   "sha256": "6df0e10aa6fb9e45b4f72fd54f3c333809d307a21586ba4d734456ef26a864ae"
+  },
+  {
+   "path": "public/world/a04/baked/ring_06_den.png",
+   "bytes": 7974,
+   "sha256": "9fda0e920f566e3137f8943ab721eb76a83e1da91ceb80fa425389bafcbc4b7d"
+  },
+  {
+   "path": "public/world/a04/baked/ring_07_bake.jpg",
+   "bytes": 30574,
+   "sha256": "6b7a54ce2e4ace727f9a68b361359dc23e9c5c6c619dcb0281a97f72b065daa6"
+  },
+  {
+   "path": "public/world/a04/baked/ring_07_den.png",
+   "bytes": 7339,
+   "sha256": "dbecca55c7232cbb1acd557a4bd93374ee21ea76de403ca761413f9acc27d383"
+  },
+  {
+   "path": "public/world/a04/baked/ring_08_bake.jpg",
+   "bytes": 30031,
+   "sha256": "164ed428a7e44f99af41f5f0ba210c9191180b3e769f11c3a83fdd250091628f"
+  },
+  {
+   "path": "public/world/a04/baked/ring_08_den.png",
+   "bytes": 7175,
+   "sha256": "b7f42a93b64a9f8b1f4f9eb5f9dc1c80bcbc5e5fd1dbbdedd3cf97a8ba0538de"
+  },
+  {
+   "path": "public/world/a04/baked/ring_09_bake.jpg",
+   "bytes": 29252,
+   "sha256": "2a287c589f2fb0cb78a4890aed88f0fca5c45a69d2bd095f5f4e8a11329f5412"
+  },
+  {
+   "path": "public/world/a04/baked/ring_09_den.png",
+   "bytes": 6851,
+   "sha256": "fbac92915f897d8e6a838acf68266af6ece001aaf083ce5b05b80700012be82a"
+  },
+  {
+   "path": "public/world/a04/baked/ring_10_bake.jpg",
+   "bytes": 28492,
+   "sha256": "5038843a97903b78fa2eb2c478c41c31a3875dddbc1222f89e9473be82b45a83"
+  },
+  {
+   "path": "public/world/a04/baked/ring_10_den.png",
+   "bytes": 6982,
+   "sha256": "f033f47db360e7fdef5beda07bfbc844a3dd4b0fa5c81d8432035c8680eb7651"
+  },
+  {
+   "path": "public/world/a04/baked/ring_11_bake.jpg",
+   "bytes": 28331,
+   "sha256": "d5fec0565e4df1fab74333a1cc320704d25e1e90768f0db257641b428956306b"
+  },
+  {
+   "path": "public/world/a04/baked/ring_11_den.png",
+   "bytes": 6861,
+   "sha256": "dedcd399fc84a0bbcc7b7c51a899907dd93cfec860c61de637df3cafd5979b32"
+  },
+  {
+   "path": "public/world/a04/baked/ring_12_bake.jpg",
+   "bytes": 28170,
+   "sha256": "4e3f051ad9d6dc0d68aaf4c15193552e5d156b6c4502324159e1ebb75ff2d380"
+  },
+  {
+   "path": "public/world/a04/baked/ring_12_den.png",
+   "bytes": 6977,
+   "sha256": "0084916cd73d5b13a2a32d78a6957a40b8bd96717b92447d9106f6df9e4375d3"
+  },
+  {
+   "path": "public/world/a04/baked/ring_13_bake.jpg",
+   "bytes": 27809,
+   "sha256": "df6a2e45cfbeee3a94a1e6f7ccae7b15e06b332f7bd34b01993278aedf9caae4"
+  },
+  {
+   "path": "public/world/a04/baked/ring_13_den.png",
+   "bytes": 6896,
+   "sha256": "d8c12d231c04bd60134b84dc4c904e14f420fa33e23db72a2cb71c1f4e3c0ae9"
+  },
+  {
+   "path": "public/world/a04/baked/ring_14_bake.jpg",
+   "bytes": 27332,
+   "sha256": "a26ff129cfbfd7336c89a4e0040b57c8122df10c5d4c77f27ca9cba910b17602"
+  },
+  {
+   "path": "public/world/a04/baked/ring_14_den.png",
+   "bytes": 7517,
+   "sha256": "b5feabc7e6cf63b3455c350e12a2c0fb24470cd4e508876f6b701808fa5f4406"
+  },
+  {
+   "path": "public/world/a04/baked/ring_15_bake.jpg",
+   "bytes": 26426,
+   "sha256": "488ebdaae55d7b63688c9727058d56da8d622d85b8a4a136bb5488a135842065"
+  },
+  {
+   "path": "public/world/a04/baked/ring_15_den.png",
+   "bytes": 7494,
+   "sha256": "5031364f9e3d8f332e33448621e57ab60de39425cacd250108daf83c3071e632"
+  },
+  {
+   "path": "public/world/a04/baked/ring_mouth_bake.jpg",
+   "bytes": 37893,
+   "sha256": "8580f9f404038071506682e73d9146a24129e5917918f02b087129178bb6e9c5"
+  },
+  {
+   "path": "public/world/a04/baked/ring_mouth_den.png",
+   "bytes": 10476,
+   "sha256": "99584902f6b7c005772f537382aa7810bc6abdefb433710253fa9b32eb01c63e"
+  },
+  {
+   "path": "public/world/a04/baked/tpl_pool.jpg",
+   "bytes": 89984,
+   "sha256": "e5f3190504da5f1d66e73882cefe638ce00dcb2ebe29e43db07998b41d08e00f"
+  },
+  {
+   "path": "public/world/a04/baked/tpl_ring.jpg",
+   "bytes": 56924,
+   "sha256": "a6bc8bb600329332761517bccc1d108b4d9887ae5ecd754c71e4ddda1106ad30"
+  },
+  {
+   "path": "public/world/a04/baked/tunnel_00_bake.jpg",
+   "bytes": 332559,
+   "sha256": "d1e581a50b74e2b81177a8f4015175f74814f09f6ef62618341d27a64f6a5c0f"
+  },
+  {
+   "path": "public/world/a04/baked/tunnel_00_den.png",
+   "bytes": 43402,
+   "sha256": "24216464864fb5102b856102605501e40dc7e7c793a07848f4e2129360029e61"
+  },
+  {
+   "path": "public/world/a04/baked/tunnel_01_bake.jpg",
+   "bytes": 282102,
+   "sha256": "5c70c6c6c70820d03dd0e466c82f46f7a0dab9573301db811891c69d90dafa24"
+  },
+  {
+   "path": "public/world/a04/baked/tunnel_01_den.png",
+   "bytes": 49894,
+   "sha256": "d4323b044eb0d2596d189620e97874905d0530e681eed470bd239a0cbe5ef70c"
+  },
+  {
+   "path": "public/world/a04/baked/tunnel_02_bake.jpg",
+   "bytes": 235446,
+   "sha256": "4f09971fba74c9e6d22cb49e5cf2d2e08fbbb5a5681bf8f8318aba44f240e805"
+  },
+  {
+   "path": "public/world/a04/baked/tunnel_02_den.png",
+   "bytes": 45597,
+   "sha256": "41e7f2af0cd4547fe23c21f3875ecc56fb5672d22bb01a3431ce02cab3e96890"
+  },
+  {
+   "path": "public/world/a04/baked/tunnel_03_bake.jpg",
+   "bytes": 210932,
+   "sha256": "e53eb8d3cc4afe9f262eb5ec3f15441df65db6c5895d0353b6c2d223d48e8c11"
+  },
+  {
+   "path": "public/world/a04/baked/tunnel_03_den.png",
+   "bytes": 42099,
+   "sha256": "047488e0fef970e2a5548b252e28431bc4c0ed2307194cb1907b02a8ea616460"
+  },
+  {
+   "path": "public/world/a04/baked/tunnel_04_bake.jpg",
+   "bytes": 271296,
+   "sha256": "b5214d36ef9498389f94200526e4c9547808358992a723198ac103171320ba66"
+  },
+  {
+   "path": "public/world/a04/baked/tunnel_04_den.png",
+   "bytes": 45000,
+   "sha256": "30fa9c17a473251193b59e20056c4d98e47303907535dc91bce42afd61f71916"
+  },
+  {
+   "path": "public/world/a04/baked/tunnel_05_bake.jpg",
+   "bytes": 281752,
+   "sha256": "a1f1099e968c09b29bb37b7c239e83ea806d5f683dca62a2c19ea1119dc96012"
+  },
+  {
+   "path": "public/world/a04/baked/tunnel_05_den.png",
+   "bytes": 43278,
+   "sha256": "6c94fbae33674ffee62c806c8f7aa5a794af29ee861f694b69f5f28de7f56c11"
+  },
+  {
+   "path": "public/world/a04/baked/tunnel_06_bake.jpg",
+   "bytes": 237459,
+   "sha256": "0befd7fa76e655e848fdbbcb71f9bf4006e4e8f21f30e52c2d39af28933aacf0"
+  },
+  {
+   "path": "public/world/a04/baked/tunnel_06_den.png",
+   "bytes": 42435,
+   "sha256": "f2450426d127241f5fdbb9d6d8b75823b445b7df524ff0f8b6c5104b9e42f5fc"
+  },
+  {
+   "path": "public/world/a04/baked/tunnelfar_00_bake.jpg",
+   "bytes": 22858,
+   "sha256": "d2319edd8b1822be6a96bfef485a4aaf7d8845f5c695f3b663c350b175c52164"
+  },
+  {
+   "path": "public/world/a04/baked/tunnelfar_00_den.png",
+   "bytes": 6147,
+   "sha256": "0c89778c8c492828ea00ee4fc6f33ab3a1d93805e6213b76062eddd6a3fe4579"
+  },
+  {
+   "path": "public/world/a04/baked/wall_00_bake.jpg",
+   "bytes": 43400,
+   "sha256": "2d6cf123c9b1c65e4236e508e1d808ce70945f648997ecdbfbf7e27eae62812c"
+  },
+  {
+   "path": "public/world/a04/baked/wall_00_den.png",
+   "bytes": 12462,
+   "sha256": "e8c61d5143deaf77ca9c194f76d164818746db90405cffc4c336db614f763014"
+  },
+  {
+   "path": "public/world/a04/layout.json",
+   "bytes": 30300,
+   "sha256": "13dbad455ec92e2002d19eced6034c3c526d8ec3c57ab3d535c15c3af6534b84"
+  },
+  {
+   "path": "public/world/a04/scene.glb",
+   "bytes": 1673060,
+   "sha256": "3a96fd6536bfb01b7376d0c37e4f191f2adc8c860fda72bd028de74ccac3cea7"
+  },
+  {
+   "path": "public/world/a05/baked/manifest.json",
+   "bytes": 6388,
+   "sha256": "56e789b816434013e6efc0ed24e613dd594c88f2b4987e060849e9b187e7e99b"
+  },
+  {
+   "path": "public/world/a05/baked/paddle_0_bake.jpg",
+   "bytes": 12469,
+   "sha256": "15aa89d2ef06d7037562c394d612f5cf18f72e9826c5449e05eb3f1af2a78d2a"
+  },
+  {
+   "path": "public/world/a05/baked/paddle_0_den.png",
+   "bytes": 3958,
+   "sha256": "ddb3d14f50e481a2f8584c3403ff53f8354deba7d30ca1ce6b3659cc8c40de71"
+  },
+  {
+   "path": "public/world/a05/baked/paddle_1_bake.jpg",
+   "bytes": 12059,
+   "sha256": "597065f47c623f50057794940b0eb8ebd04714f4b705715119966ca8d8ab8729"
+  },
+  {
+   "path": "public/world/a05/baked/paddle_1_den.png",
+   "bytes": 3559,
+   "sha256": "f840e3683393bda032528266b0f5ecb32208bb1ac6ff0a6e475a8bf82a5cefed"
+  },
+  {
+   "path": "public/world/a05/baked/paddle_2_bake.jpg",
+   "bytes": 12316,
+   "sha256": "c8be3f27de62f387abe4f1fbff3190fde8224c404bf067e090bf957b58e1fa5b"
+  },
+  {
+   "path": "public/world/a05/baked/paddle_2_den.png",
+   "bytes": 4166,
+   "sha256": "ccfcd557afc292cbcd6e474f129592aaac1444055b61d71dead2ae14fdb78e85"
+  },
+  {
+   "path": "public/world/a05/baked/paddle_3_bake.jpg",
+   "bytes": 12437,
+   "sha256": "5dbeefbf62b370e42527cbbd903d909a32aebcc054fbd324e3e4ed8ab7391cae"
+  },
+  {
+   "path": "public/world/a05/baked/paddle_3_den.png",
+   "bytes": 3931,
+   "sha256": "82db4abdbd0481ffda5737feb3b8b407bc6c746d974c1d5c6d3f866bc53f25a6"
+  },
+  {
+   "path": "public/world/a05/baked/pool_00_bake.jpg",
+   "bytes": 40266,
+   "sha256": "5c77dea92866c8b8f65bd036649a7bb30b54e2579df051dcfdc3509a1a286eb8"
+  },
+  {
+   "path": "public/world/a05/baked/pool_00_den.png",
+   "bytes": 9358,
+   "sha256": "eea0d0fd6dc9c8ba091b34014c968fabea1f51981a38c27f59461448c0b0174f"
+  },
+  {
+   "path": "public/world/a05/baked/pool_01_bake.jpg",
+   "bytes": 333260,
+   "sha256": "ce4de05464e90197d638eb0f565842a2522c5003bce8f95bd33ddc737211793d"
+  },
+  {
+   "path": "public/world/a05/baked/pool_01_den.png",
+   "bytes": 68091,
+   "sha256": "52a5e37bef166eb53ea98adbd3a9737b2af3ced0e2e230cc5dc9a4903628e0b2"
+  },
+  {
+   "path": "public/world/a05/baked/pool_02_bake.jpg",
+   "bytes": 175997,
+   "sha256": "2f41ba4ededc45871fb865f02d36f400dea9febb29e19d94ccb47da9f9209903"
+  },
+  {
+   "path": "public/world/a05/baked/pool_02_den.png",
+   "bytes": 37647,
+   "sha256": "3422f327078b92c72504da99ebc93b977c08141e2830961d0f6d3e8e6fd476a8"
+  },
+  {
+   "path": "public/world/a05/baked/pool_03_bake.jpg",
+   "bytes": 128439,
+   "sha256": "81fb9aac5a0584605334ae161b96e36aa828f9604dbc249e4c3676d8cb805490"
+  },
+  {
+   "path": "public/world/a05/baked/pool_03_den.png",
+   "bytes": 36329,
+   "sha256": "40cd5e44aad0f71eecea443f8ceb3712ad75385ad592155b165d8660fe14cb39"
+  },
+  {
+   "path": "public/world/a05/baked/pool_04_bake.jpg",
+   "bytes": 102441,
+   "sha256": "5b2ab35d2225bcb8eb3193b6e55d3fcd7f3adf9e35e03b6dac5ea6eef27bbddb"
+  },
+  {
+   "path": "public/world/a05/baked/pool_04_den.png",
+   "bytes": 27725,
+   "sha256": "c6735b32dc248690b9e95decf937fae15241c4fe67a8ee4a2676ca8b337be2d7"
+  },
+  {
+   "path": "public/world/a05/baked/pool_05_bake.jpg",
+   "bytes": 114817,
+   "sha256": "0983d5249493050d6068f5946b4551d606f428f0f1f7bfefcd6b3da74352e916"
+  },
+  {
+   "path": "public/world/a05/baked/pool_05_den.png",
+   "bytes": 22783,
+   "sha256": "6ace8b9b98426271116e288a8b26e2d10ce16c4dc0015dece9cb11d4454ed1b5"
+  },
+  {
+   "path": "public/world/a05/baked/pool_06_bake.jpg",
+   "bytes": 182419,
+   "sha256": "11d419e0129f7dc3b686483d1e90b3edf703c06453c5e5e9cf08e349727fc12c"
+  },
+  {
+   "path": "public/world/a05/baked/pool_06_den.png",
+   "bytes": 50921,
+   "sha256": "cd953590334ef9eccaa1eaf4b31e5928cc4910ca77b93fc9d1102552bdb927ad"
+  },
+  {
+   "path": "public/world/a05/baked/pool_07_bake.jpg",
+   "bytes": 147024,
+   "sha256": "dc50f0720152135eec7c0914771d58a4cd98c6077c12d06201132cdd9cde9440"
+  },
+  {
+   "path": "public/world/a05/baked/pool_07_den.png",
+   "bytes": 41026,
+   "sha256": "b681af865e19b27b2c692cf882ca5c014388557b98bf100545e7be8978643899"
+  },
+  {
+   "path": "public/world/a05/baked/ring_00_bake.jpg",
+   "bytes": 39757,
+   "sha256": "7181cb6fa9371d06de92c730c7c5bd0b4d1eed3ad6797cc6a15d3df47a243ab5"
+  },
+  {
+   "path": "public/world/a05/baked/ring_00_den.png",
+   "bytes": 9827,
+   "sha256": "c6b26ee64486aa96244e3dca6b5c88acd1db59cd4374d572bf76c363e940471c"
+  },
+  {
+   "path": "public/world/a05/baked/ring_01_bake.jpg",
+   "bytes": 44115,
+   "sha256": "6de2c11ea9204203406fe0d32f5736b8498a047b18a79f65350df72208905002"
+  },
+  {
+   "path": "public/world/a05/baked/ring_01_den.png",
+   "bytes": 7712,
+   "sha256": "25cd1a995c928482a928803f208deef56a08f609caeddfa55aa7250cd7a10873"
+  },
+  {
+   "path": "public/world/a05/baked/ring_02_bake.jpg",
+   "bytes": 44005,
+   "sha256": "99d303d2bfe885e0e514b53248f7cff78c12588fdfa16027d09c564ef364ea70"
+  },
+  {
+   "path": "public/world/a05/baked/ring_02_den.png",
+   "bytes": 7356,
+   "sha256": "f8664925cca17fa44d6a781f3925ad0b9bbb96ae18ddcb153e64209d1388f9a7"
+  },
+  {
+   "path": "public/world/a05/baked/ring_03_bake.jpg",
+   "bytes": 46482,
+   "sha256": "c165417e4486cce5af822c729dd5bae9efed9856feb58d3e0bd4f65e25fdfa27"
+  },
+  {
+   "path": "public/world/a05/baked/ring_03_den.png",
+   "bytes": 7938,
+   "sha256": "7d8138ca11cc49e98e205f4955f33bf8ee22c2e926189870278a12ae6cf12d5d"
+  },
+  {
+   "path": "public/world/a05/baked/ring_04_bake.jpg",
+   "bytes": 48800,
+   "sha256": "21988bfc7c6f682f2a6eba98fcf6f1576721c35cedd246619864b9b19b469faf"
+  },
+  {
+   "path": "public/world/a05/baked/ring_04_den.png",
+   "bytes": 9620,
+   "sha256": "b43d1592438baad2320bcf5c99c0ff512b0d68c7bc328e6113b3a9b96558d553"
+  },
+  {
+   "path": "public/world/a05/baked/ring_05_bake.jpg",
+   "bytes": 49763,
+   "sha256": "3b9c32d566f548e2e8e09308675f4652c357297220e59f3a8013eab8cd119e19"
+  },
+  {
+   "path": "public/world/a05/baked/ring_05_den.png",
+   "bytes": 10479,
+   "sha256": "b3da7641127f3532d914c92410a41c92a5aff1eba22efe85ea2b498eba8d887f"
+  },
+  {
+   "path": "public/world/a05/baked/ring_06_bake.jpg",
+   "bytes": 54924,
+   "sha256": "db39e46b2166216f820f13b333ed032b695156dd9402bd444b013cc2991730e1"
+  },
+  {
+   "path": "public/world/a05/baked/ring_06_den.png",
+   "bytes": 10436,
+   "sha256": "48cb094e7fd37ac1907399bbeb8bdb73cf0ecbfd78739ef48a56b935495a8365"
+  },
+  {
+   "path": "public/world/a05/baked/ring_07_bake.jpg",
+   "bytes": 52873,
+   "sha256": "8d5ee0465474cfa35e945fc00c6fc381f0b8a95ae031525343f4d9bfa95cc3f8"
+  },
+  {
+   "path": "public/world/a05/baked/ring_07_den.png",
+   "bytes": 10147,
+   "sha256": "764c755f31731a24600eeaf2d322eac30b6ad07c05b26d6896e55295cfae9423"
+  },
+  {
+   "path": "public/world/a05/baked/ring_08_bake.jpg",
+   "bytes": 50842,
+   "sha256": "745d63de09d6c29b1ec8b931599a70f1f75bf3dca6b2a643fb10237ce8423734"
+  },
+  {
+   "path": "public/world/a05/baked/ring_08_den.png",
+   "bytes": 10114,
+   "sha256": "a89ef3c9a42649c8b48f8c7d901e92cff9c9b4afdd467c722e5e47f8f1cd7022"
+  },
+  {
+   "path": "public/world/a05/baked/ring_09_bake.jpg",
+   "bytes": 44578,
+   "sha256": "310bb72ff4ac75648b4b8538c8f2cf348004bc1d89a63d7826e4beb49e9e1772"
+  },
+  {
+   "path": "public/world/a05/baked/ring_09_den.png",
+   "bytes": 9167,
+   "sha256": "c25d7d900e4e6bc821c5236bb81ff9f60149806adb804975d7c91ed6be95d858"
+  },
+  {
+   "path": "public/world/a05/baked/ring_10_bake.jpg",
+   "bytes": 41251,
+   "sha256": "32d17ee7a83bf93508936137becb21789d46d5b0753794b57283b1f3e131babf"
+  },
+  {
+   "path": "public/world/a05/baked/ring_10_den.png",
+   "bytes": 8876,
+   "sha256": "416650104a2eccc15b937241edf40eee9f4dda00334f355549c53f181364f17b"
+  },
+  {
+   "path": "public/world/a05/baked/ring_11_bake.jpg",
+   "bytes": 39812,
+   "sha256": "f2e02f89277697a4e9da3cb7c501c764c2526adcc5a72a381cdc33bc3d3cde16"
+  },
+  {
+   "path": "public/world/a05/baked/ring_11_den.png",
+   "bytes": 8368,
+   "sha256": "2c95567736d8931f0c268348990b204eba3a0601ef5916b86be0cc10b40311b1"
+  },
+  {
+   "path": "public/world/a05/baked/ring_12_bake.jpg",
+   "bytes": 37654,
+   "sha256": "952c45461e740f8ea065482e857653f4ee2b247ef08d4e533a47057b37ab055b"
+  },
+  {
+   "path": "public/world/a05/baked/ring_12_den.png",
+   "bytes": 8345,
+   "sha256": "d68da0834b6fe7c84e676e6480f9c93d9a09b66a918f913e923355d461e9d26f"
+  },
+  {
+   "path": "public/world/a05/baked/ring_13_bake.jpg",
+   "bytes": 34070,
+   "sha256": "b22663a8a0442d37eba02d272be788b84f5912f173d6e668e03469fa682e8c02"
+  },
+  {
+   "path": "public/world/a05/baked/ring_13_den.png",
+   "bytes": 7649,
+   "sha256": "c88faa9209fd34ff90f442eb3bdabd1b87b073c6314c7ea1e5cbd65e8b899640"
+  },
+  {
+   "path": "public/world/a05/baked/ring_14_bake.jpg",
+   "bytes": 30410,
+   "sha256": "6677b50e8b9f90e9afd239f451e143b5233c251b9f886477685563dff42daa28"
+  },
+  {
+   "path": "public/world/a05/baked/ring_14_den.png",
+   "bytes": 7468,
+   "sha256": "6999f41a891a89c8063fd8b924a33bee9a41cb768871f94a8718f2e9c585af11"
+  },
+  {
+   "path": "public/world/a05/baked/tpl_copper.jpg",
+   "bytes": 23424,
+   "sha256": "35fe1b8b2f2dff77b1eb47116cd15d502ca71934fe0f7c9a61a903208f1ca8b9"
+  },
+  {
+   "path": "public/world/a05/baked/tpl_pool.jpg",
+   "bytes": 104997,
+   "sha256": "5084bdd2a29f8c32226fdaaa804f520a1e9878b529987ba31c61169e5367fbe7"
+  },
+  {
+   "path": "public/world/a05/baked/tpl_ring.jpg",
+   "bytes": 61241,
+   "sha256": "a5f62167cd63aa7fe7a2a344bc1fcb8299999c1dcbea636dd86d78e02f29b2aa"
+  },
+  {
+   "path": "public/world/a05/baked/tpl_tunnel.jpg",
+   "bytes": 536833,
+   "sha256": "acdb295ea0040d085a058e1aa005c54d18f9207d9580c9e90b33d36f1024becf"
+  },
+  {
+   "path": "public/world/a05/baked/tpl_water.jpg",
+   "bytes": 104997,
+   "sha256": "5084bdd2a29f8c32226fdaaa804f520a1e9878b529987ba31c61169e5367fbe7"
+  },
+  {
+   "path": "public/world/a05/baked/tunnel_02_bake.jpg",
+   "bytes": 61390,
+   "sha256": "ef38d9c143b6208f27c3414dcd3605f514a7b4b87310152dcee62ddcfe5e6963"
+  },
+  {
+   "path": "public/world/a05/baked/tunnel_02_den.png",
+   "bytes": 26444,
+   "sha256": "e0e7a8552aad8fa407978e5f2db200498214ab716ee064d841fabdf6f4a14664"
+  },
+  {
+   "path": "public/world/a05/baked/tunnel_03_bake.jpg",
+   "bytes": 424074,
+   "sha256": "9a97a428d02bb9cac2e1635603e86a67ca77c80386dd6844d95a94cad8b15e37"
+  },
+  {
+   "path": "public/world/a05/baked/tunnel_03_den.png",
+   "bytes": 65745,
+   "sha256": "7079f4e01f575a94a2c2afe97f7c6c8783dae5c52cb01a4fe377cadf7fa9a950"
+  },
+  {
+   "path": "public/world/a05/baked/tunnel_04_bake.jpg",
+   "bytes": 439736,
+   "sha256": "3288b58f70fb6e6a56870f5dadca0d75b80acea9183b6661896b3fdb6e21676a"
+  },
+  {
+   "path": "public/world/a05/baked/tunnel_04_den.png",
+   "bytes": 51035,
+   "sha256": "8fa8a93adb8287f6c51b5d9de7e97e84eba2ccfd6df506ee2079935b7b548972"
+  },
+  {
+   "path": "public/world/a05/baked/tunnel_05_bake.jpg",
+   "bytes": 420726,
+   "sha256": "65bc6531e43ee1d75982a76db13c8e2dfcb9cbcb42349c092f7bb723954c6038"
+  },
+  {
+   "path": "public/world/a05/baked/tunnel_05_den.png",
+   "bytes": 43614,
+   "sha256": "3658ce513a424018668f84e71a61faab48aca365bfbf24eb1454bc64a09525e9"
+  },
+  {
+   "path": "public/world/a05/baked/tunnel_06_bake.jpg",
+   "bytes": 359302,
+   "sha256": "784dc16d488ddb144ab359a40ba26f8b3608653c3aa3b2271f2ba4502b314283"
+  },
+  {
+   "path": "public/world/a05/baked/tunnel_06_den.png",
+   "bytes": 56934,
+   "sha256": "0e0aa7aea40ad0b98c0c471d912227f0763e6d02af4d364ed6d4debc77ee6fbb"
+  },
+  {
+   "path": "public/world/a05/baked/tunnel_07_bake.jpg",
+   "bytes": 243023,
+   "sha256": "54ef091801dd3c67faa51289d67b6431bc76e8c25cc10c196c0aefe0e43b0755"
+  },
+  {
+   "path": "public/world/a05/baked/tunnel_07_den.png",
+   "bytes": 45382,
+   "sha256": "3b2caec554b75bc97dc52d1795f54e2a4a75f6580148cf0b4c6afd3b61fa0585"
+  },
+  {
+   "path": "public/world/a05/baked/tunnel_08_bake.jpg",
+   "bytes": 204122,
+   "sha256": "5e658943658e8f3bc6eb07c763c0c6df37a0a1848007e15723c51e89b031f69a"
+  },
+  {
+   "path": "public/world/a05/baked/tunnel_08_den.png",
+   "bytes": 41114,
+   "sha256": "775c311892df571af194c2af0dacba21e87b3d0929b946028c9bf4f62e115b06"
+  },
+  {
+   "path": "public/world/a05/baked/tunnel_09_bake.jpg",
+   "bytes": 234569,
+   "sha256": "bf2b4f58f3fc841e5a90f5653ca6ae86a7f4bad409ac84f06b9d3178c0f867a4"
+  },
+  {
+   "path": "public/world/a05/baked/tunnel_09_den.png",
+   "bytes": 39422,
+   "sha256": "83726c30afb3ea6cdd2c5171a3224090baf46ccedce654d5e60c5b939e26596a"
+  },
+  {
+   "path": "public/world/a05/baked/tunnelfar_00_bake.jpg",
+   "bytes": 47947,
+   "sha256": "a345c243cef877ab5d1da633beb82f99354f96e3702e2421e5e160180f635c99"
+  },
+  {
+   "path": "public/world/a05/baked/tunnelfar_00_den.png",
+   "bytes": 13896,
+   "sha256": "1a78f0a078bef62c89b9296efe5251a79f0a28156ee5cd2da3d7146d270fb322"
+  },
+  {
+   "path": "public/world/a05/baked/tunnelfar_01_bake.jpg",
+   "bytes": 30234,
+   "sha256": "bd7a87d6fa615ec17b95141a05afc0baf6f1dc750af00742dec933cd29fe7746"
+  },
+  {
+   "path": "public/world/a05/baked/tunnelfar_01_den.png",
+   "bytes": 12334,
+   "sha256": "6d1ae57132452f1324b9e45c71e21d22a8b5b776ff8a8bfd1461bdd7671d430d"
+  },
+  {
+   "path": "public/world/a05/baked/tunnelfar_02_bake.jpg",
+   "bytes": 17850,
+   "sha256": "67b1863318e0c21675fd964834e5191f4427c4a1ace9d82565861e58d0635517"
+  },
+  {
+   "path": "public/world/a05/baked/tunnelfar_02_den.png",
+   "bytes": 7597,
+   "sha256": "76b37d5f1d4c2bc09c6c1adf34bab47c98f549d85fce3cb6ad13c50b4fad800f"
+  },
+  {
+   "path": "public/world/a05/baked/water_route_00_bake.jpg",
+   "bytes": 111850,
+   "sha256": "d9da2beeeb643090d33afeb6e783a13f4bbf43dbfbfcaac8820451e6189e8d08"
+  },
+  {
+   "path": "public/world/a05/baked/water_route_00_den.png",
+   "bytes": 20830,
+   "sha256": "425871921fefe4162c8064985c9f2611f473149ed3986938c24ad3d86b81affe"
+  },
+  {
+   "path": "public/world/a05/baked/water_route_01_bake.jpg",
+   "bytes": 121947,
+   "sha256": "a2dcff6994086489e87e0e5506fa24fc0599cf47bddaab965b3e480ce43cae29"
+  },
+  {
+   "path": "public/world/a05/baked/water_route_01_den.png",
+   "bytes": 21994,
+   "sha256": "408e13cddbb3354687b59005ce65df788b47797c467d213f04911ca310168f3b"
+  },
+  {
+   "path": "public/world/a05/baked/water_route_02_bake.jpg",
+   "bytes": 97987,
+   "sha256": "5a3d570fb9c5c3cf80e7174b3ad91c816fd8ca03ff4ef4febd6881cee22cd1e4"
+  },
+  {
+   "path": "public/world/a05/baked/water_route_02_den.png",
+   "bytes": 11088,
+   "sha256": "150431b0006d74a356b5984f3c1f74ec377af7d39ac281d6d3ec80afef77f722"
+  },
+  {
+   "path": "public/world/a05/baked/water_route_03_bake.jpg",
+   "bytes": 81160,
+   "sha256": "928dad1e3d1474f37054afc944d0c5d83dcd14866eb46009c81260c1a058bf02"
+  },
+  {
+   "path": "public/world/a05/baked/water_route_03_den.png",
+   "bytes": 8025,
+   "sha256": "12c6f25447e9bb6747ee683fd13273c4ea1915cab63b691624532fdd1f8fa4cf"
+  },
+  {
+   "path": "public/world/a05/baked/water_route_04_bake.jpg",
+   "bytes": 70500,
+   "sha256": "22c1064700a641d9e5500cd098b9ace9ce175b99c6438863d50db71fd6e38dcb"
+  },
+  {
+   "path": "public/world/a05/baked/water_route_04_den.png",
+   "bytes": 8078,
+   "sha256": "43a2114b9e3814a930eb0c5be4c4ff0a8253f6ed270a296c9bc212b9394cba73"
+  },
+  {
+   "path": "public/world/a05/baked/water_route_05_bake.jpg",
+   "bytes": 64763,
+   "sha256": "aed454c37dfade3fed6f2798cf12bc565ee6f1f8eb3951a4ab35fa444a612725"
+  },
+  {
+   "path": "public/world/a05/baked/water_route_05_den.png",
+   "bytes": 7532,
+   "sha256": "d21692cce61437745a3b131b2b5c6c9e1cef23b46993c8eb21eb52ac5a4d17cf"
+  },
+  {
+   "path": "public/world/a05/baked/water_route_06_bake.jpg",
+   "bytes": 62670,
+   "sha256": "3d406ba63aeeb5db43bd2fe38cde286decddafa2db3d28e76312d89e39ef735e"
+  },
+  {
+   "path": "public/world/a05/baked/water_route_06_den.png",
+   "bytes": 10273,
+   "sha256": "e7c0fffc098d4cad5ccc97be86185e5d7048c3d8a34e3daf7c6ac75fbe5331be"
+  },
+  {
+   "path": "public/world/a05/baked/water_route_07_bake.jpg",
+   "bytes": 44199,
+   "sha256": "e7e4379d52b4d1852cee5f353cddca2767d4c75fb2aaf4eebb52aec15f48bc1c"
+  },
+  {
+   "path": "public/world/a05/baked/water_route_07_den.png",
+   "bytes": 7343,
+   "sha256": "fc930432c2b569b482f510a22bb11a3659259ad6b1a5f5814a0b000194806327"
+  },
+  {
+   "path": "public/world/a05/baked/water_route_08_bake.jpg",
+   "bytes": 36183,
+   "sha256": "9aa2e5538d261ebad25c6cb3d8f73c5c83c24f813b1f58817427750973370db2"
+  },
+  {
+   "path": "public/world/a05/baked/water_route_08_den.png",
+   "bytes": 7336,
+   "sha256": "19b385635bcbd53d7f3f5f5cbcd086d715fecc2253e4d730cea637bf55c56531"
+  },
+  {
+   "path": "public/world/a05/baked/water_route_09_bake.jpg",
+   "bytes": 37087,
+   "sha256": "8f591c1a042c9df6fffa151faa18f7080d8a5f7eeb7d0f3ac92814b37cfba342"
+  },
+  {
+   "path": "public/world/a05/baked/water_route_09_den.png",
+   "bytes": 7923,
+   "sha256": "b78179454d480d2114c43f59590c878ee745956d8d093e779d1ae9b8054428ea"
+  },
+  {
+   "path": "public/world/a05/baked/water_route_10_bake.jpg",
+   "bytes": 46453,
+   "sha256": "72cb9e69d4e07f8e00538fc0ec70d49e8d94bf71cf78b0e43f03f19dfb39c54f"
+  },
+  {
+   "path": "public/world/a05/baked/water_route_10_den.png",
+   "bytes": 7508,
+   "sha256": "4094c6c7d7efab5e0d91ec37972dfee91b7dd1b6e141306f1f420ff0d8fbbb05"
+  },
+  {
+   "path": "public/world/a05/baked/water_route_11_bake.jpg",
+   "bytes": 58748,
+   "sha256": "661e1e30cb15c08aff7241042e7a090791fd320e92b48a8d65aac0a9b98378dc"
+  },
+  {
+   "path": "public/world/a05/baked/water_route_11_den.png",
+   "bytes": 7675,
+   "sha256": "8863096748b9b072f41ddfdba963917b9cbfb396de01904076631583ac8922ba"
+  },
+  {
+   "path": "public/world/a05/baked/water_route_12_bake.jpg",
+   "bytes": 60669,
+   "sha256": "fb7bc9eaca437419b1b8a27e3fad7926c0a2ea0e92361af5327cdedd2ca9889d"
+  },
+  {
+   "path": "public/world/a05/baked/water_route_12_den.png",
+   "bytes": 10257,
+   "sha256": "20a8b7a3716e3ebd45cb8903645a528e04d216db09a06e5493f4d700eeb26d87"
+  },
+  {
+   "path": "public/world/a05/baked/water_route_13_bake.jpg",
+   "bytes": 59491,
+   "sha256": "6ae68f771ba2893cd6f61148b04bb581ea67d60262f06af06e3b506ef59b099c"
+  },
+  {
+   "path": "public/world/a05/baked/water_route_13_den.png",
+   "bytes": 13076,
+   "sha256": "d93568461e8d2a98734117aed2524bee2fbf654531094e49eece13bd2fade504"
+  },
+  {
+   "path": "public/world/a05/baked/water_route_14_bake.jpg",
+   "bytes": 63929,
+   "sha256": "a319c2e94a935ed639b13afb0ae26ebd14808b942697b53ea3eee993a008ff59"
+  },
+  {
+   "path": "public/world/a05/baked/water_route_14_den.png",
+   "bytes": 15564,
+   "sha256": "124b18d6f8782ee7f7e352a364dba66208dece7dd6e93dda363939b737460dee"
+  },
+  {
+   "path": "public/world/a05/baked/water_route_15_bake.jpg",
+   "bytes": 60576,
+   "sha256": "faf000ae0101bd979bea4143911181435d86253df7eb15fbcc04b64f267e600a"
+  },
+  {
+   "path": "public/world/a05/baked/water_route_15_den.png",
+   "bytes": 12840,
+   "sha256": "46059e7b1746974f6b5b0426f331a8b0fc4951a48c8b12c9321c200ca4bcea2c"
+  },
+  {
+   "path": "public/world/a05/baked/water_route_16_bake.jpg",
+   "bytes": 54408,
+   "sha256": "f968c581c5499b3979203cf8fb579b33ee482544b082259a8a0bbb38694f061f"
+  },
+  {
+   "path": "public/world/a05/baked/water_route_16_den.png",
+   "bytes": 11677,
+   "sha256": "257ef1515b23481de07e087c6708b01067fd16a0abdc701f3d9caf313f4c2c09"
+  },
+  {
+   "path": "public/world/a05/layout.json",
+   "bytes": 47980,
+   "sha256": "082f610c465d10fc459416bb77b5612876de32d27d932d5ecad2127fce9935a8"
+  },
+  {
+   "path": "public/world/a05/scene.glb",
+   "bytes": 4113216,
+   "sha256": "87be880098e02c875c3d1b5d5d7ef32aa6a2b7b8384d2fe638b721153d0307a4"
+  },
+  {
+   "path": "public/world/a06/baked/flume_water_route_00_bake.jpg",
+   "bytes": 11823,
+   "sha256": "9f9b8ef8deb6c53a1304ee6d3f8c786e0734efefad4024d33a439c63d37f3eb9"
+  },
+  {
+   "path": "public/world/a06/baked/flume_water_route_00_den.png",
+   "bytes": 2869,
+   "sha256": "7e3eb9a87863eaf88ad6d30517de462bd633ba5bc4f30537b0e7ec839bfeb738"
+  },
+  {
+   "path": "public/world/a06/baked/flume_water_route_01_bake.jpg",
+   "bytes": 11699,
+   "sha256": "b10d5d5cc91288319fd7c768772e8246424b1d3473468683a7956c1305d49d33"
+  },
+  {
+   "path": "public/world/a06/baked/flume_water_route_01_den.png",
+   "bytes": 3571,
+   "sha256": "ec542c1bc9f030912c99fba7ed5e0b45eae916268ef231a240cb0a9be011630d"
+  },
+  {
+   "path": "public/world/a06/baked/flume_water_route_02_bake.jpg",
+   "bytes": 11988,
+   "sha256": "4cce48beb5a9b4a3c77fc92b052254f898815914b7f0d3e3e64152e770981268"
+  },
+  {
+   "path": "public/world/a06/baked/flume_water_route_02_den.png",
+   "bytes": 3103,
+   "sha256": "04078e89f07fc4a63177268731593e364d64e8907dc8917c3e168e1031b70e72"
+  },
+  {
+   "path": "public/world/a06/baked/flume_water_route_03_bake.jpg",
+   "bytes": 11187,
+   "sha256": "1bcdf148dff7eeeb16dc64a2d8e261527040ad4666f1d711b4d1e17a922b0887"
+  },
+  {
+   "path": "public/world/a06/baked/flume_water_route_03_den.png",
+   "bytes": 2880,
+   "sha256": "98838f4f0af714dd1db0db578c268cf71bdb78d5e15cad6a9208ecf92a6a1b00"
+  },
+  {
+   "path": "public/world/a06/baked/flume_water_route_04_bake.jpg",
+   "bytes": 11083,
+   "sha256": "4b12c348d4dd380fb20c3602e44ba9afcad498cb0148d9da7601c2afb4f8cd98"
+  },
+  {
+   "path": "public/world/a06/baked/flume_water_route_04_den.png",
+   "bytes": 3050,
+   "sha256": "6887ee8730a598dbd25a46f7f5f0944b0cc60df93ca922e4ba218f5f085a163f"
+  },
+  {
+   "path": "public/world/a06/baked/flume_water_route_05_bake.jpg",
+   "bytes": 12004,
+   "sha256": "2a0799ac3a05bbacce2e17b5ddae5439863b652335a936cc8799a88193e52c38"
+  },
+  {
+   "path": "public/world/a06/baked/flume_water_route_05_den.png",
+   "bytes": 3732,
+   "sha256": "1c10e153d9409f4faf31000d94ad7af93e537dcb78371ad94648329c810ae0ab"
+  },
+  {
+   "path": "public/world/a06/baked/flume_water_route_06_bake.jpg",
+   "bytes": 20711,
+   "sha256": "071ac4cf8a47bacdf237fe6727f0a649720fd20eab469d30bce1917e3a98f242"
+  },
+  {
+   "path": "public/world/a06/baked/flume_water_route_06_den.png",
+   "bytes": 5963,
+   "sha256": "cb95afe84823dbc7804baa44c1c3e0e71b06646d5582ca5a630d9a4b7263dbc3"
+  },
+  {
+   "path": "public/world/a06/baked/flume_water_route_07_bake.jpg",
+   "bytes": 6414,
+   "sha256": "dbc4e0f464457f59ba78c5c786bc539dbd90658f61d8eb0404b0cd56445a7a10"
+  },
+  {
+   "path": "public/world/a06/baked/flume_water_route_07_den.png",
+   "bytes": 2040,
+   "sha256": "bd090af3e1ff6eec5af706f3df49b1bc9353fc981f6f7999df61e35ac7aefde4"
+  },
+  {
+   "path": "public/world/a06/baked/flume_water_route_08_bake.jpg",
+   "bytes": 7991,
+   "sha256": "5bd7cff01ecd497d33ca3d519ffeb0a320883412de8e8df729241913d3e988ff"
+  },
+  {
+   "path": "public/world/a06/baked/flume_water_route_08_den.png",
+   "bytes": 2562,
+   "sha256": "e170f752c94953a7d9264bb0080d83e9de83034aca107bc19d56af7dc36df73b"
+  },
+  {
+   "path": "public/world/a06/baked/flume_water_route_09_bake.jpg",
+   "bytes": 7878,
+   "sha256": "4a36f67969de147f456c9c6de116cb79e21ef359397582e0e540ba50b50c5c28"
+  },
+  {
+   "path": "public/world/a06/baked/flume_water_route_09_den.png",
+   "bytes": 2512,
+   "sha256": "02f7aa4a52de3ce5e4824f7a39533476b9db6bc2d220a8015a520c2868821d7b"
+  },
+  {
+   "path": "public/world/a06/baked/flume_water_route_10_bake.jpg",
+   "bytes": 8225,
+   "sha256": "d00fc048bf681e58046cdd0cc496e70230f884069e2cf58cac8ff6f7a94c27e2"
+  },
+  {
+   "path": "public/world/a06/baked/flume_water_route_10_den.png",
+   "bytes": 2570,
+   "sha256": "1c95b5a7000c11568c358a68155ac7211845058f496ae025cf08a31121200331"
+  },
+  {
+   "path": "public/world/a06/baked/flume_water_route_11_bake.jpg",
+   "bytes": 7952,
+   "sha256": "ff2e4140d99426bc8bd2c898d86c468c846eff9b390c0826f7aaf0cf6778ed92"
+  },
+  {
+   "path": "public/world/a06/baked/flume_water_route_11_den.png",
+   "bytes": 2446,
+   "sha256": "138e207adee3520027496ac12bfed77bf726d3e2a74574e45ac17eed6bffc1f8"
+  },
+  {
+   "path": "public/world/a06/baked/flume_water_route_12_bake.jpg",
+   "bytes": 8314,
+   "sha256": "75383d84199371a83e8eb8d11236456699e02b3dfe88d9c1d057e9cc24a2248e"
+  },
+  {
+   "path": "public/world/a06/baked/flume_water_route_12_den.png",
+   "bytes": 2395,
+   "sha256": "1cffa363d2694e042f00e23738787f77392eadd3831ced4e61a643a71d810351"
+  },
+  {
+   "path": "public/world/a06/baked/flume_water_route_13_bake.jpg",
+   "bytes": 7764,
+   "sha256": "03a95268c52c14277143bafeb3800af384de881b9b4b68173f165305d48a9bb7"
+  },
+  {
+   "path": "public/world/a06/baked/flume_water_route_13_den.png",
+   "bytes": 2252,
+   "sha256": "430a2ec295879cc1b6fb7864bf60876921dd744ac796d890617d61fad2dca1c6"
+  },
+  {
+   "path": "public/world/a06/baked/flume_water_route_14_bake.jpg",
+   "bytes": 7747,
+   "sha256": "5e90bc211d683af40c4a1acb93a9a365bf6360ed634ad140ffa93073cab40834"
+  },
+  {
+   "path": "public/world/a06/baked/flume_water_route_14_den.png",
+   "bytes": 2069,
+   "sha256": "83019fe4b9299a9f5680cc6cb0dc8b1eb92e8b38680104a0ed20425cd683692a"
+  },
+  {
+   "path": "public/world/a06/baked/manifest.json",
+   "bytes": 7704,
+   "sha256": "1f593d068574a5d4301d9775acf8ed7f09d94b614890eeabb1be215062ac2c18"
+  },
+  {
+   "path": "public/world/a06/baked/paddle_0_bake.jpg",
+   "bytes": 13296,
+   "sha256": "3e1f1b5809046cef28c4132491f022ed7735dc01d72b174f1936a91a6ef1f364"
+  },
+  {
+   "path": "public/world/a06/baked/paddle_0_den.png",
+   "bytes": 4657,
+   "sha256": "5de1d92544d4b5b80ddf0111e746c62933e761b158845f8c6e2489194670280f"
+  },
+  {
+   "path": "public/world/a06/baked/paddle_1_bake.jpg",
+   "bytes": 12458,
+   "sha256": "321f7c96275e0251a7592ef2c876c5897b6e752f81d20968aa7ccf9b8b6c700f"
+  },
+  {
+   "path": "public/world/a06/baked/paddle_1_den.png",
+   "bytes": 3524,
+   "sha256": "877e6aaa7e54777fe9ebdc75ed5f4b28b239715a2da299978eafc74ceb1b12ff"
+  },
+  {
+   "path": "public/world/a06/baked/pool_00_bake.jpg",
+   "bytes": 39146,
+   "sha256": "d24bfa724c3fcd49f3d3a2512129825abe675dfeffce4575c76be7d6b9f7eafc"
+  },
+  {
+   "path": "public/world/a06/baked/pool_00_den.png",
+   "bytes": 8521,
+   "sha256": "278be49db031e2af4f591ed80a49dc53900c2e9b583e2273ea8f03ac130b922c"
+  },
+  {
+   "path": "public/world/a06/baked/pool_01_bake.jpg",
+   "bytes": 168923,
+   "sha256": "fd7b9ce5d31912bfe244e9239ca3027f8a6791e0eb6ac42c2bd547ec087df91c"
+  },
+  {
+   "path": "public/world/a06/baked/pool_01_den.png",
+   "bytes": 27812,
+   "sha256": "1cf290ac1fa51532fe8108edebce5d5639d2c120468b78ba5c2bf77380c5089f"
+  },
+  {
+   "path": "public/world/a06/baked/pool_02_bake.jpg",
+   "bytes": 248034,
+   "sha256": "31511f7873d716edb5775fe8ef94c624c28b9c6fb0a8d7b7650078a50b599d60"
+  },
+  {
+   "path": "public/world/a06/baked/pool_02_den.png",
+   "bytes": 22700,
+   "sha256": "b31bfcfbe5fc2dc700d74e00f64d00c6c368a33e542aaf1eff439092952ab3e9"
+  },
+  {
+   "path": "public/world/a06/baked/pool_03_bake.jpg",
+   "bytes": 216332,
+   "sha256": "cd3aefbbd4702d11f625dc31c603ad13ca01388c5504c03428665a798ac4500c"
+  },
+  {
+   "path": "public/world/a06/baked/pool_03_den.png",
+   "bytes": 18988,
+   "sha256": "9c4674c4a1d073909edce8a34700cd89656c07292aa88326d0caf94b0e3f0124"
+  },
+  {
+   "path": "public/world/a06/baked/pool_04_bake.jpg",
+   "bytes": 164555,
+   "sha256": "fb2bc46b09c4428b3ee857650fda52fa6b40f5c483be0e37aa22d79ffea84030"
+  },
+  {
+   "path": "public/world/a06/baked/pool_04_den.png",
+   "bytes": 20421,
+   "sha256": "86bd6363beac7001ff0bc157a89e0ffdc32f89e03b7f1b35167d1afb4142e07f"
+  },
+  {
+   "path": "public/world/a06/baked/pool_05_bake.jpg",
+   "bytes": 100746,
+   "sha256": "e00e92b9688df0f1c586bd62ccac7385e91f60175b26fbfdbb952312f3490458"
+  },
+  {
+   "path": "public/world/a06/baked/pool_05_den.png",
+   "bytes": 24403,
+   "sha256": "ed674514ab2b261c37d57f25c204910856d903c09144e4e2b4c0ae65b94e31fb"
+  },
+  {
+   "path": "public/world/a06/baked/pool_06_bake.jpg",
+   "bytes": 106539,
+   "sha256": "ac18d205f2f9514b80d3550147c6dc8793e6f41067517eadcbdfb976b97a4198"
+  },
+  {
+   "path": "public/world/a06/baked/pool_06_den.png",
+   "bytes": 19578,
+   "sha256": "430faf2b8cca766a4ebfbfd90f4bd320d61fdc4e585ff06f72b86f115c72cabe"
+  },
+  {
+   "path": "public/world/a06/baked/pool_07_bake.jpg",
+   "bytes": 115250,
+   "sha256": "6d3be34f70bc878e5c881119203ed92329fd47e926ce42bef7cb4c11d7f8f2a3"
+  },
+  {
+   "path": "public/world/a06/baked/pool_07_den.png",
+   "bytes": 21395,
+   "sha256": "f77d6600eb8519d3cd346ea2716727e0be565205e5f8b4c70b2d5b4fbfe9a657"
+  },
+  {
+   "path": "public/world/a06/baked/pool_08_bake.jpg",
+   "bytes": 112092,
+   "sha256": "d56c230e818307aa61b355676b933c2dd8585faadec07f0e5422d98422074b20"
+  },
+  {
+   "path": "public/world/a06/baked/pool_08_den.png",
+   "bytes": 20419,
+   "sha256": "9d5f7d7ccfcea446a12ca59c6951f61129c36561a71c04def33808bd723cbfaa"
+  },
+  {
+   "path": "public/world/a06/baked/pool_09_bake.jpg",
+   "bytes": 104317,
+   "sha256": "19ad55e5f2984c7947bee88caf0c1feaf01f0c1bc460c72aa164254874bd07d6"
+  },
+  {
+   "path": "public/world/a06/baked/pool_09_den.png",
+   "bytes": 19019,
+   "sha256": "9dbb183664331a409af3889321283f3c75a4a98614d1fdc2ba91d1949c48402a"
+  },
+  {
+   "path": "public/world/a06/baked/pool_10_bake.jpg",
+   "bytes": 91991,
+   "sha256": "da338585c7c21401b1e82f2e24a01edd8cf55742d5abb27bf90c3cae85266a01"
+  },
+  {
+   "path": "public/world/a06/baked/pool_10_den.png",
+   "bytes": 13523,
+   "sha256": "1efc6d4249a0ffc4f3b8b8b998c6cfcfe8772aaaab35dc08eb610d265f84e2bc"
+  },
+  {
+   "path": "public/world/a06/baked/ring_00_bake.jpg",
+   "bytes": 39395,
+   "sha256": "20633cfd3ace9110f45d9ad7e1f4fdfb195f0f63bbbddd4b840cd27cc280a990"
+  },
+  {
+   "path": "public/world/a06/baked/ring_00_den.png",
+   "bytes": 8659,
+   "sha256": "ddabd135315012f2a1ada2d58b149e5515e37c7bead374e8eb7f1b2d0516ffb3"
+  },
+  {
+   "path": "public/world/a06/baked/ring_01_bake.jpg",
+   "bytes": 43981,
+   "sha256": "78a61bc340bf4edec4749fd212cc782fb0c635c24317c7652f24bb496c736047"
+  },
+  {
+   "path": "public/world/a06/baked/ring_01_den.png",
+   "bytes": 9369,
+   "sha256": "2c2803faf067016addb8a255b5cbea7ccabf814ffe7048de6268459bc37e8011"
+  },
+  {
+   "path": "public/world/a06/baked/ring_02_bake.jpg",
+   "bytes": 51465,
+   "sha256": "99c19a1726d1831e523677164a1a78eaaf93d4968db3085a16ae6a94ed3c415f"
+  },
+  {
+   "path": "public/world/a06/baked/ring_02_den.png",
+   "bytes": 10468,
+   "sha256": "f76964f410dd47cda28ef97976bd4107f28a2ad4d09c5e8cee8b4df58df1d505"
+  },
+  {
+   "path": "public/world/a06/baked/tpl_copper.jpg",
+   "bytes": 20043,
+   "sha256": "61eb6d7cb0e13f5753f08fdb32b8b9e9a8fd56051ecd458432c86054f801a0aa"
+  },
+  {
+   "path": "public/world/a06/baked/tpl_flume.jpg",
+   "bytes": 9191,
+   "sha256": "58e177f724b170489769d57c9c2cc15a64f6ae233f4a17650beb6a63949f07df"
+  },
+  {
+   "path": "public/world/a06/baked/tpl_pool.jpg",
+   "bytes": 75830,
+   "sha256": "135f2809bc22f00f10583217ebec764e028f86b943f048c424121115561406b9"
+  },
+  {
+   "path": "public/world/a06/baked/tpl_ring.jpg",
+   "bytes": 71214,
+   "sha256": "28b8bea0054a6c25fd6da70f13101d2afc0e993a14cd99a9d92acbbf2c3e2e8a"
+  },
+  {
+   "path": "public/world/a06/baked/tpl_tunnel.jpg",
+   "bytes": 397797,
+   "sha256": "0bd90698db958768f97b0b6c409dfba1392d163c3a8fe83015712b74d9274c92"
+  },
+  {
+   "path": "public/world/a06/baked/tpl_water.jpg",
+   "bytes": 75830,
+   "sha256": "135f2809bc22f00f10583217ebec764e028f86b943f048c424121115561406b9"
+  },
+  {
+   "path": "public/world/a06/baked/tunnel_02_bake.jpg",
+   "bytes": 43177,
+   "sha256": "a45c398b4d7c2a8b4bf7125b22c5e15c1d86c29d38dcebd782de69604d1d1f9a"
+  },
+  {
+   "path": "public/world/a06/baked/tunnel_02_den.png",
+   "bytes": 16411,
+   "sha256": "f9921397051c79f3b77900027194081086e354ebc8722e195ab56342139d4efa"
+  },
+  {
+   "path": "public/world/a06/baked/tunnel_03_bake.jpg",
+   "bytes": 268251,
+   "sha256": "21765285cf8d4d77e362d84e02b2c1d74bf17fe90cbc1460bf31ab3697a1e67b"
+  },
+  {
+   "path": "public/world/a06/baked/tunnel_03_den.png",
+   "bytes": 54812,
+   "sha256": "3d09d478d2de262f4077620b0c0fa5350a645dc72033fd513aac7ec58bbc106c"
+  },
+  {
+   "path": "public/world/a06/baked/tunnel_04_bake.jpg",
+   "bytes": 370866,
+   "sha256": "1cd6259f8407c49acb67fb732e0472ff4dceb9da73f84a51a24f6cd24b917d0b"
+  },
+  {
+   "path": "public/world/a06/baked/tunnel_04_den.png",
+   "bytes": 57158,
+   "sha256": "69a123ce27129556f81d6a5fdf24a50a8bda73d9f0c16211869108dc5ccddec0"
+  },
+  {
+   "path": "public/world/a06/baked/tunnel_05_bake.jpg",
+   "bytes": 344875,
+   "sha256": "c5a7d25ccb6d423de2a8681350817f8364a81402667b2ae0e32d2d0a7551002e"
+  },
+  {
+   "path": "public/world/a06/baked/tunnel_05_den.png",
+   "bytes": 54572,
+   "sha256": "e49ecb3d30eb367ed4797da7fc7e2627a582fc8bde502e6362f9e57e5a176e53"
+  },
+  {
+   "path": "public/world/a06/baked/tunnel_06_bake.jpg",
+   "bytes": 489901,
+   "sha256": "007104336f6e6a24ca88ef81fec046aa237eead34bac3b4db54eb9fb6fd3887f"
+  },
+  {
+   "path": "public/world/a06/baked/tunnel_06_den.png",
+   "bytes": 47047,
+   "sha256": "fcecbc542df8a398e31957ccc44345b981856ebdc616be288aeeb62bf5adf57a"
+  },
+  {
+   "path": "public/world/a06/baked/tunnel_07_bake.jpg",
+   "bytes": 413403,
+   "sha256": "f5e8ec1890ebe56072f90a8b285a63f86f6de6849daf7a97481fe8fb218dc54f"
+  },
+  {
+   "path": "public/world/a06/baked/tunnel_07_den.png",
+   "bytes": 47261,
+   "sha256": "5088cac65d1e69d9e63b7d6f084573625f9b5256ae1815a27a3ff8277eebfd33"
+  },
+  {
+   "path": "public/world/a06/baked/tunnel_08_bake.jpg",
+   "bytes": 319551,
+   "sha256": "c74989548588414958342a41079a5d71a1a718b8cedbf9ec9515166a3106f36e"
+  },
+  {
+   "path": "public/world/a06/baked/tunnel_08_den.png",
+   "bytes": 51233,
+   "sha256": "f64ef5044fe82ceffd174a3369c4f97934dd36679fd18796d45706867193db70"
+  },
+  {
+   "path": "public/world/a06/baked/tunnel_09_bake.jpg",
+   "bytes": 389088,
+   "sha256": "31da3fe13a077b99e33f6dd11e534b43627bb9600a5db36f7e711bcc15b4b73e"
+  },
+  {
+   "path": "public/world/a06/baked/tunnel_09_den.png",
+   "bytes": 43097,
+   "sha256": "f9239157ff6af652453b0f11908dba5b2d68756954bbc7e49daa0a2e654e8da6"
+  },
+  {
+   "path": "public/world/a06/baked/tunnel_10_bake.jpg",
+   "bytes": 386830,
+   "sha256": "9a741aa344e061a10d8ff717d4a26bf8a5341e8279528e5434a125f62e8f2e85"
+  },
+  {
+   "path": "public/world/a06/baked/tunnel_10_den.png",
+   "bytes": 38109,
+   "sha256": "e2362689dde0451bbe7b08b828db4a1a1b05f1e529aabfa1be162b999b6c8479"
+  },
+  {
+   "path": "public/world/a06/baked/tunnel_11_bake.jpg",
+   "bytes": 386550,
+   "sha256": "86a24001d1f42ac0100a60c365182fb8256e233d5a970df957329a395cd61c77"
+  },
+  {
+   "path": "public/world/a06/baked/tunnel_11_den.png",
+   "bytes": 35374,
+   "sha256": "9ad123d81c399ba0d8efa05713041f1692414320306e9e1031046e19dd6b32d0"
+  },
+  {
+   "path": "public/world/a06/baked/tunnel_12_bake.jpg",
+   "bytes": 379682,
+   "sha256": "4e6af75fefe14cce29110363b83f3e095d42fd9922bee5995b6cc72496a59b54"
+  },
+  {
+   "path": "public/world/a06/baked/tunnel_12_den.png",
+   "bytes": 34472,
+   "sha256": "370d6285ee4eafc4ab600852838815fb59b1720aa1a76ec8951bc7d0bd86d5a8"
+  },
+  {
+   "path": "public/world/a06/baked/tunnel_13_bake.jpg",
+   "bytes": 366261,
+   "sha256": "bbb4444b271f1215f50e5b1d932d1c3e1870f9cd7ee03f8779810cafd9e619a6"
+  },
+  {
+   "path": "public/world/a06/baked/tunnel_13_den.png",
+   "bytes": 33935,
+   "sha256": "895bf8c735781fefe1af44137b1dc85e5769aab64d0619b04b36de54c108011a"
+  },
+  {
+   "path": "public/world/a06/baked/tunnel_14_bake.jpg",
+   "bytes": 340732,
+   "sha256": "af76031f9aa35e19977f281682f6c69cff6d43f51e31079bff09d688beaa7f98"
+  },
+  {
+   "path": "public/world/a06/baked/tunnel_14_den.png",
+   "bytes": 33351,
+   "sha256": "7efa76f6002503873e2a9ab86f96a519c21bc5b73de393ba3475930af3b4248f"
+  },
+  {
+   "path": "public/world/a06/baked/tunnel_15_bake.jpg",
+   "bytes": 318561,
+   "sha256": "61cacb7405e7c0432848f548055d86e9fa9f63be97da7fbab51efd726996e0bd"
+  },
+  {
+   "path": "public/world/a06/baked/tunnel_15_den.png",
+   "bytes": 31896,
+   "sha256": "66f1bbb9f44fe36a1f7292cdd0de866df9af8cd3c579f14a3cd16ce06d2d80fa"
+  },
+  {
+   "path": "public/world/a06/baked/tunnel_16_bake.jpg",
+   "bytes": 175460,
+   "sha256": "b8d19c23f35fec15aa4dd7b02e2fcfccac1da5d088484171251a690e37989a99"
+  },
+  {
+   "path": "public/world/a06/baked/tunnel_16_den.png",
+   "bytes": 40484,
+   "sha256": "fd311e482f5c717863fdac59cee1825062166133d5f397ee5b19b7d939899af6"
+  },
+  {
+   "path": "public/world/a06/baked/water_route_00_bake.jpg",
+   "bytes": 107236,
+   "sha256": "45556264fed86a27969b0aa0a24e95851eb21fbd96fb3542b42dc79ea239c559"
+  },
+  {
+   "path": "public/world/a06/baked/water_route_00_den.png",
+   "bytes": 27754,
+   "sha256": "e5b6e6170bdb27edf469c442f8d00805a117772a79fa5d82355e6d0060515cfc"
+  },
+  {
+   "path": "public/world/a06/baked/water_route_01_bake.jpg",
+   "bytes": 100894,
+   "sha256": "adad8d4b8347e38178995e80cb5d74368f19814269edbd12dc014d1d020d79ef"
+  },
+  {
+   "path": "public/world/a06/baked/water_route_01_den.png",
+   "bytes": 31592,
+   "sha256": "4e08cdf11f08296187bfae5e18ac72b912b432d9c347cda3b2a720a01871e2f0"
+  },
+  {
+   "path": "public/world/a06/baked/water_route_02_bake.jpg",
+   "bytes": 110586,
+   "sha256": "610150755dfbeba3f0526fc5206a7cc1142f31c5b7fc5742a4c5c29b6d256e58"
+  },
+  {
+   "path": "public/world/a06/baked/water_route_02_den.png",
+   "bytes": 15379,
+   "sha256": "dd4803d93a07cab09cdbc98367aa50e63e04b8c27adc40313b6b81d3215a326a"
+  },
+  {
+   "path": "public/world/a06/baked/water_route_03_bake.jpg",
+   "bytes": 94813,
+   "sha256": "c2500ca5c99f73a0ed095778d6214601344fa12d2ff13473228a4cebc046af5b"
+  },
+  {
+   "path": "public/world/a06/baked/water_route_03_den.png",
+   "bytes": 10529,
+   "sha256": "5c808c0828a4f39cd707c463f590cc619c1cd9bb24a033a045f331b28728faae"
+  },
+  {
+   "path": "public/world/a06/baked/water_route_04_bake.jpg",
+   "bytes": 86438,
+   "sha256": "b9905985f4dae95008b1524ab59587c46b2c2ab870f7dd0ad96e823cd70cdccf"
+  },
+  {
+   "path": "public/world/a06/baked/water_route_04_den.png",
+   "bytes": 8332,
+   "sha256": "68cf42b98b1e5121169987659355552e0ee7b71c8dce9ab7465e3e34e9bf885c"
+  },
+  {
+   "path": "public/world/a06/baked/water_route_05_bake.jpg",
+   "bytes": 85650,
+   "sha256": "fbd61e416ac052985ba2bbd4ac0d4566e9068e8a9cd4a694fd4fa6670a548fc6"
+  },
+  {
+   "path": "public/world/a06/baked/water_route_05_den.png",
+   "bytes": 12931,
+   "sha256": "eb39534b56bb6c9c581f3f3e23f919c12abca96313479494218217f5b1e7d475"
+  },
+  {
+   "path": "public/world/a06/baked/water_route_06_bake.jpg",
+   "bytes": 53441,
+   "sha256": "98d09781324b311ab68606d7f1167200ef7058d647adf1744236ef8ab7d572f3"
+  },
+  {
+   "path": "public/world/a06/baked/water_route_06_den.png",
+   "bytes": 15146,
+   "sha256": "9ddff7180bfed7ed86e86bae5c9fea28bf00782831365b0f93e4cb8bc676754a"
+  },
+  {
+   "path": "public/world/a06/baked/water_route_07_bake.jpg",
+   "bytes": 50433,
+   "sha256": "4c4856c2d09f84d97e6f1077e47d5d8c5626f26d99adbac19ac3667d7d8cfda6"
+  },
+  {
+   "path": "public/world/a06/baked/water_route_07_den.png",
+   "bytes": 10427,
+   "sha256": "bc862834870c040e1abdc1da2c3601c3d0fcd1cd1976713fb222c46bc76f109c"
+  },
+  {
+   "path": "public/world/a06/baked/water_route_08_bake.jpg",
+   "bytes": 56435,
+   "sha256": "ef56dc713ad09483147be2f08921dd60c992d5848b8bb01795d5afa6d968f45f"
+  },
+  {
+   "path": "public/world/a06/baked/water_route_08_den.png",
+   "bytes": 6713,
+   "sha256": "9c7e79b2d7c3263f75de0d75136336ee9ce976094c60a87e6b13810eb7050667"
+  },
+  {
+   "path": "public/world/a06/baked/water_route_09_bake.jpg",
+   "bytes": 50169,
+   "sha256": "76f2cc91861b3eb7710f39f97d5d7b2e483cf2d346969460dd9b6653acd220ec"
+  },
+  {
+   "path": "public/world/a06/baked/water_route_09_den.png",
+   "bytes": 5962,
+   "sha256": "96400322148417a127d0022464dc1e4ecc861ef4e5fefdf0d750c1e1941b3f89"
+  },
+  {
+   "path": "public/world/a06/baked/water_route_10_bake.jpg",
+   "bytes": 47883,
+   "sha256": "a560bf8fc62e92e8cb27ff300e1108b0ff6b0171a2ce6a9a70ee7a750e5ba006"
+  },
+  {
+   "path": "public/world/a06/baked/water_route_10_den.png",
+   "bytes": 10540,
+   "sha256": "1607357abfa6cb53f96fcbd7f9a24485b9496dd73df0df02e2769cdb49e96516"
+  },
+  {
+   "path": "public/world/a06/baked/water_route_11_bake.jpg",
+   "bytes": 50318,
+   "sha256": "64e665c84ccf345738c5dcf4fe98dae7c5104d290e3e10e0181643d2b2a78d24"
+  },
+  {
+   "path": "public/world/a06/baked/water_route_11_den.png",
+   "bytes": 14822,
+   "sha256": "d1cf7daaf0586ab4401dd7329997594540040b18b432bc601400dca10b4dc024"
+  },
+  {
+   "path": "public/world/a06/baked/water_route_12_bake.jpg",
+   "bytes": 48376,
+   "sha256": "7fcd785aaacd1851998628f2f219b2238176a6e06cb22c998665ec9ec88e14a8"
+  },
+  {
+   "path": "public/world/a06/baked/water_route_12_den.png",
+   "bytes": 11004,
+   "sha256": "1d72e2c3de94e257947ae45b8ead5a8fcc7e8e3aa84476bb6402fb56bca898d5"
+  },
+  {
+   "path": "public/world/a06/baked/water_route_13_bake.jpg",
+   "bytes": 47670,
+   "sha256": "c2ec74410329025bbb17eb5970b0ee8a40354911ecaa599d9b580d37a01d3a97"
+  },
+  {
+   "path": "public/world/a06/baked/water_route_13_den.png",
+   "bytes": 9705,
+   "sha256": "c2914ae773af86856f65fd17116ea78021696af876720ef8f46f554699af8250"
+  },
+  {
+   "path": "public/world/a06/baked/water_route_14_bake.jpg",
+   "bytes": 44880,
+   "sha256": "95b7e47c69f013210fea5e8e696c79cb733dbe0f260afdbcad611815b335f9d0"
+  },
+  {
+   "path": "public/world/a06/baked/water_route_14_den.png",
+   "bytes": 7684,
+   "sha256": "1855a7a1a98c2193e3ac0db18b02f8a7b12eca216e55ee8c333066a31c84cd0c"
+  },
+  {
+   "path": "public/world/a06/layout.json",
+   "bytes": 71827,
+   "sha256": "50f68d1af12b52e4b484892ea1ee80cb6e4fb636da88fd9d87ae243b8011b6a6"
+  },
+  {
+   "path": "public/world/a06/scene.glb",
+   "bytes": 2372744,
+   "sha256": "af4680a0d912c5e458142322bb7133cad8ca234bb5ece300b97e95878a97623f"
+  },
+  {
+   "path": "public/world/a07/baked/manifest.json",
+   "bytes": 7431,
+   "sha256": "10427837dfcf962fd53499c58975074cdf6fbe96d050c98191957608158f6809"
+  },
+  {
+   "path": "public/world/a07/baked/paddle_0_bake.jpg",
+   "bytes": 13314,
+   "sha256": "d6465d2ac78accb8bd4ef5076170138b05f9c12307dd980fdae19c533dd00ce3"
+  },
+  {
+   "path": "public/world/a07/baked/paddle_0_den.png",
+   "bytes": 4851,
+   "sha256": "04944d7013636880407c196e0096edfbad7636fc1efccbb7cf64fa98b71476cb"
+  },
+  {
+   "path": "public/world/a07/baked/paddle_1_bake.jpg",
+   "bytes": 12624,
+   "sha256": "7c7b03fa32632d63451afe28353d68260488b00893d214aded24811d7f6c7585"
+  },
+  {
+   "path": "public/world/a07/baked/paddle_1_den.png",
+   "bytes": 3563,
+   "sha256": "0b3313c6e0c848ece06730ee8c518c4fe09d5ab37e3546e4ac7d8b8a7f463537"
+  },
+  {
+   "path": "public/world/a07/baked/paddle_2_bake.jpg",
+   "bytes": 12776,
+   "sha256": "c4fbed38b1f3096f04eee1100dc9b4c5b8f055924210af124706276408d34137"
+  },
+  {
+   "path": "public/world/a07/baked/paddle_2_den.png",
+   "bytes": 4519,
+   "sha256": "2dde7ae071094eab4dba3115c4a1aa984bf7ebe5c9c8e8b5495ff588bacc8ddb"
+  },
+  {
+   "path": "public/world/a07/baked/paddle_3_bake.jpg",
+   "bytes": 11535,
+   "sha256": "cae79b8790579d506eeb1f403f6a3e159bac7c81933195d9867ef5a9246f1e30"
+  },
+  {
+   "path": "public/world/a07/baked/paddle_3_den.png",
+   "bytes": 3630,
+   "sha256": "982f171dfc2e897876cb384971182cacb835ccf05d66cc1878358a4b70a254ad"
+  },
+  {
+   "path": "public/world/a07/baked/paddle_4_bake.jpg",
+   "bytes": 12403,
+   "sha256": "5310ac8557a2ea8a3071756e10ff301701add0c07ccb575261624b4acd3bc57b"
+  },
+  {
+   "path": "public/world/a07/baked/paddle_4_den.png",
+   "bytes": 3886,
+   "sha256": "6754d10d5fc8d939ff1c2f690da7fc60c7e2b844d4b7d2952058bb6cd63a0597"
+  },
+  {
+   "path": "public/world/a07/baked/pool_00_bake.jpg",
+   "bytes": 59588,
+   "sha256": "6995abf83aeb8667d38ed8a69857f280b1b9ad062c94879c269a57c4d05e174b"
+  },
+  {
+   "path": "public/world/a07/baked/pool_00_den.png",
+   "bytes": 11846,
+   "sha256": "88c1aa798db11e959f3fd65b944ee2cd873b084590624e4575e868125e96a02f"
+  },
+  {
+   "path": "public/world/a07/baked/pool_01_bake.jpg",
+   "bytes": 318851,
+   "sha256": "17932119acceea68f8511bca34a8a117752af59b51afc11e78f60ab5b735b824"
+  },
+  {
+   "path": "public/world/a07/baked/pool_01_den.png",
+   "bytes": 69774,
+   "sha256": "d9c9568ce175a261bb2321ed3d2caa7b34e988a86f25b4538a1360b55ce19617"
+  },
+  {
+   "path": "public/world/a07/baked/pool_02_bake.jpg",
+   "bytes": 183781,
+   "sha256": "89177df6c9f6e87c2602f9e3d55980827bceaef700008e36b61206eab2b56397"
+  },
+  {
+   "path": "public/world/a07/baked/pool_02_den.png",
+   "bytes": 36680,
+   "sha256": "a4f0734d559611f4b4576042882c1a9b059dea0b5e92c492009b4bf2adf86d87"
+  },
+  {
+   "path": "public/world/a07/baked/pool_03_bake.jpg",
+   "bytes": 144976,
+   "sha256": "a2fadc277dda69d67206b675edc1de84855a99395bd0248a133bab3b67e5030f"
+  },
+  {
+   "path": "public/world/a07/baked/pool_03_den.png",
+   "bytes": 40872,
+   "sha256": "cc398b4a3980ebb4440198fdcfd7c968ba8b790389d8235889464006e2524289"
+  },
+  {
+   "path": "public/world/a07/baked/pool_04_bake.jpg",
+   "bytes": 124797,
+   "sha256": "33fb09a0d90526d40876970e1bbbda06f3116f1a85f9a1b74814f6d0bc57a7dc"
+  },
+  {
+   "path": "public/world/a07/baked/pool_04_den.png",
+   "bytes": 25850,
+   "sha256": "8de8bca7e5d7b73c145d75c2587c9ddfc9ff97e4ef4f3ef64c38dcdf33441e54"
+  },
+  {
+   "path": "public/world/a07/baked/pool_05_bake.jpg",
+   "bytes": 154602,
+   "sha256": "5a9be5382f7a57bbc37fdf097d73aaf190e0832c3edb66169f2bebcc864a039b"
+  },
+  {
+   "path": "public/world/a07/baked/pool_05_den.png",
+   "bytes": 32014,
+   "sha256": "d8362bc40d9a794c790d80a164a95aac9c571085241362330b1d3cd775a2a36f"
+  },
+  {
+   "path": "public/world/a07/baked/pool_06_bake.jpg",
+   "bytes": 207123,
+   "sha256": "c818d9bab3ee503d0566b7fe427cc639837f84191d26c038ff1bd2745e0869ca"
+  },
+  {
+   "path": "public/world/a07/baked/pool_06_den.png",
+   "bytes": 58489,
+   "sha256": "190f0dd368f7e2011e24639cd63aac3a247999312c9ef1a9d4c36c8d7a25848a"
+  },
+  {
+   "path": "public/world/a07/baked/pool_07_bake.jpg",
+   "bytes": 184491,
+   "sha256": "e7dc6abfc18e39cc65c2c788870f26a246fd8d097c6061ba903786b645d4c98d"
+  },
+  {
+   "path": "public/world/a07/baked/pool_07_den.png",
+   "bytes": 52519,
+   "sha256": "e9a9349ba541a318e91a59065e2227a42dcab611405b4cc099ac7b82ddefb985"
+  },
+  {
+   "path": "public/world/a07/baked/pool_08_bake.jpg",
+   "bytes": 148837,
+   "sha256": "e21f629c5fa910f4babf8039aa01f04209e1293382b6a0b5752e08a889552ca8"
+  },
+  {
+   "path": "public/world/a07/baked/pool_08_den.png",
+   "bytes": 31123,
+   "sha256": "80c8f28fd957c8a58fb46fd3c77d1a9ee9420d0fa164d6a74ae5d088d22d1729"
+  },
+  {
+   "path": "public/world/a07/baked/ring_00_bake.jpg",
+   "bytes": 41493,
+   "sha256": "1045863bcaf1f87161acd753d11797332d082524a8d1de24723515b31862b28f"
+  },
+  {
+   "path": "public/world/a07/baked/ring_00_den.png",
+   "bytes": 9066,
+   "sha256": "9d5d3bdf661790d0006fc8b28b334497b18c01703cbbf86416855d2c3e22a064"
+  },
+  {
+   "path": "public/world/a07/baked/ring_01_bake.jpg",
+   "bytes": 49612,
+   "sha256": "76ee5476c5738b27022e16ba71eeca4680d56d90acefd782ab2abc0287c44f66"
+  },
+  {
+   "path": "public/world/a07/baked/ring_01_den.png",
+   "bytes": 8871,
+   "sha256": "0da4f061f6f4c8af4d9fe90f419152544df4f90e630115f1250ef97bdd990755"
+  },
+  {
+   "path": "public/world/a07/baked/ring_02_bake.jpg",
+   "bytes": 49464,
+   "sha256": "517188949c6119be2faa8c42d632f2a22e5133d5101b8bc190d75ed73d3f536b"
+  },
+  {
+   "path": "public/world/a07/baked/ring_02_den.png",
+   "bytes": 8393,
+   "sha256": "249418df4fb49df9f40bbbe88d63dbde5a47f038aa3639026e473a8c76e6a1ba"
+  },
+  {
+   "path": "public/world/a07/baked/ring_03_bake.jpg",
+   "bytes": 50279,
+   "sha256": "e4b91f346fe72655bb226dabede8898892ce3149a5c233a3caabff3cb52dc66e"
+  },
+  {
+   "path": "public/world/a07/baked/ring_03_den.png",
+   "bytes": 8629,
+   "sha256": "83ad6f7fc10e0afad9785d299127fc616188db38d87a884f73f450e7dbcfa725"
+  },
+  {
+   "path": "public/world/a07/baked/ring_04_bake.jpg",
+   "bytes": 52143,
+   "sha256": "e4c88e5724a3e0552e68cc198300e27edf67861666dd07ffd1f4ebc0a626e425"
+  },
+  {
+   "path": "public/world/a07/baked/ring_04_den.png",
+   "bytes": 8787,
+   "sha256": "043ac0f3db95c9bdb563c80499e1dce8284c511313c162da26edfcf719d2f704"
+  },
+  {
+   "path": "public/world/a07/baked/ring_05_bake.jpg",
+   "bytes": 57838,
+   "sha256": "82c77ea48211162607a0d092484b639183114ea2861896e4927dae2162e47835"
+  },
+  {
+   "path": "public/world/a07/baked/ring_05_den.png",
+   "bytes": 10153,
+   "sha256": "863df0d819c9f3af09c7351956ff716e9e14a6407184e8350d6f0d9d76a3695d"
+  },
+  {
+   "path": "public/world/a07/baked/ring_06_bake.jpg",
+   "bytes": 55023,
+   "sha256": "1d4d702e9033319fd69bc8b69779e71e8473e1e8d409c6a7a0f5d5bf0eedab35"
+  },
+  {
+   "path": "public/world/a07/baked/ring_06_den.png",
+   "bytes": 8114,
+   "sha256": "8954e9418ade2011ce0abd77efaa4ae136a0987ee14e6a16cd003959e8993b5e"
+  },
+  {
+   "path": "public/world/a07/baked/ring_07_bake.jpg",
+   "bytes": 55674,
+   "sha256": "68b72510ae9c34f14d3bf646a350897478222acff0253a213ad6a54aee6b91b9"
+  },
+  {
+   "path": "public/world/a07/baked/ring_07_den.png",
+   "bytes": 8316,
+   "sha256": "a7e6915610834463a8051d83c66ebf917d96e22554d71db263578ada3e575b12"
+  },
+  {
+   "path": "public/world/a07/baked/ring_08_bake.jpg",
+   "bytes": 53696,
+   "sha256": "0f89254f154f5e385b38b98e3d85d235a27b5deb7c61f8198a931499e133e70d"
+  },
+  {
+   "path": "public/world/a07/baked/ring_08_den.png",
+   "bytes": 8637,
+   "sha256": "5d666f9502aff1ca82bac89e33aea68793bccc881e1cd73a9c1b11054cdc91f1"
+  },
+  {
+   "path": "public/world/a07/baked/ring_09_bake.jpg",
+   "bytes": 52836,
+   "sha256": "68b6f56b49018aa69da75a95863812cc5422ad020a0a7b6f7adef6deed0ccb24"
+  },
+  {
+   "path": "public/world/a07/baked/ring_09_den.png",
+   "bytes": 8797,
+   "sha256": "640ab3606d4d431f3a4c47be997c50881a2db82e35b306f25cc82d62f40924cb"
+  },
+  {
+   "path": "public/world/a07/baked/ring_10_bake.jpg",
+   "bytes": 51448,
+   "sha256": "e74e24b61b5b34b95826ce54c49db0eb55be254edfb2ebf743972266a387d822"
+  },
+  {
+   "path": "public/world/a07/baked/ring_10_den.png",
+   "bytes": 10261,
+   "sha256": "63a7500d0fe5726d59cf6c39b475951b3e96ded9be54280acb93ae763887f7c7"
+  },
+  {
+   "path": "public/world/a07/baked/ring_11_bake.jpg",
+   "bytes": 49318,
+   "sha256": "11eb477cc069d1d3eba3b24f987591df9db8fc9d3484d5763f04189edc41bcb4"
+  },
+  {
+   "path": "public/world/a07/baked/ring_11_den.png",
+   "bytes": 9806,
+   "sha256": "55d952fdf6cc3ed8fd0271106d351c7e1b2c6edd866a09761e57128ac1344496"
+  },
+  {
+   "path": "public/world/a07/baked/ring_12_bake.jpg",
+   "bytes": 48868,
+   "sha256": "9f76b899ee4a09371c9a3d3003274815350a1e02155c8e70582f44691885e6f1"
+  },
+  {
+   "path": "public/world/a07/baked/ring_12_den.png",
+   "bytes": 10011,
+   "sha256": "c1f0d3807802f63d4552a52905f7162adbd995f8861eeea749e3e27e4be200fe"
+  },
+  {
+   "path": "public/world/a07/baked/ring_13_bake.jpg",
+   "bytes": 46746,
+   "sha256": "7b164bcbf6b961d1408635c5c26f97559266f5bb04207158e5cd9b44f118259c"
+  },
+  {
+   "path": "public/world/a07/baked/ring_13_den.png",
+   "bytes": 10215,
+   "sha256": "9f8d373ffd8767d05953173b6634b7f3d4776dccf4099256654ec38a9a6f2d03"
+  },
+  {
+   "path": "public/world/a07/baked/ring_14_bake.jpg",
+   "bytes": 46825,
+   "sha256": "7974bc0c88eeadf45ed4ba54ebd004748938f6231f252628d19d69de560ecc31"
+  },
+  {
+   "path": "public/world/a07/baked/ring_14_den.png",
+   "bytes": 9988,
+   "sha256": "203522e7c3cdb928919dc8fd556e4338ee01d8bd0e26a9823451ae757131d301"
+  },
+  {
+   "path": "public/world/a07/baked/ring_15_bake.jpg",
+   "bytes": 45495,
+   "sha256": "eb0cc8cbded3332370a7953aebf3e6eab4877940ca2e0b64c01802f257aabf77"
+  },
+  {
+   "path": "public/world/a07/baked/ring_15_den.png",
+   "bytes": 9848,
+   "sha256": "303f0e342b9ee350d2b257de2e9276eaaaee767db5affaf4157275013bae9dac"
+  },
+  {
+   "path": "public/world/a07/baked/ring_16_bake.jpg",
+   "bytes": 42876,
+   "sha256": "d1da852e437fb6df9b7ea86e8789501d528c49c746c450e55984fb05b1787cff"
+  },
+  {
+   "path": "public/world/a07/baked/ring_16_den.png",
+   "bytes": 9136,
+   "sha256": "6d45b3f25574e6c6efdac6454820b4962fa25c1f132400b744bc22171f860826"
+  },
+  {
+   "path": "public/world/a07/baked/ring_17_bake.jpg",
+   "bytes": 39912,
+   "sha256": "449b118c6da0ab7b6c3fc087f53e20c2dc7d0ee7cfe0ef17a994e42f0becd04f"
+  },
+  {
+   "path": "public/world/a07/baked/ring_17_den.png",
+   "bytes": 8874,
+   "sha256": "4a4e10f8070f9f0f2a54fcef6ca000a50004544a5f46ced7a310d0bb2fd67c2c"
+  },
+  {
+   "path": "public/world/a07/baked/ring_18_bake.jpg",
+   "bytes": 35034,
+   "sha256": "7164c75d584ae1c7a354eefb153043910892049cabb28f89bb65b2a0f49c1b23"
+  },
+  {
+   "path": "public/world/a07/baked/ring_18_den.png",
+   "bytes": 8550,
+   "sha256": "108763fd80bfc1a983ea0ca0b71a5002dc536da8cbf0a405b630d28a7ab8dfdf"
+  },
+  {
+   "path": "public/world/a07/baked/tpl_copper.jpg",
+   "bytes": 27014,
+   "sha256": "503f3cd3ac57f101cea84445dfc90a4637504dbaa77105704d05ec8c293d5c29"
+  },
+  {
+   "path": "public/world/a07/baked/tpl_pool.jpg",
+   "bytes": 99834,
+   "sha256": "659c604c9f1c8c20cbf056dff71df7ad8d9d28eee76ab9e68e59499889b46e23"
+  },
+  {
+   "path": "public/world/a07/baked/tpl_ring.jpg",
+   "bytes": 76780,
+   "sha256": "00e91bf5f0b0f316bacfd4384e8ac40c997ff29cc3da53d718f9efa49bef6d7a"
+  },
+  {
+   "path": "public/world/a07/baked/tpl_tunnel.jpg",
+   "bytes": 443520,
+   "sha256": "0e8a8e6faad116512975795fb6550cb5fab4a7404c8d523e90f6be9dc2c6cd99"
+  },
+  {
+   "path": "public/world/a07/baked/tpl_water.jpg",
+   "bytes": 99834,
+   "sha256": "659c604c9f1c8c20cbf056dff71df7ad8d9d28eee76ab9e68e59499889b46e23"
+  },
+  {
+   "path": "public/world/a07/baked/tunnel_03_bake.jpg",
+   "bytes": 260588,
+   "sha256": "2c74c706787a179c3e6c7a264ac5e2be2fd6d7ef56c92bc112abc8dbd206373f"
+  },
+  {
+   "path": "public/world/a07/baked/tunnel_03_den.png",
+   "bytes": 52271,
+   "sha256": "7b7caebc6b80d8688895aa8de6917d4c2f6b98c55272d1ee650859af749a6869"
+  },
+  {
+   "path": "public/world/a07/baked/tunnel_04_bake.jpg",
+   "bytes": 347965,
+   "sha256": "ac10d79528acdc7bef9547ca25358c069288e4ee493e671fd1206d33dab029a7"
+  },
+  {
+   "path": "public/world/a07/baked/tunnel_04_den.png",
+   "bytes": 56870,
+   "sha256": "12347f405d41f9062a1869ffe885e42aa2ca0dc78391b6fbc02f39ed336f0d61"
+  },
+  {
+   "path": "public/world/a07/baked/tunnel_05_bake.jpg",
+   "bytes": 587662,
+   "sha256": "c383c798f7046c2f58cb9f95c72a0f94d1968372656fc6fc3a77ba1801aec72b"
+  },
+  {
+   "path": "public/world/a07/baked/tunnel_05_den.png",
+   "bytes": 61116,
+   "sha256": "a51a64939761e62f2f2ab6947026d735c5924e23c3070062dd68d092028cd7ca"
+  },
+  {
+   "path": "public/world/a07/baked/tunnel_06_bake.jpg",
+   "bytes": 431816,
+   "sha256": "e7f5f5be4c73eaa0b0eea067ca1b7966b4cfc8f56813c61320eedc76724ab3d9"
+  },
+  {
+   "path": "public/world/a07/baked/tunnel_06_den.png",
+   "bytes": 53005,
+   "sha256": "c0082d8f2e8dadfc23ee65fa8aab414d0750707cb2ca42204bbe8c2645bda7c2"
+  },
+  {
+   "path": "public/world/a07/baked/tunnel_07_bake.jpg",
+   "bytes": 356838,
+   "sha256": "6002d737227a992f3ebecc01e78d28125396e2eb42d6e99c2111f96ef5eae7e0"
+  },
+  {
+   "path": "public/world/a07/baked/tunnel_07_den.png",
+   "bytes": 47094,
+   "sha256": "b3f67ebc8a8cf9da789b572df53219ca7f03cade3e590c44f8953d090baab68b"
+  },
+  {
+   "path": "public/world/a07/baked/tunnel_08_bake.jpg",
+   "bytes": 431449,
+   "sha256": "6fc12da2dfe824fa395801c15b61b91e484d6c8d680d903ad037604d187e38b2"
+  },
+  {
+   "path": "public/world/a07/baked/tunnel_08_den.png",
+   "bytes": 48602,
+   "sha256": "6a9ef6ce9473c0fffa2e9c0f83e951febd6cbbf1b178b1cd86fdf2074663b5e2"
+  },
+  {
+   "path": "public/world/a07/baked/tunnel_09_bake.jpg",
+   "bytes": 342320,
+   "sha256": "7245d6537a83762ea3c2844c23788f7327fc617edeb247351e4746d95cca3caa"
+  },
+  {
+   "path": "public/world/a07/baked/tunnel_09_den.png",
+   "bytes": 52367,
+   "sha256": "b543a27e668d4f87b326146ba3da3964eb345bade38a079025bd77f69c690356"
+  },
+  {
+   "path": "public/world/a07/baked/tunnel_10_bake.jpg",
+   "bytes": 259211,
+   "sha256": "6a1efa557cbde0dfb5774663c5c2e3ab6738ce3adc1ce08a33e019c31bcf0b0c"
+  },
+  {
+   "path": "public/world/a07/baked/tunnel_10_den.png",
+   "bytes": 45083,
+   "sha256": "3a70f87771ab48ef9a615f523d734d568657b04dc6e661afaf8327781eddc373"
+  },
+  {
+   "path": "public/world/a07/baked/tunnel_11_bake.jpg",
+   "bytes": 254700,
+   "sha256": "1ba5d6323a591b10bf187bde9496a5dfe9e6b800c5bc6f0a9e655fa124ad921a"
+  },
+  {
+   "path": "public/world/a07/baked/tunnel_11_den.png",
+   "bytes": 30616,
+   "sha256": "a7899b060a14c48a7ef540549bee80c7da1ea74171ace3e8b7e0033d7f7abdd9"
+  },
+  {
+   "path": "public/world/a07/baked/tunnelfar_00_bake.jpg",
+   "bytes": 69076,
+   "sha256": "4477cfdc4889afcf83f7d82ddba6fe6e660eae7a8c757d56c6549aa02c143a05"
+  },
+  {
+   "path": "public/world/a07/baked/tunnelfar_00_den.png",
+   "bytes": 14821,
+   "sha256": "365836c97700e30035d390ad69b04cd9e5a13a129eadd38a23877023168e5290"
+  },
+  {
+   "path": "public/world/a07/baked/tunnelfar_01_bake.jpg",
+   "bytes": 53611,
+   "sha256": "5895c6f2b20976f2c54f60794d329169a06b2a5d094388a69db86576e684120c"
+  },
+  {
+   "path": "public/world/a07/baked/tunnelfar_01_den.png",
+   "bytes": 15995,
+   "sha256": "28666ac1e49eba19784a470fda60f265367f64dece9f9ed0e522656824d7b1b6"
+  },
+  {
+   "path": "public/world/a07/baked/tunnelfar_02_bake.jpg",
+   "bytes": 43013,
+   "sha256": "94eed7546f55d0ca00fabd8e54a37b340c1cf4d3b9fb4cdf4a6bc8da408ec4bd"
+  },
+  {
+   "path": "public/world/a07/baked/tunnelfar_02_den.png",
+   "bytes": 15425,
+   "sha256": "8d710f2027567e64a0e79c2a75a0bce6e57394ef6d663173385d63af015ac430"
+  },
+  {
+   "path": "public/world/a07/baked/tunnelfar_03_bake.jpg",
+   "bytes": 32407,
+   "sha256": "e89069da3b9a8c4c40551dba5b855eb666f1f034b6e4ecda1707e746e990d555"
+  },
+  {
+   "path": "public/world/a07/baked/tunnelfar_03_den.png",
+   "bytes": 12620,
+   "sha256": "418db164514dbb0cf2dd22c579f6d0ef677249e2961a0609bae8415516f200ff"
+  },
+  {
+   "path": "public/world/a07/baked/water_route_00_bake.jpg",
+   "bytes": 116017,
+   "sha256": "2639a9caf3e2a82426c8c8bdc19c599ffc61f478fddc34b6145be58eccce66a8"
+  },
+  {
+   "path": "public/world/a07/baked/water_route_00_den.png",
+   "bytes": 23704,
+   "sha256": "c60498207d007c082893aa276a6372ca53d2d075639a2490b59f12057b6a35ae"
+  },
+  {
+   "path": "public/world/a07/baked/water_route_01_bake.jpg",
+   "bytes": 128498,
+   "sha256": "4b849494168d62ecf4f590a6ecb14c80253c5cdbaf155ef2197e069217d0289e"
+  },
+  {
+   "path": "public/world/a07/baked/water_route_01_den.png",
+   "bytes": 17317,
+   "sha256": "351074442c6d148817c4e1ec8877676d88a1a7e35263bb98608b241f16a1e4e2"
+  },
+  {
+   "path": "public/world/a07/baked/water_route_02_bake.jpg",
+   "bytes": 114723,
+   "sha256": "1841a0d8d6eec08c68c3fd4a451e678f8f28c296977fd0b96cfb1d4db3780917"
+  },
+  {
+   "path": "public/world/a07/baked/water_route_02_den.png",
+   "bytes": 11679,
+   "sha256": "5c219b2f066356fb5ceb49e17ddc97e77267a489310fe24343c177a48233e892"
+  },
+  {
+   "path": "public/world/a07/baked/water_route_03_bake.jpg",
+   "bytes": 91641,
+   "sha256": "a944b273001a67ebe5b1297a1f68ea26dd405fd075c56a75a9e7c2c502b3f9cc"
+  },
+  {
+   "path": "public/world/a07/baked/water_route_03_den.png",
+   "bytes": 8065,
+   "sha256": "0390870264fc697a329f38c7c8cdf2301640650ff72890631bce159bc150e959"
+  },
+  {
+   "path": "public/world/a07/baked/water_route_04_bake.jpg",
+   "bytes": 78339,
+   "sha256": "562061845bf20d28235630008e74022583c9b83ef9eee36e42a08acb52bebf8f"
+  },
+  {
+   "path": "public/world/a07/baked/water_route_04_den.png",
+   "bytes": 7429,
+   "sha256": "4c03310da46b24a510b4512b57e55b94e802fb69f566972280f7d0ad014f7ee8"
+  },
+  {
+   "path": "public/world/a07/baked/water_route_05_bake.jpg",
+   "bytes": 78744,
+   "sha256": "6c76b25857919e739bb5fc846fc4701b3846fe5269fd8885e5b1c5cbd37b605f"
+  },
+  {
+   "path": "public/world/a07/baked/water_route_05_den.png",
+   "bytes": 9222,
+   "sha256": "895b10a1b1b24910b6c0dea1f79745f7d5165b2bf4ab0c45fc96a4828a53a488"
+  },
+  {
+   "path": "public/world/a07/baked/water_route_06_bake.jpg",
+   "bytes": 63782,
+   "sha256": "607cab9acdb58b49cfb4d154f6fe2e744323d8b23e1f1bfffef9423196c95ed7"
+  },
+  {
+   "path": "public/world/a07/baked/water_route_06_den.png",
+   "bytes": 9382,
+   "sha256": "29083f2fb77d31f9885441dba16c5d0b64db8e68ce9de0bccd37448f0b81f32d"
+  },
+  {
+   "path": "public/world/a07/baked/water_route_07_bake.jpg",
+   "bytes": 54180,
+   "sha256": "0a4845d370c130f1624a0bf9d04fcb3ca3dbe5ade98b6215c5588b599387e671"
+  },
+  {
+   "path": "public/world/a07/baked/water_route_07_den.png",
+   "bytes": 6892,
+   "sha256": "90ded7efece409d2fa6e57a9cb9bbe85640a91e40d891607a1db540492dcfced"
+  },
+  {
+   "path": "public/world/a07/baked/water_route_08_bake.jpg",
+   "bytes": 38013,
+   "sha256": "e85a3762710e9e6d9cfbb035e49f74002b34bb4b305f5045f49ff8fdd524b6ad"
+  },
+  {
+   "path": "public/world/a07/baked/water_route_08_den.png",
+   "bytes": 7047,
+   "sha256": "e6bea758d002f22730792722e2815b7828c2863c3ddc50878d8c0fc81f110f1c"
+  },
+  {
+   "path": "public/world/a07/baked/water_route_09_bake.jpg",
+   "bytes": 37163,
+   "sha256": "74177778d8a48b3d19a9d25f5250eb1ad8df350424d25eac5388ae107f83bf1c"
+  },
+  {
+   "path": "public/world/a07/baked/water_route_09_den.png",
+   "bytes": 7976,
+   "sha256": "d99335de16f55350c740565d8aedc3db338aabf58b53ccf34dc94be828002541"
+  },
+  {
+   "path": "public/world/a07/baked/water_route_10_bake.jpg",
+   "bytes": 52102,
+   "sha256": "9ac63351d277cfb8cad95d67f48cf29eff397b799b1a345c289eeb272f7dbf70"
+  },
+  {
+   "path": "public/world/a07/baked/water_route_10_den.png",
+   "bytes": 8668,
+   "sha256": "53d05b069b1e434903806c71033f0a5942f3bec6a5dc46a4ed29219204bcba83"
+  },
+  {
+   "path": "public/world/a07/baked/water_route_11_bake.jpg",
+   "bytes": 61779,
+   "sha256": "50d323630394d460a84db2c47e4167f1c35ab7b38701f5f709c5f43ecd697518"
+  },
+  {
+   "path": "public/world/a07/baked/water_route_11_den.png",
+   "bytes": 11099,
+   "sha256": "c3bb6d03bf35377ff3124bf9f41490ce9aeaeb5ce9d6471953ce9a4081da66d7"
+  },
+  {
+   "path": "public/world/a07/baked/water_route_12_bake.jpg",
+   "bytes": 64836,
+   "sha256": "add038b5f114c1e19fb457622e3d423918debc94ae5e5d3cfd40a72600140605"
+  },
+  {
+   "path": "public/world/a07/baked/water_route_12_den.png",
+   "bytes": 12463,
+   "sha256": "6492d03836f1979bf82780862f543d91a640f3956cc49a328c99d43cb0852de0"
+  },
+  {
+   "path": "public/world/a07/baked/water_route_13_bake.jpg",
+   "bytes": 59580,
+   "sha256": "4c5d7c6dec8ceca885d5ecb78b8dec3dd77f0ead036a27bac5cad814fe652527"
+  },
+  {
+   "path": "public/world/a07/baked/water_route_13_den.png",
+   "bytes": 14592,
+   "sha256": "fd33d39bb87dbd03b5e279fa56cee31d8b0b1973306155d001fa10fa938911f6"
+  },
+  {
+   "path": "public/world/a07/baked/water_route_14_bake.jpg",
+   "bytes": 57111,
+   "sha256": "5647f1c98608585e76d626fa89e7b7df906ef36a8017f17b4df76634e081475a"
+  },
+  {
+   "path": "public/world/a07/baked/water_route_14_den.png",
+   "bytes": 10751,
+   "sha256": "ddf71f9d96067832c44cdad361c97bf2e5efd58a15bb510349df6740cd7607d9"
+  },
+  {
+   "path": "public/world/a07/baked/water_route_15_bake.jpg",
+   "bytes": 51479,
+   "sha256": "b96d8b5a0513586564de0f54018842b26a2863e4d5b3b96cf3c2a651a21dca94"
+  },
+  {
+   "path": "public/world/a07/baked/water_route_15_den.png",
+   "bytes": 6698,
+   "sha256": "2a73b7bea81753da6b78a0b282289400a8010112102a3ac12633a3c0bc259514"
+  },
+  {
+   "path": "public/world/a07/baked/water_route_16_bake.jpg",
+   "bytes": 49222,
+   "sha256": "47fba556cadd6e808f9176eeb8f22551ab1b8c2f7a9d310794ccbdfb5dcd5292"
+  },
+  {
+   "path": "public/world/a07/baked/water_route_16_den.png",
+   "bytes": 8234,
+   "sha256": "0d53ef5486ad5e46fd2d8af37ffc2dd47e40d8cc3ffe422fdc0fdee5652b7e1d"
+  },
+  {
+   "path": "public/world/a07/baked/water_route_17_bake.jpg",
+   "bytes": 46800,
+   "sha256": "3ff4151fc9e7834cbbb3bf85b4a922138ab873329e4b15f45c95e82d4df80443"
+  },
+  {
+   "path": "public/world/a07/baked/water_route_17_den.png",
+   "bytes": 7392,
+   "sha256": "e0949203757781d0d5e884bce93beb1bfdfd8121d7592d4c57909daa3e64d61f"
+  },
+  {
+   "path": "public/world/a07/baked/water_route_18_bake.jpg",
+   "bytes": 43288,
+   "sha256": "623b763ea5fa0acd00d654a3d67177ec89d15782b63b3fb2c84548bbebddbd50"
+  },
+  {
+   "path": "public/world/a07/baked/water_route_18_den.png",
+   "bytes": 6536,
+   "sha256": "8318bf63eb60df0c02fce04f3301626457bf3d6d4e7d544d6b26219b5b25be60"
+  },
+  {
+   "path": "public/world/a07/layout.json",
+   "bytes": 58569,
+   "sha256": "41a3b5ac225bcd3a9b237f78c914b32cd1645862624f762f9e82e426f037e9cb"
+  },
+  {
+   "path": "public/world/a07/scene.glb",
+   "bytes": 3173752,
+   "sha256": "425d5bc51231fceea366eb967ff9100ec34904943e7dd76fa8901e15e2c4ba23"
+  },
+  {
+   "path": "public/world/aAB/baked/arch_bake.jpg",
+   "bytes": 48933,
+   "sha256": "80141787044001ef24c10d891272b33d62391b0da523162c793a04b230b17236"
+  },
+  {
+   "path": "public/world/aAB/baked/arch_den.png",
+   "bytes": 10075,
+   "sha256": "bdaa4b9b6cb6cc403ad1032117ba313980d423dd20a223c71149c2d4dca34696"
+  },
+  {
+   "path": "public/world/aAB/baked/backwall_bake.jpg",
+   "bytes": 20409,
+   "sha256": "9e99bedb000fa6294d33ed3a23aa3650bca8317aee94556463df4a71cb8bb160"
+  },
+  {
+   "path": "public/world/aAB/baked/backwall_den.png",
+   "bytes": 6541,
+   "sha256": "1e16cfeefe046138bf0cdc9f2ece88e7cb54b8316e18f31e236048c01cac841f"
+  },
+  {
+   "path": "public/world/aAB/baked/bulkhead_bake.jpg",
+   "bytes": 223927,
+   "sha256": "3d1d10301e1f3e0d7d18aeda5c7be9725ea44492fcc25e3f97df6627fc6e0816"
+  },
+  {
+   "path": "public/world/aAB/baked/bulkhead_den.png",
+   "bytes": 52233,
+   "sha256": "22d77277c32759abcf5bed44501bdf2cf74ce149f19ba3e3ea334b2061324180"
+  },
+  {
+   "path": "public/world/aAB/baked/ceiling_bake.jpg",
+   "bytes": 57104,
+   "sha256": "5182cc47910b02bfac9c6475cfa775d0f03641ad26ab6e05a5932cff33dbaa93"
+  },
+  {
+   "path": "public/world/aAB/baked/ceiling_den.png",
+   "bytes": 26326,
+   "sha256": "6be3e18e18d26028db26faa7048fb8a45d7259a9710a7bfcab0e6ab16bc91d96"
+  },
+  {
+   "path": "public/world/aAB/baked/collar_pipe_A_0_bake.jpg",
+   "bytes": 5575,
+   "sha256": "e27de1dd2354a01433fd137720112727e1776dbc7491675970a90ae97d1b1f79"
+  },
+  {
+   "path": "public/world/aAB/baked/collar_pipe_A_0_den.png",
+   "bytes": 2874,
+   "sha256": "298350eb423c7b0c6907ad220be12f3cde1405a3adc2f4ac9a5b2d5881c87368"
+  },
+  {
+   "path": "public/world/aAB/baked/collar_pipe_A_1_bake.jpg",
+   "bytes": 7691,
+   "sha256": "029af48725d8e5a1f7d860281adf73acc53f287ccaa299c5100288f2e29a4bc2"
+  },
+  {
+   "path": "public/world/aAB/baked/collar_pipe_A_1_den.png",
+   "bytes": 2699,
+   "sha256": "799ef2542547fed2f94b59397fffb7d1d161f0e4e1754ffb3d210c97041cc9cd"
+  },
+  {
+   "path": "public/world/aAB/baked/collar_pipe_A_2_bake.jpg",
+   "bytes": 5747,
+   "sha256": "182a541998176bbd51ee3562c7458dfa94a0fa7cf55cfac081b5c84fbd6a3386"
+  },
+  {
+   "path": "public/world/aAB/baked/collar_pipe_A_2_den.png",
+   "bytes": 1681,
+   "sha256": "29f4b5fed792a2d931d1c8363f9ff5269d3df3dce256d778699d0bbc58b28e72"
+  },
+  {
+   "path": "public/world/aAB/baked/collar_pipe_B_0_bake.jpg",
+   "bytes": 5174,
+   "sha256": "4e6b5c16cd4a6e83792c7724bcd275a19c3ac7f3ba6114aa7acc2c890bcc2bbb"
+  },
+  {
+   "path": "public/world/aAB/baked/collar_pipe_B_0_den.png",
+   "bytes": 2307,
+   "sha256": "0db9c39e6eea09066ecc4f4e0daecbb8ba12500a00876bb51bb4414c2f2a863a"
+  },
+  {
+   "path": "public/world/aAB/baked/collar_pipe_B_1_bake.jpg",
+   "bytes": 4501,
+   "sha256": "3e9c1e661368c60f256a1aef38292e500f717da2466461a5187b3094505756a4"
+  },
+  {
+   "path": "public/world/aAB/baked/collar_pipe_B_1_den.png",
+   "bytes": 3016,
+   "sha256": "d6092a301c4c8346a2b9c6322228dc76530e572910492a02edb0b392cc64d40a"
+  },
+  {
+   "path": "public/world/aAB/baked/collar_pipe_B_2_bake.jpg",
+   "bytes": 7053,
+   "sha256": "c6db332f0f917cff261fffe0a9a96bf1ea101dd877ae278478a7b1a23f16b5a0"
+  },
+  {
+   "path": "public/world/aAB/baked/collar_pipe_B_2_den.png",
+   "bytes": 3638,
+   "sha256": "2b92f3b2707921eb1d0013bd336af36fe198e505694a149c623bd6ea89ef411e"
+  },
+  {
+   "path": "public/world/aAB/baked/collar_pipe_C_0_bake.jpg",
+   "bytes": 6128,
+   "sha256": "0fcdb625710467491df67e841e4585c1567a4c76398ae9de8cac62d2340ee2f3"
+  },
+  {
+   "path": "public/world/aAB/baked/collar_pipe_C_0_den.png",
+   "bytes": 2979,
+   "sha256": "d24cebcc589ee3f09cd5544d4929490fed545367a27b9b7528abad9c261b2a48"
+  },
+  {
+   "path": "public/world/aAB/baked/collar_pipe_C_1_bake.jpg",
+   "bytes": 9106,
+   "sha256": "6e362d9da085ff095ecf0f6cf5140164bc3a85a5064b9973a278e4a9220d2785"
+  },
+  {
+   "path": "public/world/aAB/baked/collar_pipe_C_1_den.png",
+   "bytes": 3089,
+   "sha256": "00910a4cf24203dc72972d9fe963b5579954d269ed04dfc8177be6d81e8083a5"
+  },
+  {
+   "path": "public/world/aAB/baked/collar_pipe_C_2_bake.jpg",
+   "bytes": 13679,
+   "sha256": "34e6940cd7d12fedba718523d9adc995f78db68eb8a9a99d63cdc64f1f3b54ff"
+  },
+  {
+   "path": "public/world/aAB/baked/collar_pipe_C_2_den.png",
+   "bytes": 4431,
+   "sha256": "20d16106a99f1393c368ff3e6f5740ad8f301f6027986f75ef27f821e3150e0b"
+  },
+  {
+   "path": "public/world/aAB/baked/collar_pipe_D_0_bake.jpg",
+   "bytes": 4051,
+   "sha256": "e07f075b3105d47a07aa322d9a38d582e271a2d635ffefbfd5ab4f646db1f8a2"
+  },
+  {
+   "path": "public/world/aAB/baked/collar_pipe_D_0_den.png",
+   "bytes": 1708,
+   "sha256": "c09144949a8fa209a528ed974e20d0717f1f37cd58c205ad088f2f701d50db27"
+  },
+  {
+   "path": "public/world/aAB/baked/collar_pipe_D_1_bake.jpg",
+   "bytes": 6231,
+   "sha256": "407a3a9ec8ea7f823367b41d7ef4fc5447769f35bd88f6ab1fefa6b4c60e68b9"
+  },
+  {
+   "path": "public/world/aAB/baked/collar_pipe_D_1_den.png",
+   "bytes": 2246,
+   "sha256": "aae831f08baa51c2bcac30ce2cf12a034ecc67b6c00ee918f6f8cded7346805f"
+  },
+  {
+   "path": "public/world/aAB/baked/collar_pipe_E_0_bake.jpg",
+   "bytes": 6771,
+   "sha256": "02e236f2d4f298cf1614019ba1e394abe3cb431c5f2f592b4a8c2132488e80e1"
+  },
+  {
+   "path": "public/world/aAB/baked/collar_pipe_E_0_den.png",
+   "bytes": 2655,
+   "sha256": "8eee94e6062210f9c2a45488257bfcf31b8e2d0aaab16642924b41fe0e6ac2e6"
+  },
+  {
+   "path": "public/world/aAB/baked/fall_L_bake.jpg",
+   "bytes": 42673,
+   "sha256": "16578c1e7f8c5d5652b784a1b3e61b567f8434550136e9efa6e0007310d40afa"
+  },
+  {
+   "path": "public/world/aAB/baked/fall_L_den.png",
+   "bytes": 7978,
+   "sha256": "40e2e25bcd9c8a80783484b49601c3a9cf828ec6b2db0ae93940c056c167dbf9"
+  },
+  {
+   "path": "public/world/aAB/baked/fall_R_bake.jpg",
+   "bytes": 42544,
+   "sha256": "5f9f786f1bf78dc354d7ac9f9329551705a2b736fe16d0cb4e8a88572244cc21"
+  },
+  {
+   "path": "public/world/aAB/baked/fall_R_den.png",
+   "bytes": 8367,
+   "sha256": "0212c779c5792283fbf44ae5ac18b3def2e40a1b936edf078327a8ce0b6baff3"
+  },
+  {
+   "path": "public/world/aAB/baked/ledge_bake.jpg",
+   "bytes": 46581,
+   "sha256": "946e596ccbdf626330327fce3173516a40ce3e1cce161c9d244081586928ebed"
+  },
+  {
+   "path": "public/world/aAB/baked/ledge_den.png",
+   "bytes": 16231,
+   "sha256": "042bd6c294f38bbb4570fe0c96a8ee05157c59e2bdaaaebc6cc8d1158d5b5b9b"
+  },
+  {
+   "path": "public/world/aAB/baked/manifest.json",
+   "bytes": 73889,
+   "sha256": "6694fc4a36ce0edd29d1fc0a8874c34ca501cc2b8cc3ce2a30cc240979744229"
+  },
+  {
+   "path": "public/world/aAB/baked/outlet_L_bake.jpg",
+   "bytes": 11878,
+   "sha256": "cdc4d7233fa8a49e703da4cf973da4ec5ece7000c712290e7907a2b742ecff51"
+  },
+  {
+   "path": "public/world/aAB/baked/outlet_L_den.png",
+   "bytes": 3293,
+   "sha256": "7a1f469bda4940858b055c53d269324641480f842eafa9277125e5deacd12852"
+  },
+  {
+   "path": "public/world/aAB/baked/outlet_L_throat_bake.jpg",
+   "bytes": 6606,
+   "sha256": "4dde86e63106690fceeded6d7bb8ed48232d9dffebd0e6d51ea917695acf1272"
+  },
+  {
+   "path": "public/world/aAB/baked/outlet_L_throat_den.png",
+   "bytes": 2011,
+   "sha256": "89e320cd3b01b92e59ac898f825ab69e71fbec4f1b74674ffae9a9946e2514c3"
+  },
+  {
+   "path": "public/world/aAB/baked/outlet_R_bake.jpg",
+   "bytes": 12430,
+   "sha256": "a49db0479e7749d515f118d1a54e6e51a00dec20bbd669a8438c705cbf92247f"
+  },
+  {
+   "path": "public/world/aAB/baked/outlet_R_den.png",
+   "bytes": 3185,
+   "sha256": "c71af461a804799ccf575aae2cce9cb96d3721424a3a6242de16a7b414ca58dd"
+  },
+  {
+   "path": "public/world/aAB/baked/outlet_R_throat_bake.jpg",
+   "bytes": 5576,
+   "sha256": "298f577ffab19e5d16045726344f8624e825a054c6869c266925219a44302486"
+  },
+  {
+   "path": "public/world/aAB/baked/outlet_R_throat_den.png",
+   "bytes": 1525,
+   "sha256": "1133393ea39d66c1fe196ca54b71944bd49c6de5c6402d93c4503b844e910ef9"
+  },
+  {
+   "path": "public/world/aAB/baked/pipe_A_bake.jpg",
+   "bytes": 24826,
+   "sha256": "318ae452af3ca96e505e3b0b6b97cec65192bf9918527f805ad2b7988bda57e9"
+  },
+  {
+   "path": "public/world/aAB/baked/pipe_A_den.png",
+   "bytes": 6030,
+   "sha256": "7fbae97a1bc7092089fc00ab5de7909436774f53d22f4533176a8647397693d6"
+  },
+  {
+   "path": "public/world/aAB/baked/pipe_B_bake.jpg",
+   "bytes": 20250,
+   "sha256": "27836d8e4c8ad997c6a98dd1a2ff4b40001961596a597e4dc7eb83f536229d93"
+  },
+  {
+   "path": "public/world/aAB/baked/pipe_B_den.png",
+   "bytes": 11662,
+   "sha256": "2b302bb7951ba4b4d3e3d0ea18f1b7c3ed5dd89728d831ff46671ee0ccde491a"
+  },
+  {
+   "path": "public/world/aAB/baked/pipe_C_bake.jpg",
+   "bytes": 33988,
+   "sha256": "97e4460312288a28c73dcad188bf2fbf3c71e90c843ed744ab383cf8c3817731"
+  },
+  {
+   "path": "public/world/aAB/baked/pipe_C_den.png",
+   "bytes": 15414,
+   "sha256": "34c69612e8662345b7ba1f2ce723dfdf9cbb6ac40b5361f138bde006d5b1dd8a"
+  },
+  {
+   "path": "public/world/aAB/baked/pipe_D_bake.jpg",
+   "bytes": 12544,
+   "sha256": "799d8f50f37532a386ffe08f402025bd2d0401b5c4a38b3dd081f523811a184e"
+  },
+  {
+   "path": "public/world/aAB/baked/pipe_D_den.png",
+   "bytes": 5035,
+   "sha256": "6b5add2dd7ce7eb54112a2372a6be600893ed0d43d396e966b5d7e093573b27a"
+  },
+  {
+   "path": "public/world/aAB/baked/pipe_E_bake.jpg",
+   "bytes": 9111,
+   "sha256": "c7d1bffcb1054daf617a4d3f6dc3c4872a47ffc6b40e3eb28fe65de35300ed34"
+  },
+  {
+   "path": "public/world/aAB/baked/pipe_E_den.png",
+   "bytes": 4562,
+   "sha256": "d4d7c3b1a90ffd56e5edbf43da86f4cf93955bed8503bada36d22d866a486fe2"
+  },
+  {
+   "path": "public/world/aAB/baked/pod_0_bake.jpg",
+   "bytes": 15264,
+   "sha256": "cce12e378b310b10f1a82de3940ca5108c0b43fb1e38836b95bda3fe12de4265"
+  },
+  {
+   "path": "public/world/aAB/baked/pod_0_den.png",
+   "bytes": 4729,
+   "sha256": "fe623fa752ee46159ca818b388bb5abd82a8f5a290bbd5cd6db22ee0f201a6c9"
+  },
+  {
+   "path": "public/world/aAB/baked/pod_10_bake.jpg",
+   "bytes": 8018,
+   "sha256": "75a5eb3a196b509b043d36ee1cf05b70f8c212fc9502b86319c9a7d4cbd87386"
+  },
+  {
+   "path": "public/world/aAB/baked/pod_10_den.png",
+   "bytes": 3794,
+   "sha256": "c71250fa6b00d19a2ca1ad59767b6b91a753417e94e41c2760821978ee29b540"
+  },
+  {
+   "path": "public/world/aAB/baked/pod_11_bake.jpg",
+   "bytes": 7926,
+   "sha256": "ac79b04a0a6f33a74c1dc166484720dee794d40473491b395cb0bb86e4d835e9"
+  },
+  {
+   "path": "public/world/aAB/baked/pod_11_den.png",
+   "bytes": 3564,
+   "sha256": "8324cc23d77c2549bd30fff69f305570dee71db57f695d0bc1577e1688d9c090"
+  },
+  {
+   "path": "public/world/aAB/baked/pod_12_bake.jpg",
+   "bytes": 7689,
+   "sha256": "60483d3d27a0066f9b71a7984d4a32a0f4953320d196aeea78f36deae27678dc"
+  },
+  {
+   "path": "public/world/aAB/baked/pod_12_den.png",
+   "bytes": 4192,
+   "sha256": "a40162f8b651d8443b6aae2be81fd425a2675fe6362cef88c58549afce5204e9"
+  },
+  {
+   "path": "public/world/aAB/baked/pod_13_bake.jpg",
+   "bytes": 7290,
+   "sha256": "d8c47c21447c8c0677f75aef1ac0423c7f15b73d1954c9196e5ddd714fe7f797"
+  },
+  {
+   "path": "public/world/aAB/baked/pod_13_den.png",
+   "bytes": 3529,
+   "sha256": "da438c4f0fd9cf0439bc01085a3d412f4f7cd32ebf97ab54de9f3a11a9833384"
+  },
+  {
+   "path": "public/world/aAB/baked/pod_14_bake.jpg",
+   "bytes": 7281,
+   "sha256": "7892c8166701902dbdcbacd2d4fa586e95c2c0d8a9dd5ff7830509886504d1fb"
+  },
+  {
+   "path": "public/world/aAB/baked/pod_14_den.png",
+   "bytes": 3773,
+   "sha256": "201d7f061d7aa317a009ea31c027c0821798da46b1a1d2aa3f6c4423a0a019b9"
+  },
+  {
+   "path": "public/world/aAB/baked/pod_15_bake.jpg",
+   "bytes": 6818,
+   "sha256": "ce0bfa6ac1cd092a1a8a5401b89a93e0db5c6a2ab6f9afe4e6ef960dd5e8949f"
+  },
+  {
+   "path": "public/world/aAB/baked/pod_15_den.png",
+   "bytes": 3622,
+   "sha256": "4dd52e3840bd67deb7839dba9948899d852e1c53d17e89e4a7f04c01974c9352"
+  },
+  {
+   "path": "public/world/aAB/baked/pod_16_bake.jpg",
+   "bytes": 7895,
+   "sha256": "25b9b4ec5b42b8af14435140b992758bee8c4843bb340c699c628af83b180a19"
+  },
+  {
+   "path": "public/world/aAB/baked/pod_16_den.png",
+   "bytes": 3751,
+   "sha256": "ee4364a226051b2050e9a79d58f4308be7b6f04044f7e5d78efe6c48145f062c"
+  },
+  {
+   "path": "public/world/aAB/baked/pod_18_bake.jpg",
+   "bytes": 8437,
+   "sha256": "287cb8d8e5f4301009fb50c2f9e8c1b11fcdd856489686cd89927bb38b0008da"
+  },
+  {
+   "path": "public/world/aAB/baked/pod_18_den.png",
+   "bytes": 3703,
+   "sha256": "404c0c84eb9959af1fc001a65de9458e9a762008aad5bd0131a74ae55a54738a"
+  },
+  {
+   "path": "public/world/aAB/baked/pod_1_bake.jpg",
+   "bytes": 17356,
+   "sha256": "f7c0298b20541feb4d371b01bf717239032b988f9411f267fe580003877dc51c"
+  },
+  {
+   "path": "public/world/aAB/baked/pod_1_den.png",
+   "bytes": 4969,
+   "sha256": "2b73227ceb20f420750c87227236c6ffbec3d7d85c69a4d3c619c3fa08eceade"
+  },
+  {
+   "path": "public/world/aAB/baked/pod_2_bake.jpg",
+   "bytes": 13683,
+   "sha256": "3449c09389d5a583a65edbf80f60a5766e633d7d74d04a001be9781ced30bec1"
+  },
+  {
+   "path": "public/world/aAB/baked/pod_2_den.png",
+   "bytes": 4608,
+   "sha256": "e0358ae792f342fce6e5a3fdad5685745844e48aa2ac133dc9380253f5d2272a"
+  },
+  {
+   "path": "public/world/aAB/baked/pod_3_bake.jpg",
+   "bytes": 16857,
+   "sha256": "515270fbe307951182930e007f56d26a8d560fc472433e3971cf8e6427776cf8"
+  },
+  {
+   "path": "public/world/aAB/baked/pod_3_den.png",
+   "bytes": 4682,
+   "sha256": "3e689650fb60200502b7bc9e9a9fe460c209243dc17d41d19588b09d3c9575f6"
+  },
+  {
+   "path": "public/world/aAB/baked/pod_4_bake.jpg",
+   "bytes": 11790,
+   "sha256": "b3d436a58895876ca470ef41c639e3ea22d39c332ddc4c0232d4c121162c03ca"
+  },
+  {
+   "path": "public/world/aAB/baked/pod_4_den.png",
+   "bytes": 4025,
+   "sha256": "ff94620f4c124cf26e6f756c9ba8bd56fd24f9c28350a2bc09a0116cad4fe838"
+  },
+  {
+   "path": "public/world/aAB/baked/pod_5_bake.jpg",
+   "bytes": 13967,
+   "sha256": "fd54daa03339e93a145780c88976f8a654088a29d88e2de8d5a50d107f50f5dd"
+  },
+  {
+   "path": "public/world/aAB/baked/pod_5_den.png",
+   "bytes": 4157,
+   "sha256": "b3e4899dc8b713e8f02d40f93051baeea5ec75eb46a6e9520687bb6ffb06fcb3"
+  },
+  {
+   "path": "public/world/aAB/baked/pod_6_bake.jpg",
+   "bytes": 8630,
+   "sha256": "be9a1662d941a682c179d45c8c1dbb9a22f9c4510bbf5c9b83f30db03e673c2b"
+  },
+  {
+   "path": "public/world/aAB/baked/pod_6_den.png",
+   "bytes": 3846,
+   "sha256": "9918755549b1a6aa3d7f23e9d11ca9ba1b3882233310eeca61e8960772efd54c"
+  },
+  {
+   "path": "public/world/aAB/baked/pod_7_bake.jpg",
+   "bytes": 7666,
+   "sha256": "97f6603481dee3d1a3b2ed11b432971f611d65898ecbd841be06a2fe2d4c3667"
+  },
+  {
+   "path": "public/world/aAB/baked/pod_7_den.png",
+   "bytes": 3517,
+   "sha256": "e1f421930d8597386c8fe9a85541ea0e6d1c1aea8370d416a5b377ff59bca8dd"
+  },
+  {
+   "path": "public/world/aAB/baked/pod_8_bake.jpg",
+   "bytes": 7644,
+   "sha256": "52b4004be8f3fedd0a8aa4c255e61eae384eebe4c18b0b5ea6aa02780d4990e1"
+  },
+  {
+   "path": "public/world/aAB/baked/pod_8_den.png",
+   "bytes": 3784,
+   "sha256": "0e483671463d89e3ce5889350ee0c1efd63c58e73a93358b2fc573980eacbebd"
+  },
+  {
+   "path": "public/world/aAB/baked/pod_9_bake.jpg",
+   "bytes": 8674,
+   "sha256": "d0243e2e07f3bb9140a887f51f7fde9fea98730c9da5430ec46b326eda8d93c0"
+  },
+  {
+   "path": "public/world/aAB/baked/pod_9_den.png",
+   "bytes": 3673,
+   "sha256": "1290052a2437b7eb851289b53950327f241128cbd431000ff6af13093a43dc0b"
+  },
+  {
+   "path": "public/world/aAB/baked/ring_f0_bake.jpg",
+   "bytes": 40156,
+   "sha256": "9cec85f043bfe799c97032262f26b26736295a35230eeeb63fecf2693ca63bf7"
+  },
+  {
+   "path": "public/world/aAB/baked/ring_f0_den.png",
+   "bytes": 13269,
+   "sha256": "fcdf5bfd78d87d0f7c4291f5016c7e276dc6deaf8ae159fab1f69529059f7abf"
+  },
+  {
+   "path": "public/world/aAB/baked/ring_f1_bake.jpg",
+   "bytes": 37778,
+   "sha256": "8bde6dce4a276d21a9273e0b0047a8645155822ec578ec0c5698f9e39cf70414"
+  },
+  {
+   "path": "public/world/aAB/baked/ring_f1_den.png",
+   "bytes": 13536,
+   "sha256": "04f1c85d9b17c9b352a0f09d2140ec7958f002c61ba363dec6ff0af06ebe841c"
+  },
+  {
+   "path": "public/world/aAB/baked/ring_f2_bake.jpg",
+   "bytes": 37977,
+   "sha256": "ef6accec645d74b651569ca3e6496a20a1173f2e32424d0605b1e0aa2d1e9996"
+  },
+  {
+   "path": "public/world/aAB/baked/ring_f2_den.png",
+   "bytes": 13520,
+   "sha256": "651787a6f7561c9b10e63d71f34a913f85e59a87f05a3a15a2d43ff734d1a60a"
+  },
+  {
+   "path": "public/world/aAB/baked/ring_f3_bake.jpg",
+   "bytes": 39258,
+   "sha256": "b829472b0f32b4434a589831f47dd59d0e52e4e960463524aae4570680b0bbb8"
+  },
+  {
+   "path": "public/world/aAB/baked/ring_f3_den.png",
+   "bytes": 15829,
+   "sha256": "79d58b71a1e8c9c3333f0dbe37a118a1fd9637e88e1bc32f3497dae7d1897519"
+  },
+  {
+   "path": "public/world/aAB/baked/ring_f4_bake.jpg",
+   "bytes": 41102,
+   "sha256": "61f527795d60b3ce2305ce413dea79c3b408706dd3f73ac749709ef808222407"
+  },
+  {
+   "path": "public/world/aAB/baked/ring_f4_den.png",
+   "bytes": 15614,
+   "sha256": "8e89321c1636190786e744007dba9dd6070ac1551e6cb6b02aa610490299bdde"
+  },
+  {
+   "path": "public/world/aAB/baked/ring_f5_bake.jpg",
+   "bytes": 40978,
+   "sha256": "a0e3a76643c4f13e599d7322b096bc7afefb6d453e0ccb4f2b7b54cd746199bd"
+  },
+  {
+   "path": "public/world/aAB/baked/ring_f5_den.png",
+   "bytes": 16148,
+   "sha256": "a03ecd459dc646f5f32dd5396691db4b961f3a46dba69c33fbc97542f8eebb0a"
+  },
+  {
+   "path": "public/world/aAB/baked/ring_f6_bake.jpg",
+   "bytes": 39091,
+   "sha256": "7a65e16a5e48ffd641226dfbc3be7144e551d29f44e2cc7a3929f5fb68a58b47"
+  },
+  {
+   "path": "public/world/aAB/baked/ring_f6_den.png",
+   "bytes": 19534,
+   "sha256": "8db5819f8dacc4ce616222b720b8babb058662ba9ebc8205bd9dd877a4e2ef67"
+  },
+  {
+   "path": "public/world/aAB/baked/ring_f7_bake.jpg",
+   "bytes": 38867,
+   "sha256": "5702e475fc622a5c4b5f9f774e629be3c1cd459901c3ae36f1442437e0054fd8"
+  },
+  {
+   "path": "public/world/aAB/baked/ring_f7_den.png",
+   "bytes": 23482,
+   "sha256": "2513319513a024ecb8ad0aa90ad568259795db07a2c9754f8b30680030e884dc"
+  },
+  {
+   "path": "public/world/aAB/baked/ring_f8_bake.jpg",
+   "bytes": 39532,
+   "sha256": "c23786aac817124acb4c2382dd23482c7aa49a50ae9cb35ddbd2917860d0cd5e"
+  },
+  {
+   "path": "public/world/aAB/baked/ring_f8_den.png",
+   "bytes": 24608,
+   "sha256": "79a8469856e9c34b119ae51749600f5aabe67417f75b6524466aaa9f15faaa2c"
+  },
+  {
+   "path": "public/world/aAB/baked/ring_s0_bake.jpg",
+   "bytes": 64667,
+   "sha256": "b0dc50b0ea8302ab524b25208219cbe77992f30443307b21c0ac552d7762110d"
+  },
+  {
+   "path": "public/world/aAB/baked/ring_s0_den.png",
+   "bytes": 25383,
+   "sha256": "b19ba09027e6e3b20ce14fe73edd308144d16f04c1d0b6ecdd3cc7529d2d0454"
+  },
+  {
+   "path": "public/world/aAB/baked/ring_s10_bake.jpg",
+   "bytes": 39028,
+   "sha256": "9501011f5ac8e27c785358bdcf2657b0aab3787591a371022cfda47d667365a6"
+  },
+  {
+   "path": "public/world/aAB/baked/ring_s10_den.png",
+   "bytes": 23258,
+   "sha256": "efde6dd498e4358d6b25a348f8d1dac4c6a3d7e5355065662d9f6de34699572b"
+  },
+  {
+   "path": "public/world/aAB/baked/ring_s1_bake.jpg",
+   "bytes": 52718,
+   "sha256": "0958eadc93949fb72f8424157a32ee9506e43ffb3316daef85cb13728d108457"
+  },
+  {
+   "path": "public/world/aAB/baked/ring_s1_den.png",
+   "bytes": 28690,
+   "sha256": "0c0c6ac91bccb2ac9ace43dcce1ddc909e0607cb1fc2c63787ef433cf2df169c"
+  },
+  {
+   "path": "public/world/aAB/baked/ring_s2_bake.jpg",
+   "bytes": 49702,
+   "sha256": "353990fc07be84d0f6d6a2404531b9ff8b8a12f85904354df36dc94c639f7110"
+  },
+  {
+   "path": "public/world/aAB/baked/ring_s2_den.png",
+   "bytes": 23568,
+   "sha256": "a41445da4b99ae103387f83e3c3974e637db4bb1ee269c6a03050c7e68f40bae"
+  },
+  {
+   "path": "public/world/aAB/baked/ring_s3_bake.jpg",
+   "bytes": 48371,
+   "sha256": "ae98ba0e1304cf71935ff33c3a1c8bc04141fed7cb243883c4b0a7cc7ddedd92"
+  },
+  {
+   "path": "public/world/aAB/baked/ring_s3_den.png",
+   "bytes": 19190,
+   "sha256": "8ca159d5db0cbaaa4a25561c3395a837522a19c7e57cf8f1f994c0c666bc30a0"
+  },
+  {
+   "path": "public/world/aAB/baked/ring_s4_bake.jpg",
+   "bytes": 41111,
+   "sha256": "7077fc4a76f07e421211307424628a054772bcc9e4794a65ed04ab21d249cc94"
+  },
+  {
+   "path": "public/world/aAB/baked/ring_s4_den.png",
+   "bytes": 24071,
+   "sha256": "0587d65b7e7f63bfe6ebedfaa0784aac3b13a03932b83a7e002e80c6d0d6d793"
+  },
+  {
+   "path": "public/world/aAB/baked/ring_s5_bake.jpg",
+   "bytes": 38882,
+   "sha256": "cdd71902ca19c0bcfe0ff6745d95aa48d0c3fd6fcf7cbab4c46f1ee7d02dd5fd"
+  },
+  {
+   "path": "public/world/aAB/baked/ring_s5_den.png",
+   "bytes": 19006,
+   "sha256": "030025ced35df73560bf67d4ed9d07647f160e14013a5e1815fe96e2c263ed9f"
+  },
+  {
+   "path": "public/world/aAB/baked/ring_s6_bake.jpg",
+   "bytes": 41922,
+   "sha256": "444aa4ca26d4c1b66916eaef4307df65b0295fd653b62550c69de56da7e98c1d"
+  },
+  {
+   "path": "public/world/aAB/baked/ring_s6_den.png",
+   "bytes": 23963,
+   "sha256": "e9c6c8873f9ce23be304529b793a57ceb0eebde7566683bbc897c439696be84b"
+  },
+  {
+   "path": "public/world/aAB/baked/ring_s7_bake.jpg",
+   "bytes": 38981,
+   "sha256": "80183b82e00b3ba7afa7735c4308bfeb50ec25c1ede376737174265ed6045224"
+  },
+  {
+   "path": "public/world/aAB/baked/ring_s7_den.png",
+   "bytes": 21983,
+   "sha256": "33f05156d7491c922b9f616aadd02964812439f51347c061e17699769aec5800"
+  },
+  {
+   "path": "public/world/aAB/baked/ring_s8_bake.jpg",
+   "bytes": 37272,
+   "sha256": "18e38e52cf9d3dd6333b835f38ce651af2cdd164ce8b454b74766fc71eb8c33d"
+  },
+  {
+   "path": "public/world/aAB/baked/ring_s8_den.png",
+   "bytes": 21066,
+   "sha256": "68ffaef3fae2c78d5cf30e7d23352d581e500628abb3625677864885491777ab"
+  },
+  {
+   "path": "public/world/aAB/baked/ring_s9_bake.jpg",
+   "bytes": 40016,
+   "sha256": "b13c43db1c26f4ce4c4d450f7339198dd9e10463496dc8baabf70f87654baeb3"
+  },
+  {
+   "path": "public/world/aAB/baked/ring_s9_den.png",
+   "bytes": 24387,
+   "sha256": "69592fdd2a0c44589bab65219a88e50ed322786162dc802b03bac76fc8fe1307"
+  },
+  {
+   "path": "public/world/aAB/baked/towel_p0_bake.jpg",
+   "bytes": 43333,
+   "sha256": "1ceab93a03ca835d6c0a0b0010afa8c0f3085e60f2b69b4f8f0730bbc2d40086"
+  },
+  {
+   "path": "public/world/aAB/baked/towel_p0_den.png",
+   "bytes": 12001,
+   "sha256": "fcefb2e9e68726963e93e74eb7fbdd2ba043ac3fe3bf0769f7ac4ff14ab35404"
+  },
+  {
+   "path": "public/world/aAB/baked/towel_p1_bake.jpg",
+   "bytes": 56335,
+   "sha256": "6e8a34521164735f85b6a0d84fa034a5363f74a6eed235d0b39c7cb5f6540382"
+  },
+  {
+   "path": "public/world/aAB/baked/towel_p1_den.png",
+   "bytes": 13713,
+   "sha256": "3ed91eef17f2549d79926e371aac9071055728f9510f67d039e9cb45d52fa25d"
+  },
+  {
+   "path": "public/world/aAB/baked/towel_r0_bake.jpg",
+   "bytes": 43202,
+   "sha256": "5f4e2e9b9479149faa903d5bf98d840f5a8c0f5ec956dadd4e0d8f4f76422b72"
+  },
+  {
+   "path": "public/world/aAB/baked/towel_r0_den.png",
+   "bytes": 10960,
+   "sha256": "2a410c7566b18eac95e2a6ca9e877dfec79d63995883a62bcdd380cd1e7c7562"
+  },
+  {
+   "path": "public/world/aAB/baked/towel_r1_bake.jpg",
+   "bytes": 43067,
+   "sha256": "25da9b1954c1d0e8ad132b2ce2b93d2901c5b9dc1354ed99686f89b803084489"
+  },
+  {
+   "path": "public/world/aAB/baked/towel_r1_den.png",
+   "bytes": 12197,
+   "sha256": "13ed180ae66ac47ae6b132276dc096a38709695ff4310baa9e8174a8dd6be530"
+  },
+  {
+   "path": "public/world/aAB/baked/towel_r2_bake.jpg",
+   "bytes": 24816,
+   "sha256": "eeaecbff4d3c7527a9a4e9429881d2542206f1440376f36b702e753efe70f3fd"
+  },
+  {
+   "path": "public/world/aAB/baked/towel_r2_den.png",
+   "bytes": 6786,
+   "sha256": "ebd42ecfba8b068c10cca2aa43f8ac4d2bcfdb71f8165736db6e99ff7200eb9b"
+  },
+  {
+   "path": "public/world/aAB/baked/towel_r3_bake.jpg",
+   "bytes": 29904,
+   "sha256": "e7a1602f22afb51d75bc5fe23a211dc337b64823b30ae4c0ee15ebd5a991c652"
+  },
+  {
+   "path": "public/world/aAB/baked/towel_r3_den.png",
+   "bytes": 8275,
+   "sha256": "f1aa813605194e061f251039a2531109823645858e044cc4a46c525cc33ffb32"
+  },
+  {
+   "path": "public/world/aAB/baked/towel_r4_bake.jpg",
+   "bytes": 21498,
+   "sha256": "a2d115a949d436664395bf5d1811f7a35a82f33613b41f6984d3698fb7d03549"
+  },
+  {
+   "path": "public/world/aAB/baked/towel_r4_den.png",
+   "bytes": 4016,
+   "sha256": "0b35b10c76d91cb1e7aca741862d7d3adbef50752a26b78e8a4a2beb16b86b2c"
+  },
+  {
+   "path": "public/world/aAB/baked/towel_r5_bake.jpg",
+   "bytes": 22651,
+   "sha256": "badeb9765ff41f98dec1c5cc40949d248eed168b14d87dac7c7361ce1ada7db7"
+  },
+  {
+   "path": "public/world/aAB/baked/towel_r5_den.png",
+   "bytes": 6977,
+   "sha256": "b893ded6f4cfc7df3b8b0be5b1a64b5bf5263f87719a0f1757426e87903e1b86"
+  },
+  {
+   "path": "public/world/aAB/baked/towel_r6_bake.jpg",
+   "bytes": 15444,
+   "sha256": "226a008c79b364a536e3d9495ca342b53d7990d8ca834a04d0fac894930f13c5"
+  },
+  {
+   "path": "public/world/aAB/baked/towel_r6_den.png",
+   "bytes": 3619,
+   "sha256": "1f143a7ab2771ad0fbdb064d93a82bc393ed827ccaacddab8ea917304b9e6012"
+  },
+  {
+   "path": "public/world/aAB/baked/towel_r7_bake.jpg",
+   "bytes": 20862,
+   "sha256": "31a303986fa05c525c3ac549b0efbced8838058db5b958cfb223f600c3ec4585"
+  },
+  {
+   "path": "public/world/aAB/baked/towel_r7_den.png",
+   "bytes": 7970,
+   "sha256": "bf4d356b9d754a426e030e858e0dc560f1d504e1fb63574e725a58e145c2699a"
+  },
+  {
+   "path": "public/world/aAB/baked/towel_r8_bake.jpg",
+   "bytes": 15989,
+   "sha256": "7604025ef6801ba909a8540d25997b71ddb403250f419f241867f79fb29ef7c7"
+  },
+  {
+   "path": "public/world/aAB/baked/towel_r8_den.png",
+   "bytes": 3213,
+   "sha256": "33b06f9b84a9621880a3248dd08bb27072598646546d3c918b430fc56dae9435"
+  },
+  {
+   "path": "public/world/aAB/baked/tower_bake.jpg",
+   "bytes": 23089,
+   "sha256": "fe292dda29a1894efcc4963c0d4ea1474951c2fb2e9821cd33f891834ac6a891"
+  },
+  {
+   "path": "public/world/aAB/baked/tower_den.png",
+   "bytes": 7459,
+   "sha256": "d6c4e88e3416eda306bb13ee0820fd0c3351774fc6506e503145f7cf064d8657"
+  },
+  {
+   "path": "public/world/aAB/baked/tower_rim0_bake.jpg",
+   "bytes": 9015,
+   "sha256": "18a46a63dadd48cc6593483f4e6e3945501054c44bce7ad8c303790c8b9011d5"
+  },
+  {
+   "path": "public/world/aAB/baked/tower_rim0_den.png",
+   "bytes": 3047,
+   "sha256": "30f0b5f73260ab0a6ed33c7b12bbdb393829b532529a51814fbe275aa115bec9"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_00_bake.jpg",
+   "bytes": 101595,
+   "sha256": "ca9c32269e2d0145cac11d2cd36bff63f46a97fa503d70078b7705e591933ee7"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_00_den.png",
+   "bytes": 3740,
+   "sha256": "d6f64b1ed86930f5b9aac8e6ee7b8e92a06591ffc50f835a86e6752bbefaa5f5"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_01_bake.jpg",
+   "bytes": 118480,
+   "sha256": "125cd3491835d81bb6946f0cacb26ea385ee09539d746c9aa6dbba81c5a18b5a"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_01_den.png",
+   "bytes": 39406,
+   "sha256": "eb413b0a6e8b3c1c45292a664f0e5013ef381ca1698875d3ae6c0137e4b5f718"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_02_bake.jpg",
+   "bytes": 153629,
+   "sha256": "2ff919fe6479642f54699abe7a96cc0e2e11c9e4729e231517fd382988c52610"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_02_den.png",
+   "bytes": 63542,
+   "sha256": "a10b3c465084899ba4b550cb4cbf14c0dac1ad99002cbd58aefeb772bde31a89"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_03_bake.jpg",
+   "bytes": 58290,
+   "sha256": "8726542b2efbce1886e9bed63039f0bd530a70900b853b4710dbba5445e39aac"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_03_den.png",
+   "bytes": 23872,
+   "sha256": "c82372ca3e6d9872e568853d9249f5bafda21ebac00eb018e4ede4cc578e98a5"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_04_bake.jpg",
+   "bytes": 192627,
+   "sha256": "258377c672d3ed8ce5f82d527bdf7a7ae375bcfdccd3b7cf123c8669910db39a"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_04_den.png",
+   "bytes": 55643,
+   "sha256": "af4bfdef1b28061b64a23260b7e21a34a7b784e15d1534b51dbeec0c851c5b67"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_05_bake.jpg",
+   "bytes": 214079,
+   "sha256": "163f0a7cd770e9a21420f754bed92cd6db5f3042ebd2c95f0550a3a46da04328"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_05_den.png",
+   "bytes": 59441,
+   "sha256": "9f44f96202ae132bf277c4bb82435043f3c7faceb25780970499ba058ce331f2"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_06_bake.jpg",
+   "bytes": 173358,
+   "sha256": "34bdb09a4c1961d330f619786f7a34ad47e09f0c267f28c894987657ea37367a"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_06_den.png",
+   "bytes": 56414,
+   "sha256": "a01c419d06e1f54b1dc2935ba902257a182d42908e9c48371f0908eecdd0484e"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_07_bake.jpg",
+   "bytes": 168623,
+   "sha256": "9bfdf8e36dc23d3cd70f2774bf2121f81fd03befef957885eac3472c6462832d"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_07_den.png",
+   "bytes": 41789,
+   "sha256": "67b2e46228baefe4a51b2515c6fca467c56855b80d6ce69617ede6a8b41698c4"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_08_bake.jpg",
+   "bytes": 131469,
+   "sha256": "747af2134fca499eeda60399901b272760fc9d2b332d7286bc7c1df11b18e6e4"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_08_den.png",
+   "bytes": 42577,
+   "sha256": "3db87eb5089fabd2fa07821de212c6672ffa94702e7cce401c64ac9aa75b4986"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_09_bake.jpg",
+   "bytes": 152738,
+   "sha256": "3a75af1f7162313c7808533a29a03fb43a7eec6feb6bd2f0a0044671d9c66b6f"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_09_den.png",
+   "bytes": 36158,
+   "sha256": "9f2cba8285a4bc9a04109044ca0daedb6f35c6b9cd261c71ca87699dd641f689"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_10_bake.jpg",
+   "bytes": 144008,
+   "sha256": "296c4b5db711b14125fe1b4151dc5cf5c0eb329beae19818ab44176505327999"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_10_den.png",
+   "bytes": 35178,
+   "sha256": "000b0c39e0c5fe203e2bbda673de071f4f8beddd02466e9d12e6878a7ed10f6d"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_11_bake.jpg",
+   "bytes": 100180,
+   "sha256": "75842adcef2def156fd7beb9b29bec0bfa1ab6a7ba6bd7a6961ad35670af52a3"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_11_den.png",
+   "bytes": 33707,
+   "sha256": "75885979ba91e299d20a3bffa263e2bff239ced3a58e29649790a7e69d86a120"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_12_bake.jpg",
+   "bytes": 129541,
+   "sha256": "4fe69ba6086ac506d4065546a0818bef086e985382513ebe3e9f0e400001fe05"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_12_den.png",
+   "bytes": 41824,
+   "sha256": "f609dc32f4561670ad28e03e8a0a6a38cb584a04b0abca79ef153d2432735c5f"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_13_bake.jpg",
+   "bytes": 137892,
+   "sha256": "b8839bf739f2bf791e9662045d4af1b3281f0484b2fa4a4de4e707785fcfb46c"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_13_den.png",
+   "bytes": 46367,
+   "sha256": "0cb3d51c94d97a9b89cf5f695a2f220a01add2f07b8ff78cb54ff391de5dad27"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_14_bake.jpg",
+   "bytes": 82527,
+   "sha256": "d755c256ca620d5208d3c41b1cd7a4db8ba68365610b34b84dee1cc828932f0b"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_14_den.png",
+   "bytes": 36645,
+   "sha256": "d823874c4250ce9f20b3acd46c357e6758b92c4e6e0ee61557a24f64501b98ae"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_15_bake.jpg",
+   "bytes": 103362,
+   "sha256": "ccf8f705ed5689e07c627e5d01c3e43dc70a78ea87d3ee336e648924f10af810"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_15_den.png",
+   "bytes": 39779,
+   "sha256": "4608ec2cfb5db2ff8d21a904aed098a67d982f70ca3c83861bee632d275a3f98"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_16_bake.jpg",
+   "bytes": 125370,
+   "sha256": "e30ead7f34d41635ad1ff01d4fb89c07d157ce38e06d6484cdbeda3edd06094a"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_16_den.png",
+   "bytes": 46579,
+   "sha256": "97d8d4fb72a97cd45713897d27cfc15f739cfce29a5cac0276c3c818c700cd83"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_17_bake.jpg",
+   "bytes": 59015,
+   "sha256": "4aab1aff280712ccc8601f36248baab6feadccdb26cf0865de92e2067e1fa9f0"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_17_den.png",
+   "bytes": 24232,
+   "sha256": "ae65bbcbe1fa3efa765d322962c81ef7915e32cb31654a896721335e203c17ea"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_18_bake.jpg",
+   "bytes": 111794,
+   "sha256": "a7806d8f38a4bfca3ef8a6ed4c4f7d9a70f8698359281c67ce6c85f66a744843"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_18_den.png",
+   "bytes": 38576,
+   "sha256": "b5118ac3061b02e672a080ade2d53182aaa178a2cabb7c33e526ae956d5bf8f4"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_19_bake.jpg",
+   "bytes": 94892,
+   "sha256": "83a903c576bb02317f02ec2cd600dbeaa595b28f950d3fb071a5203dfd138365"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_19_den.png",
+   "bytes": 36815,
+   "sha256": "ca0015b11b56ff41b9e2ba55284d20fe0c0a76925e6f14076198765ab93898a7"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_20_bake.jpg",
+   "bytes": 80168,
+   "sha256": "49d17713db3c5c1c208a2a75ec3b9293bdc5a9d9bb7bc96f97b154d26220119c"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_20_den.png",
+   "bytes": 31170,
+   "sha256": "fed48de12496b2002055421c930dfeb17707b862c11a83244f448a702be96c79"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_21_bake.jpg",
+   "bytes": 113559,
+   "sha256": "850ed460303060f7b5e031c1bbeefeb8fee7481b9ee2fc40dcbbccdcb63f8444"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_21_den.png",
+   "bytes": 39491,
+   "sha256": "c78d8aa9a5665e24780ec6b32a9c4aefe6f0d1561dfe8bbd6ce3e8ac771a6c73"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_22_bake.jpg",
+   "bytes": 66632,
+   "sha256": "dab6270d64d4e9a6053f51e34b296abcfe6a5bb0a32e3bf886c4cf47ec9eb667"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_22_den.png",
+   "bytes": 28470,
+   "sha256": "712976b86ee2b26085f0c369532a57a91714acc5f8011affe2ec1d7fdaab9e1f"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_23_bake.jpg",
+   "bytes": 92301,
+   "sha256": "b11044b3c6e4140b63211a13945281d669df0dbd67e1cdbeae7a56c805a47b79"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_23_den.png",
+   "bytes": 30534,
+   "sha256": "ea51d24764022edecae65b73ea6e8cb4f6803b0b5af79238f0985b0cf7620489"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_24_bake.jpg",
+   "bytes": 100182,
+   "sha256": "56fe9147acb2c20c14906a1d34b1a2007ccd7af83dff26298121a006809a4f1b"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_24_den.png",
+   "bytes": 33202,
+   "sha256": "7ef3165444fee63b7b2d10df0d439dd501d7a7605fbe897217f5b4f8cafeea80"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_25_bake.jpg",
+   "bytes": 53436,
+   "sha256": "7eeb64da42c3a714773c0d28809bf6fec2911c7f430b2f3801e4845d096aa440"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_25_den.png",
+   "bytes": 20490,
+   "sha256": "66e830d56917cc8fc74ad42e054d5f08d721f6888f64e02179f43aeb9a8fd4ed"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_26_bake.jpg",
+   "bytes": 93348,
+   "sha256": "0fff5f7d3469de299740989ecde6297e84f94e2099ef598d4d27642453267a8b"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_26_den.png",
+   "bytes": 29861,
+   "sha256": "b08663da7d2af76e2db38ece5156d4ba70555286e30f7d969b311a3f27f4e3bb"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_27_bake.jpg",
+   "bytes": 81149,
+   "sha256": "2d1c24c2bdb404058cae0b037dc4829e98928a172c78845fa2d7c73c7535e852"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_27_den.png",
+   "bytes": 29718,
+   "sha256": "5afeeda77ee0865fe3d3cfd1b8c98106384c1cdac462ca6809e859bc034541d4"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_28_bake.jpg",
+   "bytes": 72909,
+   "sha256": "172c398e8cfeab85b8b20956943ee66a5479058bf159ad99fb274ded71525e78"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_28_den.png",
+   "bytes": 25860,
+   "sha256": "a01e2e1a886424df3e210b3c4b116dbb2b5220aaa1ed3558a14d04d2f244f44c"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_29_bake.jpg",
+   "bytes": 108395,
+   "sha256": "13ad7d66849c062ecbd3b0bda9eceb8b3d49b727e5f11c571d74b117696725de"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_29_den.png",
+   "bytes": 32490,
+   "sha256": "0c53bdbf9cff74b4807a2824c2d071dcacdfe048e335b1949963c8b4112d83a4"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_30_bake.jpg",
+   "bytes": 54310,
+   "sha256": "a4c4e256208dd66e7932d31a766c1eee69b85c1a77c6985f5036e0405b17c968"
+  },
+  {
+   "path": "public/world/aAB/baked/tunnel_30_den.png",
+   "bytes": 23766,
+   "sha256": "76d5f85bd6e643833772cb504bdef74184b44df53126df866625dc907b11d40a"
+  },
+  {
+   "path": "public/world/aAB/baked/wall_L_bake.jpg",
+   "bytes": 139144,
+   "sha256": "ae5e76311e1c4bee1419de208e528d89b3623086b47608eb5c613a641fa01613"
+  },
+  {
+   "path": "public/world/aAB/baked/wall_L_den.png",
+   "bytes": 45328,
+   "sha256": "e8ffd8e600b73478fed4c03349f3bec46942c9157ed36ee17a57b1ca797a5da7"
+  },
+  {
+   "path": "public/world/aAB/baked/wall_R_bake.jpg",
+   "bytes": 98498,
+   "sha256": "a549f74b86f548694907280b73353b2f8e615ff2a5dc7203342051f7a9cd2854"
+  },
+  {
+   "path": "public/world/aAB/baked/wall_R_den.png",
+   "bytes": 41737,
+   "sha256": "9eb371d1b67564d711a6a492b2407907cfcb1e44fd26be71b2fb63e9e1334f41"
+  },
+  {
+   "path": "public/world/aAB/baked/water_c2_bake.jpg",
+   "bytes": 117188,
+   "sha256": "e359462091152e7456be5bb828f1c8cfe03f33ea8090ab1a95783b8b65a98454"
+  },
+  {
+   "path": "public/world/aAB/baked/water_c2_den.png",
+   "bytes": 40920,
+   "sha256": "108e2768b590418bc807ef8d9abb2dd49312d2bbafd321e06788af75b6b434ec"
+  },
+  {
+   "path": "public/world/aAB/baked/water_c4_bake.jpg",
+   "bytes": 46725,
+   "sha256": "467157b524c8c8dea508273dba8fdaef78be63903d66d6f2ccb306382ba90ff4"
+  },
+  {
+   "path": "public/world/aAB/baked/water_c4_den.png",
+   "bytes": 15160,
+   "sha256": "dd6a5f48a7844eef096e09b7f153ff7649b9fc9a5552040816f8e2d61a23ca6e"
+  },
+  {
+   "path": "public/world/aAB/baked/water_c5_bake.jpg",
+   "bytes": 402798,
+   "sha256": "279fbef64e9f8b0a6c0bdd4f1103986893e84254edd32556d57ca4ac40480c04"
+  },
+  {
+   "path": "public/world/aAB/baked/water_c5_den.png",
+   "bytes": 95863,
+   "sha256": "a64befb427467a0298d5a7cb8fb1d8e2361850109c083a0a537ef8e71d11204a"
+  },
+  {
+   "path": "public/world/aAB/baked/water_c7_bake.jpg",
+   "bytes": 462666,
+   "sha256": "a90714677a2abfa1b5a98a34b500f6b8d5ead4c1f4f42e52675fd6632438994b"
+  },
+  {
+   "path": "public/world/aAB/baked/water_c7_den.png",
+   "bytes": 94266,
+   "sha256": "0c393adc82dba318f7b0603866f8b99c2dff434b2bdc49f8bc57b816b3803306"
+  },
+  {
+   "path": "public/world/aAB/baked/water_c8_bake.jpg",
+   "bytes": 424459,
+   "sha256": "c4f806f57e42d51fa0c95ccbd99d29a188b5a33237ceda8eb6c92df5c4cc4e26"
+  },
+  {
+   "path": "public/world/aAB/baked/water_c8_den.png",
+   "bytes": 72088,
+   "sha256": "f7cde177fb15b7db90041d87ce85c71e5f6ff33408af0f439d1ad656a27d2c1e"
+  },
+  {
+   "path": "public/world/aAB/baked/water_room_bake.jpg",
+   "bytes": 70018,
+   "sha256": "dd4120ee4483a3f36f7f191c36e8a88b7c7cb905500f7fd8aed76c0ce6acf5d9"
+  },
+  {
+   "path": "public/world/aAB/baked/water_room_den.png",
+   "bytes": 18308,
+   "sha256": "ae45e787507b1a1c1d6b3119f699df2191819f4c1547f44caec346877a780eff"
+  },
+  {
+   "path": "public/world/aAB/baked/water_t0_bake.jpg",
+   "bytes": 271714,
+   "sha256": "974fb5f5ffc75113f6d2b786c1e89d220f49303dc735f3641acd8c88e620ec02"
+  },
+  {
+   "path": "public/world/aAB/baked/water_t0_den.png",
+   "bytes": 112551,
+   "sha256": "7c8fc271146077995f8167043b8208725dacaf71eb7b86feaf33fe372107e493"
+  },
+  {
+   "path": "public/world/aAB/baked/water_t10_bake.jpg",
+   "bytes": 93408,
+   "sha256": "587fce367d7a9a02022f37a550b1672a7e2461f919c6d266a40acdba4672f220"
+  },
+  {
+   "path": "public/world/aAB/baked/water_t10_den.png",
+   "bytes": 36448,
+   "sha256": "26e3a2b3db25c479829a260e5701f59dd94146d25cd093eea2d8c26ff7f0f082"
+  },
+  {
+   "path": "public/world/aAB/baked/water_t11_bake.jpg",
+   "bytes": 103583,
+   "sha256": "b02030f00eb3723d2d9e92ad82109942f9145817d97f14a86566312e267071fb"
+  },
+  {
+   "path": "public/world/aAB/baked/water_t11_den.png",
+   "bytes": 35944,
+   "sha256": "46af9b71ee4ee7c09d4910d8d1bf1b6adb22a57975c84ec66afb2f433addf93f"
+  },
+  {
+   "path": "public/world/aAB/baked/water_t12_bake.jpg",
+   "bytes": 108824,
+   "sha256": "6015860d59b6f4ca55314a69b28e943509060cd9710709dbec99dfe6a7fcb870"
+  },
+  {
+   "path": "public/world/aAB/baked/water_t12_den.png",
+   "bytes": 31341,
+   "sha256": "80897af9a7d51770ad9be6bd615af0b4886fa67d18c29ebe88716ae4f890d311"
+  },
+  {
+   "path": "public/world/aAB/baked/water_t13_bake.jpg",
+   "bytes": 96994,
+   "sha256": "d74502349ee03bca54237f4c7fb3d2d4005617760384d4718918dfcc15c5eb57"
+  },
+  {
+   "path": "public/world/aAB/baked/water_t13_den.png",
+   "bytes": 22206,
+   "sha256": "538b203272649acc8d70c0506862ebf2870fa5d1b7d3d8c1f40c8f00643e89a2"
+  },
+  {
+   "path": "public/world/aAB/baked/water_t14_bake.jpg",
+   "bytes": 93341,
+   "sha256": "b06697da62a8076ca5bc4fad2698fda38fbc52dbda5c3710a5b41a07f7ae0e85"
+  },
+  {
+   "path": "public/world/aAB/baked/water_t14_den.png",
+   "bytes": 22288,
+   "sha256": "2ecf105b093685c8292000ddcdccef231a0e4a1e042815433d2d937e71df7606"
+  },
+  {
+   "path": "public/world/aAB/baked/water_t15_bake.jpg",
+   "bytes": 93817,
+   "sha256": "c457a5ddaddf9c809a70c8e4a1c8a6758be31ee9ec0ab8d2acea82e2644b7013"
+  },
+  {
+   "path": "public/world/aAB/baked/water_t15_den.png",
+   "bytes": 23142,
+   "sha256": "51577de2ff163476f9d9c508b73b0455d27ab3fb3ac1c07bf6d08ba127b8d888"
+  },
+  {
+   "path": "public/world/aAB/baked/water_t16_bake.jpg",
+   "bytes": 92345,
+   "sha256": "9e1f7f30737e48afae9436a18a0c47b3c2e46515ffdd24e8021bfc92c27c6ce6"
+  },
+  {
+   "path": "public/world/aAB/baked/water_t16_den.png",
+   "bytes": 23209,
+   "sha256": "329ce5a4f11f3957b113899190206491fbfee5b6acd43f87b8f31c78ace20691"
+  },
+  {
+   "path": "public/world/aAB/baked/water_t17_bake.jpg",
+   "bytes": 115577,
+   "sha256": "c435e55ccbe1ca45163ce10c4dc7127e2afa41875f53daaec1bd2ef4c578f531"
+  },
+  {
+   "path": "public/world/aAB/baked/water_t17_den.png",
+   "bytes": 20138,
+   "sha256": "a23bd62d2c1ef0c45671ddd01ec1cf592c35e73636d9803b2957af546c23e894"
+  },
+  {
+   "path": "public/world/aAB/baked/water_t18_bake.jpg",
+   "bytes": 110201,
+   "sha256": "c20e548aa9380b14e3e837202bc8a89b195706c7aef2578bf4bb9fa35bc39f27"
+  },
+  {
+   "path": "public/world/aAB/baked/water_t18_den.png",
+   "bytes": 21086,
+   "sha256": "0eb639e255f6d7c062d5846d30a267b037b0bb88e5348f3b6ceac8c3d0b15c91"
+  },
+  {
+   "path": "public/world/aAB/baked/water_t19_bake.jpg",
+   "bytes": 59971,
+   "sha256": "6a3011deac2dc976ff1c2c6cbc77c4b0f541717e093cb79fcfa5ef5417e55c85"
+  },
+  {
+   "path": "public/world/aAB/baked/water_t19_den.png",
+   "bytes": 11446,
+   "sha256": "83fd6364a4fa9b54d3679b717c4ee5a2dc2cc6fb0bd37d30bbb65a57064fbb52"
+  },
+  {
+   "path": "public/world/aAB/baked/water_t1_bake.jpg",
+   "bytes": 103789,
+   "sha256": "a4b921a6f2de16a25efbfb103963e8e7cf08e0a054f24d21be0e73736ffb8461"
+  },
+  {
+   "path": "public/world/aAB/baked/water_t1_den.png",
+   "bytes": 44655,
+   "sha256": "a192382f10f8eebc025e70d75fb02a711cceaae738115106498f5d14bce2c4f9"
+  },
+  {
+   "path": "public/world/aAB/baked/water_t2_bake.jpg",
+   "bytes": 193890,
+   "sha256": "ebeeb0aca0bbeac7dcbc48136b94eb5d6bac4ece1893bbfdba67d0fe36a98e2a"
+  },
+  {
+   "path": "public/world/aAB/baked/water_t2_den.png",
+   "bytes": 64769,
+   "sha256": "28ebeaa2d9f3e4fda589b3e383dcea37b141a8d036a8a955d5acf1036473a61e"
+  },
+  {
+   "path": "public/world/aAB/baked/water_t3_bake.jpg",
+   "bytes": 100975,
+   "sha256": "9297b9a82540590e47c43387e241d9a424d99606866f6b0cc7f1c19120158274"
+  },
+  {
+   "path": "public/world/aAB/baked/water_t3_den.png",
+   "bytes": 55863,
+   "sha256": "97322e9955d3ae79ec59f0b962440100d7b7af5e64393c44ea89d53fc5b09e47"
+  },
+  {
+   "path": "public/world/aAB/baked/water_t4_bake.jpg",
+   "bytes": 121481,
+   "sha256": "c59ed57268da757488a9e759d585d24d865cc0887e2df027eb78c37f87c820eb"
+  },
+  {
+   "path": "public/world/aAB/baked/water_t4_den.png",
+   "bytes": 38257,
+   "sha256": "8da4c5d0de440d6d18740bd3822ee63fb6eb57dff517399db7d3ab692fe39fc5"
+  },
+  {
+   "path": "public/world/aAB/baked/water_t5_bake.jpg",
+   "bytes": 106779,
+   "sha256": "124d5d21b3d61950e204834bd526ab77144e423c06ce355eae193a3cada38ff2"
+  },
+  {
+   "path": "public/world/aAB/baked/water_t5_den.png",
+   "bytes": 27302,
+   "sha256": "c0b3a92cf71dc0fedd852ea858f710bf4114bf28b31c34cb2ceb19342c7a421b"
+  },
+  {
+   "path": "public/world/aAB/baked/water_t6_bake.jpg",
+   "bytes": 91846,
+   "sha256": "08b17954c609fe9ef86173710ee01f3130b254d05d6c34680961345a5d45836c"
+  },
+  {
+   "path": "public/world/aAB/baked/water_t6_den.png",
+   "bytes": 26758,
+   "sha256": "5d2e398003688b4f4d17d046f1904dc88a394622b8628250b57156950aaf3da2"
+  },
+  {
+   "path": "public/world/aAB/baked/water_t7_bake.jpg",
+   "bytes": 86445,
+   "sha256": "1b28c494e2399ba83c0c4bfe1ce01722b618b95e32c5c2c518e309de05fb8e84"
+  },
+  {
+   "path": "public/world/aAB/baked/water_t7_den.png",
+   "bytes": 23403,
+   "sha256": "bc1c753e6810e82ca8406ae2844a403f33f77bb6f5e73b1fba07c94fb715b248"
+  },
+  {
+   "path": "public/world/aAB/baked/water_t8_bake.jpg",
+   "bytes": 83336,
+   "sha256": "08e410ddf18b7d8cf76a7254da089f4f38e883f5c9b03c4b27512ffe48fbc985"
+  },
+  {
+   "path": "public/world/aAB/baked/water_t8_den.png",
+   "bytes": 24399,
+   "sha256": "b4e58f8fbd7f8ac819ee2013f01d7f60e8acf440547b760b94c69d90b1c7680e"
+  },
+  {
+   "path": "public/world/aAB/baked/water_t9_bake.jpg",
+   "bytes": 81017,
+   "sha256": "230f6ae18a01567bbcfe259ba0ba6efc9d423c7130c9100a027e543063e4f659"
+  },
+  {
+   "path": "public/world/aAB/baked/water_t9_den.png",
+   "bytes": 26045,
+   "sha256": "5d54b6826c685753f3feb4be7e900d18bfc5387631c930bd2dd8a6a70016f2e5"
+  },
+  {
+   "path": "public/world/aAB/section.glb",
+   "bytes": 6525712,
+   "sha256": "6644b01234c1188eb7078dde451efbf0981e408d65bdca648031e6e46d92b33c"
+  },
+  {
+   "path": "public/world/aAB/section.json",
+   "bytes": 12390,
+   "sha256": "2287e4128f3b048a5d9fdfba6ef70f9973e0c02a5adbe631382cd85744d9ed3f"
+  },
+  {
+   "path": "public/world/bake.js",
+   "bytes": 29662,
+   "sha256": "fe283cfe239fb1de636d6e85c97633f6412840fa38c0f053231281b3d0c9b739"
+  },
+  {
+   "path": "public/world/bake.png",
+   "bytes": 5049903,
+   "sha256": "fdb5181e4d1326d96f85f6c8ed9b7bb89bc9a0f11783d602178640a43de0d202"
+  },
+  {
+   "path": "public/world/benny31.glb",
+   "bytes": 5492416,
+   "sha256": "168c4ba4ba1909c8295deb81b6eebfb5eb440185886cb6d9471f6caff293da26"
+  },
+  {
+   "path": "public/world/bubble.png",
+   "bytes": 18839,
+   "sha256": "ba5b038458c8f1a42478fe58dc529aba1a39a2fe6567e045445e236ca2695a50"
+  },
+  {
+   "path": "public/world/coin.png",
+   "bytes": 38339,
+   "sha256": "0d01e87bea65a468bcc80d042a1285203ec8a2ffd72919c26d3cee0818c8aedb"
+  },
+  {
+   "path": "public/world/connectors.glb",
+   "bytes": 4776960,
+   "sha256": "c0765eed2eb7a6b3fd33f26fd98580b230085c63ee6aaf0853d0ebfb3126d3a9"
+  },
+  {
+   "path": "public/world/controls.js",
+   "bytes": 44800,
+   "sha256": "c9c0281da22fc872eba1a505fef0d23a428cfd1c12fe7d810761f616d26afc35"
+  },
+  {
+   "path": "public/world/glint.png",
+   "bytes": 4409,
+   "sha256": "cd9704801d675950df14a03c093acb9531f9ad079665e36e3bf40aeae6f08ad7"
+  },
+  {
+   "path": "public/world/index.html",
+   "bytes": 72458,
+   "sha256": "390ece7e70b5dd2408c2a38149b9f16b5e057e89c9e16bdf55943422541f0ac1"
+  },
+  {
+   "path": "public/world/qa.js",
+   "bytes": 3145,
+   "sha256": "b55b307d508bc94e02d32733cf246cc0416619e946249e40958b3dafe46a52f9"
+  },
+  {
+   "path": "public/world/splash.png",
+   "bytes": 533222,
+   "sha256": "b10f6ac7af45f84ae0224678e509c37ae043fa63739596766e645e1c95774dc4"
+  },
+  {
+   "path": "public/world/swimfx.js",
+   "bytes": 19407,
+   "sha256": "d0e152d8feb7bf4dfc6c44fdeea7d62a8d09ec11efbbeae182655e543d875217"
+  },
+  {
+   "path": "public/world/vendor/three/build/three.core.js",
+   "bytes": 1403455,
+   "sha256": "eb077d2417f61d3e6d9264c317cabc4ea35769ed6b0ab533067292a550784c20"
+  },
+  {
+   "path": "public/world/vendor/three/build/three.module.js",
+   "bytes": 603113,
+   "sha256": "c8211c69345d2e9949dc7a8ac969380497aa0600a5a8ac6a459c8cd02dd9cb8a"
+  },
+  {
+   "path": "public/world/vendor/three/examples/jsm/loaders/GLTFLoader.js",
+   "bytes": 114739,
+   "sha256": "67ac5551fdafa6e349bd80c8f8e5e39c136d6b2fb1ad647db9abb21dc86f9e4a"
+  },
+  {
+   "path": "public/world/vendor/three/examples/jsm/utils/BufferGeometryUtils.js",
+   "bytes": 35539,
+   "sha256": "fda7e946b8e0b5ab39b779206589e7a1079a22eb24efb89d7223e03fdfb1f751"
+  },
+  {
+   "path": "public/world/world.json",
+   "bytes": 208415,
+   "sha256": "f5472296036b558ac8af241319f2a2294ea28aefb85a4a5aaf6cf17d274f29cc"
+  },
+  {
    "path": "qa/01_diff.png",
    "bytes": 198550,
    "sha256": "460fc1276cf0cb34ada628ed7c37ca588f2247a62fe2f654846817d39969c275"
@@ -19570,6 +23330,11 @@
    "path": "qa/kit45/STATUS_05_06_approved_vs_game.jpg",
    "bytes": 878977,
    "sha256": "24bc6cfd14f439715164ba7122ecec03cc1bf2d03dd2ad6e80506426f5903658"
+  },
+  {
+   "path": "qa/kit45/run/swipe_plan_05_06.json",
+   "bytes": 405,
+   "sha256": "29f2fbbe94b4e92f15dc55f61624007ec82e77ddc1ec2b2ef6450be4da6d1bb3"
   },
   {
    "path": "qa/lead_r5/2026-11-17/README.md",

@@ -2706,3 +2706,149 @@ Adding per-frame clipping, floating, immersion and Benny-size checks to the exis
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; until grep -q \"EXIT\" $S/wr_build2.log; do sleep 5; done; tail -14 $S/wr_build2.log; for a in 05 06; do echo \"== $a\"; python3 -c \"\nimport json; d=json.load(open('$S/wr/preview_$a/preview.json'))['summary']\nprint('picture', [round(x['share_within_20_levels']*100,1) for x in d['likeness_picture_view']], 'repeat mean/min', d['repeat_within_20_mean'], d['repeat_within_20_min'], 'holes', d['holes_total'])\nprint({k:v['style_pct_mean'] for k,v in d['surfaces_while_swimming'].items()})\nfor i in d[ …[+127 chars]`
 
+### 🧑 User — 2026-11-22T18:56:45.204Z
+
+> ↩︎ result: area 04   built bake                                 31.0 s
+>   area 05   built fit,geometry,bake                    54.8 s
+>   area 06   built bake                                 55.2 s
+>   area 07   built bake                                 60.0 s
+>   assemble  ran        0.0 s
+>   layout    ran        0.1 s
+>   connectors built      1.8 s   (4f33dbf609)
+>   files     ran        0.0 s
+>   preview 05 WARN       82.9 s
+>   preview 06 WARN       61.3 s
+> world ready: /tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/wr/game/play3.html  (347.18 s; report /tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/wr/build_report.md)
+> EXIT 0
+> == 05
+> picture [80.7] repeat mean/min 0.231 0.157 holes 5
+> {'wall': 84.7, 'ring': 63.3, 'water': 53.3, 'foam': 19.3, 'trays': 93.5}
+>    ['WARN', 'textured middle lane 0 (s 114.57)', 'colour look 0.489 vs the approved picture']
+>    ['WARN', 'textured end lane 0 (s 141.25)', 'colour look 0.373 vs the approved picture']
+>    ['WARN', 'textured quarter lane -1 (s 100.94)', 'colour look 0.559 vs the approved picture']
+>    ['WARN', 'textured middle lane -1 (s 114.57)', 'colour look 0.459 vs the approved picture']
+>    ['WARN',  …[+1259 chars]
+
+### 🤖 Claude — 2026-11-22T18:56:53.627Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; python3 -c \"\nimport json; d=json.load(open('$S/wr/game/world.json')); print([(a['id'], round(a['s0'],2), round(a['s1'],2)) for a in d['areas']]); print([(k['area'], round(k['s'],2)) for k in d['cam_keys']])\"", "description": "Read area ranges of the new world"}`
+
+### 🧑 User — 2026-11-22T18:56:53.718Z
+
+> ↩︎ result: [('04', 0.0, 25.15), ('AB', 25.15, 87.3), ('05', 87.3, 141.85), ('06', 141.85, 187.65), ('07', 187.65, 246.4)]
+> [('04', 1.35), ('AB', 28.75), ('AB', 49.0), ('05', 97.8), ('06', 149.17), ('07', 198.94)]
+
+### 🤖 Claude — 2026-11-22T18:57:05.894Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; mkdir -p qa/kit45/run; cat > qa/kit45/run/swipe_plan_05_06.json <<'EOF'\n[[1.2,\"left\"],[3.0,\"right\"],[3.25,\"right\"],[5.5,\"left\"],[5.75,\"left\"],[8.0,\"right\"],[10.0,\"up\"],[12.0,\"right\"],[14.0,\"left\"],[14.25,\"left\"],[16.5,\"right\"],[16.75,\"right\"],[19.0,\"left\"],[21.0,\"right\"],[23.0,\"left\"],[23.25,\"left\"],[25.5,\"right\"],[25.75,\"right\"],[28.0,\"left\"],[30.0,\"right\"],[32.0,\"left\"],[32.25,\"left\"],[34.5,\"right\"],[34.75,\"right\"],[37.0,\"left\"],[39.0,\"up\"],[4 …[+600 chars]`
+
+### 🧑 User — 2026-11-22T18:58:06.148Z
+
+> ↩︎ result: Exit code 1
+> tail: option used in invalid context -- 2
+
+### 🤖 Claude — 2026-11-22T18:58:08.848Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; for f in rec_tex rec_gray; do echo \"== $f\"; tail -n 3 $S/$f.log; done; pgrep -fc section_run.cjs", "description": "Check both recordings are running"}`
+
+### 🧑 User — 2026-11-22T18:58:08.951Z
+
+> ↩︎ result: == rec_tex
+> loaded in 9.6 s {"LEVEL":245.8,"meshes":382}
+> frame 0 s 88 lat 0 coins 1330 socks 0
+> == rec_gray
+> loaded in 2.9 s {"LEVEL":245.8,"meshes":382}
+> frame 0 s 88 lat 0 coins 1330 socks 0
+> frame 30 s 90.2 lat 0 coins 1330 socks 0
+> 4
+
+### 🤖 Claude — 2026-11-22T18:58:12.437Z
+
+Both recordings are running (about 1,380 frames each, real touch swipes, every frame checked). In parallel I'm building the APK with the connected world inside it:
+
+### 🤖 Claude — 2026-11-22T18:58:14.551Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; bash tools/world/build_world_app.sh $S/wr 2>&1 | tail -2; git check-ignore -v public/world/index.html || echo \"public/world not ignored\"; du -sh public/section public/screen06 2>/dev/null", "description": "Pack the world into the app's public folder", "timeout": 300000}`
+
+### 🧑 User — 2026-11-22T18:58:14.829Z
+
+> ↩︎ result: world in the app build: /home/user/rainbow-/public/world 78M
+> public/world not ignored
+> 32M	public/section
+> 30M	public/screen06
+
+### 🤖 Claude — 2026-11-22T18:58:21.948Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; (VITE_RAINBOW_WORLD=1 npm run android:debug > $S/apk.log 2>&1; echo EXIT $? >> $S/apk.log) ; tail -n 5 $S/apk.log; ls -la android/app/build/outputs/apk/debug/ 2>/dev/null", "description": "Build the Android debug APK with the world route", "timeout": 1800000, "run_in_background": true}`
+
+### 🧑 User — 2026-11-22T18:58:22.057Z
+
+> ↩︎ result: Command running in background with ID: beqf56re8. Output is being written to: /tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/tasks/beqf56re8.output. You will be notified when it completes. To check interim output, use Read on that file path.
+
+### 🤖 Claude — 2026-11-22T18:58:23.870Z
+
+> 🔧 **TaskUpdate** `{"taskId": "2", "status": "completed"}`
+
+### 🧑 User — 2026-11-22T18:58:24.001Z
+
+> ↩︎ result: Updated task #2 status
+
+### 🤖 Claude — 2026-11-22T18:58:24.340Z
+
+> 🔧 **TaskUpdate** `{"taskId": "3", "status": "completed"}`
+
+### 🧑 User — 2026-11-22T18:58:24.354Z
+
+> ↩︎ result: Updated task #3 status
+
+### 🤖 Claude — 2026-11-22T18:58:24.797Z
+
+> 🔧 **TaskUpdate** `{"taskId": "4", "status": "completed"}`
+
+### 🧑 User — 2026-11-22T18:58:24.822Z
+
+> ↩︎ result: Updated task #4 status
+
+### 🤖 Claude — 2026-11-22T18:58:25.123Z
+
+> 🔧 **TaskUpdate** `{"taskId": "6", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-22T18:58:25.145Z
+
+> ↩︎ result: Updated task #6 status
+
+### 🤖 Claude — 2026-11-22T18:58:32.844Z
+
+While the recordings and the APK build run, I'm collecting the timing evidence:
+
+### 🤖 Claude — 2026-11-22T18:58:35.089Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; cat $S/base/times.txt; echo; cat $S/wr/build_report.md; python3 -c \"\nimport json; d=json.load(open('$S/wr/build_report.json'))\nfor a,st in d['areas'].items(): print(a, [(s['step'], s['status'], s['seconds']) for s in st])\"; for f in rec_tex rec_gray; do tail -n 1 $S/$f.log; done", "description": "Gather old vs new build timings and progress"}`
+
+### 🧑 User — 2026-11-22T18:58:35.329Z
+
+> ↩︎ result: setup05 7.3 rc=0
+> variant05 1.8 rc=0
+> export05 20.8 rc=0
+> setup06 8.5 rc=0
+> export06 35.9 rc=0
+> DONE
+> 
+> | step | result | seconds |
+> |---|---|---|
+> | area 04 | built: bake | 30.99 |
+> | area 05 | built: fit, geometry, bake | 54.83 |
+> | area 06 | built: bake | 55.16 |
+> | area 07 | built: bake | 60.01 |
+> | assemble | ran | 0.02 |
+> | layout | ran | 0.13 |
+> | connectors | built | 1.82 |
+> | files | ran | 0.01 |
+> | preview 05 | WARN | 82.89 |
+> | preview 06 | WARN | 61.32 |
+> | **total** | | **347.18** |
+> 04 [('depth', 'cached', 0.0), ('fit', 'cached', 0.0), ('layout', 'ran', 0.0), ('segment', 'cached', 0.0), ('gnlib', 'cached', 0.0), ('geometry', 'cached', 0.0), ('assemble', 'ran', 0.02), ('bake', 'built', 30.84)]
+> 05 [('depth', 'cached', 0.0), ('fit', 'built', 0.5), ('layout', 'ran', 0.01), ('segment', 'cached', 0.0), ('gnlib', 'cached', 0.0), ('geometry', 'built', 1.4), ('assemble', 'ran', 0.03), ('bake', 'built', 52.77)]
+> 06 [('depth', 'cached', 0.0), ('fit', 'cached', 0.0), ('layout', 'ran', 0.05), ('segment', 'cached', 0.0), ('gnlib', 'cached', 0.0), ('geometry', 'cached', 0.0), ('assemble', 'ran', 0.03), ('bake', 'built', 54.97)]
+> 07 [('depth', 'cached', 0.0), ('fit', 'cached', 0.0), ('layout', 'ran', 0.06 …[+222 chars]
+

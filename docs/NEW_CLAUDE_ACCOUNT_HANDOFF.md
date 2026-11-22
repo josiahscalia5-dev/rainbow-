@@ -1,3 +1,6 @@
+# ▶▶▶ NEWEST — ROUND 45 (2026-11-22 ~19:30 UTC, branch `ccr-c1b272d2-3ru7yx`): cached automated screen pipeline (`tools/screenkit/build.py`, GN asset library
+`gn_assets.py`, artwork-sampled materials in `bake.js`, automated previews incl. swimming measurements `preview.cjs`), world builder `tools/world/build_world.py`,
+05 + 06 in the world with the new materials, world in the app (`VITE_RAINBOW_WORLD=1`). Resume: **`docs/briefs/2026-11-22-r45/RESUME_R45.md`**.
 # ▶ ROUND 43b (2026-11-22 ~15:30 UTC): Screen 06 physics + gray geometry test + textured run, `qa/reflock/r43b/RESULT_R43b.md` (88.5 % picture view, Benny really in the water, 0 holes).
 # ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 43 (2026-11-22 ~14:00 UTC, branch `ccr-80cdb162-4sqz1a`)
 Reusable SCREEN KIT (`tools/screenkit/`, Blender Geometry Nodes components + generic bake/game page; SAM 2 adopted for masks, Depth Anything =
