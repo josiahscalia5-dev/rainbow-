@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3271,
-   "sha256": "5bb5d0e2e896554b732f3fb6cd2917b6cab94b3774f032d5d19b43212ecf0b36"
+   "sha256": "0c27aac723d30bc5a24b3020a9c4c1036b8492d1a86cfcc0a9fe9d4ae93bf53f"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -16565,6 +16565,11 @@
    "path": "qa/kit05/r37/OPTION_C_s8.5_l0.jpg",
    "bytes": 159001,
    "sha256": "581e9207a9ef00c50c32c517b5a3816ecab74025713ce70d7a968919fc06f0e5"
+  },
+  {
+   "path": "qa/kit05/r39/APPROVED_vs_GAME_START_diffmap.jpg",
+   "bytes": 353459,
+   "sha256": "e29fc147a1304b2cbbb6293373c032cdbd467106845df583049604c0cc13eff7"
   },
   {
    "path": "qa/lead_r5/2026-11-17/README.md",
