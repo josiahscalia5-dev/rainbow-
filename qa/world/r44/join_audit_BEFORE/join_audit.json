@@ -1,0 +1,902 @@
+{
+ "frames": [
+  {
+   "name": "J1_04_exit_a",
+   "s": 108.68830202823243,
+   "area": "04",
+   "join": "04>A",
+   "state": {
+    "mode": "ride",
+    "stage": "04",
+    "s": 108.688,
+    "lat": 0,
+    "coins": 1330,
+    "hearts": 5,
+    "paused": false,
+    "bennyY": -38.039,
+    "bennyVisible": true,
+    "cam": [
+     2,
+     -29.18,
+     -45.41
+    ]
+   }
+  },
+  {
+   "name": "J1_04_exit_b",
+   "s": 112.68830202823243,
+   "area": "04",
+   "join": "04>A",
+   "state": {
+    "mode": "ride",
+    "stage": "04",
+    "s": 112.688,
+    "lat": 0,
+    "coins": 1330,
+    "hearts": 5,
+    "paused": false,
+    "bennyY": -39.76,
+    "bennyVisible": true,
+    "cam": [
+     2,
+     -31.97,
+     -49.22
+    ]
+   }
+  },
+  {
+   "name": "J3_05_entrance_a",
+   "s": 115.68830202823243,
+   "area": "05",
+   "join": "B>05",
+   "state": {
+    "mode": "ride",
+    "stage": "05",
+    "s": 115.688,
+    "lat": 0,
+    "coins": 1420,
+    "hearts": 5,
+    "paused": false,
+    "bennyY": -40.365,
+    "bennyVisible": true,
+    "cam": [
+     2,
+     -34.06,
+     -52.11
+    ]
+   }
+  },
+  {
+   "name": "J3_05_entrance_b",
+   "s": 119.68830202823243,
+   "area": "05",
+   "join": "B>05",
+   "state": {
+    "mode": "ride",
+    "stage": "05",
+    "s": 119.688,
+    "lat": 0,
+    "coins": 1420,
+    "hearts": 5,
+    "paused": false,
+    "bennyY": -40.849,
+    "bennyVisible": true,
+    "cam": [
+     2.08,
+     -36.91,
+     -55.7
+    ]
+   }
+  },
+  {
+   "name": "J4_05_exit_a",
+   "s": 182.92412082521383,
+   "area": "05",
+   "join": "05>06",
+   "state": {
+    "mode": "ride",
+    "stage": "05",
+    "s": 182.924,
+    "lat": 0,
+    "coins": 1420,
+    "hearts": 5,
+    "paused": false,
+    "bennyY": -43.488,
+    "bennyVisible": true,
+    "cam": [
+     2.98,
+     -39.98,
+     -117.92
+    ]
+   }
+  },
+  {
+   "name": "J4_05_exit_b",
+   "s": 186.92412082521383,
+   "area": "05",
+   "join": "05>06",
+   "state": {
+    "mode": "ride",
+    "stage": "05",
+    "s": 186.924,
+    "lat": 0,
+    "coins": 1420,
+    "hearts": 5,
+    "paused": false,
+    "bennyY": -43.185,
+    "bennyVisible": true,
+    "cam": [
+     3.58,
+     -40.15,
+     -121.69
+    ]
+   }
+  },
+  {
+   "name": "J4_06_entrance_a",
+   "s": 190.92412082521383,
+   "area": "06",
+   "join": "05>06",
+   "state": {
+    "mode": "ride",
+    "stage": "06",
+    "s": 190.924,
+    "lat": 0,
+    "coins": 1680,
+    "hearts": 5,
+    "paused": false,
+    "bennyY": -42.142,
+    "bennyVisible": true,
+    "cam": [
+     2.49,
+     -39.98,
+     -125.29
+    ]
+   }
+  },
+  {
+   "name": "J4_06_entrance_b",
+   "s": 194.92412082521383,
+   "area": "06",
+   "join": "05>06",
+   "state": {
+    "mode": "ride",
+    "stage": "06",
+    "s": 194.924,
+    "lat": 0,
+    "coins": 1680,
+    "hearts": 5,
+    "paused": false,
+    "bennyY": -39.926,
+    "bennyVisible": true,
+    "cam": [
+     1.87,
+     -39.6,
+     -128.77
+    ]
+   }
+  },
+  {
+   "name": "J5_06_exit_a",
+   "s": 241.05710253588848,
+   "area": "06",
+   "join": "06>07",
+   "state": {
+    "mode": "ride",
+    "stage": "06",
+    "s": 241.057,
+    "lat": 0,
+    "coins": 1680,
+    "hearts": 5,
+    "paused": false,
+    "bennyY": -47.139,
+    "bennyVisible": true,
+    "cam": [
+     6.7,
+     -40.33,
+     -167.29
+    ]
+   }
+  },
+  {
+   "name": "J5_06_exit_b",
+   "s": 245.05710253588848,
+   "area": "06",
+   "join": "06>07",
+   "state": {
+    "mode": "ride",
+    "stage": "06",
+    "s": 245.057,
+    "lat": 0,
+    "coins": 1680,
+    "hearts": 5,
+    "paused": false,
+    "bennyY": -47.956,
+    "bennyVisible": true,
+    "cam": [
+     8.2,
+     -42.43,
+     -169.43
+    ]
+   }
+  },
+  {
+   "name": "J5_07_entrance_a",
+   "s": 249.05710253588848,
+   "area": "07",
+   "join": "06>07",
+   "state": {
+    "mode": "ride",
+    "stage": "07",
+    "s": 249.057,
+    "lat": 0,
+    "coins": 1940,
+    "hearts": 5,
+    "paused": false,
+    "bennyY": -48.198,
+    "bennyVisible": true,
+    "cam": [
+     10.04,
+     -43.82,
+     -172.3
+    ]
+   }
+  },
+  {
+   "name": "J5_07_entrance_b",
+   "s": 253.05710253588848,
+   "area": "07",
+   "join": "06>07",
+   "state": {
+    "mode": "ride",
+    "stage": "07",
+    "s": 253.057,
+    "lat": 0,
+    "coins": 1940,
+    "hearts": 5,
+    "paused": false,
+    "bennyY": -48.54,
+    "bennyVisible": true,
+    "cam": [
+     11.81,
+     -44.45,
+     -175.8
+    ]
+   }
+  },
+  {
+   "name": "J6_07_exit_a",
+   "s": 383.21995388030825,
+   "area": "07",
+   "join": "07>08",
+   "state": {
+    "mode": "ride",
+    "stage": "07",
+    "s": 383.22,
+    "lat": 0,
+    "coins": 1940,
+    "hearts": 5,
+    "paused": false,
+    "bennyY": -111.636,
+    "bennyVisible": true,
+    "cam": [
+     12,
+     -105.1,
+     -271.14
+    ]
+   }
+  },
+  {
+   "name": "J6_07_exit_b",
+   "s": 387.21995388030825,
+   "area": "07",
+   "join": "07>08",
+   "state": {
+    "mode": "ride",
+    "stage": "07",
+    "s": 387.22,
+    "lat": 0,
+    "coins": 1940,
+    "hearts": 5,
+    "paused": false,
+    "bennyY": -112.762,
+    "bennyVisible": true,
+    "cam": [
+     11.95,
+     -107.18,
+     -272.89
+    ]
+   }
+  },
+  {
+   "name": "J6_08_entrance_a",
+   "s": 391.21995388030825,
+   "area": "08",
+   "join": "07>08",
+   "state": {
+    "mode": "ride",
+    "stage": "08",
+    "s": 391.22,
+    "lat": 0,
+    "coins": 2040,
+    "hearts": 5,
+    "paused": false,
+    "bennyY": -113.113,
+    "bennyVisible": true,
+    "cam": [
+     12.03,
+     -108.74,
+     -276
+    ]
+   }
+  },
+  {
+   "name": "J6_08_entrance_b",
+   "s": 395.21995388030825,
+   "area": "08",
+   "join": "07>08",
+   "state": {
+    "mode": "ride",
+    "stage": "08",
+    "s": 395.22,
+    "lat": 0,
+    "coins": 2040,
+    "hearts": 5,
+    "paused": false,
+    "bennyY": -113.216,
+    "bennyVisible": true,
+    "cam": [
+     12.88,
+     -109.81,
+     -279.62
+    ]
+   }
+  },
+  {
+   "name": "J7_08_exit_a",
+   "s": 398.7896481881434,
+   "area": "08",
+   "join": "08>09",
+   "state": {
+    "mode": "ride",
+    "stage": "08",
+    "s": 398.79,
+    "lat": 0,
+    "coins": 2040,
+    "hearts": 5,
+    "paused": false,
+    "bennyY": -113.222,
+    "bennyVisible": true,
+    "cam": [
+     13.49,
+     -109.92,
+     -283.02
+    ]
+   }
+  },
+  {
+   "name": "J7_08_exit_b",
+   "s": 402.7896481881434,
+   "area": "08",
+   "join": "08>09",
+   "state": {
+    "mode": "ride",
+    "stage": "08",
+    "s": 402.79,
+    "lat": 0,
+    "coins": 2040,
+    "hearts": 5,
+    "paused": false,
+    "bennyY": -113.073,
+    "bennyVisible": true,
+    "cam": [
+     11.62,
+     -109.91,
+     -286.74
+    ]
+   }
+  },
+  {
+   "name": "J7_09_entrance_a",
+   "s": 406.7896481881434,
+   "area": "09",
+   "join": "08>09",
+   "state": {
+    "mode": "ride",
+    "stage": "09",
+    "s": 406.79,
+    "lat": 0,
+    "coins": 2280,
+    "hearts": 5,
+    "paused": false,
+    "bennyY": -113.207,
+    "bennyVisible": true,
+    "cam": [
+     10.87,
+     -109.92,
+     -290.58
+    ]
+   }
+  },
+  {
+   "name": "J7_09_entrance_b",
+   "s": 410.7896481881434,
+   "area": "09",
+   "join": "08>09",
+   "state": {
+    "mode": "ride",
+    "stage": "09",
+    "s": 410.79,
+    "lat": 0,
+    "coins": 2280,
+    "hearts": 5,
+    "paused": false,
+    "bennyY": -113.111,
+    "bennyVisible": true,
+    "cam": [
+     10.46,
+     -109.91,
+     -294.55
+    ]
+   }
+  },
+  {
+   "name": "J8_09_exit_a",
+   "s": 414.0175862766973,
+   "area": "09",
+   "join": "09>10",
+   "state": {
+    "mode": "ride",
+    "stage": "09",
+    "s": 414.018,
+    "lat": 0,
+    "coins": 2280,
+    "hearts": 5,
+    "paused": false,
+    "bennyY": -113.262,
+    "bennyVisible": true,
+    "cam": [
+     9.4,
+     -109.91,
+     -297.79
+    ]
+   }
+  },
+  {
+   "name": "J8_09_exit_b",
+   "s": 418.0175862766973,
+   "area": "09",
+   "join": "09>10",
+   "state": {
+    "mode": "ride",
+    "stage": "09",
+    "s": 418.018,
+    "lat": 0,
+    "coins": 2280,
+    "hearts": 5,
+    "paused": false,
+    "bennyY": -112.941,
+    "bennyVisible": true,
+    "cam": [
+     9.07,
+     -109.97,
+     -301.9
+    ]
+   }
+  },
+  {
+   "name": "J8_10_entrance_a",
+   "s": 422.0175862766973,
+   "area": "10",
+   "join": "09>10",
+   "state": {
+    "mode": "ride",
+    "stage": "10",
+    "s": 422.018,
+    "lat": 0,
+    "coins": 2500,
+    "hearts": 5,
+    "paused": false,
+    "bennyY": -112.953,
+    "bennyVisible": true,
+    "cam": [
+     10.28,
+     -110.13,
+     -305.89
+    ]
+   }
+  },
+  {
+   "name": "J8_10_entrance_b",
+   "s": 426.0175862766973,
+   "area": "10",
+   "join": "09>10",
+   "state": {
+    "mode": "ride",
+    "stage": "10",
+    "s": 426.018,
+    "lat": 0,
+    "coins": 2500,
+    "hearts": 5,
+    "paused": false,
+    "bennyY": -112.399,
+    "bennyVisible": true,
+    "cam": [
+     11.29,
+     -110.05,
+     -309.87
+    ]
+   }
+  },
+  {
+   "name": "J1_A_entrance_a",
+   "s": 0,
+   "area": "A",
+   "join": "04>A"
+  },
+  {
+   "name": "J1_A_entrance_b",
+   "s": 4,
+   "area": "A",
+   "join": "04>A"
+  },
+  {
+   "name": "J2_A_exit_b",
+   "s": 18.204,
+   "area": "A",
+   "join": "A>B"
+  },
+  {
+   "name": "J2_B_entrance_a",
+   "s": 22.204,
+   "area": "B",
+   "join": "A>B"
+  },
+  {
+   "name": "J3_B_exit_a",
+   "s": 46.379,
+   "area": "B",
+   "join": "B>05"
+  },
+  {
+   "name": "J3_B_exit_b",
+   "s": 51.379,
+   "area": "B",
+   "join": "B>05"
+  },
+  {
+   "name": "K6_kit06_entrance_picture",
+   "s": null,
+   "area": "06kit",
+   "join": "05>06kit"
+  },
+  {
+   "name": "K6_kit06_exit_a",
+   "s": 37.95,
+   "area": "06kit",
+   "join": "06kit>07"
+  },
+  {
+   "name": "K6_kit06_exit_b",
+   "s": 42.95,
+   "area": "06kit",
+   "join": "06kit>07"
+  }
+ ],
+ "errors": [],
+ "stages": {
+  "10": [
+   420.0175862766973,
+   435.1923632433159
+  ],
+  "04": [
+   70.41308465825975,
+   114.68830202823243
+  ],
+  "05": [
+   114.68830202823243,
+   188.92412082521383
+  ],
+  "06": [
+   188.92412082521383,
+   247.05710253588848
+  ],
+  "07": [
+   247.05710253588848,
+   389.21995388030825
+  ],
+  "08": [
+   389.21995388030825,
+   404.7896481881434
+  ],
+  "09": [
+   404.7896481881434,
+   420.0175862766973
+  ]
+ },
+ "section": {
+  "LEVEL": 52.379,
+  "S_SOCK": 20.204,
+  "z_arch": -13.606804637723817,
+  "z_exit": -89.49274643397257,
+  "meshes": 148,
+  "foam": 1035,
+  "coins": 26,
+  "bake": {
+   "arch": 0.453,
+   "bulkhead": 0.315,
+   "collar_pipe_A_0": 0.38,
+   "backwall": 0.073,
+   "collar_pipe_A_1": 0.603,
+   "ceiling": 0.269,
+   "collar_pipe_A_2": 0.378,
+   "collar_pipe_B_1": 0.37,
+   "collar_pipe_B_0": 0.338,
+   "collar_pipe_B_2": 0.529,
+   "collar_pipe_C_0": 0.374,
+   "collar_pipe_C_1": 0.538,
+   "collar_pipe_D_0": 0.168,
+   "collar_pipe_C_2": 0.838,
+   "collar_pipe_D_1": 0.385,
+   "fall_R": 0.934,
+   "ledge": 0.036,
+   "collar_pipe_E_0": 0.605,
+   "outlet_L": 0.513,
+   "fall_L": 0.999,
+   "outlet_L_throat": 0.278,
+   "outlet_R": 0.379,
+   "pipe_C": 0.512,
+   "outlet_R_throat": 0.173,
+   "pipe_B": 0.357,
+   "pipe_A": 0.463,
+   "pipe_E": 0.173,
+   "pod_0": 0.943,
+   "pod_1": 0.959,
+   "pod_17": 0.959,
+   "pod_19": 0.959,
+   "pipe_D": 0.168,
+   "pod_2": 0.885,
+   "pod_4": 0.956,
+   "pod_5": 0.922,
+   "pod_3": 0.872,
+   "pod_8": 0.754,
+   "pod_7": 0.848,
+   "pod_6": 0.88,
+   "pod_9": 0.591,
+   "pod_10": 0.58,
+   "pod_11": 0.437,
+   "pod_13": 0.371,
+   "pod_12": 0.537,
+   "pod_16": 0.491,
+   "ring_f0": 0.57,
+   "pod_18": 0.456,
+   "pod_15": 0.345,
+   "ring_f1": 0.578,
+   "pod_14": 0.486,
+   "ring_f2": 0.591,
+   "ring_f3": 0.588,
+   "ring_f4": 0.595,
+   "ring_f6": 0.51,
+   "ring_f7": 0.3,
+   "ring_f5": 0.614,
+   "ring_s0": 0.603,
+   "ring_f8": 0.333,
+   "ring_s1": 0.462,
+   "ring_s2": 0.516,
+   "ring_s5": 0.51,
+   "ring_s4": 0.476,
+   "ring_s3": 0.592,
+   "ring_s7": 0.367,
+   "ring_s6": 0.439,
+   "ring_s8": 0.377,
+   "towel_p0": 0.803,
+   "ring_s9": 0.376,
+   "ring_s10": 0.38,
+   "towel_p1": 0.756,
+   "towel_r0": 0.866,
+   "towel_r2": 0.821,
+   "towel_r1": 0.732,
+   "towel_r3": 0.748,
+   "towel_r4": 0.803,
+   "towel_r5": 0.657,
+   "towel_r7": 0.443,
+   "tower": 0.138,
+   "towel_r8": 0.8,
+   "tunnel_00": 0.479,
+   "towel_r6": 0.8,
+   "tunnel_02": 0.448,
+   "tunnel_01": 0.38,
+   "tunnel_03": 0.16,
+   "tower_rim0": 0.365,
+   "tunnel_05": 0.472,
+   "tunnel_04": 0.445,
+   "tunnel_06": 0.436,
+   "tunnel_07": 0.484,
+   "tunnel_11": 0.293,
+   "tunnel_08": 0.377,
+   "tunnel_09": 0.499,
+   "tunnel_12": 0.42,
+   "tunnel_10": 0.492,
+   "tunnel_13": 0.445,
+   "tunnel_17": 0.137,
+   "tunnel_16": 0.408,
+   "tunnel_15": 0.305,
+   "tunnel_14": 0.202,
+   "tunnel_18": 0.351,
+   "tunnel_22": 0.114,
+   "tunnel_20": 0.169,
+   "tunnel_24": 0.29,
+   "tunnel_25": 0.082,
+   "tunnel_19": 0.261,
+   "tunnel_23": 0.218,
+   "tunnel_26": 0.236,
+   "tunnel_21": 0.251,
+   "tunnel_27": 0.173,
+   "tunnel_29": 0.277,
+   "tunnel_28": 0.127,
+   "water_c4": 0.091,
+   "wall_L": 0.167,
+   "tunnel_30": 0.085,
+   "wall_R": 0.105,
+   "water_c5": 0.695,
+   "water_c2": 0.18,
+   "water_t1": 0.573,
+   "water_t3": 0.552,
+   "water_t5": 0.682,
+   "water_t2": 0.76,
+   "water_t4": 0.676,
+   "water_c8": 0.779,
+   "water_t0": 0.69,
+   "water_c7": 0.711,
+   "water_t8": 0.585,
+   "water_t7": 0.619,
+   "water_t10": 0.635,
+   "water_t6": 0.65,
+   "water_t11": 0.674,
+   "water_t9": 0.622,
+   "water_t12": 0.719,
+   "water_t13": 0.752,
+   "water_t15": 0.71,
+   "water_t14": 0.763,
+   "water_t16": 0.703,
+   "water_t17": 0.733,
+   "water_t19": 0.643,
+   "water_room": 0.078,
+   "water_t18": 0.552,
+   "_prebaked": 140
+  }
+ },
+ "kit06": {
+  "LEVEL": 43.95,
+  "S_REF": 1.2000000000000002,
+  "meshes": 125,
+  "coins": 26,
+  "bake": {
+   "flume_water_route_00": 0.084,
+   "flume_water_route_03": 0.135,
+   "flume_water_route_05": 0.165,
+   "flume_water_route_01": 0.117,
+   "flume_water_route_06": 0.202,
+   "flume_water_route_02": 0.124,
+   "flume_water_route_04": 0.166,
+   "flume_water_route_08": 0.246,
+   "flume_water_route_07": 0.254,
+   "flume_water_route_10": 0.117,
+   "flume_water_route_11": 0.128,
+   "flume_water_route_09": 0.099,
+   "flume_water_route_12": 0.124,
+   "flume_water_route_15": 0.087,
+   "flume_water_route_13": 0.106,
+   "flume_water_route_14": 0.088,
+   "flume_water_route_16": 0.092,
+   "paddle_0": 0.579,
+   "paddle_1": 0.625,
+   "flume_water_route_17": 0.081,
+   "pool_04": 0.894,
+   "pool_01": 0.262,
+   "pool_06": 0.534,
+   "pool_00": 0.004,
+   "pool_05": 0.803,
+   "pool_03": 0.925,
+   "pool_02": 0.637,
+   "pool_08": 0.597,
+   "pool_11": 0.66,
+   "pool_09": 0.64,
+   "pool_10": 0.645,
+   "pool_07": 0.483,
+   "pool_12": 0.732,
+   "pool_14": 0.771,
+   "pool_13": 0.775,
+   "pool_19": 0.767,
+   "pool_17": 0.77,
+   "pool_16": 0.768,
+   "pool_18": 0.766,
+   "pool_15": 0.773,
+   "ring_01": 0.357,
+   "ring_02": 0.438,
+   "pool_20": 0.769,
+   "ring_00": 0.302,
+   "ring_03": 0.411,
+   "ring_04": 0.406,
+   "pool_21": 0.774,
+   "ring_10": 0.331,
+   "ring_06": 0.378,
+   "ring_05": 0.394,
+   "ring_07": 0.368,
+   "ring_09": 0.339,
+   "ring_08": 0.351,
+   "ring_11": 0.327,
+   "ring_12": 0.321,
+   "ring_14": 0.313,
+   "ring_13": 0.318,
+   "ring_15": 0.309,
+   "ring_17": 0.302,
+   "ring_16": 0.308,
+   "ring_18": 0.296,
+   "ring_20": 0.294,
+   "ring_22": 0.293,
+   "ring_19": 0.296,
+   "ring_23": 0.283,
+   "ring_21": 0.294,
+   "ring_26": 0.277,
+   "ring_24": 0.282,
+   "ring_25": 0.284,
+   "ring_29": 0.265,
+   "ring_27": 0.272,
+   "ring_28": 0.265,
+   "ring_33": 0.243,
+   "ring_31": 0.271,
+   "ring_30": 0.271,
+   "tunnel_03": 0.097,
+   "ring_34": 0.262,
+   "ring_32": 0.259,
+   "tunnel_04": 0.252,
+   "tunnel_05": 0.372,
+   "tunnel_06": 0.29,
+   "tunnel_00": 0.639,
+   "tunnel_01": 0.639,
+   "tunnel_02": 0.639,
+   "tunnel_15": 0.639,
+   "tunnel_09": 0.282,
+   "tunnel_11": 0.599,
+   "tunnel_07": 0.606,
+   "tunnel_10": 0.596,
+   "tunnel_08": 0.608,
+   "tunnel_14": 0.639,
+   "tunnel_13": 0.637,
+   "tunnelfar_01": 0.112,
+   "tunnel_12": 0.622,
+   "tunnelfar_00": 0.151,
+   "tunnel_19": 0.13,
+   "tunnelfar_02": 0.084,
+   "tunnelfar_03": 0.057,
+   "tunnel_18": 0.576,
+   "tunnel_17": 0.601,
+   "tunnelfar_05": 0.03,
+   "tunnel_16": 0.619,
+   "tunnelfar_07": 0.025,
+   "tunnelfar_04": 0.042,
+   "tunnelfar_06": 0.024,
+   "water_route_01": 0.791,
+   "water_route_00": 0.563,
+   "water_route_02": 0.849,
+   "water_route_03": 0.895,
+   "water_route_09": 0.757,
+   "water_route_04": 0.926,
+   "water_route_08": 0.196,
+   "water_route_07": 0.589,
+   "water_route_06": 0.919,
+   "water_route_05": 0.912,
+   "water_route_11": 0.999,
+   "water_route_10": 0.957,
+   "water_route_15": 0.711,
+   "water_route_14": 0.747,
+   "water_route_13": 0.812,
+   "water_route_12": 0.974,
+   "water_route_16": 0.737,
+   "water_route_17": 0.705,
+   "_prebaked": 123
+  },
+  "screen": "06"
+ }
+}
