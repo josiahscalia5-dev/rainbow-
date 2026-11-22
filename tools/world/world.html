@@ -397,8 +397,8 @@ const SOCKS = WD.areas.flatMap((A) => A.socks ?? []); let socksGot = 0, gems = 3
 const drawSlots = () => { slotsEl.textContent = '\u{1F9E6}'.repeat(socksGot) + '○'.repeat(5 - socksGot); }; drawSlots();
 
 // ---------------- chase camera: camera keys = each approved picture's fitted camera, relative to Benny's route frame; blended between ----------------
-const ROLL = +(q.get('roll') ?? 0.5);
-const camFrame = (s, out) => { const sm = (a, b) => a.clone().lerp(b, ROLL).normalize(), A2 = at(Math.min(RLEN, s + 0.8), new THREE.Vector3()), B2 = at(Math.max(0, s - 0.8), new THREE.Vector3());
+const ROLL = +(q.get('roll') ?? 0.5), CAMW = +(q.get('camw') ?? 1.6);   // r44: heading averaged over +-1.6 u (was 0.8): calmer turns through tight S-curves
+const camFrame = (s, out) => { const sm = (a, b) => a.clone().lerp(b, ROLL).normalize(), A2 = at(Math.min(RLEN, s + CAMW), new THREE.Vector3()), B2 = at(Math.max(0, s - CAMW), new THREE.Vector3());
   const Ft = A2.sub(B2).normalize(), Fn = new THREE.Vector3(); for (let k = -2; k <= 2; k++) Fn.add(frameAt(Math.min(RLEN, Math.max(0, s + 0.4 * k))).n); Fn.normalize();
   const t = sm(new THREE.Vector3(Ft.x, 0, Ft.z).normalize(), Ft), n = sm(UPV, Fn), r = new THREE.Vector3().crossVectors(t, n).normalize(); n.crossVectors(r, t).normalize();
   return out.makeBasis(r, n, t.clone().negate()); };

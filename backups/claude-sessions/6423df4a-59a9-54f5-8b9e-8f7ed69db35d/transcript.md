@@ -5437,3 +5437,106 @@ The gray recording has **0 hole pixels in all 1,083 frames**, so the connected g
 
 > 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && until [ -s $S/run_tex/checks.json ]; do sleep 15; done; python3 -c \"\nimport json;c=json.load(open('$S/run_tex/checks.json')); c.pop('input_log',None); print(json.dumps(c))\"; tail -1 $S/run_b05.log | cut -c1-150", "description": "Wait for the textured recording to finish", "timeout": 3600000}`
 
+### 🧑 User — 2026-11-22T16:40:45.744Z
+
+> ↩︎ result: {"frames": 1083, "errors": [], "benny_offscreen_frames": 0, "camera_max_step_u": 0.0959, "camera_max_step_expected_u": 0.1173, "camera_max_turn_deg_per_frame": 0.669, "static_world_meshes": 225, "scenery_meshes_moved": [], "camera_min_clearance_u": 0.169, "benny_water_gap_max_u": 0.02, "benny_water_missing_frames": 0, "benny_posture_vs_surface_max_deg": 13.98, "route_normal_vs_surface_max_deg": 0, "immersion_range": [-0.413, 0.225], "bank_range_deg": [0, 0], "swipes_sent": 17, "swipes_detected": 17, "input": "real CDP touch", "coins_end": 1480, "s_end": 80.54, "lat_range": [-0.3, 0.3]}
+> frame 360 s 96.4 lat -0.0005 {"camClear":0.775,"waterGap":0.02,"waterMesh":"05/pool_00","area":"05","slopeErrDeg":0,"bennyTiltVsSurfaceDeg":0.4,"subme
+
+### 🤖 Claude — 2026-11-22T16:40:53.046Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && python3 -I tools/reflock/encode_run.py $S/run_tex qa/world/r44/run GAMEPLAY_world_04_A_B_TEXTURED_real_touch 2>&1 | tail -1 && python3 -c \"import json;c=json.load(open('qa/world/r44/run/GAMEPLAY_world_04_A_B_TEXTURED_real_touch_checks.json'));print('hole frames',c['hole_frames'],'of',c['hole_frames_checked'])\" && python3 - <<EOF\nfrom PIL import Image, ImageDraw\nimport json\nlog=json.load(open('$S/run_tex/run_log.json'))\nidx=[0,150,260,300,320,335,350,365,385,420,500,620,760,900,1060]\nW,H=1 …[+555 chars]`
+
+### 🧑 User — 2026-11-22T16:41:31.161Z
+
+> ↩︎ result: wrote qa/world/r44/run/GAMEPLAY_world_04_A_B_TEXTURED_real_touch.mp4 17.9 MB 1083 frames
+> hole frames 0 of 1083
+> ok
+
+### 🤖 Claude — 2026-11-22T16:41:45.929Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/qa/world/r44/run/GAMEPLAY_world_04_A_B_TEXTURED_contact_sheet.jpg"}`
+
+### 🧑 User — 2026-11-22T16:41:45.969Z
+
+> ↩︎ result: [image]
+
+### 🤖 Claude — 2026-11-22T16:42:04.716Z
+
+Here are honest ratings out of 10 for each level, measured two ways: at your approved picture's own camera, and while Benny swims through. The scores are my judgment built on the measured numbers. The percentage is the share of scenery pixels within 20 colour levels of your picture, with the threshold unchanged.
+
+| Level | Built how | At your picture's camera | While Benny swims |
+|---|---|---|---|
+| **04 Five Arrows** | rebuilt this round, in the connected world | 87.3 % (in the world 83.8 %) → **8/10** | **5/10**: right warm-gold tunnel, but plainer gold, simpler water, simpler arrows |
+| **A Bubble Dash** | built (round 40), in the world | 91.4 % (in the world 87.4 %) → **9/10** | **7/10**: the chamber stays close because most of it carries your painted pixels |
+| **B Sock Rescue** | built (round 40), in the world | 81.4 % (in the world 81.3 %) → **8/10** | **5/10**: further down the tunnel the walls turn to plain lilac with dots, not your painted rings and towels |
+| **05 Flow into the Current** | rebuilt this round, in the world | 83.5 % (in the world 80.6 %) → **8/10** | **5/10**: the S-river edges are there, but the walls and water are simpler than your painting |
+| **06 Crest the Rinse Arch** | rebuilt (round 43), not yet in the world | 88.5 % → **8.5/10** | **4/10**: colour look drops from 0.996 to about 0.3–0.4 while moving |
+| **07, 08, 09, 10** | old game, not rebuilt yet | not measured this round | about **3/10**, my judgment from the join frames: generic pink tubes and foam walls, not your painted scenery |
+
+**The honest summary:** at each picture's own camera the rebuilt levels are 8–9 out of 10. While Benny swims they fall to about 4–7. Your painting only covers what that one camera saw, so elsewhere the game shows simpler stand-in materials. That in-motion gap is the main thing between where we are and your 9/10 target. 07–10 haven't been rebuilt yet, so they are well below that.
+
+**What lifts the "while swimming" score:**
+1. Stand-in materials copied from your painted walls, rings and water, instead of drawn ones.
+2. More painted detail kept close up.
+3. Fixing the 3–4 points the app's pre-baked textures lose against the live bake.
+4. Rebuilding 07–10 with the same method.
+
+The Sock Rescue → 05 recording is still running. I'll finish it and send you both connected-world recordings.
+
+### 🤖 Claude — 2026-11-22T16:42:07.622Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && until [ -s $S/run_b05/checks.json ]; do sleep 15; done; cd /home/user/rainbow- && python3 -I tools/reflock/encode_run.py $S/run_b05 qa/world/r44/run GAMEPLAY_world_SockRescue_to_05_TEXTURED_real_touch 2>&1 | tail -1; python3 -c \"\nimport json;c=json.load(open('qa/world/r44/run/GAMEPLAY_world_SockRescue_to_05_TEXTURED_real_touch_checks.json')); c.pop('input_log',None); print(json.dumps(c))\"", "description": "Wait for the Sock Rescue → 05 recording and encode it", "timeout": 3600000}`
+
+### 🧑 User — 2026-11-22T16:42:34.891Z
+
+> ↩︎ result: wrote qa/world/r44/run/GAMEPLAY_world_SockRescue_to_05_TEXTURED_real_touch.mp4 9.9 MB 574 frames
+> {"frames": 574, "errors": [], "benny_offscreen_frames": 0, "camera_max_step_u": 0.106, "camera_max_step_expected_u": 0.1173, "camera_max_turn_deg_per_frame": 1.773, "static_world_meshes": 312, "scenery_meshes_moved": [], "camera_min_clearance_u": 0.237, "benny_water_gap_max_u": 0.02, "benny_water_missing_frames": 0, "benny_posture_vs_surface_max_deg": 12.76, "route_normal_vs_surface_max_deg": 0, "immersion_range": [-0.529, 0.2], "bank_range_deg": [0, 0], "swipes_sent": 10, "swipes_detected": 10, "input": "real CDP touch", "coins_end": 1350, "s_end": 112.02, "lat_range": [-0.3, 0.3], "hole_frames_checked": 574, "hole_frames": 20, "hole_pixels_max": 31}
+
+### 🤖 Claude — 2026-11-22T16:42:45.325Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && python3 - <<EOF\nfrom PIL import Image\nimport numpy as np, json, glob\nlog=json.load(open('$S/run_b05/run_log.json'))\nhits=[]\nfor f in log:\n    a=np.asarray(Image.open('$S/run_b05/'+f['file']).convert('RGB')).astype(int); m=(a[...,1]>200)&(a[...,0]<40)&(a[...,2]<40)\n    if m.sum(): ys,xs=np.nonzero(m); hits.append((f['i'],round(f['s'],2),int(m.sum()),int(xs.mean()),int(ys.mean())))\nprint(len(hits)); print(hits[:25])\nif hits:\n    i=hits[len(hits)//2][0]; im=Image.open('$S/run_b05/'+log[i] …[+138 chars]`
+
+### 🧑 User — 2026-11-22T16:42:51.606Z
+
+> ↩︎ result: 20
+> [(164, 82.03, 6, 8, 391), (167, 82.25, 1, 51, 133), (168, 82.32, 3, 6, 255), (169, 82.39, 1, 18, 157), (170, 82.47, 6, 22, 284), (171, 82.54, 12, 17, 317), (172, 82.61, 14, 31, 195), (173, 82.69, 8, 24, 207), (174, 82.76, 24, 26, 202), (175, 82.83, 16, 24, 220), (176, 82.91, 18, 33, 120), (177, 82.98, 32, 29, 140), (178, 83.05, 33, 32, 118), (179, 83.13, 22, 34, 109), (180, 83.2, 33, 30, 66), (181, 83.27, 28, 37, 49), (182, 83.35, 20, 33, 39), (183, 83.42, 16, 31, 25), (184, 83.49, 10, 29, 9), (185, 83.57, 20, 9, 7)]
+
+### 🤖 Claude — 2026-11-22T16:43:13.326Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/6423df4a-59a9-54f5-8b9e-8f7ed69db35d/scratchpad && python3 - <<EOF\nimport json, math\nlog=json.load(open('$S/run_b05/run_log.json'))\nst=[]\nfor k in range(1,len(log)):\n    a=log[k]['cam']['q']; b=log[k-1]['cam']['q']; d=abs(sum(x*y for x,y in zip(a,b))); ang=2*math.acos(min(1,d))*180/math.pi\n    st.append((round(ang,2),log[k]['i'],log[k]['s'],log[k]['qa'].get('area'), log[k]['qa'].get('camClear')))\nst.sort(reverse=True); print(st[:12])\nprint('frames > 0.8 deg:', sum(1 for x in st if x[0]>0.8))\nEOF", "description": "Find where the camera t …[+48 chars]`
+
+### 🧑 User — 2026-11-22T16:43:13.375Z
+
+> ↩︎ result: [(1.77, 417, 100.58, '05', 0.748), (1.7, 418, 100.653, '05', 0.697), (1.64, 416, 100.507, '05', 0.755), (1.59, 419, 100.727, '05', 0.646), (1.53, 420, 100.8, '05', 0.602), (1.45, 421, 100.873, '05', 0.568), (1.38, 415, 100.433, '05', 0.755), (1.37, 422, 100.947, '05', 0.545), (1.23, 423, 101.02, '05', 0.54), (1.18, 424, 101.093, '05', 0.549), (1.17, 425, 101.167, '05', 0.569), (1.13, 426, 101.24, '05', 0.589)]
+> frames > 0.8 deg: 20
+
+### 🤖 Claude — 2026-11-22T16:43:33.976Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/world/world_layout.py'; s=open(p).read()\nold=\"\"\"    tt = np.linspace(0, 1, 91); ax = herm(A0, A1, tt, LC); k = tt * tt * (3 - 2 * tt)\"\"\"\nnew=\"\"\"    tt = np.linspace(0, 1, 91); ax = herm(A0, A1, tt, LC); k = tt * tt * (3 - 2 * tt)\n    ax[0, 2] += 0.2; ax[-1, 2] -= 0.2                               # overlap 0.2 u into both neighbouring tubes: no crack where differently tessellated rings meet\"\"\"\nassert old in s; s=s.replace(old,new)\nold=\"\"\"    rad = TS['r_sock'] + (R5 - TS['r_sock']) * k; ax[:, 1] = TS['axis_y_sock'] + (D5['axis_y'] -  …[+1869 chars]`
+
+### 🧑 User — 2026-11-22T16:43:35.231Z
+
+> ↩︎ result: ok
+> 05 offset [1.109, 0.0, -96.399]; Sock Rescue ends s 84.30; 05 route from s 96.45; 05 picture key s 97.80
+> 04 tube end z -25.29; section offset [-0.695, 0.0, -27.289]; route 158.30 u (04 0-25.15, AB 25.15-158.30); picture keys s: 04 1.35, Bubble Dash 28.75, Sock Rescue 49.00
+> re-recording
+
+### 🤖 Claude — 2026-11-22T16:43:38.586Z
+
+While Sock Rescue → 05 is re-recorded in gray and textured, here are the first two uninterrupted recordings: 04 → doorway → Bubble Dash → Sock Rescue, real finger swipes, one scene.
+
+### 🤖 Claude — 2026-11-22T16:43:41.089Z
+
+> 🔧 **SendUserFile** `{"files": ["qa/world/r44/run/GAMEPLAY_world_04_A_B_TEXTURED_real_touch.mp4", "qa/world/r44/run/GAMEPLAY_world_04_A_B_GRAY_real_touch.mp4", "qa/world/r44/run/GAMEPLAY_world_04_A_B_TEXTURED_contact_sheet.jpg"], "caption": "One continuous run, no page load: Screen 04's gold tunnel → real doorway → Bubble Dash chamber → gold arch → Sock Rescue tunnel. 17/17 real swipes, Benny on screen every frame, 0 hole pixels in 1,083 frames. The gray version is the plain-material geometry test of the same run.", "status": "normal", "display": "render"}`
+
+### 🧑 User — 2026-11-22T16:43:43.508Z
+
+> ↩︎ result: 3 files delivered to user.
+>   /home/user/rainbow-/qa/world/r44/run/GAMEPLAY_world_04_A_B_TEXTURED_real_touch.mp4 → file_uuid: 41a87ff8-195b-4add-ac3b-ffbb96bc94b2
+>   /home/user/rainbow-/qa/world/r44/run/GAMEPLAY_world_04_A_B_GRAY_real_touch.mp4 → file_uuid: 7ea12bab-f292-4314-8e36-cb81b81a67c1
+>   /home/user/rainbow-/qa/world/r44/run/GAMEPLAY_world_04_A_B_TEXTURED_contact_sheet.jpg → file_uuid: 87476b2b-537e-4be7-88dc-38e0883eca38
+
+### 🤖 Claude — 2026-11-22T16:43:48.743Z
+
+> 🔧 **Bash** `{"command": "cat > qa/world/r44/run/README.md <<'EOF'\n# Round 44 — uninterrupted real-touch gameplay recordings of the ONE connected world (412 × 915, 30 fps, real CDP finger swipes)\n\n| recording | route | frames | swipes detected | Benny on screen | hole pixels | camera max step / turn per frame | scenery moved | water gap max |\n|---|---|---|---|---|---|---|---|---|\n| `GAMEPLAY_world_04_A_B_GRAY_real_touch.mp4` (plain materials) | 04 start → doorway → Bubble Dash → arch → Sock Rescue tunnel (s 1.35 → 80.5) | 1083 | 17 / 17 (2 leaps) | 1083 / 1083 | 0 in all frames | 0.096 u / 0.67° | 0 o …[+1302 chars]`
+

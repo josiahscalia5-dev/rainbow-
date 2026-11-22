@@ -53,7 +53,8 @@ if L05:   # ---- join B -> 05 (user's guide: "laundry tunnel curves into Screen 
         h00 = 2 * t ** 3 - 3 * t ** 2 + 1; h10 = t ** 3 - 2 * t ** 2 + t; h01 = -2 * t ** 3 + 3 * t ** 2; h11 = t ** 3 - t ** 2
         m = np.array([0, 0, -L]); return h00[:, None] * p0 + h10[:, None] * m + h01[:, None] * p1 + h11[:, None] * m
     tt = np.linspace(0, 1, 91); ax = herm(A0, A1, tt, LC); k = tt * tt * (3 - 2 * tt)
-    rad = TS['r_sock'] + (R5 - TS['r_sock']) * k; ax[:, 1] = TS['axis_y_sock'] + (D5['axis_y'] - TS['axis_y_sock']) * k
+    ax[0, 2] += 0.2; ax[-1, 2] -= 0.2                               # overlap 0.2 u into both neighbouring tubes: no crack where differently tessellated rings meet
+    rad = TS['r_sock'] + (R5 - TS['r_sock']) * k + 0.006; ax[:, 1] = TS['axis_y_sock'] + (D5['axis_y'] - TS['axis_y_sock']) * k
     half = np.sqrt(np.maximum(0.01, rad ** 2 - ax[:, 1] ** 2))
     p0r, p1r = rs[-1], r5[0] + T5; L2 = float(np.linalg.norm(p1r - p0r)); t2 = np.linspace(0, 1, max(8, int(L2 / DS)) + 1)[1:-1]
     rc2 = herm(p0r, p1r, t2, L2); rc2[:, 1] = 0.0
