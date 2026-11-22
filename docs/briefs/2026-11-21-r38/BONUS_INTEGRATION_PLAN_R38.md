@@ -69,3 +69,20 @@ hand-over). Full build and main-course integration only after the user approves 
   Bubble https://claude.ai/artifact/4uc39tWfZ3UykRLXoBE1hu
 * Honest gaps vs the pictures: towels flatter (hang like banners), lifters simpler, water = clean silky streaks rather than the painted glitter,
   chamber has fewer pipes / less machinery; real phone frame rate not measured. Marble (paid) not used; possible later for the chamber backdrop only.
+
+## ROUND 39 (2026-11-22 ~01:30 UTC): Sock Rescue fixes 1 + 2 (user-approved, free fill)
+* Fix 1 `tools/bonus/fit_sock.py`: camera + straight tunnel fitted to the picture's 5 gold-ring openings (yaw 9.1 deg, pitch 9.2 deg,
+  camera 0.43 right of / 0.10 above the axis; fitted ring centres within ~10-25 px); evenly spaced rings (S 2.4) + the kit depth curve
+  (Z2 4.0) reproduce the painted spacing; water 0.64 below the axis; Benny's path follows the painted coin trail, then the 05 S-bends.
+* Fix 2 `tools/bonus/plate_sock.py` + `bonus.html` (FIT39, `?fit=0` = round 38): the picture's own pixels (clean plate: HUD, Benny, splash,
+  coins, socks, arrows, buttons, big bubble removed; small holes patched from neighbouring painted water, big holes transparent -> live
+  3D water) projected from the picture's camera onto the fitted walls, rings, water, towels, paddles, rails, with a depth test (only
+  surfaces that camera saw) and a hand-over to the sharp 3D materials as the camera comes closer (ratio 0.42-0.68). Painted coins, both
+  painted socks (painted size) and the big bubble are real objects at their painted places.
+* Measured at the picture's view (412x915, scenery = below the HUD minus Benny's box): within 20 levels 9.8 % -> 68.3 %, colour look
+  0.554 -> 0.950; Benny's box 8.9 % -> 27.9 % (Benny himself not changed yet).
+* Honest limits: in motion the projected walls stretch until the hand-over (visible smear 1-2 s in), then the round-38 code-drawn tunnel
+  shows (different towel / wall look); the area around Benny is live water, not the painted water. Next proposed: upscaled matching
+  close-up artwork (free) for walls / water, Benny back-projection.
+* Evidence `qa/bonus/r39/` (SOCK_APPROVED_BEFORE_NEW.jpg, stills, diff map, clip). Phone test updated in place:
+  https://claude.ai/artifact/FXY6sg3BMqBdb3yiNieaUN
