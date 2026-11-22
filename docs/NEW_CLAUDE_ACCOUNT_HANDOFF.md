@@ -1,3 +1,15 @@
+# ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUND 40 (2026-11-22 ~03:45 UTC, branch `ccr-50ff6f57-q5me82`)
+User's orders verbatim: **`docs/briefs/2026-11-22-r40/USER_R40.md`** (real connected 3D scenery, no pictures / projections / forced perspective;
+the user's two pictures `references/candidates/bonus_bubble_dash_chamber.webp` + `bonus_sock_rescue_laundry_tunnel.webp` as blueprints; Blender;
+recordings; Android build; integrated into the game; never call a screen finished without continuous gameplay proof).
+Built: **`tools/reflock/`** (README there) = Reference-Locked 3D Scene Builder: both pictures' cameras fitted into ONE world (`fit_section.py`),
+Blender 5.3 builds 97+ connected meshes -> `section.glb` (`blender_section.py`), the pictures baked once onto the meshes from their fitted
+cameras (depth-tested, masked, clean plates, sharpness guard), Benny 31 + `tools/kit05/controls.js` swipes, chase camera blended between the two
+fitted cameras + on-screen guard, QA `section_run.cjs` (green-background hole count, Benny box, static-world audit), `compare_section.py`.
+In the game: `public/section/` (`build_section_app.sh`, pre-baked) + `src/game/bonusRoute.ts`: the game hands over at the end of 04 and resumes at
+05 ONLY with `VITE_RAINBOW_BONUS=1` / `?bonus=1` (default game unchanged). Evidence + numbers: **`qa/reflock/r40/`** (RESULT_R40.md).
+ChatGPT's `chatgpt/rainbow-physical-tunnel-test-20261121` = an older-code A/B diagnostic (patches do not apply to today's src); not merged.
+
 # ▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ NEWEST — ROUNDS 38-39 (2026-11-22 ~01:40 UTC, branch `ccr-1a97503a-p221vc`)
 Two NEW candidate bonus areas (NOT in the 11-screen route; approved screens untouched): Sock Rescue (between 06 and 07) and Bubble Dash Chamber
 (between 04 and 05), as isolated test switches on `tools/bonus/bonus.html` (`?area=sock` / `?area=bubble`; `bash tools/bonus/setup_bonus.sh <ws>`).

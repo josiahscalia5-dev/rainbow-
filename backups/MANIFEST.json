@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3153,
-   "sha256": "059fa0ee58a7f9e713e8678745fb23dda46f9d19b2ab5d1da32ab2075c7f4029"
+   "sha256": "b64cf2b072148d0d6817b5139c7c5b9d86731548f37a822ae5230973292f4459"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -10808,8 +10808,8 @@
   },
   {
    "path": "docs/NEW_CLAUDE_ACCOUNT_HANDOFF.md",
-   "bytes": 79467,
-   "sha256": "c432daf9da0efc51c24602de9dd1ba8dc9557e1520ff923c12cb0f7dea7d5250"
+   "bytes": 81038,
+   "sha256": "7d144a3dca48aa2231399501878e4a37f62522dfbb63a584298e02ef274d507c"
   },
   {
    "path": "docs/PARALLEL_PROGRESS.md",
@@ -35407,19 +35407,54 @@
    "sha256": "73d091620f3e562a9f7aa320754778f910d9d7c63a33395287b59b2aa61387b4"
   },
   {
+   "path": "qa/reflock/r40/APP_ROUTE_1_game_end_of_04.jpg",
+   "bytes": 136264,
+   "sha256": "b95924a3ec64a7d5e382a7415ca5ab07d4fd371887976bc0bd5da7c739da2460"
+  },
+  {
+   "path": "qa/reflock/r40/APP_ROUTE_2_section_start.jpg",
+   "bytes": 137379,
+   "sha256": "b37bcf74b3cf85d0555fc8a7c2fb4e98f8fc8eef5a0b756988c6f4f352f34267"
+  },
+  {
+   "path": "qa/reflock/r40/APP_ROUTE_3_game_resumed_05.jpg",
+   "bytes": 165590,
+   "sha256": "cc18560eb09557d080be2c5553bfed4eec5680ab3cc4b13c5c55448116fe6c39"
+  },
+  {
    "path": "qa/reflock/r40/BUBBLE_DASH_APPROVED.jpg",
    "bytes": 230662,
    "sha256": "9360686a1a03cbaa9b62310b1399335736becfaf4de0d4dc96925ef8add608ce"
   },
   {
    "path": "qa/reflock/r40/BUBBLE_DASH_GAME.jpg",
-   "bytes": 175382,
-   "sha256": "e0122f1208de22c0757b55d530487ae86e39529e98cae0dc17fc562dd878ce47"
+   "bytes": 176713,
+   "sha256": "ce423dc92ebc8e9a01da01771a7f2653f28822bec1380f5df1cfaa5c7615efda"
   },
   {
    "path": "qa/reflock/r40/BUBBLE_DASH_approved_vs_game.jpg",
-   "bytes": 362380,
-   "sha256": "3c6dbcd0111219db5a724e1d58aae9f5eb43a8f1d1271b8773efccf577e49bdc"
+   "bytes": 363432,
+   "sha256": "9f7fa106a2ad94607e6530078a438b0d37ea3ed3411a67645a464d25f8c15fb4"
+  },
+  {
+   "path": "qa/reflock/r40/GAMEPLAY_full_section_24s_steering.mp4",
+   "bytes": 10991259,
+   "sha256": "fbb7cc1ba5fe185e2611357ddd96175bc1fd0aab18daa2676af8aba0ef25a1c7"
+  },
+  {
+   "path": "qa/reflock/r40/GAMEPLAY_full_section_24s_steering_checks.json",
+   "bytes": 472,
+   "sha256": "126818de1a1d95d3495ebf4f9e45c5c5be0b25caaf4d341d7c73f868e3f5c1bc"
+  },
+  {
+   "path": "qa/reflock/r40/GAMEPLAY_tunnel_arch_and_gold_rings.mp4",
+   "bytes": 6606240,
+   "sha256": "c97b07eff818ce60419dacfb4b884e248c1919d13d59f37530a1f7aba338e9b7"
+  },
+  {
+   "path": "qa/reflock/r40/Rainbow_r40_bubble_sock_section_debug.apk",
+   "bytes": 87246880,
+   "sha256": "9abeef90fa7f863db2f2989a78c035a8a37bc6b954917f508b7b5254853ba753"
   },
   {
    "path": "qa/reflock/r40/SOCK_RESCUE_APPROVED.jpg",
@@ -35428,18 +35463,23 @@
   },
   {
    "path": "qa/reflock/r40/SOCK_RESCUE_GAME.jpg",
-   "bytes": 185767,
-   "sha256": "fa0b8609b79703a53e94e9c82893629c0686b091e517181b41abc47b3644aedb"
+   "bytes": 186057,
+   "sha256": "81fa605cfe3f104aa67e12699bc7fce546486668e5411d43d22fe08d2dd5f769"
   },
   {
    "path": "qa/reflock/r40/SOCK_RESCUE_approved_vs_game.jpg",
-   "bytes": 369811,
-   "sha256": "81a839581032cdcea998ac7b4c47d6ad0511239587f45ee0c5845c45b46f5cb9"
+   "bytes": 370268,
+   "sha256": "8b3e41e03e871d20103349a9f0da785788cbf1012b897c0496dfeb02e20edd40"
+  },
+  {
+   "path": "qa/reflock/r40/app_route_check.json",
+   "bytes": 1098,
+   "sha256": "35702e80e1f656c795e2b91078d52edbd0d1bceb71dc4a43eb49a2cac3bd47df"
   },
   {
    "path": "qa/reflock/r40/reference_view_compare.json",
-   "bytes": 1784,
-   "sha256": "b3511259d7b995b89a6d1ccf5059c8d4f821c262773c22b734370a0f2527926b"
+   "bytes": 1785,
+   "sha256": "0de768c6f68872cbf333ea17427589e16e3a43a68c18ab73df87fb710bf23d3e"
   },
   {
    "path": "qa/report_metrics.json",
