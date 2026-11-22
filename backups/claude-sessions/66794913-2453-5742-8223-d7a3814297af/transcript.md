@@ -1105,3 +1105,259 @@ Now writing the cached, timed builder (`tools/screenkit/build.py`).
 
 > ↩︎ result: File created successfully at: /home/user/rainbow-/tools/screenkit/build.py (file state is current in your context — no need to Read it back)
 
+### 🤖 Claude — 2026-11-22T18:03:56.561Z
+
+Next: the reusable Geometry Nodes asset library (`gn_assets.py`). It moves the existing node groups out of `blender_kit.py` and adds gold ring, foam bank v2, wall tray and machinery-row assets.
+
+### 🤖 Claude — 2026-11-22T18:05:01.932Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/tools/screenkit/gn_assets.py", "content": "\"\"\"Rainbow screen kit - the reusable GEOMETRY NODES ASSET LIBRARY (round 45, Blender 5.3). Every washer-world component is ONE node group,\nmarked as a Blender asset and saved to rainbow_gn_assets.blend (built once and cached by tools/screenkit/build.py; blender_kit.py appends\nthe groups from it, and an artist can drag them from Blender's Asset Browser into any scene). No screen-specific numbers live here.\n  RB_PerforatedDrum  washer drum / tube: circle profile swept along an axis curve, normals INSIDE, per-poin …[+17751 chars]`
+
+### 🧑 User — 2026-11-22T18:05:02.022Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/tools/screenkit/gn_assets.py (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-22T18:05:04.391Z
+
+> 🔧 **TaskUpdate** `{"taskId": "2", "status": "in_progress"}`
+
+### 🧑 User — 2026-11-22T18:05:04.404Z
+
+> ↩︎ result: Updated task #2 status
+
+### 🤖 Claude — 2026-11-22T18:05:06.436Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; time blender -b --factory-startup --python tools/screenkit/gn_assets.py -- $S/gnlib_test.blend 2>&1 | grep -v '^$' | tail -15", "description": "Build the GN asset library in Blender", "timeout": 180000}`
+
+### 🧑 User — 2026-11-22T18:05:07.497Z
+
+> ↩︎ result: Traceback (most recent call last):
+>   File "/home/user/rainbow-/tools/screenkit/gn_assets.py", line 218, in <module>
+>     ng.asset_data.catalog_simple_name = 'Rainbow washer kit'; ng.use_fake_user = True
+>     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> AttributeError: bpy_struct: attribute "catalog_simple_name" from "AssetMetaData" is read-only
+> Blender 5.3.0 (hash 02f0899d78e3 built 2026-11-10 01:31:18)
+> Blender quit
+> 
+> real	0m1.011s
+> user	0m0.603s
+> sys	0m0.239s
+
+### 🤖 Claude — 2026-11-22T18:05:11.417Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/gn_assets.py'; s=open(p).read()\ns=s.replace(\"        ng.asset_data.catalog_simple_name = 'Rainbow washer kit'; ng.use_fake_user = True\\n\",\"        ng.asset_data.tags.new('Rainbow washer kit'); ng.use_fake_user = True\\n\")\ns=s.replace(\"    mg = N.new('GeometryNodeMergeByDistance'); mg.inputs['Distance'].default_value = 1e-5; _link(ng, setp.outputs[0], mg.inputs['Geometry'])\\n\",\"\")\nopen(p,'w').write(s)\nEOF\nS=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; blender -b --factory-startup --python too …[+156 chars]`
+
+### 🧑 User — 2026-11-22T18:05:12.244Z
+
+> ↩︎ result: Info: Saved as "gnlib_test.blend"
+> saved /tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/gnlib_test.blend ['RB_Band', 'RB_ChannelBody', 'RB_FoamBank', 'RB_GoldRing', 'RB_MachineryRow', 'RB_PerforatedDrum', 'RB_WallTray', 'RB_WaterChannel']
+> Blender 5.3.0 (hash 02f0899d78e3 built 2026-11-10 01:31:18)
+> Blender quit
+
+### 🤖 Claude — 2026-11-22T18:05:49.559Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/blender_kit.py'; s=open(p).read()\nold_head = s[:s.index('# ----------------------------------------------------------------------------------------------------------------- builders')]\nnew_head = '''\"\"\"Rainbow screen kit - Blender scene builder (round 43; round 45: built from the reusable Geometry Nodes ASSET LIBRARY\ntools/screenkit/gn_assets.py -> rainbow_gn_assets.blend, cached by tools/screenkit/build.py). Builds a screen's connected 3D scenery from its\nfitted layout (tools/screenkit/screens/NN/fitNN.py -> layout.json) and exports ON …[+2651 chars]`
+
+### 🧑 User — 2026-11-22T18:05:49.660Z
+
+> ↩︎ result: 68:    """washer drum / tube: the axis polyline split into segments of seg_len (each its own 0..1 UVs for the bake), RB_Sweep_Tube"""
+> 69:    ng = sweep_group('RB_Sweep_Tube', prof_circle(res), flip=True)
+> 84:    rib = object_profile_group('RB_Sweep_Ribbon', [(-1.0, 0.0), (-0.5, 0.0), (0.0, 0.0), (0.5, 0.0), (1.0, 0.0)])
+> 85:    flu = object_profile_group('RB_Sweep_Flume', [(-1.0, 0.0), (-1.07, -0.02), (-1.12, -0.09), (-1.1, -0.18), (-1.0, -0.24), (-0.6, -0.27), (0.0, -0.28),
+> 98:    ng = foam_group(); ob = curve_object(name, pts); return apply_group(ob, ng, {'Spacing': spacing, 'Size': size, 'Seed': seed})
+> 101:def paddle(name, pos, axis_pt, width):
+> 130:    ng = object_profile_group('RB_Sweep_Band', [(-0.5, -0.17), (-0.5, 0.1), (-0.42, 0.16), (-0.25, 0.18), (0.25, 0.18), (0.42, 0.16), (0.5, 0.1), (0.5, -0.17), (-0.5, -0.17)])
+> 166:    ng = object_profile_group('RB_Sweep_Band', [(-0.5, -0.17), (-0.5, 0.1), (-0.42, 0.16), (-0.25, 0.18), (0.25, 0.18), (0.42, 0.16), (0.5, 0.1), (0.5, -0.17), (-0.5, -0.17)])
+
+### 🤖 Claude — 2026-11-22T18:05:52.717Z
+
+> 🔧 **Read** `{"file_path": "/home/user/rainbow-/tools/screenkit/blender_kit.py", "offset": 29, "limit": 140}`
+
+### 🧑 User — 2026-11-22T18:05:52.746Z
+
+> ↩︎ result: 29	
+> 30	# ----------------------------------------------------------------------------------------------------------------- builders
+> 31	def curve_object(name, pts, radii=None, tilts=None, cyclic=False, twist='Z_UP'):
+> 32	    cu = bpy.data.curves.new(name + '_curve', 'CURVE'); cu.dimensions = '3D'; cu.twist_mode = twist
+> 33	    spl = cu.splines.new('POLY'); spl.points.add(len(pts) - 1); spl.use_cyclic_u = cyclic
+> 34	    for i, p in enumerate(pts):
+> 35	        spl.points[i].co = (*B2(p), 1.0); spl.points[i].radius = radii[i] if radii else 1.0; spl.points[i].tilt = tilts[i] if tilts else 0.0
+> 36	    ob = bpy.data.objects.new(name, cu); bpy.context.collection.objects.link(ob); return ob
+> 37	
+> 38	
+> 39	def apply_group(ob, ng, inputs=None):
+> 40	    mod = ob.modifiers.new('kit', 'NODES'); mod.node_group = ng
+> 41	    for k, v in (inputs or {}).items():
+> 42	        sock = next(s for s in ng.interface.items_tree if getattr(s, 'in_out', '') == 'INPUT' and s.name == k); sock.default_value = v   # Blender 5: set the group default, applied at once below
+> 43	    bpy.context.view_layer.objects.active = ob
+> 44	    for o in bpy.context.selected_objects: o.select_set(False)
+> 45	    ob.select_set(True); bpy.ops.objec …[+9694 chars]
+
+### 🤖 Claude — 2026-11-22T18:06:19.864Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/blender_kit.py'; s=open(p).read()\nrep = [\n(\"\"\"    \\\"\\\"\\\"washer drum / tube: the axis polyline split into segments of seg_len (each its own 0..1 UVs for the bake), RB_Sweep_Tube\\\"\\\"\\\"\n    ng = sweep_group('RB_Sweep_Tube', prof_circle(res), flip=True)\"\"\",\n\"\"\"    \\\"\\\"\\\"washer drum / tube: the axis polyline split into segments of seg_len (each its own 0..1 UVs for the bake), asset RB_PerforatedDrum\\\"\\\"\\\"\n    ng = NG['RB_PerforatedDrum']\"\"\"),\n(\"\"\"    rib = object_profile_group('RB_Sweep_Ribbon', [(-1.0,  …[+6446 chars]`
+
+### 🧑 User — 2026-11-22T18:06:19.945Z
+
+> ↩︎ result: grid('wall_00', 192, 24, wfun, flip=True)
+> if LAY.get('pool_front'):            # the water in front of the mouth, where Benny starts (04: the painted swirl around him)
+>     pf = LAY['pool_front']; nz = max(4, int((pf['z0'] - pf['z1']) / 0.25))
+>     grid('pool_front_00', 48, nz, lambda a, b, pf=pf: ((pf['x0'] + (pf['x1'] - pf['x0']) * a, pf['y'], pf['z0'] - (pf['z0'] - pf['z1']) * b), (a, b)), flip=False)
+> for i, ar in enumerate(LAY.get('arrows', [])):
+>     chevron(f'arrow_{i}', ar['pos'], ar['width'], ar.get('fwd', (0.0, 0.0, -1.0)), ar.get('tilt', 0.0))
+> # foam banks along both edges of the channel where it is lifted above the pool, and along both pool edges
+> def edge(side, off):
+>     out = []
+>     for i in range(0, len(route) - 1, 4):
+>         p, q = Vector(route[i]), Vector(route[min(len(route) - 1, i + 1)]); t = (q - p).normalized(); r = t.cross(Vector((0, 1, 0))).normalized()
+>         out.append(list(p + r * side * (RT['width'] / 2 + off)))
+>     return out
+> for side, nm, sd in ((-1, 'foam_routeL', 3), (1, 'foam_routeR', 5)):
+>     if LAY.get('foam_route', {}).get(nm): foam_bank(nm, edge(side, 0.02), 0.06, 0.07, sd)   # only where the screen's picture paints foam along the channel
+> for side,  …[+544 chars]
+
+### 🤖 Claude — 2026-11-22T18:06:40.132Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/blender_kit.py'; s=open(p).read()\na=\"\"\"    foam_bank(nm, [[xa + side * (chord - 0.06), 0.0, zq] for zq in [D['z0'] - 0.5 * j for j in range(int((D['z0'] - zf) / 0.5))]], 0.09, 0.11, 7 + side)\nfor i, p in enumerate(LAY.get('paddles', [])): paddle(f'paddle_{i}', p['pos'], (xa, ya), p['width'])\n\"\"\"\nb=\"\"\"    # r45: RB_FoamBank v2 clusters along the whole tube (was: the near drum only, single lumps)\n    foam_bank(nm, [[xa + side * (chord - 0.06), 0.0, zq] for zq in [D['z0'] - 0.5 * j for j in range(int((D['z0'] - D['z1']) / 0.5) + 1)] …[+2051 chars]`
+
+### 🧑 User — 2026-11-22T18:06:40.212Z
+
+> ↩︎ result: 15:GEOM_KEYS = ['drum', 'rings', 'route', 'no_route_ribbon', 'route_flume', 'mouth_ring', 'funnel', 'wall', 'pool_front', 'arrows', 'foam_route', 'foam_pool',
+> 209:    if LAY.get('foam_route', {}).get(nm): foam_bank(nm, edge(side, 0.02), 0.06, 0.07, sd)   # only where the screen's picture paints foam along the channel
+
+### 🤖 Claude — 2026-11-22T18:06:42.309Z
+
+Testing the new geometry build on 05, comparing the asset-built rings with the old ones numerically:
+
+### 🤖 Claude — 2026-11-22T18:06:48.466Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; mkdir -p $S/geo; time blender -b --factory-startup --python tools/screenkit/blender_kit.py -- $S/base/w05/fit/layout.json $S/geo/new05.glb --gnlib $S/gnlib_test.blend 2>&1 | grep -v '^$' | grep -iv 'warn' | tail -5; cat > $S/geo/cmp.py <<'EOF'\nimport bpy, sys\na = sys.argv[sys.argv.index('--')+1:]\ndef load(p):\n    bpy.ops.wm.read_factory_settings(use_empty=True); bpy.ops.import_scene.gltf(filepath=p)\n    out = {}\n    for o in bpy.data.objects:\n        if o.type != 'MESH': continue\n        v …[+906 chars]`
+
+### 🧑 User — 2026-11-22T18:06:51.277Z
+
+> ↩︎ result: 18:06:49 | INFO: Primitives created: 1
+> 18:06:49 | INFO: Finished glTF 2.0 export in 0.1916368007659912 s
+> exported /tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad/geo/new05.glb 58 objects: ['foam', 'paddle', 'pool', 'ring', 'tunnel', 'tunnelfar', 'water']
+> Blender 5.3.0 (hash 02f0899d78e3 built 2026-11-10 01:31:18)
+> Blender quit
+> 
+> real	0m1.167s
+> user	0m1.308s
+> sys	0m0.591s
+> foam_poolL OLD (80, [-1.411, -3.0, 0.0], [-1.411, -3.0, 0.0]) 
+>    NEW (30400, [-1.741, -3.241, -0.14], [-1.108, 42.579, 0.126])
+> paddle_0 OLD (2304, [-1.426, 4.588, 0.984], [-1.145, 5.164, 1.183]) 
+>    NEW (2304, [-1.437, 4.376, 0.857], [-0.95, 5.376, 1.203])
+> paddle_1 OLD (2304, [-1.522, 8.58, 0.799], [-1.201, 9.215, 0.976]) 
+>    NEW (2304, [-1.521, 8.609, 0.813], [-1.23, 9.185, 0.973])
+> pool_00 OLD (768, [-1.471, -3.0, -0.02], [1.061, 1.0, -0.02]) 
+>    NEW (768, [-1.471, -3.0, -0.02], [1.061, 1.0, -0.02])
+> ring_00 OLD (2560, [-1.586, 3.832, -0.927], [1.177, 4.152, 1.836]) 
+>    NEW (2544, [-1.354, 3.938, -0.695], [0.945, 4.043, 1.605])
+> ring_01 OLD (2560, [-1.586, 6.432, -0.927], [1.177, 6.752, 1.836]) 
+>    NEW (2544, [-1.688, 6.534, -1.029], [1.279, 6.646, 1.939])
+> tunnel_00 OLD (1520, [-1.568, …[+275 chars]
+
+### 🤖 Claude — 2026-11-22T18:07:21.054Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/blender_kit.py'; s=open(p).read()\na=\"\"\"    bpy.context.view_layer.objects.active = ob\n    for o in bpy.context.selected_objects: o.select_set(False)\"\"\"\nb=\"\"\"    if inputs:   # r45 fix: without this the FIRST object built with a group was evaluated with the group's OLD defaults (the 05 foam bank was one lump)\n        ng.interface_update(bpy.context); ob.update_tag(); bpy.context.view_layer.update()\n    bpy.context.view_layer.objects.active = ob\n    for o in bpy.context.selected_objects: o.select_set(False)\"\"\"\nassert s.count(a …[+996 chars]`
+
+### 🧑 User — 2026-11-22T18:07:24.307Z
+
+> ↩︎ result: exported /tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/
+> foam_poolL OLD (80, [-1.411, -3.0, 0.0], [-1.411, -3.0, 0.0]) 
+>    NEW (30400, [-1.741, -3.241, -0.14], [-1.108, 42.579, 0.126])
+> paddle_0 OLD (2304, [-1.426, 4.588, 0.984], [-1.145, 5.164, 1.183]) 
+>    NEW (2304, [-1.437, 4.376, 0.857], [-0.95, 5.376, 1.203])
+> paddle_1 OLD (2304, [-1.522, 8.58, 0.799], [-1.201, 9.215, 0.976]) 
+>    NEW (2304, [-1.521, 8.609, 0.813], [-1.23, 9.185, 0.973])
+> pool_00 OLD (768, [-1.471, -3.0, -0.02], [1.061, 1.0, -0.02]) 
+>    NEW (768, [-1.471, -3.0, -0.02], [1.061, 1.0, -0.02])
+> ring_00 OLD (2560, [-1.586, 3.832, -0.927], [1.177, 4.152, 1.836]) 
+>    NEW (2544, [-1.354, 3.938, -0.695], [0.945, 4.043, 1.605])
+> ring_01 OLD (2560, [-1.586, 6.432, -0.927], [1.177, 6.752, 1.836]) 
+>    NEW (2544, [-1.688, 6.534, -1.029], [1.279, 6.646, 1.939])
+> tunnel_00 OLD (1520, [-1.568, -3.0, -0.909], [1.159, -0.901, 1.819]) 
+>    NEW (1520, [-1.568, -3.0, -0.909], [1.159, -0.901, 1.819])
+> water_route_00 OLD (408, [-0.738, -0.036, 0.0], [0.6, 2.537, 0.0]) 
+>    NEW (408, [-0.738, -0.036, 0.0], [0.6, 2.537, 0.0])
+> objects old 58 new 58 faces old 100568 new 141308
+
+### 🤖 Claude — 2026-11-22T18:07:29.275Z
+
+> 🔧 **Bash** `{"command": "S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad; blender -b --factory-startup --python tools/screenkit/gn_assets.py -- $S/gnlib_test.blend 2>&1 | grep -v '^$' | tail -5; blender -b --factory-startup --python-expr \"import bpy; ng=bpy.data.node_groups.new('x','GeometryNodeTree'); n=ng.nodes.new('GeometryNodeSetCurveNormal'); print('MODES', [i.identifier for i in n.bl_rna.properties['mode'].enum_items] if 'mode' in n.bl_rna.properties else [i.name for i in n.inputs])\" 2>&1 | grep MODES", "description": "Show library build error and normal modes", …[+19 chars]`
+
+### 🧑 User — 2026-11-22T18:07:30.482Z
+
+> ↩︎ result: nrm.mode = 'Z_UP'   # the ring lies in the XY plane: Z up = the drum axis, so the band's width runs along the drum (measured r45)
+>     ^^^^^^^^
+> AttributeError: 'GeometryNodeSetCurveNormal' object has no attribute 'mode'
+> Blender 5.3.0 (hash 02f0899d78e3 built 2026-11-10 01:31:18)
+> Blender quit
+> MODES ['Curve', 'Selection', 'Mode', 'Normal']
+
+### 🤖 Claude — 2026-11-22T18:07:33.894Z
+
+> 🔧 **Bash** `{"command": "blender -b --factory-startup --python-expr \"\nimport bpy; ng=bpy.data.node_groups.new('x','GeometryNodeTree'); n=ng.nodes.new('GeometryNodeSetCurveNormal'); s=n.inputs['Mode']\nprint('DEF', repr(s.default_value))\nfor v in ['Z Up','Z_UP','Minimum Twist','Free']:\n    try: s.default_value=v; print('OK', v)\n    except Exception as e: print('NO', v, e)\n\" 2>&1 | grep -E 'DEF|OK|NO'", "description": "Probe the curve normal mode socket values", "timeout": 60000}`
+
+### 🧑 User — 2026-11-22T18:07:34.453Z
+
+> ↩︎ result: DEF 'Minimum Twist'
+> OK Z Up
+> NO Z_UP bpy_struct: item.attr = val: enum "Z_UP" not found in ('Minimum Twist', 'Z Up', 'Free')
+> OK Minimum Twist
+> OK Free
+
+### 🤖 Claude — 2026-11-22T18:07:38.596Z
+
+> 🔧 **Bash** `{"command": "sed -i \"s/    nrm.mode = 'Z_UP'   # the ring lies/    nrm.inputs['Mode'].default_value = 'Z Up'   # Blender 5.3: a menu socket. The ring lies/\" tools/screenkit/gn_assets.py && S=/tmp/claude-0/-home-user-rainbow-/66794913-2453-5742-8223-d7a3814297af/scratchpad\nblender -b --factory-startup --python tools/screenkit/gn_assets.py -- $S/gnlib_test.blend 2>&1 | grep -c saved\nblender -b --factory-startup --python tools/screenkit/blender_kit.py -- $S/base/w05/fit/layout.json $S/geo/new05.glb --gnlib $S/gnlib_test.blend 2>&1 | grep -c exported\nblender -b --factory-startup --python $S/g …[+168 chars]`
+
+### 🧑 User — 2026-11-22T18:07:41.945Z
+
+> ↩︎ result: 1
+> 1
+> foam_poolL OLD (80, [-1.411, -3.0, 0.0], [-1.411, -3.0, 0.0]) 
+>    NEW (30400, [-1.741, -3.241, -0.14], [-1.108, 42.579, 0.126])
+> paddle_0 OLD (2304, [-1.426, 4.588, 0.984], [-1.145, 5.164, 1.183]) 
+>    NEW (2304, [-1.437, 4.376, 0.857], [-0.95, 5.376, 1.203])
+> paddle_1 OLD (2304, [-1.522, 8.58, 0.799], [-1.201, 9.215, 0.976]) 
+>    NEW (2304, [-1.521, 8.609, 0.813], [-1.23, 9.185, 0.973])
+> pool_00 OLD (768, [-1.471, -3.0, -0.02], [1.061, 1.0, -0.02]) 
+>    NEW (768, [-1.471, -3.0, -0.02], [1.061, 1.0, -0.02])
+> ring_00 OLD (2560, [-1.586, 3.832, -0.927], [1.177, 4.152, 1.836]) 
+>    NEW (2544, [-1.354, 3.938, -0.695], [0.945, 4.043, 1.605])
+> ring_01 OLD (2560, [-1.586, 6.432, -0.927], [1.177, 6.752, 1.836]) 
+>    NEW (2544, [-1.688, 6.534, -1.029], [1.279, 6.646, 1.939])
+> tunnel_00 OLD (1520, [-1.568, -3.0, -0.909], [1.159, -0.901, 1.819]) 
+>    NEW (1520, [-1.568, -3.0, -0.909], [1.159, -0.901, 1.819])
+> water_route_00 OLD (408, [-0.738, -0.036, 0.0], [0.6, 2.537, 0.0]) 
+>    NEW (408, [-0.738, -0.036, 0.0], [0.6, 2.537, 0.0])
+> objects old 58 new 58 faces old 100568 new 141308
+> [This command modified 1 file you've previously read: tools/screenkit/gn_assets.py. Call Read before editing.]
+
+### 🤖 Claude — 2026-11-22T18:08:06.477Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='tools/screenkit/blender_kit.py'; s=open(p).read()\na_start = s.index('def apply_group(ob, ng, inputs=None):'); a_end = s.index('def grid(')\ns = s[:a_start] + '''def apply_group(ob, ng, inputs=None):\n    # r45 fix: Blender 5 copies a group's input defaults into the modifier WHEN THE MODIFIER IS CREATED; setting them afterwards had no\n    # effect, so the first object built with a group got the previous defaults (the 05 foam bank was one lump, the first tray / ring wrong size).\n    # The defaults are now set BEFORE the modifier exists.\n    for k, v in (inp …[+1899 chars]`
+
+### 🧑 User — 2026-11-22T18:08:09.888Z
+
+> ↩︎ result: 1
+> 1
+> foam_poolL OLD (80, [-1.411, -3.0, 0.0], [-1.411, -3.0, 0.0]) 
+>    NEW (28500, [-1.691, -3.067, -0.123], [-1.111, 42.605, 0.132])
+> paddle_0 OLD (2304, [-1.426, 4.588, 0.984], [-1.145, 5.164, 1.183]) 
+>    NEW (2304, [-1.426, 4.588, 0.984], [-1.145, 5.164, 1.183])
+> paddle_1 OLD (2304, [-1.522, 8.58, 0.799], [-1.201, 9.215, 0.976]) 
+>    NEW (2304, [-1.522, 8.58, 0.799], [-1.201, 9.215, 0.976])
+> pool_00 OLD (768, [-1.471, -3.0, -0.02], [1.061, 1.0, -0.02]) 
+>    NEW (768, [-1.471, -3.0, -0.02], [1.061, 1.0, -0.02])
+> ring_00 OLD (2560, [-1.586, 3.832, -0.927], [1.177, 4.152, 1.836]) 
+>    NEW (2544, [-1.688, 3.934, -1.029], [1.279, 4.046, 1.939])
+> ring_01 OLD (2560, [-1.586, 6.432, -0.927], [1.177, 6.752, 1.836]) 
+>    NEW (2544, [-1.688, 6.534, -1.029], [1.279, 6.646, 1.939])
+> tunnel_00 OLD (1520, [-1.568, -3.0, -0.909], [1.159, -0.901, 1.819]) 
+>    NEW (1520, [-1.568, -3.0, -0.909], [1.159, -0.901, 1.819])
+> water_route_00 OLD (408, [-0.738, -0.036, 0.0], [0.6, 2.537, 0.0]) 
+>    NEW (408, [-0.738, -0.036, 0.0], [0.6, 2.537, 0.0])
+> objects old 58 new 58 faces old 100568 new 139408
+

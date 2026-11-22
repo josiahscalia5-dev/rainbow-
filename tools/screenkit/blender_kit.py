@@ -1,103 +1,30 @@
-"""Rainbow screen kit - Blender component library (round 43, Blender 5.3 headless). Builds a screen's connected 3D scenery from its
-fitted layout (tools/screenkit/screens/NN/fitNN.py -> layout.json) and exports ONE GLB with clean per-mesh UVs (0..1) for the
-picture bake and the code materials. Reusable Geometry Nodes groups (created once per file, applied to curves the layout defines):
-  RB_Sweep_Tube    circle profile swept along a curve, normals facing INSIDE (washer drums / tubes); radius per point = curve radius
-  RB_Sweep_Ribbon  flat ribbon (water channel surface) swept along a curve, banked by the curve tilt, width = curve radius * 2
-  RB_Sweep_Flume   the channel body under a ribbon: two rounded side lips + underside (the painted rainbow edges of a water slide)
-  RB_Sweep_Band    rounded rectangular band profile swept around a circle (gold rings / collars hugging a drum wall)
-  RB_FoamBank      points along a curve, jittered, instanced lumpy flattened ico spheres (foam heaps along banks)
-Every sweep stores the UV map 'UVMap' (u = across the profile 0..1, v = along the curve 0..1) as a FLOAT2 face-corner attribute,
-which glTF exports as TEXCOORD_0. Object names carry the material family the game assigns (tunnel_*, ring_*, water_*, pool_*,
-flume_*, foam_*, paddle_*; r44 optional: funnel_*, wall_*, pool_front_*, arrow_*, ring_mouth). Screen-specific numbers live ONLY in
-layout.json; this file has none.
-  blender -b --python tools/screenkit/blender_kit.py -- <layout.json> <out.glb>
+"""Rainbow screen kit - Blender scene builder (round 43; round 45: built from the reusable Geometry Nodes ASSET LIBRARY
+tools/screenkit/gn_assets.py -> rainbow_gn_assets.blend, cached by tools/screenkit/build.py). Builds a screen's connected 3D scenery from its
+fitted layout (tools/screenkit/screens/NN/fitNN.py -> layout.json) and exports ONE GLB with clean per-mesh UVs (0..1) for the picture bake
+and the artwork-sampled materials. Asset node groups used (see gn_assets.py):
+  RB_PerforatedDrum  washer drums / tubes            RB_WaterChannel + RB_ChannelBody  the banked river channel and its body
+  RB_GoldRing        gold washer rings              RB_FoamBank v2  cumulus foam clusters along banks
+  RB_WallTray        painted copper wall trays      RB_MachineryRow the trays repeated along the whole tube (layout 'machinery')
+Object names carry the material family the game assigns (tunnel_*, ring_*, water_*, pool_*, flume_*, foam_*, paddle_*, paddlerep_*;
+r44 optional: funnel_*, wall_*, pool_front_*, arrow_*, ring_mouth). Screen-specific numbers live ONLY in layout.json; this file has none.
+GEOM_KEYS lists every layout key this file reads: build.py re-runs Blender only when one of them (or this file / the asset library) changes.
+  blender -b --python tools/screenkit/blender_kit.py -- <layout.json> <out.glb> [--gnlib rainbow_gn_assets.blend]
 """
-import bpy, bmesh, sys, json, math
-from mathutils import Vector
+import bpy, bmesh, sys, os, json, math
+from mathutils import Vector, Matrix
+GEOM_KEYS = ['drum', 'rings', 'route', 'no_route_ribbon', 'route_flume', 'mouth_ring', 'funnel', 'wall', 'pool_front', 'arrows', 'foam_route', 'foam_pool',
+             'paddles', 'foam_style', 'machinery', 'foam_banks']
 argv = sys.argv[sys.argv.index('--') + 1:]; LAY = json.load(open(argv[0])); OUT = argv[1]
+GNLIB = argv[argv.index('--gnlib') + 1] if '--gnlib' in argv else None
 bpy.ops.wm.read_factory_settings(use_empty=True)
 B2 = lambda p: Vector((p[0], -p[2], p[1]))            # game (x, y up, z) -> Blender (x, -z, y up)
-
-
-# ----------------------------------------------------------------------------------------------------------------- node groups
-def _link(ng, a, b): ng.links.new(a, b)
-
-
-def sweep_group(name, profile, flip=False):
-    """profile(ng) -> (profile geometry socket). Builds: curve -> capture v (spline factor) ; profile -> capture u ; Curve to Mesh with
-    Scale = curve radius ; UVMap = (u, v) ; optional flip ; smooth shading."""
-    if name in bpy.data.node_groups: return bpy.data.node_groups[name]
-    ng = bpy.data.node_groups.new(name, 'GeometryNodeTree')
-    ng.interface.new_socket('Geometry', in_out='INPUT', socket_type='NodeSocketGeometry')
-    ng.interface.new_socket('Geometry', in_out='OUTPUT', socket_type='NodeSocketGeometry')
-    N = ng.nodes; gin = N.new('NodeGroupInput'); gout = N.new('NodeGroupOutput')
-    sp = N.new('GeometryNodeSplineParameter')
-    capC = N.new('GeometryNodeCaptureAttribute'); capC.capture_items.new('FLOAT', 'v'); capC.domain = 'POINT'
-    _link(ng, gin.outputs[0], capC.inputs['Geometry']); _link(ng, sp.outputs['Factor'], capC.inputs['v'])   # by name: Blender 5 has a Selection socket at index 1
-    prof = profile(ng)
-    sp2 = N.new('GeometryNodeSplineParameter')
-    capP = N.new('GeometryNodeCaptureAttribute'); capP.capture_items.new('FLOAT', 'u'); capP.domain = 'POINT'
-    _link(ng, prof, capP.inputs['Geometry']); _link(ng, sp2.outputs['Factor'], capP.inputs['u'])
-    rad = N.new('GeometryNodeInputRadius')
-    c2m = N.new('GeometryNodeCurveToMesh'); _link(ng, capC.outputs['Geometry'], c2m.inputs['Curve']); _link(ng, capP.outputs['Geometry'], c2m.inputs['Profile Curve'])
-    _link(ng, rad.outputs[0], c2m.inputs['Scale'])
-    comb = N.new('ShaderNodeCombineXYZ'); _link(ng, capP.outputs['u'], comb.inputs[0]); _link(ng, capC.outputs['v'], comb.inputs[1])
-    st = N.new('GeometryNodeStoreNamedAttribute'); st.data_type = 'FLOAT2'; st.domain = 'CORNER'; st.inputs['Name'].default_value = 'UVMap'
-    _link(ng, c2m.outputs[0], st.inputs['Geometry']); _link(ng, comb.outputs[0], st.inputs['Value'])
-    last = st.outputs[0]
-    if flip:
-        ff = N.new('GeometryNodeFlipFaces'); _link(ng, last, ff.inputs[0]); last = ff.outputs[0]
-    sm = N.new('GeometryNodeSetShadeSmooth'); _link(ng, last, sm.inputs[0]); _link(ng, sm.outputs[0], gout.inputs[0])
-    return ng
-
-
-def prof_circle(res):
-    def f(ng):
-        # an OPEN full arc (first and last point coincide): the UV seam gets u = 0 and u = 1 at the same place instead of one face
-        # wrapping backwards across the whole texture (a cyclic circle's closing face would)
-        c = ng.nodes.new('GeometryNodeCurveArc'); c.inputs['Resolution'].default_value = res; c.inputs['Radius'].default_value = 1.0
-        c.inputs['Start Angle'].default_value = 0.0; c.inputs['Sweep Angle'].default_value = 2 * math.pi; return c.outputs['Curve']
-    return f
-
-
-def object_profile_group(name, pts, flip=False):
-    """sweep group whose profile is an existing poly curve object (named name + '_prof'), referenced through an Object Info node"""
-    if name in bpy.data.node_groups: return bpy.data.node_groups[name]
-    cu = bpy.data.curves.new(name + '_prof', 'CURVE'); cu.dimensions = '3D'; spl = cu.splines.new('POLY'); spl.points.add(len(pts) - 1)
-    # pts are (across, up). Measured in Blender 5.3 (Z_UP twist): profile X -> the curve's right side, profile Y -> DOWN (so y is negated)
-    for i, (x, y) in enumerate(pts): spl.points[i].co = (x, -y, 0, 1)   # measured: profile X -> sideways (right), profile -Y -> up
-    pob = bpy.data.objects.new(name + '_prof', cu)                     # not linked to the scene: only referenced by the node group
-    def f(ng):
-        oi = ng.nodes.new('GeometryNodeObjectInfo'); oi.inputs['Object'].default_value = pob; return oi.outputs['Geometry']
-    return sweep_group(name, f, flip)
-
-
-def foam_group():
-    name = 'RB_FoamBank'
-    if name in bpy.data.node_groups: return bpy.data.node_groups[name]
-    ng = bpy.data.node_groups.new(name, 'GeometryNodeTree'); N = ng.nodes
-    ng.interface.new_socket('Geometry', in_out='INPUT', socket_type='NodeSocketGeometry')
-    ng.interface.new_socket('Spacing', in_out='INPUT', socket_type='NodeSocketFloat')
-    ng.interface.new_socket('Size', in_out='INPUT', socket_type='NodeSocketFloat')
-    ng.interface.new_socket('Seed', in_out='INPUT', socket_type='NodeSocketInt')
-    ng.interface.new_socket('Geometry', in_out='OUTPUT', socket_type='NodeSocketGeometry')
-    gin = N.new('NodeGroupInput'); gout = N.new('NodeGroupOutput')
-    rs = N.new('GeometryNodeResampleCurve'); rs.inputs['Mode'].default_value = 'Length'; _link(ng, gin.outputs[0], rs.inputs['Curve']); _link(ng, gin.outputs[1], rs.inputs['Length'])
-    c2p = N.new('GeometryNodeCurveToPoints'); c2p.mode = 'EVALUATED'; _link(ng, rs.outputs[0], c2p.inputs['Curve'])
-    jit = N.new('FunctionNodeRandomValue'); jit.data_type = 'FLOAT_VECTOR'; jit.inputs['Min'].default_value = (-1, -1, -0.15); jit.inputs['Max'].default_value = (1, 1, 0.1)
-    _link(ng, gin.outputs[3], jit.inputs['Seed'])
-    jsc = N.new('ShaderNodeVectorMath'); jsc.operation = 'SCALE'; _link(ng, jit.outputs['Value'], jsc.inputs[0]); _link(ng, gin.outputs[2], jsc.inputs['Scale'])
-    sp = N.new('GeometryNodeSetPosition'); _link(ng, c2p.outputs['Points'], sp.inputs['Geometry']); _link(ng, jsc.outputs[0], sp.inputs['Offset'])
-    ico = N.new('GeometryNodeMeshIcoSphere'); ico.inputs['Radius'].default_value = 1.0; ico.inputs['Subdivisions'].default_value = 2
-    rnd = N.new('FunctionNodeRandomValue'); rnd.data_type = 'FLOAT'; rnd.inputs['Min'].default_value = 0.55; rnd.inputs['Max'].default_value = 1.25
-    _link(ng, gin.outputs[3], rnd.inputs['Seed'])
-    msz = N.new('ShaderNodeMath'); msz.operation = 'MULTIPLY'; _link(ng, rnd.outputs['Value'], msz.inputs[0]); _link(ng, gin.outputs[2], msz.inputs[1])
-    flat = N.new('ShaderNodeCombineXYZ'); _link(ng, msz.outputs[0], flat.inputs[0]); _link(ng, msz.outputs[0], flat.inputs[1])
-    mz = N.new('ShaderNodeMath'); mz.operation = 'MULTIPLY'; mz.inputs[1].default_value = 0.62; _link(ng, msz.outputs[0], mz.inputs[0]); _link(ng, mz.outputs[0], flat.inputs[2])
-    iop = N.new('GeometryNodeInstanceOnPoints'); _link(ng, sp.outputs[0], iop.inputs['Points']); _link(ng, ico.outputs['Mesh'], iop.inputs['Instance']); _link(ng, flat.outputs[0], iop.inputs['Scale'])
-    real = N.new('GeometryNodeRealizeInstances'); _link(ng, iop.outputs[0], real.inputs[0])
-    sm = N.new('GeometryNodeSetShadeSmooth'); _link(ng, real.outputs[0], sm.inputs[0]); _link(ng, sm.outputs[0], gout.inputs[0])
-    return ng
+HERE = os.path.dirname(os.path.abspath(__file__))
+if GNLIB and os.path.exists(GNLIB):                    # the cached asset library (build.py)
+    with bpy.data.libraries.load(GNLIB, link=False) as (src, dst): dst.node_groups = [n for n in src.node_groups if n.startswith('RB_')]
+else:                                                  # stand-alone use: build the same groups in this file
+    sys.path.insert(0, HERE); import gn_assets; gn_assets.build_all()
+NG = bpy.data.node_groups
+print('asset library:', GNLIB if GNLIB else 'built in place', sorted(n.name for n in NG if n.name.startswith('RB_')))
 
 
 # ----------------------------------------------------------------------------------------------------------------- builders
@@ -110,9 +37,12 @@ def curve_object(name, pts, radii=None, tilts=None, cyclic=False, twist='Z_UP'):
 
 
 def apply_group(ob, ng, inputs=None):
-    mod = ob.modifiers.new('kit', 'NODES'); mod.node_group = ng
+    # r45 fix: Blender 5 copies a group's input defaults into the modifier WHEN THE MODIFIER IS CREATED; setting them afterwards had no
+    # effect, so the first object built with a group got the previous defaults (the 05 foam bank was one lump, the first tray / ring wrong size).
+    # The defaults are now set BEFORE the modifier exists.
     for k, v in (inputs or {}).items():
-        sock = next(s for s in ng.interface.items_tree if getattr(s, 'in_out', '') == 'INPUT' and s.name == k); sock.default_value = v   # Blender 5: set the group default, applied at once below
+        sock = next(s for s in ng.interface.items_tree if getattr(s, 'in_out', '') == 'INPUT' and s.name == k); sock.default_value = v
+    mod = ob.modifiers.new('kit', 'NODES'); mod.node_group = ng
     bpy.context.view_layer.objects.active = ob
     for o in bpy.context.selected_objects: o.select_set(False)
     ob.select_set(True); bpy.ops.object.convert(target='MESH'); return bpy.context.view_layer.objects.active
@@ -138,8 +68,8 @@ def grid(name, nu, nv, fn, flip=False):
 
 
 def tube_segments(prefix, axis_pts, radius, seg_len, res=96):
-    """washer drum / tube: the axis polyline split into segments of seg_len (each its own 0..1 UVs for the bake), RB_Sweep_Tube"""
-    ng = sweep_group('RB_Sweep_Tube', prof_circle(res), flip=True)
+    """washer drum / tube: the axis polyline split into segments of seg_len (each its own 0..1 UVs for the bake), asset RB_PerforatedDrum"""
+    ng = NG['RB_PerforatedDrum']
     L = [0.0]
     for i in range(1, len(axis_pts)): L.append(L[-1] + math.dist(axis_pts[i], axis_pts[i - 1]))
     n = max(1, round(L[-1] / seg_len)); out = []
@@ -154,9 +84,7 @@ def tube_segments(prefix, axis_pts, radius, seg_len, res=96):
 
 def ribbon(prefix, route, bank, width, seg_len, flume=True):
     """water channel along the route: the ribbon surface (water_*) and, under it, the flume body (flume_*), both banked by `bank`"""
-    rib = object_profile_group('RB_Sweep_Ribbon', [(-1.0, 0.0), (-0.5, 0.0), (0.0, 0.0), (0.5, 0.0), (1.0, 0.0)])
-    flu = object_profile_group('RB_Sweep_Flume', [(-1.0, 0.0), (-1.07, -0.02), (-1.12, -0.09), (-1.1, -0.18), (-1.0, -0.24), (-0.6, -0.27), (0.0, -0.28),
-                                                   (0.6, -0.27), (1.0, -0.24), (1.1, -0.18), (1.12, -0.09), (1.07, -0.02), (1.0, 0.0)], flip=True)
+    rib = NG['RB_WaterChannel']; flu = NG['RB_ChannelBody']   # assets (gn_assets.py)
     L = [0.0]
     for i in range(1, len(route)): L.append(L[-1] + math.dist(route[i], route[i - 1]))
     n = max(1, round(L[-1] / seg_len)); per = (len(route) - 1) / n; out = []
@@ -167,22 +95,41 @@ def ribbon(prefix, route, bank, width, seg_len, flume=True):
     return out
 
 
-def foam_bank(name, pts, spacing, size, seed):
-    ng = foam_group(); ob = curve_object(name, pts); return apply_group(ob, ng, {'Spacing': spacing, 'Size': size, 'Seed': seed})
+FS = {'spacing': 1.0, 'size': 1.0, 'height': 0.62, 'spread': 1.0, 'detail': 1, **LAY.get('foam_style', {})}   # r45: per-screen foam look (multipliers)
+
+
+def foam_bank(name, pts, spacing, size, seed, spread=None):
+    """asset RB_FoamBank v2 (cumulus clusters) along a bank polyline"""
+    ob = curve_object(name, pts)
+    return apply_group(ob, NG['RB_FoamBank'], {'Spacing': spacing * FS['spacing'], 'Size': size * FS['size'], 'Seed': seed, 'Height': FS['height'],
+                                              'Spread': FS['spread'] if spread is None else spread, 'Detail': int(FS['detail'])})
+
+
+def tray_frame(pos, axis_pt):
+    """a wall tray's frame (game coords): inward (to the drum axis, horizontal), along (-z), side = inward x along"""
+    c = Vector(pos); a = Vector((axis_pt[0], axis_pt[1], pos[2])); inward = (a - c).normalized(); along = Vector((0, 0, -1.0)); side = inward.cross(along).normalized()
+    return c, inward, along, side
 
 
 def paddle(name, pos, axis_pt, width):
-    """copper half-disc tray standing out of the drum wall (the painted trays of 05 / 06 / 07): its straight edge lies in the wall"""
-    c = Vector(pos); a = Vector((axis_pt[0], axis_pt[1], pos[2])); inward = (a - c).normalized(); along = Vector((0, 0, -1.0)); side = inward.cross(along).normalized()
-    R = width / 2; T = 0.11 * width
-    def f(u, v):
-        th = math.pi * u                                    # half disc: along the tube from -R to +R, out of the wall up to R
-        if v < 0.25: k = v / 0.25; rr = R * k; h = T / 2           # top face
-        elif v < 0.75: k = (v - 0.25) / 0.5; rr = R; h = T / 2 - T * k   # rim band
-        else: k = (v - 0.75) / 0.25; rr = R * (1 - k); h = -T / 2        # underside
-        p = c + along * (rr * math.cos(th)) + inward * (rr * math.sin(th) - 0.03) + side * h   # r43b gray test: straight edge 3 cm INTO the wall (was 2 cm off it = floating)
-        return ((p.x, p.y, p.z), (u, v))
-    return grid(name, 48, 24, f)
+    """copper half-disc tray standing out of the drum wall (the painted trays of 05 / 06 / 07), asset RB_WallTray: its straight edge lies
+    3 cm inside the wall (r43b gray test), the disc stands out toward the axis"""
+    c, inward, along, side = tray_frame(pos, axis_pt)
+    me = bpy.data.meshes.new(name + '_m'); ob = bpy.data.objects.new(name, me); bpy.context.collection.objects.link(ob)
+    ob = apply_group(ob, NG['RB_WallTray'], {'Width': width})
+    X, Y, Z, O = B2(inward), B2(along), B2(side), B2(c)   # local X -> inward, Y -> along the tube, Z -> side
+    M = Matrix(((X.x, Y.x, Z.x, O.x), (X.y, Y.y, Z.y, O.y), (X.z, Y.z, Z.z, O.z), (0, 0, 0, 1)))
+    ob.data.transform(M); ob.data.update(); return ob
+
+
+def machinery_row(name, trays):
+    """asset RB_MachineryRow: trays = [(pos, axis_pt, width)] -> one realised mesh (identical tray UVs: the artwork template fits every tray)"""
+    me = bpy.data.meshes.new(name + '_pts'); me.vertices.add(len(trays))
+    for i, (pos, axis_pt, w) in enumerate(trays): me.vertices[i].co = B2(pos)
+    aw = me.attributes.new('tray_w', 'FLOAT', 'POINT'); an = me.attributes.new('tray_n', 'FLOAT_VECTOR', 'POINT'); at_ = me.attributes.new('tray_t', 'FLOAT_VECTOR', 'POINT')
+    for i, (pos, axis_pt, w) in enumerate(trays):
+        c, inward, along, side = tray_frame(pos, axis_pt); aw.data[i].value = w; an.data[i].vector = B2(inward); at_.data[i].vector = B2(along)
+    ob = bpy.data.objects.new(name, me); bpy.context.collection.objects.link(ob); return apply_group(ob, NG['RB_MachineryRow'])
 
 
 # ----------------------------------------------------------------------------------------------------------------- the screen
@@ -195,13 +142,11 @@ zz = (min(z_r) if z_r else D['z0'] - 6) - LAY['rings']['spacing']
 while zz > D['z1'] + 1: z_r.append(zz); zz -= LAY['rings']['spacing']
 bw = LAY['rings']['band']
 for i, z in enumerate(sorted(z_r, reverse=True)):
-    # band ring: unit profile scaled by the curve radius (= band width), centred on the wall circle slightly inside the drum
-    prof_scale = bw
-    pts = [[xa + (R - 0.04) * math.cos(2 * math.pi * j / 160), ya + (R - 0.04) * math.sin(2 * math.pi * j / 160), z] for j in range(161)]
-    # closed rounded band, centred on the wall circle (radial -0.17..+0.17 of the band width): reads the same whichever way the ring's
-    # minimum-twist normal points, half of it stands proud of the wall
-    ng = object_profile_group('RB_Sweep_Band', [(-0.5, -0.17), (-0.5, 0.1), (-0.42, 0.16), (-0.25, 0.18), (0.25, 0.18), (0.42, 0.16), (0.5, 0.1), (0.5, -0.17), (-0.5, -0.17)])
-    apply_group(curve_object(f'ring_{i:02d}', pts, [prof_scale] * len(pts), twist='MINIMUM'), ng)
+    # asset RB_GoldRing: a rounded band (width bw) centred on the wall circle slightly inside the drum (radial -0.17..+0.18 of the band
+    # width: half of it stands proud of the wall); the unit ring lies in Blender's XY plane -> turned into the drum section (game x-y plane)
+    me = bpy.data.meshes.new(f'ring_{i:02d}_m'); ob = bpy.data.objects.new(f'ring_{i:02d}', me); bpy.context.collection.objects.link(ob)
+    ob = apply_group(ob, NG['RB_GoldRing'], {'Radius': R - 0.04, 'Band': bw, 'Resolution': 160})
+    ob.data.transform(Matrix.Translation(B2((xa, ya, z))) @ Matrix.Rotation(math.pi / 2, 4, 'X')); ob.data.update()
 # the pool: water plane on the drum floor between the walls (segments along the drum, own UVs)
 chord = D['chord'] - 0.02; z = D['z0']; k = 0
 while z > D['z1'] + 1e-6:
@@ -236,8 +181,7 @@ def chevron(name, pos, width, fwd, tilt_deg=0.0):
 
 if LAY.get('mouth_ring'):            # the thick gold flange around a tunnel mouth seen from outside (04)
     mr = LAY['mouth_ring']; pts = [[xa + mr['r'] * math.cos(2 * math.pi * j / 192), ya + mr['r'] * math.sin(2 * math.pi * j / 192), mr['z']] for j in range(193)]
-    ng = object_profile_group('RB_Sweep_Band', [(-0.5, -0.17), (-0.5, 0.1), (-0.42, 0.16), (-0.25, 0.18), (0.25, 0.18), (0.42, 0.16), (0.5, 0.1), (0.5, -0.17), (-0.5, -0.17)])
-    apply_group(curve_object('ring_mouth', pts, [mr['band']] * len(pts), twist='MINIMUM'), ng)
+    apply_group(curve_object('ring_mouth', pts, [mr['band']] * len(pts), twist='MINIMUM'), NG['RB_Band'])
 if LAY.get('funnel'):                # swirling water bell mouth around the tunnel mouth: circle r_in at z_in -> ellipse (a_out, b_out) at z_out
     fu = LAY['funnel']
     def ffun(u, v, fu=fu):
@@ -267,8 +211,29 @@ def edge(side, off):
 for side, nm, sd in ((-1, 'foam_routeL', 3), (1, 'foam_routeR', 5)):
     if LAY.get('foam_route', {}).get(nm): foam_bank(nm, edge(side, 0.02), 0.06, 0.07, sd)   # only where the screen's picture paints foam along the channel
 for side, nm in (((-1, 'foam_poolL'), (1, 'foam_poolR')) if LAY.get('foam_pool', True) else ()):   # r44: 04 paints no foam along the tube's water edges
-    foam_bank(nm, [[xa + side * (chord - 0.06), 0.0, zq] for zq in [D['z0'] - 0.5 * j for j in range(int((D['z0'] - zf) / 0.5))]], 0.09, 0.11, 7 + side)
+    # r45: RB_FoamBank v2 clusters along the whole tube (was: the near drum only, single lumps)
+    foam_bank(nm, [[xa + side * (chord - 0.06), 0.0, zq] for zq in [D['z0'] - 0.5 * j for j in range(int((D['z0'] - D['z1']) / 0.5) + 1)]], 0.16, 0.11, 7 + side)
 for i, p in enumerate(LAY.get('paddles', [])): paddle(f'paddle_{i}', p['pos'], (xa, ya), p['width'])
+# r45: extra foam banks (layout 'foam_banks': [{'side': -1|1, 'off': metres from the route edge, 'spacing', 'size', 's0', 's1', 'seed'}]) along the route
+for j, fb in enumerate(LAY.get('foam_banks', [])):
+    ds_ = RT.get('ds', 0.05); i0 = int(fb.get('s0', 0) / ds_); i1 = min(len(route) - 1, int(fb.get('s1', 1e9) / ds_)); pts = []
+    for i in range(i0, i1, 4):
+        p, q = Vector(route[i]), Vector(route[min(len(route) - 1, i + 1)]); t = (q - p).normalized(); r = t.cross(Vector((0, 1, 0))).normalized()
+        pts.append(list(p + r * fb['side'] * (RT['width'] / 2 + fb.get('off', 0.0)) + Vector((0, fb.get('y', 0.0), 0))))
+    if len(pts) > 1: foam_bank(f'foam_bank{j}', pts, fb.get('spacing', 0.16), fb.get('size', 0.11), fb.get('seed', 11 + j), fb.get('spread'))
+# r45: the painted trays repeated along the whole tube (asset RB_MachineryRow): the painted group (angle around the axis, offset from its ring,
+# width) every `every` ring spacings beyond the painted ones, until the tube's end (layout 'machinery': {'every': 2, 'to': z})
+MC = LAY.get('machinery')
+if MC and LAY.get('paddles'):
+    zr_all = sorted(LAY['rings']['z']); sp = LAY['rings']['spacing'] * MC.get('every', 2); pat = []
+    for p in LAY['paddles']:
+        zr = min(zr_all, key=lambda z: abs(z - p['pos'][2])); pat.append((math.atan2(p['pos'][1] - ya, p['pos'][0] - xa), p['pos'][2] - zr, p['width']))
+    zk = min(zr_all) - sp; zend = MC.get('to', D['z1'] + 1.0); trays = []
+    while zk > zend:
+        for th, dz, w in pat:
+            if zk + dz > zend: trays.append(([xa + R * math.cos(th), ya + R * math.sin(th), zk + dz], (xa, ya), w))
+        zk -= sp
+    if trays: machinery_row('paddlerep_00', trays)
 # helper objects that only fed node groups are not exported
 for ob in list(bpy.data.objects):
     if ob.type != 'MESH': bpy.data.objects.remove(ob)

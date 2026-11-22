@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 28434,
-   "sha256": "630a3c04700c1a900a227f2410f157887abdf988b390060d118397478e3db975"
+   "sha256": "7d5c9dd017b1253040be28d51ad6a2d786cb7079705fe09fa566a70675cf9297"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3233,
-   "sha256": "7a9b813d55aec5034807277790e6f9e1ce2de1a12d538eb048ddbc477f46f9e4"
+   "sha256": "25c10b014846b421b58f54763c2ea8f3eba1b48b5cd512860d676564c3d3f02f"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -45598,8 +45598,8 @@
   },
   {
    "path": "tools/screenkit/blender_kit.py",
-   "bytes": 21843,
-   "sha256": "deb07b061a59f0464d5013a5835da2c941bbb422895d45cc195c844122013d8e"
+   "bytes": 18784,
+   "sha256": "3f6123872daf66a53105fcf9709a25b91a3aa7237aab0385373e34753ba84c97"
   },
   {
    "path": "tools/screenkit/build.py",
@@ -45635,6 +45635,11 @@
    "path": "tools/screenkit/get_models.sh",
    "bytes": 1399,
    "sha256": "120b819946cf91488739919e4e66b27b01f0163721288100c4edb8bf6649a2ef"
+  },
+  {
+   "path": "tools/screenkit/gn_assets.py",
+   "bytes": 18159,
+   "sha256": "257f64a389b9de45bddbc599e62897d4a871cd980a9be04f6f61e218dbaf9202"
   },
   {
    "path": "tools/screenkit/kit_run.cjs",
