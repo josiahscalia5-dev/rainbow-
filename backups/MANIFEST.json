@@ -68,8 +68,8 @@
   },
   {
    "path": ".claude/skills/rainbow-screen-builder/screens.json",
-   "bytes": 7534,
-   "sha256": "5202904dd5afa9836b443cacadbc2c68c115205ae03c890a3a985d3d2d2948c6"
+   "bytes": 10406,
+   "sha256": "eaadb1717eaf3741c0fa0bb3bb170d0829175786b887139933d4f18856770ab0"
   },
   {
    "path": ".claude/skills/rainbow-screen-builder/scripts/acceptance.sh",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3218,
-   "sha256": "44db833b915e9db65f0fa4ee07007f7c69b1a8a0c19e6f6c4a90e0775d5419f3"
+   "sha256": "598681734ee4982d40f5b98e3749707a9507a8aaf7b46f1759e80ddc56177783"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -11675,6 +11675,11 @@
    "path": "docs/briefs/2026-11-22-r42/STORYBOARD_13_in_gameplay_order.jpg",
    "bytes": 1096237,
    "sha256": "86c7ce8890ea45ba723a48ea26898465a8b5473fdcf58c8d3768489950f9aeb0"
+  },
+  {
+   "path": "docs/briefs/2026-11-22-r43/USER_R43.md",
+   "bytes": 4308,
+   "sha256": "5a5a1109d6d9c7e710aadca58a634959c88f95ebbfd85e62201b8f3b55479366"
   },
   {
    "path": "docs/characters/benny.md",
@@ -36067,6 +36072,76 @@
    "sha256": "cbbf5639c41c780d4a68c4cc484281c5f151e77ce6b6dbf54aa637b8c783d250"
   },
   {
+   "path": "qa/reflock/r43/analysis_04_10/04_analysis.json",
+   "bytes": 4873,
+   "sha256": "11721c60431d37c0a9fb779f09c4c9e64d3e71bd657ac5b1e4b3db041051c254"
+  },
+  {
+   "path": "qa/reflock/r43/analysis_04_10/04_overlay.jpg",
+   "bytes": 103624,
+   "sha256": "dde246f00ad0c7b09d41e501d92080981fc35eacc6cc52061289c82e2adb2165"
+  },
+  {
+   "path": "qa/reflock/r43/analysis_04_10/05_analysis.json",
+   "bytes": 6171,
+   "sha256": "d6bf95e5a345c63267851c6ea1482400b5fe156ed5980f9a339e3462d7b48285"
+  },
+  {
+   "path": "qa/reflock/r43/analysis_04_10/05_overlay.jpg",
+   "bytes": 120171,
+   "sha256": "82f52529b23a39b9eca7d10dd9bc4d615f179018cead4b466d4379ebb7c7e8d0"
+  },
+  {
+   "path": "qa/reflock/r43/analysis_04_10/06_analysis.json",
+   "bytes": 6055,
+   "sha256": "953dac3643cde8b8a416d7979569725b47d2fc500976a4030b664c841537320a"
+  },
+  {
+   "path": "qa/reflock/r43/analysis_04_10/06_overlay.jpg",
+   "bytes": 124019,
+   "sha256": "49bcc47abd70c76d4bac01a89025615191b83c08a5f26d988aa0807ff31888ff"
+  },
+  {
+   "path": "qa/reflock/r43/analysis_04_10/07_analysis.json",
+   "bytes": 6528,
+   "sha256": "6e91b208f3656dbc8a0b6195280a0217aaf8950f3db8e90f9cff3f305be02e76"
+  },
+  {
+   "path": "qa/reflock/r43/analysis_04_10/07_overlay.jpg",
+   "bytes": 124055,
+   "sha256": "f9a83f00cebaa5da92059bdb906ed8937002327e0529dddb8587821e4a8ad7d0"
+  },
+  {
+   "path": "qa/reflock/r43/analysis_04_10/08_analysis.json",
+   "bytes": 6108,
+   "sha256": "6dbc0fc245a9ac4c48f039fdd4c91996ddecfc22882403298eca7998a8b04691"
+  },
+  {
+   "path": "qa/reflock/r43/analysis_04_10/08_overlay.jpg",
+   "bytes": 123954,
+   "sha256": "f480a80b8e738dc3a8c26e40904a1d0496e1632883fe78c47bd5e1caa2c8f005"
+  },
+  {
+   "path": "qa/reflock/r43/analysis_04_10/09_analysis.json",
+   "bytes": 6020,
+   "sha256": "bcc534abcedb714be9010ed8538e04053e4439e1dedd6b09c4b195f0cd3b81b6"
+  },
+  {
+   "path": "qa/reflock/r43/analysis_04_10/09_overlay.jpg",
+   "bytes": 126221,
+   "sha256": "ed252c77f417a10b938183a7c36aee1138afe89feffe904b96af85b798911348"
+  },
+  {
+   "path": "qa/reflock/r43/analysis_04_10/10_analysis.json",
+   "bytes": 5196,
+   "sha256": "9c1ce009f9e8ffeae236a22ff9c670d191ae1f0b45bc5eafdcd02f9f2785073b"
+  },
+  {
+   "path": "qa/reflock/r43/analysis_04_10/10_overlay.jpg",
+   "bytes": 123919,
+   "sha256": "7981b6daf134d6fc83adb7901a31372fd0571c75c3993800262fd48d2ba0d68f"
+  },
+  {
    "path": "qa/report_metrics.json",
    "bytes": 1112,
    "sha256": "19e17f9a21cff527b57089a43122a4e1396d5222f2b16ccc18093685071c4134"
@@ -43543,13 +43618,13 @@
   },
   {
    "path": "tools/screenkit/screen.html",
-   "bytes": 46928,
-   "sha256": "c2289e4b8323042e607b462705f018813cafa5e8f2fb7ee31d37412e142175ec"
+   "bytes": 47560,
+   "sha256": "81a752c63dc6cb6f93eb3adbd29e0baf72e0a47054e091909f8ff2f10f27b2f5"
   },
   {
    "path": "tools/screenkit/screens/06/fit06.py",
-   "bytes": 12814,
-   "sha256": "1e4b80d5449ffd830f0ab49e147d53b484ad1a3376bdf157143f81591d858726"
+   "bytes": 13238,
+   "sha256": "605f2fe55845e808cea5150b54e7881a1d5f8100271043f09fcb1939237450c4"
   },
   {
    "path": "tools/screenkit/screens/06/segment06.json",

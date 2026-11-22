@@ -61,12 +61,15 @@ const cvs = (w, h, draw) => { const c = document.createElement('canvas'); c.widt
   t.wrapS = t.wrapT = THREE.RepeatWrapping; t.anisotropy = 8; t.colorSpace = THREE.NoColorSpace; return t; };
 const rnd = (() => { let x = 4343; return () => ((x = (x * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff); })();
 const grad = (g, x0, y0, x1, y1, stops) => { const gr = g.createLinearGradient(x0, y0, x1, y1); for (const [o, c] of stops) gr.addColorStop(o, c); return gr; };
-const PAL = { wallA: '#8f4fd0', wallB: '#d79af2', slot: '#3a1060', ...(LAY.palette ?? {}) };
+const PAL = { wallA: '#7a33c4', wallB: '#e29df0', slot: '#3a1060', ...(LAY.palette ?? {}) };
 const BASE = {
-  tunnel: cvs(512, 256, (g, w, h) => { g.fillStyle = grad(g, 0, 0, 0, h, [[0, PAL.wallA], [0.5, PAL.wallB], [1, PAL.wallA]]); g.fillRect(0, 0, w, h);
-    g.globalCompositeOperation = 'lighter'; for (let i = 0; i < 10; i++) { const x = rnd() * w; g.fillStyle = `rgba(255,190,255,${0.05 + rnd() * 0.08})`; g.fillRect(x, 0, 2 + rnd() * 8, h); } g.globalCompositeOperation = 'source-over';
-    for (let r = 0; r < 4; r++) for (let i = 0; i < 8; i++) { const x = (i + 0.5 + (r % 2) * 0.5) * w / 8, y = (r + 0.5) * h / 4;
-      g.fillStyle = 'rgba(235,215,255,0.9)'; g.beginPath(); g.ellipse(x, y + 2, 15, 6, 0, 0, 7); g.fill(); g.fillStyle = PAL.slot; g.beginPath(); g.ellipse(x, y, 14, 5, 0, 0, 7); g.fill(); } }),
+  // drum wall where no painted pixel is sharp enough (seen close): the painted wall's look - violet-to-pink polished metal (colours sampled
+  // from the approved walls), light streaks along the drum, rows of dark capsule slots with a light lower rim. Tile = 8 slots x 4 rows.
+  tunnel: cvs(1024, 512, (g, w, h) => { g.fillStyle = grad(g, 0, 0, w, 0, [[0, PAL.wallA], [0.25, PAL.wallB], [0.5, '#b56be0'], [0.75, PAL.wallB], [1, PAL.wallA]]); g.fillRect(0, 0, w, h);
+    g.globalCompositeOperation = 'lighter'; for (let i = 0; i < 14; i++) { const x = rnd() * w; g.fillStyle = `rgba(255,${200 + rnd() * 40},255,${0.08 + rnd() * 0.12})`; g.fillRect(x, 0, 3 + rnd() * 14, h); } g.globalCompositeOperation = 'source-over';
+    for (let r = 0; r < 4; r++) for (let i = 0; i < 8; i++) { const x = (i + 0.5 + (r % 2) * 0.5) * w / 8, y = (r + 0.5) * h / 4, rx = w / 8 * 0.33, ry = h / 4 * 0.16;
+      g.fillStyle = 'rgba(255,225,255,0.85)'; g.beginPath(); g.ellipse(x, y + ry * 0.55, rx * 1.04, ry * 1.1, 0, 0, 7); g.fill();
+      const sg = g.createLinearGradient(0, y - ry, 0, y + ry); sg.addColorStop(0, '#1c0533'); sg.addColorStop(1, PAL.slot); g.fillStyle = sg; g.beginPath(); g.ellipse(x, y, rx, ry, 0, 0, 7); g.fill(); } }),
   goldring: cvs(1024, 128, (g, w, h) => { g.fillStyle = grad(g, 0, 0, 0, h, [[0, '#a8560f'], [0.2, '#f6b04a'], [0.35, '#ffe39a'], [0.5, '#e8902c'], [0.75, '#ffcc66'], [1, '#8a4210']]); g.fillRect(0, 0, w, h);
     for (let i = 0; i < 8; i++) { const x = (i + 0.5) * w / 8; g.fillStyle = 'rgba(255,250,215,0.95)'; g.fillRect(x - 26, 16, 52, 30); g.fillStyle = 'rgba(255,230,150,0.35)'; g.fillRect(x - 36, 8, 72, 46); } }),
   copper: cvs(128, 128, (g, w, h) => { g.fillStyle = grad(g, 0, 0, 0, h, [[0, '#fbb27a'], [0.3, '#ffd59a'], [0.5, '#f7a25a'], [0.75, '#e0702e'], [1, '#9c3d2a']]); g.fillRect(0, 0, w, h); }),
@@ -132,7 +135,7 @@ const bbox = (o) => { o.geometry.computeBoundingBox(); return o.geometry.boundin
 const NSEG = MESH.filter((o) => /^water_/.test(o.name)).length, SEG_LEN = RLEN / Math.max(1, NSEG);
 for (const o of MESH) {
   const n = o.name, fam = famOf(n), bb = bbox(o), sz = bb.getSize(new THREE.Vector3()); let m;
-  if (fam === 'tunnel') m = sceneryMat(BASE.tunnel, [Math.round(2 * Math.PI * (DRUM?.r ?? 1) / 0.9), Math.max(1, sz.z / 0.9)]);
+  if (fam === 'tunnel') m = sceneryMat(BASE.tunnel, [Math.round(2 * Math.PI * (DRUM?.r ?? 1) / (LAY.slot_tile ?? [2.6, 1.2])[0]), Math.max(1, sz.z / (LAY.slot_tile ?? [2.6, 1.2])[1])]);   // tile size in world units
   else if (fam === 'ring') m = sceneryMat(BASE.goldring, [4, 1]);
   else if (fam === 'water') { const k = +n.split('_').pop(); m = waterMat(LAY.route.width / 2, SEG_LEN, k * SEG_LEN, false); }
   else if (fam === 'pool') m = waterMat(DRUM ? DRUM.chord : 2, sz.z, -bb.max.z, true);
@@ -166,7 +169,7 @@ if (MANI) {
     renderer.setRenderTarget(rt); renderer.render(scene, cam); renderer.setRenderTarget(null); return rt; };
   const DEP = CAMS.map(depthOf);
   const vp = (c) => new THREE.Matrix4().multiplyMatrices(c.projectionMatrix, c.matrixWorldInverse);
-  const uni = { uNoDepth: { value: q.get('bakedbg') === 'nodepth' ? 1 : q.get('bakedbg') === 'raw' ? 2 : 0 }, uNF: { value: new THREE.Vector2(0.05, 300) }, uDens: { value: new THREE.Vector2(...(q.get('dens') ?? '15,60').split(',').map(Number)) }, uMode: { value: 0 } };
+  const uni = { uNoDepth: { value: q.get('bakedbg') === 'nodepth' ? 1 : q.get('bakedbg') === 'raw' ? 2 : 0 }, uNF: { value: new THREE.Vector2(0.05, 300) }, uDens: { value: new THREE.Vector2(...(q.get('dens') ?? (LAY.bake_dens ?? [15, 60]).join(',')).split(',').map(Number)) }, uMode: { value: 0 } };
   let decl = '', body = '';
   CAMS.forEach((c, i) => { Object.assign(uni, { [`uP${i}`]: { value: tex[2 * i] }, [`uM${i}`]: { value: tex[2 * i + 1] }, [`uD${i}`]: { value: DEP[i].depthTexture }, [`uVP${i}`]: { value: vp(c) }, [`uImg${i}`]: { value: new THREE.Vector2(...c.userData.img) } });
     decl += `uniform sampler2D uP${i}, uM${i}, uD${i}; uniform mat4 uVP${i}; uniform vec2 uImg${i};\n`;

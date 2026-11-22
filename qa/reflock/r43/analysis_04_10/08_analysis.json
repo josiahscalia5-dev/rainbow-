@@ -1,0 +1,545 @@
+{
+ "reference": "/home/user/rainbow-/references/08_final_spin_chamber.png",
+ "size": [
+  864,
+  1536
+ ],
+ "phone_frame": {
+  "w": 412,
+  "h": 915,
+  "scale": 0.595703125,
+  "scaled_width": 515,
+  "crop_x": 51.5
+ },
+ "hud": {
+  "found": true,
+  "bottom_px": 194,
+  "last_long_edge_row": 180,
+  "rows_with_long_edges": [
+   16,
+   17,
+   94,
+   95,
+   96,
+   99,
+   112,
+   113,
+   115,
+   116,
+   117,
+   118,
+   119,
+   174,
+   175,
+   176,
+   178,
+   179,
+   180
+  ]
+ },
+ "palette_below_hud": [
+  {
+   "hex": "#b92a99",
+   "share": 0.18
+  },
+  {
+   "hex": "#e84ddb",
+   "share": 0.163
+  },
+  {
+   "hex": "#12a6ed",
+   "share": 0.144
+  },
+  {
+   "hex": "#e2d8f2",
+   "share": 0.131
+  },
+  {
+   "hex": "#d86327",
+   "share": 0.115
+  },
+  {
+   "hex": "#7856d0",
+   "share": 0.104
+  },
+  {
+   "hex": "#62155e",
+   "share": 0.088
+  },
+  {
+   "hex": "#f9b352",
+   "share": 0.074
+  }
+ ],
+ "class_shares_below_hud": {
+  "gold": 0.1435,
+  "water_cyan": 0.1711,
+  "pink_edge": 0.405,
+  "purple": 0.0955,
+  "foam_white": 0.0738,
+  "near_black": 0.0017
+ },
+ "vanishing_point": {
+  "used": [
+   145.0,
+   316.0
+  ],
+  "source": "tunnel core estimate",
+  "confidence": "ok",
+  "tunnel_core_candidates": [
+   {
+    "x": 145,
+    "y": 316,
+    "ring_arcs": 4,
+    "arc_gold": 0.687,
+    "glow": 0.786
+   },
+   {
+    "x": 717,
+    "y": 1098,
+    "ring_arcs": 4,
+    "arc_gold": 0.49,
+    "glow": 0.74
+   },
+   {
+    "x": 491,
+    "y": 297,
+    "ring_arcs": 3,
+    "arc_gold": 0.858,
+    "glow": 0.655
+   }
+  ],
+  "line_convergence": {
+   "x": 69.7,
+   "y": 402.6,
+   "inlier_segments": 34,
+   "segments": 2753,
+   "inlier_share": 0.012
+  },
+  "agreement_px": 114.8
+ },
+ "rings": {
+  "centre_used": [
+   145.0,
+   316.0
+  ],
+  "tops_px_from_core": [
+   32.0
+  ],
+  "count": 1,
+  "successive_ratio": [],
+  "median_ratio": null,
+  "note": "radius ratio of successive rings = their depth ratio (r ~ 1/z); constant ratio = the painting's own perspective"
+ },
+ "river": {
+  "found": true,
+  "area_share": 0.5,
+  "cyan_share_in_river": 0.287,
+  "pink_share_in_river": 0.533,
+  "centre_line_y_x_width": [
+   [
+    320,
+    292.5,
+    138
+   ],
+   [
+    344,
+    280.0,
+    135
+   ],
+   [
+    368,
+    310.0,
+    61
+   ],
+   [
+    392,
+    216.0,
+    175
+   ],
+   [
+    416,
+    228.0,
+    245
+   ],
+   [
+    440,
+    228.5,
+    186
+   ],
+   [
+    464,
+    215.5,
+    292
+   ],
+   [
+    488,
+    231.0,
+    207
+   ],
+   [
+    512,
+    182.5,
+    116
+   ],
+   [
+    536,
+    162.0,
+    255
+   ],
+   [
+    560,
+    717.5,
+    224
+   ],
+   [
+    584,
+    243.5,
+    446
+   ],
+   [
+    608,
+    267.0,
+    285
+   ],
+   [
+    632,
+    515.5,
+    232
+   ],
+   [
+    656,
+    340.5,
+    138
+   ],
+   [
+    680,
+    339.5,
+    272
+   ],
+   [
+    704,
+    511.5,
+    222
+   ],
+   [
+    728,
+    238.0,
+    227
+   ],
+   [
+    752,
+    178.0,
+    175
+   ],
+   [
+    776,
+    564.0,
+    261
+   ],
+   [
+    800,
+    205.5,
+    320
+   ],
+   [
+    824,
+    313.0,
+    249
+   ],
+   [
+    848,
+    159.5,
+    268
+   ],
+   [
+    872,
+    161.0,
+    259
+   ],
+   [
+    896,
+    173.0,
+    271
+   ],
+   [
+    920,
+    329.5,
+    150
+   ],
+   [
+    944,
+    207.0,
+    299
+   ],
+   [
+    968,
+    295.0,
+    153
+   ],
+   [
+    992,
+    596.0,
+    119
+   ],
+   [
+    1016,
+    140.0,
+    85
+   ],
+   [
+    1040,
+    612.5,
+    146
+   ],
+   [
+    1064,
+    630.5,
+    102
+   ],
+   [
+    1088,
+    444.5,
+    456
+   ],
+   [
+    1112,
+    437.5,
+    450
+   ],
+   [
+    1136,
+    432.5,
+    430
+   ],
+   [
+    1160,
+    423.0,
+    287
+   ],
+   [
+    1184,
+    396.5,
+    312
+   ],
+   [
+    1208,
+    111.5,
+    164
+   ],
+   [
+    1232,
+    483.0,
+    205
+   ],
+   [
+    1256,
+    500.0,
+    275
+   ],
+   [
+    1280,
+    497.5,
+    312
+   ],
+   [
+    1304,
+    423.0,
+    207
+   ],
+   [
+    1328,
+    532.0,
+    299
+   ],
+   [
+    1352,
+    519.0,
+    301
+   ],
+   [
+    1376,
+    460.5,
+    368
+   ],
+   [
+    1400,
+    461.0,
+    379
+   ],
+   [
+    1424,
+    612.5,
+    266
+   ],
+   [
+    1448,
+    621.0,
+    301
+   ],
+   [
+    1472,
+    532.5,
+    510
+   ],
+   [
+    1496,
+    541.0,
+    495
+   ],
+   [
+    1520,
+    481.0,
+    359
+   ]
+  ],
+  "touches_frame_bottom": true,
+  "note": "centre = middle of the largest water run per row (between the banks); judge the S-shape on the overlay",
+  "max_lateral_wiggle_of_width": 3.005
+ },
+ "dark": {
+  "share_below_hud": 0.0017,
+  "components": 124,
+  "largest_px": 108,
+  "largest_px_at_phone": 38.3,
+  "top_boxes_xywh": [
+   [
+    205,
+    194,
+    40,
+    19
+   ],
+   [
+    133,
+    206,
+    21,
+    16
+   ],
+   [
+    759,
+    194,
+    17,
+    10
+   ],
+   [
+    848,
+    1122,
+    12,
+    16
+   ],
+   [
+    630,
+    197,
+    15,
+    9
+   ],
+   [
+    110,
+    223,
+    21,
+    14
+   ],
+   [
+    711,
+    208,
+    11,
+    10
+   ],
+   [
+    0,
+    1123,
+    11,
+    13
+   ]
+  ],
+  "visual_check_patch_limit_px_at_phone": 150,
+  "artwork_dark_below_limit": true,
+  "note": "intentional dark details of the ARTWORK; visual_check.py counts only connected near-black areas >= 150 px at 412x915 \u2014 if artwork_dark_below_limit is false, that screen needs its own dark-area exclusion before any acceptance run"
+ },
+ "benny": {
+  "found": true,
+  "confidence": "LOW (blob not compact: confirm on the overlay)",
+  "solidity": 0.516,
+  "box_xyxy": [
+   60,
+   461,
+   843,
+   1183
+  ],
+  "compare_exclusion_box_xyxy": [
+   0,
+   404,
+   864,
+   1354
+  ],
+  "size_px": [
+   783,
+   722
+  ],
+  "centre_px": [
+   451.5,
+   822.0
+  ]
+ },
+ "coins": {
+  "count": 5,
+  "xy_r_px_nearest_first": [
+   [
+    107.5,
+    1362.8,
+    3.7
+   ],
+   [
+    247.6,
+    448.2,
+    5.9
+   ],
+   [
+    647.9,
+    445.7,
+    10.9
+   ],
+   [
+    331.0,
+    400.3,
+    10.7
+   ],
+   [
+    647.1,
+    397.7,
+    11.1
+   ]
+  ]
+ },
+ "phone": {
+  "hud_rows": 116,
+  "vp": [
+   34.9,
+   188.2
+  ],
+  "benny_box_xyxy": [
+   0,
+   275,
+   412,
+   705
+  ],
+  "benny_exclusion_box_xyxy": [
+   0,
+   240,
+   412,
+   807
+  ]
+ },
+ "suggested_compare_mask": {
+  "hud_rows": 116,
+  "exclude_boxes_xyxy": [
+   [
+    0,
+    240,
+    412,
+    807
+   ]
+  ],
+  "status": "ESTIMATE - confirm on the overlay; a validated per-screen mask in screens.json wins"
+ }
+}
