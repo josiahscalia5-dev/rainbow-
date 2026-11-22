@@ -22,8 +22,16 @@ import kit_model as km                                   # fitted camera + tunne
 km.g = lambda z: np.asarray(z, float)                    # PHYSICAL: plain perspective, no depth curve (remap() looks g up at call time)
 W, H, A, A0, RR, NUP, RT = km.W, km.H, km.A, km.A0, km.RR, km.NUP, km.RT
 T = CFG['tunnel']; RING_IN, RING_W = T['ring_in'], T['ring_w']
-S = T['spacing']; T_RING0 = T['ring0_t']                  # ring k at t = T_RING0 + k * S (uniform, world-fixed)
-def ring_t(k): return T_RING0 + k * S
+S = T['spacing']; T_RING0 = T['ring0_t']
+# world-fixed ring positions: uniform spacing S up to ring `growth_from`, then each section `spacing_growth` x longer (level design that
+# keeps the painted ring rhythm in the start view; still ONE static tunnel seen in plain perspective), until the exit at ~`exit_t`
+RINGS_T = [T_RING0 + k * S for k in range(T.get('growth_from', 2) + 1)]
+while RINGS_T[-1] < T['exit_t'] - 1e-6:
+    RINGS_T.append(RINGS_T[-1] + S * T.get('spacing_growth', 1.0) ** (len(RINGS_T) - T.get('growth_from', 2)))
+if len(RINGS_T) > 3 and RINGS_T[-1] - T['exit_t'] > 0.5 * (RINGS_T[-1] - RINGS_T[-2]): RINGS_T[-1] = T['exit_t']   # never far past the planned exit
+EXIT_RING = len(RINGS_T) - 1
+def ring_t(k): return RINGS_T[k] if k < len(RINGS_T) else RINGS_T[-1] + (k - EXIT_RING) * S
+def sec_len(k): return ring_t(k + 1) - ring_t(k)
 TH0, TH1 = np.radians(T['theta_deg'][0]), np.radians(T['theta_deg'][1])
 project = km.project; wall_point = km.wall_point; height_above_water = km.height_above_water
 
@@ -49,7 +57,7 @@ def sample(img, x, y):
 def behind_ring(P):
     """wall point P is hidden from the start camera by a gold ring band (physical: same projected annulus test)"""
     t = np.asarray(P) @ A; h = np.zeros(t.shape, bool)
-    for j in range(0, T['n_rings']):
+    for j in range(0, EXIT_RING + 1):
         tj = ring_t(j)
         if tj <= 0.05: continue
         h |= (t > tj) & (t <= tj * RT / RING_IN)
@@ -64,8 +72,8 @@ def paddle_mask_world(P):
     """wall point P lies under a 3D paddle footprint (those pixels belong to the paddle, not the wall)"""
     t = np.asarray(P) @ A - (A0 @ A); d = np.asarray(P) - A0[None, None, :] - t[..., None] * A[None, None, :]
     th = np.arctan2(d @ NUP, d @ RR); m = np.zeros(t.shape, bool); PD = CFG['paddles']
-    for k in range(PD['k0'], T['n_rings'] - 1):
-        toff, ths = paddle_place(k); t1 = ring_t(k) + toff * S
+    for k in range(PD['k0'], EXIT_RING):
+        toff, ths = paddle_place(k); t1 = ring_t(k) + toff * sec_len(k)
         for thc in ths:
             m |= (t >= t1 - 0.02) & (t <= t1 + PD['length'] + 0.02) & (np.abs(np.angle(np.exp(1j * (th - thc)))) <= PD['half_width_rad'] + 0.03)
     return m
@@ -126,15 +134,15 @@ def wall_extra(P, x, y):
     yi, xi = np.clip(y, 0, H - 1).astype(int), np.clip(x, 0, W - 1).astype(int)
     return ~behind_ring(P) & (gold[yi, xi] == 0) & ~paddle_mask_world(P)
 OW = CFG['own']
-wall_own = own_atlas('wall', OW['wall_sections'], OW['wall_rows'], tileW, lambda k, a, b: wall_point(a, ring_t(k) + b * S), wall_extra)
+wall_own = own_atlas('wall', OW['wall_sections'], OW['wall_rows'], tileW, lambda k, a, b: wall_point(a, ring_t(k) + b * sec_len(k)), wall_extra)
 ring_own = own_atlas('ring', OW['rings'], OW['ring_rows'], tileR, lambda k, a, b: ring_P(k, a, b))
 rep['own'] = {'wall': {k: v[2] for k, v in wall_own['rows'].items()}, 'ring': {k: v[2] for k, v in ring_own['rows'].items()}}
 
 # ---------------- 3D paddles: the painted gold lifters baked onto the paddle surfaces (top face back->front, then the front lip) ----------------
 PD = CFG['paddles']
 def paddle_P(k, thc, a, b):
-    t1 = ring_t(k) + paddle_place(k)[0] * S; dth = PD['half_width_rad']; thv = thc + (a - 0.5) * 2 * dth
-    ext = np.sqrt(np.maximum(0, 1 - (2 * a - 1) ** 2)); rIn = RT - (RT - PD['r_inner']) * (0.55 + 0.45 * np.sqrt(ext))
+    t1 = ring_t(k) + paddle_place(k)[0] * sec_len(k); dth = PD['half_width_rad']; thv = thc + (a - 0.5) * 2 * dth
+    ext = np.sqrt(np.maximum(0, 1 - (2 * a - 1) ** 2)); rIn = RT - (RT - PD['r_inner']) * np.sqrt(ext)   # closed lid: edges meet the wall
     top = b < 0.7; f = np.where(top, b / 0.7, (b - 0.7) / 0.3)
     tt = np.where(top, t1 + PD['length'] * (1 - f), t1); rr = np.where(top, rIn, rIn + (RT - rIn) * f)
     return A0 + tt[..., None] * A + rr[..., None] * (np.cos(thv)[..., None] * RR + np.sin(thv)[..., None] * NUP)
@@ -163,11 +171,22 @@ yi, xi = np.clip(y, 0, H - 1).astype(int), np.clip(x, 0, W - 1).astype(int); vis
 src = np.where(cover[..., None] > 0, cln, ref)            # under Benny / coins: the clean plate's water
 water = sample(cv2.GaussianBlur(src, (0, 0), 0.6), np.clip(x, 0, W - 1), np.clip(y, 0, H - 1))
 alpha = cv2.GaussianBlur(vis.astype(np.float32), (0, 0), 3.0) * vis
+hsvw = cv2.cvtColor(np.clip(sample(ref, np.clip(x, 0, W - 1), np.clip(y, 0, H - 1)), 0, 255).astype(np.uint8), cv2.COLOR_RGB2HSV)
+foamm = vis & (hsvw[..., 2] > 205) & (hsvw[..., 1] < 75) & (cover[yi, xi] == 0)
+FC = CFG.get('foam_cell', 0.05); foam_pts = []
+nl, nt = int(2 * HWD / FC), int((RV['t1'] - RV['t0']) / FC)
+for i in range(nt):
+    r0, r1 = int(i * VH / nt), int((i + 1) * VH / nt)
+    for j in range(nl):
+        c0, c1 = int(j * VW / nl), int((j + 1) * VW / nl); blk = foamm[r0:r1, c0:c1]
+        if blk.mean() > 0.5 and vis[r0:r1, c0:c1].mean() > 0.9:
+            foam_pts.append([round(float(tv[(r0 + r1) // 2, 0]), 4), round(float(lat[0, (c0 + c1) // 2]), 4), round(float(FC * (0.9 + 0.6 * blk.mean())), 4)])
+rep_foam = len(foam_pts)
 out = np.concatenate([np.clip(water, 0, 255), (alpha * 255)[..., None]], 2).astype(np.uint8)
 Image.fromarray(out[::-1]).save(os.path.join(OUT, 'river_own.png'))   # row 0 = far end
-rep['river_own'] = {'visible': round(float(vis.mean()), 3), 't0': RV['t0'], 't1': RV['t1']}
+rep['river_own'] = {'visible': round(float(vis.mean()), 3), 't0': RV['t0'], 't1': RV['t1'], 'painted_foam_domes': rep_foam}
 
-phys = km.export(); phys.update({'TH0': float(TH0), 'TH1': float(TH1), 'S': S, 'ring0_t': T_RING0, 'n_rings': T['n_rings'], 'RING_IN': RING_IN, 'RING_W': RING_W,
+phys = km.export(); phys.update({'TH0': float(TH0), 'TH1': float(TH1), 'S': S, 'ring0_t': T_RING0, 'ring_ts': [round(v, 5) for v in RINGS_T], 'exit_ring': EXIT_RING, 'foam_painted': foam_pts, 'RING_IN': RING_IN, 'RING_W': RING_W,
     'HWD': HWD, 'fov': km.SC['cam']['fov'], 'cam_fwd': km.F.tolist(), 'cam_up': km.U.tolist(), 'benny_start_px': CFG['benny_start_px'],
     'own': {'wall': wall_own, 'ring': ring_own, 'paddle': {'n': len(prow), 'map': pmeta}}, 'river_own': RV, 'paddles': PD})
 json.dump(phys, open(os.path.join(OUT, 'phys.json'), 'w'), indent=1)

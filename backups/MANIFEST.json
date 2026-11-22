@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3153,
-   "sha256": "54cba0947419b7d44b2f03ab5ef3be20fc553453275c6fd2ef9f973e0cebabc7"
+   "sha256": "8da4b832bfc37aaee4c32f3847dae4ce90b0dca7d4de27b19ba30bed2c4edcb0"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -41803,13 +41803,28 @@
   },
   {
    "path": "tools/reflock/bake_phys.py",
-   "bytes": 12907,
-   "sha256": "d57aac4d54bbfbee303cd892588bec9b207694add7432e82d70064275a71aa85"
+   "bytes": 14487,
+   "sha256": "bae070b481d558844d74334437f216d493186cc8b7bf8d96b323998690acafea"
+  },
+  {
+   "path": "tools/reflock/make_page.py",
+   "bytes": 20470,
+   "sha256": "65764f1493e1550470d9fcc4a7b4c7f225edeeedfa6c5d3aafe72326bb069551"
+  },
+  {
+   "path": "tools/reflock/reflock.html",
+   "bytes": 86339,
+   "sha256": "8c851d7ed535339317ae7f3d27054b8bd77533a7a3decd8ace752f0d1509aa4b"
   },
   {
    "path": "tools/reflock/screens/05.json",
-   "bytes": 2249,
-   "sha256": "f8462712b321ae41d961b2016286637a787956de29e5322b6d478d11b336e732"
+   "bytes": 2338,
+   "sha256": "735b49fb2410152a9442b16921effb2cf3b87eff0070101e16d9c8928adb5dfe"
+  },
+  {
+   "path": "tools/reflock/setup_reflock.sh",
+   "bytes": 1977,
+   "sha256": "0bc169ebf862a6629f73f9cd8d9a9a942a88535d39066d3b84423b44e8957406"
   },
   {
    "path": "tools/water-lab.html",

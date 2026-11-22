@@ -15,13 +15,11 @@
   "ring_w": 0.1,
   "spacing": 2.091946478953816,
   "ring0_t": 0.8122733766595509,
-  "n_rings": 14,
   "theta_deg": [
    -50,
    230
   ],
   "entry_ring": 0,
-  "exit_ring": 13,
   "approach": {
    "t0": -9.0,
    "radius": 2.2
@@ -29,7 +27,10 @@
   "exit_room": {
    "radius": 7.0,
    "depth": 7.5
-  }
+  },
+  "growth_from": 2,
+  "spacing_growth": 1.3,
+  "exit_t": 28.5
  },
  "tile_sections": [
   0,
@@ -131,5 +132,11 @@
   "holes_px_max": 0,
   "benny_offscreen_frames_max": 0,
   "static_world": true
- }
+ },
+ "exit_glow": [
+  -9.0,
+  0.0,
+  0.55
+ ],
+ "foam_cell": 0.05
 }
