@@ -1,5 +1,12 @@
 # Paste this into Claude Code on the next Claude account
 
+## ▶▶▶▶▶▶▶▶▶▶ NEWEST (2026-11-22 ~14:10 UTC, round 43b → next account) — reusable screen kit + Screen 06 rebuild
+1. Start the cloud session on branch **`ccr-80cdb162-4sqz1a`** (NOT the default branch, NOT the older `ccr-50ff6f57-q5me82`). If the hook's
+   `git fetch` fails, run `git ls-remote origin refs/heads/ccr-80cdb162-4sqz1a`, fetch it by name and merge before anything else.
+2. Paste the FULL prompt in **`docs/briefs/2026-11-22-r43/PROMPT_NEXT_ACCOUNT.md`** (given to the user 14:10 UTC).
+3. Chat history is saved on every autosave (public repo, user-requested, sanitized); re-create `~/.rainbow-autosave.private-terms` on the new machine.
+
+
 ## ▶▶▶▶▶▶▶▶▶ NEWEST (2026-11-22 ~12:25 UTC, round 42 → next account) — Screen 06 fixes + Bubble Dash / Sock Rescue section
 1. Start the cloud session on branch **`ccr-50ff6f57-q5me82`** (NOT the default branch). If the hook's `git fetch` fails, run
    `git ls-remote origin refs/heads/ccr-50ff6f57-q5me82`, fetch it by name and merge before anything else.

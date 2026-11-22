@@ -5066,3 +5066,70 @@ The JSONL file has one "@gmail" match and one key-like match. Checking exactly w
 
 > 🔧 **Bash** `{"command": "python3 scripts/rainbow-autosave.py --reason manual:r43b-chat-history-tools 2>&1 | grep -E '\"commit\"|transcript|problem' | head -5; python3 -I scripts/autosave-status.py; echo \"local $(git rev-parse HEAD)\"; echo \"remote $(git ls-remote origin refs/heads/ccr-80cdb162-4sqz1a | cut -f1)\"; git ls-files backups/claude-sessions/e7ead6f9-80f4-50b9-a0f2-74e81333401a; python3 -c \"\nimport json;d=json.load(open('backups/LIVE_TOOLS_STATE.json')); print(list(d.keys())); print('mcp', str(d.get('mcp_servers', d.get('mcp')))[:400]); print('plugins', str(d.get('plugins'))[:300])\"", "descr …[+103 chars]`
 
+### 🧑 User — 2026-11-22T14:07:17.192Z
+
+> ↩︎ result: "commit": "010641a76bfe3233c2907cf81a8c08136cb8d401",
+> AUTOSAVE OK | branch ccr-80cdb162-4sqz1a | scheduler daemon | last verified backup 2026-11-22T14:06:58+00:00 (0.3 min ago) | local 010641a remote 010641a (match) | uncommitted 0
+> local 010641a76bfe3233c2907cf81a8c08136cb8d401
+> remote 010641a76bfe3233c2907cf81a8c08136cb8d401
+> backups/claude-sessions/e7ead6f9-80f4-50b9-a0f2-74e81333401a/transcript.md
+> backups/claude-sessions/e7ead6f9-80f4-50b9-a0f2-74e81333401a/transcript.sanitized.jsonl
+> ['time_utc', 'lead_branch', 'specialists_sha256_16', 'workers_git_worktrees', 'workers_status_latest_round', 'plugins_installed_locally', 'plugins_enabled_user_settings', 'plugins_synced_from_claude_account', 'plugins_synced_from_claude_account_names', 'mcp_servers_configured', 'hooks_project', 'note']
+> mcp None
+> plugins None
+
+### 🤖 Claude — 2026-11-22T14:07:19.915Z
+
+> 🔧 **Bash** `{"command": "python3 -c \"\nimport json;d=json.load(open('backups/LIVE_TOOLS_STATE.json'))\nfor k in ('lead_branch','plugins_installed_locally','plugins_enabled_user_settings','plugins_synced_from_claude_account_names','mcp_servers_configured','hooks_project'): print(k, str(d.get(k))[:300])\"; git log -1 --format=%B | grep -i transcript", "description": "Read the saved tools, plugins, MCP servers and hooks list"}`
+
+### 🧑 User — 2026-11-22T14:07:19.972Z
+
+> ↩︎ result: lead_branch ccr-80cdb162-4sqz1a
+> plugins_installed_locally ['worldlabs@worldlabs']
+> plugins_enabled_user_settings ['worldlabs@worldlabs']
+> plugins_synced_from_claude_account_names ['claude-code-setup', 'design', 'parallax-threejs', 'playwright', 'serena', 'skill-creator', 'typescript-native-lsp']
+> mcp_servers_configured ['worldlabs']
+> hooks_project ['PreCompact', 'SessionEnd', 'SessionStart', 'Stop']
+> Transcripts: refreshed (public repo, user-requested, sanitized)
+
+### 🤖 Claude — 2026-11-22T14:07:30.934Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\nimport json\np='backups/TOOL_MANIFEST.json'; d=json.load(open(p))\nd['screen_kit_r43'] = {\n  'what': 'tools/screenkit (reusable screen builder: fit -> SAM 2 masks -> Blender 5.3 Geometry Nodes -> screen.html game page); README tools/screenkit/README.md',\n  'free_models_not_in_git': 'SAM 2.1 hiera-tiny + Depth Anything V2 small (Apache-2.0 ONNX, ~255 MB) -> bash tools/screenkit/get_models.sh (needs the already-installed onnxruntime; no credits)',\n  'private_terms_file': '~/.rainbow-autosave.private-terms (outside the repo, never committed): the user e-mail / f …[+615 chars]`
+
+### 🧑 User — 2026-11-22T14:07:31.000Z
+
+> ↩︎ result: # Full prompt for the next Claude account (round 42, 2026-11-22 ~12:30 UTC)
+> Start the cloud session on repository `josiahscalia5-dev/rainbow-`, branch **`ccr-50ff6f57-q5me82`** if offered, then paste everything in the box.
+> 
+> ```
+> Continue my Rainbow game exactly where my last Claude account stopped. Do not start over, do not delete work.
+> 
+> STEP 1 — Get onto the right branch (the GitHub default branch is an OLD version):
+> If the current branch is not ccr-50ff6f57-q5me82, run:
+>   git fetch origin ccr-50ff6f57-q5me82 && git checkout -B ccr-50ff6f57-q5me82 FETCH_HEAD && git lfs pull
+> Then confirm `git rev-parse HEAD` matches `git ls-remote origin refs/heads/ccr-50ff6f57-q5me82`.
+> 
+> STEP 2 — Read before doing anything:
+> # Paste this into Claude Code on the next Claude account
+> 
+> ## ▶▶▶▶▶▶▶▶▶ NEWEST (2026-11-22 ~12:25 UTC, round 42 → next account) — Screen 06 fixes + Bubble Dash / Sock Rescue section
+> 1. Start the cloud session on branch **`ccr-50ff6f57-q5me82`** (NOT the default branch). If the hook's `git fetch` fails, run
+>    `git ls-remote origin refs/heads/ccr-50ff6f57-q5me82`, fetch it by name and merge before anything else.
+> 2. Paste the FULL prompt in **`docs/briefs/2026-11-22-r42/PROMPT_NEXT_ …[+786 chars]
+
+### 🤖 Claude — 2026-11-22T14:07:32.558Z
+
+Writing the full prompt into the repository, both as its own file and at the top of the new-account start file:
+
+### 🤖 Claude — 2026-11-22T14:07:51.812Z
+
+> 🔧 **Write** `{"file_path": "/home/user/rainbow-/docs/briefs/2026-11-22-r43/PROMPT_NEXT_ACCOUNT.md", "content": "# Full prompt for the next Claude account (round 43b, 2026-11-22 ~14:10 UTC)\nStart the cloud session on repository `josiahscalia5-dev/rainbow-`, branch **`ccr-80cdb162-4sqz1a`** if offered, then paste everything in the box.\n\n```\nContinue my Rainbow game exactly where my last Claude account stopped. Do not start over, do not delete work.\n\nSTEP 1 — Get onto the right branch (the GitHub default branch is an OLD version):\nIf the current branch is not ccr-80cdb162-4sqz1a, run:\n  git fetch orig …[+5380 chars]`
+
+### 🧑 User — 2026-11-22T14:07:51.886Z
+
+> ↩︎ result: File created successfully at: /home/user/rainbow-/docs/briefs/2026-11-22-r43/PROMPT_NEXT_ACCOUNT.md (file state is current in your context — no need to Read it back)
+
+### 🤖 Claude — 2026-11-22T14:07:57.115Z
+
+> 🔧 **Bash** `{"command": "python3 - <<'EOF'\np='backups/START_NEW_CLAUDE_ACCOUNT.md'; s=open(p).read()\nblock = \"\"\"# Paste this into Claude Code on the next Claude account\n\n## ▶▶▶▶▶▶▶▶▶▶ NEWEST (2026-11-22 ~14:10 UTC, round 43b → next account) — reusable screen kit + Screen 06 rebuild\n1. Start the cloud session on branch **`ccr-80cdb162-4sqz1a`** (NOT the default branch, NOT the older `ccr-50ff6f57-q5me82`). If the hook's\n   `git fetch` fails, run `git ls-remote origin refs/heads/ccr-80cdb162-4sqz1a`, fetch it by name and merge before anything else.\n2. Paste the FULL prompt in **`docs/briefs/2026-1 …[+873 chars]`
+

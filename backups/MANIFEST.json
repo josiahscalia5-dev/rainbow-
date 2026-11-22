@@ -834,7 +834,7 @@
   {
    "path": "backups/CONVERSATION_INDEX.md",
    "bytes": 27486,
-   "sha256": "a3de1e57d1dd1ca271e94a6f8fc9c2333107d3af4e2ad00d96629b59d96c7bf9"
+   "sha256": "4abe74bbcf4f9b385b96171466cb54848fb1b3f0800902449317384309814c4f"
   },
   {
    "path": "backups/CURRENT_STATE.md",
@@ -849,7 +849,7 @@
   {
    "path": "backups/LIVE_TOOLS_STATE.json",
    "bytes": 3218,
-   "sha256": "7b1df16162055852ea24bb500f25aa80fc4c596f1b8481487be028f60d36e4a6"
+   "sha256": "b1e1cd59722026fa3908e9de9dd0f67c8ac2d18a762da3a6a107b06143201f99"
   },
   {
    "path": "backups/MCP_SETUP.md",
@@ -863,13 +863,13 @@
   },
   {
    "path": "backups/START_NEW_CLAUDE_ACCOUNT.md",
-   "bytes": 36590,
-   "sha256": "35bdadfa07f6d3a084a009dd57815e916160057b552eda2dfb2c9d6fa4caf743"
+   "bytes": 37265,
+   "sha256": "7e51157a59624c767c9e0a6d966f65953c66e00e56c99b3881c9241bf2e06c87"
   },
   {
    "path": "backups/TOOL_MANIFEST.json",
-   "bytes": 20721,
-   "sha256": "c3fd403491dd1e4cb8bbea59ed7a9ee86190afe6910aa59f9b8136224c625213"
+   "bytes": 22791,
+   "sha256": "5c1862b66d05f8de9b3e97187f1e1ca9702a03d9471b7d184181d18bdfabfb46"
   },
   {
    "path": "backups/autosave.config.json",
@@ -11675,6 +11675,11 @@
    "path": "docs/briefs/2026-11-22-r42/STORYBOARD_13_in_gameplay_order.jpg",
    "bytes": 1096237,
    "sha256": "86c7ce8890ea45ba723a48ea26898465a8b5473fdcf58c8d3768489950f9aeb0"
+  },
+  {
+   "path": "docs/briefs/2026-11-22-r43/PROMPT_NEXT_ACCOUNT.md",
+   "bytes": 5849,
+   "sha256": "7f6c4f1822c8843a491accdcd729e9e54a7c2dd99a73bec7e66ecddb1255e186"
   },
   {
    "path": "docs/briefs/2026-11-22-r43/RESUME_R43.md",
